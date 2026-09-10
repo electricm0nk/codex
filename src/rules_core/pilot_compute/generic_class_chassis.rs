@@ -48,13 +48,9 @@
 //! 61 conventional classes now resolve a real chassis, not 60.
 
 use std::collections::BTreeMap;
-use std::path::{Path, PathBuf};
 use std::sync::OnceLock;
 
-use serde_json::Value;
-
-use crate::pcgen_import::formula_interpreter::{extract_formula_field, PcgenFormulaEvaluator};
-use crate::pcgen_import::formula_reproduction_harness::FormulaEvaluator as _;
+use super::class_chassis_sheet_rules::{self, ClassChassis};
 
 /// See `class_catalog_generic.rs`'s own doc comment, "Reachability, honestly
 /// scoped" — same 14 books, same population.
@@ -75,104 +71,6 @@ const CLASS_FAMILY_BOOKS: [&str; 14] = [
     "ultimate_psionics",
 ];
 
-fn repo_root() -> PathBuf {
-    PathBuf::from(env!("CARGO_MANIFEST_DIR"))
-}
-
-fn walk_json_files(dir: &Path, out: &mut Vec<PathBuf>) {
-    let Ok(entries) = std::fs::read_dir(dir) else { return };
-    let mut entries: Vec<_> = entries.flatten().collect();
-    entries.sort_by_key(|e| e.file_name());
-    for entry in entries {
-        let path = entry.path();
-        if path.is_dir() {
-            walk_json_files(&path, out);
-        } else if path.extension().is_some_and(|e| e == "json") {
-            out.push(path);
-        }
-    }
-}
-
-fn tokens_from(data: &Value) -> Vec<(String, String)> {
-    data["raw_tokens"]
-        .as_array()
-        .map(|arr| {
-            arr.iter()
-                .filter_map(|t| {
-                    let key = t["key"].as_str()?.to_string();
-                    let value = t["value"].as_str()?.to_string();
-                    Some((key, value))
-                })
-                .collect()
-        })
-        .unwrap_or_default()
-}
-
-/// Identical to `class_catalog_generic::classify_class_record` — see that
-/// module's own doc comment for the full derivation.
-fn is_conventional_pc_record(tokens: &[(String, String)]) -> bool {
-    let typ = tokens.iter().find(|(k, _)| k == "TYPE").map(|(_, v)| v.as_str()).unwrap_or("");
-    if typ.contains("Monster") {
-        return false;
-    }
-    let has_bab = tokens.iter().any(|(k, v)| k == "BONUS" && v.contains("BASEAB"));
-    let has_save = tokens.iter().any(|(k, v)| k == "BONUS" && v.starts_with("SAVE|"));
-    has_bab && has_save
-}
-
-/// Identical to `class_catalog_generic::select_baseab_formula`.
-fn select_baseab_formula(tokens: &[(String, String)]) -> Option<&str> {
-    let candidates: Vec<&str> =
-        tokens.iter().filter(|(k, v)| k == "BONUS" && v.contains("BASEAB")).map(|(_, v)| v.as_str()).collect();
-    if candidates.len() == 1 {
-        return extract_formula_field("BONUS", candidates[0]);
-    }
-    candidates.into_iter().find(|v| v.trim_end().ends_with(",0")).and_then(|v| extract_formula_field("BONUS", v))
-}
-
-/// Identical to `class_catalog_generic::select_save_formulas`.
-fn select_save_formulas(tokens: &[(String, String)]) -> [Option<String>; 3] {
-    let mut fort = None;
-    let mut refl = None;
-    let mut will = None;
-    for (k, v) in tokens {
-        if k != "BONUS" || !v.starts_with("SAVE|") {
-            continue;
-        }
-        let parts: Vec<&str> = v.split('|').collect();
-        if parts.len() < 3 {
-            continue;
-        }
-        let Some(formula) = extract_formula_field("BONUS", v) else { continue };
-        for target in parts[1].split(',') {
-            match target {
-                "BASE.Fortitude" => fort = Some(formula.to_string()),
-                "BASE.Reflex" => refl = Some(formula.to_string()),
-                "BASE.Will" => will = Some(formula.to_string()),
-                _ => {}
-            }
-        }
-    }
-    [fort, refl, will]
-}
-
-/// Identical to `class_catalog_generic::max_level_for`.
-fn max_level_for(tokens: &[(String, String)], type_value: &str) -> u8 {
-    tokens
-        .iter()
-        .find(|(k, _)| k == "MAXLEVEL")
-        .and_then(|(_, v)| v.parse::<u8>().ok())
-        .unwrap_or(if type_value.contains("Prestige") { 10 } else { 20 })
-}
-
-/// A slug matching the `"class:<slug>"` id convention every other dispatch
-/// arm in `compute_class_chassis` already uses (e.g. `"class:psychic_
-/// warrior"`, `"class:vigilante"`): the corpus record's own display name,
-/// lower-cased, with every whitespace run collapsed to one underscore.
-fn slug(name: &str) -> String {
-    name.trim().to_ascii_lowercase().split_whitespace().collect::<Vec<_>>().join("_")
-}
-
 pub(crate) struct GenericChassisRow {
     pub(crate) display_name: String,
     pub(crate) base_attack_bonus: i16,
@@ -181,65 +79,20 @@ pub(crate) struct GenericChassisRow {
     pub(crate) will_save: i16,
 }
 
-struct ClassRecord {
-    display_name: String,
-    max_level: u8,
-    baseab_formula: String,
-    fort_formula: String,
-    ref_formula: String,
-    will_formula: String,
-    /// PCGen's own auto-declared per-class level variable, `<Name>LVL` with
-    /// whitespace stripped rather than collapsed (matches `class_catalog_
-    /// generic.rs`'s own binding, `format!("{name}LVL")`, and `class_
-    /// feature_grant_consumer::class_level_variable_name`'s identical
-    /// convention).
-    class_level_var: String,
-}
-
-/// Loaded once per process, keyed by [`slug`] — mirrors `class_catalog_
-/// generic::load_generic_class_progressions`'s own population (60 of the
-/// 61 conventional classes; Demoniac refuses, see this module's own doc
-/// comment).
-fn generic_class_records() -> &'static BTreeMap<String, ClassRecord> {
-    static TABLE: OnceLock<BTreeMap<String, ClassRecord>> = OnceLock::new();
+/// Loaded once per process, keyed by the converted record's own slug -- the
+/// same `"class:<slug>"` id convention every other dispatch arm in
+/// `compute_class_chassis` uses. Two books stating the same class slug keep
+/// the first in `CLASS_FAMILY_BOOKS` order, as the corpus read this replaces
+/// already did.
+fn generic_class_records() -> &'static BTreeMap<String, ClassChassis> {
+    static TABLE: OnceLock<BTreeMap<String, ClassChassis>> = OnceLock::new();
     TABLE.get_or_init(|| {
-        let mut out = BTreeMap::new();
-        let repo_root = repo_root();
-        for book in CLASS_FAMILY_BOOKS {
-            let dir = repo_root.join("data/corpus").join(book).join("class");
-            if !dir.is_dir() {
+        let mut out: BTreeMap<String, ClassChassis> = BTreeMap::new();
+        for ((_, slug), chassis) in class_chassis_sheet_rules::records(&CLASS_FAMILY_BOOKS) {
+            if !chassis.is_conventional() {
                 continue;
             }
-            let mut files = Vec::new();
-            walk_json_files(&dir, &mut files);
-            for file in files {
-                let Ok(text) = std::fs::read_to_string(&file) else { continue };
-                let Ok(doc) = serde_json::from_str::<Value>(&text) else { continue };
-                let data = &doc["data"];
-                let Some(name) = data["name"].as_str() else { continue };
-                let tokens = tokens_from(data);
-                if !is_conventional_pc_record(&tokens) {
-                    continue;
-                }
-                let type_value =
-                    tokens.iter().find(|(k, _)| k == "TYPE").map(|(_, v)| v.as_str()).unwrap_or("");
-                let max_level = max_level_for(&tokens, type_value);
-                let Some(baseab_formula) = select_baseab_formula(&tokens) else { continue };
-                let [fort_f, ref_f, will_f] = select_save_formulas(&tokens);
-                let (Some(fort_formula), Some(ref_formula), Some(will_formula)) = (fort_f, ref_f, will_f)
-                else {
-                    continue;
-                };
-                out.entry(slug(name)).or_insert_with(|| ClassRecord {
-                    display_name: name.to_string(),
-                    max_level,
-                    baseab_formula: baseab_formula.to_string(),
-                    fort_formula,
-                    ref_formula,
-                    will_formula,
-                    class_level_var: format!("{name}LVL"),
-                });
-            }
+            out.entry(slug).or_insert(chassis);
         }
         out
     })
@@ -255,37 +108,13 @@ fn generic_class_records() -> &'static BTreeMap<String, ClassRecord> {
 pub(crate) fn resolve(class_id_str: &str, level: u8) -> Option<GenericChassisRow> {
     let bare = class_id_str.strip_prefix("class:").unwrap_or(class_id_str);
     let record = generic_class_records().get(bare)?;
-    if level < 1 || level > record.max_level {
-        return None;
-    }
-    let evaluator = PcgenFormulaEvaluator;
-    let mut vars = BTreeMap::new();
-    // Same two binding shapes `class_catalog_generic.rs`'s own module doc
-    // measured across all 61 candidates — see that module's doc comment,
-    // "Formula shape, measured across all 61 before writing any code".
-    vars.insert("CLASSLEVEL::APPLIEDAS=NONEPIC".to_string(), i64::from(level));
-    vars.insert(record.class_level_var.clone(), i64::from(level));
-    // SD-32 T12 row 18 cycle 9 widened `formula_interpreter.rs`'s grammar to PARSE a bare,
-    // zero-argument `classlevel()` call (Demoniac's own BASEAB/SAVE formulas), binding it to
-    // the SAME `CLASSLEVEL::<name>` lookup under the empty-string "no class name given"
-    // sentinel — but that widening deliberately left evaluation refusing until a caller
-    // explicitly binds the empty key (its own doc: "No caller today binds `CLASSLEVEL::`
-    // (empty key)"). This IS that caller: a bare `classlevel()` inside a class's own record
-    // names that SAME class's own level (there is no other class in scope for a single-class
-    // record to mean), so this binds the empty key to the same `level` this function already
-    // knows — never a guess, the record's own real level.
-    vars.insert("CLASSLEVEL::".to_string(), i64::from(level));
-    let bind = |f: &str| evaluator.evaluate(f, &vars).ok().map(|v| v as i16);
-    let base_attack_bonus = bind(&record.baseab_formula)?;
-    let fort_save = bind(&record.fort_formula)?;
-    let ref_save = bind(&record.ref_formula)?;
-    let will_save = bind(&record.will_formula)?;
+    let row = record.row_at(level)?;
     Some(GenericChassisRow {
         display_name: record.display_name.clone(),
-        base_attack_bonus,
-        fort_save,
-        ref_save,
-        will_save,
+        base_attack_bonus: row.base_attack_bonus,
+        fort_save: row.fort_save,
+        ref_save: row.ref_save,
+        will_save: row.will_save,
     })
 }
 
@@ -294,18 +123,34 @@ mod tests {
     use super::*;
 
     #[test]
-    fn all_sixty_one_conventional_classes_resolve() {
-        // Row 18 cycle 9 (landed on rebase, this cycle) widened
-        // `formula_interpreter.rs`'s grammar to PARSE bare `classlevel()`;
-        // this module's own `resolve` is the caller that binds the empty
-        // `CLASSLEVEL::` key (see the doc comment at this function's own
-        // binding site) — so Demoniac, the last of the 61, now resolves
-        // too. 61 of 61, not 60.
+    fn all_sixty_two_conventional_classes_resolve() {
+        // SD-35 `AT-35-E6-001`: 62, not the 61 this module counted while it
+        // read `data/corpus/<book>/class/`. Two independent movements, both
+        // re-derivable and neither a relabel:
+        //
+        //   +2  `adventurers_guide`'s Pathfinder Delver and Pathfinder Savant.
+        //       `data/corpus/adventurers_guide/class/` holds 9 records and
+        //       neither of these; the converter reads the PINNED oracle corpus
+        //       directly, so `data/sheet_rules/` carries both, each with a
+        //       complete BAB + three-save chassis and a MAXLEVEL:10 ceiling.
+        //       Re-derive: `ls data/corpus/adventurers_guide/class/ | wc -l`
+        //       against `ls data/sheet_rules/adventurers_guide/class/ | wc -l`.
+        //
+        //   -1  `inner_sea_gods`'s Evangelist. Its converted record carries a
+        //       degradation on another of its own tokens, and the converter's
+        //       standing policy (`convert.rs`, "the partly-read magnitudes are
+        //       dropped rather than folded into a sheet total -- a wrong
+        //       computed number looks right, an omitted one does not") turns
+        //       every magnitude on a degraded record into the rule's own
+        //       WORDS. Under `decisions.md` §1 that record is done as prose;
+        //       it is not a chassis, and this module refuses it rather than
+        //       inventing one. Re-derive: the four
+        //       `inner_sea_gods:class:evangelist` rules carry
+        //       `"value":"Text"` and `"target":null`.
         assert_eq!(
             generic_class_records().len(),
-            61,
-            "the read/classify population itself is 61 (matches class_catalog_generic.rs's own \
-             re-derivation)"
+            62,
+            "the converted chassis population over CLASS_FAMILY_BOOKS"
         );
         let mut resolved = 0usize;
         for bare in generic_class_records().keys() {
@@ -313,7 +158,35 @@ mod tests {
             assert!(resolve(&class_id, 1).is_some(), "{bare} must resolve a real chassis at level 1");
             resolved += 1;
         }
-        assert_eq!(resolved, 61, "all 61 conventional classes must resolve a real chassis");
+        assert_eq!(resolved, 62, "every conventional class must resolve a real chassis");
+    }
+
+    #[test]
+    fn no_class_resolves_a_degenerate_all_zero_progression() {
+        // The wrong-binding guard, corpus-wide rather than on the one record
+        // that found it: a chassis whose `Expr::ClassLevel` id is bound to a
+        // name the facts do not carry evaluates every level to zero and still
+        // returns `Some(row)`. Every conventional class in this population has
+        // a real base-attack progression, so a base attack bonus of 0 at the
+        // class's own ceiling means the binding, not the book.
+        for (bare, record) in generic_class_records() {
+            let top = record.row_at(record.max_level).unwrap_or_else(|| {
+                panic!("{bare} must resolve at its own ceiling {}", record.max_level)
+            });
+            assert!(
+                top.base_attack_bonus > 0,
+                "{bare}: base attack bonus 0 at level {} is the wrong-binding failure, not a \
+                 progression any class prints",
+                record.max_level
+            );
+        }
+    }
+
+    #[test]
+    fn a_class_whose_converted_record_is_words_is_not_a_chassis() {
+        // Evangelist, above: prose, not a number. Refusing is the contract --
+        // never a guessed progression.
+        assert!(resolve("class:evangelist", 1).is_none());
     }
 
     #[test]

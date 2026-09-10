@@ -26,37 +26,31 @@
 //! job is strictly the seven classes nothing else names at all: five NPC
 //! classes and two `Ex-*` variant states.
 //!
-//! # Method: the same general formula evaluator `generic_class_chassis.rs`
-//! already proved against 61 conventional classes across 14 other books
+//! # Method: the converted chassis, read through the one live reader
 //!
-//! Every one of these seven classes' `BONUS:COMBAT|BASEAB` / `BONUS:SAVE`
-//! tokens uses the exact same `classlevel("APPLIEDAS=NONEPIC")`-based
-//! formula shape CRB's own eleven base classes use (confirmed by reading
-//! `data/corpus/core_rulebook/class/{adept,aristocrat,commoner,expert,
-//! warrior,ex_barbarian,ex_paladin}.json`'s own `raw_tokens` directly, not
-//! assumed) -- so rather than re-deriving a hand-typed `BabProgression`/
-//! good-saves classification a second time, this module reuses
-//! `formula_interpreter::PcgenFormulaEvaluator` to evaluate each class's own
-//! corpus-sourced formula string directly, the same approach
-//! `generic_class_chassis.rs` already uses for classes whose formula shape
-//! is not a plain `Full`/`ThreeQuarter`/`Half` progression. A second,
-//! parallel module rather than widening `generic_class_chassis.rs`'s own
-//! `CLASS_FAMILY_BOOKS`: that module's population (61 conventional PC
-//! classes) is mirrored byte-for-byte in `apps/desktop/src-tauri`'s
-//! `class_catalog_generic.rs` reference-library browser, and CRB's NPC/
-//! `Ex-*` classes are not "conventional PC classes" in that browser's own
-//! sense -- widening the shared book list here without updating that
-//! separate crate's own mirror would silently desynchronize the two, which
-//! that module's own doc comment says is exactly what its parallel-copy
-//! design is meant to avoid.
+//! SD-35 `AT-35-E6-001` (`decisions.md` §11). Until that cycle this module
+//! read `data/corpus/core_rulebook/class/<slug>.json`'s `raw_tokens`, pulled
+//! the `BONUS:COMBAT|BASEAB` / `BONUS:SAVE` formula STRINGS out of them, and
+//! evaluated those strings through the PCGen formula interpreter at render
+//! time. Nothing on the live side reads a PCGen token or formula any more:
+//! the converter writes each class's four progressions as converted `Expr`s
+//! and its `MAXLEVEL` ceiling as an `applies` gate, and
+//! [`class_chassis_sheet_rules`](super::class_chassis_sheet_rules) is the one
+//! live reader of that shape. This module keeps its own scope (these seven
+//! records, registered nowhere else) and its own public surface; only the
+//! source of the numbers changed, and its tests pin the same values as
+//! before.
+//!
+//! Still a second, parallel module rather than a widening of
+//! `generic_class_chassis.rs`'s own `CLASS_FAMILY_BOOKS`: that module's
+//! population (61 conventional PC classes) is mirrored in
+//! `apps/desktop/src-tauri`'s `class_catalog_generic.rs` reference-library
+//! browser, and CRB's NPC/`Ex-*` classes are not "conventional PC classes" in
+//! that browser's own sense.
 
-use std::path::{Path, PathBuf};
 use std::sync::OnceLock;
 
-use serde_json::Value;
-
-use crate::pcgen_import::formula_interpreter::{extract_formula_field, PcgenFormulaEvaluator};
-use crate::pcgen_import::formula_reproduction_harness::FormulaEvaluator as _;
+use super::class_chassis_sheet_rules::{self, ClassChassis};
 
 /// The seven CRB classes this module covers, by their `"class:<slug>"` id
 /// convention -- five `TYPE:Base.NPC` classes and two `TYPE:Base.PC,
@@ -67,78 +61,6 @@ use crate::pcgen_import::formula_reproduction_harness::FormulaEvaluator as _;
 /// double-register or shadow either.
 const COVERED_SLUGS: [&str; 7] =
     ["adept", "aristocrat", "commoner", "expert", "warrior", "ex_barbarian", "ex_paladin"];
-
-fn repo_root() -> PathBuf {
-    PathBuf::from(env!("CARGO_MANIFEST_DIR"))
-}
-
-fn tokens_from(data: &Value) -> Vec<(String, String)> {
-    data["raw_tokens"]
-        .as_array()
-        .map(|arr| {
-            arr.iter()
-                .filter_map(|t| {
-                    let key = t["key"].as_str()?.to_string();
-                    let value = t["value"].as_str()?.to_string();
-                    Some((key, value))
-                })
-                .collect()
-        })
-        .unwrap_or_default()
-}
-
-/// Identical in shape to `generic_class_chassis::select_baseab_formula`.
-fn select_baseab_formula(tokens: &[(String, String)]) -> Option<String> {
-    let candidates: Vec<&str> =
-        tokens.iter().filter(|(k, v)| k == "BONUS" && v.contains("BASEAB")).map(|(_, v)| v.as_str()).collect();
-    if candidates.len() == 1 {
-        return extract_formula_field("BONUS", candidates[0]).map(str::to_string);
-    }
-    candidates
-        .into_iter()
-        .find(|v| v.trim_end().ends_with(",0"))
-        .and_then(|v| extract_formula_field("BONUS", v))
-        .map(str::to_string)
-}
-
-/// Identical in shape to `generic_class_chassis::select_save_formulas`.
-fn select_save_formulas(tokens: &[(String, String)]) -> [Option<String>; 3] {
-    let mut fort = None;
-    let mut refl = None;
-    let mut will = None;
-    for (k, v) in tokens {
-        if k != "BONUS" || !v.starts_with("SAVE|") {
-            continue;
-        }
-        let parts: Vec<&str> = v.split('|').collect();
-        if parts.len() < 3 {
-            continue;
-        }
-        let Some(formula) = extract_formula_field("BONUS", v) else { continue };
-        for target in parts[1].split(',') {
-            match target {
-                "BASE.Fortitude" => fort = Some(formula.to_string()),
-                "BASE.Reflex" => refl = Some(formula.to_string()),
-                "BASE.Will" => will = Some(formula.to_string()),
-                _ => {}
-            }
-        }
-    }
-    [fort, refl, will]
-}
-
-fn max_level_for(tokens: &[(String, String)]) -> u8 {
-    tokens.iter().find(|(k, _)| k == "MAXLEVEL").and_then(|(_, v)| v.parse::<u8>().ok()).unwrap_or(20)
-}
-
-struct ClassRecord {
-    display_name: String,
-    max_level: u8,
-    baseab_formula: String,
-    fort_formula: String,
-    ref_formula: String,
-    will_formula: String,
-}
 
 pub struct CrbUntabledClassChassisRow {
     pub display_name: String,
@@ -159,40 +81,21 @@ pub struct CrbUntabledClassMeta {
     pub display_name: String,
 }
 
-fn load_records() -> Vec<(&'static str, ClassRecord)> {
-    let repo_root = repo_root();
-    let dir: PathBuf = repo_root.join("data/corpus/core_rulebook/class");
+fn load_records() -> Vec<(&'static str, ClassChassis)> {
     let mut out = Vec::new();
     for slug in COVERED_SLUGS {
-        let path: PathBuf = Path::new(&dir).join(format!("{slug}.json"));
-        let Ok(text) = std::fs::read_to_string(&path) else { continue };
-        let Ok(doc) = serde_json::from_str::<Value>(&text) else { continue };
-        let data = &doc["data"];
-        let Some(name) = data["name"].as_str() else { continue };
-        let tokens = tokens_from(data);
-        let max_level = max_level_for(&tokens);
-        let Some(baseab_formula) = select_baseab_formula(&tokens) else { continue };
-        let [fort_f, ref_f, will_f] = select_save_formulas(&tokens);
-        let (Some(fort_formula), Some(ref_formula), Some(will_formula)) = (fort_f, ref_f, will_f) else {
-            continue;
-        };
-        out.push((
-            slug,
-            ClassRecord {
-                display_name: name.to_string(),
-                max_level,
-                baseab_formula,
-                fort_formula,
-                ref_formula,
-                will_formula,
-            },
-        ));
+        // A class whose converted record carries no complete chassis is
+        // honestly absent, never half-built -- the same contract the corpus
+        // read this replaces already kept.
+        if let Some(chassis) = class_chassis_sheet_rules::record("core_rulebook", slug) {
+            out.push((slug, chassis.clone()));
+        }
     }
     out
 }
 
-fn records() -> &'static [(&'static str, ClassRecord)] {
-    static TABLE: OnceLock<Vec<(&'static str, ClassRecord)>> = OnceLock::new();
+fn records() -> &'static [(&'static str, ClassChassis)] {
+    static TABLE: OnceLock<Vec<(&'static str, ClassChassis)>> = OnceLock::new();
     TABLE.get_or_init(load_records).as_slice()
 }
 
@@ -210,33 +113,25 @@ pub fn covered_classes() -> Vec<CrbUntabledClassMeta> {
         .collect()
 }
 
-fn find_by_class_id(class_id_str: &str) -> Option<&'static ClassRecord> {
+fn find_by_class_id(class_id_str: &str) -> Option<&'static ClassChassis> {
     let bare = class_id_str.strip_prefix("class:").unwrap_or(class_id_str);
     records().iter().find(|(slug, _)| *slug == bare).map(|(_, record)| record)
 }
 
 /// Resolves `class_id_str` at `level` into a real base-attack-bonus/save
-/// chassis row, evaluating this class's own corpus formula strings via
-/// `PcgenFormulaEvaluator` -- the same evaluator, the same
-/// `classlevel("APPLIEDAS=NONEPIC")` binding shape, `generic_class_chassis`
-/// already proved against 61 other classes. `None` when `class_id_str`
-/// names no class this module covers, or `level` exceeds the class's own
-/// corpus `MAXLEVEL` ceiling.
+/// chassis row, evaluating this class's own CONVERTED progressions through
+/// `sheet_rule::evaluate_expr_from_facts`. `None` when `class_id_str` names
+/// no class this module covers, or `level` exceeds the class's own converted
+/// `MAXLEVEL` ceiling.
 pub fn resolve(class_id_str: &str, level: u8) -> Option<CrbUntabledClassChassisRow> {
     let record = find_by_class_id(class_id_str)?;
-    if level < 1 || level > record.max_level {
-        return None;
-    }
-    let evaluator = PcgenFormulaEvaluator;
-    let mut vars = std::collections::BTreeMap::new();
-    vars.insert("CLASSLEVEL::APPLIEDAS=NONEPIC".to_string(), i64::from(level));
-    let bind = |f: &str| evaluator.evaluate(f, &vars).ok().map(|v| v as i16);
+    let row = record.row_at(level)?;
     Some(CrbUntabledClassChassisRow {
         display_name: record.display_name.clone(),
-        base_attack_bonus: bind(&record.baseab_formula)?,
-        fort_save: bind(&record.fort_formula)?,
-        ref_save: bind(&record.ref_formula)?,
-        will_save: bind(&record.will_formula)?,
+        base_attack_bonus: row.base_attack_bonus,
+        fort_save: row.fort_save,
+        ref_save: row.ref_save,
+        will_save: row.will_save,
     })
 }
 
@@ -250,7 +145,7 @@ mod tests {
         assert_eq!(
             covered.len(),
             7,
-            "every one of the seven corpus class records must parse and carry BASEAB+SAVE formulas"
+            "every one of the seven converted class records must carry a complete chassis"
         );
         for meta in &covered {
             let row = resolve(&meta.class_id, 1);
@@ -260,20 +155,20 @@ mod tests {
 
     #[test]
     fn warrior_full_bab_matches_the_corpus_classlevel_formula_at_level_ten() {
-        // `CLASS:Warrior ... BONUS:COMBAT|BASEAB|classlevel("APPLIEDAS=NONEPIC")` --
-        // full BAB, so level 10 must resolve to base attack bonus 10.
+        // Warrior is a full-BAB class, so level 10 must resolve to base
+        // attack bonus 10.
         let row = resolve("class:warrior", 10).expect("warrior must resolve");
         assert_eq!(row.base_attack_bonus, 10);
-        // `BONUS:SAVE|BASE.Fortitude|classlevel(...)/2+2` (good) -> 10/2+2 = 7.
+        // Good Fortitude (`level/2 + 2`) -> 10/2+2 = 7.
         assert_eq!(row.fort_save, 7);
-        // `BONUS:SAVE|BASE.Reflex,BASE.Will|classlevel(...)/3` (poor) -> 10/3 = 3.
+        // Poor Reflex and Will (`level/3`) -> 10/3 = 3.
         assert_eq!(row.ref_save, 3);
         assert_eq!(row.will_save, 3);
     }
 
     #[test]
     fn commoner_half_bab_and_all_poor_saves_match_the_corpus_formula() {
-        // `CLASS:Commoner ... BONUS:COMBAT|BASEAB|classlevel(...)/2` -> half BAB.
+        // Commoner is a half-BAB class (`level/2`).
         let row = resolve("class:commoner", 9).expect("commoner must resolve");
         assert_eq!(row.base_attack_bonus, 4); // 9/2 = 4 (integer division)
         assert_eq!(row.fort_save, 3); // 9/3 = 3, all three saves poor
@@ -283,7 +178,7 @@ mod tests {
 
     #[test]
     fn a_level_beyond_max_level_resolves_nothing() {
-        assert!(resolve("class:warrior", 21).is_none(), "MAXLEVEL:20 must cap resolution");
+        assert!(resolve("class:warrior", 21).is_none(), "the converted ceiling of 20 must cap resolution");
     }
 
     #[test]

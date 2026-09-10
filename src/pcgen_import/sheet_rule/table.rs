@@ -266,7 +266,7 @@ pub const ROWS: &[Row] = &[
     Row { token_type: "NATURALATTACKS", family: Family::Formula, maps_to: MapsTo::Dice },
     Row { token_type: "REACHMULT", family: Family::Formula, maps_to: MapsTo::Number },
     Row { token_type: "MONSTERCLASS", family: Family::Prereq, maps_to: MapsTo::Applies },
-    Row { token_type: "MAXLEVEL", family: Family::Prereq, maps_to: MapsTo::Metadata },
+    Row { token_type: "MAXLEVEL", family: Family::Prereq, maps_to: MapsTo::Applies },
     Row { token_type: "SCHOOL", family: Family::Prose, maps_to: MapsTo::Text },
     Row { token_type: "SUBSCHOOL", family: Family::Prose, maps_to: MapsTo::Text },
     Row { token_type: "DESCRIPTOR", family: Family::Prose, maps_to: MapsTo::Text },

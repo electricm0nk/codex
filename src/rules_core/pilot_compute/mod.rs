@@ -192,6 +192,12 @@ pub(crate) mod companion_base_stat_table;
 /// SD-32 T12 `epic-10-reference-library-residual-reach` row 20 cycle 5 — see its own module doc
 /// comment. `pub(crate)`: `resolve` is called from `compute_class_chassis` below (same crate);
 /// no `apps/desktop/src-tauri` caller exists yet.
+/// SD-35 `AT-35-E6-001`: the ONE live reader of the converted class chassis
+/// (`data/sheet_rules/<book>/class/<slug>.json`). `pub` because the desktop
+/// crate's `class_catalog_generic` reads the same records for the
+/// reference-library browser rather than mirroring the derivation a second
+/// time.
+pub mod class_chassis_sheet_rules;
 mod generic_class_chassis;
 /// SD-34 `AT-34-E3-001` (`decisions.md §14`, mechanism `class_absent_from_
 /// ClassId_ALL_and_book_class_id_enums`) -- see its own module doc comment.

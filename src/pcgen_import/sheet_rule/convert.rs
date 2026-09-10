@@ -646,7 +646,7 @@ fn convert_token(ctx: &mut RecordCtx, acc: &mut Acc, out: &mut Converted, key: &
     let v = value.trim();
     match key {
         // ---- identity / metadata rows ------------------------------------------------------
-        "KEY" | "SORTKEY" | "SOURCEPAGE" | "SOURCELONG" | "SOURCESHORT" | "SOURCEWEB" | "SOURCEDATE" | "SOURCELINK" | "KIT" | "STARTFEATS" | "LEVELSPERFEAT" | "MAXLEVEL" | "RACETYPE"
+        "KEY" | "SORTKEY" | "SOURCEPAGE" | "SOURCELONG" | "SOURCESHORT" | "SOURCEWEB" | "SOURCEDATE" | "SOURCELINK" | "KIT" | "STARTFEATS" | "LEVELSPERFEAT" | "RACETYPE"
         | "RACESUBTYPE" | "SUBRACE" | "DEITYWEAP" | "ALIGN" | "USEUNTRAINED" | "ROLE" | "NAMEOPT" | "ITYPE" | "REPLACES" | "FORMATCAT" | "ASSIGNTOALL" | "REGION" | "REMOVABLE" | "VARIANTS"
         | "INFO" | "EXCLUSIVE" | "ALLOWBASECLASS" | "EXCLASS" | "WEAPONBONUS" | "ACHECK" | "CHANGEPROF" | "ADDSPELLLEVEL" | "WT" | "COST" | "PLUS" | "ADDLEVEL" | "KEYSTAT" | "ITEM" | "EQMOD"
         | "ALTEQMOD" | "PROFICIENCY" | "WIELD" | "CONTAINS" | "CHARGES" | "BASEITEM" | "BASEQTY" | "MODS" | "FUMBLERANGE" | "SIZE" | "LEGS" | "HANDS" | "SPELLLEVEL" | "SPELLKNOWN" | "CRMOD"
@@ -658,6 +658,27 @@ fn convert_token(ctx: &mut RecordCtx, acc: &mut Acc, out: &mut Converted, key: &
         | "ALTTYPE" | "ARMORTYPE" | "BONUSSPELLSTAT" | "GROUP" | "ITEMCREATE" | "KNOWNSPELLS"
         | "MEMORIZE" | "MODTOSKILLS" | "NUMPAGES" | "PAGEUSAGE" | "SLOTS" | "SPELLBOOK"
         | "SPELLLIST" | "SPELLSTAT" | "STARTSKILLPTS" => {}
+        // SD-35 AT-35-E6-001 (`epic-breakdown.md` `### AT-35-E6-001`, cycle 1 Discovery 3).
+        // `MAXLEVEL:<n>` is the class's own level ceiling: above it the class's chassis rows
+        // (base attack bonus, the three base saves) do not apply at all. The table
+        // (`table.rs`) files it under `Family::Prereq`, and a ceiling IS a gate, so it
+        // converts to one instead of being read and dropped as metadata. Nothing downstream
+        // has to re-read a PCGen token to learn the ceiling: the live class chassis
+        // (`rules_core::pilot_compute::class_chassis_sheet_rules`) reads it straight off the
+        // converted `applies`.
+        //
+        // `MAXLEVEL:NOLIMIT` (38 corpus rows) states there is no ceiling -- no gate, not a
+        // gate that is always false. A non-integer value this converter cannot read is left
+        // ungated rather than guessed at, exactly as it was before this row existed.
+        "MAXLEVEL" => {
+            if let (Some(class), Ok(ceiling)) = (ctx.owning_class.clone(), v.parse::<i32>()) {
+                acc.gates.push(Applies::Compare {
+                    lhs: Expr::ClassLevel(class),
+                    op: Cmp::Lte,
+                    rhs: Expr::Const(ceiling),
+                });
+            }
+        }
         // SD-35 AT-35-E4-001, row PROHIBITSPELL: the class's barred schools/descriptors are
         // the rule's own words on the sheet (`decisions.md` §1 form 3), never a number.
         "PROHIBITSPELL" => {

@@ -1,76 +1,62 @@
 //! SD-32 T12 Epic 10 row 20 cycle 4 — generic BAB/save progression chassis
-//! for the 61 conventional PC classes cycle 3 found spread across 13 of the
-//! 17 `classes`-family books (`row20-cycle3-receipt.md`'s per-family read).
+//! for the conventional PC classes spread across the 14 `classes`-family
+//! books, for the reference-library browser.
 //!
-//! # Why generic, not 61 hand-authored tables
+//! # Why generic, not 62 hand-authored tables
 //!
 //! `decisions.md §17` ("stop treating every object as a snowflake... a
 //! generic ingest already exists") rules directly against the shape the
 //! existing `rules_tables::crb::class_tables` layer used (137,002
-//! hand-authored lines across the CRB/PU classes). Every one of the 61
-//! conventional classes carries its own BAB/save progression as a real
-//! PCGen `BONUS:COMBAT|BASEAB|<formula>|...` / `BONUS:SAVE|<targets>|
-//! <formula>|...` token pair in `raw_tokens` — confirmed uniform across all
-//! 61 by direct read (see `classify_class_record` below, and the module
-//! test `every_conventional_class_has_exactly_one_baseab_and_three_save_
-//! targets`). This module computes the table from that data via the
-//! already-`pub`, already-oracle-verified `PcgenFormulaEvaluator`
-//! (`pilot_compute::formula_interpreter`) instead of hand-typing it —
-//! one generic function serving all 61, not 61 per-class match arms.
+//! hand-authored lines across the CRB/PU classes). Every conventional class
+//! carries its own base-attack-bonus and three base-save progressions, so one
+//! generic function serves them all rather than 62 per-class match arms.
 //!
-//! # Classification (re-derives cycle 3's 61/38/8 split, not a stored list)
+//! # SD-35 `AT-35-E6-001`: read the CONVERTED chassis, not a PCGen token
 //!
-//! `classify_class_record` is the SAME heuristic cycle 3 used to read all
-//! 107 `classes`-family records by hand (`row20-cycle3-receipt.md` item
-//! (a)): `TYPE:` contains `Monster` -> a monster/companion HD-progression
-//! pseudo-class, never player-selectable; missing a `BASEAB` or `SAVE`
-//! progression token entirely -> a support/reference shell; otherwise a
-//! real, standalone, player-facing class. Re-run here as code (not
-//! transcribed as a fixed name list) so the 61/38/8 split is re-derived
-//! from the corpus every time this module runs, the same way
-//! `class_feature_descriptions.rs` re-derives its own population from
-//! `data/corpus/` rather than trusting a cached count.
+//! Until that cycle this module walked `data/corpus/<book>/class/*.json`,
+//! pulled the `BONUS:COMBAT|BASEAB` / `BONUS:SAVE` formula STRINGS out of
+//! `raw_tokens`, and ran them through the PCGen formula interpreter at
+//! browse time — a second, parallel copy of the same derivation
+//! `pilot_compute::generic_class_chassis` was doing for character creation.
+//! `decisions.md` §11 puts an end to reading a PCGen token on the live side:
+//! conversion happens at ingest, and
+//! `codex::rules_core::pilot_compute::class_chassis_sheet_rules` is the ONE
+//! live reader of the converted `data/sheet_rules/<book>/class/<slug>.json`
+//! chassis. This module now calls it, which also collapses the two parallel
+//! copies into one derivation — the desynchronization risk both modules'
+//! doc comments used to warn about is gone rather than warned about.
 //!
-//! # BASEAB disambiguation: exactly one class (`Vigilante`) carries two
+//! Everything the old per-record reading logic decided is decided by the
+//! converted record itself now:
 //!
-//! Every one of the 61 carries exactly one `BONUS:COMBAT|BASEAB|...` token
-//! **except `ultimate_intrigue/vigilante.json`**, which carries two —
-//! PCGen's own Vigilante social/combat-identity build-time toggle
-//! (`VigilanteFullBAB`, a class feature chosen at character creation, not a
-//! corpus-level ambiguity). Both of its `BASEAB` tokens are gated by a
-//! trailing `PREVAREQ:...,VigilanteFullBAB,<0|1>` pair; this module takes
-//! the `,0` (toggle-off, moderate-progression) row as the default baseline
-//! the same way `class_tables()`'s own CRB rows encode one canonical
-//! progression per class — the `,1` full-BAB alternative is a build-time
-//! character choice for a later cycle's picker UI, not a second row here.
-//! Verified this is the ONLY record needing disambiguation by the module's
-//! own `exactly_one_class_needs_baseab_disambiguation` test.
+//!   * **BASEAB disambiguation.** Only `ultimate_intrigue/vigilante.json`
+//!     states two base-attack progressions (PCGen's Vigilante social/combat
+//!     identity toggle). Its converted record keeps both, distinguished by
+//!     their own gates, and the principal row is the moderate default —
+//!     the same row the old `,0` (toggle-off) heuristic picked. Still pinned
+//!     by `exactly_one_class_needs_baseab_disambiguation` below.
+//!   * **The level ceiling.** `MAXLEVEL` converts to an `applies` gate
+//!     (`ClassLevel(slug) <= n`); a record stating none defaults to 10 for a
+//!     prestige class and 20 otherwise, exactly as before. Ulfen Guard, the
+//!     record that states none, is still pinned below.
+//!   * **Demoniac resolves.** Its bare `classlevel()` was the one formula the
+//!     run-time interpreter's grammar refused; the converter reads it, so
+//!     there is no `unresolved` population left to name.
 //!
-//! # `MAXLEVEL`: absent on prestige classes, defaults to 10
+//! # Population: 62, and why it is not the old 61
 //!
-//! One record (`inner_sea_combat/ulfen_guard.json`, `TYPE: PC.Prestige`)
-//! carries no `MAXLEVEL` token at all. Pathfinder 1e prestige classes cap
-//! at 10 levels by rule (core rulebook prestige-class chapter preamble);
-//! every other `TYPE: *Prestige*` record sampled either carries an explicit
-//! `MAXLEVEL:10` or none, so this module defaults an absent `MAXLEVEL` to
-//! `10` for a `Prestige`-typed record and `20` otherwise (matching every
-//! non-prestige base class's own explicit `MAXLEVEL:20`).
+//! Two independent movements, both re-derivable:
 //!
-//! # One record does not resolve: `Demoniac`'s bare `classlevel()`
-//!
-//! `book_of_the_damned_volume_2/demoniac.json` is the one record (of the
-//! 61) whose BASEAB/save formulas call `classlevel()` with **no argument**
-//! (`classlevel()*3/4`, `(classlevel()+1)/2`, `(classlevel()+1)/3`).
-//! `PcgenFormulaEvaluator`'s `classlevel` grammar arm requires a string
-//! literal argument (`formula_interpreter.rs`'s own parse arm: "classlevel
-//! (...) expects a string literal class name") — a real, already-adjudicated
-//! shape gap in that shared, `pilot_compute`-owned evaluator, not something
-//! this module may special-case around without editing a file this cycle
-//! stayed out of (row 18's live territory). `load_generic_class_progressions`
-//! reports Demoniac in its `unresolved` list rather than silently dropping
-//! it or guessing a value — **60 of the 61 close this cycle; Demoniac is
-//! named, not hidden, pending either a `formula_interpreter.rs` widening
-//! (a future row 18/generic-evaluator cycle) or a per-record override.**
+//!   * **+2** — `adventurers_guide`'s Pathfinder Delver and Pathfinder
+//!     Savant. `data/corpus/adventurers_guide/class/` holds 9 records and
+//!     neither of these; the converter reads the pinned oracle corpus
+//!     directly, so `data/sheet_rules/` carries both with a complete chassis.
+//!   * **−1** — `inner_sea_gods`'s Evangelist. Its converted record carries a
+//!     degradation on another of its own tokens, and the converter drops every
+//!     magnitude on a degraded record to the rule's own WORDS rather than
+//!     folding a partly-read number into a sheet total. Under `decisions.md`
+//!     §1 that record is done as prose; it is not a chassis, and this module
+//!     refuses it rather than inventing one.
 //!
 //! # Reachability, honestly scoped
 //!
@@ -86,27 +72,17 @@
 //! than silently narrowed: the catalog browser reads every one of the 61
 //! today; character creation does not yet.
 
-use std::path::{Path, PathBuf};
+use std::path::Path;
 
-use serde_json::Value;
-
-use codex::pcgen_import::formula_interpreter::{
-    extract_formula_field, PcgenFormulaEvaluator,
-};
-use codex::pcgen_import::formula_reproduction_harness::FormulaEvaluator;
+use codex::rules_core::pilot_compute::class_chassis_sheet_rules;
 
 use crate::class_catalog::ClassCatalogEntryDto;
 
-/// The 13 (of the 17 `classes`-family) book directories that hold at least
-/// one conventional PC class, per cycle 3's per-family read. Re-derivable:
-/// `python3 -c "import json,os; ..."` walking `data/corpus/<book>/class/`
-/// and applying `classify_class_record`'s own filter — see the module test
-/// `the_13_book_list_is_exactly_the_books_classify_finds_a_conventional_
-/// class_in` for the reproduction. The 4 gap-family books absent from this
-/// list (`beastiary1`, `bonus_bestiary`, `horror_adventures`, plus
-/// `inner_sea_magic`'s and `ultimate_intrigue`'s non-conventional members
-/// already excluded record-by-record) hold ONLY monster/companion
-/// pseudo-classes or support shells, per cycle 3's 61/38/8 accounting.
+/// The 14 `classes`-family book directories that hold at least one
+/// conventional PC class. Shared, deliberately identical to
+/// `codex::rules_core::pilot_compute::generic_class_chassis`'s own list --
+/// the two modules serve the same population, one for the browser and one for
+/// character creation.
 const CLASS_FAMILY_BOOKS: [&str; 14] = [
     "adventurers_guide",
     "book_of_the_damned_volume_1",
@@ -124,119 +100,6 @@ const CLASS_FAMILY_BOOKS: [&str; 14] = [
     "ultimate_psionics",
 ];
 
-#[derive(Debug, Clone, Copy, PartialEq, Eq)]
-pub enum ClassRecordCategory {
-    ConventionalPc,
-    MonsterCompanionPseudoClass,
-    SupportShell,
-}
-
-/// Re-derives cycle 3's per-record classification from `raw_tokens` alone.
-/// See the module doc comment's "Classification" section.
-pub fn classify_class_record(tokens: &[(String, String)]) -> ClassRecordCategory {
-    let typ = tokens
-        .iter()
-        .find(|(k, _)| k == "TYPE")
-        .map(|(_, v)| v.as_str())
-        .unwrap_or("");
-    if typ.contains("Monster") {
-        return ClassRecordCategory::MonsterCompanionPseudoClass;
-    }
-    let has_bab = tokens
-        .iter()
-        .any(|(k, v)| k == "BONUS" && v.contains("BASEAB"));
-    let has_save = tokens
-        .iter()
-        .any(|(k, v)| k == "BONUS" && v.starts_with("SAVE|"));
-    if has_bab && has_save {
-        ClassRecordCategory::ConventionalPc
-    } else {
-        ClassRecordCategory::SupportShell
-    }
-}
-
-fn tokens_from(data: &Value) -> Vec<(String, String)> {
-    data["raw_tokens"]
-        .as_array()
-        .map(|arr| {
-            arr.iter()
-                .filter_map(|t| {
-                    let key = t["key"].as_str()?.to_string();
-                    let value = t["value"].as_str()?.to_string();
-                    Some((key, value))
-                })
-                .collect()
-        })
-        .unwrap_or_default()
-}
-
-/// Picks the one `BONUS:COMBAT|BASEAB|...` token to use as this class's
-/// default progression. See the module doc's "BASEAB disambiguation"
-/// section: when more than one exists (only `Vigilante` today), the one
-/// whose trailing `PREVAREQ` pair reads `,0` (toggle off) wins.
-fn select_baseab_formula(tokens: &[(String, String)]) -> Option<&str> {
-    let candidates: Vec<&str> = tokens
-        .iter()
-        .filter(|(k, v)| k == "BONUS" && v.contains("BASEAB"))
-        .map(|(_, v)| v.as_str())
-        .collect();
-    if candidates.len() == 1 {
-        return extract_formula_field("BONUS", candidates[0]);
-    }
-    candidates
-        .into_iter()
-        .find(|v| v.trim_end().ends_with(",0"))
-        .and_then(|v| extract_formula_field("BONUS", v))
-}
-
-/// The three save formulas, keyed by `Fortitude`/`Reflex`/`Will`. A single
-/// `BONUS:SAVE|<target>[,<target>...]|<formula>|...` token can name more
-/// than one target for the same formula (comma-packed) — fanned out here.
-fn select_save_formulas(tokens: &[(String, String)]) -> [Option<String>; 3] {
-    let mut fort = None;
-    let mut refl = None;
-    let mut will = None;
-    for (k, v) in tokens {
-        if k != "BONUS" || !v.starts_with("SAVE|") {
-            continue;
-        }
-        let parts: Vec<&str> = v.split('|').collect();
-        if parts.len() < 3 {
-            continue;
-        }
-        let Some(formula) = extract_formula_field("BONUS", v) else { continue };
-        for target in parts[1].split(',') {
-            match target {
-                "BASE.Fortitude" => fort = Some(formula.to_string()),
-                "BASE.Reflex" => refl = Some(formula.to_string()),
-                "BASE.Will" => will = Some(formula.to_string()),
-                _ => {}
-            }
-        }
-    }
-    [fort, refl, will]
-}
-
-fn max_level_for(tokens: &[(String, String)], type_value: &str) -> u8 {
-    tokens
-        .iter()
-        .find(|(k, _)| k == "MAXLEVEL")
-        .and_then(|(_, v)| v.parse::<u8>().ok())
-        .unwrap_or(if type_value.contains("Prestige") { 10 } else { 20 })
-}
-
-fn walk_json_files(dir: &Path, out: &mut Vec<PathBuf>) {
-    let Ok(entries) = std::fs::read_dir(dir) else { return };
-    let mut entries: Vec<_> = entries.flatten().collect();
-    entries.sort_by_key(|e| e.file_name());
-    for entry in entries {
-        let path = entry.path();
-        if path.extension().is_some_and(|e| e == "json") {
-            out.push(path);
-        }
-    }
-}
-
 /// One conventional class's evaluated progression, still in the raw record
 /// form the module test suite checks before it is mapped into
 /// `ClassCatalogEntryDto` rows.
@@ -247,96 +110,44 @@ pub struct GenericClassRecord {
     #[allow(dead_code)]
     pub book: String,
     pub name: String,
+    /// The converted record's own slug -- the `"class:<slug>"` id
+    /// `compute_class_chassis` dispatches on. Not always `slug(name)`: a record
+    /// whose class name is redacted keeps a readable file slug while its
+    /// display name is a codex-neutral id.
+    pub slug: String,
     pub max_level: u8,
     pub rows: Vec<(u8, i16, i16, i16, i16)>, // level, bab, fort, ref, will
 }
 
-/// Reads every `data/corpus/<book>/class/*.json` record across
-/// `CLASS_FAMILY_BOOKS`, keeps only `ConventionalPc` records (per
-/// `classify_class_record`), and evaluates each one's BAB/save formulas at
-/// every level `1..=max_level` via `PcgenFormulaEvaluator`. A record whose
-/// BASEAB or a save formula cannot be extracted/evaluated is skipped, not
-/// guessed at (no-stub doctrine) — `unresolved_records` in the return
-/// carries the `(book, name)` of any such skip so a caller can see the gap
-/// rather than have it disappear silently.
+/// Every conventional class's full progression, read from the CONVERTED
+/// chassis (`data/sheet_rules/<book>/class/<slug>.json`) through
+/// `class_chassis_sheet_rules`. The second return value is the
+/// `(book, name)` of any record that carries a chassis but whose progression
+/// does not fully evaluate -- empty today, kept so a future gap surfaces
+/// rather than disappearing.
+///
+/// `_repo_root` is unused: `class_chassis_sheet_rules` resolves the package
+/// from the `codex` crate's own manifest directory, the single place the
+/// converted rules live. The parameter stays so the two callers
+/// (`class_catalog.rs`, `character_hub.rs`) keep their signatures.
 pub fn load_generic_class_progressions(
-    repo_root: &Path,
+    _repo_root: &Path,
 ) -> (Vec<GenericClassRecord>, Vec<(String, String)>) {
     let mut out = Vec::new();
     let mut unresolved = Vec::new();
-    for book in CLASS_FAMILY_BOOKS {
-        let dir = repo_root.join("data/corpus").join(book).join("class");
-        if !dir.is_dir() {
+    for ((book, slug), chassis) in class_chassis_sheet_rules::records(&CLASS_FAMILY_BOOKS) {
+        if !chassis.is_conventional() {
             continue;
         }
-        let mut files = Vec::new();
-        walk_json_files(&dir, &mut files);
-        for file in files {
-            let Ok(text) = std::fs::read_to_string(&file) else { continue };
-            let Ok(doc) = serde_json::from_str::<Value>(&text) else { continue };
-            let data = &doc["data"];
-            let Some(name) = data["name"].as_str() else { continue };
-            let tokens = tokens_from(data);
-            if classify_class_record(&tokens) != ClassRecordCategory::ConventionalPc {
-                continue;
-            }
-            let type_value = tokens
-                .iter()
-                .find(|(k, _)| k == "TYPE")
-                .map(|(_, v)| v.as_str())
-                .unwrap_or("");
-            let max_level = max_level_for(&tokens, type_value);
-
-            let Some(bab_formula) = select_baseab_formula(&tokens) else {
-                unresolved.push((book.to_string(), name.to_string()));
-                continue;
-            };
-            let [fort_f, ref_f, will_f] = select_save_formulas(&tokens);
-            let (Some(fort_f), Some(ref_f), Some(will_f)) = (fort_f, ref_f, will_f) else {
-                unresolved.push((book.to_string(), name.to_string()));
-                continue;
-            };
-
-            let evaluator = PcgenFormulaEvaluator;
-            let mut rows = Vec::new();
-            let mut ok = true;
-            for level in 1..=max_level {
-                let mut vars = std::collections::BTreeMap::new();
-                // Measured across all 61 candidate records
-                // (`python3` sweep over every BASEAB/SAVE formula's
-                // `classlevel(...)` argument, cited in the module doc):
-                // every `classlevel(...)` call in this population passes
-                // the SAME literal string, `"APPLIEDAS=NONEPIC"` — not a
-                // class name at all, so this binding is shared across
-                // every record, never per-name. The other observed shape
-                // is a plain `<Name>LVL` variable, already `VAR|<Name>LVL|
-                // CL`-bound in the corpus to the caller's own class level,
-                // which this module binds directly.
-                vars.insert("CLASSLEVEL::APPLIEDAS=NONEPIC".to_string(), i64::from(level));
-                vars.insert(format!("{name}LVL"), i64::from(level));
-                let bind = |f: &str| evaluator.evaluate(f, &vars).ok().map(|v| v as i16);
-                let bab = bind(bab_formula);
-                let fort = bind(&fort_f);
-                let refl = bind(&ref_f);
-                let will = bind(&will_f);
-                match (bab, fort, refl, will) {
-                    (Some(b), Some(f), Some(r), Some(w)) => rows.push((level, b, f, r, w)),
-                    _ => {
-                        ok = false;
-                        break;
-                    }
-                }
-            }
-            if ok && rows.len() == usize::from(max_level) {
-                out.push(GenericClassRecord {
-                    book: book.to_string(),
-                    name: name.to_string(),
-                    max_level,
-                    rows,
-                });
-            } else {
-                unresolved.push((book.to_string(), name.to_string()));
-            }
+        match chassis.full_progression() {
+            Some(rows) => out.push(GenericClassRecord {
+                book,
+                name: chassis.display_name.clone(),
+                slug,
+                max_level: chassis.max_level,
+                rows,
+            }),
+            None => unresolved.push((book, chassis.display_name.clone())),
         }
     }
     (out, unresolved)
@@ -363,6 +174,8 @@ pub fn generic_class_catalog_entries(repo_root: &Path) -> Vec<ClassCatalogEntryD
 #[cfg(test)]
 mod tests {
     use super::*;
+    use std::path::PathBuf;
+
     use crate::authoring_workbench::codex_repo_root;
 
     fn repo() -> PathBuf {
@@ -370,71 +183,45 @@ mod tests {
     }
 
     #[test]
-    fn classify_kineticist_is_conventional_pc() {
-        let doc: Value = serde_json::from_str(
-            &std::fs::read_to_string(
-                repo().join("data/corpus/occult_adventures/class/kineticist.json"),
-            )
-            .unwrap(),
-        )
-        .unwrap();
-        let tokens = tokens_from(&doc["data"]);
-        assert_eq!(classify_class_record(&tokens), ClassRecordCategory::ConventionalPc);
-    }
-
-    #[test]
-    fn classify_a_monster_companion_pseudo_class_is_excluded() {
-        // ultimate_psionics's "Astral Warrior" (row20-cycle3-receipt.md's
-        // own named example of the 38-record population).
-        let doc: Value = serde_json::from_str(
-            &std::fs::read_to_string(
-                repo().join("data/corpus/ultimate_psionics/class/astral_warrior.json"),
-            )
-            .unwrap(),
-        )
-        .unwrap();
-        let tokens = tokens_from(&doc["data"]);
-        assert_eq!(
-            classify_class_record(&tokens),
-            ClassRecordCategory::MonsterCompanionPseudoClass
+    fn a_monster_companion_pseudo_class_is_excluded() {
+        // ultimate_psionics's "Astral Warrior" -- `TYPE:...Monster...`, which
+        // the converted record carries as a `Monster` tag.
+        let astral = class_chassis_sheet_rules::record("ultimate_psionics", "astral_warrior");
+        assert!(
+            astral.is_none_or(|c| !c.is_conventional()),
+            "a monster pseudo-class must never enter the browser's population"
         );
+        let (records, _) = load_generic_class_progressions(&repo());
+        assert!(!records.iter().any(|r| r.name == "Astral Warrior"));
     }
 
     #[test]
-    fn classify_a_support_shell_is_excluded() {
-        // ultimate_intrigue's "VCabalist" (the receipt's own named example
-        // of the 8-record shell population: TYPE: Support, no BASEAB/SAVE).
-        let doc: Value = serde_json::from_str(
-            &std::fs::read_to_string(
-                repo().join("data/corpus/ultimate_intrigue/class/vcabalist.json"),
-            )
-            .unwrap(),
-        )
-        .unwrap();
-        let tokens = tokens_from(&doc["data"]);
-        assert_eq!(classify_class_record(&tokens), ClassRecordCategory::SupportShell);
+    fn a_support_shell_is_excluded() {
+        // ultimate_intrigue's "VCabalist": `TYPE: Support`, no BASEAB/SAVE, so
+        // its converted record carries no chassis rows at all.
+        assert!(class_chassis_sheet_rules::record("ultimate_intrigue", "vcabalist").is_none());
     }
 
     #[test]
-    fn the_13_families_reproduce_cycle_3s_61_record_conventional_population_minus_one_named_gap() {
+    fn the_converted_package_carries_sixty_two_conventional_classes() {
         let (records, unresolved) = load_generic_class_progressions(&repo());
-        // See the module doc's "One record does not resolve" section:
-        // Demoniac's bare `classlevel()` (no string-literal argument) is
-        // outside `PcgenFormulaEvaluator`'s current grammar. Named
-        // explicitly here, not swallowed into a looser assertion.
-        assert_eq!(
-            unresolved,
-            vec![(
-                "book_of_the_damned_volume_2".to_string(),
-                "Demoniac".to_string()
-            )]
+        assert!(
+            unresolved.is_empty(),
+            "every conventional class's converted progression must evaluate: {unresolved:?}"
         );
-        assert_eq!(
-            records.len(),
-            60,
-            "expected 60 of row20-cycle3's 61 conventional PC classes to \
-             resolve this cycle (Demoniac named above as the one gap)"
-        );
+        // 62, not the old 61 -- see the module doc's "Population" section for
+        // the two movements and how to re-derive each.
+        assert_eq!(records.len(), 62);
+    }
+
+    #[test]
+    fn demoniac_resolves_from_the_converted_record() {
+        // The one record the run-time interpreter's grammar refused (a bare
+        // `classlevel()` with no argument). At level 1: BAB = 1*3/4 = 0;
+        // Fortitude = (1+1)/2 = 1; Reflex = Will = (1+1)/3 = 0.
+        let (records, _) = load_generic_class_progressions(&repo());
+        let demoniac = records.iter().find(|r| r.name == "Demoniac").expect("Demoniac must resolve");
+        assert_eq!(demoniac.rows[0], (1, 0, 1, 0, 0));
     }
 
     #[test]
@@ -445,8 +232,8 @@ mod tests {
             .find(|r| r.name == "Vigilante")
             .expect("Vigilante must resolve");
         // Moderate (3/4) BAB progression at level 20 is 15, not 20 (which
-        // the alternate ,1/full-BAB toggle would have produced) -- proves
-        // the ,0 row was actually selected, not merely that a row exists.
+        // the alternate full-BAB toggle row would have produced) -- proves
+        // the default row was actually selected, not merely that a row exists.
         let (level, bab, ..) = vigilante.rows[19];
         assert_eq!(level, 20);
         assert_eq!(bab, 15);
@@ -465,9 +252,9 @@ mod tests {
 
     #[test]
     fn kineticist_level_20_bab_and_saves_match_hand_derivation() {
-        // BASEAB: classlevel*3/4 -> floor(20*3/4) = 15 (moderate progression).
-        // Fort/Reflex: classlevel/2+2 -> 10+2 = 12 (good progression).
-        // Will: classlevel/3 -> 6 (poor progression), truncated toward zero.
+        // BAB: level*3/4 -> floor(20*3/4) = 15 (moderate progression).
+        // Fort/Reflex: level/2+2 -> 10+2 = 12 (good progression).
+        // Will: level/3 -> 6 (poor progression), truncated toward zero.
         let (records, _) = load_generic_class_progressions(&repo());
         let kin = records
             .iter()
@@ -482,13 +269,13 @@ mod tests {
     }
 
     #[test]
-    fn generic_catalog_entries_cover_all_61_classes_with_no_overlap_into_crb_pu_names() {
+    fn generic_catalog_entries_cover_every_class_with_no_overlap_into_crb_pu_names() {
         let entries = generic_class_catalog_entries(&repo());
         let distinct: std::collections::BTreeSet<_> =
             entries.iter().map(|e| e.class_id.as_str()).collect();
-        assert_eq!(distinct.len(), 60);
-        // None of the 61 shares a display name with an existing CRB/PU row
-        // (would silently merge into an unrelated progression otherwise).
+        assert_eq!(distinct.len(), 62);
+        // None shares a display name with an existing CRB/PU row (would
+        // silently merge into an unrelated progression otherwise).
         let crb_pu_names = [
             "Barbarian", "Bard", "Cleric", "Druid", "Fighter", "Monk", "Paladin", "Ranger",
             "Rogue", "Sorcerer", "Wizard", "Unchained Barbarian", "Unchained Monk",
