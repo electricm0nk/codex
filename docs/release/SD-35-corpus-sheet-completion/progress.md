@@ -41,7 +41,7 @@ re-measured at the cut by the launch-readiness audit.
 
 ## Cycle log
 
-### 2026-09-10 — Epic 6 / `formula-evaluator-leaves-live` — AT-35-E6-001 **cycle 5** — **complete** (a re-dispatch of an already-closed criterion at a stale `cycle 1`: every Evidence clause re-derived at HEAD, no code shipped)
+### 2026-09-10 — Epic 6 / `formula-evaluator-leaves-live` — AT-35-E6-001 **cycle 5** (`0afbd036b8`) — **complete** (a re-dispatch of an already-closed criterion at a stale `cycle 1`: every Evidence clause re-derived at HEAD, no code shipped)
 
 - **Scope gate:** `SCOPE_GATE: EXEMPT (Epic 6 cycle — closes zero units by design, decisions.md §2)`. Run anyway: `inventory=docs/work-inventory.json / scope=(whole remainder) / scoped=0 remaining_non_done=0 floor=500 verdict=PASS_WHOLE_REMAINDER`.
 - **Receipt rows:** `since=1e982aa94b4ecd2034d5c611b7433f1c32589f68 target_dir=/tmp/cargo-sd35-AT-35-E6-001 residue_gate=present` / `regressed=0 added=0 dropped=0` / `closed=0 relabeled=0 rust_lines_changed=0 ratio=n/a builds_recorded=1 pcgen_live_files=253`.

@@ -8,9 +8,10 @@ every clause of the criterion's own **Evidence** sentence **re-derived at HEAD**
 Logged as `incident 1789065539103-at-35-e6-001-cc46e7`, recurrence key
 `stale-census-in-dispatch-prompt`.
 
-- **Commit SHA:** the commit carrying this receipt, the two folded working-tree files, this
-  cycle's retro events, and the `progress.md` / `kanban.md` rows. A second commit pins that SHA
-  into this line (a receipt cannot name the commit that carries it). Cycle start `1e982aa94b`.
+- **Commit SHA:** `0afbd036b8` — the commit carrying this receipt, the two folded working-tree
+  files, this cycle's retro events, and the `progress.md` / `kanban.md` rows. A second commit
+  pins that SHA into this line (a receipt cannot name the commit that carries it). Cycle start
+  `1e982aa94b`.
 - **Scope gate:**
   `SCOPE_GATE: EXEMPT (Epic 6 cycle — closes zero units by design, decisions.md §2)`.
   Run anyway, for the record — `python3 scripts/cycle_scope_gate.py --min 500`:
