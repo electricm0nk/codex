@@ -1,7 +1,7 @@
 # Cycle AT-35-E5-004_cycle2 — Epic 5 Residues / AT-35-E5-004
 
-- **Commit SHA:** `<pinned in the follow-up commit below>` (this receipt, `progress.md`,
-  `kanban.md` and the retro correction, in one commit), plus a SHA-pinning follow-up commit.
+- **Commit SHA:** `14f37178a0` (this receipt, `progress.md`, `kanban.md` and the retro
+  correction, in one commit), plus this SHA-pinning follow-up commit.
   Cycle start `53638610fc` — "pin AT-35-E5-003 cycle 2's commit SHA in its own receipt, kanban
   row and progress entry". Kanban row 22 was already `complete` at dispatch; this is a
   **re-dispatch of an already-closed card**, and it redoes nothing. Nothing under `src/`,
@@ -44,7 +44,10 @@
 
   `OK_NO_BUNDLE_TAGS` **on this cycle's own change**: this cycle introduces no identifier at all.
   The further matches this receipt itself contributes are the audit row above, quoting those
-  pre-existing test filenames to characterise them.
+  pre-existing test filenames to characterise them. **Re-run on the final diff** (§6 step 4,
+  after `14f37178a0` landed): **15**, the same 12 plus the **3** filename quotations in the
+  bullet above — every one still a test filename in prose, none an identifier this cycle
+  introduced.
 - **Wired-integration audit result:** **24 matches at HEAD, all pre-existing, 0 from this cycle**,
   attributed exhaustively, path by path:
   - `data/sheet_rules/` **2** — English rule prose transcribed verbatim from the corpus, on added
@@ -65,7 +68,8 @@
   `OK_NO_TOKENS` **on this cycle's own change**: no stub, no inline mock, no "Would …" string,
   because this cycle ships no code. The further matches this receipt itself contributes are the
   audit row above and the **Figures** table's re-derive commands, both of which must quote the
-  token alternation to be readable and runnable.
+  token alternation to be readable and runnable. **Re-run on the final diff** (§6 step 4, after
+  `14f37178a0` landed): **27**, the same 24 plus those **3** self-referential quotations.
 - **Acceptance criterion** (verbatim, `epic-breakdown.md ### AT-35-E5-004`):
 
   > ### AT-35-E5-004 — bucket X reaches zero: the per-character choice filter
@@ -148,19 +152,19 @@
   | live PCGen files | **253** (baseline 260) | `python3 scripts/pcgen_residue_gate.py --check` |
   | `pre_tokens` on the live side | **0 files, 0 hits** | same command, `pattern pre_tokens` row — over `src/rules_core`, `src/saved_character`, `src/campaign`, `src/homebrew_authoring`, `apps/desktop` |
   | PCGen tokens under `data/sheet_rules/` | **0 files** | the `grep -rlE … data/sheet_rules/ … wc -l` invocation quoted in full in the **Build scope verified** row below — of 69,344 rules in 49,296 files |
-  | identifier-audit matches | **12**, 0 this cycle's | `git diff --unified=0 $(git merge-base HEAD origin/develop)...HEAD -- <epic-5 file-touch set> ':!**/__tests__/**' ':!**/*.test.*' \| grep -cE '\b(sd[0-9]+_\|SD[0-9]+_\|Sd[0-9]+\|t_[0-9a-f]{8,})'` |
-  | wired-integration matches | **24**, 0 this cycle's | same diff <code>&#124; grep -cE '\b(STUB&#124;MOCK&#124;placeholder&#124;not yet implemented&#124;todo&#124;fixme&#124;hack)\b'</code> |
+  | identifier-audit matches | **12** at cycle start, **15** on the final diff, 0 this cycle's | `git diff --unified=0 $(git merge-base HEAD origin/develop)...HEAD -- <epic-5 file-touch set> ':!**/__tests__/**' ':!**/*.test.*' \| grep -cE '\b(sd[0-9]+_\|SD[0-9]+_\|Sd[0-9]+\|t_[0-9a-f]{8,})'` |
+  | wired-integration matches | **24** at cycle start, **27** on the final diff, 0 this cycle's | same diff <code>&#124; grep -cE '\b(STUB&#124;MOCK&#124;placeholder&#124;not yet implemented&#124;todo&#124;fixme&#124;hack)\b'</code> |
   | token coverage | `non_done=0 refused=142 refused_non_done=0 token_types=231 shapes=1` | `python3 scripts/token_coverage.py --check` — of 49,438 |
-  | denominator gate | `files_checked=83 violations=0` | `python3 scripts/denominator_gate.py --check 'docs/release/SD-35-corpus-sheet-completion/*.md' 'docs/release/SD-35-corpus-sheet-completion/artifacts/**/*.md'` |
-  | provenance gate | `files_checked=200 figures_examined=382 violations=0` | `python3 scripts/denominator_gate.py --check-provenance` |
+  | denominator gate | `files_checked=84 violations=0` | `python3 scripts/denominator_gate.py --check 'docs/release/SD-35-corpus-sheet-completion/*.md' 'docs/release/SD-35-corpus-sheet-completion/artifacts/**/*.md'` |
+  | provenance gate | `files_checked=201 figures_examined=391 violations=0` | `python3 scripts/denominator_gate.py --check-provenance` |
   | dashboard input pin | matches (`5a0a0787312b5181d41214cb52abcd6e0c250fc409a75675ed6e839b4142e36f`) | `./scripts/publish-site-dashboard.sh --check-pin` |
+  | Rust changed between cycle 1's proof and this cycle's start | **2,128 files changed, 6,909 insertions, 4,485 deletions** | `git diff --stat a56096b861 HEAD -- src/ apps/ data/ scripts/ tests/` — of 2,128 changed files under those five roots |
 
-  **On re-running the Evidence rather than citing it.** `git diff --stat a56096b861 HEAD -- src/
-  apps/ data/ scripts/ tests/` reports **2,128 files changed, 6,909 insertions, 4,485 deletions**,
-  and the changed set includes `src/rules_core/level_up_option_filter.rs`,
-  `src/rules_core/feat_prereqs.rs` and the new `src/rules_core/feat_prereqs/converted_gate.rs`.
-  The filter's own inputs moved after cycle 1 proved it, so citing cycle 1's green would have been
-  a stale agreement. Both suites were re-run at this cycle's start SHA and both are green.
+  **On re-running the Evidence rather than citing it.** The changed set in the row above includes
+  `src/rules_core/level_up_option_filter.rs`, `src/rules_core/feat_prereqs.rs` and the new
+  `src/rules_core/feat_prereqs/converted_gate.rs`. The filter's own inputs moved after cycle 1
+  proved it, so citing cycle 1's green would have been a stale agreement. Both suites were re-run
+  at this cycle's start SHA and both are green.
 - **Build scope verified:** `CARGO_INCREMENTAL=0`, run at `53638610fc`.
   - `cargo test --locked --lib -j 6 level_up_option_filter -- --nocapture`
     (`CARGO_TARGET_DIR=/tmp/cargo-sd35-AT-35-E5-004`, cold) → `test result: ok. 7 passed; 0
