@@ -30,7 +30,7 @@ process defect** recorded by the epic wrap-up.
 | 3 — Place and surface | 4 | 4 | 0 | 0 |
 | 4 — Resolve and verify | 3 | 3 | 0 | 0 |
 | 5 — Residues | 5 | 5 | 0 | 0 |
-| 6 — PCGen exit | 4 | 0 | 0 | 4 |
+| 6 — PCGen exit | 4 | 0 | 1 | 3 |
 | 7 — Closure | 3 | 0 | 0 | 3 |
 | **Total** | **30** | **23** | **0** | **7** |
 
@@ -40,6 +40,65 @@ Corpus at the `tranche/15` cut (2026-09-07, `4c6c57eb9f`, identical to authoring
 re-measured at the cut by the launch-readiness audit.
 
 ## Cycle log
+
+### 2026-09-09 — AT-35-E6-001 cycle 1 — `formula-evaluator-leaves-live` — **partial** (the interpreter, its harness, the bonus-stack reader and the `PRE*` reader leave `rules_core`; three live callers now hold converted `Expr`; 9 files still carry one of the three identifiers)
+
+- **Scope gate:** `SCOPE_GATE: EXEMPT (Epic 6 cycle — closes zero units by design, decisions.md §2)`.
+  Run anyway: `python3 scripts/cycle_scope_gate.py --min 500` → `inventory=docs/work-inventory.json
+  scope=(whole remainder) scoped_by_bucket= scoped_by_kind= scoped=0 remaining_non_done=0
+  floor=500 verdict=PASS_WHOLE_REMAINDER`.
+- **Receipt rows:** `closed=0 relabeled=0 rust_lines_changed=613 ratio=n/a builds_recorded=0
+  pcgen_live_files=254` (`cycle_scope_gate.py --receipt --since c3500e7984 --before
+  /tmp/wi-before-AT-35-E6-001.json --after docs/work-inventory.json`; `regressed=0 added=0
+  dropped=0`, `closed_by_kind=` and `relabeled_moves=` empty). Epic 6 moves no unit by design.
+- **Refused tokens:** none — no converter refusal was added or cleared; `_refused.json` unchanged
+  at 142 records, one shape, `refused_non_done=0`.
+- **PCGen residue:** `live_files=254 live_hits=12396 baseline_files=260 baseline_hits=12736
+  verdict=PASS` — down on both axes, up on neither. The three identifiers this criterion owns:
+  `PcgenFormulaEvaluator` 14 files/100 hits → **5/28**; `bonus_stack_reader` 7/20 → **2/13**;
+  `pre_tokens` 6/20 → **4/19**. **Not zero — hence `partial`.**
+- **What landed.** Six modules moved out of the live roots into `src/pcgen_import/` (the
+  interpreter, its corpus-wide scan, its reproduction harness, the `BonusObj`-shape bonus-stack
+  reader, the race-trait formula binding, the `PRE*`-token prerequisite reader) — **moved, never
+  deleted**: `git diff --stat c3500e7984..HEAD -- src/pcgen_import scripts/oracle_harness
+  src/oracle_validation` is 6 renames plus path repairs, **zero net deletions of function bodies**
+  (`decisions.md §11`, what is kept for Starfinder). The live side gained one arithmetic entry
+  point, `sheet_rule::evaluate_expr` / `evaluate_expr_from_facts`, and three callers moved onto it
+  with the numbers unchanged: `trait_effects.rs`'s four ability-score-difference skill traits,
+  `pilot_compute/mod.rs`'s three Undine alternate racial traits, and `racial_sla.rs`'s shared
+  save DC. Seven comment-only sites and two player-facing explanation strings stopped naming the
+  ingest modules; the desktop trait picker now serves the substitution in the **rule's own words**
+  instead of the source's formula text.
+- **Oracle parity, before and after — the engine's output is byte-identical.**
+  `lines compared=146 agree=145 disagree=1; chassis compared=382 agree=376 disagree=6;
+  characters=29 exports_missing=0 PCGEN_ORACLE_SHA=7f818006e371188e5717fd18d74d18a420747fc6`,
+  the same figures on both sides, and `cmp -s` on the two `ours.json` files returns `IDENTICAL`.
+  The "before" run used the `sheet_rule_parity` release binary built from the tree as it stood at
+  the cycle start; the "after" run used the binary rebuilt at HEAD; both compared against the same
+  pinned exports. The 7 disagreements are byte-identical to `AT-35-E4-001`'s — 0 introduced, 0 fixed.
+  Artifacts: `artifacts/epic-6-pcgen-exit/AT-35-E6-001_cycle1_sheet-parity-{before,after}.json`.
+- **An incident this cycle caused and could NOT clear — it needs an operator ruling.** The
+  import-path rewrite was run as a repo-wide `os.walk` and also rewrote 15 `.rs` files in **14
+  sibling worktrees** under `.claude/worktrees/` (375 lines, import paths only). Four repair
+  routes were refused by the permission classifier (`git checkout --`, `git restore --worktree`,
+  two scoped inverse-substitution scripts); one file was repaired through the `Edit` tool and
+  **209 file-repairs remain**. Retro incident `1788995836569-at-35-e6-001-daa3fe`, recurrence key
+  `repo-wide-walk-hits-sibling-worktrees`. The mechanism owed: every repo-wide walk launched from
+  this checkout must exclude `.claude/worktrees/` by construction, not by convention.
+- **Rework:** the first code commit did not build — `git mv` stages a moved file at move time and
+  the later path repairs stayed unstaged, missed by the explicit-path `git add` that shared-checkout
+  discipline requires. Fixed forward; retro `1788997107739-at-35-e6-001-967c28`.
+- **Next-cycle scope:** the remainder is **9 files in four named families**, each a live caller
+  that must reach `sheet_rule::evaluate`/`evaluate_expr` over converted `Expr` or be deleted:
+  the class-feature var chain (`class_feature_grant_consumer.rs`); the class chassis
+  (`crb_untabled_class_chassis.rs`, `generic_class_chassis.rs`,
+  `apps/desktop/src-tauri/src/class_catalog_generic.rs`) — blocked on one converter addition,
+  since the converted class record carries the BAB/save `Expr`s but no `MAXLEVEL`; the
+  fixture-check oracle (`derived_evaluator_fixture_check.rs`, which needs splitting into its live
+  formatters and its bar check); and feat prerequisites (`feat_prereqs.rs`,
+  `prestige_class_entry_gate.rs`, `feat_catalog.rs`, `character_hub.rs`), whose replacement
+  already ships as `level_up_option_filter::filter_option_pool` over `SheetRule.applies`.
+  Receipt: `artifacts/epic-6-pcgen-exit/AT-35-E6-001_cycle1_receipt.md`.
 
 ### 2026-09-09 — AT-35-E5-005 cycle 1 — `corpus-49438-of-49438` — **complete** (the corpus closed per unit and per capability; one 10-unit residue named, gated and handed on)
 
