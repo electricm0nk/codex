@@ -41,11 +41,23 @@ pub fn scrub_literal_glyphs(ctx: &mut RecordCtx, text: &str, field_name: &str) -
 /// detector uses (`wiring_class::EDITORIAL_MARKER_MAX_SPAN`), so scrub and detector agree.
 const EDITORIAL_MARKER_MAX_SPAN: usize = 96;
 
-/// Whether a bracketed group's words are upstream PCGen's not-implemented admission -- a `not`
-/// followed by an `implement*`, the detector's own rule
-/// (`wiring_class::carries_editorial_not_implemented_marker`).
+/// Whether a bracketed group's words are an upstream editorial aside rather than the rule's.
+///
+/// Two shapes, both addressed to the source data's maintainers and neither to a player:
+///
+/// 1. **The not-implemented admission** -- a `not` followed by an `implement*`, the detector's
+///    own rule (`wiring_class::carries_editorial_not_implemented_marker`).
+/// 2. **An annotation head** -- the group opens with the word `note` and a colon
+///    (`[NOTE:SOME ARCHETYPES MAY REQUIRE MANUAL INPUT ...]`). SD-35 `AT-35-E6-003` cycle 12:
+///    two corpus records ship one, and both reached a catalog screen as part of the rule's
+///    prose. The head is required, so a sentence that merely contains the word "note" inside a
+///    parenthetical the rule itself wrote is untouched.
 fn group_is_editorial_marker(group: &str) -> bool {
     let lower = group.to_ascii_lowercase();
+    if lower.trim_start().strip_prefix("note").is_some_and(|rest| rest.trim_start().starts_with(':'))
+    {
+        return true;
+    }
     let mut saw_not = false;
     for word in lower.split(|c: char| !c.is_ascii_alphanumeric()) {
         if word == "not" {
@@ -750,6 +762,33 @@ mod tests {
             "You gain a +2 bonus on Intimidate checks (see page 42).",
             "The implement is not usable underwater.",
             "",
+        ] {
+            assert_eq!(strip_editorial_not_implemented_markers(text), text);
+        }
+    }
+
+    /// SD-35 `AT-35-E6-003` cycle 12: an upstream annotation addressed to the data's
+    /// maintainers is the same leakage class as the not-implemented admission and is scrubbed
+    /// the same way -- it says something about the source tool's automation, never about the
+    /// rule, and it reached a catalog screen inside the rule's own prose.
+    #[test]
+    fn an_upstream_annotation_head_is_scrubbed_and_the_seam_is_closed() {
+        assert_eq!(
+            strip_editorial_not_implemented_markers(
+                "He gains another such feat. [NOTE:SOME ARCHETYPES MAY REQUIRE MANUAL INPUT!]"
+            ),
+            "He gains another such feat."
+        );
+        assert_eq!(
+            strip_editorial_not_implemented_markers(
+                "[NOTE:Not fully restricted. Check domain power before choosing!]You gain a domain."
+            ),
+            "You gain a domain."
+        );
+        // The head is required: the rule's own parenthetical survives.
+        for text in [
+            "Note that this bonus does not stack.",
+            "You gain a +2 bonus (note the duration).",
         ] {
             assert_eq!(strip_editorial_not_implemented_markers(text), text);
         }

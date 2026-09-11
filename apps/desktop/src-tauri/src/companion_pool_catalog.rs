@@ -83,9 +83,9 @@ use serde_json::Value;
 use codex::rules_core::corpus_loader::live_sheet_rules;
 use codex::rules_core::rules_tables::companion_chassis;
 use codex::rules_core::sheet_rule::SheetRulePackage;
-use codex::rules_core::sheet_rule_catalog::catalog_description;
-
-use crate::reference_library_catalog::mechanical_summary;
+use codex::rules_core::sheet_rule_catalog::{
+    catalog_description, catalog_description_or_fields, DescriptionTier,
+};
 
 /// One reference-pool member's real corpus row, with a description proven to
 /// render with nothing missing.
@@ -118,11 +118,11 @@ pub struct CompanionPoolAbilityDto {
     /// screen can settle. Never empty or the PI-redaction marker: a record that
     /// states no descriptive prose is refused before it reaches this struct.
     pub description: String,
-    /// `true` when `description` is a rendered mechanical-token summary (a
-    /// `.COPY=` template/variant row's `TEMPLATE`/`KIT`/`ASPECT` tokens,
-    /// SD-32 row 20) rather than real authored prose — the same honesty
-    /// distinction `reference_library_catalog.rs`'s own tier-3 carries, so a
-    /// caller can tell a rendered token dump from a genuine sentence.
+    /// `true` when `description` came from the converted rule's stat-block
+    /// lines or its typed fields rather than the record's own authored prose (a
+    /// `.COPY=` template/variant row, SD-32 row 20) — the same honesty
+    /// distinction `reference_library_catalog.rs` carries, so a caller can
+    /// tell a rendered stat line from a genuine sentence.
     pub is_mechanical_summary: bool,
 }
 
@@ -249,11 +249,26 @@ fn load_raw_pool_entries(repo_root: &Path) -> Vec<RawPoolEntry> {
             // following forms: cat, goat, rabbit ..."). This is the exact
             // tier-3 shape `reference_library_catalog.rs` already built for
             // the twelve reference-library kinds, reused here rather than
-            // reinvented (`mechanical_summary`).
+            // reinvented.
+            //
+            // SD-35 `AT-35-E6-003`: those facts are now read from the
+            // CONVERTED record's stat-block lines and typed fields
+            // (`catalog_description_or_fields`), not from the ingest format's
+            // token rows at run time -- the same swap
+            // `reference_library_catalog.rs` made for its own twelve kinds.
             let origin = data["origin"].as_str();
             if origin == Some("copy") {
                 let Some(name) = data["name"].as_str() else { continue };
-                let Some(summary) = mechanical_summary(data) else { continue };
+                let Some(package) = package else { continue };
+                let Some(rule) = package.rule(&converted_id(book.corpus_book, key)) else {
+                    continue;
+                };
+                let Some(resolved) = catalog_description_or_fields(package, rule) else { continue };
+                let summary = resolved.text;
+                if !is_real_description_value(&summary) {
+                    continue;
+                }
+                let mechanical = resolved.tier != DescriptionTier::Prose;
                 let group = key.split(" ~ ").next().unwrap_or(key).to_string();
                 let Some(slug) = file.file_stem().map(|s| s.to_string_lossy().into_owned())
                 else {
@@ -266,7 +281,7 @@ fn load_raw_pool_entries(repo_root: &Path) -> Vec<RawPoolEntry> {
                     slug,
                     name: name.trim_end_matches('*').trim().to_string(),
                     description: summary,
-                    is_mechanical_summary: true,
+                    is_mechanical_summary: mechanical,
                 });
                 continue;
             }
@@ -448,11 +463,11 @@ mod tests {
             .expect("Cat (Fiendish) must be served via the .COPY= tier-3 admission");
         assert_eq!(found.corpus_key, "Cat (Fiendish)");
         assert!(found.is_mechanical_summary, "a .COPY= template row has no real prose to render");
-        assert!(
-            found.description.contains("TEMPLATE") && found.description.contains("Fiendish"),
-            "expected the mechanical summary to name the real TEMPLATE token, got: {}",
-            found.description
-        );
+        // SD-35 `AT-35-E6-003` cycle 12: the row's fact -- that it applies the Fiendish
+        // Creature template -- is read from the converted package, where it lives on the far
+        // end of the grant edge, and printed as words. It used to be the source token's own
+        // head and value.
+        assert_eq!(found.description, "Grants Fiendish Creature");
         assert!(!found.description.is_empty());
     }
 
@@ -471,9 +486,16 @@ mod tests {
             .expect("Pooka ~ Change Shape must be served via the .COPY= tier-3 admission");
         assert_eq!(found.pool_group, "Pooka");
         assert!(found.is_mechanical_summary);
+        // The same swap: the variant's forms are the converted rule's own stat-block line, not
+        // the source token's head and value.
         assert!(
-            found.description.contains("ASPECT"),
-            "expected the mechanical summary to name the real ASPECT token, got: {}",
+            found.description.contains("cat, goat, rabbit"),
+            "expected the converted record's own words, got: {}",
+            found.description
+        );
+        assert!(
+            !found.description.contains("ASPECT:"),
+            "the source token head must not reach the screen: {}",
             found.description
         );
     }

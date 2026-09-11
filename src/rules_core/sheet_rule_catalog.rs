@@ -32,10 +32,13 @@
 //! No token, no formula string, no argument tail, no ingest-format vocabulary. The input is a
 //! converted [`SheetRule`]; the output is English.
 
-use crate::rules_core::level_up_option_filter::{describe_gate, expr_words, words_of_id};
+use crate::rules_core::level_up_option_filter::{
+    ability_word, describe_gate, describe_prof, expr_words, label_of, save_word, words_of_id,
+};
 use crate::rules_core::sheet_rule::{
-    fold_dice_modifier, slug, Expr, ProseFamily, ProsePiece, ProseSegment, SheetRule,
-    SheetRulePackage,
+    fold_dice_modifier, slug, Applies, BonusTarget, Choice, CountsAs, Effect, Expr, Fact, Grant,
+    Granter, OptionSet, ProseFamily, ProsePiece, ProseSegment, Scope, SheetRule, SheetRulePackage,
+    SheetValue, ValueRole, WeaponRef,
 };
 use std::collections::BTreeMap;
 
@@ -87,6 +90,416 @@ pub fn catalog_prose_by_name(
 ) -> Option<String> {
     let id = package.find(kind, &slug(name))?;
     Some(catalog_prose(package, package.rule(id)?))
+}
+
+/// A rule with **no prose at all**, rendered from its typed fields as words.
+///
+/// # The gap this closes
+///
+/// `catalog_description` serves the `Desc`/`Benefit`/`Special` families and nothing else, which
+/// is the right answer for a record whose author wrote a description. A large part of this
+/// corpus has none: the source ships `skill`, `language`, `domain` and most of `template` as a
+/// bare mechanical row. The desktop reference library served those rows by printing the ingest
+/// format's own token lines — key head, colon and value — straight onto the screen, a live-side
+/// read of the ingest format, which `decisions.md §11` rules out, and ingest-format vocabulary
+/// on a player's screen, which `decisions.md §1` rules out.
+///
+/// The converted record already holds those same facts, typed: the value, the second numbers
+/// beside it, what sheet total it feeds and under which stacking type, its tags, the condition
+/// it applies under, the choice it offers, what holding it does to the fact set, and who hands
+/// it out. This renders exactly those, in that fixed order, through the **same vocabulary**
+/// [`describe_gate`] and [`expr_words`] give a prerequisite line — no second describer, no
+/// token, no formula string.
+///
+/// `None` when the record states nothing beyond its own identity. That is the honest answer,
+/// and it is a smaller population than the token dump suggested: a record whose only remaining
+/// content was an ingest bookkeeping row -- a visibility flag, a rule-ordering directive --
+/// was never describing a rule to a player.
+pub fn catalog_field_summary(package: &SheetRulePackage, rule: &SheetRule) -> Option<String> {
+    let mut parts: Vec<String> = Vec::new();
+
+    if let Some(words) = value_words(package, &rule.value) {
+        parts.push(format!("Value: {words}"));
+    }
+    for (role, value) in &rule.also {
+        if let Some(words) = value_words(package, value) {
+            parts.push(format!("{}: {words}", role_label(role)));
+        }
+    }
+    if let Some(target) = &rule.target {
+        let mut line = format!("Adds to {}", target_words(package, target));
+        if let Some(bonus_type) = rule.bonus_type.as_ref().filter(|b| !b.name.trim().is_empty()) {
+            line = format!("{line} as a {} bonus", bonus_type.name);
+        }
+        parts.push(line);
+    }
+    if !rule.tags.is_empty() {
+        parts.push(format!("Tags: {}", rule.tags.join(", ")));
+    }
+    if rule.applies != Applies::Always {
+        let condition = describe_gate(package, &rule.applies);
+        if !condition.is_empty() && condition != "no prerequisite" {
+            parts.push(format!("Applies if {condition}"));
+        }
+    }
+    if let Some(choice) = &rule.offers {
+        parts.push(choice_words(package, choice));
+    }
+    for effect in &rule.grants {
+        parts.push(effect_words(package, effect));
+    }
+    if !rule.granted_by.is_empty() {
+        parts.push(granted_by_words(package, &rule.granted_by));
+    }
+    // Read backwards: a record that states only "apply this other thing" carries that fact on
+    // the far end of the edge, never in its own fields.
+    let hands_out = package.granted_from(&rule.id);
+    if !hands_out.is_empty() {
+        let mut names: Vec<String> = Vec::new();
+        for id in hands_out {
+            let words = label_of(package, id);
+            if !names.contains(&words) {
+                names.push(words);
+            }
+        }
+        if names.len() > MAX_NAMED_OPTIONS {
+            parts.push(format!("Grants {} rules", names.len()));
+        } else {
+            parts.push(format!("Grants {}", names.join(", ")));
+        }
+    }
+
+    // Last resort, and only when the record's own fields said nothing: a record whose entire
+    // content is a variable contribution (a bonus to a named rules variable, or the
+    // declaration of one) carries that fact in the package's variable tables, keyed the other
+    // way round. Scanning them is linear, so it happens for the few hundred rules that would
+    // otherwise be blank rather than for every rule a catalog loads.
+    if parts.is_empty() {
+        parts.extend(var_contribution_words(package, &rule.id));
+    }
+
+    if parts.is_empty() {
+        None
+    } else {
+        Some(parts.join("; "))
+    }
+}
+
+/// At most this many variable clauses print; beyond that the record is a bookkeeping row and
+/// the count is the honest sentence.
+const MAX_VAR_CLAUSES: usize = 6;
+
+/// What a rule does to the package's named variables, as words: the value it adds and the
+/// condition it adds it under, then the variables it declares.
+///
+/// A variable with no label is skipped rather than named generically — an id is a content
+/// hash, and "a rules variable" is a phrase, not a fact.
+fn var_contribution_words(package: &SheetRulePackage, rule_id: &str) -> Vec<String> {
+    let mut out: Vec<String> = Vec::new();
+    let mut declares: Vec<String> = Vec::new();
+    for table in package.vars.values() {
+        if table.label.trim().is_empty() {
+            continue;
+        }
+        for contribution in &table.contributions {
+            if contribution.rule_id != rule_id {
+                continue;
+            }
+            let value = match const_value(&contribution.expr) {
+                Some(n) => n.to_string(),
+                None => expr_words(package, &contribution.expr),
+            };
+            let mut line = format!("Adds {value} to {}", table.label);
+            if contribution.when != Applies::Always {
+                let condition = describe_gate(package, &contribution.when);
+                if !condition.is_empty() && condition != "no prerequisite" {
+                    line = format!("{line} if {condition}");
+                }
+            }
+            if !out.contains(&line) {
+                out.push(line);
+            }
+        }
+        if table.declared_by.iter().any(|id| id == rule_id) {
+            let line = format!("Declares {}", table.label);
+            if !declares.contains(&line) {
+                declares.push(line);
+            }
+        }
+    }
+    if out.len() + declares.len() > MAX_VAR_CLAUSES {
+        return vec![format!("Contributes to {} rules variables", out.len() + declares.len())];
+    }
+    out.extend(declares);
+    out
+}
+
+/// The description a catalog row serves, prose first and the typed fields when there is no
+/// prose: [`catalog_description`], then [`catalog_prose`]'s stat-block families, then
+/// [`catalog_field_summary`].
+///
+/// The three tiers are distinguishable by the caller — a stat block and a field summary are
+/// real content but they are not the record's authored words — via [`CatalogDescription::tier`].
+pub fn catalog_description_or_fields(
+    package: &SheetRulePackage,
+    rule: &SheetRule,
+) -> Option<CatalogDescription> {
+    if let Some(text) = catalog_description(package, rule) {
+        return Some(CatalogDescription { text, tier: DescriptionTier::Prose });
+    }
+    let stat_block = catalog_prose(package, rule);
+    if !stat_block.is_empty() {
+        return Some(CatalogDescription { text: stat_block, tier: DescriptionTier::StatBlock });
+    }
+    catalog_field_summary(package, rule)
+        .map(|text| CatalogDescription { text, tier: DescriptionTier::Fields })
+}
+
+/// A resolved catalog description and which tier produced it.
+#[derive(Debug, Clone, PartialEq, Eq)]
+pub struct CatalogDescription {
+    pub text: String,
+    pub tier: DescriptionTier,
+}
+
+/// Which of the three tiers [`catalog_description_or_fields`] answered from.
+#[derive(Debug, Clone, Copy, PartialEq, Eq)]
+pub enum DescriptionTier {
+    /// The record's own authored words (`Desc`/`Benefit`/`Special`).
+    Prose,
+    /// The record's structured lines (a casting time, an advancement aspect) — real content,
+    /// authored by the source, but not a description.
+    StatBlock,
+    /// [`catalog_field_summary`]: the typed fields as words, for a record with no prose at all.
+    Fields,
+}
+
+/// A [`SheetValue`] as words; `None` for [`SheetValue::Text`], whose value *is* the prose.
+fn value_words(package: &SheetRulePackage, value: &SheetValue) -> Option<String> {
+    match value {
+        SheetValue::Text => None,
+        SheetValue::Number(expr) => Some(match const_value(expr) {
+            Some(n) => n.to_string(),
+            None => expr_words(package, expr),
+        }),
+        SheetValue::Dice { dice, modifier, .. } => Some(match modifier.as_ref().map(const_value) {
+            None => dice.clone(),
+            Some(Some(n)) => fold_dice_modifier(dice, n),
+            Some(None) => {
+                let words = expr_words(package, modifier.as_ref().expect("matched Some"));
+                format!("{dice} plus {words}")
+            }
+        }),
+        SheetValue::DiceBySize(by_size) => Some(format!("{} (by size)", by_size.join(" / "))),
+    }
+}
+
+/// The label a second number on the line prints under.
+fn role_label(role: &ValueRole) -> String {
+    match role {
+        ValueRole::Uses { period } => format!("Uses per {}", words_of_id(period)),
+        ValueRole::CasterLevel => "Caster level".to_owned(),
+        ValueRole::SaveDc => "Save DC".to_owned(),
+    }
+}
+
+/// The sheet total a rule feeds, in the sheet's own words.
+fn target_words(package: &SheetRulePackage, target: &BonusTarget) -> String {
+    match target {
+        BonusTarget::Ability(a) => ability_word(*a).to_owned(),
+        BonusTarget::Skill(s) => words_of_id(s),
+        BonusTarget::SkillSituation { skill, situation } => {
+            format!("{} ({situation})", words_of_id(skill))
+        }
+        BonusTarget::Save(s) => format!("{} saves", save_word(*s)),
+        BonusTarget::BaseSave(s) => format!("the base {} save", save_word(*s)),
+        BonusTarget::Ac => "Armor Class".to_owned(),
+        BonusTarget::Attack => "attack rolls".to_owned(),
+        BonusTarget::BaseAttack => "the base attack bonus".to_owned(),
+        BonusTarget::Damage(w) => format!("{} damage", weapon_words(w)),
+        BonusTarget::Hp => "hit points".to_owned(),
+        BonusTarget::Initiative => "initiative".to_owned(),
+        BonusTarget::Cmb => "the combat maneuver bonus".to_owned(),
+        BonusTarget::Cmd => "the combat maneuver defense".to_owned(),
+        BonusTarget::Speed(mode) => format!("{} speed", words_of_id(mode)),
+        BonusTarget::Vision(tag) => words_of_id(tag),
+        BonusTarget::Dr => "damage reduction".to_owned(),
+        BonusTarget::SpellDc(scope) => format!("spell save DCs {}", scope_words(package, scope)),
+        BonusTarget::CasterLevel(scope) => format!("caster level {}", scope_words(package, scope)),
+        BonusTarget::SpellcastingLevels(class) => {
+            format!("spellcasting levels as a {}", words_of_id(class))
+        }
+        BonusTarget::SpellCell { class, level } => {
+            format!("level {level} {} spells per day", words_of_id(class))
+        }
+        BonusTarget::SpellsKnown { class, level } => {
+            format!("level {level} {} spells known", words_of_id(class))
+        }
+        BonusTarget::Pool(pool) => format!("the {} pool", words_of_id(pool)),
+        BonusTarget::DamageSize(w) => format!("{} damage die size", weapon_words(w)),
+        BonusTarget::WeaponAttack(w) => format!("{} attack rolls", weapon_words(w)),
+        BonusTarget::SkillGroup(tag) => format!("every {} skill", words_of_id(tag)),
+        BonusTarget::Chosen(choice) => format!("the choice made for {}", words_of_id(choice)),
+        BonusTarget::Other(other) => words_of_id(other),
+    }
+}
+
+fn weapon_words(weapon: &WeaponRef) -> String {
+    match weapon {
+        WeaponRef::Any => "weapon".to_owned(),
+        WeaponRef::Melee => "melee weapon".to_owned(),
+        WeaponRef::Ranged => "ranged weapon".to_owned(),
+        WeaponRef::Named(name) => words_of_id(name),
+        WeaponRef::Group(tag) => format!("{} weapon", words_of_id(tag)),
+        WeaponRef::Chosen(choice) => {
+            format!("the weapon chosen for {}", words_of_id(choice))
+        }
+    }
+}
+
+fn scope_words(package: &SheetRulePackage, scope: &Scope) -> String {
+    match scope {
+        Scope::All => "for every class".to_owned(),
+        Scope::Class(class) => format!("as a {}", words_of_id(class)),
+        Scope::School(school) => format!("for the {school} school"),
+        Scope::Subschool(sub) => format!("for the {sub} subschool"),
+        Scope::Descriptor(d) => format!("for {d} spells"),
+        Scope::Spell(id) => format!("for {}", label_of(package, id)),
+        Scope::Chosen(choice) => format!("for the choice made for {}", words_of_id(choice)),
+    }
+}
+
+/// The choice a record offers, as words.
+fn choice_words(package: &SheetRulePackage, choice: &Choice) -> String {
+    let count = match const_value(&choice.count) {
+        Some(n) => n.to_string(),
+        None => expr_words(package, &choice.count),
+    };
+    format!("Offers a choice of {count} from {}", option_set_words(package, &choice.from))
+}
+
+/// At most this many named options print before the list is summarised by its size: a catalog
+/// line is a sentence, not the option list itself.
+const MAX_NAMED_OPTIONS: usize = 6;
+
+fn named_list(kind: &str, names: &[String]) -> String {
+    if names.is_empty() {
+        return kind.to_owned();
+    }
+    if names.len() > MAX_NAMED_OPTIONS {
+        return format!("{} {kind}", names.len());
+    }
+    format!(
+        "{kind}: {}",
+        names.iter().map(|n| words_of_id(n)).collect::<Vec<_>>().join(", ")
+    )
+}
+
+fn option_set_words(package: &SheetRulePackage, from: &OptionSet) -> String {
+    match from {
+        OptionSet::Rules { pool, tags, .. } => {
+            if tags.is_empty() {
+                format!("the {} list", words_of_id(pool))
+            } else {
+                format!("the {} list tagged {}", words_of_id(pool), tags.join(", "))
+            }
+        }
+        OptionSet::Skills(list) => named_list("skills", list),
+        OptionSet::Weapons(list) => named_list("weapons", list),
+        OptionSet::Spells { class, levels } => {
+            format!("{} spells of levels {} to {}", words_of_id(class), levels.0, levels.1)
+        }
+        OptionSet::Languages(list) => named_list("languages", list),
+        OptionSet::Templates(list) => {
+            let names: Vec<String> = list.iter().map(|id| label_of(package, id)).collect();
+            named_list("templates", &names)
+        }
+        OptionSet::Classes(list) => named_list("classes", list),
+        OptionSet::Races(list) => named_list("races", list),
+        OptionSet::Schools => "the schools of magic".to_owned(),
+        OptionSet::Deities => "the deities".to_owned(),
+        OptionSet::Domains => "the domains".to_owned(),
+        OptionSet::Equipment => "the equipment list".to_owned(),
+        OptionSet::FreeText => "any text the player writes in".to_owned(),
+        OptionSet::Number { min, max } => format!(
+            "the numbers {} to {}",
+            const_value(min).map_or_else(|| expr_words(package, min), |n| n.to_string()),
+            const_value(max).map_or_else(|| expr_words(package, max), |n| n.to_string()),
+        ),
+    }
+}
+
+/// What holding the rule does to the fact set, as words.
+fn effect_words(package: &SheetRulePackage, effect: &Effect) -> String {
+    match effect {
+        Effect::FactGrant(fact) => format!("Grants {}", fact_words(fact)),
+        Effect::FactRevoke(fact) => format!("Removes {}", fact_words(fact)),
+        Effect::CountsAs(counts) => format!("Counts as {}", counts_as_words(package, counts)),
+        Effect::Waives(id) => format!("Waives the prerequisites of {}", label_of(package, id)),
+        Effect::Revokes(id) => format!("Revokes {}", label_of(package, id)),
+        Effect::FactDeclare { name, value } => {
+            format!("Declares {} as {value}", words_of_id(name))
+        }
+    }
+}
+
+fn counts_as_words(package: &SheetRulePackage, counts: &CountsAs) -> String {
+    match counts {
+        CountsAs::Rule(id) => label_of(package, id),
+        CountsAs::Class(class) => format!("the {} class", words_of_id(class)),
+        CountsAs::Race(race) => format!("the {} race", words_of_id(race)),
+    }
+}
+
+fn fact_words(fact: &Fact) -> String {
+    match fact {
+        Fact::ClassSkill(skill) => format!("{} as a class skill", words_of_id(skill)),
+        Fact::ClassSkillGroup(tag) => format!("every {} skill as a class skill", words_of_id(tag)),
+        Fact::ClassSkillChosen(choice) => {
+            format!("the skill chosen for {} as a class skill", words_of_id(choice))
+        }
+        Fact::CrossClassSkill(skill) => {
+            format!("{} as a cross-class skill", words_of_id(skill))
+        }
+        Fact::Language(language) => format!("the {language} language"),
+        Fact::Proficiency(prof) => format!("proficiency with {}", describe_prof(prof)),
+        Fact::Equipment(item) => format!("the item {item}"),
+        Fact::CompanionSlots { role, count } => match const_value(count) {
+            Some(n) => format!("{n} {} companion slot(s)", words_of_id(role)),
+            None => format!("{} companion slot(s)", words_of_id(role)),
+        },
+        Fact::Chosen(choice) => format!("the option chosen for {}", words_of_id(choice)),
+    }
+}
+
+/// Who hands the rule out. Capped: a record every class grants is a sentence about the count,
+/// not a list of forty class names.
+fn granted_by_words(package: &SheetRulePackage, granted_by: &[Grant]) -> String {
+    let mut names: Vec<String> = Vec::new();
+    for grant in granted_by {
+        let words = granter_words(package, &grant.by);
+        if !names.contains(&words) {
+            names.push(words);
+        }
+    }
+    if names.len() > MAX_NAMED_OPTIONS {
+        return format!("Granted by {} sources", names.len());
+    }
+    format!("Granted by {}", names.join(", "))
+}
+
+fn granter_words(package: &SheetRulePackage, by: &Granter) -> String {
+    match by {
+        Granter::Rule(id) | Granter::Deity(id) => label_of(package, id),
+        Granter::Class { id, at_level } => {
+            format!("{} at level {at_level}", words_of_id(id))
+        }
+        Granter::ClassSpellList { id, spell_level } => {
+            format!("the {} spell list at spell level {spell_level}", words_of_id(id))
+        }
+        Granter::Race(race) => format!("the {} race", words_of_id(race)),
+        Granter::Choice(choice) => format!("a choice made for {}", words_of_id(choice)),
+    }
 }
 
 fn family_key(family: &ProseFamily) -> String {
@@ -247,6 +660,7 @@ mod tests {
         evaluate, Ability, Applies, CharacterFacts, ClassRef, EvalContext, HeldSet, Provenance,
         SheetValue, Subject,
     };
+    use crate::rules_core::sheet_rule::{BonusTarget, Choice, Effect, Fact, OptionSet};
 
     fn rule_with(prose: Vec<ProseSegment>) -> SheetRule {
         SheetRule {
@@ -488,6 +902,233 @@ mod tests {
              slot still reaches a catalog screen as the characterless number; first few: {agreed:?}",
             with_unsettled_slot - disagreed
         );
+    }
+
+    /// The defect the field summary exists to fix, stated as a test: a record with no prose at
+    /// all had nothing for a catalog screen to print, which is why the desktop reference
+    /// library was reading the ingest format's token rows instead.
+    #[test]
+    fn a_rule_with_no_prose_renders_its_typed_fields_as_words() {
+        let mut rule = rule_with(Vec::new());
+        rule.tags = vec!["Dexterity".into(), "Base".into()];
+        rule.applies = Applies::Compare {
+            lhs: Expr::Level,
+            op: crate::rules_core::sheet_rule::Cmp::Gte,
+            rhs: Expr::Const(3),
+        };
+        let package = package_with(rule.clone());
+
+        assert_eq!(
+            catalog_description(&package, &rule),
+            None,
+            "the description tier has nothing to serve -- that is the gap"
+        );
+        assert_eq!(
+            catalog_field_summary(&package, &rule).as_deref(),
+            Some("Tags: Dexterity, Base; Applies if character level at least 3")
+        );
+    }
+
+    #[test]
+    fn a_field_summary_names_the_sheet_total_and_the_stacking_type() {
+        let mut rule = rule_with(Vec::new());
+        rule.value = SheetValue::Number(Expr::Const(2));
+        rule.target = Some(BonusTarget::Save(crate::rules_core::sheet_rule::Save::Will));
+        rule.bonus_type = Some(crate::rules_core::sheet_rule::BonusType {
+            name: "Racial".into(),
+            mode: crate::rules_core::sheet_rule::StackMode::Stack,
+        });
+        let package = package_with(rule.clone());
+        assert_eq!(
+            catalog_field_summary(&package, &rule).as_deref(),
+            Some("Value: 2; Adds to Will saves as a Racial bonus")
+        );
+    }
+
+    /// An unsettled value is words, never the characterless zero -- the same rule the prose
+    /// renderer follows, applied to the typed fields.
+    #[test]
+    fn an_unsettled_value_in_a_field_summary_is_words_not_zero() {
+        let mut rule = rule_with(Vec::new());
+        rule.value = SheetValue::Number(Expr::CasterLevel(ClassRef::Holder));
+        let package = package_with(rule.clone());
+        assert_eq!(
+            catalog_field_summary(&package, &rule).as_deref(),
+            Some("Value: caster level")
+        );
+    }
+
+    #[test]
+    fn a_field_summary_names_the_choice_offered_and_the_facts_granted() {
+        let mut rule = rule_with(Vec::new());
+        rule.offers = Some(Choice {
+            id: "pick_a_language".into(),
+            count: Expr::Const(1),
+            from: OptionSet::Languages(vec!["Draconic".into(), "Goblin".into()]),
+        });
+        rule.grants = vec![Effect::FactGrant(Fact::ClassSkill("perception".into()))];
+        let package = package_with(rule.clone());
+        assert_eq!(
+            catalog_field_summary(&package, &rule).as_deref(),
+            Some(
+                "Offers a choice of 1 from languages: Draconic, Goblin; \
+                 Grants perception as a class skill"
+            )
+        );
+    }
+
+    /// A record stating nothing beyond its identity gets `None`, never a fabricated sentence
+    /// and never an ingest bookkeeping row dressed up as content.
+    #[test]
+    fn a_rule_stating_nothing_beyond_its_identity_has_no_field_summary() {
+        let rule = rule_with(Vec::new());
+        let package = package_with(rule.clone());
+        assert_eq!(catalog_field_summary(&package, &rule), None);
+    }
+
+    #[test]
+    fn the_three_description_tiers_are_tried_in_order_and_are_distinguishable() {
+        let prose = rule_with(vec![segment(
+            ProseFamily::Desc,
+            vec![ProsePiece::Text("the words".into())],
+        )]);
+        let package = package_with(prose.clone());
+        assert_eq!(
+            catalog_description_or_fields(&package, &prose),
+            Some(CatalogDescription {
+                text: "the words".into(),
+                tier: DescriptionTier::Prose
+            })
+        );
+
+        let stat = rule_with(vec![segment(
+            ProseFamily::StatBlock("Casting time".into()),
+            vec![ProsePiece::Text("1 standard action".into())],
+        )]);
+        let package = package_with(stat.clone());
+        assert_eq!(
+            catalog_description_or_fields(&package, &stat),
+            Some(CatalogDescription {
+                text: "Casting time: 1 standard action".into(),
+                tier: DescriptionTier::StatBlock
+            })
+        );
+
+        let mut fields = rule_with(Vec::new());
+        fields.tags = vec!["Spoken".into()];
+        let package = package_with(fields.clone());
+        assert_eq!(
+            catalog_description_or_fields(&package, &fields),
+            Some(CatalogDescription {
+                text: "Tags: Spoken".into(),
+                tier: DescriptionTier::Fields
+            })
+        );
+
+        let bare = rule_with(Vec::new());
+        let package = package_with(bare.clone());
+        assert_eq!(catalog_description_or_fields(&package, &bare), None);
+    }
+
+    /// The ingest format's own vocabulary, detected by **shape** rather than by a list of
+    /// token heads: an all-capitals run of four or more letters immediately followed by `:` or
+    /// `=` is a token head, and a `%` followed by a digit or a capital is a substitution
+    /// marker. Written this way deliberately — a list of literal token heads in a live-side
+    /// file is itself a live-side occurrence of the ingest format, which
+    /// `scripts/pcgen_residue_gate.py` counts and `decisions.md §11` forbids. Returns the
+    /// offending fragment so a failure names what leaked.
+    fn ingest_vocabulary(text: &str) -> Option<String> {
+        let bytes: Vec<char> = text.chars().collect();
+        let mut i = 0usize;
+        while i < bytes.len() {
+            if bytes[i] == '%'
+                && bytes.get(i + 1).is_some_and(|c| c.is_ascii_digit() || c.is_ascii_uppercase())
+            {
+                return Some(bytes[i..(i + 2).min(bytes.len())].iter().collect());
+            }
+            if bytes[i].is_ascii_uppercase() {
+                let start = i;
+                while i < bytes.len() && bytes[i].is_ascii_uppercase() {
+                    i += 1;
+                }
+                if i - start >= 4 && matches!(bytes.get(i), Some(':') | Some('=')) {
+                    return Some(bytes[start..=i].iter().collect());
+                }
+                continue;
+            }
+            i += 1;
+        }
+        None
+    }
+
+    /// The corpus-wide gate (`decisions.md §4`: a per-kind gate over the live
+    /// `data/sheet_rules/` directory, never a per-unit fixture with a hand-derived value).
+    ///
+    /// Over the twelve reference-library kinds, every rule the package holds is resolved
+    /// through all three tiers, and **no rendered description may carry ingest-format
+    /// vocabulary** — the exact property the token dump it replaces could not have. The
+    /// population of each tier is printed so a converter change moves a visible figure.
+    #[test]
+    fn no_reference_library_description_carries_ingest_format_vocabulary() {
+        let dir = std::path::Path::new(env!("CARGO_MANIFEST_DIR")).join("data/sheet_rules");
+        if !dir.is_dir() {
+            panic!(
+                "{} is not a directory -- regenerate with `cargo run --locked --bin sheet_rule_convert`",
+                dir.display()
+            );
+        }
+        let package = crate::rules_core::corpus_loader::load_sheet_rules(&dir).package;
+        assert!(!package.rules.is_empty(), "the converted package carries no rules");
+
+        const KINDS: [&str; 12] = [
+            "ability",
+            "class_generic",
+            "deity",
+            "domain",
+            "feat_generic",
+            "language",
+            "monster_generic",
+            "power",
+            "race_generic",
+            "skill",
+            "template",
+            "trait_generic",
+        ];
+
+        let (mut prose, mut stat_block, mut fields, mut bare) = (0usize, 0usize, 0usize, 0usize);
+        let mut leaks: Vec<String> = Vec::new();
+        for rule in package.rules.values() {
+            let kind = rule.provenance.kind.as_str();
+            // The package's `kind` is the singular corpus directory name for these twelve.
+            if !KINDS.contains(&kind) {
+                continue;
+            }
+            match catalog_description_or_fields(&package, rule) {
+                None => bare += 1,
+                Some(resolved) => {
+                    match resolved.tier {
+                        DescriptionTier::Prose => prose += 1,
+                        DescriptionTier::StatBlock => stat_block += 1,
+                        DescriptionTier::Fields => fields += 1,
+                    }
+                    if let Some(marker) =
+                        ingest_vocabulary(&resolved.text).filter(|_| leaks.len() < 10)
+                    {
+                        leaks.push(format!("{}: `{marker}` in {}", rule.id, resolved.text));
+                    }
+                }
+            }
+        }
+        println!(
+            "reference-library description tiers: prose={prose} stat_block={stat_block} \
+             fields={fields} identity_only={bare}"
+        );
+        assert!(
+            fields > 0,
+            "no reference-library rule resolved through the field summary -- this gate is \
+             measuring nothing"
+        );
+        assert!(leaks.is_empty(), "ingest-format vocabulary reached a description: {leaks:?}");
     }
 
     #[test]

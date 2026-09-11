@@ -237,7 +237,10 @@ fn describe_holdable(package: &SheetRulePackage, what: &Holdable, count: u8) -> 
     }
 }
 
-fn describe_prof(prof: &ProfRef) -> String {
+/// A proficiency reference in the sheet's own words. Public so
+/// [`crate::rules_core::sheet_rule_catalog`] renders a granted proficiency with the same
+/// vocabulary a prerequisite line prints it with, rather than a second, drifting one.
+pub fn describe_prof(prof: &ProfRef) -> String {
     match prof {
         ProfRef::Weapon(weapon) => pretty(weapon),
         ProfRef::WeaponGroup(tag) | ProfRef::WeaponTag(tag) => format!("{} weapons", pretty(tag)),
@@ -323,7 +326,9 @@ fn describe_expr(package: &SheetRulePackage, expr: &Expr) -> String {
     }
 }
 
-fn ability_word(ability: Ability) -> &'static str {
+/// An ability score's full name. Public for the same single-vocabulary reason as
+/// [`describe_prof`].
+pub fn ability_word(ability: Ability) -> &'static str {
     match ability {
         Ability::Str => "Strength",
         Ability::Dex => "Dexterity",
@@ -334,7 +339,9 @@ fn ability_word(ability: Ability) -> &'static str {
     }
 }
 
-fn save_word(save: Save) -> &'static str {
+/// A saving throw's full name. Public for the same single-vocabulary reason as
+/// [`describe_prof`].
+pub fn save_word(save: Save) -> &'static str {
     match save {
         Save::Fortitude => "Fortitude",
         Save::Reflex => "Reflex",
@@ -344,7 +351,7 @@ fn save_word(save: Save) -> &'static str {
 
 /// The referenced rule's own display label when the package carries it, else its slug in
 /// words. Never the raw id: an id is a locator, not something a player reads.
-fn label_of(package: &SheetRulePackage, id: &str) -> String {
+pub fn label_of(package: &SheetRulePackage, id: &str) -> String {
     match package.rule(id) {
         Some(rule) if !rule.label.is_empty() => rule.label.clone(),
         _ => pretty(split_rule_id(id).2),

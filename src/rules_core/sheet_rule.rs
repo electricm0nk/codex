@@ -968,6 +968,18 @@ impl SheetRulePackage {
         self.rules.get(id)
     }
 
+    /// The rules this rule hands out, in package order (`Granter::Rule` read backwards).
+    ///
+    /// A record that does nothing but apply something else -- a variant row that states only
+    /// "this is the base creature with the Celestial Creature template on it" -- carries that
+    /// fact on the **other** end of the edge: the template's `granted_by`, not the variant's
+    /// own fields. Without this accessor such a record looks empty to a catalog screen, which
+    /// is why the desktop catalogs used to re-read the ingest format to describe it
+    /// (`sheet_rule_catalog::catalog_field_summary`, SD-35 `AT-35-E6-003`).
+    pub fn granted_from(&self, id: &str) -> &[RuleId] {
+        self.grants_from_rule.get(id).map_or(&[], Vec::as_slice)
+    }
+
     /// The rule of `kind` with this slug. When several books carry the slug, `core_rulebook`
     /// wins, then the lexicographically first book id -- one line per record, never one per
     /// printing.

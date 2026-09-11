@@ -3585,27 +3585,15 @@ const BARE_RECORD_FINDINGS: &[(&str, &str, &[&str])] = &[
         "spells",
         &["Keketar Spell ~ Reshape Reality", "Mothman Spell ~ Agent of Fate"],
     ),
-    // SD-32 row 19 cycle 4: `reference_library_catalog.rs`'s three-tier
-    // resolution (authored `description`, a `DESC` raw token, then a
-    // rendered mechanical-token summary) closes 9,679 of the 9,697 records
-    // across these twelve kinds to a real served field. These 6 are the
-    // genuine residual for `beastiary/race_generic` — real corpus records
-    // (`Hydra (Cryohydra)` etc., PCGen alternate-energy-type Hydra variants)
-    // with `description: null` and an empty statement array, verified by direct
-    // inspection: nothing beyond the bare `key`/`name` exists anywhere in
-    // the corpus record for any of the three tiers to resolve.
-    (
-        "beastiary1",
-        "race_variants",
-        &[
-            "Hydra (Cryohydra)",
-            "Hydra (Pyrohydra)",
-            "Iron Cobra (Adamantine Cobra)",
-            "Iron Cobra (Cold Iron Cobra)",
-            "Iron Cobra (Darkwood Cobra)",
-            "Iron Cobra (Mithral Cobra)",
-        ],
-    ),
+    // `beastiary1`/`race_variants` stood here from SD-32 row 19 cycle 4 with
+    // six keys — the Hydra and Iron Cobra energy/material variants, recorded
+    // then as records where "nothing beyond the bare key/name exists anywhere
+    // in the corpus record". SD-35 `AT-35-E6-003` cycle 12 deleted the entry
+    // rather than relaxing it: reading the converted package instead of the
+    // ingest format's token rows, all six describe themselves from their own
+    // typed fields. The premise was true of the ingest format and false of the
+    // package, which is the whole argument of this criterion stated as six
+    // records.
     // Same shape as `beastiary/race_generic` above — 7 of Bestiary 4's 183
     // `template` records carry only a `SOURCEPAGE` (administrative, excluded
     // from the tier-3 summary) or nothing at all.
@@ -3620,6 +3608,42 @@ const BARE_RECORD_FINDINGS: &[(&str, &str, &[&str])] = &[
             "Standard Death Dog",
             "Standard Gholdako",
             "Standard-Type Clockwork Dragon",
+            "Adamantine Clockwork Dragon",
+            "Clockwork Dragon Rust Breath",
+            "Clockwork Dragon Sleep Gas",
+            "Colossus",
+            "Destroyer-Type Clockwork Dragon",
+            "Drakainia Spawn",
+            "Drakainia Spawn ~ Chameleon Scales",
+            "Drakainia Spawn ~ Covered in Eyes",
+            "Drakainia Spawn ~ Favored Spawn",
+            "Drakainia Spawn ~ Impenetrable Skin",
+            "Drakainia Spawn ~ Multiple Heads",
+            "Drakainia Spawn ~ Poison Glands",
+            "Drakainia Spawn ~ Serpent-Headed Tail",
+            "Drakainia Spawn ~ Sticky",
+            "Drakainia Spawn ~ Tentacles",
+            "Drakainia Spawn ~ Vestigial Companion",
+            "Fleshdreg (Envy)",
+            "Fleshdreg (Gluttony)",
+            "Fleshdreg (Greed)",
+            "Fleshdreg (Lust)",
+            "Fleshdreg (Pride)",
+            "Fleshdreg (Sloth)",
+            "Fleshdreg (Wrath)",
+            "Great Old One",
+            "Kaiju",
+            "Leaf Ray ~ Fall",
+            "Leaf Ray ~ Spring/Summer",
+            "Leaf Ray ~ Winter",
+            "Mythic",
+            "Nightmare Outsider",
+            "Psychopomp",
+            "Samsaran",
+            "Wayang",
+            "Werebat_STATS",
+            "Werecrocodile_STATS",
+            "Wereshark_STATS",
         ],
     ),
     // Same shape — 5 of Mythic Adventures' 15 `template` records carry only
@@ -3638,6 +3662,610 @@ const BARE_RECORD_FINDINGS: &[(&str, &str, &[&str])] = &[
             "Mythic Simple Template ~ Divine",
             "Mythic Simple Template ~ Invincible",
             "Mythic Simple Template ~ Savage",
+            "Mythic",
+            "Mythic Arugment Summoning",
+        ],
+    ),
+    // SD-35 `AT-35-E6-003` cycle 12. `reference_library_catalog.rs` stopped
+    // printing the ingest format's own token rows and now reads the converted
+    // package (`decisions.md §11`). These 10 of ACG's 79 `template` records
+    // are hidden bookkeeping rows: every one states a visibility flag saying
+    // it is not shown, and at most a reference to a starting-equipment kit;
+    // four of them state the visibility flag and nothing else at all. The
+    // converter reads both as metadata, so the package holds their identity
+    // and nothing more, and the field summary has nothing to say. What the
+    // screen used to print for them was the flag and the kit reference with
+    // the source token heads still attached -- the exact leakage this cycle
+    // removed, not content a player was reading.
+    //
+    // Reported as a number, never excused (`decisions.md §27b`): they keep
+    // their surface and their keys. Remedy: convert the kit reference into a
+    // grant on the record's own rule, which would describe six of the ten;
+    // the remaining four state nothing convertible and are a hard
+    // impossibility of source data. Named in the cycle receipt and in a
+    // `deferral` retro event.
+    (
+        "acg",
+        "templates",
+        &[
+            "Arcanist ~ Acid Damage",
+            "Arcanist ~ Cold Damage",
+            "Arcanist ~ Electricity Damage",
+            "Arcanist ~ Fire Damage",
+            "Skald's Instrument (Choose)",
+            "Skald's Instrument (Random)",
+            "Slayer's Manacles",
+            "Starting Gold ACG ~ Average",
+            "Starting Gold ACG ~ Maximum",
+            "Starting Gold ACG ~ Random",
+        ],
+    ),
+    // SD-35 `AT-35-E6-003` cycle 12, one finding in 34 families.
+    //
+    // `reference_library_catalog.rs` stopped printing the ingest format's own
+    // token rows and now reads the converted package (`decisions.md §11`).
+    // These 331 records across the twelve reference-library kinds are the exact
+    // population whose converted rule states **nothing beyond its identity**:
+    // no prose, no stat-block line, no typed field, no grant edge in either
+    // direction, and no contribution to a named rules variable. Re-derived at
+    // HEAD, not carried forward, by
+    // `reference_library_catalog.rs`'s own tier census
+    // (`cargo test -p codex --lib no_reference_library_description_carries_ingest_format_vocabulary
+    // -- --nocapture`, whose `identity_only=` figure is this population by
+    // rule) and by this gate's own per-family diff.
+    //
+    // What they state in the source, and what the screen used to print for
+    // them, is a token row the converter reads and drops as metadata: a
+    // visibility flag saying the row is not shown, a creature subtype or size
+    // letter, a leg count, a starting-equipment kit reference, a variable
+    // declaration paired with an automatic grant. The old three-tier
+    // resolution printed those rows verbatim, token head and all -- which is
+    // the leakage this criterion exists to remove, not content a player was
+    // reading. Removing it is the point; the records keep their surface and
+    // their keys, and the count is reported here rather than excused
+    // (`decisions.md §27b`).
+    //
+    // Remedy, and it is converter-side by construction (`workflow-instruction.md
+    // §8`: a live-side read is never the fix): carry the metadata heads that
+    // are genuinely facts about the record -- size, legs, hands, creature
+    // subtype, subrace, alignment, region, favored weapon, starting kit --
+    // as stat-block lines on the record's own converted rule, then delete the
+    // families that close. Sized and named in the cycle receipt and in a
+    // `deferral` retro event; not attempted here because it rewrites prose
+    // corpus-wide and this cycle had already spent its one build.
+    (
+        "apg",
+        "templates",
+        &[
+            "LEGS 2",
+            "LEGS 4",
+            "Starting Gold APG ~ Average",
+            "Starting Gold APG ~ Maximum",
+            "Starting Gold APG ~ Random",
+        ],
+    ),
+    (
+        "beastiary1",
+        "abilities",
+        &[
+            "Aasimar ~ Agathion-Blooded",
+            "Aasimar ~ Angel-Blooded",
+            "Aasimar ~ Archon-Blooded",
+            "Aasimar ~ Azata-Blooded",
+            "Aasimar ~ Garuda-Blooded",
+            "Aasimar ~ Peri-Blooded",
+            "Racial Traits ~ Drow",
+            "Racial Traits ~ Duergar",
+            "Racial Traits ~ Goblin",
+            "Racial Traits ~ Hobgoblin",
+            "Racial Traits ~ Kobold",
+            "Racial Traits ~ Merfolk",
+            "Racial Traits ~ Orc",
+            "Racial Traits ~ Svirfneblin",
+            "Racial Traits ~ Tengu",
+            "Tiefling ~ Asura-Spawn",
+            "Tiefling ~ Demodand-Spawn",
+            "Tiefling ~ Demon-Spawn",
+            "Tiefling ~ Div-Spawn",
+            "Tiefling ~ Qlippoth-Spawn",
+        ],
+    ),
+    (
+        "beastiary1",
+        "templates",
+        &[
+            "Aasimar ~ Agathion-Blooded",
+            "Aasimar ~ Angel-Blooded",
+            "Aasimar ~ Archon-Blooded",
+            "Aasimar ~ Azata-Blooded",
+            "Aasimar ~ Garuda-Blooded",
+            "Aasimar ~ Peri-Blooded",
+            "Angel",
+            "Archon",
+            "Azata",
+            "Black Half-Dragon",
+            "Blue Half-Dragon",
+            "Brass Half-Dragon",
+            "Bronze Half-Dragon",
+            "Chaotic",
+            "Cold",
+            "Copper Half-Dragon",
+            "Demon",
+            "Devil",
+            "Dragon Size Tracker",
+            "Elemental",
+            "Evil",
+            "Giant",
+            "Gnoll",
+            "Gold Half-Dragon",
+            "Good",
+            "Green Half-Dragon",
+            "Lawful",
+            "No Intelligence Score",
+            "Red Half-Dragon",
+            "Reptilian",
+            "SIZE_C",
+            "SIZE_C+",
+            "SIZE_D",
+            "SIZE_F",
+            "SIZE_G",
+            "SIZE_H",
+            "Shapechanger",
+            "Silver Half-Dragon",
+            "Tengu",
+            "Tiefling ~ Asura-Spawn",
+            "Tiefling ~ Demodand-Spawn",
+            "Tiefling ~ Demon-Spawn",
+            "Tiefling ~ Div-Spawn",
+            "Tiefling ~ Qlippoth-Spawn",
+            "Wererat_STATS",
+            "Werewolf_STATS",
+            "White Half-Dragon",
+        ],
+    ),
+    (
+        "bestiary_2",
+        "abilities",
+        &[
+            "Racial Traits ~ Dhampir",
+            "Racial Traits ~ Fetchling",
+            "Racial Traits ~ Grippli",
+            "Racial Traits ~ Ifrit",
+            "Racial Traits ~ Oread",
+            "Racial Traits ~ Sylph",
+            "Racial Traits ~ Undine",
+        ],
+    ),
+    (
+        "bestiary_2",
+        "templates",
+        &[
+            "Aeon",
+            "Agathion",
+            "Arms ~ 1",
+            "Arms ~ 10",
+            "Arms ~ 2",
+            "Arms ~ 3",
+            "Arms ~ 4",
+            "Arms ~ 5",
+            "Arms ~ 6",
+            "Arms ~ 7",
+            "Arms ~ 8",
+            "Arms ~ 9",
+            "Daemon",
+            "Dark Folk",
+            "Inevitable",
+            "Legs ~ 1",
+            "Legs ~ 10",
+            "Legs ~ 11",
+            "Legs ~ 12",
+            "Legs ~ 13",
+            "Legs ~ 14",
+            "Legs ~ 15",
+            "Legs ~ 16",
+            "Legs ~ 17",
+            "Legs ~ 18",
+            "Legs ~ 19",
+            "Legs ~ 2",
+            "Legs ~ 20",
+            "Legs ~ 21",
+            "Legs ~ 22",
+            "Legs ~ 23",
+            "Legs ~ 24",
+            "Legs ~ 25",
+            "Legs ~ 26",
+            "Legs ~ 27",
+            "Legs ~ 28",
+            "Legs ~ 3",
+            "Legs ~ 4",
+            "Legs ~ 5",
+            "Legs ~ 6",
+            "Legs ~ 7",
+            "Legs ~ 8",
+            "Legs ~ 9",
+            "Nightshade",
+            "Protean",
+            "Qlippoth",
+            "Whale Bite",
+            "Whale Tail Slap",
+        ],
+    ),
+    (
+        "bestiary_3",
+        "abilities",
+        &[
+            "Racial Traits ~ Catfolk",
+            "Racial Traits ~ Ratfolk",
+            "Racial Traits ~ Suli",
+            "Racial Traits ~ Vanara",
+            "Racial Traits ~ Vishkanya",
+        ],
+    ),
+    (
+        "bestiary_3",
+        "templates",
+        &[
+            "Adlet",
+            "Asura",
+            "Behemoth",
+            "Bog Nixie",
+            "Clockwork",
+            "Demodand",
+            "Div",
+            "Dread Corby",
+            "Fey Creature Has Natural Armor",
+            "Fey Creature Has No Natural Armor",
+            "Kami",
+            "Kyton",
+            "Leshy",
+            "Oni",
+            "Rakshasa",
+            "Ratfolk",
+            "Sasquatch",
+            "Vanara",
+            "Vishkanya",
+        ],
+    ),
+    (
+        "bestiary_4",
+        "abilities",
+        &[
+            "Racial Traits ~ Changeling",
+            "Racial Traits ~ Kasatha",
+            "Racial Traits ~ Kitsune",
+            "Racial Traits ~ Nagaji",
+            "Racial Traits ~ Samsaran",
+            "Racial Traits ~ Trox",
+            "Racial Traits ~ Wayang",
+            "Racial Traits ~ Wyrwood",
+            "Racial Traits ~ Wyvaran",
+        ],
+    ),
+    (
+        "bestiary_5",
+        "abilities",
+        &[
+            "Racial Traits ~ Skinwalker",
+        ],
+    ),
+    (
+        "bestiary_5",
+        "templates",
+        &[
+            "Aether",
+            "Android",
+            "Astomoi",
+            "Deep One",
+            "Gray",
+            "Manasaputra",
+            "Phantom",
+            "Robot",
+            "Sahkil",
+            "Skinwalker",
+        ],
+    ),
+    (
+        "bestiary_6",
+        "abilities",
+        &[
+            "Racial Traits ~ Rougarou",
+        ],
+    ),
+    (
+        "bestiary_6",
+        "templates",
+        &[
+            "Blight",
+            "Derro",
+            "Munavri",
+            "Troop",
+            "Wild Hunt",
+        ],
+    ),
+    (
+        "book_of_the_damned_volume_2",
+        "templates",
+        &[
+            "Codex-Named Unit (template_book_of_the_damned_volume_2_botd2_templates_lst_64)",
+        ],
+    ),
+    (
+        "crb",
+        "abilities",
+        &[
+            "Default",
+            "Racial Traits ~ Dwarf",
+            "Racial Traits ~ Elf",
+            "Racial Traits ~ Gnome",
+            "Racial Traits ~ Half-Elf",
+            "Racial Traits ~ Half-Orc",
+            "Racial Traits ~ Halfling",
+            "Racial Traits ~ Human",
+        ],
+    ),
+    (
+        "crb",
+        "deities",
+        &[
+            "Codex-Named Unit (deity_core_rulebook_cr_deities_lst_29)",
+        ],
+    ),
+    (
+        "crb",
+        "templates",
+        &[
+            "Eighth Hitdie",
+            "Familiar ~ Augmented Animal",
+            "Half Hitdie",
+            "Quarter Hitdie",
+            "Starting Gold CRB ~ Average",
+            "Starting Gold CRB ~ Maximum",
+            "Starting Gold CRB ~ Random",
+            "Wizard Spellbook",
+        ],
+    ),
+    (
+        "inner_sea_faiths",
+        "abilities",
+        &[
+            "Codex-Named Unit (ability_inner_sea_faiths_isf_abilities_faith_lst_100)",
+            "Codex-Named Unit (ability_inner_sea_faiths_isf_abilities_faith_lst_111)",
+            "Codex-Named Unit (ability_inner_sea_faiths_isf_abilities_faith_lst_117)",
+            "Codex-Named Unit (ability_inner_sea_faiths_isf_abilities_faith_lst_123)",
+            "Codex-Named Unit (ability_inner_sea_faiths_isf_abilities_faith_lst_181)",
+            "Codex-Named Unit (ability_inner_sea_faiths_isf_abilities_faith_lst_187)",
+            "Codex-Named Unit (ability_inner_sea_faiths_isf_abilities_faith_lst_193)",
+            "Codex-Named Unit (ability_inner_sea_faiths_isf_abilities_faith_lst_25)",
+            "Codex-Named Unit (ability_inner_sea_faiths_isf_abilities_faith_lst_250)",
+            "Codex-Named Unit (ability_inner_sea_faiths_isf_abilities_faith_lst_256)",
+            "Codex-Named Unit (ability_inner_sea_faiths_isf_abilities_faith_lst_262)",
+            "Codex-Named Unit (ability_inner_sea_faiths_isf_abilities_faith_lst_273)",
+            "Codex-Named Unit (ability_inner_sea_faiths_isf_abilities_faith_lst_279)",
+            "Codex-Named Unit (ability_inner_sea_faiths_isf_abilities_faith_lst_285)",
+            "Codex-Named Unit (ability_inner_sea_faiths_isf_abilities_faith_lst_296)",
+            "Codex-Named Unit (ability_inner_sea_faiths_isf_abilities_faith_lst_302)",
+            "Codex-Named Unit (ability_inner_sea_faiths_isf_abilities_faith_lst_308)",
+            "Codex-Named Unit (ability_inner_sea_faiths_isf_abilities_faith_lst_319)",
+            "Codex-Named Unit (ability_inner_sea_faiths_isf_abilities_faith_lst_325)",
+            "Codex-Named Unit (ability_inner_sea_faiths_isf_abilities_faith_lst_331)",
+            "Codex-Named Unit (ability_inner_sea_faiths_isf_abilities_faith_lst_348)",
+            "Codex-Named Unit (ability_inner_sea_faiths_isf_abilities_faith_lst_42)",
+            "Codex-Named Unit (ability_inner_sea_faiths_isf_abilities_faith_lst_48)",
+            "Codex-Named Unit (ability_inner_sea_faiths_isf_abilities_faith_lst_54)",
+            "Codex-Named Unit (ability_inner_sea_faiths_isf_abilities_faith_lst_88)",
+            "Codex-Named Unit (ability_inner_sea_faiths_isf_abilities_faith_lst_94)",
+        ],
+    ),
+    (
+        "inner_sea_gods",
+        "abilities",
+        &[
+            "Adept",
+            "Codex-Named Unit (ability_inner_sea_gods_isg_abilities_faith_lst_100)",
+            "Codex-Named Unit (ability_inner_sea_gods_isg_abilities_faith_lst_106)",
+            "Codex-Named Unit (ability_inner_sea_gods_isg_abilities_faith_lst_117)",
+            "Codex-Named Unit (ability_inner_sea_gods_isg_abilities_faith_lst_123)",
+            "Codex-Named Unit (ability_inner_sea_gods_isg_abilities_faith_lst_129)",
+            "Codex-Named Unit (ability_inner_sea_gods_isg_abilities_faith_lst_140)",
+            "Codex-Named Unit (ability_inner_sea_gods_isg_abilities_faith_lst_146)",
+            "Codex-Named Unit (ability_inner_sea_gods_isg_abilities_faith_lst_152)",
+            "Codex-Named Unit (ability_inner_sea_gods_isg_abilities_faith_lst_163)",
+            "Codex-Named Unit (ability_inner_sea_gods_isg_abilities_faith_lst_169)",
+            "Codex-Named Unit (ability_inner_sea_gods_isg_abilities_faith_lst_175)",
+            "Codex-Named Unit (ability_inner_sea_gods_isg_abilities_faith_lst_186)",
+            "Codex-Named Unit (ability_inner_sea_gods_isg_abilities_faith_lst_198)",
+            "Codex-Named Unit (ability_inner_sea_gods_isg_abilities_faith_lst_209)",
+            "Codex-Named Unit (ability_inner_sea_gods_isg_abilities_faith_lst_215)",
+            "Codex-Named Unit (ability_inner_sea_gods_isg_abilities_faith_lst_221)",
+            "Codex-Named Unit (ability_inner_sea_gods_isg_abilities_faith_lst_232)",
+            "Codex-Named Unit (ability_inner_sea_gods_isg_abilities_faith_lst_238)",
+            "Codex-Named Unit (ability_inner_sea_gods_isg_abilities_faith_lst_244)",
+            "Codex-Named Unit (ability_inner_sea_gods_isg_abilities_faith_lst_25)",
+            "Codex-Named Unit (ability_inner_sea_gods_isg_abilities_faith_lst_255)",
+            "Codex-Named Unit (ability_inner_sea_gods_isg_abilities_faith_lst_261)",
+            "Codex-Named Unit (ability_inner_sea_gods_isg_abilities_faith_lst_267)",
+            "Codex-Named Unit (ability_inner_sea_gods_isg_abilities_faith_lst_279)",
+            "Codex-Named Unit (ability_inner_sea_gods_isg_abilities_faith_lst_285)",
+            "Codex-Named Unit (ability_inner_sea_gods_isg_abilities_faith_lst_31)",
+            "Codex-Named Unit (ability_inner_sea_gods_isg_abilities_faith_lst_348)",
+            "Codex-Named Unit (ability_inner_sea_gods_isg_abilities_faith_lst_354)",
+            "Codex-Named Unit (ability_inner_sea_gods_isg_abilities_faith_lst_360)",
+            "Codex-Named Unit (ability_inner_sea_gods_isg_abilities_faith_lst_37)",
+            "Codex-Named Unit (ability_inner_sea_gods_isg_abilities_faith_lst_372)",
+            "Codex-Named Unit (ability_inner_sea_gods_isg_abilities_faith_lst_378)",
+            "Codex-Named Unit (ability_inner_sea_gods_isg_abilities_faith_lst_384)",
+            "Codex-Named Unit (ability_inner_sea_gods_isg_abilities_faith_lst_395)",
+            "Codex-Named Unit (ability_inner_sea_gods_isg_abilities_faith_lst_401)",
+            "Codex-Named Unit (ability_inner_sea_gods_isg_abilities_faith_lst_407)",
+            "Codex-Named Unit (ability_inner_sea_gods_isg_abilities_faith_lst_465)",
+            "Codex-Named Unit (ability_inner_sea_gods_isg_abilities_faith_lst_471)",
+            "Codex-Named Unit (ability_inner_sea_gods_isg_abilities_faith_lst_541)",
+            "Codex-Named Unit (ability_inner_sea_gods_isg_abilities_faith_lst_77)",
+            "Codex-Named Unit (ability_inner_sea_gods_isg_abilities_faith_lst_94)",
+        ],
+    ),
+    (
+        "inner_sea_gods",
+        "templates",
+        &[
+            "Codex-Named Unit (template_inner_sea_gods_isg_templates_lst_6)",
+        ],
+    ),
+    (
+        "inner_sea_races",
+        "templates",
+        &[
+            "Codex-Named Unit (template_inner_sea_races_isr_templates_lst_13)",
+            "Codex-Named Unit (template_inner_sea_races_isr_templates_lst_15)",
+            "Codex-Named Unit (template_inner_sea_races_isr_templates_lst_16)",
+            "Codex-Named Unit (template_inner_sea_races_isr_templates_lst_17)",
+            "Codex-Named Unit (template_inner_sea_races_isr_templates_lst_18)",
+            "Codex-Named Unit (template_inner_sea_races_isr_templates_lst_19)",
+        ],
+    ),
+    (
+        "inner_sea_world_guide",
+        "abilities",
+        &[
+            "Racial Traits ~ Gillman",
+            "Racial Traits ~ Strix",
+        ],
+    ),
+    (
+        "inner_sea_world_guide",
+        "deities",
+        &[
+            "Codex-Named Unit (deity_inner_sea_world_guide_iswg_deities_lst_14)",
+            "Codex-Named Unit (deity_inner_sea_world_guide_iswg_deities_lst_15)",
+            "Codex-Named Unit (deity_inner_sea_world_guide_iswg_deities_lst_86)",
+            "Codex-Named Unit (deity_inner_sea_world_guide_iswg_deities_lst_87)",
+            "Codex-Named Unit (deity_inner_sea_world_guide_iswg_deities_lst_88)",
+            "Codex-Named Unit (deity_inner_sea_world_guide_iswg_deities_lst_89)",
+            "Codex-Named Unit (deity_inner_sea_world_guide_iswg_deities_lst_90)",
+            "Codex-Named Unit (deity_inner_sea_world_guide_iswg_deities_lst_91)",
+        ],
+    ),
+    (
+        "inner_sea_world_guide",
+        "templates",
+        &[
+            "Codex-Named Unit (template_inner_sea_world_guide_iswg_templates_lst_25)",
+            "Codex-Named Unit (template_inner_sea_world_guide_iswg_templates_lst_31)",
+            "Codex-Named Unit (template_inner_sea_world_guide_iswg_templates_lst_33)",
+            "Codex-Named Unit (template_inner_sea_world_guide_iswg_templates_lst_41)",
+            "Codex-Named Unit (template_inner_sea_world_guide_iswg_templates_lst_45)",
+            "Codex-Named Unit (template_inner_sea_world_guide_iswg_templates_lst_51)",
+            "Codex-Named Unit (template_inner_sea_world_guide_iswg_templates_lst_54)",
+            "Codex-Named Unit (template_inner_sea_world_guide_iswg_templates_lst_55)",
+            "Codex-Named Unit (template_inner_sea_world_guide_iswg_templates_lst_68)",
+            "Codex-Named Unit (template_inner_sea_world_guide_iswg_templates_lst_69)",
+            "Codex-Named Unit (template_inner_sea_world_guide_iswg_templates_lst_89)",
+            "Human Ethnicity (Chelaxian)",
+            "Human Ethnicity (Taldan)",
+        ],
+    ),
+    (
+        "occult_adventures",
+        "templates",
+        &[
+            "LARGE",
+            "MEDIUM",
+            "SMALL",
+        ],
+    ),
+    (
+        "pathfinder_unchained",
+        "templates",
+        &[
+            "Legs 02",
+            "Legs 04",
+            "Legs 06",
+            "Legs 08",
+            "Legs 10",
+            "Legs 12",
+            "Legs 14",
+            "Legs 16",
+            "Legs 18",
+            "Legs 20",
+            "Legs 22",
+        ],
+    ),
+    (
+        "ultimate_combat",
+        "race_variants",
+        &[
+            "Companion (Bird (Eagle))",
+            "Companion (Bird (Hawk))",
+            "Companion (Bird (Owl))",
+        ],
+    ),
+    (
+        "ultimate_combat",
+        "templates",
+        &[
+            "Starting Gold UC ~ Average",
+            "Starting Gold UC ~ Maximum",
+            "Starting Gold UC ~ Random",
+        ],
+    ),
+    (
+        "ultimate_equipment",
+        "templates",
+        &[
+            "Bard's Instrument (Choose)",
+            "Bard's Instrument (Random)",
+            "The Shield of the Sun",
+        ],
+    ),
+    (
+        "ultimate_intrigue",
+        "templates",
+        &[
+            "Starting Gold UI ~ Average",
+            "Starting Gold UI ~ Maximum",
+            "Starting Gold UI ~ Random",
+        ],
+    ),
+    (
+        "ultimate_magic",
+        "templates",
+        &[
+            "Starting Gold UM ~ Average",
+            "Starting Gold UM ~ Maximum",
+            "Starting Gold UM ~ Random",
+        ],
+    ),
+    (
+        "ultimate_psionics",
+        "skills",
+        &[
+            "Lost Skill Point",
+        ],
+    ),
+    (
+        "ultimate_psionics",
+        "templates",
+        &[
+            "Half-Construct",
+            "Starting Gold UltPsi ~ Average",
+            "Starting Gold UltPsi ~ Maximum",
+            "Starting Gold UltPsi ~ Random",
+        ],
+    ),
+    (
+        "ultimate_wilderness",
+        "abilities",
+        &[
+            "Racial Traits ~ Ghoran",
+        ],
+    ),
+    (
+        "ultimate_wilderness",
+        "templates",
+        &[
+            "Starting Gold UW ~ Average",
+            "Starting Gold UW ~ Maximum",
+            "Starting Gold UW ~ Random",
         ],
     ),
 ];
@@ -7006,32 +7634,37 @@ mod tests {
     /// until its key is removed.
     #[test]
     fn bare_records_are_exactly_the_recorded_findings() {
+        // Every family is judged before anything is asserted. A per-family assert stops at the
+        // first one and hides the rest, which turns a single mechanism change into one
+        // rediscovery per run (SD-35 `AT-35-E6-003` cycle 12 paid for this three times).
+        let mut unrecorded: Vec<String> = Vec::new();
+        let mut fixed: Vec<String> = Vec::new();
         for family in full_inventory() {
             let recorded = recorded_bare(&family).unwrap_or_default();
             let live = match reach_of(&family) {
                 Some(Reach::BareRecords { bare, .. }) => bare,
                 _ => BTreeSet::new(),
             };
-
-            let unrecorded: Vec<&String> = live.difference(&recorded).collect();
-            assert!(
-                unrecorded.is_empty(),
-                "{}: {} record(s) now reach their surface carrying only a key, with no recorded \
-                 finding — the player sees a name and empty columns: {:?}",
-                family.label(),
-                unrecorded.len(),
-                unrecorded
-            );
-
-            let fixed: Vec<&String> = recorded.difference(&live).collect();
-            assert!(
-                fixed.is_empty(),
-                "{}: these records now carry real fields — delete them from \
-                 BARE_RECORD_FINDINGS: {:?}",
-                family.label(),
-                fixed
-            );
+            let new: Vec<&String> = live.difference(&recorded).collect();
+            if !new.is_empty() {
+                unrecorded.push(format!("{}: {new:?}", family.label()));
+            }
+            let gone: Vec<&String> = recorded.difference(&live).collect();
+            if !gone.is_empty() {
+                fixed.push(format!("{}: {gone:?}", family.label()));
+            }
         }
+        assert!(
+            unrecorded.is_empty(),
+            "record(s) now reach their surface carrying only a key, with no recorded finding — \
+             the player sees a name and empty columns:\n{}",
+            unrecorded.join("\n")
+        );
+        assert!(
+            fixed.is_empty(),
+            "these records now carry real fields — delete them from BARE_RECORD_FINDINGS:\n{}",
+            fixed.join("\n")
+        );
     }
 
     /// **The honesty rule, against the real live example.**
