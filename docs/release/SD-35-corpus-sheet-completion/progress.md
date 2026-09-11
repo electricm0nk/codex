@@ -41,6 +41,75 @@ re-measured at the cut by the launch-readiness audit.
 
 ## Cycle log
 
+### 2026-09-11 — Epic 6 / `desktop-and-prose-leave-pcgen` — AT-35-E6-003 **cycle 10** (`2b4fc3ded7`, `dc8ec4f998`) — **partial** (the frontend race test leaves the ingest format; a `.COPY=` row's own `VISIBLE:NO` now reaches the sheet; the intelligent-item swap is blocked on the package not naming its variables)
+
+Cycle 9 called `intelligent_item_catalog.rs` unblocked and put it first. This cycle measured it
+before writing a swap, as cycles 7 and 9 did, and cycle 9 was **half right**: the mechanics are
+in the package now (the Ego variable went 0 → 175 contributions), but the package holds them
+under an **opaque `VarId`** and carries no display label anywhere. A screen whose whole content is
+`Ego +2` / `Intelligence +4` cannot get the word `Ego` out of it, and minting the id from the
+PCGen variable name on the live side is exactly what `decisions.md §11` forbids. **The fix
+belongs on the converter side** — a codex-neutral label on `VarTable`, AT-35-E2's territory — so
+the swap did not happen and the reason is a measured number, not a judgement.
+
+`raceCreationCoverage.test.ts` did swap: **21 hits → 0**, all four rules-bearing derivations now
+reading the converted rule's typed fields instead of re-implementing the ingest parse in
+TypeScript. Every derived value is identical to the pre-swap one for the 18 races the package
+holds; the 12 ARG chassis races it cannot serve are pinned **by name** in the file and still
+checked for the classification the corpus does carry.
+
+And, as in cycle 9, the measurement found a converter defect underneath — this time in what the
+package says a sheet should **print**. **PCGen applies a `.COPY=` record as `copied base → the
+copy row's own tokens`.** The ingest flattens both into one `raw_tokens` array with the copy's own
+tokens **first**, `PinnedTree::closure` uses that array in place of the base row's, and
+`convert_token` assigns last-wins — so every head the copy row overrides took the **inherited**
+value. `Intelligent Item ~ Alignment / Lawful Good.COPY=Intelligent Item Alignment (LG)` states
+`VISIBLE:NO`; the row it copies states `VISIBLE:QUALIFY`; the converted rule came out
+`print: true`. **527 rules across 473 records** — PCGen's own bookkeeping shadows — were marked in
+the package as belonging on a character sheet.
+
+- **Scope gate:** `SCOPE_GATE: EXEMPT (Epic 6 cycle — closes zero units by design, decisions.md §2)`.
+  Run anyway: `scoped=0 remaining_non_done=0 floor=500 verdict=PASS_WHOLE_REMAINDER`.
+- **Receipt rows:** `closed=0 relabeled=0 rust_lines_changed=195 ratio=n/a builds_recorded=2 pcgen_live_files=199`.
+- **Residue:** `root apps/desktop` **4 files / 97 hits → 3 / 76**; `live_files` **200 → 199**,
+  `live_hits` **11511 → 11490**, `verdict=PASS`. The first fall in `pcgen_live_files` since cycle 1.
+- **The fix is a stable partition, never a rewrite.** `closure::copy_own_tokens_last` moves every
+  shipped `(key, value)` pair the copy row itself states to the end of the list, in its own order.
+  Nothing is added, nothing is dropped — so a PI-screened shipped list stays exactly as screened.
+- **The blast radius was a number before it was a change.** A corpus-wide Python pass computed the
+  same partition first and asked which heads' last-wins value would move: **`VISIBLE` (473
+  records), `EQMOD` (65), `ALTEQMOD` (2), `COST` (2)** and nothing else, over the **2,110** of
+  2,418 copy-base records that ship tokens. The converter **reads and drops** the last three
+  (`convert.rs` line 653's metadata arm), so the partition was provably output-equivalent except
+  for `print`. The regenerated package then confirmed it field by field: **473 files, 527 rules,
+  one field, all `true` → `false`**. `_report.json`, `_refused.json`, `_tokens.json`, `_vars/` and
+  `var_names.json` are byte-identical.
+- **New per-kind gate** `a_copy_rows_own_visible_no_reaches_the_converted_rule` reads the **live
+  corpus directory** and each record's own base row out of the pinned tree — an enumeration of the
+  **source**, independent of the converter's census. RED at **523 offending rules across 644
+  records** before the fix (648 hidden copy rows in the corpus, 4 not held by the package under
+  their own id).
+- **Oracle parity run, and it did not move.** 156 / 154 / 2 / 67 lines and 382 / 376 / 6 chassis —
+  identical to cycle 9 on every field, with the same eight named disagreements, none of them this
+  cycle's. That is the expected result and the point of running it: 527 rules stopped printing and
+  not one was a line any of the 29 fixture characters puts on a sheet.
+- **A separate cargo workspace is a gate that does not run.** The desktop crate's
+  `description_coverage_is_pinned_per_book` was red at `UPSI` 403 → 404 (total 5389 → 5390) — the
+  first desktop run since cycle 7 swapped that catalog's description source, because
+  `apps/desktop/src-tauri` is its own workspace and `workflow-instruction.md §6` builds it only
+  for a cycle that touches `apps/`. Not this cycle's: the package differs from `HEAD~1` in one
+  field and `catalog_description` does not read `print`. Self-healed, both figures re-derived from
+  the built catalog.
+- **`partial`** — remainder **3 files / 76 hits, 7 token types**: `PRE[A-Z]+:`=27,
+  `raw_tokens`=18, `DESC:`=13, `render_pcgen_desc`=8, `raw_bonus_chains`=6, `TYPE=`=3,
+  `BONUS:`=1; by file `race_trait_picker.rs`=33, `intelligent_item_catalog.rs`=28,
+  `reference_library_catalog.rs`=15. **Two blockers, neither buildable inside this criterion:**
+  a **display label on `VarTable`** (converter side) unblocks `intelligent_item_catalog.rs`
+  outright — its 171 records join the package with **zero** misses and its hidden-row filter is
+  now just `!rule.print` — and the **inventory ruling** on the 667 corpus records that are not
+  inventory units (178 ARG `race_trait` + 489 `ability`) unblocks the other two together.
+  Reported, not excused.
+
 ### 2026-09-11 — Epic 6 / `desktop-and-prose-leave-pcgen` — AT-35-E6-003 **cycle 9** (`c3075955c0`) — **partial** (the converter was dropping 1,679 records' BONUS clauses on the floor; fixed, and two of the four remaining readers are unblocked by it)
 
 This cycle measured all four remaining readers before writing a swap, and found three of them
