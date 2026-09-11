@@ -384,7 +384,7 @@ mod tests {
         );
         assert!(
             !carries_a_positional_placeholder(&trapfinding.description),
-            "no positional placeholder may reach the screen: {:?}",
+            "no `%N` may reach the screen: {:?}",
             trapfinding.description
         );
     }
@@ -458,7 +458,7 @@ mod tests {
         }
         assert!(
             offenders.is_empty(),
-            "{} served description(s) carry a positional placeholder: {:?}",
+            "{} served description(s) carry a `%N`: {:?}",
             offenders.len(),
             offenders.iter().take(8).collect::<Vec<_>>()
         );
