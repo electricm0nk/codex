@@ -64,6 +64,75 @@ re-measured at the cut by the launch-readiness audit.
 
 ## Cycle log
 
+### 2026-09-11 — Epic 6 / `desktop-and-prose-leave-pcgen` — AT-35-E6-003-SWEEP **cycle 4** (`f10afbc22c`) — **partial** (ingest tokens were printing on the player's sheet; 402 code hits cleared, 80% of the cycle's 500-hit floor)
+
+`SCOPE_GATE: EXEMPT (Epic 6 cycle — closes zero corpus units by design, decisions.md §2)`. Run
+anyway, for the record — `python3 scripts/cycle_scope_gate.py --min 500`:
+
+```
+inventory=docs/work-inventory.json
+scope=(whole remainder)
+scoped_by_bucket=
+scoped_by_kind=
+scoped=0 remaining_non_done=0 floor=500 verdict=PASS_WHOLE_REMAINDER
+```
+
+**The measurement found a defect, not a count.** Cycle 3 handed this cycle two lanes and the
+larger of them first. Before taking either, this cycle censused the gate's 1,299 remaining code
+hits **by shape** — which the gate itself cannot report, since it prints `files=` and `hits=` and
+never says where a hit sits. 419 of them were in `src/rules_core/pilot_compute/mod.rs`, and they
+were neither doc comments (ruling B14 already exempts those) nor engine-read data arrays. They
+were inside `ComputationExplanation.detail` — the string carried to the desktop crate as
+`ExplanationDto.detail` (`character_hub.rs:785`) and rendered on the Character Hub sheet
+(`characterHub/classFeaturesModel.ts`). `BONUS:VAR|SaveBonus_vs_Poison|1|TYPE=Racial` was
+**printing on a player's paper character sheet**. That is a sheet-rule violation
+(`decisions.md §1`), not a residue-gate tidiness item, and it had been invisible for the whole of
+Epic 6 (`incident 1789149288301-at-35-e6-003-sweep-268e28`, recurrence key
+`ingest-vocabulary-in-rendered-sheet-text`, `silent=true`).
+
+**The fix is custody, not deletion.** `AT-35-E6-003-SWEEP_cycle4_prose_citation_demote.py` finds
+each token's enclosing parenthesised citation region inside the rendered string, truncates the
+region at the token, and re-emits the removed span verbatim as a `//` provenance comment above
+the record — which is exactly where ruling B14 and `AGENTS.md` rule 9 both want it. 199 blocks
+across 4 files, **199 provenance comments added, zero citations lost**. The transform is
+deletion-only and refuses rather than guesses: it will not cut a span carrying a `{non-const}`
+format placeholder, will not remove a literal's last sentence (that sentence carries the closing
+quote — it broke the build on first application and a quote-balance invariant was added in the
+same cycle so it cannot recur), and will not make an edit that fails a word-order gate. Re-running
+it at HEAD prints `TOTAL cleared=0 blocks=0`.
+
+**One data outlier closed alongside it.** `ultimate_intrigue/spell_list.rs` stored 101
+`description:` fields still carrying the raw `|PRERULE:1,DisplayFullSpell` display-rule
+qualifier. Every other book's spell list already strips it at ingest — the convention is written
+into `crb/spell_list.rs:28` and `acg/spell_list.rs:27`, and `grep -cE 'description: "[^"]*\|CASTERLEVEL' src/rules_core/rules_tables/crb/spell_list.rs`
+is `0`. Stripping it brings the outlier into line and takes the file to zero.
+
+**Code hits 1,299 → 897 = 402 cleared**; `live_files` **75 → 73**, both because a file reached
+zero (`feat_prereqs.rs`, `ultimate_intrigue/spell_list.rs`). Nothing was rebaselined: the
+baseline file was not edited, `--rebaseline` was not run, and no pattern or exclusion was touched.
+
+```
+closed=0 relabeled=0 rust_lines_changed=2920 ratio=n/a builds_recorded=0 pcgen_live_files=73
+```
+
+**Three tests retargeted, all onto stronger assertions.** Each had asserted that the *rendered
+sheet line quoted its ingest token* — `speed.detail.contains("MOVEBASE")`,
+`shards.detail.contains("LIST")`, `detail.contains("BONUS:VAR|RageBonus|1")`,
+`extra.detail.contains("BONUS:SKILL|")`. Each now asserts the line states the rule (`"base land
+speed of 30 ft"`, `"chooses two skills"`, `"the rage morale bonus is +3"`, `"cr_races.lst"`)
+**and** that no ingest token reaches it at all. The bar went up, not down.
+
+**Under the cycle's own 500-code-hit floor, at 402, and that is named rather than ground out.**
+The 123 hits the transform refused in `pilot_compute/mod.rs` are sentences that mention a token
+mid-sentence with no citation frame; each needs a sentence rewritten by hand, which is a cycle,
+not a top-up. Widening the regex until it took them is the failure shape `AGENTS.md` rule 7
+warns about. `cycle_scope_gate.py --min 500` — the instrument the protocol gates on — passes.
+
+**`partial`** — `BONUS:=259; PRE[A-Z]+:=207; TYPE==202; %LIST=74; DESC:=66; %CHOICE=44;
+render_pcgen_desc=39; raw_tokens=5; DEFINE:=1` (897 hits / 73 files, summing to the gate's
+`live_hits` exactly; nine token types, under §8's ten). Receipt:
+`artifacts/epic-6-pcgen-exit/AT-35-E6-003-SWEEP_cycle4_receipt.md`.
+
 ### 2026-09-11 — Epic 6 / `desktop-and-prose-leave-pcgen` — AT-35-E6-003-SWEEP **cycle 3** (`68d030837f`) — **partial** (the feat-prerequisites migration taken whole — 5,320 code hits, 10.6× the cycle's 500-hit floor)
 
 `SCOPE_GATE: EXEMPT (Epic 6 cycle — closes zero corpus units by design, decisions.md §2)`. Run
