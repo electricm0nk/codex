@@ -1968,8 +1968,10 @@ mod tests {
         assert_eq!(vars.get("SomeLVL"), Some(&10));
         assert!(
             !vars.contains_key("SomeBonus"),
-            "a formula referencing an identifier bound elsewhere in the corpus (a sibling \
-             record's own real BONUS:VAR target) must never resolve to a guessed number: {vars:?}"
+            // Provenance (ingest tokens, demoted out of the rendered sheet line -- SD-35 AT-35-E6-003-SWEEP):
+            //   BONUS:VAR target
+            "a formula referencing an identifier bound elsewhere in the corpus (a sibling record's \
+             own real) must never resolve to a guessed number: {vars:?}"
         );
     }
 

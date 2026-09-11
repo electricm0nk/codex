@@ -169,9 +169,21 @@ fn greater_rage_shows_the_morale_bonus_it_produces() {
     let detail = row("unchained_barbarian", 11, "greater_rage_morale_bonus")
         .expect("emitted at 11")
         .detail;
+    // Retargeted by SD-35 AT-35-E6-003-SWEEP cycle 4. This asserted the sheet
+    // line quoted `BONUS:VAR|RageBonus|1` and `BONUS:VAR|RageBonusHP|TL`. A
+    // sheet line is a final number or the rule's words, never ingest
+    // vocabulary (`decisions.md` §1); the two tokens now sit in the `//`
+    // provenance comment beside the record. What the test is really for --
+    // that BOTH halves the tokens produce reach the sheet -- is asserted on
+    // the rendered halves instead, which is a stronger check than quoting.
     assert!(
-        detail.contains("BONUS:VAR|RageBonus|1") && detail.contains("BONUS:VAR|RageBonusHP|TL"),
-        "the derivation must name the two tokens the record actually carries: {detail}"
+        detail.contains("the rage morale bonus is +3")
+            && detail.contains("rage temporary hit points"),
+        "the derivation must show both halves the record produces: {detail}"
+    );
+    assert!(
+        !detail.contains("BONUS:"),
+        "no ingest token may reach the rendered sheet line: {detail}"
     );
     assert!(
         detail.contains("character level x 3"),

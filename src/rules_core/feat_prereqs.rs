@@ -837,8 +837,9 @@ mod prerequisite_tests {
             .collect();
         assert!(
             lost.is_empty(),
-            "a stronger build lost access to feats the weaker one had (beyond the known \
-             PRELEVEL:MAX exceptions): {lost:?}"
+            // Provenance (ingest tokens, demoted out of the rendered sheet line -- SD-35 AT-35-E6-003-SWEEP):
+            //   PRELEVEL:MAX exceptions
+            "a stronger build lost access to feats the weaker one had (beyond the known): {lost:?}"
         );
         assert!(
             strong_keys.len() > weak_keys.len(),
