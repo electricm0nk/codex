@@ -41,6 +41,80 @@ re-measured at the cut by the launch-readiness audit.
 
 ## Cycle log
 
+### 2026-09-11 — Epic 6 / `desktop-and-prose-leave-pcgen` — AT-35-E6-003 **cycle 12** (`798bf8ebda`) — **partial** (the reference library leaves the ingest format; cycle 11's 4,242-record blocker was 400)
+
+Cycle 11 handed this cycle one buildable step: a generic *"a rule with no prose, as words from
+its typed fields"* renderer, sized at **4,242 of 9,697 records**. The renderer was built, the
+module swapped, and the sizing turned out to be wrong by an order of magnitude — in the closable
+direction.
+
+**`catalog_field_summary` renders a prose-less rule from its typed fields**, in one fixed order,
+through the same vocabulary a prerequisite line prints with: the value, the second numbers beside
+it, the sheet total it feeds and its stacking type, its tags, the condition it applies under, the
+choice it offers, what holding it does to the fact set, who hands it out. Then it reads **two
+edges backwards**, and that is where most of the population lives: `SheetRulePackage::granted_from`
+(what the rule hands out — the entire content of a variant row that says only *"this is the base
+creature with the Fiendish Creature template on it"*) and the labelled variable tables (a record
+whose only content is a bonus to a named variable). `catalog_description_or_fields` tiers the
+three and says which answered.
+
+**Cycle 11 measured one of five places a converted rule keeps its content.** It bucketed
+`prose[].family` and called a rule with no `Desc`/`Benefit`/`Special` undescribable. The
+stat-block families, the typed fields, the grant edge read backwards and the variable tables
+describe **3,839** of its 4,242. The real figure is **403 corpus records / 418 rules**
+(`correction 1789138505702-at-35-e6-003-5f9046`). Tier census over the twelve kinds:
+**prose 3,785 / stat block 397 / fields 5,342 / identity only 415** of 9,939 rules; the join is
+**9,697 records, 0 misses**.
+
+**The new corpus-wide gate found a real leak on its first run.** One record shipped an upstream
+annotation head inside its own converted prose, straight onto a catalog screen. The converter's
+editorial scrub removed only the not-implemented admission; it was widened by two lines of
+predicate, and the regeneration changed **exactly 3 files** — the two records and the defect
+ledger — with `_report.json`, `_refused.json` and `_tokens.json` byte-identical
+(`correction 1789138505827-at-35-e6-003-ea70be`).
+
+**The gate caught this cycle raising the residue, once.** The first draft of both new gates
+listed the ingest format's literal token heads so a failure could name what leaked — which is
+itself a live-side occurrence of the ingest format (`live_files` 198 → 199). Both were rewritten
+to detect the vocabulary by **shape**: an all-capitals run of four or more letters followed by
+`:` or `=`, or a `%` followed by a digit or a capital. Compliant, and strictly wider than the
+list.
+
+**The cost is a number, not an exemption** (`decisions.md §27b`). 395 records across 40 families
+now reach their surface with identity only and are pinned key by key in
+`reach_gate::BARE_RECORD_FINDINGS` (was 22 across 6). What the screen printed for them before was
+a visibility flag, a creature subtype or a starting-kit reference with the source token head still
+on it — **216 of the 403 identity-only corpus records are rows the source itself marks
+not-visible**. Six records went the other way: SD-32 recorded the Hydra and Iron Cobra variants as
+having "nothing beyond the bare key/name", and read from the package all six describe themselves,
+so that entry is **deleted** rather than relaxed. Remedy for the 395 is converter-side by
+construction and sized in the receipt (`deferral 1789138521337-at-35-e6-003-f852a7`).
+
+**Third instrument correction, and the cheapest one.**
+`bare_records_are_exactly_the_recorded_findings` asserted inside its per-family loop, so one run
+reported one family and hid the other 35. This cycle paid for it three times at ~2 minutes a
+build before restructuring the test to judge every family and assert once
+(`correction 1789138505960-at-35-e6-003-555c26`). `AGENTS.md` rule 8: the mechanism was one loop
+away the whole time.
+
+- **Scope gate:** `SCOPE_GATE: EXEMPT (Epic 6 cycle — closes zero units by design, decisions.md §2)`.
+  Run anyway: `scoped=0 remaining_non_done=0 floor=500 verdict=PASS_WHOLE_REMAINDER`.
+- **Receipt rows:** `closed=0 relabeled=0 rust_lines_changed=1978 ratio=n/a builds_recorded=3 pcgen_live_files=197`
+- **Residue:** `root apps/desktop files=1 hits=33`; `live_files=197 live_hits=11447 baseline_files=260 baseline_hits=12736 verdict=PASS` (was 2/48, 198/11462).
+- **Refused tokens:** `PRE[A-Z]+:`=15, `DESC:`=9, `raw_tokens`=8, `BONUS:`=1 — all 33 in
+  `race_trait_picker.rs`, blocked on a package-side source for the replacement guard
+  (`deferral 1789138521208-at-35-e6-003-3e9128`). **4 distinct token types**, under `§8`'s limit of 10.
+- **Verified once:** `--no-run` exit 0; lib `3309 passed; 0 failed; 15 ignored`; full workspace
+  `FULL_EXIT=0` / 413 targets / 8,820 passed / 0 failed / 68 ignored / 0 FAILED suites; clippy 0
+  warnings root **and** desktop; desktop crate `575 passed; 0 failed`; frontend `101/101` + `tsc`
+  clean (`apps/` was touched, so they ran here); `sheet_rule_convert --check` exit 0;
+  `grep -rlE 'BONUS:|DEFINE:|PRE[A-Z]+:|%CHOICE|CL=' data/sheet_rules/ | wc -l` → 0; atlas,
+  token-coverage, shape-boundary, missing-tables, both denominator gates and `pi-sweep` all clean.
+- **Receipt:** `artifacts/epic-6-pcgen-exit/AT-35-E6-003_cycle12_receipt.md`
+- **Still open for the operator, third cycle running:** `~/.bashrc` lines 135-137 export three
+  SD-31-era `RETRO_ACTOR` values, so `scripts/verify.sh` misfiles its derived event no matter what
+  a cycle sets inline. No cycle may write `~/.bashrc`.
+
 ### 2026-09-11 — Epic 6 / `desktop-and-prose-leave-pcgen` — AT-35-E6-003 **cycle 11** (`81d8199a06`, `0ca94baa4b`) — **partial** (the package names its variables; the intelligent-item catalog leaves the ingest format; the reference-library blocker was measured and is not what two receipts said)
 
 Cycle 10 ended with two blockers, each waiting on a ruling. This cycle asked for neither.
