@@ -18,8 +18,22 @@ process defect** recorded by the epic wrap-up.
 
 ## Open blockers
 
-*(none — an entry here pauses the bundle and is a request for an operator ruling;
-`decisions.md §6`)*
+### 2026-09-11 — AT-35-E6-003-SWEEP cycle 1 — does a live-side doc-comment count as a PCGen read?
+
+**Pauses:** Epic 6's remaining file-count work, and `AT-35-E6-004`'s `--closure` target.
+**Asked by:** AT-35-E6-003-SWEEP cycle 1 (`artifacts/epic-6-pcgen-exit/AT-35-E6-003-SWEEP_cycle1_receipt.md`).
+
+`pcgen_residue_gate.py` counts a hit inside a `//` doc-comment, on the stated reason that such a
+comment "is a sign the code next to it still needs one". Measured at HEAD, that sign is false for
+114 of the gate's 197 live files: their code carries **zero** PCGen reads. Removing every live
+code read in the repository would still leave **187 of 197** files hitting the gate
+(`max_files_clearable_by_code_work_alone=10`; re-derive with
+`python3 docs/release/SD-35-corpus-sheet-completion/artifacts/epic-6-pcgen-exit/AT-35-E6-003-SWEEP_cycle1_residue_shape_census.py`).
+
+Clearing them means deleting ~2,686 lines of derivation provenance, which the sweep's own
+standing rule forbids ("the count must fall because the reads are gone"). **A cycle may not pick
+between the two silently** — one answer costs a bounded relocation pass, the other changes the
+instrument. Both branches are scoped in the receipt's *Next-cycle scope* row.
 
 ## Status matrix
 
@@ -40,6 +54,78 @@ Corpus at the `tranche/15` cut (2026-09-07, `4c6c57eb9f`, identical to authoring
 re-measured at the cut by the launch-readiness audit.
 
 ## Cycle log
+
+### 2026-09-11 — Epic 6 / `desktop-and-prose-leave-pcgen` — AT-35-E6-003-SWEEP **cycle 1** (`<sha>`) — **blocked-escalated** (the sweep measured its own remainder before touching it and found the 25-file floor arithmetically unreachable: only 10 of 197 live files can be cleared by code work at all)
+
+`SCOPE_GATE: EXEMPT (Epic 6 cycle — closes zero corpus units by design, decisions.md §2)`. Run
+anyway, for the record — `python3 scripts/cycle_scope_gate.py --min 500`:
+
+```
+inventory=docs/work-inventory.json
+scope=(whole remainder)
+scoped_by_bucket=
+scoped_by_kind=
+scoped=0 remaining_non_done=0 floor=500 verdict=PASS_WHOLE_REMAINDER
+```
+
+This cycle was dispatched to take the **entire** remaining live-PCGen surface in one batch, with a
+hard floor of **25 live files removed**, on the diagnosis that Epic 6's ~2.8-files-per-cycle
+cadence is a defect. The diagnosis is right. The cause is not the cadence.
+
+Step 1 measures before it touches, and the measurement is the cycle's whole product
+(`artifacts/epic-6-pcgen-exit/AT-35-E6-003-SWEEP_cycle1_residue_shape_census.py`, which runs the
+real gate and splits **its** hits per file):
+
+```
+live_files=197
+comment_hits=2686 code_hits=3628
+files_comment_only=114
+files_with_code_hits=83
+files_still_hitting_after_every_code_read_removed=187
+max_files_clearable_by_code_work_alone=10
+```
+
+**If every live-side code read of the ingest format in this repository were removed tonight, 187
+of the 197 files would still hit the gate.** 114 of the 197 carry no code hit at all — their code
+left PCGen cycles ago and what still hits is provenance prose of the shape
+`` //! - `BONUS:SAVE|BASE.Will|classlevel("APPLIEDAS=NONEPIC")/2+2` — good Will save. ``, the audit
+trail `AGENTS.md` rule 9 demands. The gate's own docstring gives its reason for counting comments
+— *"a comment explaining a PCGen token on the live side is a sign the code next to it still needs
+one"* — and for those 114 files that sign is now demonstrably false. The instrument's premise held
+against its 260-file baseline of mostly-live reads; Epics 1–6 drained the code side and left the
+prose, and it has not been re-validated against that population since.
+
+So the cycle faced two doors and its own dispatch closes both: delete ~2,686 lines of derivation
+provenance (clears the floor; is exactly "making the number fall by means other than the reads
+going away", since those reads went away cycles ago), or do code work only (ceiling **10**, under
+the floor by 15). Neither is a call a cycle may make alone. **The ruling needed, in one question:
+does a live-side doc-comment that quotes an ingest-format token count as a PCGen read for
+`AT-35-E6-004`'s `--closure` mode?** If yes, Epic 6 must budget a bounded provenance-relocation
+pass (187 files / 2,686 lines) dispatched as what it is, not as a code sweep. If no, the gate
+gains a comment-aware read — pinned by its own unit test, baseline untouched — and the ruling must
+say in the same breath that the resulting 197 → 83 drop is **not** progress
+(`instrument-correction-is-not-closure`); the 83 code-bearing files stay exactly as unfinished.
+
+The 83 are grouped by mechanism in the receipt so the next dispatch can work them that way. The
+largest is the cleanest: `prerequisites: Some(&["PRE…"])` on ~30 static feat/archetype tables is
+**dead on the live side** — `feat_prereqs::evaluate_catalog_feat_prerequisites` reads the
+*converted* `Applies` gate through `converted_gate::verdicts`, and the field's only non-test
+consumer is `src/pcgen_import/cache_gen/hand_authored_feat_dump.rs`, already converter side. That
+is a **move to `src/pcgen_import/`** with zero net deletion of function bodies, ~2,400 of the
+3,628 code hits.
+
+**No source file was written**, so no build budget was spent re-proving a tree byte-identical to
+the one cycle 12 verified green. The tree-reading gates were run and are quoted in the receipt;
+`pcgen_residue_gate.py --check` is identical at start and end.
+
+- **Receipt rows (mechanical):** `closed=0 relabeled=0 rust_lines_changed=0 ratio=n/a
+  builds_recorded=0 pcgen_live_files=197` — unchanged, and it did not rise.
+- **Refused tokens:** none — no conversion was attempted. The remainder not taken is **197 live
+  files**, named in full by `python3 scripts/pcgen_residue_gate.py --check --list-files` and split
+  comment/code by the census script.
+- `correction 1789139722104-at-35-e6-003-sweep-36e91f` (claimed 197 live reads, actual 10
+  clearable; blast radius: Epic 6's whole cadence), `deferral 1789139722238-at-35-e6-003-sweep-415e0f`.
+- Receipt: `artifacts/epic-6-pcgen-exit/AT-35-E6-003-SWEEP_cycle1_receipt.md`.
 
 ### 2026-09-11 — Epic 6 / `desktop-and-prose-leave-pcgen` — AT-35-E6-003 **cycle 12** (`798bf8ebda`) — **partial** (the reference library leaves the ingest format; cycle 11's 4,242-record blocker was 400)
 
