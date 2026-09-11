@@ -1198,8 +1198,10 @@ mod tests {
         // `ingest_pu_classes.rs` used to read only the base row and silently
         // drop -- the exact `.MOD`-appended-row-loss defect row 21 fixed for
         // the generic `class_feature.rs` path, found live in THIS book's own
-        // generator too and fixed here (`raw_tokens_excluding_bonus`/
-        // `raw_bonus_chains` now read the full `.MOD` closure, matching
+        // generator too and fixed here (the generator's token reader and its
+        // declared-bonus-chain reader --
+        // `pcgen_import::ingest_record::{token_pairs, bonus_chain_qualifiers}`
+        // -- now read the full `.MOD` closure, matching
         // `out_of_record_formulas_are_byte_exact_against_the_real_lst_rows`
         // below, which independently pins the same raw `.lst` tokens). No
         // longer an honest absence -- the real tokens now ship.

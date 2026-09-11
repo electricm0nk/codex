@@ -10643,7 +10643,8 @@ const HALF_ELF_ABILITY_BONUS_CHOICE_ID: &str = "choice:half_elf_ability_bonus";
 /// that reach a computed total at all are skill bonuses, handled by
 /// [`ALTERNATE_TRAIT_SELECTED_SKILL_BONUSES`].
 ///
-/// Derived by scanning every ARG alternate's `raw_bonus_chains` against the
+/// Derived by scanning every ARG alternate's declared bonus chains
+/// (`pcgen_import::ingest_record::bonus_chain_qualifiers`) against the
 /// engine's computed-total surface, not asserted —
 /// `tests/sd27_alternate_racial_trait_reachability.rs` re-runs that scan and
 /// pins the whole set of eleven.
@@ -10664,7 +10665,9 @@ const HALF_ELF_ABILITY_BONUS_CHOICE_ID: &str = "choice:half_elf_ability_bonus";
 ///
 /// The sibling of [`ALTERNATE_TRAIT_SELECTED_SKILL_BONUSES`], and derived the
 /// same way: `tests/sd27_alternate_racial_trait_reachability.rs` rescans every
-/// alternate's `raw_bonus_chains` against the engine's computed-total surface
+/// alternate's declared bonus chains
+/// (`pcgen_import::ingest_record::bonus_chain_qualifiers`) against the
+/// engine's computed-total surface
 /// and fails, naming the trait, if this table and the corpus disagree in
 /// either direction.
 ///
@@ -11691,7 +11694,7 @@ fn explain_rougarou_flat_override_race_trait(
             "Rougarou racial trait bundle — Natural Weapon: PF1 Bestiary 6 Rougarou has a bite \
              attack dealing 1d{ROUGAROU_BITE_DAMAGE_DIE} points of damage \
              (rougarou_abilities_race.lst:20 ABILITY:Internal|AUTOMATIC|Bite, \
-             raw_bonus_chains WEAPONPROF=Bite/DAMAGESIZE -1), a secondary attack if the \
+             with the bite's damage die stepped down one size), a secondary attack if the \
              character also wields a manufactured weapon. This engine has no natural-attack \
              routine and computes no weapon-damage total anywhere (the same posture \
              `ground_alchemist_feral_mutagen_discovery`'s claw/bite damage-die records already \
@@ -12193,7 +12196,8 @@ fn explain_nagaji_flat_override_race_trait(
 //
 // Re-verified against this repo's own independently re-ingested corpus records
 // (`data/corpus/advanced_race_guide/race_trait/undine/undine_{acid_breath,nereid_fascination,
-// ooze_breath}.json`'s `raw_bonus_chains`) at fold time — all nine formula strings match the
+// ooze_breath}.json`'s declared bonus chains, read by
+// `pcgen_import::ingest_record::bonus_chain_qualifiers`) at fold time — all nine formula strings match the
 // transcription below byte-for-byte, including Ooze Breath's genuinely-as-written
 // `min(floor((TL+1/2)),5)` (not `(TL+1)/2`), confirming the branch's transcription was faithful
 // upstream arithmetic, not a typo.
@@ -13114,7 +13118,8 @@ fn replaced_by_alternate_trait(input: &CharacterInput, flag: &str) -> bool {
 /// # This list is a measurement, not a selection
 ///
 /// `tests/sd27_alternate_racial_trait_reachability.rs` re-derives it by
-/// scanning all 153 alternates' `raw_bonus_chains` against the engine's own
+/// scanning all 153 alternates' declared bonus chains
+/// (`pcgen_import::ingest_record::bonus_chain_qualifiers`) against the engine's own
 /// computed-total surface, and fails if the two disagree in either direction.
 /// It is short because the *engine* is narrow, not because the content is:
 /// every other alternate's declared number is situational

@@ -61,8 +61,9 @@ pub fn compute_general_effect(record: &EquipmentRecord) -> Option<SkillCheckBonu
 /// — the real, load-bearing mechanical effect on every potion/elixir in
 /// this population (`Elixir of Swimming`, `Elixir of Vision`, `Dust of
 /// Appearance`, ...), none of which carry a `BONUS:` chain at all
-/// (confirmed against the live corpus: `raw_bonus_chains` is empty on
-/// every one). Only fires when no explicit `BONUS:SKILL` chain exists
+/// (confirmed against the live corpus: every one declares no bonus chains
+/// at all -- `pcgen_import::ingest_record::bonus_chain_qualifiers` returns
+/// empty). Only fires when no explicit `BONUS:SKILL` chain exists
 /// (checked by the caller's `.or_else`), and only for a `<target>` of
 /// `PC`/`ANYPC` (a character-side skill bonus) — a `TEMPBONUS:EQ|...`
 /// (the `Lead Blades` shape: an equipment-side weapon-damage buff) is a
@@ -262,7 +263,8 @@ mod tests {
     /// `core_rulebook/cr_equip_magic_items.lst` — a `magic_items`-category
     /// consumable whose real, load-bearing mechanical effect is a
     /// `TEMPBONUS:ANYPC|SKILL|Swim|10|TYPE=Competence` token, never a
-    /// `BONUS:SKILL` chain (`raw_bonus_chains` is empty on this record —
+    /// `BONUS:SKILL` chain (this record declares no bonus chains at all —
+    /// `pcgen_import::ingest_record::bonus_chain_qualifiers` returns empty,
     /// confirmed against the live corpus). `TEMPBONUS` is PCGen's
     /// temporary/consumable-triggered sibling of `BONUS` and carries the
     /// identical `SKILL|<skill>|<n>|TYPE=...` shape one segment further in

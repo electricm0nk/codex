@@ -1071,7 +1071,9 @@ Armor Spikes\tKEY:Special Quality ~ Spikes ~ Armor\tTYPE:Armor\tCOST:50\n";
     ///    that actually names the `+1` modifier -- was never even
     ///    inspected, regardless of any weapon-dimension gap.
     /// 2. `compute_equipment_effects`'s weapon path summed only the base
-    ///    record's own `raw_bonus_chains` (`TOHIT` only, per its own real
+    ///    record's own declared bonus chains
+    ///    (`pcgen_import::ingest_record::bonus_chain_qualifiers`; `TOHIT`
+    ///    only, per its own real
     ///    chain) into `weapon_enhancement_bonus`, unlike the AC dimension,
     ///    which already folds `EQMOD:`-referenced records in
     ///    (`resolve_category_effect`). The `+1 Weapon` modifier's own

@@ -131,7 +131,9 @@ fn armor_class_bonus_from_bonus_chains(record: &EquipmentRecord) -> Option<i16> 
         // `AT-33-E5-003.combined-oracle-results.json`). Confirmed the
         // only record in the whole corpus with this exact shape (a
         // `python3` sweep of every `data/corpus/*/equipment*/**/*.json`
-        // record's own `raw_bonus_chains` for `COMBAT|AC|*|TYPE=Circumstance`
+        // record's own declared bonus chains
+        // (`pcgen_import::ingest_record::bonus_chain_qualifiers`) for
+        // `COMBAT|AC|*|TYPE=Circumstance`
         // finds exactly 1), so this exclusion cannot regress any other
         // already-verified unit.
         let is_ac_bonus = qualifiers.len() >= 3
@@ -489,7 +491,8 @@ mod tests {
     /// (`data/corpus/core_rulebook/equipment/magic_items/
     /// cloak_of_the_manta_ray.json`, itself sourced from
     /// `cr_equip_magic_items.lst:109`). This record carries NO
-    /// `BONUS:COMBAT|AC` chain at all (`raw_bonus_chains` is empty) — its
+    /// `BONUS:COMBAT|AC` chain at all (it declares no bonus chains at all —
+    /// `pcgen_import::ingest_record::bonus_chain_qualifiers` returns empty) — its
     /// real +3 natural armor bonus is stated only as
     /// `TEMPBONUS:PC|COMBAT|AC|3|TYPE=NaturalArmor`, which
     /// `armor_class_bonus_from_bonus_chains` alone cannot see (it reads

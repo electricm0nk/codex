@@ -575,7 +575,9 @@ mod tests {
     /// SD-33 remediation wave 5 (`AT-33-E5-002`/`003`, weapon-token-family
     /// lane): real verbatim tokens copied from
     /// `data/corpus/ultimate_equipment/equipment/heavy_hammer.json`'s
-    /// `raw_bonus_chains` — a TOHIT-only `WEAPONPROF=Warhammer|TOHIT|-2`
+    /// declared bonus chains
+    /// (`pcgen_import::ingest_record::bonus_chain_qualifiers`) — a TOHIT-only
+    /// `WEAPONPROF=Warhammer|TOHIT|-2`
     /// chain and a SEPARATE DAMAGE-only `WEAPONPROF=Warhammer|DAMAGE|4`
     /// chain on the SAME record (plus an unrelated `MOVEADD` chain, which
     /// this test also carries to prove it's correctly skipped). Before
