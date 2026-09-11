@@ -124,7 +124,9 @@ fn great_fortitude_carries_its_real_save_bonus_token() {
     assert_eq!(
         great_fortitude.effect,
         Some(&[FeatEffectBonus {
-            qualifiers: &["SAVE", "Fortitude", "2"]
+            qualifiers: &["SAVE", "Fortitude", "2"],
+            bonus_type: None,
+            conditions: &[],
         }] as &[FeatEffectBonus])
     );
 }

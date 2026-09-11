@@ -748,6 +748,17 @@ fn constant_damage_bonus(bonus: &FeatEffectBonus) -> Option<i16> {
     if qualifiers.len() != 3 {
         return None;
     }
+    // A typed or conditioned bonus is not a flat constant this slice can add.
+    // Before SD-35 `AT-35-E6-003-SWEEP` cycle 7 the stacking label and the
+    // guards were extra `qualifiers` elements, so `len() != 3` above already
+    // excluded every one of them; the cycle moved those into `bonus_type` and
+    // `conditions`, and this check keeps the excluded set exactly what it was.
+    // It is a deliberate behaviour-preserving guard, not a new rule: whether a
+    // typed damage bonus should contribute is a rules question this exit cycle
+    // does not answer.
+    if bonus.bonus_type.is_some() || !bonus.conditions.is_empty() {
+        return None;
+    }
     if qualifiers[0] == "VAR" || qualifiers[1] != "DAMAGE" {
         return None;
     }
@@ -1339,27 +1350,35 @@ Unarmed Strike\tKEY:Unarmed Strike\tTYPE:Weapon.Resizable.Melee.Special.Unarmed.
     fn constant_damage_bonus_examples() {
         assert_eq!(
             constant_damage_bonus(&FeatEffectBonus {
-                qualifiers: &["WEAPONPROF=%LIST", "DAMAGE", "2"]
+                qualifiers: &["WEAPONPROF=%LIST", "DAMAGE", "2"],
+                bonus_type: None,
+                conditions: &[],
             }),
             Some(2)
         );
         assert_eq!(
             constant_damage_bonus(&FeatEffectBonus {
-                qualifiers: &["VAR", "PowerAttackDamageBase", "2"]
+                qualifiers: &["VAR", "PowerAttackDamageBase", "2"],
+                bonus_type: None,
+                conditions: &[],
             }),
             None,
             "a VAR-category token defines a formula variable, not a direct bonus"
         );
         assert_eq!(
             constant_damage_bonus(&FeatEffectBonus {
-                qualifiers: &["COMBAT", "TOHIT-SHORTRANGE,DAMAGE-SHORTRANGE", "1"]
+                qualifiers: &["COMBAT", "TOHIT-SHORTRANGE,DAMAGE-SHORTRANGE", "1"],
+                bonus_type: None,
+                conditions: &[],
             }),
             None,
             "a compound/qualified target is not the bare DAMAGE this slice models"
         );
         assert_eq!(
             constant_damage_bonus(&FeatEffectBonus {
-                qualifiers: &["HP", "CURRENTMAX", "max(3,TL)"]
+                qualifiers: &["HP", "CURRENTMAX", "max(3,TL)"],
+                bonus_type: None,
+                conditions: &[],
             }),
             None,
             "a non-numeric value signals a formula, not a constant"

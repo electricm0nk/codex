@@ -224,6 +224,8 @@ pub type SkillId = String;
 /// `pilot_compute.rs`'s own `FIGHTER_CLASS_ID` value (verified by
 /// reading its source; that constant itself is not `pub`, so it is not
 /// imported, only matched by value).
+use crate::rules_core::rules_tables::crb::class_skill_tables::ClassSkillEntry;
+
 const FIGHTER_CLASS_ID: &str = "class:fighter";
 
 /// **AT-34-E3-003 (bucket M, `skill_content_table_holds_record_magnitude_
@@ -237,7 +239,7 @@ const FIGHTER_CLASS_ID: &str = "class:fighter";
 /// re-typed here. Falls back to an empty slice (never a fabricated one) if
 /// that row is ever renamed or removed -- a real closed-list lookup, never
 /// a name pattern.
-fn full_fighter_class_skills() -> &'static [&'static str] {
+fn full_fighter_class_skills() -> &'static [ClassSkillEntry] {
     crate::rules_core::rules_tables::crb::class_skill_tables::CLASS_SKILL_LISTS
         .iter()
         .find(|list| list.owner_id == FIGHTER_CLASS_ID)
@@ -285,14 +287,14 @@ const GROUNDED_ROGUE_CLASS_SKILLS: &[&str] = &[
 /// classes), so this list is transcribed here directly from the same
 /// corpus file, in the same `TYPE=<Family>` wildcard convention
 /// [`is_full_class_skill`] already expands for Fighter.
-const FULL_WIZARD_CLASS_SKILLS: &[&str] = &[
-    "Appraise",
-    "TYPE=Craft",
-    "Fly",
-    "TYPE=Knowledge",
-    "Linguistics",
-    "TYPE=Profession",
-    "Spellcraft",
+const FULL_WIZARD_CLASS_SKILLS: &[ClassSkillEntry] = &[
+    ClassSkillEntry::Named("Appraise"),
+    ClassSkillEntry::Family("Craft"),
+    ClassSkillEntry::Named("Fly"),
+    ClassSkillEntry::Family("Knowledge"),
+    ClassSkillEntry::Named("Linguistics"),
+    ClassSkillEntry::Family("Profession"),
+    ClassSkillEntry::Named("Spellcraft"),
 ];
 
 /// PF1 core rule: flat trained bonus for any class skill with at least 1
@@ -492,13 +494,12 @@ pub(crate) fn skill_family_member_ids(family: &str) -> Option<&'static [&'static
 /// only after the same normalization the corpus-verification tests already
 /// use ([`normalized_skill_id_matches`]). Returns `false` (never a
 /// fabricated match) for a family this module has no member list for.
-fn is_full_class_skill(raw_list: &[&str], skill_id: &str) -> bool {
-    raw_list.iter().any(|entry| {
-        if let Some(family) = entry.strip_prefix("TYPE=") {
+fn is_full_class_skill(raw_list: &[ClassSkillEntry], skill_id: &str) -> bool {
+    raw_list.iter().any(|entry| match entry {
+        ClassSkillEntry::Family(family) => {
             skill_family_member_ids(family).is_some_and(|members| members.contains(&skill_id))
-        } else {
-            normalized_skill_id_matches(entry, skill_id)
         }
+        ClassSkillEntry::Named(name) => normalized_skill_id_matches(name, skill_id),
     })
 }
 
@@ -664,10 +665,10 @@ fn class_skill_max_ranks(character_level: u16) -> u8 {
 /// enumeration -- families this module has no roster for contribute
 /// nothing, same as an unrecognized bare name would); a bare name expands
 /// to its own normalized id ([`normalize_skill_display_name`]).
-fn expand_raw_class_skill_list(raw_list: &[&str]) -> Vec<SkillId> {
+fn expand_raw_class_skill_list(raw_list: &[ClassSkillEntry]) -> Vec<SkillId> {
     let mut expanded = Vec::new();
     for entry in raw_list {
-        if let Some(family) = entry.strip_prefix("TYPE=") {
+        if let ClassSkillEntry::Family(family) = entry {
             if let Some(members) = skill_family_member_ids(family) {
                 for member in members {
                     if !expanded.iter().any(|existing: &SkillId| existing == member) {
@@ -677,7 +678,10 @@ fn expand_raw_class_skill_list(raw_list: &[&str]) -> Vec<SkillId> {
             }
             continue;
         }
-        let id = normalize_skill_display_name(entry);
+        let ClassSkillEntry::Named(name) = entry else {
+            unreachable!("the Family arm above continues")
+        };
+        let id = normalize_skill_display_name(name);
         if !expanded.contains(&id) {
             expanded.push(id);
         }

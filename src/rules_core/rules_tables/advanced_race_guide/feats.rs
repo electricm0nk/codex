@@ -76,12 +76,24 @@ pub struct FeatTableEntry {
     pub effect: Option<&'static [FeatEffectBonus]>,
 }
 
+pub use crate::rules_core::rules_tables::crb::feats::{ConditionItem, EffectCondition};
+
 /// One `BONUS:` token lifted from a feat's corpus record, captured as a
 /// flat pipe-delimited qualifier list. Mirrors
 /// `rules_tables::crb::feats::FeatEffectBonus` exactly.
+///
+/// SD-35 `AT-35-E6-003-SWEEP` cycle 7 split the ingest tail off the qualifier
+/// list here too; the condition types are shared with the CRB catalog rather
+/// than re-declared, so one round-trip oracle covers all four catalogs.
 #[derive(Debug, Clone, Copy, PartialEq, Eq)]
 pub struct FeatEffectBonus {
     pub qualifiers: &'static [&'static str],
+    /// The stacking-type label, if the record named one. Mirrors
+    /// `rules_tables::crb::feats::FeatEffectBonus.bonus_type`.
+    pub bonus_type: Option<&'static str>,
+    /// The conditions gating this bonus; empty when it is unconditional.
+    /// Mirrors `rules_tables::crb::feats::FeatEffectBonus.conditions`.
+    pub conditions: &'static [EffectCondition],
 }
 
 /// Full ARG feat catalog: every real corpus record across all 3 real

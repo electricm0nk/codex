@@ -174,11 +174,67 @@ pub struct FeatEffectBonus {
     /// bonus category (`SKILL`, `VAR`, `COMBAT`, `SAVE`, `DC`,
     /// `ABILITYPOOL`, `MOVEADD`, `HP`, or the corpus's own
     /// `WEAPONPROF=%LIST`-shaped category on e.g. Weapon Focus); further
-    /// elements are the target, the value/formula expression, and any
-    /// trailing qualifiers. None of these are re-parsed or evaluated
-    /// here -- this table stores what the corpus says, not a resolved
-    /// game-mechanical delta.
+    /// elements are the target and the value/formula expression. None of
+    /// these are re-parsed or evaluated here -- this table stores what the
+    /// corpus says, not a resolved game-mechanical delta.
+    ///
+    /// **The trailing qualifiers are no longer here.** SD-35
+    /// `AT-35-E6-003-SWEEP` cycle 7 moved the stacking label into
+    /// `bonus_type` and every guard into `conditions`, in this crate's own
+    /// schema, because the ingest spellings of both are the format's
+    /// vocabulary and `decisions.md` §11 keeps that off the live side. The
+    /// verbatim tails are kept converter-side in
+    /// `pcgen_import::feat_effect_conditions`, whose round-trip test rebuilds
+    /// each one from the fields below and proves nothing was lost.
     pub qualifiers: &'static [&'static str],
+    /// The stacking-type label this bonus carries, if any -- `"Dodge"`,
+    /// `"Resistance"`, `"Base.STACK"`. Two bonuses of the same named type do
+    /// not stack unless the label says `STACK`; an unlabelled bonus is
+    /// untyped and always stacks. `None` when the record named no type.
+    pub bonus_type: Option<&'static str>,
+    /// The conditions that gate this bonus. Empty when it applies
+    /// unconditionally -- which is the distinction the shipped
+    /// situational/wired split is derived from, so this is a load-bearing
+    /// field, not decoration.
+    pub conditions: &'static [EffectCondition],
+}
+
+/// One condition gating a feat's bonus, in this crate's own schema.
+///
+/// The ingest format writes these as `PRE<FAMILY>:<argument>` tokens (negated
+/// with a leading `!`). SD-35 `AT-35-E6-003-SWEEP` cycle 7 converted them:
+/// `family` is the family name with the format's prefix removed, `items` is the
+/// argument comma-split exactly as the record wrote it, and `alternatives`
+/// carries the sub-conditions the `MULT` family nests. Nothing was
+/// re-interpreted on the way in -- no count was inferred, no comparison
+/// operator was parsed out of the family name -- because inventing structure
+/// nothing reads would be a fabrication. What the round-trip oracle in
+/// `pcgen_import::feat_effect_conditions` guarantees is only that the
+/// conversion is lossless.
+#[derive(Debug, Clone, Copy, PartialEq, Eq)]
+pub struct EffectCondition {
+    /// `true` when the record wrote the guard negated -- the bonus applies
+    /// when the condition does **not** hold.
+    pub negated: bool,
+    /// The condition family: `"SKILL"`, `"ABILITY"`, `"VARLT"`, `"SIZEGT"`,
+    /// `"MULT"`, ... -- the format's family name, prefix removed.
+    pub family: &'static str,
+    /// The guard's argument, comma-split as written. Empty for a family whose
+    /// whole argument is nested alternatives.
+    pub items: &'static [ConditionItem],
+    /// Sub-conditions, for the `MULT` family which nests them. Empty for every
+    /// other family.
+    pub alternatives: &'static [EffectCondition],
+}
+
+/// One element of an [`EffectCondition`]'s argument.
+#[derive(Debug, Clone, Copy, PartialEq, Eq)]
+pub struct ConditionItem {
+    /// The facet the element selects by, when it selects by one: `"TYPE"`,
+    /// `"CATEGORY"`, `"EQMOD"`. `None` for a plain name or number.
+    pub facet: Option<&'static str>,
+    /// The element's value, verbatim.
+    pub value: &'static str,
 }
 
 /// Full CRB feat catalog: every real corpus record across all 4 book

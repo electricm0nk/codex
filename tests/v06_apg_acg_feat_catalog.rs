@@ -111,7 +111,9 @@ fn pinned_apg_feats_carry_their_real_corpus_fields() {
     assert_eq!(
         extra_hex.effect,
         Some(&[FeatEffectBonus {
-            qualifiers: &["ABILITYPOOL", "Witch Hex", "1"]
+            qualifiers: &["ABILITYPOOL", "Witch Hex", "1"],
+            bonus_type: None,
+            conditions: &[],
         }] as &[FeatEffectBonus])
     );
 
@@ -145,10 +147,14 @@ fn pinned_acg_feats_carry_their_real_corpus_fields() {
         extra_panache.effect,
         Some(&[
             FeatEffectBonus {
-                qualifiers: &["VAR", "PanachePoints", "2"]
+                qualifiers: &["VAR", "PanachePoints", "2"],
+                bonus_type: None,
+                conditions: &[],
             },
             FeatEffectBonus {
-                qualifiers: &["VAR", "Panache_Cap", "2"]
+                qualifiers: &["VAR", "Panache_Cap", "2"],
+                bonus_type: None,
+                conditions: &[],
             },
         ] as &[FeatEffectBonus])
     );

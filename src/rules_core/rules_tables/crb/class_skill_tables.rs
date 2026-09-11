@@ -52,15 +52,40 @@ pub struct ClassSkillList {
     /// enumerable list to transcribe; `ALL` is the record's whole
     /// content).
     pub all_skills: bool,
-    /// The literal, pipe-split `CSKILL:` token entries, in the corpus's
-    /// own order. A `TYPE=X` entry names a whole skill-type wildcard
-    /// (e.g. `"TYPE=Craft"` means every Craft subskill), kept as the
-    /// literal token text rather than expanded — expansion is a SEPARATE
-    /// concern (`skill_allocation.rs`'s own future consumer work), not
-    /// this table's own "does the engine hold this record's content"
-    /// question.
-    pub skills: &'static [&'static str],
+    /// The record's class-skill entries, in the corpus's own order, one per
+    /// pipe-split `CSKILL:` element. Never expanded — expansion is a SEPARATE
+    /// concern (`skill_allocation.rs`'s consumer work), not this table's own
+    /// "does the engine hold this record's content" question.
+    ///
+    /// SD-35 `AT-35-E6-003-SWEEP` cycle 7: these used to ship as the literal
+    /// token strings, so a family wildcard sat here as the ingest spelling
+    /// `"TYPE=Craft"` and `decisions.md` §11 counted it on the live side. The
+    /// distinction the wildcard carries is real and load-bearing, so it is
+    /// typed rather than dropped — see [`ClassSkillEntry`]. The corpus
+    /// verification test below still compares this field against the live
+    /// record's own `CSKILL:` token, rebuilt element for element, so the
+    /// typing is proved lossless by the same check that proved the
+    /// transcription.
+    pub skills: &'static [ClassSkillEntry],
 }
+
+/// One element of a class-skill list.
+///
+/// The ingest format writes a whole-family grant as `TYPE=<Family>` and a
+/// single skill as its bare name. This crate carries the same distinction in
+/// its own vocabulary.
+#[derive(Debug, Clone, Copy, PartialEq, Eq)]
+pub enum ClassSkillEntry {
+    /// One named skill, exactly as the record spells it — `"Acrobatics"`,
+    /// `"Knowledge (Nature)"`.
+    Named(&'static str),
+    /// Every subskill of a family — `Family("Craft")` grants every Craft
+    /// subskill. The roster a family expands to lives with the consumer
+    /// (`skill_allocation::skill_family_member_ids`), never here.
+    Family(&'static str),
+}
+
+use ClassSkillEntry::{Family, Named};
 
 /// The 9 CRB base classes' own `"Class Skills ~ <Class>"` records, plus
 /// `"Jack of All Trades ~ Class Skills"`. Closed list, each row
@@ -71,84 +96,84 @@ pub const CLASS_SKILL_LISTS: &[ClassSkillList] = &[
         owner_id: "class:barbarian",
         all_skills: false,
         skills: &[
-            "Acrobatics", "Climb", "TYPE=Craft", "Handle Animal", "Intimidate",
-            "Knowledge (Nature)", "Perception", "Ride", "Survival", "Swim",
+            Named("Acrobatics"), Named("Climb"), Family("Craft"), Named("Handle Animal"), Named("Intimidate"),
+            Named("Knowledge (Nature)"), Named("Perception"), Named("Ride"), Named("Survival"), Named("Swim"),
         ],
     },
     ClassSkillList {
         owner_id: "class:bard",
         all_skills: false,
         skills: &[
-            "Acrobatics", "Appraise", "Bluff", "Climb", "TYPE=Craft", "Diplomacy",
-            "Disguise", "Escape Artist", "Intimidate", "TYPE=Knowledge", "Linguistics",
-            "Perception", "TYPE=Perform", "TYPE=Profession", "Sense Motive",
-            "Sleight of Hand", "Spellcraft", "Stealth", "Use Magic Device",
+            Named("Acrobatics"), Named("Appraise"), Named("Bluff"), Named("Climb"), Family("Craft"), Named("Diplomacy"),
+            Named("Disguise"), Named("Escape Artist"), Named("Intimidate"), Family("Knowledge"), Named("Linguistics"),
+            Named("Perception"), Family("Perform"), Family("Profession"), Named("Sense Motive"),
+            Named("Sleight of Hand"), Named("Spellcraft"), Named("Stealth"), Named("Use Magic Device"),
         ],
     },
     ClassSkillList {
         owner_id: "class:cleric",
         all_skills: false,
         skills: &[
-            "Appraise", "TYPE=Craft", "Diplomacy", "Heal", "Knowledge (Arcana)",
-            "Knowledge (History)", "Knowledge (Nobility)", "Knowledge (Planes)",
-            "Knowledge (Religion)", "Linguistics", "TYPE=Profession", "Sense Motive",
-            "Spellcraft",
+            Named("Appraise"), Family("Craft"), Named("Diplomacy"), Named("Heal"), Named("Knowledge (Arcana)"),
+            Named("Knowledge (History)"), Named("Knowledge (Nobility)"), Named("Knowledge (Planes)"),
+            Named("Knowledge (Religion)"), Named("Linguistics"), Family("Profession"), Named("Sense Motive"),
+            Named("Spellcraft"),
         ],
     },
     ClassSkillList {
         owner_id: "class:druid",
         all_skills: false,
         skills: &[
-            "Climb", "TYPE=Craft", "Fly", "Handle Animal", "Heal",
-            "Knowledge (Geography)", "Knowledge (Nature)", "Perception",
-            "TYPE=Profession", "Ride", "Spellcraft", "Survival", "Swim",
+            Named("Climb"), Family("Craft"), Named("Fly"), Named("Handle Animal"), Named("Heal"),
+            Named("Knowledge (Geography)"), Named("Knowledge (Nature)"), Named("Perception"),
+            Family("Profession"), Named("Ride"), Named("Spellcraft"), Named("Survival"), Named("Swim"),
         ],
     },
     ClassSkillList {
         owner_id: "class:fighter",
         all_skills: false,
         skills: &[
-            "Climb", "TYPE=Craft", "Handle Animal", "Intimidate",
-            "Knowledge (Dungeoneering)", "Knowledge (Engineering)", "TYPE=Profession",
-            "Ride", "Survival", "Swim",
+            Named("Climb"), Family("Craft"), Named("Handle Animal"), Named("Intimidate"),
+            Named("Knowledge (Dungeoneering)"), Named("Knowledge (Engineering)"), Family("Profession"),
+            Named("Ride"), Named("Survival"), Named("Swim"),
         ],
     },
     ClassSkillList {
         owner_id: "class:monk",
         all_skills: false,
         skills: &[
-            "Acrobatics", "Climb", "TYPE=Craft", "Escape Artist", "Intimidate",
-            "Knowledge (History)", "Knowledge (Religion)", "Perception", "TYPE=Perform",
-            "TYPE=Profession", "Ride", "Sense Motive", "Stealth", "Swim",
+            Named("Acrobatics"), Named("Climb"), Family("Craft"), Named("Escape Artist"), Named("Intimidate"),
+            Named("Knowledge (History)"), Named("Knowledge (Religion)"), Named("Perception"), Family("Perform"),
+            Family("Profession"), Named("Ride"), Named("Sense Motive"), Named("Stealth"), Named("Swim"),
         ],
     },
     ClassSkillList {
         owner_id: "class:paladin",
         all_skills: false,
         skills: &[
-            "TYPE=Craft", "Diplomacy", "Handle Animal", "Heal", "Knowledge (Nobility)",
-            "Knowledge (Religion)", "TYPE=Profession", "Ride", "Sense Motive", "Spellcraft",
+            Family("Craft"), Named("Diplomacy"), Named("Handle Animal"), Named("Heal"), Named("Knowledge (Nobility)"),
+            Named("Knowledge (Religion)"), Family("Profession"), Named("Ride"), Named("Sense Motive"), Named("Spellcraft"),
         ],
     },
     ClassSkillList {
         owner_id: "class:ranger",
         all_skills: false,
         skills: &[
-            "Climb", "TYPE=Craft", "Handle Animal", "Heal", "Intimidate",
-            "Knowledge (Dungeoneering)", "Knowledge (Geography)", "Knowledge (Nature)",
-            "Perception", "TYPE=Profession", "Ride", "Spellcraft", "Stealth", "Survival",
-            "Swim",
+            Named("Climb"), Family("Craft"), Named("Handle Animal"), Named("Heal"), Named("Intimidate"),
+            Named("Knowledge (Dungeoneering)"), Named("Knowledge (Geography)"), Named("Knowledge (Nature)"),
+            Named("Perception"), Family("Profession"), Named("Ride"), Named("Spellcraft"), Named("Stealth"), Named("Survival"),
+            Named("Swim"),
         ],
     },
     ClassSkillList {
         owner_id: "class:rogue",
         all_skills: false,
         skills: &[
-            "Acrobatics", "Appraise", "Bluff", "Climb", "TYPE=Craft", "Diplomacy",
-            "Disable Device", "Disguise", "Escape Artist", "Intimidate",
-            "Knowledge (Dungeoneering)", "Knowledge (Local)", "Linguistics", "Perception",
-            "TYPE=Perform", "TYPE=Profession", "Sense Motive", "Sleight of Hand",
-            "Stealth", "Swim", "Use Magic Device",
+            Named("Acrobatics"), Named("Appraise"), Named("Bluff"), Named("Climb"), Family("Craft"), Named("Diplomacy"),
+            Named("Disable Device"), Named("Disguise"), Named("Escape Artist"), Named("Intimidate"),
+            Named("Knowledge (Dungeoneering)"), Named("Knowledge (Local)"), Named("Linguistics"), Named("Perception"),
+            Family("Perform"), Family("Profession"), Named("Sense Motive"), Named("Sleight of Hand"),
+            Named("Stealth"), Named("Swim"), Named("Use Magic Device"),
         ],
     },
     ClassSkillList {
@@ -207,7 +232,20 @@ mod class_skill_list_tests {
                 let cskill =
                     ingest_record::first_token_value(&json, "CSKILL").unwrap_or_default();
                 let expected: Vec<&str> = cskill.split('|').collect();
-                assert_eq!(row.skills, expected.as_slice(), "{class_name} CSKILL list");
+                // Rebuild the record's own token spelling from the typed
+                // entries. This is both the transcription check it has always
+                // been and, since SD-35 `AT-35-E6-003-SWEEP` cycle 7, the proof
+                // that typing the family wildcard lost nothing: a `Family`
+                // entry must reproduce the record's element exactly.
+                let rebuilt: Vec<String> = row
+                    .skills
+                    .iter()
+                    .map(|entry| match entry {
+                        ClassSkillEntry::Named(name) => (*name).to_string(),
+                        ClassSkillEntry::Family(family) => format!("TYPE={family}"),
+                    })
+                    .collect();
+                assert_eq!(rebuilt, expected, "{class_name} CSKILL list");
             }
             assert!(found_file, "no corpus record found for {class_name}");
         }
