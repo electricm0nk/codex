@@ -100,10 +100,21 @@ this artifact exists instead of a swap.
 
 ## 7. Figures + their re-derive commands
 
+Every figure in §2 and §3 comes from one committed, re-runnable script — it reproduces
+`converted_prose.rs`'s four-step join and `reference_library_catalog.rs`'s three content tiers
+rather than approximating them:
+
+```
+python3 docs/release/SD-35-corpus-sheet-completion/artifacts/epic-6-pcgen-exit/AT-35-E6-003_cycle7_reference_library_census.py
+records=9697 served_today=9679
+converted: description=4566 stat_block=480 facts=3488 none=1163 served_after=8534
+lost=1150 by_join_step={'book_exact': 563, 'no_rule': 489, 'by_name': 17, 'source_row': 81}
+lost by corpus kind dir={'ability': 672, 'domain': 10, 'template': 450, 'feat_generic': 1, 'race_generic': 7, 'deity': 9, 'skill': 1}
+```
+
 | figure | denominator | command |
 |---|---|---|
-| 9,697 records; 9,679 served today; 4,523 at tier 3 | every record under the twelve kind dirs | the Python census in this cycle's receipt's Figures row |
-| 4,566 / 480 / 3,488 / 1,163 under the converted package | the same 9,697 | the same census |
-| 1,150 losing rows split 489 / 563 / 81 / 17 | the same 9,697 | the same census, partitioned by which join step resolved |
-| 37 book-exact `DESC`-bearing rules with no prose, all `[redacted PI]` | rules under `data/sheet_rules/<book>/<kind>/` | the same census |
+| 9,697 records; 9,679 served today; 4,566 / 480 / 3,488 / 1,163; 1,150 lost split 489 / 563 / 81 / 17 | every record under the twelve kind dirs | `python3 docs/release/SD-35-corpus-sheet-completion/artifacts/epic-6-pcgen-exit/AT-35-E6-003_cycle7_reference_library_census.py` |
+| 4,523 records at tier 3 today | the same 9,697 | the same script's `served_today` tiering — tier 3 is the branch after the `description` field and the `DESC` raw token both miss (`served_today()` in that file) |
+| the token-key histogram in §4, and the 37 `[redacted PI]` rules in §4 | the 1,150, and rules under `data/sheet_rules/<book>/<kind>/` | derived in this cycle's working tree with the same walk; the script above prints the partition those rows come from (`by_join_step`) |
 | `apps/desktop` residue after this cycle: 6 files / 179 hits | the live roots' source files | `python3 scripts/pcgen_residue_gate.py --check` |

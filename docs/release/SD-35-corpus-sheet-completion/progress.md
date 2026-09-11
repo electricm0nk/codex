@@ -41,6 +41,58 @@ re-measured at the cut by the launch-readiness audit.
 
 ## Cycle log
 
+### 2026-09-11 — Epic 6 / `desktop-and-prose-leave-pcgen` — AT-35-E6-003 **cycle 7** (`e9ba387746`) — **partial** (the Equipment Catalog reaches zero and *gains* 620 descriptions; the reference library is measured and refused)
+
+Cycle 6 handed this cycle a converter blocker in front of `feat_catalog.rs`. It was in front of
+the wrong door. `decisions.md §11` forbids reading the ingest **format** on the live side — not
+serving a stored string that is already the record's plain words. So a compiled-table catalog
+needs **no converter work at all** to reach zero, and `core_essentials` is off the critical path.
+
+- **Scope gate:** `SCOPE_GATE: EXEMPT (Epic 6 cycle — closes zero units by design, decisions.md §2)`.
+  Run anyway: `scoped=0 remaining_non_done=0 floor=500 verdict=PASS_WHOLE_REMAINDER`.
+- **Receipt rows:** `closed=0 relabeled=0 rust_lines_changed=245 ratio=n/a builds_recorded=1 pcgen_live_files=202`.
+- **Residue:** `root apps/desktop` **7 files / 204 hits → 6 / 179**; `live_files 203 → 202`,
+  `live_hits 11618 → 11593`, `verdict=PASS`. Never raised.
+- **The swap.** `equipment_catalog.rs`'s `serve_description` re-parsed the compiled table's stored
+  string through `render_pcgen_desc` on the way to the screen. `row_description` asks the
+  converted package first (`converted_prose::description_for`, `equipment` then
+  `equipment_modifier`, over a new `corpus_book_dir` covering all 29 book codes the catalog
+  serves) and keeps the compiled table's string **only when it carries no unresolved marker** —
+  the rewriter that used to clean one up has left the live side, so a string that still needs it
+  is refused rather than shown. `render_pcgen_desc` is gone from the file, and the 21 remaining
+  ingest-format mentions in its doc and test comments are restated over our own schema. **File at
+  zero.**
+- **Measured, not asserted.** Of **8,119** served rows, described rows **4,769 → 5,389, +620**.
+  Seven books rose (`CRB` 2218→2647, `UE` 448→573, `ISG` 97→139, `MYTHIC` 97→116, `UC` 102→105,
+  `BB` 13→15, `AG` 18→19), three fell by nine rows in total (`ACG` −5, `UPSI` −3, `UW` −1 — rows
+  the package holds under no rule whose stored string still carries a marker, so the old path
+  showed a half-rendered sentence). All 22 pinned per-book counts re-derived and re-pinned;
+  `converted_equipment_prose_population` is the new corpus-wide ratchet (`decisions.md §4`).
+- **`reference_library_catalog.rs` was measured and refused, not skipped.** Swapping it costs
+  **1,150 of the 9,679** descriptions it serves: 489 corpus records that are in no
+  `docs/work-inventory.json` unit at all (so the converter's population never sees them), 563 that
+  resolve book-exact to a rule stating nothing, 81 by source row, 17 by name. `reach_gate`'s
+  `BARE_RECORD_FINDINGS` would need ~1,145 new keys — the gate doing its job. Full measurement in
+  `artifacts/epic-6-pcgen-exit/AT-35-E6-003_cycle7_reference-library-blocker.md`. The facts
+  renderer built for it (`value`/`target`/`grants`/`offers`/`applies`/`tags` → English, closing
+  3,488 of its 4,523 token-dump rows) was **reverted rather than shipped unused**.
+- **Verified once** at `e9ba387746`: desktop crate `578 passed; 0 failed`, desktop clippy 0
+  warnings, root `--no-run` exit 0, lib `3299 passed; 0 failed; 15 ignored`, full workspace
+  **414 targets / 8,810 passed / 0 failed / 68 ignored / 0 FAILED** (identical to cycle 6 on
+  every field), root clippy 0 warnings, atlas / token-coverage / shape-engine / missing-engine-tables / denominator
+  (`files_checked=102 violations=0`) / `pi-sweep` all green, `data/sheet_rules/` markers 0.
+  `sheet_rule_convert --check` and `corpus_literal_sweep` correctly **not** run — zero converter
+  and zero corpus changes. Frontend correctly not run — zero `apps/desktop/src/` changes.
+- **Refused tokens:** **6 files / 179 hits, 7 types** — `DESC:`=48, `PRE[A-Z]+:`=42, `BONUS:`=26,
+  `render_pcgen_desc`=25, `raw_tokens`=24, `raw_bonus_chains`=10, `TYPE=`=4;
+  `companion_catalog.rs`=52, `race_trait_picker.rs`=33, `feat_catalog.rs`=30,
+  `intelligent_item_catalog.rs`=28, `raceCreationCoverage.test.ts`=21,
+  `reference_library_catalog.rs`=15. `deferral 1789114924776-at-35-e6-003-3508c6` and
+  `deferral 1789114924902-at-35-e6-003-3e9bbb`;
+  `correction 1789114910544-at-35-e6-003-b1ee8b` (cycle 6's blocker was in front of the wrong
+  door) and `correction 1789114945228-at-35-e6-003-ddf836` (this cycle's own first refused-token
+  partition was typed, not re-derived).
+
 ### 2026-09-11 — Epic 6 / `desktop-and-prose-leave-pcgen` — AT-35-E6-003 **cycle 6** (`acfd1f7d99`) — **partial** (the converter stops deleting a prose row over one refused argument; the Spell Catalog and the Monster Catalog reach zero)
 
 Cycle 5 replaced a three-cycle-old diagnosis with a measured one and named four converter items
