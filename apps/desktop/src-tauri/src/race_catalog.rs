@@ -210,11 +210,11 @@ pub struct RaceCatalogEntryDto {
     /// Constitution`).
     pub trait_name: String,
     /// A display reading, not a resolved mechanical effect: the single
-    /// distinct numeric qualifier this trait's own `BONUS:` chains declare
+    /// distinct numeric qualifier this trait's own bonus chains declare
     /// when there is exactly one (`Stonecunning` → 2), else its declared
     /// `VISION:` range in feet (`Darkvision` → 60), else its declared
     /// `MOVE:Walk` in feet (`Slow and Steady` → 20), else 0. `decisions.md
-    /// §24` rules out interpreting `BONUS:` formulas, and this does not:
+    /// §24` rules out interpreting bonus formulas, and this does not:
     /// nothing is summed, resolved or attributed to a game effect. A trait
     /// whose chains declare several magnitudes (`+2 Con, +2 Wis, -2 Cha`)
     /// carries 0 and states its numbers in `detail`, exactly as the previous
@@ -225,7 +225,7 @@ pub struct RaceCatalogEntryDto {
     /// [`declared_magnitudes_excluding_flags`]. They
     /// were previously read as magnitudes, which put a meaningless `+1` beside
     /// every vision trait in both books (the flag is
-    /// `BONUS:VAR|HasRacialVision|1`; the real quantity was sitting unread in
+    /// the `HasRacialVision` flag set to 1; the real quantity was sitting unread in
     /// the row's `VISION:Darkvision (60)` token) and beside three other rows.
     /// 19 rows in total; `the_rows_the_internal_flag_correction_changes_are_pinned`
     /// names every one.
@@ -234,7 +234,7 @@ pub struct RaceCatalogEntryDto {
     /// the frontend reads it — it renders no badge at 0. It is never a
     /// stand-in for a number the catalog could not work out.
     pub value: i16,
-    /// The trait's real corpus `DESC:` text. Every one of the served rows
+    /// The trait's real corpus description text. Every one of the served rows
     /// carries one today (pinned by a test below), so this is never a
     /// fabricated placeholder.
     pub detail: String,
@@ -325,7 +325,7 @@ fn declared_vision_range_ft(resolved: &ResolvedTrait) -> Option<i32> {
 
 /// See [`RaceCatalogEntryDto::value`] for what this number is and is not.
 ///
-/// Precedence: a single declared `BONUS:` magnitude, else a declared `VISION:`
+/// Precedence: a single declared bonus magnitude, else a declared vision
 /// range, else a declared `MOVE:Walk`, else no number. Internal flag writes are
 /// discarded before the first step rather than being allowed to win it.
 fn display_value(resolved: &ResolvedTrait) -> i16 {
@@ -567,7 +567,7 @@ mod tests {
         // Real Tengu corpus rows, verified against
         // data/corpus/beastiary/race_trait/tengu/.
         // The ability-score row states its modifiers in its corpus *name*;
-        // its `DESC:` is flavour text, so the numbers are read from the name
+        // its description is flavour text, so the numbers are read from the name
         // rather than expected in the detail.
         let abilities = by_name["+2 Dexterity, +2 Wisdom, -2 Constitution"];
         assert_eq!(abilities.value, 0, "two distinct declared magnitudes, so no single number");
@@ -721,7 +721,7 @@ mod tests {
             assert!(!entry.trait_name.is_empty());
             assert!(
                 !entry.detail.is_empty(),
-                "{} / {} has no corpus DESC: text",
+                "{} / {} has no corpus description text",
                 entry.race_id,
                 entry.trait_name
             );
@@ -737,7 +737,7 @@ mod tests {
         assert!(response.diagnostics.is_empty(), "{:?}", response.diagnostics);
     }
 
-    /// A vision trait's only `BONUS:` chain is `BONUS:VAR|HasRacialVision|1` —
+    /// A vision trait's only bonus chain sets `HasRacialVision` to 1 —
     /// PCGen's internal "this race has a racial vision mode" flag, not a game
     /// quantity. Reading it as the row's display number rendered a meaningless
     /// `+1` beside "Dwarves can see in the dark up to 60 feet." The real
@@ -753,16 +753,16 @@ mod tests {
                 .unwrap_or_else(|| panic!("{race_id} / {trait_name} must be a catalog row"))
         };
 
-        // Core Rulebook. `VISION:Darkvision (60)`, and the DESC: says 60 feet.
+        // Core Rulebook. The row states Darkvision (60), and the description says 60 feet.
         let dwarf = row("Dwarf", "Darkvision");
         assert_eq!(dwarf.book, BOOK_CRB);
-        assert_eq!(dwarf.value, 60, "was 1, from BONUS:VAR|HasRacialVision|1");
+        assert_eq!(dwarf.value, 60, "was 1, from the HasRacialVision flag");
         assert_eq!(dwarf.detail, "Dwarves can see in the dark up to 60 feet.");
 
         // Bestiary 1. Same defect, same fix, a different book's corpus files.
         let aasimar = row("Aasimar", "Darkvision");
         assert_eq!(aasimar.book, BOOK_B1);
-        assert_eq!(aasimar.value, 60, "was 1, from BONUS:VAR|HasRacialVision|1");
+        assert_eq!(aasimar.value, 60, "was 1, from the HasRacialVision flag");
 
         // Bestiary 1's two longer-ranged cases, so the fix is reading each
         // row's own token rather than hardcoding 60.
@@ -812,10 +812,10 @@ mod tests {
                     continue;
                 }
                 // A flag-only row may still carry a real number, but only from
-                // a non-`BONUS:` token (`VISION:`, `MOVE:`) — never from the
+                // a non-bonus statement (vision, movement) — never from the
                 // flag itself.
                 let honest = declared_vision_range_ft(resolved)
-                    .or_else(|| resolved.declared_walk_speed_ft)
+                    .or(resolved.declared_walk_speed_ft)
                     .unwrap_or(0);
                 let shown = i32::from(display_value(resolved));
                 if shown != honest {
@@ -835,7 +835,7 @@ mod tests {
     fn the_rows_the_internal_flag_correction_changes_are_pinned() {
         let response = build_race_catalog();
         let expected: &[(&str, &str, i16)] = &[
-            // 16 vision rows, all previously +1 off BONUS:VAR|HasRacialVision|1.
+            // 16 vision rows, all previously +1 off the HasRacialVision flag.
             ("Dwarf", "Darkvision", 60),
             ("Elf", "Low-Light Vision", 0),
             ("Gnome", "Low-Light Vision", 0),
@@ -853,11 +853,11 @@ mod tests {
             ("Tengu", "Senses", 0),
             ("Tiefling", "Darkvision", 60),
             // 3 non-vision internal flags found by the same survey.
-            // BONUS:VAR|UMR_LightBlindness_SpecificDesc|1|TYPE=Boolean
+            // the boolean flag UMR_LightBlindness_SpecificDesc, set to 1
             ("Drow", "Light Blindness", 0),
-            // BONUS:VAR|CantBeTripped|1|TYPE=Boolean
+            // the boolean flag CantBeTripped, set to 1
             ("Merfolk", "Legless", 0),
-            // BONUS:VAR|BastardSwordExoticUse,KatanaExoticUse|1
+            // the flags BastardSwordExoticUse and KatanaExoticUse, set to 1
             ("Tengu", "Swordtrained", 0),
         ];
         assert_eq!(expected.len(), 19);
@@ -872,7 +872,7 @@ mod tests {
     }
 
     /// The neighbouring readings the survey deliberately left alone: these are
-    /// real game quantities that happen to be written through `BONUS:VAR`, and
+    /// real game quantities that happen to be written through a counter, and
     /// a rule that swallowed them would be a worse defect than the one fixed.
     #[test]
     fn genuine_bonus_var_quantities_are_untouched() {
@@ -893,7 +893,7 @@ mod tests {
         assert_eq!(value("Halfling", "Halfling Luck"), 1);
         assert_eq!(value("Kobold", "Armor"), 1);
         assert_eq!(value("Tiefling", "Fiendish Resistance"), 5);
-        // Its `BONUS:DC|SCHOOL.Illusion|1` survives while the
+        // Its +1 Illusion-school save DC survives while the
         // `RacialSLA_Nondetection_Constant` flag beside it is discarded.
         assert_eq!(value("Svirfneblin", "Svirfneblin Magic"), 1);
         // `MOVE:` readings are unaffected by the change.

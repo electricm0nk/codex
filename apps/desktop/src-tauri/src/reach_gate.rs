@@ -943,7 +943,7 @@ fn corpus_record_field(book_dir: &str, kind_dir: &str, field: &str) -> BTreeSet<
 fn reach_of(family: &Family) -> Option<Reach> {
     match (family.book.as_str(), family.kind.as_str()) {
         // Feats: `list_feat_catalog` serves all books' records with the
-        // corpus category and `DESC:` text. The Feats tab and the Add Feat
+        // corpus category and description text. The Feats tab and the Add Feat
         // picker both render from this response
         // (apps/desktop/src/characterHub/featsTabModel.ts
         // `resolveSelectedFeatEntries` -> `itemPickerFilter.ts`
@@ -1087,11 +1087,11 @@ fn reach_of(family: &Family) -> Option<Reach> {
         // the catalog's 6th book, the same `build_spell_catalog`/"All books"
         // render path ARG and UI use. 10 of its 269 records carry neither a
         // `CLASSES:`/`DOMAINS:` level (`Restore Eidolon` and siblings), but
-        // every one still carries a real `SCHOOL:` and/or `DESC:`, so
+        // every one still carries a real school and/or description, so
         // `has_payload` is satisfied regardless -- not a bare-record risk.
         // The genuine risk was the 15 `Masterpiece` bard-performance records,
         // which carry NEITHER a recognized `SCHOOL:` (`"Masterpiece"`, this
-        // engine's 9-school enum does not model it) NOR a `DESC:` token --
+        // engine's 9-school enum does not model it) NOR a description --
         // only a real `level`, from their own `CLASSES:Bard=N` token. Caught
         // by this gate's own `bare_records_are_exactly_the_recorded_findings`
         // check the FIRST time this arm was added: a level-parsing bug in
@@ -1113,7 +1113,7 @@ fn reach_of(family: &Family) -> Option<Reach> {
         // kind. One record (`Talismanic Implement`) carries no `CLASSES:`
         // token so no `level`, and two (`Repulsion` excluded as a cross-book
         // collision; `Share Language (Communal)`) carry neither `SCHOOL:`
-        // nor `DESC:` of their own -- every shipped record still carries a
+        // nor description of their own -- every shipped record still carries a
         // real `key` plus at least one of `school`/`level`/`description`,
         // so `has_payload` is satisfied for all 144, proven by this gate's
         // own `bare_records_are_exactly_the_recorded_findings` check below
@@ -1167,7 +1167,7 @@ fn reach_of(family: &Family) -> Option<Reach> {
         // book, the same `build_spell_catalog`/"All books" render path
         // UM/OA/UC/ISG use -- this book's first `spell`-kind reach claim.
         // Every one of the 61 base declarations carries a real `SCHOOL:`,
-        // `CLASSES:`/`DOMAINS:` level and `DESC:`, so `has_payload` is
+        // class/domain level and description, so `has_payload` is
         // satisfied for all 61 (`src/bin/ingest_ultimate_wilderness_spells.rs`).
         ("ultimate_wilderness", "spells") => Some(spells_reach(
             "UW",
@@ -1181,7 +1181,7 @@ fn reach_of(family: &Family) -> Option<Reach> {
         // 12th book, the same `build_spell_catalog`/"All books" render
         // path UM/OA/UC/ISG/UW use -- this book's FIRST reach claim of any
         // kind, and its first compiled `RuleSetId`. Every base declaration
-        // carries a real `SCHOOL:`, `CLASSES:` level and/or `DESC:`, so
+        // carries a real school, class level and/or description, so
         // `has_payload` is satisfied, proven by this gate's own
         // `bare_records_are_exactly_the_recorded_findings` check below
         // rather than assumed (`src/bin/ingest_adventurers_guide_spells.rs`).
@@ -1200,7 +1200,7 @@ fn reach_of(family: &Family) -> Option<Reach> {
         // its first compiled `RuleSetId`. All 3 base declarations carry no
         // `CLASSES:`/`DOMAINS:` level (a real corpus gap -- this book's
         // `isf_spells.lst` names no class list at all), but every shipped
-        // record still carries a real `SCHOOL:` and/or `DESC:`, so
+        // record still carries a real school and/or description, so
         // `has_payload` is satisfied (`src/bin/
         // ingest_inner_sea_setting_spells.rs`).
         ("inner_sea_faiths", "spells") => Some(spells_reach(
@@ -1219,7 +1219,7 @@ fn reach_of(family: &Family) -> Option<Reach> {
         // but were unreachable through the book-level gate before this
         // variant existed -- see `RuleSetId::InnerSeaMagic`'s own doc
         // comment). Every shipped record carries a real `SCHOOL:`,
-        // `CLASSES:` level and/or `DESC:`, so `has_payload` is satisfied
+        // class level and/or description, so `has_payload` is satisfied
         // (`src/bin/ingest_inner_sea_setting_spells.rs`).
         ("inner_sea_magic", "spells") => Some(spells_reach(
             "ISM",
@@ -1234,7 +1234,7 @@ fn reach_of(family: &Family) -> Option<Reach> {
         // 15th book, the same "All books" render path -- this book's
         // FIRST reach claim of any kind, and its first compiled
         // `RuleSetId`. Every one of the 21 base declarations carries a
-        // real `SCHOOL:`, `CLASSES:` level and `DESC:`, so `has_payload`
+        // real school, class level and description, so `has_payload`
         // is satisfied for all 21 (`src/bin/
         // ingest_inner_sea_setting_spells.rs`).
         ("inner_sea_temples", "spells") => Some(spells_reach(
@@ -1249,7 +1249,7 @@ fn reach_of(family: &Family) -> Option<Reach> {
         // as the catalog's 16th book, this book's SECOND reach claim
         // (`companion`/`monster`/`monster_ability` already reach). 70 of
         // its 72 base declarations carry a real `SCHOOL:`, `CLASSES:`
-        // level and `DESC:`, so `has_payload` is satisfied for those 70
+        // level and description, so `has_payload` is satisfied for those 70
         // (`src/bin/ingest_spells.rs`). The other 2 ("Green Caress",
         // "Verminous Transformation") are verbatim reprints of spells
         // Ultimate Wilderness already ships (earlier in the chain) -- the
@@ -2687,7 +2687,7 @@ fn companions_reach(corpus_book: &str, wire_code: &str) -> Reach {
             || entry.monster_class.is_some()
             || entry.natural_armor.is_some()
             || !entry.natural_attacks.is_empty()
-            // SD31-W15-COMPANION-001: the row's `BONUS:WEAPONPROF=…|DAMAGE|`
+            // SD31-W15-COMPANION-001: the row's extra-damage-on-attack
             // tokens, rendered as the PF1 rule they state. Added to the
             // predicate because it is genuine per-row payload a player reads —
             // NOT because any row needs it to reach: every row carrying one
@@ -2695,12 +2695,12 @@ fn companions_reach(corpus_book: &str, wire_code: &str) -> Reach {
             // clause moving no record is asserted by
             // `the_damage_bonus_column_moves_no_record_into_reach` below.
             || !entry.natural_attack_damage_bonuses.is_empty()
-            // SD31 wave 16: the row's `BONUS:SKILL|<skills>|<A>-<B>` tokens,
+            // SD31 wave 16: the row's ability-difference skill bonuses,
             // rendered as the PF1 rule they state. Added for the identical
             // reason override 2095's own comment states for the sibling
             // damage-bonus clause: genuine per-row payload a player reads,
             // NOT because any row needs it to reach — every companion row
-            // carrying this token also carries `BONUS:STAT` adjustments, and
+            // carrying this token also carries ability-score adjustments, and
             // this clause moving no record is asserted by
             // `the_skill_bonus_column_moves_no_record_into_reach` below.
             || !entry.skill_ability_diff_bonuses.is_empty()
@@ -2771,7 +2771,7 @@ fn companions_reach(corpus_book: &str, wire_code: &str) -> Reach {
 ///
 /// An ability reaches the player when the row it prints says something beyond
 /// its name: its facet, how it is delivered, its rules text, or its page. One
-/// record in this book (`Magic Circle against Evil`) carries no `DESC:` at all,
+/// record in this book (`Magic Circle against Evil`) carries no description at all,
 /// so it reaches on facet + delivery alone — a real, checkable corpus fact
 /// rather than a payload this gate invented for it.
 fn chassis_monster_abilities_reach(corpus_book: &str, wire_code: &str) -> Reach {
@@ -3066,7 +3066,7 @@ const OPEN_FINDINGS: &[(&str, &str, &str)] = &[
          **It is not an ARG-shaped swap and no wiring would make it one.** Upstream it is one of \
          two Goblin VARIANTS (`Standard Goblin` and `Oversized Goblin`), chosen out of an ability \
          pool that `mc_abilities_race.lst:26` grants with \
-         `CATEGORY=Internal|Racial Traits ~ Goblin.MOD  BONUS:ABILITYPOOL|Goblin Variant|1`. \
+         an internal `Racial Traits ~ Goblin` modifier row granting one `Goblin Variant` pool pick. \
          Picking the variant is what grants its two replacement rows \
          (`Oversized Goblin ~ Ability Scores`, `~ Size`), which is also why those two are the \
          only alternates in the whole menu carrying no `PREMULT` self-exclusion guard \
@@ -3074,7 +3074,7 @@ const OPEN_FINDINGS: &[(&str, &str, &str)] = &[
          pins them by name). \
          \
          REMEDY: an ability-pool variant mechanism -- a race-level choice of one row out of a \
-         `BONUS:ABILITYPOOL|<Pool>|n` pool, whose selection grants the rows TYPEd for it. That is \
+         named ability pool, whose selection grants the rows typed for it. That is \
          a new mechanism, not a missing wire, and it is outside the race-trait lane's \
          replace-flag protocol. Until it exists, the two replacement rows are offered \
          individually in the picker where the rules would grant them together; that is the \
@@ -3095,7 +3095,7 @@ const OPEN_FINDINGS: &[(&str, &str, &str)] = &[
          **These are not a swap and no picker wiring would make them one.** Upstream, each \
          kin's own `Change Shape` replacement row (`Werebat-Kin ~ Change Shape`, etc.) grants \
          its options through a TYPE pool, `ABILITY:Skinwalker Racial \
-         Trait|AUTOMATIC|TYPE=Skinwalker Change Shape <Kin>` \
+         Trait, granted automatically for the `Skinwalker Change Shape <Kin>` type` \
          (`skinwalker_abilities_race_subrace.lst`), not by naming each option's KEY directly -- \
          a real, resolvable PCGen mechanism (\"pick one of these N options when you change \
          shape\"), but a DIFFERENT one from the replace-flag swap this whole race-trait lane's \
@@ -3105,7 +3105,7 @@ const OPEN_FINDINGS: &[(&str, &str, &str)] = &[
          Codex's `Oversized Goblin` above. \
          \
          REMEDY: a TYPE-pool option picker -- a per-kin choice of one row out of a \
-         `TYPE=Skinwalker Change Shape <Kin>` pool, surfaced when a player selects that kin's \
+         `Skinwalker Change Shape <Kin>` type pool, surfaced when a player selects that kin's \
          own `Change Shape` replacement row. That is a new mechanism (this lane's Change Shape \
          rows do not yet render an option sub-choice anywhere in `apps/desktop/src`, confirmed \
          by grep), not a missing wire in the existing alternate-trait protocol, and it is \
@@ -3138,7 +3138,7 @@ const OPEN_FINDINGS: &[(&str, &str, &str)] = &[
          \
          REMEDY: either read `TEMPLATE:`-borne grants (the row's own \
          `TEMPLATE:Bonus Language ~ Common|...` chain is how upstream delivers its effect), or \
-         model human ethnicities as the `PREABILITY:1,CATEGORY=Background,TYPE.HumanEthnicity` \
+         model human ethnicities as a background ability gate on the `HumanEthnicity` type \
          gate on `:210` implies. Both are new mechanisms, not missing wires. \
          Do NOT close this by deleting the record: it is real corpus content for a modelled \
          race, and the same rule the `Oversized Goblin` entry above states applies here. \
@@ -3310,7 +3310,7 @@ const OPEN_FINDINGS: &[(&str, &str, &str)] = &[
     ("ultimate_intrigue", "class_features", "Gap: 651 Ultimate Intrigue class_feature records are ingested corpus-wide (first data/corpus/ultimate_intrigue/ directory this book has ever had, same shape as Ultimate Combat above). No per-class mechanism wiring has landed for this book's classes yet. Remedy: same as ACG above."),
     ("inner_sea_magic", "class_features", "Gap: 198 Inner Sea Magic class_feature records are ingested corpus-wide (first corpus JSON this book has ever had, any kind). No per-class mechanism wiring has landed for this book's classes yet. Remedy: same as ACG above."),
     ("inner_sea_taverns", "class_features", "Gap: 11 Inner Sea Taverns class_feature records are ingested corpus-wide (first corpus JSON this book has ever had, any kind). No per-class mechanism wiring has landed for this book's classes yet. Remedy: same as ACG above."),
-    ("bestiary_6", "spells", "Gap: Bestiary 6's own `rules_tables::bestiary_6::spell_list` table is real (2 records, transcribed from `b6_spells.lst`, byte-verified) and IS chained into `spell_resolver::spell_catalog_rows()` (SD-31 wave 24), but both of its rows are verbatim reprints of spells Ultimate Wilderness already ships (same `DESC:`, same Bestiary-6 `SOURCEPAGE:` citation inside `uw_spells.lst`). The resolver's cross-book dedup pass (added this same cycle to protect the pre-existing `no_key_is_served_twice_so_a_selection_resolves_unambiguously` product invariant in `apps/desktop/src-tauri/src/spell_catalog.rs`) keeps only the first-chained book's copy -- Ultimate Wilderness, registered in wave 19 -- so no row ever carries `book==\"B6\"` in the SERVED catalog, even though the content reaches a player under UW's own book label. Remedy: a real cross-book-reprint crediting design (Decision 10's Supersession Register, proposed but not applied, is the natural home for this policy question) so a book whose own content is verbatim-duplicated elsewhere can still claim its own reach without double-serving the catalog. See docs/release/SD-31-corpus-closure-grind/artifacts/BESTIARY-6-LEDGER.md."),
+    ("bestiary_6", "spells", "Gap: Bestiary 6's own `rules_tables::bestiary_6::spell_list` table is real (2 records, transcribed from `b6_spells.lst`, byte-verified) and IS chained into `spell_resolver::spell_catalog_rows()` (SD-31 wave 24), but both of its rows are verbatim reprints of spells Ultimate Wilderness already ships (same description, same Bestiary-6 source-page citation inside `uw_spells.lst`). The resolver's cross-book dedup pass (added this same cycle to protect the pre-existing `no_key_is_served_twice_so_a_selection_resolves_unambiguously` product invariant in `apps/desktop/src-tauri/src/spell_catalog.rs`) keeps only the first-chained book's copy -- Ultimate Wilderness, registered in wave 19 -- so no row ever carries `book==\"B6\"` in the SERVED catalog, even though the content reaches a player under UW's own book label. Remedy: a real cross-book-reprint crediting design (Decision 10's Supersession Register, proposed but not applied, is the natural home for this policy question) so a book whose own content is verbatim-duplicated elsewhere can still claim its own reach without double-serving the catalog. See docs/release/SD-31-corpus-closure-grind/artifacts/BESTIARY-6-LEDGER.md."),
     ("beastiary1", "monster_abilities", "Gap: 180 of Bestiary 1's 709 `monster_ability` records (`decisions.md §20`, no_record-to-zero wave 2) ship with `owners: &[]` -- no monster row of this book claims them, because they are the corpus's own shared reference-library vocabulary (`Universal Monster Rule ~ X`, `Vampire ~ X`, `Lich ~ X`, `Regeneration ~ X`, `Immunity to X`, and similar generic special-ability text `scripts/transcribe_monster_tables.py`'s ownership pass finds no in-book stat block naming). They are shipped anyway, deliberately, because an un-ingested row's shape cannot be measured and Gate 1's DoD needs every unit's shape measured (`decisions.md §20`); `list_monster_catalog` only ever walks a monster's own `ability_keys` (`monster_catalog.rs`), so an owner-less record reaches no screen -- not a stub (a stub is a record a player's screen SHOWS empty; this reaches no screen at all), and its non-reach is proven and pinned by exact key in `UNREACHED_RECORD_FINDINGS` above, never assumed. Remedy: the same one `decisions.md §16`'s own guard names for the rest of this cycle's residual `monster_ability` population -- a per-record read of each shared-vocabulary entry to determine its REAL owning creature-type set (a Universal Monster Rule applies to every creature of a stated type, not to one specific stat block), which is domain content work, not a mechanism this cycle's generic ingest pass can close."),
     ("bestiary_2", "monster_abilities", "Gap: 85 of Bestiary 2's 656 `monster_ability` records (`decisions.md §20`, no_record-to-zero wave 2 follow-on) ship with `owners: &[]` -- no monster row of this book claims them, the identical shared reference-library / cross-file-namespaced-orphan shape `beastiary1`'s matching entry above describes, closed by the SAME generic mechanism (`scripts/transcribe_monster_tables.py`'s orphan pass) already applied there. They are shipped anyway, deliberately, because an un-ingested row's shape cannot be measured and Gate 1's DoD needs every unit's shape measured (`decisions.md §20`); `list_monster_catalog` only ever walks a monster's own `ability_keys` (`monster_catalog.rs`), so an owner-less record reaches no screen -- not a stub (a stub is a record a player's screen SHOWS empty; this reaches no screen at all), and its non-reach is proven and pinned by exact key in `UNREACHED_RECORD_FINDINGS` above, never assumed. Remedy: the same one `decisions.md §16`'s own guard names for the rest of this cycle's residual `monster_ability` population -- a per-record read of each shared-vocabulary entry to determine its REAL owning creature-type set, which is domain content work, not a mechanism this cycle's generic ingest pass can close."),
     ("bestiary_3", "monster_abilities", "Gap: 276 of Bestiary 3's 686 `monster_ability` records (10 added `decisions.md §27`/round 8, the `TYPE:`-facet-vocabulary-gap group's provisional-default closure) (`decisions.md §20`, no_record-to-zero wave 2 follow-on) ship with `owners: &[]` -- no monster row of this book claims them, the identical shared reference-library / cross-file-namespaced-orphan shape `beastiary1`'s matching entry above describes, closed by the SAME generic mechanism (`scripts/transcribe_monster_tables.py`'s orphan pass) already applied there. They are shipped anyway, deliberately, because an un-ingested row's shape cannot be measured and Gate 1's DoD needs every unit's shape measured (`decisions.md §20`); `list_monster_catalog` only ever walks a monster's own `ability_keys` (`monster_catalog.rs`), so an owner-less record reaches no screen -- not a stub (a stub is a record a player's screen SHOWS empty; this reaches no screen at all), and its non-reach is proven and pinned by exact key in `UNREACHED_RECORD_FINDINGS` above, never assumed. Remedy: the same one `decisions.md §16`'s own guard names for the rest of this cycle's residual `monster_ability` population -- a per-record read of each shared-vocabulary entry to determine its REAL owning creature-type set, which is domain content work, not a mechanism this cycle's generic ingest pass can close."),
@@ -3325,10 +3325,10 @@ const OPEN_FINDINGS: &[(&str, &str, &str)] = &[
     ("ultimate_magic", "monster_abilities", "Gap: all 13 of Ultimate Magic's `monster_ability` records (`decisions.md §20` no_record-to-zero, round 3) ship with `owners: &[]` -- this book has ZERO monster rows of its own (`scripts/classify_monster_ability_rows.py`'s \"ZERO-monster books\" line), so nothing can ever own an ability row, closed by the SAME generic mechanism (`scripts/transcribe_monster_tables.py`'s orphan pass) already applied to every other book in this registry. They are shipped anyway, deliberately, because an un-ingested row's shape cannot be measured and Gate 1's DoD needs every unit's shape measured (`decisions.md §20`); `list_monster_catalog` only ever walks a monster's own `ability_keys` (`monster_catalog.rs`), so an owner-less record reaches no screen -- not a stub (a stub is a record a player's screen SHOWS empty; this reaches no screen at all), and its non-reach is proven and pinned by exact key in `UNREACHED_RECORD_FINDINGS` above, never assumed. Remedy: none needed -- this is the terminal state for a zero-monster book's ability rows; nothing can ever own them, so no further per-record work applies."),
     ("bestiary_6", "monster_abilities", "Gap: all 16 of Bestiary 6's `monster_ability` records (`decisions.md §20` no_record-to-zero, round 3) ship with `owners: &[]` -- this book has ZERO monster rows of its own (`scripts/classify_monster_ability_rows.py`'s \"ZERO-monster books\" line), so nothing can ever own an ability row, closed by the SAME generic mechanism (`scripts/transcribe_monster_tables.py`'s orphan pass) already applied to every other book in this registry. They are shipped anyway, deliberately, because an un-ingested row's shape cannot be measured and Gate 1's DoD needs every unit's shape measured (`decisions.md §20`); `list_monster_catalog` only ever walks a monster's own `ability_keys` (`monster_catalog.rs`), so an owner-less record reaches no screen -- not a stub (a stub is a record a player's screen SHOWS empty; this reaches no screen at all), and its non-reach is proven and pinned by exact key in `UNREACHED_RECORD_FINDINGS` above, never assumed. Remedy: none needed -- this is the terminal state for a zero-monster book's ability rows; nothing can ever own them, so no further per-record work applies."),
     ("bestiary_5", "monster_abilities", "Gap: all 40 of Bestiary 5's `monster_ability` records (39 `decisions.md §20` no_record-to-zero round 3, +1 `decisions.md §27b` round 9 -- `Traits Output ~ Sahkil`, closed via `parse_desc`'s new generalised sixth branch) ship with `owners: &[]` -- this book has ZERO monster rows of its own (`scripts/classify_monster_ability_rows.py`'s \"ZERO-monster books\" line), so nothing can ever own an ability row, closed by the SAME generic mechanism (`scripts/transcribe_monster_tables.py`'s orphan pass) already applied to every other book in this registry. They are shipped anyway, deliberately, because an un-ingested row's shape cannot be measured and Gate 1's DoD needs every unit's shape measured (`decisions.md §20`); `list_monster_catalog` only ever walks a monster's own `ability_keys` (`monster_catalog.rs`), so an owner-less record reaches no screen -- not a stub (a stub is a record a player's screen SHOWS empty; this reaches no screen at all), and its non-reach is proven and pinned by exact key in `UNREACHED_RECORD_FINDINGS` above, never assumed. Remedy: none needed -- this is the terminal state for a zero-monster book's ability rows; nothing can ever own them, so no further per-record work applies."),
-    ("pathfinder_unchained", "monster_abilities", "Gap: all 72 of Pathfinder Unchained's `monster_ability` records (69 `decisions.md §20` no_record-to-zero round 4, +3 `decisions.md §27b` round 9 -- `Elemental ~ Unchained Eidolon LVL01/08/20`, the multi-DESC: shape `parse_desc` used to refuse, closed via its new generalised sixth branch) ship with `owners: &[]` -- this book has ZERO monster rows of its own (`scripts/classify_monster_ability_rows.py`'s \"ZERO-monster books\" line), so nothing can ever own an ability row, closed by the SAME generic mechanism (`scripts/transcribe_monster_tables.py`'s orphan pass) already applied to every other book in this registry, reached this round via the book's own `gen_pathfinder_unchained()` generator function extended to also call `gen_monster_book`. They are shipped anyway, deliberately, because an un-ingested row's shape cannot be measured and Gate 1's DoD needs every unit's shape measured (`decisions.md §20`); `list_monster_catalog` only ever walks a monster's own `ability_keys` (`monster_catalog.rs`), so an owner-less record reaches no screen -- not a stub (a stub is a record a player's screen SHOWS empty; this reaches no screen at all), and its non-reach is proven and pinned by exact key in `UNREACHED_RECORD_FINDINGS` above, never assumed. Remedy: none needed -- this is the terminal state for a zero-monster book's ability rows; nothing can ever own them, so no further per-record work applies."),
+    ("pathfinder_unchained", "monster_abilities", "Gap: all 72 of Pathfinder Unchained's `monster_ability` records (69 `decisions.md §20` no_record-to-zero round 4, +3 `decisions.md §27b` round 9 -- `Elemental ~ Unchained Eidolon LVL01/08/20`, the multi-description shape `parse_desc` used to refuse, closed via its new generalised sixth branch) ship with `owners: &[]` -- this book has ZERO monster rows of its own (`scripts/classify_monster_ability_rows.py`'s \"ZERO-monster books\" line), so nothing can ever own an ability row, closed by the SAME generic mechanism (`scripts/transcribe_monster_tables.py`'s orphan pass) already applied to every other book in this registry, reached this round via the book's own `gen_pathfinder_unchained()` generator function extended to also call `gen_monster_book`. They are shipped anyway, deliberately, because an un-ingested row's shape cannot be measured and Gate 1's DoD needs every unit's shape measured (`decisions.md §20`); `list_monster_catalog` only ever walks a monster's own `ability_keys` (`monster_catalog.rs`), so an owner-less record reaches no screen -- not a stub (a stub is a record a player's screen SHOWS empty; this reaches no screen at all), and its non-reach is proven and pinned by exact key in `UNREACHED_RECORD_FINDINGS` above, never assumed. Remedy: none needed -- this is the terminal state for a zero-monster book's ability rows; nothing can ever own them, so no further per-record work applies."),
     ("advanced_race_guide", "monster_abilities", "Gap: the 1 `monster_ability` record Advanced Race Guide's `arg_abilities_race.lst` contributes (`decisions.md §20` no_record-to-zero, round 4) ships with `owners: &[]` -- this book has ZERO monster rows of its own (`scripts/classify_monster_ability_rows.py`'s \"ZERO-monster books\" line), so nothing can ever own it, closed by the SAME generic mechanism (`scripts/transcribe_monster_tables.py`'s orphan pass) already applied to every other book in this registry, reached this round via the book's own `gen_advanced_race_guide()` generator function extended to also call `gen_monster_book`. It is shipped anyway, deliberately, because an un-ingested row's shape cannot be measured and Gate 1's DoD needs every unit's shape measured (`decisions.md §20`); `list_monster_catalog` only ever walks a monster's own `ability_keys` (`monster_catalog.rs`), so an owner-less record reaches no screen -- not a stub (a stub is a record a player's screen SHOWS empty; this reaches no screen at all), and its non-reach is proven and pinned by exact key in `UNREACHED_RECORD_FINDINGS` above, never assumed. Remedy: none needed -- this is the terminal state for a zero-monster book's ability rows; nothing can ever own them, so no further per-record work applies."),
-    ("mythic_adventures", "monster_abilities", "Gap: all 21 of Mythic Adventures's `monster_ability` records (`decisions.md §20` no_record-to-zero, round 5) ship with `owners: &[]` -- this book has ZERO monster rows of its own (`scripts/classify_monster_ability_rows.py`'s \"ZERO-monster books\" line), so nothing can ever own an ability row, closed by the SAME generic mechanism (`scripts/transcribe_monster_tables.py`'s orphan pass) already applied to every other book in this registry, reached entirely through `gen_book_cache.rs`'s generic `monster_book_spec` fallback arm -- this book carries no hand-rolled generator function, unlike round 4's `pathfinder_unchained`/`advanced_race_guide`. All 21 of the book's orphan candidates shipped -- 0 refused, unlike round 4's `pathfinder_unchained` multi-DESC: residual. They are shipped anyway, deliberately, because an un-ingested row's shape cannot be measured and Gate 1's DoD needs every unit's shape measured (`decisions.md §20`); `list_monster_catalog` only ever walks a monster's own `ability_keys` (`monster_catalog.rs`), so an owner-less record reaches no screen -- not a stub (a stub is a record a player's screen SHOWS empty; this reaches no screen at all), and its non-reach is proven and pinned by exact key in `UNREACHED_RECORD_FINDINGS` above, never assumed. Remedy: none needed -- this is the terminal state for a zero-monster book's ability rows; nothing can ever own them, so no further per-record work applies."),
-    ("occult_adventures", "monster_abilities", "Gap: all 5 of Occult Adventures's `monster_ability` records (`decisions.md §27b` — EVERYTHING, overturning four cycles' worth of \"correctly out of scope\" for a negated `!PRECAMPAIGN:1,INCLUDES=Bestiary 3` gate this repo's campaign set fails, a REACHABILITY finding, not an ingest exemption) ship with `owners: &[]` -- no monster row in this generator's ownership pass claims any of the 5 by name (the two owning race rows reference them only via a CATEGORY:Internal umbrella row this generator does not resolve into per-record ownership: `Race Traits ~ Homunculus Companion` names 2 of the 3 Homunculus rows, `Poison` is not named at all; `Racial Traits ~ Kami (Shikigami)` grants by TYPE=, not by name), the identical shape every other zero-record-owner book in this registry already ships. They are shipped anyway, deliberately, because an un-ingested row's shape cannot be measured and Gate 1's DoD needs every unit's shape measured (`decisions.md §20`/`§27b`); `list_monster_catalog` only ever walks a monster's own `ability_keys` (`monster_catalog.rs`), so an owner-less record reaches no screen -- not a stub (a stub is a record a player's screen SHOWS empty; this reaches no screen at all), and its non-reach is proven and pinned by exact key in `UNREACHED_RECORD_FINDINGS` above, never assumed. Remedy: a per-record trace of each umbrella row's own grant logic (named references plus TYPE= auto-grants) to determine real ownership, which is domain content work, not a mechanism this cycle's generic ingest pass can close."),
+    ("mythic_adventures", "monster_abilities", "Gap: all 21 of Mythic Adventures's `monster_ability` records (`decisions.md §20` no_record-to-zero, round 5) ship with `owners: &[]` -- this book has ZERO monster rows of its own (`scripts/classify_monster_ability_rows.py`'s \"ZERO-monster books\" line), so nothing can ever own an ability row, closed by the SAME generic mechanism (`scripts/transcribe_monster_tables.py`'s orphan pass) already applied to every other book in this registry, reached entirely through `gen_book_cache.rs`'s generic `monster_book_spec` fallback arm -- this book carries no hand-rolled generator function, unlike round 4's `pathfinder_unchained`/`advanced_race_guide`. All 21 of the book's orphan candidates shipped -- 0 refused, unlike round 4's `pathfinder_unchained` multi-description residual. They are shipped anyway, deliberately, because an un-ingested row's shape cannot be measured and Gate 1's DoD needs every unit's shape measured (`decisions.md §20`); `list_monster_catalog` only ever walks a monster's own `ability_keys` (`monster_catalog.rs`), so an owner-less record reaches no screen -- not a stub (a stub is a record a player's screen SHOWS empty; this reaches no screen at all), and its non-reach is proven and pinned by exact key in `UNREACHED_RECORD_FINDINGS` above, never assumed. Remedy: none needed -- this is the terminal state for a zero-monster book's ability rows; nothing can ever own them, so no further per-record work applies."),
+    ("occult_adventures", "monster_abilities", "Gap: all 5 of Occult Adventures's `monster_ability` records (`decisions.md §27b` — EVERYTHING, overturning four cycles' worth of \"correctly out of scope\" for a negated campaign gate on Bestiary 3 this repo's campaign set fails, a REACHABILITY finding, not an ingest exemption) ship with `owners: &[]` -- no monster row in this generator's ownership pass claims any of the 5 by name (the two owning race rows reference them only via a CATEGORY:Internal umbrella row this generator does not resolve into per-record ownership: `Race Traits ~ Homunculus Companion` names 2 of the 3 Homunculus rows, `Poison` is not named at all; `Racial Traits ~ Kami (Shikigami)` grants by type, not by name), the identical shape every other zero-record-owner book in this registry already ships. They are shipped anyway, deliberately, because an un-ingested row's shape cannot be measured and Gate 1's DoD needs every unit's shape measured (`decisions.md §20`/`§27b`); `list_monster_catalog` only ever walks a monster's own `ability_keys` (`monster_catalog.rs`), so an owner-less record reaches no screen -- not a stub (a stub is a record a player's screen SHOWS empty; this reaches no screen at all), and its non-reach is proven and pinned by exact key in `UNREACHED_RECORD_FINDINGS` above, never assumed. Remedy: a per-record trace of each umbrella row's own grant logic (named references plus type-based auto-grants) to determine real ownership, which is domain content work, not a mechanism this cycle's generic ingest pass can close."),
     // SD-32 row 19 cycle 3: `companion_pool_catalog.rs` (the generic
     // "referenced pool" mechanism `decisions.md §17` asked for) closed 434
     // of the ~470 companion records across 8 books that reached no surface
@@ -3360,13 +3360,13 @@ const OPEN_FINDINGS: &[(&str, &str, &str)] = &[
     // **Re-derived against the now-real interpreter, per record, not
     // assumed:** every one of the sampled formula-scaled companion records
     // below (APG's 14 `%N`-carrying Eidolon Evolution rows checked directly
-    // against their `raw_tokens`, representative of the shape every book's
+    // against their verbatim statement arrays, representative of the shape every book's
     // finding below names) resolves its `%N` argument through a PCGen
     // variable the interpreter's own grammar handles fine in isolation
     // (`BreathWeaponDice|HD`, `BreathWeaponDC|10+(HD/2)+CON`, `PoisonSaveDC`
-    // gated on `PREABILITY:...Ability Focus`) but whose INPUT is scoped to a
+    // gated on holding Ability Focus) but whose INPUT is scoped to a
     // live character (`HD`, `CON`, `MasterLevel`, feat possession) or to a
-    // player's own `CHOOSE` selection (`%LIST`) -- values `list_companion_
+    // player's own open selection -- values `list_companion_
     // catalog` structurally has none of, being a browse-only catalog with no
     // character in hand (the same "no character to resolve against" gate
     // `companion_pool_catalog.rs`'s own render-and-refuse discipline already
@@ -3583,7 +3583,7 @@ const BARE_RECORD_FINDINGS: &[(&str, &str, &[&str])] = &[
     // SD-32 row 20: 2 of `bestiary`/`beastiary1`'s 111 custom spell-like-
     // ability variants (transcribed from `core_essentials/ce_spells.lst`,
     // see the matching `("beastiary1", "spells")` dispatch arm's own doc
-    // comment) carry no `SCHOOL:`/`CLASSES:`/`DESC:` token at all --
+    // comment) state no school, class list or description at all --
     // confirmed real: `data/corpus/bestiary/spell/keketar_spell_reshape_
     // reality.json` and its Mothman sibling both carry `description: null`
     // and no level/school token. They reach the catalog under their real
@@ -3601,7 +3601,7 @@ const BARE_RECORD_FINDINGS: &[(&str, &str, &[&str])] = &[
     // across these twelve kinds to a real served field. These 6 are the
     // genuine residual for `beastiary/race_generic` — real corpus records
     // (`Hydra (Cryohydra)` etc., PCGen alternate-energy-type Hydra variants)
-    // with `description: null` and `raw_tokens: []`, verified by direct
+    // with `description: null` and an empty statement array, verified by direct
     // inspection: nothing beyond the bare `key`/`name` exists anywhere in
     // the corpus record for any of the three tiers to resolve.
     (
@@ -3709,7 +3709,7 @@ const UNREACHED_RECORD_FINDINGS: &[(&str, &str, &[&str])] = &[
         // `VISIBLE:NO` `Skinwalker ~ Change Shape (<Option>)` component
         // records every kin's own `Change Shape` replacement row
         // TYPE-pool-references (`ABILITY:Skinwalker Racial
-        // Trait|AUTOMATIC|TYPE=Skinwalker Change Shape <Kin>`). Each carries
+        // Trait, granted automatically for the `Skinwalker Change Shape <Kin>` type`). Each carries
         // no `FACT:<flag>|True` and no positive gate of its own, so
         // `race_resolver::classify` correctly leaves all 20
         // `TraitRole::Unclassified` -- never a picker menu row, exactly like
@@ -3761,7 +3761,7 @@ const UNREACHED_RECORD_FINDINGS: &[(&str, &str, &[&str])] = &[
         // `Geneiekin ~ Mostly Human.MOD` rows, each carrying
         // `FACT:<Race>_ReplaceLanguages|True` AND its own
         // `ABILITY:<Race> Racial Trait|AUTOMATIC|Mostly Human ~ <Race> ~
-        // Languages|PREFACT:...` grant. Upstream is complete; the gap is
+        // Languages` grant, gated on a stated fact. Upstream is complete; the gap is
         // entirely project-side. The BASE row (`isr_abilities_race.lst:649`,
         // `Geneiekin ~ Mostly Human`) carries
         // `TYPE:RacialTraits.SpecialQuality.Special Quality` with no
@@ -3784,7 +3784,7 @@ const UNREACHED_RECORD_FINDINGS: &[(&str, &str, &[&str])] = &[
         // gap.
         //
         // ORIGINAL (WRONG) COMMENT, preserved for the record: each row
-        // carries a *positive* `PREFACT:1,ABILITIES,
+        // carries a *positive* fact gate on `ABILITIES,
         // <Race>_ReplaceLanguages=True`, so `race_resolver::classify` reads
         // them as `TraitRole::FlagGranted`, not `Unclassified` -- but no
         // Ifrit/Sylph/Undine alternate in either ARG or Inner Sea Races sets
@@ -5437,7 +5437,7 @@ const UNREACHED_RECORD_FINDINGS: &[(&str, &str, &[&str])] = &[
         // about. Pinned by exact key rather than by count so a NEW silent
         // non-reach still fails here. A further 3 of the book's 72 orphan
         // candidates (`Elemental ~ Unchained Eidolon LVL01/08/20`) are a
-        // multi-DESC: shape `parse_desc` refuses rather than mistranscribes --
+        // multi-description shape `parse_desc` refuses rather than mistranscribes --
         // real per-record work, not shipped this round, NOT in this list.
         // Re-derive: `python3 scripts/transcribe_monster_tables.py pathfinder_unchained 2>&1 >/dev/null`.
         &[
@@ -6262,7 +6262,7 @@ mod tests {
     /// ANTI-GAMING (Decision 1(a)): the `naturalAttackDamageBonuses` column
     /// this cycle added to `companions_reach`'s payload predicate must not be
     /// what carries any record over the bar. Every companion row that states a
-    /// `BONUS:WEAPONPROF=…|DAMAGE|` token also states natural attacks and stat
+    /// extra-damage-on-attack statement also states natural attacks and stat
     /// adjustments, so the new clause is genuine payload a player reads and
     /// nothing more. Asserted rather than assumed — a clause that DID move
     /// records would be reach bought with a column, which is exactly the
@@ -6304,8 +6304,8 @@ mod tests {
 
     /// The `skillAbilityDiffBonuses` twin of
     /// `the_damage_bonus_column_moves_no_record_into_reach`, same reasoning:
-    /// every companion row that states a `BONUS:SKILL|<skills>|<A>-<B>`
-    /// token also states `BONUS:STAT` adjustments, so the new clause is
+    /// every companion row that states an ability-difference skill
+    /// bonus also states ability-score adjustments, so the new clause is
     /// genuine payload a player reads and nothing more.
     #[test]
     fn the_skill_bonus_column_moves_no_record_into_reach() {
@@ -6348,7 +6348,7 @@ mod tests {
     /// reasoning but on the ABILITY-level predicate (this is the first of
     /// the three columns stated there rather than on the creature): every
     /// companion ability that states a DESC-embedded save-DC formula also
-    /// states real `description`/`description_variants` prose (the DESC:
+    /// states real `description`/`description_variants` prose (the description
     /// token the formula's own argument list hangs off), so the new clause
     /// is genuine payload a player reads and nothing more.
     #[test]
@@ -6639,7 +6639,7 @@ mod tests {
             43,
             "HA's 43 ingested race-trait records, counted on disk. Only \
              ha_abilities_race.lst is ingested: support/ha_abilities_race_oa.lst is loaded by \
-             the pcc under PRECAMPAIGN:1,INCLUDES=Occult Adventures, a book this repo has not \
+             the pcc under a campaign gate naming Occult Adventures, a book this repo has not \
              ingested"
         );
 
@@ -7223,7 +7223,7 @@ mod tests {
     ///
     /// Bestiary 5's two `support/b5_races_companion_oa.lst` units
     /// (`Familiar (Brain Mole)`, `Familiar (Chuspiki)`) were excluded
-    /// through 2026-08-23 on the premise that their `PRECAMPAIGN:1,Occult
+    /// through 2026-08-23 on the premise that their campaign gate naming `Occult
     /// Adventures` gate named an uningested book (`decisions.md §47.2`).
     /// Row-19 desktop reach/catalog reds (SD-32, 2026-08-24): that premise
     /// is now false (`CORPUS_BOOK_IDS` carries `occult_adventures`) and
@@ -7755,7 +7755,7 @@ mod tests {
         // Spells`, `Unfettered Eidolon ~ Str/Dex/Con/Int/Wis/Cha`), added to
         // `UNREACHED_RECORD_FINDINGS` above.
         // 686 -> 696 (`decisions.md §27b` round 9, +10, all owner-less):
-        // the multi-DESC: parse-refusal group closes -- Jiang-Shi Vampire
+        // the multi-description parse-refusal group closes -- Jiang-Shi Vampire
         // plus the 9 `Traits Output ~ <Kind>` rows, added to
         // `UNREACHED_RECORD_FINDINGS` above.
         assert_eq!(abilities.len(), 696, "every row on disk for this book/kind");
@@ -7949,7 +7949,7 @@ mod tests {
         // provisional `SpecialQuality` facet default. It is OWNED (by
         // `Morlock`), so it joins the reaching set too — `missing.len()` is
         // unchanged.
-        // 711 -> 733 (`decisions.md §27b` round 9, +22): the multi-DESC:
+        // 711 -> 733 (`decisions.md §27b` round 9, +22): the multi-description
         // parse-refusal group closes via `parse_desc`'s new generalised
         // sixth branch -- 5 land OWNED (join the reaching set, `missing.len()`
         // unchanged) and 17 land owner-less (join the shortfall below).

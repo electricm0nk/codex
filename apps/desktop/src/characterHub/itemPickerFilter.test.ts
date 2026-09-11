@@ -13,7 +13,7 @@ import type { FeatCatalogEntryDto } from '../boundary/listFeats';
 import { assert, assertEqual } from '../testSupport/asserts';
 
 /**
- * Real catalog rows. `description` is each record's verbatim corpus `DESC:`
+ * Real catalog rows. `description` is each record's verbatim corpus description
  * prose as `equipment_catalog.rs` serves it (`crb::equipment_data`), except
  * Banded Mail, which is `null` here to keep a no-description row in every
  * mapping assertion — 974 of the 3830 served records are in that state.
@@ -29,7 +29,7 @@ const SPELL_ENTRIES: SpellCatalogEntryDto[] = [
   { key: 'spell:fireball', book: 'CRB', school: 'Evocation', level: 3, description: 'A burst of flame.', duration: null, range: null },
   { key: 'spell:cure_light_wounds', book: 'CRB', school: 'Conjuration', level: 1, description: 'Heals wounds.', duration: null, range: null },
   // A real `apg_spells.lst` gap shape: resolves, but the corpus row
-  // carries no SCHOOL:/CLASSES:/DESC: token.
+  // states no school, class list or description.
   { key: 'spell:corpus_gap', book: 'APG', school: null, level: null, description: null, duration: null, range: null },
 ];
 
@@ -38,7 +38,7 @@ const SPELL_ENTRIES: SpellCatalogEntryDto[] = [
  * unknown-book row. `Extra Hex` / `Extra Panache` / `Elemental Fist` are
  * verbatim from `apg_feats.lst` and `acg_feats.lst`; `Elemental Fist` is
  * the one ingested APG record whose corpus row genuinely carries no
- * `DESC:` token.
+ * description.
  */
 const FEAT_ENTRIES: FeatCatalogEntryDto[] = [
   { key: 'Power Attack', category: 'Combat', name: 'Power Attack', description: 'You can make exceptionally deadly melee attacks by sacrificing accuracy for strength.', source: 'Crb', chooserTargetKind: null },
@@ -235,7 +235,7 @@ function verifiesFeatMappingOmitsADescriptionTheCorpusDoesNotHave() {
   assertEqual(
     mapped.detail,
     'APG · Combat',
-    'a record whose corpus row has no DESC: shows only book and category, never fabricated text'
+    'a record whose corpus row states no description shows only book and category, never fabricated text'
   );
 }
 

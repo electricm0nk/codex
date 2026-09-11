@@ -299,7 +299,7 @@ function CreateCharacterFields(props: {
   const [traitOptionsError, setTraitOptionsError] = useState<string | null>(null);
   const [selectedTraits, setSelectedTraits] = useState<string[]>([]);
   // AT-34-E4-002 (second slice): the player's resolved skill choice for
-  // each selected fixed-choice `%LIST` trait, keyed by trait id. A trait
+  // each selected fixed-choice open-slot trait, keyed by trait id. A trait
   // with no entry here yet (just checked, choice not made) submits no
   // `traitSkillChoices` entry for it -- `skill_choice_bonuses_from_traits`
   // honestly contributes nothing for a trait with no recorded choice,
@@ -919,9 +919,9 @@ function CreateCharacterFields(props: {
 
           {/* AT-34-E4-002: character traits/drawbacks. Every option here
               genuinely computes -- `list_available_character_traits` returns
-              only the 53 `ultimate_campaign` traits whose `BONUS:SKILL`,
-              `BONUS:SAVE`, `BONUS:SITUATION`, `BONUS:COMBAT|INITIATIVE`/
-              `BONUS:CONCENTRATION|ALLSPELLS`, ability-score-difference
+              only the 53 `ultimate_campaign` traits whose skill,
+              saving-throw, situational, initiative /
+              concentration bonus, ability-score-difference
               formula, or mixed caster-level+skill this crate's
               `trait_effects` compute paths really apply (31 flat skill + 5
               fixed-choice skill + 4 open-family skill + 2 flat save + 3

@@ -197,12 +197,12 @@ const IMPROVED_NATURAL_ARMOR_EVOLUTION_SELECTION: &str = "evolution:improved_nat
 /// * `order:sword` — `KEY:Order of the Sword`,
 ///   `TYPE:CavalierClassFeatures.CavalierOrder.SpecialQuality`
 ///   (`apg_abilities_class.lst:279`), one of the six orders the base
-///   `KEY:Cavalier ~ Order` feature's own `BONUS:ABILITYPOOL|Cavalier
+///   `Cavalier ~ Order` feature's own ability-pool grant (`Cavalier
 ///   Order|1` grants. Its Sense Motive bonus is the grounded power; the
 ///   other five orders carry only opponent-/ally-conditioned challenge
 ///   riders.
 /// * `domain:good` — the base `Inquisitor ~ Domains` record carries
-///   `DEFINE:InquisitorDomainGood|0` (`apg_abilities_class.lst:353`), and
+///   the `InquisitorDomainGood` counter, declared at 0 (`apg_abilities_class.lst:353`), and
 ///   Good's own Touch of Good is the grounded power. Deliberately the same
 ///   canonical domain Cleric already seeds, since both classes share
 ///   `active_touch_of_good_bonus`.
@@ -246,11 +246,11 @@ const CLOUDED_VISION_CURSE_SELECTION: &str = "curse:clouded_vision";
 /// **Why Dodge, of the seven feats the corpus offers at
 /// `MonkBonusFeatLVL,1`.** Verified directly against the PCGen corpus
 /// (`.../core_rulebook/cr_abilities_class.lst:1263`):
-/// `Monk Bonus Feat ~ Dodge ... PREVARGTEQ:MonkBonusFeatLVL,1 ...
+/// `Monk Bonus Feat ~ Dodge`, gated on `MonkBonusFeatLVL` being at least 1
 /// ABILITY:FEAT|VIRTUAL|Dodge` -- genuinely available at level 1, alongside
 /// Catch Off-Guard, Combat Reflexes, Deflect Arrows, Improved Grapple,
 /// Scorpion Style, and Throw Anything (the 6th/10th-level additions are
-/// gated `PREVARGTEQ:MonkBonusFeatLVL,6` / `,10` and are not options here).
+/// gated on `MonkBonusFeatLVL` reaching 6 / 10 and are not options here).
 ///
 /// Six of those seven close the burden in `pilot_compute.rs`, but they are
 /// not equivalent, and Dodge is the only one that is genuinely resolved
@@ -285,7 +285,7 @@ const CLOUDED_VISION_CURSE_SELECTION: &str = "curse:clouded_vision";
 ///
 /// **Honest caveat.** For a Human, this function also seeds
 /// `choice:human_bonus_feat -> feat:dodge`, and the corpus record above
-/// carries `!PREABILITY:1,CATEGORY=FEAT,Dodge` -- so a Human Monk's
+/// is gated on NOT already holding the Dodge feat -- so a Human Monk's
 /// canonical posture names Dodge in two slots, which PF1 would treat as a
 /// wasted pick. The COMPUTED result is still correct (the +1 dodge bonus is
 /// applied once by `compute_combat_baseline`, never doubled), and this is
@@ -362,8 +362,8 @@ const UNCHAINED_BARBARIAN_RAGE_POWER_CHOICE_ID: &str = "choice:unchained_barbari
 /// **Why Flight, of the corpus's 53 base Witch hexes.** Verified directly
 /// against the PCGen corpus
 /// (`.../advanced_players_guide/apg_abilities_class.lst:892`):
-/// `KEY:Witch Hex ~ Flight ... BONUS:SKILL|Swim|4|TYPE=Racial`, gated only
-/// by `PREVARGTEQ:WitchHexAbilityLVL,1` -- genuinely available at level 1.
+/// `Witch Hex ~ Flight`, a racial-typed +4 Swim bonus, gated only
+/// on `WitchHexAbilityLVL` being at least 1 -- genuinely available at level 1.
 ///
 /// Three hexes have a grounded magnitude in `pilot_compute.rs` and any of
 /// the three closes the burden, but they are not equivalent. Flight is the
@@ -388,18 +388,18 @@ const FLIGHT_HEX_SELECTION: &str = "hex:flight";
 /// Life earns the seed on magnitude richness. Verified against
 /// `.../advanced_class_guide/acg_abilities_class.lst:1600`,
 /// `KEY:Life Spirit ~ Channel` carries three real formulas --
-/// `BONUS:VAR|ShamanChannelTimes|1+CHA`,
-/// `BONUS:VAR|ShamanChannelDice|(ShamanChannelLVL+1)/2`,
-/// `BONUS:VAR|ShamanChannelDC|10+(ShamanChannelLVL/2)+CHA` -- which
+/// `ShamanChannelTimes` = 1 + the Charisma modifier,
+/// `ShamanChannelDice` = (`ShamanChannelLVL` + 1) / 2,
+/// `ShamanChannelDC` = 10 + (`ShamanChannelLVL` / 2) + Charisma -- which
 /// `pilot_compute.rs` grounds as three separate explanation records. The
 /// other nine each ground a single touch-attack or morale-bonus fact.
 ///
-/// **Honest caveat.** None of the ten base abilities carries a `BONUS:`
-/// landing on a computed total -- every one is a `BONUS:VAR` feeding its
-/// own `DESC:` text -- so unlike Witch's Flight this seed grounds real
+/// **Honest caveat.** None of the ten base abilities carries a bonus
+/// landing on a computed total -- every one feeds a counter behind its
+/// own description text -- so unlike Witch's Flight this seed grounds real
 /// magnitudes without integrating into an existing total. The Spirit
 /// abilities that DO land on real totals (Heavens' Manifestation
-/// `BONUS:SAVE|ALL`, Life's own Healer's Touch `BONUS:SKILL|Heal|4`) are
+/// a bonus to all saves, Life's own Healer's Touch a +4 Heal bonus) are
 /// all in the level-8+/16+ gated tiers, which stay deferred.
 const LIFE_SPIRIT_SELECTION: &str = "spirit:life";
 
@@ -1067,7 +1067,7 @@ pub fn compose_character_input(request: &CreateCharacterRequest) -> CharacterInp
     }
 
     // **AT-34-E4-002 (second slice)**: the player's own resolved choice
-    // for each fixed-choice `%LIST` trait, passed through verbatim -- the
+    // for each fixed-choice open-skill-slot trait, passed through verbatim -- the
     // same "trusted wire list" precedent `selected_feats`/`selected_traits`
     // already follow. An entry that is not a real, corpus-declared
     // (choice_set_id, selection_id) pair for the trait it names is simply

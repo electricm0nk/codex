@@ -91,7 +91,7 @@ export interface AlternateTraitRow {
    * **The prose to show, with its numbers in it.**
    *
    * Rendered by `race_trait_picker::render_trait_description` from the corpus
-   * row's own `DESC:` tokens — never the stored `data.description`, whose
+   * row's own description statements — never the stored `data.description`, whose
    * magnitudes were collapsed (and, for `Halfling ~ Adaptable Luck`, lost) at
    * ingest time.
    *
@@ -109,7 +109,7 @@ export interface AlternateTraitRow {
    */
   movedByFeats: boolean;
   /**
-   * `DESC:` arguments the engine could not resolve to a literal and therefore
+   * Description slots the engine could not resolve to a literal and therefore
    * dropped, so a partially-resolved sentence is visibly partial.
    */
   droppedArgs: string[];

@@ -463,7 +463,7 @@ pub struct CreateCharacterRequest {
     #[serde(default)]
     pub selected_traits: Vec<String>,
     /// **AT-34-E4-002 (second slice)**: the player's resolved choice for
-    /// each *fixed-choice* `%LIST` trait named in `selected_traits`
+    /// each *fixed-choice* open-slot trait named in `selected_traits`
     /// (`trait_effects::SKILL_CHOICE_TRAIT_BONUSES`) -- one
     /// `SelectedChoiceDto { choice_set_id, selection_id }` per such trait,
     /// with `choice_set_id` exactly `list_available_character_traits`'s
@@ -4222,23 +4222,23 @@ pub fn export_character(app: tauri::AppHandle, request: ExportCharacterRequest) 
 ///
 /// A hand-maintained mirror of corpus facts is also how the identical table
 /// one layer down (`rules_tables::crb::race_tables`) silently drifted from
-/// the corpus on four races' ability modifiers: `BONUS:STAT|CON,WIS|2`
+/// the corpus on four races' ability modifiers: a +2 Con/Wis adjustment
 /// states two ability grants in one token and a transcription read only up
 /// to the comma. Deriving removes the class of defect rather than re-checking
 /// for it.
 ///
 /// # What is derived, and why that is not formula interpretation
 ///
-/// `decisions.md §24` forbids a general `BONUS:`/`DEFINE:`/`PREREQ:` formula
+/// `decisions.md §24` forbids a general bonus/variable/prerequisite formula
 /// interpreter and requires each feature to be a hand-modelled,
 /// corpus-verified pure function with a test. Every field below is exactly
 /// that: `codex::rules_core::race_creation`'s `fixed_ability_adjustments`
-/// reads the ability codes and magnitude off a `BONUS:STAT` chain's own
+/// reads the ability codes and magnitude off an ability-adjustment chain's own
 /// qualifiers, its `vision_reading` reads a `VISION:` token's own declared
 /// range, size and speed come from
 /// [`ResolvedRace`]'s already-modelled chassis-then-trait-override rule.
 /// Nothing is summed across traits, no PCGen variable is resolved, and no
-/// `PREREQ:` is evaluated.
+/// prerequisite is evaluated.
 #[derive(Debug, Clone, PartialEq, Serialize, Deserialize)]
 #[serde(rename_all = "camelCase")]
 pub struct RaceCreationChassisDto {
@@ -4299,7 +4299,7 @@ pub struct RaceCreationRosterResponse {
 /// (`codex::rules_core::race_creation`) so that `src/bin/v06_work_inventory.rs`
 /// -- which cannot depend on this crate -- can OBSERVE the same function
 /// rather than re-implement it. This wrapper is only the wire-DTO mapping;
-/// every refusal reason, every `BONUS:STAT` reading and the `VISION:`
+/// every refusal reason, every ability-adjustment reading and the vision
 /// rendering are that module's, unchanged by the move (SD-31
 /// `OPEN-ISSUES.md` rows 170/207/226).
 fn race_creation_chassis(
@@ -4525,11 +4525,11 @@ mod tests {
     ///
     /// Values transcribed from the rows that declare them, not from the
     /// engine: `data/corpus/beastiary/race_trait/aasimar/
-    /// aasimar_ability_scores.json` (`BONUS:STAT|WIS,CHA|2`), the matching
-    /// `tiefling_ability_scores.json` (`BONUS:STAT|DEX,INT|2` +
-    /// `BONUS:STAT|CHA|-2`) and `data/corpus/advanced_race_guide/race_trait/
-    /// changeling/changeling_ability_scores.json` (`BONUS:STAT|WIS,CHA|2` +
-    /// `BONUS:STAT|CON|-2`).
+    /// aasimar_ability_scores.json` (+2 Wis/Cha), the matching
+    /// `tiefling_ability_scores.json` (+2 Dex/Int and
+    /// -2 Cha) and `data/corpus/advanced_race_guide/race_trait/
+    /// changeling/changeling_ability_scores.json` (+2 Wis/Cha and
+    /// -2 Con).
     #[test]
     fn the_computed_class_races_serve_their_real_ability_magnitudes() {
         let expected: [ShippedRaceRow; 3] = [
@@ -4595,12 +4595,12 @@ mod tests {
                 ("dexterity".to_owned(), 4),
                 ("strength".to_owned(), -2),
             ]),
-            "Goblin ~ Ability Scores states +4 Dex in one BONUS:STAT chain and -2 Str/-2 Cha in a \
+            "Goblin ~ Ability Scores states +4 Dex in one adjustment chain and -2 Str/-2 Cha in a \
              second two-ability one"
         );
     }
 
-    /// `BONUS:STAT|STR,CHA|-2` names two abilities in one token. Reading
+    /// a -2 Str/Cha adjustment names two abilities in one statement. Reading
     /// only up to the comma is the transcription defect that silently
     /// drifted `race_tables.rs` from the corpus on four races, so the
     /// multi-ability chains are pinned explicitly across every race that
@@ -4771,7 +4771,7 @@ mod tests {
     /// producer-with-no-consumer trap.**
     ///
     /// `race_trait_picker::render_trait_description` re-renders a trait's
-    /// `DESC:` tokens against the character's own display values, and the Race
+    /// description statements against the character's own display values, and the Race
     /// Traits picker was its only consumer. `load_saved_character` — the one
     /// call the sheet a player lives in actually makes — carried the chosen
     /// trait *keys* and nothing else, so the sheet could name a trait and never
@@ -4783,7 +4783,7 @@ mod tests {
     /// `Fortunate One`. A baked string cannot pass this, and neither can the
     /// stored `data.description` — which is why the racial base below has to
     /// read "Three times per day" and the fed one "4 times per day", the
-    /// `PREVARLTEQ:...,3` gate ceasing to apply rather than a number being
+    /// an at-most-3 gate ceasing to apply rather than a number being
     /// substituted.
     #[test]
     fn a_loaded_characters_racial_trait_prose_states_the_number_its_own_feats_produce() {
@@ -4929,7 +4929,7 @@ mod tests {
 
     /// **A top-level sheet number moving because of a racial-trait choice.**
     /// A Half-Elf Fighter 1 who takes `Dual Minded` (ARG p.42,
-    /// `BONUS:SAVE|Will|2`) saves and loads with Will +3 where the same build
+    /// a +2 Will bonus) saves and loads with Will +3 where the same build
     /// without it has +1 — on `snapshot.total_saves`, which the sheet prints at
     /// the top of the page.
     #[test]
@@ -6841,7 +6841,7 @@ mod tests {
     /// SD28-E25 adds a third, of the identical shape: `Masterwork Tool` is
     /// both a real purchasable item (`ultimate_equipment::equipment_tables`'s
     /// own `General` category, 50 gp) and a real equipment modifier
-    /// (`Equipmods`, no flat cost -- a `%CHOICE circumstance Bonus`),
+    /// (`Equipmods`, no flat cost -- a player-chosen circumstance bonus),
     /// sharing a `KEY:`. `equipment_catalog_rows()` chains UE's equipment
     /// before its equipmods, so the resolver's first match is the 50 gp
     /// item, not the free modifier the picker displays -- the same

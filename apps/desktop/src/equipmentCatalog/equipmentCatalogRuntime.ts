@@ -12,7 +12,7 @@ import { hasTauriRuntime } from '../boundary/runtime';
  * not have. The full six-book catalog arrives from `list_equipment_catalog`
  * under the desktop runtime.
  *
- * Each row's `description` is that record's **real** corpus `DESC:` prose,
+ * Each row's `description` is that record's **real** corpus description prose,
  * transcribed from `crb::equipment_data::{arms_armor,magic_items}`, not
  * sample text written for the preview. Two rows are `null` because those
  * two corpus records genuinely carry no description — `Backpack`

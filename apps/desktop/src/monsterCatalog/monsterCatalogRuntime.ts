@@ -216,7 +216,7 @@ function buildPreviewCatalog(): MonsterCatalogEntryDto[] {
         },
       ],
       externalAbilityRefs: ['Channel Resistance', 'Flight Maneuverability'],
-      // Allip's row carries no `BONUS:VAR|SLA_CL|` token -- its abilities
+      // Allip's row states no spell-like-ability caster level -- its abilities
       // above are Supernatural, not Spell-Like.
       spellLikeAbilityCasterLevel: null,
       spellLikeAbilities: [],
@@ -259,7 +259,7 @@ function buildPreviewCatalog(): MonsterCatalogEntryDto[] {
       monsterClass: 'Monstrous Humanoid:7',
       abilities: [],
       externalAbilityRefs: ['Grab', 'Rend'],
-      // No `BONUS:VAR|SLA_CL|` token on this row: its grants state their own
+      // No spell-like-ability caster level on this row: its grants state their own
       // `CASTERLEVEL=7` instead, which is a different token and a different
       // half of the same universal monster rule.
       spellLikeAbilityCasterLevel: null,

@@ -14,8 +14,8 @@
 //! # SD-35 `AT-35-E6-001`: read the CONVERTED chassis, not a PCGen token
 //!
 //! Until that cycle this module walked `data/corpus/<book>/class/*.json`,
-//! pulled the `BONUS:COMBAT|BASEAB` / `BONUS:SAVE` formula STRINGS out of
-//! `raw_tokens`, and ran them through the PCGen formula interpreter at
+//! pulled the base-attack and saving-throw progression formula STRINGS out of
+//! the ingest record's verbatim statement array, and ran them through the
 //! browse time — a second, parallel copy of the same derivation
 //! `pilot_compute::generic_class_chassis` was doing for character creation.
 //! `decisions.md` §11 puts an end to reading a PCGen token on the live side:

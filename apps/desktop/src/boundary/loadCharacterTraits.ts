@@ -7,13 +7,13 @@ import { formatError, hasTauriRuntime } from './runtime';
  *
  * A single command: `list_available_character_traits` returns the real,
  * corpus-derived roster of traits this crate's compute path genuinely
- * supports — `ultimate_campaign`'s 31 flat `BONUS:SKILL` traits, 5
- * fixed-choice `BONUS:SKILL|%LIST` traits (second slice), 4 open-family
- * `BONUS:SKILL|%LIST` traits (third slice), 2 flat `BONUS:SAVE`
- * traits (fourth slice), 3 flat `BONUS:COMBAT|INITIATIVE`/
- * `BONUS:CONCENTRATION|ALLSPELLS` traits (fifth slice, `otherPillars`),
+ * supports — `ultimate_campaign`'s 31 flat skill-bonus traits, 5
+ * fixed-choice open-skill-slot traits (second slice), 4 open-family
+ * open-skill-slot traits (third slice), 2 flat saving-throw-bonus
+ * traits (fourth slice), 3 flat initiative-bonus /
+ * concentration-bonus traits (fifth slice, `otherPillars`),
  * 4 ability-score-difference-formula traits (sixth slice,
- * `abilitySubstitution`), and 3 `BONUS:SITUATION` traits (seventh slice)
+ * `abilitySubstitution`), and 3 situational-bonus traits (seventh slice)
  * — every option returned really does grant its stated bonus once
  * selected (and, for a choice-based option, a valid `skillOptions` choice
  * recorded) and submitted on
@@ -41,7 +41,7 @@ import { formatError, hasTauriRuntime } from './runtime';
  * This cycle chains both remaining tables in.
  */
 
-/** One skill a choice-based trait's `%LIST` can resolve to. */
+/** One skill a choice-based trait's open skill slot can resolve to. */
 export interface TraitSkillOptionDto {
   /** Echoed back as `TraitSkillChoiceDto.selectionId`. */
   skillId: string;
@@ -56,15 +56,15 @@ export interface CharacterTraitOptionDto {
   /** Display-name skill(s) this trait's bonus applies to, e.g. `['Acrobatics']`. Empty for a choice-based trait (`skillOptions` non-empty instead). */
   skills: string[];
   bonus: number;
-  /** Non-empty only for a fixed-choice `%LIST` trait: the concrete skills the player may pick between. */
+  /** Non-empty only for a fixed-choice open-skill-slot trait: the concrete skills the player may pick between. */
   skillOptions: TraitSkillOptionDto[];
   /** `choiceSetId` to echo back (paired with the picked `skillOptions` entry) on `CreateCharacterRequest.traitSkillChoices`. `null` for a flat trait. */
   choiceSetId: string | null;
-  /** `'Fortitude' | 'Reflex' | 'Will'` only for a fourth-slice flat `BONUS:SAVE` trait; `null` for every skill-pillar trait. */
+  /** `'Fortitude' | 'Reflex' | 'Will'` only for a fourth-slice flat saving-throw-bonus trait; `null` for every skill-pillar trait. */
   save: string | null;
   /**
-   * Non-empty only for a fifth-slice flat `BONUS:COMBAT|INITIATIVE`
-   * and/or `BONUS:CONCENTRATION|ALLSPELLS` trait — one entry per pillar
+   * Non-empty only for a fifth-slice flat initiative-bonus
+   * and/or concentration-bonus trait — one entry per pillar
    * the record's corpus tokens carry, so `Arcane Temper` (both pillars on
    * one record) carries two entries on ONE option, never two options.
    */

@@ -48,9 +48,9 @@ export interface EquipmentCatalogEntryDto {
   /** Which ingested book this record came from. */
   book: EquipmentBookDto;
   /**
-   * The record's corpus `DESC:` prose, already rendered on the Rust side by
+   * The record's corpus description prose, already rendered on the Rust side by
    * `equipment_catalog.rs`'s `serve_description` (the same
-   * `render_pcgen_desc` treatment the spell catalog uses, which is what
+   * description treatment the spell catalog uses, which is what
    * strips the raw `%%` escapes 54 records used to leak). **Safe to render
    * verbatim — do not re-process it here.**
    *

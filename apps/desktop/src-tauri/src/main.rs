@@ -222,7 +222,7 @@ fn main() {
             // ability scores, Ego and alignment components -- reached no
             // screen at all before this catalog landed.
             list_intelligent_item_catalog,
-            // SD31-D7-PROSE-003: real corpus `DESC:` text for class
+            // SD31-D7-PROSE-003: real corpus description text for class
             // features, joined to the character sheet's own explanation ids
             // -- `ClassFeatureRow.detail` renders the engine's COMPUTED
             // derivation, never the rulebook prose, so this is a second,

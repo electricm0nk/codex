@@ -28,7 +28,7 @@ import type {
  * 2. **A move is the engine's claim, never this module's.** `movedByFeats` and
  *    `displayValueFeats` are both derived in Rust by rendering the record twice
  *    and comparing; nothing here infers a move from the feat list.
- * 3. **Absence is rendered as absence.** A dropped `DESC:` argument means the
+ * 3. **Absence is rendered as absence.** A dropped description slot means the
  *    engine could not resolve a magnitude, and
  *    [`RacialTraitsSurface.incompleteRows`] carries that to the screen rather
  *    than letting a partially-rendered sentence read as a whole one.
@@ -51,7 +51,7 @@ export interface RacialTraitRow {
   roleLabel: string;
   /** The engine-rendered prose. Render verbatim. */
   text: string;
-  /** `DESC:` arguments the engine could not resolve, so a gap is visible. */
+  /** Description slots the engine could not resolve, so a gap is visible. */
   droppedArgs: string[];
   /** True when this character's own feats changed the sentence. */
   movedByFeats: boolean;

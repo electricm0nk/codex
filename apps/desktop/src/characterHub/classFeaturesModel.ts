@@ -80,7 +80,7 @@ export interface ClassFeatureRow {
   /** The engine's corpus-cited derivation, verbatim. */
   detail: string;
   /**
-   * The real rulebook `DESC:` text for this feature, or `null`.
+   * The real rulebook description text for this feature, or `null`.
    *
    * SD31-D7-PROSE-003. A SEPARATE field from `detail`: `detail` is the
    * engine's own computed derivation (may be a bare magnitude with no prose

@@ -1719,7 +1719,7 @@ const CLASS_FEATURE_GUTTER = '9.5rem';
  * The sibling of the class-feature list above it, and deliberately the same
  * shape: a label gutter, the trait, and the engine's own text beneath. Where
  * a class-feature row shows `ComputationExplanation.detail`, a racial-trait row
- * shows `race_trait_picker::render_trait_description`'s output — corpus `DESC:`
+ * shows `race_trait_picker::render_trait_description`'s output — corpus description
  * prose re-rendered against this character's display values, so the magnitudes
  * in it are this character's and not the book's printed defaults.
  *
@@ -2131,7 +2131,7 @@ function ActionsTab(props: {
   sheetLines: readonly SheetLineDto[];
   sheetRulesUnavailableReason: string | null;
 }) {
-  // SD31-D7-PROSE-003: the real corpus `DESC:` text, fetched once and joined
+  // SD31-D7-PROSE-003: the real corpus description text, fetched once and joined
   // in `buildClassFeatureSurface` -- a SECOND, additive data source
   // alongside `props.explanations`, never a replacement for the engine's own
   // computed `detail`. Self-contained (fetched here rather than threaded
@@ -2256,7 +2256,7 @@ function ActionsTab(props: {
                 {row.detail}
               </p>
               {/*
-                SD31-D7-PROSE-003: the real rulebook `DESC:` text, when the
+                SD31-D7-PROSE-003: the real rulebook description text, when the
                 corpus row carries one and it joins to this record. A
                 SEPARATE paragraph from `row.detail` above: `detail` is the
                 engine's own computed derivation (sometimes just a bare

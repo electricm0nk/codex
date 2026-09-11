@@ -259,7 +259,7 @@ function surfacesEveryConditionThatWouldBlockTheSave() {
  * `Minesight` saw two names and could not tell what either one was worth.
  *
  * The prose was never missing from the engine — `race_trait_picker` renders
- * every alternate's `DESC:` tokens and ships the result on both the menu and
+ * every alternate's description statements and ships the result on both the menu and
  * the resolve payload. It simply reached no part of this screen except a
  * `title` tooltip. These assertions are about the row carrying it.
  */

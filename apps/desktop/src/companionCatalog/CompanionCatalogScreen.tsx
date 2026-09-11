@@ -156,12 +156,12 @@ export function formatStatAdjustment(adjustment: CompanionStatAdjustmentDto): st
 /**
  * The caption every stat-adjustment block carries.
  *
- * Load-bearing, not decoration: the corpus states `BONUS:STAT|STR|6` and a
+ * Load-bearing, not decoration: the corpus states a +6 Strength adjustment and a
  * Griffon's Strength is not 6. Printing these numbers under a heading that said
  * "Ability scores" would be the quieter lie this whole ingest is written to
  * avoid.
  */
-export const STAT_ADJUSTMENT_CAPTION = 'Ability score adjustments (corpus BONUS:STAT tokens)';
+export const STAT_ADJUSTMENT_CAPTION = 'Ability score adjustments (as the corpus states them)';
 
 /**
  * The damage-bonus block's caption. Names the token so the reader knows it is
@@ -169,7 +169,7 @@ export const STAT_ADJUSTMENT_CAPTION = 'Ability score adjustments (corpus BONUS:
  * full Strength modifier -- this is the other half PF1 CRB p.182 grants a
  * creature with a single natural attack.
  */
-export const DAMAGE_BONUS_CAPTION = 'Extra damage on attack (corpus BONUS:WEAPONPROF DAMAGE tokens)';
+export const DAMAGE_BONUS_CAPTION = 'Extra damage on attack (as the corpus states it)';
 
 /** `{ name: 'Bite', damageDice: null }` -> `'Bite'`; with dice -> `'Bite 1d6'`. */
 export function formatNaturalAttack(attack: CompanionAttackDto): string {
@@ -193,7 +193,7 @@ export function formatDamageBonus(bonus: CompanionDamageBonusDto): string {
  * The skill-bonus block's caption. Names the token so the reader knows it is
  * a corpus fact.
  */
-export const SKILL_BONUS_CAPTION = 'Skill bonus from ability difference (corpus BONUS:SKILL tokens)';
+export const SKILL_BONUS_CAPTION = 'Skill bonus from ability difference (as the corpus states it)';
 
 /**
  * One skill-bonus row: `"Climb, Swim: Dex modifier − Str modifier"`.
@@ -211,7 +211,7 @@ export function formatSkillBonus(bonus: CompanionSkillBonusDto): string {
 /**
  * The save-DC-formula block's caption, on an ABILITY row. Names the field so
  * the reader knows it is a corpus fact stated only in the ability's own
- * `DESC:` argument — the same fact `render_pcgen_desc` drops the `%1`
+ * description slot — the same fact the description render drops the
  * placeholder for, so without this row the DC number is silently missing
  * from the description above it.
  */

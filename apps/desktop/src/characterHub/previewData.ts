@@ -43,7 +43,7 @@ export function buildPreviewDetail(): LoadSavedCharacterResponse {
     // above.
     selectedTraits: [],
     // And no racial-trait resolution: every sentence in one is *rendered* by
-    // the engine from the corpus row's own `DESC:` tokens against this
+    // the engine from the corpus row's own description statements against this
     // character's feats. Hand-writing a sample here would put corpus-looking
     // rules prose on screen that no corpus produced — the fixture-in-a-
     // production-path failure `docs/governance/no-stub-mvp-doctrine.md`

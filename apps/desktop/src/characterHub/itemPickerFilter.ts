@@ -103,7 +103,7 @@ export function mapEquipmentCatalogEntries(entries: EquipmentCatalogEntryDto[]):
     // Unknown/future categories fall back to the raw variant string verbatim
     // rather than a fabricated label.
     const category = EQUIPMENT_CATEGORY_LABELS[entry.category] ?? entry.category;
-    // The corpus `DESC:` prose the Rust adapter already renders. Until this
+    // The corpus description prose the Rust adapter already renders. Until this
     // hop existed the field crossed the IPC boundary and was read by nothing,
     // so a player picking equipment saw a bare category label and had no way
     // to tell a Longsword from a Longspear except by name.
@@ -184,7 +184,7 @@ export function mapFeatCatalogEntries(entries: FeatCatalogEntryDto[]): ItemPicke
     // `mapSpellCatalogEntries` already does. An unknown/future book falls
     // back to the raw variant string rather than a fabricated label, and
     // the description is omitted rather than invented when the corpus
-    // record has no `DESC:` token (a real gap: CRB's "Heighten Spell +N"
+    // record states no description (a real gap: CRB's "Heighten Spell +N"
     // records and APG's base "Elemental Fist" — see
     // `FeatTableEntry.description`'s own doc comment).
     detail: [FEAT_SOURCE_LABELS[entry.source] ?? entry.source, entry.category, entry.description]

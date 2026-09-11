@@ -55,7 +55,7 @@ export function formatBookList(codes: readonly string[]): string {
 /**
  * True when a record carries real corpus description prose worth rendering.
  *
- * `null` is the corpus's honest "this row has no `DESC:` token" — 974 of the
+ * `null` is the corpus's honest "this row states no description" — 974 of the
  * 3830 served records are in that state — and a whitespace-only string is the
  * same absence wearing a different shape. Both render as no description line
  * at all, never as an empty box or an invented sentence.
@@ -128,7 +128,7 @@ export function EquipmentCatalogScreen(props: { onClose: () => void }) {
   );
 
   /**
-   * Records carrying real corpus `DESC:` prose. Derived from what loaded,
+   * Records carrying real corpus description prose. Derived from what loaded,
    * like every other number on this screen, so the caption cannot claim
    * description coverage the data does not back.
    */

@@ -2,7 +2,7 @@ import { invoke } from '@tauri-apps/api/core';
 import { formatError, hasTauriRuntime } from './runtime';
 
 /**
- * Read-only desktop boundary over the real corpus `DESC:` text for class
+ * Read-only desktop boundary over the real corpus description text for class
  * features (SD31-D7-PROSE-003).
  *
  * Invokes the `list_class_feature_descriptions` Tauri command

@@ -66,7 +66,7 @@ const CHARACTER_AWARE_ENTRIES: FeatCatalogEntryDto[] = [
       met: [],
       unmet: [],
       unverified: [
-        'not verified: one of its alternatives could not be evaluated (references a PCGen runtime variable this engine does not model) (PREMULT:1,[PREVARGTEQ:PreStatScore_INT,13],[PREVARGTEQ:CombatFeatIntRequirement,13])',
+        'not verified: the referenced rules variable has no converted table (Intelligence 13 or higher, or the combat-feat Intelligence requirement is at least 13)',
       ],
       prerequisiteCount: 1,
     },

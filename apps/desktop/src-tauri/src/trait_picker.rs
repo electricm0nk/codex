@@ -6,7 +6,7 @@
 //! own two tables, never a hand-typed duplicate of either.
 //!
 //! Unlike `race_trait_picker`, a flat trait needs no "resolve" step: a
-//! flat `BONUS:SKILL` trait has no alternate-swap exclusivity to
+//! flat skill-bonus trait has no alternate-swap exclusivity to
 //! validate, no rendered-description formula, and no `held_feats`
 //! dependency -- the option list itself, and the id the frontend echoes
 //! back on `CreateCharacterRequest.selected_traits`, are the entire
@@ -25,7 +25,7 @@ use codex::rules_core::trait_effects::{
 };
 use serde::Serialize;
 
-/// One skill this trait's `%LIST` choice can be resolved to -- see
+/// One skill this trait's open skill slot can be resolved to -- see
 /// [`CharacterTraitOptionDto::skill_options`].
 #[derive(Debug, Clone, Serialize)]
 #[serde(rename_all = "camelCase")]
@@ -53,7 +53,7 @@ pub struct CharacterTraitOptionDto {
     /// skill applies is not known until the player picks one.
     pub skills: Vec<String>,
     pub bonus: i8,
-    /// Non-empty **only** for a fixed-choice `%LIST` trait
+    /// Non-empty **only** for a fixed-choice open-skill-slot trait
     /// (`trait_effects::SKILL_CHOICE_TRAIT_BONUSES`): the concrete skills
     /// the player may pick between. Empty for a flat trait, whose target
     /// skill(s) are already fixed in `skills` above.
@@ -67,7 +67,7 @@ pub struct CharacterTraitOptionDto {
     #[serde(default)]
     pub choice_set_id: Option<String>,
     /// `Some(<save name>)` (`"Fortitude"`, `"Reflex"`, or `"Will"`) only
-    /// for a flat `BONUS:SAVE` trait (`trait_effects::SAVE_TRAIT_
+    /// for a flat saving-throw-bonus trait (`trait_effects::SAVE_TRAIT_
     /// BONUSES`) -- fourth slice, `AT-34-E4-002`. `None` for every
     /// skill-pillar trait, whose `skills`/`skill_options` above already
     /// say what it affects. A save-bonus option's `skills` is always
@@ -75,8 +75,8 @@ pub struct CharacterTraitOptionDto {
     /// skill trait -- only which pillar it targets differs.
     #[serde(default)]
     pub save: Option<String>,
-    /// Non-empty **only** for a fifth-slice flat `BONUS:COMBAT|INITIATIVE`
-    /// and/or `BONUS:CONCENTRATION|ALLSPELLS` trait
+    /// Non-empty **only** for a fifth-slice flat initiative-bonus
+    /// and/or concentration-bonus trait
     /// (`trait_effects::INITIATIVE_TRAIT_BONUSES` /
     /// `trait_effects::CONCENTRATION_TRAIT_BONUSES`) -- one entry per
     /// pillar the record's corpus tokens carry, so `Trait ~ Arcane Temper`
@@ -139,11 +139,11 @@ fn skill_display_name(skill_id: &str) -> String {
 }
 
 /// The full roster of traits this crate's real compute-and-apply path
-/// supports -- `ultimate_campaign`'s 31 flat `BONUS:SKILL` traits, its 5
-/// fixed-choice `BONUS:SKILL|%LIST` traits, its 4 open-family
-/// `BONUS:SKILL|%LIST` traits, its 2 flat `BONUS:SAVE` traits, its 3
-/// `BONUS:SITUATION` traits, its 3 flat `BONUS:COMBAT|INITIATIVE`/
-/// `BONUS:CONCENTRATION|ALLSPELLS` traits, and its 4 ability-score-
+/// supports -- `ultimate_campaign`'s 31 flat skill-bonus traits, its 5
+/// fixed-choice open-skill-slot traits, its 4 open-family
+/// open-skill-slot traits, its 2 flat saving-throw-bonus traits, its 3
+/// situational-bonus traits, its 3 flat initiative-bonus /
+/// concentration-bonus traits, and its 4 ability-score-
 /// difference-formula traits (52 total) -- every option returned
 /// genuinely grants its stated bonus when selected (and, for a
 /// choice-based option, a valid `skill_options` choice recorded) and
@@ -203,7 +203,7 @@ pub fn list_available_character_traits() -> Vec<CharacterTraitOptionDto> {
         other_pillars: Vec::new(),
         ability_substitution: None,
     });
-    // Third slice (`AT-34-E4-002`): the 4 open-subtype-family `%LIST`
+    // Third slice (`AT-34-E4-002`): the 4 open-subtype-family skill-slot
     // traits -- `skill_options` here is the resolved Craft/Perform/
     // Profession family UNION (`family_choice_skill_options`), not a
     // hand-typed literal, so the frontend's own generic
@@ -227,7 +227,7 @@ pub fn list_available_character_traits() -> Vec<CharacterTraitOptionDto> {
         other_pillars: Vec::new(),
         ability_substitution: None,
     });
-    // Fourth slice (`AT-34-E4-002`): the 2 flat `BONUS:SAVE` traits --
+    // Fourth slice (`AT-34-E4-002`): the 2 flat saving-throw-bonus traits --
     // needs no `choice_set_id` (no player choice, same as a flat skill
     // trait) and no `skills` (the frontend's generic display logic checks
     // `save` for this shape instead, the same "one new field, zero new
@@ -245,7 +245,7 @@ pub fn list_available_character_traits() -> Vec<CharacterTraitOptionDto> {
         other_pillars: Vec::new(),
         ability_substitution: None,
     });
-    // Seventh slice (`AT-34-E4-002`): the 3 `BONUS:SITUATION` traits.
+    // Seventh slice (`AT-34-E4-002`): the 3 situational-bonus traits.
     // Reuses the SAME `skills`/`bonus` fields the flat slice already
     // established -- every clause on these 3 records happens to share one
     // identical bonus magnitude (proven by
@@ -278,8 +278,8 @@ pub fn list_available_character_traits() -> Vec<CharacterTraitOptionDto> {
             ability_substitution: None,
         }
     });
-    // Fifth slice (`AT-34-E4-002`): the 3 flat `BONUS:COMBAT|INITIATIVE`
-    // and/or `BONUS:CONCENTRATION|ALLSPELLS` traits. A single record
+    // Fifth slice (`AT-34-E4-002`): the 3 flat initiative-bonus
+    // and/or concentration-bonus traits. A single record
     // (`Trait ~ Arcane Temper`) can carry BOTH tokens, so this merges by
     // `trait_id` into ONE option with up to two `other_pillars` entries --
     // never two separate selectable rows for one trait, which would let a
@@ -364,8 +364,8 @@ pub fn list_available_character_traits() -> Vec<CharacterTraitOptionDto> {
             }),
         }
     });
-    // Eighth slice (`AT-34-E4-002`): the 1 mixed `BONUS:CASTERLEVEL|
-    // SUBSCHOOL` + `BONUS:SKILL` trait (Eldritch Delver). Reuses the flat
+    // Eighth slice (`AT-34-E4-002`): the 1 mixed subschool-caster-level
+    // plus skill-bonus trait (Eldritch Delver). Reuses the flat
     // `skills`/`bonus` fields for the skill half (same shape the first
     // slice already established) and `other_pillars` for the
     // caster-level half (same shape the fifth slice already established
@@ -693,7 +693,7 @@ mod tests {
         }
     }
 
-    /// The Almost Human trait (seventh slice: single `BONUS:SITUATION`
+    /// The Almost Human trait (seventh slice: single situational-bonus
     /// clause) reaches the DTO with its real corpus data verbatim.
     #[test]
     fn almost_human_option_carries_its_real_corpus_situational_data() {
@@ -906,7 +906,7 @@ mod tests {
         assert_eq!(criminal.skill_options[0].name, "Disable Device");
     }
 
-    /// The Artisan trait (third slice: `TYPE=Craft` open-subtype family)
+    /// The Artisan trait (third slice: the Craft open-subtype family)
     /// reaches the DTO with a real, corpus-derived multi-entry
     /// `skill_options` list (all 23 `Craft (<subtype>)` ids), not a
     /// hand-typed stand-in and not an empty "not built yet" list.
@@ -943,7 +943,7 @@ mod tests {
         assert!(mentored.skill_options.iter().any(|o| o.skill_id == "skill:profession_scribe"));
     }
 
-    /// The Life of Toil trait (fourth slice: flat `BONUS:SAVE`) reaches
+    /// The Life of Toil trait (fourth slice: flat saving-throw bonus) reaches
     /// the DTO with its real corpus data verbatim, as a save-bonus
     /// option: no `skills`, no `skill_options`, no `choice_set_id`, but a
     /// real `save` naming Fortitude.

@@ -33,7 +33,7 @@ import { assert, assertEqual } from '../testSupport/asserts';
  * 3. `facet === null` is a row whose `TYPE:` states no facet the chassis
  *    models; three Inner Sea Intrigue rows are in that state and inventing a
  *    label for them would assert something the corpus does not.
- * 4. A `BONUS:STAT` value is an ADJUSTMENT. `STR +6` under a heading reading
+ * 4. A stated ability-score value is an ADJUSTMENT. `STR +6` under a heading reading
  *    "Ability scores" would be a lie about a Griffon's Strength.
  */
 
@@ -297,7 +297,7 @@ function testADamageBonusPrintsTheRuleAndAnUnparsedOneSaysSo() {
     'a refused formula prints verbatim AND says it was not interpreted'
   );
   assert(
-    DAMAGE_BONUS_CAPTION.includes('BONUS:WEAPONPROF'),
+    DAMAGE_BONUS_CAPTION.includes('as the corpus states it'),
     'the caption names the corpus token so the reader knows it is a corpus fact'
   );
 }
@@ -322,7 +322,7 @@ function testASkillBonusPrintsTheRuleAndAnUnparsedOneSaysSo() {
     'a refused formula prints verbatim AND says it was not interpreted'
   );
   assert(
-    SKILL_BONUS_CAPTION.includes('BONUS:SKILL'),
+    SKILL_BONUS_CAPTION.includes('as the corpus states it'),
     'the caption names the corpus token so the reader knows it is a corpus fact'
   );
 }
