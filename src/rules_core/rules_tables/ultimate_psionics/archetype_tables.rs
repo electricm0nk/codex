@@ -128,7 +128,6 @@ pub fn archetype_swap_tables() -> &'static [ArchetypeSwapEntry] {
             archetype_name: "Raging Beast",
             description: Some("You have unlocked your psionic potential and use the power of your rage to transform into a terrifying beast capable of decimating your foes."),
             source_page: Some("p.296"),
-            prerequisites: Some(&["PRECLASS:1,Barbarian=1", "PREMULT:1,[PREABILITY:1,CATEGORY=Archetype,Barbarian Archetype ~ Raging Beast],[!PREABILITY:1,CATEGORY=Archetype,TYPE.BarbarianFastMovement,TYPE.BarbarianRagePowers,TYPE.BarbarianRagePower2,TYPE.BarbarianRagePower6,TYPE.BarbarianRagePower8,TYPE.BarbarianRagePower14,TYPE.BarbarianRagePower20,TYPE.BarbarianTrapSense,TYPE.BarbarianTrapSense3,TYPE.BarbarianTrapSense4,TYPE.BarbarianTrapSense5,TYPE.BarbarianTrapSense6]"]),
             replaces: Some(&["BarbarianFastMovement", "BarbarianRagePower2", "BarbarianRagePower6", "BarbarianRagePower8", "BarbarianRagePower14", "BarbarianRagePower20", "BarbarianTrapSense3", "BarbarianTrapSense4", "BarbarianTrapSense5", "BarbarianTrapSense6"]),
             grants: &[
                 ArchetypeGrant { grants_feature_key: "Raging Beast ~ Psionic Mind", at_level: 1, description: Some("You gain wild talent or psionic talent as a bonus feat."), benefit: None },
@@ -145,7 +144,6 @@ pub fn archetype_swap_tables() -> &'static [ArchetypeSwapEntry] {
             archetype_name: "Thoughtsinger",
             description: Some("You bring your friends together into a chorus of thoughts and emotions."),
             source_page: Some("p.296"),
-            prerequisites: Some(&["PRECLASS:1,Bard=1", "PREMULT:1,[PREABILITY:1,CATEGORY=Archetype,Bard Archetype ~ Thoughtsinger],[!PREABILITY:1,CATEGORY=Archetype,TYPE.BardBardicPerformance,TYPE.BardWellVersed,TYPE.BardVersatilePerformance,TYPE.BardSuggestion,TYPE.BardMassSuggestion,TYPE.BardDirgeOfDoom,TYPE.BardFrighteningTune,TYPE.BardDeadlyPerformance]"]),
             replaces: Some(&["BardBardicPerformance", "BardWellVersed", "BardVersatilePerformance", "BardSuggestion", "BardMassSuggestion", "BardDirgeOfDoom", "BardFrighteningTune", "BardDeadlyPerformance"]),
             grants: &[
                 ArchetypeGrant { grants_feature_key: "Thoughtsinger ~ Collective", at_level: 1, description: Some("Join %1 minds, plus your own, within %2 feet; can manifest some powers through collective.|ThoughtsingerCollectiveMinds|ThoughtsingerCollectiveRange|!PREABILITY:1,CATEGORY=Internal,Thoughtsinger ~ Collective Range Unlimited"), benefit: None },
@@ -165,7 +163,6 @@ pub fn archetype_swap_tables() -> &'static [ArchetypeSwapEntry] {
             archetype_name: "Gaean",
             description: Some("You have learned that all of nature is connected by a vast earthmind.  You tap into this primal mind to fuel your energies."),
             source_page: Some("p.292"),
-            prerequisites: Some(&["PRECLASS:1,Druid=1", "PREMULT:1,[PREABILITY:1,CATEGORY=Archetype,Druid Archetype ~ Gaean],[!PREABILITY:1,CATEGORY=Archetype,TYPE.DruidWildEmpathy,TYPE.DruidResistNaturesLure,TYPE.DruidThousandFaces]"]),
             replaces: Some(&["DruidWildEmpathy", "DruidResistNaturesLure", "DruidAThousandFaces"]),
             grants: &[
                 ArchetypeGrant { grants_feature_key: "Gaean ~ Gaean Communion", at_level: 1, description: Some("While maintaining psionic focus, you gain the ability to telepathically communicate with any animal or magical beast with an intelligence of 1 or 2 within 100 ft.  Any time you cast summon nature's ally, you can communicate telepathically with all of the creatures summoned by the spell."), benefit: None },
@@ -180,7 +177,6 @@ pub fn archetype_swap_tables() -> &'static [ArchetypeSwapEntry] {
             archetype_name: "Serpent Lord",
             description: Some("You embrace the inner serpent and bring it forth."),
             source_page: Some("p.337"),
-            prerequisites: Some(&["PRECLASS:1,Druid=1", "PREMULT:1,[PREABILITY:1,CATEGORY=Archetype,Druid Archetype ~ Serpent Lord],[!PREABILITY:1,CATEGORY=Archetype,TYPE.DruidNatureBond,TYPE.DruidNaturesLure,TYPE.DruidThousandFaces,TYPE.DruidVenomImmunity,TYPE.DruidWildShape,TYPE.DruidWildEmpathy]", "PRERACE:1,Ophiduan"]),
             replaces: Some(&["DruidNatureBond", "DruidResistNaturesLure", "DruidAThousandFaces", "DruidVenomImmunity"]),
             grants: &[
                 ArchetypeGrant { grants_feature_key: "Serpent Lord ~ Nature Bond", at_level: 1, description: Some("You must choose a serpend or snake as your animal companion.  [Not enforced]  The DC of any poison attacks your animal companion has increases by +2. [Not added in]"), benefit: None },
@@ -199,7 +195,6 @@ pub fn archetype_swap_tables() -> &'static [ArchetypeSwapEntry] {
             archetype_name: "Ironborn",
             description: Some("Your body can merge with your armor."),
             source_page: Some("p.325"),
-            prerequisites: Some(&["PRECLASS:1,Fighter=1", "PREMULT:1,[PREABILITY:1,CATEGORY=Archetype,Fighter Archetype ~ Ironborn],[!PREABILITY:1,CATEGORY=Archetype,TYPE.FighterBravery,TYPE.FighterArmorTraining,TYPE.FighterBonusFeat2,TYPE.FighterBonusFeat4,TYPE.FighterBonusFeat8,TYPE.FighterArmorMastery]", "PRERACE:1,Forgeborn"]),
             replaces: Some(&["FighterBravery", "FighterArmorTraining_ALL", "FighterBonusFeat2", "FighterBonusFeat4", "FighterBonusFeat8", "FighterArmorMastery"]),
             grants: &[
                 ArchetypeGrant { grants_feature_key: "Ironborn ~ Armor Aptitude", at_level: 2, description: Some("Whenever you are wearing armor, you reduce the armor check penalty by %1 (to a minimum of 0) and increase the maximum Dexterity bonus allowed by %1.  In addition you can move at your normal speed while wearing medium|ArmorAptitudeBonus"), benefit: None },
@@ -217,7 +212,6 @@ pub fn archetype_swap_tables() -> &'static [ArchetypeSwapEntry] {
             archetype_name: "Psionic Fighter",
             description: Some("You unlock the psionic potential in yourself instead of developing the techniques that most fighters choose."),
             source_page: Some("p.294"),
-            prerequisites: Some(&["PRECLASS:1,Fighter=1", "PREMULT:1,[PREABILITY:1,CATEGORY=Archetype,Fighter Archetype ~ Psionic Fighter],[!PREABILITY:1,CATEGORY=Archetype,TYPE.FighterBonusFeat1,TYPE.FighterBravery,TYPE.FighterWeaponTraining2,TYPE.FighterWeaponTraining3]"]),
             replaces: Some(&["FighterBonusFeat1", "FighterBravery", "FighterWeaponTraining2", "FighterWeaponTraining3"]),
             grants: &[
                 ArchetypeGrant { grants_feature_key: "Psionic Fighter ~ Psionic Feats", at_level: 1, description: None, benefit: None },
@@ -234,7 +228,6 @@ pub fn archetype_swap_tables() -> &'static [ArchetypeSwapEntry] {
             archetype_name: "Disciple of the Raging Sea",
             description: Some("Your intense meditations and discipline allow you to unleash a terrifying range when needed."),
             source_page: Some("p.332"),
-            prerequisites: Some(&["PRECLASS:1,Monk=1", "PREMULT:1,[PREABILITY:1,CATEGORY=Archetype,Monk Archetype ~ Disciple of the Raging Sea],[!PREABILITY:1,CATEGORY=Archetype,TYPE.MonkStunningFist]", "PRERACE:1,Maenad"]),
             replaces: Some(&["MonkStunningFist"]),
             grants: &[
                 ArchetypeGrant { grants_feature_key: "Disciple of the Raging Sea ~ Unyielding Anger", at_level: 1, description: Some("When you use your racial outburst ability, the bonus to Strength is increased to +4.  If you expend your psionic focus when activating your racial outburst ability, this bonus is increased to +6 for the first round of the outburst."), benefit: None },
@@ -249,7 +242,6 @@ pub fn archetype_swap_tables() -> &'static [ArchetypeSwapEntry] {
             archetype_name: "Enlightened Monk",
             description: Some("You have learned how to use your ki to fuel your psionic abilities and ways to harness your psionic power."),
             source_page: Some("p.292"),
-            prerequisites: Some(&["PRECLASS:1,Monk=1", "PREMULT:1,[PREABILITY:1,CATEGORY=Archetype,Monk Archetype ~ Enlightened Monk],[!PREABILITY:1,CATEGORY=Archetype,TYPE.MonkBonusFeat1,TYPE.MonkSlowFall,TYPE.MonkBonusFeat6]"]),
             replaces: Some(&["MonkBonusFeat1", "MonkSlowFall", "MonkBonusFeat6"]),
             grants: &[
                 ArchetypeGrant { grants_feature_key: "Enlightened Monk ~ Psionic Training", at_level: 1, description: None, benefit: None },
@@ -265,7 +257,6 @@ pub fn archetype_swap_tables() -> &'static [ArchetypeSwapEntry] {
             archetype_name: "Purifier",
             description: Some("You seek to cleanse the unnatural and abberant from the world."),
             source_page: Some("p.206"),
-            prerequisites: Some(&["PRECLASS:1,Paladin=1", "PREMULT:1,[PREABILITY:1,CATEGORY=Archetype,Paladin Archetype ~ Purifier],[!PREABILITY:1,CATEGORY=Archetype,TYPE.PaladinSmiteEvil,TYPE.PaladinDetectEvil,TYPE.PaladinLayOnHands,TYPE.PaladinChannelPositiveEnergy,TYPE.PaladinMercy,TYPE.PaladinSpells,TYPE.PaladinDivineBond]"]),
             replaces: Some(&["PaladinSmiteEvil", "PaladinDetectEvil", "PaladinLayOnHands", "PaladinChannelPositiveEnergy", "PaladinMercy", "PaladinSpells", "PaladinDivineBond"]),
             grants: &[
                 ArchetypeGrant { grants_feature_key: "Purifier ~ Smite the Unclean", at_level: 1, description: Some("You can call out to the powers of good to aid you in your struggle against the unclean %1 times per day. As a swift action, you choose one target within sight to smite. If this target is an aberration or has the psionic subtype, you add +%2 to your attack rolls and +%3 to all damage rolls made against the target of your smite. Regardless of the target, Smite the Unclean attacks automatically bypass any DR the creature might possess. In addition, while smite the unclean is in effect, you gain a +%5 deflection bonus to your AC against attacks made by the target of the smite. If you target a creature that is not an aberration or of the psionic subtype, the smite is wasted with no effect. The Smite the Unclean effect remains until the target of the smite is dead or the next time you rest and regain your uses of this ability.|SmiteTheUncleanTimes|SmiteTheUncleanAttackBonus|SmiteTheUncleanDamageBonus|SmiteTheUncleanDamageBonus*2|SmiteTheUncleanACBonus"), benefit: None },
@@ -285,7 +276,6 @@ pub fn archetype_swap_tables() -> &'static [ArchetypeSwapEntry] {
             archetype_name: "Sleeper's Guardian",
             description: Some("You will go to any lengths to keep the world safe, and the Sleeper deep in his slumber."),
             source_page: Some("p.318"),
-            prerequisites: Some(&["PRECLASS:1,Paladin=1", "PREMULT:1,[PREABILITY:1,CATEGORY=Archetype,Paladin Archetype ~ Sleeper's Guardian],[!PREABILITY:1,CATEGORY=Archetype,TYPE.PaladinAuraOfGood,TYPE.PaladinSmiteEvil,TYPE.PaladinDivineGrace,TYPE.PaladinDivineBond,TYPE.PaladinSpells]", "PRERACE:1,Duergar,Duergar ~ Psionic"]),
             replaces: Some(&["PaladinAuraOfGood", "PaladinSmiteEvil", "PaladinDivineGrace", "PaladinDivineBond", "PaladinSpells"]),
             grants: &[
                 ArchetypeGrant { grants_feature_key: "Sleeper's Guardian ~ Aura of Order", at_level: 1, description: Some("The power of your aura of lawful (see the detect law spell) is equal to your paladin level.  This replaces Aura of Good."), benefit: None },
@@ -305,7 +295,6 @@ pub fn archetype_swap_tables() -> &'static [ArchetypeSwapEntry] {
             archetype_name: "Kinslayer",
             description: Some("You see your giant cousins as savages who must be eliminated for the greater good."),
             source_page: Some("p.328"),
-            prerequisites: Some(&["PRECLASS:1,Ranger=1", "PREMULT:1,[PREABILITY:1,CATEGORY=Archetype,Ranger Archetype ~ Kinslayer],[!PREABILITY:1,CATEGORY=Archetype,TYPE.RangerFavoredEnemy1,TYPE.RangerSpells,TYPE.RangerHuntersBond,TYPE.RangerWoodlandStride]", "PRERACE:1,Half-Giant"]),
             replaces: Some(&["RangerFavoredEnemy1", "RangerHuntersBond", "RangerSpells", "RangerWoodlandStride"]),
             grants: &[
                 ArchetypeGrant { grants_feature_key: "Kinslayer ~ Favored Enemy", at_level: 1, description: Some("You must choose humanoid (giant) as your favored enemy.  In addition, when you make trip attempts against creatures of the humanoid (giant) subtype, you double your favored enemy bonus for the trip attempt and can make trip attempts regardless of the creature's size compared to your own."), benefit: None },
@@ -322,7 +311,6 @@ pub fn archetype_swap_tables() -> &'static [ArchetypeSwapEntry] {
             archetype_name: "Pack Leader",
             description: Some("You use a subconscious tie to your allies to tie them all into a powerful hunting pack."),
             source_page: Some("p.291"),
-            prerequisites: Some(&["PRECLASS:1,Ranger=1", "PREMULT:1,[PREABILITY:1,CATEGORY=Archetype,Ranger Archetype ~ Pack Leader],[!PREABILITY:1,CATEGORY=Archetype,TYPE.RangerWildEmpathy,TYPE.RangerSpells,TYPE.RangerHuntersBond,TYPE.RangerWoodlandStride,TYPE.RangerCombatStyleFeat10]"]),
             replaces: Some(&["RangerWildEmpathy", "RangerSpells", "RangerHuntersBond", "RangerWoodlandStride", "RangerCombatStyleFeat10"]),
             grants: &[
                 ArchetypeGrant { grants_feature_key: "Pack Leader ~ The Pack", at_level: 4, description: Some("You can add up to %1 other creatures into your pack (collective).  When members of the pack are attacking the same creature, they gain a +1 bonus on weapon attack and damage rolls against that creature.|ThePackSize"), benefit: None },
@@ -338,7 +326,6 @@ pub fn archetype_swap_tables() -> &'static [ArchetypeSwapEntry] {
             archetype_name: "Cerebral Infiltrator",
             description: Some("You focus more on dealing with people and less on dealing with traps and mechanical devices."),
             source_page: Some("p.291"),
-            prerequisites: Some(&["PRECLASS:1,Rogue=1", "PREMULT:1,[PREABILITY:1,CATEGORY=Archetype,Rogue Archetype ~ Cerebral Infiltrator],[!PREABILITY:1,CATEGORY=Archetype,TYPE.RogueTrapfinding,TYPE.RogueTrapsense]"]),
             replaces: Some(&["RogueTrapfinding", "RogueTrapsense"]),
             grants: &[
                 ArchetypeGrant { grants_feature_key: "Cerebral Infiltrator ~ Enhanced Senses", at_level: 1, description: Some("You unlock your psionic talent and additional insight into interactions with others.  You gain a +%1 bonus on Sense Motive checks.|EnhancedSensesSenseMotiveBonus"), benefit: None },
@@ -352,7 +339,6 @@ pub fn archetype_swap_tables() -> &'static [ArchetypeSwapEntry] {
             archetype_name: "Menteur",
             description: Some("You learn to use your psionic power to alter your appearance, abscond to a safe location, and talk your way out of most any situation."),
             source_page: Some("p.322"),
-            prerequisites: Some(&["PRECLASS:1,Rogue=1", "PREMULT:1,[PREABILITY:1,CATEGORY=Archetype,Rogue Archetype ~ Menteur],[!PREABILITY:1,CATEGORY=Archetype,TYPE.RogueTrapfinding,TYPE.RogueTrapsense,TYPE.RogueTalent6]", "PRERACE:1,Elan"]),
             replaces: Some(&["RogueTrapfinding", "RogueTrapsense", "RogueTalent6"]),
             grants: &[
                 ArchetypeGrant { grants_feature_key: "Menteur ~ Silver Tongued", at_level: 1, description: Some("You add +%1 to Bluff skill checks made against an opponent's Sense Motive skill.|SilverTonguedBonus"), benefit: None },
@@ -367,7 +353,6 @@ pub fn archetype_swap_tables() -> &'static [ArchetypeSwapEntry] {
             archetype_name: "Reaving Raider",
             description: Some("You choose the life of the pirate over that of more reputable work."),
             source_page: Some("p.332"),
-            prerequisites: Some(&["PRECLASS:1,Rogue=1", "PREMULT:1,[PREABILITY:1,CATEGORY=Archetype,Rogue Archetype ~ Reaving Raider],[!PREABILITY:1,CATEGORY=Archetype,TYPE.RogueTrapfinding,TYPE.RogueTrapsense,TYPE.RogueTalent8]", "PRERACE:1,Maenad"]),
             replaces: Some(&["RogueTrapfinding", "RogueTrapsense", "RogueTalent8"]),
             grants: &[
                 ArchetypeGrant { grants_feature_key: "Reaving Raider ~ Take Captive", at_level: 1, description: Some("While maintaining psionic focus, you can choose to deal nonlethal damage without incurring the -4 penalty on the attack rolls.  In addition, when you confirm a critical hit with an attack that deals nonlethal damage, you can expend your psionic focus to try to knock the enemy out, although a successful save (Fort DC %1) negates this effect.|TakeCaptiveDC"), benefit: None },

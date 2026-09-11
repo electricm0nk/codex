@@ -78,7 +78,6 @@ pub fn archetype_swap_tables() -> &'static [ArchetypeSwapEntry] {
             archetype_name: "Aberrant Companion",
             description: Some("There's something oddly wrong about aberrant companions. Yet though they're touched by eldritch magic or mutated by strange influences, they are still loyal, if unnatural, allies."),
             source_page: Some("p.186"),
-            prerequisites: Some(&["PRECLASS:1,Companion=1", "PREMULT:1,[PREABILITY:1,CATEGORY=Archetype,Companion Archetype ~ Aberrant Companion],[!PREABILITY:1,CATEGORY=Archetype,TYPE.CF_CompanionShareSpells,TYPE.CF_CompanionDevotion,TYPE.CF_CompanionMultiattack]"]),
             replaces: Some(&["CF_CompanionShareSpells", "CF_CompanionDevotion", "CF_CompanionMultiattack"]),
             grants: &[
                 ArchetypeGrant { grants_feature_key: "Aberrant Companion ~ Aberrant Skills", at_level: 1, description: None, benefit: None },
@@ -95,7 +94,6 @@ pub fn archetype_swap_tables() -> &'static [ArchetypeSwapEntry] {
             archetype_name: "Ambusher",
             description: Some("Ambushers sneak up on unsuspecting prey, pouncing on targets when they least expect it."),
             source_page: Some("p.186"),
-            prerequisites: Some(&["PRECLASS:1,Companion=1", "PREMULT:1,[PREABILITY:1,CATEGORY=Archetype,Companion Archetype ~ Ambusher],[!PREABILITY:1,CATEGORY=Archetype,TYPE.CF_CompanionShareSpells,TYPE.CF_CompanionEvasion,TYPE.CF_CompanionImprovedEvasion,TYPE.CF_CompanionDevotion,TYPE.CF_CompanionMultiattack]"]),
             replaces: Some(&["CF_CompanionShareSpells", "CF_CompanionDevotion", "CF_CompanionMultiattack", "CF_CompanionEvasion", "CF_CompanionImprovedEvasion"]),
             grants: &[
                 ArchetypeGrant { grants_feature_key: "Ambusher ~ Camouflage", at_level: 1, description: Some("An ambusher gains a +4 racial bonus on Stealth checks in its natural environment (if this is unclear, use the environment in its Bestiary entry)."), benefit: None },
@@ -109,7 +107,6 @@ pub fn archetype_swap_tables() -> &'static [ArchetypeSwapEntry] {
             archetype_name: "Augmented Companion",
             description: Some("Augmented companions have suffered an injury, such as the loss of a wing, and parts of their bodies have been replaced by a master construct crafter. This procedure grants them unusual abilities."),
             source_page: Some("p.186"),
-            prerequisites: Some(&["PRECLASS:1,Companion=1", "PREMULT:1,[PREABILITY:1,CATEGORY=Archetype,Companion Archetype ~ Augmented Companion],[!PREABILITY:1,CATEGORY=Archetype,TYPE.CF_CompanionShareSpells,TYPE.CF_CompanionDevotion]"]),
             replaces: Some(&["CF_CompanionShareSpells", "CF_CompanionDevotion"]),
             grants: &[
                 ArchetypeGrant { grants_feature_key: "Augmented Companion ~ Not Quite Animal", at_level: 1, description: Some("The DC to use Handle Animal on an augmented companion is 5 higher, as if it were a nonanimal with an Intelligence score of 1 or 2."), benefit: None },
@@ -125,7 +122,6 @@ pub fn archetype_swap_tables() -> &'static [ArchetypeSwapEntry] {
             archetype_name: "Auspice",
             description: Some("Auspices were born with a birthmark or other feature that seems to be in the shape of their master's deity's holy symbol; they are usually animal sacred to that deity's religion."),
             source_page: Some("p.187"),
-            prerequisites: Some(&["PRECLASS:1,Companion=1", "PREMULT:1,[PREABILITY:1,CATEGORY=Archetype,Companion Archetype ~ Auspice],[!PREABILITY:1,CATEGORY=Archetype,TYPE.CF_CompanionShareSpells,TYPE.CF_CompanionEvasion,TYPE.CF_CompanionImprovedEvasion]"]),
             replaces: Some(&["CF_CompanionShareSpells", "CF_CompanionEvasion", "CF_CompanionImprovedEvasion"]),
             grants: &[
                 ArchetypeGrant { grants_feature_key: "Auspice ~ Aligned", at_level: 1, description: Some("Even though an auspice is an animal, its connection to its associated deity allows it to be chaotic neutral, lawful neutral, neutral evil, or neutral good, whichever is closest to the deity's alignment, or it can remain true neutral."), benefit: None },
@@ -140,7 +136,6 @@ pub fn archetype_swap_tables() -> &'static [ArchetypeSwapEntry] {
             archetype_name: "Bodyguard",
             description: Some("Some companions live lives of faithful devotion and steady vigilance, standing watch through long hours and always ready to leap into action to protect their master."),
             source_page: Some("p.187"),
-            prerequisites: Some(&["PRECLASS:1,Companion=1", "PREMULT:1,[PREABILITY:1,CATEGORY=Archetype,Companion Archetype ~ Bodyguard],[!PREABILITY:1,CATEGORY=Archetype,TYPE.CF_CompanionAnimalFeats,TYPE.CF_CompanionShareSpells,TYPE.CF_CompanionEvasion,TYPE.CF_CompanionMultiattack,TYPE.CF_CompanionImprovedEvasion]"]),
             replaces: Some(&["CF_CompanionShareSpells", "CF_CompanionAnimalFeats", "CF_CompanionMultiattack", "CF_CompanionEvasion", "CF_CompanionImprovedEvasion"]),
             grants: &[
                 ArchetypeGrant { grants_feature_key: "Bodyguard ~ Animal Feats", at_level: 1, description: Some("In addition to the standard animal companion feats, a bodyguard may select Bodyguard, Combat Patrol, Heroic Defiance, Heroic Recovery, and In Harm's Way."), benefit: None },
@@ -157,7 +152,6 @@ pub fn archetype_swap_tables() -> &'static [ArchetypeSwapEntry] {
             archetype_name: "Bully",
             description: Some("Bigger than others of its kind, a bully is used to winning fights and displays of dominance for its choice of mates, territory, or other privileges."),
             source_page: Some("p.187"),
-            prerequisites: Some(&["PRECLASS:1,Companion=1", "PREMULT:1,[PREABILITY:1,CATEGORY=Archetype,Companion Archetype ~ Bully],[!PREABILITY:1,CATEGORY=Archetype,TYPE.CF_CompanionShareSpells,TYPE.CF_CompanionMultiattack]"]),
             replaces: Some(&["CF_CompanionShareSpells", "CF_CompanionMultiattack"]),
             grants: &[
                 ArchetypeGrant { grants_feature_key: "Bully ~ Bully Feats", at_level: 1, description: Some("In addition to the standard feats available to animal companions, a bully can select Greater Bull Rush, Greater Overrun, Greater Reposition APG , Greater Trip, Improved Reposition, and Improved Trip. It can use Power Attack instead of Combat Expertise as a prerequisite to qualify for feats on this list."), benefit: None },
@@ -171,7 +165,6 @@ pub fn archetype_swap_tables() -> &'static [ArchetypeSwapEntry] {
             archetype_name: "Daredevil",
             description: Some("Daredevil companions join the fray with graceful leaps or swooping dives, heedless of the danger."),
             source_page: Some("p.187"),
-            prerequisites: Some(&["PRECLASS:1,Companion=1", "PREMULT:1,[PREABILITY:1,CATEGORY=Archetype,Companion Archetype ~ Daredevil],[!PREABILITY:1,CATEGORY=Archetype,TYPE.CF_CompanionShareSpells,TYPE.CF_CompanionDevotion,TYPE.CF_CompanionMultiattack]"]),
             replaces: Some(&["CF_CompanionShareSpells", "CF_CompanionDevotion", "CF_CompanionMultiattack"]),
             grants: &[
                 ArchetypeGrant { grants_feature_key: "Daredevil ~ Artful Acrobat", at_level: 1, description: Some("A daredevil gains a competence bonus on Acrobatics checks equal to half its Hit Dice."), benefit: None },
@@ -186,7 +179,6 @@ pub fn archetype_swap_tables() -> &'static [ArchetypeSwapEntry] {
             archetype_name: "Deathtouched Companion",
             description: Some("Whether the result of a partially successful attempt at revival, a strange blight, or repeated exposure to undead, deathtouched companions are living animals with a trace of the undead, somewhat like dhampirs."),
             source_page: Some("p.187"),
-            prerequisites: Some(&["PRECLASS:1,Companion=1", "PREMULT:1,[PREABILITY:1,CATEGORY=Archetype,Companion Archetype ~ Deathtouched Companion],[!PREABILITY:1,CATEGORY=Archetype,TYPE.CF_CompanionShareSpells,TYPE.CF_CompanionDevotion]"]),
             replaces: Some(&["CF_CompanionShareSpells", "CF_CompanionDevotion"]),
             grants: &[
                 ArchetypeGrant { grants_feature_key: "Deathtouched Companion ~ Deathtouched Skills", at_level: 1, description: None, benefit: None },
@@ -203,7 +195,6 @@ pub fn archetype_swap_tables() -> &'static [ArchetypeSwapEntry] {
             archetype_name: "Draconic Companion",
             description: Some("Draconic companions bear a faint trace of dragon blood that grants them special abilities."),
             source_page: Some("p.188"),
-            prerequisites: Some(&["PRECLASS:1,Companion=1", "PREMULT:1,[PREABILITY:1,CATEGORY=Archetype,Companion Archetype ~ Draconic Companion],[!PREABILITY:1,CATEGORY=Archetype,TYPE.CF_CompanionShareSpells,TYPE.CF_CompanionEvasion,TYPE.CF_CompanionDevotion,TYPE.CF_CompanionMultiattack,TYPE.CF_CompanionImprovedEvasion]"]),
             replaces: Some(&["CF_CompanionShareSpells", "CF_CompanionDevotion", "CF_CompanionMultiattack", "CF_CompanionEvasion", "CF_CompanionImprovedEvasion"]),
             grants: &[
                 ArchetypeGrant { grants_feature_key: "Draconic Companion ~ Draconic Skills", at_level: 1, description: None, benefit: None },
@@ -221,7 +212,6 @@ pub fn archetype_swap_tables() -> &'static [ArchetypeSwapEntry] {
             archetype_name: "Feytouched Companion",
             description: Some("Feytouched companions are strangely colored fauna native to the First World, the primal realm of the fey. They gain strange abilities tied to the fey."),
             source_page: Some("p.188"),
-            prerequisites: Some(&["PRECLASS:1,Companion=1", "PREMULT:1,[PREABILITY:1,CATEGORY=Archetype,Companion Archetype ~ Feytouched Companion],[!PREABILITY:1,CATEGORY=Archetype,TYPE.CF_CompanionShareSpells,TYPE.CF_CompanionEvasion,TYPE.CF_CompanionDevotion,TYPE.CF_CompanionMultiattack,TYPE.CF_CompanionImprovedEvasion,TYPE.CF_CompanionAdvancement]", "PRESIZEEQ:S"]),
             replaces: Some(&["CF_CompanionShareSpells", "CF_CompanionDevotion", "CF_CompanionMultiattack", "CF_CompanionEvasion", "CF_CompanionImprovedEvasion", "CF_CompanionAdvancement"]),
             grants: &[
                 ArchetypeGrant { grants_feature_key: "Feytouched Companion ~ Feytouched Skills", at_level: 1, description: None, benefit: None },
@@ -237,7 +227,6 @@ pub fn archetype_swap_tables() -> &'static [ArchetypeSwapEntry] {
             archetype_name: "Precocious Companion",
             description: Some("Precocious companions are able to learn far more tricks than other companions; this ability to learn allows their masters to use them for a wider variety of tasks."),
             source_page: Some("p.188"),
-            prerequisites: Some(&["PRECLASS:1,Companion=1", "PREMULT:1,[PREABILITY:1,CATEGORY=Archetype,Companion Archetype ~ Precocious Companion],[!PREABILITY:1,CATEGORY=Archetype,TYPE.CF_CompanionEvasion,TYPE.CF_CompanionImprovedEvasion,TYPE.CF_CompanionAdvancement]"]),
             replaces: Some(&["CF_CompanionEvasion", "CF_CompanionImprovedEvasion", "CF_CompanionAdvancement"]),
             grants: &[
                 ArchetypeGrant { grants_feature_key: "Precocious Companion ~ Expanded Tricks", at_level: 1, description: Some("A precocious companion gains twice as many bonus tricks as normal for an animal companion. A hunter's animal companion can't use the additional bonus tricks to learn hunter's tricks."), benefit: None },
@@ -250,7 +239,6 @@ pub fn archetype_swap_tables() -> &'static [ArchetypeSwapEntry] {
             archetype_name: "Racer",
             description: Some("Some companions have uncanny speed, providing their masters with swift transport."),
             source_page: Some("p.188"),
-            prerequisites: Some(&["PRECLASS:1,Companion=1", "PREMULT:1,[PREABILITY:1,CATEGORY=Archetype,Companion Archetype ~ Racer],[!PREABILITY:1,CATEGORY=Archetype,TYPE.CF_CompanionAnimalFeats,TYPE.CF_CompanionShareSpells,TYPE.CF_CompanionDevotion]"]),
             replaces: Some(&["CF_CompanionShareSpells", "CF_CompanionDevotion", "CF_CompanionAnimalFeats"]),
             grants: &[
                 ArchetypeGrant { grants_feature_key: "Racer ~ Animal Feats", at_level: 1, description: Some("In addition to the standard feats available to animal companions, a racer can select Acrobatic Steps, Charge Through, Improved Lightning Reflexes, Lightning Stance, Nimble Moves, and Wind Stance."), benefit: None },
@@ -265,7 +253,6 @@ pub fn archetype_swap_tables() -> &'static [ArchetypeSwapEntry] {
             archetype_name: "Totem Guide",
             description: Some("Totem guides embody the wisdom and spirituality of the natural world, providing guidance as well as aid in combat. Once a totem guide is chosen, a character may replace the companion if it is slain but may not choose a different kind of totem guide."),
             source_page: Some("p.189"),
-            prerequisites: Some(&["PRECLASS:1,Companion=1", "PREMULT:1,[PREABILITY:1,CATEGORY=Archetype,Companion Archetype ~ Totem Guide],[!PREABILITY:1,CATEGORY=Archetype,TYPE.CF_CompanionEvasion,TYPE.CF_CompanionDevotion,TYPE.CF_CompanionMultiattack,TYPE.CF_CompanionImprovedEvasion]"]),
             replaces: Some(&["CF_CompanionDevotion", "CF_CompanionMultiattack", "CF_CompanionEvasion", "CF_CompanionImprovedEvasion"]),
             grants: &[
                 ArchetypeGrant { grants_feature_key: "Totem Guide ~ Spiritual Guidance", at_level: 1, description: Some("A totem guide can use guidance as a spell-like ability at will as a full-round action, targeting itself or its master. In addition, a totem guide's master can spontaneously cast the following spells while adjacent to the totem guide by sacrificing a spell slot of equal or higher level: detect animals or plants (1st), augury (2nd), helping hand (3rd), divination (4th), commune with nature (5th), and find the path (6th). The totem guide serves as a divine focus for these spells, but costly material components must still be provided."), benefit: None },
@@ -281,7 +268,6 @@ pub fn archetype_swap_tables() -> &'static [ArchetypeSwapEntry] {
             archetype_name: "Tracker",
             description: Some("Some companions are expert trackers, able to use their scent ability to follow any trail."),
             source_page: Some("p.189"),
-            prerequisites: Some(&["PREABILITY:1,CATEGORY=Special Ability,Scent", "PRECLASS:1,Companion=1", "PREMULT:1,[PREABILITY:1,CATEGORY=Archetype,Companion Archetype ~ Tracker],[!PREABILITY:1,CATEGORY=Archetype,TYPE.CF_CompanionShareSpells,TYPE.CF_CompanionDevotion]"]),
             replaces: Some(&["CF_CompanionShareSpells", "CF_CompanionDevotion"]),
             grants: &[
                 ArchetypeGrant { grants_feature_key: "Tracker ~ Tracker Skills", at_level: 1, description: None, benefit: None },
@@ -295,7 +281,6 @@ pub fn archetype_swap_tables() -> &'static [ArchetypeSwapEntry] {
             archetype_name: "Verdant Companion",
             description: Some("Favorites of druids who balance their responsibilities between flora and fauna, verdant companions are animals with some of the abilities and physical aspects of plants."),
             source_page: Some("p.189"),
-            prerequisites: Some(&["PRECLASS:1,Companion=1", "PREMULT:1,[PREABILITY:1,CATEGORY=Archetype,Companion Archetype ~ Verdant Companion],[!PREABILITY:1,CATEGORY=Archetype,TYPE.CF_CompanionShareSpells,TYPE.CF_CompanionDevotion,TYPE.CF_CompanionEvasion,TYPE.CF_CompanionImprovedEvasion]"]),
             replaces: Some(&["CF_CompanionShareSpells", "CF_CompanionDevotion", "CF_CompanionEvasion", "CF_CompanionImprovedEvasion"]),
             grants: &[
                 ArchetypeGrant { grants_feature_key: "Verdant Companion ~ Not Quite Animal", at_level: 1, description: Some("The DC to use Handle Animal on a verdant companion is 5 higher, as if it were a nonanimal with an Intelligence score of 1 or 2."), benefit: None },
@@ -310,7 +295,6 @@ pub fn archetype_swap_tables() -> &'static [ArchetypeSwapEntry] {
             archetype_name: "Wrecker",
             description: Some("Like unruly pets, some companions have a tendency to destroy nearby objects while unsupervised, and their masters can channel these destructive impulses into an advantage in battle."),
             source_page: Some("p.189"),
-            prerequisites: Some(&["PRECLASS:1,Companion=1", "PREMULT:1,[PREABILITY:1,CATEGORY=Archetype,Companion Archetype ~ Wrecker],[!PREABILITY:1,CATEGORY=Archetype,TYPE.CF_CompanionShareSpells,TYPE.CF_CompanionMultiattack]"]),
             replaces: Some(&["CF_CompanionShareSpells", "CF_CompanionMultiattack"]),
             grants: &[
                 ArchetypeGrant { grants_feature_key: "Wrecker ~ Wrecker Feats", at_level: 1, description: Some("In addition to the standard feats available to animal companions, a wrecker can select Improved Sunder and Greater Sunder."), benefit: None },
@@ -324,7 +308,6 @@ pub fn archetype_swap_tables() -> &'static [ArchetypeSwapEntry] {
             archetype_name: "Ambassador",
             description: Some("An ambassador speaks on its master's behalf and sometimes on behalf of its master's patron or other extraplanar contacts."),
             source_page: Some("p.210"),
-            prerequisites: Some(&["PRELANG:1,ANY", "PREMULT:1,[PREABILITY:1,CATEGORY=Archetype,Familiar Archetype ~ Ambassador],[!PREABILITY:1,CATEGORY=Archetype,TYPE.CF_FamiliarAlertness,TYPE.CF_FamiliarIntelligenceScore]"]),
             replaces: Some(&["CF_FamiliarAlertness", "CF_FamiliarIntelligenceScore"]),
             grants: &[
                 ArchetypeGrant { grants_feature_key: "Ambassador ~ Class Skills", at_level: 1, description: Some("An ambassador treats Bluff, Diplomacy, and Intimidate as class skills."), benefit: None },
@@ -339,7 +322,6 @@ pub fn archetype_swap_tables() -> &'static [ArchetypeSwapEntry] {
             archetype_name: "Animal Exemplar",
             description: Some("An animal exemplar is a paragon of its species, able to command the loyalty of others of its kind. An animal exemplar familiar cannot be an improved familiar, plant, vermin, or other nonanimal themed familiar."),
             source_page: Some("p.210"),
-            prerequisites: Some(&["PREMULT:1,[PREABILITY:1,CATEGORY=Archetype,Familiar Archetype ~ Animal Exemplar],[!PREABILITY:1,CATEGORY=Archetype,TYPE.CF_FamiliarSpeakwithAnimalsofItsKind,TYPE.CF_FamiliarDeliverTouchSpells,TYPE.CF_FamiliarSpellResistance,TYPE.CF_FamiliarScryonFamiliar]", "PRERACE:1,RACESUBTYPE=Augmented Magical Beast"]),
             replaces: Some(&["CF_FamiliarSpeakwithAnimalsofItsKind", "CF_FamiliarDeliverTouchSpells", "CF_FamiliarSpellResistance", "CF_FamiliarScryonFamiliar"]),
             grants: &[
                 ArchetypeGrant { grants_feature_key: "Animal Exemplar ~ Class Skills", at_level: 1, description: Some("An animal exemplar treats Handle Animal as a class skill."), benefit: None },
@@ -354,7 +336,6 @@ pub fn archetype_swap_tables() -> &'static [ArchetypeSwapEntry] {
             archetype_name: "Egotist",
             description: Some("An egotist believes itself to be the real master in the relationship-the power behind the throne. It often attempts to communicate \"orders\" for its master as best it can, interfering in matters ranging from spell choices and tactical combat decisions to its master's love life."),
             source_page: Some("p.210"),
-            prerequisites: Some(&["PREMULT:1,[PREABILITY:1,CATEGORY=Archetype,Familiar Archetype ~ Egotist],[!PREABILITY:1,CATEGORY=Archetype,TYPE.CF_FamiliarAlertness,TYPE.CF_FamiliarSpeakwithMaster,TYPE.CF_FamiliarDeliverTouchSpells,TYPE.CF_FamiliarScryonFamiliar]"]),
             replaces: Some(&["CF_FamiliarAlertness", "CF_FamiliarSpeakwithMaster", "CF_FamiliarDeliverTouchSpells", "CF_FamiliarScryonFamiliar"]),
             grants: &[
                 ArchetypeGrant { grants_feature_key: "Egotist ~ Class Skills", at_level: 1, description: Some("An egotist treats Intimidate as a class skill."), benefit: None },
@@ -371,7 +352,6 @@ pub fn archetype_swap_tables() -> &'static [ArchetypeSwapEntry] {
             archetype_name: "Emissary",
             description: Some("The emissary is touched by the divine, serving as a font of wisdom and a moral compass for its master. An emissary familiar can serve only a master who worships a single deity."),
             source_page: Some("p.210"),
-            prerequisites: Some(&["PREDEITY:1,Y", "PREMULT:1,[PREABILITY:1,CATEGORY=Archetype,Familiar Archetype ~ Emissary],[!PREABILITY:1,CATEGORY=Archetype,TYPE.CF_FamiliarAlertness,TYPE.CF_FamiliarShareSpells,TYPE.CF_FamiliarDeliverTouchSpells]"]),
             replaces: Some(&["CF_FamiliarAlertness", "CF_FamiliarShareSpells", "CF_FamiliarDeliverTouchSpells"]),
             grants: &[
                 ArchetypeGrant { grants_feature_key: "Emissary ~ Class Skills", at_level: 1, description: Some("An emissary treats Heal, Knowledge (religion), and Sense Motive as class skills."), benefit: None },
@@ -387,7 +367,6 @@ pub fn archetype_swap_tables() -> &'static [ArchetypeSwapEntry] {
             archetype_name: "Figment",
             description: Some("Figments are born from their masters' imaginations rather than being ordinary creatures that are awakened."),
             source_page: Some("p.211"),
-            prerequisites: Some(&["PREMULT:1,[PREABILITY:1,CATEGORY=Archetype,Familiar Archetype ~ Figment],[!PREABILITY:1,CATEGORY=Archetype,TYPE.CF_FamiliarImprovedEvasion,TYPE.CF_FamiliarDeliverTouchSpells,TYPE.CF_FamiliarSpeakwithAnimalsofItsKind,TYPE.CF_FamiliarScryonFamiliar,TYPE.CF_FamiliarHalfMastHP]", "PREMULT:2,[!PREVARGTEQ:mastervar(WitchLVL),1],[!PREVARGTEQ:mastervar(ShamanLVL),1]"]),
             replaces: Some(&["CF_FamiliarImprovedEvasion", "CF_FamiliarDeliverTouchSpells", "CF_FamiliarSpeakwithAnimalsofItsKind", "CF_FamiliarScryonFamiliar", "CF_FamiliarHalfMastHP"]),
             grants: &[
                 ArchetypeGrant { grants_feature_key: "Figment ~ Recurring Dream", at_level: 1, description: Some("A figment has a total number of hit points equal to 1/4 of its master's total hit points. If the figment dies, it vanishes, appearing again with 1 hit point after its master awakens from a full night's sleep. If a figment ever strays more than 100 feet from its master or enters an antimagic field, or if a figment's master is unconscious or asleep, the figment disappears until the next time its master prepares spells or regains her spells per day."), benefit: None },
@@ -401,7 +380,6 @@ pub fn archetype_swap_tables() -> &'static [ArchetypeSwapEntry] {
             archetype_name: "Infiltrator",
             description: Some("Familiars can be skilled spies, and infiltrators are the very best of their kind at the subtle art of espionage."),
             source_page: Some("p.211"),
-            prerequisites: Some(&["PREMULT:1,[PREABILITY:1,CATEGORY=Archetype,Familiar Archetype ~ Infiltrator],[!PREABILITY:1,CATEGORY=Archetype,TYPE.CF_FamiliarAlertness,TYPE.CF_FamiliarShareSpells,TYPE.CF_FamiliarImprovedEvasion,TYPE.CF_FamiliarSpeakwithAnimalsofItsKind,TYPE.CF_FamiliarSpellResistance]"]),
             replaces: Some(&["CF_FamiliarAlertness", "CF_FamiliarShareSpells", "CF_FamiliarImprovedEvasion", "CF_FamiliarSpeakwithAnimalsofItsKind", "CF_FamiliarSpellResistance"]),
             grants: &[
                 ArchetypeGrant { grants_feature_key: "Infiltrator ~ Class Skills", at_level: 1, description: Some("An infiltrator treats Bluff and Disguise as class skills."), benefit: None },
@@ -419,7 +397,6 @@ pub fn archetype_swap_tables() -> &'static [ArchetypeSwapEntry] {
             archetype_name: "Mascot",
             description: Some("A familiar sometimes serves as the centerpiece of an adventuring party. Known as a mascot, this type of familiar eventually treats the entire party as its master."),
             source_page: Some("p.211"),
-            prerequisites: Some(&["PREMULT:1,[PREABILITY:1,CATEGORY=Archetype,Familiar Archetype ~ Mascot],[!PREABILITY:1,CATEGORY=Archetype,TYPE.CF_FamiliarAlertness,TYPE.CF_FamiliarEmpathicLink,TYPE.CF_FamiliarImprovedEvasion,TYPE.CF_FamiliarShareSpells,TYPE.CF_FamiliarDeliverTouchSpells,TYPE.CF_FamiliarSpeakwithMaster,TYPE.CF_FamiliarSpeakwithAnimalsofItsKind,TYPE.CF_FamiliarSpellResistance,TYPE.CF_FamiliarScryonFamiliar]"]),
             replaces: Some(&["CF_FamiliarAlertness", "CF_FamiliarEmpathicLink", "CF_FamiliarImprovedEvasion", "CF_FamiliarShareSpells", "CF_FamiliarDeliverTouchSpells", "CF_FamiliarSpeakwithMaster", "CF_FamiliarSpeakwithAnimalsofItsKind", "CF_FamiliarSpellResistance", "CF_FamiliarScryonFamiliar"]),
             grants: &[
                 ArchetypeGrant { grants_feature_key: "Mascot ~ Class Skills", at_level: 1, description: Some("A mascot treats all Perform skills as class skills."), benefit: None },
@@ -441,7 +418,6 @@ pub fn archetype_swap_tables() -> &'static [ArchetypeSwapEntry] {
             archetype_name: "Mauler",
             description: Some("While most familiars are scouts and assistants, the mauler familiar cares only for the thrill of battle. A mauler often serves a bloodthirsty or martial-minded master."),
             source_page: Some("p.212"),
-            prerequisites: Some(&["PREMULT:1,[PREABILITY:1,CATEGORY=Archetype,Familiar Archetype ~ Mauler],[!PREABILITY:1,CATEGORY=Archetype,TYPE.CF_FamiliarSpeakwithMaster,TYPE.CF_FamiliarSpeakwithAnimalsofItsKind,TYPE.CF_FamiliarIntelligenceScore,TYPE.CF_FamiliarDeliverTouchSpells,TYPE.CF_FamiliarSpellResistance]"]),
             replaces: Some(&["CF_FamiliarSpeakwithMaster", "CF_FamiliarSpeakwithAnimalsofItsKind", "CF_FamiliarIntelligenceScore", "CF_FamiliarDeliverTouchSpells", "CF_FamiliarSpellResistance"]),
             grants: &[
                 ArchetypeGrant { grants_feature_key: "Mauler ~ Class Skills", at_level: 1, description: Some("A mauler treats Intimidate as a class skill."), benefit: None },
@@ -458,7 +434,6 @@ pub fn archetype_swap_tables() -> &'static [ArchetypeSwapEntry] {
             archetype_name: "Pilferer",
             description: Some("Some familiars are stealthy pilferers who perform tricks of thievery or simple spying on their master's behalf."),
             source_page: Some("p.212"),
-            prerequisites: Some(&["PREMULT:1,[PREABILITY:1,CATEGORY=Archetype,Familiar Archetype ~ Pilferer],[!PREABILITY:1,CATEGORY=Archetype,TYPE.CF_FamiliarAlertness,TYPE.CF_FamiliarImprovedEvasion,TYPE.CF_FamiliarDeliverTouchSpells,TYPE.CF_FamiliarSpeakwithAnimalsofItsKind]"]),
             replaces: Some(&["CF_FamiliarAlertness", "CF_FamiliarImprovedEvasion", "CF_FamiliarDeliverTouchSpells", "CF_FamiliarSpeakwithAnimalsofItsKind"]),
             grants: &[
                 ArchetypeGrant { grants_feature_key: "Pilferer ~ Class Skills", at_level: 1, description: Some("A pilferer treats Disable Device, Escape Artist, and Sleight of Hand as class skills."), benefit: None },
@@ -475,7 +450,6 @@ pub fn archetype_swap_tables() -> &'static [ArchetypeSwapEntry] {
             archetype_name: "Prankster",
             description: Some("Some familiars love to perform pranks on their unsuspecting masters, as well as on those around their masters-allies and enemies alike. While good-aligned pranksters' tricks are usually good natured except against foes, evil pranksters play tricks that are mean spirited or even downright cruel."),
             source_page: Some("p.212"),
-            prerequisites: Some(&["PREMULT:1,[PREABILITY:1,CATEGORY=Archetype,Familiar Archetype ~ Prankster],[!PREABILITY:1,CATEGORY=Archetype,TYPE.CF_FamiliarEmpathicLink,TYPE.CF_FamiliarAlertness,TYPE.CF_FamiliarImprovedEvasion,TYPE.CF_FamiliarShareSpells,TYPE.CF_FamiliarDeliverTouchSpells,TYPE.CF_FamiliarSpellResistance,TYPE.CF_FamiliarScryonFamiliar]"]),
             replaces: Some(&["CF_FamiliarEmpathicLink", "CF_FamiliarAlertness", "CF_FamiliarImprovedEvasion", "CF_FamiliarShareSpells", "CF_FamiliarDeliverTouchSpells", "CF_FamiliarSpellResistance", "CF_FamiliarScryonFamiliar"]),
             grants: &[
                 ArchetypeGrant { grants_feature_key: "Prankster ~ Class Skills", at_level: 1, description: Some("A prankster treats Bluff, Disguise, Perform (comedy), and Sleight of Hand as class skills."), benefit: None },
@@ -496,7 +470,6 @@ pub fn archetype_swap_tables() -> &'static [ArchetypeSwapEntry] {
             archetype_name: "Protector",
             description: Some("Protector familiars are so devoted that they would give their lives for their masters. A tumor familiar can't be a protector."),
             source_page: Some("p.212"),
-            prerequisites: Some(&["PREMULT:1,[PREABILITY:1,CATEGORY=Archetype,Familiar Archetype ~ Protector],[!PREABILITY:1,CATEGORY=Archetype,TYPE.CF_FamiliarAlertness,TYPE.CF_FamiliarImprovedEvasion,TYPE.CF_FamiliarDeliverTouchSpells,TYPE.CF_FamiliarSpeakwithAnimalsofItsKind,TYPE.CF_FamiliarSpellResistance]"]),
             replaces: Some(&["CF_FamiliarAlertness", "CF_FamiliarImprovedEvasion", "CF_FamiliarDeliverTouchSpells", "CF_FamiliarSpeakwithAnimalsofItsKind", "CF_FamiliarSpellResistance"]),
             grants: &[
                 ArchetypeGrant { grants_feature_key: "Protector ~ Loyal Bodyguard", at_level: 1, description: Some("A protector gains Bodyguard and Combat Reflexes as bonus feats. If the familiar is sharing its master's square, it can use Bodyguard to aid another to improve its master's AC even if it doesn't threaten the attacking foe, though it still needs line of effect to its master and the attacker."), benefit: None },
@@ -511,7 +484,6 @@ pub fn archetype_swap_tables() -> &'static [ArchetypeSwapEntry] {
             archetype_name: "Sage",
             description: Some("Sages are masters of useful facts, able to recall them for their masters' benefit, though this leads many to become haughty and proud."),
             source_page: Some("p.213"),
-            prerequisites: Some(&["PREMULT:1,[PREABILITY:1,CATEGORY=Archetype,Familiar Archetype ~ Sage],[!PREABILITY:1,CATEGORY=Archetype,TYPE.CF_FamiliarIntelligenceScore,TYPE.CF_FamiliarNaturalArmorBonus,TYPE.CF_FamiliarAlertness,TYPE.CF_FamiliarShareSkillRanks]"]),
             replaces: Some(&["CF_FamiliarIntelligenceScore", "CF_FamiliarNaturalArmorBonus", "CF_FamiliarAlertness", "CF_FamiliarShareSkillRanks"]),
             grants: &[
                 ArchetypeGrant { grants_feature_key: "Sage ~ Class Skills", at_level: 1, description: Some("A sage treats all Knowledge skills as class skills."), benefit: None },
@@ -526,7 +498,6 @@ pub fn archetype_swap_tables() -> &'static [ArchetypeSwapEntry] {
             archetype_name: "Soulbound Familiar",
             description: Some("Soulbound familiars are born when a master uses the magical principles behind soulbound dolls to bind a soul fragment to an animal. Because it is born of another creature's soul, a soulbound familiar can never serve as a witch's familiar, a shaman's spirit animal, or any other spell-granting familiar."),
             source_page: Some("p.213"),
-            prerequisites: Some(&["PREALIGN:LN,NG,CN,NE,TN", "PREMULT:1,[PREABILITY:1,CATEGORY=Archetype,Familiar Archetype ~ Soulbound Familiar],[!PREABILITY:1,CATEGORY=Archetype,TYPE.CF_FamiliarAlertness,TYPE.CF_FamiliarSpeakwithAnimalsofItsKind,TYPE.CF_FamiliarScryonFamiliar]", "PREMULT:2,[!PREVARGTEQ:mastervar(WitchLVL),1],[!PREVARGTEQ:mastervar(ShamanLVL),1]"]),
             replaces: Some(&["CF_FamiliarAlertness", "CF_FamiliarSpeakwithAnimalsofItsKind", "CF_FamiliarScryonFamiliar"]),
             grants: &[
                 ArchetypeGrant { grants_feature_key: "Soulbound Familiar ~ Soul Focus", at_level: 1, description: Some("The soul fragment bound to the familiar lives within a focus crystal surgically inserted into the animal. As long as this soul focus remains intact, it can be used to bind the soul fragment into another familiar, with the same cost and time requirements as replacing a familiar. Once bound into the soul focus, the soul continues to learn, and so if it is later put into a new familiar body, the soul retains its personality and memories from its previous body or bodies. A soul focus has hardness 8, 12 hit points, and a break DC of 20, though it can be attacked only when surgically removed from the familiar. If the soul focus is destroyed, creating a new soul focus with none of the old one's memories costs as much as replacing a familiar, in addition to the normal cost of replacing the familiar itself. The soulbound familiar gains Skill Focus in a skill important to the creature whose soul provided the fragment."), benefit: None },
@@ -540,7 +511,6 @@ pub fn archetype_swap_tables() -> &'static [ArchetypeSwapEntry] {
             archetype_name: "Valet",
             description: Some("A valet is a consummate personal servant, able to fetch, deliver, and perform for its master's every need."),
             source_page: Some("p.213"),
-            prerequisites: Some(&["PREMULT:1,[PREABILITY:1,CATEGORY=Archetype,Familiar Archetype ~ Valet],[!PREABILITY:1,CATEGORY=Archetype,TYPE.CF_FamiliarImprovedEvasion,TYPE.CF_FamiliarAlertness,TYPE.CF_FamiliarDeliverTouchSpells,TYPE.CF_FamiliarSpeakwithAnimalsofItsKind,TYPE.CF_FamiliarScryonfamiliar,TYPE.CF_FamiliarShareSpells]"]),
             replaces: Some(&["CF_FamiliarAlertness", "CF_FamiliarImprovedEvasion", "CF_FamiliarDeliverTouchSpells", "CF_FamiliarSpeakwithAnimalsofItsKind", "CF_FamiliarScryonfamiliar", "CF_FamiliarShareSpells"]),
             grants: &[
                 ArchetypeGrant { grants_feature_key: "Valet ~ Class Skills", at_level: 1, description: Some("A valet treats Craft, Perform, and Profession as class skills."), benefit: None },

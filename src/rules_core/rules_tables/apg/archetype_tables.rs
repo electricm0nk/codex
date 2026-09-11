@@ -87,7 +87,6 @@ pub fn archetype_swap_tables() -> &'static [ArchetypeSwapEntry] {
             archetype_name: "Breaker",
             description: Some("While most barbarians are skilled at breaking things, some find the need to destroy their surroundings an almost uncontrollable urge when in the middle of a rage. These barbarians are a danger not only to their foes, but also to the very environment around them."),
             source_page: Some("p.78"),
-            prerequisites: Some(&["PRECLASS:1,Barbarian=1", "PREMULT:1,[PREABILITY:1,CATEGORY=Archetype,Barbarian Archetype ~ Breaker],[!PREABILITY:1,CATEGORY=Archetype,TYPE.BarbarianFastMovement,TYPE.BarbarianTrapSense]"]),
             replaces: Some(&["BarbarianCFFastMovement", "BarbarianCFTrapSense", "BarbarianFastMovement", "BarbarianTrapSense"]),
             grants: &[
                 ArchetypeGrant { grants_feature_key: "Breaker ~ Destructive", at_level: 1, description: Some("Whenever the breaker barbarian makes a melee attack that targets an unattended object or makes a sunder combat maneuver, she adds +%1 on the damage roll.|DestructiveDamage"), benefit: None },
@@ -101,7 +100,6 @@ pub fn archetype_swap_tables() -> &'static [ArchetypeSwapEntry] {
             archetype_name: "Brutal Pugilist",
             description: Some("Some barbarians focus on using their bare hands to tear their opponents limb from limb. These brutal pugilists also learn a great deal about various combat maneuvers, using them to cripple or crush their foes."),
             source_page: Some("p.78"),
-            prerequisites: Some(&["PRECLASS:1,Barbarian=1", "PREMULT:1,[PREABILITY:1,CATEGORY=Archetype,Barbarian Archetype ~ Brutal Pugilist],[!PREABILITY:1,CATEGORY=Archetype,TYPE.BarbarianUncannyDodge,TYPE.BarbarianTrapSense,TYPE.BarbarianImprovedUncannyDodge]"]),
             replaces: Some(&["BarbarianCFUncannyDodge", "BarbarianCFTrapSense", "BarbarianCFImprovedUncannyDodge", "BarbarianUncannyDodge", "BarbarianTrapSense", "BarbarianImprovedUncannyDodge"]),
             grants: &[
                 ArchetypeGrant { grants_feature_key: "Brutal Pugilist ~ Savage Grapple", at_level: 2, description: Some("At 2nd level, the brutal pugilist takes only half the normal penalties to Dexterity, attack rolls, and combat maneuver checks when she has the grappled condition. She can make an attack of opportunity against creatures trying to grapple her even if they possess the Improved Grapple feat or the grab special attack. If she hits with this attack of opportunity, she gains a +2 circumstance bonus to her CMD against the grapple attempt. She cannot make these attacks of opportunity once a grapple has succeeded. This ability replaces uncanny dodge."), benefit: None },
@@ -116,7 +114,6 @@ pub fn archetype_swap_tables() -> &'static [ArchetypeSwapEntry] {
             archetype_name: "Drunken Brute",
             description: Some("Barbarians are known for their ability to consume potent drink, but drunken brutes turn drinking into a combat tactic, using the potent liquor to fuel their rage and grant them additional powers."),
             source_page: Some("p.78"),
-            prerequisites: Some(&["PRECLASS:1,Barbarian=1", "PREMULT:1,[PREABILITY:1,CATEGORY=Archetype,Barbarian Archetype ~ Drunken Brute],[!PREABILITY:1,CATEGORY=Archetype,TYPE.BarbarianFastMovement]"]),
             replaces: Some(&["BarbarianCFFastMovement", "BarbarianFastMovement"]),
             grants: &[
                 ArchetypeGrant { grants_feature_key: "Drunken Brute ~ Raging Drunk", at_level: 1, description: Some("While raging, the drunken brute can drink a potion, or a tankard of ale or similar quantity of alcohol, as a move action that does not provoke attacks of opportunity. A potion has its normal effect, while an alcoholic drink allows the barbarian to maintain her rage that round without expending a round of rage for the day (instead of the alcohol's normal effects). For each alcoholic drink consumed while raging, the barbarian is nauseated for 1 round when her rage expires, in addition the normal fatigue that follows a rage. Tireless rage does not negate this nauseated condition but the internal fortitude rage power does. This ability replaces fast movement."), benefit: None },
@@ -129,7 +126,6 @@ pub fn archetype_swap_tables() -> &'static [ArchetypeSwapEntry] {
             archetype_name: "Elemental Kin",
             description: Some("Some barbarian tribes have strong ties to the elemental forces of nature. Their shamans anoint the warriors at birth, tying them to the patron element of the tribe and granting them lasting boons against such forces."),
             source_page: Some("p.78"),
-            prerequisites: Some(&["PRECLASS:1,Barbarian=1", "PREMULT:1,[PREABILITY:1,CATEGORY=Archetype,Barbarian Archetype ~ Elemental Kin],[!PREABILITY:1,CATEGORY=Archetype,TYPE.BarbarianTrapSense]"]),
             replaces: Some(&["BarbarianCFTrapSense", "BarbarianTrapSense"]),
             grants: &[
                 ArchetypeGrant { grants_feature_key: "Elemental Kin ~ Elemental Fury", at_level: 3, description: Some("At 3rd level, whenever the elemental kin takes an amount of energy damage equal to or greater than her barbarian level while raging, she adds 1 to the total number of rounds that she can rage that day. At 6th level, and every three levels thereafter, the number of extra rounds per energy attack increases by +1, to a maximum of +6 rounds per energy attack at 18th level. This ability replaces trap sense."), benefit: None },
@@ -142,7 +138,6 @@ pub fn archetype_swap_tables() -> &'static [ArchetypeSwapEntry] {
             archetype_name: "Hurler",
             description: Some("A raging barbarian is frightening enough in melee, but some become skilled at throwing objects at their foes before closing in for the kill."),
             source_page: Some("p.78"),
-            prerequisites: Some(&["PRECLASS:1,Barbarian=1", "PREMULT:1,[PREABILITY:1,CATEGORY=Archetype,Barbarian Archetype ~ Hurler],[!PREABILITY:1,CATEGORY=Archetype,TYPE.BarbarianFastMovement]"]),
             replaces: Some(&["BarbarianCFFastMovement", "BarbarianFastMovement"]),
             grants: &[
                 ArchetypeGrant { grants_feature_key: "Hurler ~ Skilled Thrower", at_level: 1, description: Some("The hurler is skilled at throwing objects in combat. Increase the range increment of any thrown weapon or object by 10 feet. This ability replaces fast movement."), benefit: None },
@@ -155,7 +150,6 @@ pub fn archetype_swap_tables() -> &'static [ArchetypeSwapEntry] {
             archetype_name: "Invulnerable Rager",
             description: Some("Some barbarians learn to take whatever comes their way, shrugging off mortal wounds with ease. These barbarians invite their enemies to attack them, and use pain to fuel their rage."),
             source_page: Some("p.79"),
-            prerequisites: Some(&["PRECLASS:1,Barbarian=1", "PREMULT:1,[PREABILITY:1,CATEGORY=Archetype,Barbarian Archetype ~ Invulnerable Rager],[!PREABILITY:1,CATEGORY=Archetype,TYPE.BarbarianUncannyDodge,TYPE.BarbarianImprovedUncannyDodge,TYPE.BarbarianDamageReduction,TYPE.BarbarianTrapSense]"]),
             replaces: Some(&["BarbarianCFUncannyDodge", "BarbarianCFImprovedUncannyDodge", "BarbarianCFDamageReduction", "BarbarianCFTrapSense", "BarbarianUncannyDodge", "BarbarianImprovedUncannyDodge", "BarbarianDamageReduction", "BarbarianTrapSense"]),
             grants: &[
                 ArchetypeGrant { grants_feature_key: "Invulnerable Rager ~ Invulnerability", at_level: 2, description: Some("At 2nd level, the invulnerable rager gains DR/- equal to half her barbarian level. This damage reduction is doubled against nonlethal damage. This ability replaces uncanny dodge, improved uncanny dodge, and damage reduction."), benefit: None },
@@ -169,7 +163,6 @@ pub fn archetype_swap_tables() -> &'static [ArchetypeSwapEntry] {
             archetype_name: "Mounted Fury",
             description: Some("Many barbarian tribes are masters of the horse, teaching their members how to ride from a young age. As a result, barbarians from such tribes are even more terrifying when mounted, using their steeds' speed and strength to great advantage."),
             source_page: Some("p.79"),
-            prerequisites: Some(&["PRECLASS:1,Barbarian=1", "PREMULT:1,[PREABILITY:1,CATEGORY=Archetype,Barbarian Archetype ~ Mounted Fury],[!PREABILITY:1,CATEGORY=Archetype,TYPE.BarbarianFastMovement,TYPE.BarbarianUncannyDodge,TYPE.BarbarianImprovedUncannyDodge]"]),
             replaces: Some(&["BarbarianFastMovement", "BarbarianUncannyDodge", "BarbarianImprovedUncannyDodge"]),
             grants: &[
                 ArchetypeGrant { grants_feature_key: "Mounted Fury ~ Fast Rider", at_level: 1, description: Some("The speed of any mount the barbarian rides is increased by 10 feet. This ability replaces fast movement."), benefit: None },
@@ -183,7 +176,6 @@ pub fn archetype_swap_tables() -> &'static [ArchetypeSwapEntry] {
             archetype_name: "Savage Barbarian",
             description: Some("Some barbarians are truly savage, having little training in modern arms. These savage barbarians learn to avoid blows and toughen up their skin."),
             source_page: Some("p.79"),
-            prerequisites: Some(&["PRECLASS:1,Barbarian=1", "PREMULT:1,[PREABILITY:1,CATEGORY=Archetype,Barbarian Archetype ~ Savage Barbarian],[!PREABILITY:1,CATEGORY=Archetype,TYPE.BarbarianTrapSense,TYPE.BarbarianDamageReduction]"]),
             replaces: Some(&["BarbarianTrapSense", "BarbarianDamageReduction"]),
             grants: &[
                 ArchetypeGrant { grants_feature_key: "Savage Barbarian ~ Naked Courage", at_level: 3, description: Some("At 3rd level, the savage barbarian gains a +%1 dodge bonus to AC and a +%1 morale bonus on saving throws against fear when wearing no armor (shields are allowed). This bonus increases by +1 for every six levels after 3rd. This ability replaces trap sense.|NakedCourageDodgeBonus"), benefit: None },
@@ -197,7 +189,6 @@ pub fn archetype_swap_tables() -> &'static [ArchetypeSwapEntry] {
             archetype_name: "Superstitious",
             description: Some("Many barbarians distrust magic. While most just shy away from magic, others focus their rage on users of such foul arts. These barbarians are naturally distrusting, and develop keen senses to protect them from harm."),
             source_page: Some("p.79"),
-            prerequisites: Some(&["PRECLASS:1,Barbarian=1", "PREMULT:1,[PREABILITY:1,CATEGORY=Archetype,Barbarian Archetype ~ Superstitious],[!PREABILITY:1,CATEGORY=Archetype,TYPE.BarbarianTrapSense,TYPE.BarbarianDamageReduction]"]),
             replaces: Some(&["BarbarianTrapSense", "BarbarianDamageReduction"]),
             grants: &[
                 ArchetypeGrant { grants_feature_key: "Superstitious ~ Sixth Sense", at_level: 3, description: Some("At 3rd level, the superstitious barbarian gains a +%1 bonus on initiative and a +%1 insight bonus to AC during surprise rounds. This bonus increases by +1 for every three levels after 3rd. This ability replaces trap sense.|BarbarianLVL/3"), benefit: None },
@@ -211,7 +202,6 @@ pub fn archetype_swap_tables() -> &'static [ArchetypeSwapEntry] {
             archetype_name: "Arcane Duelist",
             description: Some("A master of the martial applications of steel and spell, the spellsword blends both into a lethal combination."),
             source_page: Some("p.80"),
-            prerequisites: Some(&["PRECLASS:1,Bard=1", "PREMULT:1,[PREABILITY:1,CATEGORY=Archetype,Bard Archetype ~ Arcane Duelist],[!PREABILITY:1,CATEGORY=Archetype,TYPE.BardBardicKnowledge,TYPE.BardCountersong,TYPE.BardSuggestion,TYPE.BardMassSuggestion,TYPE.BardVersatilePerformance,TYPE.BardWellVersed,TYPE.BardLoreMaster,TYPE.BardJackOfAllTrades]"]),
             replaces: Some(&["BardBardicKnowledge", "BardCountersong", "BardSuggestion", "BardMassSuggestion", "BardVersatilePerformance", "BardWellVersed", "BardLoreMaster", "BardJackOfAllTrades"]),
             grants: &[
                 ArchetypeGrant { grants_feature_key: "Arcane Duelist ~ Arcane Strike", at_level: 1, description: Some("Arcane duelists gain Arcane Strike as a bonus feat at 1st level. This ability replaces bardic knowledge."), benefit: None },
@@ -230,7 +220,6 @@ pub fn archetype_swap_tables() -> &'static [ArchetypeSwapEntry] {
             archetype_name: "Archivist",
             description: Some("Some bards greatly prefer academic pursuits to the drama (and sometimes melodrama) of their artistic brethren."),
             source_page: Some("p.80"),
-            prerequisites: Some(&["PRECLASS:1,Bard=1", "PREMULT:1,[PREABILITY:1,CATEGORY=Archetype,Bard Archetype ~ Archivist],[!PREABILITY:1,CATEGORY=Archetype,TYPE.BardInspireCourage,TYPE.BardSuggestion,TYPE.BardMassSuggestion,TYPE.BardVersatilePerformance,TYPE.BardWellVersed,TYPE.BardLoreMaster,TYPE.BardJackOfAllTrades]"]),
             replaces: Some(&["BardInspireCourage", "BardSuggestion", "BardMassSuggestion", "BardVersatilePerformance", "BardWellVersed", "BardLoreMaster", "BardJackOfAllTrades"]),
             grants: &[
                 ArchetypeGrant { grants_feature_key: "Archivist ~ Naturalist", at_level: 1, description: Some("An archivist who has identified a creature with a Knowledge check appropriate to its type can use performance to share strategies for defeating it with allies in combat. The archivist and any allies within 30 feet gain a +%1 insight bonus to AC and on attack rolls and saving throws against exceptional, supernatural, and spell-like abilities used by creatures of that specific kind of monster (e.g., frost giants, not all giants or all humanoids). This bonus increases by +1 at 5th level and every six levels thereafter. This language-dependent ability requires visual and audible components. This ability replaces inspire courage.|NaturalistBonus"), benefit: None },
@@ -249,7 +238,6 @@ pub fn archetype_swap_tables() -> &'static [ArchetypeSwapEntry] {
             archetype_name: "Court Bard",
             description: Some("Spending years studying all of the finer points of erudition and etiquette, the court bard takes up the role of resplendent proclaimer and artist-in-residence at the hand of nobility, royalty, and the well-moneyed elite who aspire to join their ranks."),
             source_page: Some("p.81"),
-            prerequisites: Some(&["PRECLASS:1,Bard=1", "PREMULT:1,[PREABILITY:1,CATEGORY=Archetype,Bard Archetype ~ Court Bard],[!PREABILITY:1,CATEGORY=Archetype,TYPE.BardInspireCourage,TYPE.BardInspireCompetence,TYPE.BardDirgeOfDoom,TYPE.BardFrighteningTune,TYPE.BardBardicKnowledge,TYPE.BardLoreMaster,TYPE.BardJackOfAllTrades]"]),
             replaces: Some(&["BardInspireCourage", "BardInspireCompetence", "BardDirgeOfDoom", "BardFrighteningTune", "BardBardicKnowledge", "BardLoreMaster", "BardJackOfAllTrades"]),
             grants: &[
                 ArchetypeGrant { grants_feature_key: "Court Bard ~ Satire", at_level: 1, description: Some("A court bard can use performance to undermine the confidence of enemies who hear it, causing them to take a -%1 penalty on attack and damage rolls (minimum 1) and a -%1 penalty on saves against fear and charm effects as long as the bard continues performing. This penalty increases by -1 at 5th level and every six levels thereafter. Satire is a language-dependent, mind-affecting ability that uses audible components. This performance replaces inspire courage.|(BardLVL+1)/6"), benefit: None },
@@ -267,7 +255,6 @@ pub fn archetype_swap_tables() -> &'static [ArchetypeSwapEntry] {
             archetype_name: "Detective",
             description: Some("Piecing together clues and catching the guilty with sheer cleverness, the detective is skilled at divining the truth."),
             source_page: Some("p.81"),
-            prerequisites: Some(&["PRECLASS:1,Bard=1", "PREMULT:1,[PREABILITY:1,CATEGORY=Archetype,Bard Archetype ~ Detective],[!PREABILITY:1,CATEGORY=Archetype,TYPE.BardInspireCourage,TYPE.BardInspireGreatness,TYPE.BardInspireHeroics,TYPE.BardBardicKnowledge,TYPE.BardWellVersed,TYPE.BardVersatilePerformance]"]),
             replaces: Some(&["BardInspireCourage", "BardInspireGreatness", "BardInspireHeroics", "BardBardicKnowledge", "BardWellVersed", "BardVersatilePerformance"]),
             grants: &[
                 ArchetypeGrant { grants_feature_key: "Detective ~ Careful Teamwork", at_level: 1, description: Some("A detective uses performance to keep allies coordinated, alert, and ready for action. All allies within 30 feet gain a +%1 bonus on Initiative checks, Perception, and Disable Device checks for 1 hour. They also gain a +%1 insight bonus on Reflex saves and to AC against traps and when they are flat-footed. These bonuses increase by +1 at 5th level and every six levels thereafter. Using this ability requires 3 rounds of continuous performance, and the targets must be able to see and hear the bard throughout the performance. This ability is language-dependent and requires visual and audible components. This performance replaces inspire courage.|(BardLVL+1)/6"), benefit: None },
@@ -285,7 +272,6 @@ pub fn archetype_swap_tables() -> &'static [ArchetypeSwapEntry] {
             archetype_name: "Magician",
             description: Some("A magician dabbles in performance, but sees it as a means to tap into universal energies and channel them."),
             source_page: Some("p.82"),
-            prerequisites: Some(&["PRECLASS:1,Bard=1", "PREMULT:1,[PREABILITY:1,CATEGORY=Archetype,Bard Archetype ~ Magician],[!PREABILITY:1,CATEGORY=Archetype,TYPE.BardInspireCourage,TYPE.BardDirgeOfDoom,TYPE.BardFrighteningTune,TYPE.BardCounterSong,TYPE.BardWellVersed,TYPE.BardVersatilePerformance,TYPE.BardLoreMaster,TYPE.BardJackOfAllTrades]"]),
             replaces: Some(&["BardInspireCourage", "BardDirgeOfDoom", "BardFrighteningTune", "BardCounterSong", "BardWellVersed", "BardVersatilePerformance", "BardLoreMaster", "BardJackOfAllTrades", "BardBardicKnowledge"]),
             grants: &[
                 ArchetypeGrant { grants_feature_key: "Improved Counterspell", at_level: 1, description: None, benefit: None },
@@ -306,7 +292,6 @@ pub fn archetype_swap_tables() -> &'static [ArchetypeSwapEntry] {
             archetype_name: "Sandman",
             description: Some("Combining performance with stealth, trickery, and guile, the sandman uses cleverness to keep others off-balance."),
             source_page: Some("p.82"),
-            prerequisites: Some(&["PRECLASS:1,Bard=1", "PREMULT:1,[PREABILITY:1,CATEGORY=Archetype,Bard Archetype ~ Sandman],[!PREABILITY:1,CATEGORY=Archetype,TYPE.BardInspireCourage,TYPE.BardSuggestion,TYPE.BardInspireGreatness,TYPE.BardInspireHeroics,TYPE.BardMassSuggestion,TYPE.BardDeadlyPerformance,TYPE.BardBardicKnowledge,TYPE.BardVersatilePerformance,TYPE.BardInspireCompetence,TYPE.BardLoreMaster]"]),
             replaces: Some(&["BardInspireCourage", "BardSuggestion", "BardInspireGreatness", "BardInspireHeroics", "BardMassSuggestion", "BardDeadlyPerformance", "BardBardicKnowledge", "BardVersatilePerformance", "BardInspireCompetence", "BardLoreMaster"]),
             grants: &[
                 ArchetypeGrant { grants_feature_key: "Sandman ~ Stealspell", at_level: 1, description: Some("A sandman can use performance to steal spells from his foes and add them to his list of spells known. Once the performance is started, the bard can steal a prepared spell or a spell known from another creature with a touch attack as a standard action. The target receives a Will save DC %1 (DC 10 + the 1/2 bard's level + the bard's Cha bonus) to negate the effect. The sandman may choose a spell to steal, but if the target does not possess the spell, the bardic performance immediately ends. Otherwise the spell stolen is random, but it is always of the highest level that the bard can cast, if possible. The target loses the prepared spell or spell known and the sandman adds it to his list of spells known for as long as the performance continues, after which it reverts to the original recipient. While stolen, the bard can cast the spell using his available spell slots. This use does not consume the stolen spell. If the bard steals another spell while a spell is stolen, the previous spell immediately reverts to its original owner. This ability requires visual components. This performance replaces inspire courage.|10+CHA+(BardLVL/2)"), benefit: None },
@@ -328,7 +313,6 @@ pub fn archetype_swap_tables() -> &'static [ArchetypeSwapEntry] {
             archetype_name: "Savage Skald",
             description: Some("Far from civilization, furious tribes have their own war-singers, work-chanters, and lore-keepers, savaging enemies with song and sword alike."),
             source_page: Some("p.84"),
-            prerequisites: Some(&["PRECLASS:1,Bard=1", "PREMULT:1,[PREABILITY:1,CATEGORY=Archetype,Bard Archetype ~ Savage Skald],[!PREABILITY:1,CATEGORY=Archetype,TYPE.BardFascinate,TYPE.BardSuggestion,TYPE.BardJackOfAllTrades,TYPE.BardSoothingPerformance,TYPE.BardMassSuggestion]"]),
             replaces: Some(&["BardFascinate", "BardSuggestion", "BardJackOfAllTrades", "BardSoothingPerformance", "BardMassSuggestion"]),
             grants: &[
                 ArchetypeGrant { grants_feature_key: "Savage Skald ~ Inspiring Blow", at_level: 1, description: Some("A savage skald roars his war-cries with each telling blow. When he confirms a critical hit, he can start this performance as an immediate action (ending any other performances). He gains temporary hit points equal to his Charisma modifier (if positive), and all allies within 30 feet gain a +1 morale bonus on their next attack roll prior to the start of his next turn. These temporary hit points remain until the bard ends his performance. This performance replaces fascinate."), benefit: None },
@@ -345,7 +329,6 @@ pub fn archetype_swap_tables() -> &'static [ArchetypeSwapEntry] {
             archetype_name: "Sea Singer",
             description: Some("The sea singer calls the blue waters his home, and is much in demand among sea captains wishing good fortune for their crew and hull as they ply the tradewinds far and wide."),
             source_page: Some("p.84"),
-            prerequisites: Some(&["PRECLASS:1,Bard=1", "PREMULT:1,[PREABILITY:1,CATEGORY=Archetype,Bard Archetype ~ Sea Singer],[!PREABILITY:1,CATEGORY=Archetype,TYPE.BardCounterSong,TYPE.BardCounterSong,TYPE.BardSuggestion,TYPE.BardMassSuggestion,TYPE.BardBardicKnowledge,TYPE.BardVersatilePerformance,TYPE.BardWellVersed,TYPE.BardInspireCompetence]"]),
             replaces: Some(&["BardCounterSong", "BardCounterSong", "BardSuggestion", "BardMassSuggestion", "BardBardicKnowledge", "BardVersatilePerformance", "BardWellVersed", "BardInspireCompetence"]),
             grants: &[
                 ArchetypeGrant { grants_feature_key: "Sea Singer ~ Sea Shanty", at_level: 1, description: Some("A sea singer learns to counter seasickness and exhaustion during long sea voyages. Each round of a sea shanty, he makes a Perform skill check. Allies within 30 feet (including the sea singer) may use his Perform check in place of a saving throw against becoming exhausted, fatigued, nauseated, or sickened; if already under such an effect, a new save is allowed each round of the sea shanty, using the bard's Perform check for the save. A sea shanty has no effect on instantaneous effects or effects that do not allow saves. This ability requires audible components. This performance replaces countersong."), benefit: None },
@@ -364,7 +347,6 @@ pub fn archetype_swap_tables() -> &'static [ArchetypeSwapEntry] {
             archetype_name: "Street Performer",
             description: Some("Whether acrobat, troubadour, or thespian, the street performer mixes with the masses, singing for his supper."),
             source_page: Some("p.85"),
-            prerequisites: Some(&["PRECLASS:1,Bard=1", "PREMULT:1,[PREABILITY:1,CATEGORY=Archetype,Bard Archetype ~ Street Performer],[!PREABILITY:1,CATEGORY=Archetype,TYPE.BardInspireCourage,TYPE.BardInspireCompetence,TYPE.BardInspireGreatness,TYPE.BardInspireHeroics,TYPE.BardCountersong,TYPE.BardBardicKnowledge,TYPE.BardLoreMaster]"]),
             replaces: Some(&["BardInspireCourage", "BardInspireCompetence", "BardInspireGreatness", "BardInspireHeroics", "BardCountersong", "BardBardicKnowledge", "BardLoreMaster"]),
             grants: &[
                 ArchetypeGrant { grants_feature_key: "Street Performer ~ Disappearing Act", at_level: 1, description: Some("A street performer can use performance to divert attention from an ally. All creatures within 30 feet that fail a Will save DC %1 (DC 10 + 1/2 the bard's level + the bard's Cha modifier) treat one creature chosen by the bard as if it were invisible. This performance affects one additional creature at 5th level and every 6 levels thereafter. If the targets take any action that would cause them to become visible, they become visible to everyone. The bard cannot use this ability on himself. This ability is a mind-affecting effect that requires visual components. This performance replaces inspire courage.|10+CHA+(BardLVL/2)"), benefit: None },
@@ -383,7 +365,6 @@ pub fn archetype_swap_tables() -> &'static [ArchetypeSwapEntry] {
             archetype_name: "Aquatic Druid",
             description: Some("Shepherds of the lakes and seas, aquatic druids guard ecosystems ranging from shallows streams to deep ocean trenches, ministering to their residents and communing with the tides."),
             source_page: Some("p.98"),
-            prerequisites: Some(&["PRECLASS:1,Druid=1", "PREMULT:1,[PREABILITY:1,CATEGORY=Archetype,Druid Archetype ~ Aquatic Druid],[!PREABILITY:1,CATEGORY=Archetype,TYPE.DruidWoodlandStride,TYPE.DruidTracklessStep,TYPE.DruidNaturesLure,TYPE.DruidVenomImmunity,TYPE.DruidThousandFaces,TYPE.DruidWildShape]"]),
             replaces: Some(&["DruidWoodlandStride", "DruidTracklessStep", "DruidNaturesLure", "DruidVenomImmunity", "DruidThousandFaces", "DruidWildShape"]),
             grants: &[
                 ArchetypeGrant { grants_feature_key: "Aquatic Druid ~ Wild Empathy", at_level: 1, description: Some("An aquatic druid's wild empathy functions only on creatures that have a swim speed or the aquatic or water subtype; however, she can improve the attitude of any such creature with Intelligence 2 or less regardless of type, including mindless creatures."), benefit: None },
@@ -402,7 +383,6 @@ pub fn archetype_swap_tables() -> &'static [ArchetypeSwapEntry] {
             archetype_name: "Arctic Druid",
             description: Some("An arctic druid watches over the stark landscape of the far frozen reaches of the world, tending the stunted and rugged life that ekes out its survival in the least habitable climes."),
             source_page: Some("p.98"),
-            prerequisites: Some(&["PRECLASS:1,Druid=1", "PREMULT:1,[PREABILITY:1,CATEGORY=Archetype,Druid Archetype ~ Arctic Druid],[!PREABILITY:1,CATEGORY=Archetype,TYPE.DruidWoodlandStride,TYPE.DruidTracklessStep,TYPE.DruidNaturesLure,TYPE.DruidVenomImmunity,TYPE.DruidThousandFaces,TYPE.DruidWildShape]"]),
             replaces: Some(&["DruidWoodlandStride", "DruidTracklessStep", "DruidNaturesLure", "DruidVenomImmunity", "DruidThousandFaces", "DruidWildShape"]),
             grants: &[
                 ArchetypeGrant { grants_feature_key: "Arctic Druid ~ Arctic Native", at_level: 2, description: Some("At 2nd level, an arctic druid gains a bonus on Initiative checks and Knowledge (geography), Perception, Stealth, and Survival checks equal to 1/2 her druid level in cold or icy terrain, and she cannot be tracked in cold or icy terrain. This ability replaces woodland stride."), benefit: None },
@@ -420,7 +400,6 @@ pub fn archetype_swap_tables() -> &'static [ArchetypeSwapEntry] {
             archetype_name: "Bear Shaman",
             description: Some("A shaman with this focus calls upon the mighty bear, titan of the woodlands and mountains, a paragon of strength and ferocity, and yet also a quiet protector rich in wisdom."),
             source_page: Some("p.102"),
-            prerequisites: Some(&["PRECLASS:1,Druid=1", "PREMULT:1,[PREABILITY:1,CATEGORY=Archetype,Druid Archetype ~ Bear Shaman],[!PREABILITY:1,CATEGORY=Archetype,TYPE.DruidThousandFaces,TYPE.DruidVenomImmunity,TYPE.DruidWildShape,TYPE.DruidNatureBond]"]),
             replaces: Some(&["DruidThousandFaces", "DruidVenomImmunity", "DruidWildShape"]),
             grants: &[
                 ArchetypeGrant { grants_feature_key: "Bear Shaman ~ Nature Bond", at_level: 1, description: Some("A bear shaman who chooses an animal companion must select a bear. If choosing a domain, the bear shaman must choose from the Animal, Earth, Protection, and Strength domains."), benefit: None },
@@ -443,7 +422,6 @@ pub fn archetype_swap_tables() -> &'static [ArchetypeSwapEntry] {
             archetype_name: "Blight Druid",
             description: Some("The devoted servants of nature corrupted, ruined, and destroyed, blight druids are the caretakers of lands ravaged by natural disaster. While some are devoted to reforming and reclaiming lands despoiled by the ravages of civilization, others seek out the more rapacious violence inherent in nature and feed the creeping rot and decay that brings an end to all things."),
             source_page: Some("p.98"),
-            prerequisites: Some(&["PRECLASS:1,Druid=1", "PREMULT:1,[PREABILITY:1,CATEGORY=Archetype,Druid Archetype ~ Blight Druid],[!PREABILITY:1,CATEGORY=Archetype,TYPE.DruidThousandFaces,TYPE.DruidVenomImmunity,TYPE.DruidTracklessStep,TYPE.DruidResistNaturesLure,TYPE.DruidWildEmpathy,TYPE.DruidNatureBond]"]),
             replaces: Some(&["DruidThousandFaces", "DruidVenomImmunity", "DruidTracklessStep", "DruidNatureBond", "DruidResistNaturesLure", "DruidWildEmpathy"]),
             grants: &[
                 ArchetypeGrant { grants_feature_key: "Blight Druid ~ Nature Bond", at_level: 1, description: Some("A blight druid may not bond with an animal companion, but may either call a familiar as a wizard of her druid level or select from the Darkness, Death, and Destruction domains in addition to those normally available."), benefit: None },
@@ -460,7 +438,6 @@ pub fn archetype_swap_tables() -> &'static [ArchetypeSwapEntry] {
             archetype_name: "Cave Druid",
             description: Some("Far from the green fields of the world above lies a lightless expanse beneath the surface. This darkling fairyland is not without beauty and natural wonders of its own, and a few druids seek to preserve this hidden realm and purge it of the fell horrors that creep up from below."),
             source_page: Some("p.99"),
-            prerequisites: Some(&["PRECLASS:1,Druid=1", "PREMULT:1,[PREABILITY:1,CATEGORY=Archetype,Druid Archetype ~ Cave Druid],[!PREABILITY:1,CATEGORY=Archetype,TYPE.DruidClassSkills,TYPE.DruidNatureSense,TYPE.DruidTracklessStep,TYPE.DruidNatureBond,TYPE.DruidWildEmpathy,TYPE.DruidResistNaturesLure,TYPE.DruidWildShape,TYPE.DruidWoodlandStride]"]),
             replaces: Some(&["DruidClassSkills", "DruidNatureSense", "DruidTracklessStep", "DruidNatureBond", "DruidWildEmpathy", "DruidResistNaturesLure", "DruidWildShape", "DruidWoodlandStride"]),
             grants: &[
                 ArchetypeGrant { grants_feature_key: "Cave Druid ~ Cavesense", at_level: 1, description: Some("A underground druid adds Knowledge (dungeoneering) rather than Knowledge (geography) as a class skill and gains a +2 bonus on Knowledge (dungeoneering) and Survival skill checks. This ability replaces the nature sense ability."), benefit: None },
@@ -479,7 +456,6 @@ pub fn archetype_swap_tables() -> &'static [ArchetypeSwapEntry] {
             archetype_name: "Desert Druid",
             description: Some("Not all climates are verdant paradises, but even in the sere deserts there is life-though often hidden from the sun and rarely friendly-and raw, desolate beauty. Here desert druids come to pay homage, protect and maintain the few habitable locales, and witness nature's majesty in all its burning, merciless glory."),
             source_page: Some("p.99"),
-            prerequisites: Some(&["PRECLASS:1,Druid=1", "PREMULT:1,[PREABILITY:1,CATEGORY=Archetype,Druid Archetype ~ Desert Druid],[!PREABILITY:1,CATEGORY=Archetype,TYPE.DruidWoodlandStride,TYPE.DruidTracklessStep,TYPE.DruidResistNaturesLure,TYPE.DruidWildShape,TYPE.DruidVenomImmunity,TYPE.DruidThousandFaces]"]),
             replaces: Some(&["DruidWoodlandStride", "DruidTracklessStep", "DruidResistNaturesLure", "DruidWildShape", "DruidVenomImmunity", "DruidThousandFaces"]),
             grants: &[
                 ArchetypeGrant { grants_feature_key: "Desert Druid ~ Desert Native", at_level: 2, description: Some("At 2nd level, a desert druid gains a bonus on Initiative checks and Knowledge (geography), Perception, Stealth, and Survival checks equal to 1/2 her druid level in desert terrain, and she cannot be tracked in such environments. This ability replaces woodland stride."), benefit: None },
@@ -497,7 +473,6 @@ pub fn archetype_swap_tables() -> &'static [ArchetypeSwapEntry] {
             archetype_name: "Eagle Shaman",
             description: Some("A shaman with this totem calls upon the noble eagle, stern and proud, soaring high above the world with keen and pitiless eyes that miss nothing."),
             source_page: Some("p.102"),
-            prerequisites: Some(&["PRECLASS:1,Druid=1", "PREMULT:1,[PREABILITY:1,CATEGORY=Archetype,Druid Archetype ~ Eagle Shaman],[!PREABILITY:1,CATEGORY=Archetype,TYPE.DruidThousandFaces,TYPE.DruidVenomImmunity,TYPE.DruidWildShape,TYPE.DruidNatureBond]"]),
             replaces: Some(&["DruidThousandFaces", "DruidVenomImmunity", "DruidWildShape"]),
             grants: &[
                 ArchetypeGrant { grants_feature_key: "Eagle Shaman ~ Nature Bond", at_level: 1, description: Some("An eagle shaman who chooses an animal companion must select a bird (eagle). If choosing a domain, the eagle shaman must choose from the Air, Animal, Nobility, and Weather domains."), benefit: None },
@@ -520,7 +495,6 @@ pub fn archetype_swap_tables() -> &'static [ArchetypeSwapEntry] {
             archetype_name: "Jungle Druid",
             description: Some("The fecund jungles of the equatorial regions are rich in life and ancient tradition; druidical guardians of sacred pools, elder trees, and trembling volcanoes watch over crumbling temples and the inevitable reclamation of lost civilizations by the beating heart of nature untamed."),
             source_page: Some("p.100"),
-            prerequisites: Some(&["PRECLASS:1,Druid=1", "PREMULT:1,[PREABILITY:1,CATEGORY=Archetype,Druid Archetype ~ Jungle Druid],[!PREABILITY:1,CATEGORY=Archetype,TYPE.DruidWoodlandStride,TYPE.DruidTracklessStep,TYPE.DruidResistNaturesLure,TYPE.DruidWildShape,TYPE.DruidThousandFaces]"]),
             replaces: Some(&["DruidWoodlandStride", "DruidTracklessStep", "DruidResistNaturesLure", "DruidWildShape", "DruidThousandFaces"]),
             grants: &[
                 ArchetypeGrant { grants_feature_key: "Jungle Druid ~ Jungle Guardian", at_level: 2, description: Some("At 2nd level, a jungle druid gains a bonus on Initiative checks and Climb, Knowledge (geography), Perception, Stealth, and Survival checks equal to 1/2 her druid level in jungle terrain, and she cannot be tracked in such environments. This ability replaces woodland stride."), benefit: None },
@@ -537,7 +511,6 @@ pub fn archetype_swap_tables() -> &'static [ArchetypeSwapEntry] {
             archetype_name: "Lion Shaman",
             description: Some("A shaman with this totem calls upon the proud lion, imposing and majestic, the mighty leader of deadly hunters."),
             source_page: Some("p.103"),
-            prerequisites: Some(&["PRECLASS:1,Druid=1", "PREMULT:1,[PREABILITY:1,CATEGORY=Archetype,Druid Archetype ~ Lion Shaman],[!PREABILITY:1,CATEGORY=Archetype,TYPE.DruidThousandFaces,TYPE.DruidVenomImmunity,TYPE.DruidWildShape,TYPE.DruidNatureBond]"]),
             replaces: Some(&["DruidThousandFaces", "DruidVenomImmunity", "DruidWildShape"]),
             grants: &[
                 ArchetypeGrant { grants_feature_key: "Lion Shaman ~ Nature Bond", at_level: 1, description: Some("A lion shaman who chooses an animal companion must select a lion. If choosing a domain, the lion shaman must choose from the Animal, Glory, Nobility, and Sun domains."), benefit: None },
@@ -560,7 +533,6 @@ pub fn archetype_swap_tables() -> &'static [ArchetypeSwapEntry] {
             archetype_name: "Mountain Druid",
             description: Some("As more and more of the soft, easy lands become cultivated and civilized, many druids look for refuge and solitude among the eternal peaks of the highest mountains."),
             source_page: Some("p.100"),
-            prerequisites: Some(&["PRECLASS:1,Druid=1", "PREMULT:1,[PREABILITY:1,CATEGORY=Archetype,Druid Archetype ~ Mountain Druid],[!PREABILITY:1,CATEGORY=Archetype,TYPE.DruidWoodlandStride,TYPE.DruidTracklessStep,TYPE.DruidResistNaturesLure,TYPE.DruidWildShape,TYPE.DruidVenomImmunity,TYPE.DruidThousandFaces]"]),
             replaces: Some(&["DruidWoodlandStride", "DruidTracklessStep", "DruidResistNaturesLure", "DruidWildShape", "DruidVenomImmunity", "DruidThousandFaces"]),
             grants: &[
                 ArchetypeGrant { grants_feature_key: "Mountain Druid ~ Mountaineer", at_level: 2, description: Some("At 2nd level, a mountain druid gains a bonus on Initiative checks and Climb, Knowledge (geography), Perception, Stealth, and Survival checks equal to half her druid level in mountainous terrain, and she cannot be tracked in such an environment. This ability replaces woodland stride."), benefit: None },
@@ -578,7 +550,6 @@ pub fn archetype_swap_tables() -> &'static [ArchetypeSwapEntry] {
             archetype_name: "Plains Druid",
             description: Some("Out upon the wide and rolling prairies and savannahs, plains druids stand guard over the grasslands. These druids range far and wide, watching over nomadic tribes and wandering herds and preserving the sometimes fragile ecosystem of the wide open spaces."),
             source_page: Some("p.100"),
-            prerequisites: Some(&["PRECLASS:1,Druid=1", "PREMULT:1,[PREABILITY:1,CATEGORY=Archetype,Druid Archetype ~ Plains Druid],[!PREABILITY:1,CATEGORY=Archetype,TYPE.DruidWoodlandStride,TYPE.DruidTracklessStep,TYPE.DruidResistNaturesLure,TYPE.DruidWildShape,TYPE.DruidVenomImmunity,TYPE.DruidThousandFaces]"]),
             replaces: Some(&["DruidWoodlandStride", "DruidTracklessStep", "DruidResistNaturesLure", "DruidWildShape", "DruidVenomImmunity", "DruidThousandFaces"]),
             grants: &[
                 ArchetypeGrant { grants_feature_key: "Plains Druid ~ Plains Traveler", at_level: 2, description: Some("At 2nd level, a plains druid gains a bonus on initiative checks and Knowledge (geography), Perception, Stealth, and Survival checks equal to 1/2 her druid level in plains terrain, and she cannot be tracked in such an environment. This ability replaces woodland stride."), benefit: None },
@@ -596,7 +567,6 @@ pub fn archetype_swap_tables() -> &'static [ArchetypeSwapEntry] {
             archetype_name: "Serpent Shaman",
             description: Some("A shaman with this totem calls upon the cunning serpent, the stealthy deceiver who draws the weak minded in and strikes while they are unaware. Some hate its treacherous nature, while others praise its thoughtful pragmatism."),
             source_page: Some("p.103"),
-            prerequisites: Some(&["PRECLASS:1,Druid=1", "PREMULT:1,[PREABILITY:1,CATEGORY=Archetype,Druid Archetype ~ Serpent Shaman],[!PREABILITY:1,CATEGORY=Archetype,TYPE.DruidThousandFaces,TYPE.DruidVenomImmunity,TYPE.DruidWildShape,TYPE.DruidNatureBond]"]),
             replaces: Some(&["DruidThousandFaces", "DruidVenomImmunity", "DruidWildShape"]),
             grants: &[
                 ArchetypeGrant { grants_feature_key: "Serpent Shaman ~ Nature Bond", at_level: 1, description: Some("A serpent shaman who chooses an animal companion must select a snake. If choosing a domain, the serpent shaman must choose from the Animal, Charm, Trickery, and Water domains."), benefit: None },
@@ -619,7 +589,6 @@ pub fn archetype_swap_tables() -> &'static [ArchetypeSwapEntry] {
             archetype_name: "Swamp Druid",
             description: Some("Some druids eschew pleasant glades and groves and instead seek out dank marshes, misty bogs and heaths, and trackless swamps as the place they call home and watch over with care, finding beauty and life in abundance in places few others would willingly enter."),
             source_page: Some("p.101"),
-            prerequisites: Some(&["PRECLASS:1,Druid=1", "PREMULT:1,[PREABILITY:1,CATEGORY=Archetype,Druid Archetype ~ Swamp Druid],[!PREABILITY:1,CATEGORY=Archetype,TYPE.DruidWoodlandStride,TYPE.DruidTracklessStep,TYPE.DruidResistNaturesLure,TYPE.DruidWildShape,TYPE.DruidThousandFaces]"]),
             replaces: Some(&["DruidWoodlandStride", "DruidTracklessStep", "DruidResistNaturesLure", "DruidWildShape", "DruidThousandFaces"]),
             grants: &[
                 ArchetypeGrant { grants_feature_key: "Swamp Druid ~ Marshwight", at_level: 2, description: Some("At 2nd level, a swamp druid gains a bonus on Initiative checks and Knowledge (geography), Perception, Stealth, Swim, and Survival checks equal to 1/2 her druid level in swamp terrain, and she cannot be tracked in such an environment. This ability replaces woodland stride."), benefit: None },
@@ -636,7 +605,6 @@ pub fn archetype_swap_tables() -> &'static [ArchetypeSwapEntry] {
             archetype_name: "Urban Druid",
             description: Some("While many druids keep to the wilderness, some make their way within settlements, communing with the animals and vermin who live there and speaking for the nature that runs rampant in civilization's very cradle."),
             source_page: Some("p.101"),
-            prerequisites: Some(&["PRECLASS:1,Druid=1", "PREMULT:1,[PREABILITY:1,CATEGORY=Archetype,Druid Archetype ~ Urban Druid],[!PREABILITY:1,CATEGORY=Archetype,TYPE.DruidWoodlandStride,TYPE.DruidTracklessStep,TYPE.DruidResistNaturesLure,TYPE.DruidThousandFaces,TYPE.DruidWildShape,TYPE.DruidVenomImmunity,TYPE.DruidNatureBond]"]),
             replaces: Some(&["DruidWoodlandStride", "DruidTracklessStep", "DruidResistNaturesLure", "DruidThousandFaces", "DruidWildShape", "DruidVenomImmunity", "DruidNatureBond"]),
             grants: &[
                 ArchetypeGrant { grants_feature_key: "Urban Druid ~ Nature Bond", at_level: 1, description: Some("An urban druid may not select an animal companion. Instead, she must choose from the following domains, rather than those usually available to druids: Charm, Community, Knowledge, Nobility, Protection, Repose, Rune, or Weather."), benefit: None },
@@ -655,7 +623,6 @@ pub fn archetype_swap_tables() -> &'static [ArchetypeSwapEntry] {
             archetype_name: "Wolf Shaman",
             description: Some("A shaman with this totem calls upon the clever wolf, capable of roaming alone yet wise enough to run with a pack when facing dangers too great for one alone."),
             source_page: Some("p.103"),
-            prerequisites: Some(&["PRECLASS:1,Druid=1", "PREMULT:1,[PREABILITY:1,CATEGORY=Archetype,Druid Archetype ~ Wolf Shaman],[!PREABILITY:1,CATEGORY=Archetype,TYPE.DruidThousandFaces,TYPE.DruidVenomImmunity,TYPE.DruidWildShape,TYPE.DruidNatureBond]"]),
             replaces: Some(&["DruidThousandFaces", "DruidVenomImmunity", "DruidWildShape"]),
             grants: &[
                 ArchetypeGrant { grants_feature_key: "Wolf Shaman ~ Nature Bond", at_level: 1, description: Some("A wolf shaman who chooses an animal companion must select a wolf. If choosing a domain, the wolf shaman must choose from the Animal, Community, Liberation, and Travel domains."), benefit: None },
@@ -678,7 +645,6 @@ pub fn archetype_swap_tables() -> &'static [ArchetypeSwapEntry] {
             archetype_name: "Archer",
             description: Some("The archer is dedicated to the careful mastery of the bow, perfecting his skills with years of practice honed day after day on ranges and hunting for game, or else on the battlefield, raining destruction down on the enemy lines."),
             source_page: Some("p.104"),
-            prerequisites: Some(&["PRECLASS:1,Fighter=1", "PREMULT:1,[PREABILITY:1,CATEGORY=Archetype,Fighter Archetype ~ Archer],[!PREABILITY:1,CATEGORY=Archetype,TYPE.FighterBravery,TYPE.FighterArmorTraining1,TYPE.FighterArmorTraining2,TYPE.FighterArmorTraining3,TYPE.FighterArmorTraining4,TYPE.FighterWeaponTraining1,TYPE.FighterWeaponTraining2,TYPE.FighterWeaponTraining3,TYPE.FighterWeaponTraining4,TYPE.FighterArmorMastery]"]),
             replaces: Some(&["FighterBravery", "FighterArmorTraining_ALL", "FighterWeaponTraining_ALL", "FighterArmorMastery"]),
             grants: &[
                 ArchetypeGrant { grants_feature_key: "Fighter Archer ~ Hawkeye", at_level: 2, description: Some("At 2nd level, an archer gains a +1 bonus on Perception checks, and the range increment for any bow he uses increases by 5 feet. These bonuses increase by +1 and 5 additional feet for every 4 levels beyond 2nd. This ability replaces bravery."), benefit: None },
@@ -698,7 +664,6 @@ pub fn archetype_swap_tables() -> &'static [ArchetypeSwapEntry] {
             archetype_name: "Crossbowman",
             description: Some("The crossbowman has perfected the deadly use of the crossbow, a simple but cruelly efficient weapon, as a craftsman mastering a lethal tool."),
             source_page: Some("p.104"),
-            prerequisites: Some(&["PRECLASS:1,Fighter=1", "PREMULT:1,[PREABILITY:1,CATEGORY=Archetype,Fighter Archetype ~ Crossbowman],[!PREABILITY:1,CATEGORY=Archetype,TYPE.FighterArmorTraining1,TYPE.FighterWeaponTraining1,TYPE.FighterArmorTraining2,TYPE.FighterWeaponTraining2,TYPE.FighterArmorTraining3,TYPE.FighterWeaponTraining3,TYPE.FighterArmorTraining4,TYPE.FighterWeaponTraining4,TYPE.FighterArmorMastery]"]),
             replaces: Some(&["FighterArmorTraining_ALL", "FighterWeaponTraining_ALL", "FighterArmorMastery"]),
             grants: &[
                 ArchetypeGrant { grants_feature_key: "Fighter Crossbowman ~ Deadshot", at_level: 3, description: Some("At 3rd level, when a crossbowman attacks with a crossbow as a readied action, he may add 1/2 his Dexterity bonus (minimum +1) on his damage roll. This ability replaces armor training 1."), benefit: None },
@@ -720,7 +685,6 @@ pub fn archetype_swap_tables() -> &'static [ArchetypeSwapEntry] {
             archetype_name: "Free Hand Fighter",
             description: Some("The free hand fighter specializes in the delicate art of handling a single weapon in one hand while using his free hand to balance, block, tip, and distract his opponents. While not a brawler, his open hand is as much a weapon as a bow or blade. His fighting school benefits only apply when he is using a one-handed weapon and carrying nothing in his other hand."),
             source_page: Some("p.105"),
-            prerequisites: Some(&["PRECLASS:1,Fighter=1", "PREMULT:1,[PREABILITY:1,CATEGORY=Archetype,Fighter Archetype ~ Free Hand Fighter],[!PREABILITY:1,CATEGORY=Archetype,TYPE.FighterBravery,TYPE.FighterArmorTraining1,TYPE.FighterArmorTraining2,TYPE.FighterArmorTraining3,TYPE.FighterArmorTraining4,TYPE.FighterWeaponTraining1,TYPE.FighterWeaponTraining2,TYPE.FighterWeaponTraining3,TYPE.FighterArmorMastery,TYPE.FighterWeaponTraining4]"]),
             replaces: Some(&["FighterBravery", "FighterArmorTraining_ALL", "FighterWeaponTraining1", "FighterWeaponTraining2", "FighterWeaponTraining3", "FighterWeaponTraining4", "FighterArmorMastery"]),
             grants: &[
                 ArchetypeGrant { grants_feature_key: "Free Hand Fighter ~ Deceptive Strike", at_level: 2, description: Some("At 2nd level, a free hand fighter gains a +1 bonus to CMB and CMD on disarm checks and on Bluff checks to feint or create a diversion to hide. This bonus increases by +1 for every four levels after 2nd. This ability replaces bravery."), benefit: None },
@@ -738,7 +702,6 @@ pub fn archetype_swap_tables() -> &'static [ArchetypeSwapEntry] {
             archetype_name: "Mobile Fighter",
             description: Some("Where some fighters focus on strength and raw power, the mobile fighter relies on swiftness and mobility, gliding across the battlefield like a steel whirlwind and leaving destruction in his wake."),
             source_page: Some("p.105"),
-            prerequisites: Some(&["PRECLASS:1,Fighter=1", "PREMULT:1,[PREABILITY:1,CATEGORY=Archetype,Fighter Archetype ~ Mobile Fighter],[!PREABILITY:1,CATEGORY=Archetype,TYPE.FighterBravery,TYPE.FighterWeaponTraining1,TYPE.FighterArmorTraining3,TYPE.FighterArmorTraining4,TYPE.FighterWeaponMastery,TYPE.FighterWeaponTraining2,TYPE.FighterWeaponTraining3,TYPE.FighterWeaponTraining4]"]),
             replaces: Some(&["FighterBravery", "FighterWeaponTraining1", "FighterArmorTraining3", "FighterArmorTraining4", "FighterWeaponMastery", "FighterWeaponTraining1", "FighterWeaponTraining2", "FighterWeaponTraining3", "FighterWeaponTraining4"]),
             grants: &[
                 ArchetypeGrant { grants_feature_key: "Mobile Fighter ~ Agility", at_level: 2, description: Some("At 2nd level, a mobile fighter gains a +1 bonus on saving throws made against effects that cause him to become paralyzed, slowed, or entangled. This bonus increases by +1 for every four levels beyond 2nd. This ability replaces bravery."), benefit: None },
@@ -755,7 +718,6 @@ pub fn archetype_swap_tables() -> &'static [ArchetypeSwapEntry] {
             archetype_name: "Phalanx Soldier",
             description: Some("The phalanx soldier specializes in defensive tactics, using his shield to guard himself and his allies and forming a shield wall like an unbreakable anvil against which his enemies break."),
             source_page: Some("p.105"),
-            prerequisites: Some(&["PRECLASS:1,Fighter=1", "PREMULT:1,[PREABILITY:1,CATEGORY=Archetype,Fighter Archetype ~ Phalanx Soldier],[!PREABILITY:1,CATEGORY=Archetype,TYPE.FighterBravery,TYPE.FighterArmorTraining1,TYPE.FighterWeaponTraining1,TYPE.FighterArmorTraining1,TYPE.FighterArmorTraining2,TYPE.FighterWeaponTraining2,TYPE.FighterWeaponTraining3,TYPE.FighterWeaponTraining4,TYPE.FighterArmorTraining4,TYPE.FighterWeaponMastery]"]),
             replaces: Some(&["FighterBravery", "FighterArmorTraining_ALL", "FighterWeaponTraining_ALL", "FighterWeaponMastery"]),
             grants: &[
                 ArchetypeGrant { grants_feature_key: "Fighter Phalanx Soldier ~ Stand Firm", at_level: 2, description: Some("At 2nd level, a phalanx soldier gains a +1 bonus to CMD against drag, overrun, and trip attempts. This bonus also applies on saves against trample attacks. The bonus increases by +1 for every four levels beyond 2nd. This ability replaces bravery."), benefit: None },
@@ -774,7 +736,6 @@ pub fn archetype_swap_tables() -> &'static [ArchetypeSwapEntry] {
             archetype_name: "Polearm Master",
             description: Some("The polearm master is schooled in the ancient wisdom that enemies are best faced at the end of long striking pole, lashing like a serpent before clumsy swords and axes can even be brought to bear."),
             source_page: Some("p.106"),
-            prerequisites: Some(&["PRECLASS:1,Fighter=1", "PREMULT:1,[PREABILITY:1,CATEGORY=Archetype,Fighter Archetype ~ Polearm Master],[!PREABILITY:1,CATEGORY=Archetype,TYPE.FighterBravery,TYPE.FighterArmorTraining1,TYPE.FighterArmorTraining2,TYPE.FighterArmorTraining3,TYPE.FighterArmorTraining4,TYPE.FighterWeaponTraining1,TYPE.FighterWeaponTraining2,TYPE.FighterWeaponTraining3,TYPE.FighterWeaponTraining4,TYPE.FighterArmorMastery]"]),
             replaces: Some(&["FighterBravery", "FighterArmorTraining_ALL", "FighterWeaponTraining_ALL", "FighterArmorMastery"]),
             grants: &[
                 ArchetypeGrant { grants_feature_key: "Fighter Polearm Master ~ Pole Fighting", at_level: 2, description: Some("At 2nd level, as an immediate action, a polearm master can shorten the grip on his spear or polearm with reach and use it against adjacent targets. This action results in a -4 penalty on attack rolls with that weapon until he spends another immediate action to return to the normal grip. The penalty is reduced by -1 for every four levels beyond 2nd. This ability replaces bravery."), benefit: None },
@@ -794,7 +755,6 @@ pub fn archetype_swap_tables() -> &'static [ArchetypeSwapEntry] {
             archetype_name: "Roughrider",
             description: Some("Roughriders study and practice the fine points of mounted combat, drilling endlessly with warbeasts- from noble thoroughbreds to trained monsters-to form a perfect synergy between rider and steed."),
             source_page: Some("p.106"),
-            prerequisites: Some(&["PRECLASS:1,Fighter=1", "PREMULT:1,[PREABILITY:1,CATEGORY=Archetype,Fighter Archetype ~ Roughrider],[!PREABILITY:1,CATEGORY=Archetype,TYPE.FighterBravery,TYPE.FighterArmorTraining1,TYPE.FighterWeaponTraining1,TYPE.FighterWeaponTraining2,TYPE.FighterWeaponTraining3,TYPE.FighterWeaponTraining4,TYPE.FighterArmorTraining2,TYPE.FighterArmorTraining3,TYPE.FighterArmorTraining4,TYPE.FighterArmorTraining4,TYPE.FighterArmorMastery]"]),
             replaces: Some(&["FighterBravery", "FighterArmorTraining_ALL", "FighterWeaponTraining_ALL", "FighterArmorMastery"]),
             grants: &[
                 ArchetypeGrant { grants_feature_key: "Fighter Roughrider ~ Steadfast Mount", at_level: 2, description: Some("At 2nd level, after a roughrider has spent 1 hour practicing with a mount, the mount gains a +1 dodge bonus to AC and a +1 morale bonus on saves, but only while the roughrider is mounted on it or adjacent to it. This bonus increases by +1 for every four levels after 2nd. This ability replaces bravery."), benefit: None },
@@ -814,7 +774,6 @@ pub fn archetype_swap_tables() -> &'static [ArchetypeSwapEntry] {
             archetype_name: "Savage Warrior",
             description: Some("Warriors' might is not measured only by their skill with steel, but also by their ability to inflict death with fang and claw, horn and hoof, and every exotic appendage the natural and unnatural world has to offer."),
             source_page: Some("p.107"),
-            prerequisites: Some(&["PRECLASS:1,Fighter=1", "PREMULT:1,[PREABILITY:1,CATEGORY=Archetype,Fighter Archetype ~ Savage Warrior],[!PREABILITY:1,CATEGORY=Archetype,TYPE.FighterBravery,TYPE.FighterWeaponTraining1,TYPE.FighterWeaponTraining2,TYPE.FighterWeaponTraining3,TYPE.FighterWeaponTraining4,TYPE.FighterWeaponMastery]"]),
             replaces: Some(&["FighterBravery", "FighterWeaponTraining_ALL", "FighterWeaponMastery"]),
             grants: &[
                 ArchetypeGrant { grants_feature_key: "Fighter Savage Warrior ~ Spark of Life", at_level: 2, description: Some("At 2nd level, a savage warrior gains a +1 bonus on saving throws made against energy drain and death effects. This bonus increases by +1 for every four levels beyond 2nd. This ability replaces bravery."), benefit: None },
@@ -832,7 +791,6 @@ pub fn archetype_swap_tables() -> &'static [ArchetypeSwapEntry] {
             archetype_name: "Shielded Fighter",
             description: Some("A shielded fighter focuses on both offense and defense, blending weapon and shield in perfect balance to impede his enemies while delivering deadly blows, and even turning the shield itself into a formidable weapon. These fighting school benefits apply when wielding a weapon and a shield simultaneously."),
             source_page: Some("p.108"),
-            prerequisites: Some(&["PRECLASS:1,Fighter=1", "PREMULT:1,[PREABILITY:1,CATEGORY=Archetype,Fighter Archetype ~ Shielded Fighter],[!PREABILITY:1,CATEGORY=Archetype,TYPE.FighterArmorTraining1,TYPE.FighterArmorTraining2,TYPE.FighterArmorTraining3,TYPE.FighterArmorTraining4,TYPE.FighterWeaponTraining1,TYPE.FighterWeaponTraining3,TYPE.FighterWeaponTraining3,TYPE.FighterWeaponTraining4,TYPE.FighterArmorMastery,TYPE.FighterWeaponMastery]"]),
             replaces: Some(&["FighterArmorTraining_ALL", "FighterWeaponTraining_ALL", "FighterArmorMastery", "FighterWeaponMastery"]),
             grants: &[
                 ArchetypeGrant { grants_feature_key: "Fighter Shielded Fighter ~ Active Defense", at_level: 3, description: Some("At 3rd level, a shielded fighter gains a +1 dodge bonus to AC when wielding a shield and fighting defensively, using Combat Expertise, or using total defense. This bonus increases by +1 for every four levels beyond 3rd. As a swift action, he may share this bonus with one adjacent ally, or half of the bonus (minimum +0) with all adjacent allies, until the beginning of his next turn. This ability replaces armor training 4."), benefit: None },
@@ -850,7 +808,6 @@ pub fn archetype_swap_tables() -> &'static [ArchetypeSwapEntry] {
             archetype_name: "Two-Handed Fighter",
             description: Some("Some fighters focus their efforts on finding the biggest, heaviest, most imposing weapon they can find and training to manage and harness the weight of their massive weapons for maximum impact. These fighting school benefits only apply when using two-handed weapons."),
             source_page: Some("p.108"),
-            prerequisites: Some(&["PRECLASS:1,Fighter=1", "PREMULT:1,[PREABILITY:1,CATEGORY=Archetype,Fighter Archetype ~ Two-Handed Fighter],[!PREABILITY:1,CATEGORY=Archetype,TYPE.FighterBravery,TYPE.FighterArmorTraining1,TYPE.FighterArmorTraining2,TYPE.FighterArmorTraining3,TYPE.FighterArmorTraining4,TYPE.FighterArmorMastery,TYPE.FighterWeaponTraining1,TYPE.FighterWeaponTraining2,TYPE.FighterWeaponTraining3,TYPE.FighterWeaponTraining4]"]),
             replaces: Some(&["FighterBravery", "FighterArmorTraining_ALL", "FighterArmorMastery", "FighterWeaponTraining_ALL"]),
             grants: &[
                 ArchetypeGrant { grants_feature_key: "Fighter Two-Handed Fighter ~ Shattering Strike", at_level: 2, description: Some("At 2nd level, a two-handed fighter gains a +1 bonus to CMB and CMD on sunder attempts and on damage rolls made against objects. These bonuses increase by +1 for every four levels beyond 2nd. This ability replaces bravery."), benefit: None },
@@ -869,7 +826,6 @@ pub fn archetype_swap_tables() -> &'static [ArchetypeSwapEntry] {
             archetype_name: "Two-Weapon Warrior",
             description: Some("Trained under great masters who preached the simple truth that two are better than one when it comes to weapons, the two-weapon warrior is a terror when his hands are full. From paired daggers to exotic double weapons, all combinations come equally alive in his skilled hands."),
             source_page: Some("p.109"),
-            prerequisites: Some(&["PRECLASS:1,Fighter=1", "PREMULT:1,[PREABILITY:1,CATEGORY=Archetype,Fighter Archetype ~ Two-Weapon Warrior],[!PREABILITY:1,CATEGORY=Archetype,TYPE.FighterArmorTraining1,TYPE.FighterArmorTraining2,TYPE.FighterWeaponTraining1,TYPE.FighterWeaponTraining2,TYPE.FighterArmorTraining3,TYPE.FighterWeaponTraining3,TYPE.FighterArmorTraining4,TYPE.FighterWeaponTraining4,TYPE.FighterArmorMastery]"]),
             replaces: Some(&["FighterArmorTraining_ALL", "FighterWeaponTraining_ALL", "FighterArmorMastery"]),
             grants: &[
                 ArchetypeGrant { grants_feature_key: "Fighter Two-Weapon Warrior ~ Defensive Flurry", at_level: 3, description: Some("At 3rd level, when a two-weapon warrior makes a full attack with both weapons, he gains a +1 dodge bonus to AC against melee attacks until the beginning of his next turn. This bonus increases by +1 every four levels after 3rd. This ability replaces armor training 1 and 2."), benefit: None },
@@ -889,7 +845,6 @@ pub fn archetype_swap_tables() -> &'static [ArchetypeSwapEntry] {
             archetype_name: "Weapon Master",
             description: Some("Devoted to the perfection of a single weapon, the weapon master's meditations upon his favored weapon border on the obsessive, but none can deny his consummate skill. The weapon master must select a single type of weapon (such as longsword or shortbow). All of his abilities apply to that weapon type."),
             source_page: Some("p.109"),
-            prerequisites: Some(&["PRECLASS:1,Fighter=1", "PREMULT:1,[PREABILITY:1,CATEGORY=Archetype,Fighter Archetype ~ Weapon Master],[!PREABILITY:1,CATEGORY=Archetype,TYPE.FighterBravery,TYPE.FighterArmorTraining1,TYPE.FighterArmorTraining2,TYPE.FighterArmorTraining3,TYPE.FighterArmorTraining4,TYPE.FighterWeaponTraining1,TYPE.FighterWeaponTraining2,TYPE.FighterWeaponTraining3,TYPE.FighterWeaponTraining4,TYPE.FighterArmorMastery]"]),
             replaces: Some(&["FighterBravery", "FighterArmorTraining_ALL", "FighterWeaponTraining_ALL", "FighterArmorMastery"]),
             grants: &[
                 ArchetypeGrant { grants_feature_key: "Fighter Weapon Master ~ Weapon Guard", at_level: 2, description: Some("You gain a +%1 bonus to CMD against disarm and sunder attempts while wielding your chosen weapon. This bonus also applies on saves against any effect that targets your chosen weapon (for example, grease, heat metal, shatter, warp wood). This ability replaces bravery.|(FighterLVL+2)/4"), benefit: None },
@@ -908,7 +863,6 @@ pub fn archetype_swap_tables() -> &'static [ArchetypeSwapEntry] {
             archetype_name: "Drunken Master",
             description: Some("Most monks lead lives of moderation and quiet contemplation. But the drunken master finds perfection through excess. Powered by strong wine, he uses his intoxication to reach a state where his ki is more potent, if somewhat fleeting. A drunken master has the following class features."),
             source_page: Some("p.110"),
-            prerequisites: Some(&["PRECLASS:1,Monk=1", "PREMULT:1,[PREABILITY:1,CATEGORY=Archetype,Monk Archetype ~ Drunken Master],[!PREABILITY:1,CATEGORY=Archetype,TYPE.MonkStillMind,TYPE.MonkPurityOfBody,TYPE.MonkDiamondBody,TYPE.MonkDiamondSoul,TYPE.MonkEmptyBody]"]),
             replaces: Some(&["MonkStillMind", "MonkPurityOfBody", "MonkDiamondBody", "MonkDiamondSoul", "MonkEmptyBody"]),
             grants: &[
                 ArchetypeGrant { grants_feature_key: "Drunken Master ~ Drunken Ki", at_level: 3, description: Some("At 3rd level, a drunken master can drink a tankard of ale or strong alcohol and gain one temporary ki point. The act of drinking is a swift action that does not provoke attacks of opportunity. The monk can have a maximum number of drunken ki points equal to 1 plus one additional point for every two levels thereafter (5th, 7th, and so on). The monk can gain this temporary ki even before he gains a ki pool at 4th level. These drunken ki points last for 1 hour or until spent, whichever is shorter. As long as he has at least 1 drunken ki point, the monk can spend 1 ki point as a move action to move 5 feet without provoking attacks of opportunity. This ability replaces still mind."), benefit: None },
@@ -925,7 +879,6 @@ pub fn archetype_swap_tables() -> &'static [ArchetypeSwapEntry] {
             archetype_name: "Hungry Ghost Monk",
             description: Some("The hungry ghost monk looks to spirits that prey upon the living as models of perfection. He sees the life energy of the universe as a resource to be manipulated, even stealing it from other creatures. It is through this constant influx of energy that the hungry ghost monk reaches his ultimate goal: power-personal, pure, and simple. A hungry ghost monk has the following class features."),
             source_page: Some("p.110"),
-            prerequisites: Some(&["PRECLASS:1,Monk=1", "PREMULT:1,[PREABILITY:1,CATEGORY=Archetype,Monk Archetype ~ Hungry Ghost Monk],[!PREABILITY:1,CATEGORY=Archetype,TYPE.MonkStunningFist,TYPE.MonkPurityOfBody,TYPE.MonkWholenessOfBody,TYPE.MonkDiamondBody,TYPE.MonkDiamondSoul]"]),
             replaces: Some(&["MonkStunningFist", "MonkPurityOfBody", "MonkWholenessOfBody", "MonkDiamondBody", "MonkDiamondSoul"]),
             grants: &[
                 ArchetypeGrant { grants_feature_key: "Hungry Ghost Monk ~ Punishing Kick", at_level: 1, description: Some("At 1st level, a hungry ghost monk gains Punishing Kick as a bonus feat, even if he does not meet the prerequisites. At 10th level, and every five levels thereafter, the monk can push the target of his Punishing Kick an additional 5 feet (10 feet at 10th level, 15 feet at 15th level, and 20 feet at 20th level). At 15th level, he can instead choose to push the target 5 feet and knock the target prone with the same attack. The target still gets a saving throw to avoid being knocked prone. This ability replaces Stunning Fist."), benefit: None },
@@ -942,7 +895,6 @@ pub fn archetype_swap_tables() -> &'static [ArchetypeSwapEntry] {
             archetype_name: "Ki Mystic",
             description: Some("The ki mystic believes that violence is sometimes necessary, but knowing and understanding is the true root of perfection. Through meditation and spiritual visions, a ki mystic can see beyond the veil of reality to the underlying truth of all existence. A ki mystic has the following class features."),
             source_page: Some("p.111"),
-            prerequisites: Some(&["PRECLASS:1,Monk=1", "PREMULT:1,[PREABILITY:1,CATEGORY=Archetype,Monk Archetype ~ Ki Mystic],[!PREABILITY:1,CATEGORY=Archetype,TYPE.MonkStillMind,TYPE.MonkPurityOfBody,TYPE.MonkDiamondBody,TYPE.MonkDiamondSoul,TYPE.MonkEmptyBody]"]),
             replaces: Some(&["MonkStillMind", "MonkPurityOfBody", "MonkDiamondBody", "MonkDiamondSoul", "MonkEmptyBody"]),
             grants: &[
                 ArchetypeGrant { grants_feature_key: "Ki Mystic ~ Ki Mystic", at_level: 3, description: Some("At 3rd level, a ki mystic gains a pool of ki points equal to his Wisdom modifier. The pool increases to 1/2 his monk level + his Wisdom modifier + 2 at level 4. If the monk has at least 1 point of ki in his ki pool, he gains a +2 bonus on all Knowledge skill checks. As a swift action, the monk can spend 1 ki point immediately before making an ability, or skill check to gain a +4 insight bonus on the check. This ability replaces still mind.[Ki Points %1]|KiPoints"), benefit: None },
@@ -959,7 +911,6 @@ pub fn archetype_swap_tables() -> &'static [ArchetypeSwapEntry] {
             archetype_name: "Monk of the Empty Hand",
             description: Some("The monk of the empty hand eschews normal weapons in favor of whatever is lying around-rocks, chair legs, flagons of ale, even a simple quill pen all become deadly weapons in the hands of such a monk. A monk of the empty hand draws on his own ki to infuse his improvised weapons with power, and can transform a broken bottle into a magical weapon."),
             source_page: Some("p.111"),
-            prerequisites: Some(&["PRECLASS:1,Monk=1", "PREMULT:1,[PREABILITY:1,CATEGORY=Archetype,Monk Archetype ~ Monk of the Empty Hand],[!PREABILITY:1,CATEGORY=Archetype,TYPE.MonkWeaponProficiencies,TYPE.MonkStillMind,TYPE.MonkPurityOfBody,TYPE.MonkDiamondBody]"]),
             replaces: Some(&["MonkWeaponProficiencies", "MonkStillMind", "MonkPurityOfBody", "MonkDiamondBody"]),
             grants: &[
                 ArchetypeGrant { grants_feature_key: "Monk of the Empty Hand ~ Weapon and Armor Proficiency", at_level: 1, description: Some("Monks of the empty hand are proficient with the shuriken only. A monk of the empty hand treats normal weapons as improvised weapons with the following equivalencies (substituting all of their statistics for the listed weapon): a light weapon functions as a light hammer, a one-handed weapon functions as a club, and a two-handed weapon functions as a quarterstaff. This replaces the normal monk weapon proficiencies."), benefit: None },
@@ -977,7 +928,6 @@ pub fn archetype_swap_tables() -> &'static [ArchetypeSwapEntry] {
             archetype_name: "Monk of the Four Winds",
             description: Some("The monk of the four winds is connected to the natural world in a way few other creatures-even other monks- can hope to match. He can call upon the elements and the spirits of the world in times of need, and as he nears his goal of perfection, he gains the ability to slow down time and even defeat death itself. A monk of the four winds has the following class features."),
             source_page: Some("p.112"),
-            prerequisites: Some(&["PRECLASS:1,Monk=1", "PREMULT:1,[PREABILITY:1,CATEGORY=Archetype,Monk Archetype ~ Monk of the Four Winds],[!PREABILITY:1,CATEGORY=Archetype,TYPE.MonkStunningFist,TYPE.MonkAbundantStep,TYPE.MonkPerfectSelf,TYPE.MonkTimelessBody]"]),
             replaces: Some(&["MonkStunningFist", "MonkAbundantStep", "MonkPerfectSelf", "MonkTimelessBody"]),
             grants: &[
                 ArchetypeGrant { grants_feature_key: "Monk of the Four Winds ~ Elemental Fist", at_level: 1, description: Some("At 1st level, a monk of the four winds gains Elemental Fist as a bonus feat, even if he does not meet the prerequisites. At 5th level, and every five levels thereafter, the monk increases the damage of his Elemental Fist by 1d6 (2d6 at 5th level, 3d6 at 10th level, and so on). This ability replaces Stunning Fist."), benefit: None },
@@ -993,7 +943,6 @@ pub fn archetype_swap_tables() -> &'static [ArchetypeSwapEntry] {
             archetype_name: "Monk of the Healing Hand",
             description: Some("Monks of the healing hand seek perfection through helping others. By focusing their meditations on the flow of life within themselves and all creation they gain an understanding of how to share their ki with others, healing wounds and even bringing the dead back to life. For such a monk, sacrificing himself to save another is the surest way to achieve transcendence. A monk of the healing hand has the following class features."),
             source_page: Some("p.113"),
-            prerequisites: Some(&["PRECLASS:1,Monk=1", "PREMULT:1,[PREABILITY:1,CATEGORY=Archetype,Monk Archetype ~ Monk of the Healing Hand],[!PREABILITY:1,CATEGORY=Archetype,TYPE.MonkWholenessOfBody,TYPE.MonkDiamondBody,TYPE.MonkQuiveringPalm,TYPE.MonkPerfectSelf]"]),
             replaces: Some(&["MonkWholenessOfBody", "MonkDiamondBody", "MonkQuiveringPalm", "MonkPerfectSelf"]),
             grants: &[
                 ArchetypeGrant { grants_feature_key: "Monk of the Healing Hand ~ Ancient Healing Hand", at_level: 7, description: Some("At 7th level, a monk of the healing hand can heal another creature's wounds with a touch. As a full-round action, the monk can spend 2 ki points to heal a number of hit points equal to the monk's level. He needs at least one hand free to use this ability, and cannot heal himself. If the action is interrupted, the subject heals no hit points, and the ki points are lost. This ability replaces wholeness of body."), benefit: None },
@@ -1008,7 +957,6 @@ pub fn archetype_swap_tables() -> &'static [ArchetypeSwapEntry] {
             archetype_name: "Monk of the Lotus",
             description: Some("Monks are warriors who hone their bodies into deadly weapons, but some monks eschew violence in favor of a more peaceful philosophy. While a monk of the lotus realizes that combat cannot always be avoided-and is more than capable in a fight-he understands that all creatures are connected, and to harm another is to harm the self. Instead, he strives to find peaceful resolutions to conflicts, and in doing so, hopes to achieve inner peace. A monk of the lotus has the following class features."),
             source_page: Some("p.114"),
-            prerequisites: Some(&["PRECLASS:1,Monk=1", "PREMULT:1,[PREABILITY:1,CATEGORY=Archetype,Monk Archetype ~ Monk of the Lotus],[!PREABILITY:1,CATEGORY=Archetype,TYPE.MonkStunningFist,TYPE.MonkAbundantStep,TYPE.MonkQuiveringPalm,TYPE.MonkTongueOfTheSunAndMoon]"]),
             replaces: Some(&["MonkStunningFist", "MonkAbundantStep", "MonkQuiveringPalm", "MonkTongueOfTheSunAndMoon"]),
             grants: &[
                 ArchetypeGrant { grants_feature_key: "Monk of the Lotus ~ Touch of Serenity", at_level: 1, description: Some("At 1st level, a monk of the lotus gains Touch of Serenity as a bonus feat, even if he does not meet the prerequisites. At 6th level, and every six levels thereafter, the duration of Touch of Serenity increases by 1 round. Each round on its turn, the target may attempt a new Will save to end the effect. This duration does not stack; only the longest remaining duration applies. This ability replaces Stunning Fist."), benefit: None },
@@ -1024,7 +972,6 @@ pub fn archetype_swap_tables() -> &'static [ArchetypeSwapEntry] {
             archetype_name: "Monk of the Sacred Mountain",
             description: Some("The monk of the sacred mountain finds strength and power in the earth beneath his feet. Rather than spinning though the battlefield with the fluid motion of the river, he roots himself to the ground, as immovable and unshakable as the stones of the mountain. A monk of the sacred mountain has the following class features."),
             source_page: Some("p.114"),
-            prerequisites: Some(&["PRECLASS:1,Monk=1", "PREMULT:1,[PREABILITY:1,CATEGORY=Archetype,Monk Archetype ~ Monk of the Sacred Mountain],[!PREABILITY:1,CATEGORY=Archetype,TYPE.MonkEvasion,TYPE.MonkSlowFall,TYPE.MonkHighJump,TYPE.MonkImprovedEvasion,TYPE.MonkTongueOfTheSunAndMoon]"]),
             replaces: Some(&["MonkEvasion", "MonkSlowFall", "MonkHighJump", "MonkImprovedEvasion", "MonkTongueOfTheSunAndMoon"]),
             grants: &[
                 ArchetypeGrant { grants_feature_key: "Monk of the Sacred Mountain ~ Iron Monk", at_level: 2, description: Some("At 2nd level, a monk of the sacred mountain gains Toughness as a bonus feat. In addition, the monk gains a +1 natural armor bonus. This ability replaces evasion."), benefit: None },
@@ -1041,7 +988,6 @@ pub fn archetype_swap_tables() -> &'static [ArchetypeSwapEntry] {
             archetype_name: "Weapon Adept",
             description: Some("While all monks train in both unarmed combat and with weapons, the weapon adept seeks to become one with his weapons, transforming them into perfect extensions of his own body. Through such training, a weapon adept seeks to attain perfection by becoming a living weapon himself. A weapon adept has the following class features."),
             source_page: Some("p.114"),
-            prerequisites: Some(&["PRECLASS:1,Monk=1", "PREMULT:1,[PREABILITY:1,CATEGORY=Archetype,Monk Archetype ~ Weapon Adept],[!PREABILITY:1,CATEGORY=Archetype,TYPE.MonkStunningFist,TYPE.MonkEvasion,TYPE.MonkImprovedEvasion,TYPE.MonkTimelessBody,TYPE.MonkPerfectSelf]"]),
             replaces: Some(&["MonkStunningFist", "MonkEvasion", "MonkImprovedEvasion", "MonkTimelessBody", "MonkPerfectSelf"]),
             grants: &[
                 ArchetypeGrant { grants_feature_key: "Weapon Adept ~ Perfect Strike", at_level: 1, description: Some("At 1st level, a weapon adept gains Perfect Strike as a bonus feat, even if he does not meet the prerequisites. At 10th level, the monk can roll his attack roll three times and take the higher result. If one of these rolls is a critical threat, he can choose which one of his other two rolls to use as his confirmation roll. This ability replaces Stunning Fist."), benefit: None },
@@ -1058,7 +1004,6 @@ pub fn archetype_swap_tables() -> &'static [ArchetypeSwapEntry] {
             archetype_name: "Divine Defender",
             description: Some("Some paladins see themselves as the last line of defense between the teeming hordes of evil and the innocent folk trying to make a living in a harsh, unforgiving world. These defenders spend their lives protecting others and taking on foes that the common man should not even know exist. To aid them in their holy mission, they have special powers to protect themselves and those around them. The divine defender has the following class features."),
             source_page: Some("p.116"),
-            prerequisites: Some(&["PRECLASS:1,Paladin=1", "PREMULT:1,[PREABILITY:1,CATEGORY=Archetype,Paladin Archetype ~ Divine Defender],[!PREABILITY:1,CATEGORY=Archetype,TYPE.PaladinMercy,TYPE.PaladinDivineBond]"]),
             replaces: Some(&["PaladinMercy", "PaladinDivineBond"]),
             grants: &[
                 ArchetypeGrant { grants_feature_key: "Divine Defender ~ Shared Defense", at_level: 3, description: Some("At 3rd level, a divine defender can spend one use of her lay on hands ability as a standard action to grant all adjacent allies (including paladins) a bonus. At 3rd level, adjacent allies receive a +1 sacred bonus to their AC and CMD and on their saving throws. These bonuses last for a number of rounds equal to the divine defender's Charisma modifier. At 9th level and 15th level, this bonus increases by +1. At 6th level, these bonuses are granted to all allies within 10 feet, and allies that are at fewer than 0 hit points within this area are automatically stabilized. At 12th level, these bonuses are granted to all allies within 15 feet, and allies within this area are immune to bleed damage. At 18th level, these bonuses are granted to all allies within 20 feet, and allies within this area gain a 25%% chance to negate any sneak attack or critical hit scored against them. This ability does not stack with the chance provided from the light, medium, or heavy fortification armor special abilities. These bonuses are cumulative with each other. Allies only benefit from these bonuses while in the listed area. This ability replaces mercy."), benefit: None },
@@ -1072,7 +1017,6 @@ pub fn archetype_swap_tables() -> &'static [ArchetypeSwapEntry] {
             archetype_name: "Hospitaler",
             description: Some("Paladins are known for their charity and for tending to the sick. The hospitaler takes to this calling above all others, spending much of her time healing the poor, and giving aid and succor to those in need. The hospitaler has the following class features."),
             source_page: Some("p.116"),
-            prerequisites: Some(&["PRECLASS:1,Paladin=1", "PREMULT:1,[PREABILITY:1,CATEGORY=Archetype,Paladin Archetype ~ Hospitaler],[!PREABILITY:1,CATEGORY=Archetype,TYPE.PaladinSmiteEvil,TYPE.PaladinChannelPositiveEnergy,TYPE.PaladinAuraOfJustice]"]),
             replaces: Some(&["PaladinSmiteEvil", "PaladinChannelPositiveEnergy", "PaladinAuraOfJustice"]),
             grants: &[
                 ArchetypeGrant { grants_feature_key: "Hospitaler ~ Smite Evil", at_level: 1, description: Some("This functions as the paladin ability, but the hospitaler can smite evil one additional time per day at 7th level, and every six levels thereafter (instead of 4th level and every three levels thereafter)."), benefit: None },
@@ -1087,7 +1031,6 @@ pub fn archetype_swap_tables() -> &'static [ArchetypeSwapEntry] {
             archetype_name: "Sacred Servant",
             description: Some("Paladins as a general rule, venerate the gods of good and purity, but some take this a step further, dedicating themselves to a specific deity and furthering the cause of the faith. These sacred servants are rewarded for their devotion with additional spells and powerful allies. A sacred servant must select one deity to worship. This deity's alignment must be lawful good, lawful neutral, or neutral good. A sacred servant has the following class features."),
             source_page: Some("p.117"),
-            prerequisites: Some(&["PRECLASS:1,Paladin=1", "PREMULT:1,[PREABILITY:1,CATEGORY=Archetype,Paladin Archetype ~ Sacred Servant],[!PREABILITY:1,CATEGORY=Archetype,TYPE.PaladinAuraOfResolve,TYPE.PaladinSmiteEvil]"]),
             replaces: Some(&["PaladinAuraOfResolve", "PaladinSmiteEvil", "PaladinDivineBond"]),
             grants: &[
                 ArchetypeGrant { grants_feature_key: "Sacred Servant ~ Smite Evil", at_level: 1, description: Some("This functions as the paladin ability, but the sacred servant can smite evil one additional time per day at 7th level, and every six levels thereafter (instead of 4th level and every three levels thereafter). This replaces smite evil."), benefit: None },
@@ -1103,7 +1046,6 @@ pub fn archetype_swap_tables() -> &'static [ArchetypeSwapEntry] {
             archetype_name: "Shining Knight",
             description: Some("While paladins often are seen mounted atop a loyal steed, the shining knight is the true symbol of mounted bravery. They are never far from their steeds and are always clad in brightly polished armor. The shining knight has the following class features."),
             source_page: Some("p.117"),
-            prerequisites: Some(&["PRECLASS:1,Paladin=1", "PREMULT:1,[PREABILITY:1,CATEGORY=Archetype,Paladin Archetype ~ Shining Knight],[!PREABILITY:1,CATEGORY=Archetype,TYPE.PaladinBondedWeapon,TYPE.PaladinDivineHealth,TYPE.PaladinAuraofJustice]"]),
             replaces: Some(&["PaladinBondedWeapon", "PaladinDivineHealth", "PaladinAuraofJustice"]),
             grants: &[
                 ArchetypeGrant { grants_feature_key: "Shining Knight ~ Skilled Rider", at_level: 3, description: Some("At 3rd level, a shining knight does not take any penalty to her Ride skill due to her armor check penalty. In addition, any mount she is riding gains the benefit of her divine grace class feature, adding her Charisma bonus (if any) to its saving throws. This ability replaces divine health."), benefit: None },
@@ -1118,7 +1060,6 @@ pub fn archetype_swap_tables() -> &'static [ArchetypeSwapEntry] {
             archetype_name: "Undead Scourge",
             description: Some("Undead are an abomination in the eyes of the just and righteous. It is no surprise then that there are some paladins that dedicate themselves to wiping these unholy terrors from the world. The following are the class features of the undead scourge."),
             source_page: Some("p.117"),
-            prerequisites: Some(&["PRECLASS:1,Paladin=1", "PREMULT:1,[PREABILITY:1,CATEGORY=Archetype,Paladin Archetype ~ Undead Scourge],[!PREABILITY:1,CATEGORY=Archetype,TYPE.PaladinAuraOfJustice,TYPE.PaladinAuraOfResolve,TYPE.PaladinSmiteEvil]"]),
             replaces: Some(&["PaladinAuraOfJustice", "PaladinAuraOfResolve", "PaladinSmiteEvil"]),
             grants: &[
                 ArchetypeGrant { grants_feature_key: "Undead Scourge ~ Smite Evil", at_level: 1, description: Some("This functions as the paladin ability of the same name, but the undead scourge does not deal 2 points of damage per level on the first successful attack against evil dragons and evil outsiders. She does deal 2 points of damage per level on all smite attacks made against evil undead creatures. You can call out to the powers of good to aid you in your struggle against evil %1 times per day. As a swift action, you choose one target within sight to smite. If this target is an evil undead, you add +%2 to your attack rolls and +%3 to all damage rolls made against the target of your smite. If the target of Smite Evil is an outsider with the evil subtype, an evil-aligned dragon, or an undead creature, the bonus to damage on the first successful attack increases to +%4. Regardless of the target, Smite Evil attacks automatically bypass any DR the creature might possess. In addition, while smite evil is in effect, you gain a +%5 deflection bonus to your AC against attacks made by the target of the smite. If you target a creature that is not evil, the smite is wasted with no effect. The Smite Evil effect remains until the target of the smite is dead or the next time you rest and regain your uses of this ability.|SmiteEvilTimes|SmiteEvilAttackBonus|SmiteEvilDamageBonus|SmiteEvilDamageBonus*2|SmiteEvilACBonus"), benefit: None },
@@ -1133,7 +1074,6 @@ pub fn archetype_swap_tables() -> &'static [ArchetypeSwapEntry] {
             archetype_name: "Warrior of the Holy Light",
             description: Some("Some paladins use their gifts to focus on the holy light that shines within their souls. With the gifts of purity and redemption, these paladins spend much of their lives helping others find the true path. Unleashing this power takes patience and comes at a steep price. Warriors of the holy light have the following class features."),
             source_page: Some("p.118"),
-            prerequisites: Some(&["PRECLASS:1,Paladin=1", "PREMULT:1,[PREABILITY:1,CATEGORY=Archetype,Paladin Archetype ~ Warrior of the Holy Light],[!PREABILITY:1,CATEGORY=Archetype,TYPE.PaladinAuraOfFaith,TYPE.PaladinSpells]"]),
             replaces: Some(&["PaladinAuraOfFaith", "PaladinSpells"]),
             grants: &[
                 ArchetypeGrant { grants_feature_key: "Warrior of the Holy Light ~ Power of Faith", at_level: 4, description: Some("At 4th level, a warrior of the holy light learns to use the power of her faith to bolster her defenses and aid her allies. This class feature replaces the paladin's spells class feature. A warrior of the holy light does not gain any spells or spellcasting abilities, does not have a caster level, and cannot use spell trigger or spell completion magic items. At 4th level, the warrior of the holy light gains one additional use of her lay on hands ability per day. She gains one additional use of lay on hands per day for every four levels she attains beyond 4th. She can spend a use of her lay on hands ability to call upon. This causes a nimbus of light to emanate from the warrior of the holy light in a 30-foot radius. All allies in this area (including the warrior of the holy light) receive a +1 morale bonus to AC and on attack rolls, damage rolls, and saving throws against fear as long as they remain in the area of light. This power lasts for 1 minute. At 8th level, the nimbus of light heals the paladin and her allies, curing of them of 1d4 points of ability damage, as per the spell lesser restoration. A creature can only be healed in this way once per day. At 12th level, the nimbus of light is treated as daylight for the purposes of affecting creatures with sensitivity to light. In addition, the nimbus grants allies in the area resistance 10 to one type of energy, selected by the warrior of the holy light when this power is activated. At 16th level, the nimbus of light grants the warrior of the holy light and her allies protection from critical hits. There is a 25%% chance that critical hits made against the warrior of the holy light and her allies in the area are instead treated as normal hits. This does not stack with other abilities that grant similar protection (such as light fortification). At 20th level, the nimbus of light increases in size out to a range of 60 feet. In addition, all of its bonuses increase. The morale bonus to AC and on attack rolls, damage rolls, and saving throws against fear increases to +2. The amount of ability damage healed increases to 2d4. The energy resistance increases to 20 against one energy type. Finally, protection against critical hits increases to 50%%."), benefit: None },
@@ -1148,7 +1088,6 @@ pub fn archetype_swap_tables() -> &'static [ArchetypeSwapEntry] {
             archetype_name: "Beast Master",
             description: Some("Some rangers, particularly those in primitive lands or who were raised by animals, have unusually strong bonds with animals. Unique among rangers, they can bond with multiple animals of any kind, creating a menagerie of wild yet loyal creatures, like a strange family."),
             source_page: Some("p.124"),
-            prerequisites: Some(&["PRECLASS:1,Ranger=1", "PREMULT:1,[PREABILITY:1,CATEGORY=Archetype,Ranger Archetype ~ Beast Master],[!PREABILITY:1,CATEGORY=Archetype,TYPE.RangerClassSkills,TYPE.RangerHuntersBond,TYPE.RangerCombatStyleFeat_Six,TYPE.RangerCamouflage]"]),
             replaces: Some(&["RangerClassSkills", "RangerHuntersBond", "RangerCombatStyleFeat_Six", "RangerCamouflage"]),
             grants: &[
                 ArchetypeGrant { grants_feature_key: "Beast Master ~ Class Skills", at_level: 1, description: Some("A beast master's class skills are Acrobatics (Dex), Climb (Str), Craft (Int), Escape Artist (Dex), Handle Animal (Cha), Heal (Wis), Intimidate (Cha), Knowledge (nature) (Int), Perception (Wis), Ride (Dex), Stealth (Dex), Survival (Wis), and Swim (Wis). These replace the standard ranger class skills."), benefit: None },
@@ -1164,7 +1103,6 @@ pub fn archetype_swap_tables() -> &'static [ArchetypeSwapEntry] {
             archetype_name: "Guide",
             description: Some("Many rangers are loners, but some choose to use their familiarity with the land to guide others safely through the wilderness. The guide forgoes a favored enemy to focus on the task or foe at hand, and can pass his knowledge and luck on to his charges."),
             source_page: Some("p.125"),
-            prerequisites: Some(&["PRECLASS:1,Ranger=1", "PREMULT:1,[PREABILITY:1,CATEGORY=Archetype,Ranger Archetype ~ Guide],[!PREABILITY:1,CATEGORY=Archetype,TYPE.RangerFavoredEnemy,TYPE.RangerHuntersBond,TYPE.RangerEvasion,TYPE.RangerQuarry,TYPE.RangerImprovedQuarry,TYPE.RangerImprovedEvasion]"]),
             replaces: Some(&["RangerFavoredEnemy", "RangerHuntersBond", "RangerEvasion", "RangerQuarry", "RangerImprovedQuarry", "RangerImprovedEvasion"]),
             grants: &[
                 ArchetypeGrant { grants_feature_key: "Guide ~ Ranger's Focus", at_level: 1, description: Some("At 1st level, once per day, the guide can focus on a single enemy within line of sight as a swift action. That creature remains the ranger's focus until it is reduced to 0 or fewer hit points or surrenders, or until the ranger designates a new focus, whichever occurs first. The ranger gains a +2 bonus on attack and damage rolls against the target of his focus. At 5th level, and every five levels thereafter, this bonus increases by +2. At 4th level, and every 3 levels thereafter, the ranger can use this ability one additional time per day. This ability replaces favored enemy."), benefit: None },
@@ -1181,7 +1119,6 @@ pub fn archetype_swap_tables() -> &'static [ArchetypeSwapEntry] {
             archetype_name: "Horse Lord",
             description: Some("Rangers of the plains use horses or other riding beasts to hunt their lands, forging a near-mystical relationship with their mounts. Horse lords are unparalleled mounted combatants, the envy of even the most dedicated cavalier. Though called \"horse lords\" as a generic term, these rangers are not restricted to horses for their animal companions- any creature the ranger can ride is included in these abilities."),
             source_page: Some("p.125"),
-            prerequisites: Some(&["PRECLASS:1,Ranger=1", "PREMULT:1,[PREABILITY:1,CATEGORY=Archetype,Ranger Archetype ~ Horse Lord],[!PREABILITY:1,CATEGORY=Archetype,TYPE.RangerHuntersBond,TYPE.RangerCamouflage,TYPE.RangerHideInPlainSight]"]),
             replaces: Some(&["RangerHuntersBond", "RangerCamouflage", "RangerHideInPlainSight"]),
             grants: &[
                 ArchetypeGrant { grants_feature_key: "Horse Lord ~ Combat Style Feat", at_level: 2, description: Some("At 2nd level, a horse lord must choose the mounted combat style."), benefit: None },
@@ -1197,7 +1134,6 @@ pub fn archetype_swap_tables() -> &'static [ArchetypeSwapEntry] {
             archetype_name: "Infiltrator",
             description: Some("Some rangers study their favored enemies and learn their ways, applying this knowledge to their own abilities and using their foes' strengths against them. Infiltrators are willing to walk a mile in an enemy's shoes so as to learn eveything there is to know about their foes in order to more effectively hunt and kill them."),
             source_page: Some("p.125"),
-            prerequisites: Some(&["PRECLASS:1,Ranger=1", "PREMULT:1,[PREABILITY:1,CATEGORY=Archetype,Ranger Archetype ~ Infiltrator],[!PREABILITY:1,CATEGORY=Archetype,TYPE.RangerFavoredTerrain]"]),
             replaces: Some(&["RangerFavoredTerrain"]),
             grants: &[
                 ArchetypeGrant { grants_feature_key: "Infiltrator ~ Adaptation", at_level: 3, description: Some("At 3rd level, an infiltrator learns how to copy the unusual abilities of his prey. He chooses one type of creature he has selected as a favored enemy, such as aberrations. The ranger selects one ability or feat from the adaptation list for that type (see below). A ranger can use adaptations for 10 minutes per day per ranger level he possesses. This duration does not need to be consecutive, but it must be used in 10-minute increments. If the adaptation requires the ranger to make a more specific choice (such as what skill to use with Skill Focus), this choice is permanent and cannot be changed. At 8th, 13th, and 15th-level, the ranger chooses another one of his favored enemy types and selects one adaptation from that type's list, as well as an additional adaptation from any one list of a creature type he's selected (including the one just chosen, if so desired). The infiltrator can only use one adaptation at a time. This class ability replaces favored terrain."), benefit: None },
@@ -1210,7 +1146,6 @@ pub fn archetype_swap_tables() -> &'static [ArchetypeSwapEntry] {
             archetype_name: "Shapeshifter",
             description: Some("Most rangers venture into the wilderness, but there are some who let the wilderness seep into them. Whether by curse, disease, ancient rite, a slight lycanthropic influence in the blood, or the corrupting influence of chaos, these rangers embrace the wild to transform themselves into something untamed and feral. Shapeshifters are often held in awe, but are even more often feared."),
             source_page: Some("p.126"),
-            prerequisites: Some(&["PRECLASS:1,Ranger=1", "PREMULT:1,[PREABILITY:1,CATEGORY=Archetype,Ranger Archetype ~ Shapeshifter],[!PREABILITY:1,CATEGORY=Archetype,TYPE.RangerCamouflage,TYPE.RangerMasterHunter,TYPE.RangerFavoredTerrain]"]),
             replaces: Some(&["RangerCamouflage", "RangerMasterHunter", "RangerFavoredTerrain"]),
             grants: &[
                 ArchetypeGrant { grants_feature_key: "Shapeshifter ~ Combat Style Feat", at_level: 2, description: Some("At 2nd level, a shapeshifter ranger must choose the natural weapon combat style."), benefit: None },
@@ -1226,7 +1161,6 @@ pub fn archetype_swap_tables() -> &'static [ArchetypeSwapEntry] {
             archetype_name: "Skirmisher",
             description: Some("Many rangers rely on spells, but there are some who eschew aid from divine powers for their own reasons. Skirmishers rely on their wits, their wisdom, and sometimes even instinct to aid in their quests."),
             source_page: Some("p.128"),
-            prerequisites: Some(&["PRECLASS:1,Ranger=1", "PREMULT:1,[PREABILITY:1,CATEGORY=Archetype,Ranger Archetype ~ Skirmisher],[!PREABILITY:1,CATEGORY=Archetype,TYPE.RangerSpells]"]),
             replaces: Some(&["RangerSpells"]),
             grants: &[
                 ArchetypeGrant { grants_feature_key: "No Spellcasting ~ Ranger", at_level: 1, description: None, benefit: None },
@@ -1240,7 +1174,6 @@ pub fn archetype_swap_tables() -> &'static [ArchetypeSwapEntry] {
             archetype_name: "Spirit Ranger",
             description: Some("Some rangers nurture a connection with the spirits that reside in all things. By communing with these spirits, the spirit ranger can gain glimpses of things to come."),
             source_page: Some("p.129"),
-            prerequisites: Some(&["PRECLASS:1,Ranger=1", "PREMULT:1,[PREABILITY:1,CATEGORY=Archetype,Ranger Archetype ~ Spirit Ranger],[!PREABILITY:1,CATEGORY=Archetype,TYPE.RangerHuntersBond,TYPE.RangerCamouflage]"]),
             replaces: Some(&["RangerHuntersBond", "RangerCamouflage"]),
             grants: &[
                 ArchetypeGrant { grants_feature_key: "Spirit Ranger ~ Spirit Bond", at_level: 4, description: Some("At 4th level, instead of forming a bond with his hunting companions or an animal companion, the spirit ranger forms a bond with the spirits of nature themselves. Each day, as long as he is within one of his favored terrains, the ranger can cast augury (Pathfinder RPG Core Rulebook 245) as a spell-like ability with a caster level equal to his ranger level. In addition, he can call upon these spirits to cast any one ranger spell that he is capable of casting, without having to prepare the spell. At 8th level, and every four levels thereafter, he can cast an additional spell in this way. This replaces hunter's bond."), benefit: None },
@@ -1254,7 +1187,6 @@ pub fn archetype_swap_tables() -> &'static [ArchetypeSwapEntry] {
             archetype_name: "Urban Ranger",
             description: Some("For the urban ranger, the streets and sewers of the city are just as dangerous as the barren wastelands or the deep forests."),
             source_page: Some("p.129"),
-            prerequisites: Some(&["PRECLASS:1,Ranger=1", "PREMULT:1,[PREABILITY:1,CATEGORY=Archetype,Ranger Archetype ~ Urban Ranger],[!PREABILITY:1,CATEGORY=Archetype,TYPE.RangerClassSkills,TYPE.RangerFavoredTerrain,TYPE.RangerEndurance,TYPE.RangerHideInPlainSight,TYPE.RangerWoodlandStride,TYPE.RangerCamouflage]"]),
             replaces: Some(&["RangerClassSkills", "RangerFavoredTerrain", "RangerEndurance", "RangerHideInPlainSight", "RangerWoodlandStride", "RangerCamouflage"]),
             grants: &[
                 ArchetypeGrant { grants_feature_key: "Urban Ranger ~ Class Skills", at_level: 1, description: Some("At 1st level, an urban ranger adds Disable Device and Knowledge (local) to his list of class skills and removes Handle Animal and Knowledge (nature) from his list of class skills."), benefit: None },
@@ -1272,7 +1204,6 @@ pub fn archetype_swap_tables() -> &'static [ArchetypeSwapEntry] {
             archetype_name: "Acrobat",
             description: Some("Agility and daring are both excellent rogue traits, and their confluence can create spectacular feats of acrobatics. Whether they are daring thieves, infiltrating assassins, or intrepid spies, proper training in acrobatics is a valuable boon for rogues."),
             source_page: Some("p.132"),
-            prerequisites: Some(&["PRECLASS:1,Rogue=1", "PREMULT:1,[PREABILITY:1,CATEGORY=Archetype,Rogue Archetype ~ Acrobat],[!PREABILITY:1,CATEGORY=Archetype,TYPE=RogueTrapfinding,TYPE=RogueTrapSense]"]),
             replaces: Some(&["RogueTrapfinding", "RogueTrapSense"]),
             grants: &[
                 ArchetypeGrant { grants_feature_key: "Acrobat ~ Expert Acrobat", at_level: 1, description: Some("At 1st level, an acrobat does not suffer any armor check penalties on Acrobatics, Climb, Fly, Sleight of Hand, or Stealth skill checks while wearing light armor. When she is not wearing armor, she gains a +2 competency bonus on Acrobatics and Fly skill checks. This ability replaces trapfinding."), benefit: None },
@@ -1286,7 +1217,6 @@ pub fn archetype_swap_tables() -> &'static [ArchetypeSwapEntry] {
             archetype_name: "Burglar",
             description: None,
             source_page: Some("p.132"),
-            prerequisites: Some(&["PRECLASS:1,Rogue=1", "PREMULT:1,[PREABILITY:1,CATEGORY=Archetype,Rogue Archetype ~ Burglar],[!PREABILITY:1,CATEGORY=Archetype,TYPE=RogueUncannyDodge,TYPE=RogueImprovedUncannyDodge]"]),
             replaces: Some(&["RogueUncannyDodge", "RogueImprovedUncannyDodge"]),
             grants: &[
                 ArchetypeGrant { grants_feature_key: "Rogue ~ Careful Disarm", at_level: 4, description: Some("Whenever you attempt to disarm a trap using Disable Device, you do not spring the trap unless you fail by 10 or more. If you do set off a trap you were attempting to disarm, you adds double your trap sense bonus to avoid the trap. This ability replaces uncanny dodge."), benefit: None },
@@ -1300,7 +1230,6 @@ pub fn archetype_swap_tables() -> &'static [ArchetypeSwapEntry] {
             archetype_name: "Cutpurse",
             description: None,
             source_page: Some("p.132"),
-            prerequisites: Some(&["PRECLASS:1,Rogue=1", "PREMULT:1,[PREABILITY:1,CATEGORY=Archetype,Rogue Archetype ~ Cutpurse],[!PREABILITY:1,CATEGORY=Archetype,TYPE=RogueTrapfinding,TYPE=RogueTrapSense]"]),
             replaces: Some(&["RogueTrapfinding", "RogueTrapSense"]),
             grants: &[
                 ArchetypeGrant { grants_feature_key: "Cutpurse ~ Measure the Mark", at_level: 1, description: Some("When a cutpurse makes a Sleight of Hand check to take something from a creature, the target makes its Perception check before the rogue makes her Sleight of Hand check, and the rogue knows the Perception check result. She can decide whether or not to make the check based on the results of the target's Perception check. If the rogue elects not to make the check, she can make a Bluff check, opposed by the target's Sense Motive, to prevent the target from noticing the attempt. This ability replaces trapfinding."), benefit: None },
@@ -1314,7 +1243,6 @@ pub fn archetype_swap_tables() -> &'static [ArchetypeSwapEntry] {
             archetype_name: "Investigator",
             description: None,
             source_page: Some("p.133"),
-            prerequisites: Some(&["PRECLASS:1,Rogue=1", "PREMULT:1,[PREABILITY:1,CATEGORY=Archetype,Rogue Archetype ~ Investigator],[!PREABILITY:1,CATEGORY=Archetype,TYPE=RogueTrapfinding]"]),
             replaces: Some(&["RogueTrapfinding"]),
             grants: &[
                 ArchetypeGrant { grants_feature_key: "Investigator ~ Follow Up", at_level: 1, description: Some("An investigator can roll twice on any Diplomacy check made to gather information, and receives the information for both results. This takes the same amount of time as one check. If the lesser of the two checks reveals false information, the rogue is aware of it. False information is not revealed in this way if the people she questioned do not know it to be false. This ability replaces trapfinding."), benefit: None },
@@ -1327,7 +1255,6 @@ pub fn archetype_swap_tables() -> &'static [ArchetypeSwapEntry] {
             archetype_name: "Poisoner",
             description: None,
             source_page: Some("p.134"),
-            prerequisites: Some(&["PRECLASS:1,Rogue=1", "PREMULT:1,[PREABILITY:1,CATEGORY=Archetype,Rogue Archetype ~ Poisoner],[!PREABILITY:1,CATEGORY=Archetype,TYPE=RogueTrapfinding,TYPE=RogueTrapSense]"]),
             replaces: Some(&["RogueTrapfinding", "RogueTrapSense"]),
             grants: &[
                 ArchetypeGrant { grants_feature_key: "Rogue ~ Poison Use", at_level: 1, description: Some("You are trained in the use of poison and cannot accidentally poison yourself when applying poison to a blade. This ability replaces trap sense."), benefit: None },
@@ -1341,7 +1268,6 @@ pub fn archetype_swap_tables() -> &'static [ArchetypeSwapEntry] {
             archetype_name: "Rake",
             description: None,
             source_page: Some("p.134"),
-            prerequisites: Some(&["PRECLASS:1,Rogue=1", "PREMULT:1,[PREABILITY:1,CATEGORY=Archetype,Rogue Archetype ~ Rake],[!PREABILITY:1,CATEGORY=Archetype,TYPE=RogueTrapfinding,TYPE=RogueTrapSense]"]),
             replaces: Some(&["RogueTrapfinding", "RogueTrapSense"]),
             grants: &[
                 ArchetypeGrant { grants_feature_key: "Rake ~ Bravado's Blade", at_level: 1, description: Some("When a rake hits an opponent and deals sneak attack damage, she can forgo 1d6 points of that damage and make a free Intimidate check to demoralize the foe. For every additional 1d6 points of sneak attack damage she forgoes, she receives a +5 circumstance bonus on this check. This ability replaces trapfinding."), benefit: None },
@@ -1355,7 +1281,6 @@ pub fn archetype_swap_tables() -> &'static [ArchetypeSwapEntry] {
             archetype_name: "Scout",
             description: Some("Not all rogues live in the city. Scouts frequently roam the wilderness, often banding together as bandits, but sometimes serving as guides, as trailblazers, or as companions to a ranger or barbarian warrior. More comfortable with sneaking and hiding outdoors, the scout is still effective in the city and the dungeon."),
             source_page: Some("p.134"),
-            prerequisites: Some(&["PRECLASS:1,Rogue=1", "PREMULT:1,[PREABILITY:1,CATEGORY=Archetype,Rogue Archetype ~ Scout],[!PREABILITY:1,CATEGORY=Archetype,TYPE=RogueUncannyDodge,TYPE=RogueImprovedUncannyDodge]"]),
             replaces: Some(&["RogueUncannyDodge", "RogueImprovedUncannyDodge"]),
             grants: &[
                 ArchetypeGrant { grants_feature_key: "Scout ~ Scout's Charge", at_level: 4, description: Some("Whenever you make a charge, your attack deals sneak attack damage as if the target were flat-footed. Foes with uncanny dodge are immune to this ability."), benefit: None },
@@ -1369,7 +1294,6 @@ pub fn archetype_swap_tables() -> &'static [ArchetypeSwapEntry] {
             archetype_name: "Sniper",
             description: None,
             source_page: Some("p.134"),
-            prerequisites: Some(&["PRECLASS:1,Rogue=1", "PREMULT:1,[PREABILITY:1,CATEGORY=Archetype,Rogue Archetype ~ Sniper],[!PREABILITY:1,CATEGORY=Archetype,TYPE=RogueTrapfinding,TYPE=RogueTrapSense]"]),
             replaces: Some(&["RogueTrapfinding", "RogueTrapSense"]),
             grants: &[
                 ArchetypeGrant { grants_feature_key: "Sniper ~ Accuracy", at_level: 1, description: Some("At 1st level, a sniper halves all range increment penalties when making ranged attacks with a bow or crossbow. This ability replaces trapfinding."), benefit: None },
@@ -1383,7 +1307,6 @@ pub fn archetype_swap_tables() -> &'static [ArchetypeSwapEntry] {
             archetype_name: "Spy",
             description: None,
             source_page: Some("p.135"),
-            prerequisites: Some(&["PRECLASS:1,Rogue=1", "PREMULT:1,[PREABILITY:1,CATEGORY=Archetype,Rogue Archetype ~ Spy],[!PREABILITY:1,CATEGORY=Archetype,TYPE=RogueTrapfinding,TYPE=RogueTrapSense]"]),
             replaces: Some(&["RogueTrapfinding", "RogueTrapSense"]),
             grants: &[
                 ArchetypeGrant { grants_feature_key: "Spy ~ Skilled Liar", at_level: 1, description: Some("Whenever a spy uses Bluff to attempt to deceive someone, she gains a +%1 bonus on the opposed roll. This bonus does not apply to feint attempts or attempts to pass secret messages. This ability replaces trapfinding.|max(RogueLVL/2,1)"), benefit: None },
@@ -1397,7 +1320,6 @@ pub fn archetype_swap_tables() -> &'static [ArchetypeSwapEntry] {
             archetype_name: "Swashbuckler",
             description: Some("A paragon of mobile swordplay, the swashbuckler is a rogue who focuses almost exclusively on honing her skill at arms and perfecting daring acrobatic moves and elaborate flourishes that border on performance."),
             source_page: Some("p.135"),
-            prerequisites: Some(&["PRECLASS:1,Rogue=1", "PREMULT:1,[PREABILITY:1,CATEGORY=Archetype,Rogue Archetype ~ Swashbuckler],[!PREABILITY:1,CATEGORY=Archetype,TYPE=RogueTrapfinding,TYPE=RogueTrapSense]"]),
             replaces: Some(&["RogueTrapfinding", "RogueTrapSense"]),
             grants: &[
                 ArchetypeGrant { grants_feature_key: "Swashbuckler ~ Martial Training", at_level: 1, description: Some("You may select one martial weapon to add to your list of weapon proficiencies. In addition, you may take the combat trick rogue talent up to two times."), benefit: None },
@@ -1411,7 +1333,6 @@ pub fn archetype_swap_tables() -> &'static [ArchetypeSwapEntry] {
             archetype_name: "Thug",
             description: None,
             source_page: Some("p.135"),
-            prerequisites: Some(&["PRECLASS:1,Rogue=1", "PREMULT:1,[PREABILITY:1,CATEGORY=Archetype,Rogue Archetype ~ Thug],[!PREABILITY:1,CATEGORY=Archetype,TYPE=RogueTrapfinding,TYPE=RogueTrapSense]"]),
             replaces: Some(&["RogueTrapfinding", "RogueTrapSense"]),
             grants: &[
                 ArchetypeGrant { grants_feature_key: "Thug ~ Frightening", at_level: 1, description: Some("Whenever a thug successfully uses Intimidate to demoralize a creature, the duration of the shaken condition is increased by 1 round. In addition, if the target is shaken for 4 or more rounds, the thug can instead decide to make the target frightened for 1 round. This ability replaces trapfinding."), benefit: None },
@@ -1425,7 +1346,6 @@ pub fn archetype_swap_tables() -> &'static [ArchetypeSwapEntry] {
             archetype_name: "Trapsmith",
             description: None,
             source_page: Some("p.135"),
-            prerequisites: Some(&["PRECLASS:1,Rogue=1", "PREMULT:1,[PREABILITY:1,CATEGORY=Archetype,Rogue Archetype ~ Trapsmith],[!PREABILITY:1,CATEGORY=Archetype,TYPE=RogueUncannyDodge,TYPE=RogueImprovedUncannyDodge]"]),
             replaces: Some(&["RogueUncannyDodge", "RogueImprovedUncannyDodge"]),
             grants: &[
                 ArchetypeGrant { grants_feature_key: "Rogue ~ Careful Disarm", at_level: 4, description: Some("Whenever you attempt to disarm a trap using Disable Device, you do not spring the trap unless you fail by 10 or more. If you do set off a trap you were attempting to disarm, you adds double your trap sense bonus to avoid the trap. This ability replaces uncanny dodge."), benefit: None },

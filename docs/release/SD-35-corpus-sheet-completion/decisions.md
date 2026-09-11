@@ -511,3 +511,48 @@ new `tranche/N` cut, never on a bundle's own closure (SD-34 `decisions.md §11`)
 **Resolved 2026-09-07:** the cut landed as `4c6c57eb9f` ("feat(sd35): version bump 0.15.0 for
 tranche/15") on `fe5ae6cd4a` (SD-34's PR #383 merge); both version files read `0.15.0`;
 `git ls-remote --heads origin tranche/15` resolves. No deferral remains.
+
+---
+
+## §17 — Operator ruling B14, 2026-09-11: a live-side doc comment that quotes an ingest-format token is provenance, not a read
+
+**Ruled: NO.** A doc comment naming a PCGen token on the live side does **not** count as PCGen in
+live code. The rule `§11` states was always *"not one line of PCGen in our live code"* — and a
+comment does not execute. A comment recording where a converted rule's number came from is
+**provenance**, which `AGENTS.md` rule 9 ("every figure you write down carries the command that
+produced it") demands; provenance is kept, on the live side, next to the number it explains.
+
+**What forced the ruling.** `AT-35-E6-003-SWEEP` cycle 1 measured the remainder before starting and
+refused to grind (receipt:
+`artifacts/epic-6-pcgen-exit/AT-35-E6-003-SWEEP_cycle1_receipt.md`; instrument:
+`…_cycle1_residue_shape_census.py`). Its census, re-derivable at the same SHA:
+
+```
+live_files=197
+comment_hits=2686 code_hits=3628
+files_comment_only=114
+files_with_code_hits=83
+files_still_hitting_after_every_code_read_removed=187
+max_files_clearable_by_code_work_alone=10
+```
+
+114 of the 197 files the gate was counting carried **no code hit at all** — their code had already
+left PCGen and only the provenance prose remained. `AT-35-E6-004`'s `live_files=0` was therefore
+**arithmetically unreachable by code work**: even deleting every live-side read would leave 187
+files hitting. The gate's stated premise — *"a comment explaining a PCGen token on the live side is
+a sign the code next to it still needs one"* — held against its 2026-09-07 baseline of mostly-live
+reads. It was false for 114 of the 197 live files it was still firing on
+(`validate-proxies-against-known-truth`).
+
+**Enforced by:** `scripts/pcgen_residue_gate.py` skips a line whose left-stripped form starts with
+`//`, and scans every other line whole, so a trailing `// …` never shields the code before it and a
+provenance comment never masks a real read elsewhere in the same file. Pinned RED→GREEN by
+`scripts/tests/test_pcgen_residue_gate.py::TestCommentAwareness`. **No path is exempted, no regex is
+weakened, and `scripts/pcgen-residue-baseline.env` is untouched** — this is not an exclusion list.
+
+**This is an instrument correction, not closure** (`instrument-correction-is-not-closure`). The drop
+it causes — `live_files` 197 → 81, `live_hits` 11,447 → 8,390 at
+`1d478e727b15478d5c979eaf97fc1ec4874ba6fb` — clears no file and closes no unit. The code-bearing
+files are exactly as unfinished as they were before it was written, and no cycle may report the drop
+as files cleared. `AT-35-E6-004`'s "the gate reads zero" means **zero CODE hits** from this ruling
+on.

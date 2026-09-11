@@ -35,12 +35,42 @@ every source file (`.rs .ts .tsx .js .jsx .mjs .cjs`; never `node_modules/`,
     token syntax  BONUS:  DEFINE:  PRE[A-Z]+:  SAB:  DESC:  %CHOICE  %LIST  TYPE=
 
 A hit is one regex match; a file counts once however many hits it carries.
-A mention inside a comment or a doc string counts -- the ruling is "nothing
-left of pcgen", and a comment explaining a PCGen token on the live side is
-a sign the code next to it still needs one. The five-identifier subset is
-reported separately (`identifier_files=` / `identifier_hits=`) because that
-is the population the authoring-time "78 files" figure was counting; quote
-the gate's line, not 78, from now on.
+The five-identifier subset is reported separately (`identifier_files=` /
+`identifier_hits=`) because that is the population the authoring-time "78
+files" figure was counting; quote the gate's line, not 78, from now on.
+
+Comments do not count -- operator ruling B14, 2026-09-11
+--------------------------------------------------------
+A line whose left-stripped form starts with `//` -- a `//!` module doc, a
+`///` item doc, or a plain `//` line comment -- is skipped. Every other line
+is scanned in full, trailing comment or not, so a real read can never hide
+behind a `// ...` tail, and a provenance comment can never mask a read on
+another line of the same file.
+
+This gate used to count comments, on the premise that "a comment explaining a
+PCGen token on the live side is a sign the code next to it still needs one".
+That premise stopped holding. Epics 1-6 drained the code side and left the
+prose: by 2026-09-11 the census in
+`docs/release/SD-35-corpus-sheet-completion/artifacts/epic-6-pcgen-exit/AT-35-E6-003-SWEEP_cycle1_residue_shape_census.py`
+measured `comment_hits=2686 code_hits=3628` over 197 live files, of which
+`files_comment_only=114` -- 114 files whose code reads nothing and whose only
+remaining hits are doc comments. The "sign" was false in 58% of the files it
+was firing on, and `max_files_clearable_by_code_work_alone=10` proved
+`live_files=0` unreachable by code work at all. That is the
+`validate-proxies-against-known-truth` failure shape: a proxy still making a
+confident claim in a region where it was never tested.
+
+The ruling: the rule was always "not one line of PCGen in our live code", and
+a comment does not execute. The converter now owns the token; the comment
+beside the converted number is the receipt for where that number came from --
+provenance, which `AGENTS.md` rule 9 demands and which is kept.
+
+This is an INSTRUMENT CORRECTION, not closure (`instrument-correction-is-not-
+closure`). The drop it causes -- 197 live files to ~83 -- clears no file and
+closes no unit; the 83 code-bearing files are exactly as unfinished as they
+were before. It is not an exclusion list: no path is exempted, no regex is
+weakened, and the baseline is untouched. Pinned by
+`scripts/tests/test_pcgen_residue_gate.py::TestCommentAwareness`.
 
 The tool side -- `src/pcgen_import/**`, `src/bin/**`, `src/oracle_validation/**`,
 `scripts/**`, `tests/**` -- is never scanned. It is KEPT for Starfinder
@@ -159,6 +189,19 @@ def _iter_live_source_files(root):
                 yield live_root, rel, abs_path
 
 
+def code_only(text):
+    """Drop the provenance-comment lines, keep the executable ones.
+
+    Operator ruling B14 (2026-09-11), and the same comment/code split the
+    cycle-1 census used to measure the remainder: a line is prose when its
+    left-stripped form starts with `//`. Everything else is code and is
+    scanned whole -- a trailing `// ...` never shields the code before it.
+    """
+    return "\n".join(
+        line for line in text.splitlines() if not line.lstrip().startswith("//")
+    )
+
+
 def scan(root):
     """Scan the live side under `root`; pure, no baseline involved."""
     res = ScanResult()
@@ -169,7 +212,7 @@ def scan(root):
     for live_root, rel, abs_path in _iter_live_source_files(root):
         try:
             with open(abs_path, encoding="utf-8", errors="replace") as fh:
-                text = fh.read()
+                text = code_only(fh.read())
         except OSError:
             continue
         file_hits = 0

@@ -63,7 +63,6 @@ pub fn archetype_swap_tables() -> &'static [ArchetypeSwapEntry] {
             archetype_name: "Chirurgeon",
             description: Some("An alchemist who studies anatomy and uses this knowledge to heal is a chirurgeon."),
             source_page: Some("p.18"),
-            prerequisites: Some(&["PRECLASS:1,Alchemist=1", "PREMULT:1,[PREABILITY:1,CATEGORY=Archetype,Alchemist Archetype ~ Chirurgeon],[!PREABILITY:1,CATEGORY=Archetype,TYPE.AlchemistPoisonUse,TYPE.AlchemistPoisonResistance4,TYPE.AlchemistPoisonImmunity]"]),
             replaces: Some(&["AlchemistPoisonUse", "AlchemistPoisonResistance4", "AlchemistPoisonImmunity"]),
             grants: &[
                 ArchetypeGrant { grants_feature_key: "Chirurgeon ~ Infused Curative", at_level: 2, description: Some("Your extracts of cure spells automatically act as infusions, and can be used by non-alchemists. When you prepare your extracts, you may choose to render any or all of your infused curatives inert and prepare other extracts to replace them (unlike infusions, which continue to occupy your daily extract slots until consumed or used)."), benefit: None },
@@ -78,7 +77,6 @@ pub fn archetype_swap_tables() -> &'static [ArchetypeSwapEntry] {
             archetype_name: "Clone Master",
             description: Some("Clone masters practice duplicating existing creatures in order to better understand how to create new life."),
             source_page: Some("p.18"),
-            prerequisites: Some(&["PRECLASS:1,Alchemist=1", "PREMULT:1,[PREABILITY:1,CATEGORY=Archetype,Alchemist Archetype ~ Clone Master],[!PREABILITY:1,CATEGORY=Archetype,TYPE.AlchemistPoisonResistance6,TYPE.AlchemistPoisonImmunity,TYPE.AlchemistBombReduction]"]),
             replaces: Some(&["AlchemistPoisonResistance6", "AlchemistPoisonImmunity", "AlchemistBombReduction"]),
             grants: &[
                 ArchetypeGrant { grants_feature_key: "Clone Master ~ Lesser Simulacrum", at_level: 7, description: Some("You add Lesser Simulacrum to your formula book as a 3rd-level extract."), benefit: None },
@@ -94,7 +92,6 @@ pub fn archetype_swap_tables() -> &'static [ArchetypeSwapEntry] {
             archetype_name: "Internal Alchemist",
             description: Some("An internal alchemist studies medicine, diet, and the living body to purify the self in the hope of gaining immortality by means of alchemical concoctions and controlling vital energy. Internal alchemists develop unusual physical abilities from heightened knowledge of how their bodies work."),
             source_page: Some("p.18"),
-            prerequisites: Some(&["PRECLASS:1,Alchemist=1", "PREMULT:1,[PREABILITY:1,CATEGORY=Archetype,Alchemist Archetype ~ Internal Alchemist],[!PREABILITY:1,CATEGORY=Archetype,TYPE.AlchemistThrowAnything,TYPE.AlchemistSwiftAlchemy,TYPE.AlchemistSwiftPoisoning]"]),
             replaces: Some(&["AlchemistThrowAnything", "AlchemistSwiftAlchemy", "AlchemistSwiftPoisoning"]),
             grants: &[
                 ArchetypeGrant { grants_feature_key: "Internal Alchemist ~ Breath Mastery", at_level: 1, description: Some("You can control your breath and the flow of vital energy within your body. Without preparation, you can hold your breath for %1 minutes (after this, you must begin making Constitution checks or risk suffocation); by spending a full-round action preparing yourself, you can increase this duration to %1 hours. You can survive twice as long as normal without food or water before you start to take penalties. You can put yourself into a state of suspended animation as a move action, and are then unconscious and appear completely dead; you awaken at a preset time or in response to a condition set by you when you enters this state.|BreathMasteryDuration"), benefit: None },
@@ -109,7 +106,6 @@ pub fn archetype_swap_tables() -> &'static [ArchetypeSwapEntry] {
             archetype_name: "Mindchemist",
             description: Some("While most alchemists use mutagens to boost their physical ability at the cost of mental ability, some use alchemy for the opposite purpose-to boost the power of the mind and memory. A mindchemist can reach incredible levels of mental acuity, but suffers lingering debilitating effects to his physique."),
             source_page: Some("p.19"),
-            prerequisites: Some(&["PRECLASS:1,Alchemist=1", "PREMULT:1,[PREABILITY:1,CATEGORY=Archetype,Alchemist Archetype ~ Mindchemist],[!PREABILITY:1,CATEGORY=Archetype,TYPE.AlchemistMutagen.AlchemistPoisonUse]"]),
             replaces: Some(&["AlchemistMutagen", "AlchemistPoisonUse"]),
             grants: &[
                 ArchetypeGrant { grants_feature_key: "Mindchemist ~ Cognatogen", at_level: 1, description: Some("You learn how to create a cognatogen, as the cognatogen discovery."), benefit: None },
@@ -123,7 +119,6 @@ pub fn archetype_swap_tables() -> &'static [ArchetypeSwapEntry] {
             archetype_name: "Preservationist",
             description: Some("Some alchemists are obsessed with collecting and preserving exotic creatures. These preservationists may use bottled animals and monsters as teaching tools, but some learn how to reanimate them for short periods to battle on the alchemist's behalf."),
             source_page: Some("p.19"),
-            prerequisites: Some(&["PRECLASS:1,Alchemist=1", "PREMULT:1,[PREABILITY:1,CATEGORY=Archetype,Alchemist Archetype ~ Preservationist],[!PREABILITY:1,CATEGORY=Archetype,TYPE.AlchemistPoisonUse,TYPE.AlchemistPoisonResistance4,TYPE.AlchemistPoisonResistance6,TYPE.AlchemistPoisonImmunity,TYPE.AlchemistPersistentMutagen,TYPE.AlchemistDiscoveryLvl18]"]),
             replaces: Some(&["AlchemistPoisonUse", "AlchemistPoisonResistance4", "AlchemistPoisonResistance6", "AlchemistPoisonImmunity", "AlchemistPersistentMutagen", "AlchemistDiscoveryLvl18"]),
             grants: &[
                 ArchetypeGrant { grants_feature_key: "Preservationist ~ Bottled Ally I", at_level: 2, description: Some("You add Handle Animal to your list of class skills. You add Summon Nature's Ally I to your formula book as a 1st-level extract. When you prepare that extract, you actually prepare a tiny, preserved specimen in a bottle (as with a caster casting the spell, you don't have to choose the creature until you use the extract). When you open the bottle, the specimen animates and grows to normal size, serving you as per the spell and otherwise being treated as a summoned creature. When the duration expires, the preserved creature decays into powder. If you have the infusion discovery, another character can use the infused specimen. The Augment Summoning feat can be applied to these specimens."), benefit: None },
@@ -141,7 +136,6 @@ pub fn archetype_swap_tables() -> &'static [ArchetypeSwapEntry] {
             archetype_name: "Psychonaut",
             description: Some("A psychonaut uses his knowledge to explore altered states of consciousness and even other planes of existence."),
             source_page: Some("p.19"),
-            prerequisites: Some(&["PRECLASS:1,Alchemist=1", "PREMULT:1,[PREABILITY:1,CATEGORY=Archetype,Alchemist Archetype ~ Psychonaut],[!PREABILITY:1,CATEGORY=Archetype,TYPE.AlchemistPoisonResistance4,TYPE.AlchemistPoisonResistance6,TYPE.AlchemistPoisonImmunity,TYPE.AlchemistBombDamageLvl15,TYPE.AlchemistBombDamageLvl17,TYPE.AlchemistBombReduction]"]),
             replaces: Some(&["AlchemistPoisonResistance4", "AlchemistPoisonResistance6", "AlchemistPoisonImmunity", "AlchemistBombDamageLvl15", "AlchemistBombDamageLvl17", "AlchemistBombReduction"]),
             grants: &[
                 ArchetypeGrant { grants_feature_key: "Psychonaut ~ Precognition", at_level: 5, description: Some("You add Augury to your formula book as a 2nd-level extract (this extract does not require a divine focus component)."), benefit: None },
@@ -158,7 +152,6 @@ pub fn archetype_swap_tables() -> &'static [ArchetypeSwapEntry] {
             archetype_name: "Reanimator",
             description: Some("A reanimator is an alchemist who has discovered how to infuse a corpse with a semblance of life. Many work in tandem with necromancers to explore the fine border between the worlds of the living and the dead."),
             source_page: Some("p.20"),
-            prerequisites: Some(&["PRECLASS:1,Alchemist=1", "PREMULT:1,[PREABILITY:1,CATEGORY=Archetype,Alchemist Archetype ~ Reanimator],[!PREABILITY:1,CATEGORY=Archetype,TYPE.AlchemistBombDamageLvl7,TYPE.AlchemistBombDamageLvl13,TYPE.AlchemistBombDamageLvl15,TYPE.AlchemistBombReduction]"]),
             replaces: Some(&["AlchemistBombDamageLvl7", "AlchemistBombDamageLvl13", "AlchemistBombDamageLvl15", "AlchemistBombReduction"]),
             grants: &[
                 ArchetypeGrant { grants_feature_key: "Reanimator ~ Simple Reanimation", at_level: 7, description: Some("You add Lesser Animate Dead to your formula book as a 3rd-level extract.  When you use this extract, rather than drinking it, you inject it into the corpse you intend to animate, which rises as an undead creature under your control 1 hour later.  This extract can only create zombies (including variant zombies)."), benefit: None },
@@ -173,7 +166,6 @@ pub fn archetype_swap_tables() -> &'static [ArchetypeSwapEntry] {
             archetype_name: "Vivisectionist",
             description: Some("A vivisectionist studies bodies to better understand their function. Unlike a chirurgeon, a vivisectionist's goals are not related to healing, but rather to experimentation and knowledge that most people would consider evil."),
             source_page: Some("p.20"),
-            prerequisites: Some(&["PRECLASS:1,Alchemist=1", "PREMULT:1,[PREABILITY:1,CATEGORY=Archetype,Alchemist Archetype ~ Vivisectionist],[!PREABILITY:1,CATEGORY=Archetype,TYPE.AlchemistBomb,TYPE.AlchemistBombDamageLvl1,TYPE.AlchemistBombDamageLvl3,TYPE.AlchemistBombDamageLvl5,TYPE.AlchemistBombDamageLvl7,TYPE.AlchemistBombDamageLvl9,TYPE.AlchemistBombDamageLvl11,TYPE.AlchemistBombDamageLvl13,TYPE.AlchemistBombDamageLvl15,TYPE.AlchemistBombDamageLvl17,TYPE.AlchemistBombDamageLvl9,TYPE.AlchemistBombReduction]"]),
             replaces: Some(&["AlchemistBomb", "AlchemistBombDamageLvl1", "AlchemistBombDamageLvl3", "AlchemistBombDamageLvl5", "AlchemistBombDamageLvl7", "AlchemistBombDamageLvl9", "AlchemistBombDamageLvl11", "AlchemistBombDamageLvl13", "AlchemistBombDamageLvl15", "AlchemistBombDamageLvl17", "AlchemistBombDamageLvl19", "AlchemistBombReduction"]),
             grants: &[
                 ArchetypeGrant { grants_feature_key: "Vivisectionist ~ Sneak Attack", at_level: 1, description: Some("At 1st level, a vivisectionist gains the sneak attack ability as a rogue of the same level. If a character already has sneak attack from another class, the levels from the classes that grant sneak attack stack to determine the effective rogue level for the sneak attack's extra damage dice (so an alchemist 1/rogue 1 has a +1d6 sneak attack like a 2nd-level rogue, an alchemist 2/rogue 1 has a +2d6 sneak attack like a 3rd-level rogue, and so on). This ability replaces bomb."), benefit: None },
@@ -189,7 +181,6 @@ pub fn archetype_swap_tables() -> &'static [ArchetypeSwapEntry] {
             archetype_name: "Animal Speaker",
             description: Some("An animal speaker focuses not on the ears and minds of humans, but on the creatures of the wild and those in the underbellies of cities."),
             source_page: Some("p.25"),
-            prerequisites: Some(&["PRECLASS:1,Bard=1", "PREMULT:1,[PREABILITY:1,CATEGORY=Archetype,Bard Archetype ~ Animal Speaker],[!PREABILITY:1,CATEGORY=Archetype,TYPE.BardFascinate,TYPE.BardWellVersed,TYPE.BardInspireCompetence,TYPE.BardSuggestion,TYPE.BardMassSuggestion]"]),
             replaces: Some(&["BardFascinate", "BardWellVersed", "BardInspireCompetence", "BardSuggestion", "BardMassSuggestion"]),
             grants: &[
                 ArchetypeGrant { grants_feature_key: "Animal Speaker ~ Animal Friend", at_level: 1, description: None, benefit: None },
@@ -206,7 +197,6 @@ pub fn archetype_swap_tables() -> &'static [ArchetypeSwapEntry] {
             archetype_name: "Celebrity",
             description: Some("Known for being known, a celebrity bard is a master of  performance  who  captures  the  imagination  and attention of his audience. He trades on his charisma, his wit, and his exploits to build his renown - and that of his companions."),
             source_page: Some("p.25"),
-            prerequisites: Some(&["PRECLASS:1,Bard=1", "PREMULT:1,[PREABILITY:1,CATEGORY=Archetype,Bard Archetype ~ Celebrity],[!PREABILITY:1,CATEGORY=Archetype,TYPE.BardInspireCourage,TYPE.BardLoreMaster,TYPE.BardDirgeOfDoom]"]),
             replaces: Some(&["BardInspireCourage", "BardLoreMaster", "BardDirgeOfDoom"]),
             grants: &[
                 ArchetypeGrant { grants_feature_key: "Celebrity ~ Famous", at_level: 1, description: Some("You may choose a region where you are famous, and within that region, the locals are more likely to react favorably toward you. You gain a +%1 bonus on Diplomacy and Intimidate checks in that area and to influence people from that area|FamousModifier"), benefit: None },
@@ -221,7 +211,6 @@ pub fn archetype_swap_tables() -> &'static [ArchetypeSwapEntry] {
             archetype_name: "Demagogue",
             description: Some("Not content with providing amusing and occasionally instructive performances, the demagogue seeks to inflame and ignite his audience, driving them toward a specific purpose with carefully chosen words and tones that may spark momentous change."),
             source_page: Some("p.26"),
-            prerequisites: Some(&["PRECLASS:1,Bard=1", "PREMULT:1,[PREABILITY:1,CATEGORY=Archetype,Bard Archetype ~ Demagogue],[!PREABILITY:1,CATEGORY=Archetype,TYPE.BardInspireCourage,TYPE.BardInspireCourage1,TYPE.BardLoreMaster,TYPE.BardSuggestion,TYPE.BardMassSuggestion]"]),
             replaces: Some(&["BardInspireCourage1", "BardLoreMaster", "BardSuggestion", "BardMassSuggestion"]),
             grants: &[
                 ArchetypeGrant { grants_feature_key: "Demagogue ~ Famous", at_level: 1, description: Some("You may choose a region where you are famous, and within that region, the locals are more likely to react favorably toward you. You gain a +%1 bonus on Bluff and Intimidate checks in that area and to influence people from that area|FamousModifier"), benefit: None },
@@ -237,7 +226,6 @@ pub fn archetype_swap_tables() -> &'static [ArchetypeSwapEntry] {
             archetype_name: "Dirge Bard",
             description: Some("A composer of sonorous laments for the dead and elaborate requiems for those lost yet long remembered, dirge bards master musical tools and tropes that must appeal to the ears and hearts of both the living and the dead."),
             source_page: Some("p.26"),
-            prerequisites: Some(&["PRECLASS:1,Bard=1", "PREMULT:1,[PREABILITY:1,CATEGORY=Archetype,Bard Archetype ~ Dirge Bard],[!PREABILITY:1,CATEGORY=Archetype,TYPE.BardJackOfAllTrades,TYPE.BardLoreMaster,TYPE.BardWellVersed,TYPE.BardVersatilePerformance]"]),
             replaces: Some(&["BardJackOfAllTrades", "BardLoreMaster", "BardWellVersed", "BardVersatilePerformance"]),
             grants: &[
                 ArchetypeGrant { grants_feature_key: "Dirge Bard ~ Dance of the Dead", at_level: 10, description: Some("You can use your bardic performance to cause dead bones or bodies to rise up and move or fight at your command. This ability functions like animate dead, but the created skeletons or zombies remain fully animate only as long as you continue the performance. Once it stops, any created undead collapse into carrion. Bodies or bones cannot be animated more than once using this ability. Unlike animate dead, dance of the dead requires no components and does not have the evil descriptor."), benefit: None },
@@ -253,7 +241,6 @@ pub fn archetype_swap_tables() -> &'static [ArchetypeSwapEntry] {
             archetype_name: "Geisha",
             description: Some("In some cultures, the professional entertainer is a prestigious role. Specially trained entertainers called geisha are praised for their appearance and skill at conversation, music, dancing, singing, poetry, and calligraphy. A geisha provides social intimacy and status but not physical intimacy."),
             source_page: Some("p.27"),
-            prerequisites: Some(&["PRECLASS:1,Bard=1", "PREMULT:1,[PREABILITY:1,CATEGORY=Archetype,Bard Archetype ~ Geisha],[!PREABILITY:1,CATEGORY=Archetype,TYPE.BardWeaponProficiencies,TYPE.BardArmorProficiencies,TYPE.BardBardicKnowledge,TYPE.BardArmoredCasting]"]),
             replaces: Some(&["BardWeaponProficiencies", "BardArmorProficiencies", "BardBardicKnowledge", "BardArmoredCasting"]),
             grants: &[
                 ArchetypeGrant { grants_feature_key: "Scribe Scroll", at_level: 1, description: None, benefit: None },
@@ -267,7 +254,6 @@ pub fn archetype_swap_tables() -> &'static [ArchetypeSwapEntry] {
             archetype_name: "Songhealer",
             description: Some("Words can harm, but they also heal. The songhealer brings peace and surcease of pain, calming wild emotions and providing a balm for the wounded body."),
             source_page: Some("p.27"),
-            prerequisites: Some(&["PRECLASS:1,Bard=1", "PREMULT:1,[PREABILITY:1,CATEGORY=Archetype,Bard Archetype ~ Songhealer],[!PREABILITY:1,CATEGORY=Archetype,TYPE.BardVersatilePerformance,TYPE.BardFrighteningTune,TYPE.BardDeadlyPerformance]"]),
             replaces: Some(&["BardVersatilePerformance", "BardFrighteningTune", "BardDeadlyPerformance"]),
             grants: &[
                 ArchetypeGrant { grants_feature_key: "Songhealer ~ Enhance Healing", at_level: 1, description: Some("%1 times per day, you can cause any healing effect from a spell completion or spell trigger item to function at caster level %2.|EnhanceHealingTimes|EnhanceHealingCL"), benefit: None },
@@ -282,7 +268,6 @@ pub fn archetype_swap_tables() -> &'static [ArchetypeSwapEntry] {
             archetype_name: "Sound Striker",
             description: Some("They say that words can cut deeper than any blade, and the sound striker proves this true. Using music and words as a weapon, he can focus his performances into a deadly delivery."),
             source_page: Some("p.27"),
-            prerequisites: Some(&["PRECLASS:1,Bard=1", "PREMULT:1,[PREABILITY:1,CATEGORY=Archetype,Bard Archetype ~ Sound Striker],[!PREABILITY:1,CATEGORY=Archetype,TYPE.BardInspireCompetence,TYPE.BardSuggestion]"]),
             replaces: Some(&["BardInspireCompetence", "BardSuggestion"]),
             grants: &[
                 ArchetypeGrant { grants_feature_key: "Sound Striker ~ Wordstrike", at_level: 3, description: Some("You can spend 1 round of bardic performance as a standard action to direct a burst of sonically charged words at a creature or object. This performance deals 1d4+%1 points of damage to an object, or half this damage to a living creature.|WordstrikeBonusDamage"), benefit: None },
@@ -296,7 +281,6 @@ pub fn archetype_swap_tables() -> &'static [ArchetypeSwapEntry] {
             archetype_name: "Cloistered Cleric",
             description: Some("Cloistered clerics typically live in a temple and rarely interact with the outside world. They are bookish and well learned in the lore of the faith, paying less attention to its magical and martial aspects. A cloistered cleric has the following class features."),
             source_page: Some("p.31"),
-            prerequisites: Some(&["PRECLASS:1,Cleric=1", "PREMULT:1,[PREABILITY:1,CATEGORY=Archetype,Cleric Archetype ~ Cloistered Cleric],[!PREABILITY:1,CATEGORY=Archetype,TYPE.ClericArmorProficiency,TYPE.ClericWeaponProficiency,TYPE.ClericClassSkills,TYPE.ClericSkillRanks,TYPE.ClericSpellcasting,TYPE.ClericDomains]"]),
             replaces: Some(&["ClericArmorProficiency", "ClericWeaponProficiency", "ClericClassSkills", "ClericSkillRanks", "ClericDomains", "ClericSpellcasting"]),
             grants: &[
                 ArchetypeGrant { grants_feature_key: "Scribe Scroll", at_level: 4, description: None, benefit: None },
@@ -313,7 +297,6 @@ pub fn archetype_swap_tables() -> &'static [ArchetypeSwapEntry] {
             archetype_name: "Separatist",
             description: Some("A radical cleric, unsatisfied with the orthodoxy of her deity's teachings, forges her own path of defiant divine expression. Though most members of her faith would call her a separatist or heretic, she continues to receive spells from her deity. Charismatic separatists may develop a large following of like-minded believers and eventually found a splinter church of their deity - and they are just as likely to be the cause of a holy civil war as the branches of the religion fight to determine which is the true faith. A cleric who does not serve a deity cannot take the separatist archetype."),
             source_page: Some("p.32"),
-            prerequisites: Some(&["PRECLASS:1,Cleric=1", "PREMULT:1,[PREABILITY:1,CATEGORY=Archetype,Cleric Archetype ~ Separatist],[!PREABILITY:1,CATEGORY=Archetype,TYPE.ClericWeaponProficiency,TYPE.ClericDomains]"]),
             replaces: Some(&["ClericWeaponProficiency", "ClericDomains"]),
             grants: &[
                 ArchetypeGrant { grants_feature_key: "Separatist ~ Forbidden Rites", at_level: 1, description: Some("You select one domain from your deity's domain list, and a second domain that is not on your deity's domain list. This second domain cannot be an alignment domain that doesn't match your or your deity's alignment. For example, a lawful good separatist cleric of a neutral good deity cannot choose the Chaos or Evil domain with this ability, but can select the Lawful domain even though her deity isn't lawful. Granted powers from your second domain function as if your level, Wisdom, and Charisma were 2 lower than normal (minimum level 1) in terms of effect, DC, and uses per day. This also means you don't gain the domain's higher-level ability until 2 levels later than normal. If the second domain grants additional class skills, you gain these as normal."), benefit: None },
@@ -326,7 +309,6 @@ pub fn archetype_swap_tables() -> &'static [ArchetypeSwapEntry] {
             archetype_name: "Theologian",
             description: Some("A theologian is an expert on one particular area of her religion. She is so focused on that area that she eschews the broader sweep of her deity's dogma and focuses intensely upon that aspect of it, embodying its power in all she does. Theologians tend to be more zealous than other clerics, and many crusades are started by theologians."),
             source_page: Some("p.32"),
-            prerequisites: Some(&["PRECLASS:1,Cleric=1", "PREMULT:1,[PREABILITY:1,CATEGORY=Archetype,Cleric Archetype ~ Theologian],[!PREABILITY:1,CATEGORY=Archetype,TYPE.ClericDomains]"]),
             replaces: Some(&["ClericDomains"]),
             grants: &[
                 ArchetypeGrant { grants_feature_key: "Theologian ~ Focused Domain", at_level: 1, description: Some("You choose only one domain from your deity's portfolio rather than the normal two domains. All level-dependent effects of the granted powers from your domain function as if you were two cleric levels higher than your actual cleric level. This does not allow you to gain domain-granted powers earlier than normal. You can prepare domain spells using your non-domain slots. You cannot use her spontaneous casting ability on domain spells, even if they are prepared in non-domain slots. In all other respects, this works like and replaces the standard cleric domain ability."), benefit: None },
@@ -340,7 +322,6 @@ pub fn archetype_swap_tables() -> &'static [ArchetypeSwapEntry] {
             archetype_name: "Undead Lord",
             description: Some("An undead lord is a cleric focused on using necromancy to control undead. Her flock is the walking dead and her choir the keening spirits of the damned. This unliving congregation is the manifestation of her unceasing love affair with death."),
             source_page: Some("p.32"),
-            prerequisites: Some(&["PRECLASS:1,Cleric=1", "PREMULT:1,[PREABILITY:1,CATEGORY=Archetype,Cleric Archetype ~ Undead Lord],[!PREABILITY:1,CATEGORY=Archetype,TYPE.ClericDomains]"]),
             replaces: Some(&["ClericDomains"]),
             grants: &[
                 ArchetypeGrant { grants_feature_key: "Command Undead", at_level: 1, description: None, benefit: None },
@@ -355,7 +336,6 @@ pub fn archetype_swap_tables() -> &'static [ArchetypeSwapEntry] {
             archetype_name: "Dragon Shaman",
             description: Some("Your totem is the legendary dragon, fearsome and deadly yet cunning and wise, a creature born of pure magic and raw elemental fury, bound within a shell of fangs, claws, and scales that few dare to challenge. Though your initial focus is on dragons' mundane cousins, as your powers grow you become attuned to actual dragons."),
             source_page: Some("p.37"),
-            prerequisites: Some(&["PRECLASS:1,Druid=1", "PREMULT:1,[PREABILITY:1,CATEGORY=Archetype,Druid Archetype ~ Dragon Shaman],[!PREABILITY:1,CATEGORY=Archetype,TYPE.DruidThousandFaces,TYPE.DruidWildShape,TYPE.DruidWildShape8,TYPE.DruidVenomImmunity]"]),
             replaces: Some(&["DruidThousandFaces", "DruidWildShape", "DruidWildShape8", "DruidVenomImmunity"]),
             grants: &[
                 ArchetypeGrant { grants_feature_key: "Dragon Shaman ~ Nature's Bond", at_level: 1, description: Some("If you choose an animal companion, you must select a crocodile (see page 54 of the Core Rulebook) or monitor lizard (see page 194 of the Bestiary). If you choose a domain, you must choose from the Air, Animal, Destruction, Earth, Fire, War, and Water domains."), benefit: None },
@@ -378,7 +358,6 @@ pub fn archetype_swap_tables() -> &'static [ArchetypeSwapEntry] {
             archetype_name: "Menhir Savant",
             description: Some("Some druids study the paths of nature's power through the nodes and ley lines that connect standing stones and megalithic circles, learning to tap into their energies."),
             source_page: Some("p.38"),
-            prerequisites: Some(&["PRECLASS:1,Druid=1", "PREMULT:1,[PREABILITY:1,CATEGORY=Archetype,Druid Archetype ~ Menhir Savant],[!PREABILITY:1,CATEGORY=Archetype,TYPE.DruidNatureSense,TYPE.DruidWildEmpathy,TYPE.DruidWoodlandStride,TYPE.DruidTracklessStep,TYPE.DruidThousandFaces]"]),
             replaces: Some(&["DruidNatureSense", "DruidWildEmpathy", "DruidWoodlandStride", "DruidTracklessStep", "DruidThousandFaces"]),
             grants: &[
                 ArchetypeGrant { grants_feature_key: "Menhir Savant ~ Spirit Sense", at_level: 1, description: Some("You can detect the presence of undead; fey; outsiders; and astral, ethereal, or incorporeal creatures. This ability functions like detect undead, and you detect all of these creatures rather than trying to detect one kind."), benefit: None },
@@ -394,7 +373,6 @@ pub fn archetype_swap_tables() -> &'static [ArchetypeSwapEntry] {
             archetype_name: "Mooncaller",
             description: Some("A mooncaller is bound to the subtle influences of the ever-changing moon and its endless cycles from light to dark and back again."),
             source_page: Some("p.38"),
-            prerequisites: Some(&["PRECLASS:1,Druid=1", "PREMULT:1,[PREABILITY:1,CATEGORY=Archetype,Druid Archetype ~ Mooncaller],[!PREABILITY:1,CATEGORY=Archetype,TYPE.DruidWoodlandStride,TYPE.DruidResistNaturesLure,TYPE.DruidVenomImmunity,TYPE.DruidThousandFaces]"]),
             replaces: Some(&["DruidWoodlandStride", "DruidResistNaturesLure", "DruidVenomImmunity", "DruidThousandFaces"]),
             grants: &[
                 ArchetypeGrant { grants_feature_key: "Mooncaller ~ Resist Call of the Wild", at_level: 4, description: Some("You gain a +4 bonus on saving throws to avoid confusion, daze, feeblemind, and insanity effects. You also gain a +4 bonus against the exceptional, spell-like, and supernatural abilities of creatures with the shapechanger subtype."), benefit: None },
@@ -409,7 +387,6 @@ pub fn archetype_swap_tables() -> &'static [ArchetypeSwapEntry] {
             archetype_name: "Pack Lord",
             description: Some("Some druids bond with many animal companions rather than just one, achieving a level of communion rare even in druidic circles and leading their pack brothers and pack sisters with total authority."),
             source_page: Some("p.38"),
-            prerequisites: Some(&["PRECLASS:1,Druid=1", "PREMULT:1,[PREABILITY:1,CATEGORY=Archetype,Druid Archetype ~ Pack Lord],[!PREABILITY:1,CATEGORY=Archetype,TYPE.DruidNatureBond,TYPE.DruidWildshape6]"]),
             replaces: Some(&["DruidNatureBond", "DruidWildShape6"]),
             grants: &[
                 ArchetypeGrant { grants_feature_key: "Pack Lord ~ Pack Bond", at_level: 1, description: Some("You may not select a domain and must choose an animal companion. You gain a +2 bonus on wild empathy and Handle Animal checks made regarding your animal companion. You may have more than one animal companion, but you must divide up your effective druid level between your companions to determine the abilities of each companion. Each time your druid level increases, you must decide how to allocate the increase among your animal companions (including the option of adding a new 1st-level companion). Once a druid level is allocated to a particular companion, it cannot be redistributed while that companion is in your service (you must release the companion or wait until the companion dies to allocate its levels to another companion, which you can do the next time you prepare spells). The share spells animal companion ability only applies to one animal companion at a time - you cannot use it to cast a one-target spell and have it affect all of your animal companions."), benefit: None },
@@ -423,7 +400,6 @@ pub fn archetype_swap_tables() -> &'static [ArchetypeSwapEntry] {
             archetype_name: "Reincarnated Druid",
             description: Some("Spun off into the endless circle of life, an incarnate druid is an embodiment of nature's eternal renewal. She lives many lives and wanders the world devoid of attachments, a stranger to all yet one with all life."),
             source_page: Some("p.39"),
-            prerequisites: Some(&["PRECLASS:1,Druid=1", "PREMULT:1,[PREABILITY:1,CATEGORY=Archetype,Druid Archetype ~ Reincarnated Druid],[!PREABILITY:1,CATEGORY=Archetype,TYPE.DruidWoodlandStride,TYPE.DruidResistNaturesLure,TYPE.DruidVenomImmunity.TYPE.DruidTimelessBody]"]),
             replaces: Some(&["DruidWoodlandStride", "DruidResistNaturesLure", "DruidVenomImmunity", "DruidTimelessBody"]),
             grants: &[
                 ArchetypeGrant { grants_feature_key: "Reincarnated Druid ~ Mysterious Stranger", at_level: 2, description: Some("You add %1 to the DC of Sense Motive, Diplomacy, and Knowledge checks to learn about you.|MysteriousStrangerBonus"), benefit: None },
@@ -440,7 +416,6 @@ pub fn archetype_swap_tables() -> &'static [ArchetypeSwapEntry] {
             archetype_name: "Saurian Shaman",
             description: Some("A shaman with this focus calls upon the primeval dinosaur, the archaic terror that lingers as a hungering, atavistic stranger at the fringes of the ecosystem, a destroyer and despoiler whose coming other animals dread."),
             source_page: Some("p.39"),
-            prerequisites: Some(&["PRECLASS:1,Druid=1", "PREMULT:1,[PREABILITY:1,CATEGORY=Archetype,Druid Archetype ~ Saurian Shaman],[!PREABILITY:1,CATEGORY=Archetype,TYPE.DruidThousandFaces,TYPE.DruidWildShape,TYPE.DruidVenomImmunity,TYPE.DruidNatureBond]"]),
             replaces: Some(&["DruidThousandFaces", "DruidWildShape", "DruidVenomImmunity"]),
             grants: &[
                 ArchetypeGrant { grants_feature_key: "Druid ~ Wild Shape", at_level: 6, description: None, benefit: None },
@@ -462,7 +437,6 @@ pub fn archetype_swap_tables() -> &'static [ArchetypeSwapEntry] {
             archetype_name: "Shark Shaman",
             description: Some("Some druids emulate the deadly shark, a remorseless hunter that marine dwellers dread. Like a true shark, a shark shaman leaves blood and fear in her wake."),
             source_page: Some("p.40"),
-            prerequisites: Some(&["PRECLASS:1,Druid=1", "PREMULT:1,[PREABILITY:1,CATEGORY=Archetype,Druid Archetype ~ Shark Shaman],[!PREABILITY:1,CATEGORY=Archetype,TYPE.DruidThousandFaces,TYPE.DruidWildShape,TYPE.DruidVenomImmunity,TYPE.DruidNatureBond]"]),
             replaces: Some(&["DruidThousandFaces", "DruidWildShape", "DruidVenomImmunity"]),
             grants: &[
                 ArchetypeGrant { grants_feature_key: "Druid ~ Wild Shape", at_level: 6, description: None, benefit: None },
@@ -484,7 +458,6 @@ pub fn archetype_swap_tables() -> &'static [ArchetypeSwapEntry] {
             archetype_name: "Storm Druid",
             description: Some("While most druids focus their attention upon the rich earth and the bounty of nature that springs forth from it, the storm druid's eyes have ever been cast to the skies and the endless expanse of blue, channeling the most raw and untamed aspects of nature."),
             source_page: Some("p.40"),
-            prerequisites: Some(&["PRECLASS:1,Druid=1", "PREMULT:1,[PREABILITY:1,CATEGORY=Archetype,Druid Archetype ~ Storm Druid],[!PREABILITY:1,CATEGORY=Archetype,TYPE.DruidSpontaneousCasting,TYPE.DruidWoodlandStride,TYPE.DruidTracklessStep,TYPE.DruidResistNaturesLure.TYPE.DruidThousandFaces,TYPE.DruidNatureBond]"]),
             replaces: Some(&["DruidSpontaneousCasting", "DruidWoodlandStride", "DruidTracklessStep", "DruidResistNaturesLure", "DruidVenomImmunity", "DruidThousandFaces"]),
             grants: &[
                 ArchetypeGrant { grants_feature_key: "Storm Druid ~ Spontaneous Domain Casting", at_level: 1, description: Some("You can channel stored spell energy into domain spells that you have not prepared ahead of time. You can \"lose\" a prepared spell in order to cast any domain spell of the same level or lower."), benefit: None },
@@ -503,7 +476,6 @@ pub fn archetype_swap_tables() -> &'static [ArchetypeSwapEntry] {
             archetype_name: "Exorcist",
             description: Some("Some inquisitors, as they learn more about the threat of possession and the machinations of the planes, task themselves to expel possessing spirits and conniving outsiders from the world whenever possible. Eventually they learn the secret of the verdicts of exorcism, exile, and anathema."),
             source_page: Some("p.44"),
-            prerequisites: Some(&["PRECLASS:1,Inquisitor=1", "PREMULT:1,[PREABILITY:1,CATEGORY=Archetype,Inquisitor Archetype ~ Exorcist],[!PREABILITY:1,CATEGORY=Archetype,TYPE.InquisitorSecondJudgment,TYPE.InquisitorThirdJudgment,TYPE.InquisitorSlayer,TYPE.InquisitorTrueJudgment]"]),
             replaces: Some(&["InquisitorSecondJudgment", "InquisitorThirdJudgment", "InquisitorSlayer", "InquisitorTrueJudgment"]),
             grants: &[
                 ArchetypeGrant { grants_feature_key: "Exorcist ~ Verdict of Exorcism", at_level: 8, description: Some("While using judgment, you can unleash the verdict of exorcism on a creature. When you do, your judgment ends, but the creature is dazed for 1 round (Will DC %1 negates); if the creature is possessed, the possessing entity must succeed at a Will saving throw (DC %1), or be exorcised and never again allowed in that same body.|VerdictOfExorcismDC"), benefit: None },
@@ -519,7 +491,6 @@ pub fn archetype_swap_tables() -> &'static [ArchetypeSwapEntry] {
             archetype_name: "Heretic",
             description: Some("While all inquisitors hunt the enemies of the faith, sometimes, either through political maneuvering by her enemies or an unyielding tenacity that breaks her faith's basic tenets, an inquisitor can find herself a heretic. Still unyielding in her cause, these heretics are accustomed to using guile and deception to hide themselves and their activities while they continue to hunt their enemies."),
             source_page: Some("p.45"),
-            prerequisites: Some(&["PRECLASS:1,Inquisitor=1", "PREMULT:1,[PREABILITY:1,CATEGORY=Archetype,Inquisitor Archetype ~ Heretic],[!PREABILITY:1,CATEGORY=Archetype,TYPE.InquisitorMonsterLore]"]),
             replaces: Some(&["InquisitorMonsterLore"]),
             grants: &[
                 ArchetypeGrant { grants_feature_key: "Judgment ~ Escape", at_level: 1, description: Some("Each time you hit an opponent with a melee or ranged attack while using this judgment, you can use a move action attempt to create a diversion to hide (see the Stealth skill)."), benefit: None },
@@ -534,7 +505,6 @@ pub fn archetype_swap_tables() -> &'static [ArchetypeSwapEntry] {
             archetype_name: "Infiltrator",
             description: Some("This inquisitor uses guile and deception to blend in among the enemies of the faith rather than confronting them head-on."),
             source_page: Some("p.45"),
-            prerequisites: Some(&["PRECLASS:1,Inquisitor=1", "PREMULT:1,[PREABILITY:1,CATEGORY=Archetype,Inquisitor Archetype ~ Infiltrator],[!PREABILITY:1,CATEGORY=Archetype,TYPE.InquisitorSternGaze,TYPE.InquisitorMonsterLore,TYPE.InquisitorTrack,TYPE.InquisitorDiscernLies]"]),
             replaces: Some(&["InquisitorSternGaze", "InquisitorMonsterLore", "InquisitorTrack", "InquisitorDiscernLies"]),
             grants: &[
                 ArchetypeGrant { grants_feature_key: "Infiltrator ~ Misdirection", at_level: 1, description: Some("Each day when you prepares spells, you may choose an alignment. You detect as that alignment as if you had used misdirection on a creature with that alignment (this does not change any divination results about her other than her alignment)."), benefit: None },
@@ -550,7 +520,6 @@ pub fn archetype_swap_tables() -> &'static [ArchetypeSwapEntry] {
             archetype_name: "Preacher",
             description: Some("Some inquisitors wander the land to spread the true word of their faith. Often they come into conflict with those hostile to their teachings or to the preacher's need to help those who cannot help themselves. The leaders of evil or aggressive religions send these preachers into new territories to win converts and hopefully allies. Often, they start uprisings against powers hostile to their religion, or defend a group of honest believers from the depredations of the unfaithful."),
             source_page: Some("p.46"),
-            prerequisites: Some(&["PRECLASS:1,Inquisitor=1", "PREMULT:1,[PREABILITY:1,CATEGORY=Archetype,Inquisitor Archetype ~ Preacher],[!PREABILITY:1,CATEGORY=Archetype,TYPE.InquisitorSoloTactics]"]),
             replaces: Some(&["InquisitorSoloTactics"]),
             grants: &[
                 ArchetypeGrant { grants_feature_key: "Preacher ~ Determination", at_level: 3, description: Some("You are a person of few words on the battlefield, but those words hold great power and authority. You can use this ability to create one of the following effects %1/day. Each is a free action to use. Aggression: You may reroll an attack roll that you just made before the results of the roll are revealed. You must take the result of the reroll, even if it's worse than the original roll.  Defense: When you would be hit by a melee or ranged attack, as an immediate action you may add a +4 insight bonus to your Armor Class against that attack, and if this makes your AC higher than the opponent's attack roll, the attack misses.  Warning: When your ally within line of sight would be hit by a melee or ranged attack, you may call out a warning to that ally, and the attacker must reroll the attack and use the results of the second roll. The ally must be able to hear you and must not be helpless for this ability to have any effect.  Whenever you could select a bonus teamwork feat (at 3rd, 6th, 9th, 12th, 15th, and 18th level), you can instead choose to increase your number of uses per day of this ability by one.|DeterminationTimes"), benefit: None },
@@ -563,7 +532,6 @@ pub fn archetype_swap_tables() -> &'static [ArchetypeSwapEntry] {
             archetype_name: "Sin Eater",
             description: Some("There is a sect of inquisitors in some religions that believes it is not enough to hunt the enemies of the church - one must also devour those enemies' sins. More benign versions of the practice believe that sin, or evil, is taken out of the world when a sin is devoured, denying the enemy's soul to the enemy's god and purifying the world of its taint. Followers of malevolent churches believe that consuming the sins of good folk not only corrupts the enemy soul to keep it from the celestial planes, but also taints the souls of those who witness the sin-eating or the corpse of its victim. Consuming sins empowers the sin eater, at least for a time."),
             source_page: Some("p.46"),
-            prerequisites: Some(&["PRECLASS:1,Inquisitor=1", "PREMULT:1,[PREABILITY:1,CATEGORY=Archetype,Inquisitor Archetype ~ Sin Eater],[!PREABILITY:1,CATEGORY=Archetype,TYPE.InquisitorDomain,TYPE.InquisitorTeamworkFeat6,TYPE.InquisitorExploitWeakness]"]),
             replaces: Some(&["InquisitorDomain", "InquisitorTeamworkFeat6", "InquisitorExploitWeakness"]),
             grants: &[
                 ArchetypeGrant { grants_feature_key: "Sin Eater ~ Eat Sin", at_level: 1, description: Some("As a free action, when you kill an enemy, you may eat the sins of that enemy by spending 1 minute adjacent to its corpse. This provokes attacks of opportunity. You can rush this ritual, performing it as a full-round action that provokes attacks of opportunity, but you only gain half the normal benefit (see below). Eating the enemy's sins heals you %1d8+%2 hit points of damage. The enemy must have been killed by you within the last hour, and it must have had at least %3 Hit Dice. You can use this ability once for each enemy you kill. This ability has no effect on mindless creatures or those with Intelligence 2 or less.  In some faiths, this \"eating\" is a purely symbolic act, while in others, the inquisitor must eat a small amount of food and water as part of the ritual. A few extreme faiths actually require the inquisitor to eat some of the body of the slain enemy.|EatSinDice|EatSinBonus|EatSinMinHD"), benefit: None },
@@ -578,7 +546,6 @@ pub fn archetype_swap_tables() -> &'static [ArchetypeSwapEntry] {
             archetype_name: "Qinggong Monk Abundant Step",
             description: Some("Swap Abundant Step for a ki power."),
             source_page: Some("p.51"),
-            prerequisites: Some(&["PRECLASS:1,Monk=1", "PREMULT:1,[PREABILITY:1,CATEGORY=Archetype,Monk Archetype ~ Qinggong Monk Abundant Step],[!PREABILITY:1,CATEGORY=Archetype,TYPE.MonkAbundantStep]"]),
             replaces: Some(&["MonkAbundantStep"]),
             grants: &[],
         },
@@ -589,7 +556,6 @@ pub fn archetype_swap_tables() -> &'static [ArchetypeSwapEntry] {
             archetype_name: "Qinggong Monk Diamond Body",
             description: Some("Swap Diamond Body for a ki power."),
             source_page: Some("p.51"),
-            prerequisites: Some(&["PRECLASS:1,Monk=1", "PREMULT:1,[PREABILITY:1,CATEGORY=Archetype,Monk Archetype ~ Qinggong Monk Diamond Body],[!PREABILITY:1,CATEGORY=Archetype,TYPE.MonkDiamondBody]"]),
             replaces: Some(&["MonkDiamondBody"]),
             grants: &[],
         },
@@ -600,7 +566,6 @@ pub fn archetype_swap_tables() -> &'static [ArchetypeSwapEntry] {
             archetype_name: "Qinggong Monk Diamond Soul",
             description: Some("Swap Diamond Soul for a ki power."),
             source_page: Some("p.51"),
-            prerequisites: Some(&["PRECLASS:1,Monk=1", "PREMULT:1,[PREABILITY:1,CATEGORY=Archetype,Monk Archetype ~ Qinggong Monk Diamond Soul],[!PREABILITY:1,CATEGORY=Archetype,TYPE.MonkDiamondSoul]"]),
             replaces: Some(&["MonkDiamondSoul"]),
             grants: &[],
         },
@@ -611,7 +576,6 @@ pub fn archetype_swap_tables() -> &'static [ArchetypeSwapEntry] {
             archetype_name: "Qinggong Monk Empty Body",
             description: Some("Swap Empty Body for a ki power."),
             source_page: Some("p.51"),
-            prerequisites: Some(&["PRECLASS:1,Monk=1", "PREMULT:1,[PREABILITY:1,CATEGORY=Archetype,Monk Archetype ~ Qinggong Monk Empty Body],[!PREABILITY:1,CATEGORY=Archetype,TYPE.MonkEmptyBody]"]),
             replaces: Some(&["MonkEmptyBody"]),
             grants: &[],
         },
@@ -622,7 +586,6 @@ pub fn archetype_swap_tables() -> &'static [ArchetypeSwapEntry] {
             archetype_name: "Qinggong Monk High Jump",
             description: Some("Swap High Jump for a ki power."),
             source_page: Some("p.51"),
-            prerequisites: Some(&["PRECLASS:1,Monk=1", "PREMULT:1,[PREABILITY:1,CATEGORY=Archetype,Monk Archetype ~ Qinggong Monk High Jump],[!PREABILITY:1,CATEGORY=Archetype,TYPE.MonkHighJump]"]),
             replaces: Some(&["MonkHighJump"]),
             grants: &[],
         },
@@ -633,7 +596,6 @@ pub fn archetype_swap_tables() -> &'static [ArchetypeSwapEntry] {
             archetype_name: "Qinggong Monk Perfect Self",
             description: Some("Swap Perfect Self for a ki power."),
             source_page: Some("p.51"),
-            prerequisites: Some(&["PRECLASS:1,Monk=1", "PREMULT:1,[PREABILITY:1,CATEGORY=Archetype,Monk Archetype ~ Qinggong Monk Perfect Self],[!PREABILITY:1,CATEGORY=Archetype,TYPE.MonkPerfectSelf]"]),
             replaces: Some(&["MonkPerfectSelf"]),
             grants: &[],
         },
@@ -644,7 +606,6 @@ pub fn archetype_swap_tables() -> &'static [ArchetypeSwapEntry] {
             archetype_name: "Qinggong Monk Quivering Palm",
             description: Some("Swap Quivering Palm for a ki power."),
             source_page: Some("p.51"),
-            prerequisites: Some(&["PRECLASS:1,Monk=1", "PREMULT:1,[PREABILITY:1,CATEGORY=Archetype,Monk Archetype ~ Qinggong Monk Quivering Palm],[!PREABILITY:1,CATEGORY=Archetype,TYPE.MonkQuiveringPalm]"]),
             replaces: Some(&["MonkQuiveringPalm"]),
             grants: &[],
         },
@@ -655,7 +616,6 @@ pub fn archetype_swap_tables() -> &'static [ArchetypeSwapEntry] {
             archetype_name: "Qinggong Monk Slow Fall",
             description: Some("Swap Slow Fall for a ki power."),
             source_page: Some("p.51"),
-            prerequisites: Some(&["PRECLASS:1,Monk=1", "PREMULT:1,[PREABILITY:1,CATEGORY=Archetype,Monk Archetype ~ Qinggong Monk Slow Fall],[!PREABILITY:1,CATEGORY=Archetype,TYPE.MonkSlowFall]"]),
             replaces: Some(&["MonkSlowFall"]),
             grants: &[],
         },
@@ -666,7 +626,6 @@ pub fn archetype_swap_tables() -> &'static [ArchetypeSwapEntry] {
             archetype_name: "Qinggong Monk Timeless Body",
             description: Some("Swap Timeless Body for a ki power."),
             source_page: Some("p.51"),
-            prerequisites: Some(&["PRECLASS:1,Monk=1", "PREMULT:1,[PREABILITY:1,CATEGORY=Archetype,Monk Archetype ~ Qinggong Monk Timeless Body],[!PREABILITY:1,CATEGORY=Archetype,TYPE.MonkTimelessBody]"]),
             replaces: Some(&["MonkTimelessBody"]),
             grants: &[],
         },
@@ -677,7 +636,6 @@ pub fn archetype_swap_tables() -> &'static [ArchetypeSwapEntry] {
             archetype_name: "Qinggong Monk Tongue of the Sun and Moon",
             description: Some("Swap Tongue of the Sun and Moon for a ki power."),
             source_page: Some("p.51"),
-            prerequisites: Some(&["PRECLASS:1,Monk=1", "PREMULT:1,[PREABILITY:1,CATEGORY=Archetype,Monk Archetype ~ Qinggong Monk Tongue of the Sun and Moon],[!PREABILITY:1,CATEGORY=Archetype,TYPE.MonkTongueOfTheSunAndMoon]"]),
             replaces: Some(&["MonkTongueOfTheSunAndMoon"]),
             grants: &[],
         },
@@ -688,7 +646,6 @@ pub fn archetype_swap_tables() -> &'static [ArchetypeSwapEntry] {
             archetype_name: "Qinggong Monk Wholeness of Body",
             description: Some("Swap Wholeness of Body for a ki power."),
             source_page: Some("p.51"),
-            prerequisites: Some(&["PRECLASS:1,Monk=1", "PREMULT:1,[PREABILITY:1,CATEGORY=Archetype,Monk Archetype ~ Qinggong Monk Wholeness of Body],[!PREABILITY:1,CATEGORY=Archetype,TYPE.MonkWholenessOfBody]"]),
             replaces: Some(&["MonkWholenessOfBody"]),
             grants: &[],
         },
@@ -699,7 +656,6 @@ pub fn archetype_swap_tables() -> &'static [ArchetypeSwapEntry] {
             archetype_name: "Vow Monk",
             description: Some("You can take vows to increase your ki pool."),
             source_page: Some("p.50"),
-            prerequisites: Some(&["PREABILITY:1,CATEGORY=Internal,Allow Vows", "PREMULT:1,[PREABILITY:1,CATEGORY=Archetype,Monk Archetype ~ Vow Monk],[!PREABILITY:1,CATEGORY=Archetype,TYPE.MonkStillMind]"]),
             replaces: Some(&["MonkStillMind"]),
             grants: &[],
         },
@@ -710,7 +666,6 @@ pub fn archetype_swap_tables() -> &'static [ArchetypeSwapEntry] {
             archetype_name: "Dual-Cursed Oracle",
             description: Some("Though doubly-inflicted with supernatural or physical hindrances, a dual-cursed oracle can manipulate fortune and gains greater insight into her mystery."),
             source_page: Some("p.58"),
-            prerequisites: Some(&["PRECLASS:1,Oracle=1", "PREMULT:1,[PREABILITY:1,CATEGORY=Archetype,Oracle Archetype ~ Dual-Cursed Oracle],[!PREABILITY:1,CATEGORY=Archetype,TYPE.OracleMysterySkills,TYPE.OracleMysterySpell2,TYPE.OracleMysterySpell4,TYPE.OracleMysterySpell6]"]),
             replaces: Some(&["OracleMysterySkills", "OracleMysterySpell2", "OracleMysterySpell4", "OracleMysterySpell6"]),
             grants: &[
                 ArchetypeGrant { grants_feature_key: "Dual-Cursed Oracle ~ Second Curse", at_level: 1, description: Some("You must choose two curses at 1st level. One of these curses (oracle's choice) never changes its abilities as you gain levels; for example, an oracle with clouded vision never gains darkvision 60 feet, blindsense, or blindsight. The other curse comes with its normal benefits."), benefit: None },
@@ -724,7 +679,6 @@ pub fn archetype_swap_tables() -> &'static [ArchetypeSwapEntry] {
             archetype_name: "Enlightened Philosopher",
             description: Some("The enlightened philosopher seeks enlightenment through compassion, moderation, and humility."),
             source_page: Some("p.58"),
-            prerequisites: Some(&["PREALIGN:LN,LG,LN,LE", "PRECLASS:1,Oracle=1", "PREMULT:1,[PREABILITY:1,CATEGORY=Archetype,Oracle Archetype ~ Enlightened Philosopher],[!PREABILITY:1,CATEGORY=Archetype,TYPE.OracleMysterySkills,TYPE.OracleMysterySpell4,TYPE.OracleMysterySpell6,TYPE.OracleMysterySpell8,TYPE.OracleMysterySpell10,TYPE.OracleMysterySpell12,TYPE.OracleMysterySpell14,TYPE.OracleMysterySpell16,TYPE.OracleMysterySpell18,TYPE.OracleRevelation7,TYPE.OracleFinalRevelation]"]),
             replaces: Some(&["OracleMysterySkills", "OracleMysterySpell4", "OracleMysterySpell6", "OracleMysterySpell8", "OracleMysterySpell10", "OracleMysterySpell12", "OracleMysterySpell14", "OracleMysterySpell16", "OracleMysterySpell18", "OracleRevelation7", "OracleFinalRevelation"]),
             grants: &[
                 ArchetypeGrant { grants_feature_key: "Lore Mystery ~ Mental Acuity", at_level: 7, description: None, benefit: None },
@@ -738,7 +692,6 @@ pub fn archetype_swap_tables() -> &'static [ArchetypeSwapEntry] {
             archetype_name: "Planar Oracle",
             description: Some("A planar oracle has an affinity with one of the Outer Planes."),
             source_page: Some("p.59"),
-            prerequisites: Some(&["PRECLASS:1,Oracle=1", "PREMULT:1,[PREABILITY:1,CATEGORY=Archetype,Oracle Archetype ~ Planar Oracle],[!PREABILITY:1,CATEGORY=Archetype,TYPE.OracleMysterySpell2,TYPE.OracleMysterySpell4,TYPE.OracleMysterySpell6,TYPE.OracleMysterySpell8,TYPE.OracleMysterySpell10,TYPE.OracleMysterySpell12,TYPE.OracleMysterySpell14,TYPE.OracleMysterySpell16,TYPE.OracleMysterySpell18,TYPE.OracleRevelation3,TYPE.OracleFinalRevelation]"]),
             replaces: Some(&["OracleMysterySpell2", "OracleMysterySpell4", "OracleMysterySpell6", "OracleMysterySpell8", "OracleMysterySpell10", "OracleMysterySpell12", "OracleMysterySpell14", "OracleMysterySpell16", "OracleMysterySpell18", "OracleRevelation3", "OracleFinalRevelation"]),
             grants: &[
                 ArchetypeGrant { grants_feature_key: "Planar Oracle ~ Revelations", at_level: 1, description: Some("Choose an outer plane with which you have affinity."), benefit: None },
@@ -752,7 +705,6 @@ pub fn archetype_swap_tables() -> &'static [ArchetypeSwapEntry] {
             archetype_name: "Possessed Oracle",
             description: Some("Some oracles are possessed by spirits, demons, or similar beings."),
             source_page: Some("p.59"),
-            prerequisites: Some(&["PREABILITY:1,CATEGORY=Special Ability,Oracle ~ Haunted,Oracle ~ Tongues,Oracle ~ Pranked", "PRECLASS:1,Oracle=1", "PREMULT:1,[PREABILITY:1,CATEGORY=Archetype,Oracle Archetype ~ Possessed Oracle],[!PREABILITY:1,CATEGORY=Archetype,TYPE.OracleMysterySpell2,TYPE.OracleMysterySpell4,TYPE.OracleMysterySpell6,TYPE.OracleMysterySpell8,TYPE.OracleMysterySpell10,TYPE.OracleMysterySpell12,TYPE.OracleMysterySpell16,TYPE.OracleRevelation1]"]),
             replaces: Some(&["OracleMysterySpell2", "OracleMysterySpell4", "OracleMysterySpell6", "OracleMysterySpell8", "OracleMysterySpell10", "OracleMysterySpell12", "OracleMysterySpell16", "OracleRevelation1"]),
             grants: &[
                 ArchetypeGrant { grants_feature_key: "Possessed Oracle ~ Two Minds", at_level: 1, description: Some("You gain a +2 bonus on Will saves against enchantment spells or effects."), benefit: None },
@@ -765,7 +717,6 @@ pub fn archetype_swap_tables() -> &'static [ArchetypeSwapEntry] {
             archetype_name: "Seer",
             description: Some("While all oracles possess some ability at divination, the seer is a true prophet, able to see things as they really are, or will be."),
             source_page: Some("p.59"),
-            prerequisites: Some(&["PRECLASS:1,Oracle=1", "PREMULT:1,[PREABILITY:1,CATEGORY=Archetype,Oracle Archetype ~ Seer],[!PREABILITY:1,CATEGORY=Archetype,TYPE.OracleMysterySpell4,TYPE.OracleMysterySpell6,TYPE.OracleMysterySpell8,TYPE.OracleMysterySpell10,TYPE.OracleMysterySpell12,TYPE.OracleMysterySpell14,TYPE.OracleMysterySpell16,TYPE.OracleMysterySpell18,TYPE.OracleRevelation1,TYPE.OracleRevelation3]"]),
             replaces: Some(&["OracleMysterySpell4", "OracleMysterySpell6", "OracleMysterySpell8", "OracleMysterySpell10", "OracleMysterySpell12", "OracleMysterySpell14", "OracleMysterySpell16", "OracleMysterySpell18", "OracleRevelation1", "OracleRevelation3"]),
             grants: &[
                 ArchetypeGrant { grants_feature_key: "Nature Mystery ~ Natural Divination", at_level: 1, description: None, benefit: None },
@@ -779,7 +730,6 @@ pub fn archetype_swap_tables() -> &'static [ArchetypeSwapEntry] {
             archetype_name: "Oath against Corruption",
             description: Some("When you take this oath, you become a hunter of aberrations, protecting the common people from these bizarre threats."),
             source_page: Some("p.60"),
-            prerequisites: Some(&["PRECLASS:1,Paladin=1", "PREMULT:1,[PREABILITY:1,CATEGORY=Archetype,Paladin Archetype ~ Oath against Corruption],[!PREABILITY:1,CATEGORY=Archetype,TYPE.PaladinAuraOfCourage,TYPE.PaladinAuraOfJustice,TYPE.PaladinHolyChampion]"]),
             replaces: Some(&["PaladinAuraOfCourage", "PaladinAuraOfJustice", "PaladinHolyChampion"]),
             grants: &[
                 ArchetypeGrant { grants_feature_key: "Oath against Corruption ~ Aura of Purity", at_level: 3, description: Some("You gain a +4 sacred bonus on saves against spells and effects from creatures of the aberration type. Allies within 10 feet gain a +1 sacred bonus on these saves. This ability functions only while you are conscious, not if you are unconscious or dead."), benefit: None },
@@ -795,7 +745,6 @@ pub fn archetype_swap_tables() -> &'static [ArchetypeSwapEntry] {
             archetype_name: "Oath against Fiends",
             description: Some("You are constantly on the lookout for malicious fiendish insurgence into the world, and face it with swift and unwavering defiance."),
             source_page: Some("p.61"),
-            prerequisites: Some(&["PRECLASS:1,Paladin=1", "PREMULT:1,[PREABILITY:1,CATEGORY=Archetype,Paladin Archetype ~ Oath against Fiends],[!PREABILITY:1,CATEGORY=Archetype,TYPE.PaladinAuraOfResolve,TYPE.PaladinMercy,TYPE.PaladinMercy9]"]),
             replaces: Some(&["PaladinAuraOfResolve", "PaladinMercy9"]),
             grants: &[
                 ArchetypeGrant { grants_feature_key: "Oath against Fiends ~ Anchoring Aura", at_level: 8, description: Some("Your aura hampers extradimensional travel by evil outsiders. The aura extends 20 feet from you. Evil outsiders attempting to use abilities such as dimension door, plane shift, or teleport to leave or enter the aura must succeed at a Will save (DC %1); failure means the ability does not function, as if the outsider were affected by dimensional anchor. The aura functions only while the paladin is conscious, not if she is unconscious or dead. Alternatively, as an immediate action, the paladin can expend one use of her smite evil ability to target an evil outsider within 30 feet with dimensional anchor. A targeted dimensional anchor persists even if the paladin is unconscious or dead.|AnchoringAuraDC"), benefit: None },
@@ -810,7 +759,6 @@ pub fn archetype_swap_tables() -> &'static [ArchetypeSwapEntry] {
             archetype_name: "Oath against Savagery",
             description: Some("You are a champion of order, pledging to battle the hordes of goblinoids, orcs, hostile barbarians, and similar savages that nip at the heels of civilization, as well as those who gnaw on society from within, such as thieves' and assassins' guilds."),
             source_page: Some("p.61"),
-            prerequisites: Some(&["PRECLASS:1,Paladin=1", "PREMULT:1,[PREABILITY:1,CATEGORY=Archetype,Paladin Archetype ~ Oath against Savagery],[!PREABILITY:1,CATEGORY=Archetype,TYPE.PaladinDivineGrace,TYPE.PaladinAuraOfJustice]"]),
             replaces: Some(&["PaladinDivineGrace", "PaladinAuraOfJustice"]),
             grants: &[
                 ArchetypeGrant { grants_feature_key: "Oath against Savagery ~ Holy Reach", at_level: 2, description: Some("You can expend one use of your smite evil ability to extend your natural reach by 5 feet for 1 minute. This does not stack with the Lunge feat."), benefit: None },
@@ -825,7 +773,6 @@ pub fn archetype_swap_tables() -> &'static [ArchetypeSwapEntry] {
             archetype_name: "Oath against Undeath",
             description: Some("You vow to restore the natural state of death to any animate corpse you encounter, and destroy the undead energy in the process."),
             source_page: Some("p.61"),
-            prerequisites: Some(&["PRECLASS:1,Paladin=1", "PREMULT:1,[PREABILITY:1,CATEGORY=Archetype,Paladin Archetype ~ Oath against Undeath],[!PREABILITY:1,CATEGORY=Archetype,TYPE.PaladinDetectEvil,TYPE.PaladinMercy,TYPE.PaladinMercy3,TYPE.PaladinMercy9,TYPE.PaladinAuraOfResolve,TYPE.PaladinAuraOfJustice]"]),
             replaces: Some(&["PaladinDetectEvil", "PaladinMercy3", "PaladinMercy9", "PaladinAuraOfResolve", "PaladinAuraOfJustice"]),
             grants: &[
                 ArchetypeGrant { grants_feature_key: "Oath against Undeath ~ Detect Undead", at_level: 1, description: Some("This ability works like the standard paladin ability to detect evil, except as detect undead instead of detect evil."), benefit: None },
@@ -842,7 +789,6 @@ pub fn archetype_swap_tables() -> &'static [ArchetypeSwapEntry] {
             archetype_name: "Oath against the Wyrm",
             description: Some("You swear to protect others against the predation of dragonkind."),
             source_page: Some("p.62"),
-            prerequisites: Some(&["PRECLASS:1,Paladin=1", "PREMULT:1,[PREABILITY:1,CATEGORY=Archetype,Paladin Archetype ~ Oath against the Wyrm],[!PREABILITY:1,CATEGORY=Archetype,TYPE.PaladinChannelPositiveEnergy,TYPE.PaladinDivineBond,TYPE.PaladinHolyChampion]"]),
             replaces: Some(&["PaladinChannelPositiveEnergy", "PaladinDivineBond", "PaladinHolyChampion"]),
             grants: &[
                 ArchetypeGrant { grants_feature_key: "Oath against the Wyrm ~ Breath Evasion", at_level: 4, description: Some("You gain evasion, but only against the breath weapons of creatures with the dragon type."), benefit: None },
@@ -858,7 +804,6 @@ pub fn archetype_swap_tables() -> &'static [ArchetypeSwapEntry] {
             archetype_name: "Oath of Charity",
             description: Some("You dedicate your life to protecting those who can't protect themselves and giving to those who are in need."),
             source_page: Some("p.62"),
-            prerequisites: Some(&["PRECLASS:1,Paladin=1", "PREMULT:1,[PREABILITY:1,CATEGORY=Archetype,Paladin Archetype ~ Oath of Charity],[!PREABILITY:1,CATEGORY=Archetype,TYPE.PaladinLayOnHands,TYPE.PaladinDivineBond]"]),
             replaces: Some(&["PaladinLayOnHands", "PaladinDivineBond"]),
             grants: &[
                 ArchetypeGrant { grants_feature_key: "Oath of Charity ~ Charitable Hands", at_level: 2, description: Some("You heal 50%% less when you use lay on hands on yourself, but 50%% more than the normal amount when you use it to heal others. Using lay on hands to harm undead deals the normal amount of damage."), benefit: None },
@@ -873,7 +818,6 @@ pub fn archetype_swap_tables() -> &'static [ArchetypeSwapEntry] {
             archetype_name: "Oath of Chastity",
             description: Some("You prove your purity by way of your action and your abstinence from romantic activities."),
             source_page: Some("p.62"),
-            prerequisites: Some(&["PRECLASS:1,Paladin=1", "PREMULT:1,[PREABILITY:1,CATEGORY=Archetype,Paladin Archetype ~ Oath of Chastity],[!PREABILITY:1,CATEGORY=Archetype,TYPE.PaladinDivineGrace,TYPE.PaladinAuraOfResolve]"]),
             replaces: Some(&["PaladinDivineGrace", "PaladinAuraOfResolve"]),
             grants: &[
                 ArchetypeGrant { grants_feature_key: "Oath of Chastity ~ Pure of Mind", at_level: 2, description: Some("You gain a +4 sacred bonus on saves against charm effects and figments, and gain a +%1 bonus on Will saving throws.|PureOfMindBonus"), benefit: None },
@@ -888,7 +832,6 @@ pub fn archetype_swap_tables() -> &'static [ArchetypeSwapEntry] {
             archetype_name: "Oath of Loyalty",
             description: Some("Your word is a promise, a sacred bond, and also greater power in the cause of law and good."),
             source_page: Some("p.63"),
-            prerequisites: Some(&["PRECLASS:1,Paladin=1", "PREMULT:1,[PREABILITY:1,CATEGORY=Archetype,Paladin Archetype ~ Oath of Loyalty],[!PREABILITY:1,CATEGORY=Archetype,TYPE.PaladinSmiteEvil]"]),
             replaces: Some(&["PaladinSmiteEvil"]),
             grants: &[
                 ArchetypeGrant { grants_feature_key: "Oath of Loyalty ~ Loyal Oath", at_level: 1, description: Some("As a swift action, you can choose a willing creature within line of sight as the target of your loyal oath. When you are adjacent to the target of your loyal oath, you grant the target a +%1 sacred bonus on saving throws and to Armor Class. The loyal oath lasts 1 minute, or until you dismiss it (a free action) or discharge it (see below), whichever comes first. If the target is struck by an enemy and you are adjacent to that enemy, as an immediate action you may make a single melee attack against that enemy; making this attack ends the loyal oath. You may use your loyal oath %2/day.|LoyalOathBonus|LoyalOathTimes"), benefit: None },
@@ -903,7 +846,6 @@ pub fn archetype_swap_tables() -> &'static [ArchetypeSwapEntry] {
             archetype_name: "Oath of Vengeance",
             description: Some("You are always on the hunt for those who have perpetrated evil, and are the instrument of Heaven's most definitive and implacable judgment."),
             source_page: Some("p.63"),
-            prerequisites: Some(&["PRECLASS:1,Paladin=1", "PREMULT:1,[PREABILITY:1,CATEGORY=Archetype,Paladin Archetype ~ Oath of Vengeance],[!PREABILITY:1,CATEGORY=Archetype,TYPE.PaladinChannelPositiveEnergy,TYPE.PaladinAuraOfJustice]"]),
             replaces: Some(&["PaladinChannelPositiveEnergy", "PaladinAuraOfJustice"]),
             grants: &[
                 ArchetypeGrant { grants_feature_key: "Oath of Vengeance ~ Channel Wrath", at_level: 4, description: Some("You can spend two uses of your lay on hands ability to gain an extra use of smite evil that day. This ability has no effect for a paladin who does not have the smite evil ability."), benefit: None },
@@ -918,7 +860,6 @@ pub fn archetype_swap_tables() -> &'static [ArchetypeSwapEntry] {
             archetype_name: "Trapper",
             description: Some("A trapper is a ranger who focuses exclusively on traps, rather than learning conventional magic."),
             source_page: Some("p.65"),
-            prerequisites: Some(&["PRECLASS:1,Ranger=1", "PREMULT:1,[PREABILITY:1,CATEGORY=Archetype,Ranger Archetype ~ Trapper],[!PREABILITY:1,CATEGORY=Archetype,TYPE.RangerSpells]"]),
             replaces: Some(&["RangerSpells"]),
             grants: &[
                 ArchetypeGrant { grants_feature_key: "Trapper ~ Trapfinding", at_level: 1, description: Some("A trapper adds 1/2 her ranger level on Perception skill checks made to locate traps and on Disable Device skill checks (minimum +1). A trapper can use Disable Device to disarm magic traps."), benefit: None },
@@ -934,7 +875,6 @@ pub fn archetype_swap_tables() -> &'static [ArchetypeSwapEntry] {
             archetype_name: "Broodmaster",
             description: Some("A broodmaster forges a link with multiple smaller eidolons that make up his brood."),
             source_page: Some("p.78"),
-            prerequisites: Some(&["PRECLASS:1,Summoner=1", "PREMULT:1,[PREABILITY:1,CATEGORY=Archetype,Summoner Archetype ~ Broodmaster],[!PREABILITY:1,CATEGORY=Archetype,TYPE.SummonerEidolon,TYPE.SummonerLifeLink,TYPE.SummonerLifeBond,TYPE.SummonerMergeForms]"]),
             replaces: Some(&["SummonerLifeLink", "SummonerLifeBond", "SummonerMergeForms"]),
             grants: &[
                 ArchetypeGrant { grants_feature_key: "Broodmaster ~ Eidolon Brood", at_level: 2, description: Some("You summon two Small eidolons to your side, each less powerful than the single eidolon of a standard summoner."), benefit: None },
@@ -951,7 +891,6 @@ pub fn archetype_swap_tables() -> &'static [ArchetypeSwapEntry] {
             archetype_name: "Evolutionist",
             description: Some("An evolutionist possesses greater power over his eidolon's form, and is able to evolve his eidolon and its abilities to meet any challenge or face any threat as it comes up, seemingly on a whim."),
             source_page: Some("p.79"),
-            prerequisites: Some(&["PRECLASS:1,Summoner=1", "PREMULT:1,[PREABILITY:1,CATEGORY=Archetype,Summoner Archetype ~ Evolutionist],[!PREABILITY:1,CATEGORY=Archetype,TYPE.SummonerMakersCall,TYPE.SummonerTransposition,TYPE.SummonerGreaterShieldAlly]"]),
             replaces: Some(&["SummonerMakersCall", "SummonerTransposition", "SummonerGreaterShieldAlly"]),
             grants: &[
                 ArchetypeGrant { grants_feature_key: "Evolutionist ~ Mutate Eidolon", at_level: 6, description: Some("You can change your eidolon's evolutions as if you had gained a level. To mutate your eidolon, you must perform an arcane ritual that requires 24 hours of uninterrupted concentration and costs %1 gp in material components.|classlevel(\"Summoner\")*200"), benefit: None },
@@ -966,7 +905,6 @@ pub fn archetype_swap_tables() -> &'static [ArchetypeSwapEntry] {
             archetype_name: "Master Summoner",
             description: Some("A master summoner sacrifices the power of his eidolon in favor of summoning a plethora of otherworldly creatures to aid him."),
             source_page: Some("p.80"),
-            prerequisites: Some(&["PRECLASS:1,Summoner=1", "PREMULT:1,[PREABILITY:1,CATEGORY=Archetype,Summoner Archetype ~ Master Summoner],[!PREABILITY:1,CATEGORY=Archetype,TYPE.SummonerEidolon,TYPE.SummonerShieldAlly,TYPE.SummonerGreaterShieldAlly,TYPE.SummonerBondSenses,TYPE.SummonerSummonMonster]"]),
             replaces: Some(&["SummonerShieldAlly", "SummonerGreaterShieldAlly", "SummonerBondSenses", "SummonerSummonMonster"]),
             grants: &[
                 ArchetypeGrant { grants_feature_key: "Master Summoner ~ Lesser Eidolon", at_level: 1, description: Some("You possess the ability to summon a powerful outsider called an eidolon. You always summon an aspect of the same creature. Your eidolon has your alignment and can speak all of your languages. Your eidolon is treated as a summoned creature, except that it is not sent back to its home plane until reduced to a number of negative hit points equal to or greater than its Constitution score. In addition, due to its tie to you, your eidolon can touch and attack creatures warded by protection from evil and similar effects that prevent contact with summoned creatures. You can summon your eidolon in a ritual that takes 1 minute to perform. When summoned in this way, your eidolon's hit points are unchanged from the last time it was summoned. The only exception to this is if your eidolon was slain, in which case it returns with half its normal hit points. Your eidolon remains until dismissed (a standard action). If your eidolon is sent back to its home plane due to damage, it cannot be summoned again until the following day. Your eidolon cannot be sent back to its home plane by means of dispel magic, but spells such as dismissal and banishment work normally."), benefit: None },
@@ -981,7 +919,6 @@ pub fn archetype_swap_tables() -> &'static [ArchetypeSwapEntry] {
             archetype_name: "Beast-Bonded",
             description: Some("While all witches are intimately tied to their familiars, a beast-bonded witch's craft focuses specifically on her familiar bond and developing the relationship with her patron through her familiar."),
             source_page: Some("p.83"),
-            prerequisites: Some(&["PRECLASS:1,Witch=1", "PREMULT:1,[PREABILITY:1,CATEGORY=Archetype,Witch Archetype ~ Beast-Bonded],[!PREABILITY:1,CATEGORY=Archetype,TYPE.WitchHexes,TYPE.WitchHex4,TYPE.WitchHex8,TYPE.WitchHex10,TYPE.WitchFamiliar]"]),
             replaces: Some(&["WitchHex4", "WitchHex8", "WitchHex10"]),
             grants: &[
                 ArchetypeGrant { grants_feature_key: "Beast-Bonded ~ Transfer Feats", at_level: 1, description: Some("Whenever you are capable of learning a new feat, you may choose to instead have your familiar learn the feat as a bonus feat. The familiar must meet the prerequisites for any feats that it learns this way. If your familiar is lost or dies, you can reclaim the feat slots and select new feats for yourself, or apply the slots toward your new familiar."), benefit: None },
@@ -997,7 +934,6 @@ pub fn archetype_swap_tables() -> &'static [ArchetypeSwapEntry] {
             archetype_name: "Gravewalker",
             description: Some("Having much in common with necromancers, the gravewalker is obsessed with the occult manipulations of the dead, particularly mindless undead such as zombies. Unlike the creations of standard necromancers, a gravewalker's creations remain forever tied to her will, and she can produce vile apparitions of tremendous power."),
             source_page: Some("p.84"),
-            prerequisites: Some(&["PRECLASS:1,Witch=1", "PREMULT:1,[PREABILITY:1,CATEGORY=Archetype,Witch Archetype ~ Gravewalker],[!PREABILITY:1,CATEGORY=Archetype,TYPE.WitchPatron,TYPE.WitchPatronSpell4,TYPE.WitchPatronSpell6,TYPE.WitchPatronSpell12,TYPE.WitchPatronSpell14,TYPE.WitchPatronSpell16,TYPE.WitchHexes,TYPE.WitchHex1,TYPE.WitchHex4,TYPE.WitchHex8,TYPE.WitchFamiliar]"]),
             replaces: Some(&["WitchPatronSpell4", "WitchPatronSpell6", "WitchPatronSpell12", "WitchPatronSpell14", "WitchPatronSpell16", "WitchFamiliar", "WitchHex1", "WitchHex4", "WitchHex8"]),
             grants: &[
                 ArchetypeGrant { grants_feature_key: "Gravewalker ~ Spell Poppet", at_level: 1, description: Some("You carry around a gristly, inanimate poppet stitched from human skin and stuffed with shards of bone, fingernails, and grave dirt. Your spells come from the will of evil spirits residing in the poppet, and its ability to hold spells functions in a manner identical to the way a witch's spells are granted by her familiar. You must commune with your poppet each day to prepare your spells and cannot prepare spells that are not stored in the poppet."), benefit: None },
@@ -1015,7 +951,6 @@ pub fn archetype_swap_tables() -> &'static [ArchetypeSwapEntry] {
             archetype_name: "Hedge Witch",
             description: Some("Among witches, there are those who devote themselves to the care of others and restrict their practices to the healing arts. They often take the place of clerics in rural communities and may wander the countryside servicing the needs of several small communities."),
             source_page: Some("p.84"),
-            prerequisites: Some(&["PRECLASS:1,Witch=1", "PREMULT:1,[PREABILITY:1,CATEGORY=Archetype,Witch Archetype ~ Hedge Witch],[!PREABILITY:1,CATEGORY=Archetype,TYPE.WitchHexes,TYPE.WitchHex4,TYPE.WitchHex8]"]),
             replaces: Some(&["WitchHex4", "WitchHex8"]),
             grants: &[
                 ArchetypeGrant { grants_feature_key: "Hedge Witch ~ Spontaneous Healing", at_level: 4, description: Some("You can channel stored spell energy into healing spells that you did not prepare ahead of time. You can 'lose' any prepared spell that is not an orison in order to cast any cure spell of the same spell level or lower, even if you don't know that cure spell."), benefit: None },
@@ -1029,7 +964,6 @@ pub fn archetype_swap_tables() -> &'static [ArchetypeSwapEntry] {
             archetype_name: "Sea Witch",
             description: Some("A sea witch's affinities are tied to the vast oceans and the rolling waves. Her magic concerns the moon, tides, water, and winds, and she is most at peace when she is upon or near the sea."),
             source_page: Some("p.85"),
-            prerequisites: Some(&["PRECLASS:1,Witch=1", "PREMULT:1,[PREABILITY:1,CATEGORY=Archetype,Witch Archetype ~ Sea Witch],[!PREABILITY:1,CATEGORY=Archetype,TYPE.WitchPatron,TYPE.WitchPatronSpell2,TYPE.WitchPatronSpell4,TYPE.WitchPatronSpell6,TYPE.WitchPatronSpell8,TYPE.WitchPatronSpell10,TYPE.WitchPatronSpell12,TYPE.WitchPatronSpell14,TYPE.WitchPatronSpell16,TYPE.WitchPatronSpell18,TYPE.WitchHexes,TYPE.WitchHex1]"]),
             replaces: Some(&["WitchPatronSpell2", "WitchPatronSpell4", "WitchPatronSpell6", "WitchPatronSpell8", "WitchPatronSpell10", "WitchPatronSpell12", "WitchPatronSpell14", "WitchPatronSpell16", "WitchPatronSpell18", "WitchHex1"]),
             grants: &[
                 ArchetypeGrant { grants_feature_key: "Sea Witch ~ Know Direction", at_level: 1, description: Some("So long as you are near a sizable body of water (at least a lake with a diameter of 1 mile or more), you may cast know direction at will as a spelllike ability."), benefit: None },
@@ -1044,7 +978,6 @@ pub fn archetype_swap_tables() -> &'static [ArchetypeSwapEntry] {
             archetype_name: "Scrollmaster",
             description: Some("To some wizards, a scroll is not just a written form of a spell, it is a physical weapon meant to be used in combat like a sword or a shield. These strange wizards enter battle armed with scrolls, often one in each in each hand, practicing combat techniques resembling some monk martial arts."),
             source_page: Some("p.89"),
-            prerequisites: Some(&["PRECLASS:1,Wizard=1", "PREMULT:1,[PREABILITY:1,CATEGORY=Archetype,Wizard Archetype ~ Scrollmaster],[!PREABILITY:1,CATEGORY=Archetype,TYPE.WizardArcaneBond,TYPE.WizardFeat10,TYPE.WizardBonusFeats]"]),
             replaces: Some(&["WizardArcaneBond", "WizardFeat10"]),
             grants: &[
                 ArchetypeGrant { grants_feature_key: "Scrollmaster ~ Scroll Blade", at_level: 1, description: Some("You can wield any paper, parchment, or cloth scroll as if it were a melee weapon. In your hands, the scroll acts as a short sword with an enhancement bonus equal to 1/2 the level of the highest-level wizard spell on the scroll; a scroll with only a cantrip or 1st-level spell on it counts as a masterwork short sword. You are proficient in this weapon, and feats and abilities that affect short swords (such as Weapon Focus) apply to this weapon. You cannot wield two scrollblades at the same time. Activating this ability is a free action. A scroll blade only retains its abilities in your hands. The scroll blade has hardness 0 and hit points equal to the highest-level wizard spell on the scroll. Each successful hit by the scroll blade reduces its hit points by 1; this damage cannot be repaired, but does not affect casting from the scroll. When its hit points reach 0, the scroll is destroyed. If a scroll contains a spell with a metamagic feat, this ability uses the original spell level of the spell (a scroll of empowered fireball counts as a 3rd-level spell)."), benefit: None },

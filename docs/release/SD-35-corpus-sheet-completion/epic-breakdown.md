@@ -514,6 +514,16 @@ crate and frontend suites green; the 19 on-screen tests still pass.
 
 ### AT-35-E6-004 — the gate reads zero
 
+**"Zero" means zero CODE hits** — operator ruling B14, 2026-09-11 (`decisions.md §17`). A live-side
+doc comment that quotes an ingest-format token is provenance, not a read, and the gate no longer
+counts one. Cited census, which is what forced the ruling:
+`artifacts/epic-6-pcgen-exit/AT-35-E6-003-SWEEP_cycle1_receipt.md` and its
+`…_cycle1_residue_shape_census.py` — `comment_hits=2686 code_hits=3628`, `files_comment_only=114`,
+`max_files_clearable_by_code_work_alone=10`, which made the old reading of this criterion
+unreachable by any code work. The gate's own `live_files=` / `live_hits=` lines are now code-only
+counts; nothing else about this criterion changes, and the resulting 197→81 drop is an instrument
+correction that closes nothing.
+
 **Evidence:** `python3 scripts/pcgen_residue_gate.py --check --closure` → `live_files=0
 live_hits=0 verdict=PASS`, wired as the stage's closure mode from this cycle on. The oracle
 comparison at the end of the epic agrees with the one at its start. `cargo tree` for the

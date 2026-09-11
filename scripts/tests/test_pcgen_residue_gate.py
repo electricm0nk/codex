@@ -198,6 +198,79 @@ class TestRebaseline(_TreeCase):
         self.assertEqual((base["files"], base["hits"]), (1, 1))
 
 
+class TestCommentAwareness(_TreeCase):
+    """Operator ruling B14 (2026-09-11): a doc comment that quotes an
+    ingest-format token is PROVENANCE, not a read. The gate counts hits in
+    executable code; it does not count hits whose line is a comment. A comment
+    must never mask a real read on another line of the same file.
+
+    RED->GREEN, executed rather than narrated: plant a token in a CODE line --
+    the gate fails; move that same token into a comment -- the gate passes;
+    plant a second token in code beside that comment -- the gate fails again.
+    """
+
+    def test_code_line_fails_comment_line_passes_and_code_beside_a_comment_fails_again(self):
+        _run(["--rebaseline", "--root", self.root, "--baseline", self.baseline])
+        planted = "src/rules_core/planted.rs"
+
+        # 1. the token in CODE -- a real live-side read.
+        _write(self.root, planted,
+               'const Q: &[&str] = &["PREFEAT:1,Dodge"];\n')
+        code, out = _run(["--check", "--root", self.root, "--baseline", self.baseline])
+        self.assertEqual(code, 1, out)
+        self.assertEqual(
+            _last_line(out),
+            "live_files=2 live_hits=2 baseline_files=1 baseline_hits=1 verdict=FAIL_INCREASED",
+        )
+
+        # 2. the same token, now provenance prose beside clean code.
+        _write(self.root, planted,
+               '//! Prereq came from `PREFEAT:1,Dodge` in the ingest format.\n'
+               'const Q: &[&str] = &["Dodge"];\n')
+        code, out = _run(["--check", "--root", self.root, "--baseline", self.baseline])
+        self.assertEqual(code, 0, out)
+        self.assertEqual(
+            _last_line(out),
+            "live_files=1 live_hits=1 baseline_files=1 baseline_hits=1 verdict=PASS",
+        )
+
+        # 3. a real read on another line of the same file -- the comment must
+        #    not mask it.
+        _write(self.root, planted,
+               '//! Prereq came from `PREFEAT:1,Dodge` in the ingest format.\n'
+               'const Q: &[&str] = &["PREFEAT:1,Dodge"];\n')
+        code, out = _run(["--check", "--root", self.root, "--baseline", self.baseline])
+        self.assertEqual(code, 1, out)
+        self.assertEqual(
+            _last_line(out),
+            "live_files=2 live_hits=2 baseline_files=1 baseline_hits=1 verdict=FAIL_INCREASED",
+        )
+
+    def test_every_rust_comment_marker_is_provenance(self):
+        _write(self.root, "src/rules_core/provenance.rs",
+               "//! module doc: BONUS:STAT|STR|2\n"
+               "/// item doc: DEFINE:X|0\n"
+               "    // indented line comment: PREFEAT:1,Dodge\n"
+               "// plain: raw_tokens render_pcgen_desc %CHOICE %LIST TYPE=Combat DESC:Words\n")
+        res = prg.scan(self.root)
+        self.assertEqual(res.live_files, 1)  # only setUp's reader.rs
+        self.assertEqual(res.live_hits, 1)
+        self.assertEqual(res.identifier_files, 1)
+        self.assertEqual(res.identifier_hits, 1)
+
+    def test_a_trailing_comment_after_code_still_counts_the_code(self):
+        # The distinction is per LINE: a line whose left-stripped form starts
+        # with `//` is prose. Anything else is code, trailing comment or not --
+        # counting a whole line as prose because it ends in one would let a
+        # real read hide behind `// ...`.
+        _write(self.root, "src/rules_core/mixed.rs",
+               'let t = &r.raw_tokens; // BONUS:STAT|STR|2 is where this came from\n')
+        res = prg.scan(self.root)
+        self.assertEqual(res.live_files, 2)
+        self.assertEqual(res.hits_by_pattern["raw_tokens"], 2)
+        self.assertEqual(res.hits_by_pattern["BONUS:"], 1)
+
+
 class TestLiveRootsAreTheDesignBoundary(unittest.TestCase):
     """`technical-design.md §0`'s path table, pinned so a quiet widening of
     the allow-list (`acceptance-and-verification.md §3a`) fails here."""

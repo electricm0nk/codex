@@ -18,7 +18,7 @@ process defect** recorded by the epic wrap-up.
 
 ## Open blockers
 
-### 2026-09-11 — AT-35-E6-003-SWEEP cycle 1 — does a live-side doc-comment count as a PCGen read?
+### ~~2026-09-11 — AT-35-E6-003-SWEEP cycle 1 — does a live-side doc-comment count as a PCGen read?~~ — **RESOLVED 2026-09-11 by operator ruling B14 (`decisions.md §17`): NO.**
 
 **Pauses:** Epic 6's remaining file-count work, and `AT-35-E6-004`'s `--closure` target.
 **Asked by:** AT-35-E6-003-SWEEP cycle 1 (`artifacts/epic-6-pcgen-exit/AT-35-E6-003-SWEEP_cycle1_receipt.md`).
@@ -34,6 +34,15 @@ Clearing them means deleting ~2,686 lines of derivation provenance, which the sw
 standing rule forbids ("the count must fall because the reads are gone"). **A cycle may not pick
 between the two silently** — one answer costs a bounded relocation pass, the other changes the
 instrument. Both branches are scoped in the receipt's *Next-cycle scope* row.
+
+**Ruled, and discharged.** The operator ruled **no**: the rule was always "not one line of PCGen in
+our live code", and a comment does not execute. A comment recording where a converted rule's number
+came from is provenance, and provenance is kept. `scripts/pcgen_residue_gate.py` became
+comment-aware in AT-35-E6-003-SWEEP cycle 2, pinned RED→GREEN by
+`scripts/tests/test_pcgen_residue_gate.py::TestCommentAwareness`, with no path exempted, no regex
+weakened and `scripts/pcgen-residue-baseline.env` untouched. The resulting `live_files` 197 → 81 is
+an **instrument correction that closes nothing** (`correction
+1789141003593-at-35-e6-003-sweep-efd5eb`). This blocker no longer pauses anything.
 
 ## Status matrix
 
@@ -54,6 +63,69 @@ Corpus at the `tranche/15` cut (2026-09-07, `4c6c57eb9f`, identical to authoring
 re-measured at the cut by the launch-readiness audit.
 
 ## Cycle log
+
+### 2026-09-11 — Epic 6 / `desktop-and-prose-leave-pcgen` — AT-35-E6-003-SWEEP **cycle 2** (`<SHA>`) — **partial** (ruling B14 landed in the gate; then one whole mechanism taken corpus-wide — 1,771 code hits, 3.5× the cycle's 500-hit floor)
+
+`SCOPE_GATE: EXEMPT (Epic 6 cycle — closes zero corpus units by design, decisions.md §2)`. Run
+anyway, for the record — `python3 scripts/cycle_scope_gate.py --min 500`:
+
+```
+inventory=docs/work-inventory.json
+scope=(whole remainder)
+scoped_by_bucket=
+scoped_by_kind=
+scoped=0 remaining_non_done=0 floor=500 verdict=PASS_WHOLE_REMAINDER
+```
+
+**Step 1 — the gate became comment-aware.** Operator ruling B14 answered cycle 1's escalation with
+**no**: a live-side doc comment quoting an ingest-format token is provenance, not a read. The same
+comment/code split cycle 1's census implemented now lives inside
+`scripts/pcgen_residue_gate.py` itself — a line whose left-stripped form starts with `//` is
+skipped, every other line is scanned whole, so a trailing `// …` never shields the code before it.
+Pinned RED→GREEN by `TestCommentAwareness` (token in code → FAIL; same token moved into a comment →
+PASS; a second token in code beside that comment → FAIL again), `Ran 18 tests … OK`, RED first with
+2 failures. **No exclusion list, no path exempted, no regex weakened,
+`scripts/pcgen-residue-baseline.env` untouched.** Recorded as `decisions.md §17`; AT-35-E6-004's
+evidence amended so "the gate reads zero" means zero **code** hits.
+
+**`live_files` 197 → 81, `live_hits` 11,447 → 8,390 at an unchanged tree is an INSTRUMENT
+CORRECTION, not closure** — it cleared no file and closed no unit; the 81 code-bearing files are
+exactly as unfinished as before (`correction 1789141003593-at-35-e6-003-sweep-efd5eb`,
+`claimed=197 actual=81`).
+
+**Step 2 — one mechanism, taken whole.** `ArchetypeSwapEntry.prerequisites` carried every
+archetype master row's `PRE`-family tokens verbatim and **nothing read it** — not
+`archetype_resolver` (its own module doc leaves prerequisites to `feat_prereqs`), not
+`feat_prereqs` (which reads the converted `Applies` gate), and no converter module either, unlike
+its feat-side sibling. All **409 of 409** rows across **all 7** books that carry an archetype-swap
+table moved to `src/pcgen_import/archetype_swap_prereq_tokens.rs`, keyed by the master row's own
+corpus `KEY:` in source order. **A move, not a removal** (`decisions.md §11`): zero function
+bodies deleted, the provenance preserved on the side that owns the ingest format, restorable by a
+keyed lookup.
+
+Code hits **8,390 → 6,619: 1,771 cleared**, against a floor of 500. The count fell only because
+reads went away.
+
+Verified **once**, at the final tree: `cargo test --locked --no-run -j 6` exit 0 with no error
+line; `cargo test --locked --no-fail-fast -j 6` **`EXIT=0` / 414 targets / 8,820 passed / 0 failed / 68 ignored / 0 FAILED**; clippy **0 warnings**;
+`pcgen_residue_gate.py --check` `verdict=PASS`; `sheet_rule_convert -- --check` `records=49438 converted=49296 refused=142 rules=70135 var_tables=5293 verdict=PASS`;
+`data/sheet_rules/` token leaks **0**; atlas / token-coverage / shape-engine /
+missing-engine-tables / denominator (`files_checked=110 violations=0`) all green; `pi-sweep`
+**PASS**. `apps/` untouched, so the desktop crate and frontend are correctly at epic cadence;
+`corpus_literal_sweep` and `v06_work_inventory` not run — no corpus record or classifier changed,
+and `regressed=0 added=0 dropped=0` proves the inventory is byte-identical.
+
+```
+closed=0 relabeled=0 rust_lines_changed=420 ratio=n/a builds_recorded=0 pcgen_live_files=81
+```
+
+**`partial`.** Refused remainder, summing to the gate's `live_hits` exactly: `PRE[A-Z]+:=5620,
+BONUS:=459, TYPE==301, %LIST=76, DESC:=73, %CHOICE=44, render_pcgen_desc=39, raw_tokens=5,
+DEFINE:=2` — **6,619 code hits in 81 files**, nine token types. The mass is one atomic migration:
+the feat `prerequisites` field, shared by `FeatCatalogRecord` and five book-local entry types and
+read by **both** converter consumers, ~5,620 hits in 20 files. `deferral
+1789141051238-at-35-e6-003-sweep-92690a`. Receipt:
+`artifacts/epic-6-pcgen-exit/AT-35-E6-003-SWEEP_cycle2_receipt.md`.
 
 ### 2026-09-11 — Epic 6 / `desktop-and-prose-leave-pcgen` — AT-35-E6-003-SWEEP **cycle 1** (`18ef3d789f`) — **blocked-escalated** (the sweep measured its own remainder before touching it and found the 25-file floor arithmetically unreachable: only 10 of 197 live files can be cleared by code work at all)
 
