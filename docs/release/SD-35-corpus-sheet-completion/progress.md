@@ -18,14 +18,17 @@ process defect** recorded by the epic wrap-up.
 
 ## Open blockers
 
-### 2026-09-11 — AT-35-E6-003-SWEEP cycle 5 — does a `#[cfg(test)]` module inside a live file count as a PCGen read?
+### 2026-09-11 — AT-35-E6-003-SWEEP cycles 5 **and 6** — does a `#[cfg(test)]` module inside a live file count as a PCGen read?
 
-**Pauses:** one mechanism only — 360 of the 798 remaining code hits, in 29 of the 69 remaining
-files. It does **not** pause Epic 6: two other lanes (the feat-qualifier classification, ~110
-hits; `render_pcgen_desc` + the desktop `raw_tokens` reader, 44 hits) are unblocked and are
-cycle 6's scope either way.
+**Pauses:** one mechanism only — **360 of the 665 remaining code hits (54%), in 29 of the 69
+remaining files**. It does **not** pause Epic 6: cycle 6 ran without it and cleared 133 hits
+from three other mechanisms, and three more lanes are unblocked (`pcgen_desc.rs` deletion, 49;
+the feat-qualifier classification, ~110; the desktop `raw_tokens` reader, 5).
 **Asked by:** AT-35-E6-003-SWEEP cycle 5
-(`artifacts/epic-6-pcgen-exit/AT-35-E6-003-SWEEP_cycle5_receipt.md`).
+(`artifacts/epic-6-pcgen-exit/AT-35-E6-003-SWEEP_cycle5_receipt.md`) and **asked again by cycle
+6** (`…_cycle6_receipt.md`), which could not obtain a ruling and did not presume to make one.
+**It is now the single largest thing standing between this criterion and its own floor**: no
+cycle can reach 500 cleared hits while 360 of the 665 are unreachable by code work.
 
 `scripts/pcgen_residue_gate.py` scans every file under the five live roots **whole**, test
 modules included. All of `tests/**` is exempt, and the gate's own docstring gives the reason:
@@ -36,10 +39,18 @@ counts, while the identical assertion moved to `tests/` does not.
 Measured at HEAD, not asserted:
 
 ```
-live_hits=798  live_files=69
+live_hits=798  live_files=69          <- at cycle 5's end
 hits_inside_cfg_test=360  hits_outside=438
 files_test_only=29  files_with_non_test_hits=40
+
+live_hits=665  live_files=69          <- at cycle 6's end
+hits_inside_cfg_test=360  hits_outside=305
+files_test_only=29  files_with_non_test_hits=40
 ```
+
+**The `#[cfg(test)]` figure has not moved in two cycles and cannot**: cycle 6 cleared 133 hits
+and every one of them came out of `hits_outside`. That invariance is itself the evidence that
+this is a ruling, not a backlog.
 
 Re-derive with
 `python3 docs/release/SD-35-corpus-sheet-completion/artifacts/epic-6-pcgen-exit/AT-35-E6-003-SWEEP_cycle5_test_region_census.py`.
@@ -104,6 +115,64 @@ Corpus at the `tranche/15` cut (2026-09-07, `4c6c57eb9f`, identical to authoring
 re-measured at the cut by the launch-readiness audit.
 
 ## Cycle log
+
+### 2026-09-11 — Epic 6 / `desktop-and-prose-leave-pcgen` — AT-35-E6-003-SWEEP **cycle 6** (`2bf2537060`) — **partial** (three mechanisms taken corpus-wide; 133 code hits cleared, 27% of the cycle's 500-hit floor — and a **green test was found pinning an ingest token onto every casting character's sheet**)
+
+- **Scope gate** (`workflow-instruction.md §6` step 1):
+  ```
+  SCOPE_GATE: EXEMPT (Epic 6 cycle — closes zero corpus units by design, decisions.md §2)
+  python3 scripts/cycle_scope_gate.py --min 500
+  inventory=docs/work-inventory.json
+  scope=(whole remainder)
+  scoped_by_bucket=
+  scoped_by_kind=
+  scoped=0 remaining_non_done=0 floor=500 verdict=PASS_WHOLE_REMAINDER
+  ```
+- **Receipt rows:** ``since=1b799159def07210fdf22cffe2962e4a9a9f347e target_dir=/tmp/cargo-sd35-AT-35-E6-003-SWEEP residue_gate=present` / `closed_by_kind=` / `relabeled_moves=` / `regressed=0 added=0 dropped=0` / `closed=0 relabeled=0 rust_lines_changed=707 ratio=n/a builds_recorded=3 pcgen_live_files=69``
+- **The discovery, and it is the transferable one.**
+  `tests/v06_caster_level_every_casting_class.rs::the_record_cites_its_corpus_source_and_disclaims_the_spell_math_it_does_not_compute`
+  **asserted that the rendered caster-level sheet line must contain `BONUS:CASTERLEVEL`** — a
+  test that *required* ingest vocabulary on a player's paper character sheet, and had done since
+  v0.6 slice 1. So every casting character's sheet printed the class's `BONUS:CASTERLEVEL` token
+  and the whole `BONUS:VAR` chain it names, in full. Four cycles read `pilot_compute/mod.rs`, the
+  largest live file, and none looked at these 48 hits — because a passing assertion sat on top of
+  them saying the token *belonged* there. The gate can say a hit exists; it cannot say whether
+  the surrounding code thinks the hit is correct. `correction 1789159880605-at-35-e6-003-sweep-30d7b0`.
+- **Three mechanisms, each taken corpus-wide and cleared in full.**
+  1. **`UmFeatEntry.effect` relocated** (75 hits → 0) to `src/pcgen_import/feat_effect_tokens.rs`,
+     43 rows addressed by `(RuleSetId::Um, index, key)` — the same move, field for field, that
+     cycle 3 made for `prerequisites`. A **move, not a removal** (`decisions.md §11`): every token
+     string is carried across byte for byte and three round-trip tests assert it. The field had
+     **no live reader at all** — its only three readers were its own file's tests, reading it as
+     a presence flag.
+  2. **`CASTER_LEVEL_RULES`' `token`/`resolution` fields demoted to `//` provenance** (48 hits),
+     17 rows; `names_class_level_directly: bool` replaces the `resolution.is_empty()` test the
+     renderer made, and three rendered strings now state the rule in words and keep only the
+     `cr_classes.lst:281` source citation.
+  3. **The prose demoter gained one NARROWING frame** (10 hits, 7 blocks): inside a `(...)`
+     citation region whose tail carries real sheet prose, cut the **token run alone** instead of
+     truncating the region — a strict subset of cycle 4's span, so nothing already accepted
+     changes and it only answers where cycles 4 and 5 masked.
+- **Code hits 798 → 665 = 133 cleared**, `pcgen_live_files` **69, unchanged** (no file reached
+  zero; **none rose**). Instrument untouched: `pcgen-residue-baseline.env` not edited,
+  `--rebaseline` not run, no pattern/root/exclusion changed. The census proves nothing was
+  cleared by reclassification — `hits_inside_cfg_test` stays at exactly **360** while
+  `hits_outside` falls **438 → 305**.
+- **Under the cycle's own 500-hit floor at 133**, and named: 360 of the 665 remaining hits are
+  behind an operator ruling this cycle could not obtain (`#[cfg(test)]` regions — **asked for a
+  second time**, see `## Open blockers`). Of the 305 that are not, 49 are the `pcgen_desc.rs`
+  deletion (blocked on a catalog rewire), ~110 are the classification move cycle 5 proved
+  destructive to grind, 34 are deliberately kept raw, 21 are live selector data.
+  `cycle_scope_gate.py --min 500` passes on `PASS_WHOLE_REMAINDER`.
+- **RED→GREEN recorded for both code-bearing changes**: the relocation module was written with
+  its real declared counts and an empty table (`left: 0 right: 43`), and the inverted
+  caster-level assertion failed against the old renderer, printing the defect in full.
+- **`partial`** — `TYPE==190; PRE[A-Z]+:=160; BONUS:=128; DESC:=66; %LIST=63;
+  render_pcgen_desc=39; %CHOICE=13; raw_tokens=5; DEFINE:=1` (665 hits / 69 files, nine types,
+  summing exactly). `deferral 1789159872638-at-35-e6-003-sweep-1991ec`, own-figure correction
+  `1789159920798-at-35-e6-003-sweep-51ccdd`.
+- **Verified once** at `2bf2537060`, after the last figure-moving edit: `--no-run` 0, lib **3,316/0**, full **414 targets / 8,830 passed / 0 failed / 68 ignored / `FULL_EXIT=0`**, clippy **0 warnings**, `sheet_rule_convert --check` `records=49438 converted=49296 refused=142 rules=70135 var_tables=5293 verdict=PASS` identical to cycles 3-5, `data/sheet_rules/` leaks 0, atlas / token-coverage / shape-engine / missing-engine-tables / denominator (114 files) / provenance (231 files, 573 figures) / dashboard-pin / pi-sweep all green; `apps/` untouched so desktop at epic cadence; `docs/work-inventory.json` byte-identical to the cycle-start copy.
+- **Receipt:** `artifacts/epic-6-pcgen-exit/AT-35-E6-003-SWEEP_cycle6_receipt.md`.
 
 ### 2026-09-11 — Epic 6 / `desktop-and-prose-leave-pcgen` — AT-35-E6-003-SWEEP **cycle 5** (`6fe6131922`) — **partial** (the same sheet-rule defect cycle 4 found in the explanations was in the shipped equipment tables too; 99 code hits cleared, 20% of the cycle's 500-hit floor — and 34 more were deliberately left, because rendering them would have shipped a plausible wrong number)
 
