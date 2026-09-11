@@ -13499,16 +13499,18 @@ fn compute_fighter_chassis(
         id: "class_chassis.base_attack_bonus".to_owned(),
         value: base_attack_bonus,
         detail: format!(
-            "Fighter level {level} base attack bonus from cr_classes.lst:139 \
-             BONUS:COMBAT|BASEAB|classlevel = {base_attack_bonus}"
+            // Provenance (ingest tokens, demoted out of the rendered sheet line -- SD-35 AT-35-E6-003-SWEEP):
+            //   from cr_classes.lst:139 BONUS:COMBAT|BASEAB|classlevel
+            "Fighter level {level} base attack bonus = {base_attack_bonus}"
         ),
     });
     explanations.push(ComputationExplanation {
         id: "class_chassis.base_save.fortitude".to_owned(),
         value: base_saves.fortitude,
         detail: format!(
-            "Fighter level {level} base Fortitude save from cr_classes.lst:139 \
-             BONUS:SAVE|BASE.Fortitude|classlevel/2+2 = {}",
+            // Provenance (ingest tokens, demoted out of the rendered sheet line -- SD-35 AT-35-E6-003-SWEEP):
+            //   from cr_classes.lst:139 BONUS:SAVE|BASE.Fortitude|classlevel/2+2
+            "Fighter level {level} base Fortitude save = {}",
             base_saves.fortitude
         ),
     });
@@ -13516,8 +13518,9 @@ fn compute_fighter_chassis(
         id: "class_chassis.base_save.reflex".to_owned(),
         value: base_saves.reflex,
         detail: format!(
-            "Fighter level {level} base Reflex save from cr_classes.lst:139 \
-             BONUS:SAVE|BASE.Reflex,BASE.Will|classlevel/3 = {}",
+            // Provenance (ingest tokens, demoted out of the rendered sheet line -- SD-35 AT-35-E6-003-SWEEP):
+            //   from cr_classes.lst:139 BONUS:SAVE|BASE.Reflex,BASE.Will|classlevel/3
+            "Fighter level {level} base Reflex save = {}",
             base_saves.reflex
         ),
     });
@@ -13525,8 +13528,9 @@ fn compute_fighter_chassis(
         id: "class_chassis.base_save.will".to_owned(),
         value: base_saves.will,
         detail: format!(
-            "Fighter level {level} base Will save from cr_classes.lst:139 \
-             BONUS:SAVE|BASE.Reflex,BASE.Will|classlevel/3 = {}",
+            // Provenance (ingest tokens, demoted out of the rendered sheet line -- SD-35 AT-35-E6-003-SWEEP):
+            //   from cr_classes.lst:139 BONUS:SAVE|BASE.Reflex,BASE.Will|classlevel/3
+            "Fighter level {level} base Will save = {}",
             base_saves.will
         ),
     });
@@ -43512,30 +43516,34 @@ fn explain_barbarian_level1_chassis(
         id: "class_chassis.barbarian.base_save.fortitude".to_owned(),
         value: fortitude_save,
         detail: format!(
-            "{class_name} level {level} base Fortitude save (good save) from the PF1 \
-             Core Rulebook Barbarian class table, same formula shape as Fighter's cr_classes.lst:139 \
-             BONUS:SAVE|BASE.Fortitude|classlevel/2+2: classlevel/2+2 = {fortitude_save}. This is a \
-             standalone explanation record; it is not wired into compute_total_saves"
+            // Provenance (ingest tokens, demoted out of the rendered sheet line -- SD-35 AT-35-E6-003-SWEEP):
+            //   cr_classes.lst:139 BONUS:SAVE|BASE.Fortitude|classlevel/2+2:
+            "{class_name} level {level} base Fortitude save (good save) from the PF1 Core Rulebook \
+             Barbarian class table, same formula shape as Fighter's classlevel/2+2 = \
+             {fortitude_save}. This is a standalone explanation record; it is not wired into \
+             compute_total_saves"
         ),
     });
     explanations.push(ComputationExplanation {
         id: "class_chassis.barbarian.base_save.reflex".to_owned(),
         value: reflex_save,
         detail: format!(
-            "{class_name} level {level} base Reflex save (poor save) from the PF1 Core \
-             Rulebook Barbarian class table, same formula shape as Fighter's cr_classes.lst:139 \
-             BONUS:SAVE|BASE.Reflex,BASE.Will|classlevel/3: classlevel/3 = {reflex_save}. This is a \
-             standalone explanation record; it is not wired into compute_total_saves"
+            // Provenance (ingest tokens, demoted out of the rendered sheet line -- SD-35 AT-35-E6-003-SWEEP):
+            //   cr_classes.lst:139 BONUS:SAVE|BASE.Reflex,BASE.Will|classlevel/3:
+            "{class_name} level {level} base Reflex save (poor save) from the PF1 Core Rulebook \
+             Barbarian class table, same formula shape as Fighter's classlevel/3 = {reflex_save}. \
+             This is a standalone explanation record; it is not wired into compute_total_saves"
         ),
     });
     explanations.push(ComputationExplanation {
         id: "class_chassis.barbarian.base_save.will".to_owned(),
         value: will_save,
         detail: format!(
-            "{class_name} level {level} base Will save (poor save) from the PF1 Core \
-             Rulebook Barbarian class table, same formula shape as Fighter's cr_classes.lst:139 \
-             BONUS:SAVE|BASE.Reflex,BASE.Will|classlevel/3: classlevel/3 = {will_save}. This is a \
-             standalone explanation record; it is not wired into compute_total_saves"
+            // Provenance (ingest tokens, demoted out of the rendered sheet line -- SD-35 AT-35-E6-003-SWEEP):
+            //   cr_classes.lst:139 BONUS:SAVE|BASE.Reflex,BASE.Will|classlevel/3:
+            "{class_name} level {level} base Will save (poor save) from the PF1 Core Rulebook \
+             Barbarian class table, same formula shape as Fighter's classlevel/3 = {will_save}. This \
+             is a standalone explanation record; it is not wired into compute_total_saves"
         ),
     });
 

@@ -298,7 +298,7 @@ pub fn archetype_swap_tables() -> &'static [ArchetypeSwapEntry] {
             replaces: Some(&["CF_CompanionShareSpells", "CF_CompanionMultiattack"]),
             grants: &[
                 ArchetypeGrant { grants_feature_key: "Wrecker ~ Wrecker Feats", at_level: 1, description: Some("In addition to the standard feats available to animal companions, a wrecker can select Improved Sunder and Greater Sunder."), benefit: None },
-                ArchetypeGrant { grants_feature_key: "Wrecker ~ Destructive Wrecker", at_level: 1, description: Some("A wrecker's natural attacks ignore an inanimate object's first 5 points of hardness.|PREVARLT:MasterLevel,9"), benefit: None },
+                ArchetypeGrant { grants_feature_key: "Wrecker ~ Destructive Wrecker", at_level: 1, description: Some("A wrecker's natural attacks ignore an inanimate object's first 5 points of hardness."), benefit: None },
             ],
         },
         // Familiar Archetype ~ Ambassador -- uw_abilities_companion.lst:533

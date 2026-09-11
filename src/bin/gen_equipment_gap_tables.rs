@@ -42,7 +42,7 @@ use std::path::{Path, PathBuf};
 
 use codex::rules_core::codex_neutral_name::{neutral_key, neutral_name};
 use codex::rules_core::equipment_resolver::{hand_authored_equipment_rows, EQUIPMENT_BOOK_ACG, EQUIPMENT_BOOK_APG, EQUIPMENT_BOOK_ARG, EQUIPMENT_BOOK_B1, EQUIPMENT_BOOK_CRB, EQUIPMENT_BOOK_UC, EQUIPMENT_BOOK_UE, EQUIPMENT_BOOK_UI, EQUIPMENT_BOOK_UM, EQUIPMENT_BOOK_UPSI, EQUIPMENT_BOOK_UW};
-use codex::rules_core::pcgen_desc::{leaked_pcgen_syntax, render_pcgen_desc};
+use codex::rules_core::pcgen_desc::{leaked_pcgen_syntax, render_pcgen_desc, RenderedPcgenDesc};
 use codex::rules_core::pi_screening::{declared_product_identity, DeclaredProductIdentity, PI_BLACKLIST_TERMS};
 use codex::rules_core::pi_table_sweep::screen_generated_table;
 use codex::rules_core::shape_b_v1::REDACTED_PI_MARKER;
@@ -221,13 +221,108 @@ const EQUIPMENT_BOOK_BB: &str = "BB";
 /// carrying_raw_pcgen_syntax` check exactly (`leaked_pcgen_syntax` on the
 /// rendered text, nothing else), so this refuses precisely what that test
 /// would otherwise catch downstream — never more, never less.
+/// **SD-35 AT-35-E6-003-SWEEP cycle 5 — ships the RENDERED text, not the raw
+/// one.** Until this cycle the function rendered the description only to
+/// *decide* whether to keep it, then stored the RAW string on the row. But
+/// `equipment_gap_tables.rs` is chained straight into
+/// `equipment_resolver::equipment_catalog_rows()` and rendered by the desktop
+/// equipment catalog with no second substitution pass, so the raw `%CHOICE`
+/// / `%LIST` / `|`-argument tail reached the player's paper sheet verbatim —
+/// the same defect shape cycle 4 found in `ComputationExplanation.detail`, and
+/// a sheet-rule violation (`decisions.md` §1: a sheet line is a final number,
+/// dice in final form, or the rule's words — never ingest vocabulary).
+/// `epic-breakdown.md` AT-35-E6-003 states the fix exactly: "its `%N`
+/// substitution already happened in the converter". This *is* the converter
+/// side, so it happens here, once, at generation.
 fn safe_description(description: Option<String>) -> Option<String> {
     let description = description?;
     let rendered = render_pcgen_desc(&description);
     if leaked_pcgen_syntax(&rendered.text).is_some() {
         return None;
     }
-    Some(description)
+    if carries_an_unresolved_magnitude(&description, &rendered) {
+        return Some(description);
+    }
+    Some(trim_dangling_connective(&rendered.text))
+}
+
+/// A `%` that stands in for a NUMBER the row cannot supply — `+%d10 additional
+/// fire damage`, `Darkvision % ft.`, `a +%1 luck bonus` with no argument tail.
+///
+/// Rendering these is worse than leaving them. `render_pcgen_desc` drops the
+/// reference, so `+%d10 additional fire damage` becomes *"d10 additional fire
+/// damage"* — which reads as valid dice notation with the die COUNT silently
+/// missing, and `Darkvision % ft.` becomes *"Darkvision ft."*. The raw form at
+/// least shows the reader a `%` where a number belongs; the rendered form is a
+/// plausible-looking wrong number, which is the exact failure `AGENTS.md` rule 7
+/// and the sheet rule (`decisions.md` §1: *dice in final form*) both forbid.
+///
+/// So the row keeps its raw text, the hit stays in
+/// `scripts/pcgen_residue_gate.py`'s count, and it is named as the remainder
+/// rather than papered over. 55 of `equipment_gap_tables.rs`'s 1,014
+/// descriptions are this shape; re-derive by diffing the rendered and raw
+/// forms of every description that changed.
+///
+/// A `%%` is NOT this: it is an escaped literal percent (`20%% spell failure`
+/// -> `20% spell failure`), a real rendering with nothing missing. Nor is a
+/// `%CHOICE`/`%LIST` keyword: those stand in for a CHOICE the player already
+/// made and the sheet already names elsewhere, not for a magnitude.
+fn carries_an_unresolved_magnitude(raw: &str, rendered: &RenderedPcgenDesc) -> bool {
+    // A numbered `%N` is resolvable, but only from a `|` argument tail, and
+    // only when that tail resolved everything it was asked for. A BARE `%`
+    // has no such source and is always a hole.
+    let numbered_may_resolve = raw.contains('|') && rendered.dropped_args.is_empty();
+    let bytes = raw.as_bytes();
+    let mut i = 0;
+    while i < bytes.len() {
+        if bytes[i] != b'%' {
+            i += 1;
+            continue;
+        }
+        let next = bytes.get(i + 1).copied();
+        match next {
+            Some(b'%') => i += 2, // escaped literal percent
+            Some(c) if c.is_ascii_uppercase() => {
+                // A `%KEYWORD` choice reference; skip the whole keyword.
+                i += 1;
+                while i < bytes.len() && bytes[i].is_ascii_uppercase() {
+                    i += 1;
+                }
+            }
+            Some(c) if c.is_ascii_digit() => {
+                if !numbered_may_resolve {
+                    return true; // `%1` with no tail, or a tail that dropped
+                }
+                i += 2;
+            }
+            _ => return true, // `%d10`, `% ft.`: a bare hole with no source
+        }
+    }
+    false
+}
+
+/// A dropped `%CHOICE`/`%LIST` keyword can leave the sentence ending on the
+/// preposition that introduced it — *"Enhancement bonus to armor class of"*.
+/// That is not the rule's words, it is a truncation, so the connective goes
+/// with the keyword it introduced. Deletion only: never adds a word, never
+/// reorders one, and only ever cuts a trailing connective plus the punctuation
+/// around it.
+fn trim_dangling_connective(text: &str) -> String {
+    const CONNECTIVES: [&str; 12] =
+        ["of", "to", "against", "with", "by", "for", "in", "on", "from", "than", "and", "or"];
+    // Only a sentence that actually ends on a connective is touched; a
+    // well-formed one keeps its own trailing punctuation exactly as authored.
+    let mut kept = text.to_string();
+    loop {
+        let probe = kept.trim_end_matches([' ', ',', ';', ':']);
+        let last = probe.rsplit(' ').next().unwrap_or("").to_ascii_lowercase();
+        if !CONNECTIVES.contains(&last.as_str()) {
+            break;
+        }
+        let Some(cut) = probe.rfind(' ') else { break };
+        kept = probe[..cut].trim_end().to_string();
+    }
+    kept
 }
 
 /// Where the generated table lands, relative to the crate root.
@@ -1192,16 +1287,76 @@ mod safe_description_tests {
     /// render). Prints the rendered result so a future reader can see
     /// exactly what `safe_description` decided, rather than trusting a
     /// bare pass/fail.
+    ///
+    /// **SD-35 AT-35-E6-003-SWEEP cycle 5:** the row now ships the RENDERED
+    /// text, not the raw one. Storing the raw `%CHOICE` put ingest vocabulary
+    /// on the shipped row, and `equipment_gap_tables.rs` is read straight
+    /// into `equipment_resolver::equipment_catalog_rows()` and onto the
+    /// player's sheet -- so `%CHOICE` was printing on a paper character
+    /// sheet, the same defect cycle 4 found in `ComputationExplanation`.
+    /// The substitution belongs in the converter (`decisions.md` §11,
+    /// `epic-breakdown.md` AT-35-E6-003: "its `%N` substitution already
+    /// happened in the converter"), so it happens here, once, at generation.
     #[test]
-    fn a_bare_choice_keyword_with_no_pipe_tail_survives() {
+    fn a_bare_choice_keyword_with_no_pipe_tail_ships_rendered_not_raw() {
         let raw = "Enhancement bonus to ability %CHOICE".to_string();
         let result = safe_description(Some(raw));
         assert_eq!(
             result.as_deref(),
-            Some("Enhancement bonus to ability %CHOICE"),
-            "a dropped %CHOICE that renders to clean, leak-free text must still ship -- \
-             matches production's own equipment catalog behavior"
+            Some("Enhancement bonus to ability"),
+            "a dropped %CHOICE must ship as the RENDERED sentence -- the shipped row is \
+             read onto the sheet verbatim, so raw ingest vocabulary here prints on it"
         );
+    }
+
+    /// A dropped keyword must not leave the sentence ending on the preposition
+    /// that introduced it: *"…armor class of"* is a truncation, not the rule's
+    /// words.
+    #[test]
+    fn a_dropped_keyword_does_not_leave_a_dangling_preposition() {
+        assert_eq!(
+            safe_description(Some("Deflection bonus to armor class of %CHOICE".to_string()))
+                .as_deref(),
+            Some("Deflection bonus to armor class")
+        );
+        // Deletion only: a sentence that never ended on a connective is untouched.
+        assert_eq!(
+            safe_description(Some("Enhancement bonus increases by 4".to_string())).as_deref(),
+            Some("Enhancement bonus increases by 4")
+        );
+    }
+
+    /// A `%` standing in for a NUMBER keeps its raw text. Rendering it would
+    /// turn `+%d10` into `d10` — valid-looking dice notation with the count
+    /// silently gone — which is a worse sheet line than an obvious `%`.
+    #[test]
+    fn a_percent_standing_in_for_a_number_is_left_raw_not_rendered() {
+        for raw in [
+            "+1d6 fire damage, on a critical hit deals +%d10 additional fire damage",
+            "Darkvision % ft.",
+            "a +%1 luck bonus",
+        ] {
+            assert_eq!(
+                safe_description(Some(raw.to_string())).as_deref(),
+                Some(raw),
+                "a missing magnitude must stay visible, not be rendered away"
+            );
+        }
+        // An ESCAPED percent is a real literal, not a missing number: it renders.
+        assert_eq!(
+            safe_description(Some("any spellcasting has a 20%% failure chance".to_string()))
+                .as_deref(),
+            Some("any spellcasting has a 20% failure chance")
+        );
+    }
+
+    /// The `|`-argument tail is ingest vocabulary too: when it RESOLVES, the
+    /// shipped row carries the resolved sentence and no tail at all.
+    #[test]
+    fn a_resolvable_pipe_argument_tail_never_reaches_the_shipped_row() {
+        let result = safe_description(Some("a +%1 luck bonus|2".to_string()))
+            .expect("renders clean");
+        assert_eq!(result, "a +2 luck bonus");
     }
 }
 
