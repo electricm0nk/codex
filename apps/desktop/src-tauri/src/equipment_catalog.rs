@@ -863,7 +863,20 @@ mod tests {
         // 24 of UM's 26 (both Scrollmaster Gear ArmsArmor rows carry no
         // description; all 24 General spellbooks do).
         assert_eq!(with_description("UM"), 24);
-        assert_eq!(with_description("UPSI"), 403);
+        // 403 -> 404, SD-35 `AT-35-E6-003` cycle 10. Re-derived from the
+        // built catalog itself (the assertion's own `left`), not adjusted by
+        // delta. This is the first run of the desktop crate since cycle 7
+        // swapped this catalog's description source from the compiled
+        // table's stored string to the converted package -- the crate is a
+        // separate cargo workspace, so the root `cargo test` never builds it
+        // and `workflow-instruction.md` §6 runs it only for a cycle that
+        // touches `apps/`. Cycles 8 and 9 regenerated `data/sheet_rules/`
+        // and did not. One further Ultimate Psionics row therefore reaches a
+        // player with its own words; verified NOT to be this cycle's own
+        // converter change, which altered exactly one field (`print`, 527
+        // times) and no rule's prose or id -- `catalog_description` does not
+        // read `print`.
+        assert_eq!(with_description("UPSI"), 404);
         // Most ArmsArmor rows (ammunition, armor, plain weapons) carry no
         // `SPROP:` token at all, matching every other book's own
         // weapon-heavy shortfall.
@@ -933,9 +946,15 @@ mod tests {
         // above). Command: `cd apps/desktop/src-tauri && cargo test
         // --locked --bin codex-desktop equipment_catalog -- --nocapture`
         // with a temporary per-book description-count dump.
+        // 5389 -> 5390, SD-35 `AT-35-E6-003` cycle 10: the SAME single row
+        // as the `UPSI` pin above, and the only one -- every other book's
+        // per-book count is unchanged, which is what makes the total's +1 a
+        // confirmation of that story rather than a second, unattributed
+        // move. Re-derived from the built catalog (the assertion's own
+        // `left`).
         assert_eq!(
             response.entries.iter().filter(|e| e.description.is_some()).count(),
-            5389
+            5390
         );
     }
 
