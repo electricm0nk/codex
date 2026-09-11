@@ -18,6 +18,47 @@ process defect** recorded by the epic wrap-up.
 
 ## Open blockers
 
+### 2026-09-11 — AT-35-E6-003-SWEEP cycle 5 — does a `#[cfg(test)]` module inside a live file count as a PCGen read?
+
+**Pauses:** one mechanism only — 360 of the 798 remaining code hits, in 29 of the 69 remaining
+files. It does **not** pause Epic 6: two other lanes (the feat-qualifier classification, ~110
+hits; `render_pcgen_desc` + the desktop `raw_tokens` reader, 44 hits) are unblocked and are
+cycle 6's scope either way.
+**Asked by:** AT-35-E6-003-SWEEP cycle 5
+(`artifacts/epic-6-pcgen-exit/AT-35-E6-003-SWEEP_cycle5_receipt.md`).
+
+`scripts/pcgen_residue_gate.py` scans every file under the five live roots **whole**, test
+modules included. All of `tests/**` is exempt, and the gate's own docstring gives the reason:
+it is test code, not live code. A `#[cfg(test)] mod tests` inside a live file is the same test
+code, removed from the shipping library by the same attribute — yet an assertion written there
+counts, while the identical assertion moved to `tests/` does not.
+
+Measured at HEAD, not asserted:
+
+```
+live_hits=798  live_files=69
+hits_inside_cfg_test=360  hits_outside=438
+files_test_only=29  files_with_non_test_hits=40
+```
+
+Re-derive with
+`python3 docs/release/SD-35-corpus-sheet-completion/artifacts/epic-6-pcgen-exit/AT-35-E6-003-SWEEP_cycle5_test_region_census.py`.
+
+**This is the same shape as ruling B14** (`decisions.md §17`), which the operator settled for
+doc comments on the ground that *"the rule was always 'not one line of PCGen in our live code',
+and a comment does not execute"*. A `#[cfg(test)]` module does not ship. Both branches:
+
+- **Ruled YES (test modules count):** `AT-35-E6-004`'s `live_files=0` requires rewriting 360
+  assertions that deliberately assert *on* the ingest token — including
+  `sd27_arg_and_pu_feat_effects.rs`-shaped classification checks whose whole point is that the
+  token is there. Those are the tests that prove the converter reads the corpus correctly.
+- **Ruled NO (they do not count):** the gate skips `#[cfg(test)]` regions, pinned RED→GREEN the
+  way `TestCommentAwareness` pinned B14, with no path exempted and the baseline untouched. The
+  resulting drop is an **instrument correction that closes nothing**
+  (`instrument-correction-is-not-closure`) and no cycle may report it as files cleared.
+
+**Prepared, not applied.** The cycle wrote no gate change and asks for the ruling first.
+
 ### ~~2026-09-11 — AT-35-E6-003-SWEEP cycle 1 — does a live-side doc-comment count as a PCGen read?~~ — **RESOLVED 2026-09-11 by operator ruling B14 (`decisions.md §17`): NO.**
 
 **Pauses:** Epic 6's remaining file-count work, and `AT-35-E6-004`'s `--closure` target.
@@ -63,6 +104,91 @@ Corpus at the `tranche/15` cut (2026-09-07, `4c6c57eb9f`, identical to authoring
 re-measured at the cut by the launch-readiness audit.
 
 ## Cycle log
+
+### 2026-09-11 — Epic 6 / `desktop-and-prose-leave-pcgen` — AT-35-E6-003-SWEEP **cycle 5** (`6fe6131922`) — **partial** (the same sheet-rule defect cycle 4 found in the explanations was in the shipped equipment tables too; 99 code hits cleared, 20% of the cycle's 500-hit floor — and 34 more were deliberately left, because rendering them would have shipped a plausible wrong number)
+
+- **Scope gate** (`workflow-instruction.md §6` step 1):
+  ```
+  SCOPE_GATE: EXEMPT (Epic 6 cycle — closes zero corpus units by design, decisions.md §2)
+  python3 scripts/cycle_scope_gate.py --min 500
+  inventory=docs/work-inventory.json
+  scope=(whole remainder)
+  scoped_by_bucket=
+  scoped_by_kind=
+  scoped=0 remaining_non_done=0 floor=500 verdict=PASS_WHOLE_REMAINDER
+  ```
+- **Receipt rows:** `since=b069f01962667a3cf35fc731fb3460e2b7bb0e0e target_dir=/tmp/cargo-sd35-AT-35-E6-003-SWEEP residue_gate=present` / `closed_by_kind=` / `relabeled_moves=` / `regressed=0 added=0 dropped=0` / `closed=0 relabeled=0 rust_lines_changed=371 ratio=n/a builds_recorded=3 pcgen_live_files=69`.
+- **The defect, found in a second place.** Cycle 4 found ingest tokens rendering on the player's
+  sheet through `ComputationExplanation.detail`. They were also in the **shipped equipment and
+  archetype tables** — `description:` strings served verbatim to the catalog with no render pass
+  anywhere between the table and the page, so `"Enhancement bonus to ability %CHOICE"` and
+  `"…must otherwise meet all the feat's prerequisites. |PREVARLT:FighterLVL,9"` printed on a
+  paper character sheet. `equipment_gap_tables.rs` carried **73** such hits across its 1,973 rows.
+  Emitted as `incident 1789155409747-at-35-e6-003-sweep-083d36`, recurrence key
+  `ingest-vocabulary-in-rendered-sheet-text` — cycle 4's key, second firing.
+- **The fix is on the converter side, where the criterion says it belongs.**
+  `src/bin/gen_equipment_gap_tables.rs::safe_description` was rendering each description **only
+  to decide whether to keep it**, then storing the raw one; it now stores `rendered.text`, plus a
+  `trim_dangling_connective` so a dropped `%CHOICE` cannot leave *"…armor class of"* on the
+  sheet. Written test-first — both new tests failed for the intended reason (`left: Some("…
+  ability %CHOICE")`) before the one-line change — and the table was regenerated against the
+  pinned oracle (`PCGEN_ORACLE_SHA=7f818006e3…`): **73 → 34**, row count unchanged at 1,973,
+  0 descriptions left ending on a connective.
+- **The hand-authored tables took the same two rules**, applied once by
+  `…_cycle5_table_description_render.py` (new artifact, with its refusal rules): **24 literals
+  rendered, 5 refused** across 8 files (42 hits). The refusals are principled — a literal
+  carrying a numbered `%N` names a character value, and dropping it would delete a number off the
+  sheet. `crb/race_tables.rs`'s 5 `detail:` rows (17 hits, the file to **zero**) and 7 hits in
+  `pilot_compute/mod.rs` (123 → 116) went through the prose demoter.
+- **Cycle 4's demoter gained one frame and lost two.** It now also reads single-line literals
+  (cycle 4 only ever looked at `\`-continuation runs, so `crb/race_tables.rs` was never examined)
+  and cuts an inline `<file>.lst:<line>` source citation. Two further frames — a bare connective
+  run and a backtick-quoted token — were built, measured against the real file, and **deleted**:
+  both passed every safety gate the tool has and both produced ungrammatical sheet prose
+  (*"the record carries no -- and cross-checked against"*). A sheet line that reads as a
+  truncation is worse than the citation it replaced (`AGENTS.md` rule 7). One near-miss caught
+  before it shipped: single-line handling reached inside a live data array and rewrote
+  `count("ABILITIES","TYPE=FavoredClassBonus")` to `count("ABILITIES","")`; the control is now a
+  whole-line shape test a data array can never match.
+- **The table stops short of zero on purpose, and it is the line worth reading.** The first
+  version of the generator fix rendered every description and reached **0** hits — a clean number.
+  The diff showed what it cost: `+%d10 additional fire damage` had become *"d10 additional fire
+  damage"* and `Darkvision % ft.` had become *"Darkvision ft."* — **55 of 1,014** descriptions in
+  which a `%` standing in for a NUMBER was rendered away, leaving prose that reads as a complete
+  rule with the magnitude silently gone. `d10` looks like valid dice notation; `%d10` does not.
+  `safe_description` now keeps the RAW text whenever a `%` stands in for a number the row cannot
+  supply (`carries_an_unresolved_magnitude`, pinned by
+  `a_percent_standing_in_for_a_number_is_left_raw_not_rendered`); `%%` and `%CHOICE`/`%LIST` still
+  render, because those stand in for a choice the sheet names elsewhere, not a magnitude. **The
+  cost is 34 hits this cycle could have reported as cleared and did not.**
+- **Code hits 897 → 798 = 99 cleared**, four files to zero (`acg/equipment_data/equipmods.rs`,
+  `crb/race_tables.rs`, `ultimate_equipment/equipment_tables.rs`,
+  `ultimate_psionics/equipment_tables.rs`), seven more fell without reaching it and **none rose**;
+  `pcgen_live_files` 73 → 69. **Under the cycle's own 500-hit floor at 99**, named with its
+  cause: three of the five remaining mechanisms are not rule-shaped work. The instrument was not
+  touched — `scripts/pcgen-residue-baseline.env` unedited, `--rebaseline` not run.
+- **The previous receipt's diagnosis of the biggest remaining mass was wrong, and is corrected.**
+  Cycle 4 called `FeatEffectBonus.qualifiers`' `PRE`/`TYPE=` elements "read by a live engine".
+  They are not: the only live consumer, `damage_total.rs::constant_damage_bonus`, returns `None`
+  unless `qualifiers.len() == 3` — it **rejects** every array carrying one. The real readers are
+  tests, and `sd27_arg_and_pu_feat_effects.rs::bonus_is_conditioned` derives the published
+  133/5/49 ARG split from `q.starts_with("PRE")`. So the job is to move that **classification**
+  to the converter first; a regex sweep would have destroyed a derived count while the gate
+  applauded (`correction 1789155420495-at-35-e6-003-sweep-b1f138`).
+- **A second correction, of this cycle's own event.** The `deferral` first quoted a per-token
+  split it had not re-derived; the totals were right and the split was not
+  (`correction 1789155466000-at-35-e6-003-sweep-7d367b`).
+- **One operator ruling requested**, filed under `## Open blockers` above and blocking one
+  mechanism only: **360 of the 798 remaining hits sit inside `#[cfg(test)]` modules of live
+  files**, and 29 of the 69 remaining files carry nothing else. All of `tests/**` is already
+  exempt for being test code. Exactly the shape of B14, and no code work moves those 360 either
+  way. No gate change was written.
+- **Refused tokens:** `BONUS:=243; TYPE==194; PRE[A-Z]+:=163; %LIST=74; DESC:=66;
+  render_pcgen_desc=39; %CHOICE=13; raw_tokens=5; DEFINE:=1` — 798 hits / 69 files, summing to
+  the gate's own line. Nine token types, under §8's limit of ten.
+  `deferral 1789155433398-at-35-e6-003-sweep-285761`.
+- **Verified once, at the final committed tree (`6fe6131922`):** `--no-run` `NO_RUN_EXIT=0`; lib `3,313 passed; 0 failed; 15 ignored`; full workspace **`FULL_EXIT=0` / 414 targets / 8,827 passed / 0 failed / 68 ignored / 0 `FAILED` lines** (+3 on cycle 4's 8,824 — this cycle's three new `safe_description` tests); clippy **0 warnings**; `sheet_rule_convert -- --check` `records=49438 converted=49296 refused=142 rules=70135 var_tables=5293 verdict=PASS`, identical to cycles 3 and 4 on every field; `data/sheet_rules/` token leaks **0**; atlas / token-coverage / shape-engine / missing-engine-tables / denominator / `--check-provenance` / dashboard `--check-pin` all green; `pi-sweep` PASS; residue `verdict=PASS`, fell by 99 with the instrument untouched. **An earlier run of the same suite was started against an intermediate tree and discarded** when the generator's refusal rule changed the table again — a stale green is not a verification. `apps/` untouched, so desktop + frontend correctly at epic cadence; `v06_work_inventory` and `corpus_literal_sweep` not run (no corpus record, no classifier changed; the inventory is byte-identical to the cycle-start copy).
+- **Receipt:** `artifacts/epic-6-pcgen-exit/AT-35-E6-003-SWEEP_cycle5_receipt.md`.
 
 ### 2026-09-11 — Epic 6 / `desktop-and-prose-leave-pcgen` — AT-35-E6-003-SWEEP **cycle 4** (`f10afbc22c`) — **partial** (ingest tokens were printing on the player's sheet; 402 code hits cleared, 80% of the cycle's 500-hit floor)
 
