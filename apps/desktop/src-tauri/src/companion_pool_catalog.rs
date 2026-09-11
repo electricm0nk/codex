@@ -47,20 +47,25 @@
 //! RECORDS` still names the delta rows individually, deliberately, because
 //! there is no second record here to resolve a delta against.
 //!
-//! # The render-and-refuse gate is the whole safety property
+//! # Where a pool member's words come from (SD-35 `AT-35-E6-003` cycle 3)
 //!
-//! Reused verbatim from `class_feature_pool_catalog.rs`: a pool member's
-//! `description` is the raw, unresolved `DESC:` string (this ingest path
-//! never splits the argument tail out the way `companion_chassis`'
-//! transcriber does for owned ability rows — `data.description` already
-//! carries the `|`-joined argument list verbatim, confirmed against real
-//! records such as `ultimate_wilderness/companion/sneak.json`'s `"...+%1
-//! competence bonus...|MasterLevel/2"`). `render_pcgen_desc` resolves it with
-//! no character to resolve against; any unresolved `%N` or leaked PCGen
-//! syntax refuses the record rather than serving broken text — the same
-//! Decision-7 disposition `class_feature_pool_catalog.rs` uses, for the same
-//! reason (a record that still needs a computation is not `text-complete`,
-//! and this catalog performs none).
+//! A pool member's description is the CONVERTED record's own prose, read from
+//! `data/sheet_rules/<book>/companion/<slug>.json` through
+//! [`catalog_description`]. Until this cycle it was the ingest format's own
+//! unresolved description string, resolved here at run time and refused when a
+//! term this catalog could not compute was still standing. Both halves of that
+//! moved: the substitution now happens once, at ingest, in
+//! `src/pcgen_import/sheet_rule/`, and a term no catalog screen can settle
+//! prints **the rule's words** instead of being refused
+//! (`decisions.md` §1 form 3 — a final number, dice in final form, or the
+//! rule's words). Ultimate Wilderness's `Pilferer ~ Sneak` is the worked
+//! example: it used to be refused outright because its bonus needs the
+//! master's level, and it now reads as a sentence with that term named.
+//!
+//! The refusal that remains is the honest one: a record whose converted rule
+//! states no descriptive prose at all has nothing to serve, and
+//! [`catalog_description`] answers `None` for it. Never a partial or
+//! fabricated sentence — the same disposition, asked of our own schema.
 //!
 //! # PI screening
 //!
@@ -75,8 +80,10 @@ use std::path::{Path, PathBuf};
 use serde::{Deserialize, Serialize};
 use serde_json::Value;
 
-use codex::rules_core::pcgen_desc::{leaked_pcgen_syntax, render_pcgen_desc};
+use codex::rules_core::corpus_loader::live_sheet_rules;
 use codex::rules_core::rules_tables::companion_chassis;
+use codex::rules_core::sheet_rule::SheetRulePackage;
+use codex::rules_core::sheet_rule_catalog::catalog_description;
 
 use crate::reference_library_catalog::mechanical_summary;
 
@@ -106,10 +113,10 @@ pub struct CompanionPoolAbilityDto {
     /// of.
     pub pool_group: String,
     pub name: String,
-    /// Rendered through `render_pcgen_desc`, with every unsubstituted `%N`
-    /// argument refused rather than served (see the module doc's
-    /// "render-and-refuse" section). Never empty or the PI-redaction marker
-    /// — those never reach this struct at all.
+    /// The converted record's own words ([`catalog_description`]) — one final
+    /// number, dice in final form, or the rule's words for a term no catalog
+    /// screen can settle. Never empty or the PI-redaction marker: a record that
+    /// states no descriptive prose is refused before it reaches this struct.
     pub description: String,
     /// `true` when `description` is a rendered mechanical-token summary (a
     /// `.COPY=` template/variant row's `TEMPLATE`/`KIT`/`ASPECT` tokens,
@@ -136,6 +143,24 @@ pub struct CompanionPoolGroupDto {
 /// guaranteed to be the repo root).
 fn repo_root() -> PathBuf {
     Path::new(env!("CARGO_MANIFEST_DIR")).join("../../..")
+}
+
+/// The converted package's id for a corpus `companion` record: `<book>:companion:
+/// <slug of the record's own key>`.
+///
+/// The slug is taken from the record's `data.key` (`"Animal Trick ~ Aid"` ->
+/// `animal_trick_aid`), NOT from its on-disk file stem (`aid`) — the converter
+/// mints a record's id from its key, and for this ingest path the two differ for
+/// every `" ~ "`-grouped row. [`CompanionPoolAbilityDto::key`] keeps the file-stem
+/// identity `reach_gate.rs` joins on; this is only how the same record's converted
+/// words are found.
+///
+/// `beastiary` is the corpus directory's own historical misspelling; the converter
+/// writes that book under `bestiary`, so the one rename is applied here rather than
+/// leaving 25 records unresolvable.
+fn converted_id(corpus_book: &str, corpus_key: &str) -> String {
+    let book = if corpus_book == "beastiary" { "bestiary" } else { corpus_book };
+    format!("{book}:companion:{}", codex::rules_core::sheet_rule::slug(corpus_key))
 }
 
 /// `true` for a real, servable description value — reproduced from `class_
@@ -175,6 +200,7 @@ struct RawPoolEntry {
 /// not one this generic pass silently annexes.
 fn load_raw_pool_entries(repo_root: &Path) -> Vec<RawPoolEntry> {
     let mut out = Vec::new();
+    let package: Option<&'static SheetRulePackage> = live_sheet_rules();
     for book in companion_chassis::COMPANION_BOOKS {
         let dir = repo_root.join("data/corpus").join(book.corpus_book).join("companion");
         let Ok(read_dir) = std::fs::read_dir(&dir) else { continue };
@@ -197,8 +223,8 @@ fn load_raw_pool_entries(repo_root: &Path) -> Vec<RawPoolEntry> {
                 continue;
             }
             // `origin` distinguishes a genuine standalone pool row
-            // (`"declared"` -- a full `KEY:`/`DESC:` record in its own
-            // right, the shared reference-library shape this module's doc
+            // (`"declared"` -- a record stated in full in its own right, the
+            // shared reference-library shape this module's doc
             // comment names) from a delta row that states only a CHANGE on
             // some other record (`"mod_only"` / `"copy"` -- PCGen `.MOD`/
             // `.COPY=` rows). A `mod_only` row's `description` can render
@@ -248,31 +274,33 @@ fn load_raw_pool_entries(repo_root: &Path) -> Vec<RawPoolEntry> {
                 continue;
             }
             let Some(name) = data["name"].as_str() else { continue };
-            let Some(raw_desc) = data["description"].as_str() else { continue };
-            if !is_real_description_value(raw_desc) {
-                continue;
-            }
-            let rendered = render_pcgen_desc(raw_desc);
-            // The render-and-refuse gate: an unresolved `%N` means a real
-            // computation this catalog cannot perform is still missing from
-            // the sentence -- refused rather than served broken.
-            if !rendered.dropped_args.is_empty() {
-                continue;
-            }
-            if leaked_pcgen_syntax(&rendered.text).is_some() {
-                continue;
-            }
             let group = key.split(" ~ ").next().unwrap_or(key).to_string();
             let Some(slug) = file.file_stem().map(|s| s.to_string_lossy().into_owned()) else {
                 continue;
             };
+            // The converted record's own words. The substitution this call site
+            // used to perform at run time already happened at ingest
+            // (`src/pcgen_import/sheet_rule/`), and a term no catalog screen can
+            // settle prints the rule's words rather than a number nobody
+            // computed (`decisions.md` §1 form 3, `sheet_rule_catalog`).
+            let Some(package) = package else { continue };
+            let Some(rule) = package.rule(&converted_id(book.corpus_book, key)) else { continue };
+            // The refuse gate, restated over the converted package: a record that
+            // states no descriptive prose at all has nothing to serve. It is the
+            // same disposition as before -- refused, never served a partial or
+            // fabricated sentence -- asked of our own schema rather than of the
+            // ingest format's argument tail.
+            let Some(description) = catalog_description(package, rule) else { continue };
+            if !is_real_description_value(&description) {
+                continue;
+            }
             out.push(RawPoolEntry {
                 corpus_book: book.corpus_book.to_string(),
                 corpus_key: key.to_string(),
                 pool_group: group,
                 slug,
                 name: name.trim_end_matches('*').trim().to_string(),
-                description: rendered.text,
+                description,
                 is_mechanical_summary: false,
             });
         }
@@ -320,6 +348,35 @@ pub fn load_companion_pool_groups(wire_code_of: impl Fn(&str) -> &'static str) -
 #[cfg(test)]
 mod tests {
     use super::*;
+
+    /// The served population, pinned as a ratchet (SD-35 `AT-35-E6-003` cycle 3).
+    ///
+    /// Reading the converted package instead of resolving the ingest format's
+    /// description at run time moved this catalog from **407** served
+    /// `declared` rows to **459**, with **0** of the 407 lost — the before/after
+    /// key sets were captured on either side of the swap and diffed, and the 52
+    /// gained are rows whose bonus stands on a term no catalog screen can settle
+    /// (a companion's breath weapon scaled by its master's level, a poison DC),
+    /// which used to be refused outright and now read as the rule's words.
+    ///
+    /// The 25 `.COPY=` mechanical-summary rows are a separate, unchanged path.
+    /// A drop below either floor is a served row that stopped reaching a player.
+    #[test]
+    fn the_served_pool_population_never_falls_below_its_recorded_floor() {
+        let entries = load_raw_pool_entries(&repo_root());
+        let declared = entries.iter().filter(|e| !e.is_mechanical_summary).count();
+        let summary = entries.iter().filter(|e| e.is_mechanical_summary).count();
+        println!("POOL_CENSUS total={} declared={declared} summary={summary}", entries.len());
+        assert!(declared >= 459, "served declared pool rows fell to {declared}, below the recorded 459");
+        assert!(summary >= 25, "served mechanical-summary rows fell to {summary}, below the recorded 25");
+        for entry in &entries {
+            assert!(
+                !entry.description.is_empty(),
+                "{} reached the wire with an empty description",
+                entry.slug
+            );
+        }
+    }
 
     #[test]
     fn is_real_description_value_refuses_empty_clear_and_the_pi_marker() {
@@ -421,17 +478,35 @@ mod tests {
         );
     }
 
-    /// A record with an unresolvable `%N` (e.g. `sneak.json`'s `"...|
-    /// MasterLevel/2"` tail) is refused, not served with a dropped digit.
+    /// A row whose bonus stands on a term this catalog cannot settle
+    /// (`ultimate_wilderness/companion/sneak.json`, `Pilferer ~ Sneak`, whose
+    /// competence bonus is half the master's level) is served as **the rule's
+    /// words**, never as a dropped digit and never as the characterless `0` the
+    /// sheet evaluator would compute for it.
+    ///
+    /// SD-35 `AT-35-E6-003` cycle 3 deliberately moved this expectation. Until
+    /// this cycle the record was refused outright, which `decisions.md` §1
+    /// form 3 rules out: an unresolvable term prints the rule's words.
     #[test]
-    fn a_pool_row_with_an_unresolvable_formula_is_refused() {
+    fn a_pool_row_standing_on_an_unsettled_term_is_served_as_the_rules_words() {
         let repo = repo_root();
         let path = repo.join("data/corpus/ultimate_wilderness/companion/sneak.json");
         assert!(path.exists(), "fixture record moved or was renamed: {}", path.display());
         let entries = load_raw_pool_entries(&repo);
+        let found = entries
+            .iter()
+            .find(|e| e.corpus_book == "ultimate_wilderness" && e.slug == "sneak")
+            .expect("Pilferer ~ Sneak must be served with its own words");
+        assert_eq!(found.corpus_key, "Pilferer ~ Sneak");
         assert!(
-            !entries.iter().any(|e| e.corpus_book == "ultimate_wilderness" && e.slug == "sneak"),
-            "a record whose description needs MasterLevel resolved must not be served"
+            found.description.contains("competence bonus"),
+            "expected the record's own sentence, got: {}",
+            found.description
+        );
+        assert!(
+            !found.description.contains("+0 "),
+            "the unsettled term reached the wire as a computed zero: {}",
+            found.description
         );
     }
 
@@ -488,14 +563,32 @@ mod tests {
         );
     }
 
-    /// Mutation-proves-RED per the universal requirement: the render-and-
-    /// refuse gate is live, not vacuous.
+    /// Mutation-proves-RED per the universal requirement: the refuse gate is
+    /// live, not vacuous. Asked of the LIVE converted package rather than of a
+    /// hand-written fixture (`decisions.md` §4): across every converted
+    /// `companion` record in `data/sheet_rules/`, some state descriptive prose
+    /// and some state none, so `catalog_description`'s `None` arm is reached and
+    /// its `Some` arm is reached. A gate that answered the same way for every
+    /// record would be the vacuous one this test exists to catch.
     #[test]
-    fn render_and_refuse_gate_is_provably_live() {
-        let clean = render_pcgen_desc("you move at full speed");
-        assert!(clean.dropped_args.is_empty());
-        let broken = render_pcgen_desc("you gain a +%1 bonus|SomeUnresolvedVar");
-        assert!(!broken.dropped_args.is_empty(), "the gate must see this as unresolved");
+    fn the_refuse_gate_is_provably_live_over_the_converted_package() {
+        let package = live_sheet_rules().expect(
+            "data/sheet_rules/ must be present (cargo run --locked --bin sheet_rule_convert)",
+        );
+        let mut with_prose = 0usize;
+        let mut without_prose = 0usize;
+        for (id, rule) in &package.rules {
+            if !id.contains(":companion:") {
+                continue;
+            }
+            match catalog_description(package, rule) {
+                Some(text) if is_real_description_value(&text) => with_prose += 1,
+                _ => without_prose += 1,
+            }
+        }
+        println!("COMPANION_RULES with_prose={with_prose} without_prose={without_prose}");
+        assert!(with_prose > 0, "no converted companion record states any descriptive prose");
+        assert!(without_prose > 0, "the refuse arm is never reached -- the gate is vacuous");
     }
 
     #[test]

@@ -207,24 +207,23 @@ reverted rather than shipped, and the measurement is the cycle's second delivera
      written to protect, after a hand transcription read `BONUS:STAT|CON,WIS|2` only up to the
      comma for months. Moving it would be a gate weakening dressed as a residue win.
 - **Figures + their re-derive commands:** every row carries its own command.
-  The unit denominator where one applies is the whole corpus, all books — **49,438**
-  (`jq '.units | length' docs/work-inventory.json`).
+  The unit denominator where one applies is the whole corpus, all books — **49,438** (`jq '.units | length' docs/work-inventory.json`).
 
   | figure | value | command | denominator |
   |---|---|---|---|
   | `apps/desktop` residue, files / hits | **12 / 259**, flat | `python3 scripts/pcgen_residue_gate.py --check`, `root apps/desktop` line | 310 live `apps/desktop` source files the gate scans |
-  | live PCGen files / hits | **208 / 11,673**, flat | same command, last line | 49,438 units |
+  | live PCGen files / hits | **208 / 11,673**, flat | `python3 scripts/pcgen_residue_gate.py --check`, last line | 49,438 units |
   | `root src/rules_core` files / hits | **196 / 11,414**, flat | same command, `root src/rules_core` line | 196 files |
   | identifier files / hits | **17 / 144**, flat | same command, `identifier_files=` line | as above |
-  | converted rules in the package | **68,976** | the gate test's own `println!` | 49,438 units → 68,976 rules (a record may carry siblings) |
-  | rules whose prose carries an unsettled slot | **6,540** | same | 68,976 rules |
-  | of those, rendered differently with and without a character | **6,540 of 6,540 = 100 %** | same | 6,540 rules |
-  | spell table keys resolving a converted record | **1,194 of 1,198 = 99.7 %** | the artifact's python block, `report(…,'spell')` | 1,198 table keys |
-  | feat table keys resolving a converted record | **673 of 673 = 100 %** | same, `report(…,'feat')` | 673 table keys |
-  | equipment table keys resolving a converted record | **2,727 of 3,446 = 79.1 %** | same, `report(…,'equipment')` | 3,446 table keys |
-  | rule objects written to disk | **69,344** | `python3` walk of `data/sheet_rules/<book>/**/*.json` summing `len(json.load(f))` | 49,296 record files |
-  | rule ids written more than once | **305**, dropping **368 of 69,344 = 0.53 %** objects at load | same walk, `collections.Counter` over `r['id']` | 69,344 rule objects |
-  | `core_rulebook` `race_trait` records carrying a `target` | **6 of 217 = 2.8 %** | the artifact's §4 python block | 217 records |
+  | converted rules in the package | **68,976** | `cargo test --locked --lib sheet_rule_catalog -j 6 -- --nocapture` | 49,438 units → 68,976 rules (a record may carry siblings) |
+  | rules whose prose carries an unsettled slot | **6,540** | `cargo test --locked --lib sheet_rule_catalog -j 6 -- --nocapture` | 68,976 rules |
+  | of those, rendered differently with and without a character | **6,540 of 6,540 = 100 %** | `cargo test --locked --lib sheet_rule_catalog -j 6 -- --nocapture` | 6,540 rules |
+  | spell table keys resolving a converted record | **1,194 of 1,198 = 99.7 %** | `python3 - < AT-35-E6-003_cycle2_converted-row-coverage.md`'s §2 block, `report('src/rules_core/rules_tables/*/spell_list.rs','spell')` | 1,198 table keys |
+  | feat table keys resolving a converted record | **673 of 673 = 100 %** | `python3 - < AT-35-E6-003_cycle2_converted-row-coverage.md`'s §2 block, `report('src/rules_core/rules_tables/*/feat_data/*.rs','feat')` | 673 table keys |
+  | equipment table keys resolving a converted record | **2,727 of 3,446 = 79.1 %** | `python3 - < AT-35-E6-003_cycle2_converted-row-coverage.md`'s §2 block, `report('src/rules_core/rules_tables/*/equipment_data/*.rs','equipment')` | 3,446 table keys |
+  | rule objects written to disk | **69,344** | `python3 -c "import json,os;print(sum(len(json.load(open(os.path.join(r,f)))) for r,_,fs in os.walk('data/sheet_rules') for f in fs if f.endswith('.json') and not f.startswith('_')))"` | 49,296 record files |
+  | rule ids written more than once | **305**, dropping **368 of 69,344 = 0.53 %** objects at load | `python3 - < AT-35-E6-003_cycle2_converted-row-coverage.md`'s §5 block (a `collections.Counter` over every written rule's `id`) | 69,344 rule objects |
+  | `core_rulebook` `race_trait` records carrying a `target` | **6 of 217 = 2.8 %** | `python3 - < AT-35-E6-003_cycle2_converted-row-coverage.md`'s §4 block over `data/sheet_rules/core_rulebook/race_trait` | 217 records |
   | desktop tests failing on the reverted swap | **6 of 580** | `cd apps/desktop/src-tauri && cargo test --locked -j 6`, with the swap applied | 580 desktop tests |
   | files changed | **5** (3 modified, 2 added) | `git show --stat 1143318c92 \| tail -1` | files in that commit |
   | rust lines changed | **517** | `python3 scripts/cycle_scope_gate.py --receipt --since 99174263c1 …` | the 3 `.rs` files in that window |

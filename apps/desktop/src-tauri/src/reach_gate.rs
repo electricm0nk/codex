@@ -3399,29 +3399,24 @@ const OPEN_FINDINGS: &[(&str, &str, &str)] = &[
     (
         "beastiary1",
         "companions",
-        "6 of Bestiary 1's 154 companion records never appear on `list_companion_catalog` (down from \
-         28 -- the 22 `.COPY=` Celestial/Fiendish rows now reach via the tier-3 mechanical-summary \
-         admission above): `Mephit ~ Summon`/`Pseudodragon ~ Tail` (owned-ability rows this pool \
-         mechanism was never meant to serve) and 4 `Universal Monster Rule ~ ...` rows, genuinely \
-         `origin: \"mod_only\"` dangling-conditional-clause fragments (confirmed real: `Universal \
-         Monster Rule ~ Fast Healing`'s description is \"Works only in gusty and windy areas.\" -- a \
-         clause with no antecedent outside its base row) that `companion_pool_catalog.rs`'s `origin` \
-         gate correctly refuses. Remedy: a real base-record delta-merge mechanism for `.MOD` rows \
-         (a different, smaller-scoped engine than a creature-template applicator) -- unbuilt, sized \
-         here.",
+        "5 of Bestiary 1's 154 companion records never appear on `list_companion_catalog` (down from 6: \
+         SD-35 `AT-35-E6-003` cycle 3 pointed `companion_pool_catalog.rs` at the CONVERTED package (`data/sheet_rules/`), and a row whose bonus stands on a term no catalog screen can settle now reads as the rule's words instead of being refused -- `Mephit ~ \
+         Summon` is the one that moved). The 5 that remain are structurally refused, not \
+         prose-refused: `Pseudodragon ~ Tail` is an owned-ability row this pool mechanism was never \
+         meant to serve, and the 4 `Universal Monster Rule ~ ...` rows are `origin: \"mod_only\"` \
+         dangling-clause fragments. Remedy: a real base-record delta-merge mechanism for `.MOD` rows.",
     ),
     (
         "advanced_race_guide",
         "companions",
-        "9 of Advanced Race Guide's 32 companion records never appear on `list_companion_catalog` -- \
-         7 `Evolution ~ Major/Ultimate ...` rows carry an unresolvable `%N` formula \
-         (`companion_pool_catalog.rs`'s render-and-refuse gate correctly refuses rather than dropping \
-         the digit), plus `Shaitan Binder Eidolon ~ Noble Eidolon` and `WCEvolution ~ Skilled` (both \
-         also formula-scaled). Remedy: a character-scoped companion-ability consumer surface -- the \
-         interpreter that would evaluate these formulas (`formula_interpreter.rs`) exists and is \
-         Gate-2-proven; what is missing is a live character for it to resolve `MasterLevel`/HD/etc \
-         against, which `list_companion_catalog`'s browse-only surface has none of \
-         (`decisions.md §20 (SD-31)` overturned, corrected 2026-08-23 -- see the block comment above).",
+        "7 of Advanced Race Guide's 32 companion records never appear on `list_companion_catalog` \
+         (down from 9: SD-35 `AT-35-E6-003` cycle 3 pointed `companion_pool_catalog.rs` at the \
+         CONVERTED package, and `Evolution ~ Stone Curse` and `Shaitan Binder Eidolon ~ Noble \
+         Eidolon` now reach a player as the rule's words). The 7 that remain state no descriptive \
+         prose at all in the converted package -- there is no sentence to serve, which is a \
+         different gap from a term this catalog could not settle. Remedy: the converter deriving \
+         these rows' words from their own source rows, `src/pcgen_import/sheet_rule/` \
+         (`decisions.md §11` puts every such fix on the converter side).",
     ),
     (
         // `Family.book` for this book is `"apg"`, not `"advanced_players_guide"`
@@ -3430,73 +3425,55 @@ const OPEN_FINDINGS: &[(&str, &str, &str)] = &[
         // `unsurfaced_families_are_exactly_the_recorded_findings` cannot find it.
         "apg",
         "companions",
-        "137 of Advanced Players Guide's 220 companion records never appear on `list_companion_catalog` \
-         -- the book's full Eidolon `Evolution ~ ...`/`Temp Evolution ~ ...` roster, every one scaling \
-         on a `%N` formula (`DR`/resistance/breath-weapon magnitudes computed from eidolon level) this \
-         catalog has no character to resolve, correctly refused by the render-and-refuse gate rather \
-         than served with a dropped digit -- `Companion Bonus Skill`/`Eidolon Bonus Skill`, the book's \
-         only ungrouped clean-rendering records, ARE served (`companion_pool_catalog.rs` admits a \
-         `\" ~ \"`-free key as its own singleton pool, not excluded on a syntax technicality). Remedy: \
-         a character-scoped companion-ability consumer surface (the interpreter itself is ready and \
-         Gate-2-proven; the browse-only catalog simply has no character to hand it -- \
-         `decisions.md §20 (SD-31)` overturned, corrected 2026-08-23).",
+        "123 of Advanced Players Guide's 220 companion records never appear on `list_companion_catalog` \
+         (down from 137: SD-35 `AT-35-E6-003` cycle 3 pointed `companion_pool_catalog.rs` at the CONVERTED package (`data/sheet_rules/`), and a row whose bonus stands on a term no catalog screen can settle now reads as the rule's words instead of being refused -- \
+         the book's 14 breath-weapon/poison/reach Eidolon evolutions moved). All 123 that remain \
+         state NO descriptive prose at all in the converted package (re-derived record by record \
+         against `data/sheet_rules/advanced_players_guide/companion/`): there is no sentence to \
+         serve, which is a different gap from a term this catalog could not settle. Remedy: the \
+         converter deriving these rows' words from their own source rows, `src/pcgen_import/\
+         sheet_rule/` (`decisions.md §11` puts every such fix on the converter side).",
     ),
     (
         "crb",
         "companions",
-        "31 of Core Rulebook's 184 companion records never appear on `list_companion_catalog` -- \
-         verified per record, not by shape guess: most (`Companion`, `Companion Advancement`, \
-         `Companion Skills`, `Companion Stat ~ <ability>`, 5 `.MOD` bonus-delta rows) carry an \
-         EMPTY `description` (confirmed: `data/corpus/core_rulebook/companion/companion.json`'s \
-         `data.description == \"\"`) -- PCGen's own umbrella/category-header convention, no prose \
-         to serve at all; the rest (`Animal Companion Feat ~ Combat Reflexes`/`Power Attack`/etc.) \
-         carry an unresolvable `%N` formula this catalog has no character to compute. Remedy: none \
-         for the empty-description rows (no content exists to serve); a character-scoped companion- \
-         ability consumer surface for the rest (the interpreter is ready and Gate-2-proven; only a \
-         live character to resolve against is missing -- `decisions.md §20 (SD-31)` overturned, \
-         corrected 2026-08-23).",
+        "24 of Core Rulebook's 184 companion records never appear on `list_companion_catalog` (down from \
+         31: SD-35 `AT-35-E6-003` cycle 3 pointed `companion_pool_catalog.rs` at the CONVERTED package (`data/sheet_rules/`), and a row whose bonus stands on a term no catalog screen can settle now reads as the rule's words instead of being refused -- the 7 \
+         `Animal Companion ~ ...`/`Animal Companion Feat ~ ...` rows moved). All 24 that remain \
+         state NO descriptive prose in the converted package -- PCGen's own umbrella/category-header \
+         convention (`Companion`, `Companion Advancement`, `Companion Skills`, `Companion Stat ~ \
+         <ability>`, 5 `.MOD` bonus-delta rows). Remedy: none where no content exists; otherwise the \
+         converter, `src/pcgen_import/sheet_rule/`.",
     ),
     (
         "ultimate_magic",
         "companions",
-        "106 of Ultimate Magic's 198 companion records never appear on `list_companion_catalog` -- the \
-         Black Blade (Magus arcane pool weapon) and Eidolon `Evolution ~ ...`/basic-spell-like-ability \
-         roster, every one scaling on a `%N` formula (caster level, arcane pool points, `MasterLevel`) \
-         this catalog has no character to resolve, correctly refused by the render-and-refuse gate. \
-         Remedy: a character-scoped companion-ability consumer surface -- the interpreter is ready \
-         and Gate-2-proven; only a live character to resolve `caster level`/`MasterLevel` against is \
-         missing (`decisions.md §20 (SD-31)` overturned, corrected 2026-08-23).",
+        "96 of Ultimate Magic's 198 companion records never appear on `list_companion_catalog` (down from \
+         106: SD-35 `AT-35-E6-003` cycle 3 pointed `companion_pool_catalog.rs` at the CONVERTED package (`data/sheet_rules/`), and a row whose bonus stands on a term no catalog screen can settle now reads as the rule's words instead of being refused -- the \
+         Black Blade roster and 3 poison/incorporeal-form evolutions moved). All 96 that remain state \
+         NO descriptive prose in the converted package. Remedy: the converter deriving these rows' \
+         words from their own source rows, `src/pcgen_import/sheet_rule/`.",
     ),
     (
         "book_of_the_damned_volume_1",
         "companions",
-        "4 of Book of the Damned Volume 1's 31 companion records never appear on `list_companion_catalog` \
-         -- confirmed real: `imp_companion.json`'s `description: null` (`VISIBLE:NO` internal chassis \
-         row, `origin: \"declared\"` but no prose to render at all), `1.json`'s `description: null` \
-         (a bare `ABILITY:FEAT|AUTOMATIC|CMB Output` internal token, not player content), and the \
-         Imp Companion's 2 `Bonus Tricks`/`Starting Shape Change` rows, both scaling on an unresolved \
-         `%N` (`ImpCompBonusTricks`/`ImpCompStartTricks`). Remedy: a character-scoped companion- \
-         ability consumer surface for the latter two (the interpreter is ready and Gate-2-proven; \
-         only a live character to resolve against is missing -- `decisions.md §20 (SD-31)` \
-         overturned, corrected 2026-08-23); the former two carry no content to serve at all.",
+        "2 of Book of the Damned Volume 1's 31 companion records never appear on \
+         `list_companion_catalog` (down from 4: SD-35 `AT-35-E6-003` cycle 3 pointed `companion_pool_catalog.rs` at the CONVERTED package (`data/sheet_rules/`), and a row whose bonus stands on a term no catalog screen can settle now reads as the rule's words instead of being refused \
+         -- `Imp Companion ~ Bonus Tricks` and `~ Starting Shape Change` moved). The 2 that remain \
+         carry no content to serve at all: `imp_companion.json` is a `VISIBLE:NO` internal chassis \
+         row and `1.json` is a bare internal token, both with no prose in the converted package.",
     ),
     (
         "ultimate_wilderness",
         "companions",
-        "42 of Ultimate Wilderness's 575 companion records never appear on `list_companion_catalog` -- \
-         down from 43 (SD-32 row 20: `Margay ~ Sound Mimicry`, a `.COPY=` ability-variant row, now \
-         reaches via `companion_pool_catalog.rs`'s new `origin == \"copy\"` tier-3 admission) and from \
-         248 before `companion_pool_catalog.rs` first landed. Verified per record: most \
-         (`Archetype Companion`, `Archetype Familiar`, `Plant Base Form ~ <element>`, `Unchained \
-         Eidolon Base Form ~ <element>`) carry an EMPTY `description` (confirmed: `data/corpus/\
-         ultimate_wilderness/companion/cactus.json`'s `data.description == \"\"`) -- umbrella \
-         category rows with no prose to serve; the rest (`Draconic Companion ~ <Resistance>`, \
-         `Animal Trick ~ Sneak`/`Spin Silk`, `Prankster ~ Glib Comedy`, eidolon-progression rows) \
-         carry an unresolvable `%N` formula (`MasterLevel`/`DraconicCompanionResistanceBonus`/CON-\
-         score-derived). Remedy: none for the empty-description rows; a character-scoped companion- \
-         ability consumer surface for the rest (the interpreter is ready and Gate-2-proven; only a \
-         live character to resolve `MasterLevel`/CON against is missing -- `decisions.md §20 (SD-31)` \
-         overturned, corrected 2026-08-23).",
+        "26 of Ultimate Wilderness's 575 companion records never appear on `list_companion_catalog` (down \
+         from 42: SD-35 `AT-35-E6-003` cycle 3 pointed `companion_pool_catalog.rs` at the CONVERTED package (`data/sheet_rules/`), and a row whose bonus stands on a term no catalog screen can settle now reads as the rule's words instead of being refused -- 16 \
+         `Draconic Companion ~ <Resistance>`, `Animal Trick ~ Cocoon`/`Spin Silk`, `Pilferer ~ \
+         Sneak`/`Nondetection`, `Prankster ~ Glib Comedy` and sibling rows moved; and from 248 \
+         before `companion_pool_catalog.rs` first landed). All 26 that remain state NO descriptive \
+         prose in the converted package -- umbrella category rows (`Archetype Companion`, `Plant \
+         Base Form ~ <element>`, `Unchained Eidolon Base Form ~ <element>`). Remedy: none where no \
+         content exists; otherwise the converter, `src/pcgen_import/sheet_rule/`.",
     ),
     // SD-32 row 19 cycle 4: an independent gap this cycle discovered while
     // re-deriving `every_ingested_family_is_accounted_for`'s own population
@@ -5844,7 +5821,6 @@ const UNREACHED_RECORD_FINDINGS: &[(&str, &str, &[&str])] = &[
         "beastiary1",
         "companions",
         &[
-            "Mephit ~ Summon",
             "Pseudodragon ~ Tail",
             "Universal Monster Rule ~ Change Shape",
             "Universal Monster Rule ~ Disease (Extraordinary)",
@@ -5860,10 +5836,8 @@ const UNREACHED_RECORD_FINDINGS: &[(&str, &str, &[&str])] = &[
             "Evolution ~ Major Glitterdust 3",
             "Evolution ~ Major Soften Earth and Stone 1",
             "Evolution ~ Major Soften Earth and Stone 3",
-            "Evolution ~ Stone Curse",
             "Evolution ~ Ultimate Meld Into Stone 1",
             "Evolution ~ Ultimate Stone Shape 1",
-            "Shaitan Binder Eidolon ~ Noble Eidolon",
             "WCEvolution ~ Skilled",
         ],
     ),
@@ -5882,14 +5856,6 @@ const UNREACHED_RECORD_FINDINGS: &[(&str, &str, &[&str])] = &[
             "Evolution ~ Arms",
             "Evolution ~ Blindsense",
             "Evolution ~ Blindsight",
-            "Evolution ~ Breath Weapon (Cone of Acid)",
-            "Evolution ~ Breath Weapon (Cone of Cold)",
-            "Evolution ~ Breath Weapon (Cone of Electricity)",
-            "Evolution ~ Breath Weapon (Cone of Fire)",
-            "Evolution ~ Breath Weapon (Line of Acid)",
-            "Evolution ~ Breath Weapon (Line of Cold)",
-            "Evolution ~ Breath Weapon (Line of Electricity)",
-            "Evolution ~ Breath Weapon (Line of Fire)",
             "Evolution ~ Burrow",
             "Evolution ~ DR Chaotic",
             "Evolution ~ DR Evil",
@@ -5921,10 +5887,7 @@ const UNREACHED_RECORD_FINDINGS: &[(&str, &str, &[&str])] = &[
             "Evolution ~ Improved Flight",
             "Evolution ~ Large",
             "Evolution ~ Legs",
-            "Evolution ~ Poison Con",
-            "Evolution ~ Poison Str",
             "Evolution ~ Rake",
-            "Evolution ~ Reach",
             "Evolution ~ Remove Claws",
             "Evolution ~ Rend",
             "Evolution ~ Resist Acid",
@@ -5991,10 +5954,7 @@ const UNREACHED_RECORD_FINDINGS: &[(&str, &str, &[&str])] = &[
             "Temp Evolution ~ Improved Flight",
             "Temp Evolution ~ Large",
             "Temp Evolution ~ Legs",
-            "Temp Evolution ~ Poison Con",
-            "Temp Evolution ~ Poison Str",
             "Temp Evolution ~ Rake",
-            "Temp Evolution ~ Reach",
             "Temp Evolution ~ Rend",
             "Temp Evolution ~ Resist Acid",
             "Temp Evolution ~ Resist Cold",
@@ -6013,21 +5973,14 @@ const UNREACHED_RECORD_FINDINGS: &[(&str, &str, &[&str])] = &[
     (
         "book_of_the_damned_volume_1",
         "companions",
-        &["1", "Imp Companion", "Imp Companion ~ Bonus Tricks", "Imp Companion ~ Starting Shape Change"],
+        &["1", "Imp Companion"],
     ),
     (
         "crb",
         "companions",
         &[
             "+2 to Dexterity and Constitution",
-            "Animal Companion Feat ~ Combat Reflexes",
-            "Animal Companion Feat ~ Power Attack",
-            "Animal Companion Feat ~ Toughness",
             "Animal Companion Feat ~ Weapon Focus",
-            "Animal Companion ~ AC Bonus",
-            "Animal Companion ~ Bonus Tricks",
-            "Animal Companion ~ Spell Resistance",
-            "Animal Companion ~ Stat Bonus",
             "Base Companion ~ Animal Companion",
             "Base Companion ~ Special Mount",
             "Companion",
@@ -6058,12 +6011,6 @@ const UNREACHED_RECORD_FINDINGS: &[(&str, &str, &[&str])] = &[
         &[
             "1",
             "Black Blade",
-            "Black Blade Arcane Pool",
-            "Black Blade ~ Ego",
-            "Black Blade ~ Enhancement Bonus",
-            "Black Blade ~ Life Drinker",
-            "Black Blade ~ Spell Defense",
-            "Black Blade ~ Transfer Arcana",
             "Companion Stat ~ Mindless to 1 INT",
             "Evolution ~ BM Acid Splash 1",
             "Evolution ~ BM Acid Splash 3",
@@ -6092,7 +6039,6 @@ const UNREACHED_RECORD_FINDINGS: &[(&str, &str, &[&str])] = &[
             "Evolution ~ Hooved Feet",
             "Evolution ~ Hooved Hands",
             "Evolution ~ Improved Channel Resistance",
-            "Evolution ~ Incorporeal Form",
             "Evolution ~ Major Acid Arrow 1",
             "Evolution ~ Major Acid Arrow 3",
             "Evolution ~ Major Cure Moderate Wounds 1",
@@ -6153,14 +6099,11 @@ const UNREACHED_RECORD_FINDINGS: &[(&str, &str, &[&str])] = &[
             "Evolution ~ Ultimate Stinking Cloud 1",
             "Evolution ~ Ultimate Tongues 1",
             "Evolution ~ Ultimate Water Breathing 1",
-            "Giant Spider Vermin Companion ~ Poison",
-            "Greensting Scorpion ~ Poison",
             "Temp Evolution ~ Channel Resistance",
             "Temp Evolution ~ Dimension Door",
             "Temp Evolution ~ Hooved Feet",
             "Temp Evolution ~ Hooved Hands",
             "Temp Evolution ~ Improved Channel Resistance",
-            "Temp Evolution ~ Incorporeal Form",
             "Vermin Companion",
         ],
     ),
@@ -6170,38 +6113,23 @@ const UNREACHED_RECORD_FINDINGS: &[(&str, &str, &[&str])] = &[
         &[
             "Aberrant Companion ~ Aberrant Sight",
             "Aberrant Companion ~ Aberrant Skills",
-            "Animal Trick ~ Cocoon",
-            "Animal Trick ~ Spin Silk",
             "Archetype Companion",
             "Archetype Familiar",
             "Augmented Companion ~ Augmented Sight",
             "Deathtouched Companion ~ Dead Sight",
             "Deathtouched Companion ~ Deathtouched Skills",
-            "Draconic Companion ~ Acid Resistance",
             "Draconic Companion ~ Breath Weapon Choice",
-            "Draconic Companion ~ Breath Weapon ~ Cone",
-            "Draconic Companion ~ Breath Weapon ~ Line",
-            "Draconic Companion ~ Cold Resistance",
             "Draconic Companion ~ Draconic Sight",
             "Draconic Companion ~ Draconic Skills",
-            "Draconic Companion ~ Electricity Resistance",
-            "Draconic Companion ~ Fire Resistance",
             "Feytouched Companion Advancement",
             "Feytouched Companion ~ Feytouched Skills",
-            "Feytouched Companion ~ Iron Bane",
-            "Figment ~ Manifest Dreams",
             "Hunter's Bond ~ Animal Companion",
-            "Infiltrator ~ Scry on Familiar",
             "Infiltrator ~ Uncanny Dodge Tracker",
-            "Pilferer ~ Nondetection",
-            "Pilferer ~ Sneak",
             "Plant Base Form ~ Cactus",
             "Plant Base Form ~ Conifer",
             "Plant Base Form ~ Fungus",
             "Plant Base Form ~ Leaf",
             "Plant Base Form ~ Seaweed",
-            "Plant ~ Unchained Eidolon LVL08",
-            "Prankster ~ Glib Comedy",
             "Precocious Companion Advancement",
             "Tracker ~ Tracker Skills",
             "Unchained Eidolon Base Form ~ Cactus",
@@ -6209,7 +6137,6 @@ const UNREACHED_RECORD_FINDINGS: &[(&str, &str, &[&str])] = &[
             "Unchained Eidolon Base Form ~ Fungus",
             "Unchained Eidolon Base Form ~ Leaf",
             "Unchained Eidolon Base Form ~ Seaweed",
-            "Verdant Companion ~ Verdant Resistance",
         ],
     ),
 ];
