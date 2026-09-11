@@ -343,6 +343,23 @@ fn label_of(package: &SheetRulePackage, id: &str) -> String {
     }
 }
 
+/// One converted [`Expr`] in the rule's own words -- [`describe_expr`] for callers outside
+/// this module.
+///
+/// SD-35 `AT-35-E6-003`: `sheet_rule_catalog` renders a rule's prose with no character in
+/// hand, where a slot standing on a character term has no number and must print words. That
+/// vocabulary already exists here, is already the one the refusal lines use, and is pinned by
+/// this module's own tests -- a second describer would be a second place for the sheet's words
+/// to drift.
+pub fn expr_words(package: &SheetRulePackage, expr: &Expr) -> String {
+    describe_expr(package, expr)
+}
+
+/// A slug or an internal id as words -- [`pretty`] for callers outside this module.
+pub fn words_of_id(value: &str) -> String {
+    pretty(value)
+}
+
 /// A slug or an internal id as words: `"power_attack"` -> `"power attack"`.
 fn pretty(value: &str) -> String {
     let words = value.replace(['_', '-'], " ");
