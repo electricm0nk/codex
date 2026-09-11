@@ -139,12 +139,12 @@ pub struct UmFeatEntry {
     /// text, when the record carries prose at all. `None` when the
     /// record has no `BENEFIT:` token.
     pub benefit: Option<&'static str>,
-    /// Every `BONUS:`/`DEFINE:` token the corpus record carries,
-    /// verbatim, in source order -- carries this book's own four
-    /// no-prose-but-real-mechanic records (this module doc comment's
-    /// "Four records" paragraph) without excluding or fabricating text
-    /// for them. `None` when the row has no `BONUS:` token.
-    pub effect: Option<&'static [&'static str]>,
+    // The `effect: Option<&'static [&'static str]>` field that stood here held
+    // every `BONUS:`/`DEFINE:` token of the corpus row, verbatim, in source
+    // order. It moved to `pcgen_import::feat_effect_tokens` — SD-35
+    // `AT-35-E6-003-SWEEP` cycle 6, `decisions.md` §11: nothing on the live
+    // side reads a PCGen token. It had no live reader at all; its only three
+    // readers were this file's own tests, which now read the relocated table.
     // The `prerequisites: Option<&'static [&'static str]>` field that stood
     // here held every top-level `PRE`-family token of the corpus row,
     // verbatim. It moved to `pcgen_import::feat_prereq_tokens` — SD-35
@@ -168,7 +168,6 @@ pub fn feat_tables() -> &'static [UmFeatEntry] {
                 pretext: None,
                 source_page: Some("p.142"),
                 benefit: Some("Choose one of your revelations that has a number of uses per day. You gain 1 additional use per day of that revelation."),
-                effect: None,
             },
             // Accursed Critical -- um_feats.lst:16
             UmFeatEntry {
@@ -179,7 +178,6 @@ pub fn feat_tables() -> &'static [UmFeatEntry] {
                 pretext: None,
                 source_page: Some("p.142"),
                 benefit: Some("When you confirm a critical hit with a spell or spell-like ability, you may cast bestow curse or major curse on that target as an immediate action. This works even with ranged spells. You must have bestow curse or major curse prepared or otherwise available to cast, and using this ability casts the corresponding spell."),
-                effect: None,
             },
             // Accursed Hex -- um_feats.lst:17
             UmFeatEntry {
@@ -190,7 +188,6 @@ pub fn feat_tables() -> &'static [UmFeatEntry] {
                 pretext: None,
                 source_page: Some("p.143"),
                 benefit: Some("When you target a creature with a hex that cannot target the same creature more than once per day, and that creature succeeds at its saving throw against the hex's effect, you can target the creature with the same hex a second time before the end of your next turn. If the second attempt fails, you can make no further attempts to target that creature with the same hex for 1 day."),
-                effect: None,
             },
             // Advanced Ranger Trap -- um_feats.lst:18
             UmFeatEntry {
@@ -201,7 +198,6 @@ pub fn feat_tables() -> &'static [UmFeatEntry] {
                 pretext: None,
                 source_page: Some("p.143"),
                 benefit: Some("Add +1 to the Difficulty Class on all Perception and Disable Device skill checks to find or disable the traps you make with your trap class feature. Add a +1 to the Difficulty Class on all saving throws against the effects of the trap you make with your trap class feature."),
-                effect: None,
             },
             // Antagonize -- um_feats.lst:19
             UmFeatEntry {
@@ -212,7 +208,6 @@ pub fn feat_tables() -> &'static [UmFeatEntry] {
                 pretext: None,
                 source_page: Some("p.143"),
                 benefit: Some("You can make Diplomacy and Intimidate checks to make creatures respond to you with hostility. No matter which skill you use, antagonizing a creature takes a standard action that does not provoke attacks of opportunity, and has a DC equal to 10 + the target's Hit Dice + the target's Wisdom modifier. The benefits you gain for this check depend on the skill you use. This is a mind-affecting effect."),
-                effect: None,
             },
             // Blighted Critical -- um_feats.lst:20
             UmFeatEntry {
@@ -223,7 +218,6 @@ pub fn feat_tables() -> &'static [UmFeatEntry] {
                 pretext: None,
                 source_page: Some("p.143"),
                 benefit: Some("Whenever you confirm a critical hit with a touch spell, ranged touch spell, or spell-like ability against an opponent, the victim gains a random minor spellblight."),
-                effect: None,
             },
             // Blighted Critical Mastery -- um_feats.lst:21
             UmFeatEntry {
@@ -234,7 +228,6 @@ pub fn feat_tables() -> &'static [UmFeatEntry] {
                 pretext: None,
                 source_page: Some("p.143"),
                 benefit: Some("Whenever you apply a spellblight by way of the Blighted Critical or Greater Blighted critical feat, you can choose the spellblight you apply rather than determining it randomly."),
-                effect: None,
             },
             // Burning Spell -- um_feats.lst:22
             UmFeatEntry {
@@ -245,7 +238,6 @@ pub fn feat_tables() -> &'static [UmFeatEntry] {
                 pretext: None,
                 source_page: Some("p.143"),
                 benefit: Some("The acid or fire effects of the affected spell adhere to the creature, causing more damage the next round. When a creature takes acid or fire damage from the affected spell, that creature takes damage equal to 2 x the spell's actual level at the start of its next turn. The damage is acid or fire, as determined by the spell's descriptor. If a burning spell has both the fire and acid descriptor, the caster chooses what kind of damage is dealt by the burning spell effect. A burning spell uses up a slot two levels higher than the spell's actual level."),
-                effect: None,
             },
             // Channeled Shield Wall -- um_feats.lst:23
             UmFeatEntry {
@@ -256,7 +248,6 @@ pub fn feat_tables() -> &'static [UmFeatEntry] {
                 pretext: None,
                 source_page: Some("p.143"),
                 benefit: Some("As a swift action, you can spend a use of your channel energy to grant yourself a +2 deflection bonus while using a shield. This bonus lasts 1 minute per cleric level or effective cleric level. While you benefit from this bonus, allies with shields also gain a +2 deflection bonus while they are adjacent to you."),
-                effect: None,
             },
             // Concussive Spell -- um_feats.lst:24
             UmFeatEntry {
@@ -267,7 +258,6 @@ pub fn feat_tables() -> &'static [UmFeatEntry] {
                 pretext: None,
                 source_page: Some("p.143"),
                 benefit: Some("With sonic damage comes a concussive wave of energy that rattles creatures affected by the spell. A concussive spell causes creatures that take damage from a spell that has the sonic descriptor to take a -2 penalty on attack rolls, saving throws, skill checks, and ability checks for a number of rounds equal to the actual spell level of the spell. A concussive spell only affects spells with the sonic descriptor. A concussive spell uses up a spell slot two levels higher than the spell's actual level."),
-                effect: None,
             },
             // Create Reliquary Arms and Shields -- um_feats.lst:25
             UmFeatEntry {
@@ -278,7 +268,6 @@ pub fn feat_tables() -> &'static [UmFeatEntry] {
                 pretext: None,
                 source_page: Some("p.148"),
                 benefit: Some("When you craft a magic weapon, magic armor, or magic shield, you may add one casting of consecrate or desecrate as part of the item crafting process. This increases the item's Price by 250 gp.  The item becomes a reliquary and can be used as a holy (or unholy) symbol divine focus of your deity. If you cast consecrate or desecrate, your reliquary counts as a permanent fixture for that spell while it remains in the spell's area."),
-                effect: None,
             },
             // Create Sanguine Elixir -- um_feats.lst:26
             UmFeatEntry {
@@ -289,7 +278,6 @@ pub fn feat_tables() -> &'static [UmFeatEntry] {
                 pretext: None,
                 source_page: Some("p.148"),
                 benefit: Some("Once per day, when you clear your mind to regain spell slots, you can create a sanguine elixir. When you do, pick one of your bloodline powers. You transfer that power into a small potion that any creature can drink to temporarily gain the benefit of your bloodline power. Creating a sanguine elixir takes 1 hour, and requires special oils and distillates worth 100 gp, and when you make the sanguine elixir, you lose access to the bloodline power until the next time you clear your mind to regain spell slots. Sanguine elixirs are extremely unstable. They lose their potency 1 day after they are created."),
-                effect: None,
             },
             // Defending Eidolon -- um_feats.lst:27
             UmFeatEntry {
@@ -300,7 +288,6 @@ pub fn feat_tables() -> &'static [UmFeatEntry] {
                 pretext: None,
                 source_page: Some("p.148"),
                 benefit: Some("Whenever you are adjacent to your eidolon, you can choose for the eidolon to take a -1 penalty on melee attack rolls and combat maneuver checks to gain a +1 dodge bonus to your Armor Class. When your eidolon's base attack bonus reaches +5, and for every +5 thereafter, the penalty increases by -1 and the dodge bonus increases by +1. You must choose to use this feat when your eidolon is making an attack or full-attack action with melee or natural weapons, and its effect lasts until your eidolon's next turn, or until you are no longer adjacent to the eidolon, whichever occurs first."),
-                effect: None,
             },
             // Deny Death -- um_feats.lst:28
             UmFeatEntry {
@@ -311,7 +298,6 @@ pub fn feat_tables() -> &'static [UmFeatEntry] {
                 pretext: None,
                 source_page: Some("p.148"),
                 benefit: Some("As long as you have 1 ki point in your ki pool, when you fail your Constitution check to stabilize, you do not lose 1 hit point. If you succeed at the check, you can spend 1 ki point to heal 1d6 hit points. If you roll a natural 20 on the check to stabilize, you can spend 1 ki point to heal 2d6 hit points of damage instead."),
-                effect: None,
             },
             // Detect Expertise -- um_feats.lst:29
             UmFeatEntry {
@@ -322,7 +308,6 @@ pub fn feat_tables() -> &'static [UmFeatEntry] {
                 pretext: None,
                 source_page: Some("p.148"),
                 benefit: Some("When you use any of the spells listed in this feat's prerequisites to detect a creature's alignment or its magic, you have a chance of detecting what spellcasting expertise it has. After you observe a creature with the detect spell for 3 rounds, it must make a Will save (DC %1 plus half your caster level). If it fails the saving throw, you learn what bloodlines, domains, hexes, schools, or mysteries (if any) the creature possesses. If the creature makes its save, it is immune to the effects of this feat for 24 hours.|10+INT"),
-                effect: None,
             },
             // Die for Your Master -- um_feats.lst:30
             UmFeatEntry {
@@ -333,7 +318,6 @@ pub fn feat_tables() -> &'static [UmFeatEntry] {
                 pretext: None,
                 source_page: Some("p.148"),
                 benefit: Some("If your tumor familiar is attached, and you would be reduced to 0 or fewer hit points by damage in combat (from a weapon or other blow, not a spell or special ability), the familiar throws itself in the way of the attack as an immediate action. If it makes a Reflex saving throw (DC = damage dealt), it takes all the damage from the attack. If it fails, it takes half damage and you take half damage. The familiar must be aware of the attack and able to react to it in order to use this ability, and it can only do this once per day-if it is denied its Dexterity bonus to AC, it can't use this ability. Since this effect would not normally allow the familiar to make a Reflex save for half damage, its improved evasion ability does not apply on this saving throw."),
-                effect: None,
             },
             // Divine Interference -- um_feats.lst:31
             UmFeatEntry {
@@ -344,7 +328,6 @@ pub fn feat_tables() -> &'static [UmFeatEntry] {
                 pretext: None,
                 source_page: Some("p.149"),
                 benefit: Some("As an immediate action, when an enemy within 30 feet hits an ally with an attack, you can sacrifice a prepared divine spell or (if you are a spontaneous caster) an unused spell slot and make the enemy reroll the attack roll. The second attack roll takes a penalty equal to the level of the spell you sacrifice. You must sacrifice a spell of 1st-level or higher to use this ability. Whether or not the second attack is successful, you cannot use this effect on the same creature again for 1 day."),
-                effect: None,
             },
             // Dragonbane Aura -- um_feats.lst:32
             UmFeatEntry {
@@ -355,7 +338,6 @@ pub fn feat_tables() -> &'static [UmFeatEntry] {
                 pretext: None,
                 source_page: Some("p.149"),
                 benefit: Some("When fighting dragons, your aura of courage expands to a 20-foot-radius emanation, and allies in the aura gain a morale bonus on saving throws against dragon breath equal to your aura of courage's bonus against fear effects."),
-                effect: None,
             },
             // Echoing Spell -- um_feats.lst:33
             UmFeatEntry {
@@ -366,7 +348,6 @@ pub fn feat_tables() -> &'static [UmFeatEntry] {
                 pretext: None,
                 source_page: Some("p.149"),
                 benefit: Some("When you cast an echoing spell, it does not disappear entirely from memory, and you can cast it one additional time during that day. No effect that allows you to reprepare or recast a spell can affect the echoed spell. If you prepare spells, this second casting does not require you to prepare it in another spell slot. If you spontaneously cast spells, this second casting does not expend another available spell slot."),
-                effect: None,
             },
             // Eldritch Heritage -- um_feats.lst:37
             UmFeatEntry {
@@ -377,7 +358,6 @@ pub fn feat_tables() -> &'static [UmFeatEntry] {
                 pretext: None,
                 source_page: Some("p.149"),
                 benefit: Some("Select one sorcerer bloodline. You must have Skill focus in the class skill that bloodline grants to a sorcerer at 1st level (for example, Heal for the celestial bloodline). This bloodline cannot be a bloodline you already have. You gain the first-level bloodline power for the selected bloodline. For purposes of using that power, treat your sorcerer level as equal to your character level -2, even if you have levels in sorcerer. You do not gain any of the other bloodline abilities."),
-                effect: Some(&["BONUS:VAR|EldritchHeritageBloodlineLVL|TL-2", "BONUS:VAR|Sorcerer_Spells_StatBonus|CHA|TYPE=Base"]),
             },
             // Ensemble -- um_feats.lst:38
             UmFeatEntry {
@@ -388,7 +368,6 @@ pub fn feat_tables() -> &'static [UmFeatEntry] {
                 pretext: None,
                 source_page: Some("p.149"),
                 benefit: Some("When you are performing, allies within 20 feet who also have this feat can aid you with your Perform checks (including those made as part of bardic performance) as if they were aiding another as an immediate action. The allies make their aid another rolls before you make your check. No more than four allies can grant you a bonus with aid another. Allies aiding you do not need to use the same category of the Perform skill that you are using in order to aid you."),
-                effect: None,
             },
             // Evolved Familiar -- um_feats.lst:39
             UmFeatEntry {
@@ -399,7 +378,6 @@ pub fn feat_tables() -> &'static [UmFeatEntry] {
                 pretext: None,
                 source_page: Some("p.149"),
                 benefit: Some("Select an evolution from the list of 1-point evolutions available to a summoner's eidolon. Your familiar has this evolution. The familiar must conform to any limitations of the evolution. For instance, no familiars can benefit from the mount evolution and only familiars with wings can take the wing buffet evolution. If you gain a new familiar, your old familiar loses all evolutions, and you can select a new 1-point evolution for the new familiar."),
-                effect: Some(&["BONUS:VAR|FamiliarEP|1"]),
             },
             // Exploit Lore -- um_feats.lst:40
             UmFeatEntry {
@@ -410,7 +388,6 @@ pub fn feat_tables() -> &'static [UmFeatEntry] {
                 pretext: None,
                 source_page: Some("p.149"),
                 benefit: Some("Once per day, when you successfully identify all abilities and weaknesses of a creature using the appropriate Knowledge check, you gain a +2 bonus on attack and damage rolls against that creature for 1 minute. If you identify the abilities and weaknesses of numerous creatures, you must pick one creature to be the target of this effect."),
-                effect: None,
             },
             // Extra Arcana -- um_feats.lst:41
             UmFeatEntry {
@@ -421,7 +398,6 @@ pub fn feat_tables() -> &'static [UmFeatEntry] {
                 pretext: None,
                 source_page: Some("p.149"),
                 benefit: Some("You gain one additional magus arcana. You must meet all the prerequisites for this magus arcana. Special - You can gain this feat multiple times."),
-                effect: Some(&["BONUS:ABILITYPOOL|Magus Arcana|1"]),
             },
             // Extra Arcane Pool -- um_feats.lst:42
             UmFeatEntry {
@@ -432,7 +408,6 @@ pub fn feat_tables() -> &'static [UmFeatEntry] {
                 pretext: None,
                 source_page: Some("p.150"),
                 benefit: Some("Your arcane pool increases by 2. Special - you can gain this feat multiple times."),
-                effect: Some(&["BONUS:VAR|MagusArcanePool|2"]),
             },
             // Extended Bane -- um_feats.lst:43
             UmFeatEntry {
@@ -443,7 +418,6 @@ pub fn feat_tables() -> &'static [UmFeatEntry] {
                 pretext: None,
                 source_page: Some("p.150"),
                 benefit: Some("Add your Wisdom bonus (+%1) to the number of rounds per day that you can use your bane ability.|MAX(0,WIS)"),
-                effect: Some(&["BONUS:VAR|InquisitorBanePool|MAX(0,WIS)"]),
             },
             // Extra Cantrips or Orisons -- um_feats.lst:48
             UmFeatEntry {
@@ -454,7 +428,6 @@ pub fn feat_tables() -> &'static [UmFeatEntry] {
                 pretext: None,
                 source_page: Some("p.150"),
                 benefit: None,
-                effect: Some(&["BONUS:SPELLKNOWN|CLASS=%LIST;LEVEL=0|2"]),
             },
             // Extra Evolution -- um_feats.lst:50
             UmFeatEntry {
@@ -465,7 +438,6 @@ pub fn feat_tables() -> &'static [UmFeatEntry] {
                 pretext: None,
                 source_page: Some("p.150"),
                 benefit: None,
-                effect: Some(&["BONUS:VAR|Feat_Extra_Evolution_Count|1", "BONUS:VAR|EidolonEvolution|1"]),
             },
             // Extra Ranger Trap -- um_feats.lst:51
             UmFeatEntry {
@@ -476,7 +448,6 @@ pub fn feat_tables() -> &'static [UmFeatEntry] {
                 pretext: None,
                 source_page: Some("p.150"),
                 benefit: Some("You can set ranger traps two additional times per day."),
-                effect: Some(&["BONUS:VAR|TrapTimes|2"]),
             },
             // Extra Summons -- um_feats.lst:52
             UmFeatEntry {
@@ -487,7 +458,6 @@ pub fn feat_tables() -> &'static [UmFeatEntry] {
                 pretext: Some("Ability to cast summon monster as a spelllike ability, summoner 1st."),
                 source_page: Some("p.150"),
                 benefit: None,
-                effect: Some(&["BONUS:VAR|Feat_Extra_Summons_Taken|1", "BONUS:VAR|SummonMonsterTimes|1"]),
             },
             // Eyes of Judgment -- um_feats.lst:53
             UmFeatEntry {
@@ -498,7 +468,6 @@ pub fn feat_tables() -> &'static [UmFeatEntry] {
                 pretext: None,
                 source_page: Some("p.150"),
                 benefit: Some("When using your detect alignment class feature, you may spend 3 rounds studying a creature within 60 feet. You cannot take any other actions while doing this. After that time has passed, you learn the alignment of the creature."),
-                effect: None,
             },
             // Fast Empathy -- um_feats.lst:54
             UmFeatEntry {
@@ -509,7 +478,6 @@ pub fn feat_tables() -> &'static [UmFeatEntry] {
                 pretext: None,
                 source_page: Some("p.150"),
                 benefit: Some("Using wild empathy is a standard action for you."),
-                effect: None,
             },
             // Favored Judgment -- um_feats.lst:55
             UmFeatEntry {
@@ -520,7 +488,6 @@ pub fn feat_tables() -> &'static [UmFeatEntry] {
                 pretext: None,
                 source_page: Some("p.150"),
                 benefit: Some("Any sacred or profane bonus you gain from a judgment is 1 higher for attacks you make against or take from creatures that match the selected favored enemy."),
-                effect: None,
             },
             // Fearless Aura -- um_feats.lst:56
             UmFeatEntry {
@@ -531,7 +498,6 @@ pub fn feat_tables() -> &'static [UmFeatEntry] {
                 pretext: None,
                 source_page: Some("p.150"),
                 benefit: Some("Your aura of courage expands to a 20-foot radius emanation. Allies within the aura are immune to fear effects."),
-                effect: None,
             },
             // Fire Music -- um_feats.lst:58
             UmFeatEntry {
@@ -542,7 +508,6 @@ pub fn feat_tables() -> &'static [UmFeatEntry] {
                 pretext: None,
                 source_page: Some("p.151"),
                 benefit: Some("When you cast a bard spell that deals damage, you may replace the spell's normal damage with fire damage or split the spell's damage so that half of it is the normal damage type and half is fire damage."),
-                effect: None,
             },
             // Flaring Spell -- um_feats.lst:59
             UmFeatEntry {
@@ -553,7 +518,6 @@ pub fn feat_tables() -> &'static [UmFeatEntry] {
                 pretext: None,
                 source_page: Some("p.151"),
                 benefit: Some("The electricity, fire, or light effects of the affected spell create a flaring that dazzles creatures that take damage from the spell. A flare spell causes a creature that takes fire or electricity damage from the affected spell to become dazzled for a number of rounds equal to the actual level of the spell. A flaring spell only affects spells with a fire, light, or electricity descriptor. A flaring spell uses up a spell slot one level higher than the spell's actual level."),
-                effect: None,
             },
             // Focused Eidolon -- um_feats.lst:60
             UmFeatEntry {
@@ -564,7 +528,6 @@ pub fn feat_tables() -> &'static [UmFeatEntry] {
                 pretext: None,
                 source_page: Some("p.151"),
                 benefit: Some("While you are adjacent to your eidolon, you receive a +4 bonus on concentration checks."),
-                effect: None,
             },
             // Gliding Steps -- um_feats.lst:61
             UmFeatEntry {
@@ -575,7 +538,6 @@ pub fn feat_tables() -> &'static [UmFeatEntry] {
                 pretext: None,
                 source_page: Some("p.151"),
                 benefit: Some("If you have at least one ki in your ki pool, when you move you do not provoke attacks of opportunity when leaving the first square of that movement. You can spend 1 ki point to avoid provoking attacks of opportunity during that entire move."),
-                effect: None,
             },
             // Grant Initiative -- um_feats.lst:62
             UmFeatEntry {
@@ -586,7 +548,6 @@ pub fn feat_tables() -> &'static [UmFeatEntry] {
                 pretext: None,
                 source_page: Some("p.151"),
                 benefit: Some("At the start of each encounter, you can either choose to keep the bonus granted to you by your Wisdom modifier on initiative checks or choose to give that bonus to one of your allies that you can see. You must make this choice before you or the ally you are granting the bonus to makes the initiative check."),
-                effect: None,
             },
             // Greater Blighted Critical -- um_feats.lst:63
             UmFeatEntry {
@@ -597,7 +558,6 @@ pub fn feat_tables() -> &'static [UmFeatEntry] {
                 pretext: None,
                 source_page: Some("p.151"),
                 benefit: Some("Whenever you confirm a critical hit with a touch spell, ranged touch spell, or spell-like ability against an opponent, the victim gains a random major spellblight (see page 96 of Ultimate Magic)."),
-                effect: None,
             },
             // Greater Eldritch Heritage -- um_feats.lst:65
             UmFeatEntry {
@@ -608,7 +568,6 @@ pub fn feat_tables() -> &'static [UmFeatEntry] {
                 pretext: None,
                 source_page: Some("p.152"),
                 benefit: Some("You gain an additional power from the bloodline you selected with the Eldritch Heritage feat. You gain a 15th-level (or lower) sorcerer bloodline power that you do not already have. For purposes of using that power, treat your character level as your sorcerer level for all your sorcerer bloodline powers granted by this feat, Eldritch Heritage, and Improved Eldritch Heritage."),
-                effect: Some(&["BONUS:ABILITYPOOL|Eldritch Heritage Selection|1", "BONUS:VAR|EldritchHeritageBloodlineLVL|2"]),
             },
             // Greater Mercy -- um_feats.lst:66
             UmFeatEntry {
@@ -619,7 +578,6 @@ pub fn feat_tables() -> &'static [UmFeatEntry] {
                 pretext: None,
                 source_page: Some("p.152"),
                 benefit: Some("When you use your lay on hands ability and the target of that ability does not have any conditions your mercies can remove, it instead heals an additional +1d6 points of damage."),
-                effect: None,
             },
             // Greater Spell Specialization -- um_feats.lst:68
             UmFeatEntry {
@@ -630,7 +588,6 @@ pub fn feat_tables() -> &'static [UmFeatEntry] {
                 pretext: None,
                 source_page: Some("p.152"),
                 benefit: Some("By sacrificing a prepared spell of the same or higher level than your specialized spell, you may spontaneously cast your specialized spell. The specialized spell is treated as its normal level, regardless of the spell slot used to cast it. You may add a metamagic feat to the spell by increasing the spell slot and casting time, just like a cleric spontaneously casting a cure or inf lict spell with a metamagic feat."),
-                effect: None,
             },
             // Greater Wild Empathy -- um_feats.lst:70
             UmFeatEntry {
@@ -641,7 +598,6 @@ pub fn feat_tables() -> &'static [UmFeatEntry] {
                 pretext: None,
                 source_page: Some("p.152"),
                 benefit: Some("You gain a +2 insight bonus on wild empathy checks, and you may use wild empathy to duplicate an Intimidate check rather than a Diplomacy check. In addition, choose one of the following kinds of creatures: elementals, fey, lycanthropes, plants, or vermin. You may inf luence creatures of that type with wild empathy, if their Intelligence score is 1 or 2, or they do not possess an Intelligence score. Once you choose the type of creature, it cannot be changed."),
-                effect: None,
             },
             // Implant Bomb -- um_feats.lst:71
             UmFeatEntry {
@@ -652,7 +608,6 @@ pub fn feat_tables() -> &'static [UmFeatEntry] {
                 pretext: None,
                 source_page: Some("p.152"),
                 benefit: Some("You may implant a bomb in a willing or helpless creature (a mindless creature under your control, such as a zombie, counts as willing for this purpose). This takes 1 hour and expends 1 use of your bomb ability for the day. When the implanted creature dies or is destroyed, the bomb detonates in the creature's square as if it were a delayed bomb set by you (though you can set the bomb's damage to less than your normal bomb damage). You can use any bomb-affecting discoveries on this implanted bomb (acid bomb, frost bomb, smoke bomb, and so on) as normal. The bomb automatically detonates 24 hours after you implant it in the creature."),
-                effect: Some(&["BONUS:VAR|ImplantedBombDisableDC|11+classlevel(\"Alchemist\")"]),
             },
             // Improved Eldritch Heritage -- um_feats.lst:73
             UmFeatEntry {
@@ -663,7 +618,6 @@ pub fn feat_tables() -> &'static [UmFeatEntry] {
                 pretext: None,
                 source_page: Some("p.152"),
                 benefit: Some("You gain either the 3rd-level or the 9th-level power (your choice) of the bloodline you selected with the Eldritch Heritage feat. For purposes of using that power, treat your sorcerer level as equal to your character level - 2, even if you have levels in sorcerer. You do not gain any of the other bloodline abilities."),
-                effect: Some(&["BONUS:ABILITYPOOL|Eldritch Heritage Selection|1"]),
             },
             // Improved Monster Lore -- um_feats.lst:75
             UmFeatEntry {
@@ -674,7 +628,6 @@ pub fn feat_tables() -> &'static [UmFeatEntry] {
                 pretext: None,
                 source_page: Some("p.153"),
                 benefit: Some("You gain a +%1 sacred bonus on all skill checks to identify the abilities and weaknesses of creatures.|ImprovedMonsterLoreBonus"),
-                effect: Some(&["BONUS:VAR|ImprovedMonsterLoreBonus|classlevel(\"Inquisitor\")/2"]),
             },
             // Insightful Gaze -- um_feats.lst:76
             UmFeatEntry {
@@ -685,7 +638,6 @@ pub fn feat_tables() -> &'static [UmFeatEntry] {
                 pretext: None,
                 source_page: Some("p.153"),
                 benefit: Some("Whenever you make a Sense Motive check to oppose someone's Bluff check, you can roll two dice and take the higher result."),
-                effect: None,
             },
             // Intimidating Gaze -- um_feats.lst:77
             UmFeatEntry {
@@ -696,7 +648,6 @@ pub fn feat_tables() -> &'static [UmFeatEntry] {
                 pretext: None,
                 source_page: Some("p.153"),
                 benefit: Some("Once per day, as a free action, when making an Intimidate skill check, you can roll two dice and take the higher result."),
-                effect: None,
             },
             // Judgment Surge -- um_feats.lst:78
             UmFeatEntry {
@@ -707,7 +658,6 @@ pub fn feat_tables() -> &'static [UmFeatEntry] {
                 pretext: None,
                 source_page: Some("p.153"),
                 benefit: Some("Once per day, you can treat your class level for your judgment class feature as if it were 3 higher than normal. If you have multiple judgments active at the same time, this benefit applies to all of them."),
-                effect: None,
             },
             // Ki Stand -- um_feats.lst:79
             UmFeatEntry {
@@ -718,7 +668,6 @@ pub fn feat_tables() -> &'static [UmFeatEntry] {
                 pretext: None,
                 source_page: Some("p.153"),
                 benefit: Some("While you have at least 1 ki point in your ki pool, you can stand up as a swift action that provokes attacks of opportunity."),
-                effect: None,
             },
             // Learn Ranger Trap -- um_feats.lst:81
             UmFeatEntry {
@@ -729,7 +678,6 @@ pub fn feat_tables() -> &'static [UmFeatEntry] {
                 pretext: None,
                 source_page: Some("p.153"),
                 benefit: Some("Select one ranger trap (see page 64 of Ultimate Magic). You may use this trap %1 times per day. The DC for your trap is %2, and it lasts %3 days.|TrapTimes|TrapDC|TrapDuration"),
-                effect: Some(&["BONUS:ABILITYPOOL|Ranger Trap|1", "BONUS:VAR|RangerTrapLVL|TL", "BONUS:VAR|TrapTimes|max(1,WIS+classlevel(\"Ranger\")/2)", "BONUS:VAR|TrapDC|10+CL/2+WIS", "BONUS:VAR|TrapDuration|CL/2"]),
             },
             // Life Lure -- um_feats.lst:83
             UmFeatEntry {
@@ -740,7 +688,6 @@ pub fn feat_tables() -> &'static [UmFeatEntry] {
                 pretext: None,
                 source_page: Some("p.153"),
                 benefit: Some("As a standard action, you can channel positive energy to fascinate all undead within 30 feet for a %1 rounds. Undead that succeed at a Will save are unaffected. Use the same DC for this ability as the DC for channeling energy to harm undead. Channeling energy for this purpose does not heal or harm creatures.|LifeLureDuration"),
-                effect: Some(&["BONUS:VAR|LifeLureDuration|max(1,CHA)"]),
             },
             // Moonlight Summons -- um_feats.lst:84
             UmFeatEntry {
@@ -751,7 +698,6 @@ pub fn feat_tables() -> &'static [UmFeatEntry] {
                 pretext: None,
                 source_page: Some("p.153"),
                 benefit: Some("Creatures you summon shed light as a light spell. They are immune to confusion and sleep effects, and their natural weapons are treated as silver for the purposes of overcoming damage reduction."),
-                effect: None,
             },
             // Mystic Stride -- um_feats.lst:85
             UmFeatEntry {
@@ -762,7 +708,6 @@ pub fn feat_tables() -> &'static [UmFeatEntry] {
                 pretext: None,
                 source_page: Some("p.153"),
                 benefit: Some("You can move at full speed even through thorns, briars, and overgrown areas that are enchanted or magically manipulated to impede motion, even if those areas confer the entangled condition."),
-                effect: None,
             },
             // Oracular Intuition -- um_feats.lst:86
             UmFeatEntry {
@@ -773,7 +718,6 @@ pub fn feat_tables() -> &'static [UmFeatEntry] {
                 pretext: None,
                 source_page: Some("p.153"),
                 benefit: Some("You get a +2 bonus on Sense Motive checks and Spellcraft checks. If you have 10 or more ranks in one of these skills, the bonus increases to +4 for that skill."),
-                effect: Some(&["BONUS:SKILL|Sense Motive|if(skillinfo(\"TOTALRANK\",\"Sense Motive\")>=10,4,2)", "BONUS:SKILL|Spellcraft|if(skillinfo(\"TOTALRANK\",\"Spellcraft\")>=10,4,2)"]),
             },
             // Painful Anchor -- um_feats.lst:87
             UmFeatEntry {
@@ -784,7 +728,6 @@ pub fn feat_tables() -> &'static [UmFeatEntry] {
                 pretext: None,
                 source_page: Some("p.153"),
                 benefit: Some("When an evil outsider uses a calling, summoning, or teleportation effect, or any ability that physically transports a creature to or from another plane (such as blink or etherealness) within your anchoring aura, it takes damage equal to 4d8 + %1. This damage comes from holy power and is not subject to damage reduction, energy immunities, or energy resistances.|PainfulAnchorBonusDamage"),
-                effect: Some(&["BONUS:VAR|PainfulAnchorBonusDamage|CHA"]),
             },
             // Piercing Spell -- um_feats.lst:88
             UmFeatEntry {
@@ -795,7 +738,6 @@ pub fn feat_tables() -> &'static [UmFeatEntry] {
                 pretext: None,
                 source_page: Some("p.154"),
                 benefit: Some("When you cast a piercing spell against a target with spell resistance, it treats the spell resistance of the target as 5 lower than its actual SR. A piercing spell uses up a spell slot one level higher than the spell's actual level."),
-                effect: None,
             },
             // Planar Preservationist -- um_feats.lst:89
             UmFeatEntry {
@@ -806,7 +748,6 @@ pub fn feat_tables() -> &'static [UmFeatEntry] {
                 pretext: None,
                 source_page: Some("p.154"),
                 benefit: Some("For every summon nature's ally extract you know, you learn the equivalent summon monster spell as an extract. If you later learn other summon nature's ally extracts, you automatically learn the equivalent summon monster spell as an extract."),
-                effect: None,
             },
             // Powerful Shape -- um_feats.lst:91
             UmFeatEntry {
@@ -817,7 +758,6 @@ pub fn feat_tables() -> &'static [UmFeatEntry] {
                 pretext: None,
                 source_page: Some("p.154"),
                 benefit: Some("When in wild shape, treat your size as one category larger for the purpose of calculating CMB, CMD, carrying capacity, and any size-based special attacks you use or that are used against you (such as grab, swallow whole, and trample)."),
-                effect: None,
             },
             // Prodigy -- um_feats.lst:93
             UmFeatEntry {
@@ -828,7 +768,6 @@ pub fn feat_tables() -> &'static [UmFeatEntry] {
                 pretext: None,
                 source_page: Some("p.154"),
                 benefit: Some("Choose two Craft, Perform, or Profession skills in any combination (two Craft skills, a Craft skill and a Perform skill, and so on). You receive a +2 bonus on checks with these skills. If you have 10 or more ranks in any one of these skills, the bonus increases to +4 for that skill."),
-                effect: Some(&["BONUS:SKILL|%LIST|if(skillinfo(\"TOTALRANK\",\"%LIST\")>=10,4,2)|TYPE=Prodigy"]),
             },
             // Prophetic Visionary -- um_feats.lst:94
             UmFeatEntry {
@@ -839,7 +778,6 @@ pub fn feat_tables() -> &'static [UmFeatEntry] {
                 pretext: None,
                 source_page: Some("p.154"),
                 benefit: Some("Once per day, you can enter a deep trance to receive a vision of the future. The trance lasts for 10 minutes, during which time you can take no other actions. If you are interrupted, you must begin again. When you come out of the trance, you know whether a particular action in the immediate future will bring good or bad results, as an augury spell with a 70%% chance of success."),
-                effect: None,
             },
             // Pure Faith -- um_feats.lst:95
             UmFeatEntry {
@@ -850,7 +788,6 @@ pub fn feat_tables() -> &'static [UmFeatEntry] {
                 pretext: None,
                 source_page: Some("p.154"),
                 benefit: Some("You gain a +4 sacred bonus to saving throws against poison."),
-                effect: None,
             },
             // Quarterstaff Master -- um_feats.lst:99
             UmFeatEntry {
@@ -861,7 +798,6 @@ pub fn feat_tables() -> &'static [UmFeatEntry] {
                 pretext: None,
                 source_page: Some("p.154"),
                 benefit: Some("By employing a number of different stances and techniques, you can wield a quarterstaff as a onehanded weapon. At the start of your turn, you decide whether or not you are going to wield the quarterstaff as a one-handed or two-handed weapon. When you wield it as a one-handed weapon, your other hand is free, and you cannot use the staff as a double weapon. You can take the feat Weapon Specialization in the quarterstaff even if you have no levels in fighter."),
-                effect: Some(&["BONUS:VAR|WeapSpecQualify|1"]),
             },
             // Quick Channel -- um_feats.lst:100
             UmFeatEntry {
@@ -872,7 +808,6 @@ pub fn feat_tables() -> &'static [UmFeatEntry] {
                 pretext: None,
                 source_page: Some("p.154"),
                 benefit: Some("You may channel energy as a move action by spending 2 daily uses of that ability."),
-                effect: None,
             },
             // Quick Wild Shape -- um_feats.lst:101
             UmFeatEntry {
@@ -883,7 +818,6 @@ pub fn feat_tables() -> &'static [UmFeatEntry] {
                 pretext: None,
                 source_page: Some("p.154"),
                 benefit: Some("You can wild shape as a move action or a swift action. However, you are limited to forms available to a druid two levels lower when changing form as a move action, or four levels lower as a swift action."),
-                effect: None,
             },
             // Radiant Charge -- um_feats.lst:102
             UmFeatEntry {
@@ -894,7 +828,6 @@ pub fn feat_tables() -> &'static [UmFeatEntry] {
                 pretext: None,
                 source_page: Some("p.154"),
                 benefit: Some("When you hit with a charge attack, you can expend all of your remaining uses of lay on hands to deal extra damage equal to 1d6 per use of lay on hands expended + %1. This damage comes from holy power and is not subject to damage reduction, energy immunities, or energy resistances.|RadiantChargeBonusDamage"),
-                effect: Some(&["BONUS:VAR|RadiantChargeBonusDamage|CHA"]),
             },
             // Remote Bomb -- um_feats.lst:103
             UmFeatEntry {
@@ -905,7 +838,6 @@ pub fn feat_tables() -> &'static [UmFeatEntry] {
                 pretext: None,
                 source_page: Some("p.155"),
                 benefit: Some("The maximum delay for your delayed bombs increases to %1 minutes. If you have line of effect to your delayed bomb, you may detonate it earlier than its preset time by making a DC 20 Intelligence check; the DC increases by +1 for every 10 feet of distance between you and the bomb.|TL"),
-                effect: None,
             },
             // Resilient Eidolon -- um_feats.lst:104
             UmFeatEntry {
@@ -916,7 +848,6 @@ pub fn feat_tables() -> &'static [UmFeatEntry] {
                 pretext: None,
                 source_page: Some("p.155"),
                 benefit: Some("If you are knocked unconscious, fall asleep, or are killed, your eidolon remains for %1 rounds before it is banished. If you are brought back to consciousness before this duration expires, your eidolon is not banished. If the duration expires before you are brought back to consciousness, your eidolon is banished normally.|ResilientEidolonDuration"),
-                effect: Some(&["BONUS:VAR|ResilientEidolonDuration|classlevel(\"Summoner\")"]),
             },
             // Reward of Grace -- um_feats.lst:105
             UmFeatEntry {
@@ -927,7 +858,6 @@ pub fn feat_tables() -> &'static [UmFeatEntry] {
                 pretext: None,
                 source_page: Some("p.155"),
                 benefit: Some("Each time you use your lay on hands ability, you gain a +1 sacred bonus on all attack rolls for 1 round."),
-                effect: None,
             },
             // Reward of Life -- um_feats.lst:106
             UmFeatEntry {
@@ -938,7 +868,6 @@ pub fn feat_tables() -> &'static [UmFeatEntry] {
                 pretext: None,
                 source_page: Some("p.155"),
                 benefit: Some("Each time you use your lay on hands ability to heal a creature other than yourself, you heal %1 hit points. This ability has no effect if you use lay on hands to harm undead.|RewardOfLifeHealing"),
-                effect: Some(&["BONUS:VAR|RewardOfLifeHealing|CHA"]),
             },
             // Ricochet Splash Weapon -- um_feats.lst:107
             UmFeatEntry {
@@ -949,7 +878,6 @@ pub fn feat_tables() -> &'static [UmFeatEntry] {
                 pretext: None,
                 source_page: Some("p.155"),
                 benefit: Some("Whenever your splash weapon misses and the misdirection roll indicates it lands in a square occupied by a creature, you may make an attack roll (at a -5 penalty) as if you had thrown the splash weapon at that creature. If this attack roll succeeds, the splash weapon hits and the creature takes full damage instead of splash damage. Squares adjacent to this creature still take splash damage as normal."),
-                effect: None,
             },
             // Rime Spell -- um_feats.lst:108
             UmFeatEntry {
@@ -960,7 +888,6 @@ pub fn feat_tables() -> &'static [UmFeatEntry] {
                 pretext: None,
                 source_page: Some("p.155"),
                 benefit: Some("The frost of your cold spell clings to the target, impeding it for a short time. A rime spell causes creatures that takes cold damage from the spell to become entangled for a number of rounds equal to the original level of the spell. This feat only affects spells with the cold descriptor. A rime spell uses up a spell slot one level higher than the spell's actual level."),
-                effect: None,
             },
             // Sacred Summons -- um_feats.lst:109
             UmFeatEntry {
@@ -971,7 +898,6 @@ pub fn feat_tables() -> &'static [UmFeatEntry] {
                 pretext: None,
                 source_page: Some("p.155"),
                 benefit: Some("When using summon monster to summon creatures whose alignment subtype or subtypes exactly match your aura, you may cast the spell as a standard action instead of with a casting time of 1 round."),
-                effect: None,
             },
             // Sense Link -- um_feats.lst:110
             UmFeatEntry {
@@ -982,7 +908,6 @@ pub fn feat_tables() -> &'static [UmFeatEntry] {
                 pretext: None,
                 source_page: Some("p.155"),
                 benefit: Some("When sharing the senses of your eidolon, you gain a +4 competence bonus on Perception checks for the duration of your bond senses ability."),
-                effect: None,
             },
             // Shaping Focus -- um_feats.lst:111
             UmFeatEntry {
@@ -993,7 +918,6 @@ pub fn feat_tables() -> &'static [UmFeatEntry] {
                 pretext: None,
                 source_page: Some("p.155"),
                 benefit: Some("If you are a multiclassed druid, your wild shape ability is calculated as though your druid level were four higher, to a maximum level equal to your character level."),
-                effect: Some(&["BONUS:VAR|DruidWildShape|MIN(4,classlevel(\"TYPE=PC\")+classlevel(\"TYPE=NPC\")-classlevel(\"Druid\"))"]),
             },
             // Sin Seer -- um_feats.lst:112
             UmFeatEntry {
@@ -1004,7 +928,6 @@ pub fn feat_tables() -> &'static [UmFeatEntry] {
                 pretext: None,
                 source_page: Some("p.155"),
                 benefit: Some("You gain the detect evil class feature. You may use it or the detect undead class feature, but not at the same time."),
-                effect: None,
             },
             // Skeleton Summoner -- um_feats.lst:113
             UmFeatEntry {
@@ -1015,7 +938,6 @@ pub fn feat_tables() -> &'static [UmFeatEntry] {
                 pretext: None,
                 source_page: Some("p.155"),
                 benefit: Some("Add \"human skeleton\" to the list of creatures you can summon with summon monster I and \"human skeletal champion\" to the list of creatures you can summon with summon monster III."),
-                effect: None,
             },
             // Sorcerous Bloodstrike -- um_feats.lst:114
             UmFeatEntry {
@@ -1026,7 +948,6 @@ pub fn feat_tables() -> &'static [UmFeatEntry] {
                 pretext: None,
                 source_page: Some("p.156"),
                 benefit: Some("Once per day, as an immediate action upon reducing a creature to 0 or fewer hit points with one of your sorcerer spells, you can regain one usage of a sorcerer bloodline power that has a limited number of uses per day. The slain creature must have at least half as many Hit Dice as your sorcerer level. You cannot use this feat to gain another usage of a bloodline power that you have not yet used today."),
-                effect: None,
             },
             // Spell Bluff -- um_feats.lst:115
             UmFeatEntry {
@@ -1037,7 +958,6 @@ pub fn feat_tables() -> &'static [UmFeatEntry] {
                 pretext: None,
                 source_page: Some("p.156"),
                 benefit: Some("If another spellcaster tries to counterspell your casting, she adds +4 to her Spellcraft DC when trying to determine your spell. Because you have studied how to mask the recognizable elements of your spellcasting, you gain a +2 bonus on your Spellcraft checks to identify and counter an opponent's spell if it is a spell you know or have in your spellbook."),
-                effect: None,
             },
             // Spell Hex -- um_feats.lst:119
             UmFeatEntry {
@@ -1048,7 +968,6 @@ pub fn feat_tables() -> &'static [UmFeatEntry] {
                 pretext: None,
                 source_page: Some("p.156"),
                 benefit: Some("Select one 1st-level spell in the class that grants you the major hex class feature. You can learn that spell as a hex, and can use that hex three times per day. This is a spell-like ability. You use your class level in the major-hex-granting class as your caster level for the spell hex. The spell hex uses your hex DC instead of its original spell DC."),
-                effect: None,
             },
             // Spell Specialization (Abjuration) -- um_feats.lst:120
             UmFeatEntry {
@@ -1059,7 +978,6 @@ pub fn feat_tables() -> &'static [UmFeatEntry] {
                 pretext: None,
                 source_page: Some("p.156"),
                 benefit: Some("Select one abjuration spell. Treat your caster level as being two higher for all level-variable effects of the spell. Every time you gain an even level in the spellcasting class you chose your spell from, you can choose a new spell to replace the spell selected with this feat, and that spell becomes your specialized spell."),
-                effect: Some(&["BONUS:CASTERLEVEL|SPELL.%LIST|2"]),
             },
             // Spell Specialization (Conjuration) -- um_feats.lst:121
             UmFeatEntry {
@@ -1070,7 +988,6 @@ pub fn feat_tables() -> &'static [UmFeatEntry] {
                 pretext: None,
                 source_page: Some("p.156"),
                 benefit: Some("Select one conjuration spell. Treat your caster level as being two higher for all level-variable effects of the spell. Every time you gain an even level in the spellcasting class you chose your spell from, you can choose a new spell to replace the spell selected with this feat, and that spell becomes your specialized spell."),
-                effect: Some(&["BONUS:CASTERLEVEL|SPELL.%LIST|2"]),
             },
             // Spell Specialization (Divination) -- um_feats.lst:122
             UmFeatEntry {
@@ -1081,7 +998,6 @@ pub fn feat_tables() -> &'static [UmFeatEntry] {
                 pretext: None,
                 source_page: Some("p.156"),
                 benefit: Some("Select one divination spell. Treat your caster level as being two higher for all level-variable effects of the spell. Every time you gain an even level in the spellcasting class you chose your spell from, you can choose a new spell to replace the spell selected with this feat, and that spell becomes your specialized spell."),
-                effect: Some(&["BONUS:CASTERLEVEL|SPELL.%LIST|2"]),
             },
             // Spell Specialization (Enchantment) -- um_feats.lst:123
             UmFeatEntry {
@@ -1092,7 +1008,6 @@ pub fn feat_tables() -> &'static [UmFeatEntry] {
                 pretext: None,
                 source_page: Some("p.156"),
                 benefit: Some("Select one enchantment spell. Treat your caster level as being two higher for all level-variable effects of the spell. Every time you gain an even level in the spellcasting class you chose your spell from, you can choose a new spell to replace the spell selected with this feat, and that spell becomes your specialized spell."),
-                effect: Some(&["BONUS:CASTERLEVEL|SPELL.%LIST|2"]),
             },
             // Spell Specialization (Evocation) -- um_feats.lst:124
             UmFeatEntry {
@@ -1103,7 +1018,6 @@ pub fn feat_tables() -> &'static [UmFeatEntry] {
                 pretext: None,
                 source_page: Some("p.156"),
                 benefit: Some("Select one evocation spell. Treat your caster level as being two higher for all level-variable effects of the spell. Every time you gain an even level in the spellcasting class you chose your spell from, you can choose a new spell to replace the spell selected with this feat, and that spell becomes your specialized spell."),
-                effect: Some(&["BONUS:CASTERLEVEL|SPELL.%LIST|2"]),
             },
             // Spell Specialization (Illusion) -- um_feats.lst:125
             UmFeatEntry {
@@ -1114,7 +1028,6 @@ pub fn feat_tables() -> &'static [UmFeatEntry] {
                 pretext: None,
                 source_page: Some("p.156"),
                 benefit: Some("Select one illusion spell. Treat your caster level as being two higher for all level-variable effects of the spell. Every time you gain an even level in the spellcasting class you chose your spell from, you can choose a new spell to replace the spell selected with this feat, and that spell becomes your specialized spell."),
-                effect: Some(&["BONUS:CASTERLEVEL|SPELL.%LIST|2"]),
             },
             // Spell Specialization (Necromancy) -- um_feats.lst:126
             UmFeatEntry {
@@ -1125,7 +1038,6 @@ pub fn feat_tables() -> &'static [UmFeatEntry] {
                 pretext: None,
                 source_page: Some("p.156"),
                 benefit: Some("Select one necromancy spell. Treat your caster level as being two higher for all level-variable effects of the spell. Every time you gain an even level in the spellcasting class you chose your spell from, you can choose a new spell to replace the spell selected with this feat, and that spell becomes your specialized spell."),
-                effect: Some(&["BONUS:CASTERLEVEL|SPELL.%LIST|2"]),
             },
             // Spell Specialization (Transmutation) -- um_feats.lst:127
             UmFeatEntry {
@@ -1136,7 +1048,6 @@ pub fn feat_tables() -> &'static [UmFeatEntry] {
                 pretext: None,
                 source_page: Some("p.156"),
                 benefit: Some("Select one transmutation spell. Treat your caster level as being two higher for all level-variable effects of the spell. Every time you gain an even level in the spellcasting class you chose your spell from, you can choose a new spell to replace the spell selected with this feat, and that spell becomes your specialized spell."),
-                effect: Some(&["BONUS:CASTERLEVEL|SPELL.%LIST|2"]),
             },
             // Spellsong -- um_feats.lst:128
             UmFeatEntry {
@@ -1147,7 +1058,6 @@ pub fn feat_tables() -> &'static [UmFeatEntry] {
                 pretext: None,
                 source_page: Some("p.156"),
                 benefit: Some("You can combine your bardic performance and your spellcasting in two ways."),
-                effect: None,
             },
             // Split Hex -- um_feats.lst:129
             UmFeatEntry {
@@ -1158,7 +1068,6 @@ pub fn feat_tables() -> &'static [UmFeatEntry] {
                 pretext: None,
                 source_page: Some("p.156"),
                 benefit: Some("When you use one of your hexes (not a major hex or a grand hex) that targets a single creature, you can choose another creature within 30 feet of the first target to also be targeted by the hex."),
-                effect: None,
             },
             // Split Major Hex -- um_feats.lst:130
             UmFeatEntry {
@@ -1169,7 +1078,6 @@ pub fn feat_tables() -> &'static [UmFeatEntry] {
                 pretext: None,
                 source_page: Some("p.156"),
                 benefit: Some("When you use one of your major hexes (not a grand hex) that targets a creature, you can choose another creature within 30 feet of the first target to also be targeted by the major hex."),
-                effect: None,
             },
             // Spontaneous Metafocus -- um_feats.lst:135
             UmFeatEntry {
@@ -1180,7 +1088,6 @@ pub fn feat_tables() -> &'static [UmFeatEntry] {
                 pretext: None,
                 source_page: Some("p.157"),
                 benefit: Some("Pick a single spell that you are able to cast spontaneously. When you apply metamagic feats to that spell, you can cast the spell using the normal casting time instead of at the slower casting time."),
-                effect: None,
             },
             // Starlight Summons -- um_feats.lst:136
             UmFeatEntry {
@@ -1191,7 +1098,6 @@ pub fn feat_tables() -> &'static [UmFeatEntry] {
                 pretext: None,
                 source_page: Some("p.157"),
                 benefit: Some("Creatures you summon gain the Blind-Fight feat, a +5 bonus to Perception and Stealth checks in dim light or darkness, and their natural weapons are treated as cold iron for overcoming damage reduction."),
-                effect: None,
             },
             // Sunlight Summons -- um_feats.lst:137
             UmFeatEntry {
@@ -1202,7 +1108,6 @@ pub fn feat_tables() -> &'static [UmFeatEntry] {
                 pretext: None,
                 source_page: Some("p.157"),
                 benefit: Some("Creatures that you summon shed light as a light spell. They are immune to blinding or dazzling effects, and their natural weapons are treated as magical for overcoming damage reduction."),
-                effect: None,
             },
             // Superior Summoning -- um_feats.lst:138
             UmFeatEntry {
@@ -1213,7 +1118,6 @@ pub fn feat_tables() -> &'static [UmFeatEntry] {
                 pretext: None,
                 source_page: Some("p.157"),
                 benefit: Some("Each time you cast a summoning spell that conjures more than one creature, add one to the total number of creatures summoned."),
-                effect: None,
             },
             // Thanatopic Spell -- um_feats.lst:139
             UmFeatEntry {
@@ -1224,7 +1128,6 @@ pub fn feat_tables() -> &'static [UmFeatEntry] {
                 pretext: None,
                 source_page: Some("p.157"),
                 benefit: Some("A thanatopic spell pierces defenses and immunities that protect against death effects, negative levels, and energy drain, affecting the target as if the protective barrier did not exist."),
-                effect: None,
             },
             // Theurgy -- um_feats.lst:140
             UmFeatEntry {
@@ -1235,7 +1138,6 @@ pub fn feat_tables() -> &'static [UmFeatEntry] {
                 pretext: None,
                 source_page: Some("p.157"),
                 benefit: Some("You can augment the power of your divine spells with arcane energy and augment your arcane spells with divine energy."),
-                effect: None,
             },
             // Thoughtful Discernment -- um_feats.lst:142
             UmFeatEntry {
@@ -1246,7 +1148,6 @@ pub fn feat_tables() -> &'static [UmFeatEntry] {
                 pretext: None,
                 source_page: Some("p.157"),
                 benefit: Some("Once per day as a free action, you can think back about a single statement you heard in the last day and determine if it was a lie. This acts like the discern lies spell, but instead of affecting a creature, it affects a single statement a creature has made."),
-                effect: None,
             },
             // Threnodic Spell -- um_feats.lst:143
             UmFeatEntry {
@@ -1257,7 +1158,6 @@ pub fn feat_tables() -> &'static [UmFeatEntry] {
                 pretext: None,
                 source_page: Some("p.157"),
                 benefit: Some("This feat only works on mind-affecting spells. A threnodic spell affects undead creatures (even mindless undead) as if they weren't immune to mind-affecting effects, but has no effect on living creatures. A threnodic spell uses up a spell slot two level higher than the spell's actual level."),
-                effect: None,
             },
             // Toppling Spell -- um_feats.lst:144
             UmFeatEntry {
@@ -1268,7 +1168,6 @@ pub fn feat_tables() -> &'static [UmFeatEntry] {
                 pretext: None,
                 source_page: Some("p.158"),
                 benefit: Some("The impact of your force spell is strong enough to knock the target prone. If the target takes damage, fails its saving throw, or is moved by your force spell, make a trip check against the target, using your caster level plus your casting ability score bonus (Wisdom for clerics, Intelligence for wizards, and so on). This does not provoke an attack of opportunity. If the check fails, the target cannot attempt to trip you or the force effect in response. A toppling spell only affects spells with the force descriptor. A toppling spell uses up a spell slot one level higher than the spell's actual level."),
-                effect: None,
             },
             // Tripping Staff -- um_feats.lst:145
             UmFeatEntry {
@@ -1279,7 +1178,6 @@ pub fn feat_tables() -> &'static [UmFeatEntry] {
                 pretext: None,
                 source_page: Some("p.158"),
                 benefit: Some("You treat quarterstaves as if they had the trip special feature. If you are a magus with the staff magus archetype, you can use spellstrike on any trip combat maneuver you make with the staff."),
-                effect: None,
             },
             // Tripping Twirl -- um_feats.lst:146
             UmFeatEntry {
@@ -1290,7 +1188,6 @@ pub fn feat_tables() -> &'static [UmFeatEntry] {
                 pretext: None,
                 source_page: None,
                 benefit: Some("As a full-round action, while wielding a quarterstaff two-handed, you can attempt a trip combat maneuver against each enemy adjacent to you."),
-                effect: None,
             },
             // Ultimate Mercy -- um_feats.lst:147
             UmFeatEntry {
@@ -1301,7 +1198,6 @@ pub fn feat_tables() -> &'static [UmFeatEntry] {
                 pretext: None,
                 source_page: Some("p.158"),
                 benefit: Some("You can expend 10 uses of lay on hands to bring a single dead creature you touch back to life as a raise dead spell with a caster level equal to your paladin level. You must provide the material component for raise dead or choose to accept 1 temporary negative level; this level automatically goes away after 24 hours, never becomes a permanent negative level, and cannot be overcome in any way except by waiting for the duration to expire."),
-                effect: None,
             },
             // Ultimate Resolve -- um_feats.lst:149
             UmFeatEntry {
@@ -1312,7 +1208,6 @@ pub fn feat_tables() -> &'static [UmFeatEntry] {
                 pretext: None,
                 source_page: Some("p.158"),
                 benefit: Some("Your aura of resolve is a 20-foot emanation, and does not end if you fall unconscious."),
-                effect: Some(&["BONUS:VAR|AuraOfResolveRadius|10"]),
             },
             // Uncanny Alertness -- um_feats.lst:150
             UmFeatEntry {
@@ -1323,7 +1218,6 @@ pub fn feat_tables() -> &'static [UmFeatEntry] {
                 pretext: None,
                 source_page: Some("p.158"),
                 benefit: Some("This feat gives you an additional +1 bonus on Perception and Sense Motive checks, and you gain a +2 bonus on saving throws against sleep and charm effects."),
-                effect: Some(&["BONUS:SKILL|Perception|1", "BONUS:SKILL|Sense Motive|1"]),
             },
             // Uncanny Concentration -- um_feats.lst:151
             UmFeatEntry {
@@ -1334,7 +1228,6 @@ pub fn feat_tables() -> &'static [UmFeatEntry] {
                 pretext: None,
                 source_page: Some("p.158"),
                 benefit: Some("You do not need to make concentration checks when affected by vigorous or violent motion or by violent weather. You gain a +2 bonus on all other concentration checks."),
-                effect: Some(&["BONUS:CONCENTRATION|ALLSPELLS|2"]),
             },
             // Undead Master -- um_feats.lst:152
             UmFeatEntry {
@@ -1345,7 +1238,6 @@ pub fn feat_tables() -> &'static [UmFeatEntry] {
                 pretext: None,
                 source_page: Some("p.158"),
                 benefit: Some("When you cast animate dead or use the Command Undead feat, you are considered to be four levels higher when determining the number of Hit Dice you animate. When you cast command undead, your duration is doubled."),
-                effect: Some(&["BONUS:VAR|CommandUndeadHD|4"]),
             },
             // Unsanctioned Detection -- um_feats.lst:153
             UmFeatEntry {
@@ -1356,7 +1248,6 @@ pub fn feat_tables() -> &'static [UmFeatEntry] {
                 pretext: None,
                 source_page: Some("p.158"),
                 benefit: Some("As a swift action, you can focus the clarity granted by your detect evil ability to heighten your awareness of other things. This gives you a +10 sacred bonus on Perception and Sense Motive checks for one round. This expends your use of the detect evil class ability for the next 24 hours."),
-                effect: None,
             },
             // Unsanctioned Knowledge -- um_feats.lst:156
             UmFeatEntry {
@@ -1367,7 +1258,6 @@ pub fn feat_tables() -> &'static [UmFeatEntry] {
                 pretext: None,
                 source_page: Some("p.159"),
                 benefit: Some("Pick one 1st-level spell, one 2nd-level spell, one 3rd-level spell, and one 4th-level spell from the bard, cleric, inquisitor, or oracle spell lists. Add these spells to your paladin spell list as paladin spells of the appropriate level. Once chosen, these spells cannot be changed."),
-                effect: Some(&["BONUS:ABILITYPOOL|Unsanctioned Knowledge ~ Level 1|1", "BONUS:ABILITYPOOL|Unsanctioned Knowledge ~ Level 2|1", "BONUS:ABILITYPOOL|Unsanctioned Knowledge ~ Level 3|1", "BONUS:ABILITYPOOL|Unsanctioned Knowledge ~ Level 4|1"]),
             },
             // Versatile Channeler -- um_feats.lst:164
             UmFeatEntry {
@@ -1378,7 +1268,6 @@ pub fn feat_tables() -> &'static [UmFeatEntry] {
                 pretext: None,
                 source_page: None,
                 benefit: Some("You may choose to channel positive energy as if your effective cleric level were 2 levels lower than normal.|PREABILITY:1,CATEGORY=Special Ability,Versatile Channeler ~ Positive Energy"),
-                effect: Some(&["BONUS:ABILITYPOOL|Versatile Channeler|1"]),
             },
             // Vigilant Eidolon -- um_feats.lst:165
             UmFeatEntry {
@@ -1389,7 +1278,6 @@ pub fn feat_tables() -> &'static [UmFeatEntry] {
                 pretext: None,
                 source_page: Some("p.159"),
                 benefit: Some("While your eidolon is within your reach, you gain a +4 bonus on Perception checks. If you have 10 or more ranks in Perception, this bonus increases to +8. This does not apply if your eidolon is helpless or unconscious."),
-                effect: None,
             },
             // Voice of the Sibyl -- um_feats.lst:166
             UmFeatEntry {
@@ -1400,7 +1288,6 @@ pub fn feat_tables() -> &'static [UmFeatEntry] {
                 pretext: None,
                 source_page: Some("p.159"),
                 benefit: Some("You get a +1 bonus on all Bluff, Diplomacy, and Perform (oratory) skill checks. If you have 10 or more ranks in one of these skills, the bonus increases to +3 for that skill. You do not get these bonuses if you do not use your voice when using the skill (such as using Bluff to feint in combat)."),
-                effect: Some(&["BONUS:SITUATION|Bluff=Using voice|if(skillinfo(\"TOTALRANK\",\"Bluff\")>=10,3,1)", "BONUS:SITUATION|Diplomacy=Using voice|if(skillinfo(\"TOTALRANK\",\"Diplomacy\")>=10,3,1)", "BONUS:SKILL|Perform (Oratory)|if(skillinfo(\"TOTALRANK\",\"Perform (Oratory)\")>=10,3,1)"]),
             },
             // Warrior Priest -- um_feats.lst:167
             UmFeatEntry {
@@ -1411,7 +1298,6 @@ pub fn feat_tables() -> &'static [UmFeatEntry] {
                 pretext: None,
                 source_page: Some("p.159"),
                 benefit: Some("You gain a +1 bonus on initiative checks and a +2 bonus on concentration checks made to cast a spell or use a spell-like ability when casting defensively or while grappled."),
-                effect: Some(&["BONUS:COMBAT|INITIATIVE|1"]),
             },
             // Wild Speech -- um_feats.lst:168
             UmFeatEntry {
@@ -1422,7 +1308,6 @@ pub fn feat_tables() -> &'static [UmFeatEntry] {
                 pretext: None,
                 source_page: Some("p.159"),
                 benefit: Some("When using wild shape to take the form in which you cannot speak (such as an animal), you are able to speak normally in any language you know. This allows you to cast spells with verbal components, speak command words, and activate spell completion and spell trigger items. However, it does not give you the ability to cast spells requiring somatic components unless you also have the Natural Spell feat, or cast spells with material components merged into your form."),
-                effect: Some(&["BONUS:VAR|WildSpeechCasterLevel|DruidLVL", "BONUS:VAR|WildSpeechDuration|DruidLVL"]),
             },
             // Witch Knife -- um_feats.lst:170
             UmFeatEntry {
@@ -1433,7 +1318,6 @@ pub fn feat_tables() -> &'static [UmFeatEntry] {
                 pretext: None,
                 source_page: Some("p.159"),
                 benefit: Some("Each day, when you prepare your spells, you can select a masterwork or magical dagger, transforming it into a witch knife, which serves as an additional focus component for witch patron spells. Add +1 to the DC of all your patron spells."),
-                effect: None,
             },
             // Word of Healing -- um_feats.lst:171
             UmFeatEntry {
@@ -1444,7 +1328,6 @@ pub fn feat_tables() -> &'static [UmFeatEntry] {
                 pretext: None,
                 source_page: Some("p.159"),
                 benefit: Some("You may use your lay on hands to heal another creature at a range of 30 feet as a standard action that does not provoke an attack of opportunity. You must be able to speak and have a free hand to use this ability. The target heals half the amount they would have healed if you had touched them, but gains the benefits of your mercies as normal."),
-                effect: None,
             },
             // Masterpiece (At the Heart of It All) -- um_feats.lst:206
             UmFeatEntry {
@@ -1455,7 +1338,6 @@ pub fn feat_tables() -> &'static [UmFeatEntry] {
                 pretext: None,
                 source_page: Some("p.21"),
                 benefit: None,
-                effect: None,
             },
             // Masterpiece (Cat-Step) -- um_feats.lst:207
             UmFeatEntry {
@@ -1466,7 +1348,6 @@ pub fn feat_tables() -> &'static [UmFeatEntry] {
                 pretext: None,
                 source_page: Some("p.21"),
                 benefit: None,
-                effect: None,
             },
             // Masterpiece (Dance of 23 Steps) -- um_feats.lst:208
             UmFeatEntry {
@@ -1477,7 +1358,6 @@ pub fn feat_tables() -> &'static [UmFeatEntry] {
                 pretext: None,
                 source_page: Some("p.21"),
                 benefit: None,
-                effect: None,
             },
             // Masterpiece (Depths of the Mountain) -- um_feats.lst:209
             UmFeatEntry {
@@ -1488,7 +1368,6 @@ pub fn feat_tables() -> &'static [UmFeatEntry] {
                 pretext: None,
                 source_page: Some("p.21"),
                 benefit: None,
-                effect: None,
             },
             // Masterpiece (Dumbshow of Gorroc) -- um_feats.lst:210
             UmFeatEntry {
@@ -1499,7 +1378,6 @@ pub fn feat_tables() -> &'static [UmFeatEntry] {
                 pretext: None,
                 source_page: Some("p.21"),
                 benefit: None,
-                effect: None,
             },
             // Masterpiece (House of Imaginary Walls) -- um_feats.lst:211
             UmFeatEntry {
@@ -1510,7 +1388,6 @@ pub fn feat_tables() -> &'static [UmFeatEntry] {
                 pretext: None,
                 source_page: Some("p.21"),
                 benefit: None,
-                effect: None,
             },
             // Masterpiece (Legato Piece on the Infernal Bargain) -- um_feats.lst:212
             UmFeatEntry {
@@ -1521,7 +1398,6 @@ pub fn feat_tables() -> &'static [UmFeatEntry] {
                 pretext: None,
                 source_page: Some("p.21"),
                 benefit: None,
-                effect: None,
             },
             // Masterpiece (Lullaby of Ember the Ancient) -- um_feats.lst:213
             UmFeatEntry {
@@ -1532,7 +1408,6 @@ pub fn feat_tables() -> &'static [UmFeatEntry] {
                 pretext: None,
                 source_page: Some("p.21"),
                 benefit: None,
-                effect: None,
             },
             // Masterpiece (Minuet of the Midnight Ivy) -- um_feats.lst:214
             UmFeatEntry {
@@ -1543,7 +1418,6 @@ pub fn feat_tables() -> &'static [UmFeatEntry] {
                 pretext: None,
                 source_page: Some("p.21"),
                 benefit: None,
-                effect: None,
             },
             // Masterpiece (Quickening Pulse) -- um_feats.lst:215
             UmFeatEntry {
@@ -1554,7 +1428,6 @@ pub fn feat_tables() -> &'static [UmFeatEntry] {
                 pretext: None,
                 source_page: Some("p.21"),
                 benefit: None,
-                effect: None,
             },
             // Masterpiece (Requiem of the Fallen Priest-King) -- um_feats.lst:216
             UmFeatEntry {
@@ -1565,7 +1438,6 @@ pub fn feat_tables() -> &'static [UmFeatEntry] {
                 pretext: None,
                 source_page: Some("p.21"),
                 benefit: None,
-                effect: None,
             },
             // Masterpiece (Stone Face) -- um_feats.lst:217
             UmFeatEntry {
@@ -1576,7 +1448,6 @@ pub fn feat_tables() -> &'static [UmFeatEntry] {
                 pretext: None,
                 source_page: Some("p.21"),
                 benefit: None,
-                effect: None,
             },
             // Masterpiece (Toccata and Fugue of the Danse Macabre) -- um_feats.lst:218
             UmFeatEntry {
@@ -1587,7 +1458,6 @@ pub fn feat_tables() -> &'static [UmFeatEntry] {
                 pretext: None,
                 source_page: Some("p.21"),
                 benefit: None,
-                effect: None,
             },
             // Masterpiece (Triple Time) -- um_feats.lst:219
             UmFeatEntry {
@@ -1598,7 +1468,6 @@ pub fn feat_tables() -> &'static [UmFeatEntry] {
                 pretext: None,
                 source_page: Some("p.21"),
                 benefit: None,
-                effect: None,
             },
             // Masterpiece (Winds of the Five Heavens) -- um_feats.lst:220
             UmFeatEntry {
@@ -1609,7 +1478,6 @@ pub fn feat_tables() -> &'static [UmFeatEntry] {
                 pretext: None,
                 source_page: Some("p.21"),
                 benefit: None,
-                effect: None,
             },
             // Transfer Feat to Familiar -- um_feats.lst:226
             UmFeatEntry {
@@ -1620,7 +1488,6 @@ pub fn feat_tables() -> &'static [UmFeatEntry] {
                 pretext: None,
                 source_page: None,
                 benefit: None,
-                effect: Some(&["BONUS:VAR|BeastBondedFeatTransfer|1"]),
             },
             // Discovery (Arcane Builder) -- um_feats.lst:231
             UmFeatEntry {
@@ -1631,7 +1498,6 @@ pub fn feat_tables() -> &'static [UmFeatEntry] {
                 pretext: None,
                 source_page: Some("p.86"),
                 benefit: Some("You have an exceptional understanding of the theory behind creating magical items. Select one type of magic item (potions, wondrous items, and so on). You create items of this type 25%% faster than normal, and gain a +4 bonus on Spellcraft checks (or other checks, as appropriate) to craft items of this type."),
-                effect: None,
             },
             // Discovery (Fast Study) -- um_feats.lst:232
             UmFeatEntry {
@@ -1642,7 +1508,6 @@ pub fn feat_tables() -> &'static [UmFeatEntry] {
                 pretext: None,
                 source_page: Some("p.86"),
                 benefit: Some("Normally, a wizard spends 1 hour preparing all of his spells for the day, or proportionately less if he only prepares some spells, with a minimum of 15 minutes of preparation. Thanks to mental discipline and clever mnemonics, you can prepare all of your spells in only 15 minutes, and your minimum preparation time is only 1 minute."),
-                effect: None,
             },
             // Discovery (Feral Speech) -- um_feats.lst:233
             UmFeatEntry {
@@ -1653,7 +1518,6 @@ pub fn feat_tables() -> &'static [UmFeatEntry] {
                 pretext: None,
                 source_page: Some("p.86"),
                 benefit: Some("You gain the ability to speak with and understand the response of any animal as if using speak with animals, though each time you speak to animals, you must decide to communicate with either amphibians, birds, fish, mammals"),
-                effect: None,
             },
             // Discovery (Golem Constructor) -- um_feats.lst:234
             UmFeatEntry {
@@ -1664,7 +1528,6 @@ pub fn feat_tables() -> &'static [UmFeatEntry] {
                 pretext: None,
                 source_page: Some("p.86"),
                 benefit: Some("You have learned the art and craft of creating a single type of golem (such as stone golems or iron golems). When creating a golem of this type, you count as having the Craft Wondrous Item, Craft Magic Arms and Armor, and Craft Construct feats. You must meet all other construction requirements for the golem as normal."),
-                effect: None,
             },
             // Discovery (Immortality) -- um_feats.lst:235
             UmFeatEntry {
@@ -1675,7 +1538,6 @@ pub fn feat_tables() -> &'static [UmFeatEntry] {
                 pretext: None,
                 source_page: Some("p.86"),
                 benefit: Some("You discover a cure for aging, and from this point forward you take no penalty to your physical ability scores from advanced age. If you are already taking such penalties, they are removed at this time."),
-                effect: None,
             },
             // Discovery (Multimorph) -- um_feats.lst:236
             UmFeatEntry {
@@ -1686,7 +1548,6 @@ pub fn feat_tables() -> &'static [UmFeatEntry] {
                 pretext: None,
                 source_page: Some("p.86"),
                 benefit: Some("Your studies in transmogrification have increased your control over shapechanging spells. When you cast a spell of the polymorph subschool on yourself, you may expend 1 minute of the spell's duration as a standard action to assume another form allowed by the spell. You can do this as often as you like, subject to the duration of the spell."),
-                effect: None,
             },
             // Discovery (Opposition Research) -- um_feats.lst:237
             UmFeatEntry {
@@ -1697,7 +1558,6 @@ pub fn feat_tables() -> &'static [UmFeatEntry] {
                 pretext: None,
                 source_page: Some("p.86"),
                 benefit: Some("By completing strenuous studies, you have broken through the mental barriers that made it hard for you to prepare spells from one of your opposition schools. Select one wizard opposition school; preparing spells of this school now only requires one spell slot of the appropriate level instead of two, and you no longer have the -4 Spellcraft penalty for crafting items from that school."),
-                effect: Some(&["BONUS:VAR|Arcane Opposition School|-1"]),
             },
             // Discovery (Split Slot) -- um_feats.lst:238
             UmFeatEntry {
@@ -1708,7 +1568,6 @@ pub fn feat_tables() -> &'static [UmFeatEntry] {
                 pretext: None,
                 source_page: Some("p.86"),
                 benefit: Some("Once per day, when you prepare spells, you may treat any one of your open spell slots as if it were two spell slots that were two spell levels lower. For example, a 9th-level wizard can split a 5th-level slot into two 3rd-level slots, preparing fireball and lightning bolt in those 3rd-level slots. For all purposes, the two lower-level slots are treated as that lower level (so the split 5th-level slot used for a fireball has a DC as if it were in a normal 3rd-level slot). Splitting a 2nd-level slot lets you prepare two additional cantrips (which you can cast over and over, just like normally prepared cantrips). This discovery has no effect on cantrips or 1st-level spells. You may split %1 spell slots when you prepare spells.|SplitSlotTimes"),
-                effect: Some(&["BONUS:ABILITYPOOL|Split Slot|1", "BONUS:VAR|SplitSlotTimes|1"]),
             },
             // Discovery (True Name) -- um_feats.lst:239
             UmFeatEntry {
@@ -1719,7 +1578,6 @@ pub fn feat_tables() -> &'static [UmFeatEntry] {
                 pretext: None,
                 source_page: Some("p.87"),
                 benefit: Some("Your researches into ancient tomes and your inquisitions of bound spirits have led you to one of the best-hidden secrets of the multiverse: the true name of an outsider-the name that defines the very essence of the creature and that gives the speaker control over the being. This outsider can have no more than 12 Hit Dice. Once per day, you can speak the common name by which the outsider is known, and the outsider travels to you as if you had cast planar binding upon it. It must obey you to the best of its ability, without pay or bargaining for its services, for its fear that you might release its true name to the wider world is enough to bring even the most recalcitrant of outsiders to bear. If the creature is within 100 feet, as a move action, you may punish it by deliberately mispronouncing its name, wracking its very essence and giving it the sickened and staggered conditions for 1 round (even if the creature is normally immune to these conditions). You cannot use true name in an area of silence, but the creature does not have to be able to hear you for it to be harmed by the ability. It is in your best interest to call this creature only sparingly, and occasionally reward it in some fashion to mollify its wrath. If you repeatedly fail to offer it a reward appropriate to its type and ethos, the creature may begin plotting ways to destroy the bond between you, whether by creating an accident that will destroy your memory of the name, by plaguing you with nuisances or dangers until you vow never to call on it again, or by actively seeking to destroy you through its own devices or those of an underling. If this creature is of a lawful type and you are violating its ethos, its superiors may even destroy it or you rather than allow you to contaminate their servant further. Worse, they may establish situations where it is necessary for you to summon this outsider, opening gateways to infernal or angelic interference, in order to gain a foothold on the Material Plane."),
-                effect: None,
             },
             // Discovery (Greater True Name) -- um_feats.lst:240
             UmFeatEntry {
@@ -1730,7 +1588,6 @@ pub fn feat_tables() -> &'static [UmFeatEntry] {
                 pretext: None,
                 source_page: Some("p.87"),
                 benefit: Some("Your researches into ancient tomes and your inquisitions of bound spirits have led you to one of the best-hidden secrets of the multiverse: the true name of an outsider-the name that defines the very essence of the creature and that gives the speaker control over the being. This outsider can have no more than 18 Hit Dice. Once per day, you can speak the common name by which the outsider is known, and the outsider travels to you as if you had cast greater planar binding upon it. It must obey you to the best of its ability, without pay or bargaining for its services, for its fear that you might release its true name to the wider world is enough to bring even the most recalcitrant of outsiders to bear. If the creature is within 100 feet, as a move action, you may punish it by deliberately mispronouncing its name, wracking its very essence and giving it the sickened and staggered conditions for 1 round (even if the creature is normally immune to these conditions). You cannot use true name in an area of silence, but the creature does not have to be able to hear you for it to be harmed by the ability. It is in your best interest to call this creature only sparingly, and occasionally reward it in some fashion to mollify its wrath. If you repeatedly fail to offer it a reward appropriate to its type and ethos, the creature may begin plotting ways to destroy the bond between you, whether by creating an accident that will destroy your memory of the name, by plaguing you with nuisances or dangers until you vow never to call on it again, or by actively seeking to destroy you through its own devices or those of an underling. If this creature is of a lawful type and you are violating its ethos, its superiors may even destroy it or you rather than allow you to contaminate their servant further. Worse, they may establish situations where it is necessary for you to summon this outsider, opening gateways to infernal or angelic interference, in order to gain a foothold on the Material Plane."),
-                effect: None,
             },
             // Discovery (Staff-Like Wand) -- um_feats.lst:241
             UmFeatEntry {
@@ -1741,7 +1598,6 @@ pub fn feat_tables() -> &'static [UmFeatEntry] {
                 pretext: None,
                 source_page: Some("p.87"),
                 benefit: Some("Your research has unlocked a new power in conjunction with using a wand. Similar to using a magic staff, you use your own Intelligence score and relevant feats to set the DC for saves against spells you cast from a wand, and you can use your caster level when activating the power of a wand if it's higher than the caster level of the wand."),
-                effect: None,
             },        ]
     })
 }
@@ -1749,6 +1605,16 @@ pub fn feat_tables() -> &'static [UmFeatEntry] {
 #[cfg(test)]
 mod tests {
     use super::*;
+    use crate::pcgen_import::feat_effect_tokens::um_feat_carries_effect;
+    use crate::rules_core::rules_tables::RuleSetId;
+
+    /// The presence flag these tests used to read off `UmFeatEntry.effect`,
+    /// now read from the relocated table — SD-35 `AT-35-E6-003-SWEEP`
+    /// cycle 6. The assertions are unchanged; only where the flag comes
+    /// from moved.
+    fn carries_effect(index: usize, entry: &UmFeatEntry) -> bool {
+        um_feat_carries_effect(RuleSetId::Um, index, entry.key)
+    }
 
     #[test]
     fn catalog_has_144_records() {
@@ -1757,9 +1623,9 @@ mod tests {
 
     #[test]
     fn every_record_carries_real_content() {
-        for e in feat_tables() {
+        for (i, e) in feat_tables().iter().enumerate() {
             assert!(
-                e.description.is_some() || e.benefit.is_some() || e.effect.is_some(),
+                e.description.is_some() || e.benefit.is_some() || carries_effect(i, e),
                 "{} has no DESC:, BENEFIT:, or BONUS: -- genuinely empty, should have been excluded",
                 e.key
             );
@@ -1771,7 +1637,10 @@ mod tests {
         assert_eq!(
             feat_tables()
                 .iter()
-                .filter(|e| e.description.is_none() && e.benefit.is_none() && e.effect.is_none())
+                .enumerate()
+                .filter(|(i, e)| e.description.is_none()
+                    && e.benefit.is_none()
+                    && !carries_effect(*i, e))
                 .count(),
             0
         );
@@ -1799,7 +1668,10 @@ mod tests {
             .count();
         let effect_only = feat_tables()
             .iter()
-            .filter(|e| e.effect.is_some() && e.description.is_none() && e.benefit.is_none())
+            .enumerate()
+            .filter(|(i, e)| carries_effect(*i, e)
+                && e.description.is_none()
+                && e.benefit.is_none())
             .count();
         assert_eq!(both, 123, "records with both DESC: and BENEFIT:");
         assert_eq!(desc_only, 15, "the 15 Masterpiece feats, DESC:-complete by design");

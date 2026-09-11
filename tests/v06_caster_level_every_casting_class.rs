@@ -267,16 +267,29 @@ fn the_record_cites_its_corpus_source_and_disclaims_the_spell_math_it_does_not_c
         .find(|e| e.id == caster_level_id("wizard"))
         .expect("wizard caster level must be grounded");
 
-    assert!(
-        record.detail.contains("BONUS:CASTERLEVEL"),
-        "record must cite the corpus token it is transcribed from: {}",
-        record.detail
-    );
+    // SD-35 `AT-35-E6-003-SWEEP` cycle 6: this assertion used to REQUIRE
+    // `BONUS:CASTERLEVEL` in the rendered text. `ComputationExplanation.detail`
+    // is carried to the desktop crate and printed on the Character Hub sheet,
+    // so that pinned an ingest token onto a player's paper character sheet --
+    // the same sheet-rule defect cycles 4 and 5 cleared elsewhere
+    // (`decisions.md` §1: a sheet line is a final number, dice in final form,
+    // or the rule's words, never ingest vocabulary). The file:line citation is
+    // kept -- it is a source reference a reader can chase, not ingest syntax --
+    // and the verbatim tokens moved to the `//` provenance comments on
+    // `CASTER_LEVEL_RULES`' own rows, which is where `AGENTS.md` rule 9 wants
+    // them and where `scripts/pcgen_residue_gate.py` does not count them.
     assert!(
         record.detail.contains("cr_classes.lst"),
         "record must cite the corpus file: {}",
         record.detail
     );
+    for token in ["BONUS:", "PRECLASS:", "DEFINE", "SPELLSTAT:"] {
+        assert!(
+            !record.detail.contains(token),
+            "the rendered sheet line must carry no `{token}` ingest vocabulary: {}",
+            record.detail
+        );
+    }
     for disclaimed in ["spells per day", "spell save DC"] {
         assert!(
             record.detail.contains(disclaimed),

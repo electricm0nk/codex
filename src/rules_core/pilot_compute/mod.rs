@@ -12368,14 +12368,16 @@ fn explain_undine_formula_race_trait(
                 id: "race.undine.alternate_trait.acid_breath".to_owned(),
                 value: dice,
                 detail: format!(
+                    // Provenance (ingest tokens, demoted out of the rendered sheet line -- SD-35 AT-35-E6-003-SWEEP):
+                    //   arg_abilities_race.lst:776
+                    //   BONUS:VAR|Undine_AcidBreath_Dice|min(floor((TL+1)/2),5),
+                    //   BONUS:VAR|Undine_AcidBreath_DC|10+(TL/2)+CON,
                     "Undine alternate racial trait — Acid Breath (Advanced Race Guide p.174): a \
                      {times}/day 5-ft cone breath weapon dealing {dice}d8 acid damage, Reflex DC \
-                     {dc} for half (arg_abilities_race.lst:776 \
-                     BONUS:VAR|Undine_AcidBreath_Dice|min(floor((TL+1)/2),5), \
-                     BONUS:VAR|Undine_AcidBreath_DC|10+(TL/2)+CON, evaluated at total character \
-                     level {total_level} and Constitution modifier \
-                     {con:+} by the sheet evaluator over the converted arithmetic, gated by \
-                     `derived_evaluator_fixture_check`'s race_trait_formula bar)",
+                     {dc} for half (evaluated at total character level {total_level} and \
+                     Constitution modifier {con:+} by the sheet evaluator over the converted \
+                     arithmetic, gated by `derived_evaluator_fixture_check`'s race_trait_formula \
+                     bar)",
                     con = ability_modifiers.constitution,
                 ),
             });
@@ -12391,14 +12393,15 @@ fn explain_undine_formula_race_trait(
                 id: "race.undine.alternate_trait.nereid_fascination".to_owned(),
                 value: duration,
                 detail: format!(
-                    "Undine alternate racial trait — Nereid Fascination (Advanced Race Guide \
-                     p.175): {times}/day as a standard action, a 20-ft-radius aura fascinates \
-                     humanoids within it for {duration} rounds, Will DC {dc} negates \
-                     (arg_abilities_race.lst:781 \
-                     BONUS:VAR|Undine_NereidFascination_Duration|max((TL/2),1), \
-                     BONUS:VAR|Undine_NereidFascination_DC|10+(TL/2)+CHA, evaluated at total \
-                     character level {total_level} and Charisma modifier \
-                     {cha:+} by the sheet evaluator over the converted arithmetic, gated by \
+                    // Provenance (ingest tokens, demoted out of the rendered sheet line -- SD-35 AT-35-E6-003-SWEEP):
+                    //   arg_abilities_race.lst:781
+                    //   BONUS:VAR|Undine_NereidFascination_Duration|max((TL/2),1),
+                    //   BONUS:VAR|Undine_NereidFascination_DC|10+(TL/2)+CHA,
+                    "Undine alternate racial trait — Nereid Fascination (Advanced Race Guide p.175): \
+                     {times}/day as a standard action, a 20-ft-radius aura fascinates humanoids \
+                     within it for {duration} rounds, Will DC {dc} negates (evaluated at total \
+                     character level {total_level} and Charisma modifier {cha:+} by the sheet \
+                     evaluator over the converted arithmetic, gated by \
                      `derived_evaluator_fixture_check`'s race_trait_formula bar)",
                     cha = ability_modifiers.charisma,
                 ),
@@ -12413,18 +12416,19 @@ fn explain_undine_formula_race_trait(
                 id: "race.undine.alternate_trait.ooze_breath".to_owned(),
                 value: dice,
                 detail: format!(
+                    // Provenance (ingest tokens, demoted out of the rendered sheet line -- SD-35 AT-35-E6-003-SWEEP):
+                    //   arg_abilities_race.lst:782
+                    //   BONUS:VAR|Undine_OozeBreath_Dice|min(floor((TL+1/2)),5),
+                    //   BONUS:VAR|Undine_OozeBreath_DC|10+(TL/2)+CON,
                     "Undine alternate racial trait — Ooze Breath (Advanced Race Guide p.175): a \
-                     {times}/day 5-ft cone breath weapon dealing {dice}d4 acid damage and \
-                     sickening for 3 rounds, Reflex DC {dc} halves and negates sickened \
-                     (arg_abilities_race.lst:782 \
-                     BONUS:VAR|Undine_OozeBreath_Dice|min(floor((TL+1/2)),5), \
-                     BONUS:VAR|Undine_OozeBreath_DC|10+(TL/2)+CON, evaluated at total character \
-                     level {total_level} and Constitution modifier \
-                     {con:+} by the sheet evaluator over the converted arithmetic, gated by \
-                     `derived_evaluator_fixture_check`'s race_trait_formula bar). This \
-                     record's `Dice` formula really is `TL+1/2`, not `(TL+1)/2` — real upstream \
-                     PCGen arithmetic, transcribed faithfully rather than \"corrected\" to match \
-                     Acid Breath's shape",
+                     {times}/day 5-ft cone breath weapon dealing {dice}d4 acid damage and sickening \
+                     for 3 rounds, Reflex DC {dc} halves and negates sickened (evaluated at total \
+                     character level {total_level} and Constitution modifier {con:+} by the sheet \
+                     evaluator over the converted arithmetic, gated by \
+                     `derived_evaluator_fixture_check`'s race_trait_formula bar). This record's \
+                     `Dice` formula really is `TL+1/2`, not `(TL+1)/2` — real upstream PCGen \
+                     arithmetic, transcribed faithfully rather than \"corrected\" to match Acid \
+                     Breath's shape",
                     con = ability_modifiers.constitution,
                 ),
             });
@@ -25837,16 +25841,16 @@ fn ground_bloodrager_arcane_bloodline(
                 .to_owned(),
             value: extra_attacks,
             detail: format!(
+                // Provenance (ingest tokens, demoted out of the rendered sheet line -- SD-35 AT-35-E6-003-SWEEP):
+                //   BONUS:VAR|Bloodrager_Arcane_CastersScourge_Times|max(1,DEX)`,
                 "Bloodrager level {level} Arcane bloodline, Caster's Scourge (its \
-                 level-{ARCANE_BLOODRAGER_CASTERS_SCOURGE_LEVEL} power): a pool of \
-                 {extra_attacks} extra attacks of opportunity \
-                 (`BONUS:VAR|Bloodrager_Arcane_CastersScourge_Times|max(1,DEX)`, PCGen's DEX \
-                 being the Dexterity MODIFIER ({}) rather than the score, so max(1, {}) = \
-                 {extra_attacks}). Usable only against spellcasters who cast or attempted to \
-                 cast defensively in the threatened area, and still requiring Spellbreaker or \
-                 the Caster's Bane power to actually attack a successful defensive caster. This \
-                 codebase tracks no attack-of-opportunity pool at all, so the count grounds \
-                 standalone and no provocation is resolved",
+                 level-{ARCANE_BLOODRAGER_CASTERS_SCOURGE_LEVEL} power): a pool of {extra_attacks} \
+                 extra attacks of opportunity (` PCGen's DEX being the Dexterity MODIFIER ({}) \
+                 rather than the score, so max(1, {}) = {extra_attacks}). Usable only against \
+                 spellcasters who cast or attempted to cast defensively in the threatened area, and \
+                 still requiring Spellbreaker or the Caster's Bane power to actually attack a \
+                 successful defensive caster. This codebase tracks no attack-of-opportunity pool at \
+                 all, so the count grounds standalone and no provocation is resolved",
                 ability_modifiers.dexterity, ability_modifiers.dexterity
             ),
         });
@@ -32135,12 +32139,20 @@ struct CasterLevelRule {
     class_name: &'static str,
     /// The corpus file and line the `BONUS:CASTERLEVEL` token lives on.
     token_source: &'static str,
-    /// That token, verbatim.
-    token: &'static str,
-    /// The `BONUS:VAR` chain resolving the token's variable to the class
-    /// level, verbatim. Empty for the four ACG classes whose token names the
-    /// class level (`CL`) directly and therefore needs no resolution.
-    resolution: &'static str,
+    /// `true` for the four ACG classes whose corpus rule names the class
+    /// level directly, with no intermediate variable to chase.
+    ///
+    /// The two `&'static str` fields that stood here -- `token` and
+    /// `resolution` -- held the class's `BONUS:CASTERLEVEL` token and the
+    /// `BONUS:VAR` chain it names, verbatim, and the renderer interpolated
+    /// BOTH into the `ComputationExplanation.detail` a player's sheet
+    /// prints. They moved to the `//` provenance lines above each row of
+    /// `CASTER_LEVEL_RULES` -- SD-35 `AT-35-E6-003-SWEEP` cycle 6,
+    /// `decisions.md` §1 (no ingest vocabulary on a sheet line) and §17
+    /// (provenance belongs in a comment beside the number it explains).
+    /// Nothing was lost: every token string is still in the file, byte for
+    /// byte, four lines up from the row it belongs to.
+    names_class_level_directly: bool,
     /// The class level at which the corpus's own `PRECLASS:` gate on the
     /// token opens. `1` where the token carries no gate at all.
     first_casting_class_level: u8,
@@ -32202,176 +32214,198 @@ struct CasterLevelRule {
 /// caster-level lookup should map those two ids, not read a copy.
 const CASTER_LEVEL_RULES: &[CasterLevelRule] = &[
     // ----- PF1 Core Rulebook (`core_rulebook/cr_classes.lst`) -----
+    // Provenance (ingest tokens, demoted out of the rendered sheet line
+    // -- SD-35 AT-35-E6-003-SWEEP cycle 6). Verbatim, byte for byte:
+    //   BONUS:CASTERLEVEL|Bard|Caster_Level_BL_Stripped_Bard
+    //   cr_classes.lst:24 BONUS:VAR|Caster_Level_BL_Stripped_Bard|Caster_Level_Bard-CasterLevelBLBard and BONUS:VAR|Caster_Level_Bard|CL+Caster_Level_Bonus+CasterLevelBLBard
     CasterLevelRule {
         class_name: "bard",
         token_source: "core_rulebook/cr_classes.lst:28",
-        token: "BONUS:CASTERLEVEL|Bard|Caster_Level_BL_Stripped_Bard",
-        resolution: "cr_classes.lst:24 BONUS:VAR|Caster_Level_BL_Stripped_Bard|\
-                     Caster_Level_Bard-CasterLevelBLBard and \
-                     BONUS:VAR|Caster_Level_Bard|CL+Caster_Level_Bonus+CasterLevelBLBard",
         first_casting_class_level: 1,
         spell_stat: "CHA",
+        names_class_level_directly: false,
     },
+    // Provenance (ingest tokens, demoted out of the rendered sheet line
+    // -- SD-35 AT-35-E6-003-SWEEP cycle 6). Verbatim, byte for byte:
+    //   BONUS:CASTERLEVEL|Cleric|Caster_Level_BL_Stripped_Cleric
+    //   cr_classes.lst:55 BONUS:VAR|Caster_Level_BL_Stripped_Cleric|Caster_Level_Cleric-CasterLevelBLCleric and BONUS:VAR|Caster_Level_Cleric|CL+Caster_Level_Bonus+CasterLevelBLCleric
     CasterLevelRule {
         class_name: "cleric",
         token_source: "core_rulebook/cr_classes.lst:59",
-        token: "BONUS:CASTERLEVEL|Cleric|Caster_Level_BL_Stripped_Cleric",
-        resolution: "cr_classes.lst:55 BONUS:VAR|Caster_Level_BL_Stripped_Cleric|\
-                     Caster_Level_Cleric-CasterLevelBLCleric and \
-                     BONUS:VAR|Caster_Level_Cleric|CL+Caster_Level_Bonus+CasterLevelBLCleric",
         first_casting_class_level: 1,
         spell_stat: "WIS",
+        names_class_level_directly: false,
     },
+    // Provenance (ingest tokens, demoted out of the rendered sheet line
+    // -- SD-35 AT-35-E6-003-SWEEP cycle 6). Verbatim, byte for byte:
+    //   BONUS:CASTERLEVEL|Druid|Caster_Level_BL_Stripped_Druid
+    //   cr_classes.lst:93 BONUS:VAR|Caster_Level_BL_Stripped_Druid|Caster_Level_Druid-CasterLevelBLDruid and BONUS:VAR|Caster_Level_Druid|CL+Caster_Level_Bonus+CasterLevelBLDruid
     CasterLevelRule {
         class_name: "druid",
         token_source: "core_rulebook/cr_classes.lst:99",
-        token: "BONUS:CASTERLEVEL|Druid|Caster_Level_BL_Stripped_Druid",
-        resolution: "cr_classes.lst:93 BONUS:VAR|Caster_Level_BL_Stripped_Druid|\
-                     Caster_Level_Druid-CasterLevelBLDruid and \
-                     BONUS:VAR|Caster_Level_Druid|CL+Caster_Level_Bonus+CasterLevelBLDruid",
         first_casting_class_level: 1,
         spell_stat: "WIS",
+        names_class_level_directly: false,
     },
+    // Provenance (ingest tokens, demoted out of the rendered sheet line
+    // -- SD-35 AT-35-E6-003-SWEEP cycle 6). Verbatim, byte for byte:
+    //   BONUS:CASTERLEVEL|Sorcerer|Caster_Level_BL_Stripped_Sorcerer
+    //   cr_classes.lst:246 BONUS:VAR|Caster_Level_BL_Stripped_Sorcerer|Caster_Level_Sorcerer-CasterLevelBLSorcerer and BONUS:VAR|Caster_Level_Sorcerer|CL+Caster_Level_Bonus+CasterLevelBLSorcerer
     CasterLevelRule {
         class_name: "sorcerer",
         token_source: "core_rulebook/cr_classes.lst:250",
-        token: "BONUS:CASTERLEVEL|Sorcerer|Caster_Level_BL_Stripped_Sorcerer",
-        resolution: "cr_classes.lst:246 BONUS:VAR|Caster_Level_BL_Stripped_Sorcerer|\
-                     Caster_Level_Sorcerer-CasterLevelBLSorcerer and \
-                     BONUS:VAR|Caster_Level_Sorcerer|CL+Caster_Level_Bonus+CasterLevelBLSorcerer",
         first_casting_class_level: 1,
         spell_stat: "CHA",
+        names_class_level_directly: false,
     },
+    // Provenance (ingest tokens, demoted out of the rendered sheet line
+    // -- SD-35 AT-35-E6-003-SWEEP cycle 6). Verbatim, byte for byte:
+    //   BONUS:CASTERLEVEL|Wizard|Caster_Level_BL_Stripped_Wizard
+    //   cr_classes.lst:277 BONUS:VAR|Caster_Level_BL_Stripped_Wizard|Caster_Level_Wizard-CasterLevelBLWizard, BONUS:VAR|Caster_Level_Wizard|WizardLVL+Caster_Level_Bonus+CasterLevelBLWizard and BONUS:VAR|WizardLVL|CL
     CasterLevelRule {
         class_name: "wizard",
         token_source: "core_rulebook/cr_classes.lst:281",
-        token: "BONUS:CASTERLEVEL|Wizard|Caster_Level_BL_Stripped_Wizard",
-        resolution: "cr_classes.lst:277 BONUS:VAR|Caster_Level_BL_Stripped_Wizard|\
-                     Caster_Level_Wizard-CasterLevelBLWizard, \
-                     BONUS:VAR|Caster_Level_Wizard|WizardLVL+Caster_Level_Bonus+CasterLevelBLWizard \
-                     and BONUS:VAR|WizardLVL|CL",
         first_casting_class_level: 1,
         spell_stat: "INT",
+        names_class_level_directly: false,
     },
     // ----- PF1 Advanced Player's Guide (`advanced_players_guide/apg_classes.lst`) -----
+    // Provenance (ingest tokens, demoted out of the rendered sheet line
+    // -- SD-35 AT-35-E6-003-SWEEP cycle 6). Verbatim, byte for byte:
+    //   BONUS:CASTERLEVEL|Alchemist|Caster_Level_BL_Stripped_Alchemist
+    //   apg_classes.lst:11 BONUS:VAR|Caster_Level_BL_Stripped_Alchemist|Caster_Level_Alchemist-CasterLevelBLAlchemist and BONUS:VAR|Caster_Level_Alchemist|CL+Caster_Level_Bonus+CasterLevelBLAlchemist
     CasterLevelRule {
         class_name: "alchemist",
         token_source: "advanced_players_guide/apg_classes.lst:15",
-        token: "BONUS:CASTERLEVEL|Alchemist|Caster_Level_BL_Stripped_Alchemist",
-        resolution: "apg_classes.lst:11 BONUS:VAR|Caster_Level_BL_Stripped_Alchemist|\
-                     Caster_Level_Alchemist-CasterLevelBLAlchemist and \
-                     BONUS:VAR|Caster_Level_Alchemist|CL+Caster_Level_Bonus+CasterLevelBLAlchemist",
         first_casting_class_level: 1,
         spell_stat: "INT",
+        names_class_level_directly: false,
     },
+    // Provenance (ingest tokens, demoted out of the rendered sheet line
+    // -- SD-35 AT-35-E6-003-SWEEP cycle 6). Verbatim, byte for byte:
+    //   BONUS:CASTERLEVEL|Inquisitor|Caster_Level_BL_Stripped_Inquisitor
+    //   apg_classes.lst:50 BONUS:VAR|Caster_Level_BL_Stripped_Inquisitor|Caster_Level_Inquisitor-CasterLevelBLInquisitor and BONUS:VAR|Caster_Level_Inquisitor|CL+Caster_Level_Bonus+CasterLevelBLInquisitor
     CasterLevelRule {
         class_name: "inquisitor",
         token_source: "advanced_players_guide/apg_classes.lst:56",
-        token: "BONUS:CASTERLEVEL|Inquisitor|Caster_Level_BL_Stripped_Inquisitor",
-        resolution: "apg_classes.lst:50 BONUS:VAR|Caster_Level_BL_Stripped_Inquisitor|\
-                     Caster_Level_Inquisitor-CasterLevelBLInquisitor and \
-                     BONUS:VAR|Caster_Level_Inquisitor|CL+Caster_Level_Bonus+CasterLevelBLInquisitor",
         first_casting_class_level: 1,
         spell_stat: "WIS",
+        names_class_level_directly: false,
     },
+    // Provenance (ingest tokens, demoted out of the rendered sheet line
+    // -- SD-35 AT-35-E6-003-SWEEP cycle 6). Verbatim, byte for byte:
+    //   BONUS:CASTERLEVEL|Oracle|Caster_Level_BL_Stripped_Oracle
+    //   apg_classes.lst:107 BONUS:VAR|Caster_Level_BL_Stripped_Oracle|Caster_Level_Oracle-CasterLevelBLOracle and BONUS:VAR|Caster_Level_Oracle|CL+Caster_Level_Bonus+CasterLevelBLOracle
     CasterLevelRule {
         class_name: "oracle",
         token_source: "advanced_players_guide/apg_classes.lst:111",
-        token: "BONUS:CASTERLEVEL|Oracle|Caster_Level_BL_Stripped_Oracle",
-        resolution: "apg_classes.lst:107 BONUS:VAR|Caster_Level_BL_Stripped_Oracle|\
-                     Caster_Level_Oracle-CasterLevelBLOracle and \
-                     BONUS:VAR|Caster_Level_Oracle|CL+Caster_Level_Bonus+CasterLevelBLOracle",
         first_casting_class_level: 1,
         spell_stat: "CHA",
+        names_class_level_directly: false,
     },
+    // Provenance (ingest tokens, demoted out of the rendered sheet line
+    // -- SD-35 AT-35-E6-003-SWEEP cycle 6). Verbatim, byte for byte:
+    //   BONUS:CASTERLEVEL|Summoner|Caster_Level_BL_Stripped_Summoner
+    //   apg_classes.lst:139 BONUS:VAR|Caster_Level_BL_Stripped_Summoner|Caster_Level_Summoner-CasterLevelBLSummoner and BONUS:VAR|Caster_Level_Summoner|CL+Caster_Level_Bonus+CasterLevelBLSummoner
     CasterLevelRule {
         class_name: "summoner",
         token_source: "advanced_players_guide/apg_classes.lst:145",
-        token: "BONUS:CASTERLEVEL|Summoner|Caster_Level_BL_Stripped_Summoner",
-        resolution: "apg_classes.lst:139 BONUS:VAR|Caster_Level_BL_Stripped_Summoner|\
-                     Caster_Level_Summoner-CasterLevelBLSummoner and \
-                     BONUS:VAR|Caster_Level_Summoner|CL+Caster_Level_Bonus+CasterLevelBLSummoner",
         first_casting_class_level: 1,
         spell_stat: "CHA",
+        names_class_level_directly: false,
     },
+    // Provenance (ingest tokens, demoted out of the rendered sheet line
+    // -- SD-35 AT-35-E6-003-SWEEP cycle 6). Verbatim, byte for byte:
+    //   BONUS:CASTERLEVEL|Witch|Caster_Level_BL_Stripped_Witch
+    //   apg_classes.lst:172 BONUS:VAR|Caster_Level_BL_Stripped_Witch|Caster_Level_Witch-CasterLevelBLWitch and BONUS:VAR|Caster_Level_Witch|CL+Caster_Level_Bonus+CasterLevelBLWitch
     CasterLevelRule {
         class_name: "witch",
         token_source: "advanced_players_guide/apg_classes.lst:176",
-        token: "BONUS:CASTERLEVEL|Witch|Caster_Level_BL_Stripped_Witch",
-        resolution: "apg_classes.lst:172 BONUS:VAR|Caster_Level_BL_Stripped_Witch|\
-                     Caster_Level_Witch-CasterLevelBLWitch and \
-                     BONUS:VAR|Caster_Level_Witch|CL+Caster_Level_Bonus+CasterLevelBLWitch",
         first_casting_class_level: 1,
         spell_stat: "INT",
+        names_class_level_directly: false,
     },
     // ----- PF1 Advanced Class Guide (`advanced_class_guide/acg_classes.lst`) -----
+    // Provenance (ingest tokens, demoted out of the rendered sheet line
+    // -- SD-35 AT-35-E6-003-SWEEP cycle 6). Verbatim, byte for byte:
+    //   BONUS:CASTERLEVEL|Arcanist|CL
+    //   (the token names the class level `CL` directly -- no chain)
     CasterLevelRule {
         class_name: "arcanist",
         token_source: "advanced_class_guide/acg_classes.lst:15",
-        token: "BONUS:CASTERLEVEL|Arcanist|CL",
-        resolution: "",
         first_casting_class_level: 1,
         spell_stat: "INT",
+        names_class_level_directly: true,
     },
+    // Provenance (ingest tokens, demoted out of the rendered sheet line
+    // -- SD-35 AT-35-E6-003-SWEEP cycle 6). Verbatim, byte for byte:
+    //   BONUS:CASTERLEVEL|Bloodrager|Caster_Level_Bloodrager|PRECLASS:1,Bloodrager=4
+    //   acg_classes.lst:40 BONUS:VAR|Caster_Level_Bloodrager|BloodragerLVL+Caster_Level_Bonus+CasterLevelBLBloodrager and BONUS:VAR|BloodragerLVL|CL
     CasterLevelRule {
         class_name: "bloodrager",
         token_source: "advanced_class_guide/acg_classes.lst:44",
-        token: "BONUS:CASTERLEVEL|Bloodrager|Caster_Level_Bloodrager|PRECLASS:1,Bloodrager=4",
-        resolution: "acg_classes.lst:40 BONUS:VAR|Caster_Level_Bloodrager|\
-                     BloodragerLVL+Caster_Level_Bonus+CasterLevelBLBloodrager and \
-                     BONUS:VAR|BloodragerLVL|CL",
         first_casting_class_level: 4,
         spell_stat: "CHA",
+        names_class_level_directly: false,
     },
+    // Provenance (ingest tokens, demoted out of the rendered sheet line
+    // -- SD-35 AT-35-E6-003-SWEEP cycle 6). Verbatim, byte for byte:
+    //   BONUS:CASTERLEVEL|Hunter|CL
+    //   (the token names the class level `CL` directly -- no chain)
     CasterLevelRule {
         class_name: "hunter",
         token_source: "advanced_class_guide/acg_classes.lst:114",
-        token: "BONUS:CASTERLEVEL|Hunter|CL",
-        resolution: "",
         first_casting_class_level: 1,
         spell_stat: "WIS",
+        names_class_level_directly: true,
     },
+    // Provenance (ingest tokens, demoted out of the rendered sheet line
+    // -- SD-35 AT-35-E6-003-SWEEP cycle 6). Verbatim, byte for byte:
+    //   BONUS:CASTERLEVEL|Investigator|Caster_Level_Investigator
+    //   acg_classes.lst:168 BONUS:VAR|Caster_Level_Investigator|InvestigatorLVL+Caster_Level_Bonus+CasterLevelBLInvestigator and BONUS:VAR|InvestigatorLVL|classlevel(\"APPLIEDAS=NONEPIC\"), which is the class level for every level this codebase supports (1-20, all non-epic)
     CasterLevelRule {
         class_name: "investigator",
         token_source: "advanced_class_guide/acg_classes.lst:172",
-        token: "BONUS:CASTERLEVEL|Investigator|Caster_Level_Investigator",
-        resolution: "acg_classes.lst:168 BONUS:VAR|Caster_Level_Investigator|\
-                     InvestigatorLVL+Caster_Level_Bonus+CasterLevelBLInvestigator and \
-                     BONUS:VAR|InvestigatorLVL|classlevel(\"APPLIEDAS=NONEPIC\"), which is the \
-                     class level for every level this codebase supports (1-20, all non-epic)",
         first_casting_class_level: 1,
         spell_stat: "INT",
+        names_class_level_directly: false,
     },
+    // Provenance (ingest tokens, demoted out of the rendered sheet line
+    // -- SD-35 AT-35-E6-003-SWEEP cycle 6). Verbatim, byte for byte:
+    //   BONUS:CASTERLEVEL|Shaman|CL
+    //   (the token names the class level `CL` directly -- no chain)
     CasterLevelRule {
         class_name: "shaman",
         token_source: "advanced_class_guide/acg_classes.lst:225",
-        token: "BONUS:CASTERLEVEL|Shaman|CL",
-        resolution: "",
         first_casting_class_level: 1,
         spell_stat: "WIS",
+        names_class_level_directly: true,
     },
+    // Provenance (ingest tokens, demoted out of the rendered sheet line
+    // -- SD-35 AT-35-E6-003-SWEEP cycle 6). Verbatim, byte for byte:
+    //   BONUS:CASTERLEVEL|Skald|Caster_Level_BL_Stripped_Skald
+    //   acg_classes.lst:274 BONUS:VAR|Caster_Level_BL_Stripped_Skald|Caster_Level_Skald-CasterLevelBLSkald, BONUS:VAR|Caster_Level_Skald|SkaldLVL+Caster_Level_Bonus+CasterLevelBLSkald and BONUS:VAR|SkaldLVL|CL
     CasterLevelRule {
         class_name: "skald",
         token_source: "advanced_class_guide/acg_classes.lst:278",
-        token: "BONUS:CASTERLEVEL|Skald|Caster_Level_BL_Stripped_Skald",
-        resolution: "acg_classes.lst:274 BONUS:VAR|Caster_Level_BL_Stripped_Skald|\
-                     Caster_Level_Skald-CasterLevelBLSkald, \
-                     BONUS:VAR|Caster_Level_Skald|SkaldLVL+Caster_Level_Bonus+CasterLevelBLSkald \
-                     and BONUS:VAR|SkaldLVL|CL",
         first_casting_class_level: 1,
         spell_stat: "CHA",
+        names_class_level_directly: false,
     },
+    // Provenance (ingest tokens, demoted out of the rendered sheet line
+    // -- SD-35 AT-35-E6-003-SWEEP cycle 6). Verbatim, byte for byte:
+    //   BONUS:CASTERLEVEL|Warpriest|CL
+    //   (the token names the class level `CL` directly -- no chain)
     CasterLevelRule {
         class_name: "warpriest",
         token_source: "advanced_class_guide/acg_classes.lst:368",
-        token: "BONUS:CASTERLEVEL|Warpriest|CL",
         // The same corpus line also carries `BONUS:CASTERLEVEL|Cleric|CL`,
         // because Warpriest casts off `SPELLLIST:1|Cleric`. Both are the same
         // number (the Warpriest's own class level), so the borrowed list
         // changes nothing about the value here.
-        resolution: "",
         first_casting_class_level: 1,
         spell_stat: "WIS",
+        names_class_level_directly: true,
     },
 ];
 
@@ -32454,44 +32488,46 @@ fn ground_caster_level_records(
     let caster_level = if gated_off { 0 } else { i16::from(level) };
     let class_display = capitalized_class_name(rule.class_name);
 
-    let resolution_text = if rule.resolution.is_empty() {
-        // The token names `CL` directly, so there is no variable to chase.
-        "The token names the class level (`CL`) directly, so the caster level is the class \
-         level with no intermediate variable."
+    // SD-35 AT-35-E6-003-SWEEP cycle 6: this prose used to interpolate
+    // `rule.token` and `rule.resolution` verbatim, printing the corpus's own
+    // ingest tokens on the player's sheet. Both now live in the `//`
+    // provenance lines above each `CASTER_LEVEL_RULES` row; the sheet gets
+    // the rule's words and the source citation, which is what it is for.
+    let resolution_text = if rule.names_class_level_directly {
+        "The book's rule names the class level directly, so the caster level is the class \
+         level with no intermediate step."
             .to_owned()
     } else {
-        format!(
-            "That token's variable resolves through {} — `Caster_Level_Bonus` is DEFINEd to 0 \
-             in core_essentials/ce_abilities.lst:11 and raised only by opt-in item/trait \
-             content, and the CasterLevelBL term is DEFINEd to 0 and raised only by \
-             bloodline/archetype records, so both contribute 0 to a base-class character.",
-            rule.resolution
-        )
+        "The book's rule routes the caster level through an intermediate variable that \
+         resolves to the class level: the two terms that could raise it are both 0 for a \
+         base-class character — one is raised only by opt-in item and trait content, the \
+         other only by bloodline and archetype records."
+            .to_owned()
     };
 
     let gate_text = if rule.first_casting_class_level > 1 {
         if gated_off {
             format!(
-                "The token is gated `PRECLASS:1,{class}={gate}`, and this character is \
-                 {class} {level}, below that gate, so the caster level is a correct absence \
-                 (0) rather than a fabricated number. Note that only the GATE is delayed: \
-                 from {class} level {gate} the caster level is the FULL class level, not \
-                 `level - 3` — the literal `-3` appears on Paladin and Ranger alone.",
+                "The rule does not open until {class} level {gate}, and this character is \
+                 {class} {level}, below it, so the caster level is a correct absence (0) \
+                 rather than a fabricated number. Only the opening level is delayed: from \
+                 {class} level {gate} the caster level is the FULL class level, not \
+                 level - 3 — that reduction applies to Paladin and Ranger alone.",
                 class = class_display,
                 gate = rule.first_casting_class_level,
             )
         } else {
             format!(
-                "The token is gated `PRECLASS:1,{class}={gate}` and this character is at or \
-                 above that gate. Only the gate is delayed: the caster level is the FULL \
-                 class level, not `level - 3`, despite the spell progression having the \
-                 Paladin/Ranger shape — the literal `-3` appears on Paladin and Ranger alone.",
+                "The rule opens at {class} level {gate} and this character is at or above \
+                 it. Only the opening level is delayed: the caster level is the FULL class \
+                 level, not level - 3, despite the spell progression having the \
+                 Paladin/Ranger shape — that reduction applies to Paladin and Ranger alone.",
                 class = class_display,
                 gate = rule.first_casting_class_level,
             )
         }
     } else {
-        "The token carries no PRECLASS gate, so it applies from class level 1.".to_owned()
+        "The rule carries no level gate, so it applies from class level 1.".to_owned()
     };
 
     explanations.push(ComputationExplanation {
@@ -32499,14 +32535,14 @@ fn ground_caster_level_records(
         value: caster_level,
         detail: format!(
             "{class} caster level at {class} level {level}: {caster_level}, transcribed from \
-             the corpus's own `{token}` ({source}). {resolution_text} {gate_text} The class's \
-             declared `SPELLSTAT:{stat}` is named for reference only. This grounds the caster \
-             level and nothing else: no spells known, no spells per day, no bonus spell slots \
-             from a high {stat}, no spell save DC, and no per-spell dice counts are computed \
-             from it. The Spells tab already renders each spell's own description text, which \
-             is where a \"per caster level\" scaling clause and its cap live",
+             the book's own caster-level rule ({source}). {resolution_text} {gate_text} The \
+             class's declared spellcasting ability ({stat}) is named for reference only. This \
+             grounds the caster level and nothing else: no spells known, no spells per day, no \
+             bonus spell slots from a high {stat}, no spell save DC, and no per-spell dice \
+             counts are computed from it. The Spells tab already renders each spell's own \
+             description text, which is where a \"per caster level\" scaling clause and its cap \
+             live",
             class = class_display,
-            token = rule.token,
             source = rule.token_source,
             stat = rule.spell_stat,
         ),
@@ -36765,10 +36801,11 @@ fn ground_twilight_talon_class_features(
                 .to_owned(),
             value: dc,
             detail: format!(
-                "Twilight Talon level {level} Enhanced Tattoo save DC {dc} (corpus \
-                 `BONUS:VAR|EnhancedTattooDC|10+TwilightTalonLVL/2+CHA`, this character's \
-                 Charisma modifier {cha_mod:+}). Grounds the DC magnitude only; no save is \
-                 actually rolled by this engine, and no per-spell-like-ability total exists \
+                // Provenance (ingest tokens, demoted out of the rendered sheet line -- SD-35 AT-35-E6-003-SWEEP):
+                //   BONUS:VAR|EnhancedTattooDC|10+TwilightTalonLVL/2+CHA`,
+                "Twilight Talon level {level} Enhanced Tattoo save DC {dc} (corpus ` this \
+                 character's Charisma modifier {cha_mod:+}). Grounds the DC magnitude only; no save \
+                 is actually rolled by this engine, and no per-spell-like-ability total exists \
                  anywhere for it to feed into",
                 cha_mod = ability_modifiers.charisma
             ),
@@ -37624,8 +37661,10 @@ fn ground_hellknight_class_features(
             id: "class_feature.adventurers_guide.hellknight.smite_chaos.uses_per_day".to_owned(),
             value: uses,
             detail: format!(
-                "Hellknight level {level} Smite Chaos: {uses} times per day (corpus \
-                 `BONUS:VAR|HKSmiteTimes|(CL+2)/3`, `CL` = this class's own level {level})"
+                // Provenance (ingest tokens, demoted out of the rendered sheet line -- SD-35 AT-35-E6-003-SWEEP):
+                //   BONUS:VAR|HKSmiteTimes|(CL+2)/3`,
+                "Hellknight level {level} Smite Chaos: {uses} times per day (corpus ` `CL` = this \
+                 class's own level {level})"
             ),
         });
     }
@@ -37668,9 +37707,10 @@ fn ground_hellknight_class_features(
                 id: format!("class_feature.{book}.hellknight.hellknight_armor.bonus"),
                 value: bonus,
                 detail: format!(
-                    "Hellknight level {level} Hellknight Armor: reduces armor check penalty \
-                     and raises max Dexterity bonus by {bonus} while wearing Hellknight armor \
-                     (corpus `BONUS:VAR|HellknightArmorBonus|floor((HellknightArmorLVL+1)/3)`, \
+                    // Provenance (ingest tokens, demoted out of the rendered sheet line -- SD-35 AT-35-E6-003-SWEEP):
+                    //   BONUS:VAR|HellknightArmorBonus|floor((HellknightArmorLVL+1)/3)`,
+                    "Hellknight level {level} Hellknight Armor: reduces armor check penalty and \
+                     raises max Dexterity bonus by {bonus} while wearing Hellknight armor (corpus ` \
                      `HellknightArmorLVL` = this class's own level {level})"
                 ),
             });
