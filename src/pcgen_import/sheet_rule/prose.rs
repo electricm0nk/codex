@@ -419,7 +419,7 @@ fn rewrite_inline_formula(text: &str) -> Option<String> {
         if formula_shaped && rest.starts_with('%') {
             out.push_str(" percent");
             // The source writes the sign as the `%%` literal-percent escape as often as bare.
-            rest = if rest.starts_with("%%") { &rest[2..] } else { &rest[1..] };
+            rest = rest.strip_prefix("%%").unwrap_or_else(|| rest.strip_prefix('%').unwrap_or(rest));
         }
     }
     out.push_str(rest);

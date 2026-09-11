@@ -279,7 +279,7 @@ fn corpus_book_dir(short_code: &str) -> &'static str {
 /// it: prose plus, where the book states a caster-level formula, a positional
 /// reference and its argument tail. That run-time parse is the ingest-format
 /// reader the ruling forbids, and it was never honest either — it dropped the
-/// formula placeholder, so ARG's "Absorbing Inhalation" reached the Spell
+/// formula reference, so ARG's "Absorbing Inhalation" reached the Spell
 /// Catalog screen (and the Character Sheet's Add Spell picker, which calls
 /// `list_spells`) with the duration silently missing.
 ///

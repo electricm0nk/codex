@@ -41,6 +41,72 @@ re-measured at the cut by the launch-readiness audit.
 
 ## Cycle log
 
+### 2026-09-11 — Epic 6 / `desktop-and-prose-leave-pcgen` — AT-35-E6-003 **cycle 6** (`acfd1f7d99`) — **partial** (the converter stops deleting a prose row over one refused argument; the Spell Catalog and the Monster Catalog reach zero)
+
+Cycle 5 replaced a three-cycle-old diagnosis with a measured one and named four converter items
+plus two catalogs as this cycle's scope. This cycle took them **in that order** — converter
+first, then the one catalog the converter unblocked.
+
+- **Scope gate:** `SCOPE_GATE: EXEMPT (Epic 6 cycle — closes zero units by design, decisions.md §2)`.
+  Run anyway: `scoped=0 remaining_non_done=0 floor=500 verdict=PASS_WHOLE_REMAINDER`.
+- **Receipt rows:** `closed=0 relabeled=0 rust_lines_changed=537 ratio=n/a builds_recorded=0 pcgen_live_files=203`.
+- **Residue:** `root apps/desktop` **9 files / 219 hits → 7 / 204**; `live_files 205 → 203`,
+  `live_hits 11633 → 11618`, `verdict=PASS`. Never raised.
+- **The converter fix.** One `|`-argument the formula side refused made `convert_desc_like`
+  return `Err`, and `convert_token`'s caller refused the **whole prose row** — the record reached
+  the sheet with no description at all. `decisions.md §1` form 3 rules the other way: a term the
+  character does not settle **stays as words**. `words_for_unlowerable` renders the refused
+  argument through a **closed** leaf vocabulary (anything it does not name becomes
+  `a rules variable`, the same policy the live side applies to `Expr::Var`), and
+  `argument_or_words` records the degradation with the **same shape and the same census `under`**
+  the old `Err` path recorded, so `_report.json` and `token_coverage.py` are untouched.
+  `advanced_class_guide:feat:befuddling_strike` now reads *"attempt a DC caster level divided by
+  2 plus 10 plus Wisdom modifier Fortitude saving throw"* where it previously carried no
+  description key at all. **167 rule files** changed in the regeneration; converted `feat` rules
+  with **no prose at all** fell **487 → 477**.
+- **Both `%` leaks closed, one of them re-diagnosed.** `correction 1789109156921-at-35-e6-003-b413fa`:
+  cycle 5 read `core_rulebook:spell:teleport`'s bare `%` as a converted variable escaping; it is
+  the **source row's own `d %%`**, percentile-dice notation written with a stray space
+  (`normalize_percentile_dice`, at ingest — not by widening a live-side leak check).
+  `inner_sea_world_guide:spell:ancestral_memory` states `(70+CASTERLEVEL)%%` **inside its
+  sentence**, where no argument conversion can reach it; `rewrite_inline_formula` prints it as
+  *"(70 plus caster level) percent chance"*, under a vocabulary closed tightly enough that
+  `Skill Focus (Knowledge [Arcana])` and `a bonus (see below)` are untouched.
+- **`spell_catalog.rs` 10 → 0.** It reads the converted package through `converted_prose`;
+  `corpus_book_dir` is the closed-set book join and `converted_spell_prose_population` the
+  corpus-wide ratchet (`2,481 served, 2,410 described`). Of the 2,481 rows: 25 **gain** a
+  description, **48 stop serving the literal `[redacted PI]` marker to a player**, 1
+  (`ACG :: Discern Next of Kin`) stops serving text the corpus declares product identity
+  (`decisions.md §15` R2), 2 lose one. `monster_catalog.rs` 5 → 0 — comments and one test string
+  restated over our own schema.
+- **The 2 real losses are named, not excused.** `advanced_players_guide:spell:wall_of_thorms`
+  and `mythic_adventures:spell:elemental_body_iiimod` are real corpus records
+  (`in_scope`/`full`, `name: null`) that are **not units of `docs/work-inventory.json`**, which
+  is the converter's own population, so the converted package holds them under no id and no
+  name. Recorded in `reach_gate::BARE_RECORD_FINDINGS`, in `spell_catalog`'s APG null-field
+  assertion, and in `deferral 1789109174107-at-35-e6-003-e38c97`. Admitting them moves the
+  bundle-wide denominator 49,438 and is inventory scope.
+- **`feat_catalog.rs` was deliberately NOT swapped.** The converter fix recovered its ACG group
+  (10 rows); **20 real losses remain** — 11 Core Essentials rows, for which `data/sheet_rules/`
+  has no directory at all, and 9 Pathfinder Unchained rows written with `prose: []` for a
+  different reason. Swapping it would ship those 20 losses.
+- **Verified once at the final tree**, `src/` changed so the full workspace ran: root
+  `--no-run` exit 0, lib `3299 passed; 0 failed; 15 ignored`, `--no-fail-fast` `FULL_EXIT=0` / **414 targets** / **8,810 passed** / 0 failed / 68 ignored / 0 FAILED;
+  desktop crate `577 passed; 0 failed`, clippy **0 warnings** on both workspaces; atlas /
+  token-coverage (`refused=142 verdict=PASS`) / shape-engine / missing-engine-tables /
+  denominator (`files_checked=101 violations=0`) / provenance (`542 figures, 0 violations`) /
+  dashboard-pin / `sheet_rule_convert -- --check` (`records=49438 converted=49296 refused=142`) /
+  `pi-sweep` all green; `data/sheet_rules/` source markers **0**. The frontend suite and
+  `corpus_literal_sweep` correctly did not run (`§6` step 3's own conditions: no
+  `apps/desktop/src/` file and no corpus record changed).
+- **`partial`** — **7 files / 204 hits, 8 token types**: `companion_catalog.rs`=52,
+  `race_trait_picker.rs`=33, `feat_catalog.rs`=30, `intelligent_item_catalog.rs`=28,
+  `equipment_catalog.rs`=25, `raceCreationCoverage.test.ts`=21,
+  `reference_library_catalog.rs`=15. Cycle 7 starts with `core_essentials` conversion, then
+  `feat_catalog.rs`; the other five need `SheetRule.applies`/`grants`, not prose.
+  `deferral 1789109173978-at-35-e6-003-b620f0`. Receipt:
+  `artifacts/epic-6-pcgen-exit/AT-35-E6-003_cycle6_receipt.md`.
+
 ### 2026-09-11 — Epic 6 / `desktop-and-prose-leave-pcgen` — AT-35-E6-003 **cycle 5** (`eddc6fc703`) — **partial** (the monster catalog leaves PCGen behind, the join every remaining catalog needs is built, and cycle 2's three-cycle-old diagnosis is replaced by a measured one)
 
 - **Scope gate:** `SCOPE_GATE: EXEMPT (Epic 6 cycle — closes zero units by design, decisions.md §2)`. Run anyway: `inventory=docs/work-inventory.json / scope=(whole remainder) / scoped_by_bucket= / scoped_by_kind= / scoped=0 remaining_non_done=0 floor=500 verdict=PASS_WHOLE_REMAINDER`.
