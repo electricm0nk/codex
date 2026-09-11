@@ -249,6 +249,52 @@ pub fn row_identity(row: &str) -> RowIdentity {
     RowIdentity { category, key, shape }
 }
 
+/// A `.COPY=` row's own tokens are applied **after** the tokens it inherits from the row it
+/// copies -- PCGen's own order, the one this module's doc and `closure()`'s own comment already
+/// state ("base -> own row -> mods").
+///
+/// SD-35 `AT-35-E6-003` cycle 10. The corpus ingest flattens a `.COPY=` record into ONE
+/// `raw_tokens` array with the copy row's own tokens FIRST and the inherited ones after, and
+/// `closure()` uses that shipped array in place of the base row's. `convert_token` assigns
+/// last-wins for every metadata head, so the flattening silently handed the *inherited* value
+/// to every head the copy row overrides. The visible cost: 473 corpus records whose copy row
+/// states `VISIBLE:NO` (PCGen's own bookkeeping shadows -- e.g.
+/// `Intelligent Item ~ Alignment / Lawful Good.COPY=Intelligent Item Alignment (LG)`, whose
+/// inherited `VISIBLE:QUALIFY` won) converted with `print: true`, so the package said a row a
+/// player never sees in PCGen's own item builder belongs on a character sheet.
+///
+/// This is a **stable partition, never a rewrite**: every shipped `(key, value)` pair the copy
+/// row itself states moves to the end of the list, in its own order, and nothing else moves.
+/// No token is added and none is dropped, so a PI-screened shipped list stays exactly as
+/// screened -- the defect was ordering, not absence, and re-reading the unscreened pinned row
+/// for content would be a different (and forbidden) change.
+///
+/// A base row that is not a `.COPY=` row is returned untouched.
+fn copy_own_tokens_last(
+    shipped: &[(String, String)],
+    base_row_text: &str,
+    base_identity: &RowIdentity,
+) -> Vec<(String, String)> {
+    if !matches!(base_identity.shape, RowShape::Copy(_)) {
+        return shipped.to_vec();
+    }
+    let own: BTreeSet<(String, String)> = tokenize_row(base_row_text).1.into_iter().collect();
+    if own.is_empty() {
+        return shipped.to_vec();
+    }
+    let mut inherited: Vec<(String, String)> = Vec::with_capacity(shipped.len());
+    let mut overrides: Vec<(String, String)> = Vec::new();
+    for pair in shipped {
+        if own.contains(pair) {
+            overrides.push(pair.clone());
+        } else {
+            inherited.push(pair.clone());
+        }
+    }
+    inherited.extend(overrides);
+    inherited
+}
+
 fn walk_lst(dir: &Path, out: &mut Vec<PathBuf>) {
     let mut stack = vec![dir.to_path_buf()];
     while let Some(d) = stack.pop() {
@@ -522,7 +568,7 @@ impl PinnedTree {
         }
         // Own row(s).
         let own_tokens = match shipped_tokens {
-            Some(t) if !t.is_empty() => t.to_vec(),
+            Some(t) if !t.is_empty() => copy_own_tokens_last(t, &base_row_text, &base_identity),
             _ => tokenize_row(&base_row_text).1,
         };
         if let Some(r) = base_ref {

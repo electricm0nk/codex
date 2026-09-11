@@ -1101,4 +1101,128 @@ mod term_level_refusal_gate {
              First offenders: {offenders:?}"
         );
     }
+
+    /// **A `.COPY=` row's own `VISIBLE:NO` wins over the value it inherits.**
+    ///
+    /// SD-35 `AT-35-E6-003` cycle 10, the companion to the gate above and the same lesson: a
+    /// coverage instrument built over the reader's own input cannot see an input the reader
+    /// mis-ordered, so this enumerates the **source** independently.
+    ///
+    /// PCGen applies a `.COPY=` record as *copied base -> the copy row's own tokens*. The
+    /// corpus ingest flattens both into one `raw_tokens` array with the copy row's own tokens
+    /// **first**, and `closure::PinnedTree::closure` uses that array in place of the base row's,
+    /// so every last-wins metadata head the copy row overrides took the **inherited** value.
+    /// 473 records whose copy row states `VISIBLE:NO` -- PCGen's own bookkeeping shadows, such
+    /// as `Intelligent Item ~ Alignment / Lawful Good.COPY=Intelligent Item Alignment (LG)`,
+    /// whose copied base states `VISIBLE:QUALIFY` -- therefore converted with `print: true`:
+    /// the package said a row a player never sees in PCGen's own item builder belongs on a
+    /// character sheet. [`closure::copy_own_tokens_last`] is the fix.
+    ///
+    /// The gate walks `data/corpus/` (the live directory, `decisions.md` §4 -- never a
+    /// fixture), reads each record's own base row out of the pinned tree by the
+    /// `source.path:line` the record itself carries, and requires `print: false` on every
+    /// converted rule of a record whose base row is a `.COPY=` row stating `VISIBLE:NO`. A
+    /// record the package does not hold under its own id is **counted and reported**, never
+    /// excused.
+    #[test]
+    fn a_copy_rows_own_visible_no_reaches_the_converted_rule() {
+        let pinned = closure::corpus_root();
+        let mut rows: BTreeMap<String, Vec<String>> = BTreeMap::new();
+        let mut row_text = |rel: &str, line: usize| -> Option<String> {
+            let lines = rows.entry(rel.to_string()).or_insert_with(|| {
+                std::fs::read_to_string(pinned.join(rel))
+                    .map(|t| t.lines().map(str::to_string).collect())
+                    .unwrap_or_default()
+            });
+            lines.get(line.checked_sub(1)?).cloned()
+        };
+
+        let files = read_output(&package_dir());
+        assert!(!files.is_empty(), "data/sheet_rules/ is generated");
+        let corpus = repo_root().join("data/corpus");
+        let mut stack = vec![corpus.clone()];
+        let mut hidden_copies = 0usize;
+        let mut checked = 0usize;
+        let mut not_in_package = 0usize;
+        let mut offenders = 0usize;
+        let mut printing: Vec<String> = Vec::new();
+        while let Some(dir) = stack.pop() {
+            let Ok(entries) = std::fs::read_dir(&dir) else { continue };
+            for entry in entries.flatten() {
+                let path = entry.path();
+                if path.is_dir() {
+                    stack.push(path);
+                    continue;
+                }
+                if path.extension().is_none_or(|e| e != "json")
+                    || path.file_name().is_some_and(|n| n == "LICENSE.json")
+                {
+                    continue;
+                }
+                let Ok(text) = std::fs::read_to_string(&path) else { continue };
+                let Ok(doc) = serde_json::from_str::<serde_json::Value>(&text) else { continue };
+                let (Some(rel), Some(line)) = (
+                    doc["source"]["path"].as_str(),
+                    doc["source"]["line"].as_u64().map(|v| v as usize),
+                ) else {
+                    continue;
+                };
+                let Some(row) = row_text(rel, line) else { continue };
+                let (name, tokens) = closure::tokenize_row(&row);
+                if !name.contains(".COPY=") {
+                    continue;
+                }
+                if !tokens.iter().any(|(k, v)| k == "VISIBLE" && v.trim().eq_ignore_ascii_case("NO")) {
+                    continue;
+                }
+                hidden_copies += 1;
+                let parts: Vec<String> = path
+                    .strip_prefix(&corpus)
+                    .unwrap()
+                    .components()
+                    .map(|c| c.as_os_str().to_string_lossy().to_string())
+                    .collect();
+                let book = match parts.first().map(String::as_str) {
+                    Some("beastiary") => "bestiary".to_string(),
+                    Some(b) => b.to_string(),
+                    None => continue,
+                };
+                let kind = if parts.iter().any(|p| p == "equipmods") {
+                    "equipment_modifier".to_string()
+                } else {
+                    parts.get(1).cloned().unwrap_or_default()
+                };
+                let slug = path.file_stem().unwrap().to_string_lossy().to_string();
+                let file_rel = format!("{book}/{kind}/{slug}.json");
+                let Some(bytes) = files.get(&file_rel) else {
+                    not_in_package += 1;
+                    continue;
+                };
+                let rules: Vec<SheetRule> =
+                    serde_json::from_slice(bytes).unwrap_or_else(|err| panic!("{file_rel}: {err}"));
+                checked += 1;
+                // The offender COUNT and the offender EXAMPLES are separate numbers: cycle 9's
+                // own first gate draft reported its display cap as a total. `offenders` is the
+                // count; `printing` is at most eight names for the message.
+                for rule in &rules {
+                    if rule.print {
+                        offenders += 1;
+                        if printing.len() < 8 {
+                            printing.push(rule.id.clone());
+                        }
+                    }
+                }
+            }
+        }
+        assert!(
+            hidden_copies > 0,
+            "the pinned tree carries `.COPY=` rows stating VISIBLE:NO; this gate proved nothing"
+        );
+        assert_eq!(
+            offenders, 0,
+            "{offenders} converted rules across {checked} records whose own `.COPY=` row states \
+             VISIBLE:NO still print (hidden copy rows in the corpus: {hidden_copies}; not held by \
+             the package under their own id: {not_in_package}). First offenders: {printing:?}"
+        );
+    }
 }
