@@ -472,9 +472,11 @@ pub fn convert_record(tree: &PinnedTree, index: &CorpusIndex, record: &RecordRef
                 ctx.refuse_under(&under, trow.token_type);
                 continue;
             }
+            ctx.current_under = Some(under.clone());
             if let Err(tt) = convert_token(&mut ctx, &mut acc, &mut out, key, value, level_gate, row.kind) {
                 ctx.refuse_under(&under, tt);
             }
+            ctx.current_under = None;
         }
     }
 

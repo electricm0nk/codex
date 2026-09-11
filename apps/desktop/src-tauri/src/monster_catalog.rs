@@ -126,10 +126,10 @@ const BOOK_B4: &str = "B4";
 const BOOK_ISB: &str = "ISB";
 
 /// Inner Sea Gods, the eleventh (SD-29 Epic 5 extend, round 9). Its wire code
-/// is the book's own `SOURCESHORT:ISG`. It is the first book in this catalog
-/// whose corpus rows are not all at the book root -- 3 of its 39 monsters come
-/// from `support/isg_races_b4.lst`, loaded under
-/// `PRECAMPAIGN:1,INCLUDES=Bestiary 4`. See `rules_tables::inner_sea_gods`.
+/// is the book's own short code. It is the first book in this catalog whose
+/// corpus rows are not all at the book root -- 3 of its 39 monsters come from
+/// a support file the book loads only when Bestiary 4 is also in the campaign.
+/// See `rules_tables::inner_sea_gods`.
 const BOOK_ISG: &str = "ISG";
 
 /// Ultimate Psionics, the twelfth (SD-29 Epic 5 extend, round 10) and the first
@@ -472,8 +472,8 @@ pub struct MonsterCatalogEntryDto {
     /// this field exists rather than the function being called from a test
     /// alone).
     ///
-    /// `None` for a monster with no `BONUS:VAR|SLA_CL|` token on its row at
-    /// all (has no spell-like abilities to attach a caster level to — never shown as a
+    /// `None` for a monster whose record states no spell-like-ability caster
+    /// level at all (nothing to attach a caster level to — never shown as a
     /// bare number with nothing behind it), and for every record served by
     /// [`map_monster`]'s Bestiary 1 half, whose ingest does not capture
     /// abilities at all and so cannot honestly answer either way.
@@ -1541,10 +1541,10 @@ mod tests {
     /// `derived_evaluator_fixture_check::spell_like_ability_caster_level`
     /// (SD31-E6-F1-002, `OPEN-ISSUES.md` row 44 -- the wave-3 seam that built
     /// the function had zero). Demon (Balor) is one of the seam's own 7
-    /// committed fixtures: `MONSTERCLASS:Outsider (Fort/Will):20` states 20
-    /// Hit Dice, and its row carries `BONUS:VAR|SLA_CL|HD`
-    /// (`b1_races.lst:93`), so PF1's Spell-Like Abilities universal monster
-    /// rule gives it caster level 20 on the wire, not merely in a test.
+    /// committed fixtures: its monster class states 20 Hit Dice and its record
+    /// ties its spell-like-ability caster level to that hit-dice count, so
+    /// PF1's Spell-Like Abilities universal monster rule gives it caster level
+    /// 20 on the wire, not merely in a test.
     #[test]
     fn a_monster_with_spell_like_abilities_serves_its_universal_monster_rule_caster_level() {
         let entries = build_monster_catalog().entries;
@@ -1555,7 +1555,7 @@ mod tests {
         assert_eq!(
             balor.spell_like_ability_caster_level,
             Some(20),
-            "Balor's MONSTERCLASS states 20 Hit Dice and its row carries BONUS:VAR|SLA_CL|HD"
+            "Balor's monster class states 20 Hit Dice and its record ties its spell-like-ability caster level to that count"
         );
     }
 
@@ -1632,9 +1632,9 @@ mod tests {
         }
     }
 
-    /// A monster with a perfectly readable `MONSTERCLASS:` token but no
-    /// `BONUS:VAR|SLA_CL|` token at all must not be served a caster level it
-    /// has no spell-like abilities to attach to — a number with nothing
+    /// A monster with a perfectly readable monster class but no
+    /// spell-like-ability caster level stated at all must not be served a
+    /// caster level it has nothing to attach to — a number with nothing
     /// behind it is exactly the class of defect this file's
     /// `serve_ability_description` leak-check exists to catch for a
     /// different field.

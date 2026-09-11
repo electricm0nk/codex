@@ -1,0 +1,1 @@
+{"var":"v1183281bdf5318b8","declared_by":["ultimate_combat:class_feature:armored_hulk_improved_armored_swiftness"],"contributions":[{"rule_id":"ultimate_combat:class_feature:armored_hulk_improved_armored_swiftness","expr":{"Const":1},"when":{"Situational":{"text":"while armor.heavy or armor.light or armor.medium is equipped"}}}],"provenance":{}}

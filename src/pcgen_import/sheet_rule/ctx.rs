@@ -207,6 +207,10 @@ pub struct RecordCtx<'a> {
     /// Refusal shape -> the token type(s) it arose under, so `token_coverage.py` counts
     /// "units refused because of this token" from the converter's own reading.
     pub refusal_under: BTreeMap<String, BTreeSet<String>>,
+    /// The census key of the row being converted right now, so a term that degrades deep
+    /// inside the row (a prose argument, SD-35 `AT-35-E6-003` cycle 6) records the same
+    /// `under` the row-level `Err` path recorded.
+    pub current_under: Option<String>,
     /// Defect-list lines (`_defects/`), keyed by defect kind.
     pub defects: BTreeMap<String, Vec<String>>,
     /// Variable ids this record referenced through `Expr::Var`, with their source names.
@@ -236,6 +240,7 @@ impl<'a> RecordCtx<'a> {
             degraded_under: BTreeMap::new(),
             tokens: BTreeSet::new(),
             refusal_under: BTreeMap::new(),
+            current_under: None,
             defects: BTreeMap::new(),
             var_names: BTreeMap::new(),
             inlining: Vec::new(),

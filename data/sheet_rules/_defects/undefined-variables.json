@@ -340,6 +340,7 @@
   "core_rulebook\u003afeat\u003ascribe_scroll\u003a CasterLevel_Highest",
   "core_rulebook\u003afeat\u003aweapon_finesse\u003a SHIELDACCHECK",
   "core_rulebook\u003alanguage\u003adruidic\u003a DruidSecretLanguage",
+  "horror_adventures\u003aclass_feature\u003agravedigger_power_necromantic_servant\u003a TOTALAB",
   "horror_adventures\u003aclass_feature\u003ainquisitor_domain_isolation_subdomain\u003a InquisitorDomainIsolationSubdomain",
   "horror_adventures\u003acompanion\u003acompanion_devolved_humanoid\u003a NotAllowed",
   "horror_adventures\u003adomain\u003adark_tapestry_subdomain\u003a DomainVoidAbilityTriggerLVL",

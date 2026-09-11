@@ -218,6 +218,9 @@ enum Slot {
     Expr(Expr),
     Choice(String),
     Dice { dice: String, modifier: Option<Expr> },
+    /// The formula side could not lower this argument, so the slot prints the term's WORDS
+    /// (`decisions.md` §1 form 3) instead of deleting the whole prose row from the sheet.
+    Words(String),
 }
 
 impl Slot {
@@ -226,6 +229,218 @@ impl Slot {
             Slot::Expr(e) => ProsePiece::Slot(e.clone()),
             Slot::Choice(c) => ProsePiece::ChoiceName(c.clone()),
             Slot::Dice { dice, modifier } => ProsePiece::Dice { dice: dice.clone(), modifier: modifier.clone() },
+            Slot::Words(w) => ProsePiece::Text(w.clone()),
+        }
+    }
+}
+
+/// The leaf vocabulary [`words_for_unlowerable`] will name on a printed sheet. Anything not
+/// on this list becomes `a rules variable` -- a corpus variable's name is source-format text
+/// and naming it would put the ingest format on a player's sheet (the same policy
+/// `rules_core::level_up_option_filter::describe_expr` applies to `Expr::Var`).
+fn leaf_words(upper: &str) -> Option<&'static str> {
+    Some(match upper {
+        "CL" | "CASTERLEVEL" | "%CASTERLEVEL" => "caster level",
+        "TL" | "TOTALLEVELS" | "ECL" => "character level",
+        "HD" => "hit dice",
+        "BAB" => "base attack bonus",
+        "SIZE" => "size",
+        "SIZEMOD" => "size modifier",
+        "CR" => "challenge rating",
+        "SPELLLEVEL" | "%SPELLLEVEL" => "spell level",
+        "STR" => "Strength modifier",
+        "DEX" => "Dexterity modifier",
+        "CON" => "Constitution modifier",
+        "INT" => "Intelligence modifier",
+        "WIS" => "Wisdom modifier",
+        "CHA" => "Charisma modifier",
+        "STRSCORE" => "Strength",
+        "DEXSCORE" => "Dexterity",
+        "CONSCORE" => "Constitution",
+        "INTSCORE" => "Intelligence",
+        "WISSCORE" => "Wisdom",
+        "CHASCORE" => "Charisma",
+        "MASTERLEVEL" | "MASTERVAR" => "the master's level",
+        _ => return None,
+    })
+}
+
+/// Render a prose argument the formula side refused into plain English words.
+///
+/// SD-35 `AT-35-E6-003` cycle 6. Before this, one unlowerable `|`-argument made
+/// `convert_desc_like` return `Err`, `convert_token`'s caller refused the **whole prose row**,
+/// and the record reached the sheet with no description at all -- 30 feat rows and 2 spell
+/// rows measured on the `AT-35-E6-003` cycle 5 swap, and 487 of 2,883 converted `feat` rules
+/// and 634 of 3,102 `spell` rules carrying no prose at all
+/// (`AT-35-E6-003_cycle5_converter-prose-blocker.md` §6). `decisions.md` §1 form 3 rules the
+/// other way: a term the character does not settle **stays as words**. The description is the
+/// book's own sentence and a Pathfinder book prints exactly this shape ("DC 10 + 1/2 your
+/// caster level + your Wisdom modifier"), so the words are the right sheet line, not a
+/// fallback.
+///
+/// The vocabulary is closed ([`leaf_words`]); operators become English. No ingest-format
+/// identifier, token head, or formula punctuation survives -- that is what
+/// `pcgen_residue_gate.py` and the `data/sheet_rules/` source-marker grep check for.
+pub(crate) fn words_for_unlowerable(arg: &str) -> String {
+    let mut out: Vec<String> = Vec::new();
+    let chars: Vec<char> = arg.trim().chars().collect();
+    let mut i = 0;
+    let mut atom = String::new();
+    let push_atom = |atom: &mut String, out: &mut Vec<String>| {
+        if atom.is_empty() {
+            return;
+        }
+        let a = std::mem::take(atom);
+        let word = if a.chars().all(|c| c.is_ascii_digit()) {
+            a
+        } else {
+            leaf_words(&a.to_ascii_uppercase()).unwrap_or("a rules variable").to_string()
+        };
+        if out.last().map(String::as_str) != Some(word.as_str()) || word != "a rules variable" {
+            out.push(word);
+        }
+    };
+    while i < chars.len() {
+        let c = chars[i];
+        let op = match c {
+            '+' => Some("plus"),
+            '-' => Some("minus"),
+            '*' => Some("times"),
+            '/' => Some("divided by"),
+            ',' => Some("and"),
+            '(' | ')' | ' ' => Some(""),
+            _ => None,
+        };
+        match op {
+            Some(word) => {
+                push_atom(&mut atom, &mut out);
+                if !word.is_empty() {
+                    out.push(word.to_string());
+                }
+            }
+            None => atom.push(c),
+        }
+        i += 1;
+    }
+    push_atom(&mut atom, &mut out);
+    // A leading/trailing operator word is a fragment, not a sentence.
+    while out.first().is_some_and(|w| matches!(w.as_str(), "plus" | "minus" | "times" | "divided by" | "and")) {
+        out.remove(0);
+    }
+    while out.last().is_some_and(|w| matches!(w.as_str(), "plus" | "minus" | "times" | "divided by" | "and")) {
+        out.pop();
+    }
+    if out.is_empty() {
+        return "a rules variable".to_string();
+    }
+    out.join(" ")
+}
+
+/// `d %%` -> `d%%`: percentile-dice notation written with a stray space in the SOURCE.
+///
+/// PCGen's Core Rulebook `Teleport` row states "Distance off target is d %% of the distance"
+/// where its two sibling sentences state "roll d%%". The escape collapses to one `%` either
+/// way, and the spaced form reaches a sheet as a bare `%` with nothing before it -- a hole,
+/// as far as any reader can tell, where the rule means d100. Normalised at ingest with a
+/// defect line, never by teaching a live-side reader to recognise one more shape.
+fn normalize_percentile_dice(ctx: &mut RecordCtx, text: &str) -> String {
+    let mut out = String::with_capacity(text.len());
+    let chars: Vec<char> = text.chars().collect();
+    let mut i = 0;
+    let mut fixed = false;
+    while i < chars.len() {
+        let is_d = matches!(chars[i], 'd' | 'D');
+        let boundary = i == 0 || !chars[i - 1].is_ascii_alphanumeric();
+        if is_d && boundary && chars.get(i + 1) == Some(&' ') && chars.get(i + 2) == Some(&'%') {
+            out.push(chars[i]);
+            i += 2;
+            fixed = true;
+            continue;
+        }
+        out.push(chars[i]);
+        i += 1;
+    }
+    if fixed {
+        ctx.defect("spaced-percentile-dice", ctx.record.id.clone());
+    }
+    out
+}
+
+/// A parenthesised formula written into the prose TEXT itself, rather than as a `%N` slot,
+/// printed as the rule's words.
+///
+/// `inner_sea_world_guide:spell:ancestral_memory` states
+/// "(70+CASTERLEVEL)% chance of obtaining specific ancestral memory" in the body of its
+/// description: the variable name is source-format text in a sentence, so no slot converts it
+/// and it reached the Spell Catalog screen verbatim (SD-35 `AT-35-E6-003` cycle 2's
+/// `correction 1789093674266`, still open at cycle 5). The rewrite is closed-vocabulary: a
+/// group only qualifies when its whole content is formula punctuation AND it names at least
+/// one leaf [`leaf_words`] knows, so an ordinary parenthetical aside is never touched.
+fn scrub_inline_formula(ctx: &mut RecordCtx, text: &str, field_name: &str) -> String {
+    match rewrite_inline_formula(text) {
+        Some(rewritten) => {
+            ctx.defect("inline-formula-in-prose", format!("{}: {field_name}", ctx.record.id));
+            rewritten
+        }
+        None => text.to_string(),
+    }
+}
+
+/// The pure half of [`scrub_inline_formula`]: `Some(rewritten)` when at least one group was
+/// rewritten, `None` when the text carries no inline formula at all.
+fn rewrite_inline_formula(text: &str) -> Option<String> {
+    if !text.contains('(') {
+        return None;
+    }
+    let mut out = String::with_capacity(text.len());
+    let mut rest = text;
+    let mut rewrote = false;
+    while let Some(open) = rest.find('(') {
+        let Some(close_rel) = rest[open + 1..].find(')') else { break };
+        let close = open + 1 + close_rel;
+        let inner = &rest[open + 1..close];
+        let formula_shaped = !inner.is_empty()
+            && inner.chars().all(|c| c.is_ascii_uppercase() || c.is_ascii_digit() || matches!(c, '+' | '-' | '*' | '/' | '.' | ' ' | '_'))
+            && inner
+                .split(|c: char| !(c.is_ascii_alphanumeric() || c == '_'))
+                .any(|w| !w.is_empty() && !w.chars().all(|c| c.is_ascii_digit()) && leaf_words(w).is_some());
+        out.push_str(&rest[..=open]);
+        if formula_shaped {
+            out.push_str(&words_for_unlowerable(inner));
+            rewrote = true;
+        } else {
+            out.push_str(inner);
+        }
+        out.push(')');
+        rest = &rest[close + 1..];
+        // `(70+CASTERLEVEL)%` -- the percent sign belongs to the rewritten term, and a `%`
+        // that no digit precedes reads as a hole to every reader and every leak check. The
+        // words carry it.
+        if formula_shaped && rest.starts_with('%') {
+            out.push_str(" percent");
+            // The source writes the sign as the `%%` literal-percent escape as often as bare.
+            rest = if rest.starts_with("%%") { &rest[2..] } else { &rest[1..] };
+        }
+    }
+    out.push_str(rest);
+    if rewrote { Some(out) } else { None }
+}
+
+/// Lower one prose argument, degrading to [`Slot::Words`] when the formula side refuses it.
+///
+/// The degradation is recorded on the record exactly as the old `Err` path recorded it --
+/// same shape, same census `under` -- so `token_coverage.py`'s ledger and `_report.json`'s
+/// `degraded_by_token_type` are unchanged by this cycle. Only the prose survives that did not.
+fn argument_or_words(ctx: &mut RecordCtx, arg: &str, field_name: &str) -> Result<Slot, String> {
+    match convert_argument(ctx, arg) {
+        Ok(slot) => Ok(slot),
+        Err(tt) => {
+            if super::ctx::is_record_refusal(&tt) {
+                return Err(tt);
+            }
+            let under = ctx.current_under.clone().unwrap_or_else(|| field_name.to_string());
+            ctx.refuse_under(&under, tt);
+            Ok(Slot::Words(words_for_unlowerable(arg)))
         }
     }
 }
@@ -316,9 +531,11 @@ pub fn convert_desc_like(ctx: &mut RecordCtx, family: ProseFamily, value: &str, 
     }
     let text = scrub_literal_glyphs(ctx, &text, field_name);
     let text = scrub_editorial_markers(ctx, &text, field_name);
+    let text = normalize_percentile_dice(ctx, &text);
+    let text = scrub_inline_formula(ctx, &text, field_name);
     let mut args = Vec::new();
     for a in fields.iter().skip(1) {
-        args.push(convert_argument(ctx, a)?);
+        args.push(argument_or_words(ctx, a, field_name)?);
     }
     let applies = segment_gate(ctx, &gates)?;
     let pieces = template_pieces(ctx, &text, &args);
@@ -344,9 +561,11 @@ pub fn convert_positional(ctx: &mut RecordCtx, family: ProseFamily, value: &str,
     }
     let text = scrub_literal_glyphs(ctx, &text, field_name);
     let text = scrub_editorial_markers(ctx, &text, field_name);
+    let text = normalize_percentile_dice(ctx, &text);
+    let text = scrub_inline_formula(ctx, &text, field_name);
     let mut vars: Vec<Slot> = Vec::new();
     for a in fields.iter().skip(1) {
-        vars.push(convert_argument(ctx, a)?);
+        vars.push(argument_or_words(ctx, a, field_name)?);
     }
     let applies = segment_gate(ctx, &gates)?;
     // Each bare `%` (not `%%`, not `%CHOICE`/`%LIST`) is the next slot.
@@ -432,6 +651,38 @@ pub fn expand_output_name(output_name: &str, record_name: &str) -> String {
 #[cfg(test)]
 mod tests {
     use super::*;
+
+    /// The ACG row that named the blocker (`acg_feats.lst:20`, `Befuddling Strike`): its DC
+    /// argument is `CL/2+10+WIS`, `CL` has no owning class on a feat, and before this cycle
+    /// the whole `DESC:` row was refused. It now prints the book's own sentence.
+    #[test]
+    fn an_unlowerable_argument_prints_the_terms_words() {
+        assert_eq!(words_for_unlowerable("CL/2+10+WIS"), "caster level divided by 2 plus 10 plus Wisdom modifier");
+        assert_eq!(words_for_unlowerable("10+CHA"), "10 plus Charisma modifier");
+        assert_eq!(words_for_unlowerable("HD/2"), "hit dice divided by 2");
+        assert_eq!(words_for_unlowerable("(CL+2)*3"), "caster level plus 2 times 3");
+    }
+
+    /// A corpus variable's own name never reaches a sheet: it is source-format text, and the
+    /// live side applies the same policy to `Expr::Var`.
+    #[test]
+    fn an_unknown_leaf_is_words_not_its_source_name() {
+        assert_eq!(words_for_unlowerable("BefuddlingStrikeTimes"), "a rules variable");
+        assert_eq!(words_for_unlowerable("MYSTERY_VAR+WIS"), "a rules variable plus Wisdom modifier");
+        assert_eq!(words_for_unlowerable(""), "a rules variable");
+        assert_eq!(words_for_unlowerable("+"), "a rules variable");
+    }
+
+    /// A parenthesised formula in the prose BODY (no slot converts it) prints as words; an
+    /// ordinary parenthetical aside is untouched.
+    #[test]
+    fn an_inline_formula_in_the_prose_body_prints_as_words() {
+        assert_eq!(rewrite_inline_formula("(70+CASTERLEVEL)% chance").as_deref(), Some("(70 plus caster level) percent chance"));
+        assert_eq!(rewrite_inline_formula("(70+CASTERLEVEL)%% chance").as_deref(), Some("(70 plus caster level) percent chance"));
+        assert_eq!(rewrite_inline_formula("Skill Focus (Knowledge [Arcana])"), None);
+        assert_eq!(rewrite_inline_formula("a bonus (see below)"), None);
+        assert_eq!(rewrite_inline_formula("(10)"), None);
+    }
 
     #[test]
     fn output_name_expands_name_and_base() {
