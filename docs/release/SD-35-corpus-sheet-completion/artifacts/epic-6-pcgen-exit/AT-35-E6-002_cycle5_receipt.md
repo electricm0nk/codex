@@ -267,6 +267,7 @@ src/rules_core/ | grep -vE ':\s*(///|//|\*)' | wc -l` prints **0** — and **wid
   | library suite | `3285 passed; 0 failed; 15 ignored` | `cargo test --locked --lib -j 6` | 3,300 library tests |
   | desktop crate | `575 passed; 0 failed; 0 ignored` | `cd apps/desktop/src-tauri && cargo test --locked -j 4` | 575 desktop tests |
   | frontend | `101/101 test files passed`; `tsc --noEmit` exit 0 | `cd apps/desktop && npm test`; `npm run typecheck` | 101 test files |
+  | workspace suite, complete | `414` targets, `8796 passed, 0 failed, 68 ignored`, `0` FAILED suites | `cargo test --locked --no-fail-fast -j 6`; `grep -c '^test result' /tmp/e6002c5-full.log`; `awk '/^test result/{for(i=1;i<=NF;i++){if($(i+1)=="passed;")p+=$i}} END{print p}' /tmp/e6002c5-full.log` | 414 test targets |
   | test binaries linked | **413** | `grep -c '^  Executable' /tmp/e6002c5-norun.log` | 414 test targets |
 - **Build scope verified**, all at `ef7d54daf1`, `CARGO_INCREMENTAL=0`:
   - `cargo test --locked --no-run -j 6` (target dir `/tmp/cargo-sd35-AT-35-E6-002`) →
@@ -298,8 +299,13 @@ src/rules_core/ | grep -vE ':\s*(///|//|\*)' | wc -l` prints **0** — and **wid
     hit against a synthetic tree, so a pattern that matched nothing would fail there.
   - `scripts/verify.sh --only pi-sweep` → `RESULT: PASS`, `RETRO_ACTOR` exported in the same shell
     invocation so the derived `verification` event lands in this cycle's log.
-  - `cargo test --locked --no-fail-fast -j 6`: see **Notes** — the observation recorded there is
-    the figure this receipt stands behind, not a claim beyond it.
+  - `cargo test --locked --no-fail-fast -j 6` → **`FULL_EXIT=0`, 414 `test result` lines,
+    8,796 passed, 0 failed, 68 ignored, 0 FAILED suites, 0 errors/warnings** (totals by `awk`
+    over the `test result` lines, not `grep -o`, per `AGENTS.md` §Concurrency; `grep -c '^test
+    result: FAILED' /tmp/e6002c5-full.log` → 0). **It finished**, unlike cycle 4's. The only
+    movement against cycle 3's last complete run (414 / 8,787 / 68 / 0) is **+9 passed**, the
+    same +9 the library suite shows, which is what a relocation that adds unit tests and breaks
+    none has to look like.
 - **Sweep population:** N/A — no corpus record changed (`git status --porcelain -- data/` empty
   at every checkpoint), so `corpus_literal_sweep` was correctly not run (`§6` step 3's guard), and
   with it `v06_work_inventory`, which rebuilds its verification stamps from that sweep's report
@@ -315,19 +321,14 @@ src/rules_core/ | grep -vE ':\s*(///|//|\*)' | wc -l` prints **0** — and **wid
   a read — and ruling on whether a provenance citation counts against the live surface belongs to
   `AT-35-E6-004`'s `--closure` mode, not to this cycle's judgment.
 - **Notes:**
-  - **The workspace suite did not finish inside the turn, for the second cycle running, and the
-    work was committed and pushed anyway** (`§6`'s standing instruction). At the point this
-    receipt was written it had run **258 of 414** targets — **6,709 passed, 0 failed, 0 FAILED
-    suites** (`grep -c '^test result' /tmp/e6002c5-full.log`; totals by `awk` over the
-    `test result` lines, not `grep -o`, per `AGENTS.md` §Concurrency) — and was still advancing;
-    the closing figure is in the report this cycle returns. **This is an incomplete observation,
-    not a pass.** The cause is the one cycle 4 measured — cargo runs test binaries sequentially
-    and the corpus-wide ones are single-threaded — and it is now a recurrence, which
-    `AGENTS.md` rule 8 says is a missing mechanism rather than bad luck; cycle 4 filed
-    `incident … workspace-suite-too-slow-for-one-turn` and it still needs a ruling.
-    What *is* proven at this tree: all 413 test binaries link, the whole library suite passes,
-    clippy is clean, the desktop crate and the frontend pass, and the 258 targets that did run
-    include `sd27_crb_race_corpus_pin` — the integration test this cycle changed.
+  - **The workspace suite finished this time, and the rows above were written before it did.**
+    The receipt, `progress.md` and `kanban.md` were first written at **258 of 414** targets and
+    said so, as an incomplete observation; the suite then completed at `FULL_EXIT=0` / 414 /
+    8,796 / 0 failed, and all three were corrected in the same cycle before the report. Recorded
+    as `correction 1789086389513-at-35-e6-002-0ea708`. Cycle 4's
+    `incident … workspace-suite-too-slow-for-one-turn` did **not** recur: the run took roughly
+    two hours end to end against cycle 4's projected ten-plus, with the box's other lanes
+    quieter and this cycle holding to the three-lane cap.
   - **`git status --porcelain` is non-empty for every cycle on `tranche/15`** because the shared
     checkout carries an untracked, un-gitignored `.worktrees/` directory holding another
     session's live git worktree. Cycle 3 filed
@@ -347,5 +348,6 @@ src/rules_core/ | grep -vE ':\s*(///|//|\*)' | wc -l` prints **0** — and **wid
   Population is the 12-hit / 6-file table above, all comments, plus the ruling the deferral asks
   for: does `--closure` count a provenance citation, or does it exempt one by kind? If it counts
   them, the 12 are rewrites in files with zero code beside them and the cycle is small; if it
-  exempts them, the criterion is at zero and closes. Either way, **re-run the workspace suite at
-  that cycle's tree** — it has not completed inside a turn since cycle 3.
+  exempts them, the criterion is at zero and closes. The workspace suite is complete and green at this
+  tree (414 / 8,796 / 0 failed), so the next cycle inherits a full baseline rather than cycle 4's
+  partial one.
