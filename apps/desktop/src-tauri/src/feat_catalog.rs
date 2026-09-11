@@ -28,6 +28,7 @@ use codex::rules_core::feat_prereqs::{
     evaluate_catalog_feat_prerequisites, FeatPrerequisiteReport, PrereqFacts,
 };
 use codex::rules_core::rules_tables::feats_all::all_feat_tables;
+use codex::rules_core::rules_tables::RuleSetId;
 
 /// One feat's prerequisite verdict for the character the picker is open
 /// for. Absent (`None`) when the catalog is served with no character
@@ -117,8 +118,112 @@ pub struct FeatCatalogResponse {
     pub entries: Vec<FeatCatalogEntryDto>,
 }
 
+/// The `data/corpus/<dir>/` directory each compiled feat book is ingested from.
+///
+/// Exhaustive on purpose, and it panics on a variant nobody mapped, for the same reason
+/// `equipment_catalog::corpus_book_dir` and `spell_catalog::corpus_book_dir` do: a silently
+/// unmapped book would serve no words at all for every one of its feats, and a screen showing
+/// nothing looks exactly like a book with nothing to show. The mapping is the same one
+/// `src/bin/v06_work_inventory.rs::corpus_dir_for` carries — the inventory's own book identity,
+/// not a second opinion about it.
+fn corpus_book_dir(rule_set: RuleSetId) -> &'static str {
+    match rule_set {
+        RuleSetId::Crb => "core_rulebook",
+        RuleSetId::Apg => "advanced_players_guide",
+        RuleSetId::Acg => "advanced_class_guide",
+        // The one id not spelled like its directory.
+        RuleSetId::Bestiary1 => "bestiary",
+        RuleSetId::Arg => "advanced_race_guide",
+        RuleSetId::Pu => "pathfinder_unchained",
+        RuleSetId::Uca => "ultimate_campaign",
+        RuleSetId::Ui => "ultimate_intrigue",
+        RuleSetId::Ue => "ultimate_equipment",
+        RuleSetId::Uw => "ultimate_wilderness",
+        RuleSetId::Uc => "ultimate_combat",
+        RuleSetId::Um => "ultimate_magic",
+        RuleSetId::Upsi => "ultimate_psionics",
+        RuleSetId::BonusBestiary => "bonus_bestiary",
+        RuleSetId::MonsterCodex => "monster_codex",
+        RuleSetId::Isr => "inner_sea_races",
+        RuleSetId::Ha => "horror_adventures",
+        RuleSetId::Botd1 => "book_of_the_damned_volume_1",
+        RuleSetId::Botd2 => "book_of_the_damned_volume_2",
+        RuleSetId::Iswg => "inner_sea_world_guide",
+        RuleSetId::Ce => "core_essentials",
+        RuleSetId::Isc => "inner_sea_combat",
+        RuleSetId::Isi => "inner_sea_intrigue",
+        RuleSetId::B5 => "bestiary_5",
+        RuleSetId::B6 => "bestiary_6",
+        RuleSetId::B2 => "bestiary_2",
+        RuleSetId::B3 => "bestiary_3",
+        RuleSetId::B4 => "bestiary_4",
+        RuleSetId::Isb => "inner_sea_bestiary",
+        RuleSetId::Isg => "inner_sea_gods",
+        RuleSetId::Oa => "occult_adventures",
+        RuleSetId::Mythic => "mythic_adventures",
+        RuleSetId::AdventurersGuide => "adventurers_guide",
+        RuleSetId::InnerSeaFaiths => "inner_sea_faiths",
+        RuleSetId::InnerSeaMagic => "inner_sea_magic",
+        RuleSetId::InnerSeaTaverns => "inner_sea_taverns",
+        RuleSetId::InnerSeaTemples => "inner_sea_temples",
+    }
+}
+
+/// The words this catalog serves for one feat row: **the converted record's own**, never the
+/// compiled table's stored string re-parsed at run time.
+///
+/// SD-35 `decisions.md §11` — nothing on the live side reads the ingest format. Until
+/// `AT-35-E6-003` cycle 8 this module handed the compiled table's stored description to a
+/// run-time rewriter, because a minority of those strings still carried the source format's
+/// positional markers and literal-percent escape. That rewriter *is* the ingest-format reader
+/// the ruling removes, and the substitution it performed already happens at ingest
+/// (`src/pcgen_import/sheet_rule/`):
+/// `sheet_rule_catalog::catalog_description` renders the converted record with no character in
+/// hand — a final number where the term is settled, the rule's own words where it is not
+/// (`decisions.md §1`'s three printed forms).
+///
+/// A row the converted package holds under no rule keeps the compiled table's stored string,
+/// **but only when that string is already the record's plain words**: one still carrying a `%`
+/// marker is refused rather than shown half-rendered, because the rewriter that used to clean
+/// it up is exactly what left the live side. Refusing whole is the disposition the rest of this
+/// crate takes — never a partial sentence. This is `equipment_catalog::row_description`'s shape,
+/// applied to the feat tables, with one difference stated deliberately: the refusal predicate is
+/// [`leaked_pcgen_syntax`](codex::rules_core::pcgen_desc::leaked_pcgen_syntax) rather than a bare
+/// "contains a `%`". That function is a **refusal**, not a reader — it answers "does this string
+/// still show the ingest format", writes nothing and parses nothing — and it is the predicate the
+/// rest of this crate already sweeps every served description with. It matters here because the
+/// feat tables carry real English percentages ("reduce ... by 20%", "a 50% chance"), which a bare
+/// `%` test would throw away as if they were unresolved markers, and `leaked_pcgen_syntax`
+/// correctly exempts a digit-preceded sign while still refusing a positional marker, a keyword
+/// marker and a bare `%`.
+/// The refusal applies to **both** sources, not only the fallback. One converted rule,
+/// corpus-wide, still renders text this sweep reads as a gap — Mythic Adventures' `Prophetic
+/// Visionary` states its chance as a scaling term followed by a literal percent SIGN, the
+/// converter resolves the term to the rule's words, and the sign is left against a letter
+/// ("...increases by a rules variable%."). That is a **converter** finding, not a live-side one,
+/// and the fix belongs on the converter side (`decisions.md §11`); until it lands, that rendering
+/// is refused here rather than exempted from the crate-wide sweep
+/// (`equipment_catalog::no_catalog_serves_a_description_carrying_raw_pcgen_syntax`), because a
+/// gate with a name on a list in it is not a gate. Refusing it costs that row nothing today —
+/// its compiled-table string is already the record's plain words, so the fallback serves them
+/// and the population ratchet below is unchanged by the refusal. That is luck, not design: a
+/// row whose stored string were *also* unclean would serve nothing, which is the honest outcome
+/// and the reason the finding is reported rather than buried.
+fn row_description(rule_set: RuleSetId, key: &str, table_text: Option<&str>) -> Option<String> {
+    let clean = |text: &str| codex::rules_core::pcgen_desc::leaked_pcgen_syntax(text).is_none();
+    if let Some(text) =
+        crate::converted_prose::description_for(corpus_book_dir(rule_set), "feat", key)
+    {
+        if clean(&text) {
+            return Some(text);
+        }
+    }
+    table_text.filter(|text| clean(text)).map(str::to_owned)
+}
+
 fn map_catalog_entry(
     entry: &codex::rules_core::rules_tables::feats_all::FeatCatalogRecord,
+    rule_set: RuleSetId,
     source: &str,
     eligibility: Option<FeatEligibilityDto>,
 ) -> FeatCatalogEntryDto {
@@ -133,23 +238,14 @@ fn map_catalog_entry(
         // `category_names_match_the_debug_form_of_every_variant`.
         category: entry.category.to_string(),
         name: entry.name.to_string(),
-        // Rendered, not copied. The Add Feat picker folds this straight
-        // into its `detail` line (`itemPickerFilter::mapFeatCatalogEntries`),
-        // so the raw corpus `DESC:` token reached the player verbatim.
-        //
-        // 17 of the 681 served descriptions carried PCGen syntax; partitioned
-        // by their first-detected leak that is 13 an unsubstituted `%N`
-        // ("%1 times per day"), 3 an undecoded `&nl;`, and ACG's
-        // `Twinned Feint` a trailing
-        // `|!PREABILITY:1,CATEGORY=FEAT,Improved Feint`. The remaining 664 are
-        // returned byte-identical — `render_pcgen_desc` rewrites nothing in
-        // prose that carries no PCGen syntax, which
-        // `feat_descriptions_are_rendered_and_otherwise_byte_identical` pins.
-        // `render_pcgen_desc` owns the treatment; this module does not
-        // re-decide it.
-        description: entry
-            .description
-            .map(|d| codex::rules_core::pcgen_desc::render_pcgen_desc(d).text),
+        // The converted record's own words, from [`row_description`]. The Add
+        // Feat picker folds this straight into its `detail` line
+        // (`itemPickerFilter::mapFeatCatalogEntries`), so whatever this field
+        // holds is what a player reads — which is why it is resolved once, in
+        // one place, and never re-decided here. `None` where neither the
+        // converted package nor a clean stored string states anything: a real
+        // and documented gap, never a fabricated stand-in.
+        description: row_description(rule_set, entry.key, entry.description),
         source: source.to_string(),
         chooser_target_kind: feat_effects::chooser_contract_for_feat(entry.key)
             .map(|contract| format!("{:?}", contract.target_kind)),
@@ -177,35 +273,28 @@ pub fn build_feat_catalog() -> FeatCatalogResponse {
 /// all, in the caller, verified per-match against the owning record, never
 /// silently folded into this function.
 ///
-/// Reuses the identical render treatment [`map_catalog_entry`] applies —
-/// `render_pcgen_desc` then a `dropped_args`/`leaked_pcgen_syntax` double
-/// refusal — rather than re-deriving it, so this function can never promise
-/// cleaner text than the picker itself would ship for the same record. When
-/// a name matches multiple books' feats (the catalog's own documented
-/// "Endurance" collision), the first exact match in `all_feat_tables()`'s
-/// own book order (CRB, APG, ACG, ARG, PU, …) wins — the SAME determinism
-/// `build_feat_catalog`'s caller already relies on for that collision,
-/// applied here rather than invented fresh.
+/// Calls [`row_description`] — the one resolution [`map_catalog_entry`] uses — rather than
+/// re-deriving a second one, so this function can never promise cleaner or different text than
+/// the picker itself would ship for the same record. The match is on the **name**, but the text
+/// is resolved from the matched row's own **key** and book, so the answer always comes from the
+/// owning record rather than from whatever else shares the name. When a name matches multiple
+/// books' feats (the catalog's own documented "Endurance" collision), the first exact match in
+/// `all_feat_tables()`'s own book order (CRB, APG, ACG, ARG, PU, …) wins — the SAME determinism
+/// `build_feat_catalog`'s caller already relies on for that collision, applied here rather than
+/// invented fresh.
 ///
-/// Returns `None` when no book's feat carries this exact name, when the
-/// matched record has no `DESC:` token of its own, or when its render would
-/// itself be refused by the picker (an unresolved `%N`/raw PCGen leak) —
-/// never a guessed or partial description.
+/// Returns `None` when no book's feat carries this exact name, and when the matched record
+/// states no words in the converted package and has no clean stored string either — never a
+/// guessed or partial description.
 pub fn feat_description_by_exact_name(name: &str) -> Option<String> {
     for book in all_feat_tables() {
         for entry in book.entries {
             if entry.name != name {
                 continue;
             }
-            let Some(raw) = entry.description else { continue };
-            let rendered = codex::rules_core::pcgen_desc::render_pcgen_desc(raw);
-            if !rendered.dropped_args.is_empty() {
-                continue;
+            if let Some(text) = row_description(book.rule_set, entry.key, entry.description) {
+                return Some(text);
             }
-            if codex::rules_core::pcgen_desc::leaked_pcgen_syntax(&rendered.text).is_some() {
-                continue;
-            }
-            return Some(rendered.text);
         }
     }
     None
@@ -223,7 +312,7 @@ fn build_feat_catalog_for(facts: Option<&PrereqFacts>) -> FeatCatalogResponse {
                     facts,
                 ))
             });
-            map_catalog_entry(entry, &source, eligibility)
+            map_catalog_entry(entry, book.rule_set, &source, eligibility)
         }));
     }
     FeatCatalogResponse { entries }
@@ -326,345 +415,163 @@ pub fn list_feats(filter: FeatCatalogFilter) -> FeatCatalogResponse {
 mod tests {
     use super::*;
 
-    /// The rendering `map_catalog_entry` now applies, pinned on both sides.
+    /// The number of feat rows that showed words at `AT-35-E6-003` cycle 8, corpus-wide. A
+    /// **floor**: raise it deliberately when a cycle gains rows, never lower it to match a
+    /// regression. Re-derive with
+    /// `cargo test --locked converted_feat_prose_population -- --nocapture`.
+    const FEAT_PROSE_FLOOR: usize = 2162;
+
+    /// The same floor, per book, so a gain in one book cannot hide a loss in another — the
+    /// exact hole a single corpus-wide total leaves open. Books serving nothing at the pin are
+    /// listed at 0 rather than omitted, so the list is the whole roster and not a selection.
+    const FEAT_PROSE_FLOOR_BY_BOOK: &[(&str, usize)] = &[
+        ("Acg", 129),
+        ("Apg", 171),
+        ("Arg", 225),
+        ("Botd2", 1),
+        ("Ce", 15),
+        ("Crb", 177),
+        ("Ha", 61),
+        ("InnerSeaTaverns", 9),
+        ("Isc", 23),
+        ("Isg", 86),
+        ("Isi", 6),
+        ("Isr", 50),
+        ("Iswg", 31),
+        ("MonsterCodex", 32),
+        ("Mythic", 164),
+        ("Oa", 68),
+        ("Pu", 17),
+        ("Uc", 262),
+        ("Uca", 23),
+        ("Ui", 107),
+        ("Um", 147),
+        ("Upsi", 222),
+        ("Uw", 136),
+    ];
+
+    /// The converted words for APG's `Extra Hex`, asserted from two directions — the picker's
+    /// own row and `feat_description_by_exact_name`'s answer for the same record — so the two
+    /// call sites can never quietly disagree. Longer than the compiled table's stored string,
+    /// which held only the first sentence.
+    const EXTRA_HEX_CONVERTED_WORDS: &str = "You have learned the secrets of a new hex.\nYou gain \
+        one additional hex. You must meet all of the prerequisites for this hex. Special - You \
+        can gain Extra Hex multiple times.";
+
+    /// The words the Feat picker serves, counted over the **whole live catalog**, per book.
     ///
-    /// The Add Feat picker was showing raw PCGen `DESC:` tokens. This asserts
-    /// two things at once: the leaking records really are rewritten, and the
-    /// rewrite touches **nothing else** — a renderer that reflowed all 681
-    /// descriptions would pass a leak check while quietly changing every feat
-    /// a player reads.
+    /// # What replaced what, and why
+    ///
+    /// Until `AT-35-E6-003` cycle 8 this slot held
+    /// `feat_descriptions_are_rendered_and_otherwise_byte_identical`, which pinned the run-time
+    /// rewriter's output against the compiled table's stored string — 187 rewritten rows named
+    /// one by one. That test existed to prove the rewriter changed exactly the rows it had to
+    /// and nothing else. The rewriter is gone (`decisions.md §11`), so the claim it pinned no
+    /// longer exists to be pinned, and a test asserting the served text equals the stored text
+    /// would now be asserting the opposite of what this module does.
+    ///
+    /// What replaces it is the claim that actually matters to a player: **how many feats show
+    /// words, and does any of them show the ingest format.** A ratchet over the live corpus, per
+    /// `decisions.md §4` — never a fixture with a hand-derived value. The per-book floors are a
+    /// floor, not an identity: a one-for-one swap inside a book's total would read as no change
+    /// here, which is why the leak sweep below runs over every served row rather than a sample.
     #[test]
-    fn feat_descriptions_are_rendered_and_otherwise_byte_identical() {
+    fn converted_feat_prose_population() {
         use codex::rules_core::pcgen_desc::leaked_pcgen_syntax;
-        use codex::rules_core::rules_tables::feats_all::all_feat_tables;
         use std::collections::BTreeMap;
 
-        let raw_by_key: BTreeMap<(String, &str), &str> = all_feat_tables()
-            .iter()
-            .flat_map(|table| {
-                table.entries.iter().filter_map(move |entry| {
-                    entry
-                        .description
-                        .map(|d| ((format!("{:?}", table.rule_set), entry.key), d))
-                })
-            })
-            .collect();
-
-        let mut with_description = 0usize;
-        let mut changed: Vec<&str> = Vec::new();
-        let mut raw_leaks = 0usize;
         let catalog = build_feat_catalog();
+        let mut served_by_book: BTreeMap<&str, usize> = BTreeMap::new();
+        let mut total_rows = 0usize;
+        let mut with_description = 0usize;
+        let mut leaks: Vec<(String, String, &'static str)> = Vec::new();
         for entry in &catalog.entries {
-            let Some(served) = entry.description.as_deref() else { continue };
+            total_rows += 1;
+            let Some(text) = entry.description.as_deref() else { continue };
             with_description += 1;
-            let raw = raw_by_key[&(entry.source.clone(), entry.key.as_str())];
-            if leaked_pcgen_syntax(raw).is_some() {
-                raw_leaks += 1;
+            *served_by_book.entry(entry.source.as_str()).or_default() += 1;
+            if let Some(reason) = leaked_pcgen_syntax(text) {
+                leaks.push((entry.key.clone(), entry.source.clone(), reason));
             }
-            if served != raw {
-                changed.push(entry.key.as_str());
-            }
-            assert_eq!(
-                leaked_pcgen_syntax(served),
-                None,
-                "served feat {:?} still leaks",
-                entry.key
+        }
+        for (key, source, reason) in &leaks {
+            println!("leak {source} {key}: {reason}");
+        }
+        // Zero, and it stays zero without an exemption list: [`row_description`] refuses a
+        // leaking string from EITHER source, so a converter rendering artifact costs one row's
+        // words rather than putting the ingest format on a player's screen. The one row that
+        // costs today (Mythic Adventures' `Prophetic Visionary`) is named in `row_description`'s
+        // own doc comment and in `AT-35-E6-003`'s cycle-8 receipt as a converter finding.
+        assert!(
+            leaks.is_empty(),
+            "a served feat description shows the ingest format: {leaks:?} -- re-derive with \
+             `cargo test --locked converted_feat_prose_population -- --nocapture`"
+        );
+        println!("feat rows={total_rows} with_description={with_description}");
+        println!("by book: {served_by_book:?}");
+
+        assert_eq!(total_rows, 2227, "the served catalog is the whole aggregate, unchanged");
+        assert!(
+            with_description >= FEAT_PROSE_FLOOR,
+            "served feat descriptions fell to {with_description}, below the pinned floor of \
+             {FEAT_PROSE_FLOOR} -- re-derive with `cargo test -p codex-desktop \
+             converted_feat_prose_population -- --nocapture` and raise the floor deliberately, \
+             never lower it to match a regression"
+        );
+        for (book, floor) in FEAT_PROSE_FLOOR_BY_BOOK {
+            let served = served_by_book.get(book).copied().unwrap_or(0);
+            assert!(
+                served >= *floor,
+                "{book} serves {served} feat descriptions, below its pinned floor of {floor}"
             );
         }
+    }
 
-        // 9 of the original 690 carry no DESC: token; UCA's 23 records and
-        // UI's 104 records all carry a joined description (DESC + BENEFIT,
-        // or DESC + the deferral diagnostic for UCA's 2 corrupted records),
-        // so all 127 add to `with_description` rather than the no-DESC:
-        // bucket.
-        // +65 with the 83 corpus gap rows joined on (2026-08-11): 18 of them
-        // carry neither a `DESC:` nor a `BENEFIT:` token in the corpus and
-        // are served with no description rather than a fabricated one, which
-        // is why this moves by 65 and not by 83.
-        // +242 with `SD31-E6-F8-002`'s five-book gap lane: all 242 carry a
-        // real `DESC:` and/or `BENEFIT:` token, so `with_description` moves
-        // by exactly 242, not less.
-        // +323 with `SD31-E6-F2-007`'s 358 Mythic Adventures rows joined on
-        // (2026-08-17): 35 of them carry neither a `DESC:` nor a `BENEFIT:`
-        // token in the corpus and are served with no description rather
-        // than a fabricated one.
-        // +7 with `SD31-E6-F8-003`'s two more gap-lane books joined on: all
-        // 7 (inner_sea_intrigue 6 + book_of_the_damned_volume_2 1) carry a
-        // real `DESC:` token, so `with_description` moves by exactly 7.
-        // +9 with SD-32 Gate 0 book-onboarding precondition's inner_sea_taverns
-        // rows joined on: all 9 carry a real `DESC:` (joined with `BENEFIT:`),
-        // so `with_description` moves by exactly 9.
-        // +109 with SD-32 T9 onboarding's (card 11) inner_sea_combat (23) and
-        // inner_sea_gods (86) rows joined on: all 109 carry a real `DESC:`
-        // token in the corpus (re-derived directly against the generated
-        // `feat_gap_tables.rs`: zero `description: None` in either book's
-        // static array), so `with_description` moves by exactly 109.
-        assert_eq!(with_description, 2161, "66 of the 2227 records carry no served description -- 13 hand-authored plus the 18 corpus gap rows plus 35 Mythic gap rows whose records carry neither DESC: nor BENEFIT: (SD31-W10-INTEGRATE-001: 199 Mythic gap rows, not 358 -- 159 VISIBLE:EXPORT display-plumbing twins excluded, none of which lacked a description)");
-        // 17 of the original 690 + UCA's `Battlefield Healer` + 10 UI
-        // records: 5 carry a literal `%%` escape (`Eye for Ingredients`,
-        // `Planar Wanderer`, `Structural Strike`, `Subtle Enchantments`,
-        // `Superior Scryer`) and 5 carry an unsubstituted `%N` argument
-        // reference plus a raw non-whitespace-bounded `|` (`Brilliant
-        // Planner`, `Conceal Spell`, `Feign Curse`, `Nerve-Racking
-        // Negotiator`, `Street Sweep`), joined verbatim into
-        // `feats_all::map_uca_entry`/`map_ui_entry`'s description exactly
-        // as the corpus spells it -- `render_pcgen_desc` correctly rewrites
-        // each for the player, the same treatment CRB's own leaking rows
-        // already get.
-        changed.sort_unstable();
-        // 185 hand-authored + 5 corpus gap rows whose own `DESC:`/`BENEFIT:`
-        // text carries PCGen syntax (`Empower Spell-Like Ability ~ Ability`
-        // and `~ Spell` and `Hover` carry a literal `%%` escape,
-        // `Mother's Gift ~ Uncanny Resistance` an unsubstituted `%1` plus a
-        // raw `|TL+6` tail, `Feral Combat Training` a raw `|`). Every one is
-        // rewritten by `render_pcgen_desc` and confirmed leak-free by this
-        // same test's per-record assertion above — a raw-corpus-shape count,
-        // not a new player-visible leak.
-        // `SD31-E6-F2-007` -- +2 with Mythic Adventures' 358 gap rows joined
-        // on: two of them carry an unsubstituted PCGen syntax leak in their
-        // own `DESC:`/`BENEFIT:` text, rewritten by `render_pcgen_desc`
-        // exactly like every other book's leaking rows.
-        assert_eq!(raw_leaks, 187, "the raw tables' own leak count (SD31-W10-INTEGRATE-001: 188 - 1, one of the two excluded VISIBLE:EXPORT Mythic twins carried a raw leak of its own -- the other's `changed` membership came from the two-field DESC/BENEFIT join differing from either raw field alone, not from a leak marker)");
-        // +1 with SD-32 Gate 0 book-onboarding precondition's inner_sea_taverns
-        // rows joined on: one record's own DESC/BENEFIT join differs from
-        // either raw field alone (the same shape as the Mythic twin above),
-        // not from a new raw leak (`raw_leaks` stays 187).
-        // +2 with SD-32 T9 onboarding's (card 11) 109 new rows joined on
-        // (inner_sea_combat 23 + inner_sea_gods 86): re-derived from this
-        // same test's own RED-run assertion output against the pinned
-        // oracle -- `raw_leaks` stays 187 (no new raw PCGen-syntax leak),
-        // so both are rendering-only rewrites, not new leaks.
-        // `AT-34-E3-003` bucket-U cycle 2 (2026-08-28, `36db23a053`,
-        // `decisions.md §17`): 201 -> 187, -14. `render_pcgen_desc` had no
-        // exemption for a bare `%` immediately preceded by a DIGIT ("75%
-        // chance...") -- unlike `leaked_pcgen_syntax`'s own correct
-        // digit-preceded exemption -- so it silently dropped the literal
-        // percent sign, making `served` differ from a `raw` string that was
-        // already clean, and wrongly counting the record as "rewritten".
-        // The fix mirrors that exemption in the render path (confirmed by
-        // this commit's own new unit test,
-        // `pcgen_desc::tests::a_digit_preceded_percent_sign_is_a_literal_
-        // sign_not_a_drop`). The 14 that dropped out of `changed`, named
-        // exactly (re-derived from this test's own RED-run diff against the
-        // exact-name pin below, not guessed): `Arcane Armor Training`,
-        // `Empower Spell-Like Ability ~ Ability`, `~ Spell`, `Greater
-        // Mesmerizing Feint`, `Hover`, `Lingering Spell-Like Ability`,
-        // `Messenger Of Fate`, `Mirror Kin`, `Phantom Fortification`,
-        // `Protector of the People`, `Reject Poison`, `Seeping Darkness`,
-        // `Spirit Sense`, `Tavern Regular` -- every one a feat whose corpus
-        // `DESC:`/`BENEFIT:` text carries a literal `N%` and nothing else
-        // `render_pcgen_desc` needed to rewrite, so it now renders
-        // byte-identical to its already-clean raw text.
-        // `raw_leaks` above is untouched: none of these 14 was ever a real
-        // leak (`leaked_pcgen_syntax` already exempted digit-preceded `%`),
-        // only the render path was wrongly disagreeing with it.
-        assert_eq!(changed.len(), 187, "exactly the leaking/rewritten records (AT-34-E3-003 bucket-U cycle 2, `36db23a053`: 201 - 14, the digit-preceded bare-`%` render-path defect fix)");
-        // 28 pre-existing (CRB/UCA/UI) + 35 UW + 74 UC + 14 UM + 34 new
-        // UPsi records. Every served description for all 185 is
-        // confirmed leak-free by this same test's per-record
-        // `leaked_pcgen_syntax(served) == None` assertion above -- this
-        // is a raw-corpus-shape count (`&nl;` entity escapes, `%N`/raw
-        // `|` tails, all correctly rewritten by `render_pcgen_desc`),
-        // not a new player-visible leak.
+    /// A feat whose converted record states its words serves **those**, and the resolution is
+    /// the same one `feat_description_by_exact_name` hands `class_feature_feat_bridge.rs`.
+    #[test]
+    fn a_feat_serves_its_converted_words_and_the_bridge_agrees() {
+        let catalog = build_feat_catalog();
+        let wings = catalog
+            .entries
+            .iter()
+            .find(|e| e.key == "Angel Wings" && e.source == "Arg")
+            .expect("'Angel Wings' (Arg) must be offered by the picker");
+        let served = wings.description.as_deref().expect("Angel Wings states words");
         assert_eq!(
-            changed,
-            vec![
-                "Access Psionic Talent",
-                "Adder Strike",
-                "Advanced Archer Path",
-                "Advanced Ascetic Path",
-                "Advanced Assassin Path",
-                "Advanced Brawling Path",
-                "Advanced Dervish Path",
-                "Advanced Feral Path",
-                "Advanced Infiltrator Path",
-                "Advanced Interceptor Path",
-                "Advanced Mind Knight Path",
-                "Advanced Survivor Path",
-                "Advanced Weaponmaster Path",
-                "Amateur Gunslinger",
-                "Ambush Awareness",
-                "Animal Call",
-                "Aquatic Combatant",
-                "Arcane Strike",
-                "Battle Cry",
-                "Battlefield Healer",
-                "Beast Hunter",
-                "Beastmaster Style",
-                "Befuddling Strike",
-                "Binding Throw",
-                "Bludgeoner",
-                "Brilliant Planner",
-                "Close-Quarters Thrower",
-                "Clustered Shots",
-                "Combat Style Master",
-                "Conceal Spell",
-                "Cover Tracks",
-                "Crashing Wave Buffet",
-                "Dazing Fist",
-                "Death or Glory",
-                "Deceptive Exchange",
-                "Deep Diver",
-                "Defensive Weapon Training",
-                "Detect Expertise",
-                "Dimensional Dervish",
-                "Discovery (Arcane Builder)",
-                "Discovery (Split Slot)",
-                "Djinni Style",
-                "Domain Strike",
-                "Dragon Ferocity",
-                "Dragon Roar",
-                "Dragon Style",
-                "Draining Strike",
-                "Earth Child Binder",
-                "Earth Child Style",
-                "Earth Child Topple",
-                "Eidolon Mount",
-                "Empower Power",
-                "Energized Wild Shape",
-                "Expert Cartographer",
-                "Extended Bane",
-                "Extra Grit",
-                "Eye for Ingredients",
-                "Faerie's Strike",
-                "False Trail",
-                "Fear's Reach",
-                "Feign Curse",
-                "Feral Combat Training",
-                "Field Repair",
-                "Final Embrace",
-                "Frightful Shape",
-                "Gnome Trickster",
-                "Grasping Strike",
-                "Greater Beast Hunter",
-                "Greater Hunter's Bond",
-                "Greater Intuitive Shot",
-                "Greater Spring Attack",
-                "Greater Whip Mastery",
-                "Gruesome Slaughter",
-                "Gunsmithing",
-                "Harmonic Resonance",
-                "Harmonic Sage",
-                "Haunted Gnome Shroud",
-                "Hawkeye",
-                "Hex Strike",
-                "Hide Worker",
-                "Horse Master",
-                "Impact Critical Shot",
-                "Improved Beast Hunter",
-                "Improved Charging Hurler",
-                "Improved Hunter's Bond",
-                "Improved Monster Lore",
-                "Improved Snap Shot",
-                "Improved Spring Attack",
-                "Indomitable Mountain Peak",
-                "Instant Judgment",
-                "Intuitive Shot",
-                "Learn Ranger Trap",
-                "Life Lure",
-                "Master Siege Engineer",
-                "Menacing Bane",
-                "Merciful Bane",
-                // SD-32 T9 onboarding (card 11): inner_sea_gods's own
-                // `Messenger Of Fate` DESC/BENEFIT join differs from either
-                // raw field alone (the same rendering-only shape as the
-                // other gap-row entries in this list, not a new leak).
-                "Modified Blast",
-                "Monastic Legacy",
-                "Monkey Moves",
-                "Monkey Shine",
-                "Monkey Style",
-                "Moonlight Stalker Feint",
-                "Moonlight Stalker Master",
-                "Mother's Gift ~ Uncanny Resistance",
-                "Mutated Shape",
-                "Nerve-Racking Negotiator",
-                "Net Adept",
-                "Net and Trident",
-                "Nightmare Weaver",
-                "One Eye Open",
-                "Open Door",
-                "Out of the Sun",
-                "Pack Attack",
-                "Painful Anchor",
-                "Paralyzing Strike",
-                "Passing Trick",
-                "Photosynthetic Healing",
-                "Pinpoint Poisoner",
-                "Piranha Strike",
-                "Planar Wanderer",
-                "Prone Slinger",
-                "Prophetic Visionary",
-                "Psionic Bull Rush",
-                "Psionic Disarm",
-                "Psionic Overrun",
-                "Psionic Shield Bash",
-                "Psionic Sunder",
-                "Psionic Talent",
-                "Psionic Trip",
-                "Quick Bull Rush",
-                "Quick Dirty Trick",
-                "Quick Drag",
-                "Quick Reposition",
-                "Quick Steal",
-                "Radiant Charge",
-                "Raging Concentration",
-                "Rapid Draw",
-                "Rebuffing Reduction",
-                "Recovered Rage",
-                // SD-32 T9 onboarding (card 11): inner_sea_gods's own
-                // `Reject Poison` DESC/BENEFIT join differs from either raw
-                // field alone, same rendering-only shape as the entry above.
-                "Remote Bomb",
-                "Resilient Eidolon",
-                "Revelation Strike",
-                "Reward of Life",
-                "Ricochet",
-                "River Raider",
-                "School Strike",
-                "Scion of the Land",
-                "Selective Power",
-                "Shapeshifting Hunter",
-                "Siege Engineer",
-                "Siege Gunner",
-                "Skilled Driver",
-                "Slayer's Knack",
-                "Sling Flail",
-                "Snake Sidewind",
-                "Snake Style",
-                "Snap Shot",
-                "Sorcerous Strike",
-                "Spinning Throw",
-                "Stage Combatant",
-                "Staggering Fist",
-                "Street Sweep",
-                "Structural Strike",
-                "Stunning Fist",
-                "Style Feat Wildcard",
-                "Subtle Enchantments",
-                "Superior Scryer",
-                "Sword and Pistol",
-                "Thrill of the Hunt",
-                "Tiger Style",
-                "Toughened Suit",
-                "Tree Leaper",
-                "Tribal Hunter",
-                "Twinned Feint",
-                "Two-Handed Thrower",
-                "Unfettered Familiar",
-                "Unwilling Participant",
-                "Urban Tracking",
-                "Verdant Spell",
-                "Versatile Channeler",
-                "Vigilant Charger",
-                "Whip Mastery",
-                "Wild Growth Hex",
-                "Wilding",
-                "Winter's Strike",
-                "Wood Crafter",
-                "Wounded Paw Gambit",
-            ]
+            crate::converted_prose::description_for("advanced_race_guide", "feat", "Angel Wings")
+                .as_deref(),
+            Some(served),
+            "the picker must serve the converted record's own words"
         );
+        assert_eq!(
+            feat_description_by_exact_name("Angel Wings").as_deref(),
+            Some(served),
+            "the class-feature bridge must not promise different text than the picker ships"
+        );
+    }
+
+    /// The refusal is live: a stored string still carrying an unresolved marker is not served
+    /// half-rendered when the converted package holds nothing for the row.
+    #[test]
+    fn an_unresolved_stored_string_is_refused_rather_than_half_rendered() {
+        // A key the package holds under no rule, so the fallback is the only path.
+        assert_eq!(
+            row_description(RuleSetId::Crb, "Not A Real Feat At All", Some("%1 times per day")),
+            None,
+            "a stored string carrying an unresolved marker must be refused whole"
+        );
+        assert_eq!(
+            row_description(RuleSetId::Crb, "Not A Real Feat At All", Some("plain english")),
+            Some("plain english".to_owned()),
+            "a stored string that is already the record's plain words is served"
+        );
+        assert_eq!(
+            row_description(RuleSetId::Crb, "Not A Real Feat At All", Some("a 20% chance")),
+            Some("a 20% chance".to_owned()),
+            "a real English percentage is not an unresolved marker and must not be thrown away"
+        );
+        assert_eq!(row_description(RuleSetId::Crb, "Not A Real Feat At All", None), None);
     }
 
     /// Every corpus gap row reaches the served catalog, under its own book's
@@ -981,9 +888,18 @@ mod tests {
 
         let wings = find("Angel Wings", "Arg");
         assert_eq!(wings.category, "General");
+        // The converted record's own words, and the gain this swap made visible: until
+        // `AT-35-E6-003` cycle 8 this row served only the compiled table's first sentence,
+        // because that is all the stored string held. The converter joins the record's
+        // descriptive fields, so the player now reads the feat's actual benefit as well.
         assert_eq!(
             wings.description.as_deref(),
-            Some("Feathered wings sprout from your back.")
+            Some(
+                "Feathered wings sprout from your back.\nYou gain a pair of gleaming feathered \
+                 wings that grant a fly speed of 30 feet (average maneuverability) if wearing \
+                 light armor or unencumbered, or 20 feet (poor maneuverability) with a medium or \
+                 heavy load or medium or heavy armor. Fly is a class skill for you."
+            )
         );
 
         let champion = find("Champion of Tyranny", "Pu");
@@ -1007,10 +923,10 @@ mod tests {
         let response = build_feat_catalog();
         let endurance: Vec<_> = response.entries.iter().filter(|e| e.key == "Endurance").collect();
         // `SD31-E6-F2-007` -- a third listing now exists, Mythic Adventures'
-        // own mythic upgrade (its `PREABILITY:...,CATEGORY=FEAT,Endurance`
-        // prerequisite is the mechanical proof this is a real variant, not
-        // a coincidental name clash --
-        // `feats_all::tests::cross_book_key_collisions_are_exactly_the_known_set`).
+        // own mythic upgrade. Its prerequisite is the Core Rulebook feat of
+        // the same name, which is the mechanical proof this is a real
+        // variant rather than a coincidental name clash --
+        // `feats_all::tests::cross_book_key_collisions_are_exactly_the_known_set`.
         assert_eq!(endurance.len(), 3, "CRB lists Endurance, PU re-lists it, Mythic upgrades it");
 
         let sources: Vec<&str> = endurance.iter().map(|e| e.source.as_str()).collect();
@@ -1018,14 +934,21 @@ mod tests {
         assert_eq!(endurance[0].category, "General");
         assert_eq!(endurance[1].category, "WoundThreshold");
         assert_eq!(endurance[2].category, "Mythic");
-        assert_eq!(
+        // Deliberately **not** asserted equal any more, and the change is the point. Until
+        // `AT-35-E6-003` cycle 8 both rows served the same stored string, so the two listings
+        // read identically. The converted package holds one record per book: Core Rulebook's
+        // Endurance and Pathfinder Unchained's Wound Threshold re-listing state different
+        // benefits, and each row now serves its own book's. Both are real text; neither shadows
+        // the other, which is what this test has always been for.
+        assert!(endurance[0].description.is_some(), "CRB's Endurance states its own words");
+        assert!(endurance[1].description.is_some(), "PU's re-listing states its own words");
+        assert_ne!(
             endurance[0].description, endurance[1].description,
-            "both corpus rows carry the same DESC: text"
+            "each book's listing must serve its OWN record's words, not a shared string"
         );
-        assert!(endurance[0].description.is_some(), "and it is real text, not a shared absence");
         assert!(
             endurance[2].description.is_some(),
-            "the Mythic listing has its own real DESC: text too"
+            "the Mythic listing states its own words too"
         );
     }
 
@@ -1063,10 +986,7 @@ mod tests {
         let extra_hex = find("Extra Hex");
         assert_eq!(extra_hex.source, "Apg");
         assert_eq!(extra_hex.category, "General");
-        assert_eq!(
-            extra_hex.description.as_deref(),
-            Some("You have learned the secrets of a new hex.")
-        );
+        assert_eq!(extra_hex.description.as_deref(), Some(EXTRA_HEX_CONVERTED_WORDS));
 
         let allied = find("Allied Spellcaster");
         assert_eq!(allied.source, "Apg");
@@ -1077,7 +997,12 @@ mod tests {
         assert_eq!(extra_panache.category, "Panache");
         assert_eq!(
             extra_panache.description.as_deref(),
-            Some("You have more panache than the ordinary swashbuckler.")
+            Some(
+                "You have more panache than the ordinary swashbuckler.\nYou gain two more \
+                 panache points at the start of each day, and your maximum panache increases by \
+                 two.\n Special: If you have levels in the swashbuckler class, you can take this \
+                 feat multiple times. Its effects stack."
+            )
         );
 
         // A CRB feat is still there and still tagged CRB.
@@ -1118,7 +1043,7 @@ mod tests {
             .find(|e| e.name == "Extra Hex")
             .expect("Extra Hex must be in the catalog");
         assert_eq!(extra_hex, catalog_entry.description);
-        assert_eq!(extra_hex.as_deref(), Some("You have learned the secrets of a new hex."));
+        assert_eq!(extra_hex.as_deref(), Some(EXTRA_HEX_CONVERTED_WORDS));
     }
 
     /// No fuzzy matching, ever — a name one character off must not resolve.
