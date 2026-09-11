@@ -202,7 +202,7 @@ frame that answers where cycles 4 and 5 could only mask. **798 → 665 code hits
   | `80 → 5` hits in `ultimate_magic/feat_tables.rs` | that file's own code-hit count, by the gate's own regexes, comment lines excluded | the per-file scan above at each tree |
   | `116 → 58` hits in `pilot_compute/mod.rs` | same | same |
   | `144 records, 43 carrying effect tokens` | the live UM feat table | `python3 docs/release/SD-35-corpus-sheet-completion/artifacts/epic-6-pcgen-exit/AT-35-E6-003-SWEEP_cycle6_relocate_um_effect_tokens.py --check` |
-  | `17` caster-level rows demoted | `CASTER_LEVEL_RULES`' own rows | `python3 …_cycle6_caster_level_provenance.py --check` → `rows=17` |
+  | `17` caster-level rows demoted | `CASTER_LEVEL_RULES`' own rows | `python3 …_cycle6_caster_level_provenance.py --check` → on an applied tree, `already applied: rows=17 provenance_token_lines=17`, `EXIT=0` (the 17 rows and their 17 verbatim `BONUS:CASTERLEVEL` provenance lines agree) |
   | `10` hits cut by the cycle-6 prose frame, `7` blocks | all 69 live files | `python3 …_cycle6_prose_citation_demote.py $(cat <the 69 files>)` — idempotent, re-running at HEAD prints `TOTAL cleared=0` |
   | `0` other readers of `UmFeatEntry.effect` | all of `src`, `apps/desktop/src-tauri/src`, `tests` | `grep -rn "\.effect\b" src apps/desktop/src-tauri/src tests --include=*.rs \| grep -v "effect: " \| grep -v effect_text \| grep -v "\.effect\.spell_id"` — every surviving hit is `crb::feats::FeatTableEntry.effect`, a typed `FeatEffectBonus` slice |
   | `0` files in `data/sheet_rules/` carrying ingest vocabulary | all of `data/sheet_rules/` | `grep -rlE 'BONUS:\|DEFINE:\|PRE[A-Z]+:\|%CHOICE\|CL=' data/sheet_rules/ \| wc -l` → 0 |

@@ -123,8 +123,16 @@ def main():
     args = ap.parse_args()
     text = open(LIVE, encoding="utf-8").read()
     if START not in text:
-        print("already transformed")
+        print("already transformed (the table's own const is gone)")
         return 0
+    if not re.search(r"^\s*token: \"", text, re.M):
+        # Applied tree: the const is still there, its two token fields are not.
+        # Report what the transform left, so the receipt's re-derive command
+        # prints a figure rather than a spurious parse failure.
+        rows = len(re.findall(r"^        names_class_level_directly: ", text, re.M))
+        prov = len(re.findall(r"^    //   BONUS:CASTERLEVEL\|", text, re.M))
+        print(f"already applied: rows={rows} provenance_token_lines={prov}")
+        return 0 if rows == prov == 17 else 1
     new, rows = transform(text)
     print(f"rows={rows}")
     if args.apply:
