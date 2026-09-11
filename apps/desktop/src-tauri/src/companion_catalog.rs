@@ -1394,7 +1394,11 @@ mod tests {
         assert_eq!(text.matches("blurred vision").count(), 1, "{text:?}");
         assert_eq!(text.matches("effect blindness").count(), 1, "{text:?}");
         // The condition each one is stated under reaches the reader with it.
-        assert_eq!(text.matches("If a rules variable").count(), 2, "{text:?}");
+        // The variable is NAMED. Until SD-35 AT-35-E6-003 cycle 11 gave `VarTable` a
+        // converter-written `label`, a `VarId` was a content hash with no word attached and
+        // this read "If a rules variable" twice -- the defect cycles 4 and 8 recorded. The
+        // package now prints the variable's own words.
+        assert_eq!(text.matches("If Companion Advancement").count(), 2, "{text:?}");
         // The save DC the run-time renderer used to drop, printed as the rule's own words.
         assert!(
             text.contains("Fort DC 10 plus hit dice divided by 2"),

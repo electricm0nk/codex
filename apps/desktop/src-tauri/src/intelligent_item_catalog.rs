@@ -598,7 +598,7 @@ mod tests {
         let mut formulas: Vec<&str> = row.mechanics.iter().map(|m| m.formula.as_str()).collect();
         formulas.sort();
         assert!(
-            formulas.iter().any(|f| *f == "+2"),
+            formulas.contains(&"+2"),
             "its Ego contribution prints as a signed literal; got {formulas:?}"
         );
         assert!(
