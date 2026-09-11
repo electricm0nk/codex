@@ -41,6 +41,112 @@ re-measured at the cut by the launch-readiness audit.
 
 ## Cycle log
 
+### 2026-09-11 — Epic 6 / `desktop-and-prose-leave-pcgen` — AT-35-E6-003 **cycle 11** (`81d8199a06`, `0ca94baa4b`) — **partial** (the package names its variables; the intelligent-item catalog leaves the ingest format; the reference-library blocker was measured and is not what two receipts said)
+
+Cycle 10 ended with two blockers, each waiting on a ruling. This cycle asked for neither.
+
+**The `VarTable` label was ours to build.** Cycle 10 called it "AT-35-E2 territory"; it sits
+inside this epic's own file-touch set (`workflow-instruction.md §3`), and `AGENTS.md`'s blocker
+discipline says escalate only when the fix is outside the granted surface. So `VarTable` gained
+`label` — the words a sheet line names a corpus variable by, spaced out of the source name
+mechanically at ingest (`_`/`-`/`.` → space, a word break where lower-or-digit meets upper) and
+never interpreted. `IntelligentItemEgo` → `Intelligent Item Ego`. The converter now carries the
+source name's **original case** alongside the upper-cased one every index keys on, so
+`scripts/oracle_harness/var_names.json` is byte-identical. **5,293 of 5,293 var tables carry a
+label**, and the regenerated package differs from its parent by **exactly that one field on
+exactly those files** — proved per file by popping `label` from each new document and asserting
+equality with the old. No rule file moved.
+
+**That closed a defect three earlier cycles recorded without naming its cause.**
+`level_up_option_filter::describe_expr` printed every corpus variable as `"a rules variable"`,
+with a comment saying naming it would put a token on the sheet. True of the schema as it stood,
+and a property of what the converter *chose to emit*, not of the schema. Cycle 4 recorded a
+catalog sentence reading *"increases by a rules variable%"*; cycle 8 recorded it again; cycle 10
+recorded a screen that could not print `Ego`. One omission, three receipts, no diagnosis. The
+arm now prints the package's label, and the Spitting Cobra's poison line reads *"If Companion
+Advancement at least 1…"* without that catalog being touched.
+
+**`intelligent_item_catalog.rs`: 28 residue hits → 0.** Served-vs-hidden from
+`SheetRule::print`, description from `catalog_description`, mechanics from the package's
+`VarTable` contributions reverse-indexed by rule id, values through the same `expr_words` the
+sheet prints an unsettled term with, conditions through `describe_gate`. The record's own
+non-rules fields — book, key, name, price — still come from `data/corpus/`, joined on the source
+row **both sides record**: 171 records, **0 misses**, pinned in-crate. The Base row's Ego
+price-band ladder is now read off the converted `Expr`'s own rungs rather than the formula
+string, and refuses to print a partial ladder if any term is not a rung.
+
+**Two rows stopped being offered as choices.** `Intelligent Item Purpose (Slay All)` and
+`(Slay Creature Type)` are bookkeeping shadows whose hidden visibility lives on a source row the
+ingested token array does not carry, so the token-reading module served them as purchasable
+options. The package hides them: **154 served → 152.** Same defect class cycle 10 fixed in the
+converter, surfacing on the reader's side of the same boundary.
+
+**The other blocker was measured, and it was stale.** Cycles 7 and 10 both said
+`reference_library_catalog.rs` is blocked because 489 `ability` corpus records are not inventory
+units, costing 1,150 of 9,679 descriptions, and asked for an inventory ruling. Re-derived at
+HEAD: **all 9,697 records across the twelve reference-library kind directories join a converted
+rule on their own `source.path:line`, zero misses.** The package holds every one. The real
+blocker is narrower and is a renderer, not a ruling: by prose family, **4,983** carry
+Desc/Benefit/Special, **472** carry only a stat-block family, and **4,242 carry none at all** —
+so the module's tier-3 fallback (a summary of the record's own token rows) has no package-side
+equivalent, because nothing renders a rule with no prose as words from its typed fields.
+Swapping today would serve `None` to 4,242 records. That function is cycle 12's work
+(`correction 1789129023515-at-35-e6-003-6ed5d6`).
+
+**Scope gate:** `SCOPE_GATE: EXEMPT (Epic 6 cycle — closes zero units by design, decisions.md
+§2)`. Run anyway:
+```
+inventory=docs/work-inventory.json
+scope=(whole remainder)
+scoped_by_bucket=
+scoped_by_kind=
+scoped=0 remaining_non_done=0 floor=500 verdict=PASS_WHOLE_REMAINDER
+```
+
+**Receipt rows:**
+```
+closed=0 relabeled=0 rust_lines_changed=1170 ratio=n/a builds_recorded=3 pcgen_live_files=198
+```
+`root apps/desktop` **3 files / 76 hits → 2 / 48**; `live_files` **199 → 198**, the second fall.
+
+**Verified once**, `apps/` touched so the desktop crate and frontend ran here: root `--no-run`
+exit 0, lib **3301 passed / 0 failed / 15 ignored**, full workspace **414 targets, 8812 passed,
+0 failed, 68 ignored, FULL_EXIT=0**, root and desktop clippy 0 warnings, desktop crate **577
+passed / 0 failed**, `tsc` exit 0, frontend **101/101 files**, the criterion's **19 on-screen
+tests** green, `sheet_rule_convert -- --check` EXIT=0, residue `PASS`, `data/sheet_rules/`
+markers **0**, atlas / token-coverage / shape-engine / missing-engine-tables / denominator
+(`107 files, 0 violations`) / provenance (`224 files, 561 figures, 0 violations`) / `pi-sweep`
+all green. **Oracle parity re-run** at `PCGEN_ORACLE_SHA=7f818006e3`: lines **156 / 154 / 2 /
+67**, chassis **382 / 376 / 6 / 140**, 29 characters, 0 exports missing — **identical to cycles
+9 and 10 on every field**, which is the expected result for a cycle that added a word and no
+number.
+
+**Three self-heals**, all named: a count assertion this cycle's own change moved
+(`companion_catalog`, `"If a rules variable"` → `"If Companion Advancement"`, swept repo-wide
+for other occurrences — there were none live); one clippy suggestion on a new test assertion;
+and a `denominator_gate.py --check-provenance` violation that was **already RED at cycle start**
+— a figures-table row in cycle 10's receipt whose command cell named no command, arriving with
+the cycle-start commit `02d46f89e5`. Figure unchanged, command written down, violations 1 → 0.
+
+**One blocker for the operator, outside every cycle's write scope.** Cycles 9 and 10 each
+recorded a retro event landing in the wrong log and each diagnosed it as an `export` not
+surviving the harness's shell reset. This cycle set `RETRO_ACTOR` inline on every `retro.py`
+call **and still misfiled one**, because `scripts/verify.sh` emits its own derived event and
+reads the environment. The cause is `~/.bashrc` lines 135-137: three `RETRO_ACTOR=` assignments
+left by SD-31 wave work, the last being `sd31-transcribe`, so every shell in this repo starts as
+that actor. Three cycles have paid for a one-line fix no cycle may make (`AGENTS.md` rule 4;
+rule 8's "a warning is not a control" exactly). `correction
+1789132126934-at-35-e6-003-1d3534`.
+
+**`partial`** — remainder **2 files / 48 hits, 5 token types**: `PRE[A-Z]+:`=16, `raw_tokens`=16,
+`DESC:`=11, `render_pcgen_desc`=4, `BONUS:`=1; by file `race_trait_picker.rs`=33,
+`reference_library_catalog.rs`=15. Both partitions sum to 48 and agree with the gate.
+`deferral 1789129034843-at-35-e6-003-5e542f`, its per-token-type breakdown corrected in the same
+cycle by `correction 1789129055667-at-35-e6-003-49c732` — the first draft carried cycle 10's
+figures forward instead of re-deriving them at HEAD, the same shape as cycle 10's own slip and
+one step worse. Receipt:
+`artifacts/epic-6-pcgen-exit/AT-35-E6-003_cycle11_receipt.md`.
+
 ### 2026-09-11 — Epic 6 / `desktop-and-prose-leave-pcgen` — AT-35-E6-003 **cycle 10** (`2b4fc3ded7`, `dc8ec4f998`) — **partial** (the frontend race test leaves the ingest format; a `.COPY=` row's own `VISIBLE:NO` now reaches the sheet; the intelligent-item swap is blocked on the package not naming its variables)
 
 Cycle 9 called `intelligent_item_catalog.rs` unblocked and put it first. This cycle measured it
