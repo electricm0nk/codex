@@ -116,6 +116,95 @@ re-measured at the cut by the launch-readiness audit.
 
 ## Cycle log
 
+### 2026-09-11 — Epic 6 / `desktop-and-prose-leave-pcgen` — AT-35-E6-003-SWEEP **cycle 7** (`1d2e061717`) — **partial** (the mechanism cycle 6 refused to grind was **converted** instead; 120 code hits cleared, 24% of the cycle's 500-hit floor, 4 files to zero)
+
+Receipt: `artifacts/epic-6-pcgen-exit/AT-35-E6-003-SWEEP_cycle7_receipt.md`. Cycle start
+`46f683c024`.
+
+**This is cycle 7, not the 6 the dispatch named** — cycle 6 was already committed at
+`2bf2537060` with its receipt tracked, so a `cycle6` receipt would have overwritten a landed
+one (`correction 1789166597487-at-35-e6-003-sweep-5455a6`). The *remainder* the dispatch named
+was correct: it is cycle 6's end state, and the gate reproduced it exactly at cycle start.
+
+```
+inventory=docs/work-inventory.json
+scope=(whole remainder)
+scoped_by_bucket=
+scoped_by_kind=
+scoped=0 remaining_non_done=0 floor=500 verdict=PASS_WHOLE_REMAINDER
+```
+
+`SCOPE_GATE: EXEMPT (Epic 6 cycle — closes zero corpus units by design, decisions.md §2)`.
+
+**Two mechanisms, both corpus-wide, both cleared in full — by conversion, not relocation.**
+Cycle 6 named the feat-qualifier tail as the mechanism it would not grind, because
+`tests/sd27_arg_and_pu_feat_effects.rs::bonus_is_conditioned` decided conditioned-vs-unconditional
+by `q.starts_with("PRE")`, and a text edit would have destroyed the published ARG 133/5/49 split
+while the gate applauded. The answer was not to edit the text but to **type the field**:
+
+1. **`FeatEffectBonus`'s qualifier tail.** `bonus_type: Option<&str>` and
+   `conditions: &[EffectCondition]`, where `EffectCondition { negated, family, items,
+   alternatives }` and `ConditionItem { facet, value }`. No structure is invented — `items` is
+   the guard argument comma-split exactly as the record wrote it (commas inside `[]`, `()` or
+   `""` are not separators), a `<facet>=<value>` element becomes a typed facet, and `MULT`'s
+   bracketed sub-guards recurse. **282 literals across 11 files, 75 carrying a tail.**
+2. **`ClassSkillList.skills`.** A family wildcard shipped as the ingest spelling `"TYPE=Craft"`;
+   it is now `ClassSkillEntry::Family("Craft")` beside `ClassSkillEntry::Named("Acrobatics")`,
+   and `skill_allocation`'s two `strip_prefix("TYPE=")` call sites became matches.
+
+**Lossless, proved both ways.** `src/pcgen_import/feat_effect_conditions.rs` holds the verbatim
+ingest tail for all 75 converted bonuses, addressed by `(catalog, feat key, index)`; its two
+tests rebuild each tail from the live typed form and compare character for character, and prove
+the table addresses exactly the live bonuses that carry one. **RED first, with an empty table:**
+`the round-trip table must not be empty -- an empty table proves nothing`, and the exactness test
+listing all 75 live rows it was missing. `class_skill_lists_match_their_own_corpus_records` now
+rebuilds each row's `CSKILL:` token from the typed entries, so the same check that proved the
+transcription proves the typing. The ARG `133/5/49` split is unchanged — the proof that no bonus
+moved between conditioned and unconditional.
+
+**One discovery, and it is a trap the conversion could have walked into silently.**
+`damage_total::constant_damage_bonus` decides "is this a flat constant" by
+`qualifiers.len() != 3`. The tail **was** extra `qualifiers` elements, so that one length check
+excluded every typed or guarded bonus as a side effect. Moving the tail out would have shortened
+those lists to exactly 3 and **silently admitted** typed/guarded bonuses into the damage total —
+a rules change wearing a refactor's clothes, with a green suite, because nothing pinned the
+exclusion by name. An explicit `bonus_type.is_some() || !conditions.is_empty()` guard restores
+the excluded set exactly and says so in the code. **The lesson generalises: when a conversion
+changes a collection's shape, find every predicate that reads its *length*.**
+
+Code hits **665 → 545 = 120 cleared**, `pcgen_live_files` **69 → 65**, **4 files to zero**
+(`apg/feat_data/combat.rs` 6→0, `apg/feat_data/general.rs` 4→0,
+`advanced_race_guide/feat_data/combat.rs` 2→0, `acg/feat_data/general.rs` 1→0), **none rose**.
+`hits_outside` a `#[cfg(test)]` region falls **305 → 184**; `hits_inside_cfg_test` rises
+**360 → 361**, and that **+1 is named, not hidden**: it is the round-trip proof's own
+`format!("TYPE={family}")` in `class_skill_tables.rs`, and spelling it around the gate would be
+the masking cycles 4 and 5 were burned by. Instrument untouched — no pattern, root, exclusion or
+baseline edited.
+
+**Under the cycle's own 500-hit floor at 120**, named with a mechanism each: 361 of the 545 are
+behind the `#[cfg(test)]` operator ruling cycles 5 and 6 both asked for and which is still open;
+49 are the `pcgen_desc.rs` deletion (blocked on the `class_feature_pool_catalog` rewire); 34 are
+kept raw on purpose; **33 were attempted and refused for a mechanism, not for time** — the
+companion `description_variants` conditions are the same shape as the feat tails, but
+`src/bin/gen_book_cache.rs:1938` serialises `v.conditions` straight into the book cache and
+`AT-35-E6-002`'s Evidence pins that cache byte-identical, so it is a cache-regeneration cycle,
+not a table edit.
+
+`closed=0 relabeled=0 rust_lines_changed=1624 ratio=n/a builds_recorded=3 pcgen_live_files=65`
+
+**`partial`** — `BONUS:=128; TYPE==122; PRE[A-Z]+:=115; DESC:=66; %LIST=63; render_pcgen_desc=39;
+%CHOICE=13; raw_tokens=5; DEFINE:=1` (545 hits / 65 files, nine types, summing exactly to the
+gate's `live_hits` line).
+
+Verified once at `1d2e061717`: `--no-run` 0, lib **3,318/0**, full **414 targets / 8,832 passed /
+0 failed / 68 ignored / `FULL_EXIT=0`** (+2 is exactly the two new round-trip tests), clippy
+**0 warnings**, `sheet_rule_convert --check`
+`records=49438 converted=49296 refused=142 rules=70135 var_tables=5293 verdict=PASS` identical to
+cycles 3–6, `data/sheet_rules/` leaks 0, atlas / token-coverage / shape-engine /
+missing-engine-tables / denominator / provenance / pi-sweep all green; `apps/` untouched so
+desktop at epic cadence; `docs/work-inventory.json` byte-identical to the cycle-start copy.
+`deferral 1789166611125-at-35-e6-003-sweep-a71781`
+
 ### 2026-09-11 — Epic 6 / `desktop-and-prose-leave-pcgen` — AT-35-E6-003-SWEEP **cycle 6** (`2bf2537060`) — **partial** (three mechanisms taken corpus-wide; 133 code hits cleared, 27% of the cycle's 500-hit floor — and a **green test was found pinning an ingest token onto every casting character's sheet**)
 
 - **Scope gate** (`workflow-instruction.md §6` step 1):
