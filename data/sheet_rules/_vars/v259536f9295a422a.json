@@ -1,1 +1,1 @@
-{"var":"v259536f9295a422a","declared_by":["bestiary:monster_ability:universal_monster_rule_light_blindness"],"contributions":[],"provenance":{}}
+{"var":"v259536f9295a422a","declared_by":["bestiary:monster_ability:universal_monster_rule_light_blindness"],"contributions":[{"rule_id":"bestiary:race_trait:drow_light_blindness","expr":{"Const":1},"bonus_type":{"name":"Boolean","mode":"Plain"},"when":"Always"}],"provenance":{}}

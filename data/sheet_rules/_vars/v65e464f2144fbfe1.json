@@ -1,1 +1,1 @@
-{"var":"v65e464f2144fbfe1","declared_by":["inner_sea_races:race_trait:gnome_dirty_trickster"],"contributions":[],"provenance":{}}
+{"var":"v65e464f2144fbfe1","declared_by":["inner_sea_races:race_trait:gnome_dirty_trickster"],"contributions":[{"rule_id":"inner_sea_races:race_trait:gnome_dirty_trickster","expr":{"Const":1},"bonus_type":{"name":"Boolean","mode":"Plain"},"when":"Always"}],"provenance":{}}

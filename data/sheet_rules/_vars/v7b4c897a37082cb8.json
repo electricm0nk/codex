@@ -1,1 +1,1 @@
-{"var":"v7b4c897a37082cb8","declared_by":["pathfinder_unchained:class_feature:unchained_summoner_summon_monster"],"contributions":[],"provenance":{}}
+{"var":"v7b4c897a37082cb8","declared_by":["pathfinder_unchained:class_feature:unchained_summoner_summon_monster"],"contributions":[{"rule_id":"pathfinder_unchained:class_feature:unchained_summoner_summon_monster","expr":{"Sum":[{"Max":[{"AbilityMod":"Cha"},{"Const":0}]},{"Const":3}]},"when":"Always"}],"provenance":{}}

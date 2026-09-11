@@ -1,1 +1,1 @@
-{"var":"ve3fb22b366b33c73","declared_by":["bestiary:monster_ability:universal_monster_rule_light_sensitivity"],"contributions":[],"provenance":{}}
+{"var":"ve3fb22b366b33c73","declared_by":["bestiary:monster_ability:universal_monster_rule_light_sensitivity"],"contributions":[{"rule_id":"bestiary_2:race_trait:dhampir_weakness","expr":{"Const":1},"bonus_type":{"name":"Boolean","mode":"Plain"},"when":"Always"}],"provenance":{}}

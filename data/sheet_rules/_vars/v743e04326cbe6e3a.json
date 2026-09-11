@@ -1,1 +1,1 @@
-{"var":"v743e04326cbe6e3a","declared_by":["core_rulebook:race_trait:racial_sla_speak_with_animals_aquatic_animals_only"],"contributions":[],"provenance":{}}
+{"var":"v743e04326cbe6e3a","declared_by":["core_rulebook:race_trait:racial_sla_speak_with_animals_aquatic_animals_only"],"contributions":[{"rule_id":"inner_sea_races:race_trait:merfolk_secret_magic","expr":{"Const":1},"bonus_type":{"name":"Boolean","mode":"Plain"},"when":"Always"}],"provenance":{}}

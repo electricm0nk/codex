@@ -1,0 +1,1 @@
+{"var":"veaa5fc4b37d83847","declared_by":["ultimate_psionics:class_feature:meditant_flurry_of_strikes"],"contributions":[{"rule_id":"ultimate_psionics:class_feature:meditant_flurry_of_strikes","expr":{"Sum":[{"Var":"vd3cd677ebe74d1c8"},{"Mul":[{"Const":-1},{"Floor":{"Div":[{"Mul":[{"Const":3},{"Var":"vd3cd677ebe74d1c8"}]},{"Const":4}]}}]}]},"when":"Always"}],"provenance":{}}

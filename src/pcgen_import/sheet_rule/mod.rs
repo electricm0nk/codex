@@ -39,6 +39,7 @@ use std::path::{Path, PathBuf};
 
 use serde::{Deserialize, Serialize};
 
+use crate::pcgen_import::ingest_record;
 use crate::rules_core::sheet_rule::*;
 use closure::{Closure, PinnedTree, RowRef};
 use ctx::{slug, CorpusIndex, OwnContribution, RecordRef};
@@ -160,11 +161,28 @@ fn record_from_json(unit: &InventoryUnit, path: &Path) -> Option<RecordRef> {
         .map(|s| s.trim_start_matches("CLASS:").to_string())
         .unwrap_or_else(|| unit.corpus_key.clone().unwrap_or_else(|| unit.name.clone()));
     let name = data.get("name").and_then(|v| v.as_str()).map(|s| s.to_string()).unwrap_or_else(|| unit.name.clone());
-    let shipped_tokens: Option<Vec<(String, String)>> = data.get("raw_tokens").and_then(|v| v.as_array()).map(|arr| {
+    let mut shipped_tokens: Option<Vec<(String, String)>> = data.get("raw_tokens").and_then(|v| v.as_array()).map(|arr| {
         arr.iter()
             .filter_map(|t| Some((t.get("key")?.as_str()?.to_string(), t.get("value")?.as_str()?.to_string())))
             .collect()
     });
+    // The ingest stores a row's `BONUS:` clauses in a SECOND array, `raw_bonus_chains`, never
+    // in `raw_tokens` (`pcgen_import::bonus_chain_reader`'s module doc states the split). A
+    // record that ships tokens has its shipped list REPLACE the base row's
+    // (`closure::PinnedTree::closure`), so reading `raw_tokens` alone dropped every one of
+    // those clauses on the floor -- silently, because a token nobody reads is not a refusal.
+    // Re-joining each chain into the `BONUS:<sub>|<target>|<value>|<extras>` value the mapping
+    // table already addresses hands them back. Traversal via the converter's own named reader,
+    // never open-coded here (AT-35-E6-002 cycle 4's standing correction).
+    let chains: Vec<(String, String)> = ingest_record::bonus_chain_qualifiers(data)
+        .into_iter()
+        .filter(|q| !q.is_empty())
+        .map(|q| ("BONUS".to_string(), q.join("|")))
+        .collect();
+    if !chains.is_empty() {
+        shipped_tokens.get_or_insert_with(Vec::new).extend(chains);
+    }
+    let shipped_tokens = shipped_tokens;
     let prerequisites: Vec<String> = data
         .get("prerequisites")
         .and_then(|v| v.as_array())
@@ -981,5 +999,106 @@ mod term_level_refusal_gate {
         let degraded = census.entries.iter().filter(|e| !e.degradations.is_empty()).count();
         assert_eq!(report.degraded_records, degraded, "_report.degraded_records equals the census's degraded records");
         assert!(report.degraded_records <= report.converted, "a degraded record converted");
+    }
+
+    /// **Every `BONUS:` clause the ingest stored in the record's SECOND array reaches the
+    /// converter.**
+    ///
+    /// The ingest writes a `.lst` row's `BONUS:` clauses into `raw_bonus_chains`, not into
+    /// `raw_tokens` (`pcgen_import::bonus_chain_reader`'s own module doc states the split).
+    /// [`record_from_json`] built `shipped_tokens` from `raw_tokens` alone, and
+    /// [`closure::PinnedTree::closure`] lets shipped tokens **replace** the base row's, so for
+    /// every record that ships tokens at all the base row's `BONUS:` clauses were dropped on
+    /// the floor — silently, because a dropped token is not a refusal.
+    ///
+    /// What that cost, measured over the live corpus directory rather than a fixture:
+    /// `Dwarf ~ Ability Scores` states `BONUS:STAT|CON,WIS|2|TYPE=Racial` and
+    /// `BONUS:STAT|CHA|-2|TYPE=Racial` on its source row, and its converted rule carried
+    /// `value: Text`, no `target` and no `bonus_type` — the racial ability adjustment, absent
+    /// from the package a sheet is printed from.
+    ///
+    /// The gate is per-kind and reads the live corpus (`decisions.md` §4): it walks
+    /// `data/corpus/` for every record carrying a non-empty `raw_bonus_chains`, joins it to the
+    /// converter's own census by `(book, file stem)`, and requires a `BONUS:` census key on the
+    /// matched entry. A record the census does not hold is **counted and reported**, never
+    /// excused: those are corpus records that are not inventory units, which the converter's
+    /// population never sees.
+    #[test]
+    fn every_ingested_bonus_chain_reaches_the_converter() {
+        let census = census();
+        // Keyed on kind as well as book and slug: `core_rulebook` ships a `holy_symbol_silver`
+        // under BOTH `equipment/general/` and `equipment/equipmods/`, and a (book, slug) key
+        // resolves the chain-bearing one to the other's census entry.
+        let mut by_id: BTreeMap<(String, String, String), &TokenCensusRecord> = BTreeMap::new();
+        for entry in &census.entries {
+            let slug = entry.id.rsplit(':').next().unwrap_or("").split('#').next().unwrap_or("").to_string();
+            by_id.entry((entry.book.clone(), entry.kind.clone(), slug)).or_insert(entry);
+        }
+
+        let corpus = repo_root().join("data/corpus");
+        let mut stack = vec![corpus.clone()];
+        let mut with_chains = 0usize;
+        let mut matched = 0usize;
+        let mut not_a_unit = 0usize;
+        let mut dropped = 0usize;
+        let mut offenders: Vec<String> = Vec::new();
+        while let Some(dir) = stack.pop() {
+            let Ok(entries) = std::fs::read_dir(&dir) else { continue };
+            for entry in entries.flatten() {
+                let path = entry.path();
+                if path.is_dir() {
+                    stack.push(path);
+                    continue;
+                }
+                if path.extension().is_none_or(|e| e != "json")
+                    || path.file_name().is_some_and(|n| n == "LICENSE.json")
+                {
+                    continue;
+                }
+                let Ok(text) = std::fs::read_to_string(&path) else { continue };
+                let Ok(doc) = serde_json::from_str::<serde_json::Value>(&text) else { continue };
+                let chains = doc["data"]["raw_bonus_chains"].as_array().map(Vec::len).unwrap_or(0);
+                if chains == 0 {
+                    continue;
+                }
+                with_chains += 1;
+                let rel = path.strip_prefix(&corpus).unwrap();
+                let book = match rel.components().next().map(|c| c.as_os_str().to_string_lossy().to_string()) {
+                    // The corpus directory's historical spelling of the book the converter
+                    // writes as `bestiary`.
+                    Some(b) if b == "beastiary" => "bestiary".to_string(),
+                    Some(b) => b,
+                    None => continue,
+                };
+                let parts: Vec<String> =
+                    rel.components().map(|c| c.as_os_str().to_string_lossy().to_string()).collect();
+                // The corpus directory's kind name, and the one place it differs from the
+                // converter's: `<book>/equipment/equipmods/` is the `equipment_modifier` kind.
+                let kind = if parts.iter().any(|p| p == "equipmods") {
+                    "equipment_modifier".to_string()
+                } else {
+                    parts.get(1).cloned().unwrap_or_default()
+                };
+                let slug = path.file_stem().unwrap().to_string_lossy().to_string();
+                let Some(entry) = by_id.get(&(book.clone(), kind, slug.clone())) else {
+                    not_a_unit += 1;
+                    continue;
+                };
+                matched += 1;
+                if !entry.tokens.iter().any(|t| t.starts_with("BONUS:")) {
+                    dropped += 1;
+                    if offenders.len() < 6 {
+                        offenders.push(format!("{} ({chains} chain(s))", entry.id));
+                    }
+                }
+            }
+        }
+        assert!(with_chains > 0, "the corpus carries records with BONUS chains");
+        assert_eq!(
+            dropped, 0,
+            "{dropped} of {matched} joined corpus records ship BONUS chains the converter never saw \
+             (corpus records carrying chains: {with_chains}; not inventory units: {not_a_unit}). \
+             First offenders: {offenders:?}"
+        );
     }
 }

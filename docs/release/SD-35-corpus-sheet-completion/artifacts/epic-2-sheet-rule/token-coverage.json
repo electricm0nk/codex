@@ -15,10 +15,13 @@
   "refused_records": 142,
   "refused_non_done": 0,
   "token_less_non_done": 0,
-  "token_types": 231,
+  "token_types": 233,
   "refusal_shapes": 1
  },
- "unmapped_token_types": [],
+ "unmapped_token_types": [
+  "BONUS:LOADMULT",
+  "BONUS:SPELLCASTMULT"
+ ],
  "token_types": {
   "token-less": {
    "mapping_row": null,
@@ -219,7 +222,7 @@
     "family": "bonus",
     "maps_to": "Number(Expr) -> Choice.count of the pool's Choice (the sheet prints the picks, not the pool size)"
    },
-   "carrying": 1731,
+   "carrying": 1774,
    "carrying_non_done": 0,
    "converted_non_done": 0,
    "refused_non_done": 0,
@@ -232,7 +235,7 @@
     "family": "bonus",
     "maps_to": "Number(Expr)"
    },
-   "carrying": 172,
+   "carrying": 201,
    "carrying_non_done": 0,
    "converted_non_done": 0,
    "refused_non_done": 0,
@@ -245,7 +248,7 @@
     "family": "bonus",
     "maps_to": "Number(Expr)"
    },
-   "carrying": 597,
+   "carrying": 888,
    "carrying_non_done": 0,
    "converted_non_done": 0,
    "refused_non_done": 0,
@@ -271,7 +274,7 @@
     "family": "bonus",
     "maps_to": "Number(Expr)"
    },
-   "carrying": 48,
+   "carrying": 68,
    "carrying_non_done": 0,
    "converted_non_done": 0,
    "refused_non_done": 0,
@@ -310,7 +313,7 @@
     "family": "bonus",
     "maps_to": "Metadata"
    },
-   "carrying": 13,
+   "carrying": 59,
    "carrying_non_done": 0,
    "converted_non_done": 0,
    "refused_non_done": 0,
@@ -323,7 +326,7 @@
     "family": "bonus",
     "maps_to": "Number(Expr)"
    },
-   "carrying": 22,
+   "carrying": 119,
    "carrying_non_done": 0,
    "converted_non_done": 0,
    "refused_non_done": 0,
@@ -336,7 +339,7 @@
     "family": "bonus",
     "maps_to": "Metadata"
    },
-   "carrying": 1,
+   "carrying": 17,
    "carrying_non_done": 0,
    "converted_non_done": 0,
    "refused_non_done": 0,
@@ -375,7 +378,7 @@
     "family": "bonus",
     "maps_to": "Number(Expr)"
    },
-   "carrying": 49,
+   "carrying": 51,
    "carrying_non_done": 0,
    "converted_non_done": 0,
    "refused_non_done": 0,
@@ -388,7 +391,7 @@
     "family": "bonus",
     "maps_to": "Metadata"
    },
-   "carrying": 10,
+   "carrying": 97,
    "carrying_non_done": 0,
    "converted_non_done": 0,
    "refused_non_done": 0,
@@ -401,7 +404,17 @@
     "family": "bonus",
     "maps_to": "Number(Expr)"
    },
-   "carrying": 3,
+   "carrying": 4,
+   "carrying_non_done": 0,
+   "converted_non_done": 0,
+   "refused_non_done": 0,
+   "refused_because_of_this_token": 0,
+   "refused_because_of_this_token_non_done": 0,
+   "refusal_shapes": {}
+  },
+  "BONUS:LOADMULT": {
+   "mapping_row": null,
+   "carrying": 2,
    "carrying_non_done": 0,
    "converted_non_done": 0,
    "refused_non_done": 0,
@@ -414,7 +427,7 @@
     "family": "bonus",
     "maps_to": "Number(Expr)"
    },
-   "carrying": 44,
+   "carrying": 47,
    "carrying_non_done": 0,
    "converted_non_done": 0,
    "refused_non_done": 0,
@@ -440,7 +453,7 @@
     "family": "bonus",
     "maps_to": "Number(Expr)"
    },
-   "carrying": 133,
+   "carrying": 146,
    "carrying_non_done": 0,
    "converted_non_done": 0,
    "refused_non_done": 0,
@@ -453,7 +466,7 @@
     "family": "bonus",
     "maps_to": "Number(Expr)"
    },
-   "carrying": 1,
+   "carrying": 2,
    "carrying_non_done": 0,
    "converted_non_done": 0,
    "refused_non_done": 0,
@@ -479,7 +492,7 @@
     "family": "bonus",
     "maps_to": "Number(Expr)"
    },
-   "carrying": 4,
+   "carrying": 7,
    "carrying_non_done": 0,
    "converted_non_done": 0,
    "refused_non_done": 0,
@@ -492,7 +505,7 @@
     "family": "bonus",
     "maps_to": "Number(Expr)"
    },
-   "carrying": 4,
+   "carrying": 6,
    "carrying_non_done": 0,
    "converted_non_done": 0,
    "refused_non_done": 0,
@@ -518,7 +531,7 @@
     "family": "bonus",
     "maps_to": "Number(Expr)"
    },
-   "carrying": 347,
+   "carrying": 402,
    "carrying_non_done": 0,
    "converted_non_done": 0,
    "refused_non_done": 0,
@@ -531,7 +544,7 @@
     "family": "bonus",
     "maps_to": "Number(Expr)"
    },
-   "carrying": 509,
+   "carrying": 597,
    "carrying_non_done": 0,
    "converted_non_done": 0,
    "refused_non_done": 0,
@@ -557,7 +570,7 @@
     "family": "bonus",
     "maps_to": "Number(Expr)"
    },
-   "carrying": 1571,
+   "carrying": 1889,
    "carrying_non_done": 0,
    "converted_non_done": 0,
    "refused_non_done": 0,
@@ -570,7 +583,7 @@
     "family": "bonus",
     "maps_to": "Number(Expr)"
    },
-   "carrying": 16,
+   "carrying": 18,
    "carrying_non_done": 0,
    "converted_non_done": 0,
    "refused_non_done": 0,
@@ -596,7 +609,7 @@
     "family": "bonus",
     "maps_to": "Number(Expr)"
    },
-   "carrying": 50,
+   "carrying": 54,
    "carrying_non_done": 0,
    "converted_non_done": 0,
    "refused_non_done": 0,
@@ -609,7 +622,7 @@
     "family": "bonus",
     "maps_to": "Metadata(ignored-by-sheet)"
    },
-   "carrying": 12,
+   "carrying": 20,
    "carrying_non_done": 0,
    "converted_non_done": 0,
    "refused_non_done": 0,
@@ -635,7 +648,17 @@
     "family": "bonus",
     "maps_to": "Number(Expr)"
    },
-   "carrying": 94,
+   "carrying": 97,
+   "carrying_non_done": 0,
+   "converted_non_done": 0,
+   "refused_non_done": 0,
+   "refused_because_of_this_token": 0,
+   "refused_because_of_this_token_non_done": 0,
+   "refusal_shapes": {}
+  },
+  "BONUS:SPELLCASTMULT": {
+   "mapping_row": null,
+   "carrying": 4,
    "carrying_non_done": 0,
    "converted_non_done": 0,
    "refused_non_done": 0,
@@ -648,7 +671,7 @@
     "family": "bonus",
     "maps_to": "Number(Expr)"
    },
-   "carrying": 439,
+   "carrying": 452,
    "carrying_non_done": 0,
    "converted_non_done": 0,
    "refused_non_done": 0,
@@ -661,7 +684,7 @@
     "family": "bonus",
     "maps_to": "Number(Expr)"
    },
-   "carrying": 2322,
+   "carrying": 2442,
    "carrying_non_done": 0,
    "converted_non_done": 0,
    "refused_non_done": 0,
@@ -674,7 +697,7 @@
     "family": "bonus",
     "maps_to": "Number(Expr)"
    },
-   "carrying": 2,
+   "carrying": 3,
    "carrying_non_done": 0,
    "converted_non_done": 0,
    "refused_non_done": 0,
@@ -687,7 +710,7 @@
     "family": "bonus",
     "maps_to": "Number(Expr) -- a contribution to a corpus variable, never a sheet line"
    },
-   "carrying": 10602,
+   "carrying": 11293,
    "carrying_non_done": 0,
    "converted_non_done": 0,
    "refused_non_done": 0,
@@ -700,7 +723,7 @@
     "family": "bonus",
     "maps_to": "Number(Expr)"
    },
-   "carrying": 47,
+   "carrying": 52,
    "carrying_non_done": 0,
    "converted_non_done": 0,
    "refused_non_done": 0,
@@ -713,7 +736,7 @@
     "family": "bonus",
     "maps_to": "Number(Expr)"
    },
-   "carrying": 30,
+   "carrying": 158,
    "carrying_non_done": 0,
    "converted_non_done": 0,
    "refused_non_done": 0,
@@ -726,7 +749,7 @@
     "family": "bonus",
     "maps_to": "Number(Expr)"
    },
-   "carrying": 873,
+   "carrying": 907,
    "carrying_non_done": 0,
    "converted_non_done": 0,
    "refused_non_done": 0,
@@ -752,7 +775,7 @@
     "family": "bonus",
     "maps_to": "REFUSE"
    },
-   "carrying": 62,
+   "carrying": 63,
    "carrying_non_done": 0,
    "converted_non_done": 0,
    "refused_non_done": 0,
@@ -3061,7 +3084,7 @@
    "ok": true
   },
   "partition": {
-   "token_types": 231,
+   "token_types": 233,
    "ok": true
   }
  },

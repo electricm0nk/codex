@@ -1,1 +1,1 @@
-{"var":"vfa8bec9ee42d1969","declared_by":["pathfinder_unchained:class_feature:unchained_monk_ki_powers"],"contributions":[],"provenance":{}}
+{"var":"vfa8bec9ee42d1969","declared_by":["pathfinder_unchained:class_feature:unchained_monk_ki_powers"],"contributions":[{"rule_id":"pathfinder_unchained:class_feature:unchained_monk_ki_powers","expr":{"Var":"v4df3d6f86dee7b25"},"when":"Always"}],"provenance":{}}

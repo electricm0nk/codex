@@ -1,1 +1,1 @@
-{"var":"v84e920c941f7560e","declared_by":["bestiary_6:monster_ability:universal_monster_rule_negative_energy_affinity"],"contributions":[],"provenance":{}}
+{"var":"v84e920c941f7560e","declared_by":["bestiary_6:monster_ability:universal_monster_rule_negative_energy_affinity"],"contributions":[{"rule_id":"bestiary_2:race_trait:dhampir_negative_energy_affinity","expr":{"Const":1},"bonus_type":{"name":"Boolean","mode":"Plain"},"when":"Always"}],"provenance":{}}

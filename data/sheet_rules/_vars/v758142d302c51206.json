@@ -1,1 +1,1 @@
-{"var":"v758142d302c51206","declared_by":["core_rulebook:race_trait:racial_sla_deathwatch"],"contributions":[],"provenance":{}}
+{"var":"v758142d302c51206","declared_by":["core_rulebook:race_trait:racial_sla_deathwatch"],"contributions":[{"rule_id":"advanced_race_guide:race_trait:tiefling_soul_seer","expr":{"Const":1},"bonus_type":{"name":"Boolean","mode":"Plain"},"when":"Always"}],"provenance":{}}
