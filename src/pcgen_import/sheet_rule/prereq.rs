@@ -47,6 +47,76 @@ fn situational(text: &str) -> Applies {
     Applies::Situational { text: text.to_string() }
 }
 
+/// The item phrase behind an equipped-item census operand, or `None` when the operand is
+/// something else. `"heavy armor"`, `"shield"`, `"medium armor"` -- never the operand's own
+/// text.
+///
+/// The source format writes "how many pieces of this kind of gear is the character wearing"
+/// as a variable holding an item census. The sheet holds no equipment census, and the formula
+/// side refuses the operand outright (`formula.rs`, `FORMULA:var(COUNT)`) -- which used to
+/// take the whole gate, and with it the whole row the gate sat on, down with it. Under the
+/// sheet rule a term nobody can settle is printed as words, not refused (`decisions.md §1`
+/// form 3, and §15 R2's RULED shape: omit what cannot be converted, print the remainder,
+/// never refuse forever), so this reads the census's own subject out of the operand and hands
+/// it to the per-type word templates `PREARMORTYPE` and `PREEQUIP` below already use.
+fn equipped_census_phrase(operand: &str) -> Option<String> {
+    let inner = operand
+        .trim()
+        .strip_prefix("var(")?
+        .strip_suffix(')')?
+        .trim()
+        .trim_matches('"')
+        .trim();
+    let body = inner.strip_prefix("COUNT[")?.strip_suffix(']')?;
+    let mut parts = body.split('.');
+    if !parts.next()?.eq_ignore_ascii_case("EQTYPE") {
+        return None;
+    }
+    let base = parts.next()?.to_ascii_lowercase();
+    if base.is_empty() {
+        return None;
+    }
+    let mut qualifiers: Vec<String> = Vec::new();
+    let mut take_next = false;
+    for part in parts {
+        if part.eq_ignore_ascii_case("IS") {
+            take_next = true;
+            continue;
+        }
+        if part.eq_ignore_ascii_case("EQUIPPED") || part.eq_ignore_ascii_case("NOT") {
+            take_next = false;
+            continue;
+        }
+        if take_next {
+            qualifiers.push(part.to_ascii_lowercase());
+            take_next = false;
+        } else {
+            // An unrecognised selector: the phrase would be a guess. Refuse rather than
+            // describe the wrong gear.
+            return None;
+        }
+    }
+    qualifiers.push(base);
+    Some(qualifiers.join(" "))
+}
+
+/// The words for `<equipped census of `phrase`> <op> <n>`. `None` when the right-hand side is
+/// not a settled number, in which case the caller falls through to its ordinary refusal.
+fn equipped_census_words(op: Cmp, phrase: &str, rhs: &Expr) -> Option<Applies> {
+    let Expr::Const(n) = rhs else { return None };
+    let n = *n;
+    Some(situational(&match (op, n) {
+        (Cmp::Lt, 1) | (Cmp::Lte, 0) | (Cmp::Eq, 0) => format!("while wearing no {phrase}"),
+        (Cmp::Gte, 1) | (Cmp::Gt, 0) | (Cmp::Ne, 0) => format!("while wearing {phrase}"),
+        (Cmp::Lt, _) => format!("while wearing fewer than {n} {phrase}"),
+        (Cmp::Lte, _) => format!("while wearing at most {n} {phrase}"),
+        (Cmp::Gte, _) => format!("while wearing at least {n} {phrase}"),
+        (Cmp::Gt, _) => format!("while wearing more than {n} {phrase}"),
+        (Cmp::Eq, _) => format!("while wearing exactly {n} {phrase}"),
+        (Cmp::Ne, _) => format!("while not wearing exactly {n} {phrase}"),
+    }))
+}
+
 /// A gate as a 0/1 `Expr` for folding into an addend (row 19 / C17); `None` when the gate
 /// reads a held-set fact the arithmetic cannot express.
 pub fn applies_as_01(a: &Applies) -> Option<Expr> {
@@ -134,6 +204,15 @@ fn convert_pre(ctx: &mut RecordCtx, kind: &str, body: &str) -> Result<Applies, S
             }
             let mut terms = Vec::new();
             for pair in parts.chunks(2) {
+                // An equipped-item census the sheet does not hold: print the gate's words
+                // rather than refuse the row it sits on (`equipped_census_phrase`).
+                if let Some(phrase) = equipped_census_phrase(pair[0].trim())
+                    && let Ok(rhs) = convert_formula(ctx, pair[1].trim())
+                    && let Some(words) = equipped_census_words(op, &phrase, &rhs)
+                {
+                    terms.push(words);
+                    continue;
+                }
                 let lhs = convert_formula(ctx, pair[0].trim())?;
                 let rhs = convert_formula(ctx, pair[1].trim())?;
                 if let (Expr::Const(a), Expr::Const(b)) = (&lhs, &rhs) {

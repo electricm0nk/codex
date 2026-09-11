@@ -2,8 +2,8 @@
   "records": 49438,
   "converted": 49296,
   "refused": 142,
-  "rules_written": 69344,
-  "var_tables": 5277,
+  "rules_written": 69346,
+  "var_tables": 5278,
   "by_kind": {
     "ability": {
       "records": 4337,
@@ -104,7 +104,7 @@
   "refused_by_token_type": {
     "no_corpus_record": 142
   },
-  "degraded_records": 603,
+  "degraded_records": 398,
   "degraded_by_token_type": {
     "ADD (CLASSSKILLS)": 1,
     "ASPECT\u003a<malformed sub-key>": 1,
@@ -147,7 +147,7 @@
     "FORMULA\u003avar(<export token>) (SPELLFAILURE\u003a equipment/encumbrance state)": 1,
     "FORMULA\u003avar(AC)": 11,
     "FORMULA\u003avar(ARMOR)": 2,
-    "FORMULA\u003avar(COUNT)": 211,
+    "FORMULA\u003avar(COUNT)": 3,
     "FORMULA\u003avar(HD)": 1,
     "FORMULA\u003avar(HP)": 1,
     "FORMULA\u003avar(MOVE)": 2,

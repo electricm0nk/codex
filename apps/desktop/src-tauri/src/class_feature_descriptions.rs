@@ -6,7 +6,7 @@
 //! `ClassFeatureRow.detail` (`characterHub/classFeaturesModel.ts`) renders
 //! `ExplanationDto.detail` -- the rules engine's own COMPUTED derivation
 //! text, cited from `pilot_compute.rs`'s explanations. That is real and
-//! correct for what it is, but it is not the corpus `DESC:` text: a feature
+//! correct for what it is, but it is not the record's own rulebook text: a feature
 //! whose engine derivation is a bare `+2` magnitude with no accompanying
 //! prose carries no rulebook description anywhere on the character sheet.
 //! `SD31-D7-PROSE-001`/`002` built the equivalent surface for `race_trait`
@@ -17,21 +17,34 @@
 //! description onto the wire -- this module is that missing render path,
 //! built to the same shape.
 //!
-//! # Source of truth: the `cache_gen::class_feature` JSON cache, not the raw
-//! `.lst`
+//! # Source of truth: the record's identity from the corpus cache, its words
+//! from the converted package
 //!
-//! `src/pcgen_import/cache_gen/class_feature.rs` (SD31-E5-F1-001) already
-//! transcribes every in-scope `class_feature` unit's real corpus row --
-//! `DESC:` included, already PI-screened (`§52.3`/`§53.5`, both contracts) --
-//! into `data/corpus/<book>/class_feature/<class-slug>/<feature-slug>.json`.
-//! This module reads that cache exactly the way `corpus_full.rs` reads
-//! `data/corpus/<book>/equipment/` for the real equipment corpus: via
-//! `authoring_workbench::codex_repo_root()`, the same dev-checkout path
-//! resolution every other real-corpus reader in this crate already uses.
+//! `src/pcgen_import/cache_gen/class_feature.rs` (SD31-E5-F1-001) transcribes
+//! every in-scope `class_feature` unit's real corpus row into
+//! `data/corpus/<book>/class_feature/<class-slug>/<feature-slug>.json`, and
+//! this module reads that cache for the four plain identity fields it needs
+//! (`key`, `name`, `class`, and the book directory the record sits in) --
+//! exactly the way `corpus_full.rs` reads `data/corpus/<book>/equipment/`, via
+//! `authoring_workbench::codex_repo_root()`.
+//!
+//! **The description no longer comes from there.** SD-35 `decisions.md §11`:
+//! nothing on the live side reads the ingest format's own description string,
+//! its argument tail, or its placeholders. The substitution this module used to
+//! perform at run time already happened at ingest
+//! (`src/pcgen_import/sheet_rule/`); the served text is now the converted
+//! record's own words, read through
+//! [`codex::rules_core::sheet_rule_catalog::catalog_description`] -- one final
+//! number, dice in final form, or the rule's words for a term no catalog screen
+//! can settle (`decisions.md §1`). The join is the record's own converted id,
+//! [`converted_id`].
+//!
 //! **Same packaging caveat as `corpus_full.rs`**: this works for a source
 //! checkout and any deployment that sets `CODEX_REPO_ROOT` to a location
 //! carrying `data/corpus/`; bundling `data/corpus/` into a packaged Tauri
 //! installer is separate, already-tracked follow-on work, not assumed here.
+//! `data/sheet_rules/` is loaded by `corpus_loader::live_sheet_rules`, which
+//! resolves it from the library crate's own manifest directory.
 //!
 //! # The join: `(class_slug, feature_slug)`, not a stored crosswalk
 //!
@@ -63,29 +76,28 @@
 //! own, the same trust boundary `corpus_full.rs` and every other
 //! `data/corpus/`-reading module in this crate already holds.
 //!
-//! # The leak guard
+//! # The leak guard is gone, because there is nothing left to leak
 //!
-//! Same check as `monster_catalog::serve_ability_description` /
-//! `companion_catalog::serve_ability_description`: `render_pcgen_desc`'s
-//! output is checked with `leaked_pcgen_syntax`. **Skip, not panic** --
-//! deliberately different from those two: their registered population is a
-//! small, hand-vetted list re-checked every time a book is added, so a panic
-//! there is a proven-unreachable invariant. This catalog walks 12,000+ live
-//! corpus records at process-start time, and
-//! `every_real_class_feature_description_renders_without_a_pcgen_syntax_leak`
-//! (this module's own test) found a real one live
-//! (`advanced_class_guide:class_feature:
-//! enhancement_savant_subschool_perfection_of_self`) -- a hard panic there
-//! would crash every character sheet on process start over one malformed row
-//! anywhere in the whole corpus. See [`load_class_feature_descriptions`]'s
-//! own inline comment for the exact shape and why skip-and-report is the
-//! conservative, honest response.
+//! This module used to render the ingest format's description at run time and
+//! then check the output for surviving syntax (`leaked_pcgen_syntax`), skipping
+//! a record whose render mis-split. Both the render and the check are gone: the
+//! converted package carries no token, no formula string, no argument tail and
+//! no positional placeholder, which `sheet_rule_convert -- --check` and the
+//! package-wide source-marker grep over `data/sheet_rules/` in
+//! `workflow-instruction.md §6` prove for the whole package rather than per
+//! record. The two refusals that remain are stated over our own schema:
+//! a record with no converted rule, and a converted rule that states no
+//! descriptive prose at all ([`catalog_description`]'s `None` arm).
 
 use std::path::{Path, PathBuf};
 use std::sync::OnceLock;
 
 use serde::Serialize;
 use serde_json::Value;
+
+use codex::rules_core::corpus_loader::live_sheet_rules;
+use codex::rules_core::sheet_rule::SheetRulePackage;
+use codex::rules_core::sheet_rule_catalog::catalog_description;
 
 use crate::authoring_workbench::codex_repo_root;
 
@@ -110,9 +122,10 @@ pub struct ClassFeatureDescriptionDto {
     /// The corpus `KEY:` token verbatim (`"Rogue ~ Sneak Attack"`).
     pub key: String,
     pub name: String,
-    /// Rendered through `render_pcgen_desc`, leak-checked. Never `null` --
-    /// records with no real description are not emitted at all (see
-    /// `is_real_description_value`).
+    /// The converted record's own words ([`catalog_description`]) -- one final
+    /// number, dice in final form, or the rule's words for a term no catalog
+    /// screen can settle. Never `null` and never empty: a record whose
+    /// converted rule states no descriptive prose is not emitted at all.
     pub description: String,
     /// `None` for every record this module itself emits. `Some(<exact feat
     /// name>)` is `class_feature_feat_bridge.rs`'s own addition (T4-L9,
@@ -180,16 +193,26 @@ fn walk_json_files(dir: &Path, out: &mut Vec<PathBuf>) {
     }
 }
 
+/// The converted rule id for a corpus `class_feature` record: the record's own
+/// `data.key` slugged, under its book. `beastiary` is the corpus directory's
+/// historical spelling of the book the converter writes as `bestiary` -- the
+/// same one-line fold `companion_pool_catalog::converted_id` carries.
+pub(crate) fn converted_id(corpus_book: &str, corpus_key: &str) -> String {
+    let book = if corpus_book == "beastiary" { "bestiary" } else { corpus_book };
+    format!("{book}:class_feature:{}", codex::rules_core::sheet_rule::slug(corpus_key))
+}
+
 /// Reads every `class_feature` cache record under `<repo_root>/data/corpus/
-/// */class_feature/**/*.json`, keeping only the ones that carry a real
-/// description and a resolvable owning class (`data.class`) -- a pool-member
-/// record with no `~`-split owner has no class to join against and is
-/// correctly absent from this catalog, exactly as it is absent from
+/// */class_feature/**/*.json`, keeping only the ones with a resolvable owning
+/// class (`data.class`) whose converted rule states descriptive prose -- a
+/// pool-member record with no `~`-split owner has no class to join against and
+/// is correctly absent from this catalog, exactly as it is absent from
 /// `Kind::ClassFeature`'s `class_feature_owner` matching in
 /// `v06_work_inventory.rs`.
 fn load_class_feature_descriptions(repo_root: &Path) -> Vec<ClassFeatureDescriptionDto> {
     let corpus_root = repo_root.join("data/corpus");
     let mut out = Vec::new();
+    let package: Option<&'static SheetRulePackage> = live_sheet_rules();
     let Ok(books) = std::fs::read_dir(&corpus_root) else { return out };
     let mut book_dirs: Vec<_> = books.flatten().collect();
     book_dirs.sort_by_key(|e| e.file_name());
@@ -214,57 +237,19 @@ fn load_class_feature_descriptions(repo_root: &Path) -> Vec<ClassFeatureDescript
             else {
                 continue;
             };
-            let Some(raw_desc) = data["description"].as_str() else { continue };
-            if !is_real_description_value(raw_desc) {
-                continue;
-            }
-            let rendered = codex::rules_core::pcgen_desc::render_pcgen_desc(raw_desc);
-            // SD-31 wave 26 bugfix (`OPERATOR-RULINGS-2026-08-21.md` §20): a `%N` this catalog
-            // has no character context to fill must not be served with the number silently
-            // missing. `render_pcgen_desc` (empty `PcgenDisplayValues`) drops the placeholder
-            // AND the `+`/`-` sign that introduced it, so a real corpus row like `Rogue ~
-            // Trapfinding`'s "You add +%1 to Perception..." rendered as "You add to
-            // Perception..." -- syntactically clean, semantically missing its own headline
-            // number, and NOTHING here ever refused to serve it (the ONLY prior guard,
-            // `leaked_pcgen_syntax` below, checks for raw PCGen syntax reaching the screen, which
-            // a cleanly-dropped placeholder never trips). `class_feature_grant_consumer.rs`'s
-            // OWN sibling gate (`corpus_records_with_real_description`) already carries this
-            // exact check, flagged there as a "Gate-weakening review finding (SD-31 wave 23
-            // integration cycle)" -- this catalog never got the same fix until now. Real,
-            // per-character resolved text for a record shaped exactly like this now reaches the
-            // player through `class_feature_grant_consumer`'s own `detail` field instead (wave
-            // 26's formula-interpreter-backed chain resolution), for every grant fact it can
-            // prove; this catalog carries no character context at all (built once, process-wide),
-            // so refusing to serve an incomplete sentence is the honest response here, matching
-            // `is_real_description_value`'s own posture for an empty/placeholder description.
-            if !rendered.dropped_args.is_empty() {
-                continue;
-            }
-            // A hard panic (`monster_catalog`/`companion_catalog`'s own
-            // convention) is right for those two chassis-table kinds, whose
-            // registered population is a small, hand-vetted list re-checked
-            // every time a book is added. This catalog walks 12,000+ live
-            // corpus records at process-start time, and a single malformed
-            // row (found live: `advanced_class_guide:class_feature:
-            // enhancement_savant_subschool_perfection_of_self`'s row
-            // declares TWO pipe-separated arguments but its prose only
-            // references `%1`, so `render_pcgen_desc`'s segment-count-vs-
-            // max-reference heuristic mis-splits and a literal `|` survives
-            // into the rendered text) would otherwise crash every character
-            // sheet on process start over one bad row anywhere in the whole
-            // corpus. The conservative, honest response is the SAME one
-            // `is_real_description_value` already applies to an empty or
-            // placeholder description: refuse to serve it, count it, never
-            // guess a value or ship broken text. Not silent -- `eprintln!`
-            // so a real occurrence is visible in the app's own log, and
-            // `a_record_whose_render_leaks_a_pipe_argument_tail_is_refused_
-            // not_shipped` (this module's own test, below) pins the exact
-            // known record by name.
-            if let Some(leak) = codex::rules_core::pcgen_desc::leaked_pcgen_syntax(&rendered.text) {
-                eprintln!(
-                    "class_feature_descriptions: refusing to serve {key:?} ({book}) -- rendered \
-                     description still carries {leak}. Raw token: {raw_desc:?}"
-                );
+            // The converted record's own words. Everything this call site used
+            // to do at run time -- read the ingest format's description string,
+            // split its argument tail, substitute its positional placeholders,
+            // then check the result for surviving syntax -- happened at ingest
+            // instead (`src/pcgen_import/sheet_rule/`, `decisions.md §11`).
+            let Some(package) = package else { continue };
+            let Some(rule) = package.rule(&converted_id(&book, key)) else { continue };
+            // The refuse gate, restated over the converted package: a record
+            // whose rule states no descriptive prose at all has nothing to
+            // serve. Same disposition as before -- refused, never a partial or
+            // fabricated sentence -- asked of our own schema.
+            let Some(description) = catalog_description(package, rule) else { continue };
+            if !is_real_description_value(&description) {
                 continue;
             }
             out.push(ClassFeatureDescriptionDto {
@@ -273,7 +258,7 @@ fn load_class_feature_descriptions(repo_root: &Path) -> Vec<ClassFeatureDescript
                 feature_slug: slug(name),
                 key: key.to_string(),
                 name: name.to_string(),
-                description: rendered.text,
+                description,
                 granted_feat: None,
             });
         }
@@ -336,7 +321,7 @@ mod tests {
         );
         // `Rogue ~ Sneak Attack` itself carries `description: null` in the
         // real corpus (its rules text lives on the class table, not a
-        // per-feature `DESC:`) -- not a fixture stand-in for that record,
+        // per-feature description) -- not a fixture stand-in for that record,
         // `Aberrant Bloodline ~ Aberrant Form` genuinely does carry a real,
         // `%N`-free description (SD-31 wave 26: `Rogue ~ Trapfinding` USED
         // to be this test's example, but its description carries an
@@ -367,153 +352,167 @@ mod tests {
         assert!(!record.description.contains('|'), "the pipe-arg tail must never leak into prose");
     }
 
-    /// SD-31 wave 26 bugfix. `corpus_records_with_real_description`
-    /// (`class_feature_grant_consumer.rs`) already refuses to admit a record
-    /// whose empty-values render still drops an argument -- "Gate-weakening
-    /// review finding (SD-31 wave 23 integration cycle)", its own comment
-    /// says, over exactly this signal. This catalog never got the same fix:
-    /// it only ever checked `leaked_pcgen_syntax` (raw `%`/`|` leaking onto
-    /// the screen), which a CLEANLY dropped `%N` never trips -- `render_
-    /// pcgen_desc` removes the placeholder AND its introducing `+` sign, so
-    /// `Rogue ~ Trapfinding`'s real corpus text ("You add +%1 to Perception
-    /// skill checks...") shipped as "You add to Perception skill checks..."
-    /// -- syntactically clean, semantically missing its own headline number,
-    /// with nothing here ever refusing to serve it. A player reading that
-    /// sentence has no way to tell the magnitude is missing rather than
-    /// truly absent from the rule. This catalog carries no character
-    /// context to fill the placeholder (it is built once, process-wide, per
-    /// `class_feature_descriptions()`'s own `OnceLock` caching), so the
-    /// honest response mirrors `corpus_records_with_real_description`'s own:
-    /// refuse to serve, count it, never ship a sentence with its own number
-    /// silently missing. Real, per-character resolved text for records
-    /// shaped exactly like this now reaches the player through
-    /// `class_feature_grant_consumer`'s own `detail` field instead
-    /// (SD-31 wave 26), for every grant fact its formula-interpreter-backed
-    /// chain resolution can prove.
+    /// SD-35 `AT-35-E6-003` cycle 4 -- the same record, the opposite
+    /// disposition, and the reason the disposition changed.
+    ///
+    /// `Rogue ~ Trapfinding`'s real rulebook sentence is "You add +%1 to
+    /// Perception skill checks ...". When this module rendered the ingest
+    /// format at run time, the `%1` had no character context to fill, the
+    /// renderer dropped the placeholder AND the `+` that introduced it, and the
+    /// honest response was to refuse the record entirely -- a player saw no
+    /// Trapfinding text at all. The converter now carries that hole as a TYPED
+    /// slot over the term it stands on, and `catalog_description` prints the
+    /// term's words where no number can be settled (`decisions.md §1` form 3).
+    /// So the record is served, with its own sentence, naming what the number
+    /// depends on instead of silently losing it.
     #[test]
-    fn a_description_whose_percent_n_argument_has_no_character_context_to_resolve_it_is_not_served() {
+    fn the_record_that_used_to_be_refused_for_an_unfillable_number_now_serves_its_words() {
         let descriptions = load_class_feature_descriptions(&repo_root());
-        let trapfinding =
-            descriptions.iter().find(|d| d.book == "core_rulebook" && d.key == "Rogue ~ Trapfinding");
+        let trapfinding = descriptions
+            .iter()
+            .find(|d| d.book == "core_rulebook" && d.key == "Rogue ~ Trapfinding")
+            .expect("Rogue ~ Trapfinding must now be served: its slot prints the term's words");
         assert!(
-            trapfinding.is_none(),
-            "Rogue ~ Trapfinding's real DESC carries an unresolved %1 this catalog has no \
-             character context to fill; serving it silently drops the '+N' magnitude the whole \
-             sentence exists to state. Got: {trapfinding:?}"
+            trapfinding.description.starts_with("You add +"),
+            "the sentence must keep the sign the old render path dropped: {:?}",
+            trapfinding.description
+        );
+        assert!(
+            trapfinding.description.contains("to Perception skill checks made to locate traps"),
+            "the rest of the real sentence must survive: {:?}",
+            trapfinding.description
+        );
+        assert!(
+            !carries_a_positional_placeholder(&trapfinding.description),
+            "no positional placeholder may reach the screen: {:?}",
+            trapfinding.description
         );
     }
 
-    /// The refusal above is not vacuous scope-narrowing: a real, live sample of the corpus
-    /// carries this exact shape (thousands of records), and this general, corpus-wide sweep
-    /// proves NONE of them survive into the served catalog -- not just the one hand-picked
-    /// `Rogue ~ Trapfinding` example. Re-derives, independently of `load_class_feature_
-    /// descriptions`'s own admission gate, whether each served record's RAW description would
-    /// have dropped an argument when rendered with no values -- exactly the condition the fix
-    /// must exclude.
+    /// The same for the one record whose run-time render was known to MIS-SPLIT
+    /// -- `Enhancement Savant Subschool ~ Perfection of Self` declared two
+    /// pipe-separated arguments while its prose referenced only `%1`, so the
+    /// renderer's segment-count heuristic left a literal `|` in the output and
+    /// this module refused it. The converter splits the source row structurally
+    /// rather than by counting segments, so the record now serves a clean
+    /// sentence with both of its holes printed as words.
     #[test]
-    fn no_served_description_ever_carries_a_cleanly_dropped_but_semantically_incomplete_placeholder() {
-        let repo = repo_root();
-        let mut raw_with_percent_n = 0usize;
-        let corpus_root = repo.join("data/corpus");
-        let books = std::fs::read_dir(&corpus_root).expect("data/corpus must exist");
-        let mut raw_descriptions_by_key = std::collections::BTreeMap::new();
-        for book_entry in books.flatten() {
-            let cf_dir = book_entry.path().join("class_feature");
-            if !cf_dir.is_dir() {
+    fn the_record_whose_run_time_render_used_to_mis_split_now_serves_a_clean_sentence() {
+        let descriptions = load_class_feature_descriptions(&repo_root());
+        let record = descriptions
+            .iter()
+            .find(|d| d.key == "Enhancement Savant Subschool ~ Perfection of Self")
+            .expect("the formerly-refused mis-splitting record must now be served");
+        assert!(
+            record.description.starts_with("As a swift action you can grant yourself a +"),
+            "{:?}",
+            record.description
+        );
+        assert!(record.description.ends_with("times per day."), "{:?}", record.description);
+        assert!(!record.description.contains('|'), "{:?}", record.description);
+        assert!(
+            !carries_a_positional_placeholder(&record.description),
+            "{:?}",
+            record.description
+        );
+    }
+
+    /// `%1`, `%2`, ... -- the source format's positional placeholder, the one
+    /// thing that must never reach a player's eye. Deliberately NOT a bare `%`
+    /// or a bare `|`: real rulebook prose uses both (`"increased by half
+    /// (+50%)"`, a spell's damage table row), and a test that banned the
+    /// characters rather than the construct would be measuring English, not
+    /// ingest-format residue -- it flagged 173 clean sentences when it was
+    /// first written this way (`AT-35-E6-003` cycle 4).
+    fn carries_a_positional_placeholder(text: &str) -> bool {
+        let bytes = text.as_bytes();
+        bytes
+            .iter()
+            .enumerate()
+            .any(|(i, b)| *b == b'%' && bytes.get(i + 1).is_some_and(u8::is_ascii_digit))
+    }
+
+    /// Corpus-wide, over the whole served population: no served description
+    /// carries a positional placeholder. This replaces the two run-time guards
+    /// this module used to run per record -- the dropped-argument check and the
+    /// leaked-syntax check -- both of them properties of a render this module no
+    /// longer performs. The rest of what they protected (no source-format marker
+    /// anywhere in the served text) is proven for the WHOLE package, all 49,438
+    /// units, by `workflow-instruction.md §6`'s source-marker grep over
+    /// `data/sheet_rules/`; restating it per served row here would be a second,
+    /// weaker copy of a gate that already runs every cycle.
+    #[test]
+    fn no_served_description_carries_a_positional_placeholder() {
+        let descriptions = load_class_feature_descriptions(&repo_root());
+        assert!(
+            descriptions.len() > 1000,
+            "no real descriptions were checked; the check proved nothing: {}",
+            descriptions.len()
+        );
+        let mut offenders: Vec<&str> = Vec::new();
+        for record in &descriptions {
+            let text = record.description.as_str();
+            if carries_a_positional_placeholder(text) {
+                offenders.push(record.key.as_str());
+            }
+        }
+        assert!(
+            offenders.is_empty(),
+            "{} served description(s) carry a positional placeholder: {:?}",
+            offenders.len(),
+            offenders.iter().take(8).collect::<Vec<_>>()
+        );
+    }
+
+    /// Mutation-proves-RED per the universal requirement, asked of the LIVE
+    /// converted package rather than a hand-written fixture (`decisions.md §4`):
+    /// across every converted `class_feature` rule, some state descriptive
+    /// prose and some state none, so `catalog_description`'s `Some` arm AND its
+    /// `None` arm -- this module's whole refusal -- are both reached. A gate
+    /// that answered the same way for every record would be the vacuous one
+    /// this test exists to catch.
+    #[test]
+    fn the_refuse_gate_is_provably_live_over_the_converted_package() {
+        let package = live_sheet_rules().expect(
+            "data/sheet_rules/ must be present (cargo run --locked --bin sheet_rule_convert)",
+        );
+        let mut with_prose = 0usize;
+        let mut without_prose = 0usize;
+        for (id, rule) in &package.rules {
+            if !id.contains(":class_feature:") {
                 continue;
             }
-            let mut files = Vec::new();
-            walk_json_files(&cf_dir, &mut files);
-            for file in files {
-                let Ok(text) = std::fs::read_to_string(&file) else { continue };
-                let Ok(doc) = serde_json::from_str::<Value>(&text) else { continue };
-                let Some(key) = doc["data"]["key"].as_str() else { continue };
-                if let Some(desc) = doc["data"]["description"].as_str() {
-                    if !is_real_description_value(desc) {
-                        continue;
-                    }
-                    if desc.contains('%') {
-                        raw_with_percent_n += 1;
-                    }
-                    raw_descriptions_by_key.entry(key.to_string()).or_insert_with(|| desc.to_string());
-                }
+            match catalog_description(package, rule) {
+                Some(text) if is_real_description_value(&text) => with_prose += 1,
+                _ => without_prose += 1,
             }
         }
-        assert!(
-            raw_with_percent_n > 1000,
-            "expected thousands of real corpus class_feature descriptions carrying an unresolved \
-             %N -- this is the population the fix must exclude, and a suspiciously low count here \
-             would mean this test measured nothing: got {raw_with_percent_n}"
-        );
-
-        let descriptions = load_class_feature_descriptions(&repo);
-        let mut incomplete: Vec<&str> = Vec::new();
-        for served in &descriptions {
-            let Some(raw) = raw_descriptions_by_key.get(&served.key) else { continue };
-            let rendered = codex::rules_core::pcgen_desc::render_pcgen_desc(raw);
-            if !rendered.dropped_args.is_empty() {
-                incomplete.push(served.key.as_str());
-            }
-        }
-        assert!(
-            incomplete.is_empty(),
-            "{} served description(s) silently dropped a %N argument with no character context: \
-             {incomplete:?}",
-            incomplete.len()
-        );
+        println!("CLASS_FEATURE_RULES with_prose={with_prose} without_prose={without_prose}");
+        assert!(with_prose > 0, "no converted class_feature record states any descriptive prose");
+        assert!(without_prose > 0, "the refuse arm is never reached -- the gate is vacuous");
     }
 
-    /// No served description leaks unresolved PCGen syntax onto the screen --
-    /// the same certification `monster_catalog`/`companion_catalog` each
-    /// run, over the REAL cache rather than a hand-picked sample, so the
-    /// production hard panic is a proven-unreachable invariant.
+    /// The population ratchet. `AT-35-E6-003` cycle 4 measured the served
+    /// population on both sides of the swap with a temporary census: **8,895
+    /// before, 11,877 after**, 23 of the 8,895 lost -- every one of them a
+    /// corpus record with no converted rule at all, named in that cycle's
+    /// receipt. A floor, not an identity: a cycle that lost a row and gained a
+    /// different one would pass it.
     #[test]
-    fn every_real_class_feature_description_renders_without_a_pcgen_syntax_leak() {
+    fn the_served_population_never_falls_below_its_recorded_floor() {
         let descriptions = load_class_feature_descriptions(&repo_root());
-        let mut checked = 0;
+        assert!(
+            descriptions.len() >= 11_800,
+            "the served class_feature description population fell below its recorded floor: {}",
+            descriptions.len()
+        );
         for record in &descriptions {
-            if let Some(leak) = codex::rules_core::pcgen_desc::leaked_pcgen_syntax(&record.description)
-            {
-                panic!("{:?} ({}): leaked {leak}", record.key, record.book);
-            }
-            checked += 1;
-        }
-        assert!(checked > 1000, "no real descriptions were checked; the check proved nothing");
-    }
-
-    /// A `.CLEAR`/`.CLEARALL`/PI-marker/empty description is never emitted --
-    /// proven against a synthetic record, since the live corpus may not
-    /// currently contain a `.CLEAR` example under `class_feature`.
-    #[test]
-    fn a_clear_marker_or_empty_description_never_reaches_the_catalog() {
-        for stand_in_value in [".CLEAR", ".CLEARALL", "[redacted PI]", "", "   "] {
             assert!(
-                !is_real_description_value(stand_in_value),
-                "{stand_in_value:?} must be refused"
+                !record.description.trim().is_empty(),
+                "{:?}: a served row must never reach the wire with an empty description",
+                record.key
             );
         }
-    }
-
-    /// CONFIRMED live shape (found by this module's own leak-detection
-    /// test, not anticipated): a row that declares two pipe-separated
-    /// arguments but whose prose only references `%1` mis-splits under
-    /// `render_pcgen_desc`'s segment-count heuristic and leaves a literal
-    /// `|` in the output. Refused, not shipped, and does not crash the
-    /// loader for every other record in the same book.
-    #[test]
-    fn a_record_whose_render_leaks_a_pipe_argument_tail_is_refused_not_shipped() {
-        let descriptions = load_class_feature_descriptions(&repo_root());
-        assert!(
-            !descriptions.iter().any(|d| d.key == "Enhancement Savant Subschool ~ Perfection of Self"),
-            "the known-malformed row must be refused, never served with a leaked '|' in its text"
-        );
-        // The rest of `advanced_class_guide`'s real, well-formed class
-        // features still loaded -- the skip is scoped to the one bad row,
-        // not the whole book.
-        assert!(
-            descriptions.iter().any(|d| d.book == "advanced_class_guide"),
-            "one malformed row must not take its whole book down with it"
-        );
     }
 
     #[test]
@@ -524,3 +523,4 @@ mod tests {
         assert!(!a.is_empty());
     }
 }
+
