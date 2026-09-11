@@ -67,12 +67,12 @@ exists. Denominator is the table key population named in each row.
 
 | population | resolved | denominator | share |
 |---|---:|---:|---:|
-| spells, `crb/spell_list.rs` | 664 | 664 | 100 % |
-| spells, `acg/spell_list.rs` | 144 | 144 | 100 % |
-| spells, `advanced_race_guide/spell_list.rs` | 93 | 93 | 100 % |
-| spells, `apg/spell_list.rs` | 293 | 297 | 98.7 % |
-| feats, `*/feat_data/*.rs` (4 books) | 673 | 673 | 100 % |
-| equipment, `*/equipment_data/*.rs` | 2727 | 3446 | 79.1 % |
+| spells, `crb/spell_list.rs` | 664 | 664 | 664 of 664 = 100 % |
+| spells, `acg/spell_list.rs` | 144 | 144 | 144 of 144 = 100 % |
+| spells, `advanced_race_guide/spell_list.rs` | 93 | 93 | 93 of 93 = 100 % |
+| spells, `apg/spell_list.rs` | 293 | 297 | 293 of 297 = 98.7 % |
+| feats, `*/feat_data/*.rs` (4 books) | 673 | 673 | 673 of 673 = 100 % |
+| equipment, `*/equipment_data/*.rs` | 2727 | 3446 | 2727 of 3446 = 79.1 % |
 
 Re-derive:
 
@@ -191,3 +191,36 @@ PY
    print('race_trait records',n,'carrying a target',t)
    PY
    ```
+
+## 5. A fourth defect, found by reading the converter's own count against the loader's
+
+`sheet_rule_convert -- --check` reports `rules=69344`. The corpus-wide gate this cycle added
+prints the number the **loader** actually holds: `rules=68976`. **368 fewer.**
+
+```
+python3 - <<'PY'
+import json,os,collections
+ids=collections.Counter()
+for book in os.listdir('data/sheet_rules'):
+    bd=os.path.join('data/sheet_rules',book)
+    if not os.path.isdir(bd) or book.startswith('_'): continue
+    for root,_,fs in os.walk(bd):
+        for f in fs:
+            if f.endswith('.json'):
+                for r in json.load(open(os.path.join(root,f))): ids[r['id']]+=1
+dups={k:v for k,v in ids.items() if v>1}
+print('distinct',len(ids),'objects',sum(ids.values()),
+      'ids written more than once',len(dups),'extra objects',sum(v-1 for v in dups.values()))
+PY
+-> distinct 68976 objects 69344 ids written more than once 305 extra objects 368
+```
+
+**305 rule ids are written more than once, and every one is a `#natural<N>` sibling suffix** —
+`inner_sea_world_guide:monster:treerazer#natural0` appears three times,
+`bestiary_3:template:imperial_dragon_attacks_colossal#natural0` twice. The converter's sibling
+suffix collides for a record carrying several natural attacks at the same index, and
+`SheetRulePackage::insert_rule` keeps the last. Nothing reports it: the converter counts objects
+written, the loader counts distinct ids, and no gate compares the two.
+
+`correction 1789094375625-at-35-e6-003-af8026`. **A receipt quoting `rules=69344` as the live
+rule population is quoting the wrong denominator** — the live side holds 68,976.
