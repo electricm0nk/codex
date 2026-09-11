@@ -23,6 +23,7 @@
 
 use std::path::PathBuf;
 
+use codex::pcgen_import::feat_prereq_tokens::hand_authored_tokens_for_unique_key;
 use codex::rules_core::rules_tables::RuleSetId;
 use codex::rules_core::rules_tables::acg::feats as acg_feats;
 use codex::rules_core::rules_tables::apg::feats as apg_feats;
@@ -89,8 +90,8 @@ fn pinned_apg_feats_carry_their_real_corpus_fields() {
         )
     );
     assert_eq!(
-        allied.prerequisites,
-        Some(&["PREMULT:1,[PRECLASS:1,SPELLCASTER=1],[PREVARGTEQ:CasterLevel_Highest,1]"] as &[&str])
+        hand_authored_tokens_for_unique_key(RuleSetId::Apg, "Allied Spellcaster"),
+        Some(&["PREMULT:1,[PRECLASS:1,SPELLCASTER=1],[PREVARGTEQ:CasterLevel_Highest,1]"][..])
     );
 
     // A Metamagic feat with no prerequisite token at all — recorded as
@@ -101,7 +102,7 @@ fn pinned_apg_feats_carry_their_real_corpus_fields() {
         bouncing.description,
         Some("You can direct a failed spell against a different target.")
     );
-    assert_eq!(bouncing.prerequisites, None);
+    assert_eq!(hand_authored_tokens_for_unique_key(RuleSetId::Apg, "Bouncing Spell"), None);
 
     // A General feat carrying both a real `BONUS:` token and a real
     // prerequisite chain.
@@ -155,12 +156,14 @@ fn pinned_acg_feats_carry_their_real_corpus_fields() {
     let pack_flanking = find("Pack Flanking");
     assert_eq!(pack_flanking.category, FeatCategory::Teamwork);
     assert_eq!(
-        pack_flanking.prerequisites,
-        Some(&[
-            "PREABILITY:1,CATEGORY=FEAT,Combat Expertise",
-            "PREABILITY:1,CATEGORY=Special Ability,TYPE.Animal Companion",
-            "PREMULT:1,[PRESTAT:1,INT=13],[PREVARGTEQ:CombatFeatIntRequirement,13]",
-        ] as &[&str])
+        hand_authored_tokens_for_unique_key(RuleSetId::Acg, "Pack Flanking"),
+        Some(
+            &[
+                "PREABILITY:1,CATEGORY=FEAT,Combat Expertise",
+                "PREABILITY:1,CATEGORY=Special Ability,TYPE.Animal Companion",
+                "PREMULT:1,[PRESTAT:1,INT=13],[PREVARGTEQ:CombatFeatIntRequirement,13]",
+            ][..]
+        )
     );
 
     let extra_exploit = find("Extra Arcanist Exploit");
@@ -210,7 +213,11 @@ fn every_apg_and_acg_record_has_a_real_key_name_and_description() {
             // An empty effect/prereq slice would be indistinguishable from
             // "no data gathered yet"; absence is always None.
             assert!(entry.effect.is_none_or(|e| !e.is_empty()));
-            assert!(entry.prerequisites.is_none_or(|p| !p.is_empty()));
+            // The prerequisite half of this rule moved with the tokens to
+            // `pcgen_import::feat_prereq_tokens` (SD-35 AT-35-E6-003-SWEEP
+            // cycle 3): a checked-and-empty row is now an absent row, and
+            // `feat_prereq_tokens::tests::every_row_still_names_the_record_it_was_taken_from`
+            // asserts no relocated row is empty.
         }
     }
     assert_eq!(missing_description, vec!["Elemental Fist"]);
@@ -375,17 +382,17 @@ fn crb_records_gained_their_real_prerequisite_tokens() {
     let all = feat_tables();
     let find = |key: &str| all.iter().find(|f| f.key == key).expect(key);
 
+    let _ = &find;
     assert_eq!(
-        find("Greater Spell Focus").prerequisites,
-        Some(&["PREABILITY:1,CATEGORY=FEAT,Spell Focus"] as &[&str])
+        hand_authored_tokens_for_unique_key(RuleSetId::Crb, "Greater Spell Focus"),
+        Some(&["PREABILITY:1,CATEGORY=FEAT,Spell Focus"][..])
     );
     assert_eq!(
-        find("Improved Great Fortitude").prerequisites,
-        Some(&["PREABILITY:1,CATEGORY=FEAT,Great Fortitude"] as &[&str])
+        hand_authored_tokens_for_unique_key(RuleSetId::Crb, "Improved Great Fortitude"),
+        Some(&["PREABILITY:1,CATEGORY=FEAT,Great Fortitude"][..])
     );
     assert!(
-        find("Leadership")
-            .prerequisites
+        hand_authored_tokens_for_unique_key(RuleSetId::Crb, "Leadership")
             .is_some_and(|p| p.contains(&"PRELEVEL:MIN=7")),
         "Leadership's real PRELEVEL:MIN=7 token must be transcribed"
     );
@@ -494,20 +501,22 @@ fn apg_and_acg_catalogs_match_the_live_corpus() {
         return;
     };
 
-    let cases: [(&str, &[codex::rules_core::rules_tables::crb::feats::FeatTableEntry], usize); 2] = [
+    let cases: [(&str, &[codex::rules_core::rules_tables::crb::feats::FeatTableEntry], usize, RuleSetId); 2] = [
         (
             "pathfinder/paizo/roleplaying_game/advanced_players_guide/apg_feats.lst",
             apg_feats::feat_tables(),
             172,
+            RuleSetId::Apg,
         ),
         (
             "pathfinder/paizo/roleplaying_game/advanced_class_guide/acg_feats.lst",
             acg_feats::feat_tables(),
             129,
+            RuleSetId::Acg,
         ),
     ];
 
-    for (relative, catalog, expected) in cases {
+    for (relative, catalog, expected, rule_set) in cases {
         let path = root.join(relative);
         if !path.is_file() {
             eprintln!("corpus file not present at {}; skipping", path.display());
@@ -554,7 +563,7 @@ fn apg_and_acg_catalogs_match_the_live_corpus() {
                 record.key
             );
             assert_eq!(
-                entry.prerequisites.map_or(0, <[&str]>::len),
+                hand_authored_tokens_for_unique_key(rule_set, entry.key).map_or(0, <[&str]>::len),
                 record.prerequisite_count,
                 "'{}' PRE-token count disagrees with the live corpus",
                 record.key

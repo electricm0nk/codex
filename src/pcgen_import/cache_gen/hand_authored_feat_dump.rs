@@ -44,6 +44,7 @@ use crate::pcgen_import::cache_gen::feat_gap::{declared_pi_at, find_citation, sc
 use crate::pcgen_import::cache_gen::feat_gap::{CacheRecord, Completeness, FeatData, Population, Source};
 use crate::pcgen_import::cache_gen::WiringClassIndex;
 use crate::rules_core::pi_screening;
+use crate::pcgen_import::feat_prereq_tokens::hand_authored_feat_prereq_tokens;
 use crate::rules_core::rules_tables::feats_all::hand_authored_feat_tables;
 use crate::rules_core::rules_tables::RuleSetId;
 use crate::rules_core::shape_b_v1::License;
@@ -124,7 +125,7 @@ pub fn generate(
             continue;
         };
 
-        for entry in table.entries {
+        for (record_index, entry) in table.entries.iter().enumerate() {
             let Some((corpus_rel_path, line)) = find_citation(corpus_root, spec.files, entry.key, entry.name) else {
                 report.unresolved_citations.push(format!("{}:{}", spec.book_id, entry.key));
                 continue;
@@ -170,8 +171,13 @@ pub fn generate(
             // module's doc comment for the confirmed-leak records this
             // closed. Reuses `screen_prerequisites` directly rather than
             // forking a second copy.
+            // The tokens moved off the live record to this side of the
+            // boundary in SD-35 `AT-35-E6-003-SWEEP` cycle 3
+            // (`decisions.md` §11). Same tokens, same order, addressed by
+            // the record's own index in the table it was taken from.
             let owned_prerequisites: Option<Vec<String>> =
-                entry.prerequisites.map(|p| p.iter().map(|s| s.to_string()).collect());
+                hand_authored_feat_prereq_tokens(spec.rule_set, record_index, entry.key)
+                    .map(|p| p.iter().map(|s| s.to_string()).collect());
             let (stored_prerequisites, prereqs_redacted) = match &owned_prerequisites {
                 Some(lines) => {
                     let (screened, redacted) = screen_prerequisites(lines);

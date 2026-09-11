@@ -146,35 +146,12 @@ pub struct FeatTableEntry {
     /// is a future cycle's job (SD-20 Epic 6's `feat_effect` damage-class
     /// criterion), not this table's.
     pub effect: Option<&'static [FeatEffectBonus]>,
-    /// Every top-level `PRE`-family token the corpus record carries,
-    /// verbatim and unparsed, in source order -- `PREABILITY:`,
-    /// `PREMULT:`, `PRESTAT:`, `PRESKILL:`, `PRETOTALAB:`, `PRELEVEL:`,
-    /// `PRECLASS:`, `PRERACE:`, `PREVARGTEQ:`, the negated `!PREABILITY:`
-    /// form, and the rest. `None` when the record has none (55 of CRB's
-    /// 185, including all 17 Metamagic records; 29 of APG's 172; 4 of
-    /// ACG's 129).
-    ///
-    /// "Top-level" means tab-separated fields of the record itself. A
-    /// `PREMULT:` token embeds further `PRE...` clauses inside brackets
-    /// (e.g.
-    /// `PREMULT:1,[PRESTAT:1,INT=13],[PREVARGTEQ:CombatFeatIntRequirement,13]`);
-    /// those stay inside their `PREMULT:` string rather than being
-    /// flattened out, because flattening would lose the "any one of these
-    /// satisfies it" semantics the bracket grouping carries.
-    ///
-    /// Deliberately raw strings, not a parsed prerequisite AST -- these
-    /// are PCGen expressions over runtime character state, exactly like
-    /// the `BONUS:` formulas `effect` keeps verbatim, and for the same
-    /// reason. `feat_prereqs/general.rs`'s doc comment named this field's
-    /// absence as the blocker for a real per-feat prerequisite chain;
-    /// landing the data lifts that blocker but does not by itself
-    /// evaluate it -- `feat_prereqs` still checks catalog membership
-    /// only, and widening it to evaluate these tokens is its own job.
-    ///
-    /// `Some(&[])` never occurs: an empty slice would be
-    /// indistinguishable from "no data gathered yet", so absence is
-    /// always `None`, mirroring `effect`'s own rule.
-    pub prerequisites: Option<&'static [&'static str]>,
+    // The `prerequisites: Option<&'static [&'static str]>` field that stood
+    // here held every top-level `PRE`-family token of the corpus row,
+    // verbatim. It moved to `pcgen_import::feat_prereq_tokens` — SD-35
+    // `AT-35-E6-003-SWEEP` cycle 3, `decisions.md` §11: nothing on the live
+    // side reads a PCGen token. Its two readers were both converter modules
+    // and both still read the same tokens, keyed by `(rule_set, index)`.
 }
 
 /// One `BONUS:` token lifted from a feat's corpus record, captured as a

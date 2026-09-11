@@ -81,6 +81,7 @@ use serde::Serialize;
 
 use crate::pcgen_import::cache_gen::WiringClassIndex;
 use crate::rules_core::pi_screening::{self, DeclaredProductIdentity};
+use crate::pcgen_import::feat_prereq_tokens::feat_gap_prereq_tokens;
 use crate::rules_core::rules_tables::feat_gap_tables::feat_gap_rows_for;
 use crate::rules_core::rules_tables::RuleSetId;
 
@@ -423,7 +424,7 @@ pub fn generate(
             return Err(GenerationError::CorpusUnreachable(book_dir));
         }
 
-        for entry in feat_gap_rows_for(spec.rule_set) {
+        for (record_index, entry) in feat_gap_rows_for(spec.rule_set).iter().enumerate() {
             let Some((corpus_rel_path, line)) = find_citation(corpus_root, spec.files, entry.key, entry.name) else {
                 report.unresolved_citations.push(format!("{}:{}", spec.book_id, entry.key));
                 continue;
@@ -467,8 +468,13 @@ pub fn generate(
                 declared.description,
             );
 
+            // The tokens moved off the live record to this side of the
+            // boundary in SD-35 `AT-35-E6-003-SWEEP` cycle 3
+            // (`decisions.md` §11). Same tokens, same order, addressed by
+            // the row's own index in the table it was taken from.
             let owned_prerequisites: Option<Vec<String>> =
-                entry.prerequisites.map(|p| p.iter().map(|s| s.to_string()).collect());
+                feat_gap_prereq_tokens(spec.rule_set, record_index, entry.key)
+                    .map(|p| p.iter().map(|s| s.to_string()).collect());
             let (stored_prerequisites, prereqs_redacted) = match &owned_prerequisites {
                 Some(lines) => {
                     let (screened, redacted) = screen_prerequisites(lines);

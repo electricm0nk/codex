@@ -34,6 +34,7 @@
 use std::collections::{BTreeMap, BTreeSet};
 use std::path::PathBuf;
 
+use codex::pcgen_import::feat_prereq_tokens::joined_catalog_tokens;
 use codex::rules_core::character_input::{
     AbilityScores, CharacterClassLevel, CharacterInput, ChosenCharacterState, SkillAllocation,
 };
@@ -119,8 +120,8 @@ fn catalog_kind_census() -> BTreeMap<String, usize> {
     };
 
     for book in all_feat_tables() {
-        for entry in book.entries {
-            for token in entry.prerequisites.unwrap_or(&[]) {
+        for (index, entry) in book.entries.iter().enumerate() {
+            for token in joined_catalog_tokens(book.rule_set, index, entry.key).unwrap_or(&[]) {
                 visit(token, &mut census);
                 // Sub-clauses inside a `PREMULT:`'s brackets are real
                 // prerequisites too; a kind that only ever appears nested
@@ -308,8 +309,13 @@ fn the_pre_kind_census_is_the_real_one() {
 fn the_number_of_records_carrying_any_prerequisite_is_the_real_one() {
     let with_any: usize = all_feat_tables()
         .iter()
-        .flat_map(|book| book.entries.iter())
-        .filter(|entry| entry.prerequisites.is_some())
+        .flat_map(|book| {
+            book.entries
+                .iter()
+                .enumerate()
+                .map(move |(index, entry)| joined_catalog_tokens(book.rule_set, index, entry.key))
+        })
+        .filter(Option::is_some)
         .count();
     // 599 of the original 690 + all 23 UCA records (every one carries a
     // `PRETEXT:` prerequisite entry -- see `feats_all::UCA_FEAT_PREREQUISITES`)
@@ -479,13 +485,18 @@ fn allocating_the_required_skill_ranks_unlocks_a_skill_gated_feat() {
     // Use a genuinely rank-gated CRB feat instead: Stunning Fist is class
     // gated, so take the first live skill-gated record and satisfy it.
     let target = &skill_gated[0];
-    let record = all_feat_tables()
+    let record_tokens = all_feat_tables()
         .iter()
-        .flat_map(|book| book.entries.iter())
-        .find(|entry| entry.key == target)
+        .flat_map(|book| {
+            book.entries
+                .iter()
+                .enumerate()
+                .map(move |(index, entry)| (book.rule_set, index, entry.key))
+        })
+        .find(|(_, _, key)| *key == target)
+        .map(|(rule_set, index, key)| joined_catalog_tokens(rule_set, index, key))
         .expect("the key came from the catalog");
-    let requirement = record
-        .prerequisites
+    let requirement = record_tokens
         .unwrap_or(&[])
         .iter()
         .find(|token| token.starts_with("PRESKILL:"))
@@ -678,12 +689,11 @@ fn the_gathered_arg_and_pu_prerequisites_match_the_live_corpus() {
             .iter()
             .find(|book| format!("{:?}", book.rule_set) == book_name)
             .expect("book is in the aggregate");
-        for entry in table.entries {
+        for (index, entry) in table.entries.iter().enumerate() {
             let expected: &[String] = corpus
                 .get(entry.key)
                 .unwrap_or_else(|| panic!("{book_name} '{}' is not in {}", entry.key, path.display()));
-            let actual: Vec<String> = entry
-                .prerequisites
+            let actual: Vec<String> = joined_catalog_tokens(table.rule_set, index, entry.key)
                 .unwrap_or(&[])
                 .iter()
                 .map(|token| (*token).to_owned())

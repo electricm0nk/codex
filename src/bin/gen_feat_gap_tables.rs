@@ -57,6 +57,28 @@ use codex::rules_core::shape_b_v1::{License, REDACTED_PI_MARKER};
 /// Where the generated table lands, relative to the crate root.
 const OUTPUT_RELATIVE_PATH: &str = "src/rules_core/rules_tables/feat_gap_tables.rs";
 
+/// The converter-side companion: the gap rows' `PRE`-family prerequisite
+/// tokens. Written in the same pass as `OUTPUT_RELATIVE_PATH` and off the same
+/// parsed records, so the two can never drift. The tokens live on this side of
+/// the boundary because nothing on the live side may read a PCGen token
+/// (`decisions.md` §11, SD-35 `AT-35-E6-003-SWEEP` cycle 3).
+const PREREQ_OUTPUT_RELATIVE_PATH: &str = "src/pcgen_import/feat_gap_prereq_tokens.rs";
+
+/// The module doc and imports of `PREREQ_OUTPUT_RELATIVE_PATH`, verbatim.
+const PREREQ_FILE_HEADER: &str = "\
+//! The `PRE`-family prerequisite tokens the corpus **feat gap rows** carry,\n\
+//! relocated off the live side — SD-35 `AT-35-E6-003-SWEEP` cycle 3,\n\
+//! enforcing `decisions.md` §11. See\n\
+//! [`crate::pcgen_import::feat_prereq_tokens`] for why these moved, how a row\n\
+//! is addressed, and every lookup and gate over them.\n\
+//!\n\
+//! **Generated — do not hand-edit.** `cargo run --bin gen_feat_gap_tables`\n\
+//! writes this file and `rules_tables::feat_gap_tables.rs` together, off the\n\
+//! same pass over the live corpus, so the two can never drift apart.\n\
+\n\
+use crate::pcgen_import::feat_prereq_tokens::FeatPrereqRow;\n\
+use crate::rules_core::rules_tables::RuleSetId;\n";
+
 /// One book's gap-lane inputs: the `RuleSetId` the joined catalog files its
 /// records under, the `RuleSetId` variant name to emit in generated source,
 /// and each `.lst` path relative to the corpus root.
@@ -526,6 +548,12 @@ fn main() -> Result<(), Box<dyn std::error::Error>> {
     }
 
     let mut body = String::new();
+
+    let mut prereq_body = String::new();
+
+    let mut prereq_total: usize = 0;
+
+    let mut prereq_books: std::collections::BTreeSet<&'static str> = std::collections::BTreeSet::new();
     let mut totals: Vec<(&str, usize)> = Vec::new();
     let mut name_pi_dropped: usize = 0;
 
@@ -570,18 +598,20 @@ fn main() -> Result<(), Box<dyn std::error::Error>> {
             input.slug,
             input.slug.to_uppercase()
         )?;
-        for row in &rows {
-            let prerequisites = if row.prerequisites.is_empty() {
-                "None".to_string()
-            } else {
-                format!(
-                    "Some(&[{}])",
-                    row.prerequisites.iter().map(|p| rust_string(p)).collect::<Vec<_>>().join(", ")
-                )
-            };
+        let with_tokens = rows.iter().filter(|row| !row.prerequisites.is_empty()).count();
+        if with_tokens > 0 {
+            writeln!(
+                prereq_body,
+                "    // {} — {} of {} gap row(s) carry at least one `PRE`-family token.",
+                input.slug,
+                with_tokens,
+                rows.len()
+            )?;
+        }
+        for (index, row) in rows.iter().enumerate() {
             writeln!(
                 body,
-                "    FeatCatalogRecord {{ key: {}, category: {}, name: {}, description: {}, prerequisites: {} }},",
+                "    FeatCatalogRecord {{ key: {}, category: {}, name: {}, description: {} }},",
                 rust_string(&row.key),
                 rust_string(&row.category),
                 rust_string(&row.name),
@@ -589,8 +619,19 @@ fn main() -> Result<(), Box<dyn std::error::Error>> {
                     Some(d) => format!("Some({})", rust_string(d)),
                     None => "None".to_string(),
                 },
-                prerequisites
             )?;
+            if row.prerequisites.is_empty() {
+                continue;
+            }
+            writeln!(
+                prereq_body,
+                "    (RuleSetId::{:?}, {index}, {}, &[{}]),",
+                input.rule_set,
+                rust_string(&row.key),
+                row.prerequisites.iter().map(|p| rust_string(p)).collect::<Vec<_>>().join(", ")
+            )?;
+            prereq_total += 1;
+            prereq_books.insert(input.slug);
         }
         writeln!(body, "];")?;
     }
@@ -647,6 +688,12 @@ fn main() -> Result<(), Box<dyn std::error::Error>> {
             .collect::<String>()
     )?;
 
+    let prereq_generated = format!(
+        "{}\n/// The tokens the corpus gap rows carried, addressed by each record's index\n         /// in `feat_gap_tables::feat_gap_rows_for(rule_set)`.\n///\n         /// {prereq_total} row(s) across {} book(s).\n         pub static FEAT_GAP_PREREQ_TOKENS: &[FeatPrereqRow] = &[\n{prereq_body}];\n",
+        PREREQ_FILE_HEADER,
+        prereq_books.len(),
+    );
+
     let generated = format!("{header}{body}");
 
     // Provenance gate (`epic-3-provenance`): screen the text BEFORE writing it.
@@ -659,7 +706,18 @@ fn main() -> Result<(), Box<dyn std::error::Error>> {
         std::process::exit(1);
     }
 
+    let prereq_hits = screen_generated_table(PREREQ_OUTPUT_RELATIVE_PATH, &prereq_generated);
+    if !prereq_hits.is_empty() {
+        eprintln!("PI screening HARD STOP — {} hit(s), nothing written:", prereq_hits.len());
+        for hit in &prereq_hits {
+            eprintln!("  {hit:?}");
+        }
+        std::process::exit(1);
+    }
+
     std::fs::write(Path::new(OUTPUT_RELATIVE_PATH), &generated)?;
+    std::fs::write(Path::new(PREREQ_OUTPUT_RELATIVE_PATH), &prereq_generated)?;
+    println!("wrote {PREREQ_OUTPUT_RELATIVE_PATH}: {prereq_total} prerequisite rows");
     println!("wrote {OUTPUT_RELATIVE_PATH}: {total} rows");
     for (slug, n) in &totals {
         println!("  {slug:28} {n:5}");

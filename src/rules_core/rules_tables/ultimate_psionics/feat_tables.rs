@@ -151,10 +151,12 @@ pub struct UpsiFeatEntry {
     /// The corpus `BENEFIT:` token, verbatim -- present on only 5 of
     /// this catalog's 221 records (see this module's own doc comment).
     pub benefit: Option<&'static str>,
-    /// Every top-level `PRE`-family token the corpus record carries,
-    /// verbatim and unparsed, in source order. `None` when the row has no
-    /// `PRE`-family token.
-    pub prerequisites: Option<&'static [&'static str]>,
+    // The `prerequisites: Option<&'static [&'static str]>` field that stood
+    // here held every top-level `PRE`-family token of the corpus row,
+    // verbatim. It moved to `pcgen_import::feat_prereq_tokens` — SD-35
+    // `AT-35-E6-003-SWEEP` cycle 3, `decisions.md` §11: nothing on the live
+    // side reads a PCGen token. Its two readers were both converter modules
+    // and both still read the same tokens, keyed by `(rule_set, index)`.
 }
 
 /// Full UPsi feat catalog: 221 real, distinct corpus records, in source
@@ -172,7 +174,6 @@ pub fn feat_tables() -> &'static [UpsiFeatEntry] {
                 pretext: None,
                 source_page: Some("p.86"),
                 benefit: None,
-                prerequisites: Some(&["PREMULT:1,[PREVARGTEQ:MaxManifesterLVL,1],[PREABILITY:1,CATEGORY=FEAT,Unlocked Talent]", "PREVARGTEQ:IsPsionic,1"]),
             },
             // Additional Terror -- up_feats.lst:19
             UpsiFeatEntry {
@@ -183,7 +184,6 @@ pub fn feat_tables() -> &'static [UpsiFeatEntry] {
                 pretext: None,
                 source_page: Some("p.86"),
                 benefit: None,
-                prerequisites: Some(&["PREABILITY:1,CATEGORY=Special Ability,Dread ~ Terror", "PREVARGTEQ:IsPsionic,1"]),
             },
             // Advanced Archer Path -- up_feats.lst:20
             UpsiFeatEntry {
@@ -194,7 +194,6 @@ pub fn feat_tables() -> &'static [UpsiFeatEntry] {
                 pretext: None,
                 source_page: Some("p.86"),
                 benefit: None,
-                prerequisites: Some(&["PREABILITY:1,CATEGORY=Special Ability,Archer Path ~ First,Archer Path ~ Second", "PREABILITY:2,CATEGORY=FEAT,Point-Blank Shot,Precise Shot", "PREMULT:1,[PRETOTALAB:6],[PREVARGTEQ:PrereqBAB,6]", "PREVARGTEQ:MaxManifesterLVL,10", "PREVARGTEQ:IsPsionic,1"]),
             },
             // Advanced Ascetic Path -- up_feats.lst:21
             UpsiFeatEntry {
@@ -205,7 +204,6 @@ pub fn feat_tables() -> &'static [UpsiFeatEntry] {
                 pretext: None,
                 source_page: Some("p.86"),
                 benefit: None,
-                prerequisites: Some(&["PREABILITY:1,CATEGORY=Special Ability,Ascetic Path ~ First,Ascetic Path ~ Second", "PREABILITY:2,CATEGORY=FEAT,Dodge,Psionic Dodge", "PREMULT:1,[PRETOTALAB:6],[PREVARGTEQ:PrereqBAB,6]", "PREVARGTEQ:MaxManifesterLVL,10", "PREVARGTEQ:IsPsionic,1"]),
             },
             // Advanced Assassin Path -- up_feats.lst:22
             UpsiFeatEntry {
@@ -216,7 +214,6 @@ pub fn feat_tables() -> &'static [UpsiFeatEntry] {
                 pretext: None,
                 source_page: Some("p.87"),
                 benefit: None,
-                prerequisites: Some(&["PREABILITY:1,CATEGORY=Special Ability,Assassin's Path ~ First,Assassin's Path ~ Second", "PREABILITY:2,CATEGORY=FEAT,Deep Impact,Psionic Weapon", "PREMULT:1,[PRETOTALAB:6],[PREVARGTEQ:PrereqBAB,6]", "PREVARGTEQ:MaxManifesterLVL,10", "PREVARGTEQ:IsPsionic,1"]),
             },
             // Advanced Brawling Path -- up_feats.lst:23
             UpsiFeatEntry {
@@ -227,7 +224,6 @@ pub fn feat_tables() -> &'static [UpsiFeatEntry] {
                 pretext: None,
                 source_page: Some("p.87"),
                 benefit: None,
-                prerequisites: Some(&["PREABILITY:1,CATEGORY=Special Ability,Brawling Path ~ First,Brawling Path ~ Second", "PREABILITY:2,CATEGORY=FEAT,Improved Grapple,Improved Unarmed Strike", "PREMULT:1,[PRETOTALAB:6],[PREVARGTEQ:PrereqBAB,6]", "PREVARGTEQ:MaxManifesterLVL,10", "PREVARGTEQ:IsPsionic,1"]),
             },
             // Advanced Constructs -- up_feats.lst:24
             UpsiFeatEntry {
@@ -238,7 +234,6 @@ pub fn feat_tables() -> &'static [UpsiFeatEntry] {
                 pretext: None,
                 source_page: Some("p.87"),
                 benefit: None,
-                prerequisites: Some(&["PRESPELL:1,Astral Construct", "PREVARGTEQ:IsPsionic,1"]),
             },
             // Advanced Dervish Path -- up_feats.lst:25
             UpsiFeatEntry {
@@ -249,7 +244,6 @@ pub fn feat_tables() -> &'static [UpsiFeatEntry] {
                 pretext: None,
                 source_page: Some("p.87"),
                 benefit: None,
-                prerequisites: Some(&["PREABILITY:1,CATEGORY=Special Ability,Dervish Path ~ First,Dervish Path ~ Second", "PREABILITY:2,CATEGORY=FEAT,Double Slice,Two-Weapon Fighting", "PREMULT:1,[PRETOTALAB:6],[PREVARGTEQ:PrereqBAB,6]", "PRESTAT:1,DEX=15", "PREVARGTEQ:MaxManifesterLVL,10", "PREVARGTEQ:IsPsionic,1"]),
             },
             // Advanced Feral Path -- up_feats.lst:26
             UpsiFeatEntry {
@@ -260,7 +254,6 @@ pub fn feat_tables() -> &'static [UpsiFeatEntry] {
                 pretext: None,
                 source_page: Some("p.87"),
                 benefit: None,
-                prerequisites: Some(&["PREABILITY:1,CATEGORY=Special Ability,Feral Path ~ First,Feral Path ~ Second", "PREABILITY:2,CATEGORY=FEAT,Psionic Fist,Unavoidable Strike", "PREMULT:1,[PRETOTALAB:6],[PREVARGTEQ:PrereqBAB,6]", "PREVARGTEQ:MaxManifesterLVL,10", "PREVARGTEQ:IsPsionic,1"]),
             },
             // Advanced Infiltrator Path -- up_feats.lst:27
             UpsiFeatEntry {
@@ -271,7 +264,6 @@ pub fn feat_tables() -> &'static [UpsiFeatEntry] {
                 pretext: None,
                 source_page: Some("p.94"),
                 benefit: None,
-                prerequisites: Some(&["PREABILITY:1,CATEGORY=Special Ability,Infiltrator Path ~ First,Infiltrator Path ~ Second", "PREABILITY:1,CATEGORY=FEAT,Deceitful", "PREMULT:1,[PRETOTALAB:6],[PREVARGTEQ:PrereqBAB,6]", "PREVARGTEQ:MaxManifesterLVL,10", "PREVARGTEQ:IsPsionic,1"]),
             },
             // Advanced Interceptor Path -- up_feats.lst:28
             UpsiFeatEntry {
@@ -282,7 +274,6 @@ pub fn feat_tables() -> &'static [UpsiFeatEntry] {
                 pretext: None,
                 source_page: Some("p.94"),
                 benefit: None,
-                prerequisites: Some(&["PREABILITY:1,CATEGORY=Special Ability,Interceptor Path ~ First,Interceptor Path ~ Second", "PREABILITY:1,CATEGORY=FEAT,Combat Expertise", "PREMULT:1,[PRETOTALAB:6],[PREVARGTEQ:PrereqBAB,6]", "PREVARGTEQ:MaxManifesterLVL,10", "PREVARGTEQ:IsPsionic,1"]),
             },
             // Advanced Mind Knight Path -- up_feats.lst:29
             UpsiFeatEntry {
@@ -293,7 +284,6 @@ pub fn feat_tables() -> &'static [UpsiFeatEntry] {
                 pretext: None,
                 source_page: Some("p.94"),
                 benefit: None,
-                prerequisites: Some(&["PREABILITY:1,CATEGORY=Special Ability,Mind Knight Path ~ First,Mind Knight Path ~ Second", "PREABILITY:1,CATEGORY=FEAT,Psionic Meditation", "PREABILITY:1,CATEGORY=FEAT,Psionic Shot,Psionic Weapon", "PREMULT:1,[PRETOTALAB:6],[PREVARGTEQ:PrereqBAB,6]", "PREVARGTEQ:MaxManifesterLVL,10", "PREVARGTEQ:IsPsionic,1"]),
             },
             // Advanced Survivor Path -- up_feats.lst:30
             UpsiFeatEntry {
@@ -304,7 +294,6 @@ pub fn feat_tables() -> &'static [UpsiFeatEntry] {
                 pretext: None,
                 source_page: Some("p.94"),
                 benefit: None,
-                prerequisites: Some(&["PREABILITY:1,CATEGORY=Special Ability,Survivor Path ~ First,Survivor Path ~ Second", "PREABILITY:2,CATEGORY=FEAT,Mind Over Body,Toughness", "PREMULT:1,[PRETOTALAB:6],[PREVARGTEQ:PrereqBAB,6]", "PRESTAT:1,CON=13", "PREVARGTEQ:MaxManifesterLVL,10", "PREVARGTEQ:IsPsionic,1"]),
             },
             // Advanced Weaponmaster Path -- up_feats.lst:31
             UpsiFeatEntry {
@@ -315,7 +304,6 @@ pub fn feat_tables() -> &'static [UpsiFeatEntry] {
                 pretext: None,
                 source_page: Some("p.94"),
                 benefit: None,
-                prerequisites: Some(&["PREABILITY:1,CATEGORY=Special Ability,Weaponmaster Path ~ First,Weaponmaster Path ~ Second", "PREABILITY:3,CATEGORY=FEAT,Combat Expertise,Improved Disarm,Weapon Focus", "PREMULT:1,[PRETOTALAB:6],[PREVARGTEQ:PrereqBAB,6]", "PREVARGTEQ:MaxManifesterLVL,10", "PREVARGTEQ:IsPsionic,1"]),
             },
             // Aligned Attack (Chaos) -- up_feats.lst:32
             UpsiFeatEntry {
@@ -326,7 +314,6 @@ pub fn feat_tables() -> &'static [UpsiFeatEntry] {
                 pretext: None,
                 source_page: Some("p.94"),
                 benefit: None,
-                prerequisites: Some(&["!PREABILITY:1,CATEGORY=FEAT,TYPE=AlignedAttack", "PREALIGN:CG,CN,CE", "PREMULT:1,[PRETOTALAB:6],[PREVARGTEQ:PrereqBAB,6]", "PREVARGTEQ:IsPsionic,1"]),
             },
             // Aligned Attack (Evil) -- up_feats.lst:33
             UpsiFeatEntry {
@@ -337,7 +324,6 @@ pub fn feat_tables() -> &'static [UpsiFeatEntry] {
                 pretext: None,
                 source_page: Some("p.94"),
                 benefit: None,
-                prerequisites: Some(&["!PREABILITY:1,CATEGORY=FEAT,TYPE=AlignedAttack", "PREALIGN:CE,NE,LE", "PREMULT:1,[PRETOTALAB:6],[PREVARGTEQ:PrereqBAB,6]", "PREVARGTEQ:IsPsionic,1"]),
             },
             // Aligned Attack (Good) -- up_feats.lst:34
             UpsiFeatEntry {
@@ -348,7 +334,6 @@ pub fn feat_tables() -> &'static [UpsiFeatEntry] {
                 pretext: None,
                 source_page: Some("p.94"),
                 benefit: None,
-                prerequisites: Some(&["!PREABILITY:1,CATEGORY=FEAT,TYPE=AlignedAttack", "PREALIGN:CG,NG,LG", "PREMULT:1,[PRETOTALAB:6],[PREVARGTEQ:PrereqBAB,6]", "PREVARGTEQ:IsPsionic,1"]),
             },
             // Aligned Attack (Law) -- up_feats.lst:35
             UpsiFeatEntry {
@@ -359,7 +344,6 @@ pub fn feat_tables() -> &'static [UpsiFeatEntry] {
                 pretext: None,
                 source_page: Some("p.94"),
                 benefit: None,
-                prerequisites: Some(&["!PREABILITY:1,CATEGORY=FEAT,TYPE=AlignedAttack", "PREALIGN:LG,LN,LE", "PREMULT:1,[PRETOTALAB:6],[PREVARGTEQ:PrereqBAB,6]", "PREVARGTEQ:IsPsionic,1"]),
             },
             // Assassin's Shot -- up_feats.lst:36
             UpsiFeatEntry {
@@ -370,7 +354,6 @@ pub fn feat_tables() -> &'static [UpsiFeatEntry] {
                 pretext: None,
                 source_page: Some("p.94"),
                 benefit: None,
-                prerequisites: Some(&["PREABILITY:1,CATEGORY=Special Ability,Marksman ~ Sniper Style", "PREVARGTEQ:SneakAttackDice,1"]),
             },
             // Assassin's Venom -- up_feats.lst:37
             UpsiFeatEntry {
@@ -381,7 +364,6 @@ pub fn feat_tables() -> &'static [UpsiFeatEntry] {
                 pretext: None,
                 source_page: Some("p.94"),
                 benefit: None,
-                prerequisites: Some(&["PREABILITY:1,CATEGORY=Special Ability,Assassin's Path ~ First,Assassin's Path ~ Second", "PREABILITY:1,CATEGORY=Special Ability,Prevenom Path Power,Prevenom Weapon Path Power", "PREMULT:1,[PRETOTALAB:3],[PREVARGTEQ:PrereqBAB,3]", "PREVARGTEQ:IsPsionic,1"]),
             },
             // Autonomous -- up_feats.lst:38
             UpsiFeatEntry {
@@ -392,7 +374,6 @@ pub fn feat_tables() -> &'static [UpsiFeatEntry] {
                 pretext: None,
                 source_page: Some("p.94"),
                 benefit: None,
-                prerequisites: None,
             },
             // Body Fuel -- up_feats.lst:43
             UpsiFeatEntry {
@@ -403,7 +384,6 @@ pub fn feat_tables() -> &'static [UpsiFeatEntry] {
                 pretext: None,
                 source_page: Some("p.95"),
                 benefit: None,
-                prerequisites: Some(&["PREVARGTEQ:IsPsionic,1"]),
             },
             // Boost Construct -- up_feats.lst:44
             UpsiFeatEntry {
@@ -414,7 +394,6 @@ pub fn feat_tables() -> &'static [UpsiFeatEntry] {
                 pretext: None,
                 source_page: Some("p.95"),
                 benefit: None,
-                prerequisites: Some(&["PREVARGTEQ:IsPsionic,1"]),
             },
             // Broken Dreams Style -- up_feats.lst:45
             UpsiFeatEntry {
@@ -425,7 +404,6 @@ pub fn feat_tables() -> &'static [UpsiFeatEntry] {
                 pretext: None,
                 source_page: Some("p.95"),
                 benefit: None,
-                prerequisites: Some(&["PREABILITY:1,CATEGORY=Special Ability,Dread ~ Devastating Touch", "PREABILITY:1,CATEGORY=FEAT,Improved Unarmed Strike", "PRESKILL:1,Intimidate=3", "PREVARGTEQ:IsPsionic,1"]),
             },
             // Burning Power -- up_feats.lst:46
             UpsiFeatEntry {
@@ -436,7 +414,6 @@ pub fn feat_tables() -> &'static [UpsiFeatEntry] {
                 pretext: None,
                 source_page: Some("p.95"),
                 benefit: None,
-                prerequisites: None,
             },
             // Burrowing Power -- up_feats.lst:47
             UpsiFeatEntry {
@@ -447,7 +424,6 @@ pub fn feat_tables() -> &'static [UpsiFeatEntry] {
                 pretext: None,
                 source_page: Some("p.95"),
                 benefit: None,
-                prerequisites: Some(&["PRESKILL:1,Spellcraft=8", "PREVARGTEQ:IsPsionic,1"]),
             },
             // Chain Power -- up_feats.lst:52
             UpsiFeatEntry {
@@ -458,7 +434,6 @@ pub fn feat_tables() -> &'static [UpsiFeatEntry] {
                 pretext: None,
                 source_page: Some("p.95"),
                 benefit: None,
-                prerequisites: Some(&["PREVARGTEQ:IsPsionic,1"]),
             },
             // Channel Rage -- up_feats.lst:53
             UpsiFeatEntry {
@@ -469,7 +444,6 @@ pub fn feat_tables() -> &'static [UpsiFeatEntry] {
                 pretext: None,
                 source_page: Some("p.96"),
                 benefit: None,
-                prerequisites: Some(&["PREABILITY:2,CATEGORY=Special Ability,Wilder ~ Wild Surge,Rage", "PREVARGTEQ:IsPsionic,1"]),
             },
             // Cloak Dance -- up_feats.lst:54
             UpsiFeatEntry {
@@ -480,7 +454,6 @@ pub fn feat_tables() -> &'static [UpsiFeatEntry] {
                 pretext: None,
                 source_page: Some("p.96"),
                 benefit: None,
-                prerequisites: Some(&["PRESKILL:2,Stealth=7,Perform (Dance)=2"]),
             },
             // Combat Manifestation -- up_feats.lst:55
             UpsiFeatEntry {
@@ -491,7 +464,6 @@ pub fn feat_tables() -> &'static [UpsiFeatEntry] {
                 pretext: None,
                 source_page: Some("p.96"),
                 benefit: None,
-                prerequisites: Some(&["PREVARGTEQ:IsPsionic,1"]),
             },
             // Concussive Power -- up_feats.lst:56
             UpsiFeatEntry {
@@ -502,7 +474,6 @@ pub fn feat_tables() -> &'static [UpsiFeatEntry] {
                 pretext: None,
                 source_page: Some("p.96"),
                 benefit: None,
-                prerequisites: None,
             },
             // Craft Crystalline Focus -- up_feats.lst:57
             UpsiFeatEntry {
@@ -513,7 +484,6 @@ pub fn feat_tables() -> &'static [UpsiFeatEntry] {
                 pretext: None,
                 source_page: Some("p.96"),
                 benefit: None,
-                prerequisites: Some(&["PREVARGTEQ:MaxManifesterLVL,3", "PREVARGTEQ:IsPsionic,1"]),
             },
             // Craft Cognizance Crystal -- up_feats.lst:58
             UpsiFeatEntry {
@@ -524,7 +494,6 @@ pub fn feat_tables() -> &'static [UpsiFeatEntry] {
                 pretext: None,
                 source_page: Some("p.96"),
                 benefit: None,
-                prerequisites: Some(&["PREVARGTEQ:MaxManifesterLVL,3"]),
             },
             // Crippling Assault -- up_feats.lst:59
             UpsiFeatEntry {
@@ -535,7 +504,6 @@ pub fn feat_tables() -> &'static [UpsiFeatEntry] {
                 pretext: None,
                 source_page: Some("p.96"),
                 benefit: None,
-                prerequisites: Some(&["PREABILITY:3,CATEGORY=FEAT,Intimidating Shot,Point-Blank Shot,Staggering Shot", "PREMULT:1,[PRETOTALAB:11],[PREVARGTEQ:PrereqBAB,11]"]),
             },
             // Critical Refocus -- up_feats.lst:60
             UpsiFeatEntry {
@@ -546,7 +514,6 @@ pub fn feat_tables() -> &'static [UpsiFeatEntry] {
                 pretext: None,
                 source_page: Some("p.96"),
                 benefit: None,
-                prerequisites: Some(&["PREABILITY:1,CATEGORY=FEAT,Improved Critical", "PREMULT:1,[PRETOTALAB:8],[PREVARGTEQ:PrereqBAB,8]", "PREVARGTEQ:IsPsionic,1"]),
             },
             // Cushion the Blow -- up_feats.lst:61
             UpsiFeatEntry {
@@ -557,7 +524,6 @@ pub fn feat_tables() -> &'static [UpsiFeatEntry] {
                 pretext: None,
                 source_page: Some("p.96"),
                 benefit: None,
-                prerequisites: Some(&["PREABILITY:1,CATEGORY=Special Ability,TYPE.Collective", "PRESTAT:1,WIS=15", "PREVARGTEQ:MaxManifesterLVL,6", "PREVARGTEQ:IsPsionic,1"]),
             },
             // Dazing Power -- up_feats.lst:66
             UpsiFeatEntry {
@@ -568,7 +534,6 @@ pub fn feat_tables() -> &'static [UpsiFeatEntry] {
                 pretext: None,
                 source_page: Some("p.96"),
                 benefit: None,
-                prerequisites: None,
             },
             // Deadly Throw -- up_feats.lst:68
             UpsiFeatEntry {
@@ -579,7 +544,6 @@ pub fn feat_tables() -> &'static [UpsiFeatEntry] {
                 pretext: None,
                 source_page: Some("p.97"),
                 benefit: None,
-                prerequisites: Some(&["PREABILITY:1,CATEGORY=FEAT,Point-Blank Shot", "PREMULT:1,[PRETOTALAB:3],[PREVARGTEQ:PrereqBAB,3]", "PRESTAT:1,DEX=15"]),
             },
             // Deep Focus -- up_feats.lst:69
             UpsiFeatEntry {
@@ -590,7 +554,6 @@ pub fn feat_tables() -> &'static [UpsiFeatEntry] {
                 pretext: None,
                 source_page: Some("p.97"),
                 benefit: None,
-                prerequisites: Some(&["PREABILITY:1,CATEGORY=FEAT,Psionic Body", "PRESKILL:1,Autohypnosis=4", "PREVARGTEQ:IsPsionic,1"]),
             },
             // Deep Impact -- up_feats.lst:70
             UpsiFeatEntry {
@@ -601,7 +564,6 @@ pub fn feat_tables() -> &'static [UpsiFeatEntry] {
                 pretext: None,
                 source_page: Some("p.97"),
                 benefit: None,
-                prerequisites: Some(&["PREABILITY:1,CATEGORY=FEAT,Psionic Weapon", "PREMULT:1,[PRETOTALAB:6],[PREVARGTEQ:PrereqBAB,6]", "PRESTAT:1,STR=13", "PREVARGTEQ:IsPsionic,1"]),
             },
             // Defensive Tactics -- up_feats.lst:72
             UpsiFeatEntry {
@@ -612,7 +574,6 @@ pub fn feat_tables() -> &'static [UpsiFeatEntry] {
                 pretext: None,
                 source_page: Some("p.97"),
                 benefit: None,
-                prerequisites: Some(&["PREABILITY:2,CATEGORY=Special Ability,Tactician ~ Strategy,Armor Training"]),
             },
             // Delay Power -- up_feats.lst:73
             UpsiFeatEntry {
@@ -623,7 +584,6 @@ pub fn feat_tables() -> &'static [UpsiFeatEntry] {
                 pretext: None,
                 source_page: Some("p.97"),
                 benefit: None,
-                prerequisites: Some(&["PREVARGTEQ:IsPsionic,1"]),
             },
             // Disciple of Fear -- up_feats.lst:74
             UpsiFeatEntry {
@@ -634,7 +594,6 @@ pub fn feat_tables() -> &'static [UpsiFeatEntry] {
                 pretext: None,
                 source_page: Some("p.97"),
                 benefit: None,
-                prerequisites: Some(&["PREABILITY:2,CATEGORY=Special Ability,Dread ~ Devastating Touch,Dread ~ Terror", "PREVARGTEQ:IsPsionic,1"]),
             },
             // Dispelling Static -- up_feats.lst:75
             UpsiFeatEntry {
@@ -645,7 +604,6 @@ pub fn feat_tables() -> &'static [UpsiFeatEntry] {
                 pretext: None,
                 source_page: Some("p.98"),
                 benefit: None,
-                prerequisites: Some(&["PRESKILL:1,Spellcraft=5", "PREVARGTEQ:IsPsionic,1"]),
             },
             // Echoing Power -- up_feats.lst:80
             UpsiFeatEntry {
@@ -656,7 +614,6 @@ pub fn feat_tables() -> &'static [UpsiFeatEntry] {
                 pretext: None,
                 source_page: Some("p.98"),
                 benefit: None,
-                prerequisites: None,
             },
             // Ectoplasmic Power -- up_feats.lst:81
             UpsiFeatEntry {
@@ -667,7 +624,6 @@ pub fn feat_tables() -> &'static [UpsiFeatEntry] {
                 pretext: None,
                 source_page: Some("p.98"),
                 benefit: None,
-                prerequisites: None,
             },
             // Efficient Aid -- up_feats.lst:82
             UpsiFeatEntry {
@@ -678,7 +634,6 @@ pub fn feat_tables() -> &'static [UpsiFeatEntry] {
                 pretext: None,
                 source_page: Some("p.98"),
                 benefit: None,
-                prerequisites: Some(&["PREABILITY:1,CATEGORY=Special Ability,Request Aid", "PRESKILL:1,Heal=7", "PREVARGTEQ:IsPsionic,1"]),
             },
             // Elemental Blast -- up_feats.lst:83
             UpsiFeatEntry {
@@ -689,7 +644,6 @@ pub fn feat_tables() -> &'static [UpsiFeatEntry] {
                 pretext: None,
                 source_page: Some("p.98"),
                 benefit: None,
-                prerequisites: Some(&["PREABILITY:1,CATEGORY=Special Ability,Surge Blast", "PREVARGTEQ:IsPsionic,1", "PREVARGTEQ:WildSurge,1"]),
             },
             // Empower Power -- up_feats.lst:84
             UpsiFeatEntry {
@@ -700,7 +654,6 @@ pub fn feat_tables() -> &'static [UpsiFeatEntry] {
                 pretext: None,
                 source_page: Some("p.98"),
                 benefit: None,
-                prerequisites: Some(&["PREVARGTEQ:IsPsionic,1"]),
             },
             // Empowered Shot -- up_feats.lst:85
             UpsiFeatEntry {
@@ -711,7 +664,6 @@ pub fn feat_tables() -> &'static [UpsiFeatEntry] {
                 pretext: None,
                 source_page: Some("p.98"),
                 benefit: None,
-                prerequisites: Some(&["PREABILITY:1,CATEGORY=FEAT,Point-Blank Shot"]),
             },
             // Endowed Mind -- up_feats.lst:86
             UpsiFeatEntry {
@@ -722,7 +674,6 @@ pub fn feat_tables() -> &'static [UpsiFeatEntry] {
                 pretext: None,
                 source_page: Some("p.98"),
                 benefit: None,
-                prerequisites: Some(&["PREVARGTEQ:IsPsionic,1"]),
             },
             // Enervation Fortitude -- up_feats.lst:87
             UpsiFeatEntry {
@@ -733,7 +684,6 @@ pub fn feat_tables() -> &'static [UpsiFeatEntry] {
                 pretext: None,
                 source_page: Some("p.98"),
                 benefit: None,
-                prerequisites: Some(&["PREABILITY:1,CATEGORY=Special Ability,Psychic Enervation", "PREVARGTEQ:IsPsionic,1"]),
             },
             // Enhanced Steal Life -- up_feats.lst:88
             UpsiFeatEntry {
@@ -744,7 +694,6 @@ pub fn feat_tables() -> &'static [UpsiFeatEntry] {
                 pretext: None,
                 source_page: Some("p.98"),
                 benefit: None,
-                prerequisites: Some(&["PREABILITY:1,CATEGORY=Special Ability,Steal Life", "PREVARGTEQ:IsPsionic,1"]),
             },
             // Enlarge Power -- up_feats.lst:89
             UpsiFeatEntry {
@@ -755,7 +704,6 @@ pub fn feat_tables() -> &'static [UpsiFeatEntry] {
                 pretext: None,
                 source_page: Some("p.99"),
                 benefit: None,
-                prerequisites: Some(&["PREVARGTEQ:IsPsionic,1"]),
             },
             // Enlarged Collective -- up_feats.lst:90
             UpsiFeatEntry {
@@ -766,7 +714,6 @@ pub fn feat_tables() -> &'static [UpsiFeatEntry] {
                 pretext: None,
                 source_page: Some("p.99"),
                 benefit: None,
-                prerequisites: Some(&["PREABILITY:1,CATEGORY=Special Ability,TYPE.Collective", "PREVARGTEQ:IsPsionic,1", "PREVARGTEQ:MaxManifesterLVL,3"]),
             },
             // Expanded Collective -- up_feats.lst:92
             UpsiFeatEntry {
@@ -777,7 +724,6 @@ pub fn feat_tables() -> &'static [UpsiFeatEntry] {
                 pretext: None,
                 source_page: Some("p.99"),
                 benefit: None,
-                prerequisites: Some(&["PREABILITY:1,CATEGORY=Special Ability,TYPE.Collective", "PREVARGTEQ:IsPsionic,1"]),
             },
             // Expanded Favored Weapon -- up_feats.lst:93
             UpsiFeatEntry {
@@ -788,7 +734,6 @@ pub fn feat_tables() -> &'static [UpsiFeatEntry] {
                 pretext: None,
                 source_page: Some("p.99"),
                 benefit: None,
-                prerequisites: Some(&["PREABILITY:1,CATEGORY=Special Ability,Favored Weapon", "PREMULT:1,[PRETOTALAB:6],[PREVARGTEQ:PrereqBAB,6]"]),
             },
             // Expanded Knowledge -- up_feats.lst:96
             UpsiFeatEntry {
@@ -799,7 +744,6 @@ pub fn feat_tables() -> &'static [UpsiFeatEntry] {
                 pretext: None,
                 source_page: Some("p.99"),
                 benefit: None,
-                prerequisites: Some(&["PREVARGTEQ:MaxManifesterLVL,3", "PREVARGTEQ:IsPsionic,1"]),
             },
             // Expanded Martial Power -- up_feats.lst:97
             UpsiFeatEntry {
@@ -810,7 +754,6 @@ pub fn feat_tables() -> &'static [UpsiFeatEntry] {
                 pretext: None,
                 source_page: Some("p.99"),
                 benefit: None,
-                prerequisites: Some(&["PREABILITY:1,CATEGORY=Special Ability,Psychic Warrior ~ Martial Power", "PREVARGTEQ:IsPsionic,1"]),
             },
             // Expanded Strategies -- up_feats.lst:98
             UpsiFeatEntry {
@@ -821,7 +764,6 @@ pub fn feat_tables() -> &'static [UpsiFeatEntry] {
                 pretext: None,
                 source_page: Some("p.99"),
                 benefit: None,
-                prerequisites: Some(&["PREABILITY:1,CATEGORY=Special Ability,TYPE.Strategy", "PREVARGTEQ:IsPsionic,1"]),
             },
             // Expansive Collective -- up_feats.lst:99
             UpsiFeatEntry {
@@ -832,7 +774,6 @@ pub fn feat_tables() -> &'static [UpsiFeatEntry] {
                 pretext: None,
                 source_page: Some("p.99"),
                 benefit: None,
-                prerequisites: Some(&["PREABILITY:1,CATEGORY=Special Ability,TYPE.Collective", "PREABILITY:1,CATEGORY=Special Ability,Tactician ~ Spirit of Many,Vitalist ~ Spirit of Many", "PREVARGTEQ:IsPsionic,1"]),
             },
             // Explosive Power -- up_feats.lst:100
             UpsiFeatEntry {
@@ -843,7 +784,6 @@ pub fn feat_tables() -> &'static [UpsiFeatEntry] {
                 pretext: None,
                 source_page: Some("p.99"),
                 benefit: None,
-                prerequisites: Some(&["PREVARGTEQ:MaxManifesterLVL,3", "PREVARGTEQ:IsPsionic,1"]),
             },
             // Extra Blade Skill -- up_feats.lst:101
             UpsiFeatEntry {
@@ -854,7 +794,6 @@ pub fn feat_tables() -> &'static [UpsiFeatEntry] {
                 pretext: None,
                 source_page: Some("p.100"),
                 benefit: None,
-                prerequisites: Some(&["PREABILITY:1,CATEGORY=Special Ability,TYPE.BladeSkill,Blade Skill", "PREMULT:1,[PRETOTALAB:2],[PREVARGTEQ:PrereqBAB,2]", "PREVARGTEQ:IsPsionic,1"]),
             },
             // Extend Power -- up_feats.lst:102
             UpsiFeatEntry {
@@ -865,7 +804,6 @@ pub fn feat_tables() -> &'static [UpsiFeatEntry] {
                 pretext: None,
                 source_page: Some("p.100"),
                 benefit: None,
-                prerequisites: Some(&["PREVARGTEQ:IsPsionic,1"]),
             },
             // Extended Blast -- up_feats.lst:103
             UpsiFeatEntry {
@@ -876,7 +814,6 @@ pub fn feat_tables() -> &'static [UpsiFeatEntry] {
                 pretext: None,
                 source_page: Some("p.100"),
                 benefit: None,
-                prerequisites: Some(&["PREABILITY:1,CATEGORY=Special Ability,Surge Blast"]),
             },
             // Extra Customization -- up_feats.lst:104
             UpsiFeatEntry {
@@ -887,7 +824,6 @@ pub fn feat_tables() -> &'static [UpsiFeatEntry] {
                 pretext: None,
                 source_page: Some("p.100"),
                 benefit: None,
-                prerequisites: Some(&["PREABILITY:1,CATEGORY=Special Ability,Aegis ~ Form Astral Suit", "PREVARGT:floor(AstralSuitLVL/5),count(\"ABILITIES\",\"CATEGORY=FEAT\",\"NAME=Extra Customization\")", "PREVARGTEQ:IsPsionic,1"]),
             },
             // Extra Disruption Type -- up_feats.lst:105
             UpsiFeatEntry {
@@ -898,7 +834,6 @@ pub fn feat_tables() -> &'static [UpsiFeatEntry] {
                 pretext: None,
                 source_page: Some("p.100"),
                 benefit: None,
-                prerequisites: Some(&["PREABILITY:1,CATEGORY=Special Ability,Cryptic ~ Disrupt Pattern", "PREVARGTEQ:IsPsionic,1"]),
             },
             // Extra Insight -- up_feats.lst:106
             UpsiFeatEntry {
@@ -909,7 +844,6 @@ pub fn feat_tables() -> &'static [UpsiFeatEntry] {
                 pretext: None,
                 source_page: Some("p.100"),
                 benefit: None,
-                prerequisites: Some(&["PREABILITY:1,CATEGORY=Internal,Cryptic ~ Insights", "PREVARGTEQ:IsPsionic,1"]),
             },
             // Extra Power Known -- up_feats.lst:107
             UpsiFeatEntry {
@@ -920,7 +854,6 @@ pub fn feat_tables() -> &'static [UpsiFeatEntry] {
                 pretext: None,
                 source_page: Some("p.100"),
                 benefit: None,
-                prerequisites: Some(&["PREVARGTEQ:MaxManifesterLVL,1", "PREVARGTEQ:IsPsionic,1"]),
             },
             // Extra Reconfiguration -- up_feats.lst:108
             UpsiFeatEntry {
@@ -931,7 +864,6 @@ pub fn feat_tables() -> &'static [UpsiFeatEntry] {
                 pretext: None,
                 source_page: Some("p.100"),
                 benefit: None,
-                prerequisites: Some(&["PREABILITY:2,CATEGORY=Special Ability,Aegis ~ Form Astral Suit,Aegis ~ Reconfigure", "PREVARGTEQ:IsPsionic,1"]),
             },
             // Extra Strategy -- up_feats.lst:109
             UpsiFeatEntry {
@@ -942,7 +874,6 @@ pub fn feat_tables() -> &'static [UpsiFeatEntry] {
                 pretext: None,
                 source_page: Some("p.100"),
                 benefit: None,
-                prerequisites: Some(&["PREABILITY:1,CATEGORY=Special Ability,TYPE.Strategy", "PREVARGTEQ:IsPsionic,1"]),
             },
             // Extra Terrors -- up_feats.lst:110
             UpsiFeatEntry {
@@ -953,7 +884,6 @@ pub fn feat_tables() -> &'static [UpsiFeatEntry] {
                 pretext: None,
                 source_page: Some("p.100"),
                 benefit: None,
-                prerequisites: Some(&["PREABILITY:1,CATEGORY=Special Ability,Dread ~ Terror", "PREVARGTEQ:IsPsionic,1"]),
             },
             // Extra Transfer -- up_feats.lst:111
             UpsiFeatEntry {
@@ -964,7 +894,6 @@ pub fn feat_tables() -> &'static [UpsiFeatEntry] {
                 pretext: None,
                 source_page: Some("p.100"),
                 benefit: None,
-                prerequisites: Some(&["PREABILITY:1,CATEGORY=Special Ability,Transfer Wounds,Miasmic ~ Sickening Touch", "PREVARGTEQ:IsPsionic,1"]),
             },
             // Fast Aid -- up_feats.lst:116
             UpsiFeatEntry {
@@ -975,7 +904,6 @@ pub fn feat_tables() -> &'static [UpsiFeatEntry] {
                 pretext: None,
                 source_page: Some("p.100"),
                 benefit: None,
-                prerequisites: Some(&["PREABILITY:1,CATEGORY=Special Ability,Request Aid", "PRESKILL:2,Heal=7,Spellcraft=7", "PREVARGTEQ:IsPsionic,1"]),
             },
             // Fast Step -- up_feats.lst:117
             UpsiFeatEntry {
@@ -986,7 +914,6 @@ pub fn feat_tables() -> &'static [UpsiFeatEntry] {
                 pretext: None,
                 source_page: Some("p.101"),
                 benefit: None,
-                prerequisites: Some(&["PREABILITY:1,CATEGORY=Special Ability,Nomad's Step ~ Psychoportation", "PREVARGTEQ:IsPsionic,1"]),
             },
             // Favored Energy (Cold) -- up_feats.lst:121
             UpsiFeatEntry {
@@ -997,7 +924,6 @@ pub fn feat_tables() -> &'static [UpsiFeatEntry] {
                 pretext: Some("Able to manifest any power that deals cold damage."),
                 source_page: Some("p.101"),
                 benefit: None,
-                prerequisites: Some(&["!PREABILITY:1,CATEGORY=FEAT,TYPE=FavoredEnergy", "PRETEXT:Able to manifest any power that deals cold damage.", "PREVARGTEQ:MaxManifesterLVL,3", "PREVARGTEQ:IsPsionic,1"]),
             },
             // Favored Energy (Electricity) -- up_feats.lst:122
             UpsiFeatEntry {
@@ -1008,7 +934,6 @@ pub fn feat_tables() -> &'static [UpsiFeatEntry] {
                 pretext: Some("Able to manifest any power that deals electricity damage."),
                 source_page: Some("p.101"),
                 benefit: None,
-                prerequisites: Some(&["!PREABILITY:1,CATEGORY=FEAT,TYPE=FavoredEnergy", "PRETEXT:Able to manifest any power that deals electricity damage.", "PREVARGTEQ:MaxManifesterLVL,3", "PREVARGTEQ:IsPsionic,1"]),
             },
             // Favored Energy (Fire) -- up_feats.lst:123
             UpsiFeatEntry {
@@ -1019,7 +944,6 @@ pub fn feat_tables() -> &'static [UpsiFeatEntry] {
                 pretext: Some("Able to manifest any power that deals fire damage."),
                 source_page: Some("p.101"),
                 benefit: None,
-                prerequisites: Some(&["!PREABILITY:1,CATEGORY=FEAT,TYPE=FavoredEnergy", "PRETEXT:Able to manifest any power that deals fire damage.", "PREVARGTEQ:MaxManifesterLVL,3", "PREVARGTEQ:IsPsionic,1"]),
             },
             // Favored Energy (Sonic) -- up_feats.lst:124
             UpsiFeatEntry {
@@ -1030,7 +954,6 @@ pub fn feat_tables() -> &'static [UpsiFeatEntry] {
                 pretext: Some("Able to manifest any power that deals sonic damage."),
                 source_page: Some("p.101"),
                 benefit: None,
-                prerequisites: Some(&["!PREABILITY:1,CATEGORY=FEAT,TYPE=FavoredEnergy", "PRETEXT:Able to manifest any power that deals sonic damage.", "PREVARGTEQ:MaxManifesterLVL,3", "PREVARGTEQ:IsPsionic,1"]),
             },
             // Fear Mastery -- up_feats.lst:125
             UpsiFeatEntry {
@@ -1041,7 +964,6 @@ pub fn feat_tables() -> &'static [UpsiFeatEntry] {
                 pretext: None,
                 source_page: Some("p.101"),
                 benefit: None,
-                prerequisites: Some(&["PREABILITY:1,CATEGORY=Special Ability,Dread ~ Devastating Touch", "PREABILITY:1,CATEGORY=FEAT,Psionic Endowment", "PREVARGTEQ:IsPsionic,1"]),
             },
             // Fear's Reach -- up_feats.lst:126
             UpsiFeatEntry {
@@ -1052,7 +974,6 @@ pub fn feat_tables() -> &'static [UpsiFeatEntry] {
                 pretext: None,
                 source_page: Some("p.101"),
                 benefit: None,
-                prerequisites: Some(&["PREABILITY:1,CATEGORY=Special Ability,Dread ~ Devastating Touch", "PREABILITY:1,CATEGORY=FEAT,Psionic Shot", "PREVARGTEQ:IsPsionic,1"]),
             },
             // Fell Shot -- up_feats.lst:127
             UpsiFeatEntry {
@@ -1063,7 +984,6 @@ pub fn feat_tables() -> &'static [UpsiFeatEntry] {
                 pretext: None,
                 source_page: Some("p.101"),
                 benefit: None,
-                prerequisites: Some(&["PREABILITY:2,CATEGORY=FEAT,Point-Blank Shot,Psionic Shot", "PREMULT:1,[PRETOTALAB:6],[PREVARGTEQ:PrereqBAB,6]", "PRESTAT:1,DEX=13", "PREVARGTEQ:IsPsionic,1"]),
             },
             // Flaring Power -- up_feats.lst:129
             UpsiFeatEntry {
@@ -1074,7 +994,6 @@ pub fn feat_tables() -> &'static [UpsiFeatEntry] {
                 pretext: None,
                 source_page: Some("p.101"),
                 benefit: None,
-                prerequisites: None,
             },
             // Fighter's Blade -- up_feats.lst:130
             UpsiFeatEntry {
@@ -1085,7 +1004,6 @@ pub fn feat_tables() -> &'static [UpsiFeatEntry] {
                 pretext: None,
                 source_page: Some("p.101"),
                 benefit: None,
-                prerequisites: Some(&["PREABILITY:1,CATEGORY=Special Ability,Soulknife ~ Enhanced Mind Blade"]),
             },
             // Focused Power -- up_feats.lst:131
             UpsiFeatEntry {
@@ -1096,7 +1014,6 @@ pub fn feat_tables() -> &'static [UpsiFeatEntry] {
                 pretext: None,
                 source_page: Some("p.101"),
                 benefit: None,
-                prerequisites: None,
             },
             // Focused Precision -- up_feats.lst:134
             UpsiFeatEntry {
@@ -1107,7 +1024,6 @@ pub fn feat_tables() -> &'static [UpsiFeatEntry] {
                 pretext: None,
                 source_page: Some("p.101"),
                 benefit: None,
-                prerequisites: Some(&["PREABILITY:1,CATEGORY=Internal,Marksman Combat Style", "PREABILITY:1,CATEGORY=FEAT,Weapon Focus", "PREMULT:1,[PRETOTALAB:7],[PREVARGTEQ:PrereqBAB,7]", "PRESTAT:1,DEX=17", "PREVARGTEQ:IsPsionic,1"]),
             },
             // Focused Sunder -- up_feats.lst:135
             UpsiFeatEntry {
@@ -1118,7 +1034,6 @@ pub fn feat_tables() -> &'static [UpsiFeatEntry] {
                 pretext: None,
                 source_page: Some("p.102"),
                 benefit: None,
-                prerequisites: Some(&["PREABILITY:2,CATEGORY=FEAT,Power Attack,Improved Sunder", "PRESTAT:1,STR=13", "PREVARGTEQ:IsPsionic,1"]),
             },
             // Ghost Attack -- up_feats.lst:140
             UpsiFeatEntry {
@@ -1129,7 +1044,6 @@ pub fn feat_tables() -> &'static [UpsiFeatEntry] {
                 pretext: None,
                 source_page: Some("p.102"),
                 benefit: None,
-                prerequisites: Some(&["PREMULT:1,[PRETOTALAB:3],[PREVARGTEQ:PrereqBAB,3]", "PREVARGTEQ:IsPsionic,1"]),
             },
             // Gravitic Stability -- up_feats.lst:141
             UpsiFeatEntry {
@@ -1140,7 +1054,6 @@ pub fn feat_tables() -> &'static [UpsiFeatEntry] {
                 pretext: None,
                 source_page: Some("p.102"),
                 benefit: None,
-                prerequisites: Some(&["PRECLASS:1,Elocater=1", "PREVARGTEQ:IsPsionic,1"]),
             },
             // Greater Cushion the Blow -- up_feats.lst:142
             UpsiFeatEntry {
@@ -1151,7 +1064,6 @@ pub fn feat_tables() -> &'static [UpsiFeatEntry] {
                 pretext: None,
                 source_page: Some("p.102"),
                 benefit: None,
-                prerequisites: Some(&["PREABILITY:1,CATEGORY=Special Ability,TYPE.Collective", "PREABILITY:2,CATEGORY=FEAT,Cushion the Blow,Improved Cushion the Blow", "PRESTAT:1,WIS=17", "PREVARGTEQ:MaxManifesterLVL,18", "PREVARGTEQ:IsPsionic,1"]),
             },
             // Greater Intuitive Shot -- up_feats.lst:143
             UpsiFeatEntry {
@@ -1162,7 +1074,6 @@ pub fn feat_tables() -> &'static [UpsiFeatEntry] {
                 pretext: None,
                 source_page: Some("p.102"),
                 benefit: None,
-                prerequisites: Some(&["PREABILITY:3,CATEGORY=FEAT,Intuitive Shot,Point-Blank Shot,Psionic Shot", "PREMULT:1,[PRETOTALAB:6],[PREVARGTEQ:PrereqBAB,6]", "PRESTAT:1,WIS=13"]),
             },
             // Greater Power Penetration -- up_feats.lst:144
             UpsiFeatEntry {
@@ -1173,7 +1084,6 @@ pub fn feat_tables() -> &'static [UpsiFeatEntry] {
                 pretext: None,
                 source_page: Some("p.102"),
                 benefit: None,
-                prerequisites: Some(&["PREABILITY:1,CATEGORY=FEAT,Power Penetration", "PREVARGTEQ:IsPsionic,1"]),
             },
             // Greater Power Specialization -- up_feats.lst:145
             UpsiFeatEntry {
@@ -1184,7 +1094,6 @@ pub fn feat_tables() -> &'static [UpsiFeatEntry] {
                 pretext: None,
                 source_page: Some("p.102"),
                 benefit: None,
-                prerequisites: Some(&["PREABILITY:2,CATEGORY=FEAT,Power Specialization,Weapon Focus (Ray)", "PREVARGTEQ:MaxManifesterLVL,12", "PREVARGTEQ:IsPsionic,1"]),
             },
             // Greater Psionic Endowment -- up_feats.lst:146
             UpsiFeatEntry {
@@ -1195,7 +1104,6 @@ pub fn feat_tables() -> &'static [UpsiFeatEntry] {
                 pretext: None,
                 source_page: Some("p.102"),
                 benefit: None,
-                prerequisites: Some(&["PREABILITY:1,CATEGORY=FEAT,Psionic Endowment", "PREVARGTEQ:IsPsionic,1"]),
             },
             // Greater Psionic Fist -- up_feats.lst:148
             UpsiFeatEntry {
@@ -1206,7 +1114,6 @@ pub fn feat_tables() -> &'static [UpsiFeatEntry] {
                 pretext: None,
                 source_page: Some("p.102"),
                 benefit: None,
-                prerequisites: Some(&["PREABILITY:1,CATEGORY=FEAT,Psionic Fist", "PREMULT:1,[PRETOTALAB:6],[PREVARGTEQ:PrereqBAB,6]", "PRESTAT:1,STR=13", "PREVARGTEQ:IsPsionic,1"]),
             },
             // Greater Psionic Shot -- up_feats.lst:150
             UpsiFeatEntry {
@@ -1217,7 +1124,6 @@ pub fn feat_tables() -> &'static [UpsiFeatEntry] {
                 pretext: None,
                 source_page: Some("p.102"),
                 benefit: None,
-                prerequisites: Some(&["PREABILITY:2,CATEGORY=FEAT,Point-Blank Shot,Psionic Shot", "PREMULT:1,[PRETOTALAB:6],[PREVARGTEQ:PrereqBAB,6]", "PREVARGTEQ:IsPsionic,1"]),
             },
             // Greater Psionic Weapon -- up_feats.lst:152
             UpsiFeatEntry {
@@ -1228,7 +1134,6 @@ pub fn feat_tables() -> &'static [UpsiFeatEntry] {
                 pretext: None,
                 source_page: Some("p.103"),
                 benefit: None,
-                prerequisites: Some(&["PREABILITY:1,CATEGORY=FEAT,Psionic Weapon", "PREMULT:1,[PRETOTALAB:6],[PREVARGTEQ:PrereqBAB,6]", "PRESTAT:1,STR=13", "PREVARGTEQ:IsPsionic,1"]),
             },
             // Harmonic Resonance -- up_feats.lst:159
             UpsiFeatEntry {
@@ -1239,7 +1144,6 @@ pub fn feat_tables() -> &'static [UpsiFeatEntry] {
                 pretext: None,
                 source_page: Some("p.103"),
                 benefit: None,
-                prerequisites: Some(&["PREABILITY:1,CATEGORY=Special Ability,TYPE.Collective", "PRESKILL:1,Spellcraft=3", "PREVARGTEQ:IsPsionic,1"]),
             },
             // Hawkeye -- up_feats.lst:160
             UpsiFeatEntry {
@@ -1250,7 +1154,6 @@ pub fn feat_tables() -> &'static [UpsiFeatEntry] {
                 pretext: None,
                 source_page: Some("p.103"),
                 benefit: None,
-                prerequisites: Some(&["PREABILITY:2,CATEGORY=FEAT,Far Shot,Point-Blank Shot"]),
             },
             // Hustle Power -- up_feats.lst:161
             UpsiFeatEntry {
@@ -1261,7 +1164,6 @@ pub fn feat_tables() -> &'static [UpsiFeatEntry] {
                 pretext: None,
                 source_page: Some("p.103"),
                 benefit: None,
-                prerequisites: Some(&["PREVARGTEQ:IsPsionic,1"]),
             },
             // Improved Cover Fire -- up_feats.lst:166
             UpsiFeatEntry {
@@ -1272,7 +1174,6 @@ pub fn feat_tables() -> &'static [UpsiFeatEntry] {
                 pretext: None,
                 source_page: Some("p.103"),
                 benefit: None,
-                prerequisites: Some(&["PREABILITY:1,CATEGORY=Special Ability,Marksman ~ Cover Fire", "PREVARGTEQ:IsPsionic,1"]),
             },
             // Improved Cushion the Blow -- up_feats.lst:167
             UpsiFeatEntry {
@@ -1283,7 +1184,6 @@ pub fn feat_tables() -> &'static [UpsiFeatEntry] {
                 pretext: None,
                 source_page: Some("p.103"),
                 benefit: None,
-                prerequisites: Some(&["PREABILITY:1,CATEGORY=Special Ability,TYPE.Collective", "PREABILITY:1,CATEGORY=FEAT,Cushion the Blow", "PRESTAT:1,WIS=15", "PREVARGTEQ:MaxManifesterLVL,12", "PREVARGTEQ:IsPsionic,1"]),
             },
             // Improved Disengage -- up_feats.lst:168
             UpsiFeatEntry {
@@ -1294,7 +1194,6 @@ pub fn feat_tables() -> &'static [UpsiFeatEntry] {
                 pretext: None,
                 source_page: Some("p.103"),
                 benefit: None,
-                prerequisites: Some(&["PREABILITY:1,CATEGORY=Special Ability,Marksman ~ Disengage", "PREVARGTEQ:IsPsionic,1"]),
             },
             // Improved Disruption -- up_feats.lst:169
             UpsiFeatEntry {
@@ -1305,7 +1204,6 @@ pub fn feat_tables() -> &'static [UpsiFeatEntry] {
                 pretext: None,
                 source_page: Some("p.103"),
                 benefit: None,
-                prerequisites: Some(&["PREABILITY:1,CATEGORY=Special Ability,Cryptic ~ Disrupt Pattern", "PREVARGTEQ:IsPsionic,1"]),
             },
             // Improved Metamorphosis -- up_feats.lst:170
             UpsiFeatEntry {
@@ -1316,7 +1214,6 @@ pub fn feat_tables() -> &'static [UpsiFeatEntry] {
                 pretext: None,
                 source_page: Some("p.103"),
                 benefit: None,
-                prerequisites: Some(&["PRESPELL:1,Metamorphosis (Minor),Metamorphosis,Metamorphosis (Greater),Metamorphosis (True)", "PREVARGTEQ:IsPsionic,1"]),
             },
             // Improved Psi-Like Ability -- up_feats.lst:175
             UpsiFeatEntry {
@@ -1327,7 +1224,6 @@ pub fn feat_tables() -> &'static [UpsiFeatEntry] {
                 pretext: Some("Racial psi-like ability"),
                 source_page: Some("p.104"),
                 benefit: None,
-                prerequisites: Some(&["PRETEXT:Racial psi-like ability", "PREVARGTEQ:IsPsionic,1"]),
             },
             // Improved Psicrystal -- up_feats.lst:176
             UpsiFeatEntry {
@@ -1338,7 +1234,6 @@ pub fn feat_tables() -> &'static [UpsiFeatEntry] {
                 pretext: None,
                 source_page: Some("p.104"),
                 benefit: None,
-                prerequisites: Some(&["PREABILITY:1,CATEGORY=FEAT,Psicrystal Affinity", "PREVARGTEQ:IsPsionic,1"]),
             },
             // Inquisitor -- up_feats.lst:177
             UpsiFeatEntry {
@@ -1349,7 +1244,6 @@ pub fn feat_tables() -> &'static [UpsiFeatEntry] {
                 pretext: None,
                 source_page: Some("p.104"),
                 benefit: None,
-                prerequisites: Some(&["PRESTAT:1,WIS=13", "PREVARGTEQ:IsPsionic,1"]),
             },
             // Insightful Terror -- up_feats.lst:178
             UpsiFeatEntry {
@@ -1360,7 +1254,6 @@ pub fn feat_tables() -> &'static [UpsiFeatEntry] {
                 pretext: None,
                 source_page: Some("p.104"),
                 benefit: None,
-                prerequisites: Some(&["PREABILITY:1,CATEGORY=Special Ability,Dread ~ Fearsome Insight", "PRESKILL:1,Intimidate=9", "PREVARGTEQ:IsPsionic,1"]),
             },
             // Intimidating Shot -- up_feats.lst:179
             UpsiFeatEntry {
@@ -1371,7 +1264,6 @@ pub fn feat_tables() -> &'static [UpsiFeatEntry] {
                 pretext: None,
                 source_page: Some("p.104"),
                 benefit: None,
-                prerequisites: Some(&["PREABILITY:1,CATEGORY=FEAT,Point-Blank Shot"]),
             },
             // Intuitive Fighting -- up_feats.lst:180
             UpsiFeatEntry {
@@ -1382,7 +1274,6 @@ pub fn feat_tables() -> &'static [UpsiFeatEntry] {
                 pretext: None,
                 source_page: Some("p.104"),
                 benefit: None,
-                prerequisites: Some(&["PREABILITY:1,CATEGORY=FEAT,Blind-Fight", "PREVARGTEQ:IsPsionic,1"]),
             },
             // Intuitive Shot -- up_feats.lst:181
             UpsiFeatEntry {
@@ -1393,7 +1284,6 @@ pub fn feat_tables() -> &'static [UpsiFeatEntry] {
                 pretext: None,
                 source_page: Some("p.104"),
                 benefit: None,
-                prerequisites: Some(&["PREABILITY:2,CATEGORY=FEAT,Point-Blank Shot,Psionic Shot", "PRESTAT:1,WIS=13"]),
             },
             // Killer's Vitality -- up_feats.lst:186
             UpsiFeatEntry {
@@ -1404,7 +1294,6 @@ pub fn feat_tables() -> &'static [UpsiFeatEntry] {
                 pretext: None,
                 source_page: Some("p.104"),
                 benefit: None,
-                prerequisites: Some(&["PREABILITY:1,CATEGORY=Special Ability,Soulthief Vitalist Method", "PREVARGTEQ:SneakAttackDice,1"]),
             },
             // Knightmare -- up_feats.lst:188
             UpsiFeatEntry {
@@ -1415,7 +1304,6 @@ pub fn feat_tables() -> &'static [UpsiFeatEntry] {
                 pretext: None,
                 source_page: Some("p.104"),
                 benefit: None,
-                prerequisites: Some(&["PREABILITY:2,CATEGORY=Special Ability,Dread ~ Terror,Cavalier's Charge ~ Cavalier"]),
             },
             // Knockdown Shot -- up_feats.lst:189
             UpsiFeatEntry {
@@ -1426,7 +1314,6 @@ pub fn feat_tables() -> &'static [UpsiFeatEntry] {
                 pretext: None,
                 source_page: Some("p.104"),
                 benefit: None,
-                prerequisites: Some(&["PREABILITY:2,CATEGORY=FEAT,Point-Blank Shot,Psionic Shot", "PRESTAT:1,DEX=15"]),
             },
             // Levitative Transport -- up_feats.lst:194
             UpsiFeatEntry {
@@ -1437,7 +1324,6 @@ pub fn feat_tables() -> &'static [UpsiFeatEntry] {
                 pretext: None,
                 source_page: Some("p.105"),
                 benefit: None,
-                prerequisites: Some(&["PREABILITY:1,CATEGORY=FEAT,Gravitic Stability", "PRECLASS:1,Elocater=5", "PREVARGTEQ:IsPsionic,1"]),
             },
             // Lingering Power -- up_feats.lst:195
             UpsiFeatEntry {
@@ -1448,7 +1334,6 @@ pub fn feat_tables() -> &'static [UpsiFeatEntry] {
                 pretext: None,
                 source_page: Some("p.105"),
                 benefit: None,
-                prerequisites: None,
             },
             // Malleable Power -- up_feats.lst:200
             UpsiFeatEntry {
@@ -1459,7 +1344,6 @@ pub fn feat_tables() -> &'static [UpsiFeatEntry] {
                 pretext: None,
                 source_page: Some("p.105"),
                 benefit: None,
-                prerequisites: Some(&["PREABILITY:1,CATEGORY=FEAT,Selective Power", "PRESKILL:1,Spellcraft=10"]),
             },
             // Master of All Forms -- up_feats.lst:201
             UpsiFeatEntry {
@@ -1470,7 +1354,6 @@ pub fn feat_tables() -> &'static [UpsiFeatEntry] {
                 pretext: None,
                 source_page: Some("p.105"),
                 benefit: None,
-                prerequisites: Some(&["PREABILITY:1,CATEGORY=FEAT,Swift Shapeshifter", "PRESPELL:1,Metamorphosis", "PREVARGTEQ:IsPsionic,1"]),
             },
             // Master's Refuge -- up_feats.lst:202
             UpsiFeatEntry {
@@ -1481,7 +1364,6 @@ pub fn feat_tables() -> &'static [UpsiFeatEntry] {
                 pretext: None,
                 source_page: Some("p.106"),
                 benefit: None,
-                prerequisites: Some(&["PREABILITY:1,CATEGORY=Special Ability,Twofold Master", "PREVARGTEQ:IsPsionic,1"]),
             },
             // Master's Voice -- up_feats.lst:203
             UpsiFeatEntry {
@@ -1492,7 +1374,6 @@ pub fn feat_tables() -> &'static [UpsiFeatEntry] {
                 pretext: None,
                 source_page: Some("p.106"),
                 benefit: None,
-                prerequisites: Some(&["PREABILITY:1,CATEGORY=Special Ability,Thrallherd", "PREVARGTEQ:IsPsionic,1"]),
             },
             // Maximize Power -- up_feats.lst:204
             UpsiFeatEntry {
@@ -1503,7 +1384,6 @@ pub fn feat_tables() -> &'static [UpsiFeatEntry] {
                 pretext: None,
                 source_page: Some("p.106"),
                 benefit: None,
-                prerequisites: Some(&["PREVARGTEQ:IsPsionic,1"]),
             },
             // Mental Leap -- up_feats.lst:205
             UpsiFeatEntry {
@@ -1514,7 +1394,6 @@ pub fn feat_tables() -> &'static [UpsiFeatEntry] {
                 pretext: None,
                 source_page: Some("p.106"),
                 benefit: None,
-                prerequisites: Some(&["PRESKILL:1,Acrobatics=2", "PRESTAT:1,STR=13,DEX=13", "PREVARGTEQ:IsPsionic,1"]),
             },
             // Merciful Power -- up_feats.lst:206
             UpsiFeatEntry {
@@ -1525,7 +1404,6 @@ pub fn feat_tables() -> &'static [UpsiFeatEntry] {
                 pretext: None,
                 source_page: Some("p.106"),
                 benefit: None,
-                prerequisites: None,
             },
             // Merge Designs -- up_feats.lst:207
             UpsiFeatEntry {
@@ -1536,7 +1414,6 @@ pub fn feat_tables() -> &'static [UpsiFeatEntry] {
                 pretext: None,
                 source_page: Some("p.106"),
                 benefit: None,
-                prerequisites: Some(&["PREABILITY:1,CATEGORY=Special Ability,Cryptic ~ Pattern Designs", "PREABILITY:1,CATEGORY=FEAT,Scribe Tattoo", "PREVARGTEQ:IsPsionic,1"]),
             },
             // Metapsionic Mastery -- up_feats.lst:208
             UpsiFeatEntry {
@@ -1547,7 +1424,6 @@ pub fn feat_tables() -> &'static [UpsiFeatEntry] {
                 pretext: None,
                 source_page: Some("p.106"),
                 benefit: None,
-                prerequisites: Some(&["PREABILITY:1,CATEGORY=FEAT,TYPE=Metapsionic", "!PREABILITY:1,CATEGORY=FEAT,Metapsionic Mastery", "PREVARGTEQ:MaxManifesterLVL,3", "PREVARGTEQ:IsPsionic,1"]),
             },
             // Mind Blade Knight -- up_feats.lst:210
             UpsiFeatEntry {
@@ -1558,7 +1434,6 @@ pub fn feat_tables() -> &'static [UpsiFeatEntry] {
                 pretext: None,
                 source_page: Some("p.106"),
                 benefit: None,
-                prerequisites: Some(&["PREABILITY:1,CATEGORY=Special Ability,First ~ Mind Knight Path,Mind Knight Path ~ Second", "PREVARGTEQ:IsPsionic,1", "PREVARGTEQ:WarriorPathLVL,3"]),
             },
             // Mind Knight's Arsenal -- up_feats.lst:211
             UpsiFeatEntry {
@@ -1569,7 +1444,6 @@ pub fn feat_tables() -> &'static [UpsiFeatEntry] {
                 pretext: None,
                 source_page: Some("p.107"),
                 benefit: None,
-                prerequisites: Some(&["PREABILITY:1,CATEGORY=Special Ability,Mind Knight Path ~ First,Mind Knight Path ~ Second", "PREABILITY:1,CATEGORY=Special Ability,Call Weaponry Path Power", "PREABILITY:1,CATEGORY=FEAT,Weapon Focus", "PREMULT:1,[PRETOTALAB:3],[PREVARGTEQ:PrereqBAB,3]", "PREVARGTEQ:IsPsionic,1"]),
             },
             // Mind Over Body -- up_feats.lst:212
             UpsiFeatEntry {
@@ -1580,7 +1454,6 @@ pub fn feat_tables() -> &'static [UpsiFeatEntry] {
                 pretext: None,
                 source_page: Some("p.107"),
                 benefit: None,
-                prerequisites: Some(&["PRESTAT:1,CON=13"]),
             },
             // Mixed Combat -- up_feats.lst:213
             UpsiFeatEntry {
@@ -1591,7 +1464,6 @@ pub fn feat_tables() -> &'static [UpsiFeatEntry] {
                 pretext: None,
                 source_page: Some("p.107"),
                 benefit: None,
-                prerequisites: Some(&["PREABILITY:1,CATEGORY=FEAT,Quick Draw", "PRETOTALAB:6"]),
             },
             // Modified Blast -- up_feats.lst:214
             UpsiFeatEntry {
@@ -1602,7 +1474,6 @@ pub fn feat_tables() -> &'static [UpsiFeatEntry] {
                 pretext: None,
                 source_page: Some("p.107"),
                 benefit: None,
-                prerequisites: Some(&["PREABILITY:1,CATEGORY=Special Ability,Surge Blast", "PREVARGTEQ:MaxManifesterLVL,3", "PREVARGTEQ:IsPsionic,1"]),
             },
             // Multiple Connections -- up_feats.lst:215
             UpsiFeatEntry {
@@ -1613,7 +1484,6 @@ pub fn feat_tables() -> &'static [UpsiFeatEntry] {
                 pretext: None,
                 source_page: Some("p.107"),
                 benefit: None,
-                prerequisites: Some(&["PREABILITY:1,CATEGORY=Special Ability,Terror ~ Mindlock", "PREABILITY:1,CATEGORY=FEAT,Open Door", "PREVARGTEQ:IsPsionic,1"]),
             },
             // Nightmare Veil -- up_feats.lst:222
             UpsiFeatEntry {
@@ -1624,7 +1494,6 @@ pub fn feat_tables() -> &'static [UpsiFeatEntry] {
                 pretext: None,
                 source_page: Some("p.107"),
                 benefit: None,
-                prerequisites: Some(&["PREABILITY:1,CATEGORY=Special Ability,Dread ~ Devastating Touch", "PREABILITY:3,CATEGORY=FEAT,Improved Unarmed Strike,Broken Dreams Style,Shattered Dream Strike", "PRESKILL:1,Intimidate=9", "PREVARGTEQ:IsPsionic,1"]),
             },
             // Nomad's Jump -- up_feats.lst:223
             UpsiFeatEntry {
@@ -1635,7 +1504,6 @@ pub fn feat_tables() -> &'static [UpsiFeatEntry] {
                 pretext: None,
                 source_page: Some("p.107"),
                 benefit: None,
-                prerequisites: Some(&["PREABILITY:2,CATEGORY=Special Ability,Nomad's Step ~ Psychoportation,Elocater ~ Aerial Acrobatics", "PREVARGTEQ:IsPsionic,1"]),
             },
             // One Pattern -- up_feats.lst:228
             UpsiFeatEntry {
@@ -1646,7 +1514,6 @@ pub fn feat_tables() -> &'static [UpsiFeatEntry] {
                 pretext: None,
                 source_page: Some("p.108"),
                 benefit: None,
-                prerequisites: Some(&["PREABILITY:1,CATEGORY=Special Ability,Cryptic ~ Disrupt Pattern", "PRESKILL:6,Knowledge (Arcana)=5,Knowledge (Dungeoneering)=5,Knowledge (Nature)=5,Knowlede (Planes)=5,Knowledge (Psionics)=5,Knowledge (Religion)=5", "PREVARGTEQ:IsPsionic,1"]),
             },
             // Open Door -- up_feats.lst:229
             UpsiFeatEntry {
@@ -1657,7 +1524,6 @@ pub fn feat_tables() -> &'static [UpsiFeatEntry] {
                 pretext: None,
                 source_page: Some("p.108"),
                 benefit: None,
-                prerequisites: Some(&["PREABILITY:1,CATEGORY=Special Ability,Terror ~ Mindlock", "PREVARGTEQ:IsPsionic,1"]),
             },
             // Open Minded -- up_feats.lst:230
             UpsiFeatEntry {
@@ -1668,7 +1534,6 @@ pub fn feat_tables() -> &'static [UpsiFeatEntry] {
                 pretext: None,
                 source_page: Some("p.108"),
                 benefit: None,
-                prerequisites: None,
             },
             // Opportunity Power -- up_feats.lst:231
             UpsiFeatEntry {
@@ -1679,7 +1544,6 @@ pub fn feat_tables() -> &'static [UpsiFeatEntry] {
                 pretext: None,
                 source_page: Some("p.108"),
                 benefit: None,
-                prerequisites: Some(&["PREVARGTEQ:IsPsionic,1"]),
             },
             // Overchannel -- up_feats.lst:232
             UpsiFeatEntry {
@@ -1690,7 +1554,6 @@ pub fn feat_tables() -> &'static [UpsiFeatEntry] {
                 pretext: None,
                 source_page: Some("p.108"),
                 benefit: None,
-                prerequisites: Some(&["PREVARGTEQ:IsPsionic,1"]),
             },
             // Penetrating Fear -- up_feats.lst:237
             UpsiFeatEntry {
@@ -1701,7 +1564,6 @@ pub fn feat_tables() -> &'static [UpsiFeatEntry] {
                 pretext: None,
                 source_page: Some("p.108"),
                 benefit: None,
-                prerequisites: Some(&["PREABILITY:1,CATEGORY=Special Ability,Dread ~ Terror", "PRECLASS:1,Dread=10", "PREVARGTEQ:IsPsionic,1"]),
             },
             // Persistent Focus -- up_feats.lst:238
             UpsiFeatEntry {
@@ -1712,7 +1574,6 @@ pub fn feat_tables() -> &'static [UpsiFeatEntry] {
                 pretext: None,
                 source_page: Some("p.108"),
                 benefit: None,
-                prerequisites: Some(&["PREABILITY:1,CATEGORY=FEAT,Psionic Meditation", "PRESKILL:1,Autohypnosis=4", "PRESTAT:1,WIS=13", "PREVARGTEQ:IsPsionic,1"]),
             },
             // Persistent Power -- up_feats.lst:239
             UpsiFeatEntry {
@@ -1723,7 +1584,6 @@ pub fn feat_tables() -> &'static [UpsiFeatEntry] {
                 pretext: None,
                 source_page: Some("p.108"),
                 benefit: None,
-                prerequisites: None,
             },
             // Piercing Power -- up_feats.lst:240
             UpsiFeatEntry {
@@ -1734,7 +1594,6 @@ pub fn feat_tables() -> &'static [UpsiFeatEntry] {
                 pretext: None,
                 source_page: Some("p.108"),
                 benefit: None,
-                prerequisites: None,
             },
             // Piranha Strike -- up_feats.lst:241
             UpsiFeatEntry {
@@ -1745,7 +1604,6 @@ pub fn feat_tables() -> &'static [UpsiFeatEntry] {
                 pretext: None,
                 source_page: Some("p.109"),
                 benefit: Some("When wielding a light weapon, you can choose to take a -%1 penalty on all melee attack rolls and combat maneuver checks to gain a +%2 bonus on all melee damage rolls.  This bonus damage is halved (-50%%) if you are making an attack with an off-hand weapon or secondary natural weapon.  You must choose to use this feat before the attack roll, and its effects last until your next turn.  The bonus damage does not apply to touch attacks or effects that do not deal hit point damage.  This feat cannot be used in conjunction with the Power Attack feat.|PiranhaStrikeAttackPenalty|PiranhaStrikeBonusDamage"),
-                prerequisites: Some(&["PREVAREQ:HasWeaponFinesseFeat,1", "PRETOTALAB:1"]),
             },
             // Power Channeler -- up_feats.lst:242
             UpsiFeatEntry {
@@ -1756,7 +1614,6 @@ pub fn feat_tables() -> &'static [UpsiFeatEntry] {
                 pretext: None,
                 source_page: Some("p.109"),
                 benefit: None,
-                prerequisites: Some(&["PREVARGTEQ:IsPsionic,1"]),
             },
             // Power Penetration -- up_feats.lst:243
             UpsiFeatEntry {
@@ -1767,7 +1624,6 @@ pub fn feat_tables() -> &'static [UpsiFeatEntry] {
                 pretext: None,
                 source_page: Some("p.109"),
                 benefit: None,
-                prerequisites: Some(&["PREVARGTEQ:IsPsionic,1"]),
             },
             // Power Perfection -- up_feats.lst:245
             UpsiFeatEntry {
@@ -1778,7 +1634,6 @@ pub fn feat_tables() -> &'static [UpsiFeatEntry] {
                 pretext: None,
                 source_page: Some("p.109"),
                 benefit: None,
-                prerequisites: Some(&["PREABILITY:3,CATEGORY=FEAT,TYPE.Metapsionic", "PRESKILL:1,Spellcraft=15", "PREVARGTEQ:IsPsionic,1"]),
             },
             // Power Specialization -- up_feats.lst:246
             UpsiFeatEntry {
@@ -1789,7 +1644,6 @@ pub fn feat_tables() -> &'static [UpsiFeatEntry] {
                 pretext: None,
                 source_page: Some("p.109"),
                 benefit: None,
-                prerequisites: Some(&["PREABILITY:1,CATEGORY=FEAT,Weapon Focus (Ray)", "PREVARGTEQ:MaxManifesterLVL,4", "PREVARGTEQ:IsPsionic,1"]),
             },
             // Psicrystal Affinity -- up_feats.lst:247
             UpsiFeatEntry {
@@ -1800,7 +1654,6 @@ pub fn feat_tables() -> &'static [UpsiFeatEntry] {
                 pretext: None,
                 source_page: Some("p.109"),
                 benefit: None,
-                prerequisites: Some(&["PREVARGTEQ:MaxManifesterLVL,1", "PREVARGTEQ:IsPsionic,1"]),
             },
             // Psicrystal Containment -- up_feats.lst:248
             UpsiFeatEntry {
@@ -1811,7 +1664,6 @@ pub fn feat_tables() -> &'static [UpsiFeatEntry] {
                 pretext: None,
                 source_page: Some("p.111"),
                 benefit: None,
-                prerequisites: Some(&["PREABILITY:1,CATEGORY=FEAT,Psicrystal Affinity", "PREVARGTEQ:MaxManifesterLVL,3", "PREVARGTEQ:IsPsionic,1"]),
             },
             // Psionic Body -- up_feats.lst:249
             UpsiFeatEntry {
@@ -1822,7 +1674,6 @@ pub fn feat_tables() -> &'static [UpsiFeatEntry] {
                 pretext: None,
                 source_page: Some("p.111"),
                 benefit: None,
-                prerequisites: Some(&["PREVARGTEQ:IsPsionic,1"]),
             },
             // Psionic Bull Rush -- up_feats.lst:250
             UpsiFeatEntry {
@@ -1833,7 +1684,6 @@ pub fn feat_tables() -> &'static [UpsiFeatEntry] {
                 pretext: None,
                 source_page: Some("p.111"),
                 benefit: None,
-                prerequisites: Some(&["PREABILITY:1,CATEGORY=FEAT,Improved Bull Rush", "PREVARGTEQ:IsPsionic,1"]),
             },
             // Psionic Charge -- up_feats.lst:251
             UpsiFeatEntry {
@@ -1844,7 +1694,6 @@ pub fn feat_tables() -> &'static [UpsiFeatEntry] {
                 pretext: None,
                 source_page: Some("p.111"),
                 benefit: None,
-                prerequisites: Some(&["PREABILITY:1,CATEGORY=FEAT,Speed of Thought", "PRESTAT:1,DEX=13", "PREVARGTEQ:IsPsionic,1"]),
             },
             // Psionic Critical -- up_feats.lst:252
             UpsiFeatEntry {
@@ -1855,7 +1704,6 @@ pub fn feat_tables() -> &'static [UpsiFeatEntry] {
                 pretext: None,
                 source_page: Some("p.112"),
                 benefit: None,
-                prerequisites: Some(&["PREABILITY:1,CATEGORY=FEAT,Improved Critical", "PREVARGTEQ:IsPsionic,1"]),
             },
             // Psionic Disarm -- up_feats.lst:253
             UpsiFeatEntry {
@@ -1866,7 +1714,6 @@ pub fn feat_tables() -> &'static [UpsiFeatEntry] {
                 pretext: None,
                 source_page: Some("p.112"),
                 benefit: None,
-                prerequisites: Some(&["PREABILITY:1,CATEGORY=FEAT,Improved Disarm", "PREVARGTEQ:IsPsionic,1"]),
             },
             // Psionic Dodge -- up_feats.lst:254
             UpsiFeatEntry {
@@ -1877,7 +1724,6 @@ pub fn feat_tables() -> &'static [UpsiFeatEntry] {
                 pretext: None,
                 source_page: Some("p.112"),
                 benefit: None,
-                prerequisites: Some(&["PREABILITY:1,CATEGORY=FEAT,Dodge", "PRESTAT:1,DEX=13", "PREVARGTEQ:IsPsionic,1"]),
             },
             // Psionic Endowment -- up_feats.lst:255
             UpsiFeatEntry {
@@ -1888,7 +1734,6 @@ pub fn feat_tables() -> &'static [UpsiFeatEntry] {
                 pretext: None,
                 source_page: Some("p.112"),
                 benefit: None,
-                prerequisites: Some(&["PREVARGTEQ:IsPsionic,1"]),
             },
             // Psionic Fist -- up_feats.lst:257
             UpsiFeatEntry {
@@ -1899,7 +1744,6 @@ pub fn feat_tables() -> &'static [UpsiFeatEntry] {
                 pretext: None,
                 source_page: Some("p.112"),
                 benefit: None,
-                prerequisites: Some(&["PRESTAT:1,STR=13", "PREVARGTEQ:IsPsionic,1"]),
             },
             // Psionic Meditation -- up_feats.lst:258
             UpsiFeatEntry {
@@ -1910,7 +1754,6 @@ pub fn feat_tables() -> &'static [UpsiFeatEntry] {
                 pretext: None,
                 source_page: Some("p.112"),
                 benefit: None,
-                prerequisites: Some(&["PRESKILL:1,Autohypnosis=4", "PRESTAT:1,WIS=13", "PREVARGTEQ:IsPsionic,1"]),
             },
             // Psionic Overrun -- up_feats.lst:259
             UpsiFeatEntry {
@@ -1921,7 +1764,6 @@ pub fn feat_tables() -> &'static [UpsiFeatEntry] {
                 pretext: None,
                 source_page: Some("p.112"),
                 benefit: None,
-                prerequisites: Some(&["PREABILITY:2,CATEGORY=FEAT,Power Attack,Improved Overrun", "PREMULT:1,[PRETOTALAB:1],[PREVARGTEQ:PrereqBAB,1]", "PRESTAT:1,STR=13", "PREVARGTEQ:IsPsionic,1"]),
             },
             // Psionic Precise Shot -- up_feats.lst:260
             UpsiFeatEntry {
@@ -1932,7 +1774,6 @@ pub fn feat_tables() -> &'static [UpsiFeatEntry] {
                 pretext: None,
                 source_page: Some("p.112"),
                 benefit: None,
-                prerequisites: Some(&["PREABILITY:3,CATEGORY=FEAT,Improved Precise Shot,Point-Blank Shot,Precise Shot", "PREMULT:1,[PRETOTALAB:11],[PREVARGTEQ:PrereqBAB,11]", "PRESTAT:1,DEX=19", "PREVARGTEQ:IsPsionic,1"]),
             },
             // Psionic Shield Bash -- up_feats.lst:261
             UpsiFeatEntry {
@@ -1943,7 +1784,6 @@ pub fn feat_tables() -> &'static [UpsiFeatEntry] {
                 pretext: None,
                 source_page: Some("p.112"),
                 benefit: None,
-                prerequisites: Some(&["PREABILITY:2,CATEGORY=FEAT,Improved Shield Bash,Shield Proficiency", "PREVARGTEQ:IsPsionic,1"]),
             },
             // Psionic Shot -- up_feats.lst:263
             UpsiFeatEntry {
@@ -1954,7 +1794,6 @@ pub fn feat_tables() -> &'static [UpsiFeatEntry] {
                 pretext: None,
                 source_page: Some("p.112"),
                 benefit: Some("While you maintain psionic focus, your attacks with a ranged weapon deal an extra 1 point of damage. Additionally, if you expend your psionic focus as part of an attack with a ranged weapon, that attack instead deals an extra 2d6 points of damage. You must decide whether or not to use this feat prior to making an attack. If your attack misses, you still expend your psionic focus."),
-                prerequisites: Some(&["PREABILITY:1,CATEGORY=FEAT,Point-Blank Shot", "PREVARGTEQ:IsPsionic,1"]),
             },
             // Psionic Stamina -- up_feats.lst:264
             UpsiFeatEntry {
@@ -1965,7 +1804,6 @@ pub fn feat_tables() -> &'static [UpsiFeatEntry] {
                 pretext: None,
                 source_page: Some("p.113"),
                 benefit: None,
-                prerequisites: Some(&["PREABILITY:1,CATEGORY=FEAT,Psionic Body", "PREVARGTEQ:IsPsionic,1", "PREVARGTEQ:SoulknifeFeatPrereqLVL,3"]),
             },
             // Psionic Sunder -- up_feats.lst:265
             UpsiFeatEntry {
@@ -1976,7 +1814,6 @@ pub fn feat_tables() -> &'static [UpsiFeatEntry] {
                 pretext: None,
                 source_page: Some("p.113"),
                 benefit: None,
-                prerequisites: Some(&["PREABILITY:2,CATEGORY=FEAT,Power Attack,Improved Sunder", "PREMULT:1,[PRETOTALAB:1],[PREVARGTEQ:PrereqBAB,1]", "PRESTAT:1,STR=13", "PREVARGTEQ:IsPsionic,1"]),
             },
             // Psionic Talent -- up_feats.lst:266
             UpsiFeatEntry {
@@ -1987,7 +1824,6 @@ pub fn feat_tables() -> &'static [UpsiFeatEntry] {
                 pretext: None,
                 source_page: Some("p.113"),
                 benefit: Some("You gain %1 power points.|COUNT[FEATNAME=Psionic Talent]+1"),
-                prerequisites: Some(&["PREVARGTEQ:IsPsionic,1"]),
             },
             // Psionic Trip -- up_feats.lst:267
             UpsiFeatEntry {
@@ -1998,7 +1834,6 @@ pub fn feat_tables() -> &'static [UpsiFeatEntry] {
                 pretext: None,
                 source_page: Some("p.113"),
                 benefit: None,
-                prerequisites: Some(&["PREABILITY:2,CATEGORY=FEAT,Combat Expertise,Improved Trip", "PRESTAT:1,INT=13", "PREVARGTEQ:IsPsionic,1"]),
             },
             // Psionic Unarmed Strike -- up_feats.lst:268
             UpsiFeatEntry {
@@ -2009,7 +1844,6 @@ pub fn feat_tables() -> &'static [UpsiFeatEntry] {
                 pretext: None,
                 source_page: Some("p.113"),
                 benefit: None,
-                prerequisites: Some(&["PREABILITY:2,CATEGORY=FEAT,Improved Unarmed Strike,Stunning Fist", "PRESTAT:2,DEX=13,WIS=13", "PREVARGTEQ:IsPsionic,1"]),
             },
             // Psionic Weapon -- up_feats.lst:270
             UpsiFeatEntry {
@@ -2020,7 +1854,6 @@ pub fn feat_tables() -> &'static [UpsiFeatEntry] {
                 pretext: None,
                 source_page: Some("p.113"),
                 benefit: None,
-                prerequisites: Some(&["PRESTAT:1,STR=13", "PREVARGTEQ:IsPsionic,1"]),
             },
             // Psychoportive Pathfinder -- up_feats.lst:271
             UpsiFeatEntry {
@@ -2031,7 +1864,6 @@ pub fn feat_tables() -> &'static [UpsiFeatEntry] {
                 pretext: None,
                 source_page: Some("p.113"),
                 benefit: None,
-                prerequisites: Some(&["PRECLASS:1,Nomad=1", "PRESPELL:1,Trace Teleport", "PRESPELL:1,Psychoport,Psychoport(Greater)", "PREVARGTEQ:IsPsionic,1"]),
             },
             // Pyromaniac -- up_feats.lst:273
             UpsiFeatEntry {
@@ -2042,7 +1874,6 @@ pub fn feat_tables() -> &'static [UpsiFeatEntry] {
                 pretext: None,
                 source_page: Some("p.113"),
                 benefit: None,
-                prerequisites: Some(&["PREABILITY:2,CATEGORY=Special Ability,Pyrokinetic ~ Fire Lash,Bomb ~ Alchemist", "PREVARGTEQ:AlchemistBombAdditionalDice,1"]),
             },
             // Quick Suit -- up_feats.lst:278
             UpsiFeatEntry {
@@ -2053,7 +1884,6 @@ pub fn feat_tables() -> &'static [UpsiFeatEntry] {
                 pretext: None,
                 source_page: Some("p.114"),
                 benefit: None,
-                prerequisites: Some(&["PREABILITY:2,CATEGORY=Special Ability,Aegis ~ Form Astral Suit,Aegis ~ Reconfigure", "PREVARGTEQ:IsPsionic,1"]),
             },
             // Quicken Power -- up_feats.lst:279
             UpsiFeatEntry {
@@ -2064,7 +1894,6 @@ pub fn feat_tables() -> &'static [UpsiFeatEntry] {
                 pretext: None,
                 source_page: Some("p.114"),
                 benefit: None,
-                prerequisites: Some(&["PREVARGTEQ:IsPsionic,1"]),
             },
             // Raging Hulk -- up_feats.lst:284
             UpsiFeatEntry {
@@ -2075,7 +1904,6 @@ pub fn feat_tables() -> &'static [UpsiFeatEntry] {
                 pretext: None,
                 source_page: Some("p.114"),
                 benefit: None,
-                prerequisites: Some(&["PREABILITY:2,CATEGORY=Special Ability,Aegis ~ Form Astral Suit,Rage"]),
             },
             // Rapid Augmentation -- up_feats.lst:285
             UpsiFeatEntry {
@@ -2086,7 +1914,6 @@ pub fn feat_tables() -> &'static [UpsiFeatEntry] {
                 pretext: None,
                 source_page: Some("p.114"),
                 benefit: None,
-                prerequisites: Some(&["PREABILITY:1,CATEGORY=Special Ability,Aegis ~ Augment Suit", "PREVARGTEQ:IsPsionic,1"]),
             },
             // Rapid Draw -- up_feats.lst:286
             UpsiFeatEntry {
@@ -2097,7 +1924,6 @@ pub fn feat_tables() -> &'static [UpsiFeatEntry] {
                 pretext: None,
                 source_page: Some("p.114"),
                 benefit: None,
-                prerequisites: Some(&["PREABILITY:1,CATEGORY=Special Ability,Blade Skill ~ Alter Blade", "PREABILITY:1,CATEGORY=Special Ability,Soulknife ~ Quick Draw", "PREMULT:1,[PRETOTALAB:6],[PREVARGTEQ:PrereqBAB,6]", "PREVARGTEQ:IsPsionic,1"]),
             },
             // Rapid Metabolism -- up_feats.lst:287
             UpsiFeatEntry {
@@ -2108,7 +1934,6 @@ pub fn feat_tables() -> &'static [UpsiFeatEntry] {
                 pretext: None,
                 source_page: Some("p.114"),
                 benefit: None,
-                prerequisites: Some(&["PRESTAT:1,CON=13"]),
             },
             // Ready Response -- up_feats.lst:288
             UpsiFeatEntry {
@@ -2119,7 +1944,6 @@ pub fn feat_tables() -> &'static [UpsiFeatEntry] {
                 pretext: None,
                 source_page: Some("p.114"),
                 benefit: None,
-                prerequisites: Some(&["PREVARGTEQ:IsPsionic,1"]),
             },
             // Rebounding Throw -- up_feats.lst:289
             UpsiFeatEntry {
@@ -2130,7 +1954,6 @@ pub fn feat_tables() -> &'static [UpsiFeatEntry] {
                 pretext: None,
                 source_page: Some("p.114"),
                 benefit: None,
-                prerequisites: Some(&["PREABILITY:1,CATEGORY=FEAT,Point-Blank Shot", "PREMULT:1,[PRETOTALAB:1],[PREVARGTEQ:PrereqBAB,1]"]),
             },
             // Reckless Offense -- up_feats.lst:290
             UpsiFeatEntry {
@@ -2141,7 +1964,6 @@ pub fn feat_tables() -> &'static [UpsiFeatEntry] {
                 pretext: None,
                 source_page: Some("p.115"),
                 benefit: None,
-                prerequisites: Some(&["PRETOTALAB:1"]),
             },
             // Redirect Power -- up_feats.lst:291
             UpsiFeatEntry {
@@ -2152,7 +1974,6 @@ pub fn feat_tables() -> &'static [UpsiFeatEntry] {
                 pretext: None,
                 source_page: Some("p.115"),
                 benefit: None,
-                prerequisites: None,
             },
             // Resonance Mastery -- up_feats.lst:292
             UpsiFeatEntry {
@@ -2163,7 +1984,6 @@ pub fn feat_tables() -> &'static [UpsiFeatEntry] {
                 pretext: None,
                 source_page: Some("p.115"),
                 benefit: None,
-                prerequisites: Some(&["PREABILITY:1,CATEGORY=FEAT,TYPE.Metapsionic", "PRECLASS:1,Psicrystal Imprinter=5", "PREVARGTEQ:IsPsionic,1"]),
             },
             // Return Shot -- up_feats.lst:293
             UpsiFeatEntry {
@@ -2174,7 +1994,6 @@ pub fn feat_tables() -> &'static [UpsiFeatEntry] {
                 pretext: None,
                 source_page: Some("p.115"),
                 benefit: None,
-                prerequisites: Some(&["PREABILITY:3,CATEGORY=FEAT,Fell Shot,Point-Blank Shot,Psionic Shot", "PREMULT:1,[PRETOTALAB:6],[PREVARGTEQ:PrereqBAB,6]", "PREVARGTEQ:IsPsionic,1"]),
             },
             // Returning Throw -- up_feats.lst:294
             UpsiFeatEntry {
@@ -2185,7 +2004,6 @@ pub fn feat_tables() -> &'static [UpsiFeatEntry] {
                 pretext: None,
                 source_page: Some("p.115"),
                 benefit: None,
-                prerequisites: Some(&["PREABILITY:1,CATEGORY=FEAT,Point-Blank Shot", "PREMULT:1,[PRETOTALAB:1],[PREVARGTEQ:PrereqBAB,1]"]),
             },
             // Ricochet -- up_feats.lst:295
             UpsiFeatEntry {
@@ -2196,7 +2014,6 @@ pub fn feat_tables() -> &'static [UpsiFeatEntry] {
                 pretext: None,
                 source_page: Some("p.115"),
                 benefit: None,
-                prerequisites: Some(&["PREABILITY:1,CATEGORY=FEAT,Point-Blank Shot", "PREMULT:1,[PRETOTALAB:6],[PREVARGTEQ:PrereqBAB,6]"]),
             },
             // Rime Power -- up_feats.lst:296
             UpsiFeatEntry {
@@ -2207,7 +2024,6 @@ pub fn feat_tables() -> &'static [UpsiFeatEntry] {
                 pretext: None,
                 source_page: Some("p.115"),
                 benefit: None,
-                prerequisites: None,
             },
             // Scholarly Discipline -- up_feats.lst:302
             UpsiFeatEntry {
@@ -2218,7 +2034,6 @@ pub fn feat_tables() -> &'static [UpsiFeatEntry] {
                 pretext: None,
                 source_page: Some("p.116"),
                 benefit: None,
-                prerequisites: Some(&["PREABILITY:1,CATEGORY=Special Ability,TYPE.PsionicDiscipline", "PREABILITY:1,CATEGORY=Special Ability,TYPE.ArcaneSchool"]),
             },
             // Scribe Tattoo -- up_feats.lst:303
             UpsiFeatEntry {
@@ -2229,7 +2044,6 @@ pub fn feat_tables() -> &'static [UpsiFeatEntry] {
                 pretext: None,
                 source_page: Some("p.116"),
                 benefit: None,
-                prerequisites: Some(&["PREVARGTEQ:MaxManifesterLVL,3"]),
             },
             // Selective Power -- up_feats.lst:306
             UpsiFeatEntry {
@@ -2240,7 +2054,6 @@ pub fn feat_tables() -> &'static [UpsiFeatEntry] {
                 pretext: None,
                 source_page: Some("p.116"),
                 benefit: None,
-                prerequisites: Some(&["PRESKILL:1,Spellcraft=10"]),
             },
             // Shared Power -- up_feats.lst:307
             UpsiFeatEntry {
@@ -2251,7 +2064,6 @@ pub fn feat_tables() -> &'static [UpsiFeatEntry] {
                 pretext: None,
                 source_page: Some("p.116"),
                 benefit: None,
-                prerequisites: None,
             },
             // Shattered Dream Strike -- up_feats.lst:308
             UpsiFeatEntry {
@@ -2262,7 +2074,6 @@ pub fn feat_tables() -> &'static [UpsiFeatEntry] {
                 pretext: None,
                 source_page: Some("p.116"),
                 benefit: None,
-                prerequisites: Some(&["PREABILITY:1,CATEGORY=Special Ability,Dread ~ Devastating Touch", "PREABILITY:2,CATEGORY=FEAT,Improved Unarmed Strike,Broken Dreams Style", "PRESKILL:1,Intimidate=6", "PREVARGTEQ:IsPsionic,1"]),
             },
             // Sickening Power -- up_feats.lst:309
             UpsiFeatEntry {
@@ -2273,7 +2084,6 @@ pub fn feat_tables() -> &'static [UpsiFeatEntry] {
                 pretext: None,
                 source_page: Some("p.116"),
                 benefit: None,
-                prerequisites: None,
             },
             // Sidestep Charge -- up_feats.lst:310
             UpsiFeatEntry {
@@ -2284,7 +2094,6 @@ pub fn feat_tables() -> &'static [UpsiFeatEntry] {
                 pretext: None,
                 source_page: Some("p.116"),
                 benefit: None,
-                prerequisites: Some(&["PREABILITY:1,CATEGORY=FEAT,Dodge", "PRESTAT:1,DEX=13"]),
             },
             // Soul Warrior -- up_feats.lst:313
             UpsiFeatEntry {
@@ -2295,7 +2104,6 @@ pub fn feat_tables() -> &'static [UpsiFeatEntry] {
                 pretext: None,
                 source_page: Some("p.116"),
                 benefit: None,
-                prerequisites: Some(&["PREABILITY:2,CATEGORY=Special Ability,Soulknife ~ Enhanced Mind Blade,Warrior's Path ~ Psychic Warrior", "PREVARGTEQ:MndBladeEnhancement,2"]),
             },
             // Speed of Thought -- up_feats.lst:314
             UpsiFeatEntry {
@@ -2306,7 +2114,6 @@ pub fn feat_tables() -> &'static [UpsiFeatEntry] {
                 pretext: None,
                 source_page: Some("p.117"),
                 benefit: None,
-                prerequisites: Some(&["PRESTAT:1,WIS=13", "PREVARGTEQ:IsPsionic,1"]),
             },
             // Split Headed Lash -- up_feats.lst:315
             UpsiFeatEntry {
@@ -2317,7 +2124,6 @@ pub fn feat_tables() -> &'static [UpsiFeatEntry] {
                 pretext: None,
                 source_page: Some("p.117"),
                 benefit: None,
-                prerequisites: Some(&["PREABILITY:1,CATEGORY=Special Ability,Pyrokineticist ~ Fire Lash", "PREABILITY:3,CATEGORY=FEAT,Point-Blank Shot,Precise Shot,Weapon Focus (Whip)", "PRESKILL:1,Knowledge (Psionics)=10", "PREVARGTEQ:IsPsionic,1"]),
             },
             // Split Psionic Ray -- up_feats.lst:316
             UpsiFeatEntry {
@@ -2328,7 +2134,6 @@ pub fn feat_tables() -> &'static [UpsiFeatEntry] {
                 pretext: None,
                 source_page: Some("p.117"),
                 benefit: None,
-                prerequisites: Some(&["PREABILITY:1,CATEGORY=FEAT,TYPE=Metapsionic", "PREVARGTEQ:IsPsionic,1"]),
             },
             // Staggering Shot -- up_feats.lst:317
             UpsiFeatEntry {
@@ -2339,7 +2144,6 @@ pub fn feat_tables() -> &'static [UpsiFeatEntry] {
                 pretext: None,
                 source_page: Some("p.117"),
                 benefit: None,
-                prerequisites: Some(&["PREABILITY:2,CATEGORY=FEAT,Intimidating Shot,Point-Blank Shot", "PREMULT:1,[PRETOTALAB:6],[PREVARGTEQ:PrereqBAB,6]"]),
             },
             // Student of the Astral Suit -- up_feats.lst:319
             UpsiFeatEntry {
@@ -2350,7 +2154,6 @@ pub fn feat_tables() -> &'static [UpsiFeatEntry] {
                 pretext: None,
                 source_page: Some("p.117"),
                 benefit: None,
-                prerequisites: Some(&["PREABILITY:1,CATEGORY=Special Ability,Aegis ~ Invigorating Suit"]),
             },
             // Surging Aura -- up_feats.lst:320
             UpsiFeatEntry {
@@ -2361,7 +2164,6 @@ pub fn feat_tables() -> &'static [UpsiFeatEntry] {
                 pretext: None,
                 source_page: Some("p.117"),
                 benefit: None,
-                prerequisites: Some(&["PREVARGTEQ:IsPsionic,1", "PREVARGTEQ:WildSurge,1"]),
             },
             // Swift Shapeshifter -- up_feats.lst:321
             UpsiFeatEntry {
@@ -2372,7 +2174,6 @@ pub fn feat_tables() -> &'static [UpsiFeatEntry] {
                 pretext: None,
                 source_page: Some("p.117"),
                 benefit: None,
-                prerequisites: Some(&["PRESPELL:1,Metamorphosis", "PREVARGTEQ:IsPsionic,1"]),
             },
             // Talented -- up_feats.lst:326
             UpsiFeatEntry {
@@ -2383,7 +2184,6 @@ pub fn feat_tables() -> &'static [UpsiFeatEntry] {
                 pretext: None,
                 source_page: Some("p.117"),
                 benefit: None,
-                prerequisites: Some(&["PREABILITY:1,CATEGORY=FEAT,Overchannel", "PREVARGTEQ:IsPsionic,1"]),
             },
             // Telepathic Link -- up_feats.lst:327
             UpsiFeatEntry {
@@ -2394,7 +2194,6 @@ pub fn feat_tables() -> &'static [UpsiFeatEntry] {
                 pretext: None,
                 source_page: Some("p.117"),
                 benefit: None,
-                prerequisites: Some(&["PRESPELL:1,Mindlink", "PREVARGTEQ:MaxManifesterLVL,3"]),
             },
             // Terror Mastery -- up_feats.lst:328
             UpsiFeatEntry {
@@ -2405,7 +2204,6 @@ pub fn feat_tables() -> &'static [UpsiFeatEntry] {
                 pretext: None,
                 source_page: Some("p.118"),
                 benefit: None,
-                prerequisites: Some(&["PREABILITY:8,CATEGORY=Special Ability,TYPE.DreadTerror", "PREVARGTEQ:IsPsionic,1"]),
             },
             // Thundering Power -- up_feats.lst:329
             UpsiFeatEntry {
@@ -2416,7 +2214,6 @@ pub fn feat_tables() -> &'static [UpsiFeatEntry] {
                 pretext: None,
                 source_page: Some("p.118"),
                 benefit: None,
-                prerequisites: None,
             },
             // Tomb Raider -- up_feats.lst:331
             UpsiFeatEntry {
@@ -2427,7 +2224,6 @@ pub fn feat_tables() -> &'static [UpsiFeatEntry] {
                 pretext: None,
                 source_page: Some("p.118"),
                 benefit: None,
-                prerequisites: Some(&["PREABILITY:2,CATEGORY=Special Ability,Cryptic ~ Trapmaker,Favored Terrain (Underground)"]),
             },
             // Toppling Power -- up_feats.lst:332
             UpsiFeatEntry {
@@ -2438,7 +2234,6 @@ pub fn feat_tables() -> &'static [UpsiFeatEntry] {
                 pretext: None,
                 source_page: Some("p.118"),
                 benefit: None,
-                prerequisites: None,
             },
             // Touch of Terror -- up_feats.lst:333
             UpsiFeatEntry {
@@ -2449,7 +2244,6 @@ pub fn feat_tables() -> &'static [UpsiFeatEntry] {
                 pretext: None,
                 source_page: Some("p.118"),
                 benefit: None,
-                prerequisites: Some(&["PREABILITY:1,CATEGORY=Special Ability,Dread ~ Devastating Touch", "PREVARGTEQ:IsPsionic,1"]),
             },
             // Toughened Suit -- up_feats.lst:334
             UpsiFeatEntry {
@@ -2460,7 +2254,6 @@ pub fn feat_tables() -> &'static [UpsiFeatEntry] {
                 pretext: None,
                 source_page: Some("p.118"),
                 benefit: None,
-                prerequisites: Some(&["PREABILITY:1,CATEGORY=Special Ability,Aegis ~ Form Astral Suit", "PREVARGTEQ:IsPsionic,1"]),
             },
             // Twin Power -- up_feats.lst:335
             UpsiFeatEntry {
@@ -2471,7 +2264,6 @@ pub fn feat_tables() -> &'static [UpsiFeatEntry] {
                 pretext: None,
                 source_page: Some("p.118"),
                 benefit: None,
-                prerequisites: Some(&["PREVARGTEQ:IsPsionic,1"]),
             },
             // Twin Throw -- up_feats.lst:336
             UpsiFeatEntry {
@@ -2482,7 +2274,6 @@ pub fn feat_tables() -> &'static [UpsiFeatEntry] {
                 pretext: None,
                 source_page: Some("p.118"),
                 benefit: None,
-                prerequisites: Some(&["PREABILITY:2,CATEGORY=FEAT,Point-Blank Shot,Two-Weapon Fighting", "PRESTAT:1,DEX=17", "PRETOTALAB:6"]),
             },
             // Unavoidable Strike -- up_feats.lst:341
             UpsiFeatEntry {
@@ -2493,7 +2284,6 @@ pub fn feat_tables() -> &'static [UpsiFeatEntry] {
                 pretext: None,
                 source_page: Some("p.118"),
                 benefit: None,
-                prerequisites: Some(&["PREABILITY:1,CATEGORY=FEAT,Psionic Fist", "PREMULT:1,[PRETOTALAB:6],[PREVARGTEQ:PrereqBAB,6]", "PRESTAT:1,STR=13", "PREVARGTEQ:IsPsionic,1"]),
             },
             // Unconditional Power -- up_feats.lst:342
             UpsiFeatEntry {
@@ -2504,7 +2294,6 @@ pub fn feat_tables() -> &'static [UpsiFeatEntry] {
                 pretext: None,
                 source_page: Some("p.119"),
                 benefit: None,
-                prerequisites: Some(&["PREVARGTEQ:IsPsionic,1"]),
             },
             // Unlocked Talent -- up_feats.lst:345
             UpsiFeatEntry {
@@ -2515,7 +2304,6 @@ pub fn feat_tables() -> &'static [UpsiFeatEntry] {
                 pretext: None,
                 source_page: Some("p.119"),
                 benefit: None,
-                prerequisites: Some(&["PREABILITY:1,CATEGORY=FEAT,Wild Talent", "!PREABILITY:1,CATEGORY=FEAT,Unlocked Talent"]),
             },
             // Unwilling Participant -- up_feats.lst:346
             UpsiFeatEntry {
@@ -2526,7 +2314,6 @@ pub fn feat_tables() -> &'static [UpsiFeatEntry] {
                 pretext: None,
                 source_page: Some("p.119"),
                 benefit: Some("You may attempt to force a living creature into your collective.  The target may attempt a Will save (DC %1) to resist.  If the target fails the save, it may attempt another Will save at the same DC every 24 hours thereafter, but is otherwise unable to leave the collective unless you allow it.  Special: Creatures forced into your collective using Unwilling Participant are considered willing members for any collective-related effects unless they succeed on another Will save at the same DC to resist being forced into the collective.  A successful save means the creature resisted the speciifc effect but is still a member of the collective.|UnwillingParticipantDC"),
-                prerequisites: Some(&["PREABILITY:1,CATEGORY=Special Ability,TYPE.Collective", "PREVARGTEQ:IsPsionic,1"]),
             },
             // Up the Walls -- up_feats.lst:347
             UpsiFeatEntry {
@@ -2537,7 +2324,6 @@ pub fn feat_tables() -> &'static [UpsiFeatEntry] {
                 pretext: None,
                 source_page: Some("p.120"),
                 benefit: None,
-                prerequisites: Some(&["PRESTAT:1,WIS=13", "PREVARGTEQ:IsPsionic,1"]),
             },
             // Urban Tracking -- up_feats.lst:348
             UpsiFeatEntry {
@@ -2548,7 +2334,6 @@ pub fn feat_tables() -> &'static [UpsiFeatEntry] {
                 pretext: None,
                 source_page: Some("p.120"),
                 benefit: Some("To find the trail of an individual or to follow it for 1 hour requires a Diplomacy check to gather information. You must make another Diplomacy check every hour of the search, as well as each time the trail becomes difficult to follow, such as when it moves to a different area of town. The DC of the check, and the number of checks required to track down your quarry, depends on the community size and the conditions. If you fail a Diplomacy check, you can retry after 1 hour of questioning. The game master should roll the number of checks required secretly, so that the player doesn't know exactly how long the task will require.&nl; Normal: A character without this feat can use Diplomacy to find out information about a particular individual, but each check takes 1d4+1 hours and doesn't allow effective tailing."),
-                prerequisites: None,
             },
             // Widen Power -- up_feats.lst:353
             UpsiFeatEntry {
@@ -2559,7 +2344,6 @@ pub fn feat_tables() -> &'static [UpsiFeatEntry] {
                 pretext: None,
                 source_page: Some("p.120"),
                 benefit: None,
-                prerequisites: Some(&["PREVARGTEQ:IsPsionic,1"]),
             },
             // Wildblood Mage -- up_feats.lst:356
             UpsiFeatEntry {
@@ -2570,7 +2354,6 @@ pub fn feat_tables() -> &'static [UpsiFeatEntry] {
                 pretext: None,
                 source_page: Some("p.120"),
                 benefit: None,
-                prerequisites: Some(&["PREABILITY:1,CATEGORY=Special Ability,Wilder ~ Wild Surge", "PREABILITY:1,CATEGORY=Special Ability,TYPE.Sorcerer Bloodline", "PREVARGTEQ:WildSurge,1"]),
             },
             // Wild Talent -- up_feats.lst:357
             UpsiFeatEntry {
@@ -2581,7 +2364,6 @@ pub fn feat_tables() -> &'static [UpsiFeatEntry] {
                 pretext: None,
                 source_page: Some("p.120"),
                 benefit: None,
-                prerequisites: None,
             },
             // Wounding Attack -- up_feats.lst:358
             UpsiFeatEntry {
@@ -2592,7 +2374,6 @@ pub fn feat_tables() -> &'static [UpsiFeatEntry] {
                 pretext: None,
                 source_page: Some("p.120"),
                 benefit: None,
-                prerequisites: Some(&["PREMULT:1,[PRETOTALAB:8],[PREVARGTEQ:PrereqBAB,8]", "PREVARGTEQ:IsPsionic,1"]),
             },        ]
     })
 }

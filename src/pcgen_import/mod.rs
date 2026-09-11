@@ -17,6 +17,8 @@
 // SD-35 AT-35-E6-001 (`decisions.md` §11): relocated from `src/rules_core/` -- converter and
 // oracle code that was sitting on the live side. Behaviour-identical; KEPT for Starfinder.
 pub mod archetype_swap_prereq_tokens;
+pub mod feat_gap_prereq_tokens;
+pub mod feat_prereq_tokens;
 pub mod bonus_stack_reader;
 // SD-35 AT-35-E6-002 (`decisions.md` §11): relocated from `src/rules_core/` -- the per-book
 // cache generators and the token-closure classifier they call. Converter code that was
