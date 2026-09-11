@@ -11,6 +11,7 @@ mod class_feature_descriptions;
 mod class_feature_feat_bridge;
 mod class_feature_pool_picker;
 mod class_spell_levels;
+mod converted_prose;
 mod corpus_fixtures;
 mod corpus_full;
 mod corpus_ingest_diagnostic;

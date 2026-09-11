@@ -54,6 +54,8 @@ use codex::rules_core::derived_evaluator_fixture_check::{
 use codex::rules_core::rules_tables::monster_chassis::{self, MonsterBook};
 use codex::rules_core::rules_tables::RuleSetId;
 
+use crate::converted_prose;
+
 /// The one book this catalog serves. A wire code rather than a display label,
 /// matching `spell_catalog.rs`/`equipment_catalog.rs`'s convention; the
 /// frontend maps it to "Bestiary 1".
@@ -379,7 +381,8 @@ pub struct MonsterAbilityDto {
     /// `"Supernatural"` / `"Extraordinary"` / `"SpellLike"`, or `None` where
     /// the row does not say.
     pub delivery: Option<String>,
-    /// The row's `DESC:` text. `None` for the one record that carries none —
+    /// The converted record's own words ([`serve_ability_description`]).
+    /// `None` for a record whose converted rule states no descriptive prose —
     /// an absence the screen states, never an empty paragraph.
     pub description: Option<String>,
     pub source_page: Option<String>,
@@ -426,10 +429,11 @@ pub struct MonsterCatalogEntryDto {
     /// separator itself on screen — `MonsterCatalogScreen.tsx`'s
     /// `formatCreatureType` rendered Hell Hound as
     /// `Outsider (Evil|Extraplanar|Fire|Lawful)`. That is the same class of
-    /// defect as an unrendered `DESC:` placeholder — internal corpus syntax
-    /// reaching a player — but it is a *display join*, not a `DESC` render, so
-    /// [`render_pcgen_desc`](codex::rules_core::pcgen_desc) is the wrong tool:
-    /// it has no `|` treatment and would pass the string through untouched.
+    /// defect as an unsubstituted description placeholder — internal corpus
+    /// syntax reaching a player — but it is a *display join*, not a
+    /// description render, so the converted package's prose is the wrong
+    /// source for it: this field is a multi-value tag list, not the record's
+    /// words, and the join below is where it is spelled out for a reader.
     pub race_subtype: Option<String>,
     /// `SOURCEPAGE:` verbatim, e.g. `"p.15"`.
     pub source_page: String,
@@ -689,31 +693,34 @@ fn chassis_key(book: &str, kind: &str, corpus_key: &str) -> String {
     format!("{book}:{kind}:{}", collapsed.trim_matches('_'))
 }
 
-/// Renders one ability's `DESC:` token into text a player may read.
+/// The prose this catalog serves for one monster ability: **the converted
+/// record's own words**, never the compiled chassis's stored description
+/// string.
 ///
+/// # What changed, and why
+///
+/// SD-35 `decisions.md §11` — nothing on the live side reads the ingest
+/// format. This function used to parse that stored string at run time.
 /// **Caught on screen, not by a test** (SD-29 Epic 5, DoD item 8): the first
-/// version served `record.description` verbatim and the catalog printed
-/// *"must succeed on a DC %1 Will save"* — a raw PCGen substitution
-/// placeholder, the same class of defect as the `RACESUBTYPE:` `|` separator
-/// this file already documents. `render_pcgen_desc` owns the treatment
-/// (`decisions.md §24`: a formula `%N` is DROPPED, never guessed, because
-/// there is no formula interpreter and `Babble`'s DC is genuinely
-/// `10+(HD/2)+CHA` — a number this ingest does not compute).
+/// version served it verbatim and the catalog printed *"must succeed on a DC
+/// %1 Will save"*; the run-time renderer that replaced it then DROPPED the
+/// placeholder, so the same line reached a player with the DC silently
+/// missing. `Babble`'s DC is genuinely `10 + 1/2 HD + Cha` — a number no
+/// catalog screen has a creature in hand to settle.
 ///
-/// The leak check is the same guard `gen_book_cache.rs`'s own
-/// `render_player_facing_description` carries, kept as a hard panic: a token
-/// shape this renderer cannot handle must stop here rather than reach a
-/// screen.
-fn serve_ability_description(record: &monster_chassis::MonsterAbilityRecord) -> Option<String> {
-    let raw = record.description?;
-    let rendered = codex::rules_core::pcgen_desc::render_pcgen_desc(raw);
-    if let Some(leak) = codex::rules_core::pcgen_desc::leaked_pcgen_syntax(&rendered.text) {
-        panic!(
-            "monster ability {:?}: rendered description still carries {leak}. Raw token: {raw:?}",
-            record.key
-        );
-    }
-    Some(rendered.text)
+/// The converted package answers that honestly. The substitution happens once,
+/// at ingest (`src/pcgen_import/sheet_rule/`), and
+/// [`converted_prose::description_for`] renders the record with no character:
+/// a final number where the term is settled, **the rule's own words** where it
+/// is not (`decisions.md §1`'s third permitted form). A missing number is
+/// replaced by the term it stood for, not by nothing.
+///
+/// `None` for a record whose converted rule states no descriptive prose, and
+/// for one the converted package does not hold — never a guessed or partial
+/// description. The served population is ratcheted by
+/// `every_chassis_ability_that_states_prose_is_served_with_it`.
+fn serve_ability_description(book: &str, record: &monster_chassis::MonsterAbilityRecord) -> Option<String> {
+    converted_prose::description_for(book, "monster_ability", record.key)
 }
 
 fn map_chassis_ability(
@@ -725,7 +732,7 @@ fn map_chassis_ability(
         name: record.name.to_owned(),
         facet: record.facet.corpus_token().to_owned(),
         delivery: record.delivery.map(|d| d.corpus_token().to_owned()),
-        description: serve_ability_description(record),
+        description: serve_ability_description(book, record),
         source_page: record.source_page.map(str::to_owned),
     }
 }
@@ -1102,12 +1109,12 @@ mod tests {
         // +76): five previously-unregistered ZERO-monster books
         // (`ultimate_wilderness` +2, `ultimate_intrigue` +6, `ultimate_magic`
         // +13, `bestiary_6` +16, `bestiary_5` +39 -- one owned row,
-        // `Traits Output ~ Sahkil`, is a multi-DESC: parse refusal and does
-        // NOT ship) registered via the identical owner-less-ship mechanism.
+        // `Traits Output ~ Sahkil`, is a multi-description parse refusal and
+        // does NOT ship) registered via the identical owner-less-ship mechanism.
         // 957 -> 1027 (`decisions.md §20` round 4, +70): the last two of the
         // original 8 zero-monster books, `pathfinder_unchained` (+69, 3 of
         // its 72 orphan candidates refused during transcription as an
-        // unscreenable multi-DESC: shape) and `advanced_race_guide` (+1).
+        // unscreenable multi-description shape) and `advanced_race_guide` (+1).
         // Re-derived: `python3 scripts/shape_ledger.py --inventory
         // docs/work-inventory.json` -- `monster_ability` `no_record` 191 -> 121.
         // 1027 -> 1048 (`decisions.md §20` round 5, +21): the last of the
@@ -1144,7 +1151,7 @@ mod tests {
         // Naga ~ Spells`, `Unfettered Eidolon ~
         // Str/Dex/Con/Int/Wis/Cha`). Re-derived: `python3
         // scripts/transcribe_monster_tables.py bestiary_3 2>&1 >/dev/null`.
-        // 1076 -> 1126 (`decisions.md §27b` round 9, +50): the multi-DESC:
+        // 1076 -> 1126 (`decisions.md §27b` round 9, +50): the multi-description
         // `PREVAREQ`/`PREVARGT`/`PRESIZE*`/`PREHD`/`PRERACE`/`PRETEMPLATE`/
         // `PREABILITY`-gated parse-refusal group closes via `parse_desc`'s
         // new generalised sixth branch across 8 books -- `bestiary` +17,
@@ -1185,8 +1192,8 @@ mod tests {
                 );
             }
         }
-        // 16 of the book's 17 ability rows carry `DESC:` text; the 17th
-        // (`Magic Circle against Evil`) carries none at all.
+        // 16 of the book's 17 ability records state descriptive prose; the
+        // 17th (`Magic Circle against Evil`) states none at all.
         assert_eq!(checked, 16);
     }
 
@@ -1516,12 +1523,12 @@ mod tests {
             .iter()
             .find(|a| a.name == "Spit Acid")
             .expect("Spit Acid reaches the catalog");
-        // The row's own DC is a runtime formula (`10+(HD/2)+CON`), which this
-        // ingest does not compute -- `render_pcgen_desc` drops the `%1`
-        // placeholder rather than fabricate a number, so the rendered text
-        // must not carry it. Guards against a regression `serve_ability_
-        // description`'s own leak-panic would otherwise catch loudly, but a
-        // silent value would not.
+        // The row's own DC depends on the creature's Hit Dice and Constitution,
+        // which a catalog screen has no creature in hand to settle. The
+        // converted record prints that term's own words rather than a number
+        // nobody computed (`decisions.md §1`), so the served text must carry
+        // neither a fabricated number nor a leftover placeholder. Guards
+        // against a silent regression, which no panic would catch.
         assert!(
             !spit.description.as_deref().unwrap_or_default().contains('%'),
             "Spit Acid's rendered description leaks an unresolved placeholder: {:?}",
@@ -1895,5 +1902,49 @@ mod tests {
         assert_eq!(serve_race_subtype("A||B"), "A, B");
         assert_eq!(serve_race_subtype("A| B "), "A, B");
         assert_eq!(serve_race_subtype(""), "");
+    }
+}
+
+/// The population ratchet for [`serve_ability_description`]'s swap to the converted package
+/// (SD-35 `AT-35-E6-003` cycle 5).
+///
+/// Corpus-wide, not a fixture (`decisions.md §4`): it walks every monster ability the catalog
+/// actually serves and counts how many carry text. The number is a **floor**, re-derivable by
+/// running this test with `--nocapture`; it exists so a converter change or a join change that
+/// silently drops descriptions fails here instead of reaching a screen.
+#[cfg(test)]
+mod converted_ability_prose_population {
+    /// Measured at the swap: 3,456 of the 3,509 abilities the catalog serves state descriptive
+    /// prose in the converted package. The 53 that do not are records whose converted rule
+    /// carries a stat block and no description -- the honest `None`, not a dropped render.
+    /// The run-time renderer this replaced served 3,455 of the same 3,509, so the swap is
+    /// **net +1** served description as well as zero ingest-format reads.
+    ///
+    /// Re-derive:
+    /// ```text
+    /// cargo test --locked -j 6 converted_ability_prose_population -- --nocapture
+    /// ```
+    const SERVED_DESCRIPTION_FLOOR: usize = 3_456;
+
+    #[test]
+    fn every_chassis_ability_that_states_prose_is_served_with_it() {
+        let catalog = super::build_monster_catalog();
+        let mut abilities = 0usize;
+        let mut described = 0usize;
+        for entry in &catalog.entries {
+            for ability in &entry.abilities {
+                abilities += 1;
+                if ability.description.as_deref().is_some_and(|d| !d.trim().is_empty()) {
+                    described += 1;
+                }
+            }
+        }
+        println!("monster abilities served={abilities} with a description={described}");
+        assert!(
+            described >= SERVED_DESCRIPTION_FLOOR,
+            "monster ability descriptions fell to {described} of {abilities}, below the \
+             recorded floor of {SERVED_DESCRIPTION_FLOOR} -- a converter or join change \
+             dropped descriptions a player could read"
+        );
     }
 }
