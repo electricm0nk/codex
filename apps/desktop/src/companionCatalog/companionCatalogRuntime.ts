@@ -59,7 +59,6 @@ function buildPreviewCatalog(): CompanionCatalogEntryDto[] {
           delivery: null,
           typeSegments: ['SpecialQuality'],
           description: null,
-          descriptionVariants: [],
           statAdjustments: [],
           saveDcFormulas: [],
           sourcePage: null,
@@ -71,7 +70,6 @@ function buildPreviewCatalog(): CompanionCatalogEntryDto[] {
           delivery: null,
           typeSegments: ['CompanionAdvancement'],
           description: null,
-          descriptionVariants: [],
           statAdjustments: [
             { ability: 'STR', amount: 2 },
             { ability: 'CON', amount: 2 },
@@ -115,7 +113,6 @@ function buildPreviewCatalog(): CompanionCatalogEntryDto[] {
           delivery: 'Extraordinary',
           typeSegments: ['ClockworkSpyRacialAbility', 'SpecialQuality', 'Extraordinary'],
           description: null,
-          descriptionVariants: [],
           statAdjustments: [],
           saveDcFormulas: [],
           sourcePage: null,

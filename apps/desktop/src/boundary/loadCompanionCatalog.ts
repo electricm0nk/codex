@@ -142,37 +142,23 @@ export interface CompanionAbilityDto {
   /** Every `TYPE:` segment verbatim, so an unmodelled shape is visible. */
   typeSegments: string[];
   /**
-   * The row's unconditional rules text, or `null`.
+   * The row's rules text, from the converted record, or `null` when that record states no
+   * descriptive prose at all.
    *
-   * `null` has TWO meanings and `descriptionVariants` is what separates them:
-   * the corpus row carries no description at all, or it carries several, each gated
-   * on a different condition, so none of them is the row's unconditional text.
+   * **A row whose text is stated once per condition carries all of it here**, each variant
+   * under the condition that selects it. Until SD-35 `AT-35-E6-003` cycle 8 such a row was
+   * `null` here and a separate `descriptionVariants` array carried them, rendered at run time
+   * from the ingest format; `decisions.md §11` removed that renderer from the live side and the
+   * converter states the whole family instead.
    */
   description: string | null;
-  /**
-   * The row's conditional rules texts, each with its gate in prose. Empty for
-   * the ordinary row; Ultimate Wilderness is the first book to carry any, and
-   * 22 of its ability rows do (`decisions.md §61.1`).
-   */
-  descriptionVariants: CompanionDescriptionVariantDto[];
   statAdjustments: CompanionStatAdjustmentDto[];
   /**
-   * Every DESC-embedded save-DC formula this row states. Empty for most
-   * rows — see `CompanionSaveDcDto`.
+   * Every save-DC formula this row's stored arguments state, in words. Empty for most rows —
+   * see `CompanionSaveDcDto`.
    */
   saveDcFormulas: CompanionSaveDcDto[];
   sourcePage: string | null;
-}
-
-/** One conditional description statement of an ability row that states its text more than once. */
-export interface CompanionDescriptionVariantDto {
-  /** The variant's rules text, rendered by the same renderer as `description`. */
-  text: string;
-  /**
-   * The gate in prose — `'master level 15 or higher'`, `'unconditionally'`.
-   * Never empty: a row's single ungated token is served as `description`.
-   */
-  condition: string;
 }
 
 export interface CompanionCatalogEntryDto {

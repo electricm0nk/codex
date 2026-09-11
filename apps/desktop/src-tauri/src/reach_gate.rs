@@ -2715,14 +2715,13 @@ fn companions_reach(corpus_book: &str, wire_code: &str) -> Reach {
             let has_payload = ability.facet.is_some()
                 || ability.delivery.is_some()
                 || !ability.type_segments.is_empty()
+                // A row whose rules text is stated once per condition carries ALL of it here,
+                // each variant under the condition that selects it: the converted record states
+                // the whole family, so Ultimate Wilderness's `Poison` and `Constrict` rows are
+                // not identity-only and this one predicate sees that. Before
+                // `AT-35-E6-003` cycle 8 those rows had `description: None` and a separate
+                // variants array, which is why this clause used to be two.
                 || ability.description.as_deref().is_some_and(|d| !d.trim().is_empty())
-                // A row whose rules text is stated ONLY per condition still
-                // shows a player rules text — `description` is `None` for it by
-                // construction (`companion_chassis::CompanionDescriptionVariant`),
-                // so a predicate reading only `description` would judge Ultimate
-                // Wilderness's `Poison` and `Constrict` rows identity-only while
-                // the screen renders four paragraphs under them.
-                || ability.description_variants.iter().any(|v| !v.text.trim().is_empty())
                 || !ability.stat_adjustments.is_empty()
                 // wave 17: the row's DESC-embedded save-DC formula
                 // (`<base>[+HD/2]+<ability>`), rendered as the PF1 rule it
@@ -6306,7 +6305,6 @@ mod tests {
                     || ability.delivery.is_some()
                     || !ability.type_segments.is_empty()
                     || ability.description.as_deref().is_some_and(|d| !d.trim().is_empty())
-                    || ability.description_variants.iter().any(|v| !v.text.trim().is_empty())
                     || !ability.stat_adjustments.is_empty()
                     || ability.source_page.is_some();
                 assert!(
