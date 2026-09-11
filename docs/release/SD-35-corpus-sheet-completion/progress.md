@@ -116,6 +116,82 @@ re-measured at the cut by the launch-readiness audit.
 
 ## Cycle log
 
+### 2026-09-11 — Epic 6 / `desktop-and-prose-leave-pcgen` — AT-35-E6-003-SWEEP **cycle 8** (`1f425d5124`) — **partial** (a refusal rule's own written exception had never been reachable by its own code; 34 code hits cleared, 7% of the cycle's 500-hit floor, one file to zero)
+
+Receipt: `artifacts/epic-6-pcgen-exit/AT-35-E6-003-SWEEP_cycle8_receipt.md`. Cycle start
+`a2b128e613`.
+
+**This is cycle 8, not the 7 the dispatch named** — cycle 7 was already committed at
+`1d2e061717` with its receipt tracked at HEAD, so a `cycle7` receipt would have overwritten a
+landed one (`correction 1789167529773-at-35-e6-003-sweep-91620b`). The *remainder* the dispatch
+named was cycle 7's end state and the gate reproduced `live_files=65 live_hits=545` exactly at
+cycle start.
+
+```
+inventory=docs/work-inventory.json
+scope=(whole remainder)
+scoped_by_bucket=
+scoped_by_kind=
+scoped=0 remaining_non_done=0 floor=500 verdict=PASS_WHOLE_REMAINDER
+```
+
+`SCOPE_GATE: EXEMPT (Epic 6 cycle — closes zero corpus units by design, decisions.md §2)`.
+
+**The finding.** Cycle 5 built `carries_an_unresolved_magnitude` to stop a `%` standing in for a
+number being rendered away (`+%d10` → `d10`, a plausible wrong sheet line), and wrote the
+exception into the function's own doc comment: *"Nor is a `%CHOICE`/`%LIST` keyword: those stand
+in for a CHOICE the player already made … not for a magnitude."* That sentence was never
+reachable by the code beneath it — the bare-`%` arm returns `true` before any branch consults the
+argument tail — so **all 34** `equipment_gap_tables.rs` rows whose `%` is a *selection* were
+filed under the magnitude exemption and named as a deliberate remainder in cycles 5, 6 and 7.
+`equipment_gap_tables.rs` is chained into `equipment_resolver::equipment_catalog_rows()` with no
+second substitution pass, so `Cast % at will|%LIST` was printing on the player's paper sheet
+(`correction 1789167769730-at-35-e6-003-sweep-8458cc`).
+
+**The fix is on the converter side, and invents no word.** `src/bin/gen_equipment_gap_tables.rs`
+now reads each row's **own `CHOOSE:` token** and substitutes the noun it names — 30 rows carry
+`CHOOSE:EQBUILDER.SPELL` → *the chosen spell*, 4 carry `CHOOSE:SKILL` → *the chosen skill*, and
+no `|%LIST`-tailed row in any of the generator's 19 input files carries any other shape. A `.COPY=`
+row inherits its base's `CHOOSE:` the same way it already inherits the base's prose. The rule
+claims only what it can read: an unrecognised `CHOOSE:`, a tail that is not the bare keyword, a
+`%N`/`%KEYWORD` in the prose, or an escaped `%%` all fall through untouched and stay in the
+gate's count. `Cast % at will|%LIST` → **"Cast the chosen spell at will"**; `% 1/day|%LIST` →
+**"The chosen spell 1/day"**; `Item has 5 ranks in %|%LIST` → **"Item has 5 ranks in the chosen
+skill"**.
+
+**RED→GREEN**, run with the branch disabled (`if false && let Some(noun) = …`): three of the four
+new tests failed for the intended reason (`left: Some("Cast % at will|%LIST")`), the fourth
+asserts the negative space and is green in both states by design.
+
+Code hits **545 → 511 = 34 cleared**, `pcgen_live_files` **65 → 64**, **1 file to zero**, **none
+rose**. `hits_outside` a `#[cfg(test)]` region **184 → 150**; `hits_inside_cfg_test` **unmoved at
+361**, which is the same invariance cycles 6 and 7 recorded and is itself the evidence that that
+mechanism is a ruling, not a backlog. Instrument untouched — `scripts/pcgen-residue-baseline.env`
+not edited, `--rebaseline` not run.
+
+**Under the cycle's own 500-hit floor at 34**, named by mechanism: **361 of the 511** sit behind
+the still-open `#[cfg(test)]` ruling and no code work of any size reaches them, leaving **150
+hits in 33 files** reachable at all. Of those: 45 the `pcgen_desc.rs` deletion, 38
+`pilot_compute/mod.rs` unframed prose citations, 20 `bestiary/monster_data.rs`
+`description_variables` slots, ~33 companion `PRE` guards, 10 `FeatEffectBonus` selection
+targets, 7 `race_trait_picker.rs`, ~31 scattered. The `description_variables` family was
+**measured this cycle and refused for a mechanism**: the field is `&'static [&'static str]` with
+**4,378 literals repo-wide** and `gen_book_cache.rs:1610`/`:1926` serialises it straight into the
+book cache, so typing it is a wire-format regeneration cycle, not a table edit.
+
+`closed=0 relabeled=0 rust_lines_changed=288 ratio=n/a builds_recorded=1 pcgen_live_files=64`
+
+**`partial`** — `BONUS:=128; TYPE==122; PRE[A-Z]+:=108; DESC:=66; render_pcgen_desc=39;
+%LIST=29; %CHOICE=13; raw_tokens=5; DEFINE:=1` (511 deduplicated hits / 64 files, nine types,
+under §8's limit of ten). Verified once at `1f425d5124`: `--no-run` `NO_RUN_EXIT=0`, lib
+**3,318 passed / 0 failed / 15 ignored**, full workspace **414 targets / 8,836 passed / 0 failed / 68 ignored / `FULL_EXIT=0` (+4 = the four new tests)**, clippy
+**`CLIPPY_EXIT=0`, 0 warnings**, `sheet_rule_convert --check` **`records=49438 converted=49296 refused=142 rules=70135 var_tables=5293 verdict=PASS`, identical to cycles 3–7**, `data/sheet_rules/` ingest
+leaks **0**, atlas / token-coverage / shape-engine / missing-engine-tables / denominator
+(`files_checked=116 violations=0`) / `pi-sweep` all green; `apps/` untouched so desktop and
+frontend stay at epic cadence; `docs/work-inventory.json` byte-identical to the cycle-start copy
+(`corpus_literal_sweep` and `v06_work_inventory` correctly not run).
+`deferral 1789167781790-at-35-e6-003-sweep-54711e`
+
 ### 2026-09-11 — Epic 6 / `desktop-and-prose-leave-pcgen` — AT-35-E6-003-SWEEP **cycle 7** (`1d2e061717`) — **partial** (the mechanism cycle 6 refused to grind was **converted** instead; 120 code hits cleared, 24% of the cycle's 500-hit floor, 4 files to zero)
 
 Receipt: `artifacts/epic-6-pcgen-exit/AT-35-E6-003-SWEEP_cycle7_receipt.md`. Cycle start
