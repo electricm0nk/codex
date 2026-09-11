@@ -64,6 +64,92 @@ re-measured at the cut by the launch-readiness audit.
 
 ## Cycle log
 
+### 2026-09-11 — Epic 6 / `desktop-and-prose-leave-pcgen` — AT-35-E6-003-SWEEP **cycle 3** (`68d030837f`) — **partial** (the feat-prerequisites migration taken whole — 5,320 code hits, 10.6× the cycle's 500-hit floor)
+
+`SCOPE_GATE: EXEMPT (Epic 6 cycle — closes zero corpus units by design, decisions.md §2)`. Run
+anyway, for the record — `python3 scripts/cycle_scope_gate.py --min 500`:
+
+```
+inventory=docs/work-inventory.json
+scope=(whole remainder)
+scoped_by_bucket=
+scoped_by_kind=
+scoped=0 remaining_non_done=0 floor=500 verdict=PASS_WHOLE_REMAINDER
+```
+
+**The mechanism cycle 2 named, taken whole.** Every `prerequisites` field on every feat record
+type in the repository — `feats_all::FeatCatalogRecord` plus the six per-book entry types
+(`crb::feats`, shared with APG and ACG, and `ultimate_combat` / `ultimate_magic` /
+`ultimate_psionics` / `ultimate_wilderness` / `ultimate_intrigue`) — together with the three
+`ARG_`/`PU_`/`UCA_FEAT_PREREQUISITES` backfill tables and both helpers that fed them, moved to
+`src/pcgen_import/feat_prereq_tokens.rs` (1,429 hand-authored rows) and
+`src/pcgen_import/feat_gap_prereq_tokens.rs` (601 gap rows, generated). **2,030 of 2,030
+token-bearing rows across 29 books; 2,000 field values removed from 18 live data files.** A move,
+not a removal (`decisions.md §11`): zero function bodies deleted.
+
+The live prerequisite evaluator never read the field —
+`feat_prereqs::evaluate_catalog_feat_prerequisites` reads the CONVERTED `Applies` gate out of
+`data/sheet_rules/` and takes the record only for its `key` — and both real readers were already
+converter modules (`cache_gen::feat_gap`, `cache_gen::hand_authored_feat_dump`).
+
+**The addressing changed, and that is the cycle's one discovery.** Cycle 2's `Next-cycle scope`
+prescribed a `(rule_set, key)` lookup. It **collides**, twice over: CRB carries two distinct
+`"Combat Expertise"` records with different token sets, and Mythic Adventures deliberately reuses
+142 earlier-book keys — a key-only lookup would have silently paired 143 records with another
+record's prerequisites. The relocation is addressed by `(rule_set, index)`, with the key carried
+on every row and asserted at every lookup (`correction 1789145057211-at-35-e6-003-sweep-d6f539`).
+
+**Proven on the pinned corpus** (`PCGEN_ORACLE_SHA=7f818006e3`, local checkout on-pin), three
+ways: **601 of 601** gap rows regenerate byte-identically (`gen_feat_gap_tables` now writes both
+generated files in one pass, so they cannot drift); **204 of 204** ARG + PU records re-derive
+straight from `arg_feats.lst` / `pu_feats.lst` and match through the new lookup
+(`the_gathered_arg_and_pu_prerequisites_match_the_live_corpus ... ok`); and the per-book coverage,
+the `PRE`-kind census (4,697) and the prerequisite-bearing record count (2,030) all re-assert
+unchanged. **Not claimed:** `data/corpus/` was not regenerated and so is not byte-proven — the
+module doc says so in those words.
+
+Code hits **6,619 → 1,299: 5,320 cleared**, against a floor of 500. `live_files` 81 → 75. The
+count fell only because reads went away — no baseline edit, no `--rebaseline`, no pattern change.
+
+Verified **once**, at the final tree, with `CORPUS_ROOT`/`PCGEN_CORPUS_ROOT` set:
+`cargo test --locked --no-run -j 6` exit 0 with no error line; `cargo test --locked
+--no-fail-fast -j 6` **414 targets / 8,823 passed / 1 failed / 68 ignored**; `cargo test --locked
+--lib -j 6` **3,313 passed / 0 failed**, including all eight new `feat_prereq_tokens` gates;
+clippy **0 warnings** (one `items after a test module` this cycle introduced, self-healed before
+commit); `pcgen_residue_gate.py --check` `verdict=PASS`; `sheet_rule_convert -- --check`
+`records=49438 converted=49296 refused=142 rules=70135 var_tables=5293 verdict=PASS`;
+`grep -rlE 'BONUS:|DEFINE:|PRE[A-Z]+:|%CHOICE|CL=' data/sheet_rules/ | wc -l` → `0`;
+`completion_atlas.py`, `token_coverage.py`, `shape_engine_boundary.py`,
+`missing_engine_tables.py`, `denominator_gate.py` (`files_checked=111 violations=0`) all clean;
+`verify.sh --only pi-sweep` **`RESULT: PASS`**. Desktop crate and frontend: **not run — epic
+cadence**; this cycle touched no file under `apps/`.
+
+**The one failure is attributed away from this cycle.**
+`tests/sd19_equipment_equipmods.rs:144` asserts 658 distinct equipmods records; the pinned corpus
+parses **676**. The test is `CORPUS_ROOT`-gated and early-returns when the corpus is absent, so
+every prior SD-35 cycle recorded it as passing without ever executing it; this cycle set
+`CORPUS_ROOT` for the oracle work and is the first to run it. `git diff --name-only 98d8d96c76 |
+grep -i equip` is empty and the same target passes with `CORPUS_ROOT` unset. A latent
+corpus-vs-table drift in the **equipment** lane, outside this criterion's file-touch set: filed as
+`incident 1789147440438-at-35-e6-003-sweep-8e8b3d` (recurrence key
+`corpus-gated-test-never-actually-ran`) and named in the receipt's *Next-cycle scope* so it gets
+an owner.
+
+```
+python3 scripts/cycle_scope_gate.py --receipt --since 98d8d96c765854523bab6375a7612b09d3cb169c \
+  --before /tmp/wi-before-AT-35-E6-003-SWEEP.json --after docs/work-inventory.json
+closed=0 relabeled=0 rust_lines_changed=4020 ratio=n/a builds_recorded=0 pcgen_live_files=75
+```
+
+**Refused tokens:** `BONUS:=459; PRE[A-Z]+:=349; TYPE==252; %LIST=76; DESC:=73; %CHOICE=44;
+render_pcgen_desc=39; raw_tokens=5; DEFINE:=2` — **1,299 code hits in 75 files**, summing to the
+gate's `live_hits` line exactly. Nine token types, under §8's limit of ten. The remainder is no
+longer one mechanism: ~900 hits are the `BONUS:` qualifier arrays, which **are** live-read by the
+effect appliers and so need a converter-side **mapping**, not a relocation; ~420 are the
+description tails plus `render_pcgen_desc` and the last desktop `raw_tokens` reader, which
+together close AT-35-E6-003's own Evidence sentence.
+`artifacts/epic-6-pcgen-exit/AT-35-E6-003-SWEEP_cycle3_receipt.md`
+
 ### 2026-09-11 — Epic 6 / `desktop-and-prose-leave-pcgen` — AT-35-E6-003-SWEEP **cycle 2** (`aca2d2a9e0`) — **partial** (ruling B14 landed in the gate; then one whole mechanism taken corpus-wide — 1,771 code hits, 3.5× the cycle's 500-hit floor)
 
 `SCOPE_GATE: EXEMPT (Epic 6 cycle — closes zero corpus units by design, decisions.md §2)`. Run
