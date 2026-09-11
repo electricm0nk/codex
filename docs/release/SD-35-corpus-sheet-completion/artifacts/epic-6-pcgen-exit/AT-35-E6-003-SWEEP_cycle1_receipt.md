@@ -11,7 +11,7 @@ by code work**. This receipt is the under-floor report the dispatch mandates for
 ("report that and stop, exactly as an under-floor corpus cycle does"), plus the ruling request the
 orchestrator needs to re-scope.
 
-- **Commit SHA:** `<this cycle's commit>` — cycle start `359e5f050f4b3a50573fdf4473a1e4f8190b5c25`.
+- **Commit SHA:** `18ef3d789f` — cycle start `359e5f050f4b3a50573fdf4473a1e4f8190b5c25`.
   This cycle writes **no source file**. Its commit carries the census script, this receipt, the
   two retro events, and the board rows. (A receipt cannot name the commit that carries it; the
   SHA is recorded in `progress.md`.)

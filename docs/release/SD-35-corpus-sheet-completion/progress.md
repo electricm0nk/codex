@@ -55,7 +55,7 @@ re-measured at the cut by the launch-readiness audit.
 
 ## Cycle log
 
-### 2026-09-11 — Epic 6 / `desktop-and-prose-leave-pcgen` — AT-35-E6-003-SWEEP **cycle 1** (`<sha>`) — **blocked-escalated** (the sweep measured its own remainder before touching it and found the 25-file floor arithmetically unreachable: only 10 of 197 live files can be cleared by code work at all)
+### 2026-09-11 — Epic 6 / `desktop-and-prose-leave-pcgen` — AT-35-E6-003-SWEEP **cycle 1** (`18ef3d789f`) — **blocked-escalated** (the sweep measured its own remainder before touching it and found the 25-file floor arithmetically unreachable: only 10 of 197 live files can be cleared by code work at all)
 
 `SCOPE_GATE: EXEMPT (Epic 6 cycle — closes zero corpus units by design, decisions.md §2)`. Run
 anyway, for the record — `python3 scripts/cycle_scope_gate.py --min 500`:
