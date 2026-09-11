@@ -5,8 +5,9 @@ Cycle 1 measured the remainder and refused to start, escalating one question. Op
 is not a PCGen read. This cycle is the two steps that ruling authorises — make the gate
 comment-aware, then clear real code hits grouped by mechanism — in one batch, with one verify pass.
 
-- **Commit SHA:** see `progress.md` (a receipt cannot name the commit that carries it). Cycle start
-  `1d478e727b15478d5c979eaf97fc1ec4874ba6fb`.
+- **Commit SHA:** `aca2d2a9e0` carries the cycle's work; this line was written into it by the
+  immediately following docs commit (a receipt cannot name the commit that carries it, so the two
+  are split rather than guessed). Cycle start `1d478e727b15478d5c979eaf97fc1ec4874ba6fb`.
 
 - **Scope gate:** `SCOPE_GATE: EXEMPT (Epic 6 cycle — closes zero corpus units by design,
   decisions.md §2)`. Run anyway, for the record — `python3 scripts/cycle_scope_gate.py --min 500`:
@@ -121,8 +122,9 @@ comment-aware, then clear real code hits grouped by mechanism — in one batch, 
     the authority). Reported as `files cleared` by no row here, and emitted as a `correction` retro
     event (`1789141003593-at-35-e6-003-sweep-efd5eb`, `claimed=197 actual=81`).
 
-- **Refused tokens:** `PRE[A-Z]+:=5620, BONUS:=459, TYPE==301, %LIST=76, DESC:=73, %CHOICE=44,
-  render_pcgen_desc=39, raw_tokens=5, DEFINE:=2` — **6,619 code hits in 81 files**, summing to the
+- **Refused tokens:** `PRE[A-Z]+:=5620; BONUS:=459; TYPE==301; %LIST=76; DESC:=73; %CHOICE=44;
+  render_pcgen_desc=39; raw_tokens=5; DEFINE:=2` (semicolon-separated so no count reads as a
+  percentage — `%LIST` and `%CHOICE` are pattern names, not units) — **6,619 code hits in 81 files**, summing to the
   gate's `live_hits` line exactly. By mechanism, largest first:
 
   | mechanism | files | code hits | shape |

@@ -64,7 +64,7 @@ re-measured at the cut by the launch-readiness audit.
 
 ## Cycle log
 
-### 2026-09-11 — Epic 6 / `desktop-and-prose-leave-pcgen` — AT-35-E6-003-SWEEP **cycle 2** (`<SHA>`) — **partial** (ruling B14 landed in the gate; then one whole mechanism taken corpus-wide — 1,771 code hits, 3.5× the cycle's 500-hit floor)
+### 2026-09-11 — Epic 6 / `desktop-and-prose-leave-pcgen` — AT-35-E6-003-SWEEP **cycle 2** (`aca2d2a9e0`) — **partial** (ruling B14 landed in the gate; then one whole mechanism taken corpus-wide — 1,771 code hits, 3.5× the cycle's 500-hit floor)
 
 `SCOPE_GATE: EXEMPT (Epic 6 cycle — closes zero corpus units by design, decisions.md §2)`. Run
 anyway, for the record — `python3 scripts/cycle_scope_gate.py --min 500`:
@@ -119,8 +119,8 @@ and `regressed=0 added=0 dropped=0` proves the inventory is byte-identical.
 closed=0 relabeled=0 rust_lines_changed=420 ratio=n/a builds_recorded=0 pcgen_live_files=81
 ```
 
-**`partial`.** Refused remainder, summing to the gate's `live_hits` exactly: `PRE[A-Z]+:=5620,
-BONUS:=459, TYPE==301, %LIST=76, DESC:=73, %CHOICE=44, render_pcgen_desc=39, raw_tokens=5,
+**`partial`.** Refused remainder, summing to the gate's `live_hits` exactly: `PRE[A-Z]+:=5620;
+BONUS:=459; TYPE==301; %LIST=76; DESC:=73; %CHOICE=44; render_pcgen_desc=39; raw_tokens=5;
 DEFINE:=2` — **6,619 code hits in 81 files**, nine token types. The mass is one atomic migration:
 the feat `prerequisites` field, shared by `FeatCatalogRecord` and five book-local entry types and
 read by **both** converter consumers, ~5,620 hits in 20 files. `deferral
