@@ -81,12 +81,12 @@ class TestScan(_TreeCase):
                'let e = PcgenFormulaEvaluator::new(); render_pcgen_desc(x);\n'
                'use crate::bonus_stack_reader; use pre_tokens::parse;\n'
                '"BONUS:STAT|STR|2" "DEFINE:X|0" "PREFEAT:1,Dodge" "SAB:Text" "DESC:Words"\n'
-               '"%CHOICE" "%LIST" "TYPE=Combat"\n')
+               '"%CHOICE" "%LIST" "TYPE=Combat" let c = &r.raw_bonus_chains;\n')
         res = prg.scan(self.root)
         self.assertEqual(res.live_files, 2)
         for name in prg.PATTERNS:
             self.assertGreaterEqual(res.hits_by_pattern[name], 1, name)
-        self.assertEqual(res.hits_by_root["apps/desktop"], 12)  # 12 tokens, no raw_tokens
+        self.assertEqual(res.hits_by_root["apps/desktop"], 13)  # 12 tokens + raw_bonus_chains
         self.assertEqual(res.hits_by_root["src/rules_core"], 1)
 
     def test_identifier_subset_is_reported_separately(self):

@@ -516,7 +516,7 @@ mod tests {
 
         let (record, _) = equipment_id_resolve("Arrow (Slaying)", RuleSetId::Crb, &package)
             .expect("Arrow (Slaying) must resolve");
-        assert!(record.bonus_chains.is_empty(), "this record genuinely has no raw_bonus_chains");
+        assert!(record.bonus_chains.is_empty(), "this record genuinely declares no bonus chains");
         let wt = record.tokens.iter().find(|t| t.key == "WT").expect("synthesized WT: token must be present");
         assert_eq!(wt.value, "0.1", "Arrow (Slaying)'s real ingested weight_lbs");
         let cost = record.tokens.iter().find(|t| t.key == "COST").expect("synthesized COST: token must be present");

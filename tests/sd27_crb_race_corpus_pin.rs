@@ -302,15 +302,12 @@ fn ability_modifier_rows_agree_with_the_corpus_for_every_fixed_modifier_race() {
 
         // (1) Derive the grant from the machine-readable chains alone.
         let mut derived: Vec<String> = Vec::new();
-        for chain in &ability.raw_bonus_chains {
-            if chain.qualifiers.first().map(String::as_str) != Some("STAT") {
-                continue;
-            }
-            let stats = chain.qualifiers.get(1).expect("a STAT chain names its stats");
-            let magnitude: i32 = chain
-                .qualifiers
-                .get(2)
-                .expect("a STAT chain carries a magnitude")
+        for adjustment in &ability.declared_bonuses.ability_adjustments {
+            let stats = adjustment.codes.as_ref().expect("an ability adjustment names its stats");
+            let magnitude: i32 = adjustment
+                .magnitude
+                .as_ref()
+                .expect("an ability adjustment carries a magnitude")
                 .parse()
                 .expect("the magnitude is numeric");
             for stat in stats.split(',') {

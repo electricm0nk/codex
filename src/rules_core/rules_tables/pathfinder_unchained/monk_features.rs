@@ -721,6 +721,7 @@ pub mod prose_derived {
 #[cfg(test)]
 mod tests {
     use super::*;
+    use crate::pcgen_import::ingest_record;
     use std::path::PathBuf;
 
     fn corpus_dir() -> PathBuf {
@@ -747,19 +748,9 @@ mod tests {
     }
 
     fn bonus_tokens(record: &serde_json::Value) -> Vec<String> {
-        record["raw_bonus_chains"]
-            .as_array()
-            .expect("raw_bonus_chains is an array")
-            .iter()
-            .map(|chain| {
-                let parts: Vec<String> = chain["qualifiers"]
-                    .as_array()
-                    .expect("qualifiers is an array")
-                    .iter()
-                    .map(|q| q.as_str().expect("qualifier is a string").to_owned())
-                    .collect();
-                format!("BONUS:{}", parts.join("|"))
-            })
+        ingest_record::bonus_chain_qualifiers(record)
+            .into_iter()
+            .map(|parts| format!("BONUS:{}", parts.join("|")))
             .collect()
     }
 

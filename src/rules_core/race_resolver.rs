@@ -83,11 +83,12 @@ use std::path::{Path, PathBuf};
 // SD-35 `AT-35-E6-002` cycle 3 (`decisions.md` §11, `technical-design.md` §0): every reading
 // of an ingested `.lst` row's token array this module used to do by hand now happens on the
 // tool side of the path boundary, one named function per fact.
+use crate::pcgen_import::bonus_chain_reader::{self, DeclaredBonuses};
 use crate::pcgen_import::race_trait_tokens;
 use crate::rules_core::corpus_loader::BookCorpusRoot;
 use crate::rules_core::feat_effects::FeatDisplayValueDeltas;
 use crate::rules_core::pcgen_desc::{render_pcgen_desc_tokens, PcgenDisplayValues, RenderedPcgenDesc};
-use crate::pcgen_import::ingest_payload::{RaceCacheData, RaceTraitCacheData, RawBonusChain};
+use crate::pcgen_import::ingest_payload::{RaceCacheData, RaceTraitCacheData};
 use crate::rules_core::shape_b_v1::{validate_license, CorpusRecordV1, CorpusSource};
 use crate::rules_core::size::SizeCategory;
 
@@ -205,9 +206,10 @@ impl RaceTraitRecord {
     /// declared in a different file. It is then absent rather than guessed,
     /// which leaves its `%N` dropped and reported exactly as before.
     ///
-    /// `BONUS:` chains live in `raw_bonus_chains`, not in the row's token
-    /// array — the ingest splits them out, so the same-row variable reading
-    /// and the chain reading below are two separate readings of one row.
+    /// A row's declared bonuses live in a second ingest array, not in its
+    /// token array — the ingest splits them out, so the same-row variable
+    /// reading and the contribution reading below are two separate readings of
+    /// one row, and both are performed on the converter side.
     pub fn same_row_display_values(&self) -> PcgenDisplayValues {
         // `Option<i64>` while accumulating so "declared but unresolvable" is
         // distinguishable from "never mentioned"; only the resolved ones are
@@ -218,29 +220,19 @@ impl RaceTraitRecord {
             accumulator.insert(name, base);
         }
 
-        for chain in &self.data.raw_bonus_chains {
-            let quals = &chain.qualifiers;
-            if !quals.first().is_some_and(|q| q.eq_ignore_ascii_case("VAR")) {
-                continue;
-            }
-            let (Some(names), Some(amount)) = (quals.get(1), quals.get(2)) else { continue };
-            let conditional =
-                quals[3.min(quals.len())..].iter().any(|q| q.starts_with("PRE") || q.starts_with("!PRE"));
-            let amount = if conditional { None } else { amount.trim().parse::<i64>().ok() };
-            for name in names.split(',') {
-                let name = name.trim().to_string();
-                match accumulator.get_mut(&name) {
-                    // Never `DEFINE`d here, so the base lives elsewhere and
-                    // this row cannot finish the variable on its own.
-                    None => {
-                        accumulator.insert(name, None);
-                    }
-                    Some(slot) => {
-                        *slot = match (*slot, amount) {
-                            (Some(current), Some(add)) => Some(current + add),
-                            _ => None,
-                        };
-                    }
+        for contribution in bonus_chain_reader::declared_bonuses(&self.data).var_contributions {
+            let (name, amount) = (contribution.name, contribution.amount);
+            match accumulator.get_mut(&name) {
+                // Never `DEFINE`d here, so the base lives elsewhere and
+                // this row cannot finish the variable on its own.
+                None => {
+                    accumulator.insert(name, None);
+                }
+                Some(slot) => {
+                    *slot = match (*slot, amount) {
+                        (Some(current), Some(add)) => Some(current + add),
+                        _ => None,
+                    };
                 }
             }
         }
@@ -418,33 +410,28 @@ pub struct ResolvedTrait {
     /// (`Darkvision (60)`, `Low-Light Vision`). Rendering them as sheet lines
     /// is [`crate::rules_core::race_creation`]'s job.
     pub declared_vision: Vec<String>,
-    pub raw_bonus_chains: Vec<RawBonusChain>,
+    /// Everything this trait's declared bonuses state, read once at resolution
+    /// time by
+    /// [`bonus_chain_reader`](crate::pcgen_import::bonus_chain_reader) — so
+    /// nothing downstream holds the ingest chain array, and no live module
+    /// names a chain keyword or a qualifier position.
+    pub declared_bonuses: DeclaredBonuses,
 }
 
 impl ResolvedTrait {
     /// Every integer that appears as a bare numeric qualifier in this trait's
-    /// `BONUS:` chains, in source order, deduplicated.
+    /// declared bonuses, in source order, deduplicated.
     ///
     /// This is a *reading*, not an interpretation: it does not decide what the
     /// number bonuses, does not sum anything, and does not resolve PCGen
-    /// variables. `BONUS:SITUATION|Perception=...|Dwarf_StoneCunning_SkillBonus`
-    /// contributes nothing; the companion
-    /// `BONUS:VAR|Dwarf_StoneCunning_SkillBonus|2` contributes `2`. Callers that
-    /// need a specific mechanical effect must hand-model it per
-    /// `decisions.md §24` and read [`raw_bonus_chains`](Self::raw_bonus_chains)
-    /// directly.
+    /// variables. A chain that only names a variable
+    /// (`Dwarf_StoneCunning_SkillBonus`) contributes nothing; the companion
+    /// chain stating `2` contributes `2`. Callers that need a specific
+    /// mechanical effect must hand-model it per `decisions.md §24` from the
+    /// narrowed readings on
+    /// [`declared_bonuses`](Self::declared_bonuses).
     pub fn declared_bonus_magnitudes(&self) -> Vec<i32> {
-        let mut out: Vec<i32> = Vec::new();
-        for chain in &self.raw_bonus_chains {
-            for qualifier in &chain.qualifiers {
-                if let Ok(value) = qualifier.parse::<i32>()
-                    && !out.contains(&value)
-                {
-                    out.push(value);
-                }
-            }
-        }
-        out
+        self.declared_bonuses.magnitudes.clone()
     }
 }
 
@@ -859,7 +846,7 @@ impl RaceCorpus {
                 declared_walk_speed_ft: race_trait_tokens::declared_walk_speed_ft(&record.data),
                 declared_size: race_trait_tokens::declared_size(&record.data),
                 declared_vision: race_trait_tokens::declared_vision_segments(&record.data),
-                raw_bonus_chains: record.data.raw_bonus_chains.clone(),
+                declared_bonuses: bonus_chain_reader::declared_bonuses(&record.data),
             })
             .collect();
 

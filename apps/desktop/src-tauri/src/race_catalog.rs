@@ -66,7 +66,6 @@ use serde::{Deserialize, Serialize};
 
 use codex::rules_core::corpus_loader::BookCorpusRoot;
 use codex::rules_core::race_resolver::{load_race_corpus, RaceCorpus, ResolvedTrait};
-use codex::pcgen_import::ingest_payload::RawBonusChain;
 
 use crate::authoring_workbench::codex_repo_root;
 
@@ -221,8 +220,9 @@ pub struct RaceCatalogEntryDto {
     /// carries 0 and states its numbers in `detail`, exactly as the previous
     /// hardcoded table did.
     ///
-    /// **`BONUS:` chains that only write an internal PCGen state flag declare
-    /// no quantity and are excluded** — see [`is_internal_flag_chain`]. They
+    /// **Chains that only write an internal engine state flag declare no
+    /// quantity and are excluded** — see
+    /// [`declared_magnitudes_excluding_flags`]. They
     /// were previously read as magnitudes, which put a meaningless `+1` beside
     /// every vision trait in both books (the flag is
     /// `BONUS:VAR|HasRacialVision|1`; the real quantity was sitting unread in
@@ -281,86 +281,19 @@ pub(crate) fn race_corpus() -> &'static Result<RaceCorpus, String> {
     })
 }
 
-/// PCGen writes internal engine state with the same `BONUS:VAR|<name>|<n>`
-/// token it uses for real magnitudes, so the token shape alone cannot tell a
-/// game quantity from a boolean flag. Two signals in the corpus can, and this
-/// recognizes a name written by either:
+/// The magnitudes this trait declares once internal state-flag writes are
+/// discarded.
 ///
-/// 1. **`Has…` / `Is…` / `…Flag` / `…ExoticUse`** — PCGen's boolean naming
-///    conventions. Every vision trait in both ingested books declares exactly
-///    one chain, `BONUS:VAR|HasRacialVision|1`; `Tengu ~ Swordtrained`
-///    declares `BONUS:VAR|BastardSwordExoticUse,KatanaExoticUse|1` beside an
-///    `AUTO:WEAPONPROF` that carries the actual mechanic.
-/// 2. See [`is_internal_flag_chain`] for the explicit `TYPE=Boolean`
-///    qualifier, which needs no name convention at all.
-///
-/// The `Has`/`Is` tests require an uppercase letter after the prefix so that
-/// magnitude names beginning with those letters (`Hasted_Bonus`,
-/// `Island_Bonus`) are not swallowed. Deliberately *not* recognized:
-/// `Orc_OrcFerocity_Times` and `Halfling_AdaptableLuck_Times` (uses per day),
-/// `AC_Natural_Armor`, and every `…Bonus` — those are real quantities that a
-/// looser rule would silently erase, which would be a worse defect than the
-/// one this closes.
-fn variable_name_is_flag_shaped(name: &str) -> bool {
-    let name = name.trim();
-    if name.is_empty() {
-        return false;
-    }
-    if name.ends_with("Flag") || name.ends_with("ExoticUse") {
-        return true;
-    }
-    ["Has", "Is"].iter().any(|prefix| {
-        name.strip_prefix(prefix)
-            .and_then(|rest| rest.chars().next())
-            .is_some_and(|next| next.is_ascii_uppercase())
-    })
-}
-
-/// True when this `BONUS:` chain only writes an internal PCGen state flag and
-/// therefore declares no game quantity at all.
-///
-/// Authoritative signal first: PCGen tags the chain itself `TYPE=Boolean`.
-/// Three served rows carry it — `Drow ~ Light Blindness`
-/// (`UMR_LightBlindness_SpecificDesc`), `Merfolk ~ Legless` (`CantBeTripped`)
-/// and `Svirfneblin ~ Svirfneblin Magic` (`RacialSLA_Nondetection_Constant`) —
-/// as do four ARG alternates that will matter once the alternate-trait picker
-/// lands. The vision traits are *not* tagged, hence the name conventions in
-/// [`variable_name_is_flag_shaped`] as the second signal.
-///
-/// A chain naming several variables counts as a flag only when *every* name is
-/// flag-shaped, so a mixed chain keeps its magnitude. Non-`VAR` chains are
-/// never flags: `Svirfneblin ~ Svirfneblin Magic`'s companion
-/// `BONUS:DC|SCHOOL.Illusion|1` is a real +1 and survives.
-fn is_internal_flag_chain(chain: &RawBonusChain) -> bool {
-    if chain.qualifiers.first().map(String::as_str) != Some("VAR") {
-        return false;
-    }
-    if chain.qualifiers.iter().any(|qualifier| qualifier == "TYPE=Boolean") {
-        return true;
-    }
-    let Some(names) = chain.qualifiers.get(1) else {
-        return false;
-    };
-    let mut named = names.split(',').filter(|name| !name.trim().is_empty()).peekable();
-    named.peek().is_some() && named.all(variable_name_is_flag_shaped)
-}
-
-/// The magnitudes this trait declares once internal flag writes are discarded.
 /// Same reading as [`ResolvedTrait::declared_bonus_magnitudes`] — in source
 /// order, deduplicated, nothing summed or interpreted — over the chains that
-/// actually state a quantity.
+/// actually state a quantity. Both the reading and the flag recognition it
+/// rests on live on the converter side
+/// (`codex::pcgen_import::bonus_chain_reader`), SD-35 `AT-35-E6-002` cycle 5:
+/// the source writes internal engine state with the same token it uses for
+/// real magnitudes, so telling one from the other means knowing the ingest
+/// format, which `decisions.md` §11 puts on the tool side.
 fn declared_magnitudes_excluding_flags(resolved: &ResolvedTrait) -> Vec<i32> {
-    let mut out: Vec<i32> = Vec::new();
-    for chain in resolved.raw_bonus_chains.iter().filter(|chain| !is_internal_flag_chain(chain)) {
-        for qualifier in &chain.qualifiers {
-            if let Ok(value) = qualifier.parse::<i32>() {
-                if !out.contains(&value) {
-                    out.push(value);
-                }
-            }
-        }
-    }
-    out
+    resolved.declared_bonuses.magnitudes_excluding_flags.clone()
 }
 
 /// The range in feet a vision trait declares, read out of its `VISION:` tokens
@@ -874,8 +807,7 @@ mod tests {
         for race_key in corpus.race_keys() {
             let Some(race) = corpus.resolve(race_key, &[]) else { continue };
             for resolved in &race.traits {
-                let flag_only = !resolved.raw_bonus_chains.is_empty()
-                    && resolved.raw_bonus_chains.iter().all(is_internal_flag_chain);
+                let flag_only = resolved.declared_bonuses.only_internal_flags;
                 if !flag_only {
                     continue;
                 }
@@ -970,23 +902,13 @@ mod tests {
         assert_eq!(value("Merfolk", "Slow Speed"), 5);
     }
 
-    #[test]
-    fn flag_shaped_variable_names_are_recognized_and_magnitude_names_are_not() {
-        // Recognized: PCGen's boolean conventions, each backed by a real
-        // corpus row cited in `is_internal_flag_chain`'s doc comment.
-        assert!(variable_name_is_flag_shaped("HasRacialVision"));
-        assert!(variable_name_is_flag_shaped("IsAquatic"));
-        assert!(variable_name_is_flag_shaped("SomeThingFlag"));
-        assert!(variable_name_is_flag_shaped("BastardSwordExoticUse"));
-        // Not recognized: real magnitudes, including ones that merely start
-        // with the same letters.
-        assert!(!variable_name_is_flag_shaped("Hasted_Bonus"));
-        assert!(!variable_name_is_flag_shaped("Island_Bonus"));
-        assert!(!variable_name_is_flag_shaped("KeenSensesBonus"));
-        assert!(!variable_name_is_flag_shaped("Orc_OrcFerocity_Times"));
-        assert!(!variable_name_is_flag_shaped("AC_Natural_Armor"));
-        assert!(!variable_name_is_flag_shaped(""));
-    }
+    // `flag_shaped_variable_names_are_recognized_and_magnitude_names_are_not`
+    // moved with the recognition itself to
+    // `src/pcgen_import/bonus_chain_reader.rs` (SD-35 `AT-35-E6-002` cycle 5),
+    // where it runs under the same names and the same corpus-backed cases.
+    // What stays here is the behaviour a player sees:
+    // `no_row_takes_its_display_value_from_an_internal_flag_chain`, swept over
+    // every served row.
 
     /// The frontend keys its rows on `raceId:traitName`, so duplicates would
     /// collide. Serving racial defaults only, they do not.

@@ -47,6 +47,12 @@ pub mod ingest_payload;
 // `race_creation.rs` and `trait_pool.rs` used to do by hand, one named function per fact.
 // Behaviour-identical, and KEPT for Starfinder.
 pub mod race_trait_tokens;
+// SD-35 AT-35-E6-002 cycle 5 (`decisions.md` §11, `technical-design.md` §0): the sibling of
+// `race_trait_tokens` for the ingest record's OTHER array, `raw_bonus_chains` -- every walk of
+// it that `src/rules_core/race_resolver.rs`, `race_creation.rs` and the desktop
+// `race_catalog.rs` used to do by hand, narrowed to typed values. Behaviour-identical, and
+// KEPT for Starfinder.
+pub mod bonus_chain_reader;
 // SD-35 AT-35-E6-002 cycle 3 (`decisions.md` §11, `technical-design.md` §0): the four
 // ingest-row predicates `src/rules_core/class_feature_pool_catalog.rs` gates pool membership
 // on. Behaviour-identical, and KEPT for Starfinder.

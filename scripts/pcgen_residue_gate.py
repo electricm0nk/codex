@@ -30,8 +30,8 @@ Under the live roots (`technical-design.md` §0's boundary table)::
 every source file (`.rs .ts .tsx .js .jsx .mjs .cjs`; never `node_modules/`,
 `dist/`, `target/`) is scanned for the PCGen surface:
 
-    identifiers   raw_tokens  PcgenFormulaEvaluator  render_pcgen_desc
-                  bonus_stack_reader  pre_tokens
+    identifiers   raw_tokens  raw_bonus_chains  PcgenFormulaEvaluator
+                  render_pcgen_desc  bonus_stack_reader  pre_tokens
     token syntax  BONUS:  DEFINE:  PRE[A-Z]+:  SAB:  DESC:  %CHOICE  %LIST  TYPE=
 
 A hit is one regex match; a file counts once however many hits it carries.
@@ -97,6 +97,13 @@ SOURCE_EXTENSIONS = frozenset({".rs", ".ts", ".tsx", ".js", ".jsx", ".mjs", ".cj
 # --- the surface (technical-design.md §0) ----------------------------------
 IDENTIFIER_PATTERNS = {
     "raw_tokens": r"\braw_tokens\b",
+    # SD-35 AT-35-E6-002 cycle 5. The ingest format has TWO verbatim arrays,
+    # and until this line the gate named one. `raw_bonus_chains` stood at 31
+    # hits across 11 `src/rules_core/` files -- including an open-coded
+    # production traversal -- invisible to cycles 1-4 and to the criterion's
+    # own Evidence sentence (`correction 1789082356496-at-35-e6-002-65186a`).
+    # A population nothing measures is a population nothing closes.
+    "raw_bonus_chains": r"\braw_bonus_chains\b",
     "PcgenFormulaEvaluator": r"\bPcgenFormulaEvaluator\b",
     "render_pcgen_desc": r"\brender_pcgen_desc\b",
     "bonus_stack_reader": r"\bbonus_stack_reader\b",

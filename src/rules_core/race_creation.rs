@@ -124,28 +124,27 @@ fn racial_ability_scores_trait(race: &ResolvedRace) -> Option<&ResolvedTrait> {
 
 /// The fixed ability modifiers a `Racial Ability Scores` row declares.
 ///
-/// Reads `BONUS:STAT|<codes>|<magnitude>` chains only. `<codes>` is
+/// Reads the ability adjustments the converter transcribed off the row
+/// ([`bonus_chain_reader::AbilityAdjustment`]). The code list is
 /// comma-separated and frequently names more than one ability — Goblin's
-/// `BONUS:STAT|STR,CHA|-2` grants **both** — so every code in the list is
-/// credited. An unrecognized code is reported rather than dropped.
+/// `STR,CHA` at `-2` grants **both** — so every code in the list is credited.
+/// An unrecognized code is reported rather than dropped.
 fn fixed_ability_adjustments(
     ability_trait: &ResolvedTrait,
 ) -> Result<BTreeMap<String, i16>, String> {
     let mut out: BTreeMap<String, i16> = BTreeMap::new();
-    for chain in &ability_trait.raw_bonus_chains {
-        if chain.qualifiers.first().map(String::as_str) != Some("STAT") {
-            continue;
-        }
-        let (Some(codes), Some(raw_magnitude)) = (chain.qualifiers.get(1), chain.qualifiers.get(2))
+    for adjustment in &ability_trait.declared_bonuses.ability_adjustments {
+        let (Some(codes), Some(raw_magnitude)) =
+            (adjustment.codes.as_ref(), adjustment.magnitude.as_ref())
         else {
             return Err(format!(
-                "{}: a BONUS:STAT chain is missing its codes or magnitude",
+                "{}: a declared ability adjustment is missing its codes or magnitude",
                 ability_trait.key
             ));
         };
         let magnitude: i16 = raw_magnitude.parse().map_err(|_| {
             format!(
-                "{}: BONUS:STAT magnitude {raw_magnitude:?} is not an integer",
+                "{}: ability-adjustment magnitude {raw_magnitude:?} is not an integer",
                 ability_trait.key
             )
         })?;
@@ -156,7 +155,7 @@ fn fixed_ability_adjustments(
                 .find(|(stat, _)| *stat == code)
                 .map(|(_, ability)| *ability)
                 .ok_or_else(|| {
-                    format!("{}: unknown BONUS:STAT ability code {code:?}", ability_trait.key)
+                    format!("{}: unknown ability code {code:?}", ability_trait.key)
                 })?;
             *out.entry(ability.to_owned()).or_insert(0) += magnitude;
         }
@@ -168,21 +167,14 @@ fn fixed_ability_adjustments(
 /// The freely-distributed "+2 to one ability score" points a
 /// `Racial Ability Scores` row grants.
 ///
-/// PCGen splits the fact across two places: the *number of picks* is
-/// machine-readable (`BONUS:ABILITYPOOL|Ability Bonus|1`) but the *magnitude
-/// per pick* appears only in the row's own display name. That is stated here
-/// rather than hidden, and the name is matched strictly — a row that does not
-/// have the shape yields an error naming it, never a guessed magnitude.
+/// The source splits the fact across two places: the *number of picks* is
+/// machine-readable, and the converter transcribes it as
+/// [`DeclaredBonuses::ability_pool_picks`]; the *magnitude per pick* appears
+/// only in the row's own display name. That is stated here rather than hidden,
+/// and the name is matched strictly — a row that does not have the shape
+/// yields an error naming it, never a guessed magnitude.
 fn floating_ability_bonus_points(ability_trait: &ResolvedTrait) -> Result<u8, String> {
-    let picks: u8 = ability_trait
-        .raw_bonus_chains
-        .iter()
-        .filter(|chain| {
-            chain.qualifiers.first().map(String::as_str) == Some("ABILITYPOOL")
-                && chain.qualifiers.get(1).map(String::as_str) == Some("Ability Bonus")
-        })
-        .map(|chain| chain.qualifiers.get(2).and_then(|n| n.parse::<u8>().ok()).unwrap_or(0))
-        .sum();
+    let picks: u8 = ability_trait.declared_bonuses.ability_pool_picks;
     if picks == 0 {
         return Ok(0);
     }
@@ -312,6 +304,7 @@ mod tests {
     }
 
     fn ability_trait(name: &str, chains: &[(&str, &str, &str)]) -> ResolvedTrait {
+        use crate::pcgen_import::bonus_chain_reader::declared_bonuses_from_chains;
         use crate::pcgen_import::ingest_payload::RawBonusChain;
         ResolvedTrait {
             key: format!("Test ~ {name}"),
@@ -324,12 +317,14 @@ mod tests {
             declared_walk_speed_ft: None,
             declared_size: None,
             declared_vision: Vec::new(),
-            raw_bonus_chains: chains
-                .iter()
-                .map(|(a, b, c)| RawBonusChain {
-                    qualifiers: vec![(*a).to_owned(), (*b).to_owned(), (*c).to_owned()],
-                })
-                .collect(),
+            declared_bonuses: declared_bonuses_from_chains(
+                &chains
+                    .iter()
+                    .map(|(a, b, c)| RawBonusChain {
+                        qualifiers: vec![(*a).to_owned(), (*b).to_owned(), (*c).to_owned()],
+                    })
+                    .collect::<Vec<_>>(),
+            ),
         }
     }
 

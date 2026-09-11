@@ -719,10 +719,7 @@ mod tests {
     fn debilitating_injury_carries_no_formula_token_only_prose() {
         let record = record_for("Unchained Rogue ~ Debilitating Injury");
         assert!(
-            record["raw_bonus_chains"]
-                .as_array()
-                .expect("raw_bonus_chains is an array")
-                .is_empty(),
+            ingest_record::bonus_chain_qualifiers(&record).is_empty(),
             "Debilitating Injury must still carry no BONUS: chain -- if it gained one, the \
              prose-derived readings are no longer the only source and must be revisited"
         );
@@ -768,7 +765,7 @@ mod tests {
             "the row carries no DESC: of its own"
         );
         assert!(
-            record["raw_bonus_chains"].as_array().expect("array").is_empty(),
+            ingest_record::bonus_chain_qualifiers(&record).is_empty(),
             "the row carries no BONUS: chain"
         );
         let tokens: Vec<(String, String)> = ingest_record::token_pairs(&record)
