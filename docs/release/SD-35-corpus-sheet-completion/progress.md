@@ -41,6 +41,56 @@ re-measured at the cut by the launch-readiness audit.
 
 ## Cycle log
 
+### 2026-09-11 — Epic 6 / `desktop-and-prose-leave-pcgen` — AT-35-E6-003 **cycle 9** (`c3075955c0`) — **partial** (the converter was dropping 1,679 records' BONUS clauses on the floor; fixed, and two of the four remaining readers are unblocked by it)
+
+This cycle measured all four remaining readers before writing a swap, and found three of them
+blocked by the same shape: **the converted package does not hold the facts they read.** The reason
+was not the readers and not the facts renderer. `record_from_json` built `shipped_tokens` from the
+corpus record's `raw_tokens` alone; the ingest stores a `.lst` row's `BONUS:` clauses in a
+**second** array, `raw_bonus_chains`; and a shipped token list **replaces** the base row's in
+`PinnedTree::closure`. **1,679 of 1,750** joined corpus records lost every BONUS clause they
+state — silently, because a token nobody reads is not a refusal.
+
+`Dwarf ~ Ability Scores` states `BONUS:STAT|CON,WIS|2|TYPE=Racial` and `BONUS:STAT|CHA|-2|TYPE=Racial`.
+Its converted rule carried `value: Text`, no `target`, no `bonus_type` — the racial ability
+adjustment absent from the package a sheet is printed from. It is now three rules:
+`Number(2) → Ability(Con)`, `Number(2) → Ability(Wis)`, `Number(-2) → Ability(Cha)`, each
+`bonus_type: Racial`.
+
+- **Scope gate:** `SCOPE_GATE: EXEMPT (Epic 6 cycle — closes zero units by design, decisions.md §2)`.
+  Run anyway: `scoped=0 remaining_non_done=0 floor=500 verdict=PASS_WHOLE_REMAINDER`.
+- **Receipt rows:** `closed=0 relabeled=0 rust_lines_changed=121 ratio=n/a builds_recorded=2 pcgen_live_files=200`.
+- **Residue:** `root apps/desktop` **4 files / 97 hits**, `live_files=200`, `live_hits=11511`,
+  `verdict=PASS` — identical at cycle start and cycle end. This cycle wrote nothing on the live
+  side: it removed the reason the last four readers cannot be swapped.
+- **Package movement, all corpus-wide.** BONUS clauses reaching the converter **71 of 1,750 →
+  1,750 of 1,750**. Rules written **69,346 → 70,135 (+789)**. `race_trait` rules carrying a
+  `target` **530 → 922 (+392)**; carrying an `Ability` target **173 → 248 (+75)**. Var-table
+  contributions **18,134 → 18,970 (+836)**; the Intelligent Item Ego variable alone **0 → 175**.
+  Refusals unchanged at 142, all `no_corpus_record`.
+- **Oracle parity run, and it moved.** Against the committed BatchExporter exports at
+  `PCGEN_ORACLE_SHA=7f818006e3`: lines compared **146 → 156**, agree **145 → 154**, disagree
+  **1 → 2**, chassis unchanged (382 / 376 / 6). **Every disagreement named**: seven carry over
+  from the cycle 2 baseline unchanged; the one new one is
+  `half_elf_fighter_l1 · Pool:favored_class · ours=1 oracle=2`, and it is a **frame mismatch, not
+  a wrong number** — our line states the rule's own `+1` contribution (exactly what the corpus row
+  states), PCGen's `POOL.7.SIZE` states the resulting pool total.
+- **Two token types surface unmapped for the first time** — `BONUS:LOADMULT` (4) and
+  `BONUS:SPELLCASTMULT` (4). Both are multipliers, and no `BonusTarget` holds a multiplier;
+  writing one as an additive target would put a wrong number on a sheet. They degrade honestly
+  (the rule prints its words, `decisions.md §1` form 3), degraded records 398 → 423, and
+  `token_coverage.py --check` stays `PASS` with `refused_non_done=0`.
+- **`partial`** — remainder **the same 4 files / 97 hits, 7 token types**:
+  `PRE[A-Z]+:`=27, `raw_tokens`=24, `DESC:`=14, `BONUS:`=11, `raw_bonus_chains`=10,
+  `render_pcgen_desc`=8, `TYPE=`=3. But it is no longer one undifferentiated mechanism:
+  **`intelligent_item_catalog.rs` (28) and `raceCreationCoverage.test.ts` (21) are unblocked by
+  this cycle** and are cycle 10's work. **`race_trait_picker.rs` (33) and
+  `reference_library_catalog.rs` (15) need an operator ruling first**: 178 ARG `race_trait`
+  corpus records and cycle 7's 489 `ability` records are real corpus records that are **not units
+  of `docs/work-inventory.json`**, so the converter's population never sees them — 72 of 415
+  alternates would lose their exclusion guard, and 1,150 of 9,679 descriptions would leave the
+  screen. Admitting them moves the bundle denominator 49,438. Reported, not excused.
+
 ### 2026-09-11 — Epic 6 / `desktop-and-prose-leave-pcgen` — AT-35-E6-003 **cycle 8** (`526173470e`) — **partial** (the Feat and Companion catalogs reach zero; the four structural readers are one mechanism, named)
 
 Cycle 7's plan put the two prose-shaped readers first. Both took the swap and both reached
