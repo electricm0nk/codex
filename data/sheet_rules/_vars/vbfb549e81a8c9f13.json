@@ -1,1 +1,1 @@
-{"var":"vbfb549e81a8c9f13","declared_by":["advanced_race_guide:feat:improvisation"],"contributions":[{"rule_id":"advanced_race_guide:feat:improvisation","expr":{"Const":1},"when":"Always"}],"provenance":{}}
+{"var":"vbfb549e81a8c9f13","label":"Use Untrained Skills","declared_by":["advanced_race_guide:feat:improvisation"],"contributions":[{"rule_id":"advanced_race_guide:feat:improvisation","expr":{"Const":1},"when":"Always"}],"provenance":{}}

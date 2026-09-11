@@ -1,1 +1,1 @@
-{"var":"v71feba8f3ce66671","declared_by":["ultimate_psionics:class:tactician"],"contributions":[{"rule_id":"ultimate_psionics:class:tactician","expr":{"ClassLevel":"tactician"},"when":{"Compare":{"lhs":{"ClassLevel":"tactician"},"op":"Gte","rhs":{"Const":1}}}}],"provenance":{}}
+{"var":"v71feba8f3ce66671","label":"Tactician LVL","declared_by":["ultimate_psionics:class:tactician"],"contributions":[{"rule_id":"ultimate_psionics:class:tactician","expr":{"ClassLevel":"tactician"},"when":{"Compare":{"lhs":{"ClassLevel":"tactician"},"op":"Gte","rhs":{"Const":1}}}}],"provenance":{}}

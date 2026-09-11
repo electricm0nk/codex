@@ -1,1 +1,1 @@
-{"var":"v06b16a13cedf8ae0","declared_by":["mythic_adventures:ability:flexible_school_conjuration"],"contributions":[{"rule_id":"mythic_adventures:ability:flexible_school_conjuration","expr":{"Var":"v1c4484d110f05f91"},"when":"Always"}],"provenance":{}}
+{"var":"v06b16a13cedf8ae0","label":"Ability Flexible School Conjuration LVL","declared_by":["mythic_adventures:ability:flexible_school_conjuration"],"contributions":[{"rule_id":"mythic_adventures:ability:flexible_school_conjuration","expr":{"Var":"v1c4484d110f05f91"},"when":"Always"}],"provenance":{}}

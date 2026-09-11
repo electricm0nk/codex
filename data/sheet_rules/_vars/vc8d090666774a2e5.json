@@ -1,1 +1,1 @@
-{"var":"vc8d090666774a2e5","declared_by":["pathfinder_unchained:class_feature:abp_mental"],"contributions":[{"rule_id":"pathfinder_unchained:class_feature:abp_2_charisma","expr":{"Const":2},"when":"Always"}],"provenance":{}}
+{"var":"vc8d090666774a2e5","label":"ABP Mental Prowess CHAEnhancement","declared_by":["pathfinder_unchained:class_feature:abp_mental"],"contributions":[{"rule_id":"pathfinder_unchained:class_feature:abp_2_charisma","expr":{"Const":2},"when":"Always"}],"provenance":{}}

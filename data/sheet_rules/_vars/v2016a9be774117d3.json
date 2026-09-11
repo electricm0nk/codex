@@ -1,1 +1,1 @@
-{"var":"v2016a9be774117d3","declared_by":["adventurers_guide:class:gray_corsair"],"contributions":[{"rule_id":"adventurers_guide:class:gray_corsair","expr":{"ClassLevel":"gray_corsair"},"when":"Always"}],"provenance":{}}
+{"var":"v2016a9be774117d3","label":"Gray Corsair LVL","declared_by":["adventurers_guide:class:gray_corsair"],"contributions":[{"rule_id":"adventurers_guide:class:gray_corsair","expr":{"ClassLevel":"gray_corsair"},"when":"Always"}],"provenance":{}}

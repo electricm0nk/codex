@@ -1,1 +1,1 @@
-{"var":"va8660b1eb3d5578f","declared_by":["adventurers_guide:class:asavir"],"contributions":[{"rule_id":"adventurers_guide:class:asavir","expr":{"ClassLevel":"asavir"},"when":"Always"}],"provenance":{}}
+{"var":"va8660b1eb3d5578f","label":"Asavir LVL","declared_by":["adventurers_guide:class:asavir"],"contributions":[{"rule_id":"adventurers_guide:class:asavir","expr":{"ClassLevel":"asavir"},"when":"Always"}],"provenance":{}}

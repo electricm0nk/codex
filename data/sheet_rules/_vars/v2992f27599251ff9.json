@@ -1,1 +1,1 @@
-{"var":"v2992f27599251ff9","declared_by":["ultimate_psionics:class:marksman"],"contributions":[{"rule_id":"ultimate_psionics:class:marksman","expr":{"AbilityMod":"Wis"},"when":{"Compare":{"lhs":{"ClassLevel":"marksman"},"op":"Gte","rhs":{"Const":1}}}}],"provenance":{}}
+{"var":"v2992f27599251ff9","label":"Marksman Prime Stat","declared_by":["ultimate_psionics:class:marksman"],"contributions":[{"rule_id":"ultimate_psionics:class:marksman","expr":{"AbilityMod":"Wis"},"when":{"Compare":{"lhs":{"ClassLevel":"marksman"},"op":"Gte","rhs":{"Const":1}}}}],"provenance":{}}

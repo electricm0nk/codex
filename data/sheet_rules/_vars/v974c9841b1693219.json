@@ -1,1 +1,1 @@
-{"var":"v974c9841b1693219","declared_by":["advanced_players_guide:class_feature:shaman_wild_shape"],"contributions":[{"rule_id":"advanced_players_guide:class_feature:shaman_druid_wild_shape","expr":{"Var":"v931131048b5683eb"},"when":"Always"}],"provenance":{}}
+{"var":"v974c9841b1693219","label":"Shaman Wild Shape Duration","declared_by":["advanced_players_guide:class_feature:shaman_wild_shape"],"contributions":[{"rule_id":"advanced_players_guide:class_feature:shaman_druid_wild_shape","expr":{"Var":"v931131048b5683eb"},"when":"Always"}],"provenance":{}}

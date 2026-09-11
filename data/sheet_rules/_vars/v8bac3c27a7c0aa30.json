@@ -1,1 +1,1 @@
-{"var":"v8bac3c27a7c0aa30","declared_by":["adventurers_guide:class:argent_dramaturge"],"contributions":[{"rule_id":"adventurers_guide:class:argent_dramaturge","expr":{"ClassLevel":"argent_dramaturge"},"when":"Always"}],"provenance":{}}
+{"var":"v8bac3c27a7c0aa30","label":"Argent Dramaturge LVL","declared_by":["adventurers_guide:class:argent_dramaturge"],"contributions":[{"rule_id":"adventurers_guide:class:argent_dramaturge","expr":{"ClassLevel":"argent_dramaturge"},"when":"Always"}],"provenance":{}}

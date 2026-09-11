@@ -1,1 +1,1 @@
-{"var":"v8ab6acf0ac1a976e","declared_by":["core_rulebook:class_feature:sorcerer_elemental_bloodline_water"],"contributions":[{"rule_id":"core_rulebook:class_feature:sorcerer_elemental_bloodline_water","expr":{"Const":1},"when":"Always"}],"provenance":{}}
+{"var":"v8ab6acf0ac1a976e","label":"Sorcerer Elemental Bloodline Choice Water","declared_by":["core_rulebook:class_feature:sorcerer_elemental_bloodline_water"],"contributions":[{"rule_id":"core_rulebook:class_feature:sorcerer_elemental_bloodline_water","expr":{"Const":1},"when":"Always"}],"provenance":{}}

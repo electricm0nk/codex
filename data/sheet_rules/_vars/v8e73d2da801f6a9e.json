@@ -1,1 +1,1 @@
-{"var":"v8e73d2da801f6a9e","declared_by":["occult_adventures:class:spiritualist"],"contributions":[{"rule_id":"occult_adventures:class:spiritualist","expr":{"ClassLevel":"spiritualist"},"when":"Always"}],"provenance":{}}
+{"var":"v8e73d2da801f6a9e","label":"Spiritualist LVL","declared_by":["occult_adventures:class:spiritualist"],"contributions":[{"rule_id":"occult_adventures:class:spiritualist","expr":{"ClassLevel":"spiritualist"},"when":"Always"}],"provenance":{}}

@@ -1,1 +1,1 @@
-{"var":"v080b338fec4777e6","declared_by":["inner_sea_gods:class:sentinel"],"contributions":[{"rule_id":"inner_sea_gods:class:sentinel","expr":{"ClassLevel":"sentinel"},"when":"Always"}],"provenance":{}}
+{"var":"v080b338fec4777e6","label":"Sentinel LVL","declared_by":["inner_sea_gods:class:sentinel"],"contributions":[{"rule_id":"inner_sea_gods:class:sentinel","expr":{"ClassLevel":"sentinel"},"when":"Always"}],"provenance":{}}

@@ -1,1 +1,1 @@
-{"var":"va0caa613d6ed1950","declared_by":["ultimate_wilderness:class_feature:leafshifter_leafshifter_s_aspect"],"contributions":[{"rule_id":"ultimate_wilderness:class_feature:leafshifter_leafshifter_s_aspect","expr":{"Const":1},"when":"Always"}],"provenance":{}}
+{"var":"va0caa613d6ed1950","label":"Replace Minor Shifter Aspect","declared_by":["ultimate_wilderness:class_feature:leafshifter_leafshifter_s_aspect"],"contributions":[{"rule_id":"ultimate_wilderness:class_feature:leafshifter_leafshifter_s_aspect","expr":{"Const":1},"when":"Always"}],"provenance":{}}

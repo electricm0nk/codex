@@ -1,1 +1,1 @@
-{"var":"v08108dfb6052fdad","declared_by":["ultimate_magic:class_feature:inquisition_fervor"],"contributions":[{"rule_id":"ultimate_magic:class_feature:inquisition_fervor","expr":{"Var":"v502ed4d69b315dd4"},"when":"Always"}],"provenance":{}}
+{"var":"v08108dfb6052fdad","label":"Domain Fervor Times","declared_by":["ultimate_magic:class_feature:inquisition_fervor"],"contributions":[{"rule_id":"ultimate_magic:class_feature:inquisition_fervor","expr":{"Var":"v502ed4d69b315dd4"},"when":"Always"}],"provenance":{}}

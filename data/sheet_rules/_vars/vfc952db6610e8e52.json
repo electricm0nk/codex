@@ -1,1 +1,1 @@
-{"var":"vfc952db6610e8e52","declared_by":["ultimate_wilderness:class_feature:shifter_wild_shape"],"contributions":[{"rule_id":"ultimate_wilderness:class_feature:shifter_wild_shape","expr":{"Const":1},"when":"Always"}],"provenance":{}}
+{"var":"vfc952db6610e8e52","label":"Shifter Wild Shape","declared_by":["ultimate_wilderness:class_feature:shifter_wild_shape"],"contributions":[{"rule_id":"ultimate_wilderness:class_feature:shifter_wild_shape","expr":{"Const":1},"when":"Always"}],"provenance":{}}

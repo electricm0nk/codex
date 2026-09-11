@@ -1,1 +1,1 @@
-{"var":"v43e896cac318bc85","declared_by":["inner_sea_magic:ability:skill_specialization_base"],"contributions":[{"rule_id":"inner_sea_magic:ability:divine_boon_lamashtu","expr":{"Const":1},"when":"Always"}],"provenance":{}}
+{"var":"v43e896cac318bc85","label":"SSIntimidate","declared_by":["inner_sea_magic:ability:skill_specialization_base"],"contributions":[{"rule_id":"inner_sea_magic:ability:divine_boon_lamashtu","expr":{"Const":1},"when":"Always"}],"provenance":{}}

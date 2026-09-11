@@ -1,1 +1,1 @@
-{"var":"vf9bc2b5b10ade0e0","declared_by":["ultimate_magic:class_feature:inquisition_torture"],"contributions":[{"rule_id":"ultimate_magic:class_feature:inquisition_torture","expr":{"Var":"v502ed4d69b315dd4"},"when":"Always"}],"provenance":{}}
+{"var":"vf9bc2b5b10ade0e0","label":"Domain Torture Times","declared_by":["ultimate_magic:class_feature:inquisition_torture"],"contributions":[{"rule_id":"ultimate_magic:class_feature:inquisition_torture","expr":{"Var":"v502ed4d69b315dd4"},"when":"Always"}],"provenance":{}}

@@ -1,1 +1,1 @@
-{"var":"v024d66851b732837","declared_by":["advanced_class_guide:class_feature:shaman_spirit_bones"],"contributions":[{"rule_id":"advanced_class_guide:class_feature:shaman_spirit_bones","expr":{"Const":1},"when":"Always"}],"provenance":{}}
+{"var":"v024d66851b732837","label":"Shaman Bones Spirit","declared_by":["advanced_class_guide:class_feature:shaman_spirit_bones"],"contributions":[{"rule_id":"advanced_class_guide:class_feature:shaman_spirit_bones","expr":{"Const":1},"when":"Always"}],"provenance":{}}

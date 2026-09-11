@@ -1,1 +1,1 @@
-{"var":"vf7e5f88387effb3b","declared_by":["ultimate_intrigue:class_feature:sentinel_sense_intruder"],"contributions":[{"rule_id":"ultimate_intrigue:class_feature:sentinel_sense_intruder","expr":{"Const":1},"when":"Always"}],"provenance":{}}
+{"var":"vf7e5f88387effb3b","label":"Sentinel Style Feat Improved Sense Intruder","declared_by":["ultimate_intrigue:class_feature:sentinel_sense_intruder"],"contributions":[{"rule_id":"ultimate_intrigue:class_feature:sentinel_sense_intruder","expr":{"Const":1},"when":"Always"}],"provenance":{}}

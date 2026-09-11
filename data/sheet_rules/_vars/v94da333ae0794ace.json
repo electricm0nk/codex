@@ -1,1 +1,1 @@
-{"var":"v94da333ae0794ace","declared_by":["ultimate_magic:class_feature:inquisition_oblivion"],"contributions":[{"rule_id":"ultimate_magic:class_feature:inquisition_oblivion","expr":{"Var":"v925c9ebdb6fe293e"},"when":"Always"}],"provenance":{}}
+{"var":"v94da333ae0794ace","label":"Domain Oblivion LVL","declared_by":["ultimate_magic:class_feature:inquisition_oblivion"],"contributions":[{"rule_id":"ultimate_magic:class_feature:inquisition_oblivion","expr":{"Var":"v925c9ebdb6fe293e"},"when":"Always"}],"provenance":{}}

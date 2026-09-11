@@ -1,1 +1,1 @@
-{"var":"v8ba4cc677b4b6515","declared_by":["ultimate_magic:class_feature:discovery_cognatogen"],"contributions":[{"rule_id":"ultimate_magic:class_feature:discovery_cognatogen","expr":{"Const":2},"when":"Always"}],"provenance":{}}
+{"var":"v8ba4cc677b4b6515","label":"Cognatogen ACBonus","declared_by":["ultimate_magic:class_feature:discovery_cognatogen"],"contributions":[{"rule_id":"ultimate_magic:class_feature:discovery_cognatogen","expr":{"Const":2},"when":"Always"}],"provenance":{}}

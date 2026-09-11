@@ -1,1 +1,1 @@
-{"var":"va096f3ede658b01d","declared_by":["ultimate_psionics:class_feature:scaled_rider_reptile_mount"],"contributions":[{"rule_id":"ultimate_psionics:class_feature:scaled_rider_reptile_mount","expr":{"Const":1},"when":"Always"}],"provenance":{}}
+{"var":"va096f3ede658b01d","label":"Can Have Karaan","declared_by":["ultimate_psionics:class_feature:scaled_rider_reptile_mount"],"contributions":[{"rule_id":"ultimate_psionics:class_feature:scaled_rider_reptile_mount","expr":{"Const":1},"when":"Always"}],"provenance":{}}

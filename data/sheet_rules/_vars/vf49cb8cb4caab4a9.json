@@ -1,1 +1,1 @@
-{"var":"vf49cb8cb4caab4a9","declared_by":["ultimate_intrigue:class_feature:mounted_fury_mount"],"contributions":[{"rule_id":"ultimate_intrigue:class_feature:mounted_fury_mount","expr":{"Const":1},"when":"Always"}],"provenance":{}}
+{"var":"vf49cb8cb4caab4a9","label":"Vigilante Is Mounted Fury","declared_by":["ultimate_intrigue:class_feature:mounted_fury_mount"],"contributions":[{"rule_id":"ultimate_intrigue:class_feature:mounted_fury_mount","expr":{"Const":1},"when":"Always"}],"provenance":{}}

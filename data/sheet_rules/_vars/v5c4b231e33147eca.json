@@ -1,1 +1,1 @@
-{"var":"v5c4b231e33147eca","declared_by":["pathfinder_unchained:class_feature:abp_physical"],"contributions":[{"rule_id":"pathfinder_unchained:class_feature:abp_2_constitution","expr":{"Const":2},"when":"Always"}],"provenance":{}}
+{"var":"v5c4b231e33147eca","label":"ABP Physical Prowess CONEnhancement","declared_by":["pathfinder_unchained:class_feature:abp_physical"],"contributions":[{"rule_id":"pathfinder_unchained:class_feature:abp_2_constitution","expr":{"Const":2},"when":"Always"}],"provenance":{}}

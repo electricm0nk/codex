@@ -1,1 +1,1 @@
-{"var":"ved9b9a9567ecbf9e","declared_by":["inner_sea_magic:ability:skill_specialization_base"],"contributions":[{"rule_id":"inner_sea_magic:ability:scholar_academy","expr":{"Const":1},"when":"Always"}],"provenance":{}}
+{"var":"ved9b9a9567ecbf9e","label":"SSUMD","declared_by":["inner_sea_magic:ability:skill_specialization_base"],"contributions":[{"rule_id":"inner_sea_magic:ability:scholar_academy","expr":{"Const":1},"when":"Always"}],"provenance":{}}

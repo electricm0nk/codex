@@ -1,1 +1,1 @@
-{"var":"vaa3d4aa9710b6071","declared_by":["advanced_class_guide:class_feature:brawler_brawler_s_strike"],"contributions":[{"rule_id":"advanced_class_guide:class_feature:brawler_s_strike_alignment_selection_chaotic","expr":{"Const":1},"when":"Always"}],"provenance":{}}
+{"var":"vaa3d4aa9710b6071","label":"Brawler Strike Chaotic","declared_by":["advanced_class_guide:class_feature:brawler_brawler_s_strike"],"contributions":[{"rule_id":"advanced_class_guide:class_feature:brawler_s_strike_alignment_selection_chaotic","expr":{"Const":1},"when":"Always"}],"provenance":{}}

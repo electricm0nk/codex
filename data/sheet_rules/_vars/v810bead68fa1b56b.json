@@ -1,1 +1,1 @@
-{"var":"v810bead68fa1b56b","declared_by":["horror_adventures:ability:promethean_corruption_armored_gift"],"contributions":[{"rule_id":"horror_adventures:ability:promethean_corruption_greater_armored_gift","expr":{"Const":2},"when":"Always"}],"provenance":{}}
+{"var":"v810bead68fa1b56b","label":"Promethean Armored Bonus","declared_by":["horror_adventures:ability:promethean_corruption_armored_gift"],"contributions":[{"rule_id":"horror_adventures:ability:promethean_corruption_greater_armored_gift","expr":{"Const":2},"when":"Always"}],"provenance":{}}

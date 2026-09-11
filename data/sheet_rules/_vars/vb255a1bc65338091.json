@@ -1,1 +1,1 @@
-{"var":"vb255a1bc65338091","declared_by":["inner_sea_world_guide:class:low_templar"],"contributions":[{"rule_id":"inner_sea_world_guide:class:low_templar","expr":{"ClassLevel":"low_templar"},"when":"Always"}],"provenance":{}}
+{"var":"vb255a1bc65338091","label":"Low Templar Lvl","declared_by":["inner_sea_world_guide:class:low_templar"],"contributions":[{"rule_id":"inner_sea_world_guide:class:low_templar","expr":{"ClassLevel":"low_templar"},"when":"Always"}],"provenance":{}}

@@ -1,1 +1,1 @@
-{"var":"vc4e468b3892b6ba6","declared_by":["ultimate_wilderness:class_feature:leshy_warden_wild_shape"],"contributions":[{"rule_id":"ultimate_wilderness:class_feature:leshy_warden_wild_shape","expr":{"Const":1},"when":"Always"}],"provenance":{}}
+{"var":"vc4e468b3892b6ba6","label":"No Animal Shape","declared_by":["ultimate_wilderness:class_feature:leshy_warden_wild_shape"],"contributions":[{"rule_id":"ultimate_wilderness:class_feature:leshy_warden_wild_shape","expr":{"Const":1},"when":"Always"}],"provenance":{}}

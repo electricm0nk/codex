@@ -1,1 +1,1 @@
-{"var":"v2349e7a66386d4b2","declared_by":["ultimate_psionics:ability:tempest_s_blade_dueling_weapon"],"contributions":[{"rule_id":"ultimate_psionics:ability:tempest_s_blade_dueling_weapon","expr":{"Const":1},"when":"Always"}],"provenance":{}}
+{"var":"v2349e7a66386d4b2","label":"Tempests Blade Dueling Weapon","declared_by":["ultimate_psionics:ability:tempest_s_blade_dueling_weapon"],"contributions":[{"rule_id":"ultimate_psionics:ability:tempest_s_blade_dueling_weapon","expr":{"Const":1},"when":"Always"}],"provenance":{}}

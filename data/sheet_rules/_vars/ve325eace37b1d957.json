@@ -1,1 +1,1 @@
-{"var":"ve325eace37b1d957","declared_by":["inner_sea_intrigue:class_feature:inquisition_clandestine"],"contributions":[{"rule_id":"inner_sea_intrigue:class_feature:inquisition_clandestine","expr":{"Var":"v502ed4d69b315dd4"},"when":"Always"}],"provenance":{}}
+{"var":"ve325eace37b1d957","label":"Domain Clandestine Times","declared_by":["inner_sea_intrigue:class_feature:inquisition_clandestine"],"contributions":[{"rule_id":"inner_sea_intrigue:class_feature:inquisition_clandestine","expr":{"Var":"v502ed4d69b315dd4"},"when":"Always"}],"provenance":{}}

@@ -1,1 +1,1 @@
-{"var":"v202c670f4a94cc75","declared_by":["ultimate_intrigue:class_feature:skinshaper_skinshaping"],"contributions":[{"rule_id":"ultimate_intrigue:class_feature:skinshaper_skinshaping","expr":{"Const":1},"when":{"Situational":{"text":"when active"}}}],"provenance":{}}
+{"var":"v202c670f4a94cc75","label":"Skinshaping Active Active","declared_by":["ultimate_intrigue:class_feature:skinshaper_skinshaping"],"contributions":[{"rule_id":"ultimate_intrigue:class_feature:skinshaper_skinshaping","expr":{"Const":1},"when":{"Situational":{"text":"when active"}}}],"provenance":{}}

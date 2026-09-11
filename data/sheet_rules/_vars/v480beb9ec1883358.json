@@ -1,1 +1,1 @@
-{"var":"v480beb9ec1883358","declared_by":["ultimate_magic:class_feature:hexcrafter_hex_magus"],"contributions":[{"rule_id":"ultimate_magic:class_feature:hexcrafter_hex_magus","expr":{"Const":1},"bonus_type":{"name":"Base","mode":"Plain"},"when":"Always"}],"provenance":{}}
+{"var":"v480beb9ec1883358","label":"Witch Hex Allowed","declared_by":["ultimate_magic:class_feature:hexcrafter_hex_magus"],"contributions":[{"rule_id":"ultimate_magic:class_feature:hexcrafter_hex_magus","expr":{"Const":1},"bonus_type":{"name":"Base","mode":"Plain"},"when":"Always"}],"provenance":{}}

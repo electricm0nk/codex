@@ -1,1 +1,1 @@
-{"var":"v1165f7734074ce2c","declared_by":["ultimate_magic:class_feature:inquisition_truth"],"contributions":[{"rule_id":"ultimate_magic:class_feature:inquisition_truth","expr":{"Var":"v502ed4d69b315dd4"},"when":"Always"}],"provenance":{}}
+{"var":"v1165f7734074ce2c","label":"Domain Truth Times","declared_by":["ultimate_magic:class_feature:inquisition_truth"],"contributions":[{"rule_id":"ultimate_magic:class_feature:inquisition_truth","expr":{"Var":"v502ed4d69b315dd4"},"when":"Always"}],"provenance":{}}

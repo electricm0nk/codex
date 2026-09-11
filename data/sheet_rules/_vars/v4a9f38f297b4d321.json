@@ -1,1 +1,1 @@
-{"var":"v4a9f38f297b4d321","declared_by":["horror_adventures:class_feature:default"],"contributions":[{"rule_id":"horror_adventures:class_feature:elder_mythos_cultist_domains","expr":{"Const":1},"when":"Always"}],"provenance":{}}
+{"var":"v4a9f38f297b4d321","label":"Allow Domain Madness","declared_by":["horror_adventures:class_feature:default"],"contributions":[{"rule_id":"horror_adventures:class_feature:elder_mythos_cultist_domains","expr":{"Const":1},"when":"Always"}],"provenance":{}}

@@ -1,1 +1,1 @@
-{"var":"v16aea3769a045432","declared_by":["pathfinder_unchained:class_feature:rule_use_consolidated_skills"],"contributions":[{"rule_id":"pathfinder_unchained:class_feature:rule_use_consolidated_skills","expr":{"Const":1},"when":"Always"}],"provenance":{}}
+{"var":"v16aea3769a045432","label":"Use Consolidated Skills","declared_by":["pathfinder_unchained:class_feature:rule_use_consolidated_skills"],"contributions":[{"rule_id":"pathfinder_unchained:class_feature:rule_use_consolidated_skills","expr":{"Const":1},"when":"Always"}],"provenance":{}}

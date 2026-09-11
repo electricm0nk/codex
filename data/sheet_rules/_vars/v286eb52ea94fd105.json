@@ -1,1 +1,1 @@
-{"var":"v286eb52ea94fd105","declared_by":["advanced_players_guide:class_feature:inquisitor_domains"],"contributions":[{"rule_id":"ultimate_wilderness:deity:imbrex","expr":{"Const":1},"when":"Always"}],"provenance":{}}
+{"var":"v286eb52ea94fd105","label":"Inquisitor Domain Family Subdomain","declared_by":["advanced_players_guide:class_feature:inquisitor_domains"],"contributions":[{"rule_id":"ultimate_wilderness:deity:imbrex","expr":{"Const":1},"when":"Always"}],"provenance":{}}

@@ -1,1 +1,1 @@
-{"var":"v3eef5a25ae42e402","declared_by":["adventurers_guide:class:student_of_war"],"contributions":[{"rule_id":"adventurers_guide:class:student_of_war","expr":{"ClassLevel":"student_of_war"},"when":"Always"}],"provenance":{}}
+{"var":"v3eef5a25ae42e402","label":"So WLvl","declared_by":["adventurers_guide:class:student_of_war"],"contributions":[{"rule_id":"adventurers_guide:class:student_of_war","expr":{"ClassLevel":"student_of_war"},"when":"Always"}],"provenance":{}}

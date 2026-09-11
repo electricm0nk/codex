@@ -1,1 +1,1 @@
-{"var":"v95d70d007215b3f7","declared_by":["pathfinder_unchained:class_feature:legendary_gifts_legendary_ability"],"contributions":[{"rule_id":"pathfinder_unchained:class_feature:abp_1_wisdom","expr":{"Const":1},"when":"Always"}],"provenance":{}}
+{"var":"v95d70d007215b3f7","label":"ABP Legendary Ability WISInherent","declared_by":["pathfinder_unchained:class_feature:legendary_gifts_legendary_ability"],"contributions":[{"rule_id":"pathfinder_unchained:class_feature:abp_1_wisdom","expr":{"Const":1},"when":"Always"}],"provenance":{}}

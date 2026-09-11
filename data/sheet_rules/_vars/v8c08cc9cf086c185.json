@@ -1,1 +1,1 @@
-{"var":"v8c08cc9cf086c185","declared_by":["occult_adventures:class:mesmerist"],"contributions":[{"rule_id":"occult_adventures:class:mesmerist","expr":{"ClassLevel":"mesmerist"},"when":"Always"}],"provenance":{}}
+{"var":"v8c08cc9cf086c185","label":"Mesmerist LVL","declared_by":["occult_adventures:class:mesmerist"],"contributions":[{"rule_id":"occult_adventures:class:mesmerist","expr":{"ClassLevel":"mesmerist"},"when":"Always"}],"provenance":{}}

@@ -1,1 +1,1 @@
-{"var":"ved180733924f68b8","declared_by":["book_of_the_damned_volume_2:class:demoniac"],"contributions":[{"rule_id":"book_of_the_damned_volume_2:class:demoniac","expr":{"ClassLevel":"demoniac"},"when":"Always"}],"provenance":{}}
+{"var":"ved180733924f68b8","label":"Demoniac LVL","declared_by":["book_of_the_damned_volume_2:class:demoniac"],"contributions":[{"rule_id":"book_of_the_damned_volume_2:class:demoniac","expr":{"ClassLevel":"demoniac"},"when":"Always"}],"provenance":{}}

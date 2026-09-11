@@ -1,1 +1,1 @@
-{"var":"v13139f6f6797b728","declared_by":["advanced_class_guide:class_feature:steel_hound_investigator_talents"],"contributions":[{"rule_id":"advanced_class_guide:class_feature:steel_hound_investigator_talents","expr":{"Const":1},"when":"Always"}],"provenance":{}}
+{"var":"v13139f6f6797b728","label":"Investigator Talent Extra Grit","declared_by":["advanced_class_guide:class_feature:steel_hound_investigator_talents"],"contributions":[{"rule_id":"advanced_class_guide:class_feature:steel_hound_investigator_talents","expr":{"Const":1},"when":"Always"}],"provenance":{}}

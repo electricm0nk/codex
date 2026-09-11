@@ -1,1 +1,1 @@
-{"var":"v2ba82ac25ae8457c","declared_by":["inner_sea_gods:ability:sentinel_divine_boon"],"contributions":[{"rule_id":"inner_sea_gods:ability:sentinel_divine_boon","expr":{"Var":"v080b338fec4777e6"},"when":"Always"}],"provenance":{}}
+{"var":"v2ba82ac25ae8457c","label":"Sentinel Boon LVL","declared_by":["inner_sea_gods:ability:sentinel_divine_boon"],"contributions":[{"rule_id":"inner_sea_gods:ability:sentinel_divine_boon","expr":{"Var":"v080b338fec4777e6"},"when":"Always"}],"provenance":{}}

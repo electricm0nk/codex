@@ -1,1 +1,1 @@
-{"var":"v69bed073468685f2","declared_by":["ultimate_psionics:race_trait:duergardsp_ancestral_voice"],"contributions":[{"rule_id":"ultimate_psionics:race_trait:duergardsp_ancestral_voice","expr":{"Const":2},"when":"Always"}],"provenance":{}}
+{"var":"v69bed073468685f2","label":"Duergar Ancestral Voice Bonus","declared_by":["ultimate_psionics:race_trait:duergardsp_ancestral_voice"],"contributions":[{"rule_id":"ultimate_psionics:race_trait:duergardsp_ancestral_voice","expr":{"Const":2},"when":"Always"}],"provenance":{}}

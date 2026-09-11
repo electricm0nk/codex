@@ -238,6 +238,15 @@ pub enum SpellKind {
 #[derive(Debug, Clone, PartialEq, Serialize, Deserialize)]
 pub struct VarTable {
     pub var: VarId,
+    /// The words this variable is printed under when a sheet line has to name it.
+    ///
+    /// [`VarId`] is a content hash, so before this field existed the only way to name a
+    /// variable was the source name, and the live side is forbidden to read one
+    /// (`decisions.md §11`). The converter writes the label at ingest, spaced out of the
+    /// source name mechanically and never interpreted; an empty label means the converter had
+    /// no name for the id and the renderer falls back to generic words.
+    #[serde(default)]
+    pub label: String,
     /// Rules whose closure declares the name; no held declarer -> the value is 0.
     pub declared_by: Vec<RuleId>,
     pub contributions: Vec<VarContribution>,
@@ -2193,6 +2202,7 @@ mod evaluate_tests {
         };
         package.insert_var(VarTable {
             var: "v1".into(),
+            label: String::new(),
             declared_by: vec!["core_rulebook:feat:holder".into()],
             contributions: vec![
                 contribution("holder", 2, typed("Racial", StackMode::Plain)),
@@ -2204,7 +2214,7 @@ mod evaluate_tests {
             ],
             provenance: VarProvenance::default(),
         });
-        package.insert_var(VarTable { var: "v2".into(), declared_by: vec!["core_rulebook:feat:unheld".into()], contributions: vec![contribution("holder", 9, None)], provenance: VarProvenance::default() });
+        package.insert_var(VarTable { var: "v2".into(), label: String::new(), declared_by: vec!["core_rulebook:feat:unheld".into()], contributions: vec![contribution("holder", 9, None)], provenance: VarProvenance::default() });
         package.finish();
         let seed = HeldSeed { feats: vec!["holder".into(), "other".into()], ..Default::default() };
         let facts = CharacterFacts::default();
@@ -2217,6 +2227,7 @@ mod evaluate_tests {
         assert_eq!(evaluate(&no_declarer, &held, &package, &facts, EvalContext::default()).value, SheetLineValue::Resolved(0));
         let replace = VarTable {
             var: "v3".into(),
+            label: String::new(),
             declared_by: vec!["core_rulebook:feat:holder".into()],
             contributions: vec![
                 contribution("holder", 2, typed("Enhancement", StackMode::Plain)),
@@ -2309,6 +2320,7 @@ mod evaluate_tests {
         package.insert_rule(feature);
         package.insert_var(VarTable {
             var: "vlvl".into(),
+            label: String::new(),
             declared_by: vec!["core_rulebook:class:bard".into()],
             contributions: vec![VarContribution {
                 rule_id: "core_rulebook:class:bard".into(),

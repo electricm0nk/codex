@@ -1,1 +1,1 @@
-{"var":"ve88ccc89182af741","declared_by":["advanced_players_guide:class_feature:inquisitor_domains"],"contributions":[{"rule_id":"ultimate_wilderness:deity:shyka","expr":{"Const":1},"when":"Always"}],"provenance":{}}
+{"var":"ve88ccc89182af741","label":"Inquisitor Domain Catastrophe Subdomain","declared_by":["advanced_players_guide:class_feature:inquisitor_domains"],"contributions":[{"rule_id":"ultimate_wilderness:deity:shyka","expr":{"Const":1},"when":"Always"}],"provenance":{}}

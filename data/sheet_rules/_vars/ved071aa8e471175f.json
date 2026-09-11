@@ -1,1 +1,1 @@
-{"var":"ved071aa8e471175f","declared_by":["core_rulebook:class_feature:critical_mastery_qualify"],"contributions":[{"rule_id":"core_rulebook:class_feature:critical_mastery_qualify","expr":{"Const":1},"when":"Never"}],"provenance":{}}
+{"var":"ved071aa8e471175f","label":"Critical Mastery Qualify","declared_by":["core_rulebook:class_feature:critical_mastery_qualify"],"contributions":[{"rule_id":"core_rulebook:class_feature:critical_mastery_qualify","expr":{"Const":1},"when":"Never"}],"provenance":{}}

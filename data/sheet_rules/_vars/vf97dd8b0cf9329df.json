@@ -1,1 +1,1 @@
-{"var":"vf97dd8b0cf9329df","declared_by":["advanced_class_guide:class_feature:shaman_spirit_battle"],"contributions":[{"rule_id":"advanced_class_guide:class_feature:shaman_spirit_battle","expr":{"Const":1},"when":"Always"}],"provenance":{}}
+{"var":"vf97dd8b0cf9329df","label":"Shaman Battle Spirit","declared_by":["advanced_class_guide:class_feature:shaman_spirit_battle"],"contributions":[{"rule_id":"advanced_class_guide:class_feature:shaman_spirit_battle","expr":{"Const":1},"when":"Always"}],"provenance":{}}

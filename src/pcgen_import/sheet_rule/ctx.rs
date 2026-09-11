@@ -215,6 +215,10 @@ pub struct RecordCtx<'a> {
     pub defects: BTreeMap<String, Vec<String>>,
     /// Variable ids this record referenced through `Expr::Var`, with their source names.
     pub var_names: BTreeMap<VarId, String>,
+    /// The same ids with the source name's ORIGINAL case, which is what
+    /// `sheet_rule::display_label` spaces into the printed label. `var_names` is upper-cased
+    /// because every index keys on the folded name; a label needs the case back.
+    pub var_labels: BTreeMap<VarId, String>,
     /// Names currently being inlined (cycle guard).
     inlining: Vec<String>,
     /// Fields omitted for product identity: declared / term hits.
@@ -243,6 +247,7 @@ impl<'a> RecordCtx<'a> {
             current_under: None,
             defects: BTreeMap::new(),
             var_names: BTreeMap::new(),
+            var_labels: BTreeMap::new(),
             inlining: Vec::new(),
             pi_declared: Vec::new(),
             pi_term_hits: Vec::new(),
@@ -351,6 +356,7 @@ impl<'a> RecordCtx<'a> {
         }
         let id = var_id(name);
         self.var_names.insert(id.clone(), upper);
+        self.var_labels.entry(id.clone()).or_insert_with(|| name.trim().to_string());
         Ok(Expr::Var(id))
     }
 

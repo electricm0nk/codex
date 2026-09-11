@@ -1,1 +1,1 @@
-{"var":"ve5d766c0b6305ee9","declared_by":["core_rulebook:class_feature:default","core_rulebook:class_feature:divine_bond_special_mount"],"contributions":[{"rule_id":"core_rulebook:class_feature:divine_bond_special_mount","expr":{"Const":1},"when":"Always"}],"provenance":{}}
+{"var":"ve5d766c0b6305ee9","label":"Divine Bond Mount","declared_by":["core_rulebook:class_feature:default","core_rulebook:class_feature:divine_bond_special_mount"],"contributions":[{"rule_id":"core_rulebook:class_feature:divine_bond_special_mount","expr":{"Const":1},"when":"Always"}],"provenance":{}}

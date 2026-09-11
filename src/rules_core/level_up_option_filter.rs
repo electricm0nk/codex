@@ -292,9 +292,17 @@ fn describe_expr(package: &SheetRulePackage, expr: &Expr) -> String {
         },
         Expr::MasterLevel => "the master's level".to_owned(),
         Expr::MasterVar(_) => "a value from the master".to_owned(),
-        // A corpus variable's id is a content hash, never a word -- naming it would put a
-        // token on the sheet. The gate is still reported; only this leaf stays generic.
-        Expr::Var(_) => "a rules variable".to_owned(),
+        // A corpus variable's id is a content hash, never a word. The converter writes the
+        // words at ingest (`VarTable::label`, SD-35 AT-35-E6-003 cycle 11) so the sheet can
+        // name the variable a line moves without any source name reaching this crate; an id
+        // the package holds no table for, or a table with no label, stays generic.
+        Expr::Var(id) => package
+            .vars
+            .get(id)
+            .map(|table| table.label.trim())
+            .filter(|label| !label.is_empty())
+            .map(str::to_owned)
+            .unwrap_or_else(|| "a rules variable".to_owned()),
         Expr::Sum(terms) => {
             join(terms.iter().map(|t| describe_expr(package, t)).collect(), " plus ")
         }

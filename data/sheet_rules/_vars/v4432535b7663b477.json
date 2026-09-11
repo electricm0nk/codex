@@ -1,1 +1,1 @@
-{"var":"v4432535b7663b477","declared_by":["ultimate_wilderness:companion:draconic_companion_acid_resistance"],"contributions":[{"rule_id":"ultimate_wilderness:companion:draconic_companion_acid_resistance","expr":{"Const":1},"when":"Always"}],"provenance":{}}
+{"var":"v4432535b7663b477","label":"Draconic Companion Acid Affinity","declared_by":["ultimate_wilderness:companion:draconic_companion_acid_resistance"],"contributions":[{"rule_id":"ultimate_wilderness:companion:draconic_companion_acid_resistance","expr":{"Const":1},"when":"Always"}],"provenance":{}}

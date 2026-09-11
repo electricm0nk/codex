@@ -1,1 +1,1 @@
-{"var":"v04f6e12ca3c65d2b","declared_by":["core_rulebook:class_feature:draconic_bloodline_choice_silver"],"contributions":[{"rule_id":"core_rulebook:class_feature:draconic_bloodline_choice_silver","expr":{"Const":1},"when":"Always"}],"provenance":{}}
+{"var":"v04f6e12ca3c65d2b","label":"Sorcerer Draconic Bloodline Choice Silver","declared_by":["core_rulebook:class_feature:draconic_bloodline_choice_silver"],"contributions":[{"rule_id":"core_rulebook:class_feature:draconic_bloodline_choice_silver","expr":{"Const":1},"when":"Always"}],"provenance":{}}

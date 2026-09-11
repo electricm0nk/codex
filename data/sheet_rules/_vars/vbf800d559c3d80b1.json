@@ -1,1 +1,1 @@
-{"var":"vbf800d559c3d80b1","declared_by":["ultimate_intrigue:class_feature:inquisition_crime"],"contributions":[{"rule_id":"ultimate_intrigue:class_feature:inquisition_crime","expr":{"Var":"v502ed4d69b315dd4"},"when":"Always"}],"provenance":{}}
+{"var":"vbf800d559c3d80b1","label":"Domain Crime Times","declared_by":["ultimate_intrigue:class_feature:inquisition_crime"],"contributions":[{"rule_id":"ultimate_intrigue:class_feature:inquisition_crime","expr":{"Var":"v502ed4d69b315dd4"},"when":"Always"}],"provenance":{}}

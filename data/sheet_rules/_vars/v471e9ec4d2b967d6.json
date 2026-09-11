@@ -1,1 +1,1 @@
-{"var":"v471e9ec4d2b967d6","declared_by":["ultimate_psionics:class:cryptic"],"contributions":[{"rule_id":"ultimate_psionics:class:cryptic","expr":{"ClassLevel":"cryptic"},"when":{"Compare":{"lhs":{"ClassLevel":"cryptic"},"op":"Gte","rhs":{"Const":1}}}}],"provenance":{}}
+{"var":"v471e9ec4d2b967d6","label":"Cryptic LVL","declared_by":["ultimate_psionics:class:cryptic"],"contributions":[{"rule_id":"ultimate_psionics:class:cryptic","expr":{"ClassLevel":"cryptic"},"when":{"Compare":{"lhs":{"ClassLevel":"cryptic"},"op":"Gte","rhs":{"Const":1}}}}],"provenance":{}}

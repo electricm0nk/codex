@@ -1,1 +1,1 @@
-{"var":"vcaf49b0c2ed24c67","declared_by":["inner_sea_intrigue:class:enchanting_courtesan"],"contributions":[{"rule_id":"inner_sea_intrigue:class:enchanting_courtesan","expr":{"ClassLevel":"enchanting_courtesan"},"when":"Always"}],"provenance":{}}
+{"var":"vcaf49b0c2ed24c67","label":"Enchanting Courtesan LVL","declared_by":["inner_sea_intrigue:class:enchanting_courtesan"],"contributions":[{"rule_id":"inner_sea_intrigue:class:enchanting_courtesan","expr":{"ClassLevel":"enchanting_courtesan"},"when":"Always"}],"provenance":{}}

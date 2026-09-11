@@ -1,1 +1,1 @@
-{"var":"vbb329f752d5953db","declared_by":[],"contributions":[{"rule_id":"bestiary_3:race_trait:unfettered_eidolon_evolution_arms","expr":{"Const":2},"when":"Always"}],"provenance":{}}
+{"var":"vbb329f752d5953db","label":"HANDS","declared_by":[],"contributions":[{"rule_id":"bestiary_3:race_trait:unfettered_eidolon_evolution_arms","expr":{"Const":2},"when":"Always"}],"provenance":{}}

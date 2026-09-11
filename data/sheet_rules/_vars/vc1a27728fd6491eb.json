@@ -1,1 +1,1 @@
-{"var":"vc1a27728fd6491eb","declared_by":["ultimate_magic:class_feature:separatist_forbidden_rites"],"contributions":[{"rule_id":"ultimate_magic:class_feature:separatist_forbidden_rites","expr":{"Const":-2},"when":"Always"}],"provenance":{}}
+{"var":"vc1a27728fd6491eb","label":"Separist Domain LVL","declared_by":["ultimate_magic:class_feature:separatist_forbidden_rites"],"contributions":[{"rule_id":"ultimate_magic:class_feature:separatist_forbidden_rites","expr":{"Const":-2},"when":"Always"}],"provenance":{}}

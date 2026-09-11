@@ -1,1 +1,1 @@
-{"var":"vc2abacaac54b45c7","declared_by":["advanced_class_guide:class_feature:brawler_brawler_s_strike"],"contributions":[{"rule_id":"advanced_class_guide:class_feature:brawler_s_strike_alignment_selection_lawful","expr":{"Const":1},"when":"Always"}],"provenance":{}}
+{"var":"vc2abacaac54b45c7","label":"Brawler Strike Lawful","declared_by":["advanced_class_guide:class_feature:brawler_brawler_s_strike"],"contributions":[{"rule_id":"advanced_class_guide:class_feature:brawler_s_strike_alignment_selection_lawful","expr":{"Const":1},"when":"Always"}],"provenance":{}}

@@ -1,1 +1,1 @@
-{"var":"v5c2db30962491b23","declared_by":["advanced_class_guide:class_feature:slayer_sneak_attack"],"contributions":[{"rule_id":"advanced_class_guide:class_feature:slayer_sneak_attack","expr":{"Var":"v0cb90c787e5cf819"},"when":"Always"}],"provenance":{}}
+{"var":"v5c2db30962491b23","label":"Slayer Sneak Attack LVL","declared_by":["advanced_class_guide:class_feature:slayer_sneak_attack"],"contributions":[{"rule_id":"advanced_class_guide:class_feature:slayer_sneak_attack","expr":{"Var":"v0cb90c787e5cf819"},"when":"Always"}],"provenance":{}}

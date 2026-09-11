@@ -1,1 +1,1 @@
-{"var":"vf8f5d192f17264ab","declared_by":["bestiary_2:template:spriggan_size_alteration"],"contributions":[{"rule_id":"bestiary_2:template:spriggan_size_alteration","expr":{"Const":1},"when":"Always"}],"provenance":{}}
+{"var":"vf8f5d192f17264ab","label":"Size Alteration Active","declared_by":["bestiary_2:template:spriggan_size_alteration"],"contributions":[{"rule_id":"bestiary_2:template:spriggan_size_alteration","expr":{"Const":1},"when":"Always"}],"provenance":{}}

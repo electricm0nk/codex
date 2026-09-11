@@ -1,1 +1,1 @@
-{"var":"ve3af42114a2a459f","declared_by":["core_rulebook:companion:companion"],"contributions":[{"rule_id":"core_rulebook:companion:companion","expr":{"Const":1},"when":{"Compare":{"lhs":{"AbilityScore":"Int"},"op":"Lt","rhs":{"Const":3}}}}],"provenance":{}}
+{"var":"ve3af42114a2a459f","label":"Animal Companion Skill","declared_by":["core_rulebook:companion:companion"],"contributions":[{"rule_id":"core_rulebook:companion:companion","expr":{"Const":1},"when":{"Compare":{"lhs":{"AbilityScore":"Int"},"op":"Lt","rhs":{"Const":3}}}}],"provenance":{}}

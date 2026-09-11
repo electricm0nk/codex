@@ -1,1 +1,1 @@
-{"var":"vebb9dbccffd4827e","declared_by":["core_rulebook:class_feature:sorcerer_elemental_bloodline_earth"],"contributions":[{"rule_id":"core_rulebook:class_feature:sorcerer_elemental_bloodline_earth","expr":{"Const":1},"when":"Always"}],"provenance":{}}
+{"var":"vebb9dbccffd4827e","label":"Sorcerer Elemental Bloodline Choice Earth","declared_by":["core_rulebook:class_feature:sorcerer_elemental_bloodline_earth"],"contributions":[{"rule_id":"core_rulebook:class_feature:sorcerer_elemental_bloodline_earth","expr":{"Const":1},"when":"Always"}],"provenance":{}}

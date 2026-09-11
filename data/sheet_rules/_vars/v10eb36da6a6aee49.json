@@ -1,1 +1,1 @@
-{"var":"v10eb36da6a6aee49","declared_by":["ultimate_wilderness:class:shifter"],"contributions":[{"rule_id":"ultimate_wilderness:class:shifter","expr":{"ClassLevel":"shifter"},"when":"Always"}],"provenance":{}}
+{"var":"v10eb36da6a6aee49","label":"Shifter LVL","declared_by":["ultimate_wilderness:class:shifter"],"contributions":[{"rule_id":"ultimate_wilderness:class:shifter","expr":{"ClassLevel":"shifter"},"when":"Always"}],"provenance":{}}

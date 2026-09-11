@@ -1,1 +1,1 @@
-{"var":"vabdcae3ef2260324","declared_by":[],"contributions":[{"rule_id":"ultimate_combat:feat:horse_master","expr":{"Var":"v388d0b49ddb1f737"},"when":"Always"}],"provenance":{}}
+{"var":"vabdcae3ef2260324","label":"Cavalier Level","declared_by":[],"contributions":[{"rule_id":"ultimate_combat:feat:horse_master","expr":{"Var":"v388d0b49ddb1f737"},"when":"Always"}],"provenance":{}}

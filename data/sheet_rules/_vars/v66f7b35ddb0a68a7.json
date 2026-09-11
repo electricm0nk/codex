@@ -1,1 +1,1 @@
-{"var":"v66f7b35ddb0a68a7","declared_by":["ultimate_magic:ability:words_of_power_tracker"],"contributions":[{"rule_id":"ultimate_magic:feat:meta_word_mastery","expr":{"Const":3},"when":"Always"}],"provenance":{}}
+{"var":"v66f7b35ddb0a68a7","label":"Bonus Meta Words Per Day","declared_by":["ultimate_magic:ability:words_of_power_tracker"],"contributions":[{"rule_id":"ultimate_magic:feat:meta_word_mastery","expr":{"Const":3},"when":"Always"}],"provenance":{}}

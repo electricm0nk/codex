@@ -1,1 +1,1 @@
-{"var":"v03fc6e9dd0fcd7b6","declared_by":["core_rulebook:class_feature:evocation_school"],"contributions":[{"rule_id":"core_rulebook:class_feature:evocation_school","expr":{"Var":"vb2a5c548a4599159"},"when":"Always"}],"provenance":{}}
+{"var":"v03fc6e9dd0fcd7b6","label":"Evocation Progression School LVL","declared_by":["core_rulebook:class_feature:evocation_school"],"contributions":[{"rule_id":"core_rulebook:class_feature:evocation_school","expr":{"Var":"vb2a5c548a4599159"},"when":"Always"}],"provenance":{}}

@@ -1,1 +1,1 @@
-{"var":"ve6ac2fe48f133e35","declared_by":["inner_sea_intrigue:class:lion_blade"],"contributions":[{"rule_id":"inner_sea_intrigue:class:lion_blade","expr":{"ClassLevel":"lion_blade"},"when":"Always"}],"provenance":{}}
+{"var":"ve6ac2fe48f133e35","label":"Lion Blade LVL","declared_by":["inner_sea_intrigue:class:lion_blade"],"contributions":[{"rule_id":"inner_sea_intrigue:class:lion_blade","expr":{"ClassLevel":"lion_blade"},"when":"Always"}],"provenance":{}}

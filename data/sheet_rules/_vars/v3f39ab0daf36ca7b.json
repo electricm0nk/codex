@@ -1,1 +1,1 @@
-{"var":"v3f39ab0daf36ca7b","declared_by":["ultimate_psionics:ability:psionic_talent_power_points"],"contributions":[{"rule_id":"ultimate_psionics:feat:psionic_talent","expr":{"Const":1},"when":"Always"}],"provenance":{}}
+{"var":"v3f39ab0daf36ca7b","label":"Psionic Talent Count","declared_by":["ultimate_psionics:ability:psionic_talent_power_points"],"contributions":[{"rule_id":"ultimate_psionics:feat:psionic_talent","expr":{"Const":1},"when":"Always"}],"provenance":{}}

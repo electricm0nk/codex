@@ -1,1 +1,1 @@
-{"var":"v8d494ab73fb8ca0d","declared_by":["occult_adventures:class_feature:bloodline_tracker"],"contributions":[{"rule_id":"occult_adventures:class_feature:psychic_bloodline_feat_tracker","expr":{"Const":1},"when":"Always"}],"provenance":{}}
+{"var":"v8d494ab73fb8ca0d","label":"Sorcerer Bloodline Feat Intuitive Spell","declared_by":["occult_adventures:class_feature:bloodline_tracker"],"contributions":[{"rule_id":"occult_adventures:class_feature:psychic_bloodline_feat_tracker","expr":{"Const":1},"when":"Always"}],"provenance":{}}

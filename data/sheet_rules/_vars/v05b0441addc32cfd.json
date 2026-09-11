@@ -1,1 +1,1 @@
-{"var":"v05b0441addc32cfd","declared_by":["inner_sea_intrigue:class_feature:inquisition_clandestine"],"contributions":[{"rule_id":"inner_sea_intrigue:class_feature:inquisition_clandestine","expr":{"Var":"v925c9ebdb6fe293e"},"when":"Always"}],"provenance":{}}
+{"var":"v05b0441addc32cfd","label":"Domain Clandestine LVL","declared_by":["inner_sea_intrigue:class_feature:inquisition_clandestine"],"contributions":[{"rule_id":"inner_sea_intrigue:class_feature:inquisition_clandestine","expr":{"Var":"v925c9ebdb6fe293e"},"when":"Always"}],"provenance":{}}

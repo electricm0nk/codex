@@ -1,1 +1,1 @@
-{"var":"vedab95a14ab67f91","declared_by":[],"contributions":[{"rule_id":"ultimate_wilderness:companion:eidolon_subtype_plant","expr":{"Const":1},"when":"Always"}],"provenance":{}}
+{"var":"vedab95a14ab67f91","label":"Eidolon Fungus","declared_by":[],"contributions":[{"rule_id":"ultimate_wilderness:companion:eidolon_subtype_plant","expr":{"Const":1},"when":"Always"}],"provenance":{}}

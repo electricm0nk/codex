@@ -1,1 +1,1 @@
-{"var":"v16586b789f1ea5f4","declared_by":["pathfinder_unchained:class_feature:abp_physical"],"contributions":[{"rule_id":"pathfinder_unchained:class_feature:abp_2_dexterity","expr":{"Const":2},"when":"Always"}],"provenance":{}}
+{"var":"v16586b789f1ea5f4","label":"ABP Physical Prowess DEXEnhancement","declared_by":["pathfinder_unchained:class_feature:abp_physical"],"contributions":[{"rule_id":"pathfinder_unchained:class_feature:abp_2_dexterity","expr":{"Const":2},"when":"Always"}],"provenance":{}}

@@ -1,1 +1,1 @@
-{"var":"ve2122cf7098275c3","declared_by":["inner_sea_magic:ability:skill_specialization_base"],"contributions":[{"rule_id":"inner_sea_magic:ability:surgeon_guild","expr":{"Const":1},"when":"Always"}],"provenance":{}}
+{"var":"ve2122cf7098275c3","label":"SSHeal","declared_by":["inner_sea_magic:ability:skill_specialization_base"],"contributions":[{"rule_id":"inner_sea_magic:ability:surgeon_guild","expr":{"Const":1},"when":"Always"}],"provenance":{}}

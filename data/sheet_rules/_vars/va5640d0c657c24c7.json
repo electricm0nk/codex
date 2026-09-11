@@ -1,1 +1,1 @@
-{"var":"va5640d0c657c24c7","declared_by":["occult_adventures:class:psychic"],"contributions":[{"rule_id":"occult_adventures:class:psychic","expr":{"ClassLevel":"psychic"},"when":"Always"}],"provenance":{}}
+{"var":"va5640d0c657c24c7","label":"Psychic LVL","declared_by":["occult_adventures:class:psychic"],"contributions":[{"rule_id":"occult_adventures:class:psychic","expr":{"ClassLevel":"psychic"},"when":"Always"}],"provenance":{}}

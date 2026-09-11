@@ -1,1 +1,1 @@
-{"var":"va67f32cbb4f9475e","declared_by":["core_rulebook:class_feature:paladin_holy_champion"],"contributions":[{"rule_id":"core_rulebook:class_feature:paladin_holy_champion","expr":{"Var":"v75e0a3acc8b517a3"},"when":"Always"}],"provenance":{}}
+{"var":"va67f32cbb4f9475e","label":"Holy Champion LVL","declared_by":["core_rulebook:class_feature:paladin_holy_champion"],"contributions":[{"rule_id":"core_rulebook:class_feature:paladin_holy_champion","expr":{"Var":"v75e0a3acc8b517a3"},"when":"Always"}],"provenance":{}}

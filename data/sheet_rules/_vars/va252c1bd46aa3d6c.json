@@ -1,1 +1,1 @@
-{"var":"va252c1bd46aa3d6c","declared_by":["advanced_players_guide:class_feature:alchemist_discovery"],"contributions":[{"rule_id":"advanced_players_guide:class_feature:alchemist_discovery","expr":{"Var":"v7b298b65a6bc1dfa"},"when":"Always"}],"provenance":{}}
+{"var":"va252c1bd46aa3d6c","label":"Discovery Qualify LVL","declared_by":["advanced_players_guide:class_feature:alchemist_discovery"],"contributions":[{"rule_id":"advanced_players_guide:class_feature:alchemist_discovery","expr":{"Var":"v7b298b65a6bc1dfa"},"when":"Always"}],"provenance":{}}

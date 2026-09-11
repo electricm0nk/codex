@@ -1,1 +1,1 @@
-{"var":"v83901f66b8d1d441","declared_by":["core_rulebook:class_feature:universal_school"],"contributions":[{"rule_id":"core_rulebook:class_feature:universal_school","expr":{"Var":"v20d7a6dad2094f64"},"when":"Always"}],"provenance":{}}
+{"var":"v83901f66b8d1d441","label":"Universal School LVL","declared_by":["core_rulebook:class_feature:universal_school"],"contributions":[{"rule_id":"core_rulebook:class_feature:universal_school","expr":{"Var":"v20d7a6dad2094f64"},"when":"Always"}],"provenance":{}}

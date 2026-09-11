@@ -1,1 +1,1 @@
-{"var":"v14cc953eb4c58c51","declared_by":["bestiary_2:monster_ability:universal_monster_rule_see_in_darkness"],"contributions":[{"rule_id":"adventurers_guide:ability:infernal_affinity_power_of_the_pit","expr":{"Const":60},"when":"Always"}],"provenance":{}}
+{"var":"v14cc953eb4c58c51","label":"UMR See In Darkness Range","declared_by":["bestiary_2:monster_ability:universal_monster_rule_see_in_darkness"],"contributions":[{"rule_id":"adventurers_guide:ability:infernal_affinity_power_of_the_pit","expr":{"Const":60},"when":"Always"}],"provenance":{}}

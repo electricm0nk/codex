@@ -1,1 +1,1 @@
-{"var":"vec77a6ed0240f445","declared_by":["ultimate_magic:class_feature:inquisition_tactics"],"contributions":[{"rule_id":"ultimate_magic:class_feature:inquisition_tactics","expr":{"Var":"v502ed4d69b315dd4"},"when":"Always"}],"provenance":{}}
+{"var":"vec77a6ed0240f445","label":"Domain Tactics Times","declared_by":["ultimate_magic:class_feature:inquisition_tactics"],"contributions":[{"rule_id":"ultimate_magic:class_feature:inquisition_tactics","expr":{"Var":"v502ed4d69b315dd4"},"when":"Always"}],"provenance":{}}

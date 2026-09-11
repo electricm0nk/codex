@@ -1,1 +1,1 @@
-{"var":"vb791729b58f98afa","declared_by":["ultimate_psionics:class_feature:psychic_warrior_warrior_s_path"],"contributions":[{"rule_id":"ultimate_psionics:class_feature:pathmaster_focused_path","expr":{"Const":4},"when":"Always"}],"provenance":{}}
+{"var":"vb791729b58f98afa","label":"Warrior Path Trance LVLBonus","declared_by":["ultimate_psionics:class_feature:psychic_warrior_warrior_s_path"],"contributions":[{"rule_id":"ultimate_psionics:class_feature:pathmaster_focused_path","expr":{"Const":4},"when":"Always"}],"provenance":{}}

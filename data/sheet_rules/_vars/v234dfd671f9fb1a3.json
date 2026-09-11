@@ -1,1 +1,1 @@
-{"var":"v234dfd671f9fb1a3","declared_by":["occult_adventures:class_feature:occultist_conjuration_implement_focus"],"contributions":[{"rule_id":"occult_adventures:class_feature:occultist_conjuration_implement_focus","expr":{"Const":1},"when":"Always"}],"provenance":{}}
+{"var":"v234dfd671f9fb1a3","label":"Occultist Conjuration Focus","declared_by":["occult_adventures:class_feature:occultist_conjuration_implement_focus"],"contributions":[{"rule_id":"occult_adventures:class_feature:occultist_conjuration_implement_focus","expr":{"Const":1},"when":"Always"}],"provenance":{}}

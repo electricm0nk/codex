@@ -1,1 +1,1 @@
-{"var":"vde4d82a43703db7c","declared_by":["adventurers_guide:class:pathfinder_delver"],"contributions":[{"rule_id":"adventurers_guide:class:pathfinder_delver","expr":{"ClassLevel":"codex_named_unit_class_adventurers_guide_ag_classes_lst_279"},"when":"Always"}],"provenance":{}}
+{"var":"vde4d82a43703db7c","label":"Pa DLvl","declared_by":["adventurers_guide:class:pathfinder_delver"],"contributions":[{"rule_id":"adventurers_guide:class:pathfinder_delver","expr":{"ClassLevel":"codex_named_unit_class_adventurers_guide_ag_classes_lst_279"},"when":"Always"}],"provenance":{}}

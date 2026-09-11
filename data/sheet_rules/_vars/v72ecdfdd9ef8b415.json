@@ -1,1 +1,1 @@
-{"var":"v72ecdfdd9ef8b415","declared_by":["ultimate_psionics:class:war_mind"],"contributions":[{"rule_id":"ultimate_psionics:class:war_mind","expr":{"ClassLevel":"war_mind"},"when":{"Compare":{"lhs":{"ClassLevel":"war_mind"},"op":"Gte","rhs":{"Const":1}}}}],"provenance":{}}
+{"var":"v72ecdfdd9ef8b415","label":"War Mind LVL","declared_by":["ultimate_psionics:class:war_mind"],"contributions":[{"rule_id":"ultimate_psionics:class:war_mind","expr":{"ClassLevel":"war_mind"},"when":{"Compare":{"lhs":{"ClassLevel":"war_mind"},"op":"Gte","rhs":{"Const":1}}}}],"provenance":{}}

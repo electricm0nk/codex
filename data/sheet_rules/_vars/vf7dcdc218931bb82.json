@@ -1,1 +1,1 @@
-{"var":"vf7dcdc218931bb82","declared_by":["core_rulebook:feat:power_attack"],"contributions":[{"rule_id":"core_rulebook:feat:power_attack","expr":{"Mul":[{"Var":"vd6f14d4022388ecc"},{"Floor":{"Var":"vc634018eaf498f58"}}]},"when":"Always"}],"provenance":{}}
+{"var":"vf7dcdc218931bb82","label":"Power Attack Damage Modifier","declared_by":["core_rulebook:feat:power_attack"],"contributions":[{"rule_id":"core_rulebook:feat:power_attack","expr":{"Mul":[{"Var":"vd6f14d4022388ecc"},{"Floor":{"Var":"vc634018eaf498f58"}}]},"when":"Always"}],"provenance":{}}

@@ -1,1 +1,1 @@
-{"var":"v921634a3382f0101","declared_by":["ultimate_magic:class_feature:inquisition_valor"],"contributions":[{"rule_id":"ultimate_magic:class_feature:inquisition_valor","expr":{"Var":"v502ed4d69b315dd4"},"when":"Always"}],"provenance":{}}
+{"var":"v921634a3382f0101","label":"Domain Valor Times","declared_by":["ultimate_magic:class_feature:inquisition_valor"],"contributions":[{"rule_id":"ultimate_magic:class_feature:inquisition_valor","expr":{"Var":"v502ed4d69b315dd4"},"when":"Always"}],"provenance":{}}

@@ -1,1 +1,1 @@
-{"var":"v10a9f2b3c6b22aa3","declared_by":["ultimate_wilderness:class_feature:basic_favored_turf"],"contributions":[{"rule_id":"ultimate_wilderness:class_feature:basic_favored_turf","expr":{"Const":1},"when":"Always"}],"provenance":{}}
+{"var":"v10a9f2b3c6b22aa3","label":"Favored Turf Base Bonus","declared_by":["ultimate_wilderness:class_feature:basic_favored_turf"],"contributions":[{"rule_id":"ultimate_wilderness:class_feature:basic_favored_turf","expr":{"Const":1},"when":"Always"}],"provenance":{}}

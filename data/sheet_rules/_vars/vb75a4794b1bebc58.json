@@ -1,1 +1,1 @@
-{"var":"vb75a4794b1bebc58","declared_by":["advanced_class_guide:class_feature:brawler_brawler_s_strike"],"contributions":[{"rule_id":"advanced_class_guide:class_feature:brawler_s_strike_alignment_selection_evil","expr":{"Const":1},"when":"Always"}],"provenance":{}}
+{"var":"vb75a4794b1bebc58","label":"Brawler Strike Evil","declared_by":["advanced_class_guide:class_feature:brawler_brawler_s_strike"],"contributions":[{"rule_id":"advanced_class_guide:class_feature:brawler_s_strike_alignment_selection_evil","expr":{"Const":1},"when":"Always"}],"provenance":{}}

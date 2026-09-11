@@ -1,1 +1,1 @@
-{"var":"v4c4d6d85cf4bd1ca","declared_by":["ultimate_combat:feat:style_feat_wildcard"],"contributions":[{"rule_id":"ultimate_combat:feat:style_feat_wildcard","expr":{"Const":1},"when":"Always"}],"provenance":{}}
+{"var":"v4c4d6d85cf4bd1ca","label":"Monk Wildcard Slot","declared_by":["ultimate_combat:feat:style_feat_wildcard"],"contributions":[{"rule_id":"ultimate_combat:feat:style_feat_wildcard","expr":{"Const":1},"when":"Always"}],"provenance":{}}

@@ -1,1 +1,1 @@
-{"var":"v4821e89e67eedb8a","declared_by":["ultimate_psionics:class:vitalist"],"contributions":[{"rule_id":"ultimate_psionics:class:vitalist","expr":{"AbilityMod":"Wis"},"when":{"Compare":{"lhs":{"ClassLevel":"vitalist"},"op":"Gte","rhs":{"Const":1}}}}],"provenance":{}}
+{"var":"v4821e89e67eedb8a","label":"Vitalist Prime Stat","declared_by":["ultimate_psionics:class:vitalist"],"contributions":[{"rule_id":"ultimate_psionics:class:vitalist","expr":{"AbilityMod":"Wis"},"when":{"Compare":{"lhs":{"ClassLevel":"vitalist"},"op":"Gte","rhs":{"Const":1}}}}],"provenance":{}}

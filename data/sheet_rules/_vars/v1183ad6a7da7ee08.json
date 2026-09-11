@@ -1,1 +1,1 @@
-{"var":"v1183ad6a7da7ee08","declared_by":["ultimate_magic:class_feature:inquisition_persistence"],"contributions":[{"rule_id":"ultimate_magic:class_feature:inquisition_persistence","expr":{"Var":"v502ed4d69b315dd4"},"when":"Always"}],"provenance":{}}
+{"var":"v1183ad6a7da7ee08","label":"Domain Persistence Times","declared_by":["ultimate_magic:class_feature:inquisition_persistence"],"contributions":[{"rule_id":"ultimate_magic:class_feature:inquisition_persistence","expr":{"Var":"v502ed4d69b315dd4"},"when":"Always"}],"provenance":{}}

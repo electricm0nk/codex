@@ -1,1 +1,1 @@
-{"var":"vbf71d823ec56df86","declared_by":["core_rulebook:race_trait:racial_sla_darkness"],"contributions":[{"rule_id":"core_rulebook:race_trait:racial_sla_darkness","expr":"Level","bonus_type":{"name":"Base","mode":"Plain"},"when":"Always"}],"provenance":{}}
+{"var":"vbf71d823ec56df86","label":"Racial SLA Darkness LVL","declared_by":["core_rulebook:race_trait:racial_sla_darkness"],"contributions":[{"rule_id":"core_rulebook:race_trait:racial_sla_darkness","expr":"Level","bonus_type":{"name":"Base","mode":"Plain"},"when":"Always"}],"provenance":{}}

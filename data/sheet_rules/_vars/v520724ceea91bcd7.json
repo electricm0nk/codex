@@ -1,1 +1,1 @@
-{"var":"v520724ceea91bcd7","declared_by":["occult_adventures:class:medium"],"contributions":[{"rule_id":"occult_adventures:class:medium","expr":{"ClassLevel":"medium"},"when":"Always"}],"provenance":{}}
+{"var":"v520724ceea91bcd7","label":"Medium LVL","declared_by":["occult_adventures:class:medium"],"contributions":[{"rule_id":"occult_adventures:class:medium","expr":{"ClassLevel":"medium"},"when":"Always"}],"provenance":{}}

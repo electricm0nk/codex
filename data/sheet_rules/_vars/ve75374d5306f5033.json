@@ -1,1 +1,1 @@
-{"var":"ve75374d5306f5033","declared_by":["advanced_players_guide:class_feature:inquisitor_domains"],"contributions":[{"rule_id":"ultimate_wilderness:deity:shyka","expr":{"Const":1},"when":"Always"}],"provenance":{}}
+{"var":"ve75374d5306f5033","label":"Inquisitor Domain Death","declared_by":["advanced_players_guide:class_feature:inquisitor_domains"],"contributions":[{"rule_id":"ultimate_wilderness:deity:shyka","expr":{"Const":1},"when":"Always"}],"provenance":{}}

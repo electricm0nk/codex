@@ -1,1 +1,1 @@
-{"var":"v8161d01cc6b50964","declared_by":["core_rulebook:class_feature:paladin_channel_positive_energy"],"contributions":[{"rule_id":"core_rulebook:class_feature:paladin_channel_positive_energy","expr":{"Const":6},"when":"Always"}],"provenance":{}}
+{"var":"v8161d01cc6b50964","label":"Paladin Channel Die Size","declared_by":["core_rulebook:class_feature:paladin_channel_positive_energy"],"contributions":[{"rule_id":"core_rulebook:class_feature:paladin_channel_positive_energy","expr":{"Const":6},"when":"Always"}],"provenance":{}}

@@ -1,1 +1,1 @@
-{"var":"vd4b980ca0dbfc941","declared_by":["bestiary:template:lycanthrope"],"contributions":[{"rule_id":"bestiary:template:lycanthrope","expr":{"Const":1},"when":"Always"}],"provenance":{}}
+{"var":"vd4b980ca0dbfc941","label":"Lycanthrope","declared_by":["bestiary:template:lycanthrope"],"contributions":[{"rule_id":"bestiary:template:lycanthrope","expr":{"Const":1},"when":"Always"}],"provenance":{}}

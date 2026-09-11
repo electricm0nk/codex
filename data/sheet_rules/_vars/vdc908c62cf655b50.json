@@ -1,1 +1,1 @@
-{"var":"vdc908c62cf655b50","declared_by":["advanced_class_guide:class_feature:arcanist_greater_arcanist_exploits"],"contributions":[{"rule_id":"advanced_class_guide:class_feature:arcanist_greater_arcanist_exploits","expr":{"Const":1},"when":"Always"}],"provenance":{}}
+{"var":"vdc908c62cf655b50","label":"Arcanist Greater Exploit Enable","declared_by":["advanced_class_guide:class_feature:arcanist_greater_arcanist_exploits"],"contributions":[{"rule_id":"advanced_class_guide:class_feature:arcanist_greater_arcanist_exploits","expr":{"Const":1},"when":"Always"}],"provenance":{}}

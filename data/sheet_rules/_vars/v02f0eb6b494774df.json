@@ -1,1 +1,1 @@
-{"var":"v02f0eb6b494774df","declared_by":["ultimate_magic:class_feature:witch_hex_prehensile_hair"],"contributions":[{"rule_id":"ultimate_magic:class_feature:witch_hex_prehensile_hair","expr":{"Const":1},"when":"Always"}],"provenance":{}}
+{"var":"v02f0eb6b494774df","label":"Hair Damage Dice","declared_by":["ultimate_magic:class_feature:witch_hex_prehensile_hair"],"contributions":[{"rule_id":"ultimate_magic:class_feature:witch_hex_prehensile_hair","expr":{"Const":1},"when":"Always"}],"provenance":{}}

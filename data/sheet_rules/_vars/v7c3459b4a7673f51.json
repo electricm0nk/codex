@@ -1,1 +1,1 @@
-{"var":"v7c3459b4a7673f51","declared_by":["bestiary_2:monster_ability:spriggan_magic"],"contributions":[{"rule_id":"bestiary_2:monster_ability:spriggan_magic","expr":{"Const":1},"when":"Always"}],"provenance":{}}
+{"var":"v7c3459b4a7673f51","label":"Spriggan Magic Bonus","declared_by":["bestiary_2:monster_ability:spriggan_magic"],"contributions":[{"rule_id":"bestiary_2:monster_ability:spriggan_magic","expr":{"Const":1},"when":"Always"}],"provenance":{}}

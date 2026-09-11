@@ -41,6 +41,8 @@ pub struct Converted {
     pub degraded_under: BTreeMap<String, BTreeSet<String>>,
     pub defects: BTreeMap<String, Vec<String>>,
     pub var_names: BTreeMap<VarId, String>,
+    /// Variable ids with the source name's ORIGINAL case -- the input to the printed label.
+    pub var_labels: BTreeMap<VarId, String>,
 }
 
 /// The census key for one token: its mapping-table row's `token_type`, else the same
@@ -589,6 +591,7 @@ pub fn convert_record(tree: &PinnedTree, index: &CorpusIndex, record: &RecordRef
     out.degraded_under = ctx.degraded_under;
     out.defects = ctx.defects;
     out.var_names = ctx.var_names;
+    out.var_labels = ctx.var_labels;
     out
 }
 
@@ -750,6 +753,7 @@ fn convert_token(ctx: &mut RecordCtx, acc: &mut Acc, out: &mut Converted, key: &
         "DEFINE" => {
             if let Some((name, _)) = v.split_once('|') {
                 let id = super::ctx::var_id(name);
+                out.var_labels.entry(id.clone()).or_insert_with(|| name.trim().to_string());
                 out.var_declares.push((id, name.trim().to_ascii_uppercase()));
             }
         }
@@ -1137,6 +1141,7 @@ fn convert_token(ctx: &mut RecordCtx, acc: &mut Acc, out: &mut Converted, key: &
                     }
                     for name in target.split(',') {
                         let id = super::ctx::var_id(name);
+                        out.var_labels.entry(id.clone()).or_insert_with(|| name.trim().to_string());
                         out.var_contribs.push((id, name.trim().to_ascii_uppercase(), VarContribution { rule_id: ctx.record.id.clone(), expr: expr.clone(), bonus_type: bonus_type.clone(), when: when.clone() }));
                     }
                 }

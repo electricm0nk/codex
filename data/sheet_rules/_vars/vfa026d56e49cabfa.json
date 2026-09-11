@@ -1,1 +1,1 @@
-{"var":"vfa026d56e49cabfa","declared_by":["core_rulebook:class_feature:transmutation_school"],"contributions":[{"rule_id":"core_rulebook:class_feature:transmutation_school","expr":{"Var":"vb2a5c548a4599159"},"when":"Always"}],"provenance":{}}
+{"var":"vfa026d56e49cabfa","label":"Transmutation Progression School LVL","declared_by":["core_rulebook:class_feature:transmutation_school"],"contributions":[{"rule_id":"core_rulebook:class_feature:transmutation_school","expr":{"Var":"vb2a5c548a4599159"},"when":"Always"}],"provenance":{}}

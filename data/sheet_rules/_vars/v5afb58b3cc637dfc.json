@@ -1,1 +1,1 @@
-{"var":"v5afb58b3cc637dfc","declared_by":["core_rulebook:class_feature:draconic_bloodline_choice_bronze"],"contributions":[{"rule_id":"core_rulebook:class_feature:draconic_bloodline_choice_bronze","expr":{"Const":1},"when":"Always"}],"provenance":{}}
+{"var":"v5afb58b3cc637dfc","label":"Sorcerer Draconic Bloodline Choice Bronze","declared_by":["core_rulebook:class_feature:draconic_bloodline_choice_bronze"],"contributions":[{"rule_id":"core_rulebook:class_feature:draconic_bloodline_choice_bronze","expr":{"Const":1},"when":"Always"}],"provenance":{}}

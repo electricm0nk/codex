@@ -1,1 +1,1 @@
-{"var":"v99c1c402af34ca51","declared_by":["adventurers_guide:class:mammoth_rider"],"contributions":[{"rule_id":"adventurers_guide:class:mammoth_rider","expr":{"ClassLevel":"mammoth_rider"},"when":"Always"}],"provenance":{}}
+{"var":"v99c1c402af34ca51","label":"Mammoth Rider Lvl","declared_by":["adventurers_guide:class:mammoth_rider"],"contributions":[{"rule_id":"adventurers_guide:class:mammoth_rider","expr":{"ClassLevel":"mammoth_rider"},"when":"Always"}],"provenance":{}}

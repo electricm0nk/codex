@@ -1,1 +1,1 @@
-{"var":"v0135848fcfc5ac6d","declared_by":["core_rulebook:class_feature:draconic_bloodline_choice_red"],"contributions":[{"rule_id":"core_rulebook:class_feature:draconic_bloodline_choice_red","expr":{"Const":1},"when":"Always"}],"provenance":{}}
+{"var":"v0135848fcfc5ac6d","label":"Sorcerer Draconic Bloodline Choice Red","declared_by":["core_rulebook:class_feature:draconic_bloodline_choice_red"],"contributions":[{"rule_id":"core_rulebook:class_feature:draconic_bloodline_choice_red","expr":{"Const":1},"when":"Always"}],"provenance":{}}

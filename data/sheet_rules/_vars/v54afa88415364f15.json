@@ -1,1 +1,1 @@
-{"var":"v54afa88415364f15","declared_by":["core_rulebook:class:expert"],"contributions":[{"rule_id":"core_rulebook:class:expert","expr":{"ClassLevel":"expert"},"when":"Always"}],"provenance":{}}
+{"var":"v54afa88415364f15","label":"Expert LVL","declared_by":["core_rulebook:class:expert"],"contributions":[{"rule_id":"core_rulebook:class:expert","expr":{"ClassLevel":"expert"},"when":"Always"}],"provenance":{}}

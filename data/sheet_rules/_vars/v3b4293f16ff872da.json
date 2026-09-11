@@ -1,1 +1,1 @@
-{"var":"v3b4293f16ff872da","declared_by":["occult_adventures:class_feature:medium_spirit"],"contributions":[{"rule_id":"occult_adventures:class_feature:kami_medium_kami_channeler","expr":{"Const":1},"when":"Always"}],"provenance":{}}
+{"var":"v3b4293f16ff872da","label":"Spirit Hide Location","declared_by":["occult_adventures:class_feature:medium_spirit"],"contributions":[{"rule_id":"occult_adventures:class_feature:kami_medium_kami_channeler","expr":{"Const":1},"when":"Always"}],"provenance":{}}

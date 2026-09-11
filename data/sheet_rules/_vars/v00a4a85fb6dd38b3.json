@@ -1,1 +1,1 @@
-{"var":"v00a4a85fb6dd38b3","declared_by":["ultimate_wilderness:class_feature:shifter_shifter_aspect"],"contributions":[{"rule_id":"ultimate_wilderness:class_feature:shifter_shifter_aspect","expr":{"Var":"v10eb36da6a6aee49"},"when":"Always"}],"provenance":{}}
+{"var":"v00a4a85fb6dd38b3","label":"Shifter Aspect LVL","declared_by":["ultimate_wilderness:class_feature:shifter_shifter_aspect"],"contributions":[{"rule_id":"ultimate_wilderness:class_feature:shifter_shifter_aspect","expr":{"Var":"v10eb36da6a6aee49"},"when":"Always"}],"provenance":{}}

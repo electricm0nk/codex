@@ -1,1 +1,1 @@
-{"var":"v1c90c0c90b5078a8","declared_by":["ultimate_psionics:class_feature:psychic_fist_ki_power"],"contributions":[{"rule_id":"ultimate_psionics:class_feature:psychic_fist_ki_power","expr":{"Div":[{"Var":"v97005ef3077cc0eb"},{"Const":2}]},"when":"Always"}],"provenance":{}}
+{"var":"v1c90c0c90b5078a8","label":"Ki Power","declared_by":["ultimate_psionics:class_feature:psychic_fist_ki_power"],"contributions":[{"rule_id":"ultimate_psionics:class_feature:psychic_fist_ki_power","expr":{"Div":[{"Var":"v97005ef3077cc0eb"},{"Const":2}]},"when":"Always"}],"provenance":{}}

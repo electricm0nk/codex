@@ -1,1 +1,1 @@
-{"var":"v9587946b854df9a2","declared_by":["core_rulebook:race_trait:racial_sla_detect_magic"],"contributions":[{"rule_id":"advanced_race_guide:feat:drow_nobility","expr":{"Const":1},"bonus_type":{"name":"Boolean","mode":"Plain"},"when":"Always"}],"provenance":{}}
+{"var":"v9587946b854df9a2","label":"Racial SLA Detect Magic At Will","declared_by":["core_rulebook:race_trait:racial_sla_detect_magic"],"contributions":[{"rule_id":"advanced_race_guide:feat:drow_nobility","expr":{"Const":1},"bonus_type":{"name":"Boolean","mode":"Plain"},"when":"Always"}],"provenance":{}}

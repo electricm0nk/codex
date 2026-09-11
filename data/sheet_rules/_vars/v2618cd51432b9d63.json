@@ -1,1 +1,1 @@
-{"var":"v2618cd51432b9d63","declared_by":["ultimate_intrigue:class_feature:zealot_inquisition"],"contributions":[{"rule_id":"ultimate_intrigue:class_feature:zealot_inquisition","expr":{"Const":1},"when":"Always"}],"provenance":{}}
+{"var":"v2618cd51432b9d63","label":"Vigilante Is Zealot","declared_by":["ultimate_intrigue:class_feature:zealot_inquisition"],"contributions":[{"rule_id":"ultimate_intrigue:class_feature:zealot_inquisition","expr":{"Const":1},"when":"Always"}],"provenance":{}}

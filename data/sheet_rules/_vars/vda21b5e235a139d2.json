@@ -1,1 +1,1 @@
-{"var":"vda21b5e235a139d2","declared_by":["core_rulebook:class_feature:sorcerer_elemental_bloodline_fire"],"contributions":[{"rule_id":"core_rulebook:class_feature:sorcerer_elemental_bloodline_fire","expr":{"Const":1},"when":"Always"}],"provenance":{}}
+{"var":"vda21b5e235a139d2","label":"Sorcerer Elemental Bloodline Choice Fire","declared_by":["core_rulebook:class_feature:sorcerer_elemental_bloodline_fire"],"contributions":[{"rule_id":"core_rulebook:class_feature:sorcerer_elemental_bloodline_fire","expr":{"Const":1},"when":"Always"}],"provenance":{}}

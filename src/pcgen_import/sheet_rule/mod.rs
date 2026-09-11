@@ -519,12 +519,47 @@ fn description_only_rules(r: &RecordRef) -> Option<Vec<SheetRule>> {
     }])
 }
 
+/// The words a sheet line names a corpus variable by, spaced out of its source name.
+///
+/// [`VarId`] is a content hash and the live side may not read a source name
+/// (`decisions.md §11`), so before `VarTable::label` existed the sheet renderer printed every
+/// variable as the generic phrase "a rules variable". This is the label it prints instead, and
+/// it is produced HERE, at ingest, exactly once.
+///
+/// Purely mechanical, never an interpretation: `_`, `-` and `.` become a space, and a word
+/// break is inserted where a lower-case or digit character is followed by an upper-case one
+/// (`IntelligentItemEgo` -> `Intelligent Item Ego`). A run of capitals stays one word
+/// (`IntItemStatINT` -> `Int Item Stat INT`), so a name the source wrote in all capitals comes
+/// back unchanged apart from its separators. Nothing is title-cased, translated, expanded or
+/// looked up in a table -- a label that reads oddly is the source name reading oddly, which is
+/// the honest outcome.
+pub fn display_label(source_name: &str) -> String {
+    let mut out = String::with_capacity(source_name.len() + 8);
+    let chars: Vec<char> = source_name.trim().chars().collect();
+    for (i, ch) in chars.iter().copied().enumerate() {
+        if matches!(ch, '_' | '-' | '.') {
+            if !out.ends_with(' ') && !out.is_empty() {
+                out.push(' ');
+            }
+            continue;
+        }
+        let prev_lower_or_digit =
+            i > 0 && (chars[i - 1].is_lowercase() || chars[i - 1].is_ascii_digit());
+        if ch.is_uppercase() && prev_lower_or_digit && !out.is_empty() && !out.ends_with(' ') {
+            out.push(' ');
+        }
+        out.push(ch);
+    }
+    out.trim().to_string()
+}
+
 pub fn run(tree: &PinnedTree, index: &CorpusIndex, closures: &[Closure]) -> Run {
     let mut files: BTreeMap<String, Vec<SheetRule>> = BTreeMap::new();
     let mut grants_out: BTreeMap<RuleId, Vec<Grant>> = BTreeMap::new();
     let mut contribs: BTreeMap<VarId, (String, Vec<VarContribution>)> = BTreeMap::new();
     let mut declares: BTreeMap<VarId, (String, BTreeSet<RuleId>)> = BTreeMap::new();
     let mut var_names: BTreeMap<VarId, String> = BTreeMap::new();
+    let mut var_labels: BTreeMap<VarId, String> = BTreeMap::new();
     let mut defects: BTreeMap<String, Vec<String>> = BTreeMap::new();
     let mut refused = RefusedReport::default();
     let mut census = TokenCensus { schema: 1, entries: Vec::with_capacity(index.records.len()) };
@@ -593,6 +628,9 @@ pub fn run(tree: &PinnedTree, index: &CorpusIndex, closures: &[Closure]) -> Run 
         for (id, name) in c.var_names {
             var_names.insert(id, name);
         }
+        for (id, label) in c.var_labels {
+            var_labels.entry(id).or_insert(label);
+        }
         for (id, name) in c.var_declares {
             declares.entry(id).or_insert_with(|| (name, BTreeSet::new())).1.insert(r.id.clone());
         }
@@ -656,7 +694,8 @@ pub fn run(tree: &PinnedTree, index: &CorpusIndex, closures: &[Closure]) -> Run 
         let declared_by: Vec<RuleId> = declares.get(id).map(|(_, s)| s.iter().cloned().collect()).unwrap_or_default();
         let contributions: Vec<VarContribution> = contribs.get(id).map(|(_, v)| v.clone()).unwrap_or_default();
         let outside: Vec<String> = tree.variable_rows(&name).into_iter().filter(|r| !owned_rows.contains(r)).map(|r| tree.cite(r)).collect();
-        vars.insert(id.clone(), VarTable { var: id.clone(), declared_by, contributions, provenance: VarProvenance { outside_corpus_rows: outside } });
+        let label = display_label(var_labels.get(id).unwrap_or(&name));
+        vars.insert(id.clone(), VarTable { var: id.clone(), label, declared_by, contributions, provenance: VarProvenance { outside_corpus_rows: outside } });
     }
     for v in defects.values_mut() {
         v.sort();

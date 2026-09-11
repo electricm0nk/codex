@@ -9,12 +9,13 @@ import { hasTauriRuntime } from '../boundary/runtime';
  * screen walkable without the desktop runtime, matching the
  * `companionCatalog/companionCatalogRuntime.ts` convention.
  *
- * Every value below is transcribed from the real ingested record in
- * `data/corpus/core_rulebook/equipment/equipmods/`, so the preview never
- * shows a component the corpus does not contain or a number it does not
- * state. In the desktop app this branch is never taken:
- * `list_intelligent_item_catalog` serves all ~152 visible components across
- * both books.
+ * Every value below is transcribed from the real converted record in
+ * `data/sheet_rules/core_rulebook/equipment_modifier/` (SD-35 AT-35-E6-003
+ * cycle 11 moved the backing command off the ingest format), so the preview
+ * never shows a component the package does not contain, a number it does not
+ * state, a variable id it does not hold or a label it does not print. In the
+ * desktop app this branch is never taken: `list_intelligent_item_catalog`
+ * serves all 152 printed components across both books.
  */
 function buildPreviewCatalog(): IntelligentItemComponentDto[] {
   return [
@@ -29,8 +30,8 @@ function buildPreviewCatalog(): IntelligentItemComponentDto[] {
         'emotions and urges. It does not allow for verbal communication.',
       mechanics: [
         {
-          variable: 'IntelligentItemEgo',
-          effect: 'Ego',
+          variable: 'v027321c791a2c8bd',
+          effect: 'Intelligent Item Ego',
           formula:
             'Base Ego from item price (cumulative): price ≥ 1001 gp: +1 Ego; ' +
             'price ≥ 5001 gp: +1 Ego; price ≥ 10001 gp: +1 Ego; ' +
@@ -39,9 +40,9 @@ function buildPreviewCatalog(): IntelligentItemComponentDto[] {
           condition: null,
           bonusType: null,
         },
-        { variable: 'IntItemStatINT', effect: 'Intelligence', formula: '+10', condition: null, bonusType: null },
-        { variable: 'IntItemStatWIS', effect: 'Wisdom', formula: '+10', condition: null, bonusType: null },
-        { variable: 'IntItemStatCHA', effect: 'Charisma', formula: '+10', condition: null, bonusType: null },
+        { variable: 'v826ec4e8a9975d96', effect: 'Int Item Stat INT', formula: '+10', condition: null, bonusType: null },
+        { variable: 'v5ceaf13186f42770', effect: 'Int Item Stat WIS', formula: '+10', condition: null, bonusType: null },
+        { variable: 'v39ca80604c6d98f0', effect: 'Int Item Stat CHA', formula: '+10', condition: null, bonusType: null },
       ],
       egoDelta: null,
     },
@@ -53,11 +54,11 @@ function buildPreviewCatalog(): IntelligentItemComponentDto[] {
       costGp: 1000,
       description: null,
       mechanics: [
-        { variable: 'IntelligentItemEgo', effect: 'Ego', formula: '+2', condition: null, bonusType: null },
-        { variable: 'IntItemStatINT', effect: 'Intelligence', formula: '+4', condition: null, bonusType: null },
+        { variable: 'v027321c791a2c8bd', effect: 'Intelligent Item Ego', formula: '+2', condition: null, bonusType: null },
+        { variable: 'v826ec4e8a9975d96', effect: 'Int Item Stat INT', formula: '+4', condition: null, bonusType: null },
         {
-          variable: 'SpeechBonusLang',
-          effect: 'Bonus languages known',
+          variable: 've2e0ccdd617a6c9d',
+          effect: 'Speech Bonus Lang',
           formula: '+2',
           condition: null,
           bonusType: null,
@@ -96,8 +97,8 @@ function buildPreviewCatalog(): IntelligentItemComponentDto[] {
       description: 'Defeat/slay all (other than the item and the wielder)',
       mechanics: [
         {
-          variable: 'IntelligentItemEgo',
-          effect: 'Ego',
+          variable: 'v027321c791a2c8bd',
+          effect: 'Intelligent Item Ego',
           formula: '+2',
           condition: null,
           bonusType: 'Purpose',
@@ -114,8 +115,8 @@ function buildPreviewCatalog(): IntelligentItemComponentDto[] {
       description: null,
       mechanics: [
         {
-          variable: 'IntelligentItemEgo',
-          effect: 'Ego',
+          variable: 'v027321c791a2c8bd',
+          effect: 'Intelligent Item Ego',
           formula:
             'Base Ego from item price (cumulative): price ≥ 1001 gp: +1 Ego; ' +
             'price ≥ 5001 gp: +1 Ego; price ≥ 10001 gp: +1 Ego; ' +

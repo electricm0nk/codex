@@ -1,1 +1,1 @@
-{"var":"v06d9ea233155e893","declared_by":[],"contributions":[{"rule_id":"ultimate_wilderness:companion:eidolon_subtype_plant","expr":{"Const":1},"when":"Always"}],"provenance":{}}
+{"var":"v06d9ea233155e893","label":"Eidolon Seaweed","declared_by":[],"contributions":[{"rule_id":"ultimate_wilderness:companion:eidolon_subtype_plant","expr":{"Const":1},"when":"Always"}],"provenance":{}}

@@ -1,1 +1,1 @@
-{"var":"v3a36eb5b11dfc6cc","declared_by":["adventurers_guide:class:student_of_perfection"],"contributions":[{"rule_id":"adventurers_guide:class:student_of_perfection","expr":{"ClassLevel":"student_of_perfection"},"when":"Always"}],"provenance":{}}
+{"var":"v3a36eb5b11dfc6cc","label":"Student Of Perfection LVL","declared_by":["adventurers_guide:class:student_of_perfection"],"contributions":[{"rule_id":"adventurers_guide:class:student_of_perfection","expr":{"ClassLevel":"student_of_perfection"},"when":"Always"}],"provenance":{}}

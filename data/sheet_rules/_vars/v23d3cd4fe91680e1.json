@@ -1,1 +1,1 @@
-{"var":"v23d3cd4fe91680e1","declared_by":["advanced_race_guide:ability:builder_racial_trait_flight"],"contributions":[{"rule_id":"advanced_race_guide:ability:builder_racial_trait_flight","expr":{"Const":1},"when":"Always"}],"provenance":{}}
+{"var":"v23d3cd4fe91680e1","label":"Race Builder Flight Taken","declared_by":["advanced_race_guide:ability:builder_racial_trait_flight"],"contributions":[{"rule_id":"advanced_race_guide:ability:builder_racial_trait_flight","expr":{"Const":1},"when":"Always"}],"provenance":{}}

@@ -1,1 +1,1 @@
-{"var":"vf50ded302c848c89","declared_by":["pathfinder_unchained:class_feature:legendary_gifts_legendary_ability"],"contributions":[{"rule_id":"pathfinder_unchained:class_feature:abp_1_dexterity","expr":{"Const":1},"when":"Always"}],"provenance":{}}
+{"var":"vf50ded302c848c89","label":"ABP Legendary Ability DEXInherent","declared_by":["pathfinder_unchained:class_feature:legendary_gifts_legendary_ability"],"contributions":[{"rule_id":"pathfinder_unchained:class_feature:abp_1_dexterity","expr":{"Const":1},"when":"Always"}],"provenance":{}}

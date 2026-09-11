@@ -1,1 +1,1 @@
-{"var":"ve4dcd950822ea482","declared_by":["pathfinder_unchained:class_feature:legendary_gifts_legendary_ability"],"contributions":[{"rule_id":"pathfinder_unchained:class_feature:abp_1_charisma","expr":{"Const":1},"when":"Always"}],"provenance":{}}
+{"var":"ve4dcd950822ea482","label":"ABP Legendary Ability CHAInherent","declared_by":["pathfinder_unchained:class_feature:legendary_gifts_legendary_ability"],"contributions":[{"rule_id":"pathfinder_unchained:class_feature:abp_1_charisma","expr":{"Const":1},"when":"Always"}],"provenance":{}}

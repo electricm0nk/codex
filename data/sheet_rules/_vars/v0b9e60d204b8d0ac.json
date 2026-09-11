@@ -1,1 +1,1 @@
-{"var":"v0b9e60d204b8d0ac","declared_by":["advanced_players_guide:class_feature:inquisitor_domains"],"contributions":[{"rule_id":"ultimate_wilderness:deity:ng","expr":{"Const":1},"when":"Always"}],"provenance":{}}
+{"var":"v0b9e60d204b8d0ac","label":"Inquisitor Domain Seasons Subdomain","declared_by":["advanced_players_guide:class_feature:inquisitor_domains"],"contributions":[{"rule_id":"ultimate_wilderness:deity:ng","expr":{"Const":1},"when":"Always"}],"provenance":{}}

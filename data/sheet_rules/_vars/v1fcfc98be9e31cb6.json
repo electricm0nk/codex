@@ -1,1 +1,1 @@
-{"var":"v1fcfc98be9e31cb6","declared_by":["core_rulebook:class_feature:conjuration_school"],"contributions":[{"rule_id":"core_rulebook:class_feature:conjuration_school","expr":{"Var":"vb2a5c548a4599159"},"when":"Always"}],"provenance":{}}
+{"var":"v1fcfc98be9e31cb6","label":"Conjuration Progression School LVL","declared_by":["core_rulebook:class_feature:conjuration_school"],"contributions":[{"rule_id":"core_rulebook:class_feature:conjuration_school","expr":{"Var":"vb2a5c548a4599159"},"when":"Always"}],"provenance":{}}

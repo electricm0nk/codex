@@ -1,1 +1,1 @@
-{"var":"v8709196643e5f1e4","declared_by":["horror_adventures:class_feature:mooncursed_shifting_rage"],"contributions":[{"rule_id":"horror_adventures:class_feature:mooncursed_form_huge","expr":{"Const":1},"when":{"Situational":{"text":"when active"}}}],"provenance":{}}
+{"var":"v8709196643e5f1e4","label":"Mooncursed Rage Huge","declared_by":["horror_adventures:class_feature:mooncursed_shifting_rage"],"contributions":[{"rule_id":"horror_adventures:class_feature:mooncursed_form_huge","expr":{"Const":1},"when":{"Situational":{"text":"when active"}}}],"provenance":{}}

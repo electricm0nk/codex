@@ -1,1 +1,1 @@
-{"var":"v23f2d2847bb0d40d","declared_by":["ultimate_magic:class_feature:discovery_cognatogen"],"contributions":[{"rule_id":"ultimate_magic:class_feature:discovery_cognatogen","expr":{"Sum":[{"Const":4},{"Const":-4}]},"when":"Always"}],"provenance":{}}
+{"var":"v23f2d2847bb0d40d","label":"Third Cognatogen Stat Bonus","declared_by":["ultimate_magic:class_feature:discovery_cognatogen"],"contributions":[{"rule_id":"ultimate_magic:class_feature:discovery_cognatogen","expr":{"Sum":[{"Const":4},{"Const":-4}]},"when":"Always"}],"provenance":{}}

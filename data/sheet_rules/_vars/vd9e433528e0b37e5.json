@@ -1,1 +1,1 @@
-{"var":"vd9e433528e0b37e5","declared_by":["bestiary:template:lich"],"contributions":[{"rule_id":"bestiary:template:lich","expr":{"Const":15},"when":"Always"},{"rule_id":"horror_adventures:template:familial_lich","expr":{"Const":-15},"when":"Always"}],"provenance":{}}
+{"var":"vd9e433528e0b37e5","label":"Lich DR","declared_by":["bestiary:template:lich"],"contributions":[{"rule_id":"bestiary:template:lich","expr":{"Const":15},"when":"Always"},{"rule_id":"horror_adventures:template:familial_lich","expr":{"Const":-15},"when":"Always"}],"provenance":{}}

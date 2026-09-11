@@ -1,1 +1,1 @@
-{"var":"v95fa262905b96856","declared_by":["advanced_players_guide:class_feature:inquisitor_domains"],"contributions":[{"rule_id":"ultimate_wilderness:deity:ng","expr":{"Const":1},"when":"Always"}],"provenance":{}}
+{"var":"v95fa262905b96856","label":"Inquisitor Domain Trade Subdomain","declared_by":["advanced_players_guide:class_feature:inquisitor_domains"],"contributions":[{"rule_id":"ultimate_wilderness:deity:ng","expr":{"Const":1},"when":"Always"}],"provenance":{}}

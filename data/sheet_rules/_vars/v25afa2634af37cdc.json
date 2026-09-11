@@ -1,1 +1,1 @@
-{"var":"v25afa2634af37cdc","declared_by":["adventurers_guide:ability:devil_binder_infernal_binding"],"contributions":[{"rule_id":"adventurers_guide:ability:devil_binder_infernal_binding","expr":{"Const":1},"when":"Always"}],"provenance":{}}
+{"var":"v25afa2634af37cdc","label":"Master Is Devil Binder","declared_by":["adventurers_guide:ability:devil_binder_infernal_binding"],"contributions":[{"rule_id":"adventurers_guide:ability:devil_binder_infernal_binding","expr":{"Const":1},"when":"Always"}],"provenance":{}}

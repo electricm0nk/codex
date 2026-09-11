@@ -1,1 +1,1 @@
-{"var":"vfc40634209ba5cad","declared_by":["occult_adventures:class:occultist"],"contributions":[{"rule_id":"occult_adventures:class:occultist","expr":{"ClassLevel":"occultist"},"when":"Always"}],"provenance":{}}
+{"var":"vfc40634209ba5cad","label":"Occultist LVL","declared_by":["occult_adventures:class:occultist"],"contributions":[{"rule_id":"occult_adventures:class:occultist","expr":{"ClassLevel":"occultist"},"when":"Always"}],"provenance":{}}

@@ -1,1 +1,1 @@
-{"var":"v7de95d5abb5e3c15","declared_by":["advanced_class_guide:class_feature:shaman_spirit_lore"],"contributions":[{"rule_id":"advanced_class_guide:class_feature:shaman_spirit_lore","expr":{"Const":1},"when":"Always"}],"provenance":{}}
+{"var":"v7de95d5abb5e3c15","label":"Shaman Lore Spirit","declared_by":["advanced_class_guide:class_feature:shaman_spirit_lore"],"contributions":[{"rule_id":"advanced_class_guide:class_feature:shaman_spirit_lore","expr":{"Const":1},"when":"Always"}],"provenance":{}}

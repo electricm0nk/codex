@@ -1,1 +1,1 @@
-{"var":"vec1f85f7c3a98672","declared_by":["ultimate_intrigue:class_feature:metamorph_spellcasting_removal"],"contributions":[{"rule_id":"ultimate_intrigue:class_feature:metamorph_spellcasting_removal","expr":{"Const":1},"when":"Always"}],"provenance":{}}
+{"var":"vec1f85f7c3a98672","label":"No Formula Boook","declared_by":["ultimate_intrigue:class_feature:metamorph_spellcasting_removal"],"contributions":[{"rule_id":"ultimate_intrigue:class_feature:metamorph_spellcasting_removal","expr":{"Const":1},"when":"Always"}],"provenance":{}}

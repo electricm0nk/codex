@@ -1,1 +1,1 @@
-{"var":"vb259ec8a0389d34c","declared_by":["core_rulebook:class_feature:draconic_bloodline_choice_black"],"contributions":[{"rule_id":"core_rulebook:class_feature:draconic_bloodline_choice_black","expr":{"Const":1},"when":"Always"}],"provenance":{}}
+{"var":"vb259ec8a0389d34c","label":"Sorcerer Draconic Bloodline Choice Black","declared_by":["core_rulebook:class_feature:draconic_bloodline_choice_black"],"contributions":[{"rule_id":"core_rulebook:class_feature:draconic_bloodline_choice_black","expr":{"Const":1},"when":"Always"}],"provenance":{}}

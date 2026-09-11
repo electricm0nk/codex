@@ -1,1 +1,1 @@
-{"var":"vde59ffcdef69f1f1","declared_by":["ultimate_wilderness:class_feature:leshy_familiar_fungus_leshy"],"contributions":[{"rule_id":"ultimate_wilderness:class_feature:leshy_familiar_fungus_leshy","expr":{"Const":1},"when":"Always"}],"provenance":{}}
+{"var":"vde59ffcdef69f1f1","label":"Fungus Leshy Familiar","declared_by":["ultimate_wilderness:class_feature:leshy_familiar_fungus_leshy"],"contributions":[{"rule_id":"ultimate_wilderness:class_feature:leshy_familiar_fungus_leshy","expr":{"Const":1},"when":"Always"}],"provenance":{}}

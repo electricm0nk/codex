@@ -1,1 +1,1 @@
-{"var":"v479ba482c0ebb2bf","declared_by":["ultimate_wilderness:class_feature:weretouched_lycanthropic_wild_shape"],"contributions":[{"rule_id":"ultimate_wilderness:class_feature:weretouched_lycanthropic_wild_shape","expr":{"Const":1},"when":"Always"}],"provenance":{}}
+{"var":"v479ba482c0ebb2bf","label":"Replace Major Shifter Aspect","declared_by":["ultimate_wilderness:class_feature:weretouched_lycanthropic_wild_shape"],"contributions":[{"rule_id":"ultimate_wilderness:class_feature:weretouched_lycanthropic_wild_shape","expr":{"Const":1},"when":"Always"}],"provenance":{}}

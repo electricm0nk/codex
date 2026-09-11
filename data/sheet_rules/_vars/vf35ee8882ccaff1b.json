@@ -1,1 +1,1 @@
-{"var":"vf35ee8882ccaff1b","declared_by":["advanced_race_guide:feat:magical_tail"],"contributions":[{"rule_id":"advanced_race_guide:feat:magical_tail","expr":{"Const":1},"when":"Always"}],"provenance":{}}
+{"var":"vf35ee8882ccaff1b","label":"Kitsune Tails","declared_by":["advanced_race_guide:feat:magical_tail"],"contributions":[{"rule_id":"advanced_race_guide:feat:magical_tail","expr":{"Const":1},"when":"Always"}],"provenance":{}}

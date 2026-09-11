@@ -1,1 +1,1 @@
-{"var":"v2181d803ddfbb43f","declared_by":["ultimate_combat:class_feature:merciful_healer_merciful_healing"],"contributions":[{"rule_id":"ultimate_combat:class_feature:merciful_healer_merciful_healing","expr":{"Var":"v4de69de69e1b0ba0"},"when":"Always"}],"provenance":{}}
+{"var":"v2181d803ddfbb43f","label":"MHMercy LVL","declared_by":["ultimate_combat:class_feature:merciful_healer_merciful_healing"],"contributions":[{"rule_id":"ultimate_combat:class_feature:merciful_healer_merciful_healing","expr":{"Var":"v4de69de69e1b0ba0"},"when":"Always"}],"provenance":{}}

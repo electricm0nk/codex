@@ -1,1 +1,1 @@
-{"var":"v12df34f576d14bf5","declared_by":["advanced_class_guide:class_feature:shaman_spirit_flame"],"contributions":[{"rule_id":"advanced_class_guide:class_feature:shaman_spirit_flame","expr":{"Const":1},"when":"Always"}],"provenance":{}}
+{"var":"v12df34f576d14bf5","label":"Shaman Flame Spirit","declared_by":["advanced_class_guide:class_feature:shaman_spirit_flame"],"contributions":[{"rule_id":"advanced_class_guide:class_feature:shaman_spirit_flame","expr":{"Const":1},"when":"Always"}],"provenance":{}}

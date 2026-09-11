@@ -666,6 +666,7 @@ fn lower_call(ctx: &mut RecordCtx, name: &str, args: &[Ast]) -> Result<Expr, Str
             }
             let id = super::ctx::var_id(&s);
             ctx.var_names.insert(id.clone(), s.to_ascii_uppercase());
+            ctx.var_labels.entry(id.clone()).or_insert_with(|| s.trim().to_string());
             Ok(Expr::MasterVar(id))
         }
         "abs" => Err("FORMULA:abs()".into()),

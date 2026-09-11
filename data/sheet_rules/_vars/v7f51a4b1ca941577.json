@@ -1,1 +1,1 @@
-{"var":"v7f51a4b1ca941577","declared_by":["inner_sea_magic:ability:skill_specialization_base"],"contributions":[{"rule_id":"inner_sea_magic:ability:diplomatic_student_academy","expr":{"Const":1},"when":"Always"}],"provenance":{}}
+{"var":"v7f51a4b1ca941577","label":"SSDiplomacy","declared_by":["inner_sea_magic:ability:skill_specialization_base"],"contributions":[{"rule_id":"inner_sea_magic:ability:diplomatic_student_academy","expr":{"Const":1},"when":"Always"}],"provenance":{}}

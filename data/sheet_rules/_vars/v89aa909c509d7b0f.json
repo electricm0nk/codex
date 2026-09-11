@@ -1,1 +1,1 @@
-{"var":"v89aa909c509d7b0f","declared_by":["advanced_players_guide:class_feature:inquisitor_domains"],"contributions":[{"rule_id":"ultimate_wilderness:deity:shyka","expr":{"Const":1},"when":"Always"}],"provenance":{}}
+{"var":"v89aa909c509d7b0f","label":"Inquisitor Domain Divine Subdomain","declared_by":["advanced_players_guide:class_feature:inquisitor_domains"],"contributions":[{"rule_id":"ultimate_wilderness:deity:shyka","expr":{"Const":1},"when":"Always"}],"provenance":{}}

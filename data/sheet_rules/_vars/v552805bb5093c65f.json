@@ -1,1 +1,1 @@
-{"var":"v552805bb5093c65f","declared_by":["ultimate_psionics:class:war_mind"],"contributions":[{"rule_id":"ultimate_psionics:class:war_mind","expr":{"AbilityMod":"Wis"},"when":{"Compare":{"lhs":{"ClassLevel":"war_mind"},"op":"Gte","rhs":{"Const":1}}}}],"provenance":{}}
+{"var":"v552805bb5093c65f","label":"War Mind Prime Stat","declared_by":["ultimate_psionics:class:war_mind"],"contributions":[{"rule_id":"ultimate_psionics:class:war_mind","expr":{"AbilityMod":"Wis"},"when":{"Compare":{"lhs":{"ClassLevel":"war_mind"},"op":"Gte","rhs":{"Const":1}}}}],"provenance":{}}

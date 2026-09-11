@@ -1,1 +1,1 @@
-{"var":"v8ba6709cb4abefe1","declared_by":["bestiary:monster_ability:breath_weapon_cone_of_weakening_gas"],"contributions":[{"rule_id":"bestiary:monster:dragon_gold","expr":{"Var":"vd94724e99019048a"},"when":"Always"}],"provenance":{}}
+{"var":"v8ba6709cb4abefe1","label":"Breath Weapon Stat Damage","declared_by":["bestiary:monster_ability:breath_weapon_cone_of_weakening_gas"],"contributions":[{"rule_id":"bestiary:monster:dragon_gold","expr":{"Var":"vd94724e99019048a"},"when":"Always"}],"provenance":{}}
