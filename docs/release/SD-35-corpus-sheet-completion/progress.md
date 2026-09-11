@@ -41,6 +41,69 @@ re-measured at the cut by the launch-readiness audit.
 
 ## Cycle log
 
+### 2026-09-11 — Epic 6 / `desktop-and-prose-leave-pcgen` — AT-35-E6-003 **cycle 8** (`526173470e`) — **partial** (the Feat and Companion catalogs reach zero; the four structural readers are one mechanism, named)
+
+Cycle 7's plan put the two prose-shaped readers first. Both took the swap and both reached
+**zero**, and both **gained** text rather than costing it. The four files left do not read the
+ingest format for prose at all — they read it structurally — so they are one mechanism, not four
+files, and they need the facts renderer cycle 7 built and did not ship.
+
+- **Scope gate:** `SCOPE_GATE: EXEMPT (Epic 6 cycle — closes zero units by design, decisions.md §2)`.
+  Run anyway: `scoped=0 remaining_non_done=0 floor=500 verdict=PASS_WHOLE_REMAINDER`.
+- **Receipt rows:** `closed=0 relabeled=0 rust_lines_changed=1274 ratio=n/a builds_recorded=2 pcgen_live_files=200`.
+- **Residue:** `root apps/desktop` **6 files / 179 hits → 4 / 97**; `live_files 202 → 200`,
+  `live_hits 11593 → 11511`, `verdict=PASS`. Never raised.
+- **`feat_catalog.rs` 30 → 0.** `row_description` asks the converted package first, over a new
+  exhaustive `corpus_book_dir(RuleSetId)`, and keeps the compiled table's stored string only when
+  it shows no ingest format. Its refusal predicate is `leaked_pcgen_syntax`, **not** cycle 7's
+  bare `contains('%')`, because the feat tables carry real English per-cent figures a bare test
+  throws away. Served descriptions **2,161 → 2,162 of 2,227** — the count understates it: the
+  converter joins a record's descriptive fields, so ARG's `Angel Wings`, APG's `Extra Hex` and
+  ACG's `Extra Panache` (all three re-pinned by name) gain the benefit clause they used to drop.
+  The 340-line `feat_descriptions_are_rendered_and_otherwise_byte_identical`, which pinned the
+  retired rewriter's own output, is replaced by `converted_feat_prose_population` — a **per-book**
+  ratchet plus a leak sweep over every served row.
+- **`companion_catalog.rs` 52 → 0, and the wire got smaller.** The converted record states a
+  conditional rules family *better* than the run-time path did: every variant under the condition
+  that selects it, **and** the save DC the old renderer deleted for want of a character to settle
+  it. So `descriptionVariants` was **removed** rather than ported — leaving it would have printed
+  every variant twice — and with it `render_desc_token`, `serve_desc_condition`,
+  `spell_out_variable`, `spell_out_alignment` and `reach_gate.rs`'s matching payload clause.
+  Ultimate Wilderness's `Spitting Cobra ~ Poison` read "…save Fort DC ;" and now reads
+  "…Fort DC 10 plus hit dice divided by 2 plus Constitution modifier."
+- **Measured, not asserted.** Abilities that show a reader text **2,824 → 2,980 of 3,570, +156**
+  (measured before at `5a3a67c2dd` in a throwaway worktree). The naive figure would have been
+  `2,963 → 2,980, +17` and would have been **materially wrong**: **152** of those 2,963 rows
+  carried `Some("")`, an empty paragraph. Every population figure this cycle is counted on
+  non-empty text for that reason.
+- **One converter finding, named rather than exempted.**
+  `mythic_adventures:feat:prophetic_visionary` renders as "…increases by a rules variable%" — a
+  literal per-cent sign left against a letter, which this crate's own sweep reads as a gap. The
+  live side refuses that rendering and falls back to the row's clean stored words, so no row lost
+  text and the crate-wide sweep stays green without a name on a list in it. Fix belongs on the
+  converter side. `correction 1789118649659-at-35-e6-003-5b5d35`.
+- **Verified once** at `526173470e`: desktop crate `578 passed; 0 failed` + desktop clippy 0
+  warnings, **frontend `101/101 test files passed`** and `tsc --noEmit` exit 0 (this cycle touched
+  `apps/desktop/src/`, so both ran here rather than at the wrap-up), root `--no-run` exit 0, lib
+  `3299 passed; 0 failed; 15 ignored`, full workspace **413 targets / 8,810 passed / 0 failed /
+  68 ignored / 0 FAILED** (identical to cycle 7 on every field), root clippy 0 warnings,
+  `sheet_rule_convert --check` exit 0, atlas / token-coverage / shape-engine /
+  missing-engine-tables / denominator (`files_checked=105 violations=0`) / provenance
+  (`555 figures, 0 violations`) / site-dashboard pin / `pi-sweep` all green, `data/sheet_rules/`
+  markers 0. `corpus_literal_sweep` and `v06_work_inventory` correctly **not** run — zero corpus
+  and zero inventory changes.
+- **Refused tokens:** **4 files / 97 hits, 7 types** — `PRE[A-Z]+:`=27, `raw_tokens`=24,
+  `DESC:`=14, `BONUS:`=11, `raw_bonus_chains`=10, `render_pcgen_desc`=8, `TYPE=`=3;
+  `race_trait_picker.rs`=33, `intelligent_item_catalog.rs`=28, `raceCreationCoverage.test.ts`=21,
+  `reference_library_catalog.rs`=15. **One mechanism:** each reads the ingest format structurally
+  and needs a renderer for a converted rule's stated facts (`value`/`target`/`grants`/`offers`/
+  `applies`/`tags`) — the one cycle 7 built, measured and deliberately did not ship for want of a
+  consumer. Cycle 9 has four. `deferral 1789118649789-at-35-e6-003-c39a98`.
+- **Next cycle:** build the facts renderer, then `race_trait_picker.rs` first — its four
+  `raw_tokens` spellings of an alternate's self-exclusion guard are exactly the
+  `Not { Holds { Fact { name: "<X>_Replace<Y>" } } }` the converted `applies` already carries
+  (verified against `data/sheet_rules/core_rulebook/race_trait/dwarf_ability_scores.json`).
+
 ### 2026-09-11 — Epic 6 / `desktop-and-prose-leave-pcgen` — AT-35-E6-003 **cycle 7** (`e9ba387746`) — **partial** (the Equipment Catalog reaches zero and *gains* 620 descriptions; the reference library is measured and refused)
 
 Cycle 6 handed this cycle a converter blocker in front of `feat_catalog.rs`. It was in front of

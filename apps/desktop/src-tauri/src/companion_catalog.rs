@@ -370,9 +370,9 @@ fn serve_race_subtype(raw: &str) -> String {
 /// SD-35 `decisions.md §11` — nothing on the live side reads the ingest format. This function
 /// used to take the chassis' stored description string (and its stored argument list) and
 /// rewrite them at run time. That run-time rewriter is the ingest-format reader the ruling
-/// removes, and it was never able to do better than drop a placeholder it had no character to
-/// settle: an ability whose text states "a DC <formula> Will save" reached a player with the DC
-/// silently missing.
+/// removes, and it was never able to do better than delete a scaling term it had no character
+/// to settle: an ability whose text states "a DC <formula> Will save" reached a player with the
+/// DC silently missing.
 ///
 /// The substitution happens once, at ingest (`src/pcgen_import/sheet_rule/`), and
 /// [`converted_prose::description_for`] renders the converted record with no character in hand
