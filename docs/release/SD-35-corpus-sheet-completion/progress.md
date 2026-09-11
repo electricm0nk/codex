@@ -100,6 +100,13 @@ the package as belonging on a character sheet.
   for a cycle that touches `apps/`. Not this cycle's: the package differs from `HEAD~1` in one
   field and `catalog_description` does not read `print`. Self-healed, both figures re-derived from
   the built catalog.
+- **Verified at the final tree** (`cac1b7be3b`): root `--no-run` exit 0, lib **3301 passed; 0
+  failed; 15 ignored**, full workspace **414 targets / 8,812 passed / 0 failed / 68 ignored / 0
+  FAILED suites / FULL_EXIT=0** (+1 test on cycle 9's 8,811 — the new gate), root and desktop
+  clippy 0 warnings, desktop crate **578 passed; 0 failed**, frontend **101/101**, `tsc` exit 0,
+  the criterion's **19 on-screen tests** `19 per-kind + 5 section tests passed`. Atlas /
+  token-coverage / shape-engine / missing-engine-tables / denominator all green,
+  `sheet_rule_convert --check` EXIT=0, `pi-sweep` PASS, `data/sheet_rules/` token leaks 0.
 - **`partial`** — remainder **3 files / 76 hits, 7 token types**: `PRE[A-Z]+:`=27,
   `raw_tokens`=18, `DESC:`=13, `render_pcgen_desc`=8, `raw_bonus_chains`=6, `TYPE=`=3,
   `BONUS:`=1; by file `race_trait_picker.rs`=33, `intelligent_item_catalog.rs`=28,

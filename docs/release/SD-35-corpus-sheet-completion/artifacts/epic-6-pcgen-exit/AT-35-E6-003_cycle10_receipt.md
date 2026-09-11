@@ -248,8 +248,10 @@ either — were in the package marked as belonging on a character sheet.
   ```
   cargo test --locked --no-run -j 6                  NO_RUN_EXIT=0 (every test binary linked)
   cargo test --locked --lib -j 4                     ok. 3301 passed; 0 failed; 15 ignored
-  cargo test --locked --no-fail-fast -j 6            SEE_BELOW
-  cargo clippy --locked --tests -j 6 (root)          SEE_BELOW
+  cargo test --locked --no-fail-fast -j 6            414 targets, 8812 passed, 0 failed, 68 ignored,
+                                                     0 FAILED suites, FULL_EXIT=0
+  cargo clippy --locked --tests -j 4 (root)          0 warnings, 0 errors
+  cd apps/desktop/src-tauri && cargo clippy --locked --tests -j 3   0 warnings, 0 errors
   cd apps/desktop/src-tauri && cargo test --locked -j 4   578 passed; 0 failed; 0 ignored
   cd apps/desktop && npm run typecheck               tsc exit 0
   cd apps/desktop && npm test                        101/101 test files passed
