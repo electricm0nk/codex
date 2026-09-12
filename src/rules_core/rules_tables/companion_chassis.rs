@@ -110,6 +110,26 @@ pub use super::monster_chassis::{NaturalAttack, Speed};
 /// rather than growing a second vocabulary for one grammar.
 pub use super::crb::feats::{ConditionItem, EffectCondition};
 
+/// One guarded entry of [`CompanionRecord::external_ability_refs`].
+///
+/// The ingest format appends the guard to the grant token that cites the
+/// ability (`Special Ability|AUTOMATIC|<ability>|!PRE<FAMILY>:<argument>`), and
+/// the transcriber split it off as if it were another ability name. SD-35
+/// `AT-35-E6-003-SWEEP` cycle 13 gave it its own field and cycle 7's
+/// [`EffectCondition`] schema, the same conversion cycle 9 applied to
+/// [`CompanionAbilityGrant::conditions`]. The verbatim pre-conversion arrays are
+/// the round-trip oracle in `pcgen_import::companion_pcgen_guards`.
+#[derive(Debug, Clone, Copy, PartialEq, Eq)]
+pub struct ExternalAbilityRefCondition {
+    /// The entry of [`CompanionRecord::external_ability_refs`] this gates,
+    /// verbatim. Held closed against that slice by
+    /// `every_external_ability_ref_condition_names_a_ref_the_row_carries`.
+    pub ability: &'static str,
+    /// The conditions gating the grant. Never empty -- a row with no guard
+    /// carries no entry here at all.
+    pub conditions: &'static [EffectCondition],
+}
+
 /// One `BONUS:STAT|<abbrev>|<amount>` token from a creature or advancement row.
 ///
 /// **An adjustment, never a score.** PCGen computes a companion's actual ability
@@ -398,7 +418,20 @@ pub struct CompanionRecord {
     /// Keys into this book's `companion_abilities`, in creature-row order.
     pub ability_keys: &'static [&'static str],
     /// Ability names this row cites that this book does not define.
+    ///
+    /// **Names only.** Three CRB creature rows appended a guard to the grant
+    /// that cites the ability, and before SD-35 `AT-35-E6-003-SWEEP` cycle 13
+    /// that guard rode in this slice as if it were a fourth ability name --
+    /// which is what `apps/desktop/src-tauri/src/companion_catalog.rs` served
+    /// it as. The guards now live in
+    /// [`Self::external_ability_ref_conditions`], typed.
     pub external_ability_refs: &'static [&'static str],
+    /// The conditions gating an entry of
+    /// [`Self::external_ability_refs`], in this crate's own schema. Empty on
+    /// all but three registered rows (CRB Hippopotamus, Arsinoitherium,
+    /// Gylptodon), which is the whole corpus population re-derived by
+    /// `grep -rn external_ability_refs --include=*.rs src/ | grep -E '!?PRE[A-Z]+:'`.
+    pub external_ability_ref_conditions: &'static [ExternalAbilityRefCondition],
     /// The races-`.lst` basename this record was read from. Carried per row for
     /// the same reason as [`CompanionAbilityRecord::source_file`]: Bestiary 3
     /// draws creature rows from both `b3_races_companion.lst` and
@@ -907,6 +940,36 @@ mod tests {
             keys.sort_unstable();
             keys.dedup();
             assert_eq!(keys.len(), before, "{}: duplicate ability key", book.corpus_book);
+        }
+    }
+
+    /// A guard names a ref the row actually carries.
+    ///
+    /// `external_ability_ref_conditions` gates an entry of
+    /// `external_ability_refs` by name, so a guard naming something the row
+    /// does not list is a guard that gates nothing — the failure mode a
+    /// name-keyed side field has and an inline tail did not.
+    #[test]
+    fn every_external_ability_ref_condition_names_a_ref_the_row_carries() {
+        for book in COMPANION_BOOKS {
+            for companion in book.companions {
+                for guarded in companion.external_ability_ref_conditions {
+                    assert!(
+                        companion.external_ability_refs.contains(&guarded.ability),
+                        "{}: {} gates {:?}, which is not one of its external ability refs",
+                        book.corpus_book,
+                        companion.name,
+                        guarded.ability
+                    );
+                    assert!(
+                        !guarded.conditions.is_empty(),
+                        "{}: {} records an empty guard on {:?} — an unguarded ref carries no entry at all",
+                        book.corpus_book,
+                        companion.name,
+                        guarded.ability
+                    );
+                }
+            }
         }
     }
 

@@ -77,6 +77,7 @@ pub(super) static COMPANIONS: &[CompanionRecord] = &[
         source_page: Some("p.78"),
         ability_keys: &["Imp Companion ~ Poison"],
         external_ability_refs: &["Detect Good ~ Constant", "Detect Magic ~ Constant", "Flight Maneuverability"],
+        external_ability_ref_conditions: &[],
         source_file: "botd1_races_companion.lst",
         source_line: 6,
     },

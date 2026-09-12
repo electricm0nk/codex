@@ -32,6 +32,7 @@ pub(super) static COMPANIONS: &[CompanionRecord] = &[
         source_page: Some("p.50"),
         ability_keys: &["Companion Advancement ~ Devolved Humanoid"],
         external_ability_refs: &["Scent"],
+        external_ability_ref_conditions: &[],
         source_file: "ha_races_companion.lst",
         source_line: 3,
     },

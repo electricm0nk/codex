@@ -20,6 +20,7 @@
 //! `docs/release/SD-35-corpus-sheet-completion/artifacts/epic-6-pcgen-exit/AT-35-E6-003-SWEEP_cycle9_type_companion_guards.py`.
 //! Do not hand-edit; re-run the generator.
 
+use crate::rules_core::rules_tables::companion_chassis::CompanionRecord;
 use crate::rules_core::rules_tables::crb::feats::EffectCondition;
 
 /// One converted companion guard's verbatim ingest tail.
@@ -95,6 +96,54 @@ pub const COMPANION_GUARD_TAILS: &[CompanionGuardTail] = &[
     CompanionGuardTail { book: "ultimate_wilderness", ability_key: "Spitting Cobra ~ Poison", field: "conditions", index: 0, tail: "PREVARGTEQ:CompanionAdvancement,1" },
     CompanionGuardTail { book: "ultimate_wilderness", ability_key: "Companion (Whiptail Centipede (Giant))", field: "natural_attack_damage_bonuses", index: 0, tail: "PREVARLT:MasterLevel,7" },
 ];
+
+/// One creature row's `external_ability_refs` slice exactly as it stood before
+/// SD-35 `AT-35-E6-003-SWEEP` cycle 13 typed its guard out.
+///
+/// The whole slice, not just the guard: the live field lost an element *and*
+/// gained a companion field, so the property worth proving is that the pair
+/// rebuilds the original array in its original order, which a tail-only record
+/// cannot state.
+#[derive(Debug, Clone, Copy, PartialEq, Eq)]
+pub struct ExternalAbilityRefsBefore {
+    /// The book directory the catalog lives in.
+    pub book: &'static str,
+    /// The enclosing `CompanionRecord`'s `key`.
+    pub companion_key: &'static str,
+    /// The pre-conversion slice, verbatim and in order.
+    pub refs: &'static [&'static str],
+}
+
+/// Every creature row whose `external_ability_refs` carried a guard element.
+///
+/// Three, which is the whole corpus population: re-derive with
+/// `grep -rn external_ability_refs --include=*.rs src/ | grep -E '!?PRE[A-Z]+:'`
+/// against the pre-cycle-13 tree.
+pub const COMPANION_EXTERNAL_ABILITY_REFS_BEFORE: &[ExternalAbilityRefsBefore] = &[
+    ExternalAbilityRefsBefore { book: "core_rulebook", companion_key: "Companion (Hippopotamus)", refs: &["Animal Traits Output", "Hippopotamus ~ Sweat", "Scent", "Hippopotamus Companion Natural Attack", "!PRETEMPLATE:1,Hippopotamus Companion Advancement"] },
+    ExternalAbilityRefsBefore { book: "core_rulebook", companion_key: "Companion (Megafauna (Arsinoitherium))", refs: &["Animal Traits Output", "Scent", "Arsinoitherium Companion Natural Attack", "!PRETEMPLATE:1,Arsinoitherium Companion Advancement"] },
+    ExternalAbilityRefsBefore { book: "core_rulebook", companion_key: "Companion (Megafauna (Gylptodon))", refs: &["Animal Traits Output", "Scent", "Gylptodon Companion Natural Attack", "!PRETEMPLATE:1,Gylptodon Companion Advancement"] },
+];
+
+/// Rebuild a creature row's pre-conversion `external_ability_refs` array.
+///
+/// Converter-side, and public for the same reason [`rebuild_condition`] is:
+/// `src/bin/gen_book_cache.rs` writes this array to the book cache, and the
+/// cache's wire format carries the ingest string. Without this the cache would
+/// silently change shape for three CRB records.
+///
+/// The guard is re-appended at the end of the array because that is where every
+/// recorded row carried it; [`COMPANION_EXTERNAL_ABILITY_REFS_BEFORE`] and the
+/// round-trip test below are what hold that claim, not this comment.
+pub fn rebuild_external_ability_refs(record: &CompanionRecord) -> Vec<String> {
+    let mut out: Vec<String> = record.external_ability_refs.iter().map(|r| (*r).to_string()).collect();
+    for guarded in record.external_ability_ref_conditions {
+        for condition in guarded.conditions {
+            out.push(rebuild_condition(condition));
+        }
+    }
+    out
+}
 
 #[cfg(test)]
 mod tests {
@@ -187,6 +236,128 @@ mod tests {
             live_tails(),
             recorded_tails(),
             "the live typed form no longer rebuilds the verbatim ingest guards this              table recorded -- the conversion lost or invented something"
+        );
+    }
+
+    /// The cycle-13 conversion, proved in the same shape: every recorded
+    /// pre-conversion array is rebuilt from the live typed pair, element for
+    /// element and in order.
+    #[test]
+    fn every_converted_external_ability_ref_array_round_trips() {
+        let mut checked = 0usize;
+        for before in COMPANION_EXTERNAL_ABILITY_REFS_BEFORE {
+            let book = COMPANION_BOOKS
+                .iter()
+                .find(|b| b.corpus_book == before.book)
+                .unwrap_or_else(|| panic!("{}: not a registered companion book", before.book));
+            let record = book
+                .companion_resolve(before.companion_key)
+                .unwrap_or_else(|| panic!("{}: no creature row {:?}", before.book, before.companion_key));
+            assert_eq!(
+                rebuild_external_ability_refs(record),
+                before.refs.iter().map(|r| (*r).to_string()).collect::<Vec<_>>(),
+                "{}/{}: the typed form no longer rebuilds the array the ingest record wrote",
+                before.book,
+                before.companion_key
+            );
+            checked += 1;
+        }
+        assert_eq!(checked, COMPANION_EXTERNAL_ABILITY_REFS_BEFORE.len());
+    }
+
+    /// The book cache is the reason the rebuild exists, so the rebuild is
+    /// checked against the cache itself rather than against a hand-copied
+    /// expectation: `src/bin/gen_book_cache.rs` writes this array into
+    /// `data/corpus/<book>/companion/<slug>.json`, and those files are the
+    /// shipped, pre-conversion output. If the conversion changed the wire
+    /// shape, this is where it shows.
+    #[test]
+    fn the_rebuilt_array_matches_the_shipped_book_cache() {
+        let dir = std::path::Path::new(env!("CARGO_MANIFEST_DIR")).join("data/corpus");
+        let mut checked = 0usize;
+        for before in COMPANION_EXTERNAL_ABILITY_REFS_BEFORE {
+            let book = COMPANION_BOOKS
+                .iter()
+                .find(|b| b.corpus_book == before.book)
+                .unwrap_or_else(|| panic!("{}: not a registered companion book", before.book));
+            let record = book.companion_resolve(before.companion_key).unwrap();
+            let slug = slugify_for_cache(before.companion_key);
+            let path = dir.join(before.book).join("companion").join(format!("{slug}.json"));
+            let Ok(text) = std::fs::read_to_string(&path) else {
+                panic!("{}: no shipped cache record at {}", before.companion_key, path.display());
+            };
+            let value: serde_json::Value = serde_json::from_str(&text).expect("cache record is JSON");
+            let shipped: Vec<String> = value["data"]["external_ability_refs"]
+                .as_array()
+                .unwrap_or_else(|| panic!("{}: cache record has no external_ability_refs array", path.display()))
+                .iter()
+                .map(|v| v.as_str().expect("a ref is a string").to_string())
+                .collect();
+            assert_eq!(
+                rebuild_external_ability_refs(record),
+                shipped,
+                "{}: the rebuilt array no longer equals the shipped book cache",
+                before.companion_key
+            );
+            checked += 1;
+        }
+        assert_eq!(checked, COMPANION_EXTERNAL_ABILITY_REFS_BEFORE.len());
+    }
+
+    /// `gen_book_cache::slugify`, re-expressed for the three keys this test
+    /// needs: that generator is a `bin` target and its helpers are not
+    /// importable from the library. Held honest by the test above failing
+    /// loudly (no such file) rather than silently passing if it drifts.
+    fn slugify_for_cache(key: &str) -> String {
+        let mut out = String::new();
+        let mut last_dash = true;
+        for ch in key.chars() {
+            if ch.is_ascii_alphanumeric() {
+                out.push(ch.to_ascii_lowercase());
+                last_dash = false;
+            } else if !last_dash {
+                out.push('_');
+                last_dash = true;
+            }
+        }
+        out.trim_matches('_').to_string()
+    }
+
+    /// The other direction, and the one that catches a *new* guard slipping
+    /// back into the name slice: no registered creature row's
+    /// `external_ability_refs` may carry an ingest token, and every row that
+    /// carries a typed condition must be recorded above.
+    #[test]
+    fn no_live_external_ability_ref_is_an_ingest_token() {
+        let mut guarded_rows = 0usize;
+        for book in COMPANION_BOOKS {
+            for companion in book.companions {
+                for r in companion.external_ability_refs {
+                    assert!(
+                        !r.contains("PRE") || !r.contains(':'),
+                        "{}/{}: {r:?} is an ingest guard sitting in the ability-name slice",
+                        book.corpus_book,
+                        companion.key
+                    );
+                }
+                if companion.external_ability_ref_conditions.is_empty() {
+                    continue;
+                }
+                guarded_rows += 1;
+                assert!(
+                    COMPANION_EXTERNAL_ABILITY_REFS_BEFORE
+                        .iter()
+                        .any(|b| b.book == book.corpus_book && b.companion_key == companion.key),
+                    "{}/{}: carries a typed external-ref guard that this table does not record",
+                    book.corpus_book,
+                    companion.key
+                );
+            }
+        }
+        assert_eq!(
+            guarded_rows,
+            COMPANION_EXTERNAL_ABILITY_REFS_BEFORE.len(),
+            "the recorded population and the live population disagree"
         );
     }
 

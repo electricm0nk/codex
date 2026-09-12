@@ -57,7 +57,7 @@ use std::path::{Path, PathBuf};
 
 use sha2::{Digest, Sha256};
 
-use codex::pcgen_import::companion_pcgen_guards::rebuild_condition;
+use codex::pcgen_import::companion_pcgen_guards::{rebuild_condition, rebuild_external_ability_refs};
 use codex::pcgen_import::cache_gen::WiringClassIndex;
 use codex::rules_core::pi_screening;
 use codex::rules_core::shape_b_v1::{Completeness, CorpusRecordV1, CorpusSource, License, Population};
@@ -1868,7 +1868,13 @@ fn gen_companion_book(spec: &CompanionBookSpec) {
             "natural_armor": companion.natural_armor,
             "source_page": companion.source_page,
             "ability_keys": companion.ability_keys.iter().map(|k| format!("{book_id}:companion:{}", slugify(k))).collect::<Vec<_>>(),
-            "external_ability_refs": companion.external_ability_refs,
+            // The wire format carries the ingest string, and the live table no
+            // longer does: SD-35 `AT-35-E6-003-SWEEP` cycle 13 moved three CRB
+            // rows' guard tails into `external_ability_ref_conditions`. Rebuilt
+            // here so the cache stays byte-identical across that conversion —
+            // the same reason `companion_pcgen_guards::rebuild_condition` is
+            // public.
+            "external_ability_refs": rebuild_external_ability_refs(companion),
         });
         pi_hits.extend(monster_record_pi_hits(companion.key, &data.to_string()));
         let source = CorpusSource::LstToken {

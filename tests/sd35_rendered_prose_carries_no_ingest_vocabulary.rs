@@ -63,6 +63,13 @@ const SCANNED: &[&str] = &[
     "src/rules_core/rules_tables/crb/feat_data/general.rs",
     "src/rules_core/rules_tables/acg/feat_data/combat.rs",
     "src/rules_core/rules_tables/advanced_race_guide/feat_data/general.rs",
+    // Cycle 13. `CompanionRecord::external_ability_refs` is a list of ability
+    // NAMES, and `apps/desktop/src-tauri/src/companion_catalog.rs` serves it to
+    // the player as one. Three CRB creature rows carried the ingest guard the
+    // corpus appended to the grant as a fourth entry of that list, so the token
+    // was on screen. `pcgen_import::companion_pcgen_guards` holds the verbatim
+    // pre-conversion arrays.
+    "src/rules_core/rules_tables/crb/companion_data.rs",
 ];
 
 /// A `\b` word boundary immediately before byte `at`, exactly as the residue
