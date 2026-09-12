@@ -115,6 +115,51 @@ pub fn choice_pool_suffix<T: IngestTokens>(data: &T, prefix: &str) -> Option<Str
         .map(|t| t.value.trim_start()[prefix.len()..].to_string())
 }
 
+/// The literal `CHOOSE:` payload prefix an Adopted-Race selector row's pool
+/// token carries; the pool's `<X> Race Trait` suffix follows it verbatim.
+///
+/// SD-35 `AT-35-E6-003-SWEEP` cycle 14: moved here from
+/// `rules_core::race_resolver`, which held it as a live `pub const` and passed
+/// it back into [`choice_pool_suffix`] — a live module carrying the ingest
+/// format's vocabulary, which `decisions.md` §11 forbids and
+/// `technical-design.md` §0 places on this side of the path boundary. Still
+/// public because `src/bin/ingest_race_traits.rs` matches on it too, and one
+/// literal read by both is the point; `src/bin/**` is tool side.
+pub const ADOPTED_RACE_SELECTOR_CHOOSE_PREFIX: &str = "ABILITYSELECTION|Special Ability|TYPE=";
+
+/// The pool suffix of this row's Adopted-Race selector (`decisions.md` §25) —
+/// e.g. `"Oread Race Trait"` — or `None` when the row carries no such selector.
+///
+/// [`choice_pool_suffix`] specialized to the one prefix the live side used to
+/// supply itself. The caller now asks *which trait pool does this selector
+/// adopt from?* and never names a `CHOOSE:` payload shape.
+pub fn adopted_race_pool_suffix<T: IngestTokens>(data: &T) -> Option<String> {
+    choice_pool_suffix(data, ADOPTED_RACE_SELECTOR_CHOOSE_PREFIX)
+}
+
+/// The `TYPE=` pool prefix every Skinwalker kin master record's own `ABILITY:`
+/// grant carries ahead of the kin name.
+///
+/// SD-35 `AT-35-E6-003-SWEEP` cycle 14: moved here from
+/// `rules_core::skinwalker_change_shape`, for the same reason and under the
+/// same rules as [`ADOPTED_RACE_SELECTOR_CHOOSE_PREFIX`].
+const SKINWALKER_CHANGE_SHAPE_POOL_PREFIX: &str = "TYPE=Skinwalker Change Shape ";
+
+/// The Skinwalker kin this automatic grant names its Change Shape pool for —
+/// `"Werebear-Kin"`, `"Default"` — or `None` when the grant is not a Change
+/// Shape pool grant at all.
+///
+/// Takes one grant string as [`automatic_ability_grants`] returns it, so the
+/// caller keeps its own choice of which grant on the row to ask about. A
+/// **reading**, not an interpretation (`decisions.md` §24): the kin name is
+/// handed back exactly as the row spells it, with no mapping, normalization or
+/// validation against any kin list — the caller owns that, and does own it
+/// (`skinwalker_change_shape::KIN_OPTION_KEYS`, whose `Default` row is
+/// deliberately absent).
+pub fn skinwalker_change_shape_kin(grant: &str) -> Option<&str> {
+    grant.strip_prefix(SKINWALKER_CHANGE_SHAPE_POOL_PREFIX)
+}
+
 /// The ability flag a *positive* `PREFACT:1,ABILITIES,<Flag>=True` gate on
 /// this row names, if it carries one.
 pub fn positive_prefact_flag<T: IngestTokens>(data: &T) -> Option<String> {

@@ -63,6 +63,11 @@ pub mod race_trait_tokens;
 // `race_catalog.rs` used to do by hand, narrowed to typed values. Behaviour-identical, and
 // KEPT for Starfinder.
 pub mod bonus_chain_reader;
+// SD-35 AT-35-E6-003-SWEEP cycle 14 (`decisions.md` §11, `technical-design.md` §0): the
+// bonus-TYPE classifications the two live `src/rules_core/equipment_effects/` functions were
+// making by comparing a qualifier to an ingest string they held themselves. Behaviour-identical,
+// pinned against the live corpus, and KEPT for Starfinder.
+pub mod equipment_bonus_reader;
 // SD-35 AT-35-E6-002 cycle 3 (`decisions.md` §11, `technical-design.md` §0): the four
 // ingest-row predicates `src/rules_core/class_feature_pool_catalog.rs` gates pool membership
 // on. Behaviour-identical, and KEPT for Starfinder.

@@ -18,6 +18,7 @@
 //! here is hand-rolled or fabricated; every value traces back to a real,
 //! verbatim corpus token.
 
+use crate::pcgen_import::equipment_bonus_reader;
 use crate::pcgen_import::lst_parser::equipment::EquipmentRecord;
 use crate::rules_core::equipment_effects::EquipmentStatEffect;
 
@@ -136,10 +137,18 @@ fn armor_class_bonus_from_bonus_chains(record: &EquipmentRecord) -> Option<i16> 
         // `COMBAT|AC|*|TYPE=Circumstance`
         // finds exactly 1), so this exclusion cannot regress any other
         // already-verified unit.
+        //
+        // SD-35 `AT-35-E6-003-SWEEP` cycle 14: the circumstance exclusion is
+        // still exactly this rule, but the question "is this a circumstance
+        // bonus?" is now asked of the converter
+        // (`pcgen_import::equipment_bonus_reader`) instead of answered here by
+        // comparing a qualifier to the ingest format's own
+        // `TYPE=Circumstance` spelling, which a live module may not hold
+        // (`decisions.md` §11, `technical-design.md` §0).
         let is_ac_bonus = qualifiers.len() >= 3
             && qualifiers[0] == "COMBAT"
             && qualifiers[1] == "AC"
-            && !qualifiers.iter().any(|q| q == "TYPE=Circumstance");
+            && !equipment_bonus_reader::declares_circumstance_bonus_type(bonus);
         if is_ac_bonus {
             qualifiers[2].parse::<i16>().ok()
         } else {

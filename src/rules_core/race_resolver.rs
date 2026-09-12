@@ -1097,9 +1097,14 @@ pub fn adoptive_parentage_options(corpus: &RaceCorpus) -> Vec<AdoptiveParentageO
 /// than each carrying its own copy.
 pub const ADOPTED_RACE_SELECTOR_TYPE: &str = "AdoptiveRace";
 
-/// The literal `CHOOSE:` prefix an Adopted-Race selector row's pool token
-/// carries; the pool's `<X> Race Trait` suffix follows verbatim.
-pub const ADOPTED_RACE_SELECTOR_CHOOSE_PREFIX: &str = "ABILITYSELECTION|Special Ability|TYPE=";
+// The `CHOOSE:` payload prefix an Adopted-Race selector row's pool token
+// carries -- the ingest-format literal, and the `starts_with`/slice that
+// reads past it -- moved to
+// `pcgen_import::race_trait_tokens::ADOPTED_RACE_SELECTOR_CHOOSE_PREFIX` /
+// `adopted_race_pool_suffix` in SD-35 `AT-35-E6-003-SWEEP` cycle 14. A live
+// module may not hold the ingest format's vocabulary (`decisions.md` §11,
+// `technical-design.md` §0); `src/bin/ingest_race_traits.rs` reads the
+// constant from its new home.
 
 /// One "Adopted Race" selector (`decisions.md §25`): available to a
 /// character of the race it names' own type (the row itself, e.g. Oread's,
@@ -1134,8 +1139,7 @@ pub struct AdoptedRaceSelector {
 pub fn adopted_race_choose_selectors(corpus: &RaceCorpus) -> Vec<AdoptedRaceSelector> {
     let mut out = Vec::new();
     for record in corpus.traits_by_type_token(ADOPTED_RACE_SELECTOR_TYPE) {
-        let pool_type_suffix =
-            race_trait_tokens::choice_pool_suffix(&record.data, ADOPTED_RACE_SELECTOR_CHOOSE_PREFIX);
+        let pool_type_suffix = race_trait_tokens::adopted_race_pool_suffix(&record.data);
         out.push(AdoptedRaceSelector {
             key: record.data.key.clone(),
             name: record.data.name.clone(),

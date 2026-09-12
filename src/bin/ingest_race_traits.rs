@@ -96,9 +96,10 @@ use sha2::{Digest, Sha256};
 use codex::pcgen_import::cache_gen::WiringClassIndex;
 use codex::rules_core::pi_screening;
 use codex::pcgen_import::race_trait_formula_binding::resolve_same_row_formula;
-use codex::rules_core::race_resolver::{
-    ADOPTED_RACE_SELECTOR_CHOOSE_PREFIX, ADOPTED_RACE_SELECTOR_TYPE, ADOPTIVE_PARENTAGE_CATEGORY,
-};
+// `ADOPTED_RACE_SELECTOR_CHOOSE_PREFIX` moved to the tool side in SD-35
+// `AT-35-E6-003-SWEEP` cycle 14; this bin is tool side and reads it there.
+use codex::pcgen_import::race_trait_tokens::ADOPTED_RACE_SELECTOR_CHOOSE_PREFIX;
+use codex::rules_core::race_resolver::{ADOPTED_RACE_SELECTOR_TYPE, ADOPTIVE_PARENTAGE_CATEGORY};
 use codex::pcgen_import::ingest_payload::{RaceTraitCacheData, RawBonusChain, RawToken};
 use codex::rules_core::shape_b_v1::{Completeness, CorpusRecordV1, CorpusSource, Population};
 

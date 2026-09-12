@@ -83,6 +83,7 @@
 //! `arms_armor.rs`, `general.rs`, and `magic_items.rs` read their own
 //! tokens straight off the resolved record.
 
+use crate::pcgen_import::equipment_bonus_reader;
 use crate::pcgen_import::lst_parser::equipment::EquipmentRecord;
 
 /// A weapon to-hit/damage enhancement bonus granted by an
@@ -228,7 +229,16 @@ pub fn compute_equipmods_effect(record: &EquipmentRecord) -> Option<WeaponEnhanc
             // case-insensitive comparison cannot turn an unrelated
             // qualifier into a false match (it only widens this exact
             // string, never a substring).
-            if qualifiers.len() >= 4 && qualifiers[3].eq_ignore_ascii_case("TYPE=Enhancement") {
+            //
+            // SD-35 `AT-35-E6-003-SWEEP` cycle 14: the rule is unchanged --
+            // the bonus type must sit in the roll chain's own type position,
+            // and it is matched case-insensitively for the reason above. What
+            // moved is who knows that: `pcgen_import::equipment_bonus_reader`
+            // owns the position and the `TYPE=Enhancement` spelling now, and
+            // this line asks it a rules question instead of holding the
+            // ingest format's vocabulary itself (`decisions.md` §11,
+            // `technical-design.md` §0).
+            if equipment_bonus_reader::roll_bonus_carries_enhancement_type(bonus) {
                 // SD-33 remediation wave 6: the magnitude segment is
                 // either a literal signed integer (the common case) or
                 // the NAME of a variable this SAME record itself defines
