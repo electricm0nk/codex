@@ -81,12 +81,14 @@ class TestScan(_TreeCase):
                'let e = PcgenFormulaEvaluator::new(); render_pcgen_desc(x);\n'
                'use crate::bonus_stack_reader; use pre_tokens::parse;\n'
                '"BONUS:STAT|STR|2" "DEFINE:X|0" "PREFEAT:1,Dodge" "SAB:Text" "DESC:Words"\n'
-               '"%CHOICE" "%LIST" "TYPE=Combat" let c = &r.raw_bonus_chains;\n')
+               '"%CHOICE" "%LIST" "TYPE=Combat" let c = &r.raw_bonus_chains;\n'
+               'use codex::pcgen_import::race_trait_tokens;\n')
         res = prg.scan(self.root)
         self.assertEqual(res.live_files, 2)
         for name in prg.PATTERNS:
             self.assertGreaterEqual(res.hits_by_pattern[name], 1, name)
-        self.assertEqual(res.hits_by_root["apps/desktop"], 13)  # 12 tokens + raw_bonus_chains
+        # 12 token-syntax hits + raw_bonus_chains + pcgen_import (ruling B16).
+        self.assertEqual(res.hits_by_root["apps/desktop"], 14)
         self.assertEqual(res.hits_by_root["src/rules_core"], 1)
 
     def test_identifier_subset_is_reported_separately(self):
@@ -269,6 +271,170 @@ class TestCommentAwareness(_TreeCase):
         self.assertEqual(res.live_files, 2)
         self.assertEqual(res.hits_by_pattern["raw_tokens"], 2)
         self.assertEqual(res.hits_by_pattern["BONUS:"], 1)
+
+
+class TestCfgTestRegionsAreNotLiveCode(_TreeCase):
+    """Operator ruling B15 (2026-09-12): a `#[cfg(test)]` region is NOT live
+    code. It is compiled out of the shipping binary, and the corpus token text
+    inside it is exactly how the rewrite is proved to survive real
+    PCGen-shaped input -- the same asset reason the converter and the oracle
+    harness are KEPT (`decisions.md` §11). The skip is REGION-aware, not
+    line-aware: everything from the `#[cfg(test)]` attribute to the end of the
+    item it annotates.
+
+    RED->GREEN, executed rather than narrated: a token in shipping code fails;
+    the same token inside a `#[cfg(test)]` module passes; a token in shipping
+    code in a file that ALSO carries a `#[cfg(test)]` module still fails.
+    """
+
+    def test_shipping_token_fails_same_token_in_cfg_test_passes_and_both_fails(self):
+        _run(["--rebaseline", "--root", self.root, "--baseline", self.baseline])
+        planted = "src/rules_core/planted.rs"
+
+        # 1. the token in SHIPPING code.
+        _write(self.root, planted,
+               'const Q: &[&str] = &["PREFEAT:1,Dodge"];\n')
+        code, out = _run(["--check", "--root", self.root, "--baseline", self.baseline])
+        self.assertEqual(code, 1, out)
+        self.assertEqual(
+            _last_line(out),
+            "live_files=2 live_hits=2 baseline_files=1 baseline_hits=1 verdict=FAIL_INCREASED",
+        )
+
+        # 2. the same token, now a fixture inside a `#[cfg(test)]` module.
+        _write(self.root, planted,
+               'const Q: &[&str] = &["Dodge"];\n'
+               '\n'
+               '#[cfg(test)]\n'
+               'mod tests {\n'
+               '    #[test]\n'
+               '    fn verbatim_corpus_row_still_parses() {\n'
+               '        let row = "PREFEAT:1,Dodge";\n'
+               '        assert!(!row.is_empty());\n'
+               '    }\n'
+               '}\n')
+        code, out = _run(["--check", "--root", self.root, "--baseline", self.baseline])
+        self.assertEqual(code, 0, out)
+        self.assertEqual(
+            _last_line(out),
+            "live_files=1 live_hits=1 baseline_files=1 baseline_hits=1 verdict=PASS",
+        )
+
+        # 3. a real read in shipping code in the SAME file -- the cfg(test)
+        #    module must not mask it.
+        _write(self.root, planted,
+               'const Q: &[&str] = &["PREFEAT:1,Dodge"];\n'
+               '\n'
+               '#[cfg(test)]\n'
+               'mod tests {\n'
+               '    #[test]\n'
+               '    fn verbatim_corpus_row_still_parses() {\n'
+               '        let row = "PREFEAT:1,Dodge";\n'
+               '        assert!(!row.is_empty());\n'
+               '    }\n'
+               '}\n')
+        code, out = _run(["--check", "--root", self.root, "--baseline", self.baseline])
+        self.assertEqual(code, 1, out)
+        self.assertEqual(
+            _last_line(out),
+            "live_files=2 live_hits=2 baseline_files=1 baseline_hits=1 verdict=FAIL_INCREASED",
+        )
+
+    def test_the_region_ends_at_the_items_closing_brace(self):
+        # Code AFTER the `#[cfg(test)]` module ships, and still counts.
+        _write(self.root, "src/rules_core/after.rs",
+               '#[cfg(test)]\n'
+               'mod tests {\n'
+               '    fn f() { let _ = "BONUS:STAT|STR|2"; }\n'
+               '}\n'
+               '\n'
+               'pub fn ships() -> &\'static str { "BONUS:STAT|STR|2" }\n')
+        res = prg.scan(self.root)
+        self.assertEqual(res.hits_by_pattern["BONUS:"], 1)
+        self.assertEqual(sorted(res.files),
+                         ["src/rules_core/after.rs", "src/rules_core/reader.rs"])
+
+    def test_a_braceless_cfg_test_item_does_not_swallow_the_rest_of_the_file(self):
+        # `#[cfg(test)] use ...;` annotates a one-line item. A brace-matcher
+        # that waits for a `{` would blank the whole file after it.
+        _write(self.root, "src/rules_core/braceless.rs",
+               '#[cfg(test)]\n'
+               'use crate::fixtures::row; // DESC:Words\n'
+               '\n'
+               'pub fn ships() -> &\'static str { "DESC:Words" }\n')
+        res = prg.scan(self.root)
+        self.assertEqual(res.hits_by_pattern["DESC:"], 1)
+        self.assertIn("src/rules_core/braceless.rs", res.files)
+
+    def test_nested_braces_inside_the_region_do_not_end_it_early(self):
+        _write(self.root, "src/rules_core/nested.rs",
+               '#[cfg(test)]\n'
+               'mod tests {\n'
+               '    fn a() { if true { let _ = "TYPE=Combat"; } }\n'
+               '    fn b() { let _ = "TYPE=Combat"; }\n'
+               '}\n')
+        res = prg.scan(self.root)
+        self.assertEqual(res.hits_by_pattern["TYPE="], 0)
+        self.assertNotIn("src/rules_core/nested.rs", res.files)
+
+
+class TestRuntimeConverterImportsAreCounted(_TreeCase):
+    """Operator ruling B16 (2026-09-12): the gate's blind spot IS the residue.
+
+    Live code that calls `src/pcgen_import::` at run time reads the converter
+    -- the renderer, `ingest_record::token_pairs`, `lst_parser::*`,
+    `ir_converter::*` -- without ever spelling a literal PCGen token, so no
+    token-syntax pattern fired and no identifier pattern matched
+    (`\\brender_pcgen_desc\\b` never matched `render_pcgen_desc_with_values`).
+    The gate was counting code that does not ship and missing code that does.
+    Naming `pcgen_import` in shipping code under a live root is a hit.
+    """
+
+    def test_a_runtime_converter_import_is_a_hit(self):
+        _run(["--rebaseline", "--root", self.root, "--baseline", self.baseline])
+        _write(self.root, "src/rules_core/loader.rs",
+               "use crate::pcgen_import::lst_parser::equipment::EquipmentRecord;\n"
+               "pub fn f(d: &str) { let _ = crate::pcgen_import::ingest_record::token_pairs(d); }\n")
+        code, out = _run(["--check", "--root", self.root, "--baseline", self.baseline])
+        self.assertEqual(code, 1, out)
+        self.assertEqual(
+            _last_line(out),
+            "live_files=2 live_hits=3 baseline_files=1 baseline_hits=1 verdict=FAIL_INCREASED",
+        )
+        self.assertIn("pattern pcgen_import files=1 hits=2", out)
+
+    def test_the_desktop_crate_stops_reading_zero(self):
+        _write(self.root, "apps/desktop/src-tauri/src/reach_gate.rs",
+               "use codex::pcgen_import::race_trait_tokens;\n")
+        res = prg.scan(self.root)
+        self.assertEqual(res.hits_by_root["apps/desktop"], 1)
+        self.assertEqual(res.files_by_root["apps/desktop"], 1)
+
+    def test_a_converter_import_inside_cfg_test_is_not_a_hit(self):
+        # B15 and B16 compose: the ruling is about what SHIPS.
+        _write(self.root, "src/rules_core/fixture_only.rs",
+               "#[cfg(test)]\n"
+               "mod tests {\n"
+               "    use crate::pcgen_import::lst_parser::equipment::EquipmentRecord;\n"
+               "    fn f(_: &EquipmentRecord) {}\n"
+               "}\n")
+        res = prg.scan(self.root)
+        self.assertEqual(res.hits_by_pattern["pcgen_import"], 0)
+        self.assertNotIn("src/rules_core/fixture_only.rs", res.files)
+
+    def test_the_converter_itself_is_never_scanned(self):
+        # `src/pcgen_import/**` is tool side and KEPT (`decisions.md` §11).
+        _write(self.root, "src/pcgen_import/ir_converter.rs",
+               "pub use crate::pcgen_import::lst_parser::equipment::EquipmentRecord;\n")
+        res = prg.scan(self.root)
+        self.assertEqual(res.hits_by_pattern["pcgen_import"], 0)
+
+    def test_the_new_pattern_is_not_folded_into_the_identifier_subset(self):
+        # `identifier_files=`/`identifier_hits=` is the authoring-time "78
+        # files" population; widening it silently would change what every
+        # earlier receipt's figure means.
+        self.assertNotIn("pcgen_import", prg.IDENTIFIER_PATTERNS)
+        self.assertIn("pcgen_import", prg.PATTERNS)
 
 
 class TestLiveRootsAreTheDesignBoundary(unittest.TestCase):

@@ -556,3 +556,83 @@ it causes — `live_files` 197 → 81, `live_hits` 11,447 → 8,390 at
 files are exactly as unfinished as they were before it was written, and no cycle may report the drop
 as files cleared. `AT-35-E6-004`'s "the gate reads zero" means **zero CODE hits** from this ruling
 on.
+
+## §18 — Operator ruling B15, 2026-09-12: a `#[cfg(test)]` region is not live code
+
+**Ruled: NO.** A `#[cfg(test)]` region does **not** count as PCGen in live code. It is compiled out
+of the shipping binary. This follows `§17`/B14 directly rather than extending it: the rule `§11`
+states is *"not one line of PCGen in our live code"*, and a `#[cfg(test)]` block never ships.
+
+The token text inside those regions is an **asset**, not a residue. It feeds real verbatim corpus
+token text to live functions, which is precisely how a rewrite is proved to survive real
+PCGen-shaped input — the same reason `§11` KEEPS the converter, the parser, the generators and the
+oracle harness. They stay.
+
+**What forced the ruling.** `AT-35-E6-003-FINISH` cycle 1 partitioned the gate's hits by
+brace-matched `#[cfg(test)]` item range and asked for this ruling; cycles 2 and 3 asked again, ten
+times in total across the three receipts. At `c2f9c8f6b5` the partition was, re-derivable by
+`python3 docs/release/SD-35-corpus-sheet-completion/artifacts/epic-6-pcgen-exit/AT-35-E6-003-FINISH_cycle1_residue_census.py`:
+
+```
+counted_hits=300 counted_files=45
+class_A_in_cfg_test_hits=300 files=45
+class_B_executable_hits=0 files=0
+```
+
+**Every** hit the gate was counting was inside a `#[cfg(test)]` module. Executable product code had
+already reached zero and the gate could not say so.
+
+**Enforced by:** `scripts/pcgen_residue_gate.py::cfg_test_ranges` and `_live_lines`. The skip is
+**region-aware, not line-aware**: from the `#[cfg(test)]` attribute to the end of the item it
+annotates — the closing brace of a `mod`/`fn`, or the `;` of a braceless item such as
+`#[cfg(test)] use …;`, which must not swallow the rest of the file. Code after the item ships and
+still counts, and a `#[cfg(test)]` module elsewhere in a file never masks a real read in that file's
+shipping code. Pinned RED→GREEN by
+`scripts/tests/test_pcgen_residue_gate.py::TestCfgTestRegionsAreNotLiveCode`. **No path is exempted,
+no regex is weakened, and `scripts/pcgen-residue-baseline.env` is untouched.**
+
+**This is an instrument correction, not closure** (`instrument-correction-is-not-closure`). The drop
+it causes — all 300 hits across 45 files, at `c2f9c8f6b5` — clears no file, closes no unit and
+changes not one line of shipping code. No cycle may report it as progress, and **it is never netted
+against the rise `§19` causes.**
+
+## §19 — Operator ruling B16, 2026-09-12: the gate's blind spot is the real residue, and it is closed, not registered
+
+**Ruled: COUNT IT.** Live code that calls `src/pcgen_import::` at run time is reading the converter,
+and naming `pcgen_import` in shipping code under a live root is a **hit**. This is a **new pattern
+class, not a relaxation**: the number RISES when it is added, and that rise is a **defect that was
+always there**, never a regression the gate introduced.
+
+**What forced the ruling.** `AT-35-E6-003-FINISH` cycle 1's class C. The gate matched the identifier
+`render_pcgen_desc` with `\brender_pcgen_desc\b`, and the live side calls
+`render_pcgen_desc_with_values` — the trailing `_` defeats the word boundary. The same blind spot
+covered every read that moved behind a `crate::pcgen_import::` function call instead of staying a
+literal token: `ingest_record::token_pairs` / `bonus_chain_qualifiers` / `rebuild_bonus_token`,
+`lst_parser::*`, `ir_converter::*`, `race_trait_tokens`, `pool_member_tokens`. 17 of those lines
+were under `apps/desktop/`, where the gate printed `root apps/desktop files=0 hits=0`. **The gate
+was counting code that does not ship and missing code that does** — `AGENTS.md` rule 7 and
+`validate-proxies-against-known-truth`: a proxy still making a confident claim in a region it was
+never tested on. A green gate that does not measure the thing it claims to is a false green, and
+closing SD-35 on one is not acceptable.
+
+**Enforced by:** `RUNTIME_IMPORT_PATTERNS` in `scripts/pcgen_residue_gate.py`, deliberately **not**
+folded into `IDENTIFIER_PATTERNS` — `identifier_files=`/`identifier_hits=` remains the authoring-time
+"78 files" population, and widening it silently would change what every earlier receipt's figure
+means. Pinned RED→GREEN by
+`scripts/tests/test_pcgen_residue_gate.py::TestRuntimeConverterImportsAreCounted`, which also pins
+that `apps/desktop/` stops reading zero and that B15 and B16 compose (a converter import inside
+`#[cfg(test)]` is not a hit — the ruling is about what ships).
+
+**The honest figure at `c2f9c8f6b5`**, `python3 scripts/pcgen_residue_gate.py --check`:
+
+```
+pattern pcgen_import files=25 hits=58
+root src/rules_core files=21 hits=46
+root apps/desktop files=4 hits=12
+live_files=25 live_hits=58 baseline_files=260 baseline_hits=12736 verdict=PASS
+```
+
+Every one of the 58 is named — file, line, mechanism and why it is still there — by
+`docs/release/SD-35-corpus-sheet-completion/artifacts/epic-6-pcgen-exit/AT-35-E6-003-RULED_cycle1_runtime_import_census.py`.
+`AT-35-E6-004`'s `--check --closure` bar is unchanged and now measures what ships: zero, across all
+five live roots including `apps/desktop`.

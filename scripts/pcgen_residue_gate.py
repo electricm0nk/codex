@@ -33,6 +33,7 @@ every source file (`.rs .ts .tsx .js .jsx .mjs .cjs`; never `node_modules/`,
     identifiers   raw_tokens  raw_bonus_chains  PcgenFormulaEvaluator
                   render_pcgen_desc  bonus_stack_reader  pre_tokens
     token syntax  BONUS:  DEFINE:  PRE[A-Z]+:  SAB:  DESC:  %CHOICE  %LIST  TYPE=
+    run-time      pcgen_import        (ruling B16, below)
 
 A hit is one regex match; a file counts once however many hits it carries.
 The five-identifier subset is reported separately (`identifier_files=` /
@@ -71,6 +72,50 @@ closes no unit; the 83 code-bearing files are exactly as unfinished as they
 were before. It is not an exclusion list: no path is exempted, no regex is
 weakened, and the baseline is untouched. Pinned by
 `scripts/tests/test_pcgen_residue_gate.py::TestCommentAwareness`.
+
+`#[cfg(test)]` regions do not count -- operator ruling B15, 2026-09-12
+-----------------------------------------------------------------------
+A `#[cfg(test)]` region is NOT live code. It is compiled out of the shipping
+binary. The verbatim corpus token text inside one is how a rewrite is proved
+to survive real PCGen-shaped input -- the same asset reason the operator KEEPS
+the converter and the oracle harness (`decisions.md` §11). This follows B14
+directly: the rule is "not one line of PCGen in our live code", and a
+`#[cfg(test)]` block never ships.
+
+The skip is REGION-aware, not line-aware: everything from the `#[cfg(test)]`
+attribute to the end of the item it annotates -- the closing brace of the
+module or function, or the `;` of a braceless item such as
+`#[cfg(test)] use ...;`. Code after that item ships and still counts, and a
+`#[cfg(test)]` module elsewhere in a file never masks a real read in that
+file's shipping code. Pinned by
+`scripts/tests/test_pcgen_residue_gate.py::TestCfgTestRegionsAreNotLiveCode`.
+
+Like B14 this is an INSTRUMENT CORRECTION, not closure. At the ruling it
+removed all 300 then-counted hits across 45 files
+(`AT-35-E6-003-FINISH_cycle3_receipt.md`: `class_A_in_cfg_test_hits=300
+files=45`, `class_B_executable_hits=0`). Not one line of shipping code
+changed because of it; it is never to be reported as progress, and never
+netted against the rise B16 causes.
+
+Run-time reads of the converter DO count -- operator ruling B16, 2026-09-12
+---------------------------------------------------------------------------
+The gate's blind spot was the real residue. Live code that calls
+`src/pcgen_import::` at run time reads the converter without ever spelling a
+literal PCGen token: the renderer, `ingest_record::token_pairs` /
+`bonus_chain_qualifiers` / `rebuild_bonus_token`, `lst_parser::*`,
+`ir_converter::*`, `race_trait_tokens`, `pool_member_tokens`. No token-syntax
+pattern fires on those lines, and no identifier pattern matches either --
+`\brender_pcgen_desc\b` never matched `render_pcgen_desc_with_values`
+(`AT-35-E6-003-FINISH_cycle1_receipt.md`, class C). So the gate was counting
+code that does not ship and missing code that does, and `apps/desktop/`
+printed `files=0 hits=0` while 17 lines under it called the converter.
+
+The ruling: naming `pcgen_import` in shipping code under a live root is a
+hit. This is a NEW PATTERN CLASS, not a relaxation -- the number RISES when it
+is added, and that rise is a DEFECT THAT WAS ALWAYS THERE, not a regression
+this gate introduced. It is deliberately kept out of the `identifier_*`
+subset, which remains the authoring-time "78 files" population. Pinned by
+`scripts/tests/test_pcgen_residue_gate.py::TestRuntimeConverterImportsAreCounted`.
 
 The tool side -- `src/pcgen_import/**`, `src/bin/**`, `src/oracle_validation/**`,
 `scripts/**`, `tests/**` -- is never scanned. It is KEPT for Starfinder
@@ -149,8 +194,18 @@ TOKEN_SYNTAX_PATTERNS = {
     "%LIST": r"%LIST",
     "TYPE=": r"\bTYPE=",
 }
-PATTERNS = {**IDENTIFIER_PATTERNS, **TOKEN_SYNTAX_PATTERNS}
+# Operator ruling B16, 2026-09-12. Deliberately NOT in IDENTIFIER_PATTERNS:
+# `identifier_files=`/`identifier_hits=` is the authoring-time "78 files"
+# population, and silently widening it would change what every earlier
+# receipt's figure means.
+RUNTIME_IMPORT_PATTERNS = {
+    "pcgen_import": r"\bpcgen_import\b",
+}
+PATTERNS = {**IDENTIFIER_PATTERNS, **TOKEN_SYNTAX_PATTERNS, **RUNTIME_IMPORT_PATTERNS}
 _COMPILED = {name: re.compile(rx) for name, rx in PATTERNS.items()}
+
+# `#[cfg(test)]`, with the whitespace rustfmt permits inside the attribute.
+_CFG_TEST_ATTR = re.compile(r"^\s*#!?\[\s*cfg\(\s*test\s*\)\s*\]")
 
 DEFAULT_BASELINE_REL = os.path.join("scripts", "pcgen-residue-baseline.env")
 KEY_FILES = "PCGEN_RESIDUE_BASELINE_FILES"
@@ -202,6 +257,51 @@ def code_only(text):
     )
 
 
+def cfg_test_ranges(lines):
+    """0-based inclusive line ranges covered by a `#[cfg(test)]` item.
+
+    Operator ruling B15 (2026-09-12): a `#[cfg(test)]` region is not live
+    code. The region runs from the attribute to the end of the item it
+    annotates -- the closing brace of a `mod`/`fn` block, or the `;` of a
+    braceless item such as `#[cfg(test)] use ...;`. A braceless item must NOT
+    swallow the rest of the file, which is why the `;` case is handled first.
+    """
+    out, i, n = [], 0, len(lines)
+    while i < n:
+        if not _CFG_TEST_ATTR.match(lines[i]):
+            i += 1
+            continue
+        j, depth, started = i, 0, False
+        while j < n:
+            line = lines[j]
+            if not started and "{" not in line and ";" in line and j > i:
+                break  # a braceless item: `#[cfg(test)]` over `use ...;`
+            depth += line.count("{") - line.count("}")
+            if "{" in line:
+                started = True
+            if started and depth <= 0:
+                break
+            j += 1
+        j = min(j, n - 1)
+        out.append((i, j))
+        i = j + 1
+    return out
+
+
+def _live_lines(text):
+    """The shipping lines of one source file: comments dropped (B14),
+    `#[cfg(test)]` regions dropped (B15), everything else scanned whole."""
+    lines = text.splitlines()
+    skip = set()
+    for a, b in cfg_test_ranges(lines):
+        skip.update(range(a, b + 1))
+    return [
+        line
+        for i, line in enumerate(lines)
+        if i not in skip and not line.lstrip().startswith("//")
+    ]
+
+
 def scan(root):
     """Scan the live side under `root`; pure, no baseline involved."""
     res = ScanResult()
@@ -212,7 +312,7 @@ def scan(root):
     for live_root, rel, abs_path in _iter_live_source_files(root):
         try:
             with open(abs_path, encoding="utf-8", errors="replace") as fh:
-                text = code_only(fh.read())
+                text = "\n".join(_live_lines(fh.read()))
         except OSError:
             continue
         file_hits = 0

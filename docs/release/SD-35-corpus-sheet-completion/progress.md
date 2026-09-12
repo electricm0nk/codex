@@ -18,7 +18,14 @@ process defect** recorded by the epic wrap-up.
 
 ## Open blockers
 
-### 2026-09-11 — AT-35-E6-003-SWEEP cycles 5 **and 6** — does a `#[cfg(test)]` module inside a live file count as a PCGen read?
+### ~~2026-09-11 — AT-35-E6-003-SWEEP cycles 5 **and 6** — does a `#[cfg(test)]` module inside a live file count as a PCGen read?~~ — **RESOLVED 2026-09-12 by operator ruling B15 (`decisions.md §18`): NO.**
+
+**Applied by AT-35-E6-003-RULED cycle 1** (`artifacts/epic-6-pcgen-exit/AT-35-E6-003-RULED_cycle1_receipt.md`):
+`scripts/pcgen_residue_gate.py::cfg_test_ranges` / `_live_lines` skip the region from the
+`#[cfg(test)]` attribute to the end of the item it annotates, pinned RED→GREEN by
+`TestCfgTestRegionsAreNotLiveCode`. It removed all **300** hits across **45** files, and that drop
+is an **instrument correction that closes nothing** — not one line of shipping code changed, and it
+is never netted against the rise B16 caused. Asked eleven times across seven receipts.
 
 **Pauses:** one mechanism only — **360 of the 665 remaining code hits (54%), in 29 of the 69
 remaining files**. It does **not** pause Epic 6: cycle 6 ran without it and cleared 133 hits
@@ -77,7 +84,18 @@ thing left on this criterion's class A.** The census re-derives the split at HEA
 A cycle dispatched with a floor of **zero** could not reach it: 300 of the 304 need this ruling,
 and the other 4 need the one below.
 
-### 2026-09-12 — AT-35-E6-003-FINISH cycle 1 — **must `pcgen_residue_gate.py` count a run-time call into `src/pcgen_import/`?** — and `AT-35-E6-004` must not run until it is answered
+### ~~2026-09-12 — AT-35-E6-003-FINISH cycle 1 — **must `pcgen_residue_gate.py` count a run-time call into `src/pcgen_import/`?**~~ — **RESOLVED 2026-09-12 by operator ruling B16 (`decisions.md §19`): YES, COUNT IT — and close it, do not register it.**
+
+**Applied by AT-35-E6-003-RULED cycle 1** (`artifacts/epic-6-pcgen-exit/AT-35-E6-003-RULED_cycle1_receipt.md`):
+`RUNTIME_IMPORT_PATTERNS = {"pcgen_import": r"\bpcgen_import\b"}`, pinned RED→GREEN by
+`TestRuntimeConverterImportsAreCounted`, kept out of the `identifier_*` subset. **The ratchet was
+NOT re-baselined**: the corrected count is `live_files=25 live_hits=58`, below the standing
+`260/12736` on both axes, so the upward re-baseline the branch below contemplated was never
+needed. `root apps/desktop` now reads `files=4 hits=12` where it read `files=0 hits=0`. The **+58**
+is a **defect that was always there**, never reported as progress and never netted against B15's
+−300. Every one of the 58 is named — file, line, mechanism, reason — in
+`…/AT-35-E6-003-RULED_cycle1_runtime_import_census.md`, and **it is not cleared**: see that
+receipt's next-cycle scope, one mechanism group per cycle.
 
 **Pauses:** `AT-35-E6-004`'s `--closure` certification, and the last 4 code hits of
 `AT-35-E6-003`. **Asked by:** AT-35-E6-003-FINISH cycle 1
@@ -162,6 +180,78 @@ Corpus at the `tranche/15` cut (2026-09-07, `4c6c57eb9f`, identical to authoring
 re-measured at the cut by the launch-readiness audit.
 
 ## Cycle log
+
+### 2026-09-12 — Epic 6 / `desktop-and-prose-leave-pcgen` — AT-35-E6-003-RULED **cycle 1** (`COMMIT_SHA_PLACEHOLDER`) — **partial** (rulings B15 and B16 applied: the gate now measures what ships, `apps/desktop` stops reading `files=0 hits=0`, and the 58 hits it newly sees are named line by line, not cleared)
+
+- **Scope gate:** `SCOPE_GATE: EXEMPT (Epic 6 cycle — closes zero corpus units by design; decisions.md §2)`.
+  It ran anyway at the cycle's start tree `c2f9c8f6b5`:
+  `scoped=0 remaining_non_done=0 floor=500 verdict=PASS_WHOLE_REMAINDER`. The residue check, which
+  is not exempt, passed first at the same tree:
+  `live_files=45 live_hits=300 baseline_files=260 baseline_hits=12736 verdict=PASS`.
+
+- **Two operator rulings, implemented, pinned and written down.** **B15** (`decisions.md §18`): a
+  `#[cfg(test)]` region is **not** live code — it never ships, and the verbatim corpus token text
+  inside it is how a rewrite is proved against real PCGen-shaped input, the same asset reason
+  `§11` keeps the converter and the oracle harness. The skip is **region-aware**, from the
+  attribute to the end of the item it annotates (brace-matched for a block, `;`-terminated for a
+  braceless `use`, which must not swallow the rest of the file). **B16** (`decisions.md §19`): a
+  live-root file naming `pcgen_import` in shipping code **is a hit** — a new pattern class, not a
+  relaxation. Asked for by seven receipts across three cycle families; B15 eleven times.
+
+- **The honest number, and it is two opposite movements that are NOT netted.**
+  `live_files=25 live_hits=58 baseline_files=260 baseline_hits=12736 verdict=PASS`.
+  - **−300 hits / −45 files (B15) is an INSTRUMENT CORRECTION.** Every hit the gate counted at
+    `c2f9c8f6b5` was inside a `#[cfg(test)]` region; class B was already 0. It clears no file,
+    closes no unit, and changed not one line of shipping code. **Not progress.**
+  - **+58 hits / +25 files (B16) is a DEFECT THAT WAS ALWAYS THERE.** Those lines were in the
+    shipping binary at `c2f9c8f6b5` and at every earlier Epic 6 receipt. **Not a regression this
+    cycle caused.** `root apps/desktop` reads `files=4 hits=12` where the criterion's own Evidence
+    sentence had been satisfied by `files=0 hits=0`.
+  The net `−242` is arithmetic between two different populations and means nothing. The baseline
+  was **not** re-baselined: the corrected count sits below `260/12736` on both axes, so the upward
+  re-baseline the blocker contemplated was never needed.
+
+- **What was NOT done, and why that is the cycle.** The 58 are **not cleared**. Every one is named
+  with file, line, mechanism group and reason in
+  `artifacts/epic-6-pcgen-exit/AT-35-E6-003-RULED_cycle1_runtime_import_census.md` (re-derivable;
+  the script imports the gate and asserts its own total against it). Seven groups, summing:
+  `lst_parser_types=22, renderer=8, ingest_record_tokens=7, ir_converter=6,
+  trait_and_pool_tokens=5, source_content_payload=5, provenance_prose=5`. Six need a converted
+  equivalent the package does not carry — the live side still **owns** `EquipmentRecord` and
+  `LstSpellRecord` as its own types across 13 files, and `corpus_loader.rs` still **runs**
+  `ir_converter::convert_equipment_record` at run time instead of reading its output. The seventh
+  is 5 string literals in `reach_gate.rs` naming the converter's module path in a printed sentence;
+  trimming it would move the total by 5 without moving one dependency and would charge the desktop
+  crate's ~1,500 s suite for it, which the dispatch names as the wrong cycle.
+
+- **Two discoveries, both `correction` events.** `…-5b14cb`: the gate claimed
+  `root apps/desktop files=0 hits=0` while 12 shipping lines under the desktop crate call
+  `codex::pcgen_import::` at run time. `…-563d87`: `live_hits=300` was **entirely** non-shipping.
+  The finding under both — **the gate was counting code that does not ship and missing code that
+  does**, and at 300 vs 58 the total looked plausible either way.
+
+- **Build scope:** no `.rs` and no `data/` file changed (`git status --porcelain` lists only
+  `scripts/*.py`, `docs/release/**`, `docs/retro/**`), so the cargo suites would re-examine the
+  tree `AT-35-E6-003-FINISH` cycle 3 verified at `8fc2c53ca8` and are **skipped and named**. Run
+  instead, at the tree this entry commits: `python3 -m unittest scripts.tests.test_pcgen_residue_gate
+  scripts.tests.test_cycle_scope_gate` → `Ran 78 tests … OK`; `verify.sh --only pcgen-residue-gate`
+  and `--only pi-sweep` both PASS; `sheet_rule_convert -- --check` ``records=49438 converted=49296 refused=142 rules=70135 var_tables=5293 verdict=PASS` (116.5 s)`;
+  package source-marker grep `0`; `completion_atlas.py --check` `citation_failures=0
+  stale_derived_at=False`; `token_coverage.py --check` `non_done=0 refused=142 verdict=PASS`;
+  `shape_engine_boundary.py --check` `magnitude_bearing=26396 not_held_by_engine=0`;
+  `missing_engine_tables.py --check` `population=0 kinds=0`; `denominator_gate.py --check`
+  `files_checked=131 violations=0`.
+
+- **Receipt rows:** `since=c2f9c8f6b5f01be16b00697764375d0350093acd residue_gate=present`;
+  `closed=0 relabeled=0 rust_lines_changed=0 ratio=n/a builds_recorded=0 pcgen_live_files=25`.
+  `rust_lines_changed=0` is the point: the cycle changed the instrument, not the thing measured.
+
+- **Refused tokens:** **none** under the token-syntax patterns (B15 moved all 300 out of the
+  shipping population; class B was already 0). The refused remainder is the B16 population, the 58
+  above, `deferral 1789239788366-at-35-e6-003-ruled-d22a45`.
+
+- **Status:** **partial.** Receipt:
+  `artifacts/epic-6-pcgen-exit/AT-35-E6-003-RULED_cycle1_receipt.md`.
 
 ### 2026-09-12 — Epic 6 / `desktop-and-prose-leave-pcgen` — AT-35-E6-003-FINISH **cycle 3** (`8fc2c53ca8`) — **partial** (the racial-trait renderer leaves PCGen: live `render_pcgen_desc*` call sites **4 → 2**, `race_resolver.rs` to zero, proved byte-identical over **all 919** racial-trait records)
 
