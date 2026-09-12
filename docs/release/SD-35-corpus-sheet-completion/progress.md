@@ -116,6 +116,97 @@ re-measured at the cut by the launch-readiness audit.
 
 ## Cycle log
 
+### 2026-09-12 — Epic 6 / `desktop-and-prose-leave-pcgen` — AT-35-E6-003-SWEEP **cycle 14** (`0edcc614ee`) — **partial** (the last unblocked code job on this criterion, taken whole; 4 code hits, 1 file to zero, the reachable remainder 19 → 15 — **and no unblocked job remains**)
+
+- **Scope gate** (`workflow-instruction.md §6` step 1):
+  ```
+  SCOPE_GATE: EXEMPT (Epic 6 cycle — closes zero corpus units by design; decisions.md §2)
+  scoped=0 remaining_non_done=0 floor=500 verdict=PASS_WHOLE_REMAINDER
+  ```
+  Residue check at the cycle-start tree `bdae51f9f6`, which is **not** exempt:
+  `live_files=48 live_hits=370 baseline_files=260 baseline_hits=12736 verdict=PASS`.
+  The dispatch said "cycle 13" and handed on **cycle 12**'s refused-token line (373 hits);
+  cycle 13's receipt is committed at that tree and its own result is 370. **Fourth
+  consecutive off-by-one on this criterion's dispatch**
+  (`correction 1789194076051-at-35-e6-003-sweep-d0f14b`). Four firings is a missing
+  mechanism, not bad luck (`AGENTS.md` rule 8), and the mechanism is still one command:
+  derive the number from `ls artifacts/epic-6-pcgen-exit/AT-35-E6-003-SWEEP_cycle*_receipt.md
+  | wc -l` at dispatch time, and take the refused-token line from the newest of those
+  receipts rather than from the dispatch text.
+- **The mechanism.** Four live sites classified an ingest bonus chain by holding the ingest
+  format's own vocabulary and comparing against it — two in `equipment_effects`
+  (`!qualifiers.iter().any(|q| q == "TYPE=Circumstance")`;
+  `qualifiers.len() >= 4 && qualifiers[3].eq_ignore_ascii_case("TYPE=Enhancement")`) and two
+  as live `const` prefixes (`race_resolver`'s Adopted-Race `CHOOSE:` payload prefix, which it
+  passed *into* a converter helper, and `skinwalker_change_shape`'s `TYPE=Skinwalker Change
+  Shape ` pool prefix). All four now ask the converter a **rules** question and get back an
+  already-classified value: *is this a circumstance bonus?*, *is this an enhancement bonus on
+  a roll?*, *which trait pool does this selector adopt from?*, *which kin is this pool for?*
+  New converter module `src/pcgen_import/equipment_bonus_reader.rs`; two new readings on
+  `src/pcgen_import/race_trait_tokens.rs`, which already owned the rest of that record kind's
+  grammar.
+- **Why this is not a relocation dodge, stated because the distinction is the whole cycle.**
+  Moving a literal across the path boundary lowers the residue count whether or not it fixes
+  anything. The test that separates a real move from a count-lowering one is whether the live
+  call site still needs to know the ingest grammar to be written, and
+  `src/pcgen_import/bonus_chain_reader.rs`'s own module doc sets that bar: after it, "no live
+  module names a qualifier position, a chain keyword … or the ingest field itself." All four
+  sites clear it — the live side stops naming a qualifier position (`[3]`), a bonus-type
+  spelling, a `CHOOSE:` payload shape and a pool prefix, and the two prefix cases move the
+  `starts_with`/`strip_prefix` arithmetic across as well, not just the string.
+  **The contrast case was tested, not assumed:** relocating `src/rules_core/pcgen_desc.rs`
+  wholesale into `src/pcgen_import/` would have cleared 4 more hits in one `git mv` and was
+  **rejected on inspection** — `render_pcgen_desc(raw: &str)` takes a raw `DESC:` token that
+  two live catalogs hold and pass in at run time, so the move would relocate the rendering
+  and leave the live side holding the token. That is banking a hit by relocation, the failure
+  cycle 13 named. `AGENTS.md` rule 8 says re-test a hazard rather than copy the warning
+  forward; this one was re-tested and it holds.
+- **RED→GREEN**, in that order. A new standing gate,
+  `tests/sd35_live_side_names_no_ingest_qualifier.rs`, was written and run **before** any
+  source edit and failed with exactly the four hits the python residue gate attributes to
+  those files; green after the move. It is deliberately a **ratchet** — a per-file cleared
+  list, not a whole-tree assertion — because the whole-tree scan already exists and is the
+  authority, and a Rust test asserting zero across the tree would be red on arrival and stay
+  red until the `#[cfg(test)]` ruling lands, which makes it a wish rather than a gate.
+- **Losslessness proved against the live corpus, not a fixture.**
+  `bonus_type_qualifiers_are_unchanged_by_this_module` walks every
+  `data/corpus/<book>/equipment*/**/*.json` record and evaluates both the old predicate —
+  transcribed verbatim from the two call sites as they stood at `bdae51f9f6`, deliberately
+  transcribed rather than referenced, since a round trip proved against a paraphrase proves
+  nothing — and the new function, then asserts agreement: **0 disagreements over 2,223 chains
+  on 1,371 records** (68 circumstance, 277 enhancement-roll-typed). It also refuses to pass
+  on an empty walk, so a walk that stopped finding records cannot agree with itself about
+  nothing.
+- **Movement.** 4 code hits cleared (**370 → 366**, 48 → 47 files), the whole of it inside one
+  pattern (`TYPE=` 104 → 100, 21 → 20 files) — the check that no hit was banked by
+  reclassification. Reachable (non-`#[cfg(test)]`) remainder **19 → 15** in **9 → 5** files;
+  `hits_inside_cfg_test` unmoved at 351. No corpus record changed; `docs/work-inventory.json`
+  is byte-identical.
+- **Cost correction.** Cycle 13 costed this job as "a converter cycle of this cycle's own
+  size" — cycle 13 being 711 Rust lines across 452 record literals. It was **110 Rust lines**,
+  0 corpus records and 0 data literals, because the equipment bonus type is already a
+  qualifier on a chain the record carries rather than a field to be added to every literal
+  (`correction 1789194083764-at-35-e6-003-sweep-b93147`). The denominator of the estimate was
+  "what the last cycle cost", which is not a denominator.
+- **Receipt rows:**
+  ```
+  closed=0 relabeled=0 rust_lines_changed=110 ratio=n/a builds_recorded=0 pcgen_live_files=47
+  ```
+- **`partial`** — `TYPE==100; BONUS:=91; PRE[A-Z]+:=63; DESC:=59; render_pcgen_desc=39;
+  %CHOICE=8; raw_tokens=5; %LIST=1` (366 hits / 47 files).
+  `deferral 1789194094105-at-35-e6-003-sweep-da9fcb`.
+- **There is no unblocked code job left on this criterion.** All three remaining reachable
+  jobs are blocked on a named artifact, and two of those artifacts are themselves cycle-sized
+  converter work nobody has been dispatched to build: **(1)** the converter prose carrier
+  (`…/AT-35-E6-003_cycle5_converter-prose-blocker.md`), which unblocks `render_pcgen_desc`,
+  4 hits; **(2)** `SheetRule.applies` carrying the exclusion-guard relation, which unblocks
+  `race_trait_picker.rs`, 7 hits and the only `apps/` file left; **(3)** the four
+  `PU_*_DESC_TOKEN` verbatim book transcriptions, which move only when `pcgen_desc.rs` goes.
+  Dispatching "the next sweep cycle" against this remainder will produce nothing — the next
+  dispatch should name **(1)** or **(2)** as its own criterion and build the artifact.
+  **The `#[cfg(test)]` operator ruling stands between the gate and 351 of the 366** and has
+  now been asked by six cycles.
+
 ### 2026-09-12 — Epic 6 / `desktop-and-prose-leave-pcgen` — AT-35-E6-003-SWEEP **cycle 13** (`88b4490e16`) — **partial** (an ingest guard that was reaching the player's companion panel as an *ability name*; 3 code hits, 1 file to zero, the reachable remainder 22 → 19)
 
 - **Scope gate** (`workflow-instruction.md §6` step 1):
