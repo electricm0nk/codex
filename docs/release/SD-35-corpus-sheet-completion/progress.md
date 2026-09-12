@@ -116,6 +116,59 @@ re-measured at the cut by the launch-readiness audit.
 
 ## Cycle log
 
+### 2026-09-12 — Epic 6 / `desktop-and-prose-leave-pcgen` — AT-35-E6-003-SWEEP **cycle 12** (`db0405eb18`) — **partial** (the one reachable job that moves a number a player reads, taken with its matching rewrite and its oracle run in the same cycle; 13 code hits, 4 files to zero, and the reachable remainder down a third)
+
+- **Scope gate** (`workflow-instruction.md §6` step 1):
+  ```
+  SCOPE_GATE: EXEMPT (Epic 6 cycle — closes zero corpus units by design; decisions.md §2)
+  scoped=0 remaining_non_done=0 floor=500 verdict=PASS_WHOLE_REMAINDER
+  ```
+  Residue check at the cycle-start tree `f8e4aa78e1`, which is **not** exempt:
+  `live_files=53 live_hits=386 baseline_files=260 baseline_hits=12736 verdict=PASS`.
+  The dispatch said "cycle 11"; cycle 11's receipt is already committed and its 386-hit
+  remainder is what the dispatch handed on. **Second consecutive off-by-one on this
+  criterion's dispatch** (`correction 1789180880544-at-35-e6-003-sweep-83042e`) — the
+  number should be derived from the receipts on disk, not carried in prose.
+- **The mechanism:** ten `FeatEffectBonus` rows across four shipped feat tables stored the
+  ingest format's marker for "whatever the player picked" — `WEAPONPROF=%LIST` in the
+  category slot, `%LIST`/`SCHOOL.%LIST` in the target slot, `var("SKILLRANK=%LIST")` and
+  `count("ABILITIES","TYPE=FavoredClassBonus")` in the value slot. Typed out into
+  `EffectSelection` (this crate's own schema, with `sheet_words()` giving the rule's own
+  phrasing) on all 290 shipped literals; the marker slot **leaves** `qualifiers` rather than
+  being relocated or re-spelled, and the verbatim chains are kept converter-side in
+  `pcgen_import::feat_effect_selections` with a three-test round-trip oracle.
+- **RED→GREEN recorded**: the standing gate `sd35_rendered_prose_carries_no_ingest_vocabulary`
+  was widened to the four feat tables and failed on **11 lines / 12 hits** before a byte was
+  edited.
+- **The oracle run cycle 11 required, and it did not move.** `sheet_rule_parity` over the
+  29-character roster: `lines compared=156 agree=154 disagree=2 unverifiable=67; chassis
+  compared=382 agree=376 disagree=6 unverifiable=140; characters=29 exports_missing=0`,
+  `PCGEN_ORACLE_SHA=7f818006e3`. **Byte-identical to cycle 11's parity JSON on `roster`,
+  `summary`, `disagreements` and `results`** — shortening Weapon Specialization's chain from
+  three slots to two did not drop its `+2`. `damage_total::constant_damage_bonus` got the
+  matching rewrite in the same cycle, as cycle 11 said it must.
+- **`partial`** — `TYPE==104; BONUS:=91; PRE[A-Z]+:=66; DESC:=59; render_pcgen_desc=39;
+  %CHOICE=8; raw_tokens=5; %LIST=1` (373 hits / 49 files, eight types, summing exactly).
+  **351 of the 373 are inside `#[cfg(test)]` modules** and wait on the ruling under
+  `## Open blockers` — asked now by a fourth cycle. The reachable remainder falls **34 → 22**
+  in **14 → 10** files; each of the six remaining jobs is named with its blocker in the
+  receipt. `deferral 1789188753496-at-35-e6-003-sweep-32ef4d`.
+- **Discovery:** the converter script's own idempotence was broken — a second `--apply` reset
+  a multi-line literal's `selection` to `None`, silently undoing the conversion on the very
+  fixture whose `+2` the cycle exists to preserve. Caught by the round-trip oracle
+  (`correction 1789186513754-at-35-e6-003-sweep-687fd9`). A generator whose `--check`
+  re-derives from its own output must be run twice before it is trusted once.
+- **Receipt rows:** `closed=0 relabeled=0 rust_lines_changed=801 ratio=n/a builds_recorded=0
+  pcgen_live_files=49`.
+- **Verified once** at `db0405eb18`, after the last figure-moving edit: `--no-run` 0, lib
+  **3,326/0**, full **414 targets / 8,845 passed / 0 failed / 68 ignored / `FULL_EXIT=0`**,
+  clippy **0 warnings**, `sheet_rule_convert --check` `records=49438 converted=49296
+  refused=142` unmoved, `data/sheet_rules/` leaks **0**, atlas / token-coverage /
+  shape-engine / missing-engine-tables / denominator (120 files) / pi-sweep all green;
+  `apps/` untouched so desktop at epic cadence; `docs/work-inventory.json` byte-identical
+  (the inventory binary's stamp-loss guard fired and `--allow-stamp-loss` was **not** passed).
+- **Receipt:** `artifacts/epic-6-pcgen-exit/AT-35-E6-003-SWEEP_cycle12_receipt.md`.
+
 ### 2026-09-11 — Epic 6 / `desktop-and-prose-leave-pcgen` — AT-35-E6-003-SWEEP **cycle 11** (`208ebf1e21`) — **partial** (a job three receipts had costed as a wire-format regeneration was 26 string replacements; 27 code hits, 5% of the cycle's 500-hit floor, 3 files to zero)
 
 **This is cycle 11, not the 10 the dispatch named** — cycle 10 was already committed at
