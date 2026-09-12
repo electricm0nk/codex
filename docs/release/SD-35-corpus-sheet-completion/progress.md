@@ -116,6 +116,74 @@ re-measured at the cut by the launch-readiness audit.
 
 ## Cycle log
 
+### 2026-09-12 — Epic 6 / `desktop-and-prose-leave-pcgen` — AT-35-E6-003-SWEEP **cycle 17** (`9713a6f347`) — **partial** (the criterion's `render_pcgen_desc` clause met: **39 → 0**, every identifier pattern 0; residue **359 → 304**, the code-reachable remainder **8 → 4**; and a stub marker found printing on 32 real character sheets)
+
+**Receipt:** `artifacts/epic-6-pcgen-exit/AT-35-E6-003-SWEEP_cycle17_receipt.md`
+
+**Scope gate:** `SCOPE_GATE: EXEMPT (Epic 6 cycle — closes zero corpus units by design;
+decisions.md §2)`. Both gates ran anyway at the start tree `776a151d34`:
+`scoped=0 remaining_non_done=0 floor=500 verdict=PASS_WHOLE_REMAINDER`, and the residue check,
+which is not exempt, `live_files=46 live_hits=359 ... verdict=PASS`.
+
+**Receipt rows (mechanical):**
+```
+since=776a151d34 residue_gate=present
+closed_by_kind=
+relabeled_moves=
+regressed=0 added=0 dropped=0
+closed=0 relabeled=0 rust_lines_changed=687 ratio=n/a builds_recorded=1 pcgen_live_files=45
+```
+
+**Refused tokens — five types, summing to 304:** `TYPE==100, BONUS:=91, DESC:=59,
+PRE[A-Z]+:=51, %CHOICE=3`. Two of cycle 16's seven types are gone entirely
+(`render_pcgen_desc`, `%LIST`). **300 of the 304 sit inside a `#[cfg(test)]` module of a live
+file** and wait on the operator ruling asked for since cycle 10; the 4 outside are the
+`PU_*_DESC_TOKEN` book transcriptions.
+
+**What it did.** Cycle 16 unblocked a three-step job and named it. This cycle ran all three:
+the catalog-row → converted-record join moved from the desktop crate into
+`src/rules_core/converted_prose.rs`; the two live `render_pcgen_desc(raw_desc)` call sites
+(`class_feature_pool_catalog`, `pilot_compute::class_feature_grant_consumer`) stopped
+substituting the ingest format at run time and now read the converted package; and
+`src/rules_core/pcgen_desc.rs` moved to `src/pcgen_import/pcgen_desc.rs` — **kept, not
+deleted** (`decisions.md §11`), with every import path followed. `data/corpus/**` and
+`data/sheet_rules/**` are byte-identical.
+
+**Two defects, both measured before being fixed.** (1) **32 of the 4,463 records the two
+`class_feature` catalogs served printed `[NOT IMPLEMENTED]` on a character sheet** — the guard
+written to prevent exactly that compared lowercase only, and the corpus states both cases
+(85 records carry a marker, 68 invisible to the guard). Fixed in case *and* in surface: it now
+asks about the words that print, because for 30 of the 32 the converter's prose never carried
+the marker. Now 0 of 5,256. (2) A `converted_prose` test had been **red for two cycles in a
+crate the epic's cadence had stopped running**, and moving the module into the library is what
+surfaced it — cycle 15's own finding firing a third time.
+
+**793 more records now state their description** (catalogs serve 5,256, up from 4,463), because
+an unsettled term prints as the rule's words rather than costing the record its whole sentence.
+
+**`docs/work-inventory.json` not written, and why.** The guarded run refused (230 stamps);
+`--allow-stamp-loss` is forbidden. The candidate was produced with `--stdout-only` and diffed:
+its **only** movement is 230 `sheet-complete` → `text-complete` (both DONE) and 92 evidence rows
+`words` → `number`, with `engine-does-not-hold` **0 before and 0 after**. The 230 are the
+widened catalog shadowing a stronger evidence rung; the fix is a rung-ordering change in
+`src/bin/v06_work_inventory.rs`, outside this epic's file-touch set. Deferred, with the
+mechanism named.
+
+**Build scope verified, once, at `9713a6f347`:** `--no-run` exit 0; `--lib` **3,341 passed /
+0 failed / 15 ignored**; `--no-fail-fast` **394 targets / 8,656 passed / 0 failed**; clippy
+**0 warnings**; `sheet_rule_convert -- --check` `records=49438 converted=49296 refused=142
+rules=70135 var_tables=5293 PASS` (identical to cycles 3–16); package token-literal grep **0**;
+residue `live_files=45 live_hits=304 PASS`; atlas `population=49438 DONE=49438`, exit 0;
+`token_coverage` `non_done=0 refused=142 PASS`; `shape_engine_boundary` `not_held_by_engine=0`;
+`missing_engine_tables` `population=0`; `verify.sh --only pi-sweep` **PASS**;
+`corpus_literal_sweep` **CLEAN, 0 findings**.
+
+**Next-cycle scope: there is no code-bearing sweep job left in this criterion.** The census now
+reads `files_with_non_test_hits=1`. What remains is (1) the `#[cfg(test)]` operator ruling —
+300 of 304 hits, asked eight cycles running; (2) the inventory rung ordering, needing a
+file-touch set that includes `src/bin/v06_work_inventory.rs`; (3) the slug-independent join
+cycle 16 named.
+
 ### 2026-09-12 — Epic 6 / `desktop-and-prose-leave-pcgen` — AT-35-E6-003-SWEEP **cycle 16** (`dca9c80fe3`) — **partial** (the converter stops dropping the book's own sentence: **241 → 0** records, 310 rule files; **zero residue hits removed**, and the receipt says so)
 
 - **Scope gate** (`workflow-instruction.md §6` step 1):

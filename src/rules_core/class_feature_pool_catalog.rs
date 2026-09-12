@@ -1102,8 +1102,8 @@ mod tests {
     /// dropped.
     ///
     /// What must still never happen is the thing the old gate was really protecting against: a
-    /// gap where the magnitude was, a guessed number, or the ingest format's own positional
-    /// placeholder reaching the page.
+    /// gap where the magnitude was, a guessed number, or the ingest format's own `%N` slot
+    /// marker reaching the page.
     #[test]
     fn bleeding_attack_states_its_unsettled_term_in_words_rather_than_dropping_it() {
         let entries = load_pool_catalog(&repo_root());
