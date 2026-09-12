@@ -181,7 +181,7 @@ re-measured at the cut by the launch-readiness audit.
 
 ## Cycle log
 
-### 2026-09-12 — Epic 6 / `desktop-and-prose-leave-pcgen` — AT-35-E6-003-RULED **cycle 2** (`PENDING_SHA`) — **partial** (one of cycle 1's seven refused groups cleared; the largest one **measured** and refused on the number — the converted renderer disagrees with the live one on **97,332 of 660,320** renderings across **2,443** record keys)
+### 2026-09-12 — Epic 6 / `desktop-and-prose-leave-pcgen` — AT-35-E6-003-RULED **cycle 2** (`56faa89fcb`) — **partial** (one of cycle 1's seven refused groups cleared; the largest one **measured** and refused on the number — the converted renderer disagrees with the live one on **97,332 of 660,320** renderings across **2,443** record keys)
 
 - **Scope gate:** `SCOPE_GATE: EXEMPT (Epic 6 cycle — closes zero corpus units by design; decisions.md §2)`.
   It ran anyway at the cycle's start tree `a3b23bbc99`:
