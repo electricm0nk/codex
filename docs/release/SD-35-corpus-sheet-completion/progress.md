@@ -163,7 +163,7 @@ re-measured at the cut by the launch-readiness audit.
 
 ## Cycle log
 
-### 2026-09-12 — Epic 6 / `desktop-and-prose-leave-pcgen` — AT-35-E6-003-FINISH **cycle 1** — **partial** (dispatched with a floor of **zero**; the census found the gate cannot see the reads that are left — **100 run-time converter calls in 28 live files, 17 of them under `apps/desktop/`**, where it prints `files=0 hits=0`)
+### 2026-09-12 — Epic 6 / `desktop-and-prose-leave-pcgen` — AT-35-E6-003-FINISH **cycle 1** (`244c5c8c1c`) — **partial** (dispatched with a floor of **zero**; the census found the gate cannot see the reads that are left — **100 run-time converter calls in 28 live files, 17 of them under `apps/desktop/`**, where it prints `files=0 hits=0`)
 
 - **Scope gate:** `SCOPE_GATE: EXEMPT (Epic 6 cycle — closes zero corpus units by design;
   decisions.md §2, workflow-instruction.md §6 step 1)`. Run anyway at the cycle's start tree
