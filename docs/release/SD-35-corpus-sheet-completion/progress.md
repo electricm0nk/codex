@@ -116,6 +116,81 @@ re-measured at the cut by the launch-readiness audit.
 
 ## Cycle log
 
+### 2026-09-11 — Epic 6 / `desktop-and-prose-leave-pcgen` — AT-35-E6-003-SWEEP **cycle 9** (`f4583db504`) — **partial** (cycle 7's refusal re-examined and overturned: a serialiser is not a reader; 53 code hits cleared, 11% of the cycle's 500-hit floor, 5 files to zero)
+
+**This is cycle 9, not the 8 the dispatch named** — cycle 8 was already committed at `1f425d5124`
+with its receipt tracked at HEAD (`correction 1789171411293-at-35-e6-003-sweep-c356ea`); the
+remainder it named (511 hits / 64 files) was cycle 8's end state and reproduced exactly at cycle
+start.
+
+**Scope gate:** `SCOPE_GATE: EXEMPT (Epic 6 cycle — closes zero corpus units by design,
+decisions.md §2)`. Run anyway: `inventory=docs/work-inventory.json / scope=(whole remainder) /
+scoped=0 remaining_non_done=0 floor=500 verdict=PASS_WHOLE_REMAINDER`.
+
+**Cycle 7 refused the companion guards for a mechanism, and the refusal was one level too
+shallow.** It found `gen_book_cache.rs:1938` serialising `CompanionDescriptionVariant.conditions`
+straight into a book cache `AT-35-E6-002`'s Evidence pins byte-identical, and concluded the field
+could not move. But the **wire format** must carry the ingest string; the **live table** need not,
+and the two are joined by a rendering function that can live on either side. Moving
+`rebuild_condition` into `src/pcgen_import/` makes the cache byte-identical *by construction*, and
+the round-trip test makes it byte-identical *by proof*. **The lesson generalises: when a conversion
+is refused because a downstream consumer needs the old form, ask which side the rendering belongs
+on before concluding the storage cannot move.**
+
+Three mechanisms taken:
+
+1. **Companion `PRE` guards typed corpus-wide** — `CompanionDescriptionVariant.conditions` and a new
+   `NaturalAttackDamageBonus.conditions` become `&[EffectCondition]`, `CompanionClassRecord.ability_grants`
+   becomes `&[CompanionAbilityGrant { kind, mode, name, conditions }]`; cycle 7's `EffectCondition` /
+   `ConditionItem` **re-exported, not re-declared**. 30 guards across 13 files, every verbatim tail
+   kept in `src/pcgen_import/companion_pcgen_guards.rs` addressed by (book, key, field, index), with
+   a round-trip test comparing live-rebuilt against recorded as a sorted multiset.
+2. **The two Unchained class-skill lists typed** — `TYPE=Craft, TYPE=Perform, TYPE=Profession` was
+   printing into a shipped `ComputationExplanation.detail` a player reads, alongside a sentence
+   explaining that *"TYPE= entries are PCGen skill-type selectors"*. Now `every Craft skill`. Counts
+   unmoved at 21 / 9 / 3 families.
+3. **Five shipped prose strings lose their ingest tail** — `…from your enemy.  PREABILITY:1,CATEGORY=FEAT,…`
+   and `…to her base speed.|BeastmorphSpeed|PREVAREQ:BeastmorphProgression,1` were sentences on a
+   paper sheet. Relocated, not deleted, to `src/pcgen_import/prose_ingest_tails.rs` on cycle 2's own
+   precedent; a sixth row drops a `(chosen vehicle: %1).|%LIST` parenthetical that restated the
+   selection twice.
+
+**RED→GREEN recorded for both new round-trip tests** (a corrupted `PREHD:MIN=3`→`4` row, and a
+prose half re-tainted with `|%LIST`). The companion test also caught a real defect unprompted before
+that: the generator keyed guards by the **directory** name (`crb`) where `COMPANION_BOOKS` keys them
+by `corpus_book` (`core_rulebook`), reddening the first full-suite run on exactly those three rows;
+the generator now derives the mapping from the registry itself (`rework
+1789174161873-at-35-e6-003-sweep-deb79d`), and every figure below is from the second, clean run.
+
+Code hits **511 → 458 = 53 cleared**, `pcgen_live_files` **64 → 59**, **5 files to zero**, **none
+rose**; instrument untouched. `hits_outside` a `#[cfg(test)]` region falls **150 → 106** (44) and
+`hits_inside_cfg_test` falls **361 → 352** (9) — **that 9 is named**: the corpus-pinning assertions
+that asserted *on* the ingest string now assert on the typed fields carrying the same fact, with the
+verbatim string held converter-side and proved equivalent.
+
+**Under the cycle's own 500-hit floor at 53**, named: **352 of 458** are behind the still-open
+`#[cfg(test)]` ruling (77% of the 458), leaving **106 hits / 22 files** reachable at all — 47 unframed prose
+citations across `pilot_compute/mod.rs`, `derived_evaluator_fixture_check.rs` and
+`support_state_matrix.rs` (hand work; three rules for this shape were built and removed in cycles 5
+and 6 for producing ungrammatical sheet prose), 20 `bestiary/monster_data.rs` `description_variables`
+slots (the 4,378-literal wire-format cycle cycle 8 measured), 11 `FeatEffectBonus` selection targets,
+7 `race_trait_picker.rs`, and 3 `external_ability_refs` **deliberately left** because they cross into
+`apps/` and this epic runs the desktop suites at wrap-up cadence.
+
+`closed=0 relabeled=0 rust_lines_changed=754 ratio=n/a builds_recorded=2 pcgen_live_files=59`.
+**`partial`** — `BONUS:=128; TYPE==107; PRE[A-Z]+:=71; DESC:=66; render_pcgen_desc=39; %LIST=28;
+%CHOICE=13; raw_tokens=5; DEFINE:=1` (458 deduplicated hits / 59 files, nine types).
+
+Verified once at `f4583db504`: `--no-run` `NO_RUN_EXIT=0`, lib **3,322 passed / 0 failed / 15
+ignored** (3,318 → 3,322 is exactly the four new tests), full **414 targets / 8,840 passed / 0 failed / 68 ignored / `FULL_EXIT=0`** (+4 = the four new tests), clippy **`CLIPPY_EXIT=0`, 0 warnings**,
+`sheet_rule_convert --check` **`records=49438 converted=49296 refused=142 rules=70135 var_tables=5293 verdict=PASS`, identical to cycles 3-8**, `data/sheet_rules/` leaks 0, atlas / token-coverage /
+shape-engine / missing-engine-tables / denominator (`files_checked=117 violations=0`) / pi-sweep all
+green; `apps/` untouched so desktop at epic cadence; `docs/work-inventory.json` byte-identical to the
+cycle-start copy. `gen_book_cache` not re-run and not needing to be — `rebuild_condition` is the
+proven inverse of the parse, and `natural_attack_damage_bonuses` / `ability_grants` are not
+serialised at all. Receipt:
+`artifacts/epic-6-pcgen-exit/AT-35-E6-003-SWEEP_cycle9_receipt.md`. `deferral 1789174137971-at-35-e6-003-sweep-d84727`
+
 ### 2026-09-11 — Epic 6 / `desktop-and-prose-leave-pcgen` — AT-35-E6-003-SWEEP **cycle 8** (`1f425d5124`) — **partial** (a refusal rule's own written exception had never been reachable by its own code; 34 code hits cleared, 7% of the cycle's 500-hit floor, one file to zero)
 
 Receipt: `artifacts/epic-6-pcgen-exit/AT-35-E6-003-SWEEP_cycle8_receipt.md`. Cycle start
