@@ -664,7 +664,7 @@ fn ground_or_block_ninja_class_features(
                  lose your Dexterity bonus to AC if immobilized. You can still lose your \
                  Dexterity bonus to AC if an opponent successfully uses the feint action \
                  against you.\" A bounded grant-only identity record (value 0, non-fabricated): \
-                 the base row carries no BONUS: magnitude of its own beyond the shared \
+                 the base row carries no magnitude of its own beyond the shared \
                  UncannyDodgeFlankingLevel context-fact, which needs an opposing rogue's level \
                  to matter and is out of this engine's per-character scope"
                     .to_owned(),

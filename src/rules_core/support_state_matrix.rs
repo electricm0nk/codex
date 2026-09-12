@@ -1016,8 +1016,8 @@ pub fn seeded_current_truth() -> SupportStateMatrix {
                 next_required_uplift: "none for recognition or UI-surfacing; grounding one or \
                     more of the remaining Dwarf families (Hatred, weapon familiarity) as a real \
                     computed contribution is a future SD-N's scope, not a further per-cycle \
-                    widening of this row — Hatred currently lacks a machine-readable BONUS: tag \
-                    in the LST corpus (only DESC/ASPECT prose), so it is not eligible \
+                    widening of this row — Hatred currently lacks a machine-readable bonus tag \
+                    in the LST corpus (its own entry is description prose only), so it is not eligible \
                     until/unless that is re-verified",
             },
             SupportStateRow {
@@ -7336,7 +7336,8 @@ pub fn seeded_current_truth() -> SupportStateMatrix {
                     Supported/Product-visible (every named item grounded AND the \
                     operator's UI surfaces it) at full-category scope",
                 next_required_uplift: "none for reachability or UI-surfacing; \
-                    populating derived_stats from corpus BONUS:/ACCHECK:/MAXDEX: tokens \
+                    populating derived_stats from the corpus's own armor bonus, armor \
+                    check penalty and maximum-Dexterity fields \
                     is a future cycle's or a future SD-N's scope",
             },
             SupportStateRow {
@@ -7371,7 +7372,8 @@ pub fn seeded_current_truth() -> SupportStateMatrix {
                     by name — satisfying the loop instruction's own definition of \
                     Supported/Product-visible at full-category scope",
                 next_required_uplift: "none for reachability or UI-surfacing; \
-                    populating derived_stats from corpus BONUS:/ACCHECK:/MAXDEX: tokens \
+                    populating derived_stats from the corpus's own armor bonus, armor \
+                    check penalty and maximum-Dexterity fields \
                     is a future cycle's or a future SD-N's scope",
             },
             SupportStateRow {
@@ -7411,7 +7413,8 @@ pub fn seeded_current_truth() -> SupportStateMatrix {
                     by name — satisfying the loop instruction's own definition of \
                     Supported/Product-visible at full-category scope",
                 next_required_uplift: "none for reachability or UI-surfacing; \
-                    populating derived_stats from corpus BONUS:/ACCHECK:/MAXDEX: tokens \
+                    populating derived_stats from the corpus's own armor bonus, armor \
+                    check penalty and maximum-Dexterity fields \
                     is a future cycle's or a future SD-N's scope",
             },
             SupportStateRow {
@@ -7463,7 +7466,8 @@ pub fn seeded_current_truth() -> SupportStateMatrix {
                     equipment-category sweep (4/4) at full coverage and full \
                     UI-surfacing.",
                 next_required_uplift: "none for reachability or UI-surfacing; \
-                    populating derived_stats from corpus BONUS:/ACCHECK:/MAXDEX: tokens \
+                    populating derived_stats from the corpus's own armor bonus, armor \
+                    check penalty and maximum-Dexterity fields \
                     is a future cycle's or a future SD-N's scope",
             },
         ],

@@ -1439,7 +1439,7 @@ fn run_class_feature_bar_check(repo_root: &Path) -> BarCheckReport {
                 failures.insert(
                     fixture.unit_id.clone(),
                     format!(
-                        "corpus row states {} but carries no BONUS:VAR|{}| token at all",
+                        "corpus row states {} but carries no bonus-variable magnitude named {} at all",
                         fixture.corpus_field, fixture.bonus_var_name
                     ),
                 );
@@ -1499,7 +1499,8 @@ fn run_class_feature_bar_check(repo_root: &Path) -> BarCheckReport {
                     failures.insert(
                         fixture.unit_id.clone(),
                         format!(
-                            "no record in {book}'s class_feature corpus defines BONUS:VAR|{level_var}|, \
+                            "no record in {book}'s class_feature corpus defines a bonus-variable \
+                             magnitude named {level_var}, \
                              so the fixture's expected alias {:?} cannot be confirmed",
                             fixture.expected_class_level_alias
                         ),
@@ -4028,7 +4029,7 @@ fn run_companion_skill_bar_check(repo_root: &Path) -> BarCheckReport {
                 fixture.unit_id.clone(),
                 format!(
                     "corpus row states {} but the shipped record carries no matching \
-                     BONUS:SKILL|{}|… token at all",
+                     skill-bonus magnitude for {} at all",
                     fixture.corpus_field,
                     fixture.skills.join(",")
                 ),
@@ -4307,7 +4308,7 @@ fn run_companion_save_dc_bar_check(repo_root: &Path) -> BarCheckReport {
                 failures.insert(
                     fixture.unit_id.clone(),
                     format!(
-                        "corpus row states {} but the shipped record carries no DESC: argument \
+                        "corpus row states {} but the shipped record carries no description argument \
                          the evaluator can parse a save-DC shape from (candidates: {candidates:?})",
                         fixture.corpus_field
                     ),
@@ -4320,7 +4321,7 @@ fn run_companion_save_dc_bar_check(repo_root: &Path) -> BarCheckReport {
                     fixture.unit_id.clone(),
                     format!(
                         "corpus row states {} but the shipped record carries {n} DISTINCT \
-                         parseable save-DC shapes across its DESC: arguments — ambiguous",
+                         parseable save-DC shapes across its description arguments — ambiguous",
                         fixture.corpus_field
                     ),
                 );
@@ -4725,7 +4726,7 @@ fn run_companion_bar_check(repo_root: &Path) -> BarCheckReport {
                 fixture.unit_id.clone(),
                 format!(
                     "corpus row states {} but the shipped record carries no \
-                     BONUS:WEAPONPROF={}|DAMAGE| token at all",
+                     weapon-proficiency damage magnitude for {} at all",
                     fixture.corpus_field, fixture.attack
                 ),
             );

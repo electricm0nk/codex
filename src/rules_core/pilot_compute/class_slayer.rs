@@ -438,7 +438,7 @@ pub(super) fn ground_slayer_weapon_and_armor_proficiency(
                  Proficiency): \"A slayer is proficient with all simple and martial weapons, as \
                  well as with light armor, medium armor, and shields (except tower shields).\" \
                  This is a bounded grant-only identity record (value 0, non-fabricated): the \
-                 record's only tokens are ABILITY:...AUTOMATIC proficiency grants, no BONUS: \
+                 record grants proficiencies automatically and carries no \
                  magnitude anywhere. The weapon half's real mechanical consequence -- avoiding \
                  the -4 nonproficiency attack penalty -- is already grounded separately by \
                  `weapon_tables::class_weapon_proficiency(\"class:slayer\")`, which this record \
