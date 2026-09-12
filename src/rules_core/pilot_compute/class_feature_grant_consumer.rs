@@ -704,6 +704,33 @@ pub(crate) struct ClassFeatureRecordTokens {
     pub(crate) class: String,
     pub(crate) raw_description: String,
     pub(crate) bonus_vars: ConvertedChain,
+    /// The `data/corpus/<book>/` directory this record was read from — the FIRST one, matching
+    /// each table's own duplicate-key policy, so the converted rule this record joins to is
+    /// **its own book's** rule and never another printing's.
+    ///
+    /// SD-35 `AT-35-E6-003-RULED` cycle 2 (`decisions.md` §11): carried so
+    /// [`ClassFeatureRecordTokens::converted_rule_id`] can be formed without re-deriving a book
+    /// from the key text. This is exactly the join `race_resolver::RaceTraitRecord::
+    /// converted_rule_id` already uses for racial traits.
+    pub(crate) book: String,
+}
+
+/// **`#[cfg(test)]`-only for now.** `AT-35-E6-003-RULED` cycle 2 measured the converted renderer
+/// this join feeds against the live PCGen one over the whole corpus and they do not yet agree
+/// (`tests::class_feature_prose_parity_census`), so the only caller is that census. The join
+/// itself is correct and is kept, because re-deriving it is what the next cycle must not have to
+/// do twice.
+#[cfg(test)]
+impl ClassFeatureRecordTokens {
+    /// The converted rule this corpus record became — **its own book's**, never another's.
+    ///
+    /// [`converted_prose::converted_id`](crate::rules_core::converted_prose::converted_id) and
+    /// nothing else: step 1 of that module's join alone, with none of its by-name fallbacks, for
+    /// the same reason `race_resolver` refuses them — a fallback would serve one record's
+    /// paragraph under another record's key.
+    pub(crate) fn converted_rule_id(&self, key: &str) -> String {
+        crate::rules_core::converted_prose::converted_id(&self.book, "class_feature", key)
+    }
 }
 
 /// Every `data/corpus/*/class_feature/**/*.json` record that carries a real (non-empty,
@@ -783,7 +810,7 @@ pub(crate) fn class_feature_record_tokens_pre_gate_safe()
     TABLE.get_or_init(|| {
         let chains = &record_vars::package().class_feature_described;
         let mut out: BTreeMap<String, ClassFeatureRecordTokens> = BTreeMap::new();
-        for_each_class_feature_record(|key, data| {
+        for_each_class_feature_record(|book, key, data| {
             let (Some(name), Some(class)) = (data["name"].as_str(), data["class"].as_str()) else {
                 return;
             };
@@ -801,6 +828,7 @@ pub(crate) fn class_feature_record_tokens_pre_gate_safe()
                 class: class.to_string(),
                 raw_description: raw_desc,
                 bonus_vars: chains.get(key).cloned().unwrap_or_default(),
+                book: book.to_string(),
             });
         });
         out
@@ -823,7 +851,7 @@ pub(crate) fn class_feature_bonus_vars_any_record()
     TABLE.get_or_init(|| {
         let chains = &record_vars::package().class_feature_any;
         let mut out: BTreeMap<String, ClassFeatureRecordTokens> = BTreeMap::new();
-        for_each_class_feature_record(|key, data| {
+        for_each_class_feature_record(|book, key, data| {
             let Some(name) = data["name"].as_str() else { return };
             let class = data["class"].as_str().unwrap_or("");
             let raw_desc = data["description"].as_str().unwrap_or("").to_string();
@@ -833,6 +861,7 @@ pub(crate) fn class_feature_bonus_vars_any_record()
                     class: class.to_string(),
                     raw_description: raw_desc.clone(),
                     bonus_vars: chains.get(key).cloned().unwrap_or_default(),
+                    book: book.to_string(),
                 });
             if entry.class.is_empty() && !class.is_empty() {
                 entry.class = class.to_string();
@@ -848,7 +877,7 @@ pub(crate) fn class_feature_bonus_vars_any_record()
 /// Walk every `data/corpus/*/class_feature/**/*.json` record in book-alphabetical order, handing
 /// each one's corpus `KEY:` and its `data` object to `visit`. The ONE corpus walk both tables
 /// above share, so they can never disagree about which files exist or in what order.
-fn for_each_class_feature_record(mut visit: impl FnMut(&str, &Value)) {
+fn for_each_class_feature_record(mut visit: impl FnMut(&str, &str, &Value)) {
     let corpus_root = repo_root().join("data/corpus");
     let Ok(books) = std::fs::read_dir(&corpus_root) else { return };
     let mut book_dirs: Vec<_> = books.flatten().collect();
@@ -858,6 +887,7 @@ fn for_each_class_feature_record(mut visit: impl FnMut(&str, &Value)) {
         if !cf_dir.is_dir() {
             continue;
         }
+        let book = book_entry.file_name().to_string_lossy().into_owned();
         let mut files = Vec::new();
         walk_json_files(&cf_dir, &mut files);
         for file in files {
@@ -866,7 +896,7 @@ fn for_each_class_feature_record(mut visit: impl FnMut(&str, &Value)) {
             let data = &doc["data"];
             let Some(key) = data["key"].as_str() else { continue };
             let key = key.to_string();
-            visit(&key, data);
+            visit(&book, &key, data);
         }
     }
 }
@@ -951,6 +981,21 @@ pub(crate) fn resolve_pcgen_var_chain(
 /// extended here only by WHERE the values come from (the real formula interpreter over this
 /// record's own `BONUS:VAR` chain, seeded with the character's real class level and real ability
 /// modifiers) rather than a hand-modelled function.
+///
+/// **SD-35 `AT-35-E6-003-RULED` cycle 2 — this is still a run-time PCGen read, and the cycle that
+/// tried to remove it MEASURED why it cannot go yet.** The converted replacement is written and
+/// exercised: [`tests::converted_resolved_description_for`] renders the same record from its own
+/// converted rule through [`resolved_prose::render_description`], with the same chain, the same
+/// seeds and the same total refusal. [`tests::class_feature_prose_parity_census`] runs both over
+/// every record in the corpus at every level 1..=20 under two ability probes — 660,320
+/// comparisons — and the two disagree on **97,332 of them across 2,443 distinct record keys**.
+/// The disagreement is on the **converter** side, not here: the converted rule carries Desc
+/// segments the stored description never had (a `.MOD` row merged from a second book), and for
+/// some records the converter settled a hole to plain text that the stored `DESC:` still states
+/// as a number. Swapping on those terms would move 97,332 rendered sheet lines with no oracle
+/// agreeing, which is the defect `AGENTS.md` rule 7 names. The census is the evidence and the
+/// next cycle's scope; it lives in this module's own `#[cfg(test)]` region, where an oracle
+/// belongs (`decisions.md` §11).
 pub(crate) fn resolved_description_for(
     key: &str,
     level: u8,
@@ -964,8 +1009,10 @@ pub(crate) fn resolved_description_for(
     for (name, value) in &resolved_vars {
         values.set(name, *value);
     }
-    let rendered =
-        crate::pcgen_import::pcgen_desc::render_pcgen_desc_with_values(&record.raw_description, &values);
+    let rendered = crate::pcgen_import::pcgen_desc::render_pcgen_desc_with_values(
+        &record.raw_description,
+        &values,
+    );
     if !rendered.dropped_args.is_empty() || rendered.text.is_empty() {
         return None;
     }
@@ -1088,10 +1135,8 @@ pub(crate) fn resolved_description_for_formula_only_desc_argument(
     if crate::pcgen_import::pcgen_desc::leaked_pcgen_syntax(&rendered.text).is_some() {
         return None;
     }
-    let primary_value = record_vars::evaluate_with_bindings(
-        converted_args.get(args[0].trim())?,
-        &seed_vars,
-    )?;
+    let primary_value =
+        record_vars::evaluate_with_bindings(converted_args.get(args[0].trim())?, &seed_vars)?;
     Some((rendered.text, primary_value))
 }
 
@@ -1227,6 +1272,7 @@ pub(super) fn push_generic_class_feature_grant_records(
 #[cfg(test)]
 mod tests {
     use super::*;
+    use crate::rules_core::pilot_compute::resolved_prose;
 
     /// Lower a `name -> source formula` map the way the ingest-time converter does, so a test
     /// that states its case in the source form still exercises the REAL conversion and the REAL
@@ -1248,6 +1294,269 @@ mod tests {
             );
         }
         out
+    }
+
+    /// SD-35 `AT-35-E6-003-RULED` cycle 2 -- the corpus-wide parity measurement that is the
+    /// precondition for this module's LAST run-time PCGen read leaving the live side: the
+    /// description renderer.
+    ///
+    /// For every record `class_feature_record_tokens()` carries, at every level 1..=20 under two
+    /// ability-modifier probes, it renders the record's words BOTH ways -- the LIVE path
+    /// (`render_pcgen_desc_with_values` over the stored `DESC:` token text) and the CONVERTED
+    /// candidate ([`converted_resolved_description_for`], `resolved_prose::render_description`
+    /// over the record's own converted rule) -- and counts agreement. `Some == Some`
+    /// byte-identical is agreement; `None == None` is agreement (neither surface would show
+    /// anything); anything else is a disagreement, named with its key, level and both texts.
+    /// The second resolver is censused the same way with an EMPTY header chain.
+    ///
+    /// **The measured answer, 2026-09-12, at `records=16508`:**
+    /// `compared=660320 agree=562988 both_none=242160 disagree=97332` over `2443` distinct keys
+    /// (`both_some_differ=53698/1351 keys`, `old_none_new_some=28720/718`,
+    /// `old_some_new_none=14914/374`); the formula-only resolver
+    /// `compared=660320 agree=648342 both_none=639148 disagree=11978`. That is why the live path
+    /// is still the PCGen one: the gap is on the converter side and it is 14.7% of the rendered
+    /// population, not a tail. **What this census does NOT cover** (`AGENTS.md` rule 7): a
+    /// non-empty `header_vars` merge on the second resolver, and any ability-modifier spread
+    /// outside the two probes.
+    ///
+    /// `#[ignore]`d because it is an evidence-producing census over the whole corpus. Run:
+    /// `AT35_E6_PROSE_PARITY=<path> cargo test --locked --lib -j 6 -- --ignored
+    /// class_feature_grant_consumer::tests::class_feature_prose_parity_census`.
+    /// The CONVERTED replacement for [`resolved_description_for`]: the same record's words read
+    /// off its own converted rule (`data/sheet_rules/<book>/class_feature/<slug>.json`) and
+    /// rendered by [`resolved_prose::render_description`], with the same chain, the same seeds
+    /// and the same total refusal.
+    ///
+    /// This is the function that WOULD be the live one. It lives here rather than in the live
+    /// module because [`class_feature_prose_parity_census`] measured it against the live PCGen
+    /// path over the whole corpus and the two do not yet agree; shipping it on those terms would
+    /// move 97,332 rendered sheet lines with nothing agreeing. `decisions.md` §11's oracle half
+    /// and this candidate therefore sit on the same side of the `#[cfg(test)]` line until the
+    /// converter closes the gap the census names.
+    fn converted_resolved_description_for(
+        key: &str,
+        level: u8,
+        ability_modifiers: &AbilityModifiers,
+    ) -> Option<String> {
+        let record = class_feature_record_tokens().get(key)?;
+        let class_level_var = class_level_variable_name(&record.class);
+        let resolved_vars =
+            resolve_pcgen_var_chain(&record.bonus_vars, &class_level_var, level, ability_modifiers);
+        let mut values = resolved_prose::DisplayValues::new();
+        for (name, value) in &resolved_vars {
+            values.set(name, *value);
+        }
+        let package = crate::rules_core::corpus_loader::live_sheet_rules()?;
+        let rule = package.rule(&record.converted_rule_id(key))?;
+        let rendered = resolved_prose::render_description(package, rule, &values);
+        if !rendered.dropped_args.is_empty() || rendered.text.is_empty() {
+            return None;
+        }
+        Some(rendered.text)
+    }
+
+    /// The converted replacement for
+    /// [`resolved_description_for_formula_only_desc_argument`], on the same terms.
+    ///
+    /// The seeds bind by NAME and the holes they fill are the converted rule's own `Slot`
+    /// expressions — the same `%N` arguments, converted once at ingest and written into the
+    /// record's prose in source order. `%1`'s own resolved value becomes the first hole in that
+    /// same prose, which is the same number by construction; a record with no hole at all is the
+    /// live path's own `args.is_empty()` refusal, reached through the same `None`.
+    fn converted_formula_only_desc_argument(
+        key: &str,
+        level: u8,
+        ability_modifiers: &AbilityModifiers,
+        header_vars: &ConvertedChain,
+    ) -> Option<(String, i64)> {
+        let record = class_feature_record_tokens_pre_gate_safe().get(key)?;
+        if !record.bonus_vars.is_empty() {
+            return None;
+        }
+        let class_level_var = class_level_variable_name(&record.class);
+        let mut seed_vars: BTreeMap<String, i64> = BTreeMap::new();
+        for (i, (abbr, _)) in record_vars::ABILITY_SEED_NAMES.iter().enumerate() {
+            let value = [
+                ability_modifiers.strength,
+                ability_modifiers.dexterity,
+                ability_modifiers.constitution,
+                ability_modifiers.intelligence,
+                ability_modifiers.wisdom,
+                ability_modifiers.charisma,
+            ][i];
+            seed_vars.insert((*abbr).to_string(), i64::from(value));
+        }
+        seed_vars.insert(class_level_var.clone(), i64::from(level));
+        if let Some(class_name) = class_level_var.strip_suffix("LVL") {
+            seed_vars.insert(record_vars::class_level_call_key(class_name), i64::from(level));
+        }
+        if !header_vars.is_empty() {
+            let resolved_header =
+                resolve_pcgen_var_chain(header_vars, &class_level_var, level, ability_modifiers);
+            for (name, value) in &resolved_header {
+                seed_vars.entry(name.clone()).or_insert(*value);
+            }
+        }
+        let mut values = resolved_prose::DisplayValues::new();
+        for (name, value) in &seed_vars {
+            values.set(name, *value);
+        }
+        let package = crate::rules_core::corpus_loader::live_sheet_rules()?;
+        let rule = package.rule(&record.converted_rule_id(key))?;
+        let rendered = resolved_prose::render_description(package, rule, &values);
+        if !rendered.dropped_args.is_empty() || rendered.text.is_empty() {
+            return None;
+        }
+        let primary_value = resolved_prose::first_desc_slot_value(rule, &values)?;
+        Some((rendered.text, primary_value))
+    }
+
+    #[test]
+    #[ignore = "evidence census over the whole corpus; run explicitly with AT35_E6_PROSE_PARITY set"]
+    fn class_feature_prose_parity_census() {
+
+        let probes = [
+            AbilityModifiers::default(),
+            AbilityModifiers {
+                strength: 1,
+                dexterity: 2,
+                constitution: 3,
+                intelligence: 4,
+                wisdom: 5,
+                charisma: 6,
+            },
+        ];
+        let table = class_feature_record_tokens();
+        assert!(!table.is_empty(), "the class_feature record table must not be empty");
+
+        let mut compared = 0usize;
+        let mut agree = 0usize;
+        let mut both_none = 0usize;
+        let mut disagreements: Vec<Value> = Vec::new();
+        let mut by_shape: BTreeMap<&'static str, usize> = BTreeMap::new();
+        let mut keys_by_shape: BTreeMap<&'static str, std::collections::BTreeSet<String>> =
+            BTreeMap::new();
+        for (key, record) in table {
+            let rule_id = record.converted_rule_id(key);
+            for probe in &probes {
+                for level in 1u8..=20 {
+                    let old = resolved_description_for(key, level, probe);
+                    let new = converted_resolved_description_for(key, level, probe);
+                    compared += 1;
+                    match (&old, &new) {
+                        (None, None) => {
+                            agree += 1;
+                            both_none += 1;
+                        }
+                        (Some(a), Some(b)) if a == b => agree += 1,
+                        _ => {
+                            let shape = match (&old, &new) {
+                                (None, Some(_)) => "old_none_new_some",
+                                (Some(_), None) => "old_some_new_none",
+                                _ => "both_some_differ",
+                            };
+                            *by_shape.entry(shape).or_insert(0usize) += 1;
+                            let seen = by_shape[shape];
+                            // Sample the FIRST of each shape and then every 997th, so the sample
+                            // is spread across the corpus instead of being the first key's own
+                            // 40 rows (which is what a plain `len() < N` cap produced, and it
+                            // hid both regression shapes behind one alphabetically-first record).
+                            if seen == 1 || seen.is_multiple_of(997) {
+                                disagreements.push(serde_json::json!({
+                                    "shape": shape,
+                                    "key": key,
+                                    "book": record.book,
+                                    "rule_id": rule_id,
+                                    "level": level,
+                                    "str_probe": probe.strength,
+                                    "old": old,
+                                    "new": new,
+                                }));
+                            }
+                            keys_by_shape.entry(shape).or_default().insert(key.clone());
+                        }
+                    }
+                }
+            }
+        }
+        // The SECOND resolver, censused over the same population with an EMPTY header chain --
+        // which is what both of its pre-cycle-19 call sites passed and is the shape the pool
+        // resolver reaches for first. What this does NOT cover, stated per `AGENTS.md` rule 7:
+        // a non-empty `header_vars` merge, whose seeds this census never exercises.
+        let mut fo_compared = 0usize;
+        let mut fo_agree = 0usize;
+        let mut fo_both_none = 0usize;
+        let mut fo_disagreements: Vec<Value> = Vec::new();
+        let empty_header = ConvertedChain::new();
+        for (key, record) in class_feature_record_tokens_pre_gate_safe() {
+            for probe in &probes {
+                for level in 1u8..=20 {
+                    let old = resolved_description_for_formula_only_desc_argument(
+                        key,
+                        level,
+                        probe,
+                        &empty_header,
+                    );
+                    let new =
+                        converted_formula_only_desc_argument(key, level, probe, &empty_header);
+                    fo_compared += 1;
+                    match (&old, &new) {
+                        (None, None) => {
+                            fo_agree += 1;
+                            fo_both_none += 1;
+                        }
+                        (Some(a), Some(b)) if a == b => fo_agree += 1,
+                        _ => {
+                            if fo_disagreements.len() < 200 {
+                                fo_disagreements.push(serde_json::json!({
+                                    "key": key,
+                                    "book": record.book,
+                                    "level": level,
+                                    "str_probe": probe.strength,
+                                    "old": old.as_ref().map(|(t, v)| (t.clone(), *v)),
+                                    "new": new.as_ref().map(|(t, v)| (t.clone(), *v)),
+                                }));
+                            }
+                        }
+                    }
+                }
+            }
+        }
+        println!(
+            "formula_only compared={fo_compared} agree={fo_agree} both_none={fo_both_none} disagree={}",
+            fo_compared - fo_agree
+        );
+
+        let report = serde_json::json!({
+            "formula_only": {
+                "compared": fo_compared,
+                "agree": fo_agree,
+                "both_none": fo_both_none,
+                "disagree": fo_compared - fo_agree,
+                "disagreements_sampled": fo_disagreements,
+            },
+            "records": table.len(),
+            "compared": compared,
+            "agree": agree,
+            "both_none": both_none,
+            "disagree": compared - agree,
+            "by_shape": by_shape,
+            "distinct_keys_by_shape": keys_by_shape
+                .iter()
+                .map(|(k, v)| (*k, v.len()))
+                .collect::<BTreeMap<_, _>>(),
+            "keys_by_shape": keys_by_shape,
+            "disagreements_sampled": disagreements,
+        });
+        if let Ok(path) = std::env::var("AT35_E6_PROSE_PARITY") {
+            std::fs::write(&path, serde_json::to_string_pretty(&report).unwrap())
+                .expect("parity census must be writable");
+        }
+        println!(
+            "records={} compared={compared} agree={agree} both_none={both_none} disagree={}",
+            table.len(),
+            compared - agree
+        );
     }
 
     /// SD-35 `AT-35-E6-001` cycle 4 -- the corpus-wide before/after comparison cycle 3 named as

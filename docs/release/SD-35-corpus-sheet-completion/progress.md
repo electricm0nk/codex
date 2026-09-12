@@ -181,6 +181,79 @@ re-measured at the cut by the launch-readiness audit.
 
 ## Cycle log
 
+### 2026-09-12 — Epic 6 / `desktop-and-prose-leave-pcgen` — AT-35-E6-003-RULED **cycle 2** (`PENDING_SHA`) — **partial** (one of cycle 1's seven refused groups cleared; the largest one **measured** and refused on the number — the converted renderer disagrees with the live one on **97,332 of 660,320** renderings across **2,443** record keys)
+
+- **Scope gate:** `SCOPE_GATE: EXEMPT (Epic 6 cycle — closes zero corpus units by design; decisions.md §2)`.
+  It ran anyway at the cycle's start tree `a3b23bbc99`:
+  `scoped=0 remaining_non_done=0 floor=500 verdict=PASS_WHOLE_REMAINDER`. The residue check, which
+  is not exempt, passed first at the same tree:
+  `live_files=25 live_hits=58 baseline_files=260 baseline_hits=12736 verdict=PASS`.
+
+- **`provenance_prose` (5) cleared, and it was the only group clearable by a live-side edit.** The
+  five `src/pcgen_import/sheet_rule/` module paths written **inside `reach_gate.rs` string
+  literals** — the remedy sentence an `UNREACHED_RECORD_FINDINGS` row prints — now name the
+  runnable converter, `cargo run --bin sheet_rule_convert`. Same finding, same counts, same
+  remedy, pointed at a command a reader can run rather than at a module path shipping code has no
+  business naming. Residue `25 / 58 → 24 / 53`, `root apps/desktop` **`4 / 12` → `3 / 7`**; the
+  instrument was not touched, so the `−5` is entirely code.
+
+- **The `renderer` group (8) was attempted, measured, and reverted — and the measurement is the
+  cycle's result.** Cycle 1 scheduled it first on the strength of "the mechanism is proved". The
+  converted replacement was written into both live functions
+  (`resolved_description_for`, `resolved_description_for_formula_only_desc_argument`, reading the
+  record's own converted rule through `resolved_prose::render_description`), and a corpus-wide
+  census was written to prove it. **The census refused it.** Over every `class_feature` record ×
+  levels `1..=20` × two ability probes:
+  `records=16508 compared=660320 agree=562988 both_none=242160 disagree=97332` — 97,332 of 660,320
+  renderings, across **2,443 distinct record keys**; the formula-only sibling
+  `compared=660320 agree=648342 both_none=639148 disagree=11978`. Three shapes, none a tail:
+  **53,698 / 1,351 keys** where the converted rule carries `Desc` segments the stored description
+  never had (a `.MOD` row merged from a second book); **28,720 / 718** where the converted rule
+  renders and the live path refuses; **14,914 / 374** where the live path renders and the
+  converted rule has no prose or an unsettleable hole. **Every one is on the CONVERTER side of
+  `decisions.md §11`'s line.** Both live functions were restored byte-for-byte and the converted
+  implementations kept as `#[cfg(test)]` candidates beside the census that judges them, so the
+  next cycle inherits working code and a standing instrument instead of a claim.
+
+- **Discovery — `correction 1789246442186-at-35-e6-003-ruled-c50bff`:** cycle 1's "proved twice
+  over" was inherited from `AT-35-E6-003-FINISH` cycle 3, which proved the mechanism for **racial
+  traits** (`tests/sd35_race_trait_prose_comes_from_the_converted_package.rs` does assert
+  byte-identical text over all 919). Carrying it across to `class_feature` is the
+  `validate-proxies-against-known-truth` shape: a proof cited in a region it was never run in. A
+  second finding, recorded in the receipt: `resolved_prose::resolved_description` is **not** a
+  general renderer — it deliberately returns `None` for any rule whose prose carries no
+  `Slot`/`Dice` hole, and reading it as "the converted description" silently drops 9,195 record
+  keys. The first census run made exactly that mistake and reported `disagree=382300`: right for
+  the function called, meaningless for the question asked. `render_description` is the general one.
+
+- **Verified once at the final tree, and `apps/` was touched so the desktop crate and the frontend
+  ran here:** `NO_RUN_EXIT=0`; lib `3341 passed; 0 failed; 16 ignored` (`passed` identical to the
+  last run, `+1 ignored` is this cycle's `#[ignore]`d census); full workspace **`FULL_EXIT=0` /
+  417 targets / 8,870 passed / 0 failed / 69 ignored / 0 `test result: FAILED`** (`8,870`
+  identical); root clippy **0 warnings** (two fired in this cycle's own new census code and were
+  fixed in the same cycle); desktop crate `569 passed; 0 failed` (1509.4s, identical), frontend
+  `101/101`; `sheet_rule_convert -- --check`
+  `records=49438 converted=49296 refused=142 rules=70135 var_tables=5293 verdict=PASS`; atlas /
+  token-coverage (`non_done=0 refused=142 token_types=233`) / shape-engine
+  (`magnitude_bearing=26396 not_held_by_engine=0`) / missing-engine-tables (`population=0`) /
+  denominator (`files_checked=131 violations=0`) all green; `pi-sweep` `RESULT: PASS`;
+  `data/sheet_rules/` token leaks **0**; `data/` unchanged. **Desktop clippy: 1 warning, named not
+  swept** — `vec_init_then_push` at `equipment_catalog.rs:889`, a file this cycle's diff does not
+  touch, so pre-existing by construction; rewriting 100 hand-transcribed book/count pairs is the
+  unrelated cleanup `AGENTS.md` rule 3 forbids.
+
+- **Receipt rows:** `closed=0 relabeled=0 rust_lines_changed=382 ratio=n/a builds_recorded=1 pcgen_live_files=24`.
+
+- **`partial`** — **53 hits / 24 files / six groups** remain:
+  `lst_parser_types=22, renderer=8, ingest_record_tokens=7, ir_converter=6, trait_and_pool_tokens=5, source_content_payload=5`
+  (`22+8+7+6+5+5 = 53`). `deferral 1789246450628-at-35-e6-003-ruled-e44e84`; every line named with
+  file, line and reason in `artifacts/epic-6-pcgen-exit/AT-35-E6-003-RULED_cycle2_runtime_import_census.json`,
+  and the renderer group's 2,443 keys enumerated in `…_cycle2_prose_parity_census.json`. **The
+  remainder is now converter-first**, which is a change of shape, not of size: the renderer group
+  is a converter cycle, and `lst_parser_types + ir_converter + ingest_record_tokens +
+  source_content_payload = 40 hits` are one piece of work (a converted equipment/spell record
+  shape the live side owns).
+
 ### 2026-09-12 — Epic 6 / `desktop-and-prose-leave-pcgen` — AT-35-E6-003-RULED **cycle 1** (`611559cf6d`) — **partial** (rulings B15 and B16 applied: the gate now measures what ships, `apps/desktop` stops reading `files=0 hits=0`, and the 58 hits it newly sees are named line by line, not cleared)
 
 - **Scope gate:** `SCOPE_GATE: EXEMPT (Epic 6 cycle — closes zero corpus units by design; decisions.md §2)`.

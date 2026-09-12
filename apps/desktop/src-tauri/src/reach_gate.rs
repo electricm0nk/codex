@@ -3414,8 +3414,9 @@ const OPEN_FINDINGS: &[(&str, &str, &str)] = &[
          Eidolon` now reach a player as the rule's words). The 7 that remain state no descriptive \
          prose at all in the converted package -- there is no sentence to serve, which is a \
          different gap from a term this catalog could not settle. Remedy: the converter deriving \
-         these rows' words from their own source rows, `src/pcgen_import/sheet_rule/` \
-         (`decisions.md §11` puts every such fix on the converter side).",
+         these rows' words from their own source rows, in the converter \
+         (`cargo run --bin sheet_rule_convert`; `decisions.md §11` puts every such fix on the \
+         converter side).",
     ),
     (
         // `Family.book` for this book is `"apg"`, not `"advanced_players_guide"`
@@ -3430,8 +3431,9 @@ const OPEN_FINDINGS: &[(&str, &str, &str)] = &[
          state NO descriptive prose at all in the converted package (re-derived record by record \
          against `data/sheet_rules/advanced_players_guide/companion/`): there is no sentence to \
          serve, which is a different gap from a term this catalog could not settle. Remedy: the \
-         converter deriving these rows' words from their own source rows, `src/pcgen_import/\
-         sheet_rule/` (`decisions.md §11` puts every such fix on the converter side).",
+         converter deriving these rows' words from their own source rows \
+         (`cargo run --bin sheet_rule_convert`; `decisions.md §11` puts every such fix on the \
+         converter side).",
     ),
     (
         "crb",
@@ -3442,7 +3444,7 @@ const OPEN_FINDINGS: &[(&str, &str, &str)] = &[
          state NO descriptive prose in the converted package -- PCGen's own umbrella/category-header \
          convention (`Companion`, `Companion Advancement`, `Companion Skills`, `Companion Stat ~ \
          <ability>`, 5 `.MOD` bonus-delta rows). Remedy: none where no content exists; otherwise the \
-         converter, `src/pcgen_import/sheet_rule/`.",
+         converter, `cargo run --bin sheet_rule_convert`.",
     ),
     (
         "ultimate_magic",
@@ -3451,7 +3453,7 @@ const OPEN_FINDINGS: &[(&str, &str, &str)] = &[
          106: SD-35 `AT-35-E6-003` cycle 3 pointed `companion_pool_catalog.rs` at the CONVERTED package (`data/sheet_rules/`), and a row whose bonus stands on a term no catalog screen can settle now reads as the rule's words instead of being refused -- the \
          Black Blade roster and 3 poison/incorporeal-form evolutions moved). All 96 that remain state \
          NO descriptive prose in the converted package. Remedy: the converter deriving these rows' \
-         words from their own source rows, `src/pcgen_import/sheet_rule/`.",
+         words from their own source rows, `cargo run --bin sheet_rule_convert`.",
     ),
     (
         "book_of_the_damned_volume_1",
@@ -3472,7 +3474,7 @@ const OPEN_FINDINGS: &[(&str, &str, &str)] = &[
          before `companion_pool_catalog.rs` first landed). All 26 that remain state NO descriptive \
          prose in the converted package -- umbrella category rows (`Archetype Companion`, `Plant \
          Base Form ~ <element>`, `Unchained Eidolon Base Form ~ <element>`). Remedy: none where no \
-         content exists; otherwise the converter, `src/pcgen_import/sheet_rule/`.",
+         content exists; otherwise the converter, `cargo run --bin sheet_rule_convert`.",
     ),
     // SD-32 row 19 cycle 4: an independent gap this cycle discovered while
     // re-deriving `every_ingested_family_is_accounted_for`'s own population

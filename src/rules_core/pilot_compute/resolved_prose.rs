@@ -498,6 +498,40 @@ pub fn render_description(
     RenderedProse { text: segments.join(" "), dropped_args }
 }
 
+/// The value of the FIRST slot in this rule's `Desc` prose, or `None` when it has no slot or the
+/// slot's expression names a variable this engine has not resolved.
+///
+/// **SD-35 `AT-35-E6-003-RULED` cycle 2.** The converted restatement of "`%1`'s own resolved
+/// value", which the class-feature pool resolver reports alongside the rendered sentence as that
+/// member's single representative magnitude. The ingest form read the `DESC:` token's first `%N`
+/// argument; the converted form reads the first hole in the same prose, in the same order, which
+/// is the same number by construction — the converter writes one slot per `%N`, in source order.
+///
+/// Segments whose gate is decided FALSE are skipped, exactly as [`render_description`] skips
+/// them, so the two never disagree about which sentence the number came out of.
+pub fn first_desc_slot_value(rule: &SheetRule, values: &DisplayValues) -> Option<i64> {
+    for segment in &rule.prose {
+        if segment.family != ProseFamily::Desc {
+            continue;
+        }
+        if let Some(applies) = &segment.applies
+            && gate_holds(applies, values) == Some(false)
+        {
+            continue;
+        }
+        for piece in &segment.pieces {
+            match piece {
+                ProsePiece::Slot(expr) => return eval(expr, values).and_then(Exact::trunc),
+                ProsePiece::Dice { modifier: Some(modifier), .. } => {
+                    return eval(modifier, values).and_then(Exact::trunc)
+                }
+                _ => {}
+            }
+        }
+    }
+    None
+}
+
 /// The values one rule finishes **on its own row** — every converted variable the rule declares
 /// whose whole contribution set is that same rule's, stated as a constant, with no gate.
 ///
