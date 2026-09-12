@@ -116,6 +116,98 @@ re-measured at the cut by the launch-readiness audit.
 
 ## Cycle log
 
+### 2026-09-12 — Epic 6 / `desktop-and-prose-leave-pcgen` — AT-35-E6-003-SWEEP **cycle 15** (`01d927a306`) — **partial** (`apps/desktop` reads **zero**; the `raw_tokens` pattern is gone; 7 code hits, the reachable remainder 15 → 8 — **and the desktop crate had been red for ten cycles**)
+
+- **Scope gate** (`workflow-instruction.md §6` step 1):
+  ```
+  SCOPE_GATE: EXEMPT (Epic 6 cycle — closes zero corpus units by design; decisions.md §2)
+  scoped=0 remaining_non_done=0 floor=500 verdict=PASS_WHOLE_REMAINDER
+  ```
+  Residue check at the cycle-start tree `94b4db5306`, which is **not** exempt:
+  `live_files=47 live_hits=366 baseline_files=260 baseline_hits=12736 verdict=PASS`.
+  The dispatch said "cycle 13" and handed on **cycle 12**'s refused-token line (373 hits).
+  This is cycle **15** and the remainder was **366**. **Fifth consecutive off-by-one on this
+  criterion's dispatch** (`correction 1789196772150-at-35-e6-003-sweep-b37c50`). The mechanism
+  asked for by cycles 11–14 is unchanged and is still one command:
+  `ls artifacts/epic-6-pcgen-exit/AT-35-E6-003-SWEEP_cycle*_receipt.md | wc -l`, plus one, with
+  the refused-token line taken from the newest of those receipts rather than from the dispatch
+  text.
+- **The mechanism.** `race_trait_picker.rs` was the last and **only** file under `apps/` the
+  residue gate listed, at 7 code hits. It answered one rules question — *which flags, already
+  set by another selection, block this one?* — by walking `raw_tokens` itself, keyed on
+  `ABILITY` / `PREMULT` / `PREABILITY` / `!PREFACT` and stripping a `PREVAREQ:` prefix by hand.
+  Four token spellings of one relation, all four of them ingest grammar held inside the desktop
+  crate. The whole reading, its four spellings and the ordering between them (branch 4 is a
+  **fallback**, never an addition) moved to `pcgen_import::race_trait_tokens`; the picker calls
+  `exclusion_guard_flags`, `negated_fact_gates` and `declares_preability_negated_guard` and
+  names no PCGen token at all.
+- **Not a relocation dodge.** The bar cycles 13 and 14 set — does the live call site still have
+  to know the ingest grammar to be written? — is met in every row: the picker stops naming a
+  token key, a bracket branch, a qualifier prefix and a field position. `render_pcgen_desc`
+  was again **not** relocated, for cycle 14's re-verified reason: its signature takes a raw
+  `DESC:` token the live catalogs hold, so moving it would lower the count by 4 and change
+  nothing.
+- **RED → GREEN.** `tests/sd35_live_side_names_no_ingest_qualifier.rs` was **widened** —
+  `raw_tokens`, the ingest *field*, joined its scanned vocabulary, because `token.key ==
+  "PREMULT"` names a PCGen token and carries no colon, so the `PRE<UPPER>+:` family walk cannot
+  see it — and the picker joined its cleared list. It failed with exactly the **7** hits the
+  python gate attributes to that file, before a line of source moved; green after. The four
+  files the ratchet already held stayed green under the widening.
+- **Losslessness, over the live corpus rather than a fixture** (`decisions.md §4`): the
+  picker's code at `94b4db5306` transcribed inline — deliberately transcribed rather than
+  referenced — and compared against the new functions for all three readings over every
+  `data/corpus/<book>/race_trait/**/*.json` record. **0 disagreements over 919 records**, 415
+  carrying a guard, 4 spelling it the `!PREABILITY` way, 2 declaring a multi-flag `!PREFACT`
+  gate; the test refuses to pass on an empty walk. A second test pins the four narrownesses a
+  tidy-up would widen — including that **two one-flag gates are not one two-flag gate**, which
+  is why `negated_fact_gates` returns `Vec<Vec<String>>`.
+- **The desktop crate was red, and had been since cycle 5.** `apps/` is on epic cadence, so
+  this is the first cycle since then to run it — and `equipment_catalog` failed. Rather than
+  assume, the failures were reproduced at this cycle's own start tree and then **bisected over
+  a separate worktree**: green at `6fe6131922~1`, red at `6fe6131922` and at every tree after.
+  That commit is `AT-35-E6-003-SWEEP` **cycle 5**, which made
+  `gen_equipment_gap_tables.rs::safe_description` store the *rendered* description instead of
+  the raw one; ACG's four Equipmods rows stopped leaking a bare `%` onto the sheet and gained
+  real prose. Three pins move together by the same 4 — leak total 59 → 55,
+  `with_description("ACG")` 307 → 311, catalog total 5390 → 5394 — which is what says one real
+  fix landed rather than three unattributed drifts. All three self-healed with that attribution
+  written beside them. The finding is not the pins: **epic cadence let a red crate stay red
+  across cycles 5–14 while each of them shipped reporting "desktop crate: epic cadence"**
+  (`incident 1789198679282-at-35-e6-003-sweep-01dc50`,
+  `correction 1789198672899-at-35-e6-003-sweep-7c3ef7`).
+- **Receipt rows:**
+  ```
+  closed=0 relabeled=0 rust_lines_changed=684 ratio=n/a builds_recorded=1 pcgen_live_files=46
+  ```
+- **Residue:** `live_files=46 live_hits=359 … verdict=PASS`, and the two lines this cycle
+  exists to produce: **`root apps/desktop files=0 hits=0`** and **`pattern raw_tokens files=0
+  hits=0`**. The movement is confined to the two patterns the 7 hits belonged to —
+  `raw_tokens` 5 → 0 and `PRE[A-Z]+:` 63 → 61 in 19 → 18 files — which is the check that no hit
+  was banked by reclassification.
+- **Build scope, once, after the last figure-moving edit:** workspace **416 targets / 8,856
+  passed / 0 failed / 68 ignored**, `FULL_EXIT=0`, zero `FAILED` lines (cycle 14: 416 / 8,854;
+  the +2 are this cycle's two new tests and no target was added); `cargo clippy --locked
+  --tests` 0 warnings; **desktop crate 575 passed / 0 failed**, clippy 0 warnings; **frontend
+  101/101 test files**, `tsc --noEmit` clean — the crate and the frontend run here because this
+  cycle touched `apps/`. `sheet_rule_convert -- --check` `records=49438 converted=49296
+  refused=142 … verdict=PASS`, identical to cycles 3–14; `grep -rlE … data/sheet_rules/ | wc
+  -l` → 0; atlas, token-coverage, shape-boundary, missing-engine-tables all clean;
+  `denominator_gate.py --check` **was red on arrival** with one violation in cycle 14's receipt,
+  at a line added after cycle 14 ran the gate — self-healed by fencing the quoted line, no
+  figure changed, now `files_checked=124 violations=0` (124 at HEAD, which includes this cycle’s own receipt; it was 123 when the gate first ran); `verify.sh --only pi-sweep` PASS.
+  `corpus_literal_sweep` not run: no corpus record changed.
+- **Status `partial`.** `AT-35-E6-003`'s own three evidence clauses are met at HEAD — zero hits
+  under `apps/desktop/`, desktop crate and frontend suites green, the on-screen tests passing.
+  `AT-35-E6-004`'s closure bar, which this sweep carries, is not. Refused, seven types summing
+  to the gate's own `live_hits`: `TYPE==100; BONUS:=91; PRE[A-Z]+:=61; DESC:=59;
+  render_pcgen_desc=39; %CHOICE=8; %LIST=1` (359 hits / 46 files). `raw_tokens` leaves the list
+  entirely. **351 of the 359 sit behind the still-open `#[cfg(test)]` ruling, now asked by
+  seven cycles**; the reachable 8 are two jobs, both blocked on a named artifact — the
+  converter prose carrier (4) and the verbatim `PU_*_DESC_TOKEN` transcriptions (4).
+  **The next dispatch should name the converter prose carrier as its own criterion and build
+  it, not run another sweep cycle.**
+  `deferral 1789196783797-at-35-e6-003-sweep-6431e1`
+
 ### 2026-09-12 — Epic 6 / `desktop-and-prose-leave-pcgen` — AT-35-E6-003-SWEEP **cycle 14** (`0edcc614ee`) — **partial** (the last unblocked code job on this criterion, taken whole; 4 code hits, 1 file to zero, the reachable remainder 19 → 15 — **and no unblocked job remains**)
 
 - **Scope gate** (`workflow-instruction.md §6` step 1):

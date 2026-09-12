@@ -21,8 +21,10 @@
 
   **The dispatch's cycle number was wrong for the fourth consecutive cycle.** It
   said "CYCLE NUMBER FOR THIS CRITERION: 13", and it handed on cycle **12**'s
-  refused-token line (`TYPE==104, BONUS:=91, PRE[A-Z]+:=63, DESC:=59,
-  render_pcgen_desc=39, %CHOICE=8, raw_tokens=5, %LIST=1`, summing to 373).
+  refused-token line, quoted here from that dispatch and summing to 373:
+  ```
+  TYPE==104, BONUS:=91, PRE[A-Z]+:=63, DESC:=59, render_pcgen_desc=39, %CHOICE=8, raw_tokens=5, %LIST=1
+  ```
   Cycle 13's receipt is committed at `bdae51f9f6` and its own result is the
   **370** the residue gate reported at that tree. This is cycle 14. Cycles 11,
   12 and 13 each recorded this same defect on their own dispatch; that is now
