@@ -116,6 +116,95 @@ re-measured at the cut by the launch-readiness audit.
 
 ## Cycle log
 
+### 2026-09-11 — Epic 6 / `desktop-and-prose-leave-pcgen` — AT-35-E6-003-SWEEP **cycle 11** (`208ebf1e21`) — **partial** (a job three receipts had costed as a wire-format regeneration was 26 string replacements; 27 code hits, 5% of the cycle's 500-hit floor, 3 files to zero)
+
+**This is cycle 11, not the 10 the dispatch named** — cycle 10 was already committed at
+`e92ae64f5e` with its receipt tracked at HEAD (`correction
+1789179191019-at-35-e6-003-sweep-031187`); the remainder it named (413 hits / 56 files) was cycle
+10's end state and reproduced exactly at cycle start.
+
+**Scope gate:** `SCOPE_GATE: EXEMPT (Epic 6 cycle — closes zero corpus units by design,
+decisions.md §2)`. The residue check, which is not exempt, passed first at the start tree:
+`live_files=56 live_hits=413 baseline_files=260 baseline_hits=12736 verdict=PASS`.
+
+**The costing was wrong, and that is the finding.** Cycle 8 measured the `bestiary`
+`description_variables` job at **4,378 literals repo-wide** and refused it as "a wire-format
+regeneration cycle"; cycles 9 and 10 carried that number forward as one of four whole-cycle jobs
+standing between this criterion and zero. The actual population was **22 array entries** — the
+4,378 is every `description_variables` literal in the repo, and the job is only the ones carrying
+a PCGen substitution token. The field type is unchanged, no generator emits it, and the whole
+mechanism is **26 string replacements in three shipped tables**
+(`…_cycle11_description_argument_words.py`, `--check` → `would apply=26`).
+`correction 1789179531562-at-35-e6-003-sweep-5f605d`. The lesson is the `every-figure-states-its-
+denominator` one, in its most expensive form: a correct count of the wrong population refused a
+cheap mechanism for three cycles.
+
+**What the 26 were, and the word each became.** (1) `"%CHOICE"` ×5 and (2) `"%LIST"` ×15 →
+`"the chosen option"` — not invented here, it is the literal
+`src/pcgen_import/sheet_rule/convert.rs::tag_word` already returns for those two tokens, and the
+typed form of the same fact is `sheet_rule::ProsePiece::ChoiceName`. These arrays are **prose,
+not plumbing**: they supply the words `%1`/`%2` are replaced with in a `description` a player
+reads, so the Mephit's Summon line printed the token instead of the creature:
+
+```
+description:           Summon 1 %1, 25%% (Level 2)
+description_variables: ["%CHOICE"]        ->  ["the chosen option"]
+```
+
+(3) `"TYPE=Base"` ×2 →
+`"Base"`, the bare game word `tag_word` strips it to, in Treerazer's two save-DC rows whose
+descriptions reference `%1` only. (4) `" DESC:&nl; "` ×4 → `"&nl; "` in the Flail Snail's Warp
+Magic description: upstream states the ability as five `DESC:` tokens on one line and the ingest
+concatenated the token **names** along with the text, so the sheet read *"…consult the following
+table. DESC:&nl; 1-3 Spell misfires…"*. Only the leaked marker was dropped. Plus one relocation:
+`corpus_loader.rs` rebuilt the ingest-format `BONUS:` line itself; that inverse of
+`bonus_chain_qualifiers` now lives beside it as `pcgen_import::ingest_record::rebuild_bonus_token`,
+pinned by a round-trip test.
+
+**RED→GREEN.** The standing gate `tests/sd35_rendered_prose_carries_no_ingest_vocabulary.rs` had
+its `SCANNED` list widened from 5 files to 8 and was run against the **untouched** tables first:
+`23 line(s) of prose this engine writes still print PCGen ingest vocabulary`, `test result:
+FAILED` — 23 lines carrying 26 hits. Green after the transform. The widening is the second
+discovery: every earlier cycle of this criterion scanned explanation strings and diagnostic
+messages, and **nothing had ever scanned the shipped content tables' own description arguments**.
+
+Code hits **413 → 386 = 27 cleared**, `pcgen_live_files` **56 → 53**, **3 files to zero**, **none
+rose**; per-pattern `%LIST` −15, `%CHOICE` −5, `DESC:` −4, `TYPE=` −2, `BONUS:` −1, everything
+else flat. `hits_outside` a `#[cfg(test)]` region falls **61 → 34** while `hits_inside_cfg_test`
+is **unmoved at exactly 352** — the same invariance cycles 6–10 recorded, and still the evidence
+that that mechanism is a ruling and not a backlog. Instrument untouched:
+`scripts/pcgen-residue-baseline.env` not edited, `--rebaseline` not run, no pattern or root
+changed.
+
+**Under the cycle's own 500-hit floor at 27**, named: **352 of 386 (91%)** behind the still-open
+`#[cfg(test)]` ruling, leaving **34 hits / 14 files** reachable — 12 `FeatEffectBonus` selection
+targets, 7 `race_trait_picker.rs`, 4 the `pcgen_desc.rs` catalog rewire, 4 the `PU_*_DESC_TOKEN`
+verbatim corpus transcriptions, 3 `external_ability_refs` guard tails, 2 `equipment_effects`
+qualifier comparisons, 2 `CHOOSE:`/pool prefix constants. **The two cheapest were deliberately
+refused**: relocating a `TYPE=…` literal into a converter-side constant deletes the gate's hit
+while the live-side read it guards stays exactly where it is, which is the masking shape cycles 4
+and 5 were burned by. **A third discovery, reported not half-fixed:** PCGen's newline entity
+`&nl;` is shipped verbatim on **140** non-comment lines under `src/rules_core/rules_tables/` and
+is in **none** of the residue gate's fourteen patterns, so every cycle of this criterion has
+scoped its remainder from an instrument that cannot see it
+(`correction 1789179200765-at-35-e6-003-sweep-7f5dfd`, own figure corrected by
+`…-3a59fa`). **The highest-value action for this criterion is still not a cycle — it is the
+`#[cfg(test)]` ruling.**
+
+`cycle_scope_gate.py --min 500`: EXEMPT (Epic 6).
+``closed=0 relabeled=0 rust_lines_changed=113 ratio=n/a builds_recorded=1 pcgen_live_files=53``.
+**`partial`** — `TYPE==105; BONUS:=91; PRE[A-Z]+:=66; DESC:=59; render_pcgen_desc=39; %LIST=13;
+%CHOICE=8; raw_tokens=5` (386 hits / 53 files, eight types, summing exactly). Verified once at
+`208ebf1e21`: `--no-run` 0 (`2:55.63` wall), full `**415 targets / 8,842 passed / 0 failed / 68 ignored / `FULL_EXIT=0`** (+1 test = the new round-trip test), lib **3,323/0/15**`, clippy
+**0 warnings, 0 errors**, `sheet_rule_convert --check` `CONVERT_CHECK_EXIT=0` with every kind's
+converted/refused split identical to cycles 3–10, `data/sheet_rules/` leaks 0, atlas /
+token-coverage / shape-engine / missing-engine-tables / denominator (`files_checked=119
+violations=0`) / provenance (`figures_examined=574 violations=0`) / dashboard-pin / pi-sweep all
+green; `apps/` untouched so desktop at epic cadence; `docs/work-inventory.json` byte-identical to
+the cycle-start copy. `deferral 1789179222370-at-35-e6-003-sweep-800361` (own-figure correction
+`1789179242420-at-35-e6-003-sweep-01b92e`).
+Receipt: `artifacts/epic-6-pcgen-exit/AT-35-E6-003-SWEEP_cycle11_receipt.md`.
+
 ### 2026-09-11 — Epic 6 / `desktop-and-prose-leave-pcgen` — AT-35-E6-003-SWEEP **cycle 10** (`5e0329cc63`) — **partial** (the last unframed prose citations cleared by hand; 45 code hits, 9% of the cycle's 500-hit floor, 3 files to zero, and **no hand work left in the reachable remainder**)
 
 **This is cycle 10, not the 9 the dispatch named** — cycle 9 was already committed at
