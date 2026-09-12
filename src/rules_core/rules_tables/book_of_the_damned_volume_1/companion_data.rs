@@ -55,7 +55,7 @@
 //!   * `Imp Companion`
 //!   * `1`
 
-use crate::rules_core::rules_tables::companion_chassis::{CompanionAbilityDelivery, CompanionAbilityFacet, CompanionAbilityRecord, CompanionClassRecord, CompanionRecord, NaturalAttack, Speed, StatAdjustment};
+use crate::rules_core::rules_tables::companion_chassis::{CompanionAbilityDelivery, CompanionAbilityFacet, CompanionAbilityGrant, CompanionAbilityRecord, CompanionClassRecord, CompanionRecord, NaturalAttack, Speed, StatAdjustment};
 
 /// Every book_of_the_damned_volume_1 companion creature (1 rows).
 pub(super) static COMPANIONS: &[CompanionRecord] = &[
@@ -125,7 +125,7 @@ pub(super) static COMPANION_CLASSES: &[CompanionClassRecord] = &[
         type_segments: &[],
         visible_no: false,
         source_page: None,
-        ability_grants: &["FEAT|AUTOMATIC|CMB Output"],
+        ability_grants: &[CompanionAbilityGrant { kind: "FEAT", mode: "AUTOMATIC", name: "CMB Output", conditions: &[] }],
         fact_class_type: None,
         source_file: "botd1_classes_companion.lst",
         source_line: 8,

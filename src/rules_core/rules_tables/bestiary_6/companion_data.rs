@@ -10,7 +10,7 @@
 //!   * `b6_races_companion.lst` -- 14 companion creature rows
 //!   * `b6_abilities_companion.lst` -- 12 companion ability rows
 
-use crate::rules_core::rules_tables::companion_chassis::{CompanionAbilityFacet, CompanionAbilityRecord, CompanionRecord, NaturalAttack, NaturalAttackDamageBonus, SkillAbilityDiffBonus, Speed, StatAdjustment};
+use crate::rules_core::rules_tables::companion_chassis::{CompanionAbilityFacet, CompanionAbilityRecord, CompanionRecord, ConditionItem, EffectCondition, NaturalAttack, NaturalAttackDamageBonus, SkillAbilityDiffBonus, Speed, StatAdjustment};
 
 /// Every bestiary_6 companion creature (14 rows).
 pub(super) static COMPANIONS: &[CompanionRecord] = &[
@@ -46,7 +46,7 @@ pub(super) static COMPANIONS: &[CompanionRecord] = &[
         monster_class: Some("Companion:2"),
         type_segments: &[],
         natural_attacks: &[NaturalAttack { name: "Slam", damage_dice: Some("1d10") }],
-        natural_attack_damage_bonuses: &[NaturalAttackDamageBonus { attack: "Slam", formula: "max(0,(STR/2))" }],
+        natural_attack_damage_bonuses: &[NaturalAttackDamageBonus { attack: "Slam", formula: "max(0,(STR/2))", conditions: &[] }],
         skill_ability_diff_bonuses: &[],
         stat_adjustments: &[StatAdjustment { ability: "STR", amount: 2 }, StatAdjustment { ability: "DEX", amount: 4 }, StatAdjustment { ability: "CON", amount: 2 }, StatAdjustment { ability: "INT", amount: -8 }, StatAdjustment { ability: "WIS", amount: 6 }, StatAdjustment { ability: "CHA", amount: -4 }],
         natural_armor: Some(8),
@@ -88,7 +88,7 @@ pub(super) static COMPANIONS: &[CompanionRecord] = &[
         monster_class: Some("Companion:2"),
         type_segments: &[],
         natural_attacks: &[NaturalAttack { name: "Bite", damage_dice: None }],
-        natural_attack_damage_bonuses: &[NaturalAttackDamageBonus { attack: "Bite", formula: "max(0,(STR/2))" }],
+        natural_attack_damage_bonuses: &[NaturalAttackDamageBonus { attack: "Bite", formula: "max(0,(STR/2))", conditions: &[] }],
         skill_ability_diff_bonuses: &[],
         stat_adjustments: &[StatAdjustment { ability: "STR", amount: 4 }, StatAdjustment { ability: "DEX", amount: 8 }, StatAdjustment { ability: "CON", amount: -2 }, StatAdjustment { ability: "INT", amount: -8 }, StatAdjustment { ability: "WIS", amount: 4 }],
         natural_armor: Some(3),
@@ -109,7 +109,7 @@ pub(super) static COMPANIONS: &[CompanionRecord] = &[
         monster_class: Some("Companion:2"),
         type_segments: &[],
         natural_attacks: &[NaturalAttack { name: "Bite", damage_dice: None }],
-        natural_attack_damage_bonuses: &[NaturalAttackDamageBonus { attack: "Bite", formula: "max(0,(STR/2))" }],
+        natural_attack_damage_bonuses: &[NaturalAttackDamageBonus { attack: "Bite", formula: "max(0,(STR/2))", conditions: &[] }],
         skill_ability_diff_bonuses: &[],
         stat_adjustments: &[StatAdjustment { ability: "STR", amount: 4 }, StatAdjustment { ability: "DEX", amount: 8 }, StatAdjustment { ability: "INT", amount: -10 }, StatAdjustment { ability: "WIS", amount: 2 }, StatAdjustment { ability: "CHA", amount: -4 }],
         natural_armor: Some(4),
@@ -130,7 +130,7 @@ pub(super) static COMPANIONS: &[CompanionRecord] = &[
         monster_class: Some("Companion:2"),
         type_segments: &[],
         natural_attacks: &[NaturalAttack { name: "Gore", damage_dice: None }],
-        natural_attack_damage_bonuses: &[NaturalAttackDamageBonus { attack: "Gore", formula: "max(0,(STR/2))" }],
+        natural_attack_damage_bonuses: &[NaturalAttackDamageBonus { attack: "Gore", formula: "max(0,(STR/2))", conditions: &[] }],
         skill_ability_diff_bonuses: &[],
         stat_adjustments: &[StatAdjustment { ability: "STR", amount: 4 }, StatAdjustment { ability: "DEX", amount: 2 }, StatAdjustment { ability: "CON", amount: 4 }, StatAdjustment { ability: "INT", amount: -8 }, StatAdjustment { ability: "WIS", amount: 6 }, StatAdjustment { ability: "CHA", amount: -8 }],
         natural_armor: Some(4),
@@ -172,7 +172,7 @@ pub(super) static COMPANIONS: &[CompanionRecord] = &[
         monster_class: Some("Companion:2"),
         type_segments: &[],
         natural_attacks: &[NaturalAttack { name: "Tail", damage_dice: Some("1d8") }],
-        natural_attack_damage_bonuses: &[NaturalAttackDamageBonus { attack: "Tail", formula: "max(0,(STR/2))" }],
+        natural_attack_damage_bonuses: &[NaturalAttackDamageBonus { attack: "Tail", formula: "max(0,(STR/2))", conditions: &[] }],
         skill_ability_diff_bonuses: &[],
         stat_adjustments: &[StatAdjustment { ability: "DEX", amount: 6 }, StatAdjustment { ability: "INT", amount: -8 }, StatAdjustment { ability: "WIS", amount: 2 }],
         natural_armor: Some(2),
@@ -214,7 +214,7 @@ pub(super) static COMPANIONS: &[CompanionRecord] = &[
         monster_class: Some("Companion:2"),
         type_segments: &[],
         natural_attacks: &[NaturalAttack { name: "Bite", damage_dice: None }],
-        natural_attack_damage_bonuses: &[NaturalAttackDamageBonus { attack: "Bite", formula: "max(0,(STR/2))|PREVARLT:CompanionAdvancement,1" }],
+        natural_attack_damage_bonuses: &[NaturalAttackDamageBonus { attack: "Bite", formula: "max(0,(STR/2))", conditions: &[EffectCondition { negated: false, family: "VARLT", items: &[ConditionItem { facet: None, value: "CompanionAdvancement" }, ConditionItem { facet: None, value: "1" }], alternatives: &[] }] }],
         skill_ability_diff_bonuses: &[],
         stat_adjustments: &[StatAdjustment { ability: "STR", amount: -2 }, StatAdjustment { ability: "DEX", amount: 10 }, StatAdjustment { ability: "INT", amount: -8 }, StatAdjustment { ability: "WIS", amount: 4 }, StatAdjustment { ability: "CHA", amount: 2 }],
         natural_armor: Some(2),
@@ -235,7 +235,7 @@ pub(super) static COMPANIONS: &[CompanionRecord] = &[
         monster_class: Some("Companion:2"),
         type_segments: &[],
         natural_attacks: &[NaturalAttack { name: "Bite", damage_dice: None }],
-        natural_attack_damage_bonuses: &[NaturalAttackDamageBonus { attack: "Bite", formula: "max(0,(STR/2))" }],
+        natural_attack_damage_bonuses: &[NaturalAttackDamageBonus { attack: "Bite", formula: "max(0,(STR/2))", conditions: &[] }],
         skill_ability_diff_bonuses: &[],
         stat_adjustments: &[StatAdjustment { ability: "STR", amount: -2 }, StatAdjustment { ability: "DEX", amount: 2 }, StatAdjustment { ability: "INT", amount: -8 }, StatAdjustment { ability: "WIS", amount: 4 }, StatAdjustment { ability: "CHA", amount: -4 }],
         natural_armor: None,
@@ -256,7 +256,7 @@ pub(super) static COMPANIONS: &[CompanionRecord] = &[
         monster_class: Some("Companion:2"),
         type_segments: &[],
         natural_attacks: &[NaturalAttack { name: "Bite", damage_dice: None }],
-        natural_attack_damage_bonuses: &[NaturalAttackDamageBonus { attack: "Bite", formula: "max(0,(STR/2))" }],
+        natural_attack_damage_bonuses: &[NaturalAttackDamageBonus { attack: "Bite", formula: "max(0,(STR/2))", conditions: &[] }],
         skill_ability_diff_bonuses: &[],
         stat_adjustments: &[StatAdjustment { ability: "STR", amount: 4 }, StatAdjustment { ability: "DEX", amount: 4 }, StatAdjustment { ability: "INT", amount: -8 }, StatAdjustment { ability: "WIS", amount: 6 }, StatAdjustment { ability: "CHA", amount: -2 }],
         natural_armor: Some(4),
@@ -277,7 +277,7 @@ pub(super) static COMPANIONS: &[CompanionRecord] = &[
         monster_class: Some("Magical Beast:2"),
         type_segments: &["Companion", "Familiar", "Magical Beast"],
         natural_attacks: &[NaturalAttack { name: "Bite", damage_dice: None }],
-        natural_attack_damage_bonuses: &[NaturalAttackDamageBonus { attack: "Bite", formula: "max(0,(STR/2))" }],
+        natural_attack_damage_bonuses: &[NaturalAttackDamageBonus { attack: "Bite", formula: "max(0,(STR/2))", conditions: &[] }],
         skill_ability_diff_bonuses: &[SkillAbilityDiffBonus { skills: &["Climb", "Swim"], formula: "DEX-STR" }],
         stat_adjustments: &[StatAdjustment { ability: "STR", amount: -4 }, StatAdjustment { ability: "DEX", amount: 6 }, StatAdjustment { ability: "CON", amount: 2 }, StatAdjustment { ability: "INT", amount: -4 }, StatAdjustment { ability: "WIS", amount: 2 }, StatAdjustment { ability: "CHA", amount: -4 }],
         natural_armor: None,

@@ -57,6 +57,7 @@ use std::path::{Path, PathBuf};
 
 use sha2::{Digest, Sha256};
 
+use codex::pcgen_import::companion_pcgen_guards::rebuild_condition;
 use codex::pcgen_import::cache_gen::WiringClassIndex;
 use codex::rules_core::pi_screening;
 use codex::rules_core::shape_b_v1::{Completeness, CorpusRecordV1, CorpusSource, License, Population};
@@ -1935,7 +1936,12 @@ fn gen_companion_book(spec: &CompanionBookSpec) {
             "description_variants": ability.description_variants.iter().map(|v| serde_json::json!({
                 "text": v.text,
                 "variables": v.variables,
-                "conditions": v.conditions,
+                // The live tables carry these typed (`EffectCondition`) since
+                // SD-35 `AT-35-E6-003-SWEEP` cycle 9; the wire format still
+                // carries the ingest string, so it is rebuilt here, on the
+                // converter side, keeping the cache byte-identical across that
+                // conversion.
+                "conditions": v.conditions.iter().map(rebuild_condition).collect::<Vec<_>>(),
             })).collect::<Vec<_>>(),
             "stat_adjustments": ability.stat_adjustments.iter().map(|a| serde_json::json!({ "ability": a.ability, "amount": a.amount })).collect::<Vec<_>>(),
             "source_page": ability.source_page,

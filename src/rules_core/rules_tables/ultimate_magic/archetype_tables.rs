@@ -95,7 +95,7 @@ pub fn archetype_swap_tables() -> &'static [ArchetypeSwapEntry] {
             replaces: Some(&["AlchemistThrowAnything", "AlchemistSwiftAlchemy", "AlchemistSwiftPoisoning"]),
             grants: &[
                 ArchetypeGrant { grants_feature_key: "Internal Alchemist ~ Breath Mastery", at_level: 1, description: Some("You can control your breath and the flow of vital energy within your body. Without preparation, you can hold your breath for %1 minutes (after this, you must begin making Constitution checks or risk suffocation); by spending a full-round action preparing yourself, you can increase this duration to %1 hours. You can survive twice as long as normal without food or water before you start to take penalties. You can put yourself into a state of suspended animation as a move action, and are then unconscious and appear completely dead; you awaken at a preset time or in response to a condition set by you when you enters this state.|BreathMasteryDuration"), benefit: None },
-                ArchetypeGrant { grants_feature_key: "Internal Alchemist ~ Disease Resistance", at_level: 3, description: Some("You gain a +%1 bonus on all saving throws against disease.|AlchemistPoisonResistanceBonus|!PREABILITY:1,CATEGORY=Special Ability,Poison Immunity ~ Alchemist"), benefit: None },
+                ArchetypeGrant { grants_feature_key: "Internal Alchemist ~ Disease Resistance", at_level: 3, description: Some("You gain a +%1 bonus on all saving throws against disease."), benefit: None },
                 ArchetypeGrant { grants_feature_key: "Internal Alchemist ~ Uncanny Dodge", at_level: 6, description: None, benefit: None },
             ],
         },

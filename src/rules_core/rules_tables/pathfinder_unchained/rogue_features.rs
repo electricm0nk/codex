@@ -255,37 +255,43 @@ fn active_level(feature: UnchainedRogueFeature, level: u8) -> Option<u8> {
     feature.is_granted_at(level).then_some(level)
 }
 
-/// `CSKILL:` on `Unchained Rogue ~ Skills` (`:579`), verbatim and in source
-/// order. `TYPE=` entries are PCGen skill-*type* selectors (every Craft, every
-/// Perform, every Profession), preserved as written rather than expanded — the
-/// expansion would need the skill corpus this module does not own.
+/// `CSKILL:` on `Unchained Rogue ~ Skills` (`:579`), in source order.
+///
+/// A whole-family grant is `ClassSkillEntry::Family` — every Craft, every
+/// Perform, every Profession. It is not expanded into its member skills here:
+/// that roster lives with the consumer (`skill_allocation::skill_family_member_ids`),
+/// never with the list. The ingest format's `TYPE=<Family>` spelling was
+/// carried verbatim until SD-35 `AT-35-E6-003-SWEEP` cycle 9 typed it — it was
+/// reaching a shipped sheet line as written, which the sheet rule forbids.
 ///
 /// Identical to the CRB rogue's list? **No** — checked, not assumed: this row
 /// is its own `CSKILL:` on its own record, and the Unchained Rogue keeps
 /// Knowledge (Dungeoneering) and Knowledge (Local) only, exactly as printed.
-pub fn class_skills() -> &'static [&'static str] {
+pub fn class_skills(
+) -> &'static [crate::rules_core::rules_tables::crb::class_skill_tables::ClassSkillEntry] {
+    use crate::rules_core::rules_tables::crb::class_skill_tables::ClassSkillEntry::{Family, Named};
     &[
-        "Acrobatics",
-        "Appraise",
-        "Bluff",
-        "Climb",
-        "TYPE=Craft",
-        "Diplomacy",
-        "Disable Device",
-        "Disguise",
-        "Escape Artist",
-        "Intimidate",
-        "Knowledge (Dungeoneering)",
-        "Knowledge (Local)",
-        "Linguistics",
-        "Perception",
-        "TYPE=Perform",
-        "TYPE=Profession",
-        "Sense Motive",
-        "Sleight of Hand",
-        "Stealth",
-        "Swim",
-        "Use Magic Device",
+        Named("Acrobatics"),
+        Named("Appraise"),
+        Named("Bluff"),
+        Named("Climb"),
+        Family("Craft"),
+        Named("Diplomacy"),
+        Named("Disable Device"),
+        Named("Disguise"),
+        Named("Escape Artist"),
+        Named("Intimidate"),
+        Named("Knowledge (Dungeoneering)"),
+        Named("Knowledge (Local)"),
+        Named("Linguistics"),
+        Named("Perception"),
+        Family("Perform"),
+        Family("Profession"),
+        Named("Sense Motive"),
+        Named("Sleight of Hand"),
+        Named("Stealth"),
+        Named("Swim"),
+        Named("Use Magic Device"),
     ]
 }
 
@@ -589,18 +595,25 @@ mod tests {
 
     #[test]
     fn class_skill_list_is_the_verbatim_cskill_row() {
+        use crate::rules_core::rules_tables::crb::class_skill_tables::ClassSkillEntry;
         let skills = class_skills();
         assert_eq!(skills.len(), 21, "CSKILL: on :579 has 21 pipe-separated entries");
-        assert_eq!(skills[0], "Acrobatics");
-        assert_eq!(skills[20], "Use Magic Device");
+        assert_eq!(skills[0], ClassSkillEntry::Named("Acrobatics"));
+        assert_eq!(skills[20], ClassSkillEntry::Named("Use Magic Device"));
         assert_eq!(
-            skills.iter().filter(|s| s.starts_with("TYPE=")).count(),
+            skills
+                .iter()
+                .filter(|s| matches!(s, ClassSkillEntry::Family(_)))
+                .count(),
             3,
-            "TYPE=Craft, TYPE=Perform, TYPE=Profession are preserved unexpanded"
+            "the Craft, Perform and Profession families are carried unexpanded"
         );
-        assert!(skills.contains(&"Knowledge (Dungeoneering)"));
-        assert!(skills.contains(&"Knowledge (Local)"));
-        assert!(!skills.contains(&"TYPE=Knowledge"), "the rogue gets two named Knowledges, not all of them");
+        assert!(skills.contains(&ClassSkillEntry::Named("Knowledge (Dungeoneering)")));
+        assert!(skills.contains(&ClassSkillEntry::Named("Knowledge (Local)")));
+        assert!(
+            !skills.contains(&ClassSkillEntry::Family("Knowledge")),
+            "the rogue gets two named Knowledges, not all of them"
+        );
     }
 
     // ---- formula pins -----------------------------------------------------

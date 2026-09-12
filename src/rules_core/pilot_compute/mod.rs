@@ -31535,6 +31535,29 @@ fn ground_unchained_monk_class_features(
 
 /// Grounds the Unchained Rogue's named features
 /// (`rules_tables::pathfinder_unchained::rogue_features`).
+/// Render a class-skill list as a sheet line reads it.
+///
+/// A whole-family entry becomes the words the rule uses ("every Craft skill"),
+/// never the ingest format's `TYPE=<Family>` selector. SD-35
+/// `AT-35-E6-003-SWEEP` cycle 9: this string is shipped `explanation` text a
+/// player reads, and it was printing ingest vocabulary verbatim. The family is
+/// deliberately still not expanded into its member skills -- that roster lives
+/// with `skill_allocation`, and inventing it here would be a different claim
+/// than the rule makes.
+fn render_class_skill_list(
+    skills: &'static [crate::rules_core::rules_tables::crb::class_skill_tables::ClassSkillEntry],
+) -> String {
+    use crate::rules_core::rules_tables::crb::class_skill_tables::ClassSkillEntry;
+    skills
+        .iter()
+        .map(|entry| match entry {
+            ClassSkillEntry::Named(name) => (*name).to_string(),
+            ClassSkillEntry::Family(family) => format!("every {family} skill"),
+        })
+        .collect::<Vec<_>>()
+        .join(", ")
+}
+
 fn ground_unchained_rogue_class_features(
     level: u8,
     ability_modifiers: &AbilityModifiers,
@@ -31683,11 +31706,10 @@ fn ground_unchained_rogue_class_features(
         id: "class_feature.pu.unchained_rogue.class_skill_count".to_owned(),
         value: class_skills.len() as i16,
         detail: format!(
-            "Unchained Rogue class skills, verbatim from the book's own CSKILL: token \
-             ({} entries): {}. TYPE= entries are PCGen skill-type selectors, preserved as \
-             written rather than expanded",
+            "Unchained Rogue class skills, as the book's own class-skill list states them \
+             ({} entries): {}",
             class_skills.len(),
-            class_skills.join(", ")
+            render_class_skill_list(class_skills)
         ),
     });
 
@@ -31930,11 +31952,11 @@ fn ground_unchained_summoner_class_features(
         id: "class_feature.pu.unchained_summoner.class_skill_count".to_owned(),
         value: class_skills.len() as i16,
         detail: format!(
-            "Unchained Summoner class skills, verbatim from the book's own CSKILL: token \
-             ({} entries): {}. Note TYPE=Knowledge -- this class gets every Knowledge skill, \
-             where the Unchained Rogue's row names only two",
+            "Unchained Summoner class skills, as the book's own class-skill list states them \
+             ({} entries): {}. This class gets every Knowledge skill, where the Unchained \
+             Rogue's list names only two",
             class_skills.len(),
-            class_skills.join(", ")
+            render_class_skill_list(class_skills)
         ),
     });
 

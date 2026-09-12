@@ -1267,7 +1267,7 @@ pub fn feat_tables() -> &'static [UmFeatEntry] {
                 description: None,
                 pretext: None,
                 source_page: None,
-                benefit: Some("You may choose to channel positive energy as if your effective cleric level were 2 levels lower than normal.|PREABILITY:1,CATEGORY=Special Ability,Versatile Channeler ~ Positive Energy"),
+                benefit: Some("You may choose to channel positive energy as if your effective cleric level were 2 levels lower than normal."),
             },
             // Vigilant Eidolon -- um_feats.lst:165
             UmFeatEntry {

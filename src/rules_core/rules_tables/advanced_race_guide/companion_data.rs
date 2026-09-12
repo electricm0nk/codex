@@ -51,7 +51,7 @@ pub(super) static COMPANIONS: &[CompanionRecord] = &[
         monster_class: Some("Animal:1"),
         type_segments: &["Companion", "Familiar"],
         natural_attacks: &[NaturalAttack { name: "Bite", damage_dice: Some("1d3") }],
-        natural_attack_damage_bonuses: &[NaturalAttackDamageBonus { attack: "Claw", formula: "max(0,(STR/2))" }],
+        natural_attack_damage_bonuses: &[NaturalAttackDamageBonus { attack: "Claw", formula: "max(0,(STR/2))", conditions: &[] }],
         skill_ability_diff_bonuses: &[SkillAbilityDiffBonus { skills: &["Climb", "Swim"], formula: "DEX-STR" }],
         stat_adjustments: &[StatAdjustment { ability: "STR", amount: -8 }, StatAdjustment { ability: "DEX", amount: 4 }, StatAdjustment { ability: "CON", amount: -2 }, StatAdjustment { ability: "INT", amount: -8 }, StatAdjustment { ability: "WIS", amount: 4 }, StatAdjustment { ability: "CHA", amount: -4 }],
         natural_armor: None,

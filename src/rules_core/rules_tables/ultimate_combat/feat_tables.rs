@@ -2171,7 +2171,7 @@ pub fn feat_tables() -> &'static [UcFeatEntry] {
                 description: Some("Choose a type a type [sic] of vehicle (either air, land, or water). You are more skilled when driving that vehicle."),
                 pretext: None,
                 source_page: Some("p.119"),
-                benefit: Some("You gain a +4 bonus on driving checks with your chosen vehicle (chosen vehicle: %1).|%LIST"),
+                benefit: Some("You gain a +4 bonus on driving checks with your chosen vehicle."),
             },
             // Wave Strike -- uc_feats.lst:288
             UcFeatEntry {
@@ -2268,7 +2268,7 @@ pub fn feat_tables() -> &'static [UcFeatEntry] {
                 key: "Dispelling Fist",
                 category: FeatCategory::General,
                 name: "Dispelling Fist",
-                description: Some("By focusing on your knowledge of magic and spells that negate its powers, you use your bare hands to rip magical defenses from your enemy.  PREABILITY:1,CATEGORY=FEAT,Improved Unarmed Strike"),
+                description: Some("By focusing on your knowledge of magic and spells that negate its powers, you use your bare hands to rip magical defenses from your enemy."),
                 pretext: None,
                 source_page: Some("p.97"),
                 benefit: Some("If you have dispel magic prepared or can cast it spontaneously, you can cast it as a swift action after hitting an opponent with an unarmed strike. Treat this as a targeted dispel against the opponent you hit."),
