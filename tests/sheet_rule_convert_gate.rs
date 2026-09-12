@@ -428,3 +428,36 @@ fn a_converted_record_never_drops_the_description_its_corpus_row_states() {
         dropped.iter().take(8).collect::<Vec<_>>()
     );
 }
+
+/// No converted rule's prose carries the ingest format's **literal-percent escape**, `%%`.
+///
+/// SD-35 `AT-35-E6-003-SWEEP` cycle 17. `%%` is how the source writes a literal `%`; the
+/// `DESC:` path has always collapsed it (`prose::template_pieces`), so a converted sentence
+/// states *"roll d%"* and a player reads percentile dice. The `description` fallback added in
+/// cycle 16 took the corpus row verbatim and applied no such collapse, so
+/// `core_rulebook:spell:plane_shift_to_shadow_or_material_plane` reached the Spell Catalog
+/// screen reading *"you appear 5 to 500 miles [5d%%] from your intended destination"* — the
+/// ingest format's own escape on a player's screen, which `decisions.md §1` and `§11` both
+/// rule out. Four package files carried it; the desktop crate's own catalogs caught two of
+/// them, and had been red since cycle 16 because that cycle did not run the crate.
+///
+/// Reads the live package, not a fixture (`decisions.md §4`), and refuses an empty walk.
+#[test]
+fn no_converted_prose_carries_the_source_literal_percent_escape() {
+    let mut hits: Vec<String> = Vec::new();
+    let mut examined = 0usize;
+    for (name, bytes) in package_files() {
+        examined += 1;
+        if String::from_utf8_lossy(&bytes).contains("%%") {
+            hits.push(name);
+        }
+    }
+    println!("package files examined={examined} carrying a '%%' escape={}", hits.len());
+    assert!(examined > 1000, "the walk examined only {examined} files -- agreement about nothing");
+    assert!(
+        hits.is_empty(),
+        "{} package file(s) state the source's literal-percent escape: {:?}",
+        hits.len(),
+        hits.iter().take(12).collect::<Vec<_>>()
+    );
+}

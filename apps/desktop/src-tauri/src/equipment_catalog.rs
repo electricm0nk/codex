@@ -874,8 +874,27 @@ mod tests {
         // moved CRB -> B1 (`decisions.md §9`); `Rock (Small)`/`Rock
         // (Medium)` (no description) moved the same way. 2219 - 1 = 2218;
         // 4 + 1 = 5.
-        assert_eq!(with_description("CRB"), 2647);
-        assert_eq!(with_description("APG"), 368);
+        // 2647 -> 2648, SD-35 `AT-35-E6-003-SWEEP` cycle 17, and the +1 is one record, named:
+        // cycle 16's `description` fallback gave `core_rulebook:equipment:staff_of_the_magi` the
+        // book's own sentence, and cycle 17 collapsed the `%%` literal-percent escape that
+        // sentence carried (`text_stat`, `printable_description`), so it stops being refused at
+        // this catalog's own `safe_description` gate. Re-derive with
+        // `cargo test --locked --bin codex-desktop description_coverage_is_pinned_per_book`.
+        // Cycle 17 note: these pins are COLLECTED and reported together, not asserted one at
+        // a time. A per-book `assert_eq!` stops at the first stale pin and hides every one
+        // behind it — cycle 17 fixed `CRB` and only then learned `APG` had been stale too,
+        // at the cost of a twenty-minute crate run per book. `AGENTS.md`'s concurrency
+        // section asks for exactly this: attribute every failure and name each, rather than
+        // discover them one run at a time.
+        let mut pinned: Vec<(&str, usize)> = Vec::new();
+        pinned.push(("CRB", 2648));
+        // 368 -> 374, and `UE` 573 -> 586: cycle 16's `description` fallback
+        // (`dca9c80fe3`, 239 equipment + 44 equipment_modifier rule files) gave these rows the
+        // book's own sentence, and `catalog_description` now has words to return for them.
+        // Not cycle 17's escape fix, which touched four `core_rulebook` files only. Both pins
+        // had been stale since cycle 16, which did not run this crate; both surfaced in one
+        // run because the pins are collected rather than asserted one at a time.
+        pinned.push(("APG", 374));
         // 307 -> 311, SD-35 `AT-35-E6-003-SWEEP` cycle 5 (`6fe6131922`),
         // pinned here by cycle 15, the first run of this crate since. The four
         // are ACG's Equipmods rows whose stored string used to leak a raw `%`
@@ -885,15 +904,15 @@ mod tests {
         // `the_raw_percent_escape_stops_at_the_catalog_boundary` above.
         // Re-derived from the built catalog itself (the assertion's own
         // `left`), not adjusted by delta.
-        assert_eq!(with_description("ACG"), 311);
-        assert_eq!(with_description("B1"), 5);
-        assert_eq!(with_description("ARG"), 205);
-        assert_eq!(with_description("PU"), 42);
-        assert_eq!(with_description("UI"), 48);
-        assert_eq!(with_description("UE"), 573);
+        pinned.push(("ACG", 311));
+        pinned.push(("B1", 5));
+        pinned.push(("ARG", 205));
+        pinned.push(("PU", 42));
+        pinned.push(("UI", 48));
+        pinned.push(("UE", 586));
         // 24 of UM's 26 (both Scrollmaster Gear ArmsArmor rows carry no
         // description; all 24 General spellbooks do).
-        assert_eq!(with_description("UM"), 24);
+        pinned.push(("UM", 24));
         // 403 -> 404, SD-35 `AT-35-E6-003` cycle 10. Re-derived from the
         // built catalog itself (the assertion's own `left`), not adjusted by
         // delta. This is the first run of the desktop crate since cycle 7
@@ -907,14 +926,14 @@ mod tests {
         // converter change, which altered exactly one field (`print`, 527
         // times) and no rule's prose or id -- `catalog_description` does not
         // read `print`.
-        assert_eq!(with_description("UPSI"), 404);
+        pinned.push(("UPSI", 404));
         // Most ArmsArmor rows (ammunition, armor, plain weapons) carry no
         // `SPROP:` token at all, matching every other book's own
         // weapon-heavy shortfall.
-        assert_eq!(with_description("UC"), 105);
+        pinned.push(("UC", 105));
         // UW reaches this catalog only through the corpus gap lane; 57 of its
         // 127 rows state real descriptive or special-property text.
-        assert_eq!(with_description("UW"), 56);
+        pinned.push(("UW", 56));
         // `SD31-E6-F10-003`: 8 further already-compiled books (`OA`, `HA`,
         // `ISR`, `ISWG`, `MC`, `B2`, `B3`, `B4`) extended into the corpus
         // gap lane -- same "no hand-authored table, every row from the gap
@@ -935,16 +954,16 @@ mod tests {
         // contributes 1 more (3 -> 4). `MYTHIC`'s and `ISC`'s newly-
         // included rows state no descriptive or special-property text of their own, so
         // their description counts are unchanged.
-        assert_eq!(with_description("ISG"), 139);
-        assert_eq!(with_description("MYTHIC"), 116);
-        assert_eq!(with_description("ISC"), 7);
-        assert_eq!(with_description("ISI"), 12);
-        assert_eq!(with_description("BOTD2"), 4);
+        pinned.push(("ISG", 139));
+        pinned.push(("MYTHIC", 116));
+        pinned.push(("ISC", 7));
+        pinned.push(("ISI", 12));
+        pinned.push(("BOTD2", 4));
         // 4430 + 188 (72 + 97 + 7 + 9 + 3) = 4618.
         // SD-32 T9 onboarding (card 11): `ISTEM` 33/43, `ISM` 4/6 --
         // re-derived directly against the generated `equipment_gap_tables.rs`
         // (counting non-`None` `description` fields, not hand-adjusted).
-        assert_eq!(with_description("ISTEM"), 33);
+        pinned.push(("ISTEM", 33));
         // SD-32 T9 residual (`decisions.md §20`): `ISM` 4 -> 54.
         // `cache_gen::equipment_gap::book_routing` had no arm for `"ISM"`
         // at all (fixed) and `ism_equipmods.lst` regained its citations on
@@ -952,7 +971,7 @@ mod tests {
         // and 54 of those 68 state real descriptive or special-property text,
         // re-derived directly against the regenerated
         // `equipment_gap_tables.rs`.
-        assert_eq!(with_description("ISM"), 54);
+        pinned.push(("ISM", 54));
         // SD-32 T9 residual: the new `AG` book (`adventurers_guide`, no
         // corpus gap config at all before this cycle) -- 14 of its 97 rows
         // carry a real description, re-derived directly against the
@@ -961,12 +980,12 @@ mod tests {
         // newly-included rows (97 -> 116 total, see `catalog_spans_every_
         // ingested_book_with_their_real_counts`) contribute 4 more real
         // descriptions (14 -> 18).
-        assert_eq!(with_description("AG"), 19);
+        pinned.push(("AG", 19));
         // SD-32 desktop count re-sweep: `BB` (`beginner_box`) -- 13 of its
         // 19 rows state real descriptive or special-property text (6 `description:
         // None`), re-derived directly against the regenerated
         // `equipment_gap_tables.rs`.
-        assert_eq!(with_description("BB"), 15);
+        pinned.push(("BB", 15));
         // Re-derived fresh this cycle (`sd32-desktop-count-resweep`) as the
         // real, measured total -- not the old 4719 plus a hand-adjusted
         // delta, because `OA`/`HA`/`ISR`/`ISWG`/`MC`/`B2`/`B3`/`B4` are not
@@ -989,9 +1008,25 @@ mod tests {
         // per-book count moved, which is what makes the total's +4 a
         // confirmation of that one story rather than a second, unattributed
         // move. Re-derived from the built catalog (the assertion's own `left`).
+
+        let mut stale: Vec<String> = Vec::new();
+        for (book, expected) in &pinned {
+            let actual = with_description(book);
+            if actual != *expected {
+                stale.push(format!("{book}: pinned {expected}, catalog says {actual}"));
+            }
+        }
+        assert!(stale.is_empty(), "per-book description pins are stale:\n  {}", stale.join("\n  "));
+        // 5394 -> 5414, SD-35 `AT-35-E6-003-SWEEP` cycle 17, and the +20 is fully attributed
+        // by the per-book pins above rather than left as a bare total: `CRB` +1 (this cycle's
+        // `%%` escape collapse freeing `staff_of_the_magi`), `APG` +6 and `UE` +13 (cycle 16's
+        // `description` fallback). 1 + 6 + 13 = 20, and no other book's per-book count moved,
+        // which is what makes the total a confirmation of those two stories rather than a
+        // third, unattributed one. Re-derived from the built catalog (the assertion's own
+        // `left`).
         assert_eq!(
             response.entries.iter().filter(|e| e.description.is_some()).count(),
-            5394
+            5414
         );
     }
 

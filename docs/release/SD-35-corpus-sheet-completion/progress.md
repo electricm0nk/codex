@@ -169,9 +169,29 @@ widened catalog shadowing a stronger evidence rung; the fix is a rung-ordering c
 `src/bin/v06_work_inventory.rs`, outside this epic's file-touch set. Deferred, with the
 mechanism named.
 
+**A fourth defect, found by running the desktop crate, and fixed converter-side.** Cycle 16's
+`description` fallback collapsed nothing, so **4 package files reached a player's page carrying
+the source's `%%` literal-percent escape** — `core_rulebook:spell:plane_shift_to_shadow_or_material_plane`
+read *"you appear 5 to 500 miles [5d%%] from your intended destination"*. The `DESC:` path has
+always collapsed `%%`; two of the four came through a second door entirely (`convert::text_stat`),
+so the fix is in both, with a corpus-wide gate (`examined=54604 carrying a '%%' escape=4` → **0**)
+and the fallback's `%1`-only check generalised to any `%<digit>` **after** the collapse.
+**All four had been red in the desktop crate since cycle 16**, which recorded the crate as
+correctly not run because it "touched no file under `apps/`" — it regenerated 310 rule files that
+`apps/` reads, which is the same thing (`correction …-c2cc3d`, `…-34c942`). Third consecutive
+cycle to find a red desktop test by running the crate; the one-line mechanism is to make that
+condition read *"changed anything `apps/` reads"*.
+
+**And a test that hid its own siblings.** `description_coverage_is_pinned_per_book` asserted 21
+per-book pins one at a time, so fixing `CRB` cost a twenty-minute run only to reveal `APG`, and
+that one only to reveal `UE`. It now collects every pin and reports all mismatches in one panic,
+which named `APG: pinned 368, catalog says 374` and `UE: pinned 573, catalog says 586` together.
+Both are cycle 16's equipment prose; `CRB`'s +1 is this cycle's escape fix; the total moves
+5394 → 5414 and `1 + 6 + 13 = 20` fully attributes it.
+
 **Build scope verified, once, at `9713a6f347`:** `--no-run` exit 0; `--lib` **3,341 passed /
-0 failed / 15 ignored**; `--no-fail-fast` **394 targets / 8,656 passed / 0 failed**; clippy
-**0 warnings**; `sheet_rule_convert -- --check` `records=49438 converted=49296 refused=142
+0 failed / 15 ignored**; `--no-fail-fast` **394 targets / 8,657 passed / 0 failed**; clippy
+**0 warnings**; **desktop crate 569 passed / 0 failed** (first run 565/4, all four cycle 16's); `sheet_rule_convert -- --check` `records=49438 converted=49296 refused=142
 rules=70135 var_tables=5293 PASS` (identical to cycles 3–16); package token-literal grep **0**;
 residue `live_files=45 live_hits=304 PASS`; atlas `population=49438 DONE=49438`, exit 0;
 `token_coverage` `non_done=0 refused=142 PASS`; `shape_engine_boundary` `not_held_by_engine=0`;

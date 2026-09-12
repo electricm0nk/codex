@@ -493,6 +493,29 @@ fn printable_description(r: &RecordRef) -> Option<String> {
     if FORBIDDEN_LITERALS.iter().any(|lit| text.contains(lit)) || has_pre_head(&text) || text.contains("%1") {
         return None;
     }
+    // The literal-percent escape — SD-35 `AT-35-E6-003-SWEEP` cycle 17.
+    //
+    // `%%` is how the source writes a literal `%`, and the `DESC:` path has always collapsed it
+    // (`prose::template_pieces`), which is why a converted sentence states "roll d%". This
+    // fallback took the corpus row verbatim and collapsed nothing, so
+    // `core_rulebook:spell:plane_shift_to_shadow_or_material_plane` reached the Spell Catalog
+    // screen reading "you appear 5 to 500 miles [5d%%] from your intended destination" — the
+    // ingest format's own escape on a player's page. Four package files carried it.
+    //
+    // Collapsed here, the same way and to the same result as the other door, so the two doors
+    // still apply one bar. Then refused if a `%` followed by a digit survives: that is a slot
+    // marker, and this door has no argument row to fill one from. The old `text.contains("%1")`
+    // check was the narrow form of that — it saw `%1` and not `%2`, and it ran before the
+    // collapse, so `%%1` slipped past it and became `%1` on the page.
+    let text = text.replace("%%", "%");
+    let bytes = text.as_bytes();
+    if bytes
+        .iter()
+        .enumerate()
+        .any(|(i, b)| *b == b'%' && bytes.get(i + 1).is_some_and(u8::is_ascii_digit))
+    {
+        return None;
+    }
     Some(text)
 }
 

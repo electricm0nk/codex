@@ -626,7 +626,14 @@ fn push_stat(acc: &mut Acc, label: &str, pieces: Vec<ProsePiece>) {
 }
 
 fn text_stat(ctx: &mut RecordCtx, acc: &mut Acc, label: &str, value: &str, field: &str) {
-    let text = decode_entities(value.trim());
+    // `%%` -> `%`, the source's literal-percent escape, collapsed exactly as the `DESC:` path
+    // collapses it in `prose::template_pieces` (SD-35 `AT-35-E6-003-SWEEP` cycle 17). A
+    // stat-block field is prose that prints, and `core_rulebook:equipment:sphere_of_annihilation`
+    // stated *"there is a 50%% chance (01-50 on d%%)"* in its Quality line — the ingest format's
+    // own escape on a player's page. Collapsed here and not in `decode_entities`, because the
+    // `DESC:` path reads `%%` itself and collapsing before it would turn the escape into a bare
+    // slot marker.
+    let text = decode_entities(value.trim()).replace("%%", "%");
     if text.is_empty() {
         return;
     }
