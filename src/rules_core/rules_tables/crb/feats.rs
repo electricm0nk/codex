@@ -197,6 +197,80 @@ pub struct FeatEffectBonus {
     /// situational/wired split is derived from, so this is a load-bearing
     /// field, not decoration.
     pub conditions: &'static [EffectCondition],
+    /// What the character's own choice supplies to this bonus, when it
+    /// supplies anything. `None` -- the overwhelming majority -- when every
+    /// slot of `qualifiers` is fixed by the record.
+    ///
+    /// **The selection slot is no longer in `qualifiers`.** SD-35
+    /// `AT-35-E6-003-SWEEP` cycle 12 removed it, for the same reason cycle 7
+    /// removed the stacking label and the guards: the ingest spellings
+    /// (`WEAPONPROF=%LIST` in the category slot, `%LIST` / `SCHOOL.%LIST` in
+    /// the target slot, `var("SKILLRANK=%LIST")` /
+    /// `count("ABILITIES","TYPE=FavoredClassBonus")` in the value slot) are
+    /// the format's vocabulary for "whatever the player picked", and
+    /// `decisions.md` §11 keeps that off the live side. The verbatim
+    /// pre-conversion qualifier list is kept converter-side in
+    /// `pcgen_import::feat_effect_selections`, whose round-trip test rebuilds
+    /// each one from this field and proves nothing was lost.
+    pub selection: Option<EffectSelection>,
+}
+
+/// What a feat bonus takes from the character's own choice, in this crate's
+/// own schema.
+///
+/// A feat such as Weapon Focus is written once in the book and means something
+/// different for every character who takes it: the bonus lands on *the weapon
+/// they chose*. The ingest format spells that with a `%LIST` stand-in
+/// inside the `BONUS:` chain. This enum is that same fact named in our
+/// vocabulary, so the live side can say "with your chosen weapon" on a sheet
+/// line without reading an ingest token to find out.
+///
+/// Which slot of the original chain carried the stand-in is a fact about
+/// the ingest format, so it lives converter-side, in
+/// `pcgen_import::feat_effect_selections`, not here.
+#[derive(Debug, Clone, Copy, PartialEq, Eq)]
+pub enum EffectSelection {
+    /// The bonus applies to the weapon the character chose when taking the
+    /// feat (Weapon Focus, Weapon Specialization, Improved Critical, their
+    /// Greater forms, Slashing Grace).
+    ChosenWeapon,
+    /// The bonus applies to the skill the character chose (Skill Focus).
+    ChosenSkill,
+    /// The bonus applies to spells of the school the character chose (Spell
+    /// Focus, Greater Spell Focus).
+    ChosenSpellSchool,
+    /// The bonus's **value** is the number of ranks the character has in the
+    /// skill they chose (Master Craftsman).
+    ChosenSkillRanks,
+    /// The bonus's **value** is how many favored-class bonuses the character
+    /// has taken (Multitalented Mastery).
+    FavoredClassBonusCount,
+}
+
+impl EffectSelection {
+    /// The human-readable phrase a sheet line uses for this selection.
+    ///
+    /// This is the sheet rule (`decisions.md` §1) applied to a term the engine
+    /// cannot resolve without the character's own choice: it renders as the
+    /// rule's words, not as a stand-in token.
+    pub const fn sheet_words(self) -> &'static str {
+        match self {
+            Self::ChosenWeapon => "your chosen weapon",
+            Self::ChosenSkill => "your chosen skill",
+            Self::ChosenSpellSchool => "your chosen school",
+            Self::ChosenSkillRanks => "your ranks in your chosen skill",
+            Self::FavoredClassBonusCount => "your favored class bonuses taken",
+        }
+    }
+
+    /// Whether the selection supplied the bonus's **target** (the thing the
+    /// bonus lands on) rather than its **value**.
+    pub const fn is_target(self) -> bool {
+        matches!(
+            self,
+            Self::ChosenWeapon | Self::ChosenSkill | Self::ChosenSpellSchool
+        )
+    }
 }
 
 /// One condition gating a feat's bonus, in this crate's own schema.

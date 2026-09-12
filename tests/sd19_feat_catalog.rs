@@ -127,6 +127,7 @@ fn great_fortitude_carries_its_real_save_bonus_token() {
             qualifiers: &["SAVE", "Fortitude", "2"],
             bonus_type: None,
             conditions: &[],
+            selection: None,
         }] as &[FeatEffectBonus])
     );
 }

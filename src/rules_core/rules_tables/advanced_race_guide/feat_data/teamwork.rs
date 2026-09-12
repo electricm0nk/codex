@@ -7,6 +7,6 @@ use super::super::feats::{FeatCategory, FeatEffectBonus, FeatTableEntry};
 
 pub const TEAMWORK_TABLE: &[FeatTableEntry] = &[
     FeatTableEntry { key: "Focusing Blow", category: FeatCategory::Teamwork, name: "Focusing Blow", description: Some("You and your allies work together to shake off mental effects."), effect: None },
-    FeatTableEntry { key: "Greater Brand", category: FeatCategory::Teamwork, name: "Greater Brand", description: Some("A kinslayer learns to modify her slayer's brand judgment as she gains levels."), effect: Some(&[FeatEffectBonus { qualifiers: &["ABILITYPOOL", "Greater Brand", "1"], bonus_type: None, conditions: &[] }]) },
+    FeatTableEntry { key: "Greater Brand", category: FeatCategory::Teamwork, name: "Greater Brand", description: Some("A kinslayer learns to modify her slayer's brand judgment as she gains levels."), effect: Some(&[FeatEffectBonus { qualifiers: &["ABILITYPOOL", "Greater Brand", "1"], bonus_type: None, conditions: &[], selection: None }]) },
     FeatTableEntry { key: "Horde Charge", category: FeatCategory::Teamwork, name: "Horde Charge", description: Some("When you charge with an ally, you are more deadly."), effect: None },
 ];

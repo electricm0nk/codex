@@ -20,6 +20,9 @@ pub mod archetype_swap_prereq_tokens;
 pub mod feat_gap_prereq_tokens;
 pub mod companion_pcgen_guards;
 pub mod feat_effect_conditions;
+// SD-35 AT-35-E6-003-SWEEP cycle 12: the verbatim selection chains, round-trip
+// oracle for `FeatEffectBonus.selection`.
+pub mod feat_effect_selections;
 pub mod prose_ingest_tails;
 pub mod feat_effect_tokens;
 pub mod feat_prereq_tokens;

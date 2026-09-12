@@ -11,6 +11,6 @@ use crate::rules_core::rules_tables::crb::feats::{FeatCategory, FeatEffectBonus,
 pub const PANACHE_TABLE: &[FeatTableEntry] = &[
     FeatTableEntry { key: "Confounding Tumble Deed", category: FeatCategory::Panache, name: "Confounding Tumble Deed", description: Some("You can befuddle a foe by striking a blow after tumbling."), effect: None},
     FeatTableEntry { key: "Disarming Threat Deed", category: FeatCategory::Panache, name: "Disarming Threat Deed", description: Some("Even your threats are curiously charming."), effect: None},
-    FeatTableEntry { key: "Extra Panache", category: FeatCategory::Panache, name: "Extra Panache", description: Some("You have more panache than the ordinary swashbuckler."), effect: Some(&[FeatEffectBonus { qualifiers: &["VAR", "PanachePoints", "2"], bonus_type: None, conditions: &[] }, FeatEffectBonus { qualifiers: &["VAR", "Panache_Cap", "2"], bonus_type: None, conditions: &[] }])},
+    FeatTableEntry { key: "Extra Panache", category: FeatCategory::Panache, name: "Extra Panache", description: Some("You have more panache than the ordinary swashbuckler."), effect: Some(&[FeatEffectBonus { qualifiers: &["VAR", "PanachePoints", "2"], bonus_type: None, conditions: &[], selection: None }, FeatEffectBonus { qualifiers: &["VAR", "Panache_Cap", "2"], bonus_type: None, conditions: &[], selection: None }])},
     FeatTableEntry { key: "Pommel Strike Deed", category: FeatCategory::Panache, name: "Pommel Strike Deed", description: Some("With a surprise swipe with your pommel, you can topple a foe."), effect: None},
 ];

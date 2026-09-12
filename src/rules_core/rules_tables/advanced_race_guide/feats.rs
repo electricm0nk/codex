@@ -76,7 +76,9 @@ pub struct FeatTableEntry {
     pub effect: Option<&'static [FeatEffectBonus]>,
 }
 
-pub use crate::rules_core::rules_tables::crb::feats::{ConditionItem, EffectCondition};
+pub use crate::rules_core::rules_tables::crb::feats::{
+    ConditionItem, EffectCondition, EffectSelection,
+};
 
 /// One `BONUS:` token lifted from a feat's corpus record, captured as a
 /// flat pipe-delimited qualifier list. Mirrors
@@ -94,6 +96,10 @@ pub struct FeatEffectBonus {
     /// The conditions gating this bonus; empty when it is unconditional.
     /// Mirrors `rules_tables::crb::feats::FeatEffectBonus.conditions`.
     pub conditions: &'static [EffectCondition],
+    /// What the character's own choice supplies to this bonus. Mirrors
+    /// `rules_tables::crb::feats::FeatEffectBonus.selection`; SD-35
+    /// `AT-35-E6-003-SWEEP` cycle 12.
+    pub selection: Option<EffectSelection>,
 }
 
 /// Full ARG feat catalog: every real corpus record across all 3 real

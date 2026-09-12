@@ -108,7 +108,7 @@ use crate::rules_core::character_input::{ActiveState, CharacterInput};
 use crate::rules_core::equipment_effects::{is_natural_attack_weapon, EquipmentEffects};
 use crate::rules_core::equipment_resolver::{equipment_id_resolve, equipment_key_token};
 use crate::rules_core::pilot_compute_corpus::TableCellRef;
-use crate::rules_core::rules_tables::crb::feats::{feat_tables, FeatEffectBonus};
+use crate::rules_core::rules_tables::crb::feats::{feat_tables, EffectSelection, FeatEffectBonus};
 use crate::rules_core::rules_tables::RuleSetId;
 use crate::rules_core::source_content::SourcePackageContent;
 
@@ -734,35 +734,69 @@ pub fn resolve_feat_damage_effect(feat_key: &str) -> Option<DamageRollFeatEffect
     })
 }
 
-/// A `BONUS:` token is a directly-usable constant damage bonus, per
-/// `resolve_feat_damage_effect`'s scoping doc comment, only when its
-/// qualifier list is exactly `[<category>, "DAMAGE", "<integer>"]` and
-/// `<category>` is not `VAR` (a `VAR` token defines a named formula
-/// variable, not a direct roll bonus — e.g. Power Attack's
-/// `BONUS:VAR|PowerAttackDamageModifier|...`). Anything else (a
-/// qualified/compound target, a non-numeric value, a `VAR` category, a
-/// wrong-length qualifier list) is a formula or a non-constant-damage
-/// bonus and is honestly excluded, not coerced.
+/// A feat bonus is a directly-usable constant damage bonus, per
+/// `resolve_feat_damage_effect`'s scoping doc comment, only when it is
+/// untyped and unconditional, its target is the bare `DAMAGE` string, its
+/// value is an integer, and its category is not the formula-variable
+/// category (which defines a named variable for other tokens to reference
+/// rather than a direct roll bonus — e.g. Power Attack). Anything else (a
+/// qualified/compound target, a non-numeric value, a formula-variable
+/// category, a wrong-length qualifier list) is a formula or a
+/// non-constant-damage bonus and is honestly excluded, not coerced.
+///
+/// A row whose bonus is scoped to the character's chosen weapon
+/// (`FeatEffectBonus.selection`) carries one fewer qualifier slot, because
+/// the selection is no longer spelled inside the chain — SD-35
+/// `AT-35-E6-003-SWEEP` cycle 12. Weapon Specialization and Greater Weapon
+/// Specialization are that shape, and the match arms below are what keeps
+/// their `+2` reaching the sheet.
 fn constant_damage_bonus(bonus: &FeatEffectBonus) -> Option<i16> {
-    let qualifiers = bonus.qualifiers;
-    if qualifiers.len() != 3 {
-        return None;
-    }
     // A typed or conditioned bonus is not a flat constant this slice can add.
     // Before SD-35 `AT-35-E6-003-SWEEP` cycle 7 the stacking label and the
-    // guards were extra `qualifiers` elements, so `len() != 3` above already
-    // excluded every one of them; the cycle moved those into `bonus_type` and
-    // `conditions`, and this check keeps the excluded set exactly what it was.
-    // It is a deliberate behaviour-preserving guard, not a new rule: whether a
-    // typed damage bonus should contribute is a rules question this exit cycle
-    // does not answer.
+    // guards were extra `qualifiers` elements, so the length check below
+    // already excluded every one of them; that cycle moved them into
+    // `bonus_type` and `conditions`, and this check keeps the excluded set
+    // exactly what it was. It is a deliberate behaviour-preserving guard, not
+    // a new rule: whether a typed damage bonus should contribute is a rules
+    // question this exit cycle does not answer.
     if bonus.bonus_type.is_some() || !bonus.conditions.is_empty() {
         return None;
     }
-    if qualifiers[0] == "VAR" || qualifiers[1] != "DAMAGE" {
+    let qualifiers = bonus.qualifiers;
+
+    // SD-35 `AT-35-E6-003-SWEEP` cycle 12 typed the character's own selection
+    // out of the chain, which SHORTENS it by one slot on the rows that carry
+    // one. Weapon Specialization and its Greater form are exactly such rows
+    // (`WEAPONPROF=%LIST|DAMAGE|2` before the conversion), and they are the
+    // two feats this function exists to resolve, so the arms below are what
+    // preserve their `+2`. The excluded set is unchanged; each arm says why.
+    let (category, target, value) = match bonus.selection {
+        // The chosen weapon stood in the CATEGORY slot, which is now gone:
+        // what remains is `[target, value]`, and the category is "the weapon
+        // the character picked" rather than a fixed string. Never `VAR`.
+        Some(EffectSelection::ChosenWeapon) => {
+            if qualifiers.len() != 2 {
+                return None;
+            }
+            (None, qualifiers[0], qualifiers[1])
+        }
+        // Every other selection stood in the target slot (Skill Focus, Spell
+        // Focus) or in the value slot (Master Craftsman, Multitalented
+        // Mastery). Neither is a constant damage bonus, and neither was one
+        // before the conversion either: the first is not the bare `DAMAGE`
+        // target, and the second never parsed as an integer.
+        Some(_) => return None,
+        None => {
+            if qualifiers.len() != 3 {
+                return None;
+            }
+            (Some(qualifiers[0]), qualifiers[1], qualifiers[2])
+        }
+    };
+    if category == Some("VAR") || target != "DAMAGE" {
         return None;
     }
-    qualifiers[2].parse::<i16>().ok()
+    value.parse::<i16>().ok()
 }
 
 /// One equipped weapon's full damage breakdown — the wiring project's
@@ -1350,9 +1384,10 @@ Unarmed Strike\tKEY:Unarmed Strike\tTYPE:Weapon.Resizable.Melee.Special.Unarmed.
     fn constant_damage_bonus_examples() {
         assert_eq!(
             constant_damage_bonus(&FeatEffectBonus {
-                qualifiers: &["WEAPONPROF=%LIST", "DAMAGE", "2"],
+                qualifiers: &["DAMAGE", "2"],
                 bonus_type: None,
                 conditions: &[],
+                selection: Some(EffectSelection::ChosenWeapon),
             }),
             Some(2)
         );
@@ -1361,6 +1396,7 @@ Unarmed Strike\tKEY:Unarmed Strike\tTYPE:Weapon.Resizable.Melee.Special.Unarmed.
                 qualifiers: &["VAR", "PowerAttackDamageBase", "2"],
                 bonus_type: None,
                 conditions: &[],
+                selection: None,
             }),
             None,
             "a VAR-category token defines a formula variable, not a direct bonus"
@@ -1370,6 +1406,7 @@ Unarmed Strike\tKEY:Unarmed Strike\tTYPE:Weapon.Resizable.Melee.Special.Unarmed.
                 qualifiers: &["COMBAT", "TOHIT-SHORTRANGE,DAMAGE-SHORTRANGE", "1"],
                 bonus_type: None,
                 conditions: &[],
+                selection: None,
             }),
             None,
             "a compound/qualified target is not the bare DAMAGE this slice models"
@@ -1379,6 +1416,7 @@ Unarmed Strike\tKEY:Unarmed Strike\tTYPE:Weapon.Resizable.Melee.Special.Unarmed.
                 qualifiers: &["HP", "CURRENTMAX", "max(3,TL)"],
                 bonus_type: None,
                 conditions: &[],
+                selection: None,
             }),
             None,
             "a non-numeric value signals a formula, not a constant"

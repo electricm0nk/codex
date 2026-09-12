@@ -53,6 +53,16 @@ const SCANNED: &[&str] = &[
     "src/rules_core/rules_tables/bestiary/monster_data.rs",
     "src/rules_core/rules_tables/bestiary_3/monster_data.rs",
     "src/rules_core/rules_tables/inner_sea_world_guide/monster_data.rs",
+    // Cycle 12. A shipped feat catalog's `FeatEffectBonus.qualifiers` is read
+    // by `damage_total::constant_damage_bonus` to produce a number the sheet
+    // prints, and the sheet line for Weapon Focus has to say "your chosen
+    // weapon" — the rule's words — not the ingest format's `%LIST`. These four
+    // files are every shipped feat table that carried a selection stand-in;
+    // `pcgen_import::feat_effect_selections` holds the verbatim chains.
+    "src/rules_core/rules_tables/crb/feat_data/combat.rs",
+    "src/rules_core/rules_tables/crb/feat_data/general.rs",
+    "src/rules_core/rules_tables/acg/feat_data/combat.rs",
+    "src/rules_core/rules_tables/advanced_race_guide/feat_data/general.rs",
 ];
 
 /// A `\b` word boundary immediately before byte `at`, exactly as the residue

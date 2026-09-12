@@ -114,6 +114,7 @@ fn pinned_apg_feats_carry_their_real_corpus_fields() {
             qualifiers: &["ABILITYPOOL", "Witch Hex", "1"],
             bonus_type: None,
             conditions: &[],
+            selection: None,
         }] as &[FeatEffectBonus])
     );
 
@@ -150,11 +151,13 @@ fn pinned_acg_feats_carry_their_real_corpus_fields() {
                 qualifiers: &["VAR", "PanachePoints", "2"],
                 bonus_type: None,
                 conditions: &[],
+                selection: None,
             },
             FeatEffectBonus {
                 qualifiers: &["VAR", "Panache_Cap", "2"],
                 bonus_type: None,
                 conditions: &[],
+                selection: None,
             },
         ] as &[FeatEffectBonus])
     );
