@@ -181,7 +181,7 @@ re-measured at the cut by the launch-readiness audit.
 
 ## Cycle log
 
-### 2026-09-12 — Epic 6 / `desktop-and-prose-leave-pcgen` — AT-35-E6-003-RULED **cycle 3** (`SHA_PLACEHOLDER`) — **partial** (the converter pipeline that was living in a live root left it: residue `24 / 53 → 22 / 44`, all of it code, the instrument untouched)
+### 2026-09-12 — Epic 6 / `desktop-and-prose-leave-pcgen` — AT-35-E6-003-RULED **cycle 3** (`381f33bc84`) — **partial** (the converter pipeline that was living in a live root left it: residue `24 / 53 → 22 / 44`, all of it code, the instrument untouched)
 
 - **Scope gate:** `SCOPE_GATE: EXEMPT (Epic 6 cycle — closes zero corpus units by design; decisions.md §2)`.
   It ran anyway at the cycle's start tree `b9e5956261`:
