@@ -383,7 +383,11 @@ fn equipment_record_from_json(data: &serde_json::Value) -> Option<EquipmentRecor
     }
     for qualifiers in crate::pcgen_import::ingest_record::bonus_chain_qualifiers(data) {
         let qualifiers: Vec<String> = qualifiers.into_iter().map(str::to_string).collect();
-        let raw_bonus = format!("BONUS:{}", qualifiers.join("|"));
+        // The ingest format's own token name is the converter's vocabulary, not
+        // this side's (`decisions.md` §11, SD-35 `AT-35-E6-003-SWEEP` cycle 11):
+        // `rebuild_bonus_token` is the inverse of `bonus_chain_qualifiers`
+        // above and lives beside it.
+        let raw_bonus = crate::pcgen_import::ingest_record::rebuild_bonus_token(&qualifiers);
         bonus_chains.push(BonusToken { line_number: 1, raw_bonus, qualifiers });
     }
     // SD-33 remediation wave 5 (`sd33-r5-skillcombat`): synthesize a KEY:

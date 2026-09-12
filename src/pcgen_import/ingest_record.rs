@@ -79,6 +79,30 @@ pub fn bonus_chain_qualifiers(doc: &Value) -> Vec<Vec<&str>> {
         .collect()
 }
 
+/// Rebuild the ingest-format `BONUS:` line a qualifier chain came off.
+///
+/// SD-35 `AT-35-E6-003-SWEEP` cycle 11. [`bonus_chain_qualifiers`] splits an
+/// ingest record's bonus chain into its `|`-separated qualifiers; this puts the
+/// chain back together in the format it was read from, and it belongs here —
+/// beside the split — rather than on the live side. `decisions.md` §11: the
+/// ingest format is the converter's vocabulary, and the token name `BONUS:` is
+/// part of that format, not part of anything a character sheet computes.
+///
+/// The one caller is `rules_core::corpus_loader`, which fills
+/// `BonusToken::raw_bonus` for the corpus-provenance readers (`wiring_class`,
+/// `corpus_literal_sweep`). Same bytes as before: `"BONUS:"` + the qualifiers
+/// re-joined on `|`, which is the inverse of the split that produced them.
+pub fn rebuild_bonus_token<S: AsRef<str>>(qualifiers: &[S]) -> String {
+    let mut out = String::from("BONUS:");
+    for (i, qualifier) in qualifiers.iter().enumerate() {
+        if i > 0 {
+            out.push('|');
+        }
+        out.push_str(qualifier.as_ref());
+    }
+    out
+}
+
 /// Every token key on `doc`, in file order, with duplicates kept.
 pub fn token_keys(doc: &Value) -> Vec<&str> {
     tokens(doc).iter().filter_map(|t| t.get("key")?.as_str()).collect()
@@ -138,6 +162,33 @@ mod tests {
         let data = &full["data"];
         assert_eq!(token_values(data, "DESC"), vec!["first", "second"]);
         assert_eq!(token_count(data), 3);
+    }
+
+    /// SD-35 `AT-35-E6-003-SWEEP` cycle 11. The rebuild is the exact inverse
+    /// of [`bonus_chain_qualifiers`]' split, checked against a real shipped
+    /// chain shape rather than against a hand-typed string: split it, rebuild
+    /// it, and the bytes are the ones the record states.
+    #[test]
+    fn rebuilding_a_bonus_chain_is_the_inverse_of_splitting_it() {
+        let doc = json!({"data": {"key": "Probe", "raw_bonus_chains": [
+            {"qualifiers": ["COMBAT", "AC", "1", "TYPE=Enhancement"]},
+            {"qualifiers": ["WEAPONPROF=TYPE.Natural", "TOHIT,DAMAGE", "1", "TYPE=Enhancement"]},
+            {"qualifiers": ["FEAT"]}
+        ]}});
+        let chains = bonus_chain_qualifiers(&doc);
+        let rebuilt: Vec<String> = chains.iter().map(|q| rebuild_bonus_token(q)).collect();
+        assert_eq!(
+            rebuilt,
+            vec![
+                "BONUS:COMBAT|AC|1|TYPE=Enhancement".to_string(),
+                "BONUS:WEAPONPROF=TYPE.Natural|TOHIT,DAMAGE|1|TYPE=Enhancement".to_string(),
+                "BONUS:FEAT".to_string(),
+            ]
+        );
+        // A chain with no qualifiers at all is the bare token name, never a
+        // trailing separator.
+        let empty: [&str; 0] = [];
+        assert_eq!(rebuild_bonus_token(&empty), "BONUS:");
     }
 
     #[test]

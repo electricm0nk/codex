@@ -9878,7 +9878,7 @@ pub(super) static MONSTER_ABILITIES: &[MonsterAbilityRecord] = &[
         facet: MonsterAbilityFacet::SpecialQuality,
         delivery: Some(MonsterAbilityDelivery::Supernatural),
         traits: &["FlailSnailRacialAbility"],
-        description: Some("Anytime a spell targets a flail snail, there is an 80%% chance that it produces a random effect instead of affecting the snail. Only spells that directly target the flail snail are warped; area effect spells are not affected. If a spell is warped, roll 1d10 and consult the following table. DESC:&nl; 1-3 Spell misfires. For the next 1d4 rounds, the caster must make a DC 15 concentration check to successfully cast spells. DESC:&nl; 4-6 Spell misfires. The creature nearest the flail snail is affected as if the spell had been cast on it instead. DESC:&nl; 7-9 Spell fails. Nothing happens. DESC:&nl; 10 Spell rebounds on caster (as spell turning)."),
+        description: Some("Anytime a spell targets a flail snail, there is an 80%% chance that it produces a random effect instead of affecting the snail. Only spells that directly target the flail snail are warped; area effect spells are not affected. If a spell is warped, roll 1d10 and consult the following table.&nl; 1-3 Spell misfires. For the next 1d4 rounds, the caster must make a DC 15 concentration check to successfully cast spells.&nl; 4-6 Spell misfires. The creature nearest the flail snail is affected as if the spell had been cast on it instead.&nl; 7-9 Spell fails. Nothing happens.&nl; 10 Spell rebounds on caster (as spell turning)."),
         description_variables: &[],
         source_page: Some("p.118"),
         owners: &["Flail Snail"],

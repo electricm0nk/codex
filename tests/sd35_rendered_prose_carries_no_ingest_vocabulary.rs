@@ -43,6 +43,16 @@ const SCANNED: &[&str] = &[
     "src/rules_core/pilot_compute/class_ultimate_combat.rs",
     "src/rules_core/derived_evaluator_fixture_check.rs",
     "src/rules_core/support_state_matrix.rs",
+    // Cycle 11. The shipped content tables are prose this engine writes to a
+    // sheet just as much as an explanation string is: `description` is printed
+    // verbatim and `description_variables` supplies the words `%1`/`%2` are
+    // replaced with (`derived_evaluator_fixture_check::monster_ability_save_dc`
+    // indexes it positionally; `apps/desktop/src-tauri/src/companion_catalog.rs`
+    // serves it). A `%CHOICE` left in that array prints the ingest token where
+    // the player's chosen option belongs.
+    "src/rules_core/rules_tables/bestiary/monster_data.rs",
+    "src/rules_core/rules_tables/bestiary_3/monster_data.rs",
+    "src/rules_core/rules_tables/inner_sea_world_guide/monster_data.rs",
 ];
 
 /// A `\b` word boundary immediately before byte `at`, exactly as the residue
