@@ -745,7 +745,27 @@ mod tests {
             (("CRB", "General".to_owned()), 6),
             (("CRB", "ArmsArmor".to_owned()), 6),
             (("ARG", "ArmsArmor".to_owned()), 1),
-            (("ACG", "Equipmods".to_owned()), 4),
+            // `("ACG", "Equipmods") => 4` is GONE, and its removal is a fix
+            // landing, not a loss. SD-35 `AT-35-E6-003-SWEEP` cycle 5
+            // (`6fe6131922`) moved `gen_equipment_gap_tables.rs::
+            // safe_description` from *rendering a description only to decide
+            // whether to keep it, then storing the raw one* to storing the
+            // rendered text. ACG's four Equipmods rows were exactly that case:
+            // their stored strings leaked a raw `%` hole onto the sheet and so
+            // were also refused a description downstream. They now carry
+            // rendered prose, which is why this bucket empties and
+            // `with_description("ACG")` rises by the same 4 below -- the two
+            // assertions move together, which is what says the movement is one
+            // real change rather than two unrelated drifts.
+            //
+            // Attributed by bisection over the desktop crate, not assumed:
+            // green at `6fe6131922~1` (`b069f01962`), red at `6fe6131922`, red
+            // at every tree since, including this cycle's start `94b4db5306`.
+            // It sat red from cycle 5 to cycle 15 because `apps/` is on epic
+            // cadence and no cycle between them touched it, so no cycle ran
+            // this crate. Re-derive:
+            //   git worktree add /tmp/wt <sha> && cd /tmp/wt/apps/desktop/src-tauri
+            //   cargo test --locked -j 4 equipment_catalog
             // SD31-W8-INTEGRATE-001: `leaked_pcgen_syntax` widened to catch
             // a bare '%' hole neither a digit nor an uppercase keyword
             // follows (wave-8 adversarial review). This surfaced ONE
@@ -762,7 +782,9 @@ mod tests {
         .into_iter()
         .collect();
         assert_eq!(raw_leaks, expected, "the raw tables' own leak profile");
-        assert_eq!(raw_leaks.values().sum::<usize>(), 59);
+        // 59 -> 55: the four ACG Equipmods rows named above. Re-derived from
+        // the assertion's own `left`, not adjusted by delta.
+        assert_eq!(raw_leaks.values().sum::<usize>(), 55);
 
         let served_leaks: Vec<&str> = build_equipment_catalog()
             .entries
@@ -854,7 +876,16 @@ mod tests {
         // 4 + 1 = 5.
         assert_eq!(with_description("CRB"), 2647);
         assert_eq!(with_description("APG"), 368);
-        assert_eq!(with_description("ACG"), 307);
+        // 307 -> 311, SD-35 `AT-35-E6-003-SWEEP` cycle 5 (`6fe6131922`),
+        // pinned here by cycle 15, the first run of this crate since. The four
+        // are ACG's Equipmods rows whose stored string used to leak a raw `%`
+        // and was therefore refused; `safe_description` now stores the rendered
+        // text and they serve real prose. Same four rows as the
+        // `("ACG", "Equipmods")` bucket that disappears from
+        // `the_raw_percent_escape_stops_at_the_catalog_boundary` above.
+        // Re-derived from the built catalog itself (the assertion's own
+        // `left`), not adjusted by delta.
+        assert_eq!(with_description("ACG"), 311);
         assert_eq!(with_description("B1"), 5);
         assert_eq!(with_description("ARG"), 205);
         assert_eq!(with_description("PU"), 42);
@@ -952,9 +983,15 @@ mod tests {
         // confirmation of that story rather than a second, unattributed
         // move. Re-derived from the built catalog (the assertion's own
         // `left`).
+        // 5390 -> 5394, SD-35 `AT-35-E6-003-SWEEP` cycle 5 (`6fe6131922`),
+        // pinned by cycle 15. The whole +4 is ACG's four Equipmods rows named
+        // in the per-book pin above and in the leak profile; no other book's
+        // per-book count moved, which is what makes the total's +4 a
+        // confirmation of that one story rather than a second, unattributed
+        // move. Re-derived from the built catalog (the assertion's own `left`).
         assert_eq!(
             response.entries.iter().filter(|e| e.description.is_some()).count(),
-            5390
+            5394
         );
     }
 

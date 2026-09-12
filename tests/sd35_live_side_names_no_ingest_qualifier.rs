@@ -66,11 +66,30 @@ const SCANNED: &[&str] = &[
     // the rest of this record kind's grammar.
     "src/rules_core/skinwalker_change_shape.rs",
     "src/rules_core/race_resolver.rs",
+    // Cycle 15. The Alternate Racial Traits picker read the mutual-exclusion
+    // guard by walking `raw_tokens` itself, keyed on `ABILITY` / `PREMULT` /
+    // `PREABILITY` / `!PREFACT` and stripping `PREVAREQ:` by hand -- four
+    // spellings of one relation, all four of them ingest grammar held inside
+    // the desktop crate. The whole reading is now
+    // `pcgen_import::race_trait_tokens::exclusion_guard_flags` and its two
+    // sibling findings readers, which hand back already-derived flag names.
+    // This is the only `apps/` file the residue gate ever listed.
+    "apps/desktop/src-tauri/src/race_trait_picker.rs",
 ];
 
 /// The ingest qualifier vocabulary, in the same shapes
 /// `scripts/pcgen_residue_gate.py` counts.
-const LITERAL_PATTERNS: &[&str] = &["TYPE=", "BONUS:", "DEFINE:", "DESC:", "SAB:", "%CHOICE", "%LIST", "CHOOSE:"];
+///
+/// `raw_tokens` is the ingest **field** rather than a qualifier, and is scanned
+/// for the reason this file's header already gives: after the remedy "no live
+/// module names a qualifier position, a chain keyword ... or the ingest field
+/// itself". A live module that reaches into the token array has held the
+/// grammar whether or not the line it wrote contains a colon --
+/// `token.key == "PREMULT"` names a PCGen token and the `PRE<UPPER>+:` family
+/// walk below cannot see it. Scanning the field the traversal must start from
+/// closes that gap without guessing at token spellings.
+const LITERAL_PATTERNS: &[&str] =
+    &["TYPE=", "BONUS:", "DEFINE:", "DESC:", "SAB:", "%CHOICE", "%LIST", "CHOOSE:", "raw_tokens"];
 
 /// The first ingest qualifier this line names, if any. `PRE<UPPER>+:` is
 /// matched separately because it is a family, not a literal.

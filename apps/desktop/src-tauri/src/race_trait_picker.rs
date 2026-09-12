@@ -111,6 +111,7 @@ use std::sync::OnceLock;
 
 use serde::{Deserialize, Serialize};
 
+use codex::pcgen_import::race_trait_tokens;
 use codex::rules_core::corpus_loader::BookCorpusRoot;
 use codex::rules_core::feat_effects::{display_value_deltas_from_feats, FeatDisplayValueDeltas};
 use codex::rules_core::race_resolver::{
@@ -517,113 +518,15 @@ fn race_corpus() -> &'static Result<RaceCorpus, String> {
 /// the `_Replace` operand rather than on the token name reads all three
 /// correctly without inventing anything; [`AlternateRacialTraitsResponse::findings`]
 /// reports the slip.
+/// The four spellings, the reasoning that reads each one, and the ordering
+/// between them live on the converter side of `technical-design.md` §0's path
+/// boundary, in [`race_trait_tokens::exclusion_guard_flags`] — SD-35
+/// `AT-35-E6-003-SWEEP` cycle 15. What this file asks for is the *relation*:
+/// which flags, already set by some other selection, block this one. Nothing
+/// here names a PCGen token, a bracket branch, or a qualifier prefix, and
+/// nothing here has to know that the corpus states one relation four ways.
 fn exclusion_guard_flags(record: &RaceTraitRecord) -> Vec<String> {
-    let mut out: Vec<String> = Vec::new();
-    // The third spelling, and the only one that is not a `PREMULT`: a
-    // `PREVAREQ:<flag>,0` qualifier on the record's own
-    // `ABILITY:<Race> Racial Trait|AUTOMATIC|<key>` grant.
-    //
-    // `core_essentials`' heritage selectors (SD-29 race-trait lane round 4,
-    // `decisions.md §49`) carry no `PREMULT` at all -- upstream, only one
-    // heritage can apply because a heritage is a PCGen SUBRACE and a character
-    // has one -- so read through the `PREMULT` reader alone all 16 would come
-    // back unguarded, and a player could tick `Aasimar ~ Angel-Blooded` and
-    // `Aasimar ~ Archon-Blooded` together and collect both ability-score
-    // bonuses. The corpus does state the constraint, on the grant itself:
-    // `ABILITY:Aasimar Racial Trait|AUTOMATIC|Angel-Blooded ~ Ability Scores|PREVAREQ:Aasimar_ReplaceAbilityScores,0`
-    // reads *grant this while that standard trait has not already been
-    // replaced*, which is the same "already set by someone else blocks me"
-    // relation the `PREMULT` branch below expresses. Only `,0` is read, for
-    // `ingest_races::globalvar_gates`' stated reason: `,1` is the opposite
-    // statement.
-    for token in record.data.raw_tokens.iter().filter(|token| token.key == "ABILITY") {
-        let parts: Vec<&str> = token.value.split('|').collect();
-        if parts.len() < 2 || !parts[1].trim().eq_ignore_ascii_case("AUTOMATIC") {
-            continue;
-        }
-        for clause in &parts[2..] {
-            let Some(rest) = clause.trim().strip_prefix("PREVAREQ:") else { continue };
-            let Some((flag, want)) = rest.rsplit_once(',') else { continue };
-            let flag = flag.trim();
-            if want.trim() != "0" || !flag.contains("_Replace") {
-                continue;
-            }
-            if !out.iter().any(|existing| existing == flag) {
-                out.push(flag.to_string());
-            }
-        }
-    }
-    for token in record.data.raw_tokens.iter().filter(|token| token.key == "PREMULT") {
-        for group in negated_bracket_groups(&token.value) {
-            for clause in group.split(',') {
-                let Some((name, value)) = clause.split_once('=') else { continue };
-                let name = name.trim();
-                if !name.contains("_Replace") || !value.trim().eq_ignore_ascii_case("true") {
-                    continue;
-                }
-                if !out.iter().any(|existing| existing == name) {
-                    out.push(name.to_string());
-                }
-            }
-        }
-    }
-    // The fourth spelling, SD-33 Epic 6's Skinwalker fold (2026-08-26): a
-    // record with a positive `PREABILITY:...` dependency on a specific
-    // parent ability (i.e. `PREABILITY:1,CATEGORY=Special Ability,<parent
-    // key>`, not a negated `!PREABILITY` bracket -- that shape is already
-    // read above) AND its own `sets_replace_flags` is a heritage
-    // REPLACEMENT row this corpus never gives a `PREMULT`/`PREVAREQ` guard
-    // of its own to (Skinwalker's 36 `<Kin> ~ <Trait>` rows: PCGen gates
-    // them on their PARENT selector's `PREABILITY`/`PREMULT` alone, on the
-    // assumption a player reaches them only by picking that one selector
-    // first). Without this branch, none of the 36 carried ANY exclusion
-    // guard (unlike Monster Codex's `Oversized Goblin ~ Ability Scores`/
-    // `~ Size`, this branch's negative control: those carry no `PREABILITY`
-    // at all, so they never reach this branch and stay unguarded, matching
-    // `every_alternate_has_a_readable_exclusion_guard_including_the_
-    // preability_spelling`'s own pin) -- a player could tick e.g.
-    // `Werebat-Kin ~ Ability Scores` AND `Werebear-Kin ~ Ability Scores`
-    // together (both fire `Skinwalker_ReplaceAbilityScores`) and collect
-    // both incompatible ability-score swaps, since nothing suppressed the
-    // second. The guard is the record's OWN already-honest
-    // `sets_replace_flags` (read off its real `FACT:<flag>|True` token, the
-    // same field `classify()` itself reads), not a fabricated token --
-    // `corpus_literal_sweep` only audits `raw_tokens`, and this reads
-    // `sets_replace_flags` directly.
-    if out.is_empty()
-        && !record.data.sets_replace_flags.is_empty()
-        && record.data.raw_tokens.iter().any(|token| token.key == "PREABILITY")
-    {
-        for flag in &record.data.sets_replace_flags {
-            if !out.iter().any(|existing| existing == flag) {
-                out.push(flag.clone());
-            }
-        }
-    }
-    out
-}
-
-/// The contents of every `[...]` group in a `PREMULT` value whose first
-/// character is `!`, with that `!` stripped. Nesting does not occur in this
-/// token family, so a flat scan is exact rather than approximate.
-fn negated_bracket_groups(value: &str) -> Vec<&str> {
-    let mut out = Vec::new();
-    let bytes = value.as_bytes();
-    let mut index = 0usize;
-    while index < bytes.len() {
-        if bytes[index] != b'[' {
-            index += 1;
-            continue;
-        }
-        let start = index + 1;
-        let Some(offset) = value[start..].find(']') else { break };
-        let group = &value[start..start + offset];
-        if let Some(rest) = group.strip_prefix('!') {
-            out.push(rest);
-        }
-        index = start + offset + 1;
-    }
-    out
+    race_trait_tokens::exclusion_guard_flags(&record.data)
 }
 
 /// For one alternate: the standard traits its flags suppress, the replacement
@@ -687,8 +590,7 @@ fn multi_flag_gate_findings(corpus: &RaceCorpus) -> Vec<String> {
             if record.role == TraitRole::Alternate {
                 continue;
             }
-            for token in record.data.raw_tokens.iter().filter(|token| token.key == "!PREFACT") {
-                let flags = negated_prefact_flags(&token.value);
+            for flags in race_trait_tokens::negated_fact_gates(&record.data) {
                 if flags.len() > 1 {
                     rows.push(format!("{} ({})", record.data.key, flags[1..].join(", ")));
                 }
@@ -708,32 +610,15 @@ fn multi_flag_gate_findings(corpus: &RaceCorpus) -> Vec<String> {
     )]
 }
 
-/// `1,ABILITIES,A=True,B=True` → `["A", "B"]`.
-fn negated_prefact_flags(value: &str) -> Vec<String> {
-    let mut parts = value.split(',');
-    if parts.next() != Some("1") {
-        return Vec::new();
-    }
-    match parts.next() {
-        Some(word) if word.eq_ignore_ascii_case("ABILITIES") => {}
-        _ => return Vec::new(),
-    }
-    parts.filter_map(|clause| clause.split_once('=').map(|(flag, _)| flag.trim().to_string())).collect()
-}
-
 /// ARG rows that write their guard's negated branch as `!PREABILITY` instead of
-/// `!PREFACT`. Derived, not asserted.
+/// `!PREFACT`. Derived, not asserted. The reading is
+/// [`race_trait_tokens::declares_preability_negated_guard`]; this file only
+/// asks the question and formats the answer.
 fn preability_guard_findings(corpus: &RaceCorpus) -> Vec<String> {
     let mut rows: Vec<String> = Vec::new();
     for race_key in corpus.race_keys() {
         for record in corpus.alternate_traits(race_key) {
-            let uses_preability = record
-                .data
-                .raw_tokens
-                .iter()
-                .filter(|token| token.key == "PREMULT")
-                .any(|token| negated_bracket_groups(&token.value).iter().any(|g| g.starts_with("PREABILITY:")));
-            if uses_preability {
+            if race_trait_tokens::declares_preability_negated_guard(&record.data) {
                 rows.push(record.data.key.clone());
             }
         }
