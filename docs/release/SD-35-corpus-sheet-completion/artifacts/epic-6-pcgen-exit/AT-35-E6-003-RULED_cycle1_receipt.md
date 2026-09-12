@@ -1,6 +1,6 @@
 # Cycle AT-35-E6-003-RULED cycle 1 — Epic 6 PCGen exit / AT-35-E6-003-RULED
 
-- **Commit SHA:** `COMMIT_SHA_PLACEHOLDER`
+- **Commit SHA:** `611559cf6d`
 
 - **Scope gate:** `SCOPE_GATE: EXEMPT (Epic 6 cycle — closes zero corpus units by design;
   decisions.md §2, workflow-instruction.md §6 step 1)`

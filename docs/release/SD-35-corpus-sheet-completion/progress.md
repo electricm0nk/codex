@@ -181,7 +181,7 @@ re-measured at the cut by the launch-readiness audit.
 
 ## Cycle log
 
-### 2026-09-12 — Epic 6 / `desktop-and-prose-leave-pcgen` — AT-35-E6-003-RULED **cycle 1** (`COMMIT_SHA_PLACEHOLDER`) — **partial** (rulings B15 and B16 applied: the gate now measures what ships, `apps/desktop` stops reading `files=0 hits=0`, and the 58 hits it newly sees are named line by line, not cleared)
+### 2026-09-12 — Epic 6 / `desktop-and-prose-leave-pcgen` — AT-35-E6-003-RULED **cycle 1** (`611559cf6d`) — **partial** (rulings B15 and B16 applied: the gate now measures what ships, `apps/desktop` stops reading `files=0 hits=0`, and the 58 hits it newly sees are named line by line, not cleared)
 
 - **Scope gate:** `SCOPE_GATE: EXEMPT (Epic 6 cycle — closes zero corpus units by design; decisions.md §2)`.
   It ran anyway at the cycle's start tree `c2f9c8f6b5`:
