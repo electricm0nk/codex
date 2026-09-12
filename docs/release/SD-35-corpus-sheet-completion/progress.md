@@ -131,7 +131,7 @@ since=776a151d34 residue_gate=present
 closed_by_kind=
 relabeled_moves=
 regressed=0 added=0 dropped=0
-closed=0 relabeled=0 rust_lines_changed=687 ratio=n/a builds_recorded=1 pcgen_live_files=45
+closed=0 relabeled=0 rust_lines_changed=864 ratio=n/a builds_recorded=1 pcgen_live_files=45
 ```
 
 **Refused tokens — five types, summing to 304:** `TYPE==100, BONUS:=91, DESC:=59,

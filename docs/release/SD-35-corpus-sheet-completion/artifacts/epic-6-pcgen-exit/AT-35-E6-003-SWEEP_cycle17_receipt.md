@@ -127,11 +127,12 @@
   closed_by_kind=
   relabeled_moves=
   regressed=0 added=0 dropped=0
-  closed=0 relabeled=0 rust_lines_changed=687 ratio=n/a builds_recorded=1 pcgen_live_files=45
+  closed=0 relabeled=0 rust_lines_changed=864 ratio=n/a builds_recorded=1 pcgen_live_files=45
   ```
-  (`builds_recorded` reads 0 from the script because this cycle's build counter file
-  is not the one it inspects; one full build+test pass was run and is quoted under
-  **Build scope verified**.)
+  Re-derived at the cycle's last commit, not at its first: `rust_lines_changed` reads 687
+  against `9713a6f347` alone and **864** against both commits, and the second figure is the
+  cycle's. `regressed=0 added=0 dropped=0` because `docs/work-inventory.json` is byte-identical
+  — see the row below for the candidate run that was measured and deliberately not written.
 
 - **PCGen residue: `live_files=45 live_hits=304`, down from cycle 16's 46 / 359.**
   ```
@@ -385,7 +386,7 @@
   | `records=49438 converted=49296 refused=142 rules=70135 var_tables=5293` | every corpus record the sheet-rule converter reads | `cargo run --locked --bin sheet_rule_convert -- --check` |
   | package files carrying a `%%` escape 4 → 0, of 54,604 examined | every file in `data/sheet_rules/` | `cargo test --locked --test sheet_rule_convert_gate no_converted_prose_carries_the_source_literal_percent_escape -- --nocapture` |
   | equipment description coverage `CRB` 2647→2648, `APG` 368→374, `UE` 573→586, total 5394→5414 | every entry the desktop Equipment Catalog serves | `cd apps/desktop/src-tauri && cargo test --locked --bin codex-desktop description_coverage_is_pinned_per_book` |
-  | `rust_lines_changed=687` | the cycle's own diff since `776a151d34` | `python3 scripts/cycle_scope_gate.py --receipt --since 776a151d34 --before /tmp/wi-before-at-35-e6-003-sweep.json --after docs/work-inventory.json` |
+  | `rust_lines_changed=864` | the cycle's own diff since `776a151d34`, both commits | `python3 scripts/cycle_scope_gate.py --receipt --since 776a151d34 --before /tmp/wi-before-at-35-e6-003-sweep.json --after docs/work-inventory.json` |
   | 16 prior receipts, so this is cycle 17 | this criterion's receipts on disk | `ls docs/release/SD-35-corpus-sheet-completion/artifacts/epic-6-pcgen-exit/AT-35-E6-003-SWEEP_cycle*_receipt.md \| wc -l` |
 
 - **Build scope verified** — **once**, after the last figure-moving edit, at `9713a6f347`:
