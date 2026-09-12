@@ -367,3 +367,64 @@ fn no_token_less_refusal_still_has_words_to_print() {
         with_words.iter().take(5).collect::<Vec<_>>()
     );
 }
+
+/// A **converted** record whose corpus row states the book's own sentence must carry that
+/// sentence in the package.
+///
+/// SD-35 `AT-35-E6-003-SWEEP` cycle 16. The mirror of
+/// [`no_token_less_refusal_still_has_words_to_print`], which only ever looked at records the
+/// converter *refused*. A record the token path converts takes its prose from `DESC:` /
+/// `BENEFIT:` / `SPROP:` / `SAB:` / `TEMPDESC:` rows and from nowhere else, so a record that
+/// carries structured tokens (`CLASSES:`, `DOMAINS:`) **and** a `description` field, but no
+/// `DESC:` row, converted to a rule with no prose at all and the book's sentence was dropped
+/// on the floor. `data/corpus/advanced_players_guide/spell/blindness_deafness_only_cause_blindness.json`
+/// is the shape: its record states *"You call upon the powers of unlife to render the subject
+/// blinded or deafened, as you choose."* and its only tokens are `CLASSES` and `DOMAINS`.
+///
+/// `decisions.md §1` form 3 rules the other way: the words ARE the sheet line. This gate reads
+/// the live package and the live corpus directory -- never a fixture with a hand-derived value
+/// (`decisions.md §4`) -- and refuses to pass on an empty walk, so a walk that stopped finding
+/// records cannot agree with itself about nothing.
+#[test]
+fn a_converted_record_never_drops_the_description_its_corpus_row_states() {
+    let pkg = package_files();
+    let mut examined = 0usize;
+    let mut with_description = 0usize;
+    let mut dropped: Vec<String> = Vec::new();
+    for (rel, bytes) in &pkg {
+        let Some((book, rest)) = rel.split_once('/') else { continue };
+        let Some((kind, file)) = rest.split_once('/') else { continue };
+        if book.starts_with('_') || !file.ends_with(".json") {
+            continue;
+        }
+        let Ok(rules) = serde_json::from_slice::<Vec<serde_json::Value>>(bytes) else { continue };
+        examined += 1;
+        let corpus = repo().join(format!("data/corpus/{book}/{kind}/{file}"));
+        let Ok(text) = std::fs::read_to_string(&corpus) else { continue };
+        let Ok(json) = serde_json::from_str::<serde_json::Value>(&text) else { continue };
+        let Some(desc) = json["data"]["description"].as_str() else { continue };
+        let desc = desc.trim();
+        if desc.is_empty() || desc.contains("[redacted PI]") {
+            continue;
+        }
+        if json["license_pi"].as_bool().unwrap_or(false)
+            || json["pi_fields"].as_array().is_some_and(|a| a.iter().any(|f| f.as_str() == Some("description")))
+        {
+            continue;
+        }
+        with_description += 1;
+        let has_prose = rules.iter().any(|r| r["prose"].as_array().is_some_and(|p| !p.is_empty()));
+        if !has_prose {
+            dropped.push(format!("{book}:{kind}:{file}"));
+        }
+    }
+    assert!(examined > 1000, "package walk collapsed: only {examined} rule file(s) examined");
+    assert!(with_description > 100, "corpus walk collapsed: only {with_description} record(s) state a description");
+    eprintln!("converted rule files={examined} whose corpus record states a description={with_description} dropping it={}", dropped.len());
+    assert!(
+        dropped.is_empty(),
+        "{} converted record(s) of {with_description} drop the description their corpus row states, e.g. {:?}",
+        dropped.len(),
+        dropped.iter().take(8).collect::<Vec<_>>()
+    );
+}

@@ -477,7 +477,15 @@ pub fn rule_file_rel(book: &str, kind: &str, id: &str) -> String {
 /// (`prose::pi_hit`, `§15` R2: the sheet must not print a redacted field), or when it would put
 /// a source-format literal in the package (`FORBIDDEN_LITERALS`; the glyph scrub belongs to the
 /// token path's `RecordCtx`, which this path has none of).
-fn description_only_rules(r: &RecordRef) -> Option<Vec<SheetRule>> {
+/// The record's own `description` field, decoded, when it is safe to print on a sheet.
+///
+/// The five refusal conditions are the ones [`description_only_rules`] has always applied, split
+/// out so the token path can apply exactly the same bar (SD-35 `AT-35-E6-003-SWEEP` cycle 16).
+/// They are: no description; it is product identity by term (`prose::pi_hit`), by record flag
+/// (`license_pi`) or by declared field (`pi_fields`); it would put a source-format literal in
+/// the package (`FORBIDDEN_LITERALS`); it carries a glued `PRE<KIND>:` head; or it carries a
+/// `%1` slot with no argument row to fill it.
+fn printable_description(r: &RecordRef) -> Option<String> {
     let text = prose::decode_entities(r.description.as_deref()?.trim());
     if text.is_empty() || prose::pi_hit(&text).is_some() || r.license_pi || r.pi_fields.iter().any(|f| f == "description") {
         return None;
@@ -485,6 +493,11 @@ fn description_only_rules(r: &RecordRef) -> Option<Vec<SheetRule>> {
     if FORBIDDEN_LITERALS.iter().any(|lit| text.contains(lit)) || has_pre_head(&text) || text.contains("%1") {
         return None;
     }
+    Some(text)
+}
+
+fn description_only_rules(r: &RecordRef) -> Option<Vec<SheetRule>> {
+    let text = printable_description(r)?;
     Some(vec![SheetRule {
         id: r.id.clone(),
         label: r.name.clone(),
@@ -657,7 +670,36 @@ pub fn run(tree: &PinnedTree, index: &CorpusIndex, closures: &[Closure]) -> Run 
         }
         kc.converted += 1;
         converted_ids.push((r.book.clone(), r.kind.clone(), r.id.clone()));
-        files.insert(rule_file_rel(&r.book, &r.kind, &r.id), c.rules);
+        let mut rules = c.rules;
+        // The book's own sentence, when the token rows state none.
+        //
+        // SD-35 `AT-35-E6-003-SWEEP` cycle 16. The token path takes prose from `DESC:` /
+        // `BENEFIT:` / `SPROP:` / `SAB:` / `TEMPDESC:` rows and from nowhere else, so a record
+        // that carries structured tokens *and* a `description` field but no prose row converted
+        // to a rule set with no prose at all and the sentence was dropped -- 241 records of the
+        // 7,619 that state one, measured by
+        // `sheet_rule_convert_gate::a_converted_record_never_drops_the_description_its_corpus_row_states`.
+        // `decisions.md §1` form 3: the words ARE the sheet line.
+        //
+        // It is a **fallback**, never an addition: a record whose rows already state prose keeps
+        // exactly the prose those rows state, because a `DESC:` row is the authored sheet line
+        // and the `description` field is the same sentence in a second, unslotted form. Adding
+        // both would print it twice. The bar is `printable_description`'s -- identical to the
+        // one the no-source-row path has always applied, so a record cannot reach the sheet
+        // through this door with words the other door would have refused.
+        if !rules.iter().any(|rule| !rule.prose.is_empty())
+            && let Some(text) = printable_description(r)
+            && let Some(first) = rules.first_mut()
+        {
+            first.prose.push(ProseSegment {
+                family: ProseFamily::Desc,
+                pieces: vec![ProsePiece::Text(text)],
+                applies: None,
+                pick_last: false,
+                suppress_when_all_zero: false,
+            });
+        }
+        files.insert(rule_file_rel(&r.book, &r.kind, &r.id), rules);
     }
     // Attach grant edges to the principal rule of each target.
     for rules in files.values_mut() {
