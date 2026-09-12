@@ -47,7 +47,7 @@
   - `…/AT-35-E6-003-RULED_cycle3_runtime_import_census.py` / `.json` — **new.** Imports cycle 2's
     census whole (which imports cycle 1's) and rewrites one group's reason with this cycle's
     measurement.
-  - `docs/retro/events/at-35-e6-003-ruled.jsonl` — 2 `correction`, 1 `deferral`, 1 `incident`.
+  - `docs/retro/events/at-35-e6-003-ruled.jsonl` — 3 `correction`, 1 `deferral`, 1 `incident` (the third correction is this receipt's own `rust_lines_changed`, `1789256657297-at-35-e6-003-ruled-a95b36`).
   - `progress.md`, `kanban.md`, this receipt.
   - **Folded from the shared checkout, not this cycle's work:**
     `docs/release/SD-34-book-completion/artifacts/epic-1-atlas/completion-atlas.json` (one field,
