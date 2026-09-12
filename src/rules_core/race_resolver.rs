@@ -87,7 +87,11 @@ use crate::pcgen_import::bonus_chain_reader::{self, DeclaredBonuses};
 use crate::pcgen_import::race_trait_tokens;
 use crate::rules_core::corpus_loader::BookCorpusRoot;
 use crate::rules_core::feat_effects::FeatDisplayValueDeltas;
-use crate::pcgen_import::pcgen_desc::{render_pcgen_desc_tokens, PcgenDisplayValues, RenderedPcgenDesc};
+// SD-35 `AT-35-E6-003` (`decisions.md` §11): this file used to
+// `use crate::pcgen_import::pcgen_desc::{render_pcgen_desc_tokens, PcgenDisplayValues,
+// RenderedPcgenDesc}` here and render a racial trait's description from its `DESC:` tokens at
+// run time. It renders the converted rule's own prose instead, through our own schema.
+use crate::rules_core::pilot_compute::resolved_prose::{self, DisplayValues, RenderedProse};
 use crate::pcgen_import::ingest_payload::{RaceCacheData, RaceTraitCacheData};
 use crate::rules_core::shape_b_v1::{validate_license, CorpusRecordV1, CorpusSource};
 use crate::rules_core::size::SizeCategory;
@@ -187,63 +191,49 @@ impl RaceTraitRecord {
         &self.data.key
     }
 
-    /// This row's own display variables: every variable it both `DEFINE`s and
-    /// finishes with unconditional integer `BONUS:VAR` tokens.
+    /// This row's own display variables: every converted variable it declares whose whole
+    /// contribution set is its own, stated as a constant, with no gate.
     ///
-    /// PCGen writes a racial constant across two tokens —
-    /// `DEFINE:Gnome_Hatred_AttackBonus|0` plus
-    /// `BONUS:VAR|Gnome_Hatred_AttackBonus|1` is the number one — and the row's
-    /// own `DESC:` then substitutes it as `%1`. Reading it back is
-    /// transcription of a constant, not formula evaluation, so
-    /// `decisions.md §24`'s ban on an interpreter is not engaged. This is the
-    /// same reading `ingest_races::same_row_vars` already performs at ingest
-    /// time, moved here so it can be combined with a *character's* feats
-    /// instead of being frozen into the stored description.
+    /// **SD-35 `AT-35-E6-003` (`decisions.md` §11).** This method used to read the ingest
+    /// format at run time: the row's `DEFINE` bases through `race_trait_tokens`, its
+    /// `BONUS:VAR` amounts through `bonus_chain_reader`, folded here. Both readings already
+    /// happen once, at ingest, and their result is `data/sheet_rules/_vars/<VarId>.json` —
+    /// every contribution to one variable, corpus-wide, with the contributing rule named and
+    /// the gate converted. This reads that, through
+    /// [`resolved_prose::same_row_values`](crate::rules_core::pilot_compute::resolved_prose::same_row_values).
     ///
-    /// A variable stops resolving the instant any contribution stops being a
-    /// same-row literal — a conditional `BONUS:VAR` carrying a trailing
-    /// `PRE...` qualifier, an amount naming another variable, or a base
-    /// declared in a different file. It is then absent rather than guessed,
-    /// which leaves its `%N` dropped and reported exactly as before.
+    /// The refusal is unchanged and load-bearing: a variable stops resolving the instant any
+    /// contribution stops being this rule's own unconditional constant — a gated contribution,
+    /// an expression rather than a literal, or a declaration whose base lives elsewhere. It is
+    /// then absent rather than guessed, which leaves its slot dropped and reported exactly as
+    /// before.
     ///
-    /// A row's declared bonuses live in a second ingest array, not in its
-    /// token array — the ingest splits them out, so the same-row variable
-    /// reading and the contribution reading below are two separate readings of
-    /// one row, and both are performed on the converter side.
-    pub fn same_row_display_values(&self) -> PcgenDisplayValues {
-        // `Option<i64>` while accumulating so "declared but unresolvable" is
-        // distinguishable from "never mentioned"; only the resolved ones are
-        // published.
-        let mut accumulator: BTreeMap<String, Option<i64>> = BTreeMap::new();
+    /// `tests/sd35_race_trait_prose_comes_from_the_converted_package.rs` renders every racial
+    /// trait in the corpus both ways and asserts byte-identical text.
+    /// The converted rule this corpus record became — **its own book's**, never another's.
+    ///
+    /// SD-35 `AT-35-E6-003` (`decisions.md` §11): the join from a corpus record to its converted
+    /// rule, so nothing below has to spell a book, a kind or a slug by hand. It is
+    /// [`converted_prose::converted_id`](crate::rules_core::converted_prose::converted_id) and
+    /// nothing else — **step 1 of that module's join alone**, with none of its fallbacks.
+    ///
+    /// The fallbacks exist for a catalog row whose book is a *printing* the converted package
+    /// has no directory for. A racial trait never is one: it is loaded from a real
+    /// `data/corpus/<book>/` directory, which is exactly a converted book id. And the fallbacks
+    /// would do real harm here — the by-name and dropped-qualifier steps resolve
+    /// `Skinwalker ~ Change Shape (Distraction)` to `skinwalker_change_shape`, so all 20 of
+    /// that record's variant rows would serve the base row's paragraph as though it were their
+    /// own. A record this book does not hold under its own key renders its stored description,
+    /// which is what it shipped.
+    fn converted_rule_id(&self) -> String {
+        crate::rules_core::converted_prose::converted_id(&self.book_id, "race_trait", &self.data.key)
+    }
 
-        for (name, base) in race_trait_tokens::same_row_defines(&self.data) {
-            accumulator.insert(name, base);
-        }
-
-        for contribution in bonus_chain_reader::declared_bonuses(&self.data).var_contributions {
-            let (name, amount) = (contribution.name, contribution.amount);
-            match accumulator.get_mut(&name) {
-                // Never `DEFINE`d here, so the base lives elsewhere and
-                // this row cannot finish the variable on its own.
-                None => {
-                    accumulator.insert(name, None);
-                }
-                Some(slot) => {
-                    *slot = match (*slot, amount) {
-                        (Some(current), Some(add)) => Some(current + add),
-                        _ => None,
-                    };
-                }
-            }
-        }
-
-        let mut values = PcgenDisplayValues::new();
-        for (name, resolved) in accumulator {
-            if let Some(value) = resolved {
-                values.set(&name, value);
-            }
-        }
-        values
+    pub fn same_row_display_values(&self) -> DisplayValues {
+        let Some(package) = crate::rules_core::corpus_loader::live_sheet_rules() else {
+            return DisplayValues::new();
+        };
+        resolved_prose::same_row_values(package, &self.converted_rule_id())
     }
 
     /// This row's display variables with a character's feat contributions
@@ -253,7 +243,7 @@ impl RaceTraitRecord {
     /// is deliberate and load-bearing: Great Hatred's `+1` belongs in
     /// `Gnome ~ Hatred`'s sentence and nowhere else, and a delta that found no
     /// base would otherwise invent one out of the feat alone.
-    pub fn display_values_with(&self, deltas: &FeatDisplayValueDeltas) -> PcgenDisplayValues {
+    pub fn display_values_with(&self, deltas: &FeatDisplayValueDeltas) -> DisplayValues {
         let mut values = self.same_row_display_values();
         for (name, delta) in [
             ("Gnome_Hatred_AttackBonus", deltas.gnome_hatred_attack_bonus),
@@ -263,8 +253,9 @@ impl RaceTraitRecord {
             if delta == 0 {
                 continue;
             }
-            if let Some(base) = values.get(name) {
-                values.set(name, base + i64::from(delta));
+            let id = crate::rules_core::sheet_rule::var_id(name);
+            if let Some(base) = values.get(&id) {
+                values.set_id(id, base + i64::from(delta));
             }
         }
         values
@@ -272,35 +263,41 @@ impl RaceTraitRecord {
 
     /// This record's player-facing description, rendered against `values`.
     ///
-    /// Reads the record's `DESC:` tokens rather than the stored `description`
-    /// string, because the stored one is the *already-collapsed* result of
-    /// resolving the row against itself at ingest time — the number is baked in
-    /// and the gate branches are already chosen. Re-rendering from the tokens
-    /// is what lets a feat change both.
+    /// **SD-35 `AT-35-E6-003`.** Reads the **converted rule's** prose, not the record's `DESC:`
+    /// tokens and not the stored `description` string. The stored one is the already-collapsed
+    /// result of resolving the row against itself at ingest time — the number is baked in and
+    /// the gate branches are already chosen — so re-rendering is what lets a feat change both;
+    /// and the converted prose is where that re-rendering may read from, because it carries the
+    /// record's own words as plain English with typed holes and converted gates, and no ingest
+    /// syntax at all.
     ///
-    /// Falls back to the stored description for a record carrying no `DESC:`
-    /// token, so this never returns less than the record already shipped.
-    pub fn render_description(&self, values: &PcgenDisplayValues) -> RenderedPcgenDesc {
+    /// Falls back to the stored description for a record the package holds no prose for, so
+    /// this never returns less than the record already shipped.
+    pub fn render_description(&self, values: &DisplayValues) -> RenderedProse {
         // A PI-redacted record serves its stored marker and is never rendered
-        // from its raw `DESC:` tokens. Those tokens hold the upstream prose
-        // verbatim, so rendering them would put back exactly the Product
-        // Identity the ingest-time screen removed -- which is what this
-        // surface was doing for 12 Inner Sea Races records between SD-29's
-        // race-trait rounds 2 and 3. See [`RaceTraitRecord::description_redacted`].
+        // from its own prose. That prose holds the upstream text verbatim, so
+        // rendering it would put back exactly the Product Identity the
+        // ingest-time screen removed -- which is what this surface was doing
+        // for 12 Inner Sea Races records between SD-29's race-trait rounds 2
+        // and 3. See [`RaceTraitRecord::description_redacted`].
+        let stored = || RenderedProse {
+            text: self.data.description.clone().unwrap_or_default(),
+            dropped_args: Vec::new(),
+        };
         if self.description_redacted {
-            return RenderedPcgenDesc {
-                text: self.data.description.clone().unwrap_or_default(),
-                dropped_args: Vec::new(),
-            };
+            return stored();
         }
-        let tokens: Vec<&str> = race_trait_tokens::description_segments(&self.data);
-        if tokens.is_empty() {
-            return RenderedPcgenDesc {
-                text: self.data.description.clone().unwrap_or_default(),
-                dropped_args: Vec::new(),
-            };
+        let Some(package) = crate::rules_core::corpus_loader::live_sheet_rules() else {
+            return stored();
+        };
+        let Some(rule) = package.rule(&self.converted_rule_id()) else {
+            return stored();
+        };
+        let rendered = resolved_prose::render_description(package, rule, values);
+        if rendered.text.is_empty() {
+            return stored();
         }
-        render_pcgen_desc_tokens(&tokens, values)
+        rendered
     }
 
     /// Every ability key this record grants outright through PCGen's

@@ -50,7 +50,8 @@
 use std::collections::BTreeMap;
 
 use crate::rules_core::sheet_rule::{
-    var_id, Applies, Cmp, Expr, ProseFamily, ProsePiece, ProseSegment, VarId,
+    var_id, Applies, Cmp, Expr, Holdable, ProseFamily, ProsePiece, ProseSegment, SheetRule,
+    SheetRulePackage, VarId,
 };
 
 /// The numbers this engine has resolved for one character, keyed by the converted
@@ -84,10 +85,41 @@ impl DisplayValues {
         self.values.get(id).copied()
     }
 
+    /// States one resolved value under the converted variable **id** directly, for a caller that
+    /// read the id off the converted package rather than holding a source name at all.
+    ///
+    /// `same_row_display_values` in
+    /// [`race_resolver`](crate::rules_core::race_resolver) folds a rule's own contributions out
+    /// of `data/sheet_rules/_vars/<VarId>.json`, where the id is the key and no name exists to
+    /// mint one from. [`set`](DisplayValues::set) is the same operation for a caller that does
+    /// hold a name.
+    pub fn set_id(&mut self, id: VarId, value: i64) {
+        self.values.insert(id, value);
+    }
+
     /// True when nothing has been resolved.
     pub fn is_empty(&self) -> bool {
         self.values.is_empty()
     }
+
+    /// How many values are resolved. The population a caller reports when it says "this row
+    /// finishes N of its own variables".
+    pub fn len(&self) -> usize {
+        self.values.len()
+    }
+}
+
+/// One record's words rendered for a character, with the holes that did **not** resolve named.
+///
+/// The live-side answer to the tool-side `RenderedPcgenDesc`: same two fields, same contract —
+/// an unresolved hole is dropped and reported, never guessed — over the converted schema
+/// instead of over an ingest token. `dropped_args` carries the variable's converted **label**
+/// (`"Gnome Hatred Attack Bonus"`), which is the words the package itself prints a variable
+/// under; a caller that shows it to a player is showing English, not an ingest identifier.
+#[derive(Debug, Clone, Default, PartialEq, Eq)]
+pub struct RenderedProse {
+    pub text: String,
+    pub dropped_args: Vec<String>,
 }
 
 /// An exact rational, so a chain of divisions truncates once — at the slot — rather than at every
@@ -210,6 +242,13 @@ fn gate_holds(applies: &Applies, values: &DisplayValues) -> Option<bool> {
             }
             Some(held >= *n)
         }
+        // A rule the source named and the converter could not resolve to any corpus record.
+        // The schema's own word for it is *Exclude* and the held-set evaluator already answers
+        // `false` for it (`Holdable::MissingRule => false`): no character can ever hold a record
+        // that does not exist, so this is **decided**, not unknown, and its prose is dropped.
+        // Without this, `Elf ~ Elemental Resistance` printed all four of its mutually exclusive
+        // energy-type options as though the character had taken every one.
+        Applies::Holds { what: Holdable::MissingRule { .. }, .. } => Some(false),
         Applies::Compare { lhs, op, rhs } => {
             let ordering = eval(lhs, values)?.cmp_to(eval(rhs, values)?)?;
             use std::cmp::Ordering::{Equal, Greater, Less};
@@ -310,4 +349,192 @@ pub fn resolved_description(rule_id: &str, values: &DisplayValues) -> Option<Str
         return None;
     }
     Some(segments.join(" "))
+}
+
+/// Every converted variable inside `expr` this engine has **not** resolved, named by the label
+/// the package prints it under. Empty when the expression evaluates.
+fn unresolved_labels(expr: &Expr, values: &DisplayValues, package: &SheetRulePackage, out: &mut Vec<String>) {
+    match expr {
+        Expr::Var(id) => {
+            if values.get(id).is_none() {
+                let label = package
+                    .vars
+                    .get(id)
+                    .map(|table| table.label.clone())
+                    .filter(|label| !label.is_empty())
+                    .unwrap_or_else(|| "an unnamed value".to_string());
+                if !out.contains(&label) {
+                    out.push(label);
+                }
+            }
+        }
+        Expr::Sum(terms) => {
+            for term in terms {
+                unresolved_labels(term, values, package, out);
+            }
+        }
+        Expr::Mul(a, b) | Expr::Div(a, b) | Expr::Min(a, b) | Expr::Max(a, b) => {
+            unresolved_labels(a, values, package, out);
+            unresolved_labels(b, values, package, out);
+        }
+        _ => {}
+    }
+}
+
+/// One converted rule's `Desc` prose rendered for a character, with every hole that did not
+/// resolve **dropped and reported** rather than left as a mangled sentence.
+///
+/// This is [`resolved_description`]'s sibling and the two differ in exactly one thing: what an
+/// unresolved slot does. `resolved_description` refuses the whole description, because its
+/// caller (`pilot_compute`'s Unchained receipt rows) states a number or states nothing. This
+/// one drops the slot, takes the sign that introduced it with it, collapses the whitespace the
+/// drop left behind, and names the variable in
+/// [`dropped_args`](RenderedProse::dropped_args) — because its caller (the Race Traits panel)
+/// is showing the rulebook's sentence, where losing one number is better than losing the
+/// paragraph and a silent loss is worse than either.
+///
+/// That is the contract `render_pcgen_desc_with_values` enforced over ingest tokens, restated
+/// over our own schema. `tests/sd35_race_trait_prose_comes_from_the_converted_package.rs`
+/// renders every racial-trait record in the corpus **both ways** and asserts byte-identical
+/// text; the PCGen renderer stayed where `decisions.md §11` says an oracle belongs, in `tests/`.
+///
+/// A segment whose gate is decided FALSE is dropped; an undecidable gate keeps its prose, the
+/// same asymmetry [`gate_holds`] documents.
+pub fn render_description(
+    package: &SheetRulePackage,
+    rule: &SheetRule,
+    values: &DisplayValues,
+) -> RenderedProse {
+    let mut segments: Vec<String> = Vec::new();
+    let mut dropped_args: Vec<String> = Vec::new();
+    let mut pick_last_index: Option<usize> = None;
+
+    for segment in &rule.prose {
+        if segment.family != ProseFamily::Desc {
+            continue;
+        }
+        if let Some(applies) = &segment.applies
+            && gate_holds(applies, values) == Some(false)
+        {
+            continue;
+        }
+        let mut out = String::new();
+        let mut dropped_any = false;
+        // True immediately after a hole was dropped. The next text piece then closes the gap
+        // the hole left instead of the whole segment being re-spaced: a segment carries the
+        // record's own paragraph breaks, and collapsing all of its whitespace to repair one
+        // hole destroys them. `Suli ~ Energy Strike`, `Undine ~ Nereid Fascination` and
+        // `Nagaji ~ Hypnotic Gaze` each open a segment with a real newline and each carry an
+        // unresolved hole later in it.
+        let mut gap_open = false;
+        for piece in &segment.pieces {
+            match piece {
+                ProsePiece::Text(text) => {
+                    if gap_open && out.ends_with(char::is_whitespace) {
+                        out.push_str(text.trim_start());
+                    } else {
+                        out.push_str(text);
+                    }
+                    gap_open = false;
+                }
+                ProsePiece::Slot(expr) => match eval(expr, values).and_then(Exact::trunc) {
+                    Some(value) => {
+                        out.push_str(&value.to_string());
+                        gap_open = false;
+                    }
+                    None => {
+                        unresolved_labels(expr, values, package, &mut dropped_args);
+                        while out.ends_with('+') || out.ends_with('-') {
+                            out.pop();
+                        }
+                        dropped_any = true;
+                        gap_open = true;
+                    }
+                },
+                ProsePiece::Dice { dice, modifier } => {
+                    out.push_str(dice);
+                    match modifier.as_ref().and_then(|m| eval(m, values)).and_then(Exact::trunc) {
+                        Some(value) => {
+                            if value >= 0 {
+                                out.push('+');
+                            }
+                            out.push_str(&value.to_string());
+                        }
+                        None => {
+                            if let Some(modifier) = modifier {
+                                unresolved_labels(modifier, values, package, &mut dropped_args);
+                                dropped_any = true;
+                            }
+                        }
+                    }
+                    gap_open = false;
+                }
+                // A term the player settles at pick time, which this path never has in hand.
+                ProsePiece::ChoiceName(_) => {
+                    dropped_args.push("a choice this character has not made".to_string());
+                    dropped_any = true;
+                    gap_open = true;
+                }
+            }
+        }
+        // A hole dropped at the very end of a segment leaves the space that introduced it.
+        let text = if dropped_any { out.trim_end().to_string() } else { out };
+        if text.is_empty() {
+            continue;
+        }
+        if segment.pick_last {
+            match pick_last_index {
+                Some(index) => segments[index] = text,
+                None => {
+                    pick_last_index = Some(segments.len());
+                    segments.push(text);
+                }
+            }
+            continue;
+        }
+        segments.push(text);
+    }
+
+    RenderedProse { text: segments.join(" "), dropped_args }
+}
+
+/// The values one rule finishes **on its own row** — every converted variable the rule declares
+/// whose whole contribution set is that same rule's, stated as a constant, with no gate.
+///
+/// This is the converted restatement of "a `DEFINE` plus this row's unconditional integer
+/// `BONUS:VAR`s", and it keeps that reading's refusal exactly: a variable any other rule also
+/// contributes to, or whose contribution is an expression rather than a constant, or whose
+/// contribution is gated, is **absent** rather than guessed — which leaves its slot dropped and
+/// reported. The contributions are read out of `data/sheet_rules/_vars/<VarId>.json`, where the
+/// converter wrote them; nothing here reads a source row.
+pub fn same_row_values(package: &SheetRulePackage, rule_id: &str) -> DisplayValues {
+    let mut values = DisplayValues::new();
+    for (id, table) in &package.vars {
+        if !table.declared_by.iter().any(|declarer| declarer == rule_id) {
+            continue;
+        }
+        let mut total: i64 = 0;
+        let mut resolved = true;
+        for contribution in &table.contributions {
+            if contribution.rule_id != rule_id {
+                // Some other rule also moves this variable, so this row cannot finish it.
+                continue;
+            }
+            if contribution.when != Applies::Always {
+                resolved = false;
+                break;
+            }
+            match &contribution.expr {
+                Expr::Const(n) => total += i64::from(*n),
+                _ => {
+                    resolved = false;
+                    break;
+                }
+            }
+        }
+        if resolved {
+            values.set_id(id.clone(), total);
+        }
+    }
+    values
 }
