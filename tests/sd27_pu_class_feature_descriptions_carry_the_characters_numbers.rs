@@ -61,11 +61,20 @@ use std::path::{Path, PathBuf};
 use codex::rules_core::character_input::{
     load_character_input_fixture, CharacterClassLevel, CharacterInput,
 };
-use codex::pcgen_import::pcgen_desc::leaked_pcgen_syntax;
+// The PCGen renderer is the ORACLE this file compares the converted prose against, and it is
+// imported here rather than on the live side — `decisions.md` §11's own division, which
+// `AT-35-E6-003` did not change: PCGen is a converter input and a test oracle, and `tests/` is
+// never scanned by `pcgen_residue_gate.py`.
+use codex::pcgen_import::pcgen_desc::{
+    leaked_pcgen_syntax, render_pcgen_desc_tokens, PcgenDisplayValues,
+};
+use codex::rules_core::corpus_loader::live_sheet_rules;
+use codex::rules_core::pilot_compute::resolved_prose::{resolved_description, DisplayValues};
 use codex::rules_core::pilot_compute::{
     build_pilot_headless_receipt, pu_class_feature_cited_key, pu_resolved_description_from_detail,
-    ComputationExplanation, PU_RESOLVABLE_DESCRIPTIONS,
+    ComputationExplanation,
 };
+use codex::rules_core::sheet_rule::{slug, ProseFamily};
 
 /// The same shared deterministic fixture every sibling PU pin uses, so all of
 /// them describe the same posture rather than several different ones.
@@ -242,51 +251,158 @@ fn magnitude(class_token: &str, level: u8, id_tail: &str) -> Option<i16> {
 // The transcription, and its denominator, re-derived off disk
 // ---------------------------------------------------------------------------
 
-/// The constant is a hand transcription of corpus rows. This re-reads every one
-/// of them and compares byte for byte, so a corpus edit is a failing test rather
-/// than a stale string on a player's sheet.
+/// The **converter-parity gate** — SD-35 `AT-35-E6-003`.
+///
+/// The live side no longer transcribes a single `DESC:` token. It renders the converted rule's
+/// prose out of `data/sheet_rules/pathfinder_unchained/class_feature/`
+/// ([`codex::rules_core::pilot_compute::resolved_prose`]), which carries plain-English pieces and
+/// typed slots over our own `Expr`. The question that replaces *"is the transcription still
+/// byte-identical to the corpus?"* is the one that actually protects a player: **does the
+/// converted prose render the same words the record's own `DESC:` tokens do?**
+///
+/// So both sides run, over every PU record that carries a `%N` and over a matrix of value tables:
+///
+/// * **oracle** — the record's `DESC:` tokens, read off `data/corpus/` in this test, through the
+///   tool-side PCGen renderer `render_pcgen_desc_tokens`. PCGen stays what `decisions.md` §11
+///   says it is: a converter input and a **test oracle**.
+/// * **live** — `resolved_prose::resolved_description` over the same record's converted rule.
+///
+/// and the two must be byte-identical. Nothing here is a hand-written expected string: the
+/// expectation is computed by the oracle. A corpus edit still fails this test, because the
+/// oracle re-reads the corpus every run — the property the old transcription pin gave, kept
+/// without the transcription.
+///
+/// **What this proof does not cover** (`AGENTS.md` rule 7): it compares the two renderings of the
+/// seven PU `%N` records only. It does not claim the converter preserves the text of every record
+/// in the corpus — `sheet_rule_convert -- --check` and the `data/sheet_rules/` ingest-syntax
+/// sweep are the corpus-wide instruments — and it does not exercise the `%%`, `%CHOICE` or entity
+/// escape shapes, because no PU `%N` record carries one.
 #[test]
-fn every_transcribed_desc_token_is_byte_identical_to_the_corpus_record() {
+fn the_converted_prose_renders_the_same_words_the_corpus_desc_tokens_do() {
     let corpus = corpus_records();
-    for record in PU_RESOLVABLE_DESCRIPTIONS {
-        let (_, tokens) = corpus
-            .get(record.record_key)
-            .unwrap_or_else(|| panic!("`{}` is an ingested PU record", record.record_key));
-        assert_eq!(
-            record.desc_tokens.len(),
-            tokens.len(),
-            "`{}` transcribes a different number of DESC tokens than the corpus row carries",
-            record.record_key
-        );
-        for (index, (transcribed, on_disk)) in record.desc_tokens.iter().zip(tokens).enumerate() {
-            assert_eq!(
-                *transcribed, on_disk,
-                "`{}` DESC token {index} drifted from the corpus record",
-                record.record_key
-            );
+    let mut checked = 0usize;
+
+    for (key, (_, tokens)) in &corpus {
+        if !tokens.iter().any(|token| references_an_argument(token)) {
+            continue;
         }
+        // Every argument name the PCGen renderer will try to resolve for this record, taken by
+        // its own parser rather than re-split here.
+        let mut names: BTreeSet<String> = BTreeSet::new();
+        for token in tokens {
+            for arg in codex::pcgen_import::pcgen_desc::desc_token_arguments(token) {
+                let arg = arg.trim().to_owned();
+                if !arg.is_empty() && arg.parse::<i64>().is_err() {
+                    names.insert(arg);
+                }
+            }
+        }
+        // The gate operands too — `Unchained Rogue ~ Rogues Edge` gates on a variable its prose
+        // also references, but a record could gate on one it does not.
+        for token in tokens {
+            for segment in token.split('|') {
+                if let Some(rest) = segment.strip_prefix("PREVAR")
+                    && let Some((_, operands)) = rest.split_once(':')
+                {
+                    for operand in operands.split(',') {
+                        let operand = operand.trim().to_owned();
+                        if !operand.is_empty() && operand.parse::<i64>().is_err() {
+                            names.insert(operand);
+                        }
+                    }
+                }
+            }
+        }
+
+        let names: Vec<String> = names.into_iter().collect();
+        for seed in 0..MATRIX_SEEDS {
+            let mut oracle_values = PcgenDisplayValues::new();
+            let mut live_values = DisplayValues::new();
+            for (index, name) in names.iter().enumerate() {
+                let value = matrix_value(seed, index);
+                oracle_values.set(name, value);
+                live_values.set(name, value);
+                // The converter does not always leave a `BONUS:VAR` chain's own name in the
+                // converted expression: where the chain is one step over a class level it folds
+                // it, and `unchained_rogue_rogues_edge.json` therefore reads `Rogue LVL / 5`
+                // where `pu_abilities_class.lst:588` writes `RoguesEdgeLVL`
+                // (`BONUS:VAR|RoguesEdgeLVL|RogueLVL/5`, that row's own chain). Seeding the
+                // source variable at five times the derived one makes the two environments state
+                // the same fact; it is the corpus's own arithmetic, not a fitted constant.
+                if name == "RoguesEdgeLVL" {
+                    live_values.set("RogueLVL", value * 5);
+                }
+            }
+
+            let oracle_tokens: Vec<&str> = tokens.iter().map(String::as_str).collect();
+            let rendered = render_pcgen_desc_tokens(&oracle_tokens, &oracle_values);
+            let oracle = if rendered.dropped_args.is_empty() && !rendered.text.is_empty() {
+                Some(rendered.text)
+            } else {
+                None
+            };
+            let live = resolved_description(
+                &format!("pathfinder_unchained:class_feature:{}", slug(key)),
+                &live_values,
+            );
+
+            assert_eq!(
+                live, oracle,
+                "`{key}` seed {seed}: the converted prose and the corpus DESC tokens must render \
+                 the same words"
+            );
+            if let Some(text) = &live {
+                assert!(
+                    leaked_pcgen_syntax(text).is_none(),
+                    "`{key}` seed {seed} rendered PCGen syntax to a player: {text}"
+                );
+            }
+        }
+        checked += 1;
     }
+
+    assert_eq!(checked, 7, "7 of PU's 64 class_feature records carry a %N");
 }
 
-/// The list is *all of them*, not a selection. The denominator is read off disk
-/// so a newly-ingested `%N` record cannot join the corpus without joining the
-/// list — which is the failure mode that would quietly re-open this defect for
-/// one feature.
+/// How many value tables the parity gate renders each record against. Each seed moves every
+/// argument, so a record whose prose or gate reads a different variable in one rendering than the
+/// other cannot agree on all of them by luck.
+const MATRIX_SEEDS: usize = 8;
+
+/// The value one argument takes under one seed. Deliberately spans the gate boundaries
+/// `Unchained Rogue ~ Rogues Edge` turns on (`= 1`, `> 1`) and includes a negative, which
+/// `RageACPenalty` really is.
+fn matrix_value(seed: usize, index: usize) -> i64 {
+    const LADDER: [i64; MATRIX_SEEDS] = [0, 1, 2, 3, 5, -2, 10, 17];
+    LADDER[(seed + index) % MATRIX_SEEDS]
+}
+
+/// The denominator, re-derived off disk: a newly-ingested `%N` record cannot join the corpus
+/// without the parity gate above rendering it, because that gate's population is this same
+/// filter over the same directory.
 #[test]
-fn the_transcribed_set_is_exactly_the_pu_records_carrying_a_percent_n() {
+fn the_rendered_set_is_exactly_the_pu_records_carrying_a_percent_n() {
     let corpus = corpus_records();
     let on_disk: BTreeSet<&str> = corpus
         .iter()
         .filter(|(_, (_, tokens))| tokens.iter().any(|token| references_an_argument(token)))
         .map(|(key, _)| key.as_str())
         .collect();
-    let transcribed: BTreeSet<&str> =
-        PU_RESOLVABLE_DESCRIPTIONS.iter().map(|record| record.record_key).collect();
 
-    assert_eq!(
-        transcribed, on_disk,
-        "the transcribed set and the set of PU records carrying a %N must be the same set"
-    );
+    // Every one of them is a rule the converted package actually holds `Desc` prose for —
+    // otherwise the live side would render nothing for it whatever the character's numbers were.
+    for key in &on_disk {
+        let id = format!("pathfinder_unchained:class_feature:{}", slug(key));
+        let package = live_sheet_rules().expect("data/sheet_rules/ is present in this checkout");
+        let rule = package
+            .rule(&id)
+            .unwrap_or_else(|| panic!("the converted package holds `{id}`"));
+        assert!(
+            rule.prose.iter().any(|segment| segment.family == ProseFamily::Desc),
+            "`{id}` carries converted Desc prose"
+        );
+    }
+
     assert_eq!(corpus.len(), 64, "PU ingested 64 class_feature records");
     assert_eq!(on_disk.len(), 7, "7 of the 64 carry a %N");
 }
@@ -507,8 +623,14 @@ fn no_resolved_description_ever_carries_pcgen_syntax_to_a_player() {
 /// checked by counting rather than by inspection.
 #[test]
 fn only_the_seven_percent_n_records_gain_a_rules_text_clause() {
-    let transcribed: BTreeSet<&str> =
-        PU_RESOLVABLE_DESCRIPTIONS.iter().map(|record| record.record_key).collect();
+    // The population, re-derived off disk rather than read off a live constant — SD-35
+    // `AT-35-E6-003` deleted the constant, and the corpus was always the honest denominator.
+    let corpus = corpus_records();
+    let transcribed: BTreeSet<&str> = corpus
+        .iter()
+        .filter(|(_, (_, tokens))| tokens.iter().any(|token| references_an_argument(token)))
+        .map(|(key, _)| key.as_str())
+        .collect();
 
     for (class_token, _) in PU_CLASSES {
         for explanation in explanations_for(class_token, 20) {

@@ -478,7 +478,10 @@ fn split_prose_and_args(raw: &str) -> (String, Vec<String>) {
 /// resolve, without duplicating `split_prose_and_args`'s own tail-taken-
 /// from-the-right parsing (SD-32 T12 Epic 8 row 18 cycle 15,
 /// `class_feature_grant_consumer::resolved_description_for_formula_only_desc_argument`).
-pub(crate) fn desc_token_arguments(raw: &str) -> Vec<String> {
+/// (SD-35 `AT-35-E6-003`: widened from `pub(crate)` to `pub` so the converter-parity gate in
+/// `tests/` can name the arguments this renderer will try to resolve and seed both sides of the
+/// comparison identically. Tool side only — this module is never reachable from the live side.)
+pub fn desc_token_arguments(raw: &str) -> Vec<String> {
     split_prose_and_args(raw).1
 }
 

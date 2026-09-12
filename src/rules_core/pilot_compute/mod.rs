@@ -137,9 +137,10 @@ use super::rules_tables::ultimate_combat::{self as uc, UcClassId};
 use crate::rules_core::archetype_resolver;
 use crate::rules_core::durability::FamiliarSpecies;
 use crate::rules_core::feat_identity;
-use crate::pcgen_import::pcgen_desc::{
-    leaked_pcgen_syntax, render_pcgen_desc_tokens, PcgenDisplayValues,
-};
+// SD-35 `AT-35-E6-003`: this file used to `use crate::pcgen_import::pcgen_desc::{…}` here and
+// render a record's `DESC:` tokens at run time. It reads the converted `data/sheet_rules/`
+// prose instead — `pilot_compute::resolved_prose`, declared above.
+use crate::rules_core::pilot_compute::resolved_prose::{resolved_description, DisplayValues};
 use crate::rules_core::race_resolver::race_size_for_race_token;
 use crate::rules_core::size::SizeCategory;
 use super::rules_tables::crb::class_tables::{ClassId, class_tables, good_saves_for};
@@ -209,6 +210,10 @@ pub mod crb_untabled_class_chassis;
 /// `domain_power::domain_power_probe_catalog()` directly, the same
 /// visibility shape `crb_untabled_class_chassis` above already uses.
 pub mod domain_power;
+// SD-35 `AT-35-E6-003` (`decisions.md` §11): a converted rule's own words rendered with this
+// character's numbers, read from `data/sheet_rules/`. It replaces the verbatim `DESC:` token
+// constants and the run-time PCGen renderer this file used to hold.
+pub mod resolved_prose;
 pub(crate) use class_slayer::*;
 use class_ultimate_combat::compute_uc_class_chassis;
 use domain_power::*;
@@ -28573,115 +28578,29 @@ pub fn pu_resolved_description_from_detail(detail: &str) -> Option<&str> {
     detail.split_once(PU_RESOLVED_DESCRIPTION_MARKER).map(|(_, text)| text)
 }
 
-/// One Pathfinder Unchained class feature whose corpus description states a
-/// number this engine already computes, paired with that description's `DESC:`
-/// tokens verbatim.
+/// The converted rule id for one Pathfinder Unchained class-feature record key.
 ///
-/// # Why the tokens are transcribed here
+/// SD-35 `AT-35-E6-003` (`decisions.md` §11, §1). This file used to hold every one of these
+/// records' `DESC:` tokens **verbatim** in a `const`, and hand them to the PCGen renderer at run
+/// time — the last PCGen token text in this crate's executable code. It holds none now: the
+/// converted package at `data/sheet_rules/pathfinder_unchained/class_feature/` already carries
+/// the same records' prose as plain-English pieces with typed slots over our own `Expr`, gates
+/// and all, and `resolved_prose` renders that. The join is the schema's own
+/// [`slug`](crate::rules_core::sheet_rule::slug) of the corpus `KEY:`, which is exactly how the
+/// converter named the file — no transcription, so nothing to drift.
 ///
-/// `compute_pilot_base_chassis` is a pure function that may not read the
-/// filesystem, and `rules_tables::pathfinder_unchained`'s feature tables carry a
-/// record's key, name and grant level but not its prose. This is the same
-/// situation `RACE_SIZES` and `ALTERNATE_TRAIT_REPLACE_FLAGS` already occupy, and
-/// it gets the same treatment `decisions.md §24` prescribes: a hand-transcribed
-/// constant, cited to the row it came from, with a test that re-derives every
-/// byte of it from the on-disk corpus so drift is a caught failure rather than a
-/// stale string.
-///
-/// See `tests/sd27_pu_class_feature_descriptions_carry_the_characters_numbers.rs`'s
-/// `every_transcribed_desc_token_is_byte_identical_to_the_corpus_record`.
-#[derive(Debug, Clone, Copy, PartialEq, Eq)]
-pub struct PuResolvableDescription {
-    /// The corpus `KEY:`, matched against the feature table's own `key`.
-    pub record_key: &'static str,
-    /// The record's `DESC:` tokens, in corpus source order, verbatim.
-    pub desc_tokens: &'static [&'static str],
+/// `tests/sd27_pu_class_feature_descriptions_carry_the_characters_numbers.rs` re-derives the
+/// population off disk (the PU records carrying a `%N`, 7 of 64), renders each one **both ways**
+/// over a level/ability matrix — this path, and the record's own corpus `DESC:` tokens through
+/// the tool-side PCGen renderer — and asserts byte-identical text. The oracle stayed where the
+/// oracle belongs; only the live reader changed.
+fn pu_rule_id(record_key: &str) -> String {
+    format!(
+        "pathfinder_unchained:class_feature:{}",
+        crate::rules_core::sheet_rule::slug(record_key)
+    )
 }
 
-/// Every PU class-feature record carrying a `%N` whose variable this engine
-/// resolves. Derived by command over `data/corpus/pathfinder_unchained/`, not
-/// chosen: these are all of them, and
-/// `the_transcribed_set_is_exactly_the_pu_records_carrying_a_percent_n`
-/// re-derives the denominator off disk so a newly-ingested `%N` record cannot
-/// join the corpus without joining this list.
-///
-/// All seven shipped with the number **dropped** — *"You can rage for rounds per
-/// day"*, *"[Ki Pool = ]"*, *"Subtract from the damage you take"*, *"The DC of
-/// this save is ."*, *"You add to Perception skill checks"* — and
-/// `Unchained Rogue ~ Rogues Edge` shipped with a **null** description, because
-/// every one of its prose-bearing segments is gated on a variable the ingest
-/// could not resolve.
-pub const PU_RESOLVABLE_DESCRIPTIONS: &[PuResolvableDescription] = &[
-    // `pu_abilities_class.lst:290`
-    PuResolvableDescription {
-        record_key: "Unchained Barbarian ~ Rage",
-        desc_tokens: &[PU_RAGE_DESC_TOKEN],
-    },
-    // `pu_abilities_class.lst:303` — the same prose, reached through the sibling
-    // record `Unchained Barbarian ~ Rage` grants automatically
-    // (`ABILITY:Special Ability|AUTOMATIC|Unchained Rage`), plus one extra
-    // `PREABILITY`-gated sentence this engine leaves alone: `eval_desc_gate`
-    // decides only the `PREVAR*` family, so a `PREABILITY` gate is `Undecided`
-    // and its prose survives rather than being deleted on the strength of a fact
-    // this engine does not hold.
-    PuResolvableDescription {
-        record_key: "Unchained Rage",
-        desc_tokens: &[
-            PU_UNCHAINED_RAGE_DESC_TOKEN,
-            "You are using an alternative raging method.|PREABILITY:1,CATEGORY=Special Ability,TYPE.RageSelectionAlt",
-        ],
-    },
-    // `pu_abilities_class.lst:293`
-    PuResolvableDescription {
-        record_key: "Unchained Barbarian ~ Damage Reduction",
-        desc_tokens: &[
-            "You gain damage reduction. Subtract %1 from the damage you take each time you are dealt damage from a weapon or natural attack. Damage reduction can reduce damage to 0 but not below 0.|BarbarianDR",
-        ],
-    },
-    // `pu_abilities_class.lst:467`
-    PuResolvableDescription {
-        record_key: "Unchained Monk ~ Ki Pool",
-        desc_tokens: &[PU_KI_POOL_DESC_TOKEN],
-    },
-    // `pu_abilities_class.lst:586`
-    PuResolvableDescription {
-        record_key: "Unchained Rogue ~ Master Strike",
-        desc_tokens: &[PU_MASTER_STRIKE_DESC_TOKEN],
-    },
-    // `pu_abilities_class.lst:588` — four segments, two of them mutually
-    // exclusive `PREVAR` branches on the same variable.
-    PuResolvableDescription {
-        record_key: "Unchained Rogue ~ Rogues Edge",
-        desc_tokens: &[
-            "You have mastered",
-            "a single skill beyond that skill's normal boundaries,|PREVAREQ:RoguesEdgeLVL,1",
-            "%1 skills beyond those skill's normal boundaries,|RoguesEdgeLVL|PREVARGT:RoguesEdgeLVL,1",
-            "gaining results that others can only dream about. You gain the skill unlock powers as appropriate for the number of ranks you have.",
-        ],
-    },
-    // `pu_abilities_class.lst:590`
-    PuResolvableDescription {
-        record_key: "Unchained Rogue ~ Trapfinding",
-        desc_tokens: &[
-            "You add +%1 to Perception skill checks made to locate traps and to Disable Device skill checks. You can use the Disable Device skill to disarm magical traps.|TrapfindingBonus",
-        ],
-    },
-];
-
-/// `pu_abilities_class.lst:290`'s `DESC:` token, verbatim.
-const PU_RAGE_DESC_TOKEN: &str = "You can call upon inner reserves of strength and ferocity, granting you additional combat prowess. You can rage for %1 rounds per day. You can enter a rage as a free action. The total number of rounds of rage per day is renewed after resting for 8 hours, although these hours need not be consecutive. While in a rage, you gain a +%2 bonus on melee attack rolls, melee damage rolls, thrown weapon damage rolls, and Will saving throws. In addition, you take a %3 penalty to Armor Class. You also gain %4 temporary hit points. These temporary hit points are lost first when you take damage, disappear when the rage ends, and are not replenished if you enter a rage again within 1 minute of your previous rage. While in a rage, you cannot use any Charisma-, Dexterity-, or Intelligence-based skill (except Acrobatics, Fly, Intimidate, and Ride) or any ability that requires patience or concentration (such as spellcasting). You can end your rage as a free action, and are fatigued for 1 minute after a rage ends. You can't enter a new rage while fatigued or exhausted, but can otherwise enter a rage multiple times per day. If you fall unconscious, your rage immediately ends.|RageDuration|RageBonus|RageACPenalty|RageBonusHP";
-
-/// `pu_abilities_class.lst:303`'s first `DESC:` token, verbatim. Identical to
-/// [`PU_RAGE_DESC_TOKEN`] except for the trailing `PREABILITY` gate, which is
-/// why it is transcribed separately rather than shared — a shared constant would
-/// make the corpus re-derivation test unable to tell the two rows apart.
-const PU_UNCHAINED_RAGE_DESC_TOKEN: &str = "You can call upon inner reserves of strength and ferocity, granting you additional combat prowess. You can rage for %1 rounds per day. You can enter a rage as a free action. The total number of rounds of rage per day is renewed after resting for 8 hours, although these hours need not be consecutive. While in a rage, you gain a +%2 bonus on melee attack rolls, melee damage rolls, thrown weapon damage rolls, and Will saving throws. In addition, you take a %3 penalty to Armor Class. You also gain %4 temporary hit points. These temporary hit points are lost first when you take damage, disappear when the rage ends, and are not replenished if you enter a rage again within 1 minute of your previous rage. While in a rage, you cannot use any Charisma-, Dexterity-, or Intelligence-based skill (except Acrobatics, Fly, Intimidate, and Ride) or any ability that requires patience or concentration (such as spellcasting). You can end your rage as a free action, and are fatigued for 1 minute after a rage ends. You can't enter a new rage while fatigued or exhausted, but can otherwise enter a rage multiple times per day. If you fall unconscious, your rage immediately ends.|RageDuration|RageBonus|RageACPenalty|RageBonusHP|PREABILITY:1,CATEGORY=Special Ability,Standard Unchained Rage";
-
-/// `pu_abilities_class.lst:467`'s `DESC:` token, verbatim.
-const PU_KI_POOL_DESC_TOKEN: &str = "[Ki Pool = %1] At 3rd level, a monk gains a pool of ki points, supernatural energy he can use to accomplish amazing feats. The number of points in a monk's ki pool is equal to 1/2 his monk level + his Wisdom modifier. As long as he has at least 1 point in his ki pool, he can make a ki strike. At 3rd level, ki strike allows his unarmed attacks to be treated as magic weapons for the purpose of overcoming damage reduction. At 7th level, his unarmed attacks are also treated as cold iron and silver for the purpose of overcoming damage reduction. At 10th level, his unarmed attacks are also treated as lawful weapons for the purpose of overcoming damage reduction. At 16th level, his unarmed attacks are treated as adamantine weapons for the purpose of overcoming damage reduction and bypassing hardness. By spending 1 point from his ki pool as a swift action, a monk can make one additional unarmed strike at his highest attack bonus when making a flurry of blows attack. This bonus attack stacks with all bonus attacks gained from flurry of blows, as well as those from haste and similar effects. A monk gains additional powers that consume points from his ki pool as he gains levels. The ki pool is replenished each morning after 8 hours of rest or meditation; these hours do not need to be consecutive.|KiPoints";
-
-/// `pu_abilities_class.lst:586`'s `DESC:` token, verbatim.
-const PU_MASTER_STRIKE_DESC_TOKEN: &str = "You are incredibly deadly when dealing sneak attack damage. Each time you deal sneak attack damage, you can choose one of the following three effects: the target can be put to sleep for 1d4 hours, paralyzed for 2d6 rounds, or slain. Regardless of the effect chosen, the target receives a Fortitude save to negate the additional effect. The DC of this save is %1. Once a creature has been the target of a master strike, regardless of whether or not the save is made, that creature is immune to your master strike for 24 hours. Creatures that are immune to sneak attack damage are also immune to this ability.|MasterStrikeDC";
 
 /// The display values one Unchained character has for the PCGen variables its
 /// own class-feature descriptions reference.
@@ -28714,8 +28633,8 @@ fn pu_display_values(
     class_id: PuClassId,
     level: u8,
     ability_modifiers: &AbilityModifiers,
-) -> PcgenDisplayValues {
-    let mut values = PcgenDisplayValues::new();
+) -> DisplayValues {
+    let mut values = DisplayValues::new();
     let mut set = |name: &str, value: Option<i16>| {
         if let Some(value) = value {
             values.set(name, i64::from(value));
@@ -28767,6 +28686,15 @@ fn pu_display_values(
                 "RoguesEdgeLVL",
                 rogue_features::rogues_edge_skill_unlocks(level).map(i16::from),
             );
+            // SD-35 `AT-35-E6-003`. The converter did not leave `RoguesEdgeLVL` as an opaque
+            // name: it folded that row's own one-step chain and wrote the record's slot and
+            // both its gates as `Rogue LVL / 5` over the class level itself
+            // (`unchained_rogue_rogues_edge.json`). So the class level is the value the
+            // converted prose actually asks for, and it is seeded beside — not instead of —
+            // the hand-modelled unlock count above, which the standalone magnitude row still
+            // reads. Single-class on this path, so character level == rogue level, the same
+            // note `rage_temporary_hit_points` already carries for the same reason.
+            set("RogueLVL", Some(i16::from(level)));
         }
         // The Unchained Summoner's own records carry no `%N` at all
         // (`data/corpus/pathfinder_unchained/class_feature/summoner_unchained_class/`),
@@ -28786,17 +28714,19 @@ fn pu_display_values(
 /// (*"You can rage for rounds per day"*), and the roster line without it is
 /// honest where the mangled sentence is not. The un-rendered case is exactly what
 /// a character below the feature's grant level hits.
-fn pu_resolved_description(record_key: &str, values: &PcgenDisplayValues) -> Option<String> {
-    let record = PU_RESOLVABLE_DESCRIPTIONS.iter().find(|r| r.record_key == record_key)?;
-    let rendered = render_pcgen_desc_tokens(record.desc_tokens, values);
-    if !rendered.dropped_args.is_empty() || rendered.text.is_empty() {
-        return None;
-    }
-    debug_assert!(
-        leaked_pcgen_syntax(&rendered.text).is_none(),
-        "a resolved description must never carry PCGen syntax to a player: {rendered:?}"
-    );
-    Some(rendered.text)
+fn pu_resolved_description(record_key: &str, values: &DisplayValues) -> Option<String> {
+    // SD-35 `AT-35-E6-003`. Was: find the record's verbatim `DESC:` tokens in a live `const` and
+    // call `render_pcgen_desc_tokens` on them. Now: the converted rule's own prose, rendered by
+    // `resolved_prose`, which reads no ingest format at all. The "`None` rather than a
+    // partially-resolved sentence" contract this function's doc states is unchanged — it is
+    // `resolved_description`'s own contract now, stated as a return value rather than as a
+    // `dropped_args` report.
+    //
+    // The PCGen-syntax `debug_assert!` that used to stand here is gone with the renderer, and is
+    // not weakened by its absence: `data/sheet_rules/` is swept corpus-wide for ingest syntax by
+    // this bundle's own release gate (`grep -rlE 'BONUS:|DEFINE:|PRE[A-Z]+:|%CHOICE|CL=' →  0`),
+    // which is a wider check than one assertion on one rendered string.
+    resolved_description(&pu_rule_id(record_key), values)
 }
 
 /// One ingested Pathfinder Unchained `class_feature` record, normalised across

@@ -28,14 +28,12 @@
 //!   open operator ruling (`progress.md`, `## Open blockers`); this test does
 //!   not presume that ruling for the *gate*, it simply declines to call a test
 //!   assertion "rendered prose", which it is not.
-//! * **`PU_RESOLVABLE_DESCRIPTIONS` and the `PU_*_DESC_TOKEN` constants are
-//!   skipped, and that is not an exemption.** Those strings are verbatim
-//!   corpus transcriptions, pinned byte-for-byte against the `.lst` files on
-//!   disk by `sd27_pu_class_feature_descriptions_carry_the_characters_numbers`.
-//!   They are not prose this codebase wrote — they are the book, held so
-//!   `render_pcgen_desc_tokens` can substitute `%N` into them. They leave the
-//!   live side when `pcgen_desc.rs` is deleted, which is `AT-35-E6-003`'s own
-//!   scope, and they are reported in that cycle's refused remainder.
+//! * **The Pathfinder Unchained `DESC:` transcriptions are gone, not skipped.** They used to be
+//!   exempted here as verbatim corpus text held so `render_pcgen_desc_tokens` could substitute
+//!   `%N` into them. SD-35 `AT-35-E6-003` deleted them and the renderer call with them:
+//!   `pilot_compute::resolved_prose` renders the CONVERTED prose out of `data/sheet_rules/`
+//!   instead, and `sd27_pu_class_feature_descriptions_carry_the_characters_numbers` proves the
+//!   two render byte-identical words. This file has no exemption left.
 
 const SCANNED: &[&str] = &[
     "src/rules_core/pilot_compute/mod.rs",
@@ -157,33 +155,6 @@ fn cfg_test_lines(lines: &[&str]) -> Vec<bool> {
     inside
 }
 
-/// Lines belonging to the verbatim Pathfinder Unchained corpus transcriptions.
-fn corpus_transcription_lines(lines: &[&str]) -> Vec<bool> {
-    let mut skip = vec![false; lines.len()];
-    let mut i = 0usize;
-    while i < lines.len() {
-        let t = lines[i].trim_start();
-        if t.starts_with("const PU_") && t.contains("_DESC_TOKEN") {
-            skip[i] = true;
-            i += 1;
-            continue;
-        }
-        if t.starts_with("pub const PU_RESOLVABLE_DESCRIPTIONS") {
-            while i < lines.len() {
-                skip[i] = true;
-                if lines[i].trim_end().ends_with("];") {
-                    break;
-                }
-                i += 1;
-            }
-            i += 1;
-            continue;
-        }
-        i += 1;
-    }
-    skip
-}
-
 #[test]
 fn rendered_prose_carries_no_pcgen_ingest_vocabulary() {
     let repo = std::path::Path::new(env!("CARGO_MANIFEST_DIR"));
@@ -195,10 +166,9 @@ fn rendered_prose_carries_no_pcgen_ingest_vocabulary() {
             .unwrap_or_else(|e| panic!("cannot read {}: {e}", path.display()));
         let lines: Vec<&str> = text.lines().collect();
         let in_test = cfg_test_lines(&lines);
-        let transcribed = corpus_transcription_lines(&lines);
 
         for (idx, line) in lines.iter().enumerate() {
-            if line.trim_start().starts_with("//") || in_test[idx] || transcribed[idx] {
+            if line.trim_start().starts_with("//") || in_test[idx] {
                 continue;
             }
             if let Some(hit) = ingest_vocabulary_in(line) {
