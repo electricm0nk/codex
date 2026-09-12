@@ -612,8 +612,8 @@ fn classify_field(field_name: &str, value: &str) -> (License, Option<String>, Op
 /// `src/bin/ingest_races.rs` and `src/bin/ingest_race_traits.rs` already
 /// carry: a future leak stops this generator instead of reaching a screen.
 fn render_player_facing_description(record_key: &str, raw: &str) -> String {
-    let rendered = codex::rules_core::pcgen_desc::render_pcgen_desc(raw);
-    if let Some(leak) = codex::rules_core::pcgen_desc::leaked_pcgen_syntax(&rendered.text) {
+    let rendered = codex::pcgen_import::pcgen_desc::render_pcgen_desc(raw);
+    if let Some(leak) = codex::pcgen_import::pcgen_desc::leaked_pcgen_syntax(&rendered.text) {
         panic!(
             "record {record_key:?}: rendered description still carries {leak}. Raw token: {raw:?}"
         );

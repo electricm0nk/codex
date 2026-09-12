@@ -608,7 +608,7 @@ mod tests {
     ///   a silent omission.
     #[test]
     fn no_catalog_serves_a_description_carrying_raw_pcgen_syntax() {
-        use codex::rules_core::pcgen_desc::leaked_pcgen_syntax;
+        use codex::pcgen_import::pcgen_desc::leaked_pcgen_syntax;
 
         let mut checked = 0usize;
         let mut leaks: Vec<String> = Vec::new();
@@ -711,7 +711,7 @@ mod tests {
     /// | APG / B1 / PU | all | 0 | 0 |
     #[test]
     fn the_raw_percent_escape_stops_at_the_catalog_boundary() {
-        use codex::rules_core::pcgen_desc::leaked_pcgen_syntax;
+        use codex::pcgen_import::pcgen_desc::leaked_pcgen_syntax;
 
         let mut raw_leaks: BTreeMap<(&str, String), usize> = BTreeMap::new();
         let mut count_raw = |book: &'static str, category: String, description: Option<&str>| {

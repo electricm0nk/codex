@@ -9,9 +9,9 @@
 //! character sheet, which the ruling forbids.
 //!
 //! The substitution those call sites performed already happens at ingest, in
-//! `src/pcgen_import/sheet_rule/`. The converted [`SheetRule`](codex::rules_core::sheet_rule::SheetRule)
+//! `src/pcgen_import/sheet_rule/`. The converted [`SheetRule`](crate::rules_core::sheet_rule::SheetRule)
 //! carries the record's words with **typed** holes, and
-//! [`codex::rules_core::sheet_rule_catalog::catalog_description`] renders them with no character
+//! [`crate::rules_core::sheet_rule_catalog::catalog_description`] renders them with no character
 //! in hand — a final number where the term is settled, the rule's own words where it is not
 //! (`decisions.md §1`'s three permitted printed forms). This module is the join from a catalog
 //! row to that record, and nothing else.
@@ -31,8 +31,8 @@
 //!    file and line **both sides record** — the compiled key's own tail against the converted
 //!    rule's `provenance.closure_rows`. A suffix two rules share resolves to neither.
 //! 3. **By name, package-wide.** When steps 1 and 2 miss, [`description_for`] falls back to
-//!    [`codex::rules_core::sheet_rule_catalog::catalog_description_by_name`], whose lookup is
-//!    [`SheetRulePackage::find`](codex::rules_core::sheet_rule::SheetRulePackage::find) —
+//!    [`crate::rules_core::sheet_rule_catalog::catalog_description_by_name`], whose lookup is
+//!    [`SheetRulePackage::find`](crate::rules_core::sheet_rule::SheetRulePackage::find) —
 //!    `core_rulebook` first, then the lexicographically first book id. This is **the same
 //!    resolution the character sheet itself performs** for a name several printings share; it is
 //!    not a fuzzy matcher, and it never matches a slug the package does not literally hold.
@@ -59,7 +59,15 @@
 //! resolves to nothing. It never strips more than one group, never strips a leading or interior
 //! one, and never strips when nothing remains.
 //!
-//! **There is no step past these.** A key the package does not hold under any of the four serves
+//! 5. **A key two records share — [`description_of_the_one_disambiguated_variant`].** When two
+//!    corpus records carry the same key the converter cannot write both to the same id, so it
+//!    writes `<slug>__<hash>` for each and the bare slug holds nothing. Step 5 resolves such a
+//!    key **only when exactly one of the variants states prose**; two that both state prose are
+//!    two different rules and resolve to neither. Added in SD-35 `AT-35-E6-003-SWEEP` cycle 17,
+//!    where it was the whole reason `Wizard ~ Spells` and `Master Of Many Styles ~ Perfect
+//!    Style` had no description at all.
+//!
+//! **There is no step past these.** A key the package does not hold under any of the five serves
 //! `None` — never a guessed, partial or neighbouring record's text.
 //!
 //! # What is NOT in here
@@ -68,9 +76,9 @@
 //! vocabulary of any kind. The input is a book directory, a kind and a record key; the output is
 //! English.
 
-use codex::rules_core::corpus_loader::live_sheet_rules;
-use codex::rules_core::sheet_rule::{slug, SheetRulePackage};
-use codex::rules_core::sheet_rule_catalog::{catalog_description, catalog_description_by_name};
+use crate::rules_core::corpus_loader::live_sheet_rules;
+use crate::rules_core::sheet_rule::{slug, SheetRulePackage};
+use crate::rules_core::sheet_rule_catalog::{catalog_description, catalog_description_by_name};
 use std::collections::BTreeMap;
 
 /// The converted package this crate serves from, or `None` when
@@ -93,9 +101,23 @@ pub fn converted_id(book_dir: &str, kind: &str, key: &str) -> String {
 /// Step 1 of the join: the description of the `kind` record `key` **in `book_dir`**, or `None`
 /// when that book holds no such record, or holds it with no descriptive prose.
 pub fn description_in_book(book_dir: &str, kind: &str, key: &str) -> Option<String> {
+    let id = id_in_book(book_dir, kind, key)?;
+    catalog_description(package()?, package()?.rule(&id)?)
+}
+
+/// [`description_in_book`]'s own answer, as the rule id it resolved rather than the words.
+///
+/// Each step of the join has one of these. They exist because two callers ask two different
+/// questions of the same join: a catalog screen wants the record's words, and
+/// `pilot_compute::class_feature_grant_consumer` wants to know whether the converter settled
+/// **every** term in them without a character in hand. Both must resolve the same record or
+/// they are two joins, so the id form is the join and the description form is a view of it.
+fn id_in_book(book_dir: &str, kind: &str, key: &str) -> Option<String> {
     let package = package()?;
-    let rule = package.rule(&converted_id(book_dir, kind, key))?;
-    catalog_description(package, rule)
+    let id = converted_id(book_dir, kind, key);
+    let rule = package.rule(&id)?;
+    catalog_description(package, rule)?;
+    Some(id)
 }
 
 /// Step 4's transformation: `"Nondetection (self only)"` → `Some("Nondetection")`.
@@ -202,6 +224,12 @@ fn source_row_index() -> &'static BTreeMap<(String, String), BTreeMap<String, St
 /// row both sides record. `None` for a key that is not a placeholder, and for a placeholder
 /// whose source row the package holds under no rule or under more than one.
 pub fn description_by_source_row(book_dir: &str, kind: &str, key: &str) -> Option<String> {
+    let id = id_by_source_row(book_dir, kind, key)?;
+    catalog_description(package()?, package()?.rule(&id)?)
+}
+
+/// [`description_by_source_row`]'s own answer, as the rule id it resolved.
+fn id_by_source_row(book_dir: &str, kind: &str, key: &str) -> Option<String> {
     let token = source_row_suffix(key)?;
     let book = if book_dir == "beastiary" { "bestiary" } else { book_dir };
     let package = package()?;
@@ -210,7 +238,8 @@ pub fn description_by_source_row(book_dir: &str, kind: &str, key: &str) -> Optio
         .iter()
         .find(|(suffix, _)| token.ends_with(suffix.as_str()))
         .map(|(_, id)| id)?;
-    catalog_description(package, package.rule(id)?)
+    catalog_description(package, package.rule(id)?)?;
+    Some(id.clone())
 }
 
 /// The description a catalog row serves, through the join in the module doc.
@@ -218,20 +247,96 @@ pub fn description_by_source_row(book_dir: &str, kind: &str, key: &str) -> Optio
 /// `None` is the honest answer for a row the package holds under none of the steps, and for a
 /// record whose converted rule states a stat block and no descriptive prose at all.
 pub fn description_for(book_dir: &str, kind: &str, key: &str) -> Option<String> {
-    if let Some(text) = description_in_book(book_dir, kind, key) {
-        return Some(text);
+    let package = package()?;
+    let id = rule_id_for(book_dir, kind, key)?;
+    catalog_description(package, package.rule(&id)?)
+}
+
+/// The whole join, as the rule id it resolves — the five steps of the module doc, in order.
+///
+/// A step that resolves a rule stating **no** prose is not an answer; the walk continues, which
+/// is exactly what the description form did when `catalog_description` returned `None` at a
+/// step. [`description_for`] is this plus one `catalog_description` call.
+pub fn rule_id_for(book_dir: &str, kind: &str, key: &str) -> Option<String> {
+    if let Some(id) = id_in_book(book_dir, kind, key) {
+        return Some(id);
     }
-    if let Some(text) = description_by_source_row(book_dir, kind, key) {
-        return Some(text);
+    if let Some(id) = id_by_source_row(book_dir, kind, key) {
+        return Some(id);
     }
-    if let Some(text) = description_by_name(kind, key) {
-        return Some(text);
+    if let Some(id) = id_by_name(kind, key) {
+        return Some(id);
     }
-    let base = base_name(key)?;
-    if let Some(text) = description_in_book(book_dir, kind, base) {
-        return Some(text);
+    if let Some(base) = base_name(key) {
+        if let Some(id) = id_in_book(book_dir, kind, base) {
+            return Some(id);
+        }
+        if let Some(id) = id_by_name(kind, base) {
+            return Some(id);
+        }
     }
-    description_by_name(kind, base)
+    id_of_the_one_disambiguated_variant(book_dir, kind, key)
+}
+
+/// The record's words **only when the converter settled every term in them** with no character
+/// in hand — `None` when the join misses, when the record states no prose, and when the prose
+/// carries a hole that stands on a character term.
+///
+/// SD-35 `AT-35-E6-003-SWEEP` cycle 17. `pilot_compute::class_feature_grant_consumer` admits a
+/// grant fact on the strength of the sheet's Class Features section already being able to print
+/// the record's sentence *without this character*. A sentence with an unsettled hole does not
+/// meet that bar — it is the right thing to print on a catalog screen, where there is no
+/// character at all, and the wrong thing to rely on when a character IS in hand and the
+/// interpreter can state the real number. `[`description_for`]` answers the first question and
+/// this answers the second; conflating them silently replaced 32 resolved, per-character
+/// sentences with their unsettled form.
+pub fn settled_description_for(book_dir: &str, kind: &str, key: &str) -> Option<String> {
+    let package = package()?;
+    let id = rule_id_for(book_dir, kind, key)?;
+    let rule = package.rule(&id)?;
+    if crate::rules_core::sheet_rule_catalog::prose_has_a_slot_no_character_settles(rule) {
+        return None;
+    }
+    catalog_description(package, rule)
+}
+
+/// Step 5 of the join: a key two corpus records share, which the converter writes as
+/// `<slug>__<hash>` rules and never under the bare slug.
+///
+/// The corpus holds two `core_rulebook` `class_feature` records both keyed `Wizard ~ Spells`,
+/// and two `ultimate_combat` records both keyed `Master Of Many Styles ~ Perfect Style`. The
+/// converter cannot write both to `…:class_feature:wizard_spells`, so it disambiguates each
+/// with a content hash; the package then holds **no** rule at the bare slug and steps 1–4 all
+/// miss. Before cycle 17 those rows lost their description entirely.
+///
+/// **It resolves only when exactly one variant states prose.** In both live cases the collision
+/// is a record and its own token-only twin: one variant carries the book's sentence and the
+/// other carries structure and no words at all, so "the one that has words" names a single
+/// record and not a guess. When two variants both state prose they are two different rules and
+/// this returns `None` — the same refusal [`description_by_source_row`] applies to an ambiguous
+/// source row, and for the same reason. It never reaches outside the row's own book and kind,
+/// and never matches a slug the package does not literally hold under the `__` form.
+fn id_of_the_one_disambiguated_variant(book_dir: &str, kind: &str, key: &str) -> Option<String> {
+    let package = package()?;
+    let bare = converted_id(book_dir, kind, key);
+    if package.rule(&bare).is_some() {
+        return None;
+    }
+    let prefix = format!("{bare}__");
+    let mut found: Option<String> = None;
+    for (id, rule) in &package.rules {
+        if !id.starts_with(&prefix) {
+            continue;
+        }
+        if catalog_description(package, rule).is_none() {
+            continue;
+        }
+        if found.is_some() {
+            return None;
+        }
+        found = Some(id.clone());
+    }
+    found
 }
 
 /// Step 3 alone: the package-wide by-name resolution, exactly as the character sheet performs
@@ -239,6 +344,14 @@ pub fn description_for(book_dir: &str, kind: &str, key: &str) -> Option<String> 
 pub fn description_by_name(kind: &str, key: &str) -> Option<String> {
     let package = package()?;
     catalog_description_by_name(package, kind, key)
+}
+
+/// [`description_by_name`]'s own answer, as the rule id it resolved.
+fn id_by_name(kind: &str, key: &str) -> Option<String> {
+    let package = package()?;
+    let id = package.find(kind, &slug(key))?;
+    catalog_description(package, package.rule(id)?)?;
+    Some(id.clone())
 }
 
 #[cfg(test)]
@@ -298,16 +411,43 @@ mod tests {
         assert_eq!(base_name("(self only)"), None);
     }
 
-    /// A restricted printing serves the record it restricts; a key nothing holds still
+    /// A restricted printing the package holds as its own record serves **that** record; one the
+    /// package does not hold falls back to the record it restricts; a key nothing holds still
     /// serves nothing.
+    ///
+    /// **Corrected in SD-35 `AT-35-E6-003-SWEEP` cycle 17, against the package rather than
+    /// against this test's memory of it.** The assertion used to be that
+    /// `Nondetection (self only)` serves `Nondetection`'s words. It does not, and should not:
+    /// the converter writes `core_rulebook:spell:nondetection_self_only` as a record of its own,
+    /// so step 1 of the join answers directly and the restricted printing states the restricted
+    /// text. Step 4 is still load-bearing — `Planar Binding (Demons Only)` has no record of its
+    /// own — and is what this now exercises. Re-derive which printings the package holds:
+    /// `ls data/sheet_rules/core_rulebook/spell/ | grep -E 'nondetection|planar_binding'`.
     #[test]
-    fn a_restricted_printing_serves_its_base_record_and_an_unheld_key_serves_nothing() {
+    fn a_restricted_printing_serves_its_own_record_then_its_base_and_an_unheld_key_serves_nothing()
+    {
+        // Held as its own record: step 1, not step 4.
+        let restricted = description_for("core_rulebook", "spell", "Nondetection (self only)")
+            .expect("core_rulebook:spell:nondetection_self_only states no prose");
         let base = description_for("core_rulebook", "spell", "Nondetection")
             .expect("core_rulebook:spell:nondetection states no prose");
-        assert_eq!(
-            description_for("core_rulebook", "spell", "Nondetection (self only)").as_deref(),
-            Some(base.as_str())
+        assert_ne!(
+            restricted, base,
+            "the package holds the restricted printing as its own record; serving the base \
+             record's words for it would throw the restriction away"
         );
+
+        // A printed qualifier the package holds under no book at all: steps 1–3 miss and step 4
+        // drops the group, serving the record the printing restricts. `Planar Binding (Demons
+        // Only)` is deliberately NOT the example — the package holds it, in
+        // `advanced_players_guide`, so step 3 answers it and step 4 never runs.
+        assert_eq!(
+            description_for("core_rulebook", "spell", "Nondetection (while aboard a ship)")
+                .as_deref(),
+            Some(base.as_str()),
+            "step 4 must drop a qualifier the package holds nowhere and serve the base record"
+        );
+
         assert_eq!(
             description_for("core_rulebook", "spell", "Not A Real Spell (self only)"),
             None

@@ -11,7 +11,11 @@ mod class_feature_descriptions;
 mod class_feature_feat_bridge;
 mod class_feature_pool_picker;
 mod class_spell_levels;
-mod converted_prose;
+/// The catalog-row → converted-record join, which moved into the library crate
+/// (`codex::rules_core::converted_prose`) in SD-35 `AT-35-E6-003-SWEEP` cycle 17 so the
+/// library's own catalogs can reach the same join this crate's screens use. Re-exported under
+/// its original path so every call site in this crate is unchanged by the move.
+use codex::rules_core::converted_prose;
 mod corpus_fixtures;
 mod corpus_full;
 mod corpus_ingest_diagnostic;

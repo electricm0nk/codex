@@ -88,7 +88,7 @@ use codex::rules_core::rules_tables::crb::{
     spell_list as crb_spell_list, weapon_tables, wizard_spell_list as crb_wizard_spell_list,
 };
 use codex::rules_core::rules_tables::feats_all::all_feat_tables;
-use codex::rules_core::pcgen_desc::leaked_pcgen_syntax;
+use codex::pcgen_import::pcgen_desc::leaked_pcgen_syntax;
 use codex::rules_core::pilot_view_model::{PilotSnapshot, PilotSpellbookViewModel, PilotViewModel};
 use codex::rules_core::skill_allocation;
 use codex::rules_core::trait_effects;
@@ -1318,7 +1318,7 @@ fn corpus_json_description_leaks_pcgen_syntax(
         // positived on 3 real `core_rulebook:equipment:*` units whose only
         // "leak" was an already-correctly-renderable `%%` (caught by this
         // integration cycle's own guarded regen).
-        let rendered = codex::rules_core::pcgen_desc::render_pcgen_desc(desc);
+        let rendered = codex::pcgen_import::pcgen_desc::render_pcgen_desc(desc);
         // TWO refusal conditions, not one -- `render_pcgen_desc` was widened
         // in this SAME cycle to drop an unresolved `%<KEYWORD>` (`%CHOICE`)
         // the same no-fabrication way it already drops an unresolved `%N`

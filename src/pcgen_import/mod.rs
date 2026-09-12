@@ -76,6 +76,12 @@ pub mod include_resolver;
 pub mod ir_converter;
 pub mod lst_parser;
 pub mod pcc;
+/// The ingest format's own description renderer — its `%N` slots, `|`-argument tails and
+/// escape shapes. Lived at `src/rules_core/pcgen_desc.rs` until SD-35 `AT-35-E6-003-SWEEP`
+/// cycle 17, which is the move `epic-breakdown.md`'s `AT-35-E6-003` names: *"`render_pcgen_desc`
+/// is deleted from the live side; its `%N` substitution already happened in the converter."*
+/// Kept, not deleted — `decisions.md §11`, what is kept for Starfinder.
+pub mod pcgen_desc;
 pub mod sheet_rule;
 pub mod source_content_payload;
 

@@ -54,6 +54,29 @@ pub fn catalog_prose(package: &SheetRulePackage, rule: &SheetRule) -> String {
     render(package, &rule.prose, None)
 }
 
+/// Whether the rule's prose carries a hole that **no character settles** — a slot, or a dice
+/// modifier, standing on a term rather than on a constant.
+///
+/// SD-35 `AT-35-E6-003-SWEEP` cycle 17. A catalog screen prints such a hole as the term's own
+/// words ([`render`]'s `None` arm, `decisions.md §1`'s third permitted form), which is the
+/// right answer where there is no character. A caller that *has* a character needs to know the
+/// difference, because for it the words are a worse answer than the number it could compute:
+/// `pilot_compute::class_feature_grant_consumer` chooses between the sheet's static Class
+/// Features section and its own per-character resolution on exactly this question.
+///
+/// This is the same predicate
+/// `every_unsettled_slot_in_the_live_package_renders_as_words_not_as_the_characterless_zero`
+/// applies over the whole package, named once instead of twice.
+pub fn prose_has_a_slot_no_character_settles(rule: &SheetRule) -> bool {
+    rule.prose.iter().any(|segment| {
+        segment.pieces.iter().any(|piece| match piece {
+            ProsePiece::Slot(e) => const_value(e).is_none(),
+            ProsePiece::Dice { modifier: Some(e), .. } => const_value(e).is_none(),
+            _ => false,
+        })
+    })
+}
+
 /// The description a catalog row serves: the `Desc`/`Benefit`/`Special` families only.
 ///
 /// `None` when the record states no descriptive prose at all — the honest answer for the

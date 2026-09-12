@@ -1049,7 +1049,7 @@ mod tests {
                 described += 1;
                 assert!(!text.trim().is_empty(), "{}: an empty description shows nothing", ability.key);
                 assert!(
-                    codex::rules_core::pcgen_desc::leaked_pcgen_syntax(text).is_none(),
+                    codex::pcgen_import::pcgen_desc::leaked_pcgen_syntax(text).is_none(),
                     "{}: {text}",
                     ability.key
                 );

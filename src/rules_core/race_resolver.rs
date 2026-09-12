@@ -87,7 +87,7 @@ use crate::pcgen_import::bonus_chain_reader::{self, DeclaredBonuses};
 use crate::pcgen_import::race_trait_tokens;
 use crate::rules_core::corpus_loader::BookCorpusRoot;
 use crate::rules_core::feat_effects::FeatDisplayValueDeltas;
-use crate::rules_core::pcgen_desc::{render_pcgen_desc_tokens, PcgenDisplayValues, RenderedPcgenDesc};
+use crate::pcgen_import::pcgen_desc::{render_pcgen_desc_tokens, PcgenDisplayValues, RenderedPcgenDesc};
 use crate::pcgen_import::ingest_payload::{RaceCacheData, RaceTraitCacheData};
 use crate::rules_core::shape_b_v1::{validate_license, CorpusRecordV1, CorpusSource};
 use crate::rules_core::size::SizeCategory;

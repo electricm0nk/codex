@@ -49,7 +49,7 @@
 
 use codex::rules_core::corpus_loader::BookCorpusRoot;
 use codex::rules_core::feat_effects::display_value_deltas_from_feats;
-use codex::rules_core::pcgen_desc::leaked_pcgen_syntax;
+use codex::pcgen_import::pcgen_desc::leaked_pcgen_syntax;
 use codex::rules_core::race_resolver::{load_race_corpus, RaceCorpus};
 use std::path::Path;
 

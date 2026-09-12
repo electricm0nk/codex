@@ -1272,7 +1272,7 @@ mod tests {
     /// reaching a screen.
     #[test]
     fn no_served_spell_description_carries_raw_pcgen_syntax() {
-        use codex::rules_core::pcgen_desc::leaked_pcgen_syntax;
+        use codex::pcgen_import::pcgen_desc::leaked_pcgen_syntax;
 
         let response = build_spell_catalog();
         let leaks: Vec<String> = response

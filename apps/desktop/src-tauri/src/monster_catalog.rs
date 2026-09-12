@@ -1186,7 +1186,7 @@ mod tests {
                     ability.key
                 );
                 assert!(
-                    codex::rules_core::pcgen_desc::leaked_pcgen_syntax(description).is_none(),
+                    codex::pcgen_import::pcgen_desc::leaked_pcgen_syntax(description).is_none(),
                     "{} leaks PCGen syntax",
                     ability.key
                 );

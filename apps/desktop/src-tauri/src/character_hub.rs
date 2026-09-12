@@ -4850,7 +4850,7 @@ mod tests {
     /// one.
     #[test]
     fn every_racial_trait_on_a_loaded_sheet_carries_rendered_prose_and_names_what_it_replaced() {
-        use codex::rules_core::pcgen_desc::leaked_pcgen_syntax;
+        use codex::pcgen_import::pcgen_desc::leaked_pcgen_syntax;
 
         let root = tempdir("sheet-racial-trait-coverage");
         saved_or_panic(

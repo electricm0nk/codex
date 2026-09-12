@@ -610,25 +610,37 @@ fn corpus_records_with_real_description() -> &'static BTreeMap<String, String> {
                 if !is_real_description_value(raw_desc) {
                     continue;
                 }
-                let rendered = crate::rules_core::pcgen_desc::render_pcgen_desc(raw_desc);
-                if crate::rules_core::pcgen_desc::leaked_pcgen_syntax(&rendered.text).is_some() {
+                // SD-35 `AT-35-E6-003-SWEEP` cycle 17: the guard this module reproduces is
+                // `class_feature_pool_catalog`'s, and that catalog stopped rendering the
+                // ingest format's description at run time. It now asks the converted package
+                // for the record's words; a record the package states no prose for is one the
+                // catalog would refuse, which is exactly what this walk must not claim.
+                let book = book_entry.file_name().to_string_lossy().to_string();
+                // `settled_description_for`, **not** `description_for`: this table's whole
+                // meaning is "the sheet's Class Features section can already print this
+                // record's sentence with no character in hand". A sentence whose magnitude is
+                // still a term does not meet that bar — it is `resolved_description_for`'s
+                // job, one branch down, where this character's own level settles it. Using the
+                // unsettled form here silently replaced 32 resolved, per-character sentences
+                // with their term-word form.
+                let Some(converted) = crate::rules_core::converted_prose::settled_description_for(
+                    &book,
+                    "class_feature",
+                    key,
+                ) else {
+                    continue;
+                };
+                let lower = converted.to_ascii_lowercase();
+                if lower.contains("[not implemented]") || lower.contains("[not enforced]") {
                     continue;
                 }
-                // Gate-weakening review finding (SD-31 wave 23 integration
-                // cycle): `leaked_pcgen_syntax` alone does not catch an
-                // unresolved `%N` numeric-argument placeholder silently
-                // DROPPED (not leaked as literal syntax) by
-                // `render_pcgen_desc` -- e.g. Fighter ~ Bravery's real DESC
-                // reads "You gain a +%1 bonus to Will saves against fear
-                // effects.", which renders as "You gain a + bonus..." with
-                // no `%` character left to catch. `class_feature_pool_
-                // catalog.rs`'s sibling gate already refuses on this same
-                // signal (`!rendered.dropped_args.is_empty()`); mirrored
-                // here so this module never claims a record whose
-                // magnitude that render pass could not resolve.
-                if !rendered.dropped_args.is_empty() {
-                    continue;
-                }
+                // The gate-weakening review finding of SD-31 wave 23 — that an unresolved `%N`
+                // argument silently DROPPED, rather than leaked as literal syntax, left a
+                // sentence reading "You gain a + bonus..." with no `%` character to catch — is
+                // now settled one level upstream. A row whose magnitude the converter could not
+                // finish reaches the package as no prose at all, which the `else` above
+                // refuses, so this module still never claims a record whose magnitude is
+                // missing from its words.
                 out.entry(key.to_string()).or_insert_with(|| name.to_string());
             }
         }
@@ -948,16 +960,16 @@ pub(crate) fn resolved_description_for(
     let class_level_var = class_level_variable_name(&record.class);
     let resolved_vars =
         resolve_pcgen_var_chain(&record.bonus_vars, &class_level_var, level, ability_modifiers);
-    let mut values = crate::rules_core::pcgen_desc::PcgenDisplayValues::new();
+    let mut values = crate::pcgen_import::pcgen_desc::PcgenDisplayValues::new();
     for (name, value) in &resolved_vars {
         values.set(name, *value);
     }
     let rendered =
-        crate::rules_core::pcgen_desc::render_pcgen_desc_with_values(&record.raw_description, &values);
+        crate::pcgen_import::pcgen_desc::render_pcgen_desc_with_values(&record.raw_description, &values);
     if !rendered.dropped_args.is_empty() || rendered.text.is_empty() {
         return None;
     }
-    if crate::rules_core::pcgen_desc::leaked_pcgen_syntax(&rendered.text).is_some() {
+    if crate::pcgen_import::pcgen_desc::leaked_pcgen_syntax(&rendered.text).is_some() {
         return None;
     }
     Some(rendered.text)
@@ -973,7 +985,7 @@ pub(crate) fn resolved_description_for(
 /// bare variable name a `BONUS:VAR` chain would bind. `formula_interpreter.rs`'s own module doc
 /// scopes `%N` DESC-argument substitution OUT of that module and names this one
 /// (`pcgen_desc.rs`) as the real consumer; this is that consumer, extended only by WHERE an
-/// argument's value comes from when [`resolve_desc_argument`](crate::rules_core::pcgen_desc)'s
+/// argument's value comes from when [`resolve_desc_argument`](crate::pcgen_import::pcgen_desc)'s
 /// own three narrow shapes (integer literal, exact named lookup, `<Name><+|-><integer>` offset)
 /// do not cover it -- converted at ingest alongside the record's own chain
 /// (`crate::pcgen_import::class_feature_vars`, keyed by the exact argument text) and evaluated
@@ -1021,7 +1033,7 @@ pub(crate) fn resolved_description_for_formula_only_desc_argument(
     if !record.bonus_vars.is_empty() {
         return None; // a real chain exists -- `resolved_description_for`'s business.
     }
-    let args = crate::rules_core::pcgen_desc::desc_token_arguments(&record.raw_description);
+    let args = crate::pcgen_import::pcgen_desc::desc_token_arguments(&record.raw_description);
     if args.is_empty() {
         return None; // no `%N` argument at all -- nothing this function grounds.
     }
@@ -1053,7 +1065,7 @@ pub(crate) fn resolved_description_for_formula_only_desc_argument(
             seed_vars.entry(name.clone()).or_insert(*value);
         }
     }
-    let mut values = crate::rules_core::pcgen_desc::PcgenDisplayValues::new();
+    let mut values = crate::pcgen_import::pcgen_desc::PcgenDisplayValues::new();
     for arg in &args {
         let trimmed = arg.trim();
         let Some(converted) = converted_args.get(trimmed) else { continue };
@@ -1066,14 +1078,14 @@ pub(crate) fn resolved_description_for_formula_only_desc_argument(
             values.set(trimmed, value);
         }
     }
-    let rendered = crate::rules_core::pcgen_desc::render_pcgen_desc_with_values(
+    let rendered = crate::pcgen_import::pcgen_desc::render_pcgen_desc_with_values(
         &record.raw_description,
         &values,
     );
     if !rendered.dropped_args.is_empty() || rendered.text.is_empty() {
         return None;
     }
-    if crate::rules_core::pcgen_desc::leaked_pcgen_syntax(&rendered.text).is_some() {
+    if crate::pcgen_import::pcgen_desc::leaked_pcgen_syntax(&rendered.text).is_some() {
         return None;
     }
     let primary_value = record_vars::evaluate_with_bindings(
@@ -2244,9 +2256,26 @@ mod tests {
         // permanently 0 (no class-wide exclusion remains anywhere in this module). Re-derive:
         // `cargo test --locked --lib -- rules_core::pilot_compute::class_feature_grant_consumer::
         // tests::the_live_scale_of_this_waves_widening_is_measured_and_pinned`.
+        // `already_admitted` moved 136 -> 131 and `newly_resolved` 32 -> 37 in SD-35
+        // `AT-35-E6-003-SWEEP` cycle 17. **The two buckets' sum is unchanged at 168, and that
+        // is the whole content of the move**: it is a reclassification between two paths, not a
+        // record gained or lost, and `chain_unresolvable` and `no_record_at_all` did not move
+        // at all. The admission test stopped being "the raw corpus description renders clean
+        // with no character" and became "the CONVERTED record states prose the converter
+        // settled with no character"
+        // (`converted_prose::settled_description_for`). Five records state prose whose
+        // magnitude is still a term — `bard/Bard ~ Bardic Performance@1`,
+        // `monk/Monk ~ Slow Fall@4`, `rogue/Rogue ~ Trapfinding@1`,
+        // `vigilante/Vigilante ~ Seamless Guise@1`, `vigilante/Vigilante ~ Unshakable@3` —
+        // so they now take the interpreter path, which states this character's own number
+        // instead of the term's words. Confirmed by diffing this test's own
+        // `newly_resolved_examples` against the pre-cycle list: those five appear and nothing
+        // else changed. Re-derive:
+        // `cargo test --locked --lib -- rules_core::pilot_compute::class_feature_grant_consumer::
+        // tests::the_live_scale_of_this_waves_widening_is_measured_and_pinned -- --nocapture`.
         assert_eq!(
             (already_admitted, newly_resolved, class_excluded_otherwise_resolvable, chain_unresolvable, no_record_at_all),
-            (136, 32, 0, 43, 1),
+            (131, 37, 0, 43, 1),
             "live scale moved -- already_admitted={already_admitted} newly_resolved={newly_resolved} \
              class_excluded_otherwise_resolvable={class_excluded_otherwise_resolvable} \
              chain_unresolvable={chain_unresolvable} no_record_at_all={no_record_at_all} \

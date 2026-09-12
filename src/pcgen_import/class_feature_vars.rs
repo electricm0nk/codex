@@ -376,7 +376,7 @@ pub fn build(repo: &Path) -> RecordVarPackage {
                     && is_real_description_value(desc)
                 {
                     let mut args: BTreeMap<String, ConvertedVar> = BTreeMap::new();
-                    for arg in crate::rules_core::pcgen_desc::desc_token_arguments(desc) {
+                    for arg in crate::pcgen_import::pcgen_desc::desc_token_arguments(desc) {
                         let trimmed = arg.trim().to_string();
                         if trimmed.is_empty() || args.contains_key(&trimmed) {
                             continue;

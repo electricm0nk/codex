@@ -62,7 +62,7 @@
 //!
 //! Every description this module emits comes from
 //! [`RaceTraitRecord::render_description`] against a
-//! [`codex::rules_core::pcgen_desc::PcgenDisplayValues`] table, not from the
+//! [`codex::pcgen_import::pcgen_desc::PcgenDisplayValues`] table, not from the
 //! stored `data.description` string. The two differ in exactly the way that
 //! matters: the stored string is the *already-collapsed* result of resolving a
 //! row against itself at ingest time, so its number is baked in and its gate
@@ -1075,7 +1075,7 @@ pub fn resolve_race_alternate_selection(
 #[cfg(test)]
 mod tests {
     use super::*;
-    use codex::rules_core::pcgen_desc::leaked_pcgen_syntax;
+    use codex::pcgen_import::pcgen_desc::leaked_pcgen_syntax;
 
     /// Every count below was derived by running this module against the real
     /// on-disk corpus:

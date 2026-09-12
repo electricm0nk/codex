@@ -112,7 +112,7 @@ use serde_json::Value;
 // ingest-row predicates this catalog gates pool membership on, and the accessor its
 // ground-truth corpus assertions read a token through, both live on the tool side now.
 use crate::pcgen_import::pool_member_tokens;
-use crate::rules_core::pcgen_desc::{leaked_pcgen_syntax, render_pcgen_desc};
+use crate::rules_core::converted_prose;
 
 /// **SD-32 T12 class-feature-pool-population cycle:** this catalog used to
 /// hard-refuse any `" ~ "`-group-qualified `class_feature` record whose
@@ -181,8 +181,45 @@ fn is_standalone_class_feature(key: &str) -> bool {
 /// refusal here is the correct-for-this-file mitigation (never manufacture
 /// `text-complete` for a record this module can independently prove is
 /// broken), not a fix of the root cause.
+///
+/// **Case, and where it is applied — SD-35 `AT-35-E6-003-SWEEP` cycle 17.** The corpus states
+/// the marker in both cases (`[not implemented]` and `[NOT IMPLEMENTED]`), and this function
+/// used to read only the lowercase one: 85 `class_feature` records carry a marker, 68 of them
+/// in a case the old comparison could not see. Measured at the cycle that fixed it, **32 of the
+/// 4,463 records these catalogs serve printed a marker on the sheet.**
+///
+/// Cycle 17 also moved *where* the guard is applied. It is now asked about the words that
+/// actually print — the converted rule's prose — and not about the corpus row they were
+/// derived from. That is the surface the doctrine is about, and it is also the accurate one:
+/// for 30 of those 32 records the converter's own prose comes from a source row that never
+/// carried the marker, so refusing the record on its raw `description` would have thrown away a
+/// clean sentence over an annotation that never reaches the page.
 fn carries_unimplemented_marker(description: &str) -> bool {
-    description.contains("[not implemented]") || description.contains("[not enforced]")
+    let lower = description.to_ascii_lowercase();
+    lower.contains("[not implemented]") || lower.contains("[not enforced]")
+}
+
+/// The ingest format's **`%N` slot marker** — `%` immediately followed by a digit — in text
+/// that is about to be printed.
+///
+/// SD-35 `AT-35-E6-003-SWEEP` cycle 17. This is deliberately narrower than
+/// `pcgen_desc::leaked_pcgen_syntax`, and the narrowing is the point: that function reads an
+/// ingest string, where every `%` is a slot marker, and this one reads **converted prose**,
+/// where a `%` is the book's own percent sign (*"a 25% chance that the critical hit ... is
+/// negated"*). A `%N` in converted prose would be a real leak — the converter failed to type
+/// the hole and copied the marker through.
+///
+/// `#[cfg(test)]` because it is an assertion helper: production code never has to ask, since
+/// the words it serves come from the converted package and the package has its own gate
+/// (`package_carries_no_source_format_literal`). It exists so the two catalog tests state the
+/// same predicate rather than two hand-rolled ones.
+#[cfg(test)]
+fn carries_ingest_slot_marker(text: &str) -> bool {
+    let bytes = text.as_bytes();
+    bytes
+        .iter()
+        .enumerate()
+        .any(|(i, b)| *b == b'%' && bytes.get(i + 1).is_some_and(u8::is_ascii_digit))
 }
 
 /// Generalizes `CLASS_LEVEL_SCALED_SHEET_VALUE_EXCLUDED_KEYS`'s hand-kept,
@@ -422,9 +459,9 @@ fn load_class_feature_catalog(
             if !is_real_description_value(raw_desc) {
                 continue;
             }
-            if carries_unimplemented_marker(raw_desc) {
-                continue;
-            }
+            // The stub-marker refusal moved down, onto the converted prose — see
+            // `carries_unimplemented_marker`. Asking it here, about the corpus row, refuses 30
+            // records whose printed words never carry the marker at all.
             let owning_class = data["class"].as_str().unwrap_or("");
             if carries_class_specific_level_phrase(raw_desc, owning_class) {
                 continue;
@@ -445,15 +482,24 @@ fn load_class_feature_catalog(
             if raw_desc_has_a_bare_percent_reference_no_pipe_tail_can_resolve(raw_desc) {
                 continue;
             }
-            let rendered = render_pcgen_desc(raw_desc);
-            // The render-and-refuse gate: an unresolved `%N` means a real
-            // computation this catalog cannot perform is still missing from
-            // the sentence, which fails Decision 7's condition 2 (`nothing
-            // to compute`) at the same time it would leak broken syntax.
-            if !rendered.dropped_args.is_empty() {
+            // SD-35 `AT-35-E6-003-SWEEP` cycle 17, `decisions.md §11` and
+            // `epic-breakdown.md`'s `AT-35-E6-003`: this catalog used to take
+            // `data.description` -- the ingest format's own `DESC:` row, `%N`
+            // slots and `|`-argument tail included -- and substitute it here,
+            // at run time, on the way to a character sheet. The substitution
+            // now happens once, at ingest, in `src/pcgen_import/sheet_rule/`,
+            // and this is the join to what it produced. The old
+            // render-and-refuse gate is gone with the render: a rule the
+            // converter refused to give words to states no prose, and
+            // `None` here is that refusal arriving by its own route.
+            let Some(converted) = converted_prose::description_for(&book, "class_feature", key)
+            else {
                 continue;
-            }
-            if leaked_pcgen_syntax(&rendered.text).is_some() {
+            };
+            // The stub-marker guard, applied to the words that actually
+            // print rather than to the corpus row they came from. See
+            // `carries_unimplemented_marker`.
+            if carries_unimplemented_marker(&converted) {
                 continue;
             }
             // Strip raw PCGen footnote markers (`**`, `*`) that leaked
@@ -470,7 +516,7 @@ fn load_class_feature_catalog(
                 pool_group: group.to_string(),
                 key: key.to_string(),
                 name: clean_name,
-                description: rendered.text,
+                description: converted,
             });
         }
     }
@@ -1042,18 +1088,41 @@ mod tests {
         assert!(!ledge_walker.description.contains('%'), "no unsubstituted argument may leak into prose");
     }
 
-    /// The render-and-refuse gate's whole point: `Bleeding Attack`'s only
-    /// magnitude is a bare cross-reference (`SneakAttackDice`) this catalog
-    /// cannot resolve, so it must never be served — refused, not shipped
-    /// with a dropped `%1` or a guessed number.
+    /// `Bleeding Attack`'s only magnitude is a cross-reference to the character's own sneak
+    /// attack dice, which no catalog screen can settle — there is no character in hand.
+    ///
+    /// **What changed in SD-35 `AT-35-E6-003-SWEEP` cycle 17, and why it is not a weakening.**
+    /// Until cycle 17 this record was *refused*: the run-time render dropped its `%1` and the
+    /// catalog threw the whole sentence away rather than print "take  additional points of
+    /// damage". That was the right call for a renderer that could only substitute a number or
+    /// nothing. The converted rule carries the same magnitude as a **typed** hole, and
+    /// `sheet_rule_catalog::render` prints an unsettled hole as the term's own words — which is
+    /// `decisions.md §1`'s third permitted printed form, *the rule's words*, and the whole
+    /// premise of the sheet rule. So the record is now served, with the term stated rather than
+    /// dropped.
+    ///
+    /// What must still never happen is the thing the old gate was really protecting against: a
+    /// gap where the magnitude was, a guessed number, or the ingest format's own positional
+    /// placeholder reaching the page.
     #[test]
-    fn bleeding_attack_is_refused_for_an_unresolvable_percent_argument() {
+    fn bleeding_attack_states_its_unsettled_term_in_words_rather_than_dropping_it() {
         let entries = load_pool_catalog(&repo_root());
+        let bleeding = entries
+            .iter()
+            .find(|e| e.book == "core_rulebook" && e.key == "Rogue Talent ~ Bleeding Attack")
+            .expect("core_rulebook's Rogue Talent ~ Bleeding Attack must be in the catalog");
+        println!("Bleeding Attack serves: {}", bleeding.description);
         assert!(
-            !entries.iter().any(|e| e.key == "Rogue Talent ~ Bleeding Attack"),
-            "a record whose render drops a %N argument must never reach the catalog"
+            !bleeding.description.contains("take  additional"),
+            "the magnitude was dropped, leaving a gap: {}",
+            bleeding.description
         );
-        // The refusal is scoped to the one record, not the whole book.
+        assert!(
+            !carries_ingest_slot_marker(&bleeding.description),
+            "an ingest-format %N slot marker reached the page: {}",
+            bleeding.description
+        );
+        // The record is served, not the whole book waved through.
         assert!(entries.iter().any(|e| e.book == "core_rulebook"));
     }
 
@@ -1099,17 +1168,35 @@ mod tests {
         assert!(!carries_unimplemented_marker("A vigilante with this talent can capitalize."));
     }
 
-    /// Real defect this cycle's widening would otherwise have shipped: 16
-    /// `occult_adventures` records (plus 1 `[not enforced]`) carry a
-    /// literal stub marker baked into `data.description` itself. Proves the
-    /// live catalog refuses at least one, non-vacuously.
+    /// Real defect this gate exists to stop: `occult_adventures` records whose `data.description`
+    /// carries a literal stub marker, which would print *"[not implemented]At 1st level, a
+    /// sha'ir learns..."* on a paper character sheet.
+    ///
+    /// **Cycle 17 moved the guard onto the words that print, and this test with it.** The
+    /// marker is the transcription's own annotation about PCGen's mechanical coverage; it is
+    /// not in the book, and the converted rule does not carry it — `Sha'ir ~ Jin`'s converted
+    /// prose is the clean sentence. Refusing the record on its raw corpus row threw away a
+    /// clean description over an annotation that never reaches the page, which is why the
+    /// record is now served and this test asserts the thing actually at stake: **no marker on
+    /// the sheet.** The corpus-wide form of the same assertion, over both catalogs and all
+    /// 5,000-odd served records, is
+    /// `tests/sd35_class_feature_catalogs_read_converted_prose.rs`.
     #[test]
-    fn a_record_carrying_a_literal_unimplemented_marker_is_refused_by_the_live_catalog() {
+    fn a_record_whose_corpus_row_carries_a_stub_marker_is_served_without_one() {
         let entries = load_pool_catalog(&repo_root());
+        let jin = entries
+            .iter()
+            .find(|e| e.key == "Sha'ir ~ Jin" && e.book == "occult_adventures")
+            .expect("occult_adventures' Sha'ir ~ Jin must be in the catalog");
         assert!(
-            !entries.iter().any(|e| e.key == "Sha'ir ~ Jin" && e.book == "occult_adventures"),
-            "a record whose description carries a literal '[not implemented]' stub marker \
-             must never reach the catalog"
+            !carries_unimplemented_marker(&jin.description),
+            "a stub marker reached the sheet: {}",
+            jin.description
+        );
+        assert!(
+            jin.description.starts_with("At 1st level, a sha'ir learns"),
+            "the served words must be the book's sentence, not the annotated row: {}",
+            jin.description
         );
     }
 
@@ -1291,17 +1378,36 @@ mod tests {
 
 
 
-    /// No served description leaks unresolved PCGen syntax onto the screen
-    /// — the same certification every sibling catalog runs, over the real
-    /// cache rather than a hand-picked sample.
+    /// No served description carries the ingest format's own syntax onto the screen — over the
+    /// real corpus, not a hand-picked sample.
+    ///
+    /// **Cycle 17 changed what this asks, because it changed what it is asking about.**
+    /// `pcgen_desc::leaked_pcgen_syntax` reads an ingest string and reports a **bare `%`** as a
+    /// leak, which is correct for a `DESC:` row, where `%` is always a slot marker. The served
+    /// text is no longer a `DESC:` row: it is converted prose, and in converted prose a `%` is
+    /// the book's own percent sign. `Mutagenic Mauler Brawler Discovery ~ Preserve Organs`
+    /// states *"there is a 25% chance that the critical hit ... is negated"*, and the old
+    /// detector called that a leak.
+    ///
+    /// What is genuinely ingest-format syntax, and is what this now refuses: a **`%N` slot
+    /// marker** (`%` immediately followed by a digit).
+    ///
+    /// A `|` is not checked, for the same reason and measured the same way: the book's own
+    /// tables use it as a column separator, and the converter preserves them. `Sorcerer Bonus
+    /// Spell L4 ~ Confusion` states *"d% | Behavior / 01-25 | Act normally / …"*, which is the
+    /// Core Rulebook's confusion table and not an argument tail.
     #[test]
-    fn every_served_description_renders_without_a_pcgen_syntax_leak() {
+    fn every_served_description_carries_no_ingest_format_syntax() {
         let entries = load_pool_catalog(&repo_root());
         let mut checked = 0;
         for entry in &entries {
-            if let Some(leak) = leaked_pcgen_syntax(&entry.description) {
-                panic!("{:?} ({}): leaked {leak}", entry.key, entry.book);
-            }
+            assert!(
+                !carries_ingest_slot_marker(&entry.description),
+                "{:?} ({}): an ingest-format %N slot marker reached the page: {}",
+                entry.key,
+                entry.book,
+                entry.description
+            );
             checked += 1;
         }
         assert!(checked > 10, "no real descriptions were checked; the check proved nothing");
@@ -1361,7 +1467,15 @@ mod tests {
             index.get(&("core_rulebook".to_string(), "Rogue Talent ~ Ledge Walker".to_string())),
             Some(&"This ability allows you to move along narrow surfaces at full speed using the Acrobatics skill without penalty. In addition, you are not flat-footed when using Acrobatics to move along narrow surfaces.".to_string())
         );
-        assert!(!index.contains_key(&("core_rulebook".to_string(), "Rogue Talent ~ Bleeding Attack".to_string())));
+        // `Rogue Talent ~ Bleeding Attack` reached this index in cycle 17, stating its
+        // unsettled magnitude in words — see
+        // `bleeding_attack_states_its_unsettled_term_in_words_rather_than_dropping_it`. The
+        // index is keyed by book AND key, which is what this test is about: the same key in a
+        // different book is a different entry.
+        assert!(!index.contains_key(&(
+            "advanced_players_guide".to_string(),
+            "Rogue Talent ~ Ledge Walker".to_string()
+        )));
     }
 
     /// The real, current size of the widened catalog (SD-32 T12
@@ -1537,10 +1651,6 @@ mod tests {
                 *reasons.entry("description_not_real_value").or_default() += 1;
                 continue;
             }
-            if carries_unimplemented_marker(raw_desc) {
-                *reasons.entry("carries_unimplemented_marker").or_default() += 1;
-                continue;
-            }
             let owning_class = data["class"].as_str().unwrap_or("");
             if carries_class_specific_level_phrase(raw_desc, owning_class) {
                 // Prose states a value that scales with the OWNING class's
@@ -1581,13 +1691,17 @@ mod tests {
                 *reasons.entry("bare_percent_reference").or_default() += 1;
                 continue;
             }
-            let rendered = render_pcgen_desc(raw_desc);
-            if !rendered.dropped_args.is_empty() {
-                *reasons.entry("dropped_pcgen_args").or_default() += 1;
+            // Cycle 17: the render-and-refuse pair became the converted-prose join. The two
+            // old buckets (`dropped_pcgen_args`, `leaked_pcgen_syntax`) were two shapes of one
+            // fact — the ingest row states words this engine cannot finish — and the converter
+            // now decides that once, at ingest, by stating no prose for such a record.
+            let converted = converted_prose::description_for(book, "class_feature", key);
+            let Some(converted) = converted else {
+                *reasons.entry("converter_states_no_prose").or_default() += 1;
                 continue;
-            }
-            if leaked_pcgen_syntax(&rendered.text).is_some() {
-                *reasons.entry("leaked_pcgen_syntax").or_default() += 1;
+            };
+            if carries_unimplemented_marker(&converted) {
+                *reasons.entry("carries_unimplemented_marker").or_default() += 1;
                 continue;
             }
             // Passes every gate this catalog runs -- genuinely already
@@ -1809,8 +1923,11 @@ mod tests {
                         raw_desc,
                     ))
                 || raw_desc_has_a_bare_percent_reference_no_pipe_tail_can_resolve(raw_desc)
-                || !render_pcgen_desc(raw_desc).dropped_args.is_empty()
-                || leaked_pcgen_syntax(&render_pcgen_desc(raw_desc).text).is_some();
+                // The converted-prose join, which replaced the render-and-refuse pair in cycle
+                // 17 — a record the package states no prose for, or states marked-up prose
+                // for, is refused exactly as the two render gates used to refuse it.
+                || converted_prose::description_for("core_rulebook", "class_feature", key)
+                    .is_none_or(|text| carries_unimplemented_marker(&text));
             if refused {
                 real_desc_refused += 1;
             } else {

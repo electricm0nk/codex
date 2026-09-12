@@ -47,7 +47,7 @@ use std::collections::{BTreeMap, BTreeSet};
 use std::fmt::Write as _;
 use std::path::{Path, PathBuf};
 
-use codex::rules_core::pcgen_desc;
+use codex::pcgen_import::pcgen_desc;
 use codex::rules_core::pi_screening::{self, declared_product_identity};
 use codex::rules_core::pi_table_sweep::screen_generated_table;
 use codex::rules_core::rules_tables::feats_all::hand_authored_feat_tables;
@@ -849,7 +849,7 @@ mod pi_screen_tests {
         assert_eq!(records.len(), 1);
         let description = records[0].description.as_deref().expect("has a description");
         assert_eq!(
-            codex::rules_core::pcgen_desc::leaked_pcgen_syntax(description),
+            codex::pcgen_import::pcgen_desc::leaked_pcgen_syntax(description),
             None,
             "joined description must not leak raw PCGen syntax: {description:?}"
         );

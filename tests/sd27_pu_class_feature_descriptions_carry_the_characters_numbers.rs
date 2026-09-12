@@ -61,7 +61,7 @@ use std::path::{Path, PathBuf};
 use codex::rules_core::character_input::{
     load_character_input_fixture, CharacterClassLevel, CharacterInput,
 };
-use codex::rules_core::pcgen_desc::leaked_pcgen_syntax;
+use codex::pcgen_import::pcgen_desc::leaked_pcgen_syntax;
 use codex::rules_core::pilot_compute::{
     build_pilot_headless_receipt, pu_class_feature_cited_key, pu_resolved_description_from_detail,
     ComputationExplanation, PU_RESOLVABLE_DESCRIPTIONS,

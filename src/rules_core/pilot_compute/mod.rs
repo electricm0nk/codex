@@ -137,7 +137,7 @@ use super::rules_tables::ultimate_combat::{self as uc, UcClassId};
 use crate::rules_core::archetype_resolver;
 use crate::rules_core::durability::FamiliarSpecies;
 use crate::rules_core::feat_identity;
-use crate::rules_core::pcgen_desc::{
+use crate::pcgen_import::pcgen_desc::{
     leaked_pcgen_syntax, render_pcgen_desc_tokens, PcgenDisplayValues,
 };
 use crate::rules_core::race_resolver::race_size_for_race_token;
