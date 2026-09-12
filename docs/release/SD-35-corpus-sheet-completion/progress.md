@@ -189,7 +189,7 @@ re-measured at the cut by the launch-readiness audit.
   is not exempt, passed first at the same tree:
   `live_files=24 live_hits=53 baseline_files=260 baseline_hits=12736 verdict=PASS`.
 
-- **Receipt rows:** `closed=0 relabeled=0 rust_lines_changed=366 ratio=n/a builds_recorded=1 pcgen_live_files=22`.
+- **Receipt rows:** `closed=0 relabeled=0 rust_lines_changed=697 ratio=n/a builds_recorded=1 pcgen_live_files=22`.
 
 - **One rule, applied twice — the live root stops hosting code that is not the live side's.**
 

@@ -94,8 +94,14 @@
   closed_by_kind=
   relabeled_moves=
   regressed=0 added=0 dropped=0
-  closed=0 relabeled=0 rust_lines_changed=366 ratio=n/a builds_recorded=1 pcgen_live_files=22
+  closed=0 relabeled=0 rust_lines_changed=697 ratio=n/a builds_recorded=1 pcgen_live_files=22
   ```
+  Re-derived at HEAD after the cycle's commit. The same command run against the uncommitted
+  working tree printed `rust_lines_changed=366`; the committed figure is larger because a
+  relocation is counted on **both** sides — the 249 lines that left `composed_input.rs` and the
+  331-line file they arrived in are two diffs, not one. `closed=0` is correct and expected: Epic 6
+  closes zero corpus units by design and no `data/` file changed, so
+  `docs/work-inventory.json` is byte-identical before and after.
 
 - **PCGen residue:** `live_files=22 live_hits=44 baseline_files=260 baseline_hits=12736 verdict=PASS`
   — down from cycle 2's `24 / 53` on both axes, and **the instrument was not touched this cycle**
@@ -188,7 +194,7 @@
   | `records=49438 converted=49296 refused=142 rules=70135 var_tables=5293 verdict=PASS` (114.3s) | the whole converted package | `cargo run --locked --bin sheet_rule_convert -- --check` |
   | `NO_RUN_EXIT=0`; lib `3341 passed; 0 failed; 16 ignored`; full workspace `FULL_EXIT=101` — **418 targets, 8,869 passed, 1 failed, 69 ignored, exactly one `test result: FAILED` line, attributed below** | the whole root workspace | `cargo test --locked --no-run -j 6`; `cargo test --locked --lib -j 6`; `cargo test --locked --no-fail-fast -j 6` |
   | root-workspace clippy **0 warnings** | the root workspace with tests | `cargo clippy --locked --tests -j 6` |
-  | `closed=0 relabeled=0 rust_lines_changed=366 ratio=n/a builds_recorded=1 pcgen_live_files=22` | `docs/work-inventory.json` before vs after | `python3 scripts/cycle_scope_gate.py --receipt --since b9e595626eff8f0b87477695a275d9b1a280ce32 --before /tmp/wi-before-AT-35-E6-003-RULED.json --after docs/work-inventory.json` |
+  | `closed=0 relabeled=0 rust_lines_changed=697 ratio=n/a builds_recorded=1 pcgen_live_files=22` | `docs/work-inventory.json` before vs after | `python3 scripts/cycle_scope_gate.py --receipt --since b9e595626eff8f0b87477695a275d9b1a280ce32 --before /tmp/wi-before-AT-35-E6-003-RULED.json --after docs/work-inventory.json` |
 
 - **Build scope verified:** **the whole root workspace, at the final tree.** The desktop crate and
   the frontend are at **epic cadence** this cycle: `apps/` is not in this cycle's diff at all
