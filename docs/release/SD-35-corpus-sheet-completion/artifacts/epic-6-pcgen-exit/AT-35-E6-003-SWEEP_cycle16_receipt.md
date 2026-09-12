@@ -1,6 +1,6 @@
 # Cycle AT-35-E6-003-SWEEP cycle 16 — Epic 6 PCGen exit / AT-35-E6-003-SWEEP
 
-- **Commit SHA:** `PENDING`
+- **Commit SHA:** `dca9c80fe3`
 
 - **Scope gate:** `SCOPE_GATE: EXEMPT (Epic 6 cycle — closes zero corpus units by
   design; decisions.md §2, workflow-instruction.md §6 step 1)`
@@ -305,8 +305,12 @@
   - `cargo test --locked --no-run -j 6` → `NO_RUN_EXIT=0`
   - `cargo test --locked --lib -j 6` → **3,335 passed / 0 failed / 15 ignored**,
     `LIB_EXIT=0`
-  - `cargo test --locked --no-fail-fast -j 6` → see **FULL_SUITE** below
-  - `cargo clippy --locked --tests -j 6` → see **CLIPPY** below
+  - `cargo test --locked --no-fail-fast -j 6` → **416 targets / 8,857 passed /
+    0 failed / 68 ignored / `FULL_EXIT=0`**, zero `FAILED` lines
+    (`grep -c FAILED` → 0). Cycle 15 recorded 416 targets and 8,856 passed; the
+    **+1** is this cycle's one new gate and **no target was added**, which is the
+    arithmetic that says nothing else moved.
+  - `cargo clippy --locked --tests -j 6` → **`CLIPPY_EXIT=0`, 0 warnings, 0 errors**
   - `cargo run --locked --bin sheet_rule_convert -- --check` →
     `records=49438 converted=49296 refused=142 rules=70135 var_tables=5293
     verdict=PASS`, identical to cycles 3–15 — **the fix adds prose to existing

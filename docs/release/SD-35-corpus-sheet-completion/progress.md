@@ -116,6 +116,96 @@ re-measured at the cut by the launch-readiness audit.
 
 ## Cycle log
 
+### 2026-09-12 — Epic 6 / `desktop-and-prose-leave-pcgen` — AT-35-E6-003-SWEEP **cycle 16** (`dca9c80fe3`) — **partial** (the converter stops dropping the book's own sentence: **241 → 0** records, 310 rule files; **zero residue hits removed**, and the receipt says so)
+
+- **Scope gate** (`workflow-instruction.md §6` step 1):
+  ```
+  SCOPE_GATE: EXEMPT (Epic 6 cycle — closes zero corpus units by design; decisions.md §2)
+  scoped=0 remaining_non_done=0 floor=500 verdict=PASS_WHOLE_REMAINDER
+  ```
+  Residue check at the cycle-start tree `8cbb052583`, which is **not** exempt:
+  `live_files=46 live_hits=359 baseline_files=260 baseline_hits=12736 verdict=PASS`.
+  The dispatch said "cycle 14" — **wrong for the sixth consecutive cycle**; fifteen receipts are
+  on disk (`correction 1789201545876-at-35-e6-003-sweep-06bb38`). Its refused-token line was, for
+  the first time in six cycles, correct.
+
+- **This cycle refused to run the sweep it was dispatched for.** Cycle 15 measured that another
+  sweep pass would close nothing and named the **converter prose carrier** as the next criterion;
+  the dispatch arrived as a sweep anyway. Under `AGENTS.md`'s blocker doctrine — "a blocker bigger
+  than one cycle is a sequencing problem, not an exemption — decompose it and run the cycles" —
+  this cycle took the blocker.
+
+- **The blocker document was stale by ten cycles, and the real defect is eight times larger.**
+  `AT-35-E6-003_cycle5_converter-prose-blocker.md` §6 item 1 named `FORMULA:CL-no-owner` refusing
+  the whole `DESC` row, at 30 feat rows. **Cycle 6 already fixed that path**
+  (`prose::words_for_unlowerable`) and nobody re-derived the document afterwards; cycles 13, 14
+  and 15 each carried its diagnosis forward by quotation.
+  The defect standing at HEAD is one level up: **`convert_record` takes prose from
+  `DESC:`/`BENEFIT:`/`SPROP:`/`SAB:`/`TEMPDESC:` rows and from nowhere else**, so a record carrying
+  structured tokens *and* a `description` field but no prose row converted to a rule set with **no
+  prose at all** and the book's sentence was dropped.
+  **241 records** of the **7,619** that state a printable description, across **equipment,
+  equipment_modifier and spell** — not the feat/spell pair the document named
+  (`correction 1789201546010-at-35-e6-003-sweep-d53d4d`).
+  `advanced_players_guide:spell:blindness_deafness_only_cause_blindness` is the clean shape: only
+  `CLASSES` and `DOMAINS` tokens, a full sentence in its record, and no `prose` key in the package.
+
+- **The fix, converter-side only.** `printable_description` extracted out of
+  `description_only_rules` with its five refusal conditions unchanged, so both doors apply one
+  bar; the token path gains it as a **fallback, never an addition** — a record whose rows already
+  state prose keeps exactly that prose, because a `DESC:` row is the authored sheet line and the
+  `description` field is the same sentence unslotted, and appending both would print it twice.
+  **No live-side file was touched.**
+
+- **RED → GREEN, in that order.** `sheet_rule_convert_gate::a_converted_record_never_drops_the_description_its_corpus_row_states`
+  walks the live package and the live corpus directory (`decisions.md §4` — no fixture, no
+  hand-derived value) and refuses to pass on an empty walk:
+  `converted rule files=49296 whose corpus record states a description=7619 dropping it=241` →
+  FAILED, before a line of `src/` was edited; `dropping it=0` → `30 passed; 0 failed` after.
+
+- **What the proof does not cover** (`AGENTS.md` rule 7): the fix regenerated **310** files and the
+  gate addresses **241**. The other **69** join by a corpus slug that differs from the rule-file
+  slug, so the gate's path-join cannot reach them — **fixed but ungated**. Giving the gate the
+  converter's own `RecordRef` join is named as next-cycle work rather than claimed here.
+
+- **Zero residue hits removed, stated plainly.** `live_files=46 live_hits=359`, identical to cycle
+  15; the gate never rose, which is the bar `workflow-instruction.md §8` sets for a converter-side
+  cycle. What moved is upstream of four of those hits. Calling that residue movement would be the
+  exact error `AGENTS.md` rule 9 names.
+  Also corrected: cycle 15 recorded the reachable remainder as "8 hits in 3 files"; the census's
+  per-file breakdown lists **4** (`correction 1789202626766-at-35-e6-003-sweep-79b672`).
+
+- **Receipt rows:**
+  ```
+  closed=0 relabeled=0 rust_lines_changed=107 ratio=n/a builds_recorded=1 pcgen_live_files=46
+  regressed=0 added=0 dropped=0
+  ```
+
+- **Refused tokens** — seven types, summing to **359**, unchanged:
+  ```
+  TYPE==100, BONUS:=91, PRE[A-Z]+:=61, DESC:=59, render_pcgen_desc=39, %CHOICE=8, %LIST=1
+  ```
+  `hits_inside_cfg_test=351 hits_outside=8`. **351 sit behind the `#[cfg(test)]` ruling, now asked
+  by eight cycles.** `deferral 1789202636606-at-35-e6-003-sweep-a86fc1`.
+
+- **The `render_pcgen_desc` rewire is now the unblocked job** — the first time in four cycles that
+  sentence can be written. `class_feature_pool_catalog.rs` and `class_feature_grant_consumer.rs`
+  need `apps/desktop/src-tauri/src/converted_prose.rs`'s existing four-step join (cycle 5) moved
+  somewhere `src/rules_core` reaches; then `pcgen_desc.rs` moves to `src/pcgen_import/` and the
+  pattern goes to 0.
+
+- **Verification, once:** `--no-run` exit 0; `--lib` **3,335 passed / 0 failed / 15 ignored**;
+  `sheet_rule_convert -- --check` `records=49438 converted=49296 refused=142 rules=70135
+  var_tables=5293 verdict=PASS` (identical to cycles 3–15 — the fix adds prose to existing rules
+  and converts no new record); `data/sheet_rules/` source-marker grep **0** over a package with
+  310 newly-prose-bearing files; residue `verdict=PASS`; atlas, token-coverage, shape-engine,
+  missing-engine-tables, denominator (`files_checked=124 violations=0`) and
+  `--check-provenance` (`figures_examined=575 violations=0`) all exit 0; `verify.sh --only
+  pi-sweep` **PASS**. Desktop crate and frontend **not run** — this cycle touched no file under
+  `apps/`; they ran green at cycle 15, the most recent `apps/` touch. `corpus_literal_sweep` and
+  `v06_work_inventory` **not run** — `data/corpus/` is byte-identical at HEAD.
+  Receipt: `artifacts/epic-6-pcgen-exit/AT-35-E6-003-SWEEP_cycle16_receipt.md`.
+
 ### 2026-09-12 — Epic 6 / `desktop-and-prose-leave-pcgen` — AT-35-E6-003-SWEEP **cycle 15** (`01d927a306`) — **partial** (`apps/desktop` reads **zero**; the `raw_tokens` pattern is gone; 7 code hits, the reachable remainder 15 → 8 — **and the desktop crate had been red for ten cycles**)
 
 - **Scope gate** (`workflow-instruction.md §6` step 1):
