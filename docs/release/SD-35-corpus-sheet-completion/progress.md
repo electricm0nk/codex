@@ -70,6 +70,53 @@ and a comment does not execute"*. A `#[cfg(test)]` module does not ship. Both br
 
 **Prepared, not applied.** The cycle wrote no gate change and asks for the ruling first.
 
+**2026-09-12, AT-35-E6-003-FINISH cycle 1 — asked for the tenth time, and it is now the only
+thing left on this criterion's class A.** The census re-derives the split at HEAD:
+`class_A_in_cfg_test_hits=300 files=45`, `class_B_executable_hits=4 files=1`
+(`python3 docs/release/SD-35-corpus-sheet-completion/artifacts/epic-6-pcgen-exit/AT-35-E6-003-FINISH_cycle1_residue_census.py`).
+A cycle dispatched with a floor of **zero** could not reach it: 300 of the 304 need this ruling,
+and the other 4 need the one below.
+
+### 2026-09-12 — AT-35-E6-003-FINISH cycle 1 — **must `pcgen_residue_gate.py` count a run-time call into `src/pcgen_import/`?** — and `AT-35-E6-004` must not run until it is answered
+
+**Pauses:** `AT-35-E6-004`'s `--closure` certification, and the last 4 code hits of
+`AT-35-E6-003`. **Asked by:** AT-35-E6-003-FINISH cycle 1
+(`artifacts/epic-6-pcgen-exit/AT-35-E6-003-FINISH_cycle1_receipt.md`), on a measurement, not a
+premise.
+
+**The finding.** The gate matches the identifier `render_pcgen_desc` with `\brender_pcgen_desc\b`.
+The live side no longer calls a function by that name — it calls `render_pcgen_desc_tokens` and
+`render_pcgen_desc_with_values`, and the trailing `_` defeats the word boundary. So the gate
+prints `pattern render_pcgen_desc files=0 hits=0` while `src/rules_core/` hands PCGen `DESC:`
+token strings to the PCGen renderer at run time, from six call sites in three files
+(`race_resolver.rs:90,303`; `pilot_compute/class_feature_grant_consumer.rs:968,1081`;
+`pilot_compute/mod.rs:141,28791`). The same blind spot covers every other read that moved behind
+a `crate::pcgen_import::` function call rather than staying a literal token: **100 lines across
+28 live files, 17 of them under `apps/desktop/`**, where the gate prints `files=0 hits=0` — which
+is the literal sentence `AT-35-E6-003`'s Evidence row asks for.
+
+**Why it is a blocker and not a note.** `AT-35-E6-004`'s bar is `live_files=0 live_hits=0`. Under
+the present patterns that number is reachable while the live side still runs the PCGen parser, so
+**`AT-35-E6-004` would certify a false closure**. This is
+`validate-proxies-against-known-truth` and `AGENTS.md` rule 7 in their recorded form: the
+patterns were written against the names the code had in Epic 1; the code was refactored and the
+patterns were not.
+
+Both branches:
+
+- **Ruled YES (run-time converter calls count):** the patterns widen to the class-C symbol list,
+  `live_hits` **rises**, and the ratchet must be re-baselined upward **once**, under this explicit
+  ruling — the one case the gate's own `--rebaseline` refuses on its own authority. Epic 6 then
+  needs the class-C mechanism as its own criterion (the six renderer call sites and
+  `PU_RESOLVABLE_DESCRIPTIONS` leaving together), which requires `src/rules_core/race_resolver.rs`
+  added to the epic's file-touch set.
+- **Ruled NO (they do not count):** then `AT-35-E6-004`'s `live_hits=0` means "no literal PCGen
+  token spelled in a live file", not "the live side does not read PCGen", and the bundle should
+  say so in those words rather than let Starfinder discover it.
+
+**Prepared, not applied.** The cycle wrote no gate change, did not rebaseline, and asks for the
+ruling first.
+
 ### ~~2026-09-11 — AT-35-E6-003-SWEEP cycle 1 — does a live-side doc-comment count as a PCGen read?~~ — **RESOLVED 2026-09-11 by operator ruling B14 (`decisions.md §17`): NO.**
 
 **Pauses:** Epic 6's remaining file-count work, and `AT-35-E6-004`'s `--closure` target.
@@ -115,6 +162,58 @@ Corpus at the `tranche/15` cut (2026-09-07, `4c6c57eb9f`, identical to authoring
 re-measured at the cut by the launch-readiness audit.
 
 ## Cycle log
+
+### 2026-09-12 — Epic 6 / `desktop-and-prose-leave-pcgen` — AT-35-E6-003-FINISH **cycle 1** — **partial** (dispatched with a floor of **zero**; the census found the gate cannot see the reads that are left — **100 run-time converter calls in 28 live files, 17 of them under `apps/desktop/`**, where it prints `files=0 hits=0`)
+
+- **Scope gate:** `SCOPE_GATE: EXEMPT (Epic 6 cycle — closes zero corpus units by design;
+  decisions.md §2, workflow-instruction.md §6 step 1)`. Run anyway at the cycle's start tree
+  `4cf0ba58b3`: `scoped=0 remaining_non_done=0 floor=500 verdict=PASS_WHOLE_REMAINDER`.
+- **Receipt rows:** `closed=0 relabeled=0 rust_lines_changed=0 ratio=n/a builds_recorded=0
+  pcgen_live_files=45`.
+- **PCGen residue:** `live_files=45 live_hits=304 baseline_files=260 baseline_hits=12736
+  verdict=PASS` — identical to cycle 17's at start and at HEAD. Not lowered; **not raised**.
+- **Refused tokens** — 304 hits across 45 files, over every source file under the five live
+  roots, code lines only (ruling B14), re-derived by
+  `python3 scripts/pcgen_residue_gate.py --check`; `deferral
+  1789221241602-at-35-e6-003-finish-ea491d`:
+  ```
+  TYPE==100, BONUS:=91, DESC:=59, PRE[A-Z]+:=51, %CHOICE=3
+  ```
+
+**No `src/`, `apps/` or `data/` file was changed, and no build was run.** The dispatch set the
+floor at zero and named the exit: a token load-bearing in executable code, or a case needing an
+operator ruling → census, `partial`, stop. The census
+(`…/AT-35-E6-003-FINISH_cycle1_residue_census.py`, re-derivable by one command) found both, and a
+third thing nobody had asked for.
+
+- **Class A — 300 hits, 45 files** sit inside a `#[cfg(test)]` module of a live file. They are
+  fixtures carrying *real verbatim corpus tokens* into a live function; rewriting them would
+  delete the only thing they prove, and relocating them to a directory the gate's walk cannot
+  reach is an exclusion list wearing a directory's name. Blocked on ruling B15, **asked for the
+  tenth time**.
+- **Class B — 4 hits, 1 file:** `pilot_compute/mod.rs`'s `PU_RESOLVABLE_DESCRIPTIONS`. Cycle 10
+  already ruled these are pinned byte-for-byte against `pu_abilities_class.lst`, so editing them
+  would be a lie about what the book says; they and the renderer that consumes them leave
+  together. Two of that renderer's six live call sites are in `src/rules_core/race_resolver.rs`,
+  **outside this epic's file-touch set** — so taking the 4 alone would be the forbidden trim, and
+  taking them properly would be writing outside the granted scope. `AGENTS.md` Blocker
+  Discipline, disposition 2.
+- **Class C — the discovery, 100 lines / 28 files, and the gate counts none of it.**
+  `\brender_pcgen_desc\b` does not match `render_pcgen_desc_tokens` or
+  `render_pcgen_desc_with_values`; the same blind spot hides `ingest_record::token_pairs`,
+  `bonus_chain_qualifiers`, `rebuild_bonus_token`, `lst_parser::*`, `ir_converter::*`,
+  `race_trait_tokens`, `pool_member_tokens`. **`live_hits=0` under the present patterns would be
+  a false closure and `AT-35-E6-004` would certify it.** Filed as a new open blocker above.
+  `correction 1789221228030-at-35-e6-003-finish-b64a81`.
+
+**Instruments run at HEAD** (the ones a docs-only tree can move):
+`pcgen_residue_gate.py --check` unchanged; `completion_atlas.py --check` →
+`citation_failures=0 stale_derived_at=False`; `denominator_gate.py --check` →
+`files_checked=126 violations=0`. No workspace suite: `rust_lines_changed=0`, so it would compile
+the identical tree cycle 17 already proved green and re-prove nothing.
+
+**Next-cycle scope:** none. No `AT-35-E6-003` cycle should be dispatched until B15 and the
+class-C ruling land — every available move needs one of them or is the forbidden trim.
 
 ### 2026-09-12 — Epic 6 / `desktop-and-prose-leave-pcgen` — AT-35-E6-003-SWEEP **cycle 17** (`9713a6f347`) — **partial** (the criterion's `render_pcgen_desc` clause met: **39 → 0**, every identifier pattern 0; residue **359 → 304**, the code-reachable remainder **8 → 4**; and a stub marker found printing on 32 real character sheets)
 
