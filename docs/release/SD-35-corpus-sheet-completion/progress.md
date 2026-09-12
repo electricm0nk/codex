@@ -116,6 +116,66 @@ re-measured at the cut by the launch-readiness audit.
 
 ## Cycle log
 
+### 2026-09-12 — Epic 6 / `desktop-and-prose-leave-pcgen` — AT-35-E6-003-SWEEP **cycle 13** (`88b4490e16`) — **partial** (an ingest guard that was reaching the player's companion panel as an *ability name*; 3 code hits, 1 file to zero, the reachable remainder 22 → 19)
+
+- **Scope gate** (`workflow-instruction.md §6` step 1):
+  ```
+  SCOPE_GATE: EXEMPT (Epic 6 cycle — closes zero corpus units by design; decisions.md §2)
+  scoped=0 remaining_non_done=0 floor=500 verdict=PASS_WHOLE_REMAINDER
+  ```
+  Residue check at the cycle-start tree `bb937e57e1`, which is **not** exempt:
+  `live_files=49 live_hits=373 baseline_files=260 baseline_hits=12736 verdict=PASS`.
+  The dispatch said "cycle 12"; cycle 12's receipt is already committed at that tree and
+  its 373-hit remainder is what the dispatch handed on. **Third consecutive off-by-one on
+  this criterion's dispatch** (`correction 1789189827898-at-35-e6-003-sweep-5a451a`) —
+  three firings is a missing mechanism, not bad luck (`AGENTS.md` rule 8), and the
+  mechanism is one command: derive the number from
+  `ls artifacts/epic-6-pcgen-exit/AT-35-E6-003-SWEEP_cycle*_receipt.md | wc -l` at dispatch
+  time instead of carrying it in prose.
+- **The mechanism, and why it was not cosmetic.** `CompanionRecord::external_ability_refs`
+  is a list of ability **names**, and `apps/desktop/src-tauri/src/companion_catalog.rs`
+  copies it straight into the DTO the companion panel renders. Three CRB creature rows
+  (Hippopotamus, Megafauna (Arsinoitherium), Megafauna (Gylptodon)) carried the guard the
+  ingest format had appended to the grant token —
+  `!PRETEMPLATE:1,Hippopotamus Companion Advancement` — as a fourth *ability name*, so the
+  token was reaching the screen. It now lives in the new
+  `CompanionRecord::external_ability_ref_conditions`, keyed by the ability it gates, in
+  cycle 7's `EffectCondition` schema: `negated: true`, `family: "TEMPLATE"`,
+  `items: ["1", "<template>"]`, nothing inferred on the way in.
+- **452 `CompanionRecord` literals** across 16 shipped `companion_data.rs` files gain the
+  new field, mechanically, by the committed converter script
+  (`…_cycle13_external_ability_ref_guards.py`, `--check` / `--apply-field` /
+  `--apply-guards` / `--emit-before-table`). **3** of them lose the guard element.
+- **RED→GREEN recorded** in two passes, deliberately: `--apply-field` first (the field
+  exists, the guards are still in place), then the standing gate
+  `sd35_rendered_prose_carries_no_ingest_vocabulary` widened by
+  `crb/companion_data.rs` → **FAILED, 3 lines**; then `--apply-guards` → **ok**.
+- **Losslessness, three converter-side tests** in `pcgen_import::companion_pcgen_guards`:
+  the whole pre-conversion array rebuilt in order from the live typed pair; the same
+  rebuild compared against the **shipped book cache**
+  (`data/corpus/core_rulebook/companion/*.json` — the byte-identity evidence
+  `AT-35-E6-002` asks for, taken against the artifact rather than a hand-copied
+  expectation); and a corpus-wide direction check that no registered book's name slice
+  holds a `PRE…:`-shaped string and that the live guarded population equals the recorded
+  one — which is what catches a *new* guard arriving with a future book.
+  `src/bin/gen_book_cache.rs` writes the wire field through the same rebuild, so the cache
+  is byte-identical across the conversion.
+- **The cycle-12 estimate was wrong, and named**
+  (`correction 1789189835346-at-35-e6-003-sweep-aafa26`): cycle 12 costed this job at the
+  290-literal scale "across every book". The **guarded** population is **3**, all in one
+  file. The estimate came from the shared chassis's blast radius rather than from the
+  population actually carrying a guard.
+- **Receipt rows:** `closed=0 relabeled=0 rust_lines_changed=711 ratio=n/a
+  builds_recorded=0 pcgen_live_files=48`. Residue `373 → 370`, `49 → 48` files; the whole
+  movement is in `PRE[A-Z]+:` (66 → 63, 20 → 19 files), so nothing was banked by
+  reclassification. `hits_inside_cfg_test` unmoved at **351**.
+- **`partial`** — `TYPE==104; BONUS:=91; PRE[A-Z]+:=63; DESC:=59; render_pcgen_desc=39;
+  %CHOICE=8; raw_tokens=5; %LIST=1` (370 hits / 48 files, eight types, summing).
+  **351 of the 370 are behind the still-open `#[cfg(test)]` ruling**, now asked by five
+  cycles. Of the reachable 19, exactly one job is unblocked: the `equipment_effects` /
+  prefix-constant qualifier typing (4 hits, 4 files).
+- **Receipt:** `artifacts/epic-6-pcgen-exit/AT-35-E6-003-SWEEP_cycle13_receipt.md`.
+
 ### 2026-09-12 — Epic 6 / `desktop-and-prose-leave-pcgen` — AT-35-E6-003-SWEEP **cycle 12** (`db0405eb18`) — **partial** (the one reachable job that moves a number a player reads, taken with its matching rewrite and its oracle run in the same cycle; 13 code hits, 4 files to zero, and the reachable remainder down a third)
 
 - **Scope gate** (`workflow-instruction.md §6` step 1):
