@@ -1,6 +1,6 @@
 # Cycle AT-35-E6-003-FINISH cycle 2 — Epic 6 PCGen exit / AT-35-E6-003-FINISH
 
-- **Commit SHA:** `COMMIT_SHA_PLACEHOLDER`
+- **Commit SHA:** `e570ba506c` (stamped by cycle 3; cycle 2 left the placeholder unresolved)
 
 - **Scope gate:** `SCOPE_GATE: EXEMPT (Epic 6 cycle — closes zero corpus units by design;
   decisions.md §2, workflow-instruction.md §6 step 1)`
@@ -154,8 +154,11 @@
 - **Build scope verified:** run once, after the last figure-moving edit, at the tree this receipt
   commits. `cargo test --locked --no-run -j 6` → `NO_RUN_EXIT=0`. `cargo test --locked --lib -j 6`
   → `3341 passed; 0 failed; 15 ignored`. `cargo test --locked --no-fail-fast -j 6` →
-  `FULL_SUITE_RESULT_PLACEHOLDER`. `cargo clippy --locked --tests -j 6` →
-  `CLIPPY_RESULT_PLACEHOLDER`. `corpus_literal_sweep` is **skipped and named**: no corpus record
+  **not recorded by this cycle** — it left the placeholder unresolved and no output survives, so
+  no figure is invented here. `cargo clippy --locked --tests -j 6` → **not recorded by this
+  cycle**, same reason. Both were re-run at cycle 3's HEAD, which contains this cycle's tree plus
+  cycle 3's own changes; see `AT-35-E6-003-FINISH_cycle3_receipt.md`'s **Build scope verified**
+  row. `--no-run` and `--lib` above are this cycle's own recorded outputs and stand. `corpus_literal_sweep` is **skipped and named**: no corpus record
   changed (`git status` lists no `data/` path), so it would re-examine the identical tree.
   `v06_work_inventory` is **skipped and named**: the cycle changed no corpus record, no
   classifier and no `data/` file, so no unit can have moved — `closed=0 relabeled=0` above is

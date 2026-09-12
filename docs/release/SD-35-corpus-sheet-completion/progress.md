@@ -163,6 +163,122 @@ re-measured at the cut by the launch-readiness audit.
 
 ## Cycle log
 
+### 2026-09-12 — Epic 6 / `desktop-and-prose-leave-pcgen` — AT-35-E6-003-FINISH **cycle 3** (`8fc2c53ca8`) — **partial** (the racial-trait renderer leaves PCGen: live `render_pcgen_desc*` call sites **4 → 2**, `race_resolver.rs` to zero, proved byte-identical over **all 919** racial-trait records)
+
+**Receipt:** `artifacts/epic-6-pcgen-exit/AT-35-E6-003-FINISH_cycle3_receipt.md`
+
+**Dispatched as "cycle 2", renumbered to 3.** Cycle 2 had already landed at `e570ba506c`; this
+cycle re-derived the state at HEAD rather than working from the prompt's figures, and took cycle
+2's own named next-cycle scope. It also self-healed what cycle 2 left: no progress entry, no
+kanban row, three unresolved receipt placeholders
+(`correction 1789235054698-at-35-e6-003-finish-e88d35`).
+
+- **Scope gate:** `SCOPE_GATE: EXEMPT (Epic 6 cycle — closes zero corpus units by design;
+  decisions.md §2, workflow-instruction.md §6 step 1)`. Run anyway at the cycle's start tree
+  `948a1d8e21`: `scoped=0 remaining_non_done=0 floor=500 verdict=PASS_WHOLE_REMAINDER`.
+- **Receipt rows:** `since=948a1d8e21e175338b6ed46208e5251d20408ef4 residue_gate=present
+  closed_by_kind=
+  relabeled_moves=
+  regressed=0 added=0 dropped=0
+  closed=0 relabeled=0 rust_lines_changed=596 ratio=n/a builds_recorded=1 pcgen_live_files=45`.
+- **PCGen residue:** `live_files=45 live_hits=300 baseline_files=260 baseline_hits=12736 verdict=PASS` — not raised on either axis, and **not lowered**: the gate's
+  `\brender_pcgen_desc\b` pattern never matched `render_pcgen_desc_tokens`, so the two call
+  sites removed here were never among the 300 it counts. Cycle 1's standing escalation; widening
+  it now would *raise* `live_hits`, which `§8` names non-self-healable.
+- **Oracle parity:** `compared=919 agree=919 disagree=0` — **every** racial-trait record every
+  book under `data/corpus/` loads, rendered both ways (converted prose + converted `_vars`
+  against the record's own `DESC:` tokens through the tool-side PCGen renderer) and required
+  byte-identical.
+- **Refused tokens** — 300 hits / 45 files, **all class A**, behind ruling B15 (asked for the
+  twelfth time):
+  ```
+  TYPE==100, BONUS:=91, DESC:=59, PRE[A-Z]+:=47
+  ```
+  plus `%CHOICE=3`, inside that 300.
+
+**What moved.** `src/rules_core/race_resolver.rs` lost its
+`use crate::pcgen_import::pcgen_desc::{…}` import: `same_row_display_values` folds the
+converted `_vars` tables instead of reading the row's `DEFINE` bases and `BONUS:VAR` amounts,
+and `render_description` renders the converted rule's prose instead of handing `DESC:` tokens to
+the PCGen renderer. `resolved_prose.rs` gained the drop-and-report renderer that makes that
+possible (`+228 −1`). Class B stays **0**; class C **93 → 82 lines**, 27 files, re-derived at
+HEAD.
+
+**RED→GREEN.** The new corpus-wide gate
+`tests/sd35_race_trait_prose_comes_from_the_converted_package.rs` (208 lines) reported **24 of
+919** disagreeing on its first run, and all 24 were real defects in this cycle's own first
+implementation: **20** because the join used all five steps of `converted_prose::rule_id_for`
+and its fallbacks gave every `Skinwalker ~ Change Shape (<variant>)` row the base record's
+paragraph; **3** because repairing one dropped hole by collapsing the segment's whitespace
+destroyed the record's own paragraph breaks; **1** because
+`Applies::Holds { Holdable::MissingRule }` was treated as undecidable, so
+`Elf ~ Elemental Resistance` printed all four mutually exclusive energy-type options at once.
+Fixed → **0 of 919**, and none of it was ever committed.
+
+**The finding, now true twice in a row:** the converted package already carried more than the
+ingest path did. `_vars/v5b0c2ee048baad4f.json` holds `Gnome ~ Hatred`'s attack bonus **with the
+two feat rows that raise it named as contributions** — which the live side had been
+hand-modelling in a three-name list.
+
+**Verification** (once, after the last figure-moving edit): `--no-run` `NO_RUN_EXIT=0`; `--lib`
+`3341 passed; 0 failed`; `--no-fail-fast` `FULL_EXIT=0` — **418 targets / 8,870 passed / 0 failed**; clippy **0 warnings, 0 errors**. **The desktop crate was
+run although no `apps/` file changed** — sweep cycles 15, 16 and 17 each found it red after
+recording it not-run on exactly that reasoning: `test result: ok. 569 passed; 0 failed; 0 ignored` (1,494s). `sheet_rule_convert -- --check`
+`records=49438 converted=49296 refused=142 rules=70135 var_tables=5293 verdict=PASS`; `data/sheet_rules/` source-marker grep **0**; `completion_atlas.py --check`
+`citation_failures=0 stale_derived_at=False`; `token_coverage.py --check` `non_done=0 refused=142
+verdict=PASS`; `shape_engine_boundary.py --check` `magnitude_bearing=26396 not_held_by_engine=0`;
+`missing_engine_tables.py --check` `population=0 kinds=0`; `denominator_gate.py --check`
+`files_checked=128 violations=0`; `verify.sh --only pi-sweep` **PASS**. `corpus_literal_sweep`
+and `v06_work_inventory` **skipped and named**: no corpus record, classifier or `data/` file
+changed.
+
+**Next-cycle scope:** the **two** remaining live `render_pcgen_desc*` call sites, both in
+`src/rules_core/pilot_compute/class_feature_grant_consumer.rs`
+(`resolved_description_for`, `resolved_description_for_formula_only_desc_argument`), by the
+mechanism this cycle and cycle 2 both proved. Then, and only then, widen the gate's
+`render_pcgen_desc` pattern to a prefix match. **Class A's 300 stays blocked on B15.**
+
+### 2026-09-12 — Epic 6 / `desktop-and-prose-leave-pcgen` — AT-35-E6-003-FINISH **cycle 2** (`e570ba506c`) — **partial** (the last PCGen token text leaves executable live code: class B **4 → 0**; the conversion had already happened, only the reader had not moved)
+
+**Receipt:** `artifacts/epic-6-pcgen-exit/AT-35-E6-003-FINISH_cycle2_receipt.md`
+
+**This entry and kanban row 77 were written by cycle 3, not by cycle 2.** Cycle 2 landed its
+code and its receipt at `e570ba506c` and skipped `workflow-instruction.md §6` step 7 entirely —
+the board ended at row 76 and the cycle log at cycle 1 — and left three unresolved placeholders
+in its own receipt. Cycle 3 self-healed all four (`§8`, self-healable: dirty board);
+`correction 1789235054698-at-35-e6-003-finish-e88d35`.
+
+- **Scope gate:** `SCOPE_GATE: EXEMPT (Epic 6 cycle — closes zero corpus units by design;
+  decisions.md §2, workflow-instruction.md §6 step 1)`. Run anyway at the cycle's start tree
+  `dc960b6548`: `scoped=0 remaining_non_done=0 floor=500 verdict=PASS_WHOLE_REMAINDER`.
+- **Receipt rows:** `closed=0 relabeled=0 rust_lines_changed=411 ratio=n/a builds_recorded=0
+  pcgen_live_files=45`.
+- **PCGen residue:** `live_files=45 live_hits=300 baseline_files=260 baseline_hits=12736
+  verdict=PASS` — **down 4** from cycle 1's 304, not raised on either axis.
+- **Oracle parity:** `compared=56 agree=56 disagree=0` — the 7 Pathfinder Unchained
+  `class_feature` records carrying a `%N`, read off `data/corpus/` at run time, over 8 value
+  tables each, rendered both ways.
+- **Refused tokens** — 300 hits across 45 files, **all class A**, `deferral
+  1789222622846`-adjacent (the cycle's own `deferral` event):
+  ```
+  TYPE==100, BONUS:=91, DESC:=59, PRE[A-Z]+:=47
+  ```
+  plus `%CHOICE=3`, inside that 300.
+
+**What moved.** `src/rules_core/pilot_compute/mod.rs` lost `PU_RESOLVABLE_DESCRIPTIONS`, the four
+`PU_*_DESC_TOKEN` constants (109 lines of verbatim PCGen `DESC:` token text) and its
+`pcgen_desc` import; the new `src/rules_core/pilot_compute/resolved_prose.rs` (313 lines) renders
+the converted package's own prose instead. **Class B — executable product code — is 0.**
+
+**The discovery, and it is why the cycle had work to do at all:** the conversion had already
+happened; only the reader had not moved. Cycle 1 had refused class B on the premise that the
+four transcriptions "leave together with the renderer", and that the renderer could not leave
+because two of its call sites are in `race_resolver.rs`, "outside this epic's file-touch set".
+Both halves were wrong — `race_resolver.rs` **is** in the set, and the transcriptions needed
+only the converted package to be *read*.
+
+**Next-cycle scope:** the four remaining live `render_pcgen_desc*` call sites, in two files.
+
 ### 2026-09-12 — Epic 6 / `desktop-and-prose-leave-pcgen` — AT-35-E6-003-FINISH **cycle 1** (`244c5c8c1c`) — **partial** (dispatched with a floor of **zero**; the census found the gate cannot see the reads that are left — **100 run-time converter calls in 28 live files, 17 of them under `apps/desktop/`**, where it prints `files=0 hits=0`)
 
 - **Scope gate:** `SCOPE_GATE: EXEMPT (Epic 6 cycle — closes zero corpus units by design;
