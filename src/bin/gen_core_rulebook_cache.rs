@@ -33,7 +33,7 @@ use codex::rules_core::rules_tables::crb::class_tables::{self, ClassId, ClassTab
 use codex::rules_core::rules_tables::crb::equipment_tables::{self, EquipmentCategory, EquipmentTableEntry};
 use codex::rules_core::rules_tables::crb::json_cache::{
     ClassCacheData, Completeness, CorpusRecord, CorpusSource, EquipmentCacheData, Population,
-    SpellCacheData,
+    RenameInfo, SpellCacheData,
 };
 use codex::rules_core::rules_tables::crb::spell_list;
 
@@ -588,7 +588,14 @@ fn main() {
                     pi_field,
                     pi_marker,
                     codex_generated_name,
-                    rename: rename_info,
+                    // SD-35 `AT-35-E6-003-RULED` cycle 3: the on-disk `rename` shape is owned by
+                    // the side that reads it (`json_cache::RenameInfo`) rather than by
+                    // `cache_gen::equipment_gap`. Two strings, mapped here in the generator --
+                    // the only place the converter's copy and the reader's copy meet.
+                    rename: rename_info.map(|r| RenameInfo {
+                        reason: r.reason,
+                        coordinate: r.coordinate,
+                    }),
                 };
                 current_spell_keys.insert(renamed_key.clone());
                 let used = spell_slugs_used.entry(entry.level).or_default();
@@ -769,7 +776,14 @@ fn main() {
                     pi_field,
                     pi_marker,
                     codex_generated_name,
-                    rename: rename_info,
+                    // SD-35 `AT-35-E6-003-RULED` cycle 3: the on-disk `rename` shape is owned by
+                    // the side that reads it (`json_cache::RenameInfo`) rather than by
+                    // `cache_gen::equipment_gap`. Two strings, mapped here in the generator --
+                    // the only place the converter's copy and the reader's copy meet.
+                    rename: rename_info.map(|r| RenameInfo {
+                        reason: r.reason,
+                        coordinate: r.coordinate,
+                    }),
                 };
                 let category_slug = equipment_category_slug(entry.category);
                 let used = equipment_slugs_used.entry(category_slug).or_default();

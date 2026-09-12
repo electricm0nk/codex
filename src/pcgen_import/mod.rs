@@ -76,6 +76,12 @@ pub mod include_resolver;
 pub mod ir_converter;
 pub mod lst_parser;
 pub mod pcc;
+/// The PCC -> parse -> IR convenience loader the SD-18 pre-loop composer calls. Lived in
+/// `src/rules_core/composed_input.rs` until SD-35 `AT-35-E6-003-RULED` cycle 3: resolving an
+/// include graph, running six LST parsers and running the IR converter is converter work, and
+/// under `decisions.md §19`/B16 doing it from a live root counted as eight live reads. Kept, not
+/// deleted — `decisions.md §11`.
+pub mod pcc_package_loader;
 /// The ingest format's own description renderer — its `%N` slots, `|`-argument tails and
 /// escape shapes. Lived at `src/rules_core/pcgen_desc.rs` until SD-35 `AT-35-E6-003-SWEEP`
 /// cycle 17, which is the move `epic-breakdown.md`'s `AT-35-E6-003` names: *"`render_pcgen_desc`

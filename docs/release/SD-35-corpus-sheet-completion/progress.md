@@ -181,6 +181,98 @@ re-measured at the cut by the launch-readiness audit.
 
 ## Cycle log
 
+### 2026-09-12 — Epic 6 / `desktop-and-prose-leave-pcgen` — AT-35-E6-003-RULED **cycle 3** (`SHA_PLACEHOLDER`) — **partial** (the converter pipeline that was living in a live root left it: residue `24 / 53 → 22 / 44`, all of it code, the instrument untouched)
+
+- **Scope gate:** `SCOPE_GATE: EXEMPT (Epic 6 cycle — closes zero corpus units by design; decisions.md §2)`.
+  It ran anyway at the cycle's start tree `b9e5956261`:
+  `scoped=0 remaining_non_done=0 floor=500 verdict=PASS_WHOLE_REMAINDER`. The residue check, which
+  is not exempt, passed first at the same tree:
+  `live_files=24 live_hits=53 baseline_files=260 baseline_hits=12736 verdict=PASS`.
+
+- **Receipt rows:** `closed=0 relabeled=0 rust_lines_changed=366 ratio=n/a builds_recorded=1 pcgen_live_files=22`.
+
+- **One rule, applied twice — the live root stops hosting code that is not the live side's.**
+
+  - **`composed_input.rs` lost all eight of its reads, and the finding is why nobody had looked.**
+    The module's own doc paragraph, headed *"Why this lives here (not in `pcgen_import`)"*, states
+    the composer *"does no parsing, no include resolution, no IR conversion of its own"* — and that
+    sentence is the stated reason the file sits in a live root. It was true of `compose` and
+    **false of the file**: the PCC convenience loader beside it resolved an include graph, ran all
+    six B-family LST parsers and ran the IR converter, at run time. **Eight of the 53 live reads —
+    the largest single-file concentration in the whole B16 population — behind a doc comment that
+    said there was nothing there.** `load_composed_core_rulebook`, `project_corpus_from_owned`,
+    `drain_into`, the two result types and
+    `ComposedInputDiagnostic::include_resolution_failure` now live at
+    `src/pcgen_import/pcc_package_loader.rs`: same functions, same order, same diagnostics, same
+    borrow discipline, **KEPT** per `decisions.md §11`. Its only consumer is
+    `tests/sd18_preloop_consumer_compose.rs`. `correction 1789251026013-at-35-e6-003-ruled-5d9ef9`.
+  - **`crb/json_cache.rs` lost its one read.** `CorpusRecord::rename` was typed
+    `Option<cache_gen::equipment_gap::RenameInfo>` — a live reader naming a converter module to
+    describe the shape of **its own on-disk JSON**. `cache_gen` already keeps three separate local
+    copies of that two-string shape under the no-shared-types-file convention `equipment_gap.rs`'s
+    own doc comment establishes; this is the fourth, owned by the side that reads it. The wire
+    shape is byte-identical.
+
+- **The third move was refused before it was written, and that is the second correction.**
+  `src/rules_core/derived_evaluator_fixture_check.rs` presents as exactly the relocation
+  `AT-35-E6-001` already made (`race_trait_formula_bar_check` → `src/oracle_validation/`): a
+  bar-check harness reading a committed fixture, sitting in a live root, with its `ingest_record`
+  calls in private corpus walks. **It is not.** Three desktop catalogs import eleven live rendering
+  symbols out of it at run time — `monster_catalog.rs`, `spell_catalog.rs`, `companion_catalog.rs`
+  — and those reach the very walks that make the calls. Moving the file would have lowered the gate
+  by 1 and changed nothing in the shipping binary: the blind-spot shape `decisions.md §19` was
+  ruled to end. Re-derive:
+  `grep -rn 'rules_core::derived_evaluator_fixture_check' --include=*.rs apps/`.
+  `correction 1789251026155-at-35-e6-003-ruled-a9e18b`.
+
+- **Residue `live_files=24 live_hits=53 → live_files=22 live_hits=44`.** Per root:
+  `src/rules_core 21/46 → 19/37`; `apps/desktop 3/7 → 3/7`, **unchanged** — `apps/desktop` is
+  still not zero and the criterion's Evidence sentence is still not met. **This is not an
+  instrument correction:** `scripts/pcgen_residue_gate.py` and `scripts/pcgen-residue-baseline.env`
+  are both absent from this cycle's diff; no path was exempted, no regex weakened, and the gate
+  script's own 78 unit tests still pass. Every hit that left did so because the code that made it
+  left the live roots.
+
+- **The one `test result: FAILED` in the full run, attributed rather than bucketed.**
+  `tests/sd17_b5_equipment.rs:463` `parse_runs_in_linear_time_on_a_synthetic_large_file` —
+  *"5k equipment records should parse in well under 2s, took 2.374002021s"*. A **wall-clock
+  budget**, not a correctness assertion, and **not this cycle's**:
+  `git diff --stat HEAD -- tests/sd17_b5_equipment.rs src/pcgen_import/lst_parser/equipment.rs` is
+  **empty**. Re-run alone at the same tree, `cargo test --locked --test sd17_b5_equipment -j 2` →
+  `25 passed; 0 failed`, the same assertion finishing in **1.13 s**. The other 417 targets and
+  8,869 tests passed. `incident 1789256480840-at-35-e6-003-ruled-bd3974`.
+
+- **One red round, self-healed and recorded.** The first verification run failed to build
+  `src/bin/gen_core_rulebook_cache.rs` with two `E0308`s: the `RenameInfo` ownership swap moved a
+  live struct's field type and that bin is its only writer. `cargo check --lib` was green
+  throughout — the "verify at the widest build scope" failure `AGENTS.md` names, caught by running
+  it. Fixed at the generator and the whole gauntlet re-run at the corrected tree.
+
+- **Verified once, at the final tree:** `NO_RUN_EXIT=0`; lib `3341 passed; 0 failed; 16 ignored`
+  (identical to cycle 2's); full workspace `FULL_EXIT=101` — **418 targets, 8,869 passed, 1 failed, 69 ignored, exactly one `test result: FAILED` line, attributed below**; clippy **0 warnings**;
+  `sheet_rule_convert -- --check` `records=49438 converted=49296 refused=142 rules=70135 var_tables=5293 verdict=PASS` (114.3s); `data/sheet_rules/` ingest-syntax grep `0`;
+  `completion_atlas` `citation_failures=0`; `token_coverage` `non_done=0 refused=142 verdict=PASS`;
+  `shape_engine_boundary` `not_held_by_engine=0`; `missing_engine_tables` `population=0`;
+  `denominator_gate` `files_checked=133 violations=0`; `verify.sh --only pi-sweep` `RESULT: PASS`;
+  `python3 -m unittest scripts.tests.test_pcgen_residue_gate scripts.tests.test_cycle_scope_gate`
+  **78 tests OK**. **`apps/` is not in this cycle's diff**, so the desktop crate and the frontend
+  run at the epic wrap-up (`§6` step 3). No `data/` file changed, so `corpus_literal_sweep` and the
+  work inventory would re-examine a byte-identical tree.
+
+- **Refused tokens — 44 hits across 22 files, six groups**, each named line by line in
+  `artifacts/epic-6-pcgen-exit/AT-35-E6-003-RULED_cycle3_runtime_import_census.json`:
+  `renderer=8, lst_parser_types=16, ingest_record_tokens=7, trait_and_pool_tokens=5,
+  ir_converter=3, source_content_payload=5` (`8+16+7+5+3+5 = 44`).
+  `deferral 1789251035947-at-35-e6-003-ruled-8a0324`.
+
+- **Next-cycle scope:** unchanged in shape from cycle 2's and one fifth smaller. `renderer` (8) is
+  a converter cycle, refused by cycle 2's measured `disagree=97332 of 660320`. `lst_parser_types`
+  (16) + `ingest_record_tokens` (7) + `ir_converter` (3) + `source_content_payload` (5) = **31
+  hits, one piece of work**: a converted equipment/spell record shape the live side owns, which
+  also unblocks `apps/desktop/src-tauri/src/corpus_fixtures.rs` (5 of `apps/desktop`'s 7).
+  `trait_and_pool_tokens` (5) wants the converted rule's `applies` and a converted pool-member
+  table.
+
 ### 2026-09-12 — Epic 6 / `desktop-and-prose-leave-pcgen` — AT-35-E6-003-RULED **cycle 2** (`56faa89fcb`) — **partial** (one of cycle 1's seven refused groups cleared; the largest one **measured** and refused on the number — the converted renderer disagrees with the live one on **97,332 of 660,320** renderings across **2,443** record keys)
 
 - **Scope gate:** `SCOPE_GATE: EXEMPT (Epic 6 cycle — closes zero corpus units by design; decisions.md §2)`.

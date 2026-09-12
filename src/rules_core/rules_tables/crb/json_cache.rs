@@ -148,7 +148,24 @@ pub struct CorpusRecord<T> {
     #[serde(default)]
     pub codex_generated_name: bool,
     #[serde(default, skip_serializing_if = "Option::is_none")]
-    pub rename: Option<crate::pcgen_import::cache_gen::equipment_gap::RenameInfo>,
+    pub rename: Option<RenameInfo>,
+}
+
+/// Divergence provenance on a cached record: coordinate + reason only,
+/// never the original PI string (`decisions.md §24b`-4).
+///
+/// SD-35 `AT-35-E6-003-RULED` cycle 3: this field's type was
+/// `cache_gen::equipment_gap::RenameInfo` — a live reader naming a
+/// converter module to describe the shape of its own on-disk JSON
+/// (`decisions.md §19`/B16). The wire shape is two strings and is
+/// unchanged; `cache_gen` already keeps three separate local copies of
+/// it (`equipment_gap`, `class_feature`, `spell_lane_dump`) under the
+/// no-shared-types-file convention `equipment_gap.rs`'s own doc comment
+/// establishes, and this is the fourth, owned by the side that reads it.
+#[derive(Debug, Clone, Serialize, Deserialize, PartialEq, Eq)]
+pub struct RenameInfo {
+    pub reason: String,
+    pub coordinate: String,
 }
 
 /// `data/corpus/core_rulebook/class/<slug>.json` payload. Mirrors
