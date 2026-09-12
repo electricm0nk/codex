@@ -116,6 +116,74 @@ re-measured at the cut by the launch-readiness audit.
 
 ## Cycle log
 
+### 2026-09-11 — Epic 6 / `desktop-and-prose-leave-pcgen` — AT-35-E6-003-SWEEP **cycle 10** (`5e0329cc63`) — **partial** (the last unframed prose citations cleared by hand; 45 code hits, 9% of the cycle's 500-hit floor, 3 files to zero, and **no hand work left in the reachable remainder**)
+
+**This is cycle 10, not the 9 the dispatch named** — cycle 9 was already committed at
+`f4583db504` with its receipt tracked at HEAD (`correction
+1789175573947-at-35-e6-003-sweep-0d383e`); the remainder it named (458 hits / 59 files) was cycle
+9's end state and reproduced exactly at cycle start.
+
+**Scope gate:** `SCOPE_GATE: EXEMPT (Epic 6 cycle — closes zero corpus units by design,
+decisions.md §2)`. Run anyway: `inventory=docs/work-inventory.json / scope=(whole remainder) /
+scoped=0 remaining_non_done=0 floor=500 verdict=PASS_WHOLE_REMAINDER`.
+
+**The mechanism no rule could reach, finished by hand.** Cycles 4, 5 and 6 built three automatic
+citation frames for this shape and **removed two of them** after measuring the prose they
+produced against the real files — a truncated sentence on a player's sheet is worse than the
+citation it replaced, and no gate in that tool could see it. Cycle 9 costed what was left at **47
+hits of hand work, record by record**. This cycle did it: a **42-row hand table** with `--apply`
+and `--check`
+(`artifacts/epic-6-pcgen-exit/AT-35-E6-003-SWEEP_cycle10_prose_citation_handwork.py`) covering
+**45 hits** across `pilot_compute/mod.rs` (32 shipped `ComputationExplanation.detail` /
+`ComputationDiagnostic.message` strings), `derived_evaluator_fixture_check.rs` (6
+assertion-failure strings), `support_state_matrix.rs` (5), `class_slayer.rs` and
+`class_ultimate_combat.rs` (1 each). **No information destroyed:** each row either says the same
+fact in the rule's own words (`carries no BONUS:VAR|X| token` → `carries no bonus-variable
+magnitude named X`) or moves the token verbatim into a `//` provenance comment beside the value.
+Two `format!` argument lists shortened by the two placeholders their deleted
+`(BONUS:SITUATION|{}=...|{})` parenthetical consumed.
+
+**RED→GREEN, and the RED run caught a defect in the gate itself.** The standing gate
+`tests/sd35_rendered_prose_carries_no_ingest_vocabulary.rs` was written **first** and run against
+the untouched tree: `45 line(s) of prose this engine writes still print PCGen ingest vocabulary
+on a player's sheet`, `test result: FAILED`. Its first draft had reported **63** — it matched
+`BONUS:` by plain substring and was flagging `const SLAYER_QUARRY_ATTACK_BONUS: i16 = 2;`, the
+format spec `{MONK_IMPROVED_GRAPPLE_BONUS:+}` and `TEMPBONUS:`, none of which the residue gate's
+own `\bBONUS:` matches. **A gate that re-expresses another gate's rule must re-express its word
+boundaries too**; an 18-hit overcount would have sent the cycle rewriting correct code. Caught
+because the RED output was read rather than merely observed to be red.
+
+Code hits **458 → 413 = 45 cleared**, `pcgen_live_files` **59 → 56**, **3 files to zero**, **none
+rose**; `DEFINE:` reaches **zero across the whole live side** for the first time, taking the
+refused-type count from nine to eight. The census proves nothing was banked by reclassification:
+`hits_outside` falls **106 → 61** while `hits_inside_cfg_test` is **unmoved at exactly 352** —
+the same invariance cycles 6, 8 and 9 recorded, and itself the evidence that that mechanism is a
+ruling and not a backlog. Instrument untouched: `scripts/pcgen-residue-baseline.env` not edited,
+`--rebaseline` not run, no pattern, root or exclusion changed.
+
+**Under the cycle's own 500-hit floor at 45**, named: **352 of 413** (85%) behind the still-open
+`#[cfg(test)]` ruling, leaving **61 hits / 18 files** reachable — and **after this cycle there is
+no hand work in it at all**. What remains is four converter-side jobs, each a whole cycle: the
+`bestiary` `description_variables` wire-format regeneration (20, the 4,378-literal cycle measured
+and refused by cycle 8), the `FeatEffectBonus` selection-target typing that moves the bonus
+engine's matching (12), the `pcgen_desc.rs` deletion together with the four verbatim
+`PU_*_DESC_TOKEN` corpus transcriptions it substitutes into (11, blocked on the
+`class_feature_pool_catalog.rs` rewire), and `SheetRule.applies` carrying the exclusion-guard
+relation for `race_trait_picker.rs` (7); plus 3 `external_ability_refs` hits deliberately left
+again for crossing into `apps/`, and 6 scattered live parses of the ingest format.
+**The single highest-value action for this criterion is no longer a cycle — it is the
+`#[cfg(test)]` ruling**, which now stands between the gate and 352 of the 413 code hits that remain.
+
+`cycle_scope_gate.py --min 500` passes on `PASS_WHOLE_REMAINDER`.
+``closed=0 relabeled=0 rust_lines_changed=360 ratio=n/a builds_recorded=2 pcgen_live_files=56``.
+**`partial`** — `BONUS:=92; TYPE==107; PRE[A-Z]+:=66; DESC:=63; render_pcgen_desc=39; %LIST=28;
+%CHOICE=13; raw_tokens=5` (413 hits / 56 files, eight types). Verified once at `5e0329cc63`:
+`--no-run` 0, lib **3,322/0/15**, full **415 targets / 8,841 passed / 0 failed / 68 ignored / `FULL_EXIT=0`** (+1 target, +1 test = the new gate), clippy **`CLIPPY_EXIT=0`, 0 warnings**, `sheet_rule_convert --check` **`records=49438 converted=49296 refused=142 rules=70135 var_tables=5293 verdict=PASS`, identical to cycles 3-9**, `data/sheet_rules/` leaks 0, atlas / token-coverage / shape-engine /
+missing-engine-tables / denominator (`files_checked=118 violations=0`) / pi-sweep all green;
+`apps/` untouched so desktop at epic cadence; `docs/work-inventory.json` byte-identical to the
+cycle-start copy. `deferral 1789175574167-at-35-e6-003-sweep-5134fc`.
+Receipt: `artifacts/epic-6-pcgen-exit/AT-35-E6-003-SWEEP_cycle10_receipt.md`.
+
 ### 2026-09-11 — Epic 6 / `desktop-and-prose-leave-pcgen` — AT-35-E6-003-SWEEP **cycle 9** (`f4583db504`) — **partial** (cycle 7's refusal re-examined and overturned: a serialiser is not a reader; 53 code hits cleared, 11% of the cycle's 500-hit floor, 5 files to zero)
 
 **This is cycle 9, not the 8 the dispatch named** — cycle 8 was already committed at `1f425d5124`
