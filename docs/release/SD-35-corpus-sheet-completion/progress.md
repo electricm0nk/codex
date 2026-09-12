@@ -183,14 +183,14 @@ re-measured at the cut by the launch-readiness audit.
   `hits_inside_cfg_test` unmoved at 351. No corpus record changed; `docs/work-inventory.json`
   is byte-identical.
 - **Cost correction.** Cycle 13 costed this job as "a converter cycle of this cycle's own
-  size" — cycle 13 being 711 Rust lines across 452 record literals. It was **110 Rust lines**,
-  0 corpus records and 0 data literals, because the equipment bonus type is already a
+  size" — cycle 13 being 711 Rust lines across 452 record literals. It was **599 Rust lines** — 110 of them
+  edits to pre-existing files, the rest the two new tool-side files — with 0 corpus records and 0 data literals, because the equipment bonus type is already a
   qualifier on a chain the record carries rather than a field to be added to every literal
   (`correction 1789194083764-at-35-e6-003-sweep-b93147`). The denominator of the estimate was
   "what the last cycle cost", which is not a denominator.
 - **Receipt rows:**
   ```
-  closed=0 relabeled=0 rust_lines_changed=110 ratio=n/a builds_recorded=0 pcgen_live_files=47
+  closed=0 relabeled=0 rust_lines_changed=599 ratio=n/a builds_recorded=0 pcgen_live_files=47
   ```
 - **`partial`** — `TYPE==100; BONUS:=91; PRE[A-Z]+:=63; DESC:=59; render_pcgen_desc=39;
   %CHOICE=8; raw_tokens=5; %LIST=1` (366 hits / 47 files).

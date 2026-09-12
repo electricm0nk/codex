@@ -106,7 +106,7 @@
   closed_by_kind=
   relabeled_moves=
   regressed=0 added=0 dropped=0
-  closed=0 relabeled=0 rust_lines_changed=110 ratio=n/a builds_recorded=0 pcgen_live_files=47
+  closed=0 relabeled=0 rust_lines_changed=599 ratio=n/a builds_recorded=0 pcgen_live_files=47
   ```
 
 - **PCGen residue:**
@@ -310,6 +310,17 @@
   `every-figure-states-its-denominator` error with the denominator being "what
   the last cycle cost".
 
+  **A second correction, on this receipt's own figure.** It first recorded
+  `rust_lines_changed=110`, measured before the commit — when
+  `equipment_bonus_reader.rs` and the new standing gate were still untracked and
+  therefore invisible to the `git diff` the receipt tool runs. Re-derived at HEAD
+  with both files tracked, it is **599**
+  (`correction 1789195888613-at-35-e6-003-sweep-ffd482`). The 110 figure is kept
+  above as the pre-existing-file edit count, which is the number that made the
+  cost-estimate point, but the receipt row is the tool's own output and is now
+  599. The general shape: a receipt row computed before `git add` measures a
+  different population than the same command after it.
+
 - **Figures + their re-derive commands:**
 
   | figure | denominator | command |
@@ -320,7 +331,7 @@
   | reachable 19 → 15 in 9 → 5 files | the 366 hits, split on `#[cfg(test)]` membership | `python3 docs/release/SD-35-corpus-sheet-completion/artifacts/epic-6-pcgen-exit/AT-35-E6-003-SWEEP_cycle5_test_region_census.py` |
   | 4 RED lines, then 0 | the 4 live files the new gate lists as cleared | `cargo test --locked --test sd35_live_side_names_no_ingest_qualifier` (RED at `bdae51f9f6` + the test file, GREEN at HEAD) |
   | 1,371 records / 2,223 chains / 68 circumstance / 277 enhancement, 0 disagreements | every `data/corpus/<book>/equipment*/**/*.json` record carrying a bonus chain | `cargo test --locked --lib equipment_bonus_reader` |
-  | `rust_lines_changed=110` | the cycle's own diff since `bdae51f9f6` | `python3 scripts/cycle_scope_gate.py --receipt --since bdae51f9f6 --before /tmp/wi-before-at-35-e6-003-sweep.json --after docs/work-inventory.json` |
+  | `rust_lines_changed=599` | the cycle's own diff since `bdae51f9f6`, measured at HEAD with both new files tracked | `python3 scripts/cycle_scope_gate.py --receipt --since bdae51f9f6 --before /tmp/wi-before-at-35-e6-003-sweep.json --after docs/work-inventory.json` |
   | `records=49438 converted=49296 refused=142` | every corpus record the sheet-rule converter reads | `cargo run --locked --bin sheet_rule_convert -- --check` |
 
 - **Build scope verified** — **once**, after the last figure-moving edit:
