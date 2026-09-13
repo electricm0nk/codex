@@ -102,11 +102,29 @@
 //! all six damage-class criteria (base-dice, STR-modifier,
 //! weapon-enhancement, feat-effect, critical-threat-range,
 //! critical-multiplier) are now landed.
+//!
+//! ## SD-35 `AT-35-E6-003-RULED` cycle 12 — where these values now come from
+//!
+//! Every "reads its real `<TOKEN>:` token" sentence above is the history of
+//! how each work-unit was built, and each rule it states still holds. What
+//! changed is the side of the ingest boundary the read happens on
+//! (`decisions.md` §11, §19): the `DAMAGE:`, `BASEITEM:`, `WIELD:`,
+//! `CRITRANGE:`, `CRITMULT:` and `BONUS:EQMWEAPON|DAMAGESIZE` spellings moved
+//! to [`crate::pcgen_import::ir_converter::equipment_record_to_corpus`], and
+//! this module reads the settled values off
+//! [`crate::rules_core::equipment_record::CorpusEquipmentRecord`], resolved by
+//! [`crate::rules_core::equipment_resolver::equipment_converted_resolve_with_cell`]
+//! -- the same one resolution, answering in settled values and provenance.
+//! The parity of the move is proved over all 7,803 live corpus equipment
+//! records by `equipment_record`'s own
+//! `every_live_corpus_equipment_record_carries_the_same_weapon_values_the_token_reads_produced`.
 
-use crate::pcgen_import::lst_parser::equipment::EquipmentRecord;
 use crate::rules_core::character_input::{ActiveState, CharacterInput};
 use crate::rules_core::equipment_effects::{is_natural_attack_weapon, EquipmentEffects};
-use crate::rules_core::equipment_resolver::{equipment_id_resolve, equipment_key_token};
+use crate::rules_core::equipment_record::CorpusEquipmentRecord;
+use crate::rules_core::equipment_resolver::{
+    equipment_converted_resolve, equipment_converted_resolve_with_cell,
+};
 use crate::rules_core::pilot_compute_corpus::TableCellRef;
 use crate::rules_core::rules_tables::crb::feats::{feat_tables, EffectSelection, FeatEffectBonus};
 use crate::rules_core::rules_tables::RuleSetId;
@@ -166,12 +184,12 @@ pub fn resolve_base_damage_dice(
     weapon_item_id: &str,
     corpus: &SourcePackageContent,
 ) -> Option<DamageRollBaseDice> {
-    let (record, table_cell) = equipment_id_resolve(weapon_item_id, RuleSetId::Crb, corpus)?;
-    let base_dice =
-        damage_dice_token(record).or_else(|| base_item_damage_dice_token(record, corpus))?;
-    let weapon_record_key = equipment_key_token(record)
-        .unwrap_or(&record.name)
-        .to_string();
+    let (record, table_cell) =
+        equipment_converted_resolve_with_cell(weapon_item_id, RuleSetId::Crb, corpus)?;
+    let base_dice = record
+        .base_damage_dice
+        .or_else(|| base_item_damage_dice(record, corpus))?;
+    let weapon_record_key = record.identity.clone();
 
     Some(DamageRollBaseDice {
         weapon_item_id: weapon_item_id.to_string(),
@@ -179,14 +197,6 @@ pub fn resolve_base_damage_dice(
         base_dice,
         table_cell,
     })
-}
-
-fn damage_dice_token(record: &EquipmentRecord) -> Option<DiceExpression> {
-    record
-        .tokens
-        .iter()
-        .find(|token| token.key == "DAMAGE")
-        .and_then(|token| DiceExpression::parse(&token.value))
 }
 
 /// `AT-34-E3-003` (bucket `M`, equipment sub-cause
@@ -197,24 +207,20 @@ fn damage_dice_token(record: &EquipmentRecord) -> Option<DiceExpression> {
 /// (`core_rulebook/cr_equip_arms_armor.lst`) is the live instance: its own
 /// row carries `BASEITEM:Light Crossbow (Base)` and no `DAMAGE:` token,
 /// while `Light Crossbow (Base)` carries the real `DAMAGE:1d8`.
-/// `equipment_id_resolve` already parses `BASEITEM:` into a token (via
-/// `KNOWN_TAGS`); this function is the first thing to chase it, one hop,
-/// through the SAME resolver `resolve_base_damage_dice` already calls for
-/// its primary lookup — not a new resolution mechanism, a second call to
-/// the existing one. A `BASEITEM:` naming a record that does not resolve,
-/// or a chain more than one hop deep, returns `None` rather than guessing
-/// or recursing.
-fn base_item_damage_dice_token(
-    record: &EquipmentRecord,
+/// The stand-in item's IDENTITY is settled at ingest
+/// ([`CorpusEquipmentRecord::base_item`], SD-35 `AT-35-E6-003-RULED`
+/// cycle 12); the one-hop CHASE stays here, because it is a corpus
+/// resolution and the converter has no corpus. It goes through the SAME
+/// resolver `resolve_base_damage_dice` already calls for its primary
+/// lookup — not a new resolution mechanism, a second call to the existing
+/// one. A stand-in naming a record that does not resolve, or a chain more
+/// than one hop deep, returns `None` rather than guessing or recursing.
+fn base_item_damage_dice(
+    record: &CorpusEquipmentRecord,
     corpus: &SourcePackageContent,
 ) -> Option<DiceExpression> {
-    let base_item_key = record
-        .tokens
-        .iter()
-        .find(|token| token.key == "BASEITEM")
-        .map(|token| token.value.as_str())?;
-    let (base_record, _) = equipment_id_resolve(base_item_key, RuleSetId::Crb, corpus)?;
-    damage_dice_token(base_record)
+    let base_item_key = record.base_item.as_deref()?;
+    equipment_converted_resolve(base_item_key, corpus)?.base_damage_dice
 }
 
 /// The Pathfinder RPG single-die weapon-damage-size progression table
@@ -247,21 +253,6 @@ pub fn step_single_die(base: DiceExpression, steps: i32) -> Option<DiceExpressio
         .map(|&die_size| DiceExpression { count: 1, die_size })
 }
 
-fn eqmweapon_damagesize_chain_value(record: &EquipmentRecord) -> i32 {
-    record
-        .bonus_chains
-        .iter()
-        .filter_map(|bonus| {
-            let qualifiers = &bonus.qualifiers;
-            if qualifiers.len() >= 3 && qualifiers[0] == "EQMWEAPON" && qualifiers[1] == "DAMAGESIZE" {
-                qualifiers[2].parse::<i32>().ok()
-            } else {
-                None
-            }
-        })
-        .sum()
-}
-
 /// Resolves a weapon's real base damage die (`resolve_base_damage_dice`)
 /// stepped by every `BONUS:EQMWEAPON|DAMAGESIZE|<n>` chain carried by its
 /// `EQMOD:`-referenced modifier records (SD-33 remediation wave 6,
@@ -281,17 +272,11 @@ pub fn resolve_eqmweapon_damagesize_effect(
     weapon_item_id: &str,
     corpus: &SourcePackageContent,
 ) -> Option<DiceExpression> {
-    let (record, _table_cell) = equipment_id_resolve(weapon_item_id, RuleSetId::Crb, corpus)?;
-    let base = damage_dice_token(record)?;
-    let eqmod_records = crate::rules_core::equipment_effects::eqmod_referenced_records(
-        record,
-        RuleSetId::Crb,
-        corpus,
-    );
-    let steps: i32 = eqmod_records
-        .iter()
-        .map(|modifier| eqmweapon_damagesize_chain_value(modifier))
-        .sum();
+    let record = equipment_converted_resolve(weapon_item_id, corpus)?;
+    let base = record.base_damage_dice?;
+    let eqmod_records =
+        crate::rules_core::equipment_effects::eqmod_referenced_converted_records(record, corpus);
+    let steps: i32 = eqmod_records.iter().map(|modifier| modifier.damage_size_steps).sum();
     if steps == 0 {
         return None;
     }
@@ -361,11 +346,10 @@ pub fn resolve_str_damage_modifier(
     str_modifier: i16,
     hand: WeaponHandSlot,
 ) -> Option<DamageRollStrModifier> {
-    let (record, table_cell) = equipment_id_resolve(weapon_item_id, RuleSetId::Crb, corpus)?;
-    let wield_category = wield_category_token(record)?;
-    let weapon_record_key = equipment_key_token(record)
-        .unwrap_or(&record.name)
-        .to_string();
+    let (record, table_cell) =
+        equipment_converted_resolve_with_cell(weapon_item_id, RuleSetId::Crb, corpus)?;
+    let wield_category = record.wield_category?;
+    let weapon_record_key = record.identity.clone();
     let str_damage_modifier = str_damage_modifier_for(str_modifier, wield_category, hand);
 
     Some(DamageRollStrModifier {
@@ -376,19 +360,6 @@ pub fn resolve_str_damage_modifier(
         str_damage_modifier,
         table_cell,
     })
-}
-
-fn wield_category_token(record: &EquipmentRecord) -> Option<WieldCategory> {
-    record
-        .tokens
-        .iter()
-        .find(|token| token.key == "WIELD")
-        .and_then(|token| match token.value.as_str() {
-            "Light" => Some(WieldCategory::Light),
-            "OneHanded" => Some(WieldCategory::OneHanded),
-            "TwoHanded" => Some(WieldCategory::TwoHanded),
-            _ => None,
-        })
 }
 
 /// PF1's Strength Bonus rule (CRB p.187): full STR mod for a one-handed
@@ -482,10 +453,9 @@ pub fn resolve_weapon_enhancement_modifier(
     corpus: &SourcePackageContent,
     equipment_effects: &EquipmentEffects,
 ) -> Option<DamageRollWeaponEnhancement> {
-    let (record, table_cell) = equipment_id_resolve(weapon_item_id, RuleSetId::Crb, corpus)?;
-    let weapon_record_key = equipment_key_token(record)
-        .unwrap_or(&record.name)
-        .to_string();
+    let (record, table_cell) =
+        equipment_converted_resolve_with_cell(weapon_item_id, RuleSetId::Crb, corpus)?;
+    let weapon_record_key = record.identity.clone();
     let weapon_is_natural_attack = is_natural_attack_weapon(record);
 
     let mut attack_bonus: i16 = 0;
@@ -548,11 +518,10 @@ pub fn resolve_critical_threat_range(
     weapon_item_id: &str,
     corpus: &SourcePackageContent,
 ) -> Option<DamageRollCriticalThreatRange> {
-    let (record, table_cell) = equipment_id_resolve(weapon_item_id, RuleSetId::Crb, corpus)?;
-    let critical_threat_range = critical_threat_range_token(record)?;
-    let weapon_record_key = equipment_key_token(record)
-        .unwrap_or(&record.name)
-        .to_string();
+    let (record, table_cell) =
+        equipment_converted_resolve_with_cell(weapon_item_id, RuleSetId::Crb, corpus)?;
+    let critical_threat_range = record.critical_threat_range?;
+    let weapon_record_key = record.identity.clone();
 
     Some(DamageRollCriticalThreatRange {
         weapon_item_id: weapon_item_id.to_string(),
@@ -560,16 +529,6 @@ pub fn resolve_critical_threat_range(
         critical_threat_range,
         table_cell,
     })
-}
-
-fn critical_threat_range_token(record: &EquipmentRecord) -> Option<(u8, u8)> {
-    record
-        .tokens
-        .iter()
-        .find(|token| token.key == "CRITRANGE")
-        .and_then(|token| token.value.parse::<u8>().ok())
-        .filter(|width| (1..=20).contains(width))
-        .map(|width| (20 - width + 1, 20))
 }
 
 /// One resolved weapon's critical-hit damage multiplier, with its corpus
@@ -605,11 +564,10 @@ pub fn resolve_critical_multiplier(
     weapon_item_id: &str,
     corpus: &SourcePackageContent,
 ) -> Option<DamageRollCriticalMultiplier> {
-    let (record, table_cell) = equipment_id_resolve(weapon_item_id, RuleSetId::Crb, corpus)?;
-    let critical_multiplier = critical_multiplier_token(record)?;
-    let weapon_record_key = equipment_key_token(record)
-        .unwrap_or(&record.name)
-        .to_string();
+    let (record, table_cell) =
+        equipment_converted_resolve_with_cell(weapon_item_id, RuleSetId::Crb, corpus)?;
+    let critical_multiplier = record.critical_multiplier?;
+    let weapon_record_key = record.identity.clone();
 
     Some(DamageRollCriticalMultiplier {
         weapon_item_id: weapon_item_id.to_string(),
@@ -617,16 +575,6 @@ pub fn resolve_critical_multiplier(
         critical_multiplier,
         table_cell,
     })
-}
-
-fn critical_multiplier_token(record: &EquipmentRecord) -> Option<u8> {
-    record
-        .tokens
-        .iter()
-        .find(|token| token.key == "CRITMULT")
-        .and_then(|token| token.value.strip_prefix('x'))
-        .and_then(|digits| digits.parse::<u8>().ok())
-        .filter(|multiplier| *multiplier >= 2)
 }
 
 /// One resolved feat's constant-valued damage contribution, with its
@@ -898,7 +846,7 @@ pub fn resolve_weapon_damage_breakdown(
 mod tests {
     use super::*;
     use crate::pcgen_import::ir_converter::convert_equipment_record;
-    use crate::pcgen_import::lst_parser::equipment::parse_equipment_entries;
+    use crate::pcgen_import::lst_parser::equipment::{parse_equipment_entries, EquipmentRecord};
     use crate::rules_core::character_input::{ActiveState, EquipmentSelection};
     use crate::rules_core::equipment_effects::compute_equipment_effects;
     use crate::rules_core::source_content::SourceRef;
@@ -1433,7 +1381,7 @@ Unarmed Strike\tKEY:Unarmed Strike\tTYPE:Weapon.Resizable.Melee.Special.Unarmed.
 mod eqmweapon_damagesize_tests {
     use super::*;
     use crate::pcgen_import::ir_converter::convert_equipment_record;
-    use crate::pcgen_import::lst_parser::equipment::parse_equipment_entries;
+    use crate::pcgen_import::lst_parser::equipment::{parse_equipment_entries, EquipmentRecord};
     use crate::rules_core::source_content::SourceRef;
 
     fn corpus_from(text: &str) -> SourcePackageContent<'static> {

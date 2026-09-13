@@ -81,6 +81,7 @@ use crate::pcgen_import::lst_parser::spellcasting_class::{
     SpellcastingClassDiagnostic, SpellcastingClassEntry, SpellcastingClassParseResult,
 };
 use crate::pcgen_import::source_content_payload::b6_metadata_kind_to_canonical;
+use crate::rules_core::damage_total::{DiceExpression, WieldCategory};
 use crate::rules_core::equipment_effects::intelligent_item::{
     IntelligentItemContribution, ItemAlignment,
 };
@@ -496,7 +497,127 @@ pub fn equipment_record_to_corpus(record: &EquipmentRecord) -> CorpusEquipmentRe
         weapon_enhancement: weapon_enhancement_of(record),
         spell_resistance_bonus: spell_resistance_bonus_of(record),
         eqmod_references: eqmod_references_of(record),
+        base_damage_dice: base_damage_dice_of(record),
+        states_base_damage: states_base_damage_of(record),
+        base_item: base_item_of(record),
+        wield_category: wield_category_of(record),
+        critical_threat_range: critical_threat_range_of(record),
+        critical_multiplier: critical_multiplier_of(record),
+        damage_size_steps: damage_size_steps_of(record),
+        weight_divisor: weight_divisor_of(record),
+        is_natural_attack: is_natural_attack_of(record),
+        is_shield: is_shield_of(record),
     }
+}
+
+/// The item's settled base damage die. Moved here verbatim from
+/// `damage_total::damage_dice_token` (SD-35 `AT-35-E6-003-RULED` cycle 12);
+/// the parse rule -- PF1's canonical `<count>d<size>` only, with the
+/// degenerate `0d<n>` / `<n>d0` cases refused rather than defaulted -- is
+/// `DiceExpression::parse`'s own and stayed with it on the live side.
+fn base_damage_dice_of(record: &EquipmentRecord) -> Option<DiceExpression> {
+    equipment_token_value(record, "DAMAGE").and_then(DiceExpression::parse)
+}
+
+/// Whether the record states a base damage value at all. Separate from
+/// [`base_damage_dice_of`] because `equipment_effects::is_weapon_record` has
+/// always tested PRESENCE, not parseability: an item stating damage this
+/// engine does not spell as dice is still a wielded weapon.
+fn states_base_damage_of(record: &EquipmentRecord) -> bool {
+    equipment_token_value(record, "DAMAGE").is_some()
+}
+
+/// The identity of the item whose own stats stand in for this one's. Moved
+/// here from `damage_total::base_item_damage_dice_token`, which held the token
+/// spelling only to learn a name; the one-hop chase itself is a corpus
+/// resolution and stayed live, because the converter has no corpus.
+fn base_item_of(record: &EquipmentRecord) -> Option<String> {
+    equipment_token_value(record, "BASEITEM").map(str::to_string)
+}
+
+/// The item's settled wield category. Moved here verbatim from
+/// `damage_total::wield_category_token`: a value outside PF1's three
+/// categories yields `None` rather than a guessed default.
+fn wield_category_of(record: &EquipmentRecord) -> Option<WieldCategory> {
+    match equipment_token_value(record, "WIELD")? {
+        "Light" => Some(WieldCategory::Light),
+        "OneHanded" => Some(WieldCategory::OneHanded),
+        "TwoHanded" => Some(WieldCategory::TwoHanded),
+        _ => None,
+    }
+}
+
+/// The item's settled critical threat range as inclusive natural-roll bounds.
+/// Moved here verbatim from `damage_total::critical_threat_range_token`: the
+/// corpus states a threat *width* (the count of consecutive top natural rolls
+/// that threaten) and the sheet prints bounds, so a width of `2` settles to
+/// `(19, 20)`. A width outside `1..=20` is refused.
+fn critical_threat_range_of(record: &EquipmentRecord) -> Option<(u8, u8)> {
+    equipment_token_value(record, "CRITRANGE")
+        .and_then(|value| value.parse::<u8>().ok())
+        .filter(|width| (1..=20).contains(width))
+        .map(|width| (20 - width + 1, 20))
+}
+
+/// The item's settled critical-hit damage multiplier. Moved here verbatim from
+/// `damage_total::critical_multiplier_token`, including the `x` prefix the
+/// corpus states it with and the refusal of any multiplier below `2`.
+fn critical_multiplier_of(record: &EquipmentRecord) -> Option<u8> {
+    equipment_token_value(record, "CRITMULT")
+        .and_then(|value| value.strip_prefix('x'))
+        .and_then(|digits| digits.parse::<u8>().ok())
+        .filter(|multiplier| *multiplier >= 2)
+}
+
+/// How many steps this item, as a referenced modifier, moves its host weapon's
+/// single-die damage progression. Moved here verbatim from
+/// `damage_total::eqmweapon_damagesize_chain_value`, including its summation
+/// across every such chain the record carries.
+fn damage_size_steps_of(record: &EquipmentRecord) -> i32 {
+    record
+        .bonus_chains
+        .iter()
+        .filter_map(|bonus| {
+            let qualifiers = &bonus.qualifiers;
+            if qualifiers.len() >= 3 && qualifiers[0] == "EQMWEAPON" && qualifiers[1] == "DAMAGESIZE"
+            {
+                qualifiers[2].parse::<i32>().ok()
+            } else {
+                None
+            }
+        })
+        .sum()
+}
+
+/// The divisor this item, as a referenced modifier, applies to its host item's
+/// weight. Moved here verbatim from the inner scan of
+/// `equipment_effects::resolve_eqm_weightdiv_effect`, including its `find_map`
+/// shape: a record carrying more than one such chain contributes the first,
+/// exactly as before.
+fn weight_divisor_of(record: &EquipmentRecord) -> Option<f32> {
+    record.bonus_chains.iter().find_map(|bonus| {
+        let qualifiers = &bonus.qualifiers;
+        if qualifiers.len() >= 3 && qualifiers[0] == "EQM" && qualifiers[1] == "WEIGHTDIV" {
+            qualifiers[2].parse::<f32>().ok()
+        } else {
+            None
+        }
+    })
+}
+
+/// Whether the item is one of PF1's natural attacks. Moved here verbatim from
+/// `equipment_effects::is_natural_attack_weapon`, including the exact-segment
+/// match that keeps `Weapon Group Natural` from firing it.
+fn is_natural_attack_of(record: &EquipmentRecord) -> bool {
+    equipment_token_value(record, "TYPE")
+        .is_some_and(|value| value.split('.').any(|segment| segment == "Natural"))
+}
+
+/// Whether the item is a shield. Moved here verbatim from the shield half of
+/// `equipment_effects::is_weapon_record`, including its first-segment rule.
+fn is_shield_of(record: &EquipmentRecord) -> bool {
+    equipment_token_value(record, "TYPE")
+        .is_some_and(|value| value.split('.').next() == Some("Shield"))
 }
 
 /// The item's settled armour/shield stat contribution. Moved here verbatim

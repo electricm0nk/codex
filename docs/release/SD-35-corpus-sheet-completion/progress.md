@@ -181,6 +181,89 @@ re-measured at the cut by the launch-readiness audit.
 
 ## Cycle log
 
+### 2026-09-13 — Epic 6 / `desktop-and-prose-leave-pcgen` — AT-35-E6-003-RULED **cycle 12** (`da8eed6c45`) — **partial** (the weapon half leaves PCGen; two more whole live files clear, and the equipment consumer sequence is finished. Residue `10 / 21 → 8 / 19`)
+
+- **Scope gate:** `SCOPE_GATE: EXEMPT (Epic 6 cycle — closes zero corpus units by design;
+  decisions.md §2)`. It ran anyway at the cycle's start tree `8d454fa1b9`:
+  `scoped=0 remaining_non_done=0 floor=500 verdict=PASS_WHOLE_REMAINDER`. The residue check,
+  which is not exempt, passed first at the same tree at exactly cycle 11's closing figure:
+  `live_files=10 live_hits=21 baseline_files=260 baseline_hits=12736 verdict=PASS`.
+
+- **What moved.** The weapon half — the last of the equipment consumer sequence cycle 10 named
+  and cycle 11 began. `CorpusEquipmentRecord` gains ten settled fields (`base_damage_dice`,
+  `states_base_damage`, `base_item`, `wield_category`, `critical_threat_range`,
+  `critical_multiplier`, `damage_size_steps`, `weight_divisor`, `is_natural_attack`,
+  `is_shield`) and **still carries no token array and no bonus-chain array**; all ten reads
+  moved **verbatim**, with their doc comments and real-corpus witnesses, to converter-side
+  `ir_converter::equipment_record_to_corpus`. One call doing more, not a second call, so the
+  `ir_converter` hit did not rise.
+
+- **Two whole live files stop naming `pcgen_import`, and both are closures, not relabels** —
+  the read does not move to another live file, it stops being a token read:
+  `damage_total.rs` (the `DAMAGE:`, `BASEITEM:`, `WIELD:`, `CRITRANGE:` and `CRITMULT:` token
+  reads, the `BONUS:EQMWEAPON|DAMAGESIZE` chain scan, and the five private `*_token` functions
+  that held them; all six work-units now resolve through
+  `equipment_converted_resolve_with_cell` and report `record.identity` as the weapon record
+  key) and `equipment_effects.rs` (the `TYPE:` reads behind `is_natural_attack_weapon` and
+  `is_weapon_record`, the `BONUS:EQM|WEIGHTDIV` scan, and the **deletion** of the parser-row
+  `eqmod_referenced_records`, whose last two callers moved to the converted sibling). The
+  census asserts it by file, `cleared_by_cycle12=2`, re-asserts cycles 10's and 11's three each
+  still clear, and asserts all ten new fields are present and the record still carries no token
+  array.
+
+- **The one place a relabel could have hidden did not.** Cycle 11's `equipment_pair_resolve`
+  existed only to hand the parser row to `compute_equipment_effects`. It was **deleted**, not
+  repointed; its replacement `equipment_converted_resolve_with_cell` answers with the settled
+  record and the table cell and names no `pcgen_import` symbol.
+
+- **Parity, whole live corpus, field for field.**
+  `every_live_corpus_equipment_record_carries_the_same_weapon_values_the_token_reads_produced`
+  loads every book under `data/corpus/` — **7,803 equipment records** — re-derives all ten
+  moved reads the old way off the parser row still paired in the envelope, and compares the
+  base damage die, the damage-**presence** flag `is_weapon_record` actually tested, the stand-in
+  item identity, the wield category, the threat range converted from a stated width, the
+  multiplier with its `x` prefix, the summed damage-size steps, the weight divisor and the two
+  weapon type predicates — plus the weight divisor's dividend as `f32`, because a
+  `f64`-then-narrow is not textually the same operation as a direct `f32` parse. **0
+  disagreements.** **Mutation-proved:** `+ 1` on the converter's critical-multiplier read turns
+  it red on **522 of 7,803** records, then reverted and re-verified green.
+
+- **The correction** (`1789295230498-at-35-e6-003-ruled-d69b55`): cycle 11's next-cycle scope
+  named **four** remaining consumer moves. Only **two** were. `equipment_resolver` reads no
+  rules value at all — its `equipment_key_token` is the same KEY-or-name rule already settled
+  as `CorpusEquipmentRecord::identity` in cycle 10 — and its import survives purely because
+  `equipment_id_resolve`'s **signature** hands the parser row out for `corpus_loader`'s
+  envelope. The two are **one** move, not two; splitting them would book a relabel.
+
+- **One trim refused for the sixth cycle running:** `spell_resolver.rs`'s
+  `SourceContentPayload` repoint, `−1` and zero dependency change.
+
+- **Verification, once, at the final tree.** `apps/` and `data/` both **untouched**, so the
+  desktop crate, the frontend and `corpus_literal_sweep` run at the epic wrap-up, not here.
+  `NO_RUN_EXIT=0`; lib `3351 passed; 0 failed; 16 ignored` (cycle 11's 3350 + this cycle's one
+  new parity test); full workspace `FULL_EXIT=0`, 418 targets + 1 Doc-tests, **8,880 passed, 0
+  failed, 69 ignored**, zero `test result: FAILED` lines (cycle 11 recorded 8,879); clippy **0
+  warnings** after one self-heal on this cycle's own module-doc note.
+  `sheet_rule_convert -- --check` `records=49438 converted=49296 refused=142 rules=70135
+  var_tables=5293 verdict=PASS`; sheet_rules ingest-syntax grep `0`;
+  `pcgen_residue_gate.py --check` `live_files=8 live_hits=19 verdict=PASS` with its 27 unit
+  tests green; `completion_atlas` `citation_failures=0`; `token_coverage` `non_done=0
+  refused=142 PASS`; `shape_engine_boundary` `not_held_by_engine=0`; `missing_engine_tables`
+  `population=0`; `denominator_gate` `files_checked=141 violations=0`; `pi-sweep` PASS;
+  `data/` byte-identical.
+
+- **Receipt rows:** `closed=0 relabeled=0 rust_lines_changed=793 ratio=n/a builds_recorded=2
+  pcgen_live_files=8`. `closed=0` is by design — Epic 6 closes zero corpus units.
+
+- **Refused tokens:** `renderer=5, lst_parser_types=2, ingest_record_tokens=5,
+  trait_and_pool_tokens=3, ir_converter=1, source_content_payload=3` — 19 hits / 8 files,
+  summing, all `src/rules_core/`. `deferral 1789295217879-at-35-e6-003-ruled-2a13ed`.
+
+- **Next cycle:** **one move, not a sequence** — collapse `SourceContentPayload::Equipment` to
+  the converted half alone. Up to 7 of the 19 clear together.
+
+- **Receipt:** `artifacts/epic-6-pcgen-exit/AT-35-E6-003-RULED_cycle12_receipt.md`.
+
 ### 2026-09-13 — Epic 6 / `desktop-and-prose-leave-pcgen` — AT-35-E6-003-RULED **cycle 11** (`2daf94f6b3`) — **partial** (the armour, skill and weapon-enhancement reads leave PCGen; three more whole live files clear. Residue `13 / 26 → 10 / 21`)
 
 - **Scope gate:** `SCOPE_GATE: EXEMPT (Epic 6 cycle — closes zero corpus units by design;

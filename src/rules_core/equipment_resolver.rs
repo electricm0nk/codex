@@ -82,21 +82,25 @@ pub fn equipment_converted_resolve<'a>(
         .map(|(_record, converted, _table_cell)| converted)
 }
 
-/// The same resolution again, answering with the parser row, the converted
-/// record and the table cell together.
+/// The same resolution again, answering with the converted record **and** the
+/// table cell the item's corpus row occupies.
 ///
-/// SD-35 `AT-35-E6-003-RULED` cycle 11: `compute_equipment_effects` needs the
-/// settled values for six of its fields and the parser row for the two
-/// consumers that have not moved yet, for the SAME item. Asking once is one
-/// corpus scan instead of two, and makes it impossible for the two halves to
-/// come from different records.
-#[allow(clippy::type_complexity)]
-pub fn equipment_pair_resolve<'a>(
+/// SD-35 `AT-35-E6-003-RULED` cycle 12. `damage_total`'s six work-units and
+/// `compute_equipment_effects` each report a `table_cell: Option<TableCellRef>`
+/// provenance alongside the values they read; before cycle 12 they got it from
+/// [`equipment_id_resolve`], whose other half is the ingest-format parser row
+/// they no longer read. This is the same one resolution, answering in settled
+/// values and provenance only.
+///
+/// It replaces cycle 11's `equipment_pair_resolve`, whose sole caller --
+/// `compute_equipment_effects` -- no longer needs the parser row at all.
+pub fn equipment_converted_resolve_with_cell<'a>(
     item_id: &str,
     rule_set: RuleSetId,
     corpus: &SourcePackageContent<'a>,
-) -> Option<(&'a EquipmentRecord, &'a CorpusEquipmentRecord, Option<TableCellRef>)> {
+) -> Option<(&'a CorpusEquipmentRecord, Option<TableCellRef>)> {
     resolve_equipment_pair(item_id, rule_set, corpus)
+        .map(|(_record, converted, table_cell)| (converted, table_cell))
 }
 
 #[allow(clippy::type_complexity)]

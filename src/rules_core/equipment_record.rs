@@ -35,13 +35,27 @@
 //!
 //! ## What is deliberately NOT on it yet
 //!
-//! The weapon half -- what `damage_total` reads (base damage dice, critical
-//! range and multiplier, wield category) -- and the `EQMOD:`-referenced
-//! weight-division and damage-size steps that ride on the same records.
-//! Those are the remainder this criterion still carries; each is a settled
-//! value too, and each lands on this struct as its consumer moves. Nothing
-//! here stands in for work not done: a field absent from this struct is a
-//! consumer that has not moved yet, not a value we failed to settle.
+//! Nothing a live consumer still reads off the parser row. Cycle 12 settled
+//! the last of them -- the weapon half and the two `EQMOD:`-referenced steps
+//! (see below) -- so every remaining `pcgen_import` hit under
+//! `src/rules_core/` belongs to a different group than this one.
+//!
+//! What is still absent is absent because no consumer asks for it, never
+//! because a value resisted settling: a field absent from this struct is a
+//! question the live side does not ask, not a value we failed to settle.
+//!
+//! ## What cycle 12 added
+//!
+//! The weapon half -- what `damage_total` reads (base damage dice and the
+//! `BASEITEM:` stand-in identity, wield category, critical threat range and
+//! multiplier) -- plus the two values a record contributes **as a referenced
+//! modifier** (`damage_size_steps`, `weight_divisor`) and the two weapon
+//! predicates `equipment_effects` asked of a parser row (`is_natural_attack`,
+//! `is_shield`, with `states_base_damage` carrying the presence half of the
+//! "is this an actively-wielded weapon" test). Each is a settled value; the
+//! `DAMAGE:`, `BASEITEM:`, `WIELD:`, `CRITRANGE:`, `CRITMULT:`, `TYPE:`,
+//! `BONUS:EQMWEAPON|DAMAGESIZE` and `BONUS:EQM|WEIGHTDIV` grammar stayed on
+//! the converter.
 //!
 //! ## What cycle 11 added
 //!
@@ -55,6 +69,7 @@
 //! [`crate::pcgen_import::ir_converter::equipment_record_to_corpus`]; the
 //! numbers live here.
 
+use crate::rules_core::damage_total::{DiceExpression, WieldCategory};
 use crate::rules_core::equipment_effects::general::{SkillCheckBonus, VarBonus};
 use crate::rules_core::equipment_effects::equipmods::WeaponEnhancementBonus;
 use crate::rules_core::equipment_effects::intelligent_item::IntelligentItemContribution;
@@ -114,6 +129,57 @@ pub struct CorpusEquipmentRecord {
     /// at all -- that is the same resolve-or-skip discipline the live side
     /// applied to the token's own segments before the list was settled.
     pub eqmod_references: Vec<String>,
+    /// The item's settled base damage die, e.g. a longsword's `1d8`. `None`
+    /// for an item that states no base damage at all, **and** for one whose
+    /// stated value is not PF1's canonical `<count>d<size>` shape -- the same
+    /// honest absence [`crate::rules_core::damage_total::DiceExpression::parse`]
+    /// gave before the value was settled, never a fabricated roll.
+    pub base_damage_dice: Option<DiceExpression>,
+    /// Whether the source record states a base damage value **at all**,
+    /// including one [`Self::base_damage_dice`] declines to parse. This is the
+    /// "is this an actively-wielded weapon" signal, which has always been
+    /// presence, not parseability: an item that states damage it does not
+    /// spell as `<count>d<size>` is still a weapon.
+    pub states_base_damage: bool,
+    /// The corpus identity of the item whose own stats stand in for this
+    /// one's, when the source record states none of its own -- the real corpus
+    /// convention behind `Crossbow (Light)` naming `Light Crossbow (Base)`. An
+    /// **item identity**, not a token: the caller chases it one hop through the
+    /// same resolver, exactly as it did before the identity was settled.
+    pub base_item: Option<String>,
+    /// The item's settled wield category, which governs how much of the
+    /// wielder's Strength modifier reaches its damage roll (CRB p.187). `None`
+    /// for an item that states none, and for one stating a category outside
+    /// PF1's three.
+    pub wield_category: Option<WieldCategory>,
+    /// The item's settled critical threat range as inclusive natural-roll
+    /// bounds, e.g. `(19, 20)` for a longsword. `None` for an item that states
+    /// none, and for a stated width outside `1..=20`.
+    pub critical_threat_range: Option<(u8, u8)>,
+    /// The item's settled critical-hit damage multiplier, e.g. `2` for a
+    /// longsword and `4` for a scythe. `None` for an item that states none,
+    /// and for a stated multiplier below `2`.
+    pub critical_multiplier: Option<u8>,
+    /// The number of steps this item, **as a referenced modifier**, moves its
+    /// host weapon's single-die damage progression -- Shield Spikes' `+1`
+    /// step. `0` for an item that states none, which is the same "no step to
+    /// apply" the caller distinguished before the value was settled.
+    pub damage_size_steps: i32,
+    /// The divisor this item, **as a referenced modifier**, applies to its
+    /// host item's weight -- Darkleaf Cloth's `2`. `None` for an item that
+    /// states none.
+    pub weight_divisor: Option<f32>,
+    /// Whether this item is one of PF1's natural attacks. The scope signal a
+    /// `natural_attack_only` weapon enhancement (the Amulet of Mighty Fists
+    /// family) is checked against before it may reach an ordinary weapon's
+    /// roll.
+    pub is_natural_attack: bool,
+    /// Whether this item is a shield. A real corpus shield states a genuine
+    /// shield-bash damage die, and a worn-but-not-bashing shield must not
+    /// count as a second wielded weapon -- see
+    /// [`crate::rules_core::equipment_effects`]'s own doc comment for the
+    /// correction that forced this distinction.
+    pub is_shield: bool,
 }
 
 impl CorpusEquipmentRecord {
@@ -600,6 +666,220 @@ mod tests {
                     "{id}: eqmod references {old_references:?} != {:?}",
                     converted.eqmod_references
                 ));
+            }
+        }
+
+        assert!(examined > 3000, "expected the live equipment corpus, examined {examined}");
+        assert!(
+            disagreements.is_empty(),
+            "{} of {examined} records disagree: {:?}",
+            disagreements.len(),
+            &disagreements[..disagreements.len().min(20)]
+        );
+    }
+
+    /// **The parity proof for SD-35 `AT-35-E6-003-RULED` cycle 12.**
+    ///
+    /// The ten reads this cycle moved to the converter -- `damage_total`'s
+    /// base damage die, stand-in identity, wield category, critical threat
+    /// range and critical multiplier; the two values a record contributes as
+    /// a referenced modifier (`BONUS:EQMWEAPON|DAMAGESIZE`'s step count and
+    /// `BONUS:EQM|WEIGHTDIV`'s divisor); and `equipment_effects`' three weapon
+    /// predicates -- are re-derived here exactly the way the live modules
+    /// derived them before the move, straight off the parser row still paired
+    /// with the converted record in the canonical envelope, and compared field
+    /// for field to the settled value.
+    ///
+    /// The population is the **whole live corpus**, every book, for the reason
+    /// cycles 10 and 11 state: a proof is only as wide as the cases it covers
+    /// (`AGENTS.md` rule 7). The shapes that would break this one are exactly
+    /// the ones a hand-picked weapon roster does not contain -- a shield that
+    /// states a real bash die, a record whose `TYPE:` names
+    /// `Weapon Group Natural` without being a natural attack, a damage value
+    /// that is not `<count>d<size>`, a threat width outside `1..=20`, a
+    /// multiplier below `x2`, and a modifier carrying more than one
+    /// `DAMAGESIZE` chain.
+    #[test]
+    fn every_live_corpus_equipment_record_carries_the_same_weapon_values_the_token_reads_produced() {
+        use crate::rules_core::damage_total::{DiceExpression, WieldCategory};
+
+        let books = every_book_root();
+        assert!(books.len() > 1, "expected the whole corpus, found {} book(s)", books.len());
+        let roots: Vec<BookCorpusRoot<'_>> = books
+            .iter()
+            .map(|dir| BookCorpusRoot {
+                book_id: dir.file_name().and_then(|n| n.to_str()).unwrap_or(""),
+                dir: dir.as_path(),
+            })
+            .collect();
+        let package = load_equipment_corpus(&roots);
+
+        let mut examined = 0usize;
+        let mut disagreements: Vec<String> = Vec::new();
+        for record in package.records_by_kind(SourceContentKind::Equipment) {
+            let SourceContentPayload::Equipment(row, converted) = record.payload else {
+                continue;
+            };
+            examined += 1;
+            let id = &converted.identity;
+            let token_value = |key: &str| {
+                row.tokens.iter().find(|token| token.key == key).map(|token| token.value.as_str())
+            };
+
+            // --- the old `damage_total::damage_dice_token` ---
+            let old_dice: Option<DiceExpression> = row
+                .tokens
+                .iter()
+                .find(|token| token.key == "DAMAGE")
+                .and_then(|token| DiceExpression::parse(&token.value));
+            if old_dice != converted.base_damage_dice {
+                disagreements.push(format!(
+                    "{id}: base damage dice {old_dice:?} != {:?}",
+                    converted.base_damage_dice
+                ));
+            }
+
+            // --- the old `equipment_effects::is_weapon_record`'s presence half ---
+            let old_states_damage = row.tokens.iter().any(|token| token.key == "DAMAGE");
+            if old_states_damage != converted.states_base_damage {
+                disagreements.push(format!(
+                    "{id}: states base damage {old_states_damage} != {}",
+                    converted.states_base_damage
+                ));
+            }
+
+            // --- the old `damage_total::base_item_damage_dice_token`'s token read ---
+            let old_base_item = row
+                .tokens
+                .iter()
+                .find(|token| token.key == "BASEITEM")
+                .map(|token| token.value.clone());
+            if old_base_item != converted.base_item {
+                disagreements.push(format!(
+                    "{id}: base item {old_base_item:?} != {:?}",
+                    converted.base_item
+                ));
+            }
+
+            // --- the old `damage_total::wield_category_token` ---
+            let old_wield = row
+                .tokens
+                .iter()
+                .find(|token| token.key == "WIELD")
+                .and_then(|token| match token.value.as_str() {
+                    "Light" => Some(WieldCategory::Light),
+                    "OneHanded" => Some(WieldCategory::OneHanded),
+                    "TwoHanded" => Some(WieldCategory::TwoHanded),
+                    _ => None,
+                });
+            if old_wield != converted.wield_category {
+                disagreements.push(format!(
+                    "{id}: wield category {old_wield:?} != {:?}",
+                    converted.wield_category
+                ));
+            }
+
+            // --- the old `damage_total::critical_threat_range_token` ---
+            let old_crit_range = row
+                .tokens
+                .iter()
+                .find(|token| token.key == "CRITRANGE")
+                .and_then(|token| token.value.parse::<u8>().ok())
+                .filter(|width| (1..=20).contains(width))
+                .map(|width| (20 - width + 1, 20));
+            if old_crit_range != converted.critical_threat_range {
+                disagreements.push(format!(
+                    "{id}: critical threat range {old_crit_range:?} != {:?}",
+                    converted.critical_threat_range
+                ));
+            }
+
+            // --- the old `damage_total::critical_multiplier_token` ---
+            let old_crit_mult = row
+                .tokens
+                .iter()
+                .find(|token| token.key == "CRITMULT")
+                .and_then(|token| token.value.strip_prefix('x'))
+                .and_then(|digits| digits.parse::<u8>().ok())
+                .filter(|multiplier| *multiplier >= 2);
+            if old_crit_mult != converted.critical_multiplier {
+                disagreements.push(format!(
+                    "{id}: critical multiplier {old_crit_mult:?} != {:?}",
+                    converted.critical_multiplier
+                ));
+            }
+
+            // --- the old `damage_total::eqmweapon_damagesize_chain_value` ---
+            let old_steps: i32 = row
+                .bonus_chains
+                .iter()
+                .filter_map(|bonus| {
+                    let q = &bonus.qualifiers;
+                    if q.len() >= 3 && q[0] == "EQMWEAPON" && q[1] == "DAMAGESIZE" {
+                        q[2].parse::<i32>().ok()
+                    } else {
+                        None
+                    }
+                })
+                .sum();
+            if old_steps != converted.damage_size_steps {
+                disagreements.push(format!(
+                    "{id}: damage size steps {old_steps} != {}",
+                    converted.damage_size_steps
+                ));
+            }
+
+            // --- the old inner scan of `resolve_eqm_weightdiv_effect` ---
+            let old_divisor = row.bonus_chains.iter().find_map(|bonus| {
+                let q = &bonus.qualifiers;
+                if q.len() >= 3 && q[0] == "EQM" && q[1] == "WEIGHTDIV" {
+                    q[2].parse::<f32>().ok()
+                } else {
+                    None
+                }
+            });
+            if old_divisor != converted.weight_divisor {
+                disagreements.push(format!(
+                    "{id}: weight divisor {old_divisor:?} != {:?}",
+                    converted.weight_divisor
+                ));
+            }
+
+            // The weight `resolve_eqm_weightdiv_effect` divides is the same
+            // `WT:` token it read before the move, narrowed to `f32` at the
+            // point of use. Compared here over the whole corpus because a
+            // `f64`-then-narrow is not textually the same operation as a
+            // direct `f32` parse.
+            let old_weight_f32: Option<f32> = token_value("WT").and_then(|v| v.parse::<f32>().ok());
+            let new_weight_f32 = converted.weight_lbs.map(|w| w as f32);
+            if old_weight_f32 != new_weight_f32 {
+                disagreements.push(format!(
+                    "{id}: weight as f32 {old_weight_f32:?} != {new_weight_f32:?}"
+                ));
+            }
+
+            // --- the old `equipment_effects::is_natural_attack_weapon` ---
+            let old_natural = row
+                .tokens
+                .iter()
+                .find(|token| token.key == "TYPE")
+                .is_some_and(|token| token.value.split('.').any(|segment| segment == "Natural"));
+            if old_natural != converted.is_natural_attack {
+                disagreements.push(format!(
+                    "{id}: natural attack {old_natural} != {}",
+                    converted.is_natural_attack
+                ));
+            }
+
+            // --- the old shield half of `equipment_effects::is_weapon_record` ---
+            let old_shield = row
+                .tokens
+                .iter()
+                .find(|token| token.key == "TYPE")
+                .is_some_and(|token| token.value.split('.').next() == Some("Shield"));
+            if old_shield != converted.is_shield {
+                disagreements
+                    .push(format!("{id}: shield {old_shield} != {}", converted.is_shield));
             }
         }
 
