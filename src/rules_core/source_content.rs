@@ -280,6 +280,24 @@ impl<'a> SourceContentRecord<'a> {
             payload,
         }
     }
+
+    /// Build the canonical envelope for a spell the live side already holds
+    /// in converted form.
+    ///
+    /// SD-35 `AT-35-E6-003-RULED` cycle 8. `data/corpus/<book>/spell/*.json`
+    /// is already-converted corpus data, so the loader that reads it has no
+    /// business running the converter to wrap it
+    /// (`decisions.md` §11, §19 -- calling `pcgen_import` from live code at
+    /// run time is a hit). This constructor is the live path:
+    /// [`crate::rules_core::corpus_loader::load_spell_corpus`] uses it, and
+    /// only a record that came from a raw `.lst` row goes through
+    /// [`crate::pcgen_import::ir_converter::convert_spell_record`] instead.
+    pub fn spell(
+        source_ref: SourceRef,
+        record: &'a crate::rules_core::spell_record::CorpusSpellRecord,
+    ) -> Self {
+        Self::new(source_ref, SourceContentKind::Spell, SourceContentPayload::Spell(record))
+    }
 }
 
 // =============================================================================

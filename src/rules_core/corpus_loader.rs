@@ -40,10 +40,16 @@ use crate::pcgen_import::lst_parser::equipment::{
     parse_equipment_entries, BonusToken, EquipmentDiagnostic, EquipmentRecord, EquipmentRecordKind,
     EquipmentToken,
 };
-use crate::pcgen_import::lst_parser::spell::{
-    parse_lst_spell_row, LstSpellRecord, LstSpellRecordPayload,
-};
-use crate::rules_core::source_content::{SourcePackageContent, SourceRef};
+// SD-35 `AT-35-E6-003-RULED` cycle 8: the only remaining converter-side
+// import on the spell path. `load_lst_fixture_corpus` parses raw `.lst`
+// record lines at run time (the desktop's bundled fixture resource), which
+// is a genuine converter invocation and stays counted by
+// `pcgen_residue_gate.py` until that package is produced at build time.
+// `load_spell_corpus`, which reads already-converted corpus JSON, no longer
+// needs it.
+use crate::pcgen_import::lst_parser::spell::parse_lst_spell_row;
+use crate::rules_core::source_content::{SourceContentRecord, SourcePackageContent, SourceRef};
+use crate::rules_core::spell_record::CorpusSpellRecord;
 
 /// One book's real corpus root, e.g. `data/corpus/core_rulebook`. The
 /// caller supplies these (desktop: resolved via the bundled resource path;
@@ -136,8 +142,14 @@ pub fn load_spell_corpus<'a>(roots: &[BookCorpusRoot<'_>]) -> SourcePackageConte
             };
             match spell_record_from_json(&path, data) {
                 Some(record) => {
-                    let record: &'static LstSpellRecord = Box::leak(Box::new(record));
-                    package.push(crate::pcgen_import::ir_converter::convert_spell_record(record));
+                    let record: &'static CorpusSpellRecord = Box::leak(Box::new(record));
+                    package.push(SourceContentRecord::spell(
+                        SourceRef {
+                            lst_file: record.source_path.clone(),
+                            line: record.line_number as u32,
+                        },
+                        record,
+                    ));
                 }
                 None => package.push_diagnostic(load_diagnostic(&path, "\"data\" is missing \"key\"")),
             }
@@ -146,54 +158,20 @@ pub fn load_spell_corpus<'a>(roots: &[BookCorpusRoot<'_>]) -> SourcePackageConte
     package
 }
 
-fn spell_record_from_json(path: &Path, data: &serde_json::Value) -> Option<LstSpellRecord> {
+/// Reconstruct one already-converted corpus spell record from its on-disk
+/// Shape B v1 JSON.
+///
+/// SD-35 `AT-35-E6-003-RULED` cycle 8: this reads `data.key` and
+/// `data.school` -- two settled corpus values, no ingest-format token
+/// anywhere -- and yields the live side's own
+/// [`CorpusSpellRecord`]. It used to build the ingest-format parser struct
+/// and hand it to `pcgen_import::ir_converter` to be re-converted, which was
+/// the live side running the converter over data the converter had already
+/// produced.
+fn spell_record_from_json(path: &Path, data: &serde_json::Value) -> Option<CorpusSpellRecord> {
     let name = data.get("key").and_then(serde_json::Value::as_str)?.to_string();
     let school = data.get("school").and_then(serde_json::Value::as_str).map(str::to_string);
-    let payload = LstSpellRecordPayload {
-        name: name.clone(),
-        output_name: None,
-        spell_type: None,
-        classes: None,
-        school: school.clone(),
-        descriptor: None,
-        sub_school: None,
-        components: None,
-        casting_time: None,
-        range: None,
-        item: None,
-        target_area: None,
-        duration: None,
-        save_info: None,
-        spell_resistance: None,
-        source_page: None,
-        source_link: None,
-        description: None,
-        description_raw: None,
-    };
-    Some(LstSpellRecord {
-        line_number: 1,
-        source_path: path.display().to_string(),
-        name,
-        output_name: None,
-        spell_type: None,
-        classes: None,
-        school,
-        descriptor: None,
-        sub_school: None,
-        components: None,
-        casting_time: None,
-        range: None,
-        item: None,
-        target_area: None,
-        duration: None,
-        save_info: None,
-        spell_resistance: None,
-        source_page: None,
-        source_link: None,
-        description: None,
-        description_raw: None,
-        payload,
-    })
+    Some(CorpusSpellRecord::from_corpus_json_fields(path.display().to_string(), name, school))
 }
 
 fn find_json_files(dir: &Path) -> Vec<std::path::PathBuf> {
@@ -531,8 +509,10 @@ pub fn load_lst_fixture_corpus<'a>(
         let record = parsed.record.ok_or_else(|| {
             format!("spell fixture '{}' failed to parse: {}", fixture.label, fixture.text)
         })?;
-        let record: &'static LstSpellRecord = Box::leak(Box::new(record));
-        package.push(crate::pcgen_import::ir_converter::convert_spell_record(record));
+        // The converted record the envelope borrows is interned by
+        // `convert_spell_record` itself now, so the parsed row no longer has
+        // to outlive this loop.
+        package.push(crate::pcgen_import::ir_converter::convert_spell_record(&record));
     }
 
     for fixture in equipment {
@@ -745,6 +725,42 @@ mod tests {
         let (record, _) = spell_id_resolve("Animate Plants", RuleSetId::Crb, &package)
             .expect("Animate Plants must resolve");
         assert_eq!(record.school.as_deref(), Some("Transmutation"));
+    }
+
+    /// SD-35 `AT-35-E6-003-RULED` cycle 8: the spell half of the corpus
+    /// loader owns its own converted record shape. `load_spell_corpus`
+    /// reads `data/corpus/<book>/spell/*.json` -- already-converted corpus
+    /// data -- and must produce
+    /// [`crate::rules_core::spell_record::CorpusSpellRecord`] values
+    /// without routing through the ingest-format parser struct
+    /// (`pcgen_import::lst_parser::spell::LstSpellRecord`) or the
+    /// converter's `ir_converter::convert_spell_record` entry point at run
+    /// time. The binding claim is the TYPE the live resolver hands back,
+    /// proved here over a real on-disk record rather than a fixture:
+    /// `spell_id_resolve` returns a `&CorpusSpellRecord`, and the live
+    /// envelope constructor built it.
+    #[test]
+    fn the_live_spell_loader_yields_a_live_owned_converted_record() {
+        use crate::rules_core::spell_record::CorpusSpellRecord;
+        use crate::rules_core::spell_resolver::spell_id_resolve;
+
+        let roots = [BookCorpusRoot {
+            book_id: "core_rulebook",
+            dir: Path::new("data/corpus/core_rulebook"),
+        }];
+        let package = load_spell_corpus(&roots);
+        let (record, _) = spell_id_resolve("Animate Plants", RuleSetId::Crb, &package)
+            .expect("Animate Plants must resolve");
+        // The type annotation is the assertion: this does not compile if
+        // the payload is still the ingest-format parser struct.
+        let record: &CorpusSpellRecord = record;
+        assert_eq!(record.name, "Animate Plants");
+        assert_eq!(record.school.as_deref(), Some("Transmutation"));
+        assert!(
+            record.source_path.ends_with("animate_plants.json"),
+            "provenance must be the corpus JSON the loader actually read, got {:?}",
+            record.source_path
+        );
     }
 
     /// A book with no `spell/` subdirectory contributes nothing and does

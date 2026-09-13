@@ -27,8 +27,8 @@ use crate::pcgen_import::lst_parser::class::ClassEntry;
 use crate::pcgen_import::lst_parser::equipment::EquipmentRecord;
 use crate::pcgen_import::lst_parser::metadata::{LstRecord, MetadataKind};
 use crate::pcgen_import::lst_parser::race_ability::{AbilityDeclaration, RaceDeclaration};
-use crate::pcgen_import::lst_parser::spell::LstSpellRecord;
 use crate::pcgen_import::lst_parser::spellcasting_class::SpellcastingClassEntry;
+use crate::rules_core::spell_record::CorpusSpellRecord;
 
 // =============================================================================
 // B-6 MetadataKind <-> MetadataKindInner mapping
@@ -100,8 +100,19 @@ pub enum SourceContentPayload<'a> {
     Race(&'a RaceDeclaration),
     /// An ability declaration from the B-3 parser.
     Ability(&'a AbilityDeclaration),
-    /// A spell row record from the B-4 parser.
-    Spell(&'a LstSpellRecord),
+    /// A spell record in the live side's own converted shape.
+    ///
+    /// SD-35 `AT-35-E6-003-RULED` cycle 8: this variant is deliberately
+    /// **not** a borrow of the B-4 parser row. The spell kind is the first
+    /// one whose converted shape the live side owns
+    /// ([`CorpusSpellRecord`](crate::rules_core::spell_record::CorpusSpellRecord)),
+    /// so `rules_core::spell_resolver` and everything downstream of it no
+    /// longer name `pcgen_import` at all (`decisions.md` §11, §19). The
+    /// conversion happens once, in
+    /// [`crate::pcgen_import::ir_converter::spell_record_to_corpus`], for a
+    /// record that came from a raw `.lst` row; a record read from
+    /// already-converted `data/corpus/` JSON never touches the converter.
+    Spell(&'a CorpusSpellRecord),
     /// An equipment or equipment-modifier record from the B-5 parser.
     Equipment(&'a EquipmentRecord),
     /// A metadata-kind record from the B-6 parser. The

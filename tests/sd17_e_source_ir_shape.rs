@@ -159,10 +159,45 @@ fn v1_spell_record_round_trips_into_spell_payload() {
     assert_eq!(record.kind, SourceContentKind::Spell);
     match record.payload {
         SourceContentPayload::Spell(p) => {
-            assert!(std::ptr::eq(p, inner));
+            // SD-35 `AT-35-E6-003-RULED` cycle 8 changed this contract
+            // deliberately, and this assertion is the replacement for the
+            // `std::ptr::eq(p, inner)` zero-copy claim that stood here.
+            //
+            // The spell payload is no longer a borrow of the ingest-format
+            // parser row: it is the live side's own converted
+            // `CorpusSpellRecord`, so `rules_core::spell_resolver` and every
+            // consumer downstream of it stops naming `pcgen_import`
+            // (`decisions.md` §11, §19). What the round trip must still
+            // guarantee is that the projection is TOTAL and LOSSLESS, which
+            // is a stronger claim than pointer identity and is what this
+            // asserts: every field of the parsed row arrives on the payload
+            // unchanged.
+            assert_eq!(p.line_number, inner.line_number);
+            assert_eq!(p.source_path, inner.source_path);
             assert_eq!(p.name, inner.name);
+            assert_eq!(p.output_name, inner.output_name);
+            assert_eq!(p.spell_type, inner.spell_type);
+            assert_eq!(p.classes, inner.classes);
             assert_eq!(p.school, inner.school);
             assert_eq!(p.descriptor, inner.descriptor);
+            assert_eq!(p.sub_school, inner.sub_school);
+            assert_eq!(p.components, inner.components);
+            assert_eq!(p.casting_time, inner.casting_time);
+            assert_eq!(p.range, inner.range);
+            assert_eq!(p.item, inner.item);
+            assert_eq!(p.target_area, inner.target_area);
+            assert_eq!(p.duration, inner.duration);
+            assert_eq!(p.save_info, inner.save_info);
+            assert_eq!(p.spell_resistance, inner.spell_resistance);
+            assert_eq!(p.source_page, inner.source_page);
+            assert_eq!(p.source_link, inner.source_link);
+            assert_eq!(p.description, inner.description);
+            assert_eq!(p.description_raw, inner.description_raw);
+            // And the real values are actually there, not a row of `None`s
+            // agreeing with an empty parse.
+            assert_eq!(p.school.as_deref(), Some("Evocation"));
+            assert_eq!(p.descriptor.as_deref(), Some("Force"));
+            assert_eq!(p.casting_time.as_deref(), Some("1 standard action"));
         }
         _ => panic!("expected SourceContentPayload::Spell variant"),
     }

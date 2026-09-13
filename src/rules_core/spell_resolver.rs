@@ -1,8 +1,11 @@
 //! SD-19 spell-id resolver.
 //!
 //! Resolves a `CharacterInput.spells_selected[].spell_id` to its real
-//! PCGen corpus record and (when available) the foundation slice's
-//! canonical Paizo-table-cell reference.
+//! corpus record -- a converted
+//! [`CorpusSpellRecord`](crate::rules_core::spell_record::CorpusSpellRecord),
+//! which this module and everything downstream of it is the only thing that
+//! ever sees (SD-35 `AT-35-E6-003-RULED` cycle 8) -- and (when available)
+//! the foundation slice's canonical Paizo-table-cell reference.
 //!
 //! Note on identity: unlike equipment records, spell records in
 //! `cr_spells.lst` carry no `KEY:` token — a spell's identity is its
@@ -12,8 +15,15 @@
 //! needed since PF1 spell names are unique across the strict-school
 //! partition.
 
-use crate::pcgen_import::lst_parser::spell::LstSpellRecord;
+// SD-35 `AT-35-E6-003-RULED` cycle 8: this import stays pointed at
+// `pcgen_import` deliberately. `rules_core::source_content` re-exports the
+// same enum and repointing it here would take the gate down by one while
+// changing nothing about what this module depends on -- cycle 7 named that
+// trim and refused it, and this cycle does not take it either. The enum
+// itself moves when its remaining variants stop borrowing parser entry
+// types. The record type below is the real move: it is live-owned.
 use crate::pcgen_import::source_content_payload::SourceContentPayload;
+use crate::rules_core::spell_record::CorpusSpellRecord;
 use crate::rules_core::pilot_compute_corpus::TableCellRef;
 use crate::rules_core::rules_tables::crb::spell_list::SPELL_LIST;
 use crate::rules_core::rules_tables::RuleSetId;
@@ -451,7 +461,7 @@ pub fn spell_id_resolve<'a>(
     spell_id: &str,
     rule_set: RuleSetId,
     corpus: &SourcePackageContent<'a>,
-) -> Option<(&'a LstSpellRecord, Option<TableCellRef>)> {
+) -> Option<(&'a CorpusSpellRecord, Option<TableCellRef>)> {
     for record in corpus.records_by_kind(SourceContentKind::Spell) {
         if let SourceContentPayload::Spell(spell) = record.payload
             && spell.name == spell_id

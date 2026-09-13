@@ -81,6 +81,7 @@ use crate::pcgen_import::lst_parser::spellcasting_class::{
     SpellcastingClassDiagnostic, SpellcastingClassEntry, SpellcastingClassParseResult,
 };
 use crate::pcgen_import::source_content_payload::b6_metadata_kind_to_canonical;
+use crate::rules_core::spell_record::CorpusSpellRecord;
 use crate::rules_core::source_content::{
     SOURCE_IR_VERSION, SourceContentDiagnostic, SourceContentDiagnosticKind, SourceContentKind,
     SourceContentPayload, SourceContentRecord, SourceContentSeverity, SourcePackageContent,
@@ -389,13 +390,63 @@ pub fn convert_ability_declaration(decl: &AbilityDeclaration) -> SourceContentRe
     )
 }
 
+/// Convert a B-4 [`LstSpellRecord`] -- the ingest-format parser row -- into
+/// the live side's own converted shape,
+/// [`CorpusSpellRecord`](crate::rules_core::spell_record::CorpusSpellRecord).
+///
+/// SD-35 `AT-35-E6-003-RULED` cycle 8. This function is the **only** reader
+/// of `LstSpellRecord` on the spell path: everything downstream of the
+/// canonical envelope sees `CorpusSpellRecord` and never names
+/// `pcgen_import` (`decisions.md` §11, §19). The mapping is total and
+/// field-for-field -- no field is dropped, none is invented, and nothing
+/// about the ingest format's own vocabulary survives it, because the parser
+/// already stripped the `SCHOOL:`/`CASTTIME:`/... column tags.
+pub fn spell_record_to_corpus(record: &LstSpellRecord) -> CorpusSpellRecord {
+    CorpusSpellRecord {
+        line_number: record.line_number,
+        source_path: record.source_path.clone(),
+        name: record.name.clone(),
+        output_name: record.output_name.clone(),
+        spell_type: record.spell_type.clone(),
+        classes: record.classes.clone(),
+        school: record.school.clone(),
+        descriptor: record.descriptor.clone(),
+        sub_school: record.sub_school.clone(),
+        components: record.components.clone(),
+        casting_time: record.casting_time.clone(),
+        range: record.range.clone(),
+        item: record.item.clone(),
+        target_area: record.target_area.clone(),
+        duration: record.duration.clone(),
+        save_info: record.save_info.clone(),
+        spell_resistance: record.spell_resistance.clone(),
+        source_page: record.source_page.clone(),
+        source_link: record.source_link.clone(),
+        description: record.description.clone(),
+        description_raw: record.description_raw.clone(),
+    }
+}
+
 /// Build a canonical [`SourceContentRecord`] from a B-4 [`LstSpellRecord`].
-pub fn convert_spell_record(record: &LstSpellRecord) -> SourceContentRecord<'_> {
+///
+/// The envelope's payload is the **converted** record
+/// ([`CorpusSpellRecord`](crate::rules_core::spell_record::CorpusSpellRecord)),
+/// not a borrow of the parser row, so this is the one place on the spell
+/// path where the projection stops being zero-copy. The converted record is
+/// interned for the process lifetime (`Box::leak`) to satisfy the envelope's
+/// borrow -- the same thing every caller of this function already did with
+/// the parser row itself, one allocation earlier. A live caller that holds
+/// already-converted corpus data does not come through here at all: it
+/// builds the envelope directly with
+/// [`crate::rules_core::source_content::SourceContentRecord::spell`].
+pub fn convert_spell_record(record: &LstSpellRecord) -> SourceContentRecord<'static> {
     let source_ref = make_source_ref(&record.source_path, record.line_number);
+    let converted: &'static CorpusSpellRecord =
+        Box::leak(Box::new(spell_record_to_corpus(record)));
     SourceContentRecord::new(
         source_ref,
         SourceContentKind::Spell,
-        SourceContentPayload::Spell(record),
+        SourceContentPayload::Spell(converted),
     )
 }
 
