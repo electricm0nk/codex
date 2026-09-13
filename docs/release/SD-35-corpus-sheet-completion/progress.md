@@ -181,6 +181,77 @@ re-measured at the cut by the launch-readiness audit.
 
 ## Cycle log
 
+### 2026-09-13 — Epic 6 / `desktop-and-prose-leave-pcgen` — AT-35-E6-003-RULED **cycle 8** (`bfd82ec0aa`) — **partial** (the live side owns its first converted record shape: `CorpusSpellRecord`. Residue `16 / 34 → 16 / 32`)
+
+- **Scope gate:** `SCOPE_GATE: EXEMPT (Epic 6 cycle — closes zero corpus units by design;
+  decisions.md §2)`. It ran anyway at the cycle's start tree `eb73f54255`:
+  `scoped=0 remaining_non_done=0 floor=500 verdict=PASS_WHOLE_REMAINDER`. The residue check,
+  which is not exempt, passed first at the same tree at exactly cycle 7's closing figure:
+  `live_files=16 live_hits=34 baseline_files=260 baseline_hits=12736 verdict=PASS`.
+
+- **The blocker every census has named since cycle 1 was two pieces of work, and one of them fit
+  in a cycle.** Cycles 1–7 recorded all 21 hits in `lst_parser_types` / `ir_converter` /
+  `source_content_payload` as blocked on a single undone thing — *"a converted equipment/spell
+  record shape the live side owns, which does not exist yet"*. The **spell** kind was separable,
+  because its live consumers (`spell_resolver`, `spellbook`, `pilot_compute_corpus`) read exactly
+  **two settled values**, `name` and `school`.
+  `correction 1789274759824-at-35-e6-003-ruled-d48149`.
+
+- **What was built, end to end.** `src/rules_core/spell_record.rs` — new — declares
+  `CorpusSpellRecord`, the live side's own converted spell record: field-for-field the content of
+  a parsed spell row minus the ingest format's own vocabulary (`school` is `"Transmutation"`,
+  `casting_time` is `"1 standard action"`; the `SCHOOL:`/`CASTTIME:` column tags never reach it).
+  `SourceContentPayload::Spell` now borrows it instead of the B-4 parser row, and the new
+  converter-side `ir_converter::spell_record_to_corpus` is the only reader of `LstSpellRecord`
+  left on the path. New **live** `SourceContentRecord::spell` lets
+  `corpus_loader::load_spell_corpus` build the canonical envelope itself from
+  `data/corpus/<book>/spell/*.json` — already-converted data it used to reconstruct into a
+  21-field parser struct and hand back to the converter to be re-converted.
+  `spell_id_resolve` returns `&CorpusSpellRecord`.
+
+- **A test contract was changed deliberately, and the replacement is stronger.**
+  `tests/sd17_e_source_ir_shape.rs` asserted `std::ptr::eq(p, inner)` — the SD-17 zero-copy
+  projection claim. The spell payload is no longer a borrow of the parser row, so that assertion
+  is replaced by a **field-by-field equality over all 21 fields** plus three real values: the
+  projection must be **total and lossless**, which is a strictly stronger claim than pointer
+  identity. The reason is written into the test, not only here.
+
+- **One trim refused, for the second cycle running.** `spell_resolver.rs`'s
+  `SourceContentPayload` import could be repointed at `rules_core::source_content`'s own
+  re-export of the same enum for `−1` and **zero** change in what the module depends on. Cycle 7
+  named that trim and refused it; this cycle does not take it either, and the import now carries
+  a comment saying why so cycle 9 does not re-decide it.
+
+- **Stated now so cycle 9 does not discover it the expensive way: the equipment half is not the
+  same job.** `EquipmentRecord`'s **nine** live consumers read `record.tokens` and
+  `record.bonus_chains` *directly*. A `CorpusEquipmentRecord` carrying those arrays would move
+  PCGen token structures **under a live root** — a lower gate number and a worse repo. It clears
+  when `equipment_effects`'s consumers read converted `SheetRule` rows.
+
+- **Verified once at the final tree.** `apps/` NOT touched, so the desktop crate and the frontend
+  run at the epic wrap-up. `NO_RUN_EXIT=0`; lib `3348 passed; 0 failed; 16 ignored` (cycle 7's
+  3346 + this cycle's 2 new tests); full workspace `FULL_EXIT=0` — **418 targets, 8,877 passed,
+  0 failed, 69 ignored**, zero `test result: FAILED` lines (cycle 7 recorded 8,875; the `+2` is
+  exactly this cycle's two new tests); root clippy **0 warnings, first run**.
+  `sheet_rule_convert -- --check` `records=49438 converted=49296 refused=142 rules=70135
+  var_tables=5293 verdict=PASS`; `data/sheet_rules/` ingest-syntax grep `0`; `completion_atlas`
+  `citation_failures=0`; `token_coverage` `non_done=0 refused=142 PASS`; `shape_engine_boundary`
+  `not_held_by_engine=0`; `missing_engine_tables` `population=0`; `denominator_gate`
+  `files_checked=137 violations=0`; `verify.sh --only pi-sweep` PASS; `data/` byte-identical.
+  The gate script and `scripts/pcgen-residue-baseline.env` are **absent from this cycle's diff**
+  — no path exempted, no regex weakened, no rebaseline; census `gate_agreement=OK (32 == 32)`.
+
+- **Receipt rows (mechanical):** `closed=0 relabeled=0 rust_lines_changed=270 ratio=n/a
+  builds_recorded=3 pcgen_live_files=16`.
+
+- **Refused tokens:** `renderer=5, lst_parser_types=11, ingest_record_tokens=5,
+  trait_and_pool_tokens=3, ir_converter=3, source_content_payload=5` — 32 hits / 16 files,
+  summing, all under `src/rules_core/`.
+  `deferral 1789274747248-at-35-e6-003-ruled-4e48ea`.
+
+- **Receipt:** `artifacts/epic-6-pcgen-exit/AT-35-E6-003-RULED_cycle8_receipt.md`.
+
+
 ### 2026-09-13 — Epic 6 / `desktop-and-prose-leave-pcgen` — AT-35-E6-003-RULED **cycle 7** (`f446ba681a`) — **partial** (cycle 6's named converter defect is **refuted**: `ABILITY:` converts as a grant edge and cycle 6's probe was reading the wrong side of it. Residue `17 / 35 → 16 / 34`)
 
 - **Scope gate:** `SCOPE_GATE: EXEMPT (Epic 6 cycle — closes zero corpus units by design; decisions.md §2)`.
