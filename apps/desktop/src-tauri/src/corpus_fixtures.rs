@@ -20,72 +20,60 @@
 use std::path::PathBuf;
 use std::sync::OnceLock;
 
-use codex::rules_core::corpus_loader::{load_lst_fixture_corpus, LstFixtureLine};
-use codex::rules_core::source_content::{SourcePackageContent, SourceRef};
+use codex::rules_core::corpus_loader::{load_book_corpus, BookCorpusRoot};
+use codex::rules_core::source_content::SourcePackageContent;
 
 use crate::authoring_workbench::resolve_package_path;
 
 const FIXTURE_RESOURCE_ROOT: &str = "resources/corpus_fixtures";
-const SPELL_FIXTURES: &[&str] = &["spell_abjuration.txt", "spell_illusion.txt"];
-const EQUIPMENT_FIXTURES: &[&str] = &["equip_longsword.txt", "equip_chain_shirt.txt"];
-
-/// Strips the fixture's leading `# Fixture for ...` comment line, matching
-/// the convention `tests/sd19_seam_shapes_correctness.rs` established.
-fn record_line(fixture_text: &str) -> Option<&str> {
-    fixture_text
-        .lines()
-        .find(|line| !line.trim_start().starts_with('#') && !line.trim().is_empty())
-}
+/// The converter INPUTS that produced the shipped records. They are bundled
+/// beside the converted package so the provenance of every shipped record is
+/// one file away, and so `gen_desktop_fixture_corpus` can be re-run against
+/// exactly what shipped. Nothing in this crate parses them.
+const FIXTURE_SOURCES: &[&str] = &[
+    "spell_abjuration.txt",
+    "spell_illusion.txt",
+    "equip_longsword.txt",
+    "equip_chain_shirt.txt",
+];
+/// The CONVERTED records this crate actually reads, in the
+/// `<root>/spell/*.json` + `<root>/equipment/*.json` layout
+/// `rules_core::corpus_loader` reads the real corpus in.
+const CONVERTED_RECORDS: &[&str] = &[
+    "spell/spell_abjuration.json",
+    "spell/spell_illusion.json",
+    "equipment/equip_longsword.json",
+    "equipment/equip_chain_shirt.json",
+];
 
 fn fixture_dir() -> Result<PathBuf, String> {
     resolve_package_path(FIXTURE_RESOURCE_ROOT)
 }
 
-fn read_fixture(dir: &std::path::Path, name: &str) -> Result<String, String> {
-    std::fs::read_to_string(dir.join(name))
-        .map_err(|err| format!("could not read bundled corpus fixture '{name}': {err}"))
-}
-
 fn build_corpus_fixture_bundle() -> SourcePackageContent<'static> {
     let dir = fixture_dir().expect("corpus_fixtures resource directory must resolve");
 
-    // Reading the bundled resource is this crate's concern. Parsing the record line and
-    // converting it is not, and since SD-35 `AT-35-E6-003-RULED` cycle 4 this file no longer
-    // does either: `rules_core::corpus_loader` already owns that machinery for the two real
-    // corpus loaders, and this is its third caller (`decisions.md` §19, ruling B16 — the
-    // desktop crate stops calling into `pcgen_import` at run time).
-    let mut spell_texts: Vec<(&str, String)> = Vec::new();
-    for name in SPELL_FIXTURES {
-        let text = read_fixture(&dir, name).expect("bundled spell fixture must be readable");
-        let line = record_line(&text)
-            .unwrap_or_else(|| panic!("spell fixture '{name}' has no record line"))
-            .to_string();
-        spell_texts.push((name, line));
-    }
-    let mut equipment_texts: Vec<(&str, String)> = Vec::new();
-    for name in EQUIPMENT_FIXTURES {
-        let text = read_fixture(&dir, name).expect("bundled equipment fixture must be readable");
-        let line = record_line(&text)
-            .unwrap_or_else(|| panic!("equipment fixture '{name}' has no record line"))
-            .to_string();
-        equipment_texts.push((name, line));
-    }
+    // Reading the bundled resource is this crate's concern. Parsing and converting it is not,
+    // and since SD-35 `AT-35-E6-003-RULED` cycle 9 NOTHING does either at run time: the
+    // records ship already converted, produced at authoring time by
+    // `src/bin/gen_desktop_fixture_corpus.rs`, and this is the same
+    // `rules_core::corpus_loader` call the real on-disk corpus goes through
+    // (`decisions.md` §19, ruling B16 -- no live path reads `pcgen_import` to build this).
+    let roots = [BookCorpusRoot { book_id: "desktop_ui_fixtures", dir: dir.as_path() }];
+    let package = load_book_corpus(&roots);
 
-    let spells: Vec<LstFixtureLine<'_>> = spell_texts
-        .iter()
-        .map(|(label, text)| LstFixtureLine { label, text })
-        .collect();
-    let equipment: Vec<LstFixtureLine<'_>> = equipment_texts
-        .iter()
-        .map(|(label, text)| LstFixtureLine { label, text })
-        .collect();
-
-    let source_ref = SourceRef {
-        lst_file: "corpus_fixtures".to_string(),
-        line: 1,
-    };
-    load_lst_fixture_corpus("desktop_ui_fixtures", source_ref, &spells, &equipment)
-        .unwrap_or_else(|err| panic!("bundled corpus fixture failed to load: {err}"))
+    // Loud, never partial: this is a bounded, committed package. An empty or short load means
+    // the resource did not ship or the generator was not re-run, which is a broken build --
+    // not a diagnostic to be collected and rendered as a character with no equipment.
+    assert_eq!(
+        package.len(),
+        CONVERTED_RECORDS.len(),
+        "bundled corpus fixture package must carry exactly {} converted records, got {} (diagnostics: {:?})",
+        CONVERTED_RECORDS.len(),
+        package.len(),
+        package.diagnostics,
+    );
+    package
 }
 
 /// The bundled corpus fixture set, built once and cached for the process
@@ -103,13 +91,79 @@ mod tests {
     #[test]
     fn bundled_fixture_directory_resolves_and_contains_expected_files() {
         let dir = fixture_dir().expect("fixture dir must resolve in a source checkout");
-        for name in SPELL_FIXTURES.iter().chain(EQUIPMENT_FIXTURES.iter()) {
+        for name in FIXTURE_SOURCES.iter().chain(CONVERTED_RECORDS.iter()) {
             assert!(
                 dir.join(name).is_file(),
                 "expected bundled fixture '{name}' at {}",
                 dir.join(name).display()
             );
         }
+    }
+
+    /// SD-35 `AT-35-E6-003-RULED` cycle 9: what ships is CONVERTED data, and
+    /// the shipping binary never parses a PCGen row to get it. The converted
+    /// records resolve to the same real values the raw-`.lst` path produced --
+    /// this asserts them on the resolved package, not on the file text, so it
+    /// fails if the generator ever writes a document the live loader cannot
+    /// read back.
+    #[test]
+    fn bundled_records_carry_their_real_converted_values() {
+        use codex::rules_core::source_content::SourceContentPayload;
+
+        let corpus = corpus_fixture_bundle();
+        let spells = corpus.records_by_kind(SourceContentKind::Spell);
+        let schools: Vec<(String, Option<String>)> = spells
+            .iter()
+            .filter_map(|record| match record.payload {
+                SourceContentPayload::Spell(spell) => {
+                    Some((spell.name.clone(), spell.school.clone()))
+                }
+                _ => None,
+            })
+            .collect();
+        assert!(
+            schools.contains(&("Alarm".to_string(), Some("Abjuration".to_string()))),
+            "Alarm must load as an Abjuration spell, got {schools:?}"
+        );
+        assert!(
+            schools.contains(&("Blur".to_string(), Some("Illusion".to_string()))),
+            "Blur must load as an Illusion spell, got {schools:?}"
+        );
+
+        let equipment = corpus.records_by_kind(SourceContentKind::Equipment);
+        let longsword = equipment
+            .iter()
+            .filter_map(|record| match record.payload {
+                SourceContentPayload::Equipment(equip) => Some(equip),
+                _ => None,
+            })
+            .find(|equip| equip.name == "Longsword")
+            .expect("the bundled Longsword record must load");
+        let damage = longsword
+            .tokens
+            .iter()
+            .find(|token| token.key == "DAMAGE")
+            .expect("Longsword's real damage token must survive the build-time conversion");
+        assert_eq!(damage.value, "1d8", "Longsword's real DAMAGE value");
+
+        let chain_shirt = equipment
+            .iter()
+            .filter_map(|record| match record.payload {
+                SourceContentPayload::Equipment(equip) => Some(equip),
+                _ => None,
+            })
+            .find(|equip| equip.name == "Chain Shirt")
+            .expect("the bundled Chain Shirt record must load");
+        let ac_chain = chain_shirt
+            .bonus_chains
+            .iter()
+            .find(|chain| chain.qualifiers.first().map(String::as_str) == Some("COMBAT"))
+            .expect("Chain Shirt's real armour bonus chain must survive the conversion");
+        assert_eq!(
+            ac_chain.qualifiers,
+            vec!["COMBAT", "AC", "4", "TYPE=Armor", "PREVAREQ:DisableArmorBonus,0"],
+            "Chain Shirt's first BONUS chain, qualifier for qualifier"
+        );
     }
 
     #[test]

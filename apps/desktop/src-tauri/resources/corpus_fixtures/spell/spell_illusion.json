@@ -1,0 +1,28 @@
+{
+  "completeness": "full",
+  "data": {
+    "casting_time": "1 standard action",
+    "classes": "Bard,Sorcerer,Wizard=2",
+    "components": "V",
+    "description": "The subject's outline appears blurred, shifting, and wavering granting the subject concealment (20%% miss chance).",
+    "duration": "(CASTERLEVEL) minutes [D]",
+    "item": "Potion",
+    "key": "Blur",
+    "range": "Touch",
+    "save_info": "Will negates (harmless)",
+    "school": "Illusion",
+    "source_page": "p.251",
+    "spell_resistance": "Yes (harmless)",
+    "spell_type": "Arcane",
+    "sub_school": "Glamer",
+    "target_area": "Creature touched"
+  },
+  "license": "OGL",
+  "population": "in_scope",
+  "source": {
+    "kind": "desktop_ui_fixture",
+    "line": 1,
+    "path": "apps/desktop/src-tauri/resources/corpus_fixtures/spell_illusion.txt",
+    "record_key": "Blur"
+  }
+}

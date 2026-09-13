@@ -37,17 +37,13 @@ use std::fs;
 use std::path::Path;
 
 use crate::pcgen_import::lst_parser::equipment::{
-    parse_equipment_entries, BonusToken, EquipmentDiagnostic, EquipmentRecord, EquipmentRecordKind,
-    EquipmentToken,
+    BonusToken, EquipmentDiagnostic, EquipmentRecord, EquipmentRecordKind, EquipmentToken,
 };
-// SD-35 `AT-35-E6-003-RULED` cycle 8: the only remaining converter-side
-// import on the spell path. `load_lst_fixture_corpus` parses raw `.lst`
-// record lines at run time (the desktop's bundled fixture resource), which
-// is a genuine converter invocation and stays counted by
-// `pcgen_residue_gate.py` until that package is produced at build time.
-// `load_spell_corpus`, which reads already-converted corpus JSON, no longer
-// needs it.
-use crate::pcgen_import::lst_parser::spell::parse_lst_spell_row;
+// SD-35 `AT-35-E6-003-RULED` cycle 9: the spell parser import is GONE. It was
+// here for `load_lst_fixture_corpus`, which parsed the desktop's bundled raw
+// `.lst` fixture rows at run time; that package is produced at build time now
+// by `src/bin/gen_desktop_fixture_corpus.rs` and read as data through
+// [`load_book_corpus`] below, so no live path parses a PCGen row any more.
 use crate::rules_core::source_content::{SourceContentRecord, SourcePackageContent, SourceRef};
 use crate::rules_core::spell_record::CorpusSpellRecord;
 
@@ -456,80 +452,47 @@ fn equipment_record_from_json(data: &serde_json::Value) -> Option<EquipmentRecor
     })
 }
 
-/// One bundled `.lst` fixture record, and the file it came from.
+/// Loads one book-corpus tree's **equipment and spell** records into a single
+/// `SourcePackageContent`.
 ///
-/// `label` is used only in diagnostics and in the error a failed parse returns, so a caller
-/// that ships several fixtures can say *which* one is malformed.
-pub struct LstFixtureLine<'a> {
-    pub label: &'a str,
-    pub text: &'a str,
-}
-
-/// Builds a `SourcePackageContent` from a small, bounded set of `.lst` record lines.
+/// The two-kind sibling of [`load_equipment_corpus`] and [`load_spell_corpus`],
+/// for a caller that wants one package covering both kinds of a
+/// [`BookCorpusRoot`] rather than two it has to merge itself.
 ///
-/// # Why this is here and not in the caller
+/// # Why this exists
 ///
-/// The desktop crate bundles a handful of real corpus records as a Tauri resource and needs
-/// them as a `SourcePackageContent` to prove `compute_pilot_with_corpus` resolves real corpus
-/// data end-to-end in the live UI. It used to parse and convert those lines itself, importing
-/// `pcgen_import::lst_parser` and `pcgen_import::ir_converter` directly — five run-time reads
-/// of the converter from inside the shipping desktop binary, which `decisions.md` §19 (ruling
-/// B16) counts as hits and `AT-35-E6-003`'s Evidence sentence requires to be zero.
+/// SD-35 `AT-35-E6-003-RULED` cycle 9. This replaced `load_lst_fixture_corpus`,
+/// which built the desktop's bundled fixture package by parsing raw `.lst`
+/// record lines and running the converter over them **at run time** — the last
+/// live path in the crate that did. Every Epic 6 census since cycle 1 named the
+/// clearing condition for those hits in the same words: *"clears when that
+/// package is produced at build time and read as data."*
 ///
-/// Nothing about that work was the desktop's to do: this module already parses and converts
-/// corpus records for [`load_equipment_corpus`] and [`load_spell_corpus`], from the same two
-/// parsers into the same two converters, leaking each record for the `'static` borrow the
-/// package's lifetime needs. This is the third caller of that same machinery, and it lives
-/// beside the other two. The desktop keeps what is actually its concern — resolving a bundled
-/// resource path and reading the files.
-///
-/// **This does not make the conversion stop happening at run time.** It stops it happening in
-/// two places. The run-time `ir_converter` call is still counted against this file by
-/// `pcgen_residue_gate.py`, and it clears when the converted package is produced at build time
-/// and read as data — which is a different piece of work, named in this criterion's own
-/// remainder, not something this move quietly closes.
+/// It is produced at build time now, by
+/// `src/bin/gen_desktop_fixture_corpus.rs`, into the same
+/// `<root>/spell/*.json` + `<root>/equipment/*.json` layout the real corpus
+/// uses; the desktop ships the converted records and this function reads them
+/// with the loaders that already existed. The `.txt` fixtures stay put as that
+/// producer's input — `decisions.md` §11 keeps the converter and its inputs;
+/// what it forbids is the live side running them.
 ///
 /// # Failure
 ///
-/// Loud, never partial: a fixture line that does not parse returns `Err` naming the label and
-/// the line, exactly the contract the desktop's own `expect`/`panic!` messages carried before
-/// the move. A bounded, committed fixture set that fails to parse is a broken build, not a
-/// diagnostic to be collected.
-pub fn load_lst_fixture_corpus<'a>(
-    package_id: &str,
-    source_ref: SourceRef,
-    spells: &[LstFixtureLine<'_>],
-    equipment: &[LstFixtureLine<'_>],
-) -> Result<SourcePackageContent<'a>, String> {
-    let source_path = source_ref.lst_file.clone();
-    let mut package = SourcePackageContent::empty(package_id, source_ref);
-
-    for fixture in spells {
-        let parsed = parse_lst_spell_row(&source_path, 1, fixture.text);
-        let record = parsed.record.ok_or_else(|| {
-            format!("spell fixture '{}' failed to parse: {}", fixture.label, fixture.text)
-        })?;
-        // The converted record the envelope borrows is interned by
-        // `convert_spell_record` itself now, so the parsed row no longer has
-        // to outlive this loop.
-        package.push(crate::pcgen_import::ir_converter::convert_spell_record(&record));
+/// Same contract as the two loaders it composes: a file that cannot be read or
+/// parsed becomes a diagnostic on the package rather than aborting the load, so
+/// one malformed record never takes down every other record in the tree. A
+/// caller shipping a bounded, committed package should assert on the record
+/// count it expects — an empty package means the resource did not ship.
+pub fn load_book_corpus<'a>(roots: &[BookCorpusRoot<'_>]) -> SourcePackageContent<'a> {
+    let mut package = load_equipment_corpus(roots);
+    let spells = load_spell_corpus(roots);
+    for record in spells.records {
+        package.push(record);
     }
-
-    for fixture in equipment {
-        let result = parse_equipment_entries(&source_path, fixture.text);
-        if result.entries.is_empty() {
-            return Err(format!(
-                "equipment fixture '{}' produced no record: {}",
-                fixture.label, fixture.text
-            ));
-        }
-        for entry in result.entries {
-            let entry: &'static EquipmentRecord = Box::leak(Box::new(entry));
-            package.push(crate::pcgen_import::ir_converter::convert_equipment_record(entry));
-        }
+    for diagnostic in spells.diagnostics {
+        package.push_diagnostic(diagnostic);
     }
-
-    Ok(package)
+    package
 }
 
 #[cfg(test)]

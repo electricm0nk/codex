@@ -32,7 +32,9 @@
     ],
     "resources": [
       "resources/authoring_workbench/guard-stance-package/",
-      "resources/corpus_fixtures/"
+      "resources/corpus_fixtures/",
+      "resources/corpus_fixtures/spell/",
+      "resources/corpus_fixtures/equipment/"
     ],
     "icon": [
       "icons/icon.png",

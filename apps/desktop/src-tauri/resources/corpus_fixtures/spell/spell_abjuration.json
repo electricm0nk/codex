@@ -1,0 +1,26 @@
+{
+  "completeness": "full",
+  "data": {
+    "casting_time": "1 standard action",
+    "classes": "Bard,Ranger,Sorcerer,Wizard=1",
+    "components": "V, S, F/DF",
+    "description": "Alarm creates a subtle ward on an area you select.",
+    "duration": "(CASTERLEVEL*2) hours [D]",
+    "key": "Alarm",
+    "range": "Close",
+    "save_info": "None",
+    "school": "Abjuration",
+    "source_page": "p.240",
+    "spell_resistance": "No",
+    "spell_type": "Arcane.Divine",
+    "target_area": "20-ft.-radius emanation centered on a point in space"
+  },
+  "license": "OGL",
+  "population": "in_scope",
+  "source": {
+    "kind": "desktop_ui_fixture",
+    "line": 1,
+    "path": "apps/desktop/src-tauri/resources/corpus_fixtures/spell_abjuration.txt",
+    "record_key": "Alarm"
+  }
+}
