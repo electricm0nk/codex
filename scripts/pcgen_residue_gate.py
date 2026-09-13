@@ -257,6 +257,90 @@ def code_only(text):
     )
 
 
+def mask_non_code(text):
+    """`text` with every comment and every string/char literal body blanked to
+    spaces, newlines and length preserved.
+
+    Brace matching has to run over CODE characters only. A line-level counter
+    is fooled in both directions, and `AT-35-E6-004`'s independent census
+    caught the dangerous one in the real tree:
+    `apps/desktop/src-tauri/src/update/transaction.rs` holds
+    `b"not-json-{garbage"` inside a `#[cfg(test)]` module, leaving the counter
+    one `{` deep at that module's closing brace -- so the B15 skip ran on to
+    the next test module and blanked **618 lines of shipping code**. Nothing
+    in that window read PCGen, so the verdict was right by luck; a skip that
+    CAN hide shipping code is a false green waiting to happen
+    (`validate-proxies-against-known-truth`, `AGENTS.md` rule 7). The mirror
+    case -- a `// }` in prose ending the region early -- over-counts test code
+    as live, which is safe but equally wrong about where the item ends.
+    """
+    n = len(text)
+    out = list(text)
+    i = 0
+
+    def blank(a, b):
+        for k in range(a, min(b, n)):
+            if out[k] != "\n":
+                out[k] = " "
+
+    while i < n:
+        c = text[i]
+        if c == "/" and i + 1 < n and text[i + 1] == "/":
+            j = text.find("\n", i)
+            j = n if j < 0 else j
+            blank(i, j)
+            i = j
+        elif c == "/" and i + 1 < n and text[i + 1] == "*":
+            j = text.find("*/", i + 2)
+            j = n if j < 0 else j + 2
+            blank(i, j)
+            i = j
+        elif c == "r" and i + 1 < n and text[i + 1] in '#"':
+            k = i + 1
+            while k < n and text[k] == "#":
+                k += 1
+            if k < n and text[k] == '"':
+                term = '"' + "#" * (k - i - 1)
+                j = text.find(term, k + 1)
+                j = n if j < 0 else j + len(term)
+                blank(i, j)
+                i = j
+            else:
+                i += 1
+        elif c == '"':
+            j = i + 1
+            while j < n:
+                if text[j] == "\\":
+                    j += 2
+                    continue
+                if text[j] == '"':
+                    j += 1
+                    break
+                j += 1
+            blank(i, j)
+            i = j
+        elif c == "'":
+            # A char literal closes within a few characters; a lifetime
+            # (`'static`, `'a`) never closes and must stay code.
+            k, closed = i + 1, -1
+            while k < n and k < i + 5:
+                if text[k] == "\\":
+                    k += 2
+                    continue
+                if text[k] == "'":
+                    closed = k
+                    break
+                k += 1
+            if closed > 0:
+                blank(i, closed + 1)
+                i = closed + 1
+            else:
+                i += 1
+        else:
+            i += 1
+    return "".join(out)
+
+
 def cfg_test_ranges(lines):
     """0-based inclusive line ranges covered by a `#[cfg(test)]` item.
 
@@ -265,7 +349,12 @@ def cfg_test_ranges(lines):
     annotates -- the closing brace of a `mod`/`fn` block, or the `;` of a
     braceless item such as `#[cfg(test)] use ...;`. A braceless item must NOT
     swallow the rest of the file, which is why the `;` case is handled first.
+
+    Braces, semicolons and the attribute itself are read off `mask_non_code`,
+    so a brace inside a string or a comment can neither extend the region over
+    shipping code nor end it early (`AT-35-E6-004`).
     """
+    lines = mask_non_code("\n".join(lines)).splitlines()
     out, i, n = [], 0, len(lines)
     while i < n:
         if not _CFG_TEST_ATTR.match(lines[i]):

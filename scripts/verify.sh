@@ -1463,10 +1463,13 @@ run_figure_provenance() {
 # re/os.walk, no build, no network) -- in BOTH stage sets next to
 # denominator-gate for the same live-check-with-an-exit-code reasoning.
 #
-# `PCGEN_RESIDUE_GATE_CLOSURE=1` switches the stage to `--check --closure`,
-# which passes only at `live_files=0 live_hits=0` -- the stage's closure mode,
-# wired from AT-35-E6-004 onward (same `${VAR:-default}` shape as
-# `DENOMINATOR_GATE_PATHS`).
+# CLOSURE IS THE STAGE'S MODE, from AT-35-E6-004 (2026-09-13) on. The live
+# side reached `live_files=0 live_hits=0`, so the stage runs
+# `--check --closure` by default and passes ONLY at zero: the ratchet was the
+# way down, zero is the floor, and a re-entry of one live-side PCGen read now
+# fails the stage instead of sliding under a 260/12736 baseline. Reverting to
+# the ratchet is `PCGEN_RESIDUE_GATE_CLOSURE=0` and is a diagnostic aid, never
+# the shipping posture (`decisions.md` §11; `epic-breakdown.md AT-35-E6-004`).
 # ---------------------------------------------------------------------------
 
 run_pcgen_residue_gate() {
@@ -1474,7 +1477,7 @@ run_pcgen_residue_gate() {
     local baseline="$REPO_ROOT/scripts/pcgen-residue-baseline.env"
     local -a flags=(--check)
     local label="--check"
-    if [[ "${PCGEN_RESIDUE_GATE_CLOSURE:-0}" == 1 ]]; then
+    if [[ "${PCGEN_RESIDUE_GATE_CLOSURE:-1}" == 1 ]]; then
         flags+=(--closure)
         label="--check --closure"
     fi
@@ -1485,7 +1488,7 @@ run_pcgen_residue_gate() {
         stage_fail pcgen-residue-gate "script missing at scripts/pcgen_residue_gate.py"
         return
     fi
-    if [[ "${PCGEN_RESIDUE_GATE_CLOSURE:-0}" != 1 && ! -f "$baseline" ]]; then
+    if [[ "${PCGEN_RESIDUE_GATE_CLOSURE:-1}" != 1 && ! -f "$baseline" ]]; then
         stage_fail pcgen-residue-gate "baseline missing at scripts/pcgen-residue-baseline.env (record it with --rebaseline)"
         return
     fi

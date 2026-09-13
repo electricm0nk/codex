@@ -377,6 +377,61 @@ class TestCfgTestRegionsAreNotLiveCode(_TreeCase):
         self.assertEqual(res.hits_by_pattern["TYPE="], 0)
         self.assertNotIn("src/rules_core/nested.rs", res.files)
 
+    def test_a_brace_inside_a_test_string_does_not_swallow_shipping_code(self):
+        """AT-35-E6-004: the B15 region must end where the ITEM ends.
+
+        Found by the closure cycle's independent census, not by this suite: a
+        line-level brace counter is fooled by a brace inside a string literal.
+        `apps/desktop/src-tauri/src/update/transaction.rs` carries
+        `b"not-json-{garbage"` inside its first `#[cfg(test)]` module, which
+        left the counter one `{` deep at the module's closing brace, so the
+        skip ran on to the NEXT test module's brace and blanked **618 lines of
+        shipping code** in between. Nothing in that window read PCGen, so the
+        verdict was right by luck -- exactly the
+        `validate-proxies-against-known-truth` shape the criterion exists to
+        catch. A skip that can hide shipping code is a false green waiting to
+        happen, so the gate now brace-matches over code characters only.
+        """
+        _write(self.root, "src/rules_core/strbrace.rs",
+               '#[cfg(test)]\n'
+               'mod tests {\n'
+               '    #[test]\n'
+               '    fn rejects_bad_json() {\n'
+               '        let bad = b"not-json-{garbage";\n'
+               '        assert!(!bad.is_empty());\n'
+               '    }\n'
+               '}\n'
+               '\n'
+               'pub fn ships() -> &\'static str { "BONUS:STAT|STR|2" }\n'
+               '\n'
+               '#[cfg(test)]\n'
+               'mod more_tests {\n'
+               '    fn b() { let _ = "DESC:Words"; }\n'
+               '}\n')
+        res = prg.scan(self.root)
+        self.assertEqual(res.hits_by_pattern["BONUS:"], 1)
+        self.assertEqual(res.hits_by_pattern["DESC:"], 0)
+        self.assertIn("src/rules_core/strbrace.rs", res.files)
+
+    def test_a_brace_in_a_comment_inside_the_region_does_not_end_it_early(self):
+        """The mirror failure: a `// }` inside the test module used to close
+        the region early and count the rest of the module as shipping code.
+        Over-counting is the safe direction, but it is still the gate being
+        wrong about where the item ends."""
+        _write(self.root, "src/rules_core/cmtbrace.rs",
+               '#[cfg(test)]\n'
+               'mod tests {\n'
+               '    fn a() {\n'
+               '        // closing brace in prose: }\n'
+               '        let _ = "PREFEAT:1,Dodge";\n'
+               '    }\n'
+               '    fn b() { let _ = "SAB:Words"; }\n'
+               '}\n')
+        res = prg.scan(self.root)
+        self.assertEqual(res.hits_by_pattern["PRE[A-Z]+:"], 0)
+        self.assertEqual(res.hits_by_pattern["SAB:"], 0)
+        self.assertNotIn("src/rules_core/cmtbrace.rs", res.files)
+
 
 class TestRuntimeConverterImportsAreCounted(_TreeCase):
     """Operator ruling B16 (2026-09-12): the gate's blind spot IS the residue.
