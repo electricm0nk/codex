@@ -39,6 +39,7 @@ use crate::pcgen_import::lst_parser::spellcasting_class::{
 use crate::rules_core::composed_input::{
     ComposedInputDiagnostic, ComposedInputDiagnosticKind, ComposedInputSeverity,
 };
+use crate::pcgen_import::ir_content_payload::{package_to_live, IrPackageContent};
 use crate::rules_core::source_content::{SourcePackageContent, SourceRef};
 
 impl ComposedInputDiagnostic {
@@ -233,8 +234,12 @@ pub fn project_corpus_from_owned<'a>(
     corpus_anchor: SourceRef,
 ) -> SourcePackageContent<'a> {
     let schema = IRSchema::canonical_v1();
-    let mut corpus: SourcePackageContent<'a> =
-        SourcePackageContent::empty(package_id.to_string(), corpus_anchor);
+    // The projection runs on the converter's own envelope instantiation and is
+    // handed to the live one exactly once, at the return — SD-35
+    // `AT-35-E6-003-RULED` cycle 18. Past that boundary no parser entry is
+    // reachable (`decisions.md` §11, §19).
+    let mut corpus: IrPackageContent<'a> =
+        IrPackageContent::empty(package_id.to_string(), corpus_anchor);
 
     for class_result in &owned_inputs.class_results {
         let (mut pkg, _) = convert_package_from_class_parse_result(
@@ -258,7 +263,7 @@ pub fn project_corpus_from_owned<'a>(
         drain_into(&mut corpus, &mut pkg);
     }
     for spell_file in &owned_inputs.spell_results {
-        let mut pkg: SourcePackageContent<'_> = SourcePackageContent::empty(
+        let mut pkg: IrPackageContent<'_> = IrPackageContent::empty(
             package_id,
             SourceRef::new(spell_file.source_path.display().to_string(), 0),
         );
@@ -271,7 +276,7 @@ pub fn project_corpus_from_owned<'a>(
         drain_into(&mut corpus, &mut pkg);
     }
     for equip_result in &owned_inputs.equipment_results {
-        let mut pkg: SourcePackageContent<'_> = SourcePackageContent::empty(
+        let mut pkg: IrPackageContent<'_> = IrPackageContent::empty(
             package_id,
             SourceRef::new(equip_result.source_path.clone(), 0),
         );
@@ -292,14 +297,14 @@ pub fn project_corpus_from_owned<'a>(
         drain_into(&mut corpus, &mut pkg);
     }
 
-    corpus
+    package_to_live(corpus)
 }
 
 /// Drain records and diagnostics from `src` into `dst`, leaving
 /// `src` empty. The entries are borrowed by `SourcePackageContent`,
 /// so the merger does not clone the underlying parser entries; the
 /// move is O(n) on `records.len()` and `diagnostics.len()`.
-fn drain_into<'a>(dst: &mut SourcePackageContent<'a>, src: &mut SourcePackageContent<'a>) {
+fn drain_into<'a>(dst: &mut IrPackageContent<'a>, src: &mut IrPackageContent<'a>) {
     for record in src.records.drain(..) {
         dst.push(record);
     }

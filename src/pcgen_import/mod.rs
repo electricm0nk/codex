@@ -111,6 +111,10 @@ pub mod sheet_rule;
 /// spell catalog behind it) reads a settled formula instead of a raw token.
 pub mod spell_formula_settle;
 
-pub mod source_content_payload;
+/// SD-35 `AT-35-E6-003-RULED` cycle 18: the converter's own seven-variant
+/// projection payload, split off the live envelope's payload so that
+/// `rules_core::source_content` names no parser entry type (`decisions.md`
+/// §11, §19). Was `source_content_payload`.
+pub mod ir_content_payload;
 
 pub use lst_parser::ParsedLstRecord;

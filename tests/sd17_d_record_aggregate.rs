@@ -40,9 +40,9 @@ use codex::pcgen_import::lst_parser::spellcasting_class::{
 // Canonical home: parser surface.
 use codex::pcgen_import::lst_parser::ParsedLstRecord;
 // Canonical envelope: rules_core::source_content (SourceContentRecord,
-// SourceContentKind, SourceRef) and pcgen_import::source_content_payload
-// (SourceContentPayload).
-use codex::pcgen_import::source_content_payload::SourceContentPayload;
+// SourceContentKind, SourceRef) and pcgen_import::ir_content_payload
+// (IrContentPayload).
+use codex::pcgen_import::ir_content_payload::IrContentPayload;
 use codex::rules_core::source_content::{
     MetadataKindInner, SourceContentKind, SourceContentRecord, SourceRef,
 };
@@ -65,13 +65,13 @@ fn assert_kind_payload(
     );
     let payload_label_matches = matches!(
         (&record.payload, payload_label),
-        (SourceContentPayload::Class(_), "Class")
-            | (SourceContentPayload::SpellcastingClass(_), "SpellcastingClass")
-            | (SourceContentPayload::Race(_), "Race")
-            | (SourceContentPayload::Ability(_), "Ability")
-            | (SourceContentPayload::Spell(_), "Spell")
-            | (SourceContentPayload::Equipment(..), "Equipment")
-            | (SourceContentPayload::Metadata(_), "Metadata")
+        (IrContentPayload::Class(_), "Class")
+            | (IrContentPayload::SpellcastingClass(_), "SpellcastingClass")
+            | (IrContentPayload::Race(_), "Race")
+            | (IrContentPayload::Ability(_), "Ability")
+            | (IrContentPayload::Spell(_), "Spell")
+            | (IrContentPayload::Equipment(..), "Equipment")
+            | (IrContentPayload::Metadata(_), "Metadata")
     );
     assert!(
         payload_label_matches,
@@ -170,7 +170,7 @@ fn d1_metadata_variant_round_trips_through_convert_to_ir() {
         panic!("expected Metadata kind, got {:?}", converted.kind);
     };
     assert_eq!(inner, MetadataKindInner::Deity);
-    assert!(matches!(converted.payload, SourceContentPayload::Metadata(_)));
+    assert!(matches!(converted.payload, IrContentPayload::Metadata(_)));
 }
 
 // =============================================================================
@@ -281,7 +281,7 @@ fn d3_equipment_kind_carries_through_aggregate_constructor() {
     let aggregate = ParsedLstRecord::from_equipment(weapon);
     let record = convert_to_ir(&aggregate, &canonical_schema());
     assert_eq!(record.kind, SourceContentKind::Equipment);
-    if let SourceContentPayload::Equipment(payload) = &record.payload {
+    if let IrContentPayload::Equipment(payload) = &record.payload {
         assert!(!payload.is_modifier);
     } else {
         panic!("expected Equipment payload, got {:?}", record.payload);

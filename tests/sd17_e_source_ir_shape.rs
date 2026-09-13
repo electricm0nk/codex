@@ -11,7 +11,7 @@
 //! ## Verification coverage
 //!
 //! - V1 round-trip per kind: each of the six B-family entry types
-//!   projects into the matching `SourceContentPayload` variant and
+//!   projects into the matching `IrContentPayload` variant and
 //!   back via the borrowed entry.
 //! - V2 `SourceRef` line numbers preserved from the parser output.
 //! - V3 malformed-record diagnostic: a hand-built parsed record
@@ -41,7 +41,7 @@ use codex::pcgen_import::lst_parser::spellcasting_class::{
 };
 use codex::rules_core::source_content::{
     MetadataKindInner, SourceContentDiagnostic, SourceContentDiagnosticKind, SourceContentKind,
-    SourceContentPayload, SourceContentRecord, SourceContentSeverity, SourcePackageContent,
+    IrContentPayload, SourceContentRecord, SourceContentSeverity, SourcePackageContent,
     SourceRef, SOURCE_IR_VERSION,
 };
 
@@ -51,7 +51,7 @@ use codex::rules_core::source_content::{
 
 fn assert_payload_class(record: &SourceContentRecord<'_>, expected: &ClassEntry) {
     match record.payload {
-        SourceContentPayload::Class(p) => {
+        IrContentPayload::Class(p) => {
             // Zero-copy: the pointer the envelope holds IS the
             // same pointer the caller still holds.
             assert!(std::ptr::eq(p, expected));
@@ -61,7 +61,7 @@ fn assert_payload_class(record: &SourceContentRecord<'_>, expected: &ClassEntry)
             assert_eq!(p.tokens.len(), expected.tokens.len());
             assert_eq!(p.feature_blocks.len(), expected.feature_blocks.len());
         }
-        _ => panic!("expected SourceContentPayload::Class variant"),
+        _ => panic!("expected IrContentPayload::Class variant"),
     }
 }
 
@@ -87,14 +87,14 @@ fn v1_spellcasting_class_entry_round_trips_into_spellcasting_class_payload() {
     let record = convert_spellcasting_class_entry(entry);
     assert_eq!(record.kind, SourceContentKind::SpellcastingClass);
     match record.payload {
-        SourceContentPayload::SpellcastingClass(p) => {
+        IrContentPayload::SpellcastingClass(p) => {
             assert!(std::ptr::eq(p, entry));
             assert_eq!(p.class_name, entry.class_name);
             assert_eq!(p.spell_stat, entry.spell_stat);
             assert_eq!(p.casting_posture, entry.casting_posture);
             assert_eq!(p.spell_progression.len(), entry.spell_progression.len());
         }
-        _ => panic!("expected SourceContentPayload::SpellcastingClass variant"),
+        _ => panic!("expected IrContentPayload::SpellcastingClass variant"),
     }
 }
 
@@ -108,13 +108,13 @@ fn v1_race_declaration_round_trips_into_race_payload() {
     let record = convert_race_declaration(race);
     assert_eq!(record.kind, SourceContentKind::Race);
     match record.payload {
-        SourceContentPayload::Race(p) => {
+        IrContentPayload::Race(p) => {
             assert!(std::ptr::eq(p, race));
             assert_eq!(p.target, race.target);
             assert_eq!(p.raw_directive, race.raw_directive);
             assert_eq!(p.line_number, race.line_number);
         }
-        _ => panic!("expected SourceContentPayload::Race variant"),
+        _ => panic!("expected IrContentPayload::Race variant"),
     }
 }
 
@@ -128,7 +128,7 @@ fn v1_ability_declaration_round_trips_into_ability_payload() {
     let record = convert_ability_declaration(ability);
     assert_eq!(record.kind, SourceContentKind::Ability);
     match record.payload {
-        SourceContentPayload::Ability(p) => {
+        IrContentPayload::Ability(p) => {
             assert!(std::ptr::eq(p, ability));
             assert_eq!(p.raw_directive, ability.raw_directive);
             assert_eq!(p.line_number, ability.line_number);
@@ -142,7 +142,7 @@ fn v1_ability_declaration_round_trips_into_ability_payload() {
                 _ => panic!("parsed-field shape mismatch"),
             }
         }
-        _ => panic!("expected SourceContentPayload::Ability variant"),
+        _ => panic!("expected IrContentPayload::Ability variant"),
     }
 }
 
@@ -158,7 +158,7 @@ fn v1_spell_record_round_trips_into_spell_payload() {
     let record = convert_spell_record(inner);
     assert_eq!(record.kind, SourceContentKind::Spell);
     match record.payload {
-        SourceContentPayload::Spell(p) => {
+        IrContentPayload::Spell(p) => {
             // SD-35 `AT-35-E6-003-RULED` cycle 8 changed this contract
             // deliberately, and this assertion is the replacement for the
             // `std::ptr::eq(p, inner)` zero-copy claim that stood here.
@@ -199,7 +199,7 @@ fn v1_spell_record_round_trips_into_spell_payload() {
             assert_eq!(p.descriptor.as_deref(), Some("Force"));
             assert_eq!(p.casting_time.as_deref(), Some("1 standard action"));
         }
-        _ => panic!("expected SourceContentPayload::Spell variant"),
+        _ => panic!("expected IrContentPayload::Spell variant"),
     }
 }
 
@@ -219,7 +219,7 @@ fn v1_equipment_record_round_trips_into_equipment_payload() {
     let record = convert_equipment_record(entry);
     assert_eq!(record.kind, SourceContentKind::Equipment);
     match record.payload {
-        SourceContentPayload::Equipment(p) => {
+        IrContentPayload::Equipment(p) => {
             assert_eq!(p.name, entry.name);
             assert_eq!(p.identity, entry.name, "no KEY: token, so the name is the identity");
             assert!(!p.is_modifier);
@@ -228,7 +228,7 @@ fn v1_equipment_record_round_trips_into_equipment_payload() {
             assert!(p.states_base_damage, "the row states DAMAGE:1d8");
             assert!(entry.bonus_chains.is_empty(), "and states no BONUS: chain");
         }
-        _ => panic!("expected SourceContentPayload::Equipment variant"),
+        _ => panic!("expected IrContentPayload::Equipment variant"),
     }
 }
 
@@ -275,13 +275,13 @@ fn v1_metadata_record_round_trips_into_metadata_payload_with_inner_kind_mapping(
         let record = convert_metadata_record(entry);
         assert_eq!(record.kind, SourceContentKind::Metadata(*expected_inner));
         match record.payload {
-            SourceContentPayload::Metadata(p) => {
+            IrContentPayload::Metadata(p) => {
                 assert!(std::ptr::eq(p, entry));
                 assert_eq!(p.kind, *expected_b6_kind);
                 assert_eq!(p.name, entry.name);
                 assert_eq!(p.line_number, entry.line_number);
             }
-            _ => panic!("expected SourceContentPayload::Metadata variant"),
+            _ => panic!("expected IrContentPayload::Metadata variant"),
         }
     }
 }
@@ -600,7 +600,7 @@ fn bonus_convert_to_ir_dispatches_to_canonical_record_per_kind() {
     let class_entry: &ClassEntry = &class_parsed.entries[0];
     let r = convert_to_ir(&ParsedLstRecord::from_class(class_entry), &schema);
     assert_eq!(r.kind, SourceContentKind::Class);
-    assert!(matches!(r.payload, SourceContentPayload::Class(_)));
+    assert!(matches!(r.payload, IrContentPayload::Class(_)));
 
     // SpellcastingClassEntry
     let scc_parsed =
@@ -613,7 +613,7 @@ fn bonus_convert_to_ir_dispatches_to_canonical_record_per_kind() {
     assert_eq!(r.kind, SourceContentKind::SpellcastingClass);
     assert!(matches!(
         r.payload,
-        SourceContentPayload::SpellcastingClass(_)
+        IrContentPayload::SpellcastingClass(_)
     ));
 
     // RaceDeclaration
@@ -621,14 +621,14 @@ fn bonus_convert_to_ir_dispatches_to_canonical_record_per_kind() {
     let race: &RaceDeclaration = &race_parsed.race_pointers[0];
     let r = convert_to_ir(&ParsedLstRecord::from_race(race), &schema);
     assert_eq!(r.kind, SourceContentKind::Race);
-    assert!(matches!(r.payload, SourceContentPayload::Race(_)));
+    assert!(matches!(r.payload, IrContentPayload::Race(_)));
 
     // AbilityDeclaration
     let ability_parsed = parse_lst_entry("cr_abilities.lst", "ABILITY:CATEGORY=FEAT|Alertness\n");
     let ability: &AbilityDeclaration = &ability_parsed.ability_declarations[0];
     let r = convert_to_ir(&ParsedLstRecord::from_ability(ability), &schema);
     assert_eq!(r.kind, SourceContentKind::Ability);
-    assert!(matches!(r.payload, SourceContentPayload::Ability(_)));
+    assert!(matches!(r.payload, IrContentPayload::Ability(_)));
 
     // SpellRecord
     let spell_row = parse_lst_spell_row(
@@ -639,14 +639,14 @@ fn bonus_convert_to_ir_dispatches_to_canonical_record_per_kind() {
     let spell_inner: &LstSpellRecord = spell_row.record.as_ref().expect("expected record");
     let r = convert_to_ir(&ParsedLstRecord::Spell(spell_inner), &schema);
     assert_eq!(r.kind, SourceContentKind::Spell);
-    assert!(matches!(r.payload, SourceContentPayload::Spell(_)));
+    assert!(matches!(r.payload, IrContentPayload::Spell(_)));
 
     // EquipmentRecord
     let equip_parsed = parse_equipment_entries("cr_equip.lst", "Longsword\tTYPE:Weapon\n");
     let equip: &EquipmentRecord = &equip_parsed.entries[0];
     let r = convert_to_ir(&ParsedLstRecord::from_equipment(equip), &schema);
     assert_eq!(r.kind, SourceContentKind::Equipment);
-    assert!(matches!(r.payload, SourceContentPayload::Equipment(..)));
+    assert!(matches!(r.payload, IrContentPayload::Equipment(..)));
 
     // LstRecord
     let meta_parsed = parse_lst_metadata_text("cr_meta.lst", "DEITY:Lamashtu\n");
@@ -656,7 +656,7 @@ fn bonus_convert_to_ir_dispatches_to_canonical_record_per_kind() {
         r.kind,
         SourceContentKind::Metadata(MetadataKindInner::Deity)
     );
-    assert!(matches!(r.payload, SourceContentPayload::Metadata(_)));
+    assert!(matches!(r.payload, IrContentPayload::Metadata(_)));
 }
 
 // =============================================================================

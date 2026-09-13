@@ -15,7 +15,7 @@
 //! `"item:longsword"`-style fixture namespace, which predates
 //! corpus-linkage and was never the corpus's own exact name.
 
-use crate::pcgen_import::source_content_payload::SourceContentPayload;
+use crate::rules_core::source_content::SourceContentPayload;
 use crate::rules_core::pilot_compute_corpus::TableCellRef;
 use crate::rules_core::rules_tables::crb::equipment_tables::equipment_tables;
 use crate::rules_core::rules_tables::{

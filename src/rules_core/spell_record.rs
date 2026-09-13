@@ -7,7 +7,7 @@
 //! ## What this closes
 //!
 //! Every Epic 6 census from cycle 1 on named the same blocker for the
-//! `lst_parser_types`, `ir_converter` and `source_content_payload` groups:
+//! `lst_parser_types`, `ir_converter` and `ir_content_payload` groups:
 //! *the live side has no converted record shape of its own, so it uses the
 //! ingest-format parser struct as its data type and runs the converter at
 //! run time to produce it.* This module is that shape for the spell kind --

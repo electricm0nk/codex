@@ -12,12 +12,12 @@
 //! plus the new canonical source-IR contract artifact
 //! `canonical-source-ir-contract-2026-07-12.md`. Every test that
 //! previously destructured `IRNode::Class(p)` now destructures
-//! `node.payload` directly via [`SourceContentPayload`].
+//! `node.payload` directly via [`IrContentPayload`].
 //!
 //! ## Verification coverage
 //!
 //! - V1 round-trip per kind: every B-family entry type projects into
-//!   the matching `SourceContentPayload` variant and back.
+//!   the matching `IrContentPayload` variant and back.
 //! - V2 forwarded-diagnostic preservation: every LstDiagnostic carried by
 //!   a B-family parse-result container surfaces as an IRDiagnostic.
 //! - V3 malformed diagnostic: a hand-built LST with a malformed entry
@@ -53,6 +53,8 @@ use codex::pcgen_import::lst_parser::spell::parse_lst_spell_row;
 use codex::pcgen_import::lst_parser::spellcasting_class::{
     parse_spellcasting_class_entries, CastingPosture, SpellcastingClassEntry,
 };
+use codex::pcgen_import::ir_content_payload::IrContentPayload;
+use codex::pcgen_import::ir_converter::{convert_equipment_record_ir, convert_spell_record_ir};
 use codex::rules_core::source_content::{
     MetadataKindInner, SourceContentKind, SourceContentPayload,
 };
@@ -122,16 +124,16 @@ CLASS:Fighter\tHD:10\tPROFICIENCY:Armor,Weapon
     let record = convert_class_entry(entry);
 
     // Slice E: kind tag is `SourceContentKind::Class`, payload is the
-    // canonical `SourceContentPayload::Class(&ClassEntry)` borrow.
+    // canonical `IrContentPayload::Class(&ClassEntry)` borrow.
     assert_eq!(record.kind, SourceContentKind::Class);
     match record.payload {
-        SourceContentPayload::Class(p) => {
+        IrContentPayload::Class(p) => {
             assert_eq!(p.class_name, entry.class_name);
             assert_eq!(p.header_line_number, entry.header_line_number);
             assert_eq!(p.tokens.len(), entry.tokens.len());
             assert_eq!(p.feature_blocks.len(), entry.feature_blocks.len());
         }
-        _ => panic!("expected SourceContentPayload::Class variant"),
+        _ => panic!("expected IrContentPayload::Class variant"),
     }
 
     // V5: line-number provenance via SourceRef.
@@ -157,12 +159,12 @@ CLASS:Cleric\tSPELLSTAT:WIS\tMEMORIZE:YES
 
     assert_eq!(record.kind, SourceContentKind::SpellcastingClass);
     match record.payload {
-        SourceContentPayload::SpellcastingClass(p) => {
+        IrContentPayload::SpellcastingClass(p) => {
             assert_eq!(p.class_name, entry.class_name);
             assert_eq!(p.spell_progression.len(), entry.spell_progression.len());
             assert_eq!(p.spell_stat, entry.spell_stat);
         }
-        _ => panic!("expected SourceContentPayload::SpellcastingClass variant"),
+        _ => panic!("expected IrContentPayload::SpellcastingClass variant"),
     }
     assert_eq!(record.kind.source_slice(), "SD17-B-2");
 }
@@ -178,11 +180,11 @@ fn v1_round_trip_race_declaration_projection_carries_b3_payload() {
 
     assert_eq!(record.kind, SourceContentKind::Race);
     match record.payload {
-        SourceContentPayload::Race(p) => {
+        IrContentPayload::Race(p) => {
             assert_eq!(p.target, race.target);
             assert_eq!(p.raw_directive, race.raw_directive);
         }
-        _ => panic!("expected SourceContentPayload::Race variant"),
+        _ => panic!("expected IrContentPayload::Race variant"),
     }
     assert_eq!(record.kind.source_slice(), "SD17-B-3");
 }
@@ -198,7 +200,7 @@ fn v1_round_trip_ability_declaration_projection_carries_b3_payload() {
 
     assert_eq!(record.kind, SourceContentKind::Ability);
     match record.payload {
-        SourceContentPayload::Ability(p) => {
+        IrContentPayload::Ability(p) => {
             assert_eq!(p.raw_directive, ability.raw_directive);
             match (&p.parsed, &ability.parsed) {
                 (Some(pf), Some(af)) => {
@@ -210,7 +212,7 @@ fn v1_round_trip_ability_declaration_projection_carries_b3_payload() {
                 _ => panic!("parsed-field shape mismatch"),
             }
         }
-        _ => panic!("expected SourceContentPayload::Ability variant"),
+        _ => panic!("expected IrContentPayload::Ability variant"),
     }
 }
 
@@ -220,16 +222,16 @@ fn v1_round_trip_spell_record_projection_carries_b4_payload() {
     let row = parse_lst_spell_row("cr_spells.lst", 7, text);
     let inner = row.record.expect("expected a parsed spell record");
 
-    let record = convert_spell_record(&inner);
+    let record = convert_spell_record_ir(&inner);
 
     assert_eq!(record.kind, SourceContentKind::Spell);
     match record.payload {
-        SourceContentPayload::Spell(p) => {
+        IrContentPayload::Spell(p) => {
             assert_eq!(p.name, inner.name);
             assert_eq!(p.school, inner.school);
             assert_eq!(p.descriptor, inner.descriptor);
         }
-        _ => panic!("expected SourceContentPayload::Spell variant"),
+        _ => panic!("expected IrContentPayload::Spell variant"),
     }
     assert_eq!(record.source_ref.line, 7);
     assert_eq!(record.kind.source_slice(), "SD17-B-4");
@@ -242,7 +244,7 @@ fn v1_round_trip_equipment_record_projection_carries_b5_payload() {
     assert_eq!(parsed.entries.len(), 1);
 
     let entry = &parsed.entries[0];
-    let record = convert_equipment_record(entry);
+    let record = convert_equipment_record_ir(entry);
 
     assert_eq!(record.kind, SourceContentKind::Equipment);
     match record.payload {
@@ -250,12 +252,12 @@ fn v1_round_trip_equipment_record_projection_carries_b5_payload() {
         // record alone. Name and kind are still asserted, off the settled
         // fields; the token count moved to the entry itself, which is what
         // the converter read.
-        SourceContentPayload::Equipment(p) => {
+        IrContentPayload::Equipment(p) => {
             assert_eq!(p.name, entry.name);
             assert_eq!(p.is_modifier, entry.kind == EquipmentRecordKind::EquipMod);
             assert_eq!(entry.tokens.len(), 3, "TYPE, COST and WT, the three the row states");
         }
-        _ => panic!("expected SourceContentPayload::Equipment variant"),
+        _ => panic!("expected IrContentPayload::Equipment variant"),
     }
     assert_eq!(record.kind.source_slice(), "SD17-B-5");
 }
@@ -280,12 +282,12 @@ TEMPLATE:Lycanthrope
         let record = convert_metadata_record(inner);
         assert_eq!(record.kind, SourceContentKind::Metadata(expected_kinds[i]));
         match record.payload {
-            SourceContentPayload::Metadata(p) => {
+            IrContentPayload::Metadata(p) => {
                 assert_eq!(p.kind, inner.kind);
                 assert_eq!(p.name, inner.name);
                 assert_eq!(p.line_number, inner.line_number);
             }
-            _ => panic!("record {} expected SourceContentPayload::Metadata", i),
+            _ => panic!("record {} expected IrContentPayload::Metadata", i),
         }
         assert_eq!(record.kind.source_slice(), "SD17-B-6");
     }
@@ -316,11 +318,11 @@ fn v2_metadata_diagnostic_is_forwarded_as_ir_diagnostic_warning() {
 
     // The canonical record still carries the partial record (R4: conversion is total).
     match record.payload {
-        SourceContentPayload::Metadata(p) => {
+        IrContentPayload::Metadata(p) => {
             assert_eq!(p.name, "");
             assert_eq!(p.kind, MetadataKind::Deity);
         }
-        _ => panic!("expected SourceContentPayload::Metadata"),
+        _ => panic!("expected IrContentPayload::Metadata"),
     }
 }
 
@@ -442,8 +444,8 @@ fn v3_malformed_metadata_diagnostic_surfaces_in_ir_pipeline() {
     assert_eq!(d.source_kind, "SD17-B-6");
 
     match malformed_record.payload {
-        SourceContentPayload::Metadata(p) => assert_eq!(p.name, ""),
-        _ => panic!("expected SourceContentPayload::Metadata"),
+        IrContentPayload::Metadata(p) => assert_eq!(p.name, ""),
+        _ => panic!("expected IrContentPayload::Metadata"),
     }
 }
 
@@ -819,7 +821,7 @@ fn ir_schema_recognizes_known_kind_and_rejects_unknown() {
 }
 
 #[test]
-fn source_content_payload_kind_token_is_canonical() {
+fn ir_content_payload_kind_token_is_canonical() {
     let row = parse_lst_spell_row("cr_spells.lst", 1, "Fireball\tSCHOOL:Evocation");
     let spell_inner = row.record.unwrap();
     let spell_record = convert_spell_record(&spell_inner);
@@ -999,9 +1001,9 @@ fn equipment_record_carries_record_kind_and_token_payload() {
     assert_eq!(equip.kind, EquipmentRecordKind::Equip);
     assert_eq!(equip.tokens.len(), 4);
 
-    let record = convert_equipment_record(equip);
+    let record = convert_equipment_record_ir(equip);
     match record.payload {
-        SourceContentPayload::Equipment(p) => {
+        IrContentPayload::Equipment(p) => {
             assert!(!p.is_modifier);
             // The four tokens the entry carried are settled, not copied: the
             // record's own weight, price, base damage die and weapon typing.
@@ -1009,7 +1011,7 @@ fn equipment_record_carries_record_kind_and_token_payload() {
             assert_eq!(p.cost_gp, Some(15.0));
             assert!(p.states_base_damage);
         }
-        _ => panic!("expected SourceContentPayload::Equipment"),
+        _ => panic!("expected IrContentPayload::Equipment"),
     }
 }
 
@@ -1024,11 +1026,11 @@ fn ability_kind_enum_is_preserved_through_conversion() {
 
     let record = convert_ability_declaration(ability);
     match record.payload {
-        SourceContentPayload::Ability(p) => {
+        IrContentPayload::Ability(p) => {
             let pf = p.parsed.as_ref().expect("expected parsed fields");
             assert_eq!(pf.kind, Some(AbilityKind::Virtual));
         }
-        _ => panic!("expected SourceContentPayload::Ability"),
+        _ => panic!("expected IrContentPayload::Ability"),
     }
 }
 
@@ -1069,8 +1071,8 @@ fn metadata_kind_is_preserved_through_conversion() {
         let record = convert_metadata_record(&parsed.records[0]);
         assert_eq!(record.kind, SourceContentKind::Metadata(*expected_inner));
         match record.payload {
-            SourceContentPayload::Metadata(p) => assert_eq!(p.kind, *expected_kind),
-            _ => panic!("expected SourceContentPayload::Metadata"),
+            IrContentPayload::Metadata(p) => assert_eq!(p.kind, *expected_kind),
+            _ => panic!("expected IrContentPayload::Metadata"),
         }
     }
 }
@@ -1081,16 +1083,16 @@ fn spell_record_preserves_optional_field_set_through_conversion() {
     let row = parse_lst_spell_row("cr_spells.lst", 1, text);
     let inner = row.record.unwrap();
 
-    let record = convert_spell_record(&inner);
+    let record = convert_spell_record_ir(&inner);
     match record.payload {
-        SourceContentPayload::Spell(p) => {
+        IrContentPayload::Spell(p) => {
             assert_eq!(p.school, Some("Evocation".to_string()));
             assert_eq!(p.descriptor, Some("Fire".to_string()));
             assert_eq!(p.casting_time, Some("1 standard action".to_string()));
             assert!(p.sub_school.is_none());
             assert!(p.components.is_none());
         }
-        _ => panic!("expected SourceContentPayload::Spell"),
+        _ => panic!("expected IrContentPayload::Spell"),
     }
 }
 
@@ -1102,12 +1104,12 @@ fn class_entry_carries_all_tab_delimited_tokens_through_conversion() {
 
     let record = convert_class_entry(entry);
     match record.payload {
-        SourceContentPayload::Class(p) => {
+        IrContentPayload::Class(p) => {
             assert_eq!(p.tokens.len(), 3);
             let keys: Vec<&str> = p.tokens.iter().map(|t| t.key.as_str()).collect();
             assert_eq!(keys, vec!["HD", "PROFICIENCY", "BONUS"]);
         }
-        _ => panic!("expected SourceContentPayload::Class"),
+        _ => panic!("expected IrContentPayload::Class"),
     }
 }
 
@@ -1120,11 +1122,11 @@ fn spellcasting_class_entry_carries_casting_posture_through_conversion() {
 
     let record = convert_spellcasting_class_entry(entry);
     match record.payload {
-        SourceContentPayload::SpellcastingClass(p) => {
+        IrContentPayload::SpellcastingClass(p) => {
             assert_eq!(p.casting_posture, Some(CastingPosture::Spellbook));
             assert_eq!(p.spell_stat, Some("INT".to_string()));
         }
-        _ => panic!("expected SourceContentPayload::SpellcastingClass"),
+        _ => panic!("expected IrContentPayload::SpellcastingClass"),
     }
 }
 
@@ -1139,13 +1141,13 @@ fn equipment_record_kind_round_trips_through_conversion() {
     assert_eq!(parsed.entries.len(), 1);
     assert_eq!(parsed.entries[0].kind, EquipmentRecordKind::EquipMod);
 
-    let record = convert_equipment_record(&parsed.entries[0]);
+    let record = convert_equipment_record_ir(&parsed.entries[0]);
     assert_eq!(record.payload.kind_token(), "EQUIPMOD");
     match record.payload {
-        SourceContentPayload::Equipment(p) => {
+        IrContentPayload::Equipment(p) => {
             assert!(p.is_modifier);
         }
-        _ => panic!("expected SourceContentPayload::Equipment"),
+        _ => panic!("expected IrContentPayload::Equipment"),
     }
 }
 
@@ -1163,12 +1165,12 @@ fn ability_parsed_field_full_shape_is_preserved() {
 
     let record = convert_ability_declaration(ability);
     match record.payload {
-        SourceContentPayload::Ability(p) => {
+        IrContentPayload::Ability(p) => {
             let pf = p.parsed.as_ref().expect("expected parsed fields");
             assert_eq!(pf.category, Some("FEAT".to_string()));
             assert_eq!(pf.name, "Alertness");
             assert_eq!(pf.trailing_modifiers, vec!["FREE:YES".to_string()]);
         }
-        _ => panic!("expected SourceContentPayload::Ability"),
+        _ => panic!("expected IrContentPayload::Ability"),
     }
 }

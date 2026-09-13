@@ -9,11 +9,11 @@
 //! Slice E authors the canonical source-IR record shape in
 //! `src/rules_core/source_content.rs`:
 //!
-//! - `SourcePackageContent<'a>` — corpus-rooted aggregate.
-//! - `SourceContentRecord<'a>`   — per-record envelope.
-//! - `SourceContentPayload<'a>`  — kind-tagged enum of borrowed
+//! - `IrPackageContent<'a>` — corpus-rooted aggregate.
+//! - `IrContentRecord<'a>`   — per-record envelope.
+//! - `IrContentPayload<'a>`  — kind-tagged enum of borrowed
 //!   B-family entries (defined in
-//!   `src/pcgen_import/source_content_payload.rs` to keep the
+//!   `src/pcgen_import/ir_content_payload.rs` to keep the
 //!   `rules_core <-> pcgen_import` import graph acyclic; re-exported
 //!   from `rules_core::source_content`).
 //! - `SourceRef` / `SourceContentKind` / `SourceContentDiagnostic` —
@@ -21,7 +21,7 @@
 //!
 //! **This module (`ir_converter.rs`) is the canonical projection
 //! path.** It takes a `ParsedLstRecord<'a>` and produces a
-//! `SourceContentRecord<'a>` per record, with full provenance
+//! `IrContentRecord<'a>` per record, with full provenance
 //! forwarded and (when applicable) forwarded from the B-family
 //! parse-result containers into `SourceContentDiagnostic`s.
 //!
@@ -39,13 +39,13 @@
 //! - [`ParsedLstRecord`] — canonical input enum that [`convert_to_ir`]
 //!   dispatches on. Authored by Slice D (parser-aggregate relocation).
 //! - [`convert_to_ir`] — public entry point. Returns a
-//!   [`SourceContentRecord`] (the canonical envelope).
+//!   [`IrContentRecord`] (the canonical envelope).
 //! - Per-family converters ([`convert_class_entry`], etc.) for typed callers.
 //! - Per-document converters ([`convert_class_parse_result`], etc.) that
 //!   consume the B-family parse-result containers and emit a
-//!   [`SourcePackageContent`] aggregate plus forwarded canonical diagnostics.
+//!   [`IrPackageContent`] aggregate plus forwarded canonical diagnostics.
 //! - [`convert_package_from_class_parse_result`] etc. — corpus-rooted
-//!   entry points that accumulate a complete [`SourcePackageContent`].
+//!   entry points that accumulate a complete [`IrPackageContent`].
 //!
 //! ## Performance contract
 //!
@@ -80,7 +80,7 @@ use crate::pcgen_import::lst_parser::spell::{LstSpellFile, LstSpellRecord};
 use crate::pcgen_import::lst_parser::spellcasting_class::{
     SpellcastingClassDiagnostic, SpellcastingClassEntry, SpellcastingClassParseResult,
 };
-use crate::pcgen_import::source_content_payload::b6_metadata_kind_to_canonical;
+use crate::pcgen_import::ir_content_payload::b6_metadata_kind_to_canonical;
 use crate::rules_core::damage_total::{DiceExpression, WieldCategory};
 use crate::rules_core::equipment_effects::intelligent_item::{
     IntelligentItemContribution, ItemAlignment,
@@ -91,10 +91,12 @@ use crate::rules_core::equipment_effects::magic_items::AbilityScoreBonus;
 use crate::rules_core::equipment_effects::EquipmentStatEffect;
 use crate::rules_core::equipment_record::CorpusEquipmentRecord;
 use crate::rules_core::spell_record::CorpusSpellRecord;
+use crate::pcgen_import::ir_content_payload::{
+    record_to_live, IrContentPayload, IrContentRecord, IrPackageContent,
+};
 use crate::rules_core::source_content::{
     SOURCE_IR_VERSION, SourceContentDiagnostic, SourceContentDiagnosticKind, SourceContentKind,
-    SourceContentPayload, SourceContentRecord, SourceContentSeverity, SourcePackageContent,
-    SourceRef,
+    SourceContentRecord, SourceContentSeverity, SourceRef,
 };
 
 // =============================================================================
@@ -348,54 +350,54 @@ fn make_source_ref(path: impl Into<String>, line: usize) -> SourceRef {
 }
 
 // =============================================================================
-// Per-family record converters — return SourceContentRecord<'a>
+// Per-family record converters — return IrContentRecord<'a>
 // =============================================================================
 
-/// Build a canonical [`SourceContentRecord`] from a B-1 [`ClassEntry`].
+/// Build a canonical [`IrContentRecord`] from a B-1 [`ClassEntry`].
 ///
 /// Projection is zero-copy. The borrowed `entry` carries every
 /// `tokens` and `feature_blocks` entry verbatim.
-pub fn convert_class_entry(entry: &ClassEntry) -> SourceContentRecord<'_> {
+pub fn convert_class_entry(entry: &ClassEntry) -> IrContentRecord<'_> {
     let line = entry.header_line_number;
     let source_ref = make_source_ref(entry.record_source_path(), line);
     SourceContentRecord::new(
         source_ref,
         SourceContentKind::Class,
-        SourceContentPayload::Class(entry),
+        IrContentPayload::Class(entry),
     )
 }
 
-/// Build a canonical [`SourceContentRecord`] from a B-2
+/// Build a canonical [`IrContentRecord`] from a B-2
 /// [`SpellcastingClassEntry`].
-pub fn convert_spellcasting_class_entry(entry: &SpellcastingClassEntry) -> SourceContentRecord<'_> {
+pub fn convert_spellcasting_class_entry(entry: &SpellcastingClassEntry) -> IrContentRecord<'_> {
     let line = entry.header_line_number;
     let source_ref = make_source_ref(entry.record_source_path(), line);
     SourceContentRecord::new(
         source_ref,
         SourceContentKind::SpellcastingClass,
-        SourceContentPayload::SpellcastingClass(entry),
+        IrContentPayload::SpellcastingClass(entry),
     )
 }
 
-/// Build a canonical [`SourceContentRecord`] from a B-3
+/// Build a canonical [`IrContentRecord`] from a B-3
 /// [`RaceDeclaration`].
-pub fn convert_race_declaration(decl: &RaceDeclaration) -> SourceContentRecord<'_> {
+pub fn convert_race_declaration(decl: &RaceDeclaration) -> IrContentRecord<'_> {
     let source_ref = make_source_ref(&decl.source_path, decl.line_number);
     SourceContentRecord::new(
         source_ref,
         SourceContentKind::Race,
-        SourceContentPayload::Race(decl),
+        IrContentPayload::Race(decl),
     )
 }
 
-/// Build a canonical [`SourceContentRecord`] from a B-3
+/// Build a canonical [`IrContentRecord`] from a B-3
 /// [`AbilityDeclaration`].
-pub fn convert_ability_declaration(decl: &AbilityDeclaration) -> SourceContentRecord<'_> {
+pub fn convert_ability_declaration(decl: &AbilityDeclaration) -> IrContentRecord<'_> {
     let source_ref = make_source_ref(&decl.source_path, decl.line_number);
     SourceContentRecord::new(
         source_ref,
         SourceContentKind::Ability,
-        SourceContentPayload::Ability(decl),
+        IrContentPayload::Ability(decl),
     )
 }
 
@@ -436,7 +438,7 @@ pub fn spell_record_to_corpus(record: &LstSpellRecord) -> CorpusSpellRecord {
     }
 }
 
-/// Build a canonical [`SourceContentRecord`] from a B-4 [`LstSpellRecord`].
+/// Build a canonical [`IrContentRecord`] from a B-4 [`LstSpellRecord`].
 ///
 /// The envelope's payload is the **converted** record
 /// ([`CorpusSpellRecord`](crate::rules_core::spell_record::CorpusSpellRecord)),
@@ -449,13 +451,23 @@ pub fn spell_record_to_corpus(record: &LstSpellRecord) -> CorpusSpellRecord {
 /// builds the envelope directly with
 /// [`crate::rules_core::source_content::SourceContentRecord::spell`].
 pub fn convert_spell_record(record: &LstSpellRecord) -> SourceContentRecord<'static> {
+    record_to_live(&convert_spell_record_ir(record))
+}
+
+/// The same conversion as [`convert_spell_record`], stopping at the
+/// converter's own envelope instead of the live one.
+///
+/// SD-35 `AT-35-E6-003-RULED` cycle 18: the per-document converters accumulate
+/// an [`IrPackageContent`], so they need the IR-side record; every other caller
+/// wants the live envelope, whose `Spell` payload is the same settled record.
+pub fn convert_spell_record_ir(record: &LstSpellRecord) -> IrContentRecord<'static> {
     let source_ref = make_source_ref(&record.source_path, record.line_number);
     let converted: &'static CorpusSpellRecord =
         Box::leak(Box::new(spell_record_to_corpus(record)));
     SourceContentRecord::new(
         source_ref,
         SourceContentKind::Spell,
-        SourceContentPayload::Spell(converted),
+        IrContentPayload::Spell(converted),
     )
 }
 
@@ -987,7 +999,7 @@ fn intelligent_item_contribution_of(record: &EquipmentRecord) -> Option<Intellig
     found.then_some(result)
 }
 
-/// Build a canonical [`SourceContentRecord`] from a B-5
+/// Build a canonical [`IrContentRecord`] from a B-5
 /// [`EquipmentRecord`].
 ///
 /// SD-35 `AT-35-E6-003-RULED` cycle 13: the envelope's payload is the converted
@@ -1001,6 +1013,13 @@ fn intelligent_item_contribution_of(record: &EquipmentRecord) -> Option<Intellig
 /// The converted record is interned for the process lifetime (`Box::leak`) to
 /// satisfy the envelope's borrow, exactly as cycle 8's spell path already does.
 pub fn convert_equipment_record(record: &EquipmentRecord) -> SourceContentRecord<'static> {
+    record_to_live(&convert_equipment_record_ir(record))
+}
+
+/// The same conversion as [`convert_equipment_record`], stopping at the
+/// converter's own envelope instead of the live one. See
+/// [`convert_spell_record_ir`] for why both exist.
+pub fn convert_equipment_record_ir(record: &EquipmentRecord) -> IrContentRecord<'static> {
     let line = record.header_line_number;
     let source_ref = make_source_ref(record.record_source_path(), line);
     let converted: &'static CorpusEquipmentRecord =
@@ -1008,19 +1027,19 @@ pub fn convert_equipment_record(record: &EquipmentRecord) -> SourceContentRecord
     SourceContentRecord::new(
         source_ref,
         SourceContentKind::Equipment,
-        SourceContentPayload::Equipment(converted),
+        IrContentPayload::Equipment(converted),
     )
 }
 
-/// Build a canonical [`SourceContentRecord`] from a B-6 [`LstRecord`].
+/// Build a canonical [`IrContentRecord`] from a B-6 [`LstRecord`].
 /// The inner metadata kind is mapped from the parser-side
 /// [`crate::pcgen_import::lst_parser::metadata::MetadataKind`] to the
 /// canonical [`crate::rules_core::source_content::MetadataKindInner`] so
 /// the rules-core envelope is total over the six B-6 kinds.
-pub fn convert_metadata_record(record: &LstRecord) -> SourceContentRecord<'_> {
+pub fn convert_metadata_record(record: &LstRecord) -> IrContentRecord<'_> {
     let source_ref = make_source_ref(record.record_source_path(), record.line_number);
     let kind = SourceContentKind::Metadata(b6_metadata_kind_to_canonical(record.kind));
-    SourceContentRecord::new(source_ref, kind, SourceContentPayload::Metadata(record))
+    SourceContentRecord::new(source_ref, kind, IrContentPayload::Metadata(record))
 }
 
 // =============================================================================
@@ -1036,32 +1055,32 @@ pub fn convert_metadata_record(record: &LstRecord) -> SourceContentRecord<'_> {
 /// for typed callers.
 ///
 /// The return type changed from `Result<IRNode, IRDiagnostic>` to
-/// `SourceContentRecord<'a>` per the Slice E contract. The conversion
+/// `IrContentRecord<'a>` per the Slice E contract. The conversion
 /// is total: every B-family record has exactly one canonical envelope
 /// variant. The `Result` wrapper is no longer necessary; the
 /// canonical envelope carries its own diagnostic stream via
 /// [`SourceContentDiagnostic`] attached to the package-level
-/// [`SourcePackageContent`].
+/// [`IrPackageContent`].
 pub fn convert_to_ir<'a>(
     parsed_record: &ParsedLstRecord<'a>,
     _schema: &IRSchema,
-) -> SourceContentRecord<'a> {
+) -> IrContentRecord<'a> {
     match parsed_record {
         ParsedLstRecord::Class(entry) => convert_class_entry(entry),
         ParsedLstRecord::SpellcastingClass(entry) => convert_spellcasting_class_entry(entry),
         ParsedLstRecord::Race(r) => convert_race_declaration(r),
         ParsedLstRecord::Ability(a) => convert_ability_declaration(a),
-        ParsedLstRecord::Spell(s) => convert_spell_record(s),
-        ParsedLstRecord::Equipment(e) => convert_equipment_record(e),
+        ParsedLstRecord::Spell(s) => convert_spell_record_ir(s),
+        ParsedLstRecord::Equipment(e) => convert_equipment_record_ir(e),
         ParsedLstRecord::Metadata(r) => convert_metadata_record(r),
     }
 }
 
 // =============================================================================
-// Per-document converters — produce (SourceContentRecord, forwarded IRDiagnostic) pairs
+// Per-document converters — produce (IrContentRecord, forwarded IRDiagnostic) pairs
 // =============================================================================
 //
-// The converter returns one `SourceContentRecord` per B-family entry
+// The converter returns one `IrContentRecord` per B-family entry
 // plus the forwarded diagnostics stream. Caller-supplied `source_path`
 // overrides the per-record `source_path` for records whose parser
 // surface does not embed one (ClassEntry, SpellcastingClassEntry,
@@ -1073,7 +1092,7 @@ pub fn convert_to_ir<'a>(
 pub fn convert_class_parse_result<'a>(
     r: &'a ClassParseResult,
     _schema: &IRSchema,
-) -> Vec<(SourceContentRecord<'a>, Vec<IRDiagnostic>)> {
+) -> Vec<(IrContentRecord<'a>, Vec<IRDiagnostic>)> {
     let mut out = Vec::with_capacity(r.entries.len());
     for entry in &r.entries {
         let record = convert_class_entry(entry);
@@ -1088,7 +1107,7 @@ pub fn convert_class_parse_result<'a>(
 pub fn convert_spellcasting_class_parse_result<'a>(
     r: &'a SpellcastingClassParseResult,
     _schema: &IRSchema,
-) -> Vec<(SourceContentRecord<'a>, Vec<IRDiagnostic>)> {
+) -> Vec<(IrContentRecord<'a>, Vec<IRDiagnostic>)> {
     let mut out = Vec::with_capacity(r.entries.len());
     for entry in &r.entries {
         let record = convert_spellcasting_class_entry(entry);
@@ -1103,7 +1122,7 @@ pub fn convert_spellcasting_class_parse_result<'a>(
 pub fn convert_lst_entry_file<'a>(
     r: &'a LstEntryFile,
     _schema: &IRSchema,
-) -> Vec<(SourceContentRecord<'a>, Vec<IRDiagnostic>)> {
+) -> Vec<(IrContentRecord<'a>, Vec<IRDiagnostic>)> {
     let mut out = Vec::with_capacity(r.race_pointers.len() + r.ability_declarations.len());
     for race in &r.race_pointers {
         out.push((
@@ -1125,7 +1144,7 @@ pub fn convert_lst_entry_file<'a>(
 pub fn convert_lst_metadata_document<'a>(
     r: &'a LstMetadataDocument,
     _schema: &IRSchema,
-) -> Vec<(SourceContentRecord<'a>, Vec<IRDiagnostic>)> {
+) -> Vec<(IrContentRecord<'a>, Vec<IRDiagnostic>)> {
     let mut out = Vec::with_capacity(r.records.len());
     for record in &r.records {
         let canonical = convert_metadata_record(record);
@@ -1143,11 +1162,11 @@ pub fn convert_spell_record_list<'a>(
     records: &'a [LstSpellRecord],
     source_path: &str,
     _schema: &IRSchema,
-) -> Vec<(SourceContentRecord<'a>, Vec<IRDiagnostic>)> {
+) -> Vec<(IrContentRecord<'a>, Vec<IRDiagnostic>)> {
     let _ = source_path; // Per-row spell diagnostics live on the LstSpellFile, not on the LstSpellRecord itself.
     let mut out = Vec::with_capacity(records.len());
     for record in records {
-        let canonical = convert_spell_record(record);
+        let canonical = convert_spell_record_ir(record);
         out.push((canonical, Vec::new()));
     }
     out
@@ -1159,7 +1178,7 @@ pub fn convert_spell_record_list<'a>(
 pub fn convert_spell_file<'a>(
     r: &'a LstSpellFile,
     schema: &IRSchema,
-) -> Vec<(SourceContentRecord<'a>, Vec<IRDiagnostic>)> {
+) -> Vec<(IrContentRecord<'a>, Vec<IRDiagnostic>)> {
     let source_path = path_to_string(&r.source_path);
     let container_diagnostics = forward_spell_container_diagnostics(&r.diagnostics, &source_path);
     let mut out = Vec::with_capacity(r.records.len());
@@ -1168,7 +1187,7 @@ pub fn convert_spell_file<'a>(
         // override so the B-4 record's own source_path is honored when
         // present but the document's identity fills in for records that
         // were construct-ed with empty paths.
-        let canonical = convert_spell_record(record);
+        let canonical = convert_spell_record_ir(record);
         out.push((canonical, container_diagnostics.clone()));
     }
     let _ = schema;
@@ -1180,10 +1199,10 @@ pub fn convert_spell_file<'a>(
 pub fn convert_equipment_parse_result<'a>(
     r: &'a EquipmentParseResult,
     _schema: &IRSchema,
-) -> Vec<(SourceContentRecord<'a>, Vec<IRDiagnostic>)> {
+) -> Vec<(IrContentRecord<'a>, Vec<IRDiagnostic>)> {
     let mut out = Vec::with_capacity(r.entries.len());
     for entry in &r.entries {
-        let canonical = convert_equipment_record(entry);
+        let canonical = convert_equipment_record_ir(entry);
         let forwarded = forward_equipment_diagnostics(entry, &r.diagnostics, &r.source_path);
         out.push((canonical, forwarded));
     }
@@ -1191,21 +1210,21 @@ pub fn convert_equipment_parse_result<'a>(
 }
 
 // =============================================================================
-// Corpus-rooted SourcePackageContent builders
+// Corpus-rooted IrPackageContent builders
 // =============================================================================
 //
-// These produce the canonical [`SourcePackageContent`] aggregate
+// These produce the canonical [`IrPackageContent`] aggregate
 // directly, accumulating records and the canonical diagnostics stream
 // in one pass.
 
-/// Build a canonical [`SourcePackageContent`] from a B-1
+/// Build a canonical [`IrPackageContent`] from a B-1
 /// [`ClassParseResult`].
 pub fn convert_package_from_class_parse_result<'a>(
     r: &'a ClassParseResult,
     package_id: impl Into<String>,
     schema: &IRSchema,
-) -> (SourcePackageContent<'a>, Vec<IRDiagnostic>) {
-    let mut pkg = SourcePackageContent::empty(package_id, SourceRef::new(r.source_path.clone(), 0));
+) -> (IrPackageContent<'a>, Vec<IRDiagnostic>) {
+    let mut pkg = IrPackageContent::empty(package_id, SourceRef::new(r.source_path.clone(), 0));
     let mut all_ir_diagnostics = Vec::new();
     for entry in &r.entries {
         let record = convert_class_entry(entry);
@@ -1220,14 +1239,14 @@ pub fn convert_package_from_class_parse_result<'a>(
     (pkg, all_ir_diagnostics)
 }
 
-/// Build a canonical [`SourcePackageContent`] from a B-2
+/// Build a canonical [`IrPackageContent`] from a B-2
 /// [`SpellcastingClassParseResult`].
 pub fn convert_package_from_spellcasting_class_parse_result<'a>(
     r: &'a SpellcastingClassParseResult,
     package_id: impl Into<String>,
     schema: &IRSchema,
-) -> (SourcePackageContent<'a>, Vec<IRDiagnostic>) {
-    let mut pkg = SourcePackageContent::empty(package_id, SourceRef::new(r.source_path.clone(), 0));
+) -> (IrPackageContent<'a>, Vec<IRDiagnostic>) {
+    let mut pkg = IrPackageContent::empty(package_id, SourceRef::new(r.source_path.clone(), 0));
     let mut all_ir_diagnostics = Vec::new();
     for entry in &r.entries {
         let record = convert_spellcasting_class_entry(entry);
@@ -1242,14 +1261,14 @@ pub fn convert_package_from_spellcasting_class_parse_result<'a>(
     (pkg, all_ir_diagnostics)
 }
 
-/// Build a canonical [`SourcePackageContent`] from a B-3
+/// Build a canonical [`IrPackageContent`] from a B-3
 /// [`LstEntryFile`].
 pub fn convert_package_from_lst_entry_file<'a>(
     r: &'a LstEntryFile,
     package_id: impl Into<String>,
     schema: &IRSchema,
-) -> (SourcePackageContent<'a>, Vec<IRDiagnostic>) {
-    let mut pkg = SourcePackageContent::empty(package_id, SourceRef::new(r.source_path.clone(), 0));
+) -> (IrPackageContent<'a>, Vec<IRDiagnostic>) {
+    let mut pkg = IrPackageContent::empty(package_id, SourceRef::new(r.source_path.clone(), 0));
     let mut all_ir_diagnostics = Vec::new();
     for race in &r.race_pointers {
         let record = convert_race_declaration(race);
@@ -1273,14 +1292,14 @@ pub fn convert_package_from_lst_entry_file<'a>(
     (pkg, all_ir_diagnostics)
 }
 
-/// Build a canonical [`SourcePackageContent`] from a B-6
+/// Build a canonical [`IrPackageContent`] from a B-6
 /// [`LstMetadataDocument`].
 pub fn convert_package_from_lst_metadata_document<'a>(
     r: &'a LstMetadataDocument,
     package_id: impl Into<String>,
     schema: &IRSchema,
-) -> (SourcePackageContent<'a>, Vec<IRDiagnostic>) {
-    let mut pkg = SourcePackageContent::empty(package_id, SourceRef::new(r.source_path.clone(), 0));
+) -> (IrPackageContent<'a>, Vec<IRDiagnostic>) {
+    let mut pkg = IrPackageContent::empty(package_id, SourceRef::new(r.source_path.clone(), 0));
     let mut all_ir_diagnostics = Vec::new();
     for record in &r.records {
         let canonical = convert_metadata_record(record);
@@ -1602,7 +1621,7 @@ mod tests {
         assert_eq!(rec.kind, SourceContentKind::Class);
         assert_eq!(rec.source_ref.line, 7);
         match rec.payload {
-            SourceContentPayload::Class(e) => {
+            IrContentPayload::Class(e) => {
                 assert_eq!(e.class_name, "TestClass");
                 assert_eq!(e.header_line_number, 7);
             }
@@ -1625,7 +1644,7 @@ mod tests {
         let rec = convert_equipment_record(&record);
         assert_eq!(rec.kind, SourceContentKind::Equipment);
         match rec.payload {
-            SourceContentPayload::Equipment(e) => {
+            crate::rules_core::source_content::SourceContentPayload::Equipment(e) => {
                 assert_eq!(e.name, "TestEquip");
             }
             _ => panic!("expected Equipment payload"),

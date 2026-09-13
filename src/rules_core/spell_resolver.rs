@@ -22,7 +22,7 @@
 // trim and refused it, and this cycle does not take it either. The enum
 // itself moves when its remaining variants stop borrowing parser entry
 // types. The record type below is the real move: it is live-owned.
-use crate::pcgen_import::source_content_payload::SourceContentPayload;
+use crate::rules_core::source_content::SourceContentPayload;
 use crate::rules_core::spell_record::CorpusSpellRecord;
 use crate::rules_core::pilot_compute_corpus::TableCellRef;
 use crate::rules_core::rules_tables::crb::spell_list::SPELL_LIST;
