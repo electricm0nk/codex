@@ -38,6 +38,7 @@ use std::sync::OnceLock;
 
 use serde::{Deserialize, Serialize};
 
+use super::desc_template::DescTemplate;
 use super::sheet_rule::{Ability, CharacterFacts, Expr, VarId, evaluate_expr_from_facts, var_id};
 
 /// The relative path of the converted artifact, from the repo root.
@@ -74,6 +75,14 @@ pub struct RecordVarPackage {
     /// the renderer matches on -- the OTHER family that used to be evaluated at request time.
     #[serde(default)]
     pub desc_arguments: BTreeMap<String, ConvertedChain>,
+    /// A `class_feature` record's stored description, settled into the op list the live renderer
+    /// walks (SD-35 `AT-35-E6-003-RULED` cycle 16, `decisions.md` §11). Keyed by corpus `KEY:`
+    /// under **exactly** the live table's own first-record-wins rule, so a key present here is a
+    /// key that table also holds, and a key absent from here is one it does not serve. A record
+    /// whose description is absent settles to an empty template, which renders to nothing — the
+    /// same refusal the request-time path produced.
+    #[serde(default)]
+    pub desc_templates: BTreeMap<String, DescTemplate>,
     /// A wildblooded bloodline variant's pool group -> its declared parent's pool group.
     pub wildblooded_parents: BTreeMap<String, String>,
     /// A referenced variable name the corpus binds nowhere -> its declared baseline (step 3).

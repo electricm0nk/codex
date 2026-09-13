@@ -982,37 +982,38 @@ pub(crate) fn resolve_pcgen_var_chain(
 /// record's own `BONUS:VAR` chain, seeded with the character's real class level and real ability
 /// modifiers) rather than a hand-modelled function.
 ///
-/// **SD-35 `AT-35-E6-003-RULED` cycle 2 — this is still a run-time PCGen read, and the cycle that
-/// tried to remove it MEASURED why it cannot go yet.** The converted replacement is written and
-/// exercised: [`tests::converted_resolved_description_for`] renders the same record from its own
-/// converted rule through [`resolved_prose::render_description`], with the same chain, the same
-/// seeds and the same total refusal. [`tests::class_feature_prose_parity_census`] runs both over
-/// every record in the corpus at every level 1..=20 under two ability probes — 660,320
-/// comparisons — and the two disagree on **97,332 of them across 2,443 distinct record keys**.
-/// The disagreement is on the **converter** side, not here: the converted rule carries Desc
-/// segments the stored description never had (a `.MOD` row merged from a second book), and for
-/// some records the converter settled a hole to plain text that the stored `DESC:` still states
-/// as a number. Swapping on those terms would move 97,332 rendered sheet lines with no oracle
-/// agreeing, which is the defect `AGENTS.md` rule 7 names. The census is the evidence and the
-/// next cycle's scope; it lives in this module's own `#[cfg(test)]` region, where an oracle
-/// belongs (`decisions.md` §11).
+/// **SD-35 `AT-35-E6-003-RULED` cycle 16 — this is no longer a run-time ingest-format read.**
+/// The description is settled into an op list at ingest
+/// ([`pcgen_import::desc_template_convert`](crate::pcgen_import::desc_template_convert), written
+/// into `data/converted/record_vars.json`) and this function walks that list with the chain it
+/// already resolved. Nothing here reads a stored source token or calls the converter.
+///
+/// **The sentence on the sheet did not move, and that is proved rather than asserted.** The
+/// settling is the request-time renderer's own scan with the value-dependent half lifted out,
+/// and `desc_template_convert`'s corpus sweeps render **every** described `class_feature` record
+/// both ways under six value environments (and every other record kind's description under two),
+/// comparing text and dropped arguments field for field.
+///
+/// What cycle 2 measured and refused is a **different** substitution and is still refused: the
+/// converted RULE's own prose ([`resolved_prose::render_description`], exercised by
+/// [`tests::converted_resolved_description_for`]) disagrees with this record's stored
+/// description on 97,332 of 660,320 comparisons across 2,443 record keys, because the converted
+/// rule carries segments the stored description never had. That gap is converter-side content,
+/// not a rendering difference, and swapping on it would move 97,332 sheet lines with no oracle
+/// agreeing. This cycle removed the converter CALL without touching that question:
+/// [`tests::class_feature_prose_parity_census`] still measures it, and it lives in this module's
+/// own `#[cfg(test)]` region, where an oracle belongs (`decisions.md` §11).
 pub(crate) fn resolved_description_for(
     key: &str,
     level: u8,
     ability_modifiers: &AbilityModifiers,
 ) -> Option<String> {
     let record = class_feature_record_tokens().get(key)?;
+    let template = record_vars::package().desc_templates.get(key)?;
     let class_level_var = class_level_variable_name(&record.class);
     let resolved_vars =
         resolve_pcgen_var_chain(&record.bonus_vars, &class_level_var, level, ability_modifiers);
-    let mut values = crate::pcgen_import::pcgen_desc::PcgenDisplayValues::new();
-    for (name, value) in &resolved_vars {
-        values.set(name, *value);
-    }
-    let rendered = crate::pcgen_import::pcgen_desc::render_pcgen_desc_with_values(
-        &record.raw_description,
-        &values,
-    );
+    let rendered = template.render(&resolved_vars);
     if !rendered.dropped_args.is_empty() || rendered.text.is_empty() {
         return None;
     }
@@ -1080,7 +1081,8 @@ pub(crate) fn resolved_description_for_formula_only_desc_argument(
     if !record.bonus_vars.is_empty() {
         return None; // a real chain exists -- `resolved_description_for`'s business.
     }
-    let args = crate::pcgen_import::pcgen_desc::desc_token_arguments(&record.raw_description);
+    let template = record_vars::package().desc_templates.get(key)?;
+    let args: Vec<String> = template.args().to_vec();
     if args.is_empty() {
         return None; // no `%N` argument at all -- nothing this function grounds.
     }
@@ -1112,23 +1114,19 @@ pub(crate) fn resolved_description_for_formula_only_desc_argument(
             seed_vars.entry(name.clone()).or_insert(*value);
         }
     }
-    let mut values = crate::pcgen_import::pcgen_desc::PcgenDisplayValues::new();
+    let mut values: BTreeMap<String, i64> = BTreeMap::new();
     for arg in &args {
         let trimmed = arg.trim();
         let Some(converted) = converted_args.get(trimmed) else { continue };
-        // Keyed under the exact argument text -- `resolve_desc_argument`'s own named-lookup shape
-        // (`values.get(arg)`) then finds it by that same text, with no change to that function
-        // or to `render_pcgen_desc_with_values` itself. An argument that does not resolve is
-        // simply never inserted, and the renderer drops and reports it -- its existing
-        // no-fabrication contract, unchanged.
+        // Keyed under the exact argument text the settled template names its slot by
+        // (`DescArgument::Named`), so the render below finds it by that same text. An argument
+        // that does not resolve is simply never inserted, and the renderer drops and reports it
+        // -- its existing no-fabrication contract, unchanged.
         if let Some(value) = record_vars::evaluate_with_bindings(converted, &seed_vars) {
-            values.set(trimmed, value);
+            values.insert(trimmed.to_string(), value);
         }
     }
-    let rendered = crate::pcgen_import::pcgen_desc::render_pcgen_desc_with_values(
-        &record.raw_description,
-        &values,
-    );
+    let rendered = template.render(&values);
     if !rendered.dropped_args.is_empty() || rendered.text.is_empty() {
         return None;
     }
@@ -1273,6 +1271,110 @@ pub(super) fn push_generic_class_feature_grant_records(
 mod tests {
     use super::*;
     use crate::rules_core::pilot_compute::resolved_prose;
+
+    /// SD-35 `AT-35-E6-003-RULED` cycle 16 -- the shipped settled-description artifact serves
+    /// **exactly** the population this module's own table serves, key for key.
+    ///
+    /// Keyed agreement is half of what makes the request-time renderer's removal safe: a key the
+    /// table holds but the artifact does not would make [`resolved_description_for`] silently
+    /// return `None` where it used to return a sentence, and no rendering proof would see it.
+    /// The other half is the sibling test below.
+    #[test]
+    fn the_settled_description_artifact_covers_every_record_this_module_serves() {
+        let table = class_feature_record_tokens_pre_gate_safe();
+        let templates = &record_vars::package().desc_templates;
+        assert!(
+            table.len() >= 10_000,
+            "the served class_feature population collapsed: {} -- this test is only a proof \
+             while it reads the real corpus",
+            table.len()
+        );
+        let missing: Vec<&String> = table.keys().filter(|k| !templates.contains_key(*k)).collect();
+        let extra: Vec<&String> = templates.keys().filter(|k| !table.contains_key(*k)).collect();
+        assert!(
+            missing.is_empty() && extra.is_empty(),
+            "settled descriptions and the served table disagree: {} keys served with no settled \
+             description (first: {:?}), {} settled with no served record (first: {:?}) -- \
+             re-run `cargo run --locked --bin gen_record_vars`",
+            missing.len(),
+            missing.first(),
+            extra.len(),
+            extra.first()
+        );
+    }
+
+    /// SD-35 `AT-35-E6-003-RULED` cycle 16 -- every record this module serves renders the SAME
+    /// sentence from its settled description that the request-time renderer produced from the
+    /// stored one, under six value environments derived from each record's own slots.
+    ///
+    /// This is the oracle for the removal of the last converter call on the live side. It reads
+    /// the real table, not a fixture roster, and it compares dropped arguments as well as text:
+    /// a settling that silently resolved something the renderer refused would pass a text-only
+    /// comparison and then print a guess on a sheet.
+    #[test]
+    fn every_served_record_renders_the_same_sentence_from_its_settled_description() {
+        let table = class_feature_record_tokens_pre_gate_safe();
+        let templates = &record_vars::package().desc_templates;
+        let mut compared = 0usize;
+        let mut with_a_slot = 0usize;
+        let mut failures: Vec<String> = Vec::new();
+        for (key, record) in table {
+            let Some(template) = templates.get(key) else { continue };
+            if record.raw_description.is_empty() {
+                continue;
+            }
+            compared += 1;
+            let names = template.args();
+            if !names.is_empty() {
+                with_a_slot += 1;
+            }
+            for which in 0..6usize {
+                let mut env: BTreeMap<String, i64> = BTreeMap::new();
+                for (index, name) in names.iter().enumerate() {
+                    let bind = match which {
+                        0 => false,
+                        1 | 4 => true,
+                        2 => index % 2 == 0,
+                        3 => index % 2 == 1,
+                        _ => !name.contains(['+', '-']),
+                    };
+                    if bind {
+                        let value = match which {
+                            4 => -7,
+                            5 => 0,
+                            _ => i64::try_from(index).unwrap_or(0) + 3,
+                        };
+                        env.insert(name.clone(), value);
+                    }
+                }
+                let mut values = crate::pcgen_import::pcgen_desc::PcgenDisplayValues::new();
+                for (name, value) in &env {
+                    values.set(name, *value);
+                }
+                let ours = template.render(&env);
+                let theirs = crate::pcgen_import::pcgen_desc::render_pcgen_desc_with_values(
+                    &record.raw_description,
+                    &values,
+                );
+                if ours.text != theirs.text || ours.dropped_args != theirs.dropped_args {
+                    failures.push(format!(
+                        "{key} probe={which}\n  settled : {:?} / {:?}\n  renderer: {:?} / {:?}",
+                        ours.text, ours.dropped_args, theirs.text, theirs.dropped_args
+                    ));
+                }
+            }
+        }
+        assert!(
+            compared >= 3_000 && with_a_slot >= 200,
+            "the compared population collapsed: compared={compared} with_a_slot={with_a_slot}"
+        );
+        assert!(
+            failures.is_empty(),
+            "{} of {compared} served records render a different sentence once settled:\n{}",
+            failures.len(),
+            failures.iter().take(20).cloned().collect::<Vec<_>>().join("\n")
+        );
+    }
 
     /// Lower a `name -> source formula` map the way the ingest-time converter does, so a test
     /// that states its case in the source form still exercises the REAL conversion and the REAL

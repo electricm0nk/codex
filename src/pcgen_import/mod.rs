@@ -52,6 +52,9 @@ pub mod corpus_race_json;
 /// live loader reads with serde instead of calling this side at run time.
 pub mod corpus_settled_bundle;
 pub mod class_feature_vars;
+/// Settles a stored record `description` into the live side's own render template
+/// (SD-35 `AT-35-E6-003-RULED` cycle 16).
+pub mod desc_template_convert;
 pub mod formula_interpreter;
 pub mod formula_interpreter_corpus_wide;
 pub mod formula_reproduction_harness;

@@ -23,6 +23,7 @@ use std::path::{Path, PathBuf};
 use serde_json::Value;
 
 use crate::pcgen_import::bonus_stack_reader;
+use crate::pcgen_import::desc_template_convert;
 use crate::pcgen_import::formula_interpreter::{self, CmpOp};
 use crate::rules_core::record_vars::{
     ABILITY_SEED_NAMES, ConvertedVar, RecordVarPackage, class_level_call_key,
@@ -372,6 +373,27 @@ pub fn build(repo: &Path) -> RecordVarPackage {
                 // `resolved_description_for_formula_only_desc_argument`, which used to run the
                 // interpreter over that raw argument text at request time. Lowered here instead,
                 // keyed by the exact argument text the renderer matches on.
+                // The record's stored description, settled into the op list the live renderer
+                // walks (SD-35 `AT-35-E6-003-RULED` cycle 16, `decisions.md` §11). The guards
+                // are `class_feature_record_tokens_pre_gate_safe`'s own, term for term, so this
+                // map and that table always agree about which key a book won and which records
+                // are served at all: BOTH `name` and `class` must be present; a description that
+                // is present but carries a bad value (`.CLEAR`, a PI-redaction marker) makes the
+                // record claim nothing, exactly as that table's early `return` does; an ABSENT
+                // description is admitted as an empty template, which renders to nothing.
+                if data["class"].as_str().is_some() {
+                    let admitted = match data["description"].as_str() {
+                        Some(desc) => {
+                            is_real_description_value(desc).then(|| desc.to_string())
+                        }
+                        None => Some(String::new()),
+                    };
+                    if let Some(raw) = admitted {
+                        pkg.desc_templates
+                            .entry(key.to_string())
+                            .or_insert_with(|| desc_template_convert::template_for(&raw));
+                    }
+                }
                 if let Some(desc) = data["description"].as_str()
                     && is_real_description_value(desc)
                 {

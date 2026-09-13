@@ -15,6 +15,9 @@ pub mod damage_total;
 pub mod declared_bonuses;
 pub mod derived_evaluator_fixture_check;
 pub mod description_completion;
+/// A record description settled into an op list at ingest, and the live renderer that fills it
+/// with one character's numbers (SD-35 `AT-35-E6-003-RULED` cycle 16).
+pub mod desc_template;
 pub mod durability;
 pub mod encounters;
 pub mod encumbrance;

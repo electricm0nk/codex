@@ -226,7 +226,7 @@ fn collapse_whitespace(text: &str) -> String {
 /// the other four are decoded upstream. All five are listed so
 /// [`leaked_pcgen_syntax`] can name any that turns up, and so a future book
 /// whose ingest forgets one is caught here rather than on a screen.
-const PCGEN_ENTITIES: [(&str, &str); 5] = [
+pub(crate) const PCGEN_ENTITIES: [(&str, &str); 5] = [
     ("&nl;", "\n"),
     ("&lbracket;", "["),
     ("&rbracket;", "]"),
@@ -442,7 +442,7 @@ fn strip_trailing_tight_pipe_tag(raw: &str) -> Option<String> {
     }
 }
 
-fn split_prose_and_args(raw: &str) -> (String, Vec<String>) {
+pub(crate) fn split_prose_and_args(raw: &str) -> (String, Vec<String>) {
     let (raw, _gates) = strip_trailing_qualifiers(raw);
     let raw = raw.as_str();
     let max = max_arg_reference(raw);
@@ -503,7 +503,7 @@ pub fn desc_token_arguments(raw: &str) -> Vec<String> {
 /// `no_catalog_serves_a_description_carrying_raw_pcgen_syntax` test caught
 /// it against real `spell:Teleport`/`spell:Plane Shift`/`feat:Planar
 /// Wanderer` corpus text).
-fn is_percentile_dice_notation(chars: &[char], i: usize) -> bool {
+pub(crate) fn is_percentile_dice_notation(chars: &[char], i: usize) -> bool {
     i >= 1
         && matches!(chars[i - 1], 'd' | 'D')
         && (i < 2 || !chars[i - 2].is_alphabetic())

@@ -32,6 +32,7 @@ fn main() {
     let classes = package.class_records.len();
     let domains = package.domain_records.len();
     let defaults = package.var_defaults.len();
+    let templates = package.desc_templates.len();
     let converted: usize = package
         .class_feature_any
         .values()
@@ -41,7 +42,8 @@ fn main() {
         .sum();
     let summary = format!(
         "class_feature_described={described} class_feature_any={any} class_records={classes} \
-         domain_records={domains} converted_vars={converted} var_defaults={defaults} ({:.1}s)",
+         domain_records={domains} converted_vars={converted} var_defaults={defaults} \
+         desc_templates={templates} ({:.1}s)",
         started.elapsed().as_secs_f64()
     );
 
