@@ -181,7 +181,7 @@ re-measured at the cut by the launch-readiness audit.
 
 ## Cycle log
 
-### 2026-09-13 — Epic 6 / `pcgen-residue-zero` — AT-35-E6-004 **cycle 1** — **complete** (the gate reads zero, it was made to earn it, and `--closure` is the stage's mode. **Epic 6 closes.**)
+### 2026-09-13 — Epic 6 / `pcgen-residue-zero` — AT-35-E6-004 **cycle 1** (`72103a69bc`) — **complete** (the gate reads zero, it was made to earn it, and `--closure` is the stage's mode. **Epic 6 closes.**)
 
 - **Receipt:** `artifacts/epic-6-pcgen-exit/AT-35-E6-004_cycle1_receipt.md` (cycle start `96fa840c6b`).
 - **Scope gate:** `SCOPE_GATE: EXEMPT (Epic 6 closure cycle — closes zero units by design, decisions.md §2)`. Run for the record:

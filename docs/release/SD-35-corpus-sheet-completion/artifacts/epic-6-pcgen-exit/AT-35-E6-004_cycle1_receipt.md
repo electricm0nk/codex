@@ -1,6 +1,6 @@
 # Cycle 1 — Epic 6 (PCGen exit) / AT-35-E6-004
 
-- **Commit SHA:** `<filled at commit>` (cycle start `96fa840c6b`)
+- **Commit SHA:** `72103a69bc` (cycle start `96fa840c6b`)
 - **Scope gate:** `SCOPE_GATE: EXEMPT (Epic 6 closure cycle — closes zero units by design, decisions.md §2)`.
   Run anyway for the record:
   ```
