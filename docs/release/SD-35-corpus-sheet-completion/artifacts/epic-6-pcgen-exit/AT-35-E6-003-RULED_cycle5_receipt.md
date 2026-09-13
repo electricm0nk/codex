@@ -1,6 +1,6 @@
 # Cycle AT-35-E6-003-RULED cycle 5 — Epic 6 PCGen exit / AT-35-E6-003-RULED
 
-- **Commit SHA:** `5d80721087` (the code), `<RECEIPT_SHA>` (this receipt, the census and the
+- **Commit SHA:** `5d80721087` (the code), `8ca7a923fb` (this receipt, the census and the
   retro events), cycle start `fe0a51417e`
 
 - **Scope gate:** `SCOPE_GATE: EXEMPT (Epic 6 cycle — closes zero corpus units by design;
