@@ -181,6 +181,87 @@ re-measured at the cut by the launch-readiness audit.
 
 ## Cycle log
 
+### 2026-09-13 — Epic 6 / `desktop-and-prose-leave-pcgen` — AT-35-E6-003-RULED **cycle 10** (`db1fe3a04c`) — **partial** (the equipment kind gets a converted record of its own; three whole live files leave PCGen. Residue `16 / 29 → 13 / 26`)
+
+- **Scope gate:** `SCOPE_GATE: EXEMPT (Epic 6 cycle — closes zero corpus units by design;
+  decisions.md §2)`. It ran anyway at the cycle's start tree `e61bb2cf75`:
+  `scoped=0 remaining_non_done=0 floor=500 verdict=PASS_WHOLE_REMAINDER`. The residue check,
+  which is not exempt, passed first at the same tree at exactly cycle 9's closing figure:
+  `live_files=16 live_hits=29 baseline_files=260 baseline_hits=12736 verdict=PASS`.
+
+- **What moved.** `src/rules_core/equipment_record.rs` declares `CorpusEquipmentRecord`, the
+  equipment kind's own converted shape — the move cycle 8 made for spells. Cycles 8 and 9 both
+  refused a `CorpusEquipmentRecord` **that would carry the ingest format's token and
+  BONUS-chain arrays**, and that refusal is right and is not relitigated: **this record carries
+  no array.** Six settled fields (`identity`, `name`, `weight_lbs`, `cost_gp`,
+  `ability_score_bonus`, `intelligent_item`) and the token traversal moved the **other** way,
+  onto converter-side `ir_converter::equipment_record_to_corpus`. `convert_equipment_record`
+  builds and interns it exactly as the spell path has since cycle 8 — **one call doing more,
+  not a second call**, which is why the `ir_converter` hit did not rise. The `Equipment` payload
+  is a pair, `(&EquipmentRecord, &CorpusEquipmentRecord)`, written down in the variant's own doc
+  comment as a transition shape that collapses to the converted half when the last consumer
+  moves. New live `equipment_resolver::equipment_converted_resolve` shares all three resolution
+  passes with `equipment_id_resolve`, so the two can never answer with different records.
+
+- **Three whole live files stop naming `pcgen_import`, and all three are closures, not
+  relabels** — the read does not move to another live file, it stops being a token read:
+  `encumbrance.rs` (its `weight_and_cost_from_record` **deleted**; weight and price read off the
+  converted record), `equipment_effects/magic_items.rs` (the `BONUS:STAT` scan and the
+  `TEMPBONUS:` fallback both converter-side now), `equipment_effects/intelligent_item.rs` (the
+  `BONUS:VAR|IntItemStat*` family scan converter-side now). The census asserts it by file,
+  `cleared_by_cycle10=3`, and asserts the new record carries no `EquipmentToken`/`BonusToken`/
+  `raw_tokens`/`bonus_chains` in its shipping half.
+
+- **Parity is the widest this criterion has run.**
+  `every_live_corpus_equipment_record_carries_the_same_values_the_token_reads_produced` loads
+  **every** book under `data/corpus/` — **7,803 equipment records** — re-derives all three
+  retired reads the old way off the parser row still paired in the envelope, and compares:
+  **0 disagreements**. **Mutation-proved**: `+ 1.0` on the converter's weight read turns it red;
+  reverted and re-verified green.
+
+- **The correction this cycle produced** (`correction 1789285081035-at-35-e6-003-ruled-b8ecc2`):
+  every census from cycle 1 on, and both of the last two receipts, recorded the equipment half
+  as **one indivisible piece** blocked on the converter emitting equipment `SheetRule` rows. The
+  array clause was right; the indivisibility was not. A record carrying **no** array clears
+  consumers one at a time. Blast radius: the `lst_parser_types` and `ir_converter` group reasons
+  in nine censuses and two kanban rows.
+
+- **Also measured, and it sizes the remainder:**
+  `data/sheet_rules/core_rulebook/equipment/chain_shirt.json` already states the armour bonus as
+  `value: Number(Const 4)`, `target: Ac`, `bonus_type: Armor`, and its check penalty / max Dex /
+  arcane spell failure as `StatBlock` prose (`-2`, `4`, and `20` printed with a percent sign); `longsword.json` already states
+  `Dice{dice: "1d8"}`. Those are `arms_armor`'s and `damage_total`'s reads, already settled and
+  already shipped. The rest of the equipment shape is a **sequence of consumer moves on a built
+  path**, not one piece.
+
+- **One trim refused for the fourth cycle running:** `spell_resolver.rs`'s
+  `SourceContentPayload` re-export repoint (`−1`, zero dependency change).
+
+- **`apps/` WAS touched**, so the desktop crate and the frontend ran here. Verified once at the
+  final tree: `NO_RUN_EXIT=0`; lib `3349 passed; 0 failed; 16 ignored` (cycle 9's 3348 + this
+  cycle's one new parity test); full workspace `FULL_EXIT=0` — 418 `Running` targets + 1
+  `Doc-tests`, **8,878 passed, 0 failed, 69 ignored**, zero `test result: FAILED` lines (cycle 9
+  recorded 8,877; the `+1` is exactly this cycle's one new test); desktop crate
+  `570 passed; 0 failed`; frontend `101/101`; root clippy **0 warnings after one self-heal**
+  (`collapsible_if` on this cycle's own parity test, rewritten as a match guard); desktop clippy
+  **1 pre-existing warning named not swept** (`vec_init_then_push`, `equipment_catalog.rs:889`,
+  untouched file — the same one cycles 2, 4 and 9 recorded).
+  `sheet_rule_convert -- --check` `records=49438 converted=49296 refused=142 rules=70135
+  var_tables=5293 verdict=PASS`; sheet_rules ingest-syntax grep `0`; `completion_atlas`
+  `citation_failures=0`; `token_coverage` `non_done=0 refused=142 PASS`;
+  `shape_engine_boundary` `not_held_by_engine=0`; `missing_engine_tables` `population=0`;
+  `denominator_gate` `files_checked=139 violations=0`; `pi-sweep` PASS; 27 gate unit tests OK;
+  `data/` byte-identical.
+
+- **Receipt rows:** `closed=0 relabeled=0 rust_lines_changed=747 ratio=n/a builds_recorded=1
+  pcgen_live_files=13`.
+
+- **Refused tokens:** `renderer=5, lst_parser_types=7, ingest_record_tokens=5,
+  trait_and_pool_tokens=3, ir_converter=1, source_content_payload=5` — 26 hits / 13 files,
+  summing, all `src/rules_core/`. `deferral 1789285090865-at-35-e6-003-ruled-21656e`.
+
+- **Receipt:** `artifacts/epic-6-pcgen-exit/AT-35-E6-003-RULED_cycle10_receipt.md`.
+
 ### 2026-09-13 — Epic 6 / `desktop-and-prose-leave-pcgen` — AT-35-E6-003-RULED **cycle 9** (`8a36cd54c9`) — **partial** (the desktop's bundled corpus package is produced at build time now; no live path in the crate parses a raw PCGen row. Residue `16 / 32 → 16 / 29`)
 
 - **Scope gate:** `SCOPE_GATE: EXEMPT (Epic 6 cycle — closes zero corpus units by design;
