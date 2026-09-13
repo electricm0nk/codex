@@ -181,6 +181,107 @@ re-measured at the cut by the launch-readiness audit.
 
 ## Cycle log
 
+### 2026-09-12 — Epic 6 / `desktop-and-prose-leave-pcgen` — AT-35-E6-003-RULED **cycle 4** (`1ebbe4b9bf`) — **partial** (the Evidence sentence's `apps/desktop` clause is MET for the first time in this criterion's family: residue `22 / 44 → 19 / 37`, **the whole drop the desktop crate**, `src/rules_core` flat and said so)
+
+- **Scope gate:** `SCOPE_GATE: EXEMPT (Epic 6 cycle — closes zero corpus units by design; decisions.md §2)`.
+  It ran anyway at the cycle's start tree `2bf2b4fa2b`:
+  `scoped=0 remaining_non_done=0 floor=500 verdict=PASS_WHOLE_REMAINDER`. The residue check, which
+  is not exempt, passed first at the same tree:
+  `live_files=22 live_hits=44 baseline_files=260 baseline_hits=12736 verdict=PASS`.
+
+- **`root apps/desktop files=0 hits=0`.** Every cycle of `AT-35-E6-003`, `-SWEEP`, `-FINISH` and
+  `-RULED` has been dispatched against an Evidence row whose first clause is *"`pcgen_residue_gate.py
+  --check` shows zero hits under `apps/desktop/`"*. Cycle 1 of `-RULED` found that clause had been
+  "satisfied" by a blind spot — the gate printed `files=0 hits=0` while 12 shipping lines called
+  `codex::pcgen_import::` at run time — and ruling B16 made the number honest at `4 / 12`. This
+  cycle takes it to `0 / 0` **under the corrected instrument**, which is the first time the sentence
+  has meant what it says.
+
+- **Cycle 3's census was wrong about all three desktop files, and wrong the same way each time**
+  (`correction 1789257461317-at-35-e6-003-ruled-915037`). It recorded the desktop's 3 files / 7 hits
+  as *"all need a converted equivalent the package does not carry"*. None of them did. It had read a
+  converter **import** as evidence of a converter **dependency**, and an assertion about a
+  dependency has to be checked against what the caller actually needs:
+  - `feat_catalog.rs` called `pcgen_desc::leaked_pcgen_syntax` to ask whether its own rendered
+    catalog row still carried unrendered markup. That predicate reads **output prose** — it never
+    opens a corpus record, never names a token key, never needs the ingest grammar. It is the sheet
+    rule (`decisions.md §1`) stated as a check, so it belongs to the side that prints the line. Its
+    body is now `rules_core::pilot_compute::resolved_prose::leaked_markup` and
+    `pcgen_desc::leaked_pcgen_syntax` **delegates** to it — single-sourced, not copied, so the two
+    sides cannot drift; the converter may depend on the live side's definition of a clean sheet
+    line, the live side may not depend on the converter. Not one case or returned string changed,
+    pinned by two new tests whose inputs are the ones `pcgen_desc`'s own tests already pinned.
+    `class_feature_grant_consumer.rs`'s two live calls followed.
+  - `race_trait_picker.rs` imported `race_trait_tokens` to ask three questions about a
+    `RaceTraitRecord` it already held. `race_resolver.rs` owns that type and already imports that
+    reader; the answers are now `RaceTraitRecord::{exclusion_guard_flags, negated_fact_gates,
+    declares_negated_ability_guard}`. The picker's own doc comment already said it wanted the
+    *relation*, not the token grammar.
+  - `corpus_fixtures.rs` ran the LST parser and the IR converter **inside the shipping desktop
+    binary** on four bundled fixture records. `corpus_loader` already does exactly that — same two
+    parsers, same two converters, same `Box::leak` — twice, for the two real corpus loaders. This is
+    its third caller, `load_lst_fixture_corpus`, failing loudly and never partially. The desktop
+    keeps what is its concern: resolving a bundled resource path and reading files.
+
+- **The honest counterweight, stated and not netted.** The third move does **not** stop the
+  conversion happening at run time; it stops it happening in two places. The two
+  `ir_converter::convert_*_record` calls left the shipping desktop binary and reappear once in
+  `corpus_loader.rs`, beside the two identical calls that module already made — so
+  `root src/rules_core` reads `19 / 37` **before and after** (`−2` from
+  `class_feature_grant_consumer.rs`, `+2` in `corpus_loader.rs`) and the entire `44 → 37` fall is
+  the desktop crate. The `ir_converter` group is booked under **relabel**, not closure. It clears
+  when the converted equipment/spell shape is produced at build time and read as data.
+
+- **Not gate-gaming, by the test cycle 3 used to refuse its own third move: does the shipping binary
+  change?** It does — `apps/desktop/src-tauri` no longer links the LST parsers, the IR converter or
+  the PCGen prose module on any path. The gate script and `scripts/pcgen-residue-baseline.env` are
+  **absent from this cycle's diff** (`git diff --name-only 2bf2b4fa2b..HEAD -- scripts/` is empty):
+  no path exempted, no regex weakened, no rebaseline, no `use` collapsed to turn four counted lines
+  into one.
+
+- **Verified once, at the widest scope, and `apps/` was touched so the desktop crate ran here.**
+  `cargo test --locked --no-run -j 6` → `NO_RUN_EXIT=0`; `cargo test --locked --no-fail-fast -j 6` →
+  **`FULL_EXIT=0`, 418 targets, 8,872 passed, 0 failed, 69 ignored, zero `test result: FAILED`
+  lines** (cycle 3's single wall-clock red did not recur, consistent with its diagnosis as a
+  threshold); the lib inside that run `3343 passed; 0 failed; 16 ignored`, which is cycle 3's 3341
+  plus exactly this cycle's two new tests; `cd apps/desktop/src-tauri && cargo test --locked -j 6` →
+  `569 passed; 0 failed; 0 ignored`, the standing figure eight earlier Epic 6 receipts record, so no
+  desktop test was added or removed. `cargo clippy --locked --tests -j 6` → 0 warnings.
+  `sheet_rule_convert -- --check` `records=49438 converted=49296 refused=142 rules=70135
+  var_tables=5293 verdict=PASS`; `grep -rlE 'BONUS:|DEFINE:|PRE[A-Z]+:|%CHOICE|CL=' data/sheet_rules/ | wc -l`
+  → `0`; `completion_atlas` `citation_failures=0 stale_derived_at=False`; `token_coverage`
+  `non_done=0 refused=142 PASS`; `shape_engine_boundary` `not_held_by_engine=0`;
+  `missing_engine_tables` `population=0`; `denominator_gate --check` `files_checked=134 violations=0`
+  and `--check-provenance` `files_checked=250 figures_examined=581 violations=0`;
+  `publish-site-dashboard.sh --check-pin` matches; `verify.sh --only pi-sweep` PASS;
+  `python3 -m unittest scripts.tests.test_pcgen_residue_gate` `Ran 27 tests OK`.
+
+- **Receipt rows:** `closed=0 relabeled=0 rust_lines_changed=367 ratio=n/a builds_recorded=1
+  pcgen_live_files=19`. `closed=0` is by design — Epic 6 closes zero corpus units and no `data/`
+  file changed, so `docs/work-inventory.json` is byte-identical before and after.
+
+- **Refused tokens — 37 hits / 19 files, six groups, all under `src/rules_core/`:**
+  `renderer=5, lst_parser_types=12, ingest_record_tokens=7, trait_and_pool_tokens=4, ir_converter=4,
+  source_content_payload=5` (`5+12+7+4+4+5 = 37`).
+  `deferral 1789257475736-at-35-e6-003-ruled-eaa1d8`; every line named with file, line and reason in
+  `artifacts/epic-6-pcgen-exit/AT-35-E6-003-RULED_cycle4_runtime_import_census.json`. The remainder
+  is two items: the `renderer` group (5) is a **converter** cycle, refused on cycle 2's measurement
+  (the converted candidate disagrees with the live path on 97,332 of 660,320 renderings across 2,443
+  record keys, every shape of it converter-side); and `lst_parser_types + ingest_record_tokens +
+  ir_converter + source_content_payload = 28 hits are ONE piece of work` — the live side must own a
+  converted equipment/spell/source-content record shape `sheet_rule_convert` emits, and
+  `corpus_loader` must read that artefact instead of running `ir_converter` at load time. 13 files
+  import `EquipmentRecord` or `LstSpellRecord` as their own data type; `trait_and_pool_tokens` (4)
+  rides on the same change.
+
+- **Second correction, about this cycle's own instrument:** `RETRO_ACTOR` does not persist between
+  this harness's `Bash` calls, so the cycle's first retro event landed in
+  `docs/retro/events/sd31-transcribe.jsonl` under the wrong actor
+  (`1789257447105-sd31-transcribe-3a43e3`). Same content, wrong file; re-emitted correctly and named
+  rather than left looking like another session's event
+  (`correction 1789257461475-at-35-e6-003-ruled-ddedc9`). The control is one line: export and invoke
+  in the same call.
+
 ### 2026-09-12 — Epic 6 / `desktop-and-prose-leave-pcgen` — AT-35-E6-003-RULED **cycle 3** (`381f33bc84`) — **partial** (the converter pipeline that was living in a live root left it: residue `24 / 53 → 22 / 44`, all of it code, the instrument untouched)
 
 - **Scope gate:** `SCOPE_GATE: EXEMPT (Epic 6 cycle — closes zero corpus units by design; decisions.md §2)`.

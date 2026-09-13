@@ -1,6 +1,7 @@
 # Cycle AT-35-E6-003-RULED cycle 4 — Epic 6 PCGen exit / AT-35-E6-003-RULED
 
-- **Commit SHA:** `PENDING_SHA`
+- **Commit SHA:** `1ebbe4b9bf` (the code), `bbc9db6ddb` (this receipt, the census and the retro
+  events), cycle start `2bf2b4fa2b`
 
 - **Scope gate:** `SCOPE_GATE: EXEMPT (Epic 6 cycle — closes zero corpus units by design;
   decisions.md §2, workflow-instruction.md §6 step 1)`
