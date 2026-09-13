@@ -1,0 +1,106 @@
+{
+ "corpus_class_feature_records": 18074,
+ "joined": 18043,
+ "unjoined": 31,
+ "probes": {
+  "P1_no_engine_effect": {
+   "population": 18043,
+   "agree": 11549,
+   "disagree": 6494,
+   "verdict": "REFUSED",
+   "examples": [
+    {
+     "row": "pathfinder/paizo/roleplaying_game/occult_adventures/oa_abilities_class.lst:889",
+     "ingest": true,
+     "converted": false
+    },
+    {
+     "row": "pathfinder/paizo/roleplaying_game/occult_adventures/oa_abilities_class.lst:1373",
+     "ingest": false,
+     "converted": true
+    },
+    {
+     "row": "pathfinder/paizo/roleplaying_game/occult_adventures/oa_abilities_class.lst:1374",
+     "ingest": false,
+     "converted": true
+    },
+    {
+     "row": "pathfinder/paizo/roleplaying_game/occult_adventures/oa_abilities_class.lst:1375",
+     "ingest": false,
+     "converted": true
+    },
+    {
+     "row": "pathfinder/paizo/roleplaying_game/occult_adventures/oa_abilities_class.lst:1874",
+     "ingest": false,
+     "converted": true
+    }
+   ]
+  },
+  "P2_archetype": {
+   "population": 18043,
+   "agree": 17124,
+   "disagree": 919,
+   "verdict": "REFUSED",
+   "examples": [
+    {
+     "row": "pathfinder/paizo/roleplaying_game/occult_adventures/oa_abilities_class.lst:1755",
+     "ingest": false,
+     "converted": true
+    },
+    {
+     "row": "pathfinder/paizo/roleplaying_game/occult_adventures/oa_abilities_class.lst:845",
+     "ingest": false,
+     "converted": true
+    },
+    {
+     "row": "pathfinder/paizo/roleplaying_game/occult_adventures/oa_abilities_class.lst:852",
+     "ingest": false,
+     "converted": true
+    },
+    {
+     "row": "pathfinder/paizo/roleplaying_game/occult_adventures/oa_abilities_class.lst:849",
+     "ingest": false,
+     "converted": true
+    },
+    {
+     "row": "pathfinder/paizo/roleplaying_game/occult_adventures/oa_abilities_class.lst:838",
+     "ingest": false,
+     "converted": true
+    }
+   ]
+  },
+  "P3_multi_desc": {
+   "population": 18043,
+   "agree": 17954,
+   "disagree": 89,
+   "verdict": "REFUSED",
+   "examples": [
+    {
+     "row": "pathfinder/paizo/campaign_setting/inner_sea_intrigue/isi_abilities_class.lst:304",
+     "ingest": true,
+     "converted": false
+    },
+    {
+     "row": "pathfinder/paizo/roleplaying_game/adventurers_guide/ag_abilities_class.lst:751",
+     "ingest": true,
+     "converted": false
+    },
+    {
+     "row": "pathfinder/paizo/roleplaying_game/adventurers_guide/ag_abilities_class.lst:341",
+     "ingest": true,
+     "converted": false
+    },
+    {
+     "row": "pathfinder/paizo/roleplaying_game/adventurers_guide/ag_abilities_class.lst:1168",
+     "ingest": true,
+     "converted": false
+    },
+    {
+     "row": "pathfinder/paizo/roleplaying_game/adventurers_guide/ag_abilities_class.lst:70",
+     "ingest": true,
+     "converted": false
+    }
+   ]
+  }
+ }
+}

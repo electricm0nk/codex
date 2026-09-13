@@ -34,7 +34,20 @@ pub struct SimpleKindRecord {
     pub source_path: String,
     pub source_line: u64,
     pub description: Option<String>,
-    pub raw_token_count: usize,
+    /// How many rules the converted package wrote from **this record's own source row**,
+    /// or `None` when the package holds none for it.
+    ///
+    /// SD-35 `AT-35-E6-003-RULED` cycle 6 (`decisions.md §11`): this used to be
+    /// `raw_token_count`, read straight off the record's PCGen `raw_tokens` array by
+    /// `pcgen_import::ingest_record::token_count`. That was an ingest-format read inside the
+    /// crate that prints a character sheet. The question the transcript actually asks -- "does
+    /// the engine hold anything for this row, and how much" -- is answered by the converted
+    /// package, through the closure-row join: the record states its own `source.path` /
+    /// `source.line`, and every rule the converter wrote from that row names the same
+    /// `path:line` in `provenance.closure_rows`.
+    ///
+    /// `None` is reported as `not-converted`, never as `0` and never as a verdict.
+    pub converted_rule_count: Option<usize>,
 }
 
 /// `kind -> corpus directory name`. Every entry matches its kind's own
@@ -144,6 +157,9 @@ pub fn load_simple_kind_table_for_dir(
 ) -> SimpleKindTable {
     let mut records = BTreeMap::new();
     let mut by_coordinate = BTreeMap::new();
+    // Resolved once for the whole load, not per record: the converted package is a process-wide
+    // `OnceLock`, and this is the only thing in this loader that reaches outside `data/corpus/`.
+    let package = crate::rules_core::corpus_loader::live_sheet_rules();
     let corpus_root = repo_root.join("data/corpus");
     if let Ok(book_dirs) = std::fs::read_dir(&corpus_root) {
         for book_entry in book_dirs.flatten() {
@@ -165,9 +181,11 @@ pub fn load_simple_kind_table_for_dir(
                 let Some(key) = data["key"].as_str() else { continue };
                 let name = data["name"].as_str().unwrap_or(key).to_string();
                 let description = data["description"].as_str().map(str::to_string);
-                let raw_token_count = crate::pcgen_import::ingest_record::token_count(data);
                 let source_path = v["source"]["path"].as_str().unwrap_or_default().to_string();
                 let source_line = v["source"]["line"].as_u64().unwrap_or(0);
+                let converted_rule_count = package
+                    .map(|p| p.rules_for_closure_row(&source_path, source_line).len())
+                    .filter(|n| *n > 0);
                 if let Some(coordinate) = v["rename"]["coordinate"].as_str() {
                     by_coordinate.insert(coordinate.to_string(), (book.clone(), key.to_string()));
                 }
@@ -180,7 +198,7 @@ pub fn load_simple_kind_table_for_dir(
                         source_path,
                         source_line,
                         description,
-                        raw_token_count,
+                        converted_rule_count,
                     },
                 );
             }
@@ -197,8 +215,14 @@ pub fn load_simple_kind_table_for_dir(
 pub fn transcript_line(table: &SimpleKindTable, sample_book: &str, sample_key: &str) -> String {
     match table.resolve(sample_book, sample_key) {
         Some(r) => format!(
-            "kind={} location=data/corpus/*/{}/*.json records={} sample=({sample_book}, {sample_key:?}) -> HELD name={:?} source={}:{} ingest_tokens={}",
-            table.kind, table.dir, table.len(), r.name, r.source_path, r.source_line, r.raw_token_count
+            "kind={} location=data/corpus/*/{}/*.json records={} sample=({sample_book}, {sample_key:?}) -> HELD name={:?} source={}:{} converted_rules={}",
+            table.kind,
+            table.dir,
+            table.len(),
+            r.name,
+            r.source_path,
+            r.source_line,
+            r.converted_rule_count.map_or_else(|| "not-converted".to_string(), |n| n.to_string())
         ),
         None => format!(
             "kind={} location=data/corpus/*/{}/*.json records={} sample=({sample_book}, {sample_key:?}) -> REFUSED (absent key)",
@@ -346,5 +370,60 @@ mod tests {
         // fabricated (AT-34-E2-002's rule, carried into this new loader).
         let refusal = table.resolve("core_rulebook", "___a_key_no_corpus_record_carries___");
         assert!(refusal.is_none(), "a fabricated key must never resolve");
+    }
+
+    /// SD-35 `AT-35-E6-003-RULED` cycle 6, `decisions.md §11`.
+    ///
+    /// The transcript field this table carries used to be `raw_token_count` --
+    /// `pcgen_import::ingest_record::token_count`, a live read of the corpus record's own
+    /// PCGen token array, performed inside the crate that prints a character sheet. It is
+    /// now [`SimpleKindRecord::converted_rule_count`]: how many rules the converted package
+    /// wrote **from this record's own source row**, through the closure-row join
+    /// `AT-35-E6-003-RULED` cycle 5 built.
+    ///
+    /// The bar this test holds is **totality**, which is the only thing that makes the swap
+    /// honest: every record of all seven Epic 2 kinds must resolve to `Some(n)` with
+    /// `n >= 1`. A `None` would mean the converted package does not know what that corpus
+    /// row became, and the transcript would be printing a refusal where it used to print a
+    /// real number. The in-test oracle is the package's own `rules_for_closure_row`,
+    /// recomputed here from the record's stored `(source_path, source_line)` -- so the
+    /// stored field and the join cannot drift apart silently.
+    #[test]
+    fn every_seven_kind_record_resolves_to_its_own_converted_rules() {
+        let Some(package) = crate::rules_core::corpus_loader::live_sheet_rules() else {
+            panic!("data/sheet_rules/ is absent -- the converted package is this field's only source");
+        };
+        let mut records = 0usize;
+        let mut resolved = 0usize;
+        let mut disagree: Vec<String> = Vec::new();
+        for (kind, _dir) in SEVEN_KIND_DIRS {
+            let table = load_simple_kind_table(&repo_root(), kind);
+            for record in table.records.values() {
+                records += 1;
+                let oracle = package.rules_for_closure_row(&record.source_path, record.source_line);
+                let expected = if oracle.is_empty() { None } else { Some(oracle.len()) };
+                if record.converted_rule_count != expected {
+                    if disagree.len() < 10 {
+                        disagree.push(format!(
+                            "{kind} {}/{:?}: field={:?} join={:?}",
+                            record.book, record.key, record.converted_rule_count, expected
+                        ));
+                    }
+                } else if expected.is_some() {
+                    resolved += 1;
+                }
+            }
+        }
+        assert!(
+            disagree.is_empty(),
+            "the stored count and the closure-row join disagree on at least {} records: {}",
+            disagree.len(),
+            disagree.join("; ")
+        );
+        assert_eq!(
+            resolved, records,
+            "records={records} resolved={resolved} -- every seven-kind corpus record must name \
+             at least one converted rule written from its own source row"
+        );
     }
 }
