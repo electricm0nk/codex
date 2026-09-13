@@ -181,6 +181,119 @@ re-measured at the cut by the launch-readiness audit.
 
 ## Cycle log
 
+### 2026-09-13 — Epic 6 / `desktop-and-prose-leave-pcgen` — AT-35-E6-003-RULED **cycle 15** (`4b77b31ee3`) — **partial** (the live loader stops calling the converter at all; `data/corpus/` carries the settled fields itself. Residue `7 / 12 → 6 / 10`)
+
+**Receipt:** `artifacts/epic-6-pcgen-exit/AT-35-E6-003-RULED_cycle15_receipt.md`. Cycle start `66b36389b3`.
+
+**Scope gate** — `SCOPE_GATE: EXEMPT (Epic 6 cycle — closes zero corpus units by design;
+decisions.md §2)`. It ran anyway at the start tree and printed:
+
+```
+inventory=docs/work-inventory.json
+scope=(whole remainder)
+scoped_by_bucket=
+scoped_by_kind=
+scoped=0 remaining_non_done=0 floor=500 verdict=PASS_WHOLE_REMAINDER
+```
+
+The residue check, which is not exempt, passed first at exactly cycle 14's closing figure:
+`live_files=7 live_hits=12 baseline_files=260 baseline_hits=12736 verdict=PASS`.
+
+**What moved.** `src/rules_core/corpus_loader.rs` — the live side's one ingest boundary, and the
+only file left whose `pcgen_import` hits were **calls** rather than payload imports — is
+**cleared whole**, the second consecutive cycle to clear a file. Cycles 13 and 14 each booked a
+boundary call honestly and each named the same clearing condition in the same words: *"it clears
+when `data/corpus/` carries the settled fields itself — an ingest-side generator cycle, the same
+shape `data/sheet_rules/` already has."* This cycle did exactly that and nothing else:
+
+- `src/bin/gen_settled_corpus.rs` makes **the same three calls**, unchanged
+  (`corpus_equipment_json::corpus_equipment_source_record`,
+  `corpus_race_json::corpus_race_source_record`, `::corpus_race_trait_source_record`), at
+  authoring time, and writes `data/corpus/<book>/_settled/{equipment,race,race_trait}.json`.
+- `src/rules_core/settled_corpus.rs` reads one with **serde** and names no converter anywhere in
+  shipping code — asserted by text, because a live reader that named the converter would be the
+  old boundary under a new name.
+- `corpus_loader` and `race_resolver` hold settled records. Their file walks, per-file
+  diagnostics, push order, `source`/`license`/`pi_field` reads and duplicate-chassis reporting
+  are unchanged.
+
+**48 new data files, and not one corpus record rewritten.** 47 bundles across 39 books (8,761
+settled records, 11 MB) plus the desktop fixture root's own. `_settled/` sits **beside** the kind
+directories, never inside one, so no corpus walk can mistake a bundle for a record and no
+traversal needed a new skip rule (`bundles_inside_a_kind_dir=0`). `git status --porcelain` lists
+no modified file under `data/corpus/`: every ingested record, its license block and its `pi_*`
+redaction stamps are byte-identical. That was the deciding reason for a bundle beside the records
+rather than a settled block inside each of 8,762 of them.
+
+**Two closures, and no relabel — booked explicitly.** `closed_by_cycle15=2
+relabelled_by_cycle15=0 cleared_files_by_cycle15=1`. Cycle 14 had to book a relabel because its
+boundary call moved from one live file to another; this one did not move to another live file, it
+left the live side for a build-time producer, so all of `12 → 10` is closure.
+
+**Parity, over the whole live corpus, not a fixture.** Three new proofs in
+`pcgen_import::corpus_settled_bundle` rebuild every bundle in memory **by re-running the exact
+call the live loader made at run time**, on the exact same corpus files, and compare field for
+field — provenance anchor included — against what is on disk, over every book under
+`data/corpus/`. All three green, 0 disagreements. A fourth pins the traversal rule the producer
+restates. The racial-trait prose oracle is unchanged and still green (`compared == 919`).
+
+**Receipt rows (mechanical):**
+
+```
+since=66b36389b3 target_dir=/tmp/cargo-sd35-AT-35-E6-003-RULED residue_gate=present
+closed_by_kind=
+relabeled_moves=
+regressed=0 added=0 dropped=0
+closed=0 relabeled=0 rust_lines_changed=1034 ratio=n/a builds_recorded=2 pcgen_live_files=6
+```
+
+**Refused tokens:** `renderer=5, source_content_payload=3, ingest_record_tokens=1,
+trait_and_pool_tokens=1` — 10 hits / 6 files, summing, all under `src/rules_core/`. Four groups,
+one fewer than cycle 14 had. The `source_content_payload` use-collapse is **refused for the ninth
+cycle running** on the same reasoning: it takes the gate down by one and changes nothing about
+what the module depends on.
+
+**Verified once, at the final tree.** `--no-run` exit 0; lib `test result: ok. 3365 passed; 0 failed; 16 ignored`; full workspace `FULL2_EXIT=0`, **419 Running targets + 1 Doc-tests, 8,894 passed, 0 failed, 69 ignored, zero `test result: FAILED` lines**; `cargo clippy --locked --tests -j 6` `CLIPPY_EXIT=0`, **0 warnings**; desktop crate `DESKTOP_EXIT=0`, `570 passed; 0 failed` (1,450.98s, the standing figure), desktop clippy `DESKTOP_CLIPPY_EXIT=0` with 1 pre-existing `#[cfg(test)]` warning in a file this cycle did not touch; `gen_settled_corpus -- --check` `roots=40 bundles=48 records=8763 skipped=0 drifted=0 verdict=PASS`; `declared_pi_shipping_audit` CLEAN (run because this cycle adds files under `data/corpus/`).
+`python3 scripts/pcgen_residue_gate.py --check` → `live_files=6 live_hits=10 verdict=PASS`, the
+instrument itself untouched this cycle (`git diff --name-only 66b36389b3..HEAD -- scripts/` is
+empty) and its own 27 unit tests OK. `sheet_rule_convert -- --check` `verdict=PASS`,
+`data/sheet_rules/` byte-identical; the `BONUS:|DEFINE:|PRE…:|%CHOICE|CL=` grep over
+`data/sheet_rules/` prints 0, and over the 48 new bundles prints 0 as well.
+`corpus_literal_sweep` **48,706 records examined of 51,523 read, 0 findings, CLEAN**.
+`completion_atlas.py`, `token_coverage.py`, `shape_engine_boundary.py`,
+`missing_engine_tables.py`, `denominator_gate.py` and `verify.sh --only pi-sweep` all pass.
+
+**One correction, caught by the gates and not by prose.** The design assumed a generated
+`_settled/` directory beside a book's kind directories was inert to every existing corpus walker,
+because the live loaders' walks start *at* a kind directory. **Seven tests across four binaries
+disagreed** on the first verification pass: `apps/desktop`'s `reach_gate` (2) enumerates a book's
+subdirectories and refuses one it cannot name as a content kind — counting `_settled/` as a kind
+would have double-counted all 8,761 records and invented three unreachable families per book —
+and `tests/sd26_cache_core_rulebook` (2), `tests/sd27_book_license_record_counts` (2) and
+`tests/sd27_license_stripping_shape_v1` (1) walk `data/corpus/<book>/**` wholesale and require
+every `.json` to be a `CorpusRecordV1` with a license block. **All four already carried exactly
+this disposition for `_parity/`**, so `_settled` was added beside it in each, with its own written
+rationale. No gate was weakened, no path exempted from a correctness check, and the whole suite
+was re-run. Logged as a retro `correction` with the failing and the passing commands as its
+`--verified-by`.
+
+**One thing found and recorded rather than absorbed.** `v06_work_inventory` refuses to rewrite
+`docs/work-inventory.json` on this branch: a fresh run would drop **230** of the 32,617
+verification stamps it carries, all `advanced_class_guide:class_feature:…` units. That refusal is
+**pre-existing and not caused by this cycle** — the identical message, the same 230 count, the
+same ten first offenders and the same `stamped 23085 unit(s) (dice=911, number=4768, words=17406)`
+rung reproduce at cycle 14's own HEAD `66b36389b3` in a clean worktree. Per the standing "never
+`--allow-stamp-loss`" rule it was not forced, and `docs/work-inventory.json` is byte-identical,
+which is correct for a cycle that closes zero units. Logged as a retro `incident`
+(`recurrence-key: work-inventory-stamp-drift-on-shared-checkout`).
+
+**Next cycle.** **Cycle 16**, `SCOPE_GATE: EXEMPT (Epic 6 cycle)`, on the 10-hit remainder. The
+largest piece is **`renderer` (5)**, unchanged in shape from cycle 2's measurement: a
+**converter-parity** cycle closing the gap that made the converted candidate disagree with
+`render_pcgen_desc_with_values` on 97,332 of 660,320 comparisons across 2,443 record keys.
+Clearing it takes the gate to `5 / 5` and removes the last live *call* into the renderer.
+
+
 ### 2026-09-13 — Epic 6 / `desktop-and-prose-leave-pcgen` — AT-35-E6-003-RULED **cycle 14** (`64224a0c8e`) — **partial** (the race resolver leaves PCGen; first file cleared since cycle 12. Residue `8 / 14 → 7 / 12`)
 
 - **Scope gate:** `SCOPE_GATE: EXEMPT (Epic 6 cycle — closes zero corpus units by design;
