@@ -181,7 +181,7 @@ re-measured at the cut by the launch-readiness audit.
 
 ## Cycle log
 
-### 2026-09-13 — Epic 6 / `desktop-and-prose-leave-pcgen` — AT-35-E6-003-RULED **cycle 13** (`<SHA>`) — **partial** (the equipment payload collapses to the converted half alone; the live loader stops rebuilding an ingest row. Residue `8 / 19 → 8 / 14`)
+### 2026-09-13 — Epic 6 / `desktop-and-prose-leave-pcgen` — AT-35-E6-003-RULED **cycle 13** (`1bbeb8ce2a`) — **partial** (the equipment payload collapses to the converted half alone; the live loader stops rebuilding an ingest row. Residue `8 / 19 → 8 / 14`)
 
 - **Scope gate:** `SCOPE_GATE: EXEMPT (Epic 6 cycle — closes zero corpus units by design;
   decisions.md §2, workflow-instruction.md §6 step 1)`. It ran anyway at the cycle's start tree
