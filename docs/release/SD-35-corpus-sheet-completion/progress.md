@@ -181,7 +181,7 @@ re-measured at the cut by the launch-readiness audit.
 
 ## Cycle log
 
-### 2026-09-13 — Epic 6 / `desktop-and-prose-leave-pcgen` — AT-35-E6-003-RULED **cycle 17** (`PENDING_SHA`) — **partial** (the spell duration/range reads leave the live side and the class-feature bar check leaves it too; the `ingest_record_tokens` group clears whole. Residue `5 / 5 → 4 / 4`)
+### 2026-09-13 — Epic 6 / `desktop-and-prose-leave-pcgen` — AT-35-E6-003-RULED **cycle 17** (`fd5e4ddc69`) — **partial** (the spell duration/range reads leave the live side and the class-feature bar check leaves it too; the `ingest_record_tokens` group clears whole. Residue `5 / 5 → 4 / 4`)
 
 **Receipt:** `artifacts/epic-6-pcgen-exit/AT-35-E6-003-RULED_cycle17_receipt.md`. Cycle start `2fad97f6f5`.
 

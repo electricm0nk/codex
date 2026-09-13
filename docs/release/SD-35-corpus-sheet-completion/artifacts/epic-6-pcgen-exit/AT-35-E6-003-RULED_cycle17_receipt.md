@@ -1,6 +1,6 @@
 # Cycle AT-35-E6-003-RULED cycle 17 — Epic 6 (PCGen exit) / AT-35-E6-003-RULED
 
-- **Commit SHA:** `PENDING_SHA` (the code, the regenerated converted artifact, the cycle-17 census
+- **Commit SHA:** `fd5e4ddc69` (the code, the regenerated converted artifact, the cycle-17 census
   script and its JSON, one retro `correction`, one retro `deferral`, and the folded
   shared-checkout artifact), cycle start `2fad97f6f5`
 
