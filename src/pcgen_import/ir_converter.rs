@@ -84,7 +84,10 @@ use crate::pcgen_import::source_content_payload::b6_metadata_kind_to_canonical;
 use crate::rules_core::equipment_effects::intelligent_item::{
     IntelligentItemContribution, ItemAlignment,
 };
+use crate::rules_core::equipment_effects::equipmods::WeaponEnhancementBonus;
+use crate::rules_core::equipment_effects::general::{SkillCheckBonus, VarBonus};
 use crate::rules_core::equipment_effects::magic_items::AbilityScoreBonus;
+use crate::rules_core::equipment_effects::EquipmentStatEffect;
 use crate::rules_core::equipment_record::CorpusEquipmentRecord;
 use crate::rules_core::spell_record::CorpusSpellRecord;
 use crate::rules_core::source_content::{
@@ -486,7 +489,295 @@ pub fn equipment_record_to_corpus(record: &EquipmentRecord) -> CorpusEquipmentRe
         cost_gp,
         ability_score_bonus: ability_score_bonus_of(record),
         intelligent_item: intelligent_item_contribution_of(record),
+        stat_effect: arms_armor_stat_effect_of(record),
+        armor_class_chain_bonus: armor_class_chain_bonus_of(record),
+        skill_check_bonus: skill_check_bonus_of(record),
+        var_bonuses: var_bonuses_of(record),
+        weapon_enhancement: weapon_enhancement_of(record),
+        spell_resistance_bonus: spell_resistance_bonus_of(record),
+        eqmod_references: eqmod_references_of(record),
     }
+}
+
+/// The item's settled armour/shield stat contribution. Moved here verbatim
+/// from `equipment_effects::arms_armor` (SD-35 `AT-35-E6-003-RULED` cycle 11);
+/// every rule each field encodes, and every real-corpus witness behind it, is
+/// stated in that module's own doc comments, which stayed with the numbers.
+fn arms_armor_stat_effect_of(record: &EquipmentRecord) -> EquipmentStatEffect {
+    EquipmentStatEffect {
+        armor_class_bonus: armor_class_chain_bonus_of(record)
+            .or_else(|| tempbonus_combat_ac_of(record)),
+        max_dex: equipment_token_i16(record, "MAXDEX")
+            .or_else(|| eqmarmor_chain_value_of(record, "MAXDEX")),
+        spell_failure: equipment_token_value(record, "SPELLFAILURE")
+            .and_then(|value| value.parse().ok())
+            .or_else(|| eqmarmor_chain_value_of(record, "SPELLFAILURE").map(f32::from)),
+        armor_check_penalty: equipment_token_i16(record, "ACCHECK")
+            .or_else(|| eqmarmor_chain_value_of(record, "ACCHECK")),
+    }
+}
+
+fn equipment_token_value<'a>(record: &'a EquipmentRecord, key: &str) -> Option<&'a str> {
+    record.tokens.iter().find(|token| token.key == key).map(|token| token.value.as_str())
+}
+
+fn equipment_token_i16(record: &EquipmentRecord, key: &str) -> Option<i16> {
+    equipment_token_value(record, key).and_then(|value| value.parse().ok())
+}
+
+/// The first standing `BONUS:COMBAT|AC|<n>` chain's magnitude. A
+/// `TYPE=Circumstance` chain is excluded: by PF1's own definition it applies
+/// only while its holder is in a named situation, so it is not a standing
+/// armour contribution.
+fn armor_class_chain_bonus_of(record: &EquipmentRecord) -> Option<i16> {
+    record.bonus_chains.iter().find_map(|bonus| {
+        let qualifiers = &bonus.qualifiers;
+        let is_ac_bonus = qualifiers.len() >= 3
+            && qualifiers[0] == "COMBAT"
+            && qualifiers[1] == "AC"
+            && !crate::pcgen_import::equipment_bonus_reader::declares_circumstance_bonus_type(bonus);
+        if is_ac_bonus {
+            qualifiers[2].parse::<i16>().ok()
+        } else {
+            None
+        }
+    })
+}
+
+/// The consumable-triggered sibling of the standing AC chain, read only for
+/// the item's own total and never for a referenced modifier's contribution.
+fn tempbonus_combat_ac_of(record: &EquipmentRecord) -> Option<i16> {
+    record.tokens.iter().find_map(|token| {
+        if token.key != "TEMPBONUS" {
+            return None;
+        }
+        let parts: Vec<&str> = token.value.split('|').collect();
+        if parts.len() < 4
+            || (parts[0] != "PC" && parts[0] != "ANYPC")
+            || parts[1] != "COMBAT"
+            || parts[2] != "AC"
+        {
+            return None;
+        }
+        parts[3].parse::<i16>().ok()
+    })
+}
+
+/// A modifier record's own `BONUS:EQMARMOR|<field>|<n>` magnitude -- the
+/// family a material/masterwork/enhancement modifier states its armour-stat
+/// contribution in, consulted only when the bare token is absent.
+fn eqmarmor_chain_value_of(record: &EquipmentRecord, field: &str) -> Option<i16> {
+    record.bonus_chains.iter().find_map(|bonus| {
+        let qualifiers = &bonus.qualifiers;
+        if qualifiers.len() >= 3 && qualifiers[0] == "EQMARMOR" && qualifiers[1] == field {
+            qualifiers[2].parse::<i16>().ok()
+        } else {
+            None
+        }
+    })
+}
+
+/// The item's settled circumstance bonus to one named skill, including the
+/// automatic swim-speed racial bonus PF1 grants on top of an explicit Swim
+/// bonus. Moved here verbatim from `equipment_effects::general`.
+fn skill_check_bonus_of(record: &EquipmentRecord) -> Option<SkillCheckBonus> {
+    let explicit = record
+        .bonus_chains
+        .iter()
+        .find_map(|bonus| {
+            let qualifiers = &bonus.qualifiers;
+            if qualifiers.len() < 3 || qualifiers[0] != "SKILL" {
+                return None;
+            }
+            qualifiers[2].parse::<i16>().ok().map(|bonus_value| SkillCheckBonus {
+                skill: qualifiers[1].clone(),
+                bonus: bonus_value,
+            })
+        })
+        .or_else(|| tempbonus_skill_of(record))?;
+    Some(SkillCheckBonus {
+        bonus: explicit.bonus + swim_speed_racial_bonus_of(record, &explicit.skill),
+        ..explicit
+    })
+}
+
+/// The consumable-triggered single-skill sibling of the explicit skill chain.
+/// A comma-joined list, a `TYPE.<Group>` wildcard and the literal `ALL`
+/// wildcard are all deliberately unread: each is a wider shape this settled
+/// single-skill value has no way to state, so the honest answer is absence.
+fn tempbonus_skill_of(record: &EquipmentRecord) -> Option<SkillCheckBonus> {
+    record.tokens.iter().find_map(|token| {
+        if token.key != "TEMPBONUS" {
+            return None;
+        }
+        let parts: Vec<&str> = token.value.split('|').collect();
+        if parts.len() < 4 || (parts[0] != "PC" && parts[0] != "ANYPC") || parts[1] != "SKILL" {
+            return None;
+        }
+        let skill = parts[2];
+        if skill.is_empty()
+            || skill.contains(',')
+            || skill.starts_with("TYPE.")
+            || skill.eq_ignore_ascii_case("ALL")
+        {
+            return None;
+        }
+        parts[3].parse::<i16>().ok().map(|bonus_value| SkillCheckBonus {
+            skill: skill.to_string(),
+            bonus: bonus_value,
+        })
+    })
+}
+
+/// PF1's Swim skill rule: a swim speed of at least 5 feet is a +8 racial
+/// bonus on Swim checks, additive with any explicit Swim bonus the same item
+/// grants.
+fn swim_speed_racial_bonus_of(record: &EquipmentRecord, skill: &str) -> i16 {
+    if skill != "Swim" {
+        return 0;
+    }
+    let grants_swim_speed = record.tokens.iter().any(|token| {
+        token.key == "MOVE"
+            && token.value.split(',').any(|part| part.trim().eq_ignore_ascii_case("Swim"))
+    });
+    if grants_swim_speed {
+        8
+    } else {
+        0
+    }
+}
+
+/// The item's settled flat bonuses to named rules variables, one row per
+/// name. A chain naming several variables at once contributes the same
+/// magnitude to each. Moved here verbatim from `equipment_effects::general`.
+fn var_bonuses_of(record: &EquipmentRecord) -> Vec<VarBonus> {
+    record
+        .bonus_chains
+        .iter()
+        .filter_map(|bonus| {
+            let qualifiers = &bonus.qualifiers;
+            if qualifiers.len() < 3 || qualifiers[0] != "VAR" {
+                return None;
+            }
+            let value = qualifiers[2].parse::<i16>().ok()?;
+            Some((qualifiers[1].as_str(), value))
+        })
+        .flat_map(|(names, value)| {
+            names.split(',').map(move |name| VarBonus { name: name.to_string(), bonus: value })
+        })
+        .collect()
+}
+
+/// One record's own named-variable magnitude, used only to substitute a
+/// sibling roll chain's non-literal magnitude segment. Never looks outside
+/// this one record.
+fn var_reference_of(record: &EquipmentRecord, name: &str) -> Option<i16> {
+    record.bonus_chains.iter().find_map(|bonus| {
+        let qualifiers = &bonus.qualifiers;
+        if qualifiers.len() >= 3 && qualifiers[0] == "VAR" && qualifiers[1] == name {
+            qualifiers[2].parse::<i16>().ok()
+        } else {
+            None
+        }
+    })
+}
+
+/// The item's settled weapon to-hit / damage enhancement, summed across every
+/// qualifying roll chain on the record. Moved here verbatim from
+/// `equipment_effects::equipmods`, whose own doc comments carry every rule and
+/// real-corpus witness behind each arm below.
+fn weapon_enhancement_of(record: &EquipmentRecord) -> Option<WeaponEnhancementBonus> {
+    let mut tohit_bonus: Option<i16> = None;
+    let mut damage_bonus: Option<i16> = None;
+    let mut natural_attack_only = false;
+    let mut weapon_prof_scope: Option<String> = None;
+    let mut matched = false;
+
+    let mut apply = |affects: &str, bonus_value: i16| {
+        if affects.contains("TOHIT") {
+            tohit_bonus = Some(tohit_bonus.unwrap_or(0) + bonus_value);
+        }
+        if affects.contains("DAMAGE") {
+            damage_bonus = Some(damage_bonus.unwrap_or(0) + bonus_value);
+        }
+    };
+
+    for bonus in &record.bonus_chains {
+        let qualifiers = &bonus.qualifiers;
+        let subject = qualifiers.first().map(String::as_str);
+        let this_natural_attack_only = subject == Some("WEAPONPROF=TYPE.Natural");
+        let is_roll_shape = qualifiers.len() >= 2
+            && matches!(
+                qualifiers[1].as_str(),
+                "TOHIT" | "DAMAGE" | "DAMAGE,TOHIT" | "TOHIT,DAMAGE"
+            );
+
+        if (subject == Some("WEAPON") || this_natural_attack_only) && is_roll_shape {
+            if crate::pcgen_import::equipment_bonus_reader::roll_bonus_carries_enhancement_type(
+                bonus,
+            ) {
+                let magnitude = qualifiers[2]
+                    .parse::<i16>()
+                    .ok()
+                    .or_else(|| var_reference_of(record, &qualifiers[2]));
+                if let Some(bonus_value) = magnitude {
+                    matched = true;
+                    natural_attack_only = this_natural_attack_only;
+                    apply(&qualifiers[1], bonus_value);
+                }
+            }
+            continue;
+        }
+
+        if let Some(name) = subject.and_then(|s| s.strip_prefix("WEAPONPROF="))
+            && !name.starts_with("TYPE.")
+            && is_roll_shape
+            && qualifiers.len() >= 3
+            && let Ok(bonus_value) = qualifiers[2].parse::<i16>()
+        {
+            matched = true;
+            weapon_prof_scope = Some(name.to_string());
+            apply(&qualifiers[1], bonus_value);
+        }
+    }
+
+    matched.then_some(WeaponEnhancementBonus {
+        tohit_bonus,
+        damage_bonus,
+        natural_attack_only,
+        weapon_prof_scope,
+    })
+}
+
+/// The item's settled flat Spell Resistance grant. A record whose grant is a
+/// player choice rather than a literal states no settled number and yields
+/// `None`. Moved here verbatim from `equipment_effects::equipmods`.
+fn spell_resistance_bonus_of(record: &EquipmentRecord) -> Option<i16> {
+    equipment_token_value(record, "SR").and_then(|value| value.parse().ok())
+}
+
+/// The corpus identities of the modifier items attached to this one.
+///
+/// A record can name more than one attachment, and each names its parts in
+/// one string; the live side used to hold both of those grammar facts to ask
+/// one question ("which other corpus records are attached to this one?").
+/// Every candidate segment is emitted in source order, including the ones
+/// that resolve to no record -- the caller's resolve-or-skip pass is
+/// unchanged, and filtering here would need the corpus the converter does not
+/// have.
+fn eqmod_references_of(record: &EquipmentRecord) -> Vec<String> {
+    let mut references = Vec::new();
+    for token in record.tokens.iter().filter(|token| token.key == "EQMOD") {
+        for instance in token.value.split('.') {
+            for candidate in instance.split('|') {
+                let candidate = candidate.trim();
+                if !candidate.is_empty() {
+                    references.push(candidate.to_string());
+                }
+            }
+        }
+    }
+    references
 }
 
 /// The item's settled ability-score enhancement: its first

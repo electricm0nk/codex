@@ -15,8 +15,17 @@
 //! here is hand-rolled; every value traces back to a real, verbatim
 //! corpus token, read the same way `arms_armor.rs` reads its own tokens
 //! straight off the resolved record.
+//!
+//! **SD-35 `AT-35-E6-003-RULED` cycle 11.** Every rule and every real-corpus
+//! witness named above is unchanged and still real. What moved is WHERE the
+//! reading happens: once, at ingest, in
+//! [`crate::pcgen_import::ir_converter::equipment_record_to_corpus`], which is
+//! where `decisions.md` §11 rules that rule conversion belongs. The functions
+//! below report the settled value off
+//! [`crate::rules_core::equipment_record::CorpusEquipmentRecord`] and name no
+//! ingest-format token at all.
 
-use crate::pcgen_import::lst_parser::equipment::EquipmentRecord;
+use crate::rules_core::equipment_record::CorpusEquipmentRecord;
 
 /// A skill-check circumstance bonus granted by a `general`-category
 /// item's `BONUS:SKILL|<skill>|<n>|TYPE=Circumstance` corpus token.
@@ -26,105 +35,22 @@ pub struct SkillCheckBonus {
     pub bonus: i16,
 }
 
-/// Resolve one `general` corpus record's skill-check-bonus contribution.
+/// One `general` corpus record's settled skill-check-bonus contribution.
 ///
-/// Reads the record's first `BONUS:SKILL|<skill>|<n>|...` chain, if any.
-/// A record with no such chain (the overwhelming majority of `general`
-/// records — trade goods, containers, tattoos, ...) yields `None`: that
-/// means this record's raw tokens do not carry the field, not that its
-/// value is zero.
-pub fn compute_general_effect(record: &EquipmentRecord) -> Option<SkillCheckBonus> {
-    let explicit = record
-        .bonus_chains
-        .iter()
-        .find_map(|bonus| {
-            let qualifiers = &bonus.qualifiers;
-            let is_skill_bonus = qualifiers.len() >= 3 && qualifiers[0] == "SKILL";
-            if !is_skill_bonus {
-                return None;
-            }
-            qualifiers[2].parse::<i16>().ok().map(|bonus_value| SkillCheckBonus {
-                skill: qualifiers[1].clone(),
-                bonus: bonus_value,
-            })
-        })
-        .or_else(|| tempbonus_skill_fallback(record))?;
-    Some(SkillCheckBonus {
-        bonus: explicit.bonus + swim_speed_racial_bonus(record, &explicit.skill),
-        ..explicit
-    })
-}
-
-/// `AT-34-E3-003` (bucket `M`, equipment sub-causes, cycle 3): a
-/// `TEMPBONUS:<target>|SKILL|<skill>|<n>|...` corpus token is PCGen's
-/// temporary/consumable-triggered sibling of `BONUS:SKILL|<skill>|<n>|...`
-/// — the real, load-bearing mechanical effect on every potion/elixir in
-/// this population (`Elixir of Swimming`, `Elixir of Vision`, `Dust of
-/// Appearance`, ...), none of which carry a `BONUS:` chain at all
-/// (confirmed against the live corpus: every one declares no bonus chains
-/// at all -- `pcgen_import::ingest_record::bonus_chain_qualifiers` returns
-/// empty). Only fires when no explicit `BONUS:SKILL` chain exists
-/// (checked by the caller's `.or_else`), and only for a `<target>` of
-/// `PC`/`ANYPC` (a character-side skill bonus) — a `TEMPBONUS:EQ|...`
-/// (the `Lead Blades` shape: an equipment-side weapon-damage buff) is a
-/// structurally different effect this function must never read as a skill
-/// bonus. Only a literal, single-skill, integer-valued token is read: a
-/// comma-joined skill list or a `TYPE.<Group>` wildcard is a different,
-/// wider shape this fallback deliberately does not attempt (an honest
-/// `None`, not a guessed value).
-fn tempbonus_skill_fallback(record: &EquipmentRecord) -> Option<SkillCheckBonus> {
-    record.tokens.iter().find_map(|token| {
-        if token.key != "TEMPBONUS" {
-            return None;
-        }
-        let parts: Vec<&str> = token.value.split('|').collect();
-        if parts.len() < 4 || (parts[0] != "PC" && parts[0] != "ANYPC") || parts[1] != "SKILL" {
-            return None;
-        }
-        let skill = parts[2];
-        // `ALL` is PCGen's real wildcard meaning "every skill" (confirmed
-        // live: `Setting Stone (Invigoration)`, `TEMPBONUS:PC|SKILL|ALL|2|
-        // TYPE=Morale`) -- a blanket bonus, not a bonus to one skill
-        // literally named "ALL". Reading it as a single-skill `SkillCheck
-        // Bonus{skill:"ALL"}` would be a fabricated, wrong value (this
-        // struct has no field for "every skill"), so it is excluded here
-        // the same way a comma-joined list and a `TYPE.<Group>` wildcard
-        // are: an honest `None`, not a guessed shape.
-        if skill.is_empty() || skill.contains(',') || skill.starts_with("TYPE.") || skill.eq_ignore_ascii_case("ALL") {
-            return None;
-        }
-        parts[3].parse::<i16>().ok().map(|bonus_value| SkillCheckBonus {
-            skill: skill.to_string(),
-            bonus: bonus_value,
-        })
-    })
-}
-
-/// PF1 core rule (`Core Rulebook` Swim skill entry): "A swim speed of at
-/// least 5 feet gives a creature a +8 racial bonus on Swim checks." This is
-/// an automatic bonus triggered by the item itself granting a swim speed
-/// (a `MOVE:...Swim,<n>...` token), independent of and additive with any
-/// explicit `BONUS:SKILL|Swim|...` token the same item also carries —
-/// confirmed against the real pinned PCGen oracle, which sums both
-/// (`ultimate_equipment:equipment:ring_of_the_sea_strider`: explicit `+8`
-/// racial token + this auto-rule's `+8` = real oracle export `16`, not the
-/// explicit token's bare `8`; `AT-33-E5-remainder-equipment_cycle_receipt.md`).
-fn swim_speed_racial_bonus(record: &EquipmentRecord, skill: &str) -> i16 {
-    if skill != "Swim" {
-        return 0;
-    }
-    let grants_swim_speed = record.tokens.iter().any(|token| {
-        token.key == "MOVE"
-            && token
-                .value
-                .split(',')
-                .any(|part| part.trim().eq_ignore_ascii_case("Swim"))
-    });
-    if grants_swim_speed {
-        8
-    } else {
-        0
-    }
+/// The item's own stated circumstance bonus to one named skill, plus the
+/// automatic `+8` PF1 grants on Swim checks to anything that grants a swim
+/// speed (real witness: `ultimate_equipment:equipment:ring_of_the_sea_strider`,
+/// whose oracle total is `16`, not its stated `8`). The overwhelming majority
+/// of `general` records -- trade goods, containers, tattoos -- state no such
+/// bonus and yield `None`: honest absence, never a fabricated zero. A
+/// multi-skill or wildcard grant is a wider shape this single-skill value
+/// cannot state, and is likewise absent rather than guessed.
+///
+/// SD-35 `AT-35-E6-003-RULED` cycle 11: the reading moved to ingest
+/// ([`crate::pcgen_import::ir_converter::equipment_record_to_corpus`],
+/// `decisions.md` §11); the rule and every witness above are unchanged.
+pub fn compute_general_effect(record: &CorpusEquipmentRecord) -> Option<SkillCheckBonus> {
+    record.skill_check_bonus.clone()
 }
 
 /// One named-variable bonus granted by a `BONUS:VAR|<name(s)>|<value>`
@@ -150,37 +76,20 @@ pub struct VarBonus {
     pub bonus: i16,
 }
 
-/// Resolve every `BONUS:VAR|<name(s)>|<value>` chain on one equipment
-/// record into its flat per-name literal bonus rows.
+/// One equipment record's settled flat bonuses to named rules variables,
+/// one row per name.
 ///
-/// A chain's own name field may itself be a comma-joined list (e.g.
-/// `CMD_Disarm,CMD_Sunder`, real verbatim from `Gloves of Dueling`) — each
-/// named variable gets its own row carrying the SAME literal value, the
-/// same convention `compute_general_effect`'s own doc comment already
-/// named for the sibling multi-skill/`ALL` `SKILL`-shape gap. Any trailing
-/// qualifier past the value (`TYPE=...`) is stacking metadata, not part of
-/// the magnitude, and is not read here. Returns an empty vec when the
-/// record carries no `VAR` chain at all — an honest absence, not a
-/// fabricated zero (matching `compute_general_effect`'s own `None`
-/// convention for its own shape).
-pub fn compute_var_effect(record: &EquipmentRecord) -> Vec<VarBonus> {
-    record
-        .bonus_chains
-        .iter()
-        .filter_map(|bonus| {
-            let qualifiers = &bonus.qualifiers;
-            if qualifiers.len() < 3 || qualifiers[0] != "VAR" {
-                return None;
-            }
-            let value = qualifiers[2].parse::<i16>().ok()?;
-            Some((qualifiers[1].as_str(), value))
-        })
-        .flat_map(|(names, value)| {
-            names
-                .split(',')
-                .map(move |name| VarBonus { name: name.to_string(), bonus: value })
-        })
-        .collect()
+/// An item may state the same magnitude for several variables at once (real
+/// verbatim: `Gloves of Dueling`'s `CMD_Disarm` and `CMD_Sunder`); each gets
+/// its own row. Stacking metadata is not part of the magnitude and is not
+/// carried here. An empty vec means the item states no such bonus -- honest
+/// absence, not a fabricated zero.
+///
+/// SD-35 `AT-35-E6-003-RULED` cycle 11: the reading moved to ingest
+/// ([`crate::pcgen_import::ir_converter::equipment_record_to_corpus`],
+/// `decisions.md` §11); the rule and every witness above are unchanged.
+pub fn compute_var_effect(record: &CorpusEquipmentRecord) -> Vec<VarBonus> {
+    record.var_bonuses.clone()
 }
 
 /// Sums every EQMOD-referenced modifier record's own `VAR` chains into
@@ -203,7 +112,10 @@ pub fn compute_var_effect(record: &EquipmentRecord) -> Vec<VarBonus> {
 /// ACP effect, cosmetic special qualities) contributes nothing, same
 /// resolve-or-skip discipline as every other `equipment_effects`
 /// resolver.
-pub fn apply_eqmod_var_bonus(base: &mut Vec<VarBonus>, eqmod_records: &[&EquipmentRecord]) {
+pub fn apply_eqmod_var_bonus(
+    base: &mut Vec<VarBonus>,
+    eqmod_records: &[&CorpusEquipmentRecord],
+) {
     for modifier in eqmod_records {
         for extra in compute_var_effect(modifier) {
             if let Some(existing) = base.iter_mut().find(|v| v.name == extra.name) {
@@ -218,7 +130,14 @@ pub fn apply_eqmod_var_bonus(base: &mut Vec<VarBonus>, eqmod_records: &[&Equipme
 #[cfg(test)]
 mod tests {
     use super::*;
-    use crate::pcgen_import::lst_parser::equipment::parse_equipment_entries;
+    use crate::pcgen_import::ir_converter::equipment_record_to_corpus;
+    use crate::pcgen_import::lst_parser::equipment::{parse_equipment_entries, EquipmentRecord};
+    use crate::rules_core::equipment_record::CorpusEquipmentRecord;
+
+    /// The ingest-time conversion every live reader below is proved over.
+    fn converted(record: &EquipmentRecord) -> CorpusEquipmentRecord {
+        equipment_record_to_corpus(record)
+    }
 
     /// Real verbatim tokens copied from `KEY:Thieves' Tools` in
     /// `core_rulebook/cr_equip_general.lst`.
@@ -229,7 +148,7 @@ mod tests {
         assert!(result.entries.len() == 1, "expected exactly one parsed record");
         let record = &result.entries[0];
 
-        let effect = compute_general_effect(record);
+        let effect = compute_general_effect(&converted(record));
         assert_eq!(
             effect,
             Some(SkillCheckBonus {
@@ -248,7 +167,7 @@ mod tests {
         let result = parse_equipment_entries("cr_equip_general.lst", text);
         let record = &result.entries[0];
 
-        let effect = compute_general_effect(record);
+        let effect = compute_general_effect(&converted(record));
         assert_eq!(
             effect,
             Some(SkillCheckBonus {
@@ -280,7 +199,7 @@ mod tests {
         assert!(result.entries.len() == 1, "expected exactly one parsed record");
         let record = &result.entries[0];
 
-        let effect = compute_general_effect(record);
+        let effect = compute_general_effect(&converted(record));
         assert_eq!(
             effect,
             Some(SkillCheckBonus {
@@ -299,7 +218,7 @@ mod tests {
         let result = parse_equipment_entries("cr_equip_magic_items.lst", text);
         let record = &result.entries[0];
 
-        let effect = compute_general_effect(record);
+        let effect = compute_general_effect(&converted(record));
         assert_eq!(
             effect,
             Some(SkillCheckBonus {
@@ -320,7 +239,7 @@ mod tests {
         let result = parse_equipment_entries("cr_equip_general.lst", text);
         let record = &result.entries[0];
 
-        let effect = compute_general_effect(record);
+        let effect = compute_general_effect(&converted(record));
         assert_eq!(
             effect,
             Some(SkillCheckBonus {
@@ -342,7 +261,7 @@ mod tests {
         let result = parse_equipment_entries("cr_equip_magic_items.lst", text);
         let record = &result.entries[0];
 
-        assert_eq!(compute_general_effect(record), None);
+        assert_eq!(compute_general_effect(&converted(record)), None);
     }
 
     /// A `TEMPBONUS` targeting `EQ` (an equipment-side effect, e.g. a
@@ -356,7 +275,7 @@ mod tests {
         let result = parse_equipment_entries("cr_equip_magic_items.lst", text);
         let record = &result.entries[0];
 
-        assert_eq!(compute_general_effect(record), None);
+        assert_eq!(compute_general_effect(&converted(record)), None);
     }
 
     /// Real verbatim line copied from `ue_equip_magic_items.lst:200`
@@ -376,7 +295,7 @@ mod tests {
         assert!(result.entries.len() == 1, "expected exactly one parsed record");
         let record = &result.entries[0];
 
-        let effect = compute_general_effect(record);
+        let effect = compute_general_effect(&converted(record));
         assert_eq!(
             effect,
             Some(SkillCheckBonus {
@@ -396,7 +315,7 @@ mod tests {
         let result = parse_equipment_entries("cr_equip_general.lst", text);
         let record = &result.entries[0];
 
-        let effect = compute_general_effect(record);
+        let effect = compute_general_effect(&converted(record));
         assert_eq!(
             effect,
             Some(SkillCheckBonus {
@@ -414,7 +333,7 @@ mod tests {
         let result = parse_equipment_entries("cr_equip_general.lst", text);
         let record = &result.entries[0];
 
-        let effect = compute_general_effect(record);
+        let effect = compute_general_effect(&converted(record));
         assert_eq!(effect, None);
     }
 
@@ -433,7 +352,7 @@ mod tests {
         assert_eq!(result.entries.len(), 1, "expected exactly one parsed record");
         let record = &result.entries[0];
 
-        let effect = compute_var_effect(record);
+        let effect = compute_var_effect(&converted(record));
         assert_eq!(effect, vec![VarBonus { name: "LOADSCORE".to_string(), bonus: 8 }]);
     }
 
@@ -451,7 +370,7 @@ mod tests {
         let result = parse_equipment_entries("apg_equip_magic_items.lst", text);
         let record = &result.entries[0];
 
-        let effect = compute_var_effect(record);
+        let effect = compute_var_effect(&converted(record));
         assert_eq!(
             effect,
             vec![
@@ -471,7 +390,7 @@ mod tests {
         let result = parse_equipment_entries("cr_equip_magic_items.lst", text);
         let record = &result.entries[0];
 
-        let effect = compute_var_effect(record);
+        let effect = compute_var_effect(&converted(record));
         assert_eq!(
             effect,
             vec![
@@ -492,7 +411,7 @@ mod tests {
         let result = parse_equipment_entries("cr_equip_general.lst", text);
         let record = &result.entries[0];
 
-        let effect = compute_var_effect(record);
+        let effect = compute_var_effect(&converted(record));
         assert_eq!(effect, Vec::<VarBonus>::new());
     }
 
@@ -516,14 +435,14 @@ mod tests {
         let mithral_result = parse_equipment_entries("cr_equipmods.lst", mithral_text);
         let mithral_record = &mithral_result.entries[0];
 
-        let mut effect = compute_var_effect(base_record);
+        let mut effect = compute_var_effect(&converted(base_record));
         assert_eq!(
             effect,
             vec![VarBonus { name: "ArmorCheckPenalty".to_string(), bonus: 6 }],
             "the base item's own chain alone is Full Plate's base ACP"
         );
 
-        apply_eqmod_var_bonus(&mut effect, &[mithral_record]);
+        apply_eqmod_var_bonus(&mut effect, &[&converted(mithral_record)]);
         assert_eq!(
             effect,
             vec![VarBonus { name: "ArmorCheckPenalty".to_string(), bonus: 3 }],

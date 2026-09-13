@@ -17,252 +17,88 @@
 //! resolution and `spell_resolver.rs` uses for spell school. No field
 //! here is hand-rolled or fabricated; every value traces back to a real,
 //! verbatim corpus token.
+//!
+//! **SD-35 `AT-35-E6-003-RULED` cycle 11.** Every rule and every real-corpus
+//! witness named above is unchanged and still real. What moved is WHERE the
+//! reading happens: once, at ingest, in
+//! [`crate::pcgen_import::ir_converter::equipment_record_to_corpus`], which is
+//! where `decisions.md` §11 rules that rule conversion belongs. The functions
+//! below report the settled value off
+//! [`crate::rules_core::equipment_record::CorpusEquipmentRecord`] and name no
+//! ingest-format token at all.
 
-use crate::pcgen_import::equipment_bonus_reader;
-use crate::pcgen_import::lst_parser::equipment::EquipmentRecord;
 use crate::rules_core::equipment_effects::EquipmentStatEffect;
+use crate::rules_core::equipment_record::CorpusEquipmentRecord;
 
-/// Resolve one `arms_armor` corpus record's armor/shield stat
-/// contribution.
+/// One `arms_armor` corpus record's armor/shield stat contribution.
 ///
-/// - `armor_class_bonus` comes from the record's first
-///   `BONUS:COMBAT|AC|<n>|TYPE=Armor` (or `TYPE=Shield`) chain — the
-///   record's own "Broken" penalty chain
-///   (`PRETYPE:1,EQMOD=Special Quality ~ Broken ~ Armor`) is a
-///   conditional variant that only applies to a broken item and is never
-///   the first `COMBAT|AC` chain on an unbroken record, so taking the
-///   first match is the correct default (non-broken) armor/shield bonus.
-///   `SD31-W16-EQUIPMOD-001` widened the recognized `TYPE=` set to also
-///   accept `TYPE=ArmorEnhancement`/`TYPE=ShieldEnhancement` — the shape
-///   an `equipment_modifier` armor/shield enhancement-bonus special
-///   ability (`KEY:Special Ability ~ +1 ~ Armor` through `~ +5 ~
-///   Shield`) states its own AC contribution in, verified directly
-///   against the real `core_rulebook/cr_equipmods.lst` corpus records.
-/// - `max_dex` and `spell_failure` come straight off the `MAXDEX:` and
-///   `SPELLFAILURE:` tokens when present (weapons and shieldless items
-///   carry neither, so both are `None` for e.g. a longsword) — falling
-///   back to the record's own `BONUS:EQMARMOR|MAXDEX|...` /
-///   `BONUS:EQMARMOR|SPELLFAILURE|...` chain only when no bare token
-///   exists (`SD31-W16-EQUIPMOD-001`: an `equipment_modifier` material
-///   record like `KEY:Material ~ Mithril ~ Armor / Light` states its
-///   real max-dex/spell-failure contribution only in that chain family,
-///   never as a bare token — those live exclusively on BASE armor
-///   records).
-/// - `armor_check_penalty` comes straight off the `ACCHECK:` token (v0.6
-///   alpha swarm item 1, shape (c)) — present on every armor/shield
-///   record (`0` for no penalty, a negative number for a real one), the
-///   same token this module's own doc comment already cited as present
-///   on `KEY:Leather Armor (Base)` before this field existed to hold it.
-///   `SD31-W16-EQUIPMOD-001`'s same `BONUS:EQMARMOR|ACCHECK|...`
-///   fallback applies here too (a masterwork/material/magic-enhancement
-///   modifier's own check-penalty improvement, e.g.
-///   `KEY:Special Ability ~ +1 ~ Armor`'s `EQMARMOR|ACCHECK|1|
-///   TYPE=Enhancement`) — never consulted when the bare `ACCHECK:` token
-///   is present, so a base record's own real value (including its
-///   conditional "Broken" `EQMARMOR|ACCHECK` chain, which only ever
-///   accompanies a real `ACCHECK:` token) is never shadowed.
+/// - `armor_class_bonus` is the item's first standing `AC` bonus magnitude,
+///   falling back to the consumable-triggered form for the one real item
+///   family that states its natural-armor bonus only that way
+///   (`core_rulebook:equipment:cloak_of_the_manta_ray`, a real `+3`). A
+///   situational (circumstance) AC bonus is never reported as a standing one:
+///   the pinned oracle's standing reference character shows `0`, not the
+///   literal, for the single corpus record of that shape
+///   (`advanced_race_guide:equipment:sea_knife`).
+/// - `max_dex`, `spell_failure` and `armor_check_penalty` are the base
+///   armour/shield record's own stated values, falling back to the
+///   contribution a material/masterwork/enhancement MODIFIER record states
+///   instead (a modifier never carries the base-record form -- e.g.
+///   `Material ~ Mithril ~ Armor / Light`'s real `+3` check-penalty and `+2`
+///   max-Dex improvements).
 ///
-/// Absence (`None`) is honest: it means this record's raw tokens do not
-/// carry that field, not that the field's value is zero.
-pub fn compute_arms_armor_effect(record: &EquipmentRecord) -> EquipmentStatEffect {
-    EquipmentStatEffect {
-        armor_class_bonus: armor_class_bonus_from_bonus_chains(record)
-            .or_else(|| tempbonus_combat_ac_fallback(record)),
-        max_dex: token_i16(record, "MAXDEX").or_else(|| eqmarmor_chain_value(record, "MAXDEX")),
-        spell_failure: token_value(record, "SPELLFAILURE")
-            .and_then(|value| value.parse().ok())
-            .or_else(|| eqmarmor_chain_value(record, "SPELLFAILURE").map(f32::from)),
-        armor_check_penalty: token_i16(record, "ACCHECK")
-            .or_else(|| eqmarmor_chain_value(record, "ACCHECK")),
-    }
-}
-
-fn token_value<'a>(record: &'a EquipmentRecord, key: &str) -> Option<&'a str> {
-    record
-        .tokens
-        .iter()
-        .find(|token| token.key == key)
-        .map(|token| token.value.as_str())
-}
-
-fn token_i16(record: &EquipmentRecord, key: &str) -> Option<i16> {
-    token_value(record, key).and_then(|value| value.parse().ok())
-}
-
-fn armor_class_bonus_from_bonus_chains(record: &EquipmentRecord) -> Option<i16> {
-    record.bonus_chains.iter().find_map(|bonus| {
-        let qualifiers = &bonus.qualifiers;
-        // SD-33 Epic 5 combat/weapon lane: widened from an Armor/Shield-
-        // only `TYPE=` allowlist to any `COMBAT|AC|<n>` chain, regardless
-        // of its bonus-type qualifier (or the qualifier's absence).
-        // `resolve_category_effect` (`equipment_effects.rs`) already
-        // calls this function unconditionally on EVERY equipped item,
-        // not just base armor/shield records, so an item like a Ring of
-        // Protection (`TYPE=Deflection`) or an Amulet of Natural Armor
-        // (`TYPE=NaturalArmor`) carries an equally real, comparable
-        // `COMBAT|AC` magnitude the old Armor/Shield-only gate silently
-        // dropped to `None`. Also handles a real corpus grammar quirk
-        // confirmed against PCGen's own parser
-        // (`pcgen.core.bonus.Bonus.newBonus`, `code/src/java/pcgen/core/
-        // bonus/Bonus.java`): a qualifier segment is only ever parsed as
-        // a bonus type when it literally starts with `TYPE=`/`TYPE.`, so
-        // a real corpus line like `BONUS:COMBAT|AC|4|NaturalArmor`
-        // (`ultimate_equipment/ue_equip_magic_items.lst:1209`, no `TYPE=`
-        // prefix at all) still carries a real literal magnitude on this
-        // record even though PCGen itself never registers a `TYPE=`
-        // string for it. The record's own "Broken" penalty chain is
-        // still never the first `COMBAT|AC` chain on an unbroken record
-        // (see this function's own doc comment above), so taking the
-        // first match is still the correct default.
-        //
-        // SD-33 remediation wave 4 (`AT-33-E5-003`): `TYPE=Circumstance`
-        // is excluded from this otherwise-unconditional match. A
-        // circumstance AC bonus is, by PF1's own rules definition,
-        // conditional on a specific in-game situation the item's holder
-        // must be in (the one real corpus instance,
-        // `advanced_race_guide:equipment:sea_knife`'s
-        // `BONUS:COMBAT|AC|-2|TYPE=Circumstance`, only applies while
-        // "swimming, flying, or prone" per the record's own `SPROP`) —
-        // never a standing armor/shield/deflection/natural-armor/
-        // enhancement-style AC contribution, which is what every other
-        // `TYPE=` this widened match accepts represents. Reading it
-        // unconditionally produced a real, confirmed disagreement
-        // against the pinned oracle's standing (not prone/swimming)
-        // reference character (`ours=-2`, oracle=`0`,
-        // `AT-33-E5-003.combined-oracle-results.json`). Confirmed the
-        // only record in the whole corpus with this exact shape (a
-        // `python3` sweep of every `data/corpus/*/equipment*/**/*.json`
-        // record's own declared bonus chains
-        // (`pcgen_import::ingest_record::bonus_chain_qualifiers`) for
-        // `COMBAT|AC|*|TYPE=Circumstance`
-        // finds exactly 1), so this exclusion cannot regress any other
-        // already-verified unit.
-        //
-        // SD-35 `AT-35-E6-003-SWEEP` cycle 14: the circumstance exclusion is
-        // still exactly this rule, but the question "is this a circumstance
-        // bonus?" is now asked of the converter
-        // (`pcgen_import::equipment_bonus_reader`) instead of answered here by
-        // comparing a qualifier to the ingest format's own
-        // `TYPE=Circumstance` spelling, which a live module may not hold
-        // (`decisions.md` §11, `technical-design.md` §0).
-        let is_ac_bonus = qualifiers.len() >= 3
-            && qualifiers[0] == "COMBAT"
-            && qualifiers[1] == "AC"
-            && !equipment_bonus_reader::declares_circumstance_bonus_type(bonus);
-        if is_ac_bonus {
-            qualifiers[2].parse::<i16>().ok()
-        } else {
-            None
-        }
-    })
-}
-
-/// `AT-34-E3-003` (bucket `M`, equipment sub-causes, cycle 5): a
-/// `TEMPBONUS:<target>|COMBAT|AC|<n>|...` corpus token is PCGen's
-/// temporary/consumable-triggered sibling of `BONUS:COMBAT|AC|<n>|...` --
-/// the same shape `general.rs`'s `tempbonus_skill_fallback` (cycle 3) and
-/// `magic_items.rs`'s `TEMPBONUS|STAT` fallback (cycle 3) already read for
-/// their own fields. This is the third and, per a corpus-wide sweep this
-/// cycle ran (`grep -rl '"TEMPBONUS"' data/corpus/*/equipment/*/*.json |
-/// xargs grep -l COMBAT`), only unhandled `TEMPBONUS` target family:
-/// `COMBAT|AC`. Exactly 1 corpus-wide record carries this shape,
-/// `core_rulebook:equipment:cloak_of_the_manta_ray`'s real verbatim
-/// `TEMPBONUS:PC|COMBAT|AC|3|TYPE=NaturalArmor` (the item's real +3
-/// natural armor bonus, confirmed against `cr_equip_magic_items.lst:109`)
-/// -- carries no `BONUS:COMBAT|AC` chain of its own at all (`raw_bonus_
-/// chains` is empty), which is why the `wiring_class` classifier already
-/// tagged it `computed:tempbonus` while this compute path had nothing to
-/// answer with. Only fires when no explicit `BONUS:COMBAT|AC` chain
-/// exists (checked by the caller's `.or_else`), and only for target
-/// `PC`/`ANYPC` -- the same discipline `tempbonus_skill_fallback` applies
-/// for the identical reason: an `EQ`-targeted `TEMPBONUS` is a different,
-/// equipment-side effect (no such `COMBAT|AC` record exists in the corpus
-/// today; this guard simply never reads one as a character AC bonus).
-fn tempbonus_combat_ac_fallback(record: &EquipmentRecord) -> Option<i16> {
-    record.tokens.iter().find_map(|token| {
-        if token.key != "TEMPBONUS" {
-            return None;
-        }
-        let parts: Vec<&str> = token.value.split('|').collect();
-        if parts.len() < 4
-            || (parts[0] != "PC" && parts[0] != "ANYPC")
-            || parts[1] != "COMBAT"
-            || parts[2] != "AC"
-        {
-            return None;
-        }
-        parts[3].parse::<i16>().ok()
-    })
-}
-
-/// Sums every EQMOD-referenced modifier record's own `COMBAT|AC` chain
-/// (via [`armor_class_bonus_from_bonus_chains`], applied to each
-/// modifier's own record) into `effect.armor_class_bonus`.
+/// SD-35 `AT-35-E6-003-RULED` cycle 11: every rule above is unchanged and
+/// every witness still real, but the reading itself happens once, at ingest,
+/// in [`crate::pcgen_import::ir_converter::equipment_record_to_corpus`]
+/// (`decisions.md` §11 -- rule conversion happens at ingest into our own
+/// schema; §1 -- the sheet prints one settled number). This function reports
+/// the settled value.
 ///
-/// SD-33 remediation wave 4 (`AT-33-E5-003`): a base armor/shield item's
-/// own literal `COMBAT|AC` chain (what [`compute_arms_armor_effect`]
-/// alone reads) is only the item's OWN base value. A real magic
-/// armor/shield item's enhancement bonus is stated on a *separate*
-/// `equipment_modifier` corpus record the base item's own `EQMOD:` token
-/// references by name (e.g. `KEY:Armor of Grim Triumph`'s own
-/// `BONUS:COMBAT|AC|6|TYPE=Armor` chain is Breastplate's base 6; its
-/// `EQMOD:...Special Ability ~ +1 ~ Armor...` token names a *different*,
-/// separately-resolvable corpus record whose own
-/// `BONUS:COMBAT|AC|1|TYPE=ArmorEnhancement` chain is the real +1
-/// enhancement — oracle's real total is 7, not 6). Neither
-/// `compute_arms_armor_effect` nor any prior cycle resolved and summed
-/// that second record; this is the real, root-caused engine gap named
-/// across 21 of `AT-33-E5-003`'s 26 disagreements
-/// (`eqmod_embedded_modifier_chain_not_summed`) plus one more this cycle
-/// root-caused the same way (`diviner_s_blight`, previously
-/// "undiagnosed" — `9 - 4` under the same mechanism reproduces its
-/// prior wave's own oracle value exactly).
+/// Absence (`None`) is honest: the record does not state that value, not that
+/// the value is zero.
+pub fn compute_arms_armor_effect(record: &CorpusEquipmentRecord) -> EquipmentStatEffect {
+    record.stat_effect
+}
+
+/// Sums every attached modifier item's own standing AC contribution into
+/// `effect.armor_class_bonus`.
 ///
-/// Every EQMOD-referenced non-`+N`/enhancement modifier this cycle
-/// examined (materials, cosmetic special qualities like Spikes/
-/// Martyring) carries no `COMBAT|AC` chain of its own at all (confirmed
-/// directly against each real corpus record this fix's own tests and
-/// the disagreement-fix verification pass reference), so calling this
-/// unconditionally on every resolved modifier is safe: it adds exactly
-/// the real enhancement records' own magnitude and nothing else, never
-/// fabricated, never double-counted.
-pub fn apply_eqmod_armor_class_bonus(effect: &mut EquipmentStatEffect, eqmod_records: &[&EquipmentRecord]) {
-    let extra: i16 = eqmod_records
-        .iter()
-        .filter_map(|modifier| armor_class_bonus_from_bonus_chains(modifier))
-        .sum();
+/// SD-33 remediation wave 4 (`AT-33-E5-003`): a base armour/shield item's own
+/// magnitude (what [`compute_arms_armor_effect`] alone reports) is only the
+/// item's base value. A magic armour's enhancement bonus is stated on a
+/// SEPARATE modifier record the base item names -- `Armor of Grim Triumph`'s
+/// own `6` is Breastplate's base, its attached `Special Ability ~ +1 ~ Armor`
+/// carries the real `+1`, and the oracle's total is `7`. Summing (rather than
+/// taking the highest, as the weapon dimension does) is PF1's rule here: an
+/// armour's base value and its enhancement bonus are two different bonus
+/// types.
+///
+/// Every attached non-enhancement modifier (materials, cosmetic qualities
+/// like Spikes) states no AC contribution at all and adds exactly nothing, so
+/// calling this over every resolved modifier is safe.
+pub fn apply_eqmod_armor_class_bonus(
+    effect: &mut EquipmentStatEffect,
+    eqmod_records: &[&CorpusEquipmentRecord],
+) {
+    let extra: i16 = eqmod_records.iter().filter_map(|modifier| modifier.armor_class_chain_bonus).sum();
     if extra != 0 {
         effect.armor_class_bonus = Some(effect.armor_class_bonus.unwrap_or(0) + extra);
     }
 }
 
-/// An `equipment_modifier` record's own `BONUS:EQMARMOR|<field>|<n>[|...]`
-/// chain — the token family a masterwork/material/magic-enhancement
-/// modifier uses to state its armor/shield-stat contribution, distinct
-/// from (and never present alongside a real value in) the bare
-/// `MAXDEX:`/`SPELLFAILURE:`/`ACCHECK:` tokens a BASE armor/shield record
-/// carries instead. Only ever consulted by [`compute_arms_armor_effect`]
-/// as a fallback when the bare token is absent, so a base record's own
-/// real token (and its conditional "Broken" `EQMARMOR` chain, which only
-/// accompanies a real bare token) always wins first. `qualifiers[2]` is a
-/// literal signed integer for every real corpus record this fallback
-/// exists for; a non-numeric value (none observed in the pinned oracle)
-/// yields `None` rather than a fabricated number.
-fn eqmarmor_chain_value(record: &EquipmentRecord, field: &str) -> Option<i16> {
-    record.bonus_chains.iter().find_map(|bonus| {
-        let qualifiers = &bonus.qualifiers;
-        if qualifiers.len() >= 3 && qualifiers[0] == "EQMARMOR" && qualifiers[1] == field {
-            qualifiers[2].parse::<i16>().ok()
-        } else {
-            None
-        }
-    })
-}
-
 #[cfg(test)]
 mod tests {
     use super::*;
-    use crate::pcgen_import::lst_parser::equipment::parse_equipment_entries;
+    use crate::pcgen_import::ir_converter::equipment_record_to_corpus;
+    use crate::pcgen_import::lst_parser::equipment::{parse_equipment_entries, EquipmentRecord};
+    use crate::rules_core::equipment_record::CorpusEquipmentRecord;
+
+    /// The ingest-time conversion every live reader below is proved over: the
+    /// same function `corpus_loader` runs for a real corpus record, applied to
+    /// the real verbatim source line each test quotes.
+    fn converted(record: &EquipmentRecord) -> CorpusEquipmentRecord {
+        equipment_record_to_corpus(record)
+    }
 
     /// Real verbatim tokens copied from `KEY:Leather Armor (Base)` in
     /// `core_rulebook/cr_equip_arms_armor.lst`.
@@ -273,7 +109,7 @@ mod tests {
         assert!(result.entries.len() == 1, "expected exactly one parsed record");
         let record = &result.entries[0];
 
-        let effect = compute_arms_armor_effect(record);
+        let effect = compute_arms_armor_effect(&converted(record));
         assert_eq!(effect.armor_class_bonus, Some(2));
         assert_eq!(effect.max_dex, Some(6));
         assert_eq!(effect.spell_failure, Some(10.0));
@@ -288,7 +124,7 @@ mod tests {
         let result = parse_equipment_entries("cr_equip_arms_armor.lst", text);
         let record = &result.entries[0];
 
-        let effect = compute_arms_armor_effect(record);
+        let effect = compute_arms_armor_effect(&converted(record));
         assert_eq!(effect.armor_class_bonus, Some(1));
         assert_eq!(effect.max_dex, None);
         assert_eq!(effect.spell_failure, Some(5.0));
@@ -314,7 +150,7 @@ mod tests {
         assert!(result.entries.len() == 1, "expected exactly one parsed record");
         let record = &result.entries[0];
 
-        let effect = compute_arms_armor_effect(record);
+        let effect = compute_arms_armor_effect(&converted(record));
         assert_eq!(
             effect.armor_class_bonus,
             Some(1),
@@ -342,7 +178,7 @@ mod tests {
         let result = parse_equipment_entries("ue_equip_magic_items.lst", text);
         let record = &result.entries[0];
 
-        let effect = compute_arms_armor_effect(record);
+        let effect = compute_arms_armor_effect(&converted(record));
         assert_eq!(effect.armor_class_bonus, Some(4));
     }
 
@@ -354,7 +190,7 @@ mod tests {
         let result = parse_equipment_entries("cr_equip_arms_armor.lst", text);
         let record = &result.entries[0];
 
-        let effect = compute_arms_armor_effect(record);
+        let effect = compute_arms_armor_effect(&converted(record));
         assert_eq!(effect.armor_class_bonus, None);
         assert_eq!(effect.max_dex, None);
         assert_eq!(effect.spell_failure, None);
@@ -380,7 +216,7 @@ mod tests {
         assert!(result.entries.len() == 1, "expected exactly one parsed record");
         let record = &result.entries[0];
 
-        let effect = compute_arms_armor_effect(record);
+        let effect = compute_arms_armor_effect(&converted(record));
         assert_eq!(
             effect.armor_class_bonus,
             Some(1),
@@ -406,7 +242,7 @@ mod tests {
         let result = parse_equipment_entries("cr_equipmods.lst", text);
         let record = &result.entries[0];
 
-        let effect = compute_arms_armor_effect(record);
+        let effect = compute_arms_armor_effect(&converted(record));
         assert_eq!(effect.armor_class_bonus, None, "mithral grants no enhancement AC bonus");
         assert_eq!(effect.armor_check_penalty, Some(3), "mithral's real ACP improvement is +3");
         assert_eq!(effect.max_dex, Some(2), "mithral's real max-dex improvement is +2");
@@ -426,7 +262,7 @@ mod tests {
         let result = parse_equipment_entries("cr_equip_arms_armor.lst", text);
         let record = &result.entries[0];
 
-        let effect = compute_arms_armor_effect(record);
+        let effect = compute_arms_armor_effect(&converted(record));
         assert_eq!(
             effect.armor_check_penalty,
             Some(0),
@@ -449,7 +285,7 @@ mod tests {
         assert!(result.entries.len() == 1, "expected exactly one parsed record");
         let record = &result.entries[0];
 
-        let effect = compute_arms_armor_effect(record);
+        let effect = compute_arms_armor_effect(&converted(record));
         assert_eq!(
             effect.armor_class_bonus, None,
             "a TYPE=Circumstance AC chain is situational, never a standing bonus this function reports"
@@ -484,10 +320,10 @@ mod tests {
         let spikes_result = parse_equipment_entries("cr_equipmods.lst", spikes_text);
         let spikes_record = &spikes_result.entries[0];
 
-        let mut effect = compute_arms_armor_effect(base_record);
+        let mut effect = compute_arms_armor_effect(&converted(base_record));
         assert_eq!(effect.armor_class_bonus, Some(6), "the base item's own chain alone is Breastplate's base value");
 
-        apply_eqmod_armor_class_bonus(&mut effect, &[modifier_record, spikes_record]);
+        apply_eqmod_armor_class_bonus(&mut effect, &[&converted(modifier_record), &converted(spikes_record)]);
         assert_eq!(
             effect.armor_class_bonus,
             Some(7),
@@ -513,7 +349,7 @@ mod tests {
         assert!(result.entries.len() == 1, "expected exactly one parsed record");
         let record = &result.entries[0];
 
-        let effect = compute_arms_armor_effect(record);
+        let effect = compute_arms_armor_effect(&converted(record));
         assert_eq!(
             effect.armor_class_bonus,
             Some(3),
@@ -534,7 +370,7 @@ mod tests {
         let result = parse_equipment_entries("cr_equip_arms_armor.lst", text);
         let record = &result.entries[0];
 
-        let effect = compute_arms_armor_effect(record);
+        let effect = compute_arms_armor_effect(&converted(record));
         assert_eq!(
             effect.armor_class_bonus,
             Some(2),
@@ -555,7 +391,7 @@ mod tests {
         let result = parse_equipment_entries("cr_equip_magic_items.lst", text);
         let record = &result.entries[0];
 
-        let effect = compute_arms_armor_effect(record);
+        let effect = compute_arms_armor_effect(&converted(record));
         assert_eq!(
             effect.armor_class_bonus, None,
             "an EQ-targeted TEMPBONUS is equipment-side, never a character AC bonus"

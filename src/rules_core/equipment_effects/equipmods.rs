@@ -82,9 +82,17 @@
 //! value traces back to a real, verbatim corpus token, read the same way
 //! `arms_armor.rs`, `general.rs`, and `magic_items.rs` read their own
 //! tokens straight off the resolved record.
+//!
+//! **SD-35 `AT-35-E6-003-RULED` cycle 11.** Every rule and every real-corpus
+//! witness named above is unchanged and still real. What moved is WHERE the
+//! reading happens: once, at ingest, in
+//! [`crate::pcgen_import::ir_converter::equipment_record_to_corpus`], which is
+//! where `decisions.md` §11 rules that rule conversion belongs. The functions
+//! below report the settled value off
+//! [`crate::rules_core::equipment_record::CorpusEquipmentRecord`] and name no
+//! ingest-format token at all.
 
-use crate::pcgen_import::equipment_bonus_reader;
-use crate::pcgen_import::lst_parser::equipment::EquipmentRecord;
+use crate::rules_core::equipment_record::CorpusEquipmentRecord;
 
 /// A weapon to-hit/damage enhancement bonus granted by an
 /// `equipmods`-category item's
@@ -138,161 +146,35 @@ pub struct WeaponEnhancementBonus {
     pub weapon_prof_scope: Option<String>,
 }
 
-/// Resolve one `equipmods` corpus record's weapon-enhancement-bonus
-/// contribution.
+/// One `equipmods` corpus record's settled weapon to-hit / damage
+/// enhancement.
 ///
-/// Reads EVERY `BONUS:<WEAPON|WEAPONPROF=TYPE.Natural|WEAPONPROF=<name>>|
-/// <TOHIT|DAMAGE|DAMAGE,TOHIT|TOHIT,DAMAGE>|<n>|TYPE=Enhancement` chain on
-/// the record (SD-33 remediation wave 5: was the FIRST such chain only,
-/// via `find_map` — silently dropped a second, separately-scoped chain on
-/// the same record; see `WeaponEnhancementBonus::tohit_bonus`'s doc
-/// comment) and sums each roll's magnitude across every qualifying chain.
-/// A record with no such chain (the majority of `equipmods` records)
-/// yields `None`: that means this record's raw tokens do not carry the
-/// field, not that its value is zero. `BONUS:WEAPON|WIELDCATEGORY|...`
-/// chains and `TYPE=Enhancement`-less `BONUS:WEAPON|...` chains are
-/// deliberately not matched (see module doc comment).
-/// SD-33 remediation wave 6 (`AT-33-E5-last39-skill-combat`): a record's
-/// own `BONUS:VAR|<name>|<n>` chain, when `name` matches exactly. Used
-/// only as a narrow substitution for a sibling `WEAPON|...` chain's own
-/// magnitude segment when that segment is not a literal integer -- never
-/// consulted for any other purpose, and never looks outside this ONE
-/// record (no cross-record variable resolution, no character context).
-/// `n` is required to be a literal integer itself; a non-literal `VAR`
-/// value (none observed in the pinned corpus) yields `None` rather than a
-/// fabricated number, same discipline as every other resolver in this
-/// module.
-fn resolve_var_reference(record: &EquipmentRecord, name: &str) -> Option<i16> {
-    record.bonus_chains.iter().find_map(|bonus| {
-        let qualifiers = &bonus.qualifiers;
-        if qualifiers.len() >= 3 && qualifiers[0] == "VAR" && qualifiers[1] == name {
-            qualifiers[2].parse::<i16>().ok()
-        } else {
-            None
-        }
-    })
-}
-
-/// A `WEAPON`-chain magnitude segment: a literal signed integer, or (SD-33
-/// remediation wave 6) the name of a variable this same record defines via
-/// its own `BONUS:VAR|<name>|<n>` chain (see [`resolve_var_reference`]).
-/// Real corpus example: `ultimate_psionics`'s dissonance-modifier family
-/// carries both `BONUS:VAR|DissonanceEnhancementBonusMain|1` and
-/// `BONUS:WEAPON|DAMAGE,TOHIT|DissonanceEnhancementBonusMain|
-/// TYPE=ENHANCEMENT` on the SAME record -- the second chain's magnitude
-/// segment names the first chain's own variable, whose value (`1`) is a
-/// real, verbatim corpus literal, not computed by any formula evaluator.
-fn resolve_bonus_magnitude(record: &EquipmentRecord, raw: &str) -> Option<i16> {
-    raw.parse::<i16>().ok().or_else(|| resolve_var_reference(record, raw))
-}
-
-pub fn compute_equipmods_effect(record: &EquipmentRecord) -> Option<WeaponEnhancementBonus> {
-    let mut tohit_bonus: Option<i16> = None;
-    let mut damage_bonus: Option<i16> = None;
-    let mut natural_attack_only = false;
-    let mut weapon_prof_scope: Option<String> = None;
-    let mut matched = false;
-
-    let mut apply = |affects: &str, bonus_value: i16| {
-        if affects.contains("TOHIT") {
-            tohit_bonus = Some(tohit_bonus.unwrap_or(0) + bonus_value);
-        }
-        if affects.contains("DAMAGE") {
-            damage_bonus = Some(damage_bonus.unwrap_or(0) + bonus_value);
-        }
-    };
-
-    for bonus in &record.bonus_chains {
-        let qualifiers = &bonus.qualifiers;
-        let subject = qualifiers.first().map(String::as_str);
-        let this_natural_attack_only = subject == Some("WEAPONPROF=TYPE.Natural");
-        let is_roll_shape = qualifiers.len() >= 2
-            && matches!(qualifiers[1].as_str(), "TOHIT" | "DAMAGE" | "DAMAGE,TOHIT" | "TOHIT,DAMAGE");
-
-        if (subject == Some("WEAPON") || this_natural_attack_only) && is_roll_shape {
-            // Unchanged from before this cycle: a bare `WEAPON` chain or
-            // `WEAPONPROF=TYPE.Natural` chain still requires the trailing
-            // `TYPE=Enhancement` qualifier (see module doc comment for
-            // why: it excludes `WIELDCATEGORY` and untyped Wield-Size
-            // to-hit-offset chains, which are real but are not a magic
-            // enhancement bonus).
-            //
-            // SD-33 remediation wave 6 (`AT-33-E5-last39-skill-combat`):
-            // matched case-insensitively -- the `ultimate_psionics`
-            // dissonance-modifier family (`up_equipmods.lst:141-142`)
-            // carries the SAME shape with `TYPE=ENHANCEMENT` (uppercase),
-            // which the prior exact-string match never matched. Named,
-            // not fixed, by `AT-33-E5-last75_cycle_receipt.md` Finding 4
-            // and `AT-33-E5-last67-skill-combat_cycle_receipt.md`. No real
-            // corpus record's `TYPE=` qualifier for this shape is
-            // observed in any casing other than these two, and
-            // case-insensitive comparison cannot turn an unrelated
-            // qualifier into a false match (it only widens this exact
-            // string, never a substring).
-            //
-            // SD-35 `AT-35-E6-003-SWEEP` cycle 14: the rule is unchanged --
-            // the bonus type must sit in the roll chain's own type position,
-            // and it is matched case-insensitively for the reason above. What
-            // moved is who knows that: `pcgen_import::equipment_bonus_reader`
-            // owns the position and the `TYPE=Enhancement` spelling now, and
-            // this line asks it a rules question instead of holding the
-            // ingest format's vocabulary itself (`decisions.md` §11,
-            // `technical-design.md` §0).
-            if equipment_bonus_reader::roll_bonus_carries_enhancement_type(bonus) {
-                // SD-33 remediation wave 6: the magnitude segment is
-                // either a literal signed integer (the common case) or
-                // the NAME of a variable this SAME record itself defines
-                // via a sibling `BONUS:VAR|<name>|<n>` chain (the
-                // dissonance-modifier family's `WEAPON|DAMAGE,TOHIT|
-                // DissonanceEnhancementBonus{Alt,Main}|TYPE=ENHANCEMENT`
-                // shape) -- resolved via `resolve_var_reference`, never a
-                // blind/general formula evaluator, and never a value from
-                // any OTHER record.
-                if let Some(bonus_value) = resolve_bonus_magnitude(record, &qualifiers[2]) {
-                    matched = true;
-                    natural_attack_only = this_natural_attack_only;
-                    apply(&qualifiers[1], bonus_value);
-                }
-            }
-            continue;
-        }
-
-        // SD-33 Epic 5 combat/weapon lane: a bare `WEAPONPROF=<name>|
-        // <TOHIT|DAMAGE|...>|<n>` chain scoped to one SPECIFIC named
-        // proficiency (e.g. Longsword, Hoof, Bite) -- distinct from both
-        // the broadly-applying bare `WEAPON` chain and the natural-
-        // attack-only `TYPE.Natural` chain. Every real corpus record of
-        // this shape (`ultimate_equipment`'s "Cursed <Weapon>" and
-        // "Horseshoes of a Zealous Warhorse" families) carries this
-        // WITHOUT a trailing `TYPE=Enhancement` qualifier at all -- real
-        // PCGen source (`pcgen.io.exporttoken.WeaponToken.
-        // getMagicHitToken`/`getMagicDamageToken`) sums a
-        // `WEAPONPROF=<name>` bonus unconditionally, with no `TYPE=`
-        // filter either, so no such gate applies here.
-        if let Some(name) = subject.and_then(|s| s.strip_prefix("WEAPONPROF=")) {
-            // Excludes every `TYPE.`-prefixed subject, not just the
-            // literal `TYPE.Natural` string: a `WEAPONPROF=TYPE.<x>`
-            // chain names a whole weapon-TYPE category (a hypothetical
-            // shape this module's own pre-existing negative-control test,
-            // `a_different_weaponprof_subject_has_no_weapon_enhancement_
-            // bonus`, deliberately keeps unrecognized), never a single
-            // literal proficiency name PCGen's own `getProfName(eq)`
-            // would compare a specific weapon's proficiency against.
-            if !name.starts_with("TYPE.") && is_roll_shape && qualifiers.len() >= 3
-                && let Ok(bonus_value) = qualifiers[2].parse::<i16>() {
-                    matched = true;
-                    weapon_prof_scope = Some(name.to_string());
-                    apply(&qualifiers[1], bonus_value);
-                }
-        }
-    }
-
-    matched.then_some(WeaponEnhancementBonus {
-        tohit_bonus,
-        damage_bonus,
-        natural_attack_only,
-        weapon_prof_scope,
-    })
+/// The item's magnitude for each roll, summed across every enhancement it
+/// states -- a record may state two, with DIFFERENT per-roll numbers
+/// (`ultimate_equipment:equipment:heavy_hammer`, real oracle
+/// `MAGICHIT=-2` / `MAGICDAMAGE=+4`; it is the only such record corpus-wide).
+/// `natural_attack_only` and `weapon_prof_scope` carry the item's stated
+/// scope: the Amulet of Mighty Fists family applies only to a real natural
+/// attack, and a proficiency-scoped grant (the Cursed Sword and Horseshoes of
+/// a Zealous Warhorse families) applies only to the weapon whose own
+/// proficiency name matches -- confirmed against PCGen's own
+/// `WeaponToken.getMagicHitToken`/`getMagicDamageToken`. A wield-category
+/// offset and an untyped size offset are real but are not a magic
+/// enhancement, and are not reported here.
+///
+/// `None` means the item states no enhancement (the majority of records):
+/// honest absence, never a fabricated zero.
+///
+/// SD-35 `AT-35-E6-003-RULED` cycle 11: the reading moved to ingest
+/// ([`crate::pcgen_import::ir_converter::equipment_record_to_corpus`],
+/// `decisions.md` §11); the rule and every witness above are unchanged,
+/// including the one real family whose magnitude is stated as the name of a
+/// variable the SAME record defines (`ultimate_psionics`' dissonance
+/// modifiers), which is resolved from that one record and never any other.
+pub fn compute_equipmods_effect(
+    record: &CorpusEquipmentRecord,
+) -> Option<WeaponEnhancementBonus> {
+    record.weapon_enhancement.clone()
 }
 
 /// Folds each `EQMOD:`-referenced modifier record's own weapon-enhancement
@@ -346,7 +228,7 @@ pub fn compute_equipmods_effect(record: &EquipmentRecord) -> Option<WeaponEnhanc
 /// of its own to still gain one from a referenced modifier.
 pub fn apply_eqmod_weapon_enhancement_bonus(
     effect: &mut Option<WeaponEnhancementBonus>,
-    eqmod_records: &[&EquipmentRecord],
+    eqmod_records: &[&CorpusEquipmentRecord],
 ) {
     for modifier in eqmod_records {
         let Some(modifier_bonus) = compute_equipmods_effect(modifier) else {
@@ -367,35 +249,36 @@ pub fn apply_eqmod_weapon_enhancement_bonus(
     }
 }
 
-/// Resolve one `equipmods` corpus record's flat Spell Resistance
-/// contribution.
+/// One `equipmods` corpus record's settled flat Spell Resistance grant.
 ///
-/// Reads the record's own `SR:<n>` token, when present and a literal
-/// integer -- the armor-slot "Spell Resistance" special ability family
-/// (`KEY:Special Ability ~ Spell Resistance / 13 ~ Armor` through `/ 19 ~
-/// Armor`, `core_rulebook/cr_equipmods.lst:343-346`). Decision 7 REFINED
-/// (`SD31-D7-PROSE-004`) names this exact shape as the paradigm UNIVERSAL
-/// case: it applies unconditionally whenever the wearer's Spell
-/// Resistance is checked, so text alone ("grants spell resistance 13")
-/// does not satisfy the done-bar -- it must be COMPUTED.
+/// The armour-slot "Spell Resistance" special-ability family
+/// (`core_rulebook/cr_equipmods.lst:343-346`) states a literal value that
+/// applies unconditionally whenever the wearer's SR is checked -- Decision 7
+/// REFINED (`SD31-D7-PROSE-004`) names it the paradigm UNIVERSAL case, so
+/// text alone does not satisfy its done-bar; it must be a number.
 ///
-/// Deliberately does NOT match `BNS_SPL_RST` ("Bonus Spell Resistance",
-/// `KEY:Special Ability ~ Bonus Spell Resistance`), whose own `SR:%CHOICE`
-/// token carries a PCGen chooser placeholder rather than a literal
-/// integer -- `str::parse` fails on `"%CHOICE"` and correctly yields
-/// `None`, the same "no fabricated number" discipline every other
-/// resolver in this module follows. That record is a genuine player
-/// CHOICE (`CHOOSE:NUMBER|MIN=13|MAX=32`), not a flat grant, and stays out
-/// of this function's scope until a chosen-value resolution mechanism
-/// exists.
-pub fn resolve_spell_resistance_bonus(record: &EquipmentRecord) -> Option<i16> {
-    record.tokens.iter().find(|token| token.key == "SR").and_then(|token| token.value.parse().ok())
+/// The sibling "Bonus Spell Resistance" record states a player CHOICE with a
+/// range, not a flat grant, and yields `None` -- no fabricated number, the
+/// same discipline every resolver in this module follows.
+///
+/// SD-35 `AT-35-E6-003-RULED` cycle 11: the reading moved to ingest
+/// ([`crate::pcgen_import::ir_converter::equipment_record_to_corpus`],
+/// `decisions.md` §11); the rule is unchanged.
+pub fn resolve_spell_resistance_bonus(record: &CorpusEquipmentRecord) -> Option<i16> {
+    record.spell_resistance_bonus
 }
 
 #[cfg(test)]
 mod tests {
     use super::*;
-    use crate::pcgen_import::lst_parser::equipment::parse_equipment_entries;
+    use crate::pcgen_import::ir_converter::equipment_record_to_corpus;
+    use crate::pcgen_import::lst_parser::equipment::{parse_equipment_entries, EquipmentRecord};
+    use crate::rules_core::equipment_record::CorpusEquipmentRecord;
+
+    /// The ingest-time conversion every live reader below is proved over.
+    fn converted(record: &EquipmentRecord) -> CorpusEquipmentRecord {
+        equipment_record_to_corpus(record)
+    }
 
     /// Real verbatim tokens copied from `KEY:Special Ability ~ +1 ~
     /// Weapon` in `core_rulebook/cr_equipmods.lst`.
@@ -406,7 +289,7 @@ mod tests {
         assert!(result.entries.len() == 1, "expected exactly one parsed record");
         let record = &result.entries[0];
 
-        let effect = compute_equipmods_effect(record);
+        let effect = compute_equipmods_effect(&converted(record));
         assert_eq!(
             effect,
             Some(WeaponEnhancementBonus {
@@ -427,7 +310,7 @@ mod tests {
         let result = parse_equipment_entries("cr_equipmods.lst", text);
         let record = &result.entries[0];
 
-        let effect = compute_equipmods_effect(record);
+        let effect = compute_equipmods_effect(&converted(record));
         assert_eq!(
             effect,
             Some(WeaponEnhancementBonus {
@@ -451,7 +334,7 @@ mod tests {
         let result = parse_equipment_entries("cr_equipmods.lst", text);
         let record = &result.entries[0];
 
-        let effect = compute_equipmods_effect(record);
+        let effect = compute_equipmods_effect(&converted(record));
         assert_eq!(
             effect,
             Some(WeaponEnhancementBonus {
@@ -473,7 +356,7 @@ mod tests {
         let result = parse_equipment_entries("cr_equipmods.lst", text);
         let record = &result.entries[0];
 
-        let effect = compute_equipmods_effect(record);
+        let effect = compute_equipmods_effect(&converted(record));
         assert_eq!(effect, None);
     }
 
@@ -488,7 +371,7 @@ mod tests {
         let result = parse_equipment_entries("cr_equipmods.lst", text);
         let record = &result.entries[0];
 
-        let effect = compute_equipmods_effect(record);
+        let effect = compute_equipmods_effect(&converted(record));
         assert_eq!(effect, None);
     }
 
@@ -508,7 +391,7 @@ mod tests {
         assert!(result.entries.len() == 1, "expected exactly one parsed record");
         let record = &result.entries[0];
 
-        let effect = compute_equipmods_effect(record);
+        let effect = compute_equipmods_effect(&converted(record));
         assert_eq!(
             effect,
             Some(WeaponEnhancementBonus {
@@ -530,7 +413,7 @@ mod tests {
         let result = parse_equipment_entries("ue_equip_magic_items.lst", text);
         let record = &result.entries[0];
 
-        let effect = compute_equipmods_effect(record);
+        let effect = compute_equipmods_effect(&converted(record));
         assert_eq!(
             effect,
             Some(WeaponEnhancementBonus {
@@ -550,7 +433,7 @@ mod tests {
         let result = parse_equipment_entries("cr_equipmods.lst", text);
         let record = &result.entries[0];
 
-        let effect = compute_equipmods_effect(record);
+        let effect = compute_equipmods_effect(&converted(record));
         assert_eq!(effect, None);
     }
 
@@ -570,7 +453,7 @@ mod tests {
         let result = parse_equipment_entries("cr_equipmods.lst", text);
         let record = &result.entries[0];
 
-        let effect = compute_equipmods_effect(record);
+        let effect = compute_equipmods_effect(&converted(record));
         assert_eq!(
             effect,
             Some(WeaponEnhancementBonus {
@@ -605,7 +488,7 @@ mod tests {
         assert!(result.entries.len() == 1, "expected exactly one parsed record");
         let record = &result.entries[0];
 
-        let effect = compute_equipmods_effect(record);
+        let effect = compute_equipmods_effect(&converted(record));
         assert_eq!(
             effect,
             Some(WeaponEnhancementBonus {
@@ -628,7 +511,7 @@ mod tests {
         let result = parse_equipment_entries("cr_equipmods.lst", text);
         let record = &result.entries[0];
 
-        let effect = compute_equipmods_effect(record);
+        let effect = compute_equipmods_effect(&converted(record));
         assert_eq!(effect, None);
     }
 
@@ -645,7 +528,7 @@ mod tests {
         let result = parse_equipment_entries("cr_equipmods.lst", text);
         let record = &result.entries[0];
 
-        let effect = compute_equipmods_effect(record);
+        let effect = compute_equipmods_effect(&converted(record));
         assert_eq!(effect, None);
     }
 
@@ -662,7 +545,7 @@ mod tests {
         assert!(result.entries.len() == 1, "expected exactly one parsed record");
         let record = &result.entries[0];
 
-        assert_eq!(resolve_spell_resistance_bonus(record), Some(13));
+        assert_eq!(resolve_spell_resistance_bonus(&converted(record)), Some(13));
     }
 
     /// The same family's `/ 19 ~ Armor` tier, proving the value is read
@@ -674,7 +557,7 @@ mod tests {
         let result = parse_equipment_entries("cr_equipmods.lst", text);
         let record = &result.entries[0];
 
-        assert_eq!(resolve_spell_resistance_bonus(record), Some(19));
+        assert_eq!(resolve_spell_resistance_bonus(&converted(record)), Some(19));
     }
 
     /// `KEY:Special Ability ~ Bonus Spell Resistance` (`BNS_SPL_RST`,
@@ -690,7 +573,7 @@ mod tests {
         let result = parse_equipment_entries("cr_equipmods.lst", text);
         let record = &result.entries[0];
 
-        assert_eq!(resolve_spell_resistance_bonus(record), None);
+        assert_eq!(resolve_spell_resistance_bonus(&converted(record)), None);
     }
 
     /// A record with no `SR:` token anywhere (the canonical `+1`
@@ -702,7 +585,7 @@ mod tests {
         let result = parse_equipment_entries("cr_equipmods.lst", text);
         let record = &result.entries[0];
 
-        assert_eq!(resolve_spell_resistance_bonus(record), None);
+        assert_eq!(resolve_spell_resistance_bonus(&converted(record)), None);
     }
 
     /// SD-33 remediation wave 6 (`AT-33-E5-last39-skill-combat`): real
@@ -725,7 +608,7 @@ mod tests {
     /// string match never matches -- named but not fixed by
     /// `AT-33-E5-last75_cycle_receipt.md` Finding 4 and reconfirmed still
     /// open by `AT-33-E5-last67-skill-combat_cycle_receipt.md`. Before this
-    /// cycle: `compute_equipmods_effect(record)` returns `None` (matches
+    /// cycle: `compute_equipmods_effect` returned `None` (matches
     /// neither gate). After: real `tohit_bonus`/`damage_bonus` of `Some(1)`
     /// each, traced to the record's own two chains, no formula evaluator
     /// and no fabricated number.
@@ -736,7 +619,7 @@ mod tests {
         assert!(result.entries.len() == 1, "expected exactly one parsed record");
         let record = &result.entries[0];
 
-        let effect = compute_equipmods_effect(record);
+        let effect = compute_equipmods_effect(&converted(record));
         assert_eq!(
             effect,
             Some(WeaponEnhancementBonus {
@@ -759,6 +642,6 @@ mod tests {
         let result = parse_equipment_entries("cr_equipmods.lst", text);
         let record = &result.entries[0];
 
-        assert_eq!(compute_equipmods_effect(record), None);
+        assert_eq!(compute_equipmods_effect(&converted(record)), None);
     }
 }

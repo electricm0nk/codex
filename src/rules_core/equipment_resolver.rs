@@ -82,6 +82,23 @@ pub fn equipment_converted_resolve<'a>(
         .map(|(_record, converted, _table_cell)| converted)
 }
 
+/// The same resolution again, answering with the parser row, the converted
+/// record and the table cell together.
+///
+/// SD-35 `AT-35-E6-003-RULED` cycle 11: `compute_equipment_effects` needs the
+/// settled values for six of its fields and the parser row for the two
+/// consumers that have not moved yet, for the SAME item. Asking once is one
+/// corpus scan instead of two, and makes it impossible for the two halves to
+/// come from different records.
+#[allow(clippy::type_complexity)]
+pub fn equipment_pair_resolve<'a>(
+    item_id: &str,
+    rule_set: RuleSetId,
+    corpus: &SourcePackageContent<'a>,
+) -> Option<(&'a EquipmentRecord, &'a CorpusEquipmentRecord, Option<TableCellRef>)> {
+    resolve_equipment_pair(item_id, rule_set, corpus)
+}
+
 #[allow(clippy::type_complexity)]
 fn resolve_equipment_pair<'a>(
     item_id: &str,

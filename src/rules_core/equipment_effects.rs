@@ -54,8 +54,10 @@ use crate::rules_core::equipment_effects::equipmods::WeaponEnhancementBonus;
 use crate::rules_core::equipment_effects::general::{SkillCheckBonus, VarBonus};
 use crate::rules_core::equipment_effects::intelligent_item::IntelligentItemContribution;
 use crate::rules_core::equipment_effects::magic_items::AbilityScoreBonus;
+use crate::rules_core::equipment_record::CorpusEquipmentRecord;
 use crate::rules_core::equipment_resolver::{
     equipment_converted_resolve, equipment_id_resolve, equipment_key_token,
+    equipment_pair_resolve,
 };
 use crate::rules_core::pilot_compute_corpus::TableCellRef;
 use crate::rules_core::rules_tables::crb::equipment_tables::{equipment_tables, EquipmentCategory};
@@ -130,6 +132,28 @@ pub fn eqmod_referenced_records<'a>(
         }
     }
     resolved
+}
+
+/// The settled records of the modifier items attached to this one, resolved
+/// against `corpus` in the order the item names them.
+///
+/// SD-35 `AT-35-E6-003-RULED` cycle 11: the sibling of
+/// [`eqmod_referenced_records`] that answers in settled records. The
+/// attachment grammar -- an item may name several attachments, and each names
+/// its parts in one string -- moved to ingest with the values it was read
+/// alongside, so this function reads a list of item identities
+/// ([`CorpusEquipmentRecord::eqmod_references`]) and resolves each. A
+/// candidate that names no corpus record is skipped, exactly as before: the
+/// list is what the item states, not a promise that every entry is an item.
+pub fn eqmod_referenced_converted_records<'a>(
+    record: &CorpusEquipmentRecord,
+    corpus: &SourcePackageContent<'a>,
+) -> Vec<&'a CorpusEquipmentRecord> {
+    record
+        .eqmod_references
+        .iter()
+        .filter_map(|candidate| equipment_converted_resolve(candidate, corpus))
+        .collect()
 }
 
 /// Per-category stat contribution shared across every
@@ -294,8 +318,11 @@ pub fn compute_equipment_effects(
     let mut spell_resistance_total: Option<i16> = None;
 
     for selection in equipped {
-        let Some((record, table_cell)) =
-            equipment_id_resolve(&selection.item_id, RuleSetId::Crb, corpus)
+        // SD-35 `AT-35-E6-003-RULED` cycle 11: one resolution answers with the
+        // settled record every effect below reads and the parser row the two
+        // consumers that have not moved yet still need, for the same item.
+        let Some((record, converted, table_cell)) =
+            equipment_pair_resolve(&selection.item_id, RuleSetId::Crb, corpus)
         else {
             continue;
         };
@@ -321,14 +348,13 @@ pub fn compute_equipment_effects(
         // derived from which resolver(s) actually matched (confirmed unused
         // for branching anywhere downstream -- `apps/desktop`'s own wire
         // type treats it as a plain string) rather than the gate itself.
-        let effect = resolve_category_effect(record, RuleSetId::Crb, corpus);
-        let skill_bonus = general::compute_general_effect(record);
+        let effect = resolve_category_effect(converted, corpus);
+        let skill_bonus = general::compute_general_effect(converted);
         // SD-35 `AT-35-E6-003-RULED` cycle 10: the ability-score enhancement is
         // a settled value on the converted record, resolved by the same
         // identity rule that resolved the parser row beside it.
-        let ability_bonus = equipment_converted_resolve(&selection.item_id, corpus)
-            .and_then(magic_items::compute_magic_items_effect);
-        let mut weapon_enhancement_bonus = equipmods::compute_equipmods_effect(record);
+        let ability_bonus = magic_items::compute_magic_items_effect(converted);
+        let mut weapon_enhancement_bonus = equipmods::compute_equipmods_effect(converted);
         // SD-33 remediation wave 6 (`AT-33-E5-003`'s escalated
         // `rending_claw_blades` blocker): fold the record's own `EQMOD:`-
         // referenced modifier records' weapon enhancement into the total,
@@ -336,9 +362,9 @@ pub fn compute_equipment_effects(
         // dimension pattern (wave 4) -- see
         // `equipmods::apply_eqmod_weapon_enhancement_bonus`'s own doc
         // comment.
-        let weapon_eqmod_records = eqmod_referenced_records(record, RuleSetId::Crb, corpus);
+        let weapon_eqmod_records = eqmod_referenced_converted_records(converted, corpus);
         equipmods::apply_eqmod_weapon_enhancement_bonus(&mut weapon_enhancement_bonus, &weapon_eqmod_records);
-        let spell_resistance_bonus = equipmods::resolve_spell_resistance_bonus(record);
+        let spell_resistance_bonus = equipmods::resolve_spell_resistance_bonus(converted);
         // `AT-34-E3-003` (bucket `M`, equipment sub-causes, cycle 4):
         // `general::compute_var_effect` already reads every `BONUS:VAR|...`
         // chain on a record -- it existed since the SD-20 `general`
@@ -353,7 +379,7 @@ pub fn compute_equipment_effects(
         // `apply_eqmod_var_bonus`'s own doc comment names the real
         // `panoply_of_the_fierani_knight` case this reuse now closes (an
         // armor item, not a weapon).
-        let mut var_bonus = general::compute_var_effect(record);
+        let mut var_bonus = general::compute_var_effect(converted);
         general::apply_eqmod_var_bonus(&mut var_bonus, &weapon_eqmod_records);
         let has_arms_armor_effect = effect.armor_class_bonus.is_some()
             || effect.max_dex.is_some()
@@ -473,7 +499,7 @@ fn resolve_weapon_to_hit_bonus(
     let weapon_is_natural_attack = is_natural_attack_weapon(weapon_record);
     let mut total = 0;
     for modifier_item_id in applied_modifiers {
-        let Some((record, _table_cell)) = equipment_id_resolve(modifier_item_id, RuleSetId::Crb, corpus) else {
+        let Some(record) = equipment_converted_resolve(modifier_item_id, corpus) else {
             continue;
         };
         // `compute_equipmods_effect` already reads the record's own
@@ -605,12 +631,11 @@ fn is_weapon_record(record: &EquipmentRecord) -> bool {
 /// chain (see `arms_armor::apply_eqmod_armor_class_bonus`'s own doc
 /// comment for the confirmed real-corpus evidence).
 fn resolve_category_effect(
-    record: &EquipmentRecord,
-    rule_set: RuleSetId,
+    record: &CorpusEquipmentRecord,
     corpus: &SourcePackageContent,
 ) -> EquipmentStatEffect {
     let mut effect = arms_armor::compute_arms_armor_effect(record);
-    let eqmod_records = eqmod_referenced_records(record, rule_set, corpus);
+    let eqmod_records = eqmod_referenced_converted_records(record, corpus);
     arms_armor::apply_eqmod_armor_class_bonus(&mut effect, &eqmod_records);
     effect
 }
