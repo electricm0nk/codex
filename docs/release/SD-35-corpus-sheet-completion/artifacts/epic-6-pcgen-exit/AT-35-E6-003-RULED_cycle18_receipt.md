@@ -1,6 +1,6 @@
 # Cycle AT-35-E6-003-RULED cycle 18 — Epic 6 (PCGen exit) / AT-35-E6-003-RULED
 
-- **Commit SHA:** `PENDING` (two commits: the envelope-payload split, then the pool-gate
+- **Commit SHA:** `7270e4a2d7` (two commits, `c094391246` then `7270e4a2d7`: the envelope-payload split, then the pool-gate
   settling with the regenerated converted artifact, the cycle-18 census script and its JSON, one
   retro `correction`, and the folded shared-checkout artifact), cycle start `5bd0eda548`
 

@@ -181,6 +181,55 @@ re-measured at the cut by the launch-readiness audit.
 
 ## Cycle log
 
+### 2026-09-13 — Epic 6 / `desktop-and-prose-leave-pcgen` — AT-35-E6-003-RULED **cycle 18** (`7270e4a2d7`) — **complete** (the envelope's payload is split and the pool gates are settled; **both remaining groups clear whole**. Residue `4 / 4 → 0 / 0`)
+
+**Receipt:** `artifacts/epic-6-pcgen-exit/AT-35-E6-003-RULED_cycle18_receipt.md`. Cycle start `5bd0eda548`.
+
+`SCOPE_GATE: EXEMPT (Epic 6 cycle — closes zero corpus units by design; decisions.md §2)`. It ran
+anyway at the start tree: `scoped=0 remaining_non_done=0 floor=500 verdict=PASS_WHOLE_REMAINDER`.
+The residue check, which is not exempt, ran first and passed at exactly cycle 17's closing figure:
+`live_files=4 live_hits=4 baseline_files=260 baseline_hits=12736 verdict=PASS`.
+
+**The criterion's population is zero.** `live_files=0 live_hits=0 verdict=PASS`;
+`criterion_population=0 closure_reached=YES`; `apps_desktop_hits=0 evidence_sentence_met=YES`. Four
+hits, four whole files, two mechanisms, neither of them a trim:
+
+* **`source_content_payload` (3 hits, 3 files) — the type was SPLIT, not moved.**
+  `rules_core::source_content` re-exported the converter's payload enum and the two resolvers
+  imported it from there; refused for **eleven** cycles because four of the enum's seven variants
+  borrow Slice B parser entry types, so moving it would have moved raw `CLASS:`/`RACE:` token
+  vectors onto the live side. `rules_core::source_content` now declares its **own**
+  `SourceContentPayload` — `Spell`, `Equipment` (the two settled live-owned records) and
+  `Unsettled { kind, name }`, identity only — while the seven-variant parser-borrowing projection
+  keeps **every** variant as `pcgen_import::ir_content_payload::IrContentPayload`. The envelope
+  (`SourceContentRecord` / `SourcePackageContent` / `SourceContentLoadResult`) is generic over its
+  payload **with the live one as the default**, so `SourceContentRecord<'a>` is unchanged and **not
+  one of the ~80 files that name it was written**; `record_to_live`/`package_to_live` project at
+  the single boundary a live consumer sees, `pcc_package_loader::project_corpus_from_owned`.
+* **`trait_and_pool_tokens` (1 hit, 1 file) — settled at ingest.**
+  `class_feature_pool_catalog`'s `use crate::pcgen_import::pool_member_tokens;` carried **three
+  shipping gates** asked of the corpus row on every process start — a reader opening a rogue-talent
+  picker made the live side read raw `ABILITY:`/`PREABILITY:`/`DESC:` token text. The new
+  `src/pcgen_import/pool_gate_settle.rs` asks the same four predicates in the same order once at
+  authoring time, and `data/converted/record_vars.json` gains `pool_gates` — **5,813** admitted and
+  **6,924** refused across **23** books (`engine_effect_token_present=6459`,
+  `multi_desc_segment_not_regenerated=387`, `archetype_locked=78`). The table is **fail-closed**:
+  a key it does not hold is not admitted, so a missing artifact serves fewer options, never an
+  unvetted one. The remaining predicate calls are `#[cfg(test)]` (ruling B15) and are deliberately
+  kept as the independent check on the settled table.
+
+**Receipt rows:** `regressed=0 added=0 dropped=0`;
+`closed=0 relabeled=0 rust_lines_changed=1165 ratio=n/a builds_recorded=2 pcgen_live_files=0`.
+`closed=0` is correct — Epic 6 closes zero corpus units and `docs/work-inventory.json` is
+byte-identical. **Refused tokens: none.**
+
+**Correction logged** (`1789333434263-at-35-e6-003-ruled-7653e7`): cycle 17 priced this remainder
+at four cycles, or at one cycle that re-types `SourceContentRecord`/`SourcePackageContent`. Both
+readings assumed the envelope had to keep **one** payload type. Giving it a payload parameter whose
+**default** is the live payload re-typed nothing — `git diff --stat 5bd0eda548..HEAD` lists no
+`corpus_loader`, no `composed_input` and no `tests/sd19_*`/`tests/sd20_*` file. A refusal carried
+forward unchanged for eleven cycles had stopped being a measurement and become a premise.
+
 ### 2026-09-13 — Epic 6 / `desktop-and-prose-leave-pcgen` — AT-35-E6-003-RULED **cycle 17** (`fd5e4ddc69`) — **partial** (the spell duration/range reads leave the live side and the class-feature bar check leaves it too; the `ingest_record_tokens` group clears whole. Residue `5 / 5 → 4 / 4`)
 
 **Receipt:** `artifacts/epic-6-pcgen-exit/AT-35-E6-003-RULED_cycle17_receipt.md`. Cycle start `2fad97f6f5`.
