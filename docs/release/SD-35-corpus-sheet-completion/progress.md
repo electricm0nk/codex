@@ -181,6 +181,87 @@ re-measured at the cut by the launch-readiness audit.
 
 ## Cycle log
 
+### 2026-09-12 — Epic 6 / `desktop-and-prose-leave-pcgen` — AT-35-E6-003-RULED **cycle 6** (`1cf3f4bc7b`) — **partial** (a group reason carried unmeasured since cycle 1 named the wrong dependency; measured, the swap is refused on **6,494 of 18,043**. Residue `18 / 36 → 17 / 35`)
+
+- **Scope gate:** `SCOPE_GATE: EXEMPT (Epic 6 cycle — closes zero corpus units by design; decisions.md §2)`.
+  It ran anyway at the cycle's start tree `f760493300`:
+  `scoped=0 remaining_non_done=0 floor=500 verdict=PASS_WHOLE_REMAINDER`. The residue check, which
+  is not exempt, passed first at the same tree at exactly cycle 5's closing figure —
+  `live_files=18 live_hits=36 baseline_files=260 baseline_hits=12736 verdict=PASS`.
+
+- **The one hit, and it is a whole file.** `src/rules_core/rules_tables/simple_kind_tables.rs`
+  carried `raw_token_count`, filled by `pcgen_import::ingest_record::token_count` — the **length
+  of a corpus record's own PCGen `raw_tokens` array**, read at table-load time inside the crate
+  that prints a character sheet, and printed by `--epic2-table-transcript` as `ingest_tokens=N`.
+  It now carries `converted_rule_count: Option<usize>`, filled through cycle 5's closure-row
+  join: how many rules `sheet_rule_convert` wrote from **that record's own source row**. The
+  transcript prints `converted_rules=N`, or `not-converted` where the package holds nothing —
+  **never `0`**, which would read as a converted record the converter gave no rules. The module
+  names no ingest vocabulary at all.
+
+  **The bar is totality, and it is met:** a corpus-wide test over all seven Epic-2 kinds
+  recomputes the join in-test as the field's oracle and asserts `records=8486 resolved=8486
+  disagree=0`. Mutation-proved red — joining on `source_line + 1` fails naming real records
+  (`ability advanced_class_guide/"Arcanist Exploit ~ School Understanding": field=Some(2)
+  join=Some(3)`).
+
+- **What this cycle MEASURED and refused, which is its other product**
+  (`correction 1789266033634-at-35-e6-003-ruled-e44c73`). Every census from cycle 1 through cycle
+  5 recorded that `class_feature_pool_catalog`'s four `pool_member_tokens` guards *"read a
+  record's DESC/effect token array rather than one classified fact"* and so do not ride on the
+  closure-row join. Cycle 5's own lesson is that such a sentence is an assertion about a
+  dependency and has to be checked against **what the caller needs**. Checked, over the whole
+  live `class_feature` corpus:
+
+  - **The join is not the blocker** — **18,043 of 18,074** live `class_feature` corpus records
+    resolve through `rules_for_closure_row`.
+  - **The converted rule is.** `has_no_engine_effect_token` disagrees with the ingest read on
+    **6,494 of 18,043**; `is_archetype_locked` on 919; `carries_more_than_one_desc_segment` on 89.
+  - **The mechanism is exact, not vague.** PCGen's `ABILITY:` token maps to `MapsTo::Applies` —
+    a *prerequisite* — in `src/pcgen_import/sheet_rule/table.rs`, and `BONUS:VAR|…` lands in
+    `data/sheet_rules/_vars/` rather than on the rule. So
+    `occult_adventures:class_feature:elemental_ascetic_elemental_flurry`, whose row carries two
+    `ABILITY:…|AUTOMATIC|…` grants, converts to `grants: null, target: None, value: "Text"` —
+    on the converted side, indistinguishable from a record that really is prose only.
+
+  **Refused on the number, not deferred on effort** — cycle 2's disposition for the renderer
+  group. The remedy is converter-side and is named so no later cycle re-derives it.
+  Re-derive: `python3 docs/release/SD-35-corpus-sheet-completion/artifacts/epic-6-pcgen-exit/AT-35-E6-003-RULED_cycle6_pool_guard_parity.py`.
+
+- **The instrument was not touched.** `git diff --name-only f760493300..HEAD -- scripts/` is
+  empty — no path exempted, no regex weakened, no rebaseline; the 27 gate unit tests pinning
+  B14/B15/B16 are still green, and the census asserts its own total against the gate's
+  (`gate_agreement=OK (35 == 35)`).
+
+- **Verified once at the final tree.** `apps/` NOT touched, so the desktop crate and the frontend
+  run at the epic wrap-up. `NO_RUN_EXIT=0`; lib `3345 passed; 0 failed; 16 ignored`; full
+  workspace `FULL_EXIT=0` — **418 targets, 8,874 passed, 0 failed, 69 ignored**, zero
+  `test result: FAILED` lines (cycle 5 recorded 8,873; the `+1` is exactly this cycle's one new
+  test); root clippy **0 warnings**, first run. `sheet_rule_convert -- --check`
+  `records=49438 converted=49296 refused=142 rules=70135 var_tables=5293 verdict=PASS`;
+  `data/sheet_rules/` ingest-syntax grep `0`; `completion_atlas` `citation_failures=0`;
+  `token_coverage` `non_done=0 refused=142 PASS`; `shape_engine_boundary`
+  `not_held_by_engine=0`; `missing_engine_tables` `population=0`; `denominator_gate`
+  `files_checked=135 violations=0`; `verify.sh --only pi-sweep` PASS; `data/` byte-identical.
+
+- **Escalated, not done:** the `RETRO_ACTOR` control cycle 5 named is one condition in
+  `scripts/verify.sh`, which is **not** in this cycle's granted file-touch set. The exact change
+  is prepared in the receipt's Notes. This cycle's own events landed correctly only because every
+  command that could emit one exported `RETRO_ACTOR` in the same call — a habit, and `AGENTS.md`
+  rule 8 is explicit that a habit is not a control.
+
+- **Receipt rows:** `closed=0 relabeled=0 rust_lines_changed=89 ratio=n/a builds_recorded=1
+  pcgen_live_files=17`.
+
+- **Status: `partial`.** Refused remainder **35 hits / 17 files, six groups, summing**:
+  `renderer=5, lst_parser_types=12, ingest_record_tokens=5, trait_and_pool_tokens=4,
+  ir_converter=4, source_content_payload=5`.
+  `deferral 1789269274004-at-35-e6-003-ruled-f6f1e2`. The remainder is now **three** pieces
+  rather than two: 26 hits are the equipment/spell rule shape, 5 are the renderer's converter
+  parity, and `trait_and_pool_tokens` is a **named converter defect** rather than an unknown.
+
+- **Receipt:** `artifacts/epic-6-pcgen-exit/AT-35-E6-003-RULED_cycle6_receipt.md`.
+
 ### 2026-09-12 — Epic 6 / `desktop-and-prose-leave-pcgen` — AT-35-E6-003-RULED **cycle 5** (`5d80721087`) — **partial** (three cycles had priced a whole refused group as blocked on converter work; it was blocked on a missing index. Residue `19 / 37 → 18 / 36` — one hit, and the receipt leads with what the join does *not* unblock)
 
 - **Scope gate:** `SCOPE_GATE: EXEMPT (Epic 6 cycle — closes zero corpus units by design; decisions.md §2)`.
