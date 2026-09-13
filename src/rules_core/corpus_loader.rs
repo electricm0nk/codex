@@ -102,6 +102,43 @@ pub fn load_equipment_corpus<'a>(roots: &[BookCorpusRoot<'_>]) -> SourcePackageC
     package
 }
 
+// SD-35 `AT-35-E6-003-RULED` cycle 14: the ingest boundary asks the SAME
+// question for a race and a racial trait that cycle 13 taught it to ask for a
+// piece of equipment -- "what canonical record does this corpus JSON object
+// stand for?". Both live here, in the loader, because THIS module is the live
+// side's one ingest boundary; before this cycle `race_resolver` held its own
+// three `use crate::pcgen_import::...` lines and re-read the ingest token and
+// bonus-chain arrays on every accessor call (`decisions.md` §11, §19).
+//
+// BOOKED HONESTLY: this is a RELABEL for one hit and a CLOSURE for three. The
+// eleven run-time token readings left the live side for good; the boundary
+// call itself did not vanish -- it moved from `race_resolver` into the file
+// that already owned the boundary, and this module's own hit count rises by
+// one as a result. It clears the same way the equipment one does: when
+// `data/corpus/` race JSON carries the settled fields itself.
+use crate::pcgen_import::corpus_race_json;
+
+/// The settled [`CorpusRaceRecord`](crate::rules_core::race_record::CorpusRaceRecord)
+/// one `data/corpus/<book>/race/<slug>.json` record's `data` object stands for.
+///
+/// `None` when the object is not a race payload at all; the caller records the
+/// skip as a diagnostic rather than dropping it silently.
+pub(crate) fn corpus_race_record(
+    data: &serde_json::Value,
+) -> Option<crate::rules_core::race_record::CorpusRaceRecord> {
+    corpus_race_json::corpus_race_source_record(data)
+}
+
+/// The settled
+/// [`CorpusRaceTraitRecord`](crate::rules_core::race_record::CorpusRaceTraitRecord)
+/// one `data/corpus/<book>/race_trait/<race>/<slug>.json` record's `data`
+/// object stands for.
+pub(crate) fn corpus_race_trait_record(
+    data: &serde_json::Value,
+) -> Option<crate::rules_core::race_record::CorpusRaceTraitRecord> {
+    corpus_race_json::corpus_race_trait_source_record(data)
+}
+
 /// Loads every spell record from every given book's corpus directory into
 /// one `SourcePackageContent`, the spell-side sibling of
 /// [`load_equipment_corpus`] above (SD28-E14-F1: closes the observation gap

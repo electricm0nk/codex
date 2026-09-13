@@ -9,6 +9,10 @@ pub mod contract;
 pub mod converted_prose;
 pub mod corpus_loader;
 pub mod damage_total;
+// SD-35 `AT-35-E6-003-RULED` cycle 14: the SETTLED result of reading a row's
+// bonus chains. Declared live so a live module can hold the answer without
+// naming the converter that derived it (`decisions.md` §19, ruling B16).
+pub mod declared_bonuses;
 pub mod derived_evaluator_fixture_check;
 pub mod description_completion;
 pub mod durability;
@@ -31,6 +35,9 @@ pub mod pilot_compute_corpus;
 pub mod pilot_failure;
 pub mod pilot_view_model;
 pub mod race_creation;
+// SD-35 `AT-35-E6-003-RULED` cycle 14: the SETTLED canonical race and
+// race-trait records, the race-side sibling of `equipment_record`.
+pub mod race_record;
 pub mod record_vars;
 pub mod race_resolver;
 pub mod racial_sla;

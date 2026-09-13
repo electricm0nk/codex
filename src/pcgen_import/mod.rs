@@ -43,6 +43,10 @@ pub mod corpus_literal_sweep;
 // rebuilding a parser row out of them; the field names and the traversal are
 // converter vocabulary, so they live here (`decisions.md` §11).
 pub mod corpus_equipment_json;
+// SD-35 `AT-35-E6-003-RULED` cycle 14: the same boundary for race and
+// race-trait corpus JSON -- the cache payload shapes, the token grammar and
+// the chain grammar are converter vocabulary (`decisions.md` §11).
+pub mod corpus_race_json;
 pub mod class_feature_vars;
 pub mod formula_interpreter;
 pub mod formula_interpreter_corpus_wide;

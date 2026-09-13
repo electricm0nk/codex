@@ -83,16 +83,27 @@ use std::path::{Path, PathBuf};
 // SD-35 `AT-35-E6-002` cycle 3 (`decisions.md` §11, `technical-design.md` §0): every reading
 // of an ingested `.lst` row's token array this module used to do by hand now happens on the
 // tool side of the path boundary, one named function per fact.
-use crate::pcgen_import::bonus_chain_reader::{self, DeclaredBonuses};
-use crate::pcgen_import::race_trait_tokens;
+//
+// SD-35 `AT-35-E6-003-RULED` cycle 14 (`decisions.md` §19, ruling B16): those readings now
+// happen ONCE, at the ingest boundary, instead of once per accessor call, and this module
+// holds only their SETTLED result. It used to
+// `use crate::pcgen_import::bonus_chain_reader::{self, DeclaredBonuses}`,
+// `use crate::pcgen_import::race_trait_tokens` and
+// `use crate::pcgen_import::ingest_payload::{RaceCacheData, RaceTraitCacheData}` here -- three
+// converter imports in a live file, which under ruling B16 is three reads of the converter.
+// Not one reading was widened, narrowed or dropped: every one still runs, in the same
+// function, in `pcgen_import::corpus_race_json`, and the whole-corpus parity proof at the
+// bottom of that module compares its result field for field against the call this file used
+// to make.
 use crate::rules_core::corpus_loader::BookCorpusRoot;
+use crate::rules_core::declared_bonuses::DeclaredBonuses;
 use crate::rules_core::feat_effects::FeatDisplayValueDeltas;
 // SD-35 `AT-35-E6-003` (`decisions.md` §11): this file used to
 // `use crate::pcgen_import::pcgen_desc::{render_pcgen_desc_tokens, PcgenDisplayValues,
 // RenderedPcgenDesc}` here and render a racial trait's description from its `DESC:` tokens at
 // run time. It renders the converted rule's own prose instead, through our own schema.
 use crate::rules_core::pilot_compute::resolved_prose::{self, DisplayValues, RenderedProse};
-use crate::pcgen_import::ingest_payload::{RaceCacheData, RaceTraitCacheData};
+use crate::rules_core::race_record::{CorpusRaceRecord, CorpusRaceTraitRecord};
 use crate::rules_core::shape_b_v1::{validate_license, CorpusRecordV1, CorpusSource};
 use crate::rules_core::size::SizeCategory;
 
@@ -136,7 +147,7 @@ pub enum TraitRole {
 #[derive(Debug, Clone)]
 pub struct RaceChassisRecord {
     pub book_id: String,
-    pub data: RaceCacheData,
+    pub data: CorpusRaceRecord,
     /// The real LST path the record was ingested from, verbatim from
     /// `CorpusSource.path` (this is the one place `core_essentials/` legitimately
     /// appears — it is where the file physically lives).
@@ -180,7 +191,7 @@ pub struct RaceTraitRecord {
     /// A redacted record now serves its marker instead of re-rendering the
     /// text the screen exists to withhold.
     pub description_redacted: bool,
-    pub data: RaceTraitCacheData,
+    pub data: CorpusRaceTraitRecord,
     pub source_path: String,
     pub source_line: u32,
     pub corpus_path: PathBuf,
@@ -200,7 +211,7 @@ impl RaceTraitRecord {
     /// the question instead of importing the converter's token reader to ask it — the picker
     /// never needed the token grammar, only the answer (`decisions.md` §19, ruling B16).
     pub fn exclusion_guard_flags(&self) -> Vec<String> {
-        race_trait_tokens::exclusion_guard_flags(&self.data)
+        self.data.exclusion_guard_flags.clone()
     }
 
     /// Each negated fact gate this row declares, as its group of flag strings.
@@ -208,7 +219,7 @@ impl RaceTraitRecord {
     /// A group longer than one entry is a row whose single guard names several flags — the
     /// shape the picker reports as a findings row rather than absorbing silently.
     pub fn negated_fact_gates(&self) -> Vec<Vec<String>> {
-        race_trait_tokens::negated_fact_gates(&self.data)
+        self.data.negated_fact_gates.clone()
     }
 
     /// Whether this row writes its self-exclusion guard's negated branch as an ability
@@ -218,7 +229,7 @@ impl RaceTraitRecord {
     /// is the separate question *did we have to?*, which the picker surfaces to the player so
     /// a corpus defect is reported rather than silently absorbed.
     pub fn declares_negated_ability_guard(&self) -> bool {
-        race_trait_tokens::declares_preability_negated_guard(&self.data)
+        self.data.declares_negated_ability_guard
     }
 
     /// This row's own display variables: every converted variable it declares whose whole
@@ -342,7 +353,7 @@ impl RaceTraitRecord {
     /// would hide the rest, and "we found content we cannot place" is a fact
     /// this module deliberately keeps visible.
     pub fn automatic_trait_grants(&self) -> Vec<String> {
-        race_trait_tokens::automatic_ability_grants(&self.data)
+        self.data.automatic_trait_grants.clone()
     }
 
     /// The Skinwalker kin whose Change Shape pool this row's own automatic grant names, if
@@ -360,9 +371,7 @@ impl RaceTraitRecord {
     /// Returns the kin suffix (`"Werebear"`, …) — *not* the pool-qualified grant string — so no
     /// caller needs the prefix to strip or to reconstruct.
     pub fn skinwalker_change_shape_kin(&self) -> Option<String> {
-        self.automatic_trait_grants()
-            .into_iter()
-            .find_map(|grant| race_trait_tokens::skinwalker_change_shape_kin(&grant).map(str::to_string))
+        self.data.skinwalker_change_shape_kin.clone()
     }
 }
 
@@ -598,14 +607,18 @@ impl RaceCorpus {
             return;
         }
         for path in find_json_files(&dir) {
-            let Some(record) = self.read_record::<RaceCacheData>(&path) else { continue };
-            let key = record.data.key.clone();
+            let Some(record) = self.read_record::<serde_json::Value>(&path) else { continue };
+            let Some(data) = crate::rules_core::corpus_loader::corpus_race_record(&record.data) else {
+                self.push_diag(&path, "\"data\" is not a race chassis payload".to_string());
+                continue;
+            };
+            let key = data.key.clone();
             let (source_path, source_line) = lst_citation(&record.source);
             let chassis = RaceChassisRecord {
                 book_id: root.book_id.to_string(),
                 source_path,
                 source_line,
-                data: record.data,
+                data,
                 corpus_path: path.clone(),
             };
             if let Some(previous) = self.chassis.insert(key.clone(), chassis) {
@@ -626,10 +639,14 @@ impl RaceCorpus {
             return;
         }
         for path in find_json_files(&dir) {
-            let Some(record) = self.read_record::<RaceTraitCacheData>(&path) else { continue };
-            let requires_flag = race_trait_tokens::positive_prefact_flag(&record.data);
-            let role = classify(&record.data, requires_flag.is_some());
-            let race_key = record.data.race_key.clone();
+            let Some(record) = self.read_record::<serde_json::Value>(&path) else { continue };
+            let Some(data) = crate::rules_core::corpus_loader::corpus_race_trait_record(&record.data) else {
+                self.push_diag(&path, "\"data\" is not a racial-trait payload".to_string());
+                continue;
+            };
+            let requires_flag = data.positive_prefact_flag.clone();
+            let role = classify(&data, requires_flag.is_some());
+            let race_key = data.race_key.clone();
             let (source_path, source_line) = lst_citation(&record.source);
             self.traits.entry(race_key).or_default().push(RaceTraitRecord {
                 book_id: root.book_id.to_string(),
@@ -660,7 +677,7 @@ impl RaceCorpus {
                         == Some(crate::rules_core::shape_b_v1::PI_MARKER_REDACTED),
                 source_path,
                 source_line,
-                data: record.data,
+                data,
                 corpus_path: path,
             });
         }
@@ -890,10 +907,10 @@ impl RaceCorpus {
                 type_tokens: record.data.type_tokens.clone(),
                 description: record.data.description.clone(),
                 source_page: record.data.source_page.clone(),
-                declared_walk_speed_ft: race_trait_tokens::declared_walk_speed_ft(&record.data),
-                declared_size: race_trait_tokens::declared_size(&record.data),
-                declared_vision: race_trait_tokens::declared_vision_segments(&record.data),
-                declared_bonuses: bonus_chain_reader::declared_bonuses(&record.data),
+                declared_walk_speed_ft: record.data.declared_walk_speed_ft,
+                declared_size: record.data.declared_size,
+                declared_vision: record.data.declared_vision.clone(),
+                declared_bonuses: record.data.declared_bonuses.clone(),
             })
             .collect();
 
@@ -1186,7 +1203,7 @@ pub struct AdoptedRaceSelector {
 pub fn adopted_race_choose_selectors(corpus: &RaceCorpus) -> Vec<AdoptedRaceSelector> {
     let mut out = Vec::new();
     for record in corpus.traits_by_type_token(ADOPTED_RACE_SELECTOR_TYPE) {
-        let pool_type_suffix = race_trait_tokens::adopted_race_pool_suffix(&record.data);
+        let pool_type_suffix = record.data.adopted_race_pool_suffix.clone();
         out.push(AdoptedRaceSelector {
             key: record.data.key.clone(),
             name: record.data.name.clone(),
@@ -1978,7 +1995,7 @@ fn lst_citation(source: &CorpusSource) -> (String, u32) {
     }
 }
 
-fn classify(data: &RaceTraitCacheData, has_positive_gate: bool) -> TraitRole {
+fn classify(data: &CorpusRaceTraitRecord, has_positive_gate: bool) -> TraitRole {
     if data.is_racial_default {
         TraitRole::Default
     } else if !data.sets_replace_flags.is_empty() {
@@ -3493,7 +3510,7 @@ mod tests {
             let oracle: Option<String> = record
                 .automatic_trait_grants()
                 .into_iter()
-                .find_map(|g| race_trait_tokens::skinwalker_change_shape_kin(&g).map(str::to_string));
+                .find_map(|g| crate::pcgen_import::race_trait_tokens::skinwalker_change_shape_kin(&g).map(str::to_string));
             assert_eq!(
                 record.skinwalker_change_shape_kin(),
                 oracle,

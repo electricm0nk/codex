@@ -33,6 +33,7 @@ use codex::pcgen_import::bonus_chain_reader;
 use codex::pcgen_import::pcgen_desc::{
     leaked_pcgen_syntax, render_pcgen_desc_tokens, PcgenDisplayValues,
 };
+use codex::pcgen_import::ingest_payload::RaceTraitCacheData;
 use codex::pcgen_import::race_trait_tokens;
 use codex::rules_core::corpus_loader::BookCorpusRoot;
 use codex::rules_core::race_resolver::{load_race_corpus, RaceCorpus, RaceTraitRecord};
@@ -65,16 +66,74 @@ fn corpus() -> RaceCorpus {
     load_race_corpus(&roots)
 }
 
+/// Every shipped racial-trait record's **ingest payload**, keyed by the book it came from and
+/// its own key — the oracle's input.
+///
+/// SD-35 `AT-35-E6-003-RULED` cycle 14: the live `RaceTraitRecord` carries a **settled**
+/// `CorpusRaceTraitRecord` now and no longer holds the `.lst` row's token and bonus-chain
+/// arrays, which is the whole point of that cycle (`decisions.md` §11, §19). The oracle still
+/// needs those arrays — it IS the ingest-format reading this file compares the converted path
+/// against — so it reads them off disk itself, here in `tests/`, which is exactly where
+/// `decisions.md §11` says an oracle belongs. Same files, same records, same population; only
+/// the route from a record to its arrays changed.
+fn oracle_payloads() -> BTreeMap<(String, String), RaceTraitCacheData> {
+    let mut out: BTreeMap<(String, String), RaceTraitCacheData> = BTreeMap::new();
+    for (book_id, dir) in corpus_roots() {
+        let mut stack = vec![dir.join("race_trait")];
+        while let Some(current) = stack.pop() {
+            let Ok(entries) = std::fs::read_dir(&current) else { continue };
+            for entry in entries.flatten() {
+                let path = entry.path();
+                let name = entry.file_name().to_string_lossy().into_owned();
+                if path.is_dir() {
+                    if name != "_parity" {
+                        stack.push(path);
+                    }
+                    continue;
+                }
+                if !name.ends_with(".json") || name == "LICENSE.json" {
+                    continue;
+                }
+                let Ok(text) = std::fs::read_to_string(&path) else { continue };
+                let Ok(value) = serde_json::from_str::<serde_json::Value>(&text) else { continue };
+                let Some(data) = value.get("data") else { continue };
+                let Ok(payload) = serde_json::from_value::<RaceTraitCacheData>(data.clone()) else {
+                    continue;
+                };
+                out.insert((book_id.clone(), payload.key.clone()), payload);
+            }
+        }
+    }
+    out
+}
+
+/// The oracle payload for one live record. Every loaded record came from one of the files
+/// [`oracle_payloads`] walks, so a miss is a real defect in this pairing, never a skip.
+fn payload_for<'a>(
+    payloads: &'a BTreeMap<(String, String), RaceTraitCacheData>,
+    record: &RaceTraitRecord,
+) -> &'a RaceTraitCacheData {
+    payloads
+        .get(&(record.book_id.clone(), record.data.key.clone()))
+        .unwrap_or_else(|| {
+            panic!(
+                "no ingest payload on disk for {}/{} -- the oracle's population must be the \
+                 loaded corpus exactly",
+                record.book_id, record.data.key
+            )
+        })
+}
+
 /// The **oracle** side's reading of one row's own display values: the ingest arrays, folded the
 /// way `same_row_display_values` folded them before this criterion moved it to the converted
 /// `_vars` tables. A variable any other row also moves, or whose base is declared elsewhere,
 /// does not resolve — that refusal is the property both sides must agree on.
-fn oracle_same_row_values(record: &RaceTraitRecord) -> PcgenDisplayValues {
+fn oracle_same_row_values(payload: &RaceTraitCacheData) -> PcgenDisplayValues {
     let mut accumulator: BTreeMap<String, Option<i64>> = BTreeMap::new();
-    for (name, base) in race_trait_tokens::same_row_defines(&record.data) {
+    for (name, base) in race_trait_tokens::same_row_defines(payload) {
         accumulator.insert(name, base);
     }
-    for contribution in bonus_chain_reader::declared_bonuses(&record.data).var_contributions {
+    for contribution in bonus_chain_reader::declared_bonuses(payload).var_contributions {
         let (name, amount) = (contribution.name, contribution.amount);
         match accumulator.get_mut(&name) {
             None => {
@@ -100,15 +159,15 @@ fn oracle_same_row_values(record: &RaceTraitRecord) -> PcgenDisplayValues {
 /// The oracle's whole answer for one record, including the two fallbacks the live path keeps:
 /// a PI-redacted record serves its stored marker, and a record with no rendered prose at all
 /// serves its stored description.
-fn oracle_text(record: &RaceTraitRecord) -> String {
+fn oracle_text(record: &RaceTraitRecord, payload: &RaceTraitCacheData) -> String {
     if record.description_redacted {
         return record.data.description.clone().unwrap_or_default();
     }
-    let tokens: Vec<&str> = race_trait_tokens::description_segments(&record.data);
+    let tokens: Vec<&str> = race_trait_tokens::description_segments(payload);
     if tokens.is_empty() {
         return record.data.description.clone().unwrap_or_default();
     }
-    let rendered = render_pcgen_desc_tokens(&tokens, &oracle_same_row_values(record));
+    let rendered = render_pcgen_desc_tokens(&tokens, &oracle_same_row_values(payload));
     if rendered.text.is_empty() {
         return record.data.description.clone().unwrap_or_default();
     }
@@ -124,6 +183,7 @@ fn oracle_text(record: &RaceTraitRecord) -> String {
 #[test]
 fn every_racial_trait_renders_the_same_sentence_from_the_converted_package() {
     let corpus = corpus();
+    let payloads = oracle_payloads();
     let mut compared = 0usize;
     let mut disagreements: Vec<String> = Vec::new();
 
@@ -131,7 +191,7 @@ fn every_racial_trait_renders_the_same_sentence_from_the_converted_package() {
         for record in corpus.traits_for(race_key) {
             compared += 1;
             let live = record.render_description(&record.same_row_display_values()).text;
-            let oracle = oracle_text(record);
+            let oracle = oracle_text(record, payload_for(&payloads, record));
             if live != oracle {
                 disagreements.push(format!(
                     "{}\n    converted: {live:?}\n    oracle:    {oracle:?}",

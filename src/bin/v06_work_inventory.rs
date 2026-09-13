@@ -54,7 +54,6 @@ use codex::rules_core::corpus_loader::{BookCorpusRoot, load_equipment_corpus, lo
 use codex::rules_core::race_creation::race_creation_chassis;
 // SD-35 `AT-35-E6-002` cycle 3: the `TEMPLATE:` reading moved to the tool side of
 // `technical-design.md` §0's path boundary. Same function, same behaviour, new home.
-use codex::pcgen_import::race_trait_tokens::declared_template_bonus_languages;
 use codex::rules_core::race_resolver::{
     TraitRole, adopted_race_choose_selectors, adoptive_parentage_options, load_race_corpus,
 };
@@ -6937,9 +6936,16 @@ fn probe_race_trait_corpus(repo_root: &Path) -> RaceTraitProbe {
             // for the grounding). `"Any Spoken"` -- the marker `Human ~
             // Languages` itself carries, never a real language -- is
             // excluded so this set only ever names verified real content.
-            let template_languages: Vec<String> = declared_template_bonus_languages(&record.data.raw_tokens)
-                .into_iter()
-                .filter(|lang| lang != "Any Spoken")
+            // SD-35 `AT-35-E6-003-RULED` cycle 14: the reading itself is
+            // unchanged and still lives in `race_trait_tokens`; it now runs
+            // once, at the ingest boundary, and the record carries its settled
+            // result instead of the token array it read.
+            let template_languages: Vec<String> = record
+                .data
+                .template_bonus_languages
+                .iter()
+                .filter(|lang| *lang != "Any Spoken")
+                .cloned()
                 .collect();
             if !template_languages.is_empty() {
                 probe.template_bonus_language_grant.insert(coordinate, template_languages);

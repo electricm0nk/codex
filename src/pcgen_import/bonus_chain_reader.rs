@@ -44,62 +44,16 @@ impl IngestBonusChains for RaceTraitCacheData {
     }
 }
 
-/// One fixed ability-score adjustment a row declares, transcribed verbatim.
-///
-/// `codes` is the comma-separated ability-code list exactly as the row spells
-/// it (Goblin's `STR,CHA`), `magnitude` its unparsed text. Both are `Option`
-/// because a malformed row states neither, and the caller — which knows the
-/// row's key and can name it — is the one that must decide whether that is an
-/// error. Parsing and code-to-ability mapping are game semantics and stay on
-/// the live side.
-#[derive(Debug, Clone, PartialEq, Eq)]
-pub struct AbilityAdjustment {
-    pub codes: Option<String>,
-    pub magnitude: Option<String>,
-}
-
-/// One same-row variable contribution a chain states.
-///
-/// `amount` is `None` when the contribution cannot be finished from this row
-/// alone — a conditional chain carrying a trailing prerequisite qualifier, or
-/// an amount that is not a bare integer. `None` is "declared but
-/// unresolvable", which is a different fact from "never mentioned" (a name
-/// that never appears here at all).
-#[derive(Debug, Clone, PartialEq, Eq)]
-pub struct VarContribution {
-    pub name: String,
-    pub amount: Option<i64>,
-}
-
-/// Everything a live module needs from one row's bonus chains, read once.
-///
-/// Built at resolution time and stored, so nothing downstream holds the
-/// ingest array. Every field is a transcription of what the row states.
-#[derive(Debug, Clone, PartialEq, Eq, Default)]
-pub struct DeclaredBonuses {
-    /// Every integer that appears as a bare numeric qualifier, in source
-    /// order, deduplicated.
-    ///
-    /// This is a *reading*, not an interpretation: it does not decide what the
-    /// number bonuses, does not sum anything, and does not resolve variables.
-    /// A chain that names a variable instead of stating a number contributes
-    /// nothing; its companion chain stating the number contributes that.
-    pub magnitudes: Vec<i32>,
-    /// The same reading, over the chains that actually state a game quantity —
-    /// chains that only write an internal state flag are discarded first.
-    pub magnitudes_excluding_flags: Vec<i32>,
-    /// True when the row declares at least one chain and *every* one of them
-    /// only writes an internal state flag, so the row states no quantity of
-    /// its own at all.
-    pub only_internal_flags: bool,
-    /// The fixed ability-score adjustments the row declares, in source order.
-    pub ability_adjustments: Vec<AbilityAdjustment>,
-    /// How many freely-distributed ability picks the row grants.
-    pub ability_pool_picks: u8,
-    /// Every same-row variable contribution, one entry per named variable per
-    /// chain, in source order.
-    pub var_contributions: Vec<VarContribution>,
-}
+// SD-35 `AT-35-E6-003-RULED` cycle 14 (`decisions.md` §11, §19 ruling B16):
+// `AbilityAdjustment`, `VarContribution` and `DeclaredBonuses` were DEFINED
+// here and are now defined in `crate::rules_core::declared_bonuses`. They were
+// already settled answers rather than ingest grammar -- no qualifier position,
+// no chain keyword, no ingest field name appears in any of them -- but a live
+// module holding one had to write `pcgen_import` to name its type, which is a
+// converter read under ruling B16. The reading logic below did not move and did
+// not change; only the three struct declarations did. Re-exported so every
+// converter-side call site keeps its existing path.
+pub use crate::rules_core::declared_bonuses::{AbilityAdjustment, DeclaredBonuses, TargetBonus, VarContribution};
 
 /// [`DeclaredBonuses`] for a typed cache record.
 pub fn declared_bonuses<T: IngestBonusChains>(data: &T) -> DeclaredBonuses {
@@ -117,7 +71,31 @@ pub fn declared_bonuses_from_chains(chains: &[RawBonusChain]) -> DeclaredBonuses
         ability_adjustments: ability_adjustments(chains),
         ability_pool_picks: ability_pool_picks(chains),
         var_contributions: var_contributions(chains),
+        target_bonuses: target_bonuses(chains),
     }
+}
+
+/// Every chain that states a magnitude against a **named target**, transcribed.
+///
+/// A *reading*, not an interpretation: the keyword and the target are handed
+/// back exactly as the row spells them, and a magnitude that is not a plain
+/// integer -- a formula, a variable, an upstream `%LIST` placeholder -- is
+/// `None` rather than guessed (`decisions.md §24`). A chain with fewer than
+/// three qualifiers names no target and contributes nothing.
+fn target_bonuses(chains: &[RawBonusChain]) -> Vec<TargetBonus> {
+    chains
+        .iter()
+        .filter_map(|chain| {
+            let keyword = chain.qualifiers.first()?;
+            let target = chain.qualifiers.get(1)?;
+            let magnitude = chain.qualifiers.get(2)?;
+            Some(TargetBonus {
+                keyword: keyword.clone(),
+                target: target.clone(),
+                magnitude: magnitude.parse::<i32>().ok(),
+            })
+        })
+        .collect()
 }
 
 fn bare_magnitudes<'a>(chains: impl Iterator<Item = &'a RawBonusChain>) -> Vec<i32> {

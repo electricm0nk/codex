@@ -7,7 +7,7 @@
         ],
         "context_fn": "classify",
         "file": "src/bin/v06_work_inventory.rs",
-        "resolved_line": 16465
+        "resolved_line": 16471
       },
       "clears": "building the table (Epic 2)",
       "count": 0,
@@ -21,7 +21,7 @@
         ],
         "context_fn": "classify",
         "file": "src/bin/v06_work_inventory.rs",
-        "resolved_line": 16064
+        "resolved_line": 16070
       },
       "clears": "placing the record (Epic 3/4)",
       "count": 0,
@@ -35,7 +35,7 @@
         ],
         "context_fn": "classify",
         "file": "src/bin/v06_work_inventory.rs",
-        "resolved_line": 16370
+        "resolved_line": 16376
       },
       "clears": "wiring the display/explanation path (Epic 3)",
       "count": 0,
@@ -50,7 +50,7 @@
         ],
         "context_fn": "classify",
         "file": "src/bin/v06_work_inventory.rs",
-        "resolved_line": 13398
+        "resolved_line": 13404
       },
       "clears": "per named sub-cause",
       "count": 0,
@@ -66,7 +66,7 @@
         ],
         "context_fn": "simple_kind_verdict",
         "file": "src/bin/v06_work_inventory.rs",
-        "resolved_line": 13170
+        "resolved_line": 13176
       },
       "clears": "\u2014",
       "count": 49438,
@@ -81,7 +81,7 @@
         ],
         "context_fn": "simple_kind_verdict",
         "file": "src/bin/v06_work_inventory.rs",
-        "resolved_line": 13181
+        "resolved_line": 13187
       },
       "clears": "running the compute path (shape engine)",
       "count": 0,
@@ -96,7 +96,7 @@
         ],
         "context_fn": "classify",
         "file": "src/bin/v06_work_inventory.rs",
-        "resolved_line": 13486
+        "resolved_line": 13492
       },
       "clears": "instrument correction",
       "count": 0,
@@ -110,7 +110,7 @@
         ],
         "context_fn": "apply_done_rung_stamps",
         "file": "src/bin/v06_work_inventory.rs",
-        "resolved_line": 17311
+        "resolved_line": 17317
       },
       "clears": "the SD-33 oracle harness (scripts/oracle_harness/)",
       "count": 0,
@@ -125,7 +125,7 @@
         ],
         "context_fn": "classify",
         "file": "src/bin/v06_work_inventory.rs",
-        "resolved_line": 13446
+        "resolved_line": 13452
       },
       "clears": "revisiting the stated condition",
       "count": 0,
@@ -140,7 +140,7 @@
         ],
         "context_fn": "classify",
         "file": "src/bin/v06_work_inventory.rs",
-        "resolved_line": 13307
+        "resolved_line": 13313
       },
       "clears": "ordinary work",
       "count": 0,
@@ -149,7 +149,7 @@
     }
   },
   "citation_failures": [],
-  "derived_at": "14dd17c319ac6f6b6940b536f70ef9b5f245f667",
+  "derived_at": "8555cee7b40471147a2052feb8084869dc1894dc",
   "done_evidence_violation_ids": [],
   "done_evidence_violations": 0,
   "missing_clearing_mechanisms": [],
