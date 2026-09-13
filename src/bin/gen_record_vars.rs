@@ -12,7 +12,7 @@
 
 use std::path::PathBuf;
 
-use codex::pcgen_import::{class_feature_vars, spell_formula_settle};
+use codex::pcgen_import::{class_feature_vars, pool_gate_settle, spell_formula_settle};
 use codex::rules_core::record_vars::RECORD_VARS_PATH;
 
 fn main() {
@@ -25,6 +25,7 @@ fn main() {
     // SD-35 `AT-35-E6-003-RULED` cycle 17: the spell `DURATION:`/`RANGE:` reading the live side
     // used to do on every process start, done once, here.
     package.spell_formulas = spell_formula_settle::build(&repo);
+    package.pool_gates = pool_gate_settle::build(&repo);
     // Compact, not pretty: 4,445 records of converted expression trees are diffed by
     // regenerating and comparing, never by reading, and pretty-printing quadruples the size.
     let mut text = serde_json::to_string(&package).expect("serialise record vars");
@@ -38,6 +39,8 @@ fn main() {
     let templates = package.desc_templates.len();
     let spell_durations = package.spell_formulas.durations.len();
     let spell_ranges = package.spell_formulas.ranges.len();
+    let pool_gates_admitted = package.pool_gates.admitted.len();
+    let pool_gates_refused = package.pool_gates.refused.len();
     let converted: usize = package
         .class_feature_any
         .values()
@@ -49,7 +52,8 @@ fn main() {
         "class_feature_described={described} class_feature_any={any} class_records={classes} \
          domain_records={domains} converted_vars={converted} var_defaults={defaults} \
          desc_templates={templates} spell_durations={spell_durations} \
-         spell_ranges={spell_ranges} ({:.1}s)",
+         spell_ranges={spell_ranges} pool_gates_admitted={pool_gates_admitted} \
+         pool_gates_refused={pool_gates_refused} ({:.1}s)",
         started.elapsed().as_secs_f64()
     );
 

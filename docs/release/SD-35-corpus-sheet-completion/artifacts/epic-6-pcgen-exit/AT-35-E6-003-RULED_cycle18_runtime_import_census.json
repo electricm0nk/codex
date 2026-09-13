@@ -1,0 +1,64 @@
+{
+  "total_hits": 0,
+  "total_files": 0,
+  "by_root": {},
+  "by_group": {
+    "corpus_json_boundary": 0,
+    "renderer": 0,
+    "lst_parser_types": 0,
+    "ingest_record_tokens": 0,
+    "trait_and_pool_tokens": 0,
+    "ir_converter": 0,
+    "source_content_payload": 0,
+    "provenance_prose": 0,
+    "unclassified": 0
+  },
+  "rows": [],
+  "closed_by_cycle18": [
+    [
+      "src/rules_core/source_content.rs",
+      "source_content_payload::SourceContentPayload"
+    ],
+    [
+      "src/rules_core/spell_resolver.rs",
+      "source_content_payload::SourceContentPayload"
+    ],
+    [
+      "src/rules_core/equipment_resolver.rs",
+      "source_content_payload::SourceContentPayload"
+    ],
+    [
+      "src/rules_core/class_feature_pool_catalog.rs",
+      "pool_member_tokens"
+    ]
+  ],
+  "split_by_cycle18": [
+    [
+      "src/pcgen_import/ir_content_payload.rs",
+      "IrContentPayload",
+      "src/rules_core/source_content.rs",
+      "SourceContentPayload"
+    ]
+  ],
+  "settled_by_cycle18": [
+    [
+      "src/rules_core/class_feature_pool_catalog.rs",
+      "pool_member_tokens",
+      "src/pcgen_import/pool_gate_settle.rs"
+    ]
+  ],
+  "relabelled_by_cycle18": [],
+  "cleared_files_by_cycle18": [
+    "src/rules_core/source_content.rs",
+    "src/rules_core/spell_resolver.rs",
+    "src/rules_core/equipment_resolver.rs",
+    "src/rules_core/class_feature_pool_catalog.rs"
+  ],
+  "pool_gates_admitted": 5813,
+  "pool_gates_refused": 6924,
+  "pool_gate_refusal_reasons": {
+    "engine_effect_token_present": 6459,
+    "archetype_locked": 78,
+    "multi_desc_segment_not_regenerated": 387
+  }
+}

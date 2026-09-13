@@ -73,7 +73,7 @@
 /// tree were `Spell` in `rules_core::spell_resolver`, `Equipment` in
 /// `rules_core::equipment_resolver`, and both in the desktop crate's
 /// `corpus_fixtures` — and the full seven-variant projection is still built,
-/// still proved by the `sd17_c`/`sd17_d`/`sd17_e` suites, and still reachable as
+/// still proved by the slice-E integration suites, and still reachable as
 /// [`IrContentPayload`](crate::pcgen_import::ir_content_payload::IrContentPayload).
 #[derive(Debug, Clone, Copy, PartialEq)]
 pub enum SourceContentPayload<'a> {

@@ -110,6 +110,10 @@ pub mod sheet_rule;
 /// `DURATION:`/`RANGE:` formula at authoring time, so the live side (and the desktop
 /// spell catalog behind it) reads a settled formula instead of a raw token.
 pub mod spell_formula_settle;
+/// SD-35 `AT-35-E6-003-RULED` cycle 18: settles the class-feature pool's three
+/// ingest-token gates at authoring time, so the shipping catalog walk reads a
+/// verdict instead of the corpus row's token array.
+pub mod pool_gate_settle;
 
 /// SD-35 `AT-35-E6-003-RULED` cycle 18: the converter's own seven-variant
 /// projection payload, split off the live envelope's payload so that

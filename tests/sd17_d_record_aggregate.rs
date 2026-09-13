@@ -43,9 +43,8 @@ use codex::pcgen_import::lst_parser::ParsedLstRecord;
 // SourceContentKind, SourceRef) and pcgen_import::ir_content_payload
 // (IrContentPayload).
 use codex::pcgen_import::ir_content_payload::IrContentPayload;
-use codex::rules_core::source_content::{
-    MetadataKindInner, SourceContentKind, SourceContentRecord, SourceRef,
-};
+use codex::pcgen_import::ir_content_payload::IrContentRecord;
+use codex::rules_core::source_content::{MetadataKindInner, SourceContentKind, SourceRef};
 // Umbrella re-export path: pcgen_import itself.
 use codex::pcgen_import::ParsedLstRecord as ParsedLstRecordUmbrella;
 
@@ -54,7 +53,7 @@ fn canonical_schema() -> IRSchema {
 }
 
 fn assert_kind_payload(
-    record: &SourceContentRecord<'_>,
+    record: &IrContentRecord<'_>,
     expected_kind: SourceContentKind,
     payload_label: &str,
 ) {

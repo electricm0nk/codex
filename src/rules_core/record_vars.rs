@@ -38,6 +38,7 @@ use std::sync::{Mutex, OnceLock};
 
 use serde::{Deserialize, Serialize};
 
+use super::class_feature_pool_catalog::SettledPoolGates;
 use super::derived_evaluator_fixture_check::SettledSpellFormulas;
 use super::desc_template::DescTemplate;
 use super::sheet_rule::{Ability, CharacterFacts, Expr, VarId, evaluate_expr_from_facts, var_id};
@@ -91,6 +92,12 @@ pub struct RecordVarPackage {
     /// than a gate's bookkeeping.
     #[serde(default)]
     pub spell_formulas: SettledSpellFormulas,
+    /// Every ingested `class_feature` record's verdict under the class-feature pool's three
+    /// ingest-token gates, settled at authoring time (SD-35 `AT-35-E6-003-RULED` cycle 18,
+    /// `decisions.md` §11, §19). The shipping catalog walk asked those three questions of the
+    /// corpus row itself, on every process start, until this cycle.
+    #[serde(default)]
+    pub pool_gates: SettledPoolGates,
     /// A wildblooded bloodline variant's pool group -> its declared parent's pool group.
     pub wildblooded_parents: BTreeMap<String, String>,
     /// A referenced variable name the corpus binds nowhere -> its declared baseline (step 3).

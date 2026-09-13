@@ -6,7 +6,7 @@
 //! The slice-E converter entry point is `convert_to_ir` in
 //! `codex::pcgen_import::ir_converter`, which projects a parsed
 //! LST record (via `ParsedLstRecord<'a>`) into a canonical
-//! `SourceContentRecord<'a>` envelope.
+//! `IrContentRecord<'a>` envelope.
 //!
 //! ## Verification coverage
 //!
@@ -19,13 +19,14 @@
 //! - V4 lossy-mapping diagnostic: a token the corpus supports but
 //!   the source-IR preserves as a raw string produces a
 //!   `SourceContentDiagnostic` with severity Warning (LossyMapping).
-//! - V5 `SourcePackageContent::records_by_kind` returns a
+//! - V5 `IrPackageContent::records_by_kind` returns a
 //!   deterministic order.
 
 use codex::pcgen_import::ir_converter::{
     convert_ability_declaration, convert_class_entry, convert_equipment_record,
-    convert_metadata_record, convert_race_declaration, convert_spell_record,
-    convert_spellcasting_class_entry, convert_to_ir, IRSchema, ParsedLstRecord,
+    convert_equipment_record_ir, convert_metadata_record, convert_race_declaration,
+    convert_spell_record, convert_spell_record_ir, convert_spellcasting_class_entry,
+    convert_to_ir, IRSchema, ParsedLstRecord,
 };
 use codex::pcgen_import::lst_parser::class::{parse_class_entries, ClassEntry, ClassToken};
 use codex::pcgen_import::lst_parser::equipment::{
@@ -39,17 +40,17 @@ use codex::pcgen_import::lst_parser::spell::{parse_lst_spell_row, LstSpellRecord
 use codex::pcgen_import::lst_parser::spellcasting_class::{
     parse_spellcasting_class_entries, SpellcastingClassEntry,
 };
+use codex::pcgen_import::ir_content_payload::{IrContentPayload, IrContentRecord, IrPackageContent};
 use codex::rules_core::source_content::{
     MetadataKindInner, SourceContentDiagnostic, SourceContentDiagnosticKind, SourceContentKind,
-    IrContentPayload, SourceContentRecord, SourceContentSeverity, SourcePackageContent,
-    SourceRef, SOURCE_IR_VERSION,
+    SourceContentSeverity, SourceRef, SOURCE_IR_VERSION,
 };
 
 // =============================================================================
 // V1 — round-trip per kind (one variant per B-family entry)
 // =============================================================================
 
-fn assert_payload_class(record: &SourceContentRecord<'_>, expected: &ClassEntry) {
+fn assert_payload_class(record: &IrContentRecord<'_>, expected: &ClassEntry) {
     match record.payload {
         IrContentPayload::Class(p) => {
             // Zero-copy: the pointer the envelope holds IS the
@@ -155,7 +156,7 @@ fn v1_spell_record_round_trips_into_spell_payload() {
     let parsed_row = parse_lst_spell_row("cr_spells_magic_missile.lst", 42, raw_line);
     // Note: parse_lst_spell_row returns LstRowParse { record: Option<LstSpellRecord>, diagnostics }
     let inner = parsed_row.record.as_ref().expect("expected parsed record");
-    let record = convert_spell_record(inner);
+    let record = convert_spell_record_ir(inner);
     assert_eq!(record.kind, SourceContentKind::Spell);
     match record.payload {
         IrContentPayload::Spell(p) => {
@@ -216,7 +217,7 @@ fn v1_equipment_record_round_trips_into_equipment_payload() {
     assert_eq!(parsed.entries.len(), 1);
     let entry = &parsed.entries[0];
 
-    let record = convert_equipment_record(entry);
+    let record = convert_equipment_record_ir(entry);
     assert_eq!(record.kind, SourceContentKind::Equipment);
     match record.payload {
         IrContentPayload::Equipment(p) => {
@@ -368,7 +369,7 @@ fn v3_malformed_record_produces_error_diagnostic_naming_the_kind() {
     // contract artifact documents that the canonical projection
     // always succeeds (conversion is total). The diagnostic
     // stream is what surfaces the defect.
-    let record: SourceContentRecord<'_> = convert_metadata_record(&bad_record);
+    let record: IrContentRecord<'_> = convert_metadata_record(&bad_record);
     assert_eq!(record.source_ref.line, 17);
     assert_eq!(
         record.kind,
@@ -460,10 +461,11 @@ fn v4_lossy_mapping_diagnostic_carries_the_token_source_ref() {
     assert_eq!(diag.source_ref.line, 88);
     assert!(diag.message.contains("OSTYPE"));
 
-    // Push the diagnostic into a SourcePackageContent and assert
+    // Push the diagnostic into an IrPackageContent and assert
     // it round-trips through the records_by_kind / diagnostics
     // surface without losing the `LossyMapping` kind.
-    let mut pkg = SourcePackageContent::empty("test_pkg", SourceRef::new("cr_equip.lst", 0));
+    let mut pkg: IrPackageContent<'_> =
+        IrPackageContent::empty("test_pkg", SourceRef::new("cr_equip.lst", 0));
     pkg.push_diagnostic(diag);
     assert_eq!(pkg.diagnostics.len(), 1);
     assert_eq!(
@@ -474,13 +476,13 @@ fn v4_lossy_mapping_diagnostic_carries_the_token_source_ref() {
 }
 
 // =============================================================================
-// V5 — SourcePackageContent::records_by_kind returns a deterministic order
+// V5 — IrPackageContent::records_by_kind returns a deterministic order
 // =============================================================================
 
 #[test]
 fn v5_records_by_kind_sorts_by_lst_file_then_line() {
     // Build a static Vec of ClassEntry so the borrowed
-    // SourceContentRecord<'_> returned by convert_class_entry can
+    // IrContentRecord<'_> returned by convert_class_entry can
     // outlive the for-loop iter below. Same shape for the lone
     // RaceDeclaration.
     let class_fixtures: Vec<(&str, u32, &'static str)> = vec![
@@ -518,7 +520,8 @@ fn v5_records_by_kind_sorts_by_lst_file_then_line() {
     };
 
     let pcc_entry = SourceRef::new("core_rulebook.pcc", 0);
-    let mut pkg = SourcePackageContent::empty("pathfinder_pf1", pcc_entry.clone());
+    let mut pkg: IrPackageContent<'_> =
+        IrPackageContent::empty("pathfinder_pf1", pcc_entry.clone());
     for (idx, entry) in class_entries.iter().enumerate() {
         let (path, line, _) = class_fixtures[idx];
         let mut rec = convert_class_entry(entry);
@@ -529,7 +532,7 @@ fn v5_records_by_kind_sorts_by_lst_file_then_line() {
     race_record.source_ref = SourceRef::new("a.lst", 2);
     pkg.push(race_record);
 
-    let sorted: Vec<SourceContentRecord<'_>> = pkg.records_by_kind(SourceContentKind::Class);
+    let sorted: Vec<IrContentRecord<'_>> = pkg.records_by_kind(SourceContentKind::Class);
     assert_eq!(sorted.len(), class_fixtures.len());
 
     // Expected order: by (lst_file, line) ascending. Within
@@ -561,7 +564,7 @@ fn v5_records_by_kind_sorts_by_lst_file_then_line() {
     assert_eq!(races[0].source_ref.line, 2);
 
     // Same input built twice yields identical order.
-    let mut pkg2 = SourcePackageContent::empty("pathfinder_pf1", pcc_entry);
+    let mut pkg2: IrPackageContent<'_> = IrPackageContent::empty("pathfinder_pf1", pcc_entry);
     let tie_entries: Vec<ClassEntry> = (0..class_entries.len())
         .map(|i| ClassEntry {
             class_name: format!("Class{}", i),

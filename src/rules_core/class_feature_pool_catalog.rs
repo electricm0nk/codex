@@ -111,8 +111,69 @@ use serde_json::Value;
 // SD-35 `AT-35-E6-002` cycle 3 (`decisions.md` §11, `technical-design.md` §0): the four
 // ingest-row predicates this catalog gates pool membership on, and the accessor its
 // ground-truth corpus assertions read a token through, both live on the tool side now.
-use crate::pcgen_import::pool_member_tokens;
 use crate::rules_core::converted_prose;
+use crate::rules_core::record_vars;
+
+// =============================================================================
+// SettledPoolGates — the ingest-token gates, settled at authoring time
+// =============================================================================
+
+/// The three ingest-token gates this catalog applies to a `class_feature`
+/// record, settled once at authoring time.
+///
+/// SD-35 `AT-35-E6-003-RULED` cycle 18 (`decisions.md` §11, §19). Until this
+/// cycle the shipping walk asked
+/// `pcgen_import::pool_member_tokens`'s four predicates about the corpus row
+/// itself, on every process start: which ingest token keys the row carries, how
+/// many `DESC:` fields it has, whether a `PREABILITY` names
+/// `CATEGORY=Archetype`. Those are questions about the ingest format, so they
+/// are answered once, on the converter side, by
+/// [`crate::pcgen_import::pool_gate_settle`], and this catalog reads the verdict.
+///
+/// **The verdicts are unchanged**, which the whole-corpus parity proof in that
+/// module asserts record for record rather than assuming.
+///
+/// The table is deliberately **fail-closed**: [`SettledPoolGates::admits`] is
+/// false for a key the table does not hold, so a missing or stale artifact
+/// serves fewer pool options, never an unvetted one. That is the same direction
+/// the converted-prose join already fails in.
+#[derive(Debug, Clone, Default, PartialEq, serde::Serialize, serde::Deserialize)]
+pub struct SettledPoolGates {
+    /// [`settled_pool_gate_key`] for every record the three gates admit.
+    pub admitted: std::collections::BTreeSet<String>,
+    /// [`settled_pool_gate_key`] -> the name of the first gate that refused it.
+    /// The reason is the catalog's own bucket name, never token text.
+    pub refused: BTreeMap<String, String>,
+}
+
+impl SettledPoolGates {
+    /// Whether the three ingest-token gates admit this record.
+    ///
+    /// Fail-closed: a key the table does not hold is not admitted.
+    pub fn admits(&self, book: &str, record_key: &str) -> bool {
+        self.admitted.contains(&settled_pool_gate_key(book, record_key))
+    }
+
+    /// The name of the first gate that refused this record, when one did.
+    pub fn refusal(&self, book: &str, record_key: &str) -> Option<&str> {
+        self.refused.get(&settled_pool_gate_key(book, record_key)).map(String::as_str)
+    }
+
+    /// Whether the table knows this record at all — admitted or refused.
+    pub fn knows(&self, book: &str, record_key: &str) -> bool {
+        let key = settled_pool_gate_key(book, record_key);
+        self.admitted.contains(&key) || self.refused.contains_key(&key)
+    }
+}
+
+/// The key [`SettledPoolGates`] is indexed by: a record's book directory and its
+/// corpus `data.key`, joined. A record key is unique only within its book.
+pub fn settled_pool_gate_key(book: &str, record_key: &str) -> String {
+    format!("{book}{SETTLED_POOL_GATE_KEY_SEPARATOR}{record_key}")
+}
+
+/// The separator [`settled_pool_gate_key`] joins with.
+pub const SETTLED_POOL_GATE_KEY_SEPARATOR: char = '|';
 
 /// **SD-32 T12 class-feature-pool-population cycle:** this catalog used to
 /// hard-refuse any `" ~ "`-group-qualified `class_feature` record whose
@@ -412,6 +473,7 @@ fn load_class_feature_catalog(
     key_filter: impl Fn(&str) -> bool,
 ) -> Vec<PoolCatalogEntry> {
     let corpus_root = repo_root.join("data/corpus");
+    let pool_gates = &record_vars::package_at(repo_root).pool_gates;
     let mut out = Vec::new();
     let Ok(books) = std::fs::read_dir(&corpus_root) else { return out };
     let mut book_dirs: Vec<_> = books.flatten().collect();
@@ -466,17 +528,12 @@ fn load_class_feature_catalog(
             if carries_class_specific_level_phrase(raw_desc, owning_class) {
                 continue;
             }
-            if !pool_member_tokens::has_no_engine_effect_token(data) {
-                continue;
-            }
-            if pool_member_tokens::is_archetype_locked(data) {
-                continue;
-            }
-            if pool_member_tokens::carries_more_than_one_desc_segment(data)
-                && !pool_member_tokens::shipped_description_is_the_already_regenerated_safe_multi_desc_join(
-                    data, raw_desc,
-                )
-            {
+            // SD-35 `AT-35-E6-003-RULED` cycle 18, `decisions.md` §11/§19: the
+            // engine-effect-token, archetype-lock and multi-`DESC:` gates used
+            // to be three questions about the ingest row, asked here, at run
+            // time, on the way to a character sheet. They are settled at ingest
+            // now and this is the join to the verdict; see [`SettledPoolGates`].
+            if !pool_gates.admits(&book, key) {
                 continue;
             }
             if raw_desc_has_a_bare_percent_reference_no_pipe_tail_can_resolve(raw_desc) {
@@ -812,6 +869,12 @@ pub fn pool_catalog_index(entries: &[PoolCatalogEntry]) -> BTreeMap<(String, Str
 #[cfg(test)]
 mod tests {
     use crate::pcgen_import::ingest_record;
+    // The three ingest-token gates are settled at ingest for the shipping walk
+    // (SD-35 `AT-35-E6-003-RULED` cycle 18). The census and parity assertions
+    // below still ask the converter's predicates directly, which is what makes
+    // them an independent check on the settled table rather than a restatement
+    // of it. A `#[cfg(test)]` region is not live code (`decisions.md` §18/B15).
+    use crate::pcgen_import::pool_member_tokens;
     use super::*;
 
     fn repo_root() -> PathBuf {

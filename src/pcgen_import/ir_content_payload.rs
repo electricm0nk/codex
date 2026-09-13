@@ -29,7 +29,7 @@
 //! being ingest vocabulary and starts being sheet data.
 //!
 //! Nothing was deleted: every variant, every borrow and every proof the
-//! `sd17_c` / `sd17_d` / `sd17_e` suites make about them is still here, on the
+//! slice-E integration suites make about them is still here, on the
 //! converter side that `decisions.md` §11 explicitly KEEPS.
 
 use crate::rules_core::source_content::{

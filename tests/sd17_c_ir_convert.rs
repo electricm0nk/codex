@@ -56,7 +56,7 @@ use codex::pcgen_import::lst_parser::spellcasting_class::{
 use codex::pcgen_import::ir_content_payload::IrContentPayload;
 use codex::pcgen_import::ir_converter::{convert_equipment_record_ir, convert_spell_record_ir};
 use codex::rules_core::source_content::{
-    MetadataKindInner, SourceContentKind, SourceContentPayload,
+    MetadataKindInner, SourceContentKind,
 };
 
 // =============================================================================
