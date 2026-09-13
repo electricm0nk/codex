@@ -181,6 +181,99 @@ re-measured at the cut by the launch-readiness audit.
 
 ## Cycle log
 
+### 2026-09-13 — Epic 6 / `desktop-and-prose-leave-pcgen` — AT-35-E6-003-RULED **cycle 7** (`<sha>`) — **partial** (cycle 6's named converter defect is **refuted**: `ABILITY:` converts as a grant edge and cycle 6's probe was reading the wrong side of it. Residue `17 / 35 → 16 / 34`)
+
+- **Scope gate:** `SCOPE_GATE: EXEMPT (Epic 6 cycle — closes zero corpus units by design; decisions.md §2)`.
+  It ran anyway at the cycle's start tree `287968b058`:
+  `scoped=0 remaining_non_done=0 floor=500 verdict=PASS_WHOLE_REMAINDER`. The residue check, which
+  is not exempt, passed first at the same tree at exactly cycle 6's closing figure:
+  `live_files=17 live_hits=35 baseline_files=260 baseline_hits=12736 verdict=PASS`.
+
+- **The code move: one hit, one whole file — `skinwalker_change_shape.rs`.** It obtained a
+  record's automatic grants from the live accessor `RaceTraitRecord::automatic_trait_grants`,
+  then imported `pcgen_import::race_trait_tokens` for one call whose entire body is
+  `grant.strip_prefix(SKINWALKER_CHANGE_SHAPE_POOL_PREFIX)`. The question it was asking — *which
+  kin pool does this record own?* — is a rules question; only the prefix-stripping grammar was
+  the converter's. `RaceTraitRecord::skinwalker_change_shape_kin()` answers it now, declared
+  beside the accessor the grants already came from. This is cycle 4's ARG-picker move
+  (`exclusion_guard_flags`) applied to the one other caller that had the same shape. The grammar
+  stays on the converter side and is **KEPT for Starfinder** (`decisions.md §11`) — nothing
+  deleted, one call site moved. Pinned over the **live** `bestiary_5` Skinwalker population
+  (75 rows) with the previous in-module reading recomputed in-test as the oracle, plus the ten
+  kin master rows by name. **The kin list was written wrong first and corrected by the red test**
+  — the first run named a `Werewrasse-Kin` the corpus does not carry and missed
+  `Wereraptor-Kin`.
+
+- **The correction, and it is this cycle's larger product.** Cycle 6 refused the
+  `class_feature_pool_catalog` swap on `P1 agree=11549 disagree=6494 of 18043` and named the
+  mechanism *"exact, not vague"*: that `ABILITY:` maps to `MapsTo::Applies` in
+  `sheet_rule/table.rs`, **i.e. to a prerequisite**, so a record granting two abilities
+  automatically converts indistinguishably from a prose-only one. **The mapping table's own
+  `ABILITY` row says the opposite** — *"a **GRANT edge**: the rule `<target>` gets `granted_by +=
+  Grant{by: Rule(H)}`"* — and `sheet_rule/convert.rs:1266` implements exactly that, pushing to
+  `out.grants_out`, which `sheet_rule/mod.rs:691-732` folds onto **the target rule's**
+  `granted_by`: a different record id, in a different file. Cycle 6's probe read only
+  `rules_for_closure_row(this record)` and so was structurally incapable of seeing the converted
+  form of the token it named. `MapsTo` is the row's *coarse disposition*, not the arm that
+  implements it; reading a defect out of it is the error. Checked on cycle 6's own worked
+  example: `core_rulebook/feat/improved_unarmed_strike.json` carries
+  `{"by": {"Rule": "occult_adventures:class_feature:elemental_ascetic_elemental_flurry"}}` in its
+  `granted_by`, one of 27 there. `BONUS:`/`DEFINE:` were unread at a different address for the
+  same reason: they land as `_vars/<var>.json` contributor rows citing their `rule_id`.
+  `correction 1789270208595-at-35-e6-003-ruled-7518b3`.
+
+- **Corrected probe, three fixes** (reverse-grant index, var-contributor index, and a `Holds`
+  traversal that actually reaches the id — the serialized shape is
+  `{"Holds": {"what": {"Rule": id}, "count": n}}`, two levels down):
+  `P1 has_no_engine_effect_token` **6,494 → 1,870** of 18,043; `P2 is_archetype_locked`
+  919 → **864**; `P3 carries_more_than_one_desc_segment` 89, unchanged.
+  **The swap stays REFUSED on the number** — but a different number, and the converter is no
+  longer under the accusation. Two things are now known that were not: `P2`'s disagreements
+  **changed direction** (every one is now the converted side refusing a row the ingest guard
+  admits, because `is_archetype_locked` reads `PREABILITY` tokens only and this corpus also
+  writes `CATEGORY=Archetype` **inside a `PREMULT` wrapper** — a **live-guard** blind spot, whose
+  reach into served pool members is **unmeasured and not claimed**); and `P1`'s residual is a
+  bounded population rather than a third of the corpus.
+
+- **The trim this cycle refused.** `equipment_resolver.rs:19` and `spell_resolver.rs:16` import
+  `pcgen_import::source_content_payload::SourceContentPayload`, and
+  `rules_core::source_content` **re-exports that exact type**. Rewriting those two `use` lines to
+  the live re-export would have lowered the gate by 2 and changed not one byte of the shipping
+  binary's dependency graph — the trim cycle 3 refused for `derived_evaluator_fixture_check.rs`
+  and cycle 6 for `PU_RESOLVABLE_DESCRIPTIONS`. The payload type genuinely cannot move (its
+  variants hold borrowed B-family parser entry types), so all five stay, in item 1.
+
+- **Gate script and baseline absent from this cycle's diff** (`git diff --name-only
+  287968b058..HEAD -- scripts/` is empty) — no path exempted, no regex weakened, no rebaseline;
+  the 27 gate unit tests pinning B14/B15/B16 still green.
+
+- **Verification, at the final tree, whole root workspace** (`apps/` absent from the diff, so the
+  desktop crate and frontend run at the epic wrap-up per `§6` step 3): `NO_RUN_EXIT=0`; lib
+  `3346 passed; 0 failed; 16 ignored` (42.4 s); full workspace `FULL_EXIT=0` — **418 targets,
+  8,875 passed, 0 failed, 69 ignored**, zero `test result: FAILED` lines; clippy **0 warnings**,
+  first run. `sheet_rule_convert -- --check` `records=49438 converted=49296 refused=142
+  rules=70135 var_tables=5293 verdict=PASS` (114.9 s); `data/sheet_rules/` ingest-syntax grep `0`;
+  `completion_atlas` `citation_failures=0 stale_derived_at=False`; `token_coverage`
+  `non_done=0 refused=142 PASS`; `shape_engine_boundary` `not_held_by_engine=0`;
+  `missing_engine_tables` `population=0`; `denominator_gate` `files_checked=136 violations=0`;
+  `verify.sh --only pi-sweep` PASS. The lib count moved `3345 → 3346` and the workspace total
+  `8,874 → 8,875`: exactly this cycle's one new test.
+
+- **Receipt rows:** `closed=0 relabeled=0 rust_lines_changed=96 ratio=n/a builds_recorded=0
+  pcgen_live_files=16`. `builds_recorded=0` is a `verify.sh` counter; this cycle ran the cargo
+  suites directly and only `--only pi-sweep` through `verify.sh`. The build evidence is
+  `FULL_EXIT=0`, not that counter.
+
+- **Refused tokens** — 34 hits / 16 files, six groups, summing:
+  `renderer=5, lst_parser_types=12, ingest_record_tokens=5, trait_and_pool_tokens=3,
+  ir_converter=4, source_content_payload=5`.
+  `deferral 1789273485421-at-35-e6-003-ruled-eec71c`.
+
+- **Next-cycle scope: item 1, the 26-hit equipment/spell converted shape.** It is the largest
+  thing left in Epic 6 and the only one of the three pieces that is neither a measured refusal
+  nor a converter-parity cycle. **Do not re-derive cycle 6's `ABILITY` claim** — it is refuted
+  above.
+
 ### 2026-09-12 — Epic 6 / `desktop-and-prose-leave-pcgen` — AT-35-E6-003-RULED **cycle 6** (`1cf3f4bc7b`) — **partial** (a group reason carried unmeasured since cycle 1 named the wrong dependency; measured, the swap is refused on **6,494 of 18,043**. Residue `18 / 36 → 17 / 35`)
 
 - **Scope gate:** `SCOPE_GATE: EXEMPT (Epic 6 cycle — closes zero corpus units by design; decisions.md §2)`.

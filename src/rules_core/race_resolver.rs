@@ -344,6 +344,26 @@ impl RaceTraitRecord {
     pub fn automatic_trait_grants(&self) -> Vec<String> {
         race_trait_tokens::automatic_ability_grants(&self.data)
     }
+
+    /// The Skinwalker kin whose Change Shape pool this row's own automatic grant names, if
+    /// this row is a kin master record at all.
+    ///
+    /// **SD-35 `AT-35-E6-003-RULED` cycle 7 (`decisions.md` §19, ruling B16).** The caller —
+    /// [`crate::rules_core::skinwalker_change_shape`] — asks *which kin pool does this record
+    /// own?*, a rules question. To answer it, it was importing
+    /// [`race_trait_tokens`] to strip the ingest format's own pool-name prefix off each grant
+    /// string it had already obtained from [`RaceTraitRecord::automatic_trait_grants`]. The
+    /// grammar that reads past that prefix belongs on the converter side; the answer belongs
+    /// here, beside the grants it is derived from — the same single-sourcing cycle 4 applied to
+    /// the ARG picker's [`RaceTraitRecord::exclusion_guard_flags`].
+    ///
+    /// Returns the kin suffix (`"Werebear"`, …) — *not* the pool-qualified grant string — so no
+    /// caller needs the prefix to strip or to reconstruct.
+    pub fn skinwalker_change_shape_kin(&self) -> Option<String> {
+        self.automatic_trait_grants()
+            .into_iter()
+            .find_map(|grant| race_trait_tokens::skinwalker_change_shape_kin(&grant).map(str::to_string))
+    }
 }
 
 /// Every race chassis and racial trait from a set of books, indexed by race.
@@ -3448,5 +3468,59 @@ mod tests {
         assert!(corpus.traits_by_category("Adoptive").is_empty());
         assert!(corpus.traits_by_category("adoptive parentage").is_empty());
         assert_eq!(corpus.traits_by_category(ADOPTIVE_PARENTAGE_CATEGORY).len(), 7);
+    }
+
+    /// [`RaceTraitRecord::skinwalker_change_shape_kin`] answers over the LIVE Skinwalker
+    /// corpus, not a fixture, and answers exactly what the converter-side grammar answers.
+    ///
+    /// SD-35 `AT-35-E6-003-RULED` cycle 7. The oracle is the reading
+    /// `crate::rules_core::skinwalker_change_shape` performed for itself before this method
+    /// existed — strip the ingest pool prefix off each automatic grant — recomputed here
+    /// record by record, so the accessor and the grammar it delegates to cannot drift apart
+    /// silently. The population is every Skinwalker race-trait row in `bestiary_5`, and the
+    /// nine real kins are pinned by name so a corpus change that empties this reading fails
+    /// here rather than emptying the picker.
+    #[test]
+    fn skinwalker_change_shape_kin_names_the_nine_kin_master_rows() {
+        let dir = PathBuf::from("data/corpus/bestiary_5");
+        let roots = vec![BookCorpusRoot { book_id: "bestiary_5", dir: dir.as_path() }];
+        let corpus = load_race_corpus(&roots);
+        let rows = corpus.traits_for("Skinwalker");
+        assert!(rows.len() > 50, "the live Skinwalker trait population is {} rows", rows.len());
+
+        let mut kins: Vec<String> = Vec::new();
+        for record in &rows {
+            let oracle: Option<String> = record
+                .automatic_trait_grants()
+                .into_iter()
+                .find_map(|g| race_trait_tokens::skinwalker_change_shape_kin(&g).map(str::to_string));
+            assert_eq!(
+                record.skinwalker_change_shape_kin(),
+                oracle,
+                "accessor and grammar disagree on {}",
+                record.data.key
+            );
+            if let Some(kin) = oracle {
+                kins.push(kin);
+            }
+        }
+        kins.sort();
+        kins.dedup();
+        assert_eq!(
+            kins,
+            vec![
+                "Default",
+                "Werebat-Kin",
+                "Werebear-Kin",
+                "Wereboar-Kin",
+                "Werecrocodile-Kin",
+                "Wereraptor-Kin",
+                "Wererat-Kin",
+                "Wereshark-Kin",
+                "Weretiger-Kin",
+                "Werewolf-Kin",
+            ],
+            "the live corpus's kin master rows"
+        );
     }
 }

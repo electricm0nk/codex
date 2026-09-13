@@ -1,0 +1,412 @@
+{
+ "corpus_class_feature_files": 18074,
+ "disagreement_samples": {
+  "P1_no_engine_effect": [
+   {
+    "converted": true,
+    "ingest": false,
+    "row": "pathfinder/paizo/roleplaying_game/advanced_class_guide/acg_abilities_class.lst:583"
+   },
+   {
+    "converted": true,
+    "ingest": false,
+    "row": "pathfinder/paizo/roleplaying_game/advanced_class_guide/acg_abilities_class.lst:585"
+   },
+   {
+    "converted": true,
+    "ingest": false,
+    "row": "pathfinder/paizo/roleplaying_game/advanced_class_guide/acg_abilities_class.lst:584"
+   },
+   {
+    "converted": true,
+    "ingest": false,
+    "row": "pathfinder/paizo/roleplaying_game/advanced_class_guide/acg_abilities_class.lst:611"
+   },
+   {
+    "converted": true,
+    "ingest": false,
+    "row": "pathfinder/paizo/roleplaying_game/advanced_class_guide/acg_abilities_class.lst:2036"
+   },
+   {
+    "converted": true,
+    "ingest": false,
+    "row": "pathfinder/paizo/roleplaying_game/advanced_class_guide/acg_abilities_class.lst:2035"
+   },
+   {
+    "converted": true,
+    "ingest": false,
+    "row": "pathfinder/paizo/roleplaying_game/advanced_class_guide/acg_abilities_class.lst:634"
+   },
+   {
+    "converted": true,
+    "ingest": false,
+    "row": "pathfinder/paizo/roleplaying_game/advanced_class_guide/acg_abilities_class.lst:638"
+   },
+   {
+    "converted": true,
+    "ingest": false,
+    "row": "pathfinder/paizo/roleplaying_game/advanced_class_guide/acg_abilities_class.lst:636"
+   },
+   {
+    "converted": true,
+    "ingest": false,
+    "row": "pathfinder/paizo/roleplaying_game/advanced_class_guide/acg_abilities_class.lst:635"
+   },
+   {
+    "converted": true,
+    "ingest": false,
+    "row": "pathfinder/paizo/roleplaying_game/advanced_class_guide/acg_abilities_class.lst:637"
+   },
+   {
+    "converted": true,
+    "ingest": false,
+    "row": "pathfinder/paizo/roleplaying_game/advanced_class_guide/acg_abilities_class.lst:69"
+   },
+   {
+    "converted": true,
+    "ingest": false,
+    "row": "pathfinder/paizo/roleplaying_game/advanced_class_guide/acg_abilities_class.lst:120"
+   },
+   {
+    "converted": true,
+    "ingest": false,
+    "row": "pathfinder/paizo/roleplaying_game/advanced_class_guide/acg_abilities_class.lst:2396"
+   },
+   {
+    "converted": false,
+    "ingest": true,
+    "row": "pathfinder/paizo/roleplaying_game/advanced_class_guide/acg_abilities_class.lst:73"
+   },
+   {
+    "converted": true,
+    "ingest": false,
+    "row": "pathfinder/paizo/roleplaying_game/advanced_class_guide/acg_abilities_class.lst:227"
+   },
+   {
+    "converted": false,
+    "ingest": true,
+    "row": "pathfinder/paizo/roleplaying_game/advanced_class_guide/acg_abilities_class.lst:238"
+   },
+   {
+    "converted": true,
+    "ingest": false,
+    "row": "pathfinder/paizo/roleplaying_game/advanced_class_guide/acg_abilities_class.lst:33"
+   },
+   {
+    "converted": true,
+    "ingest": false,
+    "row": "pathfinder/paizo/roleplaying_game/advanced_class_guide/acg_abilities_class.lst:1519"
+   },
+   {
+    "converted": true,
+    "ingest": false,
+    "row": "pathfinder/paizo/roleplaying_game/advanced_class_guide/acg_abilities_class.lst:1520"
+   },
+   {
+    "converted": true,
+    "ingest": false,
+    "row": "pathfinder/paizo/roleplaying_game/advanced_class_guide/acg_abilities_class.lst:1521"
+   },
+   {
+    "converted": true,
+    "ingest": false,
+    "row": "pathfinder/paizo/roleplaying_game/advanced_class_guide/acg_abilities_class.lst:334"
+   },
+   {
+    "converted": true,
+    "ingest": false,
+    "row": "pathfinder/paizo/roleplaying_game/advanced_class_guide/acg_abilities_class.lst:1540"
+   },
+   {
+    "converted": true,
+    "ingest": false,
+    "row": "pathfinder/paizo/roleplaying_game/advanced_class_guide/acg_abilities_class.lst:1541"
+   },
+   {
+    "converted": true,
+    "ingest": false,
+    "row": "pathfinder/paizo/roleplaying_game/advanced_class_guide/acg_abilities_class.lst:1539"
+   }
+  ],
+  "P2_archetype": [
+   {
+    "converted": true,
+    "ingest": false,
+    "row": "pathfinder/paizo/roleplaying_game/advanced_class_guide/acg_abilities_class.lst:2315"
+   },
+   {
+    "converted": true,
+    "ingest": false,
+    "row": "pathfinder/paizo/roleplaying_game/advanced_class_guide/acg_abilities_class.lst:2373"
+   },
+   {
+    "converted": true,
+    "ingest": false,
+    "row": "pathfinder/paizo/roleplaying_game/advanced_class_guide/acg_abilities_class.lst:2374"
+   },
+   {
+    "converted": true,
+    "ingest": false,
+    "row": "pathfinder/paizo/roleplaying_game/advanced_class_guide/acg_abilities_class.lst:2375"
+   },
+   {
+    "converted": true,
+    "ingest": false,
+    "row": "pathfinder/paizo/roleplaying_game/advanced_class_guide/acg_abilities_class.lst:2376"
+   },
+   {
+    "converted": true,
+    "ingest": false,
+    "row": "pathfinder/paizo/roleplaying_game/advanced_class_guide/acg_abilities_class.lst:2377"
+   },
+   {
+    "converted": true,
+    "ingest": false,
+    "row": "pathfinder/paizo/roleplaying_game/advanced_class_guide/acg_abilities_class.lst:2378"
+   },
+   {
+    "converted": true,
+    "ingest": false,
+    "row": "pathfinder/paizo/roleplaying_game/advanced_class_guide/acg_abilities_class.lst:2379"
+   },
+   {
+    "converted": true,
+    "ingest": false,
+    "row": "pathfinder/paizo/roleplaying_game/advanced_class_guide/acg_abilities_class.lst:2380"
+   },
+   {
+    "converted": true,
+    "ingest": false,
+    "row": "pathfinder/paizo/roleplaying_game/advanced_class_guide/acg_abilities_class.lst:2381"
+   },
+   {
+    "converted": true,
+    "ingest": false,
+    "row": "pathfinder/paizo/roleplaying_game/advanced_class_guide/acg_abilities_class.lst:2382"
+   },
+   {
+    "converted": true,
+    "ingest": false,
+    "row": "pathfinder/paizo/roleplaying_game/advanced_class_guide/acg_abilities_class.lst:101"
+   },
+   {
+    "converted": true,
+    "ingest": false,
+    "row": "pathfinder/paizo/roleplaying_game/advanced_class_guide/acg_abilities_class.lst:2651"
+   },
+   {
+    "converted": true,
+    "ingest": false,
+    "row": "pathfinder/paizo/roleplaying_game/advanced_class_guide/acg_abilities_class.lst:2684"
+   },
+   {
+    "converted": true,
+    "ingest": false,
+    "row": "pathfinder/paizo/roleplaying_game/advanced_class_guide/acg_abilities_class.lst:2685"
+   },
+   {
+    "converted": true,
+    "ingest": false,
+    "row": "pathfinder/paizo/roleplaying_game/advanced_class_guide/acg_abilities_class.lst:2702"
+   },
+   {
+    "converted": true,
+    "ingest": false,
+    "row": "pathfinder/paizo/roleplaying_game/advanced_class_guide/acg_abilities_class.lst:2703"
+   },
+   {
+    "converted": true,
+    "ingest": false,
+    "row": "pathfinder/paizo/roleplaying_game/advanced_class_guide/acg_abilities_class.lst:2744"
+   },
+   {
+    "converted": true,
+    "ingest": false,
+    "row": "pathfinder/paizo/roleplaying_game/advanced_class_guide/acg_abilities_class.lst:2704"
+   },
+   {
+    "converted": true,
+    "ingest": false,
+    "row": "pathfinder/paizo/roleplaying_game/advanced_class_guide/acg_abilities_class.lst:2705"
+   },
+   {
+    "converted": true,
+    "ingest": false,
+    "row": "pathfinder/paizo/roleplaying_game/advanced_class_guide/acg_abilities_class.lst:2706"
+   },
+   {
+    "converted": true,
+    "ingest": false,
+    "row": "pathfinder/paizo/roleplaying_game/advanced_class_guide/acg_abilities_class.lst:2707"
+   },
+   {
+    "converted": true,
+    "ingest": false,
+    "row": "pathfinder/paizo/roleplaying_game/advanced_class_guide/acg_abilities_class.lst:2708"
+   },
+   {
+    "converted": true,
+    "ingest": false,
+    "row": "pathfinder/paizo/roleplaying_game/advanced_class_guide/acg_abilities_class.lst:2709"
+   },
+   {
+    "converted": true,
+    "ingest": false,
+    "row": "pathfinder/paizo/roleplaying_game/advanced_class_guide/acg_abilities_class.lst:2710"
+   }
+  ],
+  "P3_multi_desc": [
+   {
+    "converted": true,
+    "ingest": false,
+    "row": "pathfinder/paizo/roleplaying_game/advanced_class_guide/acg_abilities_class.lst:699"
+   },
+   {
+    "converted": true,
+    "ingest": false,
+    "row": "pathfinder/paizo/roleplaying_game/advanced_class_guide/acg_abilities_class.lst:760"
+   },
+   {
+    "converted": false,
+    "ingest": true,
+    "row": "pathfinder/paizo/roleplaying_game/advanced_class_guide/acg_abilities_class.lst:2867"
+   },
+   {
+    "converted": false,
+    "ingest": true,
+    "row": "pathfinder/paizo/roleplaying_game/advanced_class_guide/acg_abilities_class.lst:2668"
+   },
+   {
+    "converted": false,
+    "ingest": true,
+    "row": "pathfinder/paizo/roleplaying_game/advanced_class_guide/acg_abilities_class.lst:1431"
+   },
+   {
+    "converted": false,
+    "ingest": true,
+    "row": "pathfinder/paizo/roleplaying_game/advanced_class_guide/acg_abilities_class.lst:1451"
+   },
+   {
+    "converted": false,
+    "ingest": true,
+    "row": "pathfinder/paizo/roleplaying_game/advanced_class_guide/acg_abilities_class.lst:1464"
+   },
+   {
+    "converted": true,
+    "ingest": false,
+    "row": "pathfinder/paizo/roleplaying_game/advanced_players_guide/apg_abilities_class.lst:3281"
+   },
+   {
+    "converted": true,
+    "ingest": false,
+    "row": "pathfinder/paizo/roleplaying_game/advanced_players_guide/apg_abilities_class.lst:3282"
+   },
+   {
+    "converted": false,
+    "ingest": true,
+    "row": "pathfinder/paizo/roleplaying_game/advanced_players_guide/apg_abilities_class.lst:200"
+   },
+   {
+    "converted": true,
+    "ingest": false,
+    "row": "pathfinder/paizo/roleplaying_game/advanced_players_guide/apg_abilities_class.lst:198"
+   },
+   {
+    "converted": true,
+    "ingest": false,
+    "row": "pathfinder/paizo/roleplaying_game/advanced_players_guide/apg_abilities_class.lst:3287"
+   },
+   {
+    "converted": true,
+    "ingest": false,
+    "row": "pathfinder/paizo/roleplaying_game/advanced_players_guide/apg_abilities_class.lst:3286"
+   },
+   {
+    "converted": true,
+    "ingest": false,
+    "row": "pathfinder/paizo/roleplaying_game/advanced_players_guide/apg_abilities_class.lst:3292"
+   },
+   {
+    "converted": true,
+    "ingest": false,
+    "row": "pathfinder/paizo/roleplaying_game/advanced_players_guide/apg_abilities_class.lst:3291"
+   },
+   {
+    "converted": true,
+    "ingest": false,
+    "row": "pathfinder/paizo/roleplaying_game/advanced_players_guide/apg_abilities_class.lst:3088"
+   },
+   {
+    "converted": true,
+    "ingest": false,
+    "row": "pathfinder/paizo/roleplaying_game/advanced_players_guide/apg_abilities_class.lst:3108"
+   },
+   {
+    "converted": true,
+    "ingest": false,
+    "row": "pathfinder/paizo/roleplaying_game/advanced_players_guide/apg_abilities_class.lst:3126"
+   },
+   {
+    "converted": true,
+    "ingest": false,
+    "row": "pathfinder/paizo/roleplaying_game/advanced_players_guide/apg_abilities_class.lst:3144"
+   },
+   {
+    "converted": true,
+    "ingest": false,
+    "row": "pathfinder/paizo/roleplaying_game/advanced_players_guide/apg_abilities_class.lst:3162"
+   },
+   {
+    "converted": true,
+    "ingest": false,
+    "row": "pathfinder/paizo/roleplaying_game/advanced_players_guide/apg_abilities_class.lst:3180"
+   },
+   {
+    "converted": true,
+    "ingest": false,
+    "row": "pathfinder/paizo/roleplaying_game/advanced_players_guide/apg_abilities_class.lst:3198"
+   },
+   {
+    "converted": true,
+    "ingest": false,
+    "row": "pathfinder/paizo/roleplaying_game/advanced_players_guide/apg_abilities_class.lst:3216"
+   },
+   {
+    "converted": true,
+    "ingest": false,
+    "row": "pathfinder/paizo/roleplaying_game/advanced_players_guide/apg_abilities_class.lst:3234"
+   },
+   {
+    "converted": true,
+    "ingest": false,
+    "row": "pathfinder/paizo/roleplaying_game/advanced_players_guide/apg_abilities_class.lst:3252"
+   }
+  ]
+ },
+ "joined": 18043,
+ "probes": {
+  "P1_no_engine_effect": {
+   "agree": 16173,
+   "disagree": 1870,
+   "population": 18043
+  },
+  "P2_archetype": {
+   "agree": 17179,
+   "disagree": 864,
+   "population": 18043
+  },
+  "P3_multi_desc": {
+   "agree": 17954,
+   "disagree": 89,
+   "population": 18043
+  }
+ },
+ "records_with_raw_tokens": 18074,
+ "swap_verdict": "REFUSED",
+ "unjoined": 31,
+ "verdicts": {
+  "P1_no_engine_effect": "DISAGREES",
+  "P2_archetype": "DISAGREES",
+  "P3_multi_desc": "DISAGREES"
+ }
+}
