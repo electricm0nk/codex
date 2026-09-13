@@ -32,12 +32,13 @@
 //!    boundary -- `Rat`'s own contract, and the same one the replaced interpreter carried
 //!    (`f64` end to end, truncated only at the public boundary).
 
-use std::collections::{BTreeMap, BTreeSet};
+use std::collections::{BTreeMap, BTreeSet, HashMap};
 use std::path::{Path, PathBuf};
-use std::sync::OnceLock;
+use std::sync::{Mutex, OnceLock};
 
 use serde::{Deserialize, Serialize};
 
+use super::derived_evaluator_fixture_check::SettledSpellFormulas;
 use super::desc_template::DescTemplate;
 use super::sheet_rule::{Ability, CharacterFacts, Expr, VarId, evaluate_expr_from_facts, var_id};
 
@@ -83,6 +84,13 @@ pub struct RecordVarPackage {
     /// same refusal the request-time path produced.
     #[serde(default)]
     pub desc_templates: BTreeMap<String, DescTemplate>,
+    /// Every ingested spell record's `DURATION:`/`RANGE:` formula, settled at authoring time
+    /// (SD-35 `AT-35-E6-003-RULED` cycle 17, `decisions.md` §11, §19). The live side read those
+    /// two tokens out of `data/corpus/` on every process start until this cycle -- including on
+    /// the desktop app's own spell-catalog path, which is what made it a shipping read rather
+    /// than a gate's bookkeeping.
+    #[serde(default)]
+    pub spell_formulas: SettledSpellFormulas,
     /// A wildblooded bloodline variant's pool group -> its declared parent's pool group.
     pub wildblooded_parents: BTreeMap<String, String>,
     /// A referenced variable name the corpus binds nowhere -> its declared baseline (step 3).
@@ -109,6 +117,30 @@ pub fn package() -> &'static RecordVarPackage {
     PACKAGE.get_or_init(|| {
         RecordVarPackage::read(&repo_root().join(RECORD_VARS_PATH)).unwrap_or_default()
     })
+}
+
+/// The same artifact, read from an EXPLICIT repo root rather than the compiled-in one, once per
+/// distinct root for the life of the process.
+///
+/// SD-35 `AT-35-E6-003-RULED` cycle 17. The consumers that need this -- the spell seams in
+/// [`crate::rules_core::derived_evaluator_fixture_check`] and, through them, the desktop app's
+/// spell catalog -- are handed a root they discovered at run time, and the corpus walks they
+/// replace honoured that root. Reading a different artifact for a different root keeps that
+/// behaviour exactly; `package()` stays the right answer for everything compiled against this
+/// checkout. An absent or unreadable artifact is an EMPTY package, never a panic, exactly as in
+/// [`package`].
+pub fn package_at(root: &Path) -> &'static RecordVarPackage {
+    static CACHE: OnceLock<Mutex<HashMap<PathBuf, &'static RecordVarPackage>>> = OnceLock::new();
+    let cache = CACHE.get_or_init(|| Mutex::new(HashMap::new()));
+    let mut guard = cache.lock().unwrap_or_else(|poisoned| poisoned.into_inner());
+    if let Some(package) = guard.get(root) {
+        return package;
+    }
+    let package: &'static RecordVarPackage = Box::leak(Box::new(
+        RecordVarPackage::read(&root.join(RECORD_VARS_PATH)).unwrap_or_default(),
+    ));
+    guard.insert(root.to_path_buf(), package);
+    package
 }
 
 /// The six ability abbreviations a source formula may name bare, and the converted term each

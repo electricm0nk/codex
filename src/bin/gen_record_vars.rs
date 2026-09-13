@@ -12,7 +12,7 @@
 
 use std::path::PathBuf;
 
-use codex::pcgen_import::class_feature_vars;
+use codex::pcgen_import::{class_feature_vars, spell_formula_settle};
 use codex::rules_core::record_vars::RECORD_VARS_PATH;
 
 fn main() {
@@ -21,7 +21,10 @@ fn main() {
     let check = std::env::args().any(|a| a == "--check");
     let started = std::time::Instant::now();
 
-    let package = class_feature_vars::build(&repo);
+    let mut package = class_feature_vars::build(&repo);
+    // SD-35 `AT-35-E6-003-RULED` cycle 17: the spell `DURATION:`/`RANGE:` reading the live side
+    // used to do on every process start, done once, here.
+    package.spell_formulas = spell_formula_settle::build(&repo);
     // Compact, not pretty: 4,445 records of converted expression trees are diffed by
     // regenerating and comparing, never by reading, and pretty-printing quadruples the size.
     let mut text = serde_json::to_string(&package).expect("serialise record vars");
@@ -33,6 +36,8 @@ fn main() {
     let domains = package.domain_records.len();
     let defaults = package.var_defaults.len();
     let templates = package.desc_templates.len();
+    let spell_durations = package.spell_formulas.durations.len();
+    let spell_ranges = package.spell_formulas.ranges.len();
     let converted: usize = package
         .class_feature_any
         .values()
@@ -43,7 +48,8 @@ fn main() {
     let summary = format!(
         "class_feature_described={described} class_feature_any={any} class_records={classes} \
          domain_records={domains} converted_vars={converted} var_defaults={defaults} \
-         desc_templates={templates} ({:.1}s)",
+         desc_templates={templates} spell_durations={spell_durations} \
+         spell_ranges={spell_ranges} ({:.1}s)",
         started.elapsed().as_secs_f64()
     );
 

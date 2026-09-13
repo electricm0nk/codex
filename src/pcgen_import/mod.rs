@@ -106,6 +106,11 @@ pub mod pcc_package_loader;
 /// Kept, not deleted — `decisions.md §11`, what is kept for Starfinder.
 pub mod pcgen_desc;
 pub mod sheet_rule;
+/// SD-35 `AT-35-E6-003-RULED` cycle 17: settles every ingested spell record's
+/// `DURATION:`/`RANGE:` formula at authoring time, so the live side (and the desktop
+/// spell catalog behind it) reads a settled formula instead of a raw token.
+pub mod spell_formula_settle;
+
 pub mod source_content_payload;
 
 pub use lst_parser::ParsedLstRecord;

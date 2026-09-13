@@ -181,6 +181,70 @@ re-measured at the cut by the launch-readiness audit.
 
 ## Cycle log
 
+### 2026-09-13 — Epic 6 / `desktop-and-prose-leave-pcgen` — AT-35-E6-003-RULED **cycle 17** (`PENDING_SHA`) — **partial** (the spell duration/range reads leave the live side and the class-feature bar check leaves it too; the `ingest_record_tokens` group clears whole. Residue `5 / 5 → 4 / 4`)
+
+**Receipt:** `artifacts/epic-6-pcgen-exit/AT-35-E6-003-RULED_cycle17_receipt.md`. Cycle start `2fad97f6f5`.
+
+`SCOPE_GATE: EXEMPT (Epic 6 cycle — closes zero corpus units by design; decisions.md §2)`. It ran
+anyway at the start tree: `scoped=0 remaining_non_done=0 floor=500 verdict=PASS_WHOLE_REMAINDER`.
+The residue check, which is not exempt, ran first and passed at exactly cycle 16's closing figure:
+`live_files=5 live_hits=5 baseline_files=260 baseline_hits=12736 verdict=PASS`.
+
+**`src/rules_core/derived_evaluator_fixture_check.rs` is CLEARED WHOLE.** Its one counted hit —
+`use crate::pcgen_import::ingest_record;` — carried **three** shipping calls behind it (cycle 16's
+own correction named them), and they were **two different problems**:
+
+* The `DURATION:`/`RANGE:` walks were **production**. `apps/desktop/src-tauri/src/spell_catalog.rs`'s
+  `duration_for()`/`range_for()` are served by `all_spell_caster_level_durations`/`_ranges`, so a
+  reader browsing the spell catalog made the live side walk `data/corpus/` and read raw ingest
+  tokens on every process start — the thing `decisions.md` §11 forbids, not a gate's bookkeeping.
+  **Settled at ingest**: the new `src/pcgen_import/spell_formula_settle.rs` performs the identical
+  walk once at authoring time, applying the two **live** parsers rather than restating them, and
+  `data/converted/record_vars.json` gains `spell_formulas` — **1,148** settled durations (797
+  refused) and **873** settled ranges (1,068 refused) across **10** books. Neither public
+  function's name, signature, return type or refusal contract changed, so **not one line under
+  `apps/` was written**.
+* The `BONUS:VAR|` walk had **no production consumer at all** — it is the `kind=class_feature`
+  bar-check half. **Moved whole and unchanged**, with its report and its six mutation proofs, to
+  `src/oracle_validation/class_feature_scaling_bar_check.rs` — the same address and the same reason
+  `AT-35-E6-001` used for the `kind=race_trait` FORMULA half, and `run_bar_check` folds it exactly
+  as it folds that one, so the gate's reach is identical. This is the move cycle 16 named as the
+  only admissible one for this file ("it leaves `src/rules_core/` with its bar-check reports or not
+  at all"), **not** a wrapper behind a name the gate does not match.
+
+**Parity over the real corpus, not a fixture:** a whole-corpus test re-reads **1,948** records
+across **10** books the way the live side read them until this cycle and compares the settled
+tables key for key and value for value, **refusals included** — a refusal that silently became a
+formula would print a fabricated duration on a sheet. **0 disagreements.** The two spell scratch
+harnesses now write the settled artifact by running the **real** settling over the scratch corpus
+they already wrote, so those mutation proofs stay end to end.
+
+**The `correction`:** cycle 16 filed this hit as "a relocation cycle, not a settling one". Two of
+its three calls were a settling problem on a shipping desktop path. The general lesson is ruling
+B16's own, one level further in — **a proxy read as the thing it proxies for loses not only the
+count but the KIND**: one hit, three calls, two different fixes, and the receipt that summarised
+them as one refused the wrong thing.
+
+**No corpus record was rewritten** (`git status --porcelain data/corpus/` lists nothing), so
+`corpus_literal_sweep` and `v06_work_inventory` correctly did not run and `docs/work-inventory.json`
+is byte-identical.
+
+**Verified once at the final tree, no red after one self-healed floor of my own:** `NO_RUN_EXIT=0`;
+lib `3383 passed; 0 failed; 16 ignored`; full workspace **`FULL_EXIT=0` / 419 targets + Doc-tests /
+8,912 passed / 0 failed / 69 ignored**; clippy **0 warnings** after one self-heal (`empty line
+after doc comment`, this cycle's own insertion). `sheet_rule_convert --check`
+`records=49438 converted=49296 refused=142 rules=70135 var_tables=5293 verdict=PASS`;
+`gen_record_vars --check` `spell_durations=1148 spell_ranges=873 verdict=PASS`; sheet_rules
+ingest-syntax grep **0**; atlas `citation_failures=0`; token-coverage `non_done=0 refused=142
+verdict=PASS`; shape-engine `not_held_by_engine=0`; missing-engine-tables `population=0`;
+denominator `files_checked=146 violations=0`; `pi-sweep` PASS; 27 gate unit tests OK.
+
+`closed=0 relabeled=0 rust_lines_changed=715 ratio=n/a builds_recorded=3 pcgen_live_files=4`.
+**`partial`** — refused `source_content_payload=3, trait_and_pool_tokens=1` (4 hits / 4 files,
+summing, all `src/rules_core/`), one group fewer than cycle 16. Next is cycle 18 on that remainder;
+the receipt's next-cycle row states the two admissible paths for the payload enum and what each
+costs, measured.
+
 ### 2026-09-13 — Epic 6 / `desktop-and-prose-leave-pcgen` — AT-35-E6-003-RULED **cycle 16** (`16f7fac9b0`) — **partial** (the description renderer leaves the live side; the `renderer` group clears whole. Residue `6 / 10 → 5 / 5`)
 
 **Receipt:** `artifacts/epic-6-pcgen-exit/AT-35-E6-003-RULED_cycle16_receipt.md`. Cycle start `40f5d4f67a`.
