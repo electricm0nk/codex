@@ -181,7 +181,7 @@ re-measured at the cut by the launch-readiness audit.
 
 ## Cycle log
 
-### 2026-09-13 — Epic 6 / `desktop-and-prose-leave-pcgen` — AT-35-E6-003-RULED **cycle 12** (`da8eed6c45`) — **partial** (the weapon half leaves PCGen; two more whole live files clear, and the equipment consumer sequence is finished. Residue `10 / 21 → 8 / 19`)
+### 2026-09-13 — Epic 6 / `desktop-and-prose-leave-pcgen` — AT-35-E6-003-RULED **cycle 12** (`2639a15ed6`) — **partial** (the weapon half leaves PCGen; two more whole live files clear, and the equipment consumer sequence is finished. Residue `10 / 21 → 8 / 19`)
 
 - **Scope gate:** `SCOPE_GATE: EXEMPT (Epic 6 cycle — closes zero corpus units by design;
   decisions.md §2)`. It ran anyway at the cycle's start tree `8d454fa1b9`:
