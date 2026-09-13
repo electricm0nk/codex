@@ -70,7 +70,7 @@ use crate::pcgen_import::lst_parser::class::{
     ClassEntry, ClassParseResult, LstDiagnostic as ClassLstDiagnostic,
 };
 use crate::pcgen_import::lst_parser::equipment::{
-    EquipmentDiagnostic, EquipmentParseResult, EquipmentRecord,
+    EquipmentDiagnostic, EquipmentParseResult, EquipmentRecord, EquipmentRecordKind,
 };
 use crate::pcgen_import::lst_parser::metadata::{LstMetadataDocument, LstRecord};
 use crate::pcgen_import::lst_parser::race_ability::{
@@ -507,6 +507,7 @@ pub fn equipment_record_to_corpus(record: &EquipmentRecord) -> CorpusEquipmentRe
         weight_divisor: weight_divisor_of(record),
         is_natural_attack: is_natural_attack_of(record),
         is_shield: is_shield_of(record),
+        is_modifier: matches!(record.kind, EquipmentRecordKind::EquipMod),
     }
 }
 
@@ -989,14 +990,17 @@ fn intelligent_item_contribution_of(record: &EquipmentRecord) -> Option<Intellig
 /// Build a canonical [`SourceContentRecord`] from a B-5
 /// [`EquipmentRecord`].
 ///
-/// SD-35 `AT-35-E6-003-RULED` cycle 10: the envelope's payload carries the
-/// parser row **and** the converted [`CorpusEquipmentRecord`] built from it.
-/// The converted half is interned for the process lifetime (`Box::leak`) to
-/// satisfy the envelope's borrow, exactly as cycle 8's spell path already
-/// does. The pair is deliberate and temporary: the parser row is still the
-/// data type of the equipment consumers that have not moved yet, and it goes
-/// when the last of them reads a settled value instead.
-pub fn convert_equipment_record(record: &EquipmentRecord) -> SourceContentRecord<'_> {
+/// SD-35 `AT-35-E6-003-RULED` cycle 13: the envelope's payload is the converted
+/// [`CorpusEquipmentRecord`] **alone**. Cycle 10 put it there beside the parser
+/// row and wrote down that the pair was temporary -- "it goes when the last
+/// consumer reads a settled value instead". Cycle 12 moved the last two value
+/// readers and cycle 13 moved the resolver and the live loader, so the row is
+/// gone from the envelope. It is still this function's input, because the
+/// conversion is what this function is.
+///
+/// The converted record is interned for the process lifetime (`Box::leak`) to
+/// satisfy the envelope's borrow, exactly as cycle 8's spell path already does.
+pub fn convert_equipment_record(record: &EquipmentRecord) -> SourceContentRecord<'static> {
     let line = record.header_line_number;
     let source_ref = make_source_ref(record.record_source_path(), line);
     let converted: &'static CorpusEquipmentRecord =
@@ -1004,7 +1008,7 @@ pub fn convert_equipment_record(record: &EquipmentRecord) -> SourceContentRecord
     SourceContentRecord::new(
         source_ref,
         SourceContentKind::Equipment,
-        SourceContentPayload::Equipment(record, converted),
+        SourceContentPayload::Equipment(converted),
     )
 }
 
@@ -1621,7 +1625,7 @@ mod tests {
         let rec = convert_equipment_record(&record);
         assert_eq!(rec.kind, SourceContentKind::Equipment);
         match rec.payload {
-            SourceContentPayload::Equipment(e, _) => {
+            SourceContentPayload::Equipment(e) => {
                 assert_eq!(e.name, "TestEquip");
             }
             _ => panic!("expected Equipment payload"),

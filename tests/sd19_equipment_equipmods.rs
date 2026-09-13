@@ -52,7 +52,7 @@ use codex::rules_core::character_input::{
     AbilityScores, ActiveState, CharacterClassLevel, CharacterInput, ChosenCharacterState,
     EquipmentSelection,
 };
-use codex::rules_core::equipment_resolver::{equipment_id_resolve, equipment_key_token};
+use codex::rules_core::equipment_resolver::equipment_id_resolve;
 use codex::rules_core::pilot_compute_corpus::compute_pilot_with_corpus;
 use codex::rules_core::rules_tables::crb::equipment_tables::EquipmentCategory;
 use codex::rules_core::rules_tables::RuleSetId;
@@ -60,6 +60,18 @@ use codex::rules_core::source_content::{SourcePackageContent, SourceRef};
 use codex::rules_core::support_state_matrix::{
     EvidenceTier, MatrixSubjectType, SupportState, seeded_current_truth,
 };
+
+/// The record's corpus identity: its own `KEY:` when the source line carried
+/// one, else its name.
+///
+/// SD-35 `AT-35-E6-003-RULED` cycle 13: this was
+/// `equipment_resolver::equipment_key_token`, which took an ingest-format
+/// parser row and lived on the live side. The rule is settled as
+/// `CorpusEquipmentRecord::identity` now, so a test holding a parser row asks
+/// the converter for it.
+fn row_identity(record: &codex::pcgen_import::lst_parser::equipment::EquipmentRecord) -> String {
+    codex::pcgen_import::ir_converter::equipment_record_to_corpus(record).identity
+}
 
 fn corpus_root() -> Option<PathBuf> {
     match std::env::var("CORPUS_ROOT") {
@@ -110,7 +122,7 @@ fn base_input() -> CharacterInput {
 /// this cycle's investigation to account for all 314 identity collisions
 /// in `cr_equipmods.lst`, with zero unexplained exceptions.
 fn is_hidden_legacy_alias(record: &codex::pcgen_import::lst_parser::equipment::EquipmentRecord) -> bool {
-    equipment_key_token(record).is_none()
+    row_identity(record) == record.name
         && record
             .tokens
             .iter()
@@ -177,10 +189,10 @@ fn every_addressable_real_corpus_item_resolves_reaches_equipped_items_and_ground
 
     // Every addressable identity must be unique (no remaining collisions
     // once hidden aliases are excluded).
-    let mut seen: HashMap<&str, &str> = HashMap::new();
+    let mut seen: HashMap<String, &str> = HashMap::new();
     for record in &addressable {
-        let identity = equipment_key_token(record).unwrap_or(&record.name);
-        if let Some(prior_name) = seen.insert(identity, &record.name) {
+        let identity = row_identity(record);
+        if let Some(prior_name) = seen.insert(identity.clone(), &record.name) {
             panic!(
                 "unexpected remaining identity collision for '{identity}': '{prior_name}' vs '{}'",
                 record.name
@@ -190,7 +202,8 @@ fn every_addressable_real_corpus_item_resolves_reaches_equipped_items_and_ground
 
     let mut input = base_input();
     for record in &addressable {
-        let identity = equipment_key_token(record).unwrap_or(&record.name);
+        let identity = row_identity(record);
+        let identity = identity.as_str();
         let resolved = equipment_id_resolve(identity, RuleSetId::Crb, &corpus);
         let (resolved_record, table_cell) = resolved.unwrap_or_else(|| {
             panic!("expected equipment_id_resolve to resolve '{identity}'")

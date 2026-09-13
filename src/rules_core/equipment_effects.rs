@@ -72,7 +72,7 @@ use crate::rules_core::equipment_effects::intelligent_item::IntelligentItemContr
 use crate::rules_core::equipment_effects::magic_items::AbilityScoreBonus;
 use crate::rules_core::equipment_record::CorpusEquipmentRecord;
 use crate::rules_core::equipment_resolver::{
-    equipment_converted_resolve, equipment_converted_resolve_with_cell,
+    equipment_converted_resolve, equipment_id_resolve,
 };
 use crate::rules_core::pilot_compute_corpus::TableCellRef;
 use crate::rules_core::rules_tables::crb::equipment_tables::{equipment_tables, EquipmentCategory};
@@ -271,7 +271,7 @@ pub fn compute_equipment_effects(
         // settled record every effect below reads and the parser row the two
         // consumers that have not moved yet still need, for the same item.
         let Some((converted, table_cell)) =
-            equipment_converted_resolve_with_cell(&selection.item_id, RuleSetId::Crb, corpus)
+            equipment_id_resolve(&selection.item_id, RuleSetId::Crb, corpus)
         else {
             continue;
         };

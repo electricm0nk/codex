@@ -15,7 +15,6 @@
 //! `"item:longsword"`-style fixture namespace, which predates
 //! corpus-linkage and was never the corpus's own exact name.
 
-use crate::pcgen_import::lst_parser::equipment::EquipmentRecord;
 use crate::pcgen_import::source_content_payload::SourceContentPayload;
 use crate::rules_core::pilot_compute_corpus::TableCellRef;
 use crate::rules_core::rules_tables::crb::equipment_tables::equipment_tables;
@@ -26,16 +25,6 @@ use crate::rules_core::rules_tables::{
 };
 use crate::rules_core::equipment_record::CorpusEquipmentRecord;
 use crate::rules_core::source_content::{SourceContentKind, SourcePackageContent};
-
-/// The record's `KEY:` token, if the corpus line carried one. PCGen
-/// convention: absent means the record's `name` field is its own key.
-pub fn equipment_key_token(record: &EquipmentRecord) -> Option<&str> {
-    record
-        .tokens
-        .iter()
-        .find(|token| token.key == "KEY")
-        .map(|token| token.value.as_str())
-}
 
 fn normalize_equipment_name(name: &str) -> String {
     let stripped = match name.find('(') {
@@ -57,13 +46,21 @@ fn table_cell_for(rule_set: RuleSetId, key: &str) -> Option<TableCellRef> {
         })
 }
 
+/// Resolve an item id to the live side's own settled record and the
+/// foundation slice's table cell for it.
+///
+/// SD-35 `AT-35-E6-003-RULED` cycle 13: this used to answer with the
+/// ingest-format parser row. Nothing reads a parser row any more -- the
+/// canonical envelope does not carry one -- so the same resolution now answers
+/// in settled values and provenance only (`decisions.md` §11, §19). Identity,
+/// ordering and every fallback are unchanged; only the type of the first half
+/// moved.
 pub fn equipment_id_resolve<'a>(
     item_id: &str,
     rule_set: RuleSetId,
     corpus: &SourcePackageContent<'a>,
-) -> Option<(&'a EquipmentRecord, Option<TableCellRef>)> {
+) -> Option<(&'a CorpusEquipmentRecord, Option<TableCellRef>)> {
     resolve_equipment_pair(item_id, rule_set, corpus)
-        .map(|(record, _converted, table_cell)| (record, table_cell))
 }
 
 /// The same resolution as [`equipment_id_resolve`], answering with the live
@@ -78,45 +75,22 @@ pub fn equipment_converted_resolve<'a>(
     item_id: &str,
     corpus: &SourcePackageContent<'a>,
 ) -> Option<&'a CorpusEquipmentRecord> {
-    resolve_equipment_pair(item_id, RuleSetId::Crb, corpus)
-        .map(|(_record, converted, _table_cell)| converted)
+    resolve_equipment_pair(item_id, RuleSetId::Crb, corpus).map(|(converted, _table_cell)| converted)
 }
 
-/// The same resolution again, answering with the converted record **and** the
-/// table cell the item's corpus row occupies.
-///
-/// SD-35 `AT-35-E6-003-RULED` cycle 12. `damage_total`'s six work-units and
-/// `compute_equipment_effects` each report a `table_cell: Option<TableCellRef>`
-/// provenance alongside the values they read; before cycle 12 they got it from
-/// [`equipment_id_resolve`], whose other half is the ingest-format parser row
-/// they no longer read. This is the same one resolution, answering in settled
-/// values and provenance only.
-///
-/// It replaces cycle 11's `equipment_pair_resolve`, whose sole caller --
-/// `compute_equipment_effects` -- no longer needs the parser row at all.
-pub fn equipment_converted_resolve_with_cell<'a>(
-    item_id: &str,
-    rule_set: RuleSetId,
-    corpus: &SourcePackageContent<'a>,
-) -> Option<(&'a CorpusEquipmentRecord, Option<TableCellRef>)> {
-    resolve_equipment_pair(item_id, rule_set, corpus)
-        .map(|(_record, converted, table_cell)| (converted, table_cell))
-}
-
-#[allow(clippy::type_complexity)]
 fn resolve_equipment_pair<'a>(
     item_id: &str,
     rule_set: RuleSetId,
     corpus: &SourcePackageContent<'a>,
-) -> Option<(&'a EquipmentRecord, &'a CorpusEquipmentRecord, Option<TableCellRef>)> {
+) -> Option<(&'a CorpusEquipmentRecord, Option<TableCellRef>)> {
     let needle = item_id.strip_prefix("item:").unwrap_or(item_id);
     let normalized_needle = normalize_equipment_name(needle);
 
-    let pairs: Vec<(&'a EquipmentRecord, &'a CorpusEquipmentRecord)> = corpus
+    let records: Vec<&'a CorpusEquipmentRecord> = corpus
         .records_by_kind(SourceContentKind::Equipment)
         .into_iter()
         .filter_map(|record| match record.payload {
-            SourceContentPayload::Equipment(equip, converted) => Some((equip, converted)),
+            SourceContentPayload::Equipment(converted) => Some(converted),
             _ => None,
         })
         .collect();
@@ -152,24 +126,25 @@ fn resolve_equipment_pair<'a>(
     // the widest: `general/potion.json` (the empty flask) against fifty-odd
     // `Potion of ...`/`Oil of ...` magic items whose display name is likewise
     // `Potion`. Identity resolves every one of them to the right record.
-    for (equip, converted) in &pairs {
-        let identity = equipment_key_token(equip).unwrap_or(&equip.name);
-        if identity == needle || identity == item_id {
-            return Some((equip, converted, table_cell_for(rule_set, identity)));
+    // `CorpusEquipmentRecord::identity` IS this rule, settled: the record's
+    // own `KEY:` when the source line carried one, else its name
+    // (SD-35 `AT-35-E6-003-RULED` cycle 10). Before cycle 13 this function
+    // re-derived it here, off the parser row, through `equipment_key_token`.
+    for converted in &records {
+        if converted.identity == needle || converted.identity == item_id {
+            return Some((converted, table_cell_for(rule_set, &converted.identity)));
         }
     }
 
-    for (equip, converted) in &pairs {
-        if equip.name == needle || equip.name == item_id {
-            let key = equipment_key_token(equip).unwrap_or(&equip.name);
-            return Some((equip, converted, table_cell_for(rule_set, key)));
+    for converted in &records {
+        if converted.name == needle || converted.name == item_id {
+            return Some((converted, table_cell_for(rule_set, &converted.identity)));
         }
     }
 
-    for (equip, converted) in &pairs {
-        if normalize_equipment_name(&equip.name) == normalized_needle {
-            let key = equipment_key_token(equip).unwrap_or(&equip.name);
-            return Some((equip, converted, table_cell_for(rule_set, key)));
+    for converted in &records {
+        if normalize_equipment_name(&converted.name) == normalized_needle {
+            return Some((converted, table_cell_for(rule_set, &converted.identity)));
         }
     }
 
@@ -572,7 +547,8 @@ mod tests {
         };
         let mut corpus = SourcePackageContent::empty("test", source_ref);
         for record in result.entries {
-            let record: &'static EquipmentRecord = Box::leak(Box::new(record));
+            let record: &'static crate::pcgen_import::lst_parser::equipment::EquipmentRecord =
+                Box::leak(Box::new(record));
             corpus.push(convert_equipment_record(record));
         }
         corpus
@@ -635,14 +611,13 @@ Improvised Weapon (1d4)\tTYPE:Weapon.Melee.Improvised\tCOST:0\tWT:2
             let (record, _) = equipment_id_resolve("Shoes", RuleSetId::Crb, &corpus)
                 .expect("expected 'Shoes' to resolve");
             assert_eq!(
-                equipment_key_token(record),
-                None,
+                record.identity, "Shoes",
                 "[{label}] 'Shoes' must resolve to the KEY-less item whose identity is 'Shoes', \
                  not to the modifier identified as \"Artisan's Tools (Shoes)\""
             );
             assert!(
-                record.tokens.iter().any(|t| t.key == "SLOTS"),
-                "[{label}] resolved the wrong record: the item carries SLOTS, the modifier does not"
+                !record.is_modifier,
+                "[{label}] resolved the wrong record: the EQUIP item, not the EQUIPMOD twin"
             );
         }
     }
@@ -661,8 +636,7 @@ Improvised Weapon (1d4)\tTYPE:Weapon.Melee.Improvised\tCOST:0\tWT:2
                 equipment_id_resolve("Artisan's Tools (Shoes)", RuleSetId::Crb, &corpus)
                     .expect("expected the modifier to resolve by its own KEY");
             assert_eq!(
-                equipment_key_token(record),
-                Some("Artisan's Tools (Shoes)"),
+                record.identity, "Artisan's Tools (Shoes)",
                 "[{label}] the modifier must still be reachable by its identity"
             );
         }
@@ -684,14 +658,13 @@ Potion\tKEY:Potion of Blur\tTYPE:Magic.Potion\tCOST:300
         let (record, _) = equipment_id_resolve("Potion", RuleSetId::Crb, &corpus)
             .expect("expected 'Potion' to resolve");
         assert_eq!(
-            equipment_key_token(record),
-            None,
+            record.identity, "Potion",
             "'Potion' must resolve to the KEY-less flask whose identity is 'Potion'"
         );
         // ... and each specific potion stays reachable by its own identity.
         let (fly, _) = equipment_id_resolve("Potion of Fly", RuleSetId::Crb, &corpus)
             .expect("expected 'Potion of Fly' to resolve");
-        assert_eq!(equipment_key_token(fly), Some("Potion of Fly"));
+        assert_eq!(fly.identity, "Potion of Fly");
     }
 
     /// Control: the legacy `"item:longsword"`-style fixture namespace

@@ -181,6 +181,77 @@ re-measured at the cut by the launch-readiness audit.
 
 ## Cycle log
 
+### 2026-09-13 — Epic 6 / `desktop-and-prose-leave-pcgen` — AT-35-E6-003-RULED **cycle 13** (`<SHA>`) — **partial** (the equipment payload collapses to the converted half alone; the live loader stops rebuilding an ingest row. Residue `8 / 19 → 8 / 14`)
+
+- **Scope gate:** `SCOPE_GATE: EXEMPT (Epic 6 cycle — closes zero corpus units by design;
+  decisions.md §2, workflow-instruction.md §6 step 1)`. It ran anyway at the cycle's start tree
+  `14dd17c319`: `scoped=0 remaining_non_done=0 floor=500 verdict=PASS_WHOLE_REMAINDER`. The
+  residue check, which is **not** exempt, ran first at the same tree and passed at exactly cycle
+  12's closing figure — `live_files=8 live_hits=19 baseline_files=260 baseline_hits=12736
+  verdict=PASS`.
+
+- **What moved.** `SourceContentPayload::Equipment` is `Equipment(&'a CorpusEquipmentRecord)`.
+  Cycle 10 put the settled record beside the parser row and wrote the transition down in the
+  variant's own doc comment — *"it goes when the last consumer reads a settled value instead"*.
+  Cycle 12 moved the last two value readers; this cycle moved the two that were left, neither of
+  which read a rules value at all. `equipment_resolver::equipment_key_token` is **deleted** (the
+  KEY-or-name rule it computed has been `CorpusEquipmentRecord::identity` since cycle 10), and
+  `corpus_loader` stopped **rebuilding** an ingest row out of corpus JSON: that whole function
+  moved verbatim to the new converter-side `src/pcgen_import/corpus_equipment_json.rs`, where the
+  ingest field names, the array traversal and the `BONUS:` re-spelling belong (`decisions.md`
+  §11). Equipment joins cycle 8's spell as a kind whose canonical payload names no `pcgen_import`
+  type.
+
+- **Five closures and one relabel, booked separately.** `corpus_loader`'s three
+  `ingest_record::token_pairs` / `bonus_chain_qualifiers` / `rebuild_bonus_token` reads and its
+  `lst_parser::equipment` import, plus `equipment_resolver`'s `EquipmentRecord` import, are
+  **gone from live code** — asserted by file *and symbol* in the census. Its
+  `ir_converter::convert_equipment_record` call is a **relabel**, not a closure: the loader still
+  asks the converter one question, now booked under the census's new `corpus_json_boundary`
+  group. Six hits out, one back, net **19 → 14**. **No file cleared** — `corpus_loader` keeps its
+  one boundary call, `equipment_resolver` keeps its `SourceContentPayload` import — so
+  `pcgen_live_files` is unmoved at **8**, and this entry does not dress that up. Two whole census
+  groups read zero: `lst_parser_types` and `ir_converter`.
+
+- **Parity kept, not weakened.** The three whole-corpus proofs cycles 10, 11 and 12 built still
+  re-derive every moved read off the ingest row and compare field for field over **every** book
+  under `data/corpus/`. Only the pairing's source changed —
+  `corpus_equipment_json::every_live_corpus_equipment_pair`, on the converter side, because the
+  envelope no longer carries a row. Same population, same records, same assertions, all green.
+
+- **Discovery.** Clearing those two consumers made cycle 12's own
+  `equipment_converted_resolve_with_cell` an **exact duplicate** of `equipment_id_resolve` — the
+  only thing that distinguished them was which half of the pair they discarded — so the alias is
+  deleted rather than kept as a pass-through, and its six call sites point at the original name.
+  Separately: `corpus_loader`'s residue was never five problems but one, and the one hit left is
+  the **ingest boundary itself**, which does not clear by moving code. It clears when
+  `data/corpus/` equipment JSON carries the settled fields — the first time this criterion's
+  remainder has named a **data** step rather than a code step.
+
+- **Verified once**, after the last figure-moving change: `--no-run` exit 0; lib **3,352 passed /
+  0 failed**; full workspace `FULL_EXIT=0`, **418 targets + 1 Doc-tests, 8,881 passed / 0 failed
+  / 0 `test result: FAILED` lines**; clippy **0 warnings**; desktop crate **570 passed / 0 failed** (`DESKTOP_EXIT=0`), clippy `DESKTOP_CLIPPY_EXIT=0` with 1 pre-existing warning in `equipment_catalog.rs:889`, a file this cycle did not touch;
+  `sheet_rule_convert --check` `records=49438 converted=49296 refused=142 rules=70135
+  var_tables=5293 verdict=PASS`; `grep -rlE 'BONUS:|DEFINE:|PRE[A-Z]+:|%CHOICE|CL=' data/sheet_rules/ | wc -l`
+  **0**; residue `live_files=8 live_hits=14 verdict=PASS` with its own 27-test self-check OK;
+  atlas / token-coverage / shape-boundary / missing-tables / denominator (142 files, 0
+  violations) / pi-sweep all clean. `corpus_literal_sweep` not run and the inventory not
+  regenerated — `git status --porcelain data/` is empty and `docs/work-inventory.json` is
+  byte-identical. Frontend not run: no `.ts`/`.tsx` file was written.
+
+- **Receipt rows:** `closed=0 relabeled=0 rust_lines_changed=681 ratio=n/a builds_recorded=3
+  pcgen_live_files=8`.
+
+- **`partial`** — refused tokens `corpus_json_boundary=1, renderer=5, ingest_record_tokens=2,
+  trait_and_pool_tokens=3, source_content_payload=3` (14 hits / 8 files, summing, all under
+  `src/rules_core/`). `renderer` stays refused on cycle 2's `disagree=97,332 of 660,320`,
+  `trait_and_pool_tokens` on cycle 7's corrected number, `source_content_payload` on the
+  use-collapse reasoning for the **seventh** cycle running, and
+  `derived_evaluator_fixture_check` stays measured non-relocatable (cycle 3).
+  `deferral 1789299815190-at-35-e6-003-ruled-738ba9`;
+  `correction 1789299961499-at-35-e6-003-ruled-95d4d6`.
+  Receipt: `artifacts/epic-6-pcgen-exit/AT-35-E6-003-RULED_cycle13_receipt.md`.
+
 ### 2026-09-13 — Epic 6 / `desktop-and-prose-leave-pcgen` — AT-35-E6-003-RULED **cycle 12** (`2639a15ed6`) — **partial** (the weapon half leaves PCGen; two more whole live files clear, and the equipment consumer sequence is finished. Residue `10 / 21 → 8 / 19`)
 
 - **Scope gate:** `SCOPE_GATE: EXEMPT (Epic 6 cycle — closes zero corpus units by design;

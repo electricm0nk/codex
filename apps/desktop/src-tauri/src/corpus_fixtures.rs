@@ -131,38 +131,37 @@ mod tests {
         );
 
         let equipment = corpus.records_by_kind(SourceContentKind::Equipment);
+        // SD-35 `AT-35-E6-003-RULED` cycle 13: the equipment payload is the
+        // settled record, so the same two claims are asserted on the settled
+        // values -- the damage die the `DAMAGE:` token stated, and the armour
+        // bonus the `BONUS:COMBAT|AC` chain stated.
         let longsword = equipment
             .iter()
             .filter_map(|record| match record.payload {
-                SourceContentPayload::Equipment(equip, _) => Some(equip),
+                SourceContentPayload::Equipment(equip) => Some(equip),
                 _ => None,
             })
             .find(|equip| equip.name == "Longsword")
             .expect("the bundled Longsword record must load");
         let damage = longsword
-            .tokens
-            .iter()
-            .find(|token| token.key == "DAMAGE")
-            .expect("Longsword's real damage token must survive the build-time conversion");
-        assert_eq!(damage.value, "1d8", "Longsword's real DAMAGE value");
+            .base_damage_dice
+            .as_ref()
+            .expect("Longsword's real base damage must survive the build-time conversion");
+        assert_eq!(damage.count, 1, "Longsword's real 1d8, die count");
+        assert_eq!(damage.die_size, 8, "Longsword's real 1d8, die size");
 
         let chain_shirt = equipment
             .iter()
             .filter_map(|record| match record.payload {
-                SourceContentPayload::Equipment(equip, _) => Some(equip),
+                SourceContentPayload::Equipment(equip) => Some(equip),
                 _ => None,
             })
             .find(|equip| equip.name == "Chain Shirt")
             .expect("the bundled Chain Shirt record must load");
-        let ac_chain = chain_shirt
-            .bonus_chains
-            .iter()
-            .find(|chain| chain.qualifiers.first().map(String::as_str) == Some("COMBAT"))
-            .expect("Chain Shirt's real armour bonus chain must survive the conversion");
         assert_eq!(
-            ac_chain.qualifiers,
-            vec!["COMBAT", "AC", "4", "TYPE=Armor", "PREVAREQ:DisableArmorBonus,0"],
-            "Chain Shirt's first BONUS chain, qualifier for qualifier"
+            chain_shirt.stat_effect.armor_class_bonus,
+            Some(4),
+            "Chain Shirt's real +4 armour bonus must survive the conversion"
         );
     }
 

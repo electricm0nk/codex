@@ -281,8 +281,8 @@ fn d3_equipment_kind_carries_through_aggregate_constructor() {
     let aggregate = ParsedLstRecord::from_equipment(weapon);
     let record = convert_to_ir(&aggregate, &canonical_schema());
     assert_eq!(record.kind, SourceContentKind::Equipment);
-    if let SourceContentPayload::Equipment(payload, _) = &record.payload {
-        assert_eq!(payload.kind, EquipmentRecordKind::Equip);
+    if let SourceContentPayload::Equipment(payload) = &record.payload {
+        assert!(!payload.is_modifier);
     } else {
         panic!("expected Equipment payload, got {:?}", record.payload);
     }

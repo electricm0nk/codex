@@ -113,7 +113,7 @@
 //! to [`crate::pcgen_import::ir_converter::equipment_record_to_corpus`], and
 //! this module reads the settled values off
 //! [`crate::rules_core::equipment_record::CorpusEquipmentRecord`], resolved by
-//! [`crate::rules_core::equipment_resolver::equipment_converted_resolve_with_cell`]
+//! [`crate::rules_core::equipment_resolver::equipment_id_resolve`]
 //! -- the same one resolution, answering in settled values and provenance.
 //! The parity of the move is proved over all 7,803 live corpus equipment
 //! records by `equipment_record`'s own
@@ -123,7 +123,7 @@ use crate::rules_core::character_input::{ActiveState, CharacterInput};
 use crate::rules_core::equipment_effects::{is_natural_attack_weapon, EquipmentEffects};
 use crate::rules_core::equipment_record::CorpusEquipmentRecord;
 use crate::rules_core::equipment_resolver::{
-    equipment_converted_resolve, equipment_converted_resolve_with_cell,
+    equipment_converted_resolve, equipment_id_resolve,
 };
 use crate::rules_core::pilot_compute_corpus::TableCellRef;
 use crate::rules_core::rules_tables::crb::feats::{feat_tables, EffectSelection, FeatEffectBonus};
@@ -185,7 +185,7 @@ pub fn resolve_base_damage_dice(
     corpus: &SourcePackageContent,
 ) -> Option<DamageRollBaseDice> {
     let (record, table_cell) =
-        equipment_converted_resolve_with_cell(weapon_item_id, RuleSetId::Crb, corpus)?;
+        equipment_id_resolve(weapon_item_id, RuleSetId::Crb, corpus)?;
     let base_dice = record
         .base_damage_dice
         .or_else(|| base_item_damage_dice(record, corpus))?;
@@ -347,7 +347,7 @@ pub fn resolve_str_damage_modifier(
     hand: WeaponHandSlot,
 ) -> Option<DamageRollStrModifier> {
     let (record, table_cell) =
-        equipment_converted_resolve_with_cell(weapon_item_id, RuleSetId::Crb, corpus)?;
+        equipment_id_resolve(weapon_item_id, RuleSetId::Crb, corpus)?;
     let wield_category = record.wield_category?;
     let weapon_record_key = record.identity.clone();
     let str_damage_modifier = str_damage_modifier_for(str_modifier, wield_category, hand);
@@ -454,7 +454,7 @@ pub fn resolve_weapon_enhancement_modifier(
     equipment_effects: &EquipmentEffects,
 ) -> Option<DamageRollWeaponEnhancement> {
     let (record, table_cell) =
-        equipment_converted_resolve_with_cell(weapon_item_id, RuleSetId::Crb, corpus)?;
+        equipment_id_resolve(weapon_item_id, RuleSetId::Crb, corpus)?;
     let weapon_record_key = record.identity.clone();
     let weapon_is_natural_attack = is_natural_attack_weapon(record);
 
@@ -519,7 +519,7 @@ pub fn resolve_critical_threat_range(
     corpus: &SourcePackageContent,
 ) -> Option<DamageRollCriticalThreatRange> {
     let (record, table_cell) =
-        equipment_converted_resolve_with_cell(weapon_item_id, RuleSetId::Crb, corpus)?;
+        equipment_id_resolve(weapon_item_id, RuleSetId::Crb, corpus)?;
     let critical_threat_range = record.critical_threat_range?;
     let weapon_record_key = record.identity.clone();
 
@@ -565,7 +565,7 @@ pub fn resolve_critical_multiplier(
     corpus: &SourcePackageContent,
 ) -> Option<DamageRollCriticalMultiplier> {
     let (record, table_cell) =
-        equipment_converted_resolve_with_cell(weapon_item_id, RuleSetId::Crb, corpus)?;
+        equipment_id_resolve(weapon_item_id, RuleSetId::Crb, corpus)?;
     let critical_multiplier = record.critical_multiplier?;
     let weapon_record_key = record.identity.clone();
 

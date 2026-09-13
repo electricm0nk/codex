@@ -180,6 +180,16 @@ pub struct CorpusEquipmentRecord {
     /// [`crate::rules_core::equipment_effects`]'s own doc comment for the
     /// correction that forced this distinction.
     pub is_shield: bool,
+    /// Whether the source record is an equipment **modifier** rather than an
+    /// item in its own right.
+    ///
+    /// SD-35 `AT-35-E6-003-RULED` cycle 13. The canonical envelope answers
+    /// `SourceContentPayload::kind_token()` with `"EQUIP"` or `"EQUIPMOD"`, and
+    /// it used to read that straight off the parser row's own
+    /// `EquipmentRecordKind`. The row left the envelope this cycle, so the
+    /// distinction is settled here instead -- the same two-valued answer, from
+    /// the same source record, on the side that ships.
+    pub is_modifier: bool,
 }
 
 impl CorpusEquipmentRecord {
@@ -192,8 +202,7 @@ impl CorpusEquipmentRecord {
 
 #[cfg(test)]
 mod tests {
-    use crate::rules_core::corpus_loader::{load_equipment_corpus, BookCorpusRoot};
-    use crate::rules_core::source_content::{SourceContentKind, SourceContentPayload};
+    use crate::pcgen_import::corpus_equipment_json::every_live_corpus_equipment_pair;
 
     /// Every book directory under `data/corpus/`, so the sweep below reads the
     /// whole live corpus rather than one book it was tuned on.
@@ -215,8 +224,15 @@ mod tests {
     /// `encumbrance`'s weight and price, `magic_items`' ability-score
     /// enhancement, `intelligent_item`'s stat-block contribution -- are
     /// re-derived here the way the live modules derived them before the move,
-    /// straight off the parser row that is still paired with the converted
-    /// record in the canonical envelope, and compared to the settled field.
+    /// straight off the ingest row the converter's own corpus reader rebuilds,
+    /// and compared to the settled field.
+    ///
+    /// SD-35 `AT-35-E6-003-RULED` cycle 13: the pairing comes from
+    /// [`crate::pcgen_import::corpus_equipment_json::every_live_corpus_equipment_pair`]
+    /// now, not from the canonical envelope -- the envelope carries the settled
+    /// record alone from this cycle on, so the oracle side of the comparison
+    /// lives where the converter does. The population, the records and every
+    /// assertion below are unchanged.
     ///
     /// The population is the **whole live corpus**, every book, not a fixture
     /// roster: a proof is only as wide as the cases it covers (`AGENTS.md`
@@ -228,21 +244,12 @@ mod tests {
     fn every_live_corpus_equipment_record_carries_the_same_values_the_token_reads_produced() {
         let books = every_book_root();
         assert!(books.len() > 1, "expected the whole corpus, found {} book(s)", books.len());
-        let roots: Vec<BookCorpusRoot<'_>> = books
-            .iter()
-            .map(|dir| BookCorpusRoot {
-                book_id: dir.file_name().and_then(|n| n.to_str()).unwrap_or(""),
-                dir: dir.as_path(),
-            })
-            .collect();
-        let package = load_equipment_corpus(&roots);
+        let _ = &books;
 
         let mut examined = 0usize;
         let mut disagreements: Vec<String> = Vec::new();
-        for record in package.records_by_kind(SourceContentKind::Equipment) {
-            let SourceContentPayload::Equipment(row, converted) = record.payload else {
-                continue;
-            };
+        for (row, converted) in every_live_corpus_equipment_pair() {
+            let (row, converted) = (&row, &converted);
             examined += 1;
 
             // --- the old `encumbrance::weight_and_cost_from_record` ---
@@ -398,21 +405,12 @@ mod tests {
         use crate::rules_core::equipment_effects::general::{SkillCheckBonus, VarBonus};
 
         let books = every_book_root();
-        let roots: Vec<BookCorpusRoot<'_>> = books
-            .iter()
-            .map(|dir| BookCorpusRoot {
-                book_id: dir.file_name().and_then(|n| n.to_str()).unwrap_or(""),
-                dir: dir.as_path(),
-            })
-            .collect();
-        let package = load_equipment_corpus(&roots);
+        let _ = &books;
 
         let mut examined = 0usize;
         let mut disagreements: Vec<String> = Vec::new();
-        for record in package.records_by_kind(SourceContentKind::Equipment) {
-            let SourceContentPayload::Equipment(row, converted) = record.payload else {
-                continue;
-            };
+        for (row, converted) in every_live_corpus_equipment_pair() {
+            let (row, converted) = (&row, &converted);
             examined += 1;
             let id = &converted.identity;
 
@@ -705,21 +703,12 @@ mod tests {
 
         let books = every_book_root();
         assert!(books.len() > 1, "expected the whole corpus, found {} book(s)", books.len());
-        let roots: Vec<BookCorpusRoot<'_>> = books
-            .iter()
-            .map(|dir| BookCorpusRoot {
-                book_id: dir.file_name().and_then(|n| n.to_str()).unwrap_or(""),
-                dir: dir.as_path(),
-            })
-            .collect();
-        let package = load_equipment_corpus(&roots);
+        let _ = &books;
 
         let mut examined = 0usize;
         let mut disagreements: Vec<String> = Vec::new();
-        for record in package.records_by_kind(SourceContentKind::Equipment) {
-            let SourceContentPayload::Equipment(row, converted) = record.payload else {
-                continue;
-            };
+        for (row, converted) in every_live_corpus_equipment_pair() {
+            let (row, converted) = (&row, &converted);
             examined += 1;
             let id = &converted.identity;
             let token_value = |key: &str| {

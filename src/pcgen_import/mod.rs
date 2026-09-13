@@ -37,6 +37,12 @@ pub mod wiring_class;
 // `src/pcgen_import/cache_gen/`); it reads the ingest record's token array, which is converter
 // business. Behaviour-identical here, and KEPT for Starfinder.
 pub mod corpus_literal_sweep;
+// SD-35 `AT-35-E6-003-RULED` cycle 13: the ingest-format reader for an
+// already-converted `data/corpus/` equipment record. `rules_core::corpus_loader`
+// used to do this itself, reading the ingest token and bonus-chain arrays and
+// rebuilding a parser row out of them; the field names and the traversal are
+// converter vocabulary, so they live here (`decisions.md` §11).
+pub mod corpus_equipment_json;
 pub mod class_feature_vars;
 pub mod formula_interpreter;
 pub mod formula_interpreter_corpus_wide;

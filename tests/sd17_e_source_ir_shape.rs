@@ -203,6 +203,12 @@ fn v1_spell_record_round_trips_into_spell_payload() {
     }
 }
 
+/// SD-35 `AT-35-E6-003-RULED` cycle 13: the equipment payload is the settled
+/// `CorpusEquipmentRecord`, not a borrow of the parser row, so the zero-copy
+/// pointer identity this test asserted no longer applies to this kind (the
+/// spell kind stopped being zero-copy the same way in cycle 8). What the
+/// envelope must still carry is every value the row stated, and that is what
+/// is asserted here.
 #[test]
 fn v1_equipment_record_round_trips_into_equipment_payload() {
     let text = "Longsword\tTYPE:Weapon\tCOST:15\tWT:4\tDAMAGE:1d8\n";
@@ -213,12 +219,14 @@ fn v1_equipment_record_round_trips_into_equipment_payload() {
     let record = convert_equipment_record(entry);
     assert_eq!(record.kind, SourceContentKind::Equipment);
     match record.payload {
-        SourceContentPayload::Equipment(p, _) => {
-            assert!(std::ptr::eq(p, entry));
+        SourceContentPayload::Equipment(p) => {
             assert_eq!(p.name, entry.name);
-            assert_eq!(p.kind, entry.kind);
-            assert_eq!(p.tokens.len(), entry.tokens.len());
-            assert_eq!(p.bonus_chains.len(), entry.bonus_chains.len());
+            assert_eq!(p.identity, entry.name, "no KEY: token, so the name is the identity");
+            assert!(!p.is_modifier);
+            assert_eq!(p.cost_gp, Some(15.0));
+            assert_eq!(p.weight_lbs, Some(4.0));
+            assert!(p.states_base_damage, "the row states DAMAGE:1d8");
+            assert!(entry.bonus_chains.is_empty(), "and states no BONUS: chain");
         }
         _ => panic!("expected SourceContentPayload::Equipment variant"),
     }

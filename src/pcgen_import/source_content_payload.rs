@@ -24,7 +24,6 @@
 //! by `rules_core` consumers.
 
 use crate::pcgen_import::lst_parser::class::ClassEntry;
-use crate::pcgen_import::lst_parser::equipment::EquipmentRecord;
 use crate::pcgen_import::lst_parser::metadata::{LstRecord, MetadataKind};
 use crate::pcgen_import::lst_parser::race_ability::{AbilityDeclaration, RaceDeclaration};
 use crate::pcgen_import::lst_parser::spellcasting_class::SpellcastingClassEntry;
@@ -117,16 +116,20 @@ pub enum SourceContentPayload<'a> {
     /// record that came from a raw `.lst` row; a record read from
     /// already-converted `data/corpus/` JSON never touches the converter.
     Spell(&'a CorpusSpellRecord),
-    /// An equipment or equipment-modifier record from the B-5 parser,
-    /// paired with the live side's own converted record built from it.
+    /// An equipment or equipment-modifier record in the live side's own
+    /// converted shape.
     ///
-    /// SD-35 `AT-35-E6-003-RULED` cycle 10: the second half is the settled
-    /// shape ([`CorpusEquipmentRecord`](crate::rules_core::equipment_record::CorpusEquipmentRecord))
-    /// the live equipment consumers read as they move off the parser row, the
-    /// same move cycle 8 made for the spell kind. The parser row stays only
-    /// for the consumers that have not moved yet, and the variant collapses to
-    /// the converted half when the last of them does.
-    Equipment(&'a EquipmentRecord, &'a CorpusEquipmentRecord),
+    /// SD-35 `AT-35-E6-003-RULED` cycle 13: **the variant has collapsed.** It
+    /// carried the B-5 parser row alongside the settled
+    /// [`CorpusEquipmentRecord`](crate::rules_core::equipment_record::CorpusEquipmentRecord)
+    /// from cycle 10, as a stated transition shape, "until the last consumer
+    /// that has not moved does". Cycle 12 moved the last two
+    /// (`damage_total`, `equipment_effects`) and cycle 13 moved the resolver
+    /// and the loader, so the row has no live reader left and is gone from the
+    /// envelope. Equipment is now the second kind, after cycle 8's spell, whose
+    /// canonical payload names no `pcgen_import` type at all
+    /// (`decisions.md` §11, §19).
+    Equipment(&'a CorpusEquipmentRecord),
     /// A metadata-kind record from the B-6 parser. The
     /// `MetadataKind` is reachable on the borrowed entry itself
     /// (`record.kind`); the canonical envelope's
@@ -147,7 +150,13 @@ impl<'a> SourceContentPayload<'a> {
             SourceContentPayload::Race(_) => "RACE",
             SourceContentPayload::Ability(_) => "ABILITY",
             SourceContentPayload::Spell(_) => "SPELL",
-            SourceContentPayload::Equipment(e, _) => e.kind.token(),
+            SourceContentPayload::Equipment(e) => {
+                if e.is_modifier {
+                    "EQUIPMOD"
+                } else {
+                    "EQUIP"
+                }
+            }
             SourceContentPayload::Metadata(m) => m.kind.token(),
         }
     }

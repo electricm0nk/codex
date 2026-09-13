@@ -246,10 +246,14 @@ fn v1_round_trip_equipment_record_projection_carries_b5_payload() {
 
     assert_eq!(record.kind, SourceContentKind::Equipment);
     match record.payload {
-        SourceContentPayload::Equipment(p, _) => {
+        // SD-35 `AT-35-E6-003-RULED` cycle 13: the payload is the settled
+        // record alone. Name and kind are still asserted, off the settled
+        // fields; the token count moved to the entry itself, which is what
+        // the converter read.
+        SourceContentPayload::Equipment(p) => {
             assert_eq!(p.name, entry.name);
-            assert_eq!(p.kind, entry.kind);
-            assert_eq!(p.tokens.len(), entry.tokens.len());
+            assert_eq!(p.is_modifier, entry.kind == EquipmentRecordKind::EquipMod);
+            assert_eq!(entry.tokens.len(), 3, "TYPE, COST and WT, the three the row states");
         }
         _ => panic!("expected SourceContentPayload::Equipment variant"),
     }
@@ -997,12 +1001,13 @@ fn equipment_record_carries_record_kind_and_token_payload() {
 
     let record = convert_equipment_record(equip);
     match record.payload {
-        SourceContentPayload::Equipment(p, _) => {
-            assert_eq!(p.kind, EquipmentRecordKind::Equip);
-            assert_eq!(p.tokens.len(), 4);
-            // Token keys are preserved
-            let keys: Vec<&str> = p.tokens.iter().map(|t| t.key.as_str()).collect();
-            assert_eq!(keys, vec!["TYPE", "COST", "WT", "DAMAGE"]);
+        SourceContentPayload::Equipment(p) => {
+            assert!(!p.is_modifier);
+            // The four tokens the entry carried are settled, not copied: the
+            // record's own weight, price, base damage die and weapon typing.
+            assert_eq!(p.weight_lbs, Some(4.0));
+            assert_eq!(p.cost_gp, Some(15.0));
+            assert!(p.states_base_damage);
         }
         _ => panic!("expected SourceContentPayload::Equipment"),
     }
@@ -1137,8 +1142,8 @@ fn equipment_record_kind_round_trips_through_conversion() {
     let record = convert_equipment_record(&parsed.entries[0]);
     assert_eq!(record.payload.kind_token(), "EQUIPMOD");
     match record.payload {
-        SourceContentPayload::Equipment(p, _) => {
-            assert_eq!(p.kind, EquipmentRecordKind::EquipMod);
+        SourceContentPayload::Equipment(p) => {
+            assert!(p.is_modifier);
         }
         _ => panic!("expected SourceContentPayload::Equipment"),
     }

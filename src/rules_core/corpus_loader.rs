@@ -6,39 +6,35 @@
 //! `corpus_fixtures::corpus_fixture_bundle()` -- a hardcoded ~4-record
 //! fixture, regardless of book. This module reads the real, on-disk Shape B
 //! v1 JSON corpus (equipment content-kind first -- see module-level scope
-//! note at the bottom) and reconstructs `EquipmentRecord`-shaped values so
-//! every existing book-agnostic resolver (`equipment_id_resolve`,
-//! `encumbrance.rs`, `equipment_effects.rs`, ...) works completely
-//! unchanged, reading `record.tokens`/`record.bonus_chains` exactly as it
-//! does from a raw-LST-parsed fixture today.
+//! note at the bottom) and pushes the canonical envelope for each record onto
+//! one package, so every book-agnostic resolver (`equipment_id_resolve`,
+//! `encumbrance.rs`, `equipment_effects.rs`, ...) reads real corpus data.
 //!
-//! Records enriched with the two ingest arrays -- the token array and the
-//! bonus-chain array, whose field names and traversal belong to the converter
-//! and are reached only through `pcgen_import::ingest_record`
-//! (`scripts`/`src/bin/enrich_equipment_raw_tokens.rs`, commit `094acde1`) --
-//! reconstruct a full, accurate `EquipmentRecord`. A record without those
-//! fields (not yet enriched, or a `web_second_source`/`same_book_fallback`
-//! record with no raw LST line to enrich from) reconstructs a *thin*
-//! record -- `tokens`/`bonus_chains` empty, but `name`/`KEY` still present
-//! (synthesized from the JSON's own `key`/`name` fields) so `name`-based
-//! resolution (`equipment_id_resolve`'s 2nd/3rd fallback match arms) still
-//! works. This is an honest degradation, not a silent one: a caller that
-//! needs to know whether a resolved record has real mechanical data can
-//! check `record.tokens.is_empty()`.
+//! # What this module reads, and what it does not
 //!
-//! `EquipmentRecord`'s own `record_source_path()` always returns `""` for
-//! every equipment record regardless of provenance (confirmed:
-//! `ir_converter.rs`'s `RecordSourcePath` impl for `EquipmentRecord`) --
-//! equipment resolution never depends on a faithful source path, only on
-//! `tokens`/`bonus_chains`/`name`, so this loader does not need to
-//! reconstruct one either.
+//! SD-35 `AT-35-E6-003-RULED` cycle 13. It reads a corpus record's `data`
+//! object and asks
+//! [`crate::pcgen_import::corpus_equipment_json::corpus_equipment_source_record`]
+//! what canonical record that object stands for. It does **not** read the
+//! record's ingest token array or bonus-chain array, and it does not build an
+//! ingest-format parser row: those field names, that traversal and the
+//! `BONUS:` re-spelling are the converter's vocabulary and moved to the
+//! converter's side of the boundary (`decisions.md` §11, §19). The envelope
+//! this loader pushes carries the settled
+//! [`crate::rules_core::equipment_record::CorpusEquipmentRecord`] alone.
+//!
+//! A record enriched with the two ingest arrays settles a full, accurate set
+//! of values. A record without them (not yet enriched, or a
+//! `web_second_source`/`same_book_fallback` record with no raw LST line to
+//! enrich from) settles a *thin* record -- identity and name present
+//! (synthesized from the JSON's own `key`/`name` fields) so name-based
+//! resolution still works, weight and price present whenever the JSON's own
+//! `weight_lbs`/`cost_gp` fields carry them, and every mechanical field an
+//! honest `None`. This is an honest degradation, not a silent one.
 
 use std::fs;
 use std::path::Path;
 
-use crate::pcgen_import::lst_parser::equipment::{
-    BonusToken, EquipmentDiagnostic, EquipmentRecord, EquipmentRecordKind, EquipmentToken,
-};
 // SD-35 `AT-35-E6-003-RULED` cycle 9: the spell parser import is GONE. It was
 // here for `load_lst_fixture_corpus`, which parsed the desktop's bundled raw
 // `.lst` fixture rows at run time; that package is produced at build time now
@@ -87,11 +83,18 @@ pub fn load_equipment_corpus<'a>(roots: &[BookCorpusRoot<'_>]) -> SourcePackageC
                 package.push_diagnostic(load_diagnostic(&path, "no top-level \"data\" object"));
                 continue;
             };
-            match equipment_record_from_json(data) {
-                Some(record) => {
-                    let record: &'static EquipmentRecord = Box::leak(Box::new(record));
-                    package.push(crate::pcgen_import::ir_converter::convert_equipment_record(record));
-                }
+            // SD-35 `AT-35-E6-003-RULED` cycle 13: ONE question, asked at the
+            // ingest boundary -- "what canonical record does this corpus JSON
+            // object stand for?". Before this cycle this function read the
+            // record's own ingest token array and bonus-chain array, rebuilt an
+            // ingest-format parser row out of them and ran the converter over
+            // that row, all on the live side. The field names, the traversal
+            // and the `BONUS:` re-spelling are converter vocabulary
+            // (`decisions.md` §11), so they moved whole to
+            // `pcgen_import::corpus_equipment_json` and this loader names no
+            // token, no token array and no parser row.
+            match crate::pcgen_import::corpus_equipment_json::corpus_equipment_source_record(data) {
+                Some(record) => package.push(record),
                 None => package.push_diagnostic(load_diagnostic(&path, "\"data\" is missing key/name")),
             }
         }
@@ -348,110 +351,6 @@ fn load_diagnostic(path: &Path, message: &str) -> crate::rules_core::source_cont
     }
 }
 
-fn equipment_record_from_json(data: &serde_json::Value) -> Option<EquipmentRecord> {
-    let key = data.get("key").and_then(serde_json::Value::as_str)?;
-    let name = data.get("name").and_then(serde_json::Value::as_str).unwrap_or(key);
-
-    let mut tokens = Vec::new();
-    let mut bonus_chains = Vec::new();
-    for (k, v) in crate::pcgen_import::ingest_record::token_pairs(data) {
-        let raw_pair = format!("{k}:{v}");
-        tokens.push(EquipmentToken { key: k.to_string(), value: v.to_string(), line_number: 1, raw_pair });
-    }
-    for qualifiers in crate::pcgen_import::ingest_record::bonus_chain_qualifiers(data) {
-        let qualifiers: Vec<String> = qualifiers.into_iter().map(str::to_string).collect();
-        // The ingest format's own token name is the converter's vocabulary, not
-        // this side's (`decisions.md` §11, SD-35 `AT-35-E6-003-SWEEP` cycle 11):
-        // `rebuild_bonus_token` is the inverse of `bonus_chain_qualifiers`
-        // above and lives beside it.
-        let raw_bonus = crate::pcgen_import::ingest_record::rebuild_bonus_token(&qualifiers);
-        bonus_chains.push(BonusToken { line_number: 1, raw_bonus, qualifiers });
-    }
-    // SD-33 remediation wave 5 (`sd33-r5-skillcombat`): synthesize a KEY:
-    // token from the ingested `data.key` field whenever the ingest token
-    // array did not itself carry a literal `KEY:` entry -- not only when
-    // that array was completely empty. `data.key` is ALWAYS the
-    // ingestion pipeline's own record identity (the real `KEY:` token
-    // when the LST line had one, else the record's own bare name --
-    // `equipment_id_resolve`'s doc comment states this rule and the
-    // ingestion `source.record_key` field already computes it this way).
-    // Before this fix, a record with a non-empty token array but no
-    // literal `KEY:` entry among them (common: a keyless LST line whose
-    // identity is its own first-column name) fell through
-    // `equipment_key_token` to `None`, and `equipment_id_resolve` fell
-    // back to matching on `.name` instead -- which is `data.name`, NOT
-    // `data.key`, and diverges from it whenever the record also carries
-    // an `OUTPUTNAME:` token (ingestion substitutes `OUTPUTNAME` into
-    // `name` for display, e.g. `Companion Stone (Diplomacy)`'s real key
-    // vs. its `name: "Companion Stone of [NAME]"`, an unresolved
-    // OUTPUTNAME placeholder never meant to be an identity). That
-    // silently broke `equipment_id_resolve` for every OUTPUTNAME-bearing,
-    // KEY-less record -- 12 of `ultimate_psionics`'s own equipment
-    // records among them, plus the shape-combat lane's own narrower
-    // `engine_id_resolve_fails_templated_variant_record` finding
-    // (`Psychoactive Skin (Defender)`/`(Hero)`), which this fix also
-    // resolves as a side effect, not just those two instances.
-    if !tokens.iter().any(|t| t.key == "KEY") {
-        tokens.push(EquipmentToken {
-            key: "KEY".to_string(),
-            value: key.to_string(),
-            line_number: 1,
-            raw_pair: format!("KEY:{key}"),
-        });
-    }
-    // `AT-34-E3-003` (bucket `M`, EQUIPMENT sub-causes, cycle 6): the same
-    // synthesis the `KEY:` block above already performs, applied to the
-    // two fields `encumbrance::weight_and_cost_from_record` reads
-    // (`WT:`/`COST:`). The ingestion pipeline always captures a record's
-    // own weight/cost as top-level `data.weight_lbs`/`data.cost_gp`
-    // (`equipment_record_from_json`'s own caller, `arrow_slaying.json`'s
-    // real on-disk shape among many: `"weight_lbs": 0.1`, no ingest token
-    // array at all -- this module's own doc comment already names this a
-    // "thin" record). Before this fix, a thin record's `tokens` list held
-    // only the synthesized `KEY:` entry, so `weight_and_cost_from_record`
-    // -- and therefore `encumbrance::equipment_key_resolves_a_carried_
-    // weight`, the wiring probe's newly-widened check -- always returned
-    // `None` for it even though the exact weight/cost this record's own
-    // ingestion already captured was sitting one field over, unread. This
-    // does not fabricate a value: `weight_lbs`/`cost_gp` are the SAME
-    // ingested data the token array's own `WT:`/`COST:` entries would carry
-    // when present (confirmed corpus-wide, not sampled: every one of the
-    // 4,470 enriched equipment/equipment_modifier records under
-    // `data/corpus/**/equipment/**/*.json` that carries both a `WT:`
-    // token and a `weight_lbs` field has the two agree exactly). Only fires
-    // when the token array itself did not already carry the token, so an
-    // enriched record's own literal value always wins unchanged.
-    if !tokens.iter().any(|t| t.key == "WT")
-        && let Some(weight) = data.get("weight_lbs").and_then(serde_json::Value::as_f64) {
-            tokens.push(EquipmentToken {
-                key: "WT".to_string(),
-                value: weight.to_string(),
-                line_number: 1,
-                raw_pair: format!("WT:{weight}"),
-            });
-        }
-    if !tokens.iter().any(|t| t.key == "COST")
-        && let Some(cost) = data.get("cost_gp").and_then(serde_json::Value::as_f64) {
-            tokens.push(EquipmentToken {
-                key: "COST".to_string(),
-                value: cost.to_string(),
-                line_number: 1,
-                raw_pair: format!("COST:{cost}"),
-            });
-        }
-
-    Some(EquipmentRecord {
-        kind: EquipmentRecordKind::Equip,
-        name: name.to_string(),
-        header_line_number: 1,
-        header_raw_line: name.to_string(),
-        tokens,
-        bonus_chains,
-        is_record_start: true,
-        diagnostics: Vec::<EquipmentDiagnostic>::new(),
-    })
-}
-
 /// Loads one book-corpus tree's **equipment and spell** records into a single
 /// `SourcePackageContent`.
 ///
@@ -503,9 +402,14 @@ mod tests {
 
     /// Real, on-disk enriched equipment record (ARG's Dogslicer) loads
     /// through the full package loader and resolves with real mechanical
-    /// tokens intact -- proves the loader, not a synthetic fixture.
+    /// values intact -- proves the loader, not a synthetic fixture.
+    ///
+    /// SD-35 `AT-35-E6-003-RULED` cycle 13: the assertions read the settled
+    /// `weight_lbs`/`cost_gp` rather than the `WT:`/`COST:` tokens they were
+    /// settled from. Same record, same two numbers, same corpus file; the
+    /// resolver hands back a `CorpusEquipmentRecord` now.
     #[test]
-    fn a_real_on_disk_enriched_record_loads_and_resolves_with_real_tokens() {
+    fn a_real_on_disk_enriched_record_loads_and_resolves_with_real_values() {
         let roots = [BookCorpusRoot {
             book_id: "advanced_race_guide",
             dir: Path::new("data/corpus/advanced_race_guide"),
@@ -514,10 +418,8 @@ mod tests {
 
         let (record, _) =
             equipment_id_resolve("Dogslicer", RuleSetId::Crb, &package).expect("Dogslicer must resolve");
-        let wt = record.tokens.iter().find(|t| t.key == "WT").expect("real WT: token must be present");
-        assert_eq!(wt.value, "1", "Dogslicer's real WT:1 from the enriched corpus");
-        let cost = record.tokens.iter().find(|t| t.key == "COST").expect("real COST: token must be present");
-        assert_eq!(cost.value, "8");
+        assert_eq!(record.weight_lbs, Some(1.0), "Dogslicer's real weight from the enriched corpus");
+        assert_eq!(record.cost_gp, Some(8.0), "Dogslicer's real price from the enriched corpus");
     }
 
     /// `AT-34-E3-003` (bucket `M`, EQUIPMENT sub-causes, cycle 6): a real,
@@ -540,11 +442,13 @@ mod tests {
 
         let (record, _) = equipment_id_resolve("Arrow (Slaying)", RuleSetId::Crb, &package)
             .expect("Arrow (Slaying) must resolve");
-        assert!(record.bonus_chains.is_empty(), "this record genuinely declares no bonus chains");
-        let wt = record.tokens.iter().find(|t| t.key == "WT").expect("synthesized WT: token must be present");
-        assert_eq!(wt.value, "0.1", "Arrow (Slaying)'s real ingested weight_lbs");
-        let cost = record.tokens.iter().find(|t| t.key == "COST").expect("synthesized COST: token must be present");
-        assert_eq!(cost.value, "0");
+        // This record genuinely declares no bonus chains, so every field a
+        // chain would have settled is an honest absence.
+        assert!(record.var_bonuses.is_empty(), "this record genuinely declares no bonus chains");
+        assert!(record.skill_check_bonus.is_none());
+        assert!(record.ability_score_bonus.is_none());
+        assert_eq!(record.weight_lbs, Some(0.1), "Arrow (Slaying)'s real ingested weight_lbs");
+        assert_eq!(record.cost_gp, Some(0.0), "Arrow (Slaying)'s real ingested cost_gp");
 
         assert!(
             crate::rules_core::encumbrance::equipment_key_resolves_a_carried_weight(
@@ -553,62 +457,6 @@ mod tests {
             ),
             "the synthesized WT: token must now make this thin record resolve a carried weight"
         );
-    }
-
-    /// Unit-level proof of the synthesis rule itself, isolated from the
-    /// full loader: no ingest token array at all, only the top-level
-    /// `weight_lbs`/`cost_gp` fields every ingested record carries.
-    #[test]
-    fn equipment_record_from_json_synthesizes_wt_and_cost_when_raw_tokens_is_absent() {
-        let value: serde_json::Value = serde_json::json!({
-            "key": "Test Thin Record",
-            "name": "Test Thin Record",
-            "weight_lbs": 3.5,
-            "cost_gp": 120.0
-        });
-        let record = equipment_record_from_json(&value).expect("must build a record");
-        let wt = record.tokens.iter().find(|t| t.key == "WT").expect("WT: must be synthesized");
-        assert_eq!(wt.value, "3.5");
-        let cost = record.tokens.iter().find(|t| t.key == "COST").expect("COST: must be synthesized");
-        assert_eq!(cost.value, "120");
-    }
-
-    /// Negative control: an already-enriched record's own real `WT:`/
-    /// `COST:` tokens (from the ingest token array) must win unchanged -- synthesis
-    /// only fires when the token is genuinely absent, never overriding a
-    /// real ingested literal.
-    #[test]
-    fn equipment_record_from_json_never_overrides_a_real_raw_tokens_wt_or_cost() {
-        let mut value: serde_json::Value = serde_json::json!({
-            "key": "Test Enriched Record",
-            "name": "Test Enriched Record",
-            // Deliberately different from the token-array values, to prove
-            // a real conflict resolves in the token array's favor.
-            "weight_lbs": 3.5,
-            "cost_gp": 120.0
-        });
-        value[crate::pcgen_import::ingest_payload::INGEST_TOKENS_FIELD] =
-            crate::pcgen_import::ingest_payload::ingest_tokens_value(&[("WT", "99"), ("COST", "1")]);
-        let record = equipment_record_from_json(&value).expect("must build a record");
-        assert_eq!(record.tokens.iter().filter(|t| t.key == "WT").count(), 1, "no duplicate WT: token");
-        let wt = record.tokens.iter().find(|t| t.key == "WT").unwrap();
-        assert_eq!(wt.value, "99", "the real ingested WT: token value must win, not the top-level field");
-        let cost = record.tokens.iter().find(|t| t.key == "COST").unwrap();
-        assert_eq!(cost.value, "1");
-    }
-
-    /// Negative control: no `weight_lbs`/`cost_gp` field at all (neither
-    /// present) synthesizes nothing -- an honest absence, not a fabricated
-    /// zero.
-    #[test]
-    fn equipment_record_from_json_synthesizes_nothing_when_neither_field_is_present() {
-        let value: serde_json::Value = serde_json::json!({
-            "key": "Test Bare Record",
-            "name": "Test Bare Record"
-        });
-        let record = equipment_record_from_json(&value).expect("must build a record");
-        assert!(!record.tokens.iter().any(|t| t.key == "WT"));
-        assert!(!record.tokens.iter().any(|t| t.key == "COST"));
     }
 
     /// A book with no `equipment/` subdirectory at all (e.g. a corpus root
@@ -765,13 +613,13 @@ mod tests {
 
         let (record, _) = equipment_id_resolve("Companion Stone (Diplomacy)", RuleSetId::Crb, &package)
             .expect("Companion Stone (Diplomacy) must resolve by its real KEY, not its OUTPUTNAME display string");
+        assert_eq!(record.identity, "Companion Stone (Diplomacy)");
         let bonus = record
-            .bonus_chains
-            .iter()
-            .find(|b| b.qualifiers.first().map(String::as_str) == Some("SKILL"))
-            .expect("real BONUS:SKILL|Diplomacy|4|TYPE=Competence chain must be present");
-        assert_eq!(bonus.qualifiers.get(1).map(String::as_str), Some("Diplomacy"));
-        assert_eq!(bonus.qualifiers.get(2).map(String::as_str), Some("4"));
+            .skill_check_bonus
+            .as_ref()
+            .expect("this record's real +4 competence bonus to Diplomacy must be settled");
+        assert_eq!(bonus.skill, "Diplomacy");
+        assert_eq!(bonus.bonus, 4);
     }
 }
 
