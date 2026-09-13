@@ -70,7 +70,7 @@ fn assert_kind_payload(
             | (SourceContentPayload::Race(_), "Race")
             | (SourceContentPayload::Ability(_), "Ability")
             | (SourceContentPayload::Spell(_), "Spell")
-            | (SourceContentPayload::Equipment(_), "Equipment")
+            | (SourceContentPayload::Equipment(..), "Equipment")
             | (SourceContentPayload::Metadata(_), "Metadata")
     );
     assert!(
@@ -281,7 +281,7 @@ fn d3_equipment_kind_carries_through_aggregate_constructor() {
     let aggregate = ParsedLstRecord::from_equipment(weapon);
     let record = convert_to_ir(&aggregate, &canonical_schema());
     assert_eq!(record.kind, SourceContentKind::Equipment);
-    if let SourceContentPayload::Equipment(payload) = &record.payload {
+    if let SourceContentPayload::Equipment(payload, _) = &record.payload {
         assert_eq!(payload.kind, EquipmentRecordKind::Equip);
     } else {
         panic!("expected Equipment payload, got {:?}", record.payload);

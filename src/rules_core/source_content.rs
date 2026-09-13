@@ -245,7 +245,10 @@ impl MetadataKindInner {
 /// `SourceContentRecord`-typed projection helpers, and the
 /// slice-E contract artifact). Consumers should treat the type as
 /// the output of that projection.
-#[derive(Debug, Clone, PartialEq, Eq)]
+// `Eq` is deliberately absent: the `Equipment` payload now carries the live
+// side's own converted record, whose settled weight and price are `f64`
+// (SD-35 `AT-35-E6-003-RULED` cycle 10). `PartialEq` is what every caller uses.
+#[derive(Debug, Clone, PartialEq)]
 pub struct SourceContentRecord<'a> {
     /// Provenance anchor. Every record carries one.
     pub source_ref: SourceRef,

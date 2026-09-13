@@ -134,7 +134,7 @@ mod tests {
         let longsword = equipment
             .iter()
             .filter_map(|record| match record.payload {
-                SourceContentPayload::Equipment(equip) => Some(equip),
+                SourceContentPayload::Equipment(equip, _) => Some(equip),
                 _ => None,
             })
             .find(|equip| equip.name == "Longsword")
@@ -149,7 +149,7 @@ mod tests {
         let chain_shirt = equipment
             .iter()
             .filter_map(|record| match record.payload {
-                SourceContentPayload::Equipment(equip) => Some(equip),
+                SourceContentPayload::Equipment(equip, _) => Some(equip),
                 _ => None,
             })
             .find(|equip| equip.name == "Chain Shirt")

@@ -213,7 +213,7 @@ fn v1_equipment_record_round_trips_into_equipment_payload() {
     let record = convert_equipment_record(entry);
     assert_eq!(record.kind, SourceContentKind::Equipment);
     match record.payload {
-        SourceContentPayload::Equipment(p) => {
+        SourceContentPayload::Equipment(p, _) => {
             assert!(std::ptr::eq(p, entry));
             assert_eq!(p.name, entry.name);
             assert_eq!(p.kind, entry.kind);
@@ -638,7 +638,7 @@ fn bonus_convert_to_ir_dispatches_to_canonical_record_per_kind() {
     let equip: &EquipmentRecord = &equip_parsed.entries[0];
     let r = convert_to_ir(&ParsedLstRecord::from_equipment(equip), &schema);
     assert_eq!(r.kind, SourceContentKind::Equipment);
-    assert!(matches!(r.payload, SourceContentPayload::Equipment(_)));
+    assert!(matches!(r.payload, SourceContentPayload::Equipment(..)));
 
     // LstRecord
     let meta_parsed = parse_lst_metadata_text("cr_meta.lst", "DEITY:Lamashtu\n");

@@ -8,8 +8,10 @@
 //! computation). `equipment_effects.rs`'s per-item stats (AC bonus, max
 //! Dex, spell failure) were already real and wired before this task; this
 //! file adds the missing weight/capacity pillar alongside it, using
-//! `equipment_id_resolve` (book-agnostic) plus each resolved record's own
-//! `WT:`/`COST:` tokens (`weight_and_cost_from_record`, below) -- originally
+//! `equipment_converted_resolve` (book-agnostic) plus each resolved record's
+//! own settled weight and price
+//! ([`CorpusEquipmentRecord::weight_and_cost`](crate::rules_core::equipment_record::CorpusEquipmentRecord::weight_and_cost))
+//! -- originally
 //! this instead re-looked-up weight and cost in the CRB-only compiled
 //! `equipment_tables()` static table, which silently dropped both for any
 //! non-Core-Rulebook item (real bug found by SD-27's Advanced Race Guide
@@ -57,28 +59,10 @@
 //! race-to-size fact, read from each race record's own
 //! `FACT:BaseSize|<code>` token. Callers pass a `SizeCategory` in.
 
-use crate::pcgen_import::lst_parser::equipment::EquipmentRecord;
 use crate::rules_core::character_input::{ActiveState, EquipmentSelection};
-use crate::rules_core::equipment_resolver::equipment_id_resolve;
-use crate::rules_core::rules_tables::RuleSetId;
+use crate::rules_core::equipment_resolver::equipment_converted_resolve;
 use crate::rules_core::size::SizeCategory;
 use crate::rules_core::source_content::SourcePackageContent;
-
-/// Real weight (`WT:`) and cost (`COST:`) in pounds/gp for a resolved
-/// equipment record, read directly off its own raw tokens rather than a
-/// second lookup in `rules_tables::crb::equipment_tables()` -- a compiled
-/// static table that only ever covered Core Rulebook. The LST parser that
-/// produces `EquipmentRecord.tokens` is book-agnostic, so both tokens are
-/// present for every book's records already; only the compiled table this
-/// replaces was CRB-only. `None` for either means the record itself carries
-/// no such token (a real data gap, e.g. a formula-priced modifier for cost),
-/// not a book-scoping gap.
-fn weight_and_cost_from_record(record: &EquipmentRecord) -> (Option<f64>, Option<f64>) {
-    let token_value = |key: &str| {
-        record.tokens.iter().find(|token| token.key == key).and_then(|token| token.value.parse::<f64>().ok())
-    };
-    (token_value("WT"), token_value("COST"))
-}
 
 /// `AT-34-E3-003` (bucket `M`, EQUIPMENT sub-causes, cycle 6): whether
 /// resolving `item_id` against `corpus` finds a real, parseable `WT:`
@@ -109,10 +93,10 @@ fn weight_and_cost_from_record(record: &EquipmentRecord) -> (Option<f64>, Option
 /// change what counts as an answer, `compute_encumbrance`'s own gate is
 /// unchanged and untouched.
 pub fn equipment_key_resolves_a_carried_weight(item_id: &str, corpus: &SourcePackageContent) -> bool {
-    let Some((record, _table_cell)) = equipment_id_resolve(item_id, RuleSetId::Crb, corpus) else {
+    let Some(record) = equipment_converted_resolve(item_id, corpus) else {
         return false;
     };
-    weight_and_cost_from_record(record).0.is_some()
+    record.weight_lbs.is_some()
 }
 
 /// Max light/medium/heavy load in pounds for one Strength score, per PF1's
@@ -307,7 +291,7 @@ fn classify_encumbrance(total_weight_lbs: f64, thresholds: &CarryingCapacityThre
 
 /// One resolved carried item's contribution to the loadout's total weight
 /// and total gp value. Both are read from the same resolved record's own
-/// `WT:`/`COST:` tokens (`weight_and_cost_from_record`), so cost costs no
+/// settled weight and price, so cost costs no
 /// second corpus resolution.
 #[derive(Debug, Clone, PartialEq)]
 pub struct CarriedItem {
@@ -329,9 +313,9 @@ pub struct CarriedItem {
 /// or `ActiveState::SelectedInactive` (both represent items the character
 /// actually possesses/carries; `Absent` means not carried at all -- mirrors
 /// `ActiveState`'s own doc comment). Each selection is resolved to a real
-/// corpus record via `equipment_id_resolve` (already book-agnostic -- it
+/// corpus record via `equipment_converted_resolve` (already book-agnostic -- it
 /// searches the whole loaded corpus, not just Core Rulebook), then that
-/// record's own `WT:` token is read directly (`weight_and_cost_from_record`)
+/// record's own settled weight is read directly (`CorpusEquipmentRecord`)
 /// rather than re-looked-up in the CRB-only compiled static table this used
 /// to use. An item that does not resolve to a corpus record, or resolves but
 /// carries no `WT:` token, is recorded in `unresolved_item_ids`
@@ -399,13 +383,11 @@ pub fn compute_encumbrance(
             continue;
         }
 
-        let Some((record, _table_cell)) =
-            equipment_id_resolve(&selection.item_id, RuleSetId::Crb, corpus)
-        else {
+        let Some(record) = equipment_converted_resolve(&selection.item_id, corpus) else {
             unresolved_item_ids.push(selection.item_id.clone());
             continue;
         };
-        let (weight, cost) = weight_and_cost_from_record(record);
+        let (weight, cost) = record.weight_and_cost();
 
         // Weight is what makes an item *carried* for encumbrance purposes,
         // so a record with no `WT:` token is unresolved. Cost is
@@ -524,10 +506,10 @@ Longsword\tKEY:Longsword (Base)\tTYPE:Weapon.Melee.Martial\tCOST:15\tWT:4\tCRITM
     /// Regression test for the real bug found by SD-27's Advanced Race Guide
     /// PCGen parity run: a non-Core-Rulebook item (here, ARG's own Dogslicer,
     /// verbatim `COST:8 WT:1` from `arg_equip_arms_armor.lst`) resolves
-    /// through `equipment_id_resolve` (already book-agnostic) but weight and
+    /// through `equipment_converted_resolve` (already book-agnostic) but weight and
     /// cost were both silently dropped when a second, CRB-only lookup ran
     /// against `rules_tables::crb::equipment_tables()`. Reading both directly
-    /// off the resolved record's own tokens (`weight_and_cost_from_record`)
+    /// off the resolved record's own settled weight and price
     /// fixes this for every book, not just ARG. See
     /// `docs/release/v0.6/book-agnostic-backend-gaps-scoping.md` finding 1.
     #[test]

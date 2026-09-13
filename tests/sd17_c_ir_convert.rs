@@ -246,7 +246,7 @@ fn v1_round_trip_equipment_record_projection_carries_b5_payload() {
 
     assert_eq!(record.kind, SourceContentKind::Equipment);
     match record.payload {
-        SourceContentPayload::Equipment(p) => {
+        SourceContentPayload::Equipment(p, _) => {
             assert_eq!(p.name, entry.name);
             assert_eq!(p.kind, entry.kind);
             assert_eq!(p.tokens.len(), entry.tokens.len());
@@ -997,7 +997,7 @@ fn equipment_record_carries_record_kind_and_token_payload() {
 
     let record = convert_equipment_record(equip);
     match record.payload {
-        SourceContentPayload::Equipment(p) => {
+        SourceContentPayload::Equipment(p, _) => {
             assert_eq!(p.kind, EquipmentRecordKind::Equip);
             assert_eq!(p.tokens.len(), 4);
             // Token keys are preserved
@@ -1137,7 +1137,7 @@ fn equipment_record_kind_round_trips_through_conversion() {
     let record = convert_equipment_record(&parsed.entries[0]);
     assert_eq!(record.payload.kind_token(), "EQUIPMOD");
     match record.payload {
-        SourceContentPayload::Equipment(p) => {
+        SourceContentPayload::Equipment(p, _) => {
             assert_eq!(p.kind, EquipmentRecordKind::EquipMod);
         }
         _ => panic!("expected SourceContentPayload::Equipment"),

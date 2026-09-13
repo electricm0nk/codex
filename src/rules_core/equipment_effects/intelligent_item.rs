@@ -63,7 +63,7 @@
 //! verbatim corpus token, read the same way `equipmods.rs`/`magic_items.rs`
 //! read their own tokens straight off the resolved record.
 
-use crate::pcgen_import::lst_parser::equipment::EquipmentRecord;
+use crate::rules_core::equipment_record::CorpusEquipmentRecord;
 
 /// An intelligent item's own alignment (CRB "Intelligent Items"), decoded
 /// from the corpus's literal `BONUS:VAR|IntItemAlignment|<code>` two-digit
@@ -147,67 +147,24 @@ pub struct IntelligentItemContribution {
     pub alignment: Option<ItemAlignment>,
 }
 
-/// Resolve one `equipmods` corpus record's intelligent-item contribution.
+/// One `equipmods` corpus record's intelligent-item contribution.
 ///
-/// Scans every `BONUS:VAR|...` chain the record carries (unlike
-/// `compute_equipmods_effect`/`compute_magic_items_effect`, which each
-/// extract a single chain, a real intelligent-item record commonly carries
-/// two at once -- e.g. `Intelligent Item ~ Ability Score / Wisdom 15`
-/// carries both its own `IntelligentItemEgo` and `IntItemStatWIS` chains,
-/// see module doc comment) and accumulates the ones this family names:
-/// `IntItemStatINT`/`IntItemStatWIS`/`IntItemStatCHA`, `IntelligentItemEgo`,
-/// `IntItemAlignment`. Requires an exact 3-part `[VAR, <name>, <value>]`
-/// chain -- a chain with a trailing `PREVARGTEQ:`/`PREVARLTEQ:` condition
-/// (e.g. the Base record's own conditional `IntItemNegativeLevel` chains)
-/// is not unconditionally true, so it is deliberately excluded rather than
-/// asserted. Returns `None` when the record carries none of this family's
-/// tokens at all -- that means this record does not belong to the
-/// intelligent-item family, not that its contribution is zero.
-pub fn compute_intelligent_item_effect(record: &EquipmentRecord) -> Option<IntelligentItemContribution> {
-    let mut result = IntelligentItemContribution::default();
-    let mut found = false;
-
-    for bonus in &record.bonus_chains {
-        let qualifiers = &bonus.qualifiers;
-        if qualifiers.len() != 3 || qualifiers[0] != "VAR" {
-            continue;
-        }
-        let Ok(value) = qualifiers[2].parse::<i16>() else {
-            continue;
-        };
-        match qualifiers[1].as_str() {
-            "IntItemStatINT" => {
-                result.intelligence_bonus += value;
-                found = true;
-            }
-            "IntItemStatWIS" => {
-                result.wisdom_bonus += value;
-                found = true;
-            }
-            "IntItemStatCHA" => {
-                result.charisma_bonus += value;
-                found = true;
-            }
-            "IntelligentItemEgo" => {
-                result.ego_bonus += value;
-                found = true;
-            }
-            "IntItemAlignment" => {
-                if let Some(alignment) = ItemAlignment::from_code(value) {
-                    result.alignment = Some(alignment);
-                    found = true;
-                }
-            }
-            _ => {}
-        }
-    }
-
-    found.then_some(result)
+/// SD-35 `AT-35-E6-003-RULED` cycle 10: the values are settled at ingest, by
+/// [`crate::pcgen_import::ir_converter::equipment_record_to_corpus`], which
+/// accumulates every unconditional member of this family the record states
+/// and skips the conditional and formula-valued ones rather than asserting
+/// them. `None` means the record does not belong to the intelligent-item
+/// family at all, not that its contribution is zero.
+pub fn compute_intelligent_item_effect(
+    record: &CorpusEquipmentRecord,
+) -> Option<IntelligentItemContribution> {
+    record.intelligent_item
 }
 
 #[cfg(test)]
 mod tests {
     use super::*;
+    use crate::pcgen_import::ir_converter::equipment_record_to_corpus;
     use crate::pcgen_import::lst_parser::equipment::parse_equipment_entries;
 
     /// Real verbatim tokens copied from `KEY:Intelligent Item ~ Base` in
@@ -222,9 +179,9 @@ mod tests {
         let text = "Intelligent Magic Item Base\tKEY:Intelligent Item ~ Base\tTYPE:Weapon.Armor.Goods\tCOST:500\tBONUS:VAR|IntItemStatINT|10\tBONUS:VAR|IntItemStatWIS|10\tBONUS:VAR|IntItemStatCHA|10\n";
         let result = parse_equipment_entries("cr_equipmods.lst", text);
         assert!(result.diagnostics.is_empty(), "{:?}", result.diagnostics);
-        let record = &result.entries[0];
+        let record = equipment_record_to_corpus(&result.entries[0]);
 
-        let effect = compute_intelligent_item_effect(record).expect("Base record must yield a contribution");
+        let effect = compute_intelligent_item_effect(&record).expect("Base record must yield a contribution");
         assert_eq!(effect.intelligence_bonus, 10);
         assert_eq!(effect.wisdom_bonus, 10);
         assert_eq!(effect.charisma_bonus, 10);
@@ -244,9 +201,9 @@ mod tests {
         let text = "Intelligent Magic Item Base\tKEY:Intelligent Item ~ Base\tTYPE:Weapon.Armor.Goods\tCOST:500\tBONUS:VAR|IntItemNegativeLevel|1|PREVARGTEQ:IntelligentItemEgo,20\tBONUS:VAR|IntItemStatINT|10\tBONUS:VAR|IntItemStatWIS|10\tBONUS:VAR|IntItemStatCHA|10\tBONUS:VAR|BaseCostTracker|COST\tBONUS:VAR|IntelligentItemEgo|(BaseCostTracker>=1001)+(BaseCostTracker>=5001)\n";
         let result = parse_equipment_entries("cr_equipmods.lst", text);
         assert!(result.diagnostics.is_empty(), "{:?}", result.diagnostics);
-        let record = &result.entries[0];
+        let record = equipment_record_to_corpus(&result.entries[0]);
 
-        let effect = compute_intelligent_item_effect(record).expect("literal INT/WIS/CHA chains still resolve");
+        let effect = compute_intelligent_item_effect(&record).expect("literal INT/WIS/CHA chains still resolve");
         assert_eq!(effect.intelligence_bonus, 10);
         assert_eq!(effect.wisdom_bonus, 10);
         assert_eq!(effect.charisma_bonus, 10);
@@ -267,9 +224,9 @@ mod tests {
         let text = "Int Item / Stat Wisdom 15\tKEY:Intelligent Item ~ Ability Score / Wisdom 15\tTYPE:Weapon.Armor.Goods\tCOST:1400\tBONUS:VAR|IntelligentItemEgo|2\tBONUS:VAR|IntItemStatWIS|5\n";
         let result = parse_equipment_entries("cr_equipmods.lst", text);
         assert!(result.diagnostics.is_empty(), "{:?}", result.diagnostics);
-        let record = &result.entries[0];
+        let record = equipment_record_to_corpus(&result.entries[0]);
 
-        let effect = compute_intelligent_item_effect(record).expect("must yield a contribution");
+        let effect = compute_intelligent_item_effect(&record).expect("must yield a contribution");
         assert_eq!(effect.wisdom_bonus, 5, "10 (base, not asserted by this record) + 5 == 15, the record's own name");
         assert_eq!(effect.ego_bonus, 2);
         assert_eq!(effect.intelligence_bonus, 0);
@@ -286,9 +243,9 @@ mod tests {
         let text = "Int Item / Stat Charisma 20\tKEY:Intelligent Item ~ Ability Score / Charisma 20\tTYPE:Weapon.Armor.Goods\tCOST:8000\tBONUS:VAR|IntelligentItemEgo|5\tBONUS:VAR|IntItemStatCHA|10\n";
         let result = parse_equipment_entries("cr_equipmods.lst", text);
         assert!(result.diagnostics.is_empty(), "{:?}", result.diagnostics);
-        let record = &result.entries[0];
+        let record = equipment_record_to_corpus(&result.entries[0]);
 
-        let effect = compute_intelligent_item_effect(record).expect("must yield a contribution");
+        let effect = compute_intelligent_item_effect(&record).expect("must yield a contribution");
         assert_eq!(effect.charisma_bonus, 10);
         assert_eq!(effect.ego_bonus, 5);
     }
@@ -303,9 +260,9 @@ mod tests {
         let text = "Legendary Intelligent Item / Align (CG)\tKEY:Legendary Item ~ Intelligent Item ~ Alignment / Chaotic Good\tTYPE:Mythic.Intelligent.Alignment\tCOST:0\tBONUS:VAR|IntItemAlignment|20\n";
         let result = parse_equipment_entries("ma_equipmods.lst", text);
         assert!(result.diagnostics.is_empty(), "{:?}", result.diagnostics);
-        let record = &result.entries[0];
+        let record = equipment_record_to_corpus(&result.entries[0]);
 
-        let effect = compute_intelligent_item_effect(record).expect("must yield a contribution");
+        let effect = compute_intelligent_item_effect(&record).expect("must yield a contribution");
         assert_eq!(effect.alignment, Some(ItemAlignment::ChaoticGood));
         assert_eq!(effect.ego_bonus, 0, "the alignment chain grants no Ego of its own");
     }
@@ -318,9 +275,9 @@ mod tests {
     fn lawful_evil_alignment_decodes_from_its_real_two_digit_code() {
         let text = "Legendary Intelligent Item / Align (LE)\tKEY:Legendary Item ~ Intelligent Item ~ Alignment / Lawful Evil\tTYPE:Mythic.Intelligent.Alignment\tCOST:0\tBONUS:VAR|IntItemAlignment|02\n";
         let result = parse_equipment_entries("ma_equipmods.lst", text);
-        let record = &result.entries[0];
+        let record = equipment_record_to_corpus(&result.entries[0]);
 
-        let effect = compute_intelligent_item_effect(record).expect("must yield a contribution");
+        let effect = compute_intelligent_item_effect(&record).expect("must yield a contribution");
         assert_eq!(effect.alignment, Some(ItemAlignment::LawfulEvil));
     }
 
@@ -334,9 +291,9 @@ mod tests {
     fn a_power_family_record_still_yields_its_literal_ego_contribution_but_no_ability_or_alignment() {
         let text = "Int Item / Power Change shape\tKEY:Intelligent Item ~ Power / Change Shape\tTYPE:Weapon.Armor.Goods\tCOST:10000\tBONUS:VAR|IntelligentItemEgo|2\n";
         let result = parse_equipment_entries("cr_equipmods.lst", text);
-        let record = &result.entries[0];
+        let record = equipment_record_to_corpus(&result.entries[0]);
 
-        let effect = compute_intelligent_item_effect(record).expect("must yield a contribution");
+        let effect = compute_intelligent_item_effect(&record).expect("must yield a contribution");
         assert_eq!(effect.ego_bonus, 2);
         assert_eq!(effect.intelligence_bonus, 0);
         assert_eq!(effect.wisdom_bonus, 0);
@@ -351,9 +308,9 @@ mod tests {
     fn an_ordinary_equipmod_has_no_intelligent_item_contribution() {
         let text = "Masterwork (Weapon)\tKEY:Special Quality ~ Masterwork ~ Weapon\tTYPE:MasterworkQuality.Weapon\tCOST:0\tBONUS:WEAPON|TOHIT|1|TYPE=Enhancement\n";
         let result = parse_equipment_entries("cr_equipmods.lst", text);
-        let record = &result.entries[0];
+        let record = equipment_record_to_corpus(&result.entries[0]);
 
-        let effect = compute_intelligent_item_effect(record);
+        let effect = compute_intelligent_item_effect(&record);
         assert_eq!(effect, None);
     }
 
@@ -366,9 +323,9 @@ mod tests {
     fn a_conditional_var_chain_naming_a_family_variable_is_not_asserted() {
         let text = "Conditional Proxy\tKEY:Conditional Proxy\tTYPE:Weapon.Armor.Goods\tCOST:0\tBONUS:VAR|IntItemStatWIS|99|PREVARGTEQ:SomeVar,1\n";
         let result = parse_equipment_entries("cr_equipmods.lst", text);
-        let record = &result.entries[0];
+        let record = equipment_record_to_corpus(&result.entries[0]);
 
-        let effect = compute_intelligent_item_effect(record);
+        let effect = compute_intelligent_item_effect(&record);
         assert_eq!(effect, None, "a conditional chain must not be asserted as an unconditional +99 Wisdom");
     }
 

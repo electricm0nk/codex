@@ -81,6 +81,11 @@ use crate::pcgen_import::lst_parser::spellcasting_class::{
     SpellcastingClassDiagnostic, SpellcastingClassEntry, SpellcastingClassParseResult,
 };
 use crate::pcgen_import::source_content_payload::b6_metadata_kind_to_canonical;
+use crate::rules_core::equipment_effects::intelligent_item::{
+    IntelligentItemContribution, ItemAlignment,
+};
+use crate::rules_core::equipment_effects::magic_items::AbilityScoreBonus;
+use crate::rules_core::equipment_record::CorpusEquipmentRecord;
 use crate::rules_core::spell_record::CorpusSpellRecord;
 use crate::rules_core::source_content::{
     SOURCE_IR_VERSION, SourceContentDiagnostic, SourceContentDiagnosticKind, SourceContentKind,
@@ -450,15 +455,144 @@ pub fn convert_spell_record(record: &LstSpellRecord) -> SourceContentRecord<'sta
     )
 }
 
+/// Convert a B-5 [`EquipmentRecord`] into the live side's own settled
+/// equipment record.
+///
+/// SD-35 `AT-35-E6-003-RULED` cycle 10. Every read below used to happen on the
+/// live side, once per query, against the ingest format's own token and
+/// `BONUS:` chain arrays -- `encumbrance::weight_and_cost_from_record`,
+/// `equipment_effects::magic_items::compute_magic_items_effect` and its
+/// `TEMPBONUS:` fallback, and
+/// `equipment_effects::intelligent_item::compute_intelligent_item_effect`.
+/// They are the same reads, moved to the side of the boundary that owns the
+/// ingest vocabulary (`decisions.md` §11): the live consumers now read a
+/// settled value off [`CorpusEquipmentRecord`].
+///
+/// Behaviour is preserved field for field, including each read's own honest
+/// absence: a record that states no weight, no ability-score chain, or none
+/// of the intelligent-item family yields `None` for that field rather than a
+/// zero.
+pub fn equipment_record_to_corpus(record: &EquipmentRecord) -> CorpusEquipmentRecord {
+    let token_value = |key: &str| {
+        record.tokens.iter().find(|token| token.key == key).map(|token| token.value.as_str())
+    };
+    let identity = token_value("KEY").unwrap_or(record.name.as_str()).to_string();
+    let weight_lbs = token_value("WT").and_then(|value| value.parse::<f64>().ok());
+    let cost_gp = token_value("COST").and_then(|value| value.parse::<f64>().ok());
+    CorpusEquipmentRecord {
+        identity,
+        name: record.name.clone(),
+        weight_lbs,
+        cost_gp,
+        ability_score_bonus: ability_score_bonus_of(record),
+        intelligent_item: intelligent_item_contribution_of(record),
+    }
+}
+
+/// The item's settled ability-score enhancement: its first
+/// `BONUS:STAT|<ability>|<n>` chain, else the `TEMPBONUS:<PC|ANYPC>|STAT|...`
+/// form the CRB ability-score potions state theirs in (they carry no `BONUS:`
+/// chain at all). Moved here from `equipment_effects::magic_items`.
+fn ability_score_bonus_of(record: &EquipmentRecord) -> Option<AbilityScoreBonus> {
+    record
+        .bonus_chains
+        .iter()
+        .find_map(|bonus| {
+            let qualifiers = &bonus.qualifiers;
+            if qualifiers.len() < 3 || qualifiers[0] != "STAT" {
+                return None;
+            }
+            qualifiers[2].parse::<i16>().ok().map(|bonus_value| AbilityScoreBonus {
+                ability: qualifiers[1].clone(),
+                bonus: bonus_value,
+            })
+        })
+        .or_else(|| {
+            record.tokens.iter().find_map(|token| {
+                if token.key != "TEMPBONUS" {
+                    return None;
+                }
+                let parts: Vec<&str> = token.value.split('|').collect();
+                if parts.len() < 4 || (parts[0] != "PC" && parts[0] != "ANYPC") || parts[1] != "STAT"
+                {
+                    return None;
+                }
+                let ability = parts[2];
+                if ability.is_empty() || ability.contains(',') {
+                    return None;
+                }
+                parts[3].parse::<i16>().ok().map(|bonus_value| AbilityScoreBonus {
+                    ability: ability.to_string(),
+                    bonus: bonus_value,
+                })
+            })
+        })
+}
+
+/// The item's settled contribution to an intelligent item's stat block: every
+/// unconditional three-part `BONUS:VAR|<name>|<value>` chain of the
+/// intelligent-item family. A chain carrying a trailing condition is not
+/// unconditionally true and is excluded rather than asserted. Moved here from
+/// `equipment_effects::intelligent_item`.
+fn intelligent_item_contribution_of(record: &EquipmentRecord) -> Option<IntelligentItemContribution> {
+    let mut result = IntelligentItemContribution::default();
+    let mut found = false;
+    for bonus in &record.bonus_chains {
+        let qualifiers = &bonus.qualifiers;
+        if qualifiers.len() != 3 || qualifiers[0] != "VAR" {
+            continue;
+        }
+        let Ok(value) = qualifiers[2].parse::<i16>() else {
+            continue;
+        };
+        match qualifiers[1].as_str() {
+            "IntItemStatINT" => {
+                result.intelligence_bonus += value;
+                found = true;
+            }
+            "IntItemStatWIS" => {
+                result.wisdom_bonus += value;
+                found = true;
+            }
+            "IntItemStatCHA" => {
+                result.charisma_bonus += value;
+                found = true;
+            }
+            "IntelligentItemEgo" => {
+                result.ego_bonus += value;
+                found = true;
+            }
+            "IntItemAlignment" => {
+                if let Some(alignment) = ItemAlignment::from_code(value) {
+                    result.alignment = Some(alignment);
+                    found = true;
+                }
+            }
+            _ => {}
+        }
+    }
+    found.then_some(result)
+}
+
 /// Build a canonical [`SourceContentRecord`] from a B-5
 /// [`EquipmentRecord`].
+///
+/// SD-35 `AT-35-E6-003-RULED` cycle 10: the envelope's payload carries the
+/// parser row **and** the converted [`CorpusEquipmentRecord`] built from it.
+/// The converted half is interned for the process lifetime (`Box::leak`) to
+/// satisfy the envelope's borrow, exactly as cycle 8's spell path already
+/// does. The pair is deliberate and temporary: the parser row is still the
+/// data type of the equipment consumers that have not moved yet, and it goes
+/// when the last of them reads a settled value instead.
 pub fn convert_equipment_record(record: &EquipmentRecord) -> SourceContentRecord<'_> {
     let line = record.header_line_number;
     let source_ref = make_source_ref(record.record_source_path(), line);
+    let converted: &'static CorpusEquipmentRecord =
+        Box::leak(Box::new(equipment_record_to_corpus(record)));
     SourceContentRecord::new(
         source_ref,
         SourceContentKind::Equipment,
-        SourceContentPayload::Equipment(record),
+        SourceContentPayload::Equipment(record, converted),
     )
 }
 
@@ -1075,7 +1209,7 @@ mod tests {
         let rec = convert_equipment_record(&record);
         assert_eq!(rec.kind, SourceContentKind::Equipment);
         match rec.payload {
-            SourceContentPayload::Equipment(e) => {
+            SourceContentPayload::Equipment(e, _) => {
                 assert_eq!(e.name, "TestEquip");
             }
             _ => panic!("expected Equipment payload"),

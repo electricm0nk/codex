@@ -28,6 +28,7 @@ use crate::pcgen_import::lst_parser::equipment::EquipmentRecord;
 use crate::pcgen_import::lst_parser::metadata::{LstRecord, MetadataKind};
 use crate::pcgen_import::lst_parser::race_ability::{AbilityDeclaration, RaceDeclaration};
 use crate::pcgen_import::lst_parser::spellcasting_class::SpellcastingClassEntry;
+use crate::rules_core::equipment_record::CorpusEquipmentRecord;
 use crate::rules_core::spell_record::CorpusSpellRecord;
 
 // =============================================================================
@@ -90,7 +91,10 @@ pub fn canonical_metadata_kind_inner_to_b6(
 /// Every variant is a borrow (`&'a ParserEntry`) — projection is
 /// zero-copy. Callers that need to own the projected record clone the
 /// underlying entry explicitly; the canonical-IR surface never clones.
-#[derive(Debug, Clone, Copy, PartialEq, Eq)]
+// `Eq` is deliberately absent: SD-35 `AT-35-E6-003-RULED` cycle 10 added the
+// converted equipment record to this enum, and a settled weight in pounds is an
+// `f64`. `PartialEq` is what every caller uses.
+#[derive(Debug, Clone, Copy, PartialEq)]
 pub enum SourceContentPayload<'a> {
     /// A martial class record from the B-1 parser.
     Class(&'a ClassEntry),
@@ -113,8 +117,16 @@ pub enum SourceContentPayload<'a> {
     /// record that came from a raw `.lst` row; a record read from
     /// already-converted `data/corpus/` JSON never touches the converter.
     Spell(&'a CorpusSpellRecord),
-    /// An equipment or equipment-modifier record from the B-5 parser.
-    Equipment(&'a EquipmentRecord),
+    /// An equipment or equipment-modifier record from the B-5 parser,
+    /// paired with the live side's own converted record built from it.
+    ///
+    /// SD-35 `AT-35-E6-003-RULED` cycle 10: the second half is the settled
+    /// shape ([`CorpusEquipmentRecord`](crate::rules_core::equipment_record::CorpusEquipmentRecord))
+    /// the live equipment consumers read as they move off the parser row, the
+    /// same move cycle 8 made for the spell kind. The parser row stays only
+    /// for the consumers that have not moved yet, and the variant collapses to
+    /// the converted half when the last of them does.
+    Equipment(&'a EquipmentRecord, &'a CorpusEquipmentRecord),
     /// A metadata-kind record from the B-6 parser. The
     /// `MetadataKind` is reachable on the borrowed entry itself
     /// (`record.kind`); the canonical envelope's
@@ -135,7 +147,7 @@ impl<'a> SourceContentPayload<'a> {
             SourceContentPayload::Race(_) => "RACE",
             SourceContentPayload::Ability(_) => "ABILITY",
             SourceContentPayload::Spell(_) => "SPELL",
-            SourceContentPayload::Equipment(e) => e.kind.token(),
+            SourceContentPayload::Equipment(e, _) => e.kind.token(),
             SourceContentPayload::Metadata(m) => m.kind.token(),
         }
     }
@@ -149,7 +161,7 @@ impl<'a> SourceContentPayload<'a> {
             SourceContentPayload::SpellcastingClass(_) => "SD17-B-2",
             SourceContentPayload::Race(_) | SourceContentPayload::Ability(_) => "SD17-B-3",
             SourceContentPayload::Spell(_) => "SD17-B-4",
-            SourceContentPayload::Equipment(_) => "SD17-B-5",
+            SourceContentPayload::Equipment(..) => "SD17-B-5",
             SourceContentPayload::Metadata(_) => "SD17-B-6",
         }
     }

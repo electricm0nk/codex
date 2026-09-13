@@ -24,6 +24,7 @@ use crate::rules_core::rules_tables::{
     ultimate_combat as uc, ultimate_equipment as ue, ultimate_intrigue as ui,
     equipment_gap_tables, ultimate_magic as um, ultimate_psionics as upsi, RuleSetId,
 };
+use crate::rules_core::equipment_record::CorpusEquipmentRecord;
 use crate::rules_core::source_content::{SourceContentKind, SourcePackageContent};
 
 /// The record's `KEY:` token, if the corpus line carried one. PCGen
@@ -61,14 +62,40 @@ pub fn equipment_id_resolve<'a>(
     rule_set: RuleSetId,
     corpus: &SourcePackageContent<'a>,
 ) -> Option<(&'a EquipmentRecord, Option<TableCellRef>)> {
+    resolve_equipment_pair(item_id, rule_set, corpus)
+        .map(|(record, _converted, table_cell)| (record, table_cell))
+}
+
+/// The same resolution as [`equipment_id_resolve`], answering with the live
+/// side's own converted record rather than the ingest-format parser row.
+///
+/// SD-35 `AT-35-E6-003-RULED` cycle 10. A consumer that needs a settled value
+/// -- a weight, a price, an ability-score enhancement -- asks here and never
+/// names `pcgen_import` at all (`decisions.md` §11, §19). Identity, ordering
+/// and every fallback are one function with [`equipment_id_resolve`], so the
+/// two can never answer with different records.
+pub fn equipment_converted_resolve<'a>(
+    item_id: &str,
+    corpus: &SourcePackageContent<'a>,
+) -> Option<&'a CorpusEquipmentRecord> {
+    resolve_equipment_pair(item_id, RuleSetId::Crb, corpus)
+        .map(|(_record, converted, _table_cell)| converted)
+}
+
+#[allow(clippy::type_complexity)]
+fn resolve_equipment_pair<'a>(
+    item_id: &str,
+    rule_set: RuleSetId,
+    corpus: &SourcePackageContent<'a>,
+) -> Option<(&'a EquipmentRecord, &'a CorpusEquipmentRecord, Option<TableCellRef>)> {
     let needle = item_id.strip_prefix("item:").unwrap_or(item_id);
     let normalized_needle = normalize_equipment_name(needle);
 
-    let records: Vec<&'a EquipmentRecord> = corpus
+    let pairs: Vec<(&'a EquipmentRecord, &'a CorpusEquipmentRecord)> = corpus
         .records_by_kind(SourceContentKind::Equipment)
         .into_iter()
         .filter_map(|record| match record.payload {
-            SourceContentPayload::Equipment(equip) => Some(equip),
+            SourceContentPayload::Equipment(equip, converted) => Some((equip, converted)),
             _ => None,
         })
         .collect();
@@ -104,24 +131,24 @@ pub fn equipment_id_resolve<'a>(
     // the widest: `general/potion.json` (the empty flask) against fifty-odd
     // `Potion of ...`/`Oil of ...` magic items whose display name is likewise
     // `Potion`. Identity resolves every one of them to the right record.
-    for equip in &records {
+    for (equip, converted) in &pairs {
         let identity = equipment_key_token(equip).unwrap_or(&equip.name);
         if identity == needle || identity == item_id {
-            return Some((equip, table_cell_for(rule_set, identity)));
+            return Some((equip, converted, table_cell_for(rule_set, identity)));
         }
     }
 
-    for equip in &records {
+    for (equip, converted) in &pairs {
         if equip.name == needle || equip.name == item_id {
             let key = equipment_key_token(equip).unwrap_or(&equip.name);
-            return Some((equip, table_cell_for(rule_set, key)));
+            return Some((equip, converted, table_cell_for(rule_set, key)));
         }
     }
 
-    for equip in &records {
+    for (equip, converted) in &pairs {
         if normalize_equipment_name(&equip.name) == normalized_needle {
             let key = equipment_key_token(equip).unwrap_or(&equip.name);
-            return Some((equip, table_cell_for(rule_set, key)));
+            return Some((equip, converted, table_cell_for(rule_set, key)));
         }
     }
 

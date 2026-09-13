@@ -54,7 +54,9 @@ use crate::rules_core::equipment_effects::equipmods::WeaponEnhancementBonus;
 use crate::rules_core::equipment_effects::general::{SkillCheckBonus, VarBonus};
 use crate::rules_core::equipment_effects::intelligent_item::IntelligentItemContribution;
 use crate::rules_core::equipment_effects::magic_items::AbilityScoreBonus;
-use crate::rules_core::equipment_resolver::{equipment_id_resolve, equipment_key_token};
+use crate::rules_core::equipment_resolver::{
+    equipment_converted_resolve, equipment_id_resolve, equipment_key_token,
+};
 use crate::rules_core::pilot_compute_corpus::TableCellRef;
 use crate::rules_core::rules_tables::crb::equipment_tables::{equipment_tables, EquipmentCategory};
 use crate::rules_core::rules_tables::RuleSetId;
@@ -321,7 +323,11 @@ pub fn compute_equipment_effects(
         // type treats it as a plain string) rather than the gate itself.
         let effect = resolve_category_effect(record, RuleSetId::Crb, corpus);
         let skill_bonus = general::compute_general_effect(record);
-        let ability_bonus = magic_items::compute_magic_items_effect(record);
+        // SD-35 `AT-35-E6-003-RULED` cycle 10: the ability-score enhancement is
+        // a settled value on the converted record, resolved by the same
+        // identity rule that resolved the parser row beside it.
+        let ability_bonus = equipment_converted_resolve(&selection.item_id, corpus)
+            .and_then(magic_items::compute_magic_items_effect);
         let mut weapon_enhancement_bonus = equipmods::compute_equipmods_effect(record);
         // SD-33 remediation wave 6 (`AT-33-E5-003`'s escalated
         // `rending_claw_blades` blocker): fold the record's own `EQMOD:`-
@@ -513,7 +519,7 @@ fn resolve_intelligent_item_contribution(
     let mut total = IntelligentItemContribution::default();
     let mut found = false;
     for modifier_item_id in applied_modifiers {
-        let Some((record, _table_cell)) = equipment_id_resolve(modifier_item_id, RuleSetId::Crb, corpus) else {
+        let Some(record) = equipment_converted_resolve(modifier_item_id, corpus) else {
             continue;
         };
         if let Some(contribution) = intelligent_item::compute_intelligent_item_effect(record) {
