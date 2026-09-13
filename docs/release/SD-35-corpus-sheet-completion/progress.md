@@ -181,6 +181,73 @@ re-measured at the cut by the launch-readiness audit.
 
 ## Cycle log
 
+### 2026-09-13 — Epic 6 / `desktop-and-prose-leave-pcgen` — AT-35-E6-003-RULED **cycle 16** (`16f7fac9b0`) — **partial** (the description renderer leaves the live side; the `renderer` group clears whole. Residue `6 / 10 → 5 / 5`)
+
+**Receipt:** `artifacts/epic-6-pcgen-exit/AT-35-E6-003-RULED_cycle16_receipt.md`. Cycle start `40f5d4f67a`.
+
+`SCOPE_GATE: EXEMPT (Epic 6 cycle — closes zero corpus units by design; decisions.md §2)`. It ran
+anyway at the start tree: `scoped=0 remaining_non_done=0 floor=500 verdict=PASS_WHOLE_REMAINDER`.
+The residue check, which is not exempt, ran first and passed at exactly cycle 15's closing figure:
+`live_files=6 live_hits=10 baseline_files=260 baseline_hits=12736 verdict=PASS`.
+
+**The `renderer` group — cycle 15's own named next-cycle scope and the largest remaining one — is
+cleared whole**, and with it `class_feature_grant_consumer.rs`'s last `pcgen_import` hits. The five
+calls handed a corpus record's **stored** source description string to the converter's prose
+renderer at request time. Cycle 2 measured a **different** replacement — rendering the converted
+RULE's own prose — and refused it on **97,332 of 660,320** disagreements; that is a **content** gap
+on the converter side and this cycle did not reopen it. It applied cycle 15's shape instead:
+`pcgen_import::desc_template_convert` runs the renderer's own scan, **branch for branch**, at
+ingest and emits an ordered op list; `rules_core::desc_template` walks that list with a plain
+`name -> i64` map; `data/converted/record_vars.json` gains `desc_templates` — **16,508 records**,
+keyed by corpus `KEY:` under the live table's own first-record-wins guards. **No corpus record file
+was rewritten**; the one `data/` file touched is the generated converted artifact, which carries no
+licence block and no `pi_*` stamp.
+
+**Byte parity is proved over the real corpus, not a fixture, by four new whole-corpus tests** that
+compare `text` **and** `dropped_args` field for field: every described `class_feature` record both
+ways under six value environments derived from its own slots, every other record kind's description
+under two, the served table's keys against the artifact's key for key in both directions, and the
+live table's own records both ways. **0 disagreements.**
+
+**The discovery, and it generalises:** the gap cycle 2 measured was never the gap in the way.
+Fourteen cycles carried this group forward on one number that is about a *content* substitution;
+removing the converter *call* never required making those two agree. **A refusal carried forward on
+a measured number is still only a refusal of the option that was measured.**
+
+**One `correction`:** cycle 15's receipt called `corpus_loader`'s boundary call *"the live side's
+last converter CALL of any kind"*. It was not — `derived_evaluator_fixture_check.rs:668/1011/1380`
+call `pcgen_import::ingest_record::{first_token_value,token_values}` in shipping code, and the gate
+counts that file's `use` line only, so a call count read off the hit count is wrong by
+construction. The cycle-16 census now asserts those three **by file and symbol**.
+
+**Verified once at the final tree, no red:** `NO_RUN_EXIT=0`; lib `3380 passed; 0 failed; 16
+ignored` (cycle 15's 3,365 + exactly this cycle's 15 new tests); full workspace `FULL_EXIT=0`,
+**8,909 passed / 0 failed / 69 ignored** across 419 targets + Doc-tests; `cargo clippy --locked
+--tests` **0 warnings**; `sheet_rule_convert -- --check` `records=49438 converted=49296 refused=142
+rules=70135 var_tables=5293 verdict=PASS`; `gen_record_vars -- --check` `desc_templates=16508
+verdict=PASS`; `data/sheet_rules/` ingest-syntax grep **0**; `completion_atlas` `citation_failures=0`;
+`token_coverage` `non_done=0 refused=142 PASS`; `shape_engine_boundary` `not_held_by_engine=0`;
+`missing_engine_tables` `population=0`; `denominator_gate` `files_checked=145 violations=0`;
+`verify.sh --only pi-sweep` PASS; 27 gate unit tests OK. The desktop crate and frontend run at the
+**epic wrap-up** — this cycle wrote no line under `apps/`. `corpus_literal_sweep` and
+`v06_work_inventory` did not run and are named: no file under `data/corpus/` changed, so neither
+population can move.
+
+```
+closed=0 relabeled=0 rust_lines_changed=982 ratio=n/a builds_recorded=4 pcgen_live_files=5
+```
+
+**PCGen residue:** `live_files=5 live_hits=5 baseline_files=260 baseline_hits=12736 verdict=PASS` —
+files down 1 from 6, hits down 5 from 10, **and the instrument was not touched** (`git diff
+--name-only 40f5d4f67a..HEAD -- scripts/` is empty). No path exempted, no regex weakened, no
+rebaseline; the renderer group's regex is byte-identical to cycle 15's and simply matches nothing
+under a live root any more. `root apps/desktop files=0 hits=0` held.
+
+**`partial`** — refused tokens `source_content_payload=3, ingest_record_tokens=1,
+trait_and_pool_tokens=1` (**5 hits / 5 files, summing**, all under `src/rules_core/`), one group
+fewer than cycle 15. `deferral 1789322625032-at-35-e6-003-ruled-cdb2a1`,
+`correction 1789322472855-at-35-e6-003-ruled-faf3f9`.
+
 ### 2026-09-13 — Epic 6 / `desktop-and-prose-leave-pcgen` — AT-35-E6-003-RULED **cycle 15** (`4b77b31ee3`) — **partial** (the live loader stops calling the converter at all; `data/corpus/` carries the settled fields itself. Residue `7 / 12 → 6 / 10`)
 
 **Receipt:** `artifacts/epic-6-pcgen-exit/AT-35-E6-003-RULED_cycle15_receipt.md`. Cycle start `66b36389b3`.
