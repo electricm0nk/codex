@@ -81,7 +81,7 @@ pub const SOURCE_IR_VERSION: u32 = 1;
 /// path-typed parsers, verbatim for string-typed ones). `line` is
 /// the one-based line number the parser captured for the
 /// record's first directive.
-#[derive(Debug, Clone, PartialEq, Eq, Hash)]
+#[derive(Debug, Clone, PartialEq, Eq, Hash, serde::Serialize, serde::Deserialize)]
 pub struct SourceRef {
     /// Identity of the LST file the record originated from.
     pub lst_file: String,
@@ -300,6 +300,25 @@ impl<'a> SourceContentRecord<'a> {
         record: &'a crate::rules_core::spell_record::CorpusSpellRecord,
     ) -> Self {
         Self::new(source_ref, SourceContentKind::Spell, SourceContentPayload::Spell(record))
+    }
+
+    /// Build the canonical envelope for an equipment item the live side already
+    /// holds in converted form.
+    ///
+    /// SD-35 `AT-35-E6-003-RULED` cycle 15, the equipment sibling of
+    /// [`SourceContentRecord::spell`] and for the same reason. Since cycle 13
+    /// the `Equipment` payload has been the settled
+    /// [`CorpusEquipmentRecord`](crate::rules_core::equipment_record::CorpusEquipmentRecord)
+    /// rather than a parser row, so wrapping one needs no converter at all —
+    /// only the provenance anchor and the record. `corpus_loader` reads both
+    /// out of the book's settled bundle; a record that came from a raw `.lst`
+    /// row still goes through
+    /// [`crate::pcgen_import::ir_converter::convert_equipment_record`] instead.
+    pub fn equipment(
+        source_ref: SourceRef,
+        record: &'a crate::rules_core::equipment_record::CorpusEquipmentRecord,
+    ) -> Self {
+        Self::new(source_ref, SourceContentKind::Equipment, SourceContentPayload::Equipment(record))
     }
 }
 

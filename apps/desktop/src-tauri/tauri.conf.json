@@ -34,7 +34,8 @@
       "resources/authoring_workbench/guard-stance-package/",
       "resources/corpus_fixtures/",
       "resources/corpus_fixtures/spell/",
-      "resources/corpus_fixtures/equipment/"
+      "resources/corpus_fixtures/equipment/",
+      "resources/corpus_fixtures/_settled/"
     ],
     "icon": [
       "icons/icon.png",

@@ -49,6 +49,7 @@ pub mod size;
 pub mod skill_allocation;
 pub mod skinwalker_change_shape;
 pub mod source_content;
+pub mod settled_corpus;
 pub mod spell_record;
 pub mod spell_resolver;
 pub mod spellbook;

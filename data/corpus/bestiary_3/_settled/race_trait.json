@@ -1,0 +1,175 @@
+{
+  "kind": "race_trait",
+  "records": {
+    "catfolk/adopted_race_catfolk.json": {
+      "adopted_race_pool_suffix": "Catfolk Race Trait",
+      "automatic_trait_grants": [],
+      "category": "Special Ability",
+      "declared_bonuses": {
+        "ability_adjustments": [],
+        "ability_pool_picks": 0,
+        "magnitudes": [],
+        "magnitudes_excluding_flags": [],
+        "only_internal_flags": false,
+        "target_bonuses": [],
+        "var_contributions": []
+      },
+      "declared_size": null,
+      "declared_vision": [],
+      "declared_walk_speed_ft": null,
+      "declares_negated_ability_guard": false,
+      "description": null,
+      "exclusion_guard_flags": [],
+      "is_racial_default": false,
+      "key": "Adopted Race ~ Catfolk",
+      "name": "Catfolk",
+      "negated_fact_gates": [],
+      "positive_prefact_flag": null,
+      "race_key": "Catfolk",
+      "sets_replace_flags": [],
+      "skinwalker_change_shape_kin": null,
+      "source_page": null,
+      "suppressed_by_flag": null,
+      "template_bonus_languages": [],
+      "type_tokens": [
+        "AdoptiveRace"
+      ]
+    },
+    "ratfolk/adopted_race_ratfolk.json": {
+      "adopted_race_pool_suffix": "Ratfolk Race Trait",
+      "automatic_trait_grants": [],
+      "category": "Special Ability",
+      "declared_bonuses": {
+        "ability_adjustments": [],
+        "ability_pool_picks": 0,
+        "magnitudes": [],
+        "magnitudes_excluding_flags": [],
+        "only_internal_flags": false,
+        "target_bonuses": [],
+        "var_contributions": []
+      },
+      "declared_size": null,
+      "declared_vision": [],
+      "declared_walk_speed_ft": null,
+      "declares_negated_ability_guard": false,
+      "description": null,
+      "exclusion_guard_flags": [],
+      "is_racial_default": false,
+      "key": "Adopted Race ~ Ratfolk",
+      "name": "Ratfolk",
+      "negated_fact_gates": [],
+      "positive_prefact_flag": null,
+      "race_key": "Ratfolk",
+      "sets_replace_flags": [],
+      "skinwalker_change_shape_kin": null,
+      "source_page": null,
+      "suppressed_by_flag": null,
+      "template_bonus_languages": [],
+      "type_tokens": [
+        "AdoptiveRace"
+      ]
+    },
+    "suli/adopted_race_suli.json": {
+      "adopted_race_pool_suffix": "Suli Race Trait",
+      "automatic_trait_grants": [],
+      "category": "Special Ability",
+      "declared_bonuses": {
+        "ability_adjustments": [],
+        "ability_pool_picks": 0,
+        "magnitudes": [],
+        "magnitudes_excluding_flags": [],
+        "only_internal_flags": false,
+        "target_bonuses": [],
+        "var_contributions": []
+      },
+      "declared_size": null,
+      "declared_vision": [],
+      "declared_walk_speed_ft": null,
+      "declares_negated_ability_guard": false,
+      "description": null,
+      "exclusion_guard_flags": [],
+      "is_racial_default": false,
+      "key": "Adopted Race ~ Suli",
+      "name": "Suli",
+      "negated_fact_gates": [],
+      "positive_prefact_flag": null,
+      "race_key": "Suli",
+      "sets_replace_flags": [],
+      "skinwalker_change_shape_kin": null,
+      "source_page": null,
+      "suppressed_by_flag": null,
+      "template_bonus_languages": [],
+      "type_tokens": [
+        "AdoptiveRace"
+      ]
+    },
+    "vanara/adopted_race_vanara.json": {
+      "adopted_race_pool_suffix": "Vanara Race Trait",
+      "automatic_trait_grants": [],
+      "category": "Special Ability",
+      "declared_bonuses": {
+        "ability_adjustments": [],
+        "ability_pool_picks": 0,
+        "magnitudes": [],
+        "magnitudes_excluding_flags": [],
+        "only_internal_flags": false,
+        "target_bonuses": [],
+        "var_contributions": []
+      },
+      "declared_size": null,
+      "declared_vision": [],
+      "declared_walk_speed_ft": null,
+      "declares_negated_ability_guard": false,
+      "description": null,
+      "exclusion_guard_flags": [],
+      "is_racial_default": false,
+      "key": "Adopted Race ~ Vanara",
+      "name": "Vanara",
+      "negated_fact_gates": [],
+      "positive_prefact_flag": null,
+      "race_key": "Vanara",
+      "sets_replace_flags": [],
+      "skinwalker_change_shape_kin": null,
+      "source_page": null,
+      "suppressed_by_flag": null,
+      "template_bonus_languages": [],
+      "type_tokens": [
+        "AdoptiveRace"
+      ]
+    },
+    "vishkanya/adopted_race_vishkanya.json": {
+      "adopted_race_pool_suffix": "Vishkanya Race Trait",
+      "automatic_trait_grants": [],
+      "category": "Special Ability",
+      "declared_bonuses": {
+        "ability_adjustments": [],
+        "ability_pool_picks": 0,
+        "magnitudes": [],
+        "magnitudes_excluding_flags": [],
+        "only_internal_flags": false,
+        "target_bonuses": [],
+        "var_contributions": []
+      },
+      "declared_size": null,
+      "declared_vision": [],
+      "declared_walk_speed_ft": null,
+      "declares_negated_ability_guard": false,
+      "description": null,
+      "exclusion_guard_flags": [],
+      "is_racial_default": false,
+      "key": "Adopted Race ~ Vishkanya",
+      "name": "Vishkanya",
+      "negated_fact_gates": [],
+      "positive_prefact_flag": null,
+      "race_key": "Vishkanya",
+      "sets_replace_flags": [],
+      "skinwalker_change_shape_kin": null,
+      "source_page": null,
+      "suppressed_by_flag": null,
+      "template_bonus_languages": [],
+      "type_tokens": [
+        "AdoptiveRace"
+      ]
+    }
+  }
+}

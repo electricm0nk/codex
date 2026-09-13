@@ -82,7 +82,7 @@ use crate::rules_core::equipment_effects::EquipmentStatEffect;
 /// `None` on an optional field is honest absence -- the source record does not
 /// state that value -- never a fabricated zero. This is the same discipline
 /// the consumer modules stated before the values moved here.
-#[derive(Debug, Clone, Default, PartialEq)]
+#[derive(Debug, Clone, Default, PartialEq, serde::Serialize, serde::Deserialize)]
 pub struct CorpusEquipmentRecord {
     /// The item's corpus identity: its own key when the source record carried
     /// one, else its name. The same rule

@@ -104,6 +104,7 @@ use crate::rules_core::feat_effects::FeatDisplayValueDeltas;
 // run time. It renders the converted rule's own prose instead, through our own schema.
 use crate::rules_core::pilot_compute::resolved_prose::{self, DisplayValues, RenderedProse};
 use crate::rules_core::race_record::{CorpusRaceRecord, CorpusRaceTraitRecord};
+use crate::rules_core::settled_corpus;
 use crate::rules_core::shape_b_v1::{validate_license, CorpusRecordV1, CorpusSource};
 use crate::rules_core::size::SizeCategory;
 
@@ -606,10 +607,24 @@ impl RaceCorpus {
         if !dir.is_dir() {
             return;
         }
+        // SD-35 `AT-35-E6-003-RULED` cycle 15: the settled chassis records this
+        // book states, read as DATA. Cycle 14 settled the twelve run-time token
+        // readings; this cycle moves the CALL that produced them to authoring
+        // time (`src/bin/gen_settled_corpus.rs`), so this resolver asks serde,
+        // not the converter. A book whose bundle is absent or malformed
+        // contributes nothing and says so by name.
+        let bundle = match settled_corpus::read_race_bundle(root.dir) {
+            Ok(bundle) => bundle,
+            Err(err) => {
+                self.push_diag(&dir, err.to_string());
+                return;
+            }
+        };
         for path in find_json_files(&dir) {
-            let Some(record) = self.read_record::<serde_json::Value>(&path) else { continue };
-            let Some(data) = crate::rules_core::corpus_loader::corpus_race_record(&record.data) else {
-                self.push_diag(&path, "\"data\" is not a race chassis payload".to_string());
+            let Some(record) = self.read_record::<serde::de::IgnoredAny>(&path) else { continue };
+            let Some(key) = settled_corpus::bundle_key(&dir, &path) else { continue };
+            let Some(data) = bundle.records.get(&key).cloned() else {
+                self.push_diag(&path, "no settled record in this book's race bundle".to_string());
                 continue;
             };
             let key = data.key.clone();
@@ -638,10 +653,19 @@ impl RaceCorpus {
         if !dir.is_dir() {
             return;
         }
+        // SD-35 `AT-35-E6-003-RULED` cycle 15: see `load_chassis_dir` above.
+        let bundle = match settled_corpus::read_race_trait_bundle(root.dir) {
+            Ok(bundle) => bundle,
+            Err(err) => {
+                self.push_diag(&dir, err.to_string());
+                return;
+            }
+        };
         for path in find_json_files(&dir) {
-            let Some(record) = self.read_record::<serde_json::Value>(&path) else { continue };
-            let Some(data) = crate::rules_core::corpus_loader::corpus_race_trait_record(&record.data) else {
-                self.push_diag(&path, "\"data\" is not a racial-trait payload".to_string());
+            let Some(record) = self.read_record::<serde::de::IgnoredAny>(&path) else { continue };
+            let Some(key) = settled_corpus::bundle_key(&dir, &path) else { continue };
+            let Some(data) = bundle.records.get(&key).cloned() else {
+                self.push_diag(&path, "no settled record in this book's racial-trait bundle".to_string());
                 continue;
             };
             let requires_flag = data.positive_prefact_flag.clone();
@@ -3129,6 +3153,14 @@ mod tests {
             .expect("write");
         }
 
+        // SD-35 `AT-35-E6-003-RULED` cycle 15: the live resolver reads settled
+        // records as data, so a synthetic corpus needs its settled bundle
+        // produced the same way a real book's is -- by the authoring-time
+        // producer, in `#[cfg(test)]` code, which is where `decisions.md` §11
+        // allows the converter to be named.
+        crate::pcgen_import::corpus_settled_bundle::write_bundles_for_book(&dir)
+            .expect("the synthetic book's settled bundles must be produced");
+
         let roots = [BookCorpusRoot { book_id: "synthetic", dir: &dir }];
         let corpus = load_race_corpus(&roots);
         assert!(corpus.diagnostics().is_empty(), "{:?}", corpus.diagnostics());
@@ -3203,6 +3235,11 @@ mod tests {
         fs::write(race_dir.join("broken.json"), "{ not json").expect("write");
         // ...and a well-formed-JSON-but-wrong-shape record.
         fs::write(race_dir.join("wrong_shape.json"), r#"{"population":"in_scope"}"#).expect("write");
+        // The bundle is produced from the same malformed files, so it is
+        // present and EMPTY -- which is what makes the two diagnostics below
+        // per-record ones rather than one "no bundle" diagnostic for the book.
+        crate::pcgen_import::corpus_settled_bundle::write_bundles_for_book(&dir)
+            .expect("the temp book's settled bundle must be produced");
         let roots = [BookCorpusRoot { book_id: "temp", dir: &dir }];
         let corpus = load_race_corpus(&roots);
         assert_eq!(corpus.diagnostics().len(), 2, "{:?}", corpus.diagnostics());

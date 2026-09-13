@@ -810,6 +810,21 @@ const NON_CONTENT_CORPUS_DIRS: &[(&str, &str)] = &[
          the monster chassis compute directly; not a player-legible record \
          and never rendered on its own",
     ),
+    (
+        // SD-35 `AT-35-E6-003-RULED` cycle 15. `_settled/<kind>.json` is a
+        // GENERATED index, not an ingested content kind: one file per kind per
+        // book, written by `src/bin/gen_settled_corpus.rs`, holding the settled
+        // form of records that are already counted under `equipment/`, `race/`
+        // and `race_trait/`. Counting it as a kind would double-count every one
+        // of those 8,761 records and invent three families per book that no
+        // player can reach. It carries no record of its own: every key in it is
+        // the path of a record this gate already walks.
+        "_settled",
+        "a generated per-book index of already-counted equipment/race/race_trait \
+         records in settled form (`gen_settled_corpus`), not an ingested content \
+         kind; every entry is keyed by the path of a record this gate already \
+         counts under its own kind directory",
+    ),
 ];
 
 /// Every `(book, kind)` with at least one Shape B v1 record on disk, plus any

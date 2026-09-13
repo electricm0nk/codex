@@ -12,16 +12,23 @@
 //!
 //! # What this module reads, and what it does not
 //!
-//! SD-35 `AT-35-E6-003-RULED` cycle 13. It reads a corpus record's `data`
-//! object and asks
-//! [`crate::pcgen_import::corpus_equipment_json::corpus_equipment_source_record`]
-//! what canonical record that object stands for. It does **not** read the
-//! record's ingest token array or bonus-chain array, and it does not build an
-//! ingest-format parser row: those field names, that traversal and the
-//! `BONUS:` re-spelling are the converter's vocabulary and moved to the
-//! converter's side of the boundary (`decisions.md` §11, §19). The envelope
-//! this loader pushes carries the settled
+//! SD-35 `AT-35-E6-003-RULED` cycle 15. It reads **settled data and nothing
+//! else**: the book's own
+//! [`_settled/<kind>.json` bundle](crate::rules_core::settled_corpus), through
+//! serde. It does not read a record's ingest token array or bonus-chain array,
+//! does not build an ingest-format parser row, and — as of this cycle — does
+//! not call the converter at run time to ask what a corpus `data` object stands
+//! for either. That question is answered once, at authoring time, by
+//! `src/bin/gen_settled_corpus.rs`; the field names, the traversal and the
+//! `BONUS:` re-spelling stay on the converter's side of the boundary
+//! (`decisions.md` §11, §19). The envelope this loader pushes carries the
+//! settled
 //! [`crate::rules_core::equipment_record::CorpusEquipmentRecord`] alone.
+//!
+//! **This module names no converter module at all.** Cycles 13 and 14 booked
+//! the two boundary calls that remained here as the `corpus_json_boundary`
+//! group and named this cycle's change as their clearing condition; both are
+//! gone, and so is the whole file's presence on the residue gate's list.
 //!
 //! A record enriched with the two ingest arrays settles a full, accurate set
 //! of values. A record without them (not yet enriched, or a
@@ -40,6 +47,8 @@ use std::path::Path;
 // `.lst` fixture rows at run time; that package is produced at build time now
 // by `src/bin/gen_desktop_fixture_corpus.rs` and read as data through
 // [`load_book_corpus`] below, so no live path parses a PCGen row any more.
+use crate::rules_core::equipment_record::CorpusEquipmentRecord;
+use crate::rules_core::settled_corpus;
 use crate::rules_core::source_content::{SourceContentRecord, SourcePackageContent, SourceRef};
 use crate::rules_core::spell_record::CorpusSpellRecord;
 
@@ -70,74 +79,45 @@ pub fn load_equipment_corpus<'a>(roots: &[BookCorpusRoot<'_>]) -> SourcePackageC
         if !equipment_dir.is_dir() {
             continue;
         }
-        for path in find_json_files(&equipment_dir) {
-            let Ok(text) = fs::read_to_string(&path) else {
-                package.push_diagnostic(load_diagnostic(&path, "failed to read file"));
+        // SD-35 `AT-35-E6-003-RULED` cycle 15: the settled records this book
+        // states, read as DATA. Cycle 13 moved the ingest-format reading to
+        // `pcgen_import::corpus_equipment_json`; this cycle moves the CALL to
+        // authoring time (`src/bin/gen_settled_corpus.rs`), so the live loader
+        // asks serde, not the converter. A book whose bundle is absent or
+        // malformed contributes nothing and says so by name -- it never
+        // silently degrades to an empty book.
+        let bundle = match settled_corpus::read_equipment_bundle(root.dir) {
+            Ok(bundle) => bundle,
+            Err(err) => {
+                package.push_diagnostic(load_diagnostic(&equipment_dir, &err.to_string()));
                 continue;
-            };
-            let Ok(value) = serde_json::from_str::<serde_json::Value>(&text) else {
-                package.push_diagnostic(load_diagnostic(&path, "failed to parse as JSON"));
-                continue;
-            };
-            let Some(data) = value.get("data") else {
-                package.push_diagnostic(load_diagnostic(&path, "no top-level \"data\" object"));
-                continue;
-            };
-            // SD-35 `AT-35-E6-003-RULED` cycle 13: ONE question, asked at the
-            // ingest boundary -- "what canonical record does this corpus JSON
-            // object stand for?". Before this cycle this function read the
-            // record's own ingest token array and bonus-chain array, rebuilt an
-            // ingest-format parser row out of them and ran the converter over
-            // that row, all on the live side. The field names, the traversal
-            // and the `BONUS:` re-spelling are converter vocabulary
-            // (`decisions.md` §11), so they moved whole to
-            // `pcgen_import::corpus_equipment_json` and this loader names no
-            // token, no token array and no parser row.
-            match crate::pcgen_import::corpus_equipment_json::corpus_equipment_source_record(data) {
-                Some(record) => package.push(record),
-                None => package.push_diagnostic(load_diagnostic(&path, "\"data\" is missing key/name")),
             }
+        };
+        for path in find_json_files(&equipment_dir) {
+            let Some(key) = settled_corpus::bundle_key(&equipment_dir, &path) else { continue };
+            let Some(entry) = bundle.records.get(&key) else {
+                package.push_diagnostic(load_diagnostic(&path, "no settled record in this book's bundle"));
+                continue;
+            };
+            let record: &'static CorpusEquipmentRecord = Box::leak(Box::new(entry.record.clone()));
+            package.push(SourceContentRecord::equipment(entry.source_ref.clone(), record));
         }
     }
     package
 }
 
-// SD-35 `AT-35-E6-003-RULED` cycle 14: the ingest boundary asks the SAME
-// question for a race and a racial trait that cycle 13 taught it to ask for a
-// piece of equipment -- "what canonical record does this corpus JSON object
-// stand for?". Both live here, in the loader, because THIS module is the live
-// side's one ingest boundary; before this cycle `race_resolver` held its own
-// three `use crate::pcgen_import::...` lines and re-read the ingest token and
-// bonus-chain arrays on every accessor call (`decisions.md` §11, §19).
+// SD-35 `AT-35-E6-003-RULED` cycle 15: the two race boundary functions cycle
+// 14 parked here are GONE, and with them this module's last two
+// `pcgen_import` names. They existed to ask the converter "what settled record
+// does this corpus JSON object stand for?" at run time; that question is
+// answered once now, at authoring time, by `src/bin/gen_settled_corpus.rs`,
+// and `race_resolver` reads the answer out of the book's own
+// `_settled/race.json` / `_settled/race_trait.json` bundle with serde --
+// exactly as `load_equipment_corpus` above does for its own kind.
 //
-// BOOKED HONESTLY: this is a RELABEL for one hit and a CLOSURE for three. The
-// eleven run-time token readings left the live side for good; the boundary
-// call itself did not vanish -- it moved from `race_resolver` into the file
-// that already owned the boundary, and this module's own hit count rises by
-// one as a result. It clears the same way the equipment one does: when
-// `data/corpus/` race JSON carries the settled fields itself.
-use crate::pcgen_import::corpus_race_json;
-
-/// The settled [`CorpusRaceRecord`](crate::rules_core::race_record::CorpusRaceRecord)
-/// one `data/corpus/<book>/race/<slug>.json` record's `data` object stands for.
-///
-/// `None` when the object is not a race payload at all; the caller records the
-/// skip as a diagnostic rather than dropping it silently.
-pub(crate) fn corpus_race_record(
-    data: &serde_json::Value,
-) -> Option<crate::rules_core::race_record::CorpusRaceRecord> {
-    corpus_race_json::corpus_race_source_record(data)
-}
-
-/// The settled
-/// [`CorpusRaceTraitRecord`](crate::rules_core::race_record::CorpusRaceTraitRecord)
-/// one `data/corpus/<book>/race_trait/<race>/<slug>.json` record's `data`
-/// object stands for.
-pub(crate) fn corpus_race_trait_record(
-    data: &serde_json::Value,
-) -> Option<crate::rules_core::race_record::CorpusRaceTraitRecord> {
-    corpus_race_json::corpus_race_trait_source_record(data)
-}
+// Cycle 14 booked the relabel honestly and named this as its clearing
+// condition in these words: "it clears when `data/corpus/` race JSON carries
+// the settled fields itself." It does now.
 
 /// Loads every spell record from every given book's corpus directory into
 /// one `SourcePackageContent`, the spell-side sibling of

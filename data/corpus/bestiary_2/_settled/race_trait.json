@@ -1,0 +1,3843 @@
+{
+  "kind": "race_trait",
+  "records": {
+    "dhampir/adopted_race_dhampir.json": {
+      "adopted_race_pool_suffix": "Dhampir Race Trait",
+      "automatic_trait_grants": [],
+      "category": "Special Ability",
+      "declared_bonuses": {
+        "ability_adjustments": [],
+        "ability_pool_picks": 0,
+        "magnitudes": [],
+        "magnitudes_excluding_flags": [],
+        "only_internal_flags": false,
+        "target_bonuses": [],
+        "var_contributions": []
+      },
+      "declared_size": null,
+      "declared_vision": [],
+      "declared_walk_speed_ft": null,
+      "declares_negated_ability_guard": false,
+      "description": null,
+      "exclusion_guard_flags": [],
+      "is_racial_default": false,
+      "key": "Adopted Race ~ Dhampir",
+      "name": "Dhampir",
+      "negated_fact_gates": [],
+      "positive_prefact_flag": null,
+      "race_key": "Dhampir",
+      "sets_replace_flags": [],
+      "skinwalker_change_shape_kin": null,
+      "source_page": null,
+      "suppressed_by_flag": null,
+      "template_bonus_languages": [],
+      "type_tokens": [
+        "AdoptiveRace"
+      ]
+    },
+    "dhampir/dhampir_ability_scores.json": {
+      "adopted_race_pool_suffix": null,
+      "automatic_trait_grants": [],
+      "category": "Special Ability",
+      "declared_bonuses": {
+        "ability_adjustments": [
+          {
+            "codes": "DEX,CHA",
+            "magnitude": "2"
+          },
+          {
+            "codes": "CON",
+            "magnitude": "-2"
+          }
+        ],
+        "ability_pool_picks": 0,
+        "magnitudes": [
+          2,
+          -2
+        ],
+        "magnitudes_excluding_flags": [
+          2,
+          -2
+        ],
+        "only_internal_flags": false,
+        "target_bonuses": [
+          {
+            "keyword": "STAT",
+            "magnitude": 2,
+            "target": "DEX,CHA"
+          },
+          {
+            "keyword": "STAT",
+            "magnitude": -2,
+            "target": "CON"
+          }
+        ],
+        "var_contributions": []
+      },
+      "declared_size": null,
+      "declared_vision": [],
+      "declared_walk_speed_ft": null,
+      "declares_negated_ability_guard": false,
+      "description": "Dhampirs are fast and seductive, but their mortal vigor is impeded.",
+      "exclusion_guard_flags": [],
+      "is_racial_default": true,
+      "key": "Dhampir ~ Ability Scores",
+      "name": "+2 Dexterity, +2 Charisma, -2 Constitution",
+      "negated_fact_gates": [
+        [
+          "Dhampir_ReplaceAbilityScores"
+        ]
+      ],
+      "positive_prefact_flag": null,
+      "race_key": "Dhampir",
+      "sets_replace_flags": [],
+      "skinwalker_change_shape_kin": null,
+      "source_page": null,
+      "suppressed_by_flag": "Dhampir_ReplaceAbilityScores",
+      "template_bonus_languages": [],
+      "type_tokens": [
+        "RacialTraits",
+        "Dhampir Racial Trait",
+        "Dhampir Racial Default",
+        "SpecialQuality",
+        "Racial Ability Scores"
+      ]
+    },
+    "dhampir/dhampir_languages.json": {
+      "adopted_race_pool_suffix": null,
+      "automatic_trait_grants": [],
+      "category": "Special Ability",
+      "declared_bonuses": {
+        "ability_adjustments": [],
+        "ability_pool_picks": 0,
+        "magnitudes": [],
+        "magnitudes_excluding_flags": [],
+        "only_internal_flags": false,
+        "target_bonuses": [],
+        "var_contributions": []
+      },
+      "declared_size": null,
+      "declared_vision": [],
+      "declared_walk_speed_ft": null,
+      "declares_negated_ability_guard": false,
+      "description": "Dhampirs begin play speaking Common. Dhampirs with high Intelligence scores can choose any languages they want (except secret languages, such as Druidic).",
+      "exclusion_guard_flags": [],
+      "is_racial_default": true,
+      "key": "Dhampir ~ Languages",
+      "name": "Languages",
+      "negated_fact_gates": [
+        [
+          "Dhampir_ReplaceLanguages"
+        ]
+      ],
+      "positive_prefact_flag": null,
+      "race_key": "Dhampir",
+      "sets_replace_flags": [],
+      "skinwalker_change_shape_kin": null,
+      "source_page": null,
+      "suppressed_by_flag": "Dhampir_ReplaceLanguages",
+      "template_bonus_languages": [
+        "Any Spoken"
+      ],
+      "type_tokens": [
+        "RacialTraits",
+        "Dhampir Racial Trait",
+        "Dhampir Racial Default",
+        "SpecialQuality",
+        "Racial Language"
+      ]
+    },
+    "dhampir/dhampir_negative_energy_affinity.json": {
+      "adopted_race_pool_suffix": null,
+      "automatic_trait_grants": [
+        "Universal Monster Rule ~ Negative Energy Affinity"
+      ],
+      "category": "Special Ability",
+      "declared_bonuses": {
+        "ability_adjustments": [],
+        "ability_pool_picks": 0,
+        "magnitudes": [
+          1
+        ],
+        "magnitudes_excluding_flags": [],
+        "only_internal_flags": true,
+        "target_bonuses": [
+          {
+            "keyword": "VAR",
+            "magnitude": 1,
+            "target": "UMR_NegativeEnergyAffinity_SpecificDesc"
+          }
+        ],
+        "var_contributions": [
+          {
+            "amount": 1,
+            "name": "UMR_NegativeEnergyAffinity_SpecificDesc"
+          }
+        ]
+      },
+      "declared_size": null,
+      "declared_vision": [],
+      "declared_walk_speed_ft": null,
+      "declares_negated_ability_guard": false,
+      "description": "Though they're living creatures, dhampirs react to positive and negative energy as if they were undead; positive energy harms them, and negative energy heals them.",
+      "exclusion_guard_flags": [],
+      "is_racial_default": true,
+      "key": "Dhampir ~ Negative Energy Affinity",
+      "name": "Negative Energy Affinity",
+      "negated_fact_gates": [
+        [
+          "Dhampir_ReplaceEnergyAffinity"
+        ]
+      ],
+      "positive_prefact_flag": null,
+      "race_key": "Dhampir",
+      "sets_replace_flags": [],
+      "skinwalker_change_shape_kin": null,
+      "source_page": null,
+      "suppressed_by_flag": "Dhampir_ReplaceEnergyAffinity",
+      "template_bonus_languages": [],
+      "type_tokens": [
+        "RacialTraits",
+        "Dhampir Racial Trait",
+        "Dhampir Racial Default"
+      ]
+    },
+    "dhampir/dhampir_resist_level_drain.json": {
+      "adopted_race_pool_suffix": null,
+      "automatic_trait_grants": [],
+      "category": "Special Ability",
+      "declared_bonuses": {
+        "ability_adjustments": [],
+        "ability_pool_picks": 0,
+        "magnitudes": [],
+        "magnitudes_excluding_flags": [],
+        "only_internal_flags": false,
+        "target_bonuses": [],
+        "var_contributions": []
+      },
+      "declared_size": null,
+      "declared_vision": [],
+      "declared_walk_speed_ft": null,
+      "declares_negated_ability_guard": false,
+      "description": "A dhampir takes no penalties from energy drain effects, though he can still be killed if he accrues more negative levels then he has Hit Dice. After 24 hours, any negative levels a dhampir takes are removed without the need for an additional saving throw.",
+      "exclusion_guard_flags": [],
+      "is_racial_default": true,
+      "key": "Dhampir ~ Resist Level Drain",
+      "name": "Resist Level Drain",
+      "negated_fact_gates": [
+        [
+          "Dhampir_ReplaceResistLevelDrain"
+        ]
+      ],
+      "positive_prefact_flag": null,
+      "race_key": "Dhampir",
+      "sets_replace_flags": [],
+      "skinwalker_change_shape_kin": null,
+      "source_page": null,
+      "suppressed_by_flag": "Dhampir_ReplaceResistLevelDrain",
+      "template_bonus_languages": [],
+      "type_tokens": [
+        "RacialTraits",
+        "Dhampir Racial Trait",
+        "Dhampir Racial Default",
+        "SpecialQuality",
+        "Defensive"
+      ]
+    },
+    "dhampir/dhampir_size.json": {
+      "adopted_race_pool_suffix": null,
+      "automatic_trait_grants": [],
+      "category": "Special Ability",
+      "declared_bonuses": {
+        "ability_adjustments": [],
+        "ability_pool_picks": 0,
+        "magnitudes": [],
+        "magnitudes_excluding_flags": [],
+        "only_internal_flags": false,
+        "target_bonuses": [],
+        "var_contributions": []
+      },
+      "declared_size": "Medium",
+      "declared_vision": [],
+      "declared_walk_speed_ft": null,
+      "declares_negated_ability_guard": false,
+      "description": "Dhampirs are Medium creatures and have no bonuses or penalties due to their size.",
+      "exclusion_guard_flags": [],
+      "is_racial_default": true,
+      "key": "Dhampir ~ Size",
+      "name": "Medium",
+      "negated_fact_gates": [
+        [
+          "Dhampir_ReplaceSize"
+        ]
+      ],
+      "positive_prefact_flag": null,
+      "race_key": "Dhampir",
+      "sets_replace_flags": [],
+      "skinwalker_change_shape_kin": null,
+      "source_page": null,
+      "suppressed_by_flag": "Dhampir_ReplaceSize",
+      "template_bonus_languages": [],
+      "type_tokens": [
+        "RacialTraits",
+        "Dhampir Racial Trait",
+        "Dhampir Racial Default",
+        "SpecialQuality",
+        "Racial Size"
+      ]
+    },
+    "dhampir/dhampir_skilled.json": {
+      "adopted_race_pool_suffix": null,
+      "automatic_trait_grants": [],
+      "category": "Special Ability",
+      "declared_bonuses": {
+        "ability_adjustments": [],
+        "ability_pool_picks": 0,
+        "magnitudes": [
+          2
+        ],
+        "magnitudes_excluding_flags": [
+          2
+        ],
+        "only_internal_flags": false,
+        "target_bonuses": [
+          {
+            "keyword": "SKILL",
+            "magnitude": 2,
+            "target": "Bluff,Perception"
+          }
+        ],
+        "var_contributions": []
+      },
+      "declared_size": null,
+      "declared_vision": [],
+      "declared_walk_speed_ft": null,
+      "declares_negated_ability_guard": false,
+      "description": "Dhampirs gain a +2 racial bonus on Bluff and Perception checks.",
+      "exclusion_guard_flags": [],
+      "is_racial_default": true,
+      "key": "Dhampir ~ Skilled",
+      "name": "Manipulative",
+      "negated_fact_gates": [
+        [
+          "Dhampir_ReplaceSkilled"
+        ]
+      ],
+      "positive_prefact_flag": null,
+      "race_key": "Dhampir",
+      "sets_replace_flags": [],
+      "skinwalker_change_shape_kin": null,
+      "source_page": null,
+      "suppressed_by_flag": "Dhampir_ReplaceSkilled",
+      "template_bonus_languages": [],
+      "type_tokens": [
+        "RacialTraits",
+        "Dhampir Racial Trait",
+        "Dhampir Racial Default",
+        "SpecialQuality",
+        "Extraordinary"
+      ]
+    },
+    "dhampir/dhampir_speed.json": {
+      "adopted_race_pool_suffix": null,
+      "automatic_trait_grants": [],
+      "category": "Special Ability",
+      "declared_bonuses": {
+        "ability_adjustments": [],
+        "ability_pool_picks": 0,
+        "magnitudes": [
+          30
+        ],
+        "magnitudes_excluding_flags": [
+          30
+        ],
+        "only_internal_flags": false,
+        "target_bonuses": [
+          {
+            "keyword": "VAR",
+            "magnitude": 30,
+            "target": "MOVEBASE"
+          }
+        ],
+        "var_contributions": [
+          {
+            "amount": 30,
+            "name": "MOVEBASE"
+          }
+        ]
+      },
+      "declared_size": null,
+      "declared_vision": [],
+      "declared_walk_speed_ft": 30,
+      "declares_negated_ability_guard": false,
+      "description": "Dhampirs have a base speed of 30 feet.",
+      "exclusion_guard_flags": [],
+      "is_racial_default": true,
+      "key": "Dhampir ~ Speed",
+      "name": "Normal Speed",
+      "negated_fact_gates": [
+        [
+          "Dhampir_ReplaceSpeed"
+        ]
+      ],
+      "positive_prefact_flag": null,
+      "race_key": "Dhampir",
+      "sets_replace_flags": [],
+      "skinwalker_change_shape_kin": null,
+      "source_page": null,
+      "suppressed_by_flag": "Dhampir_ReplaceSpeed",
+      "template_bonus_languages": [],
+      "type_tokens": [
+        "RacialTraits",
+        "Dhampir Racial Trait",
+        "Dhampir Racial Default",
+        "SpecialQuality",
+        "Racial Speed"
+      ]
+    },
+    "dhampir/dhampir_spell_like_ability.json": {
+      "adopted_race_pool_suffix": null,
+      "automatic_trait_grants": [
+        "Racial SLA ~ Detect Undead"
+      ],
+      "category": "Special Ability",
+      "declared_bonuses": {
+        "ability_adjustments": [],
+        "ability_pool_picks": 0,
+        "magnitudes": [
+          3
+        ],
+        "magnitudes_excluding_flags": [
+          3
+        ],
+        "only_internal_flags": false,
+        "target_bonuses": [
+          {
+            "keyword": "VAR",
+            "magnitude": 3,
+            "target": "RacialSLA_DetectUndead_Times"
+          }
+        ],
+        "var_contributions": [
+          {
+            "amount": 3,
+            "name": "RacialSLA_DetectUndead_Times"
+          }
+        ]
+      },
+      "declared_size": null,
+      "declared_vision": [],
+      "declared_walk_speed_ft": null,
+      "declares_negated_ability_guard": false,
+      "description": "A dhampir can use detect undead three times per day as a spell-like ability (with a caster level equal to the dhampir's character level).",
+      "exclusion_guard_flags": [],
+      "is_racial_default": true,
+      "key": "Dhampir ~ Spell-Like Ability",
+      "name": "Spell-Like Ability",
+      "negated_fact_gates": [
+        [
+          "Dhampir_ReplaceSpellLikeAbility"
+        ]
+      ],
+      "positive_prefact_flag": null,
+      "race_key": "Dhampir",
+      "sets_replace_flags": [],
+      "skinwalker_change_shape_kin": null,
+      "source_page": null,
+      "suppressed_by_flag": "Dhampir_ReplaceSpellLikeAbility",
+      "template_bonus_languages": [],
+      "type_tokens": [
+        "RacialTraits",
+        "Dhampir Racial Trait",
+        "Dhampir Racial Default",
+        "SpecialQuality"
+      ]
+    },
+    "dhampir/dhampir_type.json": {
+      "adopted_race_pool_suffix": null,
+      "automatic_trait_grants": [],
+      "category": "Special Ability",
+      "declared_bonuses": {
+        "ability_adjustments": [],
+        "ability_pool_picks": 0,
+        "magnitudes": [],
+        "magnitudes_excluding_flags": [],
+        "only_internal_flags": false,
+        "target_bonuses": [],
+        "var_contributions": []
+      },
+      "declared_size": null,
+      "declared_vision": [],
+      "declared_walk_speed_ft": null,
+      "declares_negated_ability_guard": false,
+      "description": "Dhampirs are humanoids with the dhampir subtype.",
+      "exclusion_guard_flags": [],
+      "is_racial_default": true,
+      "key": "Dhampir ~ Type",
+      "name": "Dhampir",
+      "negated_fact_gates": [
+        [
+          "Dhampir_ReplaceType"
+        ]
+      ],
+      "positive_prefact_flag": null,
+      "race_key": "Dhampir",
+      "sets_replace_flags": [],
+      "skinwalker_change_shape_kin": null,
+      "source_page": null,
+      "suppressed_by_flag": "Dhampir_ReplaceType",
+      "template_bonus_languages": [],
+      "type_tokens": [
+        "RacialTraits",
+        "Dhampir Racial Trait",
+        "Dhampir Racial Default",
+        "SpecialQuality",
+        "Racial Type"
+      ]
+    },
+    "dhampir/dhampir_undead_resistance.json": {
+      "adopted_race_pool_suffix": null,
+      "automatic_trait_grants": [],
+      "category": "Special Ability",
+      "declared_bonuses": {
+        "ability_adjustments": [],
+        "ability_pool_picks": 0,
+        "magnitudes": [
+          2
+        ],
+        "magnitudes_excluding_flags": [
+          2
+        ],
+        "only_internal_flags": false,
+        "target_bonuses": [
+          {
+            "keyword": "VAR",
+            "magnitude": 2,
+            "target": "SaveBonus_vs_Disease"
+          },
+          {
+            "keyword": "VAR",
+            "magnitude": 2,
+            "target": "SaveBonus_vs_MindAffecting"
+          }
+        ],
+        "var_contributions": [
+          {
+            "amount": 2,
+            "name": "SaveBonus_vs_Disease"
+          },
+          {
+            "amount": 2,
+            "name": "SaveBonus_vs_MindAffecting"
+          }
+        ]
+      },
+      "declared_size": null,
+      "declared_vision": [],
+      "declared_walk_speed_ft": null,
+      "declares_negated_ability_guard": false,
+      "description": "Dhampirs gain a +2 racial bonus on saving throws against disease and mind-affecting effects.",
+      "exclusion_guard_flags": [],
+      "is_racial_default": true,
+      "key": "Dhampir ~ Undead Resistance",
+      "name": "Undead Resistance",
+      "negated_fact_gates": [
+        [
+          "Dhampir_ReplaceUndeadResistance"
+        ]
+      ],
+      "positive_prefact_flag": null,
+      "race_key": "Dhampir",
+      "sets_replace_flags": [],
+      "skinwalker_change_shape_kin": null,
+      "source_page": null,
+      "suppressed_by_flag": "Dhampir_ReplaceUndeadResistance",
+      "template_bonus_languages": [],
+      "type_tokens": [
+        "RacialTraits",
+        "Dhampir Racial Trait",
+        "Dhampir Racial Default",
+        "SpecialQuality"
+      ]
+    },
+    "dhampir/dhampir_vision.json": {
+      "adopted_race_pool_suffix": null,
+      "automatic_trait_grants": [],
+      "category": "Special Ability",
+      "declared_bonuses": {
+        "ability_adjustments": [],
+        "ability_pool_picks": 0,
+        "magnitudes": [
+          1
+        ],
+        "magnitudes_excluding_flags": [],
+        "only_internal_flags": true,
+        "target_bonuses": [
+          {
+            "keyword": "VAR",
+            "magnitude": 1,
+            "target": "HasRacialVision"
+          }
+        ],
+        "var_contributions": [
+          {
+            "amount": 1,
+            "name": "HasRacialVision"
+          }
+        ]
+      },
+      "declared_size": null,
+      "declared_vision": [
+        "Darkvision (60)",
+        "Low-Light Vision"
+      ],
+      "declared_walk_speed_ft": null,
+      "declares_negated_ability_guard": false,
+      "description": "Dhampirs get low-light vision and darkvision with a range of 60 feet.",
+      "exclusion_guard_flags": [],
+      "is_racial_default": true,
+      "key": "Dhampir ~ Vision",
+      "name": "Senses",
+      "negated_fact_gates": [
+        [
+          "Dhampir_ReplaceVision"
+        ]
+      ],
+      "positive_prefact_flag": null,
+      "race_key": "Dhampir",
+      "sets_replace_flags": [],
+      "skinwalker_change_shape_kin": null,
+      "source_page": null,
+      "suppressed_by_flag": "Dhampir_ReplaceVision",
+      "template_bonus_languages": [],
+      "type_tokens": [
+        "RacialTraits",
+        "Dhampir Racial Trait",
+        "Dhampir Racial Default",
+        "SpecialQuality",
+        "Racial Vision"
+      ]
+    },
+    "dhampir/dhampir_weakness.json": {
+      "adopted_race_pool_suffix": null,
+      "automatic_trait_grants": [
+        "Universal Monster Rule ~ Light Sensitivity"
+      ],
+      "category": "Special Ability",
+      "declared_bonuses": {
+        "ability_adjustments": [],
+        "ability_pool_picks": 0,
+        "magnitudes": [
+          1
+        ],
+        "magnitudes_excluding_flags": [],
+        "only_internal_flags": true,
+        "target_bonuses": [
+          {
+            "keyword": "VAR",
+            "magnitude": 1,
+            "target": "UMR_LightSensitivity_SpecificDesc"
+          }
+        ],
+        "var_contributions": [
+          {
+            "amount": 1,
+            "name": "UMR_LightSensitivity_SpecificDesc"
+          }
+        ]
+      },
+      "declared_size": null,
+      "declared_vision": [],
+      "declared_walk_speed_ft": null,
+      "declares_negated_ability_guard": false,
+      "description": "Dhampirs are dazzled in areas of bright sunlight or within the radius of a daylight spell.",
+      "exclusion_guard_flags": [],
+      "is_racial_default": true,
+      "key": "Dhampir ~ Weakness",
+      "name": "Light Sensitivity",
+      "negated_fact_gates": [
+        [
+          "Dhampir_ReplaceWeakness"
+        ]
+      ],
+      "positive_prefact_flag": null,
+      "race_key": "Dhampir",
+      "sets_replace_flags": [],
+      "skinwalker_change_shape_kin": null,
+      "source_page": null,
+      "suppressed_by_flag": "Dhampir_ReplaceWeakness",
+      "template_bonus_languages": [],
+      "type_tokens": [
+        "RacialTraits",
+        "Dhampir Racial Trait",
+        "Dhampir Racial Default"
+      ]
+    },
+    "fetchling/adopted_race_fetchling.json": {
+      "adopted_race_pool_suffix": "Fetchling Race Trait",
+      "automatic_trait_grants": [],
+      "category": "Special Ability",
+      "declared_bonuses": {
+        "ability_adjustments": [],
+        "ability_pool_picks": 0,
+        "magnitudes": [],
+        "magnitudes_excluding_flags": [],
+        "only_internal_flags": false,
+        "target_bonuses": [],
+        "var_contributions": []
+      },
+      "declared_size": null,
+      "declared_vision": [],
+      "declared_walk_speed_ft": null,
+      "declares_negated_ability_guard": false,
+      "description": null,
+      "exclusion_guard_flags": [],
+      "is_racial_default": false,
+      "key": "Adopted Race ~ Fetchling",
+      "name": "Fetchling",
+      "negated_fact_gates": [],
+      "positive_prefact_flag": null,
+      "race_key": "Fetchling",
+      "sets_replace_flags": [],
+      "skinwalker_change_shape_kin": null,
+      "source_page": null,
+      "suppressed_by_flag": null,
+      "template_bonus_languages": [],
+      "type_tokens": [
+        "AdoptiveRace"
+      ]
+    },
+    "fetchling/fetchling_ability_scores.json": {
+      "adopted_race_pool_suffix": null,
+      "automatic_trait_grants": [],
+      "category": "Special Ability",
+      "declared_bonuses": {
+        "ability_adjustments": [
+          {
+            "codes": "DEX,CHA",
+            "magnitude": "2"
+          },
+          {
+            "codes": "WIS",
+            "magnitude": "-2"
+          }
+        ],
+        "ability_pool_picks": 0,
+        "magnitudes": [
+          2,
+          -2
+        ],
+        "magnitudes_excluding_flags": [
+          2,
+          -2
+        ],
+        "only_internal_flags": false,
+        "target_bonuses": [
+          {
+            "keyword": "STAT",
+            "magnitude": 2,
+            "target": "DEX,CHA"
+          },
+          {
+            "keyword": "STAT",
+            "magnitude": -2,
+            "target": "WIS"
+          }
+        ],
+        "var_contributions": []
+      },
+      "declared_size": null,
+      "declared_vision": [],
+      "declared_walk_speed_ft": null,
+      "declares_negated_ability_guard": false,
+      "description": "Fetchlings are quick and forceful, but often strange and easily distracted by errant thoughts.",
+      "exclusion_guard_flags": [],
+      "is_racial_default": true,
+      "key": "Fetchling ~ Ability Scores",
+      "name": "+2 Dexterity, +2 Charisma, -2 Wisdom",
+      "negated_fact_gates": [
+        [
+          "Fetchling_ReplaceAbilityScores"
+        ]
+      ],
+      "positive_prefact_flag": null,
+      "race_key": "Fetchling",
+      "sets_replace_flags": [],
+      "skinwalker_change_shape_kin": null,
+      "source_page": null,
+      "suppressed_by_flag": "Fetchling_ReplaceAbilityScores",
+      "template_bonus_languages": [],
+      "type_tokens": [
+        "RacialTraits",
+        "Fetchling Racial Trait",
+        "Fetchling Racial Default",
+        "SpecialQuality",
+        "Racial Ability Scores"
+      ]
+    },
+    "fetchling/fetchling_languages.json": {
+      "adopted_race_pool_suffix": null,
+      "automatic_trait_grants": [],
+      "category": "Special Ability",
+      "declared_bonuses": {
+        "ability_adjustments": [],
+        "ability_pool_picks": 0,
+        "magnitudes": [],
+        "magnitudes_excluding_flags": [],
+        "only_internal_flags": false,
+        "target_bonuses": [],
+        "var_contributions": []
+      },
+      "declared_size": null,
+      "declared_vision": [],
+      "declared_walk_speed_ft": null,
+      "declares_negated_ability_guard": false,
+      "description": "Fetchlings begin play speaking Common. Fetchlings with a high Intelligence scores can choose from the following languages: Aklo, Aquan, Auran, Draconic, D'ziriak (understanding only, cannot speak), Ignan, Terran, and any regional human tongue.",
+      "exclusion_guard_flags": [],
+      "is_racial_default": true,
+      "key": "Fetchling ~ Languages",
+      "name": "Languages",
+      "negated_fact_gates": [
+        [
+          "Fetchling_ReplaceLanguages"
+        ]
+      ],
+      "positive_prefact_flag": null,
+      "race_key": "Fetchling",
+      "sets_replace_flags": [],
+      "skinwalker_change_shape_kin": null,
+      "source_page": null,
+      "suppressed_by_flag": "Fetchling_ReplaceLanguages",
+      "template_bonus_languages": [
+        "Aklo",
+        "Aquan",
+        "Auran",
+        "Draconic",
+        "D'ziriak ~ Cannot Speak",
+        "Ignan",
+        "Terran",
+        "Any Human Language"
+      ],
+      "type_tokens": [
+        "RacialTraits",
+        "Fetchling Racial Trait",
+        "Fetchling Racial Default",
+        "SpecialQuality",
+        "Racial Language"
+      ]
+    },
+    "fetchling/fetchling_low_light_vision.json": {
+      "adopted_race_pool_suffix": null,
+      "automatic_trait_grants": [],
+      "category": "Special Ability",
+      "declared_bonuses": {
+        "ability_adjustments": [],
+        "ability_pool_picks": 0,
+        "magnitudes": [],
+        "magnitudes_excluding_flags": [],
+        "only_internal_flags": false,
+        "target_bonuses": [],
+        "var_contributions": []
+      },
+      "declared_size": null,
+      "declared_vision": [
+        "Low-Light Vision"
+      ],
+      "declared_walk_speed_ft": null,
+      "declares_negated_ability_guard": false,
+      "description": "Fetchlings can see twice as far as humans in conditions of dim light.",
+      "exclusion_guard_flags": [],
+      "is_racial_default": true,
+      "key": "Fetchling ~ Low-Light Vision",
+      "name": "Low-Light Vision",
+      "negated_fact_gates": [
+        [
+          "Fetchling_ReplaceLowLightVision"
+        ]
+      ],
+      "positive_prefact_flag": null,
+      "race_key": "Fetchling",
+      "sets_replace_flags": [],
+      "skinwalker_change_shape_kin": null,
+      "source_page": null,
+      "suppressed_by_flag": "Fetchling_ReplaceLowLightVision",
+      "template_bonus_languages": [],
+      "type_tokens": [
+        "RacialTraits",
+        "Fetchling Racial Trait",
+        "Fetchling Racial Default",
+        "SpecialQuality",
+        "Racial Vision"
+      ]
+    },
+    "fetchling/fetchling_shadow_blending.json": {
+      "adopted_race_pool_suffix": null,
+      "automatic_trait_grants": [],
+      "category": "Special Ability",
+      "declared_bonuses": {
+        "ability_adjustments": [],
+        "ability_pool_picks": 0,
+        "magnitudes": [],
+        "magnitudes_excluding_flags": [],
+        "only_internal_flags": false,
+        "target_bonuses": [],
+        "var_contributions": []
+      },
+      "declared_size": null,
+      "declared_vision": [],
+      "declared_walk_speed_ft": null,
+      "declares_negated_ability_guard": false,
+      "description": "Attacks against a fetchling in dim light have a 50% miss chance instead of the normal 20% miss chance. This ability does not grant total concealment; it just increases the miss chance.",
+      "exclusion_guard_flags": [],
+      "is_racial_default": true,
+      "key": "Fetchling ~ Shadow Blending",
+      "name": "Shadow Blending",
+      "negated_fact_gates": [
+        [
+          "Fetchling_ReplaceShadowBlending"
+        ]
+      ],
+      "positive_prefact_flag": null,
+      "race_key": "Fetchling",
+      "sets_replace_flags": [],
+      "skinwalker_change_shape_kin": null,
+      "source_page": null,
+      "suppressed_by_flag": "Fetchling_ReplaceShadowBlending",
+      "template_bonus_languages": [],
+      "type_tokens": [
+        "RacialTraits",
+        "Fetchling Racial Trait",
+        "Fetchling Racial Default",
+        "SpecialQuality",
+        "Supernatural",
+        "Defensive"
+      ]
+    },
+    "fetchling/fetchling_shadowy_resistance.json": {
+      "adopted_race_pool_suffix": null,
+      "automatic_trait_grants": [],
+      "category": "Special Ability",
+      "declared_bonuses": {
+        "ability_adjustments": [],
+        "ability_pool_picks": 0,
+        "magnitudes": [
+          5
+        ],
+        "magnitudes_excluding_flags": [
+          5
+        ],
+        "only_internal_flags": false,
+        "target_bonuses": [
+          {
+            "keyword": "VAR",
+            "magnitude": 5,
+            "target": "ColdResistanceBonus"
+          },
+          {
+            "keyword": "VAR",
+            "magnitude": 5,
+            "target": "ElectricityResistanceBonus"
+          }
+        ],
+        "var_contributions": [
+          {
+            "amount": 5,
+            "name": "ColdResistanceBonus"
+          },
+          {
+            "amount": 5,
+            "name": "ElectricityResistanceBonus"
+          }
+        ]
+      },
+      "declared_size": null,
+      "declared_vision": [],
+      "declared_walk_speed_ft": null,
+      "declares_negated_ability_guard": false,
+      "description": "Fetchlings have cold resistance 5 and electricity resistance 5.",
+      "exclusion_guard_flags": [],
+      "is_racial_default": true,
+      "key": "Fetchling ~ Shadowy Resistance",
+      "name": "Shadowy Resistance",
+      "negated_fact_gates": [
+        [
+          "Fetchling_ReplaceShadowyResistance"
+        ]
+      ],
+      "positive_prefact_flag": null,
+      "race_key": "Fetchling",
+      "sets_replace_flags": [],
+      "skinwalker_change_shape_kin": null,
+      "source_page": null,
+      "suppressed_by_flag": "Fetchling_ReplaceShadowyResistance",
+      "template_bonus_languages": [],
+      "type_tokens": [
+        "RacialTraits",
+        "Fetchling Racial Trait",
+        "Fetchling Racial Default",
+        "SpecialQuality"
+      ]
+    },
+    "fetchling/fetchling_size.json": {
+      "adopted_race_pool_suffix": null,
+      "automatic_trait_grants": [],
+      "category": "Special Ability",
+      "declared_bonuses": {
+        "ability_adjustments": [],
+        "ability_pool_picks": 0,
+        "magnitudes": [],
+        "magnitudes_excluding_flags": [],
+        "only_internal_flags": false,
+        "target_bonuses": [],
+        "var_contributions": []
+      },
+      "declared_size": "Medium",
+      "declared_vision": [],
+      "declared_walk_speed_ft": null,
+      "declares_negated_ability_guard": false,
+      "description": "Fetchlings are Medium creatures and receive no bonuses or penalties due to their size.",
+      "exclusion_guard_flags": [],
+      "is_racial_default": true,
+      "key": "Fetchling ~ Size",
+      "name": "Medium",
+      "negated_fact_gates": [
+        [
+          "Fetchling_ReplaceSize"
+        ]
+      ],
+      "positive_prefact_flag": null,
+      "race_key": "Fetchling",
+      "sets_replace_flags": [],
+      "skinwalker_change_shape_kin": null,
+      "source_page": null,
+      "suppressed_by_flag": "Fetchling_ReplaceSize",
+      "template_bonus_languages": [],
+      "type_tokens": [
+        "RacialTraits",
+        "Fetchling Racial Trait",
+        "Fetchling Racial Default",
+        "SpecialQuality",
+        "Racial Size"
+      ]
+    },
+    "fetchling/fetchling_skilled.json": {
+      "adopted_race_pool_suffix": null,
+      "automatic_trait_grants": [],
+      "category": "Special Ability",
+      "declared_bonuses": {
+        "ability_adjustments": [],
+        "ability_pool_picks": 0,
+        "magnitudes": [
+          2
+        ],
+        "magnitudes_excluding_flags": [
+          2
+        ],
+        "only_internal_flags": false,
+        "target_bonuses": [
+          {
+            "keyword": "SKILL",
+            "magnitude": 2,
+            "target": "Knowledge (Planes),Stealth"
+          }
+        ],
+        "var_contributions": []
+      },
+      "declared_size": null,
+      "declared_vision": [],
+      "declared_walk_speed_ft": null,
+      "declares_negated_ability_guard": false,
+      "description": "Fetchlings have a +2 racial bonus on Knowledge (planes) and Stealth checks.",
+      "exclusion_guard_flags": [],
+      "is_racial_default": true,
+      "key": "Fetchling ~ Skilled",
+      "name": "Skilled",
+      "negated_fact_gates": [
+        [
+          "Fetchling_ReplaceSkilled"
+        ]
+      ],
+      "positive_prefact_flag": null,
+      "race_key": "Fetchling",
+      "sets_replace_flags": [],
+      "skinwalker_change_shape_kin": null,
+      "source_page": null,
+      "suppressed_by_flag": "Fetchling_ReplaceSkilled",
+      "template_bonus_languages": [],
+      "type_tokens": [
+        "RacialTraits",
+        "Fetchling Racial Trait",
+        "Fetchling Racial Default",
+        "SpecialQuality"
+      ]
+    },
+    "fetchling/fetchling_speed.json": {
+      "adopted_race_pool_suffix": null,
+      "automatic_trait_grants": [],
+      "category": "Special Ability",
+      "declared_bonuses": {
+        "ability_adjustments": [],
+        "ability_pool_picks": 0,
+        "magnitudes": [
+          30
+        ],
+        "magnitudes_excluding_flags": [
+          30
+        ],
+        "only_internal_flags": false,
+        "target_bonuses": [
+          {
+            "keyword": "VAR",
+            "magnitude": 30,
+            "target": "MOVEBASE"
+          }
+        ],
+        "var_contributions": [
+          {
+            "amount": 30,
+            "name": "MOVEBASE"
+          }
+        ]
+      },
+      "declared_size": null,
+      "declared_vision": [],
+      "declared_walk_speed_ft": 30,
+      "declares_negated_ability_guard": false,
+      "description": "Fetchlings have a base speed of 30 feet.",
+      "exclusion_guard_flags": [],
+      "is_racial_default": true,
+      "key": "Fetchling ~ Speed",
+      "name": "Normal Speed",
+      "negated_fact_gates": [
+        [
+          "Fetchling_ReplaceSpeed"
+        ]
+      ],
+      "positive_prefact_flag": null,
+      "race_key": "Fetchling",
+      "sets_replace_flags": [],
+      "skinwalker_change_shape_kin": null,
+      "source_page": null,
+      "suppressed_by_flag": "Fetchling_ReplaceSpeed",
+      "template_bonus_languages": [],
+      "type_tokens": [
+        "RacialTraits",
+        "Fetchling Racial Trait",
+        "Fetchling Racial Default",
+        "SpecialQuality",
+        "Racial Speed"
+      ]
+    },
+    "fetchling/fetchling_spell_like_abilities.json": {
+      "adopted_race_pool_suffix": null,
+      "automatic_trait_grants": [
+        "Racial SLA ~ Disguise Self (humanoid only)",
+        "Racial SLA ~ Shadow Walk (self only)",
+        "Racial SLA ~ Plane Shift (self only/to Shadow or Material Plane)"
+      ],
+      "category": "Special Ability",
+      "declared_bonuses": {
+        "ability_adjustments": [],
+        "ability_pool_picks": 0,
+        "magnitudes": [],
+        "magnitudes_excluding_flags": [],
+        "only_internal_flags": false,
+        "target_bonuses": [],
+        "var_contributions": []
+      },
+      "declared_size": null,
+      "declared_vision": [],
+      "declared_walk_speed_ft": null,
+      "declares_negated_ability_guard": false,
+      "description": "A fetchling can use disguise self once per day as a spell-like ability. He can assume the form of any humanoid creature using this spell-like ability. When a fetchling reaches character 9th level in any combination of classes, he gains shadow walk (self only) as a spell-like ability usable once per day, and at 13th level, he gains plane shift (self only, to the Shadow Plane or the Material Plane only) usable once per day. A fetchling's caster level for these abilities is equal to his character level.",
+      "exclusion_guard_flags": [],
+      "is_racial_default": true,
+      "key": "Fetchling ~ Spell-Like Abilities",
+      "name": "Spell-Like Abilities",
+      "negated_fact_gates": [
+        [
+          "Fetchling_ReplaceSpellLikeAbilities"
+        ]
+      ],
+      "positive_prefact_flag": null,
+      "race_key": "Fetchling",
+      "sets_replace_flags": [],
+      "skinwalker_change_shape_kin": null,
+      "source_page": null,
+      "suppressed_by_flag": "Fetchling_ReplaceSpellLikeAbilities",
+      "template_bonus_languages": [],
+      "type_tokens": [
+        "RacialTraits",
+        "Fetchling Racial Trait",
+        "Fetchling Racial Default",
+        "SpecialQuality",
+        "SpellLike"
+      ]
+    },
+    "fetchling/fetchling_type.json": {
+      "adopted_race_pool_suffix": null,
+      "automatic_trait_grants": [],
+      "category": "Special Ability",
+      "declared_bonuses": {
+        "ability_adjustments": [],
+        "ability_pool_picks": 0,
+        "magnitudes": [],
+        "magnitudes_excluding_flags": [],
+        "only_internal_flags": false,
+        "target_bonuses": [],
+        "var_contributions": []
+      },
+      "declared_size": null,
+      "declared_vision": [],
+      "declared_walk_speed_ft": null,
+      "declares_negated_ability_guard": false,
+      "description": "Fetchlings are outsiders with the native subtype.",
+      "exclusion_guard_flags": [],
+      "is_racial_default": true,
+      "key": "Fetchling ~ Type",
+      "name": "Native Outsider",
+      "negated_fact_gates": [
+        [
+          "Fetchling_ReplaceType"
+        ]
+      ],
+      "positive_prefact_flag": null,
+      "race_key": "Fetchling",
+      "sets_replace_flags": [],
+      "skinwalker_change_shape_kin": null,
+      "source_page": null,
+      "suppressed_by_flag": "Fetchling_ReplaceType",
+      "template_bonus_languages": [],
+      "type_tokens": [
+        "RacialTraits",
+        "Fetchling Racial Trait",
+        "Fetchling Racial Default",
+        "SpecialQuality",
+        "Racial Type"
+      ]
+    },
+    "fetchling/fetchling_vision.json": {
+      "adopted_race_pool_suffix": null,
+      "automatic_trait_grants": [],
+      "category": "Special Ability",
+      "declared_bonuses": {
+        "ability_adjustments": [],
+        "ability_pool_picks": 0,
+        "magnitudes": [],
+        "magnitudes_excluding_flags": [],
+        "only_internal_flags": false,
+        "target_bonuses": [],
+        "var_contributions": []
+      },
+      "declared_size": null,
+      "declared_vision": [
+        "Darkvision (60)"
+      ],
+      "declared_walk_speed_ft": null,
+      "declares_negated_ability_guard": false,
+      "description": "Fetchlings can see in the dark up to 60 feet.",
+      "exclusion_guard_flags": [],
+      "is_racial_default": true,
+      "key": "Fetchling ~ Vision",
+      "name": "Darkvision",
+      "negated_fact_gates": [
+        [
+          "Fetchling_ReplaceDarkvision"
+        ]
+      ],
+      "positive_prefact_flag": null,
+      "race_key": "Fetchling",
+      "sets_replace_flags": [],
+      "skinwalker_change_shape_kin": null,
+      "source_page": null,
+      "suppressed_by_flag": "Fetchling_ReplaceDarkvision",
+      "template_bonus_languages": [],
+      "type_tokens": [
+        "RacialTraits",
+        "Fetchling Racial Trait",
+        "Fetchling Racial Default",
+        "SpecialQuality",
+        "Racial Vision"
+      ]
+    },
+    "grippli/adopted_race_grippli.json": {
+      "adopted_race_pool_suffix": "Grippli Race Trait",
+      "automatic_trait_grants": [],
+      "category": "Special Ability",
+      "declared_bonuses": {
+        "ability_adjustments": [],
+        "ability_pool_picks": 0,
+        "magnitudes": [],
+        "magnitudes_excluding_flags": [],
+        "only_internal_flags": false,
+        "target_bonuses": [],
+        "var_contributions": []
+      },
+      "declared_size": null,
+      "declared_vision": [],
+      "declared_walk_speed_ft": null,
+      "declares_negated_ability_guard": false,
+      "description": null,
+      "exclusion_guard_flags": [],
+      "is_racial_default": false,
+      "key": "Adopted Race ~ Grippli",
+      "name": "Grippli",
+      "negated_fact_gates": [],
+      "positive_prefact_flag": null,
+      "race_key": "Grippli",
+      "sets_replace_flags": [],
+      "skinwalker_change_shape_kin": null,
+      "source_page": null,
+      "suppressed_by_flag": null,
+      "template_bonus_languages": [],
+      "type_tokens": [
+        "AdoptiveRace"
+      ]
+    },
+    "grippli/grippli_ability_scores.json": {
+      "adopted_race_pool_suffix": null,
+      "automatic_trait_grants": [],
+      "category": "Special Ability",
+      "declared_bonuses": {
+        "ability_adjustments": [
+          {
+            "codes": "DEX,WIS",
+            "magnitude": "2"
+          },
+          {
+            "codes": "STR",
+            "magnitude": "-2"
+          }
+        ],
+        "ability_pool_picks": 0,
+        "magnitudes": [
+          2,
+          -2
+        ],
+        "magnitudes_excluding_flags": [
+          2,
+          -2
+        ],
+        "only_internal_flags": false,
+        "target_bonuses": [
+          {
+            "keyword": "STAT",
+            "magnitude": 2,
+            "target": "DEX,WIS"
+          },
+          {
+            "keyword": "STAT",
+            "magnitude": -2,
+            "target": "STR"
+          }
+        ],
+        "var_contributions": []
+      },
+      "declared_size": null,
+      "declared_vision": [],
+      "declared_walk_speed_ft": null,
+      "declares_negated_ability_guard": false,
+      "description": "Gripplis are nimble and alert, but spindly.",
+      "exclusion_guard_flags": [],
+      "is_racial_default": true,
+      "key": "Grippli ~ Ability Scores",
+      "name": "+2 Dexterity, +2 Wisdom, -2 Strength",
+      "negated_fact_gates": [
+        [
+          "Grippli_ReplaceAbilityScores"
+        ]
+      ],
+      "positive_prefact_flag": null,
+      "race_key": "Grippli",
+      "sets_replace_flags": [],
+      "skinwalker_change_shape_kin": null,
+      "source_page": null,
+      "suppressed_by_flag": "Grippli_ReplaceAbilityScores",
+      "template_bonus_languages": [],
+      "type_tokens": [
+        "RacialTraits",
+        "Grippli Racial Trait",
+        "Grippli Racial Default",
+        "SpecialQuality",
+        "Racial Ability Scores"
+      ]
+    },
+    "grippli/grippli_camouflage.json": {
+      "adopted_race_pool_suffix": null,
+      "automatic_trait_grants": [],
+      "category": "Special Ability",
+      "declared_bonuses": {
+        "ability_adjustments": [],
+        "ability_pool_picks": 0,
+        "magnitudes": [
+          4
+        ],
+        "magnitudes_excluding_flags": [
+          4
+        ],
+        "only_internal_flags": false,
+        "target_bonuses": [
+          {
+            "keyword": "SITUATION",
+            "magnitude": 4,
+            "target": "Stealth=in forests or marshes"
+          }
+        ],
+        "var_contributions": []
+      },
+      "declared_size": null,
+      "declared_vision": [],
+      "declared_walk_speed_ft": null,
+      "declares_negated_ability_guard": false,
+      "description": "Gripplis receive a +4 racial bonus on Stealth checks in marshes and forested areas.",
+      "exclusion_guard_flags": [],
+      "is_racial_default": true,
+      "key": "Grippli ~ Camouflage",
+      "name": "Camouflage",
+      "negated_fact_gates": [
+        [
+          "Grippli_ReplaceCamouflage"
+        ]
+      ],
+      "positive_prefact_flag": null,
+      "race_key": "Grippli",
+      "sets_replace_flags": [],
+      "skinwalker_change_shape_kin": null,
+      "source_page": null,
+      "suppressed_by_flag": "Grippli_ReplaceCamouflage",
+      "template_bonus_languages": [],
+      "type_tokens": [
+        "RacialTraits",
+        "Grippli Racial Trait",
+        "Grippli Racial Default",
+        "SpecialQuality"
+      ]
+    },
+    "grippli/grippli_languages.json": {
+      "adopted_race_pool_suffix": null,
+      "automatic_trait_grants": [],
+      "category": "Special Ability",
+      "declared_bonuses": {
+        "ability_adjustments": [],
+        "ability_pool_picks": 0,
+        "magnitudes": [],
+        "magnitudes_excluding_flags": [],
+        "only_internal_flags": false,
+        "target_bonuses": [],
+        "var_contributions": []
+      },
+      "declared_size": null,
+      "declared_vision": [],
+      "declared_walk_speed_ft": null,
+      "declares_negated_ability_guard": false,
+      "description": "Gripplis begin play speaking Common and Grippli. Gripplis with high Intelligence scores can choose from the following languages: Boggard, Draconic, Elven, Gnome, Goblin, and Sylvan.",
+      "exclusion_guard_flags": [],
+      "is_racial_default": true,
+      "key": "Grippli ~ Languages",
+      "name": "Languages",
+      "negated_fact_gates": [
+        [
+          "Grippli_ReplaceLanguages"
+        ]
+      ],
+      "positive_prefact_flag": null,
+      "race_key": "Grippli",
+      "sets_replace_flags": [],
+      "skinwalker_change_shape_kin": null,
+      "source_page": null,
+      "suppressed_by_flag": "Grippli_ReplaceLanguages",
+      "template_bonus_languages": [
+        "Boggard",
+        "Draconic",
+        "Elven",
+        "Gnome",
+        "Goblin",
+        "Sylvan"
+      ],
+      "type_tokens": [
+        "RacialTraits",
+        "Grippli Racial Trait",
+        "Grippli Racial Default",
+        "SpecialQuality",
+        "Racial Language"
+      ]
+    },
+    "grippli/grippli_natural_climber.json": {
+      "adopted_race_pool_suffix": null,
+      "automatic_trait_grants": [],
+      "category": "Special Ability",
+      "declared_bonuses": {
+        "ability_adjustments": [],
+        "ability_pool_picks": 0,
+        "magnitudes": [],
+        "magnitudes_excluding_flags": [],
+        "only_internal_flags": false,
+        "target_bonuses": [],
+        "var_contributions": []
+      },
+      "declared_size": null,
+      "declared_vision": [],
+      "declared_walk_speed_ft": null,
+      "declares_negated_ability_guard": false,
+      "description": "Gripplis have a climb speed of 20 feet.",
+      "exclusion_guard_flags": [],
+      "is_racial_default": true,
+      "key": "Grippli ~ Natural Climber",
+      "name": "Natural Climber",
+      "negated_fact_gates": [
+        [
+          "Grippli_ReplaceNaturalClimber"
+        ]
+      ],
+      "positive_prefact_flag": null,
+      "race_key": "Grippli",
+      "sets_replace_flags": [],
+      "skinwalker_change_shape_kin": null,
+      "source_page": null,
+      "suppressed_by_flag": "Grippli_ReplaceNaturalClimber",
+      "template_bonus_languages": [],
+      "type_tokens": [
+        "RacialTraits",
+        "Grippli Racial Trait",
+        "Grippli Racial Default",
+        "SpecialQuality"
+      ]
+    },
+    "grippli/grippli_size.json": {
+      "adopted_race_pool_suffix": null,
+      "automatic_trait_grants": [],
+      "category": "Special Ability",
+      "declared_bonuses": {
+        "ability_adjustments": [],
+        "ability_pool_picks": 0,
+        "magnitudes": [],
+        "magnitudes_excluding_flags": [],
+        "only_internal_flags": false,
+        "target_bonuses": [],
+        "var_contributions": []
+      },
+      "declared_size": "Small",
+      "declared_vision": [],
+      "declared_walk_speed_ft": null,
+      "declares_negated_ability_guard": false,
+      "description": "Gripplis are Small creatures and gain a +1 size bonus to their AC, a +1 size bonus on attack rolls,a -1 penalty on combat maneuver checks and to their Combat Maneuver Defense, and a +4 size bonus on Stealth checks.",
+      "exclusion_guard_flags": [],
+      "is_racial_default": true,
+      "key": "Grippli ~ Size",
+      "name": "Small",
+      "negated_fact_gates": [
+        [
+          "Grippli_ReplaceSize"
+        ]
+      ],
+      "positive_prefact_flag": null,
+      "race_key": "Grippli",
+      "sets_replace_flags": [],
+      "skinwalker_change_shape_kin": null,
+      "source_page": null,
+      "suppressed_by_flag": "Grippli_ReplaceSize",
+      "template_bonus_languages": [],
+      "type_tokens": [
+        "RacialTraits",
+        "Grippli Racial Trait",
+        "Grippli Racial Default",
+        "SpecialQuality",
+        "Racial Size"
+      ]
+    },
+    "grippli/grippli_speed.json": {
+      "adopted_race_pool_suffix": null,
+      "automatic_trait_grants": [],
+      "category": "Special Ability",
+      "declared_bonuses": {
+        "ability_adjustments": [],
+        "ability_pool_picks": 0,
+        "magnitudes": [
+          30
+        ],
+        "magnitudes_excluding_flags": [
+          30
+        ],
+        "only_internal_flags": false,
+        "target_bonuses": [
+          {
+            "keyword": "VAR",
+            "magnitude": 30,
+            "target": "MOVEBASE"
+          }
+        ],
+        "var_contributions": [
+          {
+            "amount": 30,
+            "name": "MOVEBASE"
+          }
+        ]
+      },
+      "declared_size": null,
+      "declared_vision": [],
+      "declared_walk_speed_ft": 30,
+      "declares_negated_ability_guard": false,
+      "description": "Gripplis have a base speed of 30 feet.",
+      "exclusion_guard_flags": [],
+      "is_racial_default": true,
+      "key": "Grippli ~ Speed",
+      "name": "Normal Speed",
+      "negated_fact_gates": [
+        [
+          "Grippli_ReplaceSpeed"
+        ]
+      ],
+      "positive_prefact_flag": null,
+      "race_key": "Grippli",
+      "sets_replace_flags": [],
+      "skinwalker_change_shape_kin": null,
+      "source_page": null,
+      "suppressed_by_flag": "Grippli_ReplaceSpeed",
+      "template_bonus_languages": [],
+      "type_tokens": [
+        "RacialTraits",
+        "Grippli Racial Trait",
+        "Grippli Racial Default",
+        "SpecialQuality",
+        "Racial Speed"
+      ]
+    },
+    "grippli/grippli_swamp_stride.json": {
+      "adopted_race_pool_suffix": null,
+      "automatic_trait_grants": [],
+      "category": "Special Ability",
+      "declared_bonuses": {
+        "ability_adjustments": [],
+        "ability_pool_picks": 0,
+        "magnitudes": [],
+        "magnitudes_excluding_flags": [],
+        "only_internal_flags": false,
+        "target_bonuses": [],
+        "var_contributions": []
+      },
+      "declared_size": null,
+      "declared_vision": [],
+      "declared_walk_speed_ft": null,
+      "declares_negated_ability_guard": false,
+      "description": "A grippli can move through difficult terrain at its normal speed while within a swamp. Magically altered terrain affects a grippli normally.",
+      "exclusion_guard_flags": [],
+      "is_racial_default": true,
+      "key": "Grippli ~ Swamp Stride",
+      "name": "Swamp Stride",
+      "negated_fact_gates": [
+        [
+          "Grippli_ReplaceSwampStride"
+        ]
+      ],
+      "positive_prefact_flag": null,
+      "race_key": "Grippli",
+      "sets_replace_flags": [],
+      "skinwalker_change_shape_kin": null,
+      "source_page": null,
+      "suppressed_by_flag": "Grippli_ReplaceSwampStride",
+      "template_bonus_languages": [],
+      "type_tokens": [
+        "RacialTraits",
+        "Grippli Racial Trait",
+        "Grippli Racial Default",
+        "SpecialQuality",
+        "Special Quality",
+        "Special Ability",
+        "Extraordinary"
+      ]
+    },
+    "grippli/grippli_type.json": {
+      "adopted_race_pool_suffix": null,
+      "automatic_trait_grants": [],
+      "category": "Special Ability",
+      "declared_bonuses": {
+        "ability_adjustments": [],
+        "ability_pool_picks": 0,
+        "magnitudes": [],
+        "magnitudes_excluding_flags": [],
+        "only_internal_flags": false,
+        "target_bonuses": [],
+        "var_contributions": []
+      },
+      "declared_size": null,
+      "declared_vision": [],
+      "declared_walk_speed_ft": null,
+      "declares_negated_ability_guard": false,
+      "description": "Gripplis are humanoids with the grippli subtype.",
+      "exclusion_guard_flags": [],
+      "is_racial_default": true,
+      "key": "Grippli ~ Type",
+      "name": "Grippli",
+      "negated_fact_gates": [
+        [
+          "Grippli_ReplaceType"
+        ]
+      ],
+      "positive_prefact_flag": null,
+      "race_key": "Grippli",
+      "sets_replace_flags": [],
+      "skinwalker_change_shape_kin": null,
+      "source_page": null,
+      "suppressed_by_flag": "Grippli_ReplaceType",
+      "template_bonus_languages": [],
+      "type_tokens": [
+        "RacialTraits",
+        "Grippli Racial Trait",
+        "Grippli Racial Default",
+        "SpecialQuality",
+        "Racial Type"
+      ]
+    },
+    "grippli/grippli_vision.json": {
+      "adopted_race_pool_suffix": null,
+      "automatic_trait_grants": [],
+      "category": "Special Ability",
+      "declared_bonuses": {
+        "ability_adjustments": [],
+        "ability_pool_picks": 0,
+        "magnitudes": [
+          1
+        ],
+        "magnitudes_excluding_flags": [],
+        "only_internal_flags": true,
+        "target_bonuses": [
+          {
+            "keyword": "VAR",
+            "magnitude": 1,
+            "target": "HasRacialVision"
+          }
+        ],
+        "var_contributions": [
+          {
+            "amount": 1,
+            "name": "HasRacialVision"
+          }
+        ]
+      },
+      "declared_size": null,
+      "declared_vision": [
+        "Darkvision (60)"
+      ],
+      "declared_walk_speed_ft": null,
+      "declares_negated_ability_guard": false,
+      "description": "Gripplis can see in the dark up to 60 feet.",
+      "exclusion_guard_flags": [],
+      "is_racial_default": true,
+      "key": "Grippli ~ Vision",
+      "name": "Darkvision",
+      "negated_fact_gates": [
+        [
+          "Grippli_ReplaceVision"
+        ]
+      ],
+      "positive_prefact_flag": null,
+      "race_key": "Grippli",
+      "sets_replace_flags": [],
+      "skinwalker_change_shape_kin": null,
+      "source_page": null,
+      "suppressed_by_flag": "Grippli_ReplaceVision",
+      "template_bonus_languages": [],
+      "type_tokens": [
+        "RacialTraits",
+        "Grippli Racial Trait",
+        "Grippli Racial Default",
+        "SpecialQuality",
+        "Racial Vision"
+      ]
+    },
+    "grippli/grippli_weapon_familiarity.json": {
+      "adopted_race_pool_suffix": null,
+      "automatic_trait_grants": [],
+      "category": "Special Ability",
+      "declared_bonuses": {
+        "ability_adjustments": [],
+        "ability_pool_picks": 0,
+        "magnitudes": [],
+        "magnitudes_excluding_flags": [],
+        "only_internal_flags": false,
+        "target_bonuses": [],
+        "var_contributions": []
+      },
+      "declared_size": null,
+      "declared_vision": [],
+      "declared_walk_speed_ft": null,
+      "declares_negated_ability_guard": false,
+      "description": "Gripplis are proficient with nets.",
+      "exclusion_guard_flags": [],
+      "is_racial_default": true,
+      "key": "Grippli ~ Weapon Familiarity",
+      "name": "Weapon Familiarity",
+      "negated_fact_gates": [
+        [
+          "Grippli_ReplaceWeaponFamiliarity"
+        ]
+      ],
+      "positive_prefact_flag": null,
+      "race_key": "Grippli",
+      "sets_replace_flags": [],
+      "skinwalker_change_shape_kin": null,
+      "source_page": null,
+      "suppressed_by_flag": "Grippli_ReplaceWeaponFamiliarity",
+      "template_bonus_languages": [],
+      "type_tokens": [
+        "RacialTraits",
+        "Grippli Racial Trait",
+        "Grippli Racial Default",
+        "SpecialQuality"
+      ]
+    },
+    "ifrit/adopted_race_ifrit.json": {
+      "adopted_race_pool_suffix": "Ifrit Race Trait",
+      "automatic_trait_grants": [],
+      "category": "Special Ability",
+      "declared_bonuses": {
+        "ability_adjustments": [],
+        "ability_pool_picks": 0,
+        "magnitudes": [],
+        "magnitudes_excluding_flags": [],
+        "only_internal_flags": false,
+        "target_bonuses": [],
+        "var_contributions": []
+      },
+      "declared_size": null,
+      "declared_vision": [],
+      "declared_walk_speed_ft": null,
+      "declares_negated_ability_guard": false,
+      "description": null,
+      "exclusion_guard_flags": [],
+      "is_racial_default": false,
+      "key": "Adopted Race ~ Ifrit",
+      "name": "Ifrit",
+      "negated_fact_gates": [],
+      "positive_prefact_flag": null,
+      "race_key": "Ifrit",
+      "sets_replace_flags": [],
+      "skinwalker_change_shape_kin": null,
+      "source_page": null,
+      "suppressed_by_flag": null,
+      "template_bonus_languages": [],
+      "type_tokens": [
+        "AdoptiveRace"
+      ]
+    },
+    "ifrit/ifrit_ability_scores.json": {
+      "adopted_race_pool_suffix": null,
+      "automatic_trait_grants": [],
+      "category": "Special Ability",
+      "declared_bonuses": {
+        "ability_adjustments": [
+          {
+            "codes": "DEX,CHA",
+            "magnitude": "2"
+          },
+          {
+            "codes": "WIS",
+            "magnitude": "-2"
+          }
+        ],
+        "ability_pool_picks": 0,
+        "magnitudes": [
+          2,
+          -2
+        ],
+        "magnitudes_excluding_flags": [
+          2,
+          -2
+        ],
+        "only_internal_flags": false,
+        "target_bonuses": [
+          {
+            "keyword": "STAT",
+            "magnitude": 2,
+            "target": "DEX,CHA"
+          },
+          {
+            "keyword": "STAT",
+            "magnitude": -2,
+            "target": "WIS"
+          }
+        ],
+        "var_contributions": []
+      },
+      "declared_size": null,
+      "declared_vision": [],
+      "declared_walk_speed_ft": null,
+      "declares_negated_ability_guard": false,
+      "description": "Ifrits are passionate and quick, but also impetuous and destructive.",
+      "exclusion_guard_flags": [],
+      "is_racial_default": true,
+      "key": "Ifrit ~ Ability Scores",
+      "name": "+2 Dexterity, +2 Charisma, -2 Wisdom",
+      "negated_fact_gates": [
+        [
+          "Ifrit_ReplaceAbilityScores"
+        ]
+      ],
+      "positive_prefact_flag": null,
+      "race_key": "Ifrit",
+      "sets_replace_flags": [],
+      "skinwalker_change_shape_kin": null,
+      "source_page": null,
+      "suppressed_by_flag": "Ifrit_ReplaceAbilityScores",
+      "template_bonus_languages": [],
+      "type_tokens": [
+        "RacialTraits",
+        "Ifrit Racial Trait",
+        "Ifrit Racial Default",
+        "SpecialQuality",
+        "Racial Ability Scores"
+      ]
+    },
+    "ifrit/ifrit_energy_resistance.json": {
+      "adopted_race_pool_suffix": null,
+      "automatic_trait_grants": [],
+      "category": "Special Ability",
+      "declared_bonuses": {
+        "ability_adjustments": [],
+        "ability_pool_picks": 0,
+        "magnitudes": [
+          5
+        ],
+        "magnitudes_excluding_flags": [
+          5
+        ],
+        "only_internal_flags": false,
+        "target_bonuses": [
+          {
+            "keyword": "VAR",
+            "magnitude": 5,
+            "target": "FireResistanceBonus"
+          }
+        ],
+        "var_contributions": [
+          {
+            "amount": 5,
+            "name": "FireResistanceBonus"
+          }
+        ]
+      },
+      "declared_size": null,
+      "declared_vision": [],
+      "declared_walk_speed_ft": null,
+      "declares_negated_ability_guard": false,
+      "description": "Ifrits have fire resistance 5.",
+      "exclusion_guard_flags": [],
+      "is_racial_default": true,
+      "key": "Ifrit ~ Energy Resistance",
+      "name": "Energy Resistance",
+      "negated_fact_gates": [
+        [
+          "Ifrit_ReplaceEnergyResistance"
+        ]
+      ],
+      "positive_prefact_flag": null,
+      "race_key": "Ifrit",
+      "sets_replace_flags": [],
+      "skinwalker_change_shape_kin": null,
+      "source_page": null,
+      "suppressed_by_flag": "Ifrit_ReplaceEnergyResistance",
+      "template_bonus_languages": [],
+      "type_tokens": [
+        "RacialTraits",
+        "Ifrit Racial Trait",
+        "Ifrit Racial Default",
+        "SpecialQuality"
+      ]
+    },
+    "ifrit/ifrit_fire_affinity.json": {
+      "adopted_race_pool_suffix": null,
+      "automatic_trait_grants": [
+        "Affinity Sorcerer Bonus"
+      ],
+      "category": "Special Ability",
+      "declared_bonuses": {
+        "ability_adjustments": [],
+        "ability_pool_picks": 0,
+        "magnitudes": [
+          1
+        ],
+        "magnitudes_excluding_flags": [
+          1
+        ],
+        "only_internal_flags": false,
+        "target_bonuses": [
+          {
+            "keyword": "CASTERLEVEL",
+            "magnitude": 1,
+            "target": "DOMAIN.Fire"
+          }
+        ],
+        "var_contributions": []
+      },
+      "declared_size": null,
+      "declared_vision": [],
+      "declared_walk_speed_ft": null,
+      "declares_negated_ability_guard": false,
+      "description": "Ifrit sorcerers with the elemental (fire) bloodline treat their Charisma scores as 2 points higher for the purposes of all sorcerer spells and class abilities. Ifrit spellcasters with the Fire domain use their domain powers and spells at +1 caster level.",
+      "exclusion_guard_flags": [],
+      "is_racial_default": true,
+      "key": "Ifrit ~ Fire Affinity",
+      "name": "Fire Affinity",
+      "negated_fact_gates": [
+        [
+          "Ifrit_ReplaceFireAffinity"
+        ]
+      ],
+      "positive_prefact_flag": null,
+      "race_key": "Ifrit",
+      "sets_replace_flags": [],
+      "skinwalker_change_shape_kin": null,
+      "source_page": null,
+      "suppressed_by_flag": "Ifrit_ReplaceFireAffinity",
+      "template_bonus_languages": [],
+      "type_tokens": [
+        "RacialTraits",
+        "Ifrit Racial Trait",
+        "Ifrit Racial Default",
+        "SpecialQuality",
+        "Special Quality",
+        "Special Ability",
+        "Extraordinary"
+      ]
+    },
+    "ifrit/ifrit_languages.json": {
+      "adopted_race_pool_suffix": null,
+      "automatic_trait_grants": [],
+      "category": "Special Ability",
+      "declared_bonuses": {
+        "ability_adjustments": [],
+        "ability_pool_picks": 0,
+        "magnitudes": [],
+        "magnitudes_excluding_flags": [],
+        "only_internal_flags": false,
+        "target_bonuses": [],
+        "var_contributions": []
+      },
+      "declared_size": null,
+      "declared_vision": [],
+      "declared_walk_speed_ft": null,
+      "declares_negated_ability_guard": false,
+      "description": "Ifrits begin play speaking Common and Ignan. Ifrits with high Intelligence scores can choose from the following languages: Aquan, Auran, Dwarven, Elven, Gnome, Halfling, and Terran.",
+      "exclusion_guard_flags": [],
+      "is_racial_default": true,
+      "key": "Ifrit ~ Languages",
+      "name": "Languages",
+      "negated_fact_gates": [
+        [
+          "Ifrit_ReplaceLanguages"
+        ]
+      ],
+      "positive_prefact_flag": null,
+      "race_key": "Ifrit",
+      "sets_replace_flags": [],
+      "skinwalker_change_shape_kin": null,
+      "source_page": null,
+      "suppressed_by_flag": "Ifrit_ReplaceLanguages",
+      "template_bonus_languages": [
+        "Aquan",
+        "Auran",
+        "Dwarven",
+        "Elven",
+        "Gnome",
+        "Halfling",
+        "Terran"
+      ],
+      "type_tokens": [
+        "RacialTraits",
+        "Ifrit Racial Trait",
+        "Ifrit Racial Default",
+        "SpecialQuality",
+        "Racial Language"
+      ]
+    },
+    "ifrit/ifrit_size.json": {
+      "adopted_race_pool_suffix": null,
+      "automatic_trait_grants": [],
+      "category": "Special Ability",
+      "declared_bonuses": {
+        "ability_adjustments": [],
+        "ability_pool_picks": 0,
+        "magnitudes": [],
+        "magnitudes_excluding_flags": [],
+        "only_internal_flags": false,
+        "target_bonuses": [],
+        "var_contributions": []
+      },
+      "declared_size": "Medium",
+      "declared_vision": [],
+      "declared_walk_speed_ft": null,
+      "declares_negated_ability_guard": false,
+      "description": "Ifrits are Medium creatures and receive no bonuses or penalties due to their size.",
+      "exclusion_guard_flags": [],
+      "is_racial_default": true,
+      "key": "Ifrit ~ Size",
+      "name": "Medium",
+      "negated_fact_gates": [
+        [
+          "Ifrit_ReplaceSize"
+        ]
+      ],
+      "positive_prefact_flag": null,
+      "race_key": "Ifrit",
+      "sets_replace_flags": [],
+      "skinwalker_change_shape_kin": null,
+      "source_page": null,
+      "suppressed_by_flag": "Ifrit_ReplaceSize",
+      "template_bonus_languages": [],
+      "type_tokens": [
+        "RacialTraits",
+        "Ifrit Racial Trait",
+        "Ifrit Racial Default",
+        "SpecialQuality",
+        "Racial Size"
+      ]
+    },
+    "ifrit/ifrit_speed.json": {
+      "adopted_race_pool_suffix": null,
+      "automatic_trait_grants": [],
+      "category": "Special Ability",
+      "declared_bonuses": {
+        "ability_adjustments": [],
+        "ability_pool_picks": 0,
+        "magnitudes": [
+          30
+        ],
+        "magnitudes_excluding_flags": [
+          30
+        ],
+        "only_internal_flags": false,
+        "target_bonuses": [
+          {
+            "keyword": "VAR",
+            "magnitude": 30,
+            "target": "MOVEBASE"
+          }
+        ],
+        "var_contributions": [
+          {
+            "amount": 30,
+            "name": "MOVEBASE"
+          }
+        ]
+      },
+      "declared_size": null,
+      "declared_vision": [],
+      "declared_walk_speed_ft": 30,
+      "declares_negated_ability_guard": false,
+      "description": "Ifrits have a base speed of 30 feet.",
+      "exclusion_guard_flags": [],
+      "is_racial_default": true,
+      "key": "Ifrit ~ Speed",
+      "name": "Normal Speed",
+      "negated_fact_gates": [
+        [
+          "Ifrit_ReplaceSpeed"
+        ]
+      ],
+      "positive_prefact_flag": null,
+      "race_key": "Ifrit",
+      "sets_replace_flags": [],
+      "skinwalker_change_shape_kin": null,
+      "source_page": null,
+      "suppressed_by_flag": "Ifrit_ReplaceSpeed",
+      "template_bonus_languages": [],
+      "type_tokens": [
+        "RacialTraits",
+        "Ifrit Racial Trait",
+        "Ifrit Racial Default",
+        "SpecialQuality",
+        "Racial Speed"
+      ]
+    },
+    "ifrit/ifrit_spell_like_ability.json": {
+      "adopted_race_pool_suffix": null,
+      "automatic_trait_grants": [
+        "Racial SLA ~ Burning Hands"
+      ],
+      "category": "Special Ability",
+      "declared_bonuses": {
+        "ability_adjustments": [],
+        "ability_pool_picks": 0,
+        "magnitudes": [],
+        "magnitudes_excluding_flags": [],
+        "only_internal_flags": false,
+        "target_bonuses": [],
+        "var_contributions": []
+      },
+      "declared_size": null,
+      "declared_vision": [],
+      "declared_walk_speed_ft": null,
+      "declares_negated_ability_guard": false,
+      "description": "Ifrits can use burning hands 1/day as a spell-like ability (caster level equals the ifrit’s character level).",
+      "exclusion_guard_flags": [],
+      "is_racial_default": true,
+      "key": "Ifrit ~ Spell-Like Ability",
+      "name": "Spell-Like Ability",
+      "negated_fact_gates": [
+        [
+          "Ifrit_ReplaceSpellLikeAbility"
+        ]
+      ],
+      "positive_prefact_flag": null,
+      "race_key": "Ifrit",
+      "sets_replace_flags": [],
+      "skinwalker_change_shape_kin": null,
+      "source_page": null,
+      "suppressed_by_flag": "Ifrit_ReplaceSpellLikeAbility",
+      "template_bonus_languages": [],
+      "type_tokens": [
+        "RacialTraits",
+        "Ifrit Racial Trait",
+        "Ifrit Racial Default",
+        "SpecialQuality"
+      ]
+    },
+    "ifrit/ifrit_type.json": {
+      "adopted_race_pool_suffix": null,
+      "automatic_trait_grants": [],
+      "category": "Special Ability",
+      "declared_bonuses": {
+        "ability_adjustments": [],
+        "ability_pool_picks": 0,
+        "magnitudes": [],
+        "magnitudes_excluding_flags": [],
+        "only_internal_flags": false,
+        "target_bonuses": [],
+        "var_contributions": []
+      },
+      "declared_size": null,
+      "declared_vision": [],
+      "declared_walk_speed_ft": null,
+      "declares_negated_ability_guard": false,
+      "description": "Ifrits are outsiders with the native subtype.",
+      "exclusion_guard_flags": [],
+      "is_racial_default": true,
+      "key": "Ifrit ~ Type",
+      "name": "Native Outsider",
+      "negated_fact_gates": [
+        [
+          "Ifrit_ReplaceType"
+        ]
+      ],
+      "positive_prefact_flag": null,
+      "race_key": "Ifrit",
+      "sets_replace_flags": [],
+      "skinwalker_change_shape_kin": null,
+      "source_page": null,
+      "suppressed_by_flag": "Ifrit_ReplaceType",
+      "template_bonus_languages": [],
+      "type_tokens": [
+        "RacialTraits",
+        "Ifrit Racial Trait",
+        "Ifrit Racial Default",
+        "SpecialQuality",
+        "Racial Type"
+      ]
+    },
+    "ifrit/ifrit_vision.json": {
+      "adopted_race_pool_suffix": null,
+      "automatic_trait_grants": [],
+      "category": "Special Ability",
+      "declared_bonuses": {
+        "ability_adjustments": [],
+        "ability_pool_picks": 0,
+        "magnitudes": [
+          1
+        ],
+        "magnitudes_excluding_flags": [],
+        "only_internal_flags": true,
+        "target_bonuses": [
+          {
+            "keyword": "VAR",
+            "magnitude": 1,
+            "target": "HasRacialVision"
+          }
+        ],
+        "var_contributions": [
+          {
+            "amount": 1,
+            "name": "HasRacialVision"
+          }
+        ]
+      },
+      "declared_size": null,
+      "declared_vision": [
+        "Darkvision (60)"
+      ],
+      "declared_walk_speed_ft": null,
+      "declares_negated_ability_guard": false,
+      "description": "Ifrits can see in the dark up to 60 feet.",
+      "exclusion_guard_flags": [],
+      "is_racial_default": true,
+      "key": "Ifrit ~ Vision",
+      "name": "Darkvision",
+      "negated_fact_gates": [
+        [
+          "Ifrit_ReplaceVision"
+        ]
+      ],
+      "positive_prefact_flag": null,
+      "race_key": "Ifrit",
+      "sets_replace_flags": [],
+      "skinwalker_change_shape_kin": null,
+      "source_page": null,
+      "suppressed_by_flag": "Ifrit_ReplaceVision",
+      "template_bonus_languages": [],
+      "type_tokens": [
+        "RacialTraits",
+        "Ifrit Racial Trait",
+        "Ifrit Racial Default",
+        "SpecialQuality",
+        "Racial Vision"
+      ]
+    },
+    "oread/adopted_race_oread.json": {
+      "adopted_race_pool_suffix": "Oread Race Trait",
+      "automatic_trait_grants": [],
+      "category": "Special Ability",
+      "declared_bonuses": {
+        "ability_adjustments": [],
+        "ability_pool_picks": 0,
+        "magnitudes": [],
+        "magnitudes_excluding_flags": [],
+        "only_internal_flags": false,
+        "target_bonuses": [],
+        "var_contributions": []
+      },
+      "declared_size": null,
+      "declared_vision": [],
+      "declared_walk_speed_ft": null,
+      "declares_negated_ability_guard": false,
+      "description": null,
+      "exclusion_guard_flags": [],
+      "is_racial_default": false,
+      "key": "Adopted Race ~ Oread",
+      "name": "Oread",
+      "negated_fact_gates": [],
+      "positive_prefact_flag": null,
+      "race_key": "Oread",
+      "sets_replace_flags": [],
+      "skinwalker_change_shape_kin": null,
+      "source_page": null,
+      "suppressed_by_flag": null,
+      "template_bonus_languages": [],
+      "type_tokens": [
+        "AdoptiveRace"
+      ]
+    },
+    "oread/oread_ability_scores.json": {
+      "adopted_race_pool_suffix": null,
+      "automatic_trait_grants": [],
+      "category": "Special Ability",
+      "declared_bonuses": {
+        "ability_adjustments": [
+          {
+            "codes": "STR,WIS",
+            "magnitude": "2"
+          },
+          {
+            "codes": "CHA",
+            "magnitude": "-2"
+          }
+        ],
+        "ability_pool_picks": 0,
+        "magnitudes": [
+          2,
+          -2
+        ],
+        "magnitudes_excluding_flags": [
+          2,
+          -2
+        ],
+        "only_internal_flags": false,
+        "target_bonuses": [
+          {
+            "keyword": "STAT",
+            "magnitude": 2,
+            "target": "STR,WIS"
+          },
+          {
+            "keyword": "STAT",
+            "magnitude": -2,
+            "target": "CHA"
+          }
+        ],
+        "var_contributions": []
+      },
+      "declared_size": null,
+      "declared_vision": [],
+      "declared_walk_speed_ft": null,
+      "declares_negated_ability_guard": false,
+      "description": "Oreads are strong, solid, stable, and stoic.",
+      "exclusion_guard_flags": [],
+      "is_racial_default": true,
+      "key": "Oread ~ Ability Scores",
+      "name": "+2 Strength, +2 Wisdom, -2 Charisma",
+      "negated_fact_gates": [
+        [
+          "Oread_ReplaceAbilityScores"
+        ]
+      ],
+      "positive_prefact_flag": null,
+      "race_key": "Oread",
+      "sets_replace_flags": [],
+      "skinwalker_change_shape_kin": null,
+      "source_page": null,
+      "suppressed_by_flag": "Oread_ReplaceAbilityScores",
+      "template_bonus_languages": [],
+      "type_tokens": [
+        "RacialTraits",
+        "Oread Racial Trait",
+        "Oread Racial Default",
+        "SpecialQuality",
+        "Racial Ability Scores"
+      ]
+    },
+    "oread/oread_earth_affinity.json": {
+      "adopted_race_pool_suffix": null,
+      "automatic_trait_grants": [
+        "Affinity Sorcerer Bonus"
+      ],
+      "category": "Special Ability",
+      "declared_bonuses": {
+        "ability_adjustments": [],
+        "ability_pool_picks": 0,
+        "magnitudes": [
+          1
+        ],
+        "magnitudes_excluding_flags": [
+          1
+        ],
+        "only_internal_flags": false,
+        "target_bonuses": [
+          {
+            "keyword": "CASTERLEVEL",
+            "magnitude": 1,
+            "target": "DOMAIN.Earth"
+          },
+          {
+            "keyword": "CASTERLEVEL",
+            "magnitude": 1,
+            "target": "DOMAIN.Caves Subdomain"
+          },
+          {
+            "keyword": "CASTERLEVEL",
+            "magnitude": 1,
+            "target": "DOMAIN.Metal Subdomain"
+          }
+        ],
+        "var_contributions": []
+      },
+      "declared_size": null,
+      "declared_vision": [],
+      "declared_walk_speed_ft": null,
+      "declares_negated_ability_guard": false,
+      "description": "Oread sorcerers with the elemental (earth) bloodline treat their Charisma scores as 2 points higher for the purposes of all sorcerer spells and class abilities. Oread clerics with the Earth domain use their domain powers and spells at +1 caster level.",
+      "exclusion_guard_flags": [],
+      "is_racial_default": true,
+      "key": "Oread ~ Earth Affinity",
+      "name": "Earth Affinity",
+      "negated_fact_gates": [
+        [
+          "Oread_ReplaceEarthAffinity"
+        ]
+      ],
+      "positive_prefact_flag": null,
+      "race_key": "Oread",
+      "sets_replace_flags": [],
+      "skinwalker_change_shape_kin": null,
+      "source_page": null,
+      "suppressed_by_flag": "Oread_ReplaceEarthAffinity",
+      "template_bonus_languages": [],
+      "type_tokens": [
+        "RacialTraits",
+        "Oread Racial Trait",
+        "Oread Racial Default",
+        "SpecialQuality",
+        "Special Quality",
+        "Special Ability",
+        "Extraordinary"
+      ]
+    },
+    "oread/oread_energy_resistance.json": {
+      "adopted_race_pool_suffix": null,
+      "automatic_trait_grants": [],
+      "category": "Special Ability",
+      "declared_bonuses": {
+        "ability_adjustments": [],
+        "ability_pool_picks": 0,
+        "magnitudes": [
+          5
+        ],
+        "magnitudes_excluding_flags": [
+          5
+        ],
+        "only_internal_flags": false,
+        "target_bonuses": [
+          {
+            "keyword": "VAR",
+            "magnitude": 5,
+            "target": "AcidResistanceBonus"
+          }
+        ],
+        "var_contributions": [
+          {
+            "amount": 5,
+            "name": "AcidResistanceBonus"
+          }
+        ]
+      },
+      "declared_size": null,
+      "declared_vision": [],
+      "declared_walk_speed_ft": null,
+      "declares_negated_ability_guard": false,
+      "description": "Oreads have acid resistance 5.",
+      "exclusion_guard_flags": [],
+      "is_racial_default": true,
+      "key": "Oread ~ Energy Resistance",
+      "name": "Energy Resistance",
+      "negated_fact_gates": [
+        [
+          "Oread_ReplaceEnergyResistance"
+        ]
+      ],
+      "positive_prefact_flag": null,
+      "race_key": "Oread",
+      "sets_replace_flags": [],
+      "skinwalker_change_shape_kin": null,
+      "source_page": null,
+      "suppressed_by_flag": "Oread_ReplaceEnergyResistance",
+      "template_bonus_languages": [],
+      "type_tokens": [
+        "RacialTraits",
+        "Oread Racial Trait",
+        "Oread Racial Default",
+        "SpecialQuality"
+      ]
+    },
+    "oread/oread_languages.json": {
+      "adopted_race_pool_suffix": null,
+      "automatic_trait_grants": [],
+      "category": "Special Ability",
+      "declared_bonuses": {
+        "ability_adjustments": [],
+        "ability_pool_picks": 0,
+        "magnitudes": [],
+        "magnitudes_excluding_flags": [],
+        "only_internal_flags": false,
+        "target_bonuses": [],
+        "var_contributions": []
+      },
+      "declared_size": null,
+      "declared_vision": [],
+      "declared_walk_speed_ft": null,
+      "declares_negated_ability_guard": false,
+      "description": "Oreads begin play speaking Common and Terran. Oreads with high Intelligence scores can choose from the following languages: Aquan, Auran, Dwarven, Elven, Gnome, Halfling, Ignan, and Undercommon.",
+      "exclusion_guard_flags": [],
+      "is_racial_default": true,
+      "key": "Oread ~ Languages",
+      "name": "Languages",
+      "negated_fact_gates": [
+        [
+          "Oread_ReplaceLanguages"
+        ]
+      ],
+      "positive_prefact_flag": null,
+      "race_key": "Oread",
+      "sets_replace_flags": [],
+      "skinwalker_change_shape_kin": null,
+      "source_page": null,
+      "suppressed_by_flag": "Oread_ReplaceLanguages",
+      "template_bonus_languages": [
+        "Aquan",
+        "Auran",
+        "Dwarven",
+        "Elven",
+        "Gnome",
+        "Halfling",
+        "Ignan",
+        "Undercommon"
+      ],
+      "type_tokens": [
+        "RacialTraits",
+        "Oread Racial Trait",
+        "Oread Racial Default",
+        "SpecialQuality",
+        "Racial Language"
+      ]
+    },
+    "oread/oread_size.json": {
+      "adopted_race_pool_suffix": null,
+      "automatic_trait_grants": [],
+      "category": "Special Ability",
+      "declared_bonuses": {
+        "ability_adjustments": [],
+        "ability_pool_picks": 0,
+        "magnitudes": [],
+        "magnitudes_excluding_flags": [],
+        "only_internal_flags": false,
+        "target_bonuses": [],
+        "var_contributions": []
+      },
+      "declared_size": "Medium",
+      "declared_vision": [],
+      "declared_walk_speed_ft": null,
+      "declares_negated_ability_guard": false,
+      "description": "Oreads are Medium creatures and have no bonuses or penalties due to their size.",
+      "exclusion_guard_flags": [],
+      "is_racial_default": true,
+      "key": "Oread ~ Size",
+      "name": "Medium",
+      "negated_fact_gates": [
+        [
+          "Oread_ReplaceSize"
+        ]
+      ],
+      "positive_prefact_flag": null,
+      "race_key": "Oread",
+      "sets_replace_flags": [],
+      "skinwalker_change_shape_kin": null,
+      "source_page": null,
+      "suppressed_by_flag": "Oread_ReplaceSize",
+      "template_bonus_languages": [],
+      "type_tokens": [
+        "RacialTraits",
+        "Oread Racial Trait",
+        "Oread Racial Default",
+        "SpecialQuality",
+        "Racial Size"
+      ]
+    },
+    "oread/oread_speed.json": {
+      "adopted_race_pool_suffix": null,
+      "automatic_trait_grants": [],
+      "category": "Special Ability",
+      "declared_bonuses": {
+        "ability_adjustments": [],
+        "ability_pool_picks": 0,
+        "magnitudes": [
+          20
+        ],
+        "magnitudes_excluding_flags": [
+          20
+        ],
+        "only_internal_flags": false,
+        "target_bonuses": [
+          {
+            "keyword": "VAR",
+            "magnitude": 20,
+            "target": "MOVEBASE"
+          }
+        ],
+        "var_contributions": [
+          {
+            "amount": 20,
+            "name": "MOVEBASE"
+          }
+        ]
+      },
+      "declared_size": null,
+      "declared_vision": [],
+      "declared_walk_speed_ft": 20,
+      "declares_negated_ability_guard": false,
+      "description": "Oreads have a base speed of 20 feet.",
+      "exclusion_guard_flags": [],
+      "is_racial_default": true,
+      "key": "Oread ~ Speed",
+      "name": "Slow Speed",
+      "negated_fact_gates": [
+        [
+          "Oread_ReplaceSpeed"
+        ]
+      ],
+      "positive_prefact_flag": null,
+      "race_key": "Oread",
+      "sets_replace_flags": [],
+      "skinwalker_change_shape_kin": null,
+      "source_page": null,
+      "suppressed_by_flag": "Oread_ReplaceSpeed",
+      "template_bonus_languages": [],
+      "type_tokens": [
+        "RacialTraits",
+        "Oread Racial Trait",
+        "Oread Racial Default",
+        "SpecialQuality",
+        "Racial Speed"
+      ]
+    },
+    "oread/oread_spell_like_ability.json": {
+      "adopted_race_pool_suffix": null,
+      "automatic_trait_grants": [
+        "Racial SLA ~ Magic Stone"
+      ],
+      "category": "Special Ability",
+      "declared_bonuses": {
+        "ability_adjustments": [],
+        "ability_pool_picks": 0,
+        "magnitudes": [],
+        "magnitudes_excluding_flags": [],
+        "only_internal_flags": false,
+        "target_bonuses": [],
+        "var_contributions": []
+      },
+      "declared_size": null,
+      "declared_vision": [],
+      "declared_walk_speed_ft": null,
+      "declares_negated_ability_guard": false,
+      "description": "Oreads can use magic stone 1/day as spell-like ability (with a caster level equal to the oread's character level).",
+      "exclusion_guard_flags": [],
+      "is_racial_default": true,
+      "key": "Oread ~ Spell-Like Ability",
+      "name": "Spell-Like Ability",
+      "negated_fact_gates": [
+        [
+          "Oread_ReplaceSpellLikeAbility"
+        ]
+      ],
+      "positive_prefact_flag": null,
+      "race_key": "Oread",
+      "sets_replace_flags": [],
+      "skinwalker_change_shape_kin": null,
+      "source_page": null,
+      "suppressed_by_flag": "Oread_ReplaceSpellLikeAbility",
+      "template_bonus_languages": [],
+      "type_tokens": [
+        "RacialTraits",
+        "Oread Racial Trait",
+        "Oread Racial Default",
+        "SpecialQuality"
+      ]
+    },
+    "oread/oread_type.json": {
+      "adopted_race_pool_suffix": null,
+      "automatic_trait_grants": [],
+      "category": "Special Ability",
+      "declared_bonuses": {
+        "ability_adjustments": [],
+        "ability_pool_picks": 0,
+        "magnitudes": [],
+        "magnitudes_excluding_flags": [],
+        "only_internal_flags": false,
+        "target_bonuses": [],
+        "var_contributions": []
+      },
+      "declared_size": null,
+      "declared_vision": [],
+      "declared_walk_speed_ft": null,
+      "declares_negated_ability_guard": false,
+      "description": "Oreads are outsiders with the native subtype.",
+      "exclusion_guard_flags": [],
+      "is_racial_default": true,
+      "key": "Oread ~ Type",
+      "name": "Native Outsider",
+      "negated_fact_gates": [
+        [
+          "Oread_ReplaceType"
+        ]
+      ],
+      "positive_prefact_flag": null,
+      "race_key": "Oread",
+      "sets_replace_flags": [],
+      "skinwalker_change_shape_kin": null,
+      "source_page": null,
+      "suppressed_by_flag": "Oread_ReplaceType",
+      "template_bonus_languages": [],
+      "type_tokens": [
+        "RacialTraits",
+        "Oread Racial Trait",
+        "Oread Racial Default",
+        "SpecialQuality",
+        "Racial Type"
+      ]
+    },
+    "oread/oread_vision.json": {
+      "adopted_race_pool_suffix": null,
+      "automatic_trait_grants": [],
+      "category": "Special Ability",
+      "declared_bonuses": {
+        "ability_adjustments": [],
+        "ability_pool_picks": 0,
+        "magnitudes": [
+          1
+        ],
+        "magnitudes_excluding_flags": [],
+        "only_internal_flags": true,
+        "target_bonuses": [
+          {
+            "keyword": "VAR",
+            "magnitude": 1,
+            "target": "HasRacialVision"
+          }
+        ],
+        "var_contributions": [
+          {
+            "amount": 1,
+            "name": "HasRacialVision"
+          }
+        ]
+      },
+      "declared_size": null,
+      "declared_vision": [
+        "Darkvision (60)"
+      ],
+      "declared_walk_speed_ft": null,
+      "declares_negated_ability_guard": false,
+      "description": "Oreads can see in the dark up to 60 feet.",
+      "exclusion_guard_flags": [],
+      "is_racial_default": true,
+      "key": "Oread ~ Vision",
+      "name": "Darkvision",
+      "negated_fact_gates": [
+        [
+          "Oread_ReplaceVision"
+        ]
+      ],
+      "positive_prefact_flag": null,
+      "race_key": "Oread",
+      "sets_replace_flags": [],
+      "skinwalker_change_shape_kin": null,
+      "source_page": null,
+      "suppressed_by_flag": "Oread_ReplaceVision",
+      "template_bonus_languages": [],
+      "type_tokens": [
+        "RacialTraits",
+        "Oread Racial Trait",
+        "Oread Racial Default",
+        "SpecialQuality",
+        "Racial Vision"
+      ]
+    },
+    "sylph/adopted_race_sylph.json": {
+      "adopted_race_pool_suffix": "Sylph Race Trait",
+      "automatic_trait_grants": [],
+      "category": "Special Ability",
+      "declared_bonuses": {
+        "ability_adjustments": [],
+        "ability_pool_picks": 0,
+        "magnitudes": [],
+        "magnitudes_excluding_flags": [],
+        "only_internal_flags": false,
+        "target_bonuses": [],
+        "var_contributions": []
+      },
+      "declared_size": null,
+      "declared_vision": [],
+      "declared_walk_speed_ft": null,
+      "declares_negated_ability_guard": false,
+      "description": null,
+      "exclusion_guard_flags": [],
+      "is_racial_default": false,
+      "key": "Adopted Race ~ Sylph",
+      "name": "Sylph",
+      "negated_fact_gates": [],
+      "positive_prefact_flag": null,
+      "race_key": "Sylph",
+      "sets_replace_flags": [],
+      "skinwalker_change_shape_kin": null,
+      "source_page": null,
+      "suppressed_by_flag": null,
+      "template_bonus_languages": [],
+      "type_tokens": [
+        "AdoptiveRace"
+      ]
+    },
+    "sylph/sylph_ability_scores.json": {
+      "adopted_race_pool_suffix": null,
+      "automatic_trait_grants": [],
+      "category": "Special Ability",
+      "declared_bonuses": {
+        "ability_adjustments": [
+          {
+            "codes": "DEX,INT",
+            "magnitude": "2"
+          },
+          {
+            "codes": "CON",
+            "magnitude": "-2"
+          }
+        ],
+        "ability_pool_picks": 0,
+        "magnitudes": [
+          2,
+          -2
+        ],
+        "magnitudes_excluding_flags": [
+          2,
+          -2
+        ],
+        "only_internal_flags": false,
+        "target_bonuses": [
+          {
+            "keyword": "STAT",
+            "magnitude": 2,
+            "target": "DEX,INT"
+          },
+          {
+            "keyword": "STAT",
+            "magnitude": -2,
+            "target": "CON"
+          }
+        ],
+        "var_contributions": []
+      },
+      "declared_size": null,
+      "declared_vision": [],
+      "declared_walk_speed_ft": null,
+      "declares_negated_ability_guard": false,
+      "description": "Sylphs are quick and insightful, but slight and delicate.",
+      "exclusion_guard_flags": [],
+      "is_racial_default": true,
+      "key": "Sylph ~ Ability Scores",
+      "name": "+2 Dexterity, +2 Intelligence, -2 Constitution",
+      "negated_fact_gates": [
+        [
+          "Sylph_ReplaceAbilityScores"
+        ]
+      ],
+      "positive_prefact_flag": null,
+      "race_key": "Sylph",
+      "sets_replace_flags": [],
+      "skinwalker_change_shape_kin": null,
+      "source_page": null,
+      "suppressed_by_flag": "Sylph_ReplaceAbilityScores",
+      "template_bonus_languages": [],
+      "type_tokens": [
+        "RacialTraits",
+        "Sylph Racial Trait",
+        "Sylph Racial Default",
+        "SpecialQuality",
+        "Racial Ability Scores"
+      ]
+    },
+    "sylph/sylph_air_affinity.json": {
+      "adopted_race_pool_suffix": null,
+      "automatic_trait_grants": [
+        "Affinity Sorcerer Bonus"
+      ],
+      "category": "Special Ability",
+      "declared_bonuses": {
+        "ability_adjustments": [],
+        "ability_pool_picks": 0,
+        "magnitudes": [
+          1
+        ],
+        "magnitudes_excluding_flags": [
+          1
+        ],
+        "only_internal_flags": false,
+        "target_bonuses": [
+          {
+            "keyword": "CASTERLEVEL",
+            "magnitude": 1,
+            "target": "DOMAIN.Air"
+          },
+          {
+            "keyword": "CASTERLEVEL",
+            "magnitude": 1,
+            "target": "DOMAIN.Cloud Subdomain"
+          },
+          {
+            "keyword": "CASTERLEVEL",
+            "magnitude": 1,
+            "target": "DOMAIN.Wind Subdomain"
+          }
+        ],
+        "var_contributions": []
+      },
+      "declared_size": null,
+      "declared_vision": [],
+      "declared_walk_speed_ft": null,
+      "declares_negated_ability_guard": false,
+      "description": "Sylph sorcerers with the elemental (air) bloodline treat their Charisma scores as 2 points higher for the purposes of all sorcerer spells and class abilities. Sylph spellcasters with the Air domain use their domain powers and spells at +1 caster level.",
+      "exclusion_guard_flags": [],
+      "is_racial_default": true,
+      "key": "Sylph ~ Air Affinity",
+      "name": "Air Affinity",
+      "negated_fact_gates": [
+        [
+          "Sylph_ReplaceAirAffinity"
+        ]
+      ],
+      "positive_prefact_flag": null,
+      "race_key": "Sylph",
+      "sets_replace_flags": [],
+      "skinwalker_change_shape_kin": null,
+      "source_page": null,
+      "suppressed_by_flag": "Sylph_ReplaceAirAffinity",
+      "template_bonus_languages": [],
+      "type_tokens": [
+        "RacialTraits",
+        "Sylph Racial Trait",
+        "Sylph Racial Default",
+        "SpecialQuality",
+        "Special Quality",
+        "Special Ability",
+        "Extraordinary"
+      ]
+    },
+    "sylph/sylph_energy_resistance.json": {
+      "adopted_race_pool_suffix": null,
+      "automatic_trait_grants": [],
+      "category": "Special Ability",
+      "declared_bonuses": {
+        "ability_adjustments": [],
+        "ability_pool_picks": 0,
+        "magnitudes": [
+          5
+        ],
+        "magnitudes_excluding_flags": [
+          5
+        ],
+        "only_internal_flags": false,
+        "target_bonuses": [
+          {
+            "keyword": "VAR",
+            "magnitude": 5,
+            "target": "ElectricityResistanceBonus"
+          }
+        ],
+        "var_contributions": [
+          {
+            "amount": 5,
+            "name": "ElectricityResistanceBonus"
+          }
+        ]
+      },
+      "declared_size": null,
+      "declared_vision": [],
+      "declared_walk_speed_ft": null,
+      "declares_negated_ability_guard": false,
+      "description": "Sylphs have electricity resistance 5.",
+      "exclusion_guard_flags": [],
+      "is_racial_default": true,
+      "key": "Sylph ~ Energy Resistance",
+      "name": "Energy Resistance",
+      "negated_fact_gates": [
+        [
+          "Sylph_ReplaceEnergyResistance"
+        ]
+      ],
+      "positive_prefact_flag": null,
+      "race_key": "Sylph",
+      "sets_replace_flags": [],
+      "skinwalker_change_shape_kin": null,
+      "source_page": null,
+      "suppressed_by_flag": "Sylph_ReplaceEnergyResistance",
+      "template_bonus_languages": [],
+      "type_tokens": [
+        "RacialTraits",
+        "Sylph Racial Trait",
+        "Sylph Racial Default",
+        "SpecialQuality"
+      ]
+    },
+    "sylph/sylph_languages.json": {
+      "adopted_race_pool_suffix": null,
+      "automatic_trait_grants": [],
+      "category": "Special Ability",
+      "declared_bonuses": {
+        "ability_adjustments": [],
+        "ability_pool_picks": 0,
+        "magnitudes": [],
+        "magnitudes_excluding_flags": [],
+        "only_internal_flags": false,
+        "target_bonuses": [],
+        "var_contributions": []
+      },
+      "declared_size": null,
+      "declared_vision": [],
+      "declared_walk_speed_ft": null,
+      "declares_negated_ability_guard": false,
+      "description": "Sylphs speak Common and Auran. Sylphs with high Intelligence scores can choose from the following languages: Aquan, Dwarven, Elven, Gnome, Halfling, Ignan, and Terran.",
+      "exclusion_guard_flags": [],
+      "is_racial_default": true,
+      "key": "Sylph ~ Languages",
+      "name": "Languages",
+      "negated_fact_gates": [
+        [
+          "Sylph_ReplaceLanguages"
+        ]
+      ],
+      "positive_prefact_flag": null,
+      "race_key": "Sylph",
+      "sets_replace_flags": [],
+      "skinwalker_change_shape_kin": null,
+      "source_page": null,
+      "suppressed_by_flag": "Sylph_ReplaceLanguages",
+      "template_bonus_languages": [
+        "Aquan",
+        "Dwarven",
+        "Elven",
+        "Gnome",
+        "Halfling",
+        "Ignan",
+        "Terran"
+      ],
+      "type_tokens": [
+        "RacialTraits",
+        "Sylph Racial Trait",
+        "Sylph Racial Default",
+        "SpecialQuality",
+        "Racial Language"
+      ]
+    },
+    "sylph/sylph_size.json": {
+      "adopted_race_pool_suffix": null,
+      "automatic_trait_grants": [],
+      "category": "Special Ability",
+      "declared_bonuses": {
+        "ability_adjustments": [],
+        "ability_pool_picks": 0,
+        "magnitudes": [],
+        "magnitudes_excluding_flags": [],
+        "only_internal_flags": false,
+        "target_bonuses": [],
+        "var_contributions": []
+      },
+      "declared_size": "Medium",
+      "declared_vision": [],
+      "declared_walk_speed_ft": null,
+      "declares_negated_ability_guard": false,
+      "description": "Sylphs are Medium creatures and have no bonuses or penalties due to their size.",
+      "exclusion_guard_flags": [],
+      "is_racial_default": true,
+      "key": "Sylph ~ Size",
+      "name": "Medium",
+      "negated_fact_gates": [
+        [
+          "Sylph_ReplaceSize"
+        ]
+      ],
+      "positive_prefact_flag": null,
+      "race_key": "Sylph",
+      "sets_replace_flags": [],
+      "skinwalker_change_shape_kin": null,
+      "source_page": null,
+      "suppressed_by_flag": "Sylph_ReplaceSize",
+      "template_bonus_languages": [],
+      "type_tokens": [
+        "RacialTraits",
+        "Sylph Racial Trait",
+        "Sylph Racial Default",
+        "SpecialQuality",
+        "Racial Size"
+      ]
+    },
+    "sylph/sylph_speed.json": {
+      "adopted_race_pool_suffix": null,
+      "automatic_trait_grants": [],
+      "category": "Special Ability",
+      "declared_bonuses": {
+        "ability_adjustments": [],
+        "ability_pool_picks": 0,
+        "magnitudes": [
+          30
+        ],
+        "magnitudes_excluding_flags": [
+          30
+        ],
+        "only_internal_flags": false,
+        "target_bonuses": [
+          {
+            "keyword": "VAR",
+            "magnitude": 30,
+            "target": "MOVEBASE"
+          }
+        ],
+        "var_contributions": [
+          {
+            "amount": 30,
+            "name": "MOVEBASE"
+          }
+        ]
+      },
+      "declared_size": null,
+      "declared_vision": [],
+      "declared_walk_speed_ft": 30,
+      "declares_negated_ability_guard": false,
+      "description": "Sylphs have a base speed of 30 feet.",
+      "exclusion_guard_flags": [],
+      "is_racial_default": true,
+      "key": "Sylph ~ Speed",
+      "name": "Normal Speed",
+      "negated_fact_gates": [
+        [
+          "Sylph_ReplaceSpeed"
+        ]
+      ],
+      "positive_prefact_flag": null,
+      "race_key": "Sylph",
+      "sets_replace_flags": [],
+      "skinwalker_change_shape_kin": null,
+      "source_page": null,
+      "suppressed_by_flag": "Sylph_ReplaceSpeed",
+      "template_bonus_languages": [],
+      "type_tokens": [
+        "RacialTraits",
+        "Sylph Racial Trait",
+        "Sylph Racial Default",
+        "SpecialQuality",
+        "Racial Speed"
+      ]
+    },
+    "sylph/sylph_spell_like_ability.json": {
+      "adopted_race_pool_suffix": null,
+      "automatic_trait_grants": [
+        "Racial SLA ~ Feather Fall"
+      ],
+      "category": "Special Ability",
+      "declared_bonuses": {
+        "ability_adjustments": [],
+        "ability_pool_picks": 0,
+        "magnitudes": [],
+        "magnitudes_excluding_flags": [],
+        "only_internal_flags": false,
+        "target_bonuses": [],
+        "var_contributions": []
+      },
+      "declared_size": null,
+      "declared_vision": [],
+      "declared_walk_speed_ft": null,
+      "declares_negated_ability_guard": false,
+      "description": "Sylphs can use feather fall 1/day as a spell-like ability (with a caster level equal to the sylph’s character level).",
+      "exclusion_guard_flags": [],
+      "is_racial_default": true,
+      "key": "Sylph ~ Spell-Like Ability",
+      "name": "Spell-Like Ability",
+      "negated_fact_gates": [
+        [
+          "Sylph_ReplaceSpellLikeAbility"
+        ]
+      ],
+      "positive_prefact_flag": null,
+      "race_key": "Sylph",
+      "sets_replace_flags": [],
+      "skinwalker_change_shape_kin": null,
+      "source_page": null,
+      "suppressed_by_flag": "Sylph_ReplaceSpellLikeAbility",
+      "template_bonus_languages": [],
+      "type_tokens": [
+        "RacialTraits",
+        "Sylph Racial Trait",
+        "Sylph Racial Default",
+        "SpecialQuality"
+      ]
+    },
+    "sylph/sylph_type.json": {
+      "adopted_race_pool_suffix": null,
+      "automatic_trait_grants": [],
+      "category": "Special Ability",
+      "declared_bonuses": {
+        "ability_adjustments": [],
+        "ability_pool_picks": 0,
+        "magnitudes": [],
+        "magnitudes_excluding_flags": [],
+        "only_internal_flags": false,
+        "target_bonuses": [],
+        "var_contributions": []
+      },
+      "declared_size": null,
+      "declared_vision": [],
+      "declared_walk_speed_ft": null,
+      "declares_negated_ability_guard": false,
+      "description": "Sylphs are outsiders with the native subtype.",
+      "exclusion_guard_flags": [],
+      "is_racial_default": true,
+      "key": "Sylph ~ Type",
+      "name": "Native Outsider",
+      "negated_fact_gates": [
+        [
+          "Sylph_ReplaceType"
+        ]
+      ],
+      "positive_prefact_flag": null,
+      "race_key": "Sylph",
+      "sets_replace_flags": [],
+      "skinwalker_change_shape_kin": null,
+      "source_page": null,
+      "suppressed_by_flag": "Sylph_ReplaceType",
+      "template_bonus_languages": [],
+      "type_tokens": [
+        "RacialTraits",
+        "Sylph Racial Trait",
+        "Sylph Racial Default",
+        "SpecialQuality",
+        "Racial Type"
+      ]
+    },
+    "sylph/sylph_vision.json": {
+      "adopted_race_pool_suffix": null,
+      "automatic_trait_grants": [],
+      "category": "Special Ability",
+      "declared_bonuses": {
+        "ability_adjustments": [],
+        "ability_pool_picks": 0,
+        "magnitudes": [
+          1
+        ],
+        "magnitudes_excluding_flags": [],
+        "only_internal_flags": true,
+        "target_bonuses": [
+          {
+            "keyword": "VAR",
+            "magnitude": 1,
+            "target": "HasRacialVision"
+          }
+        ],
+        "var_contributions": [
+          {
+            "amount": 1,
+            "name": "HasRacialVision"
+          }
+        ]
+      },
+      "declared_size": null,
+      "declared_vision": [
+        "Darkvision (60)"
+      ],
+      "declared_walk_speed_ft": null,
+      "declares_negated_ability_guard": false,
+      "description": "Sylphs can see in the dark up to 60 feet.",
+      "exclusion_guard_flags": [],
+      "is_racial_default": true,
+      "key": "Sylph ~ Vision",
+      "name": "Darkvision",
+      "negated_fact_gates": [
+        [
+          "Sylph_ReplaceVision"
+        ]
+      ],
+      "positive_prefact_flag": null,
+      "race_key": "Sylph",
+      "sets_replace_flags": [],
+      "skinwalker_change_shape_kin": null,
+      "source_page": null,
+      "suppressed_by_flag": "Sylph_ReplaceVision",
+      "template_bonus_languages": [],
+      "type_tokens": [
+        "RacialTraits",
+        "Sylph Racial Trait",
+        "Sylph Racial Default",
+        "SpecialQuality",
+        "Racial Vision"
+      ]
+    },
+    "undine/adopted_race_undine.json": {
+      "adopted_race_pool_suffix": "Undine Race Trait",
+      "automatic_trait_grants": [],
+      "category": "Special Ability",
+      "declared_bonuses": {
+        "ability_adjustments": [],
+        "ability_pool_picks": 0,
+        "magnitudes": [],
+        "magnitudes_excluding_flags": [],
+        "only_internal_flags": false,
+        "target_bonuses": [],
+        "var_contributions": []
+      },
+      "declared_size": null,
+      "declared_vision": [],
+      "declared_walk_speed_ft": null,
+      "declares_negated_ability_guard": false,
+      "description": null,
+      "exclusion_guard_flags": [],
+      "is_racial_default": false,
+      "key": "Adopted Race ~ Undine",
+      "name": "Undine",
+      "negated_fact_gates": [],
+      "positive_prefact_flag": null,
+      "race_key": "Undine",
+      "sets_replace_flags": [],
+      "skinwalker_change_shape_kin": null,
+      "source_page": null,
+      "suppressed_by_flag": null,
+      "template_bonus_languages": [],
+      "type_tokens": [
+        "AdoptiveRace"
+      ]
+    },
+    "undine/undine_ability_scores.json": {
+      "adopted_race_pool_suffix": null,
+      "automatic_trait_grants": [],
+      "category": "Special Ability",
+      "declared_bonuses": {
+        "ability_adjustments": [
+          {
+            "codes": "DEX,WIS",
+            "magnitude": "2"
+          },
+          {
+            "codes": "STR",
+            "magnitude": "-2"
+          }
+        ],
+        "ability_pool_picks": 0,
+        "magnitudes": [
+          2,
+          -2
+        ],
+        "magnitudes_excluding_flags": [
+          2,
+          -2
+        ],
+        "only_internal_flags": false,
+        "target_bonuses": [
+          {
+            "keyword": "STAT",
+            "magnitude": 2,
+            "target": "DEX,WIS"
+          },
+          {
+            "keyword": "STAT",
+            "magnitude": -2,
+            "target": "STR"
+          }
+        ],
+        "var_contributions": []
+      },
+      "declared_size": null,
+      "declared_vision": [],
+      "declared_walk_speed_ft": null,
+      "declares_negated_ability_guard": false,
+      "description": "Undines are perceptive and agile, but somewhat weak.",
+      "exclusion_guard_flags": [],
+      "is_racial_default": true,
+      "key": "Undine ~ Ability Scores",
+      "name": "+2 Dexterity, +2 Wisdom, -2 Strength",
+      "negated_fact_gates": [
+        [
+          "Undine_ReplaceAbilityScores"
+        ]
+      ],
+      "positive_prefact_flag": null,
+      "race_key": "Undine",
+      "sets_replace_flags": [],
+      "skinwalker_change_shape_kin": null,
+      "source_page": null,
+      "suppressed_by_flag": "Undine_ReplaceAbilityScores",
+      "template_bonus_languages": [],
+      "type_tokens": [
+        "RacialTraits",
+        "Undine Racial Trait",
+        "Undine Racial Default",
+        "SpecialQuality",
+        "Racial Ability Scores"
+      ]
+    },
+    "undine/undine_energy_resistance.json": {
+      "adopted_race_pool_suffix": null,
+      "automatic_trait_grants": [],
+      "category": "Special Ability",
+      "declared_bonuses": {
+        "ability_adjustments": [],
+        "ability_pool_picks": 0,
+        "magnitudes": [
+          5
+        ],
+        "magnitudes_excluding_flags": [
+          5
+        ],
+        "only_internal_flags": false,
+        "target_bonuses": [
+          {
+            "keyword": "VAR",
+            "magnitude": 5,
+            "target": "ColdResistanceBonus"
+          }
+        ],
+        "var_contributions": [
+          {
+            "amount": 5,
+            "name": "ColdResistanceBonus"
+          }
+        ]
+      },
+      "declared_size": null,
+      "declared_vision": [],
+      "declared_walk_speed_ft": null,
+      "declares_negated_ability_guard": false,
+      "description": "Undines have cold resistance 5.",
+      "exclusion_guard_flags": [],
+      "is_racial_default": true,
+      "key": "Undine ~ Energy Resistance",
+      "name": "Energy Resistance",
+      "negated_fact_gates": [
+        [
+          "Undine_ReplaceEnergyResistance"
+        ]
+      ],
+      "positive_prefact_flag": null,
+      "race_key": "Undine",
+      "sets_replace_flags": [],
+      "skinwalker_change_shape_kin": null,
+      "source_page": null,
+      "suppressed_by_flag": "Undine_ReplaceEnergyResistance",
+      "template_bonus_languages": [],
+      "type_tokens": [
+        "RacialTraits",
+        "Undine Racial Trait",
+        "Undine Racial Default",
+        "SpecialQuality"
+      ]
+    },
+    "undine/undine_languages.json": {
+      "adopted_race_pool_suffix": null,
+      "automatic_trait_grants": [],
+      "category": "Special Ability",
+      "declared_bonuses": {
+        "ability_adjustments": [],
+        "ability_pool_picks": 0,
+        "magnitudes": [],
+        "magnitudes_excluding_flags": [],
+        "only_internal_flags": false,
+        "target_bonuses": [],
+        "var_contributions": []
+      },
+      "declared_size": null,
+      "declared_vision": [],
+      "declared_walk_speed_ft": null,
+      "declares_negated_ability_guard": false,
+      "description": "Undines begin play speaking Common and Aquan. Undines with high Intelligence scores can choose from the following languages: Auran, Dwarven, Elven, Gnome, Halfling, Ignan, and Terran.",
+      "exclusion_guard_flags": [],
+      "is_racial_default": true,
+      "key": "Undine ~ Languages",
+      "name": "Languages",
+      "negated_fact_gates": [
+        [
+          "Undine_ReplaceLanguages"
+        ]
+      ],
+      "positive_prefact_flag": null,
+      "race_key": "Undine",
+      "sets_replace_flags": [],
+      "skinwalker_change_shape_kin": null,
+      "source_page": null,
+      "suppressed_by_flag": "Undine_ReplaceLanguages",
+      "template_bonus_languages": [
+        "Auran",
+        "Dwarven",
+        "Elven",
+        "Gnome",
+        "Halfling",
+        "Ignan",
+        "Terran"
+      ],
+      "type_tokens": [
+        "RacialTraits",
+        "Undine Racial Trait",
+        "Undine Racial Default",
+        "SpecialQuality",
+        "Racial Language"
+      ]
+    },
+    "undine/undine_size.json": {
+      "adopted_race_pool_suffix": null,
+      "automatic_trait_grants": [],
+      "category": "Special Ability",
+      "declared_bonuses": {
+        "ability_adjustments": [],
+        "ability_pool_picks": 0,
+        "magnitudes": [],
+        "magnitudes_excluding_flags": [],
+        "only_internal_flags": false,
+        "target_bonuses": [],
+        "var_contributions": []
+      },
+      "declared_size": "Medium",
+      "declared_vision": [],
+      "declared_walk_speed_ft": null,
+      "declares_negated_ability_guard": false,
+      "description": "Undines are Medium creatures and receive no bonuses or penalties due to their size.",
+      "exclusion_guard_flags": [],
+      "is_racial_default": true,
+      "key": "Undine ~ Size",
+      "name": "Medium",
+      "negated_fact_gates": [
+        [
+          "Undine_ReplaceSize"
+        ]
+      ],
+      "positive_prefact_flag": null,
+      "race_key": "Undine",
+      "sets_replace_flags": [],
+      "skinwalker_change_shape_kin": null,
+      "source_page": null,
+      "suppressed_by_flag": "Undine_ReplaceSize",
+      "template_bonus_languages": [],
+      "type_tokens": [
+        "RacialTraits",
+        "Undine Racial Trait",
+        "Undine Racial Default",
+        "SpecialQuality",
+        "Racial Size"
+      ]
+    },
+    "undine/undine_speed.json": {
+      "adopted_race_pool_suffix": null,
+      "automatic_trait_grants": [
+        "Swim"
+      ],
+      "category": "Special Ability",
+      "declared_bonuses": {
+        "ability_adjustments": [],
+        "ability_pool_picks": 0,
+        "magnitudes": [
+          30
+        ],
+        "magnitudes_excluding_flags": [
+          30
+        ],
+        "only_internal_flags": false,
+        "target_bonuses": [
+          {
+            "keyword": "VAR",
+            "magnitude": 30,
+            "target": "MOVEBASE"
+          }
+        ],
+        "var_contributions": [
+          {
+            "amount": 30,
+            "name": "MOVEBASE"
+          }
+        ]
+      },
+      "declared_size": null,
+      "declared_vision": [],
+      "declared_walk_speed_ft": 30,
+      "declares_negated_ability_guard": false,
+      "description": "Undines have a base speed of 30 feet on land. They also have a swim speed of 30 feet, can move in water without needing to attempt Swim checks, and always treat Swim as a class skill.",
+      "exclusion_guard_flags": [],
+      "is_racial_default": true,
+      "key": "Undine ~ Speed",
+      "name": "Normal Speed",
+      "negated_fact_gates": [
+        [
+          "Undine_ReplaceSpeed"
+        ]
+      ],
+      "positive_prefact_flag": null,
+      "race_key": "Undine",
+      "sets_replace_flags": [],
+      "skinwalker_change_shape_kin": null,
+      "source_page": null,
+      "suppressed_by_flag": "Undine_ReplaceSpeed",
+      "template_bonus_languages": [],
+      "type_tokens": [
+        "RacialTraits",
+        "Undine Racial Trait",
+        "Undine Racial Default",
+        "SpecialQuality",
+        "Racial Speed"
+      ]
+    },
+    "undine/undine_spell_like_ability.json": {
+      "adopted_race_pool_suffix": null,
+      "automatic_trait_grants": [
+        "Racial SLA ~ Hydraulic Push"
+      ],
+      "category": "Special Ability",
+      "declared_bonuses": {
+        "ability_adjustments": [],
+        "ability_pool_picks": 0,
+        "magnitudes": [],
+        "magnitudes_excluding_flags": [],
+        "only_internal_flags": false,
+        "target_bonuses": [],
+        "var_contributions": []
+      },
+      "declared_size": null,
+      "declared_vision": [],
+      "declared_walk_speed_ft": null,
+      "declares_negated_ability_guard": false,
+      "description": "Undines can cast hydraulic push once per day as a spell-like ability (with a caster level equal to the undine's character level).",
+      "exclusion_guard_flags": [],
+      "is_racial_default": true,
+      "key": "Undine ~ Spell-Like Ability",
+      "name": "Spell-Like Ability",
+      "negated_fact_gates": [
+        [
+          "Undine_ReplaceSpellLikeAbility"
+        ]
+      ],
+      "positive_prefact_flag": null,
+      "race_key": "Undine",
+      "sets_replace_flags": [],
+      "skinwalker_change_shape_kin": null,
+      "source_page": null,
+      "suppressed_by_flag": "Undine_ReplaceSpellLikeAbility",
+      "template_bonus_languages": [],
+      "type_tokens": [
+        "RacialTraits",
+        "Undine Racial Trait",
+        "Undine Racial Default",
+        "SpecialQuality"
+      ]
+    },
+    "undine/undine_type.json": {
+      "adopted_race_pool_suffix": null,
+      "automatic_trait_grants": [],
+      "category": "Special Ability",
+      "declared_bonuses": {
+        "ability_adjustments": [],
+        "ability_pool_picks": 0,
+        "magnitudes": [],
+        "magnitudes_excluding_flags": [],
+        "only_internal_flags": false,
+        "target_bonuses": [],
+        "var_contributions": []
+      },
+      "declared_size": null,
+      "declared_vision": [],
+      "declared_walk_speed_ft": null,
+      "declares_negated_ability_guard": false,
+      "description": "Undines are outsiders with the native subtype.",
+      "exclusion_guard_flags": [],
+      "is_racial_default": true,
+      "key": "Undine ~ Type",
+      "name": "Native Outsider",
+      "negated_fact_gates": [
+        [
+          "Undine_ReplaceType"
+        ]
+      ],
+      "positive_prefact_flag": null,
+      "race_key": "Undine",
+      "sets_replace_flags": [],
+      "skinwalker_change_shape_kin": null,
+      "source_page": null,
+      "suppressed_by_flag": "Undine_ReplaceType",
+      "template_bonus_languages": [],
+      "type_tokens": [
+        "RacialTraits",
+        "Undine Racial Trait",
+        "Undine Racial Default",
+        "SpecialQuality",
+        "Racial Type"
+      ]
+    },
+    "undine/undine_vision.json": {
+      "adopted_race_pool_suffix": null,
+      "automatic_trait_grants": [],
+      "category": "Special Ability",
+      "declared_bonuses": {
+        "ability_adjustments": [],
+        "ability_pool_picks": 0,
+        "magnitudes": [
+          1
+        ],
+        "magnitudes_excluding_flags": [],
+        "only_internal_flags": true,
+        "target_bonuses": [
+          {
+            "keyword": "VAR",
+            "magnitude": 1,
+            "target": "HasRacialVision"
+          }
+        ],
+        "var_contributions": [
+          {
+            "amount": 1,
+            "name": "HasRacialVision"
+          }
+        ]
+      },
+      "declared_size": null,
+      "declared_vision": [
+        "Darkvision (60)"
+      ],
+      "declared_walk_speed_ft": null,
+      "declares_negated_ability_guard": false,
+      "description": "Undines can see in the dark up to 60 feet.",
+      "exclusion_guard_flags": [],
+      "is_racial_default": true,
+      "key": "Undine ~ Vision",
+      "name": "Darkvision",
+      "negated_fact_gates": [
+        [
+          "Undine_ReplaceVision"
+        ]
+      ],
+      "positive_prefact_flag": null,
+      "race_key": "Undine",
+      "sets_replace_flags": [],
+      "skinwalker_change_shape_kin": null,
+      "source_page": null,
+      "suppressed_by_flag": "Undine_ReplaceVision",
+      "template_bonus_languages": [],
+      "type_tokens": [
+        "RacialTraits",
+        "Undine Racial Trait",
+        "Undine Racial Default",
+        "SpecialQuality",
+        "Racial Vision"
+      ]
+    },
+    "undine/undine_water_affinity.json": {
+      "adopted_race_pool_suffix": null,
+      "automatic_trait_grants": [
+        "Affinity Sorcerer Bonus"
+      ],
+      "category": "Special Ability",
+      "declared_bonuses": {
+        "ability_adjustments": [],
+        "ability_pool_picks": 0,
+        "magnitudes": [
+          1
+        ],
+        "magnitudes_excluding_flags": [
+          1
+        ],
+        "only_internal_flags": false,
+        "target_bonuses": [
+          {
+            "keyword": "CASTERLEVEL",
+            "magnitude": 1,
+            "target": "DOMAIN.Water"
+          },
+          {
+            "keyword": "CASTERLEVEL",
+            "magnitude": 1,
+            "target": "DOMAIN.Ice"
+          },
+          {
+            "keyword": "CASTERLEVEL",
+            "magnitude": 1,
+            "target": "DOMAIN.Oceans"
+          }
+        ],
+        "var_contributions": []
+      },
+      "declared_size": null,
+      "declared_vision": [],
+      "declared_walk_speed_ft": null,
+      "declares_negated_ability_guard": false,
+      "description": "Undine sorcerers with the elemental (water) bloodline treat their Charisma scores as 2 points higher for the purposes of all sorcerer spells and class abilities. Undine clerics with the Water domain cast their Water domain powers and spells at +1 caster level.",
+      "exclusion_guard_flags": [],
+      "is_racial_default": true,
+      "key": "Undine ~ Water Affinity",
+      "name": "Water Affinity",
+      "negated_fact_gates": [
+        [
+          "Undine_ReplaceWaterAffinity"
+        ]
+      ],
+      "positive_prefact_flag": null,
+      "race_key": "Undine",
+      "sets_replace_flags": [],
+      "skinwalker_change_shape_kin": null,
+      "source_page": null,
+      "suppressed_by_flag": "Undine_ReplaceWaterAffinity",
+      "template_bonus_languages": [],
+      "type_tokens": [
+        "RacialTraits",
+        "Undine Racial Trait",
+        "Undine Racial Default",
+        "SpecialQuality",
+        "Special Quality",
+        "Special Ability",
+        "Extraordinary"
+      ]
+    }
+  }
+}

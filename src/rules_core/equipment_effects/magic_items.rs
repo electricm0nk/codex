@@ -28,7 +28,7 @@ use crate::rules_core::equipment_record::CorpusEquipmentRecord;
 /// module reads it off the converted record. Which source token stated it --
 /// an unconditional bonus chain, or the `TEMPBONUS:` form the CRB
 /// ability-score potions use -- is the converter's business, not the sheet's.
-#[derive(Debug, Clone, PartialEq)]
+#[derive(Debug, Clone, PartialEq, serde::Serialize, serde::Deserialize)]
 pub struct AbilityScoreBonus {
     pub ability: String,
     pub bonus: i16,

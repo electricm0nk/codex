@@ -38,6 +38,14 @@
 //!   equipment/equip_longsword.json
 //! ```
 //!
+//! SD-35 `AT-35-E6-003-RULED` cycle 15: `corpus_loader::load_equipment_corpus`
+//! reads a book's settled-record bundle now, so this fixture root needs one
+//! too. It is produced by `src/bin/gen_settled_corpus.rs`, which treats
+//! `corpus_fixtures/` as a `BookCorpusRoot` like any other and writes
+//! `corpus_fixtures/_settled/equipment.json` beside the records below. **Run
+//! `gen_settled_corpus` after this tool whenever a fixture record changes**;
+//! `gen_settled_corpus --check` fails loudly if you forget.
+//!
 //! The equipment records are written in the same Shape B v1 `data.raw_tokens` /
 //! `data.raw_bonus_chains` form the real `data/corpus/<book>/equipment/*.json`
 //! records carry, because that is what `corpus_loader::load_equipment_corpus`

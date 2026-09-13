@@ -133,7 +133,7 @@ use crate::rules_core::source_content::SourcePackageContent;
 /// A PF1 dice expression, e.g. `"1d8"` -> `{ count: 1, die_size: 8 }`,
 /// `"2d6"` -> `{ count: 2, die_size: 6 }`. `count` dice, each with
 /// `die_size` faces, summed.
-#[derive(Debug, Clone, Copy, PartialEq, Eq)]
+#[derive(Debug, Clone, Copy, PartialEq, Eq, serde::Serialize, serde::Deserialize)]
 pub struct DiceExpression {
     pub count: u8,
     pub die_size: u8,
@@ -292,7 +292,7 @@ pub fn resolve_eqmweapon_damagesize_effect(
 /// fraction is exactly one-half or the modifier itself is negative
 /// (CRB: "such fractions are always rounded down, even if the total is
 /// 0 or less").
-#[derive(Debug, Clone, Copy, PartialEq, Eq)]
+#[derive(Debug, Clone, Copy, PartialEq, Eq, serde::Serialize, serde::Deserialize)]
 pub enum WieldCategory {
     Light,
     OneHanded,

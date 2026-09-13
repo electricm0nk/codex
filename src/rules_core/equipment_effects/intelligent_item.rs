@@ -68,7 +68,7 @@ use crate::rules_core::equipment_record::CorpusEquipmentRecord;
 /// An intelligent item's own alignment (CRB "Intelligent Items"), decoded
 /// from the corpus's literal `BONUS:VAR|IntItemAlignment|<code>` two-digit
 /// encoding (see module doc comment).
-#[derive(Debug, Clone, Copy, PartialEq, Eq)]
+#[derive(Debug, Clone, Copy, PartialEq, Eq, serde::Serialize, serde::Deserialize)]
 pub enum ItemAlignment {
     LawfulGood,
     LawfulNeutral,
@@ -136,7 +136,7 @@ impl ItemAlignment {
 /// item's true Ego. A future consumer must not render this field as "the
 /// item's Ego" without also resolving the Base contribution; it is safe
 /// only as "this modifier's own literal Ego delta."
-#[derive(Debug, Clone, Copy, Default, PartialEq)]
+#[derive(Debug, Clone, Copy, Default, PartialEq, serde::Serialize, serde::Deserialize)]
 pub struct IntelligentItemContribution {
     pub intelligence_bonus: i16,
     pub wisdom_bonus: i16,

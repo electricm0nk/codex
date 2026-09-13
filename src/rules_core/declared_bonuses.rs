@@ -36,7 +36,7 @@
 /// row's key and can name it — is the one that must decide whether that is an
 /// error. Parsing and code-to-ability mapping are game semantics and stay on
 /// the live side.
-#[derive(Debug, Clone, PartialEq, Eq)]
+#[derive(Debug, Clone, PartialEq, Eq, serde::Serialize, serde::Deserialize)]
 pub struct AbilityAdjustment {
     pub codes: Option<String>,
     pub magnitude: Option<String>,
@@ -49,7 +49,7 @@ pub struct AbilityAdjustment {
 /// an amount that is not a bare integer. `None` is "declared but
 /// unresolvable", which is a different fact from "never mentioned" (a name
 /// that never appears here at all).
-#[derive(Debug, Clone, PartialEq, Eq)]
+#[derive(Debug, Clone, PartialEq, Eq, serde::Serialize, serde::Deserialize)]
 pub struct VarContribution {
     pub name: String,
     pub amount: Option<i64>,
@@ -63,7 +63,7 @@ pub struct VarContribution {
 /// the row states a plain integer: a formula, a variable or an upstream
 /// `%LIST` placeholder is out of reach by `decisions.md §24` and lands as
 /// `None` rather than being guessed at.
-#[derive(Debug, Clone, PartialEq, Eq)]
+#[derive(Debug, Clone, PartialEq, Eq, serde::Serialize, serde::Deserialize)]
 pub struct TargetBonus {
     pub keyword: String,
     pub target: String,
@@ -74,7 +74,7 @@ pub struct TargetBonus {
 ///
 /// Built at ingest-boundary time and stored, so nothing downstream holds the
 /// ingest array. Every field is a transcription of what the row states.
-#[derive(Debug, Clone, PartialEq, Eq, Default)]
+#[derive(Debug, Clone, PartialEq, Eq, Default, serde::Serialize, serde::Deserialize)]
 pub struct DeclaredBonuses {
     /// Every integer that appears as a bare numeric qualifier, in source
     /// order, deduplicated.

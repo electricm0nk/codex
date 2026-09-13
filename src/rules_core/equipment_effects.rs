@@ -110,7 +110,7 @@ pub fn eqmod_referenced_converted_records<'a>(
 /// resolver has not populated that field (either because the underlying
 /// corpus record carries no such token, or — for a category whose cycle
 /// has not landed yet — because no resolver exists yet at all).
-#[derive(Debug, Clone, Copy, Default, PartialEq)]
+#[derive(Debug, Clone, Copy, Default, PartialEq, serde::Serialize, serde::Deserialize)]
 pub struct EquipmentStatEffect {
     pub armor_class_bonus: Option<i16>,
     pub max_dex: Option<i16>,

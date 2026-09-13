@@ -98,7 +98,7 @@ use crate::rules_core::equipment_record::CorpusEquipmentRecord;
 /// `equipmods`-category item's
 /// `BONUS:WEAPON|<TOHIT|DAMAGE|DAMAGE,TOHIT|TOHIT,DAMAGE>|<n>|
 /// TYPE=Enhancement` corpus token.
-#[derive(Debug, Clone, PartialEq)]
+#[derive(Debug, Clone, PartialEq, serde::Serialize, serde::Deserialize)]
 pub struct WeaponEnhancementBonus {
     /// The record's TOHIT-affecting magnitude, summed across every
     /// qualifying chain on this record that affects `TOHIT` (`None` if no

@@ -1,0 +1,48 @@
+{
+  "kind": "race_trait",
+  "records": {
+    "half_orc/half_orc_plagueborn.json": {
+      "adopted_race_pool_suffix": null,
+      "automatic_trait_grants": [],
+      "category": "Special Ability",
+      "declared_bonuses": {
+        "ability_adjustments": [],
+        "ability_pool_picks": 0,
+        "magnitudes": [],
+        "magnitudes_excluding_flags": [],
+        "only_internal_flags": false,
+        "target_bonuses": [],
+        "var_contributions": []
+      },
+      "declared_size": null,
+      "declared_vision": [],
+      "declared_walk_speed_ft": null,
+      "declares_negated_ability_guard": false,
+      "description": "Half-orcs are sometimes forced to live on the rancid and unsanitary margins of society, becoming inured to all manner of sickness. Half-orcs with this racial trait gain a +2 racial bonus on saving throws against disease, ingested poisons, and becoming nauseated or sickened. This racial trait replaces the intimidating and orc ferocity racial traits.",
+      "exclusion_guard_flags": [
+        "HalfOrc_ReplaceIntimidating",
+        "HalfOrc_ReplaceWeaponFamiliarity"
+      ],
+      "is_racial_default": false,
+      "key": "Half-Orc ~ Plagueborn",
+      "name": "Plagueborn",
+      "negated_fact_gates": [],
+      "positive_prefact_flag": null,
+      "race_key": "Half-Orc",
+      "sets_replace_flags": [
+        "HalfOrc_ReplaceIntimidating",
+        "HalfOrc_ReplaceWeaponFamiliarity"
+      ],
+      "skinwalker_change_shape_kin": null,
+      "source_page": "p.19",
+      "suppressed_by_flag": null,
+      "template_bonus_languages": [],
+      "type_tokens": [
+        "RacialTraits",
+        "Half-Orc Racial Trait",
+        "SpecialQuality",
+        "Special Quality"
+      ]
+    }
+  }
+}

@@ -1,0 +1,3872 @@
+{
+  "kind": "race_trait",
+  "records": {
+    "dwarf/adopted_race_dwarf.json": {
+      "adopted_race_pool_suffix": "Dwarf Race Trait",
+      "automatic_trait_grants": [],
+      "category": "Special Ability",
+      "declared_bonuses": {
+        "ability_adjustments": [],
+        "ability_pool_picks": 0,
+        "magnitudes": [],
+        "magnitudes_excluding_flags": [],
+        "only_internal_flags": false,
+        "target_bonuses": [],
+        "var_contributions": []
+      },
+      "declared_size": null,
+      "declared_vision": [],
+      "declared_walk_speed_ft": null,
+      "declares_negated_ability_guard": false,
+      "description": null,
+      "exclusion_guard_flags": [],
+      "is_racial_default": false,
+      "key": "Adopted Race ~ Dwarf",
+      "name": "Dwarf",
+      "negated_fact_gates": [],
+      "positive_prefact_flag": null,
+      "race_key": "Dwarf",
+      "sets_replace_flags": [],
+      "skinwalker_change_shape_kin": null,
+      "source_page": null,
+      "suppressed_by_flag": null,
+      "template_bonus_languages": [],
+      "type_tokens": [
+        "AdoptiveRace"
+      ]
+    },
+    "dwarf/dwarf_ability_scores.json": {
+      "adopted_race_pool_suffix": null,
+      "automatic_trait_grants": [],
+      "category": "Special Ability",
+      "declared_bonuses": {
+        "ability_adjustments": [
+          {
+            "codes": "CON,WIS",
+            "magnitude": "2"
+          },
+          {
+            "codes": "CHA",
+            "magnitude": "-2"
+          }
+        ],
+        "ability_pool_picks": 0,
+        "magnitudes": [
+          2,
+          -2
+        ],
+        "magnitudes_excluding_flags": [
+          2,
+          -2
+        ],
+        "only_internal_flags": false,
+        "target_bonuses": [
+          {
+            "keyword": "STAT",
+            "magnitude": 2,
+            "target": "CON,WIS"
+          },
+          {
+            "keyword": "STAT",
+            "magnitude": -2,
+            "target": "CHA"
+          }
+        ],
+        "var_contributions": []
+      },
+      "declared_size": null,
+      "declared_vision": [],
+      "declared_walk_speed_ft": null,
+      "declares_negated_ability_guard": false,
+      "description": "Dwarves are both tough and wise, but also a bit gruff.",
+      "exclusion_guard_flags": [],
+      "is_racial_default": true,
+      "key": "Dwarf ~ Ability Scores",
+      "name": "+2 Constitution, +2 Wisdom, -2 Charisma",
+      "negated_fact_gates": [
+        [
+          "Dwarf_ReplaceAbilityScores"
+        ]
+      ],
+      "positive_prefact_flag": null,
+      "race_key": "Dwarf",
+      "sets_replace_flags": [],
+      "skinwalker_change_shape_kin": null,
+      "source_page": "p.21",
+      "suppressed_by_flag": "Dwarf_ReplaceAbilityScores",
+      "template_bonus_languages": [],
+      "type_tokens": [
+        "RacialTraits",
+        "Dwarf Racial Trait",
+        "Dwarf Racial Default",
+        "SpecialQuality",
+        "Racial Ability Scores"
+      ]
+    },
+    "dwarf/dwarf_defensive_training.json": {
+      "adopted_race_pool_suffix": null,
+      "automatic_trait_grants": [],
+      "category": "Special Ability",
+      "declared_bonuses": {
+        "ability_adjustments": [],
+        "ability_pool_picks": 0,
+        "magnitudes": [
+          4
+        ],
+        "magnitudes_excluding_flags": [
+          4
+        ],
+        "only_internal_flags": false,
+        "target_bonuses": [
+          {
+            "keyword": "VAR",
+            "magnitude": 4,
+            "target": "RacialDefensiveTrainingBonus"
+          }
+        ],
+        "var_contributions": [
+          {
+            "amount": 4,
+            "name": "RacialDefensiveTrainingBonus"
+          }
+        ]
+      },
+      "declared_size": null,
+      "declared_vision": [],
+      "declared_walk_speed_ft": null,
+      "declares_negated_ability_guard": false,
+      "description": "Dwarves get a +4 dodge bonus to AC against monsters of the giant subtype.",
+      "exclusion_guard_flags": [],
+      "is_racial_default": true,
+      "key": "Dwarf ~ Defensive Training",
+      "name": "Defensive Training",
+      "negated_fact_gates": [
+        [
+          "Dwarf_ReplaceDefensiveTraining"
+        ]
+      ],
+      "positive_prefact_flag": null,
+      "race_key": "Dwarf",
+      "sets_replace_flags": [],
+      "skinwalker_change_shape_kin": null,
+      "source_page": "p.21",
+      "suppressed_by_flag": "Dwarf_ReplaceDefensiveTraining",
+      "template_bonus_languages": [],
+      "type_tokens": [
+        "RacialTraits",
+        "Dwarf Racial Trait",
+        "Dwarf Racial Default",
+        "SpecialQuality",
+        "Defensive"
+      ]
+    },
+    "dwarf/dwarf_greed.json": {
+      "adopted_race_pool_suffix": null,
+      "automatic_trait_grants": [],
+      "category": "Special Ability",
+      "declared_bonuses": {
+        "ability_adjustments": [],
+        "ability_pool_picks": 0,
+        "magnitudes": [
+          2
+        ],
+        "magnitudes_excluding_flags": [
+          2
+        ],
+        "only_internal_flags": false,
+        "target_bonuses": [
+          {
+            "keyword": "SITUATION",
+            "magnitude": 2,
+            "target": "Appraise=to assess nonmagical metals or gemstones"
+          }
+        ],
+        "var_contributions": []
+      },
+      "declared_size": null,
+      "declared_vision": [],
+      "declared_walk_speed_ft": null,
+      "declares_negated_ability_guard": false,
+      "description": "Dwarves receive a +2 racial bonus on Appraise skill checks made to determine the price of nonmagical goods that contain precious metals or gemstones.",
+      "exclusion_guard_flags": [],
+      "is_racial_default": true,
+      "key": "Dwarf ~ Greed",
+      "name": "Greed",
+      "negated_fact_gates": [
+        [
+          "Dwarf_ReplaceGreed"
+        ]
+      ],
+      "positive_prefact_flag": null,
+      "race_key": "Dwarf",
+      "sets_replace_flags": [],
+      "skinwalker_change_shape_kin": null,
+      "source_page": "p.21",
+      "suppressed_by_flag": "Dwarf_ReplaceGreed",
+      "template_bonus_languages": [],
+      "type_tokens": [
+        "RacialTraits",
+        "Dwarf Racial Trait",
+        "Dwarf Racial Default",
+        "SpecialQuality"
+      ]
+    },
+    "dwarf/dwarf_hardy.json": {
+      "adopted_race_pool_suffix": null,
+      "automatic_trait_grants": [],
+      "category": "Special Ability",
+      "declared_bonuses": {
+        "ability_adjustments": [],
+        "ability_pool_picks": 0,
+        "magnitudes": [
+          2
+        ],
+        "magnitudes_excluding_flags": [
+          2
+        ],
+        "only_internal_flags": false,
+        "target_bonuses": [
+          {
+            "keyword": "VAR",
+            "magnitude": 2,
+            "target": "SaveBonus_vs_Poison"
+          },
+          {
+            "keyword": "VAR",
+            "magnitude": 2,
+            "target": "SaveBonus_vs_Spells"
+          }
+        ],
+        "var_contributions": [
+          {
+            "amount": 2,
+            "name": "SaveBonus_vs_Poison"
+          },
+          {
+            "amount": 2,
+            "name": "SaveBonus_vs_Spells"
+          }
+        ]
+      },
+      "declared_size": null,
+      "declared_vision": [],
+      "declared_walk_speed_ft": null,
+      "declares_negated_ability_guard": false,
+      "description": "Dwarves receive a +2 racial bonus on saving throws against poison, spells, and spell-like abilities.",
+      "exclusion_guard_flags": [],
+      "is_racial_default": true,
+      "key": "Dwarf ~ Hardy",
+      "name": "Hardy",
+      "negated_fact_gates": [
+        [
+          "Dwarf_ReplaceHardy"
+        ]
+      ],
+      "positive_prefact_flag": null,
+      "race_key": "Dwarf",
+      "sets_replace_flags": [],
+      "skinwalker_change_shape_kin": null,
+      "source_page": "p.21",
+      "suppressed_by_flag": "Dwarf_ReplaceHardy",
+      "template_bonus_languages": [],
+      "type_tokens": [
+        "RacialTraits",
+        "Dwarf Racial Trait",
+        "Dwarf Racial Default",
+        "SpecialQuality"
+      ]
+    },
+    "dwarf/dwarf_hatred.json": {
+      "adopted_race_pool_suffix": null,
+      "automatic_trait_grants": [],
+      "category": "Special Ability",
+      "declared_bonuses": {
+        "ability_adjustments": [],
+        "ability_pool_picks": 0,
+        "magnitudes": [],
+        "magnitudes_excluding_flags": [],
+        "only_internal_flags": false,
+        "target_bonuses": [],
+        "var_contributions": []
+      },
+      "declared_size": null,
+      "declared_vision": [],
+      "declared_walk_speed_ft": null,
+      "declares_negated_ability_guard": false,
+      "description": "Dwarves receive a +1 bonus on attack rolls against humanoid creatures of the orc and goblinoid subtypes due to special training against these hated foes.",
+      "exclusion_guard_flags": [],
+      "is_racial_default": true,
+      "key": "Dwarf ~ Hatred",
+      "name": "Hatred",
+      "negated_fact_gates": [
+        [
+          "Dwarf_ReplaceHatred"
+        ]
+      ],
+      "positive_prefact_flag": null,
+      "race_key": "Dwarf",
+      "sets_replace_flags": [],
+      "skinwalker_change_shape_kin": null,
+      "source_page": "p.21",
+      "suppressed_by_flag": "Dwarf_ReplaceHatred",
+      "template_bonus_languages": [],
+      "type_tokens": [
+        "RacialTraits",
+        "Dwarf Racial Trait",
+        "Dwarf Racial Default",
+        "SpecialAttack",
+        "Special Attack"
+      ]
+    },
+    "dwarf/dwarf_languages.json": {
+      "adopted_race_pool_suffix": null,
+      "automatic_trait_grants": [],
+      "category": "Special Ability",
+      "declared_bonuses": {
+        "ability_adjustments": [],
+        "ability_pool_picks": 0,
+        "magnitudes": [],
+        "magnitudes_excluding_flags": [],
+        "only_internal_flags": false,
+        "target_bonuses": [],
+        "var_contributions": []
+      },
+      "declared_size": null,
+      "declared_vision": [],
+      "declared_walk_speed_ft": null,
+      "declares_negated_ability_guard": false,
+      "description": "Dwarves begin play speaking Common and Dwarven. Dwarves with high Intelligence scores can choose from the following: Giant, Gnome, Goblin, Orc, Terran, and Undercommon.",
+      "exclusion_guard_flags": [],
+      "is_racial_default": true,
+      "key": "Dwarf ~ Languages",
+      "name": "Languages",
+      "negated_fact_gates": [
+        [
+          "Dwarf_ReplaceLanguages"
+        ]
+      ],
+      "positive_prefact_flag": null,
+      "race_key": "Dwarf",
+      "sets_replace_flags": [],
+      "skinwalker_change_shape_kin": null,
+      "source_page": "p.21",
+      "suppressed_by_flag": "Dwarf_ReplaceLanguages",
+      "template_bonus_languages": [
+        "Giant",
+        "Gnome",
+        "Goblin",
+        "Orc",
+        "Terran",
+        "Undercommon"
+      ],
+      "type_tokens": [
+        "RacialTraits",
+        "Dwarf Racial Trait",
+        "Dwarf Racial Default",
+        "SpecialQuality",
+        "Racial Language"
+      ]
+    },
+    "dwarf/dwarf_size.json": {
+      "adopted_race_pool_suffix": null,
+      "automatic_trait_grants": [],
+      "category": "Special Ability",
+      "declared_bonuses": {
+        "ability_adjustments": [],
+        "ability_pool_picks": 0,
+        "magnitudes": [],
+        "magnitudes_excluding_flags": [],
+        "only_internal_flags": false,
+        "target_bonuses": [],
+        "var_contributions": []
+      },
+      "declared_size": "Medium",
+      "declared_vision": [],
+      "declared_walk_speed_ft": null,
+      "declares_negated_ability_guard": false,
+      "description": "Dwarves are Medium creatures and have no bonuses or penalties due to their size.",
+      "exclusion_guard_flags": [],
+      "is_racial_default": true,
+      "key": "Dwarf ~ Size",
+      "name": "Medium",
+      "negated_fact_gates": [
+        [
+          "Dwarf_ReplaceSize"
+        ]
+      ],
+      "positive_prefact_flag": null,
+      "race_key": "Dwarf",
+      "sets_replace_flags": [],
+      "skinwalker_change_shape_kin": null,
+      "source_page": "p.21",
+      "suppressed_by_flag": "Dwarf_ReplaceSize",
+      "template_bonus_languages": [],
+      "type_tokens": [
+        "RacialTraits",
+        "Dwarf Racial Trait",
+        "Dwarf Racial Default",
+        "SpecialQuality",
+        "Racial Size"
+      ]
+    },
+    "dwarf/dwarf_speed.json": {
+      "adopted_race_pool_suffix": null,
+      "automatic_trait_grants": [
+        "Steady"
+      ],
+      "category": "Special Ability",
+      "declared_bonuses": {
+        "ability_adjustments": [],
+        "ability_pool_picks": 0,
+        "magnitudes": [
+          20
+        ],
+        "magnitudes_excluding_flags": [
+          20
+        ],
+        "only_internal_flags": false,
+        "target_bonuses": [
+          {
+            "keyword": "VAR",
+            "magnitude": 20,
+            "target": "MOVEBASE"
+          }
+        ],
+        "var_contributions": [
+          {
+            "amount": 20,
+            "name": "MOVEBASE"
+          }
+        ]
+      },
+      "declared_size": null,
+      "declared_vision": [],
+      "declared_walk_speed_ft": 20,
+      "declares_negated_ability_guard": false,
+      "description": "Dwarves have a base speed of 20 feet, but their speed is never modified by armor or encumbrance.",
+      "exclusion_guard_flags": [],
+      "is_racial_default": true,
+      "key": "Dwarf ~ Speed",
+      "name": "Slow and Steady",
+      "negated_fact_gates": [
+        [
+          "Dwarf_ReplaceSpeed"
+        ]
+      ],
+      "positive_prefact_flag": null,
+      "race_key": "Dwarf",
+      "sets_replace_flags": [],
+      "skinwalker_change_shape_kin": null,
+      "source_page": "p.21",
+      "suppressed_by_flag": "Dwarf_ReplaceSpeed",
+      "template_bonus_languages": [],
+      "type_tokens": [
+        "RacialTraits",
+        "Dwarf Racial Trait",
+        "Dwarf Racial Default",
+        "SpecialQuality",
+        "Racial Speed"
+      ]
+    },
+    "dwarf/dwarf_stability.json": {
+      "adopted_race_pool_suffix": null,
+      "automatic_trait_grants": [],
+      "category": "Special Ability",
+      "declared_bonuses": {
+        "ability_adjustments": [],
+        "ability_pool_picks": 0,
+        "magnitudes": [
+          4
+        ],
+        "magnitudes_excluding_flags": [
+          4
+        ],
+        "only_internal_flags": false,
+        "target_bonuses": [
+          {
+            "keyword": "VAR",
+            "magnitude": 4,
+            "target": "CMD_BullRush,CMD_Trip"
+          }
+        ],
+        "var_contributions": [
+          {
+            "amount": 4,
+            "name": "CMD_BullRush"
+          },
+          {
+            "amount": 4,
+            "name": "CMD_Trip"
+          }
+        ]
+      },
+      "declared_size": null,
+      "declared_vision": [],
+      "declared_walk_speed_ft": null,
+      "declares_negated_ability_guard": false,
+      "description": "Dwarves receive a +4 racial bonus to their Combat Maneuver Defense when resisting a bull rush or trip attempt while standing on the ground.",
+      "exclusion_guard_flags": [],
+      "is_racial_default": true,
+      "key": "Dwarf ~ Stability",
+      "name": "Stability",
+      "negated_fact_gates": [
+        [
+          "Dwarf_ReplaceStability"
+        ]
+      ],
+      "positive_prefact_flag": null,
+      "race_key": "Dwarf",
+      "sets_replace_flags": [],
+      "skinwalker_change_shape_kin": null,
+      "source_page": "p.21",
+      "suppressed_by_flag": "Dwarf_ReplaceStability",
+      "template_bonus_languages": [],
+      "type_tokens": [
+        "RacialTraits",
+        "Dwarf Racial Trait",
+        "Dwarf Racial Default",
+        "SpecialQuality"
+      ]
+    },
+    "dwarf/dwarf_stonecunning.json": {
+      "adopted_race_pool_suffix": null,
+      "automatic_trait_grants": [],
+      "category": "Special Ability",
+      "declared_bonuses": {
+        "ability_adjustments": [],
+        "ability_pool_picks": 0,
+        "magnitudes": [
+          2
+        ],
+        "magnitudes_excluding_flags": [
+          2
+        ],
+        "only_internal_flags": false,
+        "target_bonuses": [
+          {
+            "keyword": "SITUATION",
+            "magnitude": null,
+            "target": "Perception=to notice unusual stonework"
+          },
+          {
+            "keyword": "VAR",
+            "magnitude": 2,
+            "target": "Dwarf_StoneCunning_SkillBonus"
+          }
+        ],
+        "var_contributions": [
+          {
+            "amount": 2,
+            "name": "Dwarf_StoneCunning_SkillBonus"
+          }
+        ]
+      },
+      "declared_size": null,
+      "declared_vision": [],
+      "declared_walk_speed_ft": null,
+      "declares_negated_ability_guard": false,
+      "description": "Dwarves receive a +2 bonus on Perception checks to potentially notice unusual stonework, such as traps and hidden doors located in stone walls or floors. They receive a check to notice such features whenever they pass within 10 feet of them, whether or not they are actively looking.",
+      "exclusion_guard_flags": [],
+      "is_racial_default": true,
+      "key": "Dwarf ~ Stonecunning",
+      "name": "Stonecunning",
+      "negated_fact_gates": [
+        [
+          "Dwarf_ReplaceStonecunning"
+        ]
+      ],
+      "positive_prefact_flag": null,
+      "race_key": "Dwarf",
+      "sets_replace_flags": [],
+      "skinwalker_change_shape_kin": null,
+      "source_page": "p.21",
+      "suppressed_by_flag": "Dwarf_ReplaceStonecunning",
+      "template_bonus_languages": [],
+      "type_tokens": [
+        "RacialTraits",
+        "Dwarf Racial Trait",
+        "Dwarf Racial Default",
+        "SpecialQuality"
+      ]
+    },
+    "dwarf/dwarf_vision.json": {
+      "adopted_race_pool_suffix": null,
+      "automatic_trait_grants": [],
+      "category": "Special Ability",
+      "declared_bonuses": {
+        "ability_adjustments": [],
+        "ability_pool_picks": 0,
+        "magnitudes": [
+          1
+        ],
+        "magnitudes_excluding_flags": [],
+        "only_internal_flags": true,
+        "target_bonuses": [
+          {
+            "keyword": "VAR",
+            "magnitude": 1,
+            "target": "HasRacialVision"
+          }
+        ],
+        "var_contributions": [
+          {
+            "amount": 1,
+            "name": "HasRacialVision"
+          }
+        ]
+      },
+      "declared_size": null,
+      "declared_vision": [
+        "Darkvision (60)"
+      ],
+      "declared_walk_speed_ft": null,
+      "declares_negated_ability_guard": false,
+      "description": "Dwarves can see in the dark up to 60 feet.",
+      "exclusion_guard_flags": [],
+      "is_racial_default": true,
+      "key": "Dwarf ~ Vision",
+      "name": "Darkvision",
+      "negated_fact_gates": [
+        [
+          "Dwarf_ReplaceVision"
+        ]
+      ],
+      "positive_prefact_flag": null,
+      "race_key": "Dwarf",
+      "sets_replace_flags": [],
+      "skinwalker_change_shape_kin": null,
+      "source_page": "p.21",
+      "suppressed_by_flag": "Dwarf_ReplaceVision",
+      "template_bonus_languages": [],
+      "type_tokens": [
+        "RacialTraits",
+        "Dwarf Racial Trait",
+        "Dwarf Racial Default",
+        "SpecialQuality",
+        "Extraordinary",
+        "Racial Vision"
+      ]
+    },
+    "dwarf/dwarf_weapon_familiarity.json": {
+      "adopted_race_pool_suffix": null,
+      "automatic_trait_grants": [],
+      "category": "Special Ability",
+      "declared_bonuses": {
+        "ability_adjustments": [],
+        "ability_pool_picks": 0,
+        "magnitudes": [
+          -1
+        ],
+        "magnitudes_excluding_flags": [
+          -1
+        ],
+        "only_internal_flags": false,
+        "target_bonuses": [
+          {
+            "keyword": "WEAPONPROF=Waraxe (Dwarven)",
+            "magnitude": -1,
+            "target": "WIELDCATEGORY"
+          }
+        ],
+        "var_contributions": []
+      },
+      "declared_size": null,
+      "declared_vision": [],
+      "declared_walk_speed_ft": null,
+      "declares_negated_ability_guard": false,
+      "description": "Dwarves are proficient with battleaxes, heavy picks, and warhammers, and treat any weapon with the word \"dwarven\" in its name as a martial weapon.",
+      "exclusion_guard_flags": [],
+      "is_racial_default": true,
+      "key": "Dwarf ~ Weapon Familiarity",
+      "name": "Weapon Familiarity",
+      "negated_fact_gates": [
+        [
+          "Dwarf_ReplaceWeaponFamiliarity"
+        ]
+      ],
+      "positive_prefact_flag": null,
+      "race_key": "Dwarf",
+      "sets_replace_flags": [],
+      "skinwalker_change_shape_kin": null,
+      "source_page": "p.21",
+      "suppressed_by_flag": "Dwarf_ReplaceWeaponFamiliarity",
+      "template_bonus_languages": [],
+      "type_tokens": [
+        "RacialTraits",
+        "Dwarf Racial Trait",
+        "Dwarf Racial Default",
+        "SpecialQuality",
+        "Weapon Familiarity"
+      ]
+    },
+    "elf/adopted_race_elf.json": {
+      "adopted_race_pool_suffix": "Elf Race Trait",
+      "automatic_trait_grants": [],
+      "category": "Special Ability",
+      "declared_bonuses": {
+        "ability_adjustments": [],
+        "ability_pool_picks": 0,
+        "magnitudes": [],
+        "magnitudes_excluding_flags": [],
+        "only_internal_flags": false,
+        "target_bonuses": [],
+        "var_contributions": []
+      },
+      "declared_size": null,
+      "declared_vision": [],
+      "declared_walk_speed_ft": null,
+      "declares_negated_ability_guard": false,
+      "description": null,
+      "exclusion_guard_flags": [],
+      "is_racial_default": false,
+      "key": "Adopted Race ~ Elf",
+      "name": "Elf",
+      "negated_fact_gates": [],
+      "positive_prefact_flag": null,
+      "race_key": "Elf",
+      "sets_replace_flags": [],
+      "skinwalker_change_shape_kin": null,
+      "source_page": null,
+      "suppressed_by_flag": null,
+      "template_bonus_languages": [],
+      "type_tokens": [
+        "AdoptiveRace"
+      ]
+    },
+    "elf/elf_ability_scores.json": {
+      "adopted_race_pool_suffix": null,
+      "automatic_trait_grants": [],
+      "category": "Special Ability",
+      "declared_bonuses": {
+        "ability_adjustments": [
+          {
+            "codes": "DEX,INT",
+            "magnitude": "2"
+          },
+          {
+            "codes": "CON",
+            "magnitude": "-2"
+          }
+        ],
+        "ability_pool_picks": 0,
+        "magnitudes": [
+          2,
+          -2
+        ],
+        "magnitudes_excluding_flags": [
+          2,
+          -2
+        ],
+        "only_internal_flags": false,
+        "target_bonuses": [
+          {
+            "keyword": "STAT",
+            "magnitude": 2,
+            "target": "DEX,INT"
+          },
+          {
+            "keyword": "STAT",
+            "magnitude": -2,
+            "target": "CON"
+          }
+        ],
+        "var_contributions": []
+      },
+      "declared_size": null,
+      "declared_vision": [],
+      "declared_walk_speed_ft": null,
+      "declares_negated_ability_guard": false,
+      "description": "Elves are nimble, both in body and mind, but their form is frail.",
+      "exclusion_guard_flags": [],
+      "is_racial_default": true,
+      "key": "Elf ~ Ability Scores",
+      "name": "+2 Dexterity, +2 Intelligence, -2 Constitution",
+      "negated_fact_gates": [
+        [
+          "Elf_ReplaceAbilityScores"
+        ]
+      ],
+      "positive_prefact_flag": null,
+      "race_key": "Elf",
+      "sets_replace_flags": [],
+      "skinwalker_change_shape_kin": null,
+      "source_page": null,
+      "suppressed_by_flag": "Elf_ReplaceAbilityScores",
+      "template_bonus_languages": [],
+      "type_tokens": [
+        "RacialTraits",
+        "Elf Racial Trait",
+        "Elf Racial Default",
+        "SpecialQuality",
+        "Racial Ability Scores"
+      ]
+    },
+    "elf/elf_elven_immunities.json": {
+      "adopted_race_pool_suffix": null,
+      "automatic_trait_grants": [
+        "Immunity to Sleep"
+      ],
+      "category": "Special Ability",
+      "declared_bonuses": {
+        "ability_adjustments": [],
+        "ability_pool_picks": 0,
+        "magnitudes": [
+          2
+        ],
+        "magnitudes_excluding_flags": [
+          2
+        ],
+        "only_internal_flags": false,
+        "target_bonuses": [
+          {
+            "keyword": "VAR",
+            "magnitude": 2,
+            "target": "SaveBonus_vs_Enchantments"
+          }
+        ],
+        "var_contributions": [
+          {
+            "amount": 2,
+            "name": "SaveBonus_vs_Enchantments"
+          }
+        ]
+      },
+      "declared_size": null,
+      "declared_vision": [],
+      "declared_walk_speed_ft": null,
+      "declares_negated_ability_guard": false,
+      "description": "Elves are immune to magic sleep effects and get a +2 racial saving throw bonus against enchantment spells and effects.",
+      "exclusion_guard_flags": [],
+      "is_racial_default": true,
+      "key": "Elf ~ Elven Immunities",
+      "name": "Elven Immunities",
+      "negated_fact_gates": [
+        [
+          "Elf_ReplaceElvenImmunities"
+        ]
+      ],
+      "positive_prefact_flag": null,
+      "race_key": "Elf",
+      "sets_replace_flags": [],
+      "skinwalker_change_shape_kin": null,
+      "source_page": null,
+      "suppressed_by_flag": "Elf_ReplaceElvenImmunities",
+      "template_bonus_languages": [],
+      "type_tokens": [
+        "RacialTraits",
+        "Elf Racial Trait",
+        "Elf Racial Default",
+        "SpecialQuality"
+      ]
+    },
+    "elf/elf_elven_magic.json": {
+      "adopted_race_pool_suffix": null,
+      "automatic_trait_grants": [],
+      "category": "Special Ability",
+      "declared_bonuses": {
+        "ability_adjustments": [],
+        "ability_pool_picks": 0,
+        "magnitudes": [
+          2
+        ],
+        "magnitudes_excluding_flags": [
+          2
+        ],
+        "only_internal_flags": false,
+        "target_bonuses": [
+          {
+            "keyword": "SITUATION",
+            "magnitude": 2,
+            "target": "Spellcraft=to identify magic item properties"
+          }
+        ],
+        "var_contributions": []
+      },
+      "declared_size": null,
+      "declared_vision": [],
+      "declared_walk_speed_ft": null,
+      "declares_negated_ability_guard": false,
+      "description": "Elves receive a +2 racial bonus on caster level checks made to overcome spell resistance. In addition, elves receive a +2 racial bonus on Spellcraft skill checks made to identify the properties of magic items.",
+      "exclusion_guard_flags": [],
+      "is_racial_default": true,
+      "key": "Elf ~ Elven Magic",
+      "name": "Elven Magic",
+      "negated_fact_gates": [
+        [
+          "Elf_ReplaceElvenMagic"
+        ]
+      ],
+      "positive_prefact_flag": null,
+      "race_key": "Elf",
+      "sets_replace_flags": [],
+      "skinwalker_change_shape_kin": null,
+      "source_page": null,
+      "suppressed_by_flag": "Elf_ReplaceElvenMagic",
+      "template_bonus_languages": [],
+      "type_tokens": [
+        "RacialTraits",
+        "Elf Racial Trait",
+        "Elf Racial Default",
+        "SpecialQuality",
+        "Special Quality",
+        "Elven Magic"
+      ]
+    },
+    "elf/elf_keen_senses.json": {
+      "adopted_race_pool_suffix": null,
+      "automatic_trait_grants": [],
+      "category": "Special Ability",
+      "declared_bonuses": {
+        "ability_adjustments": [],
+        "ability_pool_picks": 0,
+        "magnitudes": [
+          2
+        ],
+        "magnitudes_excluding_flags": [
+          2
+        ],
+        "only_internal_flags": false,
+        "target_bonuses": [
+          {
+            "keyword": "SKILL",
+            "magnitude": null,
+            "target": "Perception"
+          },
+          {
+            "keyword": "VAR",
+            "magnitude": 2,
+            "target": "KeenSensesBonus"
+          }
+        ],
+        "var_contributions": [
+          {
+            "amount": 2,
+            "name": "KeenSensesBonus"
+          }
+        ]
+      },
+      "declared_size": null,
+      "declared_vision": [],
+      "declared_walk_speed_ft": null,
+      "declares_negated_ability_guard": false,
+      "description": "Elves receive a +2 racial bonus on Perception skill checks.",
+      "exclusion_guard_flags": [],
+      "is_racial_default": true,
+      "key": "Elf ~ Keen Senses",
+      "name": "Keen Senses",
+      "negated_fact_gates": [
+        [
+          "Elf_ReplaceKeenSenses"
+        ]
+      ],
+      "positive_prefact_flag": null,
+      "race_key": "Elf",
+      "sets_replace_flags": [],
+      "skinwalker_change_shape_kin": null,
+      "source_page": null,
+      "suppressed_by_flag": "Elf_ReplaceKeenSenses",
+      "template_bonus_languages": [],
+      "type_tokens": [
+        "RacialTraits",
+        "Elf Racial Trait",
+        "Elf Racial Default",
+        "SpecialQuality"
+      ]
+    },
+    "elf/elf_languages.json": {
+      "adopted_race_pool_suffix": null,
+      "automatic_trait_grants": [],
+      "category": "Special Ability",
+      "declared_bonuses": {
+        "ability_adjustments": [],
+        "ability_pool_picks": 0,
+        "magnitudes": [],
+        "magnitudes_excluding_flags": [],
+        "only_internal_flags": false,
+        "target_bonuses": [],
+        "var_contributions": []
+      },
+      "declared_size": null,
+      "declared_vision": [],
+      "declared_walk_speed_ft": null,
+      "declares_negated_ability_guard": false,
+      "description": "Elves begin play speaking Common and Elven. Elves with high Intelligence scores can choose from the following: Celestial, Draconic, Gnoll, Gnome, Goblin, Orc, and Sylvan.",
+      "exclusion_guard_flags": [],
+      "is_racial_default": true,
+      "key": "Elf ~ Languages",
+      "name": "Languages",
+      "negated_fact_gates": [
+        [
+          "Elf_ReplaceLanguages"
+        ]
+      ],
+      "positive_prefact_flag": null,
+      "race_key": "Elf",
+      "sets_replace_flags": [],
+      "skinwalker_change_shape_kin": null,
+      "source_page": null,
+      "suppressed_by_flag": "Elf_ReplaceLanguages",
+      "template_bonus_languages": [
+        "Celestial",
+        "Draconic",
+        "Gnoll",
+        "Gnome",
+        "Goblin",
+        "Orc",
+        "Sylvan"
+      ],
+      "type_tokens": [
+        "RacialTraits",
+        "Elf Racial Trait",
+        "Elf Racial Default",
+        "SpecialQuality",
+        "Racial Language"
+      ]
+    },
+    "elf/elf_size.json": {
+      "adopted_race_pool_suffix": null,
+      "automatic_trait_grants": [],
+      "category": "Special Ability",
+      "declared_bonuses": {
+        "ability_adjustments": [],
+        "ability_pool_picks": 0,
+        "magnitudes": [],
+        "magnitudes_excluding_flags": [],
+        "only_internal_flags": false,
+        "target_bonuses": [],
+        "var_contributions": []
+      },
+      "declared_size": "Medium",
+      "declared_vision": [],
+      "declared_walk_speed_ft": null,
+      "declares_negated_ability_guard": false,
+      "description": "Elves are Medium creatures and have no bonuses or penalties due to their size.",
+      "exclusion_guard_flags": [],
+      "is_racial_default": true,
+      "key": "Elf ~ Size",
+      "name": "Medium",
+      "negated_fact_gates": [
+        [
+          "Elf_ReplaceSize"
+        ]
+      ],
+      "positive_prefact_flag": null,
+      "race_key": "Elf",
+      "sets_replace_flags": [],
+      "skinwalker_change_shape_kin": null,
+      "source_page": null,
+      "suppressed_by_flag": "Elf_ReplaceSize",
+      "template_bonus_languages": [],
+      "type_tokens": [
+        "RacialTraits",
+        "Elf Racial Trait",
+        "Elf Racial Default",
+        "SpecialQuality",
+        "Racial Size"
+      ]
+    },
+    "elf/elf_speed.json": {
+      "adopted_race_pool_suffix": null,
+      "automatic_trait_grants": [],
+      "category": "Special Ability",
+      "declared_bonuses": {
+        "ability_adjustments": [],
+        "ability_pool_picks": 0,
+        "magnitudes": [
+          30
+        ],
+        "magnitudes_excluding_flags": [
+          30
+        ],
+        "only_internal_flags": false,
+        "target_bonuses": [
+          {
+            "keyword": "VAR",
+            "magnitude": 30,
+            "target": "MOVEBASE"
+          }
+        ],
+        "var_contributions": [
+          {
+            "amount": 30,
+            "name": "MOVEBASE"
+          }
+        ]
+      },
+      "declared_size": null,
+      "declared_vision": [],
+      "declared_walk_speed_ft": 30,
+      "declares_negated_ability_guard": false,
+      "description": "Elves have a base speed of 30 feet.",
+      "exclusion_guard_flags": [],
+      "is_racial_default": true,
+      "key": "Elf ~ Speed",
+      "name": "Normal Speed",
+      "negated_fact_gates": [
+        [
+          "Elf_ReplaceSpeed"
+        ]
+      ],
+      "positive_prefact_flag": null,
+      "race_key": "Elf",
+      "sets_replace_flags": [],
+      "skinwalker_change_shape_kin": null,
+      "source_page": null,
+      "suppressed_by_flag": "Elf_ReplaceSpeed",
+      "template_bonus_languages": [],
+      "type_tokens": [
+        "RacialTraits",
+        "Elf Racial Trait",
+        "Elf Racial Default",
+        "SpecialQuality",
+        "Racial Speed"
+      ]
+    },
+    "elf/elf_vision.json": {
+      "adopted_race_pool_suffix": null,
+      "automatic_trait_grants": [],
+      "category": "Special Ability",
+      "declared_bonuses": {
+        "ability_adjustments": [],
+        "ability_pool_picks": 0,
+        "magnitudes": [
+          1
+        ],
+        "magnitudes_excluding_flags": [],
+        "only_internal_flags": true,
+        "target_bonuses": [
+          {
+            "keyword": "VAR",
+            "magnitude": 1,
+            "target": "HasRacialVision"
+          }
+        ],
+        "var_contributions": [
+          {
+            "amount": 1,
+            "name": "HasRacialVision"
+          }
+        ]
+      },
+      "declared_size": null,
+      "declared_vision": [
+        "Low-Light Vision"
+      ],
+      "declared_walk_speed_ft": null,
+      "declares_negated_ability_guard": false,
+      "description": "Elves can see twice as far as humans in conditions of dim light.",
+      "exclusion_guard_flags": [],
+      "is_racial_default": true,
+      "key": "Elf ~ Vision",
+      "name": "Low-Light Vision",
+      "negated_fact_gates": [
+        [
+          "Elf_ReplaceVision"
+        ]
+      ],
+      "positive_prefact_flag": null,
+      "race_key": "Elf",
+      "sets_replace_flags": [],
+      "skinwalker_change_shape_kin": null,
+      "source_page": null,
+      "suppressed_by_flag": "Elf_ReplaceVision",
+      "template_bonus_languages": [],
+      "type_tokens": [
+        "RacialTraits",
+        "Elf Racial Trait",
+        "Elf Racial Default",
+        "SpecialQuality",
+        "Extraordinary",
+        "Racial Vision"
+      ]
+    },
+    "elf/elf_weapon_familiarity.json": {
+      "adopted_race_pool_suffix": null,
+      "automatic_trait_grants": [],
+      "category": "Special Ability",
+      "declared_bonuses": {
+        "ability_adjustments": [],
+        "ability_pool_picks": 0,
+        "magnitudes": [],
+        "magnitudes_excluding_flags": [],
+        "only_internal_flags": false,
+        "target_bonuses": [],
+        "var_contributions": []
+      },
+      "declared_size": null,
+      "declared_vision": [],
+      "declared_walk_speed_ft": null,
+      "declares_negated_ability_guard": false,
+      "description": "Elves are proficient with longbows (including composite longbows), longswords, rapiers, and shortbows (including composite shortbows), and treat any weapon with the word \"elven\" in its name as a martial weapon.",
+      "exclusion_guard_flags": [],
+      "is_racial_default": true,
+      "key": "Elf ~ Weapon Familiarity",
+      "name": "Weapon Familiarity",
+      "negated_fact_gates": [
+        [
+          "Elf_ReplaceWeaponFamiliarity"
+        ]
+      ],
+      "positive_prefact_flag": null,
+      "race_key": "Elf",
+      "sets_replace_flags": [],
+      "skinwalker_change_shape_kin": null,
+      "source_page": null,
+      "suppressed_by_flag": "Elf_ReplaceWeaponFamiliarity",
+      "template_bonus_languages": [],
+      "type_tokens": [
+        "RacialTraits",
+        "Elf Racial Trait",
+        "Elf Racial Default",
+        "SpecialQuality",
+        "Special Quality",
+        "Weapon Familiarity"
+      ]
+    },
+    "gnome/adopted_race_gnome.json": {
+      "adopted_race_pool_suffix": "Gnome Race Trait",
+      "automatic_trait_grants": [],
+      "category": "Special Ability",
+      "declared_bonuses": {
+        "ability_adjustments": [],
+        "ability_pool_picks": 0,
+        "magnitudes": [],
+        "magnitudes_excluding_flags": [],
+        "only_internal_flags": false,
+        "target_bonuses": [],
+        "var_contributions": []
+      },
+      "declared_size": null,
+      "declared_vision": [],
+      "declared_walk_speed_ft": null,
+      "declares_negated_ability_guard": false,
+      "description": null,
+      "exclusion_guard_flags": [],
+      "is_racial_default": false,
+      "key": "Adopted Race ~ Gnome",
+      "name": "Gnome",
+      "negated_fact_gates": [],
+      "positive_prefact_flag": null,
+      "race_key": "Gnome",
+      "sets_replace_flags": [],
+      "skinwalker_change_shape_kin": null,
+      "source_page": null,
+      "suppressed_by_flag": null,
+      "template_bonus_languages": [],
+      "type_tokens": [
+        "AdoptiveRace"
+      ]
+    },
+    "gnome/gnome_ability_scores.json": {
+      "adopted_race_pool_suffix": null,
+      "automatic_trait_grants": [],
+      "category": "Special Ability",
+      "declared_bonuses": {
+        "ability_adjustments": [
+          {
+            "codes": "CON,CHA",
+            "magnitude": "2"
+          },
+          {
+            "codes": "STR",
+            "magnitude": "-2"
+          }
+        ],
+        "ability_pool_picks": 0,
+        "magnitudes": [
+          2,
+          -2
+        ],
+        "magnitudes_excluding_flags": [
+          2,
+          -2
+        ],
+        "only_internal_flags": false,
+        "target_bonuses": [
+          {
+            "keyword": "STAT",
+            "magnitude": 2,
+            "target": "CON,CHA"
+          },
+          {
+            "keyword": "STAT",
+            "magnitude": -2,
+            "target": "STR"
+          }
+        ],
+        "var_contributions": []
+      },
+      "declared_size": null,
+      "declared_vision": [],
+      "declared_walk_speed_ft": null,
+      "declares_negated_ability_guard": false,
+      "description": "Gnomes are physically weak but surprisingly hardy, and their attitude makes them naturally agreeable.",
+      "exclusion_guard_flags": [],
+      "is_racial_default": true,
+      "key": "Gnome ~ Ability Scores",
+      "name": "+2 Constitution, +2 Charisma, -2 Strength",
+      "negated_fact_gates": [
+        [
+          "Gnome_ReplaceAbilityScores"
+        ]
+      ],
+      "positive_prefact_flag": null,
+      "race_key": "Gnome",
+      "sets_replace_flags": [],
+      "skinwalker_change_shape_kin": null,
+      "source_page": null,
+      "suppressed_by_flag": "Gnome_ReplaceAbilityScores",
+      "template_bonus_languages": [],
+      "type_tokens": [
+        "RacialTraits",
+        "Gnome Racial Trait",
+        "Gnome Racial Default",
+        "SpecialQuality",
+        "Racial Ability Scores"
+      ]
+    },
+    "gnome/gnome_defensive_training.json": {
+      "adopted_race_pool_suffix": null,
+      "automatic_trait_grants": [],
+      "category": "Special Ability",
+      "declared_bonuses": {
+        "ability_adjustments": [],
+        "ability_pool_picks": 0,
+        "magnitudes": [
+          4
+        ],
+        "magnitudes_excluding_flags": [
+          4
+        ],
+        "only_internal_flags": false,
+        "target_bonuses": [
+          {
+            "keyword": "VAR",
+            "magnitude": 4,
+            "target": "RacialDefensiveTrainingBonus"
+          }
+        ],
+        "var_contributions": [
+          {
+            "amount": 4,
+            "name": "RacialDefensiveTrainingBonus"
+          }
+        ]
+      },
+      "declared_size": null,
+      "declared_vision": [],
+      "declared_walk_speed_ft": null,
+      "declares_negated_ability_guard": false,
+      "description": "Gnomes get a +4 dodge bonus to AC against monsters of the giant subtype.",
+      "exclusion_guard_flags": [],
+      "is_racial_default": true,
+      "key": "Gnome ~ Defensive Training",
+      "name": "Defensive Training",
+      "negated_fact_gates": [
+        [
+          "Gnome_ReplaceDefensiveTraining"
+        ]
+      ],
+      "positive_prefact_flag": null,
+      "race_key": "Gnome",
+      "sets_replace_flags": [],
+      "skinwalker_change_shape_kin": null,
+      "source_page": null,
+      "suppressed_by_flag": "Gnome_ReplaceDefensiveTraining",
+      "template_bonus_languages": [],
+      "type_tokens": [
+        "RacialTraits",
+        "Gnome Racial Trait",
+        "Gnome Racial Default",
+        "SpecialQuality",
+        "Defensive"
+      ]
+    },
+    "gnome/gnome_gnome_magic.json": {
+      "adopted_race_pool_suffix": null,
+      "automatic_trait_grants": [
+        "Racial SLA ~ Dancing Lights",
+        "Racial SLA ~ Ghost Sound",
+        "Racial SLA ~ Prestidigitation",
+        "Racial SLA ~ Speak with Animals"
+      ],
+      "category": "Special Ability",
+      "declared_bonuses": {
+        "ability_adjustments": [],
+        "ability_pool_picks": 0,
+        "magnitudes": [
+          1
+        ],
+        "magnitudes_excluding_flags": [
+          1
+        ],
+        "only_internal_flags": false,
+        "target_bonuses": [
+          {
+            "keyword": "DC",
+            "magnitude": null,
+            "target": "SCHOOL.Illusion"
+          },
+          {
+            "keyword": "VAR",
+            "magnitude": 1,
+            "target": "Gnome_GnomeMagic_IllusionDCBonus"
+          }
+        ],
+        "var_contributions": [
+          {
+            "amount": 1,
+            "name": "Gnome_GnomeMagic_IllusionDCBonus"
+          }
+        ]
+      },
+      "declared_size": null,
+      "declared_vision": [],
+      "declared_walk_speed_ft": null,
+      "declares_negated_ability_guard": false,
+      "description": "Gnomes add +1 to the DC of any saving throws against illusion spells that they cast. Gnomes with a Charisma of 11 or higher also gain the following spell-like abilities: 1/day--dancing lights, ghost sound, prestidigitation, and speak with animals. The caster level for these effects is equal to the gnome's level. The DC for these spells is equal to 10 + the spell's level + the gnome's Charisma modifier.",
+      "exclusion_guard_flags": [],
+      "is_racial_default": true,
+      "key": "Gnome ~ Gnome Magic",
+      "name": "Gnome Magic",
+      "negated_fact_gates": [
+        [
+          "Gnome_ReplaceGnomeMagic"
+        ]
+      ],
+      "positive_prefact_flag": null,
+      "race_key": "Gnome",
+      "sets_replace_flags": [],
+      "skinwalker_change_shape_kin": null,
+      "source_page": null,
+      "suppressed_by_flag": "Gnome_ReplaceGnomeMagic",
+      "template_bonus_languages": [],
+      "type_tokens": [
+        "RacialTraits",
+        "Gnome Racial Trait",
+        "Gnome Racial Default",
+        "SpecialQuality",
+        "Special Quality",
+        "Applied Bonus"
+      ]
+    },
+    "gnome/gnome_hatred.json": {
+      "adopted_race_pool_suffix": null,
+      "automatic_trait_grants": [],
+      "category": "Special Ability",
+      "declared_bonuses": {
+        "ability_adjustments": [],
+        "ability_pool_picks": 0,
+        "magnitudes": [
+          1
+        ],
+        "magnitudes_excluding_flags": [
+          1
+        ],
+        "only_internal_flags": false,
+        "target_bonuses": [
+          {
+            "keyword": "VAR",
+            "magnitude": 1,
+            "target": "Gnome_Hatred_AttackBonus"
+          }
+        ],
+        "var_contributions": [
+          {
+            "amount": 1,
+            "name": "Gnome_Hatred_AttackBonus"
+          }
+        ]
+      },
+      "declared_size": null,
+      "declared_vision": [],
+      "declared_walk_speed_ft": null,
+      "declares_negated_ability_guard": false,
+      "description": "Gnomes receive a +1 bonus on attack rolls against humanoid creatures of the reptilian and goblinoid subtypes due to special training against these hated foes.",
+      "exclusion_guard_flags": [],
+      "is_racial_default": true,
+      "key": "Gnome ~ Hatred",
+      "name": "Hatred",
+      "negated_fact_gates": [
+        [
+          "Gnome_ReplaceHatred"
+        ]
+      ],
+      "positive_prefact_flag": null,
+      "race_key": "Gnome",
+      "sets_replace_flags": [],
+      "skinwalker_change_shape_kin": null,
+      "source_page": null,
+      "suppressed_by_flag": "Gnome_ReplaceHatred",
+      "template_bonus_languages": [],
+      "type_tokens": [
+        "RacialTraits",
+        "Gnome Racial Trait",
+        "Gnome Racial Default",
+        "SpecialAttack",
+        "Special Attack"
+      ]
+    },
+    "gnome/gnome_illusion_resistance.json": {
+      "adopted_race_pool_suffix": null,
+      "automatic_trait_grants": [],
+      "category": "Special Ability",
+      "declared_bonuses": {
+        "ability_adjustments": [],
+        "ability_pool_picks": 0,
+        "magnitudes": [
+          2
+        ],
+        "magnitudes_excluding_flags": [
+          2
+        ],
+        "only_internal_flags": false,
+        "target_bonuses": [
+          {
+            "keyword": "VAR",
+            "magnitude": 2,
+            "target": "SaveBonus_vs_Illusions"
+          }
+        ],
+        "var_contributions": [
+          {
+            "amount": 2,
+            "name": "SaveBonus_vs_Illusions"
+          }
+        ]
+      },
+      "declared_size": null,
+      "declared_vision": [],
+      "declared_walk_speed_ft": null,
+      "declares_negated_ability_guard": false,
+      "description": "Gnomes get a +2 racial saving throw bonus against illusion spells and effects.",
+      "exclusion_guard_flags": [],
+      "is_racial_default": true,
+      "key": "Gnome ~ Illusion Resistance",
+      "name": "Illusion Resistance",
+      "negated_fact_gates": [
+        [
+          "Gnome_ReplaceIllusionResistance"
+        ]
+      ],
+      "positive_prefact_flag": null,
+      "race_key": "Gnome",
+      "sets_replace_flags": [],
+      "skinwalker_change_shape_kin": null,
+      "source_page": null,
+      "suppressed_by_flag": "Gnome_ReplaceIllusionResistance",
+      "template_bonus_languages": [],
+      "type_tokens": [
+        "RacialTraits",
+        "Gnome Racial Trait",
+        "Gnome Racial Default",
+        "SpecialQuality"
+      ]
+    },
+    "gnome/gnome_keen_senses.json": {
+      "adopted_race_pool_suffix": null,
+      "automatic_trait_grants": [],
+      "category": "Special Ability",
+      "declared_bonuses": {
+        "ability_adjustments": [],
+        "ability_pool_picks": 0,
+        "magnitudes": [
+          2
+        ],
+        "magnitudes_excluding_flags": [
+          2
+        ],
+        "only_internal_flags": false,
+        "target_bonuses": [
+          {
+            "keyword": "SKILL",
+            "magnitude": null,
+            "target": "Perception"
+          },
+          {
+            "keyword": "VAR",
+            "magnitude": 2,
+            "target": "KeenSensesBonus"
+          }
+        ],
+        "var_contributions": [
+          {
+            "amount": 2,
+            "name": "KeenSensesBonus"
+          }
+        ]
+      },
+      "declared_size": null,
+      "declared_vision": [],
+      "declared_walk_speed_ft": null,
+      "declares_negated_ability_guard": false,
+      "description": "Gnomes receive a +2 racial bonus on Perception skill checks.",
+      "exclusion_guard_flags": [],
+      "is_racial_default": true,
+      "key": "Gnome ~ Keen Senses",
+      "name": "Keen Senses",
+      "negated_fact_gates": [
+        [
+          "Gnome_ReplaceKeenSenses"
+        ]
+      ],
+      "positive_prefact_flag": null,
+      "race_key": "Gnome",
+      "sets_replace_flags": [],
+      "skinwalker_change_shape_kin": null,
+      "source_page": null,
+      "suppressed_by_flag": "Gnome_ReplaceKeenSenses",
+      "template_bonus_languages": [],
+      "type_tokens": [
+        "RacialTraits",
+        "Gnome Racial Trait",
+        "Gnome Racial Default",
+        "SpecialQuality"
+      ]
+    },
+    "gnome/gnome_languages.json": {
+      "adopted_race_pool_suffix": null,
+      "automatic_trait_grants": [],
+      "category": "Special Ability",
+      "declared_bonuses": {
+        "ability_adjustments": [],
+        "ability_pool_picks": 0,
+        "magnitudes": [],
+        "magnitudes_excluding_flags": [],
+        "only_internal_flags": false,
+        "target_bonuses": [],
+        "var_contributions": []
+      },
+      "declared_size": null,
+      "declared_vision": [],
+      "declared_walk_speed_ft": null,
+      "declares_negated_ability_guard": false,
+      "description": "Gnomes begin play speaking Common, Gnome, and Sylvan. Gnomes with high Intelligence scores can choose from the following: Draconic, Dwarven, Elven, Giant, Goblin, and Orc.",
+      "exclusion_guard_flags": [],
+      "is_racial_default": true,
+      "key": "Gnome ~ Languages",
+      "name": "Languages",
+      "negated_fact_gates": [
+        [
+          "Gnome_ReplaceLanguages"
+        ]
+      ],
+      "positive_prefact_flag": null,
+      "race_key": "Gnome",
+      "sets_replace_flags": [],
+      "skinwalker_change_shape_kin": null,
+      "source_page": null,
+      "suppressed_by_flag": "Gnome_ReplaceLanguages",
+      "template_bonus_languages": [
+        "Draconic",
+        "Dwarven",
+        "Elven",
+        "Giant",
+        "Goblin",
+        "Orc"
+      ],
+      "type_tokens": [
+        "RacialTraits",
+        "Gnome Racial Trait",
+        "Gnome Racial Default",
+        "SpecialQuality",
+        "Racial Language"
+      ]
+    },
+    "gnome/gnome_obsessive.json": {
+      "adopted_race_pool_suffix": null,
+      "automatic_trait_grants": [],
+      "category": "Special Ability",
+      "declared_bonuses": {
+        "ability_adjustments": [],
+        "ability_pool_picks": 0,
+        "magnitudes": [
+          1
+        ],
+        "magnitudes_excluding_flags": [
+          1
+        ],
+        "only_internal_flags": false,
+        "target_bonuses": [
+          {
+            "keyword": "ABILITYPOOL",
+            "magnitude": 1,
+            "target": "Gnome Obsessive Skill Bonus"
+          }
+        ],
+        "var_contributions": []
+      },
+      "declared_size": null,
+      "declared_vision": [],
+      "declared_walk_speed_ft": null,
+      "declares_negated_ability_guard": false,
+      "description": "Gnomes receive a +2 racial bonus on a Craft or Profession skill of their choice.",
+      "exclusion_guard_flags": [],
+      "is_racial_default": true,
+      "key": "Gnome ~ Obsessive",
+      "name": "Obsessive",
+      "negated_fact_gates": [
+        [
+          "Gnome_ReplaceObsessive"
+        ]
+      ],
+      "positive_prefact_flag": null,
+      "race_key": "Gnome",
+      "sets_replace_flags": [],
+      "skinwalker_change_shape_kin": null,
+      "source_page": null,
+      "suppressed_by_flag": "Gnome_ReplaceObsessive",
+      "template_bonus_languages": [],
+      "type_tokens": [
+        "RacialTraits",
+        "Gnome Racial Trait",
+        "Gnome Racial Default",
+        "SpecialQuality"
+      ]
+    },
+    "gnome/gnome_size.json": {
+      "adopted_race_pool_suffix": null,
+      "automatic_trait_grants": [],
+      "category": "Special Ability",
+      "declared_bonuses": {
+        "ability_adjustments": [],
+        "ability_pool_picks": 0,
+        "magnitudes": [],
+        "magnitudes_excluding_flags": [],
+        "only_internal_flags": false,
+        "target_bonuses": [],
+        "var_contributions": []
+      },
+      "declared_size": "Small",
+      "declared_vision": [],
+      "declared_walk_speed_ft": null,
+      "declares_negated_ability_guard": false,
+      "description": "Gnomes are Small creatures and gain a +1 size bonus to their AC, a +1 size bonus on attack rolls, a -1 penalty to their Combat Maneuver Bonus and Combat Maneuver Defense, and a +4 size bonus on Stealth checks.",
+      "exclusion_guard_flags": [],
+      "is_racial_default": true,
+      "key": "Gnome ~ Size",
+      "name": "Small",
+      "negated_fact_gates": [
+        [
+          "Gnome_ReplaceSize"
+        ]
+      ],
+      "positive_prefact_flag": null,
+      "race_key": "Gnome",
+      "sets_replace_flags": [],
+      "skinwalker_change_shape_kin": null,
+      "source_page": null,
+      "suppressed_by_flag": "Gnome_ReplaceSize",
+      "template_bonus_languages": [],
+      "type_tokens": [
+        "RacialTraits",
+        "Gnome Racial Trait",
+        "Gnome Racial Default",
+        "SpecialQuality",
+        "Racial Size"
+      ]
+    },
+    "gnome/gnome_speed.json": {
+      "adopted_race_pool_suffix": null,
+      "automatic_trait_grants": [],
+      "category": "Special Ability",
+      "declared_bonuses": {
+        "ability_adjustments": [],
+        "ability_pool_picks": 0,
+        "magnitudes": [
+          20
+        ],
+        "magnitudes_excluding_flags": [
+          20
+        ],
+        "only_internal_flags": false,
+        "target_bonuses": [
+          {
+            "keyword": "VAR",
+            "magnitude": 20,
+            "target": "MOVEBASE"
+          }
+        ],
+        "var_contributions": [
+          {
+            "amount": 20,
+            "name": "MOVEBASE"
+          }
+        ]
+      },
+      "declared_size": null,
+      "declared_vision": [],
+      "declared_walk_speed_ft": 20,
+      "declares_negated_ability_guard": false,
+      "description": "Gnomes have a base speed of 20 feet.",
+      "exclusion_guard_flags": [],
+      "is_racial_default": true,
+      "key": "Gnome ~ Speed",
+      "name": "Slow Speed",
+      "negated_fact_gates": [
+        [
+          "Gnome_ReplaceSpeed"
+        ]
+      ],
+      "positive_prefact_flag": null,
+      "race_key": "Gnome",
+      "sets_replace_flags": [],
+      "skinwalker_change_shape_kin": null,
+      "source_page": null,
+      "suppressed_by_flag": "Gnome_ReplaceSpeed",
+      "template_bonus_languages": [],
+      "type_tokens": [
+        "RacialTraits",
+        "Gnome Racial Trait",
+        "Gnome Racial Default",
+        "SpecialQuality",
+        "Racial Speed"
+      ]
+    },
+    "gnome/gnome_vision.json": {
+      "adopted_race_pool_suffix": null,
+      "automatic_trait_grants": [],
+      "category": "Special Ability",
+      "declared_bonuses": {
+        "ability_adjustments": [],
+        "ability_pool_picks": 0,
+        "magnitudes": [
+          1
+        ],
+        "magnitudes_excluding_flags": [],
+        "only_internal_flags": true,
+        "target_bonuses": [
+          {
+            "keyword": "VAR",
+            "magnitude": 1,
+            "target": "HasRacialVision"
+          }
+        ],
+        "var_contributions": [
+          {
+            "amount": 1,
+            "name": "HasRacialVision"
+          }
+        ]
+      },
+      "declared_size": null,
+      "declared_vision": [
+        "Low-Light Vision"
+      ],
+      "declared_walk_speed_ft": null,
+      "declares_negated_ability_guard": false,
+      "description": "Gnomes can see twice as far as humans in conditions of dim light.",
+      "exclusion_guard_flags": [],
+      "is_racial_default": true,
+      "key": "Gnome ~ Vision",
+      "name": "Low-Light Vision",
+      "negated_fact_gates": [
+        [
+          "Gnome_ReplaceVision"
+        ]
+      ],
+      "positive_prefact_flag": null,
+      "race_key": "Gnome",
+      "sets_replace_flags": [],
+      "skinwalker_change_shape_kin": null,
+      "source_page": null,
+      "suppressed_by_flag": "Gnome_ReplaceVision",
+      "template_bonus_languages": [],
+      "type_tokens": [
+        "RacialTraits",
+        "Gnome Racial Trait",
+        "Gnome Racial Default",
+        "SpecialQuality",
+        "Extraordinary",
+        "Racial Vision"
+      ]
+    },
+    "gnome/gnome_weapon_familiarity.json": {
+      "adopted_race_pool_suffix": null,
+      "automatic_trait_grants": [],
+      "category": "Special Ability",
+      "declared_bonuses": {
+        "ability_adjustments": [],
+        "ability_pool_picks": 0,
+        "magnitudes": [],
+        "magnitudes_excluding_flags": [],
+        "only_internal_flags": false,
+        "target_bonuses": [],
+        "var_contributions": []
+      },
+      "declared_size": null,
+      "declared_vision": [],
+      "declared_walk_speed_ft": null,
+      "declares_negated_ability_guard": false,
+      "description": "Gnomes treat any weapon with the word \"gnome\" in its name as a martial weapon.",
+      "exclusion_guard_flags": [],
+      "is_racial_default": true,
+      "key": "Gnome ~ Weapon Familiarity",
+      "name": "Weapon Familiarity",
+      "negated_fact_gates": [
+        [
+          "Gnome_ReplaceWeaponFamiliarity"
+        ]
+      ],
+      "positive_prefact_flag": null,
+      "race_key": "Gnome",
+      "sets_replace_flags": [],
+      "skinwalker_change_shape_kin": null,
+      "source_page": null,
+      "suppressed_by_flag": "Gnome_ReplaceWeaponFamiliarity",
+      "template_bonus_languages": [],
+      "type_tokens": [
+        "RacialTraits",
+        "Gnome Racial Trait",
+        "Gnome Racial Default",
+        "SpecialQuality",
+        "Weapon Familiarity"
+      ]
+    },
+    "half_elf/adopted_race_half_elf.json": {
+      "adopted_race_pool_suffix": "Half-Elf Race Trait",
+      "automatic_trait_grants": [],
+      "category": "Special Ability",
+      "declared_bonuses": {
+        "ability_adjustments": [],
+        "ability_pool_picks": 0,
+        "magnitudes": [],
+        "magnitudes_excluding_flags": [],
+        "only_internal_flags": false,
+        "target_bonuses": [],
+        "var_contributions": []
+      },
+      "declared_size": null,
+      "declared_vision": [],
+      "declared_walk_speed_ft": null,
+      "declares_negated_ability_guard": false,
+      "description": null,
+      "exclusion_guard_flags": [],
+      "is_racial_default": false,
+      "key": "Adopted Race ~ Half-Elf",
+      "name": "Half-Elf",
+      "negated_fact_gates": [],
+      "positive_prefact_flag": null,
+      "race_key": "Half-Elf",
+      "sets_replace_flags": [],
+      "skinwalker_change_shape_kin": null,
+      "source_page": null,
+      "suppressed_by_flag": null,
+      "template_bonus_languages": [],
+      "type_tokens": [
+        "AdoptiveRace"
+      ]
+    },
+    "half_elf/half_elf_ability_scores.json": {
+      "adopted_race_pool_suffix": null,
+      "automatic_trait_grants": [],
+      "category": "Special Ability",
+      "declared_bonuses": {
+        "ability_adjustments": [],
+        "ability_pool_picks": 1,
+        "magnitudes": [
+          1
+        ],
+        "magnitudes_excluding_flags": [
+          1
+        ],
+        "only_internal_flags": false,
+        "target_bonuses": [
+          {
+            "keyword": "ABILITYPOOL",
+            "magnitude": 1,
+            "target": "Ability Bonus"
+          }
+        ],
+        "var_contributions": []
+      },
+      "declared_size": null,
+      "declared_vision": [],
+      "declared_walk_speed_ft": null,
+      "declares_negated_ability_guard": false,
+      "description": "Half-elf characters get a +2 bonus to one ability score of their choice at creation to represent their varied nature.",
+      "exclusion_guard_flags": [],
+      "is_racial_default": true,
+      "key": "Half-Elf ~ Ability Scores",
+      "name": "+2 to One Ability Score",
+      "negated_fact_gates": [
+        [
+          "HalfElf_ReplaceAbilityScores"
+        ]
+      ],
+      "positive_prefact_flag": null,
+      "race_key": "Half-Elf",
+      "sets_replace_flags": [],
+      "skinwalker_change_shape_kin": null,
+      "source_page": null,
+      "suppressed_by_flag": "HalfElf_ReplaceAbilityScores",
+      "template_bonus_languages": [],
+      "type_tokens": [
+        "RacialTraits",
+        "Half-Elf Racial Trait",
+        "Half-Elf Racial Default",
+        "SpecialQuality",
+        "Racial Ability Scores"
+      ]
+    },
+    "half_elf/half_elf_adaptability.json": {
+      "adopted_race_pool_suffix": null,
+      "automatic_trait_grants": [],
+      "category": "Special Ability",
+      "declared_bonuses": {
+        "ability_adjustments": [],
+        "ability_pool_picks": 0,
+        "magnitudes": [
+          1
+        ],
+        "magnitudes_excluding_flags": [
+          1
+        ],
+        "only_internal_flags": false,
+        "target_bonuses": [
+          {
+            "keyword": "ABILITYPOOL",
+            "magnitude": 1,
+            "target": "Adaptability Bonus Feat"
+          }
+        ],
+        "var_contributions": []
+      },
+      "declared_size": null,
+      "declared_vision": [],
+      "declared_walk_speed_ft": null,
+      "declares_negated_ability_guard": false,
+      "description": "Half-elves receive Skill Focus as a bonus feat at 1st level.",
+      "exclusion_guard_flags": [],
+      "is_racial_default": true,
+      "key": "Half-Elf ~ Adaptability",
+      "name": "Adaptability",
+      "negated_fact_gates": [
+        [
+          "HalfElf_ReplaceAdaptability"
+        ]
+      ],
+      "positive_prefact_flag": null,
+      "race_key": "Half-Elf",
+      "sets_replace_flags": [],
+      "skinwalker_change_shape_kin": null,
+      "source_page": null,
+      "suppressed_by_flag": "HalfElf_ReplaceAdaptability",
+      "template_bonus_languages": [],
+      "type_tokens": [
+        "RacialTraits",
+        "Half-Elf Racial Trait",
+        "Half-Elf Racial Default",
+        "SpecialQuality"
+      ]
+    },
+    "half_elf/half_elf_elf_blood.json": {
+      "adopted_race_pool_suffix": null,
+      "automatic_trait_grants": [],
+      "category": "Special Ability",
+      "declared_bonuses": {
+        "ability_adjustments": [],
+        "ability_pool_picks": 0,
+        "magnitudes": [],
+        "magnitudes_excluding_flags": [],
+        "only_internal_flags": false,
+        "target_bonuses": [],
+        "var_contributions": []
+      },
+      "declared_size": null,
+      "declared_vision": [],
+      "declared_walk_speed_ft": null,
+      "declares_negated_ability_guard": false,
+      "description": "Half-elves count as both elves and humans for any effect related to race.",
+      "exclusion_guard_flags": [],
+      "is_racial_default": true,
+      "key": "Half-Elf ~ Elf Blood",
+      "name": "Elf Blood",
+      "negated_fact_gates": [
+        [
+          "HalfElf_ReplaceElfBlood"
+        ]
+      ],
+      "positive_prefact_flag": null,
+      "race_key": "Half-Elf",
+      "sets_replace_flags": [],
+      "skinwalker_change_shape_kin": null,
+      "source_page": null,
+      "suppressed_by_flag": "HalfElf_ReplaceElfBlood",
+      "template_bonus_languages": [],
+      "type_tokens": [
+        "RacialTraits",
+        "Half-Elf Racial Trait",
+        "Half-Elf Racial Default",
+        "SpecialQuality",
+        "Special Quality"
+      ]
+    },
+    "half_elf/half_elf_elven_immunities.json": {
+      "adopted_race_pool_suffix": null,
+      "automatic_trait_grants": [
+        "Immunity to Sleep"
+      ],
+      "category": "Special Ability",
+      "declared_bonuses": {
+        "ability_adjustments": [],
+        "ability_pool_picks": 0,
+        "magnitudes": [
+          2
+        ],
+        "magnitudes_excluding_flags": [
+          2
+        ],
+        "only_internal_flags": false,
+        "target_bonuses": [
+          {
+            "keyword": "VAR",
+            "magnitude": 2,
+            "target": "SaveBonus_vs_Enchantments"
+          }
+        ],
+        "var_contributions": [
+          {
+            "amount": 2,
+            "name": "SaveBonus_vs_Enchantments"
+          }
+        ]
+      },
+      "declared_size": null,
+      "declared_vision": [],
+      "declared_walk_speed_ft": null,
+      "declares_negated_ability_guard": false,
+      "description": "Half-elves are immune to magic sleep effects and get a +2 racial saving throw bonus against enchantment spells and effects.",
+      "exclusion_guard_flags": [],
+      "is_racial_default": true,
+      "key": "Half-Elf ~ Elven Immunities",
+      "name": "Elven Immunities",
+      "negated_fact_gates": [
+        [
+          "HalfElf_ReplaceElvenImmunities"
+        ]
+      ],
+      "positive_prefact_flag": null,
+      "race_key": "Half-Elf",
+      "sets_replace_flags": [],
+      "skinwalker_change_shape_kin": null,
+      "source_page": null,
+      "suppressed_by_flag": "HalfElf_ReplaceElvenImmunities",
+      "template_bonus_languages": [],
+      "type_tokens": [
+        "RacialTraits",
+        "Half-Elf Racial Trait",
+        "Half-Elf Racial Default",
+        "SpecialQuality"
+      ]
+    },
+    "half_elf/half_elf_keen_senses.json": {
+      "adopted_race_pool_suffix": null,
+      "automatic_trait_grants": [],
+      "category": "Special Ability",
+      "declared_bonuses": {
+        "ability_adjustments": [],
+        "ability_pool_picks": 0,
+        "magnitudes": [
+          2
+        ],
+        "magnitudes_excluding_flags": [
+          2
+        ],
+        "only_internal_flags": false,
+        "target_bonuses": [
+          {
+            "keyword": "SKILL",
+            "magnitude": null,
+            "target": "Perception"
+          },
+          {
+            "keyword": "VAR",
+            "magnitude": 2,
+            "target": "KeenSensesBonus"
+          }
+        ],
+        "var_contributions": [
+          {
+            "amount": 2,
+            "name": "KeenSensesBonus"
+          }
+        ]
+      },
+      "declared_size": null,
+      "declared_vision": [],
+      "declared_walk_speed_ft": null,
+      "declares_negated_ability_guard": false,
+      "description": "Half-elves receive a +2 racial bonus on Perception skill checks.",
+      "exclusion_guard_flags": [],
+      "is_racial_default": true,
+      "key": "Half-Elf ~ Keen Senses",
+      "name": "Keen Senses",
+      "negated_fact_gates": [
+        [
+          "HalfElf_ReplaceKeenSenses"
+        ]
+      ],
+      "positive_prefact_flag": null,
+      "race_key": "Half-Elf",
+      "sets_replace_flags": [],
+      "skinwalker_change_shape_kin": null,
+      "source_page": null,
+      "suppressed_by_flag": "HalfElf_ReplaceKeenSenses",
+      "template_bonus_languages": [],
+      "type_tokens": [
+        "RacialTraits",
+        "Half-Elf Racial Trait",
+        "Half-Elf Racial Default",
+        "SpecialQuality"
+      ]
+    },
+    "half_elf/half_elf_languages.json": {
+      "adopted_race_pool_suffix": null,
+      "automatic_trait_grants": [],
+      "category": "Special Ability",
+      "declared_bonuses": {
+        "ability_adjustments": [],
+        "ability_pool_picks": 0,
+        "magnitudes": [],
+        "magnitudes_excluding_flags": [],
+        "only_internal_flags": false,
+        "target_bonuses": [],
+        "var_contributions": []
+      },
+      "declared_size": null,
+      "declared_vision": [],
+      "declared_walk_speed_ft": null,
+      "declares_negated_ability_guard": false,
+      "description": "Half-elves begin play speaking Common and Elven. Half-elves with high Intelligence scores can choose any languages they want (except secret languages, such as Druidic).",
+      "exclusion_guard_flags": [],
+      "is_racial_default": true,
+      "key": "Half-Elf ~ Languages",
+      "name": "Languages",
+      "negated_fact_gates": [
+        [
+          "HalfElf_ReplaceLanguages"
+        ]
+      ],
+      "positive_prefact_flag": null,
+      "race_key": "Half-Elf",
+      "sets_replace_flags": [],
+      "skinwalker_change_shape_kin": null,
+      "source_page": null,
+      "suppressed_by_flag": "HalfElf_ReplaceLanguages",
+      "template_bonus_languages": [
+        "Any Spoken"
+      ],
+      "type_tokens": [
+        "RacialTraits",
+        "Half-Elf Racial Trait",
+        "Half-Elf Racial Default",
+        "SpecialQuality",
+        "Racial Language"
+      ]
+    },
+    "half_elf/half_elf_multitalented.json": {
+      "adopted_race_pool_suffix": null,
+      "automatic_trait_grants": [],
+      "category": "Special Ability",
+      "declared_bonuses": {
+        "ability_adjustments": [],
+        "ability_pool_picks": 0,
+        "magnitudes": [
+          1
+        ],
+        "magnitudes_excluding_flags": [
+          1
+        ],
+        "only_internal_flags": false,
+        "target_bonuses": [
+          {
+            "keyword": "ABILITYPOOL",
+            "magnitude": 1,
+            "target": "Favored Class"
+          }
+        ],
+        "var_contributions": []
+      },
+      "declared_size": null,
+      "declared_vision": [],
+      "declared_walk_speed_ft": null,
+      "declares_negated_ability_guard": false,
+      "description": "Half-elves choose two favored classes at first level and gain +1 hit point or +1 skill point whenever they take a level in either one of those classes.",
+      "exclusion_guard_flags": [],
+      "is_racial_default": true,
+      "key": "Half-Elf ~ Multitalented",
+      "name": "Multitalented",
+      "negated_fact_gates": [
+        [
+          "HalfElf_ReplaceMultitalented"
+        ]
+      ],
+      "positive_prefact_flag": null,
+      "race_key": "Half-Elf",
+      "sets_replace_flags": [],
+      "skinwalker_change_shape_kin": null,
+      "source_page": null,
+      "suppressed_by_flag": "HalfElf_ReplaceMultitalented",
+      "template_bonus_languages": [],
+      "type_tokens": [
+        "RacialTraits",
+        "Half-Elf Racial Trait",
+        "Half-Elf Racial Default",
+        "SpecialQuality"
+      ]
+    },
+    "half_elf/half_elf_size.json": {
+      "adopted_race_pool_suffix": null,
+      "automatic_trait_grants": [],
+      "category": "Special Ability",
+      "declared_bonuses": {
+        "ability_adjustments": [],
+        "ability_pool_picks": 0,
+        "magnitudes": [],
+        "magnitudes_excluding_flags": [],
+        "only_internal_flags": false,
+        "target_bonuses": [],
+        "var_contributions": []
+      },
+      "declared_size": "Medium",
+      "declared_vision": [],
+      "declared_walk_speed_ft": null,
+      "declares_negated_ability_guard": false,
+      "description": "Half-elves are Medium creatures and have no bonuses or penalties due to their size.",
+      "exclusion_guard_flags": [],
+      "is_racial_default": true,
+      "key": "Half-Elf ~ Size",
+      "name": "Medium",
+      "negated_fact_gates": [
+        [
+          "HalfElf_ReplaceSize"
+        ]
+      ],
+      "positive_prefact_flag": null,
+      "race_key": "Half-Elf",
+      "sets_replace_flags": [],
+      "skinwalker_change_shape_kin": null,
+      "source_page": null,
+      "suppressed_by_flag": "HalfElf_ReplaceSize",
+      "template_bonus_languages": [],
+      "type_tokens": [
+        "RacialTraits",
+        "Half-Elf Racial Trait",
+        "Half-Elf Racial Default",
+        "SpecialQuality",
+        "Racial Size"
+      ]
+    },
+    "half_elf/half_elf_speed.json": {
+      "adopted_race_pool_suffix": null,
+      "automatic_trait_grants": [],
+      "category": "Special Ability",
+      "declared_bonuses": {
+        "ability_adjustments": [],
+        "ability_pool_picks": 0,
+        "magnitudes": [
+          30
+        ],
+        "magnitudes_excluding_flags": [
+          30
+        ],
+        "only_internal_flags": false,
+        "target_bonuses": [
+          {
+            "keyword": "VAR",
+            "magnitude": 30,
+            "target": "MOVEBASE"
+          }
+        ],
+        "var_contributions": [
+          {
+            "amount": 30,
+            "name": "MOVEBASE"
+          }
+        ]
+      },
+      "declared_size": null,
+      "declared_vision": [],
+      "declared_walk_speed_ft": 30,
+      "declares_negated_ability_guard": false,
+      "description": "Half-elves have a base speed of 30 feet.",
+      "exclusion_guard_flags": [],
+      "is_racial_default": true,
+      "key": "Half-Elf ~ Speed",
+      "name": "Normal Speed",
+      "negated_fact_gates": [
+        [
+          "HalfElf_ReplaceSpeed"
+        ]
+      ],
+      "positive_prefact_flag": null,
+      "race_key": "Half-Elf",
+      "sets_replace_flags": [],
+      "skinwalker_change_shape_kin": null,
+      "source_page": null,
+      "suppressed_by_flag": "HalfElf_ReplaceSpeed",
+      "template_bonus_languages": [],
+      "type_tokens": [
+        "RacialTraits",
+        "Half-Elf Racial Trait",
+        "Half-Elf Racial Default",
+        "SpecialQuality",
+        "Racial Speed"
+      ]
+    },
+    "half_elf/half_elf_vision.json": {
+      "adopted_race_pool_suffix": null,
+      "automatic_trait_grants": [],
+      "category": "Special Ability",
+      "declared_bonuses": {
+        "ability_adjustments": [],
+        "ability_pool_picks": 0,
+        "magnitudes": [
+          1
+        ],
+        "magnitudes_excluding_flags": [],
+        "only_internal_flags": true,
+        "target_bonuses": [
+          {
+            "keyword": "VAR",
+            "magnitude": 1,
+            "target": "HasRacialVision"
+          }
+        ],
+        "var_contributions": [
+          {
+            "amount": 1,
+            "name": "HasRacialVision"
+          }
+        ]
+      },
+      "declared_size": null,
+      "declared_vision": [
+        "Low-Light Vision"
+      ],
+      "declared_walk_speed_ft": null,
+      "declares_negated_ability_guard": false,
+      "description": "Half-elves can see twice as far as humans in conditions of dim light.",
+      "exclusion_guard_flags": [],
+      "is_racial_default": true,
+      "key": "Half-Elf ~ Vision",
+      "name": "Low-Light Vision",
+      "negated_fact_gates": [
+        [
+          "HalfElf_ReplaceVision"
+        ]
+      ],
+      "positive_prefact_flag": null,
+      "race_key": "Half-Elf",
+      "sets_replace_flags": [],
+      "skinwalker_change_shape_kin": null,
+      "source_page": null,
+      "suppressed_by_flag": "HalfElf_ReplaceVision",
+      "template_bonus_languages": [],
+      "type_tokens": [
+        "RacialTraits",
+        "Half-Elf Racial Trait",
+        "Half-Elf Racial Default",
+        "SpecialQuality",
+        "Racial Vision"
+      ]
+    },
+    "half_orc/adopted_race_half_orc.json": {
+      "adopted_race_pool_suffix": "Half-Orc Race Trait",
+      "automatic_trait_grants": [],
+      "category": "Special Ability",
+      "declared_bonuses": {
+        "ability_adjustments": [],
+        "ability_pool_picks": 0,
+        "magnitudes": [],
+        "magnitudes_excluding_flags": [],
+        "only_internal_flags": false,
+        "target_bonuses": [],
+        "var_contributions": []
+      },
+      "declared_size": null,
+      "declared_vision": [],
+      "declared_walk_speed_ft": null,
+      "declares_negated_ability_guard": false,
+      "description": null,
+      "exclusion_guard_flags": [],
+      "is_racial_default": false,
+      "key": "Adopted Race ~ Half-Orc",
+      "name": "Half-Orc",
+      "negated_fact_gates": [],
+      "positive_prefact_flag": null,
+      "race_key": "Half-Orc",
+      "sets_replace_flags": [],
+      "skinwalker_change_shape_kin": null,
+      "source_page": null,
+      "suppressed_by_flag": null,
+      "template_bonus_languages": [],
+      "type_tokens": [
+        "AdoptiveRace"
+      ]
+    },
+    "half_orc/half_orc_ability_scores.json": {
+      "adopted_race_pool_suffix": null,
+      "automatic_trait_grants": [],
+      "category": "Special Ability",
+      "declared_bonuses": {
+        "ability_adjustments": [],
+        "ability_pool_picks": 1,
+        "magnitudes": [
+          1
+        ],
+        "magnitudes_excluding_flags": [
+          1
+        ],
+        "only_internal_flags": false,
+        "target_bonuses": [
+          {
+            "keyword": "ABILITYPOOL",
+            "magnitude": 1,
+            "target": "Ability Bonus"
+          }
+        ],
+        "var_contributions": []
+      },
+      "declared_size": null,
+      "declared_vision": [],
+      "declared_walk_speed_ft": null,
+      "declares_negated_ability_guard": false,
+      "description": "Half-orc characters get a +2 bonus to one ability score of their choice at creation to represent their varied nature.",
+      "exclusion_guard_flags": [],
+      "is_racial_default": true,
+      "key": "Half-Orc ~ Ability Scores",
+      "name": "+2 to One Ability Score",
+      "negated_fact_gates": [
+        [
+          "HalfOrc_ReplaceAbilityScores"
+        ]
+      ],
+      "positive_prefact_flag": null,
+      "race_key": "Half-Orc",
+      "sets_replace_flags": [],
+      "skinwalker_change_shape_kin": null,
+      "source_page": "p.24",
+      "suppressed_by_flag": "HalfOrc_ReplaceAbilityScores",
+      "template_bonus_languages": [],
+      "type_tokens": [
+        "RacialTraits",
+        "Half-Orc Racial Trait",
+        "Half-Orc Racial Default",
+        "SpecialQuality",
+        "Racial Ability Scores"
+      ]
+    },
+    "half_orc/half_orc_intimidating.json": {
+      "adopted_race_pool_suffix": null,
+      "automatic_trait_grants": [],
+      "category": "Special Ability",
+      "declared_bonuses": {
+        "ability_adjustments": [],
+        "ability_pool_picks": 0,
+        "magnitudes": [
+          2
+        ],
+        "magnitudes_excluding_flags": [
+          2
+        ],
+        "only_internal_flags": false,
+        "target_bonuses": [
+          {
+            "keyword": "SKILL",
+            "magnitude": 2,
+            "target": "Intimidate"
+          }
+        ],
+        "var_contributions": []
+      },
+      "declared_size": null,
+      "declared_vision": [],
+      "declared_walk_speed_ft": null,
+      "declares_negated_ability_guard": false,
+      "description": "Half-orcs receive a +2 racial bonus on Intimidate skill checks due to their fearsome nature.",
+      "exclusion_guard_flags": [],
+      "is_racial_default": true,
+      "key": "Half-Orc ~ Intimidating",
+      "name": "Intimidating",
+      "negated_fact_gates": [
+        [
+          "HalfOrc_ReplaceIntimidating"
+        ]
+      ],
+      "positive_prefact_flag": null,
+      "race_key": "Half-Orc",
+      "sets_replace_flags": [],
+      "skinwalker_change_shape_kin": null,
+      "source_page": "p.25",
+      "suppressed_by_flag": "HalfOrc_ReplaceIntimidating",
+      "template_bonus_languages": [],
+      "type_tokens": [
+        "RacialTraits",
+        "Half-Orc Racial Trait",
+        "Half-Orc Racial Default",
+        "SpecialQuality"
+      ]
+    },
+    "half_orc/half_orc_languages.json": {
+      "adopted_race_pool_suffix": null,
+      "automatic_trait_grants": [],
+      "category": "Special Ability",
+      "declared_bonuses": {
+        "ability_adjustments": [],
+        "ability_pool_picks": 0,
+        "magnitudes": [],
+        "magnitudes_excluding_flags": [],
+        "only_internal_flags": false,
+        "target_bonuses": [],
+        "var_contributions": []
+      },
+      "declared_size": null,
+      "declared_vision": [],
+      "declared_walk_speed_ft": null,
+      "declares_negated_ability_guard": false,
+      "description": "Half-orcs begin play speaking Common and Orc. Half-orcs with high Intelligence scores can choose from the following: Abyssal, Draconic, Giant, Gnoll, and Goblin.",
+      "exclusion_guard_flags": [],
+      "is_racial_default": true,
+      "key": "Half-Orc ~ Languages",
+      "name": "Languages",
+      "negated_fact_gates": [
+        [
+          "HalfOrc_ReplaceLanguages"
+        ]
+      ],
+      "positive_prefact_flag": null,
+      "race_key": "Half-Orc",
+      "sets_replace_flags": [],
+      "skinwalker_change_shape_kin": null,
+      "source_page": "p.25",
+      "suppressed_by_flag": "HalfOrc_ReplaceLanguages",
+      "template_bonus_languages": [
+        "Abyssal",
+        "Draconic",
+        "Giant",
+        "Gnoll",
+        "Goblin"
+      ],
+      "type_tokens": [
+        "RacialTraits",
+        "Half-Orc Racial Trait",
+        "Half-Orc Racial Default",
+        "SpecialQuality",
+        "Racial Language"
+      ]
+    },
+    "half_orc/half_orc_orc_blood.json": {
+      "adopted_race_pool_suffix": null,
+      "automatic_trait_grants": [],
+      "category": "Special Ability",
+      "declared_bonuses": {
+        "ability_adjustments": [],
+        "ability_pool_picks": 0,
+        "magnitudes": [],
+        "magnitudes_excluding_flags": [],
+        "only_internal_flags": false,
+        "target_bonuses": [],
+        "var_contributions": []
+      },
+      "declared_size": null,
+      "declared_vision": [],
+      "declared_walk_speed_ft": null,
+      "declares_negated_ability_guard": false,
+      "description": "Half-orcs count as both humans and orcs for any effect related to race.",
+      "exclusion_guard_flags": [],
+      "is_racial_default": true,
+      "key": "Half-Orc ~ Orc Blood",
+      "name": "Orc Blood",
+      "negated_fact_gates": [
+        [
+          "HalfOrc_ReplaceOrcBlood"
+        ]
+      ],
+      "positive_prefact_flag": null,
+      "race_key": "Half-Orc",
+      "sets_replace_flags": [],
+      "skinwalker_change_shape_kin": null,
+      "source_page": "p.25",
+      "suppressed_by_flag": "HalfOrc_ReplaceOrcBlood",
+      "template_bonus_languages": [],
+      "type_tokens": [
+        "RacialTraits",
+        "Half-Orc Racial Trait",
+        "Half-Orc Racial Default",
+        "SpecialQuality",
+        "Special Quality"
+      ]
+    },
+    "half_orc/half_orc_orc_ferocity.json": {
+      "adopted_race_pool_suffix": null,
+      "automatic_trait_grants": [],
+      "category": "Special Ability",
+      "declared_bonuses": {
+        "ability_adjustments": [],
+        "ability_pool_picks": 0,
+        "magnitudes": [
+          1
+        ],
+        "magnitudes_excluding_flags": [
+          1
+        ],
+        "only_internal_flags": false,
+        "target_bonuses": [
+          {
+            "keyword": "VAR",
+            "magnitude": 1,
+            "target": "Orc_OrcFerocity_Times"
+          }
+        ],
+        "var_contributions": [
+          {
+            "amount": 1,
+            "name": "Orc_OrcFerocity_Times"
+          }
+        ]
+      },
+      "declared_size": null,
+      "declared_vision": [],
+      "declared_walk_speed_ft": null,
+      "declares_negated_ability_guard": false,
+      "description": "Once per day, when a half-orc is brought below 0 hit points but not killed, he can fight on for one more round as if disabled. At the end of his next turn, unless brought to above 0 hit points, he immediately falls unconscious and begins dying.",
+      "exclusion_guard_flags": [],
+      "is_racial_default": true,
+      "key": "Half-Orc ~ Orc Ferocity",
+      "name": "Orc Ferocity",
+      "negated_fact_gates": [
+        [
+          "HalfOrc_ReplaceOrcFerocity"
+        ]
+      ],
+      "positive_prefact_flag": null,
+      "race_key": "Half-Orc",
+      "sets_replace_flags": [],
+      "skinwalker_change_shape_kin": null,
+      "source_page": "p.25",
+      "suppressed_by_flag": "HalfOrc_ReplaceOrcFerocity",
+      "template_bonus_languages": [],
+      "type_tokens": [
+        "RacialTraits",
+        "Half-Orc Racial Trait",
+        "Half-Orc Racial Default",
+        "SpecialQuality",
+        "Defensive"
+      ]
+    },
+    "half_orc/half_orc_size.json": {
+      "adopted_race_pool_suffix": null,
+      "automatic_trait_grants": [],
+      "category": "Special Ability",
+      "declared_bonuses": {
+        "ability_adjustments": [],
+        "ability_pool_picks": 0,
+        "magnitudes": [],
+        "magnitudes_excluding_flags": [],
+        "only_internal_flags": false,
+        "target_bonuses": [],
+        "var_contributions": []
+      },
+      "declared_size": "Medium",
+      "declared_vision": [],
+      "declared_walk_speed_ft": null,
+      "declares_negated_ability_guard": false,
+      "description": "Half-orcs are Medium creatures and have no bonuses or penalties due to their size.",
+      "exclusion_guard_flags": [],
+      "is_racial_default": true,
+      "key": "Half-Orc ~ Size",
+      "name": "Medium",
+      "negated_fact_gates": [
+        [
+          "HalfOrc_ReplaceSize"
+        ]
+      ],
+      "positive_prefact_flag": null,
+      "race_key": "Half-Orc",
+      "sets_replace_flags": [],
+      "skinwalker_change_shape_kin": null,
+      "source_page": "p.24",
+      "suppressed_by_flag": "HalfOrc_ReplaceSize",
+      "template_bonus_languages": [],
+      "type_tokens": [
+        "RacialTraits",
+        "Half-Orc Racial Trait",
+        "Half-Orc Racial Default",
+        "SpecialQuality",
+        "Racial Size"
+      ]
+    },
+    "half_orc/half_orc_speed.json": {
+      "adopted_race_pool_suffix": null,
+      "automatic_trait_grants": [],
+      "category": "Special Ability",
+      "declared_bonuses": {
+        "ability_adjustments": [],
+        "ability_pool_picks": 0,
+        "magnitudes": [
+          30
+        ],
+        "magnitudes_excluding_flags": [
+          30
+        ],
+        "only_internal_flags": false,
+        "target_bonuses": [
+          {
+            "keyword": "VAR",
+            "magnitude": 30,
+            "target": "MOVEBASE"
+          }
+        ],
+        "var_contributions": [
+          {
+            "amount": 30,
+            "name": "MOVEBASE"
+          }
+        ]
+      },
+      "declared_size": null,
+      "declared_vision": [],
+      "declared_walk_speed_ft": 30,
+      "declares_negated_ability_guard": false,
+      "description": "Half-orcs have a base speed of 30 feet.",
+      "exclusion_guard_flags": [],
+      "is_racial_default": true,
+      "key": "Half-Orc ~ Speed",
+      "name": "Normal Speed",
+      "negated_fact_gates": [
+        [
+          "HalfOrc_ReplaceSpeed"
+        ]
+      ],
+      "positive_prefact_flag": null,
+      "race_key": "Half-Orc",
+      "sets_replace_flags": [],
+      "skinwalker_change_shape_kin": null,
+      "source_page": "p.24",
+      "suppressed_by_flag": "HalfOrc_ReplaceSpeed",
+      "template_bonus_languages": [],
+      "type_tokens": [
+        "RacialTraits",
+        "Half-Orc Racial Trait",
+        "Half-Orc Racial Default",
+        "SpecialQuality",
+        "Racial Speed"
+      ]
+    },
+    "half_orc/half_orc_vision.json": {
+      "adopted_race_pool_suffix": null,
+      "automatic_trait_grants": [],
+      "category": "Special Ability",
+      "declared_bonuses": {
+        "ability_adjustments": [],
+        "ability_pool_picks": 0,
+        "magnitudes": [
+          1
+        ],
+        "magnitudes_excluding_flags": [],
+        "only_internal_flags": true,
+        "target_bonuses": [
+          {
+            "keyword": "VAR",
+            "magnitude": 1,
+            "target": "HasRacialVision"
+          }
+        ],
+        "var_contributions": [
+          {
+            "amount": 1,
+            "name": "HasRacialVision"
+          }
+        ]
+      },
+      "declared_size": null,
+      "declared_vision": [
+        "Darkvision (60)"
+      ],
+      "declared_walk_speed_ft": null,
+      "declares_negated_ability_guard": false,
+      "description": "Half-orcs can see in the dark up to 60 feet.",
+      "exclusion_guard_flags": [],
+      "is_racial_default": true,
+      "key": "Half-Orc ~ Vision",
+      "name": "Darkvision",
+      "negated_fact_gates": [
+        [
+          "HalfOrc_ReplaceVision"
+        ]
+      ],
+      "positive_prefact_flag": null,
+      "race_key": "Half-Orc",
+      "sets_replace_flags": [],
+      "skinwalker_change_shape_kin": null,
+      "source_page": "p.25",
+      "suppressed_by_flag": "HalfOrc_ReplaceVision",
+      "template_bonus_languages": [],
+      "type_tokens": [
+        "RacialTraits",
+        "Half-Orc Racial Trait",
+        "Half-Orc Racial Default",
+        "SpecialQuality",
+        "Racial Vision"
+      ]
+    },
+    "half_orc/half_orc_weapon_familiarity.json": {
+      "adopted_race_pool_suffix": null,
+      "automatic_trait_grants": [],
+      "category": "Special Ability",
+      "declared_bonuses": {
+        "ability_adjustments": [],
+        "ability_pool_picks": 0,
+        "magnitudes": [],
+        "magnitudes_excluding_flags": [],
+        "only_internal_flags": false,
+        "target_bonuses": [],
+        "var_contributions": []
+      },
+      "declared_size": null,
+      "declared_vision": [],
+      "declared_walk_speed_ft": null,
+      "declares_negated_ability_guard": false,
+      "description": "Half-orcs are proficient with greataxes and falchions and treat any weapon with the word \"orc\" in its name as a martial weapon.",
+      "exclusion_guard_flags": [],
+      "is_racial_default": true,
+      "key": "Half-Orc ~ Weapon Familiarity",
+      "name": "Weapon Familiarity",
+      "negated_fact_gates": [
+        [
+          "HalfOrc_ReplaceWeaponFamiliarity"
+        ]
+      ],
+      "positive_prefact_flag": null,
+      "race_key": "Half-Orc",
+      "sets_replace_flags": [],
+      "skinwalker_change_shape_kin": null,
+      "source_page": "p.25",
+      "suppressed_by_flag": "HalfOrc_ReplaceWeaponFamiliarity",
+      "template_bonus_languages": [],
+      "type_tokens": [
+        "RacialTraits",
+        "Half-Orc Racial Trait",
+        "Half-Orc Racial Default",
+        "SpecialQuality",
+        "Special Quality",
+        "Weapon Familiarity"
+      ]
+    },
+    "halfling/adopted_race_halfling.json": {
+      "adopted_race_pool_suffix": "Halfling Race Trait",
+      "automatic_trait_grants": [],
+      "category": "Special Ability",
+      "declared_bonuses": {
+        "ability_adjustments": [],
+        "ability_pool_picks": 0,
+        "magnitudes": [],
+        "magnitudes_excluding_flags": [],
+        "only_internal_flags": false,
+        "target_bonuses": [],
+        "var_contributions": []
+      },
+      "declared_size": null,
+      "declared_vision": [],
+      "declared_walk_speed_ft": null,
+      "declares_negated_ability_guard": false,
+      "description": null,
+      "exclusion_guard_flags": [],
+      "is_racial_default": false,
+      "key": "Adopted Race ~ Halfling",
+      "name": "Halfling",
+      "negated_fact_gates": [],
+      "positive_prefact_flag": null,
+      "race_key": "Halfling",
+      "sets_replace_flags": [],
+      "skinwalker_change_shape_kin": null,
+      "source_page": null,
+      "suppressed_by_flag": null,
+      "template_bonus_languages": [],
+      "type_tokens": [
+        "AdoptiveRace"
+      ]
+    },
+    "halfling/halfling_ability_scores.json": {
+      "adopted_race_pool_suffix": null,
+      "automatic_trait_grants": [],
+      "category": "Special Ability",
+      "declared_bonuses": {
+        "ability_adjustments": [
+          {
+            "codes": "DEX,CHA",
+            "magnitude": "2"
+          },
+          {
+            "codes": "STR",
+            "magnitude": "-2"
+          }
+        ],
+        "ability_pool_picks": 0,
+        "magnitudes": [
+          2,
+          -2
+        ],
+        "magnitudes_excluding_flags": [
+          2,
+          -2
+        ],
+        "only_internal_flags": false,
+        "target_bonuses": [
+          {
+            "keyword": "STAT",
+            "magnitude": 2,
+            "target": "DEX,CHA"
+          },
+          {
+            "keyword": "STAT",
+            "magnitude": -2,
+            "target": "STR"
+          }
+        ],
+        "var_contributions": []
+      },
+      "declared_size": null,
+      "declared_vision": [],
+      "declared_walk_speed_ft": null,
+      "declares_negated_ability_guard": false,
+      "description": "Halflings are nimble and strong-willed, but their small stature makes them weaker than other races.",
+      "exclusion_guard_flags": [],
+      "is_racial_default": true,
+      "key": "Halfling ~ Ability Scores",
+      "name": "+2 Dexterity, +2 Charisma, -2 Strength",
+      "negated_fact_gates": [
+        [
+          "Halfling_ReplaceAbilityScores"
+        ]
+      ],
+      "positive_prefact_flag": null,
+      "race_key": "Halfling",
+      "sets_replace_flags": [],
+      "skinwalker_change_shape_kin": null,
+      "source_page": null,
+      "suppressed_by_flag": "Halfling_ReplaceAbilityScores",
+      "template_bonus_languages": [],
+      "type_tokens": [
+        "RacialTraits",
+        "Halfling Racial Trait",
+        "Halfling Racial Default",
+        "SpecialQuality",
+        "Racial Ability Scores"
+      ]
+    },
+    "halfling/halfling_fearless.json": {
+      "adopted_race_pool_suffix": null,
+      "automatic_trait_grants": [],
+      "category": "Special Ability",
+      "declared_bonuses": {
+        "ability_adjustments": [],
+        "ability_pool_picks": 0,
+        "magnitudes": [
+          2
+        ],
+        "magnitudes_excluding_flags": [
+          2
+        ],
+        "only_internal_flags": false,
+        "target_bonuses": [
+          {
+            "keyword": "VAR",
+            "magnitude": 2,
+            "target": "SaveBonus_vs_Fear"
+          }
+        ],
+        "var_contributions": [
+          {
+            "amount": 2,
+            "name": "SaveBonus_vs_Fear"
+          }
+        ]
+      },
+      "declared_size": null,
+      "declared_vision": [],
+      "declared_walk_speed_ft": null,
+      "declares_negated_ability_guard": false,
+      "description": "Halflings receive a +2 racial bonus on all saving throws against fear. This bonus stacks with the bonus granted by halfling luck.",
+      "exclusion_guard_flags": [],
+      "is_racial_default": true,
+      "key": "Halfling ~ Fearless",
+      "name": "Fearless",
+      "negated_fact_gates": [
+        [
+          "Halfling_ReplaceFearless"
+        ]
+      ],
+      "positive_prefact_flag": null,
+      "race_key": "Halfling",
+      "sets_replace_flags": [],
+      "skinwalker_change_shape_kin": null,
+      "source_page": null,
+      "suppressed_by_flag": "Halfling_ReplaceFearless",
+      "template_bonus_languages": [],
+      "type_tokens": [
+        "RacialTraits",
+        "Halfling Racial Trait",
+        "Halfling Racial Default",
+        "SpecialQuality"
+      ]
+    },
+    "halfling/halfling_halfling_luck.json": {
+      "adopted_race_pool_suffix": null,
+      "automatic_trait_grants": [],
+      "category": "Special Ability",
+      "declared_bonuses": {
+        "ability_adjustments": [],
+        "ability_pool_picks": 0,
+        "magnitudes": [
+          1
+        ],
+        "magnitudes_excluding_flags": [
+          1
+        ],
+        "only_internal_flags": false,
+        "target_bonuses": [
+          {
+            "keyword": "VAR",
+            "magnitude": 1,
+            "target": "Halfling_HalflingLuck_SaveBonus"
+          }
+        ],
+        "var_contributions": [
+          {
+            "amount": 1,
+            "name": "Halfling_HalflingLuck_SaveBonus"
+          }
+        ]
+      },
+      "declared_size": null,
+      "declared_vision": [],
+      "declared_walk_speed_ft": null,
+      "declares_negated_ability_guard": false,
+      "description": "Halflings receive a +1 racial bonus on all saving throws.",
+      "exclusion_guard_flags": [],
+      "is_racial_default": true,
+      "key": "Halfling ~ Halfling Luck",
+      "name": "Halfling Luck",
+      "negated_fact_gates": [
+        [
+          "Halfling_ReplaceHalflingLuck"
+        ]
+      ],
+      "positive_prefact_flag": null,
+      "race_key": "Halfling",
+      "sets_replace_flags": [],
+      "skinwalker_change_shape_kin": null,
+      "source_page": null,
+      "suppressed_by_flag": "Halfling_ReplaceHalflingLuck",
+      "template_bonus_languages": [],
+      "type_tokens": [
+        "RacialTraits",
+        "Halfling Racial Trait",
+        "Halfling Racial Default",
+        "SpecialQuality"
+      ]
+    },
+    "halfling/halfling_keen_senses.json": {
+      "adopted_race_pool_suffix": null,
+      "automatic_trait_grants": [],
+      "category": "Special Ability",
+      "declared_bonuses": {
+        "ability_adjustments": [],
+        "ability_pool_picks": 0,
+        "magnitudes": [
+          2
+        ],
+        "magnitudes_excluding_flags": [
+          2
+        ],
+        "only_internal_flags": false,
+        "target_bonuses": [
+          {
+            "keyword": "SKILL",
+            "magnitude": null,
+            "target": "Perception"
+          },
+          {
+            "keyword": "VAR",
+            "magnitude": 2,
+            "target": "KeenSensesBonus"
+          }
+        ],
+        "var_contributions": [
+          {
+            "amount": 2,
+            "name": "KeenSensesBonus"
+          }
+        ]
+      },
+      "declared_size": null,
+      "declared_vision": [],
+      "declared_walk_speed_ft": null,
+      "declares_negated_ability_guard": false,
+      "description": "Halflings receive a +2 racial bonus on Perception skill checks.",
+      "exclusion_guard_flags": [],
+      "is_racial_default": true,
+      "key": "Halfling ~ Keen Senses",
+      "name": "Keen Senses",
+      "negated_fact_gates": [
+        [
+          "Halfling_ReplaceKeenSenses"
+        ]
+      ],
+      "positive_prefact_flag": null,
+      "race_key": "Halfling",
+      "sets_replace_flags": [],
+      "skinwalker_change_shape_kin": null,
+      "source_page": null,
+      "suppressed_by_flag": "Halfling_ReplaceKeenSenses",
+      "template_bonus_languages": [],
+      "type_tokens": [
+        "RacialTraits",
+        "Halfling Racial Trait",
+        "Halfling Racial Default",
+        "SpecialQuality"
+      ]
+    },
+    "halfling/halfling_languages.json": {
+      "adopted_race_pool_suffix": null,
+      "automatic_trait_grants": [],
+      "category": "Special Ability",
+      "declared_bonuses": {
+        "ability_adjustments": [],
+        "ability_pool_picks": 0,
+        "magnitudes": [],
+        "magnitudes_excluding_flags": [],
+        "only_internal_flags": false,
+        "target_bonuses": [],
+        "var_contributions": []
+      },
+      "declared_size": null,
+      "declared_vision": [],
+      "declared_walk_speed_ft": null,
+      "declares_negated_ability_guard": false,
+      "description": "Halflings begin play speaking Common and Halfling. Halflings with high Intelligence scores can choose from the following: Dwarven, Elven, Gnome, and Goblin.",
+      "exclusion_guard_flags": [],
+      "is_racial_default": true,
+      "key": "Halfling ~ Languages",
+      "name": "Languages",
+      "negated_fact_gates": [
+        [
+          "Halfling_ReplaceLanguages"
+        ]
+      ],
+      "positive_prefact_flag": null,
+      "race_key": "Halfling",
+      "sets_replace_flags": [],
+      "skinwalker_change_shape_kin": null,
+      "source_page": null,
+      "suppressed_by_flag": "Halfling_ReplaceLanguages",
+      "template_bonus_languages": [
+        "Dwarven",
+        "Elven",
+        "Gnome",
+        "Goblin"
+      ],
+      "type_tokens": [
+        "RacialTraits",
+        "Halfling Racial Trait",
+        "Halfling Racial Default",
+        "SpecialQuality",
+        "Racial Language"
+      ]
+    },
+    "halfling/halfling_size.json": {
+      "adopted_race_pool_suffix": null,
+      "automatic_trait_grants": [],
+      "category": "Special Ability",
+      "declared_bonuses": {
+        "ability_adjustments": [],
+        "ability_pool_picks": 0,
+        "magnitudes": [],
+        "magnitudes_excluding_flags": [],
+        "only_internal_flags": false,
+        "target_bonuses": [],
+        "var_contributions": []
+      },
+      "declared_size": "Small",
+      "declared_vision": [],
+      "declared_walk_speed_ft": null,
+      "declares_negated_ability_guard": false,
+      "description": "Halflings are Small creatures and gain a +1 size bonus to their AC, a +1 size bonus on attack rolls, a -1 penalty to their Combat Maneuver Bonus and Combat Maneuver Defense, and a +4 size bonus on Stealth checks.",
+      "exclusion_guard_flags": [],
+      "is_racial_default": true,
+      "key": "Halfling ~ Size",
+      "name": "Small",
+      "negated_fact_gates": [
+        [
+          "Halfling_ReplaceSize"
+        ]
+      ],
+      "positive_prefact_flag": null,
+      "race_key": "Halfling",
+      "sets_replace_flags": [],
+      "skinwalker_change_shape_kin": null,
+      "source_page": null,
+      "suppressed_by_flag": "Halfling_ReplaceSize",
+      "template_bonus_languages": [],
+      "type_tokens": [
+        "RacialTraits",
+        "Halfling Racial Trait",
+        "Halfling Racial Default",
+        "SpecialQuality",
+        "Racial Size"
+      ]
+    },
+    "halfling/halfling_speed.json": {
+      "adopted_race_pool_suffix": null,
+      "automatic_trait_grants": [],
+      "category": "Special Ability",
+      "declared_bonuses": {
+        "ability_adjustments": [],
+        "ability_pool_picks": 0,
+        "magnitudes": [
+          20
+        ],
+        "magnitudes_excluding_flags": [
+          20
+        ],
+        "only_internal_flags": false,
+        "target_bonuses": [
+          {
+            "keyword": "VAR",
+            "magnitude": 20,
+            "target": "MOVEBASE"
+          }
+        ],
+        "var_contributions": [
+          {
+            "amount": 20,
+            "name": "MOVEBASE"
+          }
+        ]
+      },
+      "declared_size": null,
+      "declared_vision": [],
+      "declared_walk_speed_ft": 20,
+      "declares_negated_ability_guard": false,
+      "description": "Halflings have a base speed of 20 feet.",
+      "exclusion_guard_flags": [],
+      "is_racial_default": true,
+      "key": "Halfling ~ Speed",
+      "name": "Slow Speed",
+      "negated_fact_gates": [
+        [
+          "Halfling_ReplaceSpeed"
+        ]
+      ],
+      "positive_prefact_flag": null,
+      "race_key": "Halfling",
+      "sets_replace_flags": [],
+      "skinwalker_change_shape_kin": null,
+      "source_page": null,
+      "suppressed_by_flag": "Halfling_ReplaceSpeed",
+      "template_bonus_languages": [],
+      "type_tokens": [
+        "RacialTraits",
+        "Halfling Racial Trait",
+        "Halfling Racial Default",
+        "SpecialQuality",
+        "Racial Speed"
+      ]
+    },
+    "halfling/halfling_sure_footed.json": {
+      "adopted_race_pool_suffix": null,
+      "automatic_trait_grants": [],
+      "category": "Special Ability",
+      "declared_bonuses": {
+        "ability_adjustments": [],
+        "ability_pool_picks": 0,
+        "magnitudes": [
+          2
+        ],
+        "magnitudes_excluding_flags": [
+          2
+        ],
+        "only_internal_flags": false,
+        "target_bonuses": [
+          {
+            "keyword": "SKILL",
+            "magnitude": 2,
+            "target": "Acrobatics,Climb"
+          }
+        ],
+        "var_contributions": []
+      },
+      "declared_size": null,
+      "declared_vision": [],
+      "declared_walk_speed_ft": null,
+      "declares_negated_ability_guard": false,
+      "description": "Halflings receive a +2 racial bonus on Acrobatics and Climb skill checks.",
+      "exclusion_guard_flags": [],
+      "is_racial_default": true,
+      "key": "Halfling ~ Sure-Footed",
+      "name": "Sure-Footed",
+      "negated_fact_gates": [
+        [
+          "Halfling_ReplaceSureFooted"
+        ]
+      ],
+      "positive_prefact_flag": null,
+      "race_key": "Halfling",
+      "sets_replace_flags": [],
+      "skinwalker_change_shape_kin": null,
+      "source_page": null,
+      "suppressed_by_flag": "Halfling_ReplaceSureFooted",
+      "template_bonus_languages": [],
+      "type_tokens": [
+        "RacialTraits",
+        "Halfling Racial Trait",
+        "Halfling Racial Default",
+        "SpecialQuality"
+      ]
+    },
+    "halfling/halfling_weapon_familiarity.json": {
+      "adopted_race_pool_suffix": null,
+      "automatic_trait_grants": [],
+      "category": "Special Ability",
+      "declared_bonuses": {
+        "ability_adjustments": [],
+        "ability_pool_picks": 0,
+        "magnitudes": [],
+        "magnitudes_excluding_flags": [],
+        "only_internal_flags": false,
+        "target_bonuses": [],
+        "var_contributions": []
+      },
+      "declared_size": null,
+      "declared_vision": [],
+      "declared_walk_speed_ft": null,
+      "declares_negated_ability_guard": false,
+      "description": "Halflings are proficient with slings and treat any weapon with the word \"halfling\" in its name as a martial weapon.",
+      "exclusion_guard_flags": [],
+      "is_racial_default": true,
+      "key": "Halfling ~ Weapon Familiarity",
+      "name": "Weapon Familiarity",
+      "negated_fact_gates": [
+        [
+          "Halfling_ReplaceWeaponFamiliarity"
+        ]
+      ],
+      "positive_prefact_flag": null,
+      "race_key": "Halfling",
+      "sets_replace_flags": [],
+      "skinwalker_change_shape_kin": null,
+      "source_page": null,
+      "suppressed_by_flag": "Halfling_ReplaceWeaponFamiliarity",
+      "template_bonus_languages": [],
+      "type_tokens": [
+        "RacialTraits",
+        "Halfling Racial Trait",
+        "Halfling Racial Default",
+        "SpecialQuality",
+        "Weapon Familiarity"
+      ]
+    },
+    "human/adopted_race_human.json": {
+      "adopted_race_pool_suffix": "Human Race Trait",
+      "automatic_trait_grants": [],
+      "category": "Special Ability",
+      "declared_bonuses": {
+        "ability_adjustments": [],
+        "ability_pool_picks": 0,
+        "magnitudes": [],
+        "magnitudes_excluding_flags": [],
+        "only_internal_flags": false,
+        "target_bonuses": [],
+        "var_contributions": []
+      },
+      "declared_size": null,
+      "declared_vision": [],
+      "declared_walk_speed_ft": null,
+      "declares_negated_ability_guard": false,
+      "description": null,
+      "exclusion_guard_flags": [],
+      "is_racial_default": false,
+      "key": "Adopted Race ~ Human",
+      "name": "Human",
+      "negated_fact_gates": [],
+      "positive_prefact_flag": null,
+      "race_key": "Human",
+      "sets_replace_flags": [],
+      "skinwalker_change_shape_kin": null,
+      "source_page": null,
+      "suppressed_by_flag": null,
+      "template_bonus_languages": [],
+      "type_tokens": [
+        "AdoptiveRace"
+      ]
+    },
+    "human/human_ability_scores.json": {
+      "adopted_race_pool_suffix": null,
+      "automatic_trait_grants": [],
+      "category": "Special Ability",
+      "declared_bonuses": {
+        "ability_adjustments": [],
+        "ability_pool_picks": 1,
+        "magnitudes": [
+          1
+        ],
+        "magnitudes_excluding_flags": [
+          1
+        ],
+        "only_internal_flags": false,
+        "target_bonuses": [
+          {
+            "keyword": "ABILITYPOOL",
+            "magnitude": 1,
+            "target": "Ability Bonus"
+          }
+        ],
+        "var_contributions": []
+      },
+      "declared_size": null,
+      "declared_vision": [],
+      "declared_walk_speed_ft": null,
+      "declares_negated_ability_guard": false,
+      "description": "Human characters get a +2 bonus to one ability score of their choice at creation to represent their varied nature.",
+      "exclusion_guard_flags": [],
+      "is_racial_default": true,
+      "key": "Human ~ Ability Scores",
+      "name": "+2 to One Ability Score",
+      "negated_fact_gates": [
+        [
+          "Human_ReplaceAbilityScores"
+        ]
+      ],
+      "positive_prefact_flag": null,
+      "race_key": "Human",
+      "sets_replace_flags": [],
+      "skinwalker_change_shape_kin": null,
+      "source_page": null,
+      "suppressed_by_flag": "Human_ReplaceAbilityScores",
+      "template_bonus_languages": [],
+      "type_tokens": [
+        "RacialTraits",
+        "Human Racial Trait",
+        "Human Racial Default",
+        "SpecialQuality",
+        "Racial Ability Scores"
+      ]
+    },
+    "human/human_bonus_feat.json": {
+      "adopted_race_pool_suffix": null,
+      "automatic_trait_grants": [],
+      "category": "Special Ability",
+      "declared_bonuses": {
+        "ability_adjustments": [],
+        "ability_pool_picks": 0,
+        "magnitudes": [
+          1
+        ],
+        "magnitudes_excluding_flags": [
+          1
+        ],
+        "only_internal_flags": false,
+        "target_bonuses": [
+          {
+            "keyword": "ABILITYPOOL",
+            "magnitude": 1,
+            "target": "FEAT"
+          }
+        ],
+        "var_contributions": []
+      },
+      "declared_size": null,
+      "declared_vision": [],
+      "declared_walk_speed_ft": null,
+      "declares_negated_ability_guard": false,
+      "description": "Humans select one extra feat at 1st level.",
+      "exclusion_guard_flags": [],
+      "is_racial_default": true,
+      "key": "Human ~ Bonus Feat",
+      "name": "Bonus Feat",
+      "negated_fact_gates": [
+        [
+          "Human_ReplaceBonusFeat"
+        ]
+      ],
+      "positive_prefact_flag": null,
+      "race_key": "Human",
+      "sets_replace_flags": [],
+      "skinwalker_change_shape_kin": null,
+      "source_page": null,
+      "suppressed_by_flag": "Human_ReplaceBonusFeat",
+      "template_bonus_languages": [],
+      "type_tokens": [
+        "RacialTraits",
+        "Human Racial Trait",
+        "Human Racial Default",
+        "SpecialQuality"
+      ]
+    },
+    "human/human_ethnicity_none.json": {
+      "adopted_race_pool_suffix": null,
+      "automatic_trait_grants": [],
+      "category": "Background",
+      "declared_bonuses": {
+        "ability_adjustments": [],
+        "ability_pool_picks": 0,
+        "magnitudes": [],
+        "magnitudes_excluding_flags": [],
+        "only_internal_flags": false,
+        "target_bonuses": [],
+        "var_contributions": []
+      },
+      "declared_size": null,
+      "declared_vision": [],
+      "declared_walk_speed_ft": null,
+      "declares_negated_ability_guard": false,
+      "description": null,
+      "exclusion_guard_flags": [],
+      "is_racial_default": false,
+      "key": "Human Ethnicity ~ None",
+      "name": "None",
+      "negated_fact_gates": [],
+      "positive_prefact_flag": null,
+      "race_key": "Human",
+      "sets_replace_flags": [],
+      "skinwalker_change_shape_kin": null,
+      "source_page": null,
+      "suppressed_by_flag": null,
+      "template_bonus_languages": [],
+      "type_tokens": [
+        "HumanEthnicity"
+      ]
+    },
+    "human/human_ethnicity_unknown.json": {
+      "adopted_race_pool_suffix": null,
+      "automatic_trait_grants": [],
+      "category": "Background",
+      "declared_bonuses": {
+        "ability_adjustments": [],
+        "ability_pool_picks": 0,
+        "magnitudes": [],
+        "magnitudes_excluding_flags": [],
+        "only_internal_flags": false,
+        "target_bonuses": [],
+        "var_contributions": []
+      },
+      "declared_size": null,
+      "declared_vision": [],
+      "declared_walk_speed_ft": null,
+      "declares_negated_ability_guard": false,
+      "description": null,
+      "exclusion_guard_flags": [],
+      "is_racial_default": false,
+      "key": "Human Ethnicity ~ Unknown",
+      "name": "Unknown",
+      "negated_fact_gates": [],
+      "positive_prefact_flag": null,
+      "race_key": "Human",
+      "sets_replace_flags": [],
+      "skinwalker_change_shape_kin": null,
+      "source_page": null,
+      "suppressed_by_flag": null,
+      "template_bonus_languages": [],
+      "type_tokens": [
+        "HumanEthnicity"
+      ]
+    },
+    "human/human_languages.json": {
+      "adopted_race_pool_suffix": null,
+      "automatic_trait_grants": [],
+      "category": "Special Ability",
+      "declared_bonuses": {
+        "ability_adjustments": [],
+        "ability_pool_picks": 0,
+        "magnitudes": [],
+        "magnitudes_excluding_flags": [],
+        "only_internal_flags": false,
+        "target_bonuses": [],
+        "var_contributions": []
+      },
+      "declared_size": null,
+      "declared_vision": [],
+      "declared_walk_speed_ft": null,
+      "declares_negated_ability_guard": false,
+      "description": "Humans begin play speaking Common. Humans with high Intelligence scores can choose any languages they want (except secret languages, such as Druidic).",
+      "exclusion_guard_flags": [],
+      "is_racial_default": true,
+      "key": "Human ~ Languages",
+      "name": "Languages",
+      "negated_fact_gates": [
+        [
+          "Human_ReplaceLanguages"
+        ]
+      ],
+      "positive_prefact_flag": null,
+      "race_key": "Human",
+      "sets_replace_flags": [],
+      "skinwalker_change_shape_kin": null,
+      "source_page": null,
+      "suppressed_by_flag": "Human_ReplaceLanguages",
+      "template_bonus_languages": [
+        "Any Spoken"
+      ],
+      "type_tokens": [
+        "RacialTraits",
+        "Human Racial Trait",
+        "Human Racial Default",
+        "SpecialQuality",
+        "Racial Language"
+      ]
+    },
+    "human/human_size.json": {
+      "adopted_race_pool_suffix": null,
+      "automatic_trait_grants": [],
+      "category": "Special Ability",
+      "declared_bonuses": {
+        "ability_adjustments": [],
+        "ability_pool_picks": 0,
+        "magnitudes": [],
+        "magnitudes_excluding_flags": [],
+        "only_internal_flags": false,
+        "target_bonuses": [],
+        "var_contributions": []
+      },
+      "declared_size": null,
+      "declared_vision": [],
+      "declared_walk_speed_ft": null,
+      "declares_negated_ability_guard": false,
+      "description": "Humans are Medium creatures and have no bonuses or penalties due to their size.",
+      "exclusion_guard_flags": [],
+      "is_racial_default": true,
+      "key": "Human ~ Size",
+      "name": "Medium",
+      "negated_fact_gates": [
+        [
+          "Human_ReplaceSize"
+        ]
+      ],
+      "positive_prefact_flag": null,
+      "race_key": "Human",
+      "sets_replace_flags": [],
+      "skinwalker_change_shape_kin": null,
+      "source_page": null,
+      "suppressed_by_flag": "Human_ReplaceSize",
+      "template_bonus_languages": [],
+      "type_tokens": [
+        "RacialTraits",
+        "Human Racial Trait",
+        "Human Racial Default",
+        "SpecialQuality",
+        "Racial Size"
+      ]
+    },
+    "human/human_skilled.json": {
+      "adopted_race_pool_suffix": null,
+      "automatic_trait_grants": [],
+      "category": "Special Ability",
+      "declared_bonuses": {
+        "ability_adjustments": [],
+        "ability_pool_picks": 0,
+        "magnitudes": [
+          1
+        ],
+        "magnitudes_excluding_flags": [
+          1
+        ],
+        "only_internal_flags": false,
+        "target_bonuses": [
+          {
+            "keyword": "SKILLPOINTS",
+            "magnitude": 1,
+            "target": "NUMBER"
+          }
+        ],
+        "var_contributions": []
+      },
+      "declared_size": null,
+      "declared_vision": [],
+      "declared_walk_speed_ft": null,
+      "declares_negated_ability_guard": false,
+      "description": "Humans gain an additional skill rank at 1st level and one additional rank whenever they gain a level.",
+      "exclusion_guard_flags": [],
+      "is_racial_default": true,
+      "key": "Human ~ Skilled",
+      "name": "Skilled",
+      "negated_fact_gates": [
+        [
+          "Human_ReplaceSkilled"
+        ]
+      ],
+      "positive_prefact_flag": null,
+      "race_key": "Human",
+      "sets_replace_flags": [],
+      "skinwalker_change_shape_kin": null,
+      "source_page": null,
+      "suppressed_by_flag": "Human_ReplaceSkilled",
+      "template_bonus_languages": [],
+      "type_tokens": [
+        "RacialTraits",
+        "Human Racial Trait",
+        "Human Racial Default",
+        "SpecialQuality"
+      ]
+    },
+    "human/human_speed.json": {
+      "adopted_race_pool_suffix": null,
+      "automatic_trait_grants": [],
+      "category": "Special Ability",
+      "declared_bonuses": {
+        "ability_adjustments": [],
+        "ability_pool_picks": 0,
+        "magnitudes": [
+          30
+        ],
+        "magnitudes_excluding_flags": [
+          30
+        ],
+        "only_internal_flags": false,
+        "target_bonuses": [
+          {
+            "keyword": "VAR",
+            "magnitude": 30,
+            "target": "MOVEBASE"
+          }
+        ],
+        "var_contributions": [
+          {
+            "amount": 30,
+            "name": "MOVEBASE"
+          }
+        ]
+      },
+      "declared_size": null,
+      "declared_vision": [],
+      "declared_walk_speed_ft": 30,
+      "declares_negated_ability_guard": false,
+      "description": "Humans have a base speed of 30 feet.",
+      "exclusion_guard_flags": [],
+      "is_racial_default": true,
+      "key": "Human ~ Speed",
+      "name": "Normal Speed",
+      "negated_fact_gates": [
+        [
+          "Human_ReplaceSpeed"
+        ]
+      ],
+      "positive_prefact_flag": null,
+      "race_key": "Human",
+      "sets_replace_flags": [],
+      "skinwalker_change_shape_kin": null,
+      "source_page": null,
+      "suppressed_by_flag": "Human_ReplaceSpeed",
+      "template_bonus_languages": [],
+      "type_tokens": [
+        "RacialTraits",
+        "Human Racial Trait",
+        "Human Racial Default",
+        "SpecialQuality",
+        "Racial Speed"
+      ]
+    }
+  }
+}

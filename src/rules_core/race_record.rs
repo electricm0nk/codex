@@ -43,7 +43,7 @@ use crate::rules_core::size::SizeCategory;
 ///
 /// Every field is a transcription of what the ingested row states. `None` /
 /// empty means the row states nothing, never a default this module chose.
-#[derive(Debug, Clone, PartialEq, Eq)]
+#[derive(Debug, Clone, PartialEq, Eq, serde::Serialize, serde::Deserialize)]
 pub struct CorpusRaceRecord {
     /// The race's PCGen key (e.g. `"Dwarf"`).
     pub key: String,
@@ -73,7 +73,7 @@ pub struct CorpusRaceRecord {
 /// settled result of a reading `race_resolver` used to perform at run time, one
 /// field per named converter-side function; each field's doc comment names the
 /// function that fills it, so the provenance of every value is one grep away.
-#[derive(Debug, Clone, PartialEq, Eq)]
+#[derive(Debug, Clone, PartialEq, Eq, serde::Serialize, serde::Deserialize)]
 pub struct CorpusRaceTraitRecord {
     /// `KEY:Dwarf ~ Greed` → `"Dwarf ~ Greed"`.
     pub key: String,

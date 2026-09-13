@@ -1,0 +1,452 @@
+{
+  "kind": "race_trait",
+  "records": {
+    "rougarou/adopted_race_rougarou.json": {
+      "adopted_race_pool_suffix": "Rougarou Race Trait",
+      "automatic_trait_grants": [],
+      "category": "Special Ability",
+      "declared_bonuses": {
+        "ability_adjustments": [],
+        "ability_pool_picks": 0,
+        "magnitudes": [],
+        "magnitudes_excluding_flags": [],
+        "only_internal_flags": false,
+        "target_bonuses": [],
+        "var_contributions": []
+      },
+      "declared_size": null,
+      "declared_vision": [],
+      "declared_walk_speed_ft": null,
+      "declares_negated_ability_guard": false,
+      "description": null,
+      "exclusion_guard_flags": [],
+      "is_racial_default": false,
+      "key": "Adopted Race ~ Rougarou",
+      "name": "Rougarou",
+      "negated_fact_gates": [],
+      "positive_prefact_flag": null,
+      "race_key": "Rougarou",
+      "sets_replace_flags": [],
+      "skinwalker_change_shape_kin": null,
+      "source_page": null,
+      "suppressed_by_flag": null,
+      "template_bonus_languages": [],
+      "type_tokens": [
+        "AdoptiveRace"
+      ]
+    },
+    "rougarou/rougarou_ability_scores.json": {
+      "adopted_race_pool_suffix": null,
+      "automatic_trait_grants": [],
+      "category": "Special Ability",
+      "declared_bonuses": {
+        "ability_adjustments": [
+          {
+            "codes": "STR,WIS",
+            "magnitude": "2"
+          },
+          {
+            "codes": "INT",
+            "magnitude": "-2"
+          }
+        ],
+        "ability_pool_picks": 0,
+        "magnitudes": [
+          2,
+          -2
+        ],
+        "magnitudes_excluding_flags": [
+          2,
+          -2
+        ],
+        "only_internal_flags": false,
+        "target_bonuses": [
+          {
+            "keyword": "STAT",
+            "magnitude": 2,
+            "target": "STR,WIS"
+          },
+          {
+            "keyword": "STAT",
+            "magnitude": -2,
+            "target": "INT"
+          }
+        ],
+        "var_contributions": []
+      },
+      "declared_size": null,
+      "declared_vision": [],
+      "declared_walk_speed_ft": null,
+      "declares_negated_ability_guard": false,
+      "description": "Rougarous are strong and alert, but simplistic.",
+      "exclusion_guard_flags": [],
+      "is_racial_default": true,
+      "key": "Rougarou ~ Ability Scores",
+      "name": "+2 Strength, +2 Wisdom, -2 Intelligence",
+      "negated_fact_gates": [
+        [
+          "Rougarou_ReplaceAbilityScores"
+        ]
+      ],
+      "positive_prefact_flag": null,
+      "race_key": "Rougarou",
+      "sets_replace_flags": [],
+      "skinwalker_change_shape_kin": null,
+      "source_page": null,
+      "suppressed_by_flag": "Rougarou_ReplaceAbilityScores",
+      "template_bonus_languages": [],
+      "type_tokens": [
+        "RacialTraits",
+        "Rougarou Racial Trait",
+        "Rougarou Racial Default",
+        "SpecialQuality",
+        "Racial Ability Scores"
+      ]
+    },
+    "rougarou/rougarou_change_shape.json": {
+      "adopted_race_pool_suffix": null,
+      "automatic_trait_grants": [],
+      "category": "Special Ability",
+      "declared_bonuses": {
+        "ability_adjustments": [],
+        "ability_pool_picks": 0,
+        "magnitudes": [],
+        "magnitudes_excluding_flags": [],
+        "only_internal_flags": false,
+        "target_bonuses": [],
+        "var_contributions": []
+      },
+      "declared_size": null,
+      "declared_vision": [],
+      "declared_walk_speed_ft": null,
+      "declares_negated_ability_guard": false,
+      "description": "A rougarou can change shape once per day into a wolf as a standard action, as beast shape I. A rougarou can revert to its true form as a swift action.",
+      "exclusion_guard_flags": [],
+      "is_racial_default": true,
+      "key": "Rougarou ~ Change Shape",
+      "name": "Change Shape",
+      "negated_fact_gates": [
+        [
+          "Rougarou_ReplaceChangeShape"
+        ]
+      ],
+      "positive_prefact_flag": null,
+      "race_key": "Rougarou",
+      "sets_replace_flags": [],
+      "skinwalker_change_shape_kin": null,
+      "source_page": null,
+      "suppressed_by_flag": "Rougarou_ReplaceChangeShape",
+      "template_bonus_languages": [],
+      "type_tokens": [
+        "RacialTraits",
+        "Rougarou Racial Trait",
+        "Rougarou Racial Default",
+        "SpecialQuality",
+        "Special Quality",
+        "Supernatural"
+      ]
+    },
+    "rougarou/rougarou_languages.json": {
+      "adopted_race_pool_suffix": null,
+      "automatic_trait_grants": [],
+      "category": "Special Ability",
+      "declared_bonuses": {
+        "ability_adjustments": [],
+        "ability_pool_picks": 0,
+        "magnitudes": [],
+        "magnitudes_excluding_flags": [],
+        "only_internal_flags": false,
+        "target_bonuses": [],
+        "var_contributions": []
+      },
+      "declared_size": null,
+      "declared_vision": [],
+      "declared_walk_speed_ft": null,
+      "declares_negated_ability_guard": false,
+      "description": "Rougarous speak Common and their own racial language of Rougarou. Rougarous with high Intelligence scores can choose from these bonus languages: Aklo, Elven, Gnoll, Gnome, Goblin, or Sylvan",
+      "exclusion_guard_flags": [],
+      "is_racial_default": true,
+      "key": "Rougarou ~ Languages",
+      "name": "Languages",
+      "negated_fact_gates": [
+        [
+          "Rougarou_ReplaceLanguages"
+        ]
+      ],
+      "positive_prefact_flag": null,
+      "race_key": "Rougarou",
+      "sets_replace_flags": [],
+      "skinwalker_change_shape_kin": null,
+      "source_page": null,
+      "suppressed_by_flag": "Rougarou_ReplaceLanguages",
+      "template_bonus_languages": [
+        "Aklo",
+        "Elven",
+        "Gnoll",
+        "Gnome",
+        "Goblin",
+        "Sylvan"
+      ],
+      "type_tokens": [
+        "RacialTraits",
+        "Rougarou Racial Trait",
+        "Rougarou Racial Default",
+        "SpecialQuality",
+        "Racial Language"
+      ]
+    },
+    "rougarou/rougarou_natural_weapon.json": {
+      "adopted_race_pool_suffix": null,
+      "automatic_trait_grants": [
+        "Bite"
+      ],
+      "category": "Special Ability",
+      "declared_bonuses": {
+        "ability_adjustments": [],
+        "ability_pool_picks": 0,
+        "magnitudes": [
+          -1
+        ],
+        "magnitudes_excluding_flags": [
+          -1
+        ],
+        "only_internal_flags": false,
+        "target_bonuses": [
+          {
+            "keyword": "WEAPONPROF=Bite",
+            "magnitude": -1,
+            "target": "DAMAGESIZE"
+          }
+        ],
+        "var_contributions": []
+      },
+      "declared_size": null,
+      "declared_vision": [],
+      "declared_walk_speed_ft": null,
+      "declares_negated_ability_guard": false,
+      "description": "Rougarous have a bite attack that deals 1d4 points of damage. This is a secondary attack if a rougarou wields a manufactured weapon.",
+      "exclusion_guard_flags": [],
+      "is_racial_default": true,
+      "key": "Rougarou ~ Natural Weapon",
+      "name": "Natural Weapon",
+      "negated_fact_gates": [
+        [
+          "Rougarou_ReplaceNaturalWeapon"
+        ]
+      ],
+      "positive_prefact_flag": null,
+      "race_key": "Rougarou",
+      "sets_replace_flags": [],
+      "skinwalker_change_shape_kin": null,
+      "source_page": null,
+      "suppressed_by_flag": "Rougarou_ReplaceNaturalWeapon",
+      "template_bonus_languages": [],
+      "type_tokens": [
+        "RacialTraits",
+        "Rougarou Racial Trait",
+        "Rougarou Racial Default",
+        "SpecialQuality"
+      ]
+    },
+    "rougarou/rougarou_size.json": {
+      "adopted_race_pool_suffix": null,
+      "automatic_trait_grants": [],
+      "category": "Special Ability",
+      "declared_bonuses": {
+        "ability_adjustments": [],
+        "ability_pool_picks": 0,
+        "magnitudes": [],
+        "magnitudes_excluding_flags": [],
+        "only_internal_flags": false,
+        "target_bonuses": [],
+        "var_contributions": []
+      },
+      "declared_size": "Medium",
+      "declared_vision": [],
+      "declared_walk_speed_ft": null,
+      "declares_negated_ability_guard": false,
+      "description": "Rougarous are Medium creatures.",
+      "exclusion_guard_flags": [],
+      "is_racial_default": true,
+      "key": "Rougarou ~ Size",
+      "name": "Medium",
+      "negated_fact_gates": [
+        [
+          "Rougarou_ReplaceSize"
+        ]
+      ],
+      "positive_prefact_flag": null,
+      "race_key": "Rougarou",
+      "sets_replace_flags": [],
+      "skinwalker_change_shape_kin": null,
+      "source_page": null,
+      "suppressed_by_flag": "Rougarou_ReplaceSize",
+      "template_bonus_languages": [],
+      "type_tokens": [
+        "RacialTraits",
+        "Rougarou Racial Trait",
+        "Rougarou Racial Default",
+        "SpecialQuality",
+        "Racial Size"
+      ]
+    },
+    "rougarou/rougarou_speed.json": {
+      "adopted_race_pool_suffix": null,
+      "automatic_trait_grants": [],
+      "category": "Special Ability",
+      "declared_bonuses": {
+        "ability_adjustments": [],
+        "ability_pool_picks": 0,
+        "magnitudes": [
+          30
+        ],
+        "magnitudes_excluding_flags": [
+          30
+        ],
+        "only_internal_flags": false,
+        "target_bonuses": [
+          {
+            "keyword": "VAR",
+            "magnitude": 30,
+            "target": "MOVEBASE"
+          }
+        ],
+        "var_contributions": [
+          {
+            "amount": 30,
+            "name": "MOVEBASE"
+          }
+        ]
+      },
+      "declared_size": null,
+      "declared_vision": [],
+      "declared_walk_speed_ft": 30,
+      "declares_negated_ability_guard": false,
+      "description": "Rougarous have a base speed of 30 feet.",
+      "exclusion_guard_flags": [],
+      "is_racial_default": true,
+      "key": "Rougarou ~ Speed",
+      "name": "Normal Speed",
+      "negated_fact_gates": [
+        [
+          "Rougarou_ReplaceSpeed"
+        ]
+      ],
+      "positive_prefact_flag": null,
+      "race_key": "Rougarou",
+      "sets_replace_flags": [],
+      "skinwalker_change_shape_kin": null,
+      "source_page": null,
+      "suppressed_by_flag": "Rougarou_ReplaceSpeed",
+      "template_bonus_languages": [],
+      "type_tokens": [
+        "RacialTraits",
+        "Rougarou Racial Trait",
+        "Rougarou Racial Default",
+        "SpecialQuality",
+        "Racial Speed"
+      ]
+    },
+    "rougarou/rougarou_type.json": {
+      "adopted_race_pool_suffix": null,
+      "automatic_trait_grants": [],
+      "category": "Special Ability",
+      "declared_bonuses": {
+        "ability_adjustments": [],
+        "ability_pool_picks": 0,
+        "magnitudes": [],
+        "magnitudes_excluding_flags": [],
+        "only_internal_flags": false,
+        "target_bonuses": [],
+        "var_contributions": []
+      },
+      "declared_size": null,
+      "declared_vision": [],
+      "declared_walk_speed_ft": null,
+      "declares_negated_ability_guard": false,
+      "description": "Rougarous are humanoids with the shapechanger subtype.",
+      "exclusion_guard_flags": [],
+      "is_racial_default": true,
+      "key": "Rougarou ~ Type",
+      "name": "Shapechanger",
+      "negated_fact_gates": [
+        [
+          "Rougarou_ReplaceType"
+        ]
+      ],
+      "positive_prefact_flag": null,
+      "race_key": "Rougarou",
+      "sets_replace_flags": [],
+      "skinwalker_change_shape_kin": null,
+      "source_page": null,
+      "suppressed_by_flag": "Rougarou_ReplaceType",
+      "template_bonus_languages": [],
+      "type_tokens": [
+        "RacialTraits",
+        "Rougarou Racial Trait",
+        "Rougarou Racial Default",
+        "SpecialQuality",
+        "Racial Type"
+      ]
+    },
+    "rougarou/rougarou_vision.json": {
+      "adopted_race_pool_suffix": null,
+      "automatic_trait_grants": [
+        "Universal Monster Rule ~ Scent"
+      ],
+      "category": "Special Ability",
+      "declared_bonuses": {
+        "ability_adjustments": [],
+        "ability_pool_picks": 0,
+        "magnitudes": [
+          1
+        ],
+        "magnitudes_excluding_flags": [],
+        "only_internal_flags": true,
+        "target_bonuses": [
+          {
+            "keyword": "VAR",
+            "magnitude": 1,
+            "target": "HasRacialVision"
+          }
+        ],
+        "var_contributions": [
+          {
+            "amount": 1,
+            "name": "HasRacialVision"
+          }
+        ]
+      },
+      "declared_size": null,
+      "declared_vision": [
+        "Low-Light Vision"
+      ],
+      "declared_walk_speed_ft": null,
+      "declares_negated_ability_guard": false,
+      "description": "Rougarous have low-light vision and the scent special ability.",
+      "exclusion_guard_flags": [],
+      "is_racial_default": true,
+      "key": "Rougarou ~ Vision",
+      "name": "Senses",
+      "negated_fact_gates": [
+        [
+          "Rougarou_ReplaceVision"
+        ]
+      ],
+      "positive_prefact_flag": null,
+      "race_key": "Rougarou",
+      "sets_replace_flags": [],
+      "skinwalker_change_shape_kin": null,
+      "source_page": null,
+      "suppressed_by_flag": "Rougarou_ReplaceVision",
+      "template_bonus_languages": [],
+      "type_tokens": [
+        "RacialTraits",
+        "Rougarou Racial Trait",
+        "Rougarou Racial Default",
+        "SpecialQuality",
+        "Racial Vision"
+      ]
+    }
+  }
+}

@@ -51,6 +51,19 @@ fn walk(dir: &Path) -> Vec<PathBuf> {
     for entry in entries.flatten() {
         let path = entry.path();
         if path.is_dir() {
+            if path.file_name().and_then(|n| n.to_str()) == Some("_settled") {
+                // `_settled/` holds the per-book settled-record BUNDLES
+                // (SD-35 `AT-35-E6-003-RULED` cycle 15,
+                // `src/bin/gen_settled_corpus.rs`) -- one generated file per
+                // content kind, holding the already-counted records of that
+                // kind in settled form, keyed by the path of the record file
+                // this walk already visits. It is an index of this corpus, not
+                // content extracted from the book: counting it would
+                // double-count every record it indexes, and its entries carry
+                // no license block because the records they stand for carry
+                // one. Deliberately excluded, same rationale as `_parity/`.
+                continue;
+            }
             out.extend(walk(&path));
         } else {
             out.push(path);

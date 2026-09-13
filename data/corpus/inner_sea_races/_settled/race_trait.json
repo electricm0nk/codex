@@ -1,0 +1,4802 @@
+{
+  "kind": "race_trait",
+  "records": {
+    "aasimar/aasimar_crusading_magic.json": {
+      "adopted_race_pool_suffix": null,
+      "automatic_trait_grants": [],
+      "category": "Special Ability",
+      "declared_bonuses": {
+        "ability_adjustments": [],
+        "ability_pool_picks": 0,
+        "magnitudes": [
+          2
+        ],
+        "magnitudes_excluding_flags": [
+          2
+        ],
+        "only_internal_flags": false,
+        "target_bonuses": [
+          {
+            "keyword": "SKILL",
+            "magnitude": 2,
+            "target": "Knowledge (Planes)"
+          }
+        ],
+        "var_contributions": []
+      },
+      "declared_size": null,
+      "declared_vision": [],
+      "declared_walk_speed_ft": null,
+      "declares_negated_ability_guard": false,
+      "description": "[redacted PI]",
+      "exclusion_guard_flags": [
+        "Aasimar_ReplaceSkilled",
+        "Aasimar_ReplaceSpellLikeAbility"
+      ],
+      "is_racial_default": false,
+      "key": "Aasimar ~ Crusading Magic",
+      "name": "Crusading Magic",
+      "negated_fact_gates": [],
+      "positive_prefact_flag": null,
+      "race_key": "Aasimar",
+      "sets_replace_flags": [
+        "Aasimar_ReplaceSkilled",
+        "Aasimar_ReplaceSpellLikeAbility"
+      ],
+      "skinwalker_change_shape_kin": null,
+      "source_page": "p.214",
+      "suppressed_by_flag": null,
+      "template_bonus_languages": [],
+      "type_tokens": [
+        "RacialTraits",
+        "Aasimar Racial Trait",
+        "SpecialQuality",
+        "Special Quality"
+      ]
+    },
+    "aasimar/aasimar_lost_promise.json": {
+      "adopted_race_pool_suffix": null,
+      "automatic_trait_grants": [
+        "Tiefling ~ Maw or Claw (%LIST)"
+      ],
+      "category": "Special Ability",
+      "declared_bonuses": {
+        "ability_adjustments": [],
+        "ability_pool_picks": 0,
+        "magnitudes": [],
+        "magnitudes_excluding_flags": [],
+        "only_internal_flags": false,
+        "target_bonuses": [],
+        "var_contributions": []
+      },
+      "declared_size": null,
+      "declared_vision": [],
+      "declared_walk_speed_ft": null,
+      "declares_negated_ability_guard": false,
+      "description": "While many view aasimars' beauty and celestial powers as a gift, in some communities an aasimar might be persecuted for being different and fall into darkness. The forces of evil delight in such a perversion of their celestial counterparts' gifts. As long as the aasimar retains an evil alignment, she gains the maw or claw tiefling alternate racial trait (Pathfinder RPG Advanced Race Guide 169). This racial trait replaces the spell-like ability racial trait.",
+      "exclusion_guard_flags": [
+        "Aasimar_ReplaceSpellLikeAbility"
+      ],
+      "is_racial_default": false,
+      "key": "Aasimar ~ Lost Promise",
+      "name": "Lost Promise",
+      "negated_fact_gates": [],
+      "positive_prefact_flag": null,
+      "race_key": "Aasimar",
+      "sets_replace_flags": [
+        "Aasimar_ReplaceSpellLikeAbility"
+      ],
+      "skinwalker_change_shape_kin": null,
+      "source_page": "p.214",
+      "suppressed_by_flag": null,
+      "template_bonus_languages": [],
+      "type_tokens": [
+        "RacialTraits",
+        "Aasimar Racial Trait",
+        "SpecialQuality",
+        "Special Quality"
+      ]
+    },
+    "catfolk/catfolk_jungle_stalker.json": {
+      "adopted_race_pool_suffix": null,
+      "automatic_trait_grants": [],
+      "category": "Special Ability",
+      "declared_bonuses": {
+        "ability_adjustments": [],
+        "ability_pool_picks": 0,
+        "magnitudes": [
+          2
+        ],
+        "magnitudes_excluding_flags": [
+          2
+        ],
+        "only_internal_flags": false,
+        "target_bonuses": [
+          {
+            "keyword": "SKILL",
+            "magnitude": 2,
+            "target": "Acrobatics"
+          }
+        ],
+        "var_contributions": []
+      },
+      "declared_size": null,
+      "declared_vision": [],
+      "declared_walk_speed_ft": null,
+      "declares_negated_ability_guard": false,
+      "description": "[redacted PI]",
+      "exclusion_guard_flags": [
+        "Catfolk_ReplaceCatsLuck",
+        "Catfolk_ReplaceSprinter"
+      ],
+      "is_racial_default": false,
+      "key": "Catfolk ~ Jungle Stalker",
+      "name": "Jungle Stalker",
+      "negated_fact_gates": [],
+      "positive_prefact_flag": null,
+      "race_key": "Catfolk",
+      "sets_replace_flags": [
+        "Catfolk_ReplaceCatsLuck",
+        "Catfolk_ReplaceSprinter"
+      ],
+      "skinwalker_change_shape_kin": null,
+      "source_page": "p.214",
+      "suppressed_by_flag": null,
+      "template_bonus_languages": [],
+      "type_tokens": [
+        "RacialTraits",
+        "Catfolk Racial Trait",
+        "SpecialQuality",
+        "Special Quality"
+      ]
+    },
+    "drow/drow_defensive_training.json": {
+      "adopted_race_pool_suffix": null,
+      "automatic_trait_grants": [],
+      "category": "Special Ability",
+      "declared_bonuses": {
+        "ability_adjustments": [],
+        "ability_pool_picks": 0,
+        "magnitudes": [],
+        "magnitudes_excluding_flags": [],
+        "only_internal_flags": false,
+        "target_bonuses": [],
+        "var_contributions": []
+      },
+      "declared_size": null,
+      "declared_vision": [],
+      "declared_walk_speed_ft": null,
+      "declares_negated_ability_guard": false,
+      "description": "Many drow cities are frequently beset by attacks from aberrations, prompting the residents train themselves to defend against them. Drow gain a +4 dodge bonus to AC against aberrations. This racial trait replaces drow immunities, keen senses, and poison use.",
+      "exclusion_guard_flags": [
+        "Drow_ReplaceDrowImmunities",
+        "Drow_ReplaceKeenSenses",
+        "Drow_ReplacePoisonUse"
+      ],
+      "is_racial_default": false,
+      "key": "Drow ~ Defensive Training",
+      "name": "Defensive Training",
+      "negated_fact_gates": [],
+      "positive_prefact_flag": null,
+      "race_key": "Drow",
+      "sets_replace_flags": [
+        "Drow_ReplaceDrowImmunities",
+        "Drow_ReplaceKeenSenses",
+        "Drow_ReplacePoisonUse"
+      ],
+      "skinwalker_change_shape_kin": null,
+      "source_page": "p.215",
+      "suppressed_by_flag": null,
+      "template_bonus_languages": [],
+      "type_tokens": [
+        "RacialTraits",
+        "Drow Racial Trait",
+        "SpecialQuality",
+        "Defensive"
+      ]
+    },
+    "duergar/duergar_magical_taskmaster.json": {
+      "adopted_race_pool_suffix": null,
+      "automatic_trait_grants": [
+        "Racial SLA ~ Charm Person"
+      ],
+      "category": "Special Ability",
+      "declared_bonuses": {
+        "ability_adjustments": [],
+        "ability_pool_picks": 0,
+        "magnitudes": [],
+        "magnitudes_excluding_flags": [],
+        "only_internal_flags": false,
+        "target_bonuses": [
+          {
+            "keyword": "VAR",
+            "magnitude": null,
+            "target": "RacialSLA_CharmPerson_DCMod"
+          },
+          {
+            "keyword": "VAR",
+            "magnitude": null,
+            "target": "RacialSLA_CharmPerson_DC"
+          }
+        ],
+        "var_contributions": [
+          {
+            "amount": null,
+            "name": "RacialSLA_CharmPerson_DCMod"
+          },
+          {
+            "amount": null,
+            "name": "RacialSLA_CharmPerson_DC"
+          }
+        ]
+      },
+      "declared_size": null,
+      "declared_vision": [],
+      "declared_walk_speed_ft": null,
+      "declares_negated_ability_guard": false,
+      "description": "[redacted PI]",
+      "exclusion_guard_flags": [
+        "Duergar_ReplaceSLAInvisibility"
+      ],
+      "is_racial_default": false,
+      "key": "Duergar ~ Magical Taskmaster",
+      "name": "Magical Taskmaster",
+      "negated_fact_gates": [],
+      "positive_prefact_flag": null,
+      "race_key": "Duergar",
+      "sets_replace_flags": [
+        "Duergar_ReplaceSLAInvisibility"
+      ],
+      "skinwalker_change_shape_kin": null,
+      "source_page": "p.215",
+      "suppressed_by_flag": null,
+      "template_bonus_languages": [],
+      "type_tokens": [
+        "RacialTraits",
+        "Duergar Racial Trait",
+        "SpecialQuality"
+      ]
+    },
+    "dwarf/dwarf_lasting_grudge.json": {
+      "adopted_race_pool_suffix": null,
+      "automatic_trait_grants": [],
+      "category": "Special Ability",
+      "declared_bonuses": {
+        "ability_adjustments": [],
+        "ability_pool_picks": 0,
+        "magnitudes": [],
+        "magnitudes_excluding_flags": [],
+        "only_internal_flags": false,
+        "target_bonuses": [],
+        "var_contributions": []
+      },
+      "declared_size": null,
+      "declared_vision": [],
+      "declared_walk_speed_ft": null,
+      "declares_negated_ability_guard": false,
+      "description": "Dwarves are notorious for their long-lasting grudges. Those who live up to this racial reputation gain a +1 racial bonus on attack rolls against any individual creature that has attacked them 1 day ago or longer. This racial trait replaces defensive training and hatred.",
+      "exclusion_guard_flags": [
+        "Dwarf_ReplaceDefensiveTraining",
+        "Dwarf_ReplaceHatred"
+      ],
+      "is_racial_default": false,
+      "key": "Dwarf ~ Lasting Grudge",
+      "name": "Lasting Grudge",
+      "negated_fact_gates": [],
+      "positive_prefact_flag": null,
+      "race_key": "Dwarf",
+      "sets_replace_flags": [
+        "Dwarf_ReplaceDefensiveTraining",
+        "Dwarf_ReplaceHatred"
+      ],
+      "skinwalker_change_shape_kin": null,
+      "source_page": "p.210",
+      "suppressed_by_flag": null,
+      "template_bonus_languages": [],
+      "type_tokens": [
+        "RacialTraits",
+        "Dwarf Racial Trait",
+        "SpecialQuality",
+        "Special Quality"
+      ]
+    },
+    "dwarf/dwarf_siege_survivor.json": {
+      "adopted_race_pool_suffix": null,
+      "automatic_trait_grants": [
+        "Endurance"
+      ],
+      "category": "Special Ability",
+      "declared_bonuses": {
+        "ability_adjustments": [],
+        "ability_pool_picks": 0,
+        "magnitudes": [],
+        "magnitudes_excluding_flags": [],
+        "only_internal_flags": false,
+        "target_bonuses": [],
+        "var_contributions": []
+      },
+      "declared_size": null,
+      "declared_vision": [],
+      "declared_walk_speed_ft": null,
+      "declares_negated_ability_guard": false,
+      "description": "Dwarves who make their homes in the Sky Citadels are trained to outlast sieges and serve as vigilant guards. They gain Endurance as a bonus feat. In addition, during rounds in which they have not moved, they gain a +1 racial bonus on attack rolls against foes who also did not move since their last turn. This racial trait replaces greed, hardy, and hatred.",
+      "exclusion_guard_flags": [
+        "Dwarf_ReplaceGreed",
+        "Dwarf_ReplaceHardy",
+        "Dwarf_ReplaceHatred"
+      ],
+      "is_racial_default": false,
+      "key": "Dwarf ~ Siege Survivor",
+      "name": "Siege Survivor",
+      "negated_fact_gates": [],
+      "positive_prefact_flag": null,
+      "race_key": "Dwarf",
+      "sets_replace_flags": [
+        "Dwarf_ReplaceGreed",
+        "Dwarf_ReplaceHardy",
+        "Dwarf_ReplaceHatred"
+      ],
+      "skinwalker_change_shape_kin": null,
+      "source_page": "p.210",
+      "suppressed_by_flag": null,
+      "template_bonus_languages": [],
+      "type_tokens": [
+        "RacialTraits",
+        "Dwarf Racial Trait",
+        "SpecialQuality",
+        "Special Quality"
+      ]
+    },
+    "dwarf/dwarf_slag_child.json": {
+      "adopted_race_pool_suffix": null,
+      "automatic_trait_grants": [],
+      "category": "Special Ability",
+      "declared_bonuses": {
+        "ability_adjustments": [],
+        "ability_pool_picks": 0,
+        "magnitudes": [
+          2
+        ],
+        "magnitudes_excluding_flags": [
+          2
+        ],
+        "only_internal_flags": false,
+        "target_bonuses": [
+          {
+            "keyword": "SKILL",
+            "magnitude": 2,
+            "target": "Stealth,Survival"
+          }
+        ],
+        "var_contributions": []
+      },
+      "declared_size": null,
+      "declared_vision": [],
+      "declared_walk_speed_ft": null,
+      "declares_negated_ability_guard": false,
+      "description": "[redacted PI]",
+      "exclusion_guard_flags": [
+        "Dwarf_ReplaceDefensiveTraining",
+        "Dwarf_ReplaceHatred"
+      ],
+      "is_racial_default": false,
+      "key": "Dwarf ~ Slag Child",
+      "name": "Slag Child",
+      "negated_fact_gates": [],
+      "positive_prefact_flag": null,
+      "race_key": "Dwarf",
+      "sets_replace_flags": [
+        "Dwarf_ReplaceDefensiveTraining",
+        "Dwarf_ReplaceHatred"
+      ],
+      "skinwalker_change_shape_kin": null,
+      "source_page": "p.210",
+      "suppressed_by_flag": null,
+      "template_bonus_languages": [],
+      "type_tokens": [
+        "RacialTraits",
+        "Dwarf Racial Trait",
+        "SpecialQuality",
+        "Special Quality",
+        "Applied Bonus"
+      ]
+    },
+    "dwarf/dwarf_spell_smasher.json": {
+      "adopted_race_pool_suffix": null,
+      "automatic_trait_grants": [],
+      "category": "Special Ability",
+      "declared_bonuses": {
+        "ability_adjustments": [],
+        "ability_pool_picks": 0,
+        "magnitudes": [],
+        "magnitudes_excluding_flags": [],
+        "only_internal_flags": false,
+        "target_bonuses": [],
+        "var_contributions": []
+      },
+      "declared_size": null,
+      "declared_vision": [],
+      "declared_walk_speed_ft": null,
+      "declares_negated_ability_guard": false,
+      "description": "Dwarven families who are threatened by hostile magic-users, especially those who face duergar foes, train intently to thwart spellcasting. They gain a +1 racial bonus on attack rolls against creatures in the process of casting spells or spell-like abilities. This racial trait replaces defensive training and hatred.",
+      "exclusion_guard_flags": [
+        "Dwarf_ReplaceDefensiveTraining",
+        "Dwarf_ReplaceHatred"
+      ],
+      "is_racial_default": false,
+      "key": "Dwarf ~ Spell Smasher",
+      "name": "Spell Smasher",
+      "negated_fact_gates": [],
+      "positive_prefact_flag": null,
+      "race_key": "Dwarf",
+      "sets_replace_flags": [
+        "Dwarf_ReplaceDefensiveTraining",
+        "Dwarf_ReplaceHatred"
+      ],
+      "skinwalker_change_shape_kin": null,
+      "source_page": "p.210",
+      "suppressed_by_flag": null,
+      "template_bonus_languages": [],
+      "type_tokens": [
+        "RacialTraits",
+        "Dwarf Racial Trait",
+        "SpecialQuality",
+        "Special Quality"
+      ]
+    },
+    "dwarf/dwarf_spiritual_support.json": {
+      "adopted_race_pool_suffix": null,
+      "automatic_trait_grants": [],
+      "category": "Special Ability",
+      "declared_bonuses": {
+        "ability_adjustments": [],
+        "ability_pool_picks": 0,
+        "magnitudes": [],
+        "magnitudes_excluding_flags": [],
+        "only_internal_flags": false,
+        "target_bonuses": [],
+        "var_contributions": []
+      },
+      "declared_size": null,
+      "declared_vision": [],
+      "declared_walk_speed_ft": null,
+      "declares_negated_ability_guard": false,
+      "description": "Dwarves greatly value loyalty in faith, and their gods readily reward them for it. They gain a +1 racial bonus to their caster levels when casting conjuration (healing) spells upon allies. This racial trait replaces greed and hardy.",
+      "exclusion_guard_flags": [
+        "Dwarf_ReplaceGreed",
+        "Dwarf_ReplaceHardy"
+      ],
+      "is_racial_default": false,
+      "key": "Dwarf ~ Spiritual Support",
+      "name": "Spiritual Support",
+      "negated_fact_gates": [],
+      "positive_prefact_flag": null,
+      "race_key": "Dwarf",
+      "sets_replace_flags": [
+        "Dwarf_ReplaceGreed",
+        "Dwarf_ReplaceHardy"
+      ],
+      "skinwalker_change_shape_kin": null,
+      "source_page": "p.210",
+      "suppressed_by_flag": null,
+      "template_bonus_languages": [],
+      "type_tokens": [
+        "RacialTraits",
+        "Dwarf Racial Trait",
+        "SpecialQuality",
+        "Special Quality"
+      ]
+    },
+    "dwarf/dwarf_stoic_negotiator.json": {
+      "adopted_race_pool_suffix": null,
+      "automatic_trait_grants": [],
+      "category": "Special Ability",
+      "declared_bonuses": {
+        "ability_adjustments": [],
+        "ability_pool_picks": 0,
+        "magnitudes": [
+          2
+        ],
+        "magnitudes_excluding_flags": [
+          2
+        ],
+        "only_internal_flags": false,
+        "target_bonuses": [
+          {
+            "keyword": "SKILL",
+            "magnitude": 2,
+            "target": "Bluff,Diplomacy,Profession (Merchant)"
+          }
+        ],
+        "var_contributions": []
+      },
+      "declared_size": null,
+      "declared_vision": [],
+      "declared_walk_speed_ft": null,
+      "declares_negated_ability_guard": false,
+      "description": "[redacted PI]",
+      "exclusion_guard_flags": [
+        "Dwarf_ReplaceDefensiveTraining",
+        "Dwarf_ReplaceHatred",
+        "Dwarf_ReplaceStonecunning"
+      ],
+      "is_racial_default": false,
+      "key": "Dwarf ~ Stoic Negotiator",
+      "name": "Stoic Negotiator",
+      "negated_fact_gates": [],
+      "positive_prefact_flag": null,
+      "race_key": "Dwarf",
+      "sets_replace_flags": [
+        "Dwarf_ReplaceDefensiveTraining",
+        "Dwarf_ReplaceHatred",
+        "Dwarf_ReplaceStonecunning"
+      ],
+      "skinwalker_change_shape_kin": null,
+      "source_page": "p.210",
+      "suppressed_by_flag": null,
+      "template_bonus_languages": [],
+      "type_tokens": [
+        "RacialTraits",
+        "Dwarf Racial Trait",
+        "SpecialQuality",
+        "Special Quality",
+        "Applied Bonus"
+      ]
+    },
+    "dwarf/dwarf_unstoppable.json": {
+      "adopted_race_pool_suffix": null,
+      "automatic_trait_grants": [
+        "Toughness"
+      ],
+      "category": "Special Ability",
+      "declared_bonuses": {
+        "ability_adjustments": [],
+        "ability_pool_picks": 0,
+        "magnitudes": [
+          1
+        ],
+        "magnitudes_excluding_flags": [
+          1
+        ],
+        "only_internal_flags": false,
+        "target_bonuses": [
+          {
+            "keyword": "SAVE",
+            "magnitude": 1,
+            "target": "Fortitude"
+          }
+        ],
+        "var_contributions": []
+      },
+      "declared_size": null,
+      "declared_vision": [],
+      "declared_walk_speed_ft": null,
+      "declares_negated_ability_guard": false,
+      "description": "Some dwarves train from a young age to outlast orcs on the battlefield. They gain Toughness as a bonus feat and a +1 racial bonus on Fortitude saves. This racial trait replaces hardy.",
+      "exclusion_guard_flags": [
+        "Dwarf_ReplaceHardy"
+      ],
+      "is_racial_default": false,
+      "key": "Dwarf ~ Unstoppable",
+      "name": "Unstoppable",
+      "negated_fact_gates": [],
+      "positive_prefact_flag": null,
+      "race_key": "Dwarf",
+      "sets_replace_flags": [
+        "Dwarf_ReplaceHardy"
+      ],
+      "skinwalker_change_shape_kin": null,
+      "source_page": "p.210",
+      "suppressed_by_flag": null,
+      "template_bonus_languages": [],
+      "type_tokens": [
+        "RacialTraits",
+        "Dwarf Racial Trait",
+        "SpecialQuality",
+        "Special Quality",
+        "Applied Bonus",
+        "Replaces Dwarf Hardy"
+      ]
+    },
+    "elf/elf_ageless_patience.json": {
+      "adopted_race_pool_suffix": null,
+      "automatic_trait_grants": [],
+      "category": "Special Ability",
+      "declared_bonuses": {
+        "ability_adjustments": [],
+        "ability_pool_picks": 0,
+        "magnitudes": [],
+        "magnitudes_excluding_flags": [],
+        "only_internal_flags": false,
+        "target_bonuses": [],
+        "var_contributions": []
+      },
+      "declared_size": null,
+      "declared_vision": [],
+      "declared_walk_speed_ft": null,
+      "declares_negated_ability_guard": false,
+      "description": "[redacted PI]",
+      "exclusion_guard_flags": [
+        "Elf_ReplaceElvenMagic",
+        "Elf_ReplaceKeenSenses"
+      ],
+      "is_racial_default": false,
+      "key": "Elf ~ Ageless Patience",
+      "name": "Ageless Patience",
+      "negated_fact_gates": [],
+      "positive_prefact_flag": null,
+      "race_key": "Elf",
+      "sets_replace_flags": [
+        "Elf_ReplaceElvenMagic",
+        "Elf_ReplaceKeenSenses"
+      ],
+      "skinwalker_change_shape_kin": null,
+      "source_page": "p.210",
+      "suppressed_by_flag": null,
+      "template_bonus_languages": [],
+      "type_tokens": [
+        "RacialTraits",
+        "Elf Racial Trait",
+        "SpecialQuality",
+        "Special Quality"
+      ]
+    },
+    "elf/elf_disinterested_observer.json": {
+      "adopted_race_pool_suffix": null,
+      "automatic_trait_grants": [],
+      "category": "Special Ability",
+      "declared_bonuses": {
+        "ability_adjustments": [],
+        "ability_pool_picks": 0,
+        "magnitudes": [],
+        "magnitudes_excluding_flags": [],
+        "only_internal_flags": false,
+        "target_bonuses": [],
+        "var_contributions": []
+      },
+      "declared_size": null,
+      "declared_vision": [],
+      "declared_walk_speed_ft": null,
+      "declares_negated_ability_guard": false,
+      "description": "[redacted PI]",
+      "exclusion_guard_flags": [
+        "Elf_ReplaceElvenMagic",
+        "Elf_ReplaceWeaponFamiliarity"
+      ],
+      "is_racial_default": false,
+      "key": "Elf ~ Disinterested Observer",
+      "name": "Disinterested Observer",
+      "negated_fact_gates": [],
+      "positive_prefact_flag": null,
+      "race_key": "Elf",
+      "sets_replace_flags": [
+        "Elf_ReplaceElvenMagic",
+        "Elf_ReplaceWeaponFamiliarity"
+      ],
+      "skinwalker_change_shape_kin": null,
+      "source_page": "p.210",
+      "suppressed_by_flag": null,
+      "template_bonus_languages": [],
+      "type_tokens": [
+        "RacialTraits",
+        "Elf Racial Trait",
+        "SpecialQuality",
+        "Special Quality"
+      ]
+    },
+    "elf/elf_elven_arrogance.json": {
+      "adopted_race_pool_suffix": null,
+      "automatic_trait_grants": [],
+      "category": "Special Ability",
+      "declared_bonuses": {
+        "ability_adjustments": [],
+        "ability_pool_picks": 0,
+        "magnitudes": [],
+        "magnitudes_excluding_flags": [],
+        "only_internal_flags": false,
+        "target_bonuses": [],
+        "var_contributions": []
+      },
+      "declared_size": null,
+      "declared_vision": [],
+      "declared_walk_speed_ft": null,
+      "declares_negated_ability_guard": false,
+      "description": "[redacted PI]",
+      "exclusion_guard_flags": [
+        "Elf_ReplaceLanguages"
+      ],
+      "is_racial_default": false,
+      "key": "Elf ~ Elven Arrogance",
+      "name": "Elven Arrogance",
+      "negated_fact_gates": [],
+      "positive_prefact_flag": null,
+      "race_key": "Elf",
+      "sets_replace_flags": [
+        "Elf_ReplaceLanguages"
+      ],
+      "skinwalker_change_shape_kin": null,
+      "source_page": "p.211",
+      "suppressed_by_flag": null,
+      "template_bonus_languages": [
+        "Azlanti",
+        "Celestial",
+        "Draconic"
+      ],
+      "type_tokens": [
+        "RacialTraits",
+        "Elf Racial Trait",
+        "SpecialQuality",
+        "Special Quality"
+      ]
+    },
+    "elf/elf_human_raised.json": {
+      "adopted_race_pool_suffix": null,
+      "automatic_trait_grants": [
+        "Skill Focus (%LIST)"
+      ],
+      "category": "Special Ability",
+      "declared_bonuses": {
+        "ability_adjustments": [],
+        "ability_pool_picks": 0,
+        "magnitudes": [],
+        "magnitudes_excluding_flags": [],
+        "only_internal_flags": false,
+        "target_bonuses": [],
+        "var_contributions": []
+      },
+      "declared_size": null,
+      "declared_vision": [],
+      "declared_walk_speed_ft": null,
+      "declares_negated_ability_guard": false,
+      "description": "Forlorn--elves raised outside of elven communities--are accustomed to other races' brevity of life. Although they lose the opportunity to train in traditional elven arts, these elves pick up a bit of their adoptive parents' skills. They gain Skill Focus as a bonus feat. This racial trait replaces elven magic and weapon familiarity.",
+      "exclusion_guard_flags": [
+        "Elf_ReplaceElvenMagic",
+        "Elf_ReplaceWeaponFamiliarity"
+      ],
+      "is_racial_default": false,
+      "key": "Elf ~ Human-Raised",
+      "name": "Human-Raised",
+      "negated_fact_gates": [],
+      "positive_prefact_flag": null,
+      "race_key": "Elf",
+      "sets_replace_flags": [
+        "Elf_ReplaceElvenMagic",
+        "Elf_ReplaceWeaponFamiliarity"
+      ],
+      "skinwalker_change_shape_kin": null,
+      "source_page": "p.211",
+      "suppressed_by_flag": null,
+      "template_bonus_languages": [],
+      "type_tokens": [
+        "RacialTraits",
+        "Elf Racial Trait",
+        "SpecialQuality",
+        "Special Quality"
+      ]
+    },
+    "elf/elf_memories_beyond_death.json": {
+      "adopted_race_pool_suffix": null,
+      "automatic_trait_grants": [],
+      "category": "Special Ability",
+      "declared_bonuses": {
+        "ability_adjustments": [],
+        "ability_pool_picks": 0,
+        "magnitudes": [
+          1
+        ],
+        "magnitudes_excluding_flags": [
+          1
+        ],
+        "only_internal_flags": false,
+        "target_bonuses": [
+          {
+            "keyword": "SKILL",
+            "magnitude": 1,
+            "target": "%LIST"
+          }
+        ],
+        "var_contributions": []
+      },
+      "declared_size": null,
+      "declared_vision": [],
+      "declared_walk_speed_ft": null,
+      "declares_negated_ability_guard": false,
+      "description": "Some elves are born with sensitive souls that absorb insight from others and from the spirits of the deceased. These elves gain a +2 racial bonus on saving throws against fear effects. They also choose two Knowledge skills and always treat those skills as class skills. If they take a class that grants either or both of those skills as class skills, they gain a +1 racial bonus on the overlapping skill or skills. This racial trait replaces elven immunities and elven magic.",
+      "exclusion_guard_flags": [
+        "Elf_ReplaceElvenImmunities",
+        "Elf_ReplaceElvenMagic"
+      ],
+      "is_racial_default": false,
+      "key": "Elf ~ Memories Beyond Death",
+      "name": "Memories Beyond Death",
+      "negated_fact_gates": [],
+      "positive_prefact_flag": null,
+      "race_key": "Elf",
+      "sets_replace_flags": [
+        "Elf_ReplaceElvenImmunities",
+        "Elf_ReplaceElvenMagic"
+      ],
+      "skinwalker_change_shape_kin": null,
+      "source_page": "p.211",
+      "suppressed_by_flag": null,
+      "template_bonus_languages": [],
+      "type_tokens": [
+        "RacialTraits",
+        "Elf Racial Trait",
+        "SpecialQuality",
+        "Special Quality",
+        "Applied Bonus"
+      ]
+    },
+    "elf/elf_overwhelming_magic.json": {
+      "adopted_race_pool_suffix": null,
+      "automatic_trait_grants": [
+        "Spell Focus (%LIST)"
+      ],
+      "category": "Special Ability",
+      "declared_bonuses": {
+        "ability_adjustments": [],
+        "ability_pool_picks": 0,
+        "magnitudes": [],
+        "magnitudes_excluding_flags": [],
+        "only_internal_flags": false,
+        "target_bonuses": [],
+        "var_contributions": []
+      },
+      "declared_size": null,
+      "declared_vision": [],
+      "declared_walk_speed_ft": null,
+      "declares_negated_ability_guard": false,
+      "description": "Some elves obsess over the fundamentals of magic, training for decades to add layers of potent spellwork before they ever begin practicing true spells. This builds a foundation that makes their magic increasingly difficult to resist. These elves gain Spell Focus as a bonus feat. This racial trait replaces elven magic and weapon familiarity.",
+      "exclusion_guard_flags": [
+        "Elf_ReplaceElvenMagic",
+        "Elf_ReplaceWeaponFamiliarity"
+      ],
+      "is_racial_default": false,
+      "key": "Elf ~ Overwhelming Magic",
+      "name": "Overwhelming Magic",
+      "negated_fact_gates": [],
+      "positive_prefact_flag": null,
+      "race_key": "Elf",
+      "sets_replace_flags": [
+        "Elf_ReplaceElvenMagic",
+        "Elf_ReplaceWeaponFamiliarity"
+      ],
+      "skinwalker_change_shape_kin": null,
+      "source_page": "p.211",
+      "suppressed_by_flag": null,
+      "template_bonus_languages": [],
+      "type_tokens": [
+        "RacialTraits",
+        "Elf Racial Trait",
+        "SpecialQuality",
+        "Special Quality"
+      ]
+    },
+    "elf/elf_retreat_magic.json": {
+      "adopted_race_pool_suffix": null,
+      "automatic_trait_grants": [],
+      "category": "Special Ability",
+      "declared_bonuses": {
+        "ability_adjustments": [],
+        "ability_pool_picks": 0,
+        "magnitudes": [],
+        "magnitudes_excluding_flags": [],
+        "only_internal_flags": false,
+        "target_bonuses": [],
+        "var_contributions": []
+      },
+      "declared_size": null,
+      "declared_vision": [],
+      "declared_walk_speed_ft": null,
+      "declares_negated_ability_guard": false,
+      "description": "[redacted PI]",
+      "exclusion_guard_flags": [
+        "Elf_ReplaceElvenMagic"
+      ],
+      "is_racial_default": false,
+      "key": "Elf ~ Retreat Magic",
+      "name": "Retreat Magic",
+      "negated_fact_gates": [],
+      "positive_prefact_flag": null,
+      "race_key": "Elf",
+      "sets_replace_flags": [
+        "Elf_ReplaceElvenMagic"
+      ],
+      "skinwalker_change_shape_kin": null,
+      "source_page": "p.211",
+      "suppressed_by_flag": null,
+      "template_bonus_languages": [],
+      "type_tokens": [
+        "RacialTraits",
+        "Elf Racial Trait",
+        "SpecialQuality",
+        "Special Quality",
+        "Elven Magic"
+      ]
+    },
+    "fetchling/fetchling_shadow_agent.json": {
+      "adopted_race_pool_suffix": null,
+      "automatic_trait_grants": [],
+      "category": "Special Ability",
+      "declared_bonuses": {
+        "ability_adjustments": [],
+        "ability_pool_picks": 0,
+        "magnitudes": [
+          2
+        ],
+        "magnitudes_excluding_flags": [
+          2
+        ],
+        "only_internal_flags": false,
+        "target_bonuses": [
+          {
+            "keyword": "SKILL",
+            "magnitude": 2,
+            "target": "Bluff,Diplomacy"
+          }
+        ],
+        "var_contributions": []
+      },
+      "declared_size": null,
+      "declared_vision": [],
+      "declared_walk_speed_ft": null,
+      "declares_negated_ability_guard": false,
+      "description": "[redacted PI]",
+      "exclusion_guard_flags": [
+        "Fetchling_ReplaceSkilled"
+      ],
+      "is_racial_default": false,
+      "key": "Fetchling ~ Shadow Agent",
+      "name": "Shadow Agent",
+      "negated_fact_gates": [],
+      "positive_prefact_flag": null,
+      "race_key": "Fetchling",
+      "sets_replace_flags": [
+        "Fetchling_ReplaceSkilled"
+      ],
+      "skinwalker_change_shape_kin": null,
+      "source_page": "p.215",
+      "suppressed_by_flag": null,
+      "template_bonus_languages": [],
+      "type_tokens": [
+        "RacialTraits",
+        "Fetchling Racial Trait",
+        "SpecialQuality",
+        "Special Quality",
+        "Applied Bonus"
+      ]
+    },
+    "gillman/gillman_deep_gillman.json": {
+      "adopted_race_pool_suffix": null,
+      "automatic_trait_grants": [],
+      "category": "Special Ability",
+      "declared_bonuses": {
+        "ability_adjustments": [],
+        "ability_pool_picks": 0,
+        "magnitudes": [
+          5
+        ],
+        "magnitudes_excluding_flags": [
+          5
+        ],
+        "only_internal_flags": false,
+        "target_bonuses": [
+          {
+            "keyword": "VAR",
+            "magnitude": 5,
+            "target": "ColdResistanceBonus"
+          }
+        ],
+        "var_contributions": [
+          {
+            "amount": 5,
+            "name": "ColdResistanceBonus"
+          }
+        ]
+      },
+      "declared_size": null,
+      "declared_vision": [
+        "Darkvision (60)"
+      ],
+      "declared_walk_speed_ft": null,
+      "declares_negated_ability_guard": false,
+      "description": "Some gillmen live in the deeper ocean and almost never visit the land above the sea. Such gillmen gain darkvision to a range of 60 feet and resist cold 5, in order to survive the lightless depths. This racial trait replaces amphibious and enchantment resistance.",
+      "exclusion_guard_flags": [
+        "Gillman_ReplaceAmphibious",
+        "Gillman_ReplaceEnchantmentResistance"
+      ],
+      "is_racial_default": false,
+      "key": "Gillman ~ Deep Gillman",
+      "name": "Deep Gillman",
+      "negated_fact_gates": [],
+      "positive_prefact_flag": null,
+      "race_key": "Gillman",
+      "sets_replace_flags": [
+        "Gillman_ReplaceAmphibious",
+        "Gillman_ReplaceEnchantmentResistance"
+      ],
+      "skinwalker_change_shape_kin": null,
+      "source_page": "p.215",
+      "suppressed_by_flag": null,
+      "template_bonus_languages": [],
+      "type_tokens": [
+        "RacialTraits",
+        "Gillman Racial Trait",
+        "SpecialQuality",
+        "Special Quality"
+      ]
+    },
+    "gnome/gnome_architectural_ingenuity.json": {
+      "adopted_race_pool_suffix": null,
+      "automatic_trait_grants": [],
+      "category": "Special Ability",
+      "declared_bonuses": {
+        "ability_adjustments": [],
+        "ability_pool_picks": 0,
+        "magnitudes": [
+          2
+        ],
+        "magnitudes_excluding_flags": [
+          2
+        ],
+        "only_internal_flags": false,
+        "target_bonuses": [
+          {
+            "keyword": "SITUATION",
+            "magnitude": 2,
+            "target": "Perception=related to structures"
+          },
+          {
+            "keyword": "SKILL",
+            "magnitude": 2,
+            "target": "Knowledge (Engineering)"
+          }
+        ],
+        "var_contributions": []
+      },
+      "declared_size": null,
+      "declared_vision": [],
+      "declared_walk_speed_ft": null,
+      "declares_negated_ability_guard": false,
+      "description": "Some gnomes demonstrate incredible talent for building and adjusting structures. These gnomes gain a +2 racial bonus on Knowledge (engineering) checks and on Craft and Perception checks related to structures (including structural traps). This racial trait replaces keen senses and obsessive.",
+      "exclusion_guard_flags": [
+        "Gnome_ReplaceKeenSenses",
+        "Gnome_ReplaceObsessive"
+      ],
+      "is_racial_default": false,
+      "key": "Gnome ~ Architectural Ingenuity",
+      "name": "Architectural Ingenuity",
+      "negated_fact_gates": [],
+      "positive_prefact_flag": null,
+      "race_key": "Gnome",
+      "sets_replace_flags": [
+        "Gnome_ReplaceKeenSenses",
+        "Gnome_ReplaceObsessive"
+      ],
+      "skinwalker_change_shape_kin": null,
+      "source_page": "p.211",
+      "suppressed_by_flag": null,
+      "template_bonus_languages": [],
+      "type_tokens": [
+        "RacialTraits",
+        "Gnome Racial Trait",
+        "SpecialQuality",
+        "Special Quality",
+        "Applied Bonus"
+      ]
+    },
+    "gnome/gnome_dirty_trickster.json": {
+      "adopted_race_pool_suffix": null,
+      "automatic_trait_grants": [],
+      "category": "Special Ability",
+      "declared_bonuses": {
+        "ability_adjustments": [],
+        "ability_pool_picks": 0,
+        "magnitudes": [
+          1,
+          2
+        ],
+        "magnitudes_excluding_flags": [
+          2
+        ],
+        "only_internal_flags": false,
+        "target_bonuses": [
+          {
+            "keyword": "VAR",
+            "magnitude": 1,
+            "target": "DirtyTricksterIntQualify"
+          },
+          {
+            "keyword": "VAR",
+            "magnitude": 2,
+            "target": "CMB_DirtyTrick,CMD_DirtyTrick"
+          }
+        ],
+        "var_contributions": [
+          {
+            "amount": 1,
+            "name": "DirtyTricksterIntQualify"
+          },
+          {
+            "amount": 2,
+            "name": "CMB_DirtyTrick"
+          },
+          {
+            "amount": 2,
+            "name": "CMD_DirtyTrick"
+          }
+        ]
+      },
+      "declared_size": null,
+      "declared_vision": [],
+      "declared_walk_speed_ft": null,
+      "declares_negated_ability_guard": false,
+      "description": "All gnomes love pranks, but some specialize in those improvised during battle. These gnomes gain a +2 racial bonus on dirty trick combat maneuvers. They need not meet the Intelligence requirement to select Combat Expertise, Improved Dirty Trick, and any feat with Improved Dirty Trick as a prerequisite. This racial trait replaces defensive training, hatred, and keen senses.",
+      "exclusion_guard_flags": [
+        "Gnome_ReplaceDefensiveTraining",
+        "Gnome_ReplaceHatred",
+        "Gnome_ReplaceKeenSenses"
+      ],
+      "is_racial_default": false,
+      "key": "Gnome ~ Dirty Trickster",
+      "name": "Dirty Trickster",
+      "negated_fact_gates": [],
+      "positive_prefact_flag": null,
+      "race_key": "Gnome",
+      "sets_replace_flags": [
+        "Gnome_ReplaceHatred",
+        "Gnome_ReplaceKeenSenses"
+      ],
+      "skinwalker_change_shape_kin": null,
+      "source_page": "p.211",
+      "suppressed_by_flag": null,
+      "template_bonus_languages": [],
+      "type_tokens": [
+        "RacialTraits",
+        "Gnome Racial Trait",
+        "SpecialQuality",
+        "Special Quality",
+        "Applied Bonus"
+      ]
+    },
+    "gnome/gnome_intrepid_settler.json": {
+      "adopted_race_pool_suffix": null,
+      "automatic_trait_grants": [],
+      "category": "Special Ability",
+      "declared_bonuses": {
+        "ability_adjustments": [],
+        "ability_pool_picks": 0,
+        "magnitudes": [
+          2
+        ],
+        "magnitudes_excluding_flags": [
+          2
+        ],
+        "only_internal_flags": false,
+        "target_bonuses": [
+          {
+            "keyword": "SKILL",
+            "magnitude": 2,
+            "target": "Acrobatics,Climb,Swim"
+          }
+        ],
+        "var_contributions": []
+      },
+      "declared_size": null,
+      "declared_vision": [],
+      "declared_walk_speed_ft": null,
+      "declares_negated_ability_guard": false,
+      "description": "[redacted PI]",
+      "exclusion_guard_flags": [
+        "Gnome_ReplaceIllusionResistance",
+        "Gnome_ReplaceKeenSenses",
+        "Gnome_ReplaceObsessive"
+      ],
+      "is_racial_default": false,
+      "key": "Gnome ~ Intrepid Settler",
+      "name": "Intrepid Settler",
+      "negated_fact_gates": [],
+      "positive_prefact_flag": null,
+      "race_key": "Gnome",
+      "sets_replace_flags": [
+        "Gnome_ReplaceIllusionResistance",
+        "Gnome_ReplaceKeenSenses",
+        "Gnome_ReplaceObsessive"
+      ],
+      "skinwalker_change_shape_kin": null,
+      "source_page": "p.211",
+      "suppressed_by_flag": null,
+      "template_bonus_languages": [],
+      "type_tokens": [
+        "RacialTraits",
+        "Gnome Racial Trait",
+        "SpecialQuality",
+        "Special Quality",
+        "Applied Bonus"
+      ]
+    },
+    "gnome/gnome_utilitarian_magic.json": {
+      "adopted_race_pool_suffix": null,
+      "automatic_trait_grants": [
+        "Racial SLA ~ Mage Hand",
+        "Racial SLA ~ Open/Close",
+        "Racial SLA ~ Prestidigitation",
+        "Racial SLA ~ Unseen Servant"
+      ],
+      "category": "Special Ability",
+      "declared_bonuses": {
+        "ability_adjustments": [],
+        "ability_pool_picks": 0,
+        "magnitudes": [
+          1
+        ],
+        "magnitudes_excluding_flags": [
+          1
+        ],
+        "only_internal_flags": false,
+        "target_bonuses": [
+          {
+            "keyword": "DC",
+            "magnitude": 1,
+            "target": "SCHOOL.Transmutation"
+          },
+          {
+            "keyword": "VAR",
+            "magnitude": null,
+            "target": "RacialSLA_MageHand_DCMod,RacialSLA_OpenClose_DCMod,RacialSLA_Prestidigitation_DCMod,RacialSLA_UnseenServant_DCMod"
+          }
+        ],
+        "var_contributions": [
+          {
+            "amount": null,
+            "name": "RacialSLA_MageHand_DCMod"
+          },
+          {
+            "amount": null,
+            "name": "RacialSLA_OpenClose_DCMod"
+          },
+          {
+            "amount": null,
+            "name": "RacialSLA_Prestidigitation_DCMod"
+          },
+          {
+            "amount": null,
+            "name": "RacialSLA_UnseenServant_DCMod"
+          }
+        ]
+      },
+      "declared_size": null,
+      "declared_vision": [],
+      "declared_walk_speed_ft": null,
+      "declares_negated_ability_guard": false,
+      "description": "Some gnomes develop practical magic to assist them with their obsessive projects. These gnomes add 1 to the DC of any saving throws against transmutation spells they cast. If their Intelligence score is 11 or higher, they also gain the following spell-like abilities: 1/day--mage hand, open/close, prestidigitation, and unseen servant. The DC for these spells is equal to 10 + the spell's level + the gnome's Intelligence modifier. This racial trait replaces gnome magic.",
+      "exclusion_guard_flags": [
+        "Gnome_ReplaceGnomeMagic"
+      ],
+      "is_racial_default": false,
+      "key": "Gnome ~ Utilitarian Magic",
+      "name": "Utilitarian Magic",
+      "negated_fact_gates": [],
+      "positive_prefact_flag": null,
+      "race_key": "Gnome",
+      "sets_replace_flags": [
+        "Gnome_ReplaceGnomeMagic"
+      ],
+      "skinwalker_change_shape_kin": null,
+      "source_page": "p.211",
+      "suppressed_by_flag": null,
+      "template_bonus_languages": [],
+      "type_tokens": [
+        "RacialTraits",
+        "Gnome Racial Trait",
+        "SpecialQuality",
+        "Special Quality",
+        "Applied Bonus"
+      ]
+    },
+    "gnome/gnome_vivacious.json": {
+      "adopted_race_pool_suffix": null,
+      "automatic_trait_grants": [],
+      "category": "Special Ability",
+      "declared_bonuses": {
+        "ability_adjustments": [],
+        "ability_pool_picks": 0,
+        "magnitudes": [],
+        "magnitudes_excluding_flags": [],
+        "only_internal_flags": false,
+        "target_bonuses": [],
+        "var_contributions": []
+      },
+      "declared_size": null,
+      "declared_vision": [],
+      "declared_walk_speed_ft": null,
+      "declares_negated_ability_guard": false,
+      "description": "Some gnomes retain a trace of the vitality of the First World. These gnomes recover 50% more hit points (minimum 1) whenever they recover hit points from rest. Whenever they are healed of hit point damage by a spell, they heal an additional amount equal to 1/2 the spell's caster level (minimum 0). The extra healing does not apply to spells that grant fast healing or similar effects. This racial trait replaces gnome magic and keen senses.",
+      "exclusion_guard_flags": [
+        "Gnome_ReplaceGnomeMagic",
+        "Gnome_ReplaceKeenSenses"
+      ],
+      "is_racial_default": false,
+      "key": "Gnome ~ Vivacious",
+      "name": "Vivacious",
+      "negated_fact_gates": [],
+      "positive_prefact_flag": null,
+      "race_key": "Gnome",
+      "sets_replace_flags": [
+        "Gnome_ReplaceGnomeMagic",
+        "Gnome_ReplaceKeenSenses"
+      ],
+      "skinwalker_change_shape_kin": null,
+      "source_page": "p.211",
+      "suppressed_by_flag": null,
+      "template_bonus_languages": [],
+      "type_tokens": [
+        "RacialTraits",
+        "Gnome Racial Trait",
+        "SpecialQuality",
+        "Special Quality"
+      ]
+    },
+    "gnome/gnome_wright.json": {
+      "adopted_race_pool_suffix": null,
+      "automatic_trait_grants": [],
+      "category": "Special Ability",
+      "declared_bonuses": {
+        "ability_adjustments": [],
+        "ability_pool_picks": 0,
+        "magnitudes": [],
+        "magnitudes_excluding_flags": [],
+        "only_internal_flags": false,
+        "target_bonuses": [],
+        "var_contributions": []
+      },
+      "declared_size": null,
+      "declared_vision": [],
+      "declared_walk_speed_ft": null,
+      "declares_negated_ability_guard": false,
+      "description": "Some gnomes prefer to use their natural talents with mechanisms to drive machines. These gnomes gain a +2 racial bonus on driving checks and on Craft checks to build or repair vehicles. This racial trait replaces hatred and obsessive.",
+      "exclusion_guard_flags": [
+        "Gnome_ReplaceHatred",
+        "Gnome_ReplaceObsessive"
+      ],
+      "is_racial_default": false,
+      "key": "Gnome ~ Wright",
+      "name": "Wright",
+      "negated_fact_gates": [],
+      "positive_prefact_flag": null,
+      "race_key": "Gnome",
+      "sets_replace_flags": [
+        "Gnome_ReplaceHatred",
+        "Gnome_ReplaceObsessive"
+      ],
+      "skinwalker_change_shape_kin": null,
+      "source_page": "p.211",
+      "suppressed_by_flag": null,
+      "template_bonus_languages": [],
+      "type_tokens": [
+        "RacialTraits",
+        "Gnome Racial Trait",
+        "SpecialQuality",
+        "Special Quality"
+      ]
+    },
+    "goblin/goblin_junk_tinker.json": {
+      "adopted_race_pool_suffix": null,
+      "automatic_trait_grants": [
+        "Junk Tinker ~ Skilled"
+      ],
+      "category": "Special Ability",
+      "declared_bonuses": {
+        "ability_adjustments": [],
+        "ability_pool_picks": 0,
+        "magnitudes": [],
+        "magnitudes_excluding_flags": [],
+        "only_internal_flags": false,
+        "target_bonuses": [],
+        "var_contributions": []
+      },
+      "declared_size": null,
+      "declared_vision": [],
+      "declared_walk_speed_ft": null,
+      "declares_negated_ability_guard": false,
+      "description": "Goblins use ramshackle equipment and vehicles that seem like they should never function. Goblins gain a +2 racial bonus on driving checks and on Craft checks to build or repair weapons or vehicles without the proper tools. They can make the attempt with any material that can hold the right shape for a few uses, but normally unfit materials produce items with the fragile quality. This racial trait alters skilled, replacing the racial bonus on Stealth checks.",
+      "exclusion_guard_flags": [
+        "Goblin_ReplaceSkilled"
+      ],
+      "is_racial_default": false,
+      "key": "Goblin ~ Junk Tinker",
+      "name": "Junk Tinker",
+      "negated_fact_gates": [],
+      "positive_prefact_flag": null,
+      "race_key": "Goblin",
+      "sets_replace_flags": [
+        "Goblin_ReplaceSkilled"
+      ],
+      "skinwalker_change_shape_kin": null,
+      "source_page": "p.215",
+      "suppressed_by_flag": null,
+      "template_bonus_languages": [],
+      "type_tokens": [
+        "RacialTraits",
+        "Goblin Racial Trait",
+        "SpecialQuality",
+        "Special Quality"
+      ]
+    },
+    "goblin/junk_tinker_skilled.json": {
+      "adopted_race_pool_suffix": null,
+      "automatic_trait_grants": [],
+      "category": "Special Ability",
+      "declared_bonuses": {
+        "ability_adjustments": [],
+        "ability_pool_picks": 0,
+        "magnitudes": [
+          4
+        ],
+        "magnitudes_excluding_flags": [
+          4
+        ],
+        "only_internal_flags": false,
+        "target_bonuses": [
+          {
+            "keyword": "SKILL",
+            "magnitude": 4,
+            "target": "Ride"
+          }
+        ],
+        "var_contributions": []
+      },
+      "declared_size": null,
+      "declared_vision": [],
+      "declared_walk_speed_ft": null,
+      "declares_negated_ability_guard": false,
+      "description": "+4 racial bonus on Ride checks.",
+      "exclusion_guard_flags": [],
+      "is_racial_default": false,
+      "key": "Junk Tinker ~ Skilled",
+      "name": "Skilled",
+      "negated_fact_gates": [],
+      "positive_prefact_flag": null,
+      "race_key": "Goblin",
+      "sets_replace_flags": [],
+      "skinwalker_change_shape_kin": null,
+      "source_page": "p.156",
+      "suppressed_by_flag": null,
+      "template_bonus_languages": [],
+      "type_tokens": [
+        "RacialTraits",
+        "Goblin Racial Trait",
+        "SpecialQuality"
+      ]
+    },
+    "grippli/grippli_defensive_training.json": {
+      "adopted_race_pool_suffix": null,
+      "automatic_trait_grants": [],
+      "category": "Special Ability",
+      "declared_bonuses": {
+        "ability_adjustments": [],
+        "ability_pool_picks": 0,
+        "magnitudes": [
+          2
+        ],
+        "magnitudes_excluding_flags": [
+          2
+        ],
+        "only_internal_flags": false,
+        "target_bonuses": [
+          {
+            "keyword": "VAR",
+            "magnitude": 2,
+            "target": "RacialDefensiveTrainingBonus"
+          }
+        ],
+        "var_contributions": [
+          {
+            "amount": 2,
+            "name": "RacialDefensiveTrainingBonus"
+          }
+        ]
+      },
+      "declared_size": null,
+      "declared_vision": [],
+      "declared_walk_speed_ft": null,
+      "declares_negated_ability_guard": false,
+      "description": "[redacted PI]",
+      "exclusion_guard_flags": [
+        "Grippli_ReplaceSwampStride",
+        "Grippli_ReplaceWeaponFamiliarity"
+      ],
+      "is_racial_default": false,
+      "key": "Grippli ~ Defensive Training",
+      "name": "Defensive Training",
+      "negated_fact_gates": [],
+      "positive_prefact_flag": null,
+      "race_key": "Grippli",
+      "sets_replace_flags": [
+        "Grippli_ReplaceSwampStride",
+        "Grippli_ReplaceWeaponFamiliarity"
+      ],
+      "skinwalker_change_shape_kin": null,
+      "source_page": "p.215",
+      "suppressed_by_flag": null,
+      "template_bonus_languages": [],
+      "type_tokens": [
+        "RacialTraits",
+        "Grippli Racial Trait",
+        "SpecialQuality",
+        "Special Quality",
+        "Defensive"
+      ]
+    },
+    "half_elf/half_elf_elf_scorned.json": {
+      "adopted_race_pool_suffix": null,
+      "automatic_trait_grants": [],
+      "category": "Special Ability",
+      "declared_bonuses": {
+        "ability_adjustments": [],
+        "ability_pool_picks": 0,
+        "magnitudes": [
+          2
+        ],
+        "magnitudes_excluding_flags": [
+          2
+        ],
+        "only_internal_flags": false,
+        "target_bonuses": [
+          {
+            "keyword": "VAR",
+            "magnitude": 2,
+            "target": "RacialDefensiveTrainingBonus"
+          }
+        ],
+        "var_contributions": [
+          {
+            "amount": 2,
+            "name": "RacialDefensiveTrainingBonus"
+          }
+        ]
+      },
+      "declared_size": null,
+      "declared_vision": [],
+      "declared_walk_speed_ft": null,
+      "declares_negated_ability_guard": false,
+      "description": "[redacted PI]",
+      "exclusion_guard_flags": [
+        "HalfElf_ReplaceElvenImmunities",
+        "HalfElf_ReplaceMultitalented"
+      ],
+      "is_racial_default": false,
+      "key": "Half-Elf ~ Elf-Scorned",
+      "name": "Elf-Scorned",
+      "negated_fact_gates": [],
+      "positive_prefact_flag": null,
+      "race_key": "Half-Elf",
+      "sets_replace_flags": [
+        "HalfElf_ReplaceElvenImmunities",
+        "HalfElf_ReplaceMultitalented"
+      ],
+      "skinwalker_change_shape_kin": null,
+      "source_page": "p.211",
+      "suppressed_by_flag": null,
+      "template_bonus_languages": [],
+      "type_tokens": [
+        "RacialTraits",
+        "Half-Elf Racial Trait",
+        "SpecialAttack",
+        "Special Attack",
+        "Defensive",
+        "Applied Bonus"
+      ]
+    },
+    "half_elf/half_elf_eye_for_opportunity.json": {
+      "adopted_race_pool_suffix": null,
+      "automatic_trait_grants": [],
+      "category": "Special Ability",
+      "declared_bonuses": {
+        "ability_adjustments": [],
+        "ability_pool_picks": 0,
+        "magnitudes": [],
+        "magnitudes_excluding_flags": [],
+        "only_internal_flags": false,
+        "target_bonuses": [],
+        "var_contributions": []
+      },
+      "declared_size": null,
+      "declared_vision": [],
+      "declared_walk_speed_ft": null,
+      "declares_negated_ability_guard": false,
+      "description": "Constantly facing the rough edges of two societies, some half-elves develop a knack for finding overlooked opportunities. They gain a +1 racial bonus on attacks of opportunity. This racial trait replaces adaptability and keen senses.",
+      "exclusion_guard_flags": [
+        "HalfElf_ReplaceAdaptability",
+        "HalfElf_ReplaceKeenSenses"
+      ],
+      "is_racial_default": false,
+      "key": "Half-Elf ~ Eye for Opportunity",
+      "name": "Eye for Opportunity",
+      "negated_fact_gates": [],
+      "positive_prefact_flag": null,
+      "race_key": "Half-Elf",
+      "sets_replace_flags": [
+        "HalfElf_ReplaceAdaptability",
+        "HalfElf_ReplaceKeenSenses"
+      ],
+      "skinwalker_change_shape_kin": null,
+      "source_page": "p.211",
+      "suppressed_by_flag": null,
+      "template_bonus_languages": [],
+      "type_tokens": [
+        "RacialTraits",
+        "Half-Elf Racial Trait",
+        "SpecialQuality",
+        "Special Quality"
+      ]
+    },
+    "half_elf/half_elf_kindred_raised.json": {
+      "adopted_race_pool_suffix": null,
+      "automatic_trait_grants": [
+        "+2 Charisma"
+      ],
+      "category": "Special Ability",
+      "declared_bonuses": {
+        "ability_adjustments": [],
+        "ability_pool_picks": 1,
+        "magnitudes": [
+          1
+        ],
+        "magnitudes_excluding_flags": [
+          1
+        ],
+        "only_internal_flags": false,
+        "target_bonuses": [
+          {
+            "keyword": "ABILITYPOOL",
+            "magnitude": 1,
+            "target": "Ability Bonus"
+          }
+        ],
+        "var_contributions": []
+      },
+      "declared_size": null,
+      "declared_vision": [],
+      "declared_walk_speed_ft": null,
+      "declares_negated_ability_guard": false,
+      "description": "While most think of people with one human and one elven parent when they think of half-elves, some half-elves are raised by two half-elven parents. Such half-elves feel less like outsiders, making them more confident, but less adaptable without the exposure to a human parent. They gain a +2 bonus to Charisma and one other ability score of their choice. This racial trait replaces the half-elf's usual racial ability score modifiers, as well as adaptability, elven immunities, keen senses, and multitalented.",
+      "exclusion_guard_flags": [
+        "HalfElf_ReplaceAbilityScores",
+        "HalfElf_ReplaceAdaptability",
+        "HalfElf_ReplaceElvenImmunities",
+        "HalfElf_ReplaceKeenSenses",
+        "HalfElf_ReplaceMultitalented"
+      ],
+      "is_racial_default": false,
+      "key": "Half-Elf ~ Kindred-Raised",
+      "name": "Kindred-Raised",
+      "negated_fact_gates": [],
+      "positive_prefact_flag": null,
+      "race_key": "Half-Elf",
+      "sets_replace_flags": [
+        "HalfElf_ReplaceAbilityScores",
+        "HalfElf_ReplaceAdaptability",
+        "HalfElf_ReplaceElvenImmunities",
+        "HalfElf_ReplaceKeenSenses",
+        "HalfElf_ReplaceMultitalented"
+      ],
+      "skinwalker_change_shape_kin": null,
+      "source_page": "p.212",
+      "suppressed_by_flag": null,
+      "template_bonus_languages": [],
+      "type_tokens": [
+        "RacialTraits",
+        "Half-Elf Racial Trait",
+        "SpecialQuality",
+        "Special Quality",
+        "Applied Bonus"
+      ]
+    },
+    "half_elf/half_elf_reflexive_improvisation.json": {
+      "adopted_race_pool_suffix": null,
+      "automatic_trait_grants": [],
+      "category": "Special Ability",
+      "declared_bonuses": {
+        "ability_adjustments": [],
+        "ability_pool_picks": 0,
+        "magnitudes": [],
+        "magnitudes_excluding_flags": [],
+        "only_internal_flags": false,
+        "target_bonuses": [],
+        "var_contributions": []
+      },
+      "declared_size": null,
+      "declared_vision": [],
+      "declared_walk_speed_ft": null,
+      "declares_negated_ability_guard": false,
+      "description": "Half-elves raised among elves often stumble unprepared into each new stage of life because their elven relatives are unaccustomed to the speed of their maturation. They gain a +2 racial bonus on untrained skill checks. This racial trait replaces adaptability and multitalented.",
+      "exclusion_guard_flags": [
+        "HalfElf_ReplaceAdaptability",
+        "HalfElf_ReplaceMultitalented"
+      ],
+      "is_racial_default": false,
+      "key": "Half-Elf ~ Reflexive Improvisation",
+      "name": "Reflexive Improvisation",
+      "negated_fact_gates": [],
+      "positive_prefact_flag": null,
+      "race_key": "Half-Elf",
+      "sets_replace_flags": [
+        "HalfElf_ReplaceAdaptability",
+        "HalfElf_ReplaceMultitalented"
+      ],
+      "skinwalker_change_shape_kin": null,
+      "source_page": "p.212",
+      "suppressed_by_flag": null,
+      "template_bonus_languages": [],
+      "type_tokens": [
+        "RacialTraits",
+        "Half-Elf Racial Trait",
+        "SpecialQuality",
+        "Special Quality",
+        "Applied Bonus"
+      ]
+    },
+    "half_elf/half_elf_sea_legs.json": {
+      "adopted_race_pool_suffix": null,
+      "automatic_trait_grants": [],
+      "category": "Special Ability",
+      "declared_bonuses": {
+        "ability_adjustments": [],
+        "ability_pool_picks": 0,
+        "magnitudes": [
+          4,
+          2
+        ],
+        "magnitudes_excluding_flags": [
+          4,
+          2
+        ],
+        "only_internal_flags": false,
+        "target_bonuses": [
+          {
+            "keyword": "SITUATION",
+            "magnitude": 4,
+            "target": "Acrobatics=to move on narrow or slippery surfaces"
+          },
+          {
+            "keyword": "SITUATION",
+            "magnitude": 4,
+            "target": "Climb=on docks and ships"
+          },
+          {
+            "keyword": "SKILL",
+            "magnitude": 2,
+            "target": "Swim"
+          }
+        ],
+        "var_contributions": []
+      },
+      "declared_size": null,
+      "declared_vision": [],
+      "declared_walk_speed_ft": null,
+      "declares_negated_ability_guard": false,
+      "description": "[redacted PI]",
+      "exclusion_guard_flags": [
+        "HalfElf_ReplaceAdaptability"
+      ],
+      "is_racial_default": false,
+      "key": "Half-Elf ~ Sea Legs",
+      "name": "Sea Legs",
+      "negated_fact_gates": [],
+      "positive_prefact_flag": null,
+      "race_key": "Half-Elf",
+      "sets_replace_flags": [
+        "HalfElf_ReplaceAdaptability"
+      ],
+      "skinwalker_change_shape_kin": null,
+      "source_page": "p.212",
+      "suppressed_by_flag": null,
+      "template_bonus_languages": [],
+      "type_tokens": [
+        "RacialTraits",
+        "Half-Elf Racial Trait",
+        "SpecialQuality",
+        "Special Quality",
+        "Applied Bonus"
+      ]
+    },
+    "half_elf/half_elf_sophisticate.json": {
+      "adopted_race_pool_suffix": null,
+      "automatic_trait_grants": [],
+      "category": "Special Ability",
+      "declared_bonuses": {
+        "ability_adjustments": [],
+        "ability_pool_picks": 0,
+        "magnitudes": [
+          2
+        ],
+        "magnitudes_excluding_flags": [
+          2
+        ],
+        "only_internal_flags": false,
+        "target_bonuses": [
+          {
+            "keyword": "SKILL",
+            "magnitude": 2,
+            "target": "Knowledge (History),Knowledge (Local)"
+          }
+        ],
+        "var_contributions": []
+      },
+      "declared_size": null,
+      "declared_vision": [],
+      "declared_walk_speed_ft": null,
+      "declares_negated_ability_guard": false,
+      "description": "Half-elves who strive to embody the culture in which they live develop a keen instinct for the ebb and flow of fashions, fads, and political trends. They gain a +2 racial bonus on Knowledge (history) and Knowledge (local) checks and can use those skills untrained even for checks with a DC of 10 or more. This racial trait replaces elven immunities.",
+      "exclusion_guard_flags": [
+        "HalfElf_ReplaceElvenImmunities"
+      ],
+      "is_racial_default": false,
+      "key": "Half-Elf ~ Sophisticate",
+      "name": "Sophisticate",
+      "negated_fact_gates": [],
+      "positive_prefact_flag": null,
+      "race_key": "Half-Elf",
+      "sets_replace_flags": [
+        "HalfElf_ReplaceElvenImmunities"
+      ],
+      "skinwalker_change_shape_kin": null,
+      "source_page": "p.212",
+      "suppressed_by_flag": null,
+      "template_bonus_languages": [],
+      "type_tokens": [
+        "RacialTraits",
+        "Half-Elf Racial Trait",
+        "SpecialQuality",
+        "Special Quality",
+        "Applied Bonus"
+      ]
+    },
+    "half_elf/half_elf_weapon_familiarity.json": {
+      "adopted_race_pool_suffix": null,
+      "automatic_trait_grants": [
+        "Elf ~ Weapon Familiarity"
+      ],
+      "category": "Special Ability",
+      "declared_bonuses": {
+        "ability_adjustments": [],
+        "ability_pool_picks": 0,
+        "magnitudes": [],
+        "magnitudes_excluding_flags": [],
+        "only_internal_flags": false,
+        "target_bonuses": [],
+        "var_contributions": []
+      },
+      "declared_size": null,
+      "declared_vision": [],
+      "declared_walk_speed_ft": null,
+      "declares_negated_ability_guard": false,
+      "description": "Half-elves raised among elves often feel pitied and mistrusted by their longer-lived kin, and yet they receive training in elf weapons. They gain the elf's weapon familiarity trait. This racial trait replaces adaptability.",
+      "exclusion_guard_flags": [
+        "HalfElf_ReplaceAdaptability"
+      ],
+      "is_racial_default": false,
+      "key": "Half-Elf ~ Weapon Familiarity",
+      "name": "Weapon Familiarity",
+      "negated_fact_gates": [],
+      "positive_prefact_flag": null,
+      "race_key": "Half-Elf",
+      "sets_replace_flags": [
+        "HalfElf_ReplaceAdaptability"
+      ],
+      "skinwalker_change_shape_kin": null,
+      "source_page": "p.212",
+      "suppressed_by_flag": null,
+      "template_bonus_languages": [],
+      "type_tokens": [
+        "RacialTraits",
+        "Half-Elf Racial Trait",
+        "SpecialQuality",
+        "Special Quality"
+      ]
+    },
+    "half_orc/half_orc_divided_attention.json": {
+      "adopted_race_pool_suffix": null,
+      "automatic_trait_grants": [],
+      "category": "Special Ability",
+      "declared_bonuses": {
+        "ability_adjustments": [],
+        "ability_pool_picks": 0,
+        "magnitudes": [],
+        "magnitudes_excluding_flags": [],
+        "only_internal_flags": false,
+        "target_bonuses": [],
+        "var_contributions": []
+      },
+      "declared_size": null,
+      "declared_vision": [],
+      "declared_walk_speed_ft": null,
+      "declares_negated_ability_guard": false,
+      "description": "Half-orcs must learn to divide their attention among multiple threats to stay alive, since both humans and orcs often attempt to put them in their place. Half-orcs gain a +1 dodge bonus to AC against foes who flank them. This racial trait replaces intimidating and orc ferocity.",
+      "exclusion_guard_flags": [
+        "HalfOrc_ReplaceIntimidating",
+        "HalfOrc_ReplaceOrcFerocity"
+      ],
+      "is_racial_default": false,
+      "key": "Half-Orc ~ Divided Attention",
+      "name": "Divided Attention",
+      "negated_fact_gates": [],
+      "positive_prefact_flag": null,
+      "race_key": "Half-Orc",
+      "sets_replace_flags": [
+        "HalfOrc_ReplaceIntimidating",
+        "HalfOrc_ReplaceOrcFerocity"
+      ],
+      "skinwalker_change_shape_kin": null,
+      "source_page": "p.212",
+      "suppressed_by_flag": null,
+      "template_bonus_languages": [],
+      "type_tokens": [
+        "RacialTraits",
+        "Half-Orc Racial Trait",
+        "SpecialQuality",
+        "Special Quality"
+      ]
+    },
+    "half_orc/half_orc_human_raised.json": {
+      "adopted_race_pool_suffix": null,
+      "automatic_trait_grants": [
+        "Human ~ Skilled"
+      ],
+      "category": "Special Ability",
+      "declared_bonuses": {
+        "ability_adjustments": [],
+        "ability_pool_picks": 0,
+        "magnitudes": [],
+        "magnitudes_excluding_flags": [],
+        "only_internal_flags": false,
+        "target_bonuses": [],
+        "var_contributions": []
+      },
+      "declared_size": null,
+      "declared_vision": [],
+      "declared_walk_speed_ft": null,
+      "declares_negated_ability_guard": false,
+      "description": "Some half-orcs raised as humans lack their cousins' ferocity and training in orc weapons, but pick up a bit of their human parents' skills. They gain the human's skilled racial trait. This racial trait replaces orc ferocity and weapon familiarity.",
+      "exclusion_guard_flags": [
+        "HalfOrc_ReplaceOrcFerocity",
+        "HalfOrc_ReplaceWeaponFamiliarity"
+      ],
+      "is_racial_default": false,
+      "key": "Half-Orc ~ Human-Raised",
+      "name": "Human-Raised",
+      "negated_fact_gates": [],
+      "positive_prefact_flag": null,
+      "race_key": "Half-Orc",
+      "sets_replace_flags": [
+        "HalfOrc_ReplaceOrcFerocity",
+        "HalfOrc_ReplaceWeaponFamiliarity"
+      ],
+      "skinwalker_change_shape_kin": null,
+      "source_page": "p.212",
+      "suppressed_by_flag": null,
+      "template_bonus_languages": [],
+      "type_tokens": [
+        "RacialTraits",
+        "Half-Orc Racial Trait",
+        "SpecialQuality",
+        "Special Quality"
+      ]
+    },
+    "half_orc/half_orc_orc_atavism.json": {
+      "adopted_race_pool_suffix": null,
+      "automatic_trait_grants": [
+        "Universal Monster Rule ~ Ferocity"
+      ],
+      "category": "Special Ability",
+      "declared_bonuses": {
+        "ability_adjustments": [
+          {
+            "codes": "STR",
+            "magnitude": "2"
+          },
+          {
+            "codes": "%LIST",
+            "magnitude": "-2"
+          }
+        ],
+        "ability_pool_picks": 0,
+        "magnitudes": [
+          2,
+          -2
+        ],
+        "magnitudes_excluding_flags": [
+          2,
+          -2
+        ],
+        "only_internal_flags": false,
+        "target_bonuses": [
+          {
+            "keyword": "STAT",
+            "magnitude": 2,
+            "target": "STR"
+          },
+          {
+            "keyword": "STAT",
+            "magnitude": -2,
+            "target": "%LIST"
+          }
+        ],
+        "var_contributions": []
+      },
+      "declared_size": null,
+      "declared_vision": [],
+      "declared_walk_speed_ft": null,
+      "declares_negated_ability_guard": false,
+      "description": "Some half-orcs have much stronger orc blood than human blood. Such half-orcs count as only half-orcs and orcs (not also humans) for any effect related to race. They gain a +2 bonus to Strength and a -2 penalty to one mental ability score of their choice. Finally, they gain the ferocity universal monster ability. This racial trait replaces the half-orc's usual racial ability score modifiers, as well as intimidating, orc blood, and orc ferocity.",
+      "exclusion_guard_flags": [
+        "HalfOrc_ReplaceAbilityScores",
+        "HalfOrc_ReplaceIntimidating",
+        "HalfOrc_ReplaceOrcFerocity"
+      ],
+      "is_racial_default": false,
+      "key": "Half-Orc ~ Orc Atavism",
+      "name": "Orc Atavism",
+      "negated_fact_gates": [],
+      "positive_prefact_flag": null,
+      "race_key": "Half-Orc",
+      "sets_replace_flags": [
+        "HalfOrc_ReplaceAbilityScores",
+        "HalfOrc_ReplaceIntimidating",
+        "HalfOrc_ReplaceOrcFerocity"
+      ],
+      "skinwalker_change_shape_kin": null,
+      "source_page": "p.212",
+      "suppressed_by_flag": null,
+      "template_bonus_languages": [],
+      "type_tokens": [
+        "RacialTraits",
+        "Half-Orc Racial Trait",
+        "SpecialQuality",
+        "Special Quality"
+      ]
+    },
+    "half_orc/half_orc_overlooked_mastermind.json": {
+      "adopted_race_pool_suffix": null,
+      "automatic_trait_grants": [],
+      "category": "Special Ability",
+      "declared_bonuses": {
+        "ability_adjustments": [],
+        "ability_pool_picks": 0,
+        "magnitudes": [
+          2
+        ],
+        "magnitudes_excluding_flags": [
+          2
+        ],
+        "only_internal_flags": false,
+        "target_bonuses": [
+          {
+            "keyword": "SITUATION",
+            "magnitude": 2,
+            "target": "Bluff=to feign ignorance,Sense Motive=to intercept secret messages"
+          },
+          {
+            "keyword": "SKILL",
+            "magnitude": 2,
+            "target": "Bluff,Diplomacy,Sense Motive"
+          }
+        ],
+        "var_contributions": []
+      },
+      "declared_size": null,
+      "declared_vision": [],
+      "declared_walk_speed_ft": null,
+      "declares_negated_ability_guard": false,
+      "description": "Some half-orcs use half-orcs' brutish stereotypes to their advantage, causing others to underestimate their intelligence and scheming. Such half-orcs gain a +2 racial bonus on Bluff, Diplomacy, and Sense Motive checks. This bonus increases to +4 against other humanoids. They also receive a +2 racial bonus on Bluff checks to feign ignorance and Sense Motive checks to intercept secret messages, and this stacks with the above bonus. This racial trait replaces intimidating, orc ferocity, and weapon familiarity.",
+      "exclusion_guard_flags": [
+        "HalfOrc_ReplaceIntimidating",
+        "HalfOrc_ReplaceOrcFerocity",
+        "HalfOrc_ReplaceWeaponFamiliarity"
+      ],
+      "is_racial_default": false,
+      "key": "Half-Orc ~ Overlooked Mastermind",
+      "name": "Overlooked Mastermind",
+      "negated_fact_gates": [],
+      "positive_prefact_flag": null,
+      "race_key": "Half-Orc",
+      "sets_replace_flags": [
+        "HalfOrc_ReplaceIntimidating",
+        "HalfOrc_ReplaceOrcFerocity",
+        "HalfOrc_ReplaceWeaponFamiliarity"
+      ],
+      "skinwalker_change_shape_kin": null,
+      "source_page": "p.212",
+      "suppressed_by_flag": null,
+      "template_bonus_languages": [],
+      "type_tokens": [
+        "RacialTraits",
+        "Half-Orc Racial Trait",
+        "SpecialQuality",
+        "Special Quality",
+        "Applied Bonus"
+      ]
+    },
+    "half_orc/half_orc_pariah.json": {
+      "adopted_race_pool_suffix": null,
+      "automatic_trait_grants": [],
+      "category": "Special Ability",
+      "declared_bonuses": {
+        "ability_adjustments": [],
+        "ability_pool_picks": 0,
+        "magnitudes": [
+          -2
+        ],
+        "magnitudes_excluding_flags": [
+          -2
+        ],
+        "only_internal_flags": false,
+        "target_bonuses": [
+          {
+            "keyword": "SKILL",
+            "magnitude": -2,
+            "target": "Bluff,Diplomacy,Sense Motive"
+          }
+        ],
+        "var_contributions": []
+      },
+      "declared_size": null,
+      "declared_vision": [],
+      "declared_walk_speed_ft": null,
+      "declares_negated_ability_guard": false,
+      "description": "While many cultures discriminate against half-orcs, in some, particularly dwarven communities, half-orcs are complete social pariahs. It goes without saying that such a culture does not provide outlets for a half-orc to practice with traditional orc weapons. The few half-orcs who survive to adulthood in such harsh social climates are deeply scarred by their abusive treatment and find it hard to express and understand normal emotions. Such half-orcs gain a +2 racial bonus on saving throws against emotion and fear effects and a -2 penalty on Bluff, Diplomacy, and Sense Motive checks. This racial trait replaces weapon familiarity.",
+      "exclusion_guard_flags": [
+        "HalfOrc_ReplaceWeaponFamiliarity"
+      ],
+      "is_racial_default": false,
+      "key": "Half-Orc ~ Pariah",
+      "name": "Pariah",
+      "negated_fact_gates": [],
+      "positive_prefact_flag": null,
+      "race_key": "Half-Orc",
+      "sets_replace_flags": [
+        "HalfOrc_ReplaceWeaponFamiliarity"
+      ],
+      "skinwalker_change_shape_kin": null,
+      "source_page": "p.212",
+      "suppressed_by_flag": null,
+      "template_bonus_languages": [],
+      "type_tokens": [
+        "RacialTraits",
+        "Half-Orc Racial Trait",
+        "SpecialQuality",
+        "Special Quality",
+        "Applied Bonus"
+      ]
+    },
+    "half_orc/half_orc_sea_raider.json": {
+      "adopted_race_pool_suffix": null,
+      "automatic_trait_grants": [],
+      "category": "Special Ability",
+      "declared_bonuses": {
+        "ability_adjustments": [],
+        "ability_pool_picks": 0,
+        "magnitudes": [
+          2
+        ],
+        "magnitudes_excluding_flags": [
+          2
+        ],
+        "only_internal_flags": false,
+        "target_bonuses": [
+          {
+            "keyword": "SKILL",
+            "magnitude": 2,
+            "target": "Profession (Sailor)"
+          }
+        ],
+        "var_contributions": []
+      },
+      "declared_size": null,
+      "declared_vision": [],
+      "declared_walk_speed_ft": null,
+      "declares_negated_ability_guard": false,
+      "description": "In the Lands of the Linnorm Kings and the Shackles, half-orcs frequently take up sailing as pirates, raiders, and fishers, where they are known as tenacious fighters. They gain a +2 racial bonus on Profession (sailor) checks and Craft checks to repair ships, and a +1 racial bonus on damage rolls against foes and objects in or on top of the water. This racial trait replaces darkvision.",
+      "exclusion_guard_flags": [
+        "HalfOrc_ReplaceVision"
+      ],
+      "is_racial_default": false,
+      "key": "Half-Orc ~ Sea Raider",
+      "name": "Sea Raider",
+      "negated_fact_gates": [],
+      "positive_prefact_flag": null,
+      "race_key": "Half-Orc",
+      "sets_replace_flags": [
+        "HalfOrc_ReplaceVision"
+      ],
+      "skinwalker_change_shape_kin": null,
+      "source_page": "p.212",
+      "suppressed_by_flag": null,
+      "template_bonus_languages": [],
+      "type_tokens": [
+        "RacialTraits",
+        "Half-Orc Racial Trait",
+        "SpecialAttack",
+        "Special Attack",
+        "Applied Bonus"
+      ]
+    },
+    "half_orc/half_orc_war_leader.json": {
+      "adopted_race_pool_suffix": null,
+      "automatic_trait_grants": [],
+      "category": "Special Ability",
+      "declared_bonuses": {
+        "ability_adjustments": [],
+        "ability_pool_picks": 0,
+        "magnitudes": [
+          2
+        ],
+        "magnitudes_excluding_flags": [
+          2
+        ],
+        "only_internal_flags": false,
+        "target_bonuses": [
+          {
+            "keyword": "SKILL",
+            "magnitude": 2,
+            "target": "Diplomacy,Profession (Soldier)"
+          },
+          {
+            "keyword": "VAR",
+            "magnitude": 2,
+            "target": "LeadershipScore"
+          }
+        ],
+        "var_contributions": [
+          {
+            "amount": 2,
+            "name": "LeadershipScore"
+          }
+        ]
+      },
+      "declared_size": null,
+      "declared_vision": [],
+      "declared_walk_speed_ft": null,
+      "declares_negated_ability_guard": false,
+      "description": "Some orcs seek out human mates in hopes of birthing intelligent leaders for their interminable war efforts. When nature and luck smile upon this endeavor and a half-orc child shows cunning, that child is raised with many harrowing opportunities to learn how to best lead on the battlefield. Such half-orcs gain a +2 bonus on Diplomacy and Profession (soldier) checks as well as to their Leadership score (for the purpose of the Leadership feat). Armies they control in mass combat gain a +1 bonus to Morale. (See Pathfinder RPG Ultimate Campaign.) This racial trait replaces darkvision and orc ferocity.",
+      "exclusion_guard_flags": [
+        "HalfOrc_ReplaceVision",
+        "HalfOrc_ReplaceOrcFerocity"
+      ],
+      "is_racial_default": false,
+      "key": "Half-Orc ~ War-Leader",
+      "name": "War-Leader",
+      "negated_fact_gates": [],
+      "positive_prefact_flag": null,
+      "race_key": "Half-Orc",
+      "sets_replace_flags": [
+        "HalfOrc_ReplaceVision",
+        "HalfOrc_ReplaceOrcFerocity"
+      ],
+      "skinwalker_change_shape_kin": null,
+      "source_page": "p.212",
+      "suppressed_by_flag": null,
+      "template_bonus_languages": [],
+      "type_tokens": [
+        "RacialTraits",
+        "Half-Orc Racial Trait",
+        "SpecialQuality",
+        "Special Quality",
+        "Applied Bonus"
+      ]
+    },
+    "halfling/halfling_caretaker.json": {
+      "adopted_race_pool_suffix": null,
+      "automatic_trait_grants": [],
+      "category": "Special Ability",
+      "declared_bonuses": {
+        "ability_adjustments": [],
+        "ability_pool_picks": 0,
+        "magnitudes": [
+          2,
+          1
+        ],
+        "magnitudes_excluding_flags": [
+          2
+        ],
+        "only_internal_flags": false,
+        "target_bonuses": [
+          {
+            "keyword": "SKILL",
+            "magnitude": 2,
+            "target": "Sense Motive"
+          },
+          {
+            "keyword": "VAR",
+            "magnitude": 1,
+            "target": "Companion_MasterRacialTrait_AbilityBonus"
+          }
+        ],
+        "var_contributions": [
+          {
+            "amount": 1,
+            "name": "Companion_MasterRacialTrait_AbilityBonus"
+          }
+        ]
+      },
+      "declared_size": null,
+      "declared_vision": [],
+      "declared_walk_speed_ft": null,
+      "declares_negated_ability_guard": false,
+      "description": "Humans often entrust halfling families with the care of children and animals, a task that has helped them develop keen insight. Such halflings gain a +2 racial bonus on Sense Motive checks. In addition, when they acquire an animal companion, bonded mount, cohort, or familiar, that creature gains a +2 bonus to one ability score of the character's choice. This racial trait replaces halfling luck, sure-footed, and weapon familiarity.",
+      "exclusion_guard_flags": [
+        "Halfling_ReplaceHalflingLuck",
+        "Halfling_ReplaceSureFooted",
+        "Halfling_ReplaceWeaponFamiliarity"
+      ],
+      "is_racial_default": false,
+      "key": "Halfling ~ Caretaker",
+      "name": "Caretaker",
+      "negated_fact_gates": [],
+      "positive_prefact_flag": null,
+      "race_key": "Halfling",
+      "sets_replace_flags": [
+        "Halfling_ReplaceHalflingLuck",
+        "Halfling_ReplaceSureFooted",
+        "Halfling_ReplaceWeaponFamiliarity"
+      ],
+      "skinwalker_change_shape_kin": null,
+      "source_page": "p.212",
+      "suppressed_by_flag": null,
+      "template_bonus_languages": [],
+      "type_tokens": [
+        "RacialTraits",
+        "Halfling Racial Trait",
+        "SpecialQuality",
+        "Special Quality",
+        "Applied Bonus"
+      ]
+    },
+    "halfling/halfling_driven_worker.json": {
+      "adopted_race_pool_suffix": null,
+      "automatic_trait_grants": [],
+      "category": "Special Ability",
+      "declared_bonuses": {
+        "ability_adjustments": [],
+        "ability_pool_picks": 0,
+        "magnitudes": [
+          4
+        ],
+        "magnitudes_excluding_flags": [
+          4
+        ],
+        "only_internal_flags": false,
+        "target_bonuses": [
+          {
+            "keyword": "SKILL",
+            "magnitude": 4,
+            "target": "%LIST"
+          }
+        ],
+        "var_contributions": []
+      },
+      "declared_size": null,
+      "declared_vision": [],
+      "declared_walk_speed_ft": null,
+      "declares_negated_ability_guard": false,
+      "description": "Many halfling families have developed techniques to accomplish work faster and more efficiently, whether to contribute to the community or to please overbearing masters. These halflings gain a +4 racial bonus on checks with one Craft, Perform, or Profession skill. This racial trait replaces sure-footed.",
+      "exclusion_guard_flags": [
+        "Halfling_ReplaceSureFooted"
+      ],
+      "is_racial_default": false,
+      "key": "Halfling ~ Driven Worker",
+      "name": "Driven Worker",
+      "negated_fact_gates": [],
+      "positive_prefact_flag": null,
+      "race_key": "Halfling",
+      "sets_replace_flags": [
+        "Halfling_ReplaceSureFooted"
+      ],
+      "skinwalker_change_shape_kin": null,
+      "source_page": "p.213",
+      "suppressed_by_flag": null,
+      "template_bonus_languages": [],
+      "type_tokens": [
+        "RacialTraits",
+        "Halfling Racial Trait",
+        "SpecialQuality",
+        "Special Quality",
+        "Applied Bonus"
+      ]
+    },
+    "halfling/halfling_human_shadow.json": {
+      "adopted_race_pool_suffix": null,
+      "automatic_trait_grants": [],
+      "category": "Special Ability",
+      "declared_bonuses": {
+        "ability_adjustments": [],
+        "ability_pool_picks": 0,
+        "magnitudes": [],
+        "magnitudes_excluding_flags": [],
+        "only_internal_flags": false,
+        "target_bonuses": [],
+        "var_contributions": []
+      },
+      "declared_size": null,
+      "declared_vision": [],
+      "declared_walk_speed_ft": null,
+      "declares_negated_ability_guard": false,
+      "description": "Halflings seem to pop up wherever humans are found, in part because they actively support and move with human explorers, settlers, and travelers without drawing attention to themselves. These halflings can use Stealth to hide behind creatures at least one size category larger than themselves, without any other source of concealment or cover. As long as the halflings are within 30 feet of a human, they gain a +2 racial bonus on Sleight of Hand checks and Stealth checks. This racial trait replaces keen senses and sure-footed.",
+      "exclusion_guard_flags": [
+        "Halfling_ReplaceKeenSenses",
+        "Halfling_ReplaceSureFooted"
+      ],
+      "is_racial_default": false,
+      "key": "Halfling ~ Human Shadow",
+      "name": "Human Shadow",
+      "negated_fact_gates": [],
+      "positive_prefact_flag": null,
+      "race_key": "Halfling",
+      "sets_replace_flags": [
+        "Halfling_ReplaceKeenSenses",
+        "Halfling_ReplaceSureFooted"
+      ],
+      "skinwalker_change_shape_kin": null,
+      "source_page": "p.213",
+      "suppressed_by_flag": null,
+      "template_bonus_languages": [],
+      "type_tokens": [
+        "RacialTraits",
+        "Halfling Racial Trait",
+        "SpecialQuality",
+        "Special Quality"
+      ]
+    },
+    "halfling/halfling_secretive_survivor.json": {
+      "adopted_race_pool_suffix": null,
+      "automatic_trait_grants": [],
+      "category": "Special Ability",
+      "declared_bonuses": {
+        "ability_adjustments": [],
+        "ability_pool_picks": 0,
+        "magnitudes": [
+          2
+        ],
+        "magnitudes_excluding_flags": [
+          2
+        ],
+        "only_internal_flags": false,
+        "target_bonuses": [
+          {
+            "keyword": "SKILL",
+            "magnitude": 2,
+            "target": "Bluff,Stealth"
+          }
+        ],
+        "var_contributions": []
+      },
+      "declared_size": null,
+      "declared_vision": [],
+      "declared_walk_speed_ft": null,
+      "declares_negated_ability_guard": false,
+      "description": "Halflings from poor and desperate communities, most often in big cities, must take what they need without getting caught in order to survive. They gain a +2 racial bonus on Bluff and Stealth checks. This racial trait replaces sure-footed.",
+      "exclusion_guard_flags": [
+        "Halfling_ReplaceSureFooted"
+      ],
+      "is_racial_default": false,
+      "key": "Halfling ~ Secretive Survivor",
+      "name": "Secretive Survivor",
+      "negated_fact_gates": [],
+      "positive_prefact_flag": null,
+      "race_key": "Halfling",
+      "sets_replace_flags": [
+        "Halfling_ReplaceSureFooted"
+      ],
+      "skinwalker_change_shape_kin": null,
+      "source_page": "p.213",
+      "suppressed_by_flag": null,
+      "template_bonus_languages": [],
+      "type_tokens": [
+        "RacialTraits",
+        "Halfling Racial Trait",
+        "SpecialQuality",
+        "Special Quality",
+        "Applied Bonus"
+      ]
+    },
+    "halfling/halfling_skulker.json": {
+      "adopted_race_pool_suffix": null,
+      "automatic_trait_grants": [],
+      "category": "Special Ability",
+      "declared_bonuses": {
+        "ability_adjustments": [],
+        "ability_pool_picks": 0,
+        "magnitudes": [],
+        "magnitudes_excluding_flags": [],
+        "only_internal_flags": false,
+        "target_bonuses": [],
+        "var_contributions": []
+      },
+      "declared_size": null,
+      "declared_vision": [],
+      "declared_walk_speed_ft": null,
+      "declares_negated_ability_guard": false,
+      "description": "Oppressed halflings train from a young age to take advantage of times when their oppressors ignore them. Such halflings gain a +1 racial bonus on attacks against foes who are denied their Dexterity bonus to AC. This racial trait replaces fearless and weapon familiarity.",
+      "exclusion_guard_flags": [
+        "Halfling_ReplaceFearless",
+        "Halfling_ReplaceWeaponFamiliarity"
+      ],
+      "is_racial_default": false,
+      "key": "Halfling ~ Skulker",
+      "name": "Skulker",
+      "negated_fact_gates": [],
+      "positive_prefact_flag": null,
+      "race_key": "Halfling",
+      "sets_replace_flags": [
+        "Halfling_ReplaceFearless",
+        "Halfling_ReplaceWeaponFamiliarity"
+      ],
+      "skinwalker_change_shape_kin": null,
+      "source_page": "p.213",
+      "suppressed_by_flag": null,
+      "template_bonus_languages": [],
+      "type_tokens": [
+        "RacialTraits",
+        "Halfling Racial Trait",
+        "SpecialQuality",
+        "Special Quality"
+      ]
+    },
+    "halfling/halfling_unfettered.json": {
+      "adopted_race_pool_suffix": null,
+      "automatic_trait_grants": [],
+      "category": "Special Ability",
+      "declared_bonuses": {
+        "ability_adjustments": [],
+        "ability_pool_picks": 0,
+        "magnitudes": [
+          4,
+          2
+        ],
+        "magnitudes_excluding_flags": [
+          4,
+          2
+        ],
+        "only_internal_flags": false,
+        "target_bonuses": [
+          {
+            "keyword": "SKILL",
+            "magnitude": 4,
+            "target": "Escape Artist"
+          },
+          {
+            "keyword": "VAR",
+            "magnitude": 2,
+            "target": "CMD_Grapple"
+          }
+        ],
+        "var_contributions": [
+          {
+            "amount": 2,
+            "name": "CMD_Grapple"
+          }
+        ]
+      },
+      "declared_size": null,
+      "declared_vision": [],
+      "declared_walk_speed_ft": null,
+      "declares_negated_ability_guard": false,
+      "description": "Former slips liberated from slavery train to ensure they will never be slaves again. They gain a +4 racial bonus on Escape Artist checks and a +2 racial bonus on saving throws against effects that cause the entangled condition, to CMD against grapples, and on combat maneuver checks to escape a grapple. This racial trait replaces halfling luck and keen senses.",
+      "exclusion_guard_flags": [
+        "Halfling_ReplaceHalflingLuck",
+        "Halfling_ReplaceKeenSenses"
+      ],
+      "is_racial_default": false,
+      "key": "Halfling ~ Unfettered",
+      "name": "Unfettered",
+      "negated_fact_gates": [],
+      "positive_prefact_flag": null,
+      "race_key": "Halfling",
+      "sets_replace_flags": [
+        "Halfling_ReplaceHalflingLuck",
+        "Halfling_ReplaceKeenSenses"
+      ],
+      "skinwalker_change_shape_kin": null,
+      "source_page": "p.213",
+      "suppressed_by_flag": null,
+      "template_bonus_languages": [],
+      "type_tokens": [
+        "RacialTraits",
+        "Halfling Racial Trait",
+        "SpecialQuality",
+        "Special Quality",
+        "Applied Bonus"
+      ]
+    },
+    "halfling/halfling_unlucky_halfling.json": {
+      "adopted_race_pool_suffix": null,
+      "automatic_trait_grants": [
+        "Racial SLA ~ Ill Omen"
+      ],
+      "category": "Special Ability",
+      "declared_bonuses": {
+        "ability_adjustments": [],
+        "ability_pool_picks": 0,
+        "magnitudes": [
+          1,
+          -1
+        ],
+        "magnitudes_excluding_flags": [
+          1,
+          -1
+        ],
+        "only_internal_flags": false,
+        "target_bonuses": [
+          {
+            "keyword": "CASTERLEVEL",
+            "magnitude": 1,
+            "target": "DESCRIPTOR.Curse"
+          },
+          {
+            "keyword": "DC",
+            "magnitude": 1,
+            "target": "DESCRIPTOR.Curse"
+          },
+          {
+            "keyword": "SAVE",
+            "magnitude": -1,
+            "target": "ALL"
+          }
+        ],
+        "var_contributions": []
+      },
+      "declared_size": null,
+      "declared_vision": [],
+      "declared_walk_speed_ft": null,
+      "declares_negated_ability_guard": false,
+      "description": "These halflings take a -1 penalty on saving throws but also gain a +1 racial bonus to the caster level and save DC of all curse spells and spell-like abilities. In addition, such halflings can use ill omen as a spell-like ability once per day. This racial trait replaces halfling luck.",
+      "exclusion_guard_flags": [
+        "Halfling_ReplaceHalflingLuck"
+      ],
+      "is_racial_default": false,
+      "key": "Halfling ~ Unlucky Halfling",
+      "name": "Unlucky Halfling",
+      "negated_fact_gates": [],
+      "positive_prefact_flag": null,
+      "race_key": "Halfling",
+      "sets_replace_flags": [
+        "Halfling_ReplaceHalflingLuck"
+      ],
+      "skinwalker_change_shape_kin": null,
+      "source_page": "p.213",
+      "suppressed_by_flag": null,
+      "template_bonus_languages": [],
+      "type_tokens": [
+        "RacialTraits",
+        "Halfling Racial Trait",
+        "SpecialQuality",
+        "Special Quality",
+        "Applied Bonus"
+      ]
+    },
+    "hobgoblin/hobgoblin_authoritative.json": {
+      "adopted_race_pool_suffix": null,
+      "automatic_trait_grants": [
+        "Diplomacy",
+        "Intimidate"
+      ],
+      "category": "Special Ability",
+      "declared_bonuses": {
+        "ability_adjustments": [],
+        "ability_pool_picks": 0,
+        "magnitudes": [
+          2
+        ],
+        "magnitudes_excluding_flags": [
+          2
+        ],
+        "only_internal_flags": false,
+        "target_bonuses": [
+          {
+            "keyword": "SKILL",
+            "magnitude": 2,
+            "target": "Diplomacy,Intimidate"
+          }
+        ],
+        "var_contributions": []
+      },
+      "declared_size": null,
+      "declared_vision": [],
+      "declared_walk_speed_ft": null,
+      "declares_negated_ability_guard": false,
+      "description": "[redacted PI]",
+      "exclusion_guard_flags": [
+        "Hobgoblin_ReplaceSneaky"
+      ],
+      "is_racial_default": false,
+      "key": "Hobgoblin ~ Authoritative",
+      "name": "Authoritative",
+      "negated_fact_gates": [],
+      "positive_prefact_flag": null,
+      "race_key": "Hobgoblin",
+      "sets_replace_flags": [
+        "Hobgoblin_ReplaceSneaky"
+      ],
+      "skinwalker_change_shape_kin": null,
+      "source_page": "p.215",
+      "suppressed_by_flag": null,
+      "template_bonus_languages": [],
+      "type_tokens": [
+        "RacialTraits",
+        "Hobgoblin Racial Trait",
+        "SpecialQuality",
+        "Special Quality"
+      ]
+    },
+    "human/human_awareness.json": {
+      "adopted_race_pool_suffix": null,
+      "automatic_trait_grants": [],
+      "category": "Special Ability",
+      "declared_bonuses": {
+        "ability_adjustments": [],
+        "ability_pool_picks": 0,
+        "magnitudes": [
+          1
+        ],
+        "magnitudes_excluding_flags": [
+          1
+        ],
+        "only_internal_flags": false,
+        "target_bonuses": [
+          {
+            "keyword": "SAVE",
+            "magnitude": 1,
+            "target": "ALL"
+          }
+        ],
+        "var_contributions": []
+      },
+      "declared_size": null,
+      "declared_vision": [],
+      "declared_walk_speed_ft": null,
+      "declares_negated_ability_guard": false,
+      "description": "Humans raised within monastic traditions or communities that encourage mindfulness seem to shrug off many dangers more easily than other humans. They gain a +1 racial bonus on all saving throws and concentration checks. This racial trait replaces humans' bonus feat.",
+      "exclusion_guard_flags": [
+        "Human_ReplaceBonusFeat"
+      ],
+      "is_racial_default": false,
+      "key": "Human ~ Awareness",
+      "name": "Awareness",
+      "negated_fact_gates": [],
+      "positive_prefact_flag": null,
+      "race_key": "Human",
+      "sets_replace_flags": [
+        "Human_ReplaceBonusFeat"
+      ],
+      "skinwalker_change_shape_kin": null,
+      "source_page": "p.213",
+      "suppressed_by_flag": null,
+      "template_bonus_languages": [],
+      "type_tokens": [
+        "RacialTraits",
+        "Human Racial Trait",
+        "SpecialQuality",
+        "Special Quality"
+      ]
+    },
+    "human/human_comprehensive_education.json": {
+      "adopted_race_pool_suffix": null,
+      "automatic_trait_grants": [
+        "TYPE=Knowledge"
+      ],
+      "category": "Special Ability",
+      "declared_bonuses": {
+        "ability_adjustments": [],
+        "ability_pool_picks": 0,
+        "magnitudes": [],
+        "magnitudes_excluding_flags": [],
+        "only_internal_flags": false,
+        "target_bonuses": [],
+        "var_contributions": []
+      },
+      "declared_size": null,
+      "declared_vision": [],
+      "declared_walk_speed_ft": null,
+      "declares_negated_ability_guard": false,
+      "description": "Humans raised with skilled teachers draw upon vast swathes of knowledge gained over centuries of civilization. They gain all Knowledge skills as class skills, and they gain a +1 racial bonus on skill checks for each Knowledge skill that they gain as a class skill from their class levels. This racial trait replaces skilled.",
+      "exclusion_guard_flags": [
+        "Human_ReplaceSkilled"
+      ],
+      "is_racial_default": false,
+      "key": "Human ~ Comprehensive Education",
+      "name": "Comprehensive Education",
+      "negated_fact_gates": [],
+      "positive_prefact_flag": null,
+      "race_key": "Human",
+      "sets_replace_flags": [
+        "Human_ReplaceSkilled"
+      ],
+      "skinwalker_change_shape_kin": null,
+      "source_page": "p.213",
+      "suppressed_by_flag": null,
+      "template_bonus_languages": [],
+      "type_tokens": [
+        "RacialTraits",
+        "Human Racial Trait",
+        "SpecialQuality",
+        "Special Quality"
+      ]
+    },
+    "human/human_industrious.json": {
+      "adopted_race_pool_suffix": null,
+      "automatic_trait_grants": [],
+      "category": "Special Ability",
+      "declared_bonuses": {
+        "ability_adjustments": [],
+        "ability_pool_picks": 0,
+        "magnitudes": [
+          2
+        ],
+        "magnitudes_excluding_flags": [
+          2
+        ],
+        "only_internal_flags": false,
+        "target_bonuses": [
+          {
+            "keyword": "SKILL",
+            "magnitude": 2,
+            "target": "%LIST"
+          }
+        ],
+        "var_contributions": []
+      },
+      "declared_size": null,
+      "declared_vision": [],
+      "declared_walk_speed_ft": null,
+      "declares_negated_ability_guard": false,
+      "description": "[redacted PI]",
+      "exclusion_guard_flags": [
+        "Human_ReplaceSkilled"
+      ],
+      "is_racial_default": false,
+      "key": "Human ~ Industrious",
+      "name": "Industrious",
+      "negated_fact_gates": [],
+      "positive_prefact_flag": null,
+      "race_key": "Human",
+      "sets_replace_flags": [
+        "Human_ReplaceSkilled"
+      ],
+      "skinwalker_change_shape_kin": null,
+      "source_page": "p.213",
+      "suppressed_by_flag": null,
+      "template_bonus_languages": [],
+      "type_tokens": [
+        "RacialTraits",
+        "Human Racial Trait",
+        "SpecialQuality",
+        "Special Quality"
+      ]
+    },
+    "human/human_innovative.json": {
+      "adopted_race_pool_suffix": null,
+      "automatic_trait_grants": [],
+      "category": "Special Ability",
+      "declared_bonuses": {
+        "ability_adjustments": [],
+        "ability_pool_picks": 0,
+        "magnitudes": [
+          2
+        ],
+        "magnitudes_excluding_flags": [
+          2
+        ],
+        "only_internal_flags": false,
+        "target_bonuses": [
+          {
+            "keyword": "SITUATION",
+            "magnitude": 2,
+            "target": "Knowledge (Arcana)=to identify unique magical effects,Knowledge (Arcana)=to independently research spells,Spellcraft=to create unknown magic items,Spellcraft=to identify unique magical effects,Spellcraft=to independently research spells"
+          }
+        ],
+        "var_contributions": []
+      },
+      "declared_size": null,
+      "declared_vision": [],
+      "declared_walk_speed_ft": null,
+      "declares_negated_ability_guard": false,
+      "description": "[redacted PI]",
+      "exclusion_guard_flags": [
+        "Human_ReplaceSkilled"
+      ],
+      "is_racial_default": false,
+      "key": "Human ~ Innovative",
+      "name": "Innovative",
+      "negated_fact_gates": [],
+      "positive_prefact_flag": null,
+      "race_key": "Human",
+      "sets_replace_flags": [
+        "Human_ReplaceSkilled"
+      ],
+      "skinwalker_change_shape_kin": null,
+      "source_page": "p.213",
+      "suppressed_by_flag": null,
+      "template_bonus_languages": [],
+      "type_tokens": [
+        "RacialTraits",
+        "Human Racial Trait",
+        "SpecialQuality",
+        "Special Quality"
+      ]
+    },
+    "human/human_institutional_memory.json": {
+      "adopted_race_pool_suffix": null,
+      "automatic_trait_grants": [],
+      "category": "Special Ability",
+      "declared_bonuses": {
+        "ability_adjustments": [],
+        "ability_pool_picks": 0,
+        "magnitudes": [],
+        "magnitudes_excluding_flags": [],
+        "only_internal_flags": false,
+        "target_bonuses": [],
+        "var_contributions": []
+      },
+      "declared_size": null,
+      "declared_vision": [],
+      "declared_walk_speed_ft": null,
+      "declares_negated_ability_guard": false,
+      "description": "Humans rely on their institutions to remember the distant past and to preserve their own memories for the distant future. They gain a +4 racial bonus on Knowledge checks to answer questions about any organizations, guilds, or religions to which they belong, and they can attempt such skill checks untrained. This racial trait replaces skilled.",
+      "exclusion_guard_flags": [
+        "Human_ReplaceSkilled"
+      ],
+      "is_racial_default": false,
+      "key": "Human ~ Institutional Memory",
+      "name": "Institutional Memory",
+      "negated_fact_gates": [],
+      "positive_prefact_flag": null,
+      "race_key": "Human",
+      "sets_replace_flags": [
+        "Human_ReplaceSkilled"
+      ],
+      "skinwalker_change_shape_kin": null,
+      "source_page": "p.214",
+      "suppressed_by_flag": null,
+      "template_bonus_languages": [],
+      "type_tokens": [
+        "RacialTraits",
+        "Human Racial Trait",
+        "SpecialQuality",
+        "Special Quality"
+      ]
+    },
+    "human/human_military_tradition.json": {
+      "adopted_race_pool_suffix": null,
+      "automatic_trait_grants": [],
+      "category": "Special Ability",
+      "declared_bonuses": {
+        "ability_adjustments": [],
+        "ability_pool_picks": 0,
+        "magnitudes": [],
+        "magnitudes_excluding_flags": [],
+        "only_internal_flags": false,
+        "target_bonuses": [],
+        "var_contributions": []
+      },
+      "declared_size": null,
+      "declared_vision": [],
+      "declared_walk_speed_ft": null,
+      "declares_negated_ability_guard": false,
+      "description": "Several human cultures raise all children (or all children of a certain social class) to serve in the military or defend themselves with force of arms. They gain proficiency with up to two martial or exotic weapons appropriate to their culture. This racial trait replaces the bonus feat trait.",
+      "exclusion_guard_flags": [
+        "Human_ReplaceBonusFeat"
+      ],
+      "is_racial_default": false,
+      "key": "Human ~ Military Tradition",
+      "name": "Military Tradition",
+      "negated_fact_gates": [],
+      "positive_prefact_flag": null,
+      "race_key": "Human",
+      "sets_replace_flags": [
+        "Human_ReplaceBonusFeat"
+      ],
+      "skinwalker_change_shape_kin": null,
+      "source_page": "p.214",
+      "suppressed_by_flag": null,
+      "template_bonus_languages": [],
+      "type_tokens": [
+        "RacialTraits",
+        "Human Racial Trait",
+        "SpecialQuality",
+        "Special Quality"
+      ]
+    },
+    "human/human_practiced_hunter.json": {
+      "adopted_race_pool_suffix": null,
+      "automatic_trait_grants": [
+        "Stealth",
+        "Survival"
+      ],
+      "category": "Special Ability",
+      "declared_bonuses": {
+        "ability_adjustments": [],
+        "ability_pool_picks": 0,
+        "magnitudes": [
+          2
+        ],
+        "magnitudes_excluding_flags": [
+          2
+        ],
+        "only_internal_flags": false,
+        "target_bonuses": [
+          {
+            "keyword": "SKILL",
+            "magnitude": 2,
+            "target": "Stealth,Survival"
+          }
+        ],
+        "var_contributions": []
+      },
+      "declared_size": null,
+      "declared_vision": [],
+      "declared_walk_speed_ft": null,
+      "declares_negated_ability_guard": false,
+      "description": "Members of some human cultures train from youth to find and follow the trails of vital game and at the same time hide the evidence of their own passage. These humans gain a +2 racial bonus on Stealth and Survival checks, and Stealth and Survival are always class skills for them. This racial trait replaces skilled.",
+      "exclusion_guard_flags": [
+        "Human_ReplaceSkilled"
+      ],
+      "is_racial_default": false,
+      "key": "Human ~ Practiced Hunter",
+      "name": "Practiced Hunter",
+      "negated_fact_gates": [],
+      "positive_prefact_flag": null,
+      "race_key": "Human",
+      "sets_replace_flags": [
+        "Human_ReplaceSkilled"
+      ],
+      "skinwalker_change_shape_kin": null,
+      "source_page": "p.214",
+      "suppressed_by_flag": null,
+      "template_bonus_languages": [],
+      "type_tokens": [
+        "RacialTraits",
+        "Human Racial Trait",
+        "SpecialQuality",
+        "Special Quality"
+      ]
+    },
+    "human/human_self_made_fate.json": {
+      "adopted_race_pool_suffix": null,
+      "automatic_trait_grants": [],
+      "category": "Special Ability",
+      "declared_bonuses": {
+        "ability_adjustments": [],
+        "ability_pool_picks": 0,
+        "magnitudes": [
+          2
+        ],
+        "magnitudes_excluding_flags": [
+          2
+        ],
+        "only_internal_flags": false,
+        "target_bonuses": [
+          {
+            "keyword": "VAR",
+            "magnitude": 2,
+            "target": "SaveBonus_vs_DivineSpells"
+          }
+        ],
+        "var_contributions": [
+          {
+            "amount": 2,
+            "name": "SaveBonus_vs_DivineSpells"
+          }
+        ]
+      },
+      "declared_size": null,
+      "declared_vision": [],
+      "declared_walk_speed_ft": null,
+      "declares_negated_ability_guard": false,
+      "description": "[redacted PI]",
+      "exclusion_guard_flags": [
+        "Human_ReplaceBonusFeat"
+      ],
+      "is_racial_default": false,
+      "key": "Human ~ Self-Made Fate",
+      "name": "Self-Made Fate",
+      "negated_fact_gates": [],
+      "positive_prefact_flag": null,
+      "race_key": "Human",
+      "sets_replace_flags": [
+        "Human_ReplaceBonusFeat"
+      ],
+      "skinwalker_change_shape_kin": null,
+      "source_page": "p.214",
+      "suppressed_by_flag": null,
+      "template_bonus_languages": [],
+      "type_tokens": [
+        "RacialTraits",
+        "Human Racial Trait",
+        "SpecialQuality",
+        "Special Quality"
+      ]
+    },
+    "human/human_social_ties.json": {
+      "adopted_race_pool_suffix": null,
+      "automatic_trait_grants": [],
+      "category": "Special Ability",
+      "declared_bonuses": {
+        "ability_adjustments": [],
+        "ability_pool_picks": 0,
+        "magnitudes": [
+          2,
+          1
+        ],
+        "magnitudes_excluding_flags": [
+          2,
+          1
+        ],
+        "only_internal_flags": false,
+        "target_bonuses": [
+          {
+            "keyword": "SKILL",
+            "magnitude": 2,
+            "target": "Diplomacy"
+          },
+          {
+            "keyword": "VAR",
+            "magnitude": 1,
+            "target": "LeadershipScore"
+          }
+        ],
+        "var_contributions": [
+          {
+            "amount": 1,
+            "name": "LeadershipScore"
+          }
+        ]
+      },
+      "declared_size": null,
+      "declared_vision": [],
+      "declared_walk_speed_ft": null,
+      "declares_negated_ability_guard": false,
+      "description": "Some human societies run on complex webs of favors and loyalties that canny members can intuitively exploit with relative ease. These humans gain a +2 racial bonus on Diplomacy checks, and on any skill checks to recruit members and teams for an organization. They also add a +1 racial bonus to their Leadership scores (if they gain the Leadership feat). This racial trait replaces skilled.",
+      "exclusion_guard_flags": [
+        "Human_ReplaceSkilled"
+      ],
+      "is_racial_default": false,
+      "key": "Human ~ Social Ties",
+      "name": "Social Ties",
+      "negated_fact_gates": [],
+      "positive_prefact_flag": null,
+      "race_key": "Human",
+      "sets_replace_flags": [
+        "Human_ReplaceSkilled"
+      ],
+      "skinwalker_change_shape_kin": null,
+      "source_page": "p.214",
+      "suppressed_by_flag": null,
+      "template_bonus_languages": [],
+      "type_tokens": [
+        "RacialTraits",
+        "Human Racial Trait",
+        "SpecialQuality",
+        "Special Quality"
+      ]
+    },
+    "human/human_tribalistic.json": {
+      "adopted_race_pool_suffix": null,
+      "automatic_trait_grants": [],
+      "category": "Special Ability",
+      "declared_bonuses": {
+        "ability_adjustments": [],
+        "ability_pool_picks": 0,
+        "magnitudes": [],
+        "magnitudes_excluding_flags": [],
+        "only_internal_flags": false,
+        "target_bonuses": [],
+        "var_contributions": []
+      },
+      "declared_size": null,
+      "declared_vision": [],
+      "declared_walk_speed_ft": null,
+      "declares_negated_ability_guard": false,
+      "description": "Many humans naturally form into cliques or tribes, and these humans work exceptionally well with those they view as fellow tribe members. Such humans gain a +2 racial bonus on attack rolls and skill checks to use the aid another action to aid humans of the same ethnicity. Humans with this racial trait must hail from an ethnicity that has its own language other than Common, and they only start with that language; if they have high Intelligence scores, they can select their bonus languages from among Common, Giant, Goblin, and Halfling. This racial trait alters starting and bonus languages.",
+      "exclusion_guard_flags": [
+        "Human_ReplaceLanguages"
+      ],
+      "is_racial_default": false,
+      "key": "Human ~ Tribalistic",
+      "name": "Tribalistic",
+      "negated_fact_gates": [],
+      "positive_prefact_flag": null,
+      "race_key": "Human",
+      "sets_replace_flags": [
+        "Human_ReplaceLanguages"
+      ],
+      "skinwalker_change_shape_kin": null,
+      "source_page": "p.214",
+      "suppressed_by_flag": null,
+      "template_bonus_languages": [],
+      "type_tokens": [
+        "RacialTraits",
+        "Human Racial Trait",
+        "SpecialQuality",
+        "Special Quality"
+      ]
+    },
+    "human/human_tribalistic_languages.json": {
+      "adopted_race_pool_suffix": null,
+      "automatic_trait_grants": [],
+      "category": "Special Ability",
+      "declared_bonuses": {
+        "ability_adjustments": [],
+        "ability_pool_picks": 0,
+        "magnitudes": [],
+        "magnitudes_excluding_flags": [],
+        "only_internal_flags": false,
+        "target_bonuses": [],
+        "var_contributions": []
+      },
+      "declared_size": null,
+      "declared_vision": [],
+      "declared_walk_speed_ft": null,
+      "declares_negated_ability_guard": false,
+      "description": "Tribalistic humans only start with their ethnic language; if they have high Intelligence scores, they can select their bonus languages from among Common, Giant, Goblin, and Halfling.",
+      "exclusion_guard_flags": [],
+      "is_racial_default": false,
+      "key": "Human ~ Tribalistic Languages",
+      "name": "Languages",
+      "negated_fact_gates": [],
+      "positive_prefact_flag": null,
+      "race_key": "Human",
+      "sets_replace_flags": [],
+      "skinwalker_change_shape_kin": null,
+      "source_page": "p.214",
+      "suppressed_by_flag": null,
+      "template_bonus_languages": [
+        "Common",
+        "Giant",
+        "Goblin",
+        "Halfling"
+      ],
+      "type_tokens": [
+        "RacialTraits",
+        "Human Racial Trait",
+        "SpecialQuality",
+        "Racial Language"
+      ]
+    },
+    "human/human_unstoppable_magic.json": {
+      "adopted_race_pool_suffix": null,
+      "automatic_trait_grants": [],
+      "category": "Special Ability",
+      "declared_bonuses": {
+        "ability_adjustments": [],
+        "ability_pool_picks": 0,
+        "magnitudes": [],
+        "magnitudes_excluding_flags": [],
+        "only_internal_flags": false,
+        "target_bonuses": [],
+        "var_contributions": []
+      },
+      "declared_size": null,
+      "declared_vision": [],
+      "declared_walk_speed_ft": null,
+      "declares_negated_ability_guard": false,
+      "description": "[redacted PI]",
+      "exclusion_guard_flags": [
+        "Human_ReplaceBonusFeat"
+      ],
+      "is_racial_default": false,
+      "key": "Human ~ Unstoppable Magic",
+      "name": "Unstoppable Magic",
+      "negated_fact_gates": [],
+      "positive_prefact_flag": null,
+      "race_key": "Human",
+      "sets_replace_flags": [
+        "Human_ReplaceBonusFeat"
+      ],
+      "skinwalker_change_shape_kin": null,
+      "source_page": "p.214",
+      "suppressed_by_flag": null,
+      "template_bonus_languages": [],
+      "type_tokens": [
+        "RacialTraits",
+        "Human Racial Trait",
+        "SpecialQuality",
+        "Special Quality"
+      ]
+    },
+    "human/human_wayfarer.json": {
+      "adopted_race_pool_suffix": null,
+      "automatic_trait_grants": [],
+      "category": "Special Ability",
+      "declared_bonuses": {
+        "ability_adjustments": [],
+        "ability_pool_picks": 0,
+        "magnitudes": [
+          2,
+          1
+        ],
+        "magnitudes_excluding_flags": [
+          2,
+          1
+        ],
+        "only_internal_flags": false,
+        "target_bonuses": [
+          {
+            "keyword": "SITUATION",
+            "magnitude": null,
+            "target": "Survival=to avoid becoming lost"
+          },
+          {
+            "keyword": "SKILL",
+            "magnitude": 2,
+            "target": "Knowledge (Geography),Knowledge (Local)"
+          },
+          {
+            "keyword": "VAR",
+            "magnitude": 1,
+            "target": "Linguisitcs_NumLanguages"
+          }
+        ],
+        "var_contributions": [
+          {
+            "amount": 1,
+            "name": "Linguisitcs_NumLanguages"
+          }
+        ]
+      },
+      "declared_size": null,
+      "declared_vision": [],
+      "declared_walk_speed_ft": null,
+      "declares_negated_ability_guard": false,
+      "description": "[redacted PI]",
+      "exclusion_guard_flags": [
+        "Human_ReplaceSkilled"
+      ],
+      "is_racial_default": false,
+      "key": "Human ~ Wayfarer",
+      "name": "Wayfarer",
+      "negated_fact_gates": [],
+      "positive_prefact_flag": null,
+      "race_key": "Human",
+      "sets_replace_flags": [
+        "Human_ReplaceSkilled"
+      ],
+      "skinwalker_change_shape_kin": null,
+      "source_page": "p.214",
+      "suppressed_by_flag": null,
+      "template_bonus_languages": [],
+      "type_tokens": [
+        "RacialTraits",
+        "Human Racial Trait",
+        "SpecialQuality",
+        "Special Quality"
+      ]
+    },
+    "ifrit/ifrit_brazen_flame.json": {
+      "adopted_race_pool_suffix": null,
+      "automatic_trait_grants": [],
+      "category": "Special Ability",
+      "declared_bonuses": {
+        "ability_adjustments": [],
+        "ability_pool_picks": 0,
+        "magnitudes": [],
+        "magnitudes_excluding_flags": [],
+        "only_internal_flags": false,
+        "target_bonuses": [],
+        "var_contributions": []
+      },
+      "declared_size": null,
+      "declared_vision": [],
+      "declared_walk_speed_ft": null,
+      "declares_negated_ability_guard": false,
+      "description": "[redacted PI]",
+      "exclusion_guard_flags": [
+        "Ifrit_ReplaceEnergyResistance",
+        "Ifrit_ReplaceSpellLikeAbility"
+      ],
+      "is_racial_default": false,
+      "key": "Ifrit ~ Brazen Flame",
+      "name": "Brazen Flame",
+      "negated_fact_gates": [],
+      "positive_prefact_flag": null,
+      "race_key": "Ifrit",
+      "sets_replace_flags": [
+        "Ifrit_ReplaceEnergyResistance",
+        "Ifrit_ReplaceSpellLikeAbility"
+      ],
+      "skinwalker_change_shape_kin": null,
+      "source_page": "p.215",
+      "suppressed_by_flag": null,
+      "template_bonus_languages": [],
+      "type_tokens": [
+        "RacialTraits",
+        "Ifrit Racial Trait",
+        "SpecialAttack",
+        "Special Attack"
+      ]
+    },
+    "ifrit/mostly_human_ifrit_languages.json": {
+      "adopted_race_pool_suffix": null,
+      "automatic_trait_grants": [],
+      "category": "Special Ability",
+      "declared_bonuses": {
+        "ability_adjustments": [],
+        "ability_pool_picks": 0,
+        "magnitudes": [],
+        "magnitudes_excluding_flags": [],
+        "only_internal_flags": false,
+        "target_bonuses": [],
+        "var_contributions": []
+      },
+      "declared_size": null,
+      "declared_vision": [],
+      "declared_walk_speed_ft": null,
+      "declares_negated_ability_guard": false,
+      "description": "Mostly human ifrits begin play speaking Common. Ifrits with high Intelligence scores can choose from the following languages: Aquan, Auran, Dwarven, Elven, Gnome, Halfling, Ignan, and Terran.",
+      "exclusion_guard_flags": [],
+      "is_racial_default": false,
+      "key": "Mostly Human ~ Ifrit ~ Languages",
+      "name": "Languages",
+      "negated_fact_gates": [],
+      "positive_prefact_flag": "Ifrit_ReplaceLanguages",
+      "race_key": "Ifrit",
+      "sets_replace_flags": [],
+      "skinwalker_change_shape_kin": null,
+      "source_page": "p.215",
+      "suppressed_by_flag": null,
+      "template_bonus_languages": [
+        "Aquan",
+        "Auran",
+        "Dwarven",
+        "Elven",
+        "Gnome",
+        "Halfling",
+        "Ignan",
+        "Terran"
+      ],
+      "type_tokens": [
+        "RacialTraits",
+        "Ifrit Racial Trait",
+        "SpecialQuality",
+        "Racial Language"
+      ]
+    },
+    "kitsune/kitsune_duplicitous.json": {
+      "adopted_race_pool_suffix": null,
+      "automatic_trait_grants": [],
+      "category": "Special Ability",
+      "declared_bonuses": {
+        "ability_adjustments": [],
+        "ability_pool_picks": 0,
+        "magnitudes": [
+          2
+        ],
+        "magnitudes_excluding_flags": [
+          2
+        ],
+        "only_internal_flags": false,
+        "target_bonuses": [
+          {
+            "keyword": "SKILL",
+            "magnitude": 2,
+            "target": "Bluff,Disguise"
+          }
+        ],
+        "var_contributions": []
+      },
+      "declared_size": null,
+      "declared_vision": [],
+      "declared_walk_speed_ft": null,
+      "declares_negated_ability_guard": false,
+      "description": "Many kitsune prefer to avoid the attention they often attract from human neighbors and attempt to convince all around them that they are human. They gain a +2 racial bonus on Bluff and Disguise checks. This racial trait replaces kitsune magic.",
+      "exclusion_guard_flags": [
+        "Kitsune_ReplaceKitsuneMagic"
+      ],
+      "is_racial_default": false,
+      "key": "Kitsune ~ Duplicitous",
+      "name": "Duplicitous",
+      "negated_fact_gates": [],
+      "positive_prefact_flag": null,
+      "race_key": "Kitsune",
+      "sets_replace_flags": [
+        "Kitsune_ReplaceKitsuneMagic"
+      ],
+      "skinwalker_change_shape_kin": null,
+      "source_page": "p.215",
+      "suppressed_by_flag": null,
+      "template_bonus_languages": [],
+      "type_tokens": [
+        "RacialTraits",
+        "Kitsune Racial Trait",
+        "SpecialQuality",
+        "Special Quality"
+      ]
+    },
+    "kobold/kobold_dragon_affinity.json": {
+      "adopted_race_pool_suffix": null,
+      "automatic_trait_grants": [
+        "Affinity Sorcerer Bonus"
+      ],
+      "category": "Special Ability",
+      "declared_bonuses": {
+        "ability_adjustments": [],
+        "ability_pool_picks": 0,
+        "magnitudes": [],
+        "magnitudes_excluding_flags": [],
+        "only_internal_flags": false,
+        "target_bonuses": [],
+        "var_contributions": []
+      },
+      "declared_size": null,
+      "declared_vision": [],
+      "declared_walk_speed_ft": null,
+      "declares_negated_ability_guard": false,
+      "description": "Kobold sorcerers with the draconic bloodline or kobold bloodline treat their Charisma scores as 2 points higher for all sorcerer spells and class abilities. This racial trait replaces the armor trait.",
+      "exclusion_guard_flags": [
+        "Kobold_ReplaceArmor"
+      ],
+      "is_racial_default": false,
+      "key": "Kobold ~ Dragon Affinity",
+      "name": "Dragon Affinity",
+      "negated_fact_gates": [],
+      "positive_prefact_flag": null,
+      "race_key": "Kobold",
+      "sets_replace_flags": [
+        "Kobold_ReplaceArmor"
+      ],
+      "skinwalker_change_shape_kin": null,
+      "source_page": "p.216",
+      "suppressed_by_flag": null,
+      "template_bonus_languages": [],
+      "type_tokens": [
+        "RacialTraits",
+        "Kobold Racial Trait",
+        "SpecialQuality",
+        "Special Quality"
+      ]
+    },
+    "merfolk/merfolk_secret_magic.json": {
+      "adopted_race_pool_suffix": null,
+      "automatic_trait_grants": [
+        "Secret Magic ~ Merfolk ~ Speed",
+        "Racial SLA ~ Speak with Animals (aquatic animals only)",
+        "Racial SLA ~ Fins to Feet (self only)",
+        "Racial SLA ~ Hydraulic Push"
+      ],
+      "category": "Special Ability",
+      "declared_bonuses": {
+        "ability_adjustments": [],
+        "ability_pool_picks": 0,
+        "magnitudes": [
+          1
+        ],
+        "magnitudes_excluding_flags": [
+          1
+        ],
+        "only_internal_flags": false,
+        "target_bonuses": [
+          {
+            "keyword": "DC",
+            "magnitude": 1,
+            "target": "SCHOOL.Enchantment"
+          },
+          {
+            "keyword": "VAR",
+            "magnitude": 1,
+            "target": "RacialSLA_SpeakWithAnimalsAquaticAnimalsOnly_AtWill"
+          }
+        ],
+        "var_contributions": [
+          {
+            "amount": 1,
+            "name": "RacialSLA_SpeakWithAnimalsAquaticAnimalsOnly_AtWill"
+          }
+        ]
+      },
+      "declared_size": null,
+      "declared_vision": [],
+      "declared_walk_speed_ft": null,
+      "declares_negated_ability_guard": false,
+      "description": "Merfolk sometimes manifest magical powers they are unwilling to explain to non-merfolk, leading scholars to speculate that the magic originates from the merfolk's rumored eldritch patrons. Such merfolk have only a 40-foot swim speed, but they add +1 to the DC of any enchantment spells they cast, and if they have a Charisma score of 13 or higher, they gain the ability to cast the following spell-like abilities: At will--speak with animals (aquatic animals only); 1/day--fins to feet (self only), hydraulic push. This racial trait replaces the armor racial trait and alters the merfolk's movement speed.",
+      "exclusion_guard_flags": [
+        "Merfolk_ReplaceArmor",
+        "Merfolk_ReplaceSpeed"
+      ],
+      "is_racial_default": false,
+      "key": "Merfolk ~ Secret Magic",
+      "name": "Secret Magic",
+      "negated_fact_gates": [],
+      "positive_prefact_flag": null,
+      "race_key": "Merfolk",
+      "sets_replace_flags": [
+        "Merfolk_ReplaceArmor",
+        "Merfolk_ReplaceSpeed"
+      ],
+      "skinwalker_change_shape_kin": null,
+      "source_page": "p.216",
+      "suppressed_by_flag": null,
+      "template_bonus_languages": [],
+      "type_tokens": [
+        "RacialTraits",
+        "Merfolk Racial Trait",
+        "SpecialQuality",
+        "Special Quality"
+      ]
+    },
+    "merfolk/secret_magic_merfolk_speed.json": {
+      "adopted_race_pool_suffix": null,
+      "automatic_trait_grants": [],
+      "category": "Special Ability",
+      "declared_bonuses": {
+        "ability_adjustments": [],
+        "ability_pool_picks": 0,
+        "magnitudes": [],
+        "magnitudes_excluding_flags": [],
+        "only_internal_flags": false,
+        "target_bonuses": [],
+        "var_contributions": []
+      },
+      "declared_size": null,
+      "declared_vision": [],
+      "declared_walk_speed_ft": 5,
+      "declares_negated_ability_guard": false,
+      "description": "Merfolk with secret magic have a base speed of 5 feet and a swim speed of 40 feet.",
+      "exclusion_guard_flags": [],
+      "is_racial_default": false,
+      "key": "Secret Magic ~ Merfolk ~ Speed",
+      "name": "Slow Speed",
+      "negated_fact_gates": [],
+      "positive_prefact_flag": "Merfolk_ReplaceSpeed",
+      "race_key": "Merfolk",
+      "sets_replace_flags": [],
+      "skinwalker_change_shape_kin": null,
+      "source_page": "p.216",
+      "suppressed_by_flag": null,
+      "template_bonus_languages": [],
+      "type_tokens": [
+        "RacialTraits",
+        "Merfolk Racial Trait",
+        "SpecialQuality",
+        "Racial Speed"
+      ]
+    },
+    "nagaji/nagaji_serpent_affinity.json": {
+      "adopted_race_pool_suffix": null,
+      "automatic_trait_grants": [],
+      "category": "Special Ability",
+      "declared_bonuses": {
+        "ability_adjustments": [],
+        "ability_pool_picks": 0,
+        "magnitudes": [
+          1
+        ],
+        "magnitudes_excluding_flags": [
+          1
+        ],
+        "only_internal_flags": false,
+        "target_bonuses": [
+          {
+            "keyword": "CASTERLEVEL",
+            "magnitude": 1,
+            "target": "DOMAIN.Scalykind"
+          }
+        ],
+        "var_contributions": []
+      },
+      "declared_size": null,
+      "declared_vision": [],
+      "declared_walk_speed_ft": null,
+      "declares_negated_ability_guard": false,
+      "description": "Nagaji clerics with this racial trait and the Scalykind domain (Pathfinder Campaign Setting: The Inner Sea World Guide) use their domain powers and spells at +1 caster level. This increase is a racial bonus. This racial trait replaces resistant.",
+      "exclusion_guard_flags": [
+        "Nagaji_ReplaceResistant"
+      ],
+      "is_racial_default": false,
+      "key": "Nagaji ~ Serpent Affinity",
+      "name": "Serpent Affinity",
+      "negated_fact_gates": [],
+      "positive_prefact_flag": null,
+      "race_key": "Nagaji",
+      "sets_replace_flags": [
+        "Nagaji_ReplaceResistant"
+      ],
+      "skinwalker_change_shape_kin": null,
+      "source_page": "p.216",
+      "suppressed_by_flag": null,
+      "template_bonus_languages": [],
+      "type_tokens": [
+        "RacialTraits",
+        "Nagaji Racial Trait",
+        "SpecialQuality",
+        "Special Quality"
+      ]
+    },
+    "orc/orc_reckless_climber.json": {
+      "adopted_race_pool_suffix": null,
+      "automatic_trait_grants": [],
+      "category": "Special Ability",
+      "declared_bonuses": {
+        "ability_adjustments": [],
+        "ability_pool_picks": 0,
+        "magnitudes": [
+          4
+        ],
+        "magnitudes_excluding_flags": [
+          4
+        ],
+        "only_internal_flags": false,
+        "target_bonuses": [
+          {
+            "keyword": "SITUATION",
+            "magnitude": 4,
+            "target": "Climb=without rope"
+          },
+          {
+            "keyword": "SITUATION",
+            "magnitude": 4,
+            "target": "Acrobatics=to maintain balance"
+          }
+        ],
+        "var_contributions": []
+      },
+      "declared_size": null,
+      "declared_vision": [],
+      "declared_walk_speed_ft": null,
+      "declares_negated_ability_guard": false,
+      "description": "Mountain-dwelling orcs thrive on taking insane risks to defeat foes and show up rivals. They gain a +4 racial bonus on Climb checks without rope and on Acrobatics checks to maintain balance. This racial trait replaces ferocity.",
+      "exclusion_guard_flags": [
+        "Orc_ReplaceFerocity"
+      ],
+      "is_racial_default": false,
+      "key": "Orc ~ Reckless Climber",
+      "name": "Reckless Climber",
+      "negated_fact_gates": [],
+      "positive_prefact_flag": null,
+      "race_key": "Orc",
+      "sets_replace_flags": [
+        "Orc_ReplaceFerocity"
+      ],
+      "skinwalker_change_shape_kin": null,
+      "source_page": "p.216",
+      "suppressed_by_flag": null,
+      "template_bonus_languages": [],
+      "type_tokens": [
+        "RacialTraits",
+        "Orc Racial Trait",
+        "SpecialQuality",
+        "Special Quality",
+        "Applied Bonus"
+      ]
+    },
+    "oread/isolated_oread_languages.json": {
+      "adopted_race_pool_suffix": null,
+      "automatic_trait_grants": [],
+      "category": "Special Ability",
+      "declared_bonuses": {
+        "ability_adjustments": [],
+        "ability_pool_picks": 0,
+        "magnitudes": [],
+        "magnitudes_excluding_flags": [],
+        "only_internal_flags": false,
+        "target_bonuses": [],
+        "var_contributions": []
+      },
+      "declared_size": null,
+      "declared_vision": [],
+      "declared_walk_speed_ft": null,
+      "declares_negated_ability_guard": false,
+      "description": "Isolated oreads begin play speaking Terran. Oreads with high Intelligence scores can choose any of the following bonus languages: Aquan, Auran, Dwarven, Elven, Gnome, Halfling, Ignan, and Undercommon.",
+      "exclusion_guard_flags": [],
+      "is_racial_default": false,
+      "key": "Isolated ~ Oread ~ Languages",
+      "name": "Languages",
+      "negated_fact_gates": [],
+      "positive_prefact_flag": null,
+      "race_key": "Oread",
+      "sets_replace_flags": [],
+      "skinwalker_change_shape_kin": null,
+      "source_page": "p.216",
+      "suppressed_by_flag": null,
+      "template_bonus_languages": [
+        "Aquan",
+        "Auran",
+        "Dwarven",
+        "Elven",
+        "Gnome",
+        "Halfling",
+        "Ignan",
+        "Undercommon"
+      ],
+      "type_tokens": [
+        "RacialTraits",
+        "Oread Racial Trait",
+        "SpecialQuality",
+        "Racial Language"
+      ]
+    },
+    "oread/mostly_human_oread_languages.json": {
+      "adopted_race_pool_suffix": null,
+      "automatic_trait_grants": [],
+      "category": "Special Ability",
+      "declared_bonuses": {
+        "ability_adjustments": [],
+        "ability_pool_picks": 0,
+        "magnitudes": [],
+        "magnitudes_excluding_flags": [],
+        "only_internal_flags": false,
+        "target_bonuses": [],
+        "var_contributions": []
+      },
+      "declared_size": null,
+      "declared_vision": [],
+      "declared_walk_speed_ft": null,
+      "declares_negated_ability_guard": false,
+      "description": "Mostly human oreads begin play speaking Common. Oreads with high Intelligence scores can choose from the following languages: Aquan, Auran, Dwarven, Elven, Gnome, Halfling, Ignan, Terran, and Undercommon.",
+      "exclusion_guard_flags": [],
+      "is_racial_default": false,
+      "key": "Mostly Human ~ Oread ~ Languages",
+      "name": "Languages",
+      "negated_fact_gates": [],
+      "positive_prefact_flag": "Oread_ReplaceLanguages",
+      "race_key": "Oread",
+      "sets_replace_flags": [],
+      "skinwalker_change_shape_kin": null,
+      "source_page": "p.215",
+      "suppressed_by_flag": null,
+      "template_bonus_languages": [
+        "Aquan",
+        "Auran",
+        "Dwarven",
+        "Elven",
+        "Gnome",
+        "Halfling",
+        "Ignan",
+        "Terran",
+        "Undercommon"
+      ],
+      "type_tokens": [
+        "RacialTraits",
+        "Oread Racial Trait",
+        "SpecialQuality",
+        "Racial Language"
+      ]
+    },
+    "oread/oread_isolated.json": {
+      "adopted_race_pool_suffix": null,
+      "automatic_trait_grants": [
+        "Isolated ~ Oread ~ Languages"
+      ],
+      "category": "Special Ability",
+      "declared_bonuses": {
+        "ability_adjustments": [],
+        "ability_pool_picks": 0,
+        "magnitudes": [
+          2
+        ],
+        "magnitudes_excluding_flags": [
+          2
+        ],
+        "only_internal_flags": false,
+        "target_bonuses": [
+          {
+            "keyword": "SKILL",
+            "magnitude": 2,
+            "target": "Perception,Knowledge (Dungeoneering)"
+          }
+        ],
+        "var_contributions": []
+      },
+      "declared_size": null,
+      "declared_vision": [],
+      "declared_walk_speed_ft": null,
+      "declares_negated_ability_guard": false,
+      "description": "Many oreads are loners and raise their families in isolated groups, either in deep caverns or high mountains. They gain a +2 racial bonus on Perception checks and Knowledge (dungeoneering) checks, and they can use Knowledge (dungeoneering) untrained. They begin play speaking only Terran, rather than Common and Terran. This racial trait replaces energy resistance and alters the oread's starting languages.",
+      "exclusion_guard_flags": [
+        "Oread_ReplaceEnergyResistance",
+        "Oread_ReplaceLanguages"
+      ],
+      "is_racial_default": false,
+      "key": "Oread ~ Isolated",
+      "name": "Isolated",
+      "negated_fact_gates": [],
+      "positive_prefact_flag": null,
+      "race_key": "Oread",
+      "sets_replace_flags": [
+        "Oread_ReplaceEnergyResistance",
+        "Oread_ReplaceLanguages"
+      ],
+      "skinwalker_change_shape_kin": null,
+      "source_page": "p.216",
+      "suppressed_by_flag": null,
+      "template_bonus_languages": [],
+      "type_tokens": [
+        "RacialTraits",
+        "Oread Racial Trait",
+        "SpecialQuality",
+        "Special Quality",
+        "Applied Bonus"
+      ]
+    },
+    "ratfolk/ratfolk_market_dweller.json": {
+      "adopted_race_pool_suffix": null,
+      "automatic_trait_grants": [],
+      "category": "Special Ability",
+      "declared_bonuses": {
+        "ability_adjustments": [],
+        "ability_pool_picks": 0,
+        "magnitudes": [
+          2
+        ],
+        "magnitudes_excluding_flags": [
+          2
+        ],
+        "only_internal_flags": false,
+        "target_bonuses": [
+          {
+            "keyword": "SKILL",
+            "magnitude": 2,
+            "target": "Bluff,Sense Motive,Sleight of Hand"
+          }
+        ],
+        "var_contributions": []
+      },
+      "declared_size": null,
+      "declared_vision": [],
+      "declared_walk_speed_ft": null,
+      "declares_negated_ability_guard": false,
+      "description": "[redacted PI]",
+      "exclusion_guard_flags": [
+        "Ratfolk_ReplaceTinker"
+      ],
+      "is_racial_default": false,
+      "key": "Ratfolk ~ Market Dweller",
+      "name": "Market Dweller",
+      "negated_fact_gates": [],
+      "positive_prefact_flag": null,
+      "race_key": "Ratfolk",
+      "sets_replace_flags": [
+        "Ratfolk_ReplaceTinker"
+      ],
+      "skinwalker_change_shape_kin": null,
+      "source_page": "p.216",
+      "suppressed_by_flag": null,
+      "template_bonus_languages": [],
+      "type_tokens": [
+        "RacialTraits",
+        "Ratfolk Racial Trait",
+        "SpecialQuality",
+        "Special Quality"
+      ]
+    },
+    "strix/strix_cautious_brawler.json": {
+      "adopted_race_pool_suffix": null,
+      "automatic_trait_grants": [],
+      "category": "Special Ability",
+      "declared_bonuses": {
+        "ability_adjustments": [],
+        "ability_pool_picks": 0,
+        "magnitudes": [],
+        "magnitudes_excluding_flags": [],
+        "only_internal_flags": false,
+        "target_bonuses": [],
+        "var_contributions": []
+      },
+      "declared_size": null,
+      "declared_vision": [],
+      "declared_walk_speed_ft": null,
+      "declares_negated_ability_guard": false,
+      "description": "Because strix are careful to avoid injuring other strix even when they fight with each other, they develop a talent for fighting without causing lasting harm. They gain a +1 racial bonus on damage rolls when dealing nonlethal damage and take no attack penalty when dealing nonlethal damage with a lethal weapon. This racial trait replaces hatred and suspicious.",
+      "exclusion_guard_flags": [
+        "Strix_ReplaceHatred",
+        "Strix_ReplaceSuspicious"
+      ],
+      "is_racial_default": false,
+      "key": "Strix ~ Cautious Brawler",
+      "name": "Cautious Brawler",
+      "negated_fact_gates": [],
+      "positive_prefact_flag": null,
+      "race_key": "Strix",
+      "sets_replace_flags": [
+        "Strix_ReplaceHatred",
+        "Strix_ReplaceSuspicious"
+      ],
+      "skinwalker_change_shape_kin": null,
+      "source_page": "p.216",
+      "suppressed_by_flag": null,
+      "template_bonus_languages": [],
+      "type_tokens": [
+        "RacialTraits",
+        "Strix Racial Trait",
+        "SpecialQuality",
+        "Special Quality",
+        "Special Ability"
+      ]
+    },
+    "suli/mostly_human_suli_languages.json": {
+      "adopted_race_pool_suffix": null,
+      "automatic_trait_grants": [],
+      "category": "Special Ability",
+      "declared_bonuses": {
+        "ability_adjustments": [],
+        "ability_pool_picks": 0,
+        "magnitudes": [],
+        "magnitudes_excluding_flags": [],
+        "only_internal_flags": false,
+        "target_bonuses": [],
+        "var_contributions": []
+      },
+      "declared_size": null,
+      "declared_vision": [],
+      "declared_walk_speed_ft": null,
+      "declares_negated_ability_guard": false,
+      "description": "Mostly human sulis begin play speaking Common. Sulis with high Intelligence scores can choose from the following languages: Aquan, Auran, Draconic, Ignan, and Terran.",
+      "exclusion_guard_flags": [],
+      "is_racial_default": false,
+      "key": "Mostly Human ~ Suli ~ Languages",
+      "name": "Languages",
+      "negated_fact_gates": [],
+      "positive_prefact_flag": "Suli_ReplaceLanguages",
+      "race_key": "Suli",
+      "sets_replace_flags": [],
+      "skinwalker_change_shape_kin": null,
+      "source_page": "p.215",
+      "suppressed_by_flag": null,
+      "template_bonus_languages": [
+        "Aquan",
+        "Auran",
+        "Draconic",
+        "Ignan",
+        "Terran"
+      ],
+      "type_tokens": [
+        "RacialTraits",
+        "Suli Racial Trait",
+        "SpecialQuality",
+        "Racial Language"
+      ]
+    },
+    "suli/suli_trusted_mediator.json": {
+      "adopted_race_pool_suffix": null,
+      "automatic_trait_grants": [],
+      "category": "Special Ability",
+      "declared_bonuses": {
+        "ability_adjustments": [],
+        "ability_pool_picks": 0,
+        "magnitudes": [
+          2
+        ],
+        "magnitudes_excluding_flags": [
+          2
+        ],
+        "only_internal_flags": false,
+        "target_bonuses": [
+          {
+            "keyword": "VAR",
+            "magnitude": 2,
+            "target": "SaveBonus_vs_MindAffecting"
+          }
+        ],
+        "var_contributions": [
+          {
+            "amount": 2,
+            "name": "SaveBonus_vs_MindAffecting"
+          }
+        ]
+      },
+      "declared_size": null,
+      "declared_vision": [],
+      "declared_walk_speed_ft": null,
+      "declares_negated_ability_guard": false,
+      "description": "[redacted PI]",
+      "exclusion_guard_flags": [
+        "Suli_ReplaceEnergyResistance",
+        "Suli_ReplaceVision"
+      ],
+      "is_racial_default": false,
+      "key": "Suli ~ Trusted Mediator",
+      "name": "Trusted Mediator",
+      "negated_fact_gates": [],
+      "positive_prefact_flag": null,
+      "race_key": "Suli",
+      "sets_replace_flags": [],
+      "skinwalker_change_shape_kin": null,
+      "source_page": "p.216",
+      "suppressed_by_flag": null,
+      "template_bonus_languages": [],
+      "type_tokens": [
+        "RacialTraits",
+        "Suli Racial Trait",
+        "SpecialQuality",
+        "Special Quality"
+      ]
+    },
+    "svirfneblin/svirfneblin_stalwart_watcher.json": {
+      "adopted_race_pool_suffix": null,
+      "automatic_trait_grants": [
+        "Svirfneblin ~ Stalwart Watcher Output"
+      ],
+      "category": "Special Ability",
+      "declared_bonuses": {
+        "ability_adjustments": [],
+        "ability_pool_picks": 0,
+        "magnitudes": [
+          2
+        ],
+        "magnitudes_excluding_flags": [
+          2
+        ],
+        "only_internal_flags": false,
+        "target_bonuses": [
+          {
+            "keyword": "VAR",
+            "magnitude": 2,
+            "target": "SaveBonus_vs_MindAffecting"
+          }
+        ],
+        "var_contributions": [
+          {
+            "amount": 2,
+            "name": "SaveBonus_vs_MindAffecting"
+          }
+        ]
+      },
+      "declared_size": null,
+      "declared_vision": [],
+      "declared_walk_speed_ft": null,
+      "declares_negated_ability_guard": false,
+      "description": "[redacted PI]",
+      "exclusion_guard_flags": [
+        "Svirfneblin_ReplaceHatred",
+        "Svirfneblin_ReplaceSkilled"
+      ],
+      "is_racial_default": false,
+      "key": "Svirfneblin ~ Stalwart Watcher",
+      "name": "Stalwart Watcher",
+      "negated_fact_gates": [],
+      "positive_prefact_flag": null,
+      "race_key": "Svirfneblin",
+      "sets_replace_flags": [
+        "Svirfneblin_ReplaceHatred",
+        "Svirfneblin_ReplaceSkilled"
+      ],
+      "skinwalker_change_shape_kin": null,
+      "source_page": "p.216",
+      "suppressed_by_flag": null,
+      "template_bonus_languages": [],
+      "type_tokens": [
+        "RacialTraits",
+        "Svirfneblin Racial Trait",
+        "SpecialAttack",
+        "Special Quality"
+      ]
+    },
+    "sylph/mostly_human_sylph_languages.json": {
+      "adopted_race_pool_suffix": null,
+      "automatic_trait_grants": [],
+      "category": "Special Ability",
+      "declared_bonuses": {
+        "ability_adjustments": [],
+        "ability_pool_picks": 0,
+        "magnitudes": [],
+        "magnitudes_excluding_flags": [],
+        "only_internal_flags": false,
+        "target_bonuses": [],
+        "var_contributions": []
+      },
+      "declared_size": null,
+      "declared_vision": [],
+      "declared_walk_speed_ft": null,
+      "declares_negated_ability_guard": false,
+      "description": "Mostly human sylphs begin play speaking Common. Sylphs with high Intelligence scores can choose from the following languages: Aquan, Auran, Dwarven, Elven, Gnome, Halfling, Ignan, and Terran.",
+      "exclusion_guard_flags": [],
+      "is_racial_default": false,
+      "key": "Mostly Human ~ Sylph ~ Languages",
+      "name": "Languages",
+      "negated_fact_gates": [],
+      "positive_prefact_flag": "Sylph_ReplaceLanguages",
+      "race_key": "Sylph",
+      "sets_replace_flags": [],
+      "skinwalker_change_shape_kin": null,
+      "source_page": "p.215",
+      "suppressed_by_flag": null,
+      "template_bonus_languages": [
+        "Aquan",
+        "Auran",
+        "Dwarven",
+        "Elven",
+        "Gnome",
+        "Halfling",
+        "Ignan",
+        "Terran"
+      ],
+      "type_tokens": [
+        "RacialTraits",
+        "Sylph Racial Trait",
+        "SpecialQuality",
+        "Racial Language"
+      ]
+    },
+    "sylph/sylph_secretive.json": {
+      "adopted_race_pool_suffix": null,
+      "automatic_trait_grants": [],
+      "category": "Special Ability",
+      "declared_bonuses": {
+        "ability_adjustments": [],
+        "ability_pool_picks": 0,
+        "magnitudes": [
+          2
+        ],
+        "magnitudes_excluding_flags": [
+          2
+        ],
+        "only_internal_flags": false,
+        "target_bonuses": [
+          {
+            "keyword": "VAR",
+            "magnitude": 2,
+            "target": "SaveBonus_vs_Enchantments,SaveBonus_vs_Divination"
+          }
+        ],
+        "var_contributions": [
+          {
+            "amount": 2,
+            "name": "SaveBonus_vs_Enchantments"
+          },
+          {
+            "amount": 2,
+            "name": "SaveBonus_vs_Divination"
+          }
+        ]
+      },
+      "declared_size": null,
+      "declared_vision": [],
+      "declared_walk_speed_ft": null,
+      "declares_negated_ability_guard": false,
+      "description": "Sylphs gain a +2 racial bonus on saving throws against enchantment and divination spells and effects. This racial trait replaces energy resistance and the spell-like ability racial trait.",
+      "exclusion_guard_flags": [
+        "Sylph_ReplaceSpellLikeAbility",
+        "Sylph_ReplaceEnergyResistance"
+      ],
+      "is_racial_default": false,
+      "key": "Sylph ~ Secretive",
+      "name": "Secretive",
+      "negated_fact_gates": [],
+      "positive_prefact_flag": null,
+      "race_key": "Sylph",
+      "sets_replace_flags": [
+        "Sylph_ReplaceSpellLikeAbility",
+        "Sylph_ReplaceEnergyResistance"
+      ],
+      "skinwalker_change_shape_kin": null,
+      "source_page": "p.216",
+      "suppressed_by_flag": null,
+      "template_bonus_languages": [],
+      "type_tokens": [
+        "RacialTraits",
+        "Sylph Racial Trait",
+        "SpecialQuality",
+        "Special Quality"
+      ]
+    },
+    "tengu/tengu_deft_swords.json": {
+      "adopted_race_pool_suffix": null,
+      "automatic_trait_grants": [],
+      "category": "Special Ability",
+      "declared_bonuses": {
+        "ability_adjustments": [],
+        "ability_pool_picks": 0,
+        "magnitudes": [],
+        "magnitudes_excluding_flags": [],
+        "only_internal_flags": false,
+        "target_bonuses": [],
+        "var_contributions": []
+      },
+      "declared_size": null,
+      "declared_vision": [],
+      "declared_walk_speed_ft": null,
+      "declares_negated_ability_guard": true,
+      "description": "Some tengu learn dazzling blade techniques that allow them to use their weapons to protect against combat maneuvers. They gain a +2 dodge bonus to CMD while wielding a swordlike weapon. This racial trait replaces natural weapon and sneaky.",
+      "exclusion_guard_flags": [
+        "Tengu_ReplaceNaturalWeapon",
+        "Tengu_ReplaceSneaky"
+      ],
+      "is_racial_default": false,
+      "key": "Tengu ~ Deft Swords",
+      "name": "Deft Swords",
+      "negated_fact_gates": [],
+      "positive_prefact_flag": null,
+      "race_key": "Tengu",
+      "sets_replace_flags": [
+        "Tengu_ReplaceNaturalWeapon",
+        "Tengu_ReplaceSneaky"
+      ],
+      "skinwalker_change_shape_kin": null,
+      "source_page": "p.216",
+      "suppressed_by_flag": null,
+      "template_bonus_languages": [],
+      "type_tokens": [
+        "RacialTraits",
+        "Tengu Racial Trait",
+        "SpecialQuality",
+        "Special Quality"
+      ]
+    },
+    "tiefling/pass_for_human_tiefling_languages.json": {
+      "adopted_race_pool_suffix": null,
+      "automatic_trait_grants": [],
+      "category": "Special Ability",
+      "declared_bonuses": {
+        "ability_adjustments": [],
+        "ability_pool_picks": 0,
+        "magnitudes": [],
+        "magnitudes_excluding_flags": [],
+        "only_internal_flags": false,
+        "target_bonuses": [],
+        "var_contributions": []
+      },
+      "declared_size": null,
+      "declared_vision": [],
+      "declared_walk_speed_ft": null,
+      "declares_negated_ability_guard": false,
+      "description": "Tieflings that can pass for human begin play speaking Common. Tieflings with high Intelligence scores can choose from the following languages: Abyssal, Draconic, Dwarven, Elven, Gnome, Goblin, Halfling, Infernal, and Orc.",
+      "exclusion_guard_flags": [],
+      "is_racial_default": false,
+      "key": "Pass for Human ~ Tiefling ~ Languages",
+      "name": "Languages",
+      "negated_fact_gates": [],
+      "positive_prefact_flag": "Tiefling_ReplaceLanguages",
+      "race_key": "Tiefling",
+      "sets_replace_flags": [],
+      "skinwalker_change_shape_kin": null,
+      "source_page": "p.217",
+      "suppressed_by_flag": null,
+      "template_bonus_languages": [
+        "Abyssal",
+        "Draconic",
+        "Dwarven",
+        "Elven",
+        "Gnome",
+        "Goblin",
+        "Halfling",
+        "Infernal",
+        "Orc"
+      ],
+      "type_tokens": [
+        "RacialTraits",
+        "Tiefling Racial Trait",
+        "SpecialQuality",
+        "Racial Language"
+      ]
+    },
+    "tiefling/tiefling_bullying.json": {
+      "adopted_race_pool_suffix": null,
+      "automatic_trait_grants": [],
+      "category": "Special Ability",
+      "declared_bonuses": {
+        "ability_adjustments": [],
+        "ability_pool_picks": 0,
+        "magnitudes": [
+          1
+        ],
+        "magnitudes_excluding_flags": [
+          1
+        ],
+        "only_internal_flags": false,
+        "target_bonuses": [
+          {
+            "keyword": "VAR",
+            "magnitude": 1,
+            "target": "CMB_Disarm,CMB_Steal"
+          }
+        ],
+        "var_contributions": [
+          {
+            "amount": 1,
+            "name": "CMB_Disarm"
+          },
+          {
+            "amount": 1,
+            "name": "CMB_Steal"
+          }
+        ]
+      },
+      "declared_size": null,
+      "declared_vision": [],
+      "declared_walk_speed_ft": null,
+      "declares_negated_ability_guard": false,
+      "description": "Tieflings are often disparaged and kept low in the social order, where they commonly resort to robbing those weaker than themselves. Tieflings with this racial trait gain a +1 racial bonus on combat maneuver checks to disarm or steal. This racial trait replaces skilled.",
+      "exclusion_guard_flags": [
+        "Tiefling_ReplaceSkilled"
+      ],
+      "is_racial_default": false,
+      "key": "Tiefling ~ Bullying",
+      "name": "Bullying",
+      "negated_fact_gates": [],
+      "positive_prefact_flag": null,
+      "race_key": "Tiefling",
+      "sets_replace_flags": [
+        "Tiefling_ReplaceSkilled"
+      ],
+      "skinwalker_change_shape_kin": null,
+      "source_page": "p.216",
+      "suppressed_by_flag": null,
+      "template_bonus_languages": [],
+      "type_tokens": [
+        "RacialTraits",
+        "Tiefling Racial Trait",
+        "SpecialQuality",
+        "Special Quality",
+        "Applied Bonus"
+      ]
+    },
+    "tiefling/tiefling_light_from_the_darkness.json": {
+      "adopted_race_pool_suffix": null,
+      "automatic_trait_grants": [
+        "Aasimar ~ Incorruptible"
+      ],
+      "category": "Special Ability",
+      "declared_bonuses": {
+        "ability_adjustments": [],
+        "ability_pool_picks": 0,
+        "magnitudes": [],
+        "magnitudes_excluding_flags": [],
+        "only_internal_flags": false,
+        "target_bonuses": [],
+        "var_contributions": []
+      },
+      "declared_size": null,
+      "declared_vision": [],
+      "declared_walk_speed_ft": null,
+      "declares_negated_ability_guard": false,
+      "description": "Tieflings who deny the evil of their heritage to go on to become heroes refuse to use the dark magic of their blood, but their struggle grants them uncanny resilience against evil's touch. As long as they retain a good alignment, they gain the aasimar's incorruptible alternate racial trait (Advanced Race Guide). This racial trait replaces the spell-like ability racial trait.",
+      "exclusion_guard_flags": [
+        "Tiefling_ReplaceSpellLikeAbility"
+      ],
+      "is_racial_default": false,
+      "key": "Tiefling ~ Light from the Darkness",
+      "name": "Light from the Darkness",
+      "negated_fact_gates": [],
+      "positive_prefact_flag": null,
+      "race_key": "Tiefling",
+      "sets_replace_flags": [
+        "Tiefling_ReplaceSpellLikeAbility"
+      ],
+      "skinwalker_change_shape_kin": null,
+      "source_page": "p.217",
+      "suppressed_by_flag": null,
+      "template_bonus_languages": [],
+      "type_tokens": [
+        "RacialTraits",
+        "Tiefling Racial Trait",
+        "SpecialQuality",
+        "Special Quality"
+      ]
+    },
+    "tiefling/tiefling_pass_for_human.json": {
+      "adopted_race_pool_suffix": null,
+      "automatic_trait_grants": [
+        "Pass for Human ~ Tiefling ~ Languages"
+      ],
+      "category": "Special Ability",
+      "declared_bonuses": {
+        "ability_adjustments": [],
+        "ability_pool_picks": 0,
+        "magnitudes": [],
+        "magnitudes_excluding_flags": [],
+        "only_internal_flags": false,
+        "target_bonuses": [],
+        "var_contributions": []
+      },
+      "declared_size": null,
+      "declared_vision": [],
+      "declared_walk_speed_ft": null,
+      "declares_negated_ability_guard": false,
+      "description": "Discrimination against tieflings with horrifically fiendish features is so intense that even tieflings look up to those precious few of their kind who can pass as human. These tieflings have otherworldly features that are so subtle, they aren't often noticed unless the tiefling points them out (for example, eyes that flash red in the throes of passion, or fingernails that are naturally hard and pointed). Such a tiefling doesn't need to succeed at a Disguise check to appear to be human and count as humanoid (human) as well as outsider (native) for all purposes (such as humanoid-affecting spells like charm person or enlarge person). The tiefling does not automatically gain his associated outsider language (but may select it as a bonus language if his Intelligence score is high enough), and he may not select other racial traits that would grant him obviously fiendish features (such as the fiendish sprinter, maw or claw, prehensile tail, scaled skin, or vestigial wings alternate racial traits listed in the Advanced Race Guide). This ability alters the tiefling's type, subtype, and languages.",
+      "exclusion_guard_flags": [
+        "Tiefling_ReplaceType",
+        "Tiefling_ReplaceLanguages"
+      ],
+      "is_racial_default": false,
+      "key": "Tiefling ~ Pass for Human",
+      "name": "Pass for Human",
+      "negated_fact_gates": [],
+      "positive_prefact_flag": null,
+      "race_key": "Tiefling",
+      "sets_replace_flags": [
+        "Tiefling_ReplaceType",
+        "Tiefling_ReplaceLanguages"
+      ],
+      "skinwalker_change_shape_kin": null,
+      "source_page": "p.217",
+      "suppressed_by_flag": null,
+      "template_bonus_languages": [],
+      "type_tokens": [
+        "RacialTraits",
+        "Tiefling Racial Trait",
+        "SpecialQuality",
+        "Special Quality"
+      ]
+    },
+    "undine/mostly_human_undine_languages.json": {
+      "adopted_race_pool_suffix": null,
+      "automatic_trait_grants": [],
+      "category": "Special Ability",
+      "declared_bonuses": {
+        "ability_adjustments": [],
+        "ability_pool_picks": 0,
+        "magnitudes": [],
+        "magnitudes_excluding_flags": [],
+        "only_internal_flags": false,
+        "target_bonuses": [],
+        "var_contributions": []
+      },
+      "declared_size": null,
+      "declared_vision": [],
+      "declared_walk_speed_ft": null,
+      "declares_negated_ability_guard": false,
+      "description": "Mostly human undines begin play speaking Common. Undines with high Intelligence scores can choose from the following languages: Aquan, Auran, Dwarven, Elven, Gnome, Halfling, Ignan, and Terran.",
+      "exclusion_guard_flags": [],
+      "is_racial_default": false,
+      "key": "Mostly Human ~ Undine ~ Languages",
+      "name": "Languages",
+      "negated_fact_gates": [],
+      "positive_prefact_flag": "Undine_ReplaceLanguages",
+      "race_key": "Undine",
+      "sets_replace_flags": [],
+      "skinwalker_change_shape_kin": null,
+      "source_page": "p.215",
+      "suppressed_by_flag": null,
+      "template_bonus_languages": [
+        "Aquan",
+        "Auran",
+        "Dwarven",
+        "Elven",
+        "Gnome",
+        "Halfling",
+        "Ignan",
+        "Terran"
+      ],
+      "type_tokens": [
+        "RacialTraits",
+        "Undine Racial Trait",
+        "SpecialQuality",
+        "Racial Language"
+      ]
+    },
+    "undine/undine_triton_magic.json": {
+      "adopted_race_pool_suffix": null,
+      "automatic_trait_grants": [
+        "Racial SLA ~ Summon Nature's Ally I (dolphins only)"
+      ],
+      "category": "Special Ability",
+      "declared_bonuses": {
+        "ability_adjustments": [],
+        "ability_pool_picks": 0,
+        "magnitudes": [],
+        "magnitudes_excluding_flags": [],
+        "only_internal_flags": false,
+        "target_bonuses": [],
+        "var_contributions": []
+      },
+      "declared_size": null,
+      "declared_vision": [],
+      "declared_walk_speed_ft": null,
+      "declares_negated_ability_guard": false,
+      "description": "[redacted PI]",
+      "exclusion_guard_flags": [
+        "Undine_ReplaceSpellLikeAbility"
+      ],
+      "is_racial_default": false,
+      "key": "Undine ~ Triton Magic",
+      "name": "Triton Magic",
+      "negated_fact_gates": [],
+      "positive_prefact_flag": null,
+      "race_key": "Undine",
+      "sets_replace_flags": [
+        "Undine_ReplaceSpellLikeAbility"
+      ],
+      "skinwalker_change_shape_kin": null,
+      "source_page": "p.217",
+      "suppressed_by_flag": null,
+      "template_bonus_languages": [],
+      "type_tokens": [
+        "RacialTraits",
+        "Undine Racial Trait",
+        "SpecialQuality",
+        "Special Quality"
+      ]
+    },
+    "vanara/vanara_risky_troublemaker.json": {
+      "adopted_race_pool_suffix": null,
+      "automatic_trait_grants": [],
+      "category": "Special Ability",
+      "declared_bonuses": {
+        "ability_adjustments": [],
+        "ability_pool_picks": 0,
+        "magnitudes": [],
+        "magnitudes_excluding_flags": [],
+        "only_internal_flags": false,
+        "target_bonuses": [],
+        "var_contributions": []
+      },
+      "declared_size": null,
+      "declared_vision": [],
+      "declared_walk_speed_ft": null,
+      "declares_negated_ability_guard": false,
+      "description": "Vanara families who seek to emulate the Monkey King teach their members that unexpected opportunities are worth taking great risks. These vanaras can choose to roll twice on Use Magic Device checks. If they do, they take the higher result unless either die roll is a natural 1, in which case the check automatically fails. This racial trait replaces prehensile tail.",
+      "exclusion_guard_flags": [
+        "Vanara_ReplacePrehensileTail"
+      ],
+      "is_racial_default": false,
+      "key": "Vanara ~ Risky Troublemaker",
+      "name": "Risky Troublemaker",
+      "negated_fact_gates": [],
+      "positive_prefact_flag": null,
+      "race_key": "Vanara",
+      "sets_replace_flags": [
+        "Vanara_ReplacePrehensileTail"
+      ],
+      "skinwalker_change_shape_kin": null,
+      "source_page": "p.217",
+      "suppressed_by_flag": null,
+      "template_bonus_languages": [],
+      "type_tokens": [
+        "RacialTraits",
+        "Vanara Racial Trait",
+        "SpecialQuality",
+        "Special Quality"
+      ]
+    },
+    "vishkanya/deceptive_vishkanya_limber.json": {
+      "adopted_race_pool_suffix": null,
+      "automatic_trait_grants": [],
+      "category": "Special Ability",
+      "declared_bonuses": {
+        "ability_adjustments": [],
+        "ability_pool_picks": 0,
+        "magnitudes": [
+          2
+        ],
+        "magnitudes_excluding_flags": [
+          2
+        ],
+        "only_internal_flags": false,
+        "target_bonuses": [
+          {
+            "keyword": "SKILL",
+            "magnitude": 2,
+            "target": "Stealth"
+          }
+        ],
+        "var_contributions": []
+      },
+      "declared_size": null,
+      "declared_vision": [],
+      "declared_walk_speed_ft": null,
+      "declares_negated_ability_guard": false,
+      "description": "Deceptive vishkanyas receive a +2 racial bonus on Stealth checks.",
+      "exclusion_guard_flags": [],
+      "is_racial_default": false,
+      "key": "Deceptive ~ Vishkanya ~ Limber",
+      "name": "Limber",
+      "negated_fact_gates": [],
+      "positive_prefact_flag": "Vishkanya_ReplaceLimber",
+      "race_key": "Vishkanya",
+      "sets_replace_flags": [],
+      "skinwalker_change_shape_kin": null,
+      "source_page": "p.217",
+      "suppressed_by_flag": null,
+      "template_bonus_languages": [],
+      "type_tokens": [
+        "RacialTraits",
+        "Vishkanya Racial Trait",
+        "SpecialQuality"
+      ]
+    },
+    "vishkanya/vishkanya_deceptive.json": {
+      "adopted_race_pool_suffix": null,
+      "automatic_trait_grants": [
+        "Deceptive ~ Vishkanya ~ Limber"
+      ],
+      "category": "Special Ability",
+      "declared_bonuses": {
+        "ability_adjustments": [],
+        "ability_pool_picks": 0,
+        "magnitudes": [
+          2
+        ],
+        "magnitudes_excluding_flags": [
+          2
+        ],
+        "only_internal_flags": false,
+        "target_bonuses": [
+          {
+            "keyword": "SKILL",
+            "magnitude": 2,
+            "target": "Bluff"
+          }
+        ],
+        "var_contributions": []
+      },
+      "declared_size": null,
+      "declared_vision": [],
+      "declared_walk_speed_ft": null,
+      "declares_negated_ability_guard": false,
+      "description": "Vishkanya clans that make their livings robbing or killing humans train to distract targets at critical moments. They gain a +2 racial bonus on Bluff checks. This racial trait replaces the racial bonus on Escape Artist checks.",
+      "exclusion_guard_flags": [
+        "Vishkanya_ReplaceLimber"
+      ],
+      "is_racial_default": false,
+      "key": "Vishkanya ~ Deceptive",
+      "name": "Deceptive",
+      "negated_fact_gates": [],
+      "positive_prefact_flag": null,
+      "race_key": "Vishkanya",
+      "sets_replace_flags": [
+        "Vishkanya_ReplaceLimber"
+      ],
+      "skinwalker_change_shape_kin": null,
+      "source_page": "p.217",
+      "suppressed_by_flag": null,
+      "template_bonus_languages": [],
+      "type_tokens": [
+        "RacialTraits",
+        "Vishkanya Racial Trait",
+        "SpecialQuality",
+        "Special Quality"
+      ]
+    },
+    "wayang/wayang_in_the_shadows.json": {
+      "adopted_race_pool_suffix": null,
+      "automatic_trait_grants": [],
+      "category": "Special Ability",
+      "declared_bonuses": {
+        "ability_adjustments": [],
+        "ability_pool_picks": 0,
+        "magnitudes": [
+          2
+        ],
+        "magnitudes_excluding_flags": [
+          2
+        ],
+        "only_internal_flags": false,
+        "target_bonuses": [
+          {
+            "keyword": "SKILL",
+            "magnitude": 2,
+            "target": "%LIST"
+          }
+        ],
+        "var_contributions": []
+      },
+      "declared_size": null,
+      "declared_vision": [],
+      "declared_walk_speed_ft": null,
+      "declares_negated_ability_guard": false,
+      "description": "Many wayangs perform a variety of unusual roles and tasks in wayang society. They gain a +2 racial bonus on their choice of two of the following skills: Appraise, Bluff, Craft, Profession, and Sleight of Hand. This racial trait replaces lurker.",
+      "exclusion_guard_flags": [
+        "Wayang_ReplaceLurker"
+      ],
+      "is_racial_default": false,
+      "key": "Wayang ~ In the Shadows",
+      "name": "In the Shadows",
+      "negated_fact_gates": [],
+      "positive_prefact_flag": null,
+      "race_key": "Wayang",
+      "sets_replace_flags": [
+        "Wayang_ReplaceLurker"
+      ],
+      "skinwalker_change_shape_kin": null,
+      "source_page": "p.217",
+      "suppressed_by_flag": null,
+      "template_bonus_languages": [],
+      "type_tokens": [
+        "RacialTraits",
+        "Wayang Racial Trait",
+        "SpecialQuality",
+        "Special Quality"
+      ]
+    }
+  }
+}

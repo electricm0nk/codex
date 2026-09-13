@@ -29,7 +29,7 @@ use crate::rules_core::equipment_record::CorpusEquipmentRecord;
 
 /// A skill-check circumstance bonus granted by a `general`-category
 /// item's `BONUS:SKILL|<skill>|<n>|TYPE=Circumstance` corpus token.
-#[derive(Debug, Clone, PartialEq)]
+#[derive(Debug, Clone, PartialEq, serde::Serialize, serde::Deserialize)]
 pub struct SkillCheckBonus {
     pub skill: String,
     pub bonus: i16,
@@ -70,7 +70,7 @@ pub fn compute_general_effect(record: &CorpusEquipmentRecord) -> Option<SkillChe
 /// flat, unconditional, character-independent literal in every one of
 /// this population's 108 real corpus records (confirmed this cycle: zero
 /// formula-valued or `PRE`-gated `VAR` chains among them).
-#[derive(Debug, Clone, PartialEq)]
+#[derive(Debug, Clone, PartialEq, serde::Serialize, serde::Deserialize)]
 pub struct VarBonus {
     pub name: String,
     pub bonus: i16,

@@ -47,6 +47,10 @@ pub mod corpus_equipment_json;
 // race-trait corpus JSON -- the cache payload shapes, the token grammar and
 // the chain grammar are converter vocabulary (`decisions.md` §11).
 pub mod corpus_race_json;
+/// SD-35 `AT-35-E6-003-RULED` cycle 15: the authoring-time producer of
+/// `data/corpus/<book>/_settled/<kind>.json`, the settled-record bundle the
+/// live loader reads with serde instead of calling this side at run time.
+pub mod corpus_settled_bundle;
 pub mod class_feature_vars;
 pub mod formula_interpreter;
 pub mod formula_interpreter_corpus_wide;
