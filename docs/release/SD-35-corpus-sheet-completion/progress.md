@@ -181,7 +181,7 @@ re-measured at the cut by the launch-readiness audit.
 
 ## Cycle log
 
-### 2026-09-13 — Epic 6 / `desktop-and-prose-leave-pcgen` — AT-35-E6-003-RULED **cycle 7** (`<sha>`) — **partial** (cycle 6's named converter defect is **refuted**: `ABILITY:` converts as a grant edge and cycle 6's probe was reading the wrong side of it. Residue `17 / 35 → 16 / 34`)
+### 2026-09-13 — Epic 6 / `desktop-and-prose-leave-pcgen` — AT-35-E6-003-RULED **cycle 7** (`f446ba681a`) — **partial** (cycle 6's named converter defect is **refuted**: `ABILITY:` converts as a grant edge and cycle 6's probe was reading the wrong side of it. Residue `17 / 35 → 16 / 34`)
 
 - **Scope gate:** `SCOPE_GATE: EXEMPT (Epic 6 cycle — closes zero corpus units by design; decisions.md §2)`.
   It ran anyway at the cycle's start tree `287968b058`:
