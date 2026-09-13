@@ -181,6 +181,86 @@ re-measured at the cut by the launch-readiness audit.
 
 ## Cycle log
 
+### 2026-09-13 — Epic 6 / `desktop-and-prose-leave-pcgen` — AT-35-E6-003-RULED **cycle 14** (`64224a0c8e`) — **partial** (the race resolver leaves PCGen; first file cleared since cycle 12. Residue `8 / 14 → 7 / 12`)
+
+- **Scope gate:** `SCOPE_GATE: EXEMPT (Epic 6 cycle — closes zero corpus units by design;
+  decisions.md §2, workflow-instruction.md §6 step 1)`. It ran anyway at the cycle's start tree
+  `8555cee7b4`: `scoped=0 remaining_non_done=0 floor=500 verdict=PASS_WHOLE_REMAINDER`. The
+  residue check, which is **not** exempt, ran first at the same tree and passed at exactly cycle
+  13's closing figure — `live_files=8 live_hits=14 baseline_files=260 baseline_hits=12736
+  verdict=PASS`.
+
+- **What moved.** `src/rules_core/race_resolver.rs` — the last live file carrying **three**
+  converter imports — is **cleared whole**. It held
+  `ingest_payload::{RaceCacheData, RaceTraitCacheData}`, `race_trait_tokens` and
+  `bonus_chain_reader::{self, DeclaredBonuses}`, and read **twelve** separate facts back out of
+  the ingest token and bonus-chain arrays at run time, once per accessor call. Every one of those
+  readings still runs, in the same function with the same body, on the converter side — in the
+  new `src/pcgen_import/corpus_race_json.rs`, which settles a race chassis and a racial trait
+  **once**, at the ingest boundary. The live side holds
+  `rules_core::race_record::{CorpusRaceRecord, CorpusRaceTraitRecord}` — settled structs with
+  **no token array and no bonus-chain array**, deliberately, so no future live module can re-open
+  the ingest format behind the gate's back — and `rules_core::declared_bonuses`, the new live
+  home of `AbilityAdjustment` / `VarContribution` / `DeclaredBonuses`, which were already settled
+  *answers* rather than ingest *grammar*; `bonus_chain_reader` still fills them and re-exports
+  them, and not one line of its reading logic changed.
+
+- **Three closures, one whole file, and ONE relabel, booked separately.** The three imports and
+  the readings behind them are **gone from live code** — asserted by file *and symbol* in the
+  census, which also asserts the file names the converter nowhere in shipping code
+  (`race_resolver_shipping_pcgen_import_hits=0 (was 3)`) rather than inferring it from the gate's
+  file list. The **boundary call did not vanish**: it moved into `corpus_loader.rs`, which
+  already owned the live side's one ingest boundary for equipment, and **that file's own count
+  rises from 1 to 2**. Three hits out, one back, net `14 → 12`, and `pcgen_live_files` **8 → 7**,
+  the first file this criterion has cleared since cycle 12. The collapse that would hide the
+  second call in one `use crate::pcgen_import::{corpus_equipment_json, corpus_race_json};` line
+  was refused, exactly as the `source_content_payload` trim is refused for the eighth cycle.
+
+- **Parity, over the real corpus and not a fixture.** Two new whole-corpus proofs in
+  `corpus_race_json` re-run **the exact call `race_resolver` made at run time**, on the exact same
+  payload, and compare field for field over **every** `race` and `race_trait` record under
+  `data/corpus/` — 0 disagreements. The racial-trait prose oracle is **KEPT** and still reads the
+  ingest arrays, because it *is* the ingest-format reading the converted path is compared
+  against; it reads them off disk itself now, in `tests/`, where `decisions.md §11` says an
+  oracle belongs — `compared == 919`, unmoved. The `!PREFACT` presence pin (`from_row == 366`)
+  and the alternate-trait save/skill sweeps are unmoved too.
+
+- **Discovery: this remainder was never waiting on the converter.** Cycle 13 predicted it would
+  need "the race-trait rule shape this epic's remaining piece produces". It did not — all twelve
+  readings are *transcription* (`decisions.md §24`), so what blocked them was not the converter's
+  coverage but **where the answer was declared**. Moving the declaration, not the derivation,
+  cleared the file. Four call sites outside the epic's file-touch set were forced out by the
+  settled record, none of them predicted; three got a new settled field, and the fourth — the
+  oracle — got the opposite treatment on purpose.
+
+- **Verified once at the final tree.** `NO_RUN_EXIT=0`; lib **3,355 passed / 0 failed / 16
+  ignored** (cycle 13's 3,352 + this cycle's 3); full workspace **`FULL_EXIT=0`, 418 targets + 1
+  Doc-tests, 8,884 passed / 0 failed / 69 ignored**, zero `test result: FAILED` lines; clippy
+  **0 warnings** after one named self-heal in this cycle's own new lines (`unnecessarily eager
+  cloning`, `v06_work_inventory.rs:6943`, with that target's 636 tests re-run green). The desktop
+  crate ran **even though no line under `apps/` was written**, because this cycle changed the
+  *type* of two `pub` fields the desktop crate reads. `sheet_rule_convert -- --check`
+  `records=49438 converted=49296 refused=142 rules=70135 var_tables=5293 verdict=PASS`;
+  `data/sheet_rules/` ingest-syntax grep **0**; residue gate PASS with its own **27** unit tests
+  OK; atlas `citation_failures=0`; token-coverage `non_done=0 refused=142 PASS`; shape-engine
+  `not_held_by_engine=0`; missing-engine-tables `population=0`; denominator `files_checked=143
+  violations=0`; `pi-sweep` PASS. **No `data/` file changed.** Two SD-34 atlas artifacts were
+  restamped by their own `--check` instruments (`derived_at`, and a content-anchored line number
+  `16297 → 16303`) and are folded, not claimed.
+
+- **Receipt rows:** `closed=0 relabeled=0 rust_lines_changed=919 ratio=n/a builds_recorded=5
+  pcgen_live_files=7`.
+
+- **Refused tokens:** `corpus_json_boundary=2, renderer=5, ingest_record_tokens=1,
+  trait_and_pool_tokens=1, source_content_payload=3` — **12 hits / 7 files, summing, all under
+  `src/rules_core/`**, five groups, under the flag-cap of 10.
+  `deferral 1789307685992-at-35-e6-003-ruled-d8d296`.
+
+- **Next-cycle scope:** the unblocked piece is **`corpus_json_boundary` (2)** — a **data** step,
+  now worth twice what it was: an ingest-side generator writing the settled equipment **and race**
+  fields into `data/corpus/`, after which `corpus_loader` deserializes settled values with serde
+  and names nothing, clearing both hits and its whole file (gate to `6 / 10`).
+
 ### 2026-09-13 — Epic 6 / `desktop-and-prose-leave-pcgen` — AT-35-E6-003-RULED **cycle 13** (`1bbeb8ce2a`) — **partial** (the equipment payload collapses to the converted half alone; the live loader stops rebuilding an ingest row. Residue `8 / 19 → 8 / 14`)
 
 - **Scope gate:** `SCOPE_GATE: EXEMPT (Epic 6 cycle — closes zero corpus units by design;
