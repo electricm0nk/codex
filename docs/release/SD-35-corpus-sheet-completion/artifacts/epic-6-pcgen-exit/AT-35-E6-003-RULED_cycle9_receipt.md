@@ -1,6 +1,6 @@
 # Cycle AT-35-E6-003-RULED cycle 9 — Epic 6 (PCGen exit) / AT-35-E6-003-RULED
 
-- **Commit SHA:** `<filled at commit>`, cycle start `b732854b91`
+- **Commit SHA:** `8a36cd54c9` (the code, the generated package, the census script and its JSON, the retro events), cycle start `b732854b91`
 
 - **Scope gate:** `SCOPE_GATE: EXEMPT (Epic 6 cycle — closes zero corpus units by design;
   decisions.md §2, workflow-instruction.md §6 step 1)`
@@ -103,7 +103,7 @@
   closed_by_kind=
   relabeled_moves=
   regressed=0 added=0 dropped=0
-  closed=0 relabeled=0 rust_lines_changed=498 ratio=n/a builds_recorded=2 pcgen_live_files=16
+  closed=0 relabeled=0 rust_lines_changed=581 ratio=n/a builds_recorded=2 pcgen_live_files=16
   ```
   `closed=0` is correct and expected: Epic 6 closes zero corpus units by design and no `data/`
   file changed, so `docs/work-inventory.json` is byte-identical before and after.

@@ -181,6 +181,81 @@ re-measured at the cut by the launch-readiness audit.
 
 ## Cycle log
 
+### 2026-09-13 — Epic 6 / `desktop-and-prose-leave-pcgen` — AT-35-E6-003-RULED **cycle 9** (`8a36cd54c9`) — **partial** (the desktop's bundled corpus package is produced at build time now; no live path in the crate parses a raw PCGen row. Residue `16 / 32 → 16 / 29`)
+
+- **Scope gate:** `SCOPE_GATE: EXEMPT (Epic 6 cycle — closes zero corpus units by design;
+  decisions.md §2)`. It ran anyway at the cycle's start tree `b732854b91`:
+  `scoped=0 remaining_non_done=0 floor=500 verdict=PASS_WHOLE_REMAINDER`. The residue check,
+  which is not exempt, passed first at the same tree at exactly cycle 8's closing figure:
+  `live_files=16 live_hits=32 baseline_files=260 baseline_hits=12736 verdict=PASS`.
+
+- **What moved.** Every Epic 6 census since cycle 1 named the clearing condition for the
+  desktop fixture path's converter calls in the same words — *"clears when that package is
+  produced at build time and read as data."* It is produced at build time now.
+  `src/bin/gen_desktop_fixture_corpus.rs` (new, converter-side, 306 lines) reads the four
+  committed `.txt` fixtures, parses them with the LST parsers and writes the converted records
+  into `apps/desktop/src-tauri/resources/corpus_fixtures/{spell,equipment}/*.json` — equipment
+  in the same Shape B v1 `raw_tokens`/`raw_bonus_chains` form the real `data/corpus/**` records
+  carry (including the byte-exact `raw_pair` value split, not the trimmed one), spells as
+  converted fields only with no token array at all. `--check` regenerates in memory and fails
+  on byte drift: `files=4 drift=0 verdict=PASS`.
+  `rules_core::corpus_loader` lost `load_lst_fixture_corpus` and `LstFixtureLine` entirely, and
+  with them its `parse_lst_spell_row` import and its use of `parse_equipment_entries`; the new
+  live `load_book_corpus` composes the two loaders that already existed and parses nothing.
+  The desktop's `corpus_fixtures.rs` hands it a `BookCorpusRoot` and asserts the record count
+  it committed to, and one new test pins the real values on the loaded package —
+  Alarm/Abjuration, Blur/Illusion, Longsword's `DAMAGE 1d8`, Chain Shirt's first `BONUS` chain
+  qualifier for qualifier.
+
+- **Three hits, named by row, and all three are closures rather than relabels:**
+  `corpus_loader.rs:50` (the last live import of a PCGen row parser in the crate),
+  `corpus_loader.rs:515` (`convert_spell_record` on the fixture path) and
+  `corpus_loader.rs:528` (`convert_equipment_record` on the same path). Cycle 4 booked the same
+  records' move as a **relabel** precisely because the calls reappeared in another live file;
+  this time they do not reappear — the conversion stops happening at run time. The consequence
+  is wider than the three hits: **after this cycle no live path in the crate parses a raw PCGen
+  row at run time**, asserted by row in the census (`live_runtime_row_parse_hits=0`), not by
+  prose. The one remaining run-time converter call, `corpus_loader.rs:93`, converts an
+  already-converted corpus JSON record because the equipment half still has no live record
+  shape. `correction 1789278821965-at-35-e6-003-ruled-738e77`: the condition eight censuses
+  recorded as an unsized future piece was one cycle of work.
+
+- **What was refused.** The `source_content_payload` trim — repointing `spell_resolver.rs`'s
+  `SourceContentPayload` import at the live re-export of the same enum, for `−1` and zero
+  dependency change — is refused for the **third** cycle running, on cycles 7 and 8's
+  reasoning. Cycle 8's ruling on the equipment shape stands unamended: `EquipmentRecord`'s nine
+  live consumers read `record.tokens`/`record.bonus_chains` directly, so a
+  `CorpusEquipmentRecord` carrying those arrays would move PCGen token structures under a live
+  root; it clears when those consumers read converted `SheetRule` rows.
+
+- **Verified once at the final tree.** `apps/` was touched, so the desktop crate and the
+  frontend ran **here**, not at the epic wrap-up. `NO_RUN_EXIT=0`; lib
+  `3348 passed; 0 failed; 16 ignored` (cycle 8's 3348, unchanged — this cycle's one new test is
+  in the desktop crate); full workspace `FULL_EXIT=0`, **418 targets, 8,877 passed, 0 failed,
+  69 ignored**, zero `test result: FAILED` lines (cycle 8's 8,877, unchanged, same reason);
+  desktop crate `570 passed; 0 failed` (cycle 4 recorded 569; the `+1` is exactly this cycle's
+  one new test); frontend `101/101`; root clippy **0 warnings** after one self-heal (two lints
+  on this cycle's own new bin); desktop clippy **1 pre-existing warning named not swept**
+  (`vec_init_then_push`, `equipment_catalog.rs:889`, untouched file, the same warning cycles 2
+  and 4 recorded). `gen_desktop_fixture_corpus -- --check` `files=4 drift=0 verdict=PASS`;
+  `sheet_rule_convert -- --check` `records=49438 converted=49296 refused=142 rules=70135
+  var_tables=5293 verdict=PASS`; sheet_rules ingest-syntax grep `0`; `completion_atlas`
+  `citation_failures=0`; `token_coverage` `non_done=0 refused=142 PASS`; `shape_engine_boundary`
+  `not_held_by_engine=0`; `missing_engine_tables` `population=0`; `denominator_gate`
+  `files_checked=139 violations=0`; `pi-sweep` PASS; 27 gate unit tests OK; `data/`
+  byte-identical, so `corpus_literal_sweep` and the work inventory did not run.
+
+- **Receipt rows (mechanical):** `closed=0 relabeled=0 rust_lines_changed=581 ratio=n/a
+  builds_recorded=2 pcgen_live_files=16`. `pcgen_live_files` is the **file** count and did not
+  move — all three closures landed in one file that still carries other hits; the hit count
+  moved 32 → 29.
+
+- **Refused tokens:** `renderer=5, lst_parser_types=10, ingest_record_tokens=5,
+  trait_and_pool_tokens=3, ir_converter=1, source_content_payload=5` — 29 hits / 16 files,
+  summing, all under `src/rules_core/`. `deferral 1789278814165-at-35-e6-003-ruled-5547d2`.
+
+- **Receipt:** `artifacts/epic-6-pcgen-exit/AT-35-E6-003-RULED_cycle9_receipt.md`.
+
 ### 2026-09-13 — Epic 6 / `desktop-and-prose-leave-pcgen` — AT-35-E6-003-RULED **cycle 8** (`bfd82ec0aa`) — **partial** (the live side owns its first converted record shape: `CorpusSpellRecord`. Residue `16 / 34 → 16 / 32`)
 
 - **Scope gate:** `SCOPE_GATE: EXEMPT (Epic 6 cycle — closes zero corpus units by design;
