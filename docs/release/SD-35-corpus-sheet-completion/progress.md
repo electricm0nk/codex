@@ -181,6 +181,99 @@ re-measured at the cut by the launch-readiness audit.
 
 ## Cycle log
 
+### 2026-09-13 — Epic 6 / `desktop-and-prose-leave-pcgen` — AT-35-E6-003-RULED **cycle 11** (`2daf94f6b3`) — **partial** (the armour, skill and weapon-enhancement reads leave PCGen; three more whole live files clear. Residue `13 / 26 → 10 / 21`)
+
+- **Scope gate:** `SCOPE_GATE: EXEMPT (Epic 6 cycle — closes zero corpus units by design;
+  decisions.md §2)`. It ran anyway at the cycle's start tree `47e9e4ceee`:
+  `scoped=0 remaining_non_done=0 floor=500 verdict=PASS_WHOLE_REMAINDER`. The residue check,
+  which is not exempt, passed first at the same tree at exactly cycle 10's closing figure:
+  `live_files=13 live_hits=26 baseline_files=260 baseline_hits=12736 verdict=PASS`.
+
+- **What moved.** Cycle 10 built the path — `CorpusEquipmentRecord`, carrying **no token array
+  and no bonus-chain array** — and corrected the standing claim that the equipment half was one
+  indivisible piece: it is a **sequence of consumer moves**. This cycle walked three of them,
+  the three cycle 10 named first. `CorpusEquipmentRecord` gains seven settled fields
+  (`stat_effect`, `armor_class_chain_bonus`, `skill_check_bonus`, `var_bonuses`,
+  `weapon_enhancement`, `spell_resistance_bonus`, `eqmod_references`) and **still carries no
+  array**; every one of the nine reads that produced them moved **verbatim**, with its doc
+  comment and its real-corpus witness, to converter-side
+  `ir_converter::equipment_record_to_corpus`. That is one call doing more, not a second call,
+  so the `ir_converter` hit did not rise.
+
+- **Three whole live files stop naming `pcgen_import`, and all three are closures, not
+  relabels** — the read does not move to another live file, it stops being a token read:
+  `equipment_effects/arms_armor.rs` (the `ACCHECK:`/`MAXDEX:`/`SPELLFAILURE:` token reads, the
+  `BONUS:COMBAT|AC` chain scan with its circumstance-type exclusion, the `TEMPBONUS:` fallback
+  and the `BONUS:EQMARMOR|<field>` family scan — **both** its imports gone),
+  `equipment_effects/general.rs` (the `BONUS:SKILL`/`BONUS:VAR` scans, the `TEMPBONUS:`
+  single-skill fallback with its three wildcard exclusions, the `MOVE:` swim-speed read),
+  `equipment_effects/equipmods.rs` (the `BONUS:WEAPON`/`WEAPONPROF=` roll-chain walk, the
+  sibling-`VAR` magnitude substitution, the `SR:` token read — **both** imports gone). The
+  census asserts it by file, `cleared_by_cycle11=3`, re-asserts cycle 10's three still clear,
+  and asserts all seven new fields are present and the record still carries no token array.
+
+- **The one place a relabel could have hidden did not.** All three moved consumers needed the
+  attached-modifier records, and the attachment lived in an `EQMOD:` token.
+  `CorpusEquipmentRecord::eqmod_references` is a **list of item identities, not a token**; the
+  attachment grammar stayed on the converter, and the new live
+  `equipment_effects::eqmod_referenced_converted_records` resolves that list through
+  `equipment_converted_resolve` with the same resolve-or-skip discipline as before, naming no
+  `pcgen_import` symbol.
+
+- **Parity, whole live corpus, field for field.**
+  `every_live_corpus_equipment_record_carries_the_same_armour_skill_and_weapon_values_the_token_reads_produced`
+  loads every book under `data/corpus/` — **7,803 equipment records** — re-derives all nine
+  moved reads the old way off the parser row still paired in the envelope, and compares the four
+  `EquipmentStatEffect` fields, the referenced-modifier AC contribution, the skill bonus with
+  its swim rule, the named-variable rows, the full `WeaponEnhancementBonus` including both
+  scopes, the Spell Resistance grant and the attachment identity list. **0 disagreements.**
+  **Mutation-proved:** `+ 1` on the converter's Spell Resistance read turns it red on **16 of
+  7,803** records, then reverted and re-verified green.
+
+- **The correction** (`correction 1789290932971-at-35-e6-003-ruled-f1b63e`): cycle 10's own
+  next-cycle note said the unblocked equipment piece was *"18 hits across 11 files"*. The three
+  consumers this cycle took carried **5 hits across 3 files**, and clearing them moved the total
+  from `26 / 13` to `21 / 10`. The `18 / 11` figure counted files carrying a hit from a
+  **different** group (`equipment_resolver`'s payload import, `corpus_loader`'s `ingest_record`
+  reads) — a count of files the equipment work touches, not of hits a consumer move clears.
+
+- **One trim refused for the fifth cycle running:** `spell_resolver.rs`'s `SourceContentPayload`
+  repoint, `−1` on the gate and zero change in what the module depends on.
+
+- **Verification, once, at the final tree.** `apps/` and `data/` both untouched, so the desktop
+  crate, the frontend and `corpus_literal_sweep` run at the epic wrap-up, not here.
+  `NO_RUN_EXIT=0`; lib `3350 passed; 0 failed; 16 ignored` (cycle 10's 3349 + this cycle's one
+  new parity test); full workspace `FULL_EXIT=0`, **418 Running targets + 1 Doc-tests, 8,879
+  passed, 0 failed, 69 ignored**, zero `test result: FAILED` lines (cycle 10 recorded 8,878);
+  clippy `CLIPPY_EXIT=0`, **0 warnings**, after one self-heal (`unused_mut` on a closure in this
+  cycle's own parity test, caught at its first compile). `sheet_rule_convert -- --check`
+  `records=49438 converted=49296 refused=142 rules=70135 var_tables=5293 verdict=PASS`;
+  sheet_rules ingest-syntax grep `0`; `pcgen_residue_gate --check` `live_files=10 live_hits=21
+  verdict=PASS`, 27 gate unit tests OK; `completion_atlas` `citation_failures=0`;
+  `token_coverage` `non_done=0 refused=142 PASS`; `shape_engine_boundary`
+  `not_held_by_engine=0`; `missing_engine_tables` `population=0`; `denominator_gate`
+  `files_checked=140 violations=0`; `pi-sweep` PASS. **The instrument was not touched**
+  (`git diff --name-only 47e9e4ceee..HEAD -- scripts/` empty), so the `−3 files / −5 hits` is
+  entirely code.
+
+- **Receipt rows:**
+  `closed=0 relabeled=0 rust_lines_changed=1535 ratio=n/a builds_recorded=3 pcgen_live_files=10`.
+  `builds_recorded=3` counts compile sessions in `$CARGO_TARGET_DIR`, not verification passes;
+  there was **one** verification pass, after the last figure-moving change.
+
+- **Refused tokens:** `renderer=5, lst_parser_types=4, ingest_record_tokens=5,
+  trait_and_pool_tokens=3, ir_converter=1, source_content_payload=3` — 21 hits / 10 files,
+  summing, all under `src/rules_core/`. `deferral 1789290932844-at-35-e6-003-ruled-726dc6`.
+
+- **Next cycle: the rest of the equipment sequence**, in order — `damage_total` (damage dice,
+  crit, wield, and the `EQMWEAPON|DAMAGESIZE` step that reuses `eqmod_references`),
+  `equipment_effects`'s weapon typing and `resolve_eqm_weightdiv_effect`, `equipment_resolver`'s
+  key token, then `corpus_loader`'s rebuild last, at which point the payload collapses to the
+  converted half alone and `source_content_payload` and `ir_converter` clear with it.
+
+- **Receipt:** `artifacts/epic-6-pcgen-exit/AT-35-E6-003-RULED_cycle11_receipt.md`.
+
+
 ### 2026-09-13 — Epic 6 / `desktop-and-prose-leave-pcgen` — AT-35-E6-003-RULED **cycle 10** (`db1fe3a04c`) — **partial** (the equipment kind gets a converted record of its own; three whole live files leave PCGen. Residue `16 / 29 → 13 / 26`)
 
 - **Scope gate:** `SCOPE_GATE: EXEMPT (Epic 6 cycle — closes zero corpus units by design;
