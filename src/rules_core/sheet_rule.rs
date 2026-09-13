@@ -887,6 +887,17 @@ pub struct SheetRulePackage {
     grants_from_rule: BTreeMap<RuleId, Vec<RuleId>>,
     /// Rules with a fact-based granter (`Class`, `Race`, `Deity`, `Choice`).
     fact_granted: Vec<RuleId>,
+    /// `"<lst path>:<line>"` (one [`Provenance::closure_rows`] entry) -> the rules that read
+    /// that row. The join a live caller holding a `data/corpus/**/*.json` record needs to find
+    /// that record's converted rules: a corpus record states its own `source.path` /
+    /// `source.line`, and every rule the converter wrote from that row lists the same
+    /// `path:line` in its provenance.
+    ///
+    /// It exists because the two other joins do not close. `find(kind, slug)` misses any
+    /// record whose corpus file name is not the converter's `slug(name)` -- measured over
+    /// `kind: trait`, 131 of 487 corpus records (the `codex_named_unit_*` rows, which carry a
+    /// synthetic key). This index resolved **487 of 487** of the same population.
+    by_closure_row: BTreeMap<String, Vec<RuleId>>,
 }
 
 /// `"Trait ~ Magical Knack"` -> `"trait_magical_knack"`; the slug the converter names a
@@ -936,8 +947,15 @@ impl SheetRulePackage {
         self.by_kind_slug.clear();
         self.grants_from_rule.clear();
         self.fact_granted.clear();
+        self.by_closure_row.clear();
         for (id, rule) in &self.rules {
             let (_, kind, slug) = split_rule_id(id);
+            for row in &rule.provenance.closure_rows {
+                let ids = self.by_closure_row.entry(row.clone()).or_default();
+                if !ids.contains(id) {
+                    ids.push(id.clone());
+                }
+            }
             if !id.contains('#') {
                 self.by_kind_slug
                     .entry(kind.to_string())
@@ -978,6 +996,17 @@ impl SheetRulePackage {
     /// (`sheet_rule_catalog::catalog_field_summary`, SD-35 `AT-35-E6-003`).
     pub fn granted_from(&self, id: &str) -> &[RuleId] {
         self.grants_from_rule.get(id).map_or(&[], Vec::as_slice)
+    }
+
+    /// Every converted rule written from the closure row a corpus record cites as its own
+    /// origin -- `source.path` and `source.line` off that record's JSON -- in package order.
+    ///
+    /// This is how a live caller that holds a `data/corpus/**/*.json` record asks the
+    /// converted package what that record became, without opening the record's ingest-token
+    /// array. Empty when no rule read that row (a refused record, or a book the converter has
+    /// not written); an empty answer is reported as "not converted", never as a verdict.
+    pub fn rules_for_closure_row(&self, path: &str, line: u64) -> &[RuleId] {
+        self.by_closure_row.get(&format!("{path}:{line}")).map_or(&[], Vec::as_slice)
     }
 
     /// The rule of `kind` with this slug. When several books carry the slug, `core_rulebook`

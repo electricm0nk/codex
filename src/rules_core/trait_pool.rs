@@ -19,14 +19,15 @@
 //! stays agnostic to how many books carry Trait content at any given time
 //! (`decisions.md §17`: a generic pass, not a per-book table).
 //!
-//! **Nothing is computed.** A pool record's own ingested row is read verbatim
-//! off disk (the same `ingest_generic_kind.py` guarantee its module doc
-//! comment states); this loader only indexes each record by the `TYPE:` third
-//! dot-segment so [`resolve_adopted_race_options`] can look one up by the
-//! exact string an Adopted-Race selector's `CHOOSE:` token names. The row
-//! reading itself happens on the tool side of `technical-design.md` §0's path
-//! boundary, in `pcgen_import::ingest_record`; nothing but the resolved pool
-//! name reaches this module (SD-35 `AT-35-E6-002` cycle 3).
+//! **Nothing is computed, and nothing here reads the ingest format.** A
+//! record's pool membership comes off the **converted** package -- the third
+//! [`tags`](crate::rules_core::sheet_rule::SheetRule::tags) entry on a rule
+//! `sheet_rule_convert` wrote from that record's own closure row -- so
+//! [`resolve_adopted_race_options`] can look one up by the exact string an
+//! Adopted-Race selector names. Through SD-35 `AT-35-E6-003-RULED` cycle 4
+//! this module called `pcgen_import::ingest_record::type_token_suffix` on the
+//! corpus record's token array; cycle 5 replaced that with the converted read
+//! after measuring the two agree on all 487 `kind: trait` corpus records.
 //!
 //! **The `ability/` fallback this module carried through `epic-6-kind-trait`
 //! cycle 2 has been retired.** That cycle's own `§4`/`§6` named the reason it
@@ -48,17 +49,20 @@
 use std::fs;
 use std::path::{Path, PathBuf};
 
-use crate::pcgen_import::ingest_record;
 use crate::rules_core::corpus_loader::BookCorpusRoot;
 use crate::rules_core::race_resolver::AdoptedRaceSelector;
+use crate::rules_core::sheet_rule::SheetRulePackage;
 
-/// PCGen's `TYPE:` prefix every real Trait row's third dot-segment sits
-/// behind: `TYPE:Trait.RaceTrait.<X> Race Trait` -> `"<X> Race Trait"`. The
-/// same rule `v06_work_inventory.rs::refine_kind` and
-/// `census_independent.py::_row_is_pf1_trait` already use to classify a row
-/// into `Kind::Trait` in the first place, read here at the resolver layer
-/// instead of the census layer.
-const RACE_TRAIT_TYPE_PREFIX: &str = "Trait.RaceTrait.";
+/// The converted package's tag for a Trait record's race-adoptable pool: the
+/// rule's [`tags`](crate::rules_core::sheet_rule::SheetRule::tags) read
+/// `["Trait", "RaceTrait", "<X> Race Trait", ..]` and the pool name is the
+/// third. The converter writes the whole `TYPE:` chain out as tags, so the
+/// shape of the chain -- not a prefix string this module holds -- is what
+/// decides: a record whose first two tags are not exactly these two belongs
+/// to no race pool, which is how `Trait.BasicTrait.RaceTrait.BloodlineTrait`
+/// correctly resolves to `None`.
+const TRAIT_TAG: &str = "Trait";
+const RACE_TRAIT_TAG: &str = "RaceTrait";
 
 /// One `data/corpus/<book>/trait_generic/*.json` record.
 #[derive(Debug, Clone, PartialEq, Eq)]
@@ -110,8 +114,23 @@ impl TraitPool {
 /// `corpus_loader::load_equipment_corpus` already uses, so this is safe to
 /// call against a book that has not (yet) had `ingest_generic_kind.py
 /// --kind trait` run against it.
+/// Reads the pool name off the **converted** package
+/// (`data/sheet_rules/`, resolved by
+/// [`corpus_loader::live_sheet_rules`](crate::rules_core::corpus_loader::live_sheet_rules)),
+/// never off a corpus record's ingest-token array. With no package the pool is
+/// empty and says so; it never falls back to reading the ingest format.
 pub fn load_trait_pool(roots: &[BookCorpusRoot<'_>]) -> TraitPool {
+    load_trait_pool_with_rules(roots, crate::rules_core::corpus_loader::live_sheet_rules())
+}
+
+/// [`load_trait_pool`] against a caller-supplied converted package -- the form the
+/// corpus-wide gate below and any caller that already holds a package uses.
+pub fn load_trait_pool_with_rules(
+    roots: &[BookCorpusRoot<'_>],
+    rules: Option<&SheetRulePackage>,
+) -> TraitPool {
     let mut pool = TraitPool::default();
+    let Some(rules) = rules else { return pool };
     // Single source directory per book -- `trait_generic/`, the real
     // `kind: trait` write `ingest_generic_kind.py --kind trait` produces
     // (`decisions.md §25`). The `ability/` fallback this loader carried
@@ -127,7 +146,7 @@ pub fn load_trait_pool(roots: &[BookCorpusRoot<'_>]) -> TraitPool {
             continue;
         }
         for path in find_json_files(&dir) {
-            let Some(record) = read_trait_record(root.book_id, &path) else { continue };
+            let Some(record) = read_trait_record(root.book_id, &path, rules) else { continue };
             let Some(pool_key) = record.race_trait_pool.clone() else { continue };
             let bucket = pool.by_pool.entry(pool_key).or_default();
             if bucket.iter().any(|existing| existing.key == record.key) {
@@ -142,16 +161,42 @@ pub fn load_trait_pool(roots: &[BookCorpusRoot<'_>]) -> TraitPool {
     pool
 }
 
-fn read_trait_record(book_id: &str, path: &Path) -> Option<TraitPoolRecord> {
+fn read_trait_record(
+    book_id: &str,
+    path: &Path,
+    rules: &SheetRulePackage,
+) -> Option<TraitPoolRecord> {
     let text = fs::read_to_string(path).ok()?;
     let value: serde_json::Value = serde_json::from_str(&text).ok()?;
     let data = value.get("data")?;
     let key = data.get("key")?.as_str()?.to_string();
     let name = data.get("name").and_then(serde_json::Value::as_str).unwrap_or(&key).to_string();
     let description = data.get("description").and_then(serde_json::Value::as_str).map(str::to_string);
-    let race_trait_pool =
-        ingest_record::type_token_suffix(data, RACE_TRAIT_TYPE_PREFIX).map(str::to_string);
+    let race_trait_pool = converted_race_trait_pool(&value, rules);
     Some(TraitPoolRecord { book_id: book_id.to_string(), key, name, description, race_trait_pool })
+}
+
+/// The `<X> Race Trait` pool this corpus record's **converted** rules place it in, or `None`.
+///
+/// The join is the record's own closure row (`source.path` + `source.line`), which is the one
+/// key that closes: the converter names the same `path:line` in every rule it wrote from that
+/// row. Measured over the whole `kind: trait` population -- 487 corpus records -- this
+/// resolves 487 and agrees with the retired ingest-token read on 487 (see this cycle's
+/// receipt for the command).
+fn converted_race_trait_pool(
+    record: &serde_json::Value,
+    rules: &SheetRulePackage,
+) -> Option<String> {
+    let source = record.get("source")?;
+    let path = source.get("path")?.as_str()?;
+    let line = source.get("line")?.as_u64()?;
+    for id in rules.rules_for_closure_row(path, line) {
+        let tags = &rules.rule(id)?.tags;
+        if tags.len() >= 3 && tags[0] == TRAIT_TAG && tags[1] == RACE_TRAIT_TAG {
+            return Some(tags[2].clone());
+        }
+    }
+    None
 }
 
 fn find_json_files(dir: &Path) -> Vec<PathBuf> {
@@ -389,5 +434,91 @@ mod tests {
         assert_eq!(member.name, "Loner of the Rocks");
         assert!(member.description.as_deref().is_some_and(|d| d.contains("Heal and Survival")));
         assert_eq!(member.book_id, "inner_sea_races");
+    }
+
+    /// The per-kind converter gate for `kind: trait` (SD-35 `AT-35-E6-003-RULED` cycle 5):
+    /// over the **live** `data/corpus/*/trait_generic/` directory and the **live**
+    /// `data/sheet_rules/` package -- never a fixture with a hand-derived value -- every
+    /// corpus record's closure row resolves to at least one converted rule, and the pool
+    /// membership the converted `tags` state is exactly the one the retired
+    /// `TYPE:Trait.RaceTrait.` token read produced.
+    ///
+    /// The token read is reproduced here, in the test, deliberately: it is the oracle this
+    /// swap is measured against, and the test is the only place in the crate that may still
+    /// spell it. If the converter ever stops writing the `TYPE:` chain out as tags, this goes
+    /// red on the real corpus rather than the pool silently emptying on a sheet.
+    #[test]
+    fn every_live_trait_record_gets_the_same_pool_from_the_converted_package() {
+        let Some(rules) = crate::rules_core::corpus_loader::live_sheet_rules() else {
+            panic!("data/sheet_rules/ must be present for the kind: trait converter gate");
+        };
+        let corpus = Path::new("data/corpus");
+        let mut books: Vec<PathBuf> = match fs::read_dir(corpus) {
+            Ok(entries) => entries.flatten().map(|e| e.path()).filter(|p| p.is_dir()).collect(),
+            Err(_) => panic!("data/corpus must be readable"),
+        };
+        books.sort();
+
+        let mut records = 0usize;
+        let mut resolved = 0usize;
+        let mut pooled = 0usize;
+        let mut disagreements: Vec<String> = Vec::new();
+        for book in &books {
+            let dir = book.join("trait_generic");
+            if !dir.is_dir() {
+                continue;
+            }
+            for path in find_json_files(&dir) {
+                let Ok(text) = fs::read_to_string(&path) else { continue };
+                let Ok(value) = serde_json::from_str::<serde_json::Value>(&text) else { continue };
+                let Some(data) = value.get("data") else { continue };
+                records += 1;
+
+                // The oracle: the ingest-token read this cycle retired.
+                let expected = data
+                    .get("raw_tokens")
+                    .and_then(serde_json::Value::as_array)
+                    .into_iter()
+                    .flatten()
+                    .filter(|t| t.get("key").and_then(serde_json::Value::as_str) == Some("TYPE"))
+                    .filter_map(|t| t.get("value").and_then(serde_json::Value::as_str))
+                    .find_map(|v| v.strip_prefix("Trait.RaceTrait."))
+                    .map(str::to_string);
+
+                let source = value.get("source");
+                let row = source
+                    .and_then(|s| s.get("path"))
+                    .and_then(serde_json::Value::as_str)
+                    .zip(source.and_then(|s| s.get("line")).and_then(serde_json::Value::as_u64));
+                if let Some((p, l)) = row
+                    && !rules.rules_for_closure_row(p, l).is_empty()
+                {
+                    resolved += 1;
+                }
+
+                let actual = converted_race_trait_pool(&value, rules);
+                if actual.is_some() {
+                    pooled += 1;
+                }
+                if actual != expected && disagreements.len() < 20 {
+                    disagreements.push(format!(
+                        "{}: converted={actual:?} ingest_tokens={expected:?}",
+                        path.display()
+                    ));
+                }
+            }
+        }
+
+        assert!(records >= 487, "the live kind: trait population is {records}, expected >= 487");
+        assert_eq!(
+            resolved, records,
+            "every corpus trait record's closure row must resolve to converted rules"
+        );
+        assert!(
+            disagreements.is_empty(),
+            "{} of {records} records disagree: {disagreements:?}",
+            disagreements.len()
+        );
+        assert!(pooled > 0, "the converted package must place real records in race pools");
     }
 }
