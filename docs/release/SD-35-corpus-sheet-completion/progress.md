@@ -181,6 +181,80 @@ re-measured at the cut by the launch-readiness audit.
 
 ## Cycle log
 
+### 2026-09-12 — Epic 6 / `desktop-and-prose-leave-pcgen` — AT-35-E6-003-RULED **cycle 5** (`5d80721087`) — **partial** (three cycles had priced a whole refused group as blocked on converter work; it was blocked on a missing index. Residue `19 / 37 → 18 / 36` — one hit, and the receipt leads with what the join does *not* unblock)
+
+- **Scope gate:** `SCOPE_GATE: EXEMPT (Epic 6 cycle — closes zero corpus units by design; decisions.md §2)`.
+  It ran anyway at the cycle's start tree `fe0a51417e`:
+  `scoped=0 remaining_non_done=0 floor=500 verdict=PASS_WHOLE_REMAINDER`. The residue check, which
+  is not exempt, passed first at the same tree at exactly cycle 4's closing figure —
+  `live_files=19 live_hits=37 baseline_files=260 baseline_hits=12736 verdict=PASS` — so nothing
+  drifted between the two cycles.
+
+- **The correction this cycle turns on** (`correction 1789261501792-at-35-e6-003-ruled-0dfa46`).
+  Cycle 4's census recorded that the live side's per-record token readers need *"the converted
+  package to carry the same facts keyed by `VarId`"*, which *"does not exist yet"*. **The package
+  already carries them. What was missing was the join.** A live caller holding a
+  `data/corpus/**/*.json` record had no way to ask the converted package what that record became:
+  - `SheetRulePackage::find(kind, slug)` joins on the converter's own `slug(name)` file name, which
+    is not the corpus file name. Measured over `kind: trait`: **131 of 487** corpus records do not
+    resolve (the `codex_named_unit_*` rows, whose corpus `key` is synthetic).
+  - The corpus record states its own origin row — `source.path` and `source.line` — and every rule
+    the converter wrote from that row already names the same `path:line` in
+    `provenance.closure_rows`. **Nothing indexed it.**
+
+  So this cycle built it: `SheetRulePackage::rules_for_closure_row(path, line)`, in `finish()`
+  beside the three indexes already there. It is **total** over every Epic-2 kind's live corpus —
+  **8,486 of 8,486** records across `ability`, `template`, `trait`, `deity`, `domain`, `skill` and
+  `language`. This is the same lesson cycle 4 wrote down, in its general form: *a group's stated
+  reason is an assertion about a dependency, and an assertion about a dependency has to be checked
+  against what the caller needs, not against the module it names.*
+
+- **Its first consumer, and the honest size of it.** `rules_core::trait_pool` read a corpus
+  record's `TYPE:` token array through `pcgen_import::ingest_record::type_token_suffix` and held
+  the ingest prefix string `"Trait.RaceTrait."` in live code. Both are gone; the pool name comes
+  off the converted rule's `tags`, and the module names no ingest vocabulary at all. Agreement with
+  the retired read is **487 of 487** live `kind: trait` corpus records, pinned by a corpus-wide
+  test that computes the retired read *in-test* as its oracle and was **mutation-proved** —
+  `tags[2]` → `tags[1]` makes it red with `20 of 487 records disagree`, naming real records. That
+  is **one hit and one file**: `19 / 37 → 18 / 36`, group `ingest_record_tokens` `7 → 6`.
+
+- **What the join does NOT unblock, said before anything else about it.** 27 of the 36 remaining
+  hits do not want a *fact about* a record. They **own** `EquipmentRecord` / `LstSpellRecord` /
+  `SourceContentPayload` as their own data types across 13 files and read the PCGen `BONUS:` chains
+  and `KEY:VAL` tokens on them directly. Those clear when `sheet_rule_convert` emits an equipment
+  rule shape `equipment_effects` can read — not when a lookup exists. `trait_and_pool_tokens` is
+  reported **unchanged at 4**, not folded down: this cycle's one clearance was classified under a
+  different group.
+
+- **The misfiled-actor incident recurred one cycle later** (`incident
+  1789263208882-at-35-e6-003-ruled-93b3af`, recurrence key `retro-actor-not-exported`).
+  `verify.sh --only pi-sweep` again wrote its derived event into
+  `docs/retro/events/sd31-transcribe.jsonl` because `RETRO_ACTOR` does not survive between this
+  harness's `Bash` calls. Cycle 4 recorded it and wrote the control down as a habit; **a habit is
+  not a control** (`AGENTS.md` rule 8), and it did not survive one cycle. The mechanical fix is one
+  condition in `scripts/verify.sh`: refuse to emit a retro event when `RETRO_ACTOR` is unset.
+
+- **Receipt rows (mechanical):**
+  ```
+  since=fe0a51417e1adde5bb002b3cab33d8e35707e1e1 residue_gate=present
+  closed_by_kind=
+  relabeled_moves=
+  regressed=0 added=0 dropped=0
+  closed=0 relabeled=0 rust_lines_changed=200 ratio=n/a builds_recorded=1 pcgen_live_files=18
+  ```
+
+- **PCGen residue:** `live_files=18 live_hits=36 baseline_files=260 baseline_hits=12736
+  verdict=PASS`. The instrument was not touched (`git diff --name-only fe0a51417e..HEAD --
+  scripts/` is empty), so the `−1 / −1` is entirely code. `root apps/desktop files=0 hits=0` is
+  unchanged — no `apps/` file was written this cycle.
+
+- **Refused tokens:** `renderer=5, lst_parser_types=12, ingest_record_tokens=6,
+  trait_and_pool_tokens=4, ir_converter=4, source_content_payload=5` = **36**, six groups, under
+  `§8`'s limit of ten. Recorded as `deferral 1789261516421-at-35-e6-003-ruled-2bea07`; every line
+  named with file, line and reason in `…_cycle5_runtime_import_census.json`.
+
+- **Receipt:** `artifacts/epic-6-pcgen-exit/AT-35-E6-003-RULED_cycle5_receipt.md`.
+
 ### 2026-09-12 — Epic 6 / `desktop-and-prose-leave-pcgen` — AT-35-E6-003-RULED **cycle 4** (`1ebbe4b9bf`) — **partial** (the Evidence sentence's `apps/desktop` clause is MET for the first time in this criterion's family: residue `22 / 44 → 19 / 37`, **the whole drop the desktop crate**, `src/rules_core` flat and said so)
 
 - **Scope gate:** `SCOPE_GATE: EXEMPT (Epic 6 cycle — closes zero corpus units by design; decisions.md §2)`.
