@@ -753,62 +753,17 @@ pub fn render_pcgen_desc_tokens(tokens: &[&str], values: &PcgenDisplayValues) ->
 ///
 /// Returns the name of the leak so a caller can fail loudly with a reason
 /// rather than a bare boolean.
+///
+/// **Single-sourced on the live side** since SD-35 `AT-35-E6-003-RULED` cycle 4: the predicate
+/// itself is
+/// [`rules_core::pilot_compute::resolved_prose::leaked_markup`](crate::rules_core::pilot_compute::resolved_prose::leaked_markup),
+/// owned by the side that prints the sheet line, so a live caller checking its own rendered
+/// output no longer has to call into this module to do it (`decisions.md` §19, ruling B16).
+/// The function body moved; not one of its strings or cases changed. This alias stays because
+/// the converter and the `src/bin` ingest generators check their own output against the same
+/// bar, and `decisions.md` §11 KEEPS the converter.
 pub fn leaked_pcgen_syntax(text: &str) -> Option<&'static str> {
-    if text.contains("%%") {
-        return Some("unescaped '%%' literal-percent escape");
-    }
-    for (entity, _) in PCGEN_ENTITIES {
-        if text.contains(entity) {
-            return Some("undecoded PCGen entity escape");
-        }
-    }
-    let chars: Vec<char> = text.chars().collect();
-    for (i, c) in chars.iter().enumerate() {
-        if *c == '%' && chars.get(i + 1).is_some_and(char::is_ascii_digit) {
-            return Some("unsubstituted '%N' argument reference");
-        }
-        // CONFIRMED finding (`SD31-W6-INTEGRATE-001`): PCGen also uses
-        // uppercase KEYWORD substitutions (`%CHOICE`, the only one this
-        // corpus's shipped `description:` text carries, re-derived
-        // corpus-wide) that carry no digit at all -- the digit-only check
-        // above never caught them, so `%CHOICE` shipped to the player
-        // verbatim on the equipment render path.
-        if *c == '%' && chars.get(i + 1).is_some_and(char::is_ascii_uppercase) {
-            return Some("unsubstituted '%<KEYWORD>' argument reference");
-        }
-        // CONFIRMED finding (`SD31-W8-INTEGRATE-001`, wave-8 adversarial
-        // review): the two checks above only catch a '%' immediately
-        // followed by a digit or an uppercase letter. 31 real corpus
-        // records ship a hole neither shape catches -- a `%` followed by
-        // a space, punctuation, or a lowercase letter ("Cast % 1/day",
-        // "Darkvision % ft.", "+%d6 additional ectoplasmic damage") --
-        // and read `text-complete`/`done` with the placeholder still
-        // visible. A literal percent SIGN is always immediately preceded
-        // by a digit ("50% chance", "20% of something"); a `%` that is
-        // NOT preceded by a digit has no other legitimate PCGen meaning
-        // in a `DESC:`/`SPROP:` field, so it is always a leak here --
-        // EXCEPT the one named real shape this repo already renders on
-        // purpose: "d%"/"D%" percentile-dice notation (= d100), which a
-        // `%%` escape collapse can legitimately leave behind (see
-        // `a_prose_table_beside_a_real_argument_keeps_the_table_and_loses_
-        // the_tail`'s "roll d% for..." fixture) -- recognized narrowly as
-        // the single letter d/D at a word boundary immediately before
-        // '%', not any word merely ending in 'd'.
-        if *c == '%'
-            && !(i > 0 && chars[i - 1].is_ascii_digit())
-            && !is_percentile_dice_notation(&chars, i)
-        {
-            return Some("unsubstituted bare '%' gap");
-        }
-        if *c == '|' {
-            let left_open = i == 0 || chars[i - 1].is_whitespace();
-            let right_open = chars.get(i + 1).is_none_or(|next| next.is_whitespace());
-            if !left_open && !right_open {
-                return Some("raw '|' argument tail");
-            }
-        }
-    }
-    None
+    crate::rules_core::pilot_compute::resolved_prose::leaked_markup(text)
 }
 
 #[cfg(test)]

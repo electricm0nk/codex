@@ -1016,7 +1016,7 @@ pub(crate) fn resolved_description_for(
     if !rendered.dropped_args.is_empty() || rendered.text.is_empty() {
         return None;
     }
-    if crate::pcgen_import::pcgen_desc::leaked_pcgen_syntax(&rendered.text).is_some() {
+    if super::resolved_prose::leaked_markup(&rendered.text).is_some() {
         return None;
     }
     Some(rendered.text)
@@ -1132,7 +1132,7 @@ pub(crate) fn resolved_description_for_formula_only_desc_argument(
     if !rendered.dropped_args.is_empty() || rendered.text.is_empty() {
         return None;
     }
-    if crate::pcgen_import::pcgen_desc::leaked_pcgen_syntax(&rendered.text).is_some() {
+    if super::resolved_prose::leaked_markup(&rendered.text).is_some() {
         return None;
     }
     let primary_value =

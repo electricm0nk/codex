@@ -37,9 +37,12 @@ use std::fs;
 use std::path::Path;
 
 use crate::pcgen_import::lst_parser::equipment::{
-    BonusToken, EquipmentDiagnostic, EquipmentRecord, EquipmentRecordKind, EquipmentToken,
+    parse_equipment_entries, BonusToken, EquipmentDiagnostic, EquipmentRecord, EquipmentRecordKind,
+    EquipmentToken,
 };
-use crate::pcgen_import::lst_parser::spell::{LstSpellRecord, LstSpellRecordPayload};
+use crate::pcgen_import::lst_parser::spell::{
+    parse_lst_spell_row, LstSpellRecord, LstSpellRecordPayload,
+};
 use crate::rules_core::source_content::{SourcePackageContent, SourceRef};
 
 /// One book's real corpus root, e.g. `data/corpus/core_rulebook`. The
@@ -473,6 +476,80 @@ fn equipment_record_from_json(data: &serde_json::Value) -> Option<EquipmentRecor
         is_record_start: true,
         diagnostics: Vec::<EquipmentDiagnostic>::new(),
     })
+}
+
+/// One bundled `.lst` fixture record, and the file it came from.
+///
+/// `label` is used only in diagnostics and in the error a failed parse returns, so a caller
+/// that ships several fixtures can say *which* one is malformed.
+pub struct LstFixtureLine<'a> {
+    pub label: &'a str,
+    pub text: &'a str,
+}
+
+/// Builds a `SourcePackageContent` from a small, bounded set of `.lst` record lines.
+///
+/// # Why this is here and not in the caller
+///
+/// The desktop crate bundles a handful of real corpus records as a Tauri resource and needs
+/// them as a `SourcePackageContent` to prove `compute_pilot_with_corpus` resolves real corpus
+/// data end-to-end in the live UI. It used to parse and convert those lines itself, importing
+/// `pcgen_import::lst_parser` and `pcgen_import::ir_converter` directly — five run-time reads
+/// of the converter from inside the shipping desktop binary, which `decisions.md` §19 (ruling
+/// B16) counts as hits and `AT-35-E6-003`'s Evidence sentence requires to be zero.
+///
+/// Nothing about that work was the desktop's to do: this module already parses and converts
+/// corpus records for [`load_equipment_corpus`] and [`load_spell_corpus`], from the same two
+/// parsers into the same two converters, leaking each record for the `'static` borrow the
+/// package's lifetime needs. This is the third caller of that same machinery, and it lives
+/// beside the other two. The desktop keeps what is actually its concern — resolving a bundled
+/// resource path and reading the files.
+///
+/// **This does not make the conversion stop happening at run time.** It stops it happening in
+/// two places. The run-time `ir_converter` call is still counted against this file by
+/// `pcgen_residue_gate.py`, and it clears when the converted package is produced at build time
+/// and read as data — which is a different piece of work, named in this criterion's own
+/// remainder, not something this move quietly closes.
+///
+/// # Failure
+///
+/// Loud, never partial: a fixture line that does not parse returns `Err` naming the label and
+/// the line, exactly the contract the desktop's own `expect`/`panic!` messages carried before
+/// the move. A bounded, committed fixture set that fails to parse is a broken build, not a
+/// diagnostic to be collected.
+pub fn load_lst_fixture_corpus<'a>(
+    package_id: &str,
+    source_ref: SourceRef,
+    spells: &[LstFixtureLine<'_>],
+    equipment: &[LstFixtureLine<'_>],
+) -> Result<SourcePackageContent<'a>, String> {
+    let source_path = source_ref.lst_file.clone();
+    let mut package = SourcePackageContent::empty(package_id, source_ref);
+
+    for fixture in spells {
+        let parsed = parse_lst_spell_row(&source_path, 1, fixture.text);
+        let record = parsed.record.ok_or_else(|| {
+            format!("spell fixture '{}' failed to parse: {}", fixture.label, fixture.text)
+        })?;
+        let record: &'static LstSpellRecord = Box::leak(Box::new(record));
+        package.push(crate::pcgen_import::ir_converter::convert_spell_record(record));
+    }
+
+    for fixture in equipment {
+        let result = parse_equipment_entries(&source_path, fixture.text);
+        if result.entries.is_empty() {
+            return Err(format!(
+                "equipment fixture '{}' produced no record: {}",
+                fixture.label, fixture.text
+            ));
+        }
+        for entry in result.entries {
+            let entry: &'static EquipmentRecord = Box::leak(Box::new(entry));
+            package.push(crate::pcgen_import::ir_converter::convert_equipment_record(entry));
+        }
+    }
+
+    Ok(package)
 }
 
 #[cfg(test)]

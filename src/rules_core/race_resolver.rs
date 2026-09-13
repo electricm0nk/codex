@@ -191,6 +191,36 @@ impl RaceTraitRecord {
         &self.data.key
     }
 
+    /// The flags that, once set by some other selection, block this row.
+    ///
+    /// The corpus states that one relation four different ways (see
+    /// [`race_trait_tokens::exclusion_guard_flags`], which reads all four); this method asks
+    /// for the **relation** and hands back the flag strings. Added by SD-35
+    /// `AT-35-E6-003-RULED` cycle 4 so the desktop crate's ARG picker can ask the race corpus
+    /// the question instead of importing the converter's token reader to ask it — the picker
+    /// never needed the token grammar, only the answer (`decisions.md` §19, ruling B16).
+    pub fn exclusion_guard_flags(&self) -> Vec<String> {
+        race_trait_tokens::exclusion_guard_flags(&self.data)
+    }
+
+    /// Each negated fact gate this row declares, as its group of flag strings.
+    ///
+    /// A group longer than one entry is a row whose single guard names several flags — the
+    /// shape the picker reports as a findings row rather than absorbing silently.
+    pub fn negated_fact_gates(&self) -> Vec<Vec<String>> {
+        race_trait_tokens::negated_fact_gates(&self.data)
+    }
+
+    /// Whether this row writes its self-exclusion guard's negated branch as an ability
+    /// prerequisite rather than a fact prerequisite — an upstream corpus slip.
+    ///
+    /// [`RaceTraitRecord::exclusion_guard_flags`] reads such a row correctly regardless; this
+    /// is the separate question *did we have to?*, which the picker surfaces to the player so
+    /// a corpus defect is reported rather than silently absorbed.
+    pub fn declares_negated_ability_guard(&self) -> bool {
+        race_trait_tokens::declares_preability_negated_guard(&self.data)
+    }
+
     /// This row's own display variables: every converted variable it declares whose whole
     /// contribution set is its own, stated as a constant, with no gate.
     ///

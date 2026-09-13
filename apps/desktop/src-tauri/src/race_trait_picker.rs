@@ -111,7 +111,6 @@ use std::sync::OnceLock;
 
 use serde::{Deserialize, Serialize};
 
-use codex::pcgen_import::race_trait_tokens;
 use codex::rules_core::corpus_loader::BookCorpusRoot;
 use codex::rules_core::feat_effects::{display_value_deltas_from_feats, FeatDisplayValueDeltas};
 use codex::rules_core::race_resolver::{
@@ -520,13 +519,14 @@ fn race_corpus() -> &'static Result<RaceCorpus, String> {
 /// reports the slip.
 /// The four spellings, the reasoning that reads each one, and the ordering
 /// between them live on the converter side of `technical-design.md` §0's path
-/// boundary, in [`race_trait_tokens::exclusion_guard_flags`] — SD-35
+/// boundary, in `pcgen_import::race_trait_tokens::exclusion_guard_flags`, and this file now
+/// asks the live-side [`RaceTraitRecord::exclusion_guard_flags`] for the answer — SD-35
 /// `AT-35-E6-003-SWEEP` cycle 15. What this file asks for is the *relation*:
 /// which flags, already set by some other selection, block this one. Nothing
 /// here names a PCGen token, a bracket branch, or a qualifier prefix, and
 /// nothing here has to know that the corpus states one relation four ways.
 fn exclusion_guard_flags(record: &RaceTraitRecord) -> Vec<String> {
-    race_trait_tokens::exclusion_guard_flags(&record.data)
+    record.exclusion_guard_flags()
 }
 
 /// For one alternate: the standard traits its flags suppress, the replacement
@@ -590,7 +590,7 @@ fn multi_flag_gate_findings(corpus: &RaceCorpus) -> Vec<String> {
             if record.role == TraitRole::Alternate {
                 continue;
             }
-            for flags in race_trait_tokens::negated_fact_gates(&record.data) {
+            for flags in record.negated_fact_gates() {
                 if flags.len() > 1 {
                     rows.push(format!("{} ({})", record.data.key, flags[1..].join(", ")));
                 }
@@ -612,13 +612,13 @@ fn multi_flag_gate_findings(corpus: &RaceCorpus) -> Vec<String> {
 
 /// ARG rows that write their guard's negated branch as `!PREABILITY` instead of
 /// `!PREFACT`. Derived, not asserted. The reading is
-/// [`race_trait_tokens::declares_preability_negated_guard`]; this file only
+/// [`RaceTraitRecord::declares_negated_ability_guard`]; this file only
 /// asks the question and formats the answer.
 fn preability_guard_findings(corpus: &RaceCorpus) -> Vec<String> {
     let mut rows: Vec<String> = Vec::new();
     for race_key in corpus.race_keys() {
         for record in corpus.alternate_traits(race_key) {
-            if race_trait_tokens::declares_preability_negated_guard(&record.data) {
+            if record.declares_negated_ability_guard() {
                 rows.push(record.data.key.clone());
             }
         }

@@ -20,9 +20,7 @@
 use std::path::PathBuf;
 use std::sync::OnceLock;
 
-use codex::pcgen_import::ir_converter::{convert_equipment_record, convert_spell_record};
-use codex::pcgen_import::lst_parser::equipment::parse_equipment_entries;
-use codex::pcgen_import::lst_parser::spell::parse_lst_spell_row;
+use codex::rules_core::corpus_loader::{load_lst_fixture_corpus, LstFixtureLine};
 use codex::rules_core::source_content::{SourcePackageContent, SourceRef};
 
 use crate::authoring_workbench::resolve_package_path;
@@ -51,38 +49,43 @@ fn read_fixture(dir: &std::path::Path, name: &str) -> Result<String, String> {
 fn build_corpus_fixture_bundle() -> SourcePackageContent<'static> {
     let dir = fixture_dir().expect("corpus_fixtures resource directory must resolve");
 
+    // Reading the bundled resource is this crate's concern. Parsing the record line and
+    // converting it is not, and since SD-35 `AT-35-E6-003-RULED` cycle 4 this file no longer
+    // does either: `rules_core::corpus_loader` already owns that machinery for the two real
+    // corpus loaders, and this is its third caller (`decisions.md` §19, ruling B16 — the
+    // desktop crate stops calling into `pcgen_import` at run time).
+    let mut spell_texts: Vec<(&str, String)> = Vec::new();
+    for name in SPELL_FIXTURES {
+        let text = read_fixture(&dir, name).expect("bundled spell fixture must be readable");
+        let line = record_line(&text)
+            .unwrap_or_else(|| panic!("spell fixture '{name}' has no record line"))
+            .to_string();
+        spell_texts.push((name, line));
+    }
+    let mut equipment_texts: Vec<(&str, String)> = Vec::new();
+    for name in EQUIPMENT_FIXTURES {
+        let text = read_fixture(&dir, name).expect("bundled equipment fixture must be readable");
+        let line = record_line(&text)
+            .unwrap_or_else(|| panic!("equipment fixture '{name}' has no record line"))
+            .to_string();
+        equipment_texts.push((name, line));
+    }
+
+    let spells: Vec<LstFixtureLine<'_>> = spell_texts
+        .iter()
+        .map(|(label, text)| LstFixtureLine { label, text })
+        .collect();
+    let equipment: Vec<LstFixtureLine<'_>> = equipment_texts
+        .iter()
+        .map(|(label, text)| LstFixtureLine { label, text })
+        .collect();
+
     let source_ref = SourceRef {
         lst_file: "corpus_fixtures".to_string(),
         line: 1,
     };
-    let mut corpus = SourcePackageContent::empty("desktop_ui_fixtures", source_ref);
-
-    for name in SPELL_FIXTURES {
-        let text = read_fixture(&dir, name).expect("bundled spell fixture must be readable");
-        let line = record_line(&text)
-            .unwrap_or_else(|| panic!("spell fixture '{name}' has no record line"));
-        let parsed = parse_lst_spell_row("corpus_fixtures", 1, line);
-        let record = parsed
-            .record
-            .unwrap_or_else(|| panic!("spell fixture '{name}' failed to parse: {line}"));
-        let record: &'static codex::pcgen_import::lst_parser::spell::LstSpellRecord =
-            Box::leak(Box::new(record));
-        corpus.push(convert_spell_record(record));
-    }
-
-    for name in EQUIPMENT_FIXTURES {
-        let text = read_fixture(&dir, name).expect("bundled equipment fixture must be readable");
-        let line = record_line(&text)
-            .unwrap_or_else(|| panic!("equipment fixture '{name}' has no record line"));
-        let result = parse_equipment_entries("corpus_fixtures", line);
-        for entry in result.entries {
-            let entry: &'static codex::pcgen_import::lst_parser::equipment::EquipmentRecord =
-                Box::leak(Box::new(entry));
-            corpus.push(convert_equipment_record(entry));
-        }
-    }
-
-    corpus
+    load_lst_fixture_corpus("desktop_ui_fixtures", source_ref, &spells, &equipment)
+        .unwrap_or_else(|err| panic!("bundled corpus fixture failed to load: {err}"))
 }
 
 /// The bundled corpus fixture set, built once and cached for the process

@@ -572,3 +572,119 @@ pub fn same_row_values(package: &SheetRulePackage, rule_id: &str) -> DisplayValu
     }
     values
 }
+
+/// Markup that must never survive onto a rendered sheet line.
+///
+/// # Why this lives on the live side
+///
+/// This predicate reads **output prose** — a line about to be printed on a character sheet —
+/// and answers one question: *did any unrendered markup survive into it?* It never opens a
+/// corpus record, never names a token key, and never needs the ingest format's grammar. It is
+/// the sheet rule (`decisions.md` §1) stated as a check: what reaches a player is a final
+/// number or the rule's own words, so a `%1`, a `%%`, an undecoded `&nl;` or a tight `|`
+/// argument tail in a finished line is a defect in whatever produced it.
+///
+/// It used to live in `pcgen_import::pcgen_desc`, and every live caller that wanted to check
+/// its own rendered output had to call into the converter to do it — a run-time read of
+/// `src/pcgen_import` from a live root, which `decisions.md` §19 (ruling B16) counts as a hit
+/// and SD-35 `AT-35-E6-003` exists to remove. The predicate is **single-sourced here**:
+/// `pcgen_desc::leaked_pcgen_syntax` now delegates to this function rather than the two sides
+/// keeping two copies that could drift. The converter is allowed to depend on the live side's
+/// definition of a clean sheet line; the live side is not allowed to depend on the converter.
+///
+/// Returns the **name** of the leak, so a caller fails loudly with a reason rather than a bare
+/// boolean — the same contract, and the same strings, it returned before the move.
+///
+/// Re-derive that the strings are unchanged:
+/// `git log -p --follow -- src/rules_core/pilot_compute/resolved_prose.rs | grep "escape\"\|reference\"\|tail\"\|gap\""`
+pub fn leaked_markup(text: &str) -> Option<&'static str> {
+    if text.contains("%%") {
+        return Some("unescaped '%%' literal-percent escape");
+    }
+    for entity in ESCAPE_SEQUENCES {
+        if text.contains(entity) {
+            return Some("undecoded PCGen entity escape");
+        }
+    }
+    let chars: Vec<char> = text.chars().collect();
+    for (i, c) in chars.iter().enumerate() {
+        if *c == '%' && chars.get(i + 1).is_some_and(char::is_ascii_digit) {
+            return Some("unsubstituted '%N' argument reference");
+        }
+        // Uppercase KEYWORD substitutions carry no digit at all, so the digit-only check above
+        // never caught them and they shipped to the player verbatim on the equipment render
+        // path (`SD31-W6-INTEGRATE-001`).
+        if *c == '%' && chars.get(i + 1).is_some_and(char::is_ascii_uppercase) {
+            return Some("unsubstituted '%<KEYWORD>' argument reference");
+        }
+        // A `%` followed by a space, punctuation or a lowercase letter ("Cast % 1/day",
+        // "Darkvision % ft.") is a hole neither check above catches; 31 real corpus records
+        // read `text-complete` with that hole still visible on the sheet.
+        // A literal percent SIGN is always immediately preceded by a digit, so a `%` that is
+        // not is always a leak here — except percentile-dice notation ("roll d% for..."),
+        // which a `%%` collapse can legitimately leave behind.
+        if *c == '%'
+            && !(i > 0 && chars[i - 1].is_ascii_digit())
+            && !is_percentile_dice_notation(&chars, i)
+        {
+            return Some("unsubstituted bare '%' gap");
+        }
+        // Tightness, not the bare character, is the test: a rulebook table separator is
+        // surrounded by whitespace, an argument tail is not.
+        if *c == '|' {
+            let left_open = i == 0 || chars[i - 1].is_whitespace();
+            let right_open = chars.get(i + 1).is_none_or(|next| next.is_whitespace());
+            if !left_open && !right_open {
+                return Some("raw '|' argument tail");
+            }
+        }
+    }
+    None
+}
+
+/// The escape sequences a finished sheet line must not still contain. Named here by the side
+/// that prints the line; the converter keeps its own decode table, because decoding is its job
+/// and detecting a survivor is this side's.
+const ESCAPE_SEQUENCES: [&str; 5] = ["&nl;", "&lbracket;", "&rbracket;", "&pipe;", "&comma;"];
+
+/// `d%`/`D%` percentile-dice notation (= d100), recognised narrowly as the single letter `d`
+/// or `D` at a word boundary immediately before the `%` — not any word merely ending in `d`.
+fn is_percentile_dice_notation(chars: &[char], i: usize) -> bool {
+    i >= 1 && matches!(chars[i - 1], 'd' | 'D') && (i < 2 || !chars[i - 2].is_alphabetic())
+}
+
+#[cfg(test)]
+mod leaked_markup_tests {
+    use super::leaked_markup;
+
+    /// RED→GREEN pin for SD-35 `AT-35-E6-003-RULED` cycle 4: the predicate the live side uses
+    /// to check its own rendered output is owned by the live side. Every string below is a
+    /// case `pcgen_desc`'s own tests already pinned before the move, so a drift in either
+    /// direction fails here.
+    #[test]
+    fn a_clean_sheet_line_reports_no_leak() {
+        assert_eq!(leaked_markup("You gain a +2 bonus on the save."), None);
+        assert_eq!(leaked_markup("The chance is 20% per round."), None);
+        assert_eq!(leaked_markup("Roll d% for the effect."), None);
+        assert_eq!(leaked_markup("Choose one: fire | cold | acid."), None);
+    }
+
+    #[test]
+    fn every_markup_survivor_is_named() {
+        assert_eq!(
+            leaked_markup("a +%1 bonus"),
+            Some("unsubstituted '%N' argument reference")
+        );
+        assert_eq!(
+            leaked_markup("reduced by 20%%"),
+            Some("unescaped '%%' literal-percent escape")
+        );
+        assert_eq!(
+            leaked_markup("you gain %CHOICE"),
+            Some("unsubstituted '%<KEYWORD>' argument reference")
+        );
+        assert_eq!(leaked_markup("Darkvision % ft."), Some("unsubstituted bare '%' gap"));
+        assert_eq!(leaked_markup("prose|ArgTail"), Some("raw '|' argument tail"));
+        assert_eq!(leaked_markup("a line with &nl; in it"), Some("undecoded PCGen entity escape"));
+    }
+}

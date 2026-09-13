@@ -210,7 +210,9 @@ fn corpus_book_dir(rule_set: RuleSetId) -> &'static str {
 /// row whose stored string were *also* unclean would serve nothing, which is the honest outcome
 /// and the reason the finding is reported rather than buried.
 fn row_description(rule_set: RuleSetId, key: &str, table_text: Option<&str>) -> Option<String> {
-    let clean = |text: &str| codex::pcgen_import::pcgen_desc::leaked_pcgen_syntax(text).is_none();
+    let clean = |text: &str| {
+        codex::rules_core::pilot_compute::resolved_prose::leaked_markup(text).is_none()
+    };
     if let Some(text) =
         crate::converted_prose::description_for(corpus_book_dir(rule_set), "feat", key)
     {
