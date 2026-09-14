@@ -8,7 +8,7 @@
 `data/corpus` records with `completeness: full` and published rules prose reach no inventory unit
 at all** and are therefore absent from both the atlas's numerator and its denominator.
 
-- **Commit SHA:** see `Build scope verified` below (filled at push; the cycle's head commit)
+- **Commit SHA:** `83dfcbcfa1` (cycle start `ab1001e1b6`)
 - **Scope gate:** `SCOPE_GATE: EXEMPT (measurement cycle — it moves no unit and writes no rule; its deliverable is a census and a verdict)`
   (`decisions.md §2` floor exemption: this cycle closes ZERO units **by design** and is forbidden by
   its own dispatch from moving any. `python3 scripts/cycle_scope_gate.py --receipt` rows below
