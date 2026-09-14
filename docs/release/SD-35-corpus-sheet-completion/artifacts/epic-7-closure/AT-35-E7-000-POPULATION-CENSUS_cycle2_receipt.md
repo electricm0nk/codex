@@ -9,7 +9,10 @@ of X" feats and 1 `mythic_adventures` spell, all 10 failing the *same* enumerati
 corrected corpus-wide figure is **48,854 of 48,864 real corpus rules records = 99.9795%**, not the
 48,609 of 48,864 = 99.478% cycle 1 recorded.
 
-- **Commit SHA:** `3cc3b384a8` (cycle start `9af5cd311e`)
+- **Commit SHA:** `3cc3b384a8` (the figure-moving commit: method, artifacts, retro events) and
+  `7125e00e01` (this receipt, `progress.md`, `kanban.md` row 102, and two instrument side effects
+  folded — `completion_atlas.py --check`'s `derived_at` restamp of SD-34's atlas, and
+  `verify.sh --only pi-sweep`'s run event). Cycle start `9af5cd311e`.
 - **Scope gate:** `SCOPE_GATE: EXEMPT (measurement cycle — it moves no unit and writes no rule; its deliverable is a census and a verdict)`
   (`decisions.md §2` floor exemption, the same ground cycle 1 stood on and for the same reason: this
   cycle closes ZERO units **by design** and is forbidden by its own dispatch from moving any. The
