@@ -183,7 +183,7 @@ re-measured at the cut by the launch-readiness audit.
 
 ### 2026-09-14 — Epic 7 — AT-35-E7-000-POPULATION-FIX **cycle 1** — **operator ruling B18 executed: the shape filter stops dropping real rules, all 12 admitted units RENDER, and the headline figure is now 48,864 of 48,864 corpus records = 100%** — complete
 
-Receipt: `artifacts/epic-7-closure/AT-35-E7-000-POPULATION-FIX_cycle1_receipt.md`, kanban row 104.
+Receipt: `artifacts/epic-7-closure/AT-35-E7-000-POPULATION-FIX_cycle1_receipt.md`, kanban row 104. Commit `e58e5a9ce5`.
 Ruling recorded as `decisions.md §21`; `epic-breakdown.md` gains an `AT-35-E7-000-*` section and
 `AT-35-E7-001`'s bar is restated against the **corpus** population with its denominator named.
 

@@ -7,7 +7,7 @@ spell arms now accept a row's own rule prose as well as its classifying token, w
 headline figure is now **48,864 of 48,864 real `data/corpus` rules records = 100%**, with the
 inventory reading **49,450 of 49,450** — `49,438` is superseded everywhere.
 
-- **Commit SHA:** `__COMMIT_SHA__`. Cycle start `405faf267142f042a198ef57d39d31b7fa6514d7`.
+- **Commit SHA:** `e58e5a9ce5` (the whole cycle in one commit; this line is stamped by a follow-up commit that changes nothing else). Cycle start `405faf267142f042a198ef57d39d31b7fa6514d7`.
 - **Scope gate:** `SCOPE_GATE: EXEMPT (ruling B18 scopes this cycle to exactly 10 records the census proved are the whole population; the gate's own population is docs/work-inventory.json and these records are by definition the ones NOT in it)`
 
   Run for the record at cycle start anyway:
