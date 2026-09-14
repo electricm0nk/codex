@@ -181,6 +181,93 @@ re-measured at the cut by the launch-readiness audit.
 
 ## Cycle log
 
+### 2026-09-14 — Epic 7 — AT-35-E7-000-POPULATION-CENSUS **cycle 1** — **`49,438 of 49,438` is an INVENTORY-wide figure. The corpus-wide figure is 48,609 of 48,864 (99.478%).** — partial
+
+Receipt: `artifacts/epic-7-closure/AT-35-E7-000-POPULATION-CENSUS_cycle1_receipt.md`, kanban row
+101. Deliverable: `artifacts/epic-7-closure/population-census.json` (+ `population-census.py`, the
+script that re-derives it, and `population-census-unreached.json`, the per-record backing data for
+all 2,912). **A measurement cycle: it moves no unit, converts nothing, edits no classifier and
+changes no gate** — `data/corpus`, `docs/work-inventory.json`, `data/sheet_rules/` and `src/` are
+byte-identical to the cycle-start SHA `ab1001e1b6`.
+
+`SCOPE_GATE: EXEMPT (measurement cycle — it moves no unit and writes no rule; its deliverable is a
+census and a verdict)` (`decisions.md §2`). `closed=0 relabeled=0 rust_lines_changed=0 ratio=n/a
+builds_recorded=0 pcgen_live_files=0`. **Refused-token remainder:
+`record_absent_from_inventory_population=255`.**
+
+**The finding, in one row.** The two populations are built from **different sources** and nothing
+forces them to agree: `data/corpus` is our ingested schema, while `docs/work-inventory.json` is
+enumerated from the **pinned PCGen tree** (`src/bin/v06_work_inventory.rs:19949`,
+`corpus_root ← PCGEN_CORPUS_ROOT`). `completion_atlas.py`'s denominator is the inventory
+(`scripts/completion_atlas.py:71`), so `DONE 49,438 of 49,438` is **100% of the inventory**, not of
+the corpus.
+
+**Method, and the trap avoided.** The naive corpus-path→inventory-id join returns **12,659** and is
+wrong: it compares `data/corpus`'s directory vocabulary (`feat_generic`, `race_trait_generic`,
+`trait_generic`, `_settled`, `ability`) with the inventory's kind vocabulary (`feat`, `race_trait`,
+`trait`). This census instead **inverts the only code path that actually joins the two
+populations** — `src/pcgen_import/sheet_rule/mod.rs::walk_corpus` (`:105`) and `::load_population`
+(`:256`), joining on **(book, source-file basename, source-line)** first and **(book, kind,
+id-tail)** second. Re-derive:
+`python3 docs/release/SD-35-corpus-sheet-completion/artifacts/epic-7-closure/population_census.py`.
+
+**Direction 1 — corpus → inventory.** `data/corpus` holds **51,521** records (not the 27,681 the
+dispatch carried — `correction 1789402084165`; `find data/corpus -name '*.json' -not -path
+'*/_parity/*' -not -name LICENSE.json | wc -l`). **48,609** are reached by ≥1 inventory unit;
+**2,912** never are (`correction 1789402084302`). Those 2,912, in four hand-verified buckets:
+**1,998** `chassis_only` `.MOD` rows that only add `TYPE:`/`CLASSES:` to an existing record and
+carry no rule of their own; **612** duplicate ingests of a `(book, file, line)` another corpus JSON
+already holds (`load_population`'s indexes are first-wins); **47** `_settled/<kind>.json` generated
+aggregates that are not records at all; and **255** `completeness: full` records carrying published
+rules prose that **no inventory unit reaches under either join key**. **28 records hand-sampled**
+(10 `chassis_only`, all 10 literal `.MOD` rows against the pinned `.lst`; 6 duplicates, all 6
+twins of a claimed row; 3 `_settled`, all 3 `{kind, records}` maps; **12 of the 255, all 12 real
+player-facing rules records** — ARG variant-heritage racial traits, ACG armor/weapon special
+abilities with their printed effect line, Core Essentials and Unchained feats).
+
+**The 255 by book/kind:** `advanced_race_guide/race_trait` **178**,
+`advanced_class_guide/equipment` **48**, `core_essentials/feat` **15**,
+`pathfinder_unchained/feat` **9**, `advanced_players_guide/spell` **4**,
+`mythic_adventures/spell` **1**. The three records the dispatch named as already-confirmed are all
+in it, re-verified from disk: `advanced_players_guide:spell:wall_of_thorms` (1,851 chars of prose,
+`apg_spells.lst:1555`), `mythic_adventures:spell:elemental_body_iiimod` (649 chars), and
+`AT-35-E6-003`'s deferral is confirmed **by mechanism** — `load_population` iterates `inv.units`,
+never `walk_corpus`'s output, so a corpus record with no inventory unit is structurally
+unreachable by the converter.
+
+**Direction 2 — inventory → corpus, fully reconciled, no surprise.** **829** units resolve to no
+`data/corpus` record; **687** of them (685 `feat`, 2 `spell`) are rescued by
+`sheet_rule/mod.rs::source_row_in_tree`, which falls back to the unit's own row in the pinned tree,
+and **142** are refused `no_corpus_record` (104 `race_trait`, 27 `race`, 11 `feat`).
+**829 = 687 + 142 exactly**, and `data/sheet_rules/_refused.json`'s 142 ids are a **strict subset**
+of the 829 (verified `refused ⊆ unjoined` = `True`, 0 outside).
+
+**The corpus-wide figure:** **48,609 of 48,864 real corpus rules records = 99.478%**
+(`correction 1789402084433`). Equivalently, 51,266 of 51,521 `data/corpus` JSON files are either
+reached by a DONE unit or provably not a record.
+
+**Status `partial`, not `complete`.** The deliverable is done, but this bundle's rule is a
+population rule and the population is **not zero at HEAD**: 255 real corpus rules records sit
+outside the atlas's denominator entirely. Reporting `complete` would restate the exact error the
+cycle was dispatched to find. **This is not a carve-out** — these render as words under the sheet
+rule; they are absent because the inventory's *enumerator* never saw them, which is a population
+defect with a fix. The fix is a **separate criterion**, as the dispatch requires
+(`deferral 1789402095428`); **`AT-35-E7-001` and SD-35's closure must not treat `49,438 of 49,438`
+as corpus-wide** — either restate the headline with its denominator, or bring the 255 in first.
+
+Instruments at HEAD, all green and all re-derived: `completion_atlas.py --check`
+`population=49438 DONE=49438 done_evidence_violations=0 citation_failures=0`;
+`token_coverage.py --check` `non_done=0 refused=142 refused_non_done=0 token_types=233 shapes=1
+verdict=PASS`; `pcgen_residue_gate.py --check` `live_files=0 live_hits=0 baseline_files=260
+baseline_hits=12736 verdict=PASS` (unchanged from cycle start);
+`shape_engine_boundary.py --check` `magnitude_bearing=26396 not_held_by_engine=0`;
+`missing_engine_tables.py --check` `population=0 citation_failures=0`;
+`grep -rlE 'BONUS:|DEFINE:|PRE[A-Z]+:|%CHOICE|CL=' data/sheet_rules/ | wc -l` → `0`;
+`denominator_gate.py --check` `files_checked=161 violations=0`; `verify.sh --only pi-sweep` `PASS`;
+`cargo test --locked --no-run -j 6` `NO_RUN_EXIT=0`. `corpus_literal_sweep`,
+`sheet_rule_convert --check`, the oracle comparison, clippy and the desktop crate were **skipped
+with the reason stated**: nothing they measure changed.
+
 ### 2026-09-14 — Epic 7 — AT-35-E7-001 **cycle 2**, the final-acceptance scan re-run — **FAIL again. Closure stops.**
 
 Scanned at HEAD `8d0d4acbf2` against the `tranche/15` cut `4c6c57eb9f`. Receipt:
