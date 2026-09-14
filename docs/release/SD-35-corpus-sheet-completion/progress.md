@@ -181,6 +181,78 @@ re-measured at the cut by the launch-readiness audit.
 
 ## Cycle log
 
+### 2026-09-14 — Epic 7 — AT-35-E7-000-POPULATION-CENSUS **cycle 2**, the 255 remainder — **it is 10, not 255. Corpus-wide completion is 48,854 of 48,864 = 99.9795%, not 48,609 of 48,864 = 99.478%.** — partial
+
+Receipt: `artifacts/epic-7-closure/AT-35-E7-000-POPULATION-CENSUS_cycle2_receipt.md`, kanban row
+102. Deliverable: `artifacts/epic-7-closure/population-census-255.json` (+ `population_census_255.py`,
+the script that re-derives it, and `population-census-255-detail.json`, the per-record disposition
+for all 255). **A measurement cycle: it moves no unit, converts nothing, edits no classifier and
+changes no gate** — `data/corpus`, `docs/work-inventory.json`, `data/sheet_rules/` and `src/` are
+byte-identical to the cycle-start SHA `9af5cd311e` (`git diff --stat 9af5cd311e..HEAD -- src data
+docs/work-inventory.json` is empty).
+
+`SCOPE_GATE: EXEMPT (measurement cycle — it moves no unit and writes no rule; its deliverable is a
+census and a verdict)` (`decisions.md §2`; the remainder is furthermore not expressible as
+`cycle_scope_gate.py` flags at all — the gate's population is `docs/work-inventory.json` and these
+records are by definition the ones not in it). `closed=0 relabeled=0 rust_lines_changed=0
+ratio=n/a builds_recorded=0 pcgen_live_files=0`. **Refused-token remainder:
+`record_absent_from_inventory_population=10`** (`pathfinder_unchained/feat=9` +
+`mythic_adventures/spell=1`) — a **correction of** cycle 1's `=255`, not a second remainder beside
+it.
+
+**The finding, in one row.** Cycle 1's `255` is an artefact of the join. `load_population`'s two
+keys are **coordinate** keys — they ask where a row sits — and both carry a `book` component that
+`v06_work_inventory`'s `attributed_book` **deliberately rewrites**, applying the supersession
+ruling. ARG's `samsaran_abilities_race.lst:14` *is* enumerated; it is enumerated as
+`bestiary_4:race_trait:samsaran_ability_scores`. The sheet rule (`decisions.md §1`) asks a different
+question — do the rule's **words** reach a sheet line — and answering that one gives 10.
+
+**The disposition of all 255, every record, not a sample.** Re-derive:
+`python3 docs/release/SD-35-corpus-sheet-completion/artifacts/epic-7-closure/population_census_255.py`
+(11 s).
+
+| disposition | n | what it is |
+| --- | --- | --- |
+| `reached_via_reattributed_same_row` | **193** | the same `(basename, line)` of the same pinned `.lst`, book label dropped — one row, one rule |
+| `reached_via_copy_row_twin_same_file` | **48** | the `<New Key>.COPY=<Base>` twin in `acg_equipmods.lst` that `v06_work_inventory`'s own `book_equipmod_copy_base_targets` note says the enumerator prefers |
+| `reached_via_identical_prose_record` | **4** | published prose byte-identical to a record an inventory unit already claims |
+| `absent_no_unit_anywhere` | **10** | reaches nothing |
+
+193 + 48 + 4 + 10 = 255, exactly. **A shared KEY is never credited alone**: every key candidate must
+also match the other record's `data.description` verbatim (whitespace and case normalised only), so
+`Amorphous` (protean anatomy) can never stand in for `Amorphous` (ACG armor).
+
+**Three of cycle 1's twelve hand-verified "real gaps" are in the reached set** — `changeling_claws`
+and `samsaran_vision` are `bestiary_4` units, `special_ability_jarring_armor` and
+`special_ability_distracting_weapon` are `.COPY=` twins, and `wall_of_thorms` (cycle 1's first named
+gap) carries the Core Rulebook *Wall of Thorns* paragraph character-for-character, 1,851 chars.
+
+**The 10, and their single root cause.** 9 `pathfinder_unchained` "Champion of X" feats
+(`pu_feats.lst:6-14`) and `mythic_adventures` `Elemental Body IIIMOD` (`ma_spells.lst:98`), all
+failing the same predicate — `has_classifying_token` at `src/bin/v06_work_inventory.rs:3172-3173`
+requires `TYPE:` on a `Kind::Feat` row and `SCHOOL:`-or-`CLASSES:` on a `Kind::Spell` row. The 9
+Champion rows carry `CATEGORY:FEAT`, `DESC:` and `BENEFIT:` and no `TYPE:` (`awk -F'\t'
+'NR>=6&&NR<=14' "$PCGEN_CORPUS_ROOT/.../pu_feats.lst" | grep -c 'TYPE:'` → `0`); the 8 `pu_feats`
+rows the inventory does hold all carry it (→ `8`). Under the sheet rule all 10 render as words. Not
+a carve-out — a one-predicate enumeration gap with a named fix, needing enumerator write scope this
+measure-do-not-fix criterion is denied **and** an operator ruling, because the fix moves the atlas
+denominator off 49,438.
+
+**What this proof does not cover**, stated because the omission is the load-bearing part
+(`AGENTS.md §7`): the 2,657 records cycle 1 filed as not-records are not re-verified; prose identity
+proves the words print, not that they print under the name a player looks up; and normalisation is
+whitespace-and-case only, so a twin that reformats a table compares different — **the 10 are a
+ceiling, not a floor**.
+
+**Verification at HEAD.** atlas `population=49438 buckets=10 unclassified=0 overlap=0`,
+`done_evidence_violations=0`; token-coverage `verdict=PASS`; residue
+`live_files=0 baseline_files=260 verdict=PASS` (unchanged from cycle start); boundary
+`not_held_by_engine=0`; `missing_engine_tables population=0`; `data/sheet_rules/` token grep `0`;
+denominator gate `files_checked=163 violations=0`; `verify.sh --only pi-sweep` **PASS**. No build:
+no Rust, corpus or `sheet_rules` byte changed, so `decisions.md §3` leaves a build nothing to prove.
+`correction 1789403029925`, `correction 1789403043225`, `correction 1789403043369`,
+`deferral 1789403054827`.
+
 ### 2026-09-14 — Epic 7 — AT-35-E7-000-POPULATION-CENSUS **cycle 1** — **`49,438 of 49,438` is an INVENTORY-wide figure. The corpus-wide figure is 48,609 of 48,864 (99.478%).** — partial
 
 Receipt: `artifacts/epic-7-closure/AT-35-E7-000-POPULATION-CENSUS_cycle1_receipt.md`, kanban row
