@@ -181,6 +181,72 @@ re-measured at the cut by the launch-readiness audit.
 
 ## Cycle log
 
+### 2026-09-14 — Epic 6 / `shipped-data-is-measured-and-clean` — AT-35-E6-005-SHIPPED-DATA **cycle 1** (`2f824171b5`) — **complete** (operator ruling B17, `decisions.md §20`: the gate now measures shipped DATA, and the shipped data is clean)
+
+`SCOPE_GATE: EXEMPT (Epic 6 instrument + shipped-data cleanup cycle — closes zero corpus units by design, `decisions.md §2`)`. Run anyway:
+`scoped=0 remaining_non_done=0 floor=500 verdict=PASS_WHOLE_REMAINDER`.
+
+`closed=0 relabeled=0 rust_lines_changed=172 ratio=n/a builds_recorded=1 pcgen_live_files=0`. **Refused tokens: none.**
+
+**The instrument first.** `AT-35-E7-001`'s scan found what the residue gate structurally could not
+see: PCGen token text inside **shipped data files**. The gate scans Rust and TypeScript, so it
+printed `root apps/desktop files=0 hits=0` — truthfully, and uselessly. `pcgen_residue_gate.py`
+gains a second file class: every file that ships, **derived** from `bundle.resources` in
+`apps/desktop/src-tauri/tauri.conf.json` (never a hard-coded list — that would rebuild the blind
+spot), directory entries walked recursively the way the Tauri v2 bundler copies them, scanned whole
+for the PCGen vocabulary plus `"raw_tokens"` / `"raw_bonus_chains"` as JSON keys, folded into
+`live_files=` / `live_hits=` so `--closure` measures what ships. RED→GREEN pinned by
+`TestShippedDataIsScanned` (9 tests: a token in a shipped data file fails; the same file out of
+`bundle.resources` passes; a token in an **unshipped** data file under the same root passes; a new
+resource entry is covered with no edit). B14, B15 and B16 re-run green — 39 tests OK.
+
+**The jump is an instrument correction, not a regression, and is never netted against the cleanup:**
+
+```
+live_files=0 live_hits=0                       <- before, source-only gate
+shipped_data_files=6 shipped_data_hits=30      <- the instrument becoming honest
+shipped_scanned=15   live_files=6 live_hits=30 verdict=FAIL
+```
+
+The dispatch's census named **5** files; the re-derivation found **6** — `equip_longsword.txt` was
+missed (`correction 1789385567973`). Tauri copies a directory resource recursively, so all four
+`.txt` `.lst` rows at the top of `corpus_fixtures/` shipped even though only the three
+subdirectories are listed individually.
+
+**Then the data — a MOVE, not a deletion** (`decisions.md §11` keeps the converter, its parser and
+its **inputs** for Starfinder; a converter input is kept, it is not shipped). Six `git mv` renames
+to `apps/desktop/src-tauri/fixtures_src/`, outside `bundle.resources`:
+the four `.txt` rows and the two ingest-format `data.raw_tokens` equipment records.
+`gen_desktop_fixture_corpus` now reads that root and writes the ingest records back there and the
+**converted** records to `resources/corpus_fixtures/`; `gen_settled_corpus` reads the fixture book
+at `fixtures_src/` and lands its bundle at `resources/corpus_fixtures/_settled/equipment.json`.
+What each file's reader is was **proven, not assumed**: `corpus_loader::load_equipment_corpus`
+enumerates `equipment/*.json` for the settled bundle's KEY and reads every value out of
+`_settled/equipment.json`, so the shipped records need no token array; nothing in the shipping
+crate ever parsed the `.txt` files (`FIXTURE_SOURCES` was a `#[cfg(test)]` existence assertion,
+now removed).
+
+**At HEAD:**
+
+```
+shipped_data_files=0 shipped_data_hits=0 shipped_scanned=11
+live_files=0 live_hits=0 verdict=PASS
+```
+
+and the independent grep of all 11 files under `bundle.resources` for
+`BONUS:|DEFINE:|PRE[A-Z]+:|SAB:|DESC:|%CHOICE|%LIST|TYPE=|raw_tokens|raw_bonus_chains` returns
+**0 lines**. No fixture deleted, no pattern weakened, no resource entry dropped,
+`EXCLUDED_PREFIXES` still empty. Tool side untouched: `git diff --stat` over `src/pcgen_import`,
+`scripts/oracle_harness`, `src/oracle_validation` is **empty**; **zero** net deletions of function
+bodies; oracle pin unchanged.
+
+**Verified:** full workspace `FULL_EXIT=0` / 419 targets / **8,919 passed / 0 failed** / 69 ignored, lib `3390 passed; 0 failed`, `--no-run` exit 0; desktop crate `570 passed; 0 failed` (+ the 3 `corpus_fixtures` bundle tests targeted); clippy 0 warnings; `sheet_rule_convert --check` `records=49438 converted=49296 refused=142 verdict=PASS`; tool side live (`TOOLSIDE_EXIT=0`, `ORACLE_HELP_EXIT=0`); `gen_desktop_fixture_corpus --check` `files=6 drift=0 verdict=PASS`;
+`gen_settled_corpus --check` `roots=40 bundles=48 records=8763 skipped=0 drifted=0 verdict=PASS`;
+atlas / token-coverage / shape-engine / missing-engine-tables / denominator all green;
+`data/sheet_rules/` token leaks `0`; `pi-sweep` PASS.
+**This clears `AT-35-E7-001`'s shortfall S5.** S1–S4 are untouched and remain Epic 7's.
+
+
 ### 2026-09-14 — Epic 7 — AT-35-E7-001 **cycle 1**, the final-acceptance scan — **FAIL. Closure stops.**
 
 **Scanned at `24084e1782` against the `tranche/15` cut `4c6c57eb9f`.** Receipt:
