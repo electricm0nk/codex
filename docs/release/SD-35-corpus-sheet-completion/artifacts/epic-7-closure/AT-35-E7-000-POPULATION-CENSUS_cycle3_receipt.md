@@ -9,7 +9,10 @@ name search across all 49,438 inventory units and **0 of 10 were rescued** — s
 an upper bound**, and the corpus-wide figure **48,854 of 48,864 = 99.9795%** is confirmed from a
 population eleven times larger than the one that first produced it.
 
-- **Commit SHA:** `<filled at commit>`. Cycle start `82ffbb4ed24f1e3671bb63b4b74ef426373d7eae`.
+- **Commit SHA:** `ae9283827e` — the whole cycle in one commit (method, the three artifacts, this
+  receipt, `progress.md`, `kanban.md` row 103, the three retro events, and the two instrument side
+  effects folded), plus one follow-up commit that stamps this line with that SHA and changes nothing
+  else. Cycle start `82ffbb4ed24f1e3671bb63b4b74ef426373d7eae`.
 - **Scope gate:** `SCOPE_GATE: EXEMPT (measurement cycle — it moves no unit and writes no rule; its deliverable is a census and a verdict)`
   (`decisions.md §2` floor exemption — the same ground cycles 1 and 2 stood on, for the same reason:
   this cycle closes ZERO units **by design** and its own criterion forbids it to move any. The
@@ -24,10 +27,13 @@ population eleven times larger than the one that first produced it.
   - `docs/release/SD-35-corpus-sheet-completion/artifacts/epic-7-closure/population-census-final-detail.json` (new — per-record verdict for all 2,657)
   - `docs/release/SD-35-corpus-sheet-completion/artifacts/epic-7-closure/AT-35-E7-000-POPULATION-CENSUS_cycle3_receipt.md` (this file)
   - `docs/release/SD-35-corpus-sheet-completion/progress.md`, `docs/release/SD-35-corpus-sheet-completion/kanban.md`
-  - `docs/retro/events/at-35-e7-000-population-census.jsonl`
-  - `docs/release/SD-34-book-completion/artifacts/epic-1-atlas/completion-atlas.json` — **not this
-    cycle's content change**: `completion_atlas.py --check` restamps its own `derived_at`. Folded
-    rather than left dirty (memory's `clean-tree-means-unfiltered-status`), exactly as cycle 2 did.
+  - `docs/retro/events/at-35-e7-000-population-census.jsonl` (2 `correction` + 1 `deferral`)
+  - **Two instrument side effects, neither this cycle's content change**, folded rather than left
+    dirty (memory's `clean-tree-means-unfiltered-status`), exactly as cycle 2 did:
+    `docs/release/SD-34-book-completion/artifacts/epic-1-atlas/completion-atlas.json`
+    (`completion_atlas.py --check` restamps its own `derived_at`, `3cc3b384a8` → `82ffbb4ed2` — a
+    one-line diff) and `docs/retro/events/sd31-transcribe.jsonl` (`verify.sh` appends its own
+    run event — a one-line append).
   - **Nothing else.** `data/corpus`, `docs/work-inventory.json`, `data/sheet_rules/` and `src/` are
     byte-identical to the cycle-start SHA.
 - **Identifier audit result:** OK_NO_BUNDLE_TAGS
