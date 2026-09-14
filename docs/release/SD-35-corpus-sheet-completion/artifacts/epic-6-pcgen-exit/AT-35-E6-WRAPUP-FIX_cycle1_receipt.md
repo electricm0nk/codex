@@ -154,6 +154,8 @@ Recorded as note `1789348156572-at-35-e6-wrapup-fix-9de917`.
 | shipping lines the pre-B15 gate could hide | `transaction_rs_shipping_lines_hidden_before=618`; `total_shipping_lines_hidden_before=620` over `files_hiding_shipping_lines_before=3` | `python3 docs/release/SD-35-corpus-sheet-completion/artifacts/epic-6-pcgen-exit/AT-35-E6-004_cycle1_b15_skipline_delta.py` | `transaction_rs_total_lines=2885` |
 | feed input pin, before and after the republish | `5a0a0787312b5181d41214cb52abcd6e0c250fc409a75675ed6e839b4142e36f`, unchanged | `./scripts/publish-site-dashboard.sh --check-pin` | `docs/work-inventory.json`, the one input the pin watches |
 | republished feed population | `books=30 overall_pct=95.0 items=46074` | `python3 -c "import json,glob; d=json.load(open('site/status-data.json')); print('books=%d overall_pct=%s items=%d' % (len(d['books']), d['overall']['pct'], sum(len(k['items']) for f in glob.glob('site/status-data/*.json') for k in json.load(open(f))['kinds'])))"` | `site/status-data.json` + the 30 book-detail files under `site/status-data/` |
+| full gate, this cycle's own run | `RESULT: PASS` `VERIFY_EXIT=0`, **49 of 49 stages PASS, 0 FAIL**, 7,364 s | `./scripts/verify.sh` (every stage, no `--only`), then `grep -c '^==>' <log>` / `grep -cE '^    PASS' <log>` / `grep -cE '^    FAIL' <log>` | the 49 stages `verify.sh` defines |
+| test-binary files Epic 6 added | **6**, and the `BASELINE_ROOT_TEST_BINARIES` move is 413 → **419** | `git diff --name-status 6e4b1f7b4e HEAD -- 'tests/*.rs' 'src/bin/*.rs' 'apps/desktop/src-tauri/src/bin/*.rs' \| grep -E '^[AD]'` | every `tests/*.rs` and `src/bin/*.rs` path, added or deleted, since 413 was recorded |
 | worktrees found / removed / retained | **8 / 6 / 2** | `git worktree list` before and after; `git -C <each> status --porcelain` for the check | the 8 Epic 6 worktrees named in the gate report |
 | disk reclaimed by the sweep | `.claude/worktrees/` 15G → **9.4G** | `du -sh .claude/worktrees/` | the shared checkout's worktree dir |
 | this cycle's Rust lines | `rust_lines_changed=201` | `python3 scripts/cycle_scope_gate.py --receipt --since 77e8d3919a --before /tmp/wi-before-AT-35-E6-WRAPUP-FIX.json --after docs/work-inventory.json` | the whole cycle diff |
@@ -178,10 +180,28 @@ recorded against the report, and the report itself carries an inline correction 
    rule 4 — `.gitignore` is outside this cycle's granted write scope), but now for the right
    change: move `.claude/worktrees/` from `.git/info/exclude` into the **committed** `.gitignore`.
 
-- **Build scope verified:** `<filled after the full gate run>`
+- **Build scope verified:** the **full `scripts/verify.sh`, every stage, no `--only`**, run by this
+  cycle itself on the shared checkout at `952b313bbb` + the baseline edit below.
+  **`RESULT: PASS`, `VERIFY_EXIT=0`, 49 of 49 stages PASS, 0 FAIL.** Wall time
+  **7,364 s (2 h 02 m 44 s)**, 2026-09-14T01:26:01Z → 2026-09-14T03:28:45Z. Log:
+  `<scratchpad>/verify-e6-fix.log`. **All four formerly-red stages are green:**
+  `PASS site-dashboard-check (site/dashboard/PF1e-dashboard.json is current)`,
+  `PASS figure-provenance (files_checked=274 figures_examined=613 violations=0)`,
+  `PASS desktop (570 passed)`,
+  `PASS clippy (root:0 desktop:0 warnings, 0 errors)`.
+  Widest scope covered: `root-lib` 3390 passed; `root-full` 8919 passed across 419 suites with all
+  365 `tests/*.rs` suites executed; the separate desktop crate 570 passed; `frontend-test`,
+  `frontend-typecheck`, `reach`, `corpus-sweep` and `class-dump` all green.
+  The run's own **BASELINE NOTES** block flagged three stale root floors — all **growth**, none a
+  failure — and this cycle raised them **on its own measurement**:
+  `BASELINE_ROOT_LIB_TESTS` 3261 → 3390, `BASELINE_ROOT_FULL_TESTS` 8772 → 8919,
+  `BASELINE_ROOT_TEST_BINARIES` 413 → 419, the last attributed exhaustively to the six test-binary
+  files Epic 6 added (`git diff --name-status 6e4b1f7b4e HEAD -- 'tests/*.rs' 'src/bin/*.rs' 'apps/desktop/src-tauri/src/bin/*.rs' | grep -E '^[AD]'`).
 - **Sweep population:** N/A — no corpus record changed this cycle.
 - **Oracle pin:** N/A — no figure came from the pinned corpus.
-- **Status:** `<filled after the full gate run>`
+- **Status:** **complete.** Every red stage the Epic 6 wrap-up gate reported is fixed at its
+  source and proven green by a full 49-of-49 gate run this cycle performed itself. Nothing was
+  silenced, skipped, ignored or hidden; the one floor that moved down moved with its attribution.
 - **Notes:** The batch-floor exemption is claimed under `decisions.md §2`; the residue check was
   run at both ends and did not move. No stage was silenced, no skip added, no ignore list widened,
   and the one baseline that moved moved **down** to the value a green run measures, with its
