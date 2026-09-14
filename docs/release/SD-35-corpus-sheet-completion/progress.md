@@ -181,6 +181,93 @@ re-measured at the cut by the launch-readiness audit.
 
 ## Cycle log
 
+### 2026-09-14 — Epic 6 / `pcgen-residue-zero` — AT-35-E6-004 **cycle 2** (`<SHA>`) — **complete** (the closure certificate is re-taken at HEAD, because B17 widened the very gate it certifies)
+
+**Why this cycle exists.** Cycle 1 certified "the gate reads zero" at `77e8d3919a`. Three commits
+landed after it, and one of them — `AT-35-E6-005-SHIPPED-DATA` (`2f824171b5`, operator ruling
+**B17**) — *widened `pcgen_residue_gate.py`*, adding a shipped-installer-data class and folding
+`shipped_data_files`/`shipped_data_hits` into the `live_files=`/`live_hits=` totals **this
+criterion's Evidence sentence reads**. A closure certificate taken before its own instrument
+changed is a certificate about a different instrument. This cycle re-runs **every** Evidence clause
+at the current HEAD and carries nothing over from cycle 1's receipt. It moves no unit and changes
+no shipping file.
+
+```
+SCOPE_GATE: EXEMPT (Epic 6 closure cycle — closes zero units by design, decisions.md §2)
+inventory=docs/work-inventory.json
+scope=(whole remainder)
+scoped_by_bucket=
+scoped_by_kind=
+scoped=0 remaining_non_done=0 floor=500 verdict=PASS_WHOLE_REMAINDER
+```
+```
+since=7fadc67843433ceb899ec42025b99fa0e2faf491 target_dir=/tmp/cargo-sd35-AT-35-E6-004 residue_gate=present
+closed_by_kind=
+relabeled_moves=
+regressed=0 added=0 dropped=0
+closed=0 relabeled=0 rust_lines_changed=0 ratio=n/a builds_recorded=1 pcgen_live_files=0
+```
+
+**Result: the zero holds, and it still earns itself.** `--check --closure` →
+`live_files=0 live_hits=0 verdict=PASS` with `shipped_data_files=0 shipped_data_hits=0
+shipped_scanned=11`; `--check` (ratchet) agrees against `baseline_files=260 baseline_hits=12736`.
+The audit did not stop there, because this criterion exists to catch a green gate that does not
+measure what it claims:
+
+- **B14/B15/B16 read out of the source, not the docs.** `code_only()` scans every non-`//` line
+  whole; `cfg_test_ranges()` brace-matches over `mask_non_code()`; `RUNTIME_IMPORT_PATTERNS` holds
+  `pcgen_import`. **The claim worth doubting was B16's**, and it was chased to the totals: `scan()`
+  iterates `_COMPILED` (built from `PATTERNS`, which includes `pcgen_import`) into `file_hits`,
+  which is what increments `live_files`/`live_hits` — being *listed* in `PATTERNS` is not the same
+  as being *counted*, and here it is both. `EXCLUDED_PREFIXES` is the empty tuple; all five roots
+  including `apps/desktop` are scanned. Gate suite **Ran 39 tests, OK**.
+- **Three RED→GREEN probes, three failure shapes, each planted and removed.** A run-time
+  `codex::pcgen_import::…` call in `apps/desktop` → `verdict=FAIL` (B16 across the root the ruling
+  was written for); an ingest token in a `src/rules_core` string literal → `FAIL`; and **the same
+  token planted at `update/transaction.rs:1900`**, inside the 618-line window cycle 1's B15 brace
+  bug used to blank → `FAIL`. All removed → `verdict=PASS`, tree clean. Re-derived at this HEAD,
+  `cfg_test_ranges()` on that file returns `[(1062,1444),(1447,1499),(1502,1868),(2487,2885)]` over
+  2,885 lines: the third region still ends at 1868. **Cycle 1's fix is proved by execution, not by
+  re-reading the diff that made it.**
+- **An independent census, different algorithm, agrees:** `live_files=0 live_hits=0`,
+  `over_skip_hits_hidden_by_gate=0`, `gate_skipped_lines=90434 independent_skipped_lines=90434
+  files_with_boundary_mismatch=0`.
+- **Oracle parity re-run at HEAD:** `156/154/2` lines, `382/376/6` chassis, 29 characters, pin
+  `7f818006e3` unchanged since `c3500e7984`. Chassis figures are **identical** to `AT-35-E6-001`'s
+  at the epic's start; `gone_since_start=0` and `new_since_cycle1=0`, and the parity document is
+  **byte-identical** to cycle 1's — so the three intervening commits, B17's shipped-data move
+  included, moved no rendered number.
+- **Tool side intact** (`decisions.md §11`): `TOOLSIDE_EXIT=0`, `PARITY_BUILD_EXIT=0`,
+  `ORACLE_HELP_EXIT=0`, pin diff empty. **Zero net deletions of function bodies**, re-derived with a
+  *second, independently written* name census: `names_present_at_start_and_absent_at_HEAD=0` over
+  `src/pcgen_import` + `scripts/oracle_harness` + `src/oracle_validation` (39 → 88 files). Its
+  488 → 1,453 counts distinct names where cycle 1's 536 → 1,652 counted occurrences; the two are
+  **not comparable and are not compared** — the load-bearing figure is the zero, reached twice by
+  two instruments.
+
+**Verified at HEAD:** `--no-run` exit 0 / **419** executables; lib `3390 passed; 0 failed; 16
+ignored`; `sheet_rule_convert -- --check` `CONVERT_CHECK_EXIT=0`; `grep -rlE 'BONUS:|DEFINE:|…'
+data/sheet_rules/ | wc -l` → **0**; atlas `citation_failures=0 stale_derived_at=False`;
+token-coverage `verdict=PASS`; shape-engine `not_held_by_engine=0`; missing-engine-tables
+`population=0`; denominator `files_checked=159 violations=0`; **figure-provenance
+`figures_examined=486 violations=0`** — cycle 1's two unsourced rows, the ones the wrap-up gate
+caught as §0a-2, are gone. `pi-sweep` PASS. `cargo test --no-fail-fast` and clippy are **not**
+re-run and the reason is stated rather than assumed: `rust_lines_changed=0`, and this cycle's diff
+is four markdown/JSON files with no Rust target.
+
+**Judgment call, inherited and re-affirmed:** `cargo tree` (run from `apps/desktop/src-tauri`, a
+separate workspace) shows no converter **crate** in the desktop graph — but `pcgen_import` is a
+**module of the `codex` crate**, which *is* a dependency, so no crate-grained tool can settle
+module-level independence. Reporting it as if it could would be the same false-confidence move B16
+was ruled over. The module claim rests on the probes and the gate.
+
+**Refused tokens: none** (`refused=142 refused_non_done=0`; every refused token sits on a unit
+already `DONE` under the sheet rule). **Discoveries: none — and for an audit cycle that is the
+result, not the absence of one.** No `correction` is owed; `verification
+1789392460984-at-35-e6-004-fc318f`. **Epic 6's closure certificate now stands on the instrument
+that is actually shipping.**
+
+
 ### 2026-09-14 — Epic 6 / `shipped-data-is-measured-and-clean` — AT-35-E6-005-SHIPPED-DATA **cycle 1** (`2f824171b5`) — **complete** (operator ruling B17, `decisions.md §20`: the gate now measures shipped DATA, and the shipped data is clean)
 
 `SCOPE_GATE: EXEMPT (Epic 6 instrument + shipped-data cleanup cycle — closes zero corpus units by design, `decisions.md §2`)`. Run anyway:
