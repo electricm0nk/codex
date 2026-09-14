@@ -1,6 +1,6 @@
 # Cycle 2 — Epic 6 (PCGen exit) / AT-35-E6-004
 
-- **Commit SHA:** `<STAMPED-BELOW>` (cycle start `7fadc67843`)
+- **Commit SHA:** `5da55c42e3` (cycle start `7fadc67843`), progress + kanban at `af4e315b84`
 - **Why a cycle 2 exists:** cycle 1 certified this criterion at `77e8d3919a`. Three commits
   landed on `tranche/15` after it — `fdc90243f4`, `2f824171b5` and `7fadc67843`
   (`AT-35-E6-005-SHIPPED-DATA`, ruling **B17**, which *widened the gate* to scan shipped installer

@@ -181,7 +181,7 @@ re-measured at the cut by the launch-readiness audit.
 
 ## Cycle log
 
-### 2026-09-14 — Epic 6 / `pcgen-residue-zero` — AT-35-E6-004 **cycle 2** (`<SHA>`) — **complete** (the closure certificate is re-taken at HEAD, because B17 widened the very gate it certifies)
+### 2026-09-14 — Epic 6 / `pcgen-residue-zero` — AT-35-E6-004 **cycle 2** (`5da55c42e3`) — **complete** (the closure certificate is re-taken at HEAD, because B17 widened the very gate it certifies)
 
 **Why this cycle exists.** Cycle 1 certified "the gate reads zero" at `77e8d3919a`. Three commits
 landed after it, and one of them — `AT-35-E6-005-SHIPPED-DATA` (`2f824171b5`, operator ruling
