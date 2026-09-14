@@ -29,6 +29,8 @@
 //! data/corpus/<book>/_settled/race.json         <- keyed by path under race/
 //! data/corpus/<book>/_settled/race_trait.json   <- keyed by path under race_trait/
 //! apps/desktop/src-tauri/resources/corpus_fixtures/_settled/equipment.json
+//!   ^ built from apps/desktop/src-tauri/fixtures_src/equipment/ (ruling B17:
+//!     the ingest-format records are a converter input and do not ship)
 //! ```
 //!
 //! `_settled/` sits **beside** the kind directories, never inside one, so no
@@ -60,15 +62,34 @@ use codex::rules_core::settled_corpus::{corpus_book_dirs, CORPUS_ROOT};
 /// The desktop's bundled fixture corpus is a `BookCorpusRoot` like any other —
 /// `corpus_loader::load_equipment_corpus` reads it with the same function — so
 /// it gets its bundle from the same producer.
-const DESKTOP_FIXTURE_ROOT: &str = "apps/desktop/src-tauri/resources/corpus_fixtures";
+///
+/// SD-35 `AT-35-E6-005-SHIPPED-DATA`, ruling B17: its INGEST-format records
+/// live outside `bundle.resources`, at `fixtures_src/`, because a converter
+/// input is kept (`decisions.md` §11) but is not a shipped file. So this
+/// producer READS one root and WRITES the bundle into the other — the only
+/// place in this binary where those two differ.
+const DESKTOP_FIXTURE_SRC_ROOT: &str = "apps/desktop/src-tauri/fixtures_src";
+const DESKTOP_FIXTURE_SHIP_ROOT: &str = "apps/desktop/src-tauri/resources/corpus_fixtures";
 
 fn roots() -> Vec<PathBuf> {
     let mut roots = corpus_book_dirs(Path::new(CORPUS_ROOT));
-    let fixtures = PathBuf::from(DESKTOP_FIXTURE_ROOT);
+    let fixtures = PathBuf::from(DESKTOP_FIXTURE_SRC_ROOT);
     if fixtures.is_dir() {
         roots.push(fixtures);
     }
     roots
+}
+
+/// Where a bundle built from `root` is written.
+///
+/// Identity for every real book. For the desktop fixture root it is the shipped
+/// resource directory: the live loader reads `_settled/equipment.json` beside
+/// the records it enumerates, and those records ship.
+fn bundle_destination(artifact_path: &Path) -> PathBuf {
+    match artifact_path.strip_prefix(DESKTOP_FIXTURE_SRC_ROOT) {
+        Ok(rest) => Path::new(DESKTOP_FIXTURE_SHIP_ROOT).join(rest),
+        Err(_) => artifact_path.to_path_buf(),
+    }
 }
 
 fn main() {
@@ -85,7 +106,8 @@ fn main() {
     let mut drifted: Vec<PathBuf> = Vec::new();
 
     for root in &roots {
-        for artifact in bundles_for_book(root) {
+        for mut artifact in bundles_for_book(root) {
+            artifact.path = bundle_destination(&artifact.path);
             bundles += 1;
             records += artifact.records;
             skipped += artifact.skipped.len();

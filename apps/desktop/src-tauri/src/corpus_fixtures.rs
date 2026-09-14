@@ -5,6 +5,15 @@
 //! copied verbatim, the same fixture-authoring convention as
 //! `tests/fixtures/rules_core/sd19_seam_crb_*.txt` — bundled as a Tauri
 //! resource (`resources/corpus_fixtures/`, see `tauri.conf.json`).
+//!
+//! SD-35 `AT-35-E6-005-SHIPPED-DATA`, operator ruling B17 (`decisions.md` §20):
+//! what ships here is CONVERTED data only. The `.lst` row text those records
+//! were produced from, and the ingest-format `data.raw_tokens` /
+//! `data.raw_bonus_chains` arrays, are converter INPUTS — kept
+//! (`decisions.md` §11), moved to `apps/desktop/src-tauri/fixtures_src/`, and
+//! not listed in `bundle.resources`, so no PCGen token text goes into the
+//! installer. Regenerate with `cargo run --locked --bin
+//! gen_desktop_fixture_corpus` then `--bin gen_settled_corpus`.
 //! This is enough to prove `compute_pilot_with_corpus` resolves real
 //! corpus data end-to-end in the live UI; it is not a general corpus
 //! provider. Exhaustive corpus coverage is out of scope here (see
@@ -26,16 +35,6 @@ use codex::rules_core::source_content::SourcePackageContent;
 use crate::authoring_workbench::resolve_package_path;
 
 const FIXTURE_RESOURCE_ROOT: &str = "resources/corpus_fixtures";
-/// The converter INPUTS that produced the shipped records. They are bundled
-/// beside the converted package so the provenance of every shipped record is
-/// one file away, and so `gen_desktop_fixture_corpus` can be re-run against
-/// exactly what shipped. Nothing in this crate parses them.
-const FIXTURE_SOURCES: &[&str] = &[
-    "spell_abjuration.txt",
-    "spell_illusion.txt",
-    "equip_longsword.txt",
-    "equip_chain_shirt.txt",
-];
 /// The CONVERTED records this crate actually reads, in the
 /// `<root>/spell/*.json` + `<root>/equipment/*.json` layout
 /// `rules_core::corpus_loader` reads the real corpus in.
@@ -91,7 +90,7 @@ mod tests {
     #[test]
     fn bundled_fixture_directory_resolves_and_contains_expected_files() {
         let dir = fixture_dir().expect("fixture dir must resolve in a source checkout");
-        for name in FIXTURE_SOURCES.iter().chain(CONVERTED_RECORDS.iter()) {
+        for name in CONVERTED_RECORDS.iter() {
             assert!(
                 dir.join(name).is_file(),
                 "expected bundled fixture '{name}' at {}",

@@ -20,7 +20,7 @@
   "source": {
     "kind": "desktop_ui_fixture",
     "line": 1,
-    "path": "apps/desktop/src-tauri/resources/corpus_fixtures/spell_abjuration.txt",
+    "path": "apps/desktop/src-tauri/fixtures_src/spell_abjuration.txt",
     "record_key": "Alarm"
   }
 }

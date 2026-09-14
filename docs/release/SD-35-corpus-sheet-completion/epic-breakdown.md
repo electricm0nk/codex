@@ -534,6 +534,43 @@ gen_book_cache` exits 0; `python3 scripts/oracle_harness/run.py --help` exits 0;
 src/pcgen_import scripts/oracle_harness src/oracle_validation` shows moves and additions,
 **zero net deletions of function bodies** (a moved file is not a deleted one).
 
+### AT-35-E6-005-SHIPPED-DATA — ruling B17: the gate measures shipped DATA too, and the shipped data is cleaned
+
+**Operator ruling B17, 2026-09-13 (`decisions.md` §20).** `AT-35-E6-004`'s gate scans Rust and
+TypeScript source, so PCGen token text inside a **shipped data file** is structurally invisible to
+it. `AT-35-E7-001`'s final-acceptance scan found exactly that: raw `.lst` rows and
+`data.raw_tokens` arrays inside `apps/desktop/src-tauri/resources/corpus_fixtures/`, every one of
+them a `bundle.resources` entry that goes into the installer and onto a user's disk, while the gate
+printed `root apps/desktop files=0 hits=0`. **Fix the instrument first, then clean the data.** A
+green gate that does not measure what actually ships is a false green, and SD-35 does not close on
+one.
+
+**Step 1 — extend the gate.** A second file class: every file that SHIPS, **derived** from
+`bundle.resources` in `apps/desktop/src-tauri/tauri.conf.json` (never a hard-coded path list — that
+would reproduce the blind spot), directory entries walked recursively, scanned whole for the PCGen
+vocabulary plus `"raw_tokens"` / `"raw_bonus_chains"` as JSON keys, folded into `live_files=` /
+`live_hits=`. The jump this causes is an **instrument correction**, never netted against the
+cleanup. Rulings B14 and B15 are unchanged and must still hold.
+
+**Step 2 — clean the shipped data.** A **MOVE, not a deletion**: `decisions.md` §11 keeps the
+converter, its parser and its **inputs** for Starfinder — a converter input is kept, it is not
+shipped. Prove what reads each file before touching it; strip the token arrays from what ships or
+take the file out of `bundle.resources`. **The desktop demo must still load its four records.**
+Never delete a fixture the desktop needs, weaken a pattern, or drop a resource entry to move the
+number.
+
+**Evidence:** `python3 scripts/pcgen_residue_gate.py --check --closure` reads
+`shipped_data_files=0 shipped_data_hits=0 live_files=0 live_hits=0 verdict=PASS` with the
+shipped-data class ACTIVE; an **independent grep** of every file under `bundle.resources` for the
+PCGen vocabulary returns nothing; RED→GREEN pinned in
+`scripts/tests/test_pcgen_residue_gate.py::TestShippedDataIsScanned` (a token in a shipped data
+file fails; the same file out of `bundle.resources` passes; a token in an UNSHIPPED data file under
+the same root passes) with `TestCommentAwareness`, `TestCfgTestRegionsAreNotLiveCode` and
+`TestRuntimeConverterImportsAreCounted` re-run green; `gen_desktop_fixture_corpus --check` and
+`gen_settled_corpus --check` both `PASS`; the desktop crate suite green, including
+`corpus_fixture_bundle_has_two_spells_and_two_equipment_records`; and **zero net deletions of
+function bodies** under `src/pcgen_import`, `scripts/oracle_harness` and `src/oracle_validation`.
+
 ---
 
 ## Epic 7 — Closure epilogue

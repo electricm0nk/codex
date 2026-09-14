@@ -636,3 +636,73 @@ Every one of the 58 is named — file, line, mechanism and why it is still there
 `docs/release/SD-35-corpus-sheet-completion/artifacts/epic-6-pcgen-exit/AT-35-E6-003-RULED_cycle1_runtime_import_census.py`.
 `AT-35-E6-004`'s `--check --closure` bar is unchanged and now measures what ships: zero, across all
 five live roots including `apps/desktop`.
+
+## §20 — Operator ruling B17, 2026-09-13: the gate measures shipped DATA too, and the shipped data is cleaned
+
+**Ruled: MEASURE IT, THEN CLEAN IT.** The residue gate scans Rust and TypeScript source. PCGen
+token text sitting inside a **shipped data file** is structurally invisible to it, and that is
+where the last of the residue was: raw `.lst` rows and `data.raw_tokens` arrays inside
+`apps/desktop/src-tauri/resources/corpus_fixtures/`, every one of them a `bundle.resources`
+entry that goes into the installer and onto a user's disk.
+
+**What forced the ruling.** `AT-35-E7-001`'s final-acceptance scan. The gate reported
+`root apps/desktop files=0 hits=0` — truthfully, and uselessly; `acceptance-and-verification.md`
+§3a's independent grep caught what it could not see. This is `AGENTS.md` rule 7 and
+`validate-proxies-against-known-truth` one layer out from `§19`/B16: a proxy still making a
+confident claim in a region it was never tested on. **A green gate that does not measure what
+actually ships is a false green, and SD-35 does not close on one.**
+
+**The census, re-derived at `fdc90243f4`** by
+`python3 scripts/pcgen_residue_gate.py --check --closure --list-files` after the instrument was
+extended — **six** files, not the five the dispatch named (`equip_longsword.txt` was missed):
+
+```
+shipped_data_files=6 shipped_data_hits=30 shipped_scanned=15
+  resources/corpus_fixtures/spell_abjuration.txt        raw .lst row
+  resources/corpus_fixtures/spell_illusion.txt          raw .lst row
+  resources/corpus_fixtures/equip_longsword.txt         raw .lst row
+  resources/corpus_fixtures/equip_chain_shirt.txt       raw .lst row
+  resources/corpus_fixtures/equipment/equip_longsword.json    data.raw_tokens / raw_bonus_chains
+  resources/corpus_fixtures/equipment/equip_chain_shirt.json  data.raw_tokens / raw_bonus_chains
+```
+
+**The instrument, first.** `scripts/pcgen_residue_gate.py` gains a second file class: every file
+that ships, **derived** from each manifest in `DATA_MANIFESTS` (`bundle.resources` in
+`apps/desktop/src-tauri/tauri.conf.json`), directory entries walked recursively the way the
+bundler copies them. The set is derived and never hard-coded — a hard-coded list would reproduce
+the very blind spot this closes, and a resource entry added next month is covered with no edit.
+Data files are scanned **whole** (there is no code/comment split in a `.lst` row), for the
+identifier and token-syntax vocabulary plus `"raw_tokens"` / `"raw_bonus_chains"` as JSON keys.
+`shipped_data_files=` / `shipped_data_hits=` print on their own line and fold into
+`live_files=` / `live_hits=`, so `--check --closure` measures what ships. Pinned RED→GREEN by
+`scripts/tests/test_pcgen_residue_gate.py::TestShippedDataIsScanned`, which also re-pins that B14
+and B15 are unchanged.
+
+**The 0 → 6 files / 0 → 30 hits jump is an INSTRUMENT CORRECTION**
+(`instrument-correction-is-not-closure`), not a regression: the defect was always there and the
+gate could not say so. **It is never netted against the cleanup that follows it.**
+
+**The data, second.** This is a **MOVE, not a deletion** — `§11` keeps the converter, its parser
+and its **inputs**, for Starfinder. A converter input is kept; it is not shipped. So the four
+`.txt` `.lst` rows and the two ingest-format `data.raw_tokens` equipment records moved out of
+`bundle.resources` to `apps/desktop/src-tauri/fixtures_src/`, and the installer now carries only
+converted records:
+
+- `src/bin/gen_desktop_fixture_corpus.rs` reads `fixtures_src/`, writes the Shape B v1 ingest
+  records back to `fixtures_src/equipment/` (converter input) and the converted records to
+  `resources/corpus_fixtures/spell|equipment/` (shipped, no token array).
+- `src/bin/gen_settled_corpus.rs` reads the fixture book at `fixtures_src/` and lands its bundle
+  at `resources/corpus_fixtures/_settled/equipment.json`, which is where the live loader reads
+  every equipment **value**; the shipped `equipment/*.json` supplies the bundle **key** only, and
+  therefore needs no token array at all.
+- `apps/desktop/src-tauri/src/corpus_fixtures.rs` drops `FIXTURE_SOURCES`: nothing in the
+  shipping crate ever parsed those `.txt` files, and they are no longer beside the records.
+
+**Nothing was deleted, no pattern was weakened, no resource entry was dropped, and the desktop
+demo still loads its four records.** The count reaches zero because the PCGen text is gone from
+what ships.
+
+**Enforced by:** `python3 scripts/pcgen_residue_gate.py --check --closure` (`shipped_data_files=0
+shipped_data_hits=0 shipped_scanned=11 live_files=0 live_hits=0 verdict=PASS`); the independent
+grep of every file under `bundle.resources`; `gen_desktop_fixture_corpus --check` and
+`gen_settled_corpus --check` for the regeneration contract.

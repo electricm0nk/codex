@@ -19,40 +19,56 @@
 //! that package is produced at build time and read as data."* This binary is
 //! that producer.
 //!
-//! The `.txt` fixtures stay exactly where they are — they are this tool's
-//! **input**, and `decisions.md` §11 keeps the converter, the parser and their
-//! inputs. What changes is that the conversion happens here, once, at authoring
-//! time, and the desktop ships the **converted** records.
+//! The `.txt` fixtures are this tool's **input**, and `decisions.md` §11 keeps
+//! the converter, the parser and their inputs. What changes is that the
+//! conversion happens here, once, at authoring time, and the desktop ships the
+//! **converted** records.
 //!
-//! ## What it writes
+//! ## Where the inputs live — SD-35 `AT-35-E6-005-SHIPPED-DATA`, ruling B17
 //!
-//! One `BookCorpusRoot`-shaped tree beside the fixtures themselves, so the live
-//! side reads it with the same two loaders it already uses for the real corpus
-//! and needs no fixture-specific loader at all:
+//! They used to sit inside `resources/corpus_fixtures/`, which is a
+//! `bundle.resources` entry: every raw `.lst` row and every `data.raw_tokens`
+//! array went into the installer and onto a user's disk. `decisions.md` §11
+//! keeps a converter input; it does not ship one. So the inputs moved one
+//! directory out, to `apps/desktop/src-tauri/fixtures_src/`, which nothing
+//! bundles — a move, not a deletion.
+//!
+//! ## What it reads and what it writes
 //!
 //! ```text
-//! apps/desktop/src-tauri/resources/corpus_fixtures/
-//!   spell_abjuration.txt          <- converter input, kept
-//!   equip_longsword.txt           <- converter input, kept
-//!   spell/spell_abjuration.json   <- converted, shipped, read as data
-//!   equipment/equip_longsword.json
+//! apps/desktop/src-tauri/fixtures_src/                  <- INPUT, never shipped
+//!   spell_abjuration.txt                                   converter input
+//!   equip_longsword.txt                                    converter input
+//!   equipment/equip_longsword.json                         Shape B v1, written here
+//!
+//! apps/desktop/src-tauri/resources/corpus_fixtures/     <- SHIPPED
+//!   spell/spell_abjuration.json                            converted, read as data
+//!   equipment/equip_longsword.json                         converted, no token arrays
+//!   _settled/equipment.json                                gen_settled_corpus writes this
 //! ```
 //!
 //! SD-35 `AT-35-E6-003-RULED` cycle 15: `corpus_loader::load_equipment_corpus`
 //! reads a book's settled-record bundle now, so this fixture root needs one
 //! too. It is produced by `src/bin/gen_settled_corpus.rs`, which treats
-//! `corpus_fixtures/` as a `BookCorpusRoot` like any other and writes
-//! `corpus_fixtures/_settled/equipment.json` beside the records below. **Run
+//! `fixtures_src/` as a `BookCorpusRoot` like any other, reads the Shape B v1
+//! records this tool writes there, and lands the bundle at
+//! `resources/corpus_fixtures/_settled/equipment.json`. **Run
 //! `gen_settled_corpus` after this tool whenever a fixture record changes**;
 //! `gen_settled_corpus --check` fails loudly if you forget.
 //!
-//! The equipment records are written in the same Shape B v1 `data.raw_tokens` /
-//! `data.raw_bonus_chains` form the real `data/corpus/<book>/equipment/*.json`
-//! records carry, because that is what `corpus_loader::load_equipment_corpus`
-//! reads. The spell records are written as **converted** fields only — `key`,
-//! `school`, `description` and the rest of the settled field set — with no
-//! token array at all, because `corpus_loader::load_spell_corpus` has read
-//! converted spell fields since cycle 8.
+//! The equipment records are written **twice**, because the ingest form and the
+//! shipped form are now two different things. The `fixtures_src/equipment/`
+//! copy is Shape B v1 — the same `data.raw_tokens` / `data.raw_bonus_chains`
+//! form the real `data/corpus/<book>/equipment/*.json` records carry — because
+//! that is what `corpus_settled_bundle` converts from. The shipped copy carries
+//! the settled identity fields only: `corpus_loader::load_equipment_corpus`
+//! reads the record's **values** out of `_settled/equipment.json` and uses the
+//! file under `equipment/` for its key alone, so no token array has any reader
+//! on the live side and none is written there. The spell records are written as
+//! **converted** fields only — `key`, `school`, `description` and the rest of
+//! the settled field set — with no token array at all, because
+//! `corpus_loader::load_spell_corpus` has read converted spell fields since
+//! cycle 8.
 //!
 //! ## Determinism
 //!
@@ -75,7 +91,11 @@ use codex::pcgen_import::lst_parser::equipment::{parse_equipment_entries, Equipm
 use codex::pcgen_import::lst_parser::spell::{parse_lst_spell_row, LstSpellRecord};
 use serde_json::{json, Value};
 
-const FIXTURE_ROOT: &str = "apps/desktop/src-tauri/resources/corpus_fixtures";
+/// The converter INPUTS. Outside `bundle.resources` since ruling B17: a
+/// converter input is kept (`decisions.md` §11) and is not a shipped file.
+const FIXTURE_SRC_ROOT: &str = "apps/desktop/src-tauri/fixtures_src";
+/// What the installer carries.
+const FIXTURE_SHIP_ROOT: &str = "apps/desktop/src-tauri/resources/corpus_fixtures";
 const SPELL_FIXTURES: &[&str] = &["spell_abjuration.txt", "spell_illusion.txt"];
 const EQUIPMENT_FIXTURES: &[&str] = &["equip_longsword.txt", "equip_chain_shirt.txt"];
 
@@ -126,7 +146,7 @@ fn spell_document(label: &str, record: &LstSpellRecord) -> Value {
         "data": Value::Object(data),
         "source": {
             "kind": "desktop_ui_fixture",
-            "path": format!("{FIXTURE_ROOT}/{label}"),
+            "path": format!("{FIXTURE_SRC_ROOT}/{label}"),
             "line": record.line_number,
             "record_key": record.name,
         },
@@ -134,7 +154,8 @@ fn spell_document(label: &str, record: &LstSpellRecord) -> Value {
     })
 }
 
-/// The equipment document for one parsed record.
+/// The equipment document the CONVERTER reads — the ingest form, written to
+/// `fixtures_src/equipment/` and never shipped (ruling B17).
 ///
 /// Shape B v1, the same form `enrich_equipment_raw_tokens.rs` writes onto the
 /// real corpus: `raw_tokens` carries the record's `KEY:VAL` pairs with the
@@ -190,7 +211,7 @@ fn equipment_document(label: &str, record: &EquipmentRecord) -> Value {
         "data": Value::Object(data),
         "source": {
             "kind": "desktop_ui_fixture",
-            "path": format!("{FIXTURE_ROOT}/{label}"),
+            "path": format!("{FIXTURE_SRC_ROOT}/{label}"),
             "line": record.header_line_number,
             "record_key": key,
         },
@@ -198,35 +219,55 @@ fn equipment_document(label: &str, record: &EquipmentRecord) -> Value {
     })
 }
 
+/// The equipment document that SHIPS.
+///
+/// SD-35 `AT-35-E6-005-SHIPPED-DATA`, ruling B17. The live loader
+/// (`corpus_loader::load_equipment_corpus`) enumerates `equipment/*.json` for
+/// the record's bundle KEY and reads every value out of
+/// `_settled/equipment.json`; it never opens `data` here. So this document
+/// carries the record's settled identity — the same three fields the row
+/// states in plain words — and no token array, because a token array shipped
+/// on a user's disk with no reader is exactly the residue B17 was ruled on.
+fn shipped_equipment_document(label: &str, record: &EquipmentRecord) -> Value {
+    let mut ingest = equipment_document(label, record);
+    let data = ingest
+        .get_mut("data")
+        .and_then(Value::as_object_mut)
+        .expect("equipment_document always writes a `data` object");
+    data.remove("raw_tokens");
+    data.remove("raw_bonus_chains");
+    ingest
+}
+
 struct Generated {
     path: PathBuf,
     text: String,
 }
 
-fn generate(root: &Path) -> Result<Vec<Generated>, String> {
+fn generate(src_root: &Path, ship_root: &Path) -> Result<Vec<Generated>, String> {
     let mut out = Vec::new();
 
     for label in SPELL_FIXTURES {
-        let text = fs::read_to_string(root.join(label))
+        let text = fs::read_to_string(src_root.join(label))
             .map_err(|err| format!("could not read fixture '{label}': {err}"))?;
         let line = record_line(&text)
             .ok_or_else(|| format!("spell fixture '{label}' has no record line"))?;
-        let parsed = parse_lst_spell_row(format!("{FIXTURE_ROOT}/{label}"), 1, line);
+        let parsed = parse_lst_spell_row(format!("{FIXTURE_SRC_ROOT}/{label}"), 1, line);
         let record = parsed
             .record
             .ok_or_else(|| format!("spell fixture '{label}' failed to parse: {line}"))?;
         out.push(Generated {
-            path: root.join("spell").join(format!("{}.json", label.trim_end_matches(".txt"))),
+            path: ship_root.join("spell").join(format!("{}.json", label.trim_end_matches(".txt"))),
             text: render(&spell_document(label, &record)),
         });
     }
 
     for label in EQUIPMENT_FIXTURES {
-        let text = fs::read_to_string(root.join(label))
+        let text = fs::read_to_string(src_root.join(label))
             .map_err(|err| format!("could not read fixture '{label}': {err}"))?;
         let line = record_line(&text)
             .ok_or_else(|| format!("equipment fixture '{label}' has no record line"))?;
-        let result = parse_equipment_entries(&format!("{FIXTURE_ROOT}/{label}"), line);
+        let result = parse_equipment_entries(&format!("{FIXTURE_SRC_ROOT}/{label}"), line);
         let entry = result
             .entries
             .first()
@@ -237,9 +278,16 @@ fn generate(root: &Path) -> Result<Vec<Generated>, String> {
                 result.entries.len()
             ));
         }
+        let name = format!("{}.json", label.trim_end_matches(".txt"));
+        // The converter's input, beside the `.txt` it came from and outside
+        // `bundle.resources`; then the shipped record, token arrays removed.
         out.push(Generated {
-            path: root.join("equipment").join(format!("{}.json", label.trim_end_matches(".txt"))),
+            path: src_root.join("equipment").join(&name),
             text: render(&equipment_document(label, entry)),
+        });
+        out.push(Generated {
+            path: ship_root.join("equipment").join(&name),
+            text: render(&shipped_equipment_document(label, entry)),
         });
     }
 
@@ -254,13 +302,14 @@ fn render(value: &Value) -> String {
 
 fn main() {
     let check = std::env::args().any(|arg| arg == "--check");
-    let root = Path::new(FIXTURE_ROOT);
-    if !root.is_dir() {
-        eprintln!("gen_desktop_fixture_corpus: {FIXTURE_ROOT} is not a directory (run from the repo root)");
+    let src_root = Path::new(FIXTURE_SRC_ROOT);
+    let ship_root = Path::new(FIXTURE_SHIP_ROOT);
+    if !src_root.is_dir() {
+        eprintln!("gen_desktop_fixture_corpus: {FIXTURE_SRC_ROOT} is not a directory (run from the repo root)");
         std::process::exit(1);
     }
 
-    let generated = match generate(root) {
+    let generated = match generate(src_root, ship_root) {
         Ok(generated) => generated,
         Err(err) => {
             eprintln!("gen_desktop_fixture_corpus: {err}");

@@ -492,6 +492,140 @@ class TestRuntimeConverterImportsAreCounted(_TreeCase):
         self.assertIn("pcgen_import", prg.PATTERNS)
 
 
+class TestShippedDataIsScanned(_TreeCase):
+    """Operator ruling B17, 2026-09-13 (`decisions.md` §20): the gate measures
+    shipped DATA too.
+
+    `AT-35-E7-001`'s final-acceptance scan found PCGen token text inside files
+    that go into the installer and onto a user's disk. The gate scanned Rust
+    source only, so it printed `root apps/desktop files=0 hits=0` -- truthfully,
+    and uselessly. A green gate that does not measure what actually ships is a
+    false green.
+
+    The shipped set is DERIVED from `tauri.conf.json`'s `bundle.resources`, never
+    hard-coded: a hard-coded list would reproduce the very blind spot this ruling
+    closes, and a future resource entry has to be covered automatically.
+    """
+
+    def _manifest(self, entries):
+        _write(
+            self.root,
+            "apps/desktop/src-tauri/tauri.conf.json",
+            '{"bundle": {"resources": %s}}\n' % repr(entries).replace("'", '"'),
+        )
+
+    def test_a_token_in_a_shipped_data_file_is_a_hit(self):
+        self._manifest(["resources/fixtures/"])
+        _write(self.root, "apps/desktop/src-tauri/resources/fixtures/equip.txt",
+               "Chain Shirt\tKEY:Chain Shirt\tBONUS:COMBAT|AC|4|TYPE=Armor\n")
+        res = prg.scan(self.root)
+        self.assertEqual(res.shipped_data_files, 1)
+        # `BONUS:` and `TYPE=` -- the `.lst` row's two vocabulary hits.
+        self.assertEqual(res.shipped_data_hits, 2)
+        self.assertEqual(res.data_hits_by_pattern["BONUS:"], 1)
+        self.assertEqual(res.data_hits_by_pattern["TYPE="], 1)
+        self.assertIn(
+            "apps/desktop/src-tauri/resources/fixtures/equip.txt", res.shipped_data_file_list
+        )
+        # And it reaches the totals the closure bar reads.
+        self.assertGreaterEqual(res.live_files, 2)
+
+    def test_the_same_file_not_in_bundle_resources_is_not_a_hit(self):
+        self._manifest(["resources/other/"])
+        _write(self.root, "apps/desktop/src-tauri/resources/fixtures/equip.txt",
+               "Chain Shirt\tKEY:Chain Shirt\tBONUS:COMBAT|AC|4|TYPE=Armor\n")
+        res = prg.scan(self.root)
+        self.assertEqual(res.shipped_data_files, 0)
+        self.assertEqual(res.shipped_data_hits, 0)
+
+    def test_an_unshipped_data_file_under_a_live_root_passes(self):
+        # `apps/desktop/src/fixture.json` (from setUp) carries `raw_tokens` and
+        # `BONUS:` and is under a live root, but nothing bundles it.
+        self._manifest(["resources/fixtures/"])
+        _write(self.root, "apps/desktop/src-tauri/resources/fixtures/clean.json",
+               '{"key": "Chain Shirt", "armor_class_bonus": 4}\n')
+        res = prg.scan(self.root)
+        self.assertEqual(res.shipped_data_files, 0)
+        self.assertEqual(res.shipped_data_hits, 0)
+
+    def test_raw_tokens_and_raw_bonus_chains_count_as_json_keys(self):
+        self._manifest(["resources/fixtures/equip.json"])
+        _write(self.root, "apps/desktop/src-tauri/resources/fixtures/equip.json",
+               '{"data": {"raw_tokens": [], "raw_bonus_chains": []}}\n')
+        res = prg.scan(self.root)
+        self.assertEqual(res.shipped_data_files, 1)
+        self.assertGreaterEqual(
+            res.data_hits_by_pattern['"raw_tokens" (JSON key)'], 1
+        )
+        self.assertGreaterEqual(
+            res.data_hits_by_pattern['"raw_bonus_chains" (JSON key)'], 1
+        )
+
+    def test_a_directory_entry_is_walked_recursively(self):
+        # Tauri copies a directory resource whole; a nested file ships too.
+        self._manifest(["resources/fixtures/"])
+        _write(self.root, "apps/desktop/src-tauri/resources/fixtures/deep/nested/equip.txt",
+               "BONUS:COMBAT|AC|4\n")
+        res = prg.scan(self.root)
+        self.assertEqual(res.shipped_data_files, 1)
+
+    def test_a_new_resource_entry_is_covered_without_editing_the_gate(self):
+        # The blind spot this ruling closes: the set is derived, not listed.
+        self._manifest(["resources/fixtures/", "resources/brand_new/"])
+        _write(self.root, "apps/desktop/src-tauri/resources/brand_new/rules.lst",
+               "Alarm\tSCHOOL:Abjuration\tDESC:A ward.\n")
+        res = prg.scan(self.root)
+        self.assertEqual(res.shipped_data_files, 1)
+
+    def test_closure_fails_on_shipped_data_alone_and_passes_once_cleaned(self):
+        # RED -> GREEN, executed: shipping token text fails the closure bar even
+        # with every source file clean; removing the token text passes it.
+        os.remove(os.path.join(self.root, "src/rules_core/reader.rs"))
+        self._manifest(["resources/fixtures/"])
+        planted = "apps/desktop/src-tauri/resources/fixtures/equip.txt"
+        _write(self.root, planted, "Chain Shirt\tBONUS:COMBAT|AC|4|TYPE=Armor\n")
+        code, out = _run(["--check", "--closure", "--root", self.root,
+                          "--baseline", self.baseline])
+        self.assertEqual(code, 1)
+        self.assertIn("verdict=FAIL", _last_line(out))
+
+        _write(self.root, planted, "Chain Shirt\tarmor_class_bonus 4\n")
+        code, out = _run(["--check", "--closure", "--root", self.root,
+                          "--baseline", self.baseline])
+        self.assertEqual(code, 0)
+        self.assertIn("live_files=0 live_hits=0 verdict=PASS", _last_line(out))
+
+    def test_check_prints_the_shipped_data_rows(self):
+        self._manifest(["resources/fixtures/"])
+        _write(self.root, "apps/desktop/src-tauri/resources/fixtures/equip.txt",
+               "BONUS:COMBAT|AC|4\n")
+        _run(["--rebaseline", "--root", self.root, "--baseline", self.baseline])
+        code, out = _run(["--check", "--root", self.root, "--baseline", self.baseline])
+        self.assertEqual(code, 0)
+        self.assertIn("shipped_data_files=1", out)
+        self.assertRegex(out, r"data pattern BONUS: files=1 hits=1")
+
+    def test_the_source_class_is_not_double_counted_when_it_also_ships(self):
+        # A `.ts`/`.rs` file inside a resource dir is already scanned by the
+        # source class; it must not be counted twice.
+        self._manifest(["resources/fixtures/"])
+        _write(self.root, "apps/desktop/src-tauri/resources/fixtures/helper.ts",
+               "const t = rec.raw_tokens;\n")
+        res = prg.scan(self.root)
+        self.assertEqual(res.shipped_data_files, 0)
+        self.assertEqual(res.hits_by_pattern["raw_tokens"], 2)
+
+    def test_b14_and_b15_still_hold_for_source_files(self):
+        # The shipped-data class is additive: the source-side rulings are
+        # unchanged.
+        self._manifest(["resources/fixtures/"])
+        _write(self.root, "src/rules_core/prose.rs",
+               "// provenance: BONUS:COMBAT|AC|4 raw_tokens\n"
+               "#[cfg(test)]\nmod tests {\n    const T: &str = \"raw_tokens\";\n}\n")
+        res = prg.scan(self.root)
+        self.assertNotIn("src/rules_core/prose.rs", res.files)
+
+
 class TestLiveRootsAreTheDesignBoundary(unittest.TestCase):
     """`technical-design.md §0`'s path table, pinned so a quiet widening of
     the allow-list (`acceptance-and-verification.md §3a`) fails here."""

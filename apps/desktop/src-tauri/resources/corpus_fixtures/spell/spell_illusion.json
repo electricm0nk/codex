@@ -22,7 +22,7 @@
   "source": {
     "kind": "desktop_ui_fixture",
     "line": 1,
-    "path": "apps/desktop/src-tauri/resources/corpus_fixtures/spell_illusion.txt",
+    "path": "apps/desktop/src-tauri/fixtures_src/spell_illusion.txt",
     "record_key": "Blur"
   }
 }

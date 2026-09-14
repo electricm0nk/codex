@@ -117,9 +117,44 @@ this gate introduced. It is deliberately kept out of the `identifier_*`
 subset, which remains the authoring-time "78 files" population. Pinned by
 `scripts/tests/test_pcgen_residue_gate.py::TestRuntimeConverterImportsAreCounted`.
 
+Shipped DATA counts too -- operator ruling B17, 2026-09-13
+-----------------------------------------------------------
+Every rule above is about source code. `AT-35-E7-001`'s final-acceptance scan
+found what that can structurally never see: PCGen token text inside files that
+go into the installer and onto a user's disk. This gate scanned `.rs`/`.ts`
+and printed `root apps/desktop files=0 hits=0` -- truthfully, and uselessly --
+while six files under
+`apps/desktop/src-tauri/resources/corpus_fixtures/` shipped raw `.lst` rows and
+`data.raw_tokens` arrays. A green gate that does not measure what actually
+ships is a false green (`validate-proxies-against-known-truth`, `AGENTS.md`
+rule 7 -- the same failure shape as B16, one layer out).
+
+The ruling: fix the instrument first, then clean the data. A second file class
+is scanned -- every file that SHIPS, derived from the Tauri bundle manifest
+(`apps/desktop/src-tauri/tauri.conf.json`, `bundle.resources`), with directory
+entries walked recursively the way the bundler copies them. The set is
+DERIVED, never a hard-coded path list: a list would reproduce the very blind
+spot this closes, and a resource entry added tomorrow has to be covered with
+no edit here. Data files are scanned WHOLE -- there is no code/comment split in
+a `.lst` row or a JSON document -- for the identifier and token-syntax
+vocabulary above, plus `"raw_tokens"` and `"raw_bonus_chains"` as JSON keys.
+A shipped file that is also a live source file is counted once, by the source
+class.
+
+`shipped_data_files=` / `shipped_data_hits=` are reported on their own line and
+folded into `live_files=` / `live_hits=`, so `--check --closure` measures what
+ships. The count RISES when this class is added; that rise is an INSTRUMENT
+CORRECTION of a defect that was always there, never a regression, and it is
+never netted against the cleanup that follows it. Pinned RED->GREEN by
+`scripts/tests/test_pcgen_residue_gate.py::TestShippedDataIsScanned`, which
+also pins that B14 and B15 are unchanged.
+
 The tool side -- `src/pcgen_import/**`, `src/bin/**`, `src/oracle_validation/**`,
 `scripts/**`, `tests/**` -- is never scanned. It is KEPT for Starfinder
-(`decisions.md` §11); a cycle that deletes it is a defect, not a win.
+(`decisions.md` §11); a cycle that deletes it is a defect, not a win. So are
+the converter INPUTS the desktop fixtures are produced from: they live at
+`apps/desktop/src-tauri/fixtures_src/`, outside `bundle.resources`, because a
+converter input is not a shipped file.
 
 Modes
 -----
@@ -142,6 +177,8 @@ synthetic tree; the defaults are the repository this file lives in.
 
 import argparse
 import datetime as _dt
+import glob
+import json
 import os
 import re
 import subprocess
@@ -204,6 +241,24 @@ RUNTIME_IMPORT_PATTERNS = {
 PATTERNS = {**IDENTIFIER_PATTERNS, **TOKEN_SYNTAX_PATTERNS, **RUNTIME_IMPORT_PATTERNS}
 _COMPILED = {name: re.compile(rx) for name, rx in PATTERNS.items()}
 
+# --- the shipped-data class (operator ruling B17, 2026-09-13) --------------
+# The bundle manifests whose resource lists define "what ships". Adding a
+# second installer means adding its manifest here; a resource ENTRY never
+# needs an edit, which is the whole point (the set is derived, not listed).
+DATA_MANIFESTS = ("apps/desktop/src-tauri/tauri.conf.json",)
+# `raw_tokens` / `raw_bonus_chains` already have word patterns above, which fire
+# on a JSON key too. These name the key form explicitly so a census can say
+# "this is an ingest-format document", not merely "this text occurs".
+JSON_KEY_PATTERNS = {
+    '"raw_tokens" (JSON key)': r'"raw_tokens"\s*:',
+    '"raw_bonus_chains" (JSON key)': r'"raw_bonus_chains"\s*:',
+}
+DATA_PATTERNS = {**IDENTIFIER_PATTERNS, **TOKEN_SYNTAX_PATTERNS, **JSON_KEY_PATTERNS}
+_DATA_COMPILED = {name: re.compile(rx) for name, rx in DATA_PATTERNS.items()}
+# A shipped asset larger than this is not a rules document; reading it whole to
+# regex it would be the gate's own performance bug.
+MAX_DATA_FILE_BYTES = 8 * 1024 * 1024
+
 # `#[cfg(test)]`, with the whitespace rustfmt permits inside the attribute.
 _CFG_TEST_ATTR = re.compile(r"^\s*#!?\[\s*cfg\(\s*test\s*\)\s*\]")
 
@@ -225,6 +280,14 @@ class ScanResult:
     hits_by_pattern: dict = field(default_factory=dict)
     files_by_root: dict = field(default_factory=dict)
     hits_by_root: dict = field(default_factory=dict)
+    # Ruling B17: the shipped-data class, reported on its own line and folded
+    # into live_files/live_hits.
+    shipped_data_files: int = 0
+    shipped_data_hits: int = 0
+    shipped_scanned: int = 0
+    shipped_data_file_list: list = field(default_factory=list)
+    data_files_by_pattern: dict = field(default_factory=dict)
+    data_hits_by_pattern: dict = field(default_factory=dict)
 
 
 def _iter_live_source_files(root):
@@ -391,6 +454,94 @@ def _live_lines(text):
     ]
 
 
+def shipped_resource_files(root):
+    """Every file that goes into an installer, DERIVED from the bundle manifests.
+
+    Operator ruling B17 (2026-09-13). The set comes from `bundle.resources` in
+    each manifest in `DATA_MANIFESTS`, resolved relative to that manifest's own
+    directory -- never from a hard-coded path list, because a list is exactly
+    the blind spot this class closes: a resource entry added next month must be
+    covered with no edit to this file.
+
+    A directory entry is walked RECURSIVELY, which is what the Tauri bundler
+    does with a directory resource; a glob entry is expanded; a file entry is
+    taken as itself. Returns repo-relative paths, sorted and de-duplicated
+    (the manifest may list a directory and its children both).
+    """
+    found = set()
+    for manifest_rel in DATA_MANIFESTS:
+        manifest = os.path.join(root, manifest_rel)
+        if not os.path.isfile(manifest):
+            continue
+        try:
+            with open(manifest, encoding="utf-8") as fh:
+                conf = json.load(fh)
+        except (OSError, ValueError):
+            continue
+        base = os.path.dirname(manifest)
+        bundle = conf.get("bundle") or {}
+        entries = bundle.get("resources") or []
+        # Tauri accepts either a list of paths or a {source: target} map.
+        if isinstance(entries, dict):
+            entries = list(entries.keys())
+        if not isinstance(entries, list):
+            continue
+        for entry in entries:
+            if not isinstance(entry, str):
+                continue
+            pattern = os.path.join(base, entry)
+            matches = glob.glob(pattern) if glob.has_magic(pattern) else [pattern]
+            for match in matches:
+                if os.path.isdir(match):
+                    for dirpath, dirnames, filenames in os.walk(match):
+                        dirnames[:] = sorted(
+                            d for d in dirnames if d not in EXCLUDED_DIR_NAMES
+                        )
+                        for name in filenames:
+                            found.add(os.path.join(dirpath, name))
+                elif os.path.isfile(match):
+                    found.add(match)
+    return sorted(
+        os.path.relpath(p, root).replace(os.sep, "/") for p in found
+    )
+
+
+def _scan_shipped_data(root, res, source_rels):
+    """Count the PCGen vocabulary in what ships (ruling B17).
+
+    Data is scanned WHOLE: there is no code/comment split in a `.lst` row or a
+    JSON document, so B14's and B15's source-side skips have nothing to apply
+    to here. A shipped file that is also a live source file was already scanned
+    by the source class and is skipped so it is never counted twice.
+    """
+    for rel in shipped_resource_files(root):
+        if rel in source_rels:
+            continue
+        abs_path = os.path.join(root, rel)
+        try:
+            if os.path.getsize(abs_path) > MAX_DATA_FILE_BYTES:
+                continue
+            with open(abs_path, "rb") as fh:
+                raw = fh.read()
+        except OSError:
+            continue
+        if b"\0" in raw:
+            continue  # a binary asset (icon, font); not a rules document
+        text = raw.decode("utf-8", errors="replace")
+        res.shipped_scanned += 1
+        file_hits = 0
+        for name, rx in _DATA_COMPILED.items():
+            n = len(rx.findall(text))
+            if n:
+                res.data_files_by_pattern[name] += 1
+                res.data_hits_by_pattern[name] += n
+                file_hits += n
+        if file_hits:
+            res.shipped_data_files += 1
+            res.shipped_data_hits += file_hits
+            res.shipped_data_file_list.append(rel)
+
+
 def scan(root):
     """Scan the live side under `root`; pure, no baseline involved."""
     res = ScanResult()
@@ -398,12 +549,16 @@ def scan(root):
     res.hits_by_pattern = {n: 0 for n in PATTERNS}
     res.files_by_root = {r: 0 for r in LIVE_ROOTS}
     res.hits_by_root = {r: 0 for r in LIVE_ROOTS}
+    res.data_files_by_pattern = {n: 0 for n in DATA_PATTERNS}
+    res.data_hits_by_pattern = {n: 0 for n in DATA_PATTERNS}
+    source_rels = set()
     for live_root, rel, abs_path in _iter_live_source_files(root):
         try:
             with open(abs_path, encoding="utf-8", errors="replace") as fh:
                 text = "\n".join(_live_lines(fh.read()))
         except OSError:
             continue
+        source_rels.add(rel)
         file_hits = 0
         ident_hits = 0
         for name, rx in _COMPILED.items():
@@ -423,6 +578,12 @@ def scan(root):
         if ident_hits:
             res.identifier_files += 1
             res.identifier_hits += ident_hits
+    # Ruling B17: the shipped-data class, folded into the totals the closure
+    # bar reads. An instrument correction when it first fires, never a
+    # regression and never netted against the cleanup it forces.
+    _scan_shipped_data(root, res, source_rels)
+    res.live_files += res.shipped_data_files
+    res.live_hits += res.shipped_data_hits
     return res
 
 
@@ -479,6 +640,10 @@ def write_baseline(path, res, root):
     for live_root in LIVE_ROOTS:
         lines.append(f"#   root {live_root} files={res.files_by_root[live_root]} hits={res.hits_by_root[live_root]}")
     lines.append(f"#   identifier_files={res.identifier_files} identifier_hits={res.identifier_hits}")
+    lines.append(
+        f"#   shipped_data_files={res.shipped_data_files} "
+        f"shipped_data_hits={res.shipped_data_hits} shipped_scanned={res.shipped_scanned}"
+    )
     lines += [
         f"{KEY_FILES}={res.live_files}",
         f"{KEY_HITS}={res.live_hits}",
@@ -497,6 +662,17 @@ def print_breakdown(res):
     for live_root in LIVE_ROOTS:
         print(f"root {live_root} files={res.files_by_root[live_root]} hits={res.hits_by_root[live_root]}")
     print(f"identifier_files={res.identifier_files} identifier_hits={res.identifier_hits}")
+    for name in DATA_PATTERNS:
+        if res.data_hits_by_pattern.get(name):
+            print(
+                f"data pattern {name} files={res.data_files_by_pattern[name]} "
+                f"hits={res.data_hits_by_pattern[name]}"
+            )
+    print(
+        f"shipped_data_files={res.shipped_data_files} "
+        f"shipped_data_hits={res.shipped_data_hits} "
+        f"shipped_scanned={res.shipped_scanned}"
+    )
 
 
 def run_check(root, baseline_path, closure=False, list_files=False):
