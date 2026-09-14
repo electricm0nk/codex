@@ -6,7 +6,7 @@ the role `THE-BOX.md` played for SD-33.
 `AT-34-E1-001` is the only criterion this cycle implements:
 
     python3 scripts/completion_atlas.py --check
-        -> population=49438 buckets=10 unclassified=0 overlap=0   (exit 0)
+        -> population=49450 buckets=10 unclassified=0 overlap=0   (exit 0)
 
 Every unit lands in exactly one of:
 

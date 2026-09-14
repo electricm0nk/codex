@@ -1,7 +1,7 @@
 {
   "available": true,
   "schema": 15,
-  "generated_at": "2026-09-09T06:23:53Z",
+  "generated_at": "2026-09-14T17:43:08Z",
   "source_document": "docs/work-inventory.json",
   "shard_base": "units/",
   "fields": [
@@ -12,8 +12,8 @@
     "source_file",
     "type_facet"
   ],
-  "total_units": 49438,
-  "proven_units": 16821,
+  "total_units": 49450,
+  "proven_units": 17061,
   "doneness_unmapped_seen": false,
   "pi_redacted_names": 1483,
   "category_labels_redacted": 4,
@@ -1428,16 +1428,16 @@
     },
     "class_feature": {
       "units": 18043,
-      "proven": 5155,
+      "proven": 5385,
       "by_status": {
-        "sheet-complete": 12856,
-        "text-complete": 4239,
+        "sheet-complete": 12626,
+        "text-complete": 4469,
         "grounded": 916,
         "oracle-agree": 26,
         "oracle-unverifiable": 6
       },
       "shard": "PF1e-units-class_feature.json",
-      "bytes": 2707553,
+      "bytes": 2707323,
       "doneness_unmapped": {},
       "categories": {
         "specialquality": {
@@ -8875,15 +8875,15 @@
       "category_axis_label": "Category"
     },
     "feat": {
-      "units": 2764,
-      "proven": 1691,
+      "units": 2774,
+      "proven": 1700,
       "by_status": {
-        "text-complete": 1583,
-        "sheet-complete": 1073,
+        "text-complete": 1592,
+        "sheet-complete": 1074,
         "grounded": 108
       },
       "shard": "PF1e-units-feat.json",
-      "bytes": 281678,
+      "bytes": 282694,
       "doneness_unmapped": {},
       "categories": {
         "general": {
@@ -8915,7 +8915,7 @@
         },
         "none": {
           "label": "Uncategorised",
-          "done": 249,
+          "done": 259,
           "held": 0,
           "in-progress": 0,
           "not-started": 0,
@@ -13080,17 +13080,17 @@
       "category_axis_label": "Category"
     },
     "spell": {
-      "units": 2843,
-      "proven": 386,
+      "units": 2845,
+      "proven": 387,
       "by_status": {
         "oracle-agree": 426,
         "oracle-unverifiable": 1079,
         "grounded": 176,
-        "sheet-complete": 952,
-        "text-complete": 210
+        "sheet-complete": 953,
+        "text-complete": 211
       },
       "shard": "PF1e-units-spell.json",
-      "bytes": 331503,
+      "bytes": 331721,
       "doneness_unmapped": {},
       "categories": {
         "arcane": {
@@ -13104,7 +13104,7 @@
         },
         "none": {
           "label": "Uncategorised",
-          "done": 991,
+          "done": 992,
           "held": 42,
           "in-progress": 4,
           "not-started": 0,
@@ -13113,7 +13113,7 @@
         },
         "divine": {
           "label": "Divine",
-          "done": 313,
+          "done": 314,
           "held": 65,
           "in-progress": 0,
           "not-started": 0,
@@ -13143,7 +13143,7 @@
         },
         "n/a": {
           "label": "n/a",
-          "done": 388,
+          "done": 390,
           "held": 108,
           "in-progress": 1,
           "not-started": 0,
@@ -13239,7 +13239,7 @@
           "no_location": 0,
           "file_not_found": 110,
           "line_out_of_range": 0,
-          "no_school_token": 387
+          "no_school_token": 389
         },
         "coverage_pct": 82.5,
         "multi_school_spell_count": 2,

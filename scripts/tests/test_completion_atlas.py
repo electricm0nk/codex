@@ -6,7 +6,7 @@ Proves the load-bearing claim the atlas exists to make: every unit in
 by `decisions.md §2`, with a real `unclassified` count computed from the
 data (never assumed zero) and `overlap` computed rather than hardcoded.
 
-Uses small synthetic inventory fixtures, not the live 49,438-unit corpus, so
+Uses small synthetic inventory fixtures, not the live 49,450-unit corpus, so
 these tests stay fast and are not subject to corpus drift across cycles
 (`test_box_ledger.py` sets the same precedent in this repo). The live
 corpus is exercised separately, as acceptance evidence, by running the

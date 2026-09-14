@@ -1,34 +1,34 @@
 {
-  "generated_at": "2026-09-14T01:15:03Z",
+  "generated_at": "2026-09-14T18:07:06Z",
   "doneness_values": [
     "done",
     "partial",
     "not-started"
   ],
   "overall": {
-    "done": 35970,
+    "done": 35982,
     "partial": 1910,
     "not_started": 0,
-    "denominator": 37880,
+    "denominator": 37892,
     "pct": 95.0,
     "excluded_from_percentage": 11558,
     "standing_breakdown": {
       "unclassified": 11558,
-      "origin": 37880
+      "origin": 37892
     }
   },
   "books": [
     {
       "id": "core_rulebook",
       "title": "Core Rulebook",
-      "done": 4950,
+      "done": 4952,
       "partial": 588,
       "not_started": 0,
-      "denominator": 5538,
+      "denominator": 5540,
       "pct": 89.4,
       "excluded_from_percentage": 1163,
       "standing_breakdown": {
-        "origin": 5538,
+        "origin": 5540,
         "unclassified": 1163
       }
     },
@@ -245,14 +245,14 @@
     {
       "id": "pathfinder_unchained",
       "title": "Pathfinder Unchained",
-      "done": 798,
+      "done": 807,
       "partial": 2,
       "not_started": 0,
-      "denominator": 800,
+      "denominator": 809,
       "pct": 99.8,
       "excluded_from_percentage": 432,
       "standing_breakdown": {
-        "origin": 800,
+        "origin": 809,
         "unclassified": 432
       }
     },

@@ -773,11 +773,25 @@ mod prerequisite_tests {
         // name stays reported rather than refused -- see `converted_gate::ROSTERED_POOLS`
         // and `a_class_feature_pool_holding_is_reported_not_refused` below for the measured
         // reason.
-        assert_eq!(eligible, 549, "a starting Fighter's real eligible-feat count");
+        // **549 -> 540 with SD-35 operator ruling B18** (`decisions.md §21`), and it is the
+        // SAME direction for the same reason: the nine `pathfinder_unchained` alignment-champion
+        // feats were catalog records with **no converted rule**, so they were offered with a
+        // "not verified" note; B18's widened `has_classifying_token` enumerated them, the
+        // converter produced their `applies`, and a level-1 Fighter is now correctly denied all
+        // nine on `PREALIGN:` (chaotic/lawful/neutral-specific) and `PREHD:MIN=10`. The catalog
+        // total is unchanged (`reports.len()` still 2227 above) because the catalog reads
+        // `data/corpus`, which B18 did not touch; what moved is how many of its records carry a
+        // gate that can actually be checked. `unconverted` below falls 21 -> 12 by the same nine.
+        assert_eq!(eligible, 540, "a starting Fighter's real eligible-feat count");
         // A catalog record `data/sheet_rules/` carries no converted rule for is a number to
         // report, never an exemption: it is still offered, with one "not verified" note.
+        // **21 -> 12 with SD-35 operator ruling B18** (`decisions.md §21`): the nine
+        // `pathfinder_unchained` alignment-champion feats now carry a converted rule, which is
+        // the whole point of the ruling. 21 - 9 = 12, and the nine are exactly the nine that
+        // left `eligible` above -- the two counts move by the same set, which is why they are
+        // asserted together rather than separately re-pinned.
         let unconverted = reports.iter().filter(|report| !report.converted).count();
-        assert_eq!(unconverted, 21, "catalog records with no converted rule");
+        assert_eq!(unconverted, 12, "catalog records with no converted rule");
 
         for report in reports.iter().filter(|report| !report.is_eligible) {
             let reason = report.unavailable_reason().unwrap_or_default();

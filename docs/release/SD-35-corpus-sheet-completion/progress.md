@@ -181,6 +181,62 @@ re-measured at the cut by the launch-readiness audit.
 
 ## Cycle log
 
+### 2026-09-14 — Epic 7 — AT-35-E7-000-POPULATION-FIX **cycle 1** — **operator ruling B18 executed: the shape filter stops dropping real rules, all 12 admitted units RENDER, and the headline figure is now 48,864 of 48,864 corpus records = 100%** — complete
+
+Receipt: `artifacts/epic-7-closure/AT-35-E7-000-POPULATION-FIX_cycle1_receipt.md`, kanban row 104.
+Ruling recorded as `decisions.md §21`; `epic-breakdown.md` gains an `AT-35-E7-000-*` section and
+`AT-35-E7-001`'s bar is restated against the **corpus** population with its denominator named.
+
+**The fix is the PREDICATE, never the ten rows.** `has_classifying_token`'s `Kind::Feat` and
+`Kind::Spell` arms tested one classifying token as a proxy for "this row is a record"; the proxy is
+sound in one direction only. They now also accept the row's own non-empty, non-`.CLEAR`
+`DESC:`/`BENEFIT:` (`row_carries_rule_prose`) — generalising what `ability_row_has_content` already
+does for `Kind::Ability`, and deliberately narrower than `ABILITY_CONTENT_PREFIXES` (prose only, no
+`BONUS`/`DEFINE:`/`AUTO:`). No id allow-list, no book exemption, no `pu_feats.lst` case: each of
+those would leave the next such row silently dropped, which is the defect.
+
+**RED→GREEN demonstrated, not asserted** — the two match arms were reverted to the old predicate and
+the tests re-run: the old shape still enumerates (**ok on both**), a `pu_feats`/`ma_spells` prose row
+now enumerates (**FAILED → ok**), a row with neither token nor prose still does not (**ok on both** —
+the over-admission guard), and through `enumerate_file` a `.MOD` chassis row *carrying prose* still
+produces 0 units and 1 `mod_record` trap hit (**FAILED → ok**).
+
+**Measured before it was trusted**, across every publisher in the pinned checkout:
+`widened_predicate_census.py` → `admitted_rows=17 rows_no_longer_admitted=0` (feat 4,283 → 4,293 of
+4,536; spell 3,685 → 3,692 of 4,342) → **12 units** after attribution and the duplicate trap: the
+census's 10, plus `core_rulebook:feat:sylvan_scimitar_cleave` and
+`core_rulebook:spell:magic_vestment_shield_use`. Twelve, not thousands.
+
+**All 12 RENDER, and that is proven rather than inferred**: `b18_ten_render_proof.py` →
+`admitted=12 render=12 failures=0`, printing each unit's actual sheet line and exiting non-zero if
+any unit enumerates but renders nothing. It skips a prose family gated `applies: "Never"` (the
+converter's unresolved-formula variant), so it cannot claim a line the sheet never shows.
+
+**The figures moved, and both are stated with their denominator:** inventory **49,438 → 49,450**
+(`completion_atlas.py --check` → `population=49450 DONE 49450`, every other bucket 0); corpus-wide
+**48,854 of 48,864 = 99.9795% → 48,864 of 48,864 = 100%**. `49,438` was swept from `src/`, `apps/`,
+`scripts/`, `scripts/tests/` and this package's docs from the live figure; the remaining occurrences
+are explicitly dated historical measurements.
+
+**`--allow-stamp-loss` was refused and a stronger mechanism built instead.** The guarded regen had
+been blocked since `AT-35-E6-003` cycle 14 by 230 pre-existing `sheet-complete` → `text-complete`
+relabels (both DONE; `text-complete` sits *above* the rung). The blanket flag could not be used and
+could not be widened — measured, the 7,615-stamp hazard it exists to stop lands on `grounded`
+(7,329) and `text-complete` (286), the **same** statuses, so only identity separates them. The
+binary gained `--expect-stamp-loss <declaration.json>`: the write proceeds only on **set equality**,
+and the 230 are committed id by id at `artifacts/epic-7-closure/b18-expected-stamp-loss.json`.
+
+**Self-healed two count assertions this cycle's own change moved**, diagnosed rather than re-pinned:
+`feat_prereqs.rs` eligible **549 → 540** and unconverted **21 → 12** — the same nine champion feats,
+which were catalog records with no converted rule (offered with a "not verified" note) and are now
+correctly denied on `PREALIGN:`/`PREHD:MIN=10`.
+
+- `SCOPE_GATE: EXEMPT (ruling B18 scopes this cycle to exactly the 10 records the census proved are the whole population; the gate's own population is docs/work-inventory.json and these records are by definition the ones NOT in it)`
+- `closed=0 relabeled=0 rust_lines_changed=326 ratio=n/a builds_recorded=0 pcgen_live_files=0` (`regressed=0 added=12 dropped=0`). `closed=0` is correct: the 12 did not *move* into DONE, they did not exist.
+- `pcgen_residue_gate.py --check --closure` → `live_files=0 live_hits=0 verdict=PASS`, exit 0.
+- **Refused tokens: none.** The criterion's population is zero at HEAD.
+
+
 ### 2026-09-14 — Epic 7 — AT-35-E7-000-POPULATION-CENSUS **cycle 3**, the 10 remainder — **the census is closed. 10 is exact, not a ceiling; all 2,657 previously-unverified records re-verified; corpus-wide 48,854 of 48,864 = 99.9795% confirmed.** — partial
 
 Receipt: `artifacts/epic-7-closure/AT-35-E7-000-POPULATION-CENSUS_cycle3_receipt.md`, kanban row

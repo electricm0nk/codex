@@ -3,15 +3,15 @@
  "derived_by": "python3 scripts/token_coverage.py --check",
  "reading_rule": "A token type is the converter mapping-table row key the converter resolved a token to (`src/pcgen_import/sheet_rule/table.rs::row_for_head`), `unmapped:<HEAD>` / `BONUS:<SUB>` when the table has no row, or `token-less` for a record whose closure has no row at all. `carrying` counts a unit once per token type it carries (a unit carrying k types is under k rows); `refused_because_of_this_token` counts a refused record under the token type each of its refusal shapes arose under; `refused_non_done` counts carrying non-DONE units the converter refused for ANY shape, so carrying_non_done = converted_non_done + refused_non_done per row. DONE is `scripts/completion_atlas.py`'s partition over docs/work-inventory.json.",
  "inputs": {
-  "inventory_generated_at": "2026-09-09T06:23:53Z",
+  "inventory_generated_at": "2026-09-14T17:43:08Z",
   "converter_version": "sheet_rule_convert/0.15.0",
   "oracle_pin": "7f818006e371188e5717fd18d74d18a420747fc6",
   "mapping_table": "mapping-table.v1"
  },
  "denominators": {
-  "units": 49438,
+  "units": 49450,
   "non_done": 0,
-  "records_in_census": 49438,
+  "records_in_census": 49450,
   "refused_records": 142,
   "refused_non_done": 0,
   "token_less_non_done": 0,
@@ -209,7 +209,7 @@
     "family": "prose",
     "maps_to": "Text"
    },
-   "carrying": 2281,
+   "carrying": 2291,
    "carrying_non_done": 0,
    "converted_non_done": 0,
    "refused_non_done": 0,
@@ -814,7 +814,7 @@
     "family": "prereq",
     "maps_to": "Metadata(ignored-by-sheet)"
    },
-   "carrying": 32552,
+   "carrying": 32562,
    "carrying_non_done": 0,
    "converted_non_done": 0,
    "refused_non_done": 0,
@@ -1048,7 +1048,7 @@
     "family": "prose",
     "maps_to": "Text"
    },
-   "carrying": 30395,
+   "carrying": 30407,
    "carrying_non_done": 0,
    "converted_non_done": 0,
    "refused_non_done": 0,
@@ -1126,7 +1126,7 @@
     "family": "prose",
     "maps_to": "Text (spell stat-block line)"
    },
-   "carrying": 2852,
+   "carrying": 2853,
    "carrying_non_done": 0,
    "converted_non_done": 0,
    "refused_non_done": 0,
@@ -1269,7 +1269,7 @@
     "family": "prereq",
     "maps_to": "Metadata(ignored-by-sheet)"
    },
-   "carrying": 31445,
+   "carrying": 31446,
    "carrying_non_done": 0,
    "converted_non_done": 0,
    "refused_non_done": 0,
@@ -1594,7 +1594,7 @@
     "family": "prereq",
     "maps_to": "Applies"
    },
-   "carrying": 4464,
+   "carrying": 4473,
    "carrying_non_done": 0,
    "converted_non_done": 0,
    "refused_non_done": 0,
@@ -1620,7 +1620,7 @@
     "family": "prereq",
     "maps_to": "Applies"
    },
-   "carrying": 167,
+   "carrying": 176,
    "carrying_non_done": 0,
    "converted_non_done": 0,
    "refused_non_done": 0,
@@ -1880,7 +1880,7 @@
     "family": "prereq",
     "maps_to": "Applies"
    },
-   "carrying": 3,
+   "carrying": 12,
    "carrying_non_done": 0,
    "converted_non_done": 0,
    "refused_non_done": 0,
@@ -2218,7 +2218,7 @@
     "family": "prereq",
     "maps_to": "Applies"
    },
-   "carrying": 517,
+   "carrying": 526,
    "carrying_non_done": 0,
    "converted_non_done": 0,
    "refused_non_done": 0,
@@ -2647,7 +2647,7 @@
     "family": "prose",
     "maps_to": "Metadata(ignored-by-sheet)"
    },
-   "carrying": 34635,
+   "carrying": 34646,
    "carrying_non_done": 0,
    "converted_non_done": 0,
    "refused_non_done": 0,
@@ -2868,7 +2868,7 @@
     "family": "prose",
     "maps_to": "Text (spell stat-block line)"
    },
-   "carrying": 2852,
+   "carrying": 2853,
    "carrying_non_done": 0,
    "converted_non_done": 0,
    "refused_non_done": 0,
@@ -2881,7 +2881,7 @@
     "family": "formula",
     "maps_to": "Number(Expr) with Applies::Situational{\"when active\"} + the TEMPDESC words"
    },
-   "carrying": 601,
+   "carrying": 602,
    "carrying_non_done": 0,
    "converted_non_done": 0,
    "refused_non_done": 0,
@@ -2894,7 +2894,7 @@
     "family": "prose",
     "maps_to": "Text"
    },
-   "carrying": 185,
+   "carrying": 186,
    "carrying_non_done": 0,
    "converted_non_done": 0,
    "refused_non_done": 0,
@@ -2920,7 +2920,7 @@
     "family": "formula",
     "maps_to": "Number(Expr)"
    },
-   "carrying": 166,
+   "carrying": 167,
    "carrying_non_done": 0,
    "converted_non_done": 0,
    "refused_non_done": 0,
@@ -2933,7 +2933,7 @@
     "family": "prereq",
     "maps_to": "Metadata(ignored-by-sheet)"
    },
-   "carrying": 42828,
+   "carrying": 42829,
    "carrying_non_done": 0,
    "converted_non_done": 0,
    "refused_non_done": 0,
@@ -2998,7 +2998,7 @@
     "family": "prereq",
     "maps_to": "Metadata (print flag on the rule: SheetRule.print)"
    },
-   "carrying": 7177,
+   "carrying": 7178,
    "carrying_non_done": 0,
    "converted_non_done": 0,
    "refused_non_done": 0,
@@ -3057,9 +3057,9 @@
  },
  "sum_checks": {
   "population": {
-   "census_entries": 49438,
-   "inventory_units": 49438,
-   "report_records": 49438,
+   "census_entries": 49450,
+   "inventory_units": 49450,
+   "report_records": 49450,
    "ok": true
   },
   "double_count": {

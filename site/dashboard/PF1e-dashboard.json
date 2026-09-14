@@ -1,12 +1,12 @@
 {
-  "generated_at": "2026-09-14T00:57:07Z",
+  "generated_at": "2026-09-14T17:49:17Z",
   "generated_by": "pf1e_dashboard_producer",
   "schema_version": 2,
   "usage": {
-    "captured_at": "2026-09-14T00:45:07Z",
-    "session_used_pct": "9",
-    "session_reset": "resets Sep 13, 9:20pm (America/New_York)",
-    "week_all_models_used_pct": "48",
+    "captured_at": "2026-09-14T17:45:07Z",
+    "session_used_pct": "4",
+    "session_reset": "resets Sep 14, 5:10pm (America/New_York)",
+    "week_all_models_used_pct": "54",
     "week_all_models_reset": "resets Sep 16, 5am (America/New_York)",
     "fable_used_pct": "0",
     "fable_reset": "?",
@@ -42,7 +42,7 @@
   ],
   "content_state": {
     "available": true,
-    "generated_at": "2026-09-14T01:14:32Z",
+    "generated_at": "2026-09-14T18:05:52Z",
     "generated_by": "v06_content_state_dump",
     "books": [
       {
@@ -2273,7 +2273,7 @@
         "feats": "X"
       },
       "open_questions": {
-        "feats": "186 feat records ingested and prerequisite-evaluable, but only 45 of them compute a real mechanical effect: adding the other 141 to a character changes no number this engine produces. Measured by running the real compute pipeline with and without each catalog feat over fighter L1, fighter L12, barbarian L1, barbarian L12, monk L1, monk L12, wizard L1, wizard L12, swashbuckler L1, swashbuckler L12 \u2014 a lower bound, since a feat needing an unmodelled context (an opponent, an ally, a combat action) cannot show up as a delta here. [engine content dump 2026-09-14T01:14:32Z]"
+        "feats": "186 feat records ingested and prerequisite-evaluable, but only 45 of them compute a real mechanical effect: adding the other 141 to a character changes no number this engine produces. Measured by running the real compute pipeline with and without each catalog feat over fighter L1, fighter L12, barbarian L1, barbarian L12, monk L1, monk L12, wizard L1, wizard L12, swashbuckler L1, swashbuckler L12 \u2014 a lower bound, since a feat needing an unmodelled context (an opponent, an ally, a combat action) cannot show up as a delta here. [engine content dump 2026-09-14T18:05:52Z]"
       },
       "items": {
         "equipment": [
@@ -5427,8 +5427,8 @@
         "feats": "X"
       },
       "open_questions": {
-        "races": "No race records are ingested for this book. [engine content dump 2026-09-14T01:14:32Z]",
-        "feats": "172 feat records ingested and prerequisite-evaluable, but only 5 of them compute a real mechanical effect: adding the other 167 to a character changes no number this engine produces. Measured by running the real compute pipeline with and without each catalog feat over fighter L1, fighter L12, barbarian L1, barbarian L12, monk L1, monk L12, wizard L1, wizard L12, swashbuckler L1, swashbuckler L12 \u2014 a lower bound, since a feat needing an unmodelled context (an opponent, an ally, a combat action) cannot show up as a delta here. [engine content dump 2026-09-14T01:14:32Z]"
+        "races": "No race records are ingested for this book. [engine content dump 2026-09-14T18:05:52Z]",
+        "feats": "172 feat records ingested and prerequisite-evaluable, but only 5 of them compute a real mechanical effect: adding the other 167 to a character changes no number this engine produces. Measured by running the real compute pipeline with and without each catalog feat over fighter L1, fighter L12, barbarian L1, barbarian L12, monk L1, monk L12, wizard L1, wizard L12, swashbuckler L1, swashbuckler L12 \u2014 a lower bound, since a feat needing an unmodelled context (an opponent, an ally, a combat action) cannot show up as a delta here. [engine content dump 2026-09-14T18:05:52Z]"
       },
       "items": {
         "equipment": [
@@ -6270,8 +6270,8 @@
         "feats": "X"
       },
       "open_questions": {
-        "races": "No race records are ingested for this book. [engine content dump 2026-09-14T01:14:32Z]",
-        "feats": "129 feat records ingested and prerequisite-evaluable, but only 2 of them compute a real mechanical effect: adding the other 127 to a character changes no number this engine produces. Measured by running the real compute pipeline with and without each catalog feat over fighter L1, fighter L12, barbarian L1, barbarian L12, monk L1, monk L12, wizard L1, wizard L12, swashbuckler L1, swashbuckler L12 \u2014 a lower bound, since a feat needing an unmodelled context (an opponent, an ally, a combat action) cannot show up as a delta here. [engine content dump 2026-09-14T01:14:32Z]"
+        "races": "No race records are ingested for this book. [engine content dump 2026-09-14T18:05:52Z]",
+        "feats": "129 feat records ingested and prerequisite-evaluable, but only 2 of them compute a real mechanical effect: adding the other 127 to a character changes no number this engine produces. Measured by running the real compute pipeline with and without each catalog feat over fighter L1, fighter L12, barbarian L1, barbarian L12, monk L1, monk L12, wizard L1, wizard L12, swashbuckler L1, swashbuckler L12 \u2014 a lower bound, since a feat needing an unmodelled context (an opponent, an ally, a combat action) cannot show up as a delta here. [engine content dump 2026-09-14T18:05:52Z]"
       },
       "items": {
         "equipment": [
@@ -6796,10 +6796,10 @@
         "feats": "O"
       },
       "open_questions": {
-        "races": "No race records are ingested for this book. [engine content dump 2026-09-14T01:14:32Z]",
-        "classes": "No class records are ingested for this book. [engine content dump 2026-09-14T01:14:32Z]",
-        "spells": "No spell records are ingested for this book. [engine content dump 2026-09-14T01:14:32Z]",
-        "feats": "No feat records are ingested for this book. [engine content dump 2026-09-14T01:14:32Z]"
+        "races": "No race records are ingested for this book. [engine content dump 2026-09-14T18:05:52Z]",
+        "classes": "No class records are ingested for this book. [engine content dump 2026-09-14T18:05:52Z]",
+        "spells": "No spell records are ingested for this book. [engine content dump 2026-09-14T18:05:52Z]",
+        "feats": "No feat records are ingested for this book. [engine content dump 2026-09-14T18:05:52Z]"
       },
       "items": {
         "equipment": [
@@ -12444,7 +12444,7 @@
         "rest": "Barbarian, Bard, Cleric, Druid, Fighter, Monk, Paladin, Ranger, Rogue, Sorcerer, Wizard, Alchemist, Cavalier, Inquisitor, Oracle, Summoner, Witch, Arcanist, Bloodrager, Brawler, Hunter, Investigator, Shaman, Skald, Slayer, Swashbuckler, Warpriest.",
         "list": "Barbarian, Bard, Cleric, Druid, Fighter, Monk, Paladin, Ranger, Rogue, Sorcerer, Wizard, Alchemist, Cavalier, Inquisitor, Oracle, Summoner, Witch, Arcanist, Bloodrager, Brawler, Hunter, Investigator, Shaman, Skald, Slayer, Swashbuckler, Warpriest",
         "source": "engine-state-dump",
-        "generated_at": "2026-09-14T00:58:50Z",
+        "generated_at": "2026-09-14T17:48:30Z",
         "input_posture": "tests/fixtures/rules_core/pf1_human_fighter_level1_ge06_deterministic_input.txt with the class swapped to the class under test, swept over levels 1-20, plus the canonical per-class choice/spell seeds compose_character_input applies (pf1_adapter.rs). A class counts as computed only when every level in the sweep reaches HeadlessReceiptStatus::Computed.",
         "excluded": [
           "unchained_barbarian",
@@ -14539,15 +14539,15 @@
   },
   "work_inventory": {
     "available": true,
-    "generated_at": "2026-09-14T01:12:27Z",
+    "generated_at": "2026-09-14T18:03:20Z",
     "generated_by": "cargo run --bin v06_work_inventory",
     "corpus_root": "/home/ubuntu/workspace/repos/pcgen/data/pathfinder/paizo/roleplaying_game",
-    "total_units": 49438,
-    "proven_units": 24436,
+    "total_units": 49450,
+    "proven_units": 24446,
     "by_status": {
       "grounded": 12551,
-      "sheet-complete": 25002,
-      "text-complete": 11885
+      "sheet-complete": 25004,
+      "text-complete": 11895
     },
     "by_kind": {
       "ability": 4337,
@@ -14558,7 +14558,7 @@
       "domain": 183,
       "equipment": 6223,
       "equipment_modifier": 1532,
-      "feat": 2764,
+      "feat": 2774,
       "language": 136,
       "monster": 1270,
       "monster_ability": 3806,
@@ -14566,22 +14566,22 @@
       "race": 95,
       "race_trait": 2561,
       "skill": 149,
-      "spell": 2843,
+      "spell": 2845,
       "template": 2248,
       "trait": 487
     },
     "wiring_class_available": true,
     "by_wiring_class": {
-      "display": 19644,
+      "display": 19655,
       "static": 10117,
       "derived": 6300,
-      "computed": 12832,
+      "computed": 12833,
       "ambiguous": 545
     },
     "wiring_class_note": null,
     "wiring_class_determinator_versions": [],
     "doneness_available": true,
-    "doneness_source_generated_at": "2026-09-09T06:23:53Z",
+    "doneness_source_generated_at": "2026-09-14T17:43:08Z",
     "status_sources_agree": false,
     "doneness_values": [
       "done",
@@ -14600,7 +14600,7 @@
       "deferred": "Ruled out of scope with a recorded reason. Not pending work."
     },
     "by_doneness": {
-      "done": 46965,
+      "done": 46977,
       "held": 2313,
       "in-progress": 160,
       "not-started": 0,
@@ -14608,13 +14608,13 @@
       "deferred": 0
     },
     "mandate_headline": {
-      "done": 46965,
-      "denominator": 49438,
+      "done": 46977,
+      "denominator": 49450,
       "denominator_rule": "all units, all books except beginner_box, incl. unmeasurable, deferred and future_state; nothing subtracted",
       "unmapped_units": 0,
       "secondary_in_scope_measurable": {
-        "done": 46946,
-        "denominator": 49419,
+        "done": 46958,
+        "denominator": 49431,
         "rule": "in_scope books only, minus unmeasurable and deferred (the pre-2026-08-15 headline)"
       }
     },
@@ -14631,12 +14631,12 @@
         "held": 8
       },
       "feat": {
-        "done": 2657,
+        "done": 2667,
         "held": 106,
         "in-progress": 1
       },
       "spell": {
-        "done": 2525,
+        "done": 2527,
         "held": 314,
         "in-progress": 4
       },
@@ -14696,9 +14696,9 @@
     },
     "cross_tab": {
       "computed|grounded": 3304,
-      "computed|sheet-complete": 9368,
-      "display|text-complete": 11044,
-      "display|sheet-complete": 8035,
+      "computed|sheet-complete": 9369,
+      "display|text-complete": 11284,
+      "display|sheet-complete": 7806,
       "static|sheet-complete": 2288,
       "derived|sheet-complete": 3269,
       "ambiguous|sheet-complete": 355,
@@ -15188,10 +15188,10 @@
         },
         "feat": {
           "held": 21,
-          "done": 164
+          "done": 165
         },
         "spell": {
-          "done": 587,
+          "done": 588,
           "held": 77
         },
         "equipment": {
@@ -15583,7 +15583,7 @@
           "held": 5
         },
         "spell": {
-          "done": 9
+          "done": 10
         },
         "equipment": {
           "done": 110
@@ -15650,7 +15650,7 @@
           "done": 105
         },
         "feat": {
-          "done": 7,
+          "done": 16,
           "held": 1
         },
         "equipment_modifier": {
@@ -15936,12 +15936,12 @@
       "monster": 7,
       "skill": 84,
       "ability": 93,
-      "template": 0,
-      "power": 0,
-      "deity": 0,
+      "language": 0,
       "race": 0,
-      "domain": 0,
-      "language": 0
+      "deity": 0,
+      "power": 0,
+      "template": 0,
+      "domain": 0
     },
     "classifier_reclassified_units": {
       "predicate": "kind=='class_feature' and wiring_class=='display' and status=='grounded' and evidence=='explanation_id_observed_in_a_real_computation', EXCLUDED_BOOKS dropped",
@@ -16906,10 +16906,10 @@
           "comment_or_disabled": 443,
           "copy_record": 21,
           "directive_line": 33,
-          "duplicate_identity": 1,
+          "duplicate_identity": 3,
           "internal_namespace": 313,
           "invisible_record": 27,
-          "missing_classifying_token": 3,
+          "missing_classifying_token": 1,
           "mod_record": 174,
           "race_trait_pure_ability_pointer_row": 2
         }
@@ -17436,22 +17436,22 @@
         "id": "core_rulebook",
         "scope": "in_scope",
         "engine_rule_set": "core_rulebook",
-        "units": 6701,
+        "units": 6703,
         "by_status": {
           "grounded": 4158,
-          "sheet-complete": 1669,
+          "sheet-complete": 1671,
           "text-complete": 874
         },
         "proven": 5032,
         "by_wiring_class": {
-          "computed": 2034,
-          "display": 1216,
+          "computed": 2035,
+          "display": 1217,
           "static": 2625,
           "derived": 710,
           "ambiguous": 116
         },
         "by_doneness": {
-          "done": 6008,
+          "done": 6010,
           "held": 588,
           "in-progress": 105
         },
@@ -17486,17 +17486,17 @@
           },
           {
             "kind": "feat",
-            "corpus_units_total": 185,
-            "corpus_units_declared": 185,
+            "corpus_units_total": 186,
+            "corpus_units_declared": 186,
             "engine_records": 186,
-            "delta": -1
+            "delta": 0
           },
           {
             "kind": "spell",
-            "corpus_units_total": 664,
-            "corpus_units_declared": 652,
+            "corpus_units_total": 665,
+            "corpus_units_declared": 653,
             "engine_records": 664,
-            "delta": -12
+            "delta": -11
           },
           {
             "kind": "equipment",
@@ -17570,7 +17570,7 @@
           "duplicate_identity": 511,
           "internal_namespace": 42,
           "invisible_record": 756,
-          "missing_classifying_token": 179,
+          "missing_classifying_token": 177,
           "mod_only_rescue": 6,
           "mod_record": 2908
         }
@@ -17913,7 +17913,8 @@
         "trap_hits": {
           "comment_or_disabled": 66,
           "directive_line": 4,
-          "missing_classifying_token": 13,
+          "duplicate_identity": 1,
+          "missing_classifying_token": 12,
           "mod_record": 81
         }
       },
@@ -18662,22 +18663,22 @@
         "id": "mythic_adventures",
         "scope": "in_scope",
         "engine_rule_set": "mythic_adventures",
-        "units": 1400,
+        "units": 1401,
         "by_status": {
           "sheet-complete": 677,
-          "text-complete": 514,
+          "text-complete": 515,
           "grounded": 209
         },
-        "proven": 723,
+        "proven": 724,
         "by_wiring_class": {
           "derived": 56,
-          "display": 898,
+          "display": 899,
           "ambiguous": 11,
           "computed": 321,
           "static": 114
         },
         "by_doneness": {
-          "done": 1395,
+          "done": 1396,
           "held": 5
         },
         "reconciliation": [
@@ -18697,8 +18698,8 @@
           },
           {
             "kind": "spell",
-            "corpus_units_total": 9,
-            "corpus_units_declared": 9,
+            "corpus_units_total": 10,
+            "corpus_units_declared": 10,
             "engine_records": null,
             "delta": null
           },
@@ -18745,7 +18746,7 @@
           "duplicate_identity": 1,
           "internal_namespace": 113,
           "invisible_record": 65,
-          "missing_classifying_token": 405,
+          "missing_classifying_token": 404,
           "mod_only_rescue": 209,
           "mod_record": 513
         }
@@ -18869,22 +18870,22 @@
         "id": "pathfinder_unchained",
         "scope": "in_scope",
         "engine_rule_set": "pathfinder_unchained",
-        "units": 1232,
+        "units": 1241,
         "by_status": {
           "grounded": 105,
           "sheet-complete": 364,
-          "text-complete": 763
+          "text-complete": 772
         },
-        "proven": 868,
+        "proven": 877,
         "by_wiring_class": {
-          "display": 905,
+          "display": 914,
           "computed": 213,
           "ambiguous": 12,
           "static": 63,
           "derived": 39
         },
         "by_doneness": {
-          "done": 1210,
+          "done": 1219,
           "held": 22
         },
         "reconciliation": [
@@ -18904,10 +18905,10 @@
           },
           {
             "kind": "feat",
-            "corpus_units_total": 8,
-            "corpus_units_declared": 8,
+            "corpus_units_total": 17,
+            "corpus_units_declared": 17,
             "engine_records": 17,
-            "delta": -9
+            "delta": 0
           },
           {
             "kind": "equipment_modifier",
@@ -18951,7 +18952,6 @@
           "duplicate_identity": 465,
           "internal_namespace": 32,
           "invisible_record": 21,
-          "missing_classifying_token": 9,
           "mod_only_rescue": 3,
           "mod_record": 861,
           "race_trait_pure_ability_pointer_row": 22
@@ -19073,7 +19073,7 @@
           {
             "kind": "spell",
             "corpus_units_total": 147,
-            "corpus_units_declared": 145,
+            "corpus_units_declared": 147,
             "engine_records": null,
             "delta": null
           },
@@ -19118,11 +19118,11 @@
           "comment_or_disabled": 786,
           "copy_record": 20,
           "directive_line": 59,
-          "duplicate_identity": 32,
+          "duplicate_identity": 31,
           "internal_namespace": 10,
           "invisible_record": 40,
-          "missing_classifying_token": 3,
-          "mod_only_rescue": 9,
+          "missing_classifying_token": 1,
+          "mod_only_rescue": 7,
           "mod_record": 1279
         }
       },
@@ -19728,36 +19728,33 @@
   },
   "retrospective": {
     "available": true,
-    "generated_at": "2026-09-14T01:14:38Z",
+    "generated_at": "2026-09-14T18:06:00Z",
     "generated_by": "scripts/retro.py summary",
     "window": "14d",
-    "total_events": 838,
+    "total_events": 863,
     "by_type": {
-      "correction": 250,
-      "deferral": 99,
-      "incident": 97,
+      "correction": 261,
+      "deferral": 102,
+      "incident": 99,
       "near_miss": 1,
-      "note": 35,
+      "note": 36,
       "resolution": 18,
-      "rework": 5,
-      "verification": 333
+      "rework": 6,
+      "verification": 340
     },
     "by_origin": {
-      "agent": 455,
-      "derived": 383
+      "agent": 472,
+      "derived": 391
     },
     "corrections": {
-      "total": 250,
+      "total": 261,
       "by_subject": {
         "?": 3,
         "AT-34-E3-002 cycle 6 receipt": 1,
         "AT-34-E3-002 cycle 7 receipt remainder table": 1,
-        "AT-34-E3-003 cycle 2 receipt (VAR sub-shape classification)": 1,
         "AT-34-E3-003 wave dispatch brief": 1,
         "AT-34-E3-003_m_bucket_equipment_cycle_receipt_4.md next-cycle-plan item 1": 1,
         "AT-34-E3-003_m_bucket_equipment_cycle_receipt_5.md (cycles 2/3/5)": 1,
-        "AT-34-E4-002 dispatch brief": 1,
-        "AT-34-E4-002_cycle_receipt_6.md's own remainder census": 1,
         "AT-34-E4-002_cycle_receipt_7.md": 1,
         "AT-34-E4-002_cycle_receipt_9.md next-cycle-plan": 1,
         "AT-34-E6-001 dispatch brief (fable-review.md \u00a77)": 1,
@@ -19847,6 +19844,12 @@
         "AT-35-E6-003_cycle11_receipt.md": 1,
         "AT-35-E6-003_cycle5_converter-prose-blocker.md \u00a76 item 1": 1,
         "AT-35-E6-004 cycle 1 receipt": 1,
+        "AT-35-E7-000 dispatch brief": 1,
+        "AT-35-E7-000-POPULATION-CENSUS cycle 1's `duplicate_ingest_of_a_row_already_reached` bucket predicate": 1,
+        "AT-35-E7-000-POPULATION-CENSUS cycle 2 receipt, 'What this proof does not cover' item 3": 1,
+        "AT-35-E7-000-POPULATION-CENSUS cycle-1 census + its receipt": 1,
+        "AT-35-E7-000-POPULATION-CENSUS cycle-1 receipt's corpus-wide completion figure": 1,
+        "AT-35-E7-001 cycle 1 receipt (shortfall S5, and its kanban row-28 status histogram)": 1,
         "EPIC-2_wrapup_regate2_report.md figures (lines 80, 304)": 1,
         "EPIC-2_wrapup_regate2_report.md root cause for site-dashboard-check": 1,
         "EPIC-6 wrap-up gate report": 1,
@@ -19857,6 +19860,7 @@
         "SD-35 dispatch prompt for AT-35-E6-003-SWEEP": 2,
         "SD-35 epic-breakdown.md AT-35-E1-003 sizing figure": 1,
         "SD-35 kanban.md header row count": 1,
+        "SD-35 kanban.md status column": 1,
         "SD-35 technical-design.md \u00a72": 1,
         "SD-35 technical-design.md \u00a72 held set": 1,
         "apps/desktop/src-tauri/src/equipment_catalog.rs pinned counts": 1,
@@ -19871,6 +19875,7 @@
         "class_chassis_sheet_rules level binding (first draft)": 1,
         "commit 2bbc9c87a7 (same-day figure-provenance fix)": 1,
         "companion_catalog.rs test literal pin (141/39)": 1,
+        "completion_atlas.py --check headline 'DONE 49,438 of 49,438'": 1,
         "completion_atlas.py bucket-V citation (wave 34 lane B's own re-derivation)": 1,
         "content-unit-inventory.md \u00a76 / decisions.md \u00a711 coarse residue figure": 1,
         "corpus_ingest_diagnostic.rs::the_two_ingested_books_totals_reconcile_with_their_license_artifacts (pathfinder_unchained corpus_only_records literal)": 1,
@@ -19890,6 +19895,7 @@
         "docs/release/SD-35-corpus-sheet-completion/artifacts/epic-3-place-and-surface/rate-ledger.json": 1,
         "docs/release/SD-35-corpus-sheet-completion/kanban.md row 16 (AT-35-E4-001) and token-coverage.json": 1,
         "docs/release/SD-35-corpus-sheet-completion/kanban.md row 24 (AT-35-E6-001)": 1,
+        "docs/work-inventory.json stamp-loss guard": 1,
         "epic-breakdown.md ### AT-35-E3-001": 1,
         "epic-breakdown.md ### AT-35-E3-001 / AT-35-E3-001 cycle 1 dispatch prompt": 1,
         "epic-breakdown.md ### AT-35-E5-002 scope note (and the SD-35 dispatch prompt that quotes it)": 1,
@@ -19906,9 +19912,10 @@
         "kanban.md's own row-count header and its row-range index": 1,
         "mapping-table.v1.json row MAXLEVEL": 1,
         "mapping-table.v1.json sum_check": 1,
-        "my own pre-check estimate": 1,
+        "naive corpus-path-to-inventory-id join": 1,
         "orchestrator (me), in every gate-wave lane brief from wave 23 to wave 27": 1,
         "orchestrator dispatch prompt for AT-35-E5-005": 1,
+        "pcgen_residue_gate.py (shipped-data blind spot, operator ruling B17)": 1,
         "pcgen_residue_gate.py live_files (Epic 6 remainder instrument)": 2,
         "pcgen_residue_gate.py render_pcgen_desc pattern": 1,
         "reach_gate.rs::bare_records_are_exactly_the_recorded_findings": 1,
@@ -19937,6 +19944,7 @@
         "sheet_rule_convert's reported rules=69344, read as the number of rules the live side holds": 1,
         "site/dashboard/PF1e-dashboard.json as published at 6e4b1f7b4e, and this worker's own first-draft hypothesis for why site-dashboard-check is red": 1,
         "src/bin/v06_work_inventory.rs CLASS_FEATURE_ID_MAGNITUDE_SUFFIXES": 1,
+        "src/bin/v06_work_inventory.rs has_classifying_token": 1,
         "src/rules_core/class_feature_pool_catalog.rs::carries_unimplemented_marker": 1,
         "src/rules_core/composed_input.rs module doc": 1,
         "src/rules_core/converted_prose.rs::a_restricted_printing_serves_its_base_record_and_an_unheld_key_serves_nothing": 1,
@@ -19947,8 +19955,10 @@
         "tests/v06_caster_level_every_casting_class.rs::the_record_cites_its_corpus_source_and_disclaims_the_spell_math_it_does_not_compute": 1,
         "tests/v06_corpus_trap_report.rs's four corpus-invariant tests": 1,
         "the AT-35-E3-WRAPUP dispatch worktree base (wf_291be5c8-5f3-21)": 1,
+        "the B17 dispatch census (5 shipped files named)": 1,
         "the Epic 5 wrap-up gate report's 'NOT failures but owed' list of stale baselines": 1,
         "the SD-35 dispatch prompt for AT-35-E6-003-SWEEP": 1,
+        "the assumption that a Tauri directory resource ships only its listed children": 1,
         "the assumption that committing the gate report is inert": 1,
         "the converter's prose scrub (src/pcgen_import/sheet_rule/prose.rs)": 1,
         "the cycle-7 dispatch prompt's cycle number": 1,
@@ -19964,6 +19974,7 @@
         "this cycle's own deferral event, first emission": 1,
         "this cycle's own first fix attempt": 1,
         "this cycle's own first no-placeholder gate": 1,
+        "this cycle's own first pass at the content join": 1,
         "this cycle's own retro emission": 1,
         "this cycle's own retro logging": 1,
         "this cycle's retro actor attribution": 1,
@@ -20017,7 +20028,11 @@
         "AT-35-E6-003-FINISH": 6,
         "AT-35-E6-003-RULED": 22,
         "AT-35-E6-003-SWEEP": 24,
+        "AT-35-E6-005-SHIPPED-DATA": 1,
         "AT-35-E6-WRAPUP-FIX": 3,
+        "AT-35-E7-000-POPULATION-CENSUS": 8,
+        "AT-35-E7-000-POPULATION-FIX": 2,
+        "AT-35-E7-001": 2,
         "at-35-e2-regate2": 1,
         "at-35-e2-wrapup-fix": 3,
         "at-35-e3-002-c2": 1,
@@ -20029,10 +20044,10 @@
         "at-35-e5-003": 3,
         "at-35-e6-003-sweep": 14,
         "epic2-sheet-rule-fix2": 2,
-        "sd31-transcribe": 12,
-        "sd34-at-34-e3-002": 3,
-        "sd34-at-34-e3-003": 4,
-        "sd34-at-34-e4-002": 5,
+        "sd31-transcribe": 14,
+        "sd34-at-34-e3-002": 2,
+        "sd34-at-34-e3-003": 3,
+        "sd34-at-34-e4-002": 3,
         "sd34-at-34-e6-001": 18,
         "sd34-at-34-e6-001-gate-lane-c": 1,
         "sd34-at-34-e6-001-lane-b": 2,
@@ -20100,10 +20115,10 @@
           "subject": "scripts/pcgen_residue_gate.py"
         }
       ],
-      "already_propagated": 108
+      "already_propagated": 109
     },
     "incidents": {
-      "total": 97,
+      "total": 99,
       "silent": 7,
       "recurring": [
         {
@@ -20160,12 +20175,13 @@
       }
     },
     "deferrals": {
-      "total": 99
+      "total": 102
     },
     "rework": {
-      "total": 5,
+      "total": 6,
       "by_cause": {
         "AT-35-E6-003-SWEEP_cycle9_type_companion_guards.py keyed each converted guard by the companion_data.rs DIRECTORY name (crb, apg, beastiary1) while the round-trip test walks COMPANION_BOOKS, which keys by corpus_book (core_rulebook, advanced_players_guide, beastiary); three crb rows went red": 1,
+        "a tail filter on a run whose figures are the evidence; exit code survived, the denominators did not": 1,
         "cycle 3 returned status partial on a criterion whose own rule (zero new mappings) makes its population unreachable, and the dispatcher's remainder loop re-dispatches on partial; cycle 3's receipt and the dispatch prompt both named the \u00a78 >10-refused-type rule (re-scope) but nothing mechanical stopped the re-dispatch": 1,
         "git mv stages a moved file at move time; path repairs made to that file AFTERWARDS stayed unstaged, and the cycle's explicit-path 'git add' list (shared-checkout discipline forbids 'git add -A') named only paths it had not already staged. ea1a61e672 therefore shipped the moved modules without their own intra-crate path fixes and did not build; 60fdeeb6ec repaired it.": 1,
         "orchestrator dispatch list not reconciled against kanban.md before dispatch \u2014 the criterion's row already read 'complete' with a receipt path": 1,
@@ -20173,9 +20189,9 @@
       }
     },
     "verification": {
-      "runs": 333,
+      "runs": 340,
       "failed_runs": 46,
-      "fail_rate": 0.1381,
+      "fail_rate": 0.1353,
       "by_failing_stage": {
         "clippy": 6,
         "denominator-gate": 8,
@@ -20198,12 +20214,12 @@
     "git_join": {
       "authors": 1,
       "available": true,
-      "commits": 599,
-      "events_per_commit": 1.399,
+      "commits": 596,
+      "events_per_commit": 1.448,
       "top_authors": [
         [
           "Todd Hintzmann",
-          599
+          596
         ]
       ]
     },
@@ -20215,7 +20231,7 @@
   "unit_index": {
     "available": true,
     "schema": 15,
-    "generated_at": "2026-09-09T06:23:53Z",
+    "generated_at": "2026-09-14T17:43:08Z",
     "source_document": "docs/work-inventory.json",
     "shard_base": "units/",
     "fields": [
@@ -20226,8 +20242,8 @@
       "source_file",
       "type_facet"
     ],
-    "total_units": 49438,
-    "proven_units": 16821,
+    "total_units": 49450,
+    "proven_units": 17061,
     "doneness_unmapped_seen": false,
     "pi_redacted_names": 1483,
     "category_labels_redacted": 4,
@@ -21642,16 +21658,16 @@
       },
       "class_feature": {
         "units": 18043,
-        "proven": 5155,
+        "proven": 5385,
         "by_status": {
-          "sheet-complete": 12856,
-          "text-complete": 4239,
+          "sheet-complete": 12626,
+          "text-complete": 4469,
           "grounded": 916,
           "oracle-agree": 26,
           "oracle-unverifiable": 6
         },
         "shard": "PF1e-units-class_feature.json",
-        "bytes": 2707553,
+        "bytes": 2707323,
         "doneness_unmapped": {},
         "categories": {
           "specialquality": {
@@ -29089,15 +29105,15 @@
         "category_axis_label": "Category"
       },
       "feat": {
-        "units": 2764,
-        "proven": 1691,
+        "units": 2774,
+        "proven": 1700,
         "by_status": {
-          "text-complete": 1583,
-          "sheet-complete": 1073,
+          "text-complete": 1592,
+          "sheet-complete": 1074,
           "grounded": 108
         },
         "shard": "PF1e-units-feat.json",
-        "bytes": 281678,
+        "bytes": 282694,
         "doneness_unmapped": {},
         "categories": {
           "general": {
@@ -29129,7 +29145,7 @@
           },
           "none": {
             "label": "Uncategorised",
-            "done": 249,
+            "done": 259,
             "held": 0,
             "in-progress": 0,
             "not-started": 0,
@@ -33294,17 +33310,17 @@
         "category_axis_label": "Category"
       },
       "spell": {
-        "units": 2843,
-        "proven": 386,
+        "units": 2845,
+        "proven": 387,
         "by_status": {
           "oracle-agree": 426,
           "oracle-unverifiable": 1079,
           "grounded": 176,
-          "sheet-complete": 952,
-          "text-complete": 210
+          "sheet-complete": 953,
+          "text-complete": 211
         },
         "shard": "PF1e-units-spell.json",
-        "bytes": 331503,
+        "bytes": 331721,
         "doneness_unmapped": {},
         "categories": {
           "arcane": {
@@ -33318,7 +33334,7 @@
           },
           "none": {
             "label": "Uncategorised",
-            "done": 991,
+            "done": 992,
             "held": 42,
             "in-progress": 4,
             "not-started": 0,
@@ -33327,7 +33343,7 @@
           },
           "divine": {
             "label": "Divine",
-            "done": 313,
+            "done": 314,
             "held": 65,
             "in-progress": 0,
             "not-started": 0,
@@ -33357,7 +33373,7 @@
           },
           "n/a": {
             "label": "n/a",
-            "done": 388,
+            "done": 390,
             "held": 108,
             "in-progress": 1,
             "not-started": 0,
@@ -33453,7 +33469,7 @@
             "no_location": 0,
             "file_not_found": 110,
             "line_out_of_range": 0,
-            "no_school_token": 387
+            "no_school_token": 389
           },
           "coverage_pct": 82.5,
           "multi_school_spell_count": 2,

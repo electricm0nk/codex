@@ -636,6 +636,122 @@ mod kind_ability_tests {
         assert!(!has_classifying_token(Kind::Ability, &picklist));
     }
 
+    /// Operator ruling B18 (`decisions.md §21`), RED→GREEN case 1 of 3: a
+    /// feat row carrying `TYPE:` — the OLD shape — still enumerates, and a
+    /// spell row carrying `SCHOOL:`/`CLASSES:` still enumerates. Widening
+    /// the predicate must not narrow it anywhere.
+    #[test]
+    fn b18_old_shape_feat_and_spell_rows_still_classify() {
+        let feat = ["Combat Stamina", "CATEGORY:FEAT", "TYPE:Combat.Stamina"];
+        assert!(has_classifying_token(Kind::Feat, &feat));
+
+        let spell_school = ["Fireball", "SCHOOL:Evocation"];
+        assert!(has_classifying_token(Kind::Spell, &spell_school));
+
+        let spell_classes = ["Fireball", "CLASSES:Sorcerer|Wizard=3"];
+        assert!(has_classifying_token(Kind::Spell, &spell_classes));
+    }
+
+    /// Operator ruling B18, RED→GREEN case 2 of 3: a `pu_feats.lst` row that
+    /// used to be dropped — `CATEGORY:FEAT`, `DESC:`, `BENEFIT:`, no `TYPE:`
+    /// — now classifies, and so does the `ma_spells.lst` row that carries
+    /// only a name and a `DESC:`. Both field lists are the real pinned-corpus
+    /// rows, abridged only in the length of the prose.
+    #[test]
+    fn b18_prose_bearing_feat_and_spell_rows_without_the_token_now_classify() {
+        let champion_of_anarchy = [
+            "Champion of Anarchy",
+            "CATEGORY:FEAT",
+            "PREABILITY:1,CATEGORY=FEAT,TYPE.Alignment,Champion of Anarchy",
+            "PREALIGN:CN",
+            "PREHD:MIN=10",
+            "DESC:You spread chaos wherever you go.",
+            "SOURCEPAGE:p.98",
+            "BENEFIT:You can store a number of affirmations up to your Charisma bonus.",
+        ];
+        assert!(has_classifying_token(Kind::Feat, &champion_of_anarchy));
+
+        let elemental_body_iii_mod = [
+            "Elemental Body IIIMOD",
+            "DESC:Mythic: The spell's bonuses to ability scores increase by 2.",
+        ];
+        assert!(has_classifying_token(Kind::Spell, &elemental_body_iii_mod));
+    }
+
+    /// Operator ruling B18, RED→GREEN case 3 of 3 — the over-admission
+    /// guard. A row with neither the classifying token nor rule prose of its
+    /// own is still NOT a record: a bare file-header field row, a pick-list
+    /// entry, and a `DESC:`-clearing row all stay in the
+    /// `missing_classifying_token` trap. Without this case the widened
+    /// predicate could be "always true" and still pass cases 1 and 2.
+    #[test]
+    fn b18_rows_without_the_token_and_without_prose_still_do_not_classify() {
+        let header = ["SOURCELONG:Pathfinder Unchained", "SOURCESHORT:PU"];
+        assert!(!has_classifying_token(Kind::Feat, &header));
+
+        let picklist = ["Weapon Focus (Longsword)", "CATEGORY:FEAT", "BONUS:COMBAT|TOHIT|1"];
+        assert!(!has_classifying_token(Kind::Feat, &picklist));
+
+        let empty_desc = ["Some Spell", "DESC:"];
+        assert!(!has_classifying_token(Kind::Spell, &empty_desc));
+
+        let cleared_desc = ["Some Spell", "DESC:.CLEAR"];
+        assert!(!has_classifying_token(Kind::Spell, &cleared_desc));
+    }
+
+    /// Operator ruling B18, integration: the three cases through
+    /// `enumerate_file`, plus the case the predicate alone cannot express —
+    /// a `.MOD` chassis row CARRYING prose is still not a unit, because
+    /// `enumerate_file` dispatches `.MOD` to the `mod_record` trap before
+    /// `has_classifying_token` is ever consulted. That ordering is what stops
+    /// the widened predicate from minting phantom units out of modifier rows.
+    #[test]
+    fn b18_enumerate_file_admits_prose_rows_and_still_refuses_mod_chassis_rows() {
+        let empty = BTreeSet::new();
+        let run = |name: &str, kind: Kind, text: &str| {
+            let mut out = BookEnumeration::default();
+            enumerate_file(
+                Path::new(name),
+                "pathfinder_unchained",
+                kind,
+                text,
+                &empty,
+                &empty,
+                &empty,
+                &empty,
+                &mut out,
+            );
+            out
+        };
+
+        let prose_feat = run(
+            "pu_feats.lst",
+            Kind::Feat,
+            "Champion of Anarchy\tCATEGORY:FEAT\tDESC:You spread chaos wherever you go.\tBENEFIT:You can store affirmations.\n",
+        );
+        assert_eq!(prose_feat.units.len(), 1, "{:?}", prose_feat.trap_hits);
+        assert_eq!(*prose_feat.trap_hits.get("missing_classifying_token").unwrap_or(&0), 0);
+
+        let prose_spell = run(
+            "ma_spells.lst",
+            Kind::Spell,
+            "Elemental Body IIIMOD\tDESC:Mythic: the spell's bonuses increase by 2.\n",
+        );
+        assert_eq!(prose_spell.units.len(), 1, "{:?}", prose_spell.trap_hits);
+
+        let mod_chassis = run(
+            "pu_feats.lst",
+            Kind::Feat,
+            "Champion of Anarchy.MOD\tDESC:You spread chaos wherever you go.\n",
+        );
+        assert_eq!(mod_chassis.units.len(), 0, "{:?}", mod_chassis.units);
+        assert_eq!(*mod_chassis.trap_hits.get("mod_record").unwrap_or(&0), 1);
+
+        let proseless = run("pu_feats.lst", Kind::Feat, "Champion of Nothing\tCATEGORY:FEAT\n");
+        assert_eq!(proseless.units.len(), 0, "{:?}", proseless.units);
+        assert_eq!(*proseless.trap_hits.get("missing_classifying_token").unwrap_or(&0), 1);
+    }
+
     /// `is_bonus_token`: the `BONUS[A-Z]*:` pattern matches `BONUS:` and any
     /// all-caps `BONUS<suffix>:` field, but not an unrelated field that
     /// merely starts with the letters "BONUS" followed by something else.
@@ -1001,9 +1117,14 @@ const TRAP_RULES: &[TrapRule] = &[
     TrapRule {
         id: "missing_classifying_token",
         description:
-            "A feat row with no `TYPE:` facet, or a spell row with neither `SCHOOL:` nor \
-             `CLASSES:`, is a sub-choice/`TEMPBONUS` helper rather than an independent record. \
-             This rule is what makes CRB spells land on the documented 652 and CRB feats on 185.",
+            "A feat row with no `TYPE:` facet AND no rule prose of its own, or a spell row with \
+             neither `SCHOOL:` nor `CLASSES:` AND no rule prose of its own, is a \
+             sub-choice/`TEMPBONUS` helper rather than an independent record. This rule is what \
+             makes CRB spells land on the documented 652 and CRB feats on 185. Operator ruling \
+             B18 (`decisions.md §21`) added the prose half: the token alone was a PROXY, and it \
+             dropped ten published rules records (nine `pu_feats.lst` alignment-champion feats, \
+             one `ma_spells.lst` mythic augmentation) that carry `DESC:`/`BENEFIT:` but not the \
+             token — see `row_carries_rule_prose`.",
     },
     TrapRule {
         id: "duplicate_identity",
@@ -3164,13 +3285,64 @@ fn is_pure_ability_pointer_race_trait_row(fields: &[&str]) -> bool {
         && fields.iter().any(|f| f.contains("AUTOMATIC"))
 }
 
+/// Whether a row carries its own printable rule prose -- a non-empty,
+/// non-`.CLEAR` `DESC:` or `BENEFIT:` field.
+///
+/// **Operator ruling B18 (`decisions.md §21`).** This is the second,
+/// content-based half of [`has_classifying_token`]'s `Kind::Feat` and
+/// `Kind::Spell` arms. Those arms originally tested a single classifying
+/// token (`TYPE:` for a feat, `SCHOOL:`/`CLASSES:` for a spell) as a PROXY
+/// for "this row declares a record of its own rather than pointing at one".
+/// The proxy is sound in one direction only: a row carrying the token is a
+/// record, but a row missing it is not thereby a non-record. Nine
+/// `pu_feats.lst` rows (`Champion of Anarchy` … `Champion of Tyranny`) carry
+/// `CATEGORY:FEAT`, `DESC:` and `BENEFIT:` and no `TYPE:`, and one
+/// `ma_spells.lst` row (`Elemental Body IIIMOD`) carries only a name and a
+/// `DESC:`; all ten are published rules a player looks up, and all ten were
+/// silently dropped into the `missing_classifying_token` trap.
+///
+/// Under the sheet rule (`decisions.md §1`) DONE is the rule's words on the
+/// page, so the honest test for "this row is a record" is **does the row
+/// carry the rule's words**. A sub-choice helper -- the shape the trap
+/// exists to exclude -- carries none: it is a gateway (`ABILITY:…|%LIST`), a
+/// pick-list entry, or a bare header field, all pointer and no prose. That
+/// is the same reasoning `ability_row_has_content` already applies to
+/// `Kind::Ability`; this generalises it to the two kinds still on a token
+/// proxy, rather than exempting the ten rows by id or by book (which would
+/// be a carve-out and would leave the next such row dropped).
+///
+/// Deliberately NARROWER than [`ABILITY_CONTENT_PREFIXES`]: prose only, no
+/// `BONUS`/`DEFINE:`/`AUTO:` mechanical fields. A feat or spell row that
+/// carries a bonus but no words has nothing to print, and widening to the
+/// mechanical set here would admit pick-list rows that legitimately carry a
+/// `BONUS:` while restating a record declared elsewhere.
+///
+/// Corpus-wide effect at the pinned oracle SHA, re-derivable with
+/// `docs/release/SD-35-corpus-sheet-completion/artifacts/epic-7-closure/widened_predicate_census.py`:
+/// 17 plain `.lst` rows across every publisher change verdict, 0 rows lose one.
+fn row_carries_rule_prose(fields: &[&str]) -> bool {
+    fields.iter().any(|f| {
+        ["DESC:", "BENEFIT:"].iter().any(|p| {
+            f.strip_prefix(p)
+                .map(str::trim)
+                .is_some_and(|v| !v.is_empty() && !v.starts_with(".CLEAR"))
+        })
+    })
+}
+
 /// Whether a record of this kind carries the token that proves it is an
 /// independent record rather than a sub-choice helper. See the
 /// `missing_classifying_token` trap rule.
 fn has_classifying_token(kind: Kind, fields: &[&str]) -> bool {
     match kind {
-        Kind::Feat => has_token(fields, "TYPE:"),
-        Kind::Spell => has_token(fields, "SCHOOL:") || has_token(fields, "CLASSES:"),
+        // Operator ruling B18 (`decisions.md §21`): the classifying token OR
+        // the row's own rule prose -- see `row_carries_rule_prose`.
+        Kind::Feat => has_token(fields, "TYPE:") || row_carries_rule_prose(fields),
+        Kind::Spell => {
+            has_token(fields, "SCHOOL:")
+                || has_token(fields, "CLASSES:")
+                || row_carries_rule_prose(fields)
+        }
         // SD-32 card 15-ability: only disposition-(A) rows (independent
         // content) are enumerable; (B)-gateway and (B)-picklist rows both
         // fall through here to `false` and land in the generic
@@ -18614,6 +18786,89 @@ fn stamp_loss(existing_inventory_json: &str, incoming_stamped: &BTreeSet<String>
     stamped_ids(existing_inventory_json).difference(incoming_stamped).cloned().collect()
 }
 
+/// Parses a `--expect-stamp-loss` declaration: a JSON object with an `ids`
+/// array of unit ids. Any other shape, or an empty list, is an error --
+/// a declaration that names nothing is not a declaration.
+///
+/// **Why this exists (SD-35 operator ruling B18, `decisions.md §21`).** The
+/// stamp-loss guard had two dispositions: block, or `--allow-stamp-loss`,
+/// which waves through *any* loss of *any* size. That is the shape
+/// `AGENTS.md` rule 8 calls a warning rather than a control: the moment one
+/// legitimate, diagnosed loss has to get past it, the only available key
+/// also opens the door for the 7,615-stamp regression the guard was built
+/// to stop.
+///
+/// The measured reason the blanket flag cannot simply be widened: the
+/// hazard's fallback statuses and a legitimate supersession's are the SAME.
+/// Re-derived at ruling B18 by running this binary WITHOUT
+/// `CORPUS_LITERAL_SWEEP_REPORT`/`DERIVED_FIXTURE_CHECK_REPORT` and
+/// diffing against the committed inventory: the 7,615 stamps the hazard
+/// drops land on `grounded` (7,329) and `text-complete` (286) -- exactly
+/// where a genuine upward relabel lands too. So no status-set widening can
+/// separate them, and the separation has to be by IDENTITY.
+///
+/// This flag is therefore strictly STRONGER than `--allow-stamp-loss`, not
+/// a softer form of it: the run writes only when its loss set is EQUAL to
+/// the declared set -- one undeclared id, or one declared id that did not
+/// actually move, and the write is refused and names the difference. The
+/// declaration is a committed file, so the losses a regen took are in the
+/// diff and in review, one id at a time, instead of being a number in a
+/// receipt.
+fn declared_stamp_loss(declaration_json: &str) -> Result<BTreeSet<String>, String> {
+    let parsed: serde_json::Value =
+        serde_json::from_str(declaration_json).map_err(|e| format!("not valid JSON: {e}"))?;
+    let ids = parsed["ids"].as_array().ok_or("no `ids` array")?;
+    let out: BTreeSet<String> = ids
+        .iter()
+        .map(|v| v.as_str().map(str::to_string).ok_or_else(|| "`ids` holds a non-string".to_string()))
+        .collect::<Result<_, _>>()?;
+    if out.is_empty() {
+        return Err("`ids` is empty -- a declaration that names nothing is not a declaration".into());
+    }
+    Ok(out)
+}
+
+#[cfg(test)]
+mod declared_stamp_loss_tests {
+    use super::*;
+
+    /// The declaration parses to its id set; duplicates collapse.
+    #[test]
+    fn declaration_parses_to_its_id_set() {
+        let ids = declared_stamp_loss(r#"{"ids":["a:b:c","a:b:d","a:b:c"]}"#).unwrap();
+        assert_eq!(ids, BTreeSet::from(["a:b:c".to_string(), "a:b:d".to_string()]));
+    }
+
+    /// Every not-a-declaration shape is an error, never an empty allow-all.
+    #[test]
+    fn a_declaration_that_names_nothing_is_an_error() {
+        assert!(declared_stamp_loss(r#"{"ids":[]}"#).is_err());
+        assert!(declared_stamp_loss(r#"{"ids":"a:b:c"}"#).is_err());
+        assert!(declared_stamp_loss(r#"{"ids":[1]}"#).is_err());
+        assert!(declared_stamp_loss("{}").is_err());
+        assert!(declared_stamp_loss("not json").is_err());
+    }
+
+    /// The equality contract the write gate enforces, stated as set algebra
+    /// over the same two inputs the gate uses: an exact match writes, a
+    /// superset (an undeclared loss -- the hazard) blocks, and a subset (a
+    /// declared loss that did not happen -- a stale declaration) blocks too.
+    #[test]
+    fn only_an_exact_match_between_declared_and_lost_may_write() {
+        let declared = declared_stamp_loss(r#"{"ids":["x:1","x:2"]}"#).unwrap();
+        let exact = BTreeSet::from(["x:1".to_string(), "x:2".to_string()]);
+        let superset = BTreeSet::from(["x:1".to_string(), "x:2".to_string(), "x:3".to_string()]);
+        let subset = BTreeSet::from(["x:1".to_string()]);
+
+        let blocked = |lost: &BTreeSet<String>| {
+            lost.difference(&declared).count() != 0 || declared.difference(lost).count() != 0
+        };
+        assert!(!blocked(&exact));
+        assert!(blocked(&superset));
+        assert!(blocked(&subset));
+    }
+}
+
 fn json_field_str(obj: &str, key: &str) -> Option<String> {
     let needle = format!("\"{key}\":\"");
     let start = obj.find(&needle)? + needle.len();
@@ -20846,7 +21101,30 @@ fn main() {
     // Refuse to write over a real stamp loss unless the operator explicitly
     // opts in with `--allow-stamp-loss`; a missing/unreadable existing file
     // has nothing to lose and never blocks the write.
+    //
+    // `--expect-stamp-loss <path>` (SD-35 operator ruling B18, `decisions.md
+    // §21`) is the THIRD disposition, and the one a cycle should reach for:
+    // it declares the exact id set the run is allowed to drop, and the write
+    // proceeds only when the run's own loss set EQUALS it. See
+    // `declared_stamp_loss` for why this is strictly stronger than
+    // `--allow-stamp-loss` rather than a softer form of it.
     let allow_stamp_loss = args.iter().any(|a| a == "--allow-stamp-loss");
+    let declared_loss = match args.iter().position(|a| a == "--expect-stamp-loss") {
+        None => None,
+        Some(pos) => {
+            let Some(path) = args.get(pos + 1) else {
+                eprintln!("--expect-stamp-loss needs a path to the declaration file");
+                std::process::exit(1);
+            };
+            match std::fs::read_to_string(path).map_err(|e| e.to_string()).and_then(|t| declared_stamp_loss(&t)) {
+                Ok(ids) => Some(ids),
+                Err(e) => {
+                    eprintln!("--expect-stamp-loss {path}: {e}");
+                    std::process::exit(1);
+                }
+            }
+        }
+    };
     if let Ok(existing) = std::fs::read_to_string(&output_path) {
         let incoming_stamped: BTreeSet<String> = inventory
             .iter()
@@ -20854,7 +21132,31 @@ fn main() {
             .map(|item| item.id.clone())
             .collect();
         let lost = stamp_loss(&existing, &incoming_stamped);
-        if !lost.is_empty() && !allow_stamp_loss {
+        if let Some(declared) = &declared_loss {
+            let undeclared: Vec<&String> = lost.difference(declared).collect();
+            let unrealised: Vec<&String> = declared.difference(&lost).collect();
+            if !undeclared.is_empty() || !unrealised.is_empty() {
+                eprintln!(
+                    "refusing to write {}: --expect-stamp-loss declared {} id(s) but this run \
+                     drops {}. {} dropped and NOT declared: {}. {} declared and NOT dropped: {}. \
+                     The declaration must name the loss set exactly -- re-derive it, or drop the \
+                     flag and fix the cause.",
+                    output_path.display(),
+                    declared.len(),
+                    lost.len(),
+                    undeclared.len(),
+                    undeclared.iter().take(10).map(|s| s.as_str()).collect::<Vec<_>>().join(", "),
+                    unrealised.len(),
+                    unrealised.iter().take(10).map(|s| s.as_str()).collect::<Vec<_>>().join(", "),
+                );
+                std::process::exit(1);
+            }
+            eprintln!(
+                "stamp-loss guard: {} declared stamp loss(es) matched exactly; writing {}",
+                declared.len(),
+                output_path.display()
+            );
+        } else if !lost.is_empty() && !allow_stamp_loss {
             eprintln!(
                 "refusing to write {}: this run would drop {} of the {} verification \
                  stamp(s) (literal-verified/fixture-verified/oracle-agree/oracle-unverifiable/\

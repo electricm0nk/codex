@@ -1,6 +1,6 @@
 //! The sheet-rule converter (SD-35 AT-35-E2-001, `technical-design.md` §1).
 //!
-//! Run once at ingest time over every unit of `docs/work-inventory.json` (49,438 -- the
+//! Run once at ingest time over every unit of `docs/work-inventory.json` (49,450 -- the
 //! population every SD-35 figure states as its denominator), each joined to its shipped
 //! `data/corpus` record by (book, source basename, source line) then (book, kind, key), and
 //! write OUR rule record to `data/sheet_rules/<book>/<kind>/<key>.json`. This module is the

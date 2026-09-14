@@ -178,7 +178,7 @@ and (b) is a sanity check.
 ## 6. The instruments, and their state at authoring
 
 ```bash
-python3 scripts/completion_atlas.py --check            # population=49438 buckets=10 unclassified=0 overlap=0 citation_failures=0
+python3 scripts/completion_atlas.py --check            # population=49450 buckets=10 unclassified=0 overlap=0 citation_failures=0  (49438 before operator ruling B18, decisions.md §21)
 python3 scripts/shape_engine_boundary.py --check       # citation_ok=True  (was stale before wave 51 — decisions.md §9 L4)
 python3 scripts/missing_engine_tables.py --check       # population=449 citation_failures=0
 python3 scripts/box_ledger.py --check                  # RED since 2026-08-26: uncovered=27502 — THE-BOX.md pins SD-33's status names; retired as a gate, decisions.md §13

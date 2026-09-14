@@ -3573,20 +3573,16 @@ const BARE_RECORD_FINDINGS: &[(&str, &str, &[&str])] = &[
     // `the_menu_command_carries_all_fourteen_adopted_race_options_thirteen_
     // with_real_grants`.
     ("bestiary_6", "race_traits", &["Adopted Race ~ Rougarou"]),
-    // SD-35 `AT-35-E6-003` cycle 6: `Elemental Body IIIMOD` — an upstream
-    // `.MOD` delta row whose key is the base spell's name with the token head
-    // welded on. It is a real corpus record
-    // (`data/corpus/mythic_adventures/spell/elemental_body_iiimod.json`,
-    // `in_scope`/`full`, `name: null`) that is **not a unit of
-    // `docs/work-inventory.json`**, and the inventory is the converted
-    // package's own population, so the converter holds it under no id and no
-    // name. The Spell Catalog served the compiled table's stored string for it
-    // until this cycle swapped that catalog onto the converted package.
-    // Reported here rather than excused: the record keeps its surface and its
-    // key; the remedy is to admit it (and its APG sibling `Wall of Thorms`) to
-    // the inventory's unit population, which is inventory scope, not this
-    // criterion's. Named in the cycle receipt and in a `deferral` retro event.
-    ("mythic_adventures", "spells", &["Elemental Body IIIMOD"]),
+    // `Elemental Body IIIMOD` was here from SD-35 `AT-35-E6-003` cycle 6 until
+    // **operator ruling B18** (`SD-35 decisions.md §21`) removed it. That entry's
+    // own remedy was "admit it to the inventory's unit population, which is
+    // inventory scope, not this criterion's" -- B18 is that scope: the widened
+    // `has_classifying_token` enumerates the row (it carries a `DESC:` but
+    // neither `SCHOOL:` nor `CLASSES:`), the converter now holds it as
+    // `mythic_adventures:spell:elemental_body_iiimod`, and the Spell Catalog
+    // serves the converted record. The finding is DELETED rather than kept and
+    // excused, which is what `bare_records_are_exactly_the_recorded_findings`
+    // fails closed on.
     // SD-32 row 20: 2 of `bestiary`/`beastiary1`'s 111 custom spell-like-
     // ability variants (transcribed from `core_essentials/ce_spells.lst`,
     // see the matching `("beastiary1", "spells")` dispatch arm's own doc

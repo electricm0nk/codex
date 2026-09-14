@@ -168,7 +168,8 @@ AST to `Expr`; it never emits the source string. **The mapping rows are transcri
 table defect to record, not a rule to invent in the cycle.
 
 **Evidence:** `cargo run --locked --bin sheet_rule_convert -- --check` exits 0 with
-`records=49438 converted=<n> refused=<n>` summing to the corpus; `grep -rlE
+`records=49450 converted=<n> refused=<n>` summing to the corpus (`49438` before operator
+ruling B18, `decisions.md §21`); `grep -rlE
 'BONUS:|DEFINE:|PRE[A-Z]+:|%CHOICE|CL=' data/sheet_rules/ | wc -l` is **0**. Unit tests on real
 records for each value form: the racial SLA DC converting to `Sum([Const(10), SpellLevel,
 AbilityMod(Cha)])`; a weapon converting to `Dice{"1d8", Some(Const(2))}`; a `%CHOICE` trait
@@ -465,6 +466,9 @@ converter-refused and are AT-35-E4-001's. Re-derive:
 
 ### AT-35-E5-005 — the corpus reaches 49,438 of 49,438, and the capability register is closed
 
+**Superseded denominator:** operator ruling B18 (`decisions.md §21`) moved the population to
+**49,450**; this criterion closed at 49,438 of 49,438 and the atlas now reads 49,450 of 49,450.
+
 **Evidence:** `completion_atlas.py --check` → `DONE=49438 of 49438`, every other bucket zero.
 `artifacts/epic-5-residues/completion-manifest.json` — one row per unit. SD-34's
 `capability-register.json` re-derived: every row `built: true` or
@@ -577,7 +581,49 @@ function bodies** under `src/pcgen_import`, `scripts/oracle_harness` and `src/or
 
 **Gated on:** Epics 1–6 all `complete`. Fires **once**.
 
+### AT-35-E7-000-POPULATION-CENSUS / AT-35-E7-000-POPULATION-FIX — the corpus population, measured then fixed
+
+**Census (three cycles, closed).** How many `data/corpus` records never reach any inventory unit —
+**measure, do not fix**. Answer, confirmed across three independent methods and exhaustive over all
+2,912 never-reached records: **10**, exact rather than a ceiling
+(`artifacts/epic-7-closure/population-census-final.json`,
+`AT-35-E7-000-POPULATION-CENSUS_cycle3_receipt.md`).
+
+**Fix (operator ruling B18, `decisions.md §21`).** The 10 were dropped by one enumeration
+predicate, `has_classifying_token`, which tested a single classifying token per kind as a proxy for
+"this row is a record". **The PREDICATE is widened — never the ten rows**: no id allow-list, no book
+exemption, no `pu_feats.lst` special case, because each of those leaves the next such row silently
+dropped. A row carrying its own non-empty, non-`.CLEAR` `DESC:`/`BENEFIT:` is a record whether or
+not it carries the token.
+
+**Acceptance:** three RED→GREEN cases preserved (the old shape still enumerates; a `pu_feats` row
+that used to be dropped now enumerates; a row with neither token nor prose still does not, and a
+`.MOD` chassis row carrying prose is still refused); the widened predicate's corpus-wide admission
+**measured before it is trusted**, across every publisher, and reported with its counts; the
+inventory, `data/sheet_rules/` and the atlas all regenerated in the same cycle, with every figure
+that pinned 49,438 swept from the live figure; and **every admitted unit proven to RENDER a sheet
+line**, not merely to be in the inventory.
+
+**Evidence:** `widened_predicate_census.py` → `admitted_rows=17 rows_no_longer_admitted=0`;
+`b18_ten_render_proof.py` → `admitted=12 render=12 failures=0`, naming each unit's sheet line;
+`completion_atlas.py --check` → `population=49450 DONE 49450`.
+
 ### AT-35-E7-001 — final-acceptance scan
+
+**The completion bar is stated against the CORPUS population, with its denominator named**
+(`decisions.md §8`, `§21`). Two figures, never one, and neither may be quoted without the other:
+
+| figure | value | re-derive command |
+|---|---|---|
+| **inventory** completion | **49,450 of 49,450 = 100%** | `python3 scripts/completion_atlas.py --check` |
+| **corpus** completion — the headline | **48,864 of 48,864 real `data/corpus` rules records = 100%** | the census denominator (`artifacts/epic-7-closure/population-census-final.json`, cycle 1's `48,864`; cycle 3's receipt §"The closed census") plus `b18_ten_render_proof.py` for the last 10 |
+
+`49,438` is superseded everywhere and is never the bar. Before ruling B18 the corpus figure was
+**48,854 of 48,864 = 99.9795%** while the inventory read 100%, and the gap was the census's 10
+records — which is exactly why the bar is stated against the corpus: an inventory-only figure
+cannot see a record the inventory never enumerated. The scan **cites the census**
+(`AT-35-E7-000-POPULATION-CENSUS_cycle3_receipt.md`) for the corpus denominator rather than
+re-deriving it.
 
 Every criterion `AT-35-E1-001` … `AT-35-E6-004` is `complete` and every `kanban.md` card is
 `complete`. **There is no "complete or filed under Open blockers".** The scan re-derives every

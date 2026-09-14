@@ -42,7 +42,7 @@ register row.
 |---|---|---|
 | C3.1 | **How to verify a system whose rules exist only as prose.** Inherited from SD-34 C3.1. | A research spike. |
 | C3.2 | **Whether oracle agreement is the right definition of correct.** Inherited from SD-34 C3.2. SD-35 sharpens it further: the oracle checks totals; the sheet line is a new surface the oracle never sees. | A research spike. |
-| C3.3 | **Errata.** Inherited from SD-34 C3.3. A corpus at 49,438 of 49,438 has no mechanism to notice its source changed upstream. | A future SD-N. |
+| C3.3 | **Errata.** Inherited from SD-34 C3.3. A corpus at 49,450 of 49,450 has no mechanism to notice its source changed upstream. | A future SD-N. |
 
 ## E1.x — Branches ruled OUT of SD-33's 2026-08-26 fold — do not re-litigate
 

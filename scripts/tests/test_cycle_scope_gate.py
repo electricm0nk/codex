@@ -11,7 +11,7 @@ evidence sentence names are executed, not narrated:
   - a 12-unit scope that is the entire remainder exits 0
                                                 (`PASS_WHOLE_REMAINDER`)
 
-Uses small synthetic inventory fixtures, not the live 49,438-unit corpus,
+Uses small synthetic inventory fixtures, not the live 49,450-unit corpus,
 so these tests stay fast and are not subject to corpus drift across cycles
 (`test_completion_atlas.py` sets the precedent). The `--receipt` math
 (id-set moved into DONE, bucket-to-bucket relabels, Rust lines from

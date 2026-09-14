@@ -64,7 +64,8 @@ not with unit count (`../SD-34-book-completion/fable-review.md §1.b`).
 **SD-35 builds two small things** — an ingest-time converter that writes our own rule records
 from PCGen tokens, and a forty-line live evaluator for our own expression form
 (`technical-design.md §1`–`§2`) — runs the converter corpus-wide until the atlas reads
-`DONE=49438 of 49438`, then **removes the old run-time PCGen path from the live side** with the
+`DONE=49450 of 49450` (`49438` until operator ruling B18, `decisions.md §21`), then **removes
+the old run-time PCGen path from the live side** with the
 oracle proving parity before and after (Epic 6).
 
 **Primary deliverable (S1):** every unit DONE under the sheet rule, `unclassified=0`.

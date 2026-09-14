@@ -1,6 +1,8 @@
 //! Character trait/drawback selection & effects engine (AT-34-E4-002,
 //! bucket M closure, `ultimate_campaign`'s `trait_content` kind --
-//! corpus-wide, the same evidence shape is 1,665 of 49,438 units).
+//! corpus-wide, the same evidence shape is 1,665 of the 49,438 units the
+//! inventory held when AT-34-E4-002 measured it; the population is 49,450
+//! after operator ruling B18, `SD-35 decisions.md §21`).
 //!
 //! Before this file, no character trait/drawback selection capability
 //! existed anywhere in this crate: `CharacterInput` carried no field for

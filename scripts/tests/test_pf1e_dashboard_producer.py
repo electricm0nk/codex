@@ -150,7 +150,7 @@ class DonenessVerdictGridTest(unittest.TestCase):
         )
 
     def test_ambiguous_unmeasurable_is_unmeasurable(self):
-        """`AT-33-E6-001` (2026-08-25): the real, live cell -- 11 of 49,438
+        """`AT-33-E6-001` (2026-08-25): the real, live cell -- 11 of the 49,438
         `docs/work-inventory.json` units carry exactly this pair after
         `AT-33-E4-002` renamed the 318 genuinely-irreducible units'
         `status` from `unknown` to `unmeasurable` without updating this

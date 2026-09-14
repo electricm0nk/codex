@@ -36882,14 +36882,14 @@
     {
       "kind": "feat",
       "label": "Feats",
-      "done": 164,
+      "done": 165,
       "partial": 20,
       "not_started": 0,
-      "denominator": 184,
-      "pct": 89.1,
+      "denominator": 185,
+      "pct": 89.2,
       "excluded_from_percentage": 1,
       "standing_breakdown": {
-        "origin": 184,
+        "origin": 185,
         "unclassified": 1
       },
       "items": [
@@ -37039,6 +37039,13 @@
           "type_facet": "Combat",
           "standing": "origin",
           "display_name": "Cleave"
+        },
+        {
+          "name": "Cleave (Granted by Sylvan Scimitar)",
+          "doneness": "done",
+          "type_facet": null,
+          "standing": "origin",
+          "display_name": "Cleave (Granted by Sylvan Scimitar)"
         },
         {
           "name": "Combat Casting",
@@ -40620,14 +40627,14 @@
     {
       "kind": "spell",
       "label": "Spells",
-      "done": 568,
+      "done": 569,
       "partial": 77,
       "not_started": 0,
-      "denominator": 645,
+      "denominator": 646,
       "pct": 88.1,
       "excluded_from_percentage": 19,
       "standing_breakdown": {
-        "origin": 645,
+        "origin": 646,
         "unclassified": 19
       },
       "items": [
@@ -43178,6 +43185,13 @@
           "type_facet": "Divine",
           "standing": "origin",
           "display_name": "Magic Vestment"
+        },
+        {
+          "name": "Magic Vestment (Shield use)",
+          "doneness": "done",
+          "type_facet": "Divine",
+          "standing": "origin",
+          "display_name": "Magic Vestment (Shield use)"
         },
         {
           "name": "Magic Weapon",

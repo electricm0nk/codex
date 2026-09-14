@@ -237,7 +237,12 @@ fn package_prose_carries_no_upstream_editorial_marker() {
 fn package_on_disk_is_fresh_and_clean() {
     let s = shared();
     let r = run(&s.tree, &s.index, &s.closures);
-    assert_eq!(r.report.records, 49_438, "records = every docs/work-inventory.json unit");
+    // **49,438 -> 49,450 with SD-35 operator ruling B18** (`decisions.md §21`): the widened
+    // `has_classifying_token` admitted 12 units that carry their own rule prose but not the
+    // classifying token their kind used to demand. This figure is the inventory's own unit count,
+    // so it moves whenever the inventory's population legitimately does; re-derive it with
+    // `python3 -c "import json;print(json.load(open('docs/work-inventory.json'))['totals']['units'])"`.
+    assert_eq!(r.report.records, 49_450, "records = every docs/work-inventory.json unit");
     assert_eq!(r.report.converted + r.report.refused, r.report.records);
     if let Err(problems) = check(&repo().join("data/sheet_rules"), &r) {
         panic!("{} problem(s), e.g. {:?}", problems.len(), problems.iter().take(8).collect::<Vec<_>>());

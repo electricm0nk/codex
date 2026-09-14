@@ -706,3 +706,80 @@ what ships.
 shipped_data_hits=0 shipped_scanned=11 live_files=0 live_hits=0 verdict=PASS`); the independent
 grep of every file under `bundle.resources`; `gen_desktop_fixture_corpus --check` and
 `gen_settled_corpus --check` for the regeneration contract.
+
+## §21 — Operator ruling B18, 2026-09-14: the shape filter stops dropping real rules, and the 10 reach a sheet
+
+**Ruled: FIX IT NOW.** `AT-35-E7-000-POPULATION-CENSUS` closed across three cycles with an exact
+answer: **10** `data/corpus` records carrying published rules prose reached **no** inventory unit
+and therefore no rendered sheet line — nine `pathfinder_unchained` feats and one
+`mythic_adventures` spell. Its cycle-3 receipt raised its hand and asked for exactly two grants:
+write scope to `src/bin/v06_work_inventory.rs`, and a ruling on moving the atlas denominator off
+49,438. **Both are granted.** The denominator moves; that is the point of the ruling, not a
+side effect of it.
+
+**The defect was a proxy, not a carve-out.** `has_classifying_token` tested one token per kind —
+`TYPE:` for a feat, `SCHOOL:`/`CLASSES:` for a spell — as a stand-in for "this row declares a
+record of its own rather than pointing at one". The proxy is sound in one direction only: a row
+carrying the token **is** a record, but a row missing it is **not thereby** a non-record. All nine
+`pu_feats.lst` rows carry `CATEGORY:FEAT`, `DESC:` and `BENEFIT:` and no `TYPE:`; the
+`ma_spells.lst` row carries a name and a `DESC:`. Every one is a rule a player looks up, and every
+one was dropped into the `missing_classifying_token` trap, out of the inventory, out of the
+converter (whose population **is** the inventory) and out of the atlas. `AGENTS.md` rule 7 in its
+purest form: a filter that passed every case anyone tested and was silently wrong on the shapes
+nobody did.
+
+**The fix is the PREDICATE, never the ten rows.** No id allow-list, no book exemption, no
+`pu_feats.lst` special case — each of those would leave the next such row dropped, which is the
+whole defect. Under the sheet rule (`§1`) DONE is the rule's words on the page, so the honest test
+for "this row is a record" is **does the row carry the rule's words**: a non-empty, non-`.CLEAR`
+`DESC:` or `BENEFIT:` (`row_carries_rule_prose`). A sub-choice helper — the shape the trap exists
+to exclude — carries none; it is a gateway, a pick-list entry or a header field, all pointer and no
+prose. This generalises the reasoning `ability_row_has_content` already applies to `Kind::Ability`
+to the two kinds still on a token proxy. It is deliberately **narrower** than
+`ABILITY_CONTENT_PREFIXES`: prose only, no `BONUS`/`DEFINE:`/`AUTO:`, so a pick-list row that
+restates a record declared elsewhere while carrying a bonus is still refused.
+
+**What it admitted, measured before it was trusted** (every publisher in the pinned checkout, not
+only the in-scope books — an out-of-scope blow-up would have been visible):
+`python3 docs/release/SD-35-corpus-sheet-completion/artifacts/epic-7-closure/widened_predicate_census.py`
+→ `admitted_rows=17 rows_no_longer_admitted=0` (feat 4,283 → 4,293 of 4,536 rows; spell 3,685 →
+3,692 of 4,342). Seventeen `.lst` rows became **12** units after `refine_kind`, book attribution
+and the duplicate-identity trap: the 10 the census named, plus
+`core_rulebook:feat:sylvan_scimitar_cleave` and `core_rulebook:spell:magic_vestment_shield_use`.
+**Twelve, not thousands** — the filter was not load-bearing, and no row lost its verdict.
+
+**The figures move, and this is the pair every SD-35 reader quotes from here on:**
+
+| figure | before B18 | after B18 |
+|---|---:|---:|
+| inventory population | 49,438 | **49,450** |
+| `completion_atlas.py --check` | DONE 49,438 of 49,438 | **DONE 49,450 of 49,450** |
+| corpus records reaching a sheet line | 48,854 of 48,864 = 99.9795% | **48,864 of 48,864 = 100%** |
+
+**`--allow-stamp-loss` was refused, and a stronger mechanism built instead.** The guarded regen was
+blocked by a **pre-existing** stamp-loss condition: 230 `class_feature` units move
+`sheet-complete` → `text-complete`, because `class_feature_pool_catalog_holds` now returns true for
+them and `text-complete` is not in `SHEET_COMPLETE_PROMOTABLE_STATUSES`. Both statuses are DONE and
+`text-complete` sits **above** the rung, so this is a relabel **upward** and costs zero completion;
+it is present unchanged at `AT-35-E6-003-RULED` cycle 14's HEAD, so no cycle since has been able to
+regenerate the inventory at all. The blanket `--allow-stamp-loss` flag could not be used and could
+not be widened: measured by running the binary without its two report env vars, the **7,615**-stamp
+regression the guard exists to stop lands on `grounded` (7,329) and `text-complete` (286) — the
+**same** statuses a legitimate supersession lands on, so no status-set widening separates them and
+the separation has to be by **identity**. So the binary gains
+`--expect-stamp-loss <declaration.json>`: the run writes only when its loss set is **equal** to the
+declared id set — one undeclared loss, or one declared loss that did not happen, and the write is
+refused and names the difference. The declaration is committed
+(`artifacts/epic-7-closure/b18-expected-stamp-loss.json`), so the losses a regen takes are in the
+diff and in review one id at a time. This is `AGENTS.md` rule 8: the blanket flag was a warning;
+the equality is a control.
+
+**Enforced by:** `has_classifying_token`'s four RED→GREEN tests in `src/bin/v06_work_inventory.rs`
+(old shape preserved; a `pu_feats`/`ma_spells` prose row now classifies; a row with neither token
+nor prose still does not; and, through `enumerate_file`, a `.MOD` chassis row carrying prose is
+still refused because `.MOD` is dispatched to its own trap before the predicate is consulted);
+`declared_stamp_loss`'s three tests; `python3 scripts/completion_atlas.py --check` →
+`population=49450 DONE 49450`; and
+`python3 docs/release/SD-35-corpus-sheet-completion/artifacts/epic-7-closure/b18_ten_render_proof.py`
+→ `admitted=12 render=12 failures=0`, which prints each unit's actual sheet line and exits non-zero
+if any unit enumerates but renders nothing.

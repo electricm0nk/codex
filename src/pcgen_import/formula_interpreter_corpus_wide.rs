@@ -871,7 +871,9 @@ mod tests {
     /// The whole-remainder cycle: two token-less converter joins plus the
     /// `sheet-complete` rung's widened promotable-status list closed the last
     /// 786 non-DONE units (non-DONE 786 -> 0 by id-set diff, 0 regressions;
-    /// `completion_atlas.py --check` -> DONE 49438 of 49438). F1 fell with
+    /// `completion_atlas.py --check` -> DONE 49438 of 49438, the population
+    /// on 2026-09-08; DONE 49450 of 49450 after operator ruling B18,
+    /// `SD-35 decisions.md §21`). F1 fell with
     /// them: 135 -> 113, confirmed by re-running `python3
     /// scripts/shape_ledger.py --inventory docs/work-inventory.json
     /// --corpus-root data/corpus` against the post-regen

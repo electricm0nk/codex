@@ -1,8 +1,8 @@
 {
-  "records": 49438,
-  "converted": 49296,
+  "records": 49450,
+  "converted": 49308,
   "refused": 142,
-  "rules_written": 70135,
+  "rules_written": 70147,
   "var_tables": 5293,
   "by_kind": {
     "ability": {
@@ -46,8 +46,8 @@
       "refused": 0
     },
     "feat": {
-      "records": 2764,
-      "converted": 2753,
+      "records": 2774,
+      "converted": 2763,
       "refused": 11
     },
     "language": {
@@ -86,8 +86,8 @@
       "refused": 0
     },
     "spell": {
-      "records": 2843,
-      "converted": 2843,
+      "records": 2845,
+      "converted": 2845,
       "refused": 0
     },
     "template": {

@@ -11,7 +11,7 @@ of them an anecdote inside a lessons list. The bundle's goal stopped being a
 thing anyone had to update. This script is the mechanism that makes
 `THE-BOX.md` a living partition rather than a document: it reads the
 group definitions straight out of the committed markdown (a fenced
-` ```json ledger ` block) and the full 49,438-unit population straight out
+` ```json ledger ` block) and the full 49,450-unit population straight out
 of `docs/work-inventory.json`, and fails closed if the two disagree.
 
 `AT-33-E1-001` is the only criterion this cycle implements. It requires:

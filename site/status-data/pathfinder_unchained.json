@@ -7129,17 +7129,80 @@
     {
       "kind": "feat",
       "label": "Feats",
-      "done": 7,
+      "done": 16,
       "partial": 0,
       "not_started": 0,
-      "denominator": 7,
+      "denominator": 16,
       "pct": 100.0,
       "excluded_from_percentage": 1,
       "standing_breakdown": {
-        "origin": 7,
+        "origin": 16,
         "unclassified": 1
       },
       "items": [
+        {
+          "name": "Champion of Anarchy",
+          "doneness": "done",
+          "type_facet": null,
+          "standing": "origin",
+          "display_name": "Champion of Anarchy"
+        },
+        {
+          "name": "Champion of Balance",
+          "doneness": "done",
+          "type_facet": null,
+          "standing": "origin",
+          "display_name": "Champion of Balance"
+        },
+        {
+          "name": "Champion of Destruction",
+          "doneness": "done",
+          "type_facet": null,
+          "standing": "origin",
+          "display_name": "Champion of Destruction"
+        },
+        {
+          "name": "Champion of Freedom",
+          "doneness": "done",
+          "type_facet": null,
+          "standing": "origin",
+          "display_name": "Champion of Freedom"
+        },
+        {
+          "name": "Champion of Grace",
+          "doneness": "done",
+          "type_facet": null,
+          "standing": "origin",
+          "display_name": "Champion of Grace"
+        },
+        {
+          "name": "Champion of Malevolence",
+          "doneness": "done",
+          "type_facet": null,
+          "standing": "origin",
+          "display_name": "Champion of Malevolence"
+        },
+        {
+          "name": "Champion of Righteousness",
+          "doneness": "done",
+          "type_facet": null,
+          "standing": "origin",
+          "display_name": "Champion of Righteousness"
+        },
+        {
+          "name": "Champion of Tranquility",
+          "doneness": "done",
+          "type_facet": null,
+          "standing": "origin",
+          "display_name": "Champion of Tranquility"
+        },
+        {
+          "name": "Champion of Tyranny",
+          "doneness": "done",
+          "type_facet": null,
+          "standing": "origin",
+          "display_name": "Champion of Tyranny"
+        },
         {
           "name": "Combat Stamina",
           "doneness": "done",

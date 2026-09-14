@@ -7,7 +7,7 @@
         ],
         "context_fn": "classify",
         "file": "src/bin/v06_work_inventory.rs",
-        "resolved_line": 16471
+        "resolved_line": 16643
       },
       "clears": "building the table (Epic 2)",
       "count": 0,
@@ -21,7 +21,7 @@
         ],
         "context_fn": "classify",
         "file": "src/bin/v06_work_inventory.rs",
-        "resolved_line": 16070
+        "resolved_line": 16242
       },
       "clears": "placing the record (Epic 3/4)",
       "count": 0,
@@ -35,7 +35,7 @@
         ],
         "context_fn": "classify",
         "file": "src/bin/v06_work_inventory.rs",
-        "resolved_line": 16376
+        "resolved_line": 16548
       },
       "clears": "wiring the display/explanation path (Epic 3)",
       "count": 0,
@@ -50,7 +50,7 @@
         ],
         "context_fn": "classify",
         "file": "src/bin/v06_work_inventory.rs",
-        "resolved_line": 13404
+        "resolved_line": 13576
       },
       "clears": "per named sub-cause",
       "count": 0,
@@ -66,10 +66,10 @@
         ],
         "context_fn": "simple_kind_verdict",
         "file": "src/bin/v06_work_inventory.rs",
-        "resolved_line": 13176
+        "resolved_line": 13348
       },
       "clears": "\u2014",
-      "count": 49438,
+      "count": 49450,
       "evidence_source": "src/bin/v06_work_inventory.rs (status in {grounded, text-complete, oracle-agree, oracle-unverifiable, sheet-complete})",
       "meaning": "nothing remains"
     },
@@ -81,7 +81,7 @@
         ],
         "context_fn": "simple_kind_verdict",
         "file": "src/bin/v06_work_inventory.rs",
-        "resolved_line": 13187
+        "resolved_line": 13359
       },
       "clears": "running the compute path (shape engine)",
       "count": 0,
@@ -96,7 +96,7 @@
         ],
         "context_fn": "classify",
         "file": "src/bin/v06_work_inventory.rs",
-        "resolved_line": 13492
+        "resolved_line": 13664
       },
       "clears": "instrument correction",
       "count": 0,
@@ -110,7 +110,7 @@
         ],
         "context_fn": "apply_done_rung_stamps",
         "file": "src/bin/v06_work_inventory.rs",
-        "resolved_line": 17317
+        "resolved_line": 17489
       },
       "clears": "the SD-33 oracle harness (scripts/oracle_harness/)",
       "count": 0,
@@ -125,7 +125,7 @@
         ],
         "context_fn": "classify",
         "file": "src/bin/v06_work_inventory.rs",
-        "resolved_line": 13452
+        "resolved_line": 13624
       },
       "clears": "revisiting the stated condition",
       "count": 0,
@@ -140,7 +140,7 @@
         ],
         "context_fn": "classify",
         "file": "src/bin/v06_work_inventory.rs",
-        "resolved_line": 13313
+        "resolved_line": 13485
       },
       "clears": "ordinary work",
       "count": 0,
@@ -149,12 +149,12 @@
     }
   },
   "citation_failures": [],
-  "derived_at": "82ffbb4ed24f1e3671bb63b4b74ef426373d7eae",
+  "derived_at": "405faf267142f042a198ef57d39d31b7fa6514d7",
   "done_evidence_violation_ids": [],
   "done_evidence_violations": 0,
   "missing_clearing_mechanisms": [],
   "overlap": 0,
-  "population": 49438,
+  "population": 49450,
   "re_derive_command": "python3 scripts/completion_atlas.py --check",
   "stale_derived_at": false,
   "sub_causes": {

@@ -904,11 +904,30 @@ mod tests {
             )
         );
 
+        // **Operator ruling B18** (`SD-35 decisions.md §21`) is visible right here. Until it
+        // landed, this row served only its `DESC:` sentence: the nine `pu_feats.lst`
+        // alignment-champion feats carried `CATEGORY:FEAT`, `DESC:` and `BENEFIT:` but no
+        // `TYPE:`, so `has_classifying_token` dropped them from the inventory, the converter
+        // (whose population IS the inventory) held no rule for them, and the picker fell back
+        // to the compiled table's stored string. B18 widened the predicate to accept a row's
+        // own rule prose, so the player now reads the feat's actual BENEFIT as well -- the
+        // same gain `Angel Wings` above records, for the same reason.
         let champion = find("Champion of Tyranny", "Pu");
         assert_eq!(champion.category, "Alignment");
         assert_eq!(
             champion.description.as_deref(),
-            Some("You must beat down the masses to have true order.")
+            Some(
+                "You must beat down the masses to have true order.\nYou can store a number of \
+                 affirmations up to your Charisma bonus (minimum 1) to use at any time, not just \
+                 within the next 24 hours. You can use an affirmation to cast hold person as a \
+                 spell-like ability as a standard action, with a caster level equal to your Hit \
+                 Dice. You gain a +2 bonus on weapon and spell damage rolls against chaotic and \
+                 good creatures (or +4 if the creature is both chaotic and good). This is an \
+                 alignment-based effect. Residual: If you have this feat but you are no longer \
+                 lawful evil, you continue to gain the +2 bonus on weapon and spell damage rolls \
+                 against chaotic and good creatures (or a +4 bonus if the creature is both \
+                 chaotic and good)."
+            )
         );
     }
 

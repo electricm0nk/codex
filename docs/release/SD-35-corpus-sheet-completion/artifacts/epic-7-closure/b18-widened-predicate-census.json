@@ -1,0 +1,131 @@
+{
+  "ruling": "SD-35 operator ruling B18 (decisions.md \u00a721)",
+  "criterion": "AT-35-E7-000-POPULATION-FIX",
+  "corpus": "/home/ubuntu/workspace/repos/pcgen/data/pathfinder",
+  "predicate_old": "feat: TYPE:  |  spell: SCHOOL: or CLASSES:",
+  "predicate_new": "the same, OR a non-empty non-.CLEAR DESC:/BENEFIT: (row_carries_rule_prose)",
+  "scope": "every publisher in the pinned checkout, not only the in-scope books",
+  "counts": {
+    "feat_new_pass": 4293,
+    "feat_old_pass": 4283,
+    "feat_rows": 4536,
+    "spell_new_pass": 3692,
+    "spell_old_pass": 3685,
+    "spell_rows": 4342
+  },
+  "admitted_rows": 17,
+  "rows_no_longer_admitted": 0,
+  "admitted_by_book": {
+    "pathfinder_unchained": 9,
+    "bestiary_4": 2,
+    "core_rulebook": 2,
+    "ultimate_combat": 2,
+    "inner_sea_faiths": 1,
+    "mythic_adventures": 1
+  },
+  "admitted": [
+    {
+      "kind": "spell",
+      "file": "paizo/campaign_setting/inner_sea_faiths/isf_spells.lst",
+      "line": 9,
+      "name": "Curse of Disgust (Besmaran)"
+    },
+    {
+      "kind": "spell",
+      "file": "paizo/roleplaying_game/bestiary_4/b4_spells_modified.lst",
+      "line": 115,
+      "name": "Summon Nature's Ally V (Oceanid)"
+    },
+    {
+      "kind": "spell",
+      "file": "paizo/roleplaying_game/bestiary_4/b4_spells_modified.lst",
+      "line": 116,
+      "name": "Summon Nature's Ally VI (Erlking)"
+    },
+    {
+      "kind": "feat",
+      "file": "paizo/roleplaying_game/core_rulebook/cr_feats.lst",
+      "line": 213,
+      "name": "Cleave (Granted by Sylvan Scimitar)"
+    },
+    {
+      "kind": "spell",
+      "file": "paizo/roleplaying_game/core_rulebook/cr_spells.lst",
+      "line": 722,
+      "name": "Magic Vestment (Shield use)"
+    },
+    {
+      "kind": "spell",
+      "file": "paizo/roleplaying_game/mythic_adventures/ma_spells.lst",
+      "line": 98,
+      "name": "Elemental Body IIIMOD"
+    },
+    {
+      "kind": "feat",
+      "file": "paizo/roleplaying_game/pathfinder_unchained/pu_feats.lst",
+      "line": 6,
+      "name": "Champion of Anarchy"
+    },
+    {
+      "kind": "feat",
+      "file": "paizo/roleplaying_game/pathfinder_unchained/pu_feats.lst",
+      "line": 7,
+      "name": "Champion of Balance"
+    },
+    {
+      "kind": "feat",
+      "file": "paizo/roleplaying_game/pathfinder_unchained/pu_feats.lst",
+      "line": 8,
+      "name": "Champion of Destruction"
+    },
+    {
+      "kind": "feat",
+      "file": "paizo/roleplaying_game/pathfinder_unchained/pu_feats.lst",
+      "line": 9,
+      "name": "Champion of Freedom"
+    },
+    {
+      "kind": "feat",
+      "file": "paizo/roleplaying_game/pathfinder_unchained/pu_feats.lst",
+      "line": 10,
+      "name": "Champion of Grace"
+    },
+    {
+      "kind": "feat",
+      "file": "paizo/roleplaying_game/pathfinder_unchained/pu_feats.lst",
+      "line": 11,
+      "name": "Champion of Malevolence"
+    },
+    {
+      "kind": "feat",
+      "file": "paizo/roleplaying_game/pathfinder_unchained/pu_feats.lst",
+      "line": 12,
+      "name": "Champion of Righteousness"
+    },
+    {
+      "kind": "feat",
+      "file": "paizo/roleplaying_game/pathfinder_unchained/pu_feats.lst",
+      "line": 13,
+      "name": "Champion of Tranquility"
+    },
+    {
+      "kind": "feat",
+      "file": "paizo/roleplaying_game/pathfinder_unchained/pu_feats.lst",
+      "line": 14,
+      "name": "Champion of Tyranny"
+    },
+    {
+      "kind": "spell",
+      "file": "paizo/roleplaying_game/ultimate_combat/uc_spells.lst",
+      "line": 65,
+      "name": "Life Conduit (Greater)"
+    },
+    {
+      "kind": "spell",
+      "file": "paizo/roleplaying_game/ultimate_combat/uc_spells.lst",
+      "line": 66,
+      "name": "Life Conduit (Improved)"
+    }
+  ],
+  "lost": []
+}

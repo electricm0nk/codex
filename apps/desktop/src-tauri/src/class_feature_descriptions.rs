@@ -437,7 +437,7 @@ mod tests {
     /// this module used to run per record -- the dropped-argument check and the
     /// leaked-syntax check -- both of them properties of a render this module no
     /// longer performs. The rest of what they protected (no source-format marker
-    /// anywhere in the served text) is proven for the WHOLE package, all 49,438
+    /// anywhere in the served text) is proven for the WHOLE package, all 49,450
     /// units, by `workflow-instruction.md §6`'s source-marker grep over
     /// `data/sheet_rules/`; restating it per served row here would be a second,
     /// weaker copy of a gate that already runs every cycle.
