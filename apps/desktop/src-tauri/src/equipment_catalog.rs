@@ -886,106 +886,107 @@ mod tests {
         // at the cost of a twenty-minute crate run per book. `AGENTS.md`'s concurrency
         // section asks for exactly this: attribute every failure and name each, rather than
         // discover them one run at a time.
-        let mut pinned: Vec<(&str, usize)> = Vec::new();
-        pinned.push(("CRB", 2648));
-        // 368 -> 374, and `UE` 573 -> 586: cycle 16's `description` fallback
-        // (`dca9c80fe3`, 239 equipment + 44 equipment_modifier rule files) gave these rows the
-        // book's own sentence, and `catalog_description` now has words to return for them.
-        // Not cycle 17's escape fix, which touched four `core_rulebook` files only. Both pins
-        // had been stale since cycle 16, which did not run this crate; both surfaced in one
-        // run because the pins are collected rather than asserted one at a time.
-        pinned.push(("APG", 374));
-        // 307 -> 311, SD-35 `AT-35-E6-003-SWEEP` cycle 5 (`6fe6131922`),
-        // pinned here by cycle 15, the first run of this crate since. The four
-        // are ACG's Equipmods rows whose stored string used to leak a raw `%`
-        // and was therefore refused; `safe_description` now stores the rendered
-        // text and they serve real prose. Same four rows as the
-        // `("ACG", "Equipmods")` bucket that disappears from
-        // `the_raw_percent_escape_stops_at_the_catalog_boundary` above.
-        // Re-derived from the built catalog itself (the assertion's own
-        // `left`), not adjusted by delta.
-        pinned.push(("ACG", 311));
-        pinned.push(("B1", 5));
-        pinned.push(("ARG", 205));
-        pinned.push(("PU", 42));
-        pinned.push(("UI", 48));
-        pinned.push(("UE", 586));
-        // 24 of UM's 26 (both Scrollmaster Gear ArmsArmor rows carry no
-        // description; all 24 General spellbooks do).
-        pinned.push(("UM", 24));
-        // 403 -> 404, SD-35 `AT-35-E6-003` cycle 10. Re-derived from the
-        // built catalog itself (the assertion's own `left`), not adjusted by
-        // delta. This is the first run of the desktop crate since cycle 7
-        // swapped this catalog's description source from the compiled
-        // table's stored string to the converted package -- the crate is a
-        // separate cargo workspace, so the root `cargo test` never builds it
-        // and `workflow-instruction.md` §6 runs it only for a cycle that
-        // touches `apps/`. Cycles 8 and 9 regenerated `data/sheet_rules/`
-        // and did not. One further Ultimate Psionics row therefore reaches a
-        // player with its own words; verified NOT to be this cycle's own
-        // converter change, which altered exactly one field (`print`, 527
-        // times) and no rule's prose or id -- `catalog_description` does not
-        // read `print`.
-        pinned.push(("UPSI", 404));
-        // Most ArmsArmor rows (ammunition, armor, plain weapons) carry no
-        // `SPROP:` token at all, matching every other book's own
-        // weapon-heavy shortfall.
-        pinned.push(("UC", 105));
-        // UW reaches this catalog only through the corpus gap lane; 57 of its
-        // 127 rows state real descriptive or special-property text.
-        pinned.push(("UW", 56));
-        // `SD31-E6-F10-003`: 8 further already-compiled books (`OA`, `HA`,
-        // `ISR`, `ISWG`, `MC`, `B2`, `B3`, `B4`) extended into the corpus
-        // gap lane -- same "no hand-authored table, every row from the gap
-        // lane" shape as `UW` above. Re-derived fresh from the built
-        // catalog, not adjusted by delta: 4235 + 195 = 4430 (`declared_pi_at`'s
-        // own fix in `gen_equipment_gap_tables.rs` redacts/excludes 4 fewer
-        // than the earlier, pre-fix intermediate count -- re-derived fresh,
-        // not hand-adjusted, after that fix landed).
-        // `SD31-E6-F10-004`: 5 further already-compiled books extended into
-        // the corpus gap lane -- same shape. Per-book, re-derived fresh from
-        // the built catalog: `ISG` 72/125, `MYTHIC` 97/252 (most mythic
-        // items are `.MOD`/`NAMEISPI` rows or bare stat-boost items with no
-        // descriptive or special-property text), `ISC` 7/65, `ISI` 9/34, `BOTD2` 3/5.
-        // SD-32 `decisions.md §24` re-derivation (`t9-onboarding-unowned-
-        // reds`): `ISG`'s 25 newly-included neutral-named rows contribute
-        // 25 more real descriptions (72 -> 97); `ISI`'s 8 newly-included
-        // rows contribute 3 more (9 -> 12); `BOTD2`'s 1 newly-included row
-        // contributes 1 more (3 -> 4). `MYTHIC`'s and `ISC`'s newly-
-        // included rows state no descriptive or special-property text of their own, so
-        // their description counts are unchanged.
-        pinned.push(("ISG", 139));
-        pinned.push(("MYTHIC", 116));
-        pinned.push(("ISC", 7));
-        pinned.push(("ISI", 12));
-        pinned.push(("BOTD2", 4));
-        // 4430 + 188 (72 + 97 + 7 + 9 + 3) = 4618.
-        // SD-32 T9 onboarding (card 11): `ISTEM` 33/43, `ISM` 4/6 --
-        // re-derived directly against the generated `equipment_gap_tables.rs`
-        // (counting non-`None` `description` fields, not hand-adjusted).
-        pinned.push(("ISTEM", 33));
-        // SD-32 T9 residual (`decisions.md §20`): `ISM` 4 -> 54.
-        // `cache_gen::equipment_gap::book_routing` had no arm for `"ISM"`
-        // at all (fixed) and `ism_equipmods.lst` regained its citations on
-        // a stale exclusion (fixed) -- ISM's row count itself grew 6 -> 68,
-        // and 54 of those 68 state real descriptive or special-property text,
-        // re-derived directly against the regenerated
-        // `equipment_gap_tables.rs`.
-        pinned.push(("ISM", 54));
-        // SD-32 T9 residual: the new `AG` book (`adventurers_guide`, no
-        // corpus gap config at all before this cycle) -- 14 of its 97 rows
-        // carry a real description, re-derived directly against the
-        // generated table.
-        // SD-32 `decisions.md §24`/T9 residual re-derivation: `AG`'s
-        // newly-included rows (97 -> 116 total, see `catalog_spans_every_
-        // ingested_book_with_their_real_counts`) contribute 4 more real
-        // descriptions (14 -> 18).
-        pinned.push(("AG", 19));
-        // SD-32 desktop count re-sweep: `BB` (`beginner_box`) -- 13 of its
-        // 19 rows state real descriptive or special-property text (6 `description:
-        // None`), re-derived directly against the regenerated
-        // `equipment_gap_tables.rs`.
-        pinned.push(("BB", 15));
+        let pinned: Vec<(&str, usize)> = vec![
+            ("CRB", 2648),
+            // 368 -> 374, and `UE` 573 -> 586: cycle 16's `description` fallback
+            // (`dca9c80fe3`, 239 equipment + 44 equipment_modifier rule files) gave these rows the
+            // book's own sentence, and `catalog_description` now has words to return for them.
+            // Not cycle 17's escape fix, which touched four `core_rulebook` files only. Both pins
+            // had been stale since cycle 16, which did not run this crate; both surfaced in one
+            // run because the pins are collected rather than asserted one at a time.
+            ("APG", 374),
+            // 307 -> 311, SD-35 `AT-35-E6-003-SWEEP` cycle 5 (`6fe6131922`),
+            // pinned here by cycle 15, the first run of this crate since. The four
+            // are ACG's Equipmods rows whose stored string used to leak a raw `%`
+            // and was therefore refused; `safe_description` now stores the rendered
+            // text and they serve real prose. Same four rows as the
+            // `("ACG", "Equipmods")` bucket that disappears from
+            // `the_raw_percent_escape_stops_at_the_catalog_boundary` above.
+            // Re-derived from the built catalog itself (the assertion's own
+            // `left`), not adjusted by delta.
+            ("ACG", 311),
+            ("B1", 5),
+            ("ARG", 205),
+            ("PU", 42),
+            ("UI", 48),
+            ("UE", 586),
+            // 24 of UM's 26 (both Scrollmaster Gear ArmsArmor rows carry no
+            // description; all 24 General spellbooks do).
+            ("UM", 24),
+            // 403 -> 404, SD-35 `AT-35-E6-003` cycle 10. Re-derived from the
+            // built catalog itself (the assertion's own `left`), not adjusted by
+            // delta. This is the first run of the desktop crate since cycle 7
+            // swapped this catalog's description source from the compiled
+            // table's stored string to the converted package -- the crate is a
+            // separate cargo workspace, so the root `cargo test` never builds it
+            // and `workflow-instruction.md` §6 runs it only for a cycle that
+            // touches `apps/`. Cycles 8 and 9 regenerated `data/sheet_rules/`
+            // and did not. One further Ultimate Psionics row therefore reaches a
+            // player with its own words; verified NOT to be this cycle's own
+            // converter change, which altered exactly one field (`print`, 527
+            // times) and no rule's prose or id -- `catalog_description` does not
+            // read `print`.
+            ("UPSI", 404),
+            // Most ArmsArmor rows (ammunition, armor, plain weapons) carry no
+            // `SPROP:` token at all, matching every other book's own
+            // weapon-heavy shortfall.
+            ("UC", 105),
+            // UW reaches this catalog only through the corpus gap lane; 57 of its
+            // 127 rows state real descriptive or special-property text.
+            ("UW", 56),
+            // `SD31-E6-F10-003`: 8 further already-compiled books (`OA`, `HA`,
+            // `ISR`, `ISWG`, `MC`, `B2`, `B3`, `B4`) extended into the corpus
+            // gap lane -- same "no hand-authored table, every row from the gap
+            // lane" shape as `UW` above. Re-derived fresh from the built
+            // catalog, not adjusted by delta: 4235 + 195 = 4430 (`declared_pi_at`'s
+            // own fix in `gen_equipment_gap_tables.rs` redacts/excludes 4 fewer
+            // than the earlier, pre-fix intermediate count -- re-derived fresh,
+            // not hand-adjusted, after that fix landed).
+            // `SD31-E6-F10-004`: 5 further already-compiled books extended into
+            // the corpus gap lane -- same shape. Per-book, re-derived fresh from
+            // the built catalog: `ISG` 72/125, `MYTHIC` 97/252 (most mythic
+            // items are `.MOD`/`NAMEISPI` rows or bare stat-boost items with no
+            // descriptive or special-property text), `ISC` 7/65, `ISI` 9/34, `BOTD2` 3/5.
+            // SD-32 `decisions.md §24` re-derivation (`t9-onboarding-unowned-
+            // reds`): `ISG`'s 25 newly-included neutral-named rows contribute
+            // 25 more real descriptions (72 -> 97); `ISI`'s 8 newly-included
+            // rows contribute 3 more (9 -> 12); `BOTD2`'s 1 newly-included row
+            // contributes 1 more (3 -> 4). `MYTHIC`'s and `ISC`'s newly-
+            // included rows state no descriptive or special-property text of their own, so
+            // their description counts are unchanged.
+            ("ISG", 139),
+            ("MYTHIC", 116),
+            ("ISC", 7),
+            ("ISI", 12),
+            ("BOTD2", 4),
+            // 4430 + 188 (72 + 97 + 7 + 9 + 3) = 4618.
+            // SD-32 T9 onboarding (card 11): `ISTEM` 33/43, `ISM` 4/6 --
+            // re-derived directly against the generated `equipment_gap_tables.rs`
+            // (counting non-`None` `description` fields, not hand-adjusted).
+            ("ISTEM", 33),
+            // SD-32 T9 residual (`decisions.md §20`): `ISM` 4 -> 54.
+            // `cache_gen::equipment_gap::book_routing` had no arm for `"ISM"`
+            // at all (fixed) and `ism_equipmods.lst` regained its citations on
+            // a stale exclusion (fixed) -- ISM's row count itself grew 6 -> 68,
+            // and 54 of those 68 state real descriptive or special-property text,
+            // re-derived directly against the regenerated
+            // `equipment_gap_tables.rs`.
+            ("ISM", 54),
+            // SD-32 T9 residual: the new `AG` book (`adventurers_guide`, no
+            // corpus gap config at all before this cycle) -- 14 of its 97 rows
+            // carry a real description, re-derived directly against the
+            // generated table.
+            // SD-32 `decisions.md §24`/T9 residual re-derivation: `AG`'s
+            // newly-included rows (97 -> 116 total, see `catalog_spans_every_
+            // ingested_book_with_their_real_counts`) contribute 4 more real
+            // descriptions (14 -> 18).
+            ("AG", 19),
+            // SD-32 desktop count re-sweep: `BB` (`beginner_box`) -- 13 of its
+            // 19 rows state real descriptive or special-property text (6 `description:
+            // None`), re-derived directly against the regenerated
+            // `equipment_gap_tables.rs`.
+            ("BB", 15),
+        ];
         // Re-derived fresh this cycle (`sd32-desktop-count-resweep`) as the
         // real, measured total -- not the old 4719 plus a hand-adjusted
         // delta, because `OA`/`HA`/`ISR`/`ISWG`/`MC`/`B2`/`B3`/`B4` are not
