@@ -181,7 +181,7 @@ re-measured at the cut by the launch-readiness audit.
 
 ## Cycle log
 
-### 2026-09-13 — Epic 6 wrap-up **correction cycle** — AT-35-E6-WRAPUP-FIX **cycle 1** (`<sha>`) — **complete** (all 4 red wrap-up stages fixed at source; nothing silenced)
+### 2026-09-13 — Epic 6 wrap-up **correction cycle** — AT-35-E6-WRAPUP-FIX **cycle 1** (`952b313bbb` + `c8ce4f7f12`) — **complete** (all 4 red wrap-up stages fixed at source; nothing silenced)
 
 - **Receipt:** `artifacts/epic-6-pcgen-exit/AT-35-E6-WRAPUP-FIX_cycle1_receipt.md` (cycle start `77e8d3919a`).
 - **Scope gate:** `SCOPE_GATE: EXEMPT (wrap-up correction cycle)` — `decisions.md §2`, `workflow-instruction.md §6 step 1`. A wrap-up fix cycle closes zero units by design. **Not** exempt from the residue check, which ran at both ends.

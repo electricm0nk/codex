@@ -5,7 +5,9 @@ stages, and every red must be fixed before Epic 7's **second** dispatch. This cy
 the shared checkout and **does** commit and push, unlike the isolated gate worker, which pushed
 nothing.
 
-- **Commit SHA:** `<filled at commit>`
+- **Commit SHA:** `952b313bbb` (the fixes) + `c8ce4f7f12` (the verified gate result and the
+  three raised root floors), stamped into this receipt by the
+  commit immediately above them on `tranche/15` (`git log --oneline -3`).
 - **Cycle start SHA:** `77e8d3919a`
 - **Scope gate:** `SCOPE_GATE: EXEMPT (wrap-up correction cycle)` — `decisions.md §2` /
   `workflow-instruction.md §6 step 1`: a wrap-up fix cycle closes zero units by design. **Not**
