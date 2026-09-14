@@ -2870,5 +2870,14 @@
     "corpus_wide_figure_all_files": "51266 of 51521 `data/corpus` JSON files are either reached by a DONE unit or are not records (.MOD list rows, duplicate ingests of a reached row, `_settled` aggregates).",
     "gap_is_real": true,
     "measure_only": "This cycle measures. It adds no unit, converts nothing, edits no classifier and changes no gate. The fix is a separate criterion."
+  },
+  "cycle_2_correction": {
+    "corrects": "direction_1_corpus_to_inventory's `FULL_with_prose_no_row_reached: 255` and the verdict field's corpus-wide figure",
+    "what_changed": "255 records reach no unit under load_population's two COORDINATE keys, which is what this artifact measured and states correctly. Only 10 of them reach no rendered sheet line, which is the question the sheet rule asks. 193 are the same .lst row under a re-attributed book label (v06_work_inventory's `attributed_book` applies the supersession ruling), 48 are reached by the `.COPY=` twin row acg_equipmods enumeration deliberately prefers, 4 carry prose byte-identical to a reached record.",
+    "corrected_corpus_wide_figure": "48854 of 48864 real corpus rules records = 99.9795% (this artifact says 48609 of 48864 = 99.478%)",
+    "true_remainder": "record_absent_from_inventory_population=10",
+    "artifact": "docs/release/SD-35-corpus-sheet-completion/artifacts/epic-7-closure/population-census-255.json",
+    "re_derive": "python3 docs/release/SD-35-corpus-sheet-completion/artifacts/epic-7-closure/population_census_255.py",
+    "note": "this artifact's own numbers are LEFT AS MEASURED. They are right for the join they name; the cycle-2 artifact adds the content keys that join does not carry. Nothing here is rewritten."
   }
 }
