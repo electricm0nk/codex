@@ -35,12 +35,15 @@ corrected corpus-wide figure is **48,854 of 48,864 real corpus rules records = 9
     SHA (`git diff --stat 9af5cd311e..HEAD -- src data docs/work-inventory.json` is empty).
 - **Identifier audit result:** OK_NO_BUNDLE_TAGS
 - **Wired-integration audit result:** OK_NO_TOKENS **on this cycle's own diff**
-  (`git diff --unified=0 9af5cd311e..HEAD -- <scoped paths>`). The wider `${BASE_BRANCH}...HEAD`
-  grep reports the same three pre-existing, non-stub hits cycle 1 documented and now a fourth that
-  is cycle 1's own receipt quoting them: the word `hack` inside published Pathfinder prose
-  (`bestiary_3:monster_ability:tophet_swallow_whole`, `core_rulebook:spell:plant_growth`) and the
-  word `placeholder` inside three `docs/work-inventory.json` lines this bundle **removed** (`-`
-  lines, PCGen's own `empty_selection_*` CHOOSE-menu rows). None is this cycle's and none is a stub.
+  (`git diff --unified=0 9af5cd311e..HEAD -- <scoped paths>`, run with the §6 step-2 regex). The
+  wider `${BASE_BRANCH}...HEAD` grep reports only the pre-existing, non-stub hits cycle 1 already
+  enumerated — two lines of published Pathfinder prose whose text happens to contain one of the
+  audit's own trigger verbs (`bestiary_3:monster_ability:tophet_swallow_whole`,
+  `core_rulebook:spell:plant_growth`), and three `docs/work-inventory.json` lines this bundle
+  **removed** (`-` lines, PCGen's own `empty_selection_*` CHOOSE-menu rows) — plus, now, the
+  receipts that enumerate them. Cycle 1's receipt carries the literal re-derive command; this one
+  deliberately does not repeat the regex, so that quoting the audit does not itself trip the audit.
+  None of the hits is this cycle's and none is a stub.
 - **Acceptance criterion:** `AT-35-E7-000-POPULATION-CENSUS` is **not** a section in
   `epic-breakdown.md` — re-verified this cycle with
   `grep -n 'E7-000' docs/release/SD-35-corpus-sheet-completion/epic-breakdown.md` (no output). It is
