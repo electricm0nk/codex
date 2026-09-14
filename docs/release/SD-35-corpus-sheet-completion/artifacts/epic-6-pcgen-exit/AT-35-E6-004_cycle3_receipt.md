@@ -1,6 +1,6 @@
 # Cycle 3 — Epic 6 (PCGen exit) / AT-35-E6-004
 
-- **Commit SHA:** `PENDING_SHA` (cycle start `7913ffba49`), progress + kanban at `PENDING_DOCS_SHA`
+- **Commit SHA:** `70111a0ba6` (cycle start `7913ffba49`); the receipt, the parity artifact, the `progress.md` entry and `kanban.md` row 105 all landed in that one commit
 - **Why a cycle 3 exists:** cycle 2 certified this criterion at `5da55c42e3`. **Fourteen commits
   landed on `tranche/15` after it**, and they are not bystanders — they changed files under the
   very live roots this criterion's gate reads and the very corpus its parity roster renders:
