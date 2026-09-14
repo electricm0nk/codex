@@ -181,6 +181,74 @@ re-measured at the cut by the launch-readiness audit.
 
 ## Cycle log
 
+### 2026-09-14 — Epic 7 — AT-35-E7-000-POPULATION-CENSUS **cycle 3**, the 10 remainder — **the census is closed. 10 is exact, not a ceiling; all 2,657 previously-unverified records re-verified; corpus-wide 48,854 of 48,864 = 99.9795% confirmed.** — partial
+
+Receipt: `artifacts/epic-7-closure/AT-35-E7-000-POPULATION-CENSUS_cycle3_receipt.md`, kanban row
+103. Deliverables: `artifacts/epic-7-closure/population-census-final.json` (the closed census),
+`population_census_final.py` (the script that re-derives it, runtime 14 s) and
+`population-census-final-detail.json` (per-record verdict for all 2,657). **A measurement cycle: it
+moves no unit, converts nothing, edits no classifier and changes no gate** — `data/corpus`,
+`docs/work-inventory.json`, `data/sheet_rules/` and `src/` are byte-identical to the cycle-start SHA
+`82ffbb4ed2`.
+
+`SCOPE_GATE: EXEMPT (measurement cycle — it moves no unit and writes no rule; its deliverable is a
+census and a verdict)` (`decisions.md §2`; the remainder is furthermore not expressible as
+`cycle_scope_gate.py` flags — the gate's population is `docs/work-inventory.json` and these records
+are by definition the ones *not* in it. Run for the record at cycle start it reads
+`scoped=0 remaining_non_done=0 floor=500 verdict=PASS_WHOLE_REMAINDER`.)
+`closed=0 relabeled=0 rust_lines_changed=0 ratio=n/a builds_recorded=0 pcgen_live_files=0`.
+**Refused tokens: `record_absent_from_inventory_population=10`.**
+
+This cycle closed the **three gaps cycle 2 recorded in `what_this_proof_does_not_cover`**, and
+nothing else.
+
+**Gap 1 — the 2,657 nobody had re-verified.** Cycle 1 sorted 2,657 records into three "not a
+record" buckets by predicate and cycle 2 explicitly declined to re-check them; at ten times the size
+of the 255, they were the census's largest unverified population. All 2,657 were re-tested one at a
+time: `_settled` **47 of 47** confirmed, `chassis_only` **1,998 of 1,998** confirmed,
+`duplicate_ingest` **605 of 612** — the 7 failures caused by a prose-quantity clause *this cycle
+added* (the reached twin must carry at least as much published prose, so a duplicate can never be
+credited to a twin that lost the rule text). All 7 went through the full content-key ladder and all
+7 reach: **`gap_1_new_absent = 0`**. What the 7 expose is a different shape — one `.lst` row
+ingested as several prose **variants** of one rule (`isr_spells.lst:18`, *Elemental Mastery*, is
+ingested five times, one paragraph per element, held by one `sheet-complete` unit). That is
+rendering completeness on a **reached** unit, not reachability, and is named in the artifact rather
+than folded away.
+
+**Gap 3 — the 10 are exact.** Cycle 2 called them a *ceiling* because its prose test normalised
+whitespace and case only. Each was re-run under punctuation-normalised identity (digits survive, so
+`1d6` still differs from `1d8`), whole-paragraph containment in any reached record, and a KEY/name
+search across all 49,438 inventory units. **0 of 10 rescued.** The best token-overlap any of them
+reaches against the whole reached population is a Jaccard of **0.3636** — two unrelated short rules
+in the same house style, not a twin. Corroborated without the script:
+`grep -c 'Champion of Anarchy' docs/work-inventory.json` → `0`, against the control
+`grep -c 'Combat Stamina'` → `1`.
+
+**Gap 2 — the prose-reach figure given its predicate.** **4 of 4** prose-reached records carry a
+name differing from their twin's: three *Threefold Aspect* sub-forms printing under the base spell's
+name, and `Wall of Thorms` — a misspelling in the PCGen source whose 1,851 characters are the Core
+Rulebook *Wall of Thorns* paragraph. The words print; under the sheet rule the unit is DONE.
+
+**The root cause of the 10 was re-derived from the pinned tree rather than quoted forward**
+(pin `7f818006e3`): `pu_feats.lst` rows 6–14 carry no `TYPE:` (`grep -c` → `0`) while the 8 rows the
+inventory does hold all carry it (→ `8`), and `ma_spells.lst:98` carries neither `SCHOOL:` nor
+`CLASSES:` (→ `0`). One predicate, `has_classifying_token`
+(`src/bin/v06_work_inventory.rs:3172-3173`), explains all 10.
+
+Everything reconciles exactly: `2,657 + 255 = 2,912`, `193 + 48 + 4 + 10 = 255`,
+`2,650 + 7 = 2,657`. Atlas / token-coverage / residue / boundary / missing-engine-tables /
+denominator / pi-sweep all green at HEAD; no build, because no Rust, corpus record, sheet rule or
+inventory unit changed. Two `correction` events and one `deferral` emitted.
+
+**Status `partial`, and a raised hand rather than a fourth measurement cycle.** The measurement is
+finished — no undispositioned corpus record remains — but the criterion's population is not zero:
+10 records carrying published rules prose reach no sheet line, and calling that `complete` would be
+a carve-out. A cycle 4 on this criterion would re-derive 10 and stop, which `§8` forbids as
+grinding. The ask is exact: **write scope to `src/bin/v06_work_inventory.rs` and an operator ruling
+on moving the `completion_atlas.py` denominator off 49,438** (expected 49,438 → 49,448).
+
+`correction 1789403945517`, `correction 1789403957303`, `deferral 1789403969263`.
+
 ### 2026-09-14 — Epic 7 — AT-35-E7-000-POPULATION-CENSUS **cycle 2**, the 255 remainder — **it is 10, not 255. Corpus-wide completion is 48,854 of 48,864 = 99.9795%, not 48,609 of 48,864 = 99.478%.** — partial
 
 Receipt: `artifacts/epic-7-closure/AT-35-E7-000-POPULATION-CENSUS_cycle2_receipt.md`, kanban row

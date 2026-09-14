@@ -1,0 +1,324 @@
+{
+  "criterion": "AT-35-E7-000-POPULATION-CENSUS",
+  "cycle": 3,
+  "question": "how many `data/corpus` records never reach `docs/work-inventory.json` -- measure, do not fix",
+  "scope": "the cycle-2 remainder `record_absent_from_inventory_population=10`, PLUS the three gaps cycle 2 recorded in `what_this_proof_does_not_cover`. Nothing else.",
+  "measure_only": "reads only; adds no unit, converts nothing, edits no classifier, changes no gate, writes nothing under `src/` or `data/`",
+  "re_derive": "python3 docs/release/SD-35-corpus-sheet-completion/artifacts/epic-7-closure/population_census_final.py",
+  "gap_1_not_a_record_buckets_re_verified": {
+    "why": "cycle 2 recorded these 2,657 as NOT re-verified. They were dispositioned by the bucket's defining predicate at classification time and then trusted. This is the census's largest unverified population.",
+    "population": 2657,
+    "by_bucket": {
+      "chassis_only_mod_row_no_rule_text": {
+        "population": 1998,
+        "confirmed": 1998,
+        "failed_its_predicate": 0
+      },
+      "duplicate_ingest_of_a_row_already_reached": {
+        "population": 612,
+        "confirmed": 605,
+        "failed_its_predicate": 7
+      },
+      "generated_artifact_no_completeness": {
+        "population": 47,
+        "confirmed": 47,
+        "failed_its_predicate": 0
+      }
+    },
+    "predicates_tested": {
+      "generated_artifact_no_completeness": "no `completeness`, no `source` object, no `data` object, kind is `_settled`",
+      "chassis_only_mod_row_no_rule_text": "`completeness == \"chassis_only\"` AND zero chars of published prose -- a chassis row carrying prose would be a real record under the wrong label",
+      "duplicate_ingest_of_a_row_already_reached": "another corpus record sits at the SAME `(source_file, source_line)` (book label dropped), that twin is itself reached, AND the twin carries at least as much published prose -- so a duplicate is never credited to a twin that lost the rule text"
+    },
+    "records_failing_their_predicate": 7,
+    "of_those_still_absent_after_the_full_ladder": 0,
+    "ladder_dispositions": {
+      "reached_via_reattributed_same_row": 7
+    },
+    "the_failures_named": {
+      "what_they_are": "all 7 are `duplicate_ingest` records that ARE reached -- an inventory unit sits on their `.lst` row -- but whose reached twin carries LESS published prose than they do. They failed only the prose-quantity clause this cycle ADDED to the bucket's predicate; cycle 1's predicate did not have one.",
+      "mechanism": "one `.lst` row ingested as several corpus records carrying different prose variants of the same rule. `isr_spells.lst:18` (`Elemental Mastery`) is ingested five times -- one paragraph per element -- and one unit, `inner_sea_races:spell:elemental_mastery` (`sheet-complete`), holds the row.",
+      "why_it_is_not_an_absence": "the rule reaches a rendered sheet line. What the 7 raise is a narrower question -- whether every prose VARIANT of a multi-variant row prints, or only the one the unit resolved to -- which is a rendering-completeness question about reached units, not a reachability question, and is outside this criterion (`how many corpus records never reach the inventory`).",
+      "rows": [
+        {
+          "path": "data/corpus/advanced_class_guide/class_feature/warpriest/blessings_favored_class.json",
+          "reached_twin": "data/corpus/advanced_class_guide/race_trait_generic/warpriest_favored_class_blessings.json",
+          "reason": "the reached twin data/corpus/advanced_class_guide/race_trait_generic/warpriest_favored_class_blessings.json carries less prose (0 < 199 chars)",
+          "reaches": "advanced_class_guide:class_feature:warpriest_favored_class_blessings"
+        },
+        {
+          "path": "data/corpus/bestiary_4/spell/summon_nature_s_ally_v_oceanid.json",
+          "reached_twin": "data/corpus/bestiary_4/spell/summon_nature_s_ally_v_oceanid-2.json",
+          "reason": "the reached twin data/corpus/bestiary_4/spell/summon_nature_s_ally_v_oceanid-2.json carries less prose (106 < 116 chars)",
+          "reaches": "bestiary_4:spell:summon_nature_s_ally_v_oceanid"
+        },
+        {
+          "path": "data/corpus/inner_sea_races/spell/elemental_mastery-3.json",
+          "reached_twin": "data/corpus/inner_sea_races/spell/elemental_mastery-2.json",
+          "reason": "the reached twin data/corpus/inner_sea_races/spell/elemental_mastery-2.json carries less prose (224 < 766 chars)",
+          "reaches": "inner_sea_races:spell:elemental_mastery"
+        },
+        {
+          "path": "data/corpus/inner_sea_races/spell/elemental_mastery-4.json",
+          "reached_twin": "data/corpus/inner_sea_races/spell/elemental_mastery-2.json",
+          "reason": "the reached twin data/corpus/inner_sea_races/spell/elemental_mastery-2.json carries less prose (224 < 235 chars)",
+          "reaches": "inner_sea_races:spell:elemental_mastery"
+        },
+        {
+          "path": "data/corpus/inner_sea_races/spell/elemental_mastery-5.json",
+          "reached_twin": "data/corpus/inner_sea_races/spell/elemental_mastery-2.json",
+          "reason": "the reached twin data/corpus/inner_sea_races/spell/elemental_mastery-2.json carries less prose (224 < 246 chars)",
+          "reaches": "inner_sea_races:spell:elemental_mastery"
+        },
+        {
+          "path": "data/corpus/inner_sea_races/spell/elemental_mastery.json",
+          "reached_twin": "data/corpus/inner_sea_races/spell/elemental_mastery-2.json",
+          "reason": "the reached twin data/corpus/inner_sea_races/spell/elemental_mastery-2.json carries less prose (224 < 237 chars)",
+          "reaches": "inner_sea_races:spell:elemental_mastery"
+        },
+        {
+          "path": "data/corpus/pathfinder_unchained/class_feature/summoner/unchained_summoner.json",
+          "reached_twin": "data/corpus/pathfinder_unchained/class/summoner_unchained_class.json",
+          "reason": "the reached twin data/corpus/pathfinder_unchained/class/summoner_unchained_class.json carries less prose (0 < 172 chars)",
+          "reaches": "pathfinder_unchained:class_feature:summoner_unchained_class"
+        }
+      ]
+    }
+  },
+  "gap_2_prose_reach_predicate": {
+    "why": "cycle 2: `reached_via_identical_prose_record` proves the WORDS reach a sheet line, not that the reached record is filed under the name a player looks up. Stated here as a number instead of a caveat.",
+    "population": 4,
+    "name_differs_from_the_twin": 4,
+    "name_identical_to_the_twin": 0,
+    "rows": [
+      {
+        "record": "data/corpus/advanced_players_guide/spell/threefold_aspect_adulthood.json",
+        "record_name": "Threefold Aspect (Adulthood)",
+        "prose_twin": "data/corpus/advanced_players_guide/spell/threefold_aspect.json",
+        "twin_name": "Threefold Aspect",
+        "name_differs": true
+      },
+      {
+        "record": "data/corpus/advanced_players_guide/spell/threefold_aspect_elderly.json",
+        "record_name": "Threefold Aspect (Elderly)",
+        "prose_twin": "data/corpus/advanced_players_guide/spell/threefold_aspect.json",
+        "twin_name": "Threefold Aspect",
+        "name_differs": true
+      },
+      {
+        "record": "data/corpus/advanced_players_guide/spell/threefold_aspect_young_adult.json",
+        "record_name": "Threefold Aspect (Young Adult)",
+        "prose_twin": "data/corpus/advanced_players_guide/spell/threefold_aspect.json",
+        "twin_name": "Threefold Aspect",
+        "name_differs": true
+      },
+      {
+        "record": "data/corpus/advanced_players_guide/spell/wall_of_thorms.json",
+        "record_name": "Wall of Thorms",
+        "prose_twin": "data/corpus/core_rulebook/spell/level_5/wall_of_thorns.json",
+        "twin_name": "Wall of Thorns",
+        "name_differs": true
+      }
+    ],
+    "reading": "these records' words print; a player looking the sub-form up by its own name finds it under the base rule's name. That is a lookup-ergonomics observation, not a missing sheet line, and under the sheet rule the unit is DONE."
+  },
+  "gap_3_the_ten_under_weaker_tests": {
+    "why": "cycle 2's prose test normalised whitespace and case only, which made 10 a CEILING: a twin that re-punctuates would compare different and stay a gap. Three weaker tests turn the ceiling into an exact number.",
+    "tests": [
+      "1. strict identity (cycle 2's test, whitespace+case) -- unchanged, for reference",
+      "2. punctuation-normalised identity. Digits SURVIVE this normalisation, so `1d6` still compares different from `1d8` and `+2` from `+3`; only punctuation and spacing are laundered.",
+      "3. containment -- is this record's whole paragraph a substring of some reached record's paragraph? (applied only at >=24 chars, so a 5-word benefit line cannot be swallowed by an unrelated long paragraph)",
+      "plus: does ANY inventory unit carry this record's KEY or name?",
+      "plus: the best token-overlap (Jaccard) score against the whole reached population is reported for each, so the distance to the nearest twin is a number and not an assertion"
+    ],
+    "population": 10,
+    "rescued_by_a_weaker_test": 0,
+    "still_absent_under_every_test": 10,
+    "records": [
+      {
+        "path": "data/corpus/mythic_adventures/spell/elemental_body_iiimod.json",
+        "book": "mythic_adventures",
+        "kind": "spell",
+        "slug": "elemental_body_iiimod",
+        "key": "Elemental Body IIIMOD",
+        "source": "ma_spells.lst:98",
+        "desc_chars": 649,
+        "test_1_strict_prose_identity": [],
+        "test_2_punctuation_normalised_identity": [],
+        "test_3_containment_in_a_reached_paragraph": [],
+        "best_token_overlap_jaccard": 0.29,
+        "best_token_overlap_record": "data/corpus/mythic_adventures/ability/elemental_bond.json",
+        "inventory_units_carrying_this_name": [],
+        "still_absent": true
+      },
+      {
+        "path": "data/corpus/pathfinder_unchained/feat/champion_of_anarchy.json",
+        "book": "pathfinder_unchained",
+        "kind": "feat",
+        "slug": "champion_of_anarchy",
+        "key": "Champion of Anarchy",
+        "source": "pu_feats.lst:6",
+        "desc_chars": 33,
+        "test_1_strict_prose_identity": [],
+        "test_2_punctuation_normalised_identity": [],
+        "test_3_containment_in_a_reached_paragraph": [],
+        "best_token_overlap_jaccard": 0.2174,
+        "best_token_overlap_record": "data/corpus/inner_sea_combat/class_feature/oath_against_chaos/code_of_conduct.json",
+        "inventory_units_carrying_this_name": [],
+        "still_absent": true
+      },
+      {
+        "path": "data/corpus/pathfinder_unchained/feat/champion_of_balance.json",
+        "book": "pathfinder_unchained",
+        "kind": "feat",
+        "slug": "champion_of_balance",
+        "key": "Champion of Balance",
+        "source": "pu_feats.lst:7",
+        "desc_chars": 55,
+        "test_1_strict_prose_identity": [],
+        "test_2_punctuation_normalised_identity": [],
+        "test_3_containment_in_a_reached_paragraph": [],
+        "best_token_overlap_jaccard": 0.3333,
+        "best_token_overlap_record": "data/corpus/advanced_race_guide/feat/combat/gloom_strike.json",
+        "inventory_units_carrying_this_name": [],
+        "still_absent": true
+      },
+      {
+        "path": "data/corpus/pathfinder_unchained/feat/champion_of_destruction.json",
+        "book": "pathfinder_unchained",
+        "kind": "feat",
+        "slug": "champion_of_destruction",
+        "key": "Champion of Destruction",
+        "source": "pu_feats.lst:8",
+        "desc_chars": 57,
+        "test_1_strict_prose_identity": [],
+        "test_2_punctuation_normalised_identity": [],
+        "test_3_containment_in_a_reached_paragraph": [],
+        "best_token_overlap_jaccard": 0.2632,
+        "best_token_overlap_record": "data/corpus/core_rulebook/companion/come.json",
+        "inventory_units_carrying_this_name": [],
+        "still_absent": true
+      },
+      {
+        "path": "data/corpus/pathfinder_unchained/feat/champion_of_freedom.json",
+        "book": "pathfinder_unchained",
+        "kind": "feat",
+        "slug": "champion_of_freedom",
+        "key": "Champion of Freedom",
+        "source": "pu_feats.lst:9",
+        "desc_chars": 50,
+        "test_1_strict_prose_identity": [],
+        "test_2_punctuation_normalised_identity": [],
+        "test_3_containment_in_a_reached_paragraph": [],
+        "best_token_overlap_jaccard": 0.2667,
+        "best_token_overlap_record": "data/corpus/advanced_class_guide/class_feature/warpriest_bonus_feat/greater_trip.json",
+        "inventory_units_carrying_this_name": [],
+        "still_absent": true
+      },
+      {
+        "path": "data/corpus/pathfinder_unchained/feat/champion_of_grace.json",
+        "book": "pathfinder_unchained",
+        "kind": "feat",
+        "slug": "champion_of_grace",
+        "key": "Champion of Grace",
+        "source": "pu_feats.lst:10",
+        "desc_chars": 50,
+        "test_1_strict_prose_identity": [],
+        "test_2_punctuation_normalised_identity": [],
+        "test_3_containment_in_a_reached_paragraph": [],
+        "best_token_overlap_jaccard": 0.2941,
+        "best_token_overlap_record": "data/corpus/mythic_adventures/feat_generic/mythic_feat_output_witch_knife.json",
+        "inventory_units_carrying_this_name": [],
+        "still_absent": true
+      },
+      {
+        "path": "data/corpus/pathfinder_unchained/feat/champion_of_malevolence.json",
+        "book": "pathfinder_unchained",
+        "kind": "feat",
+        "slug": "champion_of_malevolence",
+        "key": "Champion of Malevolence",
+        "source": "pu_feats.lst:11",
+        "desc_chars": 58,
+        "test_1_strict_prose_identity": [],
+        "test_2_punctuation_normalised_identity": [],
+        "test_3_containment_in_a_reached_paragraph": [],
+        "best_token_overlap_jaccard": 0.1765,
+        "best_token_overlap_record": "data/corpus/core_rulebook/equipment/magic_items/scroll_of_true_seeing_arcane.json",
+        "inventory_units_carrying_this_name": [],
+        "still_absent": true
+      },
+      {
+        "path": "data/corpus/pathfinder_unchained/feat/champion_of_righteousness.json",
+        "book": "pathfinder_unchained",
+        "kind": "feat",
+        "slug": "champion_of_righteousness",
+        "key": "Champion of Righteousness",
+        "source": "pu_feats.lst:12",
+        "desc_chars": 89,
+        "test_1_strict_prose_identity": [],
+        "test_2_punctuation_normalised_identity": [],
+        "test_3_containment_in_a_reached_paragraph": [],
+        "best_token_overlap_jaccard": 0.2368,
+        "best_token_overlap_record": "data/corpus/core_rulebook/class_feature/monk/diamond_soul.json",
+        "inventory_units_carrying_this_name": [],
+        "still_absent": true
+      },
+      {
+        "path": "data/corpus/pathfinder_unchained/feat/champion_of_tranquility.json",
+        "book": "pathfinder_unchained",
+        "kind": "feat",
+        "slug": "champion_of_tranquility",
+        "key": "Champion of Tranquility",
+        "source": "pu_feats.lst:13",
+        "desc_chars": 41,
+        "test_1_strict_prose_identity": [],
+        "test_2_punctuation_normalised_identity": [],
+        "test_3_containment_in_a_reached_paragraph": [],
+        "best_token_overlap_jaccard": 0.3636,
+        "best_token_overlap_record": "data/corpus/ultimate_psionics/feat/enlarged_collective.json",
+        "inventory_units_carrying_this_name": [],
+        "still_absent": true
+      },
+      {
+        "path": "data/corpus/pathfinder_unchained/feat/champion_of_tyranny.json",
+        "book": "pathfinder_unchained",
+        "kind": "feat",
+        "slug": "champion_of_tyranny",
+        "key": "Champion of Tyranny",
+        "source": "pu_feats.lst:14",
+        "desc_chars": 49,
+        "test_1_strict_prose_identity": [],
+        "test_2_punctuation_normalised_identity": [],
+        "test_3_containment_in_a_reached_paragraph": [],
+        "best_token_overlap_jaccard": 0.2857,
+        "best_token_overlap_record": "data/corpus/ultimate_psionics/class_feature/warrior_path_1/mind_knight_path.json",
+        "inventory_units_carrying_this_name": [],
+        "still_absent": true
+      }
+    ]
+  },
+  "the_closed_census": {
+    "real_corpus_rules_records": 48864,
+    "reached_by_a_DONE_inventory_unit": 48854,
+    "never_reaching_any_sheet_line": 10,
+    "corpus_wide_completion": "48854 of 48864 = 99.9795%",
+    "absent_by_book_kind": {
+      "mythic_adventures/spell": 1,
+      "pathfinder_unchained/feat": 9
+    },
+    "supersedes": "cycle 1's `255` / `48,609 of 48,864 = 99.478%` and confirms cycle 2's `10` / `48,854 of 48,864 = 99.9795%` -- cycle 2's figure is re-derived here from a population 11x larger and under three weaker text tests, and does not move."
+  },
+  "root_cause_of_the_absent": {
+    "mechanism": "src/bin/v06_work_inventory.rs `has_classifying_token`: `Kind::Feat => has_token(fields, \"TYPE:\")` and `Kind::Spell => has_token(\"SCHOOL:\") || has_token(\"CLASSES:\")`. A row failing its kind's test is not enumerated and lands in the `missing_classifying_token` trap.",
+    "evidence": "all 9 `pu_feats.lst` rows 6-14 carry `CATEGORY:FEAT`, `DESC:` and `BENEFIT:` and NO `TYPE:`; all 8 `pu_feats.lst` rows the inventory does hold (18,19,20,25,26,27,29,32) carry `TYPE:`. `ma_spells.lst:98` (`Elemental Body IIIMOD`) carries `DESC:` and `PREABILITY:` only -- no `SCHOOL:`, no `CLASSES:`.",
+    "re_derive": "awk -F'\\t' 'NR>=6&&NR<=14' $PCGEN_CORPUS_ROOT/pathfinder/paizo/roleplaying_game/pathfinder_unchained/pu_feats.lst | grep -c 'TYPE:'  # -> 0",
+    "single_trap": true
+  },
+  "what_this_proof_does_not_cover": [
+    "It does not fix the 10. The criterion is `measure, do not fix`, and the fix (widening `has_classifying_token`, `src/bin/v06_work_inventory.rs:3172-3173`) is outside this criterion's write scope AND moves the atlas denominator off 49,438, so it needs an operator ruling.",
+    "The `_settled` aggregates are verified to be aggregates, not verified to AGREE with the records they aggregate. That is a different question (settle-pass fidelity) and no figure in this census rests on it.",
+    "Token-overlap (Jaccard) is reported as a DISTANCE, never as a reach. No record is dispositioned `reached` by a near-match in this cycle -- only exact identity, containment, the same `.lst` row, a `.COPY=` twin, or a name an inventory unit carries can do that.",
+    "It does not establish that every prose VARIANT of a multi-variant `.lst` row prints. The 7 named in `gap_1.../the_failures_named` reach a sheet line; whether the unit renders all five `Elemental Mastery` paragraphs or one is a rendering-completeness question about a REACHED unit, and this criterion measures reachability. Named here rather than folded away.",
+    "The denominator 48,864 is cycle 1's and is carried forward unchanged. This cycle re-verifies the DISPOSITION of the never-reached population, not the enumeration of `data/corpus` itself."
+  ]
+}
