@@ -181,6 +181,72 @@ re-measured at the cut by the launch-readiness audit.
 
 ## Cycle log
 
+### 2026-09-14 — Epic 7 — AT-35-E7-001 **cycle 1**, the final-acceptance scan — **FAIL. Closure stops.**
+
+**Scanned at `24084e1782` against the `tranche/15` cut `4c6c57eb9f`.** Receipt:
+`artifacts/epic-7-closure/AT-35-E7-001_cycle_receipt.md`. Per
+`acceptance-and-verification.md §3a` — *"If anything is short: STOP"* — **no retrospective, no
+sweep, no PR**, and steps 6 (the full `verify.sh`), 9, 10 and 11 were **not reached**. Saying that
+plainly rather than implying a green build ran.
+
+**Green at HEAD, every figure re-derived here and none quoted from a lane:**
+`completion_atlas.py --check` → `population=49438 buckets=10 unclassified=0 overlap=0`, `DONE:
+49438`, A/B/C/D/M/V/U/X/Z all `0`, `done_evidence_violations=0 missing_clearing_mechanisms=0
+stale_derived_at=False citation_failures=0`; `pcgen_residue_gate.py --check --closure` →
+`live_files=0 live_hits=0 verdict=PASS`, every pattern and all five live roots `files=0 hits=0`;
+`token_coverage.py --check` → `verdict=PASS`, six sub-checks `ok=True`, `non_done=0
+refused_non_done=0`. **The closure instrument carries no carve-out**: `72103a69bc`, the commit
+that first read zero, adds `mask_non_code()` — a comment/string-literal mask so brace matching
+runs over code characters only — and **no** path allow-list, no `EXCLUDED_*`, no widened
+exemption; it *returned* 620 previously-blanked shipping lines to measurement and the count
+stayed at zero. `git log 4c6c57eb9f..HEAD -- scripts/pcgen_residue_gate.py
+scripts/pcgen-residue-baseline.env` → 5 commits, each a named criterion cycle, no silent baseline
+edit. Epic 6's `4 / 4 → 0` fall attributes by `git` to `AT-35-E6-003-RULED` cycle 18
+(`7270e4a2d7` + `c094391246`, row 96) — code work at ingest, not an instrument correction. All
+three `## Open blockers` entries are struck and ruled (B14 §17, B15 §18, B16 §19): **no active
+blocker**.
+
+**Five shortfalls:**
+
+- **S1 — 53 of 97 kanban rows are not `complete`.** 51 `in-progress`, 1 `blocked` (row 76), 1
+  `blocked-escalated` (row 59) — **including row 26, the criterion card for `AT-35-E6-003`
+  itself**, plus rows 43–46 (`AT-35-E6-002` cycles 2–5) and rows 48–58 / 60–75 / 77–95. The
+  **status matrix above agrees independently**: Epic 6 reads 2 complete / 1 in progress / 1 not
+  started, total **25 of 30** criteria. `epic-breakdown.md § AT-35-E7-001` is explicit that
+  *"there is no 'complete or filed under Open blockers'"*, and re-labelling 51 rows to make this
+  scan pass is `§5`'s forbidden move run in reverse.
+- **S2 — `data/sheet_rules/_refused.json` is not empty.** `records=49438 converted=49296
+  refused=142`, all one token type `no_corpus_record` (`advanced_race_guide:race:dhampir`,
+  `…:drow`, `…:duergar`, `…:dwarf`, …). Every one of the 142 ids is `DONE` in the atlas by an
+  earlier route, so no unit is un-rendered — but `§3a` names the **file**, and the file is not
+  empty.
+- **S3 — `token_coverage.py --check` reports `refused=142`** where `§3a` requires zero refused
+  units. Same population as S2; the gate's own verdict is `PASS` because its partition balances,
+  and the acceptance bar is stricter than the gate.
+- **S4 — 83 open deferrals** (`python3 scripts/retro.py summary --since 2026-09-07 --json` →
+  `deferrals.open = 83`). By actor: `AT-35-E6-003-RULED` 17, `AT-35-E6-003` 16,
+  `AT-35-E6-003-SWEEP` 12 (+6 lower-cased), `AT-35-E2-005` 5, `AT-35-E6-002` 5, and 22 across 14
+  further actors. At least one defers DoD scope on its face — kanban row 41's 10-unit
+  `AT-35-E5-005` residue, *"unchanged and still handed on, not exempted"*
+  (`1789064249278-at-35-e5-005-579de8`).
+- **S5 — `§3a`'s independent grep returns 39 lines, not none.** 28 are live-side doc-comments and
+  `#[cfg(test)]` oracle code, ruled out by **B14** and **B15** and therefore **not** claimed as a
+  shortfall — manufacturing one against a standing ruling is the failure `§3a`'s closing line
+  warns about. 7 are ignored `target/` build artifacts. **2 are tracked, shipped desktop
+  resources** — `apps/desktop/src-tauri/resources/corpus_fixtures/equipment/equip_longsword.json`
+  and `equip_chain_shirt.json` — carrying a raw `"raw_tokens"` array in their payload under a
+  live root. The gate reads `live_files=0` and cannot see them, which is exactly why `§3a` asks
+  the scan to grep independently.
+
+**Before this scan can be re-run:** close or obtain a ruling on the 53 non-`complete` rows (row 26
+first, it is a criterion row); empty `_refused.json` or amend `§3a`'s wording by ruling; dispose
+of the 83 open deferrals; settle or rule on the two shipped fixtures; then re-run in full
+including the whole `verify.sh` and steps 9–11.
+
+`SCOPE_GATE: EXEMPT (Epic 7 acceptance-scan cycle — closes zero units by design, decisions.md §2)`.
+`closed=0 relabeled=0 rust_lines_changed=0 ratio=n/a builds_recorded=0 pcgen_live_files=0`.
+`incident 1789365925171-at-35-e7-001-a313b5`; `correction 1789365925309-at-35-e7-001-ce9543`.
+
 ### 2026-09-13 — Epic 6 wrap-up **correction cycle** — AT-35-E6-WRAPUP-FIX **cycle 1** (`952b313bbb` + `c8ce4f7f12`) — **complete** (all 4 red wrap-up stages fixed at source; nothing silenced)
 
 - **Receipt:** `artifacts/epic-6-pcgen-exit/AT-35-E6-WRAPUP-FIX_cycle1_receipt.md` (cycle start `77e8d3919a`).
