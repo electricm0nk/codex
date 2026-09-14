@@ -181,6 +181,65 @@ re-measured at the cut by the launch-readiness audit.
 
 ## Cycle log
 
+### 2026-09-14 — Epic 6 — AT-35-E6-004 **cycle 3** — **re-certification at `7913ffba49`: the gate still reads zero after fourteen commits edited its live roots, and the B17 shipped-data class is made to FIRE for the first time** — complete
+
+Cycle 2 certified at `5da55c42e3`. Fourteen commits landed after it, touching the very live roots
+this gate reads (`src/rules_core/{feat_prereqs,trait_effects}.rs`,
+`apps/desktop/src-tauri/src/{feat_catalog,reach_gate,class_feature_descriptions}.rs`) and the corpus
+its roster renders (ruling **B18**, `e58e5a9ce5`, inventory 49,438 → 49,450). A certificate taken
+before its own live roots were edited is a certificate about a different tree, so **every Evidence
+clause was re-run from scratch**; nothing is carried over.
+
+- `SCOPE_GATE: EXEMPT (Epic 6 closure cycle — closes zero units by design, decisions.md §2)`. Run
+  anyway: `scoped=0 remaining_non_done=0 floor=500 verdict=PASS_WHOLE_REMAINDER` — the corpus stands
+  at `DONE 49450 of 49450`.
+- `since=7913ffba4913710f9643ce0bb99a92de627c6d4b target_dir=/tmp/cargo-sd35-AT-35-E6-004 residue_gate=present`
+  `closed=0 relabeled=0 rust_lines_changed=0 ratio=n/a builds_recorded=1 pcgen_live_files=0`
+  (`regressed=0 added=0 dropped=0`).
+- **Refused tokens: none.** `token_coverage.py --check` → `refused=142 refused_non_done=0` — every
+  refused token sits on a unit already `DONE` under the sheet rule. Zero units in scope, so no
+  `deferral` event is owed (`decisions.md §2`).
+- `pcgen_residue_gate.py --check --closure` → `live_files=0 live_hits=0 verdict=PASS`, exit 0;
+  ratchet mode adds `baseline_files=260 baseline_hits=12736 verdict=PASS`, baseline untouched.
+- **The gate earned its zero on evidence, not on its word.** B14/B15/B16 traced to the lines that
+  implement them; B16 traced through `scan()` into the totals; `EXCLUDED_PREFIXES` still the empty
+  tuple and all five roots present; 39 gate unit tests OK; the independent character-level census
+  agrees (`live_files=0`, `files_with_boundary_mismatch=0`, `gate_skipped_lines=90467` on both
+  instruments — the 90,434 → 90,467 move is 33 lines of added `#[cfg(test)]` code, not a boundary
+  shifting). **Four planted probes, four FAILs, exit 1 each**, tree verified clean before and after:
+  a run-time `pcgen_import::` call from `apps/desktop`; a token literal in `src/rules_core`; the same
+  token at line 1900 of `update/transaction.rs`, inside the window the old B15 brace bug used to
+  blank; and — **new this cycle** — a `"raw_tokens"` array in a shipped resource, which cycle 2
+  certified by reading and never made fire (`shipped_data_files=1 shipped_data_hits=3 → live_files=1
+  verdict=FAIL`).
+- **Named seam, stated rather than assumed:** the B17 shipped-data class derives its population from
+  `bundle.resources` (`shipped_scanned=11`) and **does not cover `data/sheet_rules/`**, which
+  `corpus_loader::live_sheet_rules()` resolves from `CARGO_MANIFEST_DIR` at run time rather than
+  bundling. That surface is carried by the criterion's own separate check,
+  `grep -rlE 'BONUS:|DEFINE:|PRE[A-Z]+:|%CHOICE|CL=' data/sheet_rules/ | wc -l` → **0**, re-run after
+  B18's twelve additions. `live_files=0` must not be read as a claim about the converted corpus.
+- **Oracle parity agrees with the epic's start:** chassis `382/376/6` at both ends;
+  `gone_since_start=0`, `new_since_cycle2=0`; the parity document is **byte-identical** to cycle 2's,
+  so B18's twelve new records moved not one rendered number. Pin `7f818006e3`, unchanged.
+- **Tool side intact** (`decisions.md §11`): `sheet_rule_convert`/`gen_book_cache` build exit 0;
+  `sheet_rule_parity` release build exit 0; `oracle_harness/run.py --help` exit 0; pin unchanged;
+  `names_present_at_start_and_absent_at_HEAD=0` over 488 → 1,453 distinct `fn`/`def` names —
+  **zero net deletions of function bodies**, proved by name because a diffstat cannot tell a move
+  from a removal.
+- **Verification run wider than the cycle needed, because the commits it certifies are wider:**
+  `cargo test --no-run` `NO_RUN_EXIT=0` (419 executables); `--lib` `3390 passed; 0 failed`;
+  `--no-fail-fast` **420 suites, 8,926 passed, 0 failed**; the **desktop crate** (a separate
+  workspace) `570 passed; 0 failed`; `sheet_rule_convert -- --check` exit 0; atlas, token-coverage,
+  shape-boundary, missing-engine-tables, denominator (`166 files, 0 violations`) and `pi-sweep` all
+  PASS.
+- **One incident, resolved inside the cycle:** a *backgrounded* `cargo test --lib` on this shared
+  checkout produced a **false RED** — 3,337 tests linked against the same HEAD's 3,406, failing on a
+  `crb` vs `core_rulebook` slug that exists in **neither** side's source at `7913ffba49`. Foreground
+  re-run on a verified-clean tree: `3390 passed; 0 failed`. A torn build, not a defect;
+  `incident 1789416374947-at-35-e6-004-8c276e`. Lesson: do not background a cargo run on a shared
+  checkout while planting and removing probe files.
+- Receipt: `artifacts/epic-6-pcgen-exit/AT-35-E6-004_cycle3_receipt.md`.
+
 ### 2026-09-14 — Epic 7 — AT-35-E7-000-POPULATION-FIX **cycle 1** — **operator ruling B18 executed: the shape filter stops dropping real rules, all 12 admitted units RENDER, and the headline figure is now 48,864 of 48,864 corpus records = 100%** — complete
 
 Receipt: `artifacts/epic-7-closure/AT-35-E7-000-POPULATION-FIX_cycle1_receipt.md`, kanban row 104. Commit `e58e5a9ce5`.
