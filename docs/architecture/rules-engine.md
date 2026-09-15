@@ -1,7 +1,13 @@
 # Rules engine
 
 > Scope: The headless PF1 rules-computation spine — from chosen character input through the deterministic chassis engine to the boundary contract the GUI consumes.
-> Last verified: **2026-08-25 against `tranche/13`** (SD-33 closure epilogue) for the new §3c
+> Last verified: **2026-09-15 against `tranche/15`** (SD-35 closure epilogue) for the new
+> §"The sheet rule — the sixth layer, and the one the corpus now enters through" section, verified
+> against `src/rules_core/sheet_rule.rs`, `src/rules_core/sheet_rule_catalog.rs`,
+> `src/rules_core/corpus_loader.rs` and `src/rules_core/pilot_compute/mod.rs:250`; and for the
+> statement that no module in this tree reads a PCGen token
+> (`python3 scripts/pcgen_residue_gate.py --check --closure` → `live_files=0`). Prior pass
+> **2026-08-25 against `tranche/13`** (SD-33 closure epilogue) for the §3c
 > subsection and the equipment-bonus-shape-widening paragraph in the per-domain engine catalog's
 > `equipment_effects.rs` entry; every other section carries its 2026-08-21 tranche/11 (SD-31 wave
 > 26) verification, path-corrected 2026-08-22, and is otherwise unchanged.
@@ -341,6 +347,62 @@ per-domain engine directly. Its own header doc comment names it the contract's "
 - `to_pilot_receipt(receipt: &CorpusPilotReceipt, input: &CharacterInput, corpus: &SourcePackageContent) -> PilotReceipt` is the function that actually builds a `PilotReceipt`: it resolves `input.chosen.selected_feats` against `rules_tables::crb::feats::feat_tables()` (an unmatched feat string is silently skipped, never fabricated into a category), filters `equipment_selections` to `ActiveState::EquippedActive` before computing equipment effects, and reuses that same filtered `equipped` slice and its `EquipmentEffects` result when calling `damage_total::resolve_weapon_damage_breakdown` rather than recomputing either.
 - `compute_level_up_preview(character: &CharacterInput, from_level: u8, to_level: u8) -> LevelUpPlan` is a thin pass-through to `level_up::compute_level_up_grants`. It is deliberately **not** a `PilotReceipt` field — the doc comment explains that Level-Up models a level *transition* (needs two extra parameters no other `PilotReceipt` consumer has), not a current-state snapshot, so it stays a standalone function alongside `PilotReceipt` instead of contaminating it.
 - `PrintedSheetCell { cell_id, source_field, value: PrintedSheetCellValue }` and `printed_sheet_cell_map(receipt: &PilotReceipt) -> Vec<PrintedSheetCell>` are the literal cells a printed PF1 character sheet renders. `PrintedSheetCellValue` is either `Number(i16)` or `Blocked` — never a third "unknown" state, and never a fabricated number standing in for a blocked one. Every cell's `source_field` names the exact `PilotReceipt` field path it renders, for auditability. Not every `PilotReceipt` field becomes a cell: `printed_sheet_cell_map`'s own doc comment records, field by field, why `spells_prepared`/`spells_known`/`school_specialization` and `EquipmentEffects.spell_failure_chance` stay reachable only via `receipt.*` directly rather than being flattened into cells that don't fit `Number(i16) | Blocked` cleanly; `PilotReceipt.weapon_damage`'s own field doc comment records the same reasoning for why the full `WeaponDamageBreakdown` structures are never flattened into cells either.
+
+## The sheet rule — the sixth layer, and the one the corpus now enters through
+
+*New 2026-09-15 (SD-35 closure).* The five layers above are the hand-transcribed chassis spine.
+Alongside them sits the surface that carries the **whole** corpus — all 49,450 units — into the
+engine: `src/rules_core/sheet_rule.rs` (`pub mod sheet_rule;`, `src/rules_core/mod.rs:49`).
+
+**The rule it implements.** Codex is a paper character-sheet generator. A rule is *done* when it
+renders as a line a player could write on a sheet: **one final number**, **dice in final form**,
+or **the rule's own words**. There is no third state, and there is no simulation: a term the
+character does not settle stays as words. That is the shape of `SheetLineValue`, verbatim from
+the code:
+
+```rust
+pub enum SheetLineValue {
+    /// One final number.
+    Resolved(i32),
+    /// Dice in final form: `"1d8+2"`.
+    Dice(String),
+    /// The rule's words; nothing to compute, or a term the character does not settle yet.
+    Words,
+}
+```
+
+**The data it reads.** `data/sheet_rules/` — our own schema, written once at ingest by
+`src/bin/sheet_rule_convert.rs` (see [corpus-ingest.md](./corpus-ingest.md) and
+[overview.md](./overview.md) §"The converter/live boundary"). **Nothing in `src/rules_core/`
+reads a PCGen token**; the engine's input is JSON in our shape. `corpus_loader::load_sheet_rules`
+builds a `SheetRulePackage` from `<book>/<kind>/**/*.json` plus the per-variable contribution
+tables under `_vars/`; `corpus_loader::live_sheet_rules()` is the process-wide `OnceLock` handle
+the live paths use.
+
+**The types.** `SheetRule` is one record in our schema — `value: SheetValue`, `also:
+Vec<(ValueRole, SheetValue)>` for the second and third numbers on one line (uses, CL, DC),
+`prose: Vec<ProseSegment>` (the rule's words with typed slots), `applies: Applies` (may *this*
+character hold it: class+level, race, feat, choice, facts), `target: Option<BonusTarget>` (which
+sheet total the value feeds), and `bonus_type: Option<BonusType>` with a `StackMode` for the
+cross-rule fold. `Rat` is the exact rational used so a fractional progression never rounds twice.
+
+**The entry point.** `sheet_rule::render_sheet(package, seed, facts) -> Vec<SheetLine>`
+(`src/rules_core/sheet_rule.rs:1957`) resolves the held set to a fixpoint and renders each held
+rule. A `SheetLine` carries `printed: String` — the value **as the player writes it** (`"+2"`,
+`"15"`, `"1d8+2"`, `""` for words) — so no consumer re-derives a number to display it.
+
+**Where it meets the spine.** `PilotReceipt`-side computation carries the result:
+`sheet_lines: Vec<sheet_rule::SheetLine>` on the computation result
+(`src/rules_core/pilot_compute/mod.rs:250`), filled by `render_sheet` at
+`pilot_compute/mod.rs:267`. The desktop shell maps it to `SheetLineDto`
+(`apps/desktop/src-tauri/src/character_hub.rs:634`) with `form` ∈ `number | dice | words` — see
+[desktop-app.md](./desktop-app.md).
+
+**Catalog rendering without a character.** `src/rules_core/sheet_rule_catalog.rs` renders the
+same records for pickers and reference lists, where no character exists to settle a slot:
+`catalog_prose`, `catalog_description`, `catalog_field_summary`, and
+`prose_has_a_slot_no_character_settles` — the last is the explicit test for "this line cannot be
+a number here", which is why a catalog entry shows words rather than a fabricated value.
 
 ## The fail-honest pattern
 

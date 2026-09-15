@@ -1,11 +1,14 @@
 # Architecture overview
 
 > Scope: what Codex is, its three top-level planes, and how a character's data flows from raw PCGen corpus text to a rendered sheet cell.
-> Last verified: 2026-07-23 against tranche/5-4 (SD-26 Epic 6 closure). **Path correction
+> Last verified: **2026-09-15 against `tranche/15`** (SD-35 closure epilogue) for the new
+> §"The converter/live boundary" section — the one architecture fact SD-35 added, re-derived
+> from the live tree by `python3 scripts/pcgen_residue_gate.py --check --closure`
+> (`live_files=0 live_hits=0 verdict=PASS`). **Path correction
 > 2026-08-22** (SD-32 closure epilogue, `workflow-instruction.md §13`): the source-tree map's
 > `sd16/` row and `pilot_compute.rs` cites were renamed away (see README.md's provenance note and
 > `docs/architecture/rules-engine.md`'s own path correction) — fixed below; no other content in
-> this doc re-verified.
+> this doc re-verified this pass.
 > Maintenance: updated at SD closure — see [README.md](./README.md) §Maintenance contract
 
 ## What Codex is
@@ -14,7 +17,9 @@ Codex is a desktop Pathfinder 1st Edition (PF1) character-management tool. It
 pairs a headless Rust rules-computation crate with a React/Tauri desktop
 shell, and it grounds its rule data in the real PCGen open-source corpus (a
 separate, unvendored checkout of `.pcc`/`.lst` files) rather than
-hand-invented tables. PCGen itself is treated as the parity oracle: an in-crate
+hand-invented tables. **Since SD-35 that grounding happens once, at ingest, and
+never at run time** — see §"The converter/live boundary" below. PCGen itself is
+treated as the parity oracle: an in-crate
 comparator (`src/oracle_validation/`) checks Codex's computed output against
 PCGen's own runtime behavior, dimension by dimension, and renders a `PASS`/`FAIL`
 parity report — but no character yet reaches a *passing* parity verdict (the
@@ -25,6 +30,40 @@ withheld as "blocked"; the codebase never fabricates a value it cannot prove.
 This fail-honest discipline, described in full in
 [rules-engine.md](./rules-engine.md), is the single idea that most shapes how
 the rest of the system is built.
+
+## The converter/live boundary
+
+*New 2026-09-15 (SD-35 closure). This is the load-bearing structural fact about this codebase;
+read it before the three planes below, because it cuts across the first of them.*
+
+**PCGen is a converter input and a test oracle. It is not in live code.** The repository is split
+by whether a path is allowed to read PCGen's file format at all:
+
+| Side | Paths | May read PCGen? |
+|---|---|---|
+| **Converter / tools** — kept, intact, and reused for Starfinder | `src/pcgen_import/**` (including `cache_gen/`, which lived under `src/rules_core/` until SD-35 relocated it), `src/bin/sheet_rule_convert.rs`, `src/bin/gen_*`, `src/bin/enrich_*`, `src/bin/v06_work_inventory.rs`, `src/oracle_validation/**`, `scripts/**`, `tests/**` | **yes** |
+| **Live** — everything that ships in the desktop binary's rule path | `src/rules_core/**`, `src/saved_character/**`, `src/campaign/**`, `src/homebrew_authoring/**`, `apps/desktop/**` | **no** |
+
+The live side therefore contains no PCGen token syntax (`BONUS:`, `DEFINE:`, `PRE*:`, `%CHOICE`,
+`CL=`), no PCGen formula evaluator, no `raw_tokens` read, and no PCGen description renderer. Rule
+conversion happens **once, at ingest**: `src/bin/sheet_rule_convert.rs` plus
+`src/pcgen_import/sheet_rule/` read the pinned corpus (`scripts/pcgen-oracle-pin.env`) and write
+our own schema to `data/sheet_rules/<book>/<kind>/<key>.json`. The live evaluator
+(`src/rules_core/sheet_rule.rs`) reads only those files, through
+`src/rules_core/corpus_loader.rs::load_sheet_rules`.
+
+The boundary is mechanical, not a convention: `scripts/pcgen_residue_gate.py` greps the live
+paths for that surface and fails when the count rises. It is a `verify.sh` stage
+(`pcgen-residue-gate`), and `--closure` fails on anything above zero.
+
+```
+$ python3 scripts/pcgen_residue_gate.py --check --closure
+live_files=0 live_hits=0 verdict=PASS
+```
+
+**The tool side is never deleted.** The converter, the `.lst` parser, the generators, and the
+oracle harness are the reusable half — they are what a second game system (Starfinder) would be
+ingested with. Removing PCGen from the live side is not removing PCGen from the repo.
 
 ## The three planes
 

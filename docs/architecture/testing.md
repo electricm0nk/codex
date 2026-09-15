@@ -1,7 +1,10 @@
 # Testing
 
 > Scope: the full verification command set for this repo, test conventions, the fixture grammar, and how to run corpus-gated tests — this file doubles as the "how do I verify my change" runbook.
-> Last verified: **2026-08-25 against `tranche/13`** (SD-33 closure epilogue) for the new §"SD-33 additions: `box_ledger.py`, the `denominator-gate`/`corpus-sweep` stages, and the L20-per-class pilot-build probes" section; the 2026-08-19 `tranche/11` pass for §"The derived-evaluator fixture seam" (SD-31 wave 15) still stands; every other section still carries its 2026-07-22 tranche/5-3 (SD-25 closure) verification and is unchanged.
+> Last verified: **2026-09-15 against `tranche/15`** (SD-35 closure epilogue) for the new
+> §"SD-35: the tax cut, and the four gates every cycle runs" section and the refreshed baseline
+> table — verified against `scripts/verify.sh`'s `ALL_STAGES` array and the live tail values in
+> `scripts/verify-baselines.env`. Prior pass **2026-08-25 against `tranche/13`** (SD-33 closure epilogue) for the §"SD-33 additions: `box_ledger.py`, the `denominator-gate`/`corpus-sweep` stages, and the L20-per-class pilot-build probes" section; the 2026-08-19 `tranche/11` pass for §"The derived-evaluator fixture seam" (SD-31 wave 15) still stands; every other section still carries its 2026-07-22 tranche/5-3 (SD-25 closure) verification and is unchanged.
 > Maintenance: updated at SD closure — see [README.md](./README.md) §Maintenance contract
 
 ## Quick reference: what to run for a given change
@@ -128,6 +131,80 @@ spinning up a fresh build per unit. The paired `src/bin/e5_*_ours.rs`
 binaries read the engine's own compute path for the same population and
 emit the `ours` half `run.py` compares against the pinned oracle's real
 export of these same fixtures.
+
+## SD-35: the tax cut, and the four gates every cycle runs
+
+*New 2026-09-15 (SD-35 closure).*
+
+### The recorded baselines, as they stand
+
+`scripts/verify-baselines.env` is append-only and the **last** assignment of each name wins; read
+it with `grep -E '^[A-Z_]+=' scripts/verify-baselines.env | tail -n 20`, never by eye from the top.
+Current tail values:
+
+| baseline | value | direction |
+|---|---|---|
+| `BASELINE_ROOT_LIB_TESTS` | 3390 | floor |
+| `BASELINE_ROOT_FULL_TESTS` | 8926 | floor |
+| `BASELINE_ROOT_TEST_BINARIES` | 419 | floor |
+| `BASELINE_DESKTOP_TESTS` | 570 | floor |
+| `BASELINE_FRONTEND_TEST_FILES` | 101 | floor |
+| `BASELINE_CLIPPY_WARNINGS_ROOT` / `_DESKTOP` | 0 / 0 | ceiling |
+| `BASELINE_COMPUTED_CLASSES` | 31 | floor |
+| `BASELINE_CORPUS_LITERAL_RECORDS` | 48706 | floor |
+
+**`BASELINE_ROOT_TEST_BINARIES` went *down*, 589 → 419, on purpose.** That is the one place a
+floor dropping is not the finding. SD-35's `AT-35-E1-003` folded two templated integration-test
+families (`tests/sd18_*_widening.rs`, `tests/sd13_*progression*.rs`) into one binary each: the
+same tests, 182 fewer links. `cargo test --locked --no-run` is dominated by the library compile
+plus one link per binary, so the fold bought **188.97 s → 145.89 s cold (−22.8%)**, measured
+paired, back-to-back, on a quiet box
+(`docs/release/SD-35-corpus-sheet-completion/artifacts/epic-1-tax-cut/build-time.json`,
+`paired_rerun`). A test-count floor that drops without a matching binary fold is still the finding.
+
+**Write integration tests into an existing family binary, not a new file**, unless the family is
+genuinely new. One more `tests/foo.rs` is one more link on every build anyone ever runs.
+
+### `scripts/verify.sh` — 49 stages
+
+`ALL_STAGES` is 49 stages; `--quick` runs 42 of them
+(`python3 -c "import re;s=open('scripts/verify.sh').read();print(len(re.search(r'ALL_STAGES=\((.*?)\)',s,re.S).group(1).split()))"`).
+`scripts/verify.sh --list` prints the full/quick membership table. SD-35 added
+`cycle-scope-gate-selftest`, `pcgen-residue-gate`, `token-coverage-selftest`, `token-coverage`,
+and `sheet-rules-check`.
+
+### The four gates a cycle runs without a build
+
+The expensive gate is the ~90-minute full `verify.sh`. Four checks that used to surface only
+there are now per-cycle, because each is Python-or-hash only and runs in seconds — a failure
+caught at the wrap-up is a failure the offending cycle already pushed:
+
+```
+python3 scripts/pcgen_residue_gate.py --check        # live PCGen surface; monotonic, only goes down
+python3 scripts/token_coverage.py --check            # the remainder, named by token type, counts summing
+python3 scripts/denominator_gate.py --check-provenance  # NOT the same flag as --check
+./scripts/publish-site-dashboard.sh --check-pin      # the dashboard feed's one input, re-hashed
+```
+
+`--check` and `--check-provenance` are **different checks** and neither substitutes for the other:
+`--check` scans for unsourced figures by path; `--check-provenance` enforces that every figure in
+a "Figures + their re-derive commands" section carries its command **on its own line**.
+Likewise `--check-pin` watches one input of the dashboard feed in milliseconds; the full
+`publish-site-dashboard.sh --check` costs ~15 minutes of real producer time and catches staleness
+the pin cannot see. Both stages exist for that reason.
+
+**The gate checks that a command is present and resolvable, not that it runs.** After adding a
+figure row, execute its command and confirm it prints the value you wrote.
+
+### The sheet-rule data gates
+
+```
+cargo run --locked --bin sheet_rule_convert -- --check          # regeneration is a no-op
+grep -rlE 'BONUS:|DEFINE:|PRE[A-Z]+:|%CHOICE|CL=' data/sheet_rules/ | wc -l   # must print 0
+```
+
+The second is the shape rule: our data files carry none of the source format. See
+[corpus-ingest.md](./corpus-ingest.md).
 
 ## Test conventions
 

@@ -1,7 +1,11 @@
 # Status
 
 > Scope: what is real, working product surface today across the whole repo, and what is stubbed, partially wired, or deferred — superseding the root README's "Current state" section.
-> Last verified: **2026-08-19 against `tranche/11`** (SD-31 wave 17, `SD31-W17-INTEGRATE-001`) for the §"Corpus coverage, corpus-wide — re-derived 2026-08-19 (SD-31 wave 17, integration cycle)" section (the live figures — waves 14/15/16's own sections are kept below for history, unchanged); the 2026-08-18 wave-14 pass for the §"Corpus coverage, corpus-wide — re-derived 2026-08-18" section, the `RuleSetId::Ce` row, and the companion-ceiling row; every other row still carries its 2026-08-13 `tranche/9` verification and is unchanged. Prior full pass: 2026-08-13 against `tranche/9` (SD-29 **real** closure, Epic 11 run 3). The 2026-08-11 pass belonged to a closure the operator rescinded the same day (`SD-29 decisions.md §42`); every figure it wrote has been re-derived here rather than carried. The rows re-derived in full this pass are the `RuleSetId` catalog count, the JSON-corpus-cache count, the monster/companion/race-trait chassis rows, and the whole §"Corpus coverage, corpus-wide" section; every other row carries its prior 2026-08-07/tranche-8 verification and is unchanged by SD-29. **Touched again 2026-08-21 (SD-31 wave 29, integration cycle)**: `RuleSetId` variant count 32→33 (`AdventurersGuide` added, this book's first compiled rule set — see the updated row below); `class_feature_pool_catalog.rs`'s option-pool render catalog now refuses any record carrying a `PREABILITY ... CATEGORY=Archetype` token (Ruling §18, `is_archetype_locked()`) — the `class-field-fix` note two paragraphs below ("its only live consumer was never scoped to 3,047 records") still stands unchanged, this is a narrower, later guard on the SAME consumer, not a reopening of that finding. Every other row is unchanged and still carries its prior verification date.
+> Last verified: **2026-09-15 against `tranche/15`** (SD-35 closure epilogue) for the new
+> §"Corpus coverage at SD-35 closure — 49,450 of 49,450" section, which **supersedes every
+> corpus-coverage section below it**: those sections are kept as history and none of their
+> figures is current. Every figure in the new section carries its re-derive command and was run
+> at this HEAD. Prior pass: **2026-08-19 against `tranche/11`** (SD-31 wave 17, `SD31-W17-INTEGRATE-001`) for the §"Corpus coverage, corpus-wide — re-derived 2026-08-19 (SD-31 wave 17, integration cycle)" section (the live figures — waves 14/15/16's own sections are kept below for history, unchanged); the 2026-08-18 wave-14 pass for the §"Corpus coverage, corpus-wide — re-derived 2026-08-18" section, the `RuleSetId::Ce` row, and the companion-ceiling row; every other row still carries its 2026-08-13 `tranche/9` verification and is unchanged. Prior full pass: 2026-08-13 against `tranche/9` (SD-29 **real** closure, Epic 11 run 3). The 2026-08-11 pass belonged to a closure the operator rescinded the same day (`SD-29 decisions.md §42`); every figure it wrote has been re-derived here rather than carried. The rows re-derived in full this pass are the `RuleSetId` catalog count, the JSON-corpus-cache count, the monster/companion/race-trait chassis rows, and the whole §"Corpus coverage, corpus-wide" section; every other row carries its prior 2026-08-07/tranche-8 verification and is unchanged by SD-29. **Touched again 2026-08-21 (SD-31 wave 29, integration cycle)**: `RuleSetId` variant count 32→33 (`AdventurersGuide` added, this book's first compiled rule set — see the updated row below); `class_feature_pool_catalog.rs`'s option-pool render catalog now refuses any record carrying a `PREABILITY ... CATEGORY=Archetype` token (Ruling §18, `is_archetype_locked()`) — the `class-field-fix` note two paragraphs below ("its only live consumer was never scoped to 3,047 records") still stands unchanged, this is a narrower, later guard on the SAME consumer, not a reopening of that finding. Every other row is unchanged and still carries its prior verification date.
 > **Path correction 2026-08-22** (SD-32 closure epilogue): src/rules_core/pilot_compute.rs cite
 > updated to `src/rules_core/pilot_compute/mod.rs` — the module became a directory during SD-31;
 > no other content in this doc re-verified.
@@ -31,6 +35,65 @@ Several desktop-facing actions that look interactive are session-local or
 inert by design, named individually below — this is the fail-honest
 convention (see [conventions.md](./conventions.md)) applied at the product
 level: a stub says so rather than pretending to work.
+
+## Corpus coverage at SD-35 closure — 49,450 of 49,450
+
+*New 2026-09-15. **This section supersedes every "Corpus coverage, corpus-wide" section below**,
+all of which are kept as history and none of which is current.*
+
+**Two figures, never one, and neither may be quoted without the other** — an inventory-only
+figure cannot see a record the inventory never enumerated, which is exactly the gap SD-35's final
+census found:
+
+| figure | value | re-derive command |
+|---|---|---|
+| **inventory** completion | **49,450 of 49,450 = 100%** | `python3 scripts/completion_atlas.py --check` |
+| **corpus** completion — the headline | **48,864 of 48,864 real `data/corpus` rules records = 100%** | cited from `docs/release/SD-35-corpus-sheet-completion/artifacts/epic-7-closure/population-census-final.json` |
+
+`49,438` — SD-33's and SD-34's denominator — is superseded everywhere and is never the bar.
+
+**What "done" means here changed, and that is the finding.** Under the sheet rule
+(`docs/release/SD-35-corpus-sheet-completion/decisions.md §1`) a record is done when it renders a
+line a player could write: one final number, dice in final form, or the rule's own words. A term
+the character does not settle stays as words, and the unit is **done** — "the engine cannot model
+X" is a number to report, not an exemption. There is no simulation engine behind any of it.
+
+**Status distribution** (`python3 -c "import json;print(json.load(open('docs/work-inventory.json'))['totals']['by_status'])"`):
+
+| status | units | share of 49,450 |
+|---|---|---|
+| `sheet-complete` | 23,087 | 46.7% of 49,450 |
+| `text-complete` | 11,839 | 23.9% of 49,450 |
+| `oracle-unverifiable` | 8,491 | 17.2% of 49,450 |
+| `grounded` | 5,222 | 10.6% of 49,450 |
+| `oracle-agree` | 811 | 1.6% of 49,450 |
+| every other status (`not-started`, `engine-does-not-hold`, `deferred-with-reason`, `unmeasurable`, …) | **0** | 0% of 49,450 |
+
+38 books, 19 record kinds; the largest are `class_feature` 18,043, `equipment` 6,223,
+`ability` 4,337, `monster_ability` 3,806 (`['totals']['by_kind']` in the same file).
+
+**Converter coverage** (`python3 -c "import json;print(json.load(open('data/sheet_rules/_report.json')))"`):
+49,450 of 49,450 records converted, **0 refused**, 70,317 rules written, 5,294 variable tables,
+423 records degraded (converted, with some token rendered as words rather than a number).
+`python3 scripts/token_coverage.py --check` names the remainder by token type and checks the type
+counts sum — there is no unnamed "rest".
+
+**PCGen is out of live code.** 260 live files at the first gate reading → **0**
+(`docs/retro/sd35-corpus-sheet-completion-retrospective.md §5`, per-epic table):
+
+```
+$ python3 scripts/pcgen_residue_gate.py --check --closure
+live_files=0 live_hits=0 verdict=PASS
+```
+
+The converter, the `.lst` parser, the generators and the oracle harness are **kept** — see
+[overview.md](./overview.md) §"The converter/live boundary". Removing PCGen from the live side is
+not removing PCGen from the repo.
+
+**What this does *not* claim.** Coverage is a statement about the corpus reaching a rendered
+sheet line. It is **not** a claim that every class/level combination reaches a fully `Computed`
+receipt — the Posture section above still stands, and `BASELINE_COMPUTED_CLASSES=31`
+(`scripts/verify-baselines.env`) is the separate chassis figure.
 
 ## Real today
 

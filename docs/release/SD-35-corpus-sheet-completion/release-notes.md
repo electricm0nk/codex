@@ -30,13 +30,13 @@ Under the sheet rule (`decisions.md §1`), a unit is DONE when the sheet shows e
 
 | lines per unit | units | share of 49,450 |
 |---|---|---|
-| 1 | 44,840 | 90.7% |
-| 2 | 1,302 | 2.6% |
-| 3–10 | 3,909 | 7.9% |
-| >10 | 350 | 0.7% |
-| **mean 1.42, median 1** | 49,450 | 100% |
+| 1 | 44,840 | 90.7% of 49,450 |
+| 2 | 1,302 | 2.6% of 49,450 |
+| 3–10 | 3,909 | 7.9% of 49,450 |
+| >10 | 350 | 0.7% of 49,450 |
+| **mean 1.42, median 1** | 49,450 | 100% of 49,450 |
 
-Re-derive: `python3 docs/release/SD-35-corpus-sheet-completion/artifacts/epic-7-closure/lines_per_unit_census.py` (or see `retrospective.md §2` for the full shell command).
+Re-derive: the census over `data/sheet_rules/` printed verbatim in `docs/retro/sd35-corpus-sheet-completion-retrospective.md §2` (a `python3 - <<'PY'` heredoc; copy and run it from the repo root).
 
 Nine records in ten print exactly one line. The tail of 201-line records is legitimate: class progressions carry one rule per level.
 
@@ -44,38 +44,38 @@ Nine records in ten print exactly one line. The tail of 201-line records is legi
 
 | kind | rules | `Words` share |
 |---|---|---|
-| **all kinds** | **70,317** | **56.8% = 39,941 rules** |
-| deity | 459 | 100.0% |
-| language | 136 | 100.0% |
-| domain | 185 | 97.3% |
-| spell | 3,104 | 90.1% |
-| power | 447 | 88.8% |
-| feat | 2,904 | 85.2% |
-| monster_ability | 4,601 | 78.7% |
-| equipment_modifier | 1,660 | 77.2% |
-| class_feature | 20,943 | 74.0% |
-| equipment | 7,322 | 64.9% |
-| ability | 5,285 | 61.4% |
-| race_trait | 3,000 | 61.0% |
-| race | 136 | 59.6% |
-| trait | 546 | 57.9% |
-| template | 3,068 | 34.7% |
-| companion | 4,751 | 19.9% |
-| skill | 380 | 14.5% |
-| class | 837 | 9.8% |
-| monster | 10,553 | 6.8% |
+| **all kinds** | **70,317** | **56.8% of 70,317 = 39,941 rules** |
+| deity | 459 | 100.0% of 459 |
+| language | 136 | 100.0% of 136 |
+| domain | 185 | 97.3% of 185 |
+| spell | 3,104 | 90.1% of 3,104 |
+| power | 447 | 88.8% of 447 |
+| feat | 2,904 | 85.2% of 2,904 |
+| monster_ability | 4,601 | 78.7% of 4,601 |
+| equipment_modifier | 1,660 | 77.2% of 1,660 |
+| class_feature | 20,943 | 74.0% of 20,943 |
+| equipment | 7,322 | 64.9% of 7,322 |
+| ability | 5,285 | 61.4% of 5,285 |
+| race_trait | 3,000 | 61.0% of 3,000 |
+| race | 136 | 59.6% of 136 |
+| trait | 546 | 57.9% of 546 |
+| template | 3,068 | 34.7% of 3,068 |
+| companion | 4,751 | 19.9% of 4,751 |
+| skill | 380 | 14.5% of 380 |
+| class | 837 | 9.8% of 837 |
+| monster | 10,553 | 6.8% of 10,553 |
 
-Re-derive: `python3 docs/release/SD-35-corpus-sheet-completion/artifacts/epic-7-closure/words_share_census.py` (or see `retrospective.md §3`).
+Re-derive: the per-kind census over `data/sheet_rules/` printed verbatim in `docs/retro/sd35-corpus-sheet-completion-retrospective.md §3` (a `python3 - <<'PY'` heredoc; copy and run it from the repo root).
 
-The split is by kind, not by book: a `monster` stat block is 6.8% words because it carries numbers; a `deity` entry is 100% words because the entry *is* prose.
+The split is by kind, not by book: a `monster` stat block is words in only 6.8% of its 10,553 rules because it carries numbers; a `deity` entry is words in 100.0% of its 459 because the entry *is* prose.
 
 ## Process figures
 
 | metric | value | command |
 |---|---|---|
 | cycles dispatched | 127 | `git log --oneline --grep "AT-35-E" \| wc -l` or `git diff 4c6c57eb9f..HEAD --stat \| grep "cycle.*receipt"` |
-| units closed per cycle | min 0, median 0, max 21,911 | `docs/release/SD-35-corpus-sheet-completion/retrospective.md §1` |
-| **build time before / after** (cold, paired) | **188.97 s → 145.89 s (−22.8%, −43 s)** | `python3 -c "import json;print(json.load(open('docs/release/SD-35-corpus-sheet-completion/artifacts/epic-1-tax-cut/build-time.json'))['paired_rerun'])"` |
+| units closed per cycle | min 0, median 0, max 21,911 | `docs/retro/sd35-corpus-sheet-completion-retrospective.md §1` |
+| **build time before / after** (cold, paired) | **188.97 s → 145.89 s (−43.08 s, −22.8% of 188.97 s)** | `python3 -c "import json;print(json.load(open('docs/release/SD-35-corpus-sheet-completion/artifacts/epic-1-tax-cut/build-time.json'))['paired_rerun'])"` |
 | test binaries before / after | 544 → 362 | Epic 1 consolidated 184 near-identical template test files into two binaries |
 | build stages verified | 49 of 49 PASS | `bash scripts/verify.sh` at closure |
 

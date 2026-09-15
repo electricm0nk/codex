@@ -1,7 +1,12 @@
 # Desktop App
 
 > Scope: How the Tauri desktop shell is built, how it talks to the Rust backend, and how its frontend surfaces are organized.
-> Last verified: 2026-07-22 against tranche/5-3 (SD-25 closure)
+> Last verified: **2026-09-15 against `tranche/15`** (SD-35 closure epilogue) for the new
+> §"The 'Rules and features' section — how a sheet line reaches the screen" section and the
+> registered-command recount (**69**, re-derived from `generate_handler![...]` in
+> `apps/desktop/src-tauri/src/main.rs` with comments stripped; the table below still lists the
+> 53 that existed at the 2026-07-22 pass and is not re-enumerated this pass). Prior full pass:
+> 2026-07-22 against tranche/5-3 (SD-25 closure)
 > Maintenance: updated at SD closure — see [README.md](./README.md) §Maintenance contract
 
 ## Build shape
@@ -43,6 +48,32 @@ The boundary files (all under `apps/desktop/src/boundary/`), one per Tauri comma
 - `apps/desktop/src/update/installAction.ts` — `performInstall()` calls `invoke("perform_install", …)` directly; returns a no-runtime sentinel (`NO_TAURI_RUNTIME_RESPONSE`) and keeps its DOM output pure (`buildRelaunchPromptMarkup`) as its testability seam, rather than an injectable `invokeImpl`.
 - `apps/desktop/src/feedback/browserHandoff.ts` — `runBrowserHandoff()` calls `invokeImpl('handoff_defect_report_to_browser', …)` directly (default `invokeImpl` is the real `invoke`); accepts an injectable `invokeImpl`.
 - `apps/desktop/src/characterHub/CorpusIngestDiagnosticPanel.tsx` (SD-25 Epic 5) — its module-local `loadCorpusIngestDiagnostic()` guards on `hasTauriRuntime()` and calls `invoke('corpus_ingest_diagnostic')` directly rather than through a `boundary/*.ts` file; unlike most surfaces it has no browser-preview fallback and simply throws outside a Tauri runtime (the diagnostic reports real compiled-in table state, which has no meaningful sample stand-in).
+
+## The "Rules and features" section — how a sheet line reaches the screen
+
+*New 2026-09-15 (SD-35 closure).* This is the surface the whole corpus renders through, and it is
+the shortest path in the app: the frontend does no rule work at all, not even formatting.
+
+1. **Engine.** `codex::rules_core::sheet_rule::render_sheet` returns `Vec<SheetLine>`; each line
+   already carries `printed` — the value **as the player writes it** (`"+2"`, `"15"`, `"1d8+2"`,
+   `""` for words). See [rules-engine.md](./rules-engine.md).
+2. **Shell.** `apps/desktop/src-tauri/src/character_hub.rs` loads the `data/sheet_rules/` package
+   once per process (`sheet_rule_package()`, a `OnceLock`), calls `sheet_lines_for(...)` for the
+   character's held set, and maps the result with `map_sheet_lines_dto` into `SheetLineDto`:
+   `{ id, kind, label, form, value, also, prose, condition }`. `form` is exactly
+   `"number" | "dice" | "words"` — the three states a sheet line can be in, no fourth.
+3. **Failure is named, never blank.** The detail payload carries
+   `sheet_rules_unavailable_reason: Option<String>` beside `sheet_lines`, so a package that could
+   not be resolved or read says so on the sheet instead of rendering an empty section. That is the
+   fail-honest convention, applied to a data-availability failure rather than a computation.
+4. **Frontend.** `apps/desktop/src/characterHub/CharacterSheet.tsx` exports
+   `RulesAndFeaturesSection` (anchored by `RULES_AND_FEATURES_ID`), `groupSheetLinesByKind` and
+   `sheetLineKindLabel`. The section groups by `kind` and prints `value` verbatim; an unnamed kind
+   is humanised, never dropped. Its behaviour is pinned by
+   `apps/desktop/src/characterHub/rulesAndFeaturesSection.test.ts`.
+
+**The rule for a contributor:** if you find yourself formatting a rules number in TypeScript, the
+line is being derived twice. The printed form belongs in the engine.
 
 ## The complete Tauri command inventory
 
