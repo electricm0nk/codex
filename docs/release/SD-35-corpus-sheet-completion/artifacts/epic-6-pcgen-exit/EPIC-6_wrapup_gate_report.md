@@ -1,5 +1,21 @@
 # Epic 6 — PCGen exit — wrap-up gate report
 
+> ## SUPERSEDED — do not read this report's verdict as current
+>
+> Superseded by `EPIC-6_wrapup_gate_report_regate5.md` (the live one), via
+> `EPIC-6_wrapup_gate_report_regate4.md`. Stamped by the Epic 6 wrap-up correction cycle
+> `AT-35-E6-WRAPUP-FIX2`, which folded all three reports in one commit so that three live
+> verdicts would not stand side by side.
+>
+> **What is stale here:** this report describes the tree at `77e8d3919a` and states
+> *"45 stages passed, 4 failed"* with the red list `site-dashboard-check`, `figure-provenance`,
+> `desktop`, `clippy`. **All four were cleared** before `4b69eb7aab`. The current verdict at
+> `4b69eb7aab` was 48 of 49 PASS with one red stage, `shape-engine-boundary-selftest`, which
+> `AT-35-E6-WRAPUP-FIX2` fixed.
+>
+> Kept, not deleted: its stage table is the record of the four-red state and of the commits that
+> cleared it.
+
 Authored by the **isolated read-only worker** (`workflow-instruction.md §2` worker split,
 `decisions.md §3`). This worker pushed nothing and committed nothing. Everything below was run in
 its own git worktree at `/home/ubuntu/workspace/repos/codex/.claude/worktrees/wf_291be5c8-5f3-89`,

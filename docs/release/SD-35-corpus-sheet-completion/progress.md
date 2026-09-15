@@ -181,6 +181,72 @@ re-measured at the cut by the launch-readiness audit.
 
 ## Cycle log
 
+### 2026-09-15 — Epic 6 — AT-35-E6-WRAPUP-FIX2 cycle 1 — **the last red wrap-up stage fixed on the PROPERTY, and the full gate re-run green 49/49** — complete
+
+**Status: complete.** `workflow-instruction.md §10 step 0`, second correction cycle on this epic.
+Work commit `<COMMIT_SHA>`; receipt `artifacts/epic-6-pcgen-exit/AT-35-E6-WRAPUP-FIX2_cycle1_receipt.md`.
+Cycle start `4b69eb7aab` — the exact tree re-gate 5 tested.
+
+- **Scope gate:** `SCOPE_GATE: EXEMPT (wrap-up correction cycle)` (`decisions.md §2`) — closes zero
+  units by design. **Not** exempt from the residue check, which ran at both ends.
+- **Receipt rows:** `closed=0 relabeled=0 rust_lines_changed=0 ratio=n/a builds_recorded=1 pcgen_live_files=0`
+  (`python3 scripts/cycle_scope_gate.py --receipt --since 4b69eb7aab --before /tmp/claude-1000/e6fix/wi-before.json --after docs/work-inventory.json`).
+  `rust_lines_changed=0` because no Rust was touched: `git diff --stat 4b69eb7aab -- '*.rs'` is empty.
+- **Refused tokens:** none. Separately `token-coverage` reads
+  `refused=142 refused_non_done=0` — every refused token type belongs to a unit already DONE under
+  the sheet rule. **A number, not an exemption.**
+- **The red stage, fixed without copying the number.** `shape-engine-boundary-selftest` failed
+  `AssertionError: 26397 != 26396` at `scripts/tests/test_shape_engine_boundary.py:121` — a
+  hand-maintained equality pin, not a behavioural regression (the next stage was already PASS at
+  `magnitude_bearing=26397 not_held_by_engine=0 citation_ok=True`). Re-pinning it to `26397` would
+  have re-armed the trap that carried `9475` stale for six SD-34 waves, so the assertion is
+  re-stated as two halves that fail **closed**: a **floor** (`assertGreaterEqual(len(mag), 26396)`
+  — the population only grows) and a **second implementation** (`assertEqual(len(mag), len(units)
+  - len(zero_token))`, the complement recount, with **no number pinned**).
+  **Mutation-proved both ways, not asserted:** over-count → `FAIL 26398 != 26397`; under-count →
+  `FAIL 100 not >= 26396`; unmutated → `Ran 15 tests OK`. Correction
+  `1789442723166-at-35-e6-wrapup-fix2-80005d`.
+- **Second stale pin, same commit (`§10 step 0`).** `BASELINE_ROOT_FULL_TESTS` **8919 → 8926** — a
+  `check_floor` **raised, never lowered**, measured on *this* cycle's own green run rather than
+  copied from the gate worker. The +7 attributes exhaustively by a second implementation to
+  `src/bin/v06_work_inventory.rs` (637 → 644 `#[test]` attributes) and to one commit,
+  `e58e5a9ce5`. `BASELINE_ROOT_LIB_TESTS` (3390) and `BASELINE_ROOT_TEST_BINARIES` (419) measured
+  **exactly at** their floors and were not moved.
+- **Nothing silenced.** No stage skipped, no ignore list widened, no baseline lowered.
+- **Verification — the full gate, run once, by this cycle.** `scripts/verify.sh`, **every stage,
+  no `--only`**, `CARGO_TARGET_DIR=/tmp/cargo-sd35-SD35-E6-WRAPUP-FIX2`, `CARGO_INCREMENTAL=0`:
+  **`RESULT: PASS`, exit 0, 49 of 49 stages PASS, 0 FAIL, 8,523 s (2 h 22 m 3 s)**. Logs
+  `/tmp/codex-verify-pbJKpU/`; combined `/tmp/claude-1000/e6fix/verify_full.log`. Widest build
+  scope: `root-lib 3390`, `root-full 8926 across 419 suites (all 365 tests/*.rs executed)`,
+  `desktop 570`, frontend, clippy and `reach` all inside that one run.
+- **PCGen residue:** `live_files=0 live_hits=0 baseline_files=260 baseline_hits=12736 verdict=PASS`
+  at start **and** at end — **unchanged, did not rise**.
+- **Worktree sweep performed, and it caught the previous sweep short.** Re-gate 5 escalated that
+  `§10 step 2` assigns the sweep to the isolated gate worker, which is structurally incapable of
+  it — three consecutive epics censused and never performed. This cycle is non-isolated and ran it,
+  finding **5 artifacts the FIRST correction cycle missed** (`EPIC-6_wrapup_regate1_report.md`,
+  `EPIC-6_wrapup_regate2_report.md`, `at-35-e6-wrapup-regate-1.jsonl`,
+  `at-35-e6-wrapup-regate-2.jsonl`, `epic-6-wrapup.jsonl`, in `-91`/`-90`) on top of the 6 the
+  handoff named in `-94`. **11 total**, all folded. Incident
+  `1789443362836-at-35-e6-wrapup-fix2-8bb2d8` (`unfolded-gate-artifacts-die-with-the-worktree`),
+  correction `1789443336590-at-35-e6-wrapup-fix2-32faa2`. Removal **censused, not performed**: the
+  fold lands in this commit, and removing those worktrees before it is pushed would destroy the
+  only other copy.
+- **Three live gate verdicts reduced to one.** Five reports now exist and **four carry a SUPERSEDED
+  banner** naming `EPIC-6_wrapup_gate_report_regate5.md` as live and stating what in each is stale.
+  None deleted — they are the record of the red list falling 4 → 1 → 0.
+- **One self-reported defect, corrected not concealed.** This run's own derived `verification`
+  event misfiled to actor `sd31-transcribe` because `RETRO_ACTOR` was not exported inside the
+  backgrounded run script. The shard is committed **as-is** (the log is append-only), with
+  correction `1789451471001-at-35-e6-wrapup-fix2-d23401` and incident
+  `1789451471125-at-35-e6-wrapup-fix2-10d3a6` (`retro-actor-lost-between-bash-calls`, 4th firing).
+- **Operator escalations carried, none blocking Epic 7:** (1) `.gitignore` still needs one line,
+  `.worktrees/` — 12th carry, verified unfixed at this HEAD (`grep -n worktrees .gitignore` exits 1);
+  (2) `§10 step 2` must move to the correction cycle **with a fold-first sub-step**; (3)
+  `epic-wrapup-gate-red` at 7 firings needs live-population constants **derived**, not pinned — a
+  `technical-design.md` change. This cycle did the derivable half where it had scope.
+
+
 ### 2026-09-14 — Epic 6 — AT-35-E6-004 **cycle 3** — **re-certification at `7913ffba49`: the gate still reads zero after fourteen commits edited its live roots, and the B17 shipped-data class is made to FIRE for the first time** — complete
 
 Cycle 2 certified at `5da55c42e3`. Fourteen commits landed after it, touching the very live roots

@@ -118,7 +118,32 @@ class TestBuildReportOnLiveSource(unittest.TestCase):
         # state as fact, re-derived from the real committed inventory.
         units = SEB._load_units()
         mag = SEB.magnitude_bearing(units)
-        self.assertEqual(len(mag), 26396)
+        # `magnitude_bearing` was pinned by EQUALITY to `26396` and went stale
+        # the moment Epic 6 added one magnitude-bearing unit (measured 26397),
+        # turning the WHOLE instrument's selftest red for a population that had
+        # GROWN -- the same defect class the `not_held` comment below already
+        # names. Re-pinning the equality to today's number just re-arms the
+        # trap (`AGENTS.md` rule 8: a recurring failure gets a mechanism, not
+        # another edit), so the assertion is re-stated on the PROPERTY that is
+        # actually load-bearing, in two halves that together still fail CLOSED:
+        #
+        #   (a) FLOOR. This population only grows -- a unit gains magnitude
+        #       tokens at ingest and never loses them. `26396` is the SD-34
+        #       wave-51 high-water mark. Below it means units LOST their
+        #       magnitude, or the instrument started under-counting.
+        #   (b) SECOND IMPLEMENTATION. `magnitude_bearing` is a filter; this
+        #       recount is its COMPLEMENT (total minus the zero/missing-token
+        #       units), a different arithmetic path over the same inventory, so
+        #       an over-count or an off-by-one in the filter breaks equality
+        #       here even though no hand-maintained number is pinned.
+        #       (`AGENTS.md` concurrency section: any number that moves a
+        #       baseline needs two independent implementations agreeing.)
+        #
+        # Re-derive the live value: `python3 scripts/shape_engine_boundary.py
+        # --check` -> `magnitude_bearing=<n> ...`.
+        self.assertGreaterEqual(len(mag), 26396)
+        zero_token = [u for u in units if not (u.get("magnitude_token_count") or 0) > 0]
+        self.assertEqual(len(mag), len(units) - len(zero_token))
         # SD-34 wave 51: `9475` was stale, and had been carried as a KNOWN,
         # deliberately-deferred open item since wave 44 (`progress.md`, wave 45
         # entry: "left `shape_engine_boundary.py`'s own pre-existing, unrelated
@@ -140,7 +165,7 @@ class TestBuildReportOnLiveSource(unittest.TestCase):
         # `8784` is the SD-34-wave-51 high-water mark. Live at SD-35
         # `4e321d2c6c` (after Epic 2's corpus-wide conversion): 363.
         # Re-derive: `python3 scripts/shape_engine_boundary.py --check`
-        # -> `magnitude_bearing=26396 not_held_by_engine=<n>`.
+        # -> `magnitude_bearing=<n> not_held_by_engine=<n>`.
         not_held = len(SEB.not_held_by_engine(mag))
         self.assertLessEqual(not_held, 8784)
         self.assertLessEqual(not_held, len(mag))
