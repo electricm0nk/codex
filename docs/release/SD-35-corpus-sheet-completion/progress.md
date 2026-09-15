@@ -252,6 +252,27 @@ the `docs/work-inventory.json` rung-ordering defect); **3** scan/architecture-do
 (`AT-35-E1-003`'s 244 `grounding_ref` citations, and `AT-35-E7-001`'s own two).
 **No refused token type is deferred -- this cycle's converter refusal set is empty.**
 
+**Verification -- ONE full `scripts/verify.sh` at the end: `RESULT: PASS`, 49 of 49 stages,
+`FAILED: 0`** (logs `/tmp/codex-verify-XAwdmH`). `root-full` **8926 passed across 419 suites**, and
+`grep -c 'test result: FAILED'` over its log is **0** of **420** `Running`/`Doc-tests` lines --
+`tests/sd26_pilot_case_verification.rs` ran and passed here, the S8 test's third independent pass.
+`root-lib` 3390 · `desktop` 570 · `reach` 32 · `frontend-test` 101/101 of 101 files ·
+`frontend-typecheck` clean · `clippy` root:0 desktop:0 · `denominator-gate` 360 files / 0
+violations · `figure-provenance` 624 figures / 0 violations · `corpus-sweep` 0 findings ·
+`reachability-audit` reachable ceiling 100.00% · `class-dump` 31/31 computing.
+
+**An earlier verify run in this cycle was RED on exactly two stages, and that is recorded rather
+than buried.** Each was one count pin the join fix legitimately moved, and each was fixed in
+`1a3ffba353` by RE-DERIVING THE WHOLE SET and naming every member, never by adjusting a number to
+fit: `feat_prereqs.rs` (a starting Fighter's eligible feats 540 -> 537 and catalog records with no
+converted rule 12 -> 1, from the eleven `bestiary:feat:*` records now carrying a converted gate --
+exactly three correctly denied, `Awesome Blow`, `Craft Construct`, `Snatch`, each with the
+character's own value in the line, the other eight named so the eleven sum, and the one still
+unconverted NAMED as `Transfer Feat to Familiar`); and `reach_gate.rs` (22 `BARE_RECORD_FINDINGS`
+entries DELETED, not relaxed -- 11 of `beastiary1`/`abilities` and the same 11 of
+`beastiary1`/`templates` -- which the gate demanded itself with *"these records now carry real
+fields"*). `correction 1789491974154-at-35-e7-closure-cleanup-7d5aee` records the S8 classification.
+
 Honest counter-movement with its denominator: `_defects/unresolved-references.json` 11,819 ->
 **11,925** (+106) and `_defects/undefined-variables.json` 738 -> **739** (+1) of the 54,759 files in
 `data/sheet_rules/`, because 142 new records bring their own references; `inline-formula-in-prose`

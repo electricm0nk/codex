@@ -276,7 +276,67 @@ Everything above landed first; then a single full `scripts/verify.sh` in a priva
 `CARGO_TARGET_DIR` (`/tmp/cargo-sd35-AT-35-E7-CLOSURE-CLEANUP`, `CARGO_INCREMENTAL=0`).
 `builds_recorded=1`.
 
-**Stage table and result: see `## Verify` below — filled from the real run.**
+```
+SUMMARY
+  passed:  49  preflight-disk preflight-oracle oracle-pin-selftest producer-selftest
+               pi-redaction-selftest provenance-selftest site-dashboard-selftest
+               site-dashboard-pin site-dashboard-check site-dashboard-pi-gate
+               build-public-status-selftest site-public-status-check site-public-status-pi-gate
+               site-asset-stamp-check reachability-audit-selftest reachability-audit
+               groundtruth-guard-selftest supersession-gate-selftest
+               shape-coverage-standing-gate-selftest shape-coverage-standing-gate
+               cycle-scope-gate-selftest shape-engine-boundary-selftest shape-engine-boundary
+               missing-engine-tables denominator-gate figure-provenance pcgen-residue-gate
+               token-coverage-selftest token-coverage pi-sweep declared-pi-audit audit-selftest
+               reclaim-selftest driver-selftest corpus-sweep-selftest corpus-trap-audit-selftest
+               root-lib root-full desktop reach corpus-sweep sheet-rules-check corpus-trap-audit
+               supersession-gate frontend-install frontend-test frontend-typecheck clippy
+               class-dump
+  FAILED:  0
+
+RESULT: PASS
+logs in /tmp/codex-verify-XAwdmH
+```
+
+**49 of 49 stages PASS, `FAILED: 0`.** Stages that carry this cycle's figures, quoted from their
+own lines:
+
+| stage | line |
+|---|---|
+| `sheet-rules-check` | `records=49450 converted=49450 refused=0 rules=70317 var_tables=5294 verdict=PASS (117.6s)` — the HEAD `sheet_rule_convert --check` `§3a` asks for, independently confirming S2 |
+| `token-coverage` | `non_done=0 tokened=0 token_less=0 refused=0 refused_non_done=0 token_types=233 shapes=0 verdict=PASS` — S3, verbatim |
+| `pcgen-residue-gate` | `live_files=0 live_hits=0 verdict=PASS` |
+| `root-lib` | `3390 passed` (was `3389 passed; 1 failed`) |
+| `root-full` | `8926 passed across 419 suites, all 365 tests/*.rs suites executed`; `grep -c 'test result: FAILED'` over its log → **0** of **420** `Running`/`Doc-tests` lines. `tests/sd26_pilot_case_verification.rs` ran and passed here — the S8 test's **third** independent pass |
+| `desktop` | `570 passed` (was `569 passed; 1 failed`) |
+| `reach` | `32 passed` |
+| `frontend-test` | `101/101 files`; `frontend-typecheck` `tsc --noEmit clean` |
+| `clippy` | `root:0 desktop:0 warnings, 0 errors` |
+| `denominator-gate` | `files_checked=360 violations=0` |
+| `figure-provenance` | `files_checked=290 figures_examined=624 violations=0` |
+| `corpus-sweep` / `corpus-trap-audit` | `0 findings`; `all defect kinds at their registered counts` |
+| `reachability-audit` | `reachable ceiling 100.00%`, which its own line states as `(49450 / 49450)` — every inventory unit |
+| `class-dump` | `31/31 computing` |
+
+**An earlier verify run in this cycle was RED on two stages, and that is recorded rather than
+buried.** `root-lib` and `desktop` each failed on **one** count pin the join fix legitimately
+moved. Both were fixed in `1a3ffba353` by **re-deriving the whole set**, never by adjusting a
+number to fit, and each is attributed in the code:
+
+- `feat_prereqs.rs` — a starting Fighter's eligible feats **540 → 537**, catalog records with no
+  converted rule **12 → 1**. Eleven `bestiary:feat:*` records now carry a converted gate; exactly
+  three are correctly DENIED with the character's own value in the line (`Awesome Blow` on Power
+  Attack + Improved Bull Rush + size 5 + Str 25 vs. size 4 / Str 14; `Craft Construct` on two
+  item-creation feats; `Snatch` on size 6 vs. 4), and the other eight are named so the eleven sum.
+  The one record still unconverted is **named, not bucketed**: `Transfer Feat to Familiar`.
+- `reach_gate.rs` — **22 entries DELETED** from `BARE_RECORD_FINDINGS` (11 × `beastiary1/abilities`
+  + the same 11 × `beastiary1/templates`: six `Aasimar ~ *-Blooded`, five `Tiefling ~ *-Spawn`).
+  The gate reported them itself — *"these records now carry real fields — delete them from
+  BARE_RECORD_FINDINGS"* — which is what it exists to force. **Deleted, not relaxed**; no
+  assertion widened.
+
+Both are the same shape as ruling B18's move one ruling earlier: a record that previously had no
+converted rule now carries one, so a gate that could not be checked can be.
 
 The two figures that outrank finishing, re-read after everything landed:
 
