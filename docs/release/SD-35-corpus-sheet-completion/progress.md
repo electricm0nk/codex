@@ -181,6 +181,21 @@ re-measured at the cut by the launch-readiness audit.
 
 ## Cycle log
 
+### 2026-09-15 — Epic 7 — AT-35-E7-002 **cycle 1** — the retrospective, cited in the same cycle; the sweep runs and escalates — complete
+
+- **Scope gate:** `SCOPE_GATE: EXEMPT (Epic 7 closure-epilogue cycle — closes zero units by design, decisions.md §2)`; `python3 scripts/cycle_scope_gate.py --min 500` → `scoped=0 remaining_non_done=0 floor=500 verdict=PASS_WHOLE_REMAINDER`
+- **Receipt rows:** `closed=0 relabeled=0 rust_lines_changed=0 ratio=n/a builds_recorded=0 pcgen_live_files=0`
+- **Build scope:** none, and the SHA says why — `git diff --name-only 7753c29915..HEAD -- '*.rs' 'data/' 'Cargo.*'` is empty, so a rebuild would compile a byte-identical crate and `AGENTS.md` rule 9 forbids inventing a figure for it. `AT-35-E7-001` cycle 4's full `scripts/verify.sh` (**49 of 49 PASS**) stands at that tree.
+- **Step 2 — the retrospective.** `docs/retro/sd35-corpus-sheet-completion-retrospective.md`, in `docs/retro/sd31-retrospective.md`'s shape, grounded in `python3 scripts/retro.py summary --since 2026-09-08 --json` (**731 events**, 77 shards, 0 invalid lines; 225 correction / 201 verification / 93 deferral / 90 resolution / 75 incident / 41 note / 6 rework; 346 commits, 2.11 events per commit). All five required figures, each with its re-derive command: **build time** `188.97 s → 145.89 s` cold and paired, binaries 544 → 362, test entries byte-identical at 8,723 — and the unpaired run 2 (295.95 s under another lane's load 40) reported rather than deleted; **units per cycle** min `0`, median `0`, max `21,911` over 127 receipts, with `AT-35-E2-005` closing 21,911 of the 23,315 units not DONE at the cut; **lines per unit** mean `1.42`, median `1`, p95 `4`, max `201`, **44,840 of 49,450 units printing exactly one line**; **`Words` share per kind** over 70,317 rules — `deity` 459 of 459 and `language` 136 of 136 at 100%, `monster` 719 of 10,553, corpus-wide **39,941 of 70,317**; **PCGen residue per epic** — E1 260→260 (the gate was built there), E2–E5 260→253, **E6 254→0** across 67 receipts monotonically (254→208→197→81→45→25→16→8→4→0), E7 0→0.
+- **Cited in the same cycle**, as `§11` step 2 requires: `references/README.md`'s Retrospectives table now names the author, the date, the grounding command and every one of those figures.
+- **Step 3 — the sweep, found vs removed.** Worktrees **16 found, 0 removed**; `worktree-wf_*` branches **23 found, 8 removed**; untracked worktree files **30 found, 6 folded** (24 already in main, main's copy the later one in every case); `test` and `update-index` **untouched**; remote branches 8, none stale; disk 61% used, 569G free of 1.5T, unchanged. Losslessness proved first: all 16 worktree HEADs are ancestors of `tranche/15`; 22 of 23 branches likewise, and the 23rd is 47 commits ahead but **every one contained in `origin/develop`**; the ~14 modified `.rs` files per worktree are a superseded earlier pass at Epic 6's `pcgen_import` relocation (HEAD has already moved the modules).
+- **Operator escalation — the eleventh recurrence.** `git worktree remove` is refused by the Claude Code auto-mode permission classifier for a dispatched agent on this checkout, as a loop **and** as a single explicit path; `git branch -D` is permitted, which is how the 8 orphan branches came out. Ten open deferrals from the Epic 2–6 wrap-ups record the same refusal. **`workflow-instruction.md §10 step 2` and `§11 step 3` assign a step no agent in this program has ever been permitted to run** — it needs an operator-run `git worktree remove --force` over the 16 paths, or a `Bash` permission rule, and belongs in SD-36's launch checklist. `deferral 1789503195144-at-35-e7-002-023beb`.
+- **One correction, found by this cycle's own gate run.** `AT-35-E7-001` cycle 4 reported `denominator-gate files_checked=360 violations=0` from a `verify.sh` at `7753c29915`, then wrote its `progress.md` entry at `17ea4c1595` — after that run — wrapping `48,864 of 48,864 real data/corpus rules records` and `= 100%` onto two lines. Denominator present and correct; the line break hid it. Rewrapped, **no figure altered** (`correction 1789503578833-at-35-e7-002-23ccb2`). Generalised into a "Changes for SD-36" row: **a closure cycle's own `progress.md` and `kanban.md` entries are written after its gate run, so the gate never sees them.**
+- **Gates at HEAD:** `pcgen_residue_gate.py --check --closure` `live_files=0 live_hits=0 shipped_data_files=0 shipped_data_hits=0 shipped_scanned=11 verdict=PASS`; `denominator_gate.py --check` `files_checked=365 violations=0`; `denominator_gate.py --check-provenance` `files_checked=295 figures_examined=627 violations=0`; `completion_atlas.py --check` `done_evidence_violations=0 missing_clearing_mechanisms=0 stale_derived_at=False citation_failures=0`.
+- **Refused tokens:** none.
+- **Receipt:** `artifacts/epic-7-closure/AT-35-E7-002_cycle1_receipt.md` — cycle start `a57ae67cb5`.
+- **Next:** `AT-35-E7-003`'s remaining half — architecture docs, graphify, PR, release notes and version confirmation (`§11` steps 4 and 5).
+
 ### 2026-09-15 — Epic 7 — AT-35-E7-001 **cycle 4** — the final-acceptance scan **PASSES**; closure proceeds — complete
 
 Receipt: `artifacts/epic-7-closure/AT-35-E7-001_cycle4_receipt.md`. Scanned at `7753c29915`
@@ -205,8 +220,9 @@ reproduced, not a defect here.
 
 **The two headline figures, never one.** Inventory **49,450 of 49,450 = 100%**
 (`completion_atlas.py --check`, nine other buckets `0`, `done_evidence_violations=0`
-`citation_failures=0`). Corpus — the headline — **48,864 of 48,864 real `data/corpus` rules records
-= 100%**, the denominator **cited** from `artifacts/epic-7-closure/population-census-final.json`
+`citation_failures=0`). Corpus — the headline —
+**48,864 of 48,864 real `data/corpus` rules records = 100%**,
+the denominator **cited** from `artifacts/epic-7-closure/population-census-final.json`
 (`never_reaching_any_sheet_line=0`) plus `b18_ten_render_proof.py` → `admitted=12 render=12
 failures=0`. `49,438` is superseded and was not used as a bar anywhere in the scan.
 
