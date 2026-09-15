@@ -181,6 +181,89 @@ re-measured at the cut by the launch-readiness audit.
 
 ## Cycle log
 
+### 2026-09-15 — Epic 7 — AT-35-E7-001 **cycle 3**, the final-acceptance scan re-run — **FAIL. Closure stops again.** — blocked
+
+**Receipt:** `artifacts/epic-7-closure/AT-35-E7-001_cycle3_receipt.md`. **HEAD scanned:**
+`486c7f0cf04756d3b1fba3900a8daac48ce6cc18`. Cut compared against: `4c6c57eb9f`.
+
+`acceptance-and-verification.md §3a`: *"If anything is short: STOP. No retrospective, no sweep,
+no PR."* **Seven things are short.** No retrospective was written, no sweep run, no PR opened.
+
+**What is GREEN at HEAD, every figure re-derived by its own command, none quoted from a report:**
+
+- `python3 scripts/completion_atlas.py --check` → `population=49450 unclassified=0 overlap=0`,
+  `DONE: 49450`, **every other bucket 0**, `done_evidence_violations=0`,
+  `missing_clearing_mechanisms=0`, `stale_derived_at=False`, `citation_failures=0`, exit 0.
+- `python3 scripts/pcgen_residue_gate.py --check --closure` → **`live_files=0 live_hits=0
+  verdict=PASS`**, exit 0. All 12 patterns 0, all five live roots 0, `shipped_data_hits=0` over
+  `shipped_scanned=11`.
+- The scan's **own** independent grep (`§3a`, deliberately not the gate's pattern list):
+  `grep -rn 'raw_tokens\|PcgenFormulaEvaluator\|render_pcgen_desc' src/rules_core
+  src/saved_character src/campaign src/homebrew_authoring apps/desktop` → hits exist, and **every
+  one** is a doc comment (ruling B14, `decisions.md §17`) or inside a `#[cfg(test)]` region
+  (ruling B15, `§18`). `trait_pool.rs:479`'s `.get("raw_tokens")` sits under the `#[cfg(test)]`
+  at line 293. **No live read.**
+- `grep -rlE 'BONUS:|DEFINE:|PRE[A-Z]+:|%CHOICE|CL=' data/sheet_rules/ | wc -l` → **0**.
+- **No carve-out hides in the closure instruments' code**:
+  `grep -rniE 'EXCLUDED_BOOKS|EXCLUDE_|SKIP_BOOKS|ALLOWLIST|ALLOW_LIST|WHITELIST|IGNORE_PATHS'`
+  over `completion_atlas.py`, `token_coverage.py`, `pcgen_residue_gate.py`,
+  `cycle_scope_gate.py` → **no output**. The residue gate's own path list carries no live path.
+- **The tool side is intact** (`decisions.md §11`): `scripts/pcgen-oracle-pin.env` and
+  `scripts/fetch-pcgen-oracle.sh` present, `python3 scripts/oracle_harness/run.py --help` exits
+  0, `src/pcgen_import/` holds the relocated parser, generators and `cache_gen`. **No converter
+  or oracle file was deleted** — Starfinder's inputs survive.
+- **Manifest evidence pointers resolve**: independent stratified sample, seed 7, **209 units
+  across all 19 kinds**, `no_evidence_field=0`.
+- **123 of 125 cycle receipts carry a scope-gate line.**
+
+**The seven shortfalls, each with its command:**
+
+- **S1 — 57 of 104 `kanban.md` rows are not `complete`** (denominator measured at scan time,
+  before this cycle appended its own row 107; **58 of 107** after — the same 54 substantive rows).
+  `awk -F'|' '/^\| *[0-9]+ *\|/{st=$6; gsub(/^ +| +$/,"",st); print st}' kanban.md | sort | uniq -c`
+  → `complete 47`, `in-progress 51`, `partial 3`, `blocked 3`, `blocked-escalated 1`,
+  `not-started 1`. Rows 28, 100 and 29 are this scan's own closure rows; **the other 54 are
+  not**. 53 of them are AT-35-E6-002 and AT-35-E6-003 cycle rows whose criteria are labelled
+  `complete` — `§5`'s *"a lane's `status: complete` unsupported by the mechanical receipt
+  rows"*. **Unmoved since cycle 2** (it read 55; three census rows were added since).
+- **S2 — `data/sheet_rules/_refused.json` is not empty**: `records=49450 converted=49308
+  refused=142`, one token type `no_corpus_record`. Every id is `DONE` by another route
+  (`refused_non_done=0`), so no unit is un-rendered — but `§3a` names the **file**.
+- **S3 — `token_coverage.py --check` → `refused=142`** where `§3a` requires zero refused units.
+  The gate's `verdict=PASS` because its partition balances; the acceptance bar is stricter than
+  the gate. Same population as S2.
+- **S4 — 88 open deferrals.** `python3 scripts/retro.py summary --since 2026-09-07 --json` →
+  `deferrals.open = 88` (`resolved=1 total=89`), up from cycle 2's 83.
+- **S5 — two receipts carry no scope-gate line**, of 125:
+  `artifacts/epic-4-resolve-and-verify/AT-35-E4-001_cycle1_receipt.md` and
+  `AT-35-E4-002_cycle1_receipt.md`. This file's own preamble calls that a process defect.
+- **S6 — the three `§3a` oracle-parity artifacts do not exist at their named paths.**
+  `oracle-parity-epic2.json`, `oracle-parity-before.json`, `oracle-parity-after.json` → all three
+  `No such file or directory`. ~20 per-cycle parity artifacts exist under other names, plus an
+  `epic-2-sheet-rule/oracle-parity/` directory; the scan does not get to rule that a
+  differently-named file satisfies a named deliverable.
+- **S7 — `completion-manifest.json` is stale**: `generated_at_head=39dfd59b7e…`, **49,438
+  units** against the atlas's `population=49450` at HEAD. Ruling B18 admitted 12 records and the
+  manifest never followed — `49,438` is the figure `epic-breakdown.md` calls *"superseded
+  everywhere and never the bar."* The 209-unit sample was therefore drawn from a population 12
+  short of the real one.
+
+**Not run, and why:** `§3` step 9's gate re-proving, the per-sampled-unit `SheetRule`
+evaluation, step 1's launch-vs-HEAD id-set subtraction and step 4's failure attribution against
+`4c6c57eb9f`. `§3a`'s stop rule had already fired; planting probes in a shared checkout that is
+already FAIL adds risk with no decision value, and re-sampling is unsound until S7 is fixed.
+
+`SCOPE_GATE: EXEMPT (Epic 7 acceptance-scan cycle — closes zero units by design, decisions.md §2)`
+· `closed=0 relabeled=0 rust_lines_changed=0 ratio=n/a builds_recorded=1 pcgen_live_files=0` ·
+`incident 1789462522400-at-35-e7-001-b6657f`, `correction 1789462522557-at-35-e7-001-75f938`,
+`deferral 1789462522692-at-35-e7-001-49fa3b`.
+
+**Before this scan can be re-run:** close the 54 substantive kanban rows (row 26 first); obtain
+the `_refused.json` ruling (it disposes of S3 too — **asked twice now**); dispose of the 88 open
+deferrals; add the scope-gate line to the two Epic 4 receipts; produce the three named
+oracle-parity artifacts or amend `§3a`; regenerate `completion-manifest.json` at HEAD to 49,450
+units. Then run `AT-35-E7-001` in full including `§3` steps 1, 4, 9 and the per-unit evaluation.
+
 ### 2026-09-15 — Epic 6 — AT-35-E6-WRAPUP-FIX2 cycle 1 — **the last red wrap-up stage fixed on the PROPERTY, and the full gate re-run green 49/49** — complete
 
 **Status: complete.** `workflow-instruction.md §10 step 0`, second correction cycle on this epic.
