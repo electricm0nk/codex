@@ -229,9 +229,12 @@ Cycle start `4b69eb7aab` — the exact tree re-gate 5 tested.
   `at-35-e6-wrapup-regate-2.jsonl`, `epic-6-wrapup.jsonl`, in `-91`/`-90`) on top of the 6 the
   handoff named in `-94`. **11 total**, all folded. Incident
   `1789443362836-at-35-e6-wrapup-fix2-8bb2d8` (`unfolded-gate-artifacts-die-with-the-worktree`),
-  correction `1789443336590-at-35-e6-wrapup-fix2-32faa2`. Removal **censused, not performed**: the
-  fold lands in this commit, and removing those worktrees before it is pushed would destroy the
-  only other copy.
+  correction `1789443336590-at-35-e6-wrapup-fix2-32faa2`. Removal was **proved lossless after the fold was
+  pushed** — 9 of 9 retro shards byte-identical, every report a strict superset with **zero** lines
+  removed (`diff <worktree> <committed> | grep -c '^<'` → `0`), no unmerged branch, no tracked
+  mods — and then **attempted**: `git worktree remove --force` was **refused by the harness
+  permission layer**, not by git. No workaround attempted. `-19` left alone: Epic 2's, and holding
+  an unfolded tracked modification that is not this epic's to fold.
 - **Three live gate verdicts reduced to one.** Five reports now exist and **four carry a SUPERSEDED
   banner** naming `EPIC-6_wrapup_gate_report_regate5.md` as live and stating what in each is stale.
   None deleted — they are the record of the red list falling 4 → 1 → 0.

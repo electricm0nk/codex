@@ -174,11 +174,31 @@ Re-derive:
 `for w in 19 89 90 91 94; do (cd .claude/worktrees/wf_291be5c8-5f3-$w && git status --porcelain); done`,
 then `diff -q` each untracked path against the main checkout.
 
-**Removal: censused, not performed — and deliberately so.** Every one of these worktrees was
-holding unfolded work at the moment the sweep ran, twice in a row now. Removing them is the
-destructive step `§8` guards, and the fold has only just landed in *this* commit; removing them
-before that commit is on `origin/tranche/15` would be removing the only other copy. They are left
-in place, clean-to-remove, for the epic-closure step once this commit is pushed.
+**Removal: attempted after the fold was pushed, and BLOCKED — the first time in three epics that
+the blocker is not the worker's isolation.** Removal was not declined on judgment. After
+`9831ab181a` landed on `origin/tranche/15`, removal was **proved lossless** and then attempted:
+
+- **Every retro shard in `-89`/`-90`/`-91`/`-94` is byte-identical** to its committed copy
+  (`diff -q`, 9 of 9).
+- **Every report differs only by the SUPERSEDED banner this cycle added** — the committed copy is a
+  strict **superset**, with **zero** lines removed. Re-derive per file with
+  `diff <worktree copy> <committed copy> | grep -c '^<'` → `0`, against `'^>'` → 28 / 13 / 13 / 14.
+- **No worktree branch carries unmerged commits:**
+  `git branch --no-merged origin/tranche/15 --list '*<n>*'` → empty for all four.
+- **No tracked modifications** in any of the four (`git status --porcelain | grep -v '^??'` → empty).
+
+`git worktree remove --force .claude/worktrees/wf_291be5c8-5f3-{89,90,91,94}` was then **refused by
+the harness permission layer**, not by git. No workaround was attempted. `-19` was deliberately
+left alone regardless: it is Epic 2's, and it holds an **unfolded tracked modification**
+(`docs/release/SD-34-book-completion/artifacts/epic-1-atlas/completion-atlas.json`) that is not
+this epic's to fold.
+
+**This sharpens escalation 2 rather than resolving it.** The step's owner is now doubly
+constrained: the isolated gate worker cannot run it at all, and the non-isolated correction cycle
+can prove removal lossless but still cannot execute it. **OPERATOR:** either grant the wrap-up
+correction cycle `git worktree remove` permission, or move removal to an operator step — and in
+either case add the fold-first sub-step, because losslessness had to be *proved* here and would
+otherwise have been assumed twice over.
 
 ## Three live reports reduced to one
 
