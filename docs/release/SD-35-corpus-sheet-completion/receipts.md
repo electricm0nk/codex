@@ -78,7 +78,8 @@ Expected blocks, in order, all from Epic 7 (`AT-35-E7-003`):
   bundle: SD-35
   branch: tranche/15
   integration_target: develop
-  branch_tip: tranche/
+  branch_tip: d122d22b33
+  indexed_sha: d122d22b33
   graphify_exit_code: 0
   outcome: success
   wall_clock_seconds: 1322.4
