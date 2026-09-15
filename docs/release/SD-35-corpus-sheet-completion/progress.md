@@ -16,6 +16,43 @@ the `--receipt` rows (closed / relabeled / rust_lines_changed / ratio / builds_r
 pcgen_live_files), and the refused-token remainder. **An entry without the scope-gate line is a
 process defect** recorded by the epic wrap-up.
 
+## 2026-09-15 — AT-35-E7-003 cycle 1 — architecture docs, truth-up gate, graphify, PR
+
+**Receipt:** `artifacts/epic-7-closure/AT-35-E7-003_cycle1_receipt.md`
+**SHAs:** `cdf06fb00d`, `411e446088`, `59c2051a2e`
+
+**Scope gate:** `SCOPE_GATE: EXEMPT (closure-epilogue cycle — closes zero content units by
+design; workflow-instruction.md §6 step 1 floor exemption)`
+
+**Receipt rows:** closed=0, relabeled=0, rust_lines_changed=0, ratio=N/A (no units closed —
+a docs-only closure cycle), builds_recorded=0, `pcgen_live_files=0`.
+
+**Refused tokens:** none — this cycle converts nothing.
+
+Seven `docs/architecture/` docs refreshed as current-state truth against the live tree, each
+section verified against the modules it describes: `overview.md` (§"The converter/live
+boundary" — `technical-design.md §0` becomes a stated architecture fact), `rules-engine.md`
+(§"The sheet rule"), `corpus-ingest.md` (§"The sheet-rule converter"), `rules-data-tables.md`
+(§"Two data stores"), `desktop-app.md` (§"The 'Rules and features' section"), `status.md`
+(§"Corpus coverage at SD-35 closure", superseding every corpus-coverage section below it),
+`testing.md` (§"SD-35: the tax cut, and the four gates"). `homebrew-and-oracle.md` took one
+path correction.
+
+**Two gates the preceding cycles pushed over, both fixed here:**
+`release-notes.md` landed at `bfd0832799` with `denominator_gate.py --check` at
+**violations=27** — every percentage in its two tables bare — plus three cites to a
+`retrospective.md` that does not exist and two re-derive commands naming census scripts that
+were never written. And `architecture_truth_up.py` exited 7 on **10 stale cited paths**, one
+of which (`src/pcgen_import/source_content_payload.rs`) had never been true in any revision.
+Both now green: `--check` violations=0, `--check-provenance` violations=0, truth-up EXIT=0.
+
+**Escalated to the operator, not deferred** (`AGENTS.md` blocker discipline, disposition 2):
+the closure worktree sweep. 16 worktrees under `.claude/worktrees/` holding 13 G and their 15
+`worktree-wf_*` branches are still present; `git worktree remove --force` was refused by the
+Claude Code permission classifier for the **sixth** consecutive cycle. The exact command the
+operator needs to run — or the permission rule to add — is named in the receipt and in the PR
+body. `deferral 1789506077090-at-35-e7-003-arch-67aba6`.
+
 ## Open blockers
 
 ### ~~2026-09-11 — AT-35-E6-003-SWEEP cycles 5 **and 6** — does a `#[cfg(test)]` module inside a live file count as a PCGen read?~~ — **RESOLVED 2026-09-12 by operator ruling B15 (`decisions.md §18`): NO.**
