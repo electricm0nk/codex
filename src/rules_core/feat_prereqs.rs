@@ -782,7 +782,34 @@ mod prerequisite_tests {
         // total is unchanged (`reports.len()` still 2227 above) because the catalog reads
         // `data/corpus`, which B18 did not touch; what moved is how many of its records carry a
         // gate that can actually be checked. `unconverted` below falls 21 -> 12 by the same nine.
-        assert_eq!(eligible, 540, "a starting Fighter's real eligible-feat count");
+        // **540 -> 537 with SD-35 `AT-35-E7-CLOSURE-CLEANUP`** (`decisions.md §23`), and it is the
+        // SAME direction for the SAME reason as B18 above, one ruling later. That cycle found the
+        // 142 `no_corpus_record` refusals were a JOIN DEFECT, not units with no input:
+        // `sheet_rule::load_population` keyed both its lookups on the unit's own `book`, and a
+        // reprinted row is filed under whichever book carries the `.lst`. Eleven of the 142 are
+        // `bestiary:feat:*` records whose corpus record sits in `core_essentials`
+        // (`ce_feats.lst`) -- which is why the catalog carries all eleven under rule set `Ce`.
+        // They were offered with a "not verified" note; now they carry a converted `applies`.
+        //
+        // Attributed by re-deriving the set, never by adjusting the number to fit. All eleven,
+        // and exactly three of them leave `eligible`, each for a stated rulebook reason carrying
+        // the character's own value:
+        //   * `Awesome Blow`   DENIED -- "at least 2 of: requires Power Attack, requires Improved
+        //     Bull Rush; size at least 5 (this character: 4); Strength at least 25 (this
+        //     character: 14)". A level-1 13-STR Medium Fighter meets none of them.
+        //   * `Craft Construct` DENIED -- "at least 2 of: requires Craft Magic Arms and Armor,
+        //     requires Craft Wondrous Item". This build holds neither.
+        //   * `Snatch`         DENIED -- "size at least 6 (this character: 4)".
+        // The other eight stay eligible and are named too, so the eleven sum exactly:
+        // `Ability Focus`, `Flyby Attack`, `Hover`, `Wingover`, and the four
+        // `Empower`/`Quicken Spell-Like Ability ~ Ability`/`~ Spell` rows.
+        //
+        // `reports.len()` is unchanged at 2227 (asserted above) because the catalog reads
+        // `data/corpus`, which this cycle did not touch; what moved is how many of its records
+        // carry a gate that can actually be checked. `unconverted` below falls 12 -> 1 by
+        // exactly those eleven -- the two counts move by the same set, which is why they are
+        // asserted together.
+        assert_eq!(eligible, 537, "a starting Fighter's real eligible-feat count");
         // A catalog record `data/sheet_rules/` carries no converted rule for is a number to
         // report, never an exemption: it is still offered, with one "not verified" note.
         // **21 -> 12 with SD-35 operator ruling B18** (`decisions.md §21`): the nine
@@ -790,8 +817,16 @@ mod prerequisite_tests {
         // the whole point of the ruling. 21 - 9 = 12, and the nine are exactly the nine that
         // left `eligible` above -- the two counts move by the same set, which is why they are
         // asserted together rather than separately re-pinned.
+        // **12 -> 1 with SD-35 `AT-35-E7-CLOSURE-CLEANUP`** (`decisions.md §23`): the eleven
+        // `bestiary:feat:*` catalog records whose corpus record is filed in `core_essentials`
+        // now carry a converted rule, which is the whole point of the join fix. 12 - 11 = 1, and
+        // the eleven are exactly the eleven named against `eligible` above (8 still eligible,
+        // 3 correctly denied), which is why the two counts are asserted together rather than
+        // separately re-pinned. The **one** that remains is named rather than bucketed:
+        // `Transfer Feat to Familiar`. It is still offered, with its one "not verified" note --
+        // a catalog record with no converted rule is a number to report, never an exemption.
         let unconverted = reports.iter().filter(|report| !report.converted).count();
-        assert_eq!(unconverted, 12, "catalog records with no converted rule");
+        assert_eq!(unconverted, 1, "catalog records with no converted rule");
 
         for report in reports.iter().filter(|report| !report.is_eligible) {
             let reason = report.unavailable_reason().unwrap_or_default();

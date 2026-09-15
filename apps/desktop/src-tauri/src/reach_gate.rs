@@ -3557,6 +3557,16 @@ const OPEN_FINDINGS: &[(&str, &str, &str)] = &[
 /// preserved verbatim; only the content is filled), so the entry was deleted
 /// rather than relaxed. See
 /// `tests/sd27_apg_delta_spell_rows_resolve_against_their_base.rs`.
+/// **22 entries deleted 2026-09-15 by SD-35 `AT-35-E7-CLOSURE-CLEANUP`** (`decisions.md §23`),
+/// 11 from `beastiary1`/`abilities` and the same 11 from `beastiary1`/`templates`: the six
+/// `Aasimar ~ *-Blooded` and five `Tiefling ~ *-Spawn` rows. They were bare because the converter
+/// refused them as `no_corpus_record` — their corpus record is filed under
+/// `advanced_race_guide`, the book that owns the `.lst`, while the unit is declared by
+/// `bestiary`, and `sheet_rule::load_population` keyed both its lookups on the unit's own `book`.
+/// The join fix landed and `bare_records_are_exactly_the_recorded_findings` reported them as
+/// *"these records now carry real fields — delete them from BARE_RECORD_FINDINGS"*, which is what
+/// this gate exists to make happen: the entries were **deleted, not relaxed**, and no assertion
+/// was widened to accommodate them.
 const BARE_RECORD_FINDINGS: &[(&str, &str, &[&str])] = &[
     // SD-32 `decisions.md §25` cycle 2/3 (2026-08-23): `Adopted Race ~
     // Rougarou`, the one target race of the 14 whose Trait pool is
@@ -3761,12 +3771,6 @@ const BARE_RECORD_FINDINGS: &[(&str, &str, &[&str])] = &[
         "beastiary1",
         "abilities",
         &[
-            "Aasimar ~ Agathion-Blooded",
-            "Aasimar ~ Angel-Blooded",
-            "Aasimar ~ Archon-Blooded",
-            "Aasimar ~ Azata-Blooded",
-            "Aasimar ~ Garuda-Blooded",
-            "Aasimar ~ Peri-Blooded",
             "Racial Traits ~ Drow",
             "Racial Traits ~ Duergar",
             "Racial Traits ~ Goblin",
@@ -3776,23 +3780,12 @@ const BARE_RECORD_FINDINGS: &[(&str, &str, &[&str])] = &[
             "Racial Traits ~ Orc",
             "Racial Traits ~ Svirfneblin",
             "Racial Traits ~ Tengu",
-            "Tiefling ~ Asura-Spawn",
-            "Tiefling ~ Demodand-Spawn",
-            "Tiefling ~ Demon-Spawn",
-            "Tiefling ~ Div-Spawn",
-            "Tiefling ~ Qlippoth-Spawn",
         ],
     ),
     (
         "beastiary1",
         "templates",
         &[
-            "Aasimar ~ Agathion-Blooded",
-            "Aasimar ~ Angel-Blooded",
-            "Aasimar ~ Archon-Blooded",
-            "Aasimar ~ Azata-Blooded",
-            "Aasimar ~ Garuda-Blooded",
-            "Aasimar ~ Peri-Blooded",
             "Angel",
             "Archon",
             "Azata",
@@ -3826,11 +3819,6 @@ const BARE_RECORD_FINDINGS: &[(&str, &str, &[&str])] = &[
             "Shapechanger",
             "Silver Half-Dragon",
             "Tengu",
-            "Tiefling ~ Asura-Spawn",
-            "Tiefling ~ Demodand-Spawn",
-            "Tiefling ~ Demon-Spawn",
-            "Tiefling ~ Div-Spawn",
-            "Tiefling ~ Qlippoth-Spawn",
             "Wererat_STATS",
             "Werewolf_STATS",
             "White Half-Dragon",
