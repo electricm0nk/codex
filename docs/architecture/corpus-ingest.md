@@ -77,9 +77,10 @@ $ grep -rlE 'BONUS:|DEFINE:|PRE[A-Z]+:|%CHOICE|CL=' data/sheet_rules/ | wc -l
 ```
 
 **`cache_gen` moved.** The corpus-cache generators live at `src/pcgen_import/cache_gen/` as of
-SD-35 (`AT-35-E6-002`). They were under `src/rules_core/cache_gen/`, which put PCGen-reading code
-on the live side of the boundary; the code is unchanged, only its side is. `src/rules_core/cache_gen/`
-no longer exists.
+SD-35 (`AT-35-E6-002`). They were under a `cache_gen/` directory in `src/rules_core/`, which put
+PCGen-reading code on the live side of the boundary; the code is unchanged, only its side is.
+There is no `cache_gen/` under `src/rules_core/` any more — the path in any older doc or comment
+is stale.
 
 ## Pipeline stages
 
@@ -235,9 +236,9 @@ converter-originated code maps to `SourceContentSeverity::Info` +
 
 ### Stage 5 — `source_content.rs`: the payload enum
 
-`SourceContentPayload<'a>` (`src/rules_core/source_content.rs`; this doc cited a
-`src/pcgen_import/source_content_payload.rs` that does not exist — path corrected
-2026-09-15, SD-35 closure)
+`SourceContentPayload<'a>` (`src/rules_core/source_content.rs`; until 2026-09-15 this doc
+cited a `source_content_payload.rs` under `src/pcgen_import/` that has never existed —
+path corrected at the SD-35 closure)
 is the typed, kind-tagged union of borrowed B-family entries
 (`Class(&'a ClassEntry)`, `SpellcastingClass(&'a SpellcastingClassEntry)`,
 `Race(&'a RaceDeclaration)`, `Ability(&'a AbilityDeclaration)`,

@@ -36,3 +36,39 @@ Expected blocks, in order, all from Epic 7 (`AT-35-E7-003`):
   evidence_tier_before: (recorded by operator at receipt read time)
   evidence_tier_after: (recorded by operator at receipt read time)
   receipt_note: no architecture impact — diff is outside architecture scope
+
+- cycle_id: 2026-09-15T20:44:17Z
+  row_or_kind: architecture:truth_up
+  bundle: SD-35
+  branch: tranche/15
+  integration_target: develop
+  branch_tip_before: tranche/
+  branch_tip_after: tranche/
+  diff_path_count: 108104
+  docs_touched: []
+  stub_graduations: []
+  stub_regressions: []
+  obsolete_removals: 0
+  cited_path_check: fail
+  relative_link_check: pass
+  evidence_tier_before: (recorded by operator at receipt read time)
+  evidence_tier_after: (recorded by operator at receipt read time)
+  receipt_note: no architecture impact — diff is outside architecture scope
+
+- cycle_id: 2026-09-15T20:45:13Z
+  row_or_kind: architecture:truth_up
+  bundle: SD-35
+  branch: tranche/15
+  integration_target: develop
+  branch_tip_before: tranche/
+  branch_tip_after: tranche/
+  diff_path_count: 108104
+  docs_touched: []
+  stub_graduations: []
+  stub_regressions: []
+  obsolete_removals: 0
+  cited_path_check: pass
+  relative_link_check: pass
+  evidence_tier_before: (recorded by operator at receipt read time)
+  evidence_tier_after: (recorded by operator at receipt read time)
+  receipt_note: no architecture impact — diff is outside architecture scope
