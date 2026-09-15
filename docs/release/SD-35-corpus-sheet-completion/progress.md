@@ -170,9 +170,9 @@ an **instrument correction that closes nothing** (`correction
 | 3 — Place and surface | 4 | 4 | 0 | 0 |
 | 4 — Resolve and verify | 3 | 3 | 0 | 0 |
 | 5 — Residues | 5 | 5 | 0 | 0 |
-| 6 — PCGen exit | 4 | 2 | 1 | 1 |
-| 7 — Closure | 3 | 0 | 0 | 3 |
-| **Total** | **30** | **25** | **1** | **4** |
+| 6 — PCGen exit | 4 | 4 | 0 | 0 |
+| 7 — Closure | 3 | 1 | 0 | 2 |
+| **Total** | **30** | **28** | **0** | **2** |
 
 Corpus at the `tranche/15` cut (2026-09-07, `4c6c57eb9f`, identical to authoring at `5f6b18f4e3`):
 `DONE=26123 of 49438`; non-DONE 23,315 of 49,438. Live-side PCGen residue at authoring: 78 files by coarse grep
@@ -180,6 +180,101 @@ Corpus at the `tranche/15` cut (2026-09-07, `4c6c57eb9f`, identical to authoring
 re-measured at the cut by the launch-readiness audit.
 
 ## Cycle log
+
+### 2026-09-15 — Epic 7 — AT-35-E7-001 **cycle 4** — the final-acceptance scan **PASSES**; closure proceeds — complete
+
+Receipt: `artifacts/epic-7-closure/AT-35-E7-001_cycle4_receipt.md`. Scanned at `7753c29915`
+against the `tranche/15` cut `4c6c57eb9f`. Cycles 1, 2 and 3 each returned FAIL; **every shortfall
+they named is re-derived here at HEAD and is closed at its source — not one by amending the bar.**
+
+`SCOPE_GATE: EXEMPT (Epic 7 acceptance-scan cycle — closes zero units by design, decisions.md §2)`;
+the gate's own line is `scoped=0 remaining_non_done=0 floor=500 verdict=PASS_WHOLE_REMAINDER`.
+`closed=0 relabeled=0 rust_lines_changed=0 ratio=n/a builds_recorded=4 pcgen_live_files=0`.
+`builds_recorded=4` is **one** `verify.sh` run whose cargo stages sit more than the gate's
+300-second session gap apart, plus the step-9 `sheet_rule_convert --check` probe. **Refused tokens:
+none** — `_refused.json` is `refused=0, entries=[]`.
+
+**The full `scripts/verify.sh` ran here: RESULT PASS, 49 of 49.** Attribution rather than a bucket:
+`grep -c 'test result: FAILED'` over `root-full.log` = **0** of **420** `Running`/`Doc-tests` lines,
+`8926 passed across 419 suites, all 365 tests/*.rs executed`. Cycle 3's S8 —
+`sd26_pilot_case_verification.rs::full_pipeline_runs_end_to_end_and_finds_one_genuine_attack_bonus_mismatch`,
+which panicked when PCGen's own gradle build could not reach `api.adoptium.net` — **passes**, its
+fourth independent pass. Cycle 3 refused to call it environmental without a clean re-run; the
+classification is now earned: a transient third-party network failure inside PCGen's build, never
+reproduced, not a defect here.
+
+**The two headline figures, never one.** Inventory **49,450 of 49,450 = 100%**
+(`completion_atlas.py --check`, nine other buckets `0`, `done_evidence_violations=0`
+`citation_failures=0`). Corpus — the headline — **48,864 of 48,864 real `data/corpus` rules records
+= 100%**, the denominator **cited** from `artifacts/epic-7-closure/population-census-final.json`
+(`never_reaching_any_sheet_line=0`) plus `b18_ten_render_proof.py` → `admitted=12 render=12
+failures=0`. `49,438` is superseded and was not used as a bar anywhere in the scan.
+
+**Shortfalls closed, each checked at its source.** S1: all 27 rows `AT-35-E1-001`…`AT-35-E6-004`
+read `complete` and all 109 rows' receipt paths resolve. S2/S3: the 142 `no_corpus_record`
+refusals were a **join defect** (`decisions.md §23`), fixed by a predicate widening in
+`sheet_rule::load_population` — `by_row_any_book` keyed `(basename, line, kind)`, joined only when
+unambiguous, **no id list and no book exemption** — so `sheet_rule_convert --check` now reads
+`records=49450 converted=49450 refused=0`. S5: **127 of 127** receipts carry a scope-gate line.
+S6: all three oracle-parity artifacts exist, each naming `PCGEN_ORACLE_SHA=7f818006e3…`, with
+**0 of 22 disagreements missing `ours`/`oracle`/`oracle_key`**. S7: the completion manifest tracks
+the atlas at 49,450.
+
+**No carve-out.** `EXCLUDED_PREFIXES` is `()` and pinned empty; `EXCLUDED_DIR_NAMES` is build
+output only; the residue gate's pattern list was only ever **widened** (2 added, 0 removed since
+`ca2e2105ed`). Id-sets cut→HEAD: **0 units dropped, 12 added**, exactly ruling B18's admissions.
+The independent grep's 33 lines are 29 doc-comments (B14), 2 `#[cfg(test)]` (B15) and 2
+converter-input JSON files under `fixtures_src/`, which is **not** in `bundle.resources` — and all
+**11** files that do ship, enumerated from `bundle.resources`, grep clean.
+
+**The manifest, sampled and evaluated.** Seed `20260915` (cycle 3 used seed 7): 209 units, 11 per
+kind across **19 of 19** kinds, `no_evidence_field=0`, and all 108 `sheet_rule_rendered` units'
+rule files carry a rule with that exact id. The evaluation itself runs at **population** scale, not
+on the sample: `every_kind_in_the_package_evaluates_to_a_well_formed_line` loads the live package,
+evaluates **every** rule for the probe character and asserts the printed form matches the value
+kind for all 19 — green in `root-lib` (3,390 passed).
+
+**Discovery (a method lesson, not a defect).** `core_rulebook:template:reflex_penalty` records
+`sheet_rule_rendered:words` while its static `value` is `Number(Mul(-1, Choice(self)))`. The
+evaluator's own documented rule is that an **unmade numeric choice prints as words**, so the
+recorded form is right and reading the JSON instead of evaluating it is the wrong instrument —
+which is exactly why `§3a` asks for evaluation.
+
+**Step 9, all five gates re-proved**: `pcgen_residue_gate` (planted `raw_tokens` read →
+`live_hits=1 verdict=FAIL`, exit 1), `cycle_scope_gate` (100 units forced non-DONE →
+`FAIL_UNDER_FLOOR`, exit 1), `token_coverage` (injected refusal → exit 1), `sheet_rule_convert
+--check` (mutated rule file → `stale on disk: … verdict=FAIL problems=1`, exit 1, and the `§3a`
+token grep rose 0→1), and the moved anchor (function moved 50 lines → still green; cited condition
+renamed → citation failure). Every probe removed; `git status --porcelain` identical before and
+after each.
+
+**No active `## Open blockers`** — all three entries struck and resolved by rulings B14/B15/B16.
+**18 open deferrals, none deferring DoD scope**: 11 are `AT-35-E7-003`'s own row-29 scope
+(worktree sweep, stale citation strings), 2 are this scan's own and close with this receipt, 4 are
+named record sets each verified `DONE` at HEAD with its rule file present (and one,
+`advanced_players_guide:spell:wall_of_thorms`, does not exist in `data/corpus` at HEAD at all), and
+1 is a v0.6 dashboard-instrument defect outside SD-35's Definition of Done.
+
+**The tool side is intact (`decisions.md §11`) — Starfinder is next.** Oracle pin and fetch script
+present, `oracle_harness/run.py --help` exit 0, `preflight-oracle` PASS at pin. Net function
+bodies cut→HEAD: `src/pcgen_import` **262 → 1,486**, `src/oracle_validation` **46 → 66**,
+`scripts/oracle_harness` python defs **15 → 76**. **Zero net deletions**; the one file that left
+(`source_content_payload.rs`) is a rename to `ir_content_payload.rs` with all seven variants kept.
+
+**Reported, not converted into a shortfall** (`§3a`: *"Do not manufacture a shortfall either"*):
+of the 126 receipts carrying `builds_recorded`, **73 read 0**, **17 read 1** and **36 read 2–6**.
+`decisions.md §3`'s one-build target was overrun 36 times. The figure is a **measured** count of
+compile sessions in each cycle's `CARGO_TARGET_DIR`, and the overruns are self-declared in the
+receipts' own text — a cost-discipline miss that leaves no unit un-done, narrows no gate's
+population and falsifies no figure. It belongs in the retrospective (`AT-35-E7-002`), not in a
+stop.
+
+Rows 100 and 107 stay `blocked` and are **not** relabelled: a cycle row is set only from its own
+receipt, and cycles 2 and 3 genuinely returned FAIL at their own HEADs. Erasing that is `§5`'s
+forbidden move in reverse.
+
+**`AT-35-E7-002` and `AT-35-E7-003` (kanban row 29) are unblocked. The operator merges
+`tranche/15` → `develop`.**
 
 ### 2026-09-15 — Epic 7 — AT-35-E7-CLOSURE-CLEANUP **cycle 1** — the eight closure shortfalls closed; the 142 refusals were a JOIN DEFECT, not paperwork — complete
 
