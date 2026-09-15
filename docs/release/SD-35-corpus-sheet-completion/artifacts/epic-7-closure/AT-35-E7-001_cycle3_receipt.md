@@ -5,7 +5,7 @@
 **Date:** 2026-09-15
 **Bar:** `acceptance-and-verification.md §3` + `§3a`; `epic-breakdown.md` "AT-35-E7-001".
 
-`§3a`: *"If anything is short: STOP. No retrospective, no sweep, no PR."* Seven items are short.
+`§3a`: *"If anything is short: STOP. No retrospective, no sweep, no PR."* **Eight** items are short.
 This cycle therefore closes **zero** units, writes **no** retrospective, runs **no** sweep and
 opens **no** PR. It is a measurement cycle only.
 
@@ -168,10 +168,76 @@ already FAIL and running them cannot change it:
 
 ---
 
-## `verify.sh` — the full gate
+### S8 — the full `verify.sh` at HEAD is **RED**: 48 passed, 1 FAILED
 
-Run at HEAD in a private `CARGO_TARGET_DIR` (`/tmp/cargo-sd35-AT-35-E7-001`, `CARGO_INCREMENTAL=0`).
-Result recorded in `progress.md`'s cycle-3 entry.
+`scripts/verify.sh` (all stages), run at HEAD in a private `CARGO_TARGET_DIR`
+(`/tmp/cargo-sd35-AT-35-E7-001`, `CARGO_INCREMENTAL=0`). Logs: `/tmp/codex-verify-0vc2D9`.
+
+```
+SUMMARY
+  passed:  48  preflight-disk preflight-oracle oracle-pin-selftest producer-selftest
+               pi-redaction-selftest provenance-selftest site-dashboard-selftest
+               site-dashboard-pin site-dashboard-check site-dashboard-pi-gate
+               build-public-status-selftest site-public-status-check site-public-status-pi-gate
+               site-asset-stamp-check reachability-audit-selftest reachability-audit
+               groundtruth-guard-selftest supersession-gate-selftest
+               shape-coverage-standing-gate-selftest shape-coverage-standing-gate
+               cycle-scope-gate-selftest shape-engine-boundary-selftest shape-engine-boundary
+               missing-engine-tables denominator-gate figure-provenance pcgen-residue-gate
+               token-coverage-selftest token-coverage pi-sweep declared-pi-audit audit-selftest
+               reclaim-selftest driver-selftest corpus-sweep-selftest corpus-trap-audit-selftest
+               root-lib desktop reach corpus-sweep sheet-rules-check corpus-trap-audit
+               supersession-gate frontend-install frontend-test frontend-typecheck clippy
+               class-dump
+  FAILED:  1  root-full
+
+RESULT: FAIL — logs in /tmp/codex-verify-0vc2D9
+```
+
+Notable greens inside it, quoted from the stage lines:
+
+- `sheet-rules-check` — `records=49450 converted=49308 refused=142 rules=70147 var_tables=5293
+  verdict=PASS` — **this is the HEAD run of `sheet_rule_convert --check` `§3a` asks for, and it
+  independently confirms S2 and S3's `refused=142`.**
+- `pcgen-residue-gate`, `token-coverage`, `cycle-scope-gate-selftest`,
+  `shape-engine-boundary`, `missing-engine-tables`, `denominator-gate`, `figure-provenance`,
+  `pi-sweep`, `declared-pi-audit` — all PASS.
+- `corpus-sweep` — `48706 records examined of 51523 read, 413314 tokens compared, 0 findings`.
+- `desktop` 570 passed · `reach` 32 passed · `frontend-test` **101/101 files** · `clippy`
+  `root:0 desktop:0 warnings`.
+
+**Failure attribution, done per `AGENTS.md` — every `test result: FAILED` line traced to its
+`Running` line, not bucketed:**
+
+- `grep -c "test result: FAILED" /tmp/codex-verify-0vc2D9/root-full.log` → **1**, out of
+  **420** `Running` / `Doc-tests` lines. `8925 passed across 419 suites`.
+- The one suite: **`tests/sd26_pilot_case_verification.rs`** — `2 passed; 1 failed`, 968.67s.
+- The one test: `full_pipeline_runs_end_to_end_and_finds_one_genuine_attack_bonus_mismatch`,
+  panicking at `tests/sd26_pilot_case_verification.rs:377:31`.
+- The panic message: `real PCGen engine run should succeed: pcgen-run-character.sh failed (exit
+  status Some(2))` → PCGen's **own** gradle build, at
+  `/home/ubuntu/workspace/repos/pcgen/build.gradle:79`:
+  `Could not create task ':extractJavaFXLocal'. > Could not create task ':downloadJavaFXLocal'.
+  > Unable to process url: https://api.adoptium.net/v3/assets/feature_releases/25/ga?...`
+  `BUILD FAILED in 16m`.
+
+**It is NOT excused as environmental, and here is why not.** The obvious reading is "the box
+could not reach adoptium." That reading does not survive a check: re-queried from this same box
+right after the run, that exact URL returns **HTTP 200** (`curl -o /dev/null -w '%{http_code}'`),
+and `api.adoptium.net` pings at 10 ms. So the network is up now and the cause is not established
+— it is either a transient outage during the 16-minute gradle window or something in gradle's own
+resolution, and this scan does not know which.
+
+Compounding it: `tests/sd26_pilot_case_verification.rs` **was touched inside this bundle** —
+`git log 4c6c57eb9f..HEAD -- tests/sd26_pilot_case_verification.rs` → `b91d16a66b`
+(`AT-35-E6-002 cycle 1`). The panic occurs at the PCGen invocation, before any of our comparison
+logic runs, so the bundle's edit is not the visible cause; but "not the visible cause" is not
+"attributed", and the scan does not get to assume.
+
+`AGENTS.md`: *"A verification stage red for more than one run is a blocker, not a background
+condition… 'The N known environmental failures' is a bucket, not an attribution."* One suite is
+named here, and it needs one clean re-run to classify. **Either way the gate's verdict at HEAD is
+`RESULT: FAIL`, and `§3` step 6 requires the full `verify.sh` to be green here.**
 
 ---
 
@@ -179,6 +245,11 @@ Result recorded in `progress.md`'s cycle-3 entry.
 
 `SCOPE_GATE: EXEMPT (Epic 7 acceptance-scan cycle — closes zero units by design, decisions.md §2)`
 · `closed=0 relabeled=0 rust_lines_changed=0 ratio=n/a builds_recorded=1 pcgen_live_files=0`
+
+Retro events: `incident 1789462522400-at-35-e7-001-b6657f` (the scan's FAIL),
+`incident 1789470212670-at-35-e7-001-ce9b36` (the `verify.sh` red),
+`correction 1789462522557-at-35-e7-001-75f938` (criterion-level `complete` vs the board),
+`deferral 1789462522692-at-35-e7-001-49fa3b` (steps 1, 4, 9 and the per-unit evaluation).
 
 `pcgen_live_files=0` is non-increasing against every prior cycle. `builds_recorded=1` — the one
 build is `verify.sh`'s.
@@ -197,6 +268,8 @@ build is `verify.sh`'s.
 5. **Produce the three named oracle-parity artifacts, or amend `§3a` by ruling** (S6).
 6. **Regenerate `completion-manifest.json` at HEAD to 49,450 units** (S7), then re-draw the
    200+ sample and evaluate each sampled rule.
+7. **Get `verify.sh` green** (S8) — re-run `root-full` and classify
+   `sd26_pilot_case_verification`'s PCGen-gradle failure, rather than bucketing it.
 
 Then run `AT-35-E7-001` in full, **including `§3` steps 1, 4, 9 and the per-unit rule
 evaluation**.
