@@ -184,7 +184,7 @@ re-measured at the cut by the launch-readiness audit.
 ### 2026-09-15 — Epic 6 — AT-35-E6-WRAPUP-FIX2 cycle 1 — **the last red wrap-up stage fixed on the PROPERTY, and the full gate re-run green 49/49** — complete
 
 **Status: complete.** `workflow-instruction.md §10 step 0`, second correction cycle on this epic.
-Work commit `<COMMIT_SHA>`; receipt `artifacts/epic-6-pcgen-exit/AT-35-E6-WRAPUP-FIX2_cycle1_receipt.md`.
+Work commit `9831ab181a`; receipt `artifacts/epic-6-pcgen-exit/AT-35-E6-WRAPUP-FIX2_cycle1_receipt.md`.
 Cycle start `4b69eb7aab` — the exact tree re-gate 5 tested.
 
 - **Scope gate:** `SCOPE_GATE: EXEMPT (wrap-up correction cycle)` (`decisions.md §2`) — closes zero

@@ -7,7 +7,7 @@ red, `shape-engine-boundary-selftest`. This cycle fixes it. Like its predecessor
 on the shared checkout and does commit and push**, unlike the isolated gate worker, which pushed
 nothing.
 
-- **Commit SHA:** `<COMMIT_SHA>`
+- **Commit SHA:** `9831ab181a`
 - **Cycle start SHA:** `4b69eb7aab` (`git log --oneline -1`; identical to `origin/tranche/15` at
   cycle start, which is the tree re-gate 5 tested)
 - **Scope gate:** `SCOPE_GATE: EXEMPT (wrap-up correction cycle)` — `decisions.md §2` /
