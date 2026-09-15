@@ -93,6 +93,34 @@ nothing this cycle wrote can move a compile or a test. The last full-workspace r
 - **Refused tokens:** none — this cycle converts nothing.
 - **Sweep population:** N/A — `data/corpus/**` untouched.
 
+## Graphify — which SHA it indexed
+
+Run per `../template/template.md §6` step 3, over the **final** repo state, with
+`git status --porcelain` printing nothing and HEAD equal to `origin/tranche/15`:
+
+```
+INDEXED SHA: 7a0af6f2e48cd7db9be17eee4701ca231dddf7a7
+[graphify-update] working tree: clean
+[graphify-update] invocation: graphify cluster-only /home/ubuntu/workspace/repos/codex \
+                  --budget 500000 --exclude node_modules,target,dist,build,.git,out,dist-ssr,.next,coverage
+[graphify-update] graphify exit=0, elapsed=1322.4s, outcome=success
+[graphify-update] log written: graphify-out/.truth-up-run-2026-09-15T21:17:57Z.log
+EXIT=0
+```
+
+`graphify:update` receipt appended to `receipts.md`. `graphify-out/` is gitignored
+(`.gitignore:10-12`), so the index run does not move the tree and the indexed SHA stays the
+one recorded here.
+
+**One thing this run does NOT cover, stated rather than buried.** A prior full re-extraction
+(`graphify . --update`) was attempted first and **exited early**: `error: no LLM API key found
+(1672 doc/paper/image file(s) need semantic extraction)`. The mandated closure step is
+`cluster-only`, which re-clusters the existing graph and is what succeeded above — so the
+community structure is current as of this SHA, but the **semantic extraction of the 1,672
+doc/image files is as of the last keyed run (2026-08-22)**. Code extraction needs no key. If the
+operator wants the doc half re-extracted, it needs one of `GEMINI_API_KEY` / `ANTHROPIC_API_KEY`
+/ `OPENAI_API_KEY` in the environment and a re-run of `graphify . --update`.
+
 ## Open blocker raised (disposition 2 — raise your hand and wait)
 
 **The worktree sweep cannot be completed by any dispatched agent.** 16 worktrees under
