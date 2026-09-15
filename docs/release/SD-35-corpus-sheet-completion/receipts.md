@@ -86,3 +86,33 @@ Expected blocks, in order, all from Epic 7 (`AT-35-E7-003`):
   evidence_tier_before: (recorded by operator at receipt read time)
   evidence_tier_after: (recorded by operator at receipt read time)
   receipt_note: graphify succeeded
+
+- cycle_id: 2026-09-15T21:53:00Z
+  row_or_kind: merge_conflict:pr-390
+  bundle: SD-35
+  branch: tranche/15
+  integration_target: develop
+  branch_tip: d122d22b33
+  pr: 390
+  mergeable_state: CONFLICTING
+  develop_commits_ahead_of_cut: 47
+  conflicted_files: 3
+  resolved_by_agent: 2
+  needs_operator_ruling: 1
+  outcome: escalated
+  receipt_note: >
+    Trial merge run with `git merge origin/develop --no-commit`, analysed, then
+    `git merge --abort`; tranche/15 is byte-identical to the pushed d122d22b33.
+    Two conflicts are purely additive and were resolved correctly in the trial
+    (character_hub.rs and rule_system_adapter.rs: both sides add fields to
+    LoadSavedCharacterResponse and its two constructors -- keep both, develop's
+    ability_scores/skill_allocations/equipment_selections then SD-35's
+    sheet_lines/sheet_rules_unavailable_reason). The third,
+    apps/desktop/src-tauri/src/class_catalog_generic.rs, is a SEMANTIC collision
+    an agent must not decide: SD-35 Epic 6 deleted tokens_from() from this
+    live-side file because it reads data["raw_tokens"], while develop's v0.8
+    class_spell_levels.rs:38 imports it. Take ours and develop's new feature does
+    not compile; take theirs and pcgen_residue_gate.py --closure goes above zero
+    and the bundle's central deliverable is undone. Per ../template/template.md
+    §6 step 5 the operator resolves. Options are named in
+    deferral 1789509194439-at-35-e7-003-arch-144b36 and in the PR body.

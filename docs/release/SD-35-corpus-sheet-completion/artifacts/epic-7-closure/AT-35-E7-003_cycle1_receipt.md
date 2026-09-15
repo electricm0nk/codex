@@ -144,6 +144,48 @@ git branch -D worktree-wf_291be5c8-5f3-*
 settings so a dispatched agent can do it. Logged as
 `deferral 1789506077090-at-35-e7-003-arch-67aba6` and named in the PR body.
 
+## PR #390 — opened, and its merge conflicts analysed
+
+`https://github.com/electricm0nk/codex/pull/390`, `tranche/15` → `develop`, **OPEN**.
+**Not merged — the operator merges.**
+
+`develop` advanced **47 commits** since the `tranche/15` cut, so the PR reports
+`mergeable: CONFLICTING`. Measured without touching the tree
+(`git merge-tree --write-tree --name-only HEAD origin/develop`), then confirmed with a trial
+`git merge origin/develop --no-commit` which was analysed and **aborted** — `tranche/15` is
+byte-identical to what was pushed at `d122d22b33`.
+
+**3 conflicted files of 20 that needed merging.** Two are mechanical and the resolution is
+recorded so the operator does not have to re-derive it:
+
+| file | shape | resolution |
+|---|---|---|
+| `apps/desktop/src-tauri/src/character_hub.rs` | both sides add fields to `LoadSavedCharacterResponse` and its constructor | keep both: develop's `ability_scores`, `skill_allocations`, `equipment_selections`, then SD-35's `sheet_lines`, `sheet_rules_unavailable_reason` |
+| `apps/desktop/src-tauri/src/rule_system_adapter.rs` | the same struct's other constructor | same, same order |
+| `apps/desktop/src-tauri/src/class_catalog_generic.rs` | **semantic collision — operator ruling** | see below |
+
+**The third one is not an agent's call, and taking either side is a defect.** SD-35 Epic 6
+deleted `classify_class_record` / `select_baseab_formula` / `select_save_formulas` /
+`max_level_for` / `tokens_from` from this file, because `tokens_from` reads
+`data["raw_tokens"]` — a PCGen read inside `apps/desktop/**`, which `decisions.md §11` forbids
+and `pcgen_residue_gate.py --closure` fails on. Independently, develop's v0.8 work added
+`apps/desktop/src-tauri/src/class_spell_levels.rs:38`:
+
+```rust
+use crate::class_catalog_generic::{tokens_from, walk_json_files};
+```
+
+- **Take ours** → develop's new `class_spell_levels` feature does not compile.
+- **Take theirs** → `live_files` rises above 0 and this bundle's central deliverable is undone.
+
+`../template/template.md §6` step 5 anticipates exactly this — on conflicts the pipeline
+"emits a `merge_conflict:*` receipt and exits non-zero — the loop self-heals, **operator
+resolves manually**". The receipt is in `receipts.md`; the two options are named in
+`deferral 1789509194439-at-35-e7-003-arch-144b36` and in the PR body:
+**(a)** port `class_spell_levels.rs` onto `data/sheet_rules/` so it needs no token read — the
+SD-35-consistent fix the boundary implies — or **(b)** grant it a registered exception in
+`docs/governance/wired-integration-stubs-registry.md` and rebaseline the gate.
+
 - **Status:** complete (for this cycle's own scope: architecture docs, truth-up gate, graphify,
   PR), with the worktree sweep escalated to the operator as above.
 - **Next-cycle scope:** criterion at zero for the architecture-docs / graphify / PR half.
