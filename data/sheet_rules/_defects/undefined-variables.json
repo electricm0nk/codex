@@ -151,6 +151,7 @@
   "adventurers_guide\u003aclass_feature\u003awestcrown_devil_classically_trained\u003a SHIELDACCHECK",
   "adventurers_guide\u003aequipment\u003aerinyes_company_cloak\u003a ACHECK",
   "adventurers_guide\u003arace\u003acompanion_bird_raven\u003a NotAllowed",
+  "bestiary\u003afeat\u003acraft_construct\u003a CasterLevel_Highest",
   "bestiary\u003afeat\u003aimproved_natural_armor\u003a BONUS.COMBAT.AC.NaturalArmor",
   "bestiary\u003amonster_ability\u003amummy_mummy_rot\u003a MummyRotRemoveDC",
   "bestiary\u003amonster_ability\u003auniversal_monster_rule_breath_weapon\u003a BrBreathWeaponRechargeRounds",

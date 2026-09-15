@@ -181,6 +181,83 @@ re-measured at the cut by the launch-readiness audit.
 
 ## Cycle log
 
+### 2026-09-15 — Epic 7 — AT-35-E7-CLOSURE-CLEANUP **cycle 1** — the eight closure shortfalls closed; the 142 refusals were a JOIN DEFECT, not paperwork — complete
+
+Receipt: `artifacts/epic-7-closure/AT-35-E7-CLOSURE-CLEANUP_cycle1_receipt.md`. Cycle start
+`20ea567623`. Every figure below re-derived at HEAD before it was acted on.
+
+`SCOPE_GATE: python3 scripts/cycle_scope_gate.py --min 500` ->
+`scoped=0 remaining_non_done=0 floor=500 verdict=PASS_WHOLE_REMAINDER`.
+`closed=0 relabeled=0 ratio=n/a builds_recorded=1 pcgen_live_files=0` (non-increasing; at the floor).
+
+**The finding.** The brief framed S2/S3 as paperwork -- 142 ids with no INPUT record, to be split
+into a second list with the acceptance wording amended. The proof it demanded refuted its premise
+(`correction 1789474976892-at-35-e7-closure-cleanup-2ab584`). They are reprints, but the canonical
+printing is **not itself an inventory unit and has no rule file**, so all 142 rendered nothing;
+"DONE by another route" was an atlas reading of `status` + `evidence`, not a rendered sheet line.
+`sheet_rule::load_population` keyed **both** lookups on the unit's own `book`, and a reprinted row
+is filed under whichever book carries the `.lst`. Fixed as a predicate widening on the B18
+precedent -- a cross-book `(source_file basename, source_line, kind)` fallback, taken only when
+unambiguous. Ruling recorded as `decisions.md §23`; `acceptance-and-verification.md §3a` is **not**
+amended on this point and is met verbatim.
+
+| figure | population / denominator | command |
+|---|---|---|
+| `records=49450 converted=49450 refused=0 rules=70317 var_tables=5294 verdict=PASS` (was `converted=49308 refused=142 rules=70147 var_tables=5293`) | all 49,450 inventory units | `cargo run --locked --bin sheet_rule_convert -- --check` |
+| `non_done=0 tokened=0 token_less=0 refused=0 refused_non_done=0 token_types=233 shapes=0 verdict=PASS` (was `refused=142`) | all 49,450 inventory units | `python3 scripts/token_coverage.py --check` |
+| `population=49450 unclassified=0 overlap=0`, `DONE: 49450`, every other bucket 0 | all 49,450 inventory units | `python3 scripts/completion_atlas.py --check` |
+| `live_files=0 live_hits=0 shipped_data_files=0 shipped_data_hits=0 verdict=PASS` | all 5 live roots, 11 shipped data files scanned | `python3 scripts/pcgen_residue_gate.py --check --closure` |
+| `row_exact=142 ambiguous=0` -- every refused id's corpus record found in another book carries the SAME source row | all 142 refused ids | python3 over `docs/work-inventory.json` + a full walk of `data/corpus` |
+| fallback resolves **142**, and **0** of the other **689**, of the **831** units that miss the book-keyed join | all 49,450 inventory units | the same script, run before the fix was written |
+| `0` files carrying an ingest-format token | all 54,759 files under `data/sheet_rules/` | `grep -rlE 'BONUS:\|DEFINE:\|PRE[A-Z]+:\|%CHOICE\|CL=' data/sheet_rules/ \| wc -l` |
+| manifest `units` 49,438 -> **49,450**, `generated_at_head` `39dfd59b7e` -> `20ea567623`, `by_sheet_rule_content` key `no_rule: 142` now **absent** | all 49,450 inventory units | `python3 docs/release/SD-35-corpus-sheet-completion/artifacts/epic-5-residues/AT-35-E5-005_completion_manifest.py` |
+| `absent_total=0`, `corpus_wide: 48864 of 48864 = 100.0000%` | all 48,864 real `data/corpus` rules records | `python3 docs/release/SD-35-corpus-sheet-completion/artifacts/epic-7-closure/population_census_final.py` |
+| `population=255 absent_total=0` | the 255 full-completeness corpus records no unit reached | `python3 docs/release/SD-35-corpus-sheet-completion/artifacts/epic-7-closure/population_census_255.py` |
+| `admitted=12 render=12 failures=0` | the 12 units ruling B18 admitted | `python3 docs/release/SD-35-corpus-sheet-completion/artifacts/epic-7-closure/b18_ten_render_proof.py` |
+| parity lines compared 156 -> **159**, agree 154 -> **157**, disagree **2 -> 2**; chassis 382 / 376 / 6 / 140 unchanged; the **same 8** disagreements | all 29 roster characters, oracle side pinned at `PCGEN_ORACLE_SHA=7f818006e371188e5717fd18d74d18a420747fc6` | `sheet_rule_parity --roster … --output ours.json` then `python3 scripts/oracle_harness/sheet_parity.py compare` |
+| `126` receipts carry a scope-gate line, `0` missing (was 124 of 126) | all 126 receipts under `artifacts/` | `for f in $(find artifacts -name '*receipt*.md'); do grep -qiE 'SCOPE_GATE\|cycle_scope_gate' "$f" \|\| echo "$f"; done` |
+| deferrals `open 17 resolved 73 total 90` (was `open 89 resolved 1 total 90`) | all 90 deferrals emitted since 2026-09-07 | `python3 scripts/retro.py summary --since 2026-09-07 --json` |
+| kanban `104 complete · 3 blocked · 1 not-started` (was `47 complete` of 107) | all 108 numbered rows | `awk -F'\|' '/^\| *[0-9]+ *\|/{st=$6; gsub(/^ +\| +$/,"",st); print st}' kanban.md \| sort \| uniq -c` |
+| `3 passed; 0 failed; 0 ignored; finished in 38.62s` (was 2 passed / 1 failed in 968.67s) | the 3 tests in `tests/sd26_pilot_case_verification.rs` | `cargo test --test sd26_pilot_case_verification` |
+| `16` worktrees holding `13G` still present, so the sweep has NOT run | all of `.claude/worktrees/` | `ls .claude/worktrees/ \| wc -l` and `du -sh .claude/worktrees` |
+
+**S1 -- operator ruling S1 recorded, then 56 rows swept one at a time.** `decisions.md §22`,
+`acceptance-and-verification.md §3a` and `kanban.md`'s preamble now state it: a "card" is a
+CRITERION row; the per-cycle rows `workflow-instruction.md §5` appends are the mechanical receipt
+trail. **A bar counting cycle rows cannot terminate** -- every cycle dispatched to close them
+appends one more, which is visible in the scans' own figures (cycle 2 measured 55 open, cycle 3
+measured 57, and the whole difference was three census rows appended in between). That
+non-termination is the defect. Each of the 56 rows was set from its own receipt, whose path was
+checked to resolve first (60 of 60 existed), and cites the HEAD command showing its named remainder
+is zero. Rows 28, 100, 107 (`AT-35-E7-001`) and 29 (`AT-35-E7-002`/`003`) are left open on purpose:
+they are the closure rows themselves.
+
+**S8 -- classified (a) environmental, on cause rather than on a green tick.** The panic is at the
+`run_pcgen_character` call, before any comparison logic, and the message is PCGen's own gradle
+`:downloadJavaFXLocal` -- a remote-download task in a different repository, whose artifact once
+cached is not fetched at all (the whole of 968.67s -> 38.62s). This bundle's only edit to the file
+(`b91d16a66b`) is **1 file changed, 1 insertion, 1 deletion**: `rules_core::cache_gen::apg::sha256_file`
+-> `pcgen_import::cache_gen::apg::sha256_file`, the identical function after `AT-35-E6-002`'s module
+move, hashing a local fixture before PCGen is invoked -- it passed in the failing run too. Not (b),
+not (c). The standing weakness is stated and not hidden: driving the real PCGen engine as an oracle
+means a cold gradle cache can fail this way again.
+
+**What this cycle did NOT close, named, counts summing to 17**
+(`deferral 1789476280499-at-35-e7-closure-cleanup-c6f962`): **10** worktree-sweep deferrals (owned
+by `AT-35-E7-003`, live kanban row 29 -- not closed because the worktrees demonstrably still
+exist); **4** real content/inventory holes, each a named record set and not a bucket (the 2
+`~ Elemental Fist` selector/label-split records; `advanced_players_guide:spell:wall_of_thorms`,
+which still has no rule file at HEAD; `reference_library_catalog.rs`'s 1,150 of 9,679 descriptions;
+the `docs/work-inventory.json` rung-ordering defect); **3** scan/architecture-doc items
+(`AT-35-E1-003`'s 244 `grounding_ref` citations, and `AT-35-E7-001`'s own two).
+**No refused token type is deferred -- this cycle's converter refusal set is empty.**
+
+Honest counter-movement with its denominator: `_defects/unresolved-references.json` 11,819 ->
+**11,925** (+106) and `_defects/undefined-variables.json` 738 -> **739** (+1) of the 54,759 files in
+`data/sheet_rules/`, because 142 new records bring their own references; `inline-formula-in-prose`
+unchanged at 110. These are ledgers, not gates, and no gate pins them.
+
+
 ### 2026-09-15 — Epic 7 — AT-35-E7-001 **cycle 3**, the final-acceptance scan re-run — **FAIL. Closure stops again.** — blocked
 
 **Receipt:** `artifacts/epic-7-closure/AT-35-E7-001_cycle3_receipt.md`. **HEAD scanned:**

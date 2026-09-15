@@ -783,3 +783,87 @@ still refused because `.MOD` is dispatched to its own trap before the predicate 
 `python3 docs/release/SD-35-corpus-sheet-completion/artifacts/epic-7-closure/b18_ten_render_proof.py`
 → `admitted=12 render=12 failures=0`, which prints each unit's actual sheet line and exits non-zero
 if any unit enumerates but renders nothing.
+
+## §22 — Operator ruling S1, 2026-09-15: a "card" is a CRITERION row; cycle rows are the audit trail
+
+`epic-breakdown.md`'s `AT-35-E7-001` bar reads: *"Every criterion `AT-35-E1-001` … `AT-35-E6-004`
+is `complete` and every `kanban.md` card is `complete`."* Both halves of that sentence were
+written against the same 29 rows. `kanban.md` opened with exactly 29 numbered rows, one per
+acceptance criterion, and the word "card" meant one of them.
+
+`workflow-instruction.md §5` then added a second kind of row — *"one row per extra cycle … none
+of them an additional criterion"* — and `kanban.md`'s own preamble says the same. By the third
+acceptance scan the board carried **107** numbered rows: 29 criterion rows and 78 per-cycle rows.
+Read literally against 107, the bar counts rows the sentence was never about.
+
+**RULED.** **The completion bar is the CRITERION rows.** A per-cycle row is a mechanical receipt
+entry — the audit trail `§5` requires so that a criterion's `complete` can be checked against the
+cycles that produced it — and its state records what that cycle did. It is read as evidence, never
+as an item the bundle owes.
+
+**Why this ruling terminates and the literal reading does not.** Every cycle that runs appends a
+row (`§5`; `§6` step 8). A cycle dispatched to close the open rows is itself a cycle, so it
+appends one more. The set of rows therefore grows by at least one per attempt, and **a bar
+counting cycle rows cannot be satisfied by running more cycles** — the two acceptance scans that
+reported it (cycle 2 at 55 rows, cycle 3 at 57, the difference being three census rows appended in
+between) were measuring a quantity that rises when work is done. That non-termination is the
+defect, not the open rows.
+
+**What does NOT change.** `§5`'s forbidden move stands in both directions: a criterion's
+`complete` is still unsupported if its cycle rows do not bear it out, and a cycle row is still
+only set from its receipt. This ruling removes a counting bar, not a verification. The sweep it
+authorises is **row by row, each from its own receipt** — never a bulk relabel, which is the same
+forbidden move run backwards, and which the scan correctly refused twice.
+
+**Enforced by:** `acceptance-and-verification.md §3a`'s "Every kanban row `complete`" line, amended
+to name the criterion rows; the per-row citation in every cycle row's Notes column.
+
+## §23 — The 142 `no_corpus_record` refusals were a JOIN DEFECT, and are converted, not excused
+
+Two acceptance scans (cycles 2 and 3) asked for a ruling amending `acceptance-and-verification.md
+§3a`'s *"`_refused.json` empty"* and *"zero refused units"* to *"zero non-`DONE` refusals"*, on the
+ground that all 142 were `DONE` by another route (`refused_non_done=0`). **No such ruling is
+needed, and none is given.** The premise was wrong, and this is recorded as
+`correction 1789474976892-at-35-e7-closure-cleanup-2ab584`.
+
+**What was actually true.** Every one of the 142 has a **real corpus record**. PCGen files a
+reprinted row once, in the directory of whichever book physically carries the `.lst`, while every
+book that reprints it declares a unit of its own. `advanced_race_guide` declares 33 races; only 12
+race records sit in `data/corpus/advanced_race_guide/race/`, because `elf` is
+`data/corpus/core_rulebook/race/elf.json` — the same `elf_races.lst:6` row.
+`sheet_rule::load_population` keyed **both** its lookups on the unit's own `book`, so both missed,
+and the unit was refused as `no_corpus_record`.
+
+The canonical printing is **not itself an inventory unit** and has no rule file either, so no other
+unit picked the rule up. All 142 rendered **nothing at all**. "142 `DONE` by another route" was an
+atlas reading (`status` + `evidence`), not a rendered sheet line — precisely the substitution
+`§1` forbids.
+
+**Proved before it was fixed, exhaustively, not on a sample:** for all 142, the corpus record found
+in another book's directory carries the **same source row** as the unit — same `source_file`
+basename, same `source_line` — `row_exact=142`, `ambiguous=0`.
+
+**The fix is a predicate widening, on the `B18` precedent (`§21`): the PREDICATE moves, never the
+rows.** A corpus record is identified by the source ROW it was ingested from, not the directory it
+was filed under, so `load_population` gains a third lookup keyed on `(source_file basename,
+source_line)` narrowed to the unit's `kind`, taken **only when unambiguous**. No id is listed, no
+book is exempted, nothing is deleted, and `_refused.json` is not split into a second list — there
+is nothing left to put in one.
+
+**Measured over the whole population before it was trusted:** 831 of 49,450 units miss the two
+book-keyed lookups; the new fallback resolves **exactly 142** of them — precisely the refused set —
+and **none** of the other 689, which keep resolving through `source_row_in_tree` unchanged. It
+cannot silently re-join a unit that was already converting.
+
+**Enforced by:** `sheet_rule_convert --check` → `records=49450 converted=49450 refused=0
+rules=70317 var_tables=5294 verdict=PASS`; `token_coverage.py --check` → `refused=0
+refused_non_done=0 verdict=PASS` (its `REFUSED_SET` and `SHAPE_TOTALS` checks are set equalities
+and hold at zero without special-casing); `a_refused_record_and_a_record_with_no_rule_are_left_alone`
+in `src/bin/v06_work_inventory.rs`, which now **asserts the refusal set is empty** rather than
+pinning a member of it, so a refusal reappearing fails loudly; and the oracle parity re-run at HEAD
+against the exports pinned at `PCGEN_ORACLE_SHA=7f818006e3…` —
+`artifacts/epic-6-pcgen-exit/oracle-parity-after.json`, lines compared 156 → **159**, agree
+154 → **157**, disagree **2 → 2**, chassis **382 / 376 / 6 / 140 unchanged**, the **same 8**
+disagreements. The 142 added three compared lines, all three agreeing, and no new disagreement.
+
+**`§3a` is therefore met verbatim and is not amended on this point.**

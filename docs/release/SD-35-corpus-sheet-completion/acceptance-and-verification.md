@@ -106,9 +106,17 @@ The scan checks **work**, never reports:
 - **The completion manifest's evidence pointers resolve** on an independently drawn sample of at
   least 200 units across all 19 kinds; for each sampled `sheet-complete` unit, load its
   `SheetRule`, evaluate it for the probe character, and confirm the recorded form.
-- **The oracle parity artifacts** (`oracle-parity-epic2.json`, `-before.json`, `-after.json`)
-  each name `PCGEN_ORACLE_SHA` and show `disagree=0`, or every disagreement resolved by a
-  named commit.
+- **The oracle parity artifacts** each name `PCGEN_ORACLE_SHA` and show `disagree=0`, or every
+  disagreement resolved by a named commit. The three exist at these paths (produced by
+  `AT-35-E7-CLOSURE-CLEANUP`, `decisions.md §23`; before that they were named here but had never
+  been written, and ~20 per-cycle parity artifacts carried the evidence under other names):
+  `artifacts/epic-2-sheet-rule/oracle-parity-epic2.json`,
+  `artifacts/epic-6-pcgen-exit/oracle-parity-before.json`,
+  `artifacts/epic-6-pcgen-exit/oracle-parity-after.json`. Each carries `consolidated_from` naming
+  its source: the first two are the Epic 2 and Epic 6-start runs **verbatim**, re-filed, and the
+  third is a **real re-run** executed at HEAD against the PCGen exports pinned at
+  `PCGEN_ORACLE_SHA`. None shows `disagree=0`; the second clause applies and every disagreement is
+  named in the artifact's own `disagreements` array with both values and its oracle key.
 - **The tool side is intact** (`decisions.md §11`, what is kept): `cargo build --locked --bin
   sheet_rule_convert --bin gen_book_cache` exits 0; `python3 scripts/oracle_harness/run.py --help`
   exits 0; `scripts/pcgen-oracle-pin.env` and `scripts/fetch-pcgen-oracle.sh` present;
@@ -117,7 +125,15 @@ The scan checks **work**, never reports:
 - **The 19 on-screen tests exist and pass** in the frontend run.
 - **`build-time.json` shows after < before**, both measured cold.
 - **The capability register has no third state.**
-- **Every kanban row `complete`** with its receipt path resolving.
+- **Every kanban CRITERION row `complete`** with its receipt path resolving — the 29 rows
+  `AT-35-E1-001` … `AT-35-E6-004`, plus the closure rows. **Operator ruling S1, `decisions.md
+  §22`:** a "card" is a criterion row. The per-cycle rows `workflow-instruction.md §5` appends
+  ("one row per extra cycle … none of them an additional criterion") are the mechanical receipt
+  trail; each is read as evidence for its criterion, and is never itself an item the bundle owes.
+  Counting them as the bar cannot terminate — every cycle dispatched to close them appends one
+  more. `§5`'s forbidden move still stands **in both directions**: a criterion's `complete`
+  unsupported by its cycle rows does not satisfy it, and a cycle row is set only from its own
+  receipt, one row at a time, never by bulk relabel.
 
 **If anything is short: STOP.** No retrospective, no sweep, **no PR**. Report what is short
 with the command that shows it.

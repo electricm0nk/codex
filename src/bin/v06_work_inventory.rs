@@ -18575,18 +18575,31 @@ mod apply_sheet_complete_rung_tests {
     const WORDS_ID: &str = "core_rulebook:feat:empower_spell";
     const NUMBER_ID: &str = "core_rulebook:feat:acrobatic";
     const DICE_ID: &str = "core_rulebook:equipment:longsword";
-    /// Refused by the converter; it has no rule in the package AND is in
-    /// `_refused.json`. SD-35 AT-35-E3-001 moved this pin once (term-level
-    /// refusal: an unlowerable token no longer deletes a record, so
-    /// `advanced_class_guide:class:arcanist` converts and prints its words),
-    /// and SD-35 AT-35-E3-002 moved it again: a unit with no corpus record now
-    /// resolves its own source row in the pinned tree, and a corpus record with
-    /// only a second-source `description` converts to those words, so
-    /// `advanced_players_guide:feat:allied_spellcaster` converts too. The
-    /// refusal set is now the 142 records whose named source file sits in
-    /// ANOTHER book's directory -- `no_corpus_record` 142 -- and this
-    /// `bestiary` feat is one of them.
-    const REFUSED_ID: &str = "bestiary:feat:ability_focus";
+    /// An id with no rule in the package, used to prove the rung stamps only
+    /// what the converter actually wrote.
+    ///
+    /// This constant used to hold a REFUSED id, and it has moved three times.
+    /// SD-35 AT-35-E3-001 moved it first (term-level refusal: an unlowerable
+    /// token no longer deletes a record, so `advanced_class_guide:class:arcanist`
+    /// converts and prints its words). SD-35 AT-35-E3-002 moved it again (a unit
+    /// with no corpus record resolves its own source row in the pinned tree, and
+    /// a corpus record with only a second-source `description` converts to those
+    /// words, so `advanced_players_guide:feat:allied_spellcaster` converts too),
+    /// leaving 142 refusals -- the records whose named source file sits in
+    /// ANOTHER book's directory -- and it held `bestiary:feat:ability_focus`,
+    /// one of them.
+    ///
+    /// SD-35 `AT-35-E7-CLOSURE-CLEANUP` emptied the set. Those 142 were reprints:
+    /// the corpus record exists, filed under the book that owns the `.lst`
+    /// (`bestiary:feat:ability_focus` -> `data/corpus/core_essentials/feat/ability_focus.json`,
+    /// the same `ce_feats.lst:9` row), and `sheet_rule::load_population`'s
+    /// cross-book source-row fallback now joins it, so it renders like any other
+    /// record. **There is no refused id left to pin**, so the pin is now the empty
+    /// set, asserted in
+    /// [`a_refused_record_and_a_record_with_no_rule_are_left_alone`], and this
+    /// constant holds an id that is in no book at all -- the one thing that
+    /// cannot stop being an example of "no rule".
+    const NO_RULE_ID: &str = "core_rulebook:feat:no_such_feat_in_any_book";
 
     /// The core positive case: the two statuses beneath the rung, each with a
     /// rendered rule, become `sheet-complete` carrying the rendered form.
@@ -18650,21 +18663,36 @@ mod apply_sheet_complete_rung_tests {
         }
         // The rung's own three conditions still gate every one of them: a
         // status in the list is necessary, never sufficient.
-        let mut refused_unit = vec![unit(REFUSED_ID, "deferred-with-reason")];
-        assert!(apply_sheet_complete_rung(&mut refused_unit, probe).is_empty());
-        assert_eq!(refused_unit[0].verdict.status, "deferred-with-reason");
+        let mut no_rule_unit = vec![unit(NO_RULE_ID, "deferred-with-reason")];
+        assert!(apply_sheet_complete_rung(&mut no_rule_unit, probe).is_empty());
+        assert_eq!(no_rule_unit[0].verdict.status, "deferred-with-reason");
     }
 
     /// A refused record and a record with no rule stay where they were: the
     /// rung stamps only what the converter actually wrote.
+    ///
+    /// The refusal set is EMPTY at HEAD (SD-35 `AT-35-E7-CLOSURE-CLEANUP`; see
+    /// [`NO_RULE_ID`]) and that is asserted here rather than assumed, so a
+    /// refusal reappearing fails this test loudly instead of quietly shrinking
+    /// what it covers. The "refused implies no rule" invariant is still checked
+    /// over whatever the set holds, so it keeps working the moment it is
+    /// non-empty again.
     #[test]
     fn a_refused_record_and_a_record_with_no_rule_are_left_alone() {
         let probe = probe();
-        assert!(probe.refused.contains(REFUSED_ID), "the fixture refusal is still refused");
-        assert!(probe.package.rule(REFUSED_ID).is_none(), "a refused record has no rule");
+        assert!(
+            probe.refused.is_empty(),
+            "the converter refuses {} record(s) -- every one must be joined or named: {:?}",
+            probe.refused.len(),
+            probe.refused.iter().take(5).collect::<Vec<_>>()
+        );
+        for id in &probe.refused {
+            assert!(probe.package.rule(id).is_none(), "{id}: refused AND has a rule");
+        }
+        assert!(probe.package.rule(NO_RULE_ID).is_none(), "an id in no book has no rule");
         let mut inventory = vec![
-            unit(REFUSED_ID, "engine-does-not-hold"),
-            unit("core_rulebook:feat:no_such_feat_in_any_book", "ingested-magnitude"),
+            unit(NO_RULE_ID, "engine-does-not-hold"),
+            unit("core_rulebook:feat:no_such_feat_in_any_book_either", "ingested-magnitude"),
         ];
         let by_form = apply_sheet_complete_rung(&mut inventory, probe);
         assert!(by_form.is_empty(), "{by_form:?}");

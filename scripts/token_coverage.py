@@ -34,9 +34,14 @@ What it reads (tool side -- it may read the converter's view of PCGen)
 The census is the converter's own reading of the closure (base row, `.COPY=`
 base, corpus-wide `.MOD` rows, class level lines, the `.lst` row for the
 no-`raw_tokens` units) -- `data/corpus/**`'s shipped `raw_tokens` are NOT the
-population the converter converts (142 units resolve to no corpus record and
-no same-book source row, SD-35 AT-35-E3-002; it was 829 before that cycle),
-so a second reading here would count a different thing.
+population the converter converts, so a second reading here would count a
+different thing. The count of units resolving to no corpus record and no
+source row went 829 -> 142 at SD-35 AT-35-E3-002 and 142 -> 0 at SD-35
+AT-35-E7-CLOSURE-CLEANUP (the last 142 were reprints whose corpus record is
+filed under the book that owns the `.lst`; `sheet_rule::load_population`'s
+cross-book source-row fallback joins them). The REFUSED_SET and SHAPE_TOTALS
+checks below are set equalities and hold at zero exactly as they held at 142 --
+nothing here special-cases an empty refusal set.
 
 What it writes
 --------------

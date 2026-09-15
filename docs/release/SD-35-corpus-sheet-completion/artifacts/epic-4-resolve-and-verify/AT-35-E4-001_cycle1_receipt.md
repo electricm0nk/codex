@@ -2,6 +2,7 @@
 
 - **Commit SHA:** `9bae2cfa1f`
 - **Scope gate:**
+  `SCOPE_GATE: python3 scripts/cycle_scope_gate.py --min 500 --bucket M` at cycle start `07e29075b4` (the named line `acceptance-and-verification.md §3` step 10 and `§5` require; **added 2026-09-15 by `AT-35-E7-CLOSURE-CLEANUP`, which found this receipt among the two of 125 carrying the gate's OUTPUT but not the line that names it. The verdict below is the receipt's own, verbatim and unedited — nothing is re-derived and no figure is invented; only the `SCOPE_GATE:` line naming the command was missing**) · `closed=0 relabeled=0 rust_lines_changed=131 ratio=n/a builds_recorded=0 pcgen_live_files=260`
   ```
   inventory=docs/work-inventory.json
   scope=bucket=M

@@ -1,9 +1,9 @@
 {
   "records": 49450,
-  "converted": 49308,
-  "refused": 142,
-  "rules_written": 70147,
-  "var_tables": 5293,
+  "converted": 49450,
+  "refused": 0,
+  "rules_written": 70317,
+  "var_tables": 5294,
   "by_kind": {
     "ability": {
       "records": 4337,
@@ -47,8 +47,8 @@
     },
     "feat": {
       "records": 2774,
-      "converted": 2763,
-      "refused": 11
+      "converted": 2774,
+      "refused": 0
     },
     "language": {
       "records": 136,
@@ -72,13 +72,13 @@
     },
     "race": {
       "records": 95,
-      "converted": 68,
-      "refused": 27
+      "converted": 95,
+      "refused": 0
     },
     "race_trait": {
       "records": 2561,
-      "converted": 2457,
-      "refused": 104
+      "converted": 2561,
+      "refused": 0
     },
     "skill": {
       "records": 149,
@@ -101,9 +101,7 @@
       "refused": 0
     }
   },
-  "refused_by_token_type": {
-    "no_corpus_record": 142
-  },
+  "refused_by_token_type": {},
   "degraded_records": 423,
   "degraded_by_token_type": {
     "ADD (CLASSSKILLS)": 1,

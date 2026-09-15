@@ -253,17 +253,44 @@ fn source_row_in_tree(tree: &PinnedTree, unit: &InventoryUnit) -> Option<(String
 /// The population: every inventory unit, joined to its corpus record where one exists, else to
 /// its own source row in the pinned tree ([`source_row_in_tree`]). A unit that resolves to
 /// neither comes back with an empty `rel_path` and is refused as `no_corpus_record`.
+///
+/// # The cross-book source-row fallback (SD-35 `AT-35-E7-CLOSURE-CLEANUP`)
+///
+/// The first two lookups are both keyed on the unit's OWN `book`. That is wrong for a reprint:
+/// PCGen files a shared row once, in the directory of whichever book physically carries the
+/// `.lst`, while every book that reprints it declares a unit of its own. `advanced_race_guide`
+/// declares 33 races; only 12 race rows live in `data/corpus/advanced_race_guide/race/`, because
+/// `elf` lives in `data/corpus/core_rulebook/race/elf.json` — the same record, filed under the
+/// book that owns `elf_races.lst`. Keyed on `u.book`, both lookups miss, the unit is refused as
+/// `no_corpus_record`, and **nothing renders for it at all** — the canonical printing is not
+/// itself an inventory unit, so there is no other unit picking the rule up.
+///
+/// A corpus record is identified by the source ROW it was ingested from, not by the directory it
+/// was filed under. So the third lookup drops the book and keys on `(source_file basename,
+/// source_line)`, narrowed to the unit's `kind`, and is taken **only when it is unambiguous**.
+/// The predicate is widened; no id is listed and no book is exempted (the `B18` precedent,
+/// `decisions.md §21`).
+///
+/// Measured before it was trusted, over the whole population: 831 of 49,450 units miss the two
+/// book-keyed lookups; this fallback resolves **exactly 142** of them — precisely the set that
+/// was being refused — and **none** of the other 689, which keep resolving through
+/// [`source_row_in_tree`] exactly as before. It therefore cannot silently re-join a unit that
+/// was already converting.
 pub fn load_population(repo: &Path, tree: &PinnedTree) -> Result<Vec<RecordRef>, String> {
     let inv_text = std::fs::read_to_string(repo.join("docs/work-inventory.json")).map_err(|e| format!("docs/work-inventory.json: {e}"))?;
     let inv: InventoryFile = serde_json::from_str(&inv_text).map_err(|e| format!("docs/work-inventory.json: {e}"))?;
     let entries = walk_corpus(repo);
     let mut by_line: BTreeMap<(String, String, usize), usize> = BTreeMap::new();
     let mut by_key: BTreeMap<(String, String, String), usize> = BTreeMap::new();
+    // (basename, line, kind) -> every corpus record at that source row of that kind, in ANY
+    // book's directory. A key with more than one entry is ambiguous and is never joined.
+    let mut by_row_any_book: BTreeMap<(String, usize, String), Vec<usize>> = BTreeMap::new();
     for (i, e) in entries.iter().enumerate() {
         if let Some(l) = e.line
             && !e.basename.is_empty()
         {
             by_line.entry((e.book.clone(), e.basename.clone(), l)).or_insert(i);
+            by_row_any_book.entry((e.basename.clone(), l, e.kind.clone())).or_default().push(i);
         }
         by_key.entry((e.book.clone(), e.kind.clone(), e.slug.clone())).or_insert(i);
     }
@@ -277,6 +304,14 @@ pub fn load_population(repo: &Path, tree: &PinnedTree) -> Result<Vec<RecordRef>,
             .or_else(|| {
                 let s = u.id.splitn(3, ':').nth(2).unwrap_or("").to_string();
                 by_key.get(&(u.book.clone(), u.kind.clone(), s))
+            })
+            .or_else(|| {
+                // Cross-book reprint: same source row, another book's directory. Unambiguous only.
+                let (f, l) = (u.source_file.as_ref()?, u.source_line?);
+                match by_row_any_book.get(&(f.clone(), l, u.kind.clone()))?.as_slice() {
+                    [only] => Some(only),
+                    _ => None,
+                }
             })
             .copied();
         let rec = idx.and_then(|i| record_from_json(u, &entries[i].path));

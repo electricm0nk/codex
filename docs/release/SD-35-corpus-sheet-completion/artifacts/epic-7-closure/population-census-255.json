@@ -13,112 +13,17 @@
   "dispositions": {
     "reached_via_copy_row_twin_same_file": 48,
     "reached_via_identical_prose_record": 4,
-    "reached_via_reattributed_same_row": 193,
-    "absent_no_unit_anywhere": 10
+    "reached_via_reattributed_same_row": 203
   },
   "reached_twin_status": {
     "grounded": 34,
-    "text-complete": 125,
+    "text-complete": 135,
     "sheet-complete": 82,
     "null": 4
   },
-  "absent_total": 10,
-  "absent_by_book_kind": {
-    "mythic_adventures/spell": 1,
-    "pathfinder_unchained/feat": 9
-  },
-  "absent_records": [
-    {
-      "path": "data/corpus/mythic_adventures/spell/elemental_body_iiimod.json",
-      "book": "mythic_adventures",
-      "kind": "spell",
-      "slug": "elemental_body_iiimod",
-      "key": "Elemental Body IIIMOD",
-      "source": "ma_spells.lst:98",
-      "desc_chars": 649
-    },
-    {
-      "path": "data/corpus/pathfinder_unchained/feat/champion_of_anarchy.json",
-      "book": "pathfinder_unchained",
-      "kind": "feat",
-      "slug": "champion_of_anarchy",
-      "key": "Champion of Anarchy",
-      "source": "pu_feats.lst:6",
-      "desc_chars": 33
-    },
-    {
-      "path": "data/corpus/pathfinder_unchained/feat/champion_of_balance.json",
-      "book": "pathfinder_unchained",
-      "kind": "feat",
-      "slug": "champion_of_balance",
-      "key": "Champion of Balance",
-      "source": "pu_feats.lst:7",
-      "desc_chars": 55
-    },
-    {
-      "path": "data/corpus/pathfinder_unchained/feat/champion_of_destruction.json",
-      "book": "pathfinder_unchained",
-      "kind": "feat",
-      "slug": "champion_of_destruction",
-      "key": "Champion of Destruction",
-      "source": "pu_feats.lst:8",
-      "desc_chars": 57
-    },
-    {
-      "path": "data/corpus/pathfinder_unchained/feat/champion_of_freedom.json",
-      "book": "pathfinder_unchained",
-      "kind": "feat",
-      "slug": "champion_of_freedom",
-      "key": "Champion of Freedom",
-      "source": "pu_feats.lst:9",
-      "desc_chars": 50
-    },
-    {
-      "path": "data/corpus/pathfinder_unchained/feat/champion_of_grace.json",
-      "book": "pathfinder_unchained",
-      "kind": "feat",
-      "slug": "champion_of_grace",
-      "key": "Champion of Grace",
-      "source": "pu_feats.lst:10",
-      "desc_chars": 50
-    },
-    {
-      "path": "data/corpus/pathfinder_unchained/feat/champion_of_malevolence.json",
-      "book": "pathfinder_unchained",
-      "kind": "feat",
-      "slug": "champion_of_malevolence",
-      "key": "Champion of Malevolence",
-      "source": "pu_feats.lst:11",
-      "desc_chars": 58
-    },
-    {
-      "path": "data/corpus/pathfinder_unchained/feat/champion_of_righteousness.json",
-      "book": "pathfinder_unchained",
-      "kind": "feat",
-      "slug": "champion_of_righteousness",
-      "key": "Champion of Righteousness",
-      "source": "pu_feats.lst:12",
-      "desc_chars": 89
-    },
-    {
-      "path": "data/corpus/pathfinder_unchained/feat/champion_of_tranquility.json",
-      "book": "pathfinder_unchained",
-      "kind": "feat",
-      "slug": "champion_of_tranquility",
-      "key": "Champion of Tranquility",
-      "source": "pu_feats.lst:13",
-      "desc_chars": 41
-    },
-    {
-      "path": "data/corpus/pathfinder_unchained/feat/champion_of_tyranny.json",
-      "book": "pathfinder_unchained",
-      "kind": "feat",
-      "slug": "champion_of_tyranny",
-      "key": "Champion of Tyranny",
-      "source": "pu_feats.lst:14",
-      "desc_chars": 49
-    }
-  ],
+  "absent_total": 0,
+  "absent_by_book_kind": {},
+  "absent_records": [],
   "pcgen_tree_present": true,
   "root_cause_of_the_absent": {
     "mechanism": "src/bin/v06_work_inventory.rs `has_classifying_token`: `Kind::Feat => has_token(fields, \"TYPE:\")` and `Kind::Spell => has_token(\"SCHOOL:\") || has_token(\"CLASSES:\")`. A row failing its kind's test is not enumerated and lands in the `missing_classifying_token` trap.",

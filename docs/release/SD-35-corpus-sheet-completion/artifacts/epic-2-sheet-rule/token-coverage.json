@@ -12,35 +12,23 @@
   "units": 49450,
   "non_done": 0,
   "records_in_census": 49450,
-  "refused_records": 142,
+  "refused_records": 0,
   "refused_non_done": 0,
   "token_less_non_done": 0,
   "token_types": 233,
-  "refusal_shapes": 1
+  "refusal_shapes": 0
  },
  "unmapped_token_types": [
   "BONUS:LOADMULT",
   "BONUS:SPELLCASTMULT"
  ],
  "token_types": {
-  "token-less": {
-   "mapping_row": null,
-   "carrying": 152,
-   "carrying_non_done": 0,
-   "converted_non_done": 0,
-   "refused_non_done": 0,
-   "refused_because_of_this_token": 142,
-   "refused_because_of_this_token_non_done": 0,
-   "refusal_shapes": {
-    "no_corpus_record": 142
-   }
-  },
   "!PRE* (all negated forms)": {
    "mapping_row": {
     "family": "prereq",
     "maps_to": "Applies"
    },
-   "carrying": 2451,
+   "carrying": 2528,
    "carrying_non_done": 0,
    "converted_non_done": 0,
    "refused_non_done": 0,
@@ -53,7 +41,7 @@
     "family": "prereq",
     "maps_to": "Applies"
    },
-   "carrying": 9941,
+   "carrying": 9998,
    "carrying_non_done": 0,
    "converted_non_done": 0,
    "refused_non_done": 0,
@@ -144,7 +132,7 @@
     "family": "prose",
     "maps_to": "Text"
    },
-   "carrying": 2291,
+   "carrying": 2311,
    "carrying_non_done": 0,
    "converted_non_done": 0,
    "refused_non_done": 0,
@@ -157,7 +145,7 @@
     "family": "prose",
     "maps_to": "Metadata(ignored-by-sheet)"
    },
-   "carrying": 1777,
+   "carrying": 1778,
    "carrying_non_done": 0,
    "converted_non_done": 0,
    "refused_non_done": 0,
@@ -170,7 +158,7 @@
     "family": "prose",
     "maps_to": "Number(Expr)"
    },
-   "carrying": 715,
+   "carrying": 716,
    "carrying_non_done": 0,
    "converted_non_done": 0,
    "refused_non_done": 0,
@@ -196,7 +184,7 @@
     "family": "prereq",
     "maps_to": "Applies"
    },
-   "carrying": 1234,
+   "carrying": 1245,
    "carrying_non_done": 0,
    "converted_non_done": 0,
    "refused_non_done": 0,
@@ -209,7 +197,7 @@
     "family": "prose",
     "maps_to": "Text"
    },
-   "carrying": 2291,
+   "carrying": 2302,
    "carrying_non_done": 0,
    "converted_non_done": 0,
    "refused_non_done": 0,
@@ -531,7 +519,7 @@
     "family": "bonus",
     "maps_to": "Number(Expr)"
    },
-   "carrying": 402,
+   "carrying": 403,
    "carrying_non_done": 0,
    "converted_non_done": 0,
    "refused_non_done": 0,
@@ -544,7 +532,7 @@
     "family": "bonus",
     "maps_to": "Number(Expr)"
    },
-   "carrying": 597,
+   "carrying": 599,
    "carrying_non_done": 0,
    "converted_non_done": 0,
    "refused_non_done": 0,
@@ -570,7 +558,7 @@
     "family": "bonus",
     "maps_to": "Number(Expr)"
    },
-   "carrying": 1889,
+   "carrying": 1892,
    "carrying_non_done": 0,
    "converted_non_done": 0,
    "refused_non_done": 0,
@@ -684,7 +672,7 @@
     "family": "bonus",
     "maps_to": "Number(Expr)"
    },
-   "carrying": 2442,
+   "carrying": 2454,
    "carrying_non_done": 0,
    "converted_non_done": 0,
    "refused_non_done": 0,
@@ -710,7 +698,7 @@
     "family": "bonus",
     "maps_to": "Number(Expr) -- a contribution to a corpus variable, never a sheet line"
    },
-   "carrying": 11293,
+   "carrying": 11309,
    "carrying_non_done": 0,
    "converted_non_done": 0,
    "refused_non_done": 0,
@@ -814,7 +802,7 @@
     "family": "prereq",
     "maps_to": "Metadata(ignored-by-sheet)"
    },
-   "carrying": 32562,
+   "carrying": 32677,
    "carrying_non_done": 0,
    "converted_non_done": 0,
    "refused_non_done": 0,
@@ -840,7 +828,7 @@
     "family": "prereq",
     "maps_to": "Applies"
    },
-   "carrying": 2155,
+   "carrying": 2161,
    "carrying_non_done": 0,
    "converted_non_done": 0,
    "refused_non_done": 0,
@@ -957,7 +945,7 @@
     "family": "formula",
     "maps_to": "Metadata(ignored-by-sheet)"
    },
-   "carrying": 1,
+   "carrying": 2,
    "carrying_non_done": 0,
    "converted_non_done": 0,
    "refused_non_done": 0,
@@ -970,7 +958,7 @@
     "family": "prereq",
     "maps_to": "Applies"
    },
-   "carrying": 822,
+   "carrying": 823,
    "carrying_non_done": 0,
    "converted_non_done": 0,
    "refused_non_done": 0,
@@ -996,7 +984,7 @@
     "family": "formula",
     "maps_to": "Metadata(ignored-by-sheet)"
    },
-   "carrying": 6496,
+   "carrying": 6501,
    "carrying_non_done": 0,
    "converted_non_done": 0,
    "refused_non_done": 0,
@@ -1048,7 +1036,7 @@
     "family": "prose",
     "maps_to": "Text"
    },
-   "carrying": 30407,
+   "carrying": 30522,
    "carrying_non_done": 0,
    "converted_non_done": 0,
    "refused_non_done": 0,
@@ -1152,7 +1140,7 @@
     "family": "prereq",
     "maps_to": "Metadata(ignored-by-sheet)"
    },
-   "carrying": 4237,
+   "carrying": 4275,
    "carrying_non_done": 0,
    "converted_non_done": 0,
    "refused_non_done": 0,
@@ -1269,7 +1257,7 @@
     "family": "prereq",
     "maps_to": "Metadata(ignored-by-sheet)"
    },
-   "carrying": 31446,
+   "carrying": 31550,
    "carrying_non_done": 0,
    "converted_non_done": 0,
    "refused_non_done": 0,
@@ -1334,7 +1322,7 @@
     "family": "formula",
     "maps_to": "Metadata(ignored-by-sheet)"
    },
-   "carrying": 1345,
+   "carrying": 1372,
    "carrying_non_done": 0,
    "converted_non_done": 0,
    "refused_non_done": 0,
@@ -1451,7 +1439,7 @@
     "family": "formula",
     "maps_to": "Number(Expr)"
    },
-   "carrying": 1919,
+   "carrying": 1952,
    "carrying_non_done": 0,
    "converted_non_done": 0,
    "refused_non_done": 0,
@@ -1477,7 +1465,7 @@
     "family": "prereq",
     "maps_to": "Metadata(ignored-by-sheet)"
    },
-   "carrying": 2165,
+   "carrying": 2171,
    "carrying_non_done": 0,
    "converted_non_done": 0,
    "refused_non_done": 0,
@@ -1542,7 +1530,7 @@
     "family": "prose",
     "maps_to": "Text"
    },
-   "carrying": 2341,
+   "carrying": 2345,
    "carrying_non_done": 0,
    "converted_non_done": 0,
    "refused_non_done": 0,
@@ -1594,7 +1582,7 @@
     "family": "prereq",
     "maps_to": "Applies"
    },
-   "carrying": 4473,
+   "carrying": 4492,
    "carrying_non_done": 0,
    "converted_non_done": 0,
    "refused_non_done": 0,
@@ -1932,7 +1920,7 @@
     "family": "prereq",
     "maps_to": "Applies"
    },
-   "carrying": 12,
+   "carrying": 15,
    "carrying_non_done": 0,
    "converted_non_done": 0,
    "refused_non_done": 0,
@@ -1945,7 +1933,7 @@
     "family": "prereq",
     "maps_to": "Applies"
    },
-   "carrying": 4023,
+   "carrying": 4024,
    "carrying_non_done": 0,
    "converted_non_done": 0,
    "refused_non_done": 0,
@@ -2036,7 +2024,7 @@
     "family": "prereq",
     "maps_to": "Applies"
    },
-   "carrying": 9,
+   "carrying": 11,
    "carrying_non_done": 0,
    "converted_non_done": 0,
    "refused_non_done": 0,
@@ -2179,7 +2167,7 @@
     "family": "prereq",
     "maps_to": "Applies"
    },
-   "carrying": 437,
+   "carrying": 438,
    "carrying_non_done": 0,
    "converted_non_done": 0,
    "refused_non_done": 0,
@@ -2218,7 +2206,7 @@
     "family": "prereq",
     "maps_to": "Applies"
    },
-   "carrying": 526,
+   "carrying": 530,
    "carrying_non_done": 0,
    "converted_non_done": 0,
    "refused_non_done": 0,
@@ -2426,7 +2414,7 @@
     "family": "prereq",
     "maps_to": "Metadata(ignored-by-sheet)"
    },
-   "carrying": 1825,
+   "carrying": 1852,
    "carrying_non_done": 0,
    "converted_non_done": 0,
    "refused_non_done": 0,
@@ -2478,7 +2466,7 @@
     "family": "prereq",
     "maps_to": "Metadata (small record facts)"
    },
-   "carrying": 444,
+   "carrying": 455,
    "carrying_non_done": 0,
    "converted_non_done": 0,
    "refused_non_done": 0,
@@ -2556,7 +2544,7 @@
     "family": "prereq",
     "maps_to": "Applies"
    },
-   "carrying": 101,
+   "carrying": 102,
    "carrying_non_done": 0,
    "converted_non_done": 0,
    "refused_non_done": 0,
@@ -2569,7 +2557,7 @@
     "family": "prereq",
     "maps_to": "Applies"
    },
-   "carrying": 315,
+   "carrying": 317,
    "carrying_non_done": 0,
    "converted_non_done": 0,
    "refused_non_done": 0,
@@ -2634,7 +2622,7 @@
     "family": "prose",
     "maps_to": "Metadata(ignored-by-sheet)"
    },
-   "carrying": 3399,
+   "carrying": 3437,
    "carrying_non_done": 0,
    "converted_non_done": 0,
    "refused_non_done": 0,
@@ -2647,7 +2635,7 @@
     "family": "prose",
     "maps_to": "Metadata(ignored-by-sheet)"
    },
-   "carrying": 34646,
+   "carrying": 34788,
    "carrying_non_done": 0,
    "converted_non_done": 0,
    "refused_non_done": 0,
@@ -2803,7 +2791,7 @@
     "family": "prereq",
     "maps_to": "Metadata(ignored-by-sheet)"
    },
-   "carrying": 1720,
+   "carrying": 1725,
    "carrying_non_done": 0,
    "converted_non_done": 0,
    "refused_non_done": 0,
@@ -2816,7 +2804,7 @@
     "family": "prereq",
     "maps_to": "Metadata(ignored-by-sheet)"
    },
-   "carrying": 1382,
+   "carrying": 1409,
    "carrying_non_done": 0,
    "converted_non_done": 0,
    "refused_non_done": 0,
@@ -2907,7 +2895,7 @@
     "family": "prereq",
     "maps_to": "Applies"
    },
-   "carrying": 741,
+   "carrying": 791,
    "carrying_non_done": 0,
    "converted_non_done": 0,
    "refused_non_done": 0,
@@ -2933,7 +2921,7 @@
     "family": "prereq",
     "maps_to": "Metadata(ignored-by-sheet)"
    },
-   "carrying": 42829,
+   "carrying": 42971,
    "carrying_non_done": 0,
    "converted_non_done": 0,
    "refused_non_done": 0,
@@ -2998,7 +2986,7 @@
     "family": "prereq",
     "maps_to": "Metadata (print flag on the rule: SheetRule.print)"
    },
-   "carrying": 7178,
+   "carrying": 7233,
    "carrying_non_done": 0,
    "converted_non_done": 0,
    "refused_non_done": 0,
@@ -3011,7 +2999,7 @@
     "family": "formula",
     "maps_to": "Number(Expr)"
    },
-   "carrying": 522,
+   "carrying": 527,
    "carrying_non_done": 0,
    "converted_non_done": 0,
    "refused_non_done": 0,
@@ -3044,17 +3032,19 @@
    "refused_because_of_this_token": 0,
    "refused_because_of_this_token_non_done": 0,
    "refusal_shapes": {}
+  },
+  "token-less": {
+   "mapping_row": null,
+   "carrying": 10,
+   "carrying_non_done": 0,
+   "converted_non_done": 0,
+   "refused_non_done": 0,
+   "refused_because_of_this_token": 0,
+   "refused_because_of_this_token_non_done": 0,
+   "refusal_shapes": {}
   }
  },
- "refusal_shapes": {
-  "no_corpus_record": {
-   "records": 142,
-   "non_done": 0,
-   "under": {
-    "token-less": 142
-   }
-  }
- },
+ "refusal_shapes": {},
  "sum_checks": {
   "population": {
    "census_entries": 49450,
@@ -3074,13 +3064,13 @@
    "ok": true
   },
   "refused_set": {
-   "census_refused": 142,
-   "refused_json": 142,
-   "union_over_token_types": 142,
+   "census_refused": 0,
+   "refused_json": 0,
+   "union_over_token_types": 0,
    "ok": true
   },
   "shape_totals": {
-   "shapes": 1,
+   "shapes": 0,
    "ok": true
   },
   "partition": {

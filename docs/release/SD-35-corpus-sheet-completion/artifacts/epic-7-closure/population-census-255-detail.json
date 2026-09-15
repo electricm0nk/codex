@@ -4122,9 +4122,12 @@
     "source_file": "ma_spells.lst",
     "source_line": 98,
     "desc_chars": 649,
-    "disposition": "absent_no_unit_anywhere",
-    "reaches": null,
-    "name_collisions": []
+    "disposition": "reached_via_reattributed_same_row",
+    "reaches": "mythic_adventures:spell:elemental_body_iiimod",
+    "twin_status": "text-complete",
+    "inventory_book": "mythic_adventures",
+    "corpus_book": "mythic_adventures",
+    "row": "ma_spells.lst:98"
   },
   {
     "path": "data/corpus/pathfinder_unchained/feat/champion_of_anarchy.json",
@@ -4136,9 +4139,12 @@
     "source_file": "pu_feats.lst",
     "source_line": 6,
     "desc_chars": 33,
-    "disposition": "absent_no_unit_anywhere",
-    "reaches": null,
-    "name_collisions": []
+    "disposition": "reached_via_reattributed_same_row",
+    "reaches": "pathfinder_unchained:feat:champion_of_anarchy",
+    "twin_status": "text-complete",
+    "inventory_book": "pathfinder_unchained",
+    "corpus_book": "pathfinder_unchained",
+    "row": "pu_feats.lst:6"
   },
   {
     "path": "data/corpus/pathfinder_unchained/feat/champion_of_balance.json",
@@ -4150,9 +4156,12 @@
     "source_file": "pu_feats.lst",
     "source_line": 7,
     "desc_chars": 55,
-    "disposition": "absent_no_unit_anywhere",
-    "reaches": null,
-    "name_collisions": []
+    "disposition": "reached_via_reattributed_same_row",
+    "reaches": "pathfinder_unchained:feat:champion_of_balance",
+    "twin_status": "text-complete",
+    "inventory_book": "pathfinder_unchained",
+    "corpus_book": "pathfinder_unchained",
+    "row": "pu_feats.lst:7"
   },
   {
     "path": "data/corpus/pathfinder_unchained/feat/champion_of_destruction.json",
@@ -4164,9 +4173,12 @@
     "source_file": "pu_feats.lst",
     "source_line": 8,
     "desc_chars": 57,
-    "disposition": "absent_no_unit_anywhere",
-    "reaches": null,
-    "name_collisions": []
+    "disposition": "reached_via_reattributed_same_row",
+    "reaches": "pathfinder_unchained:feat:champion_of_destruction",
+    "twin_status": "text-complete",
+    "inventory_book": "pathfinder_unchained",
+    "corpus_book": "pathfinder_unchained",
+    "row": "pu_feats.lst:8"
   },
   {
     "path": "data/corpus/pathfinder_unchained/feat/champion_of_freedom.json",
@@ -4178,9 +4190,12 @@
     "source_file": "pu_feats.lst",
     "source_line": 9,
     "desc_chars": 50,
-    "disposition": "absent_no_unit_anywhere",
-    "reaches": null,
-    "name_collisions": []
+    "disposition": "reached_via_reattributed_same_row",
+    "reaches": "pathfinder_unchained:feat:champion_of_freedom",
+    "twin_status": "text-complete",
+    "inventory_book": "pathfinder_unchained",
+    "corpus_book": "pathfinder_unchained",
+    "row": "pu_feats.lst:9"
   },
   {
     "path": "data/corpus/pathfinder_unchained/feat/champion_of_grace.json",
@@ -4192,9 +4207,12 @@
     "source_file": "pu_feats.lst",
     "source_line": 10,
     "desc_chars": 50,
-    "disposition": "absent_no_unit_anywhere",
-    "reaches": null,
-    "name_collisions": []
+    "disposition": "reached_via_reattributed_same_row",
+    "reaches": "pathfinder_unchained:feat:champion_of_grace",
+    "twin_status": "text-complete",
+    "inventory_book": "pathfinder_unchained",
+    "corpus_book": "pathfinder_unchained",
+    "row": "pu_feats.lst:10"
   },
   {
     "path": "data/corpus/pathfinder_unchained/feat/champion_of_malevolence.json",
@@ -4206,9 +4224,12 @@
     "source_file": "pu_feats.lst",
     "source_line": 11,
     "desc_chars": 58,
-    "disposition": "absent_no_unit_anywhere",
-    "reaches": null,
-    "name_collisions": []
+    "disposition": "reached_via_reattributed_same_row",
+    "reaches": "pathfinder_unchained:feat:champion_of_malevolence",
+    "twin_status": "text-complete",
+    "inventory_book": "pathfinder_unchained",
+    "corpus_book": "pathfinder_unchained",
+    "row": "pu_feats.lst:11"
   },
   {
     "path": "data/corpus/pathfinder_unchained/feat/champion_of_righteousness.json",
@@ -4220,9 +4241,12 @@
     "source_file": "pu_feats.lst",
     "source_line": 12,
     "desc_chars": 89,
-    "disposition": "absent_no_unit_anywhere",
-    "reaches": null,
-    "name_collisions": []
+    "disposition": "reached_via_reattributed_same_row",
+    "reaches": "pathfinder_unchained:feat:champion_of_righteousness",
+    "twin_status": "text-complete",
+    "inventory_book": "pathfinder_unchained",
+    "corpus_book": "pathfinder_unchained",
+    "row": "pu_feats.lst:12"
   },
   {
     "path": "data/corpus/pathfinder_unchained/feat/champion_of_tranquility.json",
@@ -4234,9 +4258,12 @@
     "source_file": "pu_feats.lst",
     "source_line": 13,
     "desc_chars": 41,
-    "disposition": "absent_no_unit_anywhere",
-    "reaches": null,
-    "name_collisions": []
+    "disposition": "reached_via_reattributed_same_row",
+    "reaches": "pathfinder_unchained:feat:champion_of_tranquility",
+    "twin_status": "text-complete",
+    "inventory_book": "pathfinder_unchained",
+    "corpus_book": "pathfinder_unchained",
+    "row": "pu_feats.lst:13"
   },
   {
     "path": "data/corpus/pathfinder_unchained/feat/champion_of_tyranny.json",
@@ -4248,8 +4275,11 @@
     "source_file": "pu_feats.lst",
     "source_line": 14,
     "desc_chars": 49,
-    "disposition": "absent_no_unit_anywhere",
-    "reaches": null,
-    "name_collisions": []
+    "disposition": "reached_via_reattributed_same_row",
+    "reaches": "pathfinder_unchained:feat:champion_of_tyranny",
+    "twin_status": "text-complete",
+    "inventory_book": "pathfinder_unchained",
+    "corpus_book": "pathfinder_unchained",
+    "row": "pu_feats.lst:14"
   }
 ]
