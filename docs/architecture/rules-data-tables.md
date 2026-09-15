@@ -427,8 +427,12 @@ its 23 feat records live only in `rules_tables::ultimate_campaign`.
 Enumerated directly (grep every `CorpusRecordV1 {` / `CorpusRecord {` /
 `CacheRecord {` construction site under `src/`, 2026-08-07):
 
-- `src/rules_core/cache_gen/acg.rs`, `apg.rs`, `beastiary1.rs` — the three
-  original per-book dump generators (SD-26 Epic 3 shape).
+- `src/pcgen_import/cache_gen/acg.rs`, `apg.rs`, `beastiary1.rs` — the three
+  original per-book dump generators (SD-26 Epic 3 shape). **Path corrected
+  2026-09-15:** the whole `cache_gen/` tree moved from `src/rules_core/` to
+  `src/pcgen_import/` in SD-35 `AT-35-E6-002` — it reads PCGen tokens, so it is
+  converter-side code (see [overview.md](./overview.md) §"The converter/live boundary").
+  The code is unchanged; only its side of the boundary is.
 - `src/bin/gen_core_rulebook_cache.rs` — CRB.
 - `src/bin/gen_book_cache.rs` — Pathfinder Unchained + Advanced Race
   Guide (both books share one binary).
@@ -478,7 +482,8 @@ against the same class of loss:
 
 Every corpus record now carries a `wiring_class` — one of `Display`,
 `Static`, `Derived`, `Computed` (a strict lattice, highest-bar-wins) or
-`Ambiguous` — determined by `src/rules_core/wiring_class.rs`, the single
+`Ambiguous` — determined by `src/pcgen_import/wiring_class.rs` (moved there from
+`src/rules_core/` by SD-35 `AT-35-E6-002`), the single
 production port of the GE-01 reference determinator
 (`docs/release/GE-01-legacy-corpus-and-conversion-matrix/artifacts/wiring-class-determination.md`).
 Determination reads a unit's full **token closure**: its base `.lst` row

@@ -295,7 +295,7 @@ reads the same kind of real PCGen export text.
   probes when the intended build called for 18, silently understating every
   computed DC by 4 (103 units affected, fixed).
 
-### The per-type AC isolator (`src/bin/e5_ac_isolator.rs`)
+### The per-type AC isolator (`src/bin/e5_ac_isolator.rs` — **deleted 2026-08-27**)
 
 The original AC-shape harness computed `oracle = item AC.TOTAL - baseline
 AC.TOTAL` — a whole-character diff that conflates the item's own

@@ -91,7 +91,7 @@ pcc.rs                  parse_pcc_entry            -> PccEntryFile
 include_resolver.rs      resolve_pcc_includes_from  -> IncludeResolution
 lst_parser/<kind>.rs     parse_<kind>_entries        -> per-kind parse result
 ir_converter.rs          convert_to_ir / convert_*   -> SourceContentRecord<'a>
-source_content_payload.rs SourceContentPayload<'a>   (payload enum, referenced above)
+rules_core::source_content SourceContentPayload<'a>   (payload enum, referenced above)
 rules_core::source_content SourcePackageContent<'a>  (corpus-rooted aggregate)
 ```
 
@@ -233,9 +233,11 @@ B-family parser) map to `SourceContentSeverity::Error` +
 converter-originated code maps to `SourceContentSeverity::Info` +
 `SourceContentDiagnosticKind::PartialTranslation`.
 
-### Stage 5 — `source_content_payload.rs`: the payload enum
+### Stage 5 — `source_content.rs`: the payload enum
 
-`SourceContentPayload<'a>` (`src/pcgen_import/source_content_payload.rs`)
+`SourceContentPayload<'a>` (`src/rules_core/source_content.rs`; this doc cited a
+`src/pcgen_import/source_content_payload.rs` that does not exist — path corrected
+2026-09-15, SD-35 closure)
 is the typed, kind-tagged union of borrowed B-family entries
 (`Class(&'a ClassEntry)`, `SpellcastingClass(&'a SpellcastingClassEntry)`,
 `Race(&'a RaceDeclaration)`, `Ability(&'a AbilityDeclaration)`,
@@ -252,9 +254,13 @@ envelope lives: the variants reference parser entry types from
 and would need to import from `rules_core::source_content`, which would
 in turn need parser types from `pcgen_import`. Keeping the payload enum
 beside the parser surface keeps the dependency one-directional:
-`rules_core::source_content` re-exports the enum
-(`pub use crate::pcgen_import::source_content_payload::SourceContentPayload;`),
-and the only thing crossing the boundary is the finished envelope
+**Path correction 2026-09-15 (SD-35 closure):** the enum is *defined* in
+`src/rules_core/source_content.rs` (`pub enum SourceContentPayload<'a>` at :79) and there
+is no `pcgen_import::source_content_payload` module and no re-export — the
+paragraph above described an arrangement that never shipped. The dependency is
+still one-directional, just the other way round: `pcgen_import::ir_converter`
+constructs the enum from `rules_core`, and the only thing crossing the boundary
+is the finished envelope
 `pcgen_import::ir_converter` builds. The module also carries the total,
 mechanical `MetadataKind` <-> `MetadataKindInner` mapping
 (`b6_metadata_kind_to_canonical` and its inverse) for the same reason.
@@ -334,7 +340,7 @@ order:
 2. `src/pcgen_import/lst_parser/mod.rs` — register `pub mod <new_kind>;`,
    re-export the new entry type, add a `ParsedLstRecord::<NewKind>(&'a NewKindEntry)`
    variant and a `from_<new_kind>` convenience constructor.
-3. `src/pcgen_import/source_content_payload.rs` — add a matching
+3. `src/rules_core/source_content.rs` — add a matching
    `SourceContentPayload::<NewKind>(&'a NewKindEntry)` variant, and wire
    it into `kind_token()` and `source_slice()`.
 4. `src/rules_core/source_content.rs` — add the matching
@@ -458,7 +464,9 @@ See [rules-data-tables.md](./rules-data-tables.md) for what happens
 downstream once a corpus record is projected: transcribing its values
 into the hand-authored `rules_tables` book modules, and — new as of the
 wiring_class/PI-screening convergence cycle — the GE-01 `wiring_class`
-taxonomy every corpus record now carries (`src/rules_core/wiring_class.rs`,
+taxonomy every corpus record now carries (`src/pcgen_import/wiring_class.rs` —
+moved out of `src/rules_core/` by SD-35 `AT-35-E6-002`, because it reads PCGen
+tokens and so belongs on the converter side,
 determined from a unit's full token closure, not the base row alone),
 `Trap::WiringClassMismatch` (`src/pcgen_import/corpus_traps.rs`) which
 guards that stamp against drift, and the shared PI-screening pass

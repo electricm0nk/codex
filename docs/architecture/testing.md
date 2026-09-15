@@ -163,7 +163,7 @@ paired, back-to-back, on a quiet box
 `paired_rerun`). A test-count floor that drops without a matching binary fold is still the finding.
 
 **Write integration tests into an existing family binary, not a new file**, unless the family is
-genuinely new. One more `tests/foo.rs` is one more link on every build anyone ever runs.
+genuinely new. One more top-level `tests/<name>.rs` is one more link on every build anyone ever runs.
 
 ### `scripts/verify.sh` — 49 stages
 
@@ -208,7 +208,7 @@ The second is the shape rule: our data files carry none of the source format. Se
 
 ## Test conventions
 
-- **Integration tests live flat under `tests/*.rs`**, one behavior per file, named by originating slice — e.g. `tests/ge06_pilot_base_computation.rs`, `tests/sd13_barbarian_level10_progression.rs`, `tests/sd20_equipment_effects_parity.rs`, `tests/golden_case_fixture_schema.rs`. This provenance-naming pattern makes it possible to `cargo test --test <name>` a single slice's behavior in isolation, and to `grep` the test suite by originating SD/GE without any test-registry file.
+- **Integration tests live flat under `tests/*.rs`**, one behavior per file, named by originating slice — e.g. `tests/ge06_pilot_base_computation.rs`, `tests/sd20_equipment_effects_parity.rs`, `tests/golden_case_fixture_schema.rs`. This provenance-naming pattern makes it possible to `cargo test --test <name>` a single slice's behavior in isolation, and to `grep` the test suite by originating SD/GE without any test-registry file.
 - **RED → GREEN is the expected posture.** `AGENTS.md`'s non-negotiable rule 1 requires writing or updating a failing test before changing production code, confirming it fails for the intended reason, then implementing the smallest change to pass (`AGENTS.md:34-39`). Several of the standalone scripts document this explicitly in their own headers — e.g. `scripts/release/__tests__/test-write-release-manifest.test.sh:6-9` ("Writes the test FIRST, runs it RED, then implementation, then GREEN, then refactor"), and `tools/release/test_emit_channel_index.py:106`'s local-import comment exists specifically so the RED phase (test written, `jsonschema` not yet installed) still collects.
 - **Sibling preservation**: `tests/*.rs`'s one-file-per-slice naming is what makes this norm mechanically checkable — running `cargo test --locked` after a change touches every prior slice's file, not just the one you're editing, so a regression in an older row (e.g. an SD-13 barbarian fixture breaking because a shared rules-table changed) surfaces immediately rather than only at the next full-suite run. `AGENTS.md`'s rule 1 reinforces this at the process level: "Run the relevant test set after each meaningful change" (`AGENTS.md:38`).
 

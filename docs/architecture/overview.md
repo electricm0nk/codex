@@ -110,7 +110,7 @@ flowchart TD
         INC["include_resolver.rs: resolve_pcc_includes_from"]
         LST["lst_parser/*.rs: per-kind parsers"]
         IRC["ir_converter.rs: convert_to_ir"]
-        SCP["source_content_payload.rs: SourceContentPayload"]
+        SCP["rules_core/source_content.rs: SourceContentPayload"]
     end
 
     subgraph rulescore["src/rules_core/ — compute spine"]

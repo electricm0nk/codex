@@ -149,7 +149,7 @@ references above predate that split and describe `mod.rs`'s content; not fully s
 throughout this file as of this note — treat `pilot_compute.rs` and `pilot_compute/mod.rs` as the
 same file wherever this document names the former.
 
-### 3a. `src/rules_core/pilot_compute/formula_interpreter.rs` and `domain_power.rs` — the formula
+### 3a. `src/pcgen_import/formula_interpreter.rs` and `pilot_compute/domain_power.rs` — the formula
 interpreter (SD-31 wave 25/25b, a real architecture change, not an extension of the pattern above)
 
 **Every function cataloged in the table above is a hand-written, bespoke Rust closed-form
@@ -298,7 +298,7 @@ net-new base-class tables, structurally-non-PC-class records, unstarted books).
 
 ### 3c. SD-33 — `formula_interpreter_corpus_wide.rs` regenerates its own population census fresh, never from a frozen file
 
-`src/rules_core/pilot_compute/formula_interpreter_corpus_wide.rs` is the corpus-wide *coverage*
+`src/pcgen_import/formula_interpreter_corpus_wide.rs` is the corpus-wide *coverage*
 harness for `formula_interpreter.rs` above (SD-32 Gate 2, `AT-32-G2-004`) — it runs every
 formula-bearing F1..F9 corpus unit through the interpreter and reports agreement/refusal, distinct
 from `formula_reproduction_harness.rs`'s narrower 22-function proof set. Before SD-33 it sourced its
@@ -616,7 +616,7 @@ this document:
 
 - `tests/ge06_pilot_base_computation.rs` — proves `compute_pilot_base_chassis` against the deterministic GE-06 Human Fighter level-1 fixture (`tests/fixtures/rules_core/pf1_human_fighter_level1_ge06_deterministic_input.txt`), asserting ability modifiers and base chassis values only.
 - `tests/sd20_tabletop_readiness_integration.rs` — the Epic 8 integration-closure test: runs the full boundary-contract pipeline (`classify_character_input` → `compute_pilot_with_corpus` → `to_pilot_receipt` → `printed_sheet_cell_map`) against a fixture and asserts every defined sheet cell is a real, non-`Blocked` number matching a golden `expected_output`.
-- `tests/sd13_barbarian_level6_progression.rs` (representative of ~400 per-class/per-level widening tests) — imports `support_state_matrix::seeded_current_truth` alongside chassis assertions, so a class/level widening and its matrix-row transition are proven together, not separately.
+- `tests/sd13_progression/barbarian_level6.rs` (representative of ~400 per-class/per-level widening tests; one module of the single `sd13_progression` binary since SD-35 `AT-35-E1-003` — run it with `cargo test --test sd13_progression barbarian_level6::`) — imports `support_state_matrix::seeded_current_truth` alongside chassis assertions, so a class/level widening and its matrix-row transition are proven together, not separately.
 
 See [testing.md](./testing.md) for the full test-organization convention.
 
