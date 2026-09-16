@@ -227,9 +227,10 @@ pub fn compute_pilot_with_corpus(
             unresolved_equipment_item_ids.push(selection.item_id.clone());
             continue;
         };
-        let key = crate::rules_core::equipment_resolver::equipment_key_token(record)
-            .unwrap_or(&record.name)
-            .to_string();
+        // SD-35 `AT-35-E6-003-RULED` cycle 13: `record` is the settled
+        // `CorpusEquipmentRecord` now, and `identity` IS the KEY-or-name rule
+        // `equipment_key_token` applied to the parser row before the move.
+        let key = record.identity.clone();
 
         // v0.6 alpha swarm items 1+27 sub-task 6: resolve this selection's
         // own `applied_modifiers` the same way the selection itself just
@@ -246,9 +247,7 @@ pub fn compute_pilot_with_corpus(
                 unresolved_equipment_item_ids.push(modifier_item_id.clone());
                 continue;
             };
-            let modifier_key = crate::rules_core::equipment_resolver::equipment_key_token(modifier_record)
-                .unwrap_or(&modifier_record.name)
-                .to_string();
+            let modifier_key = modifier_record.identity.clone();
             applied_modifiers.push(ResolvedEquipment {
                 item_id: modifier_item_id.clone(),
                 equipment_record_name: modifier_record.name.clone(),

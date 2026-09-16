@@ -55,6 +55,29 @@ export interface LevelUpResourcePoolDeltaDto {
   toValue: number;
 }
 
+/** One feat this character qualifies for at this level-up. */
+export interface LevelUpOptionDto {
+  /** `<book>:<kind>:<slug>` — the engine's own record id. */
+  id: string;
+  name: string;
+  /**
+   * The situational condition that prints on the line, when the gate included
+   * the option situationally. `null` for an unconditional include.
+   */
+  condition: string | null;
+}
+
+/** One feat this character does not qualify for, and the requirement it failed. */
+export interface LevelUpRefusedOptionDto {
+  id: string;
+  name: string;
+  /**
+   * The failing requirement in the rule's own words (`'requires Dodge'`).
+   * Render verbatim — it is engine output, not text to paraphrase.
+   */
+  unmet: string;
+}
+
 export interface PreviewLevelUpResponse {
   /** The class's own level before this transition (0 for a fresh dip). */
   fromLevel: number;
@@ -65,6 +88,24 @@ export interface PreviewLevelUpResponse {
   pickFromLists: LevelUpPickListDto[];
   resourcePoolChanges: LevelUpResourcePoolDeltaDto[];
   capstoneThreshold: boolean;
+  /**
+   * The feat options THIS character qualifies for, filtered by the backend
+   * against its own prerequisites (SD-34 `decisions.md §17`). The join runs on
+   * the Rust side over `SheetRule.applies`; nothing here re-derives it.
+   */
+  featOptions: LevelUpOptionDto[];
+  /**
+   * The feat options this character does not qualify for, each carrying the
+   * requirement it failed. Shown, not hidden: a player who cannot see why an
+   * option is missing cannot plan toward it.
+   */
+  refusedFeatOptions: LevelUpRefusedOptionDto[];
+  /**
+   * Why both option lists are empty when the rules package could not be read.
+   * `null` when it loaded — "unavailable" and "nothing qualifies" are
+   * different claims and only the second is about the rules.
+   */
+  optionFilterUnavailableReason: string | null;
 }
 
 export async function previewLevelUp(

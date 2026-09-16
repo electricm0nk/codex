@@ -6,9 +6,16 @@
 //! report writer (SD-26 Criterion 2.3), and the Rust-side PCGen runner
 //! wrapper (SD-26 Criterion 2.4).
 
+/// SD-35 `AT-35-E6-003-RULED` cycle 17: the `kind=class_feature` level-scaling bar
+/// check, moved off the live side (`decisions.md` §11) -- it reads raw
+/// `BONUS:VAR|` tokens out of `data/corpus/`, which is converter work.
+pub mod class_feature_scaling_bar_check;
 pub mod comparator;
 pub mod golden_fixture;
 pub mod normalization;
 pub mod parity_report;
 pub mod pcgen_runner;
+/// SD-35 `AT-35-E6-001`: the `kind=race_trait` FORMULA bar check, moved off the
+/// live side (`decisions.md` §11).
+pub mod race_trait_formula_bar_check;
 pub mod selected_parity_dimensions;

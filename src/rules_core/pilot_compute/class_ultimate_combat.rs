@@ -296,11 +296,12 @@ fn ground_or_block_gunslinger_class_features(
             None => (
                 gun_training_count,
                 format!(
-                    "Gunslinger level {level} Gun Training: {gun_training_count} firearm \
-                     type(s) selected ((level-1)/4, first at 5th level). Grounds the COUNT \
-                     only -- which firearm type(s) were picked is a chooser \
-                     (BONUS:ABILITYPOOL) this engine does not model, the same count-vs-choice \
-                     split Slayer Talents already establishes"
+                    // Provenance (ingest tokens, demoted out of the rendered sheet line -- SD-35 AT-35-E6-003-SWEEP):
+                    //   BONUS:ABILITYPOOL
+                    "Gunslinger level {level} Gun Training: {gun_training_count} firearm type(s) \
+                     selected ((level-1)/4, first at 5th level). Grounds the COUNT only -- which \
+                     firearm type(s) were picked is a chooser this engine does not model, the same \
+                     count-vs-choice split Slayer Talents already establishes"
                 ),
             ),
         };
@@ -322,11 +323,12 @@ fn ground_or_block_gunslinger_class_features(
             id: "class_feature.uc.gunslinger.gunslinger_initiative".to_owned(),
             value: 2,
             detail: format!(
-                "Gunslinger level {level} Gunslinger Initiative (Deed): a +2 bonus on \
-                 initiative checks, as long as the gunslinger has at least 1 grit point (flat, \
-                 not level-scaled -- BONUS:VAR|GunslingerInitiative|2). This engine tracks no \
-                 per-encounter grit-spend state, so the grit>=1 precondition is named but not \
-                 gated on; the magnitude itself is correct regardless"
+                // Provenance (ingest tokens, demoted out of the rendered sheet line -- SD-35 AT-35-E6-003-SWEEP):
+                //   -- BONUS:VAR|GunslingerInitiative|2
+                "Gunslinger level {level} Gunslinger Initiative (Deed): a +2 bonus on initiative \
+                 checks, as long as the gunslinger has at least 1 grit point (flat, not \
+                 level-scaled). This engine tracks no per-encounter grit-spend state, so the grit>=1 \
+                 precondition is named but not gated on; the magnitude itself is correct regardless"
             ),
         });
     }
@@ -605,11 +607,12 @@ fn ground_or_block_ninja_class_features(
             id: "class_feature.uc.ninja.ninja_trick_count".to_owned(),
             value: trick_count,
             detail: format!(
-                "Ninja level {level} Ninja Trick: {trick_count} trick(s) known (level/2, first \
-                 at 2nd level, one additional every 2 levels thereafter). Grounds the COUNT \
-                 only -- which trick(s) were picked is a chooser (BONUS:ABILITYPOOL) this \
-                 engine does not model, the same count-vs-choice split Slayer Talents and \
-                 Gunslinger Gun Training already establish"
+                // Provenance (ingest tokens, demoted out of the rendered sheet line -- SD-35 AT-35-E6-003-SWEEP):
+                //   BONUS:ABILITYPOOL
+                "Ninja level {level} Ninja Trick: {trick_count} trick(s) known (level/2, first at \
+                 2nd level, one additional every 2 levels thereafter). Grounds the COUNT only -- \
+                 which trick(s) were picked is a chooser this engine does not model, the same \
+                 count-vs-choice split Slayer Talents and Gunslinger Gun Training already establish"
             ),
         });
     }
@@ -661,7 +664,7 @@ fn ground_or_block_ninja_class_features(
                  lose your Dexterity bonus to AC if immobilized. You can still lose your \
                  Dexterity bonus to AC if an opponent successfully uses the feint action \
                  against you.\" A bounded grant-only identity record (value 0, non-fabricated): \
-                 the base row carries no BONUS: magnitude of its own beyond the shared \
+                 the base row carries no magnitude of its own beyond the shared \
                  UncannyDodgeFlankingLevel context-fact, which needs an opposing rogue's level \
                  to matter and is out of this engine's per-character scope"
                     .to_owned(),

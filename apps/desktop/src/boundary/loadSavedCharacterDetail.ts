@@ -112,6 +112,39 @@ export interface LoadSavedCharacterResponse {
    * left absent, and re-read through `refreshEngineRecords`.
    */
   resolvedRacialTraits: RaceSelectionResponse | null;
+  /**
+   * **SD-35 AT-35-E2-002 -- the "Rules and features" section.** Every held
+   * sheet rule's line for this character, grouped by `kind`, as the live
+   * evaluator rendered it: one final number, dice in final form, or the
+   * rule's words. Rendered verbatim -- `value`, `also`, `prose` and
+   * `condition` are the engine's own text, never re-derived here.
+   */
+  sheetLines: SheetLineDto[];
+  /**
+   * Why `sheetLines` is empty when the reason is not "this character holds
+   * no rule": the sheet-rules package could not be read. `null` when it
+   * loaded.
+   */
+  sheetRulesUnavailableReason: string | null;
+}
+
+/** Mirrors `SheetLineDto` in `character_hub.rs` -- one line of the "Rules and features" section. */
+export interface SheetLineDto {
+  /** `<book>:<kind>:<slug>` -- the rule id, verbatim. */
+  id: string;
+  /** The record kind (`feat`, `class_feature`, ...); the section groups by it. */
+  kind: string;
+  label: string;
+  /** `'number'`, `'dice'` or `'words'`. */
+  form: 'number' | 'dice' | 'words';
+  /** The value as the player writes it: `"+2"`, `"15"`, `"1d8+2"`; `""` for words. */
+  value: string;
+  /** Second/third numbers on the line, already printed: `"6/day"`, `"CL 5"`, `"DC 15"`. */
+  also: string[];
+  /** The rule's words with every slot filled. */
+  prose: string;
+  /** The situational condition, when the rule has one: `"when jumping"`. */
+  condition: string | null;
 }
 
 /** Mirrors `ExplanationDto` in `character_hub.rs`. */

@@ -112,14 +112,20 @@ const RACE_TRAITS: &[RaceTraitEntry] = &[
         race_id: RaceId::Human,
         trait_name: "Extra Skill Ranks",
         value: 1,
-        detail: "4 extra skill points at 1st level, +1 extra skill rank per level thereafter (cr_races.lst race:human BONUS:SKILL).",
+        // Provenance (ingest tokens, demoted out of the rendered sheet line -- SD-35 AT-35-E6-003-SWEEP):
+        //   BONUS:SKILL
+        detail: "4 extra skill points at 1st level, +1 extra skill rank per level thereafter \
+         (cr_races.lst race:human).",
     },
     // ----- Dwarf (9) -----
     RaceTraitEntry {
         race_id: RaceId::Dwarf,
         trait_name: "Ability Modifiers",
         value: 0,
-        detail: "+2 Constitution, +2 Wisdom, -2 Charisma (core_essentials/races/dwarf/dwarf_abilities_race.lst:18, \"Dwarf ~ Ability Scores\": BONUS:STAT|CON,WIS|2|TYPE=Racial, BONUS:STAT|CHA|-2|TYPE=Racial).",
+        // Provenance (ingest tokens, demoted out of the rendered sheet line -- SD-35 AT-35-E6-003-SWEEP):
+        //   BONUS:STAT|CON,WIS|2|TYPE=Racial, BONUS:STAT|CHA|-2|TYPE=Racial
+        detail: "+2 Constitution, +2 Wisdom, -2 Charisma \
+         (core_essentials/races/dwarf/dwarf_abilities_race.lst:18, \"Dwarf ~ Ability Scores\").",
     },
     RaceTraitEntry {
         race_id: RaceId::Dwarf,
@@ -174,7 +180,10 @@ const RACE_TRAITS: &[RaceTraitEntry] = &[
         race_id: RaceId::Elf,
         trait_name: "Ability Modifiers",
         value: 0,
-        detail: "+2 Dexterity, +2 Intelligence, -2 Constitution (core_essentials/races/elf/elf_abilities_race.lst:18, \"Elf ~ Ability Scores\": BONUS:STAT|DEX,INT|2|TYPE=Racial, BONUS:STAT|CON|-2|TYPE=Racial).",
+        // Provenance (ingest tokens, demoted out of the rendered sheet line -- SD-35 AT-35-E6-003-SWEEP):
+        //   BONUS:STAT|DEX,INT|2|TYPE=Racial, BONUS:STAT|CON|-2|TYPE=Racial
+        detail: "+2 Dexterity, +2 Intelligence, -2 Constitution \
+         (core_essentials/races/elf/elf_abilities_race.lst:18, \"Elf ~ Ability Scores\").",
     },
     RaceTraitEntry {
         race_id: RaceId::Elf,
@@ -217,7 +226,10 @@ const RACE_TRAITS: &[RaceTraitEntry] = &[
         race_id: RaceId::Gnome,
         trait_name: "Ability Modifiers",
         value: 0,
-        detail: "+2 Constitution, +2 Charisma, -2 Strength (core_essentials/races/gnome/gnome_abilities_race.lst:18, \"Gnome ~ Ability Scores\": BONUS:STAT|CON,CHA|2|TYPE=Racial, BONUS:STAT|STR|-2|TYPE=Racial).",
+        // Provenance (ingest tokens, demoted out of the rendered sheet line -- SD-35 AT-35-E6-003-SWEEP):
+        //   BONUS:STAT|CON,CHA|2|TYPE=Racial, BONUS:STAT|STR|-2|TYPE=Racial
+        detail: "+2 Constitution, +2 Charisma, -2 Strength \
+         (core_essentials/races/gnome/gnome_abilities_race.lst:18, \"Gnome ~ Ability Scores\").",
     },
     RaceTraitEntry {
         race_id: RaceId::Gnome,
@@ -334,7 +346,11 @@ const RACE_TRAITS: &[RaceTraitEntry] = &[
         race_id: RaceId::Halfling,
         trait_name: "Ability Modifiers",
         value: 0,
-        detail: "+2 Dexterity, +2 Charisma, -2 Strength (core_essentials/races/halfling/halfling_abilities_race.lst:18, \"Halfling ~ Ability Scores\": BONUS:STAT|DEX,CHA|2|TYPE=Racial, BONUS:STAT|STR|-2|TYPE=Racial).",
+        // Provenance (ingest tokens, demoted out of the rendered sheet line -- SD-35 AT-35-E6-003-SWEEP):
+        //   BONUS:STAT|DEX,CHA|2|TYPE=Racial, BONUS:STAT|STR|-2|TYPE=Racial
+        detail: "+2 Dexterity, +2 Charisma, -2 Strength \
+         (core_essentials/races/halfling/halfling_abilities_race.lst:18, \"Halfling ~ Ability \
+         Scores\").",
     },
     RaceTraitEntry {
         race_id: RaceId::Halfling,

@@ -1,0 +1,364 @@
+{
+ "family": "prose",
+ "judge": "adversarial judge, prose family, 2026-09-07, tranche/15; read-only; every count re-derived by a recursive walk of data/corpus (51,474 records, _parity excluded) and, for PCGen semantics, the pinned checkout ~/workspace/repos/pcgen (7f818006)",
+ "rows_reviewed": 21,
+ "verdicts": [
+  {
+   "token_type": "DESC",
+   "refuted": true,
+   "axis": [
+    "A",
+    "B",
+    "E"
+   ],
+   "confidence": "high",
+   "reason": "Counts hold (33,841 instances / 28,065 records CW; 4,019 multi-DESC; 636 DESC+BENEFIT). The RULE fails on four points. (1) Rule 4 'a bare name with a same-row DEFINE:X|<int> -> Const (3,936 of 5,220)': every DEFINE in the corpus is |0 (formula.md section 1: all 15,763 readable DEFINE values are 0); re-derived: 3,939 DESC bare-name args have a same-row DEFINE, of which only 312 also have a single ungated literal BONUS:VAR, 3,287 have a formula/gated/multiple BONUS:VAR and 340 have DEFINE only -- so the rule prints '0' into 3,627 sentences. Record: bestiary_3/monster_ability/seaweed_leshy_water_jet.json carries DEFINE:WaterJetDC|0 and BONUS:VAR|WaterJetDC|10+(TL/2)+DEX; the DESC arg WaterJetDC is not a literal. (2) Rule 3/4 'the last N segments are the arguments, taken from the RIGHT' is render_pcgen_desc's invention, not PCGen's: plugin/lsttokens/DescLst.java tokenises on | and adds EVERY non-PRE segment after the first as a variable in left-to-right order (desc.addVariable), and pcgen/core/Description.java resolves %N as theVariables.get(N-1). 42 CW rows have more variables than N; on them the lane's split puts the extra variable NAME into the prose: inner_sea_intrigue/class_feature/clandestine_domain/delayed_spells.json 'DESC:You can delay ... %1 rounds ... %1/day.|DomainClandestineLVL|1+(DomainClandestineLVL>=12)+...' -> lane prose ends '...%1/day.|DomainClandestineLVL' (a PCGen variable name in prose, axis B) and %1 takes the wrong argument (PCGen: DomainClandestineLVL). (3) Rule 6 'a bare % ... is REFUSED (31 corpus rows)': Description.java keeps a % that is not followed by a digit/%/{ as literal text (LST_WARNING only); and there are 0 DESC first-segments CW with such a % -- the 31-row shape lives in SPROP, where it is PCGen's positional slot (see SPROP). (4) '%%N where argument N exists -> argument N': Description.java maps %% to a literal % unconditionally, so PCGen prints 'DC %1' for the 3 Water Jet rows; a deviation in the player's favour, but it must be recorded as a deviation, not parity. Also: EntityEncoder.java decodes 8 entities (&nl; &cr; &lf; &colon; &pipe; &lbracket; &rbracket; &amp;); &comma; is not one (0 CW hits); &amp; occurs in 13 prose tokens CW (DESC 9, ASPECT 3, BENEFIT 1) and neither the lane's table nor PCGEN_ENTITIES decodes it. %LIST joins the SORTED associations with ', ' or ' and ' when exactly two (Description.java VAR_LIST branch).",
+   "fix": "Arguments: every non-PRE segment after the first is an argument, left to right, %N = argument N; an integer literal -> Const; ANY other argument (bare name, Name+-int, formula) -> the formula lane's Expr through its Var table (formula G1) -- never Const from a DEFINE. Escapes: %% -> %; a lone % stays literal; %{N} = %N. Entities: PCGen's 8. Missing argument N -> empty (PCGen 'continue'). Keep rows-not-raw_tokens, .CLEAR, gates, PI screen."
+  },
+  {
+   "token_type": "DESC:.CLEAR",
+   "refuted": true,
+   "axis": [
+    "C",
+    "D",
+    "E"
+   ],
+   "confidence": "high",
+   "reason": "The leak is REAL and reproduced on three records: (1) core_rulebook/class_feature/sorcerer_bloodline_feat/scribe_scroll.json (cr_abilities_class.lst:2071, CATEGORY:Internal, KEY 'Sorcerer Bloodline Feat ~ Scribe Scroll', name 'Scribe Scroll') carries the DESC:.CLEAR/BENEFIT:.CLEAR/TYPE:PFSNotLegal/!PRECHARACTERTYPE tokens of core_rulebook/_pfs/pfs_cr_feats.lst:20 'CATEGORY=FEAT|Scribe Scroll.MOD' in its raw_tokens, because wiring_class.rs mod_base_name strips 'CATEGORY=FEAT|' and token_closure_rows looks up mod_index[(book, name)] and [(book, key)] by bare name; (2) advanced_class_guide Shaman Hex ~ Fetish (acg_abilities_class.lst:1431 + _pfs/pfs_acg_abilities_class.lst:7); (3) inner_sea_world_guide/race_trait_generic/adopted_race_gillman.json (name 'Gillman', KEY 'Adopted Race ~ Gillman') attaches _pfs/pfs_iswg_races.lst:21 'Gillman.MOD TYPE:PFSNotLegal' -- a RACE .MOD onto a race trait. Refuted on: (a) COUNT -- 215 is the raw_tokens marker count (214 by grep of PFSNotLegal); re-implementing build_mod_index + token_closure_rows over the pinned tree attaches a _pfs/ .MOD row to 826 CW records (only 192 of those show the marker in raw_tokens; e.g. inner_sea_world_guide/equipment/pistol.json gets _pfs/pfs_iswg_equip_arms_armor.lst:25 'Pistol.MOD TYPE:PFSLegal PREABILITY:...'), and the converter's declared input is token_closure_rows, not raw_tokens -- 4x off on the population that matters; (b) the claim that the overlay rows are all gated !PRECHARACTERTYPE:1,PC is false -- _pfs/pfs_acg_abilities_class.lst:7 (Fetish) has no gate -- so the open question's 'both give the same PC result' is wrong: honouring the gate leaves Fetish leaking; exclusion by path is the only working form, and it matches PCGen, where _pfs/ files are loaded only by the separate 'Core Rulebook (PFS)' campaign (core_rulebook/_pfs/_.pcc: PRECAMPAIGN:1,Pathfinder Society Core Assumption); (c) '(category, name)' is not the fix: PCGen's .MOD targets the KEY ('CATEGORY=X|<key>.MOD'); 79 CW .MOD rows name a (book, category, display-name) shared by >=2 corpus records (e.g. advanced_players_guide apg_abilities_class.lst:766 'CATEGORY=Class|Summoner.MOD'), and 4,508 record<-mod attachments CW happen through a display name where name != KEY and no KEY-targeted mod exists (e.g. occult_adventures oa_spells.lst:299 'Fear.MOD', a SPELL row, attaching to race_trait_generic/emotional_focus_fear.json 'Emotional Focus ~ Fear') -- matching on (file kind, category, KEY-else-name) drops exactly these and no legitimate row, because PCGen itself only matches on KEY; (d) a THIRD closure defect is unnamed: the index is keyed per book, so 4,419 .MOD targets (6,686 rows) whose base record exists only in another book never attach at all (occult_adventures oa_feats.lst:77 'Improved Feint.MOD' -> the core_rulebook feat) although PCGen applies them when both campaigns are loaded; (e) 56 corpus records have their BASE row inside a _pfs/ file (inner_sea_world_guide/_pfs/pfs_iswg_abilities_race.lst 30, pfs_iswg_races.lst 14, ...), so a by-path exclusion must be scoped to the mod index and those 56 shipped units need a ruling.",
+   "fix": "Mod index: skip every .lst under a _pfs/ directory; key rows by (file kind from the .pcc line type, CATEGORY= for abilities, KEY-else-name); look up by the record's KEY (name only when it has no KEY). Escalate: cross-book .MOD rows (6,686) need a design ruling (per-book SheetRule vs corpus-wide closure); the 56 _pfs/-sourced base records need a scope ruling. Keep the .CLEAR semantics (DescLst.java: .CLEAR removes the whole list; .CLEAR.<text> removes one -- 0 CW)."
+  },
+  {
+   "token_type": "BENEFIT",
+   "refuted": true,
+   "axis": [
+    "E",
+    "C"
+   ],
+   "confidence": "medium",
+   "reason": "Counts hold (672 / 638 CW; 111 %N tokens on 107 records; 9 BENEFIT:.CLEAR records; 636 DESC+BENEFIT). The rule inherits every DESC argument defect (same-row DEFINE -> Const; from-the-right split), e.g. adventurers_guide/feat_generic Falcon's Cry (ag_feats.lst:33) '...%1 times per day.|1+TL/3' is fine, but any BENEFIT whose argument is a DEFINEd name prints 0. Second: 24 CW records carry BENEFIT:[redacted PI]; under rule (3) of the PI row a blacklist hit on prose REFUSES the record, while a declared DESC redaction (rule 2) leaves the record sheet-complete with empty prose -- the same fact (nothing licensed to print) gets two outcomes, and the refused set can never be cleared by any mechanism.",
+   "fix": "Same argument rule as the corrected DESC row. A redacted BENEFIT (marker or term hit) is omitted and stamped in provenance.pi.redacted exactly like a declared DESC redaction; never refused. Keep DESC-then-BENEFIT concatenation as a product choice (PCGen exports FEAT.x.DESC and FEAT.x.BENEFIT separately; neither reading is 'parity')."
+  },
+  {
+   "token_type": "ASPECT:<display sub-key>",
+   "refuted": true,
+   "axis": [
+    "E",
+    "B",
+    "A"
+   ],
+   "confidence": "high",
+   "reason": "Counts hold (6,420 instances / 4,419 records CW; Ability Benefit 1,316; SaveBonus 376; CombatBonus 330; SkillBonus 231; 320 ASPECT-only-prose records; 118 redacted sub-keys). Semantics do not: (1) pcgen/cdom/helper/Aspect.java printAspect prints ONE aspect per sub-key -- lastPassingAspect returns the LAST aspect whose PRE passes -- never one line per aspect; 6 CW records carry >=2 same-sub-key display aspects with at least one ungated (core_rulebook/class_feature/loremaster/secret_lore.json: two ungated 'Ability Benefit'; horror_adventures/class_feature/dreamstalker/dreamwalker.json: two ungated 'SkillBonus'); the lane prints both, PCGen prints the last. The Psychic Strike pair in the lane's own example is right only because the gates are mutually exclusive. (2) Aspect.java substitutes %NAME, %LIST, %N and quoted literals only -- there is no VAR_CHOICE -- so the 4 CW ASPECT tokens with %CHOICE print '%CHOICE' literally in PCGen; the lane's Choice slot is a deviation that must be recorded. (3) 71 distinct sub-keys exist CW, not the ~30 the row lists; under 'sub-keys under 3 records default to display' the sub-keys WitchDoctorCheckCount, SpiritWardenCheckCount, WitchDoctorCheckType, SpiritWardenCheckType (CheckCount-shaped), SpellCL, and the malformed 'Ability Benefit (%1 ft.,DC %2)' would be printed as '<PCGen sub-key name>: <text>' -- token text in prose (axis B). (4) The argument rule inherits the DESC DEFINE->Const defect ('2,040 of 2,387 bare-var ASPECT args are same-row DEFINE literals' -- they are DEFINE|0 seeds). (5) An index past the variable list yields '' in Aspect.java (buf.append(EMPTY_STRING)), not a drop with sign pop.",
+   "fix": "Per sub-key, emit the LAST segment whose gate passes (convert-time when decidable, else the per-segment Applies picks the last passing at evaluate time). Replace the allowlist with an explicit 71-entry sub-key table; route *CheckCount/*CheckType to the uses row; refuse malformed sub-keys carrying %N by token shape. Arguments as the corrected DESC row. Record the %CHOICE-in-ASPECT deviation."
+  },
+  {
+   "token_type": "ASPECT:CheckCount / ASPECT:CheckType",
+   "refuted": true,
+   "axis": [
+    "D",
+    "E"
+   ],
+   "confidence": "medium",
+   "reason": "Counts hold (CheckCount 694 instances on 692 records; CheckType 696 on 693). Evidence fails the brief: two of the three examples are placeholders ('second and third real records to be quoted by the formula lane'), and no formula-lane row covers CheckCount (bonus.json 0 mentions, formula.json 1 mention). Semantics: the %1 variable is a cross-record variable in most cases (e.g. Sorcerer_Psychic_BloodlinePower1Times is fed by BONUS:VAR rows on other records), so the value depends on formula G1 (Var table); the row's 'usually a same-record DEFINE/BONUS:VAR' is unmeasured. One CW record shows an INGEST defect this row must not inherit: advanced_class_guide/class_feature/warpriest_bonus_feat/battle_cry.json holds 'ASPECT:CheckCount|%1|BattleCryTimes DESC:%1 times per day, ...' -- a DESC token glued into the ASPECT value by a lost tab; the converter reads rows, so it must re-tokenise and must count such rows.",
+   "fix": "Keep Number(Expr) uses/period. Quote three real records. Value = formula lane's Expr for the named variable through the Var table; label the gap dependency (formula G1) explicitly. Add a converter check for glued tokens (a token value containing '\\t<TOKEN>:' or ' <TOKEN>:' where TOKEN is a known key)."
+  },
+  {
+   "token_type": "ASPECT:NAME",
+   "refuted": true,
+   "axis": [
+    "B",
+    "D"
+   ],
+   "confidence": "high",
+   "reason": "Count wrong: 103 is the INSTANCE count; only 52 CW records carry ASPECT:NAME (many carry two). The fallback rule 'until the gap is closed the converter uses the record name as label and puts the template into prose as a labelled line' ships 'Str +%1' -- a %N marker -- into prose: a PCGen substitution marker in a SheetRule field other than provenance (axis B). The second example has no source line; the shape is real at pathfinder_unchained pu_abilities_class.lst:75 and :96 (data/corpus/pathfinder_unchained/class_feature/abp/1_strength.json, 2_strength.json).",
+   "fix": "label = record name (or OUTPUTNAME); the NAME template becomes a prose segment with the argument as a slot under G1 (ProseSegment) -- no separate label-slot variant is needed; never emit an unsubstituted template. Correct the count to 103 instances / 52 records."
+  },
+  {
+   "token_type": "ASPECT:<structural sub-key>",
+   "refuted": true,
+   "axis": [
+    "D"
+   ],
+   "confidence": "low",
+   "reason": "Rule holds (bookkeeping, not player text; SourceBook -> provenance). Count is loose: re-derived CW ChildAbility 833 instances/773 records, Archetype Base Class 483/470, SourceBook 365/364, MasterAbility 116/116, Bloodline 57/43, StatBlockName 27/27 = 1,881 instances on 1,793 record-mentions (overlapping), not '~1,500 records' (16% off).",
+   "fix": "keep; state 1,881 instances on up to 1,793 records CW."
+  },
+  {
+   "token_type": "SAB",
+   "refuted": true,
+   "axis": [
+    "E"
+   ],
+   "confidence": "low",
+   "reason": "Both records verified (b3_races_companion.lst:15, mc_races_companion.lst:15; 'SAB:+4 on saves vs. disease.'; 0 non-DONE). The forward rule is wrong: 'if a future book brings SAB:...|<formula> it follows the DESC argument rule' -- PCGen's SpecialAbility extends TextProperty, whose getParsedText (pcgen/core/TextProperty.java) fills each bare % positionally from the |-separated variables and suppresses the whole line when every variable is 0; it has no %N grammar.",
+   "fix": "keep Text for the two records; state that SAB shares SPROP's positional-% grammar, not DESC's."
+  },
+  {
+   "token_type": "SPROP",
+   "refuted": true,
+   "axis": [
+    "A",
+    "E"
+   ],
+   "confidence": "high",
+   "reason": "Counts hold (3,816 / 3,662 CW; 2,491 SPROP-only records; 52 %CHOICE; 48 %LIST). The grammar is wrong. pcgen/core/TextProperty.java getParsedText (SpecialProperty extends TextProperty): 'SPROP:<text>|<v1>|<v2>...' -- each BARE % in the text is replaced, left to right, by the next variable's intValue(); if every variable evaluates to 0 the entire line is suppressed; %CHOICE is replaced by the equipment modifier's association (pcgen/core/EquipmentModifier.java getSpecialProperties, replaceFirst per association). 99 CW SPROP records carry exactly this positional shape -- core_rulebook/equipment/equipmods/special_ability_thundering_weapon.json (cr_equipmods.lst:254) 'SPROP:+%d8 sonic damage on a critical hit ...|CRITMULT-1' prints '+2d8 sonic damage ...' on a x3 weapon; ultimate_psionics/equipment/equipmods/plusn_svs.json (up_equipmods.lst:293) 'SPROP:+% enhancement|Severis'; core_rulebook/equipment/equipmods/itempower_casttwoone.json (cr_equipmods.lst:871) 'SPROP:Cast % 1/day|%LIST'. The lane's 'text follows the DESC rules' refuses all 99 (bare % -> DESC:bare-percent refusal) and its '8 with %N' reading is a mis-parse: in TextProperty '%1' is a slot followed by a literal '1'.",
+   "fix": "SPROP/SAB grammar: split on |, pop PRE gates, the remaining tail segments are positional variables; each bare % in the text is a slot for the next variable (formula lane Expr, Const for literals); the line is omitted when every slot resolves to 0 (PCGen) -- state that suppression as a rule; %CHOICE -> ChoiceName of the eqmod's choice; %LIST as a variable name in eqmod context is UNVERIFIED and needs a Java citation before Epic 2 transcribes it. Drop the bare-% refusal."
+  },
+  {
+   "token_type": "TEMPDESC",
+   "refuted": false,
+   "axis": [],
+   "confidence": "high",
+   "reason": "184 / 184 CW re-derived; all three examples verified at their lines (acg_templates.lst:16, :28 with &colon;, b2_skills.lst:8); &colon; is a real PCGen entity (EntityEncoder.java) present in exactly 1 CW token. 'When active:' is a product label, not parity. Non-DONE 30 by this judge's join (lane 31).",
+   "fix": "keep; the entity fix lives in the DESC row."
+  },
+  {
+   "token_type": "TEMPVALUE",
+   "refuted": false,
+   "axis": [],
+   "confidence": "high",
+   "reason": "164 / 164 CW; 7 have MAX=<variable>; plugin/lsttokens/TempValueLst.java requires exactly MIN=|MAX=|TITLE= in that order (verified). Formula row 61 maps it identically (Choice with an integer domain). Examples verified (pu_abilities_class.lst:66, ag_abilities_class.lst:307, b2_abilities_race.lst:275).",
+   "fix": "keep; gap G8 is formula G12 -- one owner."
+  },
+  {
+   "token_type": "%CHOICE / %LIST inside DESC, BENEFIT, ASPECT, SPROP",
+   "refuted": true,
+   "axis": [
+    "E"
+   ],
+   "confidence": "medium",
+   "reason": "Counts hold (DESC 29 %CHOICE + 57 %LIST; ASPECT 4 + 15; SPROP 52 + 48; BENEFIT 0; 2 CW records use %CHOICE with no CHOOSE token: advanced_players_guide/ability/gifted_adept.json and trait_generic/trait_gifted_adept.json). Semantics are per token family, not one rule: Description.java -- %CHOICE = the first association's export string, %LIST = the SORTED associations joined with ', ' or with ' and ' when exactly two, and NOTHING is appended when the object has no associations; Aspect.java -- %LIST only, %CHOICE is printed literally; EquipmentModifier.java -- %CHOICE replaced by each association via replaceFirst in SPROP. 'comma-joined' is therefore wrong for two-item lists, and the unmade-words table is a product rule that deviates from PCGen (which prints an empty slot); it is acceptable under decisions.md section 1 rule 3 but must be labelled a deviation, and the choice lane must own the table.",
+   "fix": "State the three substitution rules per family; %LIST join = sorted, ', ' / ' and '; unmade -> words (deviation, choice-lane table); record the 2 CHOOSE-less records as an upstream defect list, not a refusal."
+  },
+  {
+   "token_type": "KEY",
+   "refuted": false,
+   "axis": [],
+   "confidence": "high",
+   "reason": "31,498 instances / 31,497 records CW; 828 redacted -- all re-derived exactly. codex_neutral_name.rs exists. Examples verified at oa_abilities_race.lst:84, cr_abilities_race.lst:239, iswg_feats.lst:43.",
+   "fix": "keep"
+  },
+  {
+   "token_type": "OUTPUTNAME",
+   "refuted": true,
+   "axis": [
+    "E",
+    "B"
+   ],
+   "confidence": "medium",
+   "reason": "Counts hold (2,124 / 2,123 CW; 684 [NAME]; 13 redacted). pcgen/core/analysis/OutputNameFormatting.java: [NAME] expands to getPreFormatedOutputName(displayName) = the text inside the parentheses, split on '/' and REVERSED, space-joined; '[BASE]' = the name before the parenthesis; and an OUTPUTNAME with '|' substitutes each '%' positionally from the variables. 5 CW records hit the '/' rule (beastiary/monster/genie_janni_noble.json, name 'Genie (Janni/Noble)', OUTPUTNAME '[NAME]' -> PCGen 'Noble Janni'; lane 'Janni/Noble'); [BASE] and '|' have 0 CW instances. Precedence gap: 1 CW record declares NAMEISPI:YES and carries a non-redacted OUTPUTNAME; 'label = OUTPUTNAME when present' would ship the PI display name unless the PI row wins -- the order is unstated.",
+   "fix": "Add the '/'-reversal and [BASE] rules; state NAMEISPI precedence over OUTPUTNAME (neutral label wins); note [NAME] on a name without parentheses = the whole name (PCGen returns displayName)."
+  },
+  {
+   "token_type": "NAMEISPI / DESCISPI (and the corpus license/pi_field/pi_marker stamps)",
+   "refuted": true,
+   "axis": [
+    "C",
+    "F"
+   ],
+   "confidence": "medium",
+   "reason": "Flags pi_screening.rs and its consumers key on, enumerated: NAMEISPI and DESCISPI declarations (value YES, case-insensitive, declared_product_identity); license (shape_b_v1::License has THREE states OGL | PI | PI-REDACTED); pi_field (comma-separated list of redacted field names); pi_marker ('redacted'); the field value REDACTED_PI_MARKER '[redacted PI]'; codex_generated_name (bool, the audit's marker that a PI name was neutralised); plus the 60-term blacklist (classify_field, blacklist_term_hit_including_concatenated). The proposed provenance keeps name_declared, description_declared, redacted: Vec<Field> (= pi_field), label_source: CodexNeutral (= codex_generated_name) and license, drops the PI state (acceptable only if the converter can never emit it -- say so) and pi_marker (derivable). Counts hold (NAMEISPI 1,177; DESCISPI 686 = 673 YES + 13 Yes; 2,330 PI-REDACTED). Two refutations: (1) rule (3) REFUSES a record on a blacklist hit in prose or label, while rule (2) leaves a declared-PI DESC sheet-complete with empty prose -- the same fact with two outcomes, and the refused set is permanent: 431 CW records carry DESC:[redacted PI] with no DESCISPI (term hits), 24 carry BENEFIT:[redacted PI], and 456 records have codex_generated_name without a NAMEISPI declaration (term-hit renames the corpus already ships) -- refusing them re-opens ~900 units no mechanism can close; (2) the oracle_check 'run declared_pi_shipping_audit.rs over data/sheet_rules/ too' cannot happen unmodified: src/bin/declared_pi_shipping_audit.rs keys on data.description == '[redacted PI]', license == 'PI-REDACTED', pi_field containing 'description', codex_generated_name and data.raw_tokens -- none of which a SheetRule carries, and the lane deliberately never writes the marker.",
+   "fix": "A term hit is handled exactly like a declaration: omit that field from prose/label (label -> codex-neutral name), stamp provenance.pi.redacted, never refuse. Re-key the shipping audit to provenance.pi and prose (rule: description_declared or 'description' in redacted => the DESC family contributed nothing; name_declared or a name term hit => label_source == CodexNeutral). Keep the 3-state License or state the invariant that PI never ships."
+  },
+  {
+   "token_type": "VISIBLE",
+   "refuted": true,
+   "axis": [
+    "E",
+    "F"
+   ],
+   "confidence": "medium",
+   "reason": "Counts hold (7,505 / 7,005 CW; NO 3,123; DISPLAY 2,319; QUALIFY 1,288; YES 471; EXPORT 303; DISPLAY|READONLY 1). Semantics: pcgen/util/enumeration/Visibility.java -- DISPLAY_ONLY 'shows up in the GUI, but not on the output sheet'; OUTPUT_ONLY 'on the output sheet, but not in the GUI'; HIDDEN neither. The sheet is PCGen's output sheet, so 'print = VISIBLE != NO' prints 2,319 DISPLAY rows PCGen's sheet omits; the lane's own justification ('a player writes Scribe Scroll (bonus feat) ... because the feat itself prints') is the reason PCGen HIDES the class-feature row -- printing it lists Scribe Scroll twice (the feat row and 'Wizard ~ Scribe Scroll', cr_abilities_class.lst:2572). Cross-family: prereq.md section 1 already puts 'visible: bool' on SheetRule, so gap G6 is a duplicate proposal.",
+   "fix": "print iff VISIBLE in {YES(default), EXPORT, QUALIFY-when-held}; DISPLAY and NO -> held, not printed (print: false); one owner for the flag (prereq's visible)."
+  },
+  {
+   "token_type": "TYPE (display facet)",
+   "refuted": false,
+   "axis": [],
+   "confidence": "high",
+   "reason": "41,700 / 41,139 CW; 597 redacted -- exact. The (Ex)/(Su)/(Sp) facet rule is a display convention and carries no token text. Examples verified. One caveat for provenance.type_tags: until the PFS closure fix lands, 826 records' closures carry TYPE:PFSNotLegal / TYPE:PFSLegal from _pfs/ rows; provenance may hold them but they are overlay tags, not the record's.",
+   "fix": "keep"
+  },
+  {
+   "token_type": "SORTKEY",
+   "refuted": false,
+   "axis": [],
+   "confidence": "high",
+   "reason": "3,250 / 3,250 CW; 12 redacted -- exact. Examples verified at oa_abilities_race.lst:97, :109, :84.",
+   "fix": "keep"
+  },
+  {
+   "token_type": "QUALIFY",
+   "refuted": true,
+   "axis": [
+    "F",
+    "G"
+   ],
+   "confidence": "low",
+   "reason": "7 instances / 5 records CW -- exact; examples verified. Two lanes model it in opposite directions: prose puts a waiver on the TARGET rule's Applies (gap G9 'Applies needs an or-holds-rule form'); prereq.md section 1 puts QUALIFY in the HOLDER's grants: Vec<Effect> (with SERVESAS, REMOVE), which is PCGen's own shape (pcgen/core/prereq/PrereqHandler.java lines 77 and 114 check QUALIFY on the character before evaluating the target's prerequisites). G9 is not a vocabulary gap either way: prereq's Applies::AtLeast{n:1, of:[<normal>, Holds{what: Rule(<this id>)}]} already expresses 'or holds rule X'.",
+   "fix": "drop the prose row's Applies mapping and G9; prereq owns QUALIFY as a holder-side Effect."
+  },
+  {
+   "token_type": "SOURCEPAGE / SOURCELONG / SOURCESHORT / SOURCEWEB / SOURCEDATE / SOURCELINK",
+   "refuted": false,
+   "axis": [],
+   "confidence": "high",
+   "reason": "SOURCEPAGE 32,165 / 32,115; SOURCELINK 1,806; SOURCELONG 275; SOURCESHORT 276; SOURCEWEB 48; SOURCEDATE 44 CW -- all exact. Fine print only. Examples verified.",
+   "fix": "keep"
+  },
+  {
+   "token_type": "(record with no raw_tokens / empty raw_tokens)",
+   "refuted": false,
+   "axis": [],
+   "confidence": "high",
+   "reason": "CW 2,768 without the field + 33 empty = 2,801 (exact); 2,488 of them have a data.description. Non-DONE by this judge's join 914 (lane 921; TOKEN-MODEL 921): feat 363, spell 312, equipment 232, monster_ability 6, race_trait_generic 1. Resolving source.path:line in the pinned tree: 912 rows found, 708 carry a DESC/BENEFIT/SPROP/ASPECT/SAB token (lane 710), 204 carry none (lane 211), 751 have a shipped description (lane 752). One evidence error: '0 rows not found' is false for 2 records that carry NO source block at all (advanced_players_guide/equipment/hammer_ricochet.json, advanced_players_guide/spell/fester.json); CW 11 of 2,801 do not resolve. 179 of the 914 have a row head that differs from the record name -- all are codex-named (NAMEISPI) records, expected.",
+   "fix": "keep; list the 2 source-less (11 CW) records as a converter refusal 'no_source_row' rather than claiming 0."
+  }
+ ],
+ "cross_family_conflicts": [
+  {
+   "rows": [
+    "prose:DESC rule 4",
+    "formula:row 1 DEFINE",
+    "formula:row 63 DESC/BENEFIT %N argument"
+   ],
+   "issue": "prose folds 'bare name with a same-row DEFINE' to Const (3,936 args); formula proves every DEFINE is |0 and maps every %N argument to an Expr slot through its Var table (G1). Following prose prints 0 into ~3,600 sentences.",
+   "recommendation": "prose adopts formula row 63 verbatim; DEFINE is never a value source."
+  },
+  {
+   "rows": [
+    "prose:VISIBLE (gap G6 print flag)",
+    "prereq:SheetRule.visible"
+   ],
+   "issue": "the same field proposed twice; prose also prints DISPLAY rows that PCGen's output sheet hides.",
+   "recommendation": "prereq owns visible: bool; print iff YES/EXPORT/QUALIFY-held."
+  },
+  {
+   "rows": [
+    "prose:QUALIFY (Applies waiver on target, gap G9)",
+    "prereq:SheetRule.grants Effect QUALIFY"
+   ],
+   "issue": "opposite directions for one token; G9 is expressible with prereq's AtLeast/Holds.",
+   "recommendation": "prereq owns; drop G9."
+  },
+  {
+   "rows": [
+    "prose:DESC/ASPECT/SPROP per-segment gates (gap G2)",
+    "prereq:Applies (whole-rule)"
+   ],
+   "issue": "prose hands segment gates to 'the prereq lane', but prereq.json has no row for gates embedded in DESC/ASPECT/SPROP tokens (one incidental mention of 'segment') and its Applies is whole-rule; nobody produces per-segment Applies today. Population: DESC gates on 410 (PREVARGTEQ) + 433 (!PREABILITY) + 249 (PRECLASS) + 182 (PREVARLT) + 160 (PREVAREQ) records CW, plus 1,872 !PRERULE spell summaries; ASPECT 105 + 24 + 20.",
+   "recommendation": "prose emits ProseSegment{applies}; prereq converts the gate text with the same table it uses for row-level PRE; name that handoff in both files."
+  },
+  {
+   "rows": [
+    "prose:%CHOICE / %LIST (ChoiceName)",
+    "formula:row 25 %CHOICE/%LIST -> Choice (integer)"
+   ],
+   "issue": "not a contradiction -- a formula %CHOICE is a number, a prose %CHOICE is a label -- but the schema's Choice(ChoiceId) yields only an integer, so one variant must carry both.",
+   "recommendation": "choice lane owns one Choice type with value and label; both rows cite it."
+  },
+  {
+   "rows": [
+    "prose:DESC:.CLEAR (drop _pfs/ by path)",
+    "prereq:!PRECHARACTERTYPE -> Always/Never metadata"
+   ],
+   "issue": "prereq's fold leaves ungated _pfs/ .MOD rows (e.g. Shaman Hex ~ Fetish) in the closure; only path exclusion removes them.",
+   "recommendation": "path exclusion in the shared mod index; prereq's fold applies to the 2 non-overlay PRECHARACTERTYPE rows only."
+  },
+  {
+   "rows": [
+    "prose:TEMPDESC/TEMPVALUE/SAB/SPROP",
+    "formula:rows 61,62,64,65"
+   ],
+   "issue": "duplicated rows with different non-DONE denominators (prose 21,722 over 35 books; formula 23,315 over 37) -- TEMPDESC 31 vs 102, SPROP 167 vs 259.",
+   "recommendation": "one owner per token (prose for the words, formula for the argument Expr); never sum across families."
+  }
+ ],
+ "expr_gaps_verdict": [
+  {
+   "gap": "G1 prose slots (prose: Vec<ProseSegment> or template+slots)",
+   "real": true,
+   "necessary": true,
+   "units": 5149,
+   "note": "A SheetRule is written at convert time without a character, so prose: String cannot hold 'DC 15' for THIS character; the only schema-free alternative (put the term in value, leave words) fails for multi-slot sentences (Minor Magic has 3). 5,149 CW records carry %N in DESC (formula: 5,013 units / 3,634 non-DONE); every non-integer argument needs it. Real schema change; shared with formula G2."
+  },
+  {
+   "gap": "G2 per-segment Applies",
+   "real": true,
+   "necessary": true,
+   "units": 1300,
+   "note": "About 1,300 CW records carry a PREVAR*/PRECLASS/!PREABILITY gate on a DESC or ASPECT segment (see the conflict entry); the whole-rule Applies cannot select among sibling segments. Cheapest form: ProseSegment{applies: Option<Applies>} with PCGen's last-passing rule for ASPECT."
+  },
+  {
+   "gap": "G3 choice-as-name (ChoiceName / ProseSegment::Choice)",
+   "real": true,
+   "necessary": true,
+   "units": 200,
+   "note": "~200 CW records (DESC 86, ASPECT 19, SPROP 100); Choice(ChoiceId) yields an integer. Owner: choice lane, one type carrying value and label."
+  },
+  {
+   "gap": "G4 spell summary field (!PRERULE:1,DisplayFullSpell)",
+   "real": true,
+   "necessary": false,
+   "units": 1872,
+   "note": "PRERULE is a game-mode flag; prereq classes it as metadata folded at convert time. Decide the product's rule once (full text) and drop the summary segment; no field needed."
+  },
+  {
+   "gap": "G5 more than one value (uses/period beside a magnitude)",
+   "real": true,
+   "necessary": true,
+   "units": 692,
+   "note": "692 CW CheckCount records; identical to formula G3 (SPELLS x3). One owner."
+  },
+  {
+   "gap": "G6 print flag",
+   "real": true,
+   "necessary": true,
+   "units": 3096,
+   "note": "3,096 VISIBLE:NO records (+2,319 DISPLAY once the PCGen semantics are adopted) must be held unprinted; already proposed as prereq's SheetRule.visible -- duplicate, not a new gap."
+  },
+  {
+   "gap": "G7 label slot (ASPECT:NAME)",
+   "real": true,
+   "necessary": false,
+   "units": 52,
+   "note": "52 CW records; expressible once G1 exists (record name as label, template as a prose segment). No separate variant."
+  },
+  {
+   "gap": "G8 bounded integer choice (TEMPVALUE)",
+   "real": true,
+   "necessary": true,
+   "units": 164,
+   "note": "Same as formula G12; 7 have a variable MAX."
+  },
+  {
+   "gap": "G9 waiver in Applies (QUALIFY)",
+   "real": false,
+   "necessary": false,
+   "units": 5,
+   "note": "Expressible with prereq's AtLeast{1,[normal, Holds{Rule(id)}]}; prereq models QUALIFY holder-side anyway."
+  },
+  {
+   "gap": "entity table (&colon;)",
+   "real": true,
+   "necessary": true,
+   "units": 14,
+   "note": "PCGen decodes 8 entities (EntityEncoder.java): &nl; &cr; &lf; &colon; &pipe; &lbracket; &rbracket; &amp;. &colon; = 1 CW token; &amp; = 13 CW prose tokens that neither the lane nor render_pcgen_desc decodes; &comma; is not a PCGen entity (0 CW)."
+  }
+ ],
+ "missing_rows": [
+  "SPROP / SAB positional-% grammar (TextProperty.getParsedText): 99 CW SPROP records carry '<text with bare %>|<var>...' slots and the all-zero suppression rule; no row models it (the SPROP row inherits DESC's %N grammar and refuses bare %).",
+  "cross-book .MOD rows: 4,419 .MOD targets / 6,686 rows CW name a record that exists only in another book; the per-book mod index never attaches them (PCGen applies them when both campaigns load); no family names this closure defect.",
+  "ASPECT sub-key table: 71 distinct sub-keys CW; the row lists ~30 and defaults the rest to display, which prints PCGen sub-key names (WitchDoctorCheckCount, SpellCL, the malformed 'Ability Benefit (%1 ft.,DC %2)') as labels.",
+  "OUTPUTNAME vs NAMEISPI precedence (1 CW record) and the '[NAME]' '/'-reversal + '[BASE]' forms of OutputNameFormatting.java.",
+  "glued-token ingest defect: at least one CW record (advanced_class_guide/class_feature/warpriest_bonus_feat/battle_cry.json) holds a DESC token inside an ASPECT value; the converter must detect and count these (population unmeasured).",
+  "PFS-sourced base records: 56 CW records cite a _pfs/ file as their own source row (inner_sea_world_guide 46, core_rulebook 3, advanced_race_guide 3, ...); a by-path exclusion must not silently drop them and they need a scope ruling."
+ ],
+ "blockers_confirmed": [
+  "PFS overlay leak is real and larger than stated: wiring_class::token_closure_rows attaches a _pfs/ .MOD row to 826 CW records (192 of which show the marker in raw_tokens; the lane's 215 counts raw_tokens markers). Reproduced on core_rulebook scribe_scroll.json (cr_abilities_class.lst:2071 <- _pfs/pfs_cr_feats.lst:20), advanced_class_guide Shaman Hex ~ Fetish (<- _pfs/pfs_acg_abilities_class.lst:7, UNGATED), inner_sea_world_guide adopted_race_gillman.json (<- _pfs/pfs_iswg_races.lst:21, a RACE .MOD onto a race trait). Fix = skip _pfs/ in the mod index AND match on (file kind, CATEGORY, KEY-else-name); '(category, name)' alone still mis-attaches 79 CW rows; KEY matching drops no legitimate row because PCGen only matches on KEY.",
+  "Byte-for-byte parity 'on every DESC-bearing record CW (28,065)' cannot hold as stated. A test-only drop-mode flag CAN reproduce today's output exactly (drop unresolved %N with trailing +/- pop, drop %UPPERCASE and lone %, collapse whitespace only when something dropped, decode 5 entities) ONLY when it is fed the same DESC list render_pcgen_desc_tokens sees today (data.raw_tokens, no PFS/row-order/.CLEAR handling) -- not the converter's row closure. The exclusion set the parity test must enumerate: 1,232 DESC instances whose value is '[redacted PI]' (the renderer prints the marker, the converter omits the family), 30 .CLEAR records (renderer prints '.CLEAR'), 826 PFS-closure records, 42 from-the-right divergence rows, 13 &amp; tokens, 3 %%N rows. Parity denominator = 28,065 minus that mechanically derived set; the ~3,000 DESC records carrying character-dependent arguments compare only in drop mode.",
+  "'prose slots' (G1) is a real schema change, not something prose: String can absorb at evaluate time: the rule is stored without a character and multi-slot sentences exist (3 slots in pathfinder_unchained Minor Magic, pu_abilities_class.lst:647).",
+  "The 921 empty-raw_tokens claim holds (914 by this judge's join; 708/204 prose/no-prose; 751 with a description) except that 2 of them (11 CW) have no source block and cannot be resolved -- '0 rows not found' is false for those.",
+  "PI handling: every flag pi_screening.rs keys on maps to the proposed provenance except the 3-state License and pi_marker; but the term-hit REFUSE rule creates a permanent ~900-record refused bucket (431 DESC term hits, 24 BENEFIT, 456 term-hit renames) and declared_pi_shipping_audit.rs cannot run on data/sheet_rules/ without re-keying.",
+  "Axis B leaks found in the rules as written: (1) the from-the-right DESC split leaks a PCGen variable name into prose on 42 CW rows; (2) ASPECT:NAME's fallback ships 'Str +%1' (a %N marker) into prose; (3) the ASPECT default-to-display rule prints PCGen sub-key names as labels. Every other row's output is PCGen-free (TYPE facet, provenance-only tags, label text, Applies)."
+ ]
+}

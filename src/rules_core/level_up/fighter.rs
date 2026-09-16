@@ -84,6 +84,17 @@
 //! Barbarian's Rage Power note), left as this cycle's own
 //! `next_required_uplift` pointer for a future cycle, not a blocker on this
 //! cycle's `LevelUpPlan`: every other field lands for real.
+//!
+//! **That uplift landed in SD-35 AT-35-E5-004.** The per-character filtering
+//! it describes is now
+//! [`level_up_option_filter::filter_option_pool`](crate::rules_core::level_up_option_filter::filter_option_pool),
+//! joined over `SheetRule.applies` rather than over `feat_prereqs`, and the
+//! desktop's `preview_level_up` serves its answer as `featOptions` /
+//! `refusedFeatOptions`. `PickList::candidates` here is still empty: this
+//! module has no `SheetRulePackage` to join against (`rules_core` loads one
+//! only where a caller supplies the directory), so the candidate list is
+//! composed at the seam that does hold the package. That is a placement, not
+//! an absence — the option list the player sees is filtered.
 
 use crate::rules_core::character_input::{CharacterClassLevel, CharacterInput};
 use crate::rules_core::level_up::{Grant, GrantEffect, LevelUpPlan};

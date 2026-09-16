@@ -105,6 +105,30 @@
 //! separate them.
 
 pub use super::monster_chassis::{NaturalAttack, Speed};
+/// Re-exported, not re-declared: a companion guard and a feat guard are the
+/// same thing, and SD-35 `AT-35-E6-003-SWEEP` cycle 9 reused cycle 7's schema
+/// rather than growing a second vocabulary for one grammar.
+pub use super::crb::feats::{ConditionItem, EffectCondition};
+
+/// One guarded entry of [`CompanionRecord::external_ability_refs`].
+///
+/// The ingest format appends the guard to the grant token that cites the
+/// ability (`Special Ability|AUTOMATIC|<ability>|!PRE<FAMILY>:<argument>`), and
+/// the transcriber split it off as if it were another ability name. SD-35
+/// `AT-35-E6-003-SWEEP` cycle 13 gave it its own field and cycle 7's
+/// [`EffectCondition`] schema, the same conversion cycle 9 applied to
+/// [`CompanionAbilityGrant::conditions`]. The verbatim pre-conversion arrays are
+/// the round-trip oracle in `pcgen_import::companion_pcgen_guards`.
+#[derive(Debug, Clone, Copy, PartialEq, Eq)]
+pub struct ExternalAbilityRefCondition {
+    /// The entry of [`CompanionRecord::external_ability_refs`] this gates,
+    /// verbatim. Held closed against that slice by
+    /// `every_external_ability_ref_condition_names_a_ref_the_row_carries`.
+    pub ability: &'static str,
+    /// The conditions gating the grant. Never empty -- a row with no guard
+    /// carries no entry here at all.
+    pub conditions: &'static [EffectCondition],
+}
 
 /// One `BONUS:STAT|<abbrev>|<amount>` token from a creature or advancement row.
 ///
@@ -137,6 +161,27 @@ pub struct StatAdjustment {
 /// the full modifier, this token adds the other half, and `max(0,…)` is why a
 /// Strength PENALTY is never multiplied.
 ///
+/// One `ABILITY:` grant a companion class row states.
+///
+/// The ingest format writes these pipe-joined (`Special Ability|AUTOMATIC|
+/// Undead Traits|PREVAREQ:NoTypeTraits,0`). The first three elements were
+/// already this crate's own vocabulary -- a category, a grant mode, a feature
+/// name -- so SD-35 `AT-35-E6-003-SWEEP` cycle 9 split them into fields rather
+/// than reinterpreting them, and moved the optional guard tail into
+/// [`Self::conditions`].
+#[derive(Debug, Clone, Copy, PartialEq, Eq)]
+pub struct CompanionAbilityGrant {
+    /// The grant's category: `"Special Ability"`, `"FEAT"`, `"Internal"`.
+    pub kind: &'static str,
+    /// How the row grants it: `"AUTOMATIC"` on every registered row, read from
+    /// the row rather than assumed.
+    pub mode: &'static str,
+    /// The granted feature's name, verbatim.
+    pub name: &'static str,
+    /// The conditions gating the grant. Empty on all but three registered rows.
+    pub conditions: &'static [EffectCondition],
+}
+
 /// **`attack` is the token's own selector, and it is NOT guaranteed to name one
 /// of [`CompanionRecord::natural_attacks`].** Re-derived corpus-wide 2026-08-19
 /// over all 927 ingested companion records: `advanced_players_guide:companion:
@@ -151,7 +196,15 @@ pub struct NaturalAttackDamageBonus {
     /// The token's trailing formula half, verbatim: `"max(0,(STR/2))"`,
     /// `"STR"`, `"-STR"`, `"5"`, … Never normalised — `max(0,(STR/2))` and
     /// `max(0,STR/2)` are two real corpus spellings and both ship as written.
+    ///
+    /// The formula half **only**. Three registered rows appended an ingest
+    /// guard to this field (`max(0,(STR/2))|PREVARLT:MasterLevel,7`), which
+    /// this field's own promise above never covered; SD-35
+    /// `AT-35-E6-003-SWEEP` cycle 9 split those into [`Self::conditions`].
     pub formula: &'static str,
+    /// The conditions gating this bonus, in this crate's own schema. Empty
+    /// when the row stated it unconditionally, which is all but three of them.
+    pub conditions: &'static [EffectCondition],
 }
 
 /// One `BONUS:SKILL|<skills>|<formula>` token whose formula half is an
@@ -247,10 +300,16 @@ pub struct CompanionDescriptionVariant {
     pub text: &'static str,
     /// The `%N` argument list belonging to *this* token, not to the row.
     pub variables: &'static [&'static str],
-    /// Every `PRE…` entry gating this token, verbatim and in row order.
-    /// Empty is a real state: a row carrying one ungated token plus several
-    /// gated ones states the ungated one unconditionally.
-    pub conditions: &'static [&'static str],
+    /// Every condition gating this token, in row order, in this crate's own
+    /// schema. Empty is a real state: a row carrying one ungated token plus
+    /// several gated ones states the ungated one unconditionally.
+    ///
+    /// These were the ingest `PRE<FAMILY>:` strings verbatim until SD-35
+    /// `AT-35-E6-003-SWEEP` cycle 9 converted them (`decisions.md` §11). The
+    /// verbatim tails are kept converter-side in
+    /// `pcgen_import::companion_pcgen_guards`, whose round-trip test rebuilds
+    /// each one from the fields here and proves nothing was lost.
+    pub conditions: &'static [EffectCondition],
 }
 
 /// One `companion` ability record.
@@ -359,7 +418,20 @@ pub struct CompanionRecord {
     /// Keys into this book's `companion_abilities`, in creature-row order.
     pub ability_keys: &'static [&'static str],
     /// Ability names this row cites that this book does not define.
+    ///
+    /// **Names only.** Three CRB creature rows appended a guard to the grant
+    /// that cites the ability, and before SD-35 `AT-35-E6-003-SWEEP` cycle 13
+    /// that guard rode in this slice as if it were a fourth ability name --
+    /// which is what `apps/desktop/src-tauri/src/companion_catalog.rs` served
+    /// it as. The guards now live in
+    /// [`Self::external_ability_ref_conditions`], typed.
     pub external_ability_refs: &'static [&'static str],
+    /// The conditions gating an entry of
+    /// [`Self::external_ability_refs`], in this crate's own schema. Empty on
+    /// all but three registered rows (CRB Hippopotamus, Arsinoitherium,
+    /// Gylptodon), which is the whole corpus population re-derived by
+    /// `grep -rn external_ability_refs --include=*.rs src/ | grep -E '!?PRE[A-Z]+:'`.
+    pub external_ability_ref_conditions: &'static [ExternalAbilityRefCondition],
     /// The races-`.lst` basename this record was read from. Carried per row for
     /// the same reason as [`CompanionAbilityRecord::source_file`]: Bestiary 3
     /// draws creature rows from both `b3_races_companion.lst` and
@@ -411,11 +483,15 @@ pub struct CompanionClassRecord {
     /// from the row, never assumed.
     pub visible_no: bool,
     pub source_page: Option<&'static str>,
-    /// Every `ABILITY:` token's payload, verbatim and in row order — the same
-    /// discipline [`CompanionAbilityRecord::type_segments`] states for an
-    /// unmodelled shape: visible rather than lost. A bare level-advancement
-    /// row (key `"1"`) carries exactly one of these and nothing else.
-    pub ability_grants: &'static [&'static str],
+    /// Every `ABILITY:` token's payload, in row order -- the same discipline
+    /// [`CompanionAbilityRecord::type_segments`] states for an unmodelled
+    /// shape: visible rather than lost. A bare level-advancement row (key
+    /// `"1"`) carries exactly one of these and nothing else.
+    ///
+    /// Split into [`CompanionAbilityGrant`]'s fields by SD-35
+    /// `AT-35-E6-003-SWEEP` cycle 9; the payload was a pipe-joined string, and
+    /// three rows appended an ingest guard to it.
+    pub ability_grants: &'static [CompanionAbilityGrant],
     pub fact_class_type: Option<&'static str>,
     /// The classes-`.lst` basename this record was read from.
     pub source_file: &'static str,
@@ -824,6 +900,7 @@ pub fn grant_token_only_dispatch_reason(key: &str) -> Option<&'static str> {
 #[cfg(test)]
 mod tests {
     use super::*;
+    use crate::pcgen_import::ingest_record;
     use serde_json::Value;
     use std::collections::BTreeMap;
     use std::path::PathBuf;
@@ -863,6 +940,36 @@ mod tests {
             keys.sort_unstable();
             keys.dedup();
             assert_eq!(keys.len(), before, "{}: duplicate ability key", book.corpus_book);
+        }
+    }
+
+    /// A guard names a ref the row actually carries.
+    ///
+    /// `external_ability_ref_conditions` gates an entry of
+    /// `external_ability_refs` by name, so a guard naming something the row
+    /// does not list is a guard that gates nothing — the failure mode a
+    /// name-keyed side field has and an inline tail did not.
+    #[test]
+    fn every_external_ability_ref_condition_names_a_ref_the_row_carries() {
+        for book in COMPANION_BOOKS {
+            for companion in book.companions {
+                for guarded in companion.external_ability_ref_conditions {
+                    assert!(
+                        companion.external_ability_refs.contains(&guarded.ability),
+                        "{}: {} gates {:?}, which is not one of its external ability refs",
+                        book.corpus_book,
+                        companion.name,
+                        guarded.ability
+                    );
+                    assert!(
+                        !guarded.conditions.is_empty(),
+                        "{}: {} records an empty guard on {:?} — an unguarded ref carries no entry at all",
+                        book.corpus_book,
+                        companion.name,
+                        guarded.ability
+                    );
+                }
+            }
         }
     }
 
@@ -1308,13 +1415,33 @@ mod tests {
             .expect("the book defines it");
         assert_eq!(poison.description, None);
         assert_eq!(poison.description_variants.len(), 2);
+        // The guard is typed (SD-35 `AT-35-E6-003-SWEEP` cycle 9); asserting on
+        // the fields is asserting the same fact the ingest string used to carry,
+        // and `pcgen_import::companion_pcgen_guards` holds that string verbatim
+        // with a round-trip test against exactly these fields.
         assert_eq!(
             poison.description_variants[0].conditions,
-            &["PREVARLT:CompanionAdvancement,1"]
+            &[EffectCondition {
+                negated: false,
+                family: "VARLT",
+                items: &[
+                    ConditionItem { facet: None, value: "CompanionAdvancement" },
+                    ConditionItem { facet: None, value: "1" },
+                ],
+                alternatives: &[],
+            }]
         );
         assert_eq!(
             poison.description_variants[1].conditions,
-            &["PREVARGTEQ:CompanionAdvancement,1"]
+            &[EffectCondition {
+                negated: false,
+                family: "VARGTEQ",
+                items: &[
+                    ConditionItem { facet: None, value: "CompanionAdvancement" },
+                    ConditionItem { facet: None, value: "1" },
+                ],
+                alternatives: &[],
+            }]
         );
         assert!(
             poison.description_variants[0].text.contains("blurred vision"),
@@ -1704,16 +1831,32 @@ mod tests {
         let level_one = um.companion_class_resolve("1").expect("bare level-advancement row");
         assert_eq!(level_one.output_name, None);
         assert_eq!(level_one.hit_dice, None);
-        assert_eq!(level_one.ability_grants, &["FEAT|AUTOMATIC|CMB Output"]);
+        assert_eq!(
+            level_one.ability_grants,
+            &[CompanionAbilityGrant {
+                kind: "FEAT",
+                mode: "AUTOMATIC",
+                name: "CMB Output",
+                conditions: &[],
+            }]
+        );
 
         let botd1 =
             companion_book("book_of_the_damned_volume_1").expect("book_of_the_damned_volume_1 is registered");
         assert_eq!(botd1.companion_classes.len(), 2);
         let imp = botd1.companion_class_resolve("Imp Companion").expect("Imp Companion");
         assert_eq!(imp.hit_dice, Some(10));
-        assert_eq!(imp.ability_grants, &[] as &[&str]);
+        assert_eq!(imp.ability_grants, &[] as &[CompanionAbilityGrant]);
         let botd1_level_one = botd1.companion_class_resolve("1").expect("bare level-advancement row");
-        assert_eq!(botd1_level_one.ability_grants, &["FEAT|AUTOMATIC|CMB Output"]);
+        assert_eq!(
+            botd1_level_one.ability_grants,
+            &[CompanionAbilityGrant {
+                kind: "FEAT",
+                mode: "AUTOMATIC",
+                name: "CMB Output",
+                conditions: &[],
+            }]
+        );
 
         // Every OTHER registered book carries none -- the type is additive,
         // never assumed present.
@@ -1765,12 +1908,16 @@ mod tests {
         // oracle looked at it (or, for `oracle-unverifiable`, before the
         // oracle found it had no surface to check). Both are held content,
         // same as `58b4f837cc` taught the doneness table.
-        const HELD_STATUSES: [&str; 5] = [
+        // `sheet-complete` (SD-35 AT-35-E2-003, `decisions.md §1`): the
+        // record's `SheetRule` renders for a probe character -- held content
+        // under the sheet rule, the terminal state above `engine-does-not-hold`.
+        const HELD_STATUSES: [&str; 6] = [
             "grounded",
             "text-complete",
             "literal-verified",
             "oracle-agree",
             "oracle-unverifiable",
+            "sheet-complete",
         ];
 
         let companion_dir = repo_root.join("data/corpus/core_rulebook/companion");
@@ -1796,20 +1943,17 @@ mod tests {
         assert_eq!(GRANT_TOKEN_ONLY_DISPATCH_ROWS.len(), 12);
         for (key, _reason) in GRANT_TOKEN_ONLY_DISPATCH_ROWS {
             let doc = find_by_key(key);
-            let raw = doc["data"]["raw_tokens"].as_array().expect("raw_tokens is an array");
-            let has_modelled_token = raw
-                .iter()
-                .any(|t| matches!(t["key"].as_str(), Some("TYPE") | Some("DESC") | Some("BONUS")));
+            let has_modelled_token = ingest_record::token_keys(doc)
+                .into_iter()
+                .any(|k| matches!(k, "TYPE" | "DESC" | "BONUS"));
             assert!(
                 !has_modelled_token,
                 "{key}: expected zero-content (ABILITY grant only), but a modelled token is \
                  present -- this row may now carry real content and no longer belong here"
             );
-            let ability_targets: Vec<&str> = raw
-                .iter()
-                .filter(|t| t["key"].as_str() == Some("ABILITY"))
-                .map(|t| {
-                    let value = t["value"].as_str().expect("ABILITY token has a string value");
+            let ability_targets: Vec<&str> = ingest_record::token_values(doc, "ABILITY")
+                .into_iter()
+                .map(|value| {
                     // `Companion Class Feature|AUTOMATIC|<target key>|<optional PRE conditions>`
                     value.split('|').nth(2).unwrap_or_else(|| {
                         panic!("{key}: ABILITY token has no target key segment: {value}")

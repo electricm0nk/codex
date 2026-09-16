@@ -1,0 +1,569 @@
+{
+ "family": "bonus",
+ "rows_reviewed": 41,
+ "method": "Every count re-derived 2026-09-07 by walking data/corpus/**/*.json recursively (48,706 records with data.raw_tokens; _parity/ and LICENSE.json excluded), joining to docs/work-inventory.json by (book, source basename, source line) with (book, kind, key) fallback, non-DONE via scripts/completion_atlas.py::_bucket_of (23,315 of 49,438). PCGen semantics read in the pinned checkout ~/workspace/repos/pcgen at 7f818006 (scripts/pcgen-oracle-pin.env). Scratch scripts: /tmp/claude-1000/-home-ubuntu-workspace-repos-codex/c1daaafa-aa42-4b94-936d-cd2782fd55b4/scratchpad/judge/{census.py,census2.py,census3.py,divmul.py}.",
+ "verdicts": [
+  {
+   "token_type": "BONUS:VAR",
+   "refuted": true,
+   "axis": [
+    "E",
+    "F",
+    "C",
+    "G"
+   ],
+   "reason": "Three parts of the rule contradict PCGen and one contradicts the formula lane. (1) Typed VAR stacking is ignored: getTotalBonusTo(\"VAR\", name) runs every VAR addend through the same fold as any bonus (BonusManager.java:640-700, pinned PCGen 7f818006 (~/workspace/repos/pcgen, read-only)): same-TYPE addends whose type is not in miscinfo.lst:17 BONUSSTACKS take the MAX, .STACK sums, .REPLACE is max(plain+stack, replace) (:475-489). Corpus-wide 4,954 VAR addends carry TYPE=Base, 373 TYPE=Resistance, 992 TYPE=Domain, and 426 names have >=2 addends sharing one non-Boolean type (AC_Natural_Armor 1,385 Base, ColdResistanceBonus 89 Resistance). Real record pair: bestiary_2:monster:athach (b2_races.lst:108) `BONUS:VAR|ColdResistanceBonus|10|TYPE=Resistance` under bestiary_4:template:Shadow Creature (b4_templates.lst:164) `BONUS:VAR|ColdResistanceBonus|15|TYPE=Resistance|PREHD:MIN=11` -> PCGen 15, rule 2's DEFINE-plus-every-addend sum prints 25; werebear_abilities (b2_templates.lst:24) `AC_Natural_Armor|2|TYPE=Base` on athach's `15|TYPE=Base` -> PCGen 15, rule 17. bonus_stack_reader.rs::evaluate_stack has no TYPE handling (grep). (2) Corpus-wide inlining sums addends from records the character does not hold; PCGen's active-bonus map holds only held objects' bonuses (PlayerCharacter.java:2090-2140, getTotalBonusTo). BloodlineLVL has 5 corpus setters (bloodline_tracker, bloodline_development, eldritch_scion bloodline, draconic_bloodline-2, mythic_bloodline) plus Robe of Arcane Heritage (apg_equip_magic_items.lst:227) in PCGen; a sorcerer holds one. Same defect the formula lane names in row 28. (3) '/ -> Div (floors); floor(x) -> x' is not PCGen: JEP division is real-valued and truncation happens once at consumption (.intValue(); old parser VariableProcessor.java:378-420 `total /= valFloat`). 68 of 3,783 BONUS formulas containing a division (corpus-wide, own parse) feed an unfloored quotient into a multiplication: apg_abilities_class.lst:2118 Hawkeye `5+(5*((FighterLVL-2)/4))` PCGen F20 = 27 (27.5 truncated), rule = 25; ag eyes_of_the_storm `5+(5*(DruidLVL/4))`; acg beastmorph `BeastmorphProgression/2*15`. (4) The DEFINE-existence gate is silently dropped: when no HELD object DEFINEs the name PCGen sets includeBonus=false and discards every BONUS:VAR into it (PlayerCharacter.java:2124-2136); the rule keeps them. (5) V1 'DEFINEd nowhere in the corpus -> refuse per name' is wrong for most of its population: see cross_family_conflicts[1]. Counts that do reproduce: 27,331 instances, 10,211 records, 6,699 non-DONE units (row says 6,708) of 23,315 non-DONE units (completion_atlas._bucket_of over docs/work-inventory.json at HEAD); records joined by (book, source basename, source line) with (book, kind, key) fallback over 48,706 data/corpus/**/*.json records carrying data.raw_tokens (_parity/ and LICENSE.json excluded).",
+   "fix": "Map BONUS:VAR to Expr::Var(VarId) plus a converter-emitted contribution table data/sheet_rules/_vars/<id>.json of {rule_id, expr, bonus_type} (formula row 28 form B); the live evaluator folds the HELD contributions with the S1 BONUSSTACKS rule (untyped/Dodge/Racial/... sum; other same-type max; .STACK sum; .REPLACE max; negatives always add) and emits 0 when no held rule declares the name. Normalise formula arithmetic so truncation happens once at the top (single Div over a rational numerator, or formula gap G16); keep floor()/ceil() as explicit nodes. Re-derive the undefined-name set case-insensitively (VariableKey.java:23-36 CaseInsensitiveMap; BonusManager.java:99 toUpperCase) and split it per cross_family_conflicts[1]. Keep the fixed name table for system-row consumers, but derive it from ce_abilities_race.lst:33-50 Default.MOD rows (e.g. :50 `DEFINE:AC_Natural_Armor|0 BONUS:COMBAT|AC|max(AC_Natural_Armor,0)|TYPE=NaturalArmor`), which are an ingest item, not a hand table.",
+   "confidence": "high"
+  },
+  {
+   "token_type": "BONUS:VAR (TYPE=Boolean flag)",
+   "refuted": false,
+   "axis": [
+    "C"
+   ],
+   "reason": "Rule is per name and per TYPE, mechanical; 1,709 TYPE=Boolean instances reproduce exactly (own count, denominator 27,331 VAR instances). Example 2 is wrong for this row: core_rulebook cr_abilities_race.lst:239 `BONUS:VAR|RacialSLA_SpeakWithAnimalsRodentsOnly_Times|1|TYPE=Base` is a TYPE=Base number consumed by the SPELLS TIMES= field and a PREVAREQ, not a Boolean flag; it belongs to the VAR binding row.",
+   "fix": "keep; replace example 2 with a TYPE=Boolean record (e.g. a <Class>_CF_<Feature> flag) and state that a 0/1 constant is a flag only when TYPE=Boolean or when the consumer census shows PRE-only consumers -- a per-name test, never per record.",
+   "confidence": "medium"
+  },
+  {
+   "token_type": "BONUS:VAR ([redacted PI] value)",
+   "refuted": false,
+   "axis": [],
+   "reason": "Pointer row to the PI REFUSE row; nothing to break.",
+   "fix": "keep",
+   "confidence": "high"
+  },
+  {
+   "token_type": "BONUS:STAT",
+   "refuted": false,
+   "axis": [
+    "E",
+    "D"
+   ],
+   "reason": "PCGen semantics verified in source: BonusManager.java:640-700 (untyped stack, same-type max unless in BONUSSTACKS, negatives add), :475-489 (.REPLACE = max(plain+stack, replace)), miscinfo.lst:17 BONUSSTACKS lists Racial; BonusObj.java:94 uppercases the type so `Type=` spellings are the same type. Counts reproduce: 8,835 instances, 2,306 records, 426 non-DONE units of 23,315 non-DONE units (completion_atlas._bucket_of over docs/work-inventory.json at HEAD); records joined by (book, source basename, source line) with (book, kind, key) fallback over 48,706 data/corpus/**/*.json records carrying data.raw_tokens (_parity/ and LICENSE.json excluded). %LIST -> Choice matches the sheet rule.",
+   "fix": "keep",
+   "confidence": "high"
+  },
+  {
+   "token_type": "BONUS:ABILITYPOOL",
+   "refuted": true,
+   "axis": [
+    "D",
+    "E"
+   ],
+   "reason": "Rule survives (PCGen sums the pool bonus per category and floors it: PlayerCharacter.java:7507-7524, so Div matches). The refusal evidence does not: '97 undefined identifiers (all ultimate_psionics *EnhancementCount names)' -- own census finds 46 undefined names / 322 instances on ABILITYPOOL formulas, and they include adventurers_guide prestige-class levels (BellflowerTillerLVL, WestcrownDevilLVL, HellknightSigniferLVL, LanternBearerLVL) that are DEFINEd in PCGen ag_classes.lst on class rows the corpus never ingested, plus case typos (FighterLvl, SoWLvl) PCGen resolves case-insensitively. Units 1,103 vs row's 1,105 of 23,315 non-DONE units (completion_atlas._bucket_of over docs/work-inventory.json at HEAD); records joined by (book, source basename, source line) with (book, kind, key) fallback over 48,706 data/corpus/**/*.json records carrying data.raw_tokens (_parity/ and LICENSE.json excluded) (agrees).",
+   "fix": "keep the mapping; redo the refusal census case-insensitively against corpus DEFINEs and pinned PCGen DEFINEs; map the pool size to the prereq lane's Choice.count (prereq.md section 1) so the printed sheet shows the picks, which settles this row's open question.",
+   "confidence": "medium"
+  },
+  {
+   "token_type": "BONUS:SKILL",
+   "refuted": true,
+   "axis": [
+    "D"
+   ],
+   "reason": "Rule and PCGen semantics hold (TYPE=ClassSkill: all 105 instances are on `skill` records as `SKILL|X|3|TYPE=ClassSkill|PRECSKILL:1,X|PRESKILL:1,X=1`, the +3 class-skill mechanism, verified). The unit count is off by 8%: own join gives 706 non-DONE units of 23,315 non-DONE units (completion_atlas._bucket_of over docs/work-inventory.json at HEAD); records joined by (book, source basename, source line) with (book, kind, key) fallback over 48,706 data/corpus/**/*.json records carrying data.raw_tokens (_parity/ and LICENSE.json excluded); every one of the 1,571 SKILL records joins by source line, so the gap is not join failure. Instances 2,075 and records 1,571 reproduce.",
+   "fix": "keep rule; correct units to 706 (or show the join that yields 763).",
+   "confidence": "high"
+  },
+  {
+   "token_type": "BONUS:WEAPONPROF=<name>",
+   "refuted": true,
+   "axis": [
+    "A",
+    "C"
+   ],
+   "reason": "The DAMAGESIZE rule says the base die is read 'from the same record's NATURALATTACKS or the weapon record', but two of the row's three examples have no die on the record: Blood Beak (acg_abilities_arg.lst:56) and Bloodrager claws (acg_abilities_class.lst:607) get the die from a NATURALATTACKS token on a granted sibling. As written the rule leaves those records with no die to step, so the sheet line 'Beak 1d6' cannot be produced; the row parks this as an open question instead of stating the closure. PCGen applies DAMAGESIZE as an ordinal step on the weapon's damage size (Equipment.java:5163-5164, bonusTo WEAPON DAMAGESIZE). Property census reproduces: DAMAGESIZE 584(+1 combined), DAMAGE 556+15, TOHIT 193+126, WIELDCATEGORY 63, REACH 62 (corpus-wide, 1,678 instances). Units 245 vs 246 agree.",
+   "fix": "state the rule: base die = the NATURALATTACKS/weapon record reached through the record's grant closure (ABILITY/AUTO edges, the prereq lane's granted_by); Const step -> step the die at convert time; level-gated step -> gap D1; no die reachable -> refuse per shape 'DAMAGESIZE without a base die'.",
+   "confidence": "medium"
+  },
+  {
+   "token_type": "BONUS:SPELLCAST",
+   "refuted": false,
+   "axis": [
+    "E"
+   ],
+   "reason": "PCGen sums SPELLCAST bonuses per (class, spell level) cell (SpellSupportForPCClass.java:500-505) and the T1 cell target is the right shape. Not verified: 'cell values below 0 print as --' -- no clamp exists in :475-515; that is an output-sheet convention, not engine semantics. 93/93/620 reproduce.",
+   "fix": "keep; mark the '--' rendering as the product's own display rule, not a PCGen fact.",
+   "confidence": "medium"
+  },
+  {
+   "token_type": "BONUS:COMBAT",
+   "refuted": false,
+   "axis": [
+    "E",
+    "D"
+   ],
+   "reason": "BASEAB as Div(Mul(ClassLevel,3),4) is exact against PCGen's `classlevel*3/4` (Mul then Div at the top; truncation equals floor for non-negative). .REPLACE semantics verified (BonusManager.java:475-489). Units 344 vs 352 (2.3%), records 527, instances 586 reproduce. Evidence note: 'PhantomArmorBonus family: undefined' is wrong -- DEFINE:PhantomArmorBonus is in PCGen oa_abilities_race.lst on a row the corpus did not ingest (ingest gap, E7/mastervar still applies to its formula).",
+   "fix": "keep; relabel the PhantomArmorBonus refusals as ingest-remainder + E7, not undefined.",
+   "confidence": "high"
+  },
+  {
+   "token_type": "BONUS:SPELLKNOWN",
+   "refuted": true,
+   "axis": [
+    "D"
+   ],
+   "reason": "Rule holds. Units off by 6.6%: own join gives 338 non-DONE units of 23,315 non-DONE units (completion_atlas._bucket_of over docs/work-inventory.json at HEAD); records joined by (book, source basename, source line) with (book, kind, key) fallback over 48,706 data/corpus/**/*.json records carrying data.raw_tokens (_parity/ and LICENSE.json excluded) (row: 362); all 462 SPELLKNOWN records join by source line. Instances 582 and records 462 reproduce.",
+   "fix": "keep rule; correct units to 338.",
+   "confidence": "high"
+  },
+  {
+   "token_type": "BONUS:SITUATION",
+   "refuted": false,
+   "axis": [
+    "B"
+   ],
+   "reason": "The situation words are English data text from the target field (`Acrobatics=When Jumping`), not PCGen syntax, so copying them to the label does not violate the PCGen-free rule; they must be case-normalised and never carry a `TYPE=` or `%` marker. Counts reproduce: 549 instances, 493 records, 234 vs 238 non-DONE units of 23,315 non-DONE units (completion_atlas._bucket_of over docs/work-inventory.json at HEAD); records joined by (book, source basename, source line) with (book, kind, key) fallback over 48,706 data/corpus/**/*.json records carrying data.raw_tokens (_parity/ and LICENSE.json excluded).",
+   "fix": "keep; add 'lower-case the situation text and refuse a target containing % or =' to the rule.",
+   "confidence": "high"
+  },
+  {
+   "token_type": "BONUS:SAVE",
+   "refuted": false,
+   "axis": [
+    "E",
+    "D"
+   ],
+   "reason": "Verified: BASE.x `classlevel/2+2` and `/3` give the same integer under real division truncated at the end as under Div-floors for non-negative levels; `Type=Racial` is the same type after BonusObj.java:94 uppercasing. 549/317/225-vs-228 reproduce.",
+   "fix": "keep",
+   "confidence": "high"
+  },
+  {
+   "token_type": "BONUS:CASTERLEVEL",
+   "refuted": false,
+   "axis": [
+    "B"
+   ],
+   "reason": "Counts reproduce (188 instances, 123 records, 113 vs 117 non-DONE units). The var(CL)+var(BL) pair rule matches PCGen's CL= and BL= export terms. B-axis gap: SCHOOL.X / DESCRIPTOR.X / SUBSCHOOL.X scopes must reach the label through a fixed scope-word table (the examples show 'fire spells', the rule does not say how); `DESCRIPTOR.Fire` must never be printed.",
+   "fix": "keep; add the scope-word table (SCHOOL.X -> '<x> spells', DESCRIPTOR.X -> '<x> spells', SPELL.%LIST -> Choice) to the rule text.",
+   "confidence": "medium"
+  },
+  {
+   "token_type": "BONUS:SIZEMOD",
+   "refuted": false,
+   "axis": [
+    "E"
+   ],
+   "reason": "Verified: SizeFacet.java:164 adds getBonus(SIZEMOD, NUMBER) to the racial size ordinal before HD advancement; Z1 is a real gap. 175/174/25 reproduce.",
+   "fix": "keep",
+   "confidence": "high"
+  },
+  {
+   "token_type": "BONUS:MOVEADD",
+   "refuted": false,
+   "axis": [
+    "E"
+   ],
+   "reason": "Verified: MoveAdd.java:46 accepts the `TYPE=` spelling (LST_TYPE_EQUAL) so the 21 `TYPE=Walk` tokens are the same target. 138/125/87 reproduce. Evidence note: UnfetteredEidolonBaseSpeed is DEFINEd in PCGen b3_abilities_race.lst (ingest gap, not undefined).",
+   "fix": "keep",
+   "confidence": "high"
+  },
+  {
+   "token_type": "BONUS:POSTMOVEADD",
+   "refuted": false,
+   "axis": [],
+   "reason": "4/4/3 reproduce; same shape as MOVEADD.",
+   "fix": "keep",
+   "confidence": "high"
+  },
+  {
+   "token_type": "BONUS:MOVEMULT",
+   "refuted": false,
+   "axis": [
+    "G"
+   ],
+   "reason": "1 record, DONE; the Speed(mode) gap is real and shared with formula row 45 (MOVECLONE).",
+   "fix": "keep",
+   "confidence": "high"
+  },
+  {
+   "token_type": "BONUS:[redacted PI]",
+   "refuted": false,
+   "axis": [
+    "D"
+   ],
+   "reason": "138 instances on 99 records, 99 non-DONE units reproduce exactly of 23,315 non-DONE units (completion_atlas._bucket_of over docs/work-inventory.json at HEAD); records joined by (book, source basename, source line) with (book, kind, key) fallback over 48,706 data/corpus/**/*.json records carrying data.raw_tokens (_parity/ and LICENSE.json excluded); nothing readable, refusal is per token type.",
+   "fix": "keep",
+   "confidence": "high"
+  },
+  {
+   "token_type": "BONUS:PCLEVEL",
+   "refuted": false,
+   "axis": [
+    "E"
+   ],
+   "reason": "Verified: caster level adds getTotalBonusTo(PCLEVEL, class) (SpellSupportForPCClass.java:165-166, :298-299, :464-465) and class-level counts add it too (PlayerCharacter.java:3434). C1 is real. 125/122/83 reproduce.",
+   "fix": "keep; define CasterLevel(X) in technical-design section 1 as class levels of X plus held PCLEVEL grants to X -- this also settles formula row 20 / gap G5.",
+   "confidence": "high"
+  },
+  {
+   "token_type": "BONUS:SKILLPOOL",
+   "refuted": false,
+   "axis": [],
+   "reason": "80 instances on 4 records, 4 non-DONE units reproduce; T1 shape shared with SPELLCAST.",
+   "fix": "keep",
+   "confidence": "medium"
+  },
+  {
+   "token_type": "BONUS:SPECIALTYSPELLKNOWN",
+   "refuted": false,
+   "axis": [],
+   "reason": "72/8/8 reproduce.",
+   "fix": "keep",
+   "confidence": "high"
+  },
+  {
+   "token_type": "BONUS:SKILLRANK",
+   "refuted": false,
+   "axis": [
+    "E"
+   ],
+   "reason": "Verified: SkillRankControl.java:263-266 adds getTotalBonusTo(SKILLRANK, skill) (and TYPE.) to ranks. 69/47/38 reproduce. Evidence note: PhantomSkillRankBonus is DEFINEd in PCGen oa_abilities_race.lst (ingest gap + E7), not undefined.",
+   "fix": "keep",
+   "confidence": "high"
+  },
+  {
+   "token_type": "BONUS:SLOTS",
+   "refuted": false,
+   "axis": [],
+   "reason": "67 instances / 10 records / 1 non-DONE unit reproduce; Metadata is right for a sheet with no slot ledger.",
+   "fix": "keep",
+   "confidence": "high"
+  },
+  {
+   "token_type": "BONUS:MISC",
+   "refuted": false,
+   "axis": [],
+   "reason": "65/42/33-vs-34 reproduce; CR-per-kind is a kind rule, not per record.",
+   "fix": "keep",
+   "confidence": "medium"
+  },
+  {
+   "token_type": "BONUS:HP",
+   "refuted": true,
+   "axis": [
+    "A"
+   ],
+   "reason": "Example 2 prints the wrong number. Under the ordinal the row's own open question states (Fine=0 ... Colossal=8; PlayerCharacter.java:5554 sizeInt() returns SIZEORDER) Large is 5, so ce_abilities_race.lst:1684 `BONUS:HP|CURRENTMAX|max(SIZE-2,0)*10` gives +30 for Large; +20 is Medium. The Bestiary construct bonus-HP table (Small 10, Medium 20, Large 30) agrees, so the formula pins the ordinal. The rule itself is right. 51/40/32 reproduce.",
+   "fix": "keep rule; fix example 2 to 'HP +30 (Large construct: ordinal 5-2 = 3, x10)'.",
+   "confidence": "high"
+  },
+  {
+   "token_type": "BONUS:DOMAIN",
+   "refuted": false,
+   "axis": [],
+   "reason": "46/46/43 reproduce; pool-vs-picks answer is the same as ABILITYPOOL (Choice.count).",
+   "fix": "keep",
+   "confidence": "medium"
+  },
+  {
+   "token_type": "BONUS:VISION",
+   "refuted": false,
+   "axis": [
+    "E"
+   ],
+   "reason": "Two PCGen code paths disagree: VisionFacet.java:169-176 (full vision list) ADDS the bonus to the existing range and creates the mode if absent; :243-247 (single-type query) takes the MAX of existing and bonus. The row's 'added to that mode' matches the list path the export uses. 45/45/19 reproduce.",
+   "fix": "keep; note the max-path divergence so an oracle disagreement on a monster with two darkvision sources is not read as a converter bug.",
+   "confidence": "medium"
+  },
+  {
+   "token_type": "BONUS:DC",
+   "refuted": false,
+   "axis": [
+    "B"
+   ],
+   "reason": "36/31/27 reproduce; scope words need the same fixed table as CASTERLEVEL.",
+   "fix": "keep",
+   "confidence": "high"
+  },
+  {
+   "token_type": "BONUS:DR",
+   "refuted": false,
+   "axis": [
+    "E"
+   ],
+   "reason": "29/26/24 reproduce; `var(\"DruidLVL\")` is the JEP var() function over a DEFINEd name, so the E5 identifier rule is right.",
+   "fix": "keep",
+   "confidence": "high"
+  },
+  {
+   "token_type": "BONUS:CONCENTRATION",
+   "refuted": true,
+   "axis": [
+    "D"
+   ],
+   "reason": "Own join gives 6 non-DONE units of 23,315 non-DONE units (completion_atlas._bucket_of over docs/work-inventory.json at HEAD); records joined by (book, source basename, source line) with (book, kind, key) fallback over 48,706 data/corpus/**/*.json records carrying data.raw_tokens (_parity/ and LICENSE.json excluded), the row says 8 (two units, 25%); 16 instances and 15 records reproduce. Rule holds; the two target-less tokens are malformed for PCGen's `CONCENTRATION|<target>|<formula>` shape.",
+   "fix": "keep rule; correct units to 6.",
+   "confidence": "medium"
+  },
+  {
+   "token_type": "BONUS:SKILLPOINTS",
+   "refuted": false,
+   "axis": [],
+   "reason": "14/14/11 reproduce.",
+   "fix": "keep",
+   "confidence": "high"
+  },
+  {
+   "token_type": "BONUS:WIELDCATEGORY",
+   "refuted": false,
+   "axis": [],
+   "reason": "9/9/0 reproduce; Text is right.",
+   "fix": "keep",
+   "confidence": "high"
+  },
+  {
+   "token_type": "BONUS:RANGEADD",
+   "refuted": false,
+   "axis": [
+    "E"
+   ],
+   "reason": "Counts reproduce (5/4/4). The worked number in example 2 is the book's (25 ft. at F20) and not PCGen's: JEP real division makes apg_abilities_class.lst:2118 `5+(5*((FighterLVL-2)/4))` = 27.5 -> 27 in PCGen. No export token covers RANGEADD, so this is a known PCGen-divergence, not a parity failure; it is one of the 68 Div-under-Mul formulas named on the VAR row.",
+   "fix": "keep; tag the example 'PCGen prints 27 (real division); the sheet prints the book's 25' so Epic 6 parity does not chase it.",
+   "confidence": "medium"
+  },
+  {
+   "token_type": "BONUS:RANGEMULT",
+   "refuted": false,
+   "axis": [],
+   "reason": "2 instances / 1 record reproduce.",
+   "fix": "keep",
+   "confidence": "high"
+  },
+  {
+   "token_type": "BONUS:WEAPON",
+   "refuted": false,
+   "axis": [],
+   "reason": "4/3/0 reproduce; all DONE.",
+   "fix": "keep",
+   "confidence": "high"
+  },
+  {
+   "token_type": "BONUS:LANGUAGES",
+   "refuted": false,
+   "axis": [],
+   "reason": "3/3/3 reproduce.",
+   "fix": "keep",
+   "confidence": "high"
+  },
+  {
+   "token_type": "BONUS:FOLLOWERS",
+   "refuted": false,
+   "axis": [],
+   "reason": "3/3/3 reproduce.",
+   "fix": "keep",
+   "confidence": "high"
+  },
+  {
+   "token_type": "BONUS:MONSKILLPTS",
+   "refuted": false,
+   "axis": [],
+   "reason": "3/3/3 reproduce.",
+   "fix": "keep",
+   "confidence": "medium"
+  },
+  {
+   "token_type": "BONUS:FEAT",
+   "refuted": false,
+   "axis": [],
+   "reason": "3/3/3 reproduce; same Choice.count answer as ABILITYPOOL.",
+   "fix": "keep",
+   "confidence": "high"
+  },
+  {
+   "token_type": "BONUS:EQMARMOR",
+   "refuted": false,
+   "axis": [],
+   "reason": "1/1/1 reproduce; Max/Sum shape is exact.",
+   "fix": "keep",
+   "confidence": "high"
+  },
+  {
+   "token_type": "BONUS:UDAM",
+   "refuted": false,
+   "axis": [
+    "G"
+   ],
+   "reason": "1/1/1 reproduce; D1 is real (formula row 35 names the same DiceBySize gap).",
+   "fix": "keep",
+   "confidence": "medium"
+  }
+ ],
+ "cross_family_conflicts": [
+  {
+   "rows": [
+    "bonus:BONUS:VAR (rule 2, inline the corpus-wide producer chain)",
+    "formula:row 28 FORMULA: corpus variable, cross-record (form B, Var + contribution table)"
+   ],
+   "issue": "The bonus lane inlines DEFINE base + every corpus addend for a name; the formula lane says inline over-counts and recommends a contribution table summed over HELD rules. PCGen: the value of a variable is the DEFINE seed of held objects plus getTotalBonusTo(\"VAR\", name) over the character's ACTIVE bonus map, which holds only bonuses of objects the character holds (PlayerCharacter.java:2090-2140); so unheld setters never contribute. BloodlineLVL: 5 corpus setters + Robe of Arcane Heritage (apg_equip_magic_items.lst:227); a sorcerer holds Bloodline Tracker (cr_abilities_class.lst:1705, `BONUS:VAR|BloodlineLVL|SorcererLVL|TYPE=Base`) only. Both lanes miss a second PCGen fact: VAR contributions are TYPED and fold by BonusManager.java:640-700 (same non-BONUSSTACKS type -> max), e.g. athach (b2_races.lst:108) `ColdResistanceBonus|10|TYPE=Resistance` + Shadow Creature (b4_templates.lst:164) `15|TYPE=Resistance` -> PCGen 15, either lane's plain sum 25.",
+   "recommendation": "Ruling: formula row 28 form B. Expr::Var(VarId) + data/sheet_rules/_vars/<id>.json listing {rule_id, expr, bonus_type}; the live evaluator sums held contributions through the S1 BONUSSTACKS fold (untyped/Dodge/Racial/Circumstance/Defense/NotRanged/NotFlatFooted sum; other same-type max; .STACK sum; .REPLACE = max(plain+stack, replace); negatives always add) and yields 0 when no held rule DEFINEs the name (PlayerCharacter.java:2124-2136 includeBonus=false). Held-ness comes from the prereq lane's held-set fixpoint, which needs class LEVEL grants (prereq.md 4.2) -- that ruling now blocks this family's cross-record rows too."
+  },
+  {
+   "rows": [
+    "bonus:BONUS:VAR gap V1 (identifier DEFINEd nowhere in the corpus -> refuse per name; 231 names, 1,417 instances)",
+    "formula:row 30 FORMULA: identifier DEFINEd nowhere (corpus or pinned PCGen data) -> Const(0) (756 / 618 non-DONE units)"
+   ],
+   "issue": "Both sets are computed case-sensitively, and the bonus lane's set is not 'DEFINEd nowhere'. PCGen variable keys are case-insensitive (VariableKey.java:23,36,123 CaseInsensitiveMap; BonusManager.java:99,216 toUpperCase). Own census of identifiers in BONUS formulas with no corpus DEFINE (219 names after dropping 8 tokenizer artefacts, 629 non-DONE units of 23,315): (a) 130 names / 778 instances / 434 non-DONE units are DEFINEd in pinned PCGen data on rows the corpus never ingested (VitalistLVL and 8 more ultimate_psionics classes in up_classes.lst, Caster_Level_Bonus in ce_abilities.lst, BoonCompanionBonus_AnimalCompanion in sos_abilities.lst, CompanionHD/PhantomMasterLevel in companion mods, adventurers_guide prestige levels in ag_classes.lst) -- PCGen does NOT print 0 for these, so Const(0) is wrong and refuse-per-name mislabels an ingest remainder; (b) 21 names / 76 instances / 67 non-DONE units are case variants of a DEFINEd name (FighterLvl, HellknightLvl, MONKLVL, MASTERLEVEL) that PCGen resolves -- both lanes' 'undefined' verdicts are wrong for them; (c) 68 names / 495 instances / 134 non-DONE units are DEFINEd nowhere in corpus or PCGen (BloodlinePower{1,3,9,15,20}LVLBonus, BloodlinePower1TimesBonus, EldrtichHeritage*, Bloodrager_CF_*, FavoredTerrainBase) -- for these PCGen evaluates the term to 0 (VariableProcessor.java:532-560 lookupVariable returns null; :378-420 NumberFormatException -> 'just zero'; PlayerCharacter.java:2124-2136 drops BONUS:VAR contributions), so Const(0) plus a defect list matches the oracle. The formula lane's 618 counts every formula position; this family's share is (c).",
+   "recommendation": "Ruling: three sets, each per name. (a) ingest remainder per file (formula row 29's mechanism), not a refusal and not 0; (b) resolve case-insensitively in the converter's variable index; (c) Const(0) with data/sheet_rules/_defects/undefined-variables.json, plus a converter-side alias table for obvious typos of a DEFINEd sibling (HellknightLvl -> HellknightLVL is set (b), but EldrtichHeritage* has no sibling and stays 0). Print-what-the-player-writes is not met for (c) by either lane; the defect list is the honest surface."
+  },
+  {
+   "rows": [
+    "bonus:BONUS:VAR rule 1 ('/ -> Div, floor(x) -> x since Div floors')",
+    "formula:row 17 FORMULA: floor ('Not gaps: floor (Div floors, agrees with Math.floor)')"
+   ],
+   "issue": "The two lanes agree with each other and both diverge from PCGen: JEP evaluates `/` as real division and only the consumer truncates (VariableProcessor.java:378-420; .intValue() at every consumption site). 68 of 3,783 BONUS formulas with a division feed an unfloored quotient into a multiplication (own parse, corpus-wide): Hawkeye `5+(5*((FighterLVL-2)/4))` = 27 in PCGen vs 25 under Div-floors; `TempestDruidStormSight|5+(5*(DruidLVL/4))`; `BeastmorphClimbSpeed|BeastmorphProgression/2*15`. In several the book intends the floored value, so this is a PCGen quirk the oracle will surface.",
+   "recommendation": "Converter normalises each formula to a single top-level truncation (rational numerator over a constant denominator; formula gap G16) so parity holds, and records the 68 formulas as a named PCGen-divergence class in artifacts/epic-6-pcgen-exit/ so Epic 6 parity does not chase them one by one. Keep explicit floor()/ceil() as nodes."
+  },
+  {
+   "rows": [
+    "bonus:BONUS:ABILITYPOOL / BONUS:DOMAIN / BONUS:FEAT (Number(Expr) 'N picks' sheet line)",
+    "prereq:CHOOSE / SELECT (Choice { count: Expr }) and prereq:ABILITYCATEGORY (REFUSE, blocked on ingest)"
+   ],
+   "issue": "The bonus lane prints the pool size and asks whether it is a sheet line; the prereq lane models the same number as Choice.count and refuses the pool definitions because *_abilitycategories.lst is not ingested. PCGen: pool = base pool formula + floor(ABILITYPOOL bonus) (PlayerCharacter.java:7507-7524).",
+   "recommendation": "ABILITYPOOL/DOMAIN/FEAT map to the prereq lane's Choice.count on the pool's Choice; the printed sheet shows the picks, not the pool size. The ABILITYCATEGORY ingest is a shared blocker."
+  },
+  {
+   "rows": [
+    "bonus:gap C1 (CasterLevel(X) must accept PCLEVEL)",
+    "formula:row 20 / gap G5 (PcLevelBonus unless CasterLevel includes it)"
+   ],
+   "issue": "Same question asked twice; PCGen answers it: caster level for a class includes getTotalBonusTo(PCLEVEL, class) (SpellSupportForPCClass.java:165-166).",
+   "recommendation": "Define CasterLevel(X) := class levels of X + held PCLEVEL grants to X in technical-design section 1; no new variant."
+  },
+  {
+   "rows": [
+    "bonus:gap A1 Applies::FeatureNotReplaced(feature_id)",
+    "prereq:class LEVEL grants (suppressed_by_var -> Not(Holds{archetype rule})) and prereq:PREFACT -> Holds"
+   ],
+   "issue": "Two names for one fact (1,580 PREFACT *_CF_*=True and 261 PREVAREQ *_CF_*,1 gates on BONUS tokens, own count; the bonus lane says 1,621 and ~170).",
+   "recommendation": "Use the prereq lane's Not(Holds{archetype rule}) and drop A1 as a separate variant."
+  }
+ ],
+ "expr_gaps_verdict": [
+  {
+   "gap": "E1 Expr::If(Cond, then, else)",
+   "real": true,
+   "necessary": false,
+   "units": 2500,
+   "note": "Exact encoding exists ((X>=k) = Min(1, Max(0, X-k+1)); if(c,a,b) = b + c*(a-b)); legibility only. Agrees with formula row 19."
+  },
+  {
+   "gap": "E2 Expr::Ceil / Abs",
+   "real": true,
+   "necessary": true,
+   "units": 49,
+   "note": "No fallback for ceil in the vocabulary; formula gap G8 agrees."
+  },
+  {
+   "gap": "E3 Expr::SkillRanks(SkillId)",
+   "real": true,
+   "necessary": true,
+   "units": 182,
+   "note": "skillinfo(TOTALRANK|RANK) and SKILLRANK mirroring; formula G6 and prereq PRESKILL agree."
+  },
+  {
+   "gap": "E4 Expr::CountHeld",
+   "real": true,
+   "necessary": true,
+   "units": 39,
+   "note": "count(\"ABILITIES\",...); refuse otherwise; formula G7 agrees."
+  },
+  {
+   "gap": "E5 Expr::BonusCasterLevels / var(name) = name",
+   "real": true,
+   "necessary": false,
+   "units": 193,
+   "note": "var(\"CL=X\")+var(\"BL=X\") -> CasterLevel(X) resolves the pair; a lone BL= is rare. var(\"Name\") of a DEFINEd name is the JEP var() function and maps to the identifier."
+  },
+  {
+   "gap": "E6 equipment/encumbrance/armor state",
+   "real": true,
+   "necessary": true,
+   "units": 60,
+   "note": "ENCUMBERANCE, COUNT[EQTYPE...], ACCHECK, SHIELDACCHECK, MOVEBASE, CR are not character facts in section 1; refuse or words. CR overlaps formula G9 ChallengeRating (needed for monsters)."
+  },
+  {
+   "gap": "E7 Expr::MasterLevel / mastervar()",
+   "real": true,
+   "necessary": true,
+   "units": 254,
+   "note": "240 MasterLevel gates + 14 mastervar calls; formula G11 agrees; several 'undefined' names (PhantomArmorBonus, PhantomSkillRankBonus, CompanionHD) are really this gap plus an ingest gap."
+  },
+  {
+   "gap": "V1 identifier DEFINEd nowhere in the corpus -> refuse per name",
+   "real": false,
+   "necessary": false,
+   "units": 629,
+   "note": "REFUTED as stated: 434 of the 629 non-DONE units hang on names DEFINEd in pinned PCGen data on never-ingested rows (ingest remainder), 67 on case variants PCGen resolves, 134 on names DEFINEd nowhere (Const(0) per PCGen). See cross_family_conflicts[1]."
+  },
+  {
+   "gap": "S1 SheetRule.target + bonus_type",
+   "real": true,
+   "necessary": true,
+   "units": 11000,
+   "note": "Confirmed and WIDENED: Var contributions need bonus_type too (4,954 TYPE=Base, 373 TYPE=Resistance, 992 TYPE=Domain VAR addends), and the live fold must be the BONUSSTACKS rule from BonusManager.java:640-700 / miscinfo.lst:17."
+  },
+  {
+   "gap": "T1 table-cell target (class, spell_level)",
+   "real": true,
+   "necessary": true,
+   "units": 1354,
+   "note": "SPELLCAST/SPELLKNOWN/SPECIALTYSPELLKNOWN/SKILLPOOL; PCGen keys the bonus by class+level (SpellSupportForPCClass.java:500-505)."
+  },
+  {
+   "gap": "D1 SheetValue::Dice size_steps: Expr",
+   "real": true,
+   "necessary": true,
+   "units": 586,
+   "note": "Level-gated DAMAGESIZE (Bloodrager claws) and UDAM; formula G14 DiceBySize is the same need. Also needs the grant closure to find the base die."
+  },
+  {
+   "gap": "Z1 Size = race size + Sum(SIZEMOD)",
+   "real": true,
+   "necessary": true,
+   "units": 175,
+   "note": "SizeFacet.java:164 confirms; every Size-reading Expr must see the mutated ordinal (HP construct formula, PRESIZE gates)."
+  },
+  {
+   "gap": "C1 CasterLevel(X) includes PCLEVEL",
+   "real": true,
+   "necessary": true,
+   "units": 125,
+   "note": "Not a new variant: a definition (SpellSupportForPCClass.java:165-166). Settles formula G5."
+  },
+  {
+   "gap": "A1-A7 Applies variants",
+   "real": true,
+   "necessary": true,
+   "units": 1900,
+   "note": "A1 duplicates the prereq lane's Not(Holds{archetype}); A2 SkillRanks/ClassSkill, A4 Alignment, A5 Size, A6 Vision, A7 HitDice match prereq's Holdable/Compare vocabulary -- adopt prereq's names."
+  },
+  {
+   "gap": "MISSING: Expr::Var(VarId) + contribution table (formula G1)",
+   "real": true,
+   "necessary": true,
+   "units": 6646,
+   "note": "Absent from the bonus lane's list because rule 2 inlines; required by the cross-record ruling above (6,646 non-DONE units per formula row 28; 6,699 non-DONE units carry a VAR in this family)."
+  },
+  {
+   "gap": "MISSING: single top-level truncation / rational division (formula G16)",
+   "real": true,
+   "necessary": true,
+   "units": 68,
+   "note": "68 BONUS formulas (of 3,783 with a division) change value under Div-floors; needed for oracle parity."
+  }
+ ],
+ "missing_rows": [
+  "BONUS:VAR typed contributions (TYPE=Base 4,954 / Domain 992 / Resistance 373 / Racial 122 / Base.STACK 113 / Base.REPLACE 62 instances of 27,331): the family has no row stating that VAR addends fold by type; 426 names carry >=2 same-type addends.",
+  "System-row consumers of 'no corpus consumer' VARs: ce_abilities_race.lst:33-50 Default.MOD rows (`BONUS:COMBAT|AC|max(AC_Natural_Armor,0)|TYPE=NaturalArmor`; `ABILITY:...|Resistance to Cold|PREVARGTEQ:ColdResistanceBonus,1`; `ABILITY:...|Darkvision|PREVARGTEQ:DarkvisionRange,1`) are the actual mapping for AC_Natural_Armor, *ResistanceBonus, DarkvisionRange and are not in the corpus; the name table should be derived from them (an ingest row set), not hand-written.",
+  "BONUS:WEAPONPROF=<name> property tail: STATDAMAGE, DAMAGEMULT:0/2, RANGE, absolute CRITRANGE/CRITMULT (9 instances) have no disposition in the row."
+ ],
+ "blockers_confirmed": [
+  "S1 (target + bonus_type on SheetRule, and on every Var contribution) -- without it the live fold double-counts same-type bonuses across records (racial +2s, Resistance VARs, Base natural armor).",
+  "G1 Expr::Var + contribution table, summed over HELD rules -- which depends on the prereq lane's held-set fixpoint and therefore on the class LEVEL grants ruling (prereq.md 4.2). That ruling blocks 6,646 non-DONE cross-record units in this family too.",
+  "Ingest remainder: 130 names / 434 non-DONE units in this family reference a variable DEFINEd only on never-ingested PCGen rows (up_classes.lst, ag_classes.lst, ce_abilities.lst, sos_abilities.lst, companion mods) -- per file, not per record.",
+  "Division semantics: 68 BONUS formulas need a single top-level truncation (G16) before oracle parity can be claimed; Div-floors is not PCGen.",
+  "ABILITYCATEGORY (*_abilitycategories.lst) ingest, shared with the prereq lane, for ABILITYPOOL/DOMAIN/FEAT to land as Choice.count."
+ ]
+}

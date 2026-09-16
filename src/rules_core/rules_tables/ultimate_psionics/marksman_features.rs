@@ -6,7 +6,7 @@
 //!
 //! Every formula below is transcribed from the corpus's own already-
 //! ingested `BONUS:VAR` tokens (`data/corpus/ultimate_psionics/
-//! class_feature/marksman/*.json`, each record's own `raw_tokens`, sourced
+//! class_feature/marksman/*.json`, each record's own ingest token array, sourced
 //! from `up_abilities_class.lst` — the roster's own `source_file` for every
 //! Marksman record). `MarksmanSecondaryStat` is `DEX` (`up_classes.lst:174`,
 //! `BONUS:VAR|MarksmanSecondaryStat|DEX`), threaded here as
@@ -80,7 +80,8 @@ pub fn ranged_specialist_critical_multiplier_bonus(level: u8) -> Option<i16> {
 // (`min(9,floor((3*MarksmanPKL-1)/4))` unconditional, plus
 // `floor((MarksmanLVL-13)/2)` once `MarksmanPKL>=15`) -- resolved by the
 // same SUM semantics `psion_features::psion_powers_known` documents
-// (`bonus_stack_reader.rs`, citing `pcgen/core/PlayerCharacter.java:2136`).
+// (the converter-side bonus-stack reader, citing
+// `pcgen/core/PlayerCharacter.java:2136`).
 // `MarksmanMaxPowerLevel`'s single term carries its own
 // `PREVARGTEQ:MarksmanMPL,2` gate -- 0 below level 2.
 

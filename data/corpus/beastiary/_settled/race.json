@@ -1,0 +1,159 @@
+{
+  "kind": "race",
+  "records": {
+    "aasimar.json": {
+      "base_move_walk": 30,
+      "base_size": "S",
+      "hands": 2,
+      "key": "Aasimar",
+      "legs": 2,
+      "name": "Aasimar",
+      "race_type": "Outsider",
+      "type_tokens": [
+        "Base",
+        "PC",
+        "Featured"
+      ]
+    },
+    "drow.json": {
+      "base_move_walk": 30,
+      "base_size": "M",
+      "hands": 2,
+      "key": "Drow",
+      "legs": 2,
+      "name": "Drow",
+      "race_type": "Humanoid",
+      "type_tokens": [
+        "Base",
+        "PC",
+        "Featured"
+      ]
+    },
+    "duergar.json": {
+      "base_move_walk": 20,
+      "base_size": "M",
+      "hands": 2,
+      "key": "Duergar",
+      "legs": 2,
+      "name": "Duergar",
+      "race_type": "Humanoid",
+      "type_tokens": [
+        "Base",
+        "PC",
+        "Uncommon"
+      ]
+    },
+    "goblin.json": {
+      "base_move_walk": 0,
+      "base_size": "S",
+      "hands": 2,
+      "key": "Goblin",
+      "legs": 2,
+      "name": "Goblin",
+      "race_type": "Humanoid",
+      "type_tokens": [
+        "Base",
+        "PC",
+        "Featured"
+      ]
+    },
+    "hobgoblin.json": {
+      "base_move_walk": 0,
+      "base_size": "M",
+      "hands": 2,
+      "key": "Hobgoblin",
+      "legs": 2,
+      "name": "Hobgoblin",
+      "race_type": "Humanoid",
+      "type_tokens": [
+        "Base",
+        "PC",
+        "Featured"
+      ]
+    },
+    "kobold.json": {
+      "base_move_walk": 30,
+      "base_size": "S",
+      "hands": 2,
+      "key": "Kobold",
+      "legs": 2,
+      "name": "Kobold",
+      "race_type": "Humanoid",
+      "type_tokens": [
+        "Base",
+        "PC",
+        "Featured"
+      ]
+    },
+    "merfolk.json": {
+      "base_move_walk": 5,
+      "base_size": "M",
+      "hands": 2,
+      "key": "Merfolk",
+      "legs": 0,
+      "name": "Merfolk",
+      "race_type": "Humanoid",
+      "type_tokens": [
+        "Base",
+        "PC",
+        "Uncommon"
+      ]
+    },
+    "orc.json": {
+      "base_move_walk": 30,
+      "base_size": "M",
+      "hands": 2,
+      "key": "Orc",
+      "legs": 2,
+      "name": "Orc",
+      "race_type": "Humanoid",
+      "type_tokens": [
+        "Base",
+        "PC",
+        "Featured"
+      ]
+    },
+    "svirfneblin.json": {
+      "base_move_walk": 20,
+      "base_size": "S",
+      "hands": 2,
+      "key": "Svirfneblin",
+      "legs": 2,
+      "name": "Svirfneblin",
+      "race_type": "Humanoid",
+      "type_tokens": [
+        "Base",
+        "PC",
+        "Uncommon"
+      ]
+    },
+    "tengu.json": {
+      "base_move_walk": 30,
+      "base_size": "M",
+      "hands": 2,
+      "key": "Tengu",
+      "legs": 2,
+      "name": "Tengu",
+      "race_type": "Humanoid",
+      "type_tokens": [
+        "Base",
+        "PC",
+        "Featured"
+      ]
+    },
+    "tiefling.json": {
+      "base_move_walk": 30,
+      "base_size": "S",
+      "hands": 2,
+      "key": "Tiefling",
+      "legs": 2,
+      "name": "Tiefling",
+      "race_type": "Outsider",
+      "type_tokens": [
+        "Base",
+        "PC",
+        "Featured"
+      ]
+    }
+  }
+}

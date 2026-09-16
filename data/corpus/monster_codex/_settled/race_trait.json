@@ -1,0 +1,532 @@
+{
+  "kind": "race_trait",
+  "records": {
+    "duergar/duergar_ironskinned.json": {
+      "adopted_race_pool_suffix": null,
+      "automatic_trait_grants": [
+        "Racial SLA ~ Ironskin"
+      ],
+      "category": "Special Ability",
+      "declared_bonuses": {
+        "ability_adjustments": [],
+        "ability_pool_picks": 0,
+        "magnitudes": [],
+        "magnitudes_excluding_flags": [],
+        "only_internal_flags": false,
+        "target_bonuses": [],
+        "var_contributions": []
+      },
+      "declared_size": null,
+      "declared_vision": [],
+      "declared_walk_speed_ft": null,
+      "declares_negated_ability_guard": false,
+      "description": "The soul of the earth infuses some duergar, giving them the ability to harden their skin. Duergar with this racial trait can use ironskin once per day as a spell-like ability, using their character level as their caster level. This racial trait replaces the enlarge person spell-like ability.",
+      "exclusion_guard_flags": [
+        "Duergar_ReplaceSLAEnlargePerson"
+      ],
+      "is_racial_default": false,
+      "key": "Duergar ~ Ironskinned",
+      "name": "Ironskinned",
+      "negated_fact_gates": [],
+      "positive_prefact_flag": null,
+      "race_key": "Duergar",
+      "sets_replace_flags": [
+        "Duergar_ReplaceSLAEnlargePerson"
+      ],
+      "skinwalker_change_shape_kin": null,
+      "source_page": null,
+      "suppressed_by_flag": null,
+      "template_bonus_languages": [],
+      "type_tokens": [
+        "RacialTraits",
+        "Duergar Racial Trait",
+        "SpecialQuality",
+        "Special Quality"
+      ]
+    },
+    "duergar/duergar_twilight_touched.json": {
+      "adopted_race_pool_suffix": null,
+      "automatic_trait_grants": [
+        "Racial SLA ~ Dust of Twilight"
+      ],
+      "category": "Special Ability",
+      "declared_bonuses": {
+        "ability_adjustments": [],
+        "ability_pool_picks": 0,
+        "magnitudes": [],
+        "magnitudes_excluding_flags": [],
+        "only_internal_flags": false,
+        "target_bonuses": [],
+        "var_contributions": []
+      },
+      "declared_size": null,
+      "declared_vision": [],
+      "declared_walk_speed_ft": null,
+      "declares_negated_ability_guard": false,
+      "description": "While most duergar have the power to become invisible, a few are instead able to extinguish the light around them. Duergar with this racial trait can use dust of twilight (Pathfinder RPG Advanced Player's Guide) once per day as a spell-like ability, using their character level as their caster level. This racial trait replaces the invisibility spell-like ability.",
+      "exclusion_guard_flags": [
+        "Duergar_ReplaceSLAInvisibility"
+      ],
+      "is_racial_default": false,
+      "key": "Duergar ~ Twilight-Touched",
+      "name": "Twilight-Touched",
+      "negated_fact_gates": [],
+      "positive_prefact_flag": null,
+      "race_key": "Duergar",
+      "sets_replace_flags": [
+        "Duergar_ReplaceSLAInvisibility"
+      ],
+      "skinwalker_change_shape_kin": null,
+      "source_page": null,
+      "suppressed_by_flag": null,
+      "template_bonus_languages": [],
+      "type_tokens": [
+        "RacialTraits",
+        "Duergar Racial Trait",
+        "SpecialQuality",
+        "Special Quality"
+      ]
+    },
+    "goblin/oversized_goblin.json": {
+      "adopted_race_pool_suffix": null,
+      "automatic_trait_grants": [
+        "Oversized Goblin ~ Ability Scores",
+        "Oversized Goblin ~ Size"
+      ],
+      "category": "Special Ability",
+      "declared_bonuses": {
+        "ability_adjustments": [],
+        "ability_pool_picks": 0,
+        "magnitudes": [],
+        "magnitudes_excluding_flags": [],
+        "only_internal_flags": false,
+        "target_bonuses": [],
+        "var_contributions": []
+      },
+      "declared_size": null,
+      "declared_vision": [],
+      "declared_walk_speed_ft": null,
+      "declares_negated_ability_guard": false,
+      "description": "A few goblins attain a much larger size than their kin. No one is exactly sure why they grow to be giants among their kind, but it's probably due to a combination of luck, diet, and constant access to food. These goblins are monsters among their own kind, not just in height, but also in girth and in strength. If not cast out for eating all of the tribe's food, oversized goblins often become the bosses of their tribes, and the most powerful of them become chiefs.&nl;Oversized goblins are Medium size, and grow to 4 to 5 feet tall. They tend to be particularly obese, weighing between 225 and 275 pounds. Instead of the normal racial ability score modifiers for goblins, oversized goblins gain a +2 bonus to Strength, a +2 bonus to Dexterity, and a -2 penalty to Charisma.",
+      "exclusion_guard_flags": [],
+      "is_racial_default": false,
+      "key": "Oversized Goblin",
+      "name": "Oversized Goblin",
+      "negated_fact_gates": [],
+      "positive_prefact_flag": null,
+      "race_key": "Goblin",
+      "sets_replace_flags": [],
+      "skinwalker_change_shape_kin": null,
+      "source_page": "p.104",
+      "suppressed_by_flag": null,
+      "template_bonus_languages": [],
+      "type_tokens": [
+        "RacialTraits",
+        "Goblin Racial Trait",
+        "SpecialQuality",
+        "Special Quality",
+        "Goblin Variant"
+      ]
+    },
+    "goblin/oversized_goblin_ability_scores.json": {
+      "adopted_race_pool_suffix": null,
+      "automatic_trait_grants": [],
+      "category": "Special Ability",
+      "declared_bonuses": {
+        "ability_adjustments": [
+          {
+            "codes": "STR,DEX",
+            "magnitude": "2"
+          },
+          {
+            "codes": "CHA",
+            "magnitude": "-2"
+          }
+        ],
+        "ability_pool_picks": 0,
+        "magnitudes": [
+          2,
+          -2
+        ],
+        "magnitudes_excluding_flags": [
+          2,
+          -2
+        ],
+        "only_internal_flags": false,
+        "target_bonuses": [
+          {
+            "keyword": "STAT",
+            "magnitude": 2,
+            "target": "STR,DEX"
+          },
+          {
+            "keyword": "STAT",
+            "magnitude": -2,
+            "target": "CHA"
+          }
+        ],
+        "var_contributions": []
+      },
+      "declared_size": null,
+      "declared_vision": [],
+      "declared_walk_speed_ft": null,
+      "declares_negated_ability_guard": false,
+      "description": "Oversized goblins gain a +2 bonus to Strength, a +2 bonus to Dexterity, and a -2 penalty to Charisma.",
+      "exclusion_guard_flags": [],
+      "is_racial_default": false,
+      "key": "Oversized Goblin ~ Ability Scores",
+      "name": "+2 Strength, +2 Dexterity, -2 Charisma",
+      "negated_fact_gates": [],
+      "positive_prefact_flag": null,
+      "race_key": "Goblin",
+      "sets_replace_flags": [
+        "Goblin_ReplaceAbilityScores"
+      ],
+      "skinwalker_change_shape_kin": null,
+      "source_page": "p.104",
+      "suppressed_by_flag": null,
+      "template_bonus_languages": [],
+      "type_tokens": [
+        "RacialTraits",
+        "Goblin Racial Trait",
+        "SpecialQuality",
+        "Racial Ability Scores"
+      ]
+    },
+    "goblin/oversized_goblin_size.json": {
+      "adopted_race_pool_suffix": null,
+      "automatic_trait_grants": [],
+      "category": "Special Ability",
+      "declared_bonuses": {
+        "ability_adjustments": [],
+        "ability_pool_picks": 0,
+        "magnitudes": [],
+        "magnitudes_excluding_flags": [],
+        "only_internal_flags": false,
+        "target_bonuses": [],
+        "var_contributions": []
+      },
+      "declared_size": "Medium",
+      "declared_vision": [],
+      "declared_walk_speed_ft": null,
+      "declares_negated_ability_guard": false,
+      "description": "Oversized goblins are Medium creatures and receive no bonuses or penalties due to their size.",
+      "exclusion_guard_flags": [],
+      "is_racial_default": false,
+      "key": "Oversized Goblin ~ Size",
+      "name": "Medium",
+      "negated_fact_gates": [],
+      "positive_prefact_flag": null,
+      "race_key": "Goblin",
+      "sets_replace_flags": [
+        "Goblin_ReplaceSize"
+      ],
+      "skinwalker_change_shape_kin": null,
+      "source_page": "p.104",
+      "suppressed_by_flag": null,
+      "template_bonus_languages": [],
+      "type_tokens": [
+        "RacialTraits",
+        "Goblin Racial Trait",
+        "SpecialQuality",
+        "Racial Size"
+      ]
+    },
+    "ratfolk/ratfolk_cheek_pouches.json": {
+      "adopted_race_pool_suffix": null,
+      "automatic_trait_grants": [],
+      "category": "Special Ability",
+      "declared_bonuses": {
+        "ability_adjustments": [],
+        "ability_pool_picks": 0,
+        "magnitudes": [],
+        "magnitudes_excluding_flags": [],
+        "only_internal_flags": false,
+        "target_bonuses": [],
+        "var_contributions": []
+      },
+      "declared_size": null,
+      "declared_vision": [],
+      "declared_walk_speed_ft": null,
+      "declares_negated_ability_guard": false,
+      "description": "Some ratfolk have developed stretchy cheek pouches that they can use to hold and carry small loads up to 1 cubic foot in volume and 10 pounds in weight, such as light weapons, potions, scrolls, and similar objects. Such a ratfolk can transfer a held object to his cheek pouches or extract an object from his cheek pouches as a swift action. As a move action that provokes an attack of opportunity, the ratfolk can instead massage all of the items held in the cheek pouches onto the ground in the square it occupies. As long as the ratfolk has at least one object in its cheek pouches, its speech is difficult to understand, and it has a 20% spell failure chance when casting spells with verbal components. This racial trait replaces swarming.",
+      "exclusion_guard_flags": [
+        "Ratfolk_ReplaceSwarming"
+      ],
+      "is_racial_default": false,
+      "key": "Ratfolk ~ Cheek Pouches",
+      "name": "Cheek Pouches",
+      "negated_fact_gates": [],
+      "positive_prefact_flag": null,
+      "race_key": "Ratfolk",
+      "sets_replace_flags": [
+        "Ratfolk_ReplaceSwarming"
+      ],
+      "skinwalker_change_shape_kin": null,
+      "source_page": "p.176",
+      "suppressed_by_flag": null,
+      "template_bonus_languages": [],
+      "type_tokens": [
+        "RacialTraits",
+        "Ratfolk Racial Trait",
+        "SpecialQuality",
+        "Special Quality"
+      ]
+    },
+    "ratfolk/ratfolk_cleanliness.json": {
+      "adopted_race_pool_suffix": null,
+      "automatic_trait_grants": [],
+      "category": "Special Ability",
+      "declared_bonuses": {
+        "ability_adjustments": [],
+        "ability_pool_picks": 0,
+        "magnitudes": [
+          2
+        ],
+        "magnitudes_excluding_flags": [
+          2
+        ],
+        "only_internal_flags": false,
+        "target_bonuses": [
+          {
+            "keyword": "VAR",
+            "magnitude": 2,
+            "target": "SaveBonus_vs_Disease"
+          }
+        ],
+        "var_contributions": [
+          {
+            "amount": 2,
+            "name": "SaveBonus_vs_Disease"
+          }
+        ]
+      },
+      "declared_size": null,
+      "declared_vision": [],
+      "declared_walk_speed_ft": null,
+      "declares_negated_ability_guard": false,
+      "description": "Ratfolk strive to keep themselves and each other immaculately clean, to make it difficult for disease to spread. A ratfolk with this racial trait gains a +2 bonus on saving throws against disease, and whenever she exceeds the save DC to recover from a disease effect by 5 or more, she is treated as though she had succeeded at two consecutive saving throws. This racial trait replaces rodent empathy.",
+      "exclusion_guard_flags": [
+        "Ratfolk_ReplaceRodentEmpathy"
+      ],
+      "is_racial_default": false,
+      "key": "Ratfolk ~ Cleanliness",
+      "name": "Cleanliness",
+      "negated_fact_gates": [],
+      "positive_prefact_flag": null,
+      "race_key": "Ratfolk",
+      "sets_replace_flags": [
+        "Ratfolk_ReplaceRodentEmpathy"
+      ],
+      "skinwalker_change_shape_kin": null,
+      "source_page": "p.176",
+      "suppressed_by_flag": null,
+      "template_bonus_languages": [],
+      "type_tokens": [
+        "RacialTraits",
+        "Ratfolk Racial Trait",
+        "SpecialQuality",
+        "Special Quality"
+      ]
+    },
+    "ratfolk/ratfolk_lab_rat.json": {
+      "adopted_race_pool_suffix": null,
+      "automatic_trait_grants": [],
+      "category": "Special Ability",
+      "declared_bonuses": {
+        "ability_adjustments": [],
+        "ability_pool_picks": 0,
+        "magnitudes": [
+          1
+        ],
+        "magnitudes_excluding_flags": [
+          1
+        ],
+        "only_internal_flags": false,
+        "target_bonuses": [
+          {
+            "keyword": "VAR",
+            "magnitude": 1,
+            "target": "SaveBonus_vs_Poison,SaveBonus_vs_AlchemicalWeapons,SaveBonus_vs_PotionsElixirs"
+          }
+        ],
+        "var_contributions": [
+          {
+            "amount": 1,
+            "name": "SaveBonus_vs_Poison"
+          },
+          {
+            "amount": 1,
+            "name": "SaveBonus_vs_AlchemicalWeapons"
+          },
+          {
+            "amount": 1,
+            "name": "SaveBonus_vs_PotionsElixirs"
+          }
+        ]
+      },
+      "declared_size": null,
+      "declared_vision": [],
+      "declared_walk_speed_ft": null,
+      "declares_negated_ability_guard": false,
+      "description": "For every ingenious ratfolk inventor, there is another who must inevitably test the invention. Those who survive enough experiments sometimes develop strange metabolic quirks that grant them heightened resilience and, on occasion, fortunate side effects when consuming alchemical or magical draughts. As a result, they gain a +1 racial bonus on saving throws against poison, alchemical weapons, and harmful effects from drinking potions or elixirs. In addition, once per day such a ratfolk can either increase the caster level of a potion he consumes by 1 or double the duration of an alchemical remedy he consumes or applies to himself (to a maximum of 4 hours). This racial trait replaces tinker.",
+      "exclusion_guard_flags": [
+        "Ratfolk_ReplaceTinker"
+      ],
+      "is_racial_default": false,
+      "key": "Ratfolk ~ Lab Rat",
+      "name": "Lab Rat",
+      "negated_fact_gates": [],
+      "positive_prefact_flag": null,
+      "race_key": "Ratfolk",
+      "sets_replace_flags": [
+        "Ratfolk_ReplaceTinker"
+      ],
+      "skinwalker_change_shape_kin": null,
+      "source_page": "p.176",
+      "suppressed_by_flag": null,
+      "template_bonus_languages": [],
+      "type_tokens": [
+        "RacialTraits",
+        "Ratfolk Racial Trait",
+        "SpecialQuality",
+        "Special Quality"
+      ]
+    },
+    "ratfolk/ratfolk_surface_sprinter.json": {
+      "adopted_race_pool_suffix": null,
+      "automatic_trait_grants": [
+        "Ratfolk ~ Surface Sprinter ~ Speed",
+        "Ratfolk ~ Surface Sprinter ~ Vision"
+      ],
+      "category": "Special Ability",
+      "declared_bonuses": {
+        "ability_adjustments": [],
+        "ability_pool_picks": 0,
+        "magnitudes": [],
+        "magnitudes_excluding_flags": [],
+        "only_internal_flags": false,
+        "target_bonuses": [],
+        "var_contributions": []
+      },
+      "declared_size": null,
+      "declared_vision": [],
+      "declared_walk_speed_ft": null,
+      "declares_negated_ability_guard": false,
+      "description": "Some ratfolk spend as much time as they can aboveground and become very fast runners. This comes at the cost of their night vision, which becomes less acute after years of sunlight. These ratfolk gain low-light vision and have a base speed of 30 feet. This racial trait replaces darkvision and slow speed.",
+      "exclusion_guard_flags": [
+        "Ratfolk_ReplaceSpeed",
+        "Ratfolk_ReplaceVision"
+      ],
+      "is_racial_default": false,
+      "key": "Ratfolk ~ Surface Sprinter",
+      "name": "Surface Sprinter",
+      "negated_fact_gates": [],
+      "positive_prefact_flag": null,
+      "race_key": "Ratfolk",
+      "sets_replace_flags": [
+        "Ratfolk_ReplaceSpeed",
+        "Ratfolk_ReplaceVision"
+      ],
+      "skinwalker_change_shape_kin": null,
+      "source_page": "p.176",
+      "suppressed_by_flag": null,
+      "template_bonus_languages": [],
+      "type_tokens": [
+        "RacialTraits",
+        "Ratfolk Racial Trait",
+        "SpecialQuality",
+        "Special Quality"
+      ]
+    },
+    "ratfolk/ratfolk_surface_sprinter_speed.json": {
+      "adopted_race_pool_suffix": null,
+      "automatic_trait_grants": [],
+      "category": "Special Ability",
+      "declared_bonuses": {
+        "ability_adjustments": [],
+        "ability_pool_picks": 0,
+        "magnitudes": [],
+        "magnitudes_excluding_flags": [],
+        "only_internal_flags": false,
+        "target_bonuses": [],
+        "var_contributions": []
+      },
+      "declared_size": null,
+      "declared_vision": [],
+      "declared_walk_speed_ft": 30,
+      "declares_negated_ability_guard": false,
+      "description": "Surface sprinter ratfolk have a base speed of 30 feet.",
+      "exclusion_guard_flags": [],
+      "is_racial_default": false,
+      "key": "Ratfolk ~ Surface Sprinter ~ Speed",
+      "name": "Normal Speed",
+      "negated_fact_gates": [],
+      "positive_prefact_flag": "Ratfolk_ReplaceSpeed",
+      "race_key": "Ratfolk",
+      "sets_replace_flags": [],
+      "skinwalker_change_shape_kin": null,
+      "source_page": "p.231",
+      "suppressed_by_flag": null,
+      "template_bonus_languages": [],
+      "type_tokens": [
+        "RacialTraits",
+        "Ratfolk Racial Trait",
+        "SpecialQuality",
+        "Racial Speed"
+      ]
+    },
+    "ratfolk/ratfolk_surface_sprinter_vision.json": {
+      "adopted_race_pool_suffix": null,
+      "automatic_trait_grants": [],
+      "category": "Special Ability",
+      "declared_bonuses": {
+        "ability_adjustments": [],
+        "ability_pool_picks": 0,
+        "magnitudes": [
+          1
+        ],
+        "magnitudes_excluding_flags": [],
+        "only_internal_flags": true,
+        "target_bonuses": [
+          {
+            "keyword": "VAR",
+            "magnitude": 1,
+            "target": "HasRacialVision"
+          }
+        ],
+        "var_contributions": [
+          {
+            "amount": 1,
+            "name": "HasRacialVision"
+          }
+        ]
+      },
+      "declared_size": null,
+      "declared_vision": [
+        "Low-Light Vision"
+      ],
+      "declared_walk_speed_ft": null,
+      "declares_negated_ability_guard": false,
+      "description": "In dim light, surface sprinter ratfolk can see twice as far as humans.",
+      "exclusion_guard_flags": [],
+      "is_racial_default": false,
+      "key": "Ratfolk ~ Surface Sprinter ~ Vision",
+      "name": "Low-Light Vision",
+      "negated_fact_gates": [],
+      "positive_prefact_flag": "Ratfolk_ReplaceSpeed",
+      "race_key": "Ratfolk",
+      "sets_replace_flags": [],
+      "skinwalker_change_shape_kin": null,
+      "source_page": "p.231",
+      "suppressed_by_flag": null,
+      "template_bonus_languages": [],
+      "type_tokens": [
+        "RacialTraits",
+        "Ratfolk Racial Trait",
+        "SpecialQuality",
+        "Racial Vision"
+      ]
+    }
+  }
+}

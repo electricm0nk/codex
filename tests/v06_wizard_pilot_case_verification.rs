@@ -156,7 +156,7 @@ fn pilot_case_pcg_fixture() -> PathBuf {
 /// Fail loudly on a swapped fixture rather than reporting parity numbers
 /// computed from content nobody verified.
 fn assert_pilot_pcg_fixture_is_pinned(path: &std::path::Path) {
-    let actual = codex::rules_core::cache_gen::apg::sha256_file(path)
+    let actual = codex::pcgen_import::cache_gen::apg::sha256_file(path)
         .unwrap_or_else(|err| panic!("cannot hash {}: {err}", path.display()));
     assert_eq!(
         actual,

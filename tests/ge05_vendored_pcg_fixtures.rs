@@ -25,7 +25,7 @@
 //! results those two suites publish as evidence, so it must fail loudly here
 //! rather than quietly shift a number in a parity report.
 
-use codex::rules_core::cache_gen::apg::sha256_file;
+use codex::pcgen_import::cache_gen::apg::sha256_file;
 
 use std::path::PathBuf;
 

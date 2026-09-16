@@ -156,12 +156,12 @@ export function formatStatAdjustment(adjustment: CompanionStatAdjustmentDto): st
 /**
  * The caption every stat-adjustment block carries.
  *
- * Load-bearing, not decoration: the corpus states `BONUS:STAT|STR|6` and a
+ * Load-bearing, not decoration: the corpus states a +6 Strength adjustment and a
  * Griffon's Strength is not 6. Printing these numbers under a heading that said
  * "Ability scores" would be the quieter lie this whole ingest is written to
  * avoid.
  */
-export const STAT_ADJUSTMENT_CAPTION = 'Ability score adjustments (corpus BONUS:STAT tokens)';
+export const STAT_ADJUSTMENT_CAPTION = 'Ability score adjustments (as the corpus states them)';
 
 /**
  * The damage-bonus block's caption. Names the token so the reader knows it is
@@ -169,7 +169,7 @@ export const STAT_ADJUSTMENT_CAPTION = 'Ability score adjustments (corpus BONUS:
  * full Strength modifier -- this is the other half PF1 CRB p.182 grants a
  * creature with a single natural attack.
  */
-export const DAMAGE_BONUS_CAPTION = 'Extra damage on attack (corpus BONUS:WEAPONPROF DAMAGE tokens)';
+export const DAMAGE_BONUS_CAPTION = 'Extra damage on attack (as the corpus states it)';
 
 /** `{ name: 'Bite', damageDice: null }` -> `'Bite'`; with dice -> `'Bite 1d6'`. */
 export function formatNaturalAttack(attack: CompanionAttackDto): string {
@@ -193,7 +193,7 @@ export function formatDamageBonus(bonus: CompanionDamageBonusDto): string {
  * The skill-bonus block's caption. Names the token so the reader knows it is
  * a corpus fact.
  */
-export const SKILL_BONUS_CAPTION = 'Skill bonus from ability difference (corpus BONUS:SKILL tokens)';
+export const SKILL_BONUS_CAPTION = 'Skill bonus from ability difference (as the corpus states it)';
 
 /**
  * One skill-bonus row: `"Climb, Swim: Dex modifier − Str modifier"`.
@@ -211,7 +211,7 @@ export function formatSkillBonus(bonus: CompanionSkillBonusDto): string {
 /**
  * The save-DC-formula block's caption, on an ABILITY row. Names the field so
  * the reader knows it is a corpus fact stated only in the ability's own
- * `DESC:` argument — the same fact `render_pcgen_desc` drops the `%1`
+ * description slot — the same fact the description render drops the
  * placeholder for, so without this row the DC number is silently missing
  * from the description above it.
  */
@@ -433,7 +433,13 @@ export function CompanionCatalogScreen(props: CompanionCatalogScreenProps) {
                           <p style={{ color: 'var(--color-text-muted)', fontSize: '0.72rem', margin: '0.1rem 0 0' }}>
                             {ability.description}
                           </p>
-                        ) : ability.descriptionVariants.length === 0 ? (
+                        ) : (
+                          /*
+                            A row that states its rules text once per condition carries all of
+                            it in `description`, each variant under the condition that selects
+                            it — the converted record states the whole family, so there is no
+                            second array to render and no row that has text but shows none.
+                          */
                           <p
                             style={{
                               color: 'var(--color-text-faint)',
@@ -445,25 +451,7 @@ export function CompanionCatalogScreen(props: CompanionCatalogScreenProps) {
                             The corpus row states this ability&rsquo;s name and type but carries no
                             rules text.
                           </p>
-                        ) : null}
-                        {/*
-                          A row that states its rules text once per condition
-                          gets every text, each under its own condition. The
-                          catalog has no character to evaluate the gate against,
-                          so showing one and hiding the rest would be wrong for
-                          every reader on the other side of it.
-                        */}
-                        {ability.descriptionVariants.map((variant) => (
-                          <p
-                            key={`${ability.key}:${variant.condition}:${variant.text.slice(0, 24)}`}
-                            style={{ color: 'var(--color-text-muted)', fontSize: '0.72rem', margin: '0.1rem 0 0' }}
-                          >
-                            <span style={{ color: 'var(--color-text-faint)', fontStyle: 'italic' }}>
-                              {variant.condition}:{' '}
-                            </span>
-                            {variant.text}
-                          </p>
-                        ))}
+                        )}
                         {ability.statAdjustments.length > 0 ? (
                           <p style={{ color: 'var(--color-text-faint)', fontSize: '0.7rem', margin: '0.1rem 0 0' }}>
                             {STAT_ADJUSTMENT_CAPTION}:{' '}

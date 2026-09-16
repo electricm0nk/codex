@@ -721,6 +721,7 @@ pub mod prose_derived {
 #[cfg(test)]
 mod tests {
     use super::*;
+    use crate::pcgen_import::ingest_record;
     use std::path::PathBuf;
 
     fn corpus_dir() -> PathBuf {
@@ -747,19 +748,9 @@ mod tests {
     }
 
     fn bonus_tokens(record: &serde_json::Value) -> Vec<String> {
-        record["raw_bonus_chains"]
-            .as_array()
-            .expect("raw_bonus_chains is an array")
-            .iter()
-            .map(|chain| {
-                let parts: Vec<String> = chain["qualifiers"]
-                    .as_array()
-                    .expect("qualifiers is an array")
-                    .iter()
-                    .map(|q| q.as_str().expect("qualifier is a string").to_owned())
-                    .collect();
-                format!("BONUS:{}", parts.join("|"))
-            })
+        ingest_record::bonus_chain_qualifiers(record)
+            .into_iter()
+            .map(|parts| format!("BONUS:{}", parts.join("|")))
             .collect()
     }
 
@@ -1207,8 +1198,10 @@ mod tests {
         // `ingest_pu_classes.rs` used to read only the base row and silently
         // drop -- the exact `.MOD`-appended-row-loss defect row 21 fixed for
         // the generic `class_feature.rs` path, found live in THIS book's own
-        // generator too and fixed here (`raw_tokens_excluding_bonus`/
-        // `raw_bonus_chains` now read the full `.MOD` closure, matching
+        // generator too and fixed here (the generator's token reader and its
+        // declared-bonus-chain reader --
+        // `pcgen_import::ingest_record::{token_pairs, bonus_chain_qualifiers}`
+        // -- now read the full `.MOD` closure, matching
         // `out_of_record_formulas_are_byte_exact_against_the_real_lst_rows`
         // below, which independently pins the same raw `.lst` tokens). No
         // longer an honest absence -- the real tokens now ship.

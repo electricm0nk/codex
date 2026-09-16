@@ -34,14 +34,16 @@
 use std::collections::{BTreeMap, BTreeSet};
 use std::path::PathBuf;
 
+use codex::pcgen_import::feat_prereq_tokens::joined_catalog_tokens;
 use codex::rules_core::character_input::{
     AbilityScores, CharacterClassLevel, CharacterInput, ChosenCharacterState, SkillAllocation,
 };
-use codex::rules_core::feat_prereqs::pre_tokens::{
+use codex::pcgen_import::pre_tokens::{
     token_kind, CharacterPrereqFacts, MODELLED_KINDS, UNMODELLED_KINDS,
 };
 use codex::rules_core::feat_prereqs::{
     character_prereq_facts, evaluate_every_catalog_feat, evaluate_feat_key_prerequisites,
+    PrereqFacts,
 };
 use codex::rules_core::rules_tables::feats_all::all_feat_tables;
 
@@ -91,9 +93,16 @@ fn starting_scores() -> AbilityScores {
     }
 }
 
-fn fighter_1() -> CharacterPrereqFacts {
+fn fighter_1() -> PrereqFacts {
     let input = build("race:human", "class:fighter", 1, starting_scores(), &[], &[]);
-    character_prereq_facts(&input, 1)
+    prereq_facts(&input)
+}
+
+/// SD-35 `AT-35-E6-001`: the prerequisite context is the converted package plus this
+/// character's held set and facts. `data/sheet_rules/` is committed, so an unreadable
+/// package in a repo checkout is a defect, not a runtime condition.
+fn prereq_facts(input: &CharacterInput) -> PrereqFacts {
+    character_prereq_facts(input).expect("data/sheet_rules/ must be loadable in a repo checkout")
 }
 
 // ---------------------------------------------------------------------------
@@ -111,8 +120,8 @@ fn catalog_kind_census() -> BTreeMap<String, usize> {
     };
 
     for book in all_feat_tables() {
-        for entry in book.entries {
-            for token in entry.prerequisites.unwrap_or(&[]) {
+        for (index, entry) in book.entries.iter().enumerate() {
+            for token in joined_catalog_tokens(book.rule_set, index, entry.key).unwrap_or(&[]) {
                 visit(token, &mut census);
                 // Sub-clauses inside a `PREMULT:`'s brackets are real
                 // prerequisites too; a kind that only ever appears nested
@@ -300,8 +309,13 @@ fn the_pre_kind_census_is_the_real_one() {
 fn the_number_of_records_carrying_any_prerequisite_is_the_real_one() {
     let with_any: usize = all_feat_tables()
         .iter()
-        .flat_map(|book| book.entries.iter())
-        .filter(|entry| entry.prerequisites.is_some())
+        .flat_map(|book| {
+            book.entries
+                .iter()
+                .enumerate()
+                .map(move |(index, entry)| joined_catalog_tokens(book.rule_set, index, entry.key))
+        })
+        .filter(Option::is_some)
         .count();
     // 599 of the original 690 + all 23 UCA records (every one carries a
     // `PRETEXT:` prerequisite entry -- see `feats_all::UCA_FEAT_PREREQUISITES`)
@@ -393,9 +407,13 @@ fn the_reported_defect_is_closed_in_both_directions() {
         .expect("catalog record");
     assert!(!denied.is_eligible);
     let reason = denied.unavailable_reason().expect("a denial must state why");
-    assert!(reason.contains("base attack bonus +6"), "{reason}");
+    // SD-35 `AT-35-E6-001`: the same three requirements, in the CONVERTED gate's own words,
+    // and now each with the character's own value where the engine holds one.
+    assert!(reason.contains("base attack bonus at least 6"), "{reason}");
+    assert!(reason.contains("this character: 1"), "{reason}");
     assert!(reason.contains("Two-Weapon Fighting"), "{reason}");
-    assert!(reason.contains("DEX 17"), "{reason}");
+    assert!(reason.contains("Dexterity"), "{reason}");
+    assert!(reason.contains("17"), "{reason}");
 
     let qualified = build(
         "race:human",
@@ -407,7 +425,7 @@ fn the_reported_defect_is_closed_in_both_directions() {
     );
     let allowed = evaluate_feat_key_prerequisites(
         "Improved Two-Weapon Fighting",
-        &character_prereq_facts(&qualified, 6),
+        &prereq_facts(&qualified),
     )
     .expect("catalog record");
     assert!(allowed.is_eligible, "unmet: {:?}", allowed.unmet);
@@ -429,7 +447,7 @@ fn both_selected_feat_id_shapes_satisfy_a_feat_prerequisite() {
             &[shape],
             &[],
         );
-        let report = evaluate_feat_key_prerequisites("Cleave", &character_prereq_facts(&input, 1))
+        let report = evaluate_feat_key_prerequisites("Cleave", &prereq_facts(&input))
             .expect("catalog record");
         assert!(report.is_eligible, "'{shape}' should satisfy Cleave's Power Attack requirement");
     }
@@ -441,15 +459,18 @@ fn allocating_the_required_skill_ranks_unlocks_a_skill_gated_feat() {
     let without = build("race:human", "class:fighter", 3, starting_scores(), &[], &[]);
     let blocked = evaluate_feat_key_prerequisites(
         "Acrobatic Steps",
-        &character_prereq_facts(&without, 3),
+        &prereq_facts(&without),
     );
     // Only assert the mechanism on a feat that really is skill-gated; find
     // one from the live catalog rather than trusting a hand-picked name.
-    let facts = character_prereq_facts(&without, 3);
+    let facts = prereq_facts(&without);
     let skill_gated: Vec<String> = evaluate_every_catalog_feat(&facts)
         .into_iter()
         .filter(|report| {
-            report.unmet.iter().any(|unmet| unmet.reason.contains("rank(s) in"))
+            // `describe_expr`'s words for `Expr::SkillRanks`, which is what `PRESKILL`
+            // converts to (SD-35 `AT-35-E6-001`; before it, the token evaluator's
+            // "rank(s) in").
+            report.unmet.iter().any(|unmet| unmet.reason.contains(" ranks at least "))
         })
         .map(|report| report.feat_key)
         .collect();
@@ -464,13 +485,18 @@ fn allocating_the_required_skill_ranks_unlocks_a_skill_gated_feat() {
     // Use a genuinely rank-gated CRB feat instead: Stunning Fist is class
     // gated, so take the first live skill-gated record and satisfy it.
     let target = &skill_gated[0];
-    let record = all_feat_tables()
+    let record_tokens = all_feat_tables()
         .iter()
-        .flat_map(|book| book.entries.iter())
-        .find(|entry| entry.key == target)
+        .flat_map(|book| {
+            book.entries
+                .iter()
+                .enumerate()
+                .map(move |(index, entry)| (book.rule_set, index, entry.key))
+        })
+        .find(|(_, _, key)| *key == target)
+        .map(|(rule_set, index, key)| joined_catalog_tokens(rule_set, index, key))
         .expect("the key came from the catalog");
-    let requirement = record
-        .prerequisites
+    let requirement = record_tokens
         .unwrap_or(&[])
         .iter()
         .find(|token| token.starts_with("PRESKILL:"))
@@ -492,7 +518,7 @@ fn allocating_the_required_skill_ranks_unlocks_a_skill_gated_feat() {
         &[(skill_id.as_str(), ranks)],
     );
     let report =
-        evaluate_feat_key_prerequisites(target, &character_prereq_facts(&with, 3)).unwrap();
+        evaluate_feat_key_prerequisites(target, &prereq_facts(&with)).unwrap();
     assert!(
         !report.unmet.iter().any(|unmet| unmet.reason.contains("rank(s) in")),
         "allocating {ranks} ranks in {skill_name} must clear '{target}'s skill clause, \
@@ -517,7 +543,7 @@ fn every_ineligible_feat_states_a_reason_for_every_build() {
     ];
     for input in &builds {
         let level = input.chosen.class_levels[0].level;
-        let facts = character_prereq_facts(input, i16::from(level));
+        let facts = prereq_facts(input);
         let reports = evaluate_every_catalog_feat(&facts);
         assert_eq!(reports.len(), 2227);
         for report in &reports {
@@ -567,9 +593,22 @@ fn unverifiable_clauses_never_block_and_are_always_reported() {
                 "an unverified note must say so plainly: {}",
                 note.message
             );
+            // SD-35 `AT-35-E6-001`: the note names the REQUIREMENT, in the rule's own words
+            // and in parentheses, plus the fact the engine does not hold -- never a source
+            // token, which is exactly what stopped being read. A note with no requirement in
+            // it tells a player nothing about what was skipped.
+            let (reason, requirement) = note
+                .message
+                .split_once(" (")
+                .unwrap_or_else(|| panic!("an unverified note must name the requirement it skipped: {}", note.message));
             assert!(
-                note.message.contains("PRE"),
-                "an unverified note must name the token it could not evaluate: {}",
+                reason.len() > "not verified: ".len(),
+                "an unverified note must say WHY it could not be checked: {}",
+                note.message
+            );
+            assert!(
+                requirement.ends_with(')') && requirement.len() > 1,
+                "an unverified note must carry the requirement in the rule's own words: {}",
                 note.message
             );
         }
@@ -650,12 +689,11 @@ fn the_gathered_arg_and_pu_prerequisites_match_the_live_corpus() {
             .iter()
             .find(|book| format!("{:?}", book.rule_set) == book_name)
             .expect("book is in the aggregate");
-        for entry in table.entries {
+        for (index, entry) in table.entries.iter().enumerate() {
             let expected: &[String] = corpus
                 .get(entry.key)
                 .unwrap_or_else(|| panic!("{book_name} '{}' is not in {}", entry.key, path.display()));
-            let actual: Vec<String> = entry
-                .prerequisites
+            let actual: Vec<String> = joined_catalog_tokens(table.rule_set, index, entry.key)
                 .unwrap_or(&[])
                 .iter()
                 .map(|token| (*token).to_owned())
@@ -753,7 +791,11 @@ fn race_subtypes_match_the_corpus_race_templates() {
     for (race_token, directory, expected) in expectations {
         // The engine's own answer, via a real prerequisite evaluation.
         let input = build(race_token, "class:fighter", 1, starting_scores(), &[], &[]);
-        let facts = character_prereq_facts(&input, 1);
+        // This oracle-corpus check evaluates the converter's own token evaluator directly
+        // (`src/pcgen_import/` -- KEPT, and the test side is where it is read) rather than the
+        // live converted gate, because what it proves is that the hand-modelled subtype table
+        // agrees with the corpus templates.
+        let facts = CharacterPrereqFacts::from_character(&input, 1);
 
         // Every template name this race's own corpus files apply.
         let race_dir = essentials.join(directory);
@@ -791,13 +833,13 @@ fn race_subtypes_match_the_corpus_race_templates() {
             // evaluation path rather than by reading the table.
             let token = format!("PRERACE:1,RACESUBTYPE={subtype}");
             let outcome =
-                codex::rules_core::feat_prereqs::pre_tokens::evaluate_prerequisite_token(
+                codex::pcgen_import::pre_tokens::evaluate_prerequisite_token(
                     &token, &facts,
                 );
             assert!(
                 matches!(
                     outcome,
-                    codex::rules_core::feat_prereqs::pre_tokens::ClauseOutcome::Met { .. }
+                    codex::pcgen_import::pre_tokens::ClauseOutcome::Met { .. }
                 ),
                 "{race_token} must satisfy {token}, got {outcome:?}"
             );

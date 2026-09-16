@@ -167,7 +167,16 @@ fn books_stating_a_record_count() -> Vec<String> {
 /// file and its expected JSON), not licensed content records extracted from
 /// the book. Counting them would inflate the compliance number with material
 /// the PI screen never ran over.
-const NON_RECORD_DIRS: &[&str] = &["_parity"];
+///
+/// `_settled` holds the per-book settled-record bundles (SD-35
+/// `AT-35-E6-003-RULED` cycle 15, `src/bin/gen_settled_corpus.rs`): one
+/// generated file per content kind, holding the already-counted records of
+/// that kind in settled form, keyed by the path of the record file this walk
+/// already visits. It is an index of this corpus, not content extracted from
+/// the book -- counting it would double-count every record it indexes and
+/// inflate the compliance number by a kind that ships no licensed text of its
+/// own.
+const NON_RECORD_DIRS: &[&str] = &["_parity", "_settled"];
 
 fn repo_root() -> PathBuf {
     PathBuf::from(env!("CARGO_MANIFEST_DIR"))

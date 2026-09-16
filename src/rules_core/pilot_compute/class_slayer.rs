@@ -14,7 +14,7 @@ use super::*;
 /// PF1 Advanced Class Guide Slayer Sneak Attack: dice count
 /// `SlayerLVL/3`, verified directly against `acg_abilities_class.lst`'s
 /// own `BONUS:VAR|SneakAttackDice|SlayerSneakAttackLVL/3`.
-pub(super) fn slayer_sneak_attack_dice(level: u8) -> i16 {
+pub(crate) fn slayer_sneak_attack_dice(level: u8) -> i16 {
     i16::from(level) / 3
 }
 
@@ -26,7 +26,7 @@ pub(super) fn slayer_sneak_attack_dice(level: u8) -> i16 {
 /// `class_feature.rogue.trap_sense` exactly -- this codebase has no
 /// "trap AC/save" pillar for either of those closures to integrate into
 /// either, an already-established idiom.
-pub(super) fn slayer_trap_sense_bonus(level: u8) -> i16 {
+pub(crate) fn slayer_trap_sense_bonus(level: u8) -> i16 {
     (i16::from(level) / 3).max(1)
 }
 
@@ -438,7 +438,7 @@ pub(super) fn ground_slayer_weapon_and_armor_proficiency(
                  Proficiency): \"A slayer is proficient with all simple and martial weapons, as \
                  well as with light armor, medium armor, and shields (except tower shields).\" \
                  This is a bounded grant-only identity record (value 0, non-fabricated): the \
-                 record's only tokens are ABILITY:...AUTOMATIC proficiency grants, no BONUS: \
+                 record grants proficiencies automatically and carries no \
                  magnitude anywhere. The weapon half's real mechanical consequence -- avoiding \
                  the -4 nonproficiency attack penalty -- is already grounded separately by \
                  `weapon_tables::class_weapon_proficiency(\"class:slayer\")`, which this record \

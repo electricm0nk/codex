@@ -174,7 +174,7 @@ pub fn build_github_issue_url(req: &IssueUrlRequest) -> Result<String, IssueUrlE
 /// `https://github.com/<owner>/<repo>/issues/new` URL and stay within
 /// `MAX_URL_LENGTH`. Only the path is checked; the query string is ignored.
 pub fn validate_github_issues_url(url: &str) -> Result<(), IssueUrlError> {
-    const PREFIX: &str = "https://github.com/";
+    const GITHUB_URL_PREFIX: &str = "https://github.com/";
 
     if url.len() > MAX_URL_LENGTH {
         return Err(IssueUrlError::UrlValidation {
@@ -185,7 +185,7 @@ pub fn validate_github_issues_url(url: &str) -> Result<(), IssueUrlError> {
         });
     }
 
-    let rest = match url.strip_prefix(PREFIX) {
+    let rest = match url.strip_prefix(GITHUB_URL_PREFIX) {
         Some(rest) => rest,
         None => {
             return Err(IssueUrlError::UrlValidation {

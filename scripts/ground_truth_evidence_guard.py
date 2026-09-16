@@ -34,7 +34,7 @@ THREE CHECKS, each independently able to fail the whole run:
    with it as evidence).
 
 Corpus-path resolution is deliberately reimplemented here rather than
-imported from `src/rules_core/wiring_class.rs` (there is no Python binding
+imported from `src/pcgen_import/wiring_class.rs` (there is no Python binding
 for it): a guard that shared the production resolver's bug would be blind
 to exactly the failure this program has already shipped once.
 
@@ -61,7 +61,7 @@ MIN_QUOTE_LEN = 20
 
 DEFAULT_SAMPLE_GLOB = "docs/release/*/artifacts/*ground-truth-sample*.json"
 
-# Reimplemented independently from src/rules_core/wiring_class.rs's
+# Reimplemented independently from src/pcgen_import/wiring_class.rs's
 # `book_paths` construction (see module docstring: sharing the production
 # resolver would share its bug). Rather than hardcode the same
 # BOOKS_RELATIVE/EXTRA_BOOK_DIRS list (which would silently drift from the

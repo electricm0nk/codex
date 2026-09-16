@@ -5,11 +5,11 @@
     {
       "kind": "ability",
       "label": "Abilities",
-      "done": 0,
-      "partial": 9,
+      "done": 9,
+      "partial": 0,
       "not_started": 0,
       "denominator": 9,
-      "pct": 0.0,
+      "pct": 100.0,
       "excluded_from_percentage": 0,
       "standing_breakdown": {
         "origin": 9
@@ -17,63 +17,63 @@
       "items": [
         {
           "name": "Racial Traits ~ Changeling",
-          "doneness": "partial",
+          "doneness": "done",
           "type_facet": null,
           "standing": "origin",
           "display_name": "Racial Traits ~ Changeling"
         },
         {
           "name": "Racial Traits ~ Kasatha",
-          "doneness": "partial",
+          "doneness": "done",
           "type_facet": null,
           "standing": "origin",
           "display_name": "Racial Traits ~ Kasatha"
         },
         {
           "name": "Racial Traits ~ Kitsune",
-          "doneness": "partial",
+          "doneness": "done",
           "type_facet": null,
           "standing": "origin",
           "display_name": "Racial Traits ~ Kitsune"
         },
         {
           "name": "Racial Traits ~ Nagaji",
-          "doneness": "partial",
+          "doneness": "done",
           "type_facet": null,
           "standing": "origin",
           "display_name": "Racial Traits ~ Nagaji"
         },
         {
           "name": "Racial Traits ~ Samsaran",
-          "doneness": "partial",
+          "doneness": "done",
           "type_facet": null,
           "standing": "origin",
           "display_name": "Racial Traits ~ Samsaran"
         },
         {
           "name": "Racial Traits ~ Trox",
-          "doneness": "partial",
+          "doneness": "done",
           "type_facet": null,
           "standing": "origin",
           "display_name": "Racial Traits ~ Trox"
         },
         {
           "name": "Racial Traits ~ Wayang",
-          "doneness": "partial",
+          "doneness": "done",
           "type_facet": null,
           "standing": "origin",
           "display_name": "Racial Traits ~ Wayang"
         },
         {
           "name": "Racial Traits ~ Wyrwood",
-          "doneness": "partial",
+          "doneness": "done",
           "type_facet": null,
           "standing": "origin",
           "display_name": "Racial Traits ~ Wyrwood"
         },
         {
           "name": "Racial Traits ~ Wyvaran",
-          "doneness": "partial",
+          "doneness": "done",
           "type_facet": null,
           "standing": "origin",
           "display_name": "Racial Traits ~ Wyvaran"
@@ -109,7 +109,7 @@
         },
         {
           "name": "Part the Veil",
-          "doneness": "not-started",
+          "doneness": "done",
           "type_facet": "SpecialQuality.Supernatural.DomainPower",
           "standing": "unclassified",
           "display_name": "Part the Veil"
@@ -130,7 +130,7 @@
         },
         {
           "name": "Void",
-          "doneness": "not-started",
+          "doneness": "done",
           "type_facet": "Internal",
           "standing": "unclassified",
           "display_name": "Void (Internal)"
@@ -140,11 +140,11 @@
     {
       "kind": "companion",
       "label": "Companions",
-      "done": 61,
+      "done": 63,
       "partial": 6,
-      "not_started": 2,
+      "not_started": 0,
       "denominator": 69,
-      "pct": 88.4,
+      "pct": 91.3,
       "excluded_from_percentage": 11,
       "standing_breakdown": {
         "origin": 69,
@@ -580,14 +580,14 @@
         },
         {
           "name": "Pooka ~ Change Shape",
-          "doneness": "not-started",
+          "doneness": "done",
           "type_facet": null,
           "standing": "origin",
           "display_name": "Pooka ~ Change Shape"
         },
         {
           "name": "Psychopomp (Nosoi) ~ Change Shape",
-          "doneness": "not-started",
+          "doneness": "done",
           "type_facet": null,
           "standing": "origin",
           "display_name": "Psychopomp (Nosoi) ~ Change Shape"
@@ -728,21 +728,21 @@
       "items": [
         {
           "name": "Dark Tapestry Subdomain",
-          "doneness": "partial",
+          "doneness": "done",
           "type_facet": null,
           "standing": "unclassified",
           "display_name": "Dark Tapestry Subdomain"
         },
         {
           "name": "Stars Subdomain",
-          "doneness": "partial",
+          "doneness": "done",
           "type_facet": null,
           "standing": "unclassified",
           "display_name": "Stars Subdomain"
         },
         {
           "name": "Void",
-          "doneness": "partial",
+          "doneness": "done",
           "type_facet": null,
           "standing": "unclassified",
           "display_name": "Void"
@@ -793,21 +793,21 @@
         },
         {
           "name": "[redacted PI]",
-          "doneness": "not-started",
+          "doneness": "done",
           "type_facet": "Weapon.Magic.Resizable.Melee.Light.Finesseable.Ranged.Thrown.Simple.Specific.Piercing.Slashing.Dagger.BladeLight.Artifact.Major",
           "standing": "unclassified",
           "display_name": "[redacted PI] (Weapon.Magic.Resizable.Melee.Light.Finesseable.Ranged.Thrown.Simple.Specific.Piercing.Slashing.Dagger.BladeLight.Artifact.Major)"
         },
         {
           "name": "[redacted PI]",
-          "doneness": "not-started",
+          "doneness": "done",
           "type_facet": "Artifact.Major",
           "standing": "unclassified",
           "display_name": "[redacted PI] (Artifact.Major)"
         },
         {
           "name": "[redacted PI]",
-          "doneness": "not-started",
+          "doneness": "done",
           "type_facet": "Weapon.Resizable.Martial.Ranged.Standard.Piercing.Bludgeoning.Container.Projectile.Firearm.Weapon Group Firearms.Rifle",
           "standing": "unclassified",
           "display_name": "[redacted PI] (Weapon.Resizable.Martial.Ranged.Standard.Piercing.Bludgeoning.Container.Projectile.Firearm.Weapon Group Firearms.Rifle)"
@@ -817,11 +817,11 @@
     {
       "kind": "equipment_modifier",
       "label": "Equipment Modifiers",
-      "done": 0,
-      "partial": 1,
+      "done": 1,
+      "partial": 0,
       "not_started": 0,
       "denominator": 1,
-      "pct": 0.0,
+      "pct": 100.0,
       "excluded_from_percentage": 0,
       "standing_breakdown": {
         "origin": 1
@@ -829,7 +829,7 @@
       "items": [
         {
           "name": "Ironwood",
-          "doneness": "partial",
+          "doneness": "done",
           "type_facet": "BaseMaterial.Mundane.Ammunition.Armor.Shield.Weapon.Instruments.Tools.Goods",
           "standing": "origin",
           "display_name": "Ironwood"
@@ -839,11 +839,11 @@
     {
       "kind": "language",
       "label": "Languages",
-      "done": 0,
+      "done": 16,
       "partial": 0,
-      "not_started": 16,
+      "not_started": 0,
       "denominator": 16,
-      "pct": 0.0,
+      "pct": 100.0,
       "excluded_from_percentage": 10,
       "standing_breakdown": {
         "origin": 16,
@@ -852,182 +852,182 @@
       "items": [
         {
           "name": "Abyssal (cannot speak)",
-          "doneness": "not-started",
+          "doneness": "done",
           "type_facet": "Understand",
           "standing": "origin",
           "display_name": "Abyssal (cannot speak)"
         },
         {
           "name": "Aklo (cannot speak)",
-          "doneness": "not-started",
+          "doneness": "done",
           "type_facet": "Understand",
           "standing": "unclassified",
           "display_name": "Aklo (cannot speak)"
         },
         {
           "name": "Aquan (cannot speak)",
-          "doneness": "not-started",
+          "doneness": "done",
           "type_facet": "Understand",
           "standing": "unclassified",
           "display_name": "Aquan (cannot speak)"
         },
         {
           "name": "Auran (cannot speak)",
-          "doneness": "not-started",
+          "doneness": "done",
           "type_facet": "Understand",
           "standing": "unclassified",
           "display_name": "Auran (cannot speak)"
         },
         {
           "name": "Common (cannot speak)",
-          "doneness": "not-started",
+          "doneness": "done",
           "type_facet": "Understand",
           "standing": "unclassified",
           "display_name": "Common (cannot speak)"
         },
         {
           "name": "Dark Folk (cannot speak)",
-          "doneness": "not-started",
+          "doneness": "done",
           "type_facet": "Understand",
           "standing": "origin",
           "display_name": "Dark Folk (cannot speak)"
         },
         {
           "name": "Draconic (cannot speak)",
-          "doneness": "not-started",
+          "doneness": "done",
           "type_facet": "Understand",
           "standing": "origin",
           "display_name": "Draconic (cannot speak)"
         },
         {
           "name": "Druidic (cannot speak)",
-          "doneness": "not-started",
+          "doneness": "done",
           "type_facet": "Understand",
           "standing": "origin",
           "display_name": "Druidic (cannot speak)"
         },
         {
           "name": "Dwarven (cannot speak)",
-          "doneness": "not-started",
+          "doneness": "done",
           "type_facet": "Understand",
           "standing": "origin",
           "display_name": "Dwarven (cannot speak)"
         },
         {
           "name": "Elder Thing",
-          "doneness": "not-started",
+          "doneness": "done",
           "type_facet": "Spoken.Written.Read",
           "standing": "origin",
           "display_name": "Elder Thing"
         },
         {
           "name": "Elven (cannot speak)",
-          "doneness": "not-started",
+          "doneness": "done",
           "type_facet": "Understand",
           "standing": "origin",
           "display_name": "Elven (cannot speak)"
         },
         {
           "name": "Goblin (cannot speak)",
-          "doneness": "not-started",
+          "doneness": "done",
           "type_facet": "Understand",
           "standing": "origin",
           "display_name": "Goblin (cannot speak)"
         },
         {
           "name": "Infernal (cannot speak)",
-          "doneness": "not-started",
+          "doneness": "done",
           "type_facet": "Understand",
           "standing": "unclassified",
           "display_name": "Infernal (cannot speak)"
         },
         {
           "name": "Kasatha",
-          "doneness": "not-started",
+          "doneness": "done",
           "type_facet": "Spoken.Written.Read",
           "standing": "origin",
           "display_name": "Kasatha"
         },
         {
           "name": "Nagaji",
-          "doneness": "not-started",
+          "doneness": "done",
           "type_facet": "Spoken.Written.Read",
           "standing": "origin",
           "display_name": "Nagaji"
         },
         {
           "name": "Orc (cannot speak)",
-          "doneness": "not-started",
+          "doneness": "done",
           "type_facet": "Understand",
           "standing": "origin",
           "display_name": "Orc (cannot speak)"
         },
         {
           "name": "Samsaran",
-          "doneness": "not-started",
+          "doneness": "done",
           "type_facet": "Spoken.Written.Read",
           "standing": "origin",
           "display_name": "Samsaran"
         },
         {
           "name": "Sphinx",
-          "doneness": "not-started",
+          "doneness": "done",
           "type_facet": "Spoken.Written.Read",
           "standing": "unclassified",
           "display_name": "Sphinx"
         },
         {
           "name": "Sylvan (cannot speak)",
-          "doneness": "not-started",
+          "doneness": "done",
           "type_facet": "Understand",
           "standing": "unclassified",
           "display_name": "Sylvan (cannot speak)"
         },
         {
           "name": "Terran (cannot speak)",
-          "doneness": "not-started",
+          "doneness": "done",
           "type_facet": "Understand",
           "standing": "origin",
           "display_name": "Terran (cannot speak)"
         },
         {
           "name": "Undercommon (cannot speak)",
-          "doneness": "not-started",
+          "doneness": "done",
           "type_facet": "Understand",
           "standing": "origin",
           "display_name": "Undercommon (cannot speak)"
         },
         {
           "name": "Vegepygmy (cannot speak)",
-          "doneness": "not-started",
+          "doneness": "done",
           "type_facet": "Understand",
           "standing": "origin",
           "display_name": "Vegepygmy (cannot speak)"
         },
         {
           "name": "Wayang",
-          "doneness": "not-started",
+          "doneness": "done",
           "type_facet": "Spoken.Written.Read",
           "standing": "origin",
           "display_name": "Wayang"
         },
         {
           "name": "Xenophobic",
-          "doneness": "not-started",
+          "doneness": "done",
           "type_facet": "Spoken.Written.Read",
           "standing": "unclassified",
           "display_name": "Xenophobic"
         },
         {
           "name": "[redacted PI]",
-          "doneness": "not-started",
+          "doneness": "done",
           "type_facet": "Spoken.Written.Read",
           "standing": "unclassified",
           "display_name": "[redacted PI] (Spoken.Written.Read)"
         },
         {
           "name": "[redacted PI]",
-          "doneness": "not-started",
+          "doneness": "done",
           "type_facet": "Spoken",
           "standing": "unclassified",
           "display_name": "[redacted PI] (Spoken)"
@@ -8192,84 +8192,84 @@
         },
         {
           "name": "[redacted PI]",
-          "doneness": "not-started",
+          "doneness": "done",
           "type_facet": "Outsider",
           "standing": "unclassified",
           "display_name": "[redacted PI] (Outsider)"
         },
         {
           "name": "[redacted PI]",
-          "doneness": "not-started",
+          "doneness": "done",
           "type_facet": "Outsider",
           "standing": "unclassified",
           "display_name": "[redacted PI] (Outsider) #3"
         },
         {
           "name": "[redacted PI]",
-          "doneness": "not-started",
+          "doneness": "done",
           "type_facet": "Outsider",
           "standing": "unclassified",
           "display_name": "[redacted PI] (Outsider) #4"
         },
         {
           "name": "[redacted PI]",
-          "doneness": "not-started",
+          "doneness": "done",
           "type_facet": "Outsider",
           "standing": "unclassified",
           "display_name": "[redacted PI] (Outsider) #5"
         },
         {
           "name": "[redacted PI]",
-          "doneness": "not-started",
+          "doneness": "done",
           "type_facet": "Outsider",
           "standing": "unclassified",
           "display_name": "[redacted PI] (Outsider) #6"
         },
         {
           "name": "[redacted PI]",
-          "doneness": "not-started",
+          "doneness": "done",
           "type_facet": "Outsider",
           "standing": "unclassified",
           "display_name": "[redacted PI] (Outsider) #7"
         },
         {
           "name": "[redacted PI]",
-          "doneness": "not-started",
+          "doneness": "done",
           "type_facet": "Magical Beast",
           "standing": "unclassified",
           "display_name": "[redacted PI] (Magical Beast)"
         },
         {
           "name": "[redacted PI]",
-          "doneness": "not-started",
+          "doneness": "done",
           "type_facet": "Aberration",
           "standing": "unclassified",
           "display_name": "[redacted PI] (Aberration) #9"
         },
         {
           "name": "[redacted PI]",
-          "doneness": "not-started",
+          "doneness": "done",
           "type_facet": "Aberration",
           "standing": "unclassified",
           "display_name": "[redacted PI] (Aberration) #10"
         },
         {
           "name": "[redacted PI]",
-          "doneness": "not-started",
+          "doneness": "done",
           "type_facet": "Magical Beast",
           "standing": "unclassified",
           "display_name": "[redacted PI] (Magical Beast) #11"
         },
         {
           "name": "[redacted PI]",
-          "doneness": "not-started",
+          "doneness": "done",
           "type_facet": "Magical Beast",
           "standing": "unclassified",
           "display_name": "[redacted PI] (Magical Beast) #12"
         },
         {
           "name": "[redacted PI]",
-          "doneness": "not-started",
+          "doneness": "done",
           "type_facet": "Magical Beast",
           "standing": "unclassified",
           "display_name": "[redacted PI] (Magical Beast) #13"
@@ -8283,14 +8283,14 @@
         },
         {
           "name": "[redacted PI]",
-          "doneness": "not-started",
+          "doneness": "done",
           "type_facet": "Aberration",
           "standing": "unclassified",
           "display_name": "[redacted PI] (Aberration) #15"
         },
         {
           "name": "[redacted PI]",
-          "doneness": "not-started",
+          "doneness": "done",
           "type_facet": "Aberration",
           "standing": "unclassified",
           "display_name": "[redacted PI] (Aberration) #16"
@@ -8300,11 +8300,11 @@
     {
       "kind": "race_trait",
       "label": "Race Traits",
-      "done": 51,
-      "partial": 13,
-      "not_started": 14,
+      "done": 78,
+      "partial": 0,
+      "not_started": 0,
       "denominator": 78,
-      "pct": 65.4,
+      "pct": 100.0,
       "excluded_from_percentage": 66,
       "standing_breakdown": {
         "unclassified": 66,
@@ -8320,7 +8320,7 @@
         },
         {
           "name": "+2 Dexterity, +2 Intelligence, -2 Charisma",
-          "doneness": "partial",
+          "doneness": "done",
           "type_facet": "RacialTraits.Wyrwood Racial Trait.Wyrwood Racial Default.SpecialQuality.Racial Ability Scores",
           "standing": "unclassified",
           "display_name": "+2 Dexterity, +2 Intelligence, -2 Charisma"
@@ -8334,14 +8334,14 @@
         },
         {
           "name": "+2 Dexterity, +2 Wisdom",
-          "doneness": "partial",
+          "doneness": "done",
           "type_facet": "RacialTraits.Kasatha Racial Trait.Kasatha Racial Default.SpecialQuality.Racial Ability Scores",
           "standing": "unclassified",
           "display_name": "+2 Dexterity, +2 Wisdom"
         },
         {
           "name": "+2 Dexterity, +2 Wisdom, -2 Intelligence",
-          "doneness": "partial",
+          "doneness": "done",
           "type_facet": "RacialTraits.Wyvaran Racial Trait.Wyvaran Racial Default.SpecialQuality.Racial Ability Scores",
           "standing": "unclassified",
           "display_name": "+2 Dexterity, +2 Wisdom, -2 Intelligence"
@@ -8369,7 +8369,7 @@
         },
         {
           "name": "+6 Strength, -2 Intelligence, -2 Wisdom, -2 Charisma",
-          "doneness": "partial",
+          "doneness": "done",
           "type_facet": "RacialTraits.Trox Racial Trait.Trox Racial Default.SpecialQuality.Racial Ability Scores",
           "standing": "origin",
           "display_name": "+6 Strength, -2 Intelligence, -2 Wisdom, -2 Charisma"
@@ -8383,14 +8383,14 @@
         },
         {
           "name": "Agile",
-          "doneness": "partial",
+          "doneness": "done",
           "type_facet": "RacialTraits.Kitsune Racial Trait.Kitsune Racial Default.SpecialQuality",
           "standing": "unclassified",
           "display_name": "Agile"
         },
         {
           "name": "Alien Presence",
-          "doneness": "partial",
+          "doneness": "done",
           "type_facet": "RaceAbility.SpecialQuality.Extraordinary.Aura",
           "standing": "origin",
           "display_name": "Alien Presence"
@@ -8404,7 +8404,7 @@
         },
         {
           "name": "Burrow",
-          "doneness": "partial",
+          "doneness": "done",
           "type_facet": "RacialTraits.Trox Racial Trait.Trox Racial Default.SpecialQuality",
           "standing": "unclassified",
           "display_name": "Burrow"
@@ -8418,14 +8418,14 @@
         },
         {
           "name": "Changeling",
-          "doneness": "not-started",
+          "doneness": "done",
           "type_facet": "AdoptiveRace",
           "standing": "origin",
           "display_name": "Changeling"
         },
         {
           "name": "Charm Person",
-          "doneness": "not-started",
+          "doneness": "done",
           "type_facet": "Ability Focus",
           "standing": "unclassified",
           "display_name": "Charm Person"
@@ -8446,14 +8446,14 @@
         },
         {
           "name": "Comprehend Languages",
-          "doneness": "partial",
+          "doneness": "done",
           "type_facet": "Communicate.SpellLike",
           "standing": "unclassified",
           "display_name": "Comprehend Languages"
         },
         {
           "name": "Construct",
-          "doneness": "partial",
+          "doneness": "done",
           "type_facet": "RacialTraits.Wyrwood Racial Trait.Wyrwood Racial Default.SpecialQuality.Racial Type",
           "standing": "unclassified",
           "display_name": "Construct"
@@ -8467,42 +8467,42 @@
         },
         {
           "name": "Darkvision",
-          "doneness": "partial",
+          "doneness": "done",
           "type_facet": "RacialTraits.Changeling Racial Trait.Changeling Racial Default.SpecialQuality.Racial Vision",
           "standing": "unclassified",
           "display_name": "Darkvision (RacialTraits.Changeling Racial Trait.Changeling Racial Default.SpecialQuality.Racial Vision)"
         },
         {
           "name": "Darkvision",
-          "doneness": "partial",
+          "doneness": "done",
           "type_facet": "RacialTraits.Trox Racial Trait.Trox Racial Default.SpecialQuality.Racial Vision",
           "standing": "unclassified",
           "display_name": "Darkvision (RacialTraits.Trox Racial Trait.Trox Racial Default.SpecialQuality.Racial Vision)"
         },
         {
           "name": "Darkvision",
-          "doneness": "partial",
+          "doneness": "done",
           "type_facet": "RacialTraits.Wayang Racial Trait.Wayang Racial Default.SpecialQuality.Racial Vision",
           "standing": "unclassified",
           "display_name": "Darkvision (RacialTraits.Wayang Racial Trait.Wayang Racial Default.SpecialQuality.Racial Vision)"
         },
         {
           "name": "Darkvision",
-          "doneness": "partial",
+          "doneness": "done",
           "type_facet": "RacialTraits.Wyrwood Racial Trait.Wyrwood Racial Default.SpecialQuality.Racial Vision",
           "standing": "unclassified",
           "display_name": "Darkvision (RacialTraits.Wyrwood Racial Trait.Wyrwood Racial Default.SpecialQuality.Racial Vision)"
         },
         {
           "name": "Darkvision",
-          "doneness": "partial",
+          "doneness": "done",
           "type_facet": "RacialTraits.Wyvaran Racial Trait.Wyvaran Racial Default.SpecialQuality.Racial Vision",
           "standing": "unclassified",
           "display_name": "Darkvision (RacialTraits.Wyvaran Racial Trait.Wyvaran Racial Default.SpecialQuality.Racial Vision)"
         },
         {
           "name": "Defensive Training",
-          "doneness": "partial",
+          "doneness": "done",
           "type_facet": "RacialTraits.Kasatha Racial Trait.Kasatha Racial Default.SpecialQuality.Extraordinary",
           "standing": "unclassified",
           "display_name": "Defensive Training"
@@ -8558,7 +8558,7 @@
         },
         {
           "name": "Flight",
-          "doneness": "partial",
+          "doneness": "done",
           "type_facet": "RacialTraits.Wyvaran Racial Trait.Wyvaran Racial Default.SpecialQuality",
           "standing": "unclassified",
           "display_name": "Flight"
@@ -8572,7 +8572,7 @@
         },
         {
           "name": "Frenzy",
-          "doneness": "partial",
+          "doneness": "done",
           "type_facet": "RacialTraits.Trox Racial Trait.Trox Racial Default.SpecialAttack.Special Attack.Special Ability.Extraordinary",
           "standing": "origin",
           "display_name": "Frenzy"
@@ -8593,14 +8593,14 @@
         },
         {
           "name": "Hag Racial Trait",
-          "doneness": "partial",
+          "doneness": "done",
           "type_facet": "RacialTraits.Changeling Racial Trait.Changeling Racial Default.SpecialQuality",
           "standing": "origin",
           "display_name": "Hag Racial Trait"
         },
         {
           "name": "Harionago ~ Paralysis",
-          "doneness": "not-started",
+          "doneness": "done",
           "type_facet": null,
           "standing": "origin",
           "display_name": "Harionago ~ Paralysis"
@@ -8691,7 +8691,7 @@
         },
         {
           "name": "Kasatha",
-          "doneness": "not-started",
+          "doneness": "done",
           "type_facet": "AdoptiveRace",
           "standing": "origin",
           "display_name": "Kasatha (AdoptiveRace)"
@@ -8705,7 +8705,7 @@
         },
         {
           "name": "Kitsune",
-          "doneness": "not-started",
+          "doneness": "done",
           "type_facet": "AdoptiveRace",
           "standing": "origin",
           "display_name": "Kitsune (AdoptiveRace)"
@@ -8719,14 +8719,14 @@
         },
         {
           "name": "Kitsune Magic",
-          "doneness": "partial",
+          "doneness": "done",
           "type_facet": "RacialTraits.Kitsune Racial Trait.Kitsune Racial Default.SpecialQuality.Special Quality.Extraordinary.SpellLike",
           "standing": "origin",
           "display_name": "Kitsune Magic"
         },
         {
           "name": "Languages",
-          "doneness": "partial",
+          "doneness": "done",
           "type_facet": "RacialTraits.Changeling Racial Trait.Changeling Racial Default.SpecialQuality.Racial Language",
           "standing": "unclassified",
           "display_name": "Languages (RacialTraits.Changeling Racial Trait.Changeling Racial Default.SpecialQuality.Racial Language)"
@@ -8789,7 +8789,7 @@
         },
         {
           "name": "Large",
-          "doneness": "not-started",
+          "doneness": "done",
           "type_facet": "RacialTraits.Trox Racial Trait.Trox Racial Default.SpecialQuality.Racial Size",
           "standing": "unclassified",
           "display_name": "Large"
@@ -8817,14 +8817,14 @@
         },
         {
           "name": "Living Machine",
-          "doneness": "partial",
+          "doneness": "done",
           "type_facet": "RacialTraits.Wyrwood Racial Trait.SpecialQuality.Special Quality",
           "standing": "origin",
           "display_name": "Living Machine"
         },
         {
           "name": "Low-Light Vision",
-          "doneness": "partial",
+          "doneness": "done",
           "type_facet": "RacialTraits.Kitsune Racial Trait.Kitsune Racial Default.SpecialQuality.Racial Vision",
           "standing": "unclassified",
           "display_name": "Low-Light Vision (RacialTraits.Kitsune Racial Trait.Kitsune Racial Default.SpecialQuality.Racial Vision)"
@@ -8845,21 +8845,21 @@
         },
         {
           "name": "Low-Light Vision",
-          "doneness": "partial",
+          "doneness": "done",
           "type_facet": "RacialTraits.Wyrwood Racial Trait.Wyrwood Racial Default.SpecialQuality.Racial Vision",
           "standing": "unclassified",
           "display_name": "Low-Light Vision (RacialTraits.Wyrwood Racial Trait.Wyrwood Racial Default.SpecialQuality.Racial Vision)"
         },
         {
           "name": "Low-Light Vision",
-          "doneness": "partial",
+          "doneness": "done",
           "type_facet": "RacialTraits.Wyvaran Racial Trait.Wyvaran Racial Default.SpecialQuality.Racial Vision",
           "standing": "unclassified",
           "display_name": "Low-Light Vision (RacialTraits.Wyvaran Racial Trait.Wyvaran Racial Default.SpecialQuality.Racial Vision)"
         },
         {
           "name": "Lurker",
-          "doneness": "partial",
+          "doneness": "done",
           "type_facet": "RacialTraits.Wayang Racial Trait.Wayang Racial Default.SpecialQuality",
           "standing": "origin",
           "display_name": "Lurker"
@@ -8929,49 +8929,49 @@
         },
         {
           "name": "Nagaji",
-          "doneness": "not-started",
+          "doneness": "done",
           "type_facet": "AdoptiveRace",
           "standing": "origin",
           "display_name": "Nagaji"
         },
         {
           "name": "Natural Armor",
-          "doneness": "partial",
+          "doneness": "done",
           "type_facet": "RacialTraits.Changeling Racial Trait.Changeling Racial Default.SpecialQuality",
           "standing": "unclassified",
           "display_name": "Natural Armor"
         },
         {
           "name": "Natural Weapons",
-          "doneness": "partial",
+          "doneness": "done",
           "type_facet": "RacialTraits.Kitsune Racial Trait.Kitsune Racial Default.SpecialQuality",
           "standing": "unclassified",
           "display_name": "Natural Weapons"
         },
         {
           "name": "Nightmare",
-          "doneness": "not-started",
+          "doneness": "done",
           "type_facet": "Ability Focus",
           "standing": "origin",
           "display_name": "Nightmare"
         },
         {
           "name": "Normal Speed",
-          "doneness": "partial",
+          "doneness": "done",
           "type_facet": "RacialTraits.Changeling Racial Trait.Changeling Racial Default.SpecialQuality.Racial Speed",
           "standing": "unclassified",
           "display_name": "Normal Speed (RacialTraits.Changeling Racial Trait.Changeling Racial Default.SpecialQuality.Racial Speed)"
         },
         {
           "name": "Normal Speed",
-          "doneness": "partial",
+          "doneness": "done",
           "type_facet": "RacialTraits.Kasatha Racial Trait.Kasatha Racial Default.SpecialQuality.Racial Speed",
           "standing": "unclassified",
           "display_name": "Normal Speed (RacialTraits.Kasatha Racial Trait.Kasatha Racial Default.SpecialQuality.Racial Speed)"
         },
         {
           "name": "Normal Speed",
-          "doneness": "partial",
+          "doneness": "done",
           "type_facet": "RacialTraits.Kitsune Racial Trait.Kitsune Racial Default.SpecialQuality.Racial Speed",
           "standing": "unclassified",
           "display_name": "Normal Speed (RacialTraits.Kitsune Racial Trait.Kitsune Racial Default.SpecialQuality.Racial Speed)"
@@ -8992,21 +8992,21 @@
         },
         {
           "name": "Normal Speed",
-          "doneness": "partial",
+          "doneness": "done",
           "type_facet": "RacialTraits.Trox Racial Trait.Trox Racial Default.SpecialQuality.Racial Speed",
           "standing": "unclassified",
           "display_name": "Normal Speed (RacialTraits.Trox Racial Trait.Trox Racial Default.SpecialQuality.Racial Speed)"
         },
         {
           "name": "Normal Speed",
-          "doneness": "partial",
+          "doneness": "done",
           "type_facet": "RacialTraits.Wyrwood Racial Trait.Wyrwood Racial Default.SpecialQuality.Racial Speed",
           "standing": "unclassified",
           "display_name": "Normal Speed (RacialTraits.Wyrwood Racial Trait.Wyrwood Racial Default.SpecialQuality.Racial Speed)"
         },
         {
           "name": "Normal Speed",
-          "doneness": "partial",
+          "doneness": "done",
           "type_facet": "RacialTraits.Wyvaran Racial Trait.Wyvaran Racial Default.SpecialQuality.Racial Speed",
           "standing": "unclassified",
           "display_name": "Normal Speed (RacialTraits.Wyvaran Racial Trait.Wyvaran Racial Default.SpecialQuality.Racial Speed)"
@@ -9048,7 +9048,7 @@
         },
         {
           "name": "Resistance to Negative Energy",
-          "doneness": "partial",
+          "doneness": "done",
           "type_facet": null,
           "standing": "origin",
           "display_name": "Resistance to Negative Energy"
@@ -9062,7 +9062,7 @@
         },
         {
           "name": "Samsaran",
-          "doneness": "not-started",
+          "doneness": "done",
           "type_facet": "AdoptiveRace",
           "standing": "origin",
           "display_name": "Samsaran (AdoptiveRace)"
@@ -9083,14 +9083,14 @@
         },
         {
           "name": "Sayona ~ Paralysis",
-          "doneness": "not-started",
+          "doneness": "done",
           "type_facet": null,
           "standing": "origin",
           "display_name": "Sayona ~ Paralysis"
         },
         {
           "name": "Sea Lungs (Sea Hag)",
-          "doneness": "partial",
+          "doneness": "done",
           "type_facet": "RacialTraits.Hag Racial Trait.SpecialQuality.Special Quality",
           "standing": "origin",
           "display_name": "Sea Lungs (Sea Hag)"
@@ -9111,14 +9111,14 @@
         },
         {
           "name": "Shadow Magic",
-          "doneness": "partial",
+          "doneness": "done",
           "type_facet": "RacialTraits.Wayang Racial Trait.Wayang Racial Default.SpecialQuality.Special Quality",
           "standing": "unclassified",
           "display_name": "Shadow Magic"
         },
         {
           "name": "Shadow Resistance",
-          "doneness": "partial",
+          "doneness": "done",
           "type_facet": "RacialTraits.Wayang Racial Trait.Wayang Racial Default.SpecialQuality",
           "standing": "origin",
           "display_name": "Shadow Resistance"
@@ -9139,21 +9139,21 @@
         },
         {
           "name": "Slow Speed",
-          "doneness": "partial",
+          "doneness": "done",
           "type_facet": "RacialTraits.Wayang Racial Trait.Wayang Racial Default.SpecialQuality.Racial Speed",
           "standing": "unclassified",
           "display_name": "Slow Speed"
         },
         {
           "name": "Small",
-          "doneness": "partial",
+          "doneness": "done",
           "type_facet": "RacialTraits.Wayang Racial Trait.Wayang Racial Default.SpecialQuality.Racial Size",
           "standing": "unclassified",
           "display_name": "Small (RacialTraits.Wayang Racial Trait.Wayang Racial Default.SpecialQuality.Racial Size)"
         },
         {
           "name": "Small",
-          "doneness": "not-started",
+          "doneness": "done",
           "type_facet": "RacialTraits.Wyrwood Racial Trait.Wyrwood Racial Default.SpecialQuality.Racial Size",
           "standing": "unclassified",
           "display_name": "Small (RacialTraits.Wyrwood Racial Trait.Wyrwood Racial Default.SpecialQuality.Racial Size)"
@@ -9174,28 +9174,28 @@
         },
         {
           "name": "Speak with Animals (aquatic only)",
-          "doneness": "partial",
+          "doneness": "done",
           "type_facet": "Communicate.SpellLike",
           "standing": "origin",
           "display_name": "Speak with Animals (aquatic only)"
         },
         {
           "name": "Speak with Animals (including vermin)",
-          "doneness": "partial",
+          "doneness": "done",
           "type_facet": "Communicate.SpellLike",
           "standing": "origin",
           "display_name": "Speak with Animals (including vermin)"
         },
         {
           "name": "Speak with Animals (rodents only)",
-          "doneness": "partial",
+          "doneness": "done",
           "type_facet": "Communicate.SpellLike",
           "standing": "unclassified",
           "display_name": "Speak with Animals (rodents only)"
         },
         {
           "name": "Speak with Animals (winged animals only)",
-          "doneness": "partial",
+          "doneness": "done",
           "type_facet": "Communicate.SpellLike",
           "standing": "origin",
           "display_name": "Speak with Animals (winged animals only)"
@@ -9209,7 +9209,7 @@
         },
         {
           "name": "Strangling Ensnare",
-          "doneness": "not-started",
+          "doneness": "done",
           "type_facet": "Ability Focus",
           "standing": "origin",
           "display_name": "Strangling Ensnare"
@@ -9244,7 +9244,7 @@
         },
         {
           "name": "Tooth Fairy ~ Paralysis",
-          "doneness": "not-started",
+          "doneness": "done",
           "type_facet": null,
           "standing": "origin",
           "display_name": "Tooth Fairy ~ Paralysis"
@@ -9258,7 +9258,7 @@
         },
         {
           "name": "Trox",
-          "doneness": "not-started",
+          "doneness": "done",
           "type_facet": "AdoptiveRace",
           "standing": "origin",
           "display_name": "Trox"
@@ -9279,7 +9279,7 @@
         },
         {
           "name": "Wayang",
-          "doneness": "not-started",
+          "doneness": "done",
           "type_facet": "AdoptiveRace",
           "standing": "origin",
           "display_name": "Wayang (AdoptiveRace)"
@@ -9293,14 +9293,14 @@
         },
         {
           "name": "Wyrwood",
-          "doneness": "not-started",
+          "doneness": "done",
           "type_facet": "AdoptiveRace",
           "standing": "origin",
           "display_name": "Wyrwood"
         },
         {
           "name": "Wyvaran",
-          "doneness": "not-started",
+          "doneness": "done",
           "type_facet": "AdoptiveRace",
           "standing": "origin",
           "display_name": "Wyvaran"
@@ -9324,11 +9324,11 @@
     {
       "kind": "race",
       "label": "Races",
-      "done": 4,
-      "partial": 1,
-      "not_started": 4,
+      "done": 9,
+      "partial": 0,
+      "not_started": 0,
       "denominator": 9,
-      "pct": 44.4,
+      "pct": 100.0,
       "excluded_from_percentage": 0,
       "standing_breakdown": {
         "origin": 9
@@ -9336,14 +9336,14 @@
       "items": [
         {
           "name": "Changeling",
-          "doneness": "partial",
+          "doneness": "done",
           "type_facet": "Base.PC.Uncommon",
           "standing": "origin",
           "display_name": "Changeling"
         },
         {
           "name": "Kasatha",
-          "doneness": "not-started",
+          "doneness": "done",
           "type_facet": "Base.PC",
           "standing": "origin",
           "display_name": "Kasatha"
@@ -9371,7 +9371,7 @@
         },
         {
           "name": "Trox",
-          "doneness": "not-started",
+          "doneness": "done",
           "type_facet": "Base.PC",
           "standing": "origin",
           "display_name": "Trox"
@@ -9385,14 +9385,14 @@
         },
         {
           "name": "Wyrwood",
-          "doneness": "not-started",
+          "doneness": "done",
           "type_facet": "Base.PC",
           "standing": "origin",
           "display_name": "Wyrwood"
         },
         {
           "name": "Wyvaran",
-          "doneness": "not-started",
+          "doneness": "done",
           "type_facet": "Base.PC",
           "standing": "origin",
           "display_name": "Wyvaran"
@@ -9402,11 +9402,11 @@
     {
       "kind": "skill",
       "label": "Skills",
-      "done": 0,
-      "partial": 1,
+      "done": 1,
+      "partial": 0,
       "not_started": 0,
       "denominator": 1,
-      "pct": 0.0,
+      "pct": 100.0,
       "excluded_from_percentage": 0,
       "standing_breakdown": {
         "origin": 1
@@ -9414,7 +9414,7 @@
       "items": [
         {
           "name": "Craft (Wood)",
-          "doneness": "partial",
+          "doneness": "done",
           "type_facet": "Intelligence.Craft.Base",
           "standing": "origin",
           "display_name": "Craft (Wood)"
@@ -9619,7 +9619,7 @@
         },
         {
           "name": "Quickened Lightning Bolt",
-          "doneness": "not-started",
+          "doneness": "done",
           "type_facet": "Arcane",
           "standing": "unclassified",
           "display_name": "Quickened Lightning Bolt"
@@ -9822,7 +9822,7 @@
         },
         {
           "name": "[redacted PI]",
-          "doneness": "not-started",
+          "doneness": "done",
           "type_facet": "Arcane.Divine",
           "standing": "unclassified",
           "display_name": "[redacted PI]"
@@ -9832,11 +9832,11 @@
     {
       "kind": "template",
       "label": "Templates",
-      "done": 42,
-      "partial": 39,
-      "not_started": 100,
+      "done": 181,
+      "partial": 0,
+      "not_started": 0,
       "denominator": 181,
-      "pct": 23.2,
+      "pct": 100.0,
       "excluded_from_percentage": 2,
       "standing_breakdown": {
         "origin": 181,
@@ -9852,70 +9852,70 @@
         },
         {
           "name": "Abyssal Boilborn",
-          "doneness": "not-started",
+          "doneness": "done",
           "type_facet": null,
           "standing": "origin",
           "display_name": "Abyssal Boilborn"
         },
         {
           "name": "Accuser Devil Bound",
-          "doneness": "partial",
+          "doneness": "done",
           "type_facet": null,
           "standing": "origin",
           "display_name": "Accuser Devil Bound"
         },
         {
           "name": "Adamantine Clockwork Dragon",
-          "doneness": "not-started",
+          "doneness": "done",
           "type_facet": null,
           "standing": "origin",
           "display_name": "Adamantine Clockwork Dragon"
         },
         {
           "name": "Afflicted Werebat",
-          "doneness": "not-started",
+          "doneness": "done",
           "type_facet": null,
           "standing": "origin",
           "display_name": "Afflicted Werebat"
         },
         {
           "name": "Afflicted Werecrocodile",
-          "doneness": "not-started",
+          "doneness": "done",
           "type_facet": null,
           "standing": "origin",
           "display_name": "Afflicted Werecrocodile"
         },
         {
           "name": "Afflicted Wereshark",
-          "doneness": "not-started",
+          "doneness": "done",
           "type_facet": null,
           "standing": "origin",
           "display_name": "Afflicted Wereshark"
         },
         {
           "name": "Barbed Devil Bound",
-          "doneness": "partial",
+          "doneness": "done",
           "type_facet": null,
           "standing": "origin",
           "display_name": "Barbed Devil Bound"
         },
         {
           "name": "Base Dragon HD (9)",
-          "doneness": "not-started",
+          "doneness": "done",
           "type_facet": null,
           "standing": "origin",
           "display_name": "Base Dragon HD (9)"
         },
         {
           "name": "Bearded Devil Bound",
-          "doneness": "partial",
+          "doneness": "done",
           "type_facet": null,
           "standing": "origin",
           "display_name": "Bearded Devil Bound"
         },
         {
           "name": "Beheaded",
-          "doneness": "not-started",
+          "doneness": "done",
           "type_facet": null,
           "standing": "origin",
           "display_name": "Beheaded"
@@ -10062,98 +10062,98 @@
         },
         {
           "name": "Belier Devil Bound",
-          "doneness": "partial",
+          "doneness": "done",
           "type_facet": null,
           "standing": "origin",
           "display_name": "Belier Devil Bound"
         },
         {
           "name": "Blindborn",
-          "doneness": "not-started",
+          "doneness": "done",
           "type_facet": null,
           "standing": "origin",
           "display_name": "Blindborn"
         },
         {
           "name": "Boilborn",
-          "doneness": "not-started",
+          "doneness": "done",
           "type_facet": null,
           "standing": "origin",
           "display_name": "Boilborn"
         },
         {
           "name": "Bone Devil Bound",
-          "doneness": "partial",
+          "doneness": "done",
           "type_facet": null,
           "standing": "origin",
           "display_name": "Bone Devil Bound"
         },
         {
           "name": "Bonus Language ~ Kasatha",
-          "doneness": "not-started",
+          "doneness": "done",
           "type_facet": null,
           "standing": "origin",
           "display_name": "Bonus Language ~ Kasatha"
         },
         {
           "name": "Bonus Language ~ Nagaji",
-          "doneness": "not-started",
+          "doneness": "done",
           "type_facet": null,
           "standing": "origin",
           "display_name": "Bonus Language ~ Nagaji"
         },
         {
           "name": "Bonus Language ~ Samsaran",
-          "doneness": "not-started",
+          "doneness": "done",
           "type_facet": null,
           "standing": "origin",
           "display_name": "Bonus Language ~ Samsaran"
         },
         {
           "name": "Bonus Language ~ Wayang",
-          "doneness": "not-started",
+          "doneness": "done",
           "type_facet": null,
           "standing": "origin",
           "display_name": "Bonus Language ~ Wayang"
         },
         {
           "name": "Broken Soul",
-          "doneness": "partial",
+          "doneness": "done",
           "type_facet": null,
           "standing": "origin",
           "display_name": "Broken Soul"
         },
         {
           "name": "Changeling",
-          "doneness": "not-started",
+          "doneness": "done",
           "type_facet": null,
           "standing": "origin",
           "display_name": "Changeling"
         },
         {
           "name": "Changeling",
-          "doneness": "not-started",
+          "doneness": "done",
           "type_facet": "Race Builder Subtype",
           "standing": "origin",
           "display_name": "Changeling (Race Builder Subtype)"
         },
         {
           "name": "Changeling",
-          "doneness": "not-started",
+          "doneness": "done",
           "type_facet": null,
           "standing": "origin",
           "display_name": "Changeling #3"
         },
         {
           "name": "Changeling",
-          "doneness": "not-started",
+          "doneness": "done",
           "type_facet": "Racial Heritage",
           "standing": "origin",
           "display_name": "Changeling (Racial Heritage)"
         },
         {
           "name": "Clockwork Charger",
-          "doneness": "not-started",
+          "doneness": "done",
           "type_facet": null,
           "standing": "origin",
           "display_name": "Clockwork Charger"
@@ -10181,28 +10181,28 @@
         },
         {
           "name": "Clockwork Dragon Rust Breath",
-          "doneness": "not-started",
+          "doneness": "done",
           "type_facet": null,
           "standing": "origin",
           "display_name": "Clockwork Dragon Rust Breath"
         },
         {
           "name": "Clockwork Dragon Sleep Gas",
-          "doneness": "not-started",
+          "doneness": "done",
           "type_facet": null,
           "standing": "origin",
           "display_name": "Clockwork Dragon Sleep Gas"
         },
         {
           "name": "Colossus",
-          "doneness": "not-started",
+          "doneness": "done",
           "type_facet": null,
           "standing": "origin",
           "display_name": "Colossus"
         },
         {
           "name": "Colour-Blighted Simple Template",
-          "doneness": "not-started",
+          "doneness": "done",
           "type_facet": null,
           "standing": "origin",
           "display_name": "Colour-Blighted Simple Template"
@@ -10216,182 +10216,182 @@
         },
         {
           "name": "Contract Devil Bound",
-          "doneness": "partial",
+          "doneness": "done",
           "type_facet": null,
           "standing": "origin",
           "display_name": "Contract Devil Bound"
         },
         {
           "name": "Death Worg",
-          "doneness": "not-started",
+          "doneness": "done",
           "type_facet": null,
           "standing": "origin",
           "display_name": "Death Worg"
         },
         {
           "name": "Demon Lord Away from Home Realm",
-          "doneness": "not-started",
+          "doneness": "done",
           "type_facet": null,
           "standing": "origin",
           "display_name": "Demon Lord Away from Home Realm"
         },
         {
           "name": "Demon Lord in Home Realm",
-          "doneness": "partial",
+          "doneness": "done",
           "type_facet": null,
           "standing": "origin",
           "display_name": "Demon Lord in Home Realm"
         },
         {
           "name": "Destroyer-Type Clockwork Dragon",
-          "doneness": "not-started",
+          "doneness": "done",
           "type_facet": null,
           "standing": "origin",
           "display_name": "Destroyer-Type Clockwork Dragon"
         },
         {
           "name": "Devil (Nemesis) ~ Evil Domain",
-          "doneness": "partial",
+          "doneness": "done",
           "type_facet": null,
           "standing": "origin",
           "display_name": "Devil (Nemesis) ~ Evil Domain"
         },
         {
           "name": "Devil (Nemesis) ~ Fire Domain",
-          "doneness": "partial",
+          "doneness": "done",
           "type_facet": null,
           "standing": "origin",
           "display_name": "Devil (Nemesis) ~ Fire Domain"
         },
         {
           "name": "Devil (Nemesis) ~ Law Domain",
-          "doneness": "partial",
+          "doneness": "done",
           "type_facet": null,
           "standing": "origin",
           "display_name": "Devil (Nemesis) ~ Law Domain"
         },
         {
           "name": "Devil (Nemesis) ~ Trickery Domain",
-          "doneness": "partial",
+          "doneness": "done",
           "type_facet": null,
           "standing": "origin",
           "display_name": "Devil (Nemesis) ~ Trickery Domain"
         },
         {
           "name": "Devil (Nemesis) ~ War Domain",
-          "doneness": "partial",
+          "doneness": "done",
           "type_facet": null,
           "standing": "origin",
           "display_name": "Devil (Nemesis) ~ War Domain"
         },
         {
           "name": "Devil (Nemesis) ~ Weather Domain",
-          "doneness": "partial",
+          "doneness": "done",
           "type_facet": null,
           "standing": "origin",
           "display_name": "Devil (Nemesis) ~ Weather Domain"
         },
         {
           "name": "Devilbound Creature",
-          "doneness": "partial",
+          "doneness": "done",
           "type_facet": null,
           "standing": "origin",
           "display_name": "Devilbound Creature"
         },
         {
           "name": "Divine Guardian",
-          "doneness": "partial",
+          "doneness": "done",
           "type_facet": null,
           "standing": "origin",
           "display_name": "Divine Guardian"
         },
         {
           "name": "Dragon Attacks HD (9)",
-          "doneness": "not-started",
+          "doneness": "done",
           "type_facet": null,
           "standing": "origin",
           "display_name": "Dragon Attacks HD (9)"
         },
         {
           "name": "Dragon Size HD (9)",
-          "doneness": "not-started",
+          "doneness": "done",
           "type_facet": null,
           "standing": "origin",
           "display_name": "Dragon Size HD (9)"
         },
         {
           "name": "Drakainia Spawn",
-          "doneness": "not-started",
+          "doneness": "done",
           "type_facet": null,
           "standing": "origin",
           "display_name": "Drakainia Spawn"
         },
         {
           "name": "Drakainia Spawn ~ Chameleon Scales",
-          "doneness": "not-started",
+          "doneness": "done",
           "type_facet": null,
           "standing": "origin",
           "display_name": "Drakainia Spawn ~ Chameleon Scales"
         },
         {
           "name": "Drakainia Spawn ~ Covered in Eyes",
-          "doneness": "not-started",
+          "doneness": "done",
           "type_facet": null,
           "standing": "origin",
           "display_name": "Drakainia Spawn ~ Covered in Eyes"
         },
         {
           "name": "Drakainia Spawn ~ Favored Spawn",
-          "doneness": "not-started",
+          "doneness": "done",
           "type_facet": null,
           "standing": "origin",
           "display_name": "Drakainia Spawn ~ Favored Spawn"
         },
         {
           "name": "Drakainia Spawn ~ Impenetrable Skin",
-          "doneness": "not-started",
+          "doneness": "done",
           "type_facet": null,
           "standing": "origin",
           "display_name": "Drakainia Spawn ~ Impenetrable Skin"
         },
         {
           "name": "Drakainia Spawn ~ Multiple Heads",
-          "doneness": "not-started",
+          "doneness": "done",
           "type_facet": null,
           "standing": "origin",
           "display_name": "Drakainia Spawn ~ Multiple Heads"
         },
         {
           "name": "Drakainia Spawn ~ Poison Glands",
-          "doneness": "not-started",
+          "doneness": "done",
           "type_facet": null,
           "standing": "origin",
           "display_name": "Drakainia Spawn ~ Poison Glands"
         },
         {
           "name": "Drakainia Spawn ~ Serpent-Headed Tail",
-          "doneness": "not-started",
+          "doneness": "done",
           "type_facet": null,
           "standing": "origin",
           "display_name": "Drakainia Spawn ~ Serpent-Headed Tail"
         },
         {
           "name": "Drakainia Spawn ~ Sticky",
-          "doneness": "not-started",
+          "doneness": "done",
           "type_facet": null,
           "standing": "origin",
           "display_name": "Drakainia Spawn ~ Sticky"
         },
         {
           "name": "Drakainia Spawn ~ Tentacles",
-          "doneness": "not-started",
+          "doneness": "done",
           "type_facet": null,
           "standing": "origin",
           "display_name": "Drakainia Spawn ~ Tentacles"
         },
         {
           "name": "Drakainia Spawn ~ Vestigial Companion",
-          "doneness": "not-started",
+          "doneness": "done",
           "type_facet": null,
           "standing": "origin",
           "display_name": "Drakainia Spawn ~ Vestigial Companion"
@@ -10405,28 +10405,28 @@
         },
         {
           "name": "Drowning Devil Bound",
-          "doneness": "partial",
+          "doneness": "done",
           "type_facet": null,
           "standing": "origin",
           "display_name": "Drowning Devil Bound"
         },
         {
           "name": "Ectoplasmic Creature",
-          "doneness": "partial",
+          "doneness": "done",
           "type_facet": null,
           "standing": "origin",
           "display_name": "Ectoplasmic Creature"
         },
         {
           "name": "Empyreal Lord Away from Home Realm",
-          "doneness": "not-started",
+          "doneness": "done",
           "type_facet": null,
           "standing": "origin",
           "display_name": "Empyreal Lord Away from Home Realm"
         },
         {
           "name": "Empyreal Lord in Home Realm",
-          "doneness": "partial",
+          "doneness": "done",
           "type_facet": null,
           "standing": "origin",
           "display_name": "Empyreal Lord in Home Realm"
@@ -10447,7 +10447,7 @@
         },
         {
           "name": "Erinyes Devil Bound",
-          "doneness": "partial",
+          "doneness": "done",
           "type_facet": null,
           "standing": "origin",
           "display_name": "Erinyes Devil Bound"
@@ -10461,91 +10461,91 @@
         },
         {
           "name": "Fleshdreg (Envy)",
-          "doneness": "not-started",
+          "doneness": "done",
           "type_facet": null,
           "standing": "origin",
           "display_name": "Fleshdreg (Envy)"
         },
         {
           "name": "Fleshdreg (Gluttony)",
-          "doneness": "not-started",
+          "doneness": "done",
           "type_facet": null,
           "standing": "origin",
           "display_name": "Fleshdreg (Gluttony)"
         },
         {
           "name": "Fleshdreg (Greed)",
-          "doneness": "not-started",
+          "doneness": "done",
           "type_facet": null,
           "standing": "origin",
           "display_name": "Fleshdreg (Greed)"
         },
         {
           "name": "Fleshdreg (Lust)",
-          "doneness": "not-started",
+          "doneness": "done",
           "type_facet": null,
           "standing": "origin",
           "display_name": "Fleshdreg (Lust)"
         },
         {
           "name": "Fleshdreg (Pride)",
-          "doneness": "not-started",
+          "doneness": "done",
           "type_facet": null,
           "standing": "origin",
           "display_name": "Fleshdreg (Pride)"
         },
         {
           "name": "Fleshdreg (Sloth)",
-          "doneness": "not-started",
+          "doneness": "done",
           "type_facet": null,
           "standing": "origin",
           "display_name": "Fleshdreg (Sloth)"
         },
         {
           "name": "Fleshdreg (Wrath)",
-          "doneness": "not-started",
+          "doneness": "done",
           "type_facet": null,
           "standing": "origin",
           "display_name": "Fleshdreg (Wrath)"
         },
         {
           "name": "Fungal Creature",
-          "doneness": "partial",
+          "doneness": "done",
           "type_facet": null,
           "standing": "origin",
           "display_name": "Fungal Creature"
         },
         {
           "name": "Great Old One",
-          "doneness": "not-started",
+          "doneness": "done",
           "type_facet": null,
           "standing": "origin",
           "display_name": "Great Old One"
         },
         {
           "name": "Handmaiden Devil Bound",
-          "doneness": "partial",
+          "doneness": "done",
           "type_facet": null,
           "standing": "origin",
           "display_name": "Handmaiden Devil Bound"
         },
         {
           "name": "Horned Devil Bound",
-          "doneness": "partial",
+          "doneness": "done",
           "type_facet": null,
           "standing": "origin",
           "display_name": "Horned Devil Bound"
         },
         {
           "name": "Host Devil Bound",
-          "doneness": "partial",
+          "doneness": "done",
           "type_facet": null,
           "standing": "origin",
           "display_name": "Host Devil Bound"
         },
         {
           "name": "Ice Devil Bound",
-          "doneness": "partial",
+          "doneness": "done",
           "type_facet": null,
           "standing": "origin",
           "display_name": "Ice Devil Bound"
@@ -10559,21 +10559,21 @@
         },
         {
           "name": "Immolation Devil Bound",
-          "doneness": "partial",
+          "doneness": "done",
           "type_facet": null,
           "standing": "origin",
           "display_name": "Immolation Devil Bound"
         },
         {
           "name": "Imp Devil Bound",
-          "doneness": "partial",
+          "doneness": "done",
           "type_facet": null,
           "standing": "origin",
           "display_name": "Imp Devil Bound"
         },
         {
           "name": "Infernal Boilborn",
-          "doneness": "not-started",
+          "doneness": "done",
           "type_facet": null,
           "standing": "origin",
           "display_name": "Infernal Boilborn"
@@ -10587,147 +10587,147 @@
         },
         {
           "name": "IsChangeling",
-          "doneness": "not-started",
+          "doneness": "done",
           "type_facet": null,
           "standing": "origin",
           "display_name": "IsChangeling"
         },
         {
           "name": "IsKasatha",
-          "doneness": "not-started",
+          "doneness": "done",
           "type_facet": null,
           "standing": "origin",
           "display_name": "IsKasatha"
         },
         {
           "name": "IsKitsune",
-          "doneness": "not-started",
+          "doneness": "done",
           "type_facet": null,
           "standing": "origin",
           "display_name": "IsKitsune"
         },
         {
           "name": "IsNagaji",
-          "doneness": "not-started",
+          "doneness": "done",
           "type_facet": null,
           "standing": "origin",
           "display_name": "IsNagaji"
         },
         {
           "name": "IsSamsaran",
-          "doneness": "not-started",
+          "doneness": "done",
           "type_facet": null,
           "standing": "origin",
           "display_name": "IsSamsaran"
         },
         {
           "name": "IsTrox",
-          "doneness": "not-started",
+          "doneness": "done",
           "type_facet": null,
           "standing": "origin",
           "display_name": "IsTrox"
         },
         {
           "name": "IsWayang",
-          "doneness": "not-started",
+          "doneness": "done",
           "type_facet": null,
           "standing": "origin",
           "display_name": "IsWayang"
         },
         {
           "name": "IsWyrwood",
-          "doneness": "not-started",
+          "doneness": "done",
           "type_facet": null,
           "standing": "origin",
           "display_name": "IsWyrwood"
         },
         {
           "name": "IsWyvaran",
-          "doneness": "not-started",
+          "doneness": "done",
           "type_facet": null,
           "standing": "origin",
           "display_name": "IsWyvaran"
         },
         {
           "name": "Kaiju",
-          "doneness": "not-started",
+          "doneness": "done",
           "type_facet": null,
           "standing": "origin",
           "display_name": "Kaiju"
         },
         {
           "name": "Kasatha",
-          "doneness": "not-started",
+          "doneness": "done",
           "type_facet": null,
           "standing": "origin",
           "display_name": "Kasatha"
         },
         {
           "name": "Kasatha",
-          "doneness": "not-started",
+          "doneness": "done",
           "type_facet": "Race Builder Subtype",
           "standing": "origin",
           "display_name": "Kasatha (Race Builder Subtype)"
         },
         {
           "name": "Kasatha",
-          "doneness": "not-started",
+          "doneness": "done",
           "type_facet": null,
           "standing": "origin",
           "display_name": "Kasatha #3"
         },
         {
           "name": "Kasatha",
-          "doneness": "not-started",
+          "doneness": "done",
           "type_facet": "Racial Heritage",
           "standing": "origin",
           "display_name": "Kasatha (Racial Heritage)"
         },
         {
           "name": "Kitsune",
-          "doneness": "not-started",
+          "doneness": "done",
           "type_facet": null,
           "standing": "origin",
           "display_name": "Kitsune"
         },
         {
           "name": "Kitsune",
-          "doneness": "not-started",
+          "doneness": "done",
           "type_facet": "Race Builder Subtype",
           "standing": "origin",
           "display_name": "Kitsune (Race Builder Subtype)"
         },
         {
           "name": "Kitsune",
-          "doneness": "not-started",
+          "doneness": "done",
           "type_facet": null,
           "standing": "origin",
           "display_name": "Kitsune #3"
         },
         {
           "name": "Kitsune",
-          "doneness": "not-started",
+          "doneness": "done",
           "type_facet": "Racial Heritage",
           "standing": "origin",
           "display_name": "Kitsune (Racial Heritage)"
         },
         {
           "name": "Leaf Ray ~ Fall",
-          "doneness": "not-started",
+          "doneness": "done",
           "type_facet": null,
           "standing": "origin",
           "display_name": "Leaf Ray ~ Fall"
         },
         {
           "name": "Leaf Ray ~ Spring/Summer",
-          "doneness": "not-started",
+          "doneness": "done",
           "type_facet": null,
           "standing": "origin",
           "display_name": "Leaf Ray ~ Spring/Summer"
         },
         {
           "name": "Leaf Ray ~ Winter",
-          "doneness": "not-started",
+          "doneness": "done",
           "type_facet": null,
           "standing": "origin",
           "display_name": "Leaf Ray ~ Winter"
@@ -10741,84 +10741,84 @@
         },
         {
           "name": "Mummified Creature",
-          "doneness": "partial",
+          "doneness": "done",
           "type_facet": null,
           "standing": "origin",
           "display_name": "Mummified Creature"
         },
         {
           "name": "Mummified Creature Weakness ~ Acid Vulnerability",
-          "doneness": "not-started",
+          "doneness": "done",
           "type_facet": null,
           "standing": "origin",
           "display_name": "Mummified Creature Weakness ~ Acid Vulnerability"
         },
         {
           "name": "Mummified Creature Weakness ~ Cold Vulnerability",
-          "doneness": "not-started",
+          "doneness": "done",
           "type_facet": null,
           "standing": "origin",
           "display_name": "Mummified Creature Weakness ~ Cold Vulnerability"
         },
         {
           "name": "Mummified Creature Weakness ~ Electricity Vulnerability",
-          "doneness": "not-started",
+          "doneness": "done",
           "type_facet": null,
           "standing": "origin",
           "display_name": "Mummified Creature Weakness ~ Electricity Vulnerability"
         },
         {
           "name": "Mummified Creature Weakness ~ Fire Vulnerability",
-          "doneness": "not-started",
+          "doneness": "done",
           "type_facet": null,
           "standing": "origin",
           "display_name": "Mummified Creature Weakness ~ Fire Vulnerability"
         },
         {
           "name": "Mummified Creature Weakness ~ Sonic Vulnerability",
-          "doneness": "not-started",
+          "doneness": "done",
           "type_facet": null,
           "standing": "origin",
           "display_name": "Mummified Creature Weakness ~ Sonic Vulnerability"
         },
         {
           "name": "Mythic",
-          "doneness": "not-started",
+          "doneness": "done",
           "type_facet": null,
           "standing": "unclassified",
           "display_name": "Mythic"
         },
         {
           "name": "Nagaji",
-          "doneness": "not-started",
+          "doneness": "done",
           "type_facet": null,
           "standing": "origin",
           "display_name": "Nagaji"
         },
         {
           "name": "Nagaji",
-          "doneness": "not-started",
+          "doneness": "done",
           "type_facet": "Racial Heritage",
           "standing": "origin",
           "display_name": "Nagaji (Racial Heritage)"
         },
         {
           "name": "Natural Werebat",
-          "doneness": "not-started",
+          "doneness": "done",
           "type_facet": null,
           "standing": "origin",
           "display_name": "Natural Werebat"
         },
         {
           "name": "Natural Werecrocodile",
-          "doneness": "not-started",
+          "doneness": "done",
           "type_facet": null,
           "standing": "origin",
           "display_name": "Natural Werecrocodile"
         },
         {
           "name": "Natural Wereshark",
-          "doneness": "not-started",
+          "doneness": "done",
           "type_facet": null,
           "standing": "origin",
           "display_name": "Natural Wereshark"
@@ -10832,49 +10832,49 @@
         },
         {
           "name": "Nemesis Devil Bound",
-          "doneness": "partial",
+          "doneness": "done",
           "type_facet": null,
           "standing": "origin",
           "display_name": "Nemesis Devil Bound"
         },
         {
           "name": "Nightmare Creature",
-          "doneness": "partial",
+          "doneness": "done",
           "type_facet": null,
           "standing": "origin",
           "display_name": "Nightmare Creature"
         },
         {
           "name": "Nightmare Lord",
-          "doneness": "partial",
+          "doneness": "done",
           "type_facet": null,
           "standing": "origin",
           "display_name": "Nightmare Lord"
         },
         {
           "name": "Nightmare Outsider",
-          "doneness": "not-started",
+          "doneness": "done",
           "type_facet": null,
           "standing": "origin",
           "display_name": "Nightmare Outsider"
         },
         {
           "name": "Nosferatu",
-          "doneness": "partial",
+          "doneness": "done",
           "type_facet": null,
           "standing": "origin",
           "display_name": "Nosferatu"
         },
         {
           "name": "Pit Fiend Devil Bound",
-          "doneness": "partial",
+          "doneness": "done",
           "type_facet": null,
           "standing": "origin",
           "display_name": "Pit Fiend Devil Bound"
         },
         {
           "name": "Plagueborn",
-          "doneness": "not-started",
+          "doneness": "done",
           "type_facet": null,
           "standing": "origin",
           "display_name": "Plagueborn"
@@ -10902,7 +10902,7 @@
         },
         {
           "name": "Psychopomp",
-          "doneness": "not-started",
+          "doneness": "done",
           "type_facet": null,
           "standing": "origin",
           "display_name": "Psychopomp"
@@ -10916,49 +10916,49 @@
         },
         {
           "name": "Samsaran",
-          "doneness": "not-started",
+          "doneness": "done",
           "type_facet": "Race Builder Subtype",
           "standing": "origin",
           "display_name": "Samsaran (Race Builder Subtype)"
         },
         {
           "name": "Samsaran",
-          "doneness": "not-started",
+          "doneness": "done",
           "type_facet": null,
           "standing": "origin",
           "display_name": "Samsaran"
         },
         {
           "name": "Samsaran",
-          "doneness": "not-started",
+          "doneness": "done",
           "type_facet": "Racial Heritage",
           "standing": "origin",
           "display_name": "Samsaran (Racial Heritage)"
         },
         {
           "name": "Samsaran",
-          "doneness": "not-started",
+          "doneness": "done",
           "type_facet": null,
           "standing": "origin",
           "display_name": "Samsaran #4"
         },
         {
           "name": "Shadow Creature",
-          "doneness": "partial",
+          "doneness": "done",
           "type_facet": null,
           "standing": "origin",
           "display_name": "Shadow Creature"
         },
         {
           "name": "Shadow Lord",
-          "doneness": "partial",
+          "doneness": "done",
           "type_facet": null,
           "standing": "origin",
           "display_name": "Shadow Lord"
         },
         {
           "name": "Shapechanger",
-          "doneness": "not-started",
+          "doneness": "done",
           "type_facet": "Race Builder Subtype",
           "standing": "unclassified",
           "display_name": "Shapechanger"
@@ -10986,21 +10986,21 @@
         },
         {
           "name": "Standard Clockwork Steed",
-          "doneness": "not-started",
+          "doneness": "done",
           "type_facet": null,
           "standing": "origin",
           "display_name": "Standard Clockwork Steed"
         },
         {
           "name": "Standard Death Dog",
-          "doneness": "not-started",
+          "doneness": "done",
           "type_facet": null,
           "standing": "origin",
           "display_name": "Standard Death Dog"
         },
         {
           "name": "Standard Gholdako",
-          "doneness": "not-started",
+          "doneness": "done",
           "type_facet": null,
           "standing": "origin",
           "display_name": "Standard Gholdako"
@@ -11014,7 +11014,7 @@
         },
         {
           "name": "Standard-Type Clockwork Dragon",
-          "doneness": "not-started",
+          "doneness": "done",
           "type_facet": null,
           "standing": "origin",
           "display_name": "Standard-Type Clockwork Dragon"
@@ -11028,98 +11028,98 @@
         },
         {
           "name": "Trox",
-          "doneness": "not-started",
+          "doneness": "done",
           "type_facet": null,
           "standing": "origin",
           "display_name": "Trox"
         },
         {
           "name": "Wayang",
-          "doneness": "not-started",
+          "doneness": "done",
           "type_facet": "Race Builder Subtype",
           "standing": "origin",
           "display_name": "Wayang (Race Builder Subtype)"
         },
         {
           "name": "Wayang",
-          "doneness": "not-started",
+          "doneness": "done",
           "type_facet": null,
           "standing": "origin",
           "display_name": "Wayang"
         },
         {
           "name": "Wayang",
-          "doneness": "not-started",
+          "doneness": "done",
           "type_facet": "Racial Heritage",
           "standing": "origin",
           "display_name": "Wayang (Racial Heritage)"
         },
         {
           "name": "Wayang",
-          "doneness": "not-started",
+          "doneness": "done",
           "type_facet": null,
           "standing": "origin",
           "display_name": "Wayang #4"
         },
         {
           "name": "Werebat Abilities",
-          "doneness": "partial",
+          "doneness": "done",
           "type_facet": null,
           "standing": "origin",
           "display_name": "Werebat Abilities"
         },
         {
           "name": "Werebat_STATS",
-          "doneness": "not-started",
+          "doneness": "done",
           "type_facet": null,
           "standing": "origin",
           "display_name": "Werebat_STATS"
         },
         {
           "name": "Werecrocodile Abilities",
-          "doneness": "partial",
+          "doneness": "done",
           "type_facet": null,
           "standing": "origin",
           "display_name": "Werecrocodile Abilities"
         },
         {
           "name": "Werecrocodile_STATS",
-          "doneness": "not-started",
+          "doneness": "done",
           "type_facet": null,
           "standing": "origin",
           "display_name": "Werecrocodile_STATS"
         },
         {
           "name": "Wereshark Abilities",
-          "doneness": "partial",
+          "doneness": "done",
           "type_facet": null,
           "standing": "origin",
           "display_name": "Wereshark Abilities"
         },
         {
           "name": "Wereshark_STATS",
-          "doneness": "not-started",
+          "doneness": "done",
           "type_facet": null,
           "standing": "origin",
           "display_name": "Wereshark_STATS"
         },
         {
           "name": "Wyrwood",
-          "doneness": "not-started",
+          "doneness": "done",
           "type_facet": null,
           "standing": "origin",
           "display_name": "Wyrwood"
         },
         {
           "name": "Wyvaran",
-          "doneness": "not-started",
+          "doneness": "done",
           "type_facet": null,
           "standing": "origin",
           "display_name": "Wyvaran"
         },
         {
           "name": "Zombie Lord",
-          "doneness": "partial",
+          "doneness": "done",
           "type_facet": null,
           "standing": "origin",
           "display_name": "Zombie Lord"

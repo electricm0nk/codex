@@ -1,0 +1,116 @@
+{
+  "kind": "equipment",
+  "records": {
+    "poison_violet_venom.json": {
+      "record": {
+        "ability_score_bonus": null,
+        "armor_class_chain_bonus": null,
+        "base_damage_dice": null,
+        "base_item": null,
+        "cost_gp": 800.0,
+        "critical_multiplier": null,
+        "critical_threat_range": null,
+        "damage_size_steps": 0,
+        "eqmod_references": [],
+        "identity": "Poison (Violet Venom)",
+        "intelligent_item": null,
+        "is_modifier": false,
+        "is_natural_attack": false,
+        "is_shield": false,
+        "name": "Poison (Violet Venom)",
+        "skill_check_bonus": null,
+        "spell_resistance_bonus": null,
+        "stat_effect": {
+          "armor_check_penalty": null,
+          "armor_class_bonus": null,
+          "max_dex": null,
+          "spell_failure": null
+        },
+        "states_base_damage": false,
+        "var_bonuses": [],
+        "weapon_enhancement": null,
+        "weight_divisor": null,
+        "weight_lbs": 0.0,
+        "wield_category": null
+      },
+      "source_ref": {
+        "line": 1,
+        "lst_file": ""
+      }
+    },
+    "rock_medium.json": {
+      "record": {
+        "ability_score_bonus": null,
+        "armor_class_chain_bonus": null,
+        "base_damage_dice": null,
+        "base_item": null,
+        "cost_gp": 0.0,
+        "critical_multiplier": null,
+        "critical_threat_range": null,
+        "damage_size_steps": 0,
+        "eqmod_references": [],
+        "identity": "Rock (Medium)",
+        "intelligent_item": null,
+        "is_modifier": false,
+        "is_natural_attack": false,
+        "is_shield": false,
+        "name": "Rock (Medium)",
+        "skill_check_bonus": null,
+        "spell_resistance_bonus": null,
+        "stat_effect": {
+          "armor_check_penalty": null,
+          "armor_class_bonus": null,
+          "max_dex": null,
+          "spell_failure": null
+        },
+        "states_base_damage": false,
+        "var_bonuses": [],
+        "weapon_enhancement": null,
+        "weight_divisor": null,
+        "weight_lbs": 100.0,
+        "wield_category": null
+      },
+      "source_ref": {
+        "line": 1,
+        "lst_file": ""
+      }
+    },
+    "rock_small.json": {
+      "record": {
+        "ability_score_bonus": null,
+        "armor_class_chain_bonus": null,
+        "base_damage_dice": null,
+        "base_item": null,
+        "cost_gp": 0.0,
+        "critical_multiplier": null,
+        "critical_threat_range": null,
+        "damage_size_steps": 0,
+        "eqmod_references": [],
+        "identity": "Rock (Small)",
+        "intelligent_item": null,
+        "is_modifier": false,
+        "is_natural_attack": false,
+        "is_shield": false,
+        "name": "Rock (Small)",
+        "skill_check_bonus": null,
+        "spell_resistance_bonus": null,
+        "stat_effect": {
+          "armor_check_penalty": null,
+          "armor_class_bonus": null,
+          "max_dex": null,
+          "spell_failure": null
+        },
+        "states_base_damage": false,
+        "var_bonuses": [],
+        "weapon_enhancement": null,
+        "weight_divisor": null,
+        "weight_lbs": 50.0,
+        "wield_category": null
+      },
+      "source_ref": {
+        "line": 1,
+        "lst_file": ""
+      }
+    }
+  }
+}

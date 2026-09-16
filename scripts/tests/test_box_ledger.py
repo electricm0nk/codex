@@ -8,7 +8,7 @@ box's ledger table -- and that the tool actually detects the negative cases
 `unverifiable` unit dispositioned `done`, and a stale `derived_at`) rather
 than only ever reporting success on inputs shaped to pass.
 
-Uses small synthetic inventory/box fixtures, not the live 49,438-unit
+Uses small synthetic inventory/box fixtures, not the live 49,450-unit
 corpus, so these tests stay fast and are not subject to corpus drift across
 cycles (`test_coverage_ledger.py` sets the same precedent for this repo).
 The live corpus is exercised separately, as acceptance evidence, by running
@@ -378,7 +378,9 @@ class TestCli(unittest.TestCase):
     def test_check_against_live_committed_files(self):
         """The real acceptance bar: the committed THE-BOX.md against the
         committed docs/work-inventory.json, population stated in the
-        criterion (49,438), confirmed here by execution, not by memory."""
+        criterion (49,450 after operator ruling B18, `SD-35 decisions.md
+        §21`; 49,438 when the criterion was written), confirmed here by
+        execution, not by memory."""
         inv_path = os.path.join(REPO_ROOT, "docs", "work-inventory.json")
         box_path = os.path.join(
             REPO_ROOT, "docs", "release",
@@ -392,7 +394,7 @@ class TestCli(unittest.TestCase):
             capture_output=True, text=True,
         )
         self.assertEqual(proc.returncode, 0, proc.stdout + proc.stderr)
-        self.assertIn("uncovered=0 overlap=0 population=49438", proc.stdout)
+        self.assertIn("uncovered=0 overlap=0 population=49450", proc.stdout)
 
 
 if __name__ == "__main__":

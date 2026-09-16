@@ -23,7 +23,7 @@ import { formatError, hasTauriRuntime } from './runtime';
  * # Descriptions carry numbers, and the numbers depend on the character
  *
  * Every `description` below is *rendered* by the engine from the corpus row's
- * own `DESC:` tokens — not transcribed from the stored prose, whose numbers
+ * own description statements — not transcribed from the stored prose, whose numbers
  * were collapsed (and, for `Halfling ~ Adaptable Luck`, lost) at ingest time.
  *
  * `resolveRaceAlternateSelection` therefore takes the character's held feats.
@@ -105,7 +105,7 @@ export interface AdoptiveParentageOptionDto {
   name: string;
   book: string;
   adoptedRace: string;
-  /** Real corpus `DESC:` prose, verbatim — a fixed sentence, never rendered. */
+  /** Real corpus description prose, verbatim — a fixed sentence, never rendered. */
   description: string;
   /** The already-ingested traits this option grants. Empty is a real answer. */
   grants: AdoptiveParentageGrantDto[];
@@ -148,7 +148,7 @@ export interface SkinwalkerChangeShapeGrantDto {
   key: string;
   name: string;
   /**
-   * Honestly `null` for every one of these — the record carries no `DESC:`
+   * Honestly `null` for every one of these — the record carries no description
    * token of its own. `name` is the real, non-fabricated corpus text
    * ("Change Shape (2 Claw Attacks)", "Change Shape (Bite Attack)", ...).
    */
@@ -227,10 +227,10 @@ export interface AppliedTraitDto {
 export interface RenderedTraitDescriptionDto {
   key: string;
   name: string;
-  /** The prose to show, rendered from the record's own `DESC:` tokens. */
+  /** The prose to show, rendered from the record's own description statements. */
   text: string;
   /**
-   * `DESC:` arguments the engine could not resolve and therefore dropped.
+   * Description slots the engine could not resolve and therefore dropped.
    * Carried so an incomplete description is visibly incomplete, never guessed.
    */
   droppedArgs: string[];

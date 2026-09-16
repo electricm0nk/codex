@@ -1,0 +1,2521 @@
+{
+  "kind": "equipment",
+  "records": {
+    "caster_s_tattoo_greater.json": {
+      "record": {
+        "ability_score_bonus": null,
+        "armor_class_chain_bonus": null,
+        "base_damage_dice": null,
+        "base_item": null,
+        "cost_gp": 48000.0,
+        "critical_multiplier": null,
+        "critical_threat_range": null,
+        "damage_size_steps": 0,
+        "eqmod_references": [],
+        "identity": "Caster's Tattoo (Greater)",
+        "intelligent_item": null,
+        "is_modifier": false,
+        "is_natural_attack": false,
+        "is_shield": false,
+        "name": "Caster's Tattoo (Greater)",
+        "skill_check_bonus": null,
+        "spell_resistance_bonus": null,
+        "stat_effect": {
+          "armor_check_penalty": null,
+          "armor_class_bonus": null,
+          "max_dex": null,
+          "spell_failure": null
+        },
+        "states_base_damage": false,
+        "var_bonuses": [],
+        "weapon_enhancement": null,
+        "weight_divisor": null,
+        "weight_lbs": 0.0,
+        "wield_category": null
+      },
+      "source_ref": {
+        "line": 1,
+        "lst_file": ""
+      }
+    },
+    "caster_s_tattoo_lesser.json": {
+      "record": {
+        "ability_score_bonus": null,
+        "armor_class_chain_bonus": null,
+        "base_damage_dice": null,
+        "base_item": null,
+        "cost_gp": 6000.0,
+        "critical_multiplier": null,
+        "critical_threat_range": null,
+        "damage_size_steps": 0,
+        "eqmod_references": [],
+        "identity": "Caster's Tattoo (Lesser)",
+        "intelligent_item": null,
+        "is_modifier": false,
+        "is_natural_attack": false,
+        "is_shield": false,
+        "name": "Caster's Tattoo (Lesser)",
+        "skill_check_bonus": null,
+        "spell_resistance_bonus": null,
+        "stat_effect": {
+          "armor_check_penalty": null,
+          "armor_class_bonus": null,
+          "max_dex": null,
+          "spell_failure": null
+        },
+        "states_base_damage": false,
+        "var_bonuses": [],
+        "weapon_enhancement": null,
+        "weight_divisor": null,
+        "weight_lbs": 0.0,
+        "wield_category": null
+      },
+      "source_ref": {
+        "line": 1,
+        "lst_file": ""
+      }
+    },
+    "caster_s_tattoo_normal.json": {
+      "record": {
+        "ability_score_bonus": null,
+        "armor_class_chain_bonus": null,
+        "base_damage_dice": null,
+        "base_item": null,
+        "cost_gp": 21000.0,
+        "critical_multiplier": null,
+        "critical_threat_range": null,
+        "damage_size_steps": 0,
+        "eqmod_references": [],
+        "identity": "Caster's Tattoo (Normal)",
+        "intelligent_item": null,
+        "is_modifier": false,
+        "is_natural_attack": false,
+        "is_shield": false,
+        "name": "Caster's Tattoo (Normal)",
+        "skill_check_bonus": null,
+        "spell_resistance_bonus": null,
+        "stat_effect": {
+          "armor_check_penalty": null,
+          "armor_class_bonus": null,
+          "max_dex": null,
+          "spell_failure": null
+        },
+        "states_base_damage": false,
+        "var_bonuses": [],
+        "weapon_enhancement": null,
+        "weight_divisor": null,
+        "weight_lbs": 0.0,
+        "wield_category": null
+      },
+      "source_ref": {
+        "line": 1,
+        "lst_file": ""
+      }
+    },
+    "equipmods/riffa_1use.json": {
+      "record": {
+        "ability_score_bonus": null,
+        "armor_class_chain_bonus": null,
+        "base_damage_dice": null,
+        "base_item": null,
+        "cost_gp": null,
+        "critical_multiplier": null,
+        "critical_threat_range": null,
+        "damage_size_steps": 0,
+        "eqmod_references": [],
+        "identity": "RIFFA_1USE",
+        "intelligent_item": null,
+        "is_modifier": false,
+        "is_natural_attack": false,
+        "is_shield": false,
+        "name": "RIFFA_1USE",
+        "skill_check_bonus": null,
+        "spell_resistance_bonus": null,
+        "stat_effect": {
+          "armor_check_penalty": null,
+          "armor_class_bonus": null,
+          "max_dex": null,
+          "spell_failure": null
+        },
+        "states_base_damage": false,
+        "var_bonuses": [],
+        "weapon_enhancement": null,
+        "weight_divisor": null,
+        "weight_lbs": null,
+        "wield_category": null
+      },
+      "source_ref": {
+        "line": 1,
+        "lst_file": ""
+      }
+    },
+    "equipmods/riffd_1use.json": {
+      "record": {
+        "ability_score_bonus": null,
+        "armor_class_chain_bonus": null,
+        "base_damage_dice": null,
+        "base_item": null,
+        "cost_gp": null,
+        "critical_multiplier": null,
+        "critical_threat_range": null,
+        "damage_size_steps": 0,
+        "eqmod_references": [],
+        "identity": "RIFFD_1USE",
+        "intelligent_item": null,
+        "is_modifier": false,
+        "is_natural_attack": false,
+        "is_shield": false,
+        "name": "RIFFD_1USE",
+        "skill_check_bonus": null,
+        "spell_resistance_bonus": null,
+        "stat_effect": {
+          "armor_check_penalty": null,
+          "armor_class_bonus": null,
+          "max_dex": null,
+          "spell_failure": null
+        },
+        "states_base_damage": false,
+        "var_bonuses": [],
+        "weapon_enhancement": null,
+        "weight_divisor": null,
+        "weight_lbs": null,
+        "wield_category": null
+      },
+      "source_ref": {
+        "line": 1,
+        "lst_file": ""
+      }
+    },
+    "equipmods/riffle_arcane.json": {
+      "record": {
+        "ability_score_bonus": null,
+        "armor_class_chain_bonus": null,
+        "base_damage_dice": null,
+        "base_item": null,
+        "cost_gp": null,
+        "critical_multiplier": null,
+        "critical_threat_range": null,
+        "damage_size_steps": 0,
+        "eqmod_references": [],
+        "identity": "RIFFLE_ARCANE",
+        "intelligent_item": null,
+        "is_modifier": false,
+        "is_natural_attack": false,
+        "is_shield": false,
+        "name": "Arcane",
+        "skill_check_bonus": null,
+        "spell_resistance_bonus": null,
+        "stat_effect": {
+          "armor_check_penalty": null,
+          "armor_class_bonus": null,
+          "max_dex": null,
+          "spell_failure": null
+        },
+        "states_base_damage": false,
+        "var_bonuses": [],
+        "weapon_enhancement": null,
+        "weight_divisor": null,
+        "weight_lbs": null,
+        "wield_category": null
+      },
+      "source_ref": {
+        "line": 1,
+        "lst_file": ""
+      }
+    },
+    "equipmods/riffle_divine.json": {
+      "record": {
+        "ability_score_bonus": null,
+        "armor_class_chain_bonus": null,
+        "base_damage_dice": null,
+        "base_item": null,
+        "cost_gp": null,
+        "critical_multiplier": null,
+        "critical_threat_range": null,
+        "damage_size_steps": 0,
+        "eqmod_references": [],
+        "identity": "RIFFLE_DIVINE",
+        "intelligent_item": null,
+        "is_modifier": false,
+        "is_natural_attack": false,
+        "is_shield": false,
+        "name": "Divine",
+        "skill_check_bonus": null,
+        "spell_resistance_bonus": null,
+        "stat_effect": {
+          "armor_check_penalty": null,
+          "armor_class_bonus": null,
+          "max_dex": null,
+          "spell_failure": null
+        },
+        "states_base_damage": false,
+        "var_bonuses": [],
+        "weapon_enhancement": null,
+        "weight_divisor": null,
+        "weight_lbs": null,
+        "wield_category": null
+      },
+      "source_ref": {
+        "line": 1,
+        "lst_file": ""
+      }
+    },
+    "equipmods/special_ability_spell_effect_completion_riffle_scroll_arcane.json": {
+      "record": {
+        "ability_score_bonus": null,
+        "armor_class_chain_bonus": null,
+        "base_damage_dice": null,
+        "base_item": null,
+        "cost_gp": null,
+        "critical_multiplier": null,
+        "critical_threat_range": null,
+        "damage_size_steps": 0,
+        "eqmod_references": [],
+        "identity": "Special Ability ~ Spell Effect / Completion / Riffle Scroll / Arcane",
+        "intelligent_item": null,
+        "is_modifier": false,
+        "is_natural_attack": false,
+        "is_shield": false,
+        "name": "Spell Effect (Single Use/Completion)",
+        "skill_check_bonus": null,
+        "spell_resistance_bonus": null,
+        "stat_effect": {
+          "armor_check_penalty": null,
+          "armor_class_bonus": null,
+          "max_dex": null,
+          "spell_failure": null
+        },
+        "states_base_damage": false,
+        "var_bonuses": [],
+        "weapon_enhancement": null,
+        "weight_divisor": null,
+        "weight_lbs": null,
+        "wield_category": null
+      },
+      "source_ref": {
+        "line": 1,
+        "lst_file": ""
+      }
+    },
+    "equipmods/special_ability_spell_effect_completion_riffle_scroll_divine.json": {
+      "record": {
+        "ability_score_bonus": null,
+        "armor_class_chain_bonus": null,
+        "base_damage_dice": null,
+        "base_item": null,
+        "cost_gp": null,
+        "critical_multiplier": null,
+        "critical_threat_range": null,
+        "damage_size_steps": 0,
+        "eqmod_references": [],
+        "identity": "Special Ability ~ Spell Effect / Completion / Riffle Scroll / Divine",
+        "intelligent_item": null,
+        "is_modifier": false,
+        "is_natural_attack": false,
+        "is_shield": false,
+        "name": "Spell Effect (Single Use/Completion)",
+        "skill_check_bonus": null,
+        "spell_resistance_bonus": null,
+        "stat_effect": {
+          "armor_check_penalty": null,
+          "armor_class_bonus": null,
+          "max_dex": null,
+          "spell_failure": null
+        },
+        "states_base_damage": false,
+        "var_bonuses": [],
+        "weapon_enhancement": null,
+        "weight_divisor": null,
+        "weight_lbs": null,
+        "wield_category": null
+      },
+      "source_ref": {
+        "line": 1,
+        "lst_file": ""
+      }
+    },
+    "equipmods/special_ability_spell_effect_completion_spell_tattoo_arcane.json": {
+      "record": {
+        "ability_score_bonus": null,
+        "armor_class_chain_bonus": null,
+        "base_damage_dice": null,
+        "base_item": null,
+        "cost_gp": null,
+        "critical_multiplier": null,
+        "critical_threat_range": null,
+        "damage_size_steps": 0,
+        "eqmod_references": [],
+        "identity": "Special Ability ~ Spell Effect / Completion / Spell Tattoo / Arcane",
+        "intelligent_item": null,
+        "is_modifier": false,
+        "is_natural_attack": false,
+        "is_shield": false,
+        "name": "Spell Effect (Single Use/Completion)",
+        "skill_check_bonus": null,
+        "spell_resistance_bonus": null,
+        "stat_effect": {
+          "armor_check_penalty": null,
+          "armor_class_bonus": null,
+          "max_dex": null,
+          "spell_failure": null
+        },
+        "states_base_damage": false,
+        "var_bonuses": [],
+        "weapon_enhancement": null,
+        "weight_divisor": null,
+        "weight_lbs": null,
+        "wield_category": null
+      },
+      "source_ref": {
+        "line": 1,
+        "lst_file": ""
+      }
+    },
+    "equipmods/special_ability_spell_effect_completion_spell_tattoo_divine.json": {
+      "record": {
+        "ability_score_bonus": null,
+        "armor_class_chain_bonus": null,
+        "base_damage_dice": null,
+        "base_item": null,
+        "cost_gp": null,
+        "critical_multiplier": null,
+        "critical_threat_range": null,
+        "damage_size_steps": 0,
+        "eqmod_references": [],
+        "identity": "Special Ability ~ Spell Effect / Completion / Spell Tattoo / Divine",
+        "intelligent_item": null,
+        "is_modifier": false,
+        "is_natural_attack": false,
+        "is_shield": false,
+        "name": "Spell Effect (Single Use/Completion)",
+        "skill_check_bonus": null,
+        "spell_resistance_bonus": null,
+        "stat_effect": {
+          "armor_check_penalty": null,
+          "armor_class_bonus": null,
+          "max_dex": null,
+          "spell_failure": null
+        },
+        "states_base_damage": false,
+        "var_bonuses": [],
+        "weapon_enhancement": null,
+        "weight_divisor": null,
+        "weight_lbs": null,
+        "wield_category": null
+      },
+      "source_ref": {
+        "line": 1,
+        "lst_file": ""
+      }
+    },
+    "equipmods/special_quality_magical_tattoo_belt.json": {
+      "record": {
+        "ability_score_bonus": null,
+        "armor_class_chain_bonus": null,
+        "base_damage_dice": null,
+        "base_item": null,
+        "cost_gp": null,
+        "critical_multiplier": null,
+        "critical_threat_range": null,
+        "damage_size_steps": 0,
+        "eqmod_references": [],
+        "identity": "Special Quality ~ Magical Tattoo / Belt",
+        "intelligent_item": null,
+        "is_modifier": false,
+        "is_natural_attack": false,
+        "is_shield": false,
+        "name": "Magical Tattoo",
+        "skill_check_bonus": null,
+        "spell_resistance_bonus": null,
+        "stat_effect": {
+          "armor_check_penalty": null,
+          "armor_class_bonus": null,
+          "max_dex": null,
+          "spell_failure": null
+        },
+        "states_base_damage": false,
+        "var_bonuses": [],
+        "weapon_enhancement": null,
+        "weight_divisor": null,
+        "weight_lbs": null,
+        "wield_category": null
+      },
+      "source_ref": {
+        "line": 1,
+        "lst_file": ""
+      }
+    },
+    "equipmods/special_quality_magical_tattoo_body.json": {
+      "record": {
+        "ability_score_bonus": null,
+        "armor_class_chain_bonus": null,
+        "base_damage_dice": null,
+        "base_item": null,
+        "cost_gp": null,
+        "critical_multiplier": null,
+        "critical_threat_range": null,
+        "damage_size_steps": 0,
+        "eqmod_references": [],
+        "identity": "Special Quality ~ Magical Tattoo / Body",
+        "intelligent_item": null,
+        "is_modifier": false,
+        "is_natural_attack": false,
+        "is_shield": false,
+        "name": "Magical Tattoo",
+        "skill_check_bonus": null,
+        "spell_resistance_bonus": null,
+        "stat_effect": {
+          "armor_check_penalty": null,
+          "armor_class_bonus": null,
+          "max_dex": null,
+          "spell_failure": null
+        },
+        "states_base_damage": false,
+        "var_bonuses": [],
+        "weapon_enhancement": null,
+        "weight_divisor": null,
+        "weight_lbs": null,
+        "wield_category": null
+      },
+      "source_ref": {
+        "line": 1,
+        "lst_file": ""
+      }
+    },
+    "equipmods/special_quality_magical_tattoo_chest.json": {
+      "record": {
+        "ability_score_bonus": null,
+        "armor_class_chain_bonus": null,
+        "base_damage_dice": null,
+        "base_item": null,
+        "cost_gp": null,
+        "critical_multiplier": null,
+        "critical_threat_range": null,
+        "damage_size_steps": 0,
+        "eqmod_references": [],
+        "identity": "Special Quality ~ Magical Tattoo / Chest",
+        "intelligent_item": null,
+        "is_modifier": false,
+        "is_natural_attack": false,
+        "is_shield": false,
+        "name": "Magical Tattoo",
+        "skill_check_bonus": null,
+        "spell_resistance_bonus": null,
+        "stat_effect": {
+          "armor_check_penalty": null,
+          "armor_class_bonus": null,
+          "max_dex": null,
+          "spell_failure": null
+        },
+        "states_base_damage": false,
+        "var_bonuses": [],
+        "weapon_enhancement": null,
+        "weight_divisor": null,
+        "weight_lbs": null,
+        "wield_category": null
+      },
+      "source_ref": {
+        "line": 1,
+        "lst_file": ""
+      }
+    },
+    "equipmods/special_quality_magical_tattoo_feet.json": {
+      "record": {
+        "ability_score_bonus": null,
+        "armor_class_chain_bonus": null,
+        "base_damage_dice": null,
+        "base_item": null,
+        "cost_gp": null,
+        "critical_multiplier": null,
+        "critical_threat_range": null,
+        "damage_size_steps": 0,
+        "eqmod_references": [],
+        "identity": "Special Quality ~ Magical Tattoo / Feet",
+        "intelligent_item": null,
+        "is_modifier": false,
+        "is_natural_attack": false,
+        "is_shield": false,
+        "name": "Magical Tattoo",
+        "skill_check_bonus": null,
+        "spell_resistance_bonus": null,
+        "stat_effect": {
+          "armor_check_penalty": null,
+          "armor_class_bonus": null,
+          "max_dex": null,
+          "spell_failure": null
+        },
+        "states_base_damage": false,
+        "var_bonuses": [],
+        "weapon_enhancement": null,
+        "weight_divisor": null,
+        "weight_lbs": null,
+        "wield_category": null
+      },
+      "source_ref": {
+        "line": 1,
+        "lst_file": ""
+      }
+    },
+    "equipmods/special_quality_magical_tattoo_hands.json": {
+      "record": {
+        "ability_score_bonus": null,
+        "armor_class_chain_bonus": null,
+        "base_damage_dice": null,
+        "base_item": null,
+        "cost_gp": null,
+        "critical_multiplier": null,
+        "critical_threat_range": null,
+        "damage_size_steps": 0,
+        "eqmod_references": [],
+        "identity": "Special Quality ~ Magical Tattoo / Hands",
+        "intelligent_item": null,
+        "is_modifier": false,
+        "is_natural_attack": false,
+        "is_shield": false,
+        "name": "Magical Tattoo",
+        "skill_check_bonus": null,
+        "spell_resistance_bonus": null,
+        "stat_effect": {
+          "armor_check_penalty": null,
+          "armor_class_bonus": null,
+          "max_dex": null,
+          "spell_failure": null
+        },
+        "states_base_damage": false,
+        "var_bonuses": [],
+        "weapon_enhancement": null,
+        "weight_divisor": null,
+        "weight_lbs": null,
+        "wield_category": null
+      },
+      "source_ref": {
+        "line": 1,
+        "lst_file": ""
+      }
+    },
+    "equipmods/special_quality_magical_tattoo_head.json": {
+      "record": {
+        "ability_score_bonus": null,
+        "armor_class_chain_bonus": null,
+        "base_damage_dice": null,
+        "base_item": null,
+        "cost_gp": null,
+        "critical_multiplier": null,
+        "critical_threat_range": null,
+        "damage_size_steps": 0,
+        "eqmod_references": [],
+        "identity": "Special Quality ~ Magical Tattoo / Head",
+        "intelligent_item": null,
+        "is_modifier": false,
+        "is_natural_attack": false,
+        "is_shield": false,
+        "name": "Magical Tattoo",
+        "skill_check_bonus": null,
+        "spell_resistance_bonus": null,
+        "stat_effect": {
+          "armor_check_penalty": null,
+          "armor_class_bonus": null,
+          "max_dex": null,
+          "spell_failure": null
+        },
+        "states_base_damage": false,
+        "var_bonuses": [],
+        "weapon_enhancement": null,
+        "weight_divisor": null,
+        "weight_lbs": null,
+        "wield_category": null
+      },
+      "source_ref": {
+        "line": 1,
+        "lst_file": ""
+      }
+    },
+    "equipmods/special_quality_magical_tattoo_neck.json": {
+      "record": {
+        "ability_score_bonus": null,
+        "armor_class_chain_bonus": null,
+        "base_damage_dice": null,
+        "base_item": null,
+        "cost_gp": null,
+        "critical_multiplier": null,
+        "critical_threat_range": null,
+        "damage_size_steps": 0,
+        "eqmod_references": [],
+        "identity": "Special Quality ~ Magical Tattoo / Neck",
+        "intelligent_item": null,
+        "is_modifier": false,
+        "is_natural_attack": false,
+        "is_shield": false,
+        "name": "Magical Tattoo",
+        "skill_check_bonus": null,
+        "spell_resistance_bonus": null,
+        "stat_effect": {
+          "armor_check_penalty": null,
+          "armor_class_bonus": null,
+          "max_dex": null,
+          "spell_failure": null
+        },
+        "states_base_damage": false,
+        "var_bonuses": [],
+        "weapon_enhancement": null,
+        "weight_divisor": null,
+        "weight_lbs": null,
+        "wield_category": null
+      },
+      "source_ref": {
+        "line": 1,
+        "lst_file": ""
+      }
+    },
+    "equipmods/special_quality_magical_tattoo_ring.json": {
+      "record": {
+        "ability_score_bonus": null,
+        "armor_class_chain_bonus": null,
+        "base_damage_dice": null,
+        "base_item": null,
+        "cost_gp": null,
+        "critical_multiplier": null,
+        "critical_threat_range": null,
+        "damage_size_steps": 0,
+        "eqmod_references": [],
+        "identity": "Special Quality ~ Magical Tattoo / Ring",
+        "intelligent_item": null,
+        "is_modifier": false,
+        "is_natural_attack": false,
+        "is_shield": false,
+        "name": "Magical Tattoo",
+        "skill_check_bonus": null,
+        "spell_resistance_bonus": null,
+        "stat_effect": {
+          "armor_check_penalty": null,
+          "armor_class_bonus": null,
+          "max_dex": null,
+          "spell_failure": null
+        },
+        "states_base_damage": false,
+        "var_bonuses": [],
+        "weapon_enhancement": null,
+        "weight_divisor": null,
+        "weight_lbs": null,
+        "wield_category": null
+      },
+      "source_ref": {
+        "line": 1,
+        "lst_file": ""
+      }
+    },
+    "equipmods/special_quality_magical_tattoo_shoulders.json": {
+      "record": {
+        "ability_score_bonus": null,
+        "armor_class_chain_bonus": null,
+        "base_damage_dice": null,
+        "base_item": null,
+        "cost_gp": null,
+        "critical_multiplier": null,
+        "critical_threat_range": null,
+        "damage_size_steps": 0,
+        "eqmod_references": [],
+        "identity": "Special Quality ~ Magical Tattoo / Shoulders",
+        "intelligent_item": null,
+        "is_modifier": false,
+        "is_natural_attack": false,
+        "is_shield": false,
+        "name": "Magical Tattoo",
+        "skill_check_bonus": null,
+        "spell_resistance_bonus": null,
+        "stat_effect": {
+          "armor_check_penalty": null,
+          "armor_class_bonus": null,
+          "max_dex": null,
+          "spell_failure": null
+        },
+        "states_base_damage": false,
+        "var_bonuses": [],
+        "weapon_enhancement": null,
+        "weight_divisor": null,
+        "weight_lbs": null,
+        "wield_category": null
+      },
+      "source_ref": {
+        "line": 1,
+        "lst_file": ""
+      }
+    },
+    "equipmods/special_quality_magical_tattoo_wrist.json": {
+      "record": {
+        "ability_score_bonus": null,
+        "armor_class_chain_bonus": null,
+        "base_damage_dice": null,
+        "base_item": null,
+        "cost_gp": null,
+        "critical_multiplier": null,
+        "critical_threat_range": null,
+        "damage_size_steps": 0,
+        "eqmod_references": [],
+        "identity": "Special Quality ~ Magical Tattoo / Wrist",
+        "intelligent_item": null,
+        "is_modifier": false,
+        "is_natural_attack": false,
+        "is_shield": false,
+        "name": "Magical Tattoo",
+        "skill_check_bonus": null,
+        "spell_resistance_bonus": null,
+        "stat_effect": {
+          "armor_check_penalty": null,
+          "armor_class_bonus": null,
+          "max_dex": null,
+          "spell_failure": null
+        },
+        "states_base_damage": false,
+        "var_bonuses": [],
+        "weapon_enhancement": null,
+        "weight_divisor": null,
+        "weight_lbs": null,
+        "wield_category": null
+      },
+      "source_ref": {
+        "line": 1,
+        "lst_file": ""
+      }
+    },
+    "equipmods/tatta_1use.json": {
+      "record": {
+        "ability_score_bonus": null,
+        "armor_class_chain_bonus": null,
+        "base_damage_dice": null,
+        "base_item": null,
+        "cost_gp": null,
+        "critical_multiplier": null,
+        "critical_threat_range": null,
+        "damage_size_steps": 0,
+        "eqmod_references": [],
+        "identity": "TATTA_1USE",
+        "intelligent_item": null,
+        "is_modifier": false,
+        "is_natural_attack": false,
+        "is_shield": false,
+        "name": "TATTA_1USE",
+        "skill_check_bonus": null,
+        "spell_resistance_bonus": null,
+        "stat_effect": {
+          "armor_check_penalty": null,
+          "armor_class_bonus": null,
+          "max_dex": null,
+          "spell_failure": null
+        },
+        "states_base_damage": false,
+        "var_bonuses": [],
+        "weapon_enhancement": null,
+        "weight_divisor": null,
+        "weight_lbs": null,
+        "wield_category": null
+      },
+      "source_ref": {
+        "line": 1,
+        "lst_file": ""
+      }
+    },
+    "equipmods/tattd_1use.json": {
+      "record": {
+        "ability_score_bonus": null,
+        "armor_class_chain_bonus": null,
+        "base_damage_dice": null,
+        "base_item": null,
+        "cost_gp": null,
+        "critical_multiplier": null,
+        "critical_threat_range": null,
+        "damage_size_steps": 0,
+        "eqmod_references": [],
+        "identity": "TATTD_1USE",
+        "intelligent_item": null,
+        "is_modifier": false,
+        "is_natural_attack": false,
+        "is_shield": false,
+        "name": "TATTD_1USE",
+        "skill_check_bonus": null,
+        "spell_resistance_bonus": null,
+        "stat_effect": {
+          "armor_check_penalty": null,
+          "armor_class_bonus": null,
+          "max_dex": null,
+          "spell_failure": null
+        },
+        "states_base_damage": false,
+        "var_bonuses": [],
+        "weapon_enhancement": null,
+        "weight_divisor": null,
+        "weight_lbs": null,
+        "wield_category": null
+      },
+      "source_ref": {
+        "line": 1,
+        "lst_file": ""
+      }
+    },
+    "equipmods/tattoo_arcane.json": {
+      "record": {
+        "ability_score_bonus": null,
+        "armor_class_chain_bonus": null,
+        "base_damage_dice": null,
+        "base_item": null,
+        "cost_gp": null,
+        "critical_multiplier": null,
+        "critical_threat_range": null,
+        "damage_size_steps": 0,
+        "eqmod_references": [],
+        "identity": "TATTOO_ARCANE",
+        "intelligent_item": null,
+        "is_modifier": false,
+        "is_natural_attack": false,
+        "is_shield": false,
+        "name": "Arcane",
+        "skill_check_bonus": null,
+        "spell_resistance_bonus": null,
+        "stat_effect": {
+          "armor_check_penalty": null,
+          "armor_class_bonus": null,
+          "max_dex": null,
+          "spell_failure": null
+        },
+        "states_base_damage": false,
+        "var_bonuses": [],
+        "weapon_enhancement": null,
+        "weight_divisor": null,
+        "weight_lbs": null,
+        "wield_category": null
+      },
+      "source_ref": {
+        "line": 1,
+        "lst_file": ""
+      }
+    },
+    "equipmods/tattoo_divine.json": {
+      "record": {
+        "ability_score_bonus": null,
+        "armor_class_chain_bonus": null,
+        "base_damage_dice": null,
+        "base_item": null,
+        "cost_gp": null,
+        "critical_multiplier": null,
+        "critical_threat_range": null,
+        "damage_size_steps": 0,
+        "eqmod_references": [],
+        "identity": "TATTOO_DIVINE",
+        "intelligent_item": null,
+        "is_modifier": false,
+        "is_natural_attack": false,
+        "is_shield": false,
+        "name": "Divine",
+        "skill_check_bonus": null,
+        "spell_resistance_bonus": null,
+        "stat_effect": {
+          "armor_check_penalty": null,
+          "armor_class_bonus": null,
+          "max_dex": null,
+          "spell_failure": null
+        },
+        "states_base_damage": false,
+        "var_bonuses": [],
+        "weapon_enhancement": null,
+        "weight_divisor": null,
+        "weight_lbs": null,
+        "wield_category": null
+      },
+      "source_ref": {
+        "line": 1,
+        "lst_file": ""
+      }
+    },
+    "equipmods/tattooamulet.json": {
+      "record": {
+        "ability_score_bonus": null,
+        "armor_class_chain_bonus": null,
+        "base_damage_dice": null,
+        "base_item": null,
+        "cost_gp": null,
+        "critical_multiplier": null,
+        "critical_threat_range": null,
+        "damage_size_steps": 0,
+        "eqmod_references": [],
+        "identity": "TattooAmulet",
+        "intelligent_item": null,
+        "is_modifier": false,
+        "is_natural_attack": false,
+        "is_shield": false,
+        "name": "TattooAmulet",
+        "skill_check_bonus": null,
+        "spell_resistance_bonus": null,
+        "stat_effect": {
+          "armor_check_penalty": null,
+          "armor_class_bonus": null,
+          "max_dex": null,
+          "spell_failure": null
+        },
+        "states_base_damage": false,
+        "var_bonuses": [],
+        "weapon_enhancement": null,
+        "weight_divisor": null,
+        "weight_lbs": null,
+        "wield_category": null
+      },
+      "source_ref": {
+        "line": 1,
+        "lst_file": ""
+      }
+    },
+    "equipmods/tattooarmwear.json": {
+      "record": {
+        "ability_score_bonus": null,
+        "armor_class_chain_bonus": null,
+        "base_damage_dice": null,
+        "base_item": null,
+        "cost_gp": null,
+        "critical_multiplier": null,
+        "critical_threat_range": null,
+        "damage_size_steps": 0,
+        "eqmod_references": [],
+        "identity": "TattooArmwear",
+        "intelligent_item": null,
+        "is_modifier": false,
+        "is_natural_attack": false,
+        "is_shield": false,
+        "name": "TattooArmwear",
+        "skill_check_bonus": null,
+        "spell_resistance_bonus": null,
+        "stat_effect": {
+          "armor_check_penalty": null,
+          "armor_class_bonus": null,
+          "max_dex": null,
+          "spell_failure": null
+        },
+        "states_base_damage": false,
+        "var_bonuses": [],
+        "weapon_enhancement": null,
+        "weight_divisor": null,
+        "weight_lbs": null,
+        "wield_category": null
+      },
+      "source_ref": {
+        "line": 1,
+        "lst_file": ""
+      }
+    },
+    "equipmods/tattoobelt.json": {
+      "record": {
+        "ability_score_bonus": null,
+        "armor_class_chain_bonus": null,
+        "base_damage_dice": null,
+        "base_item": null,
+        "cost_gp": null,
+        "critical_multiplier": null,
+        "critical_threat_range": null,
+        "damage_size_steps": 0,
+        "eqmod_references": [],
+        "identity": "TattooBelt",
+        "intelligent_item": null,
+        "is_modifier": false,
+        "is_natural_attack": false,
+        "is_shield": false,
+        "name": "TattooBelt",
+        "skill_check_bonus": null,
+        "spell_resistance_bonus": null,
+        "stat_effect": {
+          "armor_check_penalty": null,
+          "armor_class_bonus": null,
+          "max_dex": null,
+          "spell_failure": null
+        },
+        "states_base_damage": false,
+        "var_bonuses": [],
+        "weapon_enhancement": null,
+        "weight_divisor": null,
+        "weight_lbs": null,
+        "wield_category": null
+      },
+      "source_ref": {
+        "line": 1,
+        "lst_file": ""
+      }
+    },
+    "equipmods/tattoobodywear.json": {
+      "record": {
+        "ability_score_bonus": null,
+        "armor_class_chain_bonus": null,
+        "base_damage_dice": null,
+        "base_item": null,
+        "cost_gp": null,
+        "critical_multiplier": null,
+        "critical_threat_range": null,
+        "damage_size_steps": 0,
+        "eqmod_references": [],
+        "identity": "TattooBodywear",
+        "intelligent_item": null,
+        "is_modifier": false,
+        "is_natural_attack": false,
+        "is_shield": false,
+        "name": "TattooBodywear",
+        "skill_check_bonus": null,
+        "spell_resistance_bonus": null,
+        "stat_effect": {
+          "armor_check_penalty": null,
+          "armor_class_bonus": null,
+          "max_dex": null,
+          "spell_failure": null
+        },
+        "states_base_damage": false,
+        "var_bonuses": [],
+        "weapon_enhancement": null,
+        "weight_divisor": null,
+        "weight_lbs": null,
+        "wield_category": null
+      },
+      "source_ref": {
+        "line": 1,
+        "lst_file": ""
+      }
+    },
+    "equipmods/tattooboot.json": {
+      "record": {
+        "ability_score_bonus": null,
+        "armor_class_chain_bonus": null,
+        "base_damage_dice": null,
+        "base_item": null,
+        "cost_gp": null,
+        "critical_multiplier": null,
+        "critical_threat_range": null,
+        "damage_size_steps": 0,
+        "eqmod_references": [],
+        "identity": "TattooBoot",
+        "intelligent_item": null,
+        "is_modifier": false,
+        "is_natural_attack": false,
+        "is_shield": false,
+        "name": "TattooBoot",
+        "skill_check_bonus": null,
+        "spell_resistance_bonus": null,
+        "stat_effect": {
+          "armor_check_penalty": null,
+          "armor_class_bonus": null,
+          "max_dex": null,
+          "spell_failure": null
+        },
+        "states_base_damage": false,
+        "var_bonuses": [],
+        "weapon_enhancement": null,
+        "weight_divisor": null,
+        "weight_lbs": null,
+        "wield_category": null
+      },
+      "source_ref": {
+        "line": 1,
+        "lst_file": ""
+      }
+    },
+    "equipmods/tattoobracelet.json": {
+      "record": {
+        "ability_score_bonus": null,
+        "armor_class_chain_bonus": null,
+        "base_damage_dice": null,
+        "base_item": null,
+        "cost_gp": null,
+        "critical_multiplier": null,
+        "critical_threat_range": null,
+        "damage_size_steps": 0,
+        "eqmod_references": [],
+        "identity": "TattooBracelet",
+        "intelligent_item": null,
+        "is_modifier": false,
+        "is_natural_attack": false,
+        "is_shield": false,
+        "name": "TattooBracelet",
+        "skill_check_bonus": null,
+        "spell_resistance_bonus": null,
+        "stat_effect": {
+          "armor_check_penalty": null,
+          "armor_class_bonus": null,
+          "max_dex": null,
+          "spell_failure": null
+        },
+        "states_base_damage": false,
+        "var_bonuses": [],
+        "weapon_enhancement": null,
+        "weight_divisor": null,
+        "weight_lbs": null,
+        "wield_category": null
+      },
+      "source_ref": {
+        "line": 1,
+        "lst_file": ""
+      }
+    },
+    "equipmods/tattoobracer.json": {
+      "record": {
+        "ability_score_bonus": null,
+        "armor_class_chain_bonus": null,
+        "base_damage_dice": null,
+        "base_item": null,
+        "cost_gp": null,
+        "critical_multiplier": null,
+        "critical_threat_range": null,
+        "damage_size_steps": 0,
+        "eqmod_references": [],
+        "identity": "TattooBracer",
+        "intelligent_item": null,
+        "is_modifier": false,
+        "is_natural_attack": false,
+        "is_shield": false,
+        "name": "TattooBracer",
+        "skill_check_bonus": null,
+        "spell_resistance_bonus": null,
+        "stat_effect": {
+          "armor_check_penalty": null,
+          "armor_class_bonus": null,
+          "max_dex": null,
+          "spell_failure": null
+        },
+        "states_base_damage": false,
+        "var_bonuses": [],
+        "weapon_enhancement": null,
+        "weight_divisor": null,
+        "weight_lbs": null,
+        "wield_category": null
+      },
+      "source_ref": {
+        "line": 1,
+        "lst_file": ""
+      }
+    },
+    "equipmods/tattoobrooch.json": {
+      "record": {
+        "ability_score_bonus": null,
+        "armor_class_chain_bonus": null,
+        "base_damage_dice": null,
+        "base_item": null,
+        "cost_gp": null,
+        "critical_multiplier": null,
+        "critical_threat_range": null,
+        "damage_size_steps": 0,
+        "eqmod_references": [],
+        "identity": "TattooBrooch",
+        "intelligent_item": null,
+        "is_modifier": false,
+        "is_natural_attack": false,
+        "is_shield": false,
+        "name": "TattooBrooch",
+        "skill_check_bonus": null,
+        "spell_resistance_bonus": null,
+        "stat_effect": {
+          "armor_check_penalty": null,
+          "armor_class_bonus": null,
+          "max_dex": null,
+          "spell_failure": null
+        },
+        "states_base_damage": false,
+        "var_bonuses": [],
+        "weapon_enhancement": null,
+        "weight_divisor": null,
+        "weight_lbs": null,
+        "wield_category": null
+      },
+      "source_ref": {
+        "line": 1,
+        "lst_file": ""
+      }
+    },
+    "equipmods/tattoocape.json": {
+      "record": {
+        "ability_score_bonus": null,
+        "armor_class_chain_bonus": null,
+        "base_damage_dice": null,
+        "base_item": null,
+        "cost_gp": null,
+        "critical_multiplier": null,
+        "critical_threat_range": null,
+        "damage_size_steps": 0,
+        "eqmod_references": [],
+        "identity": "TattooCape",
+        "intelligent_item": null,
+        "is_modifier": false,
+        "is_natural_attack": false,
+        "is_shield": false,
+        "name": "TattooCape",
+        "skill_check_bonus": null,
+        "spell_resistance_bonus": null,
+        "stat_effect": {
+          "armor_check_penalty": null,
+          "armor_class_bonus": null,
+          "max_dex": null,
+          "spell_failure": null
+        },
+        "states_base_damage": false,
+        "var_bonuses": [],
+        "weapon_enhancement": null,
+        "weight_divisor": null,
+        "weight_lbs": null,
+        "wield_category": null
+      },
+      "source_ref": {
+        "line": 1,
+        "lst_file": ""
+      }
+    },
+    "equipmods/tattoochest.json": {
+      "record": {
+        "ability_score_bonus": null,
+        "armor_class_chain_bonus": null,
+        "base_damage_dice": null,
+        "base_item": null,
+        "cost_gp": null,
+        "critical_multiplier": null,
+        "critical_threat_range": null,
+        "damage_size_steps": 0,
+        "eqmod_references": [],
+        "identity": "TattooChest",
+        "intelligent_item": null,
+        "is_modifier": false,
+        "is_natural_attack": false,
+        "is_shield": false,
+        "name": "TattooChest",
+        "skill_check_bonus": null,
+        "spell_resistance_bonus": null,
+        "stat_effect": {
+          "armor_check_penalty": null,
+          "armor_class_bonus": null,
+          "max_dex": null,
+          "spell_failure": null
+        },
+        "states_base_damage": false,
+        "var_bonuses": [],
+        "weapon_enhancement": null,
+        "weight_divisor": null,
+        "weight_lbs": null,
+        "wield_category": null
+      },
+      "source_ref": {
+        "line": 1,
+        "lst_file": ""
+      }
+    },
+    "equipmods/tattoocirclet.json": {
+      "record": {
+        "ability_score_bonus": null,
+        "armor_class_chain_bonus": null,
+        "base_damage_dice": null,
+        "base_item": null,
+        "cost_gp": null,
+        "critical_multiplier": null,
+        "critical_threat_range": null,
+        "damage_size_steps": 0,
+        "eqmod_references": [],
+        "identity": "TattooCirclet",
+        "intelligent_item": null,
+        "is_modifier": false,
+        "is_natural_attack": false,
+        "is_shield": false,
+        "name": "TattooCirclet",
+        "skill_check_bonus": null,
+        "spell_resistance_bonus": null,
+        "stat_effect": {
+          "armor_check_penalty": null,
+          "armor_class_bonus": null,
+          "max_dex": null,
+          "spell_failure": null
+        },
+        "states_base_damage": false,
+        "var_bonuses": [],
+        "weapon_enhancement": null,
+        "weight_divisor": null,
+        "weight_lbs": null,
+        "wield_category": null
+      },
+      "source_ref": {
+        "line": 1,
+        "lst_file": ""
+      }
+    },
+    "equipmods/tattoocloak.json": {
+      "record": {
+        "ability_score_bonus": null,
+        "armor_class_chain_bonus": null,
+        "base_damage_dice": null,
+        "base_item": null,
+        "cost_gp": null,
+        "critical_multiplier": null,
+        "critical_threat_range": null,
+        "damage_size_steps": 0,
+        "eqmod_references": [],
+        "identity": "TattooCloak",
+        "intelligent_item": null,
+        "is_modifier": false,
+        "is_natural_attack": false,
+        "is_shield": false,
+        "name": "TattooCloak",
+        "skill_check_bonus": null,
+        "spell_resistance_bonus": null,
+        "stat_effect": {
+          "armor_check_penalty": null,
+          "armor_class_bonus": null,
+          "max_dex": null,
+          "spell_failure": null
+        },
+        "states_base_damage": false,
+        "var_bonuses": [],
+        "weapon_enhancement": null,
+        "weight_divisor": null,
+        "weight_lbs": null,
+        "wield_category": null
+      },
+      "source_ref": {
+        "line": 1,
+        "lst_file": ""
+      }
+    },
+    "equipmods/tattoocrown.json": {
+      "record": {
+        "ability_score_bonus": null,
+        "armor_class_chain_bonus": null,
+        "base_damage_dice": null,
+        "base_item": null,
+        "cost_gp": null,
+        "critical_multiplier": null,
+        "critical_threat_range": null,
+        "damage_size_steps": 0,
+        "eqmod_references": [],
+        "identity": "TattooCrown",
+        "intelligent_item": null,
+        "is_modifier": false,
+        "is_natural_attack": false,
+        "is_shield": false,
+        "name": "TattooCrown",
+        "skill_check_bonus": null,
+        "spell_resistance_bonus": null,
+        "stat_effect": {
+          "armor_check_penalty": null,
+          "armor_class_bonus": null,
+          "max_dex": null,
+          "spell_failure": null
+        },
+        "states_base_damage": false,
+        "var_bonuses": [],
+        "weapon_enhancement": null,
+        "weight_divisor": null,
+        "weight_lbs": null,
+        "wield_category": null
+      },
+      "source_ref": {
+        "line": 1,
+        "lst_file": ""
+      }
+    },
+    "equipmods/tattoofeet.json": {
+      "record": {
+        "ability_score_bonus": null,
+        "armor_class_chain_bonus": null,
+        "base_damage_dice": null,
+        "base_item": null,
+        "cost_gp": null,
+        "critical_multiplier": null,
+        "critical_threat_range": null,
+        "damage_size_steps": 0,
+        "eqmod_references": [],
+        "identity": "TattooFeet",
+        "intelligent_item": null,
+        "is_modifier": false,
+        "is_natural_attack": false,
+        "is_shield": false,
+        "name": "TattooFeet",
+        "skill_check_bonus": null,
+        "spell_resistance_bonus": null,
+        "stat_effect": {
+          "armor_check_penalty": null,
+          "armor_class_bonus": null,
+          "max_dex": null,
+          "spell_failure": null
+        },
+        "states_base_damage": false,
+        "var_bonuses": [],
+        "weapon_enhancement": null,
+        "weight_divisor": null,
+        "weight_lbs": null,
+        "wield_category": null
+      },
+      "source_ref": {
+        "line": 1,
+        "lst_file": ""
+      }
+    },
+    "equipmods/tattoofootwear.json": {
+      "record": {
+        "ability_score_bonus": null,
+        "armor_class_chain_bonus": null,
+        "base_damage_dice": null,
+        "base_item": null,
+        "cost_gp": null,
+        "critical_multiplier": null,
+        "critical_threat_range": null,
+        "damage_size_steps": 0,
+        "eqmod_references": [],
+        "identity": "TattooFootwear",
+        "intelligent_item": null,
+        "is_modifier": false,
+        "is_natural_attack": false,
+        "is_shield": false,
+        "name": "TattooFootwear",
+        "skill_check_bonus": null,
+        "spell_resistance_bonus": null,
+        "stat_effect": {
+          "armor_check_penalty": null,
+          "armor_class_bonus": null,
+          "max_dex": null,
+          "spell_failure": null
+        },
+        "states_base_damage": false,
+        "var_bonuses": [],
+        "weapon_enhancement": null,
+        "weight_divisor": null,
+        "weight_lbs": null,
+        "wield_category": null
+      },
+      "source_ref": {
+        "line": 1,
+        "lst_file": ""
+      }
+    },
+    "equipmods/tattoogauntlet.json": {
+      "record": {
+        "ability_score_bonus": null,
+        "armor_class_chain_bonus": null,
+        "base_damage_dice": null,
+        "base_item": null,
+        "cost_gp": null,
+        "critical_multiplier": null,
+        "critical_threat_range": null,
+        "damage_size_steps": 0,
+        "eqmod_references": [],
+        "identity": "TattooGauntlet",
+        "intelligent_item": null,
+        "is_modifier": false,
+        "is_natural_attack": false,
+        "is_shield": false,
+        "name": "TattooGauntlet",
+        "skill_check_bonus": null,
+        "spell_resistance_bonus": null,
+        "stat_effect": {
+          "armor_check_penalty": null,
+          "armor_class_bonus": null,
+          "max_dex": null,
+          "spell_failure": null
+        },
+        "states_base_damage": false,
+        "var_bonuses": [],
+        "weapon_enhancement": null,
+        "weight_divisor": null,
+        "weight_lbs": null,
+        "wield_category": null
+      },
+      "source_ref": {
+        "line": 1,
+        "lst_file": ""
+      }
+    },
+    "equipmods/tattoogirdle.json": {
+      "record": {
+        "ability_score_bonus": null,
+        "armor_class_chain_bonus": null,
+        "base_damage_dice": null,
+        "base_item": null,
+        "cost_gp": null,
+        "critical_multiplier": null,
+        "critical_threat_range": null,
+        "damage_size_steps": 0,
+        "eqmod_references": [],
+        "identity": "TattooGirdle",
+        "intelligent_item": null,
+        "is_modifier": false,
+        "is_natural_attack": false,
+        "is_shield": false,
+        "name": "TattooGirdle",
+        "skill_check_bonus": null,
+        "spell_resistance_bonus": null,
+        "stat_effect": {
+          "armor_check_penalty": null,
+          "armor_class_bonus": null,
+          "max_dex": null,
+          "spell_failure": null
+        },
+        "states_base_damage": false,
+        "var_bonuses": [],
+        "weapon_enhancement": null,
+        "weight_divisor": null,
+        "weight_lbs": null,
+        "wield_category": null
+      },
+      "source_ref": {
+        "line": 1,
+        "lst_file": ""
+      }
+    },
+    "equipmods/tattooglove.json": {
+      "record": {
+        "ability_score_bonus": null,
+        "armor_class_chain_bonus": null,
+        "base_damage_dice": null,
+        "base_item": null,
+        "cost_gp": null,
+        "critical_multiplier": null,
+        "critical_threat_range": null,
+        "damage_size_steps": 0,
+        "eqmod_references": [],
+        "identity": "TattooGlove",
+        "intelligent_item": null,
+        "is_modifier": false,
+        "is_natural_attack": false,
+        "is_shield": false,
+        "name": "TattooGlove",
+        "skill_check_bonus": null,
+        "spell_resistance_bonus": null,
+        "stat_effect": {
+          "armor_check_penalty": null,
+          "armor_class_bonus": null,
+          "max_dex": null,
+          "spell_failure": null
+        },
+        "states_base_damage": false,
+        "var_bonuses": [],
+        "weapon_enhancement": null,
+        "weight_divisor": null,
+        "weight_lbs": null,
+        "wield_category": null
+      },
+      "source_ref": {
+        "line": 1,
+        "lst_file": ""
+      }
+    },
+    "equipmods/tattoohands.json": {
+      "record": {
+        "ability_score_bonus": null,
+        "armor_class_chain_bonus": null,
+        "base_damage_dice": null,
+        "base_item": null,
+        "cost_gp": null,
+        "critical_multiplier": null,
+        "critical_threat_range": null,
+        "damage_size_steps": 0,
+        "eqmod_references": [],
+        "identity": "TattooHands",
+        "intelligent_item": null,
+        "is_modifier": false,
+        "is_natural_attack": false,
+        "is_shield": false,
+        "name": "TattooHands",
+        "skill_check_bonus": null,
+        "spell_resistance_bonus": null,
+        "stat_effect": {
+          "armor_check_penalty": null,
+          "armor_class_bonus": null,
+          "max_dex": null,
+          "spell_failure": null
+        },
+        "states_base_damage": false,
+        "var_bonuses": [],
+        "weapon_enhancement": null,
+        "weight_divisor": null,
+        "weight_lbs": null,
+        "wield_category": null
+      },
+      "source_ref": {
+        "line": 1,
+        "lst_file": ""
+      }
+    },
+    "equipmods/tattoohandwear.json": {
+      "record": {
+        "ability_score_bonus": null,
+        "armor_class_chain_bonus": null,
+        "base_damage_dice": null,
+        "base_item": null,
+        "cost_gp": null,
+        "critical_multiplier": null,
+        "critical_threat_range": null,
+        "damage_size_steps": 0,
+        "eqmod_references": [],
+        "identity": "TattooHandwear",
+        "intelligent_item": null,
+        "is_modifier": false,
+        "is_natural_attack": false,
+        "is_shield": false,
+        "name": "TattooHandwear",
+        "skill_check_bonus": null,
+        "spell_resistance_bonus": null,
+        "stat_effect": {
+          "armor_check_penalty": null,
+          "armor_class_bonus": null,
+          "max_dex": null,
+          "spell_failure": null
+        },
+        "states_base_damage": false,
+        "var_bonuses": [],
+        "weapon_enhancement": null,
+        "weight_divisor": null,
+        "weight_lbs": null,
+        "wield_category": null
+      },
+      "source_ref": {
+        "line": 1,
+        "lst_file": ""
+      }
+    },
+    "equipmods/tattoohat.json": {
+      "record": {
+        "ability_score_bonus": null,
+        "armor_class_chain_bonus": null,
+        "base_damage_dice": null,
+        "base_item": null,
+        "cost_gp": null,
+        "critical_multiplier": null,
+        "critical_threat_range": null,
+        "damage_size_steps": 0,
+        "eqmod_references": [],
+        "identity": "TattooHat",
+        "intelligent_item": null,
+        "is_modifier": false,
+        "is_natural_attack": false,
+        "is_shield": false,
+        "name": "TattooHat",
+        "skill_check_bonus": null,
+        "spell_resistance_bonus": null,
+        "stat_effect": {
+          "armor_check_penalty": null,
+          "armor_class_bonus": null,
+          "max_dex": null,
+          "spell_failure": null
+        },
+        "states_base_damage": false,
+        "var_bonuses": [],
+        "weapon_enhancement": null,
+        "weight_divisor": null,
+        "weight_lbs": null,
+        "wield_category": null
+      },
+      "source_ref": {
+        "line": 1,
+        "lst_file": ""
+      }
+    },
+    "equipmods/tattoohead.json": {
+      "record": {
+        "ability_score_bonus": null,
+        "armor_class_chain_bonus": null,
+        "base_damage_dice": null,
+        "base_item": null,
+        "cost_gp": null,
+        "critical_multiplier": null,
+        "critical_threat_range": null,
+        "damage_size_steps": 0,
+        "eqmod_references": [],
+        "identity": "TattooHead",
+        "intelligent_item": null,
+        "is_modifier": false,
+        "is_natural_attack": false,
+        "is_shield": false,
+        "name": "TattooHead",
+        "skill_check_bonus": null,
+        "spell_resistance_bonus": null,
+        "stat_effect": {
+          "armor_check_penalty": null,
+          "armor_class_bonus": null,
+          "max_dex": null,
+          "spell_failure": null
+        },
+        "states_base_damage": false,
+        "var_bonuses": [],
+        "weapon_enhancement": null,
+        "weight_divisor": null,
+        "weight_lbs": null,
+        "wield_category": null
+      },
+      "source_ref": {
+        "line": 1,
+        "lst_file": ""
+      }
+    },
+    "equipmods/tattooheadgear.json": {
+      "record": {
+        "ability_score_bonus": null,
+        "armor_class_chain_bonus": null,
+        "base_damage_dice": null,
+        "base_item": null,
+        "cost_gp": null,
+        "critical_multiplier": null,
+        "critical_threat_range": null,
+        "damage_size_steps": 0,
+        "eqmod_references": [],
+        "identity": "TattooHeadgear",
+        "intelligent_item": null,
+        "is_modifier": false,
+        "is_natural_attack": false,
+        "is_shield": false,
+        "name": "TattooHeadgear",
+        "skill_check_bonus": null,
+        "spell_resistance_bonus": null,
+        "stat_effect": {
+          "armor_check_penalty": null,
+          "armor_class_bonus": null,
+          "max_dex": null,
+          "spell_failure": null
+        },
+        "states_base_damage": false,
+        "var_bonuses": [],
+        "weapon_enhancement": null,
+        "weight_divisor": null,
+        "weight_lbs": null,
+        "wield_category": null
+      },
+      "source_ref": {
+        "line": 1,
+        "lst_file": ""
+      }
+    },
+    "equipmods/tattoohelm.json": {
+      "record": {
+        "ability_score_bonus": null,
+        "armor_class_chain_bonus": null,
+        "base_damage_dice": null,
+        "base_item": null,
+        "cost_gp": null,
+        "critical_multiplier": null,
+        "critical_threat_range": null,
+        "damage_size_steps": 0,
+        "eqmod_references": [],
+        "identity": "TattooHelm",
+        "intelligent_item": null,
+        "is_modifier": false,
+        "is_natural_attack": false,
+        "is_shield": false,
+        "name": "TattooHelm",
+        "skill_check_bonus": null,
+        "spell_resistance_bonus": null,
+        "stat_effect": {
+          "armor_check_penalty": null,
+          "armor_class_bonus": null,
+          "max_dex": null,
+          "spell_failure": null
+        },
+        "states_base_damage": false,
+        "var_bonuses": [],
+        "weapon_enhancement": null,
+        "weight_divisor": null,
+        "weight_lbs": null,
+        "wield_category": null
+      },
+      "source_ref": {
+        "line": 1,
+        "lst_file": ""
+      }
+    },
+    "equipmods/tattoomantle.json": {
+      "record": {
+        "ability_score_bonus": null,
+        "armor_class_chain_bonus": null,
+        "base_damage_dice": null,
+        "base_item": null,
+        "cost_gp": null,
+        "critical_multiplier": null,
+        "critical_threat_range": null,
+        "damage_size_steps": 0,
+        "eqmod_references": [],
+        "identity": "TattooMantle",
+        "intelligent_item": null,
+        "is_modifier": false,
+        "is_natural_attack": false,
+        "is_shield": false,
+        "name": "TattooMantle",
+        "skill_check_bonus": null,
+        "spell_resistance_bonus": null,
+        "stat_effect": {
+          "armor_check_penalty": null,
+          "armor_class_bonus": null,
+          "max_dex": null,
+          "spell_failure": null
+        },
+        "states_base_damage": false,
+        "var_bonuses": [],
+        "weapon_enhancement": null,
+        "weight_divisor": null,
+        "weight_lbs": null,
+        "wield_category": null
+      },
+      "source_ref": {
+        "line": 1,
+        "lst_file": ""
+      }
+    },
+    "equipmods/tattoomask.json": {
+      "record": {
+        "ability_score_bonus": null,
+        "armor_class_chain_bonus": null,
+        "base_damage_dice": null,
+        "base_item": null,
+        "cost_gp": null,
+        "critical_multiplier": null,
+        "critical_threat_range": null,
+        "damage_size_steps": 0,
+        "eqmod_references": [],
+        "identity": "TattooMask",
+        "intelligent_item": null,
+        "is_modifier": false,
+        "is_natural_attack": false,
+        "is_shield": false,
+        "name": "TattooMask",
+        "skill_check_bonus": null,
+        "spell_resistance_bonus": null,
+        "stat_effect": {
+          "armor_check_penalty": null,
+          "armor_class_bonus": null,
+          "max_dex": null,
+          "spell_failure": null
+        },
+        "states_base_damage": false,
+        "var_bonuses": [],
+        "weapon_enhancement": null,
+        "weight_divisor": null,
+        "weight_lbs": null,
+        "wield_category": null
+      },
+      "source_ref": {
+        "line": 1,
+        "lst_file": ""
+      }
+    },
+    "equipmods/tattoomedallion.json": {
+      "record": {
+        "ability_score_bonus": null,
+        "armor_class_chain_bonus": null,
+        "base_damage_dice": null,
+        "base_item": null,
+        "cost_gp": null,
+        "critical_multiplier": null,
+        "critical_threat_range": null,
+        "damage_size_steps": 0,
+        "eqmod_references": [],
+        "identity": "TattooMedallion",
+        "intelligent_item": null,
+        "is_modifier": false,
+        "is_natural_attack": false,
+        "is_shield": false,
+        "name": "TattooMedallion",
+        "skill_check_bonus": null,
+        "spell_resistance_bonus": null,
+        "stat_effect": {
+          "armor_check_penalty": null,
+          "armor_class_bonus": null,
+          "max_dex": null,
+          "spell_failure": null
+        },
+        "states_base_damage": false,
+        "var_bonuses": [],
+        "weapon_enhancement": null,
+        "weight_divisor": null,
+        "weight_lbs": null,
+        "wield_category": null
+      },
+      "source_ref": {
+        "line": 1,
+        "lst_file": ""
+      }
+    },
+    "equipmods/tattooneck.json": {
+      "record": {
+        "ability_score_bonus": null,
+        "armor_class_chain_bonus": null,
+        "base_damage_dice": null,
+        "base_item": null,
+        "cost_gp": null,
+        "critical_multiplier": null,
+        "critical_threat_range": null,
+        "damage_size_steps": 0,
+        "eqmod_references": [],
+        "identity": "TattooNeck",
+        "intelligent_item": null,
+        "is_modifier": false,
+        "is_natural_attack": false,
+        "is_shield": false,
+        "name": "TattooNeck",
+        "skill_check_bonus": null,
+        "spell_resistance_bonus": null,
+        "stat_effect": {
+          "armor_check_penalty": null,
+          "armor_class_bonus": null,
+          "max_dex": null,
+          "spell_failure": null
+        },
+        "states_base_damage": false,
+        "var_bonuses": [],
+        "weapon_enhancement": null,
+        "weight_divisor": null,
+        "weight_lbs": null,
+        "wield_category": null
+      },
+      "source_ref": {
+        "line": 1,
+        "lst_file": ""
+      }
+    },
+    "equipmods/tattoonecklace.json": {
+      "record": {
+        "ability_score_bonus": null,
+        "armor_class_chain_bonus": null,
+        "base_damage_dice": null,
+        "base_item": null,
+        "cost_gp": null,
+        "critical_multiplier": null,
+        "critical_threat_range": null,
+        "damage_size_steps": 0,
+        "eqmod_references": [],
+        "identity": "TattooNecklace",
+        "intelligent_item": null,
+        "is_modifier": false,
+        "is_natural_attack": false,
+        "is_shield": false,
+        "name": "TattooNecklace",
+        "skill_check_bonus": null,
+        "spell_resistance_bonus": null,
+        "stat_effect": {
+          "armor_check_penalty": null,
+          "armor_class_bonus": null,
+          "max_dex": null,
+          "spell_failure": null
+        },
+        "states_base_damage": false,
+        "var_bonuses": [],
+        "weapon_enhancement": null,
+        "weight_divisor": null,
+        "weight_lbs": null,
+        "wield_category": null
+      },
+      "source_ref": {
+        "line": 1,
+        "lst_file": ""
+      }
+    },
+    "equipmods/tattooneckwear.json": {
+      "record": {
+        "ability_score_bonus": null,
+        "armor_class_chain_bonus": null,
+        "base_damage_dice": null,
+        "base_item": null,
+        "cost_gp": null,
+        "critical_multiplier": null,
+        "critical_threat_range": null,
+        "damage_size_steps": 0,
+        "eqmod_references": [],
+        "identity": "TattooNeckwear",
+        "intelligent_item": null,
+        "is_modifier": false,
+        "is_natural_attack": false,
+        "is_shield": false,
+        "name": "TattooNeckwear",
+        "skill_check_bonus": null,
+        "spell_resistance_bonus": null,
+        "stat_effect": {
+          "armor_check_penalty": null,
+          "armor_class_bonus": null,
+          "max_dex": null,
+          "spell_failure": null
+        },
+        "states_base_damage": false,
+        "var_bonuses": [],
+        "weapon_enhancement": null,
+        "weight_divisor": null,
+        "weight_lbs": null,
+        "wield_category": null
+      },
+      "source_ref": {
+        "line": 1,
+        "lst_file": ""
+      }
+    },
+    "equipmods/tattooperiapt.json": {
+      "record": {
+        "ability_score_bonus": null,
+        "armor_class_chain_bonus": null,
+        "base_damage_dice": null,
+        "base_item": null,
+        "cost_gp": null,
+        "critical_multiplier": null,
+        "critical_threat_range": null,
+        "damage_size_steps": 0,
+        "eqmod_references": [],
+        "identity": "TattooPeriapt",
+        "intelligent_item": null,
+        "is_modifier": false,
+        "is_natural_attack": false,
+        "is_shield": false,
+        "name": "TattooPeriapt",
+        "skill_check_bonus": null,
+        "spell_resistance_bonus": null,
+        "stat_effect": {
+          "armor_check_penalty": null,
+          "armor_class_bonus": null,
+          "max_dex": null,
+          "spell_failure": null
+        },
+        "states_base_damage": false,
+        "var_bonuses": [],
+        "weapon_enhancement": null,
+        "weight_divisor": null,
+        "weight_lbs": null,
+        "wield_category": null
+      },
+      "source_ref": {
+        "line": 1,
+        "lst_file": ""
+      }
+    },
+    "equipmods/tattooring.json": {
+      "record": {
+        "ability_score_bonus": null,
+        "armor_class_chain_bonus": null,
+        "base_damage_dice": null,
+        "base_item": null,
+        "cost_gp": null,
+        "critical_multiplier": null,
+        "critical_threat_range": null,
+        "damage_size_steps": 0,
+        "eqmod_references": [],
+        "identity": "TattooRing",
+        "intelligent_item": null,
+        "is_modifier": false,
+        "is_natural_attack": false,
+        "is_shield": false,
+        "name": "TattooRing",
+        "skill_check_bonus": null,
+        "spell_resistance_bonus": null,
+        "stat_effect": {
+          "armor_check_penalty": null,
+          "armor_class_bonus": null,
+          "max_dex": null,
+          "spell_failure": null
+        },
+        "states_base_damage": false,
+        "var_bonuses": [],
+        "weapon_enhancement": null,
+        "weight_divisor": null,
+        "weight_lbs": null,
+        "wield_category": null
+      },
+      "source_ref": {
+        "line": 1,
+        "lst_file": ""
+      }
+    },
+    "equipmods/tattoorobe.json": {
+      "record": {
+        "ability_score_bonus": null,
+        "armor_class_chain_bonus": null,
+        "base_damage_dice": null,
+        "base_item": null,
+        "cost_gp": null,
+        "critical_multiplier": null,
+        "critical_threat_range": null,
+        "damage_size_steps": 0,
+        "eqmod_references": [],
+        "identity": "TattooRobe",
+        "intelligent_item": null,
+        "is_modifier": false,
+        "is_natural_attack": false,
+        "is_shield": false,
+        "name": "TattooRobe",
+        "skill_check_bonus": null,
+        "spell_resistance_bonus": null,
+        "stat_effect": {
+          "armor_check_penalty": null,
+          "armor_class_bonus": null,
+          "max_dex": null,
+          "spell_failure": null
+        },
+        "states_base_damage": false,
+        "var_bonuses": [],
+        "weapon_enhancement": null,
+        "weight_divisor": null,
+        "weight_lbs": null,
+        "wield_category": null
+      },
+      "source_ref": {
+        "line": 1,
+        "lst_file": ""
+      }
+    },
+    "equipmods/tattooscarab.json": {
+      "record": {
+        "ability_score_bonus": null,
+        "armor_class_chain_bonus": null,
+        "base_damage_dice": null,
+        "base_item": null,
+        "cost_gp": null,
+        "critical_multiplier": null,
+        "critical_threat_range": null,
+        "damage_size_steps": 0,
+        "eqmod_references": [],
+        "identity": "TattooScarab",
+        "intelligent_item": null,
+        "is_modifier": false,
+        "is_natural_attack": false,
+        "is_shield": false,
+        "name": "TattooScarab",
+        "skill_check_bonus": null,
+        "spell_resistance_bonus": null,
+        "stat_effect": {
+          "armor_check_penalty": null,
+          "armor_class_bonus": null,
+          "max_dex": null,
+          "spell_failure": null
+        },
+        "states_base_damage": false,
+        "var_bonuses": [],
+        "weapon_enhancement": null,
+        "weight_divisor": null,
+        "weight_lbs": null,
+        "wield_category": null
+      },
+      "source_ref": {
+        "line": 1,
+        "lst_file": ""
+      }
+    },
+    "equipmods/tattooshirt.json": {
+      "record": {
+        "ability_score_bonus": null,
+        "armor_class_chain_bonus": null,
+        "base_damage_dice": null,
+        "base_item": null,
+        "cost_gp": null,
+        "critical_multiplier": null,
+        "critical_threat_range": null,
+        "damage_size_steps": 0,
+        "eqmod_references": [],
+        "identity": "TattooShirt",
+        "intelligent_item": null,
+        "is_modifier": false,
+        "is_natural_attack": false,
+        "is_shield": false,
+        "name": "TattooShirt",
+        "skill_check_bonus": null,
+        "spell_resistance_bonus": null,
+        "stat_effect": {
+          "armor_check_penalty": null,
+          "armor_class_bonus": null,
+          "max_dex": null,
+          "spell_failure": null
+        },
+        "states_base_damage": false,
+        "var_bonuses": [],
+        "weapon_enhancement": null,
+        "weight_divisor": null,
+        "weight_lbs": null,
+        "wield_category": null
+      },
+      "source_ref": {
+        "line": 1,
+        "lst_file": ""
+      }
+    },
+    "equipmods/tattooshoes.json": {
+      "record": {
+        "ability_score_bonus": null,
+        "armor_class_chain_bonus": null,
+        "base_damage_dice": null,
+        "base_item": null,
+        "cost_gp": null,
+        "critical_multiplier": null,
+        "critical_threat_range": null,
+        "damage_size_steps": 0,
+        "eqmod_references": [],
+        "identity": "TattooShoes",
+        "intelligent_item": null,
+        "is_modifier": false,
+        "is_natural_attack": false,
+        "is_shield": false,
+        "name": "TattooShoes",
+        "skill_check_bonus": null,
+        "spell_resistance_bonus": null,
+        "stat_effect": {
+          "armor_check_penalty": null,
+          "armor_class_bonus": null,
+          "max_dex": null,
+          "spell_failure": null
+        },
+        "states_base_damage": false,
+        "var_bonuses": [],
+        "weapon_enhancement": null,
+        "weight_divisor": null,
+        "weight_lbs": null,
+        "wield_category": null
+      },
+      "source_ref": {
+        "line": 1,
+        "lst_file": ""
+      }
+    },
+    "equipmods/tattooshoulders.json": {
+      "record": {
+        "ability_score_bonus": null,
+        "armor_class_chain_bonus": null,
+        "base_damage_dice": null,
+        "base_item": null,
+        "cost_gp": null,
+        "critical_multiplier": null,
+        "critical_threat_range": null,
+        "damage_size_steps": 0,
+        "eqmod_references": [],
+        "identity": "TattooShoulders",
+        "intelligent_item": null,
+        "is_modifier": false,
+        "is_natural_attack": false,
+        "is_shield": false,
+        "name": "TattooShoulders",
+        "skill_check_bonus": null,
+        "spell_resistance_bonus": null,
+        "stat_effect": {
+          "armor_check_penalty": null,
+          "armor_class_bonus": null,
+          "max_dex": null,
+          "spell_failure": null
+        },
+        "states_base_damage": false,
+        "var_bonuses": [],
+        "weapon_enhancement": null,
+        "weight_divisor": null,
+        "weight_lbs": null,
+        "wield_category": null
+      },
+      "source_ref": {
+        "line": 1,
+        "lst_file": ""
+      }
+    },
+    "equipmods/tattooslippers.json": {
+      "record": {
+        "ability_score_bonus": null,
+        "armor_class_chain_bonus": null,
+        "base_damage_dice": null,
+        "base_item": null,
+        "cost_gp": null,
+        "critical_multiplier": null,
+        "critical_threat_range": null,
+        "damage_size_steps": 0,
+        "eqmod_references": [],
+        "identity": "TattooSlippers",
+        "intelligent_item": null,
+        "is_modifier": false,
+        "is_natural_attack": false,
+        "is_shield": false,
+        "name": "TattooSlippers",
+        "skill_check_bonus": null,
+        "spell_resistance_bonus": null,
+        "stat_effect": {
+          "armor_check_penalty": null,
+          "armor_class_bonus": null,
+          "max_dex": null,
+          "spell_failure": null
+        },
+        "states_base_damage": false,
+        "var_bonuses": [],
+        "weapon_enhancement": null,
+        "weight_divisor": null,
+        "weight_lbs": null,
+        "wield_category": null
+      },
+      "source_ref": {
+        "line": 1,
+        "lst_file": ""
+      }
+    },
+    "equipmods/tattoovest.json": {
+      "record": {
+        "ability_score_bonus": null,
+        "armor_class_chain_bonus": null,
+        "base_damage_dice": null,
+        "base_item": null,
+        "cost_gp": null,
+        "critical_multiplier": null,
+        "critical_threat_range": null,
+        "damage_size_steps": 0,
+        "eqmod_references": [],
+        "identity": "TattooVest",
+        "intelligent_item": null,
+        "is_modifier": false,
+        "is_natural_attack": false,
+        "is_shield": false,
+        "name": "TattooVest",
+        "skill_check_bonus": null,
+        "spell_resistance_bonus": null,
+        "stat_effect": {
+          "armor_check_penalty": null,
+          "armor_class_bonus": null,
+          "max_dex": null,
+          "spell_failure": null
+        },
+        "states_base_damage": false,
+        "var_bonuses": [],
+        "weapon_enhancement": null,
+        "weight_divisor": null,
+        "weight_lbs": null,
+        "wield_category": null
+      },
+      "source_ref": {
+        "line": 1,
+        "lst_file": ""
+      }
+    },
+    "equipmods/tattoowrist.json": {
+      "record": {
+        "ability_score_bonus": null,
+        "armor_class_chain_bonus": null,
+        "base_damage_dice": null,
+        "base_item": null,
+        "cost_gp": null,
+        "critical_multiplier": null,
+        "critical_threat_range": null,
+        "damage_size_steps": 0,
+        "eqmod_references": [],
+        "identity": "TattooWrist",
+        "intelligent_item": null,
+        "is_modifier": false,
+        "is_natural_attack": false,
+        "is_shield": false,
+        "name": "TattooWrist",
+        "skill_check_bonus": null,
+        "spell_resistance_bonus": null,
+        "stat_effect": {
+          "armor_check_penalty": null,
+          "armor_class_bonus": null,
+          "max_dex": null,
+          "spell_failure": null
+        },
+        "states_base_damage": false,
+        "var_bonuses": [],
+        "weapon_enhancement": null,
+        "weight_divisor": null,
+        "weight_lbs": null,
+        "wield_category": null
+      },
+      "source_ref": {
+        "line": 1,
+        "lst_file": ""
+      }
+    },
+    "reservoir_tattoo.json": {
+      "record": {
+        "ability_score_bonus": null,
+        "armor_class_chain_bonus": null,
+        "base_damage_dice": null,
+        "base_item": null,
+        "cost_gp": 10000.0,
+        "critical_multiplier": null,
+        "critical_threat_range": null,
+        "damage_size_steps": 0,
+        "eqmod_references": [],
+        "identity": "Reservoir Tattoo",
+        "intelligent_item": null,
+        "is_modifier": false,
+        "is_natural_attack": false,
+        "is_shield": false,
+        "name": "Reservoir Tattoo",
+        "skill_check_bonus": null,
+        "spell_resistance_bonus": null,
+        "stat_effect": {
+          "armor_check_penalty": null,
+          "armor_class_bonus": null,
+          "max_dex": null,
+          "spell_failure": null
+        },
+        "states_base_damage": false,
+        "var_bonuses": [],
+        "weapon_enhancement": null,
+        "weight_divisor": null,
+        "weight_lbs": 0.0,
+        "wield_category": null
+      },
+      "source_ref": {
+        "line": 1,
+        "lst_file": ""
+      }
+    },
+    "riffle_scroll.json": {
+      "record": {
+        "ability_score_bonus": null,
+        "armor_class_chain_bonus": null,
+        "base_damage_dice": null,
+        "base_item": null,
+        "cost_gp": 0.0,
+        "critical_multiplier": null,
+        "critical_threat_range": null,
+        "damage_size_steps": 0,
+        "eqmod_references": [],
+        "identity": "Riffle Scroll",
+        "intelligent_item": null,
+        "is_modifier": false,
+        "is_natural_attack": false,
+        "is_shield": false,
+        "name": "Riffle Scroll",
+        "skill_check_bonus": null,
+        "spell_resistance_bonus": null,
+        "stat_effect": {
+          "armor_check_penalty": null,
+          "armor_class_bonus": null,
+          "max_dex": null,
+          "spell_failure": null
+        },
+        "states_base_damage": false,
+        "var_bonuses": [],
+        "weapon_enhancement": null,
+        "weight_divisor": null,
+        "weight_lbs": 1.0,
+        "wield_category": null
+      },
+      "source_ref": {
+        "line": 1,
+        "lst_file": ""
+      }
+    },
+    "spell_tattoo.json": {
+      "record": {
+        "ability_score_bonus": null,
+        "armor_class_chain_bonus": null,
+        "base_damage_dice": null,
+        "base_item": null,
+        "cost_gp": 0.0,
+        "critical_multiplier": null,
+        "critical_threat_range": null,
+        "damage_size_steps": 0,
+        "eqmod_references": [],
+        "identity": "Spell Tattoo",
+        "intelligent_item": null,
+        "is_modifier": false,
+        "is_natural_attack": false,
+        "is_shield": false,
+        "name": "Spell Tattoo",
+        "skill_check_bonus": null,
+        "spell_resistance_bonus": null,
+        "stat_effect": {
+          "armor_check_penalty": null,
+          "armor_class_bonus": null,
+          "max_dex": null,
+          "spell_failure": null
+        },
+        "states_base_damage": false,
+        "var_bonuses": [],
+        "weapon_enhancement": null,
+        "weight_divisor": null,
+        "weight_lbs": 0.0,
+        "wield_category": null
+      },
+      "source_ref": {
+        "line": 1,
+        "lst_file": ""
+      }
+    }
+  }
+}

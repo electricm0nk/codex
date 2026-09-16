@@ -62,7 +62,7 @@ pub fn improved_share_powers(level: u8) -> Option<i16> {
 /// `BONUS:VAR` on this record at all — the record's real magnitude is the
 /// `BONUS:ABILITYPOOL|Tactician Bonus Teamwork Feat|TacticianLVL/6` pool
 /// size (the roster's own `var` field is `None` for this record, same as
-/// Vitalist's Health Sense; a real formula still exists in `raw_tokens`).
+/// Vitalist's Health Sense; a real formula still exists in the ingest token array).
 /// `None` below level 6 (the roster's own `min_level`).
 pub fn teamwork_feats_bonus_pool(level: u8) -> Option<i16> {
     if level < 6 {

@@ -54,7 +54,6 @@
 use serde::{Deserialize, Serialize};
 
 use codex::rules_core::equipment_resolver::equipment_catalog_rows;
-use codex::rules_core::pcgen_desc::render_pcgen_desc;
 use codex::rules_core::rules_tables::{
     acg, advanced_race_guide as arg, apg, beastiary1, crb, pathfinder_unchained as pu,
     ultimate_combat as uc, ultimate_equipment as ue, ultimate_intrigue as ui,
@@ -134,29 +133,108 @@ pub struct EquipmentCatalogEntryDto {
     /// not read it is unaffected, and one that does can label or filter
     /// by book the way the Spell Catalog screen already does.
     pub book: String,
-    /// The record's corpus `DESC:` prose, rendered by [`serve_description`].
-    /// `None` where the corpus row genuinely carries no description — a
-    /// real and documented gap for template/bookkeeping rows (see
-    /// `crb::equipment_tables::EquipmentTableEntry::description`), never a
-    /// fabricated placeholder.
+    /// The record's own words, from [`row_description`]. `None` where the record
+    /// genuinely states none — a real and documented gap for template and bookkeeping
+    /// rows, never a fabricated stand-in.
     pub description: Option<String>,
 }
 
-/// Renders one table description into the prose this catalog is allowed to
-/// serve — the identical treatment `spell_catalog::serve_description`
-/// already applies, and the reason this module now has one.
+/// The description one catalog row serves.
 ///
-/// Equipment descriptions were being read out of the compiled tables and
-/// were **never** run through the renderer, so 54 records still carried the
-/// raw PCGen `%%` literal-percent escape: ARG's `Helmet (Dwarven Boulder)`
-/// ("adds 20%% to the wearer's arcane spell failure chance") plus 53 CRB
-/// records (41 MagicItems, 6 General, 6 ArmsArmor). Counts derived by
-/// running the catalog through `leaked_pcgen_syntax`, not assumed.
+/// # What changed, and why
 ///
-/// [`render_pcgen_desc`] owns the treatment and the reasoning about what
-/// may and may not be substituted; this module does not re-decide it.
-fn serve_description(raw: &str) -> String {
-    render_pcgen_desc(raw).text
+/// SD-35 `decisions.md §11` — nothing on the live side reads the ingest format. Until
+/// `AT-35-E6-003` cycle 7 this module took the compiled table's stored description string and
+/// re-parsed it at run time, because a handful of those strings still carried the source
+/// format's own literal-percent escape and positional markers. That run-time parse is the
+/// ingest-format reader the ruling removes.
+///
+/// So: **the converted record's own words first** — the substitution that parse performed
+/// already happens at ingest (`src/pcgen_import/sheet_rule/`), and
+/// `sheet_rule_catalog::catalog_description` renders the result with no character in hand (a
+/// final number where the term is settled, the rule's words where it is not,
+/// `decisions.md §1`). A row the converted package holds under no rule at all keeps the words
+/// the compiled table states, **but only when that string is already the record's plain
+/// words**: a stored string still carrying a `%` marker is refused rather than shown, because
+/// the rewriter that used to clean it up is precisely what left the live side. Refusing is the
+/// same disposition the rest of this crate takes for a description it cannot serve whole —
+/// never a partial or half-rendered sentence.
+fn row_description(book: &str, key: &str, table_text: Option<&str>) -> Option<String> {
+    if let Some(text) = converted_description(book, key) {
+        return Some(text);
+    }
+    table_text.filter(|text| !text.contains('%')).map(str::to_owned)
+}
+
+/// The `data/corpus/<dir>/` directory each equipment book code names.
+///
+/// Panics on an unmapped code for the same reason `spell_catalog::corpus_book_dir` does: a
+/// silently-unmapped book would serve no prose at all for every one of its records, and a
+/// screen that shows nothing looks exactly like a book with nothing to show.
+fn corpus_book_dir(short_code: &str) -> &'static str {
+    corpus_book_dir_opt(short_code).unwrap_or_else(|| {
+        panic!(
+            "equipment_catalog carries an unmapped book code {short_code:?} -- add it to \
+             corpus_book_dir so the catalog does not silently serve no prose"
+        )
+    })
+}
+
+/// [`corpus_book_dir`] without the panic, so the census test below can *report* an unmapped
+/// code rather than abort on the first one.
+fn corpus_book_dir_opt(short_code: &str) -> Option<&'static str> {
+    Some(match short_code {
+        BOOK_CRB => "core_rulebook",
+        BOOK_APG => "advanced_players_guide",
+        BOOK_ACG => "advanced_class_guide",
+        BOOK_B1 => "beastiary",
+        BOOK_ARG => "advanced_race_guide",
+        BOOK_PU => "pathfinder_unchained",
+        BOOK_UI => "ultimate_intrigue",
+        BOOK_UE => "ultimate_equipment",
+        BOOK_UM => "ultimate_magic",
+        BOOK_UPSI => "ultimate_psionics",
+        BOOK_UC => "ultimate_combat",
+        // The corpus-gap lane's rows carry books the compiled tables never did.
+        "AG" => "adventurers_guide",
+        "B2" => "bestiary_2",
+        "B3" => "bestiary_3",
+        "B4" => "bestiary_4",
+        "BB" => "beginner_box",
+        "BOTD2" => "book_of_the_damned_volume_2",
+        "HA" => "horror_adventures",
+        "ISC" => "inner_sea_combat",
+        "ISG" => "inner_sea_gods",
+        "ISI" => "inner_sea_intrigue",
+        "ISM" => "inner_sea_magic",
+        "ISR" => "inner_sea_races",
+        "ISTEM" => "inner_sea_temples",
+        "ISWG" => "inner_sea_world_guide",
+        "MC" => "monster_codex",
+        "MYTHIC" => "mythic_adventures",
+        "OA" => "occult_adventures",
+        "UW" => "ultimate_wilderness",
+        _ => return None,
+    })
+}
+
+/// The two converted kinds an equipment catalog row can be: a piece of equipment, or an
+/// equipment modifier. `build_equipment_catalog` chains `equipment_tables()` and
+/// `equipmod_tables()` through the same mapper for most books, so a row's kind is not known
+/// from the mapper it came through — both are asked, equipment first.
+const EQUIPMENT_KINDS: [&str; 2] = ["equipment", "equipment_modifier"];
+
+/// The prose this catalog serves for one record: **the converted record's own words**, never
+/// the compiled table's stored description string.
+///
+/// SD-35 `decisions.md §11` — nothing on the live side reads the ingest format. The
+/// substitution this call site used to perform at run time already happens at ingest
+/// (`src/pcgen_import/sheet_rule/`), and `sheet_rule_catalog::catalog_description` renders the
+/// converted record with no character in hand: a final number where the term is settled, the
+/// rule's own words where it is not (`decisions.md §1`'s three printed forms).
+fn converted_description(book: &str, key: &str) -> Option<String> {
+    let dir = corpus_book_dir(book);
+    EQUIPMENT_KINDS.iter().find_map(|kind| crate::converted_prose::description_for(dir, kind, key))
 }
 
 #[derive(Debug, Clone, Serialize, Deserialize)]
@@ -173,7 +251,7 @@ fn map_crb_entry(entry: &crb::equipment_tables::EquipmentTableEntry) -> Equipmen
         cost_gp: entry.cost_gp,
         weight_lbs: entry.weight_lbs,
         book: BOOK_CRB.to_string(),
-        description: entry.description.map(serve_description),
+        description: row_description(BOOK_CRB, entry.key, entry.description),
     }
 }
 
@@ -185,7 +263,7 @@ fn map_apg_entry(entry: &apg::equipment_tables::EquipmentTableEntry) -> Equipmen
         cost_gp: entry.cost_gp,
         weight_lbs: entry.weight,
         book: BOOK_APG.to_string(),
-        description: entry.description.map(serve_description),
+        description: row_description(BOOK_APG, entry.key, entry.description),
     }
 }
 
@@ -197,7 +275,7 @@ fn map_acg_entry(entry: &acg::equipment_tables::EquipmentTableEntry) -> Equipmen
         cost_gp: entry.cost_gp,
         weight_lbs: entry.weight_lbs,
         book: BOOK_ACG.to_string(),
-        description: entry.description.map(serve_description),
+        description: row_description(BOOK_ACG, entry.key, entry.description),
     }
 }
 
@@ -211,7 +289,7 @@ fn map_beastiary1_entry(
         cost_gp: entry.cost_gp,
         weight_lbs: entry.weight_lbs,
         book: BOOK_B1.to_string(),
-        description: entry.description.map(serve_description),
+        description: row_description(BOOK_B1, entry.key, entry.description),
     }
 }
 
@@ -223,13 +301,13 @@ fn map_arg_entry(entry: &arg::equipment_tables::EquipmentTableEntry) -> Equipmen
         cost_gp: entry.cost_gp,
         weight_lbs: entry.weight_lbs,
         book: BOOK_ARG.to_string(),
-        description: entry.description.map(serve_description),
+        description: row_description(BOOK_ARG, entry.key, entry.description),
     }
 }
 
 /// PU's entry type carries no `EquipmentCategory` and no `cost_gp` field
 /// at all: `pu_equipmods.lst` has zero `COST:` tokens anywhere (its real
-/// cost signal is an `ITEMCOST` formula `BONUS:`, not a flat gp number),
+/// cost signal is a crafting-cost formula rather than a flat gp number),
 /// so `cost_gp` is honestly `None` for all 42 records rather than a
 /// fabricated `Some(0.0)`.
 fn map_pu_entry(entry: &pu::equipment_tables::EquipmentTableEntry) -> EquipmentCatalogEntryDto {
@@ -240,7 +318,7 @@ fn map_pu_entry(entry: &pu::equipment_tables::EquipmentTableEntry) -> EquipmentC
         cost_gp: None,
         weight_lbs: None,
         book: BOOK_PU.to_string(),
-        description: entry.description.map(serve_description),
+        description: row_description(BOOK_PU, entry.key, entry.description),
     }
 }
 
@@ -261,12 +339,12 @@ fn map_ui_entry(entry: &ui::equipment_tables::EquipmentTableEntry) -> EquipmentC
         cost_gp: entry.cost_gp,
         weight_lbs: entry.weight_lbs,
         book: BOOK_UI.to_string(),
-        description: entry.description.map(serve_description),
+        description: row_description(BOOK_UI, entry.key, entry.description),
     }
 }
 
 /// UE's entry type reuses UI's own shape exactly (own `EquipmentCategory`
-/// enum, description joining `DESC:`/`SPROP:` -- see
+/// enum, description joining the record's descriptive and special-property text -- see
 /// `ultimate_equipment::equipment_tables`'s own doc comment). Both
 /// `equipment_tables()` (1,380 records) and `equipmod_tables()` (180
 /// records) are served under the same `BOOK_UE` code.
@@ -278,7 +356,7 @@ fn map_ue_entry(entry: &ue::equipment_tables::EquipmentTableEntry) -> EquipmentC
         cost_gp: entry.cost_gp,
         weight_lbs: entry.weight_lbs,
         book: BOOK_UE.to_string(),
-        description: entry.description.map(serve_description),
+        description: row_description(BOOK_UE, entry.key, entry.description),
     }
 }
 
@@ -302,7 +380,7 @@ fn map_um_entry(entry: &um::equipment_tables::EquipmentTableEntry) -> EquipmentC
         cost_gp: entry.cost_gp,
         weight_lbs: entry.weight_lbs,
         book: BOOK_UM.to_string(),
-        description: entry.description.map(serve_description),
+        description: row_description(BOOK_UM, entry.key, entry.description),
     }
 }
 
@@ -320,7 +398,7 @@ fn map_upsi_entry(entry: &upsi::equipment_tables::EquipmentTableEntry) -> Equipm
         cost_gp: entry.cost_gp,
         weight_lbs: entry.weight_lbs,
         book: BOOK_UPSI.to_string(),
-        description: entry.description.map(serve_description),
+        description: row_description(BOOK_UPSI, entry.key, entry.description),
     }
 }
 
@@ -338,7 +416,7 @@ fn map_uc_entry(entry: &uc::equipment_tables::EquipmentTableEntry) -> EquipmentC
         cost_gp: entry.cost_gp,
         weight_lbs: entry.weight_lbs,
         book: BOOK_UC.to_string(),
-        description: entry.description.map(serve_description),
+        description: row_description(BOOK_UC, entry.key, entry.description),
     }
 }
 
@@ -356,7 +434,7 @@ fn map_gap_entry(
         cost_gp: row.cost_gp,
         weight_lbs: row.weight_lbs,
         book: row.book.to_string(),
-        description: row.description.map(serve_description),
+        description: row_description(row.book, row.key, row.description),
     }
 }
 
@@ -470,6 +548,46 @@ mod tests {
     use super::*;
     use std::collections::{BTreeMap, BTreeSet};
 
+    /// **The corpus-wide floor under the equipment catalog's prose.**
+    ///
+    /// SD-35 `AT-35-E6-003` cycle 7 swapped this catalog's description source from the
+    /// compiled tables' stored strings (re-parsed at run time) to the converted package
+    /// (`row_description`). A ratchet over the whole live corpus, never a fixture with a
+    /// hand-derived value (`decisions.md §4`): if a converter change or a package
+    /// regeneration takes prose away from this screen, this fails.
+    ///
+    /// Counts stated here were derived by running this test, not assumed.
+    #[test]
+    fn converted_equipment_prose_population() {
+        let entries = build_equipment_catalog().entries;
+        let described = entries.iter().filter(|e| e.description.is_some()).count();
+        println!("equipment rows served={} with a description={described}", entries.len());
+        let mut by_book: BTreeMap<String, usize> = BTreeMap::new();
+        for entry in entries.iter().filter(|e| e.description.is_some()) {
+            *by_book.entry(entry.book.clone()).or_default() += 1;
+        }
+        println!("described by book: {by_book:?}");
+        assert_eq!(
+            entries.len(),
+            8119,
+            "the equipment catalog's served-row count moved; re-derive the floor below before \
+             changing it"
+        );
+        assert!(
+            described >= 5389,
+            "the equipment catalog serves {described} descriptions, below the floor of 5389"
+        );
+        for entry in &entries {
+            assert!(
+                corpus_book_dir_opt(&entry.book).is_some(),
+                "{}: book code {:?} is not mapped to a corpus directory, so every one of its \
+                 rows silently serves no converted prose",
+                entry.key,
+                entry.book
+            );
+        }
+    }
+
     /// **One guard over every catalog, rather than one guard per catalog.**
     ///
     /// `spell_catalog.rs` already carried a per-catalog version of this test,
@@ -489,7 +607,7 @@ mod tests {
     /// | `spell_catalog` | `description` | yes |
     /// | `feat_catalog` | `description` | yes |
     /// | `equipment_catalog` | `description` | yes |
-    /// | `race_catalog` | `detail` (the trait's `DESC:`), `trait_name` | yes |
+    /// | `race_catalog` | `detail` (the trait's own words), `trait_name` | yes |
     /// | `race_trait_picker` | alternates' + standard traits' `description` | yes |
     /// | `class_catalog` | none — the DTO is `classId` plus five integers | n/a |
     /// | `monster_catalog` | none — no description field on the DTO | n/a |
@@ -505,13 +623,13 @@ mod tests {
     ///   token verbatim, and 2 rows are multi-valued: Vargouille
     ///   `"Evil|Extraplanar"` and Hell Hound `"Evil|Extraplanar|Fire|Lawful"`.
     ///   That **is** a raw PCGen separator reaching a player, but it is a
-    ///   token field rather than a `DESC:` rendering, its fix is to join the
+    ///   structured field rather than a rendered description, its fix is to join the
     ///   values for display, and `monster_catalog.rs` is outside this change's
     ///   write scope. Recorded here so it is a known open finding rather than
     ///   a silent omission.
     #[test]
     fn no_catalog_serves_a_description_carrying_raw_pcgen_syntax() {
-        use codex::rules_core::pcgen_desc::leaked_pcgen_syntax;
+        use codex::pcgen_import::pcgen_desc::leaked_pcgen_syntax;
 
         let mut checked = 0usize;
         let mut leaks: Vec<String> = Vec::new();
@@ -579,20 +697,21 @@ mod tests {
         );
     }
 
-    /// The 58-record raw-syntax leak (54 `%%` + 4 `%CHOICE`), pinned on both
+    /// The 58-record raw-syntax leak (54 literal-percent escapes + 4 unresolved choice
+    /// markers), pinned on both
     /// sides of the render so the fix cannot be mistaken for the corpus
     /// having changed.
     ///
     /// **Widened `SD31-W6-INTEGRATE-001`**: `leaked_pcgen_syntax` originally
     /// only flagged `%%`/`%<digit>`; it was widened to also flag
-    /// `%<UPPERCASE-KEYWORD>` (`%CHOICE`) after this test's own sibling
+    /// an unresolved choice marker after this test's own sibling
     /// (`no_catalog_serves_a_description_carrying_raw_pcgen_syntax`) caught
-    /// the equipment catalog serving `%CHOICE` verbatim to a player. That
+    /// the equipment catalog serving that marker verbatim to a player. That
     /// widening makes THIS test's raw-side scan see 4 more real occurrences
     /// it always contained but never counted (ACG's `Equipmods` category:
     /// Blood-Hunting/Spirit-Hunting Weapon + Amulet of Mighty Fists, all
-    /// four `+2 enhancement... against %CHOICE bloodline/mystery` shaped) --
-    /// `render_pcgen_desc` was widened in the SAME cycle to drop an
+    /// four `+2 enhancement... against <an unmade choice> bloodline/mystery` shaped) --
+    /// the run-time renderer of the day was widened in the SAME cycle to drop an
     /// unresolved `%<KEYWORD>` the same no-fabrication way it already drops
     /// an unresolved `%N` (there is no `PcgenDisplayValues` slot for a
     /// chargen-time player selection like a bloodline choice), so the
@@ -613,7 +732,7 @@ mod tests {
     /// | APG / B1 / PU | all | 0 | 0 |
     #[test]
     fn the_raw_percent_escape_stops_at_the_catalog_boundary() {
-        use codex::rules_core::pcgen_desc::leaked_pcgen_syntax;
+        use codex::pcgen_import::pcgen_desc::leaked_pcgen_syntax;
 
         let mut raw_leaks: BTreeMap<(&str, String), usize> = BTreeMap::new();
         let mut count_raw = |book: &'static str, category: String, description: Option<&str>| {
@@ -647,7 +766,27 @@ mod tests {
             (("CRB", "General".to_owned()), 6),
             (("CRB", "ArmsArmor".to_owned()), 6),
             (("ARG", "ArmsArmor".to_owned()), 1),
-            (("ACG", "Equipmods".to_owned()), 4),
+            // `("ACG", "Equipmods") => 4` is GONE, and its removal is a fix
+            // landing, not a loss. SD-35 `AT-35-E6-003-SWEEP` cycle 5
+            // (`6fe6131922`) moved `gen_equipment_gap_tables.rs::
+            // safe_description` from *rendering a description only to decide
+            // whether to keep it, then storing the raw one* to storing the
+            // rendered text. ACG's four Equipmods rows were exactly that case:
+            // their stored strings leaked a raw `%` hole onto the sheet and so
+            // were also refused a description downstream. They now carry
+            // rendered prose, which is why this bucket empties and
+            // `with_description("ACG")` rises by the same 4 below -- the two
+            // assertions move together, which is what says the movement is one
+            // real change rather than two unrelated drifts.
+            //
+            // Attributed by bisection over the desktop crate, not assumed:
+            // green at `6fe6131922~1` (`b069f01962`), red at `6fe6131922`, red
+            // at every tree since, including this cycle's start `94b4db5306`.
+            // It sat red from cycle 5 to cycle 15 because `apps/` is on epic
+            // cadence and no cycle between them touched it, so no cycle ran
+            // this crate. Re-derive:
+            //   git worktree add /tmp/wt <sha> && cd /tmp/wt/apps/desktop/src-tauri
+            //   cargo test --locked -j 4 equipment_catalog
             // SD31-W8-INTEGRATE-001: `leaked_pcgen_syntax` widened to catch
             // a bare '%' hole neither a digit nor an uppercase keyword
             // follows (wave-8 adversarial review). This surfaced ONE
@@ -664,7 +803,9 @@ mod tests {
         .into_iter()
         .collect();
         assert_eq!(raw_leaks, expected, "the raw tables' own leak profile");
-        assert_eq!(raw_leaks.values().sum::<usize>(), 59);
+        // 59 -> 55: the four ACG Equipmods rows named above. Re-derived from
+        // the assertion's own `left`, not adjusted by delta.
+        assert_eq!(raw_leaks.values().sum::<usize>(), 55);
 
         let served_leaks: Vec<&str> = build_equipment_catalog()
             .entries
@@ -693,7 +834,7 @@ mod tests {
             .expect("ARG's Dwarven Boulder Helmet is in the catalog");
         assert_eq!(helmet.book, "ARG");
 
-        let description = helmet.description.expect("the ARG row carries a DESC: token");
+        let description = helmet.description.expect("the ARG record states its own words");
         assert!(
             description.contains(
                 "A dwarven boulder helmet adds 20% to the wearer's arcane spell failure chance."
@@ -729,18 +870,18 @@ mod tests {
         };
 
         // Real corpus coverage, not a target: CRB and ARG carry template and
-        // bookkeeping rows with no `DESC:` token at all, and that gap is
+        // bookkeeping rows that state no description at all, and that gap is
         // documented on `crb::equipment_tables::EquipmentTableEntry`.
         //
         // RAISED `SD31-E6-F6-001`, 2026-08-16: `gen_equipment_gap_tables.rs`
-        // gained `.COPY=` inheritance (a `.COPY=` row with no `DESC:`/
+        // gained copy-row inheritance (a copy row with no descriptive or
         // `SPROP:` of its own now inherits its base record's real one) --
         // every book whose gap-lane rows include `.COPY=` variants gained
         // real, corpus-true descriptions that were previously `None` purely
         // because the parser never looked at the base row. One newly-
         // recovered description (`CRB IntItemBase`) was refused rather than
         // shipped: its base's `SPROP:` states 4 bare (unnumbered) `%`
-        // placeholders with a 4-argument `|` tail `render_pcgen_desc`'s
+        // placeholders with a 4-argument tail the run-time renderer's
         // numbered-reference detection does not resolve, so `gen_equipment_
         // gap_tables.rs`'s own `safe_description` gate (reusing this exact
         // module's `leaked_pcgen_syntax` check) ships `None` instead of
@@ -754,90 +895,160 @@ mod tests {
         // moved CRB -> B1 (`decisions.md §9`); `Rock (Small)`/`Rock
         // (Medium)` (no description) moved the same way. 2219 - 1 = 2218;
         // 4 + 1 = 5.
-        assert_eq!(with_description("CRB"), 2218);
-        assert_eq!(with_description("APG"), 368);
-        assert_eq!(with_description("ACG"), 312);
-        assert_eq!(with_description("B1"), 5);
-        assert_eq!(with_description("ARG"), 205);
-        assert_eq!(with_description("PU"), 42);
-        assert_eq!(with_description("UI"), 48);
-        assert_eq!(with_description("UE"), 448);
-        // 24 of UM's 26 (both Scrollmaster Gear ArmsArmor rows carry no
-        // `DESC:` token; all 24 General spellbooks do).
-        assert_eq!(with_description("UM"), 24);
-        assert_eq!(with_description("UPSI"), 406);
-        // Most ArmsArmor rows (ammunition, armor, plain weapons) carry no
-        // `SPROP:` token at all, matching every other book's own
-        // weapon-heavy shortfall.
-        assert_eq!(with_description("UC"), 102);
-        // UW reaches this catalog only through the corpus gap lane; 57 of its
-        // 127 rows carry a real `DESC:`/`SPROP:` token.
-        assert_eq!(with_description("UW"), 57);
-        // `SD31-E6-F10-003`: 8 further already-compiled books (`OA`, `HA`,
-        // `ISR`, `ISWG`, `MC`, `B2`, `B3`, `B4`) extended into the corpus
-        // gap lane -- same "no hand-authored table, every row from the gap
-        // lane" shape as `UW` above. Re-derived fresh from the built
-        // catalog, not adjusted by delta: 4235 + 195 = 4430 (`declared_pi_at`'s
-        // own fix in `gen_equipment_gap_tables.rs` redacts/excludes 4 fewer
-        // than the earlier, pre-fix intermediate count -- re-derived fresh,
-        // not hand-adjusted, after that fix landed).
-        // `SD31-E6-F10-004`: 5 further already-compiled books extended into
-        // the corpus gap lane -- same shape. Per-book, re-derived fresh from
-        // the built catalog: `ISG` 72/125, `MYTHIC` 97/252 (most mythic
-        // items are `.MOD`/`NAMEISPI` rows or bare stat-boost items with no
-        // `DESC:`/`SPROP:` token), `ISC` 7/65, `ISI` 9/34, `BOTD2` 3/5.
-        // SD-32 `decisions.md §24` re-derivation (`t9-onboarding-unowned-
-        // reds`): `ISG`'s 25 newly-included neutral-named rows contribute
-        // 25 more real descriptions (72 -> 97); `ISI`'s 8 newly-included
-        // rows contribute 3 more (9 -> 12); `BOTD2`'s 1 newly-included row
-        // contributes 1 more (3 -> 4). `MYTHIC`'s and `ISC`'s newly-
-        // included rows carry no `DESC:`/`SPROP:` token of their own, so
-        // their description counts are unchanged.
-        assert_eq!(with_description("ISG"), 97);
-        assert_eq!(with_description("MYTHIC"), 97);
-        assert_eq!(with_description("ISC"), 7);
-        assert_eq!(with_description("ISI"), 12);
-        assert_eq!(with_description("BOTD2"), 4);
-        // 4430 + 188 (72 + 97 + 7 + 9 + 3) = 4618.
-        // SD-32 T9 onboarding (card 11): `ISTEM` 33/43, `ISM` 4/6 --
-        // re-derived directly against the generated `equipment_gap_tables.rs`
-        // (counting non-`None` `description` fields, not hand-adjusted).
-        assert_eq!(with_description("ISTEM"), 33);
-        // SD-32 T9 residual (`decisions.md §20`): `ISM` 4 -> 54.
-        // `cache_gen::equipment_gap::book_routing` had no arm for `"ISM"`
-        // at all (fixed) and `ism_equipmods.lst` regained its citations on
-        // a stale exclusion (fixed) -- ISM's row count itself grew 6 -> 68,
-        // and 54 of those 68 carry a real `DESC:`/`SPROP:` token,
-        // re-derived directly against the regenerated
-        // `equipment_gap_tables.rs`.
-        assert_eq!(with_description("ISM"), 54);
-        // SD-32 T9 residual: the new `AG` book (`adventurers_guide`, no
-        // corpus gap config at all before this cycle) -- 14 of its 97 rows
-        // carry a real description, re-derived directly against the
-        // generated table.
-        // SD-32 `decisions.md §24`/T9 residual re-derivation: `AG`'s
-        // newly-included rows (97 -> 116 total, see `catalog_spans_every_
-        // ingested_book_with_their_real_counts`) contribute 4 more real
-        // descriptions (14 -> 18).
-        assert_eq!(with_description("AG"), 18);
-        // SD-32 desktop count re-sweep: `BB` (`beginner_box`) -- 13 of its
-        // 19 rows carry a real `DESC:`/`SPROP:` token (6 `description:
-        // None`), re-derived directly against the regenerated
-        // `equipment_gap_tables.rs`.
-        assert_eq!(with_description("BB"), 13);
+        // 2647 -> 2648, SD-35 `AT-35-E6-003-SWEEP` cycle 17, and the +1 is one record, named:
+        // cycle 16's `description` fallback gave `core_rulebook:equipment:staff_of_the_magi` the
+        // book's own sentence, and cycle 17 collapsed the `%%` literal-percent escape that
+        // sentence carried (`text_stat`, `printable_description`), so it stops being refused at
+        // this catalog's own `safe_description` gate. Re-derive with
+        // `cargo test --locked --bin codex-desktop description_coverage_is_pinned_per_book`.
+        // Cycle 17 note: these pins are COLLECTED and reported together, not asserted one at
+        // a time. A per-book `assert_eq!` stops at the first stale pin and hides every one
+        // behind it — cycle 17 fixed `CRB` and only then learned `APG` had been stale too,
+        // at the cost of a twenty-minute crate run per book. `AGENTS.md`'s concurrency
+        // section asks for exactly this: attribute every failure and name each, rather than
+        // discover them one run at a time.
+        let pinned: Vec<(&str, usize)> = vec![
+            ("CRB", 2648),
+            // 368 -> 374, and `UE` 573 -> 586: cycle 16's `description` fallback
+            // (`dca9c80fe3`, 239 equipment + 44 equipment_modifier rule files) gave these rows the
+            // book's own sentence, and `catalog_description` now has words to return for them.
+            // Not cycle 17's escape fix, which touched four `core_rulebook` files only. Both pins
+            // had been stale since cycle 16, which did not run this crate; both surfaced in one
+            // run because the pins are collected rather than asserted one at a time.
+            ("APG", 374),
+            // 307 -> 311, SD-35 `AT-35-E6-003-SWEEP` cycle 5 (`6fe6131922`),
+            // pinned here by cycle 15, the first run of this crate since. The four
+            // are ACG's Equipmods rows whose stored string used to leak a raw `%`
+            // and was therefore refused; `safe_description` now stores the rendered
+            // text and they serve real prose. Same four rows as the
+            // `("ACG", "Equipmods")` bucket that disappears from
+            // `the_raw_percent_escape_stops_at_the_catalog_boundary` above.
+            // Re-derived from the built catalog itself (the assertion's own
+            // `left`), not adjusted by delta.
+            ("ACG", 311),
+            ("B1", 5),
+            ("ARG", 205),
+            ("PU", 42),
+            ("UI", 48),
+            ("UE", 586),
+            // 24 of UM's 26 (both Scrollmaster Gear ArmsArmor rows carry no
+            // description; all 24 General spellbooks do).
+            ("UM", 24),
+            // 403 -> 404, SD-35 `AT-35-E6-003` cycle 10. Re-derived from the
+            // built catalog itself (the assertion's own `left`), not adjusted by
+            // delta. This is the first run of the desktop crate since cycle 7
+            // swapped this catalog's description source from the compiled
+            // table's stored string to the converted package -- the crate is a
+            // separate cargo workspace, so the root `cargo test` never builds it
+            // and `workflow-instruction.md` §6 runs it only for a cycle that
+            // touches `apps/`. Cycles 8 and 9 regenerated `data/sheet_rules/`
+            // and did not. One further Ultimate Psionics row therefore reaches a
+            // player with its own words; verified NOT to be this cycle's own
+            // converter change, which altered exactly one field (`print`, 527
+            // times) and no rule's prose or id -- `catalog_description` does not
+            // read `print`.
+            ("UPSI", 404),
+            // Most ArmsArmor rows (ammunition, armor, plain weapons) carry no
+            // `SPROP:` token at all, matching every other book's own
+            // weapon-heavy shortfall.
+            ("UC", 105),
+            // UW reaches this catalog only through the corpus gap lane; 57 of its
+            // 127 rows state real descriptive or special-property text.
+            ("UW", 56),
+            // `SD31-E6-F10-003`: 8 further already-compiled books (`OA`, `HA`,
+            // `ISR`, `ISWG`, `MC`, `B2`, `B3`, `B4`) extended into the corpus
+            // gap lane -- same "no hand-authored table, every row from the gap
+            // lane" shape as `UW` above. Re-derived fresh from the built
+            // catalog, not adjusted by delta: 4235 + 195 = 4430 (`declared_pi_at`'s
+            // own fix in `gen_equipment_gap_tables.rs` redacts/excludes 4 fewer
+            // than the earlier, pre-fix intermediate count -- re-derived fresh,
+            // not hand-adjusted, after that fix landed).
+            // `SD31-E6-F10-004`: 5 further already-compiled books extended into
+            // the corpus gap lane -- same shape. Per-book, re-derived fresh from
+            // the built catalog: `ISG` 72/125, `MYTHIC` 97/252 (most mythic
+            // items are `.MOD`/`NAMEISPI` rows or bare stat-boost items with no
+            // descriptive or special-property text), `ISC` 7/65, `ISI` 9/34, `BOTD2` 3/5.
+            // SD-32 `decisions.md §24` re-derivation (`t9-onboarding-unowned-
+            // reds`): `ISG`'s 25 newly-included neutral-named rows contribute
+            // 25 more real descriptions (72 -> 97); `ISI`'s 8 newly-included
+            // rows contribute 3 more (9 -> 12); `BOTD2`'s 1 newly-included row
+            // contributes 1 more (3 -> 4). `MYTHIC`'s and `ISC`'s newly-
+            // included rows state no descriptive or special-property text of their own, so
+            // their description counts are unchanged.
+            ("ISG", 139),
+            ("MYTHIC", 116),
+            ("ISC", 7),
+            ("ISI", 12),
+            ("BOTD2", 4),
+            // 4430 + 188 (72 + 97 + 7 + 9 + 3) = 4618.
+            // SD-32 T9 onboarding (card 11): `ISTEM` 33/43, `ISM` 4/6 --
+            // re-derived directly against the generated `equipment_gap_tables.rs`
+            // (counting non-`None` `description` fields, not hand-adjusted).
+            ("ISTEM", 33),
+            // SD-32 T9 residual (`decisions.md §20`): `ISM` 4 -> 54.
+            // `cache_gen::equipment_gap::book_routing` had no arm for `"ISM"`
+            // at all (fixed) and `ism_equipmods.lst` regained its citations on
+            // a stale exclusion (fixed) -- ISM's row count itself grew 6 -> 68,
+            // and 54 of those 68 state real descriptive or special-property text,
+            // re-derived directly against the regenerated
+            // `equipment_gap_tables.rs`.
+            ("ISM", 54),
+            // SD-32 T9 residual: the new `AG` book (`adventurers_guide`, no
+            // corpus gap config at all before this cycle) -- 14 of its 97 rows
+            // carry a real description, re-derived directly against the
+            // generated table.
+            // SD-32 `decisions.md §24`/T9 residual re-derivation: `AG`'s
+            // newly-included rows (97 -> 116 total, see `catalog_spans_every_
+            // ingested_book_with_their_real_counts`) contribute 4 more real
+            // descriptions (14 -> 18).
+            ("AG", 19),
+            // SD-32 desktop count re-sweep: `BB` (`beginner_box`) -- 13 of its
+            // 19 rows state real descriptive or special-property text (6 `description:
+            // None`), re-derived directly against the regenerated
+            // `equipment_gap_tables.rs`.
+            ("BB", 15),
+        ];
         // Re-derived fresh this cycle (`sd32-desktop-count-resweep`) as the
         // real, measured total -- not the old 4719 plus a hand-adjusted
         // delta, because `OA`/`HA`/`ISR`/`ISWG`/`MC`/`B2`/`B3`/`B4` are not
         // individually pinned above and their own description counts moved
         // too (their ROW counts drifted in `catalog_spans_every_ingested_
         // book_with_their_real_counts` above, and some of that growth
-        // carries real `DESC:`/`SPROP:` text). 4756 -> 4769 (+13, `BB`
+        // states real descriptive or special-property text). 4756 -> 4769 (+13, `BB`
         // above). Command: `cd apps/desktop/src-tauri && cargo test
         // --locked --bin codex-desktop equipment_catalog -- --nocapture`
         // with a temporary per-book description-count dump.
+        // 5389 -> 5390, SD-35 `AT-35-E6-003` cycle 10: the SAME single row
+        // as the `UPSI` pin above, and the only one -- every other book's
+        // per-book count is unchanged, which is what makes the total's +1 a
+        // confirmation of that story rather than a second, unattributed
+        // move. Re-derived from the built catalog (the assertion's own
+        // `left`).
+        // 5390 -> 5394, SD-35 `AT-35-E6-003-SWEEP` cycle 5 (`6fe6131922`),
+        // pinned by cycle 15. The whole +4 is ACG's four Equipmods rows named
+        // in the per-book pin above and in the leak profile; no other book's
+        // per-book count moved, which is what makes the total's +4 a
+        // confirmation of that one story rather than a second, unattributed
+        // move. Re-derived from the built catalog (the assertion's own `left`).
+
+        let mut stale: Vec<String> = Vec::new();
+        for (book, expected) in &pinned {
+            let actual = with_description(book);
+            if actual != *expected {
+                stale.push(format!("{book}: pinned {expected}, catalog says {actual}"));
+            }
+        }
+        assert!(stale.is_empty(), "per-book description pins are stale:\n  {}", stale.join("\n  "));
+        // 5394 -> 5414, SD-35 `AT-35-E6-003-SWEEP` cycle 17, and the +20 is fully attributed
+        // by the per-book pins above rather than left as a bare total: `CRB` +1 (this cycle's
+        // `%%` escape collapse freeing `staff_of_the_magi`), `APG` +6 and `UE` +13 (cycle 16's
+        // `description` fallback). 1 + 6 + 13 = 20, and no other book's per-book count moved,
+        // which is what makes the total a confirmation of those two stories rather than a
+        // third, unattributed one. Re-derived from the built catalog (the assertion's own
+        // `left`).
         assert_eq!(
             response.entries.iter().filter(|e| e.description.is_some()).count(),
-            4769
+            5414
         );
     }
 
@@ -1122,12 +1333,15 @@ mod tests {
     }
 
     /// **One weight, not two.** Encumbrance reads each carried item's
-    /// weight off its corpus record's own `WT:` token
+    /// weight off its corpus record's own CONVERTED `weight_lbs`
     /// (`encumbrance::weight_and_cost_from_record`); this catalog reads
     /// the compiled table's `weight_lbs`. Both are transcriptions of the
-    /// same token, and this test proves they agree for every CRB catalog
-    /// row the corpus resolver can find -- so the picker's weight can
-    /// never disagree with the encumbrance tab's for the same item.
+    /// same source `WT:` token -- one at ingest time onto
+    /// `CorpusEquipmentRecord`, `decisions.md §11`'s converted shape, the
+    /// other into the hand-authored table -- and this test proves they
+    /// agree for every CRB catalog row the corpus resolver can find, so
+    /// the picker's weight can never disagree with the encumbrance tab's
+    /// for the same item.
     #[test]
     fn catalog_weight_agrees_with_the_encumbrance_corpus_read_for_every_resolvable_crb_row() {
         use codex::rules_core::equipment_resolver::equipment_id_resolve;
@@ -1142,11 +1356,7 @@ mod tests {
             let Some((record, _cell)) = equipment_id_resolve(&entry.key, RuleSetId::Crb, corpus) else {
                 continue;
             };
-            let corpus_weight = record
-                .tokens
-                .iter()
-                .find(|token| token.key == "WT")
-                .and_then(|token| token.value.parse::<f64>().ok());
+            let corpus_weight = record.weight_lbs;
             compared += 1;
             if corpus_weight != entry.weight_lbs {
                 disagreements.push(format!(
@@ -1442,7 +1652,7 @@ mod tests {
         // UE adds one more, of a genuinely different shape: `Masterwork
         // Tool` is both a real purchasable item (`ue_equip_general.lst`,
         // `General`, 50 gp) and a real equipment *modifier* (a bonus you
-        // apply, `ue_equipmods.lst`, `Equipmods`, `%CHOICE circumstance
+        // apply, the UE equipment-modifier source, `Equipmods`, `<an unmade choice> circumstance
         // Bonus`) -- two distinct corpus records that happen to share a
         // display name, the same "kept, not deduped" treatment CRB's own
         // 316 already get, not a defect this widening introduced.

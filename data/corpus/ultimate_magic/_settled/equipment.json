@@ -1,0 +1,979 @@
+{
+  "kind": "equipment",
+  "records": {
+    "arctic_call.json": {
+      "record": {
+        "ability_score_bonus": null,
+        "armor_class_chain_bonus": null,
+        "base_damage_dice": null,
+        "base_item": null,
+        "cost_gp": 5985.0,
+        "critical_multiplier": null,
+        "critical_threat_range": null,
+        "damage_size_steps": 0,
+        "eqmod_references": [],
+        "identity": "Arctic Call",
+        "intelligent_item": null,
+        "is_modifier": false,
+        "is_natural_attack": false,
+        "is_shield": false,
+        "name": "Arctic Call",
+        "skill_check_bonus": null,
+        "spell_resistance_bonus": null,
+        "stat_effect": {
+          "armor_check_penalty": null,
+          "armor_class_bonus": null,
+          "max_dex": null,
+          "spell_failure": null
+        },
+        "states_base_damage": false,
+        "var_bonuses": [],
+        "weapon_enhancement": null,
+        "weight_divisor": null,
+        "weight_lbs": 6.0,
+        "wield_category": null
+      },
+      "source_ref": {
+        "line": 1,
+        "lst_file": ""
+      }
+    },
+    "book_of_harms.json": {
+      "record": {
+        "ability_score_bonus": null,
+        "armor_class_chain_bonus": null,
+        "base_damage_dice": null,
+        "base_item": null,
+        "cost_gp": 900.0,
+        "critical_multiplier": null,
+        "critical_threat_range": null,
+        "damage_size_steps": 0,
+        "eqmod_references": [],
+        "identity": "Book of Harms",
+        "intelligent_item": null,
+        "is_modifier": false,
+        "is_natural_attack": false,
+        "is_shield": false,
+        "name": "Book of Harms",
+        "skill_check_bonus": null,
+        "spell_resistance_bonus": null,
+        "stat_effect": {
+          "armor_check_penalty": null,
+          "armor_class_bonus": null,
+          "max_dex": null,
+          "spell_failure": null
+        },
+        "states_base_damage": false,
+        "var_bonuses": [],
+        "weapon_enhancement": null,
+        "weight_divisor": null,
+        "weight_lbs": null,
+        "wield_category": null
+      },
+      "source_ref": {
+        "line": 1,
+        "lst_file": ""
+      }
+    },
+    "book_of_the_grave.json": {
+      "record": {
+        "ability_score_bonus": null,
+        "armor_class_chain_bonus": null,
+        "base_damage_dice": null,
+        "base_item": null,
+        "cost_gp": 1265.0,
+        "critical_multiplier": null,
+        "critical_threat_range": null,
+        "damage_size_steps": 0,
+        "eqmod_references": [],
+        "identity": "Book of the Grave",
+        "intelligent_item": null,
+        "is_modifier": false,
+        "is_natural_attack": false,
+        "is_shield": false,
+        "name": "Book of the Grave",
+        "skill_check_bonus": null,
+        "spell_resistance_bonus": null,
+        "stat_effect": {
+          "armor_check_penalty": null,
+          "armor_class_bonus": null,
+          "max_dex": null,
+          "spell_failure": null
+        },
+        "states_base_damage": false,
+        "var_bonuses": [],
+        "weapon_enhancement": null,
+        "weight_divisor": null,
+        "weight_lbs": null,
+        "wield_category": null
+      },
+      "source_ref": {
+        "line": 1,
+        "lst_file": ""
+      }
+    },
+    "chymist_s_guidebook.json": {
+      "record": {
+        "ability_score_bonus": null,
+        "armor_class_chain_bonus": null,
+        "base_damage_dice": null,
+        "base_item": null,
+        "cost_gp": 2545.0,
+        "critical_multiplier": null,
+        "critical_threat_range": null,
+        "damage_size_steps": 0,
+        "eqmod_references": [],
+        "identity": "Chymist's Guidebook",
+        "intelligent_item": null,
+        "is_modifier": false,
+        "is_natural_attack": false,
+        "is_shield": false,
+        "name": "Chymist's Guidebook",
+        "skill_check_bonus": null,
+        "spell_resistance_bonus": null,
+        "stat_effect": {
+          "armor_check_penalty": null,
+          "armor_class_bonus": null,
+          "max_dex": null,
+          "spell_failure": null
+        },
+        "states_base_damage": false,
+        "var_bonuses": [],
+        "weapon_enhancement": null,
+        "weight_divisor": null,
+        "weight_lbs": null,
+        "wield_category": null
+      },
+      "source_ref": {
+        "line": 1,
+        "lst_file": ""
+      }
+    },
+    "codex_named_unit_equipment_ultimate_magic_um_equip_general_lst_13.json": {
+      "record": {
+        "ability_score_bonus": null,
+        "armor_class_chain_bonus": null,
+        "base_damage_dice": null,
+        "base_item": null,
+        "cost_gp": 195.0,
+        "critical_multiplier": null,
+        "critical_threat_range": null,
+        "damage_size_steps": 0,
+        "eqmod_references": [],
+        "identity": "Codex-Named Unit (equipment_ultimate_magic_um_equip_general_lst_13)",
+        "intelligent_item": null,
+        "is_modifier": false,
+        "is_natural_attack": false,
+        "is_shield": false,
+        "name": "Codex-Named Unit (equipment_ultimate_magic_um_equip_general_lst_13)",
+        "skill_check_bonus": null,
+        "spell_resistance_bonus": null,
+        "stat_effect": {
+          "armor_check_penalty": null,
+          "armor_class_bonus": null,
+          "max_dex": null,
+          "spell_failure": null
+        },
+        "states_base_damage": false,
+        "var_bonuses": [],
+        "weapon_enhancement": null,
+        "weight_divisor": null,
+        "weight_lbs": null,
+        "wield_category": null
+      },
+      "source_ref": {
+        "line": 1,
+        "lst_file": ""
+      }
+    },
+    "codex_named_unit_equipment_ultimate_magic_um_equip_general_lst_17.json": {
+      "record": {
+        "ability_score_bonus": null,
+        "armor_class_chain_bonus": null,
+        "base_damage_dice": null,
+        "base_item": null,
+        "cost_gp": 770.0,
+        "critical_multiplier": null,
+        "critical_threat_range": null,
+        "damage_size_steps": 0,
+        "eqmod_references": [],
+        "identity": "Codex-Named Unit (equipment_ultimate_magic_um_equip_general_lst_17)",
+        "intelligent_item": null,
+        "is_modifier": false,
+        "is_natural_attack": false,
+        "is_shield": false,
+        "name": "Codex-Named Unit (equipment_ultimate_magic_um_equip_general_lst_17)",
+        "skill_check_bonus": null,
+        "spell_resistance_bonus": null,
+        "stat_effect": {
+          "armor_check_penalty": null,
+          "armor_class_bonus": null,
+          "max_dex": null,
+          "spell_failure": null
+        },
+        "states_base_damage": false,
+        "var_bonuses": [],
+        "weapon_enhancement": null,
+        "weight_divisor": null,
+        "weight_lbs": null,
+        "wield_category": null
+      },
+      "source_ref": {
+        "line": 1,
+        "lst_file": ""
+      }
+    },
+    "codex_named_unit_equipment_ultimate_magic_um_equip_general_lst_21.json": {
+      "record": {
+        "ability_score_bonus": null,
+        "armor_class_chain_bonus": null,
+        "base_damage_dice": null,
+        "base_item": null,
+        "cost_gp": 3320.0,
+        "critical_multiplier": null,
+        "critical_threat_range": null,
+        "damage_size_steps": 0,
+        "eqmod_references": [],
+        "identity": "Codex-Named Unit (equipment_ultimate_magic_um_equip_general_lst_21)",
+        "intelligent_item": null,
+        "is_modifier": false,
+        "is_natural_attack": false,
+        "is_shield": false,
+        "name": "Codex-Named Unit (equipment_ultimate_magic_um_equip_general_lst_21)",
+        "skill_check_bonus": null,
+        "spell_resistance_bonus": null,
+        "stat_effect": {
+          "armor_check_penalty": null,
+          "armor_class_bonus": null,
+          "max_dex": null,
+          "spell_failure": null
+        },
+        "states_base_damage": false,
+        "var_bonuses": [],
+        "weapon_enhancement": null,
+        "weight_divisor": null,
+        "weight_lbs": null,
+        "wield_category": null
+      },
+      "source_ref": {
+        "line": 1,
+        "lst_file": ""
+      }
+    },
+    "codex_named_unit_equipment_ultimate_magic_um_equip_general_lst_23.json": {
+      "record": {
+        "ability_score_bonus": null,
+        "armor_class_chain_bonus": null,
+        "base_damage_dice": null,
+        "base_item": null,
+        "cost_gp": 2835.0,
+        "critical_multiplier": null,
+        "critical_threat_range": null,
+        "damage_size_steps": 0,
+        "eqmod_references": [],
+        "identity": "Codex-Named Unit (equipment_ultimate_magic_um_equip_general_lst_23)",
+        "intelligent_item": null,
+        "is_modifier": false,
+        "is_natural_attack": false,
+        "is_shield": false,
+        "name": "Codex-Named Unit (equipment_ultimate_magic_um_equip_general_lst_23)",
+        "skill_check_bonus": null,
+        "spell_resistance_bonus": null,
+        "stat_effect": {
+          "armor_check_penalty": null,
+          "armor_class_bonus": null,
+          "max_dex": null,
+          "spell_failure": null
+        },
+        "states_base_damage": false,
+        "var_bonuses": [],
+        "weapon_enhancement": null,
+        "weight_divisor": null,
+        "weight_lbs": null,
+        "wield_category": null
+      },
+      "source_ref": {
+        "line": 1,
+        "lst_file": ""
+      }
+    },
+    "codex_named_unit_equipment_ultimate_magic_um_equip_general_lst_25.json": {
+      "record": {
+        "ability_score_bonus": null,
+        "armor_class_chain_bonus": null,
+        "base_damage_dice": null,
+        "base_item": null,
+        "cost_gp": 6355.0,
+        "critical_multiplier": null,
+        "critical_threat_range": null,
+        "damage_size_steps": 0,
+        "eqmod_references": [],
+        "identity": "Codex-Named Unit (equipment_ultimate_magic_um_equip_general_lst_25)",
+        "intelligent_item": null,
+        "is_modifier": false,
+        "is_natural_attack": false,
+        "is_shield": false,
+        "name": "Codex-Named Unit (equipment_ultimate_magic_um_equip_general_lst_25)",
+        "skill_check_bonus": null,
+        "spell_resistance_bonus": null,
+        "stat_effect": {
+          "armor_check_penalty": null,
+          "armor_class_bonus": null,
+          "max_dex": null,
+          "spell_failure": null
+        },
+        "states_base_damage": false,
+        "var_bonuses": [],
+        "weapon_enhancement": null,
+        "weight_divisor": null,
+        "weight_lbs": 6.0,
+        "wield_category": null
+      },
+      "source_ref": {
+        "line": 1,
+        "lst_file": ""
+      }
+    },
+    "codex_named_unit_equipment_ultimate_magic_um_equip_general_lst_31.json": {
+      "record": {
+        "ability_score_bonus": null,
+        "armor_class_chain_bonus": null,
+        "base_damage_dice": null,
+        "base_item": null,
+        "cost_gp": 16550.0,
+        "critical_multiplier": null,
+        "critical_threat_range": null,
+        "damage_size_steps": 0,
+        "eqmod_references": [],
+        "identity": "Codex-Named Unit (equipment_ultimate_magic_um_equip_general_lst_31)",
+        "intelligent_item": null,
+        "is_modifier": false,
+        "is_natural_attack": false,
+        "is_shield": false,
+        "name": "Codex-Named Unit (equipment_ultimate_magic_um_equip_general_lst_31)",
+        "skill_check_bonus": null,
+        "spell_resistance_bonus": null,
+        "stat_effect": {
+          "armor_check_penalty": null,
+          "armor_class_bonus": null,
+          "max_dex": null,
+          "spell_failure": null
+        },
+        "states_base_damage": false,
+        "var_bonuses": [],
+        "weapon_enhancement": null,
+        "weight_divisor": null,
+        "weight_lbs": 9.0,
+        "wield_category": null
+      },
+      "source_ref": {
+        "line": 1,
+        "lst_file": ""
+      }
+    },
+    "codex_named_unit_equipment_ultimate_magic_um_equip_general_lst_33.json": {
+      "record": {
+        "ability_score_bonus": null,
+        "armor_class_chain_bonus": null,
+        "base_damage_dice": null,
+        "base_item": null,
+        "cost_gp": 20710.0,
+        "critical_multiplier": null,
+        "critical_threat_range": null,
+        "damage_size_steps": 0,
+        "eqmod_references": [],
+        "identity": "Codex-Named Unit (equipment_ultimate_magic_um_equip_general_lst_33)",
+        "intelligent_item": null,
+        "is_modifier": false,
+        "is_natural_attack": false,
+        "is_shield": false,
+        "name": "Codex-Named Unit (equipment_ultimate_magic_um_equip_general_lst_33)",
+        "skill_check_bonus": null,
+        "spell_resistance_bonus": null,
+        "stat_effect": {
+          "armor_check_penalty": null,
+          "armor_class_bonus": null,
+          "max_dex": null,
+          "spell_failure": null
+        },
+        "states_base_damage": false,
+        "var_bonuses": [],
+        "weapon_enhancement": null,
+        "weight_divisor": null,
+        "weight_lbs": 12.0,
+        "wield_category": null
+      },
+      "source_ref": {
+        "line": 1,
+        "lst_file": ""
+      }
+    },
+    "codex_named_unit_equipment_ultimate_magic_um_equip_general_lst_34.json": {
+      "record": {
+        "ability_score_bonus": null,
+        "armor_class_chain_bonus": null,
+        "base_damage_dice": null,
+        "base_item": null,
+        "cost_gp": 11115.0,
+        "critical_multiplier": null,
+        "critical_threat_range": null,
+        "damage_size_steps": 0,
+        "eqmod_references": [],
+        "identity": "Codex-Named Unit (equipment_ultimate_magic_um_equip_general_lst_34)",
+        "intelligent_item": null,
+        "is_modifier": false,
+        "is_natural_attack": false,
+        "is_shield": false,
+        "name": "Codex-Named Unit (equipment_ultimate_magic_um_equip_general_lst_34)",
+        "skill_check_bonus": null,
+        "spell_resistance_bonus": null,
+        "stat_effect": {
+          "armor_check_penalty": null,
+          "armor_class_bonus": null,
+          "max_dex": null,
+          "spell_failure": null
+        },
+        "states_base_damage": false,
+        "var_bonuses": [],
+        "weapon_enhancement": null,
+        "weight_divisor": null,
+        "weight_lbs": 12.0,
+        "wield_category": null
+      },
+      "source_ref": {
+        "line": 1,
+        "lst_file": ""
+      }
+    },
+    "defensive_primer.json": {
+      "record": {
+        "ability_score_bonus": null,
+        "armor_class_chain_bonus": null,
+        "base_damage_dice": null,
+        "base_item": null,
+        "cost_gp": 185.0,
+        "critical_multiplier": null,
+        "critical_threat_range": null,
+        "damage_size_steps": 0,
+        "eqmod_references": [],
+        "identity": "Defensive Primer",
+        "intelligent_item": null,
+        "is_modifier": false,
+        "is_natural_attack": false,
+        "is_shield": false,
+        "name": "Defensive Primer",
+        "skill_check_bonus": null,
+        "spell_resistance_bonus": null,
+        "stat_effect": {
+          "armor_check_penalty": null,
+          "armor_class_bonus": null,
+          "max_dex": null,
+          "spell_failure": null
+        },
+        "states_base_damage": false,
+        "var_bonuses": [],
+        "weapon_enhancement": null,
+        "weight_divisor": null,
+        "weight_lbs": null,
+        "wield_category": null
+      },
+      "source_ref": {
+        "line": 1,
+        "lst_file": ""
+      }
+    },
+    "grandfather_s_legacy.json": {
+      "record": {
+        "ability_score_bonus": null,
+        "armor_class_chain_bonus": null,
+        "base_damage_dice": null,
+        "base_item": null,
+        "cost_gp": 7635.0,
+        "critical_multiplier": null,
+        "critical_threat_range": null,
+        "damage_size_steps": 0,
+        "eqmod_references": [],
+        "identity": "Grandfather's Legacy",
+        "intelligent_item": null,
+        "is_modifier": false,
+        "is_natural_attack": false,
+        "is_shield": false,
+        "name": "Grandfather's Legacy",
+        "skill_check_bonus": null,
+        "spell_resistance_bonus": null,
+        "stat_effect": {
+          "armor_check_penalty": null,
+          "armor_class_bonus": null,
+          "max_dex": null,
+          "spell_failure": null
+        },
+        "states_base_damage": false,
+        "var_bonuses": [],
+        "weapon_enhancement": null,
+        "weight_divisor": null,
+        "weight_lbs": 6.0,
+        "wield_category": null
+      },
+      "source_ref": {
+        "line": 1,
+        "lst_file": ""
+      }
+    },
+    "grimoire_of_glittering_eyes.json": {
+      "record": {
+        "ability_score_bonus": null,
+        "armor_class_chain_bonus": null,
+        "base_damage_dice": null,
+        "base_item": null,
+        "cost_gp": 1755.0,
+        "critical_multiplier": null,
+        "critical_threat_range": null,
+        "damage_size_steps": 0,
+        "eqmod_references": [],
+        "identity": "Grimoire of Glittering Eyes",
+        "intelligent_item": null,
+        "is_modifier": false,
+        "is_natural_attack": false,
+        "is_shield": false,
+        "name": "Grimoire of Glittering Eyes",
+        "skill_check_bonus": null,
+        "spell_resistance_bonus": null,
+        "stat_effect": {
+          "armor_check_penalty": null,
+          "armor_class_bonus": null,
+          "max_dex": null,
+          "spell_failure": null
+        },
+        "states_base_damage": false,
+        "var_bonuses": [],
+        "weapon_enhancement": null,
+        "weight_divisor": null,
+        "weight_lbs": null,
+        "wield_category": null
+      },
+      "source_ref": {
+        "line": 1,
+        "lst_file": ""
+      }
+    },
+    "guardian_grimoire.json": {
+      "record": {
+        "ability_score_bonus": null,
+        "armor_class_chain_bonus": null,
+        "base_damage_dice": null,
+        "base_item": null,
+        "cost_gp": 13055.0,
+        "critical_multiplier": null,
+        "critical_threat_range": null,
+        "damage_size_steps": 0,
+        "eqmod_references": [],
+        "identity": "Guardian Grimoire",
+        "intelligent_item": null,
+        "is_modifier": false,
+        "is_natural_attack": false,
+        "is_shield": false,
+        "name": "Guardian Grimoire",
+        "skill_check_bonus": null,
+        "spell_resistance_bonus": null,
+        "stat_effect": {
+          "armor_check_penalty": null,
+          "armor_class_bonus": null,
+          "max_dex": null,
+          "spell_failure": null
+        },
+        "states_base_damage": false,
+        "var_bonuses": [],
+        "weapon_enhancement": null,
+        "weight_divisor": null,
+        "weight_lbs": 9.0,
+        "wield_category": null
+      },
+      "source_ref": {
+        "line": 1,
+        "lst_file": ""
+      }
+    },
+    "journal_of_the_beast_within.json": {
+      "record": {
+        "ability_score_bonus": null,
+        "armor_class_chain_bonus": null,
+        "base_damage_dice": null,
+        "base_item": null,
+        "cost_gp": 2165.0,
+        "critical_multiplier": null,
+        "critical_threat_range": null,
+        "damage_size_steps": 0,
+        "eqmod_references": [],
+        "identity": "Journal of the Beast Within",
+        "intelligent_item": null,
+        "is_modifier": false,
+        "is_natural_attack": false,
+        "is_shield": false,
+        "name": "Journal of the Beast Within",
+        "skill_check_bonus": null,
+        "spell_resistance_bonus": null,
+        "stat_effect": {
+          "armor_check_penalty": null,
+          "armor_class_bonus": null,
+          "max_dex": null,
+          "spell_failure": null
+        },
+        "states_base_damage": false,
+        "var_bonuses": [],
+        "weapon_enhancement": null,
+        "weight_divisor": null,
+        "weight_lbs": null,
+        "wield_category": null
+      },
+      "source_ref": {
+        "line": 1,
+        "lst_file": ""
+      }
+    },
+    "manual_of_binding.json": {
+      "record": {
+        "ability_score_bonus": null,
+        "armor_class_chain_bonus": null,
+        "base_damage_dice": null,
+        "base_item": null,
+        "cost_gp": 21215.0,
+        "critical_multiplier": null,
+        "critical_threat_range": null,
+        "damage_size_steps": 0,
+        "eqmod_references": [],
+        "identity": "Manual of Binding",
+        "intelligent_item": null,
+        "is_modifier": false,
+        "is_natural_attack": false,
+        "is_shield": false,
+        "name": "Manual of Binding",
+        "skill_check_bonus": null,
+        "spell_resistance_bonus": null,
+        "stat_effect": {
+          "armor_check_penalty": null,
+          "armor_class_bonus": null,
+          "max_dex": null,
+          "spell_failure": null
+        },
+        "states_base_damage": false,
+        "var_bonuses": [],
+        "weapon_enhancement": null,
+        "weight_divisor": null,
+        "weight_lbs": 9.0,
+        "wield_category": null
+      },
+      "source_ref": {
+        "line": 1,
+        "lst_file": ""
+      }
+    },
+    "mastery_of_word_and_thought.json": {
+      "record": {
+        "ability_score_bonus": null,
+        "armor_class_chain_bonus": null,
+        "base_damage_dice": null,
+        "base_item": null,
+        "cost_gp": 27265.0,
+        "critical_multiplier": null,
+        "critical_threat_range": null,
+        "damage_size_steps": 0,
+        "eqmod_references": [],
+        "identity": "Mastery of Word and Thought",
+        "intelligent_item": null,
+        "is_modifier": false,
+        "is_natural_attack": false,
+        "is_shield": false,
+        "name": "Mastery of Word and Thought",
+        "skill_check_bonus": null,
+        "spell_resistance_bonus": null,
+        "stat_effect": {
+          "armor_check_penalty": null,
+          "armor_class_bonus": null,
+          "max_dex": null,
+          "spell_failure": null
+        },
+        "states_base_damage": false,
+        "var_bonuses": [],
+        "weapon_enhancement": null,
+        "weight_divisor": null,
+        "weight_lbs": 12.0,
+        "wield_category": null
+      },
+      "source_ref": {
+        "line": 1,
+        "lst_file": ""
+      }
+    },
+    "mysteries_of_shadow.json": {
+      "record": {
+        "ability_score_bonus": null,
+        "armor_class_chain_bonus": null,
+        "base_damage_dice": null,
+        "base_item": null,
+        "cost_gp": 15065.0,
+        "critical_multiplier": null,
+        "critical_threat_range": null,
+        "damage_size_steps": 0,
+        "eqmod_references": [],
+        "identity": "Mysteries of Shadow",
+        "intelligent_item": null,
+        "is_modifier": false,
+        "is_natural_attack": false,
+        "is_shield": false,
+        "name": "Mysteries of Shadow",
+        "skill_check_bonus": null,
+        "spell_resistance_bonus": null,
+        "stat_effect": {
+          "armor_check_penalty": null,
+          "armor_class_bonus": null,
+          "max_dex": null,
+          "spell_failure": null
+        },
+        "states_base_damage": false,
+        "var_bonuses": [],
+        "weapon_enhancement": null,
+        "weight_divisor": null,
+        "weight_lbs": 9.0,
+        "wield_category": null
+      },
+      "source_ref": {
+        "line": 1,
+        "lst_file": ""
+      }
+    },
+    "quest_eternal.json": {
+      "record": {
+        "ability_score_bonus": null,
+        "armor_class_chain_bonus": null,
+        "base_damage_dice": null,
+        "base_item": null,
+        "cost_gp": 8395.0,
+        "critical_multiplier": null,
+        "critical_threat_range": null,
+        "damage_size_steps": 0,
+        "eqmod_references": [],
+        "identity": "Quest Eternal",
+        "intelligent_item": null,
+        "is_modifier": false,
+        "is_natural_attack": false,
+        "is_shield": false,
+        "name": "Quest Eternal",
+        "skill_check_bonus": null,
+        "spell_resistance_bonus": null,
+        "stat_effect": {
+          "armor_check_penalty": null,
+          "armor_class_bonus": null,
+          "max_dex": null,
+          "spell_failure": null
+        },
+        "states_base_damage": false,
+        "var_bonuses": [],
+        "weapon_enhancement": null,
+        "weight_divisor": null,
+        "weight_lbs": 6.0,
+        "wield_category": null
+      },
+      "source_ref": {
+        "line": 1,
+        "lst_file": ""
+      }
+    },
+    "scroll_blade.json": {
+      "record": {
+        "ability_score_bonus": null,
+        "armor_class_chain_bonus": null,
+        "base_damage_dice": {
+          "count": 1,
+          "die_size": 6
+        },
+        "base_item": null,
+        "cost_gp": 0.0,
+        "critical_multiplier": 2,
+        "critical_threat_range": [
+          19,
+          20
+        ],
+        "damage_size_steps": 0,
+        "eqmod_references": [],
+        "identity": "Scroll Blade",
+        "intelligent_item": null,
+        "is_modifier": false,
+        "is_natural_attack": false,
+        "is_shield": false,
+        "name": "Scroll Blade",
+        "skill_check_bonus": null,
+        "spell_resistance_bonus": null,
+        "stat_effect": {
+          "armor_check_penalty": null,
+          "armor_class_bonus": null,
+          "max_dex": null,
+          "spell_failure": null
+        },
+        "states_base_damage": true,
+        "var_bonuses": [],
+        "weapon_enhancement": null,
+        "weight_divisor": null,
+        "weight_lbs": 0.0,
+        "wield_category": "Light"
+      },
+      "source_ref": {
+        "line": 1,
+        "lst_file": ""
+      }
+    },
+    "scroll_shield.json": {
+      "record": {
+        "ability_score_bonus": null,
+        "armor_class_chain_bonus": 1,
+        "base_damage_dice": {
+          "count": 1,
+          "die_size": 3
+        },
+        "base_item": null,
+        "cost_gp": 0.0,
+        "critical_multiplier": 2,
+        "critical_threat_range": [
+          20,
+          20
+        ],
+        "damage_size_steps": 0,
+        "eqmod_references": [],
+        "identity": "Scroll Shield",
+        "intelligent_item": null,
+        "is_modifier": false,
+        "is_natural_attack": false,
+        "is_shield": true,
+        "name": "Scroll Shield",
+        "skill_check_bonus": null,
+        "spell_resistance_bonus": null,
+        "stat_effect": {
+          "armor_check_penalty": 0,
+          "armor_class_bonus": 1,
+          "max_dex": null,
+          "spell_failure": 0.0
+        },
+        "states_base_damage": true,
+        "var_bonuses": [],
+        "weapon_enhancement": null,
+        "weight_divisor": null,
+        "weight_lbs": 0.0,
+        "wield_category": "Light"
+      },
+      "source_ref": {
+        "line": 1,
+        "lst_file": ""
+      }
+    },
+    "tome_of_the_transmuter.json": {
+      "record": {
+        "ability_score_bonus": null,
+        "armor_class_chain_bonus": null,
+        "base_damage_dice": null,
+        "base_item": null,
+        "cost_gp": 2635.0,
+        "critical_multiplier": null,
+        "critical_threat_range": null,
+        "damage_size_steps": 0,
+        "eqmod_references": [],
+        "identity": "Tome of the Transmuter",
+        "intelligent_item": null,
+        "is_modifier": false,
+        "is_natural_attack": false,
+        "is_shield": false,
+        "name": "Tome of the Transmuter",
+        "skill_check_bonus": null,
+        "spell_resistance_bonus": null,
+        "stat_effect": {
+          "armor_check_penalty": null,
+          "armor_class_bonus": null,
+          "max_dex": null,
+          "spell_failure": null
+        },
+        "states_base_damage": false,
+        "var_bonuses": [],
+        "weapon_enhancement": null,
+        "weight_divisor": null,
+        "weight_lbs": null,
+        "wield_category": null
+      },
+      "source_ref": {
+        "line": 1,
+        "lst_file": ""
+      }
+    },
+    "traveler_s_tome.json": {
+      "record": {
+        "ability_score_bonus": null,
+        "armor_class_chain_bonus": null,
+        "base_damage_dice": null,
+        "base_item": null,
+        "cost_gp": 365.0,
+        "critical_multiplier": null,
+        "critical_threat_range": null,
+        "damage_size_steps": 0,
+        "eqmod_references": [],
+        "identity": "Traveler's Tome",
+        "intelligent_item": null,
+        "is_modifier": false,
+        "is_natural_attack": false,
+        "is_shield": false,
+        "name": "Traveler's Tome",
+        "skill_check_bonus": null,
+        "spell_resistance_bonus": null,
+        "stat_effect": {
+          "armor_check_penalty": null,
+          "armor_class_bonus": null,
+          "max_dex": null,
+          "spell_failure": null
+        },
+        "states_base_damage": false,
+        "var_bonuses": [],
+        "weapon_enhancement": null,
+        "weight_divisor": null,
+        "weight_lbs": null,
+        "wield_category": null
+      },
+      "source_ref": {
+        "line": 1,
+        "lst_file": ""
+      }
+    },
+    "unnamed_journal.json": {
+      "record": {
+        "ability_score_bonus": null,
+        "armor_class_chain_bonus": null,
+        "base_damage_dice": null,
+        "base_item": null,
+        "cost_gp": 275.0,
+        "critical_multiplier": null,
+        "critical_threat_range": null,
+        "damage_size_steps": 0,
+        "eqmod_references": [],
+        "identity": "Unnamed Journal",
+        "intelligent_item": null,
+        "is_modifier": false,
+        "is_natural_attack": false,
+        "is_shield": false,
+        "name": "Unnamed Journal",
+        "skill_check_bonus": null,
+        "spell_resistance_bonus": null,
+        "stat_effect": {
+          "armor_check_penalty": null,
+          "armor_class_bonus": null,
+          "max_dex": null,
+          "spell_failure": null
+        },
+        "states_base_damage": false,
+        "var_bonuses": [],
+        "weapon_enhancement": null,
+        "weight_divisor": null,
+        "weight_lbs": null,
+        "wield_category": null
+      },
+      "source_ref": {
+        "line": 1,
+        "lst_file": ""
+      }
+    }
+  }
+}

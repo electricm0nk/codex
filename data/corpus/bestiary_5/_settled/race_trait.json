@@ -1,0 +1,3684 @@
+{
+  "kind": "race_trait",
+  "records": {
+    "skinwalker/adopted_race_skinwalker.json": {
+      "adopted_race_pool_suffix": "Skinwalker Race Trait",
+      "automatic_trait_grants": [],
+      "category": "Special Ability",
+      "declared_bonuses": {
+        "ability_adjustments": [],
+        "ability_pool_picks": 0,
+        "magnitudes": [],
+        "magnitudes_excluding_flags": [],
+        "only_internal_flags": false,
+        "target_bonuses": [],
+        "var_contributions": []
+      },
+      "declared_size": null,
+      "declared_vision": [],
+      "declared_walk_speed_ft": null,
+      "declares_negated_ability_guard": false,
+      "description": null,
+      "exclusion_guard_flags": [],
+      "is_racial_default": false,
+      "key": "Adopted Race ~ Skinwalker",
+      "name": "Skinwalker",
+      "negated_fact_gates": [],
+      "positive_prefact_flag": null,
+      "race_key": "Skinwalker",
+      "sets_replace_flags": [],
+      "skinwalker_change_shape_kin": null,
+      "source_page": null,
+      "suppressed_by_flag": null,
+      "template_bonus_languages": [],
+      "type_tokens": [
+        "AdoptiveRace"
+      ]
+    },
+    "skinwalker/skinwalker_ability_scores.json": {
+      "adopted_race_pool_suffix": null,
+      "automatic_trait_grants": [],
+      "category": "Special Ability",
+      "declared_bonuses": {
+        "ability_adjustments": [
+          {
+            "codes": "WIS",
+            "magnitude": "2"
+          },
+          {
+            "codes": "INT",
+            "magnitude": "-2"
+          }
+        ],
+        "ability_pool_picks": 0,
+        "magnitudes": [
+          2,
+          -2
+        ],
+        "magnitudes_excluding_flags": [
+          2,
+          -2
+        ],
+        "only_internal_flags": false,
+        "target_bonuses": [
+          {
+            "keyword": "STAT",
+            "magnitude": 2,
+            "target": "WIS"
+          },
+          {
+            "keyword": "STAT",
+            "magnitude": -2,
+            "target": "INT"
+          }
+        ],
+        "var_contributions": []
+      },
+      "declared_size": null,
+      "declared_vision": [],
+      "declared_walk_speed_ft": null,
+      "declares_negated_ability_guard": false,
+      "description": "Skinwalkers are attuned to the natural order and value passion above reason. Their bestial forms strengthen their bodies in various ways.",
+      "exclusion_guard_flags": [],
+      "is_racial_default": true,
+      "key": "Skinwalker ~ Ability Scores",
+      "name": "+2 Wisdom, -2 Intelligence, +2 to One Physical Ability Score While in Bestial Form",
+      "negated_fact_gates": [
+        [
+          "Skinwalker_ReplaceAbilityScores"
+        ]
+      ],
+      "positive_prefact_flag": null,
+      "race_key": "Skinwalker",
+      "sets_replace_flags": [],
+      "skinwalker_change_shape_kin": null,
+      "source_page": null,
+      "suppressed_by_flag": "Skinwalker_ReplaceAbilityScores",
+      "template_bonus_languages": [],
+      "type_tokens": [
+        "RacialTraits",
+        "Skinwalker Racial Trait",
+        "Skinwalker Racial Default",
+        "SpecialQuality",
+        "Racial Ability Scores"
+      ]
+    },
+    "skinwalker/skinwalker_animal_minded.json": {
+      "adopted_race_pool_suffix": null,
+      "automatic_trait_grants": [],
+      "category": "Special Ability",
+      "declared_bonuses": {
+        "ability_adjustments": [],
+        "ability_pool_picks": 0,
+        "magnitudes": [
+          2,
+          -2
+        ],
+        "magnitudes_excluding_flags": [
+          2,
+          -2
+        ],
+        "only_internal_flags": false,
+        "target_bonuses": [
+          {
+            "keyword": "SKILL",
+            "magnitude": 2,
+            "target": "Handle Animal"
+          },
+          {
+            "keyword": "VAR",
+            "magnitude": -2,
+            "target": "ARG_RaceBuilderPoints"
+          },
+          {
+            "keyword": "VAR",
+            "magnitude": 2,
+            "target": "WildEmpathy"
+          }
+        ],
+        "var_contributions": [
+          {
+            "amount": -2,
+            "name": "ARG_RaceBuilderPoints"
+          },
+          {
+            "amount": 2,
+            "name": "WildEmpathy"
+          }
+        ]
+      },
+      "declared_size": null,
+      "declared_vision": [],
+      "declared_walk_speed_ft": null,
+      "declares_negated_ability_guard": false,
+      "description": "Skinwalkers have a +2 racial bonus on Handle Animal checks and on wild empathy checks.",
+      "exclusion_guard_flags": [],
+      "is_racial_default": true,
+      "key": "Skinwalker ~ Animal-Minded",
+      "name": "Animal-Minded",
+      "negated_fact_gates": [
+        [
+          "Skinwalker_ReplaceAnimalMinded"
+        ]
+      ],
+      "positive_prefact_flag": null,
+      "race_key": "Skinwalker",
+      "sets_replace_flags": [],
+      "skinwalker_change_shape_kin": null,
+      "source_page": null,
+      "suppressed_by_flag": "Skinwalker_ReplaceAnimalMinded",
+      "template_bonus_languages": [],
+      "type_tokens": [
+        "RacialTraits",
+        "Skinwalker Racial Trait",
+        "Skinwalker Racial Default",
+        "SpecialQuality"
+      ]
+    },
+    "skinwalker/skinwalker_change_shape.json": {
+      "adopted_race_pool_suffix": null,
+      "automatic_trait_grants": [
+        "TYPE=Skinwalker Change Shape Default"
+      ],
+      "category": "Special Ability",
+      "declared_bonuses": {
+        "ability_adjustments": [],
+        "ability_pool_picks": 0,
+        "magnitudes": [
+          -5
+        ],
+        "magnitudes_excluding_flags": [
+          -5
+        ],
+        "only_internal_flags": false,
+        "target_bonuses": [
+          {
+            "keyword": "VAR",
+            "magnitude": -5,
+            "target": "ARG_RaceBuilderPoints"
+          }
+        ],
+        "var_contributions": [
+          {
+            "amount": -5,
+            "name": "ARG_RaceBuilderPoints"
+          }
+        ]
+      },
+      "declared_size": null,
+      "declared_vision": [],
+      "declared_walk_speed_ft": null,
+      "declares_negated_ability_guard": false,
+      "description": "A skinwalker can change shape to a bestial form as a standard action. In bestial form, a skinwalker gains a +2 racial bonus to his choice of Strength, Dexterity, or Constitution. While in this form, a skinwalker also takes on an animalistic feature that provides a special effect. Each time a skinwalker assumes bestial form, he can choose to gain two claw attacks that each deal 1d4 points of damage, 60 foot darkvision, or a +1 natural armor bonus. These benefits last until the skinwalker returns to his humanoid form as a swift action. A skinwalker must first return to his humanoid form before changing to bestial form again to change benefits.",
+      "exclusion_guard_flags": [],
+      "is_racial_default": true,
+      "key": "Skinwalker ~ Change Shape",
+      "name": "Change Shape",
+      "negated_fact_gates": [
+        [
+          "Skinwalker_ReplaceChangeShape"
+        ]
+      ],
+      "positive_prefact_flag": null,
+      "race_key": "Skinwalker",
+      "sets_replace_flags": [],
+      "skinwalker_change_shape_kin": "Default",
+      "source_page": null,
+      "suppressed_by_flag": "Skinwalker_ReplaceChangeShape",
+      "template_bonus_languages": [],
+      "type_tokens": [
+        "RacialTraits",
+        "Skinwalker Racial Trait",
+        "Skinwalker Racial Default",
+        "SpecialQuality",
+        "Special Quality",
+        "Special Ability",
+        "Supernatural"
+      ]
+    },
+    "skinwalker/skinwalker_change_shape_amphibious.json": {
+      "adopted_race_pool_suffix": null,
+      "automatic_trait_grants": [
+        "Amphibious"
+      ],
+      "category": "Special Ability",
+      "declared_bonuses": {
+        "ability_adjustments": [],
+        "ability_pool_picks": 0,
+        "magnitudes": [],
+        "magnitudes_excluding_flags": [],
+        "only_internal_flags": false,
+        "target_bonuses": [],
+        "var_contributions": []
+      },
+      "declared_size": null,
+      "declared_vision": [],
+      "declared_walk_speed_ft": null,
+      "declares_negated_ability_guard": false,
+      "description": null,
+      "exclusion_guard_flags": [],
+      "is_racial_default": false,
+      "key": "Skinwalker ~ Change Shape (Amphibious)",
+      "name": "Change Shape (Amphibious)",
+      "negated_fact_gates": [],
+      "positive_prefact_flag": null,
+      "race_key": "Skinwalker",
+      "sets_replace_flags": [],
+      "skinwalker_change_shape_kin": null,
+      "source_page": null,
+      "suppressed_by_flag": null,
+      "template_bonus_languages": [],
+      "type_tokens": [
+        "Skinwalker Racial Trait"
+      ]
+    },
+    "skinwalker/skinwalker_change_shape_base_speed_bonus.json": {
+      "adopted_race_pool_suffix": null,
+      "automatic_trait_grants": [],
+      "category": "Special Ability",
+      "declared_bonuses": {
+        "ability_adjustments": [],
+        "ability_pool_picks": 0,
+        "magnitudes": [],
+        "magnitudes_excluding_flags": [],
+        "only_internal_flags": false,
+        "target_bonuses": [],
+        "var_contributions": []
+      },
+      "declared_size": null,
+      "declared_vision": [],
+      "declared_walk_speed_ft": null,
+      "declares_negated_ability_guard": false,
+      "description": null,
+      "exclusion_guard_flags": [],
+      "is_racial_default": false,
+      "key": "Skinwalker ~ Change Shape (Base Speed Bonus)",
+      "name": "Change Shape (Base Speed +10)",
+      "negated_fact_gates": [],
+      "positive_prefact_flag": null,
+      "race_key": "Skinwalker",
+      "sets_replace_flags": [],
+      "skinwalker_change_shape_kin": null,
+      "source_page": null,
+      "suppressed_by_flag": null,
+      "template_bonus_languages": [],
+      "type_tokens": [
+        "Skinwalker Racial Trait"
+      ]
+    },
+    "skinwalker/skinwalker_change_shape_bite.json": {
+      "adopted_race_pool_suffix": null,
+      "automatic_trait_grants": [
+        "Bite"
+      ],
+      "category": "Special Ability",
+      "declared_bonuses": {
+        "ability_adjustments": [],
+        "ability_pool_picks": 0,
+        "magnitudes": [],
+        "magnitudes_excluding_flags": [],
+        "only_internal_flags": false,
+        "target_bonuses": [],
+        "var_contributions": []
+      },
+      "declared_size": null,
+      "declared_vision": [],
+      "declared_walk_speed_ft": null,
+      "declares_negated_ability_guard": false,
+      "description": null,
+      "exclusion_guard_flags": [],
+      "is_racial_default": false,
+      "key": "Skinwalker ~ Change Shape (Bite)",
+      "name": "Change Shape (Bite Attack)",
+      "negated_fact_gates": [],
+      "positive_prefact_flag": null,
+      "race_key": "Skinwalker",
+      "sets_replace_flags": [],
+      "skinwalker_change_shape_kin": null,
+      "source_page": null,
+      "suppressed_by_flag": null,
+      "template_bonus_languages": [],
+      "type_tokens": [
+        "Skinwalker Racial Trait"
+      ]
+    },
+    "skinwalker/skinwalker_change_shape_charisma.json": {
+      "adopted_race_pool_suffix": null,
+      "automatic_trait_grants": [],
+      "category": "Special Ability",
+      "declared_bonuses": {
+        "ability_adjustments": [],
+        "ability_pool_picks": 0,
+        "magnitudes": [],
+        "magnitudes_excluding_flags": [],
+        "only_internal_flags": false,
+        "target_bonuses": [],
+        "var_contributions": []
+      },
+      "declared_size": null,
+      "declared_vision": [],
+      "declared_walk_speed_ft": null,
+      "declares_negated_ability_guard": false,
+      "description": null,
+      "exclusion_guard_flags": [],
+      "is_racial_default": false,
+      "key": "Skinwalker ~ Change Shape (Charisma)",
+      "name": "Change Shape (Ability Modifier Charisma)",
+      "negated_fact_gates": [],
+      "positive_prefact_flag": null,
+      "race_key": "Skinwalker",
+      "sets_replace_flags": [],
+      "skinwalker_change_shape_kin": null,
+      "source_page": null,
+      "suppressed_by_flag": null,
+      "template_bonus_languages": [],
+      "type_tokens": [
+        "Skinwalker Racial Trait"
+      ]
+    },
+    "skinwalker/skinwalker_change_shape_climb_speed_20_feet.json": {
+      "adopted_race_pool_suffix": null,
+      "automatic_trait_grants": [
+        "Skinwalker ~ Climb Speed 20"
+      ],
+      "category": "Special Ability",
+      "declared_bonuses": {
+        "ability_adjustments": [],
+        "ability_pool_picks": 0,
+        "magnitudes": [],
+        "magnitudes_excluding_flags": [],
+        "only_internal_flags": false,
+        "target_bonuses": [],
+        "var_contributions": []
+      },
+      "declared_size": null,
+      "declared_vision": [],
+      "declared_walk_speed_ft": null,
+      "declares_negated_ability_guard": false,
+      "description": null,
+      "exclusion_guard_flags": [],
+      "is_racial_default": false,
+      "key": "Skinwalker ~ Change Shape (Climb Speed 20 Feet)",
+      "name": "Change Shape (Climb Speed)",
+      "negated_fact_gates": [],
+      "positive_prefact_flag": null,
+      "race_key": "Skinwalker",
+      "sets_replace_flags": [],
+      "skinwalker_change_shape_kin": null,
+      "source_page": null,
+      "suppressed_by_flag": null,
+      "template_bonus_languages": [],
+      "type_tokens": [
+        "Skinwalker Racial Trait"
+      ]
+    },
+    "skinwalker/skinwalker_change_shape_climb_speed_30_feet.json": {
+      "adopted_race_pool_suffix": null,
+      "automatic_trait_grants": [
+        "Skinwalker ~ Climb Speed 30"
+      ],
+      "category": "Special Ability",
+      "declared_bonuses": {
+        "ability_adjustments": [],
+        "ability_pool_picks": 0,
+        "magnitudes": [],
+        "magnitudes_excluding_flags": [],
+        "only_internal_flags": false,
+        "target_bonuses": [],
+        "var_contributions": []
+      },
+      "declared_size": null,
+      "declared_vision": [],
+      "declared_walk_speed_ft": null,
+      "declares_negated_ability_guard": false,
+      "description": null,
+      "exclusion_guard_flags": [],
+      "is_racial_default": false,
+      "key": "Skinwalker ~ Change Shape (Climb Speed 30 Feet)",
+      "name": "Change Shape (Climb Speed)",
+      "negated_fact_gates": [],
+      "positive_prefact_flag": null,
+      "race_key": "Skinwalker",
+      "sets_replace_flags": [],
+      "skinwalker_change_shape_kin": null,
+      "source_page": null,
+      "suppressed_by_flag": null,
+      "template_bonus_languages": [],
+      "type_tokens": [
+        "Skinwalker Racial Trait"
+      ]
+    },
+    "skinwalker/skinwalker_change_shape_distraction.json": {
+      "adopted_race_pool_suffix": null,
+      "automatic_trait_grants": [
+        "Distraction"
+      ],
+      "category": "Special Ability",
+      "declared_bonuses": {
+        "ability_adjustments": [],
+        "ability_pool_picks": 0,
+        "magnitudes": [],
+        "magnitudes_excluding_flags": [],
+        "only_internal_flags": false,
+        "target_bonuses": [],
+        "var_contributions": []
+      },
+      "declared_size": null,
+      "declared_vision": [],
+      "declared_walk_speed_ft": null,
+      "declares_negated_ability_guard": false,
+      "description": null,
+      "exclusion_guard_flags": [],
+      "is_racial_default": false,
+      "key": "Skinwalker ~ Change Shape (Distraction)",
+      "name": "Change Shape (Distraction)",
+      "negated_fact_gates": [],
+      "positive_prefact_flag": null,
+      "race_key": "Skinwalker",
+      "sets_replace_flags": [],
+      "skinwalker_change_shape_kin": null,
+      "source_page": null,
+      "suppressed_by_flag": null,
+      "template_bonus_languages": [],
+      "type_tokens": [
+        "Skinwalker Racial Trait"
+      ]
+    },
+    "skinwalker/skinwalker_change_shape_endurance.json": {
+      "adopted_race_pool_suffix": null,
+      "automatic_trait_grants": [],
+      "category": "Special Ability",
+      "declared_bonuses": {
+        "ability_adjustments": [],
+        "ability_pool_picks": 0,
+        "magnitudes": [],
+        "magnitudes_excluding_flags": [],
+        "only_internal_flags": false,
+        "target_bonuses": [],
+        "var_contributions": []
+      },
+      "declared_size": null,
+      "declared_vision": [],
+      "declared_walk_speed_ft": null,
+      "declares_negated_ability_guard": false,
+      "description": null,
+      "exclusion_guard_flags": [],
+      "is_racial_default": false,
+      "key": "Skinwalker ~ Change Shape (Endurance)",
+      "name": "Change Shape (Endurance)",
+      "negated_fact_gates": [],
+      "positive_prefact_flag": null,
+      "race_key": "Skinwalker",
+      "sets_replace_flags": [],
+      "skinwalker_change_shape_kin": null,
+      "source_page": null,
+      "suppressed_by_flag": null,
+      "template_bonus_languages": [],
+      "type_tokens": [
+        "Skinwalker Racial Trait"
+      ]
+    },
+    "skinwalker/skinwalker_change_shape_ferocity.json": {
+      "adopted_race_pool_suffix": null,
+      "automatic_trait_grants": [
+        "Ferocity"
+      ],
+      "category": "Special Ability",
+      "declared_bonuses": {
+        "ability_adjustments": [],
+        "ability_pool_picks": 0,
+        "magnitudes": [],
+        "magnitudes_excluding_flags": [],
+        "only_internal_flags": false,
+        "target_bonuses": [],
+        "var_contributions": []
+      },
+      "declared_size": null,
+      "declared_vision": [],
+      "declared_walk_speed_ft": null,
+      "declares_negated_ability_guard": false,
+      "description": null,
+      "exclusion_guard_flags": [],
+      "is_racial_default": false,
+      "key": "Skinwalker ~ Change Shape (Ferocity)",
+      "name": "Change Shape (Ferocity)",
+      "negated_fact_gates": [],
+      "positive_prefact_flag": null,
+      "race_key": "Skinwalker",
+      "sets_replace_flags": [],
+      "skinwalker_change_shape_kin": null,
+      "source_page": null,
+      "suppressed_by_flag": null,
+      "template_bonus_languages": [],
+      "type_tokens": [
+        "Skinwalker Racial Trait"
+      ]
+    },
+    "skinwalker/skinwalker_change_shape_fly_speed_bonus.json": {
+      "adopted_race_pool_suffix": null,
+      "automatic_trait_grants": [],
+      "category": "Special Ability",
+      "declared_bonuses": {
+        "ability_adjustments": [],
+        "ability_pool_picks": 0,
+        "magnitudes": [],
+        "magnitudes_excluding_flags": [],
+        "only_internal_flags": false,
+        "target_bonuses": [],
+        "var_contributions": []
+      },
+      "declared_size": null,
+      "declared_vision": [],
+      "declared_walk_speed_ft": null,
+      "declares_negated_ability_guard": false,
+      "description": null,
+      "exclusion_guard_flags": [],
+      "is_racial_default": false,
+      "key": "Skinwalker ~ Change Shape (Fly Speed Bonus)",
+      "name": "Change Shape (Fly Speed +10)",
+      "negated_fact_gates": [],
+      "positive_prefact_flag": null,
+      "race_key": "Skinwalker",
+      "sets_replace_flags": [],
+      "skinwalker_change_shape_kin": null,
+      "source_page": null,
+      "suppressed_by_flag": null,
+      "template_bonus_languages": [],
+      "type_tokens": [
+        "Skinwalker Racial Trait"
+      ]
+    },
+    "skinwalker/skinwalker_change_shape_gore.json": {
+      "adopted_race_pool_suffix": null,
+      "automatic_trait_grants": [
+        "Gore"
+      ],
+      "category": "Special Ability",
+      "declared_bonuses": {
+        "ability_adjustments": [],
+        "ability_pool_picks": 0,
+        "magnitudes": [],
+        "magnitudes_excluding_flags": [],
+        "only_internal_flags": false,
+        "target_bonuses": [],
+        "var_contributions": []
+      },
+      "declared_size": null,
+      "declared_vision": [],
+      "declared_walk_speed_ft": null,
+      "declares_negated_ability_guard": false,
+      "description": null,
+      "exclusion_guard_flags": [],
+      "is_racial_default": false,
+      "key": "Skinwalker ~ Change Shape (Gore)",
+      "name": "Change Shape (Gore Attack)",
+      "negated_fact_gates": [],
+      "positive_prefact_flag": null,
+      "race_key": "Skinwalker",
+      "sets_replace_flags": [],
+      "skinwalker_change_shape_kin": null,
+      "source_page": null,
+      "suppressed_by_flag": null,
+      "template_bonus_languages": [],
+      "type_tokens": [
+        "Skinwalker Racial Trait"
+      ]
+    },
+    "skinwalker/skinwalker_change_shape_hoof.json": {
+      "adopted_race_pool_suffix": null,
+      "automatic_trait_grants": [
+        "Hoof"
+      ],
+      "category": "Special Ability",
+      "declared_bonuses": {
+        "ability_adjustments": [],
+        "ability_pool_picks": 0,
+        "magnitudes": [],
+        "magnitudes_excluding_flags": [],
+        "only_internal_flags": false,
+        "target_bonuses": [],
+        "var_contributions": []
+      },
+      "declared_size": null,
+      "declared_vision": [],
+      "declared_walk_speed_ft": null,
+      "declares_negated_ability_guard": false,
+      "description": null,
+      "exclusion_guard_flags": [],
+      "is_racial_default": false,
+      "key": "Skinwalker ~ Change Shape (Hoof)",
+      "name": "Change Shape (2 Hoof Attacks)",
+      "negated_fact_gates": [],
+      "positive_prefact_flag": null,
+      "race_key": "Skinwalker",
+      "sets_replace_flags": [],
+      "skinwalker_change_shape_kin": null,
+      "source_page": null,
+      "suppressed_by_flag": null,
+      "template_bonus_languages": [],
+      "type_tokens": [
+        "Skinwalker Racial Trait"
+      ]
+    },
+    "skinwalker/skinwalker_change_shape_perception_bonus.json": {
+      "adopted_race_pool_suffix": null,
+      "automatic_trait_grants": [],
+      "category": "Special Ability",
+      "declared_bonuses": {
+        "ability_adjustments": [],
+        "ability_pool_picks": 0,
+        "magnitudes": [],
+        "magnitudes_excluding_flags": [],
+        "only_internal_flags": false,
+        "target_bonuses": [],
+        "var_contributions": []
+      },
+      "declared_size": null,
+      "declared_vision": [],
+      "declared_walk_speed_ft": null,
+      "declares_negated_ability_guard": false,
+      "description": null,
+      "exclusion_guard_flags": [],
+      "is_racial_default": false,
+      "key": "Skinwalker ~ Change Shape (Perception Bonus)",
+      "name": "Change Shape (Perception Bonus)",
+      "negated_fact_gates": [],
+      "positive_prefact_flag": null,
+      "race_key": "Skinwalker",
+      "sets_replace_flags": [],
+      "skinwalker_change_shape_kin": null,
+      "source_page": null,
+      "suppressed_by_flag": null,
+      "template_bonus_languages": [],
+      "type_tokens": [
+        "Skinwalker Racial Trait"
+      ]
+    },
+    "skinwalker/skinwalker_change_shape_reduce_falling_damage.json": {
+      "adopted_race_pool_suffix": null,
+      "automatic_trait_grants": [],
+      "category": "Special Ability",
+      "declared_bonuses": {
+        "ability_adjustments": [],
+        "ability_pool_picks": 0,
+        "magnitudes": [],
+        "magnitudes_excluding_flags": [],
+        "only_internal_flags": false,
+        "target_bonuses": [],
+        "var_contributions": []
+      },
+      "declared_size": null,
+      "declared_vision": [],
+      "declared_walk_speed_ft": null,
+      "declares_negated_ability_guard": false,
+      "description": null,
+      "exclusion_guard_flags": [],
+      "is_racial_default": false,
+      "key": "Skinwalker ~ Change Shape (Reduce Falling Damage)",
+      "name": "Change Shape (Reduce Falling Damage)",
+      "negated_fact_gates": [],
+      "positive_prefact_flag": null,
+      "race_key": "Skinwalker",
+      "sets_replace_flags": [],
+      "skinwalker_change_shape_kin": null,
+      "source_page": null,
+      "suppressed_by_flag": null,
+      "template_bonus_languages": [],
+      "type_tokens": [
+        "Skinwalker Racial Trait"
+      ]
+    },
+    "skinwalker/skinwalker_change_shape_saves.json": {
+      "adopted_race_pool_suffix": null,
+      "automatic_trait_grants": [],
+      "category": "Special Ability",
+      "declared_bonuses": {
+        "ability_adjustments": [],
+        "ability_pool_picks": 0,
+        "magnitudes": [],
+        "magnitudes_excluding_flags": [],
+        "only_internal_flags": false,
+        "target_bonuses": [],
+        "var_contributions": []
+      },
+      "declared_size": null,
+      "declared_vision": [],
+      "declared_walk_speed_ft": null,
+      "declares_negated_ability_guard": false,
+      "description": null,
+      "exclusion_guard_flags": [],
+      "is_racial_default": false,
+      "key": "Skinwalker ~ Change Shape (Saves)",
+      "name": "Change Shape (Saving Throws)",
+      "negated_fact_gates": [],
+      "positive_prefact_flag": null,
+      "race_key": "Skinwalker",
+      "sets_replace_flags": [],
+      "skinwalker_change_shape_kin": null,
+      "source_page": null,
+      "suppressed_by_flag": null,
+      "template_bonus_languages": [],
+      "type_tokens": [
+        "Skinwalker Racial Trait"
+      ]
+    },
+    "skinwalker/skinwalker_change_shape_scent.json": {
+      "adopted_race_pool_suffix": null,
+      "automatic_trait_grants": [
+        "Scent"
+      ],
+      "category": "Special Ability",
+      "declared_bonuses": {
+        "ability_adjustments": [],
+        "ability_pool_picks": 0,
+        "magnitudes": [],
+        "magnitudes_excluding_flags": [],
+        "only_internal_flags": false,
+        "target_bonuses": [],
+        "var_contributions": []
+      },
+      "declared_size": null,
+      "declared_vision": [],
+      "declared_walk_speed_ft": null,
+      "declares_negated_ability_guard": false,
+      "description": null,
+      "exclusion_guard_flags": [],
+      "is_racial_default": false,
+      "key": "Skinwalker ~ Change Shape (Scent)",
+      "name": "Change Shape (Scent)",
+      "negated_fact_gates": [],
+      "positive_prefact_flag": null,
+      "race_key": "Skinwalker",
+      "sets_replace_flags": [],
+      "skinwalker_change_shape_kin": null,
+      "source_page": null,
+      "suppressed_by_flag": null,
+      "template_bonus_languages": [],
+      "type_tokens": [
+        "Skinwalker Racial Trait"
+      ]
+    },
+    "skinwalker/skinwalker_change_shape_see_in_darkness.json": {
+      "adopted_race_pool_suffix": null,
+      "automatic_trait_grants": [
+        "See In Darkness"
+      ],
+      "category": "Special Ability",
+      "declared_bonuses": {
+        "ability_adjustments": [],
+        "ability_pool_picks": 0,
+        "magnitudes": [],
+        "magnitudes_excluding_flags": [],
+        "only_internal_flags": false,
+        "target_bonuses": [],
+        "var_contributions": []
+      },
+      "declared_size": null,
+      "declared_vision": [],
+      "declared_walk_speed_ft": null,
+      "declares_negated_ability_guard": false,
+      "description": null,
+      "exclusion_guard_flags": [],
+      "is_racial_default": false,
+      "key": "Skinwalker ~ Change Shape (See In Darkness)",
+      "name": "Change Shape (See In Darkness)",
+      "negated_fact_gates": [],
+      "positive_prefact_flag": null,
+      "race_key": "Skinwalker",
+      "sets_replace_flags": [],
+      "skinwalker_change_shape_kin": null,
+      "source_page": null,
+      "suppressed_by_flag": null,
+      "template_bonus_languages": [],
+      "type_tokens": [
+        "Skinwalker Racial Trait"
+      ]
+    },
+    "skinwalker/skinwalker_change_shape_swim_speed.json": {
+      "adopted_race_pool_suffix": null,
+      "automatic_trait_grants": [
+        "Skinwalker ~ Swim Speed"
+      ],
+      "category": "Special Ability",
+      "declared_bonuses": {
+        "ability_adjustments": [],
+        "ability_pool_picks": 0,
+        "magnitudes": [],
+        "magnitudes_excluding_flags": [],
+        "only_internal_flags": false,
+        "target_bonuses": [],
+        "var_contributions": []
+      },
+      "declared_size": null,
+      "declared_vision": [],
+      "declared_walk_speed_ft": null,
+      "declares_negated_ability_guard": false,
+      "description": null,
+      "exclusion_guard_flags": [],
+      "is_racial_default": false,
+      "key": "Skinwalker ~ Change Shape (Swim Speed)",
+      "name": "Change Shape (Swim Speed)",
+      "negated_fact_gates": [],
+      "positive_prefact_flag": null,
+      "race_key": "Skinwalker",
+      "sets_replace_flags": [],
+      "skinwalker_change_shape_kin": null,
+      "source_page": null,
+      "suppressed_by_flag": null,
+      "template_bonus_languages": [],
+      "type_tokens": [
+        "Skinwalker Racial Trait"
+      ]
+    },
+    "skinwalker/skinwalker_change_shape_talon.json": {
+      "adopted_race_pool_suffix": null,
+      "automatic_trait_grants": [
+        "Talons"
+      ],
+      "category": "Special Ability",
+      "declared_bonuses": {
+        "ability_adjustments": [],
+        "ability_pool_picks": 0,
+        "magnitudes": [],
+        "magnitudes_excluding_flags": [],
+        "only_internal_flags": false,
+        "target_bonuses": [],
+        "var_contributions": []
+      },
+      "declared_size": null,
+      "declared_vision": [],
+      "declared_walk_speed_ft": null,
+      "declares_negated_ability_guard": false,
+      "description": null,
+      "exclusion_guard_flags": [],
+      "is_racial_default": false,
+      "key": "Skinwalker ~ Change Shape (Talon)",
+      "name": "Change Shape (2 Talon Attacks)",
+      "negated_fact_gates": [],
+      "positive_prefact_flag": null,
+      "race_key": "Skinwalker",
+      "sets_replace_flags": [],
+      "skinwalker_change_shape_kin": null,
+      "source_page": null,
+      "suppressed_by_flag": null,
+      "template_bonus_languages": [],
+      "type_tokens": [
+        "Skinwalker Racial Trait"
+      ]
+    },
+    "skinwalker/skinwalker_change_shape_wisdom.json": {
+      "adopted_race_pool_suffix": null,
+      "automatic_trait_grants": [],
+      "category": "Special Ability",
+      "declared_bonuses": {
+        "ability_adjustments": [],
+        "ability_pool_picks": 0,
+        "magnitudes": [],
+        "magnitudes_excluding_flags": [],
+        "only_internal_flags": false,
+        "target_bonuses": [],
+        "var_contributions": []
+      },
+      "declared_size": null,
+      "declared_vision": [],
+      "declared_walk_speed_ft": null,
+      "declares_negated_ability_guard": false,
+      "description": null,
+      "exclusion_guard_flags": [],
+      "is_racial_default": false,
+      "key": "Skinwalker ~ Change Shape (Wisdom)",
+      "name": "Change Shape (Ability Modifier Wisdom)",
+      "negated_fact_gates": [],
+      "positive_prefact_flag": null,
+      "race_key": "Skinwalker",
+      "sets_replace_flags": [],
+      "skinwalker_change_shape_kin": null,
+      "source_page": null,
+      "suppressed_by_flag": null,
+      "template_bonus_languages": [],
+      "type_tokens": [
+        "Skinwalker Racial Trait"
+      ]
+    },
+    "skinwalker/skinwalker_languages.json": {
+      "adopted_race_pool_suffix": null,
+      "automatic_trait_grants": [],
+      "category": "Special Ability",
+      "declared_bonuses": {
+        "ability_adjustments": [],
+        "ability_pool_picks": 0,
+        "magnitudes": [],
+        "magnitudes_excluding_flags": [],
+        "only_internal_flags": false,
+        "target_bonuses": [],
+        "var_contributions": []
+      },
+      "declared_size": null,
+      "declared_vision": [],
+      "declared_walk_speed_ft": null,
+      "declares_negated_ability_guard": false,
+      "description": "Skinwalkers all begin play speaking Common. Skinwalkers with high Intelligence scores can choose any languages they want (except secret languages, such as Druidic).",
+      "exclusion_guard_flags": [],
+      "is_racial_default": true,
+      "key": "Skinwalker ~ Languages",
+      "name": "Languages",
+      "negated_fact_gates": [
+        [
+          "Skinwalker_ReplaceLanguages"
+        ]
+      ],
+      "positive_prefact_flag": null,
+      "race_key": "Skinwalker",
+      "sets_replace_flags": [],
+      "skinwalker_change_shape_kin": null,
+      "source_page": null,
+      "suppressed_by_flag": "Skinwalker_ReplaceLanguages",
+      "template_bonus_languages": [
+        "Any Spoken"
+      ],
+      "type_tokens": [
+        "RacialTraits",
+        "Skinwalker Racial Trait",
+        "Skinwalker Racial Default",
+        "SpecialQuality",
+        "Racial Language"
+      ]
+    },
+    "skinwalker/skinwalker_size.json": {
+      "adopted_race_pool_suffix": null,
+      "automatic_trait_grants": [],
+      "category": "Special Ability",
+      "declared_bonuses": {
+        "ability_adjustments": [],
+        "ability_pool_picks": 0,
+        "magnitudes": [],
+        "magnitudes_excluding_flags": [],
+        "only_internal_flags": false,
+        "target_bonuses": [],
+        "var_contributions": []
+      },
+      "declared_size": "Medium",
+      "declared_vision": [],
+      "declared_walk_speed_ft": null,
+      "declares_negated_ability_guard": false,
+      "description": "Skinwalkers are Medium creatures and have no bonuses or penalties due to their size.",
+      "exclusion_guard_flags": [],
+      "is_racial_default": true,
+      "key": "Skinwalker ~ Size",
+      "name": "Medium",
+      "negated_fact_gates": [
+        [
+          "Skinwalker_ReplaceSize"
+        ]
+      ],
+      "positive_prefact_flag": null,
+      "race_key": "Skinwalker",
+      "sets_replace_flags": [],
+      "skinwalker_change_shape_kin": null,
+      "source_page": null,
+      "suppressed_by_flag": "Skinwalker_ReplaceSize",
+      "template_bonus_languages": [],
+      "type_tokens": [
+        "RacialTraits",
+        "Skinwalker Racial Trait",
+        "Skinwalker Racial Default",
+        "SpecialQuality",
+        "Racial Size"
+      ]
+    },
+    "skinwalker/skinwalker_speed.json": {
+      "adopted_race_pool_suffix": null,
+      "automatic_trait_grants": [],
+      "category": "Special Ability",
+      "declared_bonuses": {
+        "ability_adjustments": [],
+        "ability_pool_picks": 0,
+        "magnitudes": [
+          30
+        ],
+        "magnitudes_excluding_flags": [
+          30
+        ],
+        "only_internal_flags": false,
+        "target_bonuses": [
+          {
+            "keyword": "VAR",
+            "magnitude": 30,
+            "target": "MOVEBASE"
+          }
+        ],
+        "var_contributions": [
+          {
+            "amount": 30,
+            "name": "MOVEBASE"
+          }
+        ]
+      },
+      "declared_size": null,
+      "declared_vision": [],
+      "declared_walk_speed_ft": 30,
+      "declares_negated_ability_guard": false,
+      "description": "Skinwalkers have a base speed of 30 feet.",
+      "exclusion_guard_flags": [],
+      "is_racial_default": true,
+      "key": "Skinwalker ~ Speed",
+      "name": "Normal Speed",
+      "negated_fact_gates": [
+        [
+          "Skinwalker_ReplaceSpeed"
+        ]
+      ],
+      "positive_prefact_flag": null,
+      "race_key": "Skinwalker",
+      "sets_replace_flags": [],
+      "skinwalker_change_shape_kin": null,
+      "source_page": null,
+      "suppressed_by_flag": "Skinwalker_ReplaceSpeed",
+      "template_bonus_languages": [],
+      "type_tokens": [
+        "RacialTraits",
+        "Skinwalker Racial Trait",
+        "Skinwalker Racial Default",
+        "SpecialQuality",
+        "Racial Speed"
+      ]
+    },
+    "skinwalker/skinwalker_spell_like_ability.json": {
+      "adopted_race_pool_suffix": null,
+      "automatic_trait_grants": [
+        "Racial SLA ~ Speak with Animals"
+      ],
+      "category": "Special Ability",
+      "declared_bonuses": {
+        "ability_adjustments": [],
+        "ability_pool_picks": 0,
+        "magnitudes": [],
+        "magnitudes_excluding_flags": [],
+        "only_internal_flags": false,
+        "target_bonuses": [
+          {
+            "keyword": "VAR",
+            "magnitude": null,
+            "target": "RacialSLA_SpeakWithAnimals_DCMod"
+          }
+        ],
+        "var_contributions": [
+          {
+            "amount": null,
+            "name": "RacialSLA_SpeakWithAnimals_DCMod"
+          }
+        ]
+      },
+      "declared_size": null,
+      "declared_vision": [],
+      "declared_walk_speed_ft": null,
+      "declares_negated_ability_guard": false,
+      "description": "A skinwalker with a Wisdom score of 11 or higher can use speak with animals once per day as a spell-like ability, using his Wisdom modifier to determine his concentration checks. The caster level for this ability is equal to the skinwalker's character level.",
+      "exclusion_guard_flags": [],
+      "is_racial_default": true,
+      "key": "Skinwalker ~ Spell-Like Ability",
+      "name": "Spell-Like Ability",
+      "negated_fact_gates": [
+        [
+          "Skinwalker_ReplaceSpellLikeAbility"
+        ]
+      ],
+      "positive_prefact_flag": null,
+      "race_key": "Skinwalker",
+      "sets_replace_flags": [],
+      "skinwalker_change_shape_kin": null,
+      "source_page": null,
+      "suppressed_by_flag": "Skinwalker_ReplaceSpellLikeAbility",
+      "template_bonus_languages": [],
+      "type_tokens": [
+        "RacialTraits",
+        "Skinwalker Racial Trait",
+        "Skinwalker Racial Default",
+        "SpecialQuality"
+      ]
+    },
+    "skinwalker/skinwalker_type.json": {
+      "adopted_race_pool_suffix": null,
+      "automatic_trait_grants": [
+        "Weapon Prof ~ Simple"
+      ],
+      "category": "Special Ability",
+      "declared_bonuses": {
+        "ability_adjustments": [],
+        "ability_pool_picks": 0,
+        "magnitudes": [],
+        "magnitudes_excluding_flags": [],
+        "only_internal_flags": false,
+        "target_bonuses": [],
+        "var_contributions": []
+      },
+      "declared_size": null,
+      "declared_vision": [],
+      "declared_walk_speed_ft": null,
+      "declares_negated_ability_guard": false,
+      "description": "Skinwalkers are humanoids with the shapechanger and skinwalker subtypes. A shapechanger is automatically proficient with simple weapons.",
+      "exclusion_guard_flags": [],
+      "is_racial_default": true,
+      "key": "Skinwalker ~ Type",
+      "name": "Shapechanger",
+      "negated_fact_gates": [
+        [
+          "Skinwalker_ReplaceType"
+        ]
+      ],
+      "positive_prefact_flag": null,
+      "race_key": "Skinwalker",
+      "sets_replace_flags": [],
+      "skinwalker_change_shape_kin": null,
+      "source_page": null,
+      "suppressed_by_flag": "Skinwalker_ReplaceType",
+      "template_bonus_languages": [],
+      "type_tokens": [
+        "RacialTraits",
+        "Skinwalker Racial Trait",
+        "Skinwalker Racial Default",
+        "SpecialQuality",
+        "Racial Type"
+      ]
+    },
+    "skinwalker/skinwalker_vision.json": {
+      "adopted_race_pool_suffix": null,
+      "automatic_trait_grants": [],
+      "category": "Special Ability",
+      "declared_bonuses": {
+        "ability_adjustments": [],
+        "ability_pool_picks": 0,
+        "magnitudes": [
+          1
+        ],
+        "magnitudes_excluding_flags": [],
+        "only_internal_flags": true,
+        "target_bonuses": [
+          {
+            "keyword": "VAR",
+            "magnitude": 1,
+            "target": "HasRacialVision"
+          }
+        ],
+        "var_contributions": [
+          {
+            "amount": 1,
+            "name": "HasRacialVision"
+          }
+        ]
+      },
+      "declared_size": null,
+      "declared_vision": [
+        "Low-Light Vision"
+      ],
+      "declared_walk_speed_ft": null,
+      "declares_negated_ability_guard": false,
+      "description": "Skinwalkers can see twice as far as humans can in dim light.",
+      "exclusion_guard_flags": [],
+      "is_racial_default": true,
+      "key": "Skinwalker ~ Vision",
+      "name": "Low-Light Vision",
+      "negated_fact_gates": [
+        [
+          "Skinwalker_ReplaceVision"
+        ]
+      ],
+      "positive_prefact_flag": null,
+      "race_key": "Skinwalker",
+      "sets_replace_flags": [],
+      "skinwalker_change_shape_kin": null,
+      "source_page": null,
+      "suppressed_by_flag": "Skinwalker_ReplaceVision",
+      "template_bonus_languages": [],
+      "type_tokens": [
+        "RacialTraits",
+        "Skinwalker Racial Trait",
+        "Skinwalker Racial Default",
+        "SpecialQuality",
+        "Racial Vision"
+      ]
+    },
+    "skinwalker/skinwalker_werebat_kin.json": {
+      "adopted_race_pool_suffix": null,
+      "automatic_trait_grants": [
+        "Werebat-Kin ~ Ability Scores",
+        "Werebat-Kin ~ Animal-Minded",
+        "Werebat-Kin ~ Change Shape",
+        "Werebat-Kin ~ Spell-Like Ability"
+      ],
+      "category": "Special Ability",
+      "declared_bonuses": {
+        "ability_adjustments": [],
+        "ability_pool_picks": 0,
+        "magnitudes": [],
+        "magnitudes_excluding_flags": [],
+        "only_internal_flags": false,
+        "target_bonuses": [],
+        "var_contributions": []
+      },
+      "declared_size": null,
+      "declared_vision": [],
+      "declared_walk_speed_ft": null,
+      "declares_negated_ability_guard": false,
+      "description": "These skinwalkers are usually communal and defer readily to their superiors. They prefer dwelling in areas of dense foliage, such as jungles or forests. They often have little trust for those not in their immediate clan.",
+      "exclusion_guard_flags": [
+        "Skinwalker_ReplaceAbilityScores",
+        "Skinwalker_ReplaceAnimalMinded",
+        "Skinwalker_ReplaceChangeShape",
+        "Skinwalker_ReplaceSpellLikeAbility"
+      ],
+      "is_racial_default": false,
+      "key": "Skinwalker ~ Werebat-Kin",
+      "name": "Werebat-Kin (Bloodmarked)",
+      "negated_fact_gates": [],
+      "positive_prefact_flag": null,
+      "race_key": "Skinwalker",
+      "sets_replace_flags": [
+        "Skinwalker_ReplaceAbilityScores",
+        "Skinwalker_ReplaceAnimalMinded",
+        "Skinwalker_ReplaceChangeShape",
+        "Skinwalker_ReplaceSpellLikeAbility"
+      ],
+      "skinwalker_change_shape_kin": null,
+      "source_page": null,
+      "suppressed_by_flag": null,
+      "template_bonus_languages": [],
+      "type_tokens": [
+        "Skinwalker Subrace"
+      ]
+    },
+    "skinwalker/skinwalker_werebear_kin.json": {
+      "adopted_race_pool_suffix": null,
+      "automatic_trait_grants": [
+        "Werebear-Kin ~ Ability Scores",
+        "Werebear-Kin ~ Animal-Minded",
+        "Werebear-Kin ~ Change Shape",
+        "Werebear-Kin ~ Spell-Like Ability"
+      ],
+      "category": "Special Ability",
+      "declared_bonuses": {
+        "ability_adjustments": [],
+        "ability_pool_picks": 0,
+        "magnitudes": [],
+        "magnitudes_excluding_flags": [],
+        "only_internal_flags": false,
+        "target_bonuses": [],
+        "var_contributions": []
+      },
+      "declared_size": null,
+      "declared_vision": [],
+      "declared_walk_speed_ft": null,
+      "declares_negated_ability_guard": false,
+      "description": "[redacted PI]",
+      "exclusion_guard_flags": [
+        "Skinwalker_ReplaceAbilityScores",
+        "Skinwalker_ReplaceAnimalMinded",
+        "Skinwalker_ReplaceChangeShape",
+        "Skinwalker_ReplaceSpellLikeAbility"
+      ],
+      "is_racial_default": false,
+      "key": "Skinwalker ~ Werebear-Kin",
+      "name": "Werebear-Kin (Coldborn)",
+      "negated_fact_gates": [],
+      "positive_prefact_flag": null,
+      "race_key": "Skinwalker",
+      "sets_replace_flags": [
+        "Skinwalker_ReplaceAbilityScores",
+        "Skinwalker_ReplaceAnimalMinded",
+        "Skinwalker_ReplaceChangeShape",
+        "Skinwalker_ReplaceSpellLikeAbility"
+      ],
+      "skinwalker_change_shape_kin": null,
+      "source_page": null,
+      "suppressed_by_flag": null,
+      "template_bonus_languages": [],
+      "type_tokens": [
+        "Skinwalker Subrace"
+      ]
+    },
+    "skinwalker/skinwalker_wereboar_kin.json": {
+      "adopted_race_pool_suffix": null,
+      "automatic_trait_grants": [
+        "Wereboar-Kin ~ Ability Scores",
+        "Wereboar-Kin ~ Animal-Minded",
+        "Wereboar-Kin ~ Change Shape",
+        "Wereboar-Kin ~ Spell-Like Ability"
+      ],
+      "category": "Special Ability",
+      "declared_bonuses": {
+        "ability_adjustments": [],
+        "ability_pool_picks": 0,
+        "magnitudes": [],
+        "magnitudes_excluding_flags": [],
+        "only_internal_flags": false,
+        "target_bonuses": [],
+        "var_contributions": []
+      },
+      "declared_size": null,
+      "declared_vision": [],
+      "declared_walk_speed_ft": null,
+      "declares_negated_ability_guard": false,
+      "description": "[redacted PI]",
+      "exclusion_guard_flags": [
+        "Skinwalker_ReplaceAbilityScores",
+        "Skinwalker_ReplaceAnimalMinded",
+        "Skinwalker_ReplaceChangeShape",
+        "Skinwalker_ReplaceSpellLikeAbility"
+      ],
+      "is_racial_default": false,
+      "key": "Skinwalker ~ Wereboar-Kin",
+      "name": "Wereboar-Kin (Ragebred)",
+      "negated_fact_gates": [],
+      "positive_prefact_flag": null,
+      "race_key": "Skinwalker",
+      "sets_replace_flags": [
+        "Skinwalker_ReplaceAbilityScores",
+        "Skinwalker_ReplaceAnimalMinded",
+        "Skinwalker_ReplaceChangeShape",
+        "Skinwalker_ReplaceSpellLikeAbility"
+      ],
+      "skinwalker_change_shape_kin": null,
+      "source_page": null,
+      "suppressed_by_flag": null,
+      "template_bonus_languages": [],
+      "type_tokens": [
+        "Skinwalker Subrace"
+      ]
+    },
+    "skinwalker/skinwalker_werecrocodile_kin.json": {
+      "adopted_race_pool_suffix": null,
+      "automatic_trait_grants": [
+        "Werecrocodile-Kin ~ Ability Scores",
+        "Werecrocodile-Kin ~ Animal-Minded",
+        "Werecrocodile-Kin ~ Change Shape",
+        "Werecrocodile-Kin ~ Spell-Like Ability"
+      ],
+      "category": "Special Ability",
+      "declared_bonuses": {
+        "ability_adjustments": [],
+        "ability_pool_picks": 0,
+        "magnitudes": [],
+        "magnitudes_excluding_flags": [],
+        "only_internal_flags": false,
+        "target_bonuses": [],
+        "var_contributions": []
+      },
+      "declared_size": null,
+      "declared_vision": [],
+      "declared_walk_speed_ft": null,
+      "declares_negated_ability_guard": false,
+      "description": "[redacted PI]",
+      "exclusion_guard_flags": [
+        "Skinwalker_ReplaceAbilityScores",
+        "Skinwalker_ReplaceAnimalMinded",
+        "Skinwalker_ReplaceChangeShape",
+        "Skinwalker_ReplaceSpellLikeAbility"
+      ],
+      "is_racial_default": false,
+      "key": "Skinwalker ~ Werecrocodile-Kin",
+      "name": "Werecrocodile-Kin (Scaleheart)",
+      "negated_fact_gates": [],
+      "positive_prefact_flag": null,
+      "race_key": "Skinwalker",
+      "sets_replace_flags": [
+        "Skinwalker_ReplaceAbilityScores",
+        "Skinwalker_ReplaceAnimalMinded",
+        "Skinwalker_ReplaceChangeShape",
+        "Skinwalker_ReplaceSpellLikeAbility"
+      ],
+      "skinwalker_change_shape_kin": null,
+      "source_page": null,
+      "suppressed_by_flag": null,
+      "template_bonus_languages": [],
+      "type_tokens": [
+        "Skinwalker Subrace"
+      ]
+    },
+    "skinwalker/skinwalker_wereraptor_kin.json": {
+      "adopted_race_pool_suffix": null,
+      "automatic_trait_grants": [
+        "Wereraptor-Kin ~ Ability Scores",
+        "Wereraptor-Kin ~ Animal-Minded",
+        "Wereraptor-Kin ~ Change Shape",
+        "Wereraptor-Kin ~ Spell-Like Ability"
+      ],
+      "category": "Special Ability",
+      "declared_bonuses": {
+        "ability_adjustments": [],
+        "ability_pool_picks": 0,
+        "magnitudes": [],
+        "magnitudes_excluding_flags": [],
+        "only_internal_flags": false,
+        "target_bonuses": [],
+        "var_contributions": []
+      },
+      "declared_size": null,
+      "declared_vision": [],
+      "declared_walk_speed_ft": null,
+      "declares_negated_ability_guard": false,
+      "description": "Skinwalkers descended from wereraptors, aerieborn lack beaks, but have feathers in their bestial form.",
+      "exclusion_guard_flags": [
+        "Skinwalker_ReplaceAbilityScores",
+        "Skinwalker_ReplaceAnimalMinded",
+        "Skinwalker_ReplaceChangeShape",
+        "Skinwalker_ReplaceSpellLikeAbility"
+      ],
+      "is_racial_default": false,
+      "key": "Skinwalker ~ Wereraptor-Kin",
+      "name": "Wereraptor-Kin (Aerieborn)",
+      "negated_fact_gates": [],
+      "positive_prefact_flag": null,
+      "race_key": "Skinwalker",
+      "sets_replace_flags": [
+        "Skinwalker_ReplaceAbilityScores",
+        "Skinwalker_ReplaceAnimalMinded",
+        "Skinwalker_ReplaceChangeShape",
+        "Skinwalker_ReplaceSpellLikeAbility"
+      ],
+      "skinwalker_change_shape_kin": null,
+      "source_page": "p.89",
+      "suppressed_by_flag": null,
+      "template_bonus_languages": [],
+      "type_tokens": [
+        "Skinwalker Subrace"
+      ]
+    },
+    "skinwalker/skinwalker_wererat_kin.json": {
+      "adopted_race_pool_suffix": null,
+      "automatic_trait_grants": [
+        "Wererat-Kin ~ Ability Scores",
+        "Wererat-Kin ~ Animal-Minded",
+        "Wererat-Kin ~ Change Shape",
+        "Wererat-Kin ~ Spell-Like Ability"
+      ],
+      "category": "Special Ability",
+      "declared_bonuses": {
+        "ability_adjustments": [],
+        "ability_pool_picks": 0,
+        "magnitudes": [],
+        "magnitudes_excluding_flags": [],
+        "only_internal_flags": false,
+        "target_bonuses": [],
+        "var_contributions": []
+      },
+      "declared_size": null,
+      "declared_vision": [],
+      "declared_walk_speed_ft": null,
+      "declares_negated_ability_guard": false,
+      "description": "These creatures, who are among the more common of the skinwalkers, prefer to dwell in urban areas.",
+      "exclusion_guard_flags": [
+        "Skinwalker_ReplaceAbilityScores",
+        "Skinwalker_ReplaceAnimalMinded",
+        "Skinwalker_ReplaceChangeShape",
+        "Skinwalker_ReplaceSpellLikeAbility"
+      ],
+      "is_racial_default": false,
+      "key": "Skinwalker ~ Wererat-Kin",
+      "name": "Wererat-Kin (Nightskulk)",
+      "negated_fact_gates": [],
+      "positive_prefact_flag": null,
+      "race_key": "Skinwalker",
+      "sets_replace_flags": [
+        "Skinwalker_ReplaceAbilityScores",
+        "Skinwalker_ReplaceAnimalMinded",
+        "Skinwalker_ReplaceChangeShape",
+        "Skinwalker_ReplaceSpellLikeAbility"
+      ],
+      "skinwalker_change_shape_kin": null,
+      "source_page": null,
+      "suppressed_by_flag": null,
+      "template_bonus_languages": [],
+      "type_tokens": [
+        "Skinwalker Subrace"
+      ]
+    },
+    "skinwalker/skinwalker_wereshark_kin.json": {
+      "adopted_race_pool_suffix": null,
+      "automatic_trait_grants": [
+        "Wereshark-Kin ~ Ability Scores",
+        "Wereshark-Kin ~ Animal-Minded",
+        "Wereshark-Kin ~ Change Shape",
+        "Wereshark-Kin ~ Spell-Like Ability"
+      ],
+      "category": "Special Ability",
+      "declared_bonuses": {
+        "ability_adjustments": [],
+        "ability_pool_picks": 0,
+        "magnitudes": [],
+        "magnitudes_excluding_flags": [],
+        "only_internal_flags": false,
+        "target_bonuses": [],
+        "var_contributions": []
+      },
+      "declared_size": null,
+      "declared_vision": [],
+      "declared_walk_speed_ft": null,
+      "declares_negated_ability_guard": false,
+      "description": "These unusual skinwalkers tend to be strong-willed and brisk in their patterns of speech. They often serve aboard pirate ships, where their traits are well appreciated.",
+      "exclusion_guard_flags": [
+        "Skinwalker_ReplaceAbilityScores",
+        "Skinwalker_ReplaceAnimalMinded",
+        "Skinwalker_ReplaceChangeShape",
+        "Skinwalker_ReplaceSpellLikeAbility"
+      ],
+      "is_racial_default": false,
+      "key": "Skinwalker ~ Wereshark-Kin",
+      "name": "Wereshark-Kin (Seascarred)",
+      "negated_fact_gates": [],
+      "positive_prefact_flag": null,
+      "race_key": "Skinwalker",
+      "sets_replace_flags": [
+        "Skinwalker_ReplaceAbilityScores",
+        "Skinwalker_ReplaceAnimalMinded",
+        "Skinwalker_ReplaceChangeShape",
+        "Skinwalker_ReplaceSpellLikeAbility"
+      ],
+      "skinwalker_change_shape_kin": null,
+      "source_page": null,
+      "suppressed_by_flag": null,
+      "template_bonus_languages": [],
+      "type_tokens": [
+        "Skinwalker Subrace"
+      ]
+    },
+    "skinwalker/skinwalker_weretiger_kin.json": {
+      "adopted_race_pool_suffix": null,
+      "automatic_trait_grants": [
+        "Weretiger-Kin ~ Ability Scores",
+        "Weretiger-Kin ~ Animal-Minded",
+        "Weretiger-Kin ~ Change Shape",
+        "Weretiger-Kin ~ Spell-Like Ability"
+      ],
+      "category": "Special Ability",
+      "declared_bonuses": {
+        "ability_adjustments": [],
+        "ability_pool_picks": 0,
+        "magnitudes": [],
+        "magnitudes_excluding_flags": [],
+        "only_internal_flags": false,
+        "target_bonuses": [],
+        "var_contributions": []
+      },
+      "declared_size": null,
+      "declared_vision": [],
+      "declared_walk_speed_ft": null,
+      "declares_negated_ability_guard": false,
+      "description": "[redacted PI]",
+      "exclusion_guard_flags": [
+        "Skinwalker_ReplaceAbilityScores",
+        "Skinwalker_ReplaceAnimalMinded",
+        "Skinwalker_ReplaceChangeShape",
+        "Skinwalker_ReplaceSpellLikeAbility"
+      ],
+      "is_racial_default": false,
+      "key": "Skinwalker ~ Weretiger-Kin",
+      "name": "Weretiger-Kin (Fanglord)",
+      "negated_fact_gates": [],
+      "positive_prefact_flag": null,
+      "race_key": "Skinwalker",
+      "sets_replace_flags": [
+        "Skinwalker_ReplaceAbilityScores",
+        "Skinwalker_ReplaceAnimalMinded",
+        "Skinwalker_ReplaceChangeShape",
+        "Skinwalker_ReplaceSpellLikeAbility"
+      ],
+      "skinwalker_change_shape_kin": null,
+      "source_page": null,
+      "suppressed_by_flag": null,
+      "template_bonus_languages": [],
+      "type_tokens": [
+        "Skinwalker Subrace"
+      ]
+    },
+    "skinwalker/skinwalker_werewolf_kin.json": {
+      "adopted_race_pool_suffix": null,
+      "automatic_trait_grants": [
+        "Werewolf-Kin ~ Ability Scores",
+        "Werewolf-Kin ~ Animal-Minded",
+        "Werewolf-Kin ~ Change Shape",
+        "Werewolf-Kin ~ Spell-Like Ability"
+      ],
+      "category": "Special Ability",
+      "declared_bonuses": {
+        "ability_adjustments": [],
+        "ability_pool_picks": 0,
+        "magnitudes": [],
+        "magnitudes_excluding_flags": [],
+        "only_internal_flags": false,
+        "target_bonuses": [],
+        "var_contributions": []
+      },
+      "declared_size": null,
+      "declared_vision": [],
+      "declared_walk_speed_ft": null,
+      "declares_negated_ability_guard": false,
+      "description": "Perhaps the most prevalent breed of skinwalker, witchwolves prefer dwelling with others of their kind.",
+      "exclusion_guard_flags": [
+        "Skinwalker_ReplaceAbilityScores",
+        "Skinwalker_ReplaceAnimalMinded",
+        "Skinwalker_ReplaceChangeShape",
+        "Skinwalker_ReplaceSpellLikeAbility"
+      ],
+      "is_racial_default": false,
+      "key": "Skinwalker ~ Werewolf-Kin",
+      "name": "Werewolf-Kin (Witchwolf)",
+      "negated_fact_gates": [],
+      "positive_prefact_flag": null,
+      "race_key": "Skinwalker",
+      "sets_replace_flags": [
+        "Skinwalker_ReplaceAbilityScores",
+        "Skinwalker_ReplaceAnimalMinded",
+        "Skinwalker_ReplaceChangeShape",
+        "Skinwalker_ReplaceSpellLikeAbility"
+      ],
+      "skinwalker_change_shape_kin": null,
+      "source_page": null,
+      "suppressed_by_flag": null,
+      "template_bonus_languages": [],
+      "type_tokens": [
+        "Skinwalker Subrace"
+      ]
+    },
+    "skinwalker/werebat_kin_ability_scores.json": {
+      "adopted_race_pool_suffix": null,
+      "automatic_trait_grants": [],
+      "category": "Special Ability",
+      "declared_bonuses": {
+        "ability_adjustments": [
+          {
+            "codes": "INT",
+            "magnitude": "2"
+          },
+          {
+            "codes": "WIS",
+            "magnitude": "-2"
+          }
+        ],
+        "ability_pool_picks": 0,
+        "magnitudes": [
+          2,
+          -2
+        ],
+        "magnitudes_excluding_flags": [
+          2,
+          -2
+        ],
+        "only_internal_flags": false,
+        "target_bonuses": [
+          {
+            "keyword": "STAT",
+            "magnitude": 2,
+            "target": "INT"
+          },
+          {
+            "keyword": "STAT",
+            "magnitude": -2,
+            "target": "WIS"
+          }
+        ],
+        "var_contributions": []
+      },
+      "declared_size": null,
+      "declared_vision": [],
+      "declared_walk_speed_ft": null,
+      "declares_negated_ability_guard": false,
+      "description": "These skinwalkers are usually communal and defer readily to their superiors. They prefer dwelling in areas of dense foliage, such as jungles or forests. They often have little trust for those not in their immediate clan.",
+      "exclusion_guard_flags": [
+        "Skinwalker_ReplaceAbilityScores"
+      ],
+      "is_racial_default": false,
+      "key": "Werebat-Kin ~ Ability Scores",
+      "name": "+2 Intelligence, -2 Wisdom, +2 Dexterity While in Bestial Form",
+      "negated_fact_gates": [],
+      "positive_prefact_flag": null,
+      "race_key": "Skinwalker",
+      "sets_replace_flags": [
+        "Skinwalker_ReplaceAbilityScores"
+      ],
+      "skinwalker_change_shape_kin": null,
+      "source_page": null,
+      "suppressed_by_flag": null,
+      "template_bonus_languages": [],
+      "type_tokens": [
+        "RacialTraits",
+        "Skinwalker Racial Trait",
+        "SpecialQuality",
+        "Racial Ability Scores"
+      ]
+    },
+    "skinwalker/werebat_kin_animal_minded.json": {
+      "adopted_race_pool_suffix": null,
+      "automatic_trait_grants": [],
+      "category": "Special Ability",
+      "declared_bonuses": {
+        "ability_adjustments": [],
+        "ability_pool_picks": 0,
+        "magnitudes": [
+          2
+        ],
+        "magnitudes_excluding_flags": [
+          2
+        ],
+        "only_internal_flags": false,
+        "target_bonuses": [
+          {
+            "keyword": "SITUATION",
+            "magnitude": 2,
+            "target": "Perception=at night"
+          },
+          {
+            "keyword": "SKILL",
+            "magnitude": 2,
+            "target": "Fly"
+          }
+        ],
+        "var_contributions": []
+      },
+      "declared_size": null,
+      "declared_vision": [],
+      "declared_walk_speed_ft": null,
+      "declares_negated_ability_guard": false,
+      "description": "Bloodmarked skinwalkers have a +2 racial bonus on Fly checks and Perception checks at night.",
+      "exclusion_guard_flags": [
+        "Skinwalker_ReplaceAnimalMinded"
+      ],
+      "is_racial_default": false,
+      "key": "Werebat-Kin ~ Animal-Minded",
+      "name": "Animal-Minded",
+      "negated_fact_gates": [],
+      "positive_prefact_flag": null,
+      "race_key": "Skinwalker",
+      "sets_replace_flags": [
+        "Skinwalker_ReplaceAnimalMinded"
+      ],
+      "skinwalker_change_shape_kin": null,
+      "source_page": null,
+      "suppressed_by_flag": null,
+      "template_bonus_languages": [],
+      "type_tokens": [
+        "RacialTraits",
+        "Skinwalker Racial Trait",
+        "SpecialQuality"
+      ]
+    },
+    "skinwalker/werebat_kin_change_shape.json": {
+      "adopted_race_pool_suffix": null,
+      "automatic_trait_grants": [
+        "TYPE=Skinwalker Change Shape Werebat-Kin"
+      ],
+      "category": "Special Ability",
+      "declared_bonuses": {
+        "ability_adjustments": [],
+        "ability_pool_picks": 0,
+        "magnitudes": [],
+        "magnitudes_excluding_flags": [],
+        "only_internal_flags": false,
+        "target_bonuses": [],
+        "var_contributions": []
+      },
+      "declared_size": null,
+      "declared_vision": [],
+      "declared_walk_speed_ft": null,
+      "declares_negated_ability_guard": false,
+      "description": "A bloodmarked skinwalker can change shape to a bestial form as a standard action. In bestial form, a bloodmarked skinwalker gains a +2 racial bonus to Dexterity. While in this form, a skinwalker also takes on an animalistic feature that provides a special effect. Each time a bloodmarked skinwalker assumes bestial form, he can choose to gain a bite attack that deals 1d6 points of damage, +4 racial bonus on Perception checks, scent to a range of 30 feet, or treat falling damage as if the distance fallen were 20 feet less than it actually is. These benefits last until the skinwalker returns to his humanoid form as a swift action. A skinwalker must first return to his humanoid form before changing to bestial form again to change benefits.",
+      "exclusion_guard_flags": [
+        "Skinwalker_ReplaceChangeShape"
+      ],
+      "is_racial_default": false,
+      "key": "Werebat-Kin ~ Change Shape",
+      "name": "Change Shape",
+      "negated_fact_gates": [],
+      "positive_prefact_flag": null,
+      "race_key": "Skinwalker",
+      "sets_replace_flags": [
+        "Skinwalker_ReplaceChangeShape"
+      ],
+      "skinwalker_change_shape_kin": "Werebat-Kin",
+      "source_page": null,
+      "suppressed_by_flag": null,
+      "template_bonus_languages": [],
+      "type_tokens": [
+        "RacialTraits",
+        "Skinwalker Racial Trait",
+        "SpecialQuality",
+        "Special Quality",
+        "Special Ability",
+        "Supernatural"
+      ]
+    },
+    "skinwalker/werebat_kin_spell_like_ability.json": {
+      "adopted_race_pool_suffix": null,
+      "automatic_trait_grants": [
+        "Racial SLA ~ Obscuring Mist"
+      ],
+      "category": "Special Ability",
+      "declared_bonuses": {
+        "ability_adjustments": [],
+        "ability_pool_picks": 0,
+        "magnitudes": [],
+        "magnitudes_excluding_flags": [],
+        "only_internal_flags": false,
+        "target_bonuses": [
+          {
+            "keyword": "VAR",
+            "magnitude": null,
+            "target": "RacialSLA_ObscuringMist_DCMod"
+          }
+        ],
+        "var_contributions": [
+          {
+            "amount": null,
+            "name": "RacialSLA_ObscuringMist_DCMod"
+          }
+        ]
+      },
+      "declared_size": null,
+      "declared_vision": [],
+      "declared_walk_speed_ft": null,
+      "declares_negated_ability_guard": false,
+      "description": "A bloodmarked skinwalker with a Wisdom score of 11 or higher can use obsucring mist once per day as a spell-like ability, using his Wisdom modifier to determine his concentration checks. The caster level for this ability is equal to the skinwalker's character level.",
+      "exclusion_guard_flags": [
+        "Skinwalker_ReplaceSpellLikeAbility"
+      ],
+      "is_racial_default": false,
+      "key": "Werebat-Kin ~ Spell-Like Ability",
+      "name": "Spell-Like Ability",
+      "negated_fact_gates": [],
+      "positive_prefact_flag": null,
+      "race_key": "Skinwalker",
+      "sets_replace_flags": [
+        "Skinwalker_ReplaceSpellLikeAbility"
+      ],
+      "skinwalker_change_shape_kin": null,
+      "source_page": null,
+      "suppressed_by_flag": null,
+      "template_bonus_languages": [],
+      "type_tokens": [
+        "RacialTraits",
+        "Skinwalker Racial Trait",
+        "SpecialQuality"
+      ]
+    },
+    "skinwalker/werebear_kin_ability_scores.json": {
+      "adopted_race_pool_suffix": null,
+      "automatic_trait_grants": [],
+      "category": "Special Ability",
+      "declared_bonuses": {
+        "ability_adjustments": [
+          {
+            "codes": "CON",
+            "magnitude": "2"
+          },
+          {
+            "codes": "CHA",
+            "magnitude": "-2"
+          }
+        ],
+        "ability_pool_picks": 0,
+        "magnitudes": [
+          2,
+          -2
+        ],
+        "magnitudes_excluding_flags": [
+          2,
+          -2
+        ],
+        "only_internal_flags": false,
+        "target_bonuses": [
+          {
+            "keyword": "STAT",
+            "magnitude": 2,
+            "target": "CON"
+          },
+          {
+            "keyword": "STAT",
+            "magnitude": -2,
+            "target": "CHA"
+          }
+        ],
+        "var_contributions": []
+      },
+      "declared_size": null,
+      "declared_vision": [],
+      "declared_walk_speed_ft": null,
+      "declares_negated_ability_guard": false,
+      "description": "[redacted PI]",
+      "exclusion_guard_flags": [
+        "Skinwalker_ReplaceAbilityScores"
+      ],
+      "is_racial_default": false,
+      "key": "Werebear-Kin ~ Ability Scores",
+      "name": "+2 Constitution, -2 Charisma, +2 Wisdom While in Bestial Form",
+      "negated_fact_gates": [],
+      "positive_prefact_flag": null,
+      "race_key": "Skinwalker",
+      "sets_replace_flags": [
+        "Skinwalker_ReplaceAbilityScores"
+      ],
+      "skinwalker_change_shape_kin": null,
+      "source_page": null,
+      "suppressed_by_flag": null,
+      "template_bonus_languages": [],
+      "type_tokens": [
+        "RacialTraits",
+        "Skinwalker Racial Trait",
+        "SpecialQuality",
+        "Racial Ability Scores"
+      ]
+    },
+    "skinwalker/werebear_kin_animal_minded.json": {
+      "adopted_race_pool_suffix": null,
+      "automatic_trait_grants": [],
+      "category": "Special Ability",
+      "declared_bonuses": {
+        "ability_adjustments": [],
+        "ability_pool_picks": 0,
+        "magnitudes": [
+          2
+        ],
+        "magnitudes_excluding_flags": [
+          2
+        ],
+        "only_internal_flags": false,
+        "target_bonuses": [
+          {
+            "keyword": "SKILL",
+            "magnitude": 2,
+            "target": "Climb"
+          },
+          {
+            "keyword": "VAR",
+            "magnitude": 2,
+            "target": "WildEmpathy"
+          }
+        ],
+        "var_contributions": [
+          {
+            "amount": 2,
+            "name": "WildEmpathy"
+          }
+        ]
+      },
+      "declared_size": null,
+      "declared_vision": [],
+      "declared_walk_speed_ft": null,
+      "declares_negated_ability_guard": false,
+      "description": "Coldborn skinwalkers have a +2 racial bonus on Climb and wild empathy checks.",
+      "exclusion_guard_flags": [
+        "Skinwalker_ReplaceAnimalMinded"
+      ],
+      "is_racial_default": false,
+      "key": "Werebear-Kin ~ Animal-Minded",
+      "name": "Animal-Minded",
+      "negated_fact_gates": [],
+      "positive_prefact_flag": null,
+      "race_key": "Skinwalker",
+      "sets_replace_flags": [
+        "Skinwalker_ReplaceAnimalMinded"
+      ],
+      "skinwalker_change_shape_kin": null,
+      "source_page": null,
+      "suppressed_by_flag": null,
+      "template_bonus_languages": [],
+      "type_tokens": [
+        "RacialTraits",
+        "Skinwalker Racial Trait",
+        "SpecialQuality"
+      ]
+    },
+    "skinwalker/werebear_kin_change_shape.json": {
+      "adopted_race_pool_suffix": null,
+      "automatic_trait_grants": [
+        "TYPE=Skinwalker Change Shape Werebear-Kin"
+      ],
+      "category": "Special Ability",
+      "declared_bonuses": {
+        "ability_adjustments": [],
+        "ability_pool_picks": 0,
+        "magnitudes": [],
+        "magnitudes_excluding_flags": [],
+        "only_internal_flags": false,
+        "target_bonuses": [],
+        "var_contributions": []
+      },
+      "declared_size": null,
+      "declared_vision": [],
+      "declared_walk_speed_ft": null,
+      "declares_negated_ability_guard": false,
+      "description": "A coldborn skinwalker can change shape to a bestial form as a standard action. In bestial form, a coldborn skinwalker gains a +2 racial bonus to Wisdom. While in this form, a skinwalker also takes on an animalistic feature that provides a special effect. Each time a coldborn skinwalker assumes bestial form, he can choose to gain a bite attack that deals 1d6 points of damage, 2 claw attacks that each deal 1d4 points of damage, a climb speed of 20 feet, or scent to a range of 30 feet. These benefits last until the skinwalker returns to his humanoid form as a swift action. A skinwalker must first return to his humanoid form before changing to bestial form again to change benefits.",
+      "exclusion_guard_flags": [
+        "Skinwalker_ReplaceChangeShape"
+      ],
+      "is_racial_default": false,
+      "key": "Werebear-Kin ~ Change Shape",
+      "name": "Change Shape",
+      "negated_fact_gates": [],
+      "positive_prefact_flag": null,
+      "race_key": "Skinwalker",
+      "sets_replace_flags": [
+        "Skinwalker_ReplaceChangeShape"
+      ],
+      "skinwalker_change_shape_kin": "Werebear-Kin",
+      "source_page": null,
+      "suppressed_by_flag": null,
+      "template_bonus_languages": [],
+      "type_tokens": [
+        "RacialTraits",
+        "Skinwalker Racial Trait",
+        "SpecialQuality",
+        "Special Quality",
+        "Special Ability",
+        "Supernatural"
+      ]
+    },
+    "skinwalker/werebear_kin_spell_like_ability.json": {
+      "adopted_race_pool_suffix": null,
+      "automatic_trait_grants": [
+        "Racial SLA ~ Calm Animals"
+      ],
+      "category": "Special Ability",
+      "declared_bonuses": {
+        "ability_adjustments": [],
+        "ability_pool_picks": 0,
+        "magnitudes": [],
+        "magnitudes_excluding_flags": [],
+        "only_internal_flags": false,
+        "target_bonuses": [
+          {
+            "keyword": "VAR",
+            "magnitude": null,
+            "target": "RacialSLA_CalmAnimals_DCMod"
+          }
+        ],
+        "var_contributions": [
+          {
+            "amount": null,
+            "name": "RacialSLA_CalmAnimals_DCMod"
+          }
+        ]
+      },
+      "declared_size": null,
+      "declared_vision": [],
+      "declared_walk_speed_ft": null,
+      "declares_negated_ability_guard": false,
+      "description": "A coldborn skinwalker with a Wisdom score of 11 or higher can use calm animals once per day as a spell-like ability, using his Wisdom modifier to determine his concentration checks. The caster level for this ability is equal to the skinwalker's character level.",
+      "exclusion_guard_flags": [
+        "Skinwalker_ReplaceSpellLikeAbility"
+      ],
+      "is_racial_default": false,
+      "key": "Werebear-Kin ~ Spell-Like Ability",
+      "name": "Spell-Like Ability",
+      "negated_fact_gates": [],
+      "positive_prefact_flag": null,
+      "race_key": "Skinwalker",
+      "sets_replace_flags": [
+        "Skinwalker_ReplaceSpellLikeAbility"
+      ],
+      "skinwalker_change_shape_kin": null,
+      "source_page": null,
+      "suppressed_by_flag": null,
+      "template_bonus_languages": [],
+      "type_tokens": [
+        "RacialTraits",
+        "Skinwalker Racial Trait",
+        "SpecialQuality"
+      ]
+    },
+    "skinwalker/wereboar_kin_ability_scores.json": {
+      "adopted_race_pool_suffix": null,
+      "automatic_trait_grants": [],
+      "category": "Special Ability",
+      "declared_bonuses": {
+        "ability_adjustments": [
+          {
+            "codes": "STR",
+            "magnitude": "2"
+          },
+          {
+            "codes": "CHA",
+            "magnitude": "-2"
+          }
+        ],
+        "ability_pool_picks": 0,
+        "magnitudes": [
+          2,
+          -2
+        ],
+        "magnitudes_excluding_flags": [
+          2,
+          -2
+        ],
+        "only_internal_flags": false,
+        "target_bonuses": [
+          {
+            "keyword": "STAT",
+            "magnitude": 2,
+            "target": "STR"
+          },
+          {
+            "keyword": "STAT",
+            "magnitude": -2,
+            "target": "CHA"
+          }
+        ],
+        "var_contributions": []
+      },
+      "declared_size": null,
+      "declared_vision": [],
+      "declared_walk_speed_ft": null,
+      "declares_negated_ability_guard": false,
+      "description": "[redacted PI]",
+      "exclusion_guard_flags": [
+        "Skinwalker_ReplaceAbilityScores"
+      ],
+      "is_racial_default": false,
+      "key": "Wereboar-Kin ~ Ability Scores",
+      "name": "+2 Strength, -2 Charisma, +2 Constitution While in Bestial Form",
+      "negated_fact_gates": [],
+      "positive_prefact_flag": null,
+      "race_key": "Skinwalker",
+      "sets_replace_flags": [
+        "Skinwalker_ReplaceAbilityScores"
+      ],
+      "skinwalker_change_shape_kin": null,
+      "source_page": null,
+      "suppressed_by_flag": null,
+      "template_bonus_languages": [],
+      "type_tokens": [
+        "RacialTraits",
+        "Skinwalker Racial Trait",
+        "SpecialQuality",
+        "Racial Ability Scores"
+      ]
+    },
+    "skinwalker/wereboar_kin_animal_minded.json": {
+      "adopted_race_pool_suffix": null,
+      "automatic_trait_grants": [],
+      "category": "Special Ability",
+      "declared_bonuses": {
+        "ability_adjustments": [],
+        "ability_pool_picks": 0,
+        "magnitudes": [
+          2
+        ],
+        "magnitudes_excluding_flags": [
+          2
+        ],
+        "only_internal_flags": false,
+        "target_bonuses": [
+          {
+            "keyword": "SKILL",
+            "magnitude": 2,
+            "target": "Handle Animal,Perception"
+          }
+        ],
+        "var_contributions": []
+      },
+      "declared_size": null,
+      "declared_vision": [],
+      "declared_walk_speed_ft": null,
+      "declares_negated_ability_guard": false,
+      "description": "Skinwalkers have a +2 racial bonus on Handle Animal and Perception checks.",
+      "exclusion_guard_flags": [
+        "Skinwalker_ReplaceAnimalMinded"
+      ],
+      "is_racial_default": false,
+      "key": "Wereboar-Kin ~ Animal-Minded",
+      "name": "Animal-Minded",
+      "negated_fact_gates": [],
+      "positive_prefact_flag": null,
+      "race_key": "Skinwalker",
+      "sets_replace_flags": [
+        "Skinwalker_ReplaceAnimalMinded"
+      ],
+      "skinwalker_change_shape_kin": null,
+      "source_page": null,
+      "suppressed_by_flag": null,
+      "template_bonus_languages": [],
+      "type_tokens": [
+        "RacialTraits",
+        "Skinwalker Racial Trait",
+        "SpecialQuality"
+      ]
+    },
+    "skinwalker/wereboar_kin_change_shape.json": {
+      "adopted_race_pool_suffix": null,
+      "automatic_trait_grants": [
+        "TYPE=Skinwalker Change Shape Wereboar-Kin"
+      ],
+      "category": "Special Ability",
+      "declared_bonuses": {
+        "ability_adjustments": [],
+        "ability_pool_picks": 0,
+        "magnitudes": [],
+        "magnitudes_excluding_flags": [],
+        "only_internal_flags": false,
+        "target_bonuses": [],
+        "var_contributions": []
+      },
+      "declared_size": null,
+      "declared_vision": [],
+      "declared_walk_speed_ft": null,
+      "declares_negated_ability_guard": false,
+      "description": "A ragebred skinwalker can change shape to a bestial form as a standard action. In bestial form, a ragebred skinwalker gains a +2 racial bonus to Constitution. While in this form, a skinwalker also takes on an animalistic feature that provides a special effect. Each time a ragebred skinwalker assumes bestial form, he can choose to gain +10-foot racial bonus to base speed, a gore attack that deals 1d6 points of damage, 2 hoof attacks that each deal 1d4 points of damage, or scent to a range of 30 feet. These benefits last until the skinwalker returns to his humanoid form as a swift action. A skinwalker must first return to his humanoid form before changing to bestial form again to change benefits.",
+      "exclusion_guard_flags": [
+        "Skinwalker_ReplaceChangeShape"
+      ],
+      "is_racial_default": false,
+      "key": "Wereboar-Kin ~ Change Shape",
+      "name": "Change Shape",
+      "negated_fact_gates": [],
+      "positive_prefact_flag": null,
+      "race_key": "Skinwalker",
+      "sets_replace_flags": [
+        "Skinwalker_ReplaceChangeShape"
+      ],
+      "skinwalker_change_shape_kin": "Wereboar-Kin",
+      "source_page": null,
+      "suppressed_by_flag": null,
+      "template_bonus_languages": [],
+      "type_tokens": [
+        "RacialTraits",
+        "Skinwalker Racial Trait",
+        "SpecialQuality",
+        "Special Quality",
+        "Special Ability",
+        "Supernatural"
+      ]
+    },
+    "skinwalker/wereboar_kin_spell_like_ability.json": {
+      "adopted_race_pool_suffix": null,
+      "automatic_trait_grants": [
+        "Racial SLA ~ Speak with Animals (pigs and boars only)"
+      ],
+      "category": "Special Ability",
+      "declared_bonuses": {
+        "ability_adjustments": [],
+        "ability_pool_picks": 0,
+        "magnitudes": [
+          3
+        ],
+        "magnitudes_excluding_flags": [
+          3
+        ],
+        "only_internal_flags": false,
+        "target_bonuses": [
+          {
+            "keyword": "VAR",
+            "magnitude": 3,
+            "target": "RacialSLA_SpeakWithAnimalsPigsAndBoarsOnly_Times"
+          },
+          {
+            "keyword": "VAR",
+            "magnitude": null,
+            "target": "RacialSLA_SpeakWithAnimalsPigsAndBoarsOnly_DCMod"
+          }
+        ],
+        "var_contributions": [
+          {
+            "amount": 3,
+            "name": "RacialSLA_SpeakWithAnimalsPigsAndBoarsOnly_Times"
+          },
+          {
+            "amount": null,
+            "name": "RacialSLA_SpeakWithAnimalsPigsAndBoarsOnly_DCMod"
+          }
+        ]
+      },
+      "declared_size": null,
+      "declared_vision": [],
+      "declared_walk_speed_ft": null,
+      "declares_negated_ability_guard": false,
+      "description": "A ragebred skinwalker with a Wisdom score of 11 or higher can use speak with animals (pigs and boars only) three times per day as a spell-like ability, using his Wisdom modifier to determine his concentration checks. The caster level for this ability is equal to the skinwalker's character level.",
+      "exclusion_guard_flags": [
+        "Skinwalker_ReplaceSpellLikeAbility"
+      ],
+      "is_racial_default": false,
+      "key": "Wereboar-Kin ~ Spell-Like Ability",
+      "name": "Spell-Like Ability",
+      "negated_fact_gates": [],
+      "positive_prefact_flag": null,
+      "race_key": "Skinwalker",
+      "sets_replace_flags": [
+        "Skinwalker_ReplaceSpellLikeAbility"
+      ],
+      "skinwalker_change_shape_kin": null,
+      "source_page": null,
+      "suppressed_by_flag": null,
+      "template_bonus_languages": [],
+      "type_tokens": [
+        "RacialTraits",
+        "Skinwalker Racial Trait",
+        "SpecialQuality"
+      ]
+    },
+    "skinwalker/werecrocodile_kin_ability_scores.json": {
+      "adopted_race_pool_suffix": null,
+      "automatic_trait_grants": [],
+      "category": "Special Ability",
+      "declared_bonuses": {
+        "ability_adjustments": [
+          {
+            "codes": "CON",
+            "magnitude": "2"
+          },
+          {
+            "codes": "WIS",
+            "magnitude": "-2"
+          }
+        ],
+        "ability_pool_picks": 0,
+        "magnitudes": [
+          2,
+          -2
+        ],
+        "magnitudes_excluding_flags": [
+          2,
+          -2
+        ],
+        "only_internal_flags": false,
+        "target_bonuses": [
+          {
+            "keyword": "STAT",
+            "magnitude": 2,
+            "target": "CON"
+          },
+          {
+            "keyword": "STAT",
+            "magnitude": -2,
+            "target": "WIS"
+          }
+        ],
+        "var_contributions": []
+      },
+      "declared_size": null,
+      "declared_vision": [],
+      "declared_walk_speed_ft": null,
+      "declares_negated_ability_guard": false,
+      "description": "[redacted PI]",
+      "exclusion_guard_flags": [
+        "Skinwalker_ReplaceAbilityScores"
+      ],
+      "is_racial_default": false,
+      "key": "Werecrocodile-Kin ~ Ability Scores",
+      "name": "+2 Constitution, -2 Wisdom, +2 Strength While in Bestial Form",
+      "negated_fact_gates": [],
+      "positive_prefact_flag": null,
+      "race_key": "Skinwalker",
+      "sets_replace_flags": [
+        "Skinwalker_ReplaceAbilityScores"
+      ],
+      "skinwalker_change_shape_kin": null,
+      "source_page": null,
+      "suppressed_by_flag": null,
+      "template_bonus_languages": [],
+      "type_tokens": [
+        "RacialTraits",
+        "Skinwalker Racial Trait",
+        "SpecialQuality",
+        "Racial Ability Scores"
+      ]
+    },
+    "skinwalker/werecrocodile_kin_animal_minded.json": {
+      "adopted_race_pool_suffix": null,
+      "automatic_trait_grants": [],
+      "category": "Special Ability",
+      "declared_bonuses": {
+        "ability_adjustments": [],
+        "ability_pool_picks": 0,
+        "magnitudes": [
+          2
+        ],
+        "magnitudes_excluding_flags": [
+          2
+        ],
+        "only_internal_flags": false,
+        "target_bonuses": [
+          {
+            "keyword": "SKILL",
+            "magnitude": 2,
+            "target": "Stealth"
+          },
+          {
+            "keyword": "VAR",
+            "magnitude": 2,
+            "target": "WildEmpathy"
+          }
+        ],
+        "var_contributions": [
+          {
+            "amount": 2,
+            "name": "WildEmpathy"
+          }
+        ]
+      },
+      "declared_size": null,
+      "declared_vision": [],
+      "declared_walk_speed_ft": null,
+      "declares_negated_ability_guard": false,
+      "description": "Scaleheart skinwalkers have a +2 racial bonus on Stealth and wild empathy checks.",
+      "exclusion_guard_flags": [
+        "Skinwalker_ReplaceAnimalMinded"
+      ],
+      "is_racial_default": false,
+      "key": "Werecrocodile-Kin ~ Animal-Minded",
+      "name": "Animal-Minded",
+      "negated_fact_gates": [],
+      "positive_prefact_flag": null,
+      "race_key": "Skinwalker",
+      "sets_replace_flags": [
+        "Skinwalker_ReplaceAnimalMinded"
+      ],
+      "skinwalker_change_shape_kin": null,
+      "source_page": null,
+      "suppressed_by_flag": null,
+      "template_bonus_languages": [],
+      "type_tokens": [
+        "RacialTraits",
+        "Skinwalker Racial Trait",
+        "SpecialQuality"
+      ]
+    },
+    "skinwalker/werecrocodile_kin_change_shape.json": {
+      "adopted_race_pool_suffix": null,
+      "automatic_trait_grants": [
+        "TYPE=Skinwalker Change Shape Werecrocodile-Kin"
+      ],
+      "category": "Special Ability",
+      "declared_bonuses": {
+        "ability_adjustments": [],
+        "ability_pool_picks": 0,
+        "magnitudes": [],
+        "magnitudes_excluding_flags": [],
+        "only_internal_flags": false,
+        "target_bonuses": [],
+        "var_contributions": []
+      },
+      "declared_size": null,
+      "declared_vision": [],
+      "declared_walk_speed_ft": null,
+      "declares_negated_ability_guard": false,
+      "description": "A scaleheart skinwalker can change shape to a bestial form as a standard action. In bestial form, a scaleheart skinwalker gains a +2 racial bonus to Strength. While in this form, a skinwalker also takes on an animalistic feature that provides a special effect. Each time a scaleheart skinwalker assumes bestial form, he can choose to gain a bite attack that deals 1d6 points of damage, darkvision to a range of 60 feet, swim speed of 30 feet, or ferocity (Pathfinder RPG Bestiary). These benefits last until the skinwalker returns to his humanoid form as a swift action. A skinwalker must first return to his humanoid form before changing to bestial form again to change benefits.",
+      "exclusion_guard_flags": [
+        "Skinwalker_ReplaceChangeShape"
+      ],
+      "is_racial_default": false,
+      "key": "Werecrocodile-Kin ~ Change Shape",
+      "name": "Change Shape",
+      "negated_fact_gates": [],
+      "positive_prefact_flag": null,
+      "race_key": "Skinwalker",
+      "sets_replace_flags": [
+        "Skinwalker_ReplaceChangeShape"
+      ],
+      "skinwalker_change_shape_kin": "Werecrocodile-Kin",
+      "source_page": null,
+      "suppressed_by_flag": null,
+      "template_bonus_languages": [],
+      "type_tokens": [
+        "RacialTraits",
+        "Skinwalker Racial Trait",
+        "SpecialQuality",
+        "Special Quality",
+        "Special Ability",
+        "Supernatural"
+      ]
+    },
+    "skinwalker/werecrocodile_kin_spell_like_ability.json": {
+      "adopted_race_pool_suffix": null,
+      "automatic_trait_grants": [
+        "Racial SLA ~ Scare"
+      ],
+      "category": "Special Ability",
+      "declared_bonuses": {
+        "ability_adjustments": [],
+        "ability_pool_picks": 0,
+        "magnitudes": [],
+        "magnitudes_excluding_flags": [],
+        "only_internal_flags": false,
+        "target_bonuses": [
+          {
+            "keyword": "VAR",
+            "magnitude": null,
+            "target": "RacialSLA_Scare_DCMod"
+          }
+        ],
+        "var_contributions": [
+          {
+            "amount": null,
+            "name": "RacialSLA_Scare_DCMod"
+          }
+        ]
+      },
+      "declared_size": null,
+      "declared_vision": [],
+      "declared_walk_speed_ft": null,
+      "declares_negated_ability_guard": false,
+      "description": "A scaleheart skinwalker with a Wisdom score of 11 or higher can use scare once per day as a spell-like ability, using his Wisdom modifier to determine his concentration checks. The caster level for this ability is equal to the skinwalker's character level.",
+      "exclusion_guard_flags": [
+        "Skinwalker_ReplaceSpellLikeAbility"
+      ],
+      "is_racial_default": false,
+      "key": "Werecrocodile-Kin ~ Spell-Like Ability",
+      "name": "Spell-Like Ability",
+      "negated_fact_gates": [],
+      "positive_prefact_flag": null,
+      "race_key": "Skinwalker",
+      "sets_replace_flags": [
+        "Skinwalker_ReplaceSpellLikeAbility"
+      ],
+      "skinwalker_change_shape_kin": null,
+      "source_page": null,
+      "suppressed_by_flag": null,
+      "template_bonus_languages": [],
+      "type_tokens": [
+        "RacialTraits",
+        "Skinwalker Racial Trait",
+        "SpecialQuality"
+      ]
+    },
+    "skinwalker/wereraptor_kin_ability_scores.json": {
+      "adopted_race_pool_suffix": null,
+      "automatic_trait_grants": [],
+      "category": "Special Ability",
+      "declared_bonuses": {
+        "ability_adjustments": [
+          {
+            "codes": "WIS",
+            "magnitude": "2"
+          },
+          {
+            "codes": "CHA",
+            "magnitude": "-2"
+          }
+        ],
+        "ability_pool_picks": 0,
+        "magnitudes": [
+          2,
+          -2
+        ],
+        "magnitudes_excluding_flags": [
+          2,
+          -2
+        ],
+        "only_internal_flags": false,
+        "target_bonuses": [
+          {
+            "keyword": "STAT",
+            "magnitude": 2,
+            "target": "WIS"
+          },
+          {
+            "keyword": "STAT",
+            "magnitude": -2,
+            "target": "CHA"
+          }
+        ],
+        "var_contributions": []
+      },
+      "declared_size": null,
+      "declared_vision": [],
+      "declared_walk_speed_ft": null,
+      "declares_negated_ability_guard": false,
+      "description": "Skinwalkers descended from wereraptors, aerieborn lack beaks, but have feathers in their bestial form.",
+      "exclusion_guard_flags": [
+        "Skinwalker_ReplaceAbilityScores"
+      ],
+      "is_racial_default": false,
+      "key": "Wereraptor-Kin ~ Ability Scores",
+      "name": "+2 Wisdom, -2 Charisma, +2 Dexterity While in Bestial Form",
+      "negated_fact_gates": [],
+      "positive_prefact_flag": null,
+      "race_key": "Skinwalker",
+      "sets_replace_flags": [
+        "Skinwalker_ReplaceAbilityScores"
+      ],
+      "skinwalker_change_shape_kin": null,
+      "source_page": "p.89",
+      "suppressed_by_flag": null,
+      "template_bonus_languages": [],
+      "type_tokens": [
+        "RacialTraits",
+        "Skinwalker Racial Trait",
+        "SpecialQuality",
+        "Racial Ability Scores"
+      ]
+    },
+    "skinwalker/wereraptor_kin_animal_minded.json": {
+      "adopted_race_pool_suffix": null,
+      "automatic_trait_grants": [],
+      "category": "Special Ability",
+      "declared_bonuses": {
+        "ability_adjustments": [],
+        "ability_pool_picks": 0,
+        "magnitudes": [
+          2
+        ],
+        "magnitudes_excluding_flags": [
+          2
+        ],
+        "only_internal_flags": false,
+        "target_bonuses": [
+          {
+            "keyword": "SKILL",
+            "magnitude": 2,
+            "target": "Perception,Sense Motive"
+          }
+        ],
+        "var_contributions": []
+      },
+      "declared_size": null,
+      "declared_vision": [],
+      "declared_walk_speed_ft": null,
+      "declares_negated_ability_guard": false,
+      "description": "Skinwalkers have a +2 racial bonus on Perception and wild empathy checks.",
+      "exclusion_guard_flags": [
+        "Skinwalker_ReplaceAnimalMinded"
+      ],
+      "is_racial_default": false,
+      "key": "Wereraptor-Kin ~ Animal-Minded",
+      "name": "Animal-Minded",
+      "negated_fact_gates": [],
+      "positive_prefact_flag": null,
+      "race_key": "Skinwalker",
+      "sets_replace_flags": [
+        "Skinwalker_ReplaceAnimalMinded"
+      ],
+      "skinwalker_change_shape_kin": null,
+      "source_page": "p.89",
+      "suppressed_by_flag": null,
+      "template_bonus_languages": [],
+      "type_tokens": [
+        "RacialTraits",
+        "Skinwalker Racial Trait",
+        "SpecialQuality"
+      ]
+    },
+    "skinwalker/wereraptor_kin_change_shape.json": {
+      "adopted_race_pool_suffix": null,
+      "automatic_trait_grants": [
+        "TYPE=Skinwalker Change Shape Wereraptor-Kin"
+      ],
+      "category": "Special Ability",
+      "declared_bonuses": {
+        "ability_adjustments": [],
+        "ability_pool_picks": 0,
+        "magnitudes": [],
+        "magnitudes_excluding_flags": [],
+        "only_internal_flags": false,
+        "target_bonuses": [],
+        "var_contributions": []
+      },
+      "declared_size": null,
+      "declared_vision": [],
+      "declared_walk_speed_ft": null,
+      "declares_negated_ability_guard": false,
+      "description": "An aerieborn skinwalker can change shape to a bestial form as a standard action. In bestial form, an aerieborn skinwalker gains a +2 racial bonus to Dexterity. While in this form, a skinwalker also takes on an animalistic feature that provides a special effect. Each time an aerieborn skinwalker assumes bestial form, he can choose to gain a bite attack that deals 1d6 points of damage, 2 talon attacks that each deal 1d4 points of damage, +4 racial bonus on Perception checks, or increase fly speeds from other sources by 10 feet. These benefits last until the skinwalker returns to his humanoid form as a swift action. A skinwalker must first return to his humanoid form before changing to bestial form again to change benefits.",
+      "exclusion_guard_flags": [
+        "Skinwalker_ReplaceChangeShape"
+      ],
+      "is_racial_default": false,
+      "key": "Wereraptor-Kin ~ Change Shape",
+      "name": "Change Shape",
+      "negated_fact_gates": [],
+      "positive_prefact_flag": null,
+      "race_key": "Skinwalker",
+      "sets_replace_flags": [
+        "Skinwalker_ReplaceChangeShape"
+      ],
+      "skinwalker_change_shape_kin": "Wereraptor-Kin",
+      "source_page": "p.89",
+      "suppressed_by_flag": null,
+      "template_bonus_languages": [],
+      "type_tokens": [
+        "RacialTraits",
+        "Skinwalker Racial Trait",
+        "SpecialQuality",
+        "Special Quality",
+        "Special Ability",
+        "Supernatural"
+      ]
+    },
+    "skinwalker/wereraptor_kin_spell_like_ability.json": {
+      "adopted_race_pool_suffix": null,
+      "automatic_trait_grants": [
+        "Racial SLA ~ Feather Fall"
+      ],
+      "category": "Special Ability",
+      "declared_bonuses": {
+        "ability_adjustments": [],
+        "ability_pool_picks": 0,
+        "magnitudes": [],
+        "magnitudes_excluding_flags": [],
+        "only_internal_flags": false,
+        "target_bonuses": [
+          {
+            "keyword": "VAR",
+            "magnitude": null,
+            "target": "RacialSLA_FeatherFall_DCMod"
+          }
+        ],
+        "var_contributions": [
+          {
+            "amount": null,
+            "name": "RacialSLA_FeatherFall_DCMod"
+          }
+        ]
+      },
+      "declared_size": null,
+      "declared_vision": [],
+      "declared_walk_speed_ft": null,
+      "declares_negated_ability_guard": false,
+      "description": "An Aerieborn skinwalker with a Wisdom score of 11 or higher can use feather fall once per day as a spell-like ability, using his Wisdom modifier to determine his concentration checks. The caster level for this ability is equal to the skinwalker's character level.",
+      "exclusion_guard_flags": [
+        "Skinwalker_ReplaceSpellLikeAbility"
+      ],
+      "is_racial_default": false,
+      "key": "Wereraptor-Kin ~ Spell-Like Ability",
+      "name": "Spell-Like Ability",
+      "negated_fact_gates": [],
+      "positive_prefact_flag": null,
+      "race_key": "Skinwalker",
+      "sets_replace_flags": [
+        "Skinwalker_ReplaceSpellLikeAbility"
+      ],
+      "skinwalker_change_shape_kin": null,
+      "source_page": "p.89",
+      "suppressed_by_flag": null,
+      "template_bonus_languages": [],
+      "type_tokens": [
+        "RacialTraits",
+        "Skinwalker Racial Trait",
+        "SpecialQuality"
+      ]
+    },
+    "skinwalker/wererat_kin_ability_scores.json": {
+      "adopted_race_pool_suffix": null,
+      "automatic_trait_grants": [],
+      "category": "Special Ability",
+      "declared_bonuses": {
+        "ability_adjustments": [
+          {
+            "codes": "INT",
+            "magnitude": "2"
+          },
+          {
+            "codes": "STR",
+            "magnitude": "-2"
+          }
+        ],
+        "ability_pool_picks": 0,
+        "magnitudes": [
+          2,
+          -2
+        ],
+        "magnitudes_excluding_flags": [
+          2,
+          -2
+        ],
+        "only_internal_flags": false,
+        "target_bonuses": [
+          {
+            "keyword": "STAT",
+            "magnitude": 2,
+            "target": "INT"
+          },
+          {
+            "keyword": "STAT",
+            "magnitude": -2,
+            "target": "STR"
+          }
+        ],
+        "var_contributions": []
+      },
+      "declared_size": null,
+      "declared_vision": [],
+      "declared_walk_speed_ft": null,
+      "declares_negated_ability_guard": false,
+      "description": "These creatures, who are among the more common of the skinwalkers, prefer to dwell in urban areas.",
+      "exclusion_guard_flags": [
+        "Skinwalker_ReplaceAbilityScores"
+      ],
+      "is_racial_default": false,
+      "key": "Wererat-Kin ~ Ability Scores",
+      "name": "+2 Intelligence, -2 Strength, +2 Dexterity While in Bestial Form",
+      "negated_fact_gates": [],
+      "positive_prefact_flag": null,
+      "race_key": "Skinwalker",
+      "sets_replace_flags": [
+        "Skinwalker_ReplaceAbilityScores"
+      ],
+      "skinwalker_change_shape_kin": null,
+      "source_page": null,
+      "suppressed_by_flag": null,
+      "template_bonus_languages": [],
+      "type_tokens": [
+        "RacialTraits",
+        "Skinwalker Racial Trait",
+        "SpecialQuality",
+        "Racial Ability Scores"
+      ]
+    },
+    "skinwalker/wererat_kin_animal_minded.json": {
+      "adopted_race_pool_suffix": null,
+      "automatic_trait_grants": [],
+      "category": "Special Ability",
+      "declared_bonuses": {
+        "ability_adjustments": [],
+        "ability_pool_picks": 0,
+        "magnitudes": [
+          2
+        ],
+        "magnitudes_excluding_flags": [
+          2
+        ],
+        "only_internal_flags": false,
+        "target_bonuses": [
+          {
+            "keyword": "SITUATION",
+            "magnitude": 2,
+            "target": "Stealth=in urban environments"
+          },
+          {
+            "keyword": "SKILL",
+            "magnitude": 2,
+            "target": "Handle Animal"
+          }
+        ],
+        "var_contributions": []
+      },
+      "declared_size": null,
+      "declared_vision": [],
+      "declared_walk_speed_ft": null,
+      "declares_negated_ability_guard": false,
+      "description": "Skinwalkers have a +2 racial bonus on Handle Animal checks and Stealth checks in urban environents.",
+      "exclusion_guard_flags": [
+        "Skinwalker_ReplaceAnimalMinded"
+      ],
+      "is_racial_default": false,
+      "key": "Wererat-Kin ~ Animal-Minded",
+      "name": "Animal-Minded",
+      "negated_fact_gates": [],
+      "positive_prefact_flag": null,
+      "race_key": "Skinwalker",
+      "sets_replace_flags": [
+        "Skinwalker_ReplaceAnimalMinded"
+      ],
+      "skinwalker_change_shape_kin": null,
+      "source_page": null,
+      "suppressed_by_flag": null,
+      "template_bonus_languages": [],
+      "type_tokens": [
+        "RacialTraits",
+        "Skinwalker Racial Trait",
+        "SpecialQuality"
+      ]
+    },
+    "skinwalker/wererat_kin_change_shape.json": {
+      "adopted_race_pool_suffix": null,
+      "automatic_trait_grants": [
+        "TYPE=Skinwalker Change Shape Wererat-Kin"
+      ],
+      "category": "Special Ability",
+      "declared_bonuses": {
+        "ability_adjustments": [],
+        "ability_pool_picks": 0,
+        "magnitudes": [],
+        "magnitudes_excluding_flags": [],
+        "only_internal_flags": false,
+        "target_bonuses": [],
+        "var_contributions": []
+      },
+      "declared_size": null,
+      "declared_vision": [],
+      "declared_walk_speed_ft": null,
+      "declares_negated_ability_guard": false,
+      "description": "A nightskulk skinwalker can change shape to a bestial form as a standard action. In bestial form, a nightskulk skinwalker gains a +2 racial bonus to Dexterity. While in this form, a skinwalker also takes on an animalistic feature that provides a special effect. Each time a nightskulk skinwalker assumes bestial form, he can choose to gain a bite attack that deals 1d6 points of damage, climb speed of 30 feet, distraction (as the Universal Monster Rule from the Pathfinder RPG Bestiary, except with only one chosen natural attack per round, and sickens instead of nauseates), or scent to a range of 30 feet. These benefits last until the skinwalker returns to his humanoid form as a swift action. A skinwalker must first return to his humanoid form before changing to bestial form again to change benefits.",
+      "exclusion_guard_flags": [
+        "Skinwalker_ReplaceChangeShape"
+      ],
+      "is_racial_default": false,
+      "key": "Wererat-Kin ~ Change Shape",
+      "name": "Change Shape",
+      "negated_fact_gates": [],
+      "positive_prefact_flag": null,
+      "race_key": "Skinwalker",
+      "sets_replace_flags": [
+        "Skinwalker_ReplaceChangeShape"
+      ],
+      "skinwalker_change_shape_kin": "Wererat-Kin",
+      "source_page": null,
+      "suppressed_by_flag": null,
+      "template_bonus_languages": [],
+      "type_tokens": [
+        "RacialTraits",
+        "Skinwalker Racial Trait",
+        "SpecialQuality",
+        "Special Quality",
+        "Special Ability",
+        "Supernatural"
+      ]
+    },
+    "skinwalker/wererat_kin_spell_like_ability.json": {
+      "adopted_race_pool_suffix": null,
+      "automatic_trait_grants": [
+        "Racial SLA ~ Speak with Animals (rodents only)"
+      ],
+      "category": "Special Ability",
+      "declared_bonuses": {
+        "ability_adjustments": [],
+        "ability_pool_picks": 0,
+        "magnitudes": [
+          3
+        ],
+        "magnitudes_excluding_flags": [
+          3
+        ],
+        "only_internal_flags": false,
+        "target_bonuses": [
+          {
+            "keyword": "VAR",
+            "magnitude": 3,
+            "target": "RacialSLA_SpeakWithAnimalsRodentsOnly_Times"
+          },
+          {
+            "keyword": "VAR",
+            "magnitude": null,
+            "target": "RacialSLA_SpeakWithAnimalsRodentsOnly_DCMod"
+          }
+        ],
+        "var_contributions": [
+          {
+            "amount": 3,
+            "name": "RacialSLA_SpeakWithAnimalsRodentsOnly_Times"
+          },
+          {
+            "amount": null,
+            "name": "RacialSLA_SpeakWithAnimalsRodentsOnly_DCMod"
+          }
+        ]
+      },
+      "declared_size": null,
+      "declared_vision": [],
+      "declared_walk_speed_ft": null,
+      "declares_negated_ability_guard": false,
+      "description": "A nightskulk skinwalker with a Wisdom score of 11 or higher can use speak with animals (rodents only) three times per day as a spell-like ability, using his Wisdom modifier to determine his concentration checks. The caster level for this ability is equal to the skinwalker's character level.",
+      "exclusion_guard_flags": [
+        "Skinwalker_ReplaceSpellLikeAbility"
+      ],
+      "is_racial_default": false,
+      "key": "Wererat-Kin ~ Spell-Like Ability",
+      "name": "Spell-Like Ability",
+      "negated_fact_gates": [],
+      "positive_prefact_flag": null,
+      "race_key": "Skinwalker",
+      "sets_replace_flags": [
+        "Skinwalker_ReplaceSpellLikeAbility"
+      ],
+      "skinwalker_change_shape_kin": null,
+      "source_page": null,
+      "suppressed_by_flag": null,
+      "template_bonus_languages": [],
+      "type_tokens": [
+        "RacialTraits",
+        "Skinwalker Racial Trait",
+        "SpecialQuality"
+      ]
+    },
+    "skinwalker/wereshark_kin_ability_scores.json": {
+      "adopted_race_pool_suffix": null,
+      "automatic_trait_grants": [],
+      "category": "Special Ability",
+      "declared_bonuses": {
+        "ability_adjustments": [
+          {
+            "codes": "WIS",
+            "magnitude": "2"
+          },
+          {
+            "codes": "INT",
+            "magnitude": "-2"
+          }
+        ],
+        "ability_pool_picks": 0,
+        "magnitudes": [
+          2,
+          -2
+        ],
+        "magnitudes_excluding_flags": [
+          2,
+          -2
+        ],
+        "only_internal_flags": false,
+        "target_bonuses": [
+          {
+            "keyword": "STAT",
+            "magnitude": 2,
+            "target": "WIS"
+          },
+          {
+            "keyword": "STAT",
+            "magnitude": -2,
+            "target": "INT"
+          }
+        ],
+        "var_contributions": []
+      },
+      "declared_size": null,
+      "declared_vision": [],
+      "declared_walk_speed_ft": null,
+      "declares_negated_ability_guard": false,
+      "description": "These unusual skinwalkers tend to be strong-willed and brisk in their patterns of speech. They often serve aboard pirate ships, where their traits are well appreciated.",
+      "exclusion_guard_flags": [
+        "Skinwalker_ReplaceAbilityScores"
+      ],
+      "is_racial_default": false,
+      "key": "Wereshark-Kin ~ Ability Scores",
+      "name": "+2 Wisdom, -2 Intelligence, +2 Constitution While in Bestial Form",
+      "negated_fact_gates": [],
+      "positive_prefact_flag": null,
+      "race_key": "Skinwalker",
+      "sets_replace_flags": [
+        "Skinwalker_ReplaceAbilityScores"
+      ],
+      "skinwalker_change_shape_kin": null,
+      "source_page": null,
+      "suppressed_by_flag": null,
+      "template_bonus_languages": [],
+      "type_tokens": [
+        "RacialTraits",
+        "Skinwalker Racial Trait",
+        "SpecialQuality",
+        "Racial Ability Scores"
+      ]
+    },
+    "skinwalker/wereshark_kin_animal_minded.json": {
+      "adopted_race_pool_suffix": null,
+      "automatic_trait_grants": [],
+      "category": "Special Ability",
+      "declared_bonuses": {
+        "ability_adjustments": [],
+        "ability_pool_picks": 0,
+        "magnitudes": [
+          2
+        ],
+        "magnitudes_excluding_flags": [
+          2
+        ],
+        "only_internal_flags": false,
+        "target_bonuses": [
+          {
+            "keyword": "SKILL",
+            "magnitude": 2,
+            "target": "Perception,Swim"
+          }
+        ],
+        "var_contributions": []
+      },
+      "declared_size": null,
+      "declared_vision": [],
+      "declared_walk_speed_ft": null,
+      "declares_negated_ability_guard": false,
+      "description": "Skinwalkers have a +2 racial bonus on Perception and Swim checks.",
+      "exclusion_guard_flags": [
+        "Skinwalker_ReplaceAnimalMinded"
+      ],
+      "is_racial_default": false,
+      "key": "Wereshark-Kin ~ Animal-Minded",
+      "name": "Animal-Minded",
+      "negated_fact_gates": [],
+      "positive_prefact_flag": null,
+      "race_key": "Skinwalker",
+      "sets_replace_flags": [
+        "Skinwalker_ReplaceAnimalMinded"
+      ],
+      "skinwalker_change_shape_kin": null,
+      "source_page": null,
+      "suppressed_by_flag": null,
+      "template_bonus_languages": [],
+      "type_tokens": [
+        "RacialTraits",
+        "Skinwalker Racial Trait",
+        "SpecialQuality"
+      ]
+    },
+    "skinwalker/wereshark_kin_change_shape.json": {
+      "adopted_race_pool_suffix": null,
+      "automatic_trait_grants": [
+        "TYPE=Skinwalker Change Shape Wereshark-Kin"
+      ],
+      "category": "Special Ability",
+      "declared_bonuses": {
+        "ability_adjustments": [],
+        "ability_pool_picks": 0,
+        "magnitudes": [],
+        "magnitudes_excluding_flags": [],
+        "only_internal_flags": false,
+        "target_bonuses": [],
+        "var_contributions": []
+      },
+      "declared_size": null,
+      "declared_vision": [],
+      "declared_walk_speed_ft": null,
+      "declares_negated_ability_guard": false,
+      "description": "A seascarred skinwalker can change shape to a bestial form as a standard action. In bestial form, a seascarred skinwalker gains a +2 racial bonus to Constitution. While in this form, a skinwalker also takes on an animalistic feature that provides a special effect. Each time a seascarred skinwalker assumes bestial form, he can choose to gain the ability to breathe water as well as air, a bite attack that deals 1d6 points of damage, ferocity (Pathfinder RPG Bestiary), or a swim speed of 30 feet. These benefits last until the skinwalker returns to his humanoid form as a swift action. A skinwalker must first return to his humanoid form before changing to bestial form again to change benefits.",
+      "exclusion_guard_flags": [
+        "Skinwalker_ReplaceChangeShape"
+      ],
+      "is_racial_default": false,
+      "key": "Wereshark-Kin ~ Change Shape",
+      "name": "Change Shape",
+      "negated_fact_gates": [],
+      "positive_prefact_flag": null,
+      "race_key": "Skinwalker",
+      "sets_replace_flags": [
+        "Skinwalker_ReplaceChangeShape"
+      ],
+      "skinwalker_change_shape_kin": "Wereshark-Kin",
+      "source_page": null,
+      "suppressed_by_flag": null,
+      "template_bonus_languages": [],
+      "type_tokens": [
+        "RacialTraits",
+        "Skinwalker Racial Trait",
+        "SpecialQuality",
+        "Special Quality",
+        "Special Ability",
+        "Supernatural"
+      ]
+    },
+    "skinwalker/wereshark_kin_spell_like_ability.json": {
+      "adopted_race_pool_suffix": null,
+      "automatic_trait_grants": [
+        "Racial SLA ~ Charm Animal (aquatic animals only)"
+      ],
+      "category": "Special Ability",
+      "declared_bonuses": {
+        "ability_adjustments": [],
+        "ability_pool_picks": 0,
+        "magnitudes": [],
+        "magnitudes_excluding_flags": [],
+        "only_internal_flags": false,
+        "target_bonuses": [
+          {
+            "keyword": "VAR",
+            "magnitude": null,
+            "target": "RacialSLA_CharmAnimalAquaticAnimalsOnly_DCMod"
+          }
+        ],
+        "var_contributions": [
+          {
+            "amount": null,
+            "name": "RacialSLA_CharmAnimalAquaticAnimalsOnly_DCMod"
+          }
+        ]
+      },
+      "declared_size": null,
+      "declared_vision": [],
+      "declared_walk_speed_ft": null,
+      "declares_negated_ability_guard": false,
+      "description": "A seascarred skinwalker with a Wisdom score of 11 or higher can use charm animal (aquatic animals only) once per day as a spell-like ability, using his Wisdom modifier to determine his concentration checks. The caster level for this ability is equal to the skinwalker's character level.",
+      "exclusion_guard_flags": [
+        "Skinwalker_ReplaceSpellLikeAbility"
+      ],
+      "is_racial_default": false,
+      "key": "Wereshark-Kin ~ Spell-Like Ability",
+      "name": "Spell-Like Ability",
+      "negated_fact_gates": [],
+      "positive_prefact_flag": null,
+      "race_key": "Skinwalker",
+      "sets_replace_flags": [
+        "Skinwalker_ReplaceSpellLikeAbility"
+      ],
+      "skinwalker_change_shape_kin": null,
+      "source_page": null,
+      "suppressed_by_flag": null,
+      "template_bonus_languages": [],
+      "type_tokens": [
+        "RacialTraits",
+        "Skinwalker Racial Trait",
+        "SpecialQuality"
+      ]
+    },
+    "skinwalker/weretiger_kin_ability_scores.json": {
+      "adopted_race_pool_suffix": null,
+      "automatic_trait_grants": [],
+      "category": "Special Ability",
+      "declared_bonuses": {
+        "ability_adjustments": [
+          {
+            "codes": "DEX",
+            "magnitude": "2"
+          },
+          {
+            "codes": "WIS",
+            "magnitude": "-2"
+          }
+        ],
+        "ability_pool_picks": 0,
+        "magnitudes": [
+          2,
+          -2
+        ],
+        "magnitudes_excluding_flags": [
+          2,
+          -2
+        ],
+        "only_internal_flags": false,
+        "target_bonuses": [
+          {
+            "keyword": "STAT",
+            "magnitude": 2,
+            "target": "DEX"
+          },
+          {
+            "keyword": "STAT",
+            "magnitude": -2,
+            "target": "WIS"
+          }
+        ],
+        "var_contributions": []
+      },
+      "declared_size": null,
+      "declared_vision": [],
+      "declared_walk_speed_ft": null,
+      "declares_negated_ability_guard": false,
+      "description": "[redacted PI]",
+      "exclusion_guard_flags": [
+        "Skinwalker_ReplaceAbilityScores"
+      ],
+      "is_racial_default": false,
+      "key": "Weretiger-Kin ~ Ability Scores",
+      "name": "+2 Dexterity, -2 Wisdom, +2 Charisma While in Bestial Form",
+      "negated_fact_gates": [],
+      "positive_prefact_flag": null,
+      "race_key": "Skinwalker",
+      "sets_replace_flags": [
+        "Skinwalker_ReplaceAbilityScores"
+      ],
+      "skinwalker_change_shape_kin": null,
+      "source_page": null,
+      "suppressed_by_flag": null,
+      "template_bonus_languages": [],
+      "type_tokens": [
+        "RacialTraits",
+        "Skinwalker Racial Trait",
+        "SpecialQuality",
+        "Racial Ability Scores"
+      ]
+    },
+    "skinwalker/weretiger_kin_animal_minded.json": {
+      "adopted_race_pool_suffix": null,
+      "automatic_trait_grants": [],
+      "category": "Special Ability",
+      "declared_bonuses": {
+        "ability_adjustments": [],
+        "ability_pool_picks": 0,
+        "magnitudes": [
+          2
+        ],
+        "magnitudes_excluding_flags": [
+          2
+        ],
+        "only_internal_flags": false,
+        "target_bonuses": [
+          {
+            "keyword": "SKILL",
+            "magnitude": 2,
+            "target": "Acrobatics,Perception"
+          }
+        ],
+        "var_contributions": []
+      },
+      "declared_size": null,
+      "declared_vision": [],
+      "declared_walk_speed_ft": null,
+      "declares_negated_ability_guard": false,
+      "description": "Skinwalkers have a +2 racial bonus on Acrobatics and Perception checks.",
+      "exclusion_guard_flags": [
+        "Skinwalker_ReplaceAnimalMinded"
+      ],
+      "is_racial_default": false,
+      "key": "Weretiger-Kin ~ Animal-Minded",
+      "name": "Animal-Minded",
+      "negated_fact_gates": [],
+      "positive_prefact_flag": null,
+      "race_key": "Skinwalker",
+      "sets_replace_flags": [
+        "Skinwalker_ReplaceAnimalMinded"
+      ],
+      "skinwalker_change_shape_kin": null,
+      "source_page": null,
+      "suppressed_by_flag": null,
+      "template_bonus_languages": [],
+      "type_tokens": [
+        "RacialTraits",
+        "Skinwalker Racial Trait",
+        "SpecialQuality"
+      ]
+    },
+    "skinwalker/weretiger_kin_change_shape.json": {
+      "adopted_race_pool_suffix": null,
+      "automatic_trait_grants": [
+        "TYPE=Skinwalker Change Shape Weretiger-Kin"
+      ],
+      "category": "Special Ability",
+      "declared_bonuses": {
+        "ability_adjustments": [],
+        "ability_pool_picks": 0,
+        "magnitudes": [],
+        "magnitudes_excluding_flags": [],
+        "only_internal_flags": false,
+        "target_bonuses": [],
+        "var_contributions": []
+      },
+      "declared_size": null,
+      "declared_vision": [],
+      "declared_walk_speed_ft": null,
+      "declares_negated_ability_guard": false,
+      "description": "A fanglord skinwalker can change shape to a bestial form as a standard action. In bestial form, a fanglord skinwalker gains a +2 racial bonus to Charisma. While in this form, a skinwalker also takes on an animalistic feature that provides a special effect. Each time a fanglord skinwalker assumes bestial form, he can choose to gain a bite attack that deals 1d6 points of damage, 2 claw attacks that each deal 1d4 points of damage, +10 foot racial bonus to base speed, or see in darkness (Pathfinder RPG Bestiary 2). These benefits last until the skinwalker returns to his humanoid form as a swift action. A skinwalker must first return to his humanoid form before changing to bestial form again to change benefits.",
+      "exclusion_guard_flags": [
+        "Skinwalker_ReplaceChangeShape"
+      ],
+      "is_racial_default": false,
+      "key": "Weretiger-Kin ~ Change Shape",
+      "name": "Change Shape",
+      "negated_fact_gates": [],
+      "positive_prefact_flag": null,
+      "race_key": "Skinwalker",
+      "sets_replace_flags": [
+        "Skinwalker_ReplaceChangeShape"
+      ],
+      "skinwalker_change_shape_kin": "Weretiger-Kin",
+      "source_page": null,
+      "suppressed_by_flag": null,
+      "template_bonus_languages": [],
+      "type_tokens": [
+        "RacialTraits",
+        "Skinwalker Racial Trait",
+        "SpecialQuality",
+        "Special Quality",
+        "Special Ability",
+        "Supernatural"
+      ]
+    },
+    "skinwalker/weretiger_kin_spell_like_ability.json": {
+      "adopted_race_pool_suffix": null,
+      "automatic_trait_grants": [
+        "Racial SLA ~ Jump"
+      ],
+      "category": "Special Ability",
+      "declared_bonuses": {
+        "ability_adjustments": [],
+        "ability_pool_picks": 0,
+        "magnitudes": [],
+        "magnitudes_excluding_flags": [],
+        "only_internal_flags": false,
+        "target_bonuses": [
+          {
+            "keyword": "VAR",
+            "magnitude": null,
+            "target": "RacialSLA_Jump_DCMod"
+          }
+        ],
+        "var_contributions": [
+          {
+            "amount": null,
+            "name": "RacialSLA_Jump_DCMod"
+          }
+        ]
+      },
+      "declared_size": null,
+      "declared_vision": [],
+      "declared_walk_speed_ft": null,
+      "declares_negated_ability_guard": false,
+      "description": "A fanglord skinwalker with a Wisdom score of 11 or higher can use jump once per day as a spell-like ability, using his Wisdom modifier to determine his concentration checks. The caster level for this ability is equal to the skinwalker's character level.",
+      "exclusion_guard_flags": [
+        "Skinwalker_ReplaceSpellLikeAbility"
+      ],
+      "is_racial_default": false,
+      "key": "Weretiger-Kin ~ Spell-Like Ability",
+      "name": "Spell-Like Ability",
+      "negated_fact_gates": [],
+      "positive_prefact_flag": null,
+      "race_key": "Skinwalker",
+      "sets_replace_flags": [
+        "Skinwalker_ReplaceSpellLikeAbility"
+      ],
+      "skinwalker_change_shape_kin": null,
+      "source_page": null,
+      "suppressed_by_flag": null,
+      "template_bonus_languages": [],
+      "type_tokens": [
+        "RacialTraits",
+        "Skinwalker Racial Trait",
+        "SpecialQuality"
+      ]
+    },
+    "skinwalker/werewolf_kin_ability_scores.json": {
+      "adopted_race_pool_suffix": null,
+      "automatic_trait_grants": [],
+      "category": "Special Ability",
+      "declared_bonuses": {
+        "ability_adjustments": [
+          {
+            "codes": "CON",
+            "magnitude": "2"
+          },
+          {
+            "codes": "INT",
+            "magnitude": "-2"
+          }
+        ],
+        "ability_pool_picks": 0,
+        "magnitudes": [
+          2,
+          -2
+        ],
+        "magnitudes_excluding_flags": [
+          2,
+          -2
+        ],
+        "only_internal_flags": false,
+        "target_bonuses": [
+          {
+            "keyword": "STAT",
+            "magnitude": 2,
+            "target": "CON"
+          },
+          {
+            "keyword": "STAT",
+            "magnitude": -2,
+            "target": "INT"
+          }
+        ],
+        "var_contributions": []
+      },
+      "declared_size": null,
+      "declared_vision": [],
+      "declared_walk_speed_ft": null,
+      "declares_negated_ability_guard": false,
+      "description": "Perhaps the most prevalent breed of skinwalker, witchwolves prefer dwelling with others of their kind.",
+      "exclusion_guard_flags": [
+        "Skinwalker_ReplaceAbilityScores"
+      ],
+      "is_racial_default": false,
+      "key": "Werewolf-Kin ~ Ability Scores",
+      "name": "+2 Constitution, -2 Intelligence, +2 Wisdom While in Bestial Form",
+      "negated_fact_gates": [],
+      "positive_prefact_flag": null,
+      "race_key": "Skinwalker",
+      "sets_replace_flags": [
+        "Skinwalker_ReplaceAbilityScores"
+      ],
+      "skinwalker_change_shape_kin": null,
+      "source_page": null,
+      "suppressed_by_flag": null,
+      "template_bonus_languages": [],
+      "type_tokens": [
+        "RacialTraits",
+        "Skinwalker Racial Trait",
+        "SpecialQuality",
+        "Racial Ability Scores"
+      ]
+    },
+    "skinwalker/werewolf_kin_animal_minded.json": {
+      "adopted_race_pool_suffix": null,
+      "automatic_trait_grants": [],
+      "category": "Special Ability",
+      "declared_bonuses": {
+        "ability_adjustments": [],
+        "ability_pool_picks": 0,
+        "magnitudes": [
+          2
+        ],
+        "magnitudes_excluding_flags": [
+          2
+        ],
+        "only_internal_flags": false,
+        "target_bonuses": [
+          {
+            "keyword": "SKILL",
+            "magnitude": 2,
+            "target": "Perception"
+          },
+          {
+            "keyword": "VAR",
+            "magnitude": 2,
+            "target": "WildEmpathy"
+          }
+        ],
+        "var_contributions": [
+          {
+            "amount": 2,
+            "name": "WildEmpathy"
+          }
+        ]
+      },
+      "declared_size": null,
+      "declared_vision": [],
+      "declared_walk_speed_ft": null,
+      "declares_negated_ability_guard": false,
+      "description": "Skinwalkers have a +2 racial bonus on Perception and wild empathy checks.",
+      "exclusion_guard_flags": [
+        "Skinwalker_ReplaceAnimalMinded"
+      ],
+      "is_racial_default": false,
+      "key": "Werewolf-Kin ~ Animal-Minded",
+      "name": "Animal-Minded",
+      "negated_fact_gates": [],
+      "positive_prefact_flag": null,
+      "race_key": "Skinwalker",
+      "sets_replace_flags": [
+        "Skinwalker_ReplaceAnimalMinded"
+      ],
+      "skinwalker_change_shape_kin": null,
+      "source_page": null,
+      "suppressed_by_flag": null,
+      "template_bonus_languages": [],
+      "type_tokens": [
+        "RacialTraits",
+        "Skinwalker Racial Trait",
+        "SpecialQuality"
+      ]
+    },
+    "skinwalker/werewolf_kin_change_shape.json": {
+      "adopted_race_pool_suffix": null,
+      "automatic_trait_grants": [
+        "TYPE=Skinwalker Change Shape Werewolf-Kin"
+      ],
+      "category": "Special Ability",
+      "declared_bonuses": {
+        "ability_adjustments": [],
+        "ability_pool_picks": 0,
+        "magnitudes": [],
+        "magnitudes_excluding_flags": [],
+        "only_internal_flags": false,
+        "target_bonuses": [],
+        "var_contributions": []
+      },
+      "declared_size": null,
+      "declared_vision": [],
+      "declared_walk_speed_ft": null,
+      "declares_negated_ability_guard": false,
+      "description": "A witchwolf skinwalker can change shape to a bestial form as a standard action. In bestial form, a witchwolf skinwalker gains a +2 racial bonus to Wisdom. While in this form, a skinwalker also takes on an animalistic feature that provides a special effect. Each time a witchwolf skinwalker assumes bestial form, he can choose to gain a bite attack that deals 1d6 points of damage, 2 claw attacks that each deal 1d4 points of damage, darkvision 60 feet, or +2 racial bonus on all saving throws. These benefits last until the skinwalker returns to his humanoid form as a swift action. A skinwalker must first return to his humanoid form before changing to bestial form again to change benefits.",
+      "exclusion_guard_flags": [
+        "Skinwalker_ReplaceChangeShape"
+      ],
+      "is_racial_default": false,
+      "key": "Werewolf-Kin ~ Change Shape",
+      "name": "Change Shape",
+      "negated_fact_gates": [],
+      "positive_prefact_flag": null,
+      "race_key": "Skinwalker",
+      "sets_replace_flags": [
+        "Skinwalker_ReplaceChangeShape"
+      ],
+      "skinwalker_change_shape_kin": "Werewolf-Kin",
+      "source_page": null,
+      "suppressed_by_flag": null,
+      "template_bonus_languages": [],
+      "type_tokens": [
+        "RacialTraits",
+        "Skinwalker Racial Trait",
+        "SpecialQuality",
+        "Special Quality",
+        "Special Ability",
+        "Supernatural"
+      ]
+    },
+    "skinwalker/werewolf_kin_spell_like_ability.json": {
+      "adopted_race_pool_suffix": null,
+      "automatic_trait_grants": [
+        "Racial SLA ~ Magic Fang"
+      ],
+      "category": "Special Ability",
+      "declared_bonuses": {
+        "ability_adjustments": [],
+        "ability_pool_picks": 0,
+        "magnitudes": [],
+        "magnitudes_excluding_flags": [],
+        "only_internal_flags": false,
+        "target_bonuses": [
+          {
+            "keyword": "VAR",
+            "magnitude": null,
+            "target": "RacialSLA_MagicFang_DCMod"
+          }
+        ],
+        "var_contributions": [
+          {
+            "amount": null,
+            "name": "RacialSLA_MagicFang_DCMod"
+          }
+        ]
+      },
+      "declared_size": null,
+      "declared_vision": [],
+      "declared_walk_speed_ft": null,
+      "declares_negated_ability_guard": false,
+      "description": "A witchwolf skinwalker with a Wisdom score of 11 or higher can use magic fang once per day as a spell-like ability, using his Wisdom modifier to determine his concentration checks. The caster level for this ability is equal to the skinwalker's character level.",
+      "exclusion_guard_flags": [
+        "Skinwalker_ReplaceSpellLikeAbility"
+      ],
+      "is_racial_default": false,
+      "key": "Werewolf-Kin ~ Spell-Like Ability",
+      "name": "Spell-Like Ability",
+      "negated_fact_gates": [],
+      "positive_prefact_flag": null,
+      "race_key": "Skinwalker",
+      "sets_replace_flags": [
+        "Skinwalker_ReplaceSpellLikeAbility"
+      ],
+      "skinwalker_change_shape_kin": null,
+      "source_page": null,
+      "suppressed_by_flag": null,
+      "template_bonus_languages": [],
+      "type_tokens": [
+        "RacialTraits",
+        "Skinwalker Racial Trait",
+        "SpecialQuality"
+      ]
+    }
+  }
+}

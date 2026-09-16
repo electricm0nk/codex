@@ -71,8 +71,8 @@ pub const PI_BLACKLIST_TERMS: &[&str] = &[
     "lrori",
     // Per-book addition, `ogl-pi-blacklist.md`'s per-book-override
     // template, same shape as the two additions immediately above: the
-    // `pi-key-rawtokens-screen` cycle's generic `data.key`/`data.raw_tokens`
-    // corpus-wide audit (SD-32 card 11, 2026-08-23) found the pinned
+    // `pi-key-rawtokens-screen` cycle's generic audit over `data.key` and the
+    // ingest token array, corpus-wide, (SD-32 card 11, 2026-08-23) found the pinned
     // oracle's OWN lowercase-possessive typo of an already-blacklisted
     // deity name at `isg_equip.lst:232` (coordinate, not the term itself --
     // see `ogl-pi-blacklist.md`'s per-book-override section for this
@@ -81,7 +81,8 @@ pub const PI_BLACKLIST_TERMS: &[&str] = &[
     // spelling already on this list never matches the oracle's own
     // lowercase variant. Shipped unredacted in
     // `data/corpus/inner_sea_gods/equipment/wayfinder_of_zephyrs.json`'s
-    // `data.description` and `raw_tokens[DESC]` until this cycle's fix.
+    // `data.description` and the token array's `DESC:` entry until this
+    // cycle's fix.
     // Verified before adding: this lowercase variant (any case) occurs in
     // exactly one PCGen source file at exactly two lines -- one already
     // `NAMEISPI:YES`-excluded, the other this leak -- so this addition
@@ -912,7 +913,7 @@ mod tests {
         let fixed = reconcile_description_pi_stamp(
             Some(REDACTED_PI_MARKER),
             License::PiRedacted,
-            Some("description,name,raw_tokens"),
+            Some(&format!("description,name,{}", crate::pcgen_import::ingest_payload::INGEST_TOKENS_FIELD)),
         );
         assert_eq!(fixed, None);
     }

@@ -589,7 +589,48 @@ function verifiesABridgeRecordIgnoresTheClassHeldArmEvenIfClassSlugCoincidentall
   );
 }
 
+/**
+ * SD-35 AT-35-E2-002: the `Not computed` lane keeps only records with no rule.
+ * A `.unsupported` notice whose record the "Rules and features" section
+ * renders from its sheet rule is dropped; one with no sheet line stays.
+ */
+function verifiesANoticeWithASheetRuleLeavesTheNotComputedLane() {
+  const fighter: HeldClass[] = [{ classId: 'class:fighter', classLabel: 'Fighter', level: 3 }];
+  const notices = [
+    explanation('class_feature.fighter.bravery.unsupported', 0, 'bravery is not grounded here'),
+    explanation('class_feature.fighter.weapon_training.unsupported', 0, 'weapon training is not grounded here'),
+  ];
+  const withoutLines = buildClassFeatureSurface(notices, fighter);
+  assertEqual(withoutLines.notComputed.length, 2, 'with no sheet lines every notice stays');
+
+  const withLines = buildClassFeatureSurface(notices, fighter, [], [
+    {
+      id: 'core_rulebook:class_feature:fighter_bravery',
+      kind: 'class_feature',
+      label: 'Bravery',
+      form: 'words',
+      value: '',
+      also: [],
+      prose: 'You gain a +1 bonus on Will saves against fear.',
+      condition: null,
+    },
+    {
+      id: 'core_rulebook:feat:weapon_training',
+      kind: 'feat',
+      label: 'Weapon Training',
+      form: 'words',
+      value: '',
+      also: [],
+      prose: 'a feat of the same slug is a different record',
+      condition: null,
+    },
+  ]);
+  assertEqual(withLines.notComputed.length, 1, 'the notice whose class_feature rule renders is dropped');
+  assertEqual(withLines.notComputed[0].id, 'class_feature.fighter.weapon_training.unsupported', 'the notice with no class_feature line stays -- a feat line of the same slug is not its rule');
+}
+
 async function main() {
+  verifiesANoticeWithASheetRuleLeavesTheNotComputedLane();
   verifiesALevel11RoguesSneakAttackKeepsItsMagnitudeAndCitation();
   verifiesTheDetailTextIsNeverRewritten();
   verifiesNonClassRecordsAreIgnored();

@@ -26,14 +26,14 @@ use std::path::{Path, PathBuf};
 
 use sha2::{Digest, Sha256};
 
-use codex::rules_core::cache_gen::WiringClassIndex;
-use codex::rules_core::cache_gen::equipment_gap::resolve_name_or_rename;
+use codex::pcgen_import::cache_gen::WiringClassIndex;
+use codex::pcgen_import::cache_gen::equipment_gap::resolve_name_or_rename;
 use codex::rules_core::pi_screening;
 use codex::rules_core::rules_tables::crb::class_tables::{self, ClassId, ClassTableRow};
 use codex::rules_core::rules_tables::crb::equipment_tables::{self, EquipmentCategory, EquipmentTableEntry};
 use codex::rules_core::rules_tables::crb::json_cache::{
     ClassCacheData, Completeness, CorpusRecord, CorpusSource, EquipmentCacheData, Population,
-    SpellCacheData,
+    RenameInfo, SpellCacheData,
 };
 use codex::rules_core::rules_tables::crb::spell_list;
 
@@ -58,7 +58,7 @@ fn wiring_citation(source: &CorpusSource) -> Option<(&str, u32, &str)> {
 
 fn wiring_class_for_source(
     index: &WiringClassIndex,
-    lines: &mut codex::rules_core::wiring_class::CorpusLines,
+    lines: &mut codex::pcgen_import::wiring_class::CorpusLines,
     source: &CorpusSource,
 ) -> (String, Vec<String>) {
     match wiring_citation(source) {
@@ -588,7 +588,14 @@ fn main() {
                     pi_field,
                     pi_marker,
                     codex_generated_name,
-                    rename: rename_info,
+                    // SD-35 `AT-35-E6-003-RULED` cycle 3: the on-disk `rename` shape is owned by
+                    // the side that reads it (`json_cache::RenameInfo`) rather than by
+                    // `cache_gen::equipment_gap`. Two strings, mapped here in the generator --
+                    // the only place the converter's copy and the reader's copy meet.
+                    rename: rename_info.map(|r| RenameInfo {
+                        reason: r.reason,
+                        coordinate: r.coordinate,
+                    }),
                 };
                 current_spell_keys.insert(renamed_key.clone());
                 let used = spell_slugs_used.entry(entry.level).or_default();
@@ -618,7 +625,7 @@ fn main() {
         // is in neither `cache_gen::spell_lane_dump`'s nor
         // `cache_gen::spell_mod_access`'s book lists -- SD-32 cross-generator
         // sweep, 2026-08-23).
-        codex::rules_core::cache_gen::ultimate_equipment::remove_stale_owned_files(
+        codex::pcgen_import::cache_gen::ultimate_equipment::remove_stale_owned_files(
             &out_root.join("spell"),
             &current_spell_keys,
             &|_path, _line| true,
@@ -769,7 +776,14 @@ fn main() {
                     pi_field,
                     pi_marker,
                     codex_generated_name,
-                    rename: rename_info,
+                    // SD-35 `AT-35-E6-003-RULED` cycle 3: the on-disk `rename` shape is owned by
+                    // the side that reads it (`json_cache::RenameInfo`) rather than by
+                    // `cache_gen::equipment_gap`. Two strings, mapped here in the generator --
+                    // the only place the converter's copy and the reader's copy meet.
+                    rename: rename_info.map(|r| RenameInfo {
+                        reason: r.reason,
+                        coordinate: r.coordinate,
+                    }),
                 };
                 let category_slug = equipment_category_slug(entry.category);
                 let used = equipment_slugs_used.entry(category_slug).or_default();

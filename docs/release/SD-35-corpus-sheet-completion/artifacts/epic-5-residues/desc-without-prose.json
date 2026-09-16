@@ -1,0 +1,128 @@
+{
+ "criterion": "AT-35-E5-005",
+ "what": "units whose corpus record carries a real DESC token whose words never reach a sheet line -- the sheet prints a bare label where the rulebook prints a paragraph",
+ "fix_side": "converter (src/pcgen_import/sheet_rule/), outside Epic 5's file-touch set",
+ "re_derive_command": "python3 docs/release/SD-35-corpus-sheet-completion/artifacts/epic-5-residues/AT-35-E5-005_desc_without_prose.py",
+ "count": 10,
+ "by_kind": {
+  "ability": 3,
+  "class_feature": 7
+ },
+ "by_status": {
+  "sheet-complete": 10
+ },
+ "with_a_granting_rule_that_also_has_no_prose": 5,
+ "units": [
+  {
+   "id": "advanced_players_guide:class_feature:domain_power_anything_to_please",
+   "book": "advanced_players_guide",
+   "kind": "class_feature",
+   "status": "sheet-complete",
+   "evidence": "sheet_rule_rendered:words",
+   "corpus_record": "data/corpus/advanced_players_guide/class_feature/domain_power/anything_to_please.json",
+   "corpus_description_chars": 417,
+   "granted_by": [
+    "advanced_players_guide:class_feature:core_domain_lust_subdomain"
+   ]
+  },
+  {
+   "id": "horror_adventures:ability:shadowbound_corruption_eerie_perception_gift",
+   "book": "horror_adventures",
+   "kind": "ability",
+   "status": "sheet-complete",
+   "evidence": "sheet_rule_rendered:words",
+   "corpus_record": "data/corpus/horror_adventures/ability/eerie_perception_gift.json",
+   "corpus_description_chars": 224,
+   "granted_by": []
+  },
+  {
+   "id": "horror_adventures:class_feature:gravedigger_power_flesh_rot",
+   "book": "horror_adventures",
+   "kind": "class_feature",
+   "status": "sheet-complete",
+   "evidence": "sheet_rule_rendered:words",
+   "corpus_record": "data/corpus/horror_adventures/class_feature/gravedigger_power/flesh_rot.json",
+   "corpus_description_chars": 333,
+   "granted_by": []
+  },
+  {
+   "id": "inner_sea_intrigue:class_feature:guerrilla_skilled_liar",
+   "book": "inner_sea_intrigue",
+   "kind": "class_feature",
+   "status": "sheet-complete",
+   "evidence": "sheet_rule_rendered:words",
+   "corpus_record": "data/corpus/inner_sea_intrigue/class_feature/guerrilla/skilled_liar.json",
+   "corpus_description_chars": 270,
+   "granted_by": [
+    "inner_sea_intrigue:class_feature:rogue_archetype_guerrilla"
+   ]
+  },
+  {
+   "id": "inner_sea_magic:ability:infirmary_access_monastery",
+   "book": "inner_sea_magic",
+   "kind": "ability",
+   "status": "sheet-complete",
+   "evidence": "sheet_rule_rendered:words",
+   "corpus_record": "data/corpus/inner_sea_magic/ability/infirmary_access.json",
+   "corpus_description_chars": 445,
+   "granted_by": []
+  },
+  {
+   "id": "mythic_adventures:ability:mythic_ability_recuperation",
+   "book": "mythic_adventures",
+   "kind": "ability",
+   "status": "sheet-complete",
+   "evidence": "sheet_rule_rendered:words",
+   "corpus_record": "data/corpus/mythic_adventures/ability/recuperation.json",
+   "corpus_description_chars": 584,
+   "granted_by": []
+  },
+  {
+   "id": "occult_adventures:class_feature:resonant_power_necromantic_focus",
+   "book": "occult_adventures",
+   "kind": "class_feature",
+   "status": "sheet-complete",
+   "evidence": "sheet_rule_rendered:words",
+   "corpus_record": "data/corpus/occult_adventures/class_feature/resonant_power/necromantic_focus_necromancy.json",
+   "corpus_description_chars": 829,
+   "granted_by": [
+    "occult_adventures:class_feature:occultist_implement_school_necromancy"
+   ]
+  },
+  {
+   "id": "pathfinder_unchained:class_feature:wound_threshold",
+   "book": "pathfinder_unchained",
+   "kind": "class_feature",
+   "status": "sheet-complete",
+   "evidence": "sheet_rule_rendered:words",
+   "corpus_record": "data/corpus/pathfinder_unchained/class_feature/wound_threshold/wound_threshold.json",
+   "corpus_description_chars": 269,
+   "granted_by": [
+    "pathfinder_unchained:class_feature:rule_wound_threshold"
+   ]
+  },
+  {
+   "id": "ultimate_combat:class_feature:armored_hulk_improved_armored_swiftness",
+   "book": "ultimate_combat",
+   "kind": "class_feature",
+   "status": "sheet-complete",
+   "evidence": "sheet_rule_rendered:words",
+   "corpus_record": "data/corpus/ultimate_combat/class_feature/armored_hulk/improved_armored_swiftness.json",
+   "corpus_description_chars": 512,
+   "granted_by": []
+  },
+  {
+   "id": "ultimate_magic:class_feature:frog_domain_sticky_strike",
+   "book": "ultimate_magic",
+   "kind": "class_feature",
+   "status": "sheet-complete",
+   "evidence": "sheet_rule_rendered:words",
+   "corpus_record": "data/corpus/ultimate_magic/class_feature/frog_domain/sticky_strike.json",
+   "corpus_description_chars": 740,
+   "granted_by": [
+    "ultimate_magic:domain:frog",
+    "ultimate_wilderness:class_feature:green_faith_marshal_frog_domain"
+   ]
+  }
+ ]
+}

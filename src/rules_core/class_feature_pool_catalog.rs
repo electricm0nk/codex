@@ -108,7 +108,72 @@ use std::path::{Path, PathBuf};
 
 use serde_json::Value;
 
-use crate::rules_core::pcgen_desc::{leaked_pcgen_syntax, render_pcgen_desc};
+// SD-35 `AT-35-E6-002` cycle 3 (`decisions.md` §11, `technical-design.md` §0): the four
+// ingest-row predicates this catalog gates pool membership on, and the accessor its
+// ground-truth corpus assertions read a token through, both live on the tool side now.
+use crate::rules_core::converted_prose;
+use crate::rules_core::record_vars;
+
+// =============================================================================
+// SettledPoolGates — the ingest-token gates, settled at authoring time
+// =============================================================================
+
+/// The three ingest-token gates this catalog applies to a `class_feature`
+/// record, settled once at authoring time.
+///
+/// SD-35 `AT-35-E6-003-RULED` cycle 18 (`decisions.md` §11, §19). Until this
+/// cycle the shipping walk asked
+/// `pcgen_import::pool_member_tokens`'s four predicates about the corpus row
+/// itself, on every process start: which ingest token keys the row carries, how
+/// many `DESC:` fields it has, whether a `PREABILITY` names
+/// `CATEGORY=Archetype`. Those are questions about the ingest format, so they
+/// are answered once, on the converter side, by
+/// [`crate::pcgen_import::pool_gate_settle`], and this catalog reads the verdict.
+///
+/// **The verdicts are unchanged**, which the whole-corpus parity proof in that
+/// module asserts record for record rather than assuming.
+///
+/// The table is deliberately **fail-closed**: [`SettledPoolGates::admits`] is
+/// false for a key the table does not hold, so a missing or stale artifact
+/// serves fewer pool options, never an unvetted one. That is the same direction
+/// the converted-prose join already fails in.
+#[derive(Debug, Clone, Default, PartialEq, serde::Serialize, serde::Deserialize)]
+pub struct SettledPoolGates {
+    /// [`settled_pool_gate_key`] for every record the three gates admit.
+    pub admitted: std::collections::BTreeSet<String>,
+    /// [`settled_pool_gate_key`] -> the name of the first gate that refused it.
+    /// The reason is the catalog's own bucket name, never token text.
+    pub refused: BTreeMap<String, String>,
+}
+
+impl SettledPoolGates {
+    /// Whether the three ingest-token gates admit this record.
+    ///
+    /// Fail-closed: a key the table does not hold is not admitted.
+    pub fn admits(&self, book: &str, record_key: &str) -> bool {
+        self.admitted.contains(&settled_pool_gate_key(book, record_key))
+    }
+
+    /// The name of the first gate that refused this record, when one did.
+    pub fn refusal(&self, book: &str, record_key: &str) -> Option<&str> {
+        self.refused.get(&settled_pool_gate_key(book, record_key)).map(String::as_str)
+    }
+
+    /// Whether the table knows this record at all — admitted or refused.
+    pub fn knows(&self, book: &str, record_key: &str) -> bool {
+        let key = settled_pool_gate_key(book, record_key);
+        self.admitted.contains(&key) || self.refused.contains_key(&key)
+    }
+}
+
+/// The key [`SettledPoolGates`] is indexed by: a record's book directory and its
+/// corpus `data.key`, joined. A record key is unique only within its book.
+pub fn settled_pool_gate_key(book: &str, record_key: &str) -> String {
+    format!("{book}{SETTLED_POOL_GATE_KEY_SEPARATOR}{record_key}")
+}
+
+/// The separator [`settled_pool_gate_key`] joins with.
+pub const SETTLED_POOL_GATE_KEY_SEPARATOR: char = '|';
 
 /// **SD-32 T12 class-feature-pool-population cycle:** this catalog used to
 /// hard-refuse any `" ~ "`-group-qualified `class_feature` record whose
@@ -177,8 +242,45 @@ fn is_standalone_class_feature(key: &str) -> bool {
 /// refusal here is the correct-for-this-file mitigation (never manufacture
 /// `text-complete` for a record this module can independently prove is
 /// broken), not a fix of the root cause.
+///
+/// **Case, and where it is applied — SD-35 `AT-35-E6-003-SWEEP` cycle 17.** The corpus states
+/// the marker in both cases (`[not implemented]` and `[NOT IMPLEMENTED]`), and this function
+/// used to read only the lowercase one: 85 `class_feature` records carry a marker, 68 of them
+/// in a case the old comparison could not see. Measured at the cycle that fixed it, **32 of the
+/// 4,463 records these catalogs serve printed a marker on the sheet.**
+///
+/// Cycle 17 also moved *where* the guard is applied. It is now asked about the words that
+/// actually print — the converted rule's prose — and not about the corpus row they were
+/// derived from. That is the surface the doctrine is about, and it is also the accurate one:
+/// for 30 of those 32 records the converter's own prose comes from a source row that never
+/// carried the marker, so refusing the record on its raw `description` would have thrown away a
+/// clean sentence over an annotation that never reaches the page.
 fn carries_unimplemented_marker(description: &str) -> bool {
-    description.contains("[not implemented]") || description.contains("[not enforced]")
+    let lower = description.to_ascii_lowercase();
+    lower.contains("[not implemented]") || lower.contains("[not enforced]")
+}
+
+/// The ingest format's **`%N` slot marker** — `%` immediately followed by a digit — in text
+/// that is about to be printed.
+///
+/// SD-35 `AT-35-E6-003-SWEEP` cycle 17. This is deliberately narrower than
+/// `pcgen_desc::leaked_pcgen_syntax`, and the narrowing is the point: that function reads an
+/// ingest string, where every `%` is a slot marker, and this one reads **converted prose**,
+/// where a `%` is the book's own percent sign (*"a 25% chance that the critical hit ... is
+/// negated"*). A `%N` in converted prose would be a real leak — the converter failed to type
+/// the hole and copied the marker through.
+///
+/// `#[cfg(test)]` because it is an assertion helper: production code never has to ask, since
+/// the words it serves come from the converted package and the package has its own gate
+/// (`package_carries_no_source_format_literal`). It exists so the two catalog tests state the
+/// same predicate rather than two hand-rolled ones.
+#[cfg(test)]
+fn carries_ingest_slot_marker(text: &str) -> bool {
+    let bytes = text.as_bytes();
+    bytes
+        .iter()
+        .enumerate()
+        .any(|(i, b)| *b == b'%' && bytes.get(i + 1).is_some_and(u8::is_ascii_digit))
 }
 
 /// Generalizes `CLASS_LEVEL_SCALED_SHEET_VALUE_EXCLUDED_KEYS`'s hand-kept,
@@ -213,151 +315,6 @@ fn carries_class_specific_level_phrase(description: &str, class_name: &str) -> b
     false
 }
 
-/// `raw_tokens` keys that carry a real, player-facing engine effect --
-/// wave-22 adversarial review CONFIRMED (finding, severity high) that 9 of
-/// the lane's 88 originally-banked records carry one of these alongside a
-/// clean-rendering description (e.g. `Finesse Rogue`'s own `ABILITY:FEAT|
-/// VIRTUAL|Weapon Finesse`, `Skill Mastery`'s `SELECT:3+INT`). Decision 7
-/// condition 1 ("prose only, not a mechanic") and condition 2 ("nothing to
-/// compute") both fail for a record carrying any of these -- the render-
-/// and-refuse gate above only catches an UNRESOLVED `%N` inside the prose
-/// itself, never a wholly separate mechanical token the description text
-/// never mentions at all. Refused here, at the corpus-row level, per
-/// Decision 7's own binding PROXY WARNING (hand-verify the WHOLE row, not
-/// a magnitude-token proxy, before banking a zero-magnitude unit).
-const ENGINE_EFFECT_TOKEN_KEYS: &[&str] =
-    &["ABILITY", "CSKILL", "SELECT", "AUTO", "SAB", "BONUS", "DEFINE", "ADD", "SPELLS", "DR", "SR"];
-
-/// SD31-W29-INTEGRATE (Ruling §18, `OPERATOR-RULINGS-2026-08-21.md`):
-/// *"we need to show only valid choices."*
-///
-/// **Corrected mid-cycle, by this same integration pass, after a blanket
-/// "any `PRE*` token" version of this guard broke three pre-existing,
-/// correctly-served real records** (`core_rulebook: Rage Power ~ Clear
-/// Mind` — `PREVARGTEQ:RagePowersPrereqLVL,8`; `advanced_class_guide:
-/// Rage Power ~ Elemental Blood (Greater)` and `~ Linnorm Death Curse
-/// (Crag)` — `PRELEVEL:MIN=4`/`MIN=8`). A blanket refusal conflates two
-/// UNRELATED PF1e shapes:
-///
-/// * **A level/chain/skill gate within the pool's OWN class** (`PRELEVEL`,
-///   `PREVARGTEQ` against a class-internal counter, most `PREABILITY
-///   CATEGORY=Special Ability` chain prerequisites like "Greater" requiring
-///   the character already hold "Lesser") — every character who stays in
-///   this class and levels up CAN eventually take this option. It is a
-///   real, valid, standing member of an OPEN pool (exactly what Ruling
-///   §18's own worked answer already calls Rage Power/Rogue Talent: "any
-///   [class] can eventually take any [option]") — the catalog is not
-///   lying by listing it, the same way a feat reference list is not lying
-///   by listing a feat the character does not qualify for YET.
-/// * **A permanent, structural exclusion from the base class itself** — a
-///   PCGen `PREABILITY` token whose value carries `CATEGORY=Archetype`,
-///   meaning the option belongs to a specific ARCHETYPE swap
-///   (`Barbarian Archetype ~ Giant Stalker`, etc.), not to the base class
-///   the pool's `REGISTERED_POOL_GROUPS` entry is keyed against. A
-///   character who never takes that archetype can NEVER take this option
-///   at any level — this is the genuinely EXCLUSIVE-shaped case Ruling §18
-///   forbids serving wholesale (confirmed: `adventurers_guide`'s
-///   `giant_stalker_defense`/`topple_giant`/`underfoot`, all three
-///   `PREABILITY = 1,CATEGORY=Archetype,Barbarian Archetype ~ Giant
-///   Stalker`).
-///
-/// So the refusal is scoped to exactly the second shape: a `PREABILITY`
-/// token whose value contains `CATEGORY=Archetype`. This catalog has no
-/// character to check a level/skill prerequisite against, but it does not
-/// need one to know an archetype-locked option is not a standing member of
-/// the base class's own pool. A future cycle that wants real per-character
-/// LEVEL/skill gating (so the picker can grey out, not just list,
-/// not-yet-qualified options) needs that in the picker itself
-/// (`class_feature_pool_picker.rs`), not a wider refusal here.
-fn is_archetype_locked(raw_tokens: &Value) -> bool {
-    let Some(tokens) = raw_tokens.as_array() else { return false };
-    tokens.iter().any(|t| {
-        t.get("key").and_then(|k| k.as_str()) == Some("PREABILITY")
-            && t.get("value")
-                .and_then(|v| v.as_str())
-                .is_some_and(|v| v.contains("CATEGORY=Archetype"))
-    })
-}
-
-/// `true` when `raw_tokens` carries no [`ENGINE_EFFECT_TOKEN_KEYS`] entry --
-/// i.e. the record is genuinely prose-only, not merely prose-renders-clean.
-fn has_no_engine_effect_token(raw_tokens: &Value) -> bool {
-    let Some(tokens) = raw_tokens.as_array() else { return true };
-    !tokens.iter().any(|t| {
-        t.get("key").and_then(|k| k.as_str()).is_some_and(|k| ENGINE_EFFECT_TOKEN_KEYS.contains(&k))
-    })
-}
-
-/// A silent-truncation defect found by on-screen DoD-8 inspection while
-/// widening this catalog to Rage Power (`SD31-W23-POOLMEMBER-002`), present
-/// in neither the render-and-refuse gate nor the engine-effect-token gate:
-/// PCGen ships a handful of records with MULTIPLE `DESC:` tab fields on the
-/// same row -- a lead-in clause plus several `PREVAREQ:`-gated continuation
-/// clauses, one per "which element/condition did the character pick" branch
-/// (e.g. `Rage Power ~ Elemental Blood (Greater)`'s real oracle row: `DESC:
-/// While raging, the barbarian gains` followed by four separate `DESC:
-/// ...a burrow speed of 30 feet.|PREVAREQ:BloodRage Acid,1` / `...a swim
-/// speed of 60 feet.|PREVAREQ:BloodRage Cold,1` / ... segments).
-///
-/// Refused structurally here: any record whose row carries more than
-/// one `DESC:` field is, by construction, showing only a fragment of what
-/// the oracle actually states, regardless of whether that fragment happens
-/// to read as a complete sentence -- UNLESS [`shipped_description_is_the_
-/// already_regenerated_safe_multi_desc_join`] proves this specific
-/// record's shipped `data.description` has already been caught up (see
-/// that function's own doc comment for why the proof, not just the shape,
-/// gates the exception).
-fn raw_tokens_carry_more_than_one_desc_segment(raw_tokens: &Value) -> bool {
-    let Some(tokens) = raw_tokens.as_array() else { return false };
-    tokens.iter().filter(|t| t.get("key").and_then(|k| k.as_str()) == Some("DESC")).count() > 1
-}
-
-/// The `AT-34-E3-001 class_feature_option_pool` cycle's own narrow fix,
-/// sub-cause 8: `Martial Weapon Proficiency Output` (standalone) and
-/// `Octopus Wild Shape ~ Poison` (pool) each carry a genuine sequential
-/// DESC continuation with no mechanical reason for the split -- unlike
-/// `Rage Power ~ Elemental Blood (Greater)`'s PREVAREQ-gated alternative
-/// branches, joining every segment IS this record's real, complete
-/// description. `cache_gen::class_feature::generate`'s own `desc_value`
-/// (a different file, this package's disjoint-file-touch convention) now
-/// performs that join at ingest time for exactly this safe shape, so a
-/// record whose `data.description` has been regenerated since carries the
-/// FULL joined text already.
-///
-/// **Why this function re-derives the join instead of trusting the shape
-/// alone.** Corpus-wide, many OTHER multi-DESC records share the same
-/// "no PREVAREQ/PREVARGTEQ gate" shape but have NOT been regenerated --
-/// their shipped `data.description` is still the stale, first-segment-only
-/// value the old `desc_value` produced. Gating on shape alone (relaxing
-/// [`raw_tokens_carry_more_than_one_desc_segment`] to skip every
-/// ungated multi-DESC row) was tried and reverted: it silently served
-/// ~186 other records' stale, truncated `data.description` across
-/// multiple books and mechanisms this cycle does not own -- exactly the
-/// silent-truncation defect this module exists to prevent, reopened at
-/// corpus scale. Re-deriving the expected join from `raw_tokens` directly
-/// and requiring it to match the ALREADY-SHIPPED `data.description` proves
-/// ingest has actually caught up for this one record; every other
-/// not-yet-regenerated record fails the equality check and stays refused,
-/// unchanged from before this cycle.
-fn shipped_description_is_the_already_regenerated_safe_multi_desc_join(
-    raw_tokens: &Value,
-    shipped_description: &str,
-) -> bool {
-    let Some(tokens) = raw_tokens.as_array() else { return false };
-    let segments: Vec<&str> = tokens
-        .iter()
-        .filter(|t| t.get("key").and_then(|k| k.as_str()) == Some("DESC"))
-        .filter_map(|t| t.get("value").and_then(|v| v.as_str()))
-        .collect();
-    if segments.len() <= 1 {
-        return false;
-    }
-    if segments[1..].iter().any(|s| s.contains("PREVAREQ") || s.contains("PREVARGTEQ")) {
-        return false;
-    }
-    let expected_join = segments.iter().map(|s| s.trim()).collect::<Vec<_>>().join(" ");
-    expected_join == shipped_description
-}
 
 /// A gap in `render_pcgen_desc`'s own `dropped_args` reporting, found while
 /// widening this catalog to Rage Power (`SD31-W23-POOLMEMBER-002`; NOT
@@ -468,7 +425,7 @@ fn is_real_description_value(value: &str) -> bool {
 /// ability, ...), a blast radius this integration cycle has no budget to
 /// re-verify; a class_feature_pool_catalog-local denylist is exactly the
 /// same "narrow, disjoint-file-touch correction" precedent this module's
-/// other hand-kept guards (`raw_tokens_carry_more_than_one_desc_segment`,
+/// other hand-kept guards (`pool_member_tokens::carries_more_than_one_desc_segment`,
 /// the render-and-refuse gate) already establish.
 const CLASS_LEVEL_SCALED_SHEET_VALUE_EXCLUDED_KEYS: [&str; 16] = [
     "Rage Power ~ Chaos Totem (Greater)",
@@ -516,6 +473,7 @@ fn load_class_feature_catalog(
     key_filter: impl Fn(&str) -> bool,
 ) -> Vec<PoolCatalogEntry> {
     let corpus_root = repo_root.join("data/corpus");
+    let pool_gates = &record_vars::package_at(repo_root).pool_gates;
     let mut out = Vec::new();
     let Ok(books) = std::fs::read_dir(&corpus_root) else { return out };
     let mut book_dirs: Vec<_> = books.flatten().collect();
@@ -563,36 +521,42 @@ fn load_class_feature_catalog(
             if !is_real_description_value(raw_desc) {
                 continue;
             }
-            if carries_unimplemented_marker(raw_desc) {
-                continue;
-            }
+            // The stub-marker refusal moved down, onto the converted prose — see
+            // `carries_unimplemented_marker`. Asking it here, about the corpus row, refuses 30
+            // records whose printed words never carry the marker at all.
             let owning_class = data["class"].as_str().unwrap_or("");
             if carries_class_specific_level_phrase(raw_desc, owning_class) {
                 continue;
             }
-            if !has_no_engine_effect_token(&data["raw_tokens"]) {
-                continue;
-            }
-            if is_archetype_locked(&data["raw_tokens"]) {
-                continue;
-            }
-            if raw_tokens_carry_more_than_one_desc_segment(&data["raw_tokens"])
-                && !shipped_description_is_the_already_regenerated_safe_multi_desc_join(&data["raw_tokens"], raw_desc)
-            {
+            // SD-35 `AT-35-E6-003-RULED` cycle 18, `decisions.md` §11/§19: the
+            // engine-effect-token, archetype-lock and multi-`DESC:` gates used
+            // to be three questions about the ingest row, asked here, at run
+            // time, on the way to a character sheet. They are settled at ingest
+            // now and this is the join to the verdict; see [`SettledPoolGates`].
+            if !pool_gates.admits(&book, key) {
                 continue;
             }
             if raw_desc_has_a_bare_percent_reference_no_pipe_tail_can_resolve(raw_desc) {
                 continue;
             }
-            let rendered = render_pcgen_desc(raw_desc);
-            // The render-and-refuse gate: an unresolved `%N` means a real
-            // computation this catalog cannot perform is still missing from
-            // the sentence, which fails Decision 7's condition 2 (`nothing
-            // to compute`) at the same time it would leak broken syntax.
-            if !rendered.dropped_args.is_empty() {
+            // SD-35 `AT-35-E6-003-SWEEP` cycle 17, `decisions.md §11` and
+            // `epic-breakdown.md`'s `AT-35-E6-003`: this catalog used to take
+            // `data.description` -- the ingest format's own `DESC:` row, `%N`
+            // slots and `|`-argument tail included -- and substitute it here,
+            // at run time, on the way to a character sheet. The substitution
+            // now happens once, at ingest, in `src/pcgen_import/sheet_rule/`,
+            // and this is the join to what it produced. The old
+            // render-and-refuse gate is gone with the render: a rule the
+            // converter refused to give words to states no prose, and
+            // `None` here is that refusal arriving by its own route.
+            let Some(converted) = converted_prose::description_for(&book, "class_feature", key)
+            else {
                 continue;
-            }
-            if leaked_pcgen_syntax(&rendered.text).is_some() {
+            };
+            // The stub-marker guard, applied to the words that actually
+            // print rather than to the corpus row they came from. See
+            // `carries_unimplemented_marker`.
+            if carries_unimplemented_marker(&converted) {
                 continue;
             }
             // Strip raw PCGen footnote markers (`**`, `*`) that leaked
@@ -609,7 +573,7 @@ fn load_class_feature_catalog(
                 pool_group: group.to_string(),
                 key: key.to_string(),
                 name: clean_name,
-                description: rendered.text,
+                description: converted,
             });
         }
     }
@@ -661,8 +625,8 @@ pub fn load_standalone_class_feature_catalog(repo_root: &Path) -> Vec<PoolCatalo
 /// three `CATEGORY:Class` rows whose ENTIRE content is a `KEY`, a
 /// `CATEGORY`, and a `TYPE` token — no `DESC:`, no
 /// `AUTO:`/`ABILITY:`/`BONUS:`/`CHOOSE:`, no mechanical token of any kind
-/// (`data.description` is JSON `null`, `data.raw_tokens` has exactly 3
-/// entries). These are PCGen's own "no selection" placeholder rows for a
+/// (`data.description` is JSON `null`, and the row's ingested token array
+/// has exactly 3 entries). These are PCGen's own "no selection" placeholder rows for a
 /// `CHOOSE` menu's default entry (the record's own `class` field is
 /// literally `"Empty Selection"`, PCGen's own convention name) — not a
 /// Pathfinder rules feature at all, so there is genuinely nothing to
@@ -676,7 +640,7 @@ pub fn load_standalone_class_feature_catalog(repo_root: &Path) -> Vec<PoolCatalo
 /// where gating a sibling rung on record SHAPE ALONE (rather than a
 /// proven, closed set) would have promoted 188 unrelated corpus-wide
 /// records before being caught and reverted pre-commit. A corpus-wide
-/// structural scan for "description null, raw_tokens ⊆ {KEY, CATEGORY,
+/// structural scan for "description null, token keys ⊆ {KEY, CATEGORY,
 /// TYPE}" independently confirmed 41 matches spanning 6 other books (witch
 /// hex sub-features, uncanny-dodge trackers, BWBI wondrous-item slots,
 /// ...) that are NOT vacuous — this table can only ever match the 3 exact
@@ -904,6 +868,13 @@ pub fn pool_catalog_index(entries: &[PoolCatalogEntry]) -> BTreeMap<(String, Str
 
 #[cfg(test)]
 mod tests {
+    use crate::pcgen_import::ingest_record;
+    // The three ingest-token gates are settled at ingest for the shipping walk
+    // (SD-35 `AT-35-E6-003-RULED` cycle 18). The census and parity assertions
+    // below still ask the converter's predicates directly, which is what makes
+    // them an independent check on the settled table rather than a restatement
+    // of it. A `#[cfg(test)]` region is not live code (`decisions.md` §18/B15).
+    use crate::pcgen_import::pool_member_tokens;
     use super::*;
 
     fn repo_root() -> PathBuf {
@@ -934,12 +905,8 @@ mod tests {
                 json["data"]["description"].is_null(),
                 "{key} now carries a real description -- revisit this table, decisions.md §2"
             );
-            let token_keys: std::collections::BTreeSet<&str> = json["data"]["raw_tokens"]
-                .as_array()
-                .expect("raw_tokens is an array")
-                .iter()
-                .map(|t| t["key"].as_str().expect("token key present"))
-                .collect();
+            let token_keys: std::collections::BTreeSet<&str> =
+                ingest_record::token_keys(&json).into_iter().collect();
             assert_eq!(
                 token_keys,
                 std::collections::BTreeSet::from(["KEY", "CATEGORY", "TYPE"]),
@@ -983,14 +950,8 @@ mod tests {
                 "{key} now carries a real description -- this record may now qualify for a \
                  different, display-bearing rung; revisit this table"
             );
-            let auto_token = json["data"]["raw_tokens"]
-                .as_array()
-                .expect("raw_tokens is an array")
-                .iter()
-                .find(|t| t["key"].as_str() == Some("AUTO"))
-                .unwrap_or_else(|| panic!("{key} carries no AUTO token"))["value"]
-                .as_str()
-                .expect("AUTO token has a string value")
+            let auto_token = ingest_record::first_token_value(&json, "AUTO")
+                .unwrap_or_else(|| panic!("{key} carries no AUTO token"))
                 .to_string();
             let corpus_weapons: std::collections::BTreeSet<String> = auto_token
                 .strip_prefix("WEAPONPROF|")
@@ -1052,13 +1013,9 @@ mod tests {
                 "{key} must carry a real description -- this table is only for the DISPLAY-\
                  bearing combined records, not the internal weapon-only chassis rows"
             );
-            let tokens = json["data"]["raw_tokens"].as_array().expect("raw_tokens is an array");
-
             // Weapon-side: named list (if any) must be an exact set match.
-            let named_weapons: std::collections::BTreeSet<String> = tokens
-                .iter()
-                .find(|t| t["key"].as_str() == Some("AUTO"))
-                .and_then(|t| t["value"].as_str())
+            let named_weapons: std::collections::BTreeSet<String> =
+                ingest_record::first_token_value(&json, "AUTO")
                 .and_then(|v| v.strip_prefix("WEAPONPROF|"))
                 .map(|list| {
                     list.split('|')
@@ -1079,10 +1036,9 @@ mod tests {
             // caller reading only this test still sees the full claim.
             let armor_row = weapon_tables::class_armor_proficiency(class_id)
                 .unwrap_or_else(|| panic!("{class_id} must be a real row in CLASS_ARMOR_PROFICIENCIES"));
-            let ability_tokens: Vec<String> = tokens
-                .iter()
-                .filter(|t| t["key"].as_str() == Some("ABILITY"))
-                .map(|t| t["value"].as_str().unwrap_or_default().to_string())
+            let ability_tokens: Vec<String> = ingest_record::token_values(&json, "ABILITY")
+                .into_iter()
+                .map(str::to_string)
                 .collect();
             let has = |needle: &str| ability_tokens.iter().any(|v| v.contains(needle));
             assert_eq!(has("Armor Prof ~ Light"), armor_row.light, "{key} light armor");
@@ -1195,18 +1151,41 @@ mod tests {
         assert!(!ledge_walker.description.contains('%'), "no unsubstituted argument may leak into prose");
     }
 
-    /// The render-and-refuse gate's whole point: `Bleeding Attack`'s only
-    /// magnitude is a bare cross-reference (`SneakAttackDice`) this catalog
-    /// cannot resolve, so it must never be served — refused, not shipped
-    /// with a dropped `%1` or a guessed number.
+    /// `Bleeding Attack`'s only magnitude is a cross-reference to the character's own sneak
+    /// attack dice, which no catalog screen can settle — there is no character in hand.
+    ///
+    /// **What changed in SD-35 `AT-35-E6-003-SWEEP` cycle 17, and why it is not a weakening.**
+    /// Until cycle 17 this record was *refused*: the run-time render dropped its `%1` and the
+    /// catalog threw the whole sentence away rather than print "take  additional points of
+    /// damage". That was the right call for a renderer that could only substitute a number or
+    /// nothing. The converted rule carries the same magnitude as a **typed** hole, and
+    /// `sheet_rule_catalog::render` prints an unsettled hole as the term's own words — which is
+    /// `decisions.md §1`'s third permitted printed form, *the rule's words*, and the whole
+    /// premise of the sheet rule. So the record is now served, with the term stated rather than
+    /// dropped.
+    ///
+    /// What must still never happen is the thing the old gate was really protecting against: a
+    /// gap where the magnitude was, a guessed number, or the ingest format's own `%N` slot
+    /// marker reaching the page.
     #[test]
-    fn bleeding_attack_is_refused_for_an_unresolvable_percent_argument() {
+    fn bleeding_attack_states_its_unsettled_term_in_words_rather_than_dropping_it() {
         let entries = load_pool_catalog(&repo_root());
+        let bleeding = entries
+            .iter()
+            .find(|e| e.book == "core_rulebook" && e.key == "Rogue Talent ~ Bleeding Attack")
+            .expect("core_rulebook's Rogue Talent ~ Bleeding Attack must be in the catalog");
+        println!("Bleeding Attack serves: {}", bleeding.description);
         assert!(
-            !entries.iter().any(|e| e.key == "Rogue Talent ~ Bleeding Attack"),
-            "a record whose render drops a %N argument must never reach the catalog"
+            !bleeding.description.contains("take  additional"),
+            "the magnitude was dropped, leaving a gap: {}",
+            bleeding.description
         );
-        // The refusal is scoped to the one record, not the whole book.
+        assert!(
+            !carries_ingest_slot_marker(&bleeding.description),
+            "an ingest-format %N slot marker reached the page: {}",
+            bleeding.description
+        );
+        // The record is served, not the whole book waved through.
         assert!(entries.iter().any(|e| e.book == "core_rulebook"));
     }
 
@@ -1252,17 +1231,35 @@ mod tests {
         assert!(!carries_unimplemented_marker("A vigilante with this talent can capitalize."));
     }
 
-    /// Real defect this cycle's widening would otherwise have shipped: 16
-    /// `occult_adventures` records (plus 1 `[not enforced]`) carry a
-    /// literal stub marker baked into `data.description` itself. Proves the
-    /// live catalog refuses at least one, non-vacuously.
+    /// Real defect this gate exists to stop: `occult_adventures` records whose `data.description`
+    /// carries a literal stub marker, which would print *"[not implemented]At 1st level, a
+    /// sha'ir learns..."* on a paper character sheet.
+    ///
+    /// **Cycle 17 moved the guard onto the words that print, and this test with it.** The
+    /// marker is the transcription's own annotation about PCGen's mechanical coverage; it is
+    /// not in the book, and the converted rule does not carry it — `Sha'ir ~ Jin`'s converted
+    /// prose is the clean sentence. Refusing the record on its raw corpus row threw away a
+    /// clean description over an annotation that never reaches the page, which is why the
+    /// record is now served and this test asserts the thing actually at stake: **no marker on
+    /// the sheet.** The corpus-wide form of the same assertion, over both catalogs and all
+    /// 5,000-odd served records, is
+    /// `tests/sd35_class_feature_catalogs_read_converted_prose.rs`.
     #[test]
-    fn a_record_carrying_a_literal_unimplemented_marker_is_refused_by_the_live_catalog() {
+    fn a_record_whose_corpus_row_carries_a_stub_marker_is_served_without_one() {
         let entries = load_pool_catalog(&repo_root());
+        let jin = entries
+            .iter()
+            .find(|e| e.key == "Sha'ir ~ Jin" && e.book == "occult_adventures")
+            .expect("occult_adventures' Sha'ir ~ Jin must be in the catalog");
         assert!(
-            !entries.iter().any(|e| e.key == "Sha'ir ~ Jin" && e.book == "occult_adventures"),
-            "a record whose description carries a literal '[not implemented]' stub marker \
-             must never reach the catalog"
+            !carries_unimplemented_marker(&jin.description),
+            "a stub marker reached the sheet: {}",
+            jin.description
+        );
+        assert!(
+            jin.description.starts_with("At 1st level, a sha'ir learns"),
+            "the served words must be the book's sentence, not the annotated row: {}",
+            jin.description
         );
     }
 
@@ -1442,68 +1439,45 @@ mod tests {
         assert!(!poison.description.contains('|'), "the |PRERULE:... tail must not leak into prose");
     }
 
-    #[test]
-    fn raw_tokens_carry_more_than_one_desc_segment_counts_desc_keys_only() {
-        let one = serde_json::json!([{"key": "KEY", "value": "x"}, {"key": "DESC", "value": "x"}]);
-        assert!(!raw_tokens_carry_more_than_one_desc_segment(&one));
-        let two = serde_json::json!([
-            {"key": "DESC", "value": "a"},
-            {"key": "DESC", "value": "b"},
-        ]);
-        assert!(raw_tokens_carry_more_than_one_desc_segment(&two));
-        // A second occurrence of an unrelated key must never trip this check.
-        let unrelated_repeat = serde_json::json!([
-            {"key": "DESC", "value": "a"},
-            {"key": "SOURCEPAGE", "value": "p.1"},
-            {"key": "SOURCEPAGE", "value": "p.2"},
-        ]);
-        assert!(!raw_tokens_carry_more_than_one_desc_segment(&unrelated_repeat));
-    }
 
-    #[test]
-    fn shipped_description_is_the_already_regenerated_safe_multi_desc_join_requires_an_exact_match() {
-        let two_plain = serde_json::json!([
-            {"key": "DESC", "value": "a"},
-            {"key": "DESC", "value": "b"},
-        ]);
-        // Not yet regenerated: shipped description is still just the first
-        // segment -- stays refused.
-        assert!(!shipped_description_is_the_already_regenerated_safe_multi_desc_join(&two_plain, "a"));
-        // Regenerated: shipped description is the full safe join.
-        assert!(shipped_description_is_the_already_regenerated_safe_multi_desc_join(&two_plain, "a b"));
-        // A choice-branch-gated row never has a safe join, regardless of
-        // what the shipped description says.
-        let choice_gated = serde_json::json!([
-            {"key": "DESC", "value": "While raging, the barbarian gains"},
-            {"key": "DESC", "value": " a burrow speed of 30 feet.|PREVAREQ:BloodRage Acid,1"},
-        ]);
-        assert!(!shipped_description_is_the_already_regenerated_safe_multi_desc_join(
-            &choice_gated,
-            "While raging, the barbarian gains a burrow speed of 30 feet.|PREVAREQ:BloodRage Acid,1"
-        ));
-        // A single-DESC row has nothing to join.
-        let one = serde_json::json!([{"key": "DESC", "value": "a"}]);
-        assert!(!shipped_description_is_the_already_regenerated_safe_multi_desc_join(&one, "a"));
-    }
 
-    /// No served description leaks unresolved PCGen syntax onto the screen
-    /// — the same certification every sibling catalog runs, over the real
-    /// cache rather than a hand-picked sample.
+    /// No served description carries the ingest format's own syntax onto the screen — over the
+    /// real corpus, not a hand-picked sample.
+    ///
+    /// **Cycle 17 changed what this asks, because it changed what it is asking about.**
+    /// `pcgen_desc::leaked_pcgen_syntax` reads an ingest string and reports a **bare `%`** as a
+    /// leak, which is correct for a `DESC:` row, where `%` is always a slot marker. The served
+    /// text is no longer a `DESC:` row: it is converted prose, and in converted prose a `%` is
+    /// the book's own percent sign. `Mutagenic Mauler Brawler Discovery ~ Preserve Organs`
+    /// states *"there is a 25% chance that the critical hit ... is negated"*, and the old
+    /// detector called that a leak.
+    ///
+    /// What is genuinely ingest-format syntax, and is what this now refuses: a **`%N` slot
+    /// marker** (`%` immediately followed by a digit).
+    ///
+    /// A `|` is not checked, for the same reason and measured the same way: the book's own
+    /// tables use it as a column separator, and the converter preserves them. `Sorcerer Bonus
+    /// Spell L4 ~ Confusion` states *"d% | Behavior / 01-25 | Act normally / …"*, which is the
+    /// Core Rulebook's confusion table and not an argument tail.
     #[test]
-    fn every_served_description_renders_without_a_pcgen_syntax_leak() {
+    fn every_served_description_carries_no_ingest_format_syntax() {
         let entries = load_pool_catalog(&repo_root());
         let mut checked = 0;
         for entry in &entries {
-            if let Some(leak) = leaked_pcgen_syntax(&entry.description) {
-                panic!("{:?} ({}): leaked {leak}", entry.key, entry.book);
-            }
+            assert!(
+                !carries_ingest_slot_marker(&entry.description),
+                "{:?} ({}): an ingest-format %N slot marker reached the page: {}",
+                entry.key,
+                entry.book,
+                entry.description
+            );
             checked += 1;
         }
         assert!(checked > 10, "no real descriptions were checked; the check proved nothing");
     }
 
     /// Wave-22 integration fix: 9 of the lane's originally-banked 88
-    /// records carry a real engine-effect `raw_tokens` entry alongside a
+    /// records carry a real engine-effect token entry alongside a
     /// clean-rendering description and must be withdrawn (adversarial
     /// review, confirmed finding, severity high). `Finesse Rogue` is one
     /// of the 9 named -- `ABILITY:FEAT|VIRTUAL|Weapon Finesse`.
@@ -1530,53 +1504,7 @@ mod tests {
         assert!(entries.iter().any(|e| e.book == "core_rulebook"));
     }
 
-    #[test]
-    fn has_no_engine_effect_token_refuses_ability_and_select_but_allows_a_plain_desc_only_record() {
-        let clean = serde_json::json!([{"key": "KEY", "value": "x"}, {"key": "DESC", "value": "x"}]);
-        assert!(has_no_engine_effect_token(&clean));
-        let with_ability = serde_json::json!([{"key": "ABILITY", "value": "FEAT|VIRTUAL|Weapon Finesse"}]);
-        assert!(!has_no_engine_effect_token(&with_ability));
-        let with_select = serde_json::json!([{"key": "SELECT", "value": "3+INT"}]);
-        assert!(!has_no_engine_effect_token(&with_select));
-    }
 
-    // SD31-W29-INTEGRATE (Ruling §18): only an ARCHETYPE-lock (a permanent,
-    // structural exclusion from the base class) is refused -- an ordinary
-    // level/chain/skill prerequisite within the pool's own class is not,
-    // because every character of that class can eventually satisfy it.
-    #[test]
-    fn is_archetype_locked_refuses_only_a_preability_category_archetype_token() {
-        let clean = serde_json::json!([{"key": "KEY", "value": "x"}, {"key": "DESC", "value": "x"}]);
-        assert!(!is_archetype_locked(&clean));
-
-        // Ordinary within-class prerequisites -- must NOT be refused. Real
-        // shapes: `core_rulebook: Rage Power ~ Clear Mind`
-        // (`PREVARGTEQ:RagePowersPrereqLVL,8`), `advanced_class_guide:
-        // Rage Power ~ Linnorm Death Curse (Crag)` (`PRELEVEL:MIN=4`), and
-        // a `PREABILITY CATEGORY=Special Ability` chain prerequisite (e.g.
-        // "Greater" requiring "Lesser" already held), all of which stay
-        // served today.
-        for (key, value) in [
-            ("PREVARGTEQ", "RagePowersPrereqLVL,8"),
-            ("PRELEVEL", "MIN=4"),
-            ("PRESKILL", "1,Knowledge (Arcana)=5"),
-            ("PREFACT", "Deity,Zon-Kuthon"),
-            ("PREMULT", "1,[PRELEVEL:MIN=8],[PREABILITY:1,CATEGORY=Special Ability,X]"),
-            ("PREABILITY", "1,CATEGORY=Special Ability,Rage Power ~ Elemental Blood (Lesser)"),
-        ] {
-            let ungated = serde_json::json!([{"key": key, "value": value}]);
-            assert!(
-                !is_archetype_locked(&ungated),
-                "{key}={value} is an ordinary within-class prerequisite, not an archetype lock"
-            );
-        }
-
-        // The genuinely EXCLUSIVE shape -- must be refused.
-        let archetype_gated = serde_json::json!([
-            {"key": "PREABILITY", "value": "1,CATEGORY=Archetype,Barbarian Archetype ~ Giant Stalker"}
-        ]);
-        assert!(is_archetype_locked(&archetype_gated));
-    }
 
     #[test]
     fn an_archetype_gated_rage_power_is_refused_by_the_live_catalog() {
@@ -1602,7 +1530,15 @@ mod tests {
             index.get(&("core_rulebook".to_string(), "Rogue Talent ~ Ledge Walker".to_string())),
             Some(&"This ability allows you to move along narrow surfaces at full speed using the Acrobatics skill without penalty. In addition, you are not flat-footed when using Acrobatics to move along narrow surfaces.".to_string())
         );
-        assert!(!index.contains_key(&("core_rulebook".to_string(), "Rogue Talent ~ Bleeding Attack".to_string())));
+        // `Rogue Talent ~ Bleeding Attack` reached this index in cycle 17, stating its
+        // unsettled magnitude in words — see
+        // `bleeding_attack_states_its_unsettled_term_in_words_rather_than_dropping_it`. The
+        // index is keyed by book AND key, which is what this test is about: the same key in a
+        // different book is a different entry.
+        assert!(!index.contains_key(&(
+            "advanced_players_guide".to_string(),
+            "Rogue Talent ~ Ledge Walker".to_string()
+        )));
     }
 
     /// The real, current size of the widened catalog (SD-32 T12
@@ -1778,10 +1714,6 @@ mod tests {
                 *reasons.entry("description_not_real_value").or_default() += 1;
                 continue;
             }
-            if carries_unimplemented_marker(raw_desc) {
-                *reasons.entry("carries_unimplemented_marker").or_default() += 1;
-                continue;
-            }
             let owning_class = data["class"].as_str().unwrap_or("");
             if carries_class_specific_level_phrase(raw_desc, owning_class) {
                 // Prose states a value that scales with the OWNING class's
@@ -1791,20 +1723,20 @@ mod tests {
                 *reasons.entry("class_specific_level_phrase").or_default() += 1;
                 continue;
             }
-            if !has_no_engine_effect_token(&data["raw_tokens"]) {
+            if !pool_member_tokens::has_no_engine_effect_token(data) {
                 // Carries a real mechanical token (`ADD`, `ABILITY`,
                 // `AUTO`, `BONUS`, `DEFINE`, `SPELLS`, ...) alongside its
                 // description -- a genuine mechanic, not prose-only.
                 *reasons.entry("engine_effect_token_present").or_default() += 1;
                 continue;
             }
-            if is_archetype_locked(&data["raw_tokens"]) {
+            if pool_member_tokens::is_archetype_locked(data) {
                 *reasons.entry("archetype_locked").or_default() += 1;
                 continue;
             }
-            if raw_tokens_carry_more_than_one_desc_segment(&data["raw_tokens"])
-                && !shipped_description_is_the_already_regenerated_safe_multi_desc_join(
-                    &data["raw_tokens"],
+            if pool_member_tokens::carries_more_than_one_desc_segment(data)
+                && !pool_member_tokens::shipped_description_is_the_already_regenerated_safe_multi_desc_join(
+                    data,
                     raw_desc,
                 )
             {
@@ -1822,13 +1754,17 @@ mod tests {
                 *reasons.entry("bare_percent_reference").or_default() += 1;
                 continue;
             }
-            let rendered = render_pcgen_desc(raw_desc);
-            if !rendered.dropped_args.is_empty() {
-                *reasons.entry("dropped_pcgen_args").or_default() += 1;
+            // Cycle 17: the render-and-refuse pair became the converted-prose join. The two
+            // old buckets (`dropped_pcgen_args`, `leaked_pcgen_syntax`) were two shapes of one
+            // fact — the ingest row states words this engine cannot finish — and the converter
+            // now decides that once, at ingest, by stating no prose for such a record.
+            let converted = converted_prose::description_for(book, "class_feature", key);
+            let Some(converted) = converted else {
+                *reasons.entry("converter_states_no_prose").or_default() += 1;
                 continue;
-            }
-            if leaked_pcgen_syntax(&rendered.text).is_some() {
-                *reasons.entry("leaked_pcgen_syntax").or_default() += 1;
+            };
+            if carries_unimplemented_marker(&converted) {
+                *reasons.entry("carries_unimplemented_marker").or_default() += 1;
                 continue;
             }
             // Passes every gate this catalog runs -- genuinely already
@@ -1900,14 +1836,8 @@ mod tests {
                 "{key} now carries a real description -- this record may now qualify for a \
                  different, display-bearing rung; revisit this table"
             );
-            let spellknown = json["data"]["raw_tokens"]
-                .as_array()
-                .expect("raw_tokens is an array")
-                .iter()
-                .find(|t| t["key"].as_str() == Some("SPELLKNOWN"))
-                .unwrap_or_else(|| panic!("{key} carries no SPELLKNOWN token"))["value"]
-                .as_str()
-                .expect("SPELLKNOWN token has a string value")
+            let spellknown = ingest_record::first_token_value(&json, "SPELLKNOWN")
+                .unwrap_or_else(|| panic!("{key} carries no SPELLKNOWN token"))
                 .to_string();
             let corpus_spells: std::collections::BTreeSet<String> = spellknown
                 .split('|')
@@ -2048,16 +1978,19 @@ mod tests {
             let refused = !is_real_description_value(raw_desc)
                 || carries_unimplemented_marker(raw_desc)
                 || carries_class_specific_level_phrase(raw_desc, owning_class)
-                || !has_no_engine_effect_token(&data["raw_tokens"])
-                || is_archetype_locked(&data["raw_tokens"])
-                || (raw_tokens_carry_more_than_one_desc_segment(&data["raw_tokens"])
-                    && !shipped_description_is_the_already_regenerated_safe_multi_desc_join(
-                        &data["raw_tokens"],
+                || !pool_member_tokens::has_no_engine_effect_token(data)
+                || pool_member_tokens::is_archetype_locked(data)
+                || (pool_member_tokens::carries_more_than_one_desc_segment(data)
+                    && !pool_member_tokens::shipped_description_is_the_already_regenerated_safe_multi_desc_join(
+                        data,
                         raw_desc,
                     ))
                 || raw_desc_has_a_bare_percent_reference_no_pipe_tail_can_resolve(raw_desc)
-                || !render_pcgen_desc(raw_desc).dropped_args.is_empty()
-                || leaked_pcgen_syntax(&render_pcgen_desc(raw_desc).text).is_some();
+                // The converted-prose join, which replaced the render-and-refuse pair in cycle
+                // 17 — a record the package states no prose for, or states marked-up prose
+                // for, is refused exactly as the two render gates used to refuse it.
+                || converted_prose::description_for("core_rulebook", "class_feature", key)
+                    .is_none_or(|text| carries_unimplemented_marker(&text));
             if refused {
                 real_desc_refused += 1;
             } else {
@@ -2088,11 +2021,25 @@ mod tests {
         // by re-running this test's own live query standalone post-regen). This lane's OWN
         // owned population (`null_desc`/`real_desc_refused` below, neither Cleric nor Sorcerer
         // was ever counted there) is unaffected -- still 18/6, still summing to 24.
-        assert_eq!(excluded, 138, "excluded-class population (sibling lane's, do not touch)");
-        assert_eq!(null_desc, 18, "non-excluded, zero-description internal-bookkeeping (bucket B, OPEN question, left untouched)");
-        assert_eq!(real_desc_refused, 6, "non-excluded, real-description, correctly refused by an existing safety gate (needs real engine wiring, not this cycle's scope)");
+        // SD-35 AT-35-E2-005 re-derivation (2026-09-08): 138 -> 1, 18 -> 0, 6 -> 0. The first
+        // corpus-wide sheet-rule pass stamped `sheet-complete` (AT-35-E2-003's rung) on every
+        // `engine-does-not-hold` unit whose converted `SheetRule` renders for the probe
+        // character, so `mechanism_units` (this test's own live query, re-run standalone
+        // post-regen: `python3 -c` over `docs/work-inventory.json` filtering book/status/
+        // evidence exactly as above) shrank 162 -> 1 -- the one survivor is excluded-class
+        // (its record is in `data/sheet_rules/_refused.json`). This lane's own owned
+        // population (`null_desc` + `real_desc_refused`) is 0: every one of the 24 rendered
+        // as a sheet line and left the mechanism.
+        // SD-35 AT-35-E3-001 re-derivation (2026-09-08): 1 -> 0. Term-level refusal (the
+        // converter no longer deletes a whole record because one of its tokens will not
+        // lower) converted the last survivor, so it rendered as a sheet line and left the
+        // mechanism. `mechanism_units` is now empty: this test's own live query over
+        // `docs/work-inventory.json`, re-run standalone post-regen, returns 0 rows.
+        assert_eq!(excluded, 0, "excluded-class population (sibling lane's, do not touch)");
+        assert_eq!(null_desc, 0, "non-excluded, zero-description internal-bookkeeping (bucket B, OPEN question, left untouched)");
+        assert_eq!(real_desc_refused, 0, "non-excluded, real-description, correctly refused by an existing safety gate (needs real engine wiring, not this cycle's scope)");
         assert_eq!(excluded + null_desc + real_desc_refused, mechanism_units.len() as u32);
-        assert_eq!(null_desc + real_desc_refused, 24, "this lane's own owned population");
+        assert_eq!(null_desc + real_desc_refused, 0, "this lane's own owned population (24 before SD-35 AT-35-E2-005's pass)");
     }
 }
 

@@ -15,7 +15,7 @@
 use std::path::PathBuf;
 use std::process::Command;
 
-use codex::rules_core::cache_gen::spell_lane_dump;
+use codex::pcgen_import::cache_gen::spell_lane_dump;
 
 fn real_now_iso8601() -> String {
     let output = Command::new("date")

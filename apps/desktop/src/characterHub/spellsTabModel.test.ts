@@ -54,7 +54,7 @@ const CATALOG: SpellCatalogEntryDto[] = [
     range: null,
   },
   // Shape of a real `apg_spells.lst` gap: a record that exists and
-  // resolves, but whose corpus row carries no SCHOOL:/CLASSES:/DESC:.
+  // resolves, but whose corpus row states no school, class list or description.
   {
     key: 'Corpus Gap Spell',
     book: 'APG',

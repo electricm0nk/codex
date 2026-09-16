@@ -99,18 +99,18 @@ fn compute(input: &CharacterInput) -> PilotBaseChassisComputation {
     compute_pilot_base_chassis(input)
 }
 
-/// Whether one corpus `BONUS:` qualifier list carries its own inline
-/// `PRE*`/`!PRE*` condition.
+/// Whether one shipped bonus carries its own condition.
 ///
-/// The shipped ARG table stores each `BONUS:` token as its pipe-split
-/// qualifiers with the leading `BONUS:` stripped, so qualifier `0` is the bonus
-/// category (`SKILL`, `VAR`, `ABILITYPOOL`, ...) and any later qualifier
-/// beginning `PRE` or `!PRE` is a condition on the bonus itself.
-fn bonus_is_conditioned(qualifiers: &[&str]) -> bool {
-    qualifiers
-        .iter()
-        .skip(1)
-        .any(|q| q.starts_with("PRE") || q.starts_with("!PRE"))
+/// Until SD-35 `AT-35-E6-003-SWEEP` cycle 7 the shipped table stored each
+/// `BONUS:` token whole, so this asked whether any qualifier after the category
+/// began `PRE`/`!PRE` — reading the ingest format's own spelling out of a live
+/// table. The cycle converted those guards into `FeatEffectBonus.conditions`
+/// (`decisions.md` §11), so the same question is now a field, not a string
+/// prefix. **The split below is unchanged and is the proof**: if the conversion
+/// had moved one bonus between conditioned and unconditional, `133/5/49` would
+/// not still hold.
+fn bonus_is_conditioned(bonus: &arg_feats::FeatEffectBonus) -> bool {
+    !bonus.conditions.is_empty()
 }
 
 /// The situational-versus-should-be-wired split for ARG's 187 feats, re-derived
@@ -125,7 +125,7 @@ fn args_187_feats_split_133_prose_only_5_pre_gated_and_49_unconditionally_bonuse
         match entry.effect {
             None => prose_only += 1,
             Some(bonuses) => {
-                if bonuses.iter().any(|b| !bonus_is_conditioned(b.qualifiers)) {
+                if bonuses.iter().any(|b| !bonus_is_conditioned(b)) {
                     has_unconditional += 1;
                 } else {
                     all_conditioned += 1;
@@ -828,7 +828,7 @@ fn twenty_four_of_args_forty_nine_unconditionally_bonused_feats_now_move_a_numbe
         .filter(|entry| {
             entry
                 .effect
-                .is_some_and(|bonuses| bonuses.iter().any(|b| !bonus_is_conditioned(b.qualifiers)))
+                .is_some_and(|bonuses| bonuses.iter().any(|b| !bonus_is_conditioned(b)))
         })
         .map(|entry| entry.key)
         .collect();

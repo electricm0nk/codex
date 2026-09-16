@@ -175,9 +175,19 @@ fn human_extra_skill_ranks_record_names_both_at_level_1_and_per_level_grants() {
         "Human extra skill ranks record must name the per-additional-level grant: {}",
         extra.detail
     );
+    // Retargeted by SD-35 AT-35-E6-003-SWEEP cycle 4. This asserted the sheet
+    // line quoted the `BONUS:SKILL|` token. A sheet line is a final number or
+    // the rule's words, never ingest vocabulary (`decisions.md` §1), so the
+    // token moved to the `//` provenance comment on the record and the line
+    // keeps the human-readable source citation the test really wanted.
     assert!(
-        extra.detail.contains("BONUS:SKILL|"),
-        "Human extra skill ranks record must reference the cr_races.lst BONUS:SKILL source: {}",
+        extra.detail.contains("cr_races.lst"),
+        "Human extra skill ranks record must still cite its cr_races.lst source: {}",
+        extra.detail
+    );
+    assert!(
+        !extra.detail.contains("BONUS:"),
+        "no ingest token may reach the rendered sheet line: {}",
         extra.detail
     );
     // Recognition value carries the per-additional-level +1 identity only;

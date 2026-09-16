@@ -5,11 +5,11 @@
     {
       "kind": "ability",
       "label": "Abilities",
-      "done": 0,
-      "partial": 2,
+      "done": 2,
+      "partial": 0,
       "not_started": 0,
       "denominator": 2,
-      "pct": 0.0,
+      "pct": 100.0,
       "excluded_from_percentage": 0,
       "standing_breakdown": {
         "origin": 2
@@ -17,14 +17,14 @@
       "items": [
         {
           "name": "+2 Wisdom, -2 Intelligence, +2 to One Physical Ability Score While in Bestial Form",
-          "doneness": "partial",
+          "doneness": "done",
           "type_facet": "RaceStatAbility",
           "standing": "origin",
           "display_name": "+2 Wisdom, -2 Intelligence, +2 to One Physical Ability Score While in Bestial Form"
         },
         {
           "name": "Racial Traits ~ Skinwalker",
-          "doneness": "partial",
+          "doneness": "done",
           "type_facet": null,
           "standing": "origin",
           "display_name": "Racial Traits ~ Skinwalker"
@@ -449,11 +449,11 @@
     {
       "kind": "language",
       "label": "Languages",
-      "done": 0,
+      "done": 1,
       "partial": 0,
-      "not_started": 1,
+      "not_started": 0,
       "denominator": 1,
-      "pct": 0.0,
+      "pct": 100.0,
       "excluded_from_percentage": 2,
       "standing_breakdown": {
         "unclassified": 2,
@@ -462,21 +462,21 @@
       "items": [
         {
           "name": "Common (cannot speak)",
-          "doneness": "not-started",
+          "doneness": "done",
           "type_facet": "Understand",
           "standing": "unclassified",
           "display_name": "Common (cannot speak)"
         },
         {
           "name": "Reptoid",
-          "doneness": "not-started",
+          "doneness": "done",
           "type_facet": "Spoken.Written.Read",
           "standing": "origin",
           "display_name": "Reptoid"
         },
         {
           "name": "Sasquatch",
-          "doneness": "not-started",
+          "doneness": "done",
           "type_facet": "Spoken.Written.Read",
           "standing": "unclassified",
           "display_name": "Sasquatch"
@@ -782,11 +782,11 @@
     {
       "kind": "race_trait",
       "label": "Race Traits",
-      "done": 51,
-      "partial": 12,
-      "not_started": 21,
+      "done": 80,
+      "partial": 4,
+      "not_started": 0,
       "denominator": 84,
-      "pct": 60.7,
+      "pct": 95.2,
       "excluded_from_percentage": 62,
       "standing_breakdown": {
         "unclassified": 62,
@@ -1054,182 +1054,182 @@
         },
         {
           "name": "Change Shape (2 Claw Attacks)",
-          "doneness": "partial",
+          "doneness": "done",
           "type_facet": "Skinwalker Racial Trait",
           "standing": "origin",
           "display_name": "Change Shape (2 Claw Attacks)"
         },
         {
           "name": "Change Shape (2 Hoof Attacks)",
-          "doneness": "not-started",
+          "doneness": "done",
           "type_facet": "Skinwalker Racial Trait",
           "standing": "origin",
           "display_name": "Change Shape (2 Hoof Attacks)"
         },
         {
           "name": "Change Shape (2 Talon Attacks)",
-          "doneness": "not-started",
+          "doneness": "done",
           "type_facet": "Skinwalker Racial Trait",
           "standing": "origin",
           "display_name": "Change Shape (2 Talon Attacks)"
         },
         {
           "name": "Change Shape (Ability Modifier Charisma)",
-          "doneness": "not-started",
+          "doneness": "done",
           "type_facet": "Skinwalker Racial Trait",
           "standing": "origin",
           "display_name": "Change Shape (Ability Modifier Charisma)"
         },
         {
           "name": "Change Shape (Ability Modifier Constitution)",
-          "doneness": "partial",
+          "doneness": "done",
           "type_facet": "Skinwalker Racial Trait",
           "standing": "origin",
           "display_name": "Change Shape (Ability Modifier Constitution)"
         },
         {
           "name": "Change Shape (Ability Modifier Dexterity)",
-          "doneness": "partial",
+          "doneness": "done",
           "type_facet": "Skinwalker Racial Trait",
           "standing": "origin",
           "display_name": "Change Shape (Ability Modifier Dexterity)"
         },
         {
           "name": "Change Shape (Ability Modifier Strength)",
-          "doneness": "partial",
+          "doneness": "done",
           "type_facet": "Skinwalker Racial Trait",
           "standing": "origin",
           "display_name": "Change Shape (Ability Modifier Strength)"
         },
         {
           "name": "Change Shape (Ability Modifier Wisdom)",
-          "doneness": "not-started",
+          "doneness": "done",
           "type_facet": "Skinwalker Racial Trait",
           "standing": "origin",
           "display_name": "Change Shape (Ability Modifier Wisdom)"
         },
         {
           "name": "Change Shape (Amphibious)",
-          "doneness": "not-started",
+          "doneness": "done",
           "type_facet": "Skinwalker Racial Trait",
           "standing": "origin",
           "display_name": "Change Shape (Amphibious)"
         },
         {
           "name": "Change Shape (Base Speed +10)",
-          "doneness": "not-started",
+          "doneness": "done",
           "type_facet": "Skinwalker Racial Trait",
           "standing": "origin",
           "display_name": "Change Shape (Base Speed +10)"
         },
         {
           "name": "Change Shape (Bite Attack)",
-          "doneness": "not-started",
+          "doneness": "done",
           "type_facet": "Skinwalker Racial Trait",
           "standing": "origin",
           "display_name": "Change Shape (Bite Attack)"
         },
         {
           "name": "Change Shape (Climb Speed)",
-          "doneness": "not-started",
+          "doneness": "done",
           "type_facet": "Skinwalker Racial Trait",
           "standing": "origin",
           "display_name": "Change Shape (Climb Speed) (Skinwalker Racial Trait)"
         },
         {
           "name": "Change Shape (Climb Speed)",
-          "doneness": "not-started",
+          "doneness": "done",
           "type_facet": "Skinwalker Racial Trait",
           "standing": "origin",
           "display_name": "Change Shape (Climb Speed) (Skinwalker Racial Trait) #2"
         },
         {
           "name": "Change Shape (Darkvision)",
-          "doneness": "partial",
+          "doneness": "done",
           "type_facet": "Skinwalker Racial Trait",
           "standing": "origin",
           "display_name": "Change Shape (Darkvision)"
         },
         {
           "name": "Change Shape (Distraction)",
-          "doneness": "not-started",
+          "doneness": "done",
           "type_facet": "Skinwalker Racial Trait",
           "standing": "origin",
           "display_name": "Change Shape (Distraction)"
         },
         {
           "name": "Change Shape (Endurance)",
-          "doneness": "not-started",
+          "doneness": "done",
           "type_facet": "Skinwalker Racial Trait",
           "standing": "origin",
           "display_name": "Change Shape (Endurance)"
         },
         {
           "name": "Change Shape (Ferocity)",
-          "doneness": "not-started",
+          "doneness": "done",
           "type_facet": "Skinwalker Racial Trait",
           "standing": "origin",
           "display_name": "Change Shape (Ferocity)"
         },
         {
           "name": "Change Shape (Fly Speed +10)",
-          "doneness": "not-started",
+          "doneness": "done",
           "type_facet": "Skinwalker Racial Trait",
           "standing": "origin",
           "display_name": "Change Shape (Fly Speed +10)"
         },
         {
           "name": "Change Shape (Gore Attack)",
-          "doneness": "not-started",
+          "doneness": "done",
           "type_facet": "Skinwalker Racial Trait",
           "standing": "origin",
           "display_name": "Change Shape (Gore Attack)"
         },
         {
           "name": "Change Shape (Natural Armor)",
-          "doneness": "partial",
+          "doneness": "done",
           "type_facet": "Skinwalker Racial Trait",
           "standing": "origin",
           "display_name": "Change Shape (Natural Armor)"
         },
         {
           "name": "Change Shape (Perception Bonus)",
-          "doneness": "not-started",
+          "doneness": "done",
           "type_facet": "Skinwalker Racial Trait",
           "standing": "origin",
           "display_name": "Change Shape (Perception Bonus)"
         },
         {
           "name": "Change Shape (Reduce Falling Damage)",
-          "doneness": "not-started",
+          "doneness": "done",
           "type_facet": "Skinwalker Racial Trait",
           "standing": "origin",
           "display_name": "Change Shape (Reduce Falling Damage)"
         },
         {
           "name": "Change Shape (Saving Throws)",
-          "doneness": "not-started",
+          "doneness": "done",
           "type_facet": "Skinwalker Racial Trait",
           "standing": "origin",
           "display_name": "Change Shape (Saving Throws)"
         },
         {
           "name": "Change Shape (Scent)",
-          "doneness": "not-started",
+          "doneness": "done",
           "type_facet": "Skinwalker Racial Trait",
           "standing": "origin",
           "display_name": "Change Shape (Scent)"
         },
         {
           "name": "Change Shape (See In Darkness)",
-          "doneness": "not-started",
+          "doneness": "done",
           "type_facet": "Skinwalker Racial Trait",
           "standing": "origin",
           "display_name": "Change Shape (See In Darkness)"
         },
         {
           "name": "Change Shape (Swim Speed)",
-          "doneness": "not-started",
+          "doneness": "done",
           "type_facet": "Skinwalker Racial Trait",
           "standing": "origin",
           "display_name": "Change Shape (Swim Speed)"
@@ -1250,7 +1250,7 @@
         },
         {
           "name": "Death Throes",
-          "doneness": "partial",
+          "doneness": "done",
           "type_facet": "RacialTraits.SpecialQuality.Caligni Racial Trait.Caligni Racial Default.Supernatural",
           "standing": "unclassified",
           "display_name": "Death Throes"
@@ -1439,7 +1439,7 @@
         },
         {
           "name": "Mental Potency",
-          "doneness": "not-started",
+          "doneness": "done",
           "type_facet": "RacialTraits.SpecialQuality.Reptoid Racial Trait.Reptoid Racial Default.Extraordinary",
           "standing": "origin",
           "display_name": "Mental Potency"
@@ -1551,7 +1551,7 @@
         },
         {
           "name": "Sahkil Traits",
-          "doneness": "partial",
+          "doneness": "done",
           "type_facet": null,
           "standing": "origin",
           "display_name": "Sahkil Traits"
@@ -1607,7 +1607,7 @@
         },
         {
           "name": "Shattered Soul",
-          "doneness": "partial",
+          "doneness": "done",
           "type_facet": "RacialTraits.SpecialQuality.Shabti Racial Trait.Shabti Racial Default.Extraordinary.Weakness",
           "standing": "origin",
           "display_name": "Shattered Soul"
@@ -1642,14 +1642,14 @@
         },
         {
           "name": "Small",
-          "doneness": "not-started",
+          "doneness": "done",
           "type_facet": "RacialTraits.SpecialQuality.Orang-Pendak Racial Trait.Orang-Pendak Racial Default.Racial Size",
           "standing": "unclassified",
           "display_name": "Small"
         },
         {
           "name": "Spell-Like Ability",
-          "doneness": "partial",
+          "doneness": "done",
           "type_facet": "RacialTraits.SpecialQuality.Shabti Racial Trait.Shabti Racial Default.SpellLike",
           "standing": "unclassified",
           "display_name": "Spell-Like Ability (RacialTraits.SpecialQuality.Shabti Racial Trait.Shabti Racial Default.SpellLike)"
@@ -1820,11 +1820,11 @@
     {
       "kind": "race",
       "label": "Races",
-      "done": 1,
+      "done": 7,
       "partial": 0,
-      "not_started": 6,
+      "not_started": 0,
       "denominator": 7,
-      "pct": 14.3,
+      "pct": 100.0,
       "excluded_from_percentage": 0,
       "standing_breakdown": {
         "origin": 7
@@ -1832,42 +1832,42 @@
       "items": [
         {
           "name": "Astomoi",
-          "doneness": "not-started",
+          "doneness": "done",
           "type_facet": "Humanoid.PC",
           "standing": "origin",
           "display_name": "Astomoi"
         },
         {
           "name": "Caligni",
-          "doneness": "not-started",
+          "doneness": "done",
           "type_facet": "Humanoid.PC",
           "standing": "origin",
           "display_name": "Caligni"
         },
         {
           "name": "Deep One Hybrid",
-          "doneness": "not-started",
+          "doneness": "done",
           "type_facet": "Humanoid.PC",
           "standing": "origin",
           "display_name": "Deep One Hybrid"
         },
         {
           "name": "Orang-Pendak",
-          "doneness": "not-started",
+          "doneness": "done",
           "type_facet": "Humanoid.PC",
           "standing": "origin",
           "display_name": "Orang-Pendak"
         },
         {
           "name": "Reptoid",
-          "doneness": "not-started",
+          "doneness": "done",
           "type_facet": "Humanoid.PC",
           "standing": "origin",
           "display_name": "Reptoid"
         },
         {
           "name": "Shabti",
-          "doneness": "not-started",
+          "doneness": "done",
           "type_facet": "Outsider.PC",
           "standing": "origin",
           "display_name": "Shabti"
@@ -1884,11 +1884,11 @@
     {
       "kind": "template",
       "label": "Templates",
-      "done": 0,
+      "done": 23,
       "partial": 0,
-      "not_started": 23,
+      "not_started": 0,
       "denominator": 23,
-      "pct": 0.0,
+      "pct": 100.0,
       "excluded_from_percentage": 0,
       "standing_breakdown": {
         "origin": 23
@@ -1896,161 +1896,161 @@
       "items": [
         {
           "name": "Aether",
-          "doneness": "not-started",
+          "doneness": "done",
           "type_facet": null,
           "standing": "origin",
           "display_name": "Aether"
         },
         {
           "name": "Android",
-          "doneness": "not-started",
+          "doneness": "done",
           "type_facet": null,
           "standing": "origin",
           "display_name": "Android"
         },
         {
           "name": "Astomoi",
-          "doneness": "not-started",
+          "doneness": "done",
           "type_facet": null,
           "standing": "origin",
           "display_name": "Astomoi"
         },
         {
           "name": "Deep One",
-          "doneness": "not-started",
+          "doneness": "done",
           "type_facet": null,
           "standing": "origin",
           "display_name": "Deep One"
         },
         {
           "name": "Gray",
-          "doneness": "not-started",
+          "doneness": "done",
           "type_facet": null,
           "standing": "origin",
           "display_name": "Gray"
         },
         {
           "name": "IsSkinwalker",
-          "doneness": "not-started",
+          "doneness": "done",
           "type_facet": null,
           "standing": "origin",
           "display_name": "IsSkinwalker"
         },
         {
           "name": "Manasaputra",
-          "doneness": "not-started",
+          "doneness": "done",
           "type_facet": null,
           "standing": "origin",
           "display_name": "Manasaputra"
         },
         {
           "name": "Phantom",
-          "doneness": "not-started",
+          "doneness": "done",
           "type_facet": null,
           "standing": "origin",
           "display_name": "Phantom"
         },
         {
           "name": "Robot",
-          "doneness": "not-started",
+          "doneness": "done",
           "type_facet": null,
           "standing": "origin",
           "display_name": "Robot"
         },
         {
           "name": "Sahkil",
-          "doneness": "not-started",
+          "doneness": "done",
           "type_facet": null,
           "standing": "origin",
           "display_name": "Sahkil"
         },
         {
           "name": "Skinwalker",
-          "doneness": "not-started",
+          "doneness": "done",
           "type_facet": "Race Builder Subtype",
           "standing": "origin",
           "display_name": "Skinwalker (Race Builder Subtype)"
         },
         {
           "name": "Skinwalker",
-          "doneness": "not-started",
+          "doneness": "done",
           "type_facet": null,
           "standing": "origin",
           "display_name": "Skinwalker"
         },
         {
           "name": "Skinwalker",
-          "doneness": "not-started",
+          "doneness": "done",
           "type_facet": "Racial Heritage",
           "standing": "origin",
           "display_name": "Skinwalker (Racial Heritage)"
         },
         {
           "name": "Skinwalker",
-          "doneness": "not-started",
+          "doneness": "done",
           "type_facet": null,
           "standing": "origin",
           "display_name": "Skinwalker #4"
         },
         {
           "name": "Werebat-Kin",
-          "doneness": "not-started",
+          "doneness": "done",
           "type_facet": null,
           "standing": "origin",
           "display_name": "Werebat-Kin"
         },
         {
           "name": "Werebear-Kin",
-          "doneness": "not-started",
+          "doneness": "done",
           "type_facet": null,
           "standing": "origin",
           "display_name": "Werebear-Kin"
         },
         {
           "name": "Wereboar-Kin",
-          "doneness": "not-started",
+          "doneness": "done",
           "type_facet": null,
           "standing": "origin",
           "display_name": "Wereboar-Kin"
         },
         {
           "name": "Werecrocodile-Kin",
-          "doneness": "not-started",
+          "doneness": "done",
           "type_facet": null,
           "standing": "origin",
           "display_name": "Werecrocodile-Kin"
         },
         {
           "name": "Wereraptor-Kin",
-          "doneness": "not-started",
+          "doneness": "done",
           "type_facet": null,
           "standing": "origin",
           "display_name": "Wereraptor-Kin"
         },
         {
           "name": "Wererat-Kin",
-          "doneness": "not-started",
+          "doneness": "done",
           "type_facet": null,
           "standing": "origin",
           "display_name": "Wererat-Kin"
         },
         {
           "name": "Wereshark-Kin",
-          "doneness": "not-started",
+          "doneness": "done",
           "type_facet": null,
           "standing": "origin",
           "display_name": "Wereshark-Kin"
         },
         {
           "name": "Weretiger-Kin",
-          "doneness": "not-started",
+          "doneness": "done",
           "type_facet": null,
           "standing": "origin",
           "display_name": "Weretiger-Kin"
         },
         {
           "name": "Werewolf-Kin",
-          "doneness": "not-started",
+          "doneness": "done",
           "type_facet": null,
           "standing": "origin",
           "display_name": "Werewolf-Kin"

@@ -295,7 +295,7 @@ reads the same kind of real PCGen export text.
   probes when the intended build called for 18, silently understating every
   computed DC by 4 (103 units affected, fixed).
 
-### The per-type AC isolator (`src/bin/e5_ac_isolator.rs`)
+### The per-type AC isolator (**the `e5_ac_isolator` bin was deleted 2026-08-27**)
 
 The original AC-shape harness computed `oracle = item AC.TOTAL - baseline
 AC.TOTAL` — a whole-character diff that conflates the item's own
@@ -303,7 +303,7 @@ AC.TOTAL` — a whole-character diff that conflates the item's own
 second-order effects the diff cannot separate: a `MAXDEX` cap reducing the
 baseline's own Dex bonus when the item is worn, or a co-located
 ability-score-enhancement chain on the same record raising `AC.Total` via
-the normal Dex-to-AC path. `e5_ac_isolator.rs` replaces that diff with
+the normal Dex-to-AC path. The isolator replaced that diff with
 PCGen's own per-type isolator, reading
 `BONUS.COMBAT.AC.TOTAL.!BASE.!Ability.!Size` directly off the same
 unmodified `.pcg` fixtures — emitting, per item, the exact set of PCGen

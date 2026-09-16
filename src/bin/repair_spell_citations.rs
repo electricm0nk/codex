@@ -45,8 +45,8 @@ use std::env;
 use std::fs;
 use std::path::{Path, PathBuf};
 
-use codex::rules_core::corpus_literal_sweep::token_closure;
-use codex::rules_core::wiring_class::build_mod_index;
+use codex::pcgen_import::corpus_literal_sweep::token_closure;
+use codex::pcgen_import::wiring_class::build_mod_index;
 use serde_json::{json, Value};
 use std::collections::{BTreeMap, BTreeSet};
 

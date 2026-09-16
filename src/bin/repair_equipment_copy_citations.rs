@@ -1,7 +1,7 @@
 //! Repairs shipped `equipment`/`equipment_modifier` records' stale
 //! `.COPY=` citations (SD-32 T9 residual, `decisions.md §20`). Full
 //! rationale and the safety bar each record must clear are in
-//! `rules_core::cache_gen::equipment_copy_citation_repair`'s module doc
+//! `pcgen_import::cache_gen::equipment_copy_citation_repair`'s module doc
 //! comment.
 //!
 //! Run with `PCGEN_CORPUS_ROOT` pointing at the pinned PCGen `data/`
@@ -15,7 +15,7 @@
 
 use std::path::PathBuf;
 
-use codex::rules_core::cache_gen::equipment_copy_citation_repair::repair_book;
+use codex::pcgen_import::cache_gen::equipment_copy_citation_repair::repair_book;
 
 /// Every book this binary considers -- `(book_id, book_rel_dir)`, the same
 /// pair `equipment_gap::book_routing` returns for each code. Scoped to the

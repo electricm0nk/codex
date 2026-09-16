@@ -30,7 +30,7 @@ pub(super) static MONSTERS: &[MonsterStatBlock] = &[
         external_ability_refs: &["Scent"],
         stat_adjustments: &[StatAdjustment { ability: "STR", amount: 4 }, StatAdjustment { ability: "CON", amount: 4 }, StatAdjustment { ability: "DEX", amount: -2 }, StatAdjustment { ability: "INT", amount: 2 }, StatAdjustment { ability: "WIS", amount: 2 }, StatAdjustment { ability: "CHA", amount: 2 }],
         has_spell_like_abilities: true,
-        sla_cl_token: Some("HD*3/4"),
+        sla_cl_token: Some("3"),
         spell_like_abilities: &[MonsterSpellLikeAbility { label: "Innate", times: Some("3"), time_unit: None, caster_level_token: Some("TL"), spell: "Inflict Light Wounds (Mass)", save_dc_token: Some("15+CHA") }, MonsterSpellLikeAbility { label: "Innate", times: Some("3"), time_unit: None, caster_level_token: Some("TL"), spell: "Spider Climb", save_dc_token: Some("12+CHA") }, MonsterSpellLikeAbility { label: "Innate", times: Some("1"), time_unit: None, caster_level_token: Some("TL"), spell: "Gentle Repose", save_dc_token: Some("13+CHA") }, MonsterSpellLikeAbility { label: "Innate", times: Some("1"), time_unit: None, caster_level_token: Some("TL"), spell: "Summon Monster II (Vermlek)", save_dc_token: Some("12+CHA") }],
         source_file: "botd2_races.lst",
         source_line: 7,

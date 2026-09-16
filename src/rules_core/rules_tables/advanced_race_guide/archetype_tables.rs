@@ -60,7 +60,6 @@ pub fn archetype_swap_tables() -> &'static [ArchetypeSwapEntry] {
             archetype_name: "Bogborn Alchemist",
             description: Some("Some grippli alchemists are particularly attuned to the swamps and the dangerous creatures that inhabit them; these serve as their laboratories and research subjects, respectively."),
             source_page: Some("p.191"),
-            prerequisites: Some(&["PRECLASS:1,Alchemist=1", "PREMULT:1,[PREABILITY:1,CATEGORY=Archetype,Alchemist Archetype ~ Bogborn Alchemist],[!PREABILITY:1,CATEGORY=Archetype,TYPE.AlchemistThrowAnything]", "PREFACT:1,TEMPLATES,IsGrippli=true"]),
             replaces: Some(&["AlchemistThrowAnything"]),
             grants: &[
                 ArchetypeGrant { grants_feature_key: "Bogborn Alchemist ~ Class Skills", at_level: 1, description: Some("A bogborn alchemist adds Swim to his list of class skills."), benefit: None },
@@ -75,7 +74,6 @@ pub fn archetype_swap_tables() -> &'static [ArchetypeSwapEntry] {
             archetype_name: "Bramble Brewer",
             description: Some("Some half-elven alchemists merge human curiosity with their elven link to nature. Such alchemists can manipulate the forces of alchemy to create bombs that reshape terrain and defoliate swaths of vegetation or to create mutagens that bestow the resilience of oak or the tenacity of bamboo."),
             source_page: Some("p.43"),
-            prerequisites: Some(&["PRECLASS:1,Alchemist=1", "PREMULT:1,[PREABILITY:1,CATEGORY=Archetype,Alchemist Archetype ~ Bramble Brewer],[!PREABILITY:1,CATEGORY=Archetype,TYPE.AlchemistDiscovery]", "PREFACT:1,TEMPLATES,IsHalfElf=true"]),
             replaces: Some(&["AlchemistDiscovery"]),
             grants: &[
                 ArchetypeGrant { grants_feature_key: "Bramble Brewer ~ Briar Bombs", at_level: 2, description: Some("A bramble brewer gains the tanglefoot bomb discovery (Ultimate Magic 17), but the entanglement's duration persists for a number of rounds equal to the bramble brewer's Intelligence modifier (minimum 1 round). Additionally, when a bramble brewer throws a tanglefoot bomb, it transforms all squares in its splash radius into difficult terrain that persists for as long as the bomb's entangling effect. Although these bombs deal no damage, for every 1d6 points of damage the bramble brewer's regular bombs deal, the briar bomb's splash radius increases by 5 feet."), benefit: None },
@@ -91,7 +89,6 @@ pub fn archetype_swap_tables() -> &'static [ArchetypeSwapEntry] {
             archetype_name: "Deep Bomber",
             description: Some("Consumed with keeping hidden from the horrors below the surface, svirfneblin use their racial proclivity for alchemy and their inherent talent for obfuscation to strike their enemies from the darkness and retreat unseen."),
             source_page: Some("p.205"),
-            prerequisites: Some(&["PRECLASS:1,Alchemist=1", "PREMULT:1,[PREABILITY:1,CATEGORY=Archetype,Alchemist Archetype ~ Deep Bomber],[!PREABILITY:1,CATEGORY=Archetype,TYPE.AlchemistPoisonUse,TYPE.AlchemistSwiftAlchemy,TYPE.AlchemistSwiftPoisoning]", "PREFACT:1,TEMPLATES,IsSvirfneblin=true"]),
             replaces: Some(&["AlchemistPoisonUse", "AlchemistSwiftAlchemy", "AlchemistSwiftPoisoning"]),
             grants: &[
                 ArchetypeGrant { grants_feature_key: "Deep Bomber ~ Silent Bomb", at_level: 2, description: Some("When the deep bomber creates a bomb, he can choose to have it explode without making any noise, although those damaged by it may cry out."), benefit: None },
@@ -107,7 +104,6 @@ pub fn archetype_swap_tables() -> &'static [ArchetypeSwapEntry] {
             archetype_name: "Fire Bomber",
             description: Some("Fire bombers are exceptionally good at using bombs to burn creatures and blow things up, but are not quite as good at creating other types of bombs or extracts."),
             source_page: Some("p.117"),
-            prerequisites: Some(&["PRECLASS:1,Alchemist=1", "PREMULT:1,[PREABILITY:1,CATEGORY=Archetype,Alchemist Archetype ~ Fire Bomber],[!PREABILITY:1,CATEGORY=Archetype,TYPE.AlchemistBomb,TYPE.AlchemistThrowAnything,TYPE.AlchemistDiscovery4,TYPE.AlchemistPoisonResistance6,TYPE.AlchemistPoisonImmunity,TYPE.AlchemistPersistentMutagen]", "PREFACT:1,TEMPLATES,IsGoblin=true"]),
             replaces: Some(&["AlchemistDiscovery4", "AlchemistPoisonResistance6", "AlchemistPoisonImmunity", "AlchemistPersistentMutagen"]),
             grants: &[
                 ArchetypeGrant { grants_feature_key: "Fire Bomber ~ Weapon and Armor Proficiency", at_level: 1, description: Some("A fire bomber treats torches as a simple weapon."), benefit: None },
@@ -126,7 +122,6 @@ pub fn archetype_swap_tables() -> &'static [ArchetypeSwapEntry] {
             archetype_name: "Plague Bringer",
             description: Some("The plague bringer sees disease as the ultimate weapon, and has worked tirelessly to master new diseases and disease-delivery systems. A plague bringer feels no more remorse at unleashing his armaments on his enemies than an archer does when firing an arrow in the heat of battle. Disease is a tool, and the plague bringer is its master. A plague bringer has the following class features."),
             source_page: Some("p.153"),
-            prerequisites: Some(&["PRECLASS:1,Alchemist=1", "PREMULT:1,[PREABILITY:1,CATEGORY=Archetype,Alchemist Archetype ~ Plague Bringer],[!PREABILITY:1,CATEGORY=Archetype,TYPE.AlchemistMutagen,TYPE.AlchemistPoisonResistance,TYPE.AlchemistPoisonResistance2,TYPE.AlchemistPoisonResistance4,TYPE.AlchemistPoisonResistance6,TYPE.AlchemistPoisonImmunity]", "PREFACT:1,TEMPLATES,IsRatfolk=true"]),
             replaces: Some(&["AlchemistMutagen", "AlchemistPoisonResistance", "AlchemistPoisonResistance2", "AlchemistPoisonResistance4", "AlchemistPoisonResistance6", "AlchemistPoisonImmunity"]),
             grants: &[
                 ArchetypeGrant { grants_feature_key: "Plague Bringer ~ Plague Vial", at_level: 1, description: Some("A plague bringer can create a plague vial, an alchemically grown and concentrated disease sample. It takes 1 hour to prepare a plague vial, and once prepared, the vial remains potent until used. A plague bringer can only maintain 1 plague vial at a time-if he prepares a second vial, any existing plague vial becomes inert. A plague vial that is not in a plague bringer's possession becomes inert until a plague bringer picks it up again. It's a standard action to drink a plague vial. Upon being imbibed, the plague vial infects the plague bringer's blood, sweat, tears, and other bodily fluids for %10 minutes. Any creature that harms him with melee attacks (except with reach weapons) must make a Fortitude save (DC %2) or become sickened for %1 rounds. The plague bringer is immune to the effect of his own plague vial, but not that of another's plague vial. The effects of multiple plague vials do not stack. As a standard action, the plague bringer can infect a weapon with this sickness (typically by licking it or wiping his blood or pus on it). The disease on the weapon works like a poisoned weapon, except the source is a disease instead of a poison (so a dwarf 's resistance to poison does not apply). Anyone other than a plague bringer (including another alchemist) who drinks a plague vial must make a saving throw against the vial's DC or become nauseated for 1 hour. Unless he learns how to brew a mutagen by taking the mutagen discovery (see Ultimate Magic), he can never benefit from a mutagen and reacts to it as if he were a non-alchemist. At any particular time, a plague bringer can only be under the effect of either a plague vial or a mutagen (not both); drinking another immediately ends the effects of any ongoing plague vial or mutagen. All limitations to mutagens apply to plague vials as if they were the same substance. The infuse mutagen discovery and persistent mutagen class ability apply to plague vials. The sticky poison discovery applies to a weapon infected with a plague vial. The plague vial is a disease effect.|AlchemistLVL|10+AlchemistLVL/2+Int"), benefit: None },
@@ -142,7 +137,6 @@ pub fn archetype_swap_tables() -> &'static [ArchetypeSwapEntry] {
             archetype_name: "Saboteur",
             description: Some("The saboteur is an alchemist who specializes in destroying the plans, materials, and allies of his enemies. A saboteur has focused his alchemical research toward new ways to conceal his presence, sow confusion, and blow up large structures."),
             source_page: Some("p.36"),
-            prerequisites: Some(&["PRECLASS:1,Alchemist=1", "PREMULT:1,[PREABILITY:1,CATEGORY=Archetype,Alchemist Archetype ~ Saboteur],[!PREABILITY:1,CATEGORY=Archetype,TYPE.AlchemistMutagen]", "PREFACT:1,TEMPLATES,IsGnome=true"]),
             replaces: Some(&["AlchemistMutagen"]),
             grants: &[
                 ArchetypeGrant { grants_feature_key: "Saboteur ~ Class Skills", at_level: 1, description: Some("A saboteur adds Knowledge (engineering) to his list of class skills and removes Knowledge (nature) from his list of class skills."), benefit: None },
@@ -157,7 +151,6 @@ pub fn archetype_swap_tables() -> &'static [ArchetypeSwapEntry] {
             archetype_name: "Feral Gnasher",
             description: Some("Feral gnashers grow up in the wild, either raised by animals or scraping by on their own, and soon learn to fend for themselves. These barbarians often utilize pieced-together armor and fight with their sharp teeth and whatever improvised weapons are within reach."),
             source_page: Some("p.116"),
-            prerequisites: Some(&["PRECLASS:1,Barbarian=1", "PREMULT:1,[PREABILITY:1,CATEGORY=Archetype,Barbarian Archetype ~ Feral Gnasher],[!PREABILITY:1,CATEGORY=Archetype,TYPE.BarbarianWeaponProficiencies,TYPE.BarbarianArmorProficiencies,TYPE.BarbarianFastMovement,TYPE.BarbarianTrapSense1,TYPE.BarbarianTrapSense2,TYPE.BarbarianTrapSense3,TYPE.BarbarianTrapSense4,TYPE.BarbarianImprovedUncannyDodge]", "PREFACT:1,TEMPLATES,IsGoblin=true"]),
             replaces: Some(&["BarbarianProficiencies", "BarbarianFastMovement", "BarbarianRagePower2", "BarbarianTrapSense1", "BarbarianTrapSense2", "BarbarianTrapSense3", "BarbarianTrapSense4", "BarbarianImprovedUncannyDodge"]),
             grants: &[
                 ArchetypeGrant { grants_feature_key: "Feral Gnasher ~ Weapon and Armor Proficiency", at_level: 1, description: Some("A feral gnasher loses all martial weapon proficiencies except for greatclub and loses proficiency with medium armor."), benefit: None },
@@ -178,7 +171,6 @@ pub fn archetype_swap_tables() -> &'static [ArchetypeSwapEntry] {
             archetype_name: "Hateful Rager",
             description: Some("From a young age, many half-orcs are treated cruelly, bullied, ridiculed, and made outcasts. While some hide their shame, others foster a deep, burning hatred that they channel into a raw fury and unleash against their enemies. These half-orcs are called hateful ragers. A hateful rager has the following class features."),
             source_page: Some("p.54"),
-            prerequisites: Some(&["PRECLASS:1,Barbarian=1", "PREMULT:1,[PREABILITY:1,CATEGORY=Archetype,Barbarian Archetype ~ Hateful Rager],[!PREABILITY:1,CATEGORY=Archetype,TYPE.BarbarianRagePower2,TYPE.BarbarianRagePower8,TYPE.BarbarianRagePower14,TYPE.BarbarianRagePower20,TYPE.BarbarianImprovedUncannyDodge,TYPE.BarbarianTrapSense3]", "PREFACT:1,TEMPLATES,IsHalfOrc=true"]),
             replaces: Some(&["BarbarianRagePower2", "BarbarianRagePower8", "BarbarianRagePower14", "BarbarianRagePower20", "BarbarianImprovedUncannyDodge", "BarbarianTrapSense3"]),
             grants: &[
                 ArchetypeGrant { grants_feature_key: "Hateful Rager ~ Reduced Rage", at_level: 2, description: Some("A hateful rager only gains 1 additional round of rage per day instead of the normal 2 additional rounds of rage per day."), benefit: None },
@@ -195,7 +187,6 @@ pub fn archetype_swap_tables() -> &'static [ArchetypeSwapEntry] {
             archetype_name: "Prankster",
             description: Some("The prankster sees humor as the highest form or art, and pranks as the highest form of humor. In addition to setting friends up for light-hearted pranks, the prankster can use his quick wit and cruel sense of humor to enrage foes before incapacitating them with a clever turn of phrase."),
             source_page: Some("p.26"),
-            prerequisites: Some(&["PRECLASS:1,Bard=1", "PREMULT:1,[PREABILITY:1,CATEGORY=Archetype,Bard Archetype ~ Prankster],[!PREABILITY:1,CATEGORY=Archetype,TYPE.BardFascinate,TYPE.BardSuggestion,TYPE.BardMassSuggestion,TYPE.BardLoreMaster]", "PREFACT:1,TEMPLATES,IsGnome=true"]),
             replaces: Some(&["BardFascinate", "BardSuggestion", "BardMassSuggestion", "BardLoreMaster"]),
             grants: &[
                 ArchetypeGrant { grants_feature_key: "Prankster ~ Bardic Performance", at_level: 1, description: Some("A prankster's bardic performance functions like a bard's, but some of its performances are exchanged for those listed below."), benefit: None },
@@ -212,7 +203,6 @@ pub fn archetype_swap_tables() -> &'static [ArchetypeSwapEntry] {
             archetype_name: "Shadow Puppeteer",
             description: Some("A shadow puppeteer invokes amazing and terrifying shadow puppet shows, producing supernatural effects by creating and manipulating shadow."),
             source_page: Some("p.210"),
-            prerequisites: Some(&["PRECLASS:1,Bard=1", "PREMULT:1,[PREABILITY:1,CATEGORY=Archetype,Bard Archetype ~ Shadow Puppeteer],[!PREABILITY:1,CATEGORY=Archetype,TYPE.BardInspireCourage1,TYPE.BardInspireCourage2,TYPE.BardInspireCourage3,TYPE.BardInspireCourage4,TYPE.BardInspireCompetence1,TYPE.BardInspireCompetence2,TYPE.BardInspireCompetence3,TYPE.BardInspireCompetence4,TYPE.BardInspireCompetence5,TYPE.BardInspireCompetence6]", "PREFACT:1,TEMPLATES,IsWayang=true"]),
             replaces: Some(&["BardInspireCourage1", "BardInspireCourage2", "BardInspireCourage3", "BardInspireCourage4", "BardInspireCompetence1", "BardInspireCompetence2", "BardInspireCompetence3", "BardInspireCompetence4", "BardInspireCompetence5", "BardInspireCompetence6"]),
             grants: &[
                 ArchetypeGrant { grants_feature_key: "Shadow Puppeteer ~ Bardic Performance", at_level: 1, description: Some("A shadow puppeteer gains the following types of bardic performance. The character must be able to perform shadow puppetry in order to activate any of these abilities. Shadow puppetry uses Perform (act), and requires a light source. These abilities replace all levels of inspire courage and inspire competence."), benefit: None },
@@ -227,7 +217,6 @@ pub fn archetype_swap_tables() -> &'static [ArchetypeSwapEntry] {
             archetype_name: "Watersinger",
             description: Some("The watersinger's song reaches from the depths of his soul into the elemental waters from which life first sprang. His voice commands water, bending and shaping it to his desire."),
             source_page: Some("p.176"),
-            prerequisites: Some(&["PRECLASS:1,Bard=1", "PREMULT:1,[PREABILITY:1,CATEGORY=Archetype,Bard Archetype ~ Watersinger],[!PREABILITY:1,CATEGORY=Archetype,TYPE.BardFascinate,TYPE.BardSuggestion,TYPE.BardMassSuggestion,TYPE.BardInspireCompetence,TYPE.BardLoreMaster]", "PREFACT:1,TEMPLATES,IsUndine=true"]),
             replaces: Some(&["BardFascinate", "BardSuggestion", "BardMassSuggestion", "BardInspireCompetence", "BardLoreMaster"]),
             grants: &[
                 ArchetypeGrant { grants_feature_key: "Watersinger ~ Bardic Performance", at_level: 1, description: Some("A watersinger has some unique bardic performances, which replace some of the standard bardic performances as listed in each entry. These bardic performances follow all the general rules and restrictions of a bard's bardic performances."), benefit: None },
@@ -247,7 +236,6 @@ pub fn archetype_swap_tables() -> &'static [ArchetypeSwapEntry] {
             archetype_name: "Demonic Apostle",
             description: Some("In order to survive, the drow threw in their lot with demon lords. Thus, demon worship is common among the drow, and so are ranks of demonic apostles, who gain magical insight from their dark lords and crush their chaotic masters' enemies by channeling demonic energy."),
             source_page: Some("p.104"),
-            prerequisites: Some(&["PRECLASS:1,Cleric=1", "PREDOMAIN:1,Chaos,Evil,Demon", "PREMULT:1,[PREABILITY:1,CATEGORY=Archetype,Cleric Archetype ~ Demonic Apostle],[!PREABILITY:1,CATEGORY=Archetype,TYPE.ClericChannelEnergy1,TYPE.ClericChannelEnergy2,TYPE.ClericChannelEnergy3,TYPE.ClericChannelEnergy4,TYPE.ClericChannelEnergy5,TYPE.ClericChannelEnergy6,TYPE.ClericChannelEnergy7,TYPE.ClericChannelEnergy8,TYPE.ClericChannelEnergy9,TYPE.ClericChannelEnergy10]", "PREFACT:1,TEMPLATES,IsDrow=true"]),
             replaces: Some(&["ClericChannelEnergy1", "ClericChannelEnergy2", "ClericChannelEnergy3", "ClericChannelEnergy4", "ClericChannelEnergy5", "ClericChannelEnergy6", "ClericChannelEnergy7", "ClericChannelEnergy8", "ClericChannelEnergy9", "ClericChannelEnergy10"]),
             grants: &[
                 ArchetypeGrant { grants_feature_key: "Demonic Apostle ~ Demonic Magic", at_level: 1, description: Some("A demonic apostle must choose to channel negative energy, and must select either the Chaos or Evil domain or the Demon subdomain (Advanced Player's Guide 89) as her sole domain."), benefit: None },
@@ -262,7 +250,6 @@ pub fn archetype_swap_tables() -> &'static [ArchetypeSwapEntry] {
             archetype_name: "Fiendish Vessel",
             description: Some("Many clerics pray to or make evil bargains with fiendish powers, devoting body and soul to the insane plans and wicked aims of their despicable patrons. But these mortal clerics are often just shallow beings searching for quick power or the caress of true and final oblivion-few truly grasp the full scope of the entities they worship. Fiendish vessels, through their fiendish heritage, share an innate connection with their patron, and that connection grants them understanding and power."),
             source_page: Some("p.170"),
-            prerequisites: Some(&["PREALIGN:CE,NE,LE", "PREALIGN:Deity", "PRECLASS:1,Cleric=1", "PREDOMAIN:1,Daemon Subdomain,Demon Subdomain (Evil),Demon Subdomain (Chaos),Devil Subdomain (Evil),Devil Subdomian (Law)", "PREMULT:1,[PREABILITY:1,CATEGORY=Archetype,Cleric Archetype ~ Fiendish Vessel],[!PREABILITY:1,CATEGORY=Archetype,TYPE.ClericChannelEnergy1,TYPE.ClericChannelEnergy2,TYPE.ClericChannelEnergy3,TYPE.ClericChannelEnergy4,TYPE.ClericChannelEnergy5,TYPE.ClericChannelEnergy6,TYPE.ClericChannelEnergy7,TYPE.ClericChannelEnergy8,TYPE.ClericChannelEnergy9,TYPE.ClericChannelEnergy10]", "PREFACT:1,TEMPLATES,IsTiefling=true"]),
             replaces: Some(&["ClericChannelEnergy1", "ClericChannelEnergy2", "ClericChannelEnergy3", "ClericChannelEnergy4", "ClericChannelEnergy5", "ClericChannelEnergy6", "ClericChannelEnergy7", "ClericChannelEnergy8", "ClericChannelEnergy9", "ClericChannelEnergy10"]),
             grants: &[
                 ArchetypeGrant { grants_feature_key: "Fiendish Vessel ~ Alignment", at_level: 1, description: Some("Unlike normal clerics, a fiendish vessel's alignment must match her patron's."), benefit: None },
@@ -282,7 +269,6 @@ pub fn archetype_swap_tables() -> &'static [ArchetypeSwapEntry] {
             archetype_name: "Forgemaster",
             description: Some("Forgemasters are priestly dwarves who are ritual casters and expert enchanters, able to produce their rune-graven armaments with astonishing speed."),
             source_page: Some("p.15"),
-            prerequisites: Some(&["PRECLASS:1,Cleric=1", "PREDEITYDOMAIN:1,Artifice", "PREDOMAIN:1,Artifice", "PREMULT:1,[PREABILITY:1,CATEGORY=Archetype,Cleric Archetype ~ Forgemaster],[!PREABILITY:1,CATEGORY=Archetype,TYPE.ClericChannelEnergy]", "PREFACT:1,TEMPLATES,IsDwarf=true"]),
             replaces: Some(&["ClericChannelEnergy"]),
             grants: &[
                 ArchetypeGrant { grants_feature_key: "Forgemaster ~ Artificer", at_level: 1, description: Some("A forgemaster gains only one domain, which must be the Artifice domain (not including subdomains). If she worships a deity, it must grant the Artifice domain."), benefit: None },
@@ -300,7 +286,6 @@ pub fn archetype_swap_tables() -> &'static [ArchetypeSwapEntry] {
             archetype_name: "Feral Child",
             description: Some("Some youths, abandoned in the wilderness and then raised by animals, are so connected with their adoptive home and family that they become feral. Suspicious of civilized society, these foundlings often choose allegiance to the wild over their human forebears. A feral child has the following class features."),
             source_page: Some("p.74"),
-            prerequisites: Some(&["PRECLASS:1,Druid=1", "PREMULT:1,[PREABILITY:1,CATEGORY=Archetype,Druid Archetype ~ Feral Child],[!PREABILITY:1,CATEGORY=Archetype,TYPE.DruidTracklessStep.DruidThousandFaces.DruidWildShape.DruidResistNaturesLure.DruidVenomImmunity.DruidTimelessBody]", "PREFACT:1,TEMPLATES,IsHuman=true"]),
             replaces: Some(&["DruidTracklessStep", "DruidThousandFaces", "DruidWildShape", "DruidResistNaturesLure", "DruidVenomImmunity", "DruidTimelessBody"]),
             grants: &[
                 ArchetypeGrant { grants_feature_key: "Feral Child ~ Weapon and Armor Proficiency", at_level: 1, description: Some("A feral child loses proficiency with the scimitar, scythe, and sickle and with shields."), benefit: None },
@@ -323,7 +308,6 @@ pub fn archetype_swap_tables() -> &'static [ArchetypeSwapEntry] {
             archetype_name: "Naga Aspirant",
             description: Some("The naga aspirant follows the ancient beliefs and engages in the rituals of a druidic sect dedicated to the transcendence of her nagaji form through absolute devotion to nagas and naga gods. Through acting as a herald to the naga deities, the aspirant is rewarded with the ability to unlock her ultimate spirit form and become a true naga."),
             source_page: Some("p.196"),
-            prerequisites: Some(&["PRECLASS:1,Druid=1", "PREMULT:1,[PREABILITY:1,CATEGORY=Archetype,Druid Archetype ~ Naga Aspirant],[!PREABILITY:1,CATEGORY=Archetype,TYPE.DruidSpontaneousCasting,TYPE.DruidResistNaturesLure,TYPE.DruidWildShape,TYPE.DruidVenomImmunity,TYPE.DruidAThousandFaces,TYPE.DruidTimelessBody]", "PREFACT:1,TEMPLATES,IsNagaji=true"]),
             replaces: Some(&["DruidSpontaneousCasting", "DruidResistNaturesLure", "DruidWildShape", "DruidVenomImmunity", "DruidAThousandFaces", "DruidTimelessBody"]),
             grants: &[
                 ArchetypeGrant { grants_feature_key: "Naga Aspirant ~ Aspirant's Bond", at_level: 1, description: Some("A naga aspirant gains a spiritual connection to the serpentine deities worshiped by the nagas. At 1st level, and each time she gains a druid level, she may add one of the following spells to her druid spell list. 0-acid splash, bleed, daze, mage hand, open/close, ray of frost; 1st-charm person, divine favor, expeditious retreat, mage armor, magic missile, ray of enfeeblement, shield, shield of faith, silent image, true strike; 2nd-acid arrow, detect thoughts, invisibility, mirror image, scorching ray, see invisibility; 3rd- dispel magic, displacement, fireball, lightning bolt, suggestion; 4th-divine power, greater invisibility."), benefit: None },
@@ -340,7 +324,6 @@ pub fn archetype_swap_tables() -> &'static [ArchetypeSwapEntry] {
             archetype_name: "Sky Druid",
             description: Some("Some druids develop ties not to a particular landscape, but instead to the endless blue expanse of the skies. Such are the sky druids, who are more at home soaring through air than standing on the ground."),
             source_page: Some("p.158"),
-            prerequisites: Some(&["PRECLASS:1,Druid=1", "PREMULT:1,[PREABILITY:1,CATEGORY=Archetype,Druid Archetype ~ Sky Druid],[!PREABILITY:1,CATEGORY=Archetype,TYPE.DruidWoodlandStride,TYPE.DruidNatureBond,TYPE.DruidNaturesLure,TYPE.DruidTracklessStep,TYPE.DruidWildShape,TYPE.DruidVenomImmunity,TYPE.DruidThousandFaces]", "PREFACT:1,TEMPLATES,IsSylph=true"]),
             replaces: Some(&["DruidNatureSense", "DruidWoodlandStride", "DruidResistNaturesLure", "DruidTracklessStep", "DruidWildShape", "DruidVenomImmunity", "DruidThousandFaces"]),
             grants: &[
                 ArchetypeGrant { grants_feature_key: "Sky Druid ~ Weapon and Armor Proficiency", at_level: 1, description: Some("A sky druid loses medium armor proficiency."), benefit: None },
@@ -360,7 +343,6 @@ pub fn archetype_swap_tables() -> &'static [ArchetypeSwapEntry] {
             archetype_name: "Treesinger",
             description: Some("Elves live far longer than other common races, and a single elf may see whole empires rise and fall. Given the impermanence of the cultures around them, it's small wonder that some elves turn to the timeless growth of nature for solace, finding allies among the great trees themselves, and even leading the forest's plants into combat."),
             source_page: Some("p.25"),
-            prerequisites: Some(&["PRECLASS:1,Druid=1", "PREMULT:1,[PREABILITY:1,CATEGORY=Archetype,Druid Archetype ~ Treesinger],[!PREABILITY:1,CATEGORY=Archetype,TYPE.DruidNatureBond,TYPE.DruidWildEmpathy,TYPE.DruidWildShape]", "PREFACT:1,TEMPLATES,IsElf=true"]),
             replaces: Some(&["DruidNatureBond", "DruidWildEmpathy", "DruidWildShape"]),
             grants: &[
                 ArchetypeGrant { grants_feature_key: "Treesinger ~ Plant Bond", at_level: 1, description: Some("A treesinger forms a mystic bond with plant life."), benefit: None },
@@ -375,7 +357,6 @@ pub fn archetype_swap_tables() -> &'static [ArchetypeSwapEntry] {
             archetype_name: "Undine Adept",
             description: Some("An undine adept dedicates herself to preserving the knowledge of the first undines and ensuring her people's ancient connections to the natural world remain undisturbed. They serve as the keepers of the roots of the undine people and as their protectors."),
             source_page: Some("p.176"),
-            prerequisites: Some(&["PRECLASS:1,Druid=1", "PREDOMAIN:1,Community,Water", "PREMULT:1,[PREABILITY:1,CATEGORY=Archetype,Druid Archetype ~ Undine Adept],[!PREABILITY:1,CATEGORY=Archetype,TYPE.DruidWoodlandStride,TYPE.DruidTracklessStep,TYPE.DruidResistNaturesLure,TYPE.DruidWildShape,TYPE.DruidVenomImmunity]", "PREFACT:1,TEMPLATES,IsUndine=true"]),
             replaces: Some(&["DruidWoodlandStride", "DruidTracklessStep", "DruidResistNaturesLure", "DruidWildShape", "DruidVenomImmunity"]),
             grants: &[
                 ArchetypeGrant { grants_feature_key: "Undine Adept ~ Domains", at_level: 1, description: Some("An undine adept who chooses a domain must choose the Community or Water domain, or any subdomain of those domains."), benefit: None },
@@ -393,7 +374,6 @@ pub fn archetype_swap_tables() -> &'static [ArchetypeSwapEntry] {
             archetype_name: "Airborne Ambusher",
             description: Some("Driven by suspicion and hatred, strix doggedly guard their territories, making deadly use of their flight. Using swift strikes from above, strix plummet onto their foes with lethal force."),
             source_page: Some("p.201"),
-            prerequisites: Some(&["PRECLASS:1,Fighter=1", "PREMULT:1,[PREABILITY:1,CATEGORY=Archetype,Fighter Archetype ~ Airborne Ambusher],[!PREABILITY:1,CATEGORY=Archetype,TYPE.FighterBravery,TYPE.FighterWeaponTraining1,TYPE.FighterWeaponTraining2,TYPE.FighterWeaponTraining3,TYPE.FighterWeaponTraining4]", "PREFACT:1,TEMPLATES,IsStrix=true"]),
             replaces: Some(&["FighterBravery", "FighterWeaponTraining1", "FighterWeaponTraining2", "FighterWeaponTraining3", "FighterWeaponTraining4"]),
             grants: &[
                 ArchetypeGrant { grants_feature_key: "Airborne Ambusher ~ Weapon and Armor Proficiency", at_level: 1, description: Some("An airborne ambusher is not proficient with heavy armor or tower shields."), benefit: None },
@@ -411,7 +391,6 @@ pub fn archetype_swap_tables() -> &'static [ArchetypeSwapEntry] {
             archetype_name: "Cavern Sniper",
             description: Some("Perfectly at home in the darkness, the cavern sniper capitalizes on stealth and ranged attacks imbued with his spell-like abilities to harass his opponents. The cavern sniper focuses on surprise, his innate magical abilities, and poison to take down unwary foes. The cavern sniper has the following class features."),
             source_page: Some("p.104"),
-            prerequisites: Some(&["PRECLASS:1,Fighter=1", "PREMULT:1,[PREABILITY:1,CATEGORY=Archetype,Fighter Archetype ~ Cavern Sniper],[!PREABILITY:1,CATEGORY=Archetype,TYPE.FighterBravery,TYPE.FighterWeaponTraining1,TYPE.FighterWeaponTraining2,TYPE.FighterWeaponTraining3,TYPE.FighterWeaponTraining4,TYPE.FighterWeaponMastery]", "PREFACT:1,TEMPLATES,IsDrow=true"]),
             replaces: Some(&["FighterBravery", "FighterWeaponTraining1", "FighterWeaponTraining2", "FighterWeaponTraining3", "FighterWeaponTraining4", "FighterWeaponMastery"]),
             grants: &[
                 ArchetypeGrant { grants_feature_key: "Cavern Sniper ~ Class Skills", at_level: 1, description: Some("The cavern sniper adds Stealth to his list of class skills and removes Intimidate from his list of class skills."), benefit: None },
@@ -430,7 +409,6 @@ pub fn archetype_swap_tables() -> &'static [ArchetypeSwapEntry] {
             archetype_name: "Dirty Fighter",
             description: Some("The dirty fighter laughs at concepts like honor and fair play. He cares only for victory, no matter how he achieves it, and spends as much time mastering sneaky combat maneuvers as he does drilling with weapons or learning how to wear armor. A dirty fighter has the following class features."),
             source_page: Some("p.140"),
-            prerequisites: Some(&["PRECLASS:1,Fighter=1", "PREMULT:1,[PREABILITY:1,CATEGORY=Archetype,Fighter Archetype ~ Dirty Fighter],[!PREABILITY:1,CATEGORY=Archetype,TYPE.FighterBravery,TYPE.FighterWeaponTraining1,TYPE.FighterWeaponTraining2,TYPE.FighterWeaponTraining3,TYPE.FighterWeaponTraining4]", "PREFACT:1,TEMPLATES,IsOrc=true"]),
             replaces: Some(&["FighterBravery", "FighterWeaponTraining1", "FighterWeaponTraining2", "FighterWeaponTraining3", "FighterWeaponTraining4"]),
             grants: &[
                 ArchetypeGrant { grants_feature_key: "Dirty Fighter ~ Sidestep", at_level: 2, description: Some("The dirty fighter learns how to evade his enemies when they react to his combat maneuvers. He gains a +%1 dodge bonus to his AC against attacks of opportunity provoked by him while attempting a combat maneuver.|1+(FighterLVL-2)/4"), benefit: None },
@@ -446,7 +424,6 @@ pub fn archetype_swap_tables() -> &'static [ArchetypeSwapEntry] {
             archetype_name: "Foehammer",
             description: Some("While the axe is the most famous dwarven weapon, the hammer is at the heart of dwarves' heritage as forgemasters and warriors alike."),
             source_page: Some("p.15"),
-            prerequisites: Some(&["PRECLASS:1,Fighter=1", "PREMULT:1,[PREABILITY:1,CATEGORY=Archetype,Fighter Archetype ~ Foehammer],[!PREABILITY:1,CATEGORY=Archetype,TYPE.FighterArmorTraining1,TYPE.FighterArmorTraining2,TYPE.FighterArmorTraining3,TYPE.FighterArmorTraining4,TYPE.FighterWeaponTraining1,TYPE.FighterWeaponTraining2,TYPE.FighterWeaponTraining3,TYPE.FighterWeaponTraining4,TYPE.FighterArmorMastery,TYPE.FighterWeaponMastery]", "PREFACT:1,TEMPLATES,IsDwarf=true"]),
             replaces: Some(&["FighterArmorTraining1", "FighterArmorTraining2", "FighterArmorTraining3", "FighterArmorTraining4", "FighterWeaponTraining1", "FighterWeaponTraining2", "FighterWeaponTraining3", "FighterWeaponTraining4", "FighterArmorMastery", "FighterWeaponMastery"]),
             grants: &[
                 ArchetypeGrant { grants_feature_key: "Foehammer ~ Sledgehammer", at_level: 3, description: Some("At 3rd level, a foehammer wielding a hammer gains a +2 circumstance bonus on combat maneuver checks made to bull rush, overrun, sunder, or trip. This ability replaces armor training 1."), benefit: None },
@@ -468,7 +445,6 @@ pub fn archetype_swap_tables() -> &'static [ArchetypeSwapEntry] {
             archetype_name: "Exarch",
             description: Some("The gruff traditionalism of most dwarves finds its apex in those who adhere to a strict orthodoxy rooted in ancient principles and practices and who are not amenable whatsoever to change or innovation."),
             source_page: Some("p.13"),
-            prerequisites: Some(&["PRECLASS:1,Inquisitor=1", "PREMULT:1,[PREABILITY:1,CATEGORY=Archetype,Inquisitor Archetype ~ Exarch],[!PREABILITY:1,CATEGORY=Archetype,TYPE.InquisitorMonsterLore,TYPE.InquisitorDetectAlignment,TYPE.InquisitorBane,TYPE.InquisitorSecondJudgment,TYPE.InquisitorGreaterBane,TYPE.InquisitorThirdJudgment]", "PREFACT:1,TEMPLATES,IsDwarf=true"]),
             replaces: Some(&["InquisitorMonsterLore", "InquisitorDetectAlignment", "InquisitorBane", "InquisitorSecondJudgment", "InquisitorGreaterBane", "InquisitorThirdJudgment"]),
             grants: &[
                 ArchetypeGrant { grants_feature_key: "Exarch ~ Spells", at_level: 1, description: Some("Exarchs cannot cast spells with the chaotic descriptor."), benefit: None },
@@ -487,7 +463,6 @@ pub fn archetype_swap_tables() -> &'static [ArchetypeSwapEntry] {
             archetype_name: "Immolator",
             description: Some("The immolator puts her pyromaniacal urges to work in the service of a deity. She brings burning retribution down upon the enemies of her faith, consigning their souls to the sacrificial flames. An immolator has the following class features."),
             source_page: Some("p.124"),
-            prerequisites: Some(&["PRECLASS:1,Inquisitor=1", "PREDEITYDOMAIN:1,Fire", "PREMULT:1,[PREABILITY:1,CATEGORY=Archetype,Inquisitor Archetype ~ Immolator],[!PREABILITY:1,CATEGORY=Archetype,TYPE.InquisitorJudgmentSmiting,TYPE.InquisitorBane,TYPE.InquisitorGreaterBane,TYPE.InquisitorTrueJudgement]", "PREFACT:1,TEMPLATES,IsIfrit=true"]),
             replaces: Some(&["InquisitorJudgmentSmiting", "InquisitorBane", "InquisitorGreaterBane", "InquisitorTrueJudgement"]),
             grants: &[
                 ArchetypeGrant { grants_feature_key: "Immolator ~ Servant of the Flame", at_level: 1, description: Some("An immolator must worship a deity whose portfolio includes the Fire domain. An immolator who selects the Fire domain (or one of its associated subdomains, if available) uses her domain powers at +1 caster level (this stacks with the ifrit's fire affinity racial trait)."), benefit: None },
@@ -504,7 +479,6 @@ pub fn archetype_swap_tables() -> &'static [ArchetypeSwapEntry] {
             archetype_name: "Kinslayer",
             description: Some("Appalled and guilt-ridden by the horrific circumstances of her birth, a kinslayer dedicates herself to eradicating the very creatures whose blood flows within her veins. She spends her life hunting and slaying those vampiric monsters for whom humans have become prey."),
             source_page: Some("p.98"),
-            prerequisites: Some(&["PRECLASS:1,Inquisitor=1", "PREMULT:1,[PREABILITY:1,CATEGORY=Archetype,Inquisitor Archetype ~ Kinslayer],[!PREABILITY:1,CATEGORY=Archetype,TYPE.InquisitorJudgmentDestruction,TYPE.InquisitorDetectAlignment]", "PREFACT:1,TEMPLATES,IsDhampir=true"]),
             replaces: Some(&["InquisitorJudgmentDestruction", "InquisitorDetectAlignment"]),
             grants: &[
                 ArchetypeGrant { grants_feature_key: "Kinslayer ~ Slayer's Brand", at_level: 1, description: Some("When using this judgment, the kinslayer gains the ability to brand undead creatures with positive energy. To do so, she must make a successful melee touch attack against the undead creature. This attack deals an amount of positive energy damage equal to 1d6 + %1, and burns her personal symbol into the undead creature's flesh, bone, or even its incorporeal form. From that point onward, the kinslayer can sense the existence of the branded creature as if it were the target of a locate creature spell (caster level %2). A slayer's brand lasts until the undead creature is destroyed or until the kinslayer uses this ability on another creature.|KinslayerSlayersBrandDamage|KinslayerSlayersBrandLVL"), benefit: None },
@@ -519,7 +493,6 @@ pub fn archetype_swap_tables() -> &'static [ArchetypeSwapEntry] {
             archetype_name: "Gray Disciple",
             description: Some("The gray disciple contemplates the inner voice of duergar magic and the silent eternity of stone, mastering these dual mysteries and combining them to deadly effect."),
             source_page: Some("p.187"),
-            prerequisites: Some(&["PRECLASS:1,Monk=1", "PREMULT:1,[PREABILITY:1,CATEGORY=Archetype,Monk Archetype ~ Gray Disciple],[!PREABILITY:1,CATEGORY=Archetype,TYPE.MonkSlowFall,TYPE.MonkStillMind,TYPE.MonkHighJump,TYPE.MonkBonusFeat6,TYPE.MonkWholenessOfBody,TYPE.MonkAbundantStep,TYPE.MonkQuiveringPalm,TYPE.MonkTongueOfTheSunAndMoon,TYPE.MonkEmptyBody]", "PREFACT:1,TEMPLATES,IsDuergar=true"]),
             replaces: Some(&["MonkSlowFall", "MonkStillMind", "MonkHighJump", "MonkBonusFeat6", "MonkWholenessOfBody", "MonkAbundantStep", "MonkQuiveringPalm", "MonkTongueOfTheSunAndMoon", "MonkEmptyBody"]),
             grants: &[
                 ArchetypeGrant { grants_feature_key: "Gray Disciple ~ Fade from Sight", at_level: 4, description: Some("As a swift action, the gray disciple can become invisible (as the invisibility spell) for 1 round by spending 1 ki point."), benefit: None },
@@ -537,7 +510,6 @@ pub fn archetype_swap_tables() -> &'static [ArchetypeSwapEntry] {
             archetype_name: "Ironskin Monk",
             description: Some("Through discipline and training, an ironskin monk hardens his body to withstand punishing blows. Though slow on his feet, his calloused hands and feet can shatter stone and stagger foes."),
             source_page: Some("p.122"),
-            prerequisites: Some(&["PRECLASS:1,Monk=1", "PREMULT:1,[PREABILITY:1,CATEGORY=Archetype,Monk Archetype ~ Ironskin Monk],[!PREABILITY:1,CATEGORY=Archetype,TYPE.MonkACBonus,TYPE.MonkEvasion,TYPE.MonkKiPool,TYPE.MonkHighJump,TYPE.MonkFastMovement,TYPE.MonkSlowFall,TYPE.MonkImprovedEvasion,TYPE.MonkTongueOfTheSunAndMoon,TYPE.MonkPerfectSelf]", "PREFACT:1,TEMPLATES,IsHobgoblin=true"]),
             replaces: Some(&["MonkACBonus", "MonkEvasion", "MonkKiPool", "MonkHighJump", "MonkFastMovement", "MonkSlowFall", "MonkImprovedEvasion", "MonkTongueOfTheSunAndMoon", "MonkPerfectSelf"]),
             grants: &[
                 ArchetypeGrant { grants_feature_key: "Ironskin Monk ~ Iron Skin", at_level: 1, description: Some("The ironskin monk gains a +%1 bonus to his natural armor. This bonus stacks with any existing natural armor the ironskin monk already has. At 4th level, and every 4 levels thereafter, this bonus increases by +1. This ability replaces the monk's AC bonus ability and the ability to add his Wisdom bonus to his AC.|IronskinMonkIronSkinBonus"), benefit: None },
@@ -558,7 +530,6 @@ pub fn archetype_swap_tables() -> &'static [ArchetypeSwapEntry] {
             archetype_name: "Nimble Guardian",
             description: Some("Some catfolk monks dedicate their graceful prowess to the defense of others, especially those dedicated to a similar ethos or who prove themselves as stalwart allies of the monk's cause. A nimble guardian has the following class features."),
             source_page: Some("p.92"),
-            prerequisites: Some(&["PRECLASS:1,Monk=1", "PREMULT:1,[PREABILITY:1,CATEGORY=Archetype,Monk Archetype ~ Nimble Guardian],[!PREABILITY:1,CATEGORY=Archetype,TYPE.MonkStillMind,TYPE.MonkPurityOfBody,TYPE.MonkWholenessOfBody,TYPE.MonkImprovedEvasion]", "PREFACT:1,TEMPLATES,IsCatfolk=true"]),
             replaces: Some(&["MonkEvasion", "MonkStillMind", "MonkPurityOfBody", "MonkWholenessOfBody", "MonkImprovedEvasion"]),
             grants: &[
                 ArchetypeGrant { grants_feature_key: "Nimble Guardian ~ Defensive Aid", at_level: 2, description: Some("%1 times per day, a nimble guardian can interpose herself between one adjacent ally and an attack or damage dealt in an area of effect. If an adjacent ally is the target of the attack or is required to make a Reflex saving throw against a damaging effect, as an immediate action the nimble guardian can grant that ally a +4 circumstance bonus to AC or on the saving throw against the effect. The nimble guardian must use this ability before the attack roll or saving throw is made. The nimble guardian can only use this ability if he is wearing light or no armor.|NimbleGuardianDefensiveAidTimes"), benefit: None },
@@ -575,7 +546,6 @@ pub fn archetype_swap_tables() -> &'static [ArchetypeSwapEntry] {
             archetype_name: "Student of Stone",
             description: Some("By following the path of the stone, students of stone give up much of monks' mobility in favor of sheer resilience."),
             source_page: Some("p.146"),
-            prerequisites: Some(&["PRECLASS:1,Monk=1", "PREMULT:1,[PREABILITY:1,CATEGORY=Archetype,Monk Archetype ~ Student of Stone],[!PREABILITY:1,CATEGORY=Archetype,TYPE.MonkEvasion,TYPE.MonkFastMovement,TYPE.MonkHighJump,TYPE.MonkImprovedEvasion,TYPE.MonkAbundantStep,TYPE.MonkPerfectSelf]", "PREFACT:1,TEMPLATES,IsOread=true"]),
             replaces: Some(&["MonkEvasion", "MonkFastMovement", "MonkHighJump", "MonkImprovedEvasion", "MonkAbundantStep", "MonkPerfectSelf"]),
             grants: &[
                 ArchetypeGrant { grants_feature_key: "Student of Stone ~ Hard as Stone", at_level: 2, description: Some("Whenever an opponent rolls to confirm a critical hit against a student of stone, treat the student of stone's AC as +4 higher than normal. This ability replaces evasion."), benefit: None },
@@ -596,7 +566,6 @@ pub fn archetype_swap_tables() -> &'static [ArchetypeSwapEntry] {
             archetype_name: "Treetop Monk",
             description: Some("While many vanaras follow traditional monastic training and traditions, others learn to blend exotic combat and the mysterious forces of ki with the natural world, allowing them to move through trees and overgrowth to deliver devastating attacks."),
             source_page: Some("p.206"),
-            prerequisites: Some(&["PRECLASS:1,Monk=1", "PREMULT:1,[PREABILITY:1,CATEGORY=Archetype,Monk Archetype ~ Treetop Monk],[!PREABILITY:1,CATEGORY=Archetype,TYPE.MonkStillMind,TYPE.MonkPurityOfBody]", "PREFACT:1,TEMPLATES,IsVanara=true"]),
             replaces: Some(&["MonkStillMind", "MonkPurityOfBody"]),
             grants: &[
                 ArchetypeGrant { grants_feature_key: "Treetop Monk ~ Branch Runner", at_level: 3, description: Some("A treetop monk adds half the base speed bonus from his fast movement ability to his racial climb speed."), benefit: None },
@@ -612,7 +581,6 @@ pub fn archetype_swap_tables() -> &'static [ArchetypeSwapEntry] {
             archetype_name: "Underfoot Adept",
             description: Some("An underfoot adept turns his diminutive stature and unorthodox footwork into a powerful weapon. Effortlessly moving across the battlefield, he ducks under the legs of larger creatures and then topples them with surprising attacks. An underfoot adept has the following class features."),
             source_page: Some("p.65"),
-            prerequisites: Some(&["PRECLASS:1,Monk=1", "PREMULT:1,[PREABILITY:1,CATEGORY=Archetype,Monk Archetype ~ Underfoot Adept],[!PREABILITY:1,CATEGORY=Archetype,TYPE.MonkBonusFeat1,TYPE.MonkStunningFist,TYPE.MonkHighJump]", "PREFACT:1,TEMPLATES,IsHalfling=true"]),
             replaces: Some(&["MonkBonusFeat1", "MonkStunningFist", "MonkHighJump"]),
             grants: &[
                 ArchetypeGrant { grants_feature_key: "Underfoot Adept ~ Underfoot Grace", at_level: 1, description: Some("An underfoot adept uses his size and grace to avoid the attacks of those he passes. When using the Acrobatics skill to avoid attacks of opportunity by moving through a threatened area or an enemy's space, he only takes a -5 penalty when doing so at full speed, instead of the normal -10 penalty."), benefit: None },
@@ -627,7 +595,6 @@ pub fn archetype_swap_tables() -> &'static [ArchetypeSwapEntry] {
             archetype_name: "Wanderer",
             description: Some("Some monks wander the world in humility to learn and to share wisdom and philosophy from their teachers with those they meet, often aiding those who are in need. A wanderer has the following class features."),
             source_page: Some("p.76"),
-            prerequisites: Some(&["PRECLASS:1,Monk=1", "PREMULT:1,[PREABILITY:1,CATEGORY=Archetype,Monk Archetype ~ Wanderer],[!PREABILITY:1,CATEGORY=Archetype,TYPE.MonkBonusFeat1.MonkStillMind.MonkSlowFall.MonkHighJump.MonkWholenessOfBody.MonkAbundantStep.MonkDiamondSoul]", "PREFACT:1,TEMPLATES,IsHuman=true"]),
             replaces: Some(&["MonkBonusFeat1", "MonkStillMind", "MonkSlowFall", "MonkHighJump", "MonkWholenessOfBody", "MonkAbundantStep", "MonkDiamondSoul"]),
             grants: &[
                 ArchetypeGrant { grants_feature_key: "Wanderer ~ Class Skills", at_level: 1, description: Some("The wanderer adds Diplomacy, Knowledge (geography), Knowledge (local), Linguistics, and Survival to his list of class skills."), benefit: None },
@@ -647,7 +614,6 @@ pub fn archetype_swap_tables() -> &'static [ArchetypeSwapEntry] {
             archetype_name: "Ancient Lorekeeper",
             description: Some("The ancient lorekeeper is a repository for all the beliefs and vast knowledge of an elven people. She shows a strong interest in and understanding of histories and creation legends at a young age, and as she matures her calling to serve as the memory of her long-lived people becomes clear to all who know her."),
             source_page: Some("p.24"),
-            prerequisites: Some(&["PRECLASS:1,Oracle=1", "PREMULT:1,[PREABILITY:1,CATEGORY=Archetype,Oracle Archetype ~ Ancient Lorekeeper],[!PREABILITY:1,CATEGORY=Archetype,TYPE.OracleMysterySkills,TYPE.OracleMysterySpell2,TYPE.OracleMysterySpell4,TYPE.OracleMysterySpell6,TYPE.OracleMysterySpell8,TYPE.OracleMysterySpell10,TYPE.OracleMysterySpell12,TYPE.OracleMysterySpell14,TYPE.OracleMysterySpell16,TYPE.OracleMysterySpell18]", "PREFACT:1,TEMPLATES,IsElf=true"]),
             replaces: Some(&["OracleMysterySkills", "OracleMysterySpell2", "OracleMysterySpell4", "OracleMysterySpell6", "OracleMysterySpell8", "OracleMysterySpell10", "OracleMysterySpell12", "OracleMysterySpell14", "OracleMysterySpell16", "OracleMysterySpell18"]),
             grants: &[
                 ArchetypeGrant { grants_feature_key: "Ancient Lorekeeper ~ Class Skills", at_level: 1, description: Some("An ancient lorekeeper adds Knowledge (arcane) and Knowledge (local) to her list of class skills. Whenever she makes a Knowledge check of any kind about a question regarding elves (creatures of the elf subtype), the ancient lorekeeper adds half her class level on her check. This replaces the bonus skills the ancient lorekeeper gains from her mystery."), benefit: None },
@@ -662,7 +628,6 @@ pub fn archetype_swap_tables() -> &'static [ArchetypeSwapEntry] {
             archetype_name: "Community Guardian",
             description: Some("The community guardian is chosen to protect and succor the weak and innocent within her community. Her calling also allows her to draw upon and focus the collective will in order to achieve those goals. A community guardian has the following class features."),
             source_page: Some("p.63"),
-            prerequisites: Some(&["PREALIGN:LG,NG,CG", "PRECLASS:1,Oracle=1", "PREMULT:1,[PREABILITY:1,CATEGORY=Archetype,Oracle Archetype ~ Community Guardian],[!PREABILITY:1,CATEGORY=Archetype,TYPE.OracleMysterySkills,TYPE.OracleMysterySpell2,TYPE.OracleMysterySpell4,TYPE.OracleMysterySpell6,TYPE.OracleMysterySpell10,TYPE.OracleMysterySpell12]", "PREFACT:1,TEMPLATES,IsHalfling=true"]),
             replaces: Some(&["OracleMysterySkills", "OracleMysterySpell2", "OracleMysterySpell4", "OracleMysterySpell6", "OracleMysterySpell10", "OracleMysterySpell12"]),
             grants: &[
                 ArchetypeGrant { grants_feature_key: "Community Guardian ~ Recommended Mysteries", at_level: 1, description: Some("ancestor (Ultimate Magic 53), life, lore, nature."), benefit: None },
@@ -680,7 +645,6 @@ pub fn archetype_swap_tables() -> &'static [ArchetypeSwapEntry] {
             archetype_name: "Purifier",
             description: Some("The purifier seeks out signs of possession or mind control that manifest from unwilling (and often unwitting) servants for fiendish corruptors and their mortal minions. A purifier seeks liberation of mind, body, and spirit from the bondage of sin and the taint of the unholy. A purifier gains the following class features."),
             source_page: Some("p.86"),
-            prerequisites: Some(&["PRECLASS:1,Oracle=1", "PREFACT:1,TEMPLATES,IsAasimar=true"]),
             replaces: Some(&["OracleRevelation3", "OracleRevelation7", "OracleRevelation11"]),
             grants: &[
                 ArchetypeGrant { grants_feature_key: "Purifier ~ Recommended Mysteries", at_level: 1, description: Some("ancestor, battle, heavens, lore."), benefit: None },
@@ -701,7 +665,6 @@ pub fn archetype_swap_tables() -> &'static [ArchetypeSwapEntry] {
             archetype_name: "Reincarnated Oracle",
             description: Some("A reincarnated oracle draws her knowledge and power from the experiences of her previous lives. Her memories guide her through a spiritual ascension leading the way to her ultimate incarnation."),
             source_page: Some("p.199"),
-            prerequisites: Some(&["PREABILITY:1,CATEGORY=Special Ability,Oracle ~ Haunted,Oracle ~ Tongues", "PRECLASS:1,Oracle=1", "PREMULT:1,[PREABILITY:1,CATEGORY=Archetype,Oracle Archetype ~ Reincarnated Oracle],[!PREABILITY:1,CATEGORY=Archetype,TYPE.OracleMysterySpell2,TYPE.OracleMysterySpell4,TYPE.OracleMysterySpell10,TYPE.OracleMysterySpell16,TYPE.OracleMysterySpell18,TYPE.OracleRevelation1,TYPE.OracleRevelation3,TYPE.OracleRevelation7]", "PREFACT:1,TEMPLATES,IsSamsaran=true"]),
             replaces: Some(&["OracleMysterySpell2", "OracleMysterySpell4", "OracleMysterySpell10", "OracleMysterySpell16", "OracleMysterySpell18", "OracleMysteryRevelation1", "OracleMysteryRevelation3", "OracleMysteryRevelation7"]),
             grants: &[
                 ArchetypeGrant { grants_feature_key: "Reincarnated Oracle ~ Recommended Mysteries", at_level: 1, description: Some("ancestor, lore, time."), benefit: None },
@@ -717,7 +680,6 @@ pub fn archetype_swap_tables() -> &'static [ArchetypeSwapEntry] {
             archetype_name: "Shigenjo",
             description: Some("The shigenjo walks the path of enlightenment and transcendence by seeking oneness with the celestial spirits. In doing so, she unlocks the martial potential of her own spiritual power."),
             source_page: Some("p.164"),
-            prerequisites: Some(&["PREALIGN:NG,TN,NE", "PRECLASS:1,Oracle=1", "PREMULT:1,[PREABILITY:1,CATEGORY=Archetype,Oracle Archetype ~ Shigenjo],[!PREABILITY:1,CATEGORY=Archetype,TYPE.OracleMysterySpell2,TYPE.OracleMysterySpell4,TYPE.OracleMysterySpell8,TYPE.OracleMysterySpell12,TYPE.OracleMysterySpell14,TYPE.OracleRevelation7,TYPE.OracleRevelation15,TYPE.OracleRevelation20]", "PREFACT:1,TEMPLATES,IsTengu=true"]),
             replaces: Some(&["OracleMysterySpell2", "OracleMysterySpell4", "OracleMysterySpell8", "OracleMysterySpell12", "OracleMysterySpell14", "OracleRevelation7", "OracleRevelation15", "OracleRevelation20"]),
             grants: &[
                 ArchetypeGrant { grants_feature_key: "Shigenjo ~ Class Skills", at_level: 1, description: Some("A shigenjo adds Knowledge (nature), Knowledge (religion), Knowledge (planes), and Survival to her list of class skills. These replace the additional class skills from her mystery."), benefit: None },
@@ -739,7 +701,6 @@ pub fn archetype_swap_tables() -> &'static [ArchetypeSwapEntry] {
             archetype_name: "Redeemer",
             description: Some("As most half-orcs are outcasts, a half-orc paladin recognizes that often those who are monstrous are not necessarily evil and that sometimes even those who are evil became that way because of circumstances and misfortune. Some half-orc paladins take up these misunderstood creatures as their cause, standing up for the monstrous creatures and, when possible, leading them to the light. These paladins are called redeemers. A redeemer has the following class features."),
             source_page: Some("p.55"),
-            prerequisites: Some(&["PRECLASS:1,Paladin=1", "PREMULT:1,[PREABILITY:1,CATEGORY=Archetype,Paladin Archetype ~ Redeemer],[!PREABILITY:1,CATEGORY=Archetype,TYPE.PaladinSmiteEvil,TYPE.PaladinDetectEvil,TYPE.PaladinAuraOfResolve,TYPE.PaladinAuraOfJustice]", "PREFACT:1,TEMPLATES,IsHalfOrc=true"]),
             replaces: Some(&["PaladinSmiteEvil", "PaladinDetectEvil", "PaladinAuraOfResolve", "PaladinAuraOfJustice"]),
             grants: &[
                 ArchetypeGrant { grants_feature_key: "Redeemer ~ Merciful Smite", at_level: 1, description: Some("When a redeemer chooses to smite a creature, she can have all of her attacks against the target deal nonlethal damage. She does not take the normal -4 attack roll penalty for using a lethal weapon to deal nonlethal damage. She cannot use this ability to deal nonlethal damage to outsiders with the evil subtype, evil-aligned dragons, or undead creatures (these creatures take lethal damage from her smite)."), benefit: None },
@@ -756,7 +717,6 @@ pub fn archetype_swap_tables() -> &'static [ArchetypeSwapEntry] {
             archetype_name: "Stonelord",
             description: Some("A stonelord is a devoted sentinel of dwarven enclaves, drawing the power of the earth and ancient stone to protect her people."),
             source_page: Some("p.16"),
-            prerequisites: Some(&["PRECLASS:1,Paladin=1", "PREMULT:1,[PREABILITY:1,CATEGORY=Archetype,Paladin Archetype ~ Stonelord],[!PREABILITY:1,CATEGORY=Archetype,TYPE.PaladinSmiteEvil,TYPE.PaladinDivineGrace,TYPE.PaladinDivineHealth,TYPE.PaladinMercy3,TYPE.PaladinMercy9,TYPE.PaladinMercy15,TYPE.PaladinChannelPositiveEnergy,TYPE.PaladinDivineBond,TYPE.PaladinAuraOfJustice,TYPE.PaladinMercy12,TYPE.PaladinMercy18,TYPE.PaladinHolyChampion]", "PREFACT:1,TEMPLATES,IsDwarf=true"]),
             replaces: Some(&["PaladinSmiteEvil", "PaladinDivineGrace", "PaladinDivineHealth", "PaladinMercy3", "PaladinMercy9", "PaladinMercy15", "PaladinChannelPositiveEnergy", "PaladinDivineBond", "PaladinAuraOfJustice", "PaladinMercy12", "PaladinMercy18", "PaladinHolyChampion"]),
             grants: &[
                 ArchetypeGrant { grants_feature_key: "Stonelord ~ Stonestrike", at_level: 1, description: Some("Once per day per paladin level, a stonelord can draw upon the power of the living rock. As a swift action, she treats her melee attacks until the beginning of her next turn (whether armed or unarmed) as magical and adamantine, including ignoring hardness up to %1, with a +%2 bonus on attack and damage rolls, as well as on combat maneuver checks. This bonus also applies to her CMD if she or her target is touching the ground or a stone structure|PaladinLVL*2|1+PaladinLVL/5"), benefit: None },
@@ -780,7 +740,6 @@ pub fn archetype_swap_tables() -> &'static [ArchetypeSwapEntry] {
             archetype_name: "Tranquil Guardian",
             description: Some("A tranquil guardian is a missionary of peace and tranquility, a soothing voice of succor in a violent and dangerous world."),
             source_page: Some("p.86"),
-            prerequisites: Some(&["PRECLASS:1,Paladin=1", "PREMULT:1,[PREABILITY:1,CATEGORY=Archetype,Paladin Archetype ~ Tranquil Guardian],[!PREABILITY:1,CATEGORY=Archetype,TYPE.PaladinSmiteEvil,TYPE.PaladinAuraOfCourage,TYPE.PaladinAuraOfResolve,TYPE.PaladinAuraOfJustice,TYPE.PaladinHolyChampion]", "PREFACT:1,TEMPLATES,IsAasimar=true"]),
             replaces: Some(&["PaladinSmiteEvil", "PaladinAuraOfCourage", "PaladinAuraOfResolve", "PaladinAuraOfJustice", "PaladinHolyChampion"]),
             grants: &[
                 ArchetypeGrant { grants_feature_key: "Tranquil Guardian ~ Touch of Serenity", at_level: 1, description: Some("The tranquil guardian gains Touch of Serenity as a bonus feat, even if she does not meet the prerequisites. At 6th level, and every six levels thereafter, the duration of a tranquil guardian's Touch of Serenity increases by 1 round. Each round on its turn, the target may attempt a new Will save to end the effect. The duration does not stack; only the longest remaining duration applies."), benefit: None },
@@ -798,7 +757,6 @@ pub fn archetype_swap_tables() -> &'static [ArchetypeSwapEntry] {
             archetype_name: "Dusk Stalker",
             description: Some("Hunters and guides through the Shadow Plane, dusk stalkers are rangers that thrive in shadow. Adept at hunting in dusk, darkness, and twilight, these rangers excel at manipulating shadows."),
             source_page: Some("p.110"),
-            prerequisites: Some(&["PRECLASS:1,Ranger=1", "PREMULT:1,[PREABILITY:1,CATEGORY=Archetype,Ranger Archetype ~ Dusk Stalker],[!PREABILITY:1,CATEGORY=Archetype,TYPE.RangerFavoredTerrain,TYPE.RangerHuntersBond,TYPE.RangerCamouflage]", "PREFACT:1,TEMPLATES,IsFetchling=true"]),
             replaces: Some(&["RangerFavoredTerrain", "RangerHuntersBond", "RangerCamouflage"]),
             grants: &[
                 ArchetypeGrant { grants_feature_key: "Dusk Stalker ~ Class Skills", at_level: 1, description: Some("The dusk stalker adds Knowledge (planes) to his list of class skills and removes Knowledge (nature) from his list of class skills."), benefit: None },
@@ -814,7 +772,6 @@ pub fn archetype_swap_tables() -> &'static [ArchetypeSwapEntry] {
             archetype_name: "Wave Warden",
             description: Some("The wave warden patrols beneath the sea, preserving the safety and secrets of merfolk communities. Though he fares best beneath the water, dry land is no haven to his quarry."),
             source_page: Some("p.194"),
-            prerequisites: Some(&["PRECLASS:1,Ranger=1", "PREMULT:1,[PREABILITY:1,CATEGORY=Archetype,Ranger Archetype ~ Wave Warden],[!PREABILITY:1,CATEGORY=Archetype,TYPE.RangerTrack,TYPE.RangerCombatStyle,TYPE.RangerBonusFeat2,TYPE.RangerBonusFeat6,TYPE.RangerBonusFeat10,TYPE.RangerBonusFeat14,TYPE.RangerBonusFeat18,TYPE.RangerFavoredTerrain,TYPE.RangerWoodlandStride,TYPE.RangerSwiftTracker]", "PREFACT:1,TEMPLATES,IsMerfolk=true"]),
             replaces: Some(&["RangerTrack", "RangerBonusFeat2", "RangerBonusFeat6", "RangerBonusFeat10", "RangerBonusFeat14", "RangerBonusFeat18", "RangerFavoredTerrain", "RangerWoodlandStride", "RangerSwiftTracker", "RangerCombatStyle"]),
             grants: &[
                 ArchetypeGrant { grants_feature_key: "Wave Warden ~ Deep Sentinel", at_level: 1, description: Some("A wave warden adds %1 on Perception checks made to notice creatures underwater.|1+(RangerLVL-1)/2"), benefit: None },
@@ -831,7 +788,6 @@ pub fn archetype_swap_tables() -> &'static [ArchetypeSwapEntry] {
             archetype_name: "Wild Shadow",
             description: Some("The isolation that some half-elves feel leads them to live a life of isolation amid the wild places of the world. Such rangers stalk the wild like shadows, creating close bonds with the wild itself instead of seeking the solace and aid of companions. While ill at ease within cities and other urban areas, they are adept at using the terrain to tactical advantage; they dart through brambles and rough terrain with uncommon grace and use the land itself to lock down enemies."),
             source_page: Some("p.45"),
-            prerequisites: Some(&["PRECLASS:1,Ranger=1", "PREMULT:1,[PREABILITY:1,CATEGORY=Archetype,Ranger Archetype ~ Wild Shadow],[!PREABILITY:1,CATEGORY=Archetype,TYPE.RangerTrack,TYPE.RangerWildEmpathy,TYPE.RangerFavoredTerrain,TYPE.RangerHuntersBond,TYPE.RangerWoodlandStride,TYPE.RangerQuarry,TYPE.RangerCamouflage,TYPE.RangerImprovedQuarry]", "PREFACT:1,TEMPLATES,IsHalfElf=true"]),
             replaces: Some(&["RangerTrack", "RangerWildEmpathy", "RangerFavoredTerrain", "RangerHuntersBond", "RangerWoodlandStride", "RangerQuarry", "RangerCamouflage", "RangerImprovedQuarry"]),
             grants: &[
                 ArchetypeGrant { grants_feature_key: "Wild Shadow ~ Wild at Heart", at_level: 1, description: Some("A wild shadow adds only 1/2 his class level when making wild empathy checks while in urban areas, and adds only 1/4 his class level to follow or identify tracks in such areas. In non-urban settings, he is considered two levels higher when determining the bonuses for such checks."), benefit: None },
@@ -850,7 +806,6 @@ pub fn archetype_swap_tables() -> &'static [ArchetypeSwapEntry] {
             archetype_name: "Cat Burglar",
             description: Some("Gifted with finesse and stealth, catfolk make excellent burglars. Cat burglars are masters of breaking and entering, using their feline grace to make it seem as though no crime was ever committed in the first place. Few locks can withstand skilled cat burglars, and such nimble rogues are capable of bypassing traps without activating them and enabling associates to do the same."),
             source_page: Some("p.92"),
-            prerequisites: Some(&["PRECLASS:1,Rogue=1", "PREMULT:1,[PREABILITY:1,CATEGORY=Archetype,Rogue Archetype ~ Cat Burglar],[!PREABILITY:1,CATEGORY=Archetype,TYPE.RogueUncannyDodge]", "PREFACT:1,TEMPLATES,IsCatfolk=true"]),
             replaces: Some(&["RogueUncannyDodge"]),
             grants: &[
                 ArchetypeGrant { grants_feature_key: "Cat Burglar ~ Phantom Presence", at_level: 4, description: Some("The cat burglar masters stealthy movement and leaves no trace of her passing in dungeons and cities. While in dungeon and urban environments, she leaves no trail and cannot be tracked, though she can choose to leave behind a trail if she so desires. Furthermore, she can always choose to take 10 when making a Stealth check."), benefit: None },
@@ -866,7 +821,6 @@ pub fn archetype_swap_tables() -> &'static [ArchetypeSwapEntry] {
             archetype_name: "Deadly Courtesan",
             description: Some("Skilled at manipulation and diversion, the deadly courtesan builds up those around her and periodically takes them down. She can be a spy, entertainer, assassin, bodyguard, or just an intimate to someone who needs it most."),
             source_page: Some("p.208"),
-            prerequisites: Some(&["PRECLASS:1,Rogue=1", "PREMULT:1,[PREABILITY:1,CATEGORY=Archetype,Rogue Archetype ~ Deadly Courtesan],[!PREABILITY:1,CATEGORY=Archetype,TYPE.RogueTrick2,TYPE.RogueTrapSense1,TYPE.RogueTrapSense2,TYPE.RogueTrapSense3,TYPE.RogueTrapSense4,TYPE.RogueTrapSense5,TYPE.RogueTrapSense6,TYPE.RogueUncannyDodge]", "PREFACT:1,TEMPLATES,IsVishkanya=true"]),
             replaces: Some(&["RogueTrick2", "RogueTrapSense1", "RogueTrapSense2", "RogueTrapSense3", "RogueTrapSense4", "RogueTrapSense5", "RogueTrapSense6", "RogueUncannyDodge"]),
             grants: &[
                 ArchetypeGrant { grants_feature_key: "Deadly Courtesan ~ Class Skills", at_level: 1, description: Some("A deadly courtesan adds Knowledge (history) and Knowledge (nobility) to her list of class skills and removes Knowledge (dungeoneering) from her list of class skills."), benefit: None },
@@ -884,7 +838,6 @@ pub fn archetype_swap_tables() -> &'static [ArchetypeSwapEntry] {
             archetype_name: "Eldritch Raider",
             description: Some("An eldritch raider is a rogue who seeks to unravel the mysteries of the destruction of the Gillman's homeland. They explore old ruins that date back to the days of the old human empire and track down relics and lore from its glory days."),
             source_page: Some("p.189"),
-            prerequisites: Some(&["PRECLASS:1,Rogue=1", "PREMULT:1,[PREABILITY:1,CATEGORY=Archetype,Rogue Archetype ~ Eldritch Raider],[!PREABILITY:1,CATEGORY=Archetype,TYPE.RogueTalent2,TYPE.RogueTrapSense]", "PREFACT:1,TEMPLATES,IsGillman=true"]),
             replaces: Some(&["RogueTalent2", "RogueTrapSense"]),
             grants: &[
                 ArchetypeGrant { grants_feature_key: "Eldritch Raider ~ Class Skills", at_level: 1, description: Some("An eldritch raider adds Knowledge (arcana), Knowledge (history), and Spellcraft to her list of class skills and removes Disguise, Perform, and Sleight of Hand from her list of class skills."), benefit: None },
@@ -903,7 +856,6 @@ pub fn archetype_swap_tables() -> &'static [ArchetypeSwapEntry] {
             archetype_name: "Filcher",
             description: Some("A filcher steals valuables without their owners even realizing it. Whether cutting purses in the midst of combat or replacing prized items with fakes under the noses of their owners, the filcher is the master of the quick and quiet steal. A filcher has the following class features."),
             source_page: Some("p.64"),
-            prerequisites: Some(&["PRECLASS:1,Rogue=1", "PREMULT:1,[PREABILITY:1,CATEGORY=Archetype,Rogue Archetype ~ Filcher],[!PREABILITY:1,CATEGORY=Archetype,TYPE.RogueEvasion.RogueTrapSense.RogueUncannyDodge.RogueImprovedUncannyDodge]", "PREFACT:1,TEMPLATES,IsHalfling=true"]),
             replaces: Some(&["RogueEvasion", "RogueTrapSense", "RogueUncannyDodge", "RogueImprovedUncannyDodge"]),
             grants: &[
                 ArchetypeGrant { grants_feature_key: "Filcher ~ Quicker than the Eye", at_level: 2, description: Some("A filcher develops an amazingly swift and delicate touch. When she uses Sleight of Hand, creatures take a penalty on their Perception checks to notice the attempt equal to half the filcher's class level. The filcher also subtracts her class level from the normal -20 penalty when attempting to make a Sleight of Hand check as a move action instead of as a standard action. Lastly, the filcher can withdraw an object hidden on her person, including a weapon, as a move action instead of the usual standard action."), benefit: None },
@@ -921,7 +873,6 @@ pub fn archetype_swap_tables() -> &'static [ArchetypeSwapEntry] {
             archetype_name: "Kitsune Trickster",
             description: Some("The kitsune trickster combines her sharpened wit with minor arcane powers of charm and persuasion. She uses her talents to spin convincing lies, riddles, and stories."),
             source_page: Some("p.193"),
-            prerequisites: Some(&["PRECLASS:1,Rogue=1", "PREMULT:1,[PREABILITY:1,CATEGORY=Archetype,Rogue Archetype ~ Kitsune Trickster],[!PREABILITY:1,CATEGORY=Archetype,TYPE.RogueTrapfinding,TYPE.RogueTrapSense]", "PREFACT:1,TEMPLATES,IsKitsune=true"]),
             replaces: Some(&["RogueTrapfinding", "RogueTrapSense"]),
             grants: &[
                 ArchetypeGrant { grants_feature_key: "Kitsune Trickster ~ Kitsune's Guile", at_level: 1, description: Some("A trickster relies on her intellect as much as her personality. She adds her Intelligence modifier on Bluff, Diplomacy, Disguise, and Sense Motive checks."), benefit: None },
@@ -936,7 +887,6 @@ pub fn archetype_swap_tables() -> &'static [ArchetypeSwapEntry] {
             archetype_name: "Skulking Slayer",
             description: Some("Pushed into a life of crime by the society around them, half orcs gravitate toward criminal activities that suit them best. Half-orc rogues leave subtle tactics and finesse to halflings and elves, and rely on brute strength and thuggery when they go about making mischief. Skulking slayers have turned the use of raw strength and surprise into an art form. A skulking slayer has the following class features."),
             source_page: Some("p.55"),
-            prerequisites: Some(&["PRECLASS:1,Rogue=1", "PREMULT:1,[PREABILITY:1,CATEGORY=Archetype,Rogue Archetype ~ Skulking Slayer],[!PREABILITY:1,CATEGORY=Archetype,TYPE.RogueTrapfinding.RogueTrapSense1.RogueTrapSense2.RogueTrapSense3.RogueTrapSense4.RogueTrapSense]", "PREFACT:1,TEMPLATES,IsHalfOrc=true"]),
             replaces: Some(&["RogueTrapfinding", "RogueTrapSense1", "RogueTrapSense2", "RogueTrapSense3", "RogueTrapSense4"]),
             grants: &[
                 ArchetypeGrant { grants_feature_key: "Skulking Slayer ~ Weapon and Armor Proficiency", at_level: 1, description: Some("The skulking slayer gains proficiency with greatclubs and whips, but loses proficiency with rapiers and hand crossbows."), benefit: None },
@@ -959,7 +909,6 @@ pub fn archetype_swap_tables() -> &'static [ArchetypeSwapEntry] {
             archetype_name: "Swordmaster",
             description: Some("A swordmaster meditates to strengthen her spiritual connection to her blade. She strives to perfect her skills by mastering six deadly trances."),
             source_page: Some("p.164"),
-            prerequisites: Some(&["PRECLASS:1,Rogue=1", "PREMULT:1,[PREABILITY:1,CATEGORY=Archetype,Rogue Archetype ~ Swordmaster],[!PREABILITY:1,CATEGORY=Archetype,TYPE.RogueTrapSense1,TYPE.RogueTrapSense2,TYPE.RogueTrapSense3,TYPE.RogueTrapSense4,TYPE.RogueTrapSense5,TYPE.RogueTrapSense6]", "PREFACT:1,TEMPLATES,IsTengu=true"]),
             replaces: Some(&["RogueTrapSense1", "RogueTrapSense2", "RogueTrapSense3", "RogueTrapSense4", "RogueTrapSense5", "RogueTrapSense6"]),
             grants: &[
                 ArchetypeGrant { grants_feature_key: "Swordmaster ~ Class Skills", at_level: 1, description: Some("The swordmaster adds Knowledge (nature) and Survival to her list of class skills and removes Disguise and Knowledge (dungeoneering) from her list of class skills."), benefit: None },
@@ -975,7 +924,6 @@ pub fn archetype_swap_tables() -> &'static [ArchetypeSwapEntry] {
             archetype_name: "Blood God Disciple",
             description: Some("A half-orc summoner who devotes himself to one of the bloody orc gods may believe his eidolon is an avatar of that god rather than a mere supernatural creature. A blood god disciple generally fights by the avatar's side and offers it blood sacrifices in exchange for martial prowess. A blood god disciple has the following class features."),
             source_page: Some("p.53"),
-            prerequisites: Some(&["PRECLASS:1,Summoner=1", "PREMULT:1,[PREABILITY:1,CATEGORY=Archetype,Summoner Archetype ~ Blood God Disciple],[!PREABILITY:1,CATEGORY=Archetype,TYPE.SummonerSummonMonster]", "PREFACT:1,TEMPLATES,IsHalfOrc=true"]),
             replaces: Some(&["SummonerSummonMonster"]),
             grants: &[
                 ArchetypeGrant { grants_feature_key: "Blood God Disciple ~ Blood Feast", at_level: 1, description: Some("A blood god disciple can feed a recently fallen foe to his eidolon, allowing the outsider to channel some of its power into the summoner. The eidolon must spend a standard action to eat some of the opponent, which must be a living, corporeal creature killed or knocked unconscious by the eidolon or summoner in the past minute. This eating deals damage to the target as if the eidolon had attacked it with one natural attack (typically a bite). The fallen creature must have at least half as many Hit Dice as the summoner. Once the feeding is complete, the summoner may manifest %1 evolution points. This lasts for 1 minute. The evolution's effects use the summoner's Hit Dice and ability scores rather than the eidolon's. The blood god disciple can use this ability %2 times per day. He may only apply one use of this ability at a time (using it a second time replaces any evolution manifested with this ability), and can only manifest evolutions his eidolon has.|1+(SummonerLVL-1)/4|3+CHA"), benefit: None },
@@ -991,7 +939,6 @@ pub fn archetype_swap_tables() -> &'static [ArchetypeSwapEntry] {
             archetype_name: "Shaitan Binder",
             description: Some("Shaitan binders call upon a reflection of their genie ancestors to serve as their eidolons. A shaitan binder has the following class features."),
             source_page: Some("p.146"),
-            prerequisites: Some(&["PRECLASS:1,Summoner=1", "PREMULT:1,[PREABILITY:1,CATEGORY=Archetype,Summoner Archetype ~ Shaitan Binder],[!PREABILITY:1,CATEGORY=Archetype,TYPE.SummonerShareSpells,TYPE.SummonerEidolon,TYPE.SummonerShieldAlly,TYPE.SummonerGreaterShieldAlly,TYPE.SummonerAspect,TYPE.SummonerGreaterAspect,TYPE.SummonerTwinEidolon]", "PREFACT:1,TEMPLATES,IsOread=true"]),
             replaces: Some(&["SummonerShareSpells", "SummonerShieldAlly", "SummonerGreaterShieldAlly", "SummonerAspect", "SummonerGreaterAspect", "SummonerTwinEidolon"]),
             grants: &[
                 ArchetypeGrant { grants_feature_key: "Shaitan Binder ~ Base Form", at_level: 1, description: Some("At 1st level, if a shaitan binder's eidolon has the biped base form, it gains a +2 bonus to one ability score. The shaitan binder must make this choice at 1st level. If at any time the shaitan binder's eidolon has another base form, it loses this bonus until it returns to biped form. A shaitan binder's eidolon does not gain the share spells ability."), benefit: None },
@@ -1008,7 +955,6 @@ pub fn archetype_swap_tables() -> &'static [ArchetypeSwapEntry] {
             archetype_name: "Bonded Witch",
             description: Some("While all witches commune with the unknown, the blend of human ingenuity and adept learning mixed with elven blood gives some half-elves a unique conduit to channel the powers of the arcane. Bonded witches forsake familiars as vessels of power in favor of a specific object that grants them powers above and beyond those of their patron alone, as they tap into the powerful magic of the item itself."),
             source_page: Some("p.43"),
-            prerequisites: Some(&["PRECLASS:1,Witch=1", "PREMULT:1,[PREABILITY:1,CATEGORY=Archetype,Witch Archetype ~ Bonded Witch],[!PREABILITY:1,CATEGORY=Archetype,TYPE.WitchFamiliar]", "PREFACT:1,TEMPLATES,IsHalfElf=true"]),
             replaces: Some(&["WitchFamiliar"]),
             grants: &[
                 ArchetypeGrant { grants_feature_key: "Bonded Witch ~ Bonded Item", at_level: 1, description: Some("At 1st level, a bonded witch gains a bonded item instead of a familiar. This bonded item is similar to a wizard's arcane bond bonded item (Core Rulebook 78), and follows all the rules of such an item with the following exceptions. A bonded witch's bonded item serves as a vessel for her spells and a conduit for communication with her patron. A bonded witch must commune with her bonded item each day to prepare her spells. The bonded item stores all of the spells that the bonded witch knows, and the bonded witch cannot prepare spells that are not stored within it. A bonded witch starts with the same number of spells and gains new spells the same way as a witch, and can even add spells by learning them from scrolls in the same way (Advanced Player's Guide 68), but a bonded witch cannot learn spells from another bonded item. Since a bonded witch does not have a spellbook, starting at 2nd level, a bonded witch's bonded item can be used once per day to cast a spell dependent on the type of bonded object chosen by the bonded witch. The spell is treated like any other spell cast by the bonded witch, including its casting time, duration, and other effects dependent of the bonded witch's level. This spell cannot be further modified by metamagic feats or any other ability. As the bonded witch gains levels, the bonded item gains new spells that the bonded witch can cast in this way. She can cast any one of these spells once per day using her bonded object, but gains greater flexibility in what spells she can cast, and gains more powerful spells as she gains new levels. The bonded item spells associated with each item type are as follows."), benefit: None },
@@ -1021,7 +967,6 @@ pub fn archetype_swap_tables() -> &'static [ArchetypeSwapEntry] {
             archetype_name: "Dreamweaver",
             description: Some("A changeling dreamweaver draws upon her hag heritage to ply the dream realms in order to touch mortal minds and souls, for good or ill."),
             source_page: Some("p.185"),
-            prerequisites: Some(&["PRECLASS:1,Witch=1", "PREMULT:1,[PREABILITY:1,CATEGORY=Archetype,Witch Archetype ~ Dreamweaver],[!PREABILITY:1,CATEGORY=Archetype,TYPE.WitchHex2,TYPE.WitchHex6,TYPE.WitchHex10]", "PREFACT:1,TEMPLATES,IsChangeling=true"]),
             replaces: Some(&["WitchHex2", "WitchHex6", "WitchHex10"]),
             grants: &[
                 ArchetypeGrant { grants_feature_key: "Dreamweaver ~ Class Skills", at_level: 1, description: Some("The dreamweaver adds Sense Motive to her list of class skills and removes Healing from her list of class skills."), benefit: None },
@@ -1042,7 +987,6 @@ pub fn archetype_swap_tables() -> &'static [ArchetypeSwapEntry] {
             archetype_name: "Scarred Witch Doctor",
             description: Some("The scarred witch doctor draws power from her ability to endure pain and suffering. She mutilates her own flesh, inflicting horrific scars, in order to attract the attention of her patron. Rather than call forth a familiar, she creates a repulsive fetish mask that she uses as a repository for her power."),
             source_page: Some("p.140"),
-            prerequisites: Some(&["PRECLASS:1,Witch=1", "PREMULT:1,[PREABILITY:1,CATEGORY=Archetype,Witch Archetype ~ Scarred Witch Doctor],[!PREABILITY:1,CATEGORY=Archetype,TYPE.WitchFamiliar,TYPE.WitchHex1]", "PREFACT:1,TEMPLATES,IsOrc=true"]),
             replaces: Some(&["WitchFamiliar", "WitchHex1"]),
             grants: &[
                 ArchetypeGrant { grants_feature_key: "Scarred Witch Doctor ~ Fierce Intelligence", at_level: 1, description: Some("A scarred witch doctor treats her Intelligence score as 2 points higher when determining the highest level of spells she can cast, the number of spells she can cast per day, her spell save DCs, her number of spells known at 1st level, and any effects of her hexes determined by her Intelligence."), benefit: None },
@@ -1062,7 +1006,6 @@ pub fn archetype_swap_tables() -> &'static [ArchetypeSwapEntry] {
             archetype_name: "Cruoromancer",
             description: Some("To those who know how to manipulate it, the blood of a dhampir can be a powerful component to magic. A cruoromancer infuses his necromantic magic with the power of his unique mixture of living blood and undead ichor. As his power increases in this strange arcane art, a cruoromancer finds potent ways to infuse his unique blood with necromancy spells. A cruoromancer has the following class features."),
             source_page: Some("p.98"),
-            prerequisites: Some(&["PRECLASS:1,Wizard=1", "PREMULT:1,[PREABILITY:1,CATEGORY=Archetype,Wizard Archetype ~ Cruoromancer],[!PREABILITY:1,CATEGORY=Archetype,TYPE.WizardArcaneBond,TYPE.WizardBonusFeat5,TYPE.WizardBonusFeat10,TYPE.WizardBonusFeat15,TYPE.WizardBonusFeat20]", "PREFACT:1,TEMPLATES,IsDhampir=true"]),
             replaces: Some(&["WizardArcaneBond", "WizardBonusFeat5", "WizardBonusFeat10", "WizardBonusFeat15", "WizardBonusFeat20"]),
             grants: &[
                 ArchetypeGrant { grants_feature_key: "Cruoromancer ~ Blood Infusion", at_level: 1, description: Some("When a cruoromancer casts a spell of the necromancy school, he can opt to infuse that spell with his undead-tainted blood as a swift action. As he increases in level, the power and effects of such infusions become more potent. Each time a cruoromancer uses blood infusion, he drains a portion of his own blood either by cutting himself with a blade or by opening a scab from a previous wound. When he does this, he takes an amount of damage equal to 1d4 + the level of the spell being infused. A cruoromancer can only affect a spell with a single type of blood infusion."), benefit: None },
@@ -1082,7 +1025,6 @@ pub fn archetype_swap_tables() -> &'static [ArchetypeSwapEntry] {
             archetype_name: "Spellbinder",
             description: Some("A spellbinder is an elven wizard who forges an arcane bond between himself and one or more wizard spells. These spells become so well understood by the spellbinder that he can prepare them in spell slots that already have other spells prepared in them."),
             source_page: Some("p.25"),
-            prerequisites: Some(&["PRECLASS:1,Wizard=1", "PREMULT:1,[PREABILITY:1,CATEGORY=Archetype,Wizard Archetype ~ Spellbinder],[!PREABILITY:1,CATEGORY=Archetype,TYPE.WizardArcaneBond]", "PREFACT:1,TEMPLATES,IsElf=true"]),
             replaces: Some(&["WizardArcaneBond"]),
             grants: &[
                 ArchetypeGrant { grants_feature_key: "Spellbinder ~ Spell Bond", at_level: 1, description: Some("The spellbinder selects any one spell that he knows as a bonded spell. As a full-round action, the spellbinder may replace a spell of the same or higher level as his bonded spell with his bonded spell."), benefit: None },
@@ -1096,7 +1038,6 @@ pub fn archetype_swap_tables() -> &'static [ArchetypeSwapEntry] {
             archetype_name: "Wind Listener",
             description: Some("The wind listener takes a sylph's natural curiosity to the extreme, enhancing his natural skill at subterfuge and eavesdropping with potent arcane magic."),
             source_page: Some("p.158"),
-            prerequisites: Some(&["!PREABILITY:1,CATEGORY=Special Ability,Divination Opposition School,Illusion Opposition School", "PRECLASS:1,Wizard=1", "PREMULT:1,[PREABILITY:1,CATEGORY=Archetype,Wizard Archetype ~ Wind Listener],[!PREABILITY:1,CATEGORY=Archetype,TYPE.WizardArcaneBond,TYPE.WizardBonusFeat5,TYPE.WizardBonusFeat10,TYPE.WizardBonusFeat15]", "PREFACT:1,TEMPLATES,IsSylph=true"]),
             replaces: Some(&["WizardArcaneBond", "WizardBonusFeat5", "WizardBonusFeat10", "WizardBonusFeat15"]),
             grants: &[
                 ArchetypeGrant { grants_feature_key: "Wind Listener ~ Class Skills", at_level: 1, description: Some("A wind listener adds Perception to his list of class skills."), benefit: None },

@@ -66,7 +66,6 @@ use serde::{Deserialize, Serialize};
 
 use codex::rules_core::corpus_loader::BookCorpusRoot;
 use codex::rules_core::race_resolver::{load_race_corpus, RaceCorpus, ResolvedTrait};
-use codex::rules_core::shape_b_v1::RawBonusChain;
 
 use crate::authoring_workbench::codex_repo_root;
 
@@ -211,21 +210,22 @@ pub struct RaceCatalogEntryDto {
     /// Constitution`).
     pub trait_name: String,
     /// A display reading, not a resolved mechanical effect: the single
-    /// distinct numeric qualifier this trait's own `BONUS:` chains declare
+    /// distinct numeric qualifier this trait's own bonus chains declare
     /// when there is exactly one (`Stonecunning` → 2), else its declared
     /// `VISION:` range in feet (`Darkvision` → 60), else its declared
     /// `MOVE:Walk` in feet (`Slow and Steady` → 20), else 0. `decisions.md
-    /// §24` rules out interpreting `BONUS:` formulas, and this does not:
+    /// §24` rules out interpreting bonus formulas, and this does not:
     /// nothing is summed, resolved or attributed to a game effect. A trait
     /// whose chains declare several magnitudes (`+2 Con, +2 Wis, -2 Cha`)
     /// carries 0 and states its numbers in `detail`, exactly as the previous
     /// hardcoded table did.
     ///
-    /// **`BONUS:` chains that only write an internal PCGen state flag declare
-    /// no quantity and are excluded** — see [`is_internal_flag_chain`]. They
+    /// **Chains that only write an internal engine state flag declare no
+    /// quantity and are excluded** — see
+    /// [`declared_magnitudes_excluding_flags`]. They
     /// were previously read as magnitudes, which put a meaningless `+1` beside
     /// every vision trait in both books (the flag is
-    /// `BONUS:VAR|HasRacialVision|1`; the real quantity was sitting unread in
+    /// the `HasRacialVision` flag set to 1; the real quantity was sitting unread in
     /// the row's `VISION:Darkvision (60)` token) and beside three other rows.
     /// 19 rows in total; `the_rows_the_internal_flag_correction_changes_are_pinned`
     /// names every one.
@@ -234,7 +234,7 @@ pub struct RaceCatalogEntryDto {
     /// the frontend reads it — it renders no badge at 0. It is never a
     /// stand-in for a number the catalog could not work out.
     pub value: i16,
-    /// The trait's real corpus `DESC:` text. Every one of the served rows
+    /// The trait's real corpus description text. Every one of the served rows
     /// carries one today (pinned by a test below), so this is never a
     /// fabricated placeholder.
     pub detail: String,
@@ -281,86 +281,19 @@ pub(crate) fn race_corpus() -> &'static Result<RaceCorpus, String> {
     })
 }
 
-/// PCGen writes internal engine state with the same `BONUS:VAR|<name>|<n>`
-/// token it uses for real magnitudes, so the token shape alone cannot tell a
-/// game quantity from a boolean flag. Two signals in the corpus can, and this
-/// recognizes a name written by either:
+/// The magnitudes this trait declares once internal state-flag writes are
+/// discarded.
 ///
-/// 1. **`Has…` / `Is…` / `…Flag` / `…ExoticUse`** — PCGen's boolean naming
-///    conventions. Every vision trait in both ingested books declares exactly
-///    one chain, `BONUS:VAR|HasRacialVision|1`; `Tengu ~ Swordtrained`
-///    declares `BONUS:VAR|BastardSwordExoticUse,KatanaExoticUse|1` beside an
-///    `AUTO:WEAPONPROF` that carries the actual mechanic.
-/// 2. See [`is_internal_flag_chain`] for the explicit `TYPE=Boolean`
-///    qualifier, which needs no name convention at all.
-///
-/// The `Has`/`Is` tests require an uppercase letter after the prefix so that
-/// magnitude names beginning with those letters (`Hasted_Bonus`,
-/// `Island_Bonus`) are not swallowed. Deliberately *not* recognized:
-/// `Orc_OrcFerocity_Times` and `Halfling_AdaptableLuck_Times` (uses per day),
-/// `AC_Natural_Armor`, and every `…Bonus` — those are real quantities that a
-/// looser rule would silently erase, which would be a worse defect than the
-/// one this closes.
-fn variable_name_is_flag_shaped(name: &str) -> bool {
-    let name = name.trim();
-    if name.is_empty() {
-        return false;
-    }
-    if name.ends_with("Flag") || name.ends_with("ExoticUse") {
-        return true;
-    }
-    ["Has", "Is"].iter().any(|prefix| {
-        name.strip_prefix(prefix)
-            .and_then(|rest| rest.chars().next())
-            .is_some_and(|next| next.is_ascii_uppercase())
-    })
-}
-
-/// True when this `BONUS:` chain only writes an internal PCGen state flag and
-/// therefore declares no game quantity at all.
-///
-/// Authoritative signal first: PCGen tags the chain itself `TYPE=Boolean`.
-/// Three served rows carry it — `Drow ~ Light Blindness`
-/// (`UMR_LightBlindness_SpecificDesc`), `Merfolk ~ Legless` (`CantBeTripped`)
-/// and `Svirfneblin ~ Svirfneblin Magic` (`RacialSLA_Nondetection_Constant`) —
-/// as do four ARG alternates that will matter once the alternate-trait picker
-/// lands. The vision traits are *not* tagged, hence the name conventions in
-/// [`variable_name_is_flag_shaped`] as the second signal.
-///
-/// A chain naming several variables counts as a flag only when *every* name is
-/// flag-shaped, so a mixed chain keeps its magnitude. Non-`VAR` chains are
-/// never flags: `Svirfneblin ~ Svirfneblin Magic`'s companion
-/// `BONUS:DC|SCHOOL.Illusion|1` is a real +1 and survives.
-fn is_internal_flag_chain(chain: &RawBonusChain) -> bool {
-    if chain.qualifiers.first().map(String::as_str) != Some("VAR") {
-        return false;
-    }
-    if chain.qualifiers.iter().any(|qualifier| qualifier == "TYPE=Boolean") {
-        return true;
-    }
-    let Some(names) = chain.qualifiers.get(1) else {
-        return false;
-    };
-    let mut named = names.split(',').filter(|name| !name.trim().is_empty()).peekable();
-    named.peek().is_some() && named.all(variable_name_is_flag_shaped)
-}
-
-/// The magnitudes this trait declares once internal flag writes are discarded.
 /// Same reading as [`ResolvedTrait::declared_bonus_magnitudes`] — in source
 /// order, deduplicated, nothing summed or interpreted — over the chains that
-/// actually state a quantity.
+/// actually state a quantity. Both the reading and the flag recognition it
+/// rests on live on the converter side
+/// (`codex::pcgen_import::bonus_chain_reader`), SD-35 `AT-35-E6-002` cycle 5:
+/// the source writes internal engine state with the same token it uses for
+/// real magnitudes, so telling one from the other means knowing the ingest
+/// format, which `decisions.md` §11 puts on the tool side.
 fn declared_magnitudes_excluding_flags(resolved: &ResolvedTrait) -> Vec<i32> {
-    let mut out: Vec<i32> = Vec::new();
-    for chain in resolved.raw_bonus_chains.iter().filter(|chain| !is_internal_flag_chain(chain)) {
-        for qualifier in &chain.qualifiers {
-            if let Ok(value) = qualifier.parse::<i32>() {
-                if !out.contains(&value) {
-                    out.push(value);
-                }
-            }
-        }
-    }
-    out
+    resolved.declared_bonuses.magnitudes_excluding_flags.clone()
 }
 
 /// The range in feet a vision trait declares, read out of its `VISION:` tokens
@@ -374,9 +307,9 @@ fn declared_magnitudes_excluding_flags(resolved: &ResolvedTrait) -> Vec<i32> {
 /// range is a reading and several are not.
 fn declared_vision_range_ft(resolved: &ResolvedTrait) -> Option<i32> {
     let mut ranges: Vec<i32> = Vec::new();
-    for token in resolved.raw_tokens.iter().filter(|token| token.key == "VISION") {
-        for segment in token.value.split('(').skip(1) {
-            let Some((digits, _)) = segment.split_once(')') else { continue };
+    for segment in &resolved.declared_vision {
+        for tail in segment.split('(').skip(1) {
+            let Some((digits, _)) = tail.split_once(')') else { continue };
             if let Ok(range) = digits.trim().parse::<i32>() {
                 if !ranges.contains(&range) {
                     ranges.push(range);
@@ -392,7 +325,7 @@ fn declared_vision_range_ft(resolved: &ResolvedTrait) -> Option<i32> {
 
 /// See [`RaceCatalogEntryDto::value`] for what this number is and is not.
 ///
-/// Precedence: a single declared `BONUS:` magnitude, else a declared `VISION:`
+/// Precedence: a single declared bonus magnitude, else a declared vision
 /// range, else a declared `MOVE:Walk`, else no number. Internal flag writes are
 /// discarded before the first step rather than being allowed to win it.
 fn display_value(resolved: &ResolvedTrait) -> i16 {
@@ -406,7 +339,7 @@ fn display_value(resolved: &ResolvedTrait) -> i16 {
             return value;
         }
     }
-    if let Some(feet) = resolved.declared_walk_speed_ft() {
+    if let Some(feet) = resolved.declared_walk_speed_ft {
         if let Ok(value) = i16::try_from(feet) {
             return value;
         }
@@ -634,7 +567,7 @@ mod tests {
         // Real Tengu corpus rows, verified against
         // data/corpus/beastiary/race_trait/tengu/.
         // The ability-score row states its modifiers in its corpus *name*;
-        // its `DESC:` is flavour text, so the numbers are read from the name
+        // its description is flavour text, so the numbers are read from the name
         // rather than expected in the detail.
         let abilities = by_name["+2 Dexterity, +2 Wisdom, -2 Constitution"];
         assert_eq!(abilities.value, 0, "two distinct declared magnitudes, so no single number");
@@ -788,7 +721,7 @@ mod tests {
             assert!(!entry.trait_name.is_empty());
             assert!(
                 !entry.detail.is_empty(),
-                "{} / {} has no corpus DESC: text",
+                "{} / {} has no corpus description text",
                 entry.race_id,
                 entry.trait_name
             );
@@ -804,7 +737,7 @@ mod tests {
         assert!(response.diagnostics.is_empty(), "{:?}", response.diagnostics);
     }
 
-    /// A vision trait's only `BONUS:` chain is `BONUS:VAR|HasRacialVision|1` —
+    /// A vision trait's only bonus chain sets `HasRacialVision` to 1 —
     /// PCGen's internal "this race has a racial vision mode" flag, not a game
     /// quantity. Reading it as the row's display number rendered a meaningless
     /// `+1` beside "Dwarves can see in the dark up to 60 feet." The real
@@ -820,16 +753,16 @@ mod tests {
                 .unwrap_or_else(|| panic!("{race_id} / {trait_name} must be a catalog row"))
         };
 
-        // Core Rulebook. `VISION:Darkvision (60)`, and the DESC: says 60 feet.
+        // Core Rulebook. The row states Darkvision (60), and the description says 60 feet.
         let dwarf = row("Dwarf", "Darkvision");
         assert_eq!(dwarf.book, BOOK_CRB);
-        assert_eq!(dwarf.value, 60, "was 1, from BONUS:VAR|HasRacialVision|1");
+        assert_eq!(dwarf.value, 60, "was 1, from the HasRacialVision flag");
         assert_eq!(dwarf.detail, "Dwarves can see in the dark up to 60 feet.");
 
         // Bestiary 1. Same defect, same fix, a different book's corpus files.
         let aasimar = row("Aasimar", "Darkvision");
         assert_eq!(aasimar.book, BOOK_B1);
-        assert_eq!(aasimar.value, 60, "was 1, from BONUS:VAR|HasRacialVision|1");
+        assert_eq!(aasimar.value, 60, "was 1, from the HasRacialVision flag");
 
         // Bestiary 1's two longer-ranged cases, so the fix is reading each
         // row's own token rather than hardcoding 60.
@@ -874,16 +807,15 @@ mod tests {
         for race_key in corpus.race_keys() {
             let Some(race) = corpus.resolve(race_key, &[]) else { continue };
             for resolved in &race.traits {
-                let flag_only = !resolved.raw_bonus_chains.is_empty()
-                    && resolved.raw_bonus_chains.iter().all(is_internal_flag_chain);
+                let flag_only = resolved.declared_bonuses.only_internal_flags;
                 if !flag_only {
                     continue;
                 }
                 // A flag-only row may still carry a real number, but only from
-                // a non-`BONUS:` token (`VISION:`, `MOVE:`) — never from the
+                // a non-bonus statement (vision, movement) — never from the
                 // flag itself.
                 let honest = declared_vision_range_ft(resolved)
-                    .or_else(|| resolved.declared_walk_speed_ft())
+                    .or(resolved.declared_walk_speed_ft)
                     .unwrap_or(0);
                 let shown = i32::from(display_value(resolved));
                 if shown != honest {
@@ -903,7 +835,7 @@ mod tests {
     fn the_rows_the_internal_flag_correction_changes_are_pinned() {
         let response = build_race_catalog();
         let expected: &[(&str, &str, i16)] = &[
-            // 16 vision rows, all previously +1 off BONUS:VAR|HasRacialVision|1.
+            // 16 vision rows, all previously +1 off the HasRacialVision flag.
             ("Dwarf", "Darkvision", 60),
             ("Elf", "Low-Light Vision", 0),
             ("Gnome", "Low-Light Vision", 0),
@@ -921,11 +853,11 @@ mod tests {
             ("Tengu", "Senses", 0),
             ("Tiefling", "Darkvision", 60),
             // 3 non-vision internal flags found by the same survey.
-            // BONUS:VAR|UMR_LightBlindness_SpecificDesc|1|TYPE=Boolean
+            // the boolean flag UMR_LightBlindness_SpecificDesc, set to 1
             ("Drow", "Light Blindness", 0),
-            // BONUS:VAR|CantBeTripped|1|TYPE=Boolean
+            // the boolean flag CantBeTripped, set to 1
             ("Merfolk", "Legless", 0),
-            // BONUS:VAR|BastardSwordExoticUse,KatanaExoticUse|1
+            // the flags BastardSwordExoticUse and KatanaExoticUse, set to 1
             ("Tengu", "Swordtrained", 0),
         ];
         assert_eq!(expected.len(), 19);
@@ -940,7 +872,7 @@ mod tests {
     }
 
     /// The neighbouring readings the survey deliberately left alone: these are
-    /// real game quantities that happen to be written through `BONUS:VAR`, and
+    /// real game quantities that happen to be written through a counter, and
     /// a rule that swallowed them would be a worse defect than the one fixed.
     #[test]
     fn genuine_bonus_var_quantities_are_untouched() {
@@ -961,7 +893,7 @@ mod tests {
         assert_eq!(value("Halfling", "Halfling Luck"), 1);
         assert_eq!(value("Kobold", "Armor"), 1);
         assert_eq!(value("Tiefling", "Fiendish Resistance"), 5);
-        // Its `BONUS:DC|SCHOOL.Illusion|1` survives while the
+        // Its +1 Illusion-school save DC survives while the
         // `RacialSLA_Nondetection_Constant` flag beside it is discarded.
         assert_eq!(value("Svirfneblin", "Svirfneblin Magic"), 1);
         // `MOVE:` readings are unaffected by the change.
@@ -970,23 +902,13 @@ mod tests {
         assert_eq!(value("Merfolk", "Slow Speed"), 5);
     }
 
-    #[test]
-    fn flag_shaped_variable_names_are_recognized_and_magnitude_names_are_not() {
-        // Recognized: PCGen's boolean conventions, each backed by a real
-        // corpus row cited in `is_internal_flag_chain`'s doc comment.
-        assert!(variable_name_is_flag_shaped("HasRacialVision"));
-        assert!(variable_name_is_flag_shaped("IsAquatic"));
-        assert!(variable_name_is_flag_shaped("SomeThingFlag"));
-        assert!(variable_name_is_flag_shaped("BastardSwordExoticUse"));
-        // Not recognized: real magnitudes, including ones that merely start
-        // with the same letters.
-        assert!(!variable_name_is_flag_shaped("Hasted_Bonus"));
-        assert!(!variable_name_is_flag_shaped("Island_Bonus"));
-        assert!(!variable_name_is_flag_shaped("KeenSensesBonus"));
-        assert!(!variable_name_is_flag_shaped("Orc_OrcFerocity_Times"));
-        assert!(!variable_name_is_flag_shaped("AC_Natural_Armor"));
-        assert!(!variable_name_is_flag_shaped(""));
-    }
+    // `flag_shaped_variable_names_are_recognized_and_magnitude_names_are_not`
+    // moved with the recognition itself to
+    // `src/pcgen_import/bonus_chain_reader.rs` (SD-35 `AT-35-E6-002` cycle 5),
+    // where it runs under the same names and the same corpus-backed cases.
+    // What stays here is the behaviour a player sees:
+    // `no_row_takes_its_display_value_from_an_internal_flag_chain`, swept over
+    // every served row.
 
     /// The frontend keys its rows on `raceId:traitName`, so duplicates would
     /// collide. Serving racial defaults only, they do not.

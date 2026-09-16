@@ -118,7 +118,7 @@ fn rs_files_in(dir: &Path) -> Vec<PathBuf> {
 /// `SCHEMA_ONLY_FILES` to their real generator's text.
 fn discover_identity_bearing_generators(root: &Path) -> Vec<(String, String)> {
     let schema_map: std::collections::HashMap<&str, &str> = SCHEMA_ONLY_FILES.iter().copied().collect();
-    let dirs = [root.join("src/rules_core/cache_gen"), root.join("src/bin")];
+    let dirs = [root.join("src/pcgen_import/cache_gen"), root.join("src/bin")];
     // `rules_tables/*/json_cache.rs` schema files -- checked via their
     // SCHEMA_ONLY_FILES-mapped generator, never their own (empty) text.
     // Deliberately narrower than the two dirs above: every OTHER file
@@ -267,7 +267,7 @@ fn the_detector_passes_the_same_synthetic_generator_once_a_screen_is_added() {
 #[test]
 fn mutating_a_real_generators_screen_call_away_makes_the_detector_fail_for_it() {
     let root = repo_root();
-    let real_path = root.join("src/rules_core/cache_gen/ultimate_equipment.rs");
+    let real_path = root.join("src/pcgen_import/cache_gen/ultimate_equipment.rs");
     let real_text = fs::read_to_string(&real_path).expect("ultimate_equipment.rs must exist and be readable");
     assert!(defines_identity_field(&real_text), "sanity: this file must own an identity field");
     assert!(

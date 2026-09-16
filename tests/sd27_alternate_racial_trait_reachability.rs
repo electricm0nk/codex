@@ -603,19 +603,20 @@ fn every_alternate_whose_bonus_lands_on_a_total_this_engine_computes_is_named_an
     for race_key in corpus.race_keys() {
         for record in corpus.alternate_traits(race_key) {
             race_of.insert(record.data.key.clone(), race_key.to_string());
-            for chain in &record.data.raw_bonus_chains {
-                // `["SAVE", "Will", "2"]` / `["SKILL", "Swim", "4", "TYPE=Racial"]`.
-                let (Some(head), Some(target), Some(magnitude)) =
-                    (chain.qualifiers.first(), chain.qualifiers.get(1), chain.qualifiers.get(2))
-                else {
-                    continue;
-                };
+            // SD-35 `AT-35-E6-003-RULED` cycle 14: the record carries the
+            // settled reading of its own chains -- `BONUS:SAVE|Will|2` ->
+            // `{keyword: "SAVE", target: "Will", magnitude: Some(2)}` -- so
+            // this walks answers, not the ingest chain array. A magnitude that
+            // is not a plain integer (a formula, a variable, an upstream
+            // `%LIST` placeholder) arrives as `None`, out of reach by
+            // `decisions.md §24`, exactly as the parse that used to sit here.
+            for bonus in &record.data.declared_bonuses.target_bonuses {
+                let head = &bonus.keyword;
+                let target = &bonus.target;
                 if head != "SAVE" && head != "SKILL" {
                     continue;
                 }
-                // A formula, a variable, or a PCGen `%LIST` placeholder is out
-                // of reach by `decisions.md §24` — it is not a plain integer.
-                let Ok(magnitude) = magnitude.parse::<i32>() else {
+                let Some(magnitude) = bonus.magnitude else {
                     continue;
                 };
                 for name in target.split(',') {
@@ -756,14 +757,14 @@ fn no_race_contributes_two_alternate_trait_bonuses_to_one_save() {
     let mut per_race_save: BTreeMap<(String, String), Vec<String>> = BTreeMap::new();
     for race_key in corpus.race_keys() {
         for record in corpus.alternate_traits(race_key) {
-            for chain in &record.data.raw_bonus_chains {
-                let mut q = chain.qualifiers.iter();
-                if q.next().map(String::as_str) != Some("SAVE") {
+            // SD-35 `AT-35-E6-003-RULED` cycle 14: the settled reading, not
+            // the ingest chain array. See the sibling test above.
+            for bonus in &record.data.declared_bonuses.target_bonuses {
+                if bonus.keyword != "SAVE" {
                     continue;
                 }
-                let Some(save) = q.next() else { continue };
-                let Some(magnitude) = q.next() else { continue };
-                if magnitude.parse::<i32>().is_err() {
+                let save = &bonus.target;
+                if bonus.magnitude.is_none() {
                     continue;
                 }
                 if !["Fortitude", "Reflex", "Will"].contains(&save.as_str()) {

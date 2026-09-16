@@ -54,7 +54,7 @@ export interface CreateCharacterRequest {
   selectedTraits: string[];
   /**
    * Character trait/drawback selections (AT-34-E4-002, second slice): the
-   * player's resolved skill choice for each *fixed-choice* `%LIST` trait
+   * player's resolved skill choice for each *fixed-choice* open-slot trait
    * named in `selectedTraits` — one entry per such trait, with
    * `choiceSetId` exactly `loadCharacterTraits`'s own `choiceSetId` for
    * that option and `selectionId` one of its `skillOptions`. Mirrors
@@ -67,7 +67,7 @@ export interface CreateCharacterRequest {
   traitSkillChoices: TraitSkillChoiceDto[];
 }
 
-/** One player-resolved skill choice for a fixed-choice `%LIST` trait. Mirrors `SelectedChoiceDto` in `character_hub.rs`. */
+/** One player-resolved skill choice for a fixed-choice open-slot trait. Mirrors `SelectedChoiceDto` in `character_hub.rs`. */
 export interface TraitSkillChoiceDto {
   choiceSetId: string;
   selectionId: string;

@@ -146,35 +146,12 @@ pub struct FeatTableEntry {
     /// is a future cycle's job (SD-20 Epic 6's `feat_effect` damage-class
     /// criterion), not this table's.
     pub effect: Option<&'static [FeatEffectBonus]>,
-    /// Every top-level `PRE`-family token the corpus record carries,
-    /// verbatim and unparsed, in source order -- `PREABILITY:`,
-    /// `PREMULT:`, `PRESTAT:`, `PRESKILL:`, `PRETOTALAB:`, `PRELEVEL:`,
-    /// `PRECLASS:`, `PRERACE:`, `PREVARGTEQ:`, the negated `!PREABILITY:`
-    /// form, and the rest. `None` when the record has none (55 of CRB's
-    /// 185, including all 17 Metamagic records; 29 of APG's 172; 4 of
-    /// ACG's 129).
-    ///
-    /// "Top-level" means tab-separated fields of the record itself. A
-    /// `PREMULT:` token embeds further `PRE...` clauses inside brackets
-    /// (e.g.
-    /// `PREMULT:1,[PRESTAT:1,INT=13],[PREVARGTEQ:CombatFeatIntRequirement,13]`);
-    /// those stay inside their `PREMULT:` string rather than being
-    /// flattened out, because flattening would lose the "any one of these
-    /// satisfies it" semantics the bracket grouping carries.
-    ///
-    /// Deliberately raw strings, not a parsed prerequisite AST -- these
-    /// are PCGen expressions over runtime character state, exactly like
-    /// the `BONUS:` formulas `effect` keeps verbatim, and for the same
-    /// reason. `feat_prereqs/general.rs`'s doc comment named this field's
-    /// absence as the blocker for a real per-feat prerequisite chain;
-    /// landing the data lifts that blocker but does not by itself
-    /// evaluate it -- `feat_prereqs` still checks catalog membership
-    /// only, and widening it to evaluate these tokens is its own job.
-    ///
-    /// `Some(&[])` never occurs: an empty slice would be
-    /// indistinguishable from "no data gathered yet", so absence is
-    /// always `None`, mirroring `effect`'s own rule.
-    pub prerequisites: Option<&'static [&'static str]>,
+    // The `prerequisites: Option<&'static [&'static str]>` field that stood
+    // here held every top-level `PRE`-family token of the corpus row,
+    // verbatim. It moved to `pcgen_import::feat_prereq_tokens` — SD-35
+    // `AT-35-E6-003-SWEEP` cycle 3, `decisions.md` §11: nothing on the live
+    // side reads a PCGen token. Its two readers were both converter modules
+    // and both still read the same tokens, keyed by `(rule_set, index)`.
 }
 
 /// One `BONUS:` token lifted from a feat's corpus record, captured as a
@@ -197,11 +174,141 @@ pub struct FeatEffectBonus {
     /// bonus category (`SKILL`, `VAR`, `COMBAT`, `SAVE`, `DC`,
     /// `ABILITYPOOL`, `MOVEADD`, `HP`, or the corpus's own
     /// `WEAPONPROF=%LIST`-shaped category on e.g. Weapon Focus); further
-    /// elements are the target, the value/formula expression, and any
-    /// trailing qualifiers. None of these are re-parsed or evaluated
-    /// here -- this table stores what the corpus says, not a resolved
-    /// game-mechanical delta.
+    /// elements are the target and the value/formula expression. None of
+    /// these are re-parsed or evaluated here -- this table stores what the
+    /// corpus says, not a resolved game-mechanical delta.
+    ///
+    /// **The trailing qualifiers are no longer here.** SD-35
+    /// `AT-35-E6-003-SWEEP` cycle 7 moved the stacking label into
+    /// `bonus_type` and every guard into `conditions`, in this crate's own
+    /// schema, because the ingest spellings of both are the format's
+    /// vocabulary and `decisions.md` §11 keeps that off the live side. The
+    /// verbatim tails are kept converter-side in
+    /// `pcgen_import::feat_effect_conditions`, whose round-trip test rebuilds
+    /// each one from the fields below and proves nothing was lost.
     pub qualifiers: &'static [&'static str],
+    /// The stacking-type label this bonus carries, if any -- `"Dodge"`,
+    /// `"Resistance"`, `"Base.STACK"`. Two bonuses of the same named type do
+    /// not stack unless the label says `STACK`; an unlabelled bonus is
+    /// untyped and always stacks. `None` when the record named no type.
+    pub bonus_type: Option<&'static str>,
+    /// The conditions that gate this bonus. Empty when it applies
+    /// unconditionally -- which is the distinction the shipped
+    /// situational/wired split is derived from, so this is a load-bearing
+    /// field, not decoration.
+    pub conditions: &'static [EffectCondition],
+    /// What the character's own choice supplies to this bonus, when it
+    /// supplies anything. `None` -- the overwhelming majority -- when every
+    /// slot of `qualifiers` is fixed by the record.
+    ///
+    /// **The selection slot is no longer in `qualifiers`.** SD-35
+    /// `AT-35-E6-003-SWEEP` cycle 12 removed it, for the same reason cycle 7
+    /// removed the stacking label and the guards: the ingest spellings
+    /// (`WEAPONPROF=%LIST` in the category slot, `%LIST` / `SCHOOL.%LIST` in
+    /// the target slot, `var("SKILLRANK=%LIST")` /
+    /// `count("ABILITIES","TYPE=FavoredClassBonus")` in the value slot) are
+    /// the format's vocabulary for "whatever the player picked", and
+    /// `decisions.md` §11 keeps that off the live side. The verbatim
+    /// pre-conversion qualifier list is kept converter-side in
+    /// `pcgen_import::feat_effect_selections`, whose round-trip test rebuilds
+    /// each one from this field and proves nothing was lost.
+    pub selection: Option<EffectSelection>,
+}
+
+/// What a feat bonus takes from the character's own choice, in this crate's
+/// own schema.
+///
+/// A feat such as Weapon Focus is written once in the book and means something
+/// different for every character who takes it: the bonus lands on *the weapon
+/// they chose*. The ingest format spells that with a `%LIST` stand-in
+/// inside the `BONUS:` chain. This enum is that same fact named in our
+/// vocabulary, so the live side can say "with your chosen weapon" on a sheet
+/// line without reading an ingest token to find out.
+///
+/// Which slot of the original chain carried the stand-in is a fact about
+/// the ingest format, so it lives converter-side, in
+/// `pcgen_import::feat_effect_selections`, not here.
+#[derive(Debug, Clone, Copy, PartialEq, Eq)]
+pub enum EffectSelection {
+    /// The bonus applies to the weapon the character chose when taking the
+    /// feat (Weapon Focus, Weapon Specialization, Improved Critical, their
+    /// Greater forms, Slashing Grace).
+    ChosenWeapon,
+    /// The bonus applies to the skill the character chose (Skill Focus).
+    ChosenSkill,
+    /// The bonus applies to spells of the school the character chose (Spell
+    /// Focus, Greater Spell Focus).
+    ChosenSpellSchool,
+    /// The bonus's **value** is the number of ranks the character has in the
+    /// skill they chose (Master Craftsman).
+    ChosenSkillRanks,
+    /// The bonus's **value** is how many favored-class bonuses the character
+    /// has taken (Multitalented Mastery).
+    FavoredClassBonusCount,
+}
+
+impl EffectSelection {
+    /// The human-readable phrase a sheet line uses for this selection.
+    ///
+    /// This is the sheet rule (`decisions.md` §1) applied to a term the engine
+    /// cannot resolve without the character's own choice: it renders as the
+    /// rule's words, not as a stand-in token.
+    pub const fn sheet_words(self) -> &'static str {
+        match self {
+            Self::ChosenWeapon => "your chosen weapon",
+            Self::ChosenSkill => "your chosen skill",
+            Self::ChosenSpellSchool => "your chosen school",
+            Self::ChosenSkillRanks => "your ranks in your chosen skill",
+            Self::FavoredClassBonusCount => "your favored class bonuses taken",
+        }
+    }
+
+    /// Whether the selection supplied the bonus's **target** (the thing the
+    /// bonus lands on) rather than its **value**.
+    pub const fn is_target(self) -> bool {
+        matches!(
+            self,
+            Self::ChosenWeapon | Self::ChosenSkill | Self::ChosenSpellSchool
+        )
+    }
+}
+
+/// One condition gating a feat's bonus, in this crate's own schema.
+///
+/// The ingest format writes these as `PRE<FAMILY>:<argument>` tokens (negated
+/// with a leading `!`). SD-35 `AT-35-E6-003-SWEEP` cycle 7 converted them:
+/// `family` is the family name with the format's prefix removed, `items` is the
+/// argument comma-split exactly as the record wrote it, and `alternatives`
+/// carries the sub-conditions the `MULT` family nests. Nothing was
+/// re-interpreted on the way in -- no count was inferred, no comparison
+/// operator was parsed out of the family name -- because inventing structure
+/// nothing reads would be a fabrication. What the round-trip oracle in
+/// `pcgen_import::feat_effect_conditions` guarantees is only that the
+/// conversion is lossless.
+#[derive(Debug, Clone, Copy, PartialEq, Eq)]
+pub struct EffectCondition {
+    /// `true` when the record wrote the guard negated -- the bonus applies
+    /// when the condition does **not** hold.
+    pub negated: bool,
+    /// The condition family: `"SKILL"`, `"ABILITY"`, `"VARLT"`, `"SIZEGT"`,
+    /// `"MULT"`, ... -- the format's family name, prefix removed.
+    pub family: &'static str,
+    /// The guard's argument, comma-split as written. Empty for a family whose
+    /// whole argument is nested alternatives.
+    pub items: &'static [ConditionItem],
+    /// Sub-conditions, for the `MULT` family which nests them. Empty for every
+    /// other family.
+    pub alternatives: &'static [EffectCondition],
+}
+
+/// One element of an [`EffectCondition`]'s argument.
+#[derive(Debug, Clone, Copy, PartialEq, Eq)]
+pub struct ConditionItem {
+    /// The facet the element selects by, when it selects by one: `"TYPE"`,
+    /// `"CATEGORY"`, `"EQMOD"`. `None` for a plain name or number.
+    pub facet: Option<&'static str>,
+    /// The element's value, verbatim.
+    pub value: &'static str,
 }
 
 /// Full CRB feat catalog: every real corpus record across all 4 book

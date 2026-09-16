@@ -353,18 +353,24 @@ fn the_two_gate_sources_agree_wherever_both_speak() {
                 continue;
             }
             let Some(gate) = record.data.suppressed_by_flag.as_deref() else { continue };
-            let row_token = record.data.raw_tokens.iter().find(|token| token.key == "!PREFACT");
-            match row_token {
-                Some(token) => {
-                    assert!(
-                        token.value.contains(gate),
-                        "{}: concluded gate {gate} is not in its own row's !PREFACT ({})",
-                        record.data.key,
-                        token.value
-                    );
-                    from_row += 1;
-                }
-                None => from_globalvar += 1,
+            // SD-35 `AT-35-E6-003-RULED` cycle 14: the record carries the
+            // settled reading of its own negated fact gates -- ONE entry per
+            // `!PREFACT` token on the row, in source order -- so "does this row
+            // declare one at all?" is `!is_empty()`, exactly the presence test
+            // the `raw_tokens` scan that used to sit here performed, and the
+            // flags are compared as flags rather than as a substring of the
+            // token text.
+            let gates = &record.data.negated_fact_gates;
+            if gates.is_empty() {
+                from_globalvar += 1;
+            } else {
+                assert!(
+                    gates.iter().flatten().any(|flag| flag == gate),
+                    "{}: concluded gate {gate} is not among its own row's !PREFACT flags ({:?})",
+                    record.data.key,
+                    gates
+                );
+                from_row += 1;
             }
         }
     }

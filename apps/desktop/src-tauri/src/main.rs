@@ -14,6 +14,11 @@ mod wizard_school_picker;
 mod dm_console_export;
 mod encounter_rating;
 mod class_spell_levels;
+/// The catalog-row → converted-record join, which moved into the library crate
+/// (`codex::rules_core::converted_prose`) in SD-35 `AT-35-E6-003-SWEEP` cycle 17 so the
+/// library's own catalogs can reach the same join this crate's screens use. Re-exported under
+/// its original path so every call site in this crate is unchanged by the move.
+use codex::rules_core::converted_prose;
 mod corpus_fixtures;
 mod corpus_full;
 mod corpus_ingest_diagnostic;
@@ -232,7 +237,7 @@ fn main() {
             // ability scores, Ego and alignment components -- reached no
             // screen at all before this catalog landed.
             list_intelligent_item_catalog,
-            // SD31-D7-PROSE-003: real corpus `DESC:` text for class
+            // SD31-D7-PROSE-003: real corpus description text for class
             // features, joined to the character sheet's own explanation ids
             // -- `ClassFeatureRow.detail` renders the engine's COMPUTED
             // derivation, never the rulebook prose, so this is a second,

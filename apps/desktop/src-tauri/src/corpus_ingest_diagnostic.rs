@@ -152,7 +152,7 @@ pub struct BookIngestStatus {
 /// `ClassId::ALL`/`ApgClassId::ALL`/`AcgClassId::ALL`). SD-26 Epic 3
 /// Criterion 3.4 (`decisions.md §11.6`) added the real
 /// `MonsterId::ALL` constant so this diagnostic and the JSON-cache
-/// generator (`codex::rules_core::cache_gen::beastiary1`) both read the
+/// generator (`codex::pcgen_import::cache_gen::beastiary1`) both read the
 /// same single source of truth instead of each maintaining their own
 /// copy of this list a second/third time.
 const ALL_BESTIARY1_MONSTERS: &[MonsterId] = MonsterId::ALL;
@@ -1469,7 +1469,7 @@ mod tests {
             // 0 -> 69 by `decisions.md §20` no_record-to-zero round 4 (2026-08-23):
             // `gen_pathfinder_unchained()` extended to also call `gen_monster_book`, adding
             // this book's 69 owner-less `monster_ability` records (72 orphan candidates, 3
-            // refused as an unscreenable multi-DESC: shape). Corpus-only for the same
+            // refused as an unscreenable multi-description shape). Corpus-only for the same
             // reason: `pathfinder_unchained_counts()` above tracks `classes`/
             // `class_features`/`feats`/`equipment` only, never `monster_abilities`.
             // 69 -> 1137 by the SD-32 stale-assertion fix cycle
@@ -1581,7 +1581,7 @@ mod tests {
         // Attack` (`TYPE:Internal`, no facet/delivery) now ships with a
         // provisional `SpecialQuality` facet default instead of being
         // dropped -- owned (Morlock claims it), so it joins the reaching set.
-        // `decisions.md §27b` round 9: 711 -> 733 (+22), the multi-DESC:
+        // `decisions.md §27b` round 9: 711 -> 733 (+22), the multi-description
         // parse-refusal group closes via `parse_desc`'s new generalised
         // sixth branch -- 21 real `no_record` units plus `Lycanthrope ~
         // Change Shape` (already `text-complete` by inventory evidence

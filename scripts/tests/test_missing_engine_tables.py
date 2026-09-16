@@ -99,8 +99,12 @@ class TestEngineSurfaceCitation(unittest.TestCase):
         for k in MET.ENGINE_SURFACE_CITATIONS:
             surface = result["kinds"][k]["engine_surface"]
             self.assertEqual(surface["file"], "src/bin/v06_work_inventory.rs")
-            self.assertIsInstance(surface["line"], int)
-            self.assertIn("has_no_engine_table", surface["must_contain"])
+            self.assertEqual(surface["context_fn"], "classify")
+            self.assertIn("has_no_engine_table", surface["anchor"])
+            # Derived by search at check time (AT-35-E1-002), never pinned.
+            self.assertIsInstance(surface["resolved_line"], int)
+            self.assertGreater(surface["resolved_line"], 0)
+            self.assertNotIn("line", surface)
 
     def test_citation_resolves_at_head(self):
         # The real, committed file -- not a fixture. Guards against the
@@ -108,6 +112,36 @@ class TestEngineSurfaceCitation(unittest.TestCase):
         # (`decisions.md §12` L1, same shape as completion_atlas condition 6).
         failures = MET.citation_failures()
         self.assertEqual(failures, [], f"stale citations: {failures}")
+
+
+_SYNTHETIC = [
+    "fn classify(unit: &Unit) -> Verdict {",
+    "    match unit.kind {",
+    '        Kind::Companion => engine_does_not_hold("companion_content_has_no_engine_table"),',
+    '        Kind::Power => engine_does_not_hold("power_content_has_no_engine_table"),',
+    "    }",
+    "}",
+]
+
+
+class TestContentAnchorRedGreen(unittest.TestCase):
+    """AT-35-E1-002: moving `classify` 50 lines keeps both anchors green;
+    changing one cited arm fails exactly that kind."""
+
+    def test_synthetic_source_is_GREEN(self):
+        self.assertEqual(MET.citation_failures(lines=_SYNTHETIC), [])
+
+    def test_moving_the_function_fifty_lines_stays_GREEN(self):
+        moved = ["// %d" % i for i in range(50)] + _SYNTHETIC
+        self.assertEqual(MET.citation_failures(lines=moved), [])
+
+    def test_changing_one_cited_arm_is_RED_for_that_kind_only(self):
+        mutated = list(_SYNTHETIC)
+        mutated[2] = mutated[2].replace("companion_content_has_no_engine_table", "companion_has_a_table_now")
+        failures = MET.citation_failures(lines=mutated)
+        self.assertEqual(len(failures), 1, failures)
+        self.assertTrue(failures[0].startswith("companion:"), failures[0])
+        self.assertIn("no longer contains", failures[0])
 
 
 class TestLiveInventory(unittest.TestCase):
@@ -118,11 +152,19 @@ class TestLiveInventory(unittest.TestCase):
         # seven `simple_kind_tables` are wired into `classify()` for real --
         # only `companion` (28, `bestiary`-book, no chassis registration at
         # all for that book) and `power` (421, Epic 5's to build) remain.
+        # SD-35 drains this population too (Epic 2's converter renders the
+        # sheet line; Epic 5 builds the `power` chassis), so the assertion is
+        # the ceiling and the kind set, not an equality that has to be
+        # hand-edited every cycle. It still fails CLOSED: a new kind, or a
+        # count above the SD-34 mark, breaks it.
+        # `449` / `{companion, power}` is the SD-34 AT-34-E2-004 high-water
+        # mark. Live at SD-35 `4e321d2c6c`: population=1, kinds={power}.
+        # Re-derive: `python3 scripts/missing_engine_tables.py --check`.
         units = MET._load_units()
         report = MET.build_report(units)
-        self.assertEqual(report["population"], 449)
-        self.assertEqual(len(report["kinds"]), 2)
-        self.assertEqual(set(report["kinds"]), {"companion", "power"})
+        self.assertLessEqual(report["population"], 449)
+        self.assertLessEqual(len(report["kinds"]), 2)
+        self.assertTrue(set(report["kinds"]) <= {"companion", "power"}, report["kinds"])
 
     def test_live_core_rulebook_and_ultimate_campaign_have_zero_bucket_a(self):
         # `AT-34-E2-004`'s own evidence bar, restated as a pinned test: the
@@ -135,10 +177,22 @@ class TestLiveInventory(unittest.TestCase):
             self.assertNotIn("ultimate_campaign", kind_report["by_book"], f"kind={kind}")
 
     def test_live_remaining_population_is_power_and_bestiary_companion_only(self):
+        # The BOOK set is the invariant that does not drain: whatever survives
+        # under `power` is `ultimate_psionics`, and whatever survives under
+        # `companion` is `bestiary`. A unit from any other book appearing here
+        # is the regression this test catches. Counts are ceilings against the
+        # SD-34 marks (421 / 28); live at SD-35 `4e321d2c6c`: power 1,
+        # companion absent. Re-derive:
+        # `python3 scripts/missing_engine_tables.py --check`.
         units = MET._load_units()
         report = MET.build_report(units)
-        self.assertEqual(report["kinds"]["power"]["by_book"], {"ultimate_psionics": 421})
-        self.assertEqual(report["kinds"]["companion"]["by_book"], {"bestiary": 28})
+        ceilings = {"power": ("ultimate_psionics", 421), "companion": ("bestiary", 28)}
+        for kind, (book, ceiling) in ceilings.items():
+            if kind not in report["kinds"]:
+                continue
+            by_book = report["kinds"][kind]["by_book"]
+            self.assertEqual(set(by_book), {book}, f"kind={kind}")
+            self.assertLessEqual(by_book[book], ceiling, f"kind={kind}")
 
 
 if __name__ == "__main__":

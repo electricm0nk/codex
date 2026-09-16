@@ -101,6 +101,13 @@ jobs:
       # rule). The repo version files moved to 0.11.0 in the same commit
       # (SD31-E10-F1-001), keeping this stamp in lockstep.
       #
+      # tranche/15: bumped 0.14 -> 0.15 for the SD-35 bundle cut (tranche/15 is
+      # a NEW tranche branch, cut from develop fe5ae6cd4a after SD-34's PRs
+      # #382/#383 merged, per operator directive 2026-09-07 and the same
+      # one-advance-per-tranche-cut rule). The repo version files
+      # (package.json, tauri.conf.json, src-tauri/Cargo.toml + Cargo.lock)
+      # moved to 0.15.0 in the same commit, keeping this stamp in lockstep.
+      #
       # Only the tranche prefix is written here. The build number is always
       # ${GITHUB_RUN_NUMBER} — never hardcode one.
       - name: Stamp build version
@@ -108,7 +115,7 @@ jobs:
         working-directory: apps/desktop
         run: |
           set -euo pipefail
-          VERSION="0.14.${GITHUB_RUN_NUMBER}"
+          VERSION="0.15.${GITHUB_RUN_NUMBER}"
           node - "$VERSION" <<'EOF'
           const fs = require('fs');
           const version = process.argv[2];

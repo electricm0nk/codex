@@ -15,7 +15,7 @@
  *
  * A hand-maintained mirror of corpus facts is also how the same table one
  * layer down (`rules_tables/crb/race_tables.rs`) silently drifted from the
- * corpus on four races' ability modifiers, because `BONUS:STAT|CON,WIS|2`
+ * corpus on four races' ability modifiers, because a +2 Con/Wis adjustment
  * states two grants in one token and a transcription read only up to the
  * comma. `list_race_creation_roster` derives instead, which removes the
  * class of defect rather than re-checking for it.

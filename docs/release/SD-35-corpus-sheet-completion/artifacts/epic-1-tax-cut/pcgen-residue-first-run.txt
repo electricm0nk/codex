@@ -1,0 +1,24 @@
+# python3 scripts/pcgen_residue_gate.py --check   (first run, baseline recorded at 53296d80f0 by --rebaseline in the same cycle; AT-35-E1-005; exit 0)
+pattern raw_tokens files=47 hits=265
+pattern PcgenFormulaEvaluator files=14 hits=100
+pattern render_pcgen_desc files=17 hits=109
+pattern bonus_stack_reader files=7 hits=20
+pattern pre_tokens files=6 hits=20
+pattern BONUS: files=146 hits=2403
+pattern DEFINE: files=34 hits=151
+pattern PRE[A-Z]+: files=126 hits=8078
+pattern SAB: files=0 hits=0
+pattern DESC: files=142 hits=596
+pattern %CHOICE files=9 hits=68
+pattern %LIST files=25 hits=141
+pattern TYPE= files=74 hits=785
+root src/rules_core files=208 hits=12242
+root src/saved_character files=0 hits=0
+root src/campaign files=0 hits=0
+root src/homebrew_authoring files=0 hits=0
+root apps/desktop files=52 hits=494
+identifier_files=68 identifier_hits=514
+live_files=260 live_hits=12736 baseline_files=260 baseline_hits=12736 verdict=PASS
+
+# python3 scripts/pcgen_residue_gate.py --check --closure   (last line; exit 1 -- correct until AT-35-E6-004)
+live_files=260 live_hits=12736 verdict=FAIL

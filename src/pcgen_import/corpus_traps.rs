@@ -131,7 +131,7 @@ use std::collections::{BTreeMap, BTreeSet};
 use std::fmt;
 use std::path::Path;
 
-use crate::rules_core::cache_gen::WiringClassIndex;
+use crate::pcgen_import::cache_gen::WiringClassIndex;
 
 // ===========================================================================
 // Line classification
@@ -553,7 +553,7 @@ pub enum Trap {
     /// Audit-only: an ingested record cites a line that does not resolve.
     UnresolvableCitation,
     /// Audit-only: a stored `wiring_class` disagrees with what
-    /// `codex::rules_core::wiring_class` computes fresh from the record's
+    /// `codex::pcgen_import::wiring_class` computes fresh from the record's
     /// own cited token closure (GE-01). The property that makes the flag
     /// self-correcting rather than another stale roster.
     WiringClassMismatch,

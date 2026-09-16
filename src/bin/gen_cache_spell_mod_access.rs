@@ -3,7 +3,7 @@
 //! `cargo run --locked --bin gen_cache_spell_mod_access` with
 //! `PCGEN_CORPUS_ROOT` pointing at a local PCGen `data/` checkout (defaults
 //! to `$HOME/workspace/repos/pcgen/data`). Writes `data/corpus/<book>/
-//! spell/*.json` for every book `rules_core::cache_gen::spell_mod_access`
+//! spell/*.json` for every book `pcgen_import::cache_gen::spell_mod_access`
 //! covers.
 //!
 //! Mirrors `gen_cache_feat_gap.rs`'s posture: a PI-excluded or
@@ -13,7 +13,7 @@
 use std::path::PathBuf;
 use std::process::Command;
 
-use codex::rules_core::cache_gen::spell_mod_access;
+use codex::pcgen_import::cache_gen::spell_mod_access;
 
 fn real_now_iso8601() -> String {
     let output = Command::new("date")

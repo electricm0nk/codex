@@ -1,7 +1,10 @@
 # Corpus Ingest
 
 > Scope: how real PCGen corpus files (`.pcc` entry files + `.lst` data files) are parsed and projected into the canonical source-IR the rules engine consumes.
-> Last verified: **2026-08-25 against `tranche/13`** (SD-33 closure epilogue) for the new §"`raw_tokens` enrichment and the corpus-literal sweep's own closure builder" section; the 2026-08-18 `tranche/11` pass for §"Provenance is per-FIELD, not per-record" (SD-31 wave 14, `SD31-W14-INTEGRATE-001`) still stands; prior pass 2026-08-07 against tranche/8 (wiring_class/PI-screening convergence cycle) — parsing-pipeline sections (Stage 1-6) re-verified structurally only; the cache-layer additions are documented in [rules-data-tables.md](./rules-data-tables.md)
+> Last verified: **2026-09-15 against `tranche/15`** (SD-35 closure epilogue) for the new
+> §"The sheet-rule converter (`data/sheet_rules/`)" section and the `cache_gen` relocation, verified
+> against `src/pcgen_import/sheet_rule/`, `src/bin/sheet_rule_convert.rs`, `src/pcgen_import/cache_gen/`
+> and `data/sheet_rules/_report.json`. Prior pass **2026-08-25 against `tranche/13`** (SD-33 closure epilogue) for the §"`raw_tokens` enrichment and the corpus-literal sweep's own closure builder" section; the 2026-08-18 `tranche/11` pass for §"Provenance is per-FIELD, not per-record" (SD-31 wave 14, `SD31-W14-INTEGRATE-001`) still stands; prior pass 2026-08-07 against tranche/8 (wiring_class/PI-screening convergence cycle) — parsing-pipeline sections (Stage 1-6) re-verified structurally only; the cache-layer additions are documented in [rules-data-tables.md](./rules-data-tables.md)
 > Maintenance: updated at SD closure — see [README.md](./README.md) §Maintenance contract
 
 ## Purpose
@@ -22,6 +25,63 @@ interprets PF1 rule semantics (BONUS trees, pipe-delimited qualifiers,
 spell-slot math); it only recognizes directive shapes and carries their
 tokens forward with source provenance.
 
+## The sheet-rule converter (`data/sheet_rules/`) — new 2026-09-15, SD-35
+
+The stages below produce the source-IR the engine's hand-transcribed chassis consumes. SD-35
+added a **second, terminal output** of this module, and it is the one that carries the whole
+corpus: `src/pcgen_import/sheet_rule/` (`closure.rs`, `convert.rs`, `ctx.rs`, `formula.rs`,
+`mod.rs`, `prereq.rs`, `prose.rs`, `table.rs`), driven by the `src/bin/sheet_rule_convert.rs`
+binary.
+
+**Why it exists.** It is the whole of the converter/live boundary
+([overview.md](./overview.md)). Before SD-35 the live engine read PCGen tokens at run time
+through a formula evaluator. Now the reading happens **once, here, at ingest**, and the live side
+reads only our own schema. `sheet_rule_convert` is a tool: it never ships in the desktop binary
+and is never called at run time.
+
+**Input.** One corpus record's *token closure* — the base `.lst` row plus every `.MOD` row —
+read in PCGen's own order (`.COPY=` base → own row → `.MOD` rows in file order), from the pinned
+tree named by `scripts/pcgen-oracle-pin.env`. `_pfs/` files are skipped by path; `.MOD` rows match
+on (file kind, CATEGORY, KEY-else-name); a base record resolves corpus-wide
+(`src/pcgen_import/sheet_rule/closure.rs`). The closure also reads the numbered class level lines
+(`PinnedTree.level_lines`) that `data/corpus/` never held.
+
+**Output.** `data/sheet_rules/<book>/<kind>/<key>.json` — one `SheetRule` per record in **our**
+schema (`src/rules_core/sheet_rule.rs`; no token, no formula string, no PCGen variable name),
+plus `_vars/<VarId>.json` contribution tables and `_defects/*.json`. The tree's root carries a
+`data/sheet_rules/GENERATED` marker file — "written by `cargo run --locked --bin
+sheet_rule_convert`; regenerated whole; never hand-edited". `data/corpus/` itself is not touched
+by this stage. Every emitted rule carries its own `provenance`: the `book`, the `kind`, the exact
+`closure_rows` (`<file>:<line>`) it was built from, the `oracle_pin` SHA, and the
+`converter_version`.
+
+**Its own report is the gate.** `data/sheet_rules/_report.json`, re-derivable with
+`cargo run --locked --bin sheet_rule_convert -- --check`:
+
+| figure | value | re-derive |
+|---|---|---|
+| records converted | 49,450 of 49,450, **0 refused** | `python3 -c "import json;d=json.load(open('data/sheet_rules/_report.json'));print(d['converted'],d['records'],d['refused'])"` |
+| rules written | 70,317 | `python3 -c "import json;print(json.load(open('data/sheet_rules/_report.json'))['rules_written'])"` |
+| variable contribution tables | 5,294 | `python3 -c "import json;print(json.load(open('data/sheet_rules/_report.json'))['var_tables'])"` |
+| degraded records (converted, some token dropped to words) | 423 | `python3 -c "import json;print(json.load(open('data/sheet_rules/_report.json'))['degraded_records'])"` |
+
+`scripts/token_coverage.py --check` is the companion instrument: it names the remainder **by
+token type** and checks the type counts sum to the record count, so "the rest" can never be a
+category. A refused token type is the next cycle's scope, never an exemption.
+
+**One shape rule, mechanically enforced:** our data files carry none of the source format.
+
+```
+$ grep -rlE 'BONUS:|DEFINE:|PRE[A-Z]+:|%CHOICE|CL=' data/sheet_rules/ | wc -l
+0
+```
+
+**`cache_gen` moved.** The corpus-cache generators live at `src/pcgen_import/cache_gen/` as of
+SD-35 (`AT-35-E6-002`). They were under a `cache_gen/` directory in `src/rules_core/`, which put
+PCGen-reading code on the live side of the boundary; the code is unchanged, only its side is.
+There is no `cache_gen/` under `src/rules_core/` any more — the path in any older doc or comment
+is stale.
+
 ## Pipeline stages
 
 The pipeline runs in one direction, each stage consuming the previous
@@ -32,7 +92,7 @@ pcc.rs                  parse_pcc_entry            -> PccEntryFile
 include_resolver.rs      resolve_pcc_includes_from  -> IncludeResolution
 lst_parser/<kind>.rs     parse_<kind>_entries        -> per-kind parse result
 ir_converter.rs          convert_to_ir / convert_*   -> SourceContentRecord<'a>
-source_content_payload.rs SourceContentPayload<'a>   (payload enum, referenced above)
+rules_core::source_content SourceContentPayload<'a>   (payload enum, referenced above)
 rules_core::source_content SourcePackageContent<'a>  (corpus-rooted aggregate)
 ```
 
@@ -174,9 +234,11 @@ B-family parser) map to `SourceContentSeverity::Error` +
 converter-originated code maps to `SourceContentSeverity::Info` +
 `SourceContentDiagnosticKind::PartialTranslation`.
 
-### Stage 5 — `source_content_payload.rs`: the payload enum
+### Stage 5 — `source_content.rs`: the payload enum
 
-`SourceContentPayload<'a>` (`src/pcgen_import/source_content_payload.rs`)
+`SourceContentPayload<'a>` (`src/rules_core/source_content.rs`; until 2026-09-15 this doc
+cited a `source_content_payload.rs` under `src/pcgen_import/` that has never existed —
+path corrected at the SD-35 closure)
 is the typed, kind-tagged union of borrowed B-family entries
 (`Class(&'a ClassEntry)`, `SpellcastingClass(&'a SpellcastingClassEntry)`,
 `Race(&'a RaceDeclaration)`, `Ability(&'a AbilityDeclaration)`,
@@ -193,9 +255,13 @@ envelope lives: the variants reference parser entry types from
 and would need to import from `rules_core::source_content`, which would
 in turn need parser types from `pcgen_import`. Keeping the payload enum
 beside the parser surface keeps the dependency one-directional:
-`rules_core::source_content` re-exports the enum
-(`pub use crate::pcgen_import::source_content_payload::SourceContentPayload;`),
-and the only thing crossing the boundary is the finished envelope
+**Path correction 2026-09-15 (SD-35 closure):** the enum is *defined* in
+`src/rules_core/source_content.rs` (`pub enum SourceContentPayload<'a>` at :79) and there
+is no `pcgen_import::source_content_payload` module and no re-export — the
+paragraph above described an arrangement that never shipped. The dependency is
+still one-directional, just the other way round: `pcgen_import::ir_converter`
+constructs the enum from `rules_core`, and the only thing crossing the boundary
+is the finished envelope
 `pcgen_import::ir_converter` builds. The module also carries the total,
 mechanical `MetadataKind` <-> `MetadataKindInner` mapping
 (`b6_metadata_kind_to_canonical` and its inverse) for the same reason.
@@ -275,7 +341,7 @@ order:
 2. `src/pcgen_import/lst_parser/mod.rs` — register `pub mod <new_kind>;`,
    re-export the new entry type, add a `ParsedLstRecord::<NewKind>(&'a NewKindEntry)`
    variant and a `from_<new_kind>` convenience constructor.
-3. `src/pcgen_import/source_content_payload.rs` — add a matching
+3. `src/rules_core/source_content.rs` — add a matching
    `SourceContentPayload::<NewKind>(&'a NewKindEntry)` variant, and wire
    it into `kind_token()` and `source_slice()`.
 4. `src/rules_core/source_content.rs` — add the matching
@@ -361,7 +427,7 @@ caught-before-commit data loss). Records whose `source.kind` is not
 LST line to enrich from) are left untouched and counted separately, not
 treated as an error.
 
-`src/rules_core/corpus_literal_sweep.rs` (see above, "the closure, not the
+`src/pcgen_import/corpus_literal_sweep.rs` (see above, "the closure, not the
 base row alone, is the correct comparand") is the independent verifier that
 byte-compares those populated `raw_tokens` against its own `.MOD`-chain
 closure derived from the pinned oracle. Two real defects in the sweep's own
@@ -399,7 +465,9 @@ See [rules-data-tables.md](./rules-data-tables.md) for what happens
 downstream once a corpus record is projected: transcribing its values
 into the hand-authored `rules_tables` book modules, and — new as of the
 wiring_class/PI-screening convergence cycle — the GE-01 `wiring_class`
-taxonomy every corpus record now carries (`src/rules_core/wiring_class.rs`,
+taxonomy every corpus record now carries (`src/pcgen_import/wiring_class.rs` —
+moved out of `src/rules_core/` by SD-35 `AT-35-E6-002`, because it reads PCGen
+tokens and so belongs on the converter side,
 determined from a unit's full token closure, not the base row alone),
 `Trap::WiringClassMismatch` (`src/pcgen_import/corpus_traps.rs`) which
 guards that stamp against drift, and the shared PI-screening pass

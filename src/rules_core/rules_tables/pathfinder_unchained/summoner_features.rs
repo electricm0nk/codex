@@ -286,24 +286,26 @@ fn active_level(feature: UnchainedSummonerFeature, level: u8) -> Option<u8> {
     feature.is_granted_at(level).then_some(level)
 }
 
-/// `CSKILL:` on `Unchained Summoner ~ Skills` (`:727`), verbatim and in source
-/// order. `TYPE=` entries are PCGen skill-*type* selectors, preserved as written
-/// rather than expanded.
+/// `CSKILL:` on `Unchained Summoner ~ Skills` (`:727`), in source order.
 ///
-/// Note `TYPE=Knowledge` — the summoner gets *every* Knowledge skill, where the
-/// Unchained Rogue's row names only two. That contrast is why both lists are
-/// transcribed verbatim instead of normalised into one representation.
-pub fn class_skills() -> &'static [&'static str] {
+/// Note `ClassSkillEntry::Family("Knowledge")` — the summoner gets *every*
+/// Knowledge skill, where the Unchained Rogue's row names only two. That
+/// contrast is why both lists are transcribed row by row instead of normalised
+/// into one representation. Typed by SD-35 `AT-35-E6-003-SWEEP` cycle 9; the
+/// ingest `TYPE=<Family>` spelling was reaching a shipped sheet line.
+pub fn class_skills(
+) -> &'static [crate::rules_core::rules_tables::crb::class_skill_tables::ClassSkillEntry] {
+    use crate::rules_core::rules_tables::crb::class_skill_tables::ClassSkillEntry::{Family, Named};
     &[
-        "TYPE=Craft",
-        "Fly",
-        "Handle Animal",
-        "TYPE=Knowledge",
-        "Linguistics",
-        "TYPE=Profession",
-        "Ride",
-        "Spellcraft",
-        "Use Magic Device",
+        Family("Craft"),
+        Named("Fly"),
+        Named("Handle Animal"),
+        Family("Knowledge"),
+        Named("Linguistics"),
+        Family("Profession"),
+        Named("Ride"),
+        Named("Spellcraft"),
+        Named("Use Magic Device"),
     ]
 }
 
@@ -729,13 +731,17 @@ mod tests {
 
     #[test]
     fn class_skill_list_is_the_verbatim_cskill_row() {
+        use crate::rules_core::rules_tables::crb::class_skill_tables::ClassSkillEntry;
         let skills = class_skills();
         assert_eq!(skills.len(), 9, "CSKILL: on :727 has 9 pipe-separated entries");
-        assert_eq!(skills[0], "TYPE=Craft");
-        assert_eq!(skills[8], "Use Magic Device");
-        assert!(skills.contains(&"TYPE=Knowledge"), "the summoner gets every Knowledge, not a named subset");
-        assert!(skills.contains(&"Fly"));
-        assert!(skills.contains(&"Handle Animal"));
+        assert_eq!(skills[0], ClassSkillEntry::Family("Craft"));
+        assert_eq!(skills[8], ClassSkillEntry::Named("Use Magic Device"));
+        assert!(
+            skills.contains(&ClassSkillEntry::Family("Knowledge")),
+            "the summoner gets every Knowledge, not a named subset"
+        );
+        assert!(skills.contains(&ClassSkillEntry::Named("Fly")));
+        assert!(skills.contains(&ClassSkillEntry::Named("Handle Animal")));
     }
 
     // ---- formula pins -----------------------------------------------------

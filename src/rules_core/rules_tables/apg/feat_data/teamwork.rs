@@ -9,7 +9,7 @@
 use crate::rules_core::rules_tables::crb::feats::{FeatCategory, FeatTableEntry};
 
 pub const TEAMWORK_TABLE: &[FeatTableEntry] = &[
-    FeatTableEntry { key: "Allied Spellcaster", category: FeatCategory::Teamwork, name: "Allied Spellcaster", description: Some("With the aid of an ally, you are skilled at piercing the protections of other creatures with your spells."), effect: None, prerequisites: Some(&["PREMULT:1,[PRECLASS:1,SPELLCASTER=1],[PREVARGTEQ:CasterLevel_Highest,1]"]) },
-    FeatTableEntry { key: "Duck and Cover", category: FeatCategory::Teamwork, name: "Duck and Cover", description: Some("Your allies assist you in avoiding certain attacks."), effect: None, prerequisites: None },
-    FeatTableEntry { key: "Shielded Caster", category: FeatCategory::Teamwork, name: "Shielded Caster", description: Some("Your allies cover you while you cast complicated spells."), effect: None, prerequisites: None },
+    FeatTableEntry { key: "Allied Spellcaster", category: FeatCategory::Teamwork, name: "Allied Spellcaster", description: Some("With the aid of an ally, you are skilled at piercing the protections of other creatures with your spells."), effect: None},
+    FeatTableEntry { key: "Duck and Cover", category: FeatCategory::Teamwork, name: "Duck and Cover", description: Some("Your allies assist you in avoiding certain attacks."), effect: None},
+    FeatTableEntry { key: "Shielded Caster", category: FeatCategory::Teamwork, name: "Shielded Caster", description: Some("Your allies cover you while you cast complicated spells."), effect: None},
 ];

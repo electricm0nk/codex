@@ -1,0 +1,4013 @@
+{
+  "kind": "equipment",
+  "records": {
+    "accent_pill.json": {
+      "record": {
+        "ability_score_bonus": null,
+        "armor_class_chain_bonus": null,
+        "base_damage_dice": null,
+        "base_item": null,
+        "cost_gp": 300.0,
+        "critical_multiplier": null,
+        "critical_threat_range": null,
+        "damage_size_steps": 0,
+        "eqmod_references": [],
+        "identity": "Accent Pill",
+        "intelligent_item": null,
+        "is_modifier": false,
+        "is_natural_attack": false,
+        "is_shield": false,
+        "name": "Accent Pill",
+        "skill_check_bonus": null,
+        "spell_resistance_bonus": null,
+        "stat_effect": {
+          "armor_check_penalty": null,
+          "armor_class_bonus": null,
+          "max_dex": null,
+          "spell_failure": null
+        },
+        "states_base_damage": false,
+        "var_bonuses": [],
+        "weapon_enhancement": null,
+        "weight_divisor": null,
+        "weight_lbs": null,
+        "wield_category": null
+      },
+      "source_ref": {
+        "line": 1,
+        "lst_file": ""
+      }
+    },
+    "accuracy_lozenge.json": {
+      "record": {
+        "ability_score_bonus": null,
+        "armor_class_chain_bonus": null,
+        "base_damage_dice": null,
+        "base_item": null,
+        "cost_gp": 330.0,
+        "critical_multiplier": null,
+        "critical_threat_range": null,
+        "damage_size_steps": 0,
+        "eqmod_references": [],
+        "identity": "Accuracy Lozenge",
+        "intelligent_item": null,
+        "is_modifier": false,
+        "is_natural_attack": false,
+        "is_shield": false,
+        "name": "Accuracy Lozenge",
+        "skill_check_bonus": null,
+        "spell_resistance_bonus": null,
+        "stat_effect": {
+          "armor_check_penalty": null,
+          "armor_class_bonus": null,
+          "max_dex": null,
+          "spell_failure": null
+        },
+        "states_base_damage": false,
+        "var_bonuses": [],
+        "weapon_enhancement": null,
+        "weight_divisor": null,
+        "weight_lbs": null,
+        "wield_category": null
+      },
+      "source_ref": {
+        "line": 1,
+        "lst_file": ""
+      }
+    },
+    "age_ointment.json": {
+      "record": {
+        "ability_score_bonus": null,
+        "armor_class_chain_bonus": null,
+        "base_damage_dice": null,
+        "base_item": null,
+        "cost_gp": 80.0,
+        "critical_multiplier": null,
+        "critical_threat_range": null,
+        "damage_size_steps": 0,
+        "eqmod_references": [],
+        "identity": "Age Ointment",
+        "intelligent_item": null,
+        "is_modifier": false,
+        "is_natural_attack": false,
+        "is_shield": false,
+        "name": "Age Ointment",
+        "skill_check_bonus": null,
+        "spell_resistance_bonus": null,
+        "stat_effect": {
+          "armor_check_penalty": null,
+          "armor_class_bonus": null,
+          "max_dex": null,
+          "spell_failure": null
+        },
+        "states_base_damage": false,
+        "var_bonuses": [],
+        "weapon_enhancement": null,
+        "weight_divisor": null,
+        "weight_lbs": null,
+        "wield_category": null
+      },
+      "source_ref": {
+        "line": 1,
+        "lst_file": ""
+      }
+    },
+    "alchemical_dye_kit.json": {
+      "record": {
+        "ability_score_bonus": null,
+        "armor_class_chain_bonus": null,
+        "base_damage_dice": null,
+        "base_item": null,
+        "cost_gp": 160.0,
+        "critical_multiplier": null,
+        "critical_threat_range": null,
+        "damage_size_steps": 0,
+        "eqmod_references": [],
+        "identity": "Alchemical Dye Kit",
+        "intelligent_item": null,
+        "is_modifier": false,
+        "is_natural_attack": false,
+        "is_shield": false,
+        "name": "Alchemical Dye Kit",
+        "skill_check_bonus": null,
+        "spell_resistance_bonus": null,
+        "stat_effect": {
+          "armor_check_penalty": null,
+          "armor_class_bonus": null,
+          "max_dex": null,
+          "spell_failure": null
+        },
+        "states_base_damage": false,
+        "var_bonuses": [],
+        "weapon_enhancement": null,
+        "weight_divisor": null,
+        "weight_lbs": 6.0,
+        "wield_category": null
+      },
+      "source_ref": {
+        "line": 1,
+        "lst_file": ""
+      }
+    },
+    "best_friend_pendant.json": {
+      "record": {
+        "ability_score_bonus": null,
+        "armor_class_chain_bonus": null,
+        "base_damage_dice": null,
+        "base_item": null,
+        "cost_gp": 5000.0,
+        "critical_multiplier": null,
+        "critical_threat_range": null,
+        "damage_size_steps": 0,
+        "eqmod_references": [],
+        "identity": "Best Friend Pendant",
+        "intelligent_item": null,
+        "is_modifier": false,
+        "is_natural_attack": false,
+        "is_shield": false,
+        "name": "Best Friend Pendant",
+        "skill_check_bonus": null,
+        "spell_resistance_bonus": null,
+        "stat_effect": {
+          "armor_check_penalty": null,
+          "armor_class_bonus": null,
+          "max_dex": null,
+          "spell_failure": null
+        },
+        "states_base_damage": false,
+        "var_bonuses": [],
+        "weapon_enhancement": null,
+        "weight_divisor": null,
+        "weight_lbs": null,
+        "wield_category": null
+      },
+      "source_ref": {
+        "line": 1,
+        "lst_file": ""
+      }
+    },
+    "best_friend_pendant_greater.json": {
+      "record": {
+        "ability_score_bonus": null,
+        "armor_class_chain_bonus": null,
+        "base_damage_dice": null,
+        "base_item": null,
+        "cost_gp": 9000.0,
+        "critical_multiplier": null,
+        "critical_threat_range": null,
+        "damage_size_steps": 0,
+        "eqmod_references": [],
+        "identity": "Best Friend Pendant (Greater)",
+        "intelligent_item": null,
+        "is_modifier": false,
+        "is_natural_attack": false,
+        "is_shield": false,
+        "name": "Best Friend Pendant (Greater)",
+        "skill_check_bonus": null,
+        "spell_resistance_bonus": null,
+        "stat_effect": {
+          "armor_check_penalty": null,
+          "armor_class_bonus": null,
+          "max_dex": null,
+          "spell_failure": null
+        },
+        "states_base_damage": false,
+        "var_bonuses": [],
+        "weapon_enhancement": null,
+        "weight_divisor": null,
+        "weight_lbs": null,
+        "wield_category": null
+      },
+      "source_ref": {
+        "line": 1,
+        "lst_file": ""
+      }
+    },
+    "black_marketeer_s_bag.json": {
+      "record": {
+        "ability_score_bonus": null,
+        "armor_class_chain_bonus": null,
+        "base_damage_dice": null,
+        "base_item": null,
+        "cost_gp": 6200.0,
+        "critical_multiplier": null,
+        "critical_threat_range": null,
+        "damage_size_steps": 0,
+        "eqmod_references": [],
+        "identity": "Black Marketeer's Bag",
+        "intelligent_item": null,
+        "is_modifier": false,
+        "is_natural_attack": false,
+        "is_shield": false,
+        "name": "Black Marketeer's Bag",
+        "skill_check_bonus": null,
+        "spell_resistance_bonus": null,
+        "stat_effect": {
+          "armor_check_penalty": null,
+          "armor_class_bonus": null,
+          "max_dex": null,
+          "spell_failure": null
+        },
+        "states_base_damage": false,
+        "var_bonuses": [],
+        "weapon_enhancement": null,
+        "weight_divisor": null,
+        "weight_lbs": 3.0,
+        "wield_category": null
+      },
+      "source_ref": {
+        "line": 1,
+        "lst_file": ""
+      }
+    },
+    "boar_s_bellow.json": {
+      "record": {
+        "ability_score_bonus": null,
+        "armor_class_chain_bonus": null,
+        "base_damage_dice": null,
+        "base_item": null,
+        "cost_gp": 190.0,
+        "critical_multiplier": null,
+        "critical_threat_range": null,
+        "damage_size_steps": 0,
+        "eqmod_references": [],
+        "identity": "Boar's Bellow",
+        "intelligent_item": null,
+        "is_modifier": false,
+        "is_natural_attack": false,
+        "is_shield": false,
+        "name": "Boar's Bellow",
+        "skill_check_bonus": null,
+        "spell_resistance_bonus": null,
+        "stat_effect": {
+          "armor_check_penalty": null,
+          "armor_class_bonus": null,
+          "max_dex": null,
+          "spell_failure": null
+        },
+        "states_base_damage": false,
+        "var_bonuses": [],
+        "weapon_enhancement": null,
+        "weight_divisor": null,
+        "weight_lbs": null,
+        "wield_category": null
+      },
+      "source_ref": {
+        "line": 1,
+        "lst_file": ""
+      }
+    },
+    "brilliant_plan_encumberance.json": {
+      "record": {
+        "ability_score_bonus": null,
+        "armor_class_chain_bonus": null,
+        "base_damage_dice": null,
+        "base_item": null,
+        "cost_gp": 0.0,
+        "critical_multiplier": null,
+        "critical_threat_range": null,
+        "damage_size_steps": 0,
+        "eqmod_references": [],
+        "identity": "Brilliant Plan Encumberance",
+        "intelligent_item": null,
+        "is_modifier": false,
+        "is_natural_attack": false,
+        "is_shield": false,
+        "name": "Brilliant Plan Encumberance",
+        "skill_check_bonus": null,
+        "spell_resistance_bonus": null,
+        "stat_effect": {
+          "armor_check_penalty": null,
+          "armor_class_bonus": null,
+          "max_dex": null,
+          "spell_failure": null
+        },
+        "states_base_damage": false,
+        "var_bonuses": [],
+        "weapon_enhancement": null,
+        "weight_divisor": null,
+        "weight_lbs": 20.0,
+        "wield_category": null
+      },
+      "source_ref": {
+        "line": 1,
+        "lst_file": ""
+      }
+    },
+    "candle_of_comity.json": {
+      "record": {
+        "ability_score_bonus": null,
+        "armor_class_chain_bonus": null,
+        "base_damage_dice": null,
+        "base_item": null,
+        "cost_gp": 2000.0,
+        "critical_multiplier": null,
+        "critical_threat_range": null,
+        "damage_size_steps": 0,
+        "eqmod_references": [],
+        "identity": "Candle of Comity",
+        "intelligent_item": null,
+        "is_modifier": false,
+        "is_natural_attack": false,
+        "is_shield": false,
+        "name": "Candle of Comity",
+        "skill_check_bonus": null,
+        "spell_resistance_bonus": null,
+        "stat_effect": {
+          "armor_check_penalty": null,
+          "armor_class_bonus": null,
+          "max_dex": null,
+          "spell_failure": null
+        },
+        "states_base_damage": false,
+        "var_bonuses": [],
+        "weapon_enhancement": null,
+        "weight_divisor": null,
+        "weight_lbs": 1.0,
+        "wield_category": null
+      },
+      "source_ref": {
+        "line": 1,
+        "lst_file": ""
+      }
+    },
+    "candle_of_drowsiness.json": {
+      "record": {
+        "ability_score_bonus": null,
+        "armor_class_chain_bonus": null,
+        "base_damage_dice": null,
+        "base_item": null,
+        "cost_gp": 2500.0,
+        "critical_multiplier": null,
+        "critical_threat_range": null,
+        "damage_size_steps": 0,
+        "eqmod_references": [],
+        "identity": "Candle of Drowsiness",
+        "intelligent_item": null,
+        "is_modifier": false,
+        "is_natural_attack": false,
+        "is_shield": false,
+        "name": "Candle of Drowsiness",
+        "skill_check_bonus": null,
+        "spell_resistance_bonus": null,
+        "stat_effect": {
+          "armor_check_penalty": null,
+          "armor_class_bonus": null,
+          "max_dex": null,
+          "spell_failure": null
+        },
+        "states_base_damage": false,
+        "var_bonuses": [],
+        "weapon_enhancement": null,
+        "weight_divisor": null,
+        "weight_lbs": 0.5,
+        "wield_category": null
+      },
+      "source_ref": {
+        "line": 1,
+        "lst_file": ""
+      }
+    },
+    "coat_of_pockets.json": {
+      "record": {
+        "ability_score_bonus": null,
+        "armor_class_chain_bonus": null,
+        "base_damage_dice": null,
+        "base_item": null,
+        "cost_gp": 2500.0,
+        "critical_multiplier": null,
+        "critical_threat_range": null,
+        "damage_size_steps": 0,
+        "eqmod_references": [],
+        "identity": "Coat of Pockets",
+        "intelligent_item": null,
+        "is_modifier": false,
+        "is_natural_attack": false,
+        "is_shield": false,
+        "name": "Coat of Pockets",
+        "skill_check_bonus": null,
+        "spell_resistance_bonus": null,
+        "stat_effect": {
+          "armor_check_penalty": null,
+          "armor_class_bonus": null,
+          "max_dex": null,
+          "spell_failure": null
+        },
+        "states_base_damage": false,
+        "var_bonuses": [],
+        "weapon_enhancement": null,
+        "weight_divisor": null,
+        "weight_lbs": 7.0,
+        "wield_category": null
+      },
+      "source_ref": {
+        "line": 1,
+        "lst_file": ""
+      }
+    },
+    "coat_of_the_undercity.json": {
+      "record": {
+        "ability_score_bonus": null,
+        "armor_class_chain_bonus": null,
+        "base_damage_dice": null,
+        "base_item": null,
+        "cost_gp": 7500.0,
+        "critical_multiplier": null,
+        "critical_threat_range": null,
+        "damage_size_steps": 0,
+        "eqmod_references": [],
+        "identity": "Coat of the Undercity",
+        "intelligent_item": null,
+        "is_modifier": false,
+        "is_natural_attack": false,
+        "is_shield": false,
+        "name": "Coat of the Undercity",
+        "skill_check_bonus": null,
+        "spell_resistance_bonus": null,
+        "stat_effect": {
+          "armor_check_penalty": null,
+          "armor_class_bonus": null,
+          "max_dex": null,
+          "spell_failure": null
+        },
+        "states_base_damage": false,
+        "var_bonuses": [],
+        "weapon_enhancement": null,
+        "weight_divisor": null,
+        "weight_lbs": 5.0,
+        "wield_category": null
+      },
+      "source_ref": {
+        "line": 1,
+        "lst_file": ""
+      }
+    },
+    "coat_of_the_undercity_greater.json": {
+      "record": {
+        "ability_score_bonus": null,
+        "armor_class_chain_bonus": null,
+        "base_damage_dice": null,
+        "base_item": null,
+        "cost_gp": 37500.0,
+        "critical_multiplier": null,
+        "critical_threat_range": null,
+        "damage_size_steps": 0,
+        "eqmod_references": [],
+        "identity": "Coat of the Undercity (Greater)",
+        "intelligent_item": null,
+        "is_modifier": false,
+        "is_natural_attack": false,
+        "is_shield": false,
+        "name": "Coat of the Undercity (Greater)",
+        "skill_check_bonus": null,
+        "spell_resistance_bonus": null,
+        "stat_effect": {
+          "armor_check_penalty": null,
+          "armor_class_bonus": null,
+          "max_dex": null,
+          "spell_failure": null
+        },
+        "states_base_damage": false,
+        "var_bonuses": [],
+        "weapon_enhancement": null,
+        "weight_divisor": null,
+        "weight_lbs": 5.0,
+        "wield_category": null
+      },
+      "source_ref": {
+        "line": 1,
+        "lst_file": ""
+      }
+    },
+    "code_rod.json": {
+      "record": {
+        "ability_score_bonus": null,
+        "armor_class_chain_bonus": null,
+        "base_damage_dice": null,
+        "base_item": null,
+        "cost_gp": 0.1,
+        "critical_multiplier": null,
+        "critical_threat_range": null,
+        "damage_size_steps": 0,
+        "eqmod_references": [],
+        "identity": "Code Rod",
+        "intelligent_item": null,
+        "is_modifier": false,
+        "is_natural_attack": false,
+        "is_shield": false,
+        "name": "Code Rod",
+        "skill_check_bonus": null,
+        "spell_resistance_bonus": null,
+        "stat_effect": {
+          "armor_check_penalty": null,
+          "armor_class_bonus": null,
+          "max_dex": null,
+          "spell_failure": null
+        },
+        "states_base_damage": false,
+        "var_bonuses": [],
+        "weapon_enhancement": null,
+        "weight_divisor": null,
+        "weight_lbs": 1.0,
+        "wield_category": null
+      },
+      "source_ref": {
+        "line": 1,
+        "lst_file": ""
+      }
+    },
+    "codex_of_conversations.json": {
+      "record": {
+        "ability_score_bonus": null,
+        "armor_class_chain_bonus": null,
+        "base_damage_dice": null,
+        "base_item": null,
+        "cost_gp": 10000.0,
+        "critical_multiplier": null,
+        "critical_threat_range": null,
+        "damage_size_steps": 0,
+        "eqmod_references": [],
+        "identity": "Codex of Conversations",
+        "intelligent_item": null,
+        "is_modifier": false,
+        "is_natural_attack": false,
+        "is_shield": false,
+        "name": "Codex of Conversations",
+        "skill_check_bonus": null,
+        "spell_resistance_bonus": null,
+        "stat_effect": {
+          "armor_check_penalty": null,
+          "armor_class_bonus": null,
+          "max_dex": null,
+          "spell_failure": null
+        },
+        "states_base_damage": false,
+        "var_bonuses": [],
+        "weapon_enhancement": null,
+        "weight_divisor": null,
+        "weight_lbs": 3.0,
+        "wield_category": null
+      },
+      "source_ref": {
+        "line": 1,
+        "lst_file": ""
+      }
+    },
+    "communique_ring.json": {
+      "record": {
+        "ability_score_bonus": null,
+        "armor_class_chain_bonus": null,
+        "base_damage_dice": null,
+        "base_item": null,
+        "cost_gp": 6000.0,
+        "critical_multiplier": null,
+        "critical_threat_range": null,
+        "damage_size_steps": 0,
+        "eqmod_references": [],
+        "identity": "Communique Ring",
+        "intelligent_item": null,
+        "is_modifier": false,
+        "is_natural_attack": false,
+        "is_shield": false,
+        "name": "Communique Ring",
+        "skill_check_bonus": null,
+        "spell_resistance_bonus": null,
+        "stat_effect": {
+          "armor_check_penalty": null,
+          "armor_class_bonus": null,
+          "max_dex": null,
+          "spell_failure": null
+        },
+        "states_base_damage": false,
+        "var_bonuses": [],
+        "weapon_enhancement": null,
+        "weight_divisor": null,
+        "weight_lbs": null,
+        "wield_category": null
+      },
+      "source_ref": {
+        "line": 1,
+        "lst_file": ""
+      }
+    },
+    "concealment_coin.json": {
+      "record": {
+        "ability_score_bonus": null,
+        "armor_class_chain_bonus": null,
+        "base_damage_dice": null,
+        "base_item": null,
+        "cost_gp": 12.0,
+        "critical_multiplier": null,
+        "critical_threat_range": null,
+        "damage_size_steps": 0,
+        "eqmod_references": [],
+        "identity": "Concealment Coin",
+        "intelligent_item": null,
+        "is_modifier": false,
+        "is_natural_attack": false,
+        "is_shield": false,
+        "name": "Concealment Coin",
+        "skill_check_bonus": null,
+        "spell_resistance_bonus": null,
+        "stat_effect": {
+          "armor_check_penalty": null,
+          "armor_class_bonus": null,
+          "max_dex": null,
+          "spell_failure": null
+        },
+        "states_base_damage": false,
+        "var_bonuses": [],
+        "weapon_enhancement": null,
+        "weight_divisor": null,
+        "weight_lbs": 0.1,
+        "wield_category": null
+      },
+      "source_ref": {
+        "line": 1,
+        "lst_file": ""
+      }
+    },
+    "costume_bureau.json": {
+      "record": {
+        "ability_score_bonus": null,
+        "armor_class_chain_bonus": null,
+        "base_damage_dice": null,
+        "base_item": null,
+        "cost_gp": 7000.0,
+        "critical_multiplier": null,
+        "critical_threat_range": null,
+        "damage_size_steps": 0,
+        "eqmod_references": [],
+        "identity": "Costume Bureau",
+        "intelligent_item": null,
+        "is_modifier": false,
+        "is_natural_attack": false,
+        "is_shield": false,
+        "name": "Costume Bureau",
+        "skill_check_bonus": null,
+        "spell_resistance_bonus": null,
+        "stat_effect": {
+          "armor_check_penalty": null,
+          "armor_class_bonus": null,
+          "max_dex": null,
+          "spell_failure": null
+        },
+        "states_base_damage": false,
+        "var_bonuses": [],
+        "weapon_enhancement": null,
+        "weight_divisor": null,
+        "weight_lbs": 175.0,
+        "wield_category": null
+      },
+      "source_ref": {
+        "line": 1,
+        "lst_file": ""
+      }
+    },
+    "courier_s_secure_pouch.json": {
+      "record": {
+        "ability_score_bonus": null,
+        "armor_class_chain_bonus": null,
+        "base_damage_dice": null,
+        "base_item": null,
+        "cost_gp": 1600.0,
+        "critical_multiplier": null,
+        "critical_threat_range": null,
+        "damage_size_steps": 0,
+        "eqmod_references": [],
+        "identity": "Courier's Secure Pouch",
+        "intelligent_item": null,
+        "is_modifier": false,
+        "is_natural_attack": false,
+        "is_shield": false,
+        "name": "Courier's Secure Pouch",
+        "skill_check_bonus": null,
+        "spell_resistance_bonus": null,
+        "stat_effect": {
+          "armor_check_penalty": null,
+          "armor_class_bonus": null,
+          "max_dex": null,
+          "spell_failure": null
+        },
+        "states_base_damage": false,
+        "var_bonuses": [],
+        "weapon_enhancement": null,
+        "weight_divisor": null,
+        "weight_lbs": 2.0,
+        "wield_category": null
+      },
+      "source_ref": {
+        "line": 1,
+        "lst_file": ""
+      }
+    },
+    "courtesan_s_ire.json": {
+      "record": {
+        "ability_score_bonus": null,
+        "armor_class_chain_bonus": null,
+        "base_damage_dice": {
+          "count": 1,
+          "die_size": 4
+        },
+        "base_item": null,
+        "cost_gp": 5.0,
+        "critical_multiplier": 3,
+        "critical_threat_range": [
+          20,
+          20
+        ],
+        "damage_size_steps": 0,
+        "eqmod_references": [
+          "Special Ability ~ Enhancement Cost",
+          "8000",
+          "Special Ability ~ +1 ~ Weapon",
+          "Material ~ Steel"
+        ],
+        "identity": "Courtesan's Ire",
+        "intelligent_item": null,
+        "is_modifier": false,
+        "is_natural_attack": false,
+        "is_shield": false,
+        "name": "Courtesan's Ire",
+        "skill_check_bonus": null,
+        "spell_resistance_bonus": null,
+        "stat_effect": {
+          "armor_check_penalty": null,
+          "armor_class_bonus": null,
+          "max_dex": null,
+          "spell_failure": null
+        },
+        "states_base_damage": true,
+        "var_bonuses": [],
+        "weapon_enhancement": null,
+        "weight_divisor": null,
+        "weight_lbs": 0.1,
+        "wield_category": "Light"
+      },
+      "source_ref": {
+        "line": 1,
+        "lst_file": ""
+      }
+    },
+    "dart_of_recovery.json": {
+      "record": {
+        "ability_score_bonus": null,
+        "armor_class_chain_bonus": null,
+        "base_damage_dice": null,
+        "base_item": null,
+        "cost_gp": 206.0,
+        "critical_multiplier": null,
+        "critical_threat_range": null,
+        "damage_size_steps": 0,
+        "eqmod_references": [
+          "Special Ability ~ +1 ~ Ammunition",
+          "Material ~ Steel"
+        ],
+        "identity": "Dart of Recovery",
+        "intelligent_item": null,
+        "is_modifier": false,
+        "is_natural_attack": false,
+        "is_shield": false,
+        "name": "Dart of Recovery",
+        "skill_check_bonus": null,
+        "spell_resistance_bonus": null,
+        "stat_effect": {
+          "armor_check_penalty": null,
+          "armor_class_bonus": null,
+          "max_dex": null,
+          "spell_failure": null
+        },
+        "states_base_damage": false,
+        "var_bonuses": [],
+        "weapon_enhancement": null,
+        "weight_divisor": null,
+        "weight_lbs": null,
+        "wield_category": null
+      },
+      "source_ref": {
+        "line": 1,
+        "lst_file": ""
+      }
+    },
+    "darts_featherweight_10.json": {
+      "record": {
+        "ability_score_bonus": null,
+        "armor_class_chain_bonus": null,
+        "base_damage_dice": null,
+        "base_item": null,
+        "cost_gp": 1.0,
+        "critical_multiplier": null,
+        "critical_threat_range": null,
+        "damage_size_steps": 0,
+        "eqmod_references": [
+          "Material ~ Steel"
+        ],
+        "identity": "Darts (Featherweight/10)",
+        "intelligent_item": null,
+        "is_modifier": false,
+        "is_natural_attack": false,
+        "is_shield": false,
+        "name": "Darts, Featherweight (10)",
+        "skill_check_bonus": null,
+        "spell_resistance_bonus": null,
+        "stat_effect": {
+          "armor_check_penalty": null,
+          "armor_class_bonus": null,
+          "max_dex": null,
+          "spell_failure": null
+        },
+        "states_base_damage": false,
+        "var_bonuses": [],
+        "weapon_enhancement": null,
+        "weight_divisor": null,
+        "weight_lbs": null,
+        "wield_category": null
+      },
+      "source_ref": {
+        "line": 1,
+        "lst_file": ""
+      }
+    },
+    "deadened_shadows_cloak.json": {
+      "record": {
+        "ability_score_bonus": null,
+        "armor_class_chain_bonus": null,
+        "base_damage_dice": null,
+        "base_item": null,
+        "cost_gp": 63250.0,
+        "critical_multiplier": null,
+        "critical_threat_range": null,
+        "damage_size_steps": 0,
+        "eqmod_references": [],
+        "identity": "Deadened Shadows Cloak",
+        "intelligent_item": null,
+        "is_modifier": false,
+        "is_natural_attack": false,
+        "is_shield": false,
+        "name": "Deadened Shadows Cloak",
+        "skill_check_bonus": null,
+        "spell_resistance_bonus": null,
+        "stat_effect": {
+          "armor_check_penalty": null,
+          "armor_class_bonus": null,
+          "max_dex": null,
+          "spell_failure": null
+        },
+        "states_base_damage": false,
+        "var_bonuses": [],
+        "weapon_enhancement": null,
+        "weight_divisor": null,
+        "weight_lbs": 2.0,
+        "wield_category": null
+      },
+      "source_ref": {
+        "line": 1,
+        "lst_file": ""
+      }
+    },
+    "deck_of_doors.json": {
+      "record": {
+        "ability_score_bonus": null,
+        "armor_class_chain_bonus": null,
+        "base_damage_dice": null,
+        "base_item": null,
+        "cost_gp": 12150.0,
+        "critical_multiplier": null,
+        "critical_threat_range": null,
+        "damage_size_steps": 0,
+        "eqmod_references": [],
+        "identity": "Deck of Doors",
+        "intelligent_item": null,
+        "is_modifier": false,
+        "is_natural_attack": false,
+        "is_shield": false,
+        "name": "Deck of Doors",
+        "skill_check_bonus": null,
+        "spell_resistance_bonus": null,
+        "stat_effect": {
+          "armor_check_penalty": null,
+          "armor_class_bonus": null,
+          "max_dex": null,
+          "spell_failure": null
+        },
+        "states_base_damage": false,
+        "var_bonuses": [],
+        "weapon_enhancement": null,
+        "weight_divisor": null,
+        "weight_lbs": null,
+        "wield_category": null
+      },
+      "source_ref": {
+        "line": 1,
+        "lst_file": ""
+      }
+    },
+    "diviner_s_blight.json": {
+      "record": {
+        "ability_score_bonus": null,
+        "armor_class_chain_bonus": 2,
+        "base_damage_dice": null,
+        "base_item": null,
+        "cost_gp": 10.0,
+        "critical_multiplier": null,
+        "critical_threat_range": null,
+        "damage_size_steps": 0,
+        "eqmod_references": [
+          "Special Ability ~ Enhancement Cost",
+          "15000",
+          "Special Ability ~ +4 ~ Armor",
+          "Material ~ Leather"
+        ],
+        "identity": "Diviner's Blight",
+        "intelligent_item": null,
+        "is_modifier": false,
+        "is_natural_attack": false,
+        "is_shield": false,
+        "name": "Diviner's Blight",
+        "skill_check_bonus": null,
+        "spell_resistance_bonus": null,
+        "stat_effect": {
+          "armor_check_penalty": 0,
+          "armor_class_bonus": 2,
+          "max_dex": 6,
+          "spell_failure": 10.0
+        },
+        "states_base_damage": false,
+        "var_bonuses": [
+          {
+            "bonus": 0,
+            "name": "ArmorCheckPenalty"
+          }
+        ],
+        "weapon_enhancement": null,
+        "weight_divisor": null,
+        "weight_lbs": 15.0,
+        "wield_category": null
+      },
+      "source_ref": {
+        "line": 1,
+        "lst_file": ""
+      }
+    },
+    "efreeti_cord.json": {
+      "record": {
+        "ability_score_bonus": null,
+        "armor_class_chain_bonus": null,
+        "base_damage_dice": null,
+        "base_item": null,
+        "cost_gp": 50.0,
+        "critical_multiplier": null,
+        "critical_threat_range": null,
+        "damage_size_steps": 0,
+        "eqmod_references": [],
+        "identity": "Efreeti Cord",
+        "intelligent_item": null,
+        "is_modifier": false,
+        "is_natural_attack": false,
+        "is_shield": false,
+        "name": "Efreeti Cord",
+        "skill_check_bonus": null,
+        "spell_resistance_bonus": null,
+        "stat_effect": {
+          "armor_check_penalty": null,
+          "armor_class_bonus": null,
+          "max_dex": null,
+          "spell_failure": null
+        },
+        "states_base_damage": false,
+        "var_bonuses": [],
+        "weapon_enhancement": null,
+        "weight_divisor": null,
+        "weight_lbs": null,
+        "wield_category": null
+      },
+      "source_ref": {
+        "line": 1,
+        "lst_file": ""
+      }
+    },
+    "efreeti_switch.json": {
+      "record": {
+        "ability_score_bonus": null,
+        "armor_class_chain_bonus": null,
+        "base_damage_dice": null,
+        "base_item": null,
+        "cost_gp": 25.0,
+        "critical_multiplier": null,
+        "critical_threat_range": null,
+        "damage_size_steps": 0,
+        "eqmod_references": [],
+        "identity": "Efreeti Switch",
+        "intelligent_item": null,
+        "is_modifier": false,
+        "is_natural_attack": false,
+        "is_shield": false,
+        "name": "Efreeti Switch",
+        "skill_check_bonus": null,
+        "spell_resistance_bonus": null,
+        "stat_effect": {
+          "armor_check_penalty": null,
+          "armor_class_bonus": null,
+          "max_dex": null,
+          "spell_failure": null
+        },
+        "states_base_damage": false,
+        "var_bonuses": [],
+        "weapon_enhancement": null,
+        "weight_divisor": null,
+        "weight_lbs": null,
+        "wield_category": null
+      },
+      "source_ref": {
+        "line": 1,
+        "lst_file": ""
+      }
+    },
+    "equipmods/liberating.json": {
+      "record": {
+        "ability_score_bonus": null,
+        "armor_class_chain_bonus": null,
+        "base_damage_dice": null,
+        "base_item": null,
+        "cost_gp": null,
+        "critical_multiplier": null,
+        "critical_threat_range": null,
+        "damage_size_steps": 0,
+        "eqmod_references": [],
+        "identity": "Special Ability ~ Liberating ~ Melee",
+        "intelligent_item": null,
+        "is_modifier": false,
+        "is_natural_attack": false,
+        "is_shield": false,
+        "name": "LIBERATING",
+        "skill_check_bonus": null,
+        "spell_resistance_bonus": null,
+        "stat_effect": {
+          "armor_check_penalty": null,
+          "armor_class_bonus": null,
+          "max_dex": null,
+          "spell_failure": null
+        },
+        "states_base_damage": false,
+        "var_bonuses": [],
+        "weapon_enhancement": null,
+        "weight_divisor": null,
+        "weight_lbs": null,
+        "wield_category": null
+      },
+      "source_ref": {
+        "line": 1,
+        "lst_file": ""
+      }
+    },
+    "equipmods/peaceful.json": {
+      "record": {
+        "ability_score_bonus": null,
+        "armor_class_chain_bonus": null,
+        "base_damage_dice": null,
+        "base_item": null,
+        "cost_gp": null,
+        "critical_multiplier": null,
+        "critical_threat_range": null,
+        "damage_size_steps": 0,
+        "eqmod_references": [],
+        "identity": "Special Ability ~ Peaceful ~ Weapon",
+        "intelligent_item": null,
+        "is_modifier": false,
+        "is_natural_attack": false,
+        "is_shield": false,
+        "name": "PEACEFUL",
+        "skill_check_bonus": null,
+        "spell_resistance_bonus": null,
+        "stat_effect": {
+          "armor_check_penalty": null,
+          "armor_class_bonus": null,
+          "max_dex": null,
+          "spell_failure": null
+        },
+        "states_base_damage": false,
+        "var_bonuses": [],
+        "weapon_enhancement": null,
+        "weight_divisor": null,
+        "weight_lbs": null,
+        "wield_category": null
+      },
+      "source_ref": {
+        "line": 1,
+        "lst_file": ""
+      }
+    },
+    "equipmods/silencing.json": {
+      "record": {
+        "ability_score_bonus": null,
+        "armor_class_chain_bonus": null,
+        "base_damage_dice": null,
+        "base_item": null,
+        "cost_gp": null,
+        "critical_multiplier": null,
+        "critical_threat_range": null,
+        "damage_size_steps": 0,
+        "eqmod_references": [],
+        "identity": "Special Ability ~ Silencing ~ Weapon",
+        "intelligent_item": null,
+        "is_modifier": false,
+        "is_natural_attack": false,
+        "is_shield": false,
+        "name": "SILENCING",
+        "skill_check_bonus": null,
+        "spell_resistance_bonus": null,
+        "stat_effect": {
+          "armor_check_penalty": null,
+          "armor_class_bonus": null,
+          "max_dex": null,
+          "spell_failure": null
+        },
+        "states_base_damage": false,
+        "var_bonuses": [],
+        "weapon_enhancement": null,
+        "weight_divisor": null,
+        "weight_lbs": null,
+        "wield_category": null
+      },
+      "source_ref": {
+        "line": 1,
+        "lst_file": ""
+      }
+    },
+    "equipmods/slithering.json": {
+      "record": {
+        "ability_score_bonus": null,
+        "armor_class_chain_bonus": null,
+        "base_damage_dice": null,
+        "base_item": null,
+        "cost_gp": null,
+        "critical_multiplier": null,
+        "critical_threat_range": null,
+        "damage_size_steps": 0,
+        "eqmod_references": [],
+        "identity": "Special Ability ~ Slithering ~ Melee",
+        "intelligent_item": null,
+        "is_modifier": false,
+        "is_natural_attack": false,
+        "is_shield": false,
+        "name": "SLITHERING",
+        "skill_check_bonus": null,
+        "spell_resistance_bonus": null,
+        "stat_effect": {
+          "armor_check_penalty": null,
+          "armor_class_bonus": null,
+          "max_dex": null,
+          "spell_failure": null
+        },
+        "states_base_damage": false,
+        "var_bonuses": [],
+        "weapon_enhancement": null,
+        "weight_divisor": null,
+        "weight_lbs": null,
+        "wield_category": null
+      },
+      "source_ref": {
+        "line": 1,
+        "lst_file": ""
+      }
+    },
+    "equipmods/special_ability_liberating_melee.json": {
+      "record": {
+        "ability_score_bonus": null,
+        "armor_class_chain_bonus": null,
+        "base_damage_dice": null,
+        "base_item": null,
+        "cost_gp": null,
+        "critical_multiplier": null,
+        "critical_threat_range": null,
+        "damage_size_steps": 0,
+        "eqmod_references": [],
+        "identity": "Special Ability ~ Liberating ~ Melee",
+        "intelligent_item": null,
+        "is_modifier": false,
+        "is_natural_attack": false,
+        "is_shield": false,
+        "name": "Liberating",
+        "skill_check_bonus": null,
+        "spell_resistance_bonus": null,
+        "stat_effect": {
+          "armor_check_penalty": null,
+          "armor_class_bonus": null,
+          "max_dex": null,
+          "spell_failure": null
+        },
+        "states_base_damage": false,
+        "var_bonuses": [],
+        "weapon_enhancement": null,
+        "weight_divisor": null,
+        "weight_lbs": null,
+        "wield_category": null
+      },
+      "source_ref": {
+        "line": 1,
+        "lst_file": ""
+      }
+    },
+    "equipmods/special_ability_peaceful_weapon.json": {
+      "record": {
+        "ability_score_bonus": null,
+        "armor_class_chain_bonus": null,
+        "base_damage_dice": null,
+        "base_item": null,
+        "cost_gp": null,
+        "critical_multiplier": null,
+        "critical_threat_range": null,
+        "damage_size_steps": 0,
+        "eqmod_references": [],
+        "identity": "Special Ability ~ Peaceful ~ Weapon",
+        "intelligent_item": null,
+        "is_modifier": false,
+        "is_natural_attack": false,
+        "is_shield": false,
+        "name": "Peaceful",
+        "skill_check_bonus": null,
+        "spell_resistance_bonus": null,
+        "stat_effect": {
+          "armor_check_penalty": null,
+          "armor_class_bonus": null,
+          "max_dex": null,
+          "spell_failure": null
+        },
+        "states_base_damage": false,
+        "var_bonuses": [],
+        "weapon_enhancement": null,
+        "weight_divisor": null,
+        "weight_lbs": null,
+        "wield_category": null
+      },
+      "source_ref": {
+        "line": 1,
+        "lst_file": ""
+      }
+    },
+    "equipmods/special_ability_silencing_weapon.json": {
+      "record": {
+        "ability_score_bonus": null,
+        "armor_class_chain_bonus": null,
+        "base_damage_dice": null,
+        "base_item": null,
+        "cost_gp": null,
+        "critical_multiplier": null,
+        "critical_threat_range": null,
+        "damage_size_steps": 0,
+        "eqmod_references": [],
+        "identity": "Special Ability ~ Silencing ~ Weapon",
+        "intelligent_item": null,
+        "is_modifier": false,
+        "is_natural_attack": false,
+        "is_shield": false,
+        "name": "Silencing",
+        "skill_check_bonus": null,
+        "spell_resistance_bonus": null,
+        "stat_effect": {
+          "armor_check_penalty": null,
+          "armor_class_bonus": null,
+          "max_dex": null,
+          "spell_failure": null
+        },
+        "states_base_damage": false,
+        "var_bonuses": [],
+        "weapon_enhancement": null,
+        "weight_divisor": null,
+        "weight_lbs": null,
+        "wield_category": null
+      },
+      "source_ref": {
+        "line": 1,
+        "lst_file": ""
+      }
+    },
+    "equipmods/special_ability_slithering_melee.json": {
+      "record": {
+        "ability_score_bonus": null,
+        "armor_class_chain_bonus": null,
+        "base_damage_dice": null,
+        "base_item": null,
+        "cost_gp": null,
+        "critical_multiplier": null,
+        "critical_threat_range": null,
+        "damage_size_steps": 0,
+        "eqmod_references": [],
+        "identity": "Special Ability ~ Slithering ~ Melee",
+        "intelligent_item": null,
+        "is_modifier": false,
+        "is_natural_attack": false,
+        "is_shield": false,
+        "name": "Slithering",
+        "skill_check_bonus": null,
+        "spell_resistance_bonus": null,
+        "stat_effect": {
+          "armor_check_penalty": null,
+          "armor_class_bonus": null,
+          "max_dex": null,
+          "spell_failure": null
+        },
+        "states_base_damage": false,
+        "var_bonuses": [],
+        "weapon_enhancement": null,
+        "weight_divisor": null,
+        "weight_lbs": null,
+        "wield_category": null
+      },
+      "source_ref": {
+        "line": 1,
+        "lst_file": ""
+      }
+    },
+    "equipmods/special_ability_truthful_melee.json": {
+      "record": {
+        "ability_score_bonus": null,
+        "armor_class_chain_bonus": null,
+        "base_damage_dice": null,
+        "base_item": null,
+        "cost_gp": null,
+        "critical_multiplier": null,
+        "critical_threat_range": null,
+        "damage_size_steps": 0,
+        "eqmod_references": [],
+        "identity": "Special Ability ~ Truthful ~ Melee",
+        "intelligent_item": null,
+        "is_modifier": false,
+        "is_natural_attack": false,
+        "is_shield": false,
+        "name": "Truthful",
+        "skill_check_bonus": null,
+        "spell_resistance_bonus": null,
+        "stat_effect": {
+          "armor_check_penalty": null,
+          "armor_class_bonus": null,
+          "max_dex": null,
+          "spell_failure": null
+        },
+        "states_base_damage": false,
+        "var_bonuses": [],
+        "weapon_enhancement": null,
+        "weight_divisor": null,
+        "weight_lbs": null,
+        "wield_category": null
+      },
+      "source_ref": {
+        "line": 1,
+        "lst_file": ""
+      }
+    },
+    "equipmods/special_ability_umbral_melee.json": {
+      "record": {
+        "ability_score_bonus": null,
+        "armor_class_chain_bonus": null,
+        "base_damage_dice": null,
+        "base_item": null,
+        "cost_gp": null,
+        "critical_multiplier": null,
+        "critical_threat_range": null,
+        "damage_size_steps": 0,
+        "eqmod_references": [],
+        "identity": "Special Ability ~ Umbral ~ Melee",
+        "intelligent_item": null,
+        "is_modifier": false,
+        "is_natural_attack": false,
+        "is_shield": false,
+        "name": "Umbral",
+        "skill_check_bonus": null,
+        "spell_resistance_bonus": null,
+        "stat_effect": {
+          "armor_check_penalty": null,
+          "armor_class_bonus": null,
+          "max_dex": null,
+          "spell_failure": null
+        },
+        "states_base_damage": false,
+        "var_bonuses": [],
+        "weapon_enhancement": null,
+        "weight_divisor": null,
+        "weight_lbs": null,
+        "wield_category": null
+      },
+      "source_ref": {
+        "line": 1,
+        "lst_file": ""
+      }
+    },
+    "equipmods/special_ability_unseen_melee.json": {
+      "record": {
+        "ability_score_bonus": null,
+        "armor_class_chain_bonus": null,
+        "base_damage_dice": null,
+        "base_item": null,
+        "cost_gp": null,
+        "critical_multiplier": null,
+        "critical_threat_range": null,
+        "damage_size_steps": 0,
+        "eqmod_references": [],
+        "identity": "Special Ability ~ Unseen ~ Melee",
+        "intelligent_item": null,
+        "is_modifier": false,
+        "is_natural_attack": false,
+        "is_shield": false,
+        "name": "Unseen",
+        "skill_check_bonus": null,
+        "spell_resistance_bonus": null,
+        "stat_effect": {
+          "armor_check_penalty": null,
+          "armor_class_bonus": null,
+          "max_dex": null,
+          "spell_failure": null
+        },
+        "states_base_damage": false,
+        "var_bonuses": [],
+        "weapon_enhancement": null,
+        "weight_divisor": null,
+        "weight_lbs": null,
+        "wield_category": null
+      },
+      "source_ref": {
+        "line": 1,
+        "lst_file": ""
+      }
+    },
+    "equipmods/truthful.json": {
+      "record": {
+        "ability_score_bonus": null,
+        "armor_class_chain_bonus": null,
+        "base_damage_dice": null,
+        "base_item": null,
+        "cost_gp": null,
+        "critical_multiplier": null,
+        "critical_threat_range": null,
+        "damage_size_steps": 0,
+        "eqmod_references": [],
+        "identity": "Special Ability ~ Truthful ~ Melee",
+        "intelligent_item": null,
+        "is_modifier": false,
+        "is_natural_attack": false,
+        "is_shield": false,
+        "name": "TRUTHFUL",
+        "skill_check_bonus": null,
+        "spell_resistance_bonus": null,
+        "stat_effect": {
+          "armor_check_penalty": null,
+          "armor_class_bonus": null,
+          "max_dex": null,
+          "spell_failure": null
+        },
+        "states_base_damage": false,
+        "var_bonuses": [],
+        "weapon_enhancement": null,
+        "weight_divisor": null,
+        "weight_lbs": null,
+        "wield_category": null
+      },
+      "source_ref": {
+        "line": 1,
+        "lst_file": ""
+      }
+    },
+    "equipmods/umbral.json": {
+      "record": {
+        "ability_score_bonus": null,
+        "armor_class_chain_bonus": null,
+        "base_damage_dice": null,
+        "base_item": null,
+        "cost_gp": null,
+        "critical_multiplier": null,
+        "critical_threat_range": null,
+        "damage_size_steps": 0,
+        "eqmod_references": [],
+        "identity": "Special Ability ~ Umbral ~ Melee",
+        "intelligent_item": null,
+        "is_modifier": false,
+        "is_natural_attack": false,
+        "is_shield": false,
+        "name": "UMBRAL",
+        "skill_check_bonus": null,
+        "spell_resistance_bonus": null,
+        "stat_effect": {
+          "armor_check_penalty": null,
+          "armor_class_bonus": null,
+          "max_dex": null,
+          "spell_failure": null
+        },
+        "states_base_damage": false,
+        "var_bonuses": [],
+        "weapon_enhancement": null,
+        "weight_divisor": null,
+        "weight_lbs": null,
+        "wield_category": null
+      },
+      "source_ref": {
+        "line": 1,
+        "lst_file": ""
+      }
+    },
+    "equipmods/unseen.json": {
+      "record": {
+        "ability_score_bonus": null,
+        "armor_class_chain_bonus": null,
+        "base_damage_dice": null,
+        "base_item": null,
+        "cost_gp": null,
+        "critical_multiplier": null,
+        "critical_threat_range": null,
+        "damage_size_steps": 0,
+        "eqmod_references": [],
+        "identity": "Special Ability ~ Unseen ~ Melee",
+        "intelligent_item": null,
+        "is_modifier": false,
+        "is_natural_attack": false,
+        "is_shield": false,
+        "name": "UNSEEN",
+        "skill_check_bonus": null,
+        "spell_resistance_bonus": null,
+        "stat_effect": {
+          "armor_check_penalty": null,
+          "armor_class_bonus": null,
+          "max_dex": null,
+          "spell_failure": null
+        },
+        "states_base_damage": false,
+        "var_bonuses": [],
+        "weapon_enhancement": null,
+        "weight_divisor": null,
+        "weight_lbs": null,
+        "wield_category": null
+      },
+      "source_ref": {
+        "line": 1,
+        "lst_file": ""
+      }
+    },
+    "esquire_attache_case.json": {
+      "record": {
+        "ability_score_bonus": null,
+        "armor_class_chain_bonus": null,
+        "base_damage_dice": null,
+        "base_item": null,
+        "cost_gp": 100.0,
+        "critical_multiplier": null,
+        "critical_threat_range": null,
+        "damage_size_steps": 0,
+        "eqmod_references": [],
+        "identity": "Esquire Attache Case",
+        "intelligent_item": null,
+        "is_modifier": false,
+        "is_natural_attack": false,
+        "is_shield": false,
+        "name": "Esquire Attache Case",
+        "skill_check_bonus": null,
+        "spell_resistance_bonus": null,
+        "stat_effect": {
+          "armor_check_penalty": null,
+          "armor_class_bonus": null,
+          "max_dex": null,
+          "spell_failure": null
+        },
+        "states_base_damage": false,
+        "var_bonuses": [],
+        "weapon_enhancement": null,
+        "weight_divisor": null,
+        "weight_lbs": 8.0,
+        "wield_category": null
+      },
+      "source_ref": {
+        "line": 1,
+        "lst_file": ""
+      }
+    },
+    "falsehood_fizz.json": {
+      "record": {
+        "ability_score_bonus": null,
+        "armor_class_chain_bonus": null,
+        "base_damage_dice": null,
+        "base_item": null,
+        "cost_gp": 190.0,
+        "critical_multiplier": null,
+        "critical_threat_range": null,
+        "damage_size_steps": 0,
+        "eqmod_references": [],
+        "identity": "Falsehood Fizz",
+        "intelligent_item": null,
+        "is_modifier": false,
+        "is_natural_attack": false,
+        "is_shield": false,
+        "name": "Falsehood Fizz",
+        "skill_check_bonus": null,
+        "spell_resistance_bonus": null,
+        "stat_effect": {
+          "armor_check_penalty": null,
+          "armor_class_bonus": null,
+          "max_dex": null,
+          "spell_failure": null
+        },
+        "states_base_damage": false,
+        "var_bonuses": [],
+        "weapon_enhancement": null,
+        "weight_divisor": null,
+        "weight_lbs": null,
+        "wield_category": null
+      },
+      "source_ref": {
+        "line": 1,
+        "lst_file": ""
+      }
+    },
+    "fan_of_flirting.json": {
+      "record": {
+        "ability_score_bonus": null,
+        "armor_class_chain_bonus": null,
+        "base_damage_dice": null,
+        "base_item": null,
+        "cost_gp": 1700.0,
+        "critical_multiplier": null,
+        "critical_threat_range": null,
+        "damage_size_steps": 0,
+        "eqmod_references": [],
+        "identity": "Fan of Flirting",
+        "intelligent_item": null,
+        "is_modifier": false,
+        "is_natural_attack": false,
+        "is_shield": false,
+        "name": "Fan of Flirting",
+        "skill_check_bonus": null,
+        "spell_resistance_bonus": null,
+        "stat_effect": {
+          "armor_check_penalty": null,
+          "armor_class_bonus": null,
+          "max_dex": null,
+          "spell_failure": null
+        },
+        "states_base_damage": false,
+        "var_bonuses": [],
+        "weapon_enhancement": null,
+        "weight_divisor": null,
+        "weight_lbs": null,
+        "wield_category": null
+      },
+      "source_ref": {
+        "line": 1,
+        "lst_file": ""
+      }
+    },
+    "fellowship_film.json": {
+      "record": {
+        "ability_score_bonus": null,
+        "armor_class_chain_bonus": null,
+        "base_damage_dice": null,
+        "base_item": null,
+        "cost_gp": 190.0,
+        "critical_multiplier": null,
+        "critical_threat_range": null,
+        "damage_size_steps": 0,
+        "eqmod_references": [],
+        "identity": "Fellowship Film",
+        "intelligent_item": null,
+        "is_modifier": false,
+        "is_natural_attack": false,
+        "is_shield": false,
+        "name": "Fellowship Film",
+        "skill_check_bonus": null,
+        "spell_resistance_bonus": null,
+        "stat_effect": {
+          "armor_check_penalty": null,
+          "armor_class_bonus": null,
+          "max_dex": null,
+          "spell_failure": null
+        },
+        "states_base_damage": false,
+        "var_bonuses": [],
+        "weapon_enhancement": null,
+        "weight_divisor": null,
+        "weight_lbs": null,
+        "wield_category": null
+      },
+      "source_ref": {
+        "line": 1,
+        "lst_file": ""
+      }
+    },
+    "flash_seeds.json": {
+      "record": {
+        "ability_score_bonus": null,
+        "armor_class_chain_bonus": null,
+        "base_damage_dice": null,
+        "base_item": null,
+        "cost_gp": 35.0,
+        "critical_multiplier": null,
+        "critical_threat_range": null,
+        "damage_size_steps": 0,
+        "eqmod_references": [],
+        "identity": "Flash Seeds",
+        "intelligent_item": null,
+        "is_modifier": false,
+        "is_natural_attack": false,
+        "is_shield": false,
+        "name": "Flash Seeds",
+        "skill_check_bonus": null,
+        "spell_resistance_bonus": null,
+        "stat_effect": {
+          "armor_check_penalty": null,
+          "armor_class_bonus": null,
+          "max_dex": null,
+          "spell_failure": null
+        },
+        "states_base_damage": false,
+        "var_bonuses": [],
+        "weapon_enhancement": null,
+        "weight_divisor": null,
+        "weight_lbs": 0.5,
+        "wield_category": null
+      },
+      "source_ref": {
+        "line": 1,
+        "lst_file": ""
+      }
+    },
+    "ghost_needle.json": {
+      "record": {
+        "ability_score_bonus": null,
+        "armor_class_chain_bonus": null,
+        "base_damage_dice": null,
+        "base_item": null,
+        "cost_gp": 3600.0,
+        "critical_multiplier": null,
+        "critical_threat_range": null,
+        "damage_size_steps": 0,
+        "eqmod_references": [],
+        "identity": "Ghost Needle",
+        "intelligent_item": null,
+        "is_modifier": false,
+        "is_natural_attack": false,
+        "is_shield": false,
+        "name": "Ghost Needle",
+        "skill_check_bonus": null,
+        "spell_resistance_bonus": null,
+        "stat_effect": {
+          "armor_check_penalty": null,
+          "armor_class_bonus": null,
+          "max_dex": null,
+          "spell_failure": null
+        },
+        "states_base_damage": false,
+        "var_bonuses": [],
+        "weapon_enhancement": null,
+        "weight_divisor": null,
+        "weight_lbs": null,
+        "wield_category": null
+      },
+      "source_ref": {
+        "line": 1,
+        "lst_file": ""
+      }
+    },
+    "glass_of_veils.json": {
+      "record": {
+        "ability_score_bonus": null,
+        "armor_class_chain_bonus": null,
+        "base_damage_dice": null,
+        "base_item": null,
+        "cost_gp": 53000.0,
+        "critical_multiplier": null,
+        "critical_threat_range": null,
+        "damage_size_steps": 0,
+        "eqmod_references": [],
+        "identity": "Glass of Veils",
+        "intelligent_item": null,
+        "is_modifier": false,
+        "is_natural_attack": false,
+        "is_shield": false,
+        "name": "Glass of Veils",
+        "skill_check_bonus": null,
+        "spell_resistance_bonus": null,
+        "stat_effect": {
+          "armor_check_penalty": null,
+          "armor_class_bonus": null,
+          "max_dex": null,
+          "spell_failure": null
+        },
+        "states_base_damage": false,
+        "var_bonuses": [],
+        "weapon_enhancement": null,
+        "weight_divisor": null,
+        "weight_lbs": 40.0,
+        "wield_category": null
+      },
+      "source_ref": {
+        "line": 1,
+        "lst_file": ""
+      }
+    },
+    "glittering_trinket_belt_buckle.json": {
+      "record": {
+        "ability_score_bonus": null,
+        "armor_class_chain_bonus": null,
+        "base_damage_dice": null,
+        "base_item": null,
+        "cost_gp": 120.0,
+        "critical_multiplier": null,
+        "critical_threat_range": null,
+        "damage_size_steps": 0,
+        "eqmod_references": [],
+        "identity": "Glittering Trinket (Belt Buckle)",
+        "intelligent_item": null,
+        "is_modifier": false,
+        "is_natural_attack": false,
+        "is_shield": false,
+        "name": "Glittering Trinket (Belt Buckle)",
+        "skill_check_bonus": null,
+        "spell_resistance_bonus": null,
+        "stat_effect": {
+          "armor_check_penalty": null,
+          "armor_class_bonus": null,
+          "max_dex": null,
+          "spell_failure": null
+        },
+        "states_base_damage": false,
+        "var_bonuses": [],
+        "weapon_enhancement": null,
+        "weight_divisor": null,
+        "weight_lbs": 0.5,
+        "wield_category": null
+      },
+      "source_ref": {
+        "line": 1,
+        "lst_file": ""
+      }
+    },
+    "glittering_trinket_bracelet.json": {
+      "record": {
+        "ability_score_bonus": null,
+        "armor_class_chain_bonus": null,
+        "base_damage_dice": null,
+        "base_item": null,
+        "cost_gp": 120.0,
+        "critical_multiplier": null,
+        "critical_threat_range": null,
+        "damage_size_steps": 0,
+        "eqmod_references": [],
+        "identity": "Glittering Trinket (Bracelet)",
+        "intelligent_item": null,
+        "is_modifier": false,
+        "is_natural_attack": false,
+        "is_shield": false,
+        "name": "Glittering Trinket (Bracelet)",
+        "skill_check_bonus": null,
+        "spell_resistance_bonus": null,
+        "stat_effect": {
+          "armor_check_penalty": null,
+          "armor_class_bonus": null,
+          "max_dex": null,
+          "spell_failure": null
+        },
+        "states_base_damage": false,
+        "var_bonuses": [],
+        "weapon_enhancement": null,
+        "weight_divisor": null,
+        "weight_lbs": 0.5,
+        "wield_category": null
+      },
+      "source_ref": {
+        "line": 1,
+        "lst_file": ""
+      }
+    },
+    "glittering_trinket_necklace.json": {
+      "record": {
+        "ability_score_bonus": null,
+        "armor_class_chain_bonus": null,
+        "base_damage_dice": null,
+        "base_item": null,
+        "cost_gp": 120.0,
+        "critical_multiplier": null,
+        "critical_threat_range": null,
+        "damage_size_steps": 0,
+        "eqmod_references": [],
+        "identity": "Glittering Trinket (Necklace)",
+        "intelligent_item": null,
+        "is_modifier": false,
+        "is_natural_attack": false,
+        "is_shield": false,
+        "name": "Glittering Trinket (Necklace)",
+        "skill_check_bonus": null,
+        "spell_resistance_bonus": null,
+        "stat_effect": {
+          "armor_check_penalty": null,
+          "armor_class_bonus": null,
+          "max_dex": null,
+          "spell_failure": null
+        },
+        "states_base_damage": false,
+        "var_bonuses": [],
+        "weapon_enhancement": null,
+        "weight_divisor": null,
+        "weight_lbs": 0.5,
+        "wield_category": null
+      },
+      "source_ref": {
+        "line": 1,
+        "lst_file": ""
+      }
+    },
+    "glittering_trinket_ring.json": {
+      "record": {
+        "ability_score_bonus": null,
+        "armor_class_chain_bonus": null,
+        "base_damage_dice": null,
+        "base_item": null,
+        "cost_gp": 120.0,
+        "critical_multiplier": null,
+        "critical_threat_range": null,
+        "damage_size_steps": 0,
+        "eqmod_references": [],
+        "identity": "Glittering Trinket (Ring)",
+        "intelligent_item": null,
+        "is_modifier": false,
+        "is_natural_attack": false,
+        "is_shield": false,
+        "name": "Glittering Trinket (Ring)",
+        "skill_check_bonus": null,
+        "spell_resistance_bonus": null,
+        "stat_effect": {
+          "armor_check_penalty": null,
+          "armor_class_bonus": null,
+          "max_dex": null,
+          "spell_failure": null
+        },
+        "states_base_damage": false,
+        "var_bonuses": [],
+        "weapon_enhancement": null,
+        "weight_divisor": null,
+        "weight_lbs": 0.5,
+        "wield_category": null
+      },
+      "source_ref": {
+        "line": 1,
+        "lst_file": ""
+      }
+    },
+    "gloves_of_unexpected_violence.json": {
+      "record": {
+        "ability_score_bonus": null,
+        "armor_class_chain_bonus": null,
+        "base_damage_dice": null,
+        "base_item": null,
+        "cost_gp": 10000.0,
+        "critical_multiplier": null,
+        "critical_threat_range": null,
+        "damage_size_steps": 0,
+        "eqmod_references": [],
+        "identity": "Gloves of Unexpected Violence",
+        "intelligent_item": null,
+        "is_modifier": false,
+        "is_natural_attack": false,
+        "is_shield": false,
+        "name": "Gloves of Unexpected Violence",
+        "skill_check_bonus": null,
+        "spell_resistance_bonus": null,
+        "stat_effect": {
+          "armor_check_penalty": null,
+          "armor_class_bonus": null,
+          "max_dex": null,
+          "spell_failure": null
+        },
+        "states_base_damage": false,
+        "var_bonuses": [],
+        "weapon_enhancement": null,
+        "weight_divisor": null,
+        "weight_lbs": null,
+        "wield_category": null
+      },
+      "source_ref": {
+        "line": 1,
+        "lst_file": ""
+      }
+    },
+    "gloves_of_unexpected_violence_expert.json": {
+      "record": {
+        "ability_score_bonus": null,
+        "armor_class_chain_bonus": null,
+        "base_damage_dice": null,
+        "base_item": null,
+        "cost_gp": 30000.0,
+        "critical_multiplier": null,
+        "critical_threat_range": null,
+        "damage_size_steps": 0,
+        "eqmod_references": [],
+        "identity": "Gloves of Unexpected Violence (Expert)",
+        "intelligent_item": null,
+        "is_modifier": false,
+        "is_natural_attack": false,
+        "is_shield": false,
+        "name": "Gloves of Unexpected Violence (Expert)",
+        "skill_check_bonus": null,
+        "spell_resistance_bonus": null,
+        "stat_effect": {
+          "armor_check_penalty": null,
+          "armor_class_bonus": null,
+          "max_dex": null,
+          "spell_failure": null
+        },
+        "states_base_damage": false,
+        "var_bonuses": [],
+        "weapon_enhancement": null,
+        "weight_divisor": null,
+        "weight_lbs": null,
+        "wield_category": null
+      },
+      "source_ref": {
+        "line": 1,
+        "lst_file": ""
+      }
+    },
+    "hollow_book.json": {
+      "record": {
+        "ability_score_bonus": null,
+        "armor_class_chain_bonus": null,
+        "base_damage_dice": null,
+        "base_item": null,
+        "cost_gp": 15.0,
+        "critical_multiplier": null,
+        "critical_threat_range": null,
+        "damage_size_steps": 0,
+        "eqmod_references": [],
+        "identity": "Hollow Book",
+        "intelligent_item": null,
+        "is_modifier": false,
+        "is_natural_attack": false,
+        "is_shield": false,
+        "name": "Hollow Book",
+        "skill_check_bonus": null,
+        "spell_resistance_bonus": null,
+        "stat_effect": {
+          "armor_check_penalty": null,
+          "armor_class_bonus": null,
+          "max_dex": null,
+          "spell_failure": null
+        },
+        "states_base_damage": false,
+        "var_bonuses": [],
+        "weapon_enhancement": null,
+        "weight_divisor": null,
+        "weight_lbs": 3.0,
+        "wield_category": null
+      },
+      "source_ref": {
+        "line": 1,
+        "lst_file": ""
+      }
+    },
+    "ink_of_mimicry.json": {
+      "record": {
+        "ability_score_bonus": null,
+        "armor_class_chain_bonus": null,
+        "base_damage_dice": null,
+        "base_item": null,
+        "cost_gp": 1950.0,
+        "critical_multiplier": null,
+        "critical_threat_range": null,
+        "damage_size_steps": 0,
+        "eqmod_references": [],
+        "identity": "Ink of Mimicry",
+        "intelligent_item": null,
+        "is_modifier": false,
+        "is_natural_attack": false,
+        "is_shield": false,
+        "name": "Ink of Mimicry",
+        "skill_check_bonus": null,
+        "spell_resistance_bonus": null,
+        "stat_effect": {
+          "armor_check_penalty": null,
+          "armor_class_bonus": null,
+          "max_dex": null,
+          "spell_failure": null
+        },
+        "states_base_damage": false,
+        "var_bonuses": [],
+        "weapon_enhancement": null,
+        "weight_divisor": null,
+        "weight_lbs": null,
+        "wield_category": null
+      },
+      "source_ref": {
+        "line": 1,
+        "lst_file": ""
+      }
+    },
+    "intuition_serum.json": {
+      "record": {
+        "ability_score_bonus": null,
+        "armor_class_chain_bonus": null,
+        "base_damage_dice": null,
+        "base_item": null,
+        "cost_gp": 190.0,
+        "critical_multiplier": null,
+        "critical_threat_range": null,
+        "damage_size_steps": 0,
+        "eqmod_references": [],
+        "identity": "Intuition Serum",
+        "intelligent_item": null,
+        "is_modifier": false,
+        "is_natural_attack": false,
+        "is_shield": false,
+        "name": "Intuition Serum",
+        "skill_check_bonus": null,
+        "spell_resistance_bonus": null,
+        "stat_effect": {
+          "armor_check_penalty": null,
+          "armor_class_bonus": null,
+          "max_dex": null,
+          "spell_failure": null
+        },
+        "states_base_damage": false,
+        "var_bonuses": [],
+        "weapon_enhancement": null,
+        "weight_divisor": null,
+        "weight_lbs": null,
+        "wield_category": null
+      },
+      "source_ref": {
+        "line": 1,
+        "lst_file": ""
+      }
+    },
+    "launcher_of_distraction.json": {
+      "record": {
+        "ability_score_bonus": null,
+        "armor_class_chain_bonus": null,
+        "base_damage_dice": {
+          "count": 1,
+          "die_size": 4
+        },
+        "base_item": null,
+        "cost_gp": 250.0,
+        "critical_multiplier": 2,
+        "critical_threat_range": [
+          19,
+          20
+        ],
+        "damage_size_steps": 0,
+        "eqmod_references": [
+          "Special Ability ~ Enhancement Cost",
+          "8000",
+          "Special Ability ~ +1 ~ Weapon",
+          "Material ~ Steel",
+          "Material ~ Leather"
+        ],
+        "identity": "Launcher of Distraction",
+        "intelligent_item": null,
+        "is_modifier": false,
+        "is_natural_attack": false,
+        "is_shield": false,
+        "name": "Launcher of Distraction",
+        "skill_check_bonus": null,
+        "spell_resistance_bonus": null,
+        "stat_effect": {
+          "armor_check_penalty": null,
+          "armor_class_bonus": null,
+          "max_dex": null,
+          "spell_failure": null
+        },
+        "states_base_damage": true,
+        "var_bonuses": [],
+        "weapon_enhancement": null,
+        "weight_divisor": null,
+        "weight_lbs": 2.0,
+        "wield_category": "Light"
+      },
+      "source_ref": {
+        "line": 1,
+        "lst_file": ""
+      }
+    },
+    "lockpick_shield.json": {
+      "record": {
+        "ability_score_bonus": null,
+        "armor_class_chain_bonus": 1,
+        "base_damage_dice": {
+          "count": 1,
+          "die_size": 3
+        },
+        "base_item": null,
+        "cost_gp": 9.0,
+        "critical_multiplier": 2,
+        "critical_threat_range": [
+          20,
+          20
+        ],
+        "damage_size_steps": 0,
+        "eqmod_references": [
+          "Special Ability ~ Enhancement Cost",
+          "3000",
+          "Special Ability ~ +2 ~ Shield",
+          "Material ~ Steel"
+        ],
+        "identity": "Lockpick Shield",
+        "intelligent_item": null,
+        "is_modifier": false,
+        "is_natural_attack": false,
+        "is_shield": true,
+        "name": "Lockpick Shield",
+        "skill_check_bonus": null,
+        "spell_resistance_bonus": null,
+        "stat_effect": {
+          "armor_check_penalty": -1,
+          "armor_class_bonus": 1,
+          "max_dex": null,
+          "spell_failure": 5.0
+        },
+        "states_base_damage": true,
+        "var_bonuses": [
+          {
+            "bonus": 1,
+            "name": "ArmorCheckPenalty"
+          }
+        ],
+        "weapon_enhancement": null,
+        "weight_divisor": null,
+        "weight_lbs": 6.0,
+        "wield_category": "Light"
+      },
+      "source_ref": {
+        "line": 1,
+        "lst_file": ""
+      }
+    },
+    "magnificent_map.json": {
+      "record": {
+        "ability_score_bonus": null,
+        "armor_class_chain_bonus": null,
+        "base_damage_dice": null,
+        "base_item": null,
+        "cost_gp": 7800.0,
+        "critical_multiplier": null,
+        "critical_threat_range": null,
+        "damage_size_steps": 0,
+        "eqmod_references": [],
+        "identity": "Magnificent Map",
+        "intelligent_item": null,
+        "is_modifier": false,
+        "is_natural_attack": false,
+        "is_shield": false,
+        "name": "Magnificent Map",
+        "skill_check_bonus": null,
+        "spell_resistance_bonus": null,
+        "stat_effect": {
+          "armor_check_penalty": null,
+          "armor_class_bonus": null,
+          "max_dex": null,
+          "spell_failure": null
+        },
+        "states_base_damage": false,
+        "var_bonuses": [],
+        "weapon_enhancement": null,
+        "weight_divisor": null,
+        "weight_lbs": 0.5,
+        "wield_category": null
+      },
+      "source_ref": {
+        "line": 1,
+        "lst_file": ""
+      }
+    },
+    "mask_of_stolen_mien.json": {
+      "record": {
+        "ability_score_bonus": null,
+        "armor_class_chain_bonus": null,
+        "base_damage_dice": null,
+        "base_item": null,
+        "cost_gp": 17200.0,
+        "critical_multiplier": null,
+        "critical_threat_range": null,
+        "damage_size_steps": 0,
+        "eqmod_references": [],
+        "identity": "Mask of Stolen Mien",
+        "intelligent_item": null,
+        "is_modifier": false,
+        "is_natural_attack": false,
+        "is_shield": false,
+        "name": "Mask of Stolen Mien",
+        "skill_check_bonus": null,
+        "spell_resistance_bonus": null,
+        "stat_effect": {
+          "armor_check_penalty": null,
+          "armor_class_bonus": null,
+          "max_dex": null,
+          "spell_failure": null
+        },
+        "states_base_damage": false,
+        "var_bonuses": [],
+        "weapon_enhancement": null,
+        "weight_divisor": null,
+        "weight_lbs": 0.5,
+        "wield_category": null
+      },
+      "source_ref": {
+        "line": 1,
+        "lst_file": ""
+      }
+    },
+    "memory_box.json": {
+      "record": {
+        "ability_score_bonus": null,
+        "armor_class_chain_bonus": null,
+        "base_damage_dice": null,
+        "base_item": null,
+        "cost_gp": 28000.0,
+        "critical_multiplier": null,
+        "critical_threat_range": null,
+        "damage_size_steps": 0,
+        "eqmod_references": [],
+        "identity": "Memory Box",
+        "intelligent_item": null,
+        "is_modifier": false,
+        "is_natural_attack": false,
+        "is_shield": false,
+        "name": "Memory Box",
+        "skill_check_bonus": null,
+        "spell_resistance_bonus": null,
+        "stat_effect": {
+          "armor_check_penalty": null,
+          "armor_class_bonus": null,
+          "max_dex": null,
+          "spell_failure": null
+        },
+        "states_base_damage": false,
+        "var_bonuses": [],
+        "weapon_enhancement": null,
+        "weight_divisor": null,
+        "weight_lbs": null,
+        "wield_category": null
+      },
+      "source_ref": {
+        "line": 1,
+        "lst_file": ""
+      }
+    },
+    "mind_s_eye_blade.json": {
+      "record": {
+        "ability_score_bonus": null,
+        "armor_class_chain_bonus": null,
+        "base_damage_dice": {
+          "count": 1,
+          "die_size": 4
+        },
+        "base_item": null,
+        "cost_gp": 2.0,
+        "critical_multiplier": 2,
+        "critical_threat_range": [
+          19,
+          20
+        ],
+        "damage_size_steps": 0,
+        "eqmod_references": [
+          "Special Ability ~ Enhancement Cost",
+          "28000",
+          "Special Ability ~ +2 ~ Weapon",
+          "Material ~ Steel"
+        ],
+        "identity": "Mind's Eye Blade",
+        "intelligent_item": null,
+        "is_modifier": false,
+        "is_natural_attack": false,
+        "is_shield": false,
+        "name": "Mind's Eye Blade",
+        "skill_check_bonus": null,
+        "spell_resistance_bonus": null,
+        "stat_effect": {
+          "armor_check_penalty": null,
+          "armor_class_bonus": null,
+          "max_dex": null,
+          "spell_failure": null
+        },
+        "states_base_damage": true,
+        "var_bonuses": [],
+        "weapon_enhancement": null,
+        "weight_divisor": null,
+        "weight_lbs": 1.0,
+        "wield_category": "Light"
+      },
+      "source_ref": {
+        "line": 1,
+        "lst_file": ""
+      }
+    },
+    "monocle_of_flawlessness.json": {
+      "record": {
+        "ability_score_bonus": null,
+        "armor_class_chain_bonus": null,
+        "base_damage_dice": null,
+        "base_item": null,
+        "cost_gp": 8750.0,
+        "critical_multiplier": null,
+        "critical_threat_range": null,
+        "damage_size_steps": 0,
+        "eqmod_references": [],
+        "identity": "Monocle of Flawlessness",
+        "intelligent_item": null,
+        "is_modifier": false,
+        "is_natural_attack": false,
+        "is_shield": false,
+        "name": "Monocle of Flawlessness",
+        "skill_check_bonus": null,
+        "spell_resistance_bonus": null,
+        "stat_effect": {
+          "armor_check_penalty": null,
+          "armor_class_bonus": null,
+          "max_dex": null,
+          "spell_failure": null
+        },
+        "states_base_damage": false,
+        "var_bonuses": [],
+        "weapon_enhancement": null,
+        "weight_divisor": null,
+        "weight_lbs": null,
+        "wield_category": null
+      },
+      "source_ref": {
+        "line": 1,
+        "lst_file": ""
+      }
+    },
+    "murderer_s_silence.json": {
+      "record": {
+        "ability_score_bonus": null,
+        "armor_class_chain_bonus": null,
+        "base_damage_dice": null,
+        "base_item": null,
+        "cost_gp": 900.0,
+        "critical_multiplier": null,
+        "critical_threat_range": null,
+        "damage_size_steps": 0,
+        "eqmod_references": [],
+        "identity": "Murderer's Silence",
+        "intelligent_item": null,
+        "is_modifier": false,
+        "is_natural_attack": false,
+        "is_shield": false,
+        "name": "Murderer's Silence",
+        "skill_check_bonus": null,
+        "spell_resistance_bonus": null,
+        "stat_effect": {
+          "armor_check_penalty": null,
+          "armor_class_bonus": null,
+          "max_dex": null,
+          "spell_failure": null
+        },
+        "states_base_damage": false,
+        "var_bonuses": [],
+        "weapon_enhancement": null,
+        "weight_divisor": null,
+        "weight_lbs": 1.0,
+        "wield_category": null
+      },
+      "source_ref": {
+        "line": 1,
+        "lst_file": ""
+      }
+    },
+    "mystic_bolts.json": {
+      "record": {
+        "ability_score_bonus": null,
+        "armor_class_chain_bonus": null,
+        "base_damage_dice": null,
+        "base_item": null,
+        "cost_gp": 0.0,
+        "critical_multiplier": 2,
+        "critical_threat_range": [
+          20,
+          20
+        ],
+        "damage_size_steps": 0,
+        "eqmod_references": [],
+        "identity": "Mystic Bolts",
+        "intelligent_item": null,
+        "is_modifier": false,
+        "is_natural_attack": false,
+        "is_shield": false,
+        "name": "Mystic Bolts",
+        "skill_check_bonus": null,
+        "spell_resistance_bonus": null,
+        "stat_effect": {
+          "armor_check_penalty": null,
+          "armor_class_bonus": null,
+          "max_dex": null,
+          "spell_failure": null
+        },
+        "states_base_damage": true,
+        "var_bonuses": [],
+        "weapon_enhancement": null,
+        "weight_divisor": null,
+        "weight_lbs": 0.0,
+        "wield_category": "Light"
+      },
+      "source_ref": {
+        "line": 1,
+        "lst_file": ""
+      }
+    },
+    "night_stalker_s_tonic.json": {
+      "record": {
+        "ability_score_bonus": null,
+        "armor_class_chain_bonus": null,
+        "base_damage_dice": null,
+        "base_item": null,
+        "cost_gp": 200.0,
+        "critical_multiplier": null,
+        "critical_threat_range": null,
+        "damage_size_steps": 0,
+        "eqmod_references": [],
+        "identity": "Night Stalker's Tonic",
+        "intelligent_item": null,
+        "is_modifier": false,
+        "is_natural_attack": false,
+        "is_shield": false,
+        "name": "Night Stalker's Tonic",
+        "skill_check_bonus": null,
+        "spell_resistance_bonus": null,
+        "stat_effect": {
+          "armor_check_penalty": null,
+          "armor_class_bonus": null,
+          "max_dex": null,
+          "spell_failure": null
+        },
+        "states_base_damage": false,
+        "var_bonuses": [],
+        "weapon_enhancement": null,
+        "weight_divisor": null,
+        "weight_lbs": null,
+        "wield_category": null
+      },
+      "source_ref": {
+        "line": 1,
+        "lst_file": ""
+      }
+    },
+    "parley_ward.json": {
+      "record": {
+        "ability_score_bonus": null,
+        "armor_class_chain_bonus": null,
+        "base_damage_dice": null,
+        "base_item": null,
+        "cost_gp": 52000.0,
+        "critical_multiplier": null,
+        "critical_threat_range": null,
+        "damage_size_steps": 0,
+        "eqmod_references": [],
+        "identity": "Parley Ward",
+        "intelligent_item": null,
+        "is_modifier": false,
+        "is_natural_attack": false,
+        "is_shield": false,
+        "name": "Parley Ward",
+        "skill_check_bonus": null,
+        "spell_resistance_bonus": null,
+        "stat_effect": {
+          "armor_check_penalty": null,
+          "armor_class_bonus": null,
+          "max_dex": null,
+          "spell_failure": null
+        },
+        "states_base_damage": false,
+        "var_bonuses": [],
+        "weapon_enhancement": null,
+        "weight_divisor": null,
+        "weight_lbs": 2.0,
+        "wield_category": null
+      },
+      "source_ref": {
+        "line": 1,
+        "lst_file": ""
+      }
+    },
+    "perfume_kit.json": {
+      "record": {
+        "ability_score_bonus": null,
+        "armor_class_chain_bonus": null,
+        "base_damage_dice": null,
+        "base_item": null,
+        "cost_gp": 40.0,
+        "critical_multiplier": null,
+        "critical_threat_range": null,
+        "damage_size_steps": 0,
+        "eqmod_references": [],
+        "identity": "Perfume Kit",
+        "intelligent_item": null,
+        "is_modifier": false,
+        "is_natural_attack": false,
+        "is_shield": false,
+        "name": "Perfume Kit",
+        "skill_check_bonus": null,
+        "spell_resistance_bonus": null,
+        "stat_effect": {
+          "armor_check_penalty": null,
+          "armor_class_bonus": null,
+          "max_dex": null,
+          "spell_failure": null
+        },
+        "states_base_damage": false,
+        "var_bonuses": [],
+        "weapon_enhancement": null,
+        "weight_divisor": null,
+        "weight_lbs": 10.0,
+        "wield_category": null
+      },
+      "source_ref": {
+        "line": 1,
+        "lst_file": ""
+      }
+    },
+    "pipe_of_revealing_mists.json": {
+      "record": {
+        "ability_score_bonus": null,
+        "armor_class_chain_bonus": null,
+        "base_damage_dice": null,
+        "base_item": null,
+        "cost_gp": 2592.0,
+        "critical_multiplier": null,
+        "critical_threat_range": null,
+        "damage_size_steps": 0,
+        "eqmod_references": [],
+        "identity": "Pipe of Revealing Mists",
+        "intelligent_item": null,
+        "is_modifier": false,
+        "is_natural_attack": false,
+        "is_shield": false,
+        "name": "Pipe of Revealing Mists",
+        "skill_check_bonus": null,
+        "spell_resistance_bonus": null,
+        "stat_effect": {
+          "armor_check_penalty": null,
+          "armor_class_bonus": null,
+          "max_dex": null,
+          "spell_failure": null
+        },
+        "states_base_damage": false,
+        "var_bonuses": [],
+        "weapon_enhancement": null,
+        "weight_divisor": null,
+        "weight_lbs": 0.5,
+        "wield_category": null
+      },
+      "source_ref": {
+        "line": 1,
+        "lst_file": ""
+      }
+    },
+    "planar_parchment.json": {
+      "record": {
+        "ability_score_bonus": null,
+        "armor_class_chain_bonus": null,
+        "base_damage_dice": null,
+        "base_item": null,
+        "cost_gp": 18000.0,
+        "critical_multiplier": null,
+        "critical_threat_range": null,
+        "damage_size_steps": 0,
+        "eqmod_references": [],
+        "identity": "Planar Parchment",
+        "intelligent_item": null,
+        "is_modifier": false,
+        "is_natural_attack": false,
+        "is_shield": false,
+        "name": "Planar Parchment",
+        "skill_check_bonus": null,
+        "spell_resistance_bonus": null,
+        "stat_effect": {
+          "armor_check_penalty": null,
+          "armor_class_bonus": null,
+          "max_dex": null,
+          "spell_failure": null
+        },
+        "states_base_damage": false,
+        "var_bonuses": [],
+        "weapon_enhancement": null,
+        "weight_divisor": null,
+        "weight_lbs": 1.0,
+        "wield_category": null
+      },
+      "source_ref": {
+        "line": 1,
+        "lst_file": ""
+      }
+    },
+    "poison_lip_paint.json": {
+      "record": {
+        "ability_score_bonus": null,
+        "armor_class_chain_bonus": null,
+        "base_damage_dice": null,
+        "base_item": null,
+        "cost_gp": 5.0,
+        "critical_multiplier": null,
+        "critical_threat_range": null,
+        "damage_size_steps": 0,
+        "eqmod_references": [],
+        "identity": "Poison Lip Paint",
+        "intelligent_item": null,
+        "is_modifier": false,
+        "is_natural_attack": false,
+        "is_shield": false,
+        "name": "Poison Lip Paint",
+        "skill_check_bonus": null,
+        "spell_resistance_bonus": null,
+        "stat_effect": {
+          "armor_check_penalty": null,
+          "armor_class_bonus": null,
+          "max_dex": null,
+          "spell_failure": null
+        },
+        "states_base_damage": false,
+        "var_bonuses": [],
+        "weapon_enhancement": null,
+        "weight_divisor": null,
+        "weight_lbs": null,
+        "wield_category": null
+      },
+      "source_ref": {
+        "line": 1,
+        "lst_file": ""
+      }
+    },
+    "polish_of_inconspicuous_armor.json": {
+      "record": {
+        "ability_score_bonus": null,
+        "armor_class_chain_bonus": null,
+        "base_damage_dice": null,
+        "base_item": null,
+        "cost_gp": 750.0,
+        "critical_multiplier": null,
+        "critical_threat_range": null,
+        "damage_size_steps": 0,
+        "eqmod_references": [],
+        "identity": "Polish of Inconspicuous Armor",
+        "intelligent_item": null,
+        "is_modifier": false,
+        "is_natural_attack": false,
+        "is_shield": false,
+        "name": "Polish of Inconspicuous Armor",
+        "skill_check_bonus": null,
+        "spell_resistance_bonus": null,
+        "stat_effect": {
+          "armor_check_penalty": null,
+          "armor_class_bonus": null,
+          "max_dex": null,
+          "spell_failure": null
+        },
+        "states_base_damage": false,
+        "var_bonuses": [],
+        "weapon_enhancement": null,
+        "weight_divisor": null,
+        "weight_lbs": 0.5,
+        "wield_category": null
+      },
+      "source_ref": {
+        "line": 1,
+        "lst_file": ""
+      }
+    },
+    "private_palanquin.json": {
+      "record": {
+        "ability_score_bonus": null,
+        "armor_class_chain_bonus": null,
+        "base_damage_dice": null,
+        "base_item": null,
+        "cost_gp": 63000.0,
+        "critical_multiplier": null,
+        "critical_threat_range": null,
+        "damage_size_steps": 0,
+        "eqmod_references": [],
+        "identity": "Private Palanquin",
+        "intelligent_item": null,
+        "is_modifier": false,
+        "is_natural_attack": false,
+        "is_shield": false,
+        "name": "Private Palanquin",
+        "skill_check_bonus": null,
+        "spell_resistance_bonus": null,
+        "stat_effect": {
+          "armor_check_penalty": null,
+          "armor_class_bonus": null,
+          "max_dex": null,
+          "spell_failure": null
+        },
+        "states_base_damage": false,
+        "var_bonuses": [],
+        "weapon_enhancement": null,
+        "weight_divisor": null,
+        "weight_lbs": 500.0,
+        "wield_category": null
+      },
+      "source_ref": {
+        "line": 1,
+        "lst_file": ""
+      }
+    },
+    "prying_star.json": {
+      "record": {
+        "ability_score_bonus": null,
+        "armor_class_chain_bonus": null,
+        "base_damage_dice": null,
+        "base_item": null,
+        "cost_gp": 646.0,
+        "critical_multiplier": 2,
+        "critical_threat_range": [
+          20,
+          20
+        ],
+        "damage_size_steps": 0,
+        "eqmod_references": [
+          "Special Ability ~ +1 ~ Ammunition",
+          "Special Quality ~ Monk",
+          "Material ~ Steel",
+          "Special Quality ~ Thrown Ammunition"
+        ],
+        "identity": "Prying Star",
+        "intelligent_item": null,
+        "is_modifier": false,
+        "is_natural_attack": false,
+        "is_shield": false,
+        "name": "Prying Star",
+        "skill_check_bonus": null,
+        "spell_resistance_bonus": null,
+        "stat_effect": {
+          "armor_check_penalty": null,
+          "armor_class_bonus": null,
+          "max_dex": null,
+          "spell_failure": null
+        },
+        "states_base_damage": false,
+        "var_bonuses": [],
+        "weapon_enhancement": null,
+        "weight_divisor": null,
+        "weight_lbs": 0.1,
+        "wield_category": "Light"
+      },
+      "source_ref": {
+        "line": 1,
+        "lst_file": ""
+      }
+    },
+    "puzzle_heel_3_steps.json": {
+      "record": {
+        "ability_score_bonus": null,
+        "armor_class_chain_bonus": null,
+        "base_damage_dice": null,
+        "base_item": null,
+        "cost_gp": 20.0,
+        "critical_multiplier": null,
+        "critical_threat_range": null,
+        "damage_size_steps": 0,
+        "eqmod_references": [],
+        "identity": "Puzzle Heel (3 steps)",
+        "intelligent_item": null,
+        "is_modifier": false,
+        "is_natural_attack": false,
+        "is_shield": false,
+        "name": "Puzzle Heel (3 steps)",
+        "skill_check_bonus": null,
+        "spell_resistance_bonus": null,
+        "stat_effect": {
+          "armor_check_penalty": null,
+          "armor_class_bonus": null,
+          "max_dex": null,
+          "spell_failure": null
+        },
+        "states_base_damage": false,
+        "var_bonuses": [],
+        "weapon_enhancement": null,
+        "weight_divisor": null,
+        "weight_lbs": null,
+        "wield_category": null
+      },
+      "source_ref": {
+        "line": 1,
+        "lst_file": ""
+      }
+    },
+    "puzzle_heel_4_steps.json": {
+      "record": {
+        "ability_score_bonus": null,
+        "armor_class_chain_bonus": null,
+        "base_damage_dice": null,
+        "base_item": null,
+        "cost_gp": 40.0,
+        "critical_multiplier": null,
+        "critical_threat_range": null,
+        "damage_size_steps": 0,
+        "eqmod_references": [],
+        "identity": "Puzzle Heel (4 steps)",
+        "intelligent_item": null,
+        "is_modifier": false,
+        "is_natural_attack": false,
+        "is_shield": false,
+        "name": "Puzzle Heel (4 steps)",
+        "skill_check_bonus": null,
+        "spell_resistance_bonus": null,
+        "stat_effect": {
+          "armor_check_penalty": null,
+          "armor_class_bonus": null,
+          "max_dex": null,
+          "spell_failure": null
+        },
+        "states_base_damage": false,
+        "var_bonuses": [],
+        "weapon_enhancement": null,
+        "weight_divisor": null,
+        "weight_lbs": null,
+        "wield_category": null
+      },
+      "source_ref": {
+        "line": 1,
+        "lst_file": ""
+      }
+    },
+    "puzzle_heel_5_steps.json": {
+      "record": {
+        "ability_score_bonus": null,
+        "armor_class_chain_bonus": null,
+        "base_damage_dice": null,
+        "base_item": null,
+        "cost_gp": 80.0,
+        "critical_multiplier": null,
+        "critical_threat_range": null,
+        "damage_size_steps": 0,
+        "eqmod_references": [],
+        "identity": "Puzzle Heel (5 steps)",
+        "intelligent_item": null,
+        "is_modifier": false,
+        "is_natural_attack": false,
+        "is_shield": false,
+        "name": "Puzzle Heel (5 steps)",
+        "skill_check_bonus": null,
+        "spell_resistance_bonus": null,
+        "stat_effect": {
+          "armor_check_penalty": null,
+          "armor_class_bonus": null,
+          "max_dex": null,
+          "spell_failure": null
+        },
+        "states_base_damage": false,
+        "var_bonuses": [],
+        "weapon_enhancement": null,
+        "weight_divisor": null,
+        "weight_lbs": null,
+        "wield_category": null
+      },
+      "source_ref": {
+        "line": 1,
+        "lst_file": ""
+      }
+    },
+    "quick_change_mask.json": {
+      "record": {
+        "ability_score_bonus": null,
+        "armor_class_chain_bonus": null,
+        "base_damage_dice": null,
+        "base_item": null,
+        "cost_gp": 650.0,
+        "critical_multiplier": null,
+        "critical_threat_range": null,
+        "damage_size_steps": 0,
+        "eqmod_references": [],
+        "identity": "Quick-Change Mask",
+        "intelligent_item": null,
+        "is_modifier": false,
+        "is_natural_attack": false,
+        "is_shield": false,
+        "name": "Quick-Change Mask",
+        "skill_check_bonus": null,
+        "spell_resistance_bonus": null,
+        "stat_effect": {
+          "armor_check_penalty": null,
+          "armor_class_bonus": null,
+          "max_dex": null,
+          "spell_failure": null
+        },
+        "states_base_damage": false,
+        "var_bonuses": [],
+        "weapon_enhancement": null,
+        "weight_divisor": null,
+        "weight_lbs": null,
+        "wield_category": null
+      },
+      "source_ref": {
+        "line": 1,
+        "lst_file": ""
+      }
+    },
+    "quick_change_outfit.json": {
+      "record": {
+        "ability_score_bonus": null,
+        "armor_class_chain_bonus": null,
+        "base_damage_dice": null,
+        "base_item": null,
+        "cost_gp": 0.0,
+        "critical_multiplier": null,
+        "critical_threat_range": null,
+        "damage_size_steps": 0,
+        "eqmod_references": [],
+        "identity": "Quick-Change Outfit",
+        "intelligent_item": null,
+        "is_modifier": false,
+        "is_natural_attack": false,
+        "is_shield": false,
+        "name": "Quick-Change Outfit",
+        "skill_check_bonus": null,
+        "spell_resistance_bonus": null,
+        "stat_effect": {
+          "armor_check_penalty": null,
+          "armor_class_bonus": null,
+          "max_dex": null,
+          "spell_failure": null
+        },
+        "states_base_damage": false,
+        "var_bonuses": [],
+        "weapon_enhancement": null,
+        "weight_divisor": null,
+        "weight_lbs": 5.0,
+        "wield_category": null
+      },
+      "source_ref": {
+        "line": 1,
+        "lst_file": ""
+      }
+    },
+    "rake_s_friend.json": {
+      "record": {
+        "ability_score_bonus": null,
+        "armor_class_chain_bonus": null,
+        "base_damage_dice": null,
+        "base_item": null,
+        "cost_gp": 120.0,
+        "critical_multiplier": null,
+        "critical_threat_range": null,
+        "damage_size_steps": 0,
+        "eqmod_references": [],
+        "identity": "Rake's Friend",
+        "intelligent_item": null,
+        "is_modifier": false,
+        "is_natural_attack": false,
+        "is_shield": false,
+        "name": "Rake's Friend",
+        "skill_check_bonus": null,
+        "spell_resistance_bonus": null,
+        "stat_effect": {
+          "armor_check_penalty": null,
+          "armor_class_bonus": null,
+          "max_dex": null,
+          "spell_failure": null
+        },
+        "states_base_damage": false,
+        "var_bonuses": [],
+        "weapon_enhancement": null,
+        "weight_divisor": null,
+        "weight_lbs": null,
+        "wield_category": null
+      },
+      "source_ref": {
+        "line": 1,
+        "lst_file": ""
+      }
+    },
+    "raucous_canard.json": {
+      "record": {
+        "ability_score_bonus": null,
+        "armor_class_chain_bonus": null,
+        "base_damage_dice": null,
+        "base_item": null,
+        "cost_gp": 100.0,
+        "critical_multiplier": null,
+        "critical_threat_range": null,
+        "damage_size_steps": 0,
+        "eqmod_references": [],
+        "identity": "Raucous Canard",
+        "intelligent_item": null,
+        "is_modifier": false,
+        "is_natural_attack": false,
+        "is_shield": false,
+        "name": "Raucous Canard",
+        "skill_check_bonus": null,
+        "spell_resistance_bonus": null,
+        "stat_effect": {
+          "armor_check_penalty": null,
+          "armor_class_bonus": null,
+          "max_dex": null,
+          "spell_failure": null
+        },
+        "states_base_damage": false,
+        "var_bonuses": [],
+        "weapon_enhancement": null,
+        "weight_divisor": null,
+        "weight_lbs": null,
+        "wield_category": null
+      },
+      "source_ref": {
+        "line": 1,
+        "lst_file": ""
+      }
+    },
+    "ring_of_the_shadow_victim.json": {
+      "record": {
+        "ability_score_bonus": null,
+        "armor_class_chain_bonus": null,
+        "base_damage_dice": null,
+        "base_item": null,
+        "cost_gp": 101000.0,
+        "critical_multiplier": null,
+        "critical_threat_range": null,
+        "damage_size_steps": 0,
+        "eqmod_references": [],
+        "identity": "Ring of the Shadow Victim",
+        "intelligent_item": null,
+        "is_modifier": false,
+        "is_natural_attack": false,
+        "is_shield": false,
+        "name": "Ring of the Shadow Victim",
+        "skill_check_bonus": null,
+        "spell_resistance_bonus": null,
+        "stat_effect": {
+          "armor_check_penalty": null,
+          "armor_class_bonus": null,
+          "max_dex": null,
+          "spell_failure": null
+        },
+        "states_base_damage": false,
+        "var_bonuses": [],
+        "weapon_enhancement": null,
+        "weight_divisor": null,
+        "weight_lbs": null,
+        "wield_category": null
+      },
+      "source_ref": {
+        "line": 1,
+        "lst_file": ""
+      }
+    },
+    "rings_of_bondage.json": {
+      "record": {
+        "ability_score_bonus": null,
+        "armor_class_chain_bonus": null,
+        "base_damage_dice": null,
+        "base_item": null,
+        "cost_gp": 18200.0,
+        "critical_multiplier": null,
+        "critical_threat_range": null,
+        "damage_size_steps": 0,
+        "eqmod_references": [],
+        "identity": "Rings of Bondage",
+        "intelligent_item": null,
+        "is_modifier": false,
+        "is_natural_attack": false,
+        "is_shield": false,
+        "name": "Rings of Bondage",
+        "skill_check_bonus": null,
+        "spell_resistance_bonus": null,
+        "stat_effect": {
+          "armor_check_penalty": null,
+          "armor_class_bonus": null,
+          "max_dex": null,
+          "spell_failure": null
+        },
+        "states_base_damage": false,
+        "var_bonuses": [],
+        "weapon_enhancement": null,
+        "weight_divisor": null,
+        "weight_lbs": null,
+        "wield_category": null
+      },
+      "source_ref": {
+        "line": 1,
+        "lst_file": ""
+      }
+    },
+    "rings_of_bondage_greater.json": {
+      "record": {
+        "ability_score_bonus": null,
+        "armor_class_chain_bonus": null,
+        "base_damage_dice": null,
+        "base_item": null,
+        "cost_gp": 42000.0,
+        "critical_multiplier": null,
+        "critical_threat_range": null,
+        "damage_size_steps": 0,
+        "eqmod_references": [],
+        "identity": "Rings of Bondage (Greater)",
+        "intelligent_item": null,
+        "is_modifier": false,
+        "is_natural_attack": false,
+        "is_shield": false,
+        "name": "Rings of Bondage (Greater)",
+        "skill_check_bonus": null,
+        "spell_resistance_bonus": null,
+        "stat_effect": {
+          "armor_check_penalty": null,
+          "armor_class_bonus": null,
+          "max_dex": null,
+          "spell_failure": null
+        },
+        "states_base_damage": false,
+        "var_bonuses": [],
+        "weapon_enhancement": null,
+        "weight_divisor": null,
+        "weight_lbs": null,
+        "wield_category": null
+      },
+      "source_ref": {
+        "line": 1,
+        "lst_file": ""
+      }
+    },
+    "scroll_belt.json": {
+      "record": {
+        "ability_score_bonus": null,
+        "armor_class_chain_bonus": null,
+        "base_damage_dice": null,
+        "base_item": null,
+        "cost_gp": 0.3,
+        "critical_multiplier": null,
+        "critical_threat_range": null,
+        "damage_size_steps": 0,
+        "eqmod_references": [],
+        "identity": "Scroll Belt",
+        "intelligent_item": null,
+        "is_modifier": false,
+        "is_natural_attack": false,
+        "is_shield": false,
+        "name": "Scroll Belt",
+        "skill_check_bonus": null,
+        "spell_resistance_bonus": null,
+        "stat_effect": {
+          "armor_check_penalty": null,
+          "armor_class_bonus": null,
+          "max_dex": null,
+          "spell_failure": null
+        },
+        "states_base_damage": false,
+        "var_bonuses": [],
+        "weapon_enhancement": null,
+        "weight_divisor": null,
+        "weight_lbs": null,
+        "wield_category": null
+      },
+      "source_ref": {
+        "line": 1,
+        "lst_file": ""
+      }
+    },
+    "sentry_seeds.json": {
+      "record": {
+        "ability_score_bonus": null,
+        "armor_class_chain_bonus": null,
+        "base_damage_dice": null,
+        "base_item": null,
+        "cost_gp": 7.0,
+        "critical_multiplier": null,
+        "critical_threat_range": null,
+        "damage_size_steps": 0,
+        "eqmod_references": [],
+        "identity": "Sentry Seeds",
+        "intelligent_item": null,
+        "is_modifier": false,
+        "is_natural_attack": false,
+        "is_shield": false,
+        "name": "Sentry Seeds",
+        "skill_check_bonus": null,
+        "spell_resistance_bonus": null,
+        "stat_effect": {
+          "armor_check_penalty": null,
+          "armor_class_bonus": null,
+          "max_dex": null,
+          "spell_failure": null
+        },
+        "states_base_damage": false,
+        "var_bonuses": [],
+        "weapon_enhancement": null,
+        "weight_divisor": null,
+        "weight_lbs": 0.5,
+        "wield_category": null
+      },
+      "source_ref": {
+        "line": 1,
+        "lst_file": ""
+      }
+    },
+    "serpent_s_fang.json": {
+      "record": {
+        "ability_score_bonus": null,
+        "armor_class_chain_bonus": null,
+        "base_damage_dice": {
+          "count": 1,
+          "die_size": 4
+        },
+        "base_item": null,
+        "cost_gp": 2.0,
+        "critical_multiplier": 2,
+        "critical_threat_range": [
+          19,
+          20
+        ],
+        "damage_size_steps": 0,
+        "eqmod_references": [
+          "Special Ability ~ Enhancement Cost",
+          "8000",
+          "Special Ability ~ +1 ~ Weapon",
+          "Material ~ Steel"
+        ],
+        "identity": "Serpent's Fang",
+        "intelligent_item": null,
+        "is_modifier": false,
+        "is_natural_attack": false,
+        "is_shield": false,
+        "name": "Serpent's Fang",
+        "skill_check_bonus": null,
+        "spell_resistance_bonus": null,
+        "stat_effect": {
+          "armor_check_penalty": null,
+          "armor_class_bonus": null,
+          "max_dex": null,
+          "spell_failure": null
+        },
+        "states_base_damage": true,
+        "var_bonuses": [],
+        "weapon_enhancement": null,
+        "weight_divisor": null,
+        "weight_lbs": 1.0,
+        "wield_category": "Light"
+      },
+      "source_ref": {
+        "line": 1,
+        "lst_file": ""
+      }
+    },
+    "shadow_hand_smoke_pellet.json": {
+      "record": {
+        "ability_score_bonus": null,
+        "armor_class_chain_bonus": null,
+        "base_damage_dice": null,
+        "base_item": null,
+        "cost_gp": 800.0,
+        "critical_multiplier": null,
+        "critical_threat_range": null,
+        "damage_size_steps": 0,
+        "eqmod_references": [],
+        "identity": "Shadow Hand Smoke Pellet",
+        "intelligent_item": null,
+        "is_modifier": false,
+        "is_natural_attack": false,
+        "is_shield": false,
+        "name": "Shadow Hand Smoke Pellet",
+        "skill_check_bonus": null,
+        "spell_resistance_bonus": null,
+        "stat_effect": {
+          "armor_check_penalty": null,
+          "armor_class_bonus": null,
+          "max_dex": null,
+          "spell_failure": null
+        },
+        "states_base_damage": false,
+        "var_bonuses": [],
+        "weapon_enhancement": null,
+        "weight_divisor": null,
+        "weight_lbs": null,
+        "wield_category": null
+      },
+      "source_ref": {
+        "line": 1,
+        "lst_file": ""
+      }
+    },
+    "silent_sentry_crossbow.json": {
+      "record": {
+        "ability_score_bonus": null,
+        "armor_class_chain_bonus": null,
+        "base_damage_dice": {
+          "count": 1,
+          "die_size": 8
+        },
+        "base_item": null,
+        "cost_gp": 35.0,
+        "critical_multiplier": 2,
+        "critical_threat_range": [
+          19,
+          20
+        ],
+        "damage_size_steps": 0,
+        "eqmod_references": [
+          "Special Ability ~ Enhancement Cost",
+          "6000",
+          "Special Ability ~ Endless Ammunition ~ Ranged",
+          "Special Ability ~ +2 ~ Weapon",
+          "Material ~ Wood"
+        ],
+        "identity": "Silent Sentry Crossbow",
+        "intelligent_item": null,
+        "is_modifier": false,
+        "is_natural_attack": false,
+        "is_shield": false,
+        "name": "Silent Sentry Crossbow",
+        "skill_check_bonus": null,
+        "spell_resistance_bonus": null,
+        "stat_effect": {
+          "armor_check_penalty": null,
+          "armor_class_bonus": null,
+          "max_dex": null,
+          "spell_failure": null
+        },
+        "states_base_damage": true,
+        "var_bonuses": [],
+        "weapon_enhancement": null,
+        "weight_divisor": null,
+        "weight_lbs": 4.0,
+        "wield_category": null
+      },
+      "source_ref": {
+        "line": 1,
+        "lst_file": ""
+      }
+    },
+    "singer_s_solution.json": {
+      "record": {
+        "ability_score_bonus": null,
+        "armor_class_chain_bonus": null,
+        "base_damage_dice": null,
+        "base_item": null,
+        "cost_gp": 120.0,
+        "critical_multiplier": null,
+        "critical_threat_range": null,
+        "damage_size_steps": 0,
+        "eqmod_references": [],
+        "identity": "Singer's Solution",
+        "intelligent_item": null,
+        "is_modifier": false,
+        "is_natural_attack": false,
+        "is_shield": false,
+        "name": "Singer's Solution",
+        "skill_check_bonus": null,
+        "spell_resistance_bonus": null,
+        "stat_effect": {
+          "armor_check_penalty": null,
+          "armor_class_bonus": null,
+          "max_dex": null,
+          "spell_failure": null
+        },
+        "states_base_damage": false,
+        "var_bonuses": [],
+        "weapon_enhancement": null,
+        "weight_divisor": null,
+        "weight_lbs": null,
+        "wield_category": null
+      },
+      "source_ref": {
+        "line": 1,
+        "lst_file": ""
+      }
+    },
+    "speech_resin.json": {
+      "record": {
+        "ability_score_bonus": null,
+        "armor_class_chain_bonus": null,
+        "base_damage_dice": null,
+        "base_item": null,
+        "cost_gp": 410.0,
+        "critical_multiplier": null,
+        "critical_threat_range": null,
+        "damage_size_steps": 0,
+        "eqmod_references": [],
+        "identity": "Speech Resin",
+        "intelligent_item": null,
+        "is_modifier": false,
+        "is_natural_attack": false,
+        "is_shield": false,
+        "name": "Speech Resin",
+        "skill_check_bonus": null,
+        "spell_resistance_bonus": null,
+        "stat_effect": {
+          "armor_check_penalty": null,
+          "armor_class_bonus": null,
+          "max_dex": null,
+          "spell_failure": null
+        },
+        "states_base_damage": false,
+        "var_bonuses": [],
+        "weapon_enhancement": null,
+        "weight_divisor": null,
+        "weight_lbs": null,
+        "wield_category": null
+      },
+      "source_ref": {
+        "line": 1,
+        "lst_file": ""
+      }
+    },
+    "spring_blade.json": {
+      "record": {
+        "ability_score_bonus": null,
+        "armor_class_chain_bonus": null,
+        "base_damage_dice": {
+          "count": 1,
+          "die_size": 4
+        },
+        "base_item": null,
+        "cost_gp": 70.0,
+        "critical_multiplier": 2,
+        "critical_threat_range": [
+          20,
+          20
+        ],
+        "damage_size_steps": 0,
+        "eqmod_references": [
+          "Material ~ Steel",
+          "Material ~ Wood"
+        ],
+        "identity": "Spring Blade",
+        "intelligent_item": null,
+        "is_modifier": false,
+        "is_natural_attack": false,
+        "is_shield": false,
+        "name": "Spring Blade",
+        "skill_check_bonus": null,
+        "spell_resistance_bonus": null,
+        "stat_effect": {
+          "armor_check_penalty": null,
+          "armor_class_bonus": null,
+          "max_dex": null,
+          "spell_failure": null
+        },
+        "states_base_damage": true,
+        "var_bonuses": [],
+        "weapon_enhancement": null,
+        "weight_divisor": null,
+        "weight_lbs": 1.0,
+        "wield_category": "Light"
+      },
+      "source_ref": {
+        "line": 1,
+        "lst_file": ""
+      }
+    },
+    "subversive_vest.json": {
+      "record": {
+        "ability_score_bonus": null,
+        "armor_class_chain_bonus": null,
+        "base_damage_dice": null,
+        "base_item": null,
+        "cost_gp": 45.0,
+        "critical_multiplier": null,
+        "critical_threat_range": null,
+        "damage_size_steps": 0,
+        "eqmod_references": [],
+        "identity": "Subversive Vest",
+        "intelligent_item": null,
+        "is_modifier": false,
+        "is_natural_attack": false,
+        "is_shield": false,
+        "name": "Subversive Vest",
+        "skill_check_bonus": null,
+        "spell_resistance_bonus": null,
+        "stat_effect": {
+          "armor_check_penalty": null,
+          "armor_class_bonus": null,
+          "max_dex": null,
+          "spell_failure": null
+        },
+        "states_base_damage": false,
+        "var_bonuses": [],
+        "weapon_enhancement": null,
+        "weight_divisor": null,
+        "weight_lbs": 1.0,
+        "wield_category": null
+      },
+      "source_ref": {
+        "line": 1,
+        "lst_file": ""
+      }
+    },
+    "subversive_vestment.json": {
+      "record": {
+        "ability_score_bonus": null,
+        "armor_class_chain_bonus": null,
+        "base_damage_dice": null,
+        "base_item": null,
+        "cost_gp": 90.0,
+        "critical_multiplier": null,
+        "critical_threat_range": null,
+        "damage_size_steps": 0,
+        "eqmod_references": [],
+        "identity": "Subversive Vestment",
+        "intelligent_item": null,
+        "is_modifier": false,
+        "is_natural_attack": false,
+        "is_shield": false,
+        "name": "Subversive Vestment",
+        "skill_check_bonus": null,
+        "spell_resistance_bonus": null,
+        "stat_effect": {
+          "armor_check_penalty": null,
+          "armor_class_bonus": null,
+          "max_dex": null,
+          "spell_failure": null
+        },
+        "states_base_damage": false,
+        "var_bonuses": [],
+        "weapon_enhancement": null,
+        "weight_divisor": null,
+        "weight_lbs": 2.0,
+        "wield_category": null
+      },
+      "source_ref": {
+        "line": 1,
+        "lst_file": ""
+      }
+    },
+    "swarmwalker_s_ring.json": {
+      "record": {
+        "ability_score_bonus": null,
+        "armor_class_chain_bonus": null,
+        "base_damage_dice": null,
+        "base_item": null,
+        "cost_gp": 26000.0,
+        "critical_multiplier": null,
+        "critical_threat_range": null,
+        "damage_size_steps": 0,
+        "eqmod_references": [],
+        "identity": "Swarmwalker's Ring",
+        "intelligent_item": null,
+        "is_modifier": false,
+        "is_natural_attack": false,
+        "is_shield": false,
+        "name": "Swarmwalker's Ring",
+        "skill_check_bonus": null,
+        "spell_resistance_bonus": null,
+        "stat_effect": {
+          "armor_check_penalty": null,
+          "armor_class_bonus": null,
+          "max_dex": null,
+          "spell_failure": null
+        },
+        "states_base_damage": false,
+        "var_bonuses": [],
+        "weapon_enhancement": null,
+        "weight_divisor": null,
+        "weight_lbs": null,
+        "wield_category": null
+      },
+      "source_ref": {
+        "line": 1,
+        "lst_file": ""
+      }
+    },
+    "swift_hands_tonic.json": {
+      "record": {
+        "ability_score_bonus": null,
+        "armor_class_chain_bonus": null,
+        "base_damage_dice": null,
+        "base_item": null,
+        "cost_gp": 250.0,
+        "critical_multiplier": null,
+        "critical_threat_range": null,
+        "damage_size_steps": 0,
+        "eqmod_references": [],
+        "identity": "Swift Hands Tonic",
+        "intelligent_item": null,
+        "is_modifier": false,
+        "is_natural_attack": false,
+        "is_shield": false,
+        "name": "Swift Hands Tonic",
+        "skill_check_bonus": null,
+        "spell_resistance_bonus": null,
+        "stat_effect": {
+          "armor_check_penalty": null,
+          "armor_class_bonus": null,
+          "max_dex": null,
+          "spell_failure": null
+        },
+        "states_base_damage": false,
+        "var_bonuses": [],
+        "weapon_enhancement": null,
+        "weight_divisor": null,
+        "weight_lbs": null,
+        "wield_category": null
+      },
+      "source_ref": {
+        "line": 1,
+        "lst_file": ""
+      }
+    },
+    "thieves_tools_concealable.json": {
+      "record": {
+        "ability_score_bonus": null,
+        "armor_class_chain_bonus": null,
+        "base_damage_dice": null,
+        "base_item": null,
+        "cost_gp": 190.0,
+        "critical_multiplier": null,
+        "critical_threat_range": null,
+        "damage_size_steps": 0,
+        "eqmod_references": [],
+        "identity": "Thieves' Tools (Concealable)",
+        "intelligent_item": null,
+        "is_modifier": false,
+        "is_natural_attack": false,
+        "is_shield": false,
+        "name": "Thieves' Tools (Concealable)",
+        "skill_check_bonus": {
+          "bonus": 2,
+          "skill": "Disable Device"
+        },
+        "spell_resistance_bonus": null,
+        "stat_effect": {
+          "armor_check_penalty": null,
+          "armor_class_bonus": null,
+          "max_dex": null,
+          "spell_failure": null
+        },
+        "states_base_damage": false,
+        "var_bonuses": [],
+        "weapon_enhancement": null,
+        "weight_divisor": null,
+        "weight_lbs": 0.5,
+        "wield_category": null
+      },
+      "source_ref": {
+        "line": 1,
+        "lst_file": ""
+      }
+    },
+    "time_bomb.json": {
+      "record": {
+        "ability_score_bonus": null,
+        "armor_class_chain_bonus": null,
+        "base_damage_dice": null,
+        "base_item": null,
+        "cost_gp": 1000.0,
+        "critical_multiplier": null,
+        "critical_threat_range": null,
+        "damage_size_steps": 0,
+        "eqmod_references": [],
+        "identity": "Time Bomb",
+        "intelligent_item": null,
+        "is_modifier": false,
+        "is_natural_attack": false,
+        "is_shield": false,
+        "name": "Time Bomb",
+        "skill_check_bonus": null,
+        "spell_resistance_bonus": null,
+        "stat_effect": {
+          "armor_check_penalty": null,
+          "armor_class_bonus": null,
+          "max_dex": null,
+          "spell_failure": null
+        },
+        "states_base_damage": false,
+        "var_bonuses": [],
+        "weapon_enhancement": null,
+        "weight_divisor": null,
+        "weight_lbs": 1.0,
+        "wield_category": null
+      },
+      "source_ref": {
+        "line": 1,
+        "lst_file": ""
+      }
+    },
+    "time_bomb_greater.json": {
+      "record": {
+        "ability_score_bonus": null,
+        "armor_class_chain_bonus": null,
+        "base_damage_dice": null,
+        "base_item": null,
+        "cost_gp": 6000.0,
+        "critical_multiplier": null,
+        "critical_threat_range": null,
+        "damage_size_steps": 0,
+        "eqmod_references": [],
+        "identity": "Time Bomb (Greater)",
+        "intelligent_item": null,
+        "is_modifier": false,
+        "is_natural_attack": false,
+        "is_shield": false,
+        "name": "Time Bomb (Greater)",
+        "skill_check_bonus": null,
+        "spell_resistance_bonus": null,
+        "stat_effect": {
+          "armor_check_penalty": null,
+          "armor_class_bonus": null,
+          "max_dex": null,
+          "spell_failure": null
+        },
+        "states_base_damage": false,
+        "var_bonuses": [],
+        "weapon_enhancement": null,
+        "weight_divisor": null,
+        "weight_lbs": 1.0,
+        "wield_category": null
+      },
+      "source_ref": {
+        "line": 1,
+        "lst_file": ""
+      }
+    },
+    "vestments_of_false_faith.json": {
+      "record": {
+        "ability_score_bonus": null,
+        "armor_class_chain_bonus": null,
+        "base_damage_dice": null,
+        "base_item": null,
+        "cost_gp": 27000.0,
+        "critical_multiplier": null,
+        "critical_threat_range": null,
+        "damage_size_steps": 0,
+        "eqmod_references": [],
+        "identity": "Vestments of False Faith",
+        "intelligent_item": null,
+        "is_modifier": false,
+        "is_natural_attack": false,
+        "is_shield": false,
+        "name": "Vestments of False Faith",
+        "skill_check_bonus": null,
+        "spell_resistance_bonus": null,
+        "stat_effect": {
+          "armor_check_penalty": null,
+          "armor_class_bonus": null,
+          "max_dex": null,
+          "spell_failure": null
+        },
+        "states_base_damage": false,
+        "var_bonuses": [],
+        "weapon_enhancement": null,
+        "weight_divisor": null,
+        "weight_lbs": 5.0,
+        "wield_category": null
+      },
+      "source_ref": {
+        "line": 1,
+        "lst_file": ""
+      }
+    },
+    "vigilante_s_kit.json": {
+      "record": {
+        "ability_score_bonus": null,
+        "armor_class_chain_bonus": null,
+        "base_damage_dice": null,
+        "base_item": null,
+        "cost_gp": 8.0,
+        "critical_multiplier": null,
+        "critical_threat_range": null,
+        "damage_size_steps": 0,
+        "eqmod_references": [],
+        "identity": "Vigilante's Kit",
+        "intelligent_item": null,
+        "is_modifier": false,
+        "is_natural_attack": false,
+        "is_shield": false,
+        "name": "Vigilante's Kit",
+        "skill_check_bonus": null,
+        "spell_resistance_bonus": null,
+        "stat_effect": {
+          "armor_check_penalty": null,
+          "armor_class_bonus": null,
+          "max_dex": null,
+          "spell_failure": null
+        },
+        "states_base_damage": false,
+        "var_bonuses": [],
+        "weapon_enhancement": null,
+        "weight_divisor": null,
+        "weight_lbs": 22.0,
+        "wield_category": null
+      },
+      "source_ref": {
+        "line": 1,
+        "lst_file": ""
+      }
+    },
+    "wrist_launcher.json": {
+      "record": {
+        "ability_score_bonus": null,
+        "armor_class_chain_bonus": null,
+        "base_damage_dice": null,
+        "base_item": null,
+        "cost_gp": 200.0,
+        "critical_multiplier": null,
+        "critical_threat_range": null,
+        "damage_size_steps": 0,
+        "eqmod_references": [
+          "Material ~ Steel",
+          "Material ~ Leather"
+        ],
+        "identity": "Wrist Launcher",
+        "intelligent_item": null,
+        "is_modifier": false,
+        "is_natural_attack": false,
+        "is_shield": false,
+        "name": "Wrist Launcher",
+        "skill_check_bonus": null,
+        "spell_resistance_bonus": null,
+        "stat_effect": {
+          "armor_check_penalty": null,
+          "armor_class_bonus": null,
+          "max_dex": null,
+          "spell_failure": null
+        },
+        "states_base_damage": false,
+        "var_bonuses": [],
+        "weapon_enhancement": null,
+        "weight_divisor": null,
+        "weight_lbs": 1.0,
+        "wield_category": "Light"
+      },
+      "source_ref": {
+        "line": 1,
+        "lst_file": ""
+      }
+    },
+    "wrist_launcher_heavy.json": {
+      "record": {
+        "ability_score_bonus": null,
+        "armor_class_chain_bonus": null,
+        "base_damage_dice": {
+          "count": 1,
+          "die_size": 4
+        },
+        "base_item": null,
+        "cost_gp": 250.0,
+        "critical_multiplier": 2,
+        "critical_threat_range": [
+          19,
+          20
+        ],
+        "damage_size_steps": 0,
+        "eqmod_references": [
+          "Material ~ Steel",
+          "Material ~ Leather"
+        ],
+        "identity": "Wrist Launcher (Heavy)",
+        "intelligent_item": null,
+        "is_modifier": false,
+        "is_natural_attack": false,
+        "is_shield": false,
+        "name": "Wrist Launcher, Heavy",
+        "skill_check_bonus": null,
+        "spell_resistance_bonus": null,
+        "stat_effect": {
+          "armor_check_penalty": null,
+          "armor_class_bonus": null,
+          "max_dex": null,
+          "spell_failure": null
+        },
+        "states_base_damage": true,
+        "var_bonuses": [],
+        "weapon_enhancement": null,
+        "weight_divisor": null,
+        "weight_lbs": 2.0,
+        "wield_category": "Light"
+      },
+      "source_ref": {
+        "line": 1,
+        "lst_file": ""
+      }
+    }
+  }
+}

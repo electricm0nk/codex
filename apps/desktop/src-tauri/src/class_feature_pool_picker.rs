@@ -113,12 +113,37 @@ mod tests {
         assert!(!ledge_walker.description.is_empty());
     }
 
-    /// The known unresolvable-argument record must never appear -- proves
-    /// the render-and-refuse gate crosses the IPC boundary intact.
+    /// The known unsettled-magnitude record crosses the IPC boundary **stating its term in
+    /// words**, never with a gap or the ingest format's own slot marker where the number goes.
+    ///
+    /// Until SD-35 `AT-35-E6-003-SWEEP` cycle 17 this asserted the record never appeared at
+    /// all: the run-time renderer could substitute a number or nothing, so a `%N` it could not
+    /// resolve cost `Rogue Talent ~ Bleeding Attack` its whole sentence. The catalog now serves
+    /// the converted record, whose magnitude is a typed hole that prints as the term's words
+    /// (`decisions.md §1`'s third permitted form). The library-side twin of this assertion is
+    /// `class_feature_pool_catalog::tests::bleeding_attack_states_its_unsettled_term_in_words_rather_than_dropping_it`;
+    /// this one proves the same thing survives the IPC boundary.
     #[test]
-    fn bleeding_attack_never_reaches_the_command_output() {
+    fn bleeding_attack_crosses_the_ipc_boundary_stating_its_term_in_words() {
         let options = list_class_feature_pool_options();
-        assert!(!options.iter().any(|o| o.key == "Rogue Talent ~ Bleeding Attack"));
+        let bleeding = options
+            .iter()
+            .find(|o| o.book == "core_rulebook" && o.key == "Rogue Talent ~ Bleeding Attack")
+            .expect("core_rulebook's Rogue Talent ~ Bleeding Attack must reach the command output");
+        assert!(
+            !bleeding.description.contains("take  additional"),
+            "the magnitude was dropped, leaving a gap: {}",
+            bleeding.description
+        );
+        let bytes = bleeding.description.as_bytes();
+        assert!(
+            !bytes
+                .iter()
+                .enumerate()
+                .any(|(i, b)| *b == b'%' && bytes.get(i + 1).is_some_and(u8::is_ascii_digit)),
+            "an ingest-format %N slot marker crossed the boundary: {}",
+            bleeding.description
+        );
     }
 
     #[test]

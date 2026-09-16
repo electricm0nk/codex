@@ -1,7 +1,11 @@
 # Status
 
 > Scope: what is real, working product surface today across the whole repo, and what is stubbed, partially wired, or deferred — superseding the root README's "Current state" section.
-> Last verified: **2026-08-19 against `tranche/11`** (SD-31 wave 17, `SD31-W17-INTEGRATE-001`) for the §"Corpus coverage, corpus-wide — re-derived 2026-08-19 (SD-31 wave 17, integration cycle)" section (the live figures — waves 14/15/16's own sections are kept below for history, unchanged); the 2026-08-18 wave-14 pass for the §"Corpus coverage, corpus-wide — re-derived 2026-08-18" section, the `RuleSetId::Ce` row, and the companion-ceiling row; every other row still carries its 2026-08-13 `tranche/9` verification and is unchanged. Prior full pass: 2026-08-13 against `tranche/9` (SD-29 **real** closure, Epic 11 run 3). The 2026-08-11 pass belonged to a closure the operator rescinded the same day (`SD-29 decisions.md §42`); every figure it wrote has been re-derived here rather than carried. The rows re-derived in full this pass are the `RuleSetId` catalog count, the JSON-corpus-cache count, the monster/companion/race-trait chassis rows, and the whole §"Corpus coverage, corpus-wide" section; every other row carries its prior 2026-08-07/tranche-8 verification and is unchanged by SD-29. **Touched again 2026-08-21 (SD-31 wave 29, integration cycle)**: `RuleSetId` variant count 32→33 (`AdventurersGuide` added, this book's first compiled rule set — see the updated row below); `class_feature_pool_catalog.rs`'s option-pool render catalog now refuses any record carrying a `PREABILITY ... CATEGORY=Archetype` token (Ruling §18, `is_archetype_locked()`) — the `class-field-fix` note two paragraphs below ("its only live consumer was never scoped to 3,047 records") still stands unchanged, this is a narrower, later guard on the SAME consumer, not a reopening of that finding. Every other row is unchanged and still carries its prior verification date.
+> Last verified: **2026-09-15 against `tranche/15`** (SD-35 closure epilogue) for the new
+> §"Corpus coverage at SD-35 closure — 49,450 of 49,450" section, which **supersedes every
+> corpus-coverage section below it**: those sections are kept as history and none of their
+> figures is current. Every figure in the new section carries its re-derive command and was run
+> at this HEAD. Prior pass: **2026-08-19 against `tranche/11`** (SD-31 wave 17, `SD31-W17-INTEGRATE-001`) for the §"Corpus coverage, corpus-wide — re-derived 2026-08-19 (SD-31 wave 17, integration cycle)" section (the live figures — waves 14/15/16's own sections are kept below for history, unchanged); the 2026-08-18 wave-14 pass for the §"Corpus coverage, corpus-wide — re-derived 2026-08-18" section, the `RuleSetId::Ce` row, and the companion-ceiling row; every other row still carries its 2026-08-13 `tranche/9` verification and is unchanged. Prior full pass: 2026-08-13 against `tranche/9` (SD-29 **real** closure, Epic 11 run 3). The 2026-08-11 pass belonged to a closure the operator rescinded the same day (`SD-29 decisions.md §42`); every figure it wrote has been re-derived here rather than carried. The rows re-derived in full this pass are the `RuleSetId` catalog count, the JSON-corpus-cache count, the monster/companion/race-trait chassis rows, and the whole §"Corpus coverage, corpus-wide" section; every other row carries its prior 2026-08-07/tranche-8 verification and is unchanged by SD-29. **Touched again 2026-08-21 (SD-31 wave 29, integration cycle)**: `RuleSetId` variant count 32→33 (`AdventurersGuide` added, this book's first compiled rule set — see the updated row below); `class_feature_pool_catalog.rs`'s option-pool render catalog now refuses any record carrying a `PREABILITY ... CATEGORY=Archetype` token (Ruling §18, `is_archetype_locked()`) — the `class-field-fix` note two paragraphs below ("its only live consumer was never scoped to 3,047 records") still stands unchanged, this is a narrower, later guard on the SAME consumer, not a reopening of that finding. Every other row is unchanged and still carries its prior verification date.
 > **Path correction 2026-08-22** (SD-32 closure epilogue): src/rules_core/pilot_compute.rs cite
 > updated to `src/rules_core/pilot_compute/mod.rs` — the module became a directory during SD-31;
 > no other content in this doc re-verified.
@@ -31,6 +35,65 @@ Several desktop-facing actions that look interactive are session-local or
 inert by design, named individually below — this is the fail-honest
 convention (see [conventions.md](./conventions.md)) applied at the product
 level: a stub says so rather than pretending to work.
+
+## Corpus coverage at SD-35 closure — 49,450 of 49,450
+
+*New 2026-09-15. **This section supersedes every "Corpus coverage, corpus-wide" section below**,
+all of which are kept as history and none of which is current.*
+
+**Two figures, never one, and neither may be quoted without the other** — an inventory-only
+figure cannot see a record the inventory never enumerated, which is exactly the gap SD-35's final
+census found:
+
+| figure | value | re-derive command |
+|---|---|---|
+| **inventory** completion | **49,450 of 49,450 = 100%** | `python3 scripts/completion_atlas.py --check` |
+| **corpus** completion — the headline | **48,864 of 48,864 real `data/corpus` rules records = 100%** | cited from `docs/release/SD-35-corpus-sheet-completion/artifacts/epic-7-closure/population-census-final.json` |
+
+`49,438` — SD-33's and SD-34's denominator — is superseded everywhere and is never the bar.
+
+**What "done" means here changed, and that is the finding.** Under the sheet rule
+(`docs/release/SD-35-corpus-sheet-completion/decisions.md §1`) a record is done when it renders a
+line a player could write: one final number, dice in final form, or the rule's own words. A term
+the character does not settle stays as words, and the unit is **done** — "the engine cannot model
+X" is a number to report, not an exemption. There is no simulation engine behind any of it.
+
+**Status distribution** (`python3 -c "import json;print(json.load(open('docs/work-inventory.json'))['totals']['by_status'])"`):
+
+| status | units | share of 49,450 |
+|---|---|---|
+| `sheet-complete` | 23,087 | 46.7% of 49,450 |
+| `text-complete` | 11,839 | 23.9% of 49,450 |
+| `oracle-unverifiable` | 8,491 | 17.2% of 49,450 |
+| `grounded` | 5,222 | 10.6% of 49,450 |
+| `oracle-agree` | 811 | 1.6% of 49,450 |
+| every other status (`not-started`, `engine-does-not-hold`, `deferred-with-reason`, `unmeasurable`, …) | **0** | 0% of 49,450 |
+
+38 books, 19 record kinds; the largest are `class_feature` 18,043, `equipment` 6,223,
+`ability` 4,337, `monster_ability` 3,806 (`['totals']['by_kind']` in the same file).
+
+**Converter coverage** (`python3 -c "import json;print(json.load(open('data/sheet_rules/_report.json')))"`):
+49,450 of 49,450 records converted, **0 refused**, 70,317 rules written, 5,294 variable tables,
+423 records degraded (converted, with some token rendered as words rather than a number).
+`python3 scripts/token_coverage.py --check` names the remainder by token type and checks the type
+counts sum — there is no unnamed "rest".
+
+**PCGen is out of live code.** 260 live files at the first gate reading → **0**
+(`docs/retro/sd35-corpus-sheet-completion-retrospective.md §5`, per-epic table):
+
+```
+$ python3 scripts/pcgen_residue_gate.py --check --closure
+live_files=0 live_hits=0 verdict=PASS
+```
+
+The converter, the `.lst` parser, the generators and the oracle harness are **kept** — see
+[overview.md](./overview.md) §"The converter/live boundary". Removing PCGen from the live side is
+not removing PCGen from the repo.
+
+**What this does *not* claim.** Coverage is a statement about the corpus reaching a rendered
+sheet line. It is **not** a claim that every class/level combination reaches a fully `Computed`
+receipt — the Posture section above still stands, and `BASELINE_COMPUTED_CLASSES=31`
+(`scripts/verify-baselines.env`) is the separate chassis figure.
 
 ## Real today
 
@@ -1310,7 +1373,7 @@ assertion behind even when the reclassification itself is correct.
 |---|---|---|
 | Class/level compute coverage | Only single-class Fighter levels 1-3 reach `Computed` for any race; Wizard level 1 is closest but still blocked on spellbook/school-power diagnostics. | `apps/desktop/src-tauri/src/character_hub.rs:949-954` (test) |
 | Oracle-parity comparator | **Graduated (SD-26 Epic 2): the in-crate harness now exists and is tested.** `oracle_validation::comparator::compare` aligns a normalized PCGen output against Codex's selected dimensions and reports per-dimension matches/mismatches; `normalization` reduces raw PCGen text into the comparator's input shape; `parity_report` renders a real `PASS`/`FAIL` `parity_report_<case-id>.md`; `pcgen_runner::run_pcgen_character` wraps the two real PCGen scripts into one Rust call. What is still deferred is a *passing* parity claim: the pilot end-to-end run (`tests/sd26_pilot_case_verification.rs`) currently produces a real **FAIL** — two genuine `skill.selected_modifier.{climb,swim}` mismatches because `pilot_compute::compute_ability_modifiers` does not yet apply the chosen racial ability bonus (the open CG-03 blocker). `SelectedParityDimensions` still carries only a `Computed` `ClaimTierFloor` (no `OracleChecked` variant), so no fixture can yet assert oracle-checked parity. The harness is real; a green parity verdict is not, pending CG-03. | `src/oracle_validation/comparator.rs`; `src/oracle_validation/normalization.rs`; `src/oracle_validation/parity_report.rs`; `src/oracle_validation/pcgen_runner.rs`; `tests/sd26_pilot_case_verification.rs`; `src/rules_core/pilot_compute/mod.rs` (CG-03) |
-| Bestiary 1 monster parser | `monster_stat_block.rs`'s row parser is fully unwired: no `ParsedLstRecord`/`SourceContentPayload` variant exists for it, and its only callers outside its own module are its own test file. Bestiary 1 table content is hand-transcribed, not parsed through the canonical-IR path. | `src/pcgen_import/lst_parser/monster_stat_block.rs`; zero references in `ir_converter.rs`/`source_content_payload.rs`/`source_content.rs` |
+| Bestiary 1 monster parser | `monster_stat_block.rs`'s row parser is fully unwired: no `ParsedLstRecord`/`SourceContentPayload` variant exists for it, and its only callers outside its own module are its own test file. Bestiary 1 table content is hand-transcribed, not parsed through the canonical-IR path. | `src/pcgen_import/lst_parser/monster_stat_block.rs`; zero references in `ir_converter.rs`/`src/rules_core/source_content.rs` |
 | Failure-owner classifier | `pilot_failure.rs`'s `primary_owner` only ever returns `OracleGap` (on `Computed`) or `EngineFlaw` (on `Blocked`); `ModelFlaw`/`ImporterFlaw`/`UiGap` are unreachable from the current receipt surface. | `src/rules_core/pilot_failure.rs:61-66` |
 | Spellbook magnitude — a third disconnected twin (**in-flight**) | `contract::build_pilot_receipt` wires `spellbook::compute_spellbook_coverage` into `PilotReceipt.spellbook`, but nothing in the shipped desktop app reaches it — `grep -rn build_pilot_receipt apps/desktop/src-tauri/src` returns 0 hits (re-confirmed 2026-08-07). The app instead gates on `pf1_adapter::resolve_unified_pilot_snapshot`, so no spell magnitude reaches a player surface through the receipt path. **This is being actively worked right now**: at write time, `apps/desktop/src-tauri/src/character_hub.rs`, `apps/desktop/src-tauri/src/pf1_adapter.rs`, and `src/rules_core/pilot_view_model.rs` all carry uncommitted changes adding spell save DC/slot-total surfacing directly through `resolve_unified_pilot_snapshot` (not by connecting `build_pilot_receipt`) — confirm current state before relying on this row; it may already be resolved. Same shape as `decisions.md §29.1`/`§29.2` (a magnitude not wired until it moves on the twin the player reads). | `src/rules_core/contract.rs` (`build_pilot_receipt`); `apps/desktop/src-tauri/src/pf1_adapter.rs` (`resolve_unified_pilot_snapshot`) |
 | Per-item corpus equipment stats | `pilot_compute_corpus.rs`'s `DerivedEquipmentStats` is always `default()` — a permanent placeholder there; real per-item stats are computed separately by `equipment_effects.rs`. | `src/rules_core/pilot_compute_corpus.rs:80-147` |

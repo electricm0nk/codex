@@ -1,0 +1,173 @@
+{
+  "kind": "race",
+  "records": {
+    "catfolk.json": {
+      "base_move_walk": 30,
+      "base_size": "M",
+      "hands": 2,
+      "key": "Catfolk",
+      "legs": 2,
+      "name": "Catfolk",
+      "race_type": "Humanoid",
+      "type_tokens": [
+        "Base",
+        "PC",
+        "Featured"
+      ]
+    },
+    "changeling.json": {
+      "base_move_walk": 30,
+      "base_size": "M",
+      "hands": 2,
+      "key": "Changeling",
+      "legs": 2,
+      "name": "Changeling",
+      "race_type": "Humanoid",
+      "type_tokens": [
+        "Base",
+        "PC",
+        "Uncommon"
+      ]
+    },
+    "gillman.json": {
+      "base_move_walk": 30,
+      "base_size": "M",
+      "hands": 2,
+      "key": "Gillman",
+      "legs": 2,
+      "name": "Gillman",
+      "race_type": "Humanoid",
+      "type_tokens": [
+        "Base",
+        "PC",
+        "Uncommon"
+      ]
+    },
+    "kitsune.json": {
+      "base_move_walk": 30,
+      "base_size": "M",
+      "hands": 2,
+      "key": "Kitsune",
+      "legs": 2,
+      "name": "Kitsune",
+      "race_type": "Humanoid",
+      "type_tokens": [
+        "Base",
+        "PC",
+        "Uncommon"
+      ]
+    },
+    "nagaji.json": {
+      "base_move_walk": 30,
+      "base_size": "M",
+      "hands": 2,
+      "key": "Nagaji",
+      "legs": 2,
+      "name": "Nagaji",
+      "race_type": "Humanoid",
+      "type_tokens": [
+        "Base",
+        "PC",
+        "Uncommon"
+      ]
+    },
+    "ratfolk.json": {
+      "base_move_walk": 0,
+      "base_size": "S",
+      "hands": 2,
+      "key": "Ratfolk",
+      "legs": 2,
+      "name": "Ratfolk",
+      "race_type": "Humanoid",
+      "type_tokens": [
+        "Base",
+        "PC",
+        "Featured"
+      ]
+    },
+    "samsaran.json": {
+      "base_move_walk": 30,
+      "base_size": "M",
+      "hands": 2,
+      "key": "Samsaran",
+      "legs": 2,
+      "name": "Samsaran",
+      "race_type": "Humanoid",
+      "type_tokens": [
+        "Base",
+        "PC",
+        "Uncommon"
+      ]
+    },
+    "strix.json": {
+      "base_move_walk": 30,
+      "base_size": "M",
+      "hands": 2,
+      "key": "Strix",
+      "legs": 2,
+      "name": "Strix",
+      "race_type": "Humanoid",
+      "type_tokens": [
+        "Base",
+        "PC",
+        "Uncommon"
+      ]
+    },
+    "suli.json": {
+      "base_move_walk": 30,
+      "base_size": "M",
+      "hands": 2,
+      "key": "Suli",
+      "legs": 2,
+      "name": "Suli",
+      "race_type": "Outsider",
+      "type_tokens": [
+        "Base",
+        "PC",
+        "Uncommon"
+      ]
+    },
+    "vanara.json": {
+      "base_move_walk": 30,
+      "base_size": "M",
+      "hands": 2,
+      "key": "Vanara",
+      "legs": 2,
+      "name": "Vanara",
+      "race_type": "Humanoid",
+      "type_tokens": [
+        "Base",
+        "PC",
+        "Uncommon"
+      ]
+    },
+    "vishkanya.json": {
+      "base_move_walk": 30,
+      "base_size": "M",
+      "hands": 2,
+      "key": "Vishkanya",
+      "legs": 2,
+      "name": "Vishkanya",
+      "race_type": "Humanoid",
+      "type_tokens": [
+        "Base",
+        "PC",
+        "Uncommon"
+      ]
+    },
+    "wayang.json": {
+      "base_move_walk": 20,
+      "base_size": "S",
+      "hands": 2,
+      "key": "Wayang",
+      "legs": 2,
+      "name": "Wayang",
+      "race_type": "Humanoid",
+      "type_tokens": [
+        "Base",
+        "PC",
+        "Uncommon"
+      ]
+    }
+  }
+}

@@ -83,12 +83,10 @@ use std::path::{Path, PathBuf};
 
 use sha2::{Digest, Sha256};
 
-use codex::rules_core::cache_gen::WiringClassIndex;
+use codex::pcgen_import::cache_gen::WiringClassIndex;
 use codex::rules_core::pi_screening;
-use codex::rules_core::shape_b_v1::{
-    ClassFeatureCacheData, ClassFeatureGrant, ClassVariantCacheData, Completeness, CorpusRecordV1, CorpusSource,
-    License, Population, RawBonusChain, RawToken,
-};
+use codex::pcgen_import::ingest_payload::{ClassFeatureCacheData, ClassFeatureGrant, ClassVariantCacheData, RawBonusChain, RawToken};
+use codex::rules_core::shape_b_v1::{Completeness, CorpusRecordV1, CorpusSource, License, Population};
 
 /// The one source file this binary ingests, relative to the PCGen `data/`
 /// root. The same string is written into every record's `source.path`.
@@ -279,7 +277,7 @@ fn raw_bonus_chains(rows: &[LstRow]) -> Vec<RawBonusChain> {
 /// as it does for the base row it has always read.
 fn closure_lst_rows(
     wiring_index: &WiringClassIndex,
-    lines: &mut codex::rules_core::wiring_class::CorpusLines,
+    lines: &mut codex::pcgen_import::wiring_class::CorpusLines,
     lst_basename: &str,
     base: &LstRow,
     name: &str,

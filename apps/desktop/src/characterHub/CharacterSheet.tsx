@@ -4,6 +4,7 @@ import {
   loadSavedCharacterDetail,
   type ExplanationDto,
   type LoadSavedCharacterResponse,
+  type SheetLineDto,
   type SpellSelectionDto,
   type WeaponDamageDto,
 } from '../boundary/loadSavedCharacterDetail';
@@ -1811,7 +1812,7 @@ const CLASS_FEATURE_GUTTER = '9.5rem';
  * The sibling of the class-feature list above it, and deliberately the same
  * shape: a label gutter, the trait, and the engine's own text beneath. Where
  * a class-feature row shows `ComputationExplanation.detail`, a racial-trait row
- * shows `race_trait_picker::render_trait_description`'s output — corpus `DESC:`
+ * shows `race_trait_picker::render_trait_description`'s output — corpus description
  * prose re-rendered against this character's display values, so the magnitudes
  * in it are this character's and not the book's printed defaults.
  *
@@ -2094,6 +2095,121 @@ function ClassFeatureDescriptionReferenceSection(props: {
   );
 }
 
+/**
+ * SD-35 AT-35-E2-002 -- the generic "Rules and features" section.
+ *
+ * One section for every held sheet rule's line, grouped by kind, on the
+ * existing sheet IPC (`LoadSavedCharacterResponse.sheetLines`). Each line is
+ * what the player writes on paper (`decisions.md §1`): one final number
+ * (`DC 15`, `+2`), dice in final form (`1d8+2`), or the rule's words. The
+ * engine evaluated every term against this character; nothing is re-derived
+ * here, and a `words` line renders no number at all -- absence is rendered as
+ * absence, never as `0`.
+ */
+export const RULES_AND_FEATURES_ID = 'rules-and-features';
+
+/** Kind -> the heading the section groups under. A kind this table does not name is humanised. */
+const SHEET_LINE_KIND_LABELS: Readonly<Record<string, string>> = {
+  ability: 'Abilities',
+  class: 'Classes',
+  class_feature: 'Class features',
+  companion: 'Companions',
+  deity: 'Deities',
+  domain: 'Domains',
+  equipment: 'Equipment',
+  equipment_modifier: 'Equipment modifiers',
+  feat: 'Feats',
+  language: 'Languages',
+  monster: 'Monsters',
+  monster_ability: 'Monster abilities',
+  power: 'Powers',
+  race: 'Races',
+  race_trait: 'Racial traits',
+  skill: 'Skills',
+  spell: 'Spells',
+  template: 'Templates',
+  trait: 'Traits',
+};
+
+export function sheetLineKindLabel(kind: string): string {
+  const named = SHEET_LINE_KIND_LABELS[kind];
+  if (named !== undefined) {
+    return named;
+  }
+  const words = kind.split('_').filter((word) => word.length > 0);
+  return words.map((word, index) => (index === 0 ? word.charAt(0).toUpperCase() + word.slice(1) : word)).join(' ');
+}
+
+/** Lines grouped by kind, in the order the engine emitted them (kind, then label). */
+export function groupSheetLinesByKind(lines: readonly SheetLineDto[]): Array<{ kind: string; lines: SheetLineDto[] }> {
+  const groups: Array<{ kind: string; lines: SheetLineDto[] }> = [];
+  for (const line of lines) {
+    const last = groups[groups.length - 1];
+    if (last !== undefined && last.kind === line.kind) {
+      last.lines.push(line);
+    } else {
+      groups.push({ kind: line.kind, lines: [line] });
+    }
+  }
+  return groups;
+}
+
+export function RulesAndFeaturesSection(props: { lines: readonly SheetLineDto[]; unavailableReason: string | null }) {
+  const heading = (
+    <p style={{ color: 'var(--color-text-muted)', fontSize: '0.72rem', fontWeight: 700, letterSpacing: '0.04em', margin: '0 0 0.4rem', textTransform: 'uppercase' }}>
+      Rules and features
+    </p>
+  );
+  if (props.unavailableReason !== null) {
+    return (
+      <div id={RULES_AND_FEATURES_ID} style={{ marginTop: '1.25rem' }}>
+        {heading}
+        <p style={{ color: 'var(--color-text-faint)', fontSize: '0.75rem', margin: 0 }}>{props.unavailableReason}</p>
+      </div>
+    );
+  }
+  if (props.lines.length === 0) {
+    return null;
+  }
+  return (
+    <div id={RULES_AND_FEATURES_ID} style={{ marginTop: '1.25rem' }}>
+      {heading}
+      {groupSheetLinesByKind(props.lines).map((group) => (
+        <section key={group.kind} data-kind={group.kind} style={{ marginBottom: '0.75rem' }}>
+          <p style={{ color: 'var(--color-text-muted)', fontSize: '0.72rem', fontWeight: 700, margin: '0.5rem 0 0.2rem' }}>
+            {sheetLineKindLabel(group.kind)}
+          </p>
+          {group.lines.map((line) => (
+            <div key={line.id} data-rule-id={line.id} data-form={line.form} style={{ borderBottom: '1px solid var(--color-border)', padding: '0.4rem 0' }}>
+              <div style={{ alignItems: 'baseline', display: 'flex', flexWrap: 'wrap', gap: '0.6rem' }}>
+                <span style={{ color: 'var(--color-text)', fontSize: '0.85rem', fontWeight: 700 }}>{line.label}</span>
+                {line.form === 'words' ? null : (
+                  <span data-sheet-value style={{ color: 'var(--color-accent)', fontSize: '0.85rem', fontWeight: 800 }}>{line.value}</span>
+                )}
+                {line.also.map((also) => (
+                  <span key={also} data-sheet-also style={{ color: 'var(--color-text-secondary)', fontSize: '0.8rem' }}>
+                    {also}
+                  </span>
+                ))}
+                {line.condition === null ? null : (
+                  <span data-sheet-condition style={{ color: 'var(--color-text-muted)', fontSize: '0.78rem', fontStyle: 'italic' }}>
+                    {line.condition}
+                  </span>
+                )}
+              </div>
+              {line.prose.length === 0 ? null : (
+                <p style={{ color: 'var(--color-text-secondary)', fontSize: '0.72rem', margin: '0.2rem 0 0', whiteSpace: 'pre-line' }}>
+                  {line.prose}
+                </p>
+              )}
+            </div>
+          ))}
+        </section>
+      ))}
+    </div>
+  );
+}
+
 function ActionsTab(props: {
   levelEntries: LevelEntry[];
   explanations: readonly ExplanationDto[];
@@ -2104,8 +2220,11 @@ function ActionsTab(props: {
    * character's own selection list to check against — see
    * `unmatchedClassFeatureDescriptions`'s own doc comment. */
   selectedFeats: readonly string[];
+  /** SD-35 AT-35-E2-002: the "Rules and features" lines the engine rendered. */
+  sheetLines: readonly SheetLineDto[];
+  sheetRulesUnavailableReason: string | null;
 }) {
-  // SD31-D7-PROSE-003: the real corpus `DESC:` text, fetched once and joined
+  // SD31-D7-PROSE-003: the real corpus description text, fetched once and joined
   // in `buildClassFeatureSurface` -- a SECOND, additive data source
   // alongside `props.explanations`, never a replacement for the engine's own
   // computed `detail`. Self-contained (fetched here rather than threaded
@@ -2145,7 +2264,12 @@ function ActionsTab(props: {
     };
   }, []);
 
-  const surface = buildClassFeatureSurface(props.explanations, props.heldClasses, classFeatureDescriptions);
+  const surface = buildClassFeatureSurface(
+    props.explanations,
+    props.heldClasses,
+    classFeatureDescriptions,
+    props.sheetLines
+  );
   const generalBenefits = props.levelEntries.flatMap((entry) =>
     entry.features.map((feature) => ({ characterLevel: entry.characterLevel, feature }))
   );
@@ -2166,6 +2290,8 @@ function ActionsTab(props: {
     props.racialTraits.rows.length === 0 &&
     props.racialTraits.unavailableReason === null &&
     unmatchedDescriptions.length === 0 &&
+    props.sheetLines.length === 0 &&
+    props.sheetRulesUnavailableReason === null &&
     !holdsRogue
   ) {
     return (
@@ -2223,7 +2349,7 @@ function ActionsTab(props: {
                 {row.detail}
               </p>
               {/*
-                SD31-D7-PROSE-003: the real rulebook `DESC:` text, when the
+                SD31-D7-PROSE-003: the real rulebook description text, when the
                 corpus row carries one and it joins to this record. A
                 SEPARATE paragraph from `row.detail` above: `detail` is the
                 engine's own computed derivation (sometimes just a bare
@@ -2287,6 +2413,8 @@ function ActionsTab(props: {
           ))}
         </div>
       ) : null}
+
+      <RulesAndFeaturesSection lines={props.sheetLines} unavailableReason={props.sheetRulesUnavailableReason} />
 
       {generalBenefits.length > 0 ? (
         <div style={{ marginTop: '1.25rem' }}>
@@ -2762,10 +2890,15 @@ export function CharacterSheet(props: {
     explanations: ExplanationDto[];
     weaponDamage: WeaponDamageDto[];
     resolvedRacialTraits: RaceSelectionResponse | null;
+    /** SD-35 AT-35-E2-002: the "Rules and features" lines, re-read with the rest. */
+    sheetLines: SheetLineDto[];
+    sheetRulesUnavailableReason: string | null;
   }>({
     explanations: props.detail?.explanations ?? [],
     weaponDamage: props.detail?.weaponDamage ?? [],
     resolvedRacialTraits: props.detail?.resolvedRacialTraits ?? null,
+    sheetLines: props.detail?.sheetLines ?? [],
+    sheetRulesUnavailableReason: props.detail?.sheetRulesUnavailableReason ?? null,
   });
   useEffect(() => {
     let cancelled = false;
@@ -2773,6 +2906,8 @@ export function CharacterSheet(props: {
       explanations: props.detail?.explanations ?? [],
       weaponDamage: props.detail?.weaponDamage ?? [],
       resolvedRacialTraits: props.detail?.resolvedRacialTraits ?? null,
+      sheetLines: props.detail?.sheetLines ?? [],
+      sheetRulesUnavailableReason: props.detail?.sheetRulesUnavailableReason ?? null,
     });
     loadSavedCharacterDetail({ characterId: props.row.characterId })
       .then((loaded) => {
@@ -2781,6 +2916,8 @@ export function CharacterSheet(props: {
             explanations: loaded.explanations,
             weaponDamage: loaded.weaponDamage,
             resolvedRacialTraits: loaded.resolvedRacialTraits,
+            sheetLines: loaded.sheetLines,
+            sheetRulesUnavailableReason: loaded.sheetRulesUnavailableReason,
           });
         }
       })
@@ -3023,6 +3160,10 @@ export function CharacterSheet(props: {
         weaponDamage: [],
         // Nor a racial-trait resolution — see `characterSheetRefresh.ts`.
         resolvedRacialTraits: null,
+        // Nor the sheet-rule lines (SD-35 AT-35-E2-002): a purchase changes
+        // what the character holds; absent until re-read, never stale.
+        sheetLines: [],
+        sheetRulesUnavailableReason: null,
       });
       setMoney(outcome.money);
       // Buying a weapon is exactly what makes a new Weapons row appear.
@@ -3081,6 +3222,10 @@ export function CharacterSheet(props: {
         weaponDamage: [],
         // Nor a racial-trait resolution — see `characterSheetRefresh.ts`.
         resolvedRacialTraits: null,
+        // Nor the sheet-rule lines (SD-35 AT-35-E2-002): a purchase changes
+        // what the character holds; absent until re-read, never stale.
+        sheetLines: [],
+        sheetRulesUnavailableReason: null,
       });
       setMoney(outcome.money);
       // Attaching a +1 enhancement changes that weapon's Enh. columns.
@@ -3324,6 +3469,8 @@ export function CharacterSheet(props: {
       // surely as adding one — dropping `Fortunate One` takes halfling luck
       // back from "4 times per day" to "Three".
       resolvedRacialTraits: loaded.resolvedRacialTraits,
+      sheetLines: loaded.sheetLines,
+      sheetRulesUnavailableReason: loaded.sheetRulesUnavailableReason,
     });
     await refreshDurability();
   }
@@ -3558,6 +3705,8 @@ export function CharacterSheet(props: {
         explanations: loaded.explanations,
         weaponDamage: loaded.weaponDamage,
         resolvedRacialTraits: loaded.resolvedRacialTraits,
+        sheetLines: loaded.sheetLines,
+        sheetRulesUnavailableReason: loaded.sheetRulesUnavailableReason,
       });
     } catch {
       // Intentionally keeps the current records.
@@ -4186,6 +4335,8 @@ export function CharacterSheet(props: {
                   racialTraits={racialTraits}
                   raceLabel={props.row.raceLabel}
                   selectedFeats={props.detail?.selectedFeats ?? []}
+                  sheetLines={engineRecords.sheetLines}
+                  sheetRulesUnavailableReason={engineRecords.sheetRulesUnavailableReason}
                 />
               )}
             </div>

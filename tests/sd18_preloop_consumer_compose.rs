@@ -42,9 +42,13 @@ use codex::pcgen_import::include_resolver::{
 use codex::rules_core::character_input::{
     CharacterInput, load_character_input_fixture,
 };
+// SD-35 `AT-35-E6-003-RULED` cycle 3: the PCC convenience loader moved to the converter side
+// (`codex::pcgen_import::pcc_package_loader`); the composer it feeds stayed in `rules_core`.
+use codex::pcgen_import::pcc_package_loader::{
+    load_composed_core_rulebook, project_corpus_from_owned,
+};
 use codex::rules_core::composed_input::{
     ComposedInputDiagnosticKind, ComposedInputSeverity, CORE_RULEBOOK_PACKAGE_ID, compose,
-    load_composed_core_rulebook, project_corpus_from_owned,
 };
 use codex::rules_core::pilot_compute::compute_pilot_base_chassis;
 use codex::rules_core::source_content::{SourceRef, SourceContentKind};

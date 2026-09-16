@@ -23,12 +23,16 @@
 use std::collections::{BTreeMap, BTreeSet};
 use std::path::{Path, PathBuf};
 
+// SD-35 `AT-35-E6-003-RULED` cycle 17 (`decisions.md` §11, §19): this module read the ingested
+// row directly until this cycle. It no longer does, and names no converter at all. The two spell
+// seams below read the SETTLED formulas `pcgen_import::spell_formula_settle` writes into
+// `data/converted/record_vars.json` at authoring time; the `class_feature` seam's own token walk
+// moved, whole and unchanged, to `oracle_validation::class_feature_scaling_bar_check`.
+use serde::{Deserialize, Serialize};
+
 use crate::rules_core::character_input::{ActiveState, EquipmentSelection};
 use crate::rules_core::corpus_loader::{BookCorpusRoot, load_equipment_corpus};
 use crate::rules_core::equipment_effects::compute_equipment_effects;
-use crate::rules_core::pilot_compute::UNDINE_RACE_TRAIT_FORMULAS;
-use crate::rules_core::pilot_compute::formula_interpreter::PcgenFormulaEvaluator;
-use crate::rules_core::pilot_compute::formula_reproduction_harness::FormulaEvaluator;
 use crate::rules_core::rules_tables::companion_chassis::companion_book;
 use crate::rules_core::rules_tables::monster_chassis::{MonsterStatBlock, MONSTER_BOOKS};
 
@@ -113,14 +117,20 @@ pub fn run_bar_check(repo_root: &Path) -> BarCheckReport {
     let monster_sla = run_monster_sla_bar_check(repo_root);
     let spell = run_spell_bar_check(repo_root);
     let spell_range = run_spell_range_bar_check(repo_root);
-    let class_feature = run_class_feature_bar_check(repo_root);
+    let class_feature =
+        crate::oracle_validation::class_feature_scaling_bar_check::run_class_feature_bar_check(
+            repo_root,
+        );
     let monster_ability = run_monster_ability_bar_check(repo_root);
     let monster_ability_formula = run_monster_ability_formula_bar_check(repo_root);
     let companion = run_companion_bar_check(repo_root);
     let companion_skill = run_companion_skill_bar_check(repo_root);
     let companion_save_dc = run_companion_save_dc_bar_check(repo_root);
     let class_feature_description = run_class_feature_description_bar_check(repo_root);
-    let race_trait_formula = run_race_trait_formula_bar_check(repo_root);
+    let race_trait_formula =
+        crate::oracle_validation::race_trait_formula_bar_check::run_race_trait_formula_bar_check(
+            repo_root,
+        );
     let mut cleared = equipment.cleared;
     cleared.extend(monster.cleared);
     cleared.extend(monster_sla.cleared);
@@ -292,10 +302,10 @@ fn run_equipment_bar_check(repo_root: &Path) -> BarCheckReport {
 /// spells it differently) -- an honest absence, never a guessed value.
 ///
 /// **SD31-E6-F9-003: the rule's own "unless otherwise noted" clause is not
-/// decorative.** A monster's `BONUS:VAR|SLA_CL|<value>` token
+/// decorative.** A monster's transcribed SLA caster-level field
 /// ([`MonsterStatBlock::sla_cl_token`]) states EITHER the generic rule
 /// (`HD`, or the equivalent `max(TL,1)`/`(max(TL,1))`) OR a monster-specific
-/// literal override -- Couatl carries `BONUS:VAR|SLA_CL|9` against 12 Hit
+/// literal override -- Couatl carries `9` against 12 Hit
 /// Dice; Demon (Glabrezu) carries `14` against 12 HD. Before this function
 /// read `sla_cl_token` it always applied the generic HD rule regardless,
 /// which silently served the WRONG caster level for every monster whose row
@@ -305,7 +315,7 @@ fn run_equipment_bar_check(repo_root: &Path) -> BarCheckReport {
 /// `HD`/`max(TL,1)` spelling the function used to assume unconditionally.
 pub fn spell_like_ability_caster_level(monster: &MonsterStatBlock) -> Option<i32> {
     // SD31-E6-F1-002 (`OPEN-ISSUES.md` row 44): a monster with no
-    // `BONUS:VAR|SLA_CL|` token has no spell-like abilities, and this
+    // transcribed SLA caster-level field has no spell-like abilities, and this
     // function has a real production caller now
     // (`apps/desktop/src-tauri/src/monster_catalog.rs`) that would otherwise
     // hand every monster with a readable `MONSTERCLASS:` a caster level it
@@ -329,32 +339,25 @@ pub fn spell_like_ability_caster_level(monster: &MonsterStatBlock) -> Option<i32
         // rather than silently losing its caster level.
         Some("HD") | Some("max(TL,1)") | Some("(max(TL,1))") | None => Some(hd),
         // Every other value is the row's own STATED override -- trust the
-        // corpus over the generic rule. A plain integer parses directly.
+        // corpus over the generic rule, and it is always a plain integer.
         //
-        // W26-INTERPRETER-INTEGRATE (`OPERATOR-RULINGS-2026-08-21.md` §20):
-        // a value that is not a plain integer is no longer an automatic
-        // refusal -- `formula_interpreter::PcgenFormulaEvaluator` reads real
-        // PCGen arithmetic now, and `HD*3/4`
-        // (`book_of_the_damned_volume_2`'s Demon (Vermlek)) is exactly such
-        // a formula: multiply and divide over the monster's OWN Hit Dice,
-        // which this function already read two lines above to apply the
-        // generic rule. `TL` is bound to the same value as `HD` (PCGen's own
-        // `TL` == "total levels", which for a monster with only a
-        // `MONSTERCLASS:` token and no PC class levels sums to exactly the
-        // racial HD -- the same equivalence
-        // `monster_ability_formula_save_dc`'s own `parse_formula_base_plus_
-        // ability` already establishes and cites for this corpus). The
-        // interpreter refuses -- returns `Err`, never a guess -- on any
-        // identifier this repo has not bound (a race-specific bonus name
-        // with no `DEFINE:` on the row, say), so `.ok()` below is still the
-        // same honest-absence contract every other arm of this function
-        // keeps: `Some(value)` only when the formula both parses AND
-        // evaluates against the two variables this function can honestly
-        // supply.
-        Some(raw) => raw.trim().parse::<i32>().ok().or_else(|| {
-            let vars = BTreeMap::from([("HD".to_string(), i64::from(hd)), ("TL".to_string(), i64::from(hd))]);
-            PcgenFormulaEvaluator.evaluate(raw.trim(), &vars).ok().and_then(|v| i32::try_from(v).ok())
-        }),
+        // SD-35 `AT-35-E6-001` (`decisions.md` §1, §11). Until this cycle this
+        // arm ran an arithmetic value through the PCGen formula interpreter at
+        // render time, for exactly one corpus row -- Demon (Vermlek)'s
+        // `HD*3/4` against its own 4 racial Hit Dice. A monster's racial Hit
+        // Dice are a fixed property of its own row, so that value is a
+        // constant, and the arithmetic now happens at ingest instead:
+        // `scripts/transcribe_monster_tables.py::resolve_sla_cl_arithmetic`
+        // resolves it and the transcribed table states the number the sheet
+        // prints (`sla_cl_token: Some("3")`). Nothing live evaluates a formula
+        // string. A value the converter could not resolve is transcribed as an
+        // honest absence, so `.ok()` below keeps the same contract every other
+        // arm keeps: `Some(value)` only for a value that really is a number.
+        //
+        // Re-derive that this arm now sees integers only:
+        //   grep -rn 'sla_cl_token: Some("' src/rules_core/rules_tables/ \
+        //     | grep -vE 'Some\("[0-9]+"\)|Some\("HD"\)|max\(TL,1\)'
+        Some(raw) => raw.trim().parse::<i32>().ok(),
     }
 }
 
@@ -537,7 +540,7 @@ fn run_monster_bar_check(repo_root: &Path) -> BarCheckReport {
 /// `CASTERLEVEL` argument tail (`src/rules_core/pcgen_desc.rs`'s
 /// `dropped_args`) -- this is a structural derivation, not a resolved
 /// magnitude.
-#[derive(Debug, Clone, PartialEq)]
+#[derive(Debug, Clone, PartialEq, Serialize, Deserialize)]
 pub struct CasterLevelLinearFormula {
     pub per_level: i32,
     pub unit: String,
@@ -646,40 +649,74 @@ fn spell_corpus_dir_exists(repo_root: &Path, book: &str) -> Option<PathBuf> {
     dir.join("spell").is_dir().then_some(dir)
 }
 
-/// Walks `data/corpus/<book>/spell/` once (it is nested by spell level for
-/// some books, flat for others -- `WalkDir`-free recursive walk handles
-/// both without assuming a depth) and returns every record's `DURATION:`
-/// raw token, keyed by the record's `data.key` -- the same identity
-/// [`SpellFixture::record_key`] and `SpellCatalogRow.key` both carry.
-fn load_spell_durations(spell_dir: &Path) -> BTreeMap<String, String> {
-    let mut out = BTreeMap::new();
-    let mut stack = vec![spell_dir.to_path_buf()];
-    while let Some(dir) = stack.pop() {
-        let Ok(read_dir) = std::fs::read_dir(&dir) else { continue };
-        for entry in read_dir.flatten() {
-            let path = entry.path();
-            if path.is_dir() {
-                stack.push(path);
-                continue;
-            }
-            if path.extension().and_then(|e| e.to_str()) != Some("json") {
-                continue;
-            }
-            let Ok(text) = std::fs::read_to_string(&path) else { continue };
-            let Ok(doc) = serde_json::from_str::<serde_json::Value>(&text) else { continue };
-            let Some(key) = doc["data"]["key"].as_str() else { continue };
-            let Some(tokens) = doc["data"]["raw_tokens"].as_array() else { continue };
-            for t in tokens {
-                if t["key"].as_str() == Some("DURATION") {
-                    if let Some(v) = t["value"].as_str() {
-                        out.insert(key.to_string(), v.to_string());
-                    }
-                    break;
-                }
-            }
-        }
+/// The settled spell formulas this repo ships, read from
+/// `data/converted/record_vars.json` under `repo_root`.
+///
+/// SD-35 `AT-35-E6-003-RULED` cycle 17 (`decisions.md` §11, §19). This function
+/// replaces the two recursive `data/corpus/<book>/spell/` walks that used to sit
+/// here and read each record's raw `DURATION:`/`RANGE:` token through the
+/// converter. **The reading did not stop happening -- it moved to authoring
+/// time**, into [`crate::pcgen_import::spell_formula_settle`], which performs the
+/// identical walk and applies the identical parsers
+/// ([`parse_caster_level_linear_duration`], [`spell_range_formula`]) once, and
+/// whose own whole-corpus test proves the settled tables agree with that walk
+/// record for record. An absent or unreadable artifact settles to an EMPTY table
+/// -- the same refusal posture [`crate::rules_core::record_vars::package`] takes,
+/// and the same answer the old walk gave for a book with no ingest.
+fn settled_spell_formulas(repo_root: &Path) -> &'static SettledSpellFormulas {
+    &crate::rules_core::record_vars::package_at(repo_root).spell_formulas
+}
+
+/// One spell record's settled key: its book's `data/corpus/` directory name and
+/// its own `data.key`, joined by [`SETTLED_SPELL_KEY_SEPARATOR`]. The separator
+/// appears in neither half for any record in this corpus, which
+/// `spell_formula_settle`'s own test asserts over every book rather than assuming.
+pub fn settled_spell_key(book: &str, record_key: &str) -> String {
+    format!("{book}{SETTLED_SPELL_KEY_SEPARATOR}{record_key}")
+}
+
+/// Splits a [`settled_spell_key`] back into `(book, record_key)`.
+pub fn split_settled_spell_key(key: &str) -> Option<(&str, &str)> {
+    key.split_once(SETTLED_SPELL_KEY_SEPARATOR)
+}
+
+/// The separator [`settled_spell_key`] joins with.
+pub const SETTLED_SPELL_KEY_SEPARATOR: char = '|';
+
+/// The spell `DURATION:`/`RANGE:` formulas, settled at authoring time.
+///
+/// SD-35 `AT-35-E6-003-RULED` cycle 17. Every entry is keyed by
+/// [`settled_spell_key`]. The two `*_refused` sets carry the records that DO
+/// carry the token but whose text the evaluator refuses to read a formula out of
+/// -- kept apart from "no such record" because the bar check's two failure
+/// branches are different claims, and collapsing them would make a missing
+/// ingest look like an unparseable one. No token text is carried: a refusal is a
+/// key, not a source string.
+#[derive(Debug, Clone, Default, PartialEq, Serialize, Deserialize)]
+pub struct SettledSpellFormulas {
+    /// `settled_spell_key` -> the caster-level-linear duration its `DURATION:`
+    /// token settles to.
+    pub durations: BTreeMap<String, CasterLevelLinearFormula>,
+    /// Records carrying a `DURATION:` the evaluator reads no formula out of.
+    pub duration_refused: BTreeSet<String>,
+    /// `settled_spell_key` -> the range formula its `RANGE:` token settles to.
+    pub ranges: BTreeMap<String, SpellRangeFormula>,
+    /// Records carrying a `RANGE:` the evaluator reads no formula out of.
+    pub range_refused: BTreeSet<String>,
+}
+
+impl SettledSpellFormulas {
+    /// Whether the settled tables know this record's `DURATION:` at all --
+    /// parsed or refused. The old walk's `durations.get(key).is_none()` test,
+    /// stated on the settled shape.
+    pub fn has_duration(&self, key: &str) -> bool {
+        self.durations.contains_key(key) || self.duration_refused.contains(key)
     }
-    out
+
+    /// The `RANGE:` sibling of [`SettledSpellFormulas::has_duration`].
+    pub fn has_range(&self, key: &str) -> bool {
+        self.ranges.contains_key(key) || self.range_refused.contains(key)
+    }
 }
 
 /// The 8 books `spell_resolver::spell_catalog_rows()` chains, as
@@ -689,7 +726,7 @@ fn load_spell_durations(spell_dir: &Path) -> BTreeMap<String, String> {
 /// constants) because this list names `data/corpus/` directory names, not
 /// wire-form short codes; the two are related by
 /// [`spell_book_corpus_dir_for_short_code`] below.
-const SPELL_CORPUS_BOOK_DIRS: &[&str] = &[
+pub const SPELL_CORPUS_BOOK_DIRS: &[&str] = &[
     "core_rulebook",
     "advanced_players_guide",
     "advanced_class_guide",
@@ -700,7 +737,7 @@ const SPELL_CORPUS_BOOK_DIRS: &[&str] = &[
     "ultimate_combat",
     // W19-INTEGRATE: `inner_sea_gods` was found live, already carrying a
     // real `data/corpus/inner_sea_gods/spell/` cache (92 files, already
-    // `raw_tokens`-enriched by `enrich_spell_raw_tokens.rs`'s own
+    // token-array-enriched by `enrich_spell_raw_tokens.rs`'s own
     // `TARGET_BOOKS` since `SD31-E6-F10-001`) but MISSING from this list --
     // the exact same silent-gap shape the `ultimate_wilderness` entry below
     // fixes, discovered while fixing it. Neither this book's own `spell`
@@ -788,16 +825,14 @@ mod spell_book_corpus_dir_coverage_tests {
 pub fn all_spell_caster_level_durations(
     repo_root: &Path,
 ) -> BTreeMap<(String, String), CasterLevelLinearFormula> {
-    let mut out = BTreeMap::new();
-    for book in SPELL_CORPUS_BOOK_DIRS {
-        let Some(dir) = spell_corpus_dir_exists(repo_root, book) else { continue };
-        for (key, raw) in load_spell_durations(&dir.join("spell")) {
-            if let Some(formula) = parse_caster_level_linear_duration(&raw) {
-                out.insert((book.to_string(), key), formula);
-            }
-        }
-    }
-    out
+    settled_spell_formulas(repo_root)
+        .durations
+        .iter()
+        .filter_map(|(key, formula)| {
+            let (book, record_key) = split_settled_spell_key(key)?;
+            Some(((book.to_string(), record_key.to_string()), formula.clone()))
+        })
+        .collect()
 }
 
 /// The `kind=spell` half of [`run_bar_check`]. Reads the SAME
@@ -816,16 +851,17 @@ fn run_spell_bar_check(repo_root: &Path) -> BarCheckReport {
     let mut engine_does_not_hold: BTreeMap<String, String> = BTreeMap::new();
 
     for book in &books {
-        let Some(dir) = spell_corpus_dir_exists(repo_root, book) else {
+        if spell_corpus_dir_exists(repo_root, book).is_none() {
             for f in fixtures.iter().filter(|f| &f.book == book) {
                 engine_does_not_hold.insert(f.unit_id.clone(), book.clone());
             }
             continue;
-        };
-        let durations = load_spell_durations(&dir.join("spell"));
+        }
+        let settled = settled_spell_formulas(repo_root);
 
         for fixture in fixtures.iter().filter(|f| &f.book == book) {
-            let Some(raw) = durations.get(&fixture.record_key) else {
+            let settled_key = settled_spell_key(book, &fixture.record_key);
+            if !settled.has_duration(&settled_key) {
                 failures.insert(
                     fixture.unit_id.clone(),
                     format!(
@@ -834,14 +870,14 @@ fn run_spell_bar_check(repo_root: &Path) -> BarCheckReport {
                     ),
                 );
                 continue;
-            };
-            match parse_caster_level_linear_duration(raw) {
+            }
+            match settled.durations.get(&settled_key).cloned() {
                 None => {
                     failures.insert(
                         fixture.unit_id.clone(),
                         format!(
                             "corpus row states {} but the evaluator produced no caster-level \
-                             formula at all (raw DURATION: {raw:?})",
+                             formula at all from this record's DURATION",
                             fixture.corpus_field
                         ),
                     );
@@ -894,7 +930,7 @@ fn run_spell_bar_check(repo_root: &Path) -> BarCheckReport {
 /// level, never a resolved feet-at-level-N number (matching
 /// `render_pcgen_desc`'s own `CASTERLEVEL`-argument-drop policy, restated
 /// at [`parse_caster_level_linear_duration`]'s own doc comment).
-#[derive(Debug, Clone, Copy, PartialEq)]
+#[derive(Debug, Clone, Copy, PartialEq, Serialize, Deserialize)]
 pub struct SpellRangeFormula {
     pub base_ft: i32,
     pub rate_ft: i32,
@@ -997,40 +1033,6 @@ pub fn load_spell_range_fixtures(repo_root: &Path) -> Vec<SpellRangeFixture> {
         .collect()
 }
 
-/// Walks `data/corpus/<book>/spell/` once and returns every record's
-/// `RANGE:` raw token, keyed by the record's `data.key` -- the RANGE
-/// sibling of [`load_spell_durations`], same recursive-walk shape.
-fn load_spell_ranges(spell_dir: &Path) -> BTreeMap<String, String> {
-    let mut out = BTreeMap::new();
-    let mut stack = vec![spell_dir.to_path_buf()];
-    while let Some(dir) = stack.pop() {
-        let Ok(read_dir) = std::fs::read_dir(&dir) else { continue };
-        for entry in read_dir.flatten() {
-            let path = entry.path();
-            if path.is_dir() {
-                stack.push(path);
-                continue;
-            }
-            if path.extension().and_then(|e| e.to_str()) != Some("json") {
-                continue;
-            }
-            let Ok(text) = std::fs::read_to_string(&path) else { continue };
-            let Ok(doc) = serde_json::from_str::<serde_json::Value>(&text) else { continue };
-            let Some(key) = doc["data"]["key"].as_str() else { continue };
-            let Some(tokens) = doc["data"]["raw_tokens"].as_array() else { continue };
-            for t in tokens {
-                if t["key"].as_str() == Some("RANGE") {
-                    if let Some(v) = t["value"].as_str() {
-                        out.insert(key.to_string(), v.to_string());
-                    }
-                    break;
-                }
-            }
-        }
-    }
-    out
-}
-
 /// Every spell record, across all 8 ingested books, whose corpus `RANGE:`
 /// token names one of the three caster-level-linear keywords
 /// [`spell_range_formula`] resolves -- keyed by `(data/corpus book dir,
@@ -1040,16 +1042,14 @@ fn load_spell_ranges(spell_dir: &Path) -> BTreeMap<String, String> {
 /// [`all_spell_caster_level_durations`]: this walks every book once and
 /// returns everything parseable, not only the fixture-covered subset.
 pub fn all_spell_caster_level_ranges(repo_root: &Path) -> BTreeMap<(String, String), SpellRangeFormula> {
-    let mut out = BTreeMap::new();
-    for book in SPELL_CORPUS_BOOK_DIRS {
-        let Some(dir) = spell_corpus_dir_exists(repo_root, book) else { continue };
-        for (key, raw) in load_spell_ranges(&dir.join("spell")) {
-            if let Some(formula) = spell_range_formula(&raw) {
-                out.insert((book.to_string(), key), formula);
-            }
-        }
-    }
-    out
+    settled_spell_formulas(repo_root)
+        .ranges
+        .iter()
+        .filter_map(|(key, formula)| {
+            let (book, record_key) = split_settled_spell_key(key)?;
+            Some(((book.to_string(), record_key.to_string()), *formula))
+        })
+        .collect()
 }
 
 /// The `kind=spell` `RANGE:` half of [`run_bar_check`]. Reads the SAME
@@ -1065,16 +1065,17 @@ fn run_spell_range_bar_check(repo_root: &Path) -> BarCheckReport {
     let mut engine_does_not_hold: BTreeMap<String, String> = BTreeMap::new();
 
     for book in &books {
-        let Some(dir) = spell_corpus_dir_exists(repo_root, book) else {
+        if spell_corpus_dir_exists(repo_root, book).is_none() {
             for f in fixtures.iter().filter(|f| &f.book == book) {
                 engine_does_not_hold.insert(f.unit_id.clone(), book.clone());
             }
             continue;
-        };
-        let ranges = load_spell_ranges(&dir.join("spell"));
+        }
+        let settled = settled_spell_formulas(repo_root);
 
         for fixture in fixtures.iter().filter(|f| &f.book == book) {
-            let Some(raw) = ranges.get(&fixture.record_key) else {
+            let settled_key = settled_spell_key(book, &fixture.record_key);
+            if !settled.has_range(&settled_key) {
                 failures.insert(
                     fixture.unit_id.clone(),
                     format!(
@@ -1083,14 +1084,14 @@ fn run_spell_range_bar_check(repo_root: &Path) -> BarCheckReport {
                     ),
                 );
                 continue;
-            };
-            match spell_range_formula(raw) {
+            }
+            match settled.ranges.get(&settled_key).copied() {
                 None => {
                     failures.insert(
                         fixture.unit_id.clone(),
                         format!(
                             "corpus row states {} but the evaluator produced no caster-level \
-                             range formula at all (raw RANGE: {raw:?})",
+                             range formula at all from this record's RANGE",
                             fixture.corpus_field
                         ),
                     );
@@ -1357,180 +1358,6 @@ pub fn load_class_feature_fixtures(repo_root: &Path) -> Vec<ClassFeatureFixture>
         .collect()
 }
 
-/// Where this repo's own ingest of `book`'s `class_feature` kind lives, and
-/// whether it exists -- the `class_feature` sibling of
-/// [`ingested_equipment_dir`]/[`spell_corpus_dir_exists`].
-fn class_feature_corpus_dir_exists(repo_root: &Path, book: &str) -> Option<PathBuf> {
-    let dir = repo_root.join("data").join("corpus").join(book);
-    dir.join("class_feature").is_dir().then_some(dir)
-}
-
-/// Walks `data/corpus/<book>/class_feature/` once (nested by class/ability
-/// slug) and returns every record's `BONUS:VAR|<name>|<formula>` tokens,
-/// keyed by the record's own `data.key` -- the `class_feature` sibling of
-/// [`load_spell_durations`]/[`load_spell_ranges`]'s recursive walk, carrying
-/// every `VAR` token (not just one field) because a class-feature bar check
-/// needs BOTH the headline formula token and, potentially on a DIFFERENT
-/// record in the same walk, the level-variable's own alias definition.
-fn load_class_feature_bonus_vars(
-    class_feature_dir: &Path,
-) -> BTreeMap<String, Vec<(String, String)>> {
-    let mut out: BTreeMap<String, Vec<(String, String)>> = BTreeMap::new();
-    let mut stack = vec![class_feature_dir.to_path_buf()];
-    while let Some(dir) = stack.pop() {
-        let Ok(read_dir) = std::fs::read_dir(&dir) else { continue };
-        for entry in read_dir.flatten() {
-            let path = entry.path();
-            if path.is_dir() {
-                stack.push(path);
-                continue;
-            }
-            if path.extension().and_then(|e| e.to_str()) != Some("json") {
-                continue;
-            }
-            let Ok(text) = std::fs::read_to_string(&path) else { continue };
-            let Ok(doc) = serde_json::from_str::<serde_json::Value>(&text) else { continue };
-            let Some(key) = doc["data"]["key"].as_str() else { continue };
-            let Some(tokens) = doc["data"]["raw_tokens"].as_array() else { continue };
-            let mut vars = Vec::new();
-            for t in tokens {
-                if t["key"].as_str() != Some("BONUS") {
-                    continue;
-                }
-                let Some(v) = t["value"].as_str() else { continue };
-                let Some(rest) = v.strip_prefix("VAR|") else { continue };
-                let Some((name, formula)) = rest.split_once('|') else { continue };
-                vars.push((name.to_string(), formula.to_string()));
-            }
-            if !vars.is_empty() {
-                out.entry(key.to_string()).or_default().extend(vars);
-            }
-        }
-    }
-    out
-}
-
-/// Searches every record's `BONUS:VAR` tokens `bonus_vars` carries (the
-/// WHOLE book, not one record -- see [`ClassFeatureFixture`]'s doc comment
-/// on why the alias may live on a sibling record) for a token whose NAME is
-/// `level_var`, and returns its formula text verbatim (the declared alias,
-/// e.g. `"BarbarianLVL"` or, one hop short of a base class,
-/// `"SlayerStudiedTargetLVL"`) -- `None` if no record in the book defines it.
-fn find_level_var_alias(
-    bonus_vars: &BTreeMap<String, Vec<(String, String)>>,
-    level_var: &str,
-) -> Option<String> {
-    bonus_vars.values().flatten().find(|(name, _)| name == level_var).map(|(_, v)| v.clone())
-}
-
-/// The `kind=class_feature` half of [`run_bar_check`].
-fn run_class_feature_bar_check(repo_root: &Path) -> BarCheckReport {
-    let fixtures = load_class_feature_fixtures(repo_root);
-    let fixtures_total = fixtures.len();
-    let books: BTreeSet<String> = fixtures.iter().map(|f| f.book.clone()).collect();
-
-    let mut cleared = BTreeSet::new();
-    let mut failures: BTreeMap<String, String> = BTreeMap::new();
-    let mut engine_does_not_hold: BTreeMap<String, String> = BTreeMap::new();
-
-    for book in &books {
-        let Some(dir) = class_feature_corpus_dir_exists(repo_root, book) else {
-            for f in fixtures.iter().filter(|f| &f.book == book) {
-                engine_does_not_hold.insert(f.unit_id.clone(), book.clone());
-            }
-            continue;
-        };
-        let bonus_vars = load_class_feature_bonus_vars(&dir.join("class_feature"));
-
-        for fixture in fixtures.iter().filter(|f| &f.book == book) {
-            let Some(record_vars) = bonus_vars.get(&fixture.record_key) else {
-                failures.insert(
-                    fixture.unit_id.clone(),
-                    format!(
-                        "{:?} does not resolve against {book}'s ingested class_feature cache",
-                        fixture.record_key
-                    ),
-                );
-                continue;
-            };
-            let Some((_, raw_formula)) =
-                record_vars.iter().find(|(name, _)| name == &fixture.bonus_var_name)
-            else {
-                failures.insert(
-                    fixture.unit_id.clone(),
-                    format!(
-                        "corpus row states {} but carries no BONUS:VAR|{}| token at all",
-                        fixture.corpus_field, fixture.bonus_var_name
-                    ),
-                );
-                continue;
-            };
-            let Some((level_var, formula)) = parse_class_feature_level_scaling(raw_formula)
-            else {
-                failures.insert(
-                    fixture.unit_id.clone(),
-                    format!(
-                        "corpus row states {} but the evaluator could not parse a level-scaling \
-                         formula from {raw_formula:?}",
-                        fixture.corpus_field
-                    ),
-                );
-                continue;
-            };
-            if level_var != fixture.expected_level_var
-                || formula.offset_pre != fixture.expected_offset_pre
-                || formula.divisor != fixture.expected_divisor
-                || formula.offset_post != fixture.expected_offset_post
-            {
-                failures.insert(
-                    fixture.unit_id.clone(),
-                    format!(
-                        "corpus row {:?} states level_var {:?} offset_pre {} divisor {} \
-                         offset_post {}, evaluator produced level_var {:?} offset_pre {} \
-                         divisor {} offset_post {}",
-                        fixture.corpus_field,
-                        fixture.expected_level_var,
-                        fixture.expected_offset_pre,
-                        fixture.expected_divisor,
-                        fixture.expected_offset_post,
-                        level_var,
-                        formula.offset_pre,
-                        formula.divisor,
-                        formula.offset_post
-                    ),
-                );
-                continue;
-            }
-            match find_level_var_alias(&bonus_vars, &level_var) {
-                Some(alias) if alias == fixture.expected_class_level_alias => {
-                    cleared.insert(fixture.unit_id.clone());
-                }
-                Some(alias) => {
-                    failures.insert(
-                        fixture.unit_id.clone(),
-                        format!(
-                            "level_var {level_var:?} aliases {alias:?} in {book}'s own class_feature \
-                             corpus, fixture expected {:?}",
-                            fixture.expected_class_level_alias
-                        ),
-                    );
-                }
-                None => {
-                    failures.insert(
-                        fixture.unit_id.clone(),
-                        format!(
-                            "no record in {book}'s class_feature corpus defines BONUS:VAR|{level_var}|, \
-                             so the fixture's expected alias {:?} cannot be confirmed",
-                            fixture.expected_class_level_alias
-                        ),
-                    );
-                }
-            }
-        }
-    }
-
-    BarCheckReport { cleared, failures, engine_does_not_hold, fixtures_total }
-}
 
 // ---------------------------------------------------------------------------
 // `kind = monster`, second seam — the spell-like-ability SAVE DC
@@ -1894,267 +1721,6 @@ mod class_feature_seam_tests {
         assert_eq!(parse_class_feature_level_scaling("SomeLVL"), None);
         assert_eq!(parse_class_feature_level_scaling("3+SomeLVL"), None);
     }
-
-    #[test]
-    fn run_class_feature_bar_check_clears_every_committed_class_feature_fixture() {
-        let repo_root = PathBuf::from(env!("CARGO_MANIFEST_DIR"));
-        let report = run_class_feature_bar_check(&repo_root);
-        assert!(
-            report.fixtures_total > 0,
-            "the committed fixture must carry at least one class_feature_entries row"
-        );
-        assert!(
-            report.engine_does_not_hold.is_empty(),
-            "every committed class_feature fixture's book must be ingested, got: {:?}",
-            report.engine_does_not_hold
-        );
-        assert!(
-            report.failures.is_empty(),
-            "every committed class_feature fixture must clear the bar, got {} failures, first \
-             few: {:?}",
-            report.failures.len(),
-            report.failures.iter().take(5).collect::<Vec<_>>()
-        );
-        assert_eq!(report.cleared.len(), report.fixtures_total);
-    }
-
-    /// A synthetic `repo_root` carrying one `class_feature` corpus record
-    /// (`Rage Power ~ Superstition`-shaped: `2+ProbeLVL/4`, plus a sibling
-    /// record defining `ProbeLVL`'s own alias) plus one fixture the caller
-    /// corrupts -- same `ScratchRangeRoot`/`ScratchDurationRoot` pattern the
-    /// spell seams above use, so a test can drive the REAL
-    /// `run_class_feature_bar_check(&root)` end to end without touching the
-    /// committed fixture.
-    struct ScratchClassFeatureRoot {
-        root: PathBuf,
-    }
-
-    impl ScratchClassFeatureRoot {
-        /// The real corpus formula is fixed (`2+ProbeLVL/4`, offset_pre=0
-        /// under `parse_class_feature_level_scaling`'s own N+VAR/D shape);
-        /// every parameter here is what the FIXTURE claims via `expected`,
-        /// so a caller can independently mutate any one of the four
-        /// compared fields away from truth and prove `run_class_feature_
-        /// bar_check` catches that specific mismatch (SD31-W13-INTEGRATE-001:
-        /// `offset_pre` and `level_var` were previously never mutated at
-        /// all -- `offset_pre` had in fact been dropped from this
-        /// constructor's own parameter list, `let _ = expected_offset_pre;`
-        /// dead code, one commit prior).
-        fn new_full(
-            name: &str,
-            expected_offset_pre: i32,
-            expected_divisor: i32,
-            expected_offset_post: i32,
-            expected_level_var: &str,
-        ) -> Self {
-            let root = std::env::temp_dir().join(format!(
-                "codex_class_feature_mutation_proof_{name}_{}",
-                std::process::id()
-            ));
-            let _ = std::fs::remove_dir_all(&root);
-            let cf_dir = root.join("data/corpus/core_rulebook/class_feature");
-            std::fs::create_dir_all(&cf_dir).unwrap();
-            std::fs::write(
-                cf_dir.join("scratch_power.json"),
-                r#"{"data":{"key":"Probe ~ Scratch Power","raw_tokens":[
-                    {"key":"BONUS","value":"VAR|ScratchPowerBonus|2+ProbeLVL/4"}
-                ]}}"#,
-            )
-            .unwrap();
-            std::fs::write(
-                cf_dir.join("scratch_pool_header.json"),
-                r#"{"data":{"key":"Probe ~ Scratch Powers","raw_tokens":[
-                    {"key":"BONUS","value":"VAR|ProbeLVL|ProbeClassLVL"}
-                ]}}"#,
-            )
-            .unwrap();
-            let fixture_dir = root.join("tests/fixtures/rules_core");
-            std::fs::create_dir_all(&fixture_dir).unwrap();
-            std::fs::write(
-                fixture_dir.join("derived-evaluator-fixtures.json"),
-                format!(
-                    r#"{{"class_feature_entries":[{{
-                        "unit_id":"scratch:class_feature:scratch_power",
-                        "book":"core_rulebook",
-                        "record_key":"Probe ~ Scratch Power",
-                        "bonus_var_name":"ScratchPowerBonus",
-                        "upstream_lst":"scratch.lst",
-                        "upstream_lst_sha256":"0",
-                        "upstream_line":1,
-                        "corpus_field":"BONUS:VAR|ScratchPowerBonus|2+ProbeLVL/4",
-                        "alias_upstream_line":1,
-                        "alias_corpus_field":"BONUS:VAR|ProbeLVL|ProbeClassLVL",
-                        "expected":{{
-                            "offset_pre":{expected_offset_pre},
-                            "divisor":{expected_divisor},
-                            "offset_post":{expected_offset_post},
-                            "level_var":"{expected_level_var}",
-                            "class_level_alias":"ProbeClassLVL"
-                        }}
-                    }}]}}"#
-                ),
-            )
-            .unwrap();
-            ScratchClassFeatureRoot { root }
-        }
-
-        fn new(name: &str, expected_divisor: i32, expected_offset_post: i32) -> Self {
-            Self::new_full(name, 0, expected_divisor, expected_offset_post, "ProbeLVL")
-        }
-    }
-
-    impl Drop for ScratchClassFeatureRoot {
-        fn drop(&mut self) {
-            let _ = std::fs::remove_dir_all(&self.root);
-        }
-    }
-
-    // MUTATION PROOF: a fixture whose `expected.divisor` is deliberately
-    // wrong must make the REAL `run_class_feature_bar_check` report a
-    // failure, not silently pass.
-    #[test]
-    fn a_wrong_expected_divisor_makes_run_class_feature_bar_check_report_a_failure() {
-        let (_, real) = parse_class_feature_level_scaling("2+ProbeLVL/4").unwrap();
-        let wrong_divisor = real.divisor + 1;
-        let scratch = ScratchClassFeatureRoot::new("wrong_divisor", wrong_divisor, real.offset_post);
-        let report = run_class_feature_bar_check(&scratch.root);
-
-        assert!(
-            report.cleared.is_empty(),
-            "a fixture asserting a wrong expected divisor must never clear the bar, got {:?}",
-            report.cleared
-        );
-        assert_eq!(report.failures.len(), 1, "failures: {:?}", report.failures);
-        assert!(report.failures.contains_key("scratch:class_feature:scratch_power"));
-    }
-
-    // MUTATION PROOF (SD31-W13-INTEGRATE-001, was missing entirely): a
-    // fixture whose `expected.offset_pre` is deliberately wrong must also
-    // make the real check fail. The real formula (`2+ProbeLVL/4`) has
-    // offset_pre=0; asserting 1 must not clear the bar.
-    #[test]
-    fn a_wrong_expected_offset_pre_makes_run_class_feature_bar_check_report_a_failure() {
-        let (_, real) = parse_class_feature_level_scaling("2+ProbeLVL/4").unwrap();
-        assert_eq!(real.offset_pre, 0, "test assumption: real offset_pre is 0");
-        let scratch =
-            ScratchClassFeatureRoot::new_full("wrong_offset_pre", 1, real.divisor, real.offset_post, "ProbeLVL");
-        let report = run_class_feature_bar_check(&scratch.root);
-
-        assert!(report.cleared.is_empty(), "cleared: {:?}", report.cleared);
-        assert_eq!(report.failures.len(), 1, "failures: {:?}", report.failures);
-        assert!(report.failures.contains_key("scratch:class_feature:scratch_power"));
-    }
-
-    // MUTATION PROOF (SD31-W13-INTEGRATE-001, was missing entirely): a
-    // fixture whose `expected.offset_post` is deliberately wrong must also
-    // make the real check fail.
-    #[test]
-    fn a_wrong_expected_offset_post_makes_run_class_feature_bar_check_report_a_failure() {
-        let (_, real) = parse_class_feature_level_scaling("2+ProbeLVL/4").unwrap();
-        let wrong_offset_post = real.offset_post + 1;
-        let scratch =
-            ScratchClassFeatureRoot::new_full("wrong_offset_post", 0, real.divisor, wrong_offset_post, "ProbeLVL");
-        let report = run_class_feature_bar_check(&scratch.root);
-
-        assert!(report.cleared.is_empty(), "cleared: {:?}", report.cleared);
-        assert_eq!(report.failures.len(), 1, "failures: {:?}", report.failures);
-        assert!(report.failures.contains_key("scratch:class_feature:scratch_power"));
-    }
-
-    // MUTATION PROOF (SD31-W13-INTEGRATE-001, was missing entirely): a
-    // fixture whose `expected.level_var` names the WRONG variable must also
-    // make the real check fail -- distinct from the class_level_alias proof
-    // below, which mutates the alias the level_var resolves TO, not the
-    // level_var name itself.
-    #[test]
-    fn a_wrong_expected_level_var_makes_run_class_feature_bar_check_report_a_failure() {
-        let (_, real) = parse_class_feature_level_scaling("2+ProbeLVL/4").unwrap();
-        let scratch = ScratchClassFeatureRoot::new_full(
-            "wrong_level_var",
-            0,
-            real.divisor,
-            real.offset_post,
-            "TotallyTheWrongLevelVar",
-        );
-        let report = run_class_feature_bar_check(&scratch.root);
-
-        assert!(report.cleared.is_empty(), "cleared: {:?}", report.cleared);
-        assert_eq!(report.failures.len(), 1, "failures: {:?}", report.failures);
-        assert!(report.failures.contains_key("scratch:class_feature:scratch_power"));
-    }
-
-    // The same proof for `expected.class_level_alias`: a fixture claiming
-    // the WRONG owning class for the level variable must also fail, not just
-    // a wrong numeric coefficient -- this is the check that would have
-    // caught a level-scaling formula silently pointing at the wrong class.
-    #[test]
-    fn a_wrong_expected_class_level_alias_makes_run_class_feature_bar_check_report_a_failure() {
-        let root = std::env::temp_dir()
-            .join(format!("codex_class_feature_mutation_proof_wrong_alias_{}", std::process::id()));
-        let _ = std::fs::remove_dir_all(&root);
-        let cf_dir = root.join("data/corpus/core_rulebook/class_feature");
-        std::fs::create_dir_all(&cf_dir).unwrap();
-        std::fs::write(
-            cf_dir.join("scratch_power.json"),
-            r#"{"data":{"key":"Probe ~ Scratch Power","raw_tokens":[
-                {"key":"BONUS","value":"VAR|ScratchPowerBonus|2+ProbeLVL/4"}
-            ]}}"#,
-        )
-        .unwrap();
-        std::fs::write(
-            cf_dir.join("scratch_pool_header.json"),
-            r#"{"data":{"key":"Probe ~ Scratch Powers","raw_tokens":[
-                {"key":"BONUS","value":"VAR|ProbeLVL|ProbeClassLVL"}
-            ]}}"#,
-        )
-        .unwrap();
-        let fixture_dir = root.join("tests/fixtures/rules_core");
-        std::fs::create_dir_all(&fixture_dir).unwrap();
-        std::fs::write(
-            fixture_dir.join("derived-evaluator-fixtures.json"),
-            r#"{"class_feature_entries":[{
-                "unit_id":"scratch:class_feature:scratch_power",
-                "book":"core_rulebook",
-                "record_key":"Probe ~ Scratch Power",
-                "bonus_var_name":"ScratchPowerBonus",
-                "upstream_lst":"scratch.lst",
-                "upstream_lst_sha256":"0",
-                "upstream_line":1,
-                "corpus_field":"BONUS:VAR|ScratchPowerBonus|2+ProbeLVL/4",
-                "alias_upstream_line":1,
-                "alias_corpus_field":"BONUS:VAR|ProbeLVL|ProbeClassLVL",
-                "expected":{
-                    "offset_pre":0,
-                    "divisor":4,
-                    "offset_post":2,
-                    "level_var":"ProbeLVL",
-                    "class_level_alias":"TotallyTheWrongClassLVL"
-                }
-            }]}"#,
-        )
-        .unwrap();
-
-        let report = run_class_feature_bar_check(&root);
-        assert!(report.cleared.is_empty(), "cleared: {:?}", report.cleared);
-        assert_eq!(report.failures.len(), 1, "failures: {:?}", report.failures);
-        let _ = std::fs::remove_dir_all(&root);
-    }
-
-    // The positive control for both mutation-proof tests above: a fixture
-    // whose `expected` matches the real corpus row EXACTLY (divisor and
-    // alias both correct) must clear the bar -- proving the two tests above
-    // fail because the asserted value is wrong, not because the synthetic
-    // harness always reports a failure.
-    #[test]
-    fn a_correct_expected_class_feature_formula_clears_run_class_feature_bar_check() {
-        let (_, real) = parse_class_feature_level_scaling("2+ProbeLVL/4").unwrap();
-        let scratch = ScratchClassFeatureRoot::new("correct", real.divisor, real.offset_post);
-        let report = run_class_feature_bar_check(&scratch.root);
-
-        assert!(report.failures.is_empty(), "failures: {:?}", report.failures);
-        assert_eq!(report.cleared.len(), 1);
-        assert!(report.cleared.contains("scratch:class_feature:scratch_power"));
-    }
 }
 
 #[cfg(test)]
@@ -2265,6 +1831,26 @@ mod class_feature_description_seam_tests {
     }
 }
 
+
+/// Writes the settled `data/converted/record_vars.json` a scratch test root needs, by running the
+/// REAL authoring-time settling over the scratch corpus the harness just wrote.
+///
+/// SD-35 `AT-35-E6-003-RULED` cycle 17: the spell seams read settled formulas now, so a synthetic
+/// root must carry the artifact as well as the corpus record. Running the real converter over it
+/// (rather than hand-writing the table) keeps these mutation proofs end to end: corpus record ->
+/// settling -> bar check, with nothing hand-derived in between.
+#[cfg(test)]
+fn write_settled_spell_artifact(root: &Path) {
+    let package = crate::rules_core::record_vars::RecordVarPackage {
+        spell_formulas: crate::pcgen_import::spell_formula_settle::build(root),
+        ..Default::default()
+    };
+    let out = root.join(crate::rules_core::record_vars::RECORD_VARS_PATH);
+    std::fs::create_dir_all(out.parent().unwrap()).unwrap();
+    std::fs::write(&out, serde_json::to_string(&package).unwrap()).unwrap();
+}
+
+
 #[cfg(test)]
 mod spell_range_seam_tests {
     use super::*;
@@ -2365,7 +1951,7 @@ mod spell_range_seam_tests {
             std::fs::create_dir_all(&spell_dir).unwrap();
             std::fs::write(
                 spell_dir.join("scratch_close_spell.json"),
-                r#"{"data":{"key":"scratch_close_spell","raw_tokens":[{"key":"RANGE","value":"Close"}]}}"#,
+                crate::pcgen_import::ingest_payload::ingest_record_json("scratch_close_spell", &[("RANGE", "Close")]),
             )
             .unwrap();
             let fixture_dir = root.join("tests/fixtures/rules_core");
@@ -2386,6 +1972,7 @@ mod spell_range_seam_tests {
                 ),
             )
             .unwrap();
+            write_settled_spell_artifact(&root);
             ScratchRangeRoot { root }
         }
     }
@@ -2573,7 +2160,7 @@ mod spell_seam_tests {
             std::fs::create_dir_all(&spell_dir).unwrap();
             std::fs::write(
                 spell_dir.join("scratch_duration_spell.json"),
-                r#"{"data":{"key":"scratch_duration_spell","raw_tokens":[{"key":"DURATION","value":"(CASTERLEVEL*10) minutes [D]"}]}}"#,
+                crate::pcgen_import::ingest_payload::ingest_record_json("scratch_duration_spell", &[("DURATION", "(CASTERLEVEL*10) minutes [D]")]),
             )
             .unwrap();
             let fixture_dir = root.join("tests/fixtures/rules_core");
@@ -2594,6 +2181,7 @@ mod spell_seam_tests {
                 ),
             )
             .unwrap();
+            write_settled_spell_artifact(&root);
             ScratchDurationRoot { root }
         }
     }
@@ -2816,45 +2404,59 @@ mod monster_seam_tests {
         assert_eq!(spell_like_ability_caster_level(&block), Some(9));
     }
 
-    // W26-INTERPRETER-INTEGRATE (`OPERATOR-RULINGS-2026-08-21.md` §20):
-    // `HD*3/4` -- the real Demon (Vermlek) worked example,
-    // `book_of_the_damned_volume_2`, `BONUS:VAR|SLA_CL|HD*3/4` -- is a real
-    // arithmetic formula over the monster's own Hit Dice, which
-    // `formula_interpreter::PcgenFormulaEvaluator` can now read (`HD*3/4`
-    // is plain multiply/divide, no unbound identifier). This test used to
-    // assert `None` under §24.1's "no formula interpreter" ban; the
-    // arithmetic is genuinely `16*3/4 = 12`, and refusing an evaluable
-    // formula once the interpreter exists would be exactly the "leave a
-    // real answer on the table" failure mode the ruling exists to fix. The
-    // exact real-corpus value (`HD=4` -> `3`) is pinned separately by
+    // SD-35 `AT-35-E6-001` (`decisions.md` §1, §11): the one arithmetic SLA
+    // caster-level value the corpus carries -- the real Demon (Vermlek) worked
+    // example, `book_of_the_damned_volume_2`, three quarters of its own racial
+    // Hit Dice -- is resolved at ingest now
+    // (`scripts/transcribe_monster_tables.py::resolve_sla_cl_arithmetic`), so
+    // the shipped table states the number and this live function sees an
+    // integer. A row whose value is still an unresolved expression is an
+    // honest absence here, exactly as an unreadable row always was. The exact
+    // real-corpus value (4 Hit Dice -> 3) is pinned separately by
     // `hd_times_three_quarters_matches_the_real_demon_vermlek_worked_example`
     // below and by `monster_entries`'s own
     // `book_of_the_damned_volume_2:monster:demon_vermlek` fixture row.
     #[test]
-    fn a_multiply_divide_sla_cl_formula_now_evaluates_via_the_interpreter() {
+    fn an_unresolved_arithmetic_sla_cl_value_refuses_on_the_live_side() {
         let block = stat_block_full(Some("Outsider:16"), true, Some("HD*3/4"));
-        assert_eq!(spell_like_ability_caster_level(&block), Some(12));
+        assert_eq!(
+            spell_like_ability_caster_level(&block),
+            None,
+            "the live side evaluates no formula: an arithmetic value the converter left \
+             unresolved is an honest absence, not a run-time interpretation"
+        );
     }
 
     // The real Demon (Vermlek) worked example itself
     // (`book_of_the_damned_volume_2/botd2_races.lst:7`,
-    // `MONSTERCLASS:Outsider (Fort/Will):4`, `BONUS:VAR|SLA_CL|HD*3/4`) --
-    // `4*3/4 = 3` exactly, no truncation ambiguity. Pinned independently by
-    // `monster_entries`'s own fixture row for this unit.
+    // `MONSTERCLASS:Outsider (Fort/Will):4`, three quarters of 4 racial Hit
+    // Dice) -- `4*3/4 = 3` exactly, no truncation ambiguity. Read from the
+    // SHIPPED table rather than a hand-built stat block, so a regression in
+    // `scripts/transcribe_monster_tables.py::resolve_sla_cl_arithmetic` fails
+    // HERE and not only in a fixture nothing player-facing reads. Pinned
+    // independently by `monster_entries`'s own fixture row for this unit.
     #[test]
     fn hd_times_three_quarters_matches_the_real_demon_vermlek_worked_example() {
-        let block = stat_block_full(Some("Outsider (Fort/Will):4"), true, Some("HD*3/4"));
-        assert_eq!(spell_like_ability_caster_level(&block), Some(3));
+        let vermlek = crate::rules_core::rules_tables::monster_chassis::monster_book(
+            "book_of_the_damned_volume_2",
+        )
+        .expect("book_of_the_damned_volume_2 has a monster book")
+        .monster_resolve("Demon (Vermlek)")
+        .expect("book_of_the_damned_volume_2 carries the Demon (Vermlek) row");
+        assert_eq!(
+            vermlek.sla_cl_token,
+            Some("3"),
+            "the converter resolves this row's arithmetic at ingest"
+        );
+        assert_eq!(spell_like_ability_caster_level(vermlek), Some(3));
     }
 
-    // An interpreter refusal (an unbound identifier the corpus has never
-    // shown this repo, e.g. a race-specific bonus name with no `DEFINE:`
-    // anywhere on the row) must still surface as `None`, never a guess --
-    // the interpreter's own "never default to zero" contract, restated at
-    // this seam's boundary so a future formula shape this repo cannot bind
-    // fails exactly as honestly as an unparseable one always has.
+    // A value this repo cannot read as a number must still surface as `None`,
+    // never a guess -- restated at this seam's boundary so a future shape the
+    // converter cannot resolve fails exactly as honestly as an unparseable one
+    // always has.
     #[test]
-    fn an_sla_cl_formula_naming_an_unbound_identifier_still_refuses() {
+    fn an_sla_cl_value_that_is_not_a_number_still_refuses() {
         let block = stat_block_full(Some("Outsider:16"), true, Some("HD*SomeRaceSpecificBonus"));
         assert_eq!(spell_like_ability_caster_level(&block), None);
     }
@@ -4039,7 +3641,7 @@ fn run_companion_skill_bar_check(repo_root: &Path) -> BarCheckReport {
                 fixture.unit_id.clone(),
                 format!(
                     "corpus row states {} but the shipped record carries no matching \
-                     BONUS:SKILL|{}|… token at all",
+                     skill-bonus magnitude for {} at all",
                     fixture.corpus_field,
                     fixture.skills.join(",")
                 ),
@@ -4318,7 +3920,7 @@ fn run_companion_save_dc_bar_check(repo_root: &Path) -> BarCheckReport {
                 failures.insert(
                     fixture.unit_id.clone(),
                     format!(
-                        "corpus row states {} but the shipped record carries no DESC: argument \
+                        "corpus row states {} but the shipped record carries no description argument \
                          the evaluator can parse a save-DC shape from (candidates: {candidates:?})",
                         fixture.corpus_field
                     ),
@@ -4331,7 +3933,7 @@ fn run_companion_save_dc_bar_check(repo_root: &Path) -> BarCheckReport {
                     fixture.unit_id.clone(),
                     format!(
                         "corpus row states {} but the shipped record carries {n} DISTINCT \
-                         parseable save-DC shapes across its DESC: arguments — ambiguous",
+                         parseable save-DC shapes across its description arguments — ambiguous",
                         fixture.corpus_field
                     ),
                 );
@@ -4521,8 +4123,8 @@ fn ability_modifiers_from_fixture_inputs(
 }
 
 /// The `class_feature_description_entries` half of [`run_bar_check`]. Runs the REAL production
-/// resolver (`pilot_compute::class_feature_grant_consumer::resolve_pcgen_var_chain`, which
-/// drives the proven `formula_interpreter::PcgenFormulaEvaluator`) against the SAME live corpus
+/// resolver (`pilot_compute::class_feature_grant_consumer::resolve_pcgen_var_chain`) against the
+/// SAME live corpus
 /// record (`class_feature_grant_consumer::class_feature_record_tokens`) the shipped engine reads
 /// -- never a second, hand-rolled Rust evaluator -- at every level the fixture pins, for every
 /// PCGen variable name the fixture names. A unit clears only when EVERY (arg, level) pair
@@ -4736,7 +4338,7 @@ fn run_companion_bar_check(repo_root: &Path) -> BarCheckReport {
                 fixture.unit_id.clone(),
                 format!(
                     "corpus row states {} but the shipped record carries no \
-                     BONUS:WEAPONPROF={}|DAMAGE| token at all",
+                     weapon-proficiency damage magnitude for {} at all",
                     fixture.corpus_field, fixture.attack
                 ),
             );
@@ -5760,310 +5362,5 @@ mod companion_save_dc_seam_tests {
         let _ = std::fs::remove_dir_all(&root);
         assert!(report.cleared.is_empty(), "cleared: {:?}", report.cleared);
         assert_eq!(report.failures.len(), 1, "failures: {:?}", report.failures);
-    }
-}
-
-
-// -------------------------------------------------------------------------------------------
-// Folded into SD-33 from `worktree-wf_be4660f2-72a-3` (2026-08-26) per
-// `docs/release/SD-31-corpus-closure-grind/artifacts/OPEN-ISSUES.md` row 365's remediation
-// path (a). The seam + fixtures below are unchanged from the branch (reviewer-confirmed sound);
-// the branch's race-level `FORMULA_RACE_TRAIT_RACES` doneness-credit const was NOT folded — see
-// `src/rules_core/pilot_compute/mod.rs`'s own fold-note next to `explain_undine_formula_race_trait`.
-// -------------------------------------------------------------------------------------------
-
-// ---------------------------------------------------------------------------------------------
-// `kind=race_trait`, FORMULA shape (SD31-W26-RACETRAIT-001).
-// ---------------------------------------------------------------------------------------------
-//
-// The first consumer of `formula_interpreter::PcgenFormulaEvaluator` anywhere in this codebase
-// (`grep -rn PcgenFormulaEvaluator src/` before this addition returns only the evaluator's own
-// module) — wave 25b built and proved the interpreter but shipped no consumer of it, per
-// `OPERATOR-RULINGS-2026-08-21.md` §20's own condition: "every interpreted value must clear
-// `derived_evaluator_fixture_check` ... An interpreted value with no fixture is not done." This
-// is that gate for `src/rules_core/pilot_compute/mod.rs`'s
-// `explain_undine_formula_race_trait`/`UNDINE_RACE_TRAIT_FORMULAS`.
-//
-// Runs against the SHIPPED table (`UNDINE_RACE_TRAIT_FORMULAS`), exactly as
-// `run_companion_skill_bar_check` runs against `record.skill_ability_diff_bonuses` and for the
-// same reason: a transcription that corrupted the formula text in `pilot_compute::mod.rs` must
-// fail HERE, not pass silently against a corpus file no player-facing code reads.
-
-/// One `kind=race_trait` formula fixture row — a sibling top-level
-/// `race_trait_formula_entries` array in the same committed fixture JSON.
-#[derive(Debug, Clone)]
-pub struct RaceTraitFormulaFixture {
-    pub unit_id: String,
-    pub book: String,
-    pub record_key: String,
-    pub upstream_lst: String,
-    pub upstream_lst_sha256: String,
-    pub upstream_line: u64,
-    /// field name -> raw formula text, as the generator re-verified against
-    /// the pinned oracle. Compared against `UNDINE_RACE_TRAIT_FORMULAS`
-    /// below so a transcription regression in EITHER the shipped table or
-    /// the fixture turns this check red, never just the arithmetic.
-    pub formulas: BTreeMap<String, String>,
-    /// `(TL, CON, CHA, {field: expected_value})` at each of the ten sample
-    /// points `scripts/derive_race_trait_formula_fixtures.py` computed with
-    /// its own from-scratch Python function per formula shape — never read
-    /// back from this repo's evaluator.
-    pub expected_at: Vec<(i64, i64, i64, BTreeMap<String, i64>)>,
-}
-
-/// Reads the `race_trait_formula_entries` array of the same committed
-/// fixture file [`load_fixtures`] reads `entries` from.
-pub fn load_race_trait_formula_fixtures(repo_root: &Path) -> Vec<RaceTraitFormulaFixture> {
-    let path = repo_root.join(FIXTURE_RELATIVE_PATH);
-    let text = std::fs::read_to_string(&path)
-        .unwrap_or_else(|e| panic!("the committed fixture must be readable at {path:?}: {e}"));
-    let doc: serde_json::Value =
-        serde_json::from_str(&text).expect("the committed fixture must be valid JSON");
-    let Some(entries) = doc.get("race_trait_formula_entries").and_then(|v| v.as_array()) else {
-        return Vec::new();
-    };
-    entries
-        .iter()
-        .map(|e| {
-            let formulas: BTreeMap<String, String> = e["formulas"]
-                .as_object()
-                .expect("formulas")
-                .iter()
-                .map(|(k, v)| (k.clone(), v.as_str().expect("formula value").to_string()))
-                .collect();
-            let expected_at = e["expected_at_sample_points"]
-                .as_array()
-                .expect("expected_at_sample_points")
-                .iter()
-                .map(|p| {
-                    let expected: BTreeMap<String, i64> = p["expected"]
-                        .as_object()
-                        .expect("expected")
-                        .iter()
-                        .map(|(k, v)| (k.clone(), v.as_i64().expect("expected value fits in i64")))
-                        .collect();
-                    (
-                        p["TL"].as_i64().expect("TL"),
-                        p["CON"].as_i64().expect("CON"),
-                        p["CHA"].as_i64().expect("CHA"),
-                        expected,
-                    )
-                })
-                .collect();
-            RaceTraitFormulaFixture {
-                unit_id: e["unit_id"].as_str().expect("unit_id").to_string(),
-                book: e["book"].as_str().expect("book").to_string(),
-                record_key: e["record_key"].as_str().expect("record_key").to_string(),
-                upstream_lst: e["upstream_lst"].as_str().expect("upstream_lst").to_string(),
-                upstream_lst_sha256: e["upstream_lst_sha256"]
-                    .as_str()
-                    .expect("upstream_lst_sha256")
-                    .to_string(),
-                upstream_line: e["upstream_line"].as_u64().expect("upstream_line"),
-                formulas,
-                expected_at,
-            }
-        })
-        .collect()
-}
-
-/// The `kind=race_trait` formula half of [`run_bar_check`].
-fn run_race_trait_formula_bar_check(repo_root: &Path) -> BarCheckReport {
-    let fixtures = load_race_trait_formula_fixtures(repo_root);
-    let fixtures_total = fixtures.len();
-
-    let mut cleared = BTreeSet::new();
-    let mut failures: BTreeMap<String, String> = BTreeMap::new();
-    let engine_does_not_hold: BTreeMap<String, String> = BTreeMap::new();
-
-    let evaluator = PcgenFormulaEvaluator;
-
-    for fixture in &fixtures {
-        let mut mismatch: Option<String> = None;
-
-        for (field, expected_formula) in &fixture.formulas {
-            let Some((_, _, shipped_formula)) =
-                UNDINE_RACE_TRAIT_FORMULAS.iter().find(|(_, f, _)| f == field)
-            else {
-                mismatch = Some(format!(
-                    "fixture names field {field:?} but UNDINE_RACE_TRAIT_FORMULAS carries no \
-                     entry for it at all"
-                ));
-                break;
-            };
-            // The independence check: confirm the SHIPPED table states the
-            // SAME formula text the fixture (independently re-derived from
-            // the oracle) expects, not merely SOME formula for this field --
-            // the same posture `run_companion_skill_bar_check` takes for
-            // `parsed.plus`/`parsed.minus` against `fixture.plus_ability`.
-            if shipped_formula != expected_formula {
-                mismatch = Some(format!(
-                    "fixture expects {field}={expected_formula:?} but UNDINE_RACE_TRAIT_FORMULAS \
-                     states {field}={shipped_formula:?}"
-                ));
-                break;
-            }
-        }
-        if let Some(message) = mismatch {
-            failures.insert(fixture.unit_id.clone(), message);
-            continue;
-        }
-
-        if fixture.expected_at.is_empty() {
-            // A fixture that pins no sample point asserts nothing about the
-            // evaluator. Refused rather than counted -- a gate that cannot
-            // fail is worse than no gate (`decisions.md` Decision 1(a)).
-            failures.insert(
-                fixture.unit_id.clone(),
-                format!("fixture for {:?} pins no sample point at all, so it asserts nothing", fixture.record_key),
-            );
-            continue;
-        }
-
-        let mut all_matched = true;
-        for (tl, con, cha, expected) in &fixture.expected_at {
-            let mut vars: BTreeMap<String, i64> = BTreeMap::new();
-            vars.insert("TL".to_owned(), *tl);
-            vars.insert("CON".to_owned(), *con);
-            vars.insert("CHA".to_owned(), *cha);
-
-            for (field, expected_value) in expected {
-                let Some((_, _, formula)) = UNDINE_RACE_TRAIT_FORMULAS.iter().find(|(_, f, _)| f == field)
-                else {
-                    // Already reported as a mismatch above; unreachable here.
-                    all_matched = false;
-                    continue;
-                };
-                match evaluator.evaluate(formula, &vars) {
-                    Ok(actual) if actual == *expected_value => {}
-                    Ok(actual) => {
-                        failures.insert(
-                            fixture.unit_id.clone(),
-                            format!(
-                                "at TL={tl} CON={con} CHA={cha}, {field} expected \
-                                 {expected_value} but PcgenFormulaEvaluator produced {actual} \
-                                 for formula {formula:?}"
-                            ),
-                        );
-                        all_matched = false;
-                    }
-                    Err(e) => {
-                        failures.insert(
-                            fixture.unit_id.clone(),
-                            format!(
-                                "at TL={tl} CON={con} CHA={cha}, {field}'s formula {formula:?} \
-                                 refused to evaluate: {e}"
-                            ),
-                        );
-                        all_matched = false;
-                    }
-                }
-                if !all_matched {
-                    break;
-                }
-            }
-            if !all_matched {
-                break;
-            }
-        }
-        if all_matched {
-            cleared.insert(fixture.unit_id.clone());
-        }
-    }
-
-    BarCheckReport { cleared, failures, engine_does_not_hold, fixtures_total }
-}
-
-#[cfg(test)]
-mod race_trait_formula_bar_check_tests {
-    use super::*;
-    use crate::rules_core::pilot_compute::formula_reproduction_harness::FormulaEvalError;
-
-    fn repo_root() -> std::path::PathBuf {
-        std::path::PathBuf::from(
-            std::env::var("CODEX_REPO_ROOT").unwrap_or_else(|_| ".".to_string()),
-        )
-    }
-
-    /// The real gate, run against the real committed fixture and the real
-    /// shipped `UNDINE_RACE_TRAIT_FORMULAS` table: every entry must clear.
-    #[test]
-    fn run_race_trait_formula_bar_check_clears_every_committed_fixture() {
-        let report = run_race_trait_formula_bar_check(&repo_root());
-        assert!(
-            report.failures.is_empty(),
-            "every committed race_trait_formula fixture must clear: {:?}",
-            report.failures
-        );
-        assert!(report.engine_does_not_hold.is_empty());
-        assert_eq!(report.fixtures_total, 3, "3 Undine alternate-trait records are fixture-pinned");
-        assert_eq!(report.cleared.len(), 3);
-    }
-
-    /// Anti-gaming mutation proof (Decision 1(a)): a wrong-but-plausible
-    /// evaluator must be caught. Mirrors `harness_detects_a_deliberately_
-    /// wrong_evaluator` in `formula_reproduction_harness.rs` and every other
-    /// bar check's own mutation test in this file -- a gate that cannot
-    /// fail is worse than no gate.
-    struct OffByOneEvaluator;
-    impl FormulaEvaluator for OffByOneEvaluator {
-        fn evaluate(
-            &self,
-            formula: &str,
-            vars: &BTreeMap<String, i64>,
-        ) -> Result<i64, FormulaEvalError> {
-            PcgenFormulaEvaluator.evaluate(formula, vars).map(|v| v + 1)
-        }
-    }
-
-    #[test]
-    fn a_mutated_evaluator_is_caught_by_the_race_trait_formula_gate() {
-        let fixtures = load_race_trait_formula_fixtures(&repo_root());
-        assert!(!fixtures.is_empty(), "the committed fixture must carry at least one entry");
-        let evaluator = OffByOneEvaluator;
-        let mut any_mismatch = false;
-        for fixture in &fixtures {
-            for (tl, con, cha, expected) in &fixture.expected_at {
-                let mut vars: BTreeMap<String, i64> = BTreeMap::new();
-                vars.insert("TL".to_owned(), *tl);
-                vars.insert("CON".to_owned(), *con);
-                vars.insert("CHA".to_owned(), *cha);
-                for (field, expected_value) in expected {
-                    let (_, _, formula) =
-                        UNDINE_RACE_TRAIT_FORMULAS.iter().find(|(_, f, _)| f == field).unwrap();
-                    let actual = evaluator.evaluate(formula, &vars).unwrap();
-                    if actual != *expected_value {
-                        any_mismatch = true;
-                    }
-                }
-            }
-        }
-        assert!(
-            any_mismatch,
-            "an evaluator that is off by one on every result must disagree with at least one \
-             pinned expected value -- if this fails, the fixture itself cannot detect a wrong \
-             evaluator"
-        );
-    }
-
-    /// The shipped table and the committed fixture must state the IDENTICAL
-    /// formula text for every field -- proves the independence check inside
-    /// `run_race_trait_formula_bar_check` itself is reachable and correct,
-    /// not merely present in the source.
-    #[test]
-    fn a_transcription_regression_in_the_shipped_table_is_caught() {
-        let fixtures = load_race_trait_formula_fixtures(&repo_root());
-        for fixture in &fixtures {
-            for (field, expected_formula) in &fixture.formulas {
-                let (_, _, shipped_formula) =
-                    UNDINE_RACE_TRAIT_FORMULAS.iter().find(|(_, f, _)| f == field).unwrap_or_else(|| {
-                        panic!("UNDINE_RACE_TRAIT_FORMULAS carries no entry for {field:?}")
-                    });
-                assert_eq!(
-                    shipped_formula, expected_formula,
-                    "shipped formula for {field} must match the independently-derived fixture"
-                );
-            }
-        }
     }
 }

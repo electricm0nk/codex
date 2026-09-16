@@ -85,11 +85,16 @@
 #                                         # roots (defaults: ~/workspace, /tmp)
 #   scripts/reclaim.sh --help
 #
-# Emits a retro.py `incident` event (recurrence-key `disk-full`, the same key
-# every manual disk-exhaustion cleanup in this repo has used) when --apply
-# actually reclaims bytes — that is a real incident-prevention datapoint, not
-# routine housekeeping, and the retrospective log is honest only if runs like
-# this are recorded the same way a human's manual cleanup was.
+# Records every --apply run that actually reclaims bytes, and records it as the
+# RIGHT KIND of event. When the filesystem is at or above
+# RECLAIM_PRESSURE_PERCENT (default 90) the run fired under pressure and is a
+# retro.py `incident` with recurrence-key `disk-full` — the same key every
+# manual disk-exhaustion cleanup in this repo has used. Below that threshold
+# the run is the control working as designed and is a `note` tagged
+# `reclaim-routine`. Either way the measured used-percent is written onto the
+# event. (Before SD-35 Epic 2's wrap-up every successful run logged
+# incident/disk-full, so a 4-hourly cron minted ~6 "incidents" a day and made
+# the repo's single most serious recurrence key unreadable.)
 #
 # Exit status: 0 on a normal run (including one that finds nothing to do or
 # skips everything). Non-zero only on a usage error or an internal safety
@@ -767,6 +772,24 @@ reclaim_branches() {
 # Retro event
 # ---------------------------------------------------------------------------
 
+# Used-percent of the filesystem holding the repo, as a bare integer, or the
+# empty string when it cannot be read. RECLAIM_USED_PERCENT_OVERRIDE exists for
+# scripts/tests/test_reclaim.py, which must be able to drive both branches of
+# emit_retro_event() deterministically on a box whose real disk it cannot set.
+# Every real run leaves it unset and reads df.
+disk_used_percent() {
+    if [[ -n "${RECLAIM_USED_PERCENT_OVERRIDE:-}" ]]; then
+        printf '%s' "${RECLAIM_USED_PERCENT_OVERRIDE}"
+        return 0
+    fi
+    df -P "$REPO_ROOT" 2>/dev/null | awk 'NR==2 { gsub(/%/, "", $5); print $5 }'
+}
+
+# At or above this used-percent, a reclaim run was fired UNDER PRESSURE and is
+# a genuine `disk-full` incident. Below it, the run is the control working:
+# routine, preventive, nothing went wrong.
+RECLAIM_PRESSURE_PERCENT="${RECLAIM_PRESSURE_PERCENT:-90}"
+
 emit_retro_event() {
     (( ANY_APPLIED == 1 )) || return 0
     [[ -z "${RETRO_DISABLE:-}" ]] || return 0
@@ -775,13 +798,42 @@ emit_retro_event() {
     command -v python3 >/dev/null 2>&1 || return 0
 
     local n=${#RECLAIMED_LINES[@]}
-    python3 "$emitter" incident \
-        --source reclaim.sh --derived \
-        --impact "reclaim.sh --apply removed $n item(s), $(human_size "$TOTAL_RECLAIMED_BYTES") total, across categories: ${SELECTED[*]}" \
-        --detected-by "scripts/reclaim.sh scanning $SCRATCHPAD_ROOT, $CACHE_ROOT, $VERIFY_TMP_ROOT, and git worktree/branch state" \
-        --recurrence-key disk-full \
-        --resolution "automated reclaim: ${RECLAIMED_LINES[*]}" \
-        --quiet >/dev/null 2>&1 || true
+    local size; size="$(human_size "$TOTAL_RECLAIMED_BYTES")"
+    local where="scripts/reclaim.sh scanning $SCRATCHPAD_ROOT, $CACHE_ROOT, $VERIFY_TMP_ROOT, and git worktree/branch state"
+    local used; used="$(disk_used_percent)"
+
+    # WHY THE TYPE IS A DECISION AND NOT A CONSTANT (SD-35 Epic 2 wrap-up).
+    # Every successful --apply used to log `incident` / recurrence-key
+    # `disk-full`, the key tranche/7's 120-firing disk-exhaustion catastrophe
+    # owns. On a 4-hourly cron that manufactured ~6 "incidents" a day out of a
+    # control WORKING AS DESIGNED -- Epic 2's retro summary showed `disk-full`
+    # as the only key firing 3+ times (12 firings), every single one a clean
+    # preventive run at no disk pressure whatever. `AGENTS.md` rule 8 reads
+    # recurrence as the signal that a mechanism is missing, so a working
+    # mechanism must not spend that signal on itself: it buries the keys that
+    # are real. An incident is now a run that fired under pressure; a routine
+    # preventive run is a `note`, and either way the used-percent that made
+    # the call is recorded on the event instead of staying null.
+    local set_used=()
+    [[ -n "$used" ]] && set_used=(--set "used_percent=$used")
+
+    if [[ -n "$used" ]] && (( used >= RECLAIM_PRESSURE_PERCENT )); then
+        python3 "$emitter" incident \
+            --source reclaim.sh --derived \
+            --impact "disk at ${used}% (>= ${RECLAIM_PRESSURE_PERCENT}% pressure threshold) when reclaim.sh --apply ran; it removed $n item(s), $size total, across categories: ${SELECTED[*]}" \
+            --detected-by "$where" \
+            --recurrence-key disk-full \
+            --resolution "automated reclaim: ${RECLAIMED_LINES[*]}" \
+            "${set_used[@]}" \
+            --quiet >/dev/null 2>&1 || true
+    else
+        python3 "$emitter" note \
+            --source reclaim.sh --derived \
+            --tag reclaim-routine \
+            --summary "routine preventive reclaim: removed $n item(s), $size total, across categories: ${SELECTED[*]}; disk at ${used:-unknown}% (below the ${RECLAIM_PRESSURE_PERCENT}% pressure threshold) -- the control working, not an incident" \
+            "${set_used[@]}" \
+            --quiet >/dev/null 2>&1 || true
+    fi
 }
 
 # ---------------------------------------------------------------------------

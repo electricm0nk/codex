@@ -31,7 +31,7 @@ use std::collections::BTreeSet;
 use std::path::PathBuf;
 use std::process::Command;
 
-use codex::rules_core::cache_gen::class_feature;
+use codex::pcgen_import::cache_gen::class_feature;
 
 /// Parses a `--coordinates <file>` list into the `(book, source_file,
 /// source_line)` set `units_from_inventory_json`'s own units are filtered

@@ -1,0 +1,103 @@
+{
+  "kind": "race",
+  "records": {
+    "dhampir.json": {
+      "base_move_walk": 30,
+      "base_size": "M",
+      "hands": 2,
+      "key": "Dhampir",
+      "legs": 2,
+      "name": "Dhampir",
+      "race_type": "Humanoid",
+      "type_tokens": [
+        "Base",
+        "PC",
+        "Featured"
+      ]
+    },
+    "fetchling.json": {
+      "base_move_walk": 30,
+      "base_size": "M",
+      "hands": 2,
+      "key": "Fetchling",
+      "legs": 2,
+      "name": "Fetchling",
+      "race_type": "Outsider",
+      "type_tokens": [
+        "Base",
+        "PC",
+        "Featured"
+      ]
+    },
+    "grippli.json": {
+      "base_move_walk": 30,
+      "base_size": "S",
+      "hands": 2,
+      "key": "Grippli",
+      "legs": 2,
+      "name": "Grippli",
+      "race_type": "Humanoid",
+      "type_tokens": [
+        "Base",
+        "PC",
+        "Uncommon"
+      ]
+    },
+    "ifrit.json": {
+      "base_move_walk": 30,
+      "base_size": "M",
+      "hands": 2,
+      "key": "Ifrit",
+      "legs": 2,
+      "name": "Ifrit",
+      "race_type": "Outsider",
+      "type_tokens": [
+        "Base",
+        "PC",
+        "Featured"
+      ]
+    },
+    "oread.json": {
+      "base_move_walk": 20,
+      "base_size": "M",
+      "hands": 2,
+      "key": "Oread",
+      "legs": 2,
+      "name": "Oread",
+      "race_type": "Outsider",
+      "type_tokens": [
+        "Base",
+        "PC",
+        "Featured"
+      ]
+    },
+    "sylph.json": {
+      "base_move_walk": 30,
+      "base_size": "M",
+      "hands": 2,
+      "key": "Sylph",
+      "legs": 2,
+      "name": "Sylph",
+      "race_type": "Outsider",
+      "type_tokens": [
+        "Base",
+        "PC",
+        "Featured"
+      ]
+    },
+    "undine.json": {
+      "base_move_walk": 30,
+      "base_size": "M",
+      "hands": 2,
+      "key": "Undine",
+      "legs": 2,
+      "name": "Undine",
+      "race_type": "Outsider",
+      "type_tokens": [
+        "Base",
+        "PC",
+        "Featured"
+      ]
+    }
+  }
+}

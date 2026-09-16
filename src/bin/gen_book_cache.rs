@@ -57,7 +57,8 @@ use std::path::{Path, PathBuf};
 
 use sha2::{Digest, Sha256};
 
-use codex::rules_core::cache_gen::WiringClassIndex;
+use codex::pcgen_import::companion_pcgen_guards::{rebuild_condition, rebuild_external_ability_refs};
+use codex::pcgen_import::cache_gen::WiringClassIndex;
 use codex::rules_core::pi_screening;
 use codex::rules_core::shape_b_v1::{Completeness, CorpusRecordV1, CorpusSource, License, Population};
 
@@ -111,7 +112,7 @@ fn wiring_class_file_arg(book_id: &str, path: &str) -> String {
 
 fn wiring_class_for_source(
     index: &WiringClassIndex,
-    lines: &mut codex::rules_core::wiring_class::CorpusLines,
+    lines: &mut codex::pcgen_import::wiring_class::CorpusLines,
     source: &CorpusSource,
 ) -> (String, Vec<String>) {
     match wiring_citation(source) {
@@ -611,8 +612,8 @@ fn classify_field(field_name: &str, value: &str) -> (License, Option<String>, Op
 /// `src/bin/ingest_races.rs` and `src/bin/ingest_race_traits.rs` already
 /// carry: a future leak stops this generator instead of reaching a screen.
 fn render_player_facing_description(record_key: &str, raw: &str) -> String {
-    let rendered = codex::rules_core::pcgen_desc::render_pcgen_desc(raw);
-    if let Some(leak) = codex::rules_core::pcgen_desc::leaked_pcgen_syntax(&rendered.text) {
+    let rendered = codex::pcgen_import::pcgen_desc::render_pcgen_desc(raw);
+    if let Some(leak) = codex::pcgen_import::pcgen_desc::leaked_pcgen_syntax(&rendered.text) {
         panic!(
             "record {record_key:?}: rendered description still carries {leak}. Raw token: {raw:?}"
         );
@@ -723,7 +724,7 @@ fn gen_pathfinder_unchained() {
         // `cache_gen::feat_gap` nor `cache_gen::hand_authored_feat_dump`
         // registers `pathfinder_unchained` -- SD-32 cross-generator sweep,
         // 2026-08-23), so an unscoped citation predicate is safe here.
-        codex::rules_core::cache_gen::ultimate_equipment::remove_stale_owned_files(
+        codex::pcgen_import::cache_gen::ultimate_equipment::remove_stale_owned_files(
             &out_root.join("feat"),
             &current_feat_keys,
             &|_path, _line| true,
@@ -822,7 +823,7 @@ fn gen_pathfinder_unchained() {
         // underlying verification (no other writer of THIS function's own
         // `out_root.join("equipment")`) was already correct; only the
         // comment's book name was wrong).
-        codex::rules_core::cache_gen::ultimate_equipment::remove_stale_owned_files(
+        codex::pcgen_import::cache_gen::ultimate_equipment::remove_stale_owned_files(
             &out_root.join("equipment"),
             &current_equipment_keys,
             &|_path, _line| true,
@@ -1004,7 +1005,7 @@ fn gen_advanced_race_guide() {
         // `advanced_race_guide` is in neither `cache_gen::spell_lane_dump`'s
         // nor `cache_gen::spell_mod_access`'s book lists -- SD-32
         // cross-generator sweep, 2026-08-23).
-        codex::rules_core::cache_gen::ultimate_equipment::remove_stale_owned_files(
+        codex::pcgen_import::cache_gen::ultimate_equipment::remove_stale_owned_files(
             &out_root.join("spell"),
             &current_spell_keys,
             &|_path, _line| true,
@@ -1867,7 +1868,13 @@ fn gen_companion_book(spec: &CompanionBookSpec) {
             "natural_armor": companion.natural_armor,
             "source_page": companion.source_page,
             "ability_keys": companion.ability_keys.iter().map(|k| format!("{book_id}:companion:{}", slugify(k))).collect::<Vec<_>>(),
-            "external_ability_refs": companion.external_ability_refs,
+            // The wire format carries the ingest string, and the live table no
+            // longer does: SD-35 `AT-35-E6-003-SWEEP` cycle 13 moved three CRB
+            // rows' guard tails into `external_ability_ref_conditions`. Rebuilt
+            // here so the cache stays byte-identical across that conversion —
+            // the same reason `companion_pcgen_guards::rebuild_condition` is
+            // public.
+            "external_ability_refs": rebuild_external_ability_refs(companion),
         });
         pi_hits.extend(monster_record_pi_hits(companion.key, &data.to_string()));
         let source = CorpusSource::LstToken {
@@ -1935,7 +1942,12 @@ fn gen_companion_book(spec: &CompanionBookSpec) {
             "description_variants": ability.description_variants.iter().map(|v| serde_json::json!({
                 "text": v.text,
                 "variables": v.variables,
-                "conditions": v.conditions,
+                // The live tables carry these typed (`EffectCondition`) since
+                // SD-35 `AT-35-E6-003-SWEEP` cycle 9; the wire format still
+                // carries the ingest string, so it is rebuilt here, on the
+                // converter side, keeping the cache byte-identical across that
+                // conversion.
+                "conditions": v.conditions.iter().map(rebuild_condition).collect::<Vec<_>>(),
             })).collect::<Vec<_>>(),
             "stat_adjustments": ability.stat_adjustments.iter().map(|a| serde_json::json!({ "ability": a.ability, "amount": a.amount })).collect::<Vec<_>>(),
             "source_page": ability.source_page,
@@ -1975,7 +1987,7 @@ fn gen_companion_book(spec: &CompanionBookSpec) {
         // Single writer of `<book>/companion/` (verified: `gen_companion_book`
         // is the only generator that writes a `companion` kind directory --
         // SD-32 cross-generator sweep, 2026-08-23).
-        codex::rules_core::cache_gen::ultimate_equipment::remove_stale_owned_files(
+        codex::pcgen_import::cache_gen::ultimate_equipment::remove_stale_owned_files(
             &out_root.join("companion"),
             &current_companion_keys,
             &|_path, _line| true,

@@ -42,7 +42,7 @@ register row.
 |---|---|---|
 | C3.1 | **How to verify a system whose rules exist only as prose.** Inherited from SD-34 C3.1. | A research spike. |
 | C3.2 | **Whether oracle agreement is the right definition of correct.** Inherited from SD-34 C3.2. SD-35 sharpens it further: the oracle checks totals; the sheet line is a new surface the oracle never sees. | A research spike. |
-| C3.3 | **Errata.** Inherited from SD-34 C3.3. A corpus at 49,438 of 49,438 has no mechanism to notice its source changed upstream. | A future SD-N. |
+| C3.3 | **Errata.** Inherited from SD-34 C3.3. A corpus at 49,450 of 49,450 has no mechanism to notice its source changed upstream. | A future SD-N. |
 
 ## E1.x — Branches ruled OUT of SD-33's 2026-08-26 fold — do not re-litigate
 
@@ -64,6 +64,6 @@ same ruling, without re-diagnosis.
 | SD-33 open deferral 2 (`1787633121875-sd33-e4-unknown-58d073`) — `unmeasurable` in the dashboard producer's `_doneness_verdict_uncapped()` | **AT-35-E2-003** touches every status consumer; this closes there. | AT-35-E2-003 |
 | SD-33 open deferral 3 (`1787667636036-sd33-r6-skillcombat-3dee2d`) — COMBAT non-AC subtoken aggregation (6 units), cross-record class-feature variable resolution (2), Special-Quality eqmod live-oracle attachment (2) | The 6 and 2 are converter mapping rows (AT-35-E4-001); the eqmod attachment is an oracle-harness question for AT-35-E4-002's run. In SD-35's DoD. | AT-35-E4-001, AT-35-E4-002 |
 | SD-33 inherited test debt — 29 of 599 suites / 46 of 8,034 tests, proven pre-existing at `tranche/13` | Re-derived at the `tranche/15` cut as SD-35's baseline (`technical-requirements.md §3`). AT-35-E1-003's consolidation touches many of those suites; any that become green are reported, any still red are carried with their SHAs. SD-35 does not own fixing the rest. | A future SD-N, or a dedicated cleanup cycle. |
-| `site-dashboard-check` hang — `publish-site-dashboard.sh --check` invokes `v06_work_inventory --summary` with no timeout | AT-35-E1-002 touches `verify.sh`'s stage list; the timeout wrapper lands there. In SD-35's DoD. | AT-35-E1-002 |
+| `site-dashboard-check` hang — `publish-site-dashboard.sh --check` invokes `v06_work_inventory --summary` with no timeout | **Already closed before SD-35** — AT-35-E1-002 cycle 1 found `run_site_dashboard_check` wrapped in `timeout "${SITE_DASHBOARD_CHECK_TIMEOUT_S:-2400}s"` since SD-34 AT-34-E6-001 wave 27 (re-derive: `grep -n SITE_DASHBOARD_CHECK_TIMEOUT_S scripts/verify.sh`); the exit-124 and exit-3 paths both fail the stage loudly. Nothing to add; recorded as a `correction` retro event (`docs/retro/events/at-35-e1-002.jsonl`). | AT-35-E1-002 (verified, no change) |
 | SD-31 Decision 20's run-time interpreter permission | **Revoked by `decisions.md §11`; the exit is AT-35-E6-001..004.** In SD-35's DoD — not a carry. | AT-35-E6-001..004 |
-| SD-34's own open cards at the `tranche/15` cut | **None, by construction** — launch gate item 1 requires SD-34 closed. Any unit SD-34's closure leaves non-DONE is in SD-35's population like every other. | — |
+| SD-34's own open cards at the `tranche/15` cut | **17 of 37 rows open** (13, 14, 15, 17, 20, 26, 27, 28–37) — SD-34 merged without its epilogue. **Folded into AT-35-E1-006** by operator ruling (`decisions.md §12`): retrospective written and cited, rows mapped to the SD-35 criteria that own their units. In SD-35's DoD — not a carry. | AT-35-E1-006 |

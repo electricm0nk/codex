@@ -350,6 +350,9 @@ mod tests {
                     .clone(),
             };
 
+            let (sheet_lines, sheet_rules_unavailable_reason) =
+                crate::character_hub::sheet_lines_for(&envelope.character_input, &corpus_receipt.base);
+
             Ok(LoadSavedCharacterResponse {
                 summary,
                 snapshot,
@@ -379,6 +382,8 @@ mod tests {
                 equipment_selections: crate::character_hub::map_equipment_selections_dto(
                     &envelope.character_input,
                 ),
+                sheet_lines,
+                sheet_rules_unavailable_reason,
             })
         }
     }

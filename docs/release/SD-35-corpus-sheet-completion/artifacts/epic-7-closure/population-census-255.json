@@ -1,0 +1,45 @@
+{
+  "criterion": "AT-35-E7-000-POPULATION-CENSUS",
+  "cycle": 2,
+  "scope": "the cycle-1 remainder `record_absent_from_inventory_population=255`, every record, not a sample",
+  "measure_only": "reads only; adds no unit, converts nothing, edits no classifier, changes no gate",
+  "method": {
+    "cycle_1_keys": "(book, source_file, source_line) and (book, kind, id-tail) -- `mod.rs::load_population`'s two COORDINATE keys",
+    "cycle_2_keys": "corpus_key/name across all books, CONFIRMED by verbatim `data.description` identity (whitespace+case normalised only); and the `<New Key>.COPY=<Base>` pairing read from the pinned `.lst`",
+    "why": "a coordinate key asks where a row sits; the sheet rule asks whether the rule's words reach a sheet line. Only the second question decides whether a record is a lost rule.",
+    "collision_guard": "a shared KEY alone is never accepted -- the two records' published prose must be byte-identical after whitespace/case normalisation, so `Amorphous` (protean anatomy) can never be credited for `Amorphous` (ACG armor)."
+  },
+  "population": 255,
+  "dispositions": {
+    "reached_via_copy_row_twin_same_file": 48,
+    "reached_via_identical_prose_record": 4,
+    "reached_via_reattributed_same_row": 203
+  },
+  "reached_twin_status": {
+    "grounded": 34,
+    "text-complete": 135,
+    "sheet-complete": 82,
+    "null": 4
+  },
+  "absent_total": 0,
+  "absent_by_book_kind": {},
+  "absent_records": [],
+  "pcgen_tree_present": true,
+  "root_cause_of_the_absent": {
+    "mechanism": "src/bin/v06_work_inventory.rs `has_classifying_token`: `Kind::Feat => has_token(fields, \"TYPE:\")` and `Kind::Spell => has_token(\"SCHOOL:\") || has_token(\"CLASSES:\")`. A row failing its kind's test is not enumerated and lands in the `missing_classifying_token` trap.",
+    "evidence": "all 9 `pu_feats.lst` rows 6-14 carry `CATEGORY:FEAT`, `DESC:` and `BENEFIT:` and NO `TYPE:`; all 8 `pu_feats.lst` rows the inventory does hold (18,19,20,25,26,27,29,32) carry `TYPE:`. `ma_spells.lst:98` (`Elemental Body IIIMOD`) carries `DESC:` and `PREABILITY:` only -- no `SCHOOL:`, no `CLASSES:`.",
+    "re_derive": "awk -F'\\t' 'NR>=6&&NR<=14' $PCGEN_CORPUS_ROOT/pathfinder/paizo/roleplaying_game/pathfinder_unchained/pu_feats.lst | grep -c 'TYPE:'  # -> 0",
+    "single_trap": true
+  },
+  "corpus_wide_figure_corrected": {
+    "cycle_1_claim": "48609 of 48864 real corpus rules records = 99.478%",
+    "corrected": "48854 of 48864 = 99.9795%",
+    "arithmetic": "48609 + (255 - 10) = 48854; the denominator 48864 is unchanged",
+    "why": "245 of the 255 cycle 1 subtracted from the numerator do reach a DONE inventory unit -- under a re-attributed book label, a `.COPY=` twin row, or a prose-identical record. Only 10 reach nothing."
+  },
+  "what_this_proof_does_not_cover": [
+    "It does not re-verify the 2,657 records cycle 1 placed in the three not-a-record buckets (`chassis_only`, `duplicate_ingest`, `_settled`). Those keep cycle 1's disposition; this cycle's scope is the 255 remainder only.",
+    "`reached_via_identical_prose_record` proves the WORDS reach a sheet line; it does not prove the reached record is filed under the name a player would look up. `Threefold Aspect (Adulthood)` prints as part of `Threefold Aspect`.",
+    "Prose identity is normalised for whitespace and case ONLY. A twin differing in a single numeral, die expression or bonus compares different and stays a gap -- the test cannot silently launder a changed magnitude."
+  ]
+}

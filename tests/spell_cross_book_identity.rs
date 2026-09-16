@@ -174,7 +174,7 @@ fn no_archetype_display_name_shadows_another_record_in_its_own_book() {
 
 /// The `SPELL_LIST` table above is only half the pipeline: the on-disk
 /// JSON cache (`data/corpus/advanced_class_guide/spell/*.json`), produced
-/// by `codex::rules_core::cache_gen::acg::generate()` and consulted by
+/// by `codex::pcgen_import::cache_gen::acg::generate()` and consulted by
 /// `v06_corpus_trap_report --audit`, is the actual artifact ingest ships.
 /// A prior generation run stamped `data.key` as the *display* name for the
 /// 9 Naturalist rows (pre-dating the `SPELL_LIST` KEY:-token fix above),

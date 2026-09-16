@@ -107,8 +107,8 @@ ONLY_STAGES=()
 # §4.1, 5 of 34) and a ~490-binary root-full build is exactly what tips a box
 # over — it must fail loudly before that build starts, not be discovered by
 # `ld terminated with signal 7 [Bus error]` partway through it.
-ALL_STAGES=(preflight-disk preflight-oracle oracle-pin-selftest producer-selftest pi-redaction-selftest provenance-selftest site-dashboard-selftest site-dashboard-check site-dashboard-pi-gate build-public-status-selftest site-public-status-check site-public-status-pi-gate site-asset-stamp-check reachability-audit-selftest reachability-audit groundtruth-guard-selftest supersession-gate-selftest shape-coverage-standing-gate-selftest shape-coverage-standing-gate denominator-gate figure-provenance pi-sweep declared-pi-audit audit-selftest reclaim-selftest driver-selftest corpus-sweep-selftest corpus-trap-audit-selftest root-lib root-full desktop reach corpus-sweep corpus-trap-audit supersession-gate frontend-install frontend-test frontend-typecheck clippy class-dump)
-QUICK_STAGES=(preflight-disk preflight-oracle oracle-pin-selftest producer-selftest pi-redaction-selftest provenance-selftest site-dashboard-selftest site-dashboard-check site-dashboard-pi-gate build-public-status-selftest site-public-status-check site-public-status-pi-gate site-asset-stamp-check reachability-audit-selftest reachability-audit groundtruth-guard-selftest supersession-gate-selftest shape-coverage-standing-gate-selftest shape-coverage-standing-gate denominator-gate figure-provenance pi-sweep declared-pi-audit audit-selftest reclaim-selftest driver-selftest corpus-sweep-selftest corpus-trap-audit-selftest root-lib reach frontend-install frontend-test frontend-typecheck class-dump)
+ALL_STAGES=(preflight-disk preflight-oracle oracle-pin-selftest producer-selftest pi-redaction-selftest provenance-selftest site-dashboard-selftest site-dashboard-pin site-dashboard-check site-dashboard-pi-gate build-public-status-selftest site-public-status-check site-public-status-pi-gate site-asset-stamp-check reachability-audit-selftest reachability-audit groundtruth-guard-selftest supersession-gate-selftest shape-coverage-standing-gate-selftest shape-coverage-standing-gate cycle-scope-gate-selftest shape-engine-boundary-selftest shape-engine-boundary missing-engine-tables denominator-gate figure-provenance pcgen-residue-gate token-coverage-selftest token-coverage pi-sweep declared-pi-audit audit-selftest reclaim-selftest driver-selftest corpus-sweep-selftest corpus-trap-audit-selftest root-lib root-full desktop reach corpus-sweep sheet-rules-check corpus-trap-audit supersession-gate frontend-install frontend-test frontend-typecheck clippy class-dump)
+QUICK_STAGES=(preflight-disk preflight-oracle oracle-pin-selftest producer-selftest pi-redaction-selftest provenance-selftest site-dashboard-selftest site-dashboard-pin site-dashboard-check site-dashboard-pi-gate build-public-status-selftest site-public-status-check site-public-status-pi-gate site-asset-stamp-check reachability-audit-selftest reachability-audit groundtruth-guard-selftest supersession-gate-selftest shape-coverage-standing-gate-selftest shape-coverage-standing-gate cycle-scope-gate-selftest shape-engine-boundary-selftest shape-engine-boundary missing-engine-tables denominator-gate figure-provenance pcgen-residue-gate token-coverage-selftest token-coverage pi-sweep declared-pi-audit audit-selftest reclaim-selftest driver-selftest corpus-sweep-selftest corpus-trap-audit-selftest root-lib reach frontend-install frontend-test frontend-typecheck class-dump)
 
 usage() {
     sed -n '3,48p' "${BASH_SOURCE[0]}" | sed 's/^# \{0,1\}//'
@@ -582,6 +582,51 @@ run_site_dashboard_selftest() {
     fi
 
     stage_pass site-dashboard-selftest "${tally:-$passed cases passed}"
+}
+
+# ---------------------------------------------------------------------------
+# Stage: site-dashboard-pin
+#
+# The fast half of the freshness gate, and the control for incident key
+# `site-dashboard-json-stale-after-inventory-move` (3 firings; 7 failing runs
+# of `site-dashboard-check`). `--check` below is correct but costs ~15 minutes
+# of real producer time (measured 904 s, 2026-09-10, HEAD 00e44eee02), which
+# is why it only ever ran at the ~90-minute epic wrap-up -- long after the
+# cycle that broke the feed had pushed. Every firing had one cause: the
+# inventory was regenerated and the feed derived from it was not.
+#
+# This stage re-hashes `docs/work-inventory.json` and compares it to the pin a
+# real publish recorded. Milliseconds, no producer, no cargo. The same command
+# is in `workflow-instruction.md` §6 step 3, so a cycle now goes red at its own
+# push gate instead of at the next wrap-up. It does NOT replace
+# `site-dashboard-check`: the pin watches one input, and a feed made stale by a
+# unit-ledger or owner-state change hashes clean here.
+# ---------------------------------------------------------------------------
+
+run_site_dashboard_pin() {
+    stage_start "site-dashboard-pin — scripts/publish-site-dashboard.sh --check-pin"
+    local log="$LOG_DIR/site-dashboard-pin.log"
+    local script="$REPO_ROOT/scripts/publish-site-dashboard.sh"
+
+    if [[ ! -f "$script" ]]; then
+        stage_fail site-dashboard-pin "script missing at scripts/publish-site-dashboard.sh"
+        return
+    fi
+
+    ( cd "$REPO_ROOT" && exec "$script" --check-pin ) >"$log" 2>&1
+    local status=$?
+
+    if (( status != 0 )); then
+        stage_fail site-dashboard-pin "the feed's recorded input moved — run ./scripts/publish-site-dashboard.sh and commit the refreshed feed — $log"
+        return
+    fi
+
+    if ! grep -q "input pin matches" "$log"; then
+        stage_fail site-dashboard-pin "exited 0 without confirming the pin — $log"
+        return
+    fi
+
+    stage_pass site-dashboard-pin "docs/work-inventory.json matches the pin the feed was published from"
 }
 
 # ---------------------------------------------------------------------------
@@ -1110,17 +1155,207 @@ run_shape_coverage_standing_gate() {
 }
 
 # ---------------------------------------------------------------------------
+# Stage: cycle-scope-gate-selftest
+#
+# Runs `python3 -m unittest scripts/tests/test_cycle_scope_gate.py` -- the
+# batch floor's own self-test (SD-35 `AT-35-E1-001`, `decisions.md §2`).
+# `scripts/cycle_scope_gate.py --min 500 <scope flags>` is the nonzero exit
+# every SD-35 dispatch runs before touching anything; the three cases the
+# criterion names are executed here against synthetic inventories (a 12-unit
+# scope exits 1; a 500-unit scope exits 0; a 12-unit scope that is the whole
+# remainder exits 0), plus the `--receipt` math (id-set moved into DONE,
+# relabels, Rust lines from `git diff --numstat` on a throwaway repo, compile
+# sessions from cargo fingerprint timestamps, the live-side PCGen count from
+# `pcgen_residue_gate.py`). A floor that stops failing is the incident this
+# stage exists to catch (`workflow-instruction.md §12` row 27). Cheap (stdlib
+# unittest, no build, no network) -- placed in BOTH stage sets next to the
+# other self-tests, the same prove-it-can-fail reasoning they carry.
+# ---------------------------------------------------------------------------
+
+run_cycle_scope_gate_selftest() {
+    stage_start "cycle-scope-gate-selftest — python3 -m unittest scripts/tests/test_cycle_scope_gate.py"
+    local log="$LOG_DIR/cycle-scope-gate-selftest.log"
+    local script="$REPO_ROOT/scripts/tests/test_cycle_scope_gate.py"
+
+    if [[ ! -f "$script" ]]; then
+        stage_fail cycle-scope-gate-selftest "self-test script missing at scripts/tests/test_cycle_scope_gate.py"
+        return
+    fi
+    if [[ ! -f "$REPO_ROOT/scripts/cycle_scope_gate.py" ]]; then
+        stage_fail cycle-scope-gate-selftest "gate missing at scripts/cycle_scope_gate.py"
+        return
+    fi
+
+    ( cd "$REPO_ROOT" && exec python3 -m unittest -v "$script" ) >"$log" 2>&1
+    local status=$?
+
+    local ran
+    ran=$(sed -n 's/^Ran \([0-9]*\) tests\? in .*$/\1/p' "$log" | tail -1)
+
+    if (( status != 0 )); then
+        stage_fail cycle-scope-gate-selftest "self-test exit $status${ran:+; ran $ran}  — $log"
+        return
+    fi
+
+    if [[ -z "$ran" || "$ran" -eq 0 ]]; then
+        stage_fail cycle-scope-gate-selftest "0 cases ran — the self-test asserts nothing — $log"
+        return
+    fi
+
+    stage_pass cycle-scope-gate-selftest "$ran cases passed"
+}
+
+# ---------------------------------------------------------------------------
+# Stage: shape-engine-boundary-selftest
+#
+# Runs `python3 -m unittest scripts/tests/test_shape_engine_boundary.py` --
+# the self-test behind the `shape-engine-boundary` stage below, carrying the
+# two RED->GREEN proofs SD-35 `AT-35-E1-002` names (moving the cited function
+# 50 lines keeps its content anchor green; changing one cited condition
+# fails it). Same shape as `shape-coverage-standing-gate-selftest`: a zero
+# case count is a failure, not a vacuous pass. Cheap (Python, no build) --
+# in BOTH stage sets.
+# ---------------------------------------------------------------------------
+
+run_shape_engine_boundary_selftest() {
+    stage_start "shape-engine-boundary-selftest — python3 -m unittest scripts/tests/test_shape_engine_boundary.py"
+    local log="$LOG_DIR/shape-engine-boundary-selftest.log"
+    local script="$REPO_ROOT/scripts/tests/test_shape_engine_boundary.py"
+
+    if [[ ! -f "$script" ]]; then
+        stage_fail shape-engine-boundary-selftest "self-test script missing at scripts/tests/test_shape_engine_boundary.py"
+        return
+    fi
+
+    ( cd "$REPO_ROOT" && exec python3 -m unittest -v "$script" ) >"$log" 2>&1
+    local status=$?
+
+    local ran
+    ran=$(sed -n 's/^Ran \([0-9]*\) tests\? in .*$/\1/p' "$log" | tail -1)
+
+    if (( status != 0 )); then
+        stage_fail shape-engine-boundary-selftest "self-test exit $status${ran:+; ran $ran}  — $log"
+        return
+    fi
+
+    if [[ -z "$ran" || "$ran" -eq 0 ]]; then
+        stage_fail shape-engine-boundary-selftest "0 cases ran — the self-test asserts nothing — $log"
+        return
+    fi
+
+    stage_pass shape-engine-boundary-selftest "$ran cases passed"
+}
+
+# ---------------------------------------------------------------------------
+# Stage: shape-engine-boundary
+#
+# Runs `scripts/shape_engine_boundary.py --check` -- SD-34 `AT-34-E1-004`'s
+# committed fact (a shape engine turns a formula into a number and does not
+# place/attach/display the record), re-derived against the live
+# `docs/work-inventory.json` and the live `src/bin/v06_work_inventory.rs` on
+# every run. Fails when either count cannot be derived or the promotion
+# ladder's CONTENT ANCHOR no longer resolves -- the four cited lines gone,
+# changed, duplicated, or `fn classify` vanished (SD-35 `AT-35-E1-002`).
+# Wired here because SD-34 wave 51 found this instrument's citation already
+# drifted at HEAD: the gate worked, nobody had asked it -- an instrument
+# that is not a stage is not a gate (`workflow-instruction.md §12` row 31).
+# Cheap (Python + JSON, no build) -- in BOTH stage sets.
+# ---------------------------------------------------------------------------
+
+run_shape_engine_boundary() {
+    stage_start "shape-engine-boundary — python3 scripts/shape_engine_boundary.py --check"
+    local log="$LOG_DIR/shape-engine-boundary.log"
+    local script="$REPO_ROOT/scripts/shape_engine_boundary.py"
+
+    if [[ ! -f "$script" ]]; then
+        stage_fail shape-engine-boundary "script missing at scripts/shape_engine_boundary.py"
+        return
+    fi
+
+    ( cd "$REPO_ROOT" && exec python3 "$script" --check ) >"$log" 2>&1
+    local status=$?
+
+    local magnitude_bearing not_held citation_ok stale
+    magnitude_bearing=$(sed -n 's/^magnitude_bearing=\([0-9]*\) .*$/\1/p' "$log" | tail -1)
+    not_held=$(sed -n 's/^.* not_held_by_engine=\([0-9]*\) .*$/\1/p' "$log" | tail -1)
+    citation_ok=$(sed -n 's/^.* citation_ok=\([A-Za-z]*\)$/\1/p' "$log" | tail -1)
+    stale=$(sed -n 's/^STALE_CITATION: \(.*\)$/\1/p' "$log" | tail -1)
+    actual "SHAPE_ENGINE_MAGNITUDE_BEARING=${magnitude_bearing:-unknown}"
+    actual "SHAPE_ENGINE_NOT_HELD=${not_held:-unknown}"
+
+    if (( status != 0 )); then
+        stage_fail shape-engine-boundary "exit $status${stale:+ — stale citation: $stale} — $log"
+        return
+    fi
+
+    if [[ "$citation_ok" != True || -z "$magnitude_bearing" ]]; then
+        stage_fail shape-engine-boundary "exited 0 without printing citation_ok=True and a population — $log"
+        return
+    fi
+
+    stage_pass shape-engine-boundary "magnitude_bearing=${magnitude_bearing} not_held_by_engine=${not_held:-?} citation_ok=True"
+}
+
+# ---------------------------------------------------------------------------
+# Stage: missing-engine-tables
+#
+# Runs `scripts/missing_engine_tables.py --check` -- SD-34 `AT-34-E1-003`'s
+# per-kind enumeration of bucket A ("engine has no table for this kind"),
+# re-derived against the live inventory on every run. Fails on a bucket-A
+# kind with no engine-surface citation (`UnknownKindError`) or on a citation
+# whose CONTENT ANCHOR no longer resolves inside `fn classify` (SD-35
+# `AT-35-E1-002`). Same wave-51 lesson as `shape-engine-boundary`: both
+# pins were found stale at HEAD because neither instrument was a stage.
+# Cheap (Python + JSON, no build) -- in BOTH stage sets.
+# ---------------------------------------------------------------------------
+
+run_missing_engine_tables() {
+    stage_start "missing-engine-tables — python3 scripts/missing_engine_tables.py --check"
+    local log="$LOG_DIR/missing-engine-tables.log"
+    local script="$REPO_ROOT/scripts/missing_engine_tables.py"
+
+    if [[ ! -f "$script" ]]; then
+        stage_fail missing-engine-tables "script missing at scripts/missing_engine_tables.py"
+        return
+    fi
+
+    ( cd "$REPO_ROOT" && exec python3 "$script" --check ) >"$log" 2>&1
+    local status=$?
+
+    local population kinds cite_failures unknown
+    population=$(sed -n 's/^population=\([0-9]*\) kinds=[0-9]*$/\1/p' "$log" | tail -1)
+    kinds=$(sed -n 's/^population=[0-9]* kinds=\([0-9]*\)$/\1/p' "$log" | tail -1)
+    cite_failures=$(sed -n 's/^citation_failures=\([0-9]*\)$/\1/p' "$log" | tail -1)
+    unknown=$(sed -n 's/^UNKNOWN_KIND: \(.*\)$/\1/p' "$log" | tail -1)
+    actual "MISSING_ENGINE_TABLES_POPULATION=${population:-unknown}"
+
+    if (( status != 0 )); then
+        stage_fail missing-engine-tables "exit $status population=${population:-?} kinds=${kinds:-?} citation_failures=${cite_failures:-?}${unknown:+ — $unknown} — $log"
+        return
+    fi
+
+    if [[ -z "$population" || "$cite_failures" != 0 ]]; then
+        stage_fail missing-engine-tables "exited 0 without printing a population and citation_failures=0 — $log"
+        return
+    fi
+
+    stage_pass missing-engine-tables "population=${population} kinds=${kinds:-?} citation_failures=0"
+}
+
+# ---------------------------------------------------------------------------
 # Stage: denominator-gate
 #
 # Runs `scripts/denominator_gate.py --check` -- `AT-33-E1-004`
 # (`docs/release/SD-33-computed-value-verification/epic-breakdown.md`),
 # enforcing `decisions.md` §2: a percentage reported without its
 # denominator stated in the same construct (the same line) fails the
-# build. Default target is this bundle's own generated evidence
-# (`artifacts/**/*_cycle_receipt.md` + `progress.md`) -- deliberately not
-# this bundle's planning prose (out of this criterion's write scope) and
-# not every prior bundle's receipts (261 files, unaudited, a separate
-# task). `DENOMINATOR_GATE_PATHS` (space-separated globs) overrides the
+# build. Default target (`DEFAULT_GLOBS` in the script) is SD-33's
+# receipts, `progress.md` and seven headline docs, SD-34's receipts and
+# root `.md` (`AT-34-E1-006`), and every SD-35 `.md` -- root plus
+# `artifacts/**` (`AT-35-E1-004`); each widening is additive, nothing
+# already scanned stops being scanned. Still not every prior bundle's
+# receipts (261 files, unaudited, a separate task).
+# `DENOMINATOR_GATE_PATHS` (space-separated globs) overrides the
 # default, matching the `${VAR:-default}` shape `VERIFY_LOG_DIR` and
 # `PREFLIGHT_DISK_MIN_FREE_GB` already use -- this is how a deliberately-
 # malformed receipt is proven to fail this exact stage without permanently
@@ -1168,9 +1403,12 @@ run_denominator_gate() {
 # (`docs/release/SD-34-book-completion/epic-breakdown.md`), enforcing
 # `AGENTS.md` rule 9: a figure with no re-derive command reachable from it
 # is not a figure, it is a recollection. Wired alongside `denominator-gate`
-# in the same script, not as a standalone tool. Default target is this
-# package's own artifacts (`PROVENANCE_DEFAULT_GLOBS` -- deliberately not
-# SD-33's folder, which this bundle may not write to). `FIGURE_PROVENANCE_PATHS`
+# in the same script, not as a standalone tool. Default target
+# (`PROVENANCE_DEFAULT_GLOBS`) is SD-34's receipts and root `.md` plus
+# every SD-35 `.md`, root and `artifacts/**` (`AT-35-E1-004`) --
+# deliberately not SD-33's folder, which no later bundle may write to and
+# which reads 44 provenance violations of 137 figures at the widening
+# (measured in the script's own comment). `FIGURE_PROVENANCE_PATHS`
 # (space-separated globs) overrides the default, the same `${VAR:-default}`
 # shape `DENOMINATOR_GATE_PATHS` already uses. The PASS line states the
 # figure population examined, closing `workflow-instruction.md §12` row 15
@@ -1207,6 +1445,164 @@ run_figure_provenance() {
     fi
 
     stage_pass figure-provenance "files_checked=${checked:-?} figures_examined=${figures:-?} violations=0"
+}
+
+# ---------------------------------------------------------------------------
+# Stage: pcgen-residue-gate
+#
+# Runs `scripts/pcgen_residue_gate.py --check` -- `AT-35-E1-005`
+# (`docs/release/SD-35-corpus-sheet-completion/epic-breakdown.md`), enforcing
+# SD-35 `decisions.md` §11: PCGen is a converter input and a test oracle,
+# never live code. The script greps the LIVE side (`src/rules_core` minus
+# `cache_gen/`, `src/saved_character`, `src/campaign`, `src/homebrew_authoring`,
+# `apps/desktop`) for the PCGen surface -- `raw_tokens`, `PcgenFormulaEvaluator`,
+# `render_pcgen_desc`, `bonus_stack_reader`, `pre_tokens`, and the token-syntax
+# literals -- and fails when either the file count or the hit count is above
+# `scripts/pcgen-residue-baseline.env`. The baseline is a ratchet: only
+# `--rebaseline` after a reduction moves it, never a hand edit. Cheap (stdlib
+# re/os.walk, no build, no network) -- in BOTH stage sets next to
+# denominator-gate for the same live-check-with-an-exit-code reasoning.
+#
+# CLOSURE IS THE STAGE'S MODE, from AT-35-E6-004 (2026-09-13) on. The live
+# side reached `live_files=0 live_hits=0`, so the stage runs
+# `--check --closure` by default and passes ONLY at zero: the ratchet was the
+# way down, zero is the floor, and a re-entry of one live-side PCGen read now
+# fails the stage instead of sliding under a 260/12736 baseline. Reverting to
+# the ratchet is `PCGEN_RESIDUE_GATE_CLOSURE=0` and is a diagnostic aid, never
+# the shipping posture (`decisions.md` §11; `epic-breakdown.md AT-35-E6-004`).
+# ---------------------------------------------------------------------------
+
+run_pcgen_residue_gate() {
+    local script="$REPO_ROOT/scripts/pcgen_residue_gate.py"
+    local baseline="$REPO_ROOT/scripts/pcgen-residue-baseline.env"
+    local -a flags=(--check)
+    local label="--check"
+    if [[ "${PCGEN_RESIDUE_GATE_CLOSURE:-1}" == 1 ]]; then
+        flags+=(--closure)
+        label="--check --closure"
+    fi
+    stage_start "pcgen-residue-gate — python3 scripts/pcgen_residue_gate.py $label"
+    local log="$LOG_DIR/pcgen-residue-gate.log"
+
+    if [[ ! -f "$script" ]]; then
+        stage_fail pcgen-residue-gate "script missing at scripts/pcgen_residue_gate.py"
+        return
+    fi
+    if [[ "${PCGEN_RESIDUE_GATE_CLOSURE:-1}" != 1 && ! -f "$baseline" ]]; then
+        stage_fail pcgen-residue-gate "baseline missing at scripts/pcgen-residue-baseline.env (record it with --rebaseline)"
+        return
+    fi
+
+    ( cd "$REPO_ROOT" && exec python3 "$script" "${flags[@]}" ) >"$log" 2>&1
+    local status=$?
+
+    local verdict_line files hits verdict
+    verdict_line=$(grep -E '^live_files=[0-9]+ live_hits=[0-9]+ .*verdict=' "$log" | tail -1)
+    files=$(printf '%s\n' "$verdict_line" | sed -n 's/^live_files=\([0-9]*\) .*/\1/p')
+    hits=$(printf '%s\n' "$verdict_line" | sed -n 's/.* live_hits=\([0-9]*\) .*/\1/p')
+    verdict=$(printf '%s\n' "$verdict_line" | sed -n 's/.*verdict=\([A-Z_]*\)$/\1/p')
+
+    if (( status != 0 )); then
+        stage_fail pcgen-residue-gate "${verdict_line:-no verdict line (exit $status)} — $log"
+        return
+    fi
+    if [[ "$verdict" != PASS ]]; then
+        stage_fail pcgen-residue-gate "exit 0 without verdict=PASS: ${verdict_line:-none} — $log"
+        return
+    fi
+
+    stage_pass pcgen-residue-gate "${verdict_line:-live_files=${files:-?} live_hits=${hits:-?} verdict=PASS}"
+}
+
+# ---------------------------------------------------------------------------
+# Stage: token-coverage-selftest
+#
+# Runs `python3 -m unittest scripts/tests/test_token_coverage.py` -- the
+# self-test behind the `token-coverage` stage below, carrying the RED->GREEN
+# proof SD-35 `AT-35-E2-004` names: a planted double-count (one record twice
+# in the census, or one token twice on a record) fails the check; removing it
+# passes. Same shape as `shape-engine-boundary-selftest`: a zero case count is
+# a failure, not a vacuous pass. Cheap (Python, synthetic fixtures, no build)
+# -- in BOTH stage sets.
+# ---------------------------------------------------------------------------
+
+run_token_coverage_selftest() {
+    stage_start "token-coverage-selftest — python3 -m unittest scripts/tests/test_token_coverage.py"
+    local log="$LOG_DIR/token-coverage-selftest.log"
+    local script="$REPO_ROOT/scripts/tests/test_token_coverage.py"
+
+    if [[ ! -f "$script" ]]; then
+        stage_fail token-coverage-selftest "self-test script missing at scripts/tests/test_token_coverage.py"
+        return
+    fi
+
+    ( cd "$REPO_ROOT" && exec python3 -m unittest -v "$script" ) >"$log" 2>&1
+    local status=$?
+
+    local ran
+    ran=$(sed -n 's/^Ran \([0-9]*\) tests\? in .*$/\1/p' "$log" | tail -1)
+
+    if (( status != 0 )); then
+        stage_fail token-coverage-selftest "self-test exit $status${ran:+; ran $ran}  — $log"
+        return
+    fi
+
+    if [[ -z "$ran" || "$ran" -eq 0 ]]; then
+        stage_fail token-coverage-selftest "0 cases ran — the self-test asserts nothing — $log"
+        return
+    fi
+
+    stage_pass token-coverage-selftest "$ran cases passed"
+}
+
+# ---------------------------------------------------------------------------
+# Stage: token-coverage
+#
+# Runs `scripts/token_coverage.py --check` -- SD-35 `AT-35-E2-004`: the
+# token-coverage ledger. Re-derives `artifacts/epic-2-sheet-rule/
+# token-coverage.json` from the converter's token census
+# (`data/sheet_rules/_tokens.json`), its refusal report, and the live
+# `docs/work-inventory.json`, and checks the sums: every non-DONE unit is
+# under >= 1 token type or `token-less`; the refused set across all token
+# types equals `_refused.json`'s id set; no record or token is counted
+# twice; per-shape totals agree. Fails when a sum does not hold OR when the
+# committed ledger is stale (it rewrites it, so the fix is one commit) --
+# from this criterion on the remainder is named by token type
+# (`workflow-instruction.md §12` row 33). Cheap (Python + JSON, no build) --
+# in BOTH stage sets.
+# ---------------------------------------------------------------------------
+
+run_token_coverage() {
+    stage_start "token-coverage — python3 scripts/token_coverage.py --check"
+    local log="$LOG_DIR/token-coverage.log"
+    local script="$REPO_ROOT/scripts/token_coverage.py"
+
+    if [[ ! -f "$script" ]]; then
+        stage_fail token-coverage "script missing at scripts/token_coverage.py"
+        return
+    fi
+
+    ( cd "$REPO_ROOT" && exec python3 "$script" --check ) >"$log" 2>&1
+    local status=$?
+
+    local verdict_line non_done refused verdict
+    verdict_line=$(grep -E '^non_done=[0-9]+ .*verdict=' "$log" | tail -1)
+    non_done=$(printf '%s\n' "$verdict_line" | sed -n 's/^non_done=\([0-9]*\) .*/\1/p')
+    refused=$(printf '%s\n' "$verdict_line" | sed -n 's/.* refused=\([0-9]*\) .*/\1/p')
+    verdict=$(printf '%s\n' "$verdict_line" | sed -n 's/.*verdict=\([A-Z_]*\)$/\1/p')
+    actual "TOKEN_COVERAGE_NON_DONE=${non_done:-unknown}"
+    actual "TOKEN_COVERAGE_REFUSED=${refused:-unknown}"
+
+    if (( status != 0 )); then
+        stage_fail token-coverage "${verdict_line:-no verdict line (exit $status)} — $log"
+        return
+    fi
+    if [[ "$verdict" != PASS ]]; then
+        stage_fail token-coverage "exit 0 without verdict=PASS: ${verdict_line:-none} — $log"
+        return
+    fi
+
+    stage_pass token-coverage "$verdict_line"
 }
 
 # ---------------------------------------------------------------------------
@@ -1932,6 +2328,35 @@ run_corpus_sweep() {
 }
 
 # ---------------------------------------------------------------------------
+# Stage: sheet-rules-check
+#
+# Runs `cargo run --locked --bin sheet_rule_convert -- --check` -- `AT-35-E2-001`
+# (`docs/release/SD-35-corpus-sheet-completion/epic-breakdown.md`): the generated
+# `data/sheet_rules/` package equals a fresh conversion of every
+# `docs/work-inventory.json` unit byte for byte, carries no source-format
+# literal (`BONUS:`, `DEFINE:`, `PRE<X>:`, `%CHOICE`, `CL=`, `TYPE=`, `%<n>`),
+# every referenced variable has a `_vars/` table, and converted + refused sums
+# to the population. Needs the pinned oracle checkout (`preflight-oracle`).
+# ---------------------------------------------------------------------------
+run_sheet_rule_convert_check() {
+    stage_start "sheet-rules-check — cargo run --locked --bin sheet_rule_convert -- --check  (repo root)"
+    local log="$LOG_DIR/sheet-rules-check.log"
+    ( cd "$REPO_ROOT" && exec cargo run --locked --quiet -j "$JOBS" --bin sheet_rule_convert -- --check ) >"$log" 2>&1
+    local status=$?
+    if [[ "$status" -ne 0 ]]; then
+        stage_fail sheet-rules-check "package stale, source-format literal, or a variable with no table (exit $status) — $log"
+        return
+    fi
+    local line
+    line=$(grep -E '^records=[0-9]+ converted=[0-9]+ refused=[0-9]+ .*verdict=PASS' "$log" | tail -n 1)
+    if [[ -z "$line" ]]; then
+        stage_fail sheet-rules-check "binary exited 0 without a verdict=PASS line — $log"
+        return
+    fi
+    stage_pass sheet-rules-check "$line"
+}
+
+# ---------------------------------------------------------------------------
 # Stage: corpus-trap-audit-selftest
 #
 # Runs scripts/tests/test_corpus_trap_audit_baseline.sh — the detection
@@ -2209,6 +2634,7 @@ for stage in "${SELECTED[@]}"; do
         pi-redaction-selftest) run_pi_redaction_selftest ;;
         provenance-selftest) run_provenance_selftest ;;
         site-dashboard-selftest) run_site_dashboard_selftest ;;
+        site-dashboard-pin) run_site_dashboard_pin ;;
         site-dashboard-check) run_site_dashboard_check ;;
         site-dashboard-pi-gate) run_site_dashboard_pi_gate ;;
         build-public-status-selftest) run_build_public_status_selftest ;;
@@ -2221,8 +2647,15 @@ for stage in "${SELECTED[@]}"; do
         supersession-gate-selftest) run_supersession_gate_selftest ;;
         shape-coverage-standing-gate-selftest) run_shape_coverage_standing_gate_selftest ;;
         shape-coverage-standing-gate) run_shape_coverage_standing_gate ;;
+        cycle-scope-gate-selftest) run_cycle_scope_gate_selftest ;;
+        shape-engine-boundary-selftest) run_shape_engine_boundary_selftest ;;
+        shape-engine-boundary) run_shape_engine_boundary ;;
+        missing-engine-tables) run_missing_engine_tables ;;
         denominator-gate)    run_denominator_gate ;;
         figure-provenance)   run_figure_provenance ;;
+        pcgen-residue-gate)  run_pcgen_residue_gate ;;
+        token-coverage-selftest) run_token_coverage_selftest ;;
+        token-coverage)      run_token_coverage ;;
         pi-sweep)            run_pi_sweep ;;
         declared-pi-audit)   run_declared_pi_audit ;;
         audit-selftest)      run_audit_selftest ;;
@@ -2231,6 +2664,7 @@ for stage in "${SELECTED[@]}"; do
         corpus-sweep-selftest) run_corpus_sweep_selftest ;;
         corpus-trap-audit-selftest) run_corpus_trap_audit_selftest ;;
         corpus-sweep)        run_corpus_sweep ;;
+        sheet-rules-check) run_sheet_rule_convert_check ;;
         corpus-trap-audit)   run_corpus_trap_audit ;;
         supersession-gate)   run_supersession_gate ;;
         root-lib)            run_root_lib ;;

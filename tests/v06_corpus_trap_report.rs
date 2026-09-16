@@ -529,7 +529,7 @@ fn no_two_ingested_records_share_a_record_key() {
 /// cache data, with the Naturalist archetype's variant spell filed
 /// under the Core spell's identity. That has been fixed: the ACG spell
 /// cache now resolves those nine rows via their own `KEY:` field
-/// (`src/rules_core/cache_gen/acg.rs`) and is re-keyed to
+/// (`src/pcgen_import/cache_gen/acg.rs`) and is re-keyed to
 /// `Naturalist Summon Nature's Ally N` on disk, so the known-debt list
 /// below is empty.
 ///

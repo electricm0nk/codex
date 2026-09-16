@@ -31,23 +31,104 @@
 //!
 //! # Module-partition rationale
 //!
-//! The typed payload enum [`SourceContentPayload`] lives in
-//! [`crate::pcgen_import::source_content_payload`] because its
-//! variants borrow Slice B parser entry types
-//! (e.g. `&'a ClassEntry`). Defining the enum directly in this
-//! module would force `rules_core::source_content` to pull
-//! `pcgen_import::lst_parser::*` into its surface; combined with
-//! the canonical projection path (which lives inside
-//! `pcgen_import`), that would either form an import cycle at
-//! the cargo module level or require an unsafe lifetime
-//! extension. The split avoids both: the canonical envelope (this
-//! module's surface) depends only on `&str`-based
-//! identifiers, integers, owned strings, and the
-//! [`SourceContentPayload`] re-export — none of which
-//! transitively depend on parser entry types living in the
-//! canonical envelope.
+//! Until SD-35 `AT-35-E6-003-RULED` cycle 18 the typed payload enum lived in
+//! `pcgen_import` and was re-exported from here, because four of its seven
+//! variants borrowed Slice B parser entry types (e.g. `&'a ClassEntry`) and
+//! defining the enum here would have pulled `pcgen_import::lst_parser::*` into
+//! the rules-core surface. `decisions.md` §11/§19 make that re-export a residue
+//! hit: naming the converter in shipping code is reading the converter.
+//!
+//! Cycle 18 split the type instead of moving it. The envelope
+//! ([`SourceContentRecord`], [`SourcePackageContent`],
+//! [`SourceContentLoadResult`]) is now generic over its payload, with this
+//! module's own [`SourceContentPayload`] as the default. The live payload names
+//! only rules-core types; the parser-borrowing projection keeps every variant
+//! it had, under its own name
+//! ([`IrContentPayload`](crate::pcgen_import::ir_content_payload::IrContentPayload)),
+//! on the converter side where `decisions.md` §11 says the converter belongs.
+//! No consumer of the default envelope changed: `SourceContentRecord<'a>` still
+//! means what it meant.
 
-pub use crate::pcgen_import::source_content_payload::SourceContentPayload;
+// =============================================================================
+// SourceContentPayload — the live side's own kind-specific payload
+// =============================================================================
+
+/// Kind-specific payload carried by [`SourceContentRecord`] on the **live**
+/// side.
+///
+/// Every variant names a type this crate's rules core owns. No variant borrows
+/// an ingest parser entry, which is what lets the enum live here rather than in
+/// `pcgen_import` (`decisions.md` §11, §19).
+///
+/// Two kinds are settled — the two the live side has its own converted shape
+/// for: [`CorpusSpellRecord`](crate::rules_core::spell_record::CorpusSpellRecord)
+/// (SD-35 `AT-35-E6-003-RULED` cycle 8) and
+/// [`CorpusEquipmentRecord`](crate::rules_core::equipment_record::CorpusEquipmentRecord)
+/// (cycles 10 and 13). Every other B-family kind reaches the live envelope as
+/// [`SourceContentPayload::Unsettled`]: the kind tag and the record's canonical
+/// name, which are identity, not ingest vocabulary.
+///
+/// That is a deliberate narrowing, not a silent drop. No live consumer has ever
+/// matched a parser-borrowing variant — at cycle 18 the only live matches in the
+/// tree were `Spell` in `rules_core::spell_resolver`, `Equipment` in
+/// `rules_core::equipment_resolver`, and both in the desktop crate's
+/// `corpus_fixtures` — and the full seven-variant projection is still built,
+/// still proved by the slice-E integration suites, and still reachable as
+/// [`IrContentPayload`](crate::pcgen_import::ir_content_payload::IrContentPayload).
+#[derive(Debug, Clone, Copy, PartialEq)]
+pub enum SourceContentPayload<'a> {
+    /// A spell record in the live side's own converted shape.
+    Spell(&'a crate::rules_core::spell_record::CorpusSpellRecord),
+    /// An equipment or equipment-modifier record in the live side's own
+    /// converted shape.
+    Equipment(&'a crate::rules_core::equipment_record::CorpusEquipmentRecord),
+    /// A record of a kind the live side owns no settled shape for: identity
+    /// only.
+    Unsettled {
+        /// The record's kind, mirroring the envelope's own tag.
+        kind: SourceContentKind,
+        /// The record's canonical name, borrowed from the projection source.
+        name: &'a str,
+    },
+}
+
+impl<'a> SourceContentPayload<'a> {
+    /// The canonical directive-token prefix for this payload variant.
+    /// Mirrors [`SourceContentKind::token`] so callers that hold either an
+    /// envelope or a payload can ask the same question.
+    pub fn kind_token(&self) -> &'static str {
+        match self {
+            SourceContentPayload::Spell(_) => "SPELL",
+            SourceContentPayload::Equipment(e) => {
+                if e.is_modifier {
+                    "EQUIPMOD"
+                } else {
+                    "EQUIP"
+                }
+            }
+            SourceContentPayload::Unsettled { kind, .. } => kind.token(),
+        }
+    }
+
+    /// The originating B-family slice tag for this payload variant.
+    /// Same answer as the matching [`SourceContentKind::source_slice`].
+    pub fn source_slice(&self) -> &'static str {
+        match self {
+            SourceContentPayload::Spell(_) => "SD17-B-4",
+            SourceContentPayload::Equipment(_) => "SD17-B-5",
+            SourceContentPayload::Unsettled { kind, .. } => kind.source_slice(),
+        }
+    }
+
+    /// The record's canonical name for an [`SourceContentPayload::Unsettled`]
+    /// payload, `None` for a settled one (whose own record carries its name).
+    pub fn unsettled_name(&self) -> Option<&'a str> {
+        match self {
+            SourceContentPayload::Unsettled { name, .. } => Some(name),
+            _ => None,
+        }
+    }
+}
 
 // =============================================================================
 // Versioning
@@ -81,7 +162,7 @@ pub const SOURCE_IR_VERSION: u32 = 1;
 /// path-typed parsers, verbatim for string-typed ones). `line` is
 /// the one-based line number the parser captured for the
 /// record's first directive.
-#[derive(Debug, Clone, PartialEq, Eq, Hash)]
+#[derive(Debug, Clone, PartialEq, Eq, Hash, serde::Serialize, serde::Deserialize)]
 pub struct SourceRef {
     /// Identity of the LST file the record originated from.
     pub lst_file: String,
@@ -241,44 +322,95 @@ impl MetadataKindInner {
 ///   entry is the consumer's decision, never the envelope's.
 ///
 /// Records are constructed via the canonical projection path
-/// (see [`crate::pcgen_import::source_content_payload`]'s
-/// `SourceContentRecord`-typed projection helpers, and the
-/// slice-E contract artifact). Consumers should treat the type as
-/// the output of that projection.
-#[derive(Debug, Clone, PartialEq, Eq)]
-pub struct SourceContentRecord<'a> {
+/// (the converter's
+/// [`ir_content_payload`](crate::pcgen_import::ir_content_payload) projection
+/// helpers, and the slice-E contract artifact). Consumers should treat the
+/// type as the output of that projection.
+///
+/// The envelope is generic over its payload and defaults to the live
+/// [`SourceContentPayload`], so `SourceContentRecord<'a>` continues to name the
+/// live shape. The converter's own seven-variant projection instantiates it as
+/// [`IrContentRecord`](crate::pcgen_import::ir_content_payload::IrContentRecord)
+/// (SD-35 `AT-35-E6-003-RULED` cycle 18).
+// `Eq` is deliberately absent: the `Equipment` payload now carries the live
+// side's own converted record, whose settled weight and price are `f64`
+// (SD-35 `AT-35-E6-003-RULED` cycle 10). `PartialEq` is what every caller uses.
+#[derive(Debug, Clone, PartialEq)]
+pub struct SourceContentRecord<'a, P = SourceContentPayload<'a>> {
     /// Provenance anchor. Every record carries one.
     pub source_ref: SourceRef,
     /// Kind tag. Drives per-kind routing in the rules engine.
     pub kind: SourceContentKind,
-    /// Kind-specific payload. Borrowed from the B-family parser's
-    /// entry; the borrow is the canonical projection.
-    pub payload: SourceContentPayload<'a>,
+    /// Kind-specific payload.
+    pub payload: P,
+    /// Ties the default payload's borrow to the envelope's lifetime for
+    /// instantiations whose payload does not itself borrow.
+    _marker: core::marker::PhantomData<&'a ()>,
 }
 
-impl<'a> SourceContentRecord<'a> {
+impl<'a, P> SourceContentRecord<'a, P> {
     /// Construct an arbitrary canonical envelope from its three
     /// constituent parts. Most callers should use the
     /// kind-specific constructors
-    /// ([`SourceContentRecord::class`],
-    /// [`SourceContentRecord::spellcasting_class`],
-    /// [`SourceContentRecord::race`],
-    /// [`SourceContentRecord::ability`],
-    /// [`SourceContentRecord::spell`],
-    /// [`SourceContentRecord::equipment`],
-    /// [`SourceContentRecord::metadata`]) or the projection
-    /// path in
-    /// [`crate::pcgen_import::source_content_payload`].
-    pub fn new(
-        source_ref: SourceRef,
-        kind: SourceContentKind,
-        payload: SourceContentPayload<'a>,
-    ) -> Self {
+    /// ([`SourceContentRecord::spell`], [`SourceContentRecord::equipment`],
+    /// [`SourceContentRecord::unsettled`]) or the converter's projection path
+    /// in [`crate::pcgen_import::ir_content_payload`].
+    pub fn new(source_ref: SourceRef, kind: SourceContentKind, payload: P) -> Self {
         Self {
             source_ref,
             kind,
             payload,
+            _marker: core::marker::PhantomData,
         }
+    }
+}
+
+impl<'a> SourceContentRecord<'a> {
+    /// Build the canonical envelope for a record of a kind the live side owns
+    /// no settled shape for: the kind tag and the record's canonical name.
+    ///
+    /// SD-35 `AT-35-E6-003-RULED` cycle 18. This is the live counterpart of the
+    /// converter's parser-borrowing variants; see
+    /// [`SourceContentPayload::Unsettled`] for why the borrow does not cross.
+    pub fn unsettled(source_ref: SourceRef, kind: SourceContentKind, name: &'a str) -> Self {
+        Self::new(source_ref, kind, SourceContentPayload::Unsettled { kind, name })
+    }
+
+    /// Build the canonical envelope for a spell the live side already holds
+    /// in converted form.
+    ///
+    /// SD-35 `AT-35-E6-003-RULED` cycle 8. `data/corpus/<book>/spell/*.json`
+    /// is already-converted corpus data, so the loader that reads it has no
+    /// business running the converter to wrap it
+    /// (`decisions.md` §11, §19 -- calling `pcgen_import` from live code at
+    /// run time is a hit). This constructor is the live path:
+    /// [`crate::rules_core::corpus_loader::load_spell_corpus`] uses it, and
+    /// only a record that came from a raw `.lst` row goes through
+    /// [`crate::pcgen_import::ir_converter::convert_spell_record`] instead.
+    pub fn spell(
+        source_ref: SourceRef,
+        record: &'a crate::rules_core::spell_record::CorpusSpellRecord,
+    ) -> Self {
+        Self::new(source_ref, SourceContentKind::Spell, SourceContentPayload::Spell(record))
+    }
+
+    /// Build the canonical envelope for an equipment item the live side already
+    /// holds in converted form.
+    ///
+    /// SD-35 `AT-35-E6-003-RULED` cycle 15, the equipment sibling of
+    /// [`SourceContentRecord::spell`] and for the same reason. Since cycle 13
+    /// the `Equipment` payload has been the settled
+    /// [`CorpusEquipmentRecord`](crate::rules_core::equipment_record::CorpusEquipmentRecord)
+    /// rather than a parser row, so wrapping one needs no converter at all —
+    /// only the provenance anchor and the record. `corpus_loader` reads both
+    /// out of the book's settled bundle; a record that came from a raw `.lst`
+    /// row still goes through
+    /// [`crate::pcgen_import::ir_converter::convert_equipment_record`] instead.
+    pub fn equipment(
+        source_ref: SourceRef,
+        record: &'a crate::rules_core::equipment_record::CorpusEquipmentRecord,
+    ) -> Self {
+        Self::new(source_ref, SourceContentKind::Equipment, SourceContentPayload::Equipment(record))
     }
 }
 
@@ -433,20 +565,20 @@ impl SourceContentDiagnostic {
 /// projection-side diagnostics (lossy mappings,
 /// malformed-record forwards, unsupported tokens).
 #[derive(Debug, Clone)]
-pub struct SourcePackageContent<'a> {
+pub struct SourcePackageContent<'a, P = SourceContentPayload<'a>> {
     /// Corpus identity (e.g. `pathfinder_pf1`).
     pub package_id: String,
     /// Provenance anchor for the PCC entry file the include
     /// graph was resolved against.
     pub source_ref: SourceRef,
     /// Projected records, in source order.
-    pub records: Vec<SourceContentRecord<'a>>,
+    pub records: Vec<SourceContentRecord<'a, P>>,
     /// Projection-side diagnostics (lossy mappings, malformed
     /// forwards, unsupported tokens).
     pub diagnostics: Vec<SourceContentDiagnostic>,
 }
 
-impl<'a> SourcePackageContent<'a> {
+impl<'a, P> SourcePackageContent<'a, P> {
     /// Construct an empty `SourcePackageContent` with the
     /// canonical provenance anchors and no records. Useful for
     /// tests and for the projection's preliminary accumulator.
@@ -460,7 +592,7 @@ impl<'a> SourcePackageContent<'a> {
     }
 
     /// Append a record to the bundle.
-    pub fn push(&mut self, record: SourceContentRecord<'a>) {
+    pub fn push(&mut self, record: SourceContentRecord<'a, P>) {
         self.records.push(record);
     }
 
@@ -479,8 +611,11 @@ impl<'a> SourcePackageContent<'a> {
     /// `self.records`. The result is a `Vec` (not a slice) so
     /// callers can pass it across the borrow boundary without
     /// lifetime gymnastics.
-    pub fn records_by_kind(&self, kind: SourceContentKind) -> Vec<SourceContentRecord<'a>> {
-        let mut filtered: Vec<SourceContentRecord<'a>> = self
+    pub fn records_by_kind(&self, kind: SourceContentKind) -> Vec<SourceContentRecord<'a, P>>
+    where
+        P: Clone,
+    {
+        let mut filtered: Vec<SourceContentRecord<'a, P>> = self
             .records
             .iter()
             .filter(|r| kinds_match(r.kind, kind))
@@ -496,7 +631,7 @@ impl<'a> SourcePackageContent<'a> {
             let rb = &filtered[b].source_ref;
             (ra.lst_file.as_str(), ra.line).cmp(&(rb.lst_file.as_str(), rb.line))
         });
-        let permuted: Vec<SourceContentRecord<'a>> =
+        let permuted: Vec<SourceContentRecord<'a, P>> =
             indices.into_iter().map(|i| filtered[i].clone()).collect();
         filtered = permuted;
         filtered
@@ -544,15 +679,15 @@ fn kinds_match(a: SourceContentKind, b: SourceContentKind) -> bool {
 /// projection's warnings (lossy mappings, partial translations,
 /// malformed-record forwards) so the consumer can surface them.
 #[derive(Debug, Clone)]
-pub struct SourceContentLoadResult<'a> {
+pub struct SourceContentLoadResult<'a, P = SourceContentPayload<'a>> {
     /// The projected corpus, when projection produced a usable
     /// bundle.
-    pub content: Option<SourcePackageContent<'a>>,
+    pub content: Option<SourcePackageContent<'a, P>>,
     /// All projection-side diagnostics (errors, warnings, infos).
     pub diagnostics: Vec<SourceContentDiagnostic>,
 }
 
-impl<'a> SourceContentLoadResult<'a> {
+impl<'a, P> SourceContentLoadResult<'a, P> {
     /// Construct an empty `SourceContentLoadResult` with no
     /// content and no diagnostics.
     pub fn empty() -> Self {
@@ -564,7 +699,7 @@ impl<'a> SourceContentLoadResult<'a> {
 
     /// Construct a successful load result wrapping the supplied
     /// package content.
-    pub fn ok(content: SourcePackageContent<'a>) -> Self {
+    pub fn ok(content: SourcePackageContent<'a, P>) -> Self {
         Self {
             content: Some(content),
             diagnostics: Vec::new(),
@@ -738,7 +873,7 @@ mod tests {
     #[test]
     fn ok_load_result_carries_content() {
         let sr = SourceRef::new("foo.lst", 1);
-        let pkg = SourcePackageContent::empty("test_pkg", sr);
+        let pkg: SourcePackageContent<'_> = SourcePackageContent::empty("test_pkg", sr);
         let r = SourceContentLoadResult::ok(pkg);
         assert!(r.content.is_some());
     }

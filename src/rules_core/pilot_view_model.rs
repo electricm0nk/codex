@@ -423,6 +423,7 @@ mod damage_reduction_exposure_tests {
                 selected_skill_modifiers: SelectedSkillModifiers::default(),
                 explanations,
                 diagnostics: Vec::new(),
+                sheet_lines: Vec::new(),
             },
         }
     }
@@ -503,6 +504,7 @@ mod companion_exposure_tests {
                 selected_skill_modifiers: SelectedSkillModifiers::default(),
                 explanations,
                 diagnostics,
+                sheet_lines: Vec::new(),
             },
         }
     }

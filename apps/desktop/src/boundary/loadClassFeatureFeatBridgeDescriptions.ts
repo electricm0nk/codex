@@ -10,7 +10,7 @@ import type { ClassFeatureDescriptionDto } from './loadClassFeatureDescriptions'
  * (`class_feature_feat_bridge.rs`), which serves the SAME
  * {@link ClassFeatureDescriptionDto} shape {@link loadClassFeatureDescriptions}
  * does, for a DISJOINT population: `class_feature` records with no local
- * `DESC:` text of their own whose entire content is a grant of an
+ * description text of their own whose entire content is a grant of an
  * already-separately-modelled `feat` (e.g. `Golden Legionnaire ~ Swift Aid`
  * carries no description, but its `ABILITY:FEAT|AUTOMATIC|Swift Aid` token
  * names a real, already-described feat). The two lists are meant to be

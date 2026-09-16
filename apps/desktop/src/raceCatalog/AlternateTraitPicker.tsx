@@ -70,7 +70,7 @@ const muted: CSSProperties = { color: 'var(--color-text-muted)', fontSize: '0.75
  * A racial trait's prose *states magnitudes* — "three times per day", "a +1
  * bonus on attack rolls" — and feats a character holds change several of them.
  * Every description below is therefore the engine's rendering of the corpus
- * row's own `DESC:` tokens against a character's display values, never the
+ * row's own description statements against a character's display values, never the
  * stored prose (which has its numbers collapsed at ingest, and for
  * `Halfling ~ Adaptable Luck` lost outright).
  *
@@ -546,7 +546,7 @@ export function AlternateTraitPicker() {
  * - `movedByFeats` marks a sentence whose number the selected character's feats
  *   changed from the printed one. Without the mark a player reading "5 times
  *   per day" has no way to tell it apart from the book's own text.
- * - `droppedArgs` names `DESC:` arguments the engine could not resolve. No
+ * - `droppedArgs` names description slots the engine could not resolve. No
  *   shipped record reports one today (derived, not assumed —
  *   `race_trait_picker.rs` prints the live count), and the branch stays because
  *   the alternative to showing it is a silently incomplete sentence.

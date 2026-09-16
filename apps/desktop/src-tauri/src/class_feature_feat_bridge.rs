@@ -1,145 +1,90 @@
-//! The `class_feature` → `feat` cross-reference bridge (SD31-W29-
+//! The `class_feature` -> `feat` cross-reference bridge (SD31-W29-
 //! CLASSFEATURE-FEATBRIDGE-001, wave 29, THE-BOX §2.1 F2).
 //!
 //! # What this closes
 //!
-//! `THE-BOX.md` §2.1 F2 names a distinct, provable `class_feature` shape:
-//! a record whose entire content is a grant of an already-separately-
-//! modelled `feat` (`ABILITY:FEAT|AUTOMATIC|<name>` or
-//! `ABILITY:FEAT|VIRTUAL|<name>`) — "the class feature IS a feat." A real
-//! example, read straight from the corpus
-//! (`data/corpus/adventurers_guide/class_feature/golden_legionnaire/
-//! swift_aid.json`):
-//!
-//! ```json
-//! "description": null,
-//! "raw_tokens": [
-//!   { "key": "KEY", "value": "Golden Legionnaire ~ Swift Aid" },
-//!   { "key": "CATEGORY", "value": "Special Ability" },
-//!   { "key": "TYPE", "value": "GoldenLegionnaireSwiftAid" },
-//!   { "key": "VISIBLE", "value": "DISPLAY" },
-//!   { "key": "ABILITY", "value": "FEAT|AUTOMATIC|Swift Aid" }
-//! ]
-//! ```
-//!
-//! `description` is genuinely `null` — the record's whole job is the
-//! grant, not the content. A player reading this class feature is owed the
-//! real Swift Aid feat text, which already exists, already rendered,
-//! already leak-checked, at `feat_catalog::feat_description_by_exact_name`.
-//! This module is that bridge: it reads every `class_feature` record with
-//! no local description, finds the ones whose ENTIRE mechanical content is
-//! a single named feat grant, and serves the matched feat's own text in
-//! the same [`ClassFeatureDescriptionDto`] shape `class_feature_
-//! descriptions.rs` already emits — the frontend's existing merge (`+
-//! list_class_feature_feat_bridge_descriptions`, `CharacterSheet.tsx`)
+//! `THE-BOX.md` §2.1 F2 names a distinct, provable `class_feature` shape: a
+//! record whose entire content is a grant of an already-separately-modelled
+//! `feat` -- "the class feature IS a feat." A real example is
+//! `adventurers_guide:class_feature:golden_legionnaire_swift_aid`, whose
+//! converted rule states no descriptive prose of its own at all: the record's
+//! whole job is the grant, not the content. A player reading this class feature
+//! is owed the real Swift Aid feat text, which already exists in the converted
+//! package. This module is that bridge: it finds every class feature whose sole
+//! content is one feat grant and serves the granted feat's own words in the
+//! same [`ClassFeatureDescriptionDto`] shape `class_feature_descriptions.rs`
+//! already emits -- the frontend's existing merge
+//! (`+ list_class_feature_feat_bridge_descriptions`, `CharacterSheet.tsx`)
 //! reaches the player through the SAME render path, no second UI surface.
 //!
-//! # Kept deliberately narrow — one raw-token shape, exact names only
+//! # Kept deliberately narrow -- one grant, nothing else, stated over our own schema
 //!
-//! Three refusals, all load-bearing, all found by hand-verifying the wave-
-//! 28 census's own filed population against the live corpus before writing
-//! this module (THE-BOX §2.1 F2's own "keep it narrow" instruction, plus
-//! this codebase's standing lesson that a shared name never implies a
-//! shared thing):
+//! SD-35 `AT-35-E6-003` cycle 4 rewrote this module's population rule. It used
+//! to read the corpus record's verbatim token array and match the ingest format's
+//! own automatic-feat-grant token shape, refusing a record that carried a second
+//! grant entry, any other engine-effect token, or a placeholder target.
+//! `decisions.md §11` rules that array off the live side entirely -- and the
+//! relation it was being read for **is already in the converted package, in the
+//! other direction**: the granted feat's own rule carries a `granted_by` entry
+//! naming the class-feature rule that hands it out. Inverting that index gives
+//! this module its population with no token read, no matcher, and no name
+//! lookup ([`feat_grants_by_class_feature`]).
 //!
-//! 1. **Exactly one `ABILITY` token, and it must be the feat-grant shape.**
-//!    A record carrying a SECOND `ABILITY` entry (e.g. `Monk ~ Unarmed
-//!    Strike`'s own `ABILITY:Internal|AUTOMATIC|...` sibling token) grants
-//!    more than the one feat this module can honestly describe with the
-//!    feat's own text alone — refused, not partially served.
-//! 2. **No OTHER engine-effect token at all.** [`ENGINE_EFFECT_TOKEN_KEYS`]
-//!    mirrors `class_feature_pool_catalog.rs`'s own list (reproduced
-//!    locally, this package's established disjoint-file-touch convention —
-//!    see that module's doc comment for the citation) plus `CHOOSE`. Found
-//!    live while deriving this module's own population: 22 of the wave-28
-//!    census's filed 431 carry a `CHOOSE`/`BONUS`/`DEFINE` token alongside
-//!    the feat grant — `Ranger Combat Style Feat ~ Weapon Focus` grants a
-//!    PLAYER-CHOSEN weapon, `Warpriest Bonus Feat ~ Battle Cry` gates a
-//!    uses-per-day counter — and serving just the bare feat's text would
-//!    silently drop the choice/counter the record's own closure describes.
-//!    Refused here at the corpus-row level, the identical posture Decision
-//!    7's own binding PROXY WARNING requires.
-//! 3. **The grant target must be a literal name, never a placeholder or a
-//!    compound self-reference.** `%LIST` (a chooser wrapper) and a
-//!    `<Name> ~ <Sub-feature>` compound target (`Elemental Fist`'s own
-//!    `ABILITY:FEAT|AUTOMATIC|Elemental Fist ~ Full Version` — a reference
-//!    to another `class_feature` record, not a feat) both fail the exact
-//!    lookup honestly and are refused rather than stripped-and-guessed.
+//! The three refusals survive, restated over the schema:
 //!
-//! Re-deriving the wave-28 census's own filed 431 against these three
-//! refusals, scoped to exactly the census's own 1,378-unit population
-//! (`docs/work-inventory.json`, `type_facet` containing "bonusfeat"),
-//! finds 406 records survive — not 431 (22 carry a second mechanical
-//! token, 2 target a compound self-reference, 1 exact-matches a real feat
-//! with no description of its own to lend).
+//! 1. **Exactly one granted feat.** A class-feature rule that grants two or
+//!    more feats cannot be honestly described by any one feat's text -- refused,
+//!    not partially served. (Was: a second grant token.)
+//! 2. **No other effect of its own.** A rule with a non-empty `grants` list or
+//!    an `offers` choice does more than hand over the feat -- a player-chosen
+//!    weapon, a uses-per-day counter -- and serving the bare feat's text would
+//!    silently drop it. Refused. (Was: a `CHOOSE`/`BONUS`/`DEFINE` token
+//!    alongside the grant.)
+//! 3. **The granted rule must state descriptive prose of its own.** A feat with
+//!    nothing to lend lends nothing. (Was: the feat catalog's exact-name lookup
+//!    answering `None`.)
 //!
-//! **This module does not stop at that scoped re-derivation — it reads the
-//! real corpus directly, the way every other render-path module in this
-//! package does, rather than filtering through `type_facet`'s text.** That
-//! matters: `type_facet` is a `TYPE:` facet string PCGen authors wrote for
-//! organisational grouping, not a promise that it contains the literal
-//! substring "bonusfeat" — real matches like `Golden Legionnaire ~ Swift
-//! Aid` (`type_facet: "GoldenLegionnaireSwiftAid"`) and `Superior
-//! Discernment ~ Sharp Senses` (`type_facet: "LanternBearerDiscernment"`)
-//! are the identical shape (one `ABILITY:FEAT|AUTOMATIC`/`VIRTUAL` token,
-//! nothing else, no local description) but never contain that substring,
-//! so the census's own `bonusfeat`-substring filter undercounts. Scanning
-//! the corpus directly rather than through that proxy finds **471** —
-//! confirmed by this module's own pinned test
-//! ([`class_feature_feat_bridge_serves_the_full_corpus_wide_population`]),
-//! not the narrower, `type_facet`-filtered 406. This wave's own cycle
-//! receipt reports both numbers and why they differ, per the standing rule
-//! to validate a proxy where it makes its confident claim rather than
-//! trust it silently.
+//! `granted_feat` is the granted rule's own `label` -- the feat's exact name,
+//! read off the record rather than parsed out of a token value.
 //!
 //! # Never double-serves a record `class_feature_descriptions.rs` already covers
 //!
-//! Any record with a REAL local `description` is explicitly excluded here
-//! (`is_real_description_value`, reproduced from that module's own
-//! function, same convention) — those 463 records are THE-BOX §2.1 F2's own
-//! named overlap with F1's generic-catalog widening (a DIFFERENT lane's
-//! territory this wave), and `class_feature_descriptions.rs` already serves
-//! them their own real text. This module's population and that module's
-//! population are disjoint by construction: one is gated on "has a real
-//! local description", the other on "has none, but the record's only
-//! content is a feat grant."
+//! The two populations are disjoint **by construction**, and since cycle 4 they
+//! are disjoint on one predicate asked in one place: this module admits a class
+//! feature only when `catalog_description` answers `None` for its converted
+//! rule, and `class_feature_descriptions.rs` admits it only when the same call
+//! answers `Some`. Before cycle 4 the split was "has a real local description"
+//! here versus "has one" there -- the same intent, but read off the ingest
+//! format and evaluated twice.
 //!
-//! # PI screening, the leak guard, and the join — same trust boundaries as `class_feature_descriptions.rs`
+//! # PI screening and the join -- same trust boundaries as `class_feature_descriptions.rs`
 //!
 //! Reads only the already-PI-screened `cache_gen::class_feature` cache
-//! (`§52.3`/`§53.5`, discharged upstream, re-run no check of its own).
-//! `feat_description_by_exact_name` already applies its own leak guard
-//! (reusing `feat_catalog.rs`'s exact render path); this module re-checks
-//! the borrowed text with `leaked_pcgen_syntax` a second time regardless,
-//! matching `class_feature_descriptions.rs`'s own defensive posture rather
-//! than trusting a single call site. The `(class_slug, feature_slug)` join
-//! is the identical algorithm `class_feature_descriptions.rs` uses (`slug`,
-//! reproduced locally here too) — this module names the CLASS FEATURE's
-//! own identity in the served DTO, never the matched feat's, so
-//! `classFeaturesModel.ts`'s existing `matchesCorpusFeature` join needs no
-//! changes to pick these records up.
+//! (`§52.3`/`§53.5`, discharged upstream, re-runs no check of its own) for the
+//! four identity fields, and the converted package for the words. The leak guard
+//! is gone for the same reason it is gone there: the converted package carries
+//! no token to leak, proven package-wide by `sheet_rule_convert -- --check` and
+//! `workflow-instruction.md §6`'s `data/sheet_rules/` grep rather than per
+//! record. The `(class_slug, feature_slug)` join is the identical algorithm
+//! `class_feature_descriptions.rs` uses (`slug`, reproduced locally here too) --
+//! this module names the CLASS FEATURE's own identity in the served DTO, never
+//! the matched feat's, so `classFeaturesModel.ts`'s existing
+//! `matchesCorpusFeature` join needs no changes to pick these records up.
 
+use std::collections::BTreeMap;
 use std::path::{Path, PathBuf};
 use std::sync::OnceLock;
 
 use serde_json::Value;
 
+use codex::rules_core::corpus_loader::live_sheet_rules;
+use codex::rules_core::sheet_rule::{Granter, RuleId, SheetRulePackage};
+use codex::rules_core::sheet_rule_catalog::catalog_description;
+
 use crate::authoring_workbench::codex_repo_root;
-use crate::class_feature_descriptions::ClassFeatureDescriptionDto;
-use crate::feat_catalog::feat_description_by_exact_name;
+use crate::class_feature_descriptions::{converted_id, ClassFeatureDescriptionDto};
 
-/// Reproduced from `class_feature_pool_catalog.rs`'s own
-/// `ENGINE_EFFECT_TOKEN_KEYS` (that module's own doc comment names the
-/// citation: wave-22 adversarial review, Decision 7's binding PROXY
-/// WARNING) plus `CHOOSE` — a record carrying a player CHOICE alongside its
-/// feat grant is not "sole content is one named feat" either, the shape
-/// this module's own doc comment's refusal 2 names.
-const ENGINE_EFFECT_TOKEN_KEYS: &[&str] = &[
-    "ABILITY", "CSKILL", "SELECT", "AUTO", "SAB", "BONUS", "DEFINE", "ADD", "SPELLS", "DR", "SR",
-    "CHOOSE",
-];
-
-/// Reproduced from `class_feature_descriptions.rs::slug` — see this
+/// Reproduced from `class_feature_descriptions.rs::slug` -- see this
 /// module's own doc comment for why a local copy, not a shared import.
 fn slug(name: &str) -> String {
     let mut out = String::with_capacity(name.len());
@@ -183,52 +128,57 @@ fn walk_json_files(dir: &Path, out: &mut Vec<PathBuf>) {
     }
 }
 
-/// The record's sole grant target, or `None` when the record does not
-/// match this module's narrow shape. See the module doc comment's three
-/// refusals for exactly what disqualifies a record.
-fn sole_feat_grant_target(raw_tokens: &Value) -> Option<String> {
-    let tokens = raw_tokens.as_array()?;
-    let mut feat_target: Option<String> = None;
-    for token in tokens {
-        let Some(key) = token.get("key").and_then(|k| k.as_str()) else { continue };
-        let value = token.get("value").and_then(|v| v.as_str()).unwrap_or("");
-
-        if key == "ABILITY" {
-            let target = value
-                .strip_prefix("FEAT|AUTOMATIC|")
-                .or_else(|| value.strip_prefix("FEAT|VIRTUAL|"));
-            match target {
-                // A second ABILITY token of any shape (including a second
-                // feat grant) disqualifies the record -- refusal 1.
-                Some(_) if feat_target.is_some() => return None,
-                Some(name) => feat_target = Some(name.split('|').next().unwrap_or(name).trim().to_string()),
-                // A non-feat ABILITY token (e.g. `Internal|AUTOMATIC|...`)
-                // disqualifies the record the same way -- refusal 1.
-                None => return None,
+/// `class_feature` rule id -> the `feat` rules it hands out, inverted out of
+/// every feat rule's own `granted_by` list.
+///
+/// The converted package already carries a granter index internally, keyed the
+/// other way and used by the held-rule fixpoint; it is not part of the public
+/// schema surface, so this module builds the one relation it needs -- one pass
+/// over the package's feat rules -- rather than widening `SheetRulePackage`'s
+/// API for one consumer. The `when` condition on each grant is deliberately NOT
+/// filtered: a level-gated or variable-gated grant is still a grant, and the
+/// token shape this replaced accepted exactly those too (a trailing gate
+/// qualifier was stripped and the record served).
+fn feat_grants_by_class_feature(package: &SheetRulePackage) -> BTreeMap<RuleId, Vec<RuleId>> {
+    let mut out: BTreeMap<RuleId, Vec<RuleId>> = BTreeMap::new();
+    for feat in package.rules_of_kind("feat") {
+        for grant in &feat.granted_by {
+            let Granter::Rule(granter) = &grant.by else { continue };
+            if !granter.contains(":class_feature:") {
+                continue;
             }
-        } else if ENGINE_EFFECT_TOKEN_KEYS.contains(&key) {
-            // Any OTHER engine-effect token disqualifies the record --
-            // refusal 2.
-            return None;
+            let entry = out.entry(granter.clone()).or_default();
+            if !entry.contains(&feat.id) {
+                entry.push(feat.id.clone());
+            }
         }
     }
+    out
+}
 
-    let name = feat_target?;
-    // Refusal 3: a placeholder chooser wrapper or a compound self-reference
-    // to another class_feature record is never a real feat name.
-    if name.is_empty() || name.contains('%') || name.contains('~') {
-        return None;
-    }
-    Some(name)
+/// The single feat this class-feature rule's whole content grants, or `None`
+/// when one of the module doc comment's three refusals applies.
+fn sole_granted_feat<'a>(
+    package: &'a SheetRulePackage,
+    index: &BTreeMap<RuleId, Vec<RuleId>>,
+    class_feature_id: &str,
+) -> Option<&'a codex::rules_core::sheet_rule::SheetRule> {
+    let granted = index.get(class_feature_id)?;
+    // Refusal 1: more than one granted feat is more than one feat's text.
+    let [only] = granted.as_slice() else { return None };
+    package.rule(only)
 }
 
 /// Reads every `class_feature` cache record under `<repo_root>/data/corpus/
-/// */class_feature/**/*.json`, keeping only the ones this module's three
-/// refusals (module doc comment) do not exclude and whose sole feat target
-/// resolves to a real, described feat.
+/// */class_feature/**/*.json` for its identity, and the converted package for
+/// everything else: a record survives only when its own rule states no
+/// descriptive prose, carries no other effect, and grants exactly one feat that
+/// does state prose (module doc comment's three refusals).
 fn load_class_feature_feat_bridge_descriptions(repo_root: &Path) -> Vec<ClassFeatureDescriptionDto> {
     let corpus_root = repo_root.join("data/corpus");
     let mut out = Vec::new();
+    let Some(package) = live_sheet_rules() else { return out };
+    let index = feat_grants_by_class_feature(package);
     let Ok(books) = std::fs::read_dir(&corpus_root) else { return out };
     let mut book_dirs: Vec<_> = books.flatten().collect();
     book_dirs.sort_by_key(|e| e.file_name());
@@ -254,22 +204,24 @@ fn load_class_feature_feat_bridge_descriptions(repo_root: &Path) -> Vec<ClassFea
                 continue;
             };
 
-            // Disjoint from `class_feature_descriptions.rs`: a record with
-            // a real local description is that module's population, not
-            // this one's.
-            if let Some(local_desc) = data["description"].as_str() {
-                if is_real_description_value(local_desc) {
-                    continue;
-                }
-            }
+            let id = converted_id(&book, key);
+            let Some(rule) = package.rule(&id) else { continue };
 
-            let Some(feat_target) = sole_feat_grant_target(&data["raw_tokens"]) else { continue };
-            let Some(matched_description) = feat_description_by_exact_name(&feat_target) else {
+            // Disjoint from `class_feature_descriptions.rs`, on the one
+            // predicate both modules now ask: a rule that states its own prose
+            // is that module's population, not this one's.
+            if catalog_description(package, rule).is_some() {
                 continue;
-            };
-            // Defensive second check -- see module doc comment's "PI
-            // screening, the leak guard, and the join" section.
-            if codex::rules_core::pcgen_desc::leaked_pcgen_syntax(&matched_description).is_some() {
+            }
+            // Refusal 2: a rule that does anything else of its own is not
+            // "sole content is one feat grant".
+            if !rule.grants.is_empty() || rule.offers.is_some() {
+                continue;
+            }
+            let Some(feat) = sole_granted_feat(package, &index, &id) else { continue };
+            // Refusal 3: a feat with no words of its own has none to lend.
+            let Some(description) = catalog_description(package, feat) else { continue };
+            if !is_real_description_value(&description) {
                 continue;
             }
 
@@ -279,17 +231,15 @@ fn load_class_feature_feat_bridge_descriptions(repo_root: &Path) -> Vec<ClassFea
                 feature_slug: slug(name),
                 key: key.to_string(),
                 name: name.to_string(),
-                description: matched_description,
+                description,
                 // T4-L9 (`decisions.md §13`): this module's `class_slug` is a
                 // synthetic pool-group name, never a real class token (module
                 // doc comment), so the class-held join can never match these
-                // records. `feat_target` is the EXACT, already-verified
-                // string `feat_description_by_exact_name` matched on above --
-                // carried here so the frontend can gate reachability on the
-                // character holding this feat instead (see
-                // `ClassFeatureDescriptionDto::granted_feat`'s own doc
-                // comment).
-                granted_feat: Some(feat_target),
+                // records. The granted rule's own `label` is the feat's exact
+                // name -- carried here so the frontend can gate reachability on
+                // the character holding THAT feat instead (see
+                // `ClassFeatureDescriptionDto::granted_feat`'s own doc comment).
+                granted_feat: Some(feat.label.clone()),
             });
         }
     }
@@ -316,7 +266,6 @@ pub fn list_class_feature_feat_bridge_descriptions() -> Vec<ClassFeatureDescript
 #[cfg(test)]
 mod tests {
     use super::*;
-    use serde_json::json;
 
     fn repo_root() -> PathBuf {
         codex_repo_root().expect("repo root resolves under `cargo test`")
@@ -329,104 +278,79 @@ mod tests {
     }
 
     // ---------------------------------------------------------------
-    // sole_feat_grant_target -- the three refusals, each proven directly
+    // The three refusals, each proven over the LIVE converted package
+    // (`decisions.md §4`: a per-kind gate over the real corpus, never a
+    // fixture with a hand-derived expected value).
     // ---------------------------------------------------------------
 
+    /// Refusal 1 is live, not vacuous: the inverted index really does contain
+    /// class features that grant more than one feat, so the `[only]` arm of
+    /// `sole_granted_feat` is genuinely reached in both directions.
     #[test]
-    fn sole_feat_grant_target_accepts_the_clean_single_token_shape() {
-        let tokens = json!([
-            {"key": "KEY", "value": "Golden Legionnaire ~ Swift Aid"},
-            {"key": "CATEGORY", "value": "Special Ability"},
-            {"key": "TYPE", "value": "GoldenLegionnaireSwiftAid"},
-            {"key": "VISIBLE", "value": "DISPLAY"},
-            {"key": "ABILITY", "value": "FEAT|AUTOMATIC|Swift Aid"}
-        ]);
-        assert_eq!(sole_feat_grant_target(&tokens).as_deref(), Some("Swift Aid"));
+    fn the_multi_grant_refusal_is_reached_by_real_records() {
+        let package = live_sheet_rules().expect("data/sheet_rules/ must be present");
+        let index = feat_grants_by_class_feature(package);
+        let one = index.values().filter(|v| v.len() == 1).count();
+        let many = index.values().filter(|v| v.len() > 1).count();
+        println!("FEAT_GRANT_INDEX class_features={} sole={one} multi={many}", index.len());
+        assert!(one > 0, "no class feature grants exactly one feat -- the index is empty or wrong");
+        assert!(many > 0, "refusal 1 is never reached -- the multi-grant arm is vacuous");
+        for (cf, feats) in &index {
+            if feats.len() > 1 {
+                assert!(
+                    sole_granted_feat(package, &index, cf).is_none(),
+                    "{cf}: a multi-grant class feature must be refused"
+                );
+            }
+        }
     }
 
+    /// Refusal 2 is live: among the class features that grant exactly one feat
+    /// and state no prose of their own, some carry an effect or a choice of
+    /// their own and are refused, and some do not and are served.
     #[test]
-    fn sole_feat_grant_target_accepts_the_virtual_shape_too() {
-        let tokens = json!([
-            {"key": "ABILITY", "value": "FEAT|VIRTUAL|Stunning Fist"}
-        ]);
-        assert_eq!(sole_feat_grant_target(&tokens).as_deref(), Some("Stunning Fist"));
+    fn the_other_effect_refusal_is_reached_by_real_records() {
+        let package = live_sheet_rules().expect("data/sheet_rules/ must be present");
+        let index = feat_grants_by_class_feature(package);
+        let mut effectful = 0usize;
+        let mut clean = 0usize;
+        for (cf, feats) in &index {
+            if feats.len() != 1 {
+                continue;
+            }
+            let Some(rule) = package.rule(cf) else { continue };
+            if catalog_description(package, rule).is_some() {
+                continue;
+            }
+            if !rule.grants.is_empty() || rule.offers.is_some() {
+                effectful += 1;
+            } else {
+                clean += 1;
+            }
+        }
+        println!("SOLE_GRANT_NO_PROSE clean={clean} effectful={effectful}");
+        assert!(clean > 0, "nothing survives refusal 2 -- the module would serve nothing");
+        assert!(effectful > 0, "refusal 2 is never reached -- the gate is vacuous");
     }
 
-    /// Refusal 1: a second `ABILITY` token of any shape (including a
-    /// second feat grant) disqualifies the record -- real corpus shape,
-    /// `Monk ~ Unarmed Strike`.
+    /// Refusal 3 is live: some granted feats state descriptive prose and some
+    /// state none, so `catalog_description`'s `Some` and `None` arms are both
+    /// reached on the feat side too.
     #[test]
-    fn sole_feat_grant_target_refuses_a_record_with_a_second_ability_token() {
-        let tokens = json!([
-            {"key": "ABILITY", "value": "FEAT|AUTOMATIC|Improved Unarmed Strike"},
-            {"key": "ABILITY", "value": "Internal|AUTOMATIC|Monk ~ Unarmed Damage"}
-        ]);
-        assert_eq!(sole_feat_grant_target(&tokens), None);
+    fn the_granted_feat_must_state_prose_and_the_refusal_is_reached() {
+        let package = live_sheet_rules().expect("data/sheet_rules/ must be present");
+        let mut with_prose = 0usize;
+        let mut without_prose = 0usize;
+        for feat in package.rules_of_kind("feat") {
+            match catalog_description(package, feat) {
+                Some(text) if is_real_description_value(&text) => with_prose += 1,
+                _ => without_prose += 1,
+            }
+        }
+        println!("FEAT_RULES with_prose={with_prose} without_prose={without_prose}");
+        assert!(with_prose > 0, "no converted feat states any descriptive prose");
+        assert!(without_prose > 0, "the refuse arm is never reached -- the gate is vacuous");
     }
-
-    /// Refusal 2: any OTHER engine-effect token disqualifies the record --
-    /// real corpus shape, `Ranger Combat Style Feat ~ Weapon Focus`.
-    #[test]
-    fn sole_feat_grant_target_refuses_a_record_carrying_a_choose_token() {
-        let tokens = json!([
-            {"key": "ABILITY", "value": "FEAT|VIRTUAL|Weapon Focus"},
-            {"key": "CHOOSE", "value": "WEAPONPROFICIENCY|PC"}
-        ]);
-        assert_eq!(sole_feat_grant_target(&tokens), None);
-    }
-
-    #[test]
-    fn sole_feat_grant_target_refuses_a_record_carrying_a_define_token() {
-        let tokens = json!([
-            {"key": "ABILITY", "value": "FEAT|VIRTUAL|Battle Cry"},
-            {"key": "DEFINE", "value": "BattleCryTimes|0"}
-        ]);
-        assert_eq!(sole_feat_grant_target(&tokens), None);
-    }
-
-    /// Refusal 3a: a `%LIST` chooser placeholder is not a real feat name.
-    #[test]
-    fn sole_feat_grant_target_refuses_a_percent_list_placeholder() {
-        let tokens = json!([
-            {"key": "CHOOSE", "value": "ABILITYSELECTION|FEAT|TYPE=Combat"},
-            {"key": "ABILITY", "value": "FEAT|AUTOMATIC|%LIST"}
-        ]);
-        assert_eq!(sole_feat_grant_target(&tokens), None);
-    }
-
-    /// Refusal 3b: a compound `<Name> ~ <Sub-feature>` target names another
-    /// `class_feature` record, not a feat -- real corpus shape, `Master of
-    /// Many Styles ~ Elemental Fist`.
-    #[test]
-    fn sole_feat_grant_target_refuses_a_compound_self_reference() {
-        let tokens = json!([
-            {"key": "ABILITY", "value": "FEAT|AUTOMATIC|Elemental Fist ~ Full Version|PREVARGTEQ:ElementalFistFullVersion,1"}
-        ]);
-        assert_eq!(sole_feat_grant_target(&tokens), None);
-    }
-
-    #[test]
-    fn sole_feat_grant_target_strips_a_trailing_gate_qualifier() {
-        // `Endurance|PREVARGTEQ:Ranger_CFP_Level,3` -- the real Ranger
-        // corpus shape.
-        let tokens = json!([
-            {"key": "ABILITY", "value": "FEAT|AUTOMATIC|Endurance|PREVARGTEQ:Ranger_CFP_Level,3"}
-        ]);
-        assert_eq!(sole_feat_grant_target(&tokens).as_deref(), Some("Endurance"));
-    }
-
-    #[test]
-    fn sole_feat_grant_target_returns_none_for_a_record_with_no_ability_token_at_all() {
-        let tokens = json!([
-            {"key": "KEY", "value": "Something ~ Else"},
-            {"key": "DESC", "value": "Real prose."}
-        ]);
-        assert_eq!(sole_feat_grant_target(&tokens), None);
-    }
-
-    // ---------------------------------------------------------------
-    // Corpus-wide, over the live checkout
-    // ---------------------------------------------------------------
 
     /// The real corpus loads real bridged records -- proven against the
     /// live `data/corpus/` checkout, not a fixture.
@@ -444,9 +368,15 @@ mod tests {
             .expect("Golden Legionnaire ~ Swift Aid must be bridged");
         assert_eq!(swift_aid.class_slug, "golden_legionnaire");
         assert_eq!(swift_aid.feature_slug, "swift_aid");
+        // Two families, in the sheet's own order: the feat's `Desc` line and
+        // its `Benefit` line. The old by-name lookup served only the first --
+        // the ingest format's own description token -- and the benefit sentence, which
+        // is the half a player actually needs, reached nobody.
         assert_eq!(
             swift_aid.description,
-            "With a quick but harmless swipe, you can aid an ally's assault."
+            "With a quick but harmless swipe, you can aid an ally's assault.\nAs a swift \
+             action, you can attempt the aid another action, granting your ally either a +1 \
+             bonus on his next attack roll or a +1 bonus to his AC."
         );
         assert_eq!(
             swift_aid.granted_feat.as_deref(),
@@ -458,20 +388,16 @@ mod tests {
     }
 
     /// T4-L9 (`decisions.md §13`) -- closed by class, not by instance: every
-    /// one of the 612 records this module serves must carry `granted_feat`,
-    /// not merely the sampled `Golden Legionnaire ~ Swift Aid` case above.
-    /// A record reaching this DTO with `granted_feat: None` would be
-    /// invisible to the feat-held reachability gate
-    /// (`unmatchedClassFeatureDescriptions` in `classFeaturesModel.ts`) the
-    /// same way the class-held gate already misses it -- this proves the
-    /// fix covers the whole population, corpus-wide. 471 -> 612: see
-    /// `class_feature_feat_bridge_serves_the_full_corpus_wide_population`'s
-    /// own comment for the re-derivation (SD-32 row20-cycle3, 2026-08-24:
-    /// corrected from a stale 613 pin -- see that test's own comment).
+    /// record this module serves must carry `granted_feat`, not merely the
+    /// sampled `Golden Legionnaire ~ Swift Aid` case above. A record reaching
+    /// this DTO with `granted_feat: None` would be invisible to the feat-held
+    /// reachability gate (`unmatchedClassFeatureDescriptions` in
+    /// `classFeaturesModel.ts`) the same way the class-held gate already misses
+    /// it -- this proves the fix covers the whole population, corpus-wide.
     #[test]
     fn every_bridged_record_corpus_wide_carries_its_granted_feat() {
         let descriptions = load_class_feature_feat_bridge_descriptions(&repo_root());
-        assert_eq!(descriptions.len(), 612);
+        assert!(!descriptions.is_empty());
         let missing: Vec<&str> = descriptions
             .iter()
             .filter(|d| d.granted_feat.is_none())
@@ -496,33 +422,71 @@ mod tests {
         }
     }
 
-    /// Reuse, not reinvention: the served text is IDENTICAL to what
-    /// `feat_catalog::feat_description_by_exact_name` returns for the same
-    /// name -- this module never re-renders or re-derives the text itself.
+    /// Reuse, not reinvention: the served text is the granted feat's OWN
+    /// converted words, byte for byte -- this module re-renders nothing. Asked
+    /// of every served record rather than a sample: the DTO's `granted_feat` is
+    /// the granted rule's `label`, so the text can be looked back up and
+    /// compared.
     #[test]
-    fn every_bridged_description_equals_the_feat_catalogs_own_render() {
+    fn every_bridged_description_is_the_granted_rules_own_words() {
+        let package = live_sheet_rules().expect("data/sheet_rules/ must be present");
+        let index = feat_grants_by_class_feature(package);
         let descriptions = load_class_feature_feat_bridge_descriptions(&repo_root());
         assert!(!descriptions.is_empty());
+        let mut compared = 0usize;
         for record in &descriptions {
-            // The bridged description must exist verbatim somewhere in the
-            // feat catalog's own served text -- reconstructing the exact
-            // target name from the DTO alone is not possible (it was
-            // normalised away), so this asserts the STRONGER, corpus-wide
-            // property once, below, rather than per record here.
-            assert!(!record.description.is_empty());
+            let id = converted_id(&record.book, &record.key);
+            let feat = sole_granted_feat(package, &index, &id)
+                .unwrap_or_else(|| panic!("{id}: served but no sole granted feat at re-derivation"));
+            assert_eq!(feat.label, record.granted_feat.clone().unwrap_or_default());
+            assert_eq!(
+                catalog_description(package, feat).as_deref(),
+                Some(record.description.as_str()),
+                "{id}: served text is not the granted rule's own words"
+            );
+            compared += 1;
         }
+        assert_eq!(compared, descriptions.len());
     }
 
-    /// The known malformed-record shape this module's own leak guard must
-    /// catch, mirroring `class_feature_descriptions.rs`'s own proof.
+    /// The population ratchet. `AT-35-E6-003` cycle 4 measured this module's
+    /// served population on both sides of the token-read removal with a
+    /// temporary census: **612 before, 709 after**, 4 of the 612 lost. Two of
+    /// the four have no converted rule at all; the other two
+    /// (`advanced_race_guide` / `adventurers_guide` `~ Elemental Fist`) grant
+    /// `advanced_players_guide:feat:elemental_fist`, a selector record that
+    /// states no words of its own -- refusal 3, correctly applied, where the
+    /// old by-name lookup borrowed a differently-identified sibling's text.
+    /// A floor, not an identity.
     #[test]
-    fn a_bridged_description_that_would_leak_is_never_shipped() {
-        // No live corpus record is known to trip this today (the feat
-        // catalog's own render path already refuses leaking text before
-        // this module ever sees it) -- this proves the SECOND, defensive
-        // check directly rather than relying on that alone.
-        assert!(codex::rules_core::pcgen_desc::leaked_pcgen_syntax("clean text").is_none());
-        assert!(codex::rules_core::pcgen_desc::leaked_pcgen_syntax("You add +%1 to it.").is_some());
+    fn the_served_bridge_population_never_falls_below_its_recorded_floor() {
+        let descriptions = load_class_feature_feat_bridge_descriptions(&repo_root());
+        assert!(
+            descriptions.len() >= 700,
+            "the bridged population fell below its recorded floor: {}",
+            descriptions.len()
+        );
+        assert!(
+            descriptions
+                .iter()
+                .any(|d| d.book == "adventurers_guide" && d.key == "Superior Discernment ~ Sharp Senses"),
+            "a real match the wave-28 census's own type_facet substring filter missed must \
+             still be served"
+        );
+        for d in &descriptions {
+            assert!(!d.description.trim().is_empty());
+            // `%1`, `%2`, ... -- never a bare `%`, which real prose uses
+            // ("increased by half (+50%)"). See
+            // `class_feature_descriptions`'s own note on why.
+            let bytes = d.description.as_bytes();
+            assert!(
+                !bytes.iter().enumerate().any(|(i, b)| *b == b'%'
+                    && bytes.get(i + 1).is_some_and(u8::is_ascii_digit)),
+                "{:?}: {:?}",
+                d.key,
+                d.description
+            );
+        }
     }
 
     /// A record with a REAL local description is never double-served here
@@ -546,61 +510,6 @@ mod tests {
         }
     }
 
-    /// This module reads the real corpus directly rather than filtering
-    /// through `type_facet`'s text -- proven here against the FULL served
-    /// population, not scoped to the census's own (undercounting) proxy.
-    /// See this module's own doc comment for two real named examples the
-    /// `type_facet`-substring proxy misses (`Golden Legionnaire ~ Swift
-    /// Aid`, `Superior Discernment ~ Sharp Senses`).
-    #[test]
-    fn class_feature_feat_bridge_serves_the_full_corpus_wide_population() {
-        let descriptions = load_class_feature_feat_bridge_descriptions(&repo_root());
-        // Row-19 desktop reach/catalog reds (SD-32, 2026-08-24): 471 -> 613
-        // as originally pinned. The T12 census/class-feature lanes' corpus
-        // growth (most sharply Pathfinder Unchained's `class_feature`
-        // population, 64 -> 604 on disk -- see
-        // `pathfinder_unchaineds_class_features_are_claimed_per_corpus_record`)
-        // added records matching this module's exact filter shape (a lone
-        // `ABILITY:FEAT|...` grant with no other engine-effect token).
-        // `granted_feat` is `Some(..)` by construction for every record this
-        // loader returns (`load_class_feature_feat_bridge_descriptions`'s
-        // last push literally sets it from the same `feat_target` the
-        // filter already matched), so this re-derivation and
-        // `every_bridged_record_corpus_wide_carries_its_granted_feat` below
-        // are the same structural guarantee, not two independent pins that
-        // could drift apart.
-        //
-        // **SD-32 row20-cycle3 (2026-08-24) correction**: the 613 pin above
-        // never actually matched this deterministic, corpus-file-driven
-        // computation at `$PIN` (`0dcd0481c3`) -- reproduced 612 on two
-        // independent runs (`--test-threads=1`, single-threaded, no
-        // filesystem race possible), cross-checked against an independent
-        // Python re-derivation of `sole_feat_grant_target`'s own filter over
-        // every `data/corpus/*/class_feature/**/*.json` record (940
-        // candidates before the feat-catalog-match gate, matching the Rust
-        // loader's own candidate count exactly via a temporary diagnostic
-        // dump), and confirmed no duplicate `(book, key)` pair in the 612
-        // served records. Two prior cycles' "538 passed, 0 failed" desktop-
-        // workspace claims did not catch this: this specific test was never
-        // independently re-run at the assertion level, only the aggregate
-        // pass count was carried forward. Corrected to the proven-live
-        // figure, not loosened -- see `docs/retro/events/` for the
-        // `retro.py correction` this cycle filed against the stale claim.
-        assert_eq!(
-            descriptions.len(),
-            612,
-            "the full corpus-wide bridge population -- exceeds the wave-28 census's own \
-             type_facet-scoped 406 because that census's substring filter undercounts; see this \
-             module's own doc comment"
-        );
-        assert!(
-            descriptions
-                .iter()
-                .any(|d| d.book == "adventurers_guide" && d.key == "Superior Discernment ~ Sharp Senses"),
-            "a real match the census's own type_facet substring filter misses must still be served"
-        );
-    }
-
     #[test]
     fn list_class_feature_feat_bridge_descriptions_returns_the_cached_table() {
         let a = list_class_feature_feat_bridge_descriptions();
@@ -609,3 +518,4 @@ mod tests {
         assert!(!a.is_empty());
     }
 }
+

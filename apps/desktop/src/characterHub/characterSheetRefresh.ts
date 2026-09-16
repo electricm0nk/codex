@@ -119,6 +119,10 @@ export function toCharacterMutationRefresh(
       // pre-mutation resolution is stale the moment this returns. Absent
       // rather than stale; `refreshEngineRecords` re-reads it.
       resolvedRacialTraits: null,
+      // SD-35 AT-35-E2-002: the same rule for the sheet-rule lines -- a mutation
+      // changes what the character holds; absent until re-read, never stale.
+      sheetLines: [],
+      sheetRulesUnavailableReason: null,
     },
   };
 }

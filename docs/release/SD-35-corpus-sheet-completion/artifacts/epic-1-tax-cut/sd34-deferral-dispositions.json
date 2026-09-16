@@ -1,0 +1,369 @@
+{
+ "criterion": "AT-35-E1-006",
+ "source_command": "python3 scripts/retro.py summary --since 2026-08-27 --json  (deferrals.open_items)",
+ "source_generated_at": "2026-09-08T01:33:13Z",
+ "inventory_sha": "4c6c57eb9f (docs/work-inventory.json byte-identical at HEAD 53296d80f0: git diff --stat 4c6c57eb9f HEAD -- docs/work-inventory.json is empty)",
+ "bucket_lookup": "completion_atlas._bucket_of over docs/work-inventory.json units",
+ "open_at_cut": 29,
+ "disposition_counts": {
+  "mapped": 20,
+  "resolved": 8,
+  "superseded": 1
+ },
+ "disposition_vocabulary": {
+  "resolved": "closed by a commit; resolved_by names the SHA, verified_by the command; a resolution event is appended to the retro log",
+  "superseded": "the deferral as recorded no longer applies; tracked_at names the register row; a resolution event is appended with outcome=superseded",
+  "mapped": "the units remain non-DONE and are owned by the named SD-35 criteria by bucket at the cut; the deferral stays open in the retro log and names SD-35-owned work"
+ },
+ "rows": [
+  {
+   "id": "1787817430882-sd34-at-34-e2-004-a35eee",
+   "ts": "2026-08-27T07:57:10Z",
+   "actor": "sd34-at-34-e2-004",
+   "what": "fix the engine_book misattribution for 29 core_rulebook ability(7)+template(22) units routed through the retired core_essentials registry (same root cause as the companion fix this cycle made)",
+   "revisit": "AT-34-E3-001 (bucket B closes: records reach their tables, by mechanism)",
+   "disposition": "mapped",
+   "mapped_to": [
+    "AT-35-E4-001",
+    "AT-35-E5-002"
+   ],
+   "note": "core_rulebook ability+template non-DONE at the cut: M=313 D=8 (lookup over docs/work-inventory.json via completion_atlas._bucket_of). The 29 misattributed units no longer sit in bucket B; their buckets are M (AT-35-E4-001) and D (AT-35-E5-002). Under decisions.md §1 the engine_book field is a classifier detail replaced by the converter's `applies` derivation (Epic 3)."
+  },
+  {
+   "id": "1787834285405-sd34-at-34-e3-001-4bdfe1",
+   "ts": "2026-08-27T12:38:05Z",
+   "actor": "sd34-at-34-e3-001",
+   "what": "scripts/tests/test_shape_engine_boundary.py's own stale file:line citation table (PROMOTION_LADDER_ANCHOR_LINE) and its not_held_by_engine live-count assertion (4 failures + 2 errors), plus test_box_ledger.py's single hardcoded uncovered=0 assertion in test_check_against_live_committed_files",
+   "revisit": "the next cycle or AT-34-E6-001's own closure scan that re-derives the bundle's inherited test baseline",
+   "disposition": "resolved",
+   "resolved_by": "244a4dce65",
+   "verified_by": "python3 -m unittest scripts.tests.test_shape_engine_boundary -> Ran 12 tests OK at HEAD 53296d80f0; git log -3 -- scripts/tests/test_shape_engine_boundary.py names 244a4dce65 (wave 51)",
+   "note": "The second half (scripts/tests/test_box_ledger.py's hardcoded uncovered=0 assertion, still 1 failure at HEAD) is superseded by decisions.md §13: box_ledger.py is retired as a standing gate and is not a verify.sh stage; the atlas is the partition."
+  },
+  {
+   "id": "1787863790285-sd34-at-34-e3-001-bc1c64",
+   "ts": "2026-08-27T20:49:50Z",
+   "actor": "sd34-at-34-e3-001",
+   "what": "Domain Base (33 core_rulebook units, class_feature_option_pool_record_with_magnitude_not_held_by_engine mechanism) not closed this cycle",
+   "revisit": "a real save-DC-consuming domain power (e.g. Evil's Touch of Evil) is wired into the engine, at which point the same generic DC formula this cycle verified computable can be attached to its consumer",
+   "disposition": "mapped",
+   "mapped_to": [
+    "AT-35-E3-001"
+   ],
+   "note": "Domain Base's mechanism (class_feature_option_pool_record_with_magnitude_not_held_by_engine) is bucket B, class_feature -> AT-35-E3-001. The 'no consumer for the DC' refusal is moot under decisions.md §1 (a computed DC prints as a final number)."
+  },
+  {
+   "id": "1787872556948-sd34-at-34-e3-001-a22b3e",
+   "ts": "2026-08-27T23:15:56Z",
+   "actor": "sd34-at-34-e3-001",
+   "what": "AT-34-E3-001 class_feature_owner_matched_by_name_but_record_not_held_by_engine mechanism: 103 of 346 units (Sorcerer Bloodline Feat 87 + Ranger Combat Style Feat 16, within engine_effect_token_present) are per-option enumeration records for a slot whose ratified treatment elsewhere (Fighter/Cavalier/Brawler/Arcane-bloodline bonus feats) is 'count grounds, choice not modelled'",
+   "revisit": "an operator ruling is issued on either classification question, or a future cycle builds real per-feat engine wiring instead",
+   "disposition": "mapped",
+   "mapped_to": [
+    "AT-35-E5-004",
+    "AT-35-E3-001"
+   ],
+   "note": "core_rulebook ranger combat-style units at the cut: X=16 of 19; sorcerer bloodline feat units: X=78 B=35 C=25 V=10 of 216. Per-option enumeration records for an unmade choice are bucket X (AT-35-E5-004, the per-character choice filter) and under §1 rule 3 render as the rule's words; the B residue is AT-35-E3-001's."
+  },
+  {
+   "id": "1787876425471-sd34-at-34-e3-001-0e5236",
+   "ts": "2026-08-28T00:20:25Z",
+   "actor": "sd34-at-34-e3-001",
+   "what": "Cleric/Assassin/Shadowdancer 'Weapon and Armor Proficiency' grant-only class_feature grounding (3 of the 346-unit class_feature_owner_matched_by_name mechanism's engine_effect_token_present sub-cause)",
+   "revisit": "A prestige-class chassis exists for Assassin/Shadowdancer (any cycle building one), or a base-class archetype-supersession grounding precedent is built for Cleric mirroring class_slayer.rs",
+   "disposition": "mapped",
+   "mapped_to": [
+    "AT-35-E3-001"
+   ],
+   "note": "core_rulebook weapon_and_armor_proficiency class_feature units at the cut: B=3 (Cleric/Assassin/Shadowdancer), DONE=23. Bucket B class_feature -> AT-35-E3-001."
+  },
+  {
+   "id": "1787922788802-sd34-u-ruling-2-dc9418",
+   "ts": "2026-08-28T13:13:08Z",
+   "actor": "sd34-u-ruling-2",
+   "what": "30 equipment_modifier unmeasurable units (18 core_rulebook, incl. decisions.md §17's own named BANE/FLM_BRST/FRT_HVY examples) NOT promoted to DONE under the §17 U-ruling",
+   "revisit": "a further operator ruling on whether a leak-guarded internal equipment-modifier code should also read DONE despite an unresolved choice token, OR a targeted render_pcgen_desc fix for the bare-percent-after-digit case, re-verified corpus-wide before any promotion",
+   "disposition": "mapped",
+   "mapped_to": [
+    "AT-35-E5-003",
+    "AT-35-E6-003"
+   ],
+   "note": "core_rulebook equipment_modifier U=10 at the cut -> AT-35-E5-003 (buckets U and Z). The render_pcgen_desc bare-percent defect is on the prose renderer that AT-35-E6-003 removes; the converter emits words for %CHOICE per decisions.md §15 R2 (omit-and-stamp)."
+  },
+  {
+   "id": "1787929916810-sd34-at-34-e3-001-ba3e8f",
+   "ts": "2026-08-28T15:11:56Z",
+   "actor": "sd34-at-34-e3-001",
+   "what": "AT-34-E3-001 class_feature_option_pool_record_not_held_by_engine remainder (34 units: 8 weapon-flavored proficiency indirection, 2 excluded weapon+armor pair, 10 armor/shield-flavored proficiency indirection + standalone extras, 3 companion/mount registration, 9 wizard opposition-school spell tracking, 2 sibling-owned domain-power)",
+   "revisit": "a future cycle dispatched with budget to build one full new subsystem",
+   "disposition": "mapped",
+   "mapped_to": [
+    "AT-35-E3-001"
+   ],
+   "note": "class_feature_option_pool_record_not_held_by_engine is bucket B, class_feature -> AT-35-E3-001. The three 'new subsystem' sub-causes (possession ledger, mount catalog, opposition-school table) are words on the sheet under §1 unless they feed a total."
+  },
+  {
+   "id": "1787972921859-sd34-at-34-e3-005-e78930",
+   "ts": "2026-08-29T03:08:41Z",
+   "actor": "sd34-at-34-e3-005",
+   "what": "AT-34-E3-005 whole-book DONE=6701/6701 gate left open; 5,253 units remain, all owned by sibling criteria",
+   "revisit": "after AT-34-E3-001/002/003 each report their own bucket at zero via completion_atlas.py --book core_rulebook --check",
+   "disposition": "mapped",
+   "mapped_to": [
+    "AT-35-E5-005"
+   ],
+   "note": "Whole-book DONE=6701/6701 is subsumed by AT-35-E5-005 (corpus 49,438 of 49,438). core_rulebook non-DONE at the cut is 1,529 of 6,701, split by bucket in sd34-open-row-map.json."
+  },
+  {
+   "id": "1787977822867-sd34-at-34-e4-002-2f6a56",
+   "ts": "2026-08-29T04:30:22Z",
+   "actor": "sd34-at-34-e4-002",
+   "what": "AT-34-E4-002's remaining 135 ultimate_campaign units (M:89 V:18 D:5 U:21 X:2) not closed to DONE this cycle",
+   "revisit": "a follow-up cycle measures per-unit M/V cost on a sample, widens closure_has_real_description for ASPECT-only ability records, and builds a compute path for the 2 trait prose-scaling D units",
+   "disposition": "mapped",
+   "mapped_to": [
+    "AT-35-E4-001",
+    "AT-35-E5-002",
+    "AT-35-E5-003",
+    "AT-35-E5-004"
+   ],
+   "note": "ultimate_campaign non-DONE at the cut is 61 of 265: M=36 (AT-35-E4-001), D=2 (AT-35-E5-002), U=21 (AT-35-E5-003), X=2 (AT-35-E5-004). The deferral's 135 (M:89 V:18 D:5 U:21 X:2) was reduced by SD-34 cycles 3-10 and wave 50 before the cut."
+  },
+  {
+   "id": "1787980636848-sd34-at-34-e5-002-aa4cce",
+   "ts": "2026-08-29T05:17:16Z",
+   "actor": "sd34-at-34-e5-002",
+   "what": "Sizing corpus_content_extraction_for_uncaptured_records and cross_record_content_ownership_resolution (atlas-defects.md #2's two unresolved 'no description, structural tokens only' meanings)",
+   "revisit": "a future cycle runs the per-record evidence-based split atlas-defects.md #2 names",
+   "disposition": "mapped",
+   "mapped_to": [
+    "AT-35-E2-004"
+   ],
+   "note": "Sizing a capability is not SD-35 work (decisions.md §1, §4): the converter is generic, and AT-35-E2-004's token_coverage.py names every refused shape with a count — the instrument that replaces this sizing task."
+  },
+  {
+   "id": "1788114572795-sd34-at-34-e3-002-ccc80d",
+   "ts": "2026-08-30T18:29:32Z",
+   "actor": "sd34-at-34-e3-002",
+   "what": "Monk Unarmed Damage Small column (6 units): cross-book attribution question -- corpus record lives under core_rulebook but the only compute path reaching it belongs to a different book's Unchained Monk class",
+   "revisit": "an operator ruling on cross-book class-path attribution, or a future cycle investigating whether core_rulebook's own Monk chassis independently reaches the Small column another way",
+   "disposition": "mapped",
+   "mapped_to": [
+    "AT-35-E3-003",
+    "AT-35-E3-001",
+    "AT-35-E4-002"
+   ],
+   "note": "core_rulebook unarmed-damage units at the cut: C=49 B=6 V=6 of 61. The cross-book attribution question is moot under decisions.md §1 rule 2 — a dice column prints as dice; the units close by bucket (C -> AT-35-E3-003, B -> AT-35-E3-001, V -> AT-35-E4-002)."
+  },
+  {
+   "id": "1788116517160-sd34-at-34-e3-003-da51c7",
+   "ts": "2026-08-30T19:01:57Z",
+   "actor": "sd34-at-34-e3-003",
+   "what": "core_rulebook bucket M equipment remainder, 409 units (equipment_table_entry_with_corpus_magnitude 262 + equipment_own_line_has_no_magnitude_but_closure_wiring_class_does 147)",
+   "revisit": "an AC-bonus-from-equipmod compute path is scoped and costed as its own bucket-B-shaped cycle",
+   "disposition": "mapped",
+   "mapped_to": [
+    "AT-35-E4-001"
+   ],
+   "note": "core_rulebook bucket M at the cut: equipment=19, equipment_modifier=210 (229 of the 409 the deferral named; the rest closed in waves 49-51). Bucket M -> AT-35-E4-001 by token family."
+  },
+  {
+   "id": "1788130798515-sd34-at-34-e3-002-41d940",
+   "ts": "2026-08-30T22:59:58Z",
+   "actor": "sd34-at-34-e3-002",
+   "what": "8 core_rulebook domain-shaped bucket-C units this cycle deliberately left unclosed: 7 Druid Domain sub-choice records (Druid Domain ~ Air/Base/Earth/Fire/Plant/Water/Weather -- a different Druid-specific choice pool, not swept by this cycle's Cleric-only probe) and 1 zero-magnitude-token record (Nobility Domain ~ Inspiring Word)",
+   "revisit": "a future AT-34-E3-002 cycle investigates whether Druid's own domain sub-choice pool is wired through an analogous generic-pool mechanism, and whether Inspiring Word's flat non-token bonus has a text-complete or diagnostic-naming path",
+   "disposition": "mapped",
+   "mapped_to": [
+    "AT-35-E3-003",
+    "AT-35-E3-001",
+    "AT-35-E5-004"
+   ],
+   "note": "core_rulebook druid_domain units at the cut: C=7 B=1 X=1 of 9; inspiring_word: C=1 B=1 of 2. C -> AT-35-E3-003, B -> AT-35-E3-001, X -> AT-35-E5-004."
+  },
+  {
+   "id": "1788137927363-sd34-at-34-e3-002-5dba5e",
+   "ts": "2026-08-31T00:58:47Z",
+   "actor": "sd34-at-34-e3-002",
+   "what": "23 of 77 Sorcerer Bloodline units in bloodline_power_or_bloodline_feat_not_computed: 16 generic-pass-formula-chain refusals, 3 feat-pool-catalog-scope stragglers (Deadly Aim/Toughness/Weapon Focus), 4 elemental-choice-flag records of a different corpus shape",
+   "revisit": "a future cycle investigates why Elemental Movement (Air) resolved but Earth/Fire/Water did not, and whether the feat-pool-catalog / elemental-choice-flag shapes need their own new mechanism",
+   "disposition": "mapped",
+   "mapped_to": [
+    "AT-35-E3-003"
+   ],
+   "note": "core_rulebook sorcerer bloodline units in bucket C at the cut: 25 of 217. C -> AT-35-E3-003."
+  },
+  {
+   "id": "1788184089028-sd34-at-34-e3-002-9219e9",
+   "ts": "2026-08-31T13:48:09Z",
+   "actor": "sd34-at-34-e3-002",
+   "what": "Bard 'Versatile Performance' header record (Bard ~ Versatile Performance, visible:false, class-name-first corpus shape) and the remaining 224 non-versatile-performance sub-causes of AT-34-E3-002 bucket C",
+   "revisit": "next AT-34-E3-002 cycle, re-derive fresh per decisions.md §12 L2",
+   "disposition": "mapped",
+   "mapped_to": [
+    "AT-35-E3-003"
+   ],
+   "note": "core_rulebook bucket C at the cut: 191, all class_feature (versatile_performance header C=1 of 10). C -> AT-35-E3-003."
+  },
+  {
+   "id": "1788210901380-sd34-at-34-e3-003-33f87d",
+   "ts": "2026-08-31T21:15:01Z",
+   "actor": "sd34-at-34-e3-003",
+   "what": "Full v06_work_inventory regen (writing docs/work-inventory.json) applying this cycle's own equipment WT:/COST: fix",
+   "revisit": "the next full v06_work_inventory regen that completes -- ideally scheduled when no other cargo build contends for the shared target-dir slot and with enough turn budget for a multi-minute unoptimized run",
+   "disposition": "resolved",
+   "resolved_by": "244a4dce65",
+   "verified_by": "git log -3 --format='%h %s' -- docs/work-inventory.json -> 244a4dce65 (wave 51), 1a07f08bdc (wave 50), c2a41a62da (wave 49): three full regens completed and committed after this deferral",
+   "note": "The equipment WT:/COST: fix the deferral wanted applied is in the wave 49-51 inventories."
+  },
+  {
+   "id": "1788217140481-sd34-at-34-e3-002-5494a7",
+   "ts": "2026-08-31T22:59:00Z",
+   "actor": "sd34-at-34-e3-002",
+   "what": "Ranger Wild Empathy compute (class_chassis.ranger.wild_empathy, level + Charisma modifier, mirroring the already-shipped Druid formula)",
+   "revisit": null,
+   "disposition": "mapped",
+   "mapped_to": [
+    "AT-35-E3-003",
+    "AT-35-E3-001"
+   ],
+   "note": "core_rulebook:class_feature:ranger_wild_empathy is bucket C at the cut (-> AT-35-E3-003); core_rulebook:class_feature:wild_empathy is B (-> AT-35-E3-001); druid_wild_empathy is DONE (oracle-agree). Under §1 the Ranger value is a final number on the sheet regardless of wiring_class."
+  },
+  {
+   "id": "1788290815996-sd34-at-34-e6-001-50a7ee",
+   "ts": "2026-09-01T19:26:55Z",
+   "actor": "sd34-at-34-e6-001",
+   "what": "site-dashboard-check: refresh site/dashboard/PF1e-dashboard.json + units/*.json via ./scripts/publish-site-dashboard.sh (real run, not --check)",
+   "revisit": "the closing sweep, or any cycle explicitly authorized to run the producer",
+   "disposition": "resolved",
+   "resolved_by": "2a00af8439",
+   "verified_by": "git log -3 -- site/dashboard/PF1e-dashboard.json -> 2a00af8439 'wave 51 wave-end gate -- site dashboard refreshed, full 40/40 confirmed' (also 5f6b18f4e3, f809b34100)"
+  },
+  {
+   "id": "1788300485944-sd34-at-34-e6-001-957086",
+   "ts": "2026-09-01T22:08:05Z",
+   "actor": "sd34-at-34-e6-001",
+   "what": "5 remaining gate FAILs (site-dashboard-check, denominator-gate x2, figure-provenance x1, root-full x3-suites/7-tests, desktop x1) -- all named precisely with commit attribution in the wave-27 receipt",
+   "revisit": "lanes A/B's next gate-remediation cycle, or the closing sweep before the final-acceptance scan is attempted again",
+   "disposition": "resolved",
+   "resolved_by": "2a00af8439",
+   "verified_by": "SD-34 progress.md wave 40, 41, 49, 50, 51 wave-end gate entries each record 'full 40/40 confirmed'; re-run at the tranche/15 cut: SD-35 workflow-instruction.md §1 item 10 (590 targets / 8,656 passed / 0 failed; desktop 573/0)"
+  },
+  {
+   "id": "1788312839395-sd34-at-34-e6-001-2f0be2",
+   "ts": "2026-09-02T01:33:59Z",
+   "actor": "sd34-at-34-e6-001",
+   "what": "root-full's full aggregate pass/fail recount across all 589 test suites",
+   "revisit": "whoever next runs the full verify.sh sweep (the closing gate-remediation sweep, or the eventual final-acceptance scan) re-runs root-full to completion and confirms the remaining ~404 suites this cycle did not reach (185 of 589 confirmed live, 0 unexpected failures) carry no surprises",
+   "disposition": "resolved",
+   "resolved_by": "2a00af8439",
+   "verified_by": "wave 51 wave-end gate: root-full PASS, 8656 passed across 591 suites (SD-34 progress.md, top entry); at the cut 590 targets / 8,656 passed / 0 failed (SD-35 workflow-instruction.md §1 item 10)"
+  },
+  {
+   "id": "1788312855090-sd34-at-34-e6-001-3865f1",
+   "ts": "2026-09-02T01:34:15Z",
+   "actor": "sd34-at-34-e6-001",
+   "what": "regenerating completion-atlas.json so its 10 bucket citations resolve at HEAD again (currently citation_failures=10, all stale)",
+   "revisit": "the wave's closing atlas-regeneration cycle re-derives the atlas after wave 25's src/bin/v06_work_inventory.rs edits (9d2e7d9e28, 199ec991e0) shifted the cited line numbers past the last regeneration (3aebc28477, wave-22)",
+   "disposition": "resolved",
+   "resolved_by": "c15e64bc3e",
+   "verified_by": "python3 scripts/completion_atlas.py --check at HEAD 53296d80f0 -> unclassified=0 overlap=0 citation_failures=0; git log -3 -- docs/release/SD-34-book-completion/artifacts/epic-1-atlas/completion-atlas.json -> c15e64bc3e (atlas derived_at stamp), 3dcf0f044d, 244a4dce65"
+  },
+  {
+   "id": "1788329951728-sd34-orchestrator-11556d",
+   "ts": "2026-09-02T06:19:11Z",
+   "actor": "sd34-orchestrator",
+   "what": "two confirmed P1 defects from the fable review sat with no owner in any lane: R11-01 (character_id joined into a filesystem path with zero validation across 14+ commands, including delete_character -> fs::remove_dir_all) and R14-02 (saved-character write is two sequential fs::write calls, no temp-file-and-rename; same pattern in campaign and homebrew stores)",
+   "revisit": "assigned in the wave-28 briefs: R11-01 to lane B as its FIRST task (it owns apps/desktop), R14-02 to lane A (it owns src/). Both confirmed still live at HEAD before assignment.",
+   "disposition": "superseded",
+   "tracked_at": "docs/release/SD-35-corpus-sheet-completion/forward-scope-register.md C2.5",
+   "verified_by": "grep -n 'C2.5' docs/release/SD-35-corpus-sheet-completion/forward-scope-register.md; git log --grep 'R11-01\\|R14-02\\|character_id' finds only f42deaf5a1 (the review) and ff5f19e05e (its fold) — no fix commit",
+   "note": "NOT fixed. The deferral recorded an ownerless state inside SD-34; SD-34 is closed and the eight confirmed P1s (R11-01 and R14-02 among them) are now a register row with a named successor ('a dedicated correctness SD-N, or the operator's call to fold into SD-35 by ruling'). Not SD-35 scope per that row; surfaced for the operator in the AT-35-E1-006 receipt."
+  },
+  {
+   "id": "1788361137004-sd34-wave33-fold-lanea-e191ac",
+   "ts": "2026-09-02T14:58:57Z",
+   "actor": "sd34-wave33-fold-lanea",
+   "what": "5-unit weapon-and-armor-proficiency class_feature rung (Bard/Fighter/Paladin/Ranger/Rogue) not grounded",
+   "revisit": "next cycle extends pilot_compute::ground_class_weapon_and_armor_proficiency to these five classes",
+   "disposition": "resolved",
+   "resolved_by": "c0141ea54b",
+   "verified_by": "git log -2 -- docs/release/SD-34-book-completion/artifacts/bucket-d-mining/wave34_laneA_weapon_and_armor_proficiency_cycle_receipt.md -> c0141ea54b 'wave 34 lane A -- ground weapon-and-armor-proficiency for Bard/Fighter/Paladin/Ranger/Rogue, closes wave 33 lane A's 5-unit deferral'; core_rulebook weapon_and_armor_proficiency DONE=23 of 26 at the cut"
+  },
+  {
+   "id": "1788442802035-sd34-wave37-lanec-bb2060",
+   "ts": "2026-09-03T13:40:02Z",
+   "actor": "sd34-wave37-lanec",
+   "what": "Undead Savant Subschool/Dragon Shaman/Plant Master Plant Focus (17 magnitude-bearing units, real owners Arcanist/Druid/Hunter traced): a narrow per-group hardcoded owner-resolution override, same shape as CLASS_FEATURE_POOLS",
+   "revisit": "Bundle with the PaDFE Construct/Ooze/Undead fix and sub-mechanism 5's remainder re-derivation (wave36 laneC next-cycle items 1 and 3) in one future wave -- all three are the same class of zero-bucket-movement evidence cleanup",
+   "disposition": "mapped",
+   "mapped_to": [
+    "AT-35-E5-002",
+    "AT-35-E3-003",
+    "AT-35-E3-001"
+   ],
+   "note": "undead_savant/dragon_shaman/plant_master units at the cut: D=18 C=5 B=1 DONE=3 of 27 (all books). D -> AT-35-E5-002, C -> AT-35-E3-003, B -> AT-35-E3-001. The owner-resolution override is replaced by the converter's `applies` derivation (Epic 3)."
+  },
+  {
+   "id": "1788463539901-sd34-wave38-laneb-b6bbb6",
+   "ts": "2026-09-03T19:25:39Z",
+   "actor": "sd34-wave38-laneb",
+   "what": "divine_scion (45 units) and phrenic_slayer (43 units) real chassis builds -- the top two class groups of sub-mechanism 5's corrected 634-unit population",
+   "revisit": "when a caster/manifester-level-stacking mechanism is built for prestige-class chassis (same milestone crb_untabled_class_chassis.rs's own deferral already names), or when a PRERULE house-rule-toggle mechanism is built for multi-DESC branch selection",
+   "disposition": "mapped",
+   "mapped_to": [
+    "AT-35-E5-002",
+    "AT-35-E4-002",
+    "AT-35-E3-001"
+   ],
+   "note": "At the cut divine_scion: DONE=40 V=4 D=2 B=1 of 47 (wave 47, 24666d0667, closed 43 of 45); phrenic_slayer: DONE=36 D=11 B=1 of 48. D -> AT-35-E5-002 (class chassis from CLASS records, decisions.md §7), V -> AT-35-E4-002, B -> AT-35-E3-001. The manifester-level-stacking and PRERULE-branch gaps render as words under §1 unless they feed a total."
+  },
+  {
+   "id": "1788493021841-sd34-wave39-laneb-6f6734",
+   "ts": "2026-09-04T03:37:01Z",
+   "actor": "sd34-wave39-laneB",
+   "what": "13 of the 28 assigned units (Monk 5, Fighter 2, Wizard's Bonus Feats 1, Bard 1, Druid 1, Ranger 1, Sorcerer 1, Psychic 1) have a real, already-shipped per-feature compute function touching the named feature, but none matches lane A's own CLASS_FEATURE_ID_KNOWN_SYNONYMS shape (a clean single-word swap within one dot segment) -- each carries an additional structural wrinkle (multi-word compound suffix, a different top-level id namespace, folded into a combined total with no discrete id, or an input-construction gap that never emits the id for the classifier's generic per-class sweep)",
+   "revisit": "after lane A's wave 39 CLASS_FEATURE_ID_KNOWN_SYNONYMS fix merges onto tranche/14, so entries can be appended to the live table instead of a second, independently-committed copy",
+   "disposition": "mapped",
+   "mapped_to": [
+    "AT-35-E3-003"
+   ],
+   "note": "Wave 41 (b4f33e16d2) closed 3 of the 13 (Stunning Fist, Weapon Training, Phrenic Pool). The remaining 10 are class_feature records with an existing compute function and no matching explanation id — bucket C's evidence shape -> AT-35-E3-003."
+  },
+  {
+   "id": "1788504261703-sd34-wave40-lanea-5e609b",
+   "ts": "2026-09-04T06:44:21Z",
+   "actor": "sd34-wave40-laneA",
+   "what": "Druid ~ Nature Bond synonym-table alias to class_chassis.druid.nature_bond_choice",
+   "revisit": "if a future cycle wires real animal-companion/domain execution behind Nature Bond, producing a genuine non-zero id",
+   "disposition": "mapped",
+   "mapped_to": [
+    "AT-35-E5-002"
+   ],
+   "note": "core_rulebook:class_feature:druid_nature_bond is bucket D at the cut -> AT-35-E5-002. Under §1 rule 3 an unmade choice prints as the rule's words; no alias to a +0 record is needed."
+  },
+  {
+   "id": "1788504270593-sd34-wave40-lanea-5bcc5c",
+   "ts": "2026-09-04T06:44:30Z",
+   "actor": "sd34-wave40-laneA",
+   "what": "Monk ~ Stunning Fist synonym-table entry for owner=monk",
+   "revisit": "if the classifier's group==owner guard is ever widened to recognize a standalone-namespace id as belonging to its granting class -- a different, larger change than this table",
+   "disposition": "resolved",
+   "resolved_by": "b4f33e16d2",
+   "verified_by": "git log --grep 'wave 41' -> b4f33e16d2 'wave 41 -- Shape 2's three corrected units, 3 of 3 closed'; retro correction 2026-09-04T14:13:35Z: 'Monk ~ Stunning Fist -- closed via a single synonym-table entry'",
+   "note": "The unit core_rulebook:class_feature:monk_stunning_fist sits in bucket V (literal-verified) at the cut and is AT-35-E4-002's; the deferral's own question (whether the synonym table can carry it) is answered."
+  },
+  {
+   "id": "1788509105917-sd34-wave40-laneb-cf8fe1",
+   "ts": "2026-09-04T08:05:05Z",
+   "actor": "sd34-wave40-laneB",
+   "what": "Summoner ~ Greater Aspect (1 unit, advanced_players_guide:class_feature:summoner_greater_aspect)",
+   "revisit": "when the Summoner eidolon evolution-point economy itself is built out (the same blocker ground_summoner_eidolon's own doc comment names for the rest of Summoner's evolution-pool-dependent scope)",
+   "disposition": "mapped",
+   "mapped_to": [
+    "AT-35-E5-002"
+   ],
+   "note": "advanced_players_guide:class_feature:summoner_greater_aspect is bucket D at the cut -> AT-35-E5-002. Under §1 the evolution-pool diversion prints as the rule's words."
+  }
+ ]
+}

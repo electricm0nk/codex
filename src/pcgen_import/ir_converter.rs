@@ -9,11 +9,11 @@
 //! Slice E authors the canonical source-IR record shape in
 //! `src/rules_core/source_content.rs`:
 //!
-//! - `SourcePackageContent<'a>` — corpus-rooted aggregate.
-//! - `SourceContentRecord<'a>`   — per-record envelope.
-//! - `SourceContentPayload<'a>`  — kind-tagged enum of borrowed
+//! - `IrPackageContent<'a>` — corpus-rooted aggregate.
+//! - `IrContentRecord<'a>`   — per-record envelope.
+//! - `IrContentPayload<'a>`  — kind-tagged enum of borrowed
 //!   B-family entries (defined in
-//!   `src/pcgen_import/source_content_payload.rs` to keep the
+//!   `src/pcgen_import/ir_content_payload.rs` to keep the
 //!   `rules_core <-> pcgen_import` import graph acyclic; re-exported
 //!   from `rules_core::source_content`).
 //! - `SourceRef` / `SourceContentKind` / `SourceContentDiagnostic` —
@@ -21,7 +21,7 @@
 //!
 //! **This module (`ir_converter.rs`) is the canonical projection
 //! path.** It takes a `ParsedLstRecord<'a>` and produces a
-//! `SourceContentRecord<'a>` per record, with full provenance
+//! `IrContentRecord<'a>` per record, with full provenance
 //! forwarded and (when applicable) forwarded from the B-family
 //! parse-result containers into `SourceContentDiagnostic`s.
 //!
@@ -39,13 +39,13 @@
 //! - [`ParsedLstRecord`] — canonical input enum that [`convert_to_ir`]
 //!   dispatches on. Authored by Slice D (parser-aggregate relocation).
 //! - [`convert_to_ir`] — public entry point. Returns a
-//!   [`SourceContentRecord`] (the canonical envelope).
+//!   [`IrContentRecord`] (the canonical envelope).
 //! - Per-family converters ([`convert_class_entry`], etc.) for typed callers.
 //! - Per-document converters ([`convert_class_parse_result`], etc.) that
 //!   consume the B-family parse-result containers and emit a
-//!   [`SourcePackageContent`] aggregate plus forwarded canonical diagnostics.
+//!   [`IrPackageContent`] aggregate plus forwarded canonical diagnostics.
 //! - [`convert_package_from_class_parse_result`] etc. — corpus-rooted
-//!   entry points that accumulate a complete [`SourcePackageContent`].
+//!   entry points that accumulate a complete [`IrPackageContent`].
 //!
 //! ## Performance contract
 //!
@@ -70,7 +70,7 @@ use crate::pcgen_import::lst_parser::class::{
     ClassEntry, ClassParseResult, LstDiagnostic as ClassLstDiagnostic,
 };
 use crate::pcgen_import::lst_parser::equipment::{
-    EquipmentDiagnostic, EquipmentParseResult, EquipmentRecord,
+    EquipmentDiagnostic, EquipmentParseResult, EquipmentRecord, EquipmentRecordKind,
 };
 use crate::pcgen_import::lst_parser::metadata::{LstMetadataDocument, LstRecord};
 use crate::pcgen_import::lst_parser::race_ability::{
@@ -80,11 +80,23 @@ use crate::pcgen_import::lst_parser::spell::{LstSpellFile, LstSpellRecord};
 use crate::pcgen_import::lst_parser::spellcasting_class::{
     SpellcastingClassDiagnostic, SpellcastingClassEntry, SpellcastingClassParseResult,
 };
-use crate::pcgen_import::source_content_payload::b6_metadata_kind_to_canonical;
+use crate::pcgen_import::ir_content_payload::b6_metadata_kind_to_canonical;
+use crate::rules_core::damage_total::{DiceExpression, WieldCategory};
+use crate::rules_core::equipment_effects::intelligent_item::{
+    IntelligentItemContribution, ItemAlignment,
+};
+use crate::rules_core::equipment_effects::equipmods::WeaponEnhancementBonus;
+use crate::rules_core::equipment_effects::general::{SkillCheckBonus, VarBonus};
+use crate::rules_core::equipment_effects::magic_items::AbilityScoreBonus;
+use crate::rules_core::equipment_effects::EquipmentStatEffect;
+use crate::rules_core::equipment_record::CorpusEquipmentRecord;
+use crate::rules_core::spell_record::CorpusSpellRecord;
+use crate::pcgen_import::ir_content_payload::{
+    record_to_live, IrContentPayload, IrContentRecord, IrPackageContent,
+};
 use crate::rules_core::source_content::{
     SOURCE_IR_VERSION, SourceContentDiagnostic, SourceContentDiagnosticKind, SourceContentKind,
-    SourceContentPayload, SourceContentRecord, SourceContentSeverity, SourcePackageContent,
-    SourceRef,
+    SourceContentRecord, SourceContentSeverity, SourceRef,
 };
 
 // =============================================================================
@@ -338,88 +350,696 @@ fn make_source_ref(path: impl Into<String>, line: usize) -> SourceRef {
 }
 
 // =============================================================================
-// Per-family record converters — return SourceContentRecord<'a>
+// Per-family record converters — return IrContentRecord<'a>
 // =============================================================================
 
-/// Build a canonical [`SourceContentRecord`] from a B-1 [`ClassEntry`].
+/// Build a canonical [`IrContentRecord`] from a B-1 [`ClassEntry`].
 ///
 /// Projection is zero-copy. The borrowed `entry` carries every
 /// `tokens` and `feature_blocks` entry verbatim.
-pub fn convert_class_entry(entry: &ClassEntry) -> SourceContentRecord<'_> {
+pub fn convert_class_entry(entry: &ClassEntry) -> IrContentRecord<'_> {
     let line = entry.header_line_number;
     let source_ref = make_source_ref(entry.record_source_path(), line);
     SourceContentRecord::new(
         source_ref,
         SourceContentKind::Class,
-        SourceContentPayload::Class(entry),
+        IrContentPayload::Class(entry),
     )
 }
 
-/// Build a canonical [`SourceContentRecord`] from a B-2
+/// Build a canonical [`IrContentRecord`] from a B-2
 /// [`SpellcastingClassEntry`].
-pub fn convert_spellcasting_class_entry(entry: &SpellcastingClassEntry) -> SourceContentRecord<'_> {
+pub fn convert_spellcasting_class_entry(entry: &SpellcastingClassEntry) -> IrContentRecord<'_> {
     let line = entry.header_line_number;
     let source_ref = make_source_ref(entry.record_source_path(), line);
     SourceContentRecord::new(
         source_ref,
         SourceContentKind::SpellcastingClass,
-        SourceContentPayload::SpellcastingClass(entry),
+        IrContentPayload::SpellcastingClass(entry),
     )
 }
 
-/// Build a canonical [`SourceContentRecord`] from a B-3
+/// Build a canonical [`IrContentRecord`] from a B-3
 /// [`RaceDeclaration`].
-pub fn convert_race_declaration(decl: &RaceDeclaration) -> SourceContentRecord<'_> {
+pub fn convert_race_declaration(decl: &RaceDeclaration) -> IrContentRecord<'_> {
     let source_ref = make_source_ref(&decl.source_path, decl.line_number);
     SourceContentRecord::new(
         source_ref,
         SourceContentKind::Race,
-        SourceContentPayload::Race(decl),
+        IrContentPayload::Race(decl),
     )
 }
 
-/// Build a canonical [`SourceContentRecord`] from a B-3
+/// Build a canonical [`IrContentRecord`] from a B-3
 /// [`AbilityDeclaration`].
-pub fn convert_ability_declaration(decl: &AbilityDeclaration) -> SourceContentRecord<'_> {
+pub fn convert_ability_declaration(decl: &AbilityDeclaration) -> IrContentRecord<'_> {
     let source_ref = make_source_ref(&decl.source_path, decl.line_number);
     SourceContentRecord::new(
         source_ref,
         SourceContentKind::Ability,
-        SourceContentPayload::Ability(decl),
+        IrContentPayload::Ability(decl),
     )
 }
 
-/// Build a canonical [`SourceContentRecord`] from a B-4 [`LstSpellRecord`].
-pub fn convert_spell_record(record: &LstSpellRecord) -> SourceContentRecord<'_> {
+/// Convert a B-4 [`LstSpellRecord`] -- the ingest-format parser row -- into
+/// the live side's own converted shape,
+/// [`CorpusSpellRecord`](crate::rules_core::spell_record::CorpusSpellRecord).
+///
+/// SD-35 `AT-35-E6-003-RULED` cycle 8. This function is the **only** reader
+/// of `LstSpellRecord` on the spell path: everything downstream of the
+/// canonical envelope sees `CorpusSpellRecord` and never names
+/// `pcgen_import` (`decisions.md` §11, §19). The mapping is total and
+/// field-for-field -- no field is dropped, none is invented, and nothing
+/// about the ingest format's own vocabulary survives it, because the parser
+/// already stripped the `SCHOOL:`/`CASTTIME:`/... column tags.
+pub fn spell_record_to_corpus(record: &LstSpellRecord) -> CorpusSpellRecord {
+    CorpusSpellRecord {
+        line_number: record.line_number,
+        source_path: record.source_path.clone(),
+        name: record.name.clone(),
+        output_name: record.output_name.clone(),
+        spell_type: record.spell_type.clone(),
+        classes: record.classes.clone(),
+        school: record.school.clone(),
+        descriptor: record.descriptor.clone(),
+        sub_school: record.sub_school.clone(),
+        components: record.components.clone(),
+        casting_time: record.casting_time.clone(),
+        range: record.range.clone(),
+        item: record.item.clone(),
+        target_area: record.target_area.clone(),
+        duration: record.duration.clone(),
+        save_info: record.save_info.clone(),
+        spell_resistance: record.spell_resistance.clone(),
+        source_page: record.source_page.clone(),
+        source_link: record.source_link.clone(),
+        description: record.description.clone(),
+        description_raw: record.description_raw.clone(),
+    }
+}
+
+/// Build a canonical [`IrContentRecord`] from a B-4 [`LstSpellRecord`].
+///
+/// The envelope's payload is the **converted** record
+/// ([`CorpusSpellRecord`](crate::rules_core::spell_record::CorpusSpellRecord)),
+/// not a borrow of the parser row, so this is the one place on the spell
+/// path where the projection stops being zero-copy. The converted record is
+/// interned for the process lifetime (`Box::leak`) to satisfy the envelope's
+/// borrow -- the same thing every caller of this function already did with
+/// the parser row itself, one allocation earlier. A live caller that holds
+/// already-converted corpus data does not come through here at all: it
+/// builds the envelope directly with
+/// [`crate::rules_core::source_content::SourceContentRecord::spell`].
+pub fn convert_spell_record(record: &LstSpellRecord) -> SourceContentRecord<'static> {
+    record_to_live(&convert_spell_record_ir(record))
+}
+
+/// The same conversion as [`convert_spell_record`], stopping at the
+/// converter's own envelope instead of the live one.
+///
+/// SD-35 `AT-35-E6-003-RULED` cycle 18: the per-document converters accumulate
+/// an [`IrPackageContent`], so they need the IR-side record; every other caller
+/// wants the live envelope, whose `Spell` payload is the same settled record.
+pub fn convert_spell_record_ir(record: &LstSpellRecord) -> IrContentRecord<'static> {
     let source_ref = make_source_ref(&record.source_path, record.line_number);
+    let converted: &'static CorpusSpellRecord =
+        Box::leak(Box::new(spell_record_to_corpus(record)));
     SourceContentRecord::new(
         source_ref,
         SourceContentKind::Spell,
-        SourceContentPayload::Spell(record),
+        IrContentPayload::Spell(converted),
     )
 }
 
-/// Build a canonical [`SourceContentRecord`] from a B-5
+/// Convert a B-5 [`EquipmentRecord`] into the live side's own settled
+/// equipment record.
+///
+/// SD-35 `AT-35-E6-003-RULED` cycle 10. Every read below used to happen on the
+/// live side, once per query, against the ingest format's own token and
+/// `BONUS:` chain arrays -- `encumbrance::weight_and_cost_from_record`,
+/// `equipment_effects::magic_items::compute_magic_items_effect` and its
+/// `TEMPBONUS:` fallback, and
+/// `equipment_effects::intelligent_item::compute_intelligent_item_effect`.
+/// They are the same reads, moved to the side of the boundary that owns the
+/// ingest vocabulary (`decisions.md` §11): the live consumers now read a
+/// settled value off [`CorpusEquipmentRecord`].
+///
+/// Behaviour is preserved field for field, including each read's own honest
+/// absence: a record that states no weight, no ability-score chain, or none
+/// of the intelligent-item family yields `None` for that field rather than a
+/// zero.
+pub fn equipment_record_to_corpus(record: &EquipmentRecord) -> CorpusEquipmentRecord {
+    let token_value = |key: &str| {
+        record.tokens.iter().find(|token| token.key == key).map(|token| token.value.as_str())
+    };
+    let identity = token_value("KEY").unwrap_or(record.name.as_str()).to_string();
+    let weight_lbs = token_value("WT").and_then(|value| value.parse::<f64>().ok());
+    let cost_gp = token_value("COST").and_then(|value| value.parse::<f64>().ok());
+    CorpusEquipmentRecord {
+        identity,
+        name: record.name.clone(),
+        weight_lbs,
+        cost_gp,
+        ability_score_bonus: ability_score_bonus_of(record),
+        intelligent_item: intelligent_item_contribution_of(record),
+        stat_effect: arms_armor_stat_effect_of(record),
+        armor_class_chain_bonus: armor_class_chain_bonus_of(record),
+        skill_check_bonus: skill_check_bonus_of(record),
+        var_bonuses: var_bonuses_of(record),
+        weapon_enhancement: weapon_enhancement_of(record),
+        spell_resistance_bonus: spell_resistance_bonus_of(record),
+        eqmod_references: eqmod_references_of(record),
+        base_damage_dice: base_damage_dice_of(record),
+        states_base_damage: states_base_damage_of(record),
+        base_item: base_item_of(record),
+        wield_category: wield_category_of(record),
+        critical_threat_range: critical_threat_range_of(record),
+        critical_multiplier: critical_multiplier_of(record),
+        damage_size_steps: damage_size_steps_of(record),
+        weight_divisor: weight_divisor_of(record),
+        is_natural_attack: is_natural_attack_of(record),
+        is_shield: is_shield_of(record),
+        is_modifier: matches!(record.kind, EquipmentRecordKind::EquipMod),
+    }
+}
+
+/// The item's settled base damage die. Moved here verbatim from
+/// `damage_total::damage_dice_token` (SD-35 `AT-35-E6-003-RULED` cycle 12);
+/// the parse rule -- PF1's canonical `<count>d<size>` only, with the
+/// degenerate `0d<n>` / `<n>d0` cases refused rather than defaulted -- is
+/// `DiceExpression::parse`'s own and stayed with it on the live side.
+fn base_damage_dice_of(record: &EquipmentRecord) -> Option<DiceExpression> {
+    equipment_token_value(record, "DAMAGE").and_then(DiceExpression::parse)
+}
+
+/// Whether the record states a base damage value at all. Separate from
+/// [`base_damage_dice_of`] because `equipment_effects::is_weapon_record` has
+/// always tested PRESENCE, not parseability: an item stating damage this
+/// engine does not spell as dice is still a wielded weapon.
+fn states_base_damage_of(record: &EquipmentRecord) -> bool {
+    equipment_token_value(record, "DAMAGE").is_some()
+}
+
+/// The identity of the item whose own stats stand in for this one's. Moved
+/// here from `damage_total::base_item_damage_dice_token`, which held the token
+/// spelling only to learn a name; the one-hop chase itself is a corpus
+/// resolution and stayed live, because the converter has no corpus.
+fn base_item_of(record: &EquipmentRecord) -> Option<String> {
+    equipment_token_value(record, "BASEITEM").map(str::to_string)
+}
+
+/// The item's settled wield category. Moved here verbatim from
+/// `damage_total::wield_category_token`: a value outside PF1's three
+/// categories yields `None` rather than a guessed default.
+fn wield_category_of(record: &EquipmentRecord) -> Option<WieldCategory> {
+    match equipment_token_value(record, "WIELD")? {
+        "Light" => Some(WieldCategory::Light),
+        "OneHanded" => Some(WieldCategory::OneHanded),
+        "TwoHanded" => Some(WieldCategory::TwoHanded),
+        _ => None,
+    }
+}
+
+/// The item's settled critical threat range as inclusive natural-roll bounds.
+/// Moved here verbatim from `damage_total::critical_threat_range_token`: the
+/// corpus states a threat *width* (the count of consecutive top natural rolls
+/// that threaten) and the sheet prints bounds, so a width of `2` settles to
+/// `(19, 20)`. A width outside `1..=20` is refused.
+fn critical_threat_range_of(record: &EquipmentRecord) -> Option<(u8, u8)> {
+    equipment_token_value(record, "CRITRANGE")
+        .and_then(|value| value.parse::<u8>().ok())
+        .filter(|width| (1..=20).contains(width))
+        .map(|width| (20 - width + 1, 20))
+}
+
+/// The item's settled critical-hit damage multiplier. Moved here verbatim from
+/// `damage_total::critical_multiplier_token`, including the `x` prefix the
+/// corpus states it with and the refusal of any multiplier below `2`.
+fn critical_multiplier_of(record: &EquipmentRecord) -> Option<u8> {
+    equipment_token_value(record, "CRITMULT")
+        .and_then(|value| value.strip_prefix('x'))
+        .and_then(|digits| digits.parse::<u8>().ok())
+        .filter(|multiplier| *multiplier >= 2)
+}
+
+/// How many steps this item, as a referenced modifier, moves its host weapon's
+/// single-die damage progression. Moved here verbatim from
+/// `damage_total::eqmweapon_damagesize_chain_value`, including its summation
+/// across every such chain the record carries.
+fn damage_size_steps_of(record: &EquipmentRecord) -> i32 {
+    record
+        .bonus_chains
+        .iter()
+        .filter_map(|bonus| {
+            let qualifiers = &bonus.qualifiers;
+            if qualifiers.len() >= 3 && qualifiers[0] == "EQMWEAPON" && qualifiers[1] == "DAMAGESIZE"
+            {
+                qualifiers[2].parse::<i32>().ok()
+            } else {
+                None
+            }
+        })
+        .sum()
+}
+
+/// The divisor this item, as a referenced modifier, applies to its host item's
+/// weight. Moved here verbatim from the inner scan of
+/// `equipment_effects::resolve_eqm_weightdiv_effect`, including its `find_map`
+/// shape: a record carrying more than one such chain contributes the first,
+/// exactly as before.
+fn weight_divisor_of(record: &EquipmentRecord) -> Option<f32> {
+    record.bonus_chains.iter().find_map(|bonus| {
+        let qualifiers = &bonus.qualifiers;
+        if qualifiers.len() >= 3 && qualifiers[0] == "EQM" && qualifiers[1] == "WEIGHTDIV" {
+            qualifiers[2].parse::<f32>().ok()
+        } else {
+            None
+        }
+    })
+}
+
+/// Whether the item is one of PF1's natural attacks. Moved here verbatim from
+/// `equipment_effects::is_natural_attack_weapon`, including the exact-segment
+/// match that keeps `Weapon Group Natural` from firing it.
+fn is_natural_attack_of(record: &EquipmentRecord) -> bool {
+    equipment_token_value(record, "TYPE")
+        .is_some_and(|value| value.split('.').any(|segment| segment == "Natural"))
+}
+
+/// Whether the item is a shield. Moved here verbatim from the shield half of
+/// `equipment_effects::is_weapon_record`, including its first-segment rule.
+fn is_shield_of(record: &EquipmentRecord) -> bool {
+    equipment_token_value(record, "TYPE")
+        .is_some_and(|value| value.split('.').next() == Some("Shield"))
+}
+
+/// The item's settled armour/shield stat contribution. Moved here verbatim
+/// from `equipment_effects::arms_armor` (SD-35 `AT-35-E6-003-RULED` cycle 11);
+/// every rule each field encodes, and every real-corpus witness behind it, is
+/// stated in that module's own doc comments, which stayed with the numbers.
+fn arms_armor_stat_effect_of(record: &EquipmentRecord) -> EquipmentStatEffect {
+    EquipmentStatEffect {
+        armor_class_bonus: armor_class_chain_bonus_of(record)
+            .or_else(|| tempbonus_combat_ac_of(record)),
+        max_dex: equipment_token_i16(record, "MAXDEX")
+            .or_else(|| eqmarmor_chain_value_of(record, "MAXDEX")),
+        spell_failure: equipment_token_value(record, "SPELLFAILURE")
+            .and_then(|value| value.parse().ok())
+            .or_else(|| eqmarmor_chain_value_of(record, "SPELLFAILURE").map(f32::from)),
+        armor_check_penalty: equipment_token_i16(record, "ACCHECK")
+            .or_else(|| eqmarmor_chain_value_of(record, "ACCHECK")),
+    }
+}
+
+fn equipment_token_value<'a>(record: &'a EquipmentRecord, key: &str) -> Option<&'a str> {
+    record.tokens.iter().find(|token| token.key == key).map(|token| token.value.as_str())
+}
+
+fn equipment_token_i16(record: &EquipmentRecord, key: &str) -> Option<i16> {
+    equipment_token_value(record, key).and_then(|value| value.parse().ok())
+}
+
+/// The first standing `BONUS:COMBAT|AC|<n>` chain's magnitude. A
+/// `TYPE=Circumstance` chain is excluded: by PF1's own definition it applies
+/// only while its holder is in a named situation, so it is not a standing
+/// armour contribution.
+fn armor_class_chain_bonus_of(record: &EquipmentRecord) -> Option<i16> {
+    record.bonus_chains.iter().find_map(|bonus| {
+        let qualifiers = &bonus.qualifiers;
+        let is_ac_bonus = qualifiers.len() >= 3
+            && qualifiers[0] == "COMBAT"
+            && qualifiers[1] == "AC"
+            && !crate::pcgen_import::equipment_bonus_reader::declares_circumstance_bonus_type(bonus);
+        if is_ac_bonus {
+            qualifiers[2].parse::<i16>().ok()
+        } else {
+            None
+        }
+    })
+}
+
+/// The consumable-triggered sibling of the standing AC chain, read only for
+/// the item's own total and never for a referenced modifier's contribution.
+fn tempbonus_combat_ac_of(record: &EquipmentRecord) -> Option<i16> {
+    record.tokens.iter().find_map(|token| {
+        if token.key != "TEMPBONUS" {
+            return None;
+        }
+        let parts: Vec<&str> = token.value.split('|').collect();
+        if parts.len() < 4
+            || (parts[0] != "PC" && parts[0] != "ANYPC")
+            || parts[1] != "COMBAT"
+            || parts[2] != "AC"
+        {
+            return None;
+        }
+        parts[3].parse::<i16>().ok()
+    })
+}
+
+/// A modifier record's own `BONUS:EQMARMOR|<field>|<n>` magnitude -- the
+/// family a material/masterwork/enhancement modifier states its armour-stat
+/// contribution in, consulted only when the bare token is absent.
+fn eqmarmor_chain_value_of(record: &EquipmentRecord, field: &str) -> Option<i16> {
+    record.bonus_chains.iter().find_map(|bonus| {
+        let qualifiers = &bonus.qualifiers;
+        if qualifiers.len() >= 3 && qualifiers[0] == "EQMARMOR" && qualifiers[1] == field {
+            qualifiers[2].parse::<i16>().ok()
+        } else {
+            None
+        }
+    })
+}
+
+/// The item's settled circumstance bonus to one named skill, including the
+/// automatic swim-speed racial bonus PF1 grants on top of an explicit Swim
+/// bonus. Moved here verbatim from `equipment_effects::general`.
+fn skill_check_bonus_of(record: &EquipmentRecord) -> Option<SkillCheckBonus> {
+    let explicit = record
+        .bonus_chains
+        .iter()
+        .find_map(|bonus| {
+            let qualifiers = &bonus.qualifiers;
+            if qualifiers.len() < 3 || qualifiers[0] != "SKILL" {
+                return None;
+            }
+            qualifiers[2].parse::<i16>().ok().map(|bonus_value| SkillCheckBonus {
+                skill: qualifiers[1].clone(),
+                bonus: bonus_value,
+            })
+        })
+        .or_else(|| tempbonus_skill_of(record))?;
+    Some(SkillCheckBonus {
+        bonus: explicit.bonus + swim_speed_racial_bonus_of(record, &explicit.skill),
+        ..explicit
+    })
+}
+
+/// The consumable-triggered single-skill sibling of the explicit skill chain.
+/// A comma-joined list, a `TYPE.<Group>` wildcard and the literal `ALL`
+/// wildcard are all deliberately unread: each is a wider shape this settled
+/// single-skill value has no way to state, so the honest answer is absence.
+fn tempbonus_skill_of(record: &EquipmentRecord) -> Option<SkillCheckBonus> {
+    record.tokens.iter().find_map(|token| {
+        if token.key != "TEMPBONUS" {
+            return None;
+        }
+        let parts: Vec<&str> = token.value.split('|').collect();
+        if parts.len() < 4 || (parts[0] != "PC" && parts[0] != "ANYPC") || parts[1] != "SKILL" {
+            return None;
+        }
+        let skill = parts[2];
+        if skill.is_empty()
+            || skill.contains(',')
+            || skill.starts_with("TYPE.")
+            || skill.eq_ignore_ascii_case("ALL")
+        {
+            return None;
+        }
+        parts[3].parse::<i16>().ok().map(|bonus_value| SkillCheckBonus {
+            skill: skill.to_string(),
+            bonus: bonus_value,
+        })
+    })
+}
+
+/// PF1's Swim skill rule: a swim speed of at least 5 feet is a +8 racial
+/// bonus on Swim checks, additive with any explicit Swim bonus the same item
+/// grants.
+fn swim_speed_racial_bonus_of(record: &EquipmentRecord, skill: &str) -> i16 {
+    if skill != "Swim" {
+        return 0;
+    }
+    let grants_swim_speed = record.tokens.iter().any(|token| {
+        token.key == "MOVE"
+            && token.value.split(',').any(|part| part.trim().eq_ignore_ascii_case("Swim"))
+    });
+    if grants_swim_speed {
+        8
+    } else {
+        0
+    }
+}
+
+/// The item's settled flat bonuses to named rules variables, one row per
+/// name. A chain naming several variables at once contributes the same
+/// magnitude to each. Moved here verbatim from `equipment_effects::general`.
+fn var_bonuses_of(record: &EquipmentRecord) -> Vec<VarBonus> {
+    record
+        .bonus_chains
+        .iter()
+        .filter_map(|bonus| {
+            let qualifiers = &bonus.qualifiers;
+            if qualifiers.len() < 3 || qualifiers[0] != "VAR" {
+                return None;
+            }
+            let value = qualifiers[2].parse::<i16>().ok()?;
+            Some((qualifiers[1].as_str(), value))
+        })
+        .flat_map(|(names, value)| {
+            names.split(',').map(move |name| VarBonus { name: name.to_string(), bonus: value })
+        })
+        .collect()
+}
+
+/// One record's own named-variable magnitude, used only to substitute a
+/// sibling roll chain's non-literal magnitude segment. Never looks outside
+/// this one record.
+fn var_reference_of(record: &EquipmentRecord, name: &str) -> Option<i16> {
+    record.bonus_chains.iter().find_map(|bonus| {
+        let qualifiers = &bonus.qualifiers;
+        if qualifiers.len() >= 3 && qualifiers[0] == "VAR" && qualifiers[1] == name {
+            qualifiers[2].parse::<i16>().ok()
+        } else {
+            None
+        }
+    })
+}
+
+/// The item's settled weapon to-hit / damage enhancement, summed across every
+/// qualifying roll chain on the record. Moved here verbatim from
+/// `equipment_effects::equipmods`, whose own doc comments carry every rule and
+/// real-corpus witness behind each arm below.
+fn weapon_enhancement_of(record: &EquipmentRecord) -> Option<WeaponEnhancementBonus> {
+    let mut tohit_bonus: Option<i16> = None;
+    let mut damage_bonus: Option<i16> = None;
+    let mut natural_attack_only = false;
+    let mut weapon_prof_scope: Option<String> = None;
+    let mut matched = false;
+
+    let mut apply = |affects: &str, bonus_value: i16| {
+        if affects.contains("TOHIT") {
+            tohit_bonus = Some(tohit_bonus.unwrap_or(0) + bonus_value);
+        }
+        if affects.contains("DAMAGE") {
+            damage_bonus = Some(damage_bonus.unwrap_or(0) + bonus_value);
+        }
+    };
+
+    for bonus in &record.bonus_chains {
+        let qualifiers = &bonus.qualifiers;
+        let subject = qualifiers.first().map(String::as_str);
+        let this_natural_attack_only = subject == Some("WEAPONPROF=TYPE.Natural");
+        let is_roll_shape = qualifiers.len() >= 2
+            && matches!(
+                qualifiers[1].as_str(),
+                "TOHIT" | "DAMAGE" | "DAMAGE,TOHIT" | "TOHIT,DAMAGE"
+            );
+
+        if (subject == Some("WEAPON") || this_natural_attack_only) && is_roll_shape {
+            if crate::pcgen_import::equipment_bonus_reader::roll_bonus_carries_enhancement_type(
+                bonus,
+            ) {
+                let magnitude = qualifiers[2]
+                    .parse::<i16>()
+                    .ok()
+                    .or_else(|| var_reference_of(record, &qualifiers[2]));
+                if let Some(bonus_value) = magnitude {
+                    matched = true;
+                    natural_attack_only = this_natural_attack_only;
+                    apply(&qualifiers[1], bonus_value);
+                }
+            }
+            continue;
+        }
+
+        if let Some(name) = subject.and_then(|s| s.strip_prefix("WEAPONPROF="))
+            && !name.starts_with("TYPE.")
+            && is_roll_shape
+            && qualifiers.len() >= 3
+            && let Ok(bonus_value) = qualifiers[2].parse::<i16>()
+        {
+            matched = true;
+            weapon_prof_scope = Some(name.to_string());
+            apply(&qualifiers[1], bonus_value);
+        }
+    }
+
+    matched.then_some(WeaponEnhancementBonus {
+        tohit_bonus,
+        damage_bonus,
+        natural_attack_only,
+        weapon_prof_scope,
+    })
+}
+
+/// The item's settled flat Spell Resistance grant. A record whose grant is a
+/// player choice rather than a literal states no settled number and yields
+/// `None`. Moved here verbatim from `equipment_effects::equipmods`.
+fn spell_resistance_bonus_of(record: &EquipmentRecord) -> Option<i16> {
+    equipment_token_value(record, "SR").and_then(|value| value.parse().ok())
+}
+
+/// The corpus identities of the modifier items attached to this one.
+///
+/// A record can name more than one attachment, and each names its parts in
+/// one string; the live side used to hold both of those grammar facts to ask
+/// one question ("which other corpus records are attached to this one?").
+/// Every candidate segment is emitted in source order, including the ones
+/// that resolve to no record -- the caller's resolve-or-skip pass is
+/// unchanged, and filtering here would need the corpus the converter does not
+/// have.
+fn eqmod_references_of(record: &EquipmentRecord) -> Vec<String> {
+    let mut references = Vec::new();
+    for token in record.tokens.iter().filter(|token| token.key == "EQMOD") {
+        for instance in token.value.split('.') {
+            for candidate in instance.split('|') {
+                let candidate = candidate.trim();
+                if !candidate.is_empty() {
+                    references.push(candidate.to_string());
+                }
+            }
+        }
+    }
+    references
+}
+
+/// The item's settled ability-score enhancement: its first
+/// `BONUS:STAT|<ability>|<n>` chain, else the `TEMPBONUS:<PC|ANYPC>|STAT|...`
+/// form the CRB ability-score potions state theirs in (they carry no `BONUS:`
+/// chain at all). Moved here from `equipment_effects::magic_items`.
+fn ability_score_bonus_of(record: &EquipmentRecord) -> Option<AbilityScoreBonus> {
+    record
+        .bonus_chains
+        .iter()
+        .find_map(|bonus| {
+            let qualifiers = &bonus.qualifiers;
+            if qualifiers.len() < 3 || qualifiers[0] != "STAT" {
+                return None;
+            }
+            qualifiers[2].parse::<i16>().ok().map(|bonus_value| AbilityScoreBonus {
+                ability: qualifiers[1].clone(),
+                bonus: bonus_value,
+            })
+        })
+        .or_else(|| {
+            record.tokens.iter().find_map(|token| {
+                if token.key != "TEMPBONUS" {
+                    return None;
+                }
+                let parts: Vec<&str> = token.value.split('|').collect();
+                if parts.len() < 4 || (parts[0] != "PC" && parts[0] != "ANYPC") || parts[1] != "STAT"
+                {
+                    return None;
+                }
+                let ability = parts[2];
+                if ability.is_empty() || ability.contains(',') {
+                    return None;
+                }
+                parts[3].parse::<i16>().ok().map(|bonus_value| AbilityScoreBonus {
+                    ability: ability.to_string(),
+                    bonus: bonus_value,
+                })
+            })
+        })
+}
+
+/// The item's settled contribution to an intelligent item's stat block: every
+/// unconditional three-part `BONUS:VAR|<name>|<value>` chain of the
+/// intelligent-item family. A chain carrying a trailing condition is not
+/// unconditionally true and is excluded rather than asserted. Moved here from
+/// `equipment_effects::intelligent_item`.
+fn intelligent_item_contribution_of(record: &EquipmentRecord) -> Option<IntelligentItemContribution> {
+    let mut result = IntelligentItemContribution::default();
+    let mut found = false;
+    for bonus in &record.bonus_chains {
+        let qualifiers = &bonus.qualifiers;
+        if qualifiers.len() != 3 || qualifiers[0] != "VAR" {
+            continue;
+        }
+        let Ok(value) = qualifiers[2].parse::<i16>() else {
+            continue;
+        };
+        match qualifiers[1].as_str() {
+            "IntItemStatINT" => {
+                result.intelligence_bonus += value;
+                found = true;
+            }
+            "IntItemStatWIS" => {
+                result.wisdom_bonus += value;
+                found = true;
+            }
+            "IntItemStatCHA" => {
+                result.charisma_bonus += value;
+                found = true;
+            }
+            "IntelligentItemEgo" => {
+                result.ego_bonus += value;
+                found = true;
+            }
+            "IntItemAlignment" => {
+                if let Some(alignment) = ItemAlignment::from_code(value) {
+                    result.alignment = Some(alignment);
+                    found = true;
+                }
+            }
+            _ => {}
+        }
+    }
+    found.then_some(result)
+}
+
+/// Build a canonical [`IrContentRecord`] from a B-5
 /// [`EquipmentRecord`].
-pub fn convert_equipment_record(record: &EquipmentRecord) -> SourceContentRecord<'_> {
+///
+/// SD-35 `AT-35-E6-003-RULED` cycle 13: the envelope's payload is the converted
+/// [`CorpusEquipmentRecord`] **alone**. Cycle 10 put it there beside the parser
+/// row and wrote down that the pair was temporary -- "it goes when the last
+/// consumer reads a settled value instead". Cycle 12 moved the last two value
+/// readers and cycle 13 moved the resolver and the live loader, so the row is
+/// gone from the envelope. It is still this function's input, because the
+/// conversion is what this function is.
+///
+/// The converted record is interned for the process lifetime (`Box::leak`) to
+/// satisfy the envelope's borrow, exactly as cycle 8's spell path already does.
+pub fn convert_equipment_record(record: &EquipmentRecord) -> SourceContentRecord<'static> {
+    record_to_live(&convert_equipment_record_ir(record))
+}
+
+/// The same conversion as [`convert_equipment_record`], stopping at the
+/// converter's own envelope instead of the live one. See
+/// [`convert_spell_record_ir`] for why both exist.
+pub fn convert_equipment_record_ir(record: &EquipmentRecord) -> IrContentRecord<'static> {
     let line = record.header_line_number;
     let source_ref = make_source_ref(record.record_source_path(), line);
+    let converted: &'static CorpusEquipmentRecord =
+        Box::leak(Box::new(equipment_record_to_corpus(record)));
     SourceContentRecord::new(
         source_ref,
         SourceContentKind::Equipment,
-        SourceContentPayload::Equipment(record),
+        IrContentPayload::Equipment(converted),
     )
 }
 
-/// Build a canonical [`SourceContentRecord`] from a B-6 [`LstRecord`].
+/// Build a canonical [`IrContentRecord`] from a B-6 [`LstRecord`].
 /// The inner metadata kind is mapped from the parser-side
 /// [`crate::pcgen_import::lst_parser::metadata::MetadataKind`] to the
 /// canonical [`crate::rules_core::source_content::MetadataKindInner`] so
 /// the rules-core envelope is total over the six B-6 kinds.
-pub fn convert_metadata_record(record: &LstRecord) -> SourceContentRecord<'_> {
+pub fn convert_metadata_record(record: &LstRecord) -> IrContentRecord<'_> {
     let source_ref = make_source_ref(record.record_source_path(), record.line_number);
     let kind = SourceContentKind::Metadata(b6_metadata_kind_to_canonical(record.kind));
-    SourceContentRecord::new(source_ref, kind, SourceContentPayload::Metadata(record))
+    SourceContentRecord::new(source_ref, kind, IrContentPayload::Metadata(record))
 }
 
 // =============================================================================
@@ -435,32 +1055,32 @@ pub fn convert_metadata_record(record: &LstRecord) -> SourceContentRecord<'_> {
 /// for typed callers.
 ///
 /// The return type changed from `Result<IRNode, IRDiagnostic>` to
-/// `SourceContentRecord<'a>` per the Slice E contract. The conversion
+/// `IrContentRecord<'a>` per the Slice E contract. The conversion
 /// is total: every B-family record has exactly one canonical envelope
 /// variant. The `Result` wrapper is no longer necessary; the
 /// canonical envelope carries its own diagnostic stream via
 /// [`SourceContentDiagnostic`] attached to the package-level
-/// [`SourcePackageContent`].
+/// [`IrPackageContent`].
 pub fn convert_to_ir<'a>(
     parsed_record: &ParsedLstRecord<'a>,
     _schema: &IRSchema,
-) -> SourceContentRecord<'a> {
+) -> IrContentRecord<'a> {
     match parsed_record {
         ParsedLstRecord::Class(entry) => convert_class_entry(entry),
         ParsedLstRecord::SpellcastingClass(entry) => convert_spellcasting_class_entry(entry),
         ParsedLstRecord::Race(r) => convert_race_declaration(r),
         ParsedLstRecord::Ability(a) => convert_ability_declaration(a),
-        ParsedLstRecord::Spell(s) => convert_spell_record(s),
-        ParsedLstRecord::Equipment(e) => convert_equipment_record(e),
+        ParsedLstRecord::Spell(s) => convert_spell_record_ir(s),
+        ParsedLstRecord::Equipment(e) => convert_equipment_record_ir(e),
         ParsedLstRecord::Metadata(r) => convert_metadata_record(r),
     }
 }
 
 // =============================================================================
-// Per-document converters — produce (SourceContentRecord, forwarded IRDiagnostic) pairs
+// Per-document converters — produce (IrContentRecord, forwarded IRDiagnostic) pairs
 // =============================================================================
 //
-// The converter returns one `SourceContentRecord` per B-family entry
+// The converter returns one `IrContentRecord` per B-family entry
 // plus the forwarded diagnostics stream. Caller-supplied `source_path`
 // overrides the per-record `source_path` for records whose parser
 // surface does not embed one (ClassEntry, SpellcastingClassEntry,
@@ -472,7 +1092,7 @@ pub fn convert_to_ir<'a>(
 pub fn convert_class_parse_result<'a>(
     r: &'a ClassParseResult,
     _schema: &IRSchema,
-) -> Vec<(SourceContentRecord<'a>, Vec<IRDiagnostic>)> {
+) -> Vec<(IrContentRecord<'a>, Vec<IRDiagnostic>)> {
     let mut out = Vec::with_capacity(r.entries.len());
     for entry in &r.entries {
         let record = convert_class_entry(entry);
@@ -487,7 +1107,7 @@ pub fn convert_class_parse_result<'a>(
 pub fn convert_spellcasting_class_parse_result<'a>(
     r: &'a SpellcastingClassParseResult,
     _schema: &IRSchema,
-) -> Vec<(SourceContentRecord<'a>, Vec<IRDiagnostic>)> {
+) -> Vec<(IrContentRecord<'a>, Vec<IRDiagnostic>)> {
     let mut out = Vec::with_capacity(r.entries.len());
     for entry in &r.entries {
         let record = convert_spellcasting_class_entry(entry);
@@ -502,7 +1122,7 @@ pub fn convert_spellcasting_class_parse_result<'a>(
 pub fn convert_lst_entry_file<'a>(
     r: &'a LstEntryFile,
     _schema: &IRSchema,
-) -> Vec<(SourceContentRecord<'a>, Vec<IRDiagnostic>)> {
+) -> Vec<(IrContentRecord<'a>, Vec<IRDiagnostic>)> {
     let mut out = Vec::with_capacity(r.race_pointers.len() + r.ability_declarations.len());
     for race in &r.race_pointers {
         out.push((
@@ -524,7 +1144,7 @@ pub fn convert_lst_entry_file<'a>(
 pub fn convert_lst_metadata_document<'a>(
     r: &'a LstMetadataDocument,
     _schema: &IRSchema,
-) -> Vec<(SourceContentRecord<'a>, Vec<IRDiagnostic>)> {
+) -> Vec<(IrContentRecord<'a>, Vec<IRDiagnostic>)> {
     let mut out = Vec::with_capacity(r.records.len());
     for record in &r.records {
         let canonical = convert_metadata_record(record);
@@ -542,11 +1162,11 @@ pub fn convert_spell_record_list<'a>(
     records: &'a [LstSpellRecord],
     source_path: &str,
     _schema: &IRSchema,
-) -> Vec<(SourceContentRecord<'a>, Vec<IRDiagnostic>)> {
+) -> Vec<(IrContentRecord<'a>, Vec<IRDiagnostic>)> {
     let _ = source_path; // Per-row spell diagnostics live on the LstSpellFile, not on the LstSpellRecord itself.
     let mut out = Vec::with_capacity(records.len());
     for record in records {
-        let canonical = convert_spell_record(record);
+        let canonical = convert_spell_record_ir(record);
         out.push((canonical, Vec::new()));
     }
     out
@@ -558,7 +1178,7 @@ pub fn convert_spell_record_list<'a>(
 pub fn convert_spell_file<'a>(
     r: &'a LstSpellFile,
     schema: &IRSchema,
-) -> Vec<(SourceContentRecord<'a>, Vec<IRDiagnostic>)> {
+) -> Vec<(IrContentRecord<'a>, Vec<IRDiagnostic>)> {
     let source_path = path_to_string(&r.source_path);
     let container_diagnostics = forward_spell_container_diagnostics(&r.diagnostics, &source_path);
     let mut out = Vec::with_capacity(r.records.len());
@@ -567,7 +1187,7 @@ pub fn convert_spell_file<'a>(
         // override so the B-4 record's own source_path is honored when
         // present but the document's identity fills in for records that
         // were construct-ed with empty paths.
-        let canonical = convert_spell_record(record);
+        let canonical = convert_spell_record_ir(record);
         out.push((canonical, container_diagnostics.clone()));
     }
     let _ = schema;
@@ -579,10 +1199,10 @@ pub fn convert_spell_file<'a>(
 pub fn convert_equipment_parse_result<'a>(
     r: &'a EquipmentParseResult,
     _schema: &IRSchema,
-) -> Vec<(SourceContentRecord<'a>, Vec<IRDiagnostic>)> {
+) -> Vec<(IrContentRecord<'a>, Vec<IRDiagnostic>)> {
     let mut out = Vec::with_capacity(r.entries.len());
     for entry in &r.entries {
-        let canonical = convert_equipment_record(entry);
+        let canonical = convert_equipment_record_ir(entry);
         let forwarded = forward_equipment_diagnostics(entry, &r.diagnostics, &r.source_path);
         out.push((canonical, forwarded));
     }
@@ -590,21 +1210,21 @@ pub fn convert_equipment_parse_result<'a>(
 }
 
 // =============================================================================
-// Corpus-rooted SourcePackageContent builders
+// Corpus-rooted IrPackageContent builders
 // =============================================================================
 //
-// These produce the canonical [`SourcePackageContent`] aggregate
+// These produce the canonical [`IrPackageContent`] aggregate
 // directly, accumulating records and the canonical diagnostics stream
 // in one pass.
 
-/// Build a canonical [`SourcePackageContent`] from a B-1
+/// Build a canonical [`IrPackageContent`] from a B-1
 /// [`ClassParseResult`].
 pub fn convert_package_from_class_parse_result<'a>(
     r: &'a ClassParseResult,
     package_id: impl Into<String>,
     schema: &IRSchema,
-) -> (SourcePackageContent<'a>, Vec<IRDiagnostic>) {
-    let mut pkg = SourcePackageContent::empty(package_id, SourceRef::new(r.source_path.clone(), 0));
+) -> (IrPackageContent<'a>, Vec<IRDiagnostic>) {
+    let mut pkg = IrPackageContent::empty(package_id, SourceRef::new(r.source_path.clone(), 0));
     let mut all_ir_diagnostics = Vec::new();
     for entry in &r.entries {
         let record = convert_class_entry(entry);
@@ -619,14 +1239,14 @@ pub fn convert_package_from_class_parse_result<'a>(
     (pkg, all_ir_diagnostics)
 }
 
-/// Build a canonical [`SourcePackageContent`] from a B-2
+/// Build a canonical [`IrPackageContent`] from a B-2
 /// [`SpellcastingClassParseResult`].
 pub fn convert_package_from_spellcasting_class_parse_result<'a>(
     r: &'a SpellcastingClassParseResult,
     package_id: impl Into<String>,
     schema: &IRSchema,
-) -> (SourcePackageContent<'a>, Vec<IRDiagnostic>) {
-    let mut pkg = SourcePackageContent::empty(package_id, SourceRef::new(r.source_path.clone(), 0));
+) -> (IrPackageContent<'a>, Vec<IRDiagnostic>) {
+    let mut pkg = IrPackageContent::empty(package_id, SourceRef::new(r.source_path.clone(), 0));
     let mut all_ir_diagnostics = Vec::new();
     for entry in &r.entries {
         let record = convert_spellcasting_class_entry(entry);
@@ -641,14 +1261,14 @@ pub fn convert_package_from_spellcasting_class_parse_result<'a>(
     (pkg, all_ir_diagnostics)
 }
 
-/// Build a canonical [`SourcePackageContent`] from a B-3
+/// Build a canonical [`IrPackageContent`] from a B-3
 /// [`LstEntryFile`].
 pub fn convert_package_from_lst_entry_file<'a>(
     r: &'a LstEntryFile,
     package_id: impl Into<String>,
     schema: &IRSchema,
-) -> (SourcePackageContent<'a>, Vec<IRDiagnostic>) {
-    let mut pkg = SourcePackageContent::empty(package_id, SourceRef::new(r.source_path.clone(), 0));
+) -> (IrPackageContent<'a>, Vec<IRDiagnostic>) {
+    let mut pkg = IrPackageContent::empty(package_id, SourceRef::new(r.source_path.clone(), 0));
     let mut all_ir_diagnostics = Vec::new();
     for race in &r.race_pointers {
         let record = convert_race_declaration(race);
@@ -672,14 +1292,14 @@ pub fn convert_package_from_lst_entry_file<'a>(
     (pkg, all_ir_diagnostics)
 }
 
-/// Build a canonical [`SourcePackageContent`] from a B-6
+/// Build a canonical [`IrPackageContent`] from a B-6
 /// [`LstMetadataDocument`].
 pub fn convert_package_from_lst_metadata_document<'a>(
     r: &'a LstMetadataDocument,
     package_id: impl Into<String>,
     schema: &IRSchema,
-) -> (SourcePackageContent<'a>, Vec<IRDiagnostic>) {
-    let mut pkg = SourcePackageContent::empty(package_id, SourceRef::new(r.source_path.clone(), 0));
+) -> (IrPackageContent<'a>, Vec<IRDiagnostic>) {
+    let mut pkg = IrPackageContent::empty(package_id, SourceRef::new(r.source_path.clone(), 0));
     let mut all_ir_diagnostics = Vec::new();
     for record in &r.records {
         let canonical = convert_metadata_record(record);
@@ -1001,7 +1621,7 @@ mod tests {
         assert_eq!(rec.kind, SourceContentKind::Class);
         assert_eq!(rec.source_ref.line, 7);
         match rec.payload {
-            SourceContentPayload::Class(e) => {
+            IrContentPayload::Class(e) => {
                 assert_eq!(e.class_name, "TestClass");
                 assert_eq!(e.header_line_number, 7);
             }
@@ -1024,7 +1644,7 @@ mod tests {
         let rec = convert_equipment_record(&record);
         assert_eq!(rec.kind, SourceContentKind::Equipment);
         match rec.payload {
-            SourceContentPayload::Equipment(e) => {
+            crate::rules_core::source_content::SourceContentPayload::Equipment(e) => {
                 assert_eq!(e.name, "TestEquip");
             }
             _ => panic!("expected Equipment payload"),

@@ -5,11 +5,11 @@
     {
       "kind": "class",
       "label": "Classes",
-      "done": 0,
+      "done": 3,
       "partial": 0,
-      "not_started": 3,
+      "not_started": 0,
       "denominator": 3,
-      "pct": 0.0,
+      "pct": 100.0,
       "excluded_from_percentage": 0,
       "standing_breakdown": {
         "origin": 3
@@ -17,21 +17,21 @@
       "items": [
         {
           "name": "Faerie Dragon",
-          "doneness": "not-started",
+          "doneness": "done",
           "type_facet": "Monster",
           "standing": "origin",
           "display_name": "Faerie Dragon"
         },
         {
           "name": "Lammasu",
-          "doneness": "not-started",
+          "doneness": "done",
           "type_facet": "Monster",
           "standing": "origin",
           "display_name": "Lammasu"
         },
         {
           "name": "Water Naga",
-          "doneness": "not-started",
+          "doneness": "done",
           "type_facet": "Monster",
           "standing": "origin",
           "display_name": "Water Naga"

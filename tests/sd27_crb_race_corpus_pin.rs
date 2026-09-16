@@ -151,9 +151,8 @@ fn resolved_vision_matches_the_hardcoded_senses_row_for_all_seven() {
         let corpus_vision: Vec<&str> = resolved
             .traits
             .iter()
-            .flat_map(|t| t.raw_tokens.iter())
-            .filter(|t| t.key == "VISION")
-            .map(|t| t.value.as_str())
+            .flat_map(|t| t.declared_vision.iter())
+            .map(String::as_str)
             .collect();
         match vision {
             Some(v) => assert_eq!(corpus_vision, vec![*v], "{key}: corpus VISION token"),
@@ -303,15 +302,12 @@ fn ability_modifier_rows_agree_with_the_corpus_for_every_fixed_modifier_race() {
 
         // (1) Derive the grant from the machine-readable chains alone.
         let mut derived: Vec<String> = Vec::new();
-        for chain in &ability.raw_bonus_chains {
-            if chain.qualifiers.first().map(String::as_str) != Some("STAT") {
-                continue;
-            }
-            let stats = chain.qualifiers.get(1).expect("a STAT chain names its stats");
-            let magnitude: i32 = chain
-                .qualifiers
-                .get(2)
-                .expect("a STAT chain carries a magnitude")
+        for adjustment in &ability.declared_bonuses.ability_adjustments {
+            let stats = adjustment.codes.as_ref().expect("an ability adjustment names its stats");
+            let magnitude: i32 = adjustment
+                .magnitude
+                .as_ref()
+                .expect("an ability adjustment carries a magnitude")
                 .parse()
                 .expect("the magnitude is numeric");
             for stat in stats.split(',') {

@@ -1,0 +1,16 @@
+{
+  "completeness": "full",
+  "data": {
+    "description": "This sword is about 3-1/2 feet in length.",
+    "key": "Longsword (Base)",
+    "name": "Longsword"
+  },
+  "license": "OGL",
+  "population": "in_scope",
+  "source": {
+    "kind": "desktop_ui_fixture",
+    "line": 1,
+    "path": "apps/desktop/src-tauri/fixtures_src/equip_longsword.txt",
+    "record_key": "Longsword (Base)"
+  }
+}

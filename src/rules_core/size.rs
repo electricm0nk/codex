@@ -71,7 +71,7 @@
 /// error that put a wrong Strength-15 threshold into this codebase, and it
 /// would leave the next person to need Large or Tiny guessing at a value
 /// that is sitting right there in the source file.
-#[derive(Debug, Clone, Copy, PartialEq, Eq, Hash)]
+#[derive(Debug, Clone, Copy, PartialEq, Eq, Hash, serde::Serialize, serde::Deserialize)]
 pub enum SizeCategory {
     Fine,
     Diminutive,

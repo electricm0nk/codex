@@ -137,9 +137,10 @@ use super::rules_tables::ultimate_combat::{self as uc, UcClassId};
 use crate::rules_core::archetype_resolver;
 use crate::rules_core::durability::FamiliarSpecies;
 use crate::rules_core::feat_identity;
-use crate::rules_core::pcgen_desc::{
-    leaked_pcgen_syntax, render_pcgen_desc_tokens, PcgenDisplayValues,
-};
+// SD-35 `AT-35-E6-003`: this file used to `use crate::pcgen_import::pcgen_desc::{…}` here and
+// render a record's `DESC:` tokens at run time. It reads the converted `data/sheet_rules/`
+// prose instead — `pilot_compute::resolved_prose`, declared above.
+use crate::rules_core::pilot_compute::resolved_prose::{resolved_description, DisplayValues};
 use crate::rules_core::race_resolver::race_size_for_race_token;
 use crate::rules_core::size::SizeCategory;
 use super::rules_tables::crb::class_tables::{ClassId, class_tables, good_saves_for};
@@ -174,36 +175,12 @@ mod class_ultimate_combat;
 pub mod prestige_class_entry_gate;
 pub mod untabled_base_class_chassis;
 pub mod untabled_base_class_feature_roster;
-/// SD-31 wave 25's interpreter reproduction harness (`OPERATOR-RULINGS-2026-08-21.md` §20) --
-/// see its own module doc. A sibling of the three submodules above, not a call-site consumer of
-/// them: it reads their functions through `super::` the same way `mod.rs`'s own inline
-/// `#[cfg(test)]` modules already do, and never edits any hand-modelled function's logic.
-pub mod formula_reproduction_harness;
-/// SD-31 wave 25b's formula interpreter core (`OPERATOR-RULINGS-2026-08-21.md` §20). Implements
-/// the `FormulaEvaluator` trait `formula_reproduction_harness` defines. `pub`, like the harness
-/// above: its non-test API has zero callers outside `#[cfg(test)]` yet (no unit-banking consumer
-/// is wired this wave — see its own module doc's opening paragraph), and a private `mod` here
-/// would make every one of those items a genuine `dead_code` lint.
-pub mod formula_interpreter;
-/// SD-32 Gate 2 (`gate-2-corpus-wide-runs`, kanban `#8`) — the corpus-wide,
-/// closed-Gate-1-census-scoped run AT-32-G2-004 requires of
-/// `formula_interpreter.rs` (F1..F9). `pub` for the same reason as the three
-/// modules above: its non-test API's only caller today is
-/// `src/bin/formula_interpreter.rs`, a separate compilation unit, not this
-/// crate's own internals.
-pub mod formula_interpreter_corpus_wide;
-/// SD-31 wave 26's "BonusObj-shape reader" (`OPERATOR-RULINGS-2026-08-21.md` §20 follow-on) --
-/// see its own module doc. `pub` for the same reason as the two modules above: no unit-banking
-/// consumer is wired to it yet (this lane is scoped to closing interpreter refusals and reading
-/// the real multi-token `PREVARGTEQ` bonus-stack shape, not to wiring a consumer), so a private
-/// `mod` here would make its non-test API dead code.
-pub mod bonus_stack_reader;
-/// SD-32 — wires `formula_interpreter`/`PcgenFormulaEvaluator` into
-/// `src/bin/ingest_race_traits.rs` and `src/bin/ingest_races.rs`'s shared
-/// `same_row_vars`/`substitute_placeholders`/`eval_prevar_gate` shape (see its
-/// own module doc). `pub`: both binaries are separate compilation units, so
-/// this crate's own internals are not the only caller.
-pub mod race_trait_formula_binding;
+// SD-35 AT-35-E6-001 (`decisions.md` §11): the PCGen formula interpreter, its reproduction
+// harness, its corpus-wide scan, the `BonusObj`-shape bonus-stack reader and the race-trait
+// formula binding are CONVERTER code. They were on the live side; they now live under
+// `src/pcgen_import/` (`crate::pcgen_import::formula_interpreter`, `::formula_reproduction_harness`,
+// `::formula_interpreter_corpus_wide`, the bonus-stack reader, `::race_trait_formula_binding`).
+// They are KEPT, not deleted -- they are reused for Starfinder (`decisions.md` §11, what is kept).
 /// SD-32 T12 `epic-10-reference-library-residual-reach` row 20 cycles 5-7 — the generic
 /// companion base-ability-score table, generalizing `ground_wolf_companion_stat_block`/
 /// `ground_horse_companion_stat_block` (below) into a table-driven function. `pub(crate)`,
@@ -216,6 +193,12 @@ pub(crate) mod companion_base_stat_table;
 /// SD-32 T12 `epic-10-reference-library-residual-reach` row 20 cycle 5 — see its own module doc
 /// comment. `pub(crate)`: `resolve` is called from `compute_class_chassis` below (same crate);
 /// no `apps/desktop/src-tauri` caller exists yet.
+/// SD-35 `AT-35-E6-001`: the ONE live reader of the converted class chassis
+/// (`data/sheet_rules/<book>/class/<slug>.json`). `pub` because the desktop
+/// crate's `class_catalog_generic` reads the same records for the
+/// reference-library browser rather than mirroring the derivation a second
+/// time.
+pub mod class_chassis_sheet_rules;
 mod generic_class_chassis;
 /// SD-34 `AT-34-E3-001` (`decisions.md §14`, mechanism `class_absent_from_
 /// ClassId_ALL_and_book_class_id_enums`) -- see its own module doc comment.
@@ -227,7 +210,11 @@ pub mod crb_untabled_class_chassis;
 /// `domain_power::domain_power_probe_catalog()` directly, the same
 /// visibility shape `crb_untabled_class_chassis` above already uses.
 pub mod domain_power;
-use class_slayer::*;
+// SD-35 `AT-35-E6-003` (`decisions.md` §11): a converted rule's own words rendered with this
+// character's numbers, read from `data/sheet_rules/`. It replaces the verbatim `DESC:` token
+// constants and the run-time PCGen renderer this file used to hold.
+pub mod resolved_prose;
+pub(crate) use class_slayer::*;
 use class_ultimate_combat::compute_uc_class_chassis;
 use domain_power::*;
 
@@ -255,6 +242,31 @@ pub struct PilotBaseChassisComputation {
     pub selected_skill_modifiers: SelectedSkillModifiers,
     pub explanations: Vec<ComputationExplanation>,
     pub diagnostics: Vec<ComputationDiagnostic>,
+    /// SD-35 AT-35-E2-002: the "Rules and features" lines -- every held sheet rule's line
+    /// (`sheet_rule::render_sheet`), one per held, printed rule. Empty from
+    /// `compute_pilot_base_chassis` itself, which has no `data/sheet_rules/` package in hand;
+    /// filled by [`PilotBaseChassisComputation::with_sheet_rules`] once a caller loads one
+    /// (the desktop, once per process).
+    pub sheet_lines: Vec<crate::rules_core::sheet_rule::SheetLine>,
+}
+
+impl PilotBaseChassisComputation {
+    /// Attach the sheet lines for this computation: the held set is the seed (the character's
+    /// own selections plus the class-feature records this computation grounded, plus
+    /// `extra_race_traits` from the caller's race resolver) closed over the package's grants.
+    pub fn with_sheet_rules(
+        mut self,
+        input: &CharacterInput,
+        package: &crate::rules_core::sheet_rule::SheetRulePackage,
+        extra_race_traits: &[String],
+    ) -> Self {
+        use crate::rules_core::sheet_rule::{render_sheet, CharacterFacts, HeldSeed};
+        let mut seed = HeldSeed::from_character(input, &self);
+        seed.race_traits.extend(extra_race_traits.iter().cloned());
+        let facts = CharacterFacts::from_character(input, &self);
+        self.sheet_lines = render_sheet(package, &seed, &facts);
+        self
+    }
 }
 
 /// Ability modifiers derived from chosen ability scores via `floor(score/2) - 5`.
@@ -2240,12 +2252,12 @@ fn ground_sorcerer_bloodline_feat_pool(
     let eligible_count = SORCERER_BLOODLINE_FEAT_POOL_ELIGIBLE_FEATS.len();
     let detail = if slot_count == 0 {
         format!(
-            "Sorcerer bloodline feat pool slot count at sorcerer level {sorcerer_level}: none \
-             yet, correctly absent by PF1 Core Rulebook level gate (the first slot is granted \
-             at sorcerer level {ARCANE_BLOODLINE_FIRST_BONUS_FEAT_LEVEL}). This formula (corpus \
-             BONUS:VAR|BloodlineFeatCount|(BloodlineFeatProgression-1)/6|TYPE=Base) is \
-             IDENTICAL across every PF1 Core Rulebook Sorcerer bloodline, not specific to \
-             Arcane"
+            // Provenance (ingest tokens, demoted out of the rendered sheet line -- SD-35 AT-35-E6-003-SWEEP):
+            //   BONUS:VAR|BloodlineFeatCount|(BloodlineFeatProgression-1)/6|TYPE=Base
+            "Sorcerer bloodline feat pool slot count at sorcerer level {sorcerer_level}: none yet, \
+             correctly absent by PF1 Core Rulebook level gate (the first slot is granted at sorcerer \
+             level {ARCANE_BLOODLINE_FIRST_BONUS_FEAT_LEVEL}). This formula is IDENTICAL across \
+             every PF1 Core Rulebook Sorcerer bloodline, not specific to Arcane"
         )
     } else {
         format!(
@@ -2786,7 +2798,7 @@ const CAVALIER_CHALLENGE_ARMOR_CLASS_PENALTY: i16 = -2;
 /// Cavalier's Challenge uses per day: `(CavalierLVL+2)/3`, verified
 /// directly against `apg_abilities_class.lst`'s own
 /// `BONUS:VAR|CavalierChallengeTimes|(CavalierLVL+2)/3`.
-fn cavalier_challenge_uses_per_day(level: u8) -> i16 {
+pub(crate) fn cavalier_challenge_uses_per_day(level: u8) -> i16 {
     (i16::from(level) + 2) / 3
 }
 
@@ -2799,7 +2811,7 @@ fn cavalier_challenge_uses_per_day(level: u8) -> i16 {
 /// a specific archetype, and this repo ingests no Cavalier archetype at
 /// all -- provably vacuous here, the same check that cleared Alchemist's
 /// Gnome-only and Ultimate-Magic-gated Bomb terms.
-fn cavalier_bonus_combat_feat_count(level: u8) -> i16 {
+pub(crate) fn cavalier_bonus_combat_feat_count(level: u8) -> i16 {
     i16::from(level) / 6
 }
 
@@ -7334,7 +7346,7 @@ fn animal_companion_table_index(master_level: u8) -> usize {
 /// This has a live consumer -- the companion's own `.armor_class`
 /// explanation record -- so widening Hit Dice without widening this would
 /// have shipped an understated Armor Class from master level 3 upward.
-fn animal_companion_natural_armor_bonus(master_level: u8) -> i16 {
+pub(crate) fn animal_companion_natural_armor_bonus(master_level: u8) -> i16 {
     let clamped = master_level.clamp(1, MAX_ANIMAL_COMPANION_MASTER_LEVEL);
     2 * (i16::from(clamped) / 3)
 }
@@ -7357,7 +7369,7 @@ fn animal_companion_natural_armor_bonus(master_level: u8) -> i16 {
 /// (`BONUS:ABILITYPOOL|Companion Stat Increase|1` at master levels 4, 9,
 /// 14 and 20, `apg_companionmods.lst:77,82,87,93`), which is a chooser
 /// input with no canonical default and stays deferred.
-fn animal_companion_stat_bonus(master_level: u8) -> i16 {
+pub(crate) fn animal_companion_stat_bonus(master_level: u8) -> i16 {
     let clamped = master_level.clamp(1, MAX_ANIMAL_COMPANION_MASTER_LEVEL);
     i16::from(clamped) / 3
 }
@@ -7740,16 +7752,17 @@ fn ground_horse_companion_stat_block(
         id: format!("{id_prefix}.armor_class"),
         value: companion_armor_class,
         detail: format!(
+            // Provenance (ingest tokens, demoted out of the rendered sheet line -- SD-35 AT-35-E6-003-SWEEP):
+            //   The base figure was verified against aonprd.com's own Horse companion page, backed
+            //   directly by the PCGen corpus's BONUS:VAR|AC_Natural_Armor|4|TYPE=Base
+            //   (cr_races_companion.lst:21) -- d20pfsrd's own +1 figure disagreed and was rejected
+            //   as the uncorroborated minority reading, the same resolution methodology as Wolf's
+            //   own natural-armor question.
             "Horse companion armor class: base 10 + natural armor (+{natural_armor} = the Horse \
-             race's own base +{HORSE_COMPANION_NATURAL_ARMOR} plus +{} from the companion \
-             class's own 2*floor(master level/3) natural-armor advance) = \
-             {companion_armor_class}. The base figure was verified against aonprd.com's own \
-             Horse companion page, backed directly by the PCGen corpus's \
-             BONUS:VAR|AC_Natural_Armor|4|TYPE=Base (cr_races_companion.lst:21) -- d20pfsrd's \
-             own +1 figure disagreed and was rejected as the uncorroborated minority reading, \
-             the same resolution methodology as Wolf's own natural-armor question. Standalone \
-             record; Dexterity's own contribution to the companion's AC is not grounded, so the \
-             Dexterity half of the same advance is deliberately not applied either",
+             race's own base +{HORSE_COMPANION_NATURAL_ARMOR} plus +{} from the companion class's \
+             own 2*floor(master level/3) natural-armor advance) = {companion_armor_class}. \
+             Standalone record; Dexterity's own contribution to the companion's AC is not grounded, \
+             so the Dexterity half of the same advance is deliberately not applied either",
             animal_companion_natural_armor_bonus(companion_level)
         ),
     });
@@ -9425,6 +9438,7 @@ pub fn compute_pilot_base_chassis(input: &CharacterInput) -> PilotBaseChassisCom
         selected_skill_modifiers,
         explanations,
         diagnostics,
+        sheet_lines: Vec::new(),
     }
 }
 
@@ -9920,15 +9934,16 @@ fn explain_dwarf_race_seam(
         id: "race.dwarf.trait_bundle.ability_modifiers".to_owned(),
         value: 0,
         detail: format!(
+            // Provenance (ingest tokens, demoted out of the rendered sheet line -- SD-35 AT-35-E6-003-SWEEP):
+            //   — BONUS:STAT|CON,WIS|2|TYPE=Racial, BONUS:STAT|CHA|-2|TYPE=Racial
             "Dwarf racial trait bundle — ability modifiers: PF1 Core Dwarf grants a fixed \
              {DWARF_CON_ADJUSTMENT:+} Constitution, {DWARF_WIS_ADJUSTMENT:+} Wisdom, and \
-             {DWARF_CHA_ADJUSTMENT:+} Charisma racial adjustment (verified against the real \
-             PCGen corpus: core_essentials/races/dwarf/dwarf_abilities_race.lst's \"Dwarf \
-             Racial Default\" ability-score row — BONUS:STAT|CON,WIS|2|TYPE=Racial, \
-             BONUS:STAT|CHA|-2|TYPE=Racial). This is a bounded recognition record naming the \
-             fixed adjustment on the deterministic pilot seam; the chosen Constitution, Wisdom, \
-             and Charisma scores are understood to already reflect it, so this record performs \
-             no arithmetic and carries no fabricated mechanical value (+0)"
+             {DWARF_CHA_ADJUSTMENT:+} Charisma racial adjustment (verified against the real PCGen \
+             corpus: core_essentials/races/dwarf/dwarf_abilities_race.lst's \"Dwarf Racial Default\" \
+             ability-score row). This is a bounded recognition record naming the fixed adjustment on \
+             the deterministic pilot seam; the chosen Constitution, Wisdom, and Charisma scores are \
+             understood to already reflect it, so this record performs no arithmetic and carries no \
+             fabricated mechanical value (+0)"
         ),
     });
 
@@ -9980,21 +9995,21 @@ fn explain_dwarf_race_seam(
                 id: "race.dwarf.alternate_trait.minesight.senses".to_owned(),
                 value: DWARF_MINESIGHT_DARKVISION_FEET,
                 detail: format!(
-                    "Dwarf alternate racial trait — Minesight (Advanced Race Guide p.12): the \
-                     chosen alternate replaces the standard Dwarf darkvision, increasing its \
-                     range from {DWARF_DARKVISION_FEET} ft to \
-                     {DWARF_MINESIGHT_DARKVISION_FEET} ft \
+                    // Provenance (ingest tokens, demoted out of the rendered sheet line -- SD-35 AT-35-E6-003-SWEEP):
+                    //   , gated !PREFACT:1,ABILITIES,{DWARF_REPLACE_VISION_FLAG}=True, which
+                    //   Minesight sets
+                    "Dwarf alternate racial trait — Minesight (Advanced Race Guide p.12): the chosen \
+                     alternate replaces the standard Dwarf darkvision, increasing its range from \
+                     {DWARF_DARKVISION_FEET} ft to {DWARF_MINESIGHT_DARKVISION_FEET} ft \
                      (arg_abilities_race.lst:39 KEY:Dwarf ~ Minesight, VISION:Darkvision \
                      ({DWARF_MINESIGHT_DARKVISION_FEET}); the standard row it replaces is \
-                     dwarf_abilities_race.lst's Dwarf ~ Vision, gated \
-                     !PREFACT:1,ABILITIES,{DWARF_REPLACE_VISION_FLAG}=True, which Minesight \
-                     sets). The standard {DWARF_DARKVISION_FEET} ft record is therefore NOT \
-                     emitted for this character. Minesight's own drawbacks — automatically \
-                     dazzled in bright light, and a -2 penalty on saving throws against \
-                     effects with the light descriptor — are carried in the trait's corpus \
-                     description and are deliberately not folded into any save total, for the \
-                     same reason Dwarf Hardy is not: they are conditional on what the save is \
-                     against, and BaseSaves has no by-source dimension"
+                     dwarf_abilities_race.lst's Dwarf ~ Vision). The standard \
+                     {DWARF_DARKVISION_FEET} ft record is therefore NOT emitted for this character. \
+                     Minesight's own drawbacks — automatically dazzled in bright light, and a -2 \
+                     penalty on saving throws against effects with the light descriptor — are \
+                     carried in the trait's corpus description and are deliberately not folded into \
+                     any save total, for the same reason Dwarf Hardy is not: they are conditional on \
+                     what the save is against, and BaseSaves has no by-source dimension"
                 ),
             });
         }
@@ -10030,12 +10045,14 @@ fn explain_dwarf_race_seam(
             id: "race.dwarf.trait_bundle.stonecunning".to_owned(),
             value: DWARF_STONECUNNING_PERCEPTION_BONUS,
             detail: format!(
+                // Provenance (ingest tokens, demoted out of the rendered sheet line -- SD-35 AT-35-E6-003-SWEEP):
+                //   BONUS:SITUATION|Perception=to notice unusual
+                //   stonework|{DWARF_STONECUNNING_PERCEPTION_BONUS}|TYPE=Racial; dwarf_skills.lst:6
+                //   Perception.MOD SITUATION:to notice unusual stonework
                 "Dwarf racial trait bundle — Stonecunning: PF1 Core Dwarf grants a flat \
                  {DWARF_STONECUNNING_PERCEPTION_BONUS:+} bonus on Perception checks to potentially \
                  notice unusual stonework, such as traps and hidden doors located in stone walls or \
-                 floors (dwarf_abilities_race.lst:27 BONUS:SITUATION|Perception=to notice unusual \
-                 stonework|{DWARF_STONECUNNING_PERCEPTION_BONUS}|TYPE=Racial; dwarf_skills.lst:6 \
-                 Perception.MOD SITUATION:to notice unusual stonework). This is a bounded flat \
+                 floors (dwarf_abilities_race.lst:27). This is a bounded flat \
                  situational-bonus-magnitude recognition record naming the Stonecunning identity on \
                  the deterministic pilot seam; no Perception-check-total or stonework-detection \
                  engine exists anywhere in this codebase, so no check resolution is fabricated from \
@@ -10060,16 +10077,17 @@ fn explain_dwarf_race_seam(
             id: "race.dwarf.trait_bundle.greed".to_owned(),
             value: DWARF_GREED_APPRAISE_BONUS,
             detail: format!(
+                // Provenance (ingest tokens, demoted out of the rendered sheet line -- SD-35 AT-35-E6-003-SWEEP):
+                //   BONUS:SITUATION|Appraise=to assess nonmagical metals or
+                //   gemstones|{DWARF_GREED_APPRAISE_BONUS}|TYPE=Racial; dwarf_skills.lst:5
+                //   Appraise.MOD SITUATION:to assess nonmagical metals or gemstones
                 "Dwarf racial trait bundle — Greed: PF1 Core Dwarf grants a flat \
-                 {DWARF_GREED_APPRAISE_BONUS:+} bonus on Appraise checks made to determine the \
-                 price of nonmagical goods that contain precious metals or gemstones \
-                 (dwarf_abilities_race.lst:23 BONUS:SITUATION|Appraise=to assess nonmagical \
-                 metals or gemstones|{DWARF_GREED_APPRAISE_BONUS}|TYPE=Racial; \
-                 dwarf_skills.lst:5 Appraise.MOD SITUATION:to assess nonmagical metals or \
-                 gemstones). This is a bounded flat situational-bonus-magnitude recognition \
-                 record naming the Greed identity on the deterministic pilot seam; no \
-                 Appraise-check-total or goods-valuation engine exists anywhere in this \
-                 codebase, so no check resolution is fabricated from this record"
+                 {DWARF_GREED_APPRAISE_BONUS:+} bonus on Appraise checks made to determine the price \
+                 of nonmagical goods that contain precious metals or gemstones \
+                 (dwarf_abilities_race.lst:23). This is a bounded flat situational-bonus-magnitude \
+                 recognition record naming the Greed identity on the deterministic pilot seam; no \
+                 Appraise-check-total or goods-valuation engine exists anywhere in this codebase, so \
+                 no check resolution is fabricated from this record"
             ),
         });
     }
@@ -10100,21 +10118,22 @@ fn explain_dwarf_race_seam(
             id: "race.dwarf.trait_bundle.hardy".to_owned(),
             value: DWARF_HARDY_SAVE_BONUS,
             detail: format!(
+                // Provenance (ingest tokens, demoted out of the rendered sheet line -- SD-35 AT-35-E6-003-SWEEP):
+                //   BONUS:VAR|SaveBonus_vs_Poison|{DWARF_HARDY_SAVE_BONUS}|TYPE=Racial,
+                //   BONUS:VAR|SaveBonus_vs_Spells|{DWARF_HARDY_SAVE_BONUS}|TYPE=Racial
                 "Dwarf racial trait bundle — Hardy: PF1 Core Dwarf grants a flat \
-                 {DWARF_HARDY_SAVE_BONUS:+} racial bonus on saving throws against poison, and a \
-                 flat {DWARF_HARDY_SAVE_BONUS:+} racial bonus on saving throws against spells and \
-                 spell-like abilities (dwarf_abilities_race.lst:25 \
-                 BONUS:VAR|SaveBonus_vs_Poison|{DWARF_HARDY_SAVE_BONUS}|TYPE=Racial, \
-                 BONUS:VAR|SaveBonus_vs_Spells|{DWARF_HARDY_SAVE_BONUS}|TYPE=Racial). This is a \
-                 bounded flat saving-throw-bonus-magnitude recognition record naming the Hardy \
-                 identity on the deterministic pilot seam, mirroring the already-grounded Elf \
-                 Elven Immunities enchantment-save-bonus idiom. It is deliberately NOT added to \
-                 this character's integrated save totals, which do exist (`total_saves`, surfaced \
-                 as the `defense.total_save.*` records, and already folding in unconditional feat \
-                 save bonuses): both halves of Hardy are conditional on what the saving throw is \
-                 against, and a save total is three by-category scalars (Fortitude/Reflex/Will) \
-                 with no by-source dimension, so folding a vs-poison or vs-spells bonus into one \
-                 would wrongly apply it to every save of that category. The magnitude is therefore \
+                 {DWARF_HARDY_SAVE_BONUS:+} racial bonus on saving throws against poison, and a flat \
+                 {DWARF_HARDY_SAVE_BONUS:+} racial bonus on saving throws against spells and \
+                 spell-like abilities (dwarf_abilities_race.lst:25). This is a bounded flat \
+                 saving-throw-bonus-magnitude recognition record naming the Hardy identity on the \
+                 deterministic pilot seam, mirroring the already-grounded Elf Elven Immunities \
+                 enchantment-save-bonus idiom. It is deliberately NOT added to this character's \
+                 integrated save totals, which do exist (`total_saves`, surfaced as the \
+                 `defense.total_save.*` records, and already folding in unconditional feat save \
+                 bonuses): both halves of Hardy are conditional on what the saving throw is against, \
+                 and a save total is three by-category scalars (Fortitude/Reflex/Will) with no \
+                 by-source dimension, so folding a vs-poison or vs-spells bonus into one would \
+                 wrongly apply it to every save of that category. The magnitude is therefore \
                  reported standalone, and no check resolution is fabricated from this record"
             ),
         });
@@ -10140,17 +10159,17 @@ fn explain_dwarf_race_seam(
             id: "race.dwarf.trait_bundle.stability".to_owned(),
             value: DWARF_STABILITY_CMD_BONUS,
             detail: format!(
+                // Provenance (ingest tokens, demoted out of the rendered sheet line -- SD-35 AT-35-E6-003-SWEEP):
+                //   BONUS:VAR|CMD_BullRush,CMD_Trip|{DWARF_STABILITY_CMD_BONUS}|TYPE=Racial
                 "Dwarf racial trait bundle — Stability: PF1 Core Dwarf grants a flat \
                  {DWARF_STABILITY_CMD_BONUS:+} racial bonus to Combat Maneuver Defense when \
                  resisting a bull rush attempt, and a flat {DWARF_STABILITY_CMD_BONUS:+} racial \
-                 bonus to Combat Maneuver Defense when resisting a trip attempt, in both cases \
-                 while standing on the ground (dwarf_abilities_race.lst:26 \
-                 BONUS:VAR|CMD_BullRush,CMD_Trip|{DWARF_STABILITY_CMD_BONUS}|TYPE=Racial). This \
-                 is a bounded flat CMD-bonus-magnitude recognition record naming the Stability \
-                 identity on the deterministic pilot seam, mirroring the already-grounded Dwarf \
-                 Hardy two-save-category flat-bonus idiom; no Combat-Maneuver-Defense-total \
-                 engine exists anywhere in this codebase, so no check resolution is fabricated \
-                 from this record"
+                 bonus to Combat Maneuver Defense when resisting a trip attempt, in both cases while \
+                 standing on the ground (dwarf_abilities_race.lst:26). This is a bounded flat \
+                 CMD-bonus-magnitude recognition record naming the Stability identity on the \
+                 deterministic pilot seam, mirroring the already-grounded Dwarf Hardy \
+                 two-save-category flat-bonus idiom; no Combat-Maneuver-Defense-total engine exists \
+                 anywhere in this codebase, so no check resolution is fabricated from this record"
             ),
         });
     }
@@ -10169,15 +10188,15 @@ fn explain_dwarf_race_seam(
             id: "race.dwarf.trait_bundle.defensive_training".to_owned(),
             value: DWARF_DEFENSIVE_TRAINING_DODGE_BONUS,
             detail: format!(
+                // Provenance (ingest tokens, demoted out of the rendered sheet line -- SD-35 AT-35-E6-003-SWEEP):
+                //   BONUS:VAR|RacialDefensiveTrainingBonus|{DWARF_DEFENSIVE_TRAINING_DODGE_BONUS}
                 "Dwarf racial trait bundle — Defensive Training: PF1 Core Dwarf grants a flat \
                  {DWARF_DEFENSIVE_TRAINING_DODGE_BONUS:+} dodge bonus to Armor Class against \
-                 monsters of the giant subtype (dwarf_abilities_race.lst:22 \
-                 BONUS:VAR|RacialDefensiveTrainingBonus|{DWARF_DEFENSIVE_TRAINING_DODGE_BONUS}). \
-                 This is a bounded flat dodge-bonus-magnitude recognition record naming the \
-                 Defensive Training identity on the deterministic pilot seam, mirroring the \
-                 already-grounded Dwarf Stability flat-bonus idiom; no Armor-Class-total or \
-                 giant-subtype-detection engine exists anywhere in this codebase, so no check \
-                 resolution is fabricated from this record"
+                 monsters of the giant subtype (dwarf_abilities_race.lst:22). This is a bounded flat \
+                 dodge-bonus-magnitude recognition record naming the Defensive Training identity on \
+                 the deterministic pilot seam, mirroring the already-grounded Dwarf Stability \
+                 flat-bonus idiom; no Armor-Class-total or giant-subtype-detection engine exists \
+                 anywhere in this codebase, so no check resolution is fabricated from this record"
             ),
         });
     }
@@ -10270,17 +10289,17 @@ fn explain_elf_race_seam(
         id: "race.elf.trait_bundle.ability_modifiers".to_owned(),
         value: 0,
         detail: format!(
+            // Provenance (ingest tokens, demoted out of the rendered sheet line -- SD-35 AT-35-E6-003-SWEEP):
+            //   — BONUS:STAT|DEX,INT|2|TYPE=Racial, BONUS:STAT|CON|-2|TYPE=Racial; cr_races.lst's
+            //   own Elf.MOD record is only a source-page citation, not the real base-race data
             "Elf racial trait bundle — ability modifiers: PF1 Core Elf grants a fixed \
              {ELF_DEX_ADJUSTMENT:+} Dexterity, {ELF_INT_ADJUSTMENT:+} Intelligence, and \
-             {ELF_CON_ADJUSTMENT:+} Constitution racial adjustment (verified against the real \
-             PCGen corpus: core_essentials/races/elf/elf_abilities_race.lst's \"Elf Racial \
-             Default\" ability-score row, not an alternate/optional variant — \
-             BONUS:STAT|DEX,INT|2|TYPE=Racial, BONUS:STAT|CON|-2|TYPE=Racial; \
-             cr_races.lst's own Elf.MOD record is only a source-page citation, not the real \
-             base-race data). This is a bounded recognition record naming the fixed adjustment \
-             on the deterministic pilot seam; the chosen Dexterity, Intelligence, and \
-             Constitution scores are understood to already reflect it, so this record performs \
-             no arithmetic and carries no fabricated mechanical value (+0)."
+             {ELF_CON_ADJUSTMENT:+} Constitution racial adjustment (verified against the real PCGen \
+             corpus: core_essentials/races/elf/elf_abilities_race.lst's \"Elf Racial Default\" \
+             ability-score row, not an alternate/optional variant). This is a bounded recognition \
+             record naming the fixed adjustment on the deterministic pilot seam; the chosen \
+             Dexterity, Intelligence, and Constitution scores are understood to already reflect it, \
+             so this record performs no arithmetic and carries no fabricated mechanical value (+0)."
         ),
     });
 
@@ -10332,13 +10351,12 @@ fn explain_elf_race_seam(
     explanations.push(ComputationExplanation {
         id: "race.elf.trait_bundle.keen_senses".to_owned(),
         value: 2,
-        detail: "Elf racial trait bundle — Keen Senses: PF1 Core Elf grants a flat +2 racial \
-                  bonus on Perception checks \
-                  (core_essentials/races/elf/elf_abilities_race.lst Keen Senses entry — \
-                  BONUS:SKILL|Perception|KeenSensesBonus|TYPE=Racial, \
-                  BONUS:VAR|KeenSensesBonus|2). This is a bounded recognition record naming \
-                  only the flat racial-bonus magnitude on the deterministic pilot seam, not a \
-                  Perception-check-total engine."
+        // Provenance (ingest tokens, demoted out of the rendered sheet line -- SD-35 AT-35-E6-003-SWEEP):
+        //   — BONUS:SKILL|Perception|KeenSensesBonus|TYPE=Racial, BONUS:VAR|KeenSensesBonus|2
+        detail: "Elf racial trait bundle — Keen Senses: PF1 Core Elf grants a flat +2 racial bonus \
+                  on Perception checks (core_essentials/races/elf/elf_abilities_race.lst Keen Senses \
+                  entry). This is a bounded recognition record naming only the flat racial-bonus \
+                  magnitude on the deterministic pilot seam, not a Perception-check-total engine."
             .to_owned(),
     });
 
@@ -10358,18 +10376,17 @@ fn explain_elf_race_seam(
     explanations.push(ComputationExplanation {
         id: "race.elf.trait_bundle.elven_immunities".to_owned(),
         value: 2,
-        detail: "Elf racial trait bundle — Elven Immunities: PF1 Core Elf is immune to magic \
-                  sleep effects and gets a flat +2 racial saving throw bonus against \
-                  enchantment spells and effects \
-                  (core_essentials/races/elf/elf_abilities_race.lst Elven Immunities entry — \
-                  DESC:\"Elves are immune to magic sleep effects and get a +2 racial saving \
-                  throw bonus against enchantment spells and effects.\", \
-                  ABILITY:Special Ability|AUTOMATIC|Immunity to Sleep, \
-                  BONUS:VAR|SaveBonus_vs_Enchantments|2|TYPE=Racial). The sleep immunity is a \
-                  bounded grant-only identity record (non-fabricated): no sleep-effect- \
-                  resolution engine exists anywhere in this codebase to apply the immunity to. \
-                  The recognized numeric value (2) names only the flat enchantment \
-                  saving-throw-bonus magnitude, not a saving-throw-total engine."
+        // Provenance (ingest tokens, demoted out of the rendered sheet line -- SD-35 AT-35-E6-003-SWEEP):
+        //   — DESC:\"Elves are immune to magic sleep effects and get a +2 racial saving throw bonus
+        //   against enchantment spells and effects.\", ABILITY:Special Ability|AUTOMATIC|Immunity
+        //   to Sleep, BONUS:VAR|SaveBonus_vs_Enchantments|2|TYPE=Racial
+        detail: "Elf racial trait bundle — Elven Immunities: PF1 Core Elf is immune to magic sleep \
+                  effects and gets a flat +2 racial saving throw bonus against enchantment spells \
+                  and effects (core_essentials/races/elf/elf_abilities_race.lst Elven Immunities \
+                  entry). The sleep immunity is a bounded grant-only identity record \
+                  (non-fabricated): no sleep-effect- resolution engine exists anywhere in this \
+                  codebase to apply the immunity to. The recognized numeric value (2) names only the \
+                  flat enchantment saving-throw-bonus magnitude, not a saving-throw-total engine."
             .to_owned(),
     });
 
@@ -10392,21 +10409,20 @@ fn explain_elf_race_seam(
     explanations.push(ComputationExplanation {
         id: "race.elf.trait_bundle.elven_magic".to_owned(),
         value: 2,
-        detail: "Elf racial trait bundle — Elven Magic: PF1 Core Elf gets a flat +2 racial \
-                  bonus on caster level checks made to overcome spell resistance, and a flat \
-                  +2 racial bonus on Spellcraft skill checks made to identify the properties \
-                  of magic items \
-                  (core_essentials/races/elf/elf_abilities_race.lst Elven Magic entry — \
-                  DESC:\"Elves receive a +2 racial bonus on caster level checks made to \
-                  overcome spell resistance. In addition, elves receive a +2 racial bonus on \
-                  Spellcraft skill checks made to identify the properties of magic items.\", \
-                  BONUS:SITUATION|Spellcraft=to identify magic item properties|2|TYPE=Racial). \
-                  The caster-level-check-vs-spell-resistance bonus is a bounded grant-only \
-                  identity record (non-fabricated): no caster-level-check or \
-                  spell-resistance-resolution engine exists anywhere in this codebase to apply \
-                  the bonus to. The recognized numeric value (2) names only the flat \
-                  Spellcraft-identify racial-bonus magnitude, not a Spellcraft-check-total \
-                  engine."
+        // Provenance (ingest tokens, demoted out of the rendered sheet line -- SD-35 AT-35-E6-003-SWEEP):
+        //   — DESC:\"Elves receive a +2 racial bonus on caster level checks made to overcome spell
+        //   resistance. In addition, elves receive a +2 racial bonus on Spellcraft skill checks
+        //   made to identify the properties of magic items.\", BONUS:SITUATION|Spellcraft=to
+        //   identify magic item properties|2|TYPE=Racial
+        detail: "Elf racial trait bundle — Elven Magic: PF1 Core Elf gets a flat +2 racial bonus on \
+                  caster level checks made to overcome spell resistance, and a flat +2 racial bonus \
+                  on Spellcraft skill checks made to identify the properties of magic items \
+                  (core_essentials/races/elf/elf_abilities_race.lst Elven Magic entry). The \
+                  caster-level-check-vs-spell-resistance bonus is a bounded grant-only identity \
+                  record (non-fabricated): no caster-level-check or spell-resistance-resolution \
+                  engine exists anywhere in this codebase to apply the bonus to. The recognized \
+                  numeric value (2) names only the flat Spellcraft-identify racial-bonus magnitude, \
+                  not a Spellcraft-check-total engine."
             .to_owned(),
     });
 
@@ -10486,15 +10502,16 @@ fn explain_gnome_race_seam(
         id: "race.gnome.trait_bundle.ability_modifiers".to_owned(),
         value: 0,
         detail: format!(
+            // Provenance (ingest tokens, demoted out of the rendered sheet line -- SD-35 AT-35-E6-003-SWEEP):
+            //   — BONUS:STAT|CON,CHA|2|TYPE=Racial, BONUS:STAT|STR|-2|TYPE=Racial
             "Gnome racial trait bundle — ability modifiers: PF1 Core Gnome grants a fixed \
              {GNOME_CON_ADJUSTMENT:+} Constitution, {GNOME_CHA_ADJUSTMENT:+} Charisma, and \
-             {GNOME_STR_ADJUSTMENT:+} Strength racial adjustment (verified against the real \
-             PCGen corpus: core_essentials/races/gnome/gnome_abilities_race.lst's \"Gnome \
-             Racial Default\" ability-score row — BONUS:STAT|CON,CHA|2|TYPE=Racial, \
-             BONUS:STAT|STR|-2|TYPE=Racial). This is a bounded recognition record naming the \
-             fixed adjustment on the deterministic pilot seam; the chosen Constitution, \
-             Charisma, and Strength scores are understood to already reflect it, so this record \
-             performs no arithmetic and carries no fabricated mechanical value (+0)"
+             {GNOME_STR_ADJUSTMENT:+} Strength racial adjustment (verified against the real PCGen \
+             corpus: core_essentials/races/gnome/gnome_abilities_race.lst's \"Gnome Racial Default\" \
+             ability-score row). This is a bounded recognition record naming the fixed adjustment on \
+             the deterministic pilot seam; the chosen Constitution, Charisma, and Strength scores \
+             are understood to already reflect it, so this record performs no arithmetic and carries \
+             no fabricated mechanical value (+0)"
         ),
     });
 
@@ -10548,13 +10565,13 @@ fn explain_gnome_race_seam(
     explanations.push(ComputationExplanation {
         id: "race.gnome.trait_bundle.keen_senses".to_owned(),
         value: 2,
-        detail: "Gnome racial trait bundle — Keen Senses: PF1 Core Gnome grants a flat +2 \
-                  racial bonus on Perception skill checks \
-                  (core_essentials/races/gnome/gnome_abilities_race.lst Keen Senses entry — \
-                  BONUS:SKILL|Perception|KeenSensesBonus|TYPE=Racial, \
-                  BONUS:VAR|KeenSensesBonus|2). This is a bounded recognition record naming \
-                  only the flat racial-bonus magnitude on the deterministic pilot seam, not a \
-                  Perception-check-total engine."
+        // Provenance (ingest tokens, demoted out of the rendered sheet line -- SD-35 AT-35-E6-003-SWEEP):
+        //   — BONUS:SKILL|Perception|KeenSensesBonus|TYPE=Racial, BONUS:VAR|KeenSensesBonus|2
+        detail: "Gnome racial trait bundle — Keen Senses: PF1 Core Gnome grants a flat +2 racial \
+                  bonus on Perception skill checks \
+                  (core_essentials/races/gnome/gnome_abilities_race.lst Keen Senses entry). This is \
+                  a bounded recognition record naming only the flat racial-bonus magnitude on the \
+                  deterministic pilot seam, not a Perception-check-total engine."
             .to_owned(),
     });
 
@@ -10562,12 +10579,13 @@ fn explain_gnome_race_seam(
     explanations.push(ComputationExplanation {
         id: "race.gnome.trait_bundle.illusion_resistance".to_owned(),
         value: 2,
-        detail: "Gnome racial trait bundle — Illusion Resistance: PF1 Core Gnome grants a \
-                  flat +2 racial saving throw bonus against illusion spells and effects \
-                  (core_essentials/races/gnome/gnome_abilities_race.lst Illusion Resistance \
-                  entry — BONUS:VAR|SaveBonus_vs_Illusions|2|TYPE=Racial). This is a bounded \
-                  recognition record naming only the flat racial-bonus magnitude on the \
-                  deterministic pilot seam, not a saving-throw-total engine."
+        // Provenance (ingest tokens, demoted out of the rendered sheet line -- SD-35 AT-35-E6-003-SWEEP):
+        //   — BONUS:VAR|SaveBonus_vs_Illusions|2|TYPE=Racial
+        detail: "Gnome racial trait bundle — Illusion Resistance: PF1 Core Gnome grants a flat +2 \
+                  racial saving throw bonus against illusion spells and effects \
+                  (core_essentials/races/gnome/gnome_abilities_race.lst Illusion Resistance entry). \
+                  This is a bounded recognition record naming only the flat racial-bonus magnitude \
+                  on the deterministic pilot seam, not a saving-throw-total engine."
             .to_owned(),
     });
 
@@ -10575,12 +10593,13 @@ fn explain_gnome_race_seam(
     explanations.push(ComputationExplanation {
         id: "race.gnome.trait_bundle.defensive_training".to_owned(),
         value: 4,
-        detail: "Gnome racial trait bundle — Defensive Training: PF1 Core Gnome grants a flat \
-                  +4 dodge bonus to AC against monsters of the giant subtype \
-                  (core_essentials/races/gnome/gnome_abilities_race.lst Defensive Training \
-                  entry — BONUS:VAR|RacialDefensiveTrainingBonus|4). This is a bounded \
-                  recognition record naming only the flat racial-bonus magnitude on the \
-                  deterministic pilot seam, not an AC-total engine and not a \
+        // Provenance (ingest tokens, demoted out of the rendered sheet line -- SD-35 AT-35-E6-003-SWEEP):
+        //   — BONUS:VAR|RacialDefensiveTrainingBonus|4
+        detail: "Gnome racial trait bundle — Defensive Training: PF1 Core Gnome grants a flat +4 \
+                  dodge bonus to AC against monsters of the giant subtype \
+                  (core_essentials/races/gnome/gnome_abilities_race.lst Defensive Training entry). \
+                  This is a bounded recognition record naming only the flat racial-bonus magnitude \
+                  on the deterministic pilot seam, not an AC-total engine and not a \
                   giant-subtype-detection engine (no \"is the target a giant\" resolution is \
                   fabricated)."
             .to_owned(),
@@ -10590,15 +10609,15 @@ fn explain_gnome_race_seam(
     explanations.push(ComputationExplanation {
         id: "race.gnome.trait_bundle.hatred".to_owned(),
         value: 1,
-        detail: "Gnome racial trait bundle — Hatred: PF1 Core Gnome grants a flat +1 racial \
-                  bonus on attack rolls against humanoid creatures of the reptilian and \
-                  goblinoid subtypes \
-                  (core_essentials/races/gnome/gnome_abilities_race.lst Hatred entry — \
-                  BONUS:VAR|Gnome_Hatred_AttackBonus|1). This is a bounded recognition record \
-                  naming only the flat racial-bonus magnitude on the deterministic pilot seam, \
-                  not an attack-roll-total engine and not a reptilian/goblinoid-subtype- \
-                  detection engine (no \"is the target a reptilian humanoid or goblinoid\" \
-                  resolution is fabricated)."
+        // Provenance (ingest tokens, demoted out of the rendered sheet line -- SD-35 AT-35-E6-003-SWEEP):
+        //   — BONUS:VAR|Gnome_Hatred_AttackBonus|1
+        detail: "Gnome racial trait bundle — Hatred: PF1 Core Gnome grants a flat +1 racial bonus on \
+                  attack rolls against humanoid creatures of the reptilian and goblinoid subtypes \
+                  (core_essentials/races/gnome/gnome_abilities_race.lst Hatred entry). This is a \
+                  bounded recognition record naming only the flat racial-bonus magnitude on the \
+                  deterministic pilot seam, not an attack-roll-total engine and not a \
+                  reptilian/goblinoid-subtype- detection engine (no \"is the target a reptilian \
+                  humanoid or goblinoid\" resolution is fabricated)."
             .to_owned(),
     });
 
@@ -10635,7 +10654,8 @@ const HALF_ELF_ABILITY_BONUS_CHOICE_ID: &str = "choice:half_elf_ability_bonus";
 /// that reach a computed total at all are skill bonuses, handled by
 /// [`ALTERNATE_TRAIT_SELECTED_SKILL_BONUSES`].
 ///
-/// Derived by scanning every ARG alternate's `raw_bonus_chains` against the
+/// Derived by scanning every ARG alternate's declared bonus chains
+/// (`pcgen_import::ingest_record::bonus_chain_qualifiers`) against the
 /// engine's computed-total surface, not asserted —
 /// `tests/sd27_alternate_racial_trait_reachability.rs` re-runs that scan and
 /// pins the whole set of eleven.
@@ -10656,7 +10676,9 @@ const HALF_ELF_ABILITY_BONUS_CHOICE_ID: &str = "choice:half_elf_ability_bonus";
 ///
 /// The sibling of [`ALTERNATE_TRAIT_SELECTED_SKILL_BONUSES`], and derived the
 /// same way: `tests/sd27_alternate_racial_trait_reachability.rs` rescans every
-/// alternate's `raw_bonus_chains` against the engine's computed-total surface
+/// alternate's declared bonus chains
+/// (`pcgen_import::ingest_record::bonus_chain_qualifiers`) against the
+/// engine's computed-total surface
 /// and fails, naming the trait, if this table and the corpus disagree in
 /// either direction.
 ///
@@ -10978,13 +11000,13 @@ fn explain_half_elf_race_seam(
     explanations.push(ComputationExplanation {
         id: "race.half_elf.trait_bundle.keen_senses".to_owned(),
         value: 2,
-        detail: "Half-Elf racial trait bundle — Keen Senses: PF1 Core Half-Elf grants a flat \
-                  +2 racial bonus on Perception skill checks \
-                  (core_essentials/races/half_elf/halfelf_abilities_race.lst Keen Senses entry \
-                  — BONUS:SKILL|Perception|KeenSensesBonus|TYPE=Racial, \
-                  BONUS:VAR|KeenSensesBonus|2). This is a bounded recognition record naming \
-                  only the flat racial-bonus magnitude on the deterministic pilot seam, not a \
-                  Perception-check-total engine."
+        // Provenance (ingest tokens, demoted out of the rendered sheet line -- SD-35 AT-35-E6-003-SWEEP):
+        //   — BONUS:SKILL|Perception|KeenSensesBonus|TYPE=Racial, BONUS:VAR|KeenSensesBonus|2
+        detail: "Half-Elf racial trait bundle — Keen Senses: PF1 Core Half-Elf grants a flat +2 \
+                  racial bonus on Perception skill checks \
+                  (core_essentials/races/half_elf/halfelf_abilities_race.lst Keen Senses entry). \
+                  This is a bounded recognition record naming only the flat racial-bonus magnitude \
+                  on the deterministic pilot seam, not a Perception-check-total engine."
             .to_owned(),
     });
 
@@ -11005,18 +11027,18 @@ fn explain_half_elf_race_seam(
     explanations.push(ComputationExplanation {
         id: "race.half_elf.trait_bundle.elven_immunities".to_owned(),
         value: 2,
-        detail: "Half-Elf racial trait bundle — Elven Immunities: PF1 Core Half-Elf is immune \
-                  to magic sleep effects and gets a flat +2 racial saving throw bonus against \
+        // Provenance (ingest tokens, demoted out of the rendered sheet line -- SD-35 AT-35-E6-003-SWEEP):
+        //   — DESC:\"Half-elves are immune to magic sleep effects and get a +2 racial saving throw
+        //   bonus against enchantment spells and effects.\", ABILITY:Special
+        //   Ability|AUTOMATIC|Immunity to Sleep, BONUS:VAR|SaveBonus_vs_Enchantments|2|TYPE=Racial
+        detail: "Half-Elf racial trait bundle — Elven Immunities: PF1 Core Half-Elf is immune to \
+                  magic sleep effects and gets a flat +2 racial saving throw bonus against \
                   enchantment spells and effects \
                   (core_essentials/races/half_elf/halfelf_abilities_race.lst Elven Immunities \
-                  entry — DESC:\"Half-elves are immune to magic sleep effects and get a +2 \
-                  racial saving throw bonus against enchantment spells and effects.\", \
-                  ABILITY:Special Ability|AUTOMATIC|Immunity to Sleep, \
-                  BONUS:VAR|SaveBonus_vs_Enchantments|2|TYPE=Racial). The sleep immunity is a \
-                  bounded grant-only identity record (non-fabricated): no sleep-effect- \
-                  resolution engine exists anywhere in this codebase to apply the immunity to. \
-                  The recognized numeric value (2) names only the flat enchantment \
-                  saving-throw-bonus magnitude, not a saving-throw-total engine."
+                  entry). The sleep immunity is a bounded grant-only identity record \
+                  (non-fabricated): no sleep-effect- resolution engine exists anywhere in this \
+                  codebase to apply the immunity to. The recognized numeric value (2) names only the \
+                  flat enchantment saving-throw-bonus magnitude, not a saving-throw-total engine."
             .to_owned(),
     });
 
@@ -11150,14 +11172,14 @@ fn explain_half_orc_race_seam(
         id: "race.half_orc.trait_bundle.intimidating".to_owned(),
         value: HALF_ORC_INTIMIDATING_BONUS,
         detail: format!(
+            // Provenance (ingest tokens, demoted out of the rendered sheet line -- SD-35 AT-35-E6-003-SWEEP):
+            //   , BONUS:SKILL|Intimidate|{HALF_ORC_INTIMIDATING_BONUS}|TYPE=Racial
             "Half-Orc racial trait bundle — Intimidating: PF1 Core Half-Orc grants a flat \
              {HALF_ORC_INTIMIDATING_BONUS:+} racial bonus on Intimidate skill checks \
-             (halforc_abilities_race.lst — Intimidating entry, \
-             BONUS:SKILL|Intimidate|{HALF_ORC_INTIMIDATING_BONUS}|TYPE=Racial). This is a \
-             bounded recognition record naming only the flat racial-bonus magnitude, mirroring \
-             the Dwarf Stonecunning / Elf Keen Senses / Gnome Keen Senses / Half-Elf Keen \
-             Senses skill-bonus idiom already established on this seam; it is deliberately NOT \
-             an Intimidate-check-total engine"
+             (halforc_abilities_race.lst — Intimidating entry). This is a bounded recognition record \
+             naming only the flat racial-bonus magnitude, mirroring the Dwarf Stonecunning / Elf \
+             Keen Senses / Gnome Keen Senses / Half-Elf Keen Senses skill-bonus idiom already \
+             established on this seam; it is deliberately NOT an Intimidate-check-total engine"
         ),
     });
 
@@ -11240,16 +11262,16 @@ fn explain_halfling_race_seam(
         id: "race.halfling.trait_bundle.ability_modifiers".to_owned(),
         value: 0,
         detail: format!(
-            "Halfling racial trait bundle — ability modifiers: PF1 Core Halfling grants a \
-             fixed {HALFLING_DEX_ADJUSTMENT:+} Dexterity, {HALFLING_CHA_ADJUSTMENT:+} Charisma, \
-             and {HALFLING_STR_ADJUSTMENT:+} Strength racial adjustment (verified against the \
-             real PCGen corpus: \
-             core_essentials/races/halfling/halfling_abilities_race.lst's \"Halfling Racial \
-             Default\" ability-score row — BONUS:STAT|DEX,CHA|2|TYPE=Racial, \
-             BONUS:STAT|STR|-2|TYPE=Racial). This is a bounded recognition record naming the \
-             fixed adjustment on the deterministic pilot seam; the chosen Dexterity, Charisma, \
-             and Strength scores are understood to already reflect it, so this record performs \
-             no arithmetic and carries no fabricated mechanical value (+0)"
+            // Provenance (ingest tokens, demoted out of the rendered sheet line -- SD-35 AT-35-E6-003-SWEEP):
+            //   — BONUS:STAT|DEX,CHA|2|TYPE=Racial, BONUS:STAT|STR|-2|TYPE=Racial
+            "Halfling racial trait bundle — ability modifiers: PF1 Core Halfling grants a fixed \
+             {HALFLING_DEX_ADJUSTMENT:+} Dexterity, {HALFLING_CHA_ADJUSTMENT:+} Charisma, and \
+             {HALFLING_STR_ADJUSTMENT:+} Strength racial adjustment (verified against the real PCGen \
+             corpus: core_essentials/races/halfling/halfling_abilities_race.lst's \"Halfling Racial \
+             Default\" ability-score row). This is a bounded recognition record naming the fixed \
+             adjustment on the deterministic pilot seam; the chosen Dexterity, Charisma, and \
+             Strength scores are understood to already reflect it, so this record performs no \
+             arithmetic and carries no fabricated mechanical value (+0)"
         ),
     });
 
@@ -11306,16 +11328,16 @@ fn explain_halfling_race_seam(
     explanations.push(ComputationExplanation {
         id: "race.halfling.trait_bundle.keen_senses".to_owned(),
         value: 2,
-        detail: "Halfling racial trait bundle — Keen Senses: PF1 Core Halfling grants a flat \
-                  +2 racial bonus on Perception skill checks \
-                  (core_essentials/races/halfling/halfling_abilities_race.lst Keen Senses entry \
-                  — BONUS:SKILL|Perception|KeenSensesBonus|TYPE=Racial, \
-                  BONUS:VAR|KeenSensesBonus|2). This is a bounded recognition record naming \
-                  only the flat racial-bonus magnitude on the deterministic pilot seam, \
-                  mirroring the Dwarf Stonecunning / Elf Keen Senses / Gnome Keen Senses / \
-                  Half-Elf Keen Senses / Half-Orc Intimidating skill-bonus idiom already \
-                  established on this seam; it is deliberately NOT a Perception-check-total \
-                  engine."
+        // Provenance (ingest tokens, demoted out of the rendered sheet line -- SD-35 AT-35-E6-003-SWEEP):
+        //   — BONUS:SKILL|Perception|KeenSensesBonus|TYPE=Racial, BONUS:VAR|KeenSensesBonus|2
+        detail: "Halfling racial trait bundle — Keen Senses: PF1 Core Halfling grants a flat +2 \
+                  racial bonus on Perception skill checks \
+                  (core_essentials/races/halfling/halfling_abilities_race.lst Keen Senses entry). \
+                  This is a bounded recognition record naming only the flat racial-bonus magnitude \
+                  on the deterministic pilot seam, mirroring the Dwarf Stonecunning / Elf Keen \
+                  Senses / Gnome Keen Senses / Half-Elf Keen Senses / Half-Orc Intimidating \
+                  skill-bonus idiom already established on this seam; it is deliberately NOT a \
+                  Perception-check-total engine."
             .to_owned(),
     });
 
@@ -11325,15 +11347,16 @@ fn explain_halfling_race_seam(
     explanations.push(ComputationExplanation {
         id: "race.halfling.trait_bundle.sure_footed".to_owned(),
         value: 2,
-        detail: "Halfling racial trait bundle — Sure-Footed: PF1 Core Halfling grants a flat \
-                  +2 racial bonus on Acrobatics and Climb skill checks \
-                  (core_essentials/races/halfling/halfling_abilities_race.lst Sure-Footed \
-                  entry — BONUS:SKILL|Acrobatics,Climb|2|TYPE=Racial). This is a bounded \
-                  recognition record naming only the flat racial-bonus magnitude on the \
-                  deterministic pilot seam, mirroring the Keen Senses / Dwarf Stonecunning / \
-                  Elf Keen Senses / Gnome Keen Senses / Half-Elf Keen Senses / Half-Orc \
-                  Intimidating skill-bonus idiom already established on this seam; it is \
-                  deliberately NOT an Acrobatics/Climb-check-total engine."
+        // Provenance (ingest tokens, demoted out of the rendered sheet line -- SD-35 AT-35-E6-003-SWEEP):
+        //   — BONUS:SKILL|Acrobatics,Climb|2|TYPE=Racial
+        detail: "Halfling racial trait bundle — Sure-Footed: PF1 Core Halfling grants a flat +2 \
+                  racial bonus on Acrobatics and Climb skill checks \
+                  (core_essentials/races/halfling/halfling_abilities_race.lst Sure-Footed entry). \
+                  This is a bounded recognition record naming only the flat racial-bonus magnitude \
+                  on the deterministic pilot seam, mirroring the Keen Senses / Dwarf Stonecunning / \
+                  Elf Keen Senses / Gnome Keen Senses / Half-Elf Keen Senses / Half-Orc Intimidating \
+                  skill-bonus idiom already established on this seam; it is deliberately NOT an \
+                  Acrobatics/Climb-check-total engine."
             .to_owned(),
     });
 
@@ -11353,15 +11376,15 @@ fn explain_halfling_race_seam(
         id: "race.halfling.trait_bundle.fearless".to_owned(),
         value: HALFLING_FEARLESS_SAVE_VS_FEAR_BONUS,
         detail: format!(
+            // Provenance (ingest tokens, demoted out of the rendered sheet line -- SD-35 AT-35-E6-003-SWEEP):
+            //   — BONUS:VAR|SaveBonus_vs_Fear|{HALFLING_FEARLESS_SAVE_VS_FEAR_BONUS}|TYPE=Racial
             "Halfling racial trait bundle — Fearless: PF1 Core Halfling grants a flat \
-             {HALFLING_FEARLESS_SAVE_VS_FEAR_BONUS:+} racial bonus on saving throws against \
-             fear (halfling_abilities_race.lst Fearless entry — \
-             BONUS:VAR|SaveBonus_vs_Fear|{HALFLING_FEARLESS_SAVE_VS_FEAR_BONUS}|TYPE=Racial). \
-             This is a bounded flat saving-throw-bonus-magnitude recognition record naming the \
-             Fearless identity on the deterministic pilot seam, mirroring the already-grounded \
-             Dwarf Hardy flat racial saving-throw-bonus idiom; no saving-throw-total or \
-             fear-effect-resolution engine exists anywhere in this codebase, so no check \
-             resolution is fabricated from this record"
+             {HALFLING_FEARLESS_SAVE_VS_FEAR_BONUS:+} racial bonus on saving throws against fear \
+             (halfling_abilities_race.lst Fearless entry). This is a bounded flat \
+             saving-throw-bonus-magnitude recognition record naming the Fearless identity on the \
+             deterministic pilot seam, mirroring the already-grounded Dwarf Hardy flat racial \
+             saving-throw-bonus idiom; no saving-throw-total or fear-effect-resolution engine exists \
+             anywhere in this codebase, so no check resolution is fabricated from this record"
         ),
     });
 
@@ -11382,15 +11405,17 @@ fn explain_halfling_race_seam(
         id: "race.halfling.trait_bundle.halfling_luck".to_owned(),
         value: HALFLING_LUCK_ALL_SAVES_BONUS,
         detail: format!(
+            // Provenance (ingest tokens, demoted out of the rendered sheet line -- SD-35 AT-35-E6-003-SWEEP):
+            //   —
+            //   BONUS:VAR|Halfling_HalflingLuck_SaveBonus|{HALFLING_LUCK_ALL_SAVES_BONUS}|TYPE=Racial
             "Halfling racial trait bundle — Halfling Luck: PF1 Core Halfling grants a flat \
              {HALFLING_LUCK_ALL_SAVES_BONUS:+} racial bonus on all saving throws \
-             (halfling_abilities_race.lst Halfling Luck entry — \
-             BONUS:VAR|Halfling_HalflingLuck_SaveBonus|{HALFLING_LUCK_ALL_SAVES_BONUS}|TYPE=Racial). \
-             This is a bounded flat saving-throw-bonus-magnitude recognition record naming the \
-             Halfling Luck identity on the deterministic pilot seam, mirroring the \
-             already-grounded Dwarf Hardy / Halfling Fearless flat racial saving-throw-bonus \
-             idiom; no saving-throw-total or luck-effect-resolution engine exists anywhere in \
-             this codebase, so no check resolution is fabricated from this record"
+             (halfling_abilities_race.lst Halfling Luck entry). This is a bounded flat \
+             saving-throw-bonus-magnitude recognition record naming the Halfling Luck identity on \
+             the deterministic pilot seam, mirroring the already-grounded Dwarf Hardy / Halfling \
+             Fearless flat racial saving-throw-bonus idiom; no saving-throw-total or \
+             luck-effect-resolution engine exists anywhere in this codebase, so no check resolution \
+             is fabricated from this record"
         ),
     });
 
@@ -11636,7 +11661,7 @@ const TREE_STRANGER_VANARA_SPEED_FEET: i16 = 30;
 /// 1d4 bite, secondary if the character also wields a manufactured weapon).
 /// Source: `core_essentials/races/rougarou/rougarou_abilities_race.lst:17-20`
 /// (`data/corpus/bestiary_6/race_trait/rougarou/rougarou_{speed,vision,
-/// natural_weapon}.json`'s own `source.line`/`raw_tokens`, read directly, not
+/// natural_weapon}.json`'s own `source.line` and ingest token array, read directly, not
 /// transcribed from the ledger).
 fn explain_rougarou_flat_override_race_trait(
     input: &CharacterInput,
@@ -11683,7 +11708,7 @@ fn explain_rougarou_flat_override_race_trait(
             "Rougarou racial trait bundle — Natural Weapon: PF1 Bestiary 6 Rougarou has a bite \
              attack dealing 1d{ROUGAROU_BITE_DAMAGE_DIE} points of damage \
              (rougarou_abilities_race.lst:20 ABILITY:Internal|AUTOMATIC|Bite, \
-             raw_bonus_chains WEAPONPROF=Bite/DAMAGESIZE -1), a secondary attack if the \
+             with the bite's damage die stepped down one size), a secondary attack if the \
              character also wields a manufactured weapon. This engine has no natural-attack \
              routine and computes no weapon-damage total anywhere (the same posture \
              `ground_alchemist_feral_mutagen_discovery`'s claw/bite damage-die records already \
@@ -11719,18 +11744,19 @@ fn explain_gillman_flat_override_race_trait(
             id: "race.gillman.alternate_trait.throwback.speed".to_owned(),
             value: THROWBACK_GILLMAN_SPEED_FEET,
             detail: format!(
-                "Gillman alternate racial trait — Throwback (Advanced Race Guide p.188): the \
-                 chosen `Gillman ~ Throwback` alternate replaces the standard Gillman `~ Speed` \
-                 record (arg_abilities_race.lst:881 `Throwback ~ Gillman ~ Speed`, \
-                 MOVE:Walk,{THROWBACK_GILLMAN_SPEED_FEET}, gated \
-                 PREFACT:1,ABILITIES,{GILLMAN_REPLACE_SPEED_FLAG}=True, which `Gillman ~ \
-                 Throwback` sets). Throwback gillmen have {THROWBACK_GILLMAN_SPEED_FEET} ft \
-                 land speed only — no swim speed, unlike the standard racial default. The \
-                 standard {GILLMAN_BASE_SPEED_FEET}/{GILLMAN_SWIM_SPEED_FEET} ft record is \
-                 therefore NOT emitted for this character (selected_throwback={selected_throwback}, \
-                 confirmed via the same flag `replaced_by_alternate_trait` checks). This is a \
-                 grounded recognition value; it contributes no computed speed-derived effect to \
-                 any chassis output"
+                // Provenance (ingest tokens, demoted out of the rendered sheet line -- SD-35 AT-35-E6-003-SWEEP):
+                //   , gated PREFACT:1,ABILITIES,{GILLMAN_REPLACE_SPEED_FLAG}=True, which `Gillman ~
+                //   Throwback` sets
+                "Gillman alternate racial trait — Throwback (Advanced Race Guide p.188): the chosen \
+                 `Gillman ~ Throwback` alternate replaces the standard Gillman `~ Speed` record \
+                 (arg_abilities_race.lst:881 `Throwback ~ Gillman ~ Speed`, \
+                 MOVE:Walk,{THROWBACK_GILLMAN_SPEED_FEET}). Throwback gillmen have \
+                 {THROWBACK_GILLMAN_SPEED_FEET} ft land speed only — no swim speed, unlike the \
+                 standard racial default. The standard \
+                 {GILLMAN_BASE_SPEED_FEET}/{GILLMAN_SWIM_SPEED_FEET} ft record is therefore NOT \
+                 emitted for this character (selected_throwback={selected_throwback}, confirmed via \
+                 the same flag `replaced_by_alternate_trait` checks). This is a grounded recognition \
+                 value; it contributes no computed speed-derived effect to any chassis output"
             ),
         });
         return;
@@ -11778,19 +11804,20 @@ fn explain_vanara_flat_override_race_trait(
             id: "race.vanara.alternate_trait.tree_stranger.speed".to_owned(),
             value: TREE_STRANGER_VANARA_SPEED_FEET,
             detail: format!(
+                // Provenance (ingest tokens, demoted out of the rendered sheet line -- SD-35 AT-35-E6-003-SWEEP):
+                //   , gated PREFACT:1,ABILITIES,{VANARA_REPLACE_SPEED_FLAG}=True, which `Vanara ~
+                //   Tree Stranger` sets
                 "Vanara alternate racial trait — Tree Stranger (Advanced Race Guide p.206): the \
-                 chosen `Vanara ~ Tree Stranger` alternate replaces the standard Vanara `~ \
-                 Speed` record (arg_abilities_race.lst:1241 `Tree Stranger ~ Vanara ~ Speed`, \
-                 MOVE:Walk,{TREE_STRANGER_VANARA_SPEED_FEET}, gated \
-                 PREFACT:1,ABILITIES,{VANARA_REPLACE_SPEED_FLAG}=True, which `Vanara ~ Tree \
-                 Stranger` sets). Tree stranger vanaras have \
-                 {TREE_STRANGER_VANARA_SPEED_FEET} ft land speed only — no Climb speed, unlike \
-                 the standard racial default. The standard \
+                 chosen `Vanara ~ Tree Stranger` alternate replaces the standard Vanara `~ Speed` \
+                 record (arg_abilities_race.lst:1241 `Tree Stranger ~ Vanara ~ Speed`, \
+                 MOVE:Walk,{TREE_STRANGER_VANARA_SPEED_FEET}). Tree stranger vanaras have \
+                 {TREE_STRANGER_VANARA_SPEED_FEET} ft land speed only — no Climb speed, unlike the \
+                 standard racial default. The standard \
                  {VANARA_BASE_SPEED_FEET}/{VANARA_CLIMB_SPEED_FEET} ft record is therefore NOT \
                  emitted for this character (selected_tree_stranger={selected_tree_stranger}, \
                  confirmed via the same flag `replaced_by_alternate_trait` checks). This is a \
-                 grounded recognition value; it contributes no computed speed-derived effect to \
-                 any chassis output"
+                 grounded recognition value; it contributes no computed speed-derived effect to any \
+                 chassis output"
             ),
         });
     } else {
@@ -11884,28 +11911,30 @@ fn explain_samsaran_flat_override_race_trait(
         id: "race.samsaran.trait_bundle.speed".to_owned(),
         value: SAMSARAN_BASE_SPEED_FEET,
         detail: format!(
-            "Samsaran racial trait bundle — speed: PF1 Advanced Race Guide Samsaran has a base \
-             land speed of {SAMSARAN_BASE_SPEED_FEET} ft (samsaran_abilities_race.lst:17 \
-             BONUS:VAR|MOVEBASE|{SAMSARAN_BASE_SPEED_FEET}). This is a grounded recognition \
-             value carrying the Samsaran base-speed identity on the deterministic pilot seam; \
-             it contributes no computed speed-derived effect to any chassis output, skill \
-             modifier, attack roll, or combat baseline — no speed-consuming engine exists in \
-             this codebase, mirroring the Rougarou/Gillman/Vanara `trait_bundle.speed` idiom \
-             exactly"
+            // Provenance (ingest tokens, demoted out of the rendered sheet line -- SD-35 AT-35-E6-003-SWEEP):
+            //   BONUS:VAR|MOVEBASE|{SAMSARAN_BASE_SPEED_FEET}
+            "Samsaran racial trait bundle — speed: PF1 Advanced Race Guide Samsaran has a base land \
+             speed of {SAMSARAN_BASE_SPEED_FEET} ft (samsaran_abilities_race.lst:17). This is a \
+             grounded recognition value carrying the Samsaran base-speed identity on the \
+             deterministic pilot seam; it contributes no computed speed-derived effect to any \
+             chassis output, skill modifier, attack roll, or combat baseline — no speed-consuming \
+             engine exists in this codebase, mirroring the Rougarou/Gillman/Vanara \
+             `trait_bundle.speed` idiom exactly"
         ),
     });
 
     explanations.push(ComputationExplanation {
         id: "race.samsaran.trait_bundle.senses".to_owned(),
         value: 0,
-        detail: "Samsaran racial trait bundle — senses: PF1 Advanced Race Guide Samsaran can \
-                  see twice as far as humans in conditions of dim light \
-                  (samsaran_abilities_race.lst:18 BONUS:VAR|HasRacialVision|1), a binary \
-                  low-light-vision trait, not a distance magnitude. This is a bounded \
-                  recognition record naming the Samsaran low-light-vision identity on the \
-                  deterministic pilot seam; it contributes no computed illumination or \
-                  perception-derived effect to any chassis output, so it carries no fabricated \
-                  mechanical value (+0)"
+        // Provenance (ingest tokens, demoted out of the rendered sheet line -- SD-35 AT-35-E6-003-SWEEP):
+        //   BONUS:VAR|HasRacialVision|1
+        detail: "Samsaran racial trait bundle — senses: PF1 Advanced Race Guide Samsaran can see \
+                  twice as far as humans in conditions of dim light \
+                  (samsaran_abilities_race.lst:18), a binary low-light-vision trait, not a distance \
+                  magnitude. This is a bounded recognition record naming the Samsaran \
+                  low-light-vision identity on the deterministic pilot seam; it contributes no \
+                  computed illumination or perception-derived effect to any chassis output, so it \
+                  carries no fabricated mechanical value (+0)"
             .to_owned(),
     });
 
@@ -11913,17 +11942,17 @@ fn explain_samsaran_flat_override_race_trait(
         id: "race.samsaran.trait_bundle.lifebound".to_owned(),
         value: SAMSARAN_LIFEBOUND_SAVE_BONUS,
         detail: format!(
+            // Provenance (ingest tokens, demoted out of the rendered sheet line -- SD-35 AT-35-E6-003-SWEEP):
+            //   BONUS:VAR|SaveBonus_vs_DeathEffects,SaveBonus_vs_NegativeEnergy,FortSave_vs_NegativeLevels|{SAMSARAN_LIFEBOUND_SAVE_BONUS}|TYPE=Racial
             "Samsaran racial trait bundle — Lifebound: PF1 Advanced Race Guide Samsaran gains a \
-             {SAMSARAN_LIFEBOUND_SAVE_BONUS:+} racial bonus on saving throws against death \
-             effects, saving throws against negative energy effects, Fortitude saves to remove \
-             negative levels, and Constitution checks to stabilize \
-             (samsaran_abilities_race.lst:19 BONUS:VAR|SaveBonus_vs_DeathEffects,\
-             SaveBonus_vs_NegativeEnergy,FortSave_vs_NegativeLevels|{SAMSARAN_LIFEBOUND_SAVE_BONUS}\
-             |TYPE=Racial). CONDITIONAL under Decision 7 REFINED (a named effect-type subset, \
-             not a universal sheet modifier) — no save-bonus-vs-condition-type consuming total \
-             exists anywhere in this codebase (`BaseSaves`/`total_saves` carry no per-condition \
-             breakdown), so this is grounded as a standalone recognition value rather than \
-             folded into a total that does not exist"
+             {SAMSARAN_LIFEBOUND_SAVE_BONUS:+} racial bonus on saving throws against death effects, \
+             saving throws against negative energy effects, Fortitude saves to remove negative \
+             levels, and Constitution checks to stabilize (samsaran_abilities_race.lst:19). \
+             CONDITIONAL under Decision 7 REFINED (a named effect-type subset, not a universal sheet \
+             modifier) — no save-bonus-vs-condition-type consuming total exists anywhere in this \
+             codebase (`BaseSaves`/`total_saves` carry no per-condition breakdown), so this is \
+             grounded as a standalone recognition value rather than folded into a total that does \
+             not exist"
         ),
     });
 
@@ -11931,17 +11960,17 @@ fn explain_samsaran_flat_override_race_trait(
         id: "race.samsaran.trait_bundle.shards_of_the_past".to_owned(),
         value: SAMSARAN_SHARDS_OF_THE_PAST_SKILL_BONUS,
         detail: format!(
-            "Samsaran racial trait bundle — Shards of the Past: PF1 Advanced Race Guide \
-             Samsaran chooses two skills and gains a \
-             {SAMSARAN_SHARDS_OF_THE_PAST_SKILL_BONUS:+} racial bonus on both, always as class \
-             skills (samsaran_abilities_race.lst:21 BONUS:SKILL|LIST|\
-             {SAMSARAN_SHARDS_OF_THE_PAST_SKILL_BONUS}|TYPE=Racial). The `LIST` target is a \
-             player-chosen pair of skills this engine models no chooser for — the same `%LIST`/\
-             `LIST` shape `ALTERNATE_TRAIT_SELECTED_SKILL_BONUSES`'s own doc comment already \
-             declines to guess at — and `SelectedSkillModifiers` totals only Climb, Intimidate, \
-             and Swim, none of which this trait can be proven to target without a chooser. \
-             Grounded as a standalone recognition value, not folded into a skill total this \
-             engine cannot resolve"
+            // Provenance (ingest tokens, demoted out of the rendered sheet line -- SD-35 AT-35-E6-003-SWEEP):
+            //   BONUS:SKILL|LIST|{SAMSARAN_SHARDS_OF_THE_PAST_SKILL_BONUS}|TYPE=Racial
+            //   The `LIST` target is a player-chosen pair of skills this engine models no chooser
+            //   for — the same `%LIST`/`LIST` shape `ALTERNATE_TRAIT_SELECTED_SKILL_BONUSES`'s own
+            //   doc comment already declines to guess at — and `SelectedSkillModifiers` totals only
+            //   Climb, Intimidate, and Swim, none of which this trait can be proven to target
+            //   without a chooser.
+            "Samsaran racial trait bundle — Shards of the Past: PF1 Advanced Race Guide Samsaran \
+             chooses two skills and gains a {SAMSARAN_SHARDS_OF_THE_PAST_SKILL_BONUS:+} racial bonus \
+             on both, always as class skills (samsaran_abilities_race.lst:21). Grounded as a \
+             standalone recognition value, not folded into a skill total this engine cannot resolve"
         ),
     });
 }
@@ -12035,23 +12064,25 @@ fn explain_nagaji_flat_override_race_trait(
         id: "race.nagaji.trait_bundle.speed".to_owned(),
         value: NAGAJI_BASE_SPEED_FEET,
         detail: format!(
+            // Provenance (ingest tokens, demoted out of the rendered sheet line -- SD-35 AT-35-E6-003-SWEEP):
+            //   BONUS:VAR|MOVEBASE|{NAGAJI_BASE_SPEED_FEET}
             "Nagaji racial trait bundle — speed: PF1 Advanced Race Guide Nagaji has a base land \
-             speed of {NAGAJI_BASE_SPEED_FEET} ft (nagaji_abilities_race.lst:17 \
-             BONUS:VAR|MOVEBASE|{NAGAJI_BASE_SPEED_FEET}). This is a grounded recognition value \
-             carrying the Nagaji base-speed identity on the deterministic pilot seam; it \
-             contributes no computed speed-derived effect to any chassis output, skill \
-             modifier, attack roll, or combat baseline — no speed-consuming engine exists in \
-             this codebase"
+             speed of {NAGAJI_BASE_SPEED_FEET} ft (nagaji_abilities_race.lst:17). This is a grounded \
+             recognition value carrying the Nagaji base-speed identity on the deterministic pilot \
+             seam; it contributes no computed speed-derived effect to any chassis output, skill \
+             modifier, attack roll, or combat baseline — no speed-consuming engine exists in this \
+             codebase"
         ),
     });
 
     explanations.push(ComputationExplanation {
         id: "race.nagaji.trait_bundle.senses".to_owned(),
         value: 0,
-        detail: "Nagaji racial trait bundle — senses: PF1 Advanced Race Guide Nagaji can see \
-                  twice as far as humans in conditions of dim light \
-                  (nagaji_abilities_race.lst:18 BONUS:VAR|HasRacialVision|1), a binary \
-                  low-light-vision trait, not a distance magnitude. This is a bounded \
+        // Provenance (ingest tokens, demoted out of the rendered sheet line -- SD-35 AT-35-E6-003-SWEEP):
+        //   BONUS:VAR|HasRacialVision|1
+        detail: "Nagaji racial trait bundle — senses: PF1 Advanced Race Guide Nagaji can see twice \
+                  as far as humans in conditions of dim light (nagaji_abilities_race.lst:18), a \
+                  binary low-light-vision trait, not a distance magnitude. This is a bounded \
                   recognition record naming the Nagaji low-light-vision identity on the \
                   deterministic pilot seam; it contributes no computed illumination or \
                   perception-derived effect to any chassis output, so it carries no fabricated \
@@ -12063,19 +12094,18 @@ fn explain_nagaji_flat_override_race_trait(
         id: "race.nagaji.trait_bundle.armored_scales".to_owned(),
         value: NAGAJI_ARMORED_SCALES_NATURAL_ARMOR,
         detail: format!(
+            // Provenance (ingest tokens, demoted out of the rendered sheet line -- SD-35 AT-35-E6-003-SWEEP):
+            //   BONUS:VAR|AC_Natural_Armor|{NAGAJI_ARMORED_SCALES_NATURAL_ARMOR}|TYPE=Base
             "Nagaji racial trait bundle — Armored Scales: PF1 Advanced Race Guide Nagaji has a \
              {NAGAJI_ARMORED_SCALES_NATURAL_ARMOR:+} natural armor bonus from scaly flesh \
-             (nagaji_abilities_race.lst:19 \
-             BONUS:VAR|AC_Natural_Armor|{NAGAJI_ARMORED_SCALES_NATURAL_ARMOR}|TYPE=Base). A \
-             UNIVERSAL, unconditional AC modifier under Decision 7 REFINED. A real natural-armor \
-             consuming total DOES exist in this codebase \
-             (`FeatDerivedPillarContributions::natural_armor_bonus`, already summed into both \
-             the armor-class total and the touch-AC exclusion, and already accepting \
-             contributions from three other sources — Alchemist Mutagen, Sorcerer Draconic \
-             Bloodline, ARG Armor of the Pit) — but this race trait is not wired into it; that \
-             is a genuine, separate follow-on (logged to OPEN-ISSUES.md), not a missing \
-             consumer. Grounded here as a standalone recognition value, not folded into an AC \
-             total this specific trait does not yet feed"
+             (nagaji_abilities_race.lst:19). A UNIVERSAL, unconditional AC modifier under Decision 7 \
+             REFINED. A real natural-armor consuming total DOES exist in this codebase \
+             (`FeatDerivedPillarContributions::natural_armor_bonus`, already summed into both the \
+             armor-class total and the touch-AC exclusion, and already accepting contributions from \
+             three other sources — Alchemist Mutagen, Sorcerer Draconic Bloodline, ARG Armor of the \
+             Pit) — but this race trait is not wired into it; that is a genuine, separate follow-on \
+             (logged to OPEN-ISSUES.md), not a missing consumer. Grounded here as a standalone \
+             recognition value, not folded into an AC total this specific trait does not yet feed"
         ),
     });
 
@@ -12083,11 +12113,11 @@ fn explain_nagaji_flat_override_race_trait(
         id: "race.nagaji.trait_bundle.resistant".to_owned(),
         value: NAGAJI_RESISTANT_SAVE_BONUS,
         detail: format!(
+            // Provenance (ingest tokens, demoted out of the rendered sheet line -- SD-35 AT-35-E6-003-SWEEP):
+            //   BONUS:VAR|SaveBonus_vs_MindAffecting,SaveBonus_vs_Poison|{NAGAJI_RESISTANT_SAVE_BONUS}|TYPE=Racial
             "Nagaji racial trait bundle — Resistant: PF1 Advanced Race Guide Nagaji gains a \
              {NAGAJI_RESISTANT_SAVE_BONUS:+} racial saving throw bonus against mind-affecting \
-             effects and poison (nagaji_abilities_race.lst:20 \
-             BONUS:VAR|SaveBonus_vs_MindAffecting,SaveBonus_vs_Poison|\
-             {NAGAJI_RESISTANT_SAVE_BONUS}|TYPE=Racial). CONDITIONAL under Decision 7 REFINED \
+             effects and poison (nagaji_abilities_race.lst:20). CONDITIONAL under Decision 7 REFINED \
              (a named effect-type subset), and no save-bonus-vs-condition-type consuming total \
              exists anywhere in this codebase. Grounded as a standalone recognition value"
         ),
@@ -12108,19 +12138,21 @@ fn explain_nagaji_flat_override_race_trait(
             id: "race.nagaji.alternate_trait.hypnotic_gaze.dc".to_owned(),
             value: hypnotic_gaze_dc,
             detail: format!(
+                // Provenance (ingest tokens, demoted out of the rendered sheet line -- SD-35 AT-35-E6-003-SWEEP):
+                //   , gated PREFACT:1,ABILITIES,{NAGAJI_REPLACE_SERPENTS_SENSE_FLAG}=True, which
+                //   `Nagaji ~ Hypnotic Gaze` sets
+                //   DESC:\"...The DC of this effect is equal to 11 + the nagaji's Charisma
+                //   modifier...\"
                 "Nagaji alternate racial trait — Hypnotic Gaze (Advanced Race Guide p.??): the \
-                 chosen `Nagaji ~ Hypnotic Gaze` alternate replaces the standard Nagaji `~ \
-                 Serpent's Sense` record (arg_abilities_race.lst:985, gated \
-                 PREFACT:1,ABILITIES,{NAGAJI_REPLACE_SERPENTS_SENSE_FLAG}=True, which `Nagaji ~ \
-                 Hypnotic Gaze` sets). Its spell-like ability (as hypnotism) has a DC equal to \
-                 {NAGAJI_HYPNOTIC_GAZE_DC_BASE} + the nagaji's Charisma modifier \
-                 (DESC:\"...The DC of this effect is equal to 11 + the nagaji's Charisma \
-                 modifier...\"). This character's Charisma modifier is {cha_mod:+}, so DC = \
+                 chosen `Nagaji ~ Hypnotic Gaze` alternate replaces the standard Nagaji `~ Serpent's \
+                 Sense` record (arg_abilities_race.lst:985). Its spell-like ability (as hypnotism) \
+                 has a DC equal to {NAGAJI_HYPNOTIC_GAZE_DC_BASE} + the nagaji's Charisma modifier. \
+                 This character's Charisma modifier is {cha_mod:+}, so DC = \
                  {NAGAJI_HYPNOTIC_GAZE_DC_BASE} + ({cha_mod:+}) = {hypnotic_gaze_dc}. A REAL \
                  computed value, not a recognition record — mirrors the \
-                 `alchemist_extract_save_dc`/`witch_hex_save_dc` DC-function idiom this file \
-                 already uses for class features. The standard Serpent's Sense record is \
-                 therefore NOT emitted for this character",
+                 `alchemist_extract_save_dc`/`witch_hex_save_dc` DC-function idiom this file already \
+                 uses for class features. The standard Serpent's Sense record is therefore NOT \
+                 emitted for this character",
                 cha_mod = ability_modifiers.charisma,
             ),
         });
@@ -12142,19 +12174,20 @@ fn explain_nagaji_flat_override_race_trait(
             id: "race.nagaji.trait_bundle.serpents_sense".to_owned(),
             value: NAGAJI_SERPENTS_SENSE_SKILL_BONUS,
             detail: format!(
-                "Nagaji racial trait bundle — Serpent's Sense: PF1 Advanced Race Guide Nagaji \
-                 gains a {NAGAJI_SERPENTS_SENSE_SKILL_BONUS:+} racial bonus on Handle Animal \
-                 checks against reptiles and a {NAGAJI_SERPENTS_SENSE_SKILL_BONUS:+} racial \
-                 bonus on Perception checks (nagaji_abilities_race.lst:21 \
-                 BONUS:SITUATION|Handle Animal=against reptiles|\
-                 {NAGAJI_SERPENTS_SENSE_SKILL_BONUS}, \
-                 BONUS:SKILL|Perception|{NAGAJI_SERPENTS_SENSE_SKILL_BONUS}|TYPE=Racial). Handle \
-                 Animal and Perception are both named in `ALTERNATE_TRAIT_SELECTED_SKILL_BONUSES`'s \
-                 own doc comment as skills this codebase computes no total for; \
-                 `SelectedSkillModifiers` totals only Climb, Intimidate, and Swim. Grounded as a \
-                 standalone recognition value, not folded into a skill total this engine cannot \
-                 resolve. This is the default record; NOT emitted if the character has selected \
-                 the `Nagaji ~ Hypnotic Gaze` alternate trait, which replaces it (see above)"
+                // Provenance (ingest tokens, demoted out of the rendered sheet line -- SD-35 AT-35-E6-003-SWEEP):
+                //   BONUS:SITUATION|Handle Animal=against
+                //   reptiles|{NAGAJI_SERPENTS_SENSE_SKILL_BONUS},
+                //   BONUS:SKILL|Perception|{NAGAJI_SERPENTS_SENSE_SKILL_BONUS}|TYPE=Racial
+                "Nagaji racial trait bundle — Serpent's Sense: PF1 Advanced Race Guide Nagaji gains \
+                 a {NAGAJI_SERPENTS_SENSE_SKILL_BONUS:+} racial bonus on Handle Animal checks \
+                 against reptiles and a {NAGAJI_SERPENTS_SENSE_SKILL_BONUS:+} racial bonus on \
+                 Perception checks (nagaji_abilities_race.lst:21). Handle Animal and Perception are \
+                 both named in `ALTERNATE_TRAIT_SELECTED_SKILL_BONUSES`'s own doc comment as skills \
+                 this codebase computes no total for; `SelectedSkillModifiers` totals only Climb, \
+                 Intimidate, and Swim. Grounded as a standalone recognition value, not folded into a \
+                 skill total this engine cannot resolve. This is the default record; NOT emitted if \
+                 the character has selected the `Nagaji ~ Hypnotic Gaze` alternate trait, which \
+                 replaces it (see above)"
             ),
         });
     }
@@ -12179,13 +12212,14 @@ fn explain_nagaji_flat_override_race_trait(
 //
 // **The formula text is the single source of truth for BOTH the compute path and its own fixture
 // gate**: [`UNDINE_RACE_TRAIT_FORMULAS`] is read by [`explain_undine_formula_race_trait`] below
-// AND by `derived_evaluator_fixture_check::run_race_trait_formula_bar_check` (a separate crate
-// module) — a transcription regression in this table therefore fails the SAME gate whether it
+// AND by `oracle_validation::race_trait_formula_bar_check` (a separate crate
+// module, oracle-side since SD-35 `AT-35-E6-001`) — a transcription regression in this table therefore fails the SAME gate whether it
 // corrupts the value a player sees or the value the bar check verifies.
 //
 // Re-verified against this repo's own independently re-ingested corpus records
 // (`data/corpus/advanced_race_guide/race_trait/undine/undine_{acid_breath,nereid_fascination,
-// ooze_breath}.json`'s `raw_bonus_chains`) at fold time — all nine formula strings match the
+// ooze_breath}.json`'s declared bonus chains, read by
+// `pcgen_import::ingest_record::bonus_chain_qualifiers`) at fold time — all nine formula strings match the
 // transcription below byte-for-byte, including Ooze Breath's genuinely-as-written
 // `min(floor((TL+1/2)),5)` (not `(TL+1)/2`), confirming the branch's transcription was faithful
 // upstream arithmetic, not a typo.
@@ -12229,15 +12263,72 @@ pub(crate) const UNDINE_RACE_TRAIT_FORMULAS: &[(&str, &str, &str)] = &[
     ("advanced_race_guide:race_trait:undine_ooze_breath", "Undine_OozeBreath_DC", "10+(TL/2)+CON"),
 ];
 
-/// Looks up one formula's raw text from [`UNDINE_RACE_TRAIT_FORMULAS`] by its field name. Panics
-/// on a missing field — every field this function is ever called with is a literal named
-/// directly below, so a mismatch is a coding error in this file, not a runtime corpus condition.
-fn undine_formula(field: &str) -> &'static str {
-    UNDINE_RACE_TRAIT_FORMULAS
-        .iter()
-        .find(|(_, f, _)| *f == field)
-        .unwrap_or_else(|| panic!("UNDINE_RACE_TRAIT_FORMULAS carries no field named {field:?}"))
-        .2
+/// The ability-modifier slot [`CharacterFacts::ability_mods`] uses, so this file can seed the
+/// two modifiers Undine's alternate racial traits actually reference without duplicating the
+/// sheet evaluator's own ordering.
+fn ability_index_of(a: crate::rules_core::sheet_rule::Ability) -> usize {
+    use crate::rules_core::sheet_rule::Ability;
+    match a {
+        Ability::Str => 0,
+        Ability::Dex => 1,
+        Ability::Con => 2,
+        Ability::Int => 3,
+        Ability::Wis => 4,
+        Ability::Cha => 5,
+    }
+}
+
+/// One Undine alternate-racial-trait field's arithmetic, as a CONVERTED
+/// [`Expr`](crate::rules_core::sheet_rule::Expr) over total character level and one ability
+/// modifier (SD-35 `AT-35-E6-001`, `decisions.md` §11 -- the live side holds converted
+/// arithmetic, never an ingest-format formula string).
+///
+/// Each arm is the conversion of the corresponding row of
+/// [`UNDINE_RACE_TRAIT_FORMULAS`], which the
+/// converter/oracle side still carries verbatim and which
+/// `derived_evaluator_fixture_check`'s race_trait_formula bar still checks both halves of.
+/// Panics on a field name this file does not build -- every field this function is ever called
+/// with is a literal named directly below, so a mismatch is a coding error here, never a
+/// runtime condition.
+fn undine_expr(field: &str) -> crate::rules_core::sheet_rule::Expr {
+    use crate::rules_core::sheet_rule::{Ability, Expr};
+    // `10 + (TL/2) + <ability modifier>` -- the save DC shape all three alternates share.
+    let dc = |a: Ability| {
+        Expr::sum(vec![
+            Expr::Const(10),
+            Expr::div(Expr::Level, Expr::Const(2)),
+            Expr::AbilityMod(a),
+        ])
+    };
+    match field {
+        "Undine_AcidBreath_Times"
+        | "Undine_NereidFascination_Times"
+        | "Undine_OozeBreath_Times" => Expr::Const(1),
+        // `min(floor((TL+1)/2),5)`
+        "Undine_AcidBreath_Dice" => Expr::min(
+            Expr::Floor(Box::new(Expr::div(
+                Expr::sum(vec![Expr::Level, Expr::Const(1)]),
+                Expr::Const(2),
+            ))),
+            Expr::Const(5),
+        ),
+        "Undine_AcidBreath_DC" | "Undine_OozeBreath_DC" => dc(Ability::Con),
+        // `max((TL/2),1)`
+        "Undine_NereidFascination_Duration" => {
+            Expr::max(Expr::div(Expr::Level, Expr::Const(2)), Expr::Const(1))
+        }
+        "Undine_NereidFascination_DC" => dc(Ability::Cha),
+        // `min(floor((TL+1/2)),5)` -- genuinely `TL + one half`, not `(TL+1)/2`; see the
+        // section doc above `UNDINE_RACE_TRAIT_FORMULAS` for why that asymmetry is faithful.
+        "Undine_OozeBreath_Dice" => Expr::min(
+            Expr::Floor(Box::new(Expr::sum(vec![
+                Expr::Level,
+                Expr::div(Expr::Const(1), Expr::Const(2)),
+            ]))),
+            Expr::Const(5),
+        ),
+        other => panic!("undine_expr carries no converted arithmetic for field {other:?}"),
+    }
 }
 
 /// Undine (Advanced Race Guide): three selectable alternate racial traits, each replacing the
@@ -12256,19 +12347,22 @@ fn explain_undine_formula_race_trait(
     if input.chosen.race_id != UNDINE_RACE_ID {
         return;
     }
-    use formula_reproduction_harness::FormulaEvaluator as _;
-    let evaluator = formula_interpreter::PcgenFormulaEvaluator;
+    use crate::rules_core::sheet_rule::{evaluate_expr_from_facts, Ability, CharacterFacts};
 
     let total_level: i64 = input.chosen.class_levels.iter().map(|c| i64::from(c.level)).sum();
-    let mut vars: std::collections::BTreeMap<String, i64> = std::collections::BTreeMap::new();
-    vars.insert("TL".to_owned(), total_level);
-    vars.insert("CON".to_owned(), i64::from(ability_modifiers.constitution));
-    vars.insert("CHA".to_owned(), i64::from(ability_modifiers.charisma));
+    let mut facts = CharacterFacts { level: total_level, ..CharacterFacts::default() };
+    facts.ability_mods[ability_index_of(Ability::Con)] = i64::from(ability_modifiers.constitution);
+    facts.ability_mods[ability_index_of(Ability::Cha)] = i64::from(ability_modifiers.charisma);
 
     let selected = selected_alternate_trait_keys(input);
 
+    // SD-35 `AT-35-E6-001` (`decisions.md` §11): each field's arithmetic is a CONVERTED
+    // `sheet_rule::Expr`, evaluated by the sheet renderer's own evaluator. The source's own
+    // formula TEXT is no longer read here at all -- it lives on the converter/oracle side
+    // ([`UNDINE_RACE_TRAIT_FORMULAS`] above), which is
+    // what `derived_evaluator_fixture_check`'s race_trait_formula bar still compares against.
     let eval = |field: &str| -> Option<i16> {
-        evaluator.evaluate(undine_formula(field), &vars).ok().and_then(|v| i16::try_from(v).ok())
+        i16::try_from(evaluate_expr_from_facts(&undine_expr(field), &facts).trunc()).ok()
     };
 
     if selected.iter().any(|k| k == UNDINE_ACID_BREATH_TRAIT_KEY)
@@ -12279,14 +12373,16 @@ fn explain_undine_formula_race_trait(
                 id: "race.undine.alternate_trait.acid_breath".to_owned(),
                 value: dice,
                 detail: format!(
+                    // Provenance (ingest tokens, demoted out of the rendered sheet line -- SD-35 AT-35-E6-003-SWEEP):
+                    //   arg_abilities_race.lst:776
+                    //   BONUS:VAR|Undine_AcidBreath_Dice|min(floor((TL+1)/2),5),
+                    //   BONUS:VAR|Undine_AcidBreath_DC|10+(TL/2)+CON,
                     "Undine alternate racial trait — Acid Breath (Advanced Race Guide p.174): a \
                      {times}/day 5-ft cone breath weapon dealing {dice}d8 acid damage, Reflex DC \
-                     {dc} for half (arg_abilities_race.lst:776 \
-                     BONUS:VAR|Undine_AcidBreath_Dice|min(floor((TL+1)/2),5), \
-                     BONUS:VAR|Undine_AcidBreath_DC|10+(TL/2)+CON, evaluated at total character \
-                     level {total_level} and Constitution modifier \
-                     {con:+} by `formula_interpreter::PcgenFormulaEvaluator`, gated by \
-                     `derived_evaluator_fixture_check`'s race_trait_formula bar)",
+                     {dc} for half (evaluated at total character level {total_level} and \
+                     Constitution modifier {con:+} by the sheet evaluator over the converted \
+                     arithmetic, gated by `derived_evaluator_fixture_check`'s race_trait_formula \
+                     bar)",
                     con = ability_modifiers.constitution,
                 ),
             });
@@ -12302,14 +12398,15 @@ fn explain_undine_formula_race_trait(
                 id: "race.undine.alternate_trait.nereid_fascination".to_owned(),
                 value: duration,
                 detail: format!(
-                    "Undine alternate racial trait — Nereid Fascination (Advanced Race Guide \
-                     p.175): {times}/day as a standard action, a 20-ft-radius aura fascinates \
-                     humanoids within it for {duration} rounds, Will DC {dc} negates \
-                     (arg_abilities_race.lst:781 \
-                     BONUS:VAR|Undine_NereidFascination_Duration|max((TL/2),1), \
-                     BONUS:VAR|Undine_NereidFascination_DC|10+(TL/2)+CHA, evaluated at total \
-                     character level {total_level} and Charisma modifier \
-                     {cha:+} by `formula_interpreter::PcgenFormulaEvaluator`, gated by \
+                    // Provenance (ingest tokens, demoted out of the rendered sheet line -- SD-35 AT-35-E6-003-SWEEP):
+                    //   arg_abilities_race.lst:781
+                    //   BONUS:VAR|Undine_NereidFascination_Duration|max((TL/2),1),
+                    //   BONUS:VAR|Undine_NereidFascination_DC|10+(TL/2)+CHA,
+                    "Undine alternate racial trait — Nereid Fascination (Advanced Race Guide p.175): \
+                     {times}/day as a standard action, a 20-ft-radius aura fascinates humanoids \
+                     within it for {duration} rounds, Will DC {dc} negates (evaluated at total \
+                     character level {total_level} and Charisma modifier {cha:+} by the sheet \
+                     evaluator over the converted arithmetic, gated by \
                      `derived_evaluator_fixture_check`'s race_trait_formula bar)",
                     cha = ability_modifiers.charisma,
                 ),
@@ -12324,18 +12421,19 @@ fn explain_undine_formula_race_trait(
                 id: "race.undine.alternate_trait.ooze_breath".to_owned(),
                 value: dice,
                 detail: format!(
+                    // Provenance (ingest tokens, demoted out of the rendered sheet line -- SD-35 AT-35-E6-003-SWEEP):
+                    //   arg_abilities_race.lst:782
+                    //   BONUS:VAR|Undine_OozeBreath_Dice|min(floor((TL+1/2)),5),
+                    //   BONUS:VAR|Undine_OozeBreath_DC|10+(TL/2)+CON,
                     "Undine alternate racial trait — Ooze Breath (Advanced Race Guide p.175): a \
-                     {times}/day 5-ft cone breath weapon dealing {dice}d4 acid damage and \
-                     sickening for 3 rounds, Reflex DC {dc} halves and negates sickened \
-                     (arg_abilities_race.lst:782 \
-                     BONUS:VAR|Undine_OozeBreath_Dice|min(floor((TL+1/2)),5), \
-                     BONUS:VAR|Undine_OozeBreath_DC|10+(TL/2)+CON, evaluated at total character \
-                     level {total_level} and Constitution modifier \
-                     {con:+} by `formula_interpreter::PcgenFormulaEvaluator`, gated by \
-                     `derived_evaluator_fixture_check`'s race_trait_formula bar). This \
-                     record's `Dice` formula really is `TL+1/2`, not `(TL+1)/2` — real upstream \
-                     PCGen arithmetic, transcribed faithfully rather than \"corrected\" to match \
-                     Acid Breath's shape",
+                     {times}/day 5-ft cone breath weapon dealing {dice}d4 acid damage and sickening \
+                     for 3 rounds, Reflex DC {dc} halves and negates sickened (evaluated at total \
+                     character level {total_level} and Constitution modifier {con:+} by the sheet \
+                     evaluator over the converted arithmetic, gated by \
+                     `derived_evaluator_fixture_check`'s race_trait_formula bar). This record's \
+                     `Dice` formula really is `TL+1/2`, not `(TL+1)/2` — real upstream PCGen \
+                     arithmetic, transcribed faithfully rather than \"corrected\" to match Acid \
+                     Breath's shape",
                     con = ability_modifiers.constitution,
                 ),
             });
@@ -12617,7 +12715,18 @@ mod flat_override_race_trait_tests {
             .find(|e| e.id == "race.samsaran.trait_bundle.speed")
             .expect("samsaran must produce a speed explanation");
         assert_eq!(speed.value, 30);
-        assert!(speed.detail.contains("MOVEBASE"));
+        // Retargeted by SD-35 AT-35-E6-003-SWEEP cycle 4. This used to assert
+        // the sheet line quoted the corpus token (`MOVEBASE`). A sheet line is
+        // a final number or the rule's words, never ingest vocabulary
+        // (`decisions.md` §1), so the token now lives in the `//` provenance
+        // comment beside the record and the line states the speed itself.
+        // Same shape as the `senses`/`lifebound` assertions just below.
+        assert!(speed.detail.contains("base land speed of 30 ft"));
+        assert!(
+            !speed.detail.contains("MOVEBASE"),
+            "no ingest token may reach the rendered sheet line: {}",
+            speed.detail
+        );
 
         let senses = computation
             .explanations
@@ -12642,7 +12751,16 @@ mod flat_override_race_trait_tests {
             .find(|e| e.id == "race.samsaran.trait_bundle.shards_of_the_past")
             .expect("samsaran must produce a Shards of the Past explanation");
         assert_eq!(shards.value, 2);
-        assert!(shards.detail.contains("LIST"));
+        // Retargeted by SD-35 AT-35-E6-003-SWEEP cycle 4, same reason as the
+        // `speed` assertion above: the sheet line states the rule in words
+        // ("chooses two skills"), and the `BONUS:SKILL|LIST|…` token it used to
+        // quote now sits in the `//` provenance comment on the record itself.
+        assert!(shards.detail.contains("chooses two skills"));
+        assert!(
+            !shards.detail.contains("LIST"),
+            "no ingest token may reach the rendered sheet line: {}",
+            shards.detail
+        );
     }
 
     /// Nagaji with NO alternate trait selected gets the five default
@@ -12849,16 +12967,18 @@ fn explain_human_trait_bundle(
         id: "race.human.trait_bundle.extra_skill_ranks".to_owned(),
         value: i16::from(HUMAN_EXTRA_SKILL_RANKS_PER_LEVEL),
         detail: format!(
+            // Provenance (ingest tokens, demoted out of the rendered sheet line -- SD-35 AT-35-E6-003-SWEEP):
+            //   BONUS:SKILL|...
             "Human racial trait bundle — extra skill ranks: PF1 Standard Human gains \
              {HUMAN_EXTRA_SKILL_POINTS_AT_LEVEL_1} extra skill points at 1st level and \
              {HUMAN_EXTRA_SKILL_RANKS_PER_LEVEL} extra skill rank per additional level thereafter \
-             (cr_races.lst race:human BONUS:SKILL|...). The recognition value \
+             (cr_races.lst race:human). The recognition value \
              ({HUMAN_EXTRA_SKILL_RANKS_PER_LEVEL:+}) carries the per-additional-level extra-rank \
-             identity on the deterministic pilot seam; this slice does not propagate these \
-             extra skill points/rank through the bounded Climb/Intimidate/Swim rank-1 selected \
-             skill-modifier computation, so the bounded fighter-posture skill totals remain \
-             grounded by the canonical rank-1 posture rather than by the unbounded Human extra \
-             skill-rank rule"
+             identity on the deterministic pilot seam; this slice does not propagate these extra \
+             skill points/rank through the bounded Climb/Intimidate/Swim rank-1 selected \
+             skill-modifier computation, so the bounded fighter-posture skill totals remain grounded \
+             by the canonical rank-1 posture rather than by the unbounded Human extra skill-rank \
+             rule"
         ),
     });
 }
@@ -13046,7 +13166,8 @@ fn replaced_by_alternate_trait(input: &CharacterInput, flag: &str) -> bool {
 /// # This list is a measurement, not a selection
 ///
 /// `tests/sd27_alternate_racial_trait_reachability.rs` re-derives it by
-/// scanning all 153 alternates' `raw_bonus_chains` against the engine's own
+/// scanning all 153 alternates' declared bonus chains
+/// (`pcgen_import::ingest_record::bonus_chain_qualifiers`) against the engine's own
 /// computed-total surface, and fails if the two disagree in either direction.
 /// It is short because the *engine* is narrow, not because the content is:
 /// every other alternate's declared number is situational
@@ -13185,9 +13306,11 @@ fn explain_selected_alternate_racial_traits(
         id: "race.alternate_trait.selected".to_owned(),
         value: 0,
         detail: format!(
+            // Provenance (ingest tokens, demoted out of the rendered sheet line -- SD-35 AT-35-E6-003-SWEEP):
+            //   !PREFACT:1,ABILITIES,<flag>=True
             "Alternate racial traits chosen for {}: {}. Firing replace-flag(s) {}, each of which \
-             suppresses the standard racial trait whose \
-             !PREFACT:1,ABILITIES,<flag>=True gate names it (decisions.md §26 — the swap is a \
+             suppresses the standard racial trait its own exclusion gate names \
+             (decisions.md §26 — the swap is a \
              relationship the PCGen corpus declares, not one this engine invents). This record \
              names the selection itself and carries no mechanical value (+0); the numbers that \
              actually change are emitted by the affected per-trait records",
@@ -13387,16 +13510,18 @@ fn compute_fighter_chassis(
         id: "class_chassis.base_attack_bonus".to_owned(),
         value: base_attack_bonus,
         detail: format!(
-            "Fighter level {level} base attack bonus from cr_classes.lst:139 \
-             BONUS:COMBAT|BASEAB|classlevel = {base_attack_bonus}"
+            // Provenance (ingest tokens, demoted out of the rendered sheet line -- SD-35 AT-35-E6-003-SWEEP):
+            //   from cr_classes.lst:139 BONUS:COMBAT|BASEAB|classlevel
+            "Fighter level {level} base attack bonus = {base_attack_bonus}"
         ),
     });
     explanations.push(ComputationExplanation {
         id: "class_chassis.base_save.fortitude".to_owned(),
         value: base_saves.fortitude,
         detail: format!(
-            "Fighter level {level} base Fortitude save from cr_classes.lst:139 \
-             BONUS:SAVE|BASE.Fortitude|classlevel/2+2 = {}",
+            // Provenance (ingest tokens, demoted out of the rendered sheet line -- SD-35 AT-35-E6-003-SWEEP):
+            //   from cr_classes.lst:139 BONUS:SAVE|BASE.Fortitude|classlevel/2+2
+            "Fighter level {level} base Fortitude save = {}",
             base_saves.fortitude
         ),
     });
@@ -13404,8 +13529,9 @@ fn compute_fighter_chassis(
         id: "class_chassis.base_save.reflex".to_owned(),
         value: base_saves.reflex,
         detail: format!(
-            "Fighter level {level} base Reflex save from cr_classes.lst:139 \
-             BONUS:SAVE|BASE.Reflex,BASE.Will|classlevel/3 = {}",
+            // Provenance (ingest tokens, demoted out of the rendered sheet line -- SD-35 AT-35-E6-003-SWEEP):
+            //   from cr_classes.lst:139 BONUS:SAVE|BASE.Reflex,BASE.Will|classlevel/3
+            "Fighter level {level} base Reflex save = {}",
             base_saves.reflex
         ),
     });
@@ -13413,8 +13539,9 @@ fn compute_fighter_chassis(
         id: "class_chassis.base_save.will".to_owned(),
         value: base_saves.will,
         detail: format!(
-            "Fighter level {level} base Will save from cr_classes.lst:139 \
-             BONUS:SAVE|BASE.Reflex,BASE.Will|classlevel/3 = {}",
+            // Provenance (ingest tokens, demoted out of the rendered sheet line -- SD-35 AT-35-E6-003-SWEEP):
+            //   from cr_classes.lst:139 BONUS:SAVE|BASE.Reflex,BASE.Will|classlevel/3
+            "Fighter level {level} base Will save = {}",
             base_saves.will
         ),
     });
@@ -14514,12 +14641,13 @@ fn ground_cavalier_named_features(
         id: "class_feature.apg.cavalier.challenge_uses_per_day".to_owned(),
         value: challenge_uses,
         detail: format!(
-            "Cavalier level {level} Challenge uses per day: (level + 2)/3 = {challenge_uses} \
-             (`BONUS:VAR|CavalierChallengeTimes|(CavalierLVL+2)/3`). A flat daily pool -- no \
-             per-use consumption is tracked. Challenge's own +{level} extra melee damage \
-             against the challenge TARGET is deliberately not grounded: it needs a persistent \
-             tracked relationship with a specific opponent, the same line already drawn for \
-             Slayer's Studied Target and Investigator's Studied Combat"
+            // Provenance (ingest tokens, demoted out of the rendered sheet line -- SD-35 AT-35-E6-003-SWEEP):
+            //   `BONUS:VAR|CavalierChallengeTimes|(CavalierLVL+2)/3`
+            "Cavalier level {level} Challenge uses per day: (level + 2)/3 = {challenge_uses}. A flat \
+             daily pool -- no per-use consumption is tracked. Challenge's own +{level} extra melee \
+             damage against the challenge TARGET is deliberately not grounded: it needs a persistent \
+             tracked relationship with a specific opponent, the same line already drawn for Slayer's \
+             Studied Target and Investigator's Studied Combat"
         ),
     });
 
@@ -14528,12 +14656,13 @@ fn ground_cavalier_named_features(
             id: "class_feature.apg.cavalier.challenge_damage_bonus".to_owned(),
             value: i16::from(level),
             detail: format!(
-                "Cavalier level {level} Challenge: +{level} extra damage on attacks made AGAINST \
-                 THE TARGET of the challenge (`BONUS:VAR|CavalierChallengeLVL|CavalierLVL`). \
-                 Grounds standalone -- the formula reads only the cavalier's own level, nothing \
-                 about the opponent. Note this scope is the INVERSE of the challenge's Armor \
-                 Class penalty, which applies against everyone EXCEPT that target; the two must \
-                 not be conflated"
+                // Provenance (ingest tokens, demoted out of the rendered sheet line -- SD-35 AT-35-E6-003-SWEEP):
+                //   `BONUS:VAR|CavalierChallengeLVL|CavalierLVL`
+                "Cavalier level {level} Challenge: +{level} extra damage on attacks made AGAINST THE \
+                 TARGET of the challenge. Grounds standalone -- the formula reads only the \
+                 cavalier's own level, nothing about the opponent. Note this scope is the INVERSE of \
+                 the challenge's Armor Class penalty, which applies against everyone EXCEPT that \
+                 target; the two must not be conflated"
             ),
         });
     }
@@ -14543,11 +14672,12 @@ fn ground_cavalier_named_features(
             id: "class_feature.apg.cavalier.challenge_armor_class_penalty".to_owned(),
             value: penalty,
             detail: format!(
-                "Cavalier level {level} is actively challenging, taking a {penalty} penalty to \
-                 Armor Class. INTEGRATED into the real `defense.baseline_armor_class` total, the \
-                 same path Bloodrage's own -2 already uses. Two honest caveats: the magnitude is \
-                 DESC-sourced (the Challenge record carries no `BONUS:COMBAT` token at all, \
-                 unlike Bloodrage's real token), and the rule's \"except against attacks made by \
+                // Provenance (ingest tokens, demoted out of the rendered sheet line -- SD-35 AT-35-E6-003-SWEEP):
+                //   `BONUS:COMBAT` token at all, unlike Bloodrage's real token
+                "Cavalier level {level} is actively challenging, taking a {penalty} penalty to Armor \
+                 Class. INTEGRATED into the real `defense.baseline_armor_class` total, the same path \
+                 Bloodrage's own -2 already uses. Two honest caveats: the magnitude is DESC-sourced \
+                 (the Challenge record carries no), and the rule's \"except against attacks made by \
                  the target of his challenge\" exception is NOT modelled, so the penalty applies \
                  unconditionally here -- the strictly more conservative reading"
             ),
@@ -14572,9 +14702,9 @@ fn ground_cavalier_named_features(
                 "Cavalier level {level} Expert Trainer: a +{bonus} bonus (level/2) on Handle \
                  Animal checks made on an animal serving as a mount. Handle Animal is not among \
                  the three skills this engine computes, so this grounds standalone, the same \
-                 shape as Bard's Bardic Knowledge. DESC-sourced -- the record carries no \
-                 `BONUS:SKILL` token -- and cross-checked against the published rule text, which \
-                 agrees"
+                 shape as Bard's Bardic Knowledge. Taken from the record's own \
+                 description rather than from a skill-bonus magnitude, which it does not carry, \
+                 and cross-checked against the published rule text, which agrees"
             ),
         });
     }
@@ -14905,7 +15035,7 @@ fn active_alchemist_mutagen_bonus(
 /// own light-armor check and Dodge's own AC bonus already established --
 /// the base formula is the real, complete answer for this closure's
 /// scope.
-fn alchemist_bomb_damage_dice(level: u8) -> i16 {
+pub(crate) fn alchemist_bomb_damage_dice(level: u8) -> i16 {
     1 + (i16::from(level) - 1) / 2
 }
 
@@ -14913,7 +15043,7 @@ fn alchemist_bomb_damage_dice(level: u8) -> i16 {
 /// Intelligence modifier added to bomb damage (deepening 2026-07-26,
 /// task #4), verified directly against `apg_abilities_class.lst`'s own
 /// `BONUS:VAR|AlchemistBombDamageBonus|INT`.
-fn alchemist_bomb_damage_bonus(intelligence_modifier: i16) -> i16 {
+pub(crate) fn alchemist_bomb_damage_bonus(intelligence_modifier: i16) -> i16 {
     intelligence_modifier
 }
 
@@ -14922,7 +15052,7 @@ fn alchemist_bomb_damage_bonus(intelligence_modifier: i16) -> i16 {
 /// directly against `apg_abilities_class.lst`'s own
 /// `BONUS:VAR|AlchemistBombDC|10+(AlchemistBombLVL/2)+INT`, the same
 /// flat-DC standalone shape Blessing's/Mutagen's own DC-style facts use.
-fn alchemist_bomb_dc(level: u8, intelligence_modifier: i16) -> i16 {
+pub(crate) fn alchemist_bomb_dc(level: u8, intelligence_modifier: i16) -> i16 {
     10 + i16::from(level) / 2 + intelligence_modifier
 }
 
@@ -15909,7 +16039,7 @@ fn active_inquisitor_purity_judgment_bonus(input: &CharacterInput) -> Option<(u8
 /// consumer was never actually required, only a genuinely verified
 /// magnitude. No Knowledge-skill total exists anywhere in this codebase,
 /// so this grounds only the flat bonus value.
-fn inquisitor_monster_lore_bonus(wisdom_modifier: i16) -> i16 {
+pub(crate) fn inquisitor_monster_lore_bonus(wisdom_modifier: i16) -> i16 {
     wisdom_modifier
 }
 
@@ -15921,7 +16051,7 @@ fn inquisitor_monster_lore_bonus(wisdom_modifier: i16) -> i16 {
 /// Monster Lore above: no Initiative total exists anywhere in this
 /// codebase (confirmed directly), so this grounds only the flat bonus
 /// value.
-fn inquisitor_cunning_initiative_bonus(wisdom_modifier: i16) -> i16 {
+pub(crate) fn inquisitor_cunning_initiative_bonus(wisdom_modifier: i16) -> i16 {
     wisdom_modifier
 }
 
@@ -15952,7 +16082,7 @@ fn inquisitor_track_bonus(level: u8) -> i16 {
 /// own Fervor uses/day: this grounds only the flat daily pool size --
 /// which creature type (and subtype, for humanoid/outsider) is imbued,
 /// and how the rounds are spent/tracked across a day, is not modeled.
-fn inquisitor_bane_pool_rounds(level: u8) -> i16 {
+pub(crate) fn inquisitor_bane_pool_rounds(level: u8) -> i16 {
     i16::from(level)
 }
 
@@ -16502,8 +16632,9 @@ fn ground_or_block_inquisitor_domain_power(
             "Inquisitor's remaining Domain class-feature granted-power burden is named but no \
              longer claim-blocking: the {domain} domain's {power} ({grounded_facets}) IS \
              grounded, and the corpus confirms {domain} is a real base-class Inquisitor domain \
-             (`advanced_players_guide/class_feature/inquisitor/inquisitor_domains.json` carries \
-             `DEFINE:InquisitorDomain{define_token_domain}|0`). So a {domain}-domain \
+             (`advanced_players_guide/class_feature/inquisitor/inquisitor_domains.json` \
+             declares an `InquisitorDomain{define_token_domain}` variable of its own). So a \
+             {domain}-domain \
              inquisitor's domain power is genuinely computed rather than deferred. Every domain \
              not in `domain_power::DOMAIN_POWER_CATALOG` (Good, War, Strength, Destruction, \
              Glory, Undead Subdomain, Construct Subdomain) remains entirely unproven and is \
@@ -16961,10 +17092,12 @@ fn ground_or_block_oracle_mystery(
             id: "class_feature.apg.oracle.life_mystery.healing_hands".to_owned(),
             value: ORACLE_HEALING_HANDS_HEAL_BONUS,
             detail: format!(
-                "Oracle with the Life Mystery gets Healing Hands: a +{ORACLE_HEALING_HANDS_HEAL_BONUS} \
-                 bonus on Heal checks (PF1 Advanced Player's Guide, verified directly against \
-                 `apg_abilities_class.lst`'s own `BONUS:SKILL|Heal|4` tag). Grounds only the flat \
-                 magnitude -- Heal isn't among the three skills \
+                // Provenance (ingest tokens, demoted out of the rendered sheet line -- SD-35 AT-35-E6-003-SWEEP):
+                //   `BONUS:SKILL|Heal|4` tag
+                "Oracle with the Life Mystery gets Healing Hands: a \
+                 +{ORACLE_HEALING_HANDS_HEAL_BONUS} bonus on Heal checks (PF1 Advanced Player's \
+                 Guide, verified directly against `apg_abilities_class.lst`'s own). Grounds only the \
+                 flat magnitude -- Heal isn't among the three skills \
                  `compute_selected_skill_modifiers` tracks, so no total integration exists; the \
                  revelation's own \"treat two people at once\" clause is not modeled"
             ),
@@ -17092,7 +17225,7 @@ fn oracle_level_with_battlecry_revelation(input: &CharacterInput) -> Option<u8> 
 /// `ORACLE_BATTLECRY_UPGRADE_LEVEL` (10) -- `BONUS:VAR|OracleBattlecryBonus|1`
 /// plus `|1|PRECLASS:1,Oracle=10` (the two flat additions sum to +2, they
 /// do not replace one another).
-fn oracle_battlecry_bonus(oracle_level: u8) -> i16 {
+pub(crate) fn oracle_battlecry_bonus(oracle_level: u8) -> i16 {
     if oracle_level >= ORACLE_BATTLECRY_UPGRADE_LEVEL {
         ORACLE_BATTLECRY_UPGRADED_BONUS
     } else {
@@ -17542,11 +17675,15 @@ fn ground_oracle_tier_one_revelations(
             id: "class_feature.apg.oracle.life_mystery.channel_dc".to_owned(),
             value: dc,
             detail: format!(
+                // Provenance (ingest tokens, demoted out of the rendered sheet line -- SD-35 AT-35-E6-003-SWEEP):
+                //   apg_feats.lst's own `CATEGORY=FEAT|Improved Channel.MOD`, which adds
+                //   `BONUS:VAR|OracleChannelDC|2`
                 "Oracle level {oracle_level} Life Mystery Channel save DC: 10 + level/2 + \
                  Charisma modifier ({charisma:+}) + Improved Channel feat ({:+}) = {dc}. That \
                  feat's own Core Rulebook record names only Cleric/Paladin channel DC variables \
-                 this engine computes no total for; its reach here comes from apg_feats.lst's \
-                 own `CATEGORY=FEAT|Improved Channel.MOD`, which adds BONUS:VAR|OracleChannelDC|2",
+                 this engine computes no total for; its reach here comes from the Advanced \
+                 Player's Guide's own modification of that feat, which adds +2 to the Oracle's \
+                 channel DC",
                 non_stacking_resource_feat_bonus(
                     &input.chosen.selected_feats,
                     IMPROVED_CHANNEL_FEAT_KEY,
@@ -17595,8 +17732,8 @@ fn ground_oracle_tier_one_revelations(
                  judgment already lands on). The corpus applies it as an untyped ability bonus \
                  on top of the Dexterity contribution, so where the worn armor's maximum \
                  Dexterity bonus caps that contribution the two interact exactly as the raw \
-                 tokens do. The revelation's parallel `BONUS:VAR|CMD` half is not integrated -- \
-                 this engine computes no Combat Maneuver Defense total"
+                 tokens do. The revelation's parallel Combat Maneuver Defense half is not \
+                 integrated -- this engine computes no Combat Maneuver Defense total"
             ),
         });
     }
@@ -17644,14 +17781,15 @@ fn ground_oracle_tier_one_revelations(
             id: "class_feature.apg.oracle.flame_mystery.cinder_dance_speed_bonus".to_owned(),
             value: ORACLE_CINDER_DANCE_SPEED_BONUS,
             detail: format!(
-                "Oracle level {oracle_level} Flame Mystery Cinder Dance increases base land speed \
-                 by {ORACLE_CINDER_DANCE_SPEED_BONUS} feet (`BONUS:MOVEADD|TYPE.WALK|10`), always \
-                 on with no level gate -- the exact mirror of the Lame Curse's own reduction. \
-                 This engine computes no movement total, so it grounds standalone. The corpus \
-                 record carries `!PREABILITY:1,CATEGORY=Special Ability,Oracle ~ Lame`, making \
-                 this revelation mutually exclusive with the Lame Curse; the bonus feats it also \
-                 grants at Oracle 5 and 10 (Nimble Moves, Acrobatic Steps) carry no magnitude and \
-                 are not modelled"
+                // Provenance (ingest tokens, demoted out of the rendered sheet line -- SD-35 AT-35-E6-003-SWEEP):
+                //   `BONUS:MOVEADD|TYPE.WALK|10`
+                "Oracle level {oracle_level} Flame Mystery Cinder Dance increases base land speed by \
+                 {ORACLE_CINDER_DANCE_SPEED_BONUS} feet, always on with no level gate -- the exact \
+                 mirror of the Lame Curse's own reduction. This engine computes no movement total, \
+                 so it grounds standalone. The corpus record excludes the Oracle's Lame curse \
+                 outright, making this revelation mutually exclusive with the Lame \
+                 Curse; the bonus feats it also grants at Oracle 5 and 10 (Nimble Moves, Acrobatic \
+                 Steps) carry no magnitude and are not modelled"
             ),
         });
     }
@@ -17678,39 +17816,42 @@ fn ground_oracle_tier_one_revelations(
             id: "class_feature.apg.oracle.battle_mystery.battlecry_bonus".to_owned(),
             value: bonus,
             detail: format!(
-                "Oracle level {oracle_level} Battle Mystery Battlecry grants allies within 100 \
-                 feet a +{bonus} morale bonus on attack rolls, skill checks, and saving throws \
-                 (+1, rising to +2 from Oracle level {ORACLE_BATTLECRY_UPGRADE_LEVEL} -- \
-                 `BONUS:VAR|OracleBattlecryBonus|1` plus `|1|PRECLASS:1,Oracle=10`). This engine \
+                // Provenance (ingest tokens, demoted out of the rendered sheet line -- SD-35 AT-35-E6-003-SWEEP):
+                //   -- `BONUS:VAR|OracleBattlecryBonus|1` plus `|1|PRECLASS:1,Oracle=10`
+                "Oracle level {oracle_level} Battle Mystery Battlecry grants allies within 100 feet \
+                 a +{bonus} morale bonus on attack rolls, skill checks, and saving throws (+1, \
+                 rising to +2 from Oracle level {ORACLE_BATTLECRY_UPGRADE_LEVEL}). This engine \
                  computes no ally entity anywhere, so the bonus grounds as a standalone flat \
-                 magnitude, the same 'grant-only identity record, no execution engine' idiom \
-                 used throughout this session"
+                 magnitude, the same 'grant-only identity record, no execution engine' idiom used \
+                 throughout this session"
             ),
         });
         explanations.push(ComputationExplanation {
             id: "class_feature.apg.oracle.battle_mystery.battlecry_duration_rounds".to_owned(),
             value: duration_rounds,
             detail: format!(
-                "Oracle level {oracle_level} Battle Mystery Battlecry's morale bonus lasts a \
-                 number of rounds equal to the Oracle's Charisma MODIFIER \
-                 (`BONUS:VAR|OracleBattlecryDuration|CHA`; PCGen's bare `CHA` token is the \
-                 ability modifier, not the score -- confirmed against the game system's own \
-                 `STATMOD:floor(SCORE/2)-5` definition and the sibling revelation-DC token in \
-                 the same corpus record). At a Charisma modifier of {duration_rounds:+} this is \
-                 {duration_rounds} rounds. This engine tracks no round-by-round duration state, \
-                 so this grounds as a standalone flat magnitude"
+                // Provenance (ingest tokens, demoted out of the rendered sheet line -- SD-35 AT-35-E6-003-SWEEP):
+                //   `BONUS:VAR|OracleBattlecryDuration|CHA`; PCGen's bare `CHA` token is the
+                //   ability modifier, not the score -- confirmed against the game system's own
+                //   `STATMOD:floor(SCORE/2)-5` definition and the sibling revelation-DC token in
+                //   the same corpus record
+                "Oracle level {oracle_level} Battle Mystery Battlecry's morale bonus lasts a number \
+                 of rounds equal to the Oracle's Charisma MODIFIER. At a Charisma modifier of \
+                 {duration_rounds:+} this is {duration_rounds} rounds. This engine tracks no \
+                 round-by-round duration state, so this grounds as a standalone flat magnitude"
             ),
         });
         explanations.push(ComputationExplanation {
             id: "class_feature.apg.oracle.battle_mystery.battlecry_uses_per_day".to_owned(),
             value: times_per_day,
             detail: format!(
-                "Oracle level {oracle_level} Battle Mystery Battlecry uses per day: \
-                 1 + Oracle level / {ORACLE_BATTLECRY_TIMES_PER_DAY_LEVEL_DIVISOR} \
-                 (`BONUS:VAR|OracleBattlecryTimes|1+classlevel(\"Oracle\")/5`). At Oracle level \
-                 {oracle_level} this is 1 + {oracle_level} / \
-                 {ORACLE_BATTLECRY_TIMES_PER_DAY_LEVEL_DIVISOR} = {times_per_day}. This grounds \
-                 only the flat daily use count; it performs no per-use consumption tracking"
+                // Provenance (ingest tokens, demoted out of the rendered sheet line -- SD-35 AT-35-E6-003-SWEEP):
+                //   `BONUS:VAR|OracleBattlecryTimes|1+classlevel(\"Oracle\")/5`
+                "Oracle level {oracle_level} Battle Mystery Battlecry uses per day: 1 + Oracle level \
+                 / {ORACLE_BATTLECRY_TIMES_PER_DAY_LEVEL_DIVISOR}. At Oracle level {oracle_level} \
+                 this is 1 + {oracle_level} / {ORACLE_BATTLECRY_TIMES_PER_DAY_LEVEL_DIVISOR} = \
+                 {times_per_day}. This grounds only the flat daily use count; it performs no per-use \
+                 consumption tracking"
             ),
         });
     }
@@ -17724,13 +17865,13 @@ fn ground_oracle_tier_one_revelations(
             id: "class_feature.apg.oracle.stone_mystery.steelbreaker_skin_damage".to_owned(),
             value: damage,
             detail: format!(
-                "Oracle level {oracle_level} Stone Mystery Steelbreaker Skin: as a standard \
-                 action, any weapon striking you takes {damage} points of damage \
-                 (`BONUS:VAR|OracleSteelbreakerSkinDamage|classlevel(\"Oracle\")`). Usable once \
-                 per day; not folded into any weapon-damage total this engine computes, since \
-                 no weapon-vs-Oracle interaction exists here. From Oracle level 15 the damage \
-                 also ignores up to 10 points of hardness -- not modelled, no hardness facet \
-                 exists in this engine"
+                // Provenance (ingest tokens, demoted out of the rendered sheet line -- SD-35 AT-35-E6-003-SWEEP):
+                //   `BONUS:VAR|OracleSteelbreakerSkinDamage|classlevel(\"Oracle\")`
+                "Oracle level {oracle_level} Stone Mystery Steelbreaker Skin: as a standard action, \
+                 any weapon striking you takes {damage} points of damage. Usable once per day; not \
+                 folded into any weapon-damage total this engine computes, since no weapon-vs-Oracle \
+                 interaction exists here. From Oracle level 15 the damage also ignores up to 10 \
+                 points of hardness -- not modelled, no hardness facet exists in this engine"
             ),
         });
         explanations.push(ComputationExplanation {
@@ -17738,10 +17879,11 @@ fn ground_oracle_tier_one_revelations(
                 .to_owned(),
             value: duration,
             detail: format!(
+                // Provenance (ingest tokens, demoted out of the rendered sheet line -- SD-35 AT-35-E6-003-SWEEP):
+                //   `BONUS:VAR|OracleSteelbreakerSkinDuration|classlevel(\"Oracle\")`
                 "Oracle level {oracle_level} Stone Mystery Steelbreaker Skin lasts {duration} \
-                 minutes per use (`BONUS:VAR|OracleSteelbreakerSkinDuration|classlevel(\"Oracle\")`). \
-                 This engine tracks no round-by-round or minute-by-minute duration state, so \
-                 this grounds as a standalone flat magnitude"
+                 minutes per use. This engine tracks no round-by-round or minute-by-minute duration \
+                 state, so this grounds as a standalone flat magnitude"
             ),
         });
     }
@@ -17752,18 +17894,19 @@ fn ground_oracle_tier_one_revelations(
             id: "class_feature.apg.oracle.waves_mystery.icy_skin_cold_resistance".to_owned(),
             value: resistance,
             detail: format!(
+                // Provenance (ingest tokens, demoted out of the rendered sheet line -- SD-35 AT-35-E6-003-SWEEP):
+                //   `ABILITY:...Immunity to Cold|PRECLASS:1,Oracle=17`
                 "Oracle level {oracle_level} Waves Mystery Icy Skin grants cold resistance \
                  {resistance} (`5 + OracleColdResistanceBonus`, always on, stepping to \
                  +{ORACLE_ELEMENTAL_RESISTANCE_TIER_TWO_BONUS} more at Oracle level \
-                 {ORACLE_ELEMENTAL_RESISTANCE_TIER_TWO_LEVEL} and +{ORACLE_ELEMENTAL_RESISTANCE_TIER_THREE_BONUS} \
-                 more (additive, not replacing) at Oracle level \
-                 {ORACLE_ELEMENTAL_RESISTANCE_TIER_THREE_LEVEL}). This engine computes no \
-                 resistance/DR total, so this grounds as a standalone flat magnitude. From \
-                 Oracle level 17 the corpus record replaces resistance with cold IMMUNITY \
-                 (`ABILITY:...Immunity to Cold|PRECLASS:1,Oracle=17`); this engine does not \
-                 model that qualitative shift, so this magnitude understates a level-17+ \
-                 character and is honest about doing so rather than fabricating an immunity \
-                 sentinel value"
+                 {ORACLE_ELEMENTAL_RESISTANCE_TIER_TWO_LEVEL} and \
+                 +{ORACLE_ELEMENTAL_RESISTANCE_TIER_THREE_BONUS} more (additive, not replacing) at \
+                 Oracle level {ORACLE_ELEMENTAL_RESISTANCE_TIER_THREE_LEVEL}). This engine computes \
+                 no resistance/DR total, so this grounds as a standalone flat magnitude. From Oracle \
+                 level 17 the corpus record replaces resistance with cold IMMUNITY; this engine does \
+                 not model that qualitative shift, so this magnitude understates a level-17+ \
+                 character and is honest about doing so rather than fabricating an immunity sentinel \
+                 value"
             ),
         });
     }
@@ -17810,11 +17953,12 @@ fn ground_oracle_tier_one_revelations(
                 .to_owned(),
             value: duration_hours,
             detail: format!(
+                // Provenance (ingest tokens, demoted out of the rendered sheet line -- SD-35 AT-35-E6-003-SWEEP):
+                //   `BONUS:VAR|OracleCoatofManyStarsDuration|classlevel(\"Oracle\")`
                 "Oracle level {oracle_level} Heavens Mystery Coat of Many Stars is usable \
-                 {duration_hours} hour(s) per day, equal to the Oracle's class level \
-                 (`BONUS:VAR|OracleCoatofManyStarsDuration|classlevel(\"Oracle\")`); the \
-                 duration does not need to be consecutive. This engine tracks no \
-                 hour-by-hour duration state, so this grounds as a standalone flat magnitude"
+                 {duration_hours} hour(s) per day, equal to the Oracle's class level; the duration \
+                 does not need to be consecutive. This engine tracks no hour-by-hour duration state, \
+                 so this grounds as a standalone flat magnitude"
             ),
         });
     }
@@ -17859,12 +18003,13 @@ fn ground_or_block_oracle_curse(
             id: "class_feature.apg.oracle.clouded_vision_curse.vision_range_cap".to_owned(),
             value: ORACLE_CLOUDED_VISION_RANGE_FEET,
             detail: format!(
+                // Provenance (ingest tokens, demoted out of the rendered sheet line -- SD-35 AT-35-E6-003-SWEEP):
+                //   `BONUS:VAR|OracleCloudedVisionRange|30` tag
                 "Oracle with the Clouded Vision Curse cannot see beyond \
                  {ORACLE_CLOUDED_VISION_RANGE_FEET} feet (PF1 Advanced Player's Guide, verified \
-                 directly against `apg_abilities_class.lst`'s own \
-                 `BONUS:VAR|OracleCloudedVisionRange|30` tag), but sees as if under darkvision \
-                 within that range. Grounds only the flat vision-range magnitude -- this \
-                 headless engine computes no vision/darkvision total anywhere to integrate this \
+                 directly against `apg_abilities_class.lst`'s own), but sees as if under darkvision \
+                 within that range. Grounds only the flat vision-range magnitude -- this headless \
+                 engine computes no vision/darkvision total anywhere to integrate this \
                  restriction-plus-benefit pair into"
             ),
         });
@@ -17962,12 +18107,14 @@ fn ground_oracle_wasting_curse(
         id: "class_feature.apg.oracle.wasting_curse.charisma_skill_penalty".to_owned(),
         value: ORACLE_WASTING_CHARISMA_SKILL_PENALTY,
         detail: format!(
-            "Oracle with the Wasting Curse takes a {ORACLE_WASTING_CHARISMA_SKILL_PENALTY} \
-             penalty on all Charisma-based skill checks (PF1 Advanced Player's Guide, verified \
-             directly against `apg_abilities_class.lst`'s own `BONUS:SKILL|STAT.CHA|-4`), with \
-             Intimidate explicitly excepted. Of the three skills this engine actually computes, \
-             only Intimidate is Charisma-based -- and it is the excepted one -- so this penalty \
-             lands on no computed total and grounds standalone"
+            // Provenance (ingest tokens, demoted out of the rendered sheet line -- SD-35 AT-35-E6-003-SWEEP):
+            //   `BONUS:SKILL|STAT.CHA|-4`
+            "Oracle with the Wasting Curse takes a {ORACLE_WASTING_CHARISMA_SKILL_PENALTY} penalty \
+             on all Charisma-based skill checks (PF1 Advanced Player's Guide, verified directly \
+             against `apg_abilities_class.lst`'s own), with Intimidate explicitly excepted. Of the \
+             three skills this engine actually computes, only Intimidate is Charisma-based -- and it \
+             is the excepted one -- so this penalty lands on no computed total and grounds \
+             standalone"
         ),
     });
     let net = oracle_wasting_intimidate_net_effect();
@@ -17975,16 +18122,17 @@ fn ground_oracle_wasting_curse(
         id: "class_feature.apg.oracle.wasting_curse.intimidate_net_effect".to_owned(),
         value: net,
         detail: format!(
+            // Provenance (ingest tokens, demoted out of the rendered sheet line -- SD-35 AT-35-E6-003-SWEEP):
+            //   The corpus carries two tokens: `BONUS:SKILL|STAT.CHA|-4` (which hits Intimidate, a
+            //   Charisma-based skill) and `BONUS:SKILL|Intimidate|4` (which exists solely to cancel
+            //   it), matching the published rule \"a -4 penalty on all Charisma-based skill checks
+            //   except Intimidate\".
             "Oracle with the Wasting Curse has a NET {net} effect on Intimidate, not \
-             +{ORACLE_WASTING_INTIMIDATE_OFFSET}. The corpus carries two tokens: \
-             `BONUS:SKILL|STAT.CHA|-4` (which hits Intimidate, a Charisma-based skill) and \
-             `BONUS:SKILL|Intimidate|4` (which exists solely to cancel it), matching the \
-             published rule \"a -4 penalty on all Charisma-based skill checks except \
-             Intimidate\". Grounded explicitly because Intimidate IS one of this engine's three \
-             computed skill totals: reading the +4 token alone would land a wrong number on a \
-             live total, so this closure deliberately wires nothing into that total. This \
-             character's curse level is {curse_level}; the sickened/disease/nauseated immunities \
-             at curse levels 5/10/15 are non-numeric and are not modelled"
+             +{ORACLE_WASTING_INTIMIDATE_OFFSET}. Grounded explicitly because Intimidate IS one of \
+             this engine's three computed skill totals: reading the +4 token alone would land a \
+             wrong number on a live total, so this closure deliberately wires nothing into that \
+             total. This character's curse level is {curse_level}; the sickened/disease/nauseated \
+             immunities at curse levels 5/10/15 are non-numeric and are not modelled"
         ),
     });
 }
@@ -18013,13 +18161,15 @@ fn ground_oracle_deaf_curse(
         id: "class_feature.apg.oracle.deaf_curse.opposed_perception_penalty".to_owned(),
         value: ORACLE_DEAF_OPPOSED_PERCEPTION_PENALTY,
         detail: format!(
-            "Oracle with the Deaf Curse takes a {ORACLE_DEAF_OPPOSED_PERCEPTION_PENALTY} penalty \
-             on OPPOSED Perception checks (`BONUS:SITUATION|Perception=Opposed|-4`), at every \
-             curse level. Grounds despite being situational: the magnitude is fixed and applies \
-             to this character's own roll, needing nothing known about the opposing creature -- \
-             unlike a Studied-Target-style bonus, which requires a persistent tracked \
-             relationship with a specific opponent that this engine models nowhere. Perception \
-             is not among the three skills this engine computes, so this grounds standalone"
+            // Provenance (ingest tokens, demoted out of the rendered sheet line -- SD-35 AT-35-E6-003-SWEEP):
+            //   `BONUS:SITUATION|Perception=Opposed|-4`
+            "Oracle with the Deaf Curse takes a {ORACLE_DEAF_OPPOSED_PERCEPTION_PENALTY} penalty on \
+             OPPOSED Perception checks, at every curse level. Grounds despite being situational: the \
+             magnitude is fixed and applies to this character's own roll, needing nothing known \
+             about the opposing creature -- unlike a Studied-Target-style bonus, which requires a \
+             persistent tracked relationship with a specific opponent that this engine models \
+             nowhere. Perception is not among the three skills this engine computes, so this grounds \
+             standalone"
         ),
     });
     match oracle_deaf_perception_bonus(curse_level) {
@@ -18027,13 +18177,13 @@ fn ground_oracle_deaf_curse(
             id: "class_feature.apg.oracle.deaf_curse.perception_bonus".to_owned(),
             value: bonus,
             detail: format!(
-                "Oracle with the Deaf Curse gains a +{bonus} competence bonus on Perception \
-                 checks that do not rely on hearing, from curse level \
-                 {ORACLE_CURSE_TIER_TWO_LEVEL} (`BONUS:SKILL|Perception|3|PREVARGTEQ:\
-                 OracleCurseLVL,5`). Perception is not among the three skills this engine \
-                 computes, so this grounds standalone. The curse's own automatic failure on \
-                 hearing-based Perception checks is a qualitative rule, not a magnitude, and is \
-                 not modelled"
+                // Provenance (ingest tokens, demoted out of the rendered sheet line -- SD-35 AT-35-E6-003-SWEEP):
+                //   `BONUS:SKILL|Perception|3|PREVARGTEQ:OracleCurseLVL,5`
+                "Oracle with the Deaf Curse gains a +{bonus} competence bonus on Perception checks \
+                 that do not rely on hearing, from curse level {ORACLE_CURSE_TIER_TWO_LEVEL}. \
+                 Perception is not among the three skills this engine computes, so this grounds \
+                 standalone. The curse's own automatic failure on hearing-based Perception checks is \
+                 a qualitative rule, not a magnitude, and is not modelled"
             ),
         }),
         None => explanations.push(ComputationExplanation {
@@ -18127,12 +18277,13 @@ fn ground_or_block_oracle_class_features(
     {
         diagnostics.push(ComputationDiagnostic {
             id: "class_feature.apg.oracle.cinder_dance_lame_mutually_exclusive".to_owned(),
+            // Provenance (ingest tokens, demoted out of the rendered sheet line -- SD-35 AT-35-E6-003-SWEEP):
+            //   `!PREABILITY:1,CATEGORY=Special Ability,Oracle ~ Lame`
             message: "This character holds both the Lame Curse and the Cinder Dance revelation, \
-                 which the corpus makes mutually exclusive (Cinder Dance carries \
-                 `!PREABILITY:1,CATEGORY=Special Ability,Oracle ~ Lame`). Both speed magnitudes \
-                 are reported as the records themselves state them; they are NOT netted against \
-                 each other, because this combination cannot legally exist rather than resolving \
-                 to some combined speed"
+                 which the corpus makes mutually exclusive (Cinder Dance carries). Both speed \
+                 magnitudes are reported as the records themselves state them; they are NOT netted \
+                 against each other, because this combination cannot legally exist rather than \
+                 resolving to some combined speed"
                 .to_owned(),
             claim_blocking: true,
         });
@@ -18310,7 +18461,7 @@ fn push_oracle_other_features_deferred_diagnostic(
 /// (`PREVARGTEQ:WitchHexAbilityLVL,16`) -- `WitchHexAbilityLVL` resolves
 /// to `WitchLVL` directly, confirmed unconditional (no delayed-grant gate
 /// the way Shaman's Healer's Touch has).
-fn witch_ward_bonus(level: u8) -> i16 {
+pub(crate) fn witch_ward_bonus(level: u8) -> i16 {
     let mut bonus = 2;
     if level >= 8 {
         bonus += 1;
@@ -18514,7 +18665,7 @@ const SUMMONER_TWIN_EIDOLON_LEVEL: u8 = 20;
 
 /// Bond Senses: `BONUS:VAR|BondSensesRounds|classlevel("Summoner")` --
 /// rounds per day the summoner may share the eidolon's senses.
-fn summoner_bond_senses_rounds_per_day(level: u8) -> i16 {
+pub(crate) fn summoner_bond_senses_rounds_per_day(level: u8) -> i16 {
     i16::from(level)
 }
 
@@ -18522,17 +18673,17 @@ fn summoner_bond_senses_rounds_per_day(level: u8) -> i16 {
 /// -- 1/day at 6th, +1 every four levels after (6->1, 10->2, 14->3, 18->4).
 /// The formula is self-gating (it is 0 below 6th), and its first non-zero
 /// value lands exactly on the independently-confirmed grant level.
-fn summoner_makers_call_uses_per_day(level: u8) -> i16 {
+pub(crate) fn summoner_makers_call_uses_per_day(level: u8) -> i16 {
     (i16::from(level) - 2) / 4
 }
 
 /// Merge Forms: `BONUS:VAR|MergeFormsRounds|classlevel("Summoner")`.
-fn summoner_merge_forms_rounds_per_day(level: u8) -> i16 {
+pub(crate) fn summoner_merge_forms_rounds_per_day(level: u8) -> i16 {
     i16::from(level)
 }
 
 /// Twin Eidolon: `BONUS:VAR|TwinEidolonMinutes|classlevel("Summoner")`.
-fn summoner_twin_eidolon_minutes_per_day(level: u8) -> i16 {
+pub(crate) fn summoner_twin_eidolon_minutes_per_day(level: u8) -> i16 {
     i16::from(level)
 }
 
@@ -18542,7 +18693,7 @@ fn summoner_twin_eidolon_minutes_per_day(level: u8) -> i16 {
 /// creatures remain for %3 **minutes** (instead of %3 rounds)", where `%3`
 /// is this variable. Worth pinning, because the summoned-creature default
 /// really is rounds and this ability's whole point is upgrading that unit.
-fn summoner_summon_monster_duration_minutes(level: u8) -> i16 {
+pub(crate) fn summoner_summon_monster_duration_minutes(level: u8) -> i16 {
     i16::from(level)
 }
 
@@ -18892,8 +19043,10 @@ fn ground_or_block_summoner_eidolon_evolutions(
     );
     debug_assert!(
         instances_taken - 1 <= i16::from(level) / IMPROVED_NATURAL_ARMOR_LEVELS_PER_EXTRA,
+        // Provenance (ingest tokens, demoted out of the rendered sheet line -- SD-35 AT-35-E6-003-SWEEP):
+        //   PREVARLTEQ:EvoImpNatArmCount,MasterLevel/5
         "level {level}: {instances_taken} instances of Improved Natural Armor exceeds the \
-         corpus PREVARLTEQ:EvoImpNatArmCount,MasterLevel/5 cap"
+         corpus cap of one per five master levels"
     );
 
     let spent = IMPROVED_NATURAL_ARMOR_COST * instances_taken;
@@ -18903,17 +19056,19 @@ fn ground_or_block_summoner_eidolon_evolutions(
         id: "class_feature.apg.summoner.eidolon.improved_natural_armor".to_owned(),
         value: IMPROVED_NATURAL_ARMOR_BONUS,
         detail: format!(
+            // Provenance (ingest tokens, demoted out of the rendered sheet line -- SD-35 AT-35-E6-003-SWEEP):
+            //   `BONUS:VAR|AC_Natural_Armor|2|TYPE=Base.STACK` on `KEY:Evolution ~ Improved Natural
+            //   Armor`, corroborated by its own DESC
+            //   `PREVARLTEQ:EvoImpNatArmCount,MasterLevel/5` -- at most one instance per
+            //   {IMPROVED_NATURAL_ARMOR_LEVELS_PER_EXTRA} summoner levels
             "Quadruped Eidolon Improved Natural Armor evolution: +{IMPROVED_NATURAL_ARMOR_BONUS} \
-             natural armor (corpus `BONUS:VAR|AC_Natural_Armor|2|TYPE=Base.STACK` on \
-             `KEY:Evolution ~ Improved Natural Armor`, corroborated by its own DESC). Bought for \
-             {IMPROVED_NATURAL_ARMOR_COST} evolution point -- the record carries no COST field, \
-             which in this corpus means the default of 1, not a missing value. Its \
-             `TYPE:EvolutionChoice` carries no base-form restriction, so it is legal on the \
-             canonical Quadruped. This slice buys exactly ONE instance, which satisfies the \
-             record's real prerequisite (`PREVARLTEQ:EvoImpNatArmCount,MasterLevel/5` -- at most \
-             one instance per {IMPROVED_NATURAL_ARMOR_LEVELS_PER_EXTRA} summoner levels) at \
-             every level by construction; a second instance would require summoner level \
-             {IMPROVED_NATURAL_ARMOR_LEVELS_PER_EXTRA} and is not bought here"
+             natural armor. Bought for {IMPROVED_NATURAL_ARMOR_COST} evolution point -- the record \
+             carries no COST field, which in this corpus means the default of 1, not a missing \
+             value. Its `TYPE:EvolutionChoice` carries no base-form restriction, so it is legal on \
+             the canonical Quadruped. This slice buys exactly ONE instance, which satisfies the \
+             record's real prerequisite at every level by construction; a second instance would \
+             require summoner level {IMPROVED_NATURAL_ARMOR_LEVELS_PER_EXTRA} and is not bought \
+             here"
         ),
     });
 
@@ -19076,15 +19231,16 @@ fn ground_familiar_master_benefit(
         id: "class_feature.familiar.master_hit_point_bonus".to_owned(),
         value: hp_bonus,
         detail: format!(
-            "Bonded Toad familiar: its master gains +{hp_bonus} maximum hit points \
-             (`BONUS:HP|CURRENTMAX|FamiliarGrantedBonus_3`). INTEGRATED into the real computed \
-             max-HP total rather than grounded as a standalone record -- it is layered on as a \
-             per-character add-on at the same consumer that already applies Toughness's feat \
-             bonus, not folded into the class hit-die table. The familiar's own creature stat \
-             block (its hit dice, saves, skills and Intelligence, all scaling off master level \
-             {level}) is deferred. The corpus states the benefit applies only while master and \
-             familiar are within a mile of each other; the cancelling setters for that condition \
-             live in books this repo does not ingest, so within this scope the bonus is \
+            // Provenance (ingest tokens, demoted out of the rendered sheet line -- SD-35 AT-35-E6-003-SWEEP):
+            //   `BONUS:HP|CURRENTMAX|FamiliarGrantedBonus_3`
+            "Bonded Toad familiar: its master gains +{hp_bonus} maximum hit points. INTEGRATED into \
+             the real computed max-HP total rather than grounded as a standalone record -- it is \
+             layered on as a per-character add-on at the same consumer that already applies \
+             Toughness's feat bonus, not folded into the class hit-die table. The familiar's own \
+             creature stat block (its hit dice, saves, skills and Intelligence, all scaling off \
+             master level {level}) is deferred. The corpus states the benefit applies only while \
+             master and familiar are within a mile of each other; the cancelling setters for that \
+             condition live in books this repo does not ingest, so within this scope the bonus is \
              unconditional"
         ),
     });
@@ -19540,16 +19696,17 @@ fn ground_or_block_witch_class_features(
         // leaves behind; the substance of the two notes is the same.
         diagnostics.push(ComputationDiagnostic {
             id: "class_feature.apg.witch.hex_powers_beyond_base.unmodeled".to_owned(),
+            // Provenance (ingest tokens, demoted out of the rendered sheet line -- SD-35 AT-35-E6-003-SWEEP):
+            //   Cauldron's Craft (Alchemy) insight bonus and Flight's Swim bonus are the two
+            //   non-Ward magnitudes this codebase grounds; the other 50 of the corpus's 53 base
+            //   hexes (29 `Witch Hex`, 16 `Witch Major Hex`, 8 `Witch Grand Hex`) carry no modeled
+            //   magnitude beyond that shared DC -- which itself misses `City Sight` and `Summer's
+            //   Heat`, the two records carrying no `BONUS:` token at all -- and Flight's own
+            //   later-level feather fall/levitate/fly benefits are spell-effect wrappers with no
+            //   independent magnitude.
             message: "Only the selected hex's own grounded magnitude is modeled, alongside the \
-                 shared hex save DC that covers 51 of the 53 records. Cauldron's Craft (Alchemy) \
-                 insight bonus and Flight's Swim bonus are the two non-Ward magnitudes this \
-                 codebase grounds; the other 50 of the corpus's 53 base hexes (29 `Witch \
-                 Hex`, 16 `Witch Major Hex`, 8 `Witch Grand Hex`) carry no modeled magnitude \
-                 beyond that shared DC -- which itself misses `City Sight` and `Summer's \
-                 Heat`, the two records carrying no `BONUS:` token at all -- and \
-                 Flight's own later-level feather fall/levitate/fly benefits are spell-effect \
-                 wrappers with no independent magnitude. This does not block an otherwise-valid \
-                 hex posture"
+                 shared hex save DC that covers 51 of the 53 records. This does not block an \
+                 otherwise-valid hex posture"
                 .to_owned(),
             claim_blocking: false,
         });
@@ -19915,11 +20072,12 @@ fn ground_arcanist_prepared_spellbook(
             id: format!("class_spell.acg.arcanist.base_spells_per_day.spell_level_{spell_level}"),
             value: *base_count,
             detail: format!(
+                // Provenance (ingest tokens, demoted out of the rendered sheet line -- SD-35 AT-35-E6-003-SWEEP):
+                //   BONUS:VAR formulas, hand-evaluated, and legacy.aonprd.com's own printed table
+                //   -- both agree
                 "Arcanist level {level} base spells per day at spell level {spell_level}: \
                  {base_count}, read directly from the PF1 Advanced Class Guide Arcanist class \
-                 table's spells-prepared row (verified against the raw corpus BONUS:VAR \
-                 formulas, hand-evaluated, and legacy.aonprd.com's own printed table -- both \
-                 agree)"
+                 table's spells-prepared row (verified against the raw corpus)"
             ),
         });
         explanations.push(ComputationExplanation {
@@ -20933,13 +21091,14 @@ fn ground_warpriest_fervor_channel_and_sacred_armor(
             id: "class_feature.acg.warpriest.channel_energy_dc".to_owned(),
             value: dc,
             detail: format!(
+                // Provenance (ingest tokens, demoted out of the rendered sheet line -- SD-35 AT-35-E6-003-SWEEP):
+                //   Keyed on Wisdom, Warpriest's own casting stat, per the authoritative BONUS:VAR
+                //   on the Channel Energy record itself; the class's separate positive/negative
+                //   display records carry a Charisma-keyed variant inherited from the Cleric
+                //   original, which is not Warpriest's real rule.
                 "Warpriest level {level} Channel Energy save DC: 10 + level/2 + Wisdom modifier \
-                 ({wisdom:+}) = {dc}. Keyed on Wisdom, Warpriest's own casting stat, per the \
-                 authoritative BONUS:VAR on the Channel Energy record itself; the class's \
-                 separate positive/negative display records carry a Charisma-keyed variant \
-                 inherited from the Cleric original, which is not Warpriest's real rule. The \
-                 resource routing (a channel expends two Fervor uses) is not modelled -- only \
-                 the DC and the shared Fervor dice are grounded"
+                 ({wisdom:+}) = {dc}. The resource routing (a channel expends two Fervor uses) is \
+                 not modelled -- only the DC and the shared Fervor dice are grounded"
             ),
         });
     }
@@ -21638,17 +21797,18 @@ fn ground_swashbuckler_remaining_deeds_and_mastery(
                 .to_owned(),
             value: SWASHBUCKLER_WEAPON_MASTERY_CRIT_MULTIPLIER_INCREASE,
             detail: format!(
+                // Provenance (ingest tokens, demoted out of the rendered sheet line -- SD-35 AT-35-E6-003-SWEEP):
+                //   The magnitude is NOT on the parent record, which carries no numeric token at
+                //   all -- it lives on the two Internal helper records the parent grants, as
+                //   TEMPBONUS:EQ|...|WEAPON|CRITMULTADD|1|TYPE=NonStackingCrit.
                 "Swashbuckler level {level} Swashbuckler Weapon Mastery (granted at level \
-                 {SWASHBUCKLER_WEAPON_MASTERY_LEVEL}): critical threats with a light or \
-                 one-handed piercing melee weapon are automatically confirmed, and such weapons' \
-                 critical multipliers increase by \
-                 {SWASHBUCKLER_WEAPON_MASTERY_CRIT_MULTIPLIER_INCREASE} (x2 becomes x3, and so \
-                 on). The magnitude is NOT on the parent record, which carries no numeric token \
-                 at all -- it lives on the two Internal helper records the parent grants, as \
-                 TEMPBONUS:EQ|...|WEAPON|CRITMULTADD|1|TYPE=NonStackingCrit. Reading only the \
-                 parent would have wrongly concluded this feature is zero-magnitude. Grounds the \
-                 increment only: this codebase computes no critical multiplier for a wielded \
-                 weapon, and the automatic-confirmation clause is a resolution with no magnitude"
+                 {SWASHBUCKLER_WEAPON_MASTERY_LEVEL}): critical threats with a light or one-handed \
+                 piercing melee weapon are automatically confirmed, and such weapons' critical \
+                 multipliers increase by {SWASHBUCKLER_WEAPON_MASTERY_CRIT_MULTIPLIER_INCREASE} (x2 \
+                 becomes x3, and so on). Reading only the parent would have wrongly concluded this \
+                 feature is zero-magnitude. Grounds the increment only: this codebase computes no \
+                 critical multiplier for a wielded weapon, and the automatic-confirmation clause is \
+                 a resolution with no magnitude"
             ),
         });
     }
@@ -21704,17 +21864,18 @@ fn ground_or_block_swashbuckler_class_features(
             .to_owned(),
         value: finesse_effective_intelligence,
         detail: format!(
+            // Provenance (ingest tokens, demoted out of the rendered sheet line -- SD-35 AT-35-E6-003-SWEEP):
+            //   `BONUS:VAR|CombatFeatIntRequirement|max(CHASCORE,INTSCORE)`
             "Swashbuckler Finesse: for the purpose of meeting combat-feat prerequisites, the \
-             swashbuckler uses her Charisma score in place of Intelligence when it is higher \
-             (`BONUS:VAR|CombatFeatIntRequirement|max(CHASCORE,INTSCORE)`). Real Charisma {} / \
-             Intelligence {} -> effective {finesse_effective_intelligence}. This writes the same \
-             corpus variable as Brawler's Cunning, which floors Intelligence at the constant 13 \
-             instead -- genuine shared-idiom reuse, with the operand differing per class. \
-             Grounds only the flat effective-score fact: this codebase's feat_prereqs modules do \
-             not check ability scores as a prerequisite type, so no feat-prerequisite resolution \
-             runs against it. Finesse's OTHER half (gaining Weapon Finesse's benefits with light \
-             or one-handed piercing weapons) carries no corpus token and needs real attack \
-             mechanics, so it stays deferred",
+             swashbuckler uses her Charisma score in place of Intelligence when it is higher. Real \
+             Charisma {} / Intelligence {} -> effective {finesse_effective_intelligence}. This \
+             writes the same corpus variable as Brawler's Cunning, which floors Intelligence at the \
+             constant 13 instead -- genuine shared-idiom reuse, with the operand differing per \
+             class. Grounds only the flat effective-score fact: this codebase's feat_prereqs modules \
+             do not check ability scores as a prerequisite type, so no feat-prerequisite resolution \
+             runs against it. Finesse's OTHER half (gaining Weapon Finesse's benefits with light or \
+             one-handed piercing weapons) carries no corpus token and needs real attack mechanics, \
+             so it stays deferred",
             input.chosen.ability_scores.charisma, input.chosen.ability_scores.intelligence
         ),
     });
@@ -21737,10 +21898,11 @@ fn ground_or_block_swashbuckler_class_features(
         id: "class_feature.acg.swashbuckler.fighter_level_equivalence_for_feats".to_owned(),
         value: i16::from(level),
         detail: format!(
+            // Provenance (ingest tokens, demoted out of the rendered sheet line -- SD-35 AT-35-E6-003-SWEEP):
+            //   `BONUS:VAR|FighterWeaponQualifyLVL|SwashbucklerLVL`
             "Swashbuckler level {level} counts as fighter level {level} for the purpose of \
-             qualifying for feats (`BONUS:VAR|FighterWeaponQualifyLVL|SwashbucklerLVL`). Grounds \
-             the level-equivalence fact only; the feat_prereqs wiring stays deferred, the same \
-             treatment already ruled for Brawler's Martial Training"
+             qualifying for feats. Grounds the level-equivalence fact only; the feat_prereqs wiring \
+             stays deferred, the same treatment already ruled for Brawler's Martial Training"
         ),
     });
 
@@ -21752,13 +21914,14 @@ fn ground_or_block_swashbuckler_class_features(
         id: "class_feature.acg.swashbuckler.panache_max".to_owned(),
         value: panache_max,
         detail: format!(
-            "Swashbuckler level {level} Panache: max(1, Charisma modifier ({})) + Extra Panache \
-             feat ({:+}) = {panache_max} points at the start of each day. The base term is \
-             confirmed by the corpus's own `Swashbuckler ~ Panache.MOD` record, which carries a \
-             literal BONUS:VAR|PanachePointsBase|max(CHA,1) routed into Panache_Cap by the \
-             Internal Panache Tracker -- the base ability record itself only DEFINEs these to 0 \
-             (see swashbuckler_panache_max's own doc comment). This grounds only the flat daily \
-             maximum; spending/regaining Panache on Deeds is not modeled",
+            // Provenance (ingest tokens, demoted out of the rendered sheet line -- SD-35 AT-35-E6-003-SWEEP):
+            //   The base term is confirmed by the corpus's own `Swashbuckler ~ Panache.MOD` record,
+            //   which carries a literal BONUS:VAR|PanachePointsBase|max(CHA,1) routed into
+            //   Panache_Cap by the Internal Panache Tracker -- the base ability record itself only
+            //   DEFINEs these to 0 (see swashbuckler_panache_max's own doc comment).
+            "Swashbuckler level {level} Panache: max(1, Charisma modifier ({})) + Extra Panache feat \
+             ({:+}) = {panache_max} points at the start of each day. This grounds only the flat \
+             daily maximum; spending/regaining Panache on Deeds is not modeled",
             ability_modifiers.charisma,
             extra_resource_feat_bonus(
                 &input.chosen.selected_feats,
@@ -22394,8 +22557,8 @@ fn ground_or_block_investigator_class_features(
                  requires an explicit recorded choice and is never seeded, the same \
                  no-silent-seeding design ratified for Skill Focus. The damage half of Studied \
                  Combat is unaffected either way. Gated at investigator level \
-                 {INVESTIGATOR_STUDIED_DEFENSE_LEVEL} by the talent's own \
-                 `PREVARGTEQ:InvestigatorTalentLVL,9`"
+                 {INVESTIGATOR_STUDIED_DEFENSE_LEVEL} by the talent's own prerequisite, which \
+                 requires nine investigator talent levels"
             ),
         });
     }
@@ -22414,20 +22577,21 @@ fn ground_or_block_investigator_class_features(
             id: "class_feature.acg.investigator.resiliency_temp_hp".to_owned(),
             value: temp_hp,
             detail: format!(
+                // Provenance (ingest tokens, demoted out of the rendered sheet line -- SD-35 AT-35-E6-003-SWEEP):
+                //   , `BONUS:VAR|ResiliencyHitPoints|InvestigatorLVL`, a separate corpus record
+                //   from Rogue's own copy, no PRE gate
                 "Investigator level {level} selected the Resiliency talent (from her own Rogue \
                  Talent whitelist): once per day, when brought below 0 hit points, she can gain \
-                 {temp_hp} temporary hit points (equal to her investigator level, \
-                 `BONUS:VAR|ResiliencyHitPoints|InvestigatorLVL`, a separate corpus record from \
-                 Rogue's own copy, no PRE gate) as an immediate action, lasting 1 minute. This \
-                 grounds the magnitude only: the once-per-day budget and the \"brought below 0 \
-                 hit points\" trigger are named but not enforced -- no once-per-day activation \
-                 tracker and no HP-threshold trigger engine exists anywhere in this codebase \
-                 (the same honest-gap idiom already used for Skald's Raging Song rounds-per-\
-                 day). No temporary-hit-point total exists anywhere in this codebase or its \
-                 downstream apps/desktop/src-tauri character_hub.rs consumer (which tracks \
-                 only max_hp/current_hp), so this grounds as a standalone flat magnitude rather \
-                 than a false integration claim, the same honest-gap idiom already used for \
-                 Witch's Ward hex"
+                 {temp_hp} temporary hit points (equal to her investigator level) as an immediate \
+                 action, lasting 1 minute. This grounds the magnitude only: the once-per-day budget \
+                 and the \"brought below 0 hit points\" trigger are named but not enforced -- no \
+                 once-per-day activation tracker and no HP-threshold trigger engine exists anywhere \
+                 in this codebase (the same honest-gap idiom already used for Skald's Raging Song \
+                 rounds-per-day). No temporary-hit-point total exists anywhere in this codebase or \
+                 its downstream apps/desktop/src-tauri character_hub.rs consumer (which tracks only \
+                 max_hp/current_hp), so this grounds as a standalone flat magnitude rather than a \
+                 false integration claim, the same honest-gap idiom already used for Witch's Ward \
+                 hex"
             ),
         });
     }
@@ -22450,12 +22614,13 @@ fn ground_or_block_investigator_class_features(
         id: "class_feature.acg.investigator.trap_sense_bonus".to_owned(),
         value: trap_sense_bonus,
         detail: format!(
-            "Investigator level {level} Trap Sense: a +{trap_sense_bonus} bonus on Reflex saves \
-             made to avoid traps and a +{trap_sense_bonus} dodge bonus to AC against attacks \
-             made by traps (level/3 = {trap_sense_bonus}, no floor -- genuinely different from \
-             Slayer's own floored Trap Sense despite sharing the same corpus BONUS:VAR name). \
-             This codebase has no trap-specific AC/save pillar; grounded as a standalone flat \
-             record"
+            // Provenance (ingest tokens, demoted out of the rendered sheet line -- SD-35 AT-35-E6-003-SWEEP):
+            //   BONUS:VAR name
+            "Investigator level {level} Trap Sense: a +{trap_sense_bonus} bonus on Reflex saves made \
+             to avoid traps and a +{trap_sense_bonus} dodge bonus to AC against attacks made by \
+             traps (level/3 = {trap_sense_bonus}, no floor -- genuinely different from Slayer's own \
+             floored Trap Sense despite sharing the same corpus). This codebase has no trap-specific \
+             AC/save pillar; grounded as a standalone flat record"
         ),
     });
 
@@ -22468,14 +22633,16 @@ fn ground_or_block_investigator_class_features(
         id: "class_feature.acg.investigator.inspiration_pool_size".to_owned(),
         value: inspiration_pool_size,
         detail: format!(
+            // Provenance (ingest tokens, demoted out of the rendered sheet line -- SD-35 AT-35-E6-003-SWEEP):
+            //   The feat's 3 lands outside the max(1, ...) clamp because the corpus applies it as a
+            //   separate BONUS:VAR contribution to the same variable, not as a term inside the
+            //   class formula.
             "Investigator level {level} Inspiration pool size: max(1, level/2 + Intelligence \
-             modifier ({})) + Extra Inspiration feat ({:+}) = {inspiration_pool_size} points at \
-             the start of each day, each worth 1d6 when spent. The feat's 3 lands outside the \
-             max(1, ...) clamp because the corpus applies it as a separate BONUS:VAR \
-             contribution to the same variable, not as a term inside the class formula. Grounds \
-             only the flat daily maximum -- spending a use on a skill/ability/attack/save roll, \
-             and the free Knowledge/Linguistics/Spellcraft interaction, are not modeled (no \
-             per-roll resolution surface exists in this codebase)",
+             modifier ({})) + Extra Inspiration feat ({:+}) = {inspiration_pool_size} points at the \
+             start of each day, each worth 1d6 when spent. Grounds only the flat daily maximum -- \
+             spending a use on a skill/ability/attack/save roll, and the free \
+             Knowledge/Linguistics/Spellcraft interaction, are not modeled (no per-roll resolution \
+             surface exists in this codebase)",
             ability_modifiers.intelligence,
             extra_resource_feat_bonus(
                 &input.chosen.selected_feats,
@@ -23082,17 +23249,19 @@ fn ground_or_block_shaman_class_features(
         spirit_recognized = true;
         diagnostics.push(ComputationDiagnostic {
             id: "class_feature.acg.shaman.spirit_powers_beyond_base.unmodeled".to_owned(),
-            message: "Only the selected Spirit's own immediately-available base ability is \
-                 grounded. Each Spirit's three higher-tier abilities stay deferred: the \
-                 `ShamanSpiritGreater` tier (PRECLASS:1,Shaman=8), the `ShamanSpiritTrue` tier \
-                 (PRECLASS:1,Shaman=16), and Manifestation (the capstone). Worth naming \
-                 explicitly, because it is where the mechanical loss actually is: NONE of the \
-                 ten base abilities carries a `BONUS:` landing on a total this engine computes \
-                 -- every one is a `BONUS:VAR` feeding its own DESC text -- whereas the gated \
-                 tiers genuinely do (Heavens' Manifestation `BONUS:SAVE|ALL|...`, Life's \
-                 Healer's Touch `BONUS:SKILL|Heal|4`, Lore's Perfect Knowledge \
-                 `BONUS:SKILL|TYPE.Knowledge,Linguistics,Spellcraft|10|TYPE=Insight`). This \
-                 does not block an otherwise-valid Spirit posture"
+            // Provenance (ingest tokens, demoted out of the rendered sheet line -- SD-35 AT-35-E6-003-SWEEP):
+            //   PRECLASS:1,Shaman=8
+            //   PRECLASS:1,Shaman=16
+            //   `BONUS:SAVE|ALL|...`, Life's Healer's Touch `BONUS:SKILL|Heal|4`, Lore's Perfect
+            //   Knowledge `BONUS:SKILL|TYPE.Knowledge,Linguistics,Spellcraft|10|TYPE=Insight`
+            //   Worth naming explicitly, because it is where the mechanical loss actually is: NONE
+            //   of the ten base abilities carries a `BONUS:` landing on a total this engine
+            //   computes -- every one is a `BONUS:VAR` feeding its own DESC text -- whereas the
+            //   gated tiers genuinely do (Heavens' Manifestation).
+            message: "Only the selected Spirit's own immediately-available base ability is grounded. \
+                 Each Spirit's three higher-tier abilities stay deferred: the `ShamanSpiritGreater` \
+                 tier, the `ShamanSpiritTrue` tier, and Manifestation (the capstone). This does not \
+                 block an otherwise-valid Spirit posture"
                 .to_owned(),
             claim_blocking: false,
         });
@@ -23108,7 +23277,7 @@ fn ground_or_block_shaman_class_features(
                  later-book Spirits this codebase does not recognize -- Mammoth \
                  (`adventurers_guide/ag_abilities_class.lst`, Powerful Smash) and Wood \
                  (`ultimate_wilderness/uw_abilities_class.lst`, Tree Limb), neither of which \
-                 carries any `BONUS:` token at all"
+                 carries any magnitude at all"
                 .to_owned(),
             claim_blocking: true,
         });
@@ -23319,29 +23488,30 @@ fn push_shaman_other_features_deferred_diagnostic(
     diagnostics.push(ComputationDiagnostic {
         id: "class_feature.acg.shaman.other_features_deferred.unsupported".to_owned(),
         message: format!(
-            "{SHAMAN_CLASS_ID} is grounded for its base-attack-bonus/base-save chassis \
-             pillar, its own prepared spellcasting including Orisons, Spirit Animal's familiar \
-             master benefit, and the immediately-available base ability of ALL TEN primary \
-             Spirits (Battle, Bones, Flame, Heavens, Life, Lore, Nature, Stone, Waves, Wind). \
-             {posture}, ungrounded anywhere in this codebase: Spirit Magic (the spirit-granted \
-             bonus spells layered on top of the class list), Manifestation (a capstone ability), \
-             each Spirit's three higher abilities gated at `ShamanSpiritGreater` (`PRECLASS:1,\
-             Shaman=8`), `ShamanSpiritTrue` (`PRECLASS:1,Shaman=16`) and Manifestation, \
-             Wandering Spirit, the two later-book Spirits (Mammoth, Wood), and the hex \
-             chooser-lists (13 `Shaman Hex`, 59 `Shaman Spirit Hex`, 59 `Shaman Wandering Hex` \
-             records). No class-feature or spell execution is fabricated here. This message \
-             previously claimed \"the other 9 primary spirits\" were ungrounded while the \
-             sibling `spirit_powers.unsupported` record simultaneously stated all ten are \
-             recognized: the sibling was right and this clause was stale. Battle, Heavens, Lore \
-             and Nature ship as ordinary `id: \"...\"` literals; Bones, Flame, Stone, Waves and \
-             Wind ship as table-constructed \
-             `format!(\"class_feature.acg.shaman.{{key}}_spirit.touch_bonus_damage\")` ids that \
-             an `id: \"`-prefixed search does not match, which is how those five stayed \
-             invisible to an id-grep audit (task #76). Wandering Spirit and Wandering Hex were \
-             named in NEITHER clause. The Spirit Hex / Wandering Hex counts read 49/49 until \
-             the canonical-narrowing pass re-derived them across the WHOLE corpus rather than \
-             `acg_abilities_class.lst` alone: the Adventurer's Guide and Ultimate Wilderness \
-             each add 5 more of each, for 59/59"
+            // Provenance (ingest tokens, demoted out of the rendered sheet line -- SD-35 AT-35-E6-003-SWEEP):
+            //   `PRECLASS:1,Shaman=8`
+            //   `PRECLASS:1,Shaman=16`
+            "{SHAMAN_CLASS_ID} is grounded for its base-attack-bonus/base-save chassis pillar, its \
+             own prepared spellcasting including Orisons, Spirit Animal's familiar master benefit, \
+             and the immediately-available base ability of ALL TEN primary Spirits (Battle, Bones, \
+             Flame, Heavens, Life, Lore, Nature, Stone, Waves, Wind). {posture}, ungrounded anywhere \
+             in this codebase: Spirit Magic (the spirit-granted bonus spells layered on top of the \
+             class list), Manifestation (a capstone ability), each Spirit's three higher abilities \
+             gated at `ShamanSpiritGreater`, `ShamanSpiritTrue` and Manifestation, Wandering Spirit, \
+             the two later-book Spirits (Mammoth, Wood), and the hex chooser-lists (13 `Shaman Hex`, \
+             59 `Shaman Spirit Hex`, 59 `Shaman Wandering Hex` records). No class-feature or spell \
+             execution is fabricated here. This message previously claimed \"the other 9 primary \
+             spirits\" were ungrounded while the sibling `spirit_powers.unsupported` record \
+             simultaneously stated all ten are recognized: the sibling was right and this clause was \
+             stale. Battle, Heavens, Lore and Nature ship as ordinary `id: \"...\"` literals; Bones, \
+             Flame, Stone, Waves and Wind ship as table-constructed \
+             `format!(\"class_feature.acg.shaman.{{key}}_spirit.touch_bonus_damage\")` ids that an \
+             `id: \"`-prefixed search does not match, which is how those five stayed invisible to an \
+             id-grep audit (task #76). Wandering Spirit and Wandering Hex were named in NEITHER \
+             clause. The Spirit Hex / Wandering Hex counts read 49/49 until the canonical-narrowing \
+             pass re-derived them across the WHOLE corpus rather than `acg_abilities_class.lst` \
+             alone: the Adventurer's Guide and Ultimate Wilderness each add 5 more of each, for \
+             59/59"
         ),
         claim_blocking: !spirit_recognized,
     });
@@ -23765,27 +23935,30 @@ fn ground_raging_climber_and_swimmer(
         let slug = power_name.to_lowercase().replace(' ', "_");
         let detail = if is_raging {
             format!(
+                // Provenance (ingest tokens, demoted out of the rendered sheet line -- SD-35 AT-35-E6-003-SWEEP):
+                //   PREVAREQ:Raging,1
                 "{class_label} level {level} {power_name} (PF1 Core Rulebook rage power, \
                  canonical-narrowing representative of the 60-record Rage Powers family, task \
                  #54/#53): while raging, a +{magnitude} enhancement bonus to all {skill} skill \
-                 checks (corpus BONUS:VAR|{bonus_var}|RagePowersLVL, no arithmetic; \
-                 RagePowersLVL = {class_label}LVL directly). Gated on the same active-Raging \
-                 state as the rage-execution engine above (corpus \
-                 BONUS:SKILL|{skill}|{bonus_var}|PREVAREQ:Raging,1), integrated into the real \
-                 {skill} total in compute_selected_skill_modifiers. This grounds the magnitude \
-                 formula only, unconditionally for any actively raging {class_label} -- it does \
-                 not validate that {power_name} was actually chosen among the character's \
+                 checks (the corpus states the magnitude as the rage-power level {bonus_var} \
+                 with no arithmetic, and that level tracks {class_label} level directly). Gated on \
+                 the same active-Raging state as the \
+                 rage-execution engine above, and integrated \
+                 into the real {skill} total in compute_selected_skill_modifiers. This grounds the \
+                 magnitude formula only, unconditionally for any actively raging {class_label} -- it \
+                 does not validate that {power_name} was actually chosen among the character's \
                  limited rage-power slots (out of scope per #53's own canonical-narrowing \
                  recommendation; see ground_raging_climber_and_swimmer's own doc comment)"
             )
         } else {
             format!(
-                "{class_label} level {level} {power_name}: not currently raging, so no \
-                 enhancement bonus to {skill} is claimed (corpus \
-                 BONUS:SKILL|{skill}|{bonus_var}|PREVAREQ:Raging,1 is entirely conditional on \
-                 the active-Raging state, unlike a level-gated feature). Mirrors the \
-                 rage-execution engine's own \"not raging\" posture above -- a genuinely valid \
-                 PF1 state, not a claim-blocking one"
+                // Provenance (ingest tokens, demoted out of the rendered sheet line -- SD-35 AT-35-E6-003-SWEEP):
+                //   PREVAREQ:Raging,1 is entirely conditional on the active-Raging state, unlike a
+                //   level-gated feature
+                "{class_label} level {level} {power_name}: not currently raging, so no enhancement \
+                 bonus to {skill} is claimed (the corpus grants it only while raging). Mirrors the \
+                 rage-execution engine's own \"not raging\" posture above -- a genuinely valid PF1 \
+                 state, not a claim-blocking one"
             )
         };
         explanations.push(ComputationExplanation {
@@ -24415,22 +24588,23 @@ fn ground_skald_remaining_named_features(
         id: "class_feature.acg.skald.raging_song_rounds_per_day".to_owned(),
         value: rounds,
         detail: format!(
+            // Provenance (ingest tokens, demoted out of the rendered sheet line -- SD-35 AT-35-E6-003-SWEEP):
+            //   BONUS:VAR|SkaldRagingSongRoundsPerDay|6, and re-impose a widened prerequisite
+            //   accepting either pool
             "Skald level {level} Raging Song: {rounds} rounds per day (3 + Charisma modifier \
-             {charisma_modifier:+} + 2 per level after the first + Extra Performance feat ({:+}) \
-             -- that Core feat looks Bard-only in cr_feats.lst, but acg_feats.lst's own \
+             {charisma_modifier:+} + 2 per level after the first + Extra Performance feat ({:+}) -- \
+             that Core feat looks Bard-only in cr_feats.lst, but acg_feats.lst's own \
              `CATEGORY=FEAT|Extra Performance.MOD` records clear its Bardic-Performance-only \
-             prerequisite, add BONUS:VAR|SkaldRagingSongRoundsPerDay|6, and re-impose a widened \
-             prerequisite accepting either pool). Raging Song is the umbrella \
-             performance that Inspired Rage, Song of Marching, Song of Strength, Dirge of Doom \
-             and Song of the Fallen all spend from -- ONE shared pool, which is why this reads \
-             the same `skald_inspired_rage_rounds_per_day` the rage-execution budget enforces \
-             against rather than deriving a second figure. Starting a song is a standard action, \
-             a move action at 7th and a swift action at 13th; this codebase models no action \
-             economy for that, and the 20%%-failure-chance-while-deaf clause is a resolution, \
-             not a magnitude. The corpus's own BONUS:VAR token for this record reads \
-             3+CHA+(2*SkaldLVL), two higher than its own rule text at every level; that defect \
-             was already identified and knowingly overridden in favour of the rule text -- see \
-             `skald_inspired_rage_rounds_per_day`'s doc comment for the standing ruling",
+             prerequisite, add). Raging Song is the umbrella performance that Inspired Rage, Song of \
+             Marching, Song of Strength, Dirge of Doom and Song of the Fallen all spend from -- ONE \
+             shared pool, which is why this reads the same `skald_inspired_rage_rounds_per_day` the \
+             rage-execution budget enforces against rather than deriving a second figure. Starting a \
+             song is a standard action, a move action at 7th and a swift action at 13th; this \
+             codebase models no action economy for that, and the 20%%-failure-chance-while-deaf \
+             clause is a resolution, not a magnitude. The corpus's own magnitude for this \
+             record reads 3+CHA+(2*SkaldLVL), two higher than its own rule text at every level; that \
+             defect was already identified and knowingly overridden in favour of the rule text -- \
+             see `skald_inspired_rage_rounds_per_day`'s doc comment for the standing ruling",
             extra_resource_feat_bonus(
                 selected_feats,
                 EXTRA_PERFORMANCE_FEAT_KEY,
@@ -24575,40 +24749,40 @@ fn push_skald_other_features_deferred_diagnostic(diagnostics: &mut Vec<Computati
     diagnostics.push(ComputationDiagnostic {
         id: "class_feature.acg.skald.other_features_deferred.unsupported".to_owned(),
         message: format!(
+            // Provenance (ingest tokens, demoted out of the rendered sheet line -- SD-35 AT-35-E6-003-SWEEP):
+            //   (3) One real corpus disagreement is surfaced rather than hidden: Raging Song's
+            //   BONUS:VAR token reads 3+CHA+(2*SkaldLVL), two higher at every level than the rule
+            //   text on the same record, which increments only for levels after the first.
             "{SKALD_CLASS_ID} now grounds every named feature on its corpus class table: the \
              base-attack-bonus/base-save chassis pillar, its class-skill list, Inspired Rage, \
              known-spell posture and spontaneous spellcasting, self-only Damage Reduction, Bardic \
-             Knowledge, Well-Versed, the flat magnitudes for Spell Kenning, Lore Master, \
-             Versatile Performance and the Rage Powers pool, Raging Climber and Raging Swimmer \
-             (landing on the real Climb/Swim totals), and -- newly, task #91 -- Raging Song's own \
-             rounds-per-day pool, Cantrips known, the Scribe Scroll bonus-feat grant, Song of \
-             Strength's half-level bonus, and Song of Marching, Uncanny Dodge, Improved Uncanny \
-             Dodge, Dirge of Doom, Song of the Fallen and Master Skald as bounded grant-only \
-             identity records. This diagnostic is therefore no longer claim-blocking; it is \
-             retained to carry the honest remainder, which is substantial and worth reading. \
-             (1) EXECUTION, not magnitude, is what stays deferred: Damage Reduction's \
-             ally-extension, Spell Kenning's cross-class spell-borrowing, Lore Master's \
-             take-10/take-20, Versatile Performance's Perform-type choice and skill \
-             substitution, and Rage Powers' ally-granting shared-list access all have their \
-             counts or amounts grounded while the mechanism that would spend them does not \
-             exist here. Several also land on ALLIES -- Song of Strength, Song of Marching, Song \
+             Knowledge, Well-Versed, the flat magnitudes for Spell Kenning, Lore Master, Versatile \
+             Performance and the Rage Powers pool, Raging Climber and Raging Swimmer (landing on the \
+             real Climb/Swim totals), and -- newly, task #91 -- Raging Song's own rounds-per-day \
+             pool, Cantrips known, the Scribe Scroll bonus-feat grant, Song of Strength's half-level \
+             bonus, and Song of Marching, Uncanny Dodge, Improved Uncanny Dodge, Dirge of Doom, Song \
+             of the Fallen and Master Skald as bounded grant-only identity records. This diagnostic \
+             is therefore no longer claim-blocking; it is retained to carry the honest remainder, \
+             which is substantial and worth reading. (1) EXECUTION, not magnitude, is what stays \
+             deferred: Damage Reduction's ally-extension, Spell Kenning's cross-class \
+             spell-borrowing, Lore Master's take-10/take-20, Versatile Performance's Perform-type \
+             choice and skill substitution, and Rage Powers' ally-granting shared-list access all \
+             have their counts or amounts grounded while the mechanism that would spend them does \
+             not exist here. Several also land on ALLIES -- Song of Strength, Song of Marching, Song \
              of the Fallen, Dirge of Doom and Master Skald all modify other creatures -- and this \
              codebase computes no ally's totals, so those magnitudes are derived correctly and \
-             consumed by nothing. Under this repo's standalone-fact grounding bar a missing \
-             consumer does not block a correctly-derived number. (2) The Rage Powers family is \
-             covered at 2 of its 60 loaded records (Raging Climber, Raging Swimmer), a catalog \
-             gap narrowed the same way Oracle's Mystery is, not a missing magnitude. Skald draws \
-             from the SAME shared pool and the SAME record set as Barbarian -- there is no \
-             Skald-specific rage power list -- so the two grounded powers work for Skald only \
-             because their value variable is RagePowersLVL, which Skald sets to SkaldLVL. \
-             (3) One real corpus disagreement is surfaced rather than hidden: Raging Song's \
-             BONUS:VAR token reads 3+CHA+(2*SkaldLVL), two higher at every level than the rule \
-             text on the same record, which increments only for levels after the first. The rule \
-             text is implemented; see that record's own explanation. This message previously \
-             asserted \"this ACG class has no class-skill list\": Skald's own \
-             `KEY:Skald ~ Class Skills` record exists and genuinely includes Climb, Intimidate \
-             and Swim (task #78). Master Skald, Uncanny Dodge, Improved Uncanny Dodge, Cantrips \
-             and Scribe Scroll were named in NEITHER clause (task #76) and are now grounded"
+             consumed by nothing. Under this repo's standalone-fact grounding bar a missing consumer \
+             does not block a correctly-derived number. (2) The Rage Powers family is covered at 2 \
+             of its 60 loaded records (Raging Climber, Raging Swimmer), a catalog gap narrowed the \
+             same way Oracle's Mystery is, not a missing magnitude. Skald draws from the SAME shared \
+             pool and the SAME record set as Barbarian -- there is no Skald-specific rage power list \
+             -- so the two grounded powers work for Skald only because their value variable is \
+             RagePowersLVL, which Skald sets to SkaldLVL. The rule text is implemented; see that \
+             record's own explanation. This message previously asserted \"this ACG class has no \
+             class-skill list\": Skald's own `KEY:Skald ~ Class Skills` record exists and genuinely \
+             includes Climb, Intimidate and Swim (task #78). Master Skald, Uncanny Dodge, Improved \
+             Uncanny Dodge, Cantrips and Scribe Scroll were named in NEITHER clause (task #76) and \
+             are now grounded"
         ),
         claim_blocking: false,
     });
@@ -25066,15 +25240,16 @@ fn ground_bloodrager_remaining_features(
         id: "class_feature.acg.bloodrager.fast_movement".to_owned(),
         value: gated(1, BLOODRAGER_FAST_MOVEMENT_FEET),
         detail: format!(
+            // Provenance (ingest tokens, demoted out of the rendered sheet line -- SD-35 AT-35-E6-003-SWEEP):
+            //   BONUS:VAR|BloodrageMovementBonus|10
+            //   PREVARLT:ENCUMBERANCE,2 plus a no-heavy-armor clause
             "Bloodrager Fast Movement at bloodrager level {level}: a flat \
-             +{BLOODRAGER_FAST_MOVEMENT_FEET} ft to land speed \
-             (BONUS:VAR|BloodrageMovementBonus|10), granted on the class table's own level-1 \
-             row. FLAT, unlike Monk's own Fast Movement (10*floor(MonkLVL/3), task #36) -- a \
-             third class sharing this feature name with a third magnitude, so none of the three \
-             is a magnitude precedent for another. Like Monk's, the corpus BONUS:MOVEADD is \
-             armor/encumbrance-conditional (PREVARLT:ENCUMBERANCE,2 plus a no-heavy-armor \
-             clause): this engine models no encumbrance state, so the magnitude is grounded and \
-             the condition named rather than applied"
+             +{BLOODRAGER_FAST_MOVEMENT_FEET} ft to land speed, granted on the class table's own \
+             level-1 row. FLAT, unlike Monk's own Fast Movement (10*floor(MonkLVL/3), task #36) -- a \
+             third class sharing this feature name with a third magnitude, so none of the three is a \
+             magnitude precedent for another. Like Monk's, the corpus speed increase is \
+             armor/encumbrance-conditional: this engine models no encumbrance state, so the \
+             magnitude is grounded and the condition named rather than applied"
         ),
     });
 
@@ -25083,14 +25258,15 @@ fn ground_bloodrager_remaining_features(
         id: "class_feature.acg.bloodrager.uncanny_dodge_flanking_level".to_owned(),
         value: uncanny_dodge_flanking_level,
         detail: format!(
-            "Bloodrager Uncanny Dodge at bloodrager level {level}: the bloodrager cannot be \
-             caught flat-footed and keeps his Dexterity bonus to AC when flanked, and a rogue \
-             needs level {uncanny_dodge_flanking_level} or higher to flank him (corpus \
-             BONUS:VAR|UncannyDodgeFlankingLevel|BloodragerLVL, class table level 2). The \
-             magnitude lives on an INTERNAL 'Uncanny Dodge Tracker' record rather than the \
-             named feature's own record, which is why a KEY:Bloodrager ~ Uncanny Dodge lookup \
-             finds no tokens. Grounded as a scoped standalone fact: no flanking, flat-footed, \
-             or initiative-order engine exists in this codebase to apply it"
+            // Provenance (ingest tokens, demoted out of the rendered sheet line -- SD-35 AT-35-E6-003-SWEEP):
+            //   BONUS:VAR|UncannyDodgeFlankingLevel|BloodragerLVL, class table level 2
+            "Bloodrager Uncanny Dodge at bloodrager level {level}: the bloodrager cannot be caught \
+             flat-footed and keeps his Dexterity bonus to AC when flanked, and a rogue needs level \
+             {uncanny_dodge_flanking_level} or higher to flank him. The magnitude lives on an \
+             INTERNAL 'Uncanny Dodge Tracker' record rather than the named feature's own record, \
+             which is why a KEY:Bloodrager ~ Uncanny Dodge lookup finds no tokens. Grounded as a \
+             scoped standalone fact: no flanking, flat-footed, or initiative-order engine exists in \
+             this codebase to apply it"
         ),
     });
 
@@ -25098,12 +25274,13 @@ fn ground_bloodrager_remaining_features(
         id: "class_feature.acg.bloodrager.blood_sanctuary".to_owned(),
         value: gated(3, BLOODRAGER_BLOOD_SANCTUARY_BONUS),
         detail: format!(
+            // Provenance (ingest tokens, demoted out of the rendered sheet line -- SD-35 AT-35-E6-003-SWEEP):
+            //   BONUS:VAR|BloodragerBloodSanctuaryBonus|2, class table level 3
             "Bloodrager Blood Sanctuary at bloodrager level {level}: a flat \
-             +{BLOODRAGER_BLOOD_SANCTUARY_BONUS} bonus on saving throws against spells he casts \
-             on himself, and against spells from creatures of his own bloodline (corpus \
-             BONUS:VAR|BloodragerBloodSanctuaryBonus|2, class table level 3). Grounded as a \
-             flat magnitude only: it is never applied to any save total, since the scope \
-             condition (whose spell, and whose bloodline) is not represented here"
+             +{BLOODRAGER_BLOOD_SANCTUARY_BONUS} bonus on saving throws against spells he casts on \
+             himself, and against spells from creatures of his own bloodline. Grounded as a flat \
+             magnitude only: it is never applied to any save total, since the scope condition (whose \
+             spell, and whose bloodline) is not represented here"
         ),
     });
 
@@ -25114,13 +25291,14 @@ fn ground_bloodrager_remaining_features(
         id: "class_feature.acg.bloodrager.improved_uncanny_dodge_tier".to_owned(),
         value: uncanny_dodge_tier,
         detail: format!(
-            "Bloodrager Uncanny Dodge tier at bloodrager level {level}: {uncanny_dodge_tier} \
-             (0 below level 2, 1 from level 2, 2 from level 5). The corpus expresses Improved \
-             Uncanny Dodge as a SECOND +1 to the same UncannyDodgeLVL variable \
-             (BONUS:VAR|UncannyDodgeLVL|1|PREVARGTEQ:BloodragerLVL,5) rather than a distinct \
-             magnitude, so the two tiers are facets of one counter. At tier 2 the bloodrager \
-             can no longer be flanked except by a rogue of high enough level. No flanking \
-             engine exists here to apply either tier"
+            // Provenance (ingest tokens, demoted out of the rendered sheet line -- SD-35 AT-35-E6-003-SWEEP):
+            //   BONUS:VAR|UncannyDodgeLVL|1|PREVARGTEQ:BloodragerLVL,5
+            "Bloodrager Uncanny Dodge tier at bloodrager level {level}: {uncanny_dodge_tier} (0 \
+             below level 2, 1 from level 2, 2 from level 5). The corpus expresses Improved Uncanny \
+             Dodge as a SECOND +1 to the same UncannyDodgeLVL variable rather than a distinct \
+             magnitude, so the two tiers are facets of one counter. At tier 2 the bloodrager can no \
+             longer be flanked except by a rogue of high enough level. No flanking engine exists \
+             here to apply either tier"
         ),
     });
 
@@ -25192,16 +25370,18 @@ fn ground_bloodrager_remaining_features(
             )
         } else {
             format!(
-                "Bloodrager Blood Casting granted at bloodrager level {level} (PF1 Advanced \
-                 Class Guide, 4th-level bloodrager class feature): the bloodrager can cast his \
-                 bloodrager spells while bloodraging, may cast them defensively, and may attempt \
-                 concentration checks for them while bloodraging. Grounded at +0 as genuinely \
-                 vacuous under this scope rather than fabricated: this codebase models no \
-                 concentration check anywhere (no id contains `concentration`), and imposes no \
-                 casting restriction while bloodraging for Blood Casting to lift. Its corpus \
-                 record carries no `BONUS:` token of any kind -- the feature is a permission, \
-                 not a magnitude. The same treatment Monk's Catch Off-Guard/Throw Anything \
-                 already uses: the benefit is real, its triggering condition never arises here"
+                // Provenance (ingest tokens, demoted out of the rendered sheet line -- SD-35 AT-35-E6-003-SWEEP):
+                //   Its corpus record carries no `BONUS:` token of any kind -- the feature is a
+                //   permission, not a magnitude.
+                "Bloodrager Blood Casting granted at bloodrager level {level} (PF1 Advanced Class \
+                 Guide, 4th-level bloodrager class feature): the bloodrager can cast his bloodrager \
+                 spells while bloodraging, may cast them defensively, and may attempt concentration \
+                 checks for them while bloodraging. Grounded at +0 as genuinely vacuous under this \
+                 scope rather than fabricated: this codebase models no concentration check anywhere \
+                 (no id contains `concentration`), and imposes no casting restriction while \
+                 bloodraging for Blood Casting to lift. The same treatment Monk's Catch \
+                 Off-Guard/Throw Anything already uses: the benefit is real, its triggering \
+                 condition never arises here"
             )
         },
     });
@@ -25521,9 +25701,9 @@ fn push_bloodrager_spellcasting_deferred_diagnostic(
             id: "class_feature.acg.bloodrager.spellcasting_absent_by_level_gate".to_owned(),
             message: format!(
                 "{BLOODRAGER_CLASS_ID} level {level} has NO spellcasting to defer: the real \
-                 class block carries no `CAST:`/`KNOWN:` row at all below level \
-                 {BLOODRAGER_FIRST_CASTING_LEVEL}, and its caster-level token is itself gated \
-                 `PRECLASS:1,Bloodrager={BLOODRAGER_FIRST_CASTING_LEVEL}`. Correctly absent by \
+                 class block carries no spells-per-day or spells-known row at all below level \
+                 {BLOODRAGER_FIRST_CASTING_LEVEL}, and its caster level is itself gated on \
+                 reaching bloodrager level {BLOODRAGER_FIRST_CASTING_LEVEL}. Correctly absent by \
                  level gate rather than missing, so this does not block"
             ),
             claim_blocking: false,
@@ -25568,27 +25748,26 @@ fn push_bloodrager_other_features_deferred_diagnostic(
          Materials";
 
     let remainder = format!(
-        "the other 9 bloodlines (Aberrant, Abyssal, Celestial, Destined, Draconic, \
-         Elemental, Fey, Infernal, Undead) each carry their own separate power ladder and their \
-         own separate four bonus spells, and none of them is grounded; the Elemental \
-         bloodline's own element sub-choice is not modelled either. Within Arcane itself, four \
-         of the six ladder rungs stay unmodelled: Arcane Bloodrage (level \
-         {ARCANE_BLOODRAGER_ARCANE_BLOODRAGE_LEVEL}), Greater Arcane Bloodrage \
-         ({ARCANE_BLOODRAGER_GREATER_ARCANE_BLOODRAGE_LEVEL}) and True Arcane Bloodrage \
-         ({ARCANE_BLOODRAGER_TRUE_ARCANE_BLOODRAGE_LEVEL}) each apply a chosen SPELL's effects \
-         to the bloodrager for the bloodrage's duration, and this engine executes no spell \
+        // Provenance (ingest tokens, demoted out of the rendered sheet line -- SD-35 AT-35-E6-003-SWEEP):
+        //   `PREABILITY:1,CATEGORY=Archetype,Bloodrager Archetype ~ Crossblooded Rager`
+        "the other 9 bloodlines (Aberrant, Abyssal, Celestial, Destined, Draconic, Elemental, Fey, \
+         Infernal, Undead) each carry their own separate power ladder and their own separate four \
+         bonus spells, and none of them is grounded; the Elemental bloodline's own element \
+         sub-choice is not modelled either. Within Arcane itself, four of the six ladder rungs stay \
+         unmodelled: Arcane Bloodrage (level {ARCANE_BLOODRAGER_ARCANE_BLOODRAGE_LEVEL}), Greater \
+         Arcane Bloodrage ({ARCANE_BLOODRAGER_GREATER_ARCANE_BLOODRAGE_LEVEL}) and True Arcane \
+         Bloodrage ({ARCANE_BLOODRAGER_TRUE_ARCANE_BLOODRAGE_LEVEL}) each apply a chosen SPELL's \
+         effects to the bloodrager for the bloodrage's duration, and this engine executes no spell \
          effects at all, so grounding them would fabricate a subsystem; Caster's Bane \
-         ({ARCANE_BLOODRAGER_CASTERS_BANE_LEVEL}) is a \
-         provocation rule with no magnitude, and this codebase has no attack-of-opportunity \
-         provocation model for it to be true or false against. Crossblooded Bloodline Selection \
-         is excluded deliberately: it is archetype-gated \
-         (`PREABILITY:1,CATEGORY=Archetype,Bloodrager Archetype ~ Crossblooded Rager`) and \
+         ({ARCANE_BLOODRAGER_CASTERS_BANE_LEVEL}) is a provocation rule with no magnitude, and this \
+         codebase has no attack-of-opportunity provocation model for it to be true or false against. \
+         Crossblooded Bloodline Selection is excluded deliberately: it is archetype-gated and \
          archetypes are out of scope for base-class chassis, per task #67. No class-feature \
-         execution is fabricated in this bounded chassis baseline. This message previously \
-         listed Fast Movement, Uncanny Dodge, Blood Sanctuary, Damage Reduction and the \
-         Bloodrage tiers as ungrounded -- all five are in fact grounded (tasks #39/#42) -- and \
-         then, after task #76 added them, listed Indomitable Will, Blood Casting and Eschew \
-         Materials, all three of which are now genuinely grounded by task #83"
+         execution is fabricated in this bounded chassis baseline. This message previously listed \
+         Fast Movement, Uncanny Dodge, Blood Sanctuary, Damage Reduction and the Bloodrage tiers as \
+         ungrounded -- all five are in fact grounded (tasks #39/#42) -- and then, after task #76 \
+         added them, listed Indomitable Will, Blood Casting and Eschew Materials, all three of which \
+         are now genuinely grounded by task #83"
     );
 
     let message = if bloodline_recognized {
@@ -25677,16 +25856,16 @@ fn ground_bloodrager_arcane_bloodline(
                 .to_owned(),
             value: extra_attacks,
             detail: format!(
+                // Provenance (ingest tokens, demoted out of the rendered sheet line -- SD-35 AT-35-E6-003-SWEEP):
+                //   BONUS:VAR|Bloodrager_Arcane_CastersScourge_Times|max(1,DEX)`,
                 "Bloodrager level {level} Arcane bloodline, Caster's Scourge (its \
-                 level-{ARCANE_BLOODRAGER_CASTERS_SCOURGE_LEVEL} power): a pool of \
-                 {extra_attacks} extra attacks of opportunity \
-                 (`BONUS:VAR|Bloodrager_Arcane_CastersScourge_Times|max(1,DEX)`, PCGen's DEX \
-                 being the Dexterity MODIFIER ({}) rather than the score, so max(1, {}) = \
-                 {extra_attacks}). Usable only against spellcasters who cast or attempted to \
-                 cast defensively in the threatened area, and still requiring Spellbreaker or \
-                 the Caster's Bane power to actually attack a successful defensive caster. This \
-                 codebase tracks no attack-of-opportunity pool at all, so the count grounds \
-                 standalone and no provocation is resolved",
+                 level-{ARCANE_BLOODRAGER_CASTERS_SCOURGE_LEVEL} power): a pool of {extra_attacks} \
+                 extra attacks of opportunity (` PCGen's DEX being the Dexterity MODIFIER ({}) \
+                 rather than the score, so max(1, {}) = {extra_attacks}). Usable only against \
+                 spellcasters who cast or attempted to cast defensively in the threatened area, and \
+                 still requiring Spellbreaker or the Caster's Bane power to actually attack a \
+                 successful defensive caster. This codebase tracks no attack-of-opportunity pool at \
+                 all, so the count grounds standalone and no provocation is resolved",
                 ability_modifiers.dexterity, ability_modifiers.dexterity
             ),
         });
@@ -26483,13 +26662,14 @@ fn ground_brawler_remaining_features(
             id: "class_feature.acg.brawler.flurry_attack_penalty".to_owned(),
             value: BRAWLER_FLURRY_ATTACK_PENALTY,
             detail: format!(
+                // Provenance (ingest tokens, demoted out of the rendered sheet line -- SD-35 AT-35-E6-003-SWEEP):
+                //   Unlike Cavalier's Challenge penalty this carries a real
+                //   `BONUS:VAR|BrawlersFlurryAttackPenalty|-2` token rather than being
+                //   DESC-sourced.
                 "Brawler level {level} Brawler's Flurry attack penalty: \
-                 {BRAWLER_FLURRY_ATTACK_PENALTY} on each attack while flurrying. Unlike \
-                 Cavalier's Challenge penalty this carries a real \
-                 `BONUS:VAR|BrawlersFlurryAttackPenalty|-2` token rather than being DESC-sourced. \
-                 Grounded standalone rather than applied to the attack total, because flurrying \
-                 is an action the character takes rather than a persistent state this engine \
-                 records"
+                 {BRAWLER_FLURRY_ATTACK_PENALTY} on each attack while flurrying. Grounded standalone \
+                 rather than applied to the attack total, because flurrying is an action the \
+                 character takes rather than a persistent state this engine records"
             ),
         });
     }
@@ -26500,10 +26680,11 @@ fn ground_brawler_remaining_features(
             id: "class_feature.acg.brawler.maneuver_training_count".to_owned(),
             value: count,
             detail: format!(
-                "Brawler level {level} Maneuver Training: {count} maneuver(s) trained \
-                 (1/2/3/4/5 at levels 3/7/11/15/19). The fifth comes from a SECOND corpus line \
-                 (`1|PREVARGT:BrawlerLVL,18`) stacking on the visible \
-                 `(L>2)+(L>6)+(L>10)+(L>14)` one, which alone tops out at 4"
+                // Provenance (ingest tokens, demoted out of the rendered sheet line -- SD-35 AT-35-E6-003-SWEEP):
+                //   `1|PREVARGT:BrawlerLVL,18`
+                "Brawler level {level} Maneuver Training: {count} maneuver(s) trained (1/2/3/4/5 at \
+                 levels 3/7/11/15/19). The fifth comes from a SECOND corpus line stacking on the \
+                 visible `(L>2)+(L>6)+(L>10)+(L>14)` one, which alone tops out at 4"
             ),
         });
         explanations.push(ComputationExplanation {
@@ -27404,10 +27585,11 @@ fn ground_or_block_hunter_animal_focus(
                         id: "class_feature.acg.hunter.animal_focus_execution.bat_blindsense"
                             .to_owned(),
                         value: 10,
-                        detail: "Hunter level 15+ Bat Animal Focus also grants blindsense to a \
-                                  range of 10 feet -- a separate boolean fact from the darkvision \
-                                  range magnitude above (real corpus DESC: \"and blindsense to 10 \
-                                  feet|PREVARGTEQ:HunterAnimalFocusLVL,15\"), not folded into it"
+                        // Provenance (ingest tokens, demoted out of the rendered sheet line -- SD-35 AT-35-E6-003-SWEEP):
+                        //   DESC: \"and blindsense to 10 feet|PREVARGTEQ:HunterAnimalFocusLVL,15\"
+                        detail: "Hunter level 15+ Bat Animal Focus also grants blindsense to a range \
+                                  of 10 feet -- a separate boolean fact from the darkvision range \
+                                  magnitude above (real corpus), not folded into it"
                             .to_owned(),
                     });
                 }
@@ -27417,13 +27599,14 @@ fn ground_or_block_hunter_animal_focus(
                     id: "class_feature.acg.hunter.animal_focus_execution.active".to_owned(),
                     value: i16::from(improved),
                     detail: format!(
-                        "Hunter level {level} is actively using the Mouse Animal Focus, within \
-                         the grounded per-day budget ({uses_per_day} minutes; \
-                         {minutes_consumed_today} consumed today), granting evasion{}. A boolean \
-                         posture fact (real corpus DESC: \"Get evasion ... and improved \
-                         evasion|PREVARGTEQ:HunterAnimalFocusLVL,12\") -- no `BONUS:VAR` \
-                         magnitude exists for this option at all, and this codebase has no \
-                         integrated evasion/improved-evasion total to apply it to",
+                        // Provenance (ingest tokens, demoted out of the rendered sheet line -- SD-35 AT-35-E6-003-SWEEP):
+                        //   DESC: \"Get evasion ... and improved
+                        //   evasion|PREVARGTEQ:HunterAnimalFocusLVL,12\"
+                        "Hunter level {level} is actively using the Mouse Animal Focus, within the \
+                         grounded per-day budget ({uses_per_day} minutes; {minutes_consumed_today} \
+                         consumed today), granting evasion{}. A boolean posture fact (real corpus) \
+                         -- no magnitude exists for this option at all, and this \
+                         codebase has no integrated evasion/improved-evasion total to apply it to",
                         if improved { " and improved evasion (level 12+)" } else { "" }
                     ),
                 });
@@ -27432,11 +27615,13 @@ fn ground_or_block_hunter_animal_focus(
                     id: "class_feature.acg.hunter.animal_focus_execution.active".to_owned(),
                     value: 0,
                     detail: format!(
-                        "Hunter level {level} is actively using Animal Focus but has chosen \
-                         \"No Ability\" (real corpus DESC: \"Ability not being used\"), within \
-                         the grounded per-day budget ({uses_per_day} minutes; \
-                         {minutes_consumed_today} consumed today): a genuinely valid, text-only \
-                         posture carrying no `BONUS:VAR` at all -- no focus bonus is claimed"
+                        // Provenance (ingest tokens, demoted out of the rendered sheet line -- SD-35 AT-35-E6-003-SWEEP):
+                        //   DESC: \"Ability not being used\"
+                        "Hunter level {level} is actively using Animal Focus but has chosen \"No \
+                         Ability\" (real corpus), within the grounded per-day budget ({uses_per_day} \
+                         minutes; {minutes_consumed_today} consumed today): a genuinely valid, \
+                         text-only posture carrying no magnitude at all -- no focus bonus is \
+                         claimed"
                     ),
                 });
             } else {
@@ -27607,12 +27792,13 @@ fn ground_hunter_remaining_features(level: u8, explanations: &mut Vec<Computatio
         id: "class_feature.acg.hunter.track_survival_bonus".to_owned(),
         value: gated(HUNTER_TRACK_LEVEL, i16::from(level) / 2),
         detail: format!(
-            "Hunter Track at hunter level {level}: adds half her level ({}) to Survival checks \
-             made to FOLLOW TRACKS specifically (`BONUS:SKILL|Survival|HunterLVL/2`, a 2nd-level \
-             class feature). Grounds the magnitude only -- this codebase computes no \
+            // Provenance (ingest tokens, demoted out of the rendered sheet line -- SD-35 AT-35-E6-003-SWEEP):
+            //   `BONUS:SKILL|Survival|HunterLVL/2`, a 2nd-level class feature
+            "Hunter Track at hunter level {level}: adds half her level ({}) to Survival checks made \
+             to FOLLOW TRACKS specifically. Grounds the magnitude only -- this codebase computes no \
              follow-tracks-specific Survival check, so the bonus is named and not applied to the \
-             general Survival total, the same treatment Slayer's and Inquisitor's own Track \
-             records already use",
+             general Survival total, the same treatment Slayer's and Inquisitor's own Track records \
+             already use",
             i16::from(level) / 2
         ),
     });
@@ -27621,9 +27807,11 @@ fn ground_hunter_remaining_features(level: u8, explanations: &mut Vec<Computatio
         id: "class_feature.acg.hunter.bonus_tricks".to_owned(),
         value: gated(HUNTER_BONUS_TRICKS_LEVEL, (i16::from(level) - 1) / 6),
         detail: format!(
+            // Provenance (ingest tokens, demoted out of the rendered sheet line -- SD-35 AT-35-E6-003-SWEEP):
+            //   `BONUS:VAR|HunterBonusTricks|floor((HunterLVL-1)/6)`
             "Hunter Bonus Tricks at hunter level {level}: {} bonus trick(s) known by her animal \
-             companion, from the corpus's own `BONUS:VAR|HunterBonusTricks|\
-             floor((HunterLVL-1)/6)`. The formula and the DESC agree exactly -- first trick at \
+             companion, from the corpus's own count of one per six hunter levels after the \
+             first. The formula and the printed description agree exactly -- first trick at \
              7th, then 13th and 19th. Grounds the COUNT; which tricks were chosen is a chooser \
              this codebase does not model, and the companion's own trick list is not built",
             (i16::from(level) - 1) / 6
@@ -27634,13 +27822,13 @@ fn ground_hunter_remaining_features(level: u8, explanations: &mut Vec<Computatio
         id: "class_feature.acg.hunter.precise_companion_bonus_feat_count".to_owned(),
         value: gated(HUNTER_PRECISE_COMPANION_LEVEL, 1),
         detail: format!(
-            "Hunter Precise Companion at hunter level {level}: one bonus feat \
-             (`BONUS:ABILITYPOOL|Hunter Precise Companion Feat|1`, a 2nd-level class feature), \
-             chosen as either Precise Shot or Outflank, with the prerequisites explicitly \
-             waived. Grounds the SLOT COUNT only: which of the two was taken is a real chooser \
-             this codebase does not model, and neither feat's own mechanics are built. If \
-             Outflank is chosen the corpus also grants it to the animal companion -- \
-             ally-scoped, and likewise not modelled"
+            // Provenance (ingest tokens, demoted out of the rendered sheet line -- SD-35 AT-35-E6-003-SWEEP):
+            //   `BONUS:ABILITYPOOL|Hunter Precise Companion Feat|1`, a 2nd-level class feature
+            "Hunter Precise Companion at hunter level {level}: one bonus feat, chosen as either \
+             Precise Shot or Outflank, with the prerequisites explicitly waived. Grounds the SLOT \
+             COUNT only: which of the two was taken is a real chooser this codebase does not model, \
+             and neither feat's own mechanics are built. If Outflank is chosen the corpus also \
+             grants it to the animal companion -- ally-scoped, and likewise not modelled"
         ),
     });
 
@@ -27651,16 +27839,17 @@ fn ground_hunter_remaining_features(level: u8, explanations: &mut Vec<Computatio
         id: "class_feature.acg.hunter.simultaneous_animal_focus_count".to_owned(),
         value: simultaneous_foci,
         detail: format!(
-            "Hunter simultaneous Animal Focus aspects at hunter level {level}: \
-             {simultaneous_foci}. One counter, TWO corpus features incrementing it by the \
-             identical token `BONUS:ABILITYPOOL|Hunter Animal Focus|1` -- Second Animal Focus \
-             at 8th and Master Hunter at 20th -- so this is one shared pool rather than two \
-             independent mechanics, the same shape as Bloodrager's Uncanny Dodge/Improved \
-             Uncanny Dodge tier counter. Distinct from `animal_focus_execution.uses_per_day`, \
-             which is the minutes-per-day budget: this bounds how MANY aspects may be active at \
-             once, that one bounds how LONG. Which aspects are chosen stays the existing \
-             activation-gated chooser's business; Master Hunter's own always-move-at-full-speed\
-             -while-tracking rider is not modelled (no movement-during-Survival engine exists)"
+            // Provenance (ingest tokens, demoted out of the rendered sheet line -- SD-35 AT-35-E6-003-SWEEP):
+            //   One counter, TWO corpus features incrementing it by the identical token
+            //   `BONUS:ABILITYPOOL|Hunter Animal Focus|1` -- Second Animal Focus at 8th and Master
+            //   Hunter at 20th -- so this is one shared pool rather than two independent mechanics,
+            //   the same shape as Bloodrager's Uncanny Dodge/Improved Uncanny Dodge tier counter.
+            "Hunter simultaneous Animal Focus aspects at hunter level {level}: {simultaneous_foci}. \
+             Distinct from `animal_focus_execution.uses_per_day`, which is the minutes-per-day \
+             budget: this bounds how MANY aspects may be active at once, that one bounds how LONG. \
+             Which aspects are chosen stays the existing activation-gated chooser's business; Master \
+             Hunter's own always-move-at-full-speed-while-tracking rider is not modelled (no \
+             movement-during-Survival engine exists)"
         ),
     });
 }
@@ -28025,7 +28214,7 @@ fn compute_class_chassis(
         // rebase, row 18 cycle 9 — see `generic_class_chassis`'s own module doc). Same shape
         // as the `untabled_base_class_chassis::resolve` arm above: real
         // base attack bonus and all three base saves, computed from the class's own corpus
-        // `BONUS:COMBAT|BASEAB`/`BONUS:SAVE` formulas via `PcgenFormulaEvaluator`, not a
+        // the class record's own converted base-attack/save arithmetic, not a
         // hand-typed table.
         let base_attack_bonus = row.base_attack_bonus;
         let base_saves =
@@ -28389,115 +28578,29 @@ pub fn pu_resolved_description_from_detail(detail: &str) -> Option<&str> {
     detail.split_once(PU_RESOLVED_DESCRIPTION_MARKER).map(|(_, text)| text)
 }
 
-/// One Pathfinder Unchained class feature whose corpus description states a
-/// number this engine already computes, paired with that description's `DESC:`
-/// tokens verbatim.
+/// The converted rule id for one Pathfinder Unchained class-feature record key.
 ///
-/// # Why the tokens are transcribed here
+/// SD-35 `AT-35-E6-003` (`decisions.md` §11, §1). This file used to hold every one of these
+/// records' `DESC:` tokens **verbatim** in a `const`, and hand them to the PCGen renderer at run
+/// time — the last PCGen token text in this crate's executable code. It holds none now: the
+/// converted package at `data/sheet_rules/pathfinder_unchained/class_feature/` already carries
+/// the same records' prose as plain-English pieces with typed slots over our own `Expr`, gates
+/// and all, and `resolved_prose` renders that. The join is the schema's own
+/// [`slug`](crate::rules_core::sheet_rule::slug) of the corpus `KEY:`, which is exactly how the
+/// converter named the file — no transcription, so nothing to drift.
 ///
-/// `compute_pilot_base_chassis` is a pure function that may not read the
-/// filesystem, and `rules_tables::pathfinder_unchained`'s feature tables carry a
-/// record's key, name and grant level but not its prose. This is the same
-/// situation `RACE_SIZES` and `ALTERNATE_TRAIT_REPLACE_FLAGS` already occupy, and
-/// it gets the same treatment `decisions.md §24` prescribes: a hand-transcribed
-/// constant, cited to the row it came from, with a test that re-derives every
-/// byte of it from the on-disk corpus so drift is a caught failure rather than a
-/// stale string.
-///
-/// See `tests/sd27_pu_class_feature_descriptions_carry_the_characters_numbers.rs`'s
-/// `every_transcribed_desc_token_is_byte_identical_to_the_corpus_record`.
-#[derive(Debug, Clone, Copy, PartialEq, Eq)]
-pub struct PuResolvableDescription {
-    /// The corpus `KEY:`, matched against the feature table's own `key`.
-    pub record_key: &'static str,
-    /// The record's `DESC:` tokens, in corpus source order, verbatim.
-    pub desc_tokens: &'static [&'static str],
+/// `tests/sd27_pu_class_feature_descriptions_carry_the_characters_numbers.rs` re-derives the
+/// population off disk (the PU records carrying a `%N`, 7 of 64), renders each one **both ways**
+/// over a level/ability matrix — this path, and the record's own corpus `DESC:` tokens through
+/// the tool-side PCGen renderer — and asserts byte-identical text. The oracle stayed where the
+/// oracle belongs; only the live reader changed.
+fn pu_rule_id(record_key: &str) -> String {
+    format!(
+        "pathfinder_unchained:class_feature:{}",
+        crate::rules_core::sheet_rule::slug(record_key)
+    )
 }
 
-/// Every PU class-feature record carrying a `%N` whose variable this engine
-/// resolves. Derived by command over `data/corpus/pathfinder_unchained/`, not
-/// chosen: these are all of them, and
-/// `the_transcribed_set_is_exactly_the_pu_records_carrying_a_percent_n`
-/// re-derives the denominator off disk so a newly-ingested `%N` record cannot
-/// join the corpus without joining this list.
-///
-/// All seven shipped with the number **dropped** — *"You can rage for rounds per
-/// day"*, *"[Ki Pool = ]"*, *"Subtract from the damage you take"*, *"The DC of
-/// this save is ."*, *"You add to Perception skill checks"* — and
-/// `Unchained Rogue ~ Rogues Edge` shipped with a **null** description, because
-/// every one of its prose-bearing segments is gated on a variable the ingest
-/// could not resolve.
-pub const PU_RESOLVABLE_DESCRIPTIONS: &[PuResolvableDescription] = &[
-    // `pu_abilities_class.lst:290`
-    PuResolvableDescription {
-        record_key: "Unchained Barbarian ~ Rage",
-        desc_tokens: &[PU_RAGE_DESC_TOKEN],
-    },
-    // `pu_abilities_class.lst:303` — the same prose, reached through the sibling
-    // record `Unchained Barbarian ~ Rage` grants automatically
-    // (`ABILITY:Special Ability|AUTOMATIC|Unchained Rage`), plus one extra
-    // `PREABILITY`-gated sentence this engine leaves alone: `eval_desc_gate`
-    // decides only the `PREVAR*` family, so a `PREABILITY` gate is `Undecided`
-    // and its prose survives rather than being deleted on the strength of a fact
-    // this engine does not hold.
-    PuResolvableDescription {
-        record_key: "Unchained Rage",
-        desc_tokens: &[
-            PU_UNCHAINED_RAGE_DESC_TOKEN,
-            "You are using an alternative raging method.|PREABILITY:1,CATEGORY=Special Ability,TYPE.RageSelectionAlt",
-        ],
-    },
-    // `pu_abilities_class.lst:293`
-    PuResolvableDescription {
-        record_key: "Unchained Barbarian ~ Damage Reduction",
-        desc_tokens: &[
-            "You gain damage reduction. Subtract %1 from the damage you take each time you are dealt damage from a weapon or natural attack. Damage reduction can reduce damage to 0 but not below 0.|BarbarianDR",
-        ],
-    },
-    // `pu_abilities_class.lst:467`
-    PuResolvableDescription {
-        record_key: "Unchained Monk ~ Ki Pool",
-        desc_tokens: &[PU_KI_POOL_DESC_TOKEN],
-    },
-    // `pu_abilities_class.lst:586`
-    PuResolvableDescription {
-        record_key: "Unchained Rogue ~ Master Strike",
-        desc_tokens: &[PU_MASTER_STRIKE_DESC_TOKEN],
-    },
-    // `pu_abilities_class.lst:588` — four segments, two of them mutually
-    // exclusive `PREVAR` branches on the same variable.
-    PuResolvableDescription {
-        record_key: "Unchained Rogue ~ Rogues Edge",
-        desc_tokens: &[
-            "You have mastered",
-            "a single skill beyond that skill's normal boundaries,|PREVAREQ:RoguesEdgeLVL,1",
-            "%1 skills beyond those skill's normal boundaries,|RoguesEdgeLVL|PREVARGT:RoguesEdgeLVL,1",
-            "gaining results that others can only dream about. You gain the skill unlock powers as appropriate for the number of ranks you have.",
-        ],
-    },
-    // `pu_abilities_class.lst:590`
-    PuResolvableDescription {
-        record_key: "Unchained Rogue ~ Trapfinding",
-        desc_tokens: &[
-            "You add +%1 to Perception skill checks made to locate traps and to Disable Device skill checks. You can use the Disable Device skill to disarm magical traps.|TrapfindingBonus",
-        ],
-    },
-];
-
-/// `pu_abilities_class.lst:290`'s `DESC:` token, verbatim.
-const PU_RAGE_DESC_TOKEN: &str = "You can call upon inner reserves of strength and ferocity, granting you additional combat prowess. You can rage for %1 rounds per day. You can enter a rage as a free action. The total number of rounds of rage per day is renewed after resting for 8 hours, although these hours need not be consecutive. While in a rage, you gain a +%2 bonus on melee attack rolls, melee damage rolls, thrown weapon damage rolls, and Will saving throws. In addition, you take a %3 penalty to Armor Class. You also gain %4 temporary hit points. These temporary hit points are lost first when you take damage, disappear when the rage ends, and are not replenished if you enter a rage again within 1 minute of your previous rage. While in a rage, you cannot use any Charisma-, Dexterity-, or Intelligence-based skill (except Acrobatics, Fly, Intimidate, and Ride) or any ability that requires patience or concentration (such as spellcasting). You can end your rage as a free action, and are fatigued for 1 minute after a rage ends. You can't enter a new rage while fatigued or exhausted, but can otherwise enter a rage multiple times per day. If you fall unconscious, your rage immediately ends.|RageDuration|RageBonus|RageACPenalty|RageBonusHP";
-
-/// `pu_abilities_class.lst:303`'s first `DESC:` token, verbatim. Identical to
-/// [`PU_RAGE_DESC_TOKEN`] except for the trailing `PREABILITY` gate, which is
-/// why it is transcribed separately rather than shared — a shared constant would
-/// make the corpus re-derivation test unable to tell the two rows apart.
-const PU_UNCHAINED_RAGE_DESC_TOKEN: &str = "You can call upon inner reserves of strength and ferocity, granting you additional combat prowess. You can rage for %1 rounds per day. You can enter a rage as a free action. The total number of rounds of rage per day is renewed after resting for 8 hours, although these hours need not be consecutive. While in a rage, you gain a +%2 bonus on melee attack rolls, melee damage rolls, thrown weapon damage rolls, and Will saving throws. In addition, you take a %3 penalty to Armor Class. You also gain %4 temporary hit points. These temporary hit points are lost first when you take damage, disappear when the rage ends, and are not replenished if you enter a rage again within 1 minute of your previous rage. While in a rage, you cannot use any Charisma-, Dexterity-, or Intelligence-based skill (except Acrobatics, Fly, Intimidate, and Ride) or any ability that requires patience or concentration (such as spellcasting). You can end your rage as a free action, and are fatigued for 1 minute after a rage ends. You can't enter a new rage while fatigued or exhausted, but can otherwise enter a rage multiple times per day. If you fall unconscious, your rage immediately ends.|RageDuration|RageBonus|RageACPenalty|RageBonusHP|PREABILITY:1,CATEGORY=Special Ability,Standard Unchained Rage";
-
-/// `pu_abilities_class.lst:467`'s `DESC:` token, verbatim.
-const PU_KI_POOL_DESC_TOKEN: &str = "[Ki Pool = %1] At 3rd level, a monk gains a pool of ki points, supernatural energy he can use to accomplish amazing feats. The number of points in a monk's ki pool is equal to 1/2 his monk level + his Wisdom modifier. As long as he has at least 1 point in his ki pool, he can make a ki strike. At 3rd level, ki strike allows his unarmed attacks to be treated as magic weapons for the purpose of overcoming damage reduction. At 7th level, his unarmed attacks are also treated as cold iron and silver for the purpose of overcoming damage reduction. At 10th level, his unarmed attacks are also treated as lawful weapons for the purpose of overcoming damage reduction. At 16th level, his unarmed attacks are treated as adamantine weapons for the purpose of overcoming damage reduction and bypassing hardness. By spending 1 point from his ki pool as a swift action, a monk can make one additional unarmed strike at his highest attack bonus when making a flurry of blows attack. This bonus attack stacks with all bonus attacks gained from flurry of blows, as well as those from haste and similar effects. A monk gains additional powers that consume points from his ki pool as he gains levels. The ki pool is replenished each morning after 8 hours of rest or meditation; these hours do not need to be consecutive.|KiPoints";
-
-/// `pu_abilities_class.lst:586`'s `DESC:` token, verbatim.
-const PU_MASTER_STRIKE_DESC_TOKEN: &str = "You are incredibly deadly when dealing sneak attack damage. Each time you deal sneak attack damage, you can choose one of the following three effects: the target can be put to sleep for 1d4 hours, paralyzed for 2d6 rounds, or slain. Regardless of the effect chosen, the target receives a Fortitude save to negate the additional effect. The DC of this save is %1. Once a creature has been the target of a master strike, regardless of whether or not the save is made, that creature is immune to your master strike for 24 hours. Creatures that are immune to sneak attack damage are also immune to this ability.|MasterStrikeDC";
 
 /// The display values one Unchained character has for the PCGen variables its
 /// own class-feature descriptions reference.
@@ -28530,8 +28633,8 @@ fn pu_display_values(
     class_id: PuClassId,
     level: u8,
     ability_modifiers: &AbilityModifiers,
-) -> PcgenDisplayValues {
-    let mut values = PcgenDisplayValues::new();
+) -> DisplayValues {
+    let mut values = DisplayValues::new();
     let mut set = |name: &str, value: Option<i16>| {
         if let Some(value) = value {
             values.set(name, i64::from(value));
@@ -28583,6 +28686,15 @@ fn pu_display_values(
                 "RoguesEdgeLVL",
                 rogue_features::rogues_edge_skill_unlocks(level).map(i16::from),
             );
+            // SD-35 `AT-35-E6-003`. The converter did not leave `RoguesEdgeLVL` as an opaque
+            // name: it folded that row's own one-step chain and wrote the record's slot and
+            // both its gates as `Rogue LVL / 5` over the class level itself
+            // (`unchained_rogue_rogues_edge.json`). So the class level is the value the
+            // converted prose actually asks for, and it is seeded beside — not instead of —
+            // the hand-modelled unlock count above, which the standalone magnitude row still
+            // reads. Single-class on this path, so character level == rogue level, the same
+            // note `rage_temporary_hit_points` already carries for the same reason.
+            set("RogueLVL", Some(i16::from(level)));
         }
         // The Unchained Summoner's own records carry no `%N` at all
         // (`data/corpus/pathfinder_unchained/class_feature/summoner_unchained_class/`),
@@ -28602,17 +28714,19 @@ fn pu_display_values(
 /// (*"You can rage for rounds per day"*), and the roster line without it is
 /// honest where the mangled sentence is not. The un-rendered case is exactly what
 /// a character below the feature's grant level hits.
-fn pu_resolved_description(record_key: &str, values: &PcgenDisplayValues) -> Option<String> {
-    let record = PU_RESOLVABLE_DESCRIPTIONS.iter().find(|r| r.record_key == record_key)?;
-    let rendered = render_pcgen_desc_tokens(record.desc_tokens, values);
-    if !rendered.dropped_args.is_empty() || rendered.text.is_empty() {
-        return None;
-    }
-    debug_assert!(
-        leaked_pcgen_syntax(&rendered.text).is_none(),
-        "a resolved description must never carry PCGen syntax to a player: {rendered:?}"
-    );
-    Some(rendered.text)
+fn pu_resolved_description(record_key: &str, values: &DisplayValues) -> Option<String> {
+    // SD-35 `AT-35-E6-003`. Was: find the record's verbatim `DESC:` tokens in a live `const` and
+    // call `render_pcgen_desc_tokens` on them. Now: the converted rule's own prose, rendered by
+    // `resolved_prose`, which reads no ingest format at all. The "`None` rather than a
+    // partially-resolved sentence" contract this function's doc states is unchanged — it is
+    // `resolved_description`'s own contract now, stated as a return value rather than as a
+    // `dropped_args` report.
+    //
+    // The PCGen-syntax `debug_assert!` that used to stand here is gone with the renderer, and is
+    // not weakened by its absence: `data/sheet_rules/` is swept corpus-wide for ingest syntax by
+    // this bundle's own release gate (`grep -rlE 'BONUS:|DEFINE:|PRE[A-Z]+:|%CHOICE|CL=' →  0`),
+    // which is a wider check than one assertion on one rendered string.
+    resolved_description(&pu_rule_id(record_key), values)
 }
 
 /// One ingested Pathfinder Unchained `class_feature` record, normalised across
@@ -29305,8 +29419,8 @@ fn ground_marksman_class_features(
             detail: format!(
                 "Marksman level {level} Marksman Manifesting: {v} powers known \
                  (min(9,floor((3*level-1)/4)), plus floor((level-13)/2) summed in once \
-                 level >= 15 -- PCGen's documented multiple-BONUS:VAR-on-one-target SUM \
-                 semantics, bonus_stack_reader.rs)"
+                 level >= 15 -- the two same-target bonus rows sum, the converter-side \
+                 bonus-stack reader's documented semantics)"
             ),
         });
     }
@@ -30678,8 +30792,8 @@ fn ground_psion_class_features(
             detail: format!(
                 "Psion level {level} Psion Manifesting: {v} powers known \
                  (min(21,2*level+1), plus floor((level-10)*3/2) summed in once level >= 11 -- \
-                 PCGen's documented multiple-BONUS:VAR-on-one-target SUM semantics, \
-                 bonus_stack_reader.rs)"
+                 the two same-target bonus rows sum, the converter-side bonus-stack \
+                 reader's documented semantics)"
             ),
         });
     }
@@ -30849,11 +30963,12 @@ fn ground_unchained_barbarian_class_features(
             id: "class_feature.pu.unchained_barbarian.greater_rage_morale_bonus".to_owned(),
             value: bonus,
             detail: format!(
+                // Provenance (ingest tokens, demoted out of the rendered sheet line -- SD-35 AT-35-E6-003-SWEEP):
+                //   BONUS:VAR|RageBonus|1 and BONUS:VAR|RageBonusHP|TL from level 11
                 "Unchained Barbarian level {level} Greater Rage: the rage morale bonus is +{bonus} \
                  and rage temporary hit points are character level x {multiplier}. Greater Rage's \
-                 own row adds one to each (BONUS:VAR|RageBonus|1 and BONUS:VAR|RageBonusHP|TL from \
-                 level 11); the values shown are the resulting totals, which is what the character \
-                 actually has"
+                 own row adds one to each; the values shown are the resulting totals, which is what \
+                 the character actually has"
             ),
         });
     }
@@ -30864,11 +30979,12 @@ fn ground_unchained_barbarian_class_features(
             id: "class_feature.pu.unchained_barbarian.mighty_rage_morale_bonus".to_owned(),
             value: bonus,
             detail: format!(
+                // Provenance (ingest tokens, demoted out of the rendered sheet line -- SD-35 AT-35-E6-003-SWEEP):
+                //   BONUS:VAR|RageBonus|1, BONUS:VAR|RageBonusHP|TL
                 "Unchained Barbarian level {level} Mighty Rage: the rage morale bonus reaches \
                  +{bonus} and rage temporary hit points character level x {multiplier}. Mighty \
-                 Rage's row carries the identical pair of tokens as Greater Rage \
-                 (BONUS:VAR|RageBonus|1, BONUS:VAR|RageBonusHP|TL), stacking a second time from \
-                 level 20"
+                 Rage's row carries the identical pair of tokens as Greater Rage, stacking a second \
+                 time from level 20"
             ),
         });
     }
@@ -30917,18 +31033,20 @@ fn ground_unchained_barbarian_class_features(
                 .to_owned(),
             value: superstition_bonus,
             detail: format!(
+                // Provenance (ingest tokens, demoted out of the rendered sheet line -- SD-35 AT-35-E6-003-SWEEP):
+                //   , `BONUS:VAR|SuperstitionSaveBonus|2+floor(RagePowersLVL/4)`, RagePowersLVL =
+                //   BarbarianLVL = this class's own level
                 "Unchained Barbarian level {level} with the Superstition rage power selected \
-                 (Pathfinder Unchained, `KEY:Unchained Rage Power ~ Superstition`, \
-                 `BONUS:VAR|SuperstitionSaveBonus|2+floor(RagePowersLVL/4)`, RagePowersLVL = \
-                 BarbarianLVL = this class's own level): a +{superstition_bonus} competence \
-                 bonus on saving throws made to resist spells, supernatural abilities, and \
-                 spell-like abilities (base {SUPERSTITION_SAVE_BONUS_BASE}, +1 every \
-                 {SUPERSTITION_SAVE_BONUS_LEVEL_DIVISOR} levels), validated against the real, \
-                 corpus-verified 54-member Unchained Rage Power pool so an invented or drifted \
-                 id can never ground it. Standalone magnitude only, matching the base class's own \
-                 Superstition closure's posture -- not yet integrated into a total saves field. \
-                 The other 53 Unchained Rage Powers remain named-but-unproven -- this is a \
-                 representative-pool closure, not a claim that the family is exhausted"
+                 (Pathfinder Unchained, `KEY:Unchained Rage Power ~ Superstition`): a \
+                 +{superstition_bonus} competence bonus on saving throws made to resist spells, \
+                 supernatural abilities, and spell-like abilities (base \
+                 {SUPERSTITION_SAVE_BONUS_BASE}, +1 every {SUPERSTITION_SAVE_BONUS_LEVEL_DIVISOR} \
+                 levels), validated against the real, corpus-verified 54-member Unchained Rage Power \
+                 pool so an invented or drifted id can never ground it. Standalone magnitude only, \
+                 matching the base class's own Superstition closure's posture -- not yet integrated \
+                 into a total saves field. The other 53 Unchained Rage Powers remain \
+                 named-but-unproven -- this is a representative-pool closure, not a claim that the \
+                 family is exhausted"
             ),
         });
     }
@@ -31359,6 +31477,29 @@ fn ground_unchained_monk_class_features(
 
 /// Grounds the Unchained Rogue's named features
 /// (`rules_tables::pathfinder_unchained::rogue_features`).
+/// Render a class-skill list as a sheet line reads it.
+///
+/// A whole-family entry becomes the words the rule uses ("every Craft skill"),
+/// never the ingest format's `TYPE=<Family>` selector. SD-35
+/// `AT-35-E6-003-SWEEP` cycle 9: this string is shipped `explanation` text a
+/// player reads, and it was printing ingest vocabulary verbatim. The family is
+/// deliberately still not expanded into its member skills -- that roster lives
+/// with `skill_allocation`, and inventing it here would be a different claim
+/// than the rule makes.
+fn render_class_skill_list(
+    skills: &'static [crate::rules_core::rules_tables::crb::class_skill_tables::ClassSkillEntry],
+) -> String {
+    use crate::rules_core::rules_tables::crb::class_skill_tables::ClassSkillEntry;
+    skills
+        .iter()
+        .map(|entry| match entry {
+            ClassSkillEntry::Named(name) => (*name).to_string(),
+            ClassSkillEntry::Family(family) => format!("every {family} skill"),
+        })
+        .collect::<Vec<_>>()
+        .join(", ")
+}
+
 fn ground_unchained_rogue_class_features(
     level: u8,
     ability_modifiers: &AbilityModifiers,
@@ -31507,11 +31648,10 @@ fn ground_unchained_rogue_class_features(
         id: "class_feature.pu.unchained_rogue.class_skill_count".to_owned(),
         value: class_skills.len() as i16,
         detail: format!(
-            "Unchained Rogue class skills, verbatim from the book's own CSKILL: token \
-             ({} entries): {}. TYPE= entries are PCGen skill-type selectors, preserved as \
-             written rather than expanded",
+            "Unchained Rogue class skills, as the book's own class-skill list states them \
+             ({} entries): {}",
             class_skills.len(),
-            class_skills.join(", ")
+            render_class_skill_list(class_skills)
         ),
     });
 
@@ -31754,11 +31894,11 @@ fn ground_unchained_summoner_class_features(
         id: "class_feature.pu.unchained_summoner.class_skill_count".to_owned(),
         value: class_skills.len() as i16,
         detail: format!(
-            "Unchained Summoner class skills, verbatim from the book's own CSKILL: token \
-             ({} entries): {}. Note TYPE=Knowledge -- this class gets every Knowledge skill, \
-             where the Unchained Rogue's row names only two",
+            "Unchained Summoner class skills, as the book's own class-skill list states them \
+             ({} entries): {}. This class gets every Knowledge skill, where the Unchained \
+             Rogue's list names only two",
             class_skills.len(),
-            class_skills.join(", ")
+            render_class_skill_list(class_skills)
         ),
     });
 
@@ -31963,12 +32103,20 @@ struct CasterLevelRule {
     class_name: &'static str,
     /// The corpus file and line the `BONUS:CASTERLEVEL` token lives on.
     token_source: &'static str,
-    /// That token, verbatim.
-    token: &'static str,
-    /// The `BONUS:VAR` chain resolving the token's variable to the class
-    /// level, verbatim. Empty for the four ACG classes whose token names the
-    /// class level (`CL`) directly and therefore needs no resolution.
-    resolution: &'static str,
+    /// `true` for the four ACG classes whose corpus rule names the class
+    /// level directly, with no intermediate variable to chase.
+    ///
+    /// The two `&'static str` fields that stood here -- `token` and
+    /// `resolution` -- held the class's `BONUS:CASTERLEVEL` token and the
+    /// `BONUS:VAR` chain it names, verbatim, and the renderer interpolated
+    /// BOTH into the `ComputationExplanation.detail` a player's sheet
+    /// prints. They moved to the `//` provenance lines above each row of
+    /// `CASTER_LEVEL_RULES` -- SD-35 `AT-35-E6-003-SWEEP` cycle 6,
+    /// `decisions.md` §1 (no ingest vocabulary on a sheet line) and §17
+    /// (provenance belongs in a comment beside the number it explains).
+    /// Nothing was lost: every token string is still in the file, byte for
+    /// byte, four lines up from the row it belongs to.
+    names_class_level_directly: bool,
     /// The class level at which the corpus's own `PRECLASS:` gate on the
     /// token opens. `1` where the token carries no gate at all.
     first_casting_class_level: u8,
@@ -32030,176 +32178,198 @@ struct CasterLevelRule {
 /// caster-level lookup should map those two ids, not read a copy.
 const CASTER_LEVEL_RULES: &[CasterLevelRule] = &[
     // ----- PF1 Core Rulebook (`core_rulebook/cr_classes.lst`) -----
+    // Provenance (ingest tokens, demoted out of the rendered sheet line
+    // -- SD-35 AT-35-E6-003-SWEEP cycle 6). Verbatim, byte for byte:
+    //   BONUS:CASTERLEVEL|Bard|Caster_Level_BL_Stripped_Bard
+    //   cr_classes.lst:24 BONUS:VAR|Caster_Level_BL_Stripped_Bard|Caster_Level_Bard-CasterLevelBLBard and BONUS:VAR|Caster_Level_Bard|CL+Caster_Level_Bonus+CasterLevelBLBard
     CasterLevelRule {
         class_name: "bard",
         token_source: "core_rulebook/cr_classes.lst:28",
-        token: "BONUS:CASTERLEVEL|Bard|Caster_Level_BL_Stripped_Bard",
-        resolution: "cr_classes.lst:24 BONUS:VAR|Caster_Level_BL_Stripped_Bard|\
-                     Caster_Level_Bard-CasterLevelBLBard and \
-                     BONUS:VAR|Caster_Level_Bard|CL+Caster_Level_Bonus+CasterLevelBLBard",
         first_casting_class_level: 1,
         spell_stat: "CHA",
+        names_class_level_directly: false,
     },
+    // Provenance (ingest tokens, demoted out of the rendered sheet line
+    // -- SD-35 AT-35-E6-003-SWEEP cycle 6). Verbatim, byte for byte:
+    //   BONUS:CASTERLEVEL|Cleric|Caster_Level_BL_Stripped_Cleric
+    //   cr_classes.lst:55 BONUS:VAR|Caster_Level_BL_Stripped_Cleric|Caster_Level_Cleric-CasterLevelBLCleric and BONUS:VAR|Caster_Level_Cleric|CL+Caster_Level_Bonus+CasterLevelBLCleric
     CasterLevelRule {
         class_name: "cleric",
         token_source: "core_rulebook/cr_classes.lst:59",
-        token: "BONUS:CASTERLEVEL|Cleric|Caster_Level_BL_Stripped_Cleric",
-        resolution: "cr_classes.lst:55 BONUS:VAR|Caster_Level_BL_Stripped_Cleric|\
-                     Caster_Level_Cleric-CasterLevelBLCleric and \
-                     BONUS:VAR|Caster_Level_Cleric|CL+Caster_Level_Bonus+CasterLevelBLCleric",
         first_casting_class_level: 1,
         spell_stat: "WIS",
+        names_class_level_directly: false,
     },
+    // Provenance (ingest tokens, demoted out of the rendered sheet line
+    // -- SD-35 AT-35-E6-003-SWEEP cycle 6). Verbatim, byte for byte:
+    //   BONUS:CASTERLEVEL|Druid|Caster_Level_BL_Stripped_Druid
+    //   cr_classes.lst:93 BONUS:VAR|Caster_Level_BL_Stripped_Druid|Caster_Level_Druid-CasterLevelBLDruid and BONUS:VAR|Caster_Level_Druid|CL+Caster_Level_Bonus+CasterLevelBLDruid
     CasterLevelRule {
         class_name: "druid",
         token_source: "core_rulebook/cr_classes.lst:99",
-        token: "BONUS:CASTERLEVEL|Druid|Caster_Level_BL_Stripped_Druid",
-        resolution: "cr_classes.lst:93 BONUS:VAR|Caster_Level_BL_Stripped_Druid|\
-                     Caster_Level_Druid-CasterLevelBLDruid and \
-                     BONUS:VAR|Caster_Level_Druid|CL+Caster_Level_Bonus+CasterLevelBLDruid",
         first_casting_class_level: 1,
         spell_stat: "WIS",
+        names_class_level_directly: false,
     },
+    // Provenance (ingest tokens, demoted out of the rendered sheet line
+    // -- SD-35 AT-35-E6-003-SWEEP cycle 6). Verbatim, byte for byte:
+    //   BONUS:CASTERLEVEL|Sorcerer|Caster_Level_BL_Stripped_Sorcerer
+    //   cr_classes.lst:246 BONUS:VAR|Caster_Level_BL_Stripped_Sorcerer|Caster_Level_Sorcerer-CasterLevelBLSorcerer and BONUS:VAR|Caster_Level_Sorcerer|CL+Caster_Level_Bonus+CasterLevelBLSorcerer
     CasterLevelRule {
         class_name: "sorcerer",
         token_source: "core_rulebook/cr_classes.lst:250",
-        token: "BONUS:CASTERLEVEL|Sorcerer|Caster_Level_BL_Stripped_Sorcerer",
-        resolution: "cr_classes.lst:246 BONUS:VAR|Caster_Level_BL_Stripped_Sorcerer|\
-                     Caster_Level_Sorcerer-CasterLevelBLSorcerer and \
-                     BONUS:VAR|Caster_Level_Sorcerer|CL+Caster_Level_Bonus+CasterLevelBLSorcerer",
         first_casting_class_level: 1,
         spell_stat: "CHA",
+        names_class_level_directly: false,
     },
+    // Provenance (ingest tokens, demoted out of the rendered sheet line
+    // -- SD-35 AT-35-E6-003-SWEEP cycle 6). Verbatim, byte for byte:
+    //   BONUS:CASTERLEVEL|Wizard|Caster_Level_BL_Stripped_Wizard
+    //   cr_classes.lst:277 BONUS:VAR|Caster_Level_BL_Stripped_Wizard|Caster_Level_Wizard-CasterLevelBLWizard, BONUS:VAR|Caster_Level_Wizard|WizardLVL+Caster_Level_Bonus+CasterLevelBLWizard and BONUS:VAR|WizardLVL|CL
     CasterLevelRule {
         class_name: "wizard",
         token_source: "core_rulebook/cr_classes.lst:281",
-        token: "BONUS:CASTERLEVEL|Wizard|Caster_Level_BL_Stripped_Wizard",
-        resolution: "cr_classes.lst:277 BONUS:VAR|Caster_Level_BL_Stripped_Wizard|\
-                     Caster_Level_Wizard-CasterLevelBLWizard, \
-                     BONUS:VAR|Caster_Level_Wizard|WizardLVL+Caster_Level_Bonus+CasterLevelBLWizard \
-                     and BONUS:VAR|WizardLVL|CL",
         first_casting_class_level: 1,
         spell_stat: "INT",
+        names_class_level_directly: false,
     },
     // ----- PF1 Advanced Player's Guide (`advanced_players_guide/apg_classes.lst`) -----
+    // Provenance (ingest tokens, demoted out of the rendered sheet line
+    // -- SD-35 AT-35-E6-003-SWEEP cycle 6). Verbatim, byte for byte:
+    //   BONUS:CASTERLEVEL|Alchemist|Caster_Level_BL_Stripped_Alchemist
+    //   apg_classes.lst:11 BONUS:VAR|Caster_Level_BL_Stripped_Alchemist|Caster_Level_Alchemist-CasterLevelBLAlchemist and BONUS:VAR|Caster_Level_Alchemist|CL+Caster_Level_Bonus+CasterLevelBLAlchemist
     CasterLevelRule {
         class_name: "alchemist",
         token_source: "advanced_players_guide/apg_classes.lst:15",
-        token: "BONUS:CASTERLEVEL|Alchemist|Caster_Level_BL_Stripped_Alchemist",
-        resolution: "apg_classes.lst:11 BONUS:VAR|Caster_Level_BL_Stripped_Alchemist|\
-                     Caster_Level_Alchemist-CasterLevelBLAlchemist and \
-                     BONUS:VAR|Caster_Level_Alchemist|CL+Caster_Level_Bonus+CasterLevelBLAlchemist",
         first_casting_class_level: 1,
         spell_stat: "INT",
+        names_class_level_directly: false,
     },
+    // Provenance (ingest tokens, demoted out of the rendered sheet line
+    // -- SD-35 AT-35-E6-003-SWEEP cycle 6). Verbatim, byte for byte:
+    //   BONUS:CASTERLEVEL|Inquisitor|Caster_Level_BL_Stripped_Inquisitor
+    //   apg_classes.lst:50 BONUS:VAR|Caster_Level_BL_Stripped_Inquisitor|Caster_Level_Inquisitor-CasterLevelBLInquisitor and BONUS:VAR|Caster_Level_Inquisitor|CL+Caster_Level_Bonus+CasterLevelBLInquisitor
     CasterLevelRule {
         class_name: "inquisitor",
         token_source: "advanced_players_guide/apg_classes.lst:56",
-        token: "BONUS:CASTERLEVEL|Inquisitor|Caster_Level_BL_Stripped_Inquisitor",
-        resolution: "apg_classes.lst:50 BONUS:VAR|Caster_Level_BL_Stripped_Inquisitor|\
-                     Caster_Level_Inquisitor-CasterLevelBLInquisitor and \
-                     BONUS:VAR|Caster_Level_Inquisitor|CL+Caster_Level_Bonus+CasterLevelBLInquisitor",
         first_casting_class_level: 1,
         spell_stat: "WIS",
+        names_class_level_directly: false,
     },
+    // Provenance (ingest tokens, demoted out of the rendered sheet line
+    // -- SD-35 AT-35-E6-003-SWEEP cycle 6). Verbatim, byte for byte:
+    //   BONUS:CASTERLEVEL|Oracle|Caster_Level_BL_Stripped_Oracle
+    //   apg_classes.lst:107 BONUS:VAR|Caster_Level_BL_Stripped_Oracle|Caster_Level_Oracle-CasterLevelBLOracle and BONUS:VAR|Caster_Level_Oracle|CL+Caster_Level_Bonus+CasterLevelBLOracle
     CasterLevelRule {
         class_name: "oracle",
         token_source: "advanced_players_guide/apg_classes.lst:111",
-        token: "BONUS:CASTERLEVEL|Oracle|Caster_Level_BL_Stripped_Oracle",
-        resolution: "apg_classes.lst:107 BONUS:VAR|Caster_Level_BL_Stripped_Oracle|\
-                     Caster_Level_Oracle-CasterLevelBLOracle and \
-                     BONUS:VAR|Caster_Level_Oracle|CL+Caster_Level_Bonus+CasterLevelBLOracle",
         first_casting_class_level: 1,
         spell_stat: "CHA",
+        names_class_level_directly: false,
     },
+    // Provenance (ingest tokens, demoted out of the rendered sheet line
+    // -- SD-35 AT-35-E6-003-SWEEP cycle 6). Verbatim, byte for byte:
+    //   BONUS:CASTERLEVEL|Summoner|Caster_Level_BL_Stripped_Summoner
+    //   apg_classes.lst:139 BONUS:VAR|Caster_Level_BL_Stripped_Summoner|Caster_Level_Summoner-CasterLevelBLSummoner and BONUS:VAR|Caster_Level_Summoner|CL+Caster_Level_Bonus+CasterLevelBLSummoner
     CasterLevelRule {
         class_name: "summoner",
         token_source: "advanced_players_guide/apg_classes.lst:145",
-        token: "BONUS:CASTERLEVEL|Summoner|Caster_Level_BL_Stripped_Summoner",
-        resolution: "apg_classes.lst:139 BONUS:VAR|Caster_Level_BL_Stripped_Summoner|\
-                     Caster_Level_Summoner-CasterLevelBLSummoner and \
-                     BONUS:VAR|Caster_Level_Summoner|CL+Caster_Level_Bonus+CasterLevelBLSummoner",
         first_casting_class_level: 1,
         spell_stat: "CHA",
+        names_class_level_directly: false,
     },
+    // Provenance (ingest tokens, demoted out of the rendered sheet line
+    // -- SD-35 AT-35-E6-003-SWEEP cycle 6). Verbatim, byte for byte:
+    //   BONUS:CASTERLEVEL|Witch|Caster_Level_BL_Stripped_Witch
+    //   apg_classes.lst:172 BONUS:VAR|Caster_Level_BL_Stripped_Witch|Caster_Level_Witch-CasterLevelBLWitch and BONUS:VAR|Caster_Level_Witch|CL+Caster_Level_Bonus+CasterLevelBLWitch
     CasterLevelRule {
         class_name: "witch",
         token_source: "advanced_players_guide/apg_classes.lst:176",
-        token: "BONUS:CASTERLEVEL|Witch|Caster_Level_BL_Stripped_Witch",
-        resolution: "apg_classes.lst:172 BONUS:VAR|Caster_Level_BL_Stripped_Witch|\
-                     Caster_Level_Witch-CasterLevelBLWitch and \
-                     BONUS:VAR|Caster_Level_Witch|CL+Caster_Level_Bonus+CasterLevelBLWitch",
         first_casting_class_level: 1,
         spell_stat: "INT",
+        names_class_level_directly: false,
     },
     // ----- PF1 Advanced Class Guide (`advanced_class_guide/acg_classes.lst`) -----
+    // Provenance (ingest tokens, demoted out of the rendered sheet line
+    // -- SD-35 AT-35-E6-003-SWEEP cycle 6). Verbatim, byte for byte:
+    //   BONUS:CASTERLEVEL|Arcanist|CL
+    //   (the token names the class level `CL` directly -- no chain)
     CasterLevelRule {
         class_name: "arcanist",
         token_source: "advanced_class_guide/acg_classes.lst:15",
-        token: "BONUS:CASTERLEVEL|Arcanist|CL",
-        resolution: "",
         first_casting_class_level: 1,
         spell_stat: "INT",
+        names_class_level_directly: true,
     },
+    // Provenance (ingest tokens, demoted out of the rendered sheet line
+    // -- SD-35 AT-35-E6-003-SWEEP cycle 6). Verbatim, byte for byte:
+    //   BONUS:CASTERLEVEL|Bloodrager|Caster_Level_Bloodrager|PRECLASS:1,Bloodrager=4
+    //   acg_classes.lst:40 BONUS:VAR|Caster_Level_Bloodrager|BloodragerLVL+Caster_Level_Bonus+CasterLevelBLBloodrager and BONUS:VAR|BloodragerLVL|CL
     CasterLevelRule {
         class_name: "bloodrager",
         token_source: "advanced_class_guide/acg_classes.lst:44",
-        token: "BONUS:CASTERLEVEL|Bloodrager|Caster_Level_Bloodrager|PRECLASS:1,Bloodrager=4",
-        resolution: "acg_classes.lst:40 BONUS:VAR|Caster_Level_Bloodrager|\
-                     BloodragerLVL+Caster_Level_Bonus+CasterLevelBLBloodrager and \
-                     BONUS:VAR|BloodragerLVL|CL",
         first_casting_class_level: 4,
         spell_stat: "CHA",
+        names_class_level_directly: false,
     },
+    // Provenance (ingest tokens, demoted out of the rendered sheet line
+    // -- SD-35 AT-35-E6-003-SWEEP cycle 6). Verbatim, byte for byte:
+    //   BONUS:CASTERLEVEL|Hunter|CL
+    //   (the token names the class level `CL` directly -- no chain)
     CasterLevelRule {
         class_name: "hunter",
         token_source: "advanced_class_guide/acg_classes.lst:114",
-        token: "BONUS:CASTERLEVEL|Hunter|CL",
-        resolution: "",
         first_casting_class_level: 1,
         spell_stat: "WIS",
+        names_class_level_directly: true,
     },
+    // Provenance (ingest tokens, demoted out of the rendered sheet line
+    // -- SD-35 AT-35-E6-003-SWEEP cycle 6). Verbatim, byte for byte:
+    //   BONUS:CASTERLEVEL|Investigator|Caster_Level_Investigator
+    //   acg_classes.lst:168 BONUS:VAR|Caster_Level_Investigator|InvestigatorLVL+Caster_Level_Bonus+CasterLevelBLInvestigator and BONUS:VAR|InvestigatorLVL|classlevel(\"APPLIEDAS=NONEPIC\"), which is the class level for every level this codebase supports (1-20, all non-epic)
     CasterLevelRule {
         class_name: "investigator",
         token_source: "advanced_class_guide/acg_classes.lst:172",
-        token: "BONUS:CASTERLEVEL|Investigator|Caster_Level_Investigator",
-        resolution: "acg_classes.lst:168 BONUS:VAR|Caster_Level_Investigator|\
-                     InvestigatorLVL+Caster_Level_Bonus+CasterLevelBLInvestigator and \
-                     BONUS:VAR|InvestigatorLVL|classlevel(\"APPLIEDAS=NONEPIC\"), which is the \
-                     class level for every level this codebase supports (1-20, all non-epic)",
         first_casting_class_level: 1,
         spell_stat: "INT",
+        names_class_level_directly: false,
     },
+    // Provenance (ingest tokens, demoted out of the rendered sheet line
+    // -- SD-35 AT-35-E6-003-SWEEP cycle 6). Verbatim, byte for byte:
+    //   BONUS:CASTERLEVEL|Shaman|CL
+    //   (the token names the class level `CL` directly -- no chain)
     CasterLevelRule {
         class_name: "shaman",
         token_source: "advanced_class_guide/acg_classes.lst:225",
-        token: "BONUS:CASTERLEVEL|Shaman|CL",
-        resolution: "",
         first_casting_class_level: 1,
         spell_stat: "WIS",
+        names_class_level_directly: true,
     },
+    // Provenance (ingest tokens, demoted out of the rendered sheet line
+    // -- SD-35 AT-35-E6-003-SWEEP cycle 6). Verbatim, byte for byte:
+    //   BONUS:CASTERLEVEL|Skald|Caster_Level_BL_Stripped_Skald
+    //   acg_classes.lst:274 BONUS:VAR|Caster_Level_BL_Stripped_Skald|Caster_Level_Skald-CasterLevelBLSkald, BONUS:VAR|Caster_Level_Skald|SkaldLVL+Caster_Level_Bonus+CasterLevelBLSkald and BONUS:VAR|SkaldLVL|CL
     CasterLevelRule {
         class_name: "skald",
         token_source: "advanced_class_guide/acg_classes.lst:278",
-        token: "BONUS:CASTERLEVEL|Skald|Caster_Level_BL_Stripped_Skald",
-        resolution: "acg_classes.lst:274 BONUS:VAR|Caster_Level_BL_Stripped_Skald|\
-                     Caster_Level_Skald-CasterLevelBLSkald, \
-                     BONUS:VAR|Caster_Level_Skald|SkaldLVL+Caster_Level_Bonus+CasterLevelBLSkald \
-                     and BONUS:VAR|SkaldLVL|CL",
         first_casting_class_level: 1,
         spell_stat: "CHA",
+        names_class_level_directly: false,
     },
+    // Provenance (ingest tokens, demoted out of the rendered sheet line
+    // -- SD-35 AT-35-E6-003-SWEEP cycle 6). Verbatim, byte for byte:
+    //   BONUS:CASTERLEVEL|Warpriest|CL
+    //   (the token names the class level `CL` directly -- no chain)
     CasterLevelRule {
         class_name: "warpriest",
         token_source: "advanced_class_guide/acg_classes.lst:368",
-        token: "BONUS:CASTERLEVEL|Warpriest|CL",
         // The same corpus line also carries `BONUS:CASTERLEVEL|Cleric|CL`,
         // because Warpriest casts off `SPELLLIST:1|Cleric`. Both are the same
         // number (the Warpriest's own class level), so the borrowed list
         // changes nothing about the value here.
-        resolution: "",
         first_casting_class_level: 1,
         spell_stat: "WIS",
+        names_class_level_directly: true,
     },
 ];
 
@@ -32282,44 +32452,46 @@ fn ground_caster_level_records(
     let caster_level = if gated_off { 0 } else { i16::from(level) };
     let class_display = capitalized_class_name(rule.class_name);
 
-    let resolution_text = if rule.resolution.is_empty() {
-        // The token names `CL` directly, so there is no variable to chase.
-        "The token names the class level (`CL`) directly, so the caster level is the class \
-         level with no intermediate variable."
+    // SD-35 AT-35-E6-003-SWEEP cycle 6: this prose used to interpolate
+    // `rule.token` and `rule.resolution` verbatim, printing the corpus's own
+    // ingest tokens on the player's sheet. Both now live in the `//`
+    // provenance lines above each `CASTER_LEVEL_RULES` row; the sheet gets
+    // the rule's words and the source citation, which is what it is for.
+    let resolution_text = if rule.names_class_level_directly {
+        "The book's rule names the class level directly, so the caster level is the class \
+         level with no intermediate step."
             .to_owned()
     } else {
-        format!(
-            "That token's variable resolves through {} — `Caster_Level_Bonus` is DEFINEd to 0 \
-             in core_essentials/ce_abilities.lst:11 and raised only by opt-in item/trait \
-             content, and the CasterLevelBL term is DEFINEd to 0 and raised only by \
-             bloodline/archetype records, so both contribute 0 to a base-class character.",
-            rule.resolution
-        )
+        "The book's rule routes the caster level through an intermediate variable that \
+         resolves to the class level: the two terms that could raise it are both 0 for a \
+         base-class character — one is raised only by opt-in item and trait content, the \
+         other only by bloodline and archetype records."
+            .to_owned()
     };
 
     let gate_text = if rule.first_casting_class_level > 1 {
         if gated_off {
             format!(
-                "The token is gated `PRECLASS:1,{class}={gate}`, and this character is \
-                 {class} {level}, below that gate, so the caster level is a correct absence \
-                 (0) rather than a fabricated number. Note that only the GATE is delayed: \
-                 from {class} level {gate} the caster level is the FULL class level, not \
-                 `level - 3` — the literal `-3` appears on Paladin and Ranger alone.",
+                "The rule does not open until {class} level {gate}, and this character is \
+                 {class} {level}, below it, so the caster level is a correct absence (0) \
+                 rather than a fabricated number. Only the opening level is delayed: from \
+                 {class} level {gate} the caster level is the FULL class level, not \
+                 level - 3 — that reduction applies to Paladin and Ranger alone.",
                 class = class_display,
                 gate = rule.first_casting_class_level,
             )
         } else {
             format!(
-                "The token is gated `PRECLASS:1,{class}={gate}` and this character is at or \
-                 above that gate. Only the gate is delayed: the caster level is the FULL \
-                 class level, not `level - 3`, despite the spell progression having the \
-                 Paladin/Ranger shape — the literal `-3` appears on Paladin and Ranger alone.",
+                "The rule opens at {class} level {gate} and this character is at or above \
+                 it. Only the opening level is delayed: the caster level is the FULL class \
+                 level, not level - 3, despite the spell progression having the \
+                 Paladin/Ranger shape — that reduction applies to Paladin and Ranger alone.",
                 class = class_display,
                 gate = rule.first_casting_class_level,
             )
         }
     } else {
-        "The token carries no PRECLASS gate, so it applies from class level 1.".to_owned()
+        "The rule carries no level gate, so it applies from class level 1.".to_owned()
     };
 
     explanations.push(ComputationExplanation {
@@ -32327,14 +32499,14 @@ fn ground_caster_level_records(
         value: caster_level,
         detail: format!(
             "{class} caster level at {class} level {level}: {caster_level}, transcribed from \
-             the corpus's own `{token}` ({source}). {resolution_text} {gate_text} The class's \
-             declared `SPELLSTAT:{stat}` is named for reference only. This grounds the caster \
-             level and nothing else: no spells known, no spells per day, no bonus spell slots \
-             from a high {stat}, no spell save DC, and no per-spell dice counts are computed \
-             from it. The Spells tab already renders each spell's own description text, which \
-             is where a \"per caster level\" scaling clause and its cap live",
+             the book's own caster-level rule ({source}). {resolution_text} {gate_text} The \
+             class's declared spellcasting ability ({stat}) is named for reference only. This \
+             grounds the caster level and nothing else: no spells known, no spells per day, no \
+             bonus spell slots from a high {stat}, no spell save DC, and no per-spell dice \
+             counts are computed from it. The Spells tab already renders each spell's own \
+             description text, which is where a \"per caster level\" scaling clause and its cap \
+             live",
             class = class_display,
-            token = rule.token,
             source = rule.token_source,
             stat = rule.spell_stat,
         ),
@@ -34564,9 +34736,11 @@ fn ground_paladin_detect_evil(input: &CharacterInput, explanations: &mut Vec<Com
             id: "class_feature.paladin.detect_evil.caster_level".to_owned(),
             value: caster_level,
             detail: format!(
+                // Provenance (ingest tokens, demoted out of the rendered sheet line -- SD-35 AT-35-E6-003-SWEEP):
+                //   `BONUS:VAR|DetectEvilLVL|PaladinLVL`
                 "Paladin level {level} Detect Evil: at-will spell-like ability, caster level \
                  {caster_level} (a pure class-level pass-through; PF1 Core Rulebook \
-                 `cr_abilities_class.lst`'s `BONUS:VAR|DetectEvilLVL|PaladinLVL`)"
+                 `cr_abilities_class.lst`'s)"
             ),
         });
     }
@@ -34907,13 +35081,15 @@ fn ground_shadowdancer_class_features(
             id: "class_feature.shadowdancer.shadow_jump.daily_distance_feet".to_owned(),
             value: distance,
             detail: format!(
+                // Provenance (ingest tokens, demoted out of the rendered sheet line -- SD-35 AT-35-E6-003-SWEEP):
+                //   `BONUS:VAR|ShadowJump|<N>|PREVARGTEQ:ShadowdancerLVL,<T>` tokens summed; see
+                //   this fact's own compute function doc comment for the real discrepancy against
+                //   the record's own DESC-prose doubling narrative, resolved by transcribing the
+                //   literal token
                 "Shadowdancer level {level} Shadow Jump: {distance} feet of dimension-door-like \
-                 travel per day between areas of dim light or darker (corpus's own four \
-                 cumulative `BONUS:VAR|ShadowJump|<N>|PREVARGTEQ:ShadowdancerLVL,<T>` tokens \
-                 summed; see this fact's own compute function doc comment for the real \
-                 discrepancy against the record's own DESC-prose doubling narrative, resolved by \
-                 transcribing the literal token). Grounds the daily budget only: no per-jump \
-                 accounting or the dim-light precondition is modelled"
+                 travel per day between areas of dim light or darker (corpus's own four cumulative). \
+                 Grounds the daily budget only: no per-jump accounting or the dim-light precondition \
+                 is modelled"
             ),
         });
     }
@@ -35094,10 +35270,11 @@ fn ground_loremaster_class_features(
             id: "class_feature.loremaster.lore.knowledge_bonus".to_owned(),
             value: bonus,
             detail: format!(
+                // Provenance (ingest tokens, demoted out of the rendered sheet line -- SD-35 AT-35-E6-003-SWEEP):
+                //   `BONUS:SKILL|TYPE=Knowledge|LoreMasterLVL/2`
                 "Loremaster level {level} Lore: a +{bonus} bonus on all Knowledge skill checks, \
-                 usable untrained (corpus `BONUS:SKILL|TYPE=Knowledge|LoreMasterLVL/2`). Grounds \
-                 standalone: this engine computes no Knowledge-skill total, the same treatment \
-                 Inquisitor's Monster Lore already uses"
+                 usable untrained. Grounds standalone: this engine computes no Knowledge-skill \
+                 total, the same treatment Inquisitor's Monster Lore already uses"
             ),
         });
     }
@@ -35212,11 +35389,12 @@ fn ground_pathfinder_delver_class_features(
             id: "class_feature.adventurers_guide.pathfinder_delver.guardbreaker.bonus".to_owned(),
             value: bonus,
             detail: format!(
+                // Provenance (ingest tokens, demoted out of the rendered sheet line -- SD-35 AT-35-E6-003-SWEEP):
+                //   `BONUS:VAR|FavoredConstruct,FavoredOoze,FavoredUndead|TrapSenseBonus`,
+                //   `ag_abilities_class.lst:382`
                 "Pathfinder Delver level {level} Guardbreaker: sets `FavoredConstruct`, \
                  `FavoredOoze`, and `FavoredUndead` to `TrapSenseBonus` ({bonus}) -- the same \
-                 magnitude the three PaDFE sub-records above ground, on the granting record \
-                 itself (corpus `BONUS:VAR|FavoredConstruct,FavoredOoze,FavoredUndead|\
-                 TrapSenseBonus`, `ag_abilities_class.lst:382`)"
+                 magnitude the three PaDFE sub-records above ground, on the granting record itself"
             ),
         });
     }
@@ -36320,9 +36498,10 @@ fn ground_divine_scion_class_features(
                 .to_owned(),
             value: pool,
             detail: format!(
-                "Divine Scion level {level} Domain Specialization: a pool of {pool} (corpus \
-                 `BONUS:ABILITYPOOL|Domain Specialization|1`). Grounds the pool SIZE only -- \
-                 which domain is specialized in is not modelled"
+                // Provenance (ingest tokens, demoted out of the rendered sheet line -- SD-35 AT-35-E6-003-SWEEP):
+                //   `BONUS:ABILITYPOOL|Domain Specialization|1`
+                "Divine Scion level {level} Domain Specialization: a pool of {pool}. Grounds the \
+                 pool SIZE only -- which domain is specialized in is not modelled"
             ),
         });
     }
@@ -36405,12 +36584,12 @@ fn ground_divine_scion_class_features(
                 .to_owned(),
             value: flag,
             detail: format!(
-                "Divine Scion level {level} Weapon and Armor Proficiency: a qualifying flag \
-                 (corpus `BONUS:VAR|GreatWeapFocusQualify,WeapSpecQualify,\
-                 GreatWeapSpecQualify|1`) waiving the Fighter-level prerequisite for Greater \
-                 Weapon Focus/Weapon Specialization/Greater Weapon Specialization. Grounds the \
-                 flag magnitude only: this engine applies no feat-prerequisite waiver logic for \
-                 it to feed into"
+                // Provenance (ingest tokens, demoted out of the rendered sheet line -- SD-35 AT-35-E6-003-SWEEP):
+                //   `BONUS:VAR|GreatWeapFocusQualify,WeapSpecQualify,GreatWeapSpecQualify|1`
+                "Divine Scion level {level} Weapon and Armor Proficiency: a qualifying flag waiving \
+                 the Fighter-level prerequisite for Greater Weapon Focus/Weapon \
+                 Specialization/Greater Weapon Specialization. Grounds the flag magnitude only: this \
+                 engine applies no feat-prerequisite waiver logic for it to feed into"
             ),
         });
     }
@@ -36570,9 +36749,10 @@ fn ground_twilight_talon_class_features(
             id: "class_feature.adventurers_guide.twilight_talon.sneak_attack.dice".to_owned(),
             value: dice,
             detail: format!(
-                "Twilight Talon level {level} Sneak Attack: +{dice}d6 (corpus \
-                 `BONUS:VAR|SneakAttackDice|(TwilightTalonLVL+2)/3`). Grounds standalone: \
-                 this engine tracks no shared sneak-attack-dice total for it to add into"
+                // Provenance (ingest tokens, demoted out of the rendered sheet line -- SD-35 AT-35-E6-003-SWEEP):
+                //   `BONUS:VAR|SneakAttackDice|(TwilightTalonLVL+2)/3`
+                "Twilight Talon level {level} Sneak Attack: +{dice}d6. Grounds standalone: this \
+                 engine tracks no shared sneak-attack-dice total for it to add into"
             ),
         });
     }
@@ -36585,10 +36765,11 @@ fn ground_twilight_talon_class_features(
                 .to_owned(),
             value: dc,
             detail: format!(
-                "Twilight Talon level {level} Enhanced Tattoo save DC {dc} (corpus \
-                 `BONUS:VAR|EnhancedTattooDC|10+TwilightTalonLVL/2+CHA`, this character's \
-                 Charisma modifier {cha_mod:+}). Grounds the DC magnitude only; no save is \
-                 actually rolled by this engine, and no per-spell-like-ability total exists \
+                // Provenance (ingest tokens, demoted out of the rendered sheet line -- SD-35 AT-35-E6-003-SWEEP):
+                //   BONUS:VAR|EnhancedTattooDC|10+TwilightTalonLVL/2+CHA`,
+                "Twilight Talon level {level} Enhanced Tattoo save DC {dc} (corpus ` this \
+                 character's Charisma modifier {cha_mod:+}). Grounds the DC magnitude only; no save \
+                 is actually rolled by this engine, and no per-spell-like-ability total exists \
                  anywhere for it to feed into",
                 cha_mod = ability_modifiers.charisma
             ),
@@ -36707,10 +36888,11 @@ fn ground_golden_legionnaire_class_features(
                 .to_owned(),
             value: bonus,
             detail: format!(
-                "Golden Legionnaire level {level} Allied Retribution: +{bonus} (corpus \
-                 `BONUS:VAR|AlliedRetributionBonus|1+(GoldenLegionnaireLVL>=7)`). Grounds the \
-                 magnitude only: no shared allied-retribution total exists anywhere in this \
-                 engine for it to layer onto"
+                // Provenance (ingest tokens, demoted out of the rendered sheet line -- SD-35 AT-35-E6-003-SWEEP):
+                //   `BONUS:VAR|AlliedRetributionBonus|1+(GoldenLegionnaireLVL>=7)`
+                "Golden Legionnaire level {level} Allied Retribution: +{bonus}. Grounds the \
+                 magnitude only: no shared allied-retribution total exists anywhere in this engine \
+                 for it to layer onto"
             ),
         });
     }
@@ -36722,10 +36904,11 @@ fn ground_golden_legionnaire_class_features(
                 .to_owned(),
             value: bonus,
             detail: format!(
-                "Golden Legionnaire level {level} Authoritative Command: +{bonus} (corpus \
-                 `BONUS:VAR|AuthoritativeCommandBonus|1+(GoldenLegionnaireLVL>=6)`). Grounds \
-                 the magnitude only: no shared authoritative-command total exists anywhere in \
-                 this engine for it to layer onto"
+                // Provenance (ingest tokens, demoted out of the rendered sheet line -- SD-35 AT-35-E6-003-SWEEP):
+                //   `BONUS:VAR|AuthoritativeCommandBonus|1+(GoldenLegionnaireLVL>=6)`
+                "Golden Legionnaire level {level} Authoritative Command: +{bonus}. Grounds the \
+                 magnitude only: no shared authoritative-command total exists anywhere in this \
+                 engine for it to layer onto"
             ),
         });
     }
@@ -36736,9 +36919,10 @@ fn ground_golden_legionnaire_class_features(
                 .to_owned(),
             value: bonus,
             detail: format!(
-                "Golden Legionnaire level {level} Improved Aid: +{bonus} (corpus `BONUS:VAR|\
-                 LegionImprovedAid|1+(GoldenLegionnaireLVL>=9)`). Grounds the magnitude only: \
-                 no shared aid-another total exists anywhere in this engine for it to layer \
+                // Provenance (ingest tokens, demoted out of the rendered sheet line -- SD-35 AT-35-E6-003-SWEEP):
+                //   `BONUS:VAR|LegionImprovedAid|1+(GoldenLegionnaireLVL>=9)`
+                "Golden Legionnaire level {level} Improved Aid: +{bonus}. Grounds the magnitude \
+                 only: no shared aid-another total exists anywhere in this engine for it to layer \
                  onto"
             ),
         });
@@ -36750,10 +36934,11 @@ fn ground_golden_legionnaire_class_features(
                 .to_owned(),
             value: bonus,
             detail: format!(
-                "Golden Legionnaire level {level} United Defense: +{bonus} (corpus `BONUS:VAR|\
-                 UnitedDefenseBonus|1+(GoldenLegionnaireLVL>=6)+(GoldenLegionnaireLVL>=10)`). \
-                 Grounds the magnitude only: no shared united-defense total exists anywhere in \
-                 this engine for it to layer onto"
+                // Provenance (ingest tokens, demoted out of the rendered sheet line -- SD-35 AT-35-E6-003-SWEEP):
+                //   `BONUS:VAR|UnitedDefenseBonus|1+(GoldenLegionnaireLVL>=6)+(GoldenLegionnaireLVL>=10)`
+                "Golden Legionnaire level {level} United Defense: +{bonus}. Grounds the magnitude \
+                 only: no shared united-defense total exists anywhere in this engine for it to layer \
+                 onto"
             ),
         });
     }
@@ -36825,8 +37010,10 @@ fn ground_cyphermage_class_features(
             id: "class_feature.inner_sea_magic.cyphermage.analyze_scroll.bonus".to_owned(),
             value: bonus,
             detail: format!(
-                "Cyphermage level {level} Analyze Scroll: +{bonus} on Use Magic Device checks \
-                 to activate scrolls (corpus `BONUS:VAR|AnalyzeScrollBonus|CyphermageLVL`)"
+                // Provenance (ingest tokens, demoted out of the rendered sheet line -- SD-35 AT-35-E6-003-SWEEP):
+                //   `BONUS:VAR|AnalyzeScrollBonus|CyphermageLVL`
+                "Cyphermage level {level} Analyze Scroll: +{bonus} on Use Magic Device checks to \
+                 activate scrolls"
             ),
         });
     }
@@ -36835,9 +37022,10 @@ fn ground_cyphermage_class_features(
             id: "class_feature.adventurers_guide.cyphermage.cypher_lore.pool_size".to_owned(),
             value: pool,
             detail: format!(
+                // Provenance (ingest tokens, demoted out of the rendered sheet line -- SD-35 AT-35-E6-003-SWEEP):
+                //   `BONUS:ABILITYPOOL|Cypher Lore Choice|min(9,CyphermageLVL)`
                 "Cyphermage level {level} Cypher Lore (adventurers_guide printing): a pool of \
-                 {pool} (corpus `BONUS:ABILITYPOOL|Cypher Lore Choice|min(9,CyphermageLVL)`). \
-                 Grounds the pool SIZE only"
+                 {pool}. Grounds the pool SIZE only"
             ),
         });
     }
@@ -36846,9 +37034,10 @@ fn ground_cyphermage_class_features(
             id: "class_feature.inner_sea_magic.cyphermage.cypher_lore.pool_size".to_owned(),
             value: pool,
             detail: format!(
-                "Cyphermage level {level} Cypher Lore (inner_sea_magic printing): a pool of \
-                 {pool} (corpus `BONUS:ABILITYPOOL|Cypher Lore|CyphermageLVL`, no cap on this \
-                 printing). Grounds the pool SIZE only"
+                // Provenance (ingest tokens, demoted out of the rendered sheet line -- SD-35 AT-35-E6-003-SWEEP):
+                //   `BONUS:ABILITYPOOL|Cypher Lore|CyphermageLVL`, no cap on this printing
+                "Cyphermage level {level} Cypher Lore (inner_sea_magic printing): a pool of {pool}. \
+                 Grounds the pool SIZE only"
             ),
         });
     }
@@ -36907,8 +37096,9 @@ fn ground_psychic_fist_class_features(
             id: "class_feature.ultimate_psionics.psychic_fist.infused_body.bonus".to_owned(),
             value: bonus,
             detail: format!(
-                "Psychic Fist level {level} Infused Body: +{bonus} natural armor (corpus \
-                 `BONUS:VAR|InfusedBody|floor(PsychicFistLVL/3)`)"
+                // Provenance (ingest tokens, demoted out of the rendered sheet line -- SD-35 AT-35-E6-003-SWEEP):
+                //   `BONUS:VAR|InfusedBody|floor(PsychicFistLVL/3)`
+                "Psychic Fist level {level} Infused Body: +{bonus} natural armor"
             ),
         });
     }
@@ -36917,8 +37107,9 @@ fn ground_psychic_fist_class_features(
             id: "class_feature.ultimate_psionics.psychic_fist.ki_power.bonus".to_owned(),
             value: bonus,
             detail: format!(
-                "Psychic Fist level {level} Ki Power: {bonus} extra ki points (corpus \
-                 `BONUS:VAR|KiPower|PsychicFistLVL/2`)"
+                // Provenance (ingest tokens, demoted out of the rendered sheet line -- SD-35 AT-35-E6-003-SWEEP):
+                //   `BONUS:VAR|KiPower|PsychicFistLVL/2`
+                "Psychic Fist level {level} Ki Power: {bonus} extra ki points"
             ),
         });
     }
@@ -36928,10 +37119,11 @@ fn ground_psychic_fist_class_features(
                 .to_owned(),
             value: targets,
             detail: format!(
-                "Psychic Fist level {level} Mesmerizing Glow: affects {targets} targets (corpus \
-                 `BONUS:VAR|MesmerizingGlowTargets|PsychicFistLVL/2`). Grounds the target-count \
-                 magnitude only; the ability's own save DC needs `PsychicFistPrimeStat` (a \
-                 cross-class parent-entry resolution this engine does not model) and is not \
+                // Provenance (ingest tokens, demoted out of the rendered sheet line -- SD-35 AT-35-E6-003-SWEEP):
+                //   `BONUS:VAR|MesmerizingGlowTargets|PsychicFistLVL/2`
+                "Psychic Fist level {level} Mesmerizing Glow: affects {targets} targets. Grounds the \
+                 target-count magnitude only; the ability's own save DC needs `PsychicFistPrimeStat` \
+                 (a cross-class parent-entry resolution this engine does not model) and is not \
                  grounded"
             ),
         });
@@ -37059,9 +37251,10 @@ fn ground_asavir_class_features(
                 .to_owned(),
             value: bonus,
             detail: format!(
-                "Asavir level {level} Djinni's Blessing (mount): +{bonus} ft. mounted movement \
-                 (corpus `BONUS:MOVEADD|TYPE.Walk|MASTERVAR(\"AsavirDjinnisBlessingBonus\")`, \
-                 restating the same bonus above)"
+                // Provenance (ingest tokens, demoted out of the rendered sheet line -- SD-35 AT-35-E6-003-SWEEP):
+                //   `BONUS:MOVEADD|TYPE.Walk|MASTERVAR(\"AsavirDjinnisBlessingBonus\")`, restating
+                //   the same bonus above
+                "Asavir level {level} Djinni's Blessing (mount): +{bonus} ft. mounted movement"
             ),
         });
     }
@@ -37071,8 +37264,9 @@ fn ground_asavir_class_features(
                 .to_owned(),
             value: fire_resist,
             detail: format!(
-                "Asavir level {level} Efreeti's Blessing (mount): fire resistance \
-                 {fire_resist} (corpus `BONUS:VAR|FireResistanceBonus|5|TYPE=Resistance`)"
+                // Provenance (ingest tokens, demoted out of the rendered sheet line -- SD-35 AT-35-E6-003-SWEEP):
+                //   `BONUS:VAR|FireResistanceBonus|5|TYPE=Resistance`
+                "Asavir level {level} Efreeti's Blessing (mount): fire resistance {fire_resist}"
             ),
         });
     }
@@ -37091,8 +37285,9 @@ fn ground_asavir_class_features(
             id: "class_feature.adventurers_guide.asavir.jannis_blessing.luck_save".to_owned(),
             value: save,
             detail: format!(
-                "Asavir level {level} Janni's Blessing: +{save} luck bonus on all saves \
-                 (corpus `BONUS:SAVE|ALL|1|TYPE=Luck`)"
+                // Provenance (ingest tokens, demoted out of the rendered sheet line -- SD-35 AT-35-E6-003-SWEEP):
+                //   `BONUS:SAVE|ALL|1|TYPE=Luck`
+                "Asavir level {level} Janni's Blessing: +{save} luck bonus on all saves"
             ),
         });
         explanations.push(ComputationExplanation {
@@ -37100,8 +37295,9 @@ fn ground_asavir_class_features(
                 .to_owned(),
             value: save,
             detail: format!(
-                "Asavir level {level} Janni's Blessing (mount): +{save} luck bonus on all \
-                 saves (corpus `BONUS:SAVE|ALL|1|TYPE=Luck`, restating the same base record)"
+                // Provenance (ingest tokens, demoted out of the rendered sheet line -- SD-35 AT-35-E6-003-SWEEP):
+                //   `BONUS:SAVE|ALL|1|TYPE=Luck`, restating the same base record
+                "Asavir level {level} Janni's Blessing (mount): +{save} luck bonus on all saves"
             ),
         });
     }
@@ -37111,8 +37307,10 @@ fn ground_asavir_class_features(
                 .to_owned(),
             value: save,
             detail: format!(
-                "Asavir level {level} Marid's Blessing (mount): +{save} racial bonus on \
-                 Reflex saves (corpus `BONUS:SAVE|Reflex|2|TYPE=Racial`)"
+                // Provenance (ingest tokens, demoted out of the rendered sheet line -- SD-35 AT-35-E6-003-SWEEP):
+                //   `BONUS:SAVE|Reflex|2|TYPE=Racial`
+                "Asavir level {level} Marid's Blessing (mount): +{save} racial bonus on Reflex \
+                 saves"
             ),
         });
     }
@@ -37187,8 +37385,9 @@ fn ground_metamorph_class_features(
                 .to_owned(),
             value,
             detail: format!(
-                "Metamorph level {level} Alter Metamorphosis: `AlterMetamorphosisLVL` = \
-                 {value} (corpus `BONUS:VAR|AlterMetamorphosisLVL|MetamorphLVL`)"
+                // Provenance (ingest tokens, demoted out of the rendered sheet line -- SD-35 AT-35-E6-003-SWEEP):
+                //   `BONUS:VAR|AlterMetamorphosisLVL|MetamorphLVL`
+                "Metamorph level {level} Alter Metamorphosis: `AlterMetamorphosisLVL` = {value}"
             ),
         });
     }
@@ -37197,8 +37396,9 @@ fn ground_metamorph_class_features(
             id: "class_feature.ultimate_psionics.metamorph.free_shift.times".to_owned(),
             value: times,
             detail: format!(
-                "Metamorph level {level} Free Shift: {times} times per day (corpus \
-                 `BONUS:VAR|FreeShiftTimes|(MetamorphLVL/2)`)"
+                // Provenance (ingest tokens, demoted out of the rendered sheet line -- SD-35 AT-35-E6-003-SWEEP):
+                //   `BONUS:VAR|FreeShiftTimes|(MetamorphLVL/2)`
+                "Metamorph level {level} Free Shift: {times} times per day"
             ),
         });
     }
@@ -37207,9 +37407,10 @@ fn ground_metamorph_class_features(
             id: "class_feature.ultimate_psionics.metamorph.natural_shifter.bonus".to_owned(),
             value: bonus,
             detail: format!(
-                "Metamorph level {level} Natural Shifter: +{bonus} caster level on \
-                 Metamorphosis spells (corpus `BONUS:VAR|NaturalShifter|\
-                 floor((MetamorphLVL+4)/5)`)"
+                // Provenance (ingest tokens, demoted out of the rendered sheet line -- SD-35 AT-35-E6-003-SWEEP):
+                //   `BONUS:VAR|NaturalShifter|floor((MetamorphLVL+4)/5)`
+                "Metamorph level {level} Natural Shifter: +{bonus} caster level on Metamorphosis \
+                 spells"
             ),
         });
     }
@@ -37264,8 +37465,9 @@ fn ground_war_mind_class_features(
                 .to_owned(),
             value: bonus,
             detail: format!(
-                "War Mind level {level} Chain of Defensive Posture: +{bonus} natural armor \
-                 (corpus `BONUS:VAR|DefensiveChain|2*floor((WarMindLVL+4)/6)`)"
+                // Provenance (ingest tokens, demoted out of the rendered sheet line -- SD-35 AT-35-E6-003-SWEEP):
+                //   `BONUS:VAR|DefensiveChain|2*floor((WarMindLVL+4)/6)`
+                "War Mind level {level} Chain of Defensive Posture: +{bonus} natural armor"
             ),
         });
     }
@@ -37275,8 +37477,9 @@ fn ground_war_mind_class_features(
                 .to_owned(),
             value: bonus,
             detail: format!(
-                "War Mind level {level} Chain of Personal Superiority: +{bonus} (corpus \
-                 `BONUS:VAR|SuperiorityChain|2*floor((WarMindLVL+5)/6)`)"
+                // Provenance (ingest tokens, demoted out of the rendered sheet line -- SD-35 AT-35-E6-003-SWEEP):
+                //   `BONUS:VAR|SuperiorityChain|2*floor((WarMindLVL+5)/6)`
+                "War Mind level {level} Chain of Personal Superiority: +{bonus}"
             ),
         });
     }
@@ -37285,8 +37488,9 @@ fn ground_war_mind_class_features(
             id: "class_feature.ultimate_psionics.war_mind.enduring_body.bonus".to_owned(),
             value: bonus,
             detail: format!(
-                "War Mind level {level} Enduring Body: +{bonus} hit points per Hit Die (corpus \
-                 `BONUS:VAR|EnduringBody|floor(WarMindLVL/3)`)"
+                // Provenance (ingest tokens, demoted out of the rendered sheet line -- SD-35 AT-35-E6-003-SWEEP):
+                //   `BONUS:VAR|EnduringBody|floor(WarMindLVL/3)`
+                "War Mind level {level} Enduring Body: +{bonus} hit points per Hit Die"
             ),
         });
     }
@@ -37421,8 +37625,10 @@ fn ground_hellknight_class_features(
             id: "class_feature.adventurers_guide.hellknight.smite_chaos.uses_per_day".to_owned(),
             value: uses,
             detail: format!(
-                "Hellknight level {level} Smite Chaos: {uses} times per day (corpus \
-                 `BONUS:VAR|HKSmiteTimes|(CL+2)/3`, `CL` = this class's own level {level})"
+                // Provenance (ingest tokens, demoted out of the rendered sheet line -- SD-35 AT-35-E6-003-SWEEP):
+                //   BONUS:VAR|HKSmiteTimes|(CL+2)/3`,
+                "Hellknight level {level} Smite Chaos: {uses} times per day (corpus ` `CL` = this \
+                 class's own level {level})"
             ),
         });
     }
@@ -37465,9 +37671,10 @@ fn ground_hellknight_class_features(
                 id: format!("class_feature.{book}.hellknight.hellknight_armor.bonus"),
                 value: bonus,
                 detail: format!(
-                    "Hellknight level {level} Hellknight Armor: reduces armor check penalty \
-                     and raises max Dexterity bonus by {bonus} while wearing Hellknight armor \
-                     (corpus `BONUS:VAR|HellknightArmorBonus|floor((HellknightArmorLVL+1)/3)`, \
+                    // Provenance (ingest tokens, demoted out of the rendered sheet line -- SD-35 AT-35-E6-003-SWEEP):
+                    //   BONUS:VAR|HellknightArmorBonus|floor((HellknightArmorLVL+1)/3)`,
+                    "Hellknight level {level} Hellknight Armor: reduces armor check penalty and \
+                     raises max Dexterity bonus by {bonus} while wearing Hellknight armor (corpus ` \
                      `HellknightArmorLVL` = this class's own level {level})"
                 ),
             });
@@ -37475,9 +37682,10 @@ fn ground_hellknight_class_features(
                 id: format!("class_feature.{book}.hellknight.hellknight_armor_benefits.bonus"),
                 value: bonus,
                 detail: format!(
-                    "Hellknight level {level} Hellknight Armor Benefits: restates the same \
-                     +{bonus} armor-check/max-Dex bonus above (corpus `BONUS:MISC|MAXDEX,\
-                     ACCHECK|HellknightArmorBonus`)"
+                    // Provenance (ingest tokens, demoted out of the rendered sheet line -- SD-35 AT-35-E6-003-SWEEP):
+                    //   `BONUS:MISC|MAXDEX,ACCHECK|HellknightArmorBonus`
+                    "Hellknight level {level} Hellknight Armor Benefits: restates the same +{bonus} \
+                     armor-check/max-Dex bonus above"
                 ),
             });
         }
@@ -37558,8 +37766,9 @@ fn ground_adaptive_warrior_class_features(
                 .to_owned(),
             value: times,
             detail: format!(
-                "Adaptive Warrior level {level} Combine Fighting Styles: {times} times per day \
-                 (corpus `BONUS:VAR|CombineFightingStylesTimes|4+INT`)"
+                // Provenance (ingest tokens, demoted out of the rendered sheet line -- SD-35 AT-35-E6-003-SWEEP):
+                //   `BONUS:VAR|CombineFightingStylesTimes|4+INT`
+                "Adaptive Warrior level {level} Combine Fighting Styles: {times} times per day"
             ),
         });
     }
@@ -37569,8 +37778,9 @@ fn ground_adaptive_warrior_class_features(
                 .to_owned(),
             value: bonus,
             detail: format!(
-                "Adaptive Warrior level {level} Counter Fighting Style: +{bonus} (corpus \
-                 `BONUS:VAR|CounterFightingStyleBonus|max(1,AdaptiveWarriorLVL/2)`)"
+                // Provenance (ingest tokens, demoted out of the rendered sheet line -- SD-35 AT-35-E6-003-SWEEP):
+                //   `BONUS:VAR|CounterFightingStyleBonus|max(1,AdaptiveWarriorLVL/2)`
+                "Adaptive Warrior level {level} Counter Fighting Style: +{bonus}"
             ),
         });
     }
@@ -37580,8 +37790,9 @@ fn ground_adaptive_warrior_class_features(
                 .to_owned(),
             value: targets,
             detail: format!(
-                "Adaptive Warrior level {level} Examine Technique: {targets} (corpus \
-                 `BONUS:VAR|ExamineTechniqueTargets|AdaptiveWarriorLVL`)"
+                // Provenance (ingest tokens, demoted out of the rendered sheet line -- SD-35 AT-35-E6-003-SWEEP):
+                //   `BONUS:VAR|ExamineTechniqueTargets|AdaptiveWarriorLVL`
+                "Adaptive Warrior level {level} Examine Technique: {targets}"
             ),
         });
     }
@@ -37591,8 +37802,9 @@ fn ground_adaptive_warrior_class_features(
                 .to_owned(),
             value: bonus,
             detail: format!(
-                "Adaptive Warrior level {level} Extended Examination: +{bonus} (corpus \
-                 `BONUS:VAR|ExtendedExaminationBonus|AdaptiveWarriorLVL`)"
+                // Provenance (ingest tokens, demoted out of the rendered sheet line -- SD-35 AT-35-E6-003-SWEEP):
+                //   `BONUS:VAR|ExtendedExaminationBonus|AdaptiveWarriorLVL`
+                "Adaptive Warrior level {level} Extended Examination: +{bonus}"
             ),
         });
     }
@@ -37601,8 +37813,9 @@ fn ground_adaptive_warrior_class_features(
             id: "class_feature.ultimate_psionics.adaptive_warrior.mimic_skill.ranks".to_owned(),
             value: ranks,
             detail: format!(
-                "Adaptive Warrior level {level} Mimic Skill: {ranks} ranks (corpus \
-                 `BONUS:VAR|MimicSkillRanks|AdaptiveWarriorLVL`)"
+                // Provenance (ingest tokens, demoted out of the rendered sheet line -- SD-35 AT-35-E6-003-SWEEP):
+                //   `BONUS:VAR|MimicSkillRanks|AdaptiveWarriorLVL`
+                "Adaptive Warrior level {level} Mimic Skill: {ranks} ranks"
             ),
         });
     }
@@ -37651,9 +37864,10 @@ fn ground_sanguine_angel_class_features(
             id: "class_feature.adventurers_guide.sanguine_angel.armored_angel.level".to_owned(),
             value,
             detail: format!(
-                "Sanguine Angel level {level} Armored Angel: `ArmorTrainingLVL` = {value} \
-                 (corpus `BONUS:VAR|ArmorTrainingLVL|SanguineAngelLVL|...`). Grounds the \
-                 magnitude only; this engine does not track whether Gray Maiden Plate is \
+                // Provenance (ingest tokens, demoted out of the rendered sheet line -- SD-35 AT-35-E6-003-SWEEP):
+                //   `BONUS:VAR|ArmorTrainingLVL|SanguineAngelLVL|...`
+                "Sanguine Angel level {level} Armored Angel: `ArmorTrainingLVL` = {value}. Grounds \
+                 the magnitude only; this engine does not track whether Gray Maiden Plate is \
                  equipped"
             ),
         });
@@ -37732,10 +37946,11 @@ fn ground_body_snatcher_class_features(
                 .to_owned(),
             value: bonus,
             detail: format!(
-                "Body Snatcher level {level} Body Thief: +{bonus} caster level on Mind Switch \
-                 (corpus `BONUS:CASTERLEVEL|SPELL.Mind Switch|BodySnatcherLVL`). Grounds the \
-                 magnitude only: no Mind Switch total exists anywhere in this engine for it to \
-                 layer onto"
+                // Provenance (ingest tokens, demoted out of the rendered sheet line -- SD-35 AT-35-E6-003-SWEEP):
+                //   `BONUS:CASTERLEVEL|SPELL.Mind Switch|BodySnatcherLVL`
+                "Body Snatcher level {level} Body Thief: +{bonus} caster level on Mind Switch. \
+                 Grounds the magnitude only: no Mind Switch total exists anywhere in this engine for \
+                 it to layer onto"
             ),
         });
     }
@@ -37746,9 +37961,10 @@ fn ground_body_snatcher_class_features(
                 .to_owned(),
             value: bonus,
             detail: format!(
-                "Body Snatcher level {level} Death Is Only the Beginning: +{bonus} caster \
-                 level on Mind Switch (True) (corpus `BONUS:CASTERLEVEL|SPELL.Mind Switch \
-                 (True)|BodySnatcherLVL`)"
+                // Provenance (ingest tokens, demoted out of the rendered sheet line -- SD-35 AT-35-E6-003-SWEEP):
+                //   `BONUS:CASTERLEVEL|SPELL.Mind Switch (True)|BodySnatcherLVL`
+                "Body Snatcher level {level} Death Is Only the Beginning: +{bonus} caster level on \
+                 Mind Switch (True)"
             ),
         });
     }
@@ -37758,8 +37974,9 @@ fn ground_body_snatcher_class_features(
                 .to_owned(),
             value: bonus,
             detail: format!(
-                "Body Snatcher level {level} Melding Exchange: +{bonus} (corpus \
-                 `BONUS:VAR|MeldingExchangeBonus|2*BodySnatcherLVL`)"
+                // Provenance (ingest tokens, demoted out of the rendered sheet line -- SD-35 AT-35-E6-003-SWEEP):
+                //   `BONUS:VAR|MeldingExchangeBonus|2*BodySnatcherLVL`
+                "Body Snatcher level {level} Melding Exchange: +{bonus}"
             ),
         });
     }
@@ -37815,8 +38032,9 @@ fn ground_steel_falcon_class_features(
             id: "class_feature.adventurers_guide.steel_falcon.chainbreaker.bonus".to_owned(),
             value: bonus,
             detail: format!(
-                "Steel Falcon level {level} Chainbreaker: +{bonus} to escape manacles or ropes \
-                 (corpus `BONUS:SITUATION|Escape Artist=...|10`)"
+                // Provenance (ingest tokens, demoted out of the rendered sheet line -- SD-35 AT-35-E6-003-SWEEP):
+                //   `BONUS:SITUATION|Escape Artist=...|10`
+                "Steel Falcon level {level} Chainbreaker: +{bonus} to escape manacles or ropes"
             ),
         });
     }
@@ -37836,9 +38054,10 @@ fn ground_steel_falcon_class_features(
                 .to_owned(),
             value: bonus,
             detail: format!(
-                "Steel Falcon level {level} Sailor and Survivalist: +{bonus} on Profession \
-                 (sailor) and relevant Survival checks (corpus `BONUS:SKILL|Profession \
-                 (sailor)|SteelFalconLVL`)"
+                // Provenance (ingest tokens, demoted out of the rendered sheet line -- SD-35 AT-35-E6-003-SWEEP):
+                //   `BONUS:SKILL|Profession (sailor)|SteelFalconLVL`
+                "Steel Falcon level {level} Sailor and Survivalist: +{bonus} on Profession (sailor) \
+                 and relevant Survival checks"
             ),
         });
     }
@@ -37848,8 +38067,9 @@ fn ground_steel_falcon_class_features(
                  bonus"
                 .to_owned(),
             value: 10,
-            detail: "Steel Falcon Talmandor's Blessing: +10 on Acrobatics checks made when \
-                     jumping (corpus `BONUS:SITUATION|Acrobatics=When Jumping|10`)"
+            // Provenance (ingest tokens, demoted out of the rendered sheet line -- SD-35 AT-35-E6-003-SWEEP):
+            //   `BONUS:SITUATION|Acrobatics=When Jumping|10`
+            detail: "Steel Falcon Talmandor's Blessing: +10 on Acrobatics checks made when jumping"
                 .to_owned(),
         });
         explanations.push(ComputationExplanation {
@@ -37857,8 +38077,9 @@ fn ground_steel_falcon_class_features(
                  bonus"
                 .to_owned(),
             value: 4,
-            detail: "Steel Falcon Talmandor's Blessing: +4 on Perception checks (corpus \
-                     `BONUS:SKILL|Perception|4`)"
+            // Provenance (ingest tokens, demoted out of the rendered sheet line -- SD-35 AT-35-E6-003-SWEEP):
+            //   `BONUS:SKILL|Perception|4`
+            detail: "Steel Falcon Talmandor's Blessing: +4 on Perception checks"
                 .to_owned(),
         });
     }
@@ -37923,9 +38144,10 @@ fn ground_lantern_bearer_class_features(
                 .to_owned(),
             value: pool,
             detail: format!(
-                "Lantern Bearer level {level} Favored Enemy: a pool of {pool} (corpus \
-                 `BONUS:ABILITYPOOL|Lantern Bearer Favored Enemy|1+(LanternBearerLVL>=8)`). \
-                 Grounds the pool SIZE only"
+                // Provenance (ingest tokens, demoted out of the rendered sheet line -- SD-35 AT-35-E6-003-SWEEP):
+                //   `BONUS:ABILITYPOOL|Lantern Bearer Favored Enemy|1+(LanternBearerLVL>=8)`
+                "Lantern Bearer level {level} Favored Enemy: a pool of {pool}. Grounds the pool SIZE \
+                 only"
             ),
         });
     }
@@ -37935,9 +38157,10 @@ fn ground_lantern_bearer_class_features(
                 .to_owned(),
             value: pool,
             detail: format!(
-                "Lantern Bearer level {level} Favored Enemy Bonus: a pool of {pool} (corpus \
-                 `BONUS:ABILITYPOOL|Lantern Bearer Favored Enemy Bonus|1|\
-                 PREVARGTEQ:LanternBearerLVL,8`)"
+                // Provenance (ingest tokens, demoted out of the rendered sheet line -- SD-35 AT-35-E6-003-SWEEP):
+                //   `BONUS:ABILITYPOOL|Lantern Bearer Favored Enemy
+                //   Bonus|1|PREVARGTEQ:LanternBearerLVL,8`
+                "Lantern Bearer level {level} Favored Enemy Bonus: a pool of {pool}"
             ),
         });
     }
@@ -37947,9 +38170,10 @@ fn ground_lantern_bearer_class_features(
                 .to_owned(),
             value: bonus,
             detail: format!(
-                "Lantern Bearer level {level} Proven Weapon Familiarity: +{bonus} damage and \
-                 attack with longbow, shortbow, longsword, short sword, and elven weapons \
-                 (corpus `BONUS:WEAPONPROF=...|DAMAGE,TOHIT|1`)"
+                // Provenance (ingest tokens, demoted out of the rendered sheet line -- SD-35 AT-35-E6-003-SWEEP):
+                //   `BONUS:WEAPONPROF=...|DAMAGE,TOHIT|1`
+                "Lantern Bearer level {level} Proven Weapon Familiarity: +{bonus} damage and attack \
+                 with longbow, shortbow, longsword, short sword, and elven weapons"
             ),
         });
     }
@@ -37959,8 +38183,9 @@ fn ground_lantern_bearer_class_features(
                 .to_owned(),
             value: pool,
             detail: format!(
-                "Lantern Bearer level {level} Superior Discernment: a pool of {pool} (corpus \
-                 `BONUS:ABILITYPOOL|Lantern Bearer Discernment|1`)"
+                // Provenance (ingest tokens, demoted out of the rendered sheet line -- SD-35 AT-35-E6-003-SWEEP):
+                //   `BONUS:ABILITYPOOL|Lantern Bearer Discernment|1`
+                "Lantern Bearer level {level} Superior Discernment: a pool of {pool}"
             ),
         });
     }
@@ -38143,8 +38368,9 @@ fn ground_westcrown_devil_class_features(
                 .to_owned(),
             value: pool,
             detail: format!(
-                "Westcrown Devil level {level} Council's Secret: a pool of {pool} rogue \
-                 talents (corpus `BONUS:ABILITYPOOL|Rogue Talent|WestcrownDevilLVL/2`)"
+                // Provenance (ingest tokens, demoted out of the rendered sheet line -- SD-35 AT-35-E6-003-SWEEP):
+                //   `BONUS:ABILITYPOOL|Rogue Talent|WestcrownDevilLVL/2`
+                "Westcrown Devil level {level} Council's Secret: a pool of {pool} rogue talents"
             ),
         });
     }
@@ -38293,8 +38519,9 @@ fn ground_pyrokineticist_class_features(
             id: "class_feature.ultimate_psionics.pyrokineticist.bolt_of_fire.bonus".to_owned(),
             value: bonus,
             detail: format!(
-                "Pyrokineticist level {level} Bolt of Fire: +{bonus} fire damage (corpus \
-                 `BONUS:VAR|BoltFire|PyrokineticistLVL`)"
+                // Provenance (ingest tokens, demoted out of the rendered sheet line -- SD-35 AT-35-E6-003-SWEEP):
+                //   `BONUS:VAR|BoltFire|PyrokineticistLVL`
+                "Pyrokineticist level {level} Bolt of Fire: +{bonus} fire damage"
             ),
         });
     }
@@ -38517,9 +38744,10 @@ fn ground_gray_corsair_class_features(
             id: "class_feature.adventurers_guide.gray_corsair.favored_port.bonus".to_owned(),
             value: bonus,
             detail: format!(
-                "Gray Corsair level {level} Favored Port: +{bonus} on Bluff/Diplomacy/\
-                 Intimidate/Knowledge (local) in a favored port (corpus \
-                 `BONUS:SITUATION|...=In favored port|+2`)"
+                // Provenance (ingest tokens, demoted out of the rendered sheet line -- SD-35 AT-35-E6-003-SWEEP):
+                //   `BONUS:SITUATION|...=In favored port|+2`
+                "Gray Corsair level {level} Favored Port: +{bonus} on \
+                 Bluff/Diplomacy/Intimidate/Knowledge (local) in a favored port"
             ),
         });
     }
@@ -38844,8 +39072,9 @@ fn ground_student_of_war_class_features(
                 .to_owned(),
             value: pool,
             detail: format!(
-                "Student of War level {level} Additional Skill: a pool of {pool} (corpus \
-                 `BONUS:ABILITYPOOL|Student of War Skill|(SoWLvl+1)/2`)"
+                // Provenance (ingest tokens, demoted out of the rendered sheet line -- SD-35 AT-35-E6-003-SWEEP):
+                //   `BONUS:ABILITYPOOL|Student of War Skill|(SoWLvl+1)/2`
+                "Student of War level {level} Additional Skill: a pool of {pool}"
             ),
         });
     }
@@ -38858,10 +39087,12 @@ fn ground_student_of_war_class_features(
                 .to_owned(),
             value: bonus,
             detail: format!(
-                "Student of War level {level} Mind Over Metal: +{bonus} AC (corpus \
-                 `BONUS:COMBAT|AC|INT-DEX|...`, this character's Intelligence modifier exceeds \
-                 Dexterity). Grounds the magnitude only; this engine does not track whether \
-                 armor or a shield is equipped, which the corpus record itself also requires"
+                // Provenance (ingest tokens, demoted out of the rendered sheet line -- SD-35 AT-35-E6-003-SWEEP):
+                //   `BONUS:COMBAT|AC|INT-DEX|...`, this character's Intelligence modifier exceeds
+                //   Dexterity
+                "Student of War level {level} Mind Over Metal: +{bonus} AC. Grounds the magnitude \
+                 only; this engine does not track whether armor or a shield is equipped, which the \
+                 corpus record itself also requires"
             ),
         });
     }
@@ -39060,10 +39291,11 @@ fn ground_lion_blade_class_features(
                 .to_owned(),
             value: bonus,
             detail: format!(
-                "Lion Blade level {level} Expeditious Advance: +{bonus} ft. movement speed \
-                 (corpus `BONUS:MOVEADD|TYPE=Walk|10|...`), while lightly loaded and not \
-                 wearing medium or heavy armor -- this engine does not track encumbrance or \
-                 armor weight, so the gate is not itself modelled"
+                // Provenance (ingest tokens, demoted out of the rendered sheet line -- SD-35 AT-35-E6-003-SWEEP):
+                //   `BONUS:MOVEADD|TYPE=Walk|10|...`
+                "Lion Blade level {level} Expeditious Advance: +{bonus} ft. movement speed, while \
+                 lightly loaded and not wearing medium or heavy armor -- this engine does not track \
+                 encumbrance or armor weight, so the gate is not itself modelled"
             ),
         });
     }
@@ -39073,8 +39305,9 @@ fn ground_lion_blade_class_features(
                 .to_owned(),
             value: bonus,
             detail: format!(
-                "Lion Blade level {level} Silent Soul: +{bonus} Stealth (corpus \
-                 `BONUS:SKILL|Stealth|10|TYPE=Circumstance`)"
+                // Provenance (ingest tokens, demoted out of the rendered sheet line -- SD-35 AT-35-E6-003-SWEEP):
+                //   `BONUS:SKILL|Stealth|10|TYPE=Circumstance`
+                "Lion Blade level {level} Silent Soul: +{bonus} Stealth"
             ),
         });
     }
@@ -39190,9 +39423,10 @@ fn ground_bellflower_tiller_class_features(
                 .to_owned(),
             value: pool,
             detail: format!(
-                "Bellflower Tiller level {level} Teamwork Feat: a pool of {pool} (corpus \
-                 `BONUS:ABILITYPOOL|Teamwork Feat|1+(BellflowerTillerLVL>=6)+\
-                 (BellflowerTillerLVL>=10)`)"
+                // Provenance (ingest tokens, demoted out of the rendered sheet line -- SD-35 AT-35-E6-003-SWEEP):
+                //   `BONUS:ABILITYPOOL|Teamwork
+                //   Feat|1+(BellflowerTillerLVL>=6)+(BellflowerTillerLVL>=10)`
+                "Bellflower Tiller level {level} Teamwork Feat: a pool of {pool}"
             ),
         });
     }
@@ -39241,8 +39475,9 @@ fn ground_hellknight_signifer_class_features(
                 .to_owned(),
             value: pool,
             detail: format!(
-                "Hellknight Signifer level {level} Assiduous Gaze: a pool of {pool} (corpus \
-                 `BONUS:ABILITYPOOL|Assiduous Gaze Ability|1+(HellknightSigniferLVL>=7)`)"
+                // Provenance (ingest tokens, demoted out of the rendered sheet line -- SD-35 AT-35-E6-003-SWEEP):
+                //   `BONUS:ABILITYPOOL|Assiduous Gaze Ability|1+(HellknightSigniferLVL>=7)`
+                "Hellknight Signifer level {level} Assiduous Gaze: a pool of {pool}"
             ),
         });
     }
@@ -39252,10 +39487,11 @@ fn ground_hellknight_signifer_class_features(
                 .to_owned(),
             value: bonus,
             detail: format!(
+                // Provenance (ingest tokens, demoted out of the rendered sheet line -- SD-35 AT-35-E6-003-SWEEP):
+                //   `BONUS:SKILL|Sense Motive|2|TYPE=Competence|PREEQUIP:1,Signifer Mask%`
                 "Hellknight Signifer level {level} Signifer Mask: +{bonus} Sense Motive while \
-                 wearing the mask (corpus `BONUS:SKILL|Sense Motive|2|TYPE=Competence|\
-                 PREEQUIP:1,Signifer Mask%`). Grounds the magnitude only; this engine does not \
-                 track whether the mask is equipped"
+                 wearing the mask. Grounds the magnitude only; this engine does not track whether \
+                 the mask is equipped"
             ),
         });
     }
@@ -39468,8 +39704,9 @@ fn ground_mammoth_rider_class_features(
                 .to_owned(),
             value: pool,
             detail: format!(
-                "Mammoth Rider level {level} Born Survivor: a pool of {pool} (corpus \
-                 `BONUS:ABILITYPOOL|Mammoth Rider Born Survivor Feat|(MammothRiderLvl+2)/4`)"
+                // Provenance (ingest tokens, demoted out of the rendered sheet line -- SD-35 AT-35-E6-003-SWEEP):
+                //   `BONUS:ABILITYPOOL|Mammoth Rider Born Survivor Feat|(MammothRiderLvl+2)/4`
+                "Mammoth Rider level {level} Born Survivor: a pool of {pool}"
             ),
         });
     }
@@ -39639,9 +39876,10 @@ fn ground_master_chymist_class_features(
                 .to_owned(),
             value: pool,
             detail: format!(
-                "Master Chymist level {level} Advanced Mutagen: a pool of {pool} (corpus \
-                 `BONUS:ABILITYPOOL|Master Chymist Advanced Mutagen|\
-                 MasterChymist_AdvancedMutagen_LVL/2`)"
+                // Provenance (ingest tokens, demoted out of the rendered sheet line -- SD-35 AT-35-E6-003-SWEEP):
+                //   `BONUS:ABILITYPOOL|Master Chymist Advanced
+                //   Mutagen|MasterChymist_AdvancedMutagen_LVL/2`
+                "Master Chymist level {level} Advanced Mutagen: a pool of {pool}"
             ),
         });
     }
@@ -39739,9 +39977,10 @@ fn ground_enchanting_courtesan_class_features(
                 .to_owned(),
             value: bonus,
             detail: format!(
-                "Enchanting Courtesan level {level} Seductive Intuition: +{bonus} on Bluff/\
-                 Diplomacy/Sense Motive/Sleight of Hand (corpus `BONUS:SKILL|...|\
-                 EnchantingCourtesanLVL/2`)"
+                // Provenance (ingest tokens, demoted out of the rendered sheet line -- SD-35 AT-35-E6-003-SWEEP):
+                //   `BONUS:SKILL|...|EnchantingCourtesanLVL/2`
+                "Enchanting Courtesan level {level} Seductive Intuition: +{bonus} on \
+                 Bluff/Diplomacy/Sense Motive/Sleight of Hand"
             ),
         });
     }
@@ -39815,8 +40054,9 @@ fn ground_dark_tempest_class_features(
                 .to_owned(),
             value: pool,
             detail: format!(
-                "Dark Tempest level {level} Blade Skills: a pool of {pool} (corpus \
-                 `BONUS:ABILITYPOOL|Dark Tempest Blade Skill|floor((DarkTempestLVL-2)/3)`)"
+                // Provenance (ingest tokens, demoted out of the rendered sheet line -- SD-35 AT-35-E6-003-SWEEP):
+                //   `BONUS:ABILITYPOOL|Dark Tempest Blade Skill|floor((DarkTempestLVL-2)/3)`
+                "Dark Tempest level {level} Blade Skills: a pool of {pool}"
             ),
         });
     }
@@ -39838,8 +40078,9 @@ fn ground_dark_tempest_class_features(
                 .to_owned(),
             value: pool,
             detail: format!(
-                "Dark Tempest level {level} Expanded Power List: a pool of {pool} (corpus \
-                 `BONUS:ABILITYPOOL|Dark Tempest Expanded Power List Class|1`)"
+                // Provenance (ingest tokens, demoted out of the rendered sheet line -- SD-35 AT-35-E6-003-SWEEP):
+                //   `BONUS:ABILITYPOOL|Dark Tempest Expanded Power List Class|1`
+                "Dark Tempest level {level} Expanded Power List: a pool of {pool}"
             ),
         });
     }
@@ -39914,8 +40155,9 @@ fn ground_battle_herald_class_features(
                 .to_owned(),
             value: pool,
             detail: format!(
-                "Battle Herald level {level} Teamwork Feat: a pool of {pool} (corpus \
-                 `BONUS:ABILITYPOOL|Teamwork Feat|1`)"
+                // Provenance (ingest tokens, demoted out of the rendered sheet line -- SD-35 AT-35-E6-003-SWEEP):
+                //   `BONUS:ABILITYPOOL|Teamwork Feat|1`
+                "Battle Herald level {level} Teamwork Feat: a pool of {pool}"
             ),
         });
     }
@@ -40020,9 +40262,10 @@ fn ground_evangelist_class_features(
                 .to_owned(),
             value: delta,
             detail: format!(
-                "Evangelist level {level} Single-Minded: `ClericDomainCount` {delta} (corpus \
-                 `BONUS:VAR|ClericDomainCount|-1`, the Evangelist gives up their second domain \
-                 for full Bardic-Performance-style abilities)"
+                // Provenance (ingest tokens, demoted out of the rendered sheet line -- SD-35 AT-35-E6-003-SWEEP):
+                //   `BONUS:VAR|ClericDomainCount|-1`, the Evangelist gives up their second domain
+                //   for full Bardic-Performance-style abilities
+                "Evangelist level {level} Single-Minded: `ClericDomainCount` {delta}"
             ),
         });
     }
@@ -40057,8 +40300,9 @@ fn ground_ulfen_guard_class_features(
                 .to_owned(),
             value: pool,
             detail: format!(
-                "Ulfen Guard level {level} Guard Dedications: a pool of {pool} (corpus \
-                 `BONUS:VAR|Pool_GuardDedication|(Ulfen_GuardLVL+1)/2`)"
+                // Provenance (ingest tokens, demoted out of the rendered sheet line -- SD-35 AT-35-E6-003-SWEEP):
+                //   `BONUS:VAR|Pool_GuardDedication|(Ulfen_GuardLVL+1)/2`
+                "Ulfen Guard level {level} Guard Dedications: a pool of {pool}"
             ),
         });
     }
@@ -43256,11 +43500,13 @@ fn explain_barbarian_level1_chassis(
         id: "class_chassis.barbarian.base_attack_bonus".to_owned(),
         value: base_attack_bonus,
         detail: format!(
-            "{class_name} level {level} base attack bonus from the PF1 Core Rulebook \
-             Barbarian class table (full base-attack progression, same formula shape as Fighter's \
-             cr_classes.lst:139 BONUS:COMBAT|BASEAB|classlevel): classlevel = {base_attack_bonus}. This \
-             is a standalone explanation record; it is not wired into the integrated base_attack_bonus \
-             field or into compute_combat_baseline"
+            // Provenance (ingest tokens, demoted out of the rendered sheet line -- SD-35 AT-35-E6-003-SWEEP):
+            //   BONUS:COMBAT|BASEAB|classlevel
+            "{class_name} level {level} base attack bonus from the PF1 Core Rulebook Barbarian class \
+             table (full base-attack progression, same formula shape as Fighter's \
+             cr_classes.lst:139): classlevel = {base_attack_bonus}. This is a standalone explanation \
+             record; it is not wired into the integrated base_attack_bonus field or into \
+             compute_combat_baseline"
         ),
     });
 
@@ -43274,30 +43520,34 @@ fn explain_barbarian_level1_chassis(
         id: "class_chassis.barbarian.base_save.fortitude".to_owned(),
         value: fortitude_save,
         detail: format!(
-            "{class_name} level {level} base Fortitude save (good save) from the PF1 \
-             Core Rulebook Barbarian class table, same formula shape as Fighter's cr_classes.lst:139 \
-             BONUS:SAVE|BASE.Fortitude|classlevel/2+2: classlevel/2+2 = {fortitude_save}. This is a \
-             standalone explanation record; it is not wired into compute_total_saves"
+            // Provenance (ingest tokens, demoted out of the rendered sheet line -- SD-35 AT-35-E6-003-SWEEP):
+            //   cr_classes.lst:139 BONUS:SAVE|BASE.Fortitude|classlevel/2+2:
+            "{class_name} level {level} base Fortitude save (good save) from the PF1 Core Rulebook \
+             Barbarian class table, same formula shape as Fighter's classlevel/2+2 = \
+             {fortitude_save}. This is a standalone explanation record; it is not wired into \
+             compute_total_saves"
         ),
     });
     explanations.push(ComputationExplanation {
         id: "class_chassis.barbarian.base_save.reflex".to_owned(),
         value: reflex_save,
         detail: format!(
-            "{class_name} level {level} base Reflex save (poor save) from the PF1 Core \
-             Rulebook Barbarian class table, same formula shape as Fighter's cr_classes.lst:139 \
-             BONUS:SAVE|BASE.Reflex,BASE.Will|classlevel/3: classlevel/3 = {reflex_save}. This is a \
-             standalone explanation record; it is not wired into compute_total_saves"
+            // Provenance (ingest tokens, demoted out of the rendered sheet line -- SD-35 AT-35-E6-003-SWEEP):
+            //   cr_classes.lst:139 BONUS:SAVE|BASE.Reflex,BASE.Will|classlevel/3:
+            "{class_name} level {level} base Reflex save (poor save) from the PF1 Core Rulebook \
+             Barbarian class table, same formula shape as Fighter's classlevel/3 = {reflex_save}. \
+             This is a standalone explanation record; it is not wired into compute_total_saves"
         ),
     });
     explanations.push(ComputationExplanation {
         id: "class_chassis.barbarian.base_save.will".to_owned(),
         value: will_save,
         detail: format!(
-            "{class_name} level {level} base Will save (poor save) from the PF1 Core \
-             Rulebook Barbarian class table, same formula shape as Fighter's cr_classes.lst:139 \
-             BONUS:SAVE|BASE.Reflex,BASE.Will|classlevel/3: classlevel/3 = {will_save}. This is a \
-             standalone explanation record; it is not wired into compute_total_saves"
+            // Provenance (ingest tokens, demoted out of the rendered sheet line -- SD-35 AT-35-E6-003-SWEEP):
+            //   cr_classes.lst:139 BONUS:SAVE|BASE.Reflex,BASE.Will|classlevel/3:
+            "{class_name} level {level} base Will save (poor save) from the PF1 Core Rulebook \
+             Barbarian class table, same formula shape as Fighter's classlevel/3 = {will_save}. This \
+             is a standalone explanation record; it is not wired into compute_total_saves"
         ),
     });
 
@@ -43763,25 +44013,26 @@ fn explain_barbarian_level1_chassis(
             id: "class_feature.barbarian.rage_power.superstition.save_bonus".to_owned(),
             value: superstition_bonus,
             detail: format!(
+                // Provenance (ingest tokens, demoted out of the rendered sheet line -- SD-35 AT-35-E6-003-SWEEP):
+                //   , `BONUS:VAR|SuperstitionSaveBonus|2+RagePowersLVL/4`, RagePowersLVL =
+                //   BarbarianLVL
+                //   The corpus's own `BONUS:VAR` token for this power carries no `Raging`-state
+                //   gate (checked directly against the full raw row -- unlike Raging Climber/Raging
+                //   Swimmer's or Witch's Ward hex's own explicit gates), so this grounds once the
+                //   power is selected, not only while actively raging.
                 "Barbarian level {level} with the Superstition rage power selected (PF1 Core \
-                 Rulebook, `KEY:Rage Power ~ Superstition`, `BONUS:VAR|SuperstitionSaveBonus|\
-                 2+RagePowersLVL/4`, RagePowersLVL = BarbarianLVL): a +{superstition_bonus} \
-                 morale bonus on saving throws made to resist spells, supernatural abilities, \
-                 and spell-like abilities (base {SUPERSTITION_SAVE_BONUS_BASE}, +1 every \
-                 {SUPERSTITION_SAVE_BONUS_LEVEL_DIVISOR} barbarian levels). The corpus's own \
-                 `BONUS:VAR` token for this power carries no `Raging`-state gate (checked \
-                 directly against the full raw row -- unlike Raging Climber/Raging Swimmer's \
-                 or Witch's Ward hex's own explicit gates), so this grounds once the power is \
-                 selected, not only while actively raging. Standalone magnitude only -- not \
-                 yet integrated into the real total saves this codebase computes, the same \
-                 posture Witch's Ward hex magnitude carries; the corpus record's OTHER clause \
-                 (\"While raging, you cannot be a willing target of any spell and must make \
-                 saving throws to resist all spells, even those cast by allies\") is an \
-                 unmodeled restriction, not a magnitude, and is not fabricated here. The other \
-                 27 Core Rulebook Rage Powers, and the wider ~60-record corpus-wide family \
-                 across ACG/APG/UC/UW/AG/HA/UI and the player-companion books, remain \
-                 named-but-unproven -- this is a representative-pool closure, not a claim that \
-                 the family is exhausted."
+                 Rulebook, `KEY:Rage Power ~ Superstition`): a +{superstition_bonus} morale bonus on \
+                 saving throws made to resist spells, supernatural abilities, and spell-like \
+                 abilities (base {SUPERSTITION_SAVE_BONUS_BASE}, +1 every \
+                 {SUPERSTITION_SAVE_BONUS_LEVEL_DIVISOR} barbarian levels). Standalone magnitude \
+                 only -- not yet integrated into the real total saves this codebase computes, the \
+                 same posture Witch's Ward hex magnitude carries; the corpus record's OTHER clause \
+                 (\"While raging, you cannot be a willing target of any spell and must make saving \
+                 throws to resist all spells, even those cast by allies\") is an unmodeled \
+                 restriction, not a magnitude, and is not fabricated here. The other 27 Core \
+                 Rulebook Rage Powers, and the wider ~60-record corpus-wide family across \
+                 ACG/APG/UC/UW/AG/HA/UI and the player-companion books, remain named-but-unproven -- \
+                 this is a representative-pool closure, not a claim that the family is exhausted."
             ),
         });
     }
@@ -44444,18 +44695,18 @@ fn monk_ac_bonus_dodge_progression(level: u8) -> i16 {
 /// swift action, you gain a +20 bonus". Only the +20 costs ki. An earlier
 /// deferral of this feature cited the ki cost as a blocker for the whole
 /// ability; that conflated the two clauses.
-fn monk_high_jump_acrobatics_bonus(level: u8) -> i16 {
+pub(crate) fn monk_high_jump_acrobatics_bonus(level: u8) -> i16 {
     i16::from(level)
 }
 
 /// Monk Wholeness of Body's self-heal magnitude: `WholenessOfBody =
 /// WholenessOfBodyLVL = MonkLVL` hit points, for 2 ki points -- verified
 /// against the corpus's own two `BONUS:VAR` tokens.
-fn monk_wholeness_of_body_healing(level: u8) -> i16 {
+pub(crate) fn monk_wholeness_of_body_healing(level: u8) -> i16 {
     i16::from(level)
 }
 
-fn monk_scorpion_style_dc(level: u8, wisdom_modifier: i16) -> i16 {
+pub(crate) fn monk_scorpion_style_dc(level: u8, wisdom_modifier: i16) -> i16 {
     10 + i16::from(level) / 2 + wisdom_modifier
 }
 
@@ -45072,17 +45323,18 @@ fn explain_monk_level1_chassis(
             id: "class_chassis.monk.fast_movement".to_owned(),
             value: feet,
             detail: format!(
-                "Monk Fast Movement at monk level {level}: a +{feet} ft enhancement bonus to \
-                 land speed (10*floor(MonkLVL/3), so +10 at levels 3-5, +20 at 6-8, +30 at \
-                 9-11, +40 at 12). Unlike Barbarian's own Fast Movement, which is a flat +10 \
-                 at every level, the monk's SCALES -- same feature name, different magnitude. \
-                 The corpus applies it as BONUS:MOVEADD|TYPE=Walk with TYPE=Enhancement, gated \
-                 on PREVAREQ:ENCUMBERANCE,0 and zero equipped armor: a monk in armor or under \
-                 a medium/heavy load loses it entirely. That condition is NOT enforced here -- \
-                 this engine models no encumbrance state -- so this grounds the magnitude a \
-                 qualifying monk gets, and the armor/load condition is named rather than \
-                 applied. Worth knowing the deterministic fixture wears a Chain Shirt, which \
-                 would suppress this bonus for a real character in that posture"
+                // Provenance (ingest tokens, demoted out of the rendered sheet line -- SD-35 AT-35-E6-003-SWEEP):
+                //   The corpus applies it as BONUS:MOVEADD|TYPE=Walk with TYPE=Enhancement, gated
+                //   on PREVAREQ:ENCUMBERANCE,0 and zero equipped armor: a monk in armor or under a
+                //   medium/heavy load loses it entirely.
+                "Monk Fast Movement at monk level {level}: a +{feet} ft enhancement bonus to land \
+                 speed (10*floor(MonkLVL/3), so +10 at levels 3-5, +20 at 6-8, +30 at 9-11, +40 at \
+                 12). Unlike Barbarian's own Fast Movement, which is a flat +10 at every level, the \
+                 monk's SCALES -- same feature name, different magnitude. That condition is NOT \
+                 enforced here -- this engine models no encumbrance state -- so this grounds the \
+                 magnitude a qualifying monk gets, and the armor/load condition is named rather than \
+                 applied. Worth knowing the deterministic fixture wears a Chain Shirt, which would \
+                 suppress this bonus for a real character in that posture"
             ),
         });
     }
@@ -45131,15 +45383,17 @@ fn explain_monk_level1_chassis(
             id: "class_chassis.monk.high_jump".to_owned(),
             value: jump_bonus,
             detail: format!(
-                "Monk High Jump at monk level {level}: +{jump_bonus} on all Acrobatics checks \
-                 made to jump, vertical and horizontal (corpus BONUS:SITUATION|Acrobatics=When \
-                 Jumping|HighJumpBonus, where HighJumpBonus = MonkLVL). The monk also always \
-                 counts as having a running start. This flat bonus is UNCONDITIONAL -- the \
-                 record's own DESC scopes the ki cost to a separate clause (\"By spending 1 \
-                 point from your ki pool as a swift action, you gain a +20 bonus\"), and only \
-                 that +20 boost stays deferred. Grounded as a standalone record: Acrobatics is \
-                 not among the three skills compute_selected_skill_modifiers tracks \
-                 (Climb/Intimidate/Swim), so there is no check total to layer it onto"
+                // Provenance (ingest tokens, demoted out of the rendered sheet line -- SD-35 AT-35-E6-003-SWEEP):
+                //   BONUS:SITUATION|Acrobatics=When Jumping|HighJumpBonus, where HighJumpBonus =
+                //   MonkLVL
+                "Monk High Jump at monk level {level}: +{jump_bonus} on all Acrobatics checks made \
+                 to jump, vertical and horizontal. The monk also always counts as having a running \
+                 start. This flat bonus is UNCONDITIONAL -- the record's own DESC scopes the ki cost \
+                 to a separate clause (\"By spending 1 point from your ki pool as a swift action, \
+                 you gain a +20 bonus\"), and only that +20 boost stays deferred. Grounded as a \
+                 standalone record: Acrobatics is not among the three skills \
+                 compute_selected_skill_modifiers tracks (Climb/Intimidate/Swim), so there is no \
+                 check total to layer it onto"
             ),
         });
     }
@@ -45873,8 +46127,10 @@ fn explain_monk_level1_chassis(
                 .to_owned(),
             value: additional_attacks_of_opportunity,
             detail: format!(
+                // Provenance (ingest tokens, demoted out of the rendered sheet line -- SD-35 AT-35-E6-003-SWEEP):
+                //   BONUS:VAR|CombatReflexesAttacks|DEX
                 "Monk level {level} level-1 bonus feat is Combat Reflexes: the corpus formula \
-                 token BONUS:VAR|CombatReflexesAttacks|DEX resolves to \
+                 for its extra attacks of opportunity resolves to \
                  max(Dexterity modifier, 0) = {additional_attacks_of_opportunity} additional \
                  attacks of opportunity available per round (this codebase's own gloss on the \
                  formula, not a literal quote of the feat's BENEFIT text, which only says \
@@ -46672,9 +46928,9 @@ fn pool_header_record_by_normalized_suffix(
     class: &str,
     pool_group: &str,
     registered_name: Option<&str>,
-) -> std::collections::BTreeMap<String, String> {
+) -> crate::rules_core::record_vars::ConvertedChain {
     let table = class_feature_grant_consumer::class_feature_bonus_vars_any_record();
-    let mut merged: std::collections::BTreeMap<String, String> = std::collections::BTreeMap::new();
+    let mut merged = crate::rules_core::record_vars::ConvertedChain::new();
     let mut merge_in = |header: &class_feature_grant_consumer::ClassFeatureRecordTokens| {
         class_feature_grant_consumer::merge_bonus_var_target_map_never_overwriting(
             &mut merged,
@@ -46885,22 +47141,22 @@ fn pool_group_header_vars_merged(
     owning_class: &str,
     pool_group: &str,
     registered_name_for_tracker: Option<&str>,
-) -> std::collections::BTreeMap<String, String> {
-    let mut combined_vars: std::collections::BTreeMap<String, String> = std::collections::BTreeMap::new();
+) -> crate::rules_core::record_vars::ConvertedChain {
+    let mut combined_vars = crate::rules_core::record_vars::ConvertedChain::new();
     let header_vars = pool_header_record_by_normalized_suffix(
         owning_class,
         pool_group,
         registered_name_for_tracker,
     );
-    for (name, formula) in &header_vars {
-        combined_vars.entry(name.clone()).or_insert_with(|| formula.clone());
+    for (name, var) in &header_vars {
+        combined_vars.entry(name.clone()).or_insert_with(|| var.clone());
     }
     if let Some(registered_name) = registered_name_for_tracker {
         let tracker_name = format!("{registered_name} Tracker");
         let tracker_vars =
             pool_header_record_by_normalized_suffix(owning_class, &tracker_name, None);
-        for (name, formula) in &tracker_vars {
-            combined_vars.entry(name.clone()).or_insert_with(|| formula.clone());
+        for (name, var) in &tracker_vars {
+            combined_vars.entry(name.clone()).or_insert_with(|| var.clone());
         }
         // SD-32 T12 Epic 8 row 18 cycle 13: a THIRD real corpus shape for the class-wide shared
         // base of a "select ONE group, inherit every member" pool, distinct from both the
@@ -46936,8 +47192,8 @@ fn pool_group_header_vars_merged(
         // function out rather than duplicating a narrower, incomplete merge at the new call site.
         let base_vars =
             pool_header_record_by_normalized_suffix(owning_class, registered_name, None);
-        for (name, formula) in &base_vars {
-            combined_vars.entry(name.clone()).or_insert_with(|| formula.clone());
+        for (name, var) in &base_vars {
+            combined_vars.entry(name.clone()).or_insert_with(|| var.clone());
         }
     }
     // SD-32 T12 Epic 8 row 18 cycle 8: the owning CLASS's own record-level `BONUS:VAR` chain
@@ -46946,8 +47202,8 @@ fn pool_group_header_vars_merged(
     // tried (no gating flag -- a class with no such record simply merges nothing, exactly like an
     // absent per-group/tracker header above).
     if let Some(class_vars) = class_feature_grant_consumer::class_record_bonus_vars().get(owning_class) {
-        for (name, formula) in class_vars {
-            combined_vars.entry(name.clone()).or_insert_with(|| formula.clone());
+        for (name, var) in class_vars {
+            combined_vars.entry(name.clone()).or_insert_with(|| var.clone());
         }
     }
     // SD-32 T12 Epic 8 row 18 cycle 22 (`§27b`/`§17a`): an EIGHTH real corpus header shape -- the
@@ -46977,8 +47233,8 @@ fn pool_group_header_vars_merged(
     if let Some(header) = class_feature_grant_consumer::class_feature_bonus_vars_any_record()
         .get(&format!("{owning_class} ~ Spells"))
     {
-        for (name, formula) in &header.bonus_vars {
-            combined_vars.entry(name.clone()).or_insert_with(|| formula.clone());
+        for (name, var) in &header.bonus_vars {
+            combined_vars.entry(name.clone()).or_insert_with(|| var.clone());
         }
     }
     combined_vars
@@ -47013,7 +47269,7 @@ fn pool_member_terminal_targets_and_resolved_vars(
         record
             .bonus_vars
             .iter()
-            .any(|(other_name, formula)| other_name != name && formula_names_identifier(formula, name))
+            .any(|(other_name, var)| other_name != name && converted_var_names_identifier(var, name))
     };
     let terminals: Vec<String> = record
         .bonus_vars
@@ -47027,8 +47283,8 @@ fn pool_member_terminal_targets_and_resolved_vars(
     let mut combined_vars = record.bonus_vars.clone();
     let merged_header_vars =
         pool_group_header_vars_merged(owning_class, pool_group, registered_name_for_tracker);
-    for (name, formula) in &merged_header_vars {
-        combined_vars.entry(name.clone()).or_insert_with(|| formula.clone());
+    for (name, var) in &merged_header_vars {
+        combined_vars.entry(name.clone()).or_insert_with(|| var.clone());
     }
     let class_level_var = class_feature_grant_consumer::class_level_variable_name(owning_class);
     let vars = class_feature_grant_consumer::resolve_pcgen_var_chain(
@@ -47044,7 +47300,7 @@ fn pool_member_terminal_targets_and_resolved_vars(
 /// member record carries, rather than refusing once there is more than one. The real PCGen rule
 /// this implements (established by reading `pcgen/core/PlayerCharacter.java:2136` and
 /// `pcgen/core/BonusManager.java`'s `sumActiveBonusMap`, both already cited in
-/// `bonus_stack_reader.rs`'s own module doc): a `BONUS:VAR` target's value is the sum of every
+/// the converter-side bonus-stack reader's own module doc): a bonus target's value is the sum of every
 /// ACTIVE contribution filed under THAT variable's own name -- summation only ever happens WITHIN
 /// one target name. A record carrying several `BONUS:VAR` tokens with DIFFERENT target names
 /// (`Forbidden Rites Domain ~ Madness Domain`'s real `DomainMadnessDC`/`DomainMadnessTimes`/
@@ -47095,10 +47351,15 @@ pub(crate) fn resolve_pool_member_all_magnitudes(
 /// not `[A-Za-z0-9_]`, PCGen formula syntax's own identifier-boundary set
 /// (the same character class `formula_interpreter.rs`'s tokenizer treats
 /// as an identifier body).
-fn formula_names_identifier(formula: &str, identifier: &str) -> bool {
-    formula
-        .split(|c: char| !(c.is_ascii_alphanumeric() || c == '_'))
-        .any(|token| token == identifier)
+/// Whether a converted variable's source form referenced `identifier`. SD-35 `AT-35-E6-001`
+/// cycle 4: this used to tokenize the source formula TEXT. The converter records each variable's
+/// references by name at ingest (`ConvertedVar::refs`) precisely because the converted `Expr`
+/// carries opaque ids, so the same question is now answered from the artifact.
+fn converted_var_names_identifier(
+    var: &crate::rules_core::record_vars::ConvertedVar,
+    identifier: &str,
+) -> bool {
+    var.refs.iter().any(|r| r == identifier)
 }
 
 /// Resolves a real, recorded `SelectedChoice::selection_id` (e.g.
@@ -47421,14 +47682,16 @@ fn push_generic_pool_group_selection_description_magnitude(
                 id: format!("{id_prefix}.{group_slug}.{member_slug}.description"),
                 value,
                 detail: format!(
+                    // Provenance (ingest tokens, demoted out of the rendered sheet line -- SD-35 AT-35-E6-003-SWEEP):
+                    //   BONUS:VAR token at all, a shape resolve_pool_member_sole_magnitude never
+                    //   reaches
                     "{group} member \"{member_name}\" (corpus key `{key}`, real level {level}): \
-                     {description} Resolved generically -- not a hand-picked, per-member \
-                     function -- through the real PCGen formula interpreter applied DIRECTLY to \
-                     this member's own `%N`-substituted DESC: argument text (this record carries \
-                     no BONUS:VAR token at all, a shape resolve_pool_member_sole_magnitude never \
-                     reaches), after resolving the recorded {choice_set_id} -> {selection_id} \
-                     selection to its real corpus group {group} (SD-32 T12 Epic 8 row 18 cycle \
-                     15, decisions.md §17 generic pool-group-selection description resolver)."
+                     {description} Resolved generically -- not a hand-picked, per-member function -- \
+                     through the real PCGen formula interpreter applied DIRECTLY to this member's \
+                     own `%N`-substituted description argument text, after \
+                     resolving the recorded {choice_set_id} -> {selection_id} selection to its real \
+                     corpus group {group} (SD-32 T12 Epic 8 row 18 cycle 15, decisions.md §17 \
+                     generic pool-group-selection description resolver)."
                 ),
             });
         }
@@ -47963,18 +48226,18 @@ fn explain_rogue_level1_chassis(
             id: "class_feature.rogue.resiliency_temp_hp".to_owned(),
             value: temp_hp,
             detail: format!(
-                "Rogue level {level} selected the Resiliency talent: once per day, when \
-                 brought below 0 hit points, she can gain {temp_hp} temporary hit points \
-                 (equal to her rogue level, `BONUS:VAR|ResiliencyHitPoints|RogueTalentLVL`, no \
-                 PRE gate) as an immediate action, lasting 1 minute. This grounds the \
-                 magnitude only: the once-per-day budget and the \"brought below 0 hit \
-                 points\" trigger are named but not enforced -- no once-per-day activation \
-                 tracker and no HP-threshold trigger engine exists anywhere in this codebase \
-                 (the same honest-gap idiom already used for Skald's Raging Song rounds-per-\
-                 day). No temporary-hit-point total exists anywhere in this codebase or its \
-                 downstream apps/desktop/src-tauri character_hub.rs consumer (which tracks \
-                 only max_hp/current_hp), so this grounds as a standalone flat magnitude \
-                 rather than a false integration claim, the same honest-gap idiom already \
+                // Provenance (ingest tokens, demoted out of the rendered sheet line -- SD-35 AT-35-E6-003-SWEEP):
+                //   , `BONUS:VAR|ResiliencyHitPoints|RogueTalentLVL`, no PRE gate
+                "Rogue level {level} selected the Resiliency talent: once per day, when brought \
+                 below 0 hit points, she can gain {temp_hp} temporary hit points (equal to her rogue \
+                 level) as an immediate action, lasting 1 minute. This grounds the magnitude only: \
+                 the once-per-day budget and the \"brought below 0 hit points\" trigger are named \
+                 but not enforced -- no once-per-day activation tracker and no HP-threshold trigger \
+                 engine exists anywhere in this codebase (the same honest-gap idiom already used for \
+                 Skald's Raging Song rounds-per-day). No temporary-hit-point total exists anywhere \
+                 in this codebase or its downstream apps/desktop/src-tauri character_hub.rs consumer \
+                 (which tracks only max_hp/current_hp), so this grounds as a standalone flat \
+                 magnitude rather than a false integration claim, the same honest-gap idiom already \
                  used for Witch's Ward hex"
             ),
         });
@@ -48099,17 +48362,17 @@ fn explain_base_class_weapon_and_armor_proficiency(
         explanations.push(ComputationExplanation {
             id: "class_feature.sorcerer.weapon_and_armor_proficiency".to_owned(),
             value: 0,
-            detail: "Sorcerer Weapon and Armor Proficiency (corpus KEY:Sorcerer ~ Weapon and \
-                 Armor Proficiency): \"Sorcerers are proficient with all simple weapons. They \
-                 are not proficient with any type of armor or shield. Armor interferes with a \
-                 sorcerer's gestures, which can cause her spells with somatic components to \
-                 fail.\" This is a bounded grant-only identity record (value 0, \
-                 non-fabricated): the record's only tokens are ABILITY:...AUTOMATIC \
-                 proficiency grants, no BONUS: magnitude anywhere. The weapon half's real \
-                 mechanical consequence -- avoiding the -4 nonproficiency attack penalty -- is \
-                 already grounded separately by \
-                 `weapon_tables::class_weapon_proficiency(\"class:sorcerer\")`, which this \
-                 record does not duplicate. No armor-nonproficiency-penalty mechanic exists \
+            // Provenance (ingest tokens, demoted out of the rendered sheet line -- SD-35 AT-35-E6-003-SWEEP):
+            //   Armor interferes with a sorcerer's gestures, which can cause her spells with
+            //   somatic components to fail.\" This is a bounded grant-only identity record (value
+            //   0, non-fabricated): the record's only tokens are ABILITY:...AUTOMATIC proficiency
+            //   grants, no BONUS: magnitude anywhere.
+            detail: "Sorcerer Weapon and Armor Proficiency (corpus KEY:Sorcerer ~ Weapon and Armor \
+                 Proficiency): \"Sorcerers are proficient with all simple weapons. They are not \
+                 proficient with any type of armor or shield. The weapon half's real mechanical \
+                 consequence -- avoiding the -4 nonproficiency attack penalty -- is already grounded \
+                 separately by `weapon_tables::class_weapon_proficiency(\"class:sorcerer\")`, which \
+                 this record does not duplicate. No armor-nonproficiency-penalty mechanic exists \
                  anywhere in this engine"
                 .to_owned(),
         });
@@ -48119,18 +48382,19 @@ fn explain_base_class_weapon_and_armor_proficiency(
         explanations.push(ComputationExplanation {
             id: "class_feature.wizard.weapon_and_armor_proficiency".to_owned(),
             value: 0,
+            // Provenance (ingest tokens, demoted out of the rendered sheet line -- SD-35 AT-35-E6-003-SWEEP):
+            //   Armor interferes with a wizard's movements, which can cause his spells with somatic
+            //   components to fail.\" This is a bounded grant-only identity record (value 0,
+            //   non-fabricated): the record's only tokens are ABILITY:...AUTOMATIC proficiency
+            //   grants, no BONUS: magnitude anywhere.
             detail: "Wizard Weapon and Armor Proficiency (corpus KEY:Wizard ~ Weapon and Armor \
-                 Proficiency): \"Wizards are proficient with the club, dagger, heavy crossbow, \
-                 light crossbow, and quarterstaff, but not with any type of armor or shield. \
-                 Armor interferes with a wizard's movements, which can cause his spells with \
-                 somatic components to fail.\" This is a bounded grant-only identity record \
-                 (value 0, non-fabricated): the record's only tokens are ABILITY:...AUTOMATIC \
-                 proficiency grants, no BONUS: magnitude anywhere. The weapon half's real \
-                 mechanical consequence -- avoiding the -4 nonproficiency attack penalty -- is \
-                 already grounded separately by \
-                 `weapon_tables::class_weapon_proficiency(\"class:wizard\")`, which this \
-                 record does not duplicate. No armor-nonproficiency-penalty mechanic exists \
-                 anywhere in this engine"
+                 Proficiency): \"Wizards are proficient with the club, dagger, heavy crossbow, light \
+                 crossbow, and quarterstaff, but not with any type of armor or shield. The weapon \
+                 half's real mechanical consequence -- avoiding the -4 nonproficiency attack penalty \
+                 -- is already grounded separately by \
+                 `weapon_tables::class_weapon_proficiency(\"class:wizard\")`, which this record does \
+                 not duplicate. No armor-nonproficiency-penalty mechanic exists anywhere in this \
+                 engine"
                 .to_owned(),
         });
     }
@@ -48444,8 +48708,8 @@ fn ground_class_weapon_and_armor_proficiency(
         detail: format!(
             "{class_name} Weapon and Armor Proficiency (corpus KEY:{class_name} ~ Weapon and \
              Armor Proficiency): \"{base_desc}\" This is a bounded grant-only identity record \
-             (value 0, non-fabricated): the record's only proficiency tokens are \
-             ABILITY:...AUTOMATIC/AUTO:WEAPONPROF grants, no BONUS: magnitude anywhere. \
+             (value 0, non-fabricated): the record grants proficiencies automatically and \
+             carries no magnitude anywhere. \
              {weapon_half_note} No armor-nonproficiency-penalty mechanic exists anywhere in \
              this engine (the game system's own miscinfo.lst carries only \
              WEAPONNONPROFPENALTY:-4, no armor equivalent), so the armor half has nothing \
@@ -50054,25 +50318,27 @@ fn ground_sorcerer_arcane_bloodline_progression(
     let bonus_spells_known = arcane_bloodline_bonus_spells_known(sorcerer_level);
     let bonus_spell_detail = if bonus_spells_known == 0 {
         format!(
+            // Provenance (ingest tokens, demoted out of the rendered sheet line -- SD-35 AT-35-E6-003-SWEEP):
+            //   , PREVARGTEQ:BloodlineCasterLVL,{ARCANE_BLOODLINE_BONUS_LEVEL}
             "Sorcerer Arcane bloodline bonus spells at sorcerer level {sorcerer_level}: none yet, \
-             correctly absent by PF1 Core Rulebook level gate (the first bonus spell, Identify, \
-             is granted at sorcerer level {ARCANE_BLOODLINE_BONUS_LEVEL}; corpus \
-             KEY:Arcane Bloodline ~ Bonus Spells, PREVARGTEQ:BloodlineCasterLVL,\
-             {ARCANE_BLOODLINE_BONUS_LEVEL}). This is a level-gate absence, not an ungrounded \
-             gap: the whole nine-spell progression is transcribed and computed above this gate"
+             correctly absent by PF1 Core Rulebook level gate (the first bonus spell, Identify, is \
+             granted at sorcerer level {ARCANE_BLOODLINE_BONUS_LEVEL}; corpus KEY:Arcane Bloodline ~ \
+             Bonus Spells). This is a level-gate absence, not an ungrounded gap: the whole \
+             nine-spell progression is transcribed and computed above this gate"
         )
     } else {
         format!(
+            // Provenance (ingest tokens, demoted out of the rendered sheet line -- SD-35 AT-35-E6-003-SWEEP):
+            //   Every entry is transcribed from the corpus record KEY:Arcane Bloodline ~ Bonus
+            //   Spells (cr_abilities_class.lst), whose SPELLKNOWN:CLASS|Sorcerer=<spell
+            //   level>|<spell> tokens are each gated PREVARGTEQ:BloodlineCasterLVL,<grant level>,
+            //   and each spell's level is independently cross-checked against
+            //   sorcerer_spell_list::SORCERER_SPELL_LIST.
             "Sorcerer Arcane bloodline bonus spells at sorcerer level {sorcerer_level}: \
-             {bonus_spells_known} granted so far — {}. Every entry is transcribed from the \
-             corpus record KEY:Arcane Bloodline ~ Bonus Spells (cr_abilities_class.lst), whose \
-             SPELLKNOWN:CLASS|Sorcerer=<spell level>|<spell> tokens are each gated \
-             PREVARGTEQ:BloodlineCasterLVL,<grant level>, and each spell's level is \
-             independently cross-checked against sorcerer_spell_list::SORCERER_SPELL_LIST. \
-             This grounds the COUNT and the named identities of the bonus spells the bloodline \
-             adds to spells known; it computes no spell save DC against a target and no casting \
-             execution, since no spell-casting-resolution engine exists anywhere in this \
-             codebase for any class",
+             {bonus_spells_known} granted so far — {}. This grounds the COUNT and the named \
+             identities of the bonus spells the bloodline adds to spells known; it computes no spell \
+             save DC against a target and no casting execution, since no spell-casting-resolution \
+             engine exists anywhere in this codebase for any class",
             arcane_bloodline_granted_bonus_spells(sorcerer_level).join(", ")
         )
     };
@@ -50086,24 +50352,29 @@ fn ground_sorcerer_arcane_bloodline_progression(
     let bonus_feat_count = arcane_bloodline_bonus_feat_count(sorcerer_level);
     let bonus_feat_detail = if bonus_feat_count == 0 {
         format!(
+            // Provenance (ingest tokens, demoted out of the rendered sheet line -- SD-35 AT-35-E6-003-SWEEP):
+            //   BONUS:ABILITYPOOL|Sorcerer Bloodline Feat|BloodlineFeatCount
+            //   BONUS:VAR|BloodlineFeatCount|(BloodlineFeatProgression-1)/6
             "Sorcerer Arcane bloodline bonus feats at sorcerer level {sorcerer_level}: none yet, \
              correctly absent by PF1 Core Rulebook level gate (the first is granted at 7th \
-             level). Corpus: BONUS:ABILITYPOOL|Sorcerer Bloodline Feat|BloodlineFeatCount with \
-             BONUS:VAR|BloodlineFeatCount|(BloodlineFeatProgression-1)/6, which is 0 below 7th"
+             level). The corpus sizes the bloodline feat pool as one per six bloodline levels \
+             after the first, which is 0 below 7th"
         )
     } else {
         format!(
+            // Provenance (ingest tokens, demoted out of the rendered sheet line -- SD-35 AT-35-E6-003-SWEEP):
+            //   Corpus: BONUS:ABILITYPOOL|Sorcerer Bloodline Feat|BloodlineFeatCount,
+            //   BONUS:VAR|BloodlineFeatCount|(BloodlineFeatProgression-1)/6|TYPE=Base,
+            //   BONUS:VAR|BloodlineFeatProgression|BloodlineProgressionLVL|TYPE=Base,
+            //   BONUS:VAR|BloodlineProgressionLVL|SorcererLVL|TYPE=Base.
             "Sorcerer Arcane bloodline bonus feats at sorcerer level {sorcerer_level}: \
              {bonus_feat_count} slot(s) granted ((sorcerer level - 1)/6 — one at 7th, 13th, and \
-             19th). Corpus: BONUS:ABILITYPOOL|Sorcerer Bloodline Feat|BloodlineFeatCount, \
-             BONUS:VAR|BloodlineFeatCount|(BloodlineFeatProgression-1)/6|TYPE=Base, \
-             BONUS:VAR|BloodlineFeatProgression|BloodlineProgressionLVL|TYPE=Base, \
-             BONUS:VAR|BloodlineProgressionLVL|SorcererLVL|TYPE=Base. The three corpus `-1` \
-             deductions against this same pool are each gated on a Sorcerer_CF_BloodlineFeat<n> \
-             archetype flag and this repo ingests no sorcerer archetype, so all three are \
-             provably vacuous here. Only the COUNT grounds; which feat fills a slot is not \
-             modelled — the ratified Fighter/Cavalier/Brawler bonus-feat treatment. The eight \
-             eligible feats for this bloodline (corpus Arcane Bloodline ~ Feat Tracker) are: {}",
+             19th). The three corpus `-1` deductions against this same pool are each gated on a \
+             Sorcerer_CF_BloodlineFeat<n> archetype flag and this repo ingests no sorcerer \
+             archetype, so all three are provably vacuous here. Only the COUNT grounds; which feat \
+             fills a slot is not modelled — the ratified Fighter/Cavalier/Brawler bonus-feat \
+             treatment. The eight eligible feats for this bloodline (corpus Arcane Bloodline ~ Feat \
+             Tracker) are: {}",
             ARCANE_BLOODLINE_ELIGIBLE_BONUS_FEATS.join(", ")
         )
     };
@@ -50120,26 +50391,29 @@ fn ground_sorcerer_arcane_bloodline_progression(
         (
             0,
             format!(
+                // Provenance (ingest tokens, demoted out of the rendered sheet line -- SD-35 AT-35-E6-003-SWEEP):
+                //   ,
+                //   PREVARGTEQ:Sorcerer_Arcane_BloodlineProgressionLVL,{ARCANE_BLOODLINE_METAMAGIC_ADEPT_LEVEL}
                 "Sorcerer Arcane bloodline Metamagic Adept at sorcerer level {sorcerer_level}: \
                  correctly absent by PF1 Core Rulebook level gate (a \
-                 {ARCANE_BLOODLINE_METAMAGIC_ADEPT_LEVEL}rd-level bloodline power; corpus \
-                 KEY:Arcane Bloodline ~ Metamagic Adept, \
-                 PREVARGTEQ:Sorcerer_Arcane_BloodlineProgressionLVL,\
-                 {ARCANE_BLOODLINE_METAMAGIC_ADEPT_LEVEL})"
+                 {ARCANE_BLOODLINE_METAMAGIC_ADEPT_LEVEL}rd-level bloodline power; corpus KEY:Arcane \
+                 Bloodline ~ Metamagic Adept)"
             ),
         )
     } else if sorcerer_level >= ARCANE_BLOODLINE_ARCANE_APOTHEOSIS_LEVEL {
         (
             0,
             format!(
+                // Provenance (ingest tokens, demoted out of the rendered sheet line -- SD-35 AT-35-E6-003-SWEEP):
+                //   The corpus Arcane Apotheosis record carries
+                //   BONUS:VAR|Sorcerer_Arcane_BloodlinePower3|-1, which switches off the
+                //   bloodline's own 3rd-level-power grant at 20th level, and Metamagic Adept's
+                //   uses-per-day ASPECTs are each suppressed by !PREABILITY:1,CATEGORY=Special
+                //   Ability,Arcane Bloodline ~ Arcane Apotheosis.
                 "Sorcerer Arcane bloodline Metamagic Adept at sorcerer level {sorcerer_level}: \
-                 SUPERSEDED, not absent and not zero-limited. The corpus Arcane Apotheosis \
-                 record carries BONUS:VAR|Sorcerer_Arcane_BloodlinePower3|-1, which switches off \
-                 the bloodline's own 3rd-level-power grant at 20th level, and Metamagic Adept's \
-                 uses-per-day ASPECTs are each suppressed by \
-                 !PREABILITY:1,CATEGORY=Special Ability,Arcane Bloodline ~ Arcane Apotheosis. \
-                 Arcane Apotheosis replaces the per-day budget with an unlimited one, so \
-                 reporting the raw formula's {} uses/day here would be a wrong number",
+                 SUPERSEDED, not absent and not zero-limited. Arcane Apotheosis replaces the per-day \
+                 budget with an unlimited one, so reporting the raw formula's {} uses/day here would \
+                 be a wrong number",
                 arcane_bloodline_metamagic_adept_uses_per_day(sorcerer_level)
             ),
         )
@@ -50148,15 +50422,16 @@ fn ground_sorcerer_arcane_bloodline_progression(
         (
             uses,
             format!(
+                // Provenance (ingest tokens, demoted out of the rendered sheet line -- SD-35 AT-35-E6-003-SWEEP):
+                //   Corpus:
+                //   BONUS:VAR|Sorcerer_ArcaneMetamagicAdept_Times|floor((Sorcerer_Arcane_BloodlinePower3LVL+1)/4).
                 "Sorcerer Arcane bloodline Metamagic Adept at sorcerer level {sorcerer_level}: \
-                 usable {uses} time(s) per day (floor((sorcerer level + 1)/4) — 1/day at 3rd, \
-                 rising at 7th, 11th, 15th, and 19th). Corpus: \
-                 BONUS:VAR|Sorcerer_ArcaneMetamagicAdept_Times|\
-                 floor((Sorcerer_Arcane_BloodlinePower3LVL+1)/4). Only the daily BUDGET grounds; \
-                 the benefit itself (applying a known metamagic feat without increasing casting \
-                 time) can never be exercised here, since SpellSelection carries no metamagic \
-                 field anywhere in this codebase and no casting-resolution engine exists, so \
-                 there is nothing for a consumption count to gate"
+                 usable {uses} time(s) per day (floor((sorcerer level + 1)/4) — 1/day at 3rd, rising \
+                 at 7th, 11th, 15th, and 19th). Only the daily BUDGET grounds; the benefit itself \
+                 (applying a known metamagic feat without increasing casting time) can never be \
+                 exercised here, since SpellSelection carries no metamagic field anywhere in this \
+                 codebase and no casting-resolution engine exists, so there is nothing for a \
+                 consumption count to gate"
             ),
         )
     };
@@ -50171,12 +50446,13 @@ fn ground_sorcerer_arcane_bloodline_progression(
         (
             0,
             format!(
-                "Sorcerer Arcane bloodline New Arcana at sorcerer level {sorcerer_level}: \
-                 correctly absent by PF1 Core Rulebook level gate (a \
-                 {ARCANE_BLOODLINE_NEW_ARCANA_LEVEL}th-level bloodline power; corpus \
-                 KEY:Arcane Bloodline ~ New Arcana, \
-                 PREVARGTEQ:Sorcerer_Arcane_BloodlineProgressionLVL,\
-                 {ARCANE_BLOODLINE_NEW_ARCANA_LEVEL})"
+                // Provenance (ingest tokens, demoted out of the rendered sheet line -- SD-35 AT-35-E6-003-SWEEP):
+                //   ,
+                //   PREVARGTEQ:Sorcerer_Arcane_BloodlineProgressionLVL,{ARCANE_BLOODLINE_NEW_ARCANA_LEVEL}
+                "Sorcerer Arcane bloodline New Arcana at sorcerer level {sorcerer_level}: correctly \
+                 absent by PF1 Core Rulebook level gate (a \
+                 {ARCANE_BLOODLINE_NEW_ARCANA_LEVEL}th-level bloodline power; corpus KEY:Arcane \
+                 Bloodline ~ New Arcana)"
             ),
         )
     } else {
@@ -50184,15 +50460,16 @@ fn ground_sorcerer_arcane_bloodline_progression(
         (
             count,
             format!(
-                "Sorcerer Arcane bloodline New Arcana at sorcerer level {sorcerer_level}: \
-                 {count} additional spell(s) may be added to spells known \
-                 (floor((sorcerer level - 5)/4) — one at 9th, a second at 13th, a third at \
-                 17th). Corpus: BONUS:VAR|Sorcerer_NewArcana_Number|\
-                 floor((Sorcerer_Arcane_BloodlinePower9LVL-5)/4), feeding \
-                 BONUS:ABILITYPOOL|New Arcana|Sorcerer_NewArcana_Number. Only the COUNT grounds; \
-                 WHICH sorcerer/wizard spells are added is a free chooser over the whole list \
-                 and is not modelled, mirroring how Brawler's Martial Flexibility grounds its \
-                 pool without seeding a canonical feat"
+                // Provenance (ingest tokens, demoted out of the rendered sheet line -- SD-35 AT-35-E6-003-SWEEP):
+                //   Corpus:
+                //   BONUS:VAR|Sorcerer_NewArcana_Number|floor((Sorcerer_Arcane_BloodlinePower9LVL-5)/4),
+                //   feeding BONUS:ABILITYPOOL|New Arcana|Sorcerer_NewArcana_Number.
+                "Sorcerer Arcane bloodline New Arcana at sorcerer level {sorcerer_level}: {count} \
+                 additional spell(s) may be added to spells known (floor((sorcerer level - 5)/4) — \
+                 one at 9th, a second at 13th, a third at 17th). Only the COUNT grounds; WHICH \
+                 sorcerer/wizard spells are added is a free chooser over the whole list and is not \
+                 modelled, mirroring how Brawler's Martial Flexibility grounds its pool without \
+                 seeding a canonical feat"
             ),
         )
     };
@@ -50208,29 +50485,31 @@ fn ground_sorcerer_arcane_bloodline_progression(
             (
                 0,
                 format!(
+                    // Provenance (ingest tokens, demoted out of the rendered sheet line -- SD-35 AT-35-E6-003-SWEEP):
+                    //   ,
+                    //   PREVARGTEQ:Sorcerer_Arcane_BloodlineProgressionLVL,{ARCANE_BLOODLINE_SCHOOL_POWER_LEVEL}
                     "Sorcerer Arcane bloodline School Power at sorcerer level {sorcerer_level}: \
                      correctly absent by PF1 Core Rulebook level gate (a \
                      {ARCANE_BLOODLINE_SCHOOL_POWER_LEVEL}th-level bloodline power; corpus \
-                     KEY:Arcane Bloodline ~ School Power Choice, \
-                     PREVARGTEQ:Sorcerer_Arcane_BloodlineProgressionLVL,\
-                     {ARCANE_BLOODLINE_SCHOOL_POWER_LEVEL})"
+                     KEY:Arcane Bloodline ~ School Power Choice)"
                 ),
             )
         } else {
             (
                 SORCERER_ARCANE_BLOODLINE_SCHOOL_POWER_DC_BONUS,
                 format!(
+                    // Provenance (ingest tokens, demoted out of the rendered sheet line -- SD-35 AT-35-E6-003-SWEEP):
+                    //   Corpus: KEY:Arcane Bloodline ~ School Power Choice,
+                    //   BONUS:DC|SCHOOL.%LIST|2|TYPE=SchoolPower.
                     "Sorcerer Arcane bloodline School Power at sorcerer level {sorcerer_level}: \
                      +{SORCERER_ARCANE_BLOODLINE_SCHOOL_POWER_DC_BONUS} to the spell save DC of \
-                     spells from one chosen school of magic, stacking with Spell Focus. Corpus: \
-                     KEY:Arcane Bloodline ~ School Power Choice, BONUS:DC|SCHOOL.%LIST|2|\
-                     TYPE=SchoolPower. This grounds the magnitude as a school-agnostic fact — \
-                     the number is identical whichever school the CHOOSE:SCHOOLS|ALL sub-choice \
-                     names, so no canonical school is fabricated here, exactly as the sibling \
-                     Draconic Dragon Resistances grounds its two numbers without picking an \
-                     energy type. It is not folded into any spell-DC total: no \
-                     spell-save-DC-resolution engine against a target exists anywhere in this \
-                     codebase for any class"
+                     spells from one chosen school of magic, stacking with Spell Focus. This grounds \
+                     the magnitude as a school-agnostic fact — the number is identical whichever \
+                     school the CHOOSE:SCHOOLS|ALL sub-choice names, so no canonical school is \
+                     fabricated here, exactly as the sibling Draconic Dragon Resistances grounds its \
+                     two numbers without picking an energy type. It is not folded into any spell-DC \
+                     total: no spell-save-DC-resolution engine against a target exists anywhere in \
+                     this codebase for any class"
                 ),
             )
         };
@@ -50260,21 +50539,21 @@ fn ground_sorcerer_arcane_bloodline_progression(
             id: SORCERER_ARCANE_BLOODLINE_ARCANE_APOTHEOSIS_EXPLANATION_ID.to_owned(),
             value: 0,
             detail: format!(
+                // Provenance (ingest tokens, demoted out of the rendered sheet line -- SD-35 AT-35-E6-003-SWEEP):
+                //   For every three levels of spell slots that you expend, you consume one less
+                //   charge when using a magic item that expends charges.\" This is a bounded
+                //   grant-only identity record (value 0, non-fabricated): the record's only numeric
+                //   corpus token is BONUS:VAR|Sorcerer_Arcane_BloodlinePower3|-1, the Metamagic
+                //   Adept supersession already grounded in that record above.
                 "Sorcerer Arcane bloodline capstone Arcane Apotheosis, granted at sorcerer level \
-                 {ARCANE_BLOODLINE_ARCANE_APOTHEOSIS_LEVEL} (corpus \
-                 KEY:Arcane Bloodline ~ Arcane Apotheosis): \"Your body surges with arcane power. \
-                 You can add any metamagic feats that you know to your spells without increasing \
-                 their casting time, although you must still expend higher-level spell slots. \
-                 Whenever you use magic items that require charges, you can instead expend spell \
-                 slots to power the item. For every three levels of spell slots that you expend, \
-                 you consume one less charge when using a magic item that expends charges.\" \
-                 This is a bounded grant-only identity record (value 0, non-fabricated): the \
-                 record's only numeric corpus token is \
-                 BONUS:VAR|Sorcerer_Arcane_BloodlinePower3|-1, the Metamagic Adept supersession \
-                 already grounded in that record above. The remaining benefits have no magnitude \
-                 to compute — no metamagic-application engine and no magic-item-charge engine \
-                 exists anywhere in this codebase — so this grounds the grant and its real \
-                 rulebook text, and no charge arithmetic"
+                 {ARCANE_BLOODLINE_ARCANE_APOTHEOSIS_LEVEL} (corpus KEY:Arcane Bloodline ~ Arcane \
+                 Apotheosis): \"Your body surges with arcane power. You can add any metamagic feats \
+                 that you know to your spells without increasing their casting time, although you \
+                 must still expend higher-level spell slots. Whenever you use magic items that \
+                 require charges, you can instead expend spell slots to power the item. The \
+                 remaining benefits have no magnitude to compute — no metamagic-application engine \
+                 and no magic-item-charge engine exists anywhere in this codebase — so this grounds \
+                 the grant and its real rulebook text, and no charge arithmetic"
             ),
         });
     }
@@ -50448,11 +50727,12 @@ fn ground_sorcerer_draconic_bloodline_dragon_resistances(
             id: SORCERER_DRACONIC_DRAGON_RESISTANCES_NATURAL_ARMOR_EXPLANATION_ID.to_owned(),
             value: 0,
             detail: format!(
+                // Provenance (ingest tokens, demoted out of the rendered sheet line -- SD-35 AT-35-E6-003-SWEEP):
+                //   PREVARGTEQ:Sorcerer_Draconic_BloodlineProgressionLVL,3
                 "Sorcerer Draconic Bloodline Dragon Resistances natural armor bonus at sorcerer \
-                 level {level}: correctly absent by PF1 Core Rulebook level gate (Dragon \
-                 Resistances is a 3rd-level Draconic bloodline power, corpus \
-                 PREVARGTEQ:Sorcerer_Draconic_BloodlineProgressionLVL,3); the at-grant magnitude \
-                 is named but not computed."
+                 level {level}: correctly absent by PF1 Core Rulebook level gate (Dragon Resistances \
+                 is a 3rd-level Draconic bloodline power, corpus); the at-grant magnitude is named \
+                 but not computed."
             ),
         });
         explanations.push(ComputationExplanation {
@@ -50485,17 +50765,18 @@ fn ground_sorcerer_draconic_bloodline_dragon_resistances(
         id: SORCERER_DRACONIC_DRAGON_RESISTANCES_NATURAL_ARMOR_EXPLANATION_ID.to_owned(),
         value: natural_armor_bonus,
         detail: format!(
-            "Sorcerer Draconic Bloodline Dragon Resistances natural armor bonus at sorcerer \
-             level {level} (PF1 Core Rulebook, 3rd-level Draconic bloodline power, corpus \
-             KEY:Draconic Bloodline ~ Dragon Resistances): min(floor(({level}-3)/6)+1,3) PLUS an \
-             additional +1 at 15th level and higher (two separate corpus BONUS:VAR lines that \
-             accumulate additively into the same variable, not an override) = \
-             {natural_armor_bonus}. This grounds the magnitude as a type-agnostic fact (the \
-             number is identical regardless of which dragon type this power ultimately names); \
-             see apply_sorcerer_draconic_dragon_resistances_ac_bonus_to_combat_baseline for its \
-             real integration into the shared defense.baseline_armor_class total (only when the \
-             shared GE-06 combat posture -- Longsword/Chain Shirt/Dodge/Weapon Focus/no shield --\
-             is also met)."
+            // Provenance (ingest tokens, demoted out of the rendered sheet line -- SD-35 AT-35-E6-003-SWEEP):
+            //   BONUS:VAR lines that accumulate additively into the same variable, not an override
+            "Sorcerer Draconic Bloodline Dragon Resistances natural armor bonus at sorcerer level \
+             {level} (PF1 Core Rulebook, 3rd-level Draconic bloodline power, corpus KEY:Draconic \
+             Bloodline ~ Dragon Resistances): min(floor(({level}-3)/6)+1,3) PLUS an additional +1 at \
+             15th level and higher (two separate corpus) = {natural_armor_bonus}. This grounds the \
+             magnitude as a type-agnostic fact (the number is identical regardless of which dragon \
+             type this power ultimately names); see \
+             apply_sorcerer_draconic_dragon_resistances_ac_bonus_to_combat_baseline for its real \
+             integration into the shared defense.baseline_armor_class total (only when the shared \
+             GE-06 combat posture -- Longsword/Chain Shirt/Dodge/Weapon Focus/no shield --is also \
+             met)."
         ),
     });
 
@@ -51492,19 +51773,19 @@ fn explain_wizard_level1_prepared_spell_baseline(
                 id: "class_feature.school.abjuration.resistance".to_owned(),
                 value: resistance_bonus,
                 detail: format!(
-                    "Wizard level {level} Abjuration School power Resistance flat magnitude \
-                     (PF1 Core Rulebook Abjuration School, `KEY:Abjuration School ~ \
-                     Resistance`): resistance 5 to an energy type of your choice, chosen when \
-                     you prepare spells; the resistance increases to 10 at \
-                     AbjurationProgressionSchoolLVL 11+ (two stacked \
-                     BONUS:VAR|AbjurationResistanceBonus|5 lines in the corpus record). At \
-                     Wizard level {level} this is {resistance_bonus}. This grounds only the \
-                     flat resistance magnitude; it applies no resistance to any actual damage \
+                    // Provenance (ingest tokens, demoted out of the rendered sheet line -- SD-35 AT-35-E6-003-SWEEP):
+                    //   BONUS:VAR|AbjurationResistanceBonus|5 lines in the corpus record
+                    "Wizard level {level} Abjuration School power Resistance flat magnitude (PF1 \
+                     Core Rulebook Abjuration School, `KEY:Abjuration School ~ Resistance`): \
+                     resistance 5 to an energy type of your choice, chosen when you prepare spells; \
+                     the resistance increases to 10 at AbjurationProgressionSchoolLVL 11+ (two \
+                     stacked). At Wizard level {level} this is {resistance_bonus}. This grounds only \
+                     the flat resistance magnitude; it applies no resistance to any actual damage \
                      roll, tracks no daily energy-type reselection, and implements no \
-                     energy-type-of-choice bookkeeping. At level 20 the corpus record's DESC \
-                     text replaces resistance with immunity to an energy type -- a tokenless, \
-                     non-numeric capstone this slice leaves deferred/named-only, so no \
-                     Resistance explanation fires at level 20 or above"
+                     energy-type-of-choice bookkeeping. At level 20 the corpus record's DESC text \
+                     replaces resistance with immunity to an energy type -- a tokenless, non-numeric \
+                     capstone this slice leaves deferred/named-only, so no Resistance explanation \
+                     fires at level 20 or above"
                 ),
             });
         }
@@ -52963,11 +53244,12 @@ fn explain_cleric_level1_spell_baseline(
                 id: "class_feature.cleric.aura.strength_level".to_owned(),
                 value: strength_level,
                 detail: format!(
-                    "Cleric level {cleric_level} Aura: aura strength level {strength_level} \
-                     (a pure class-level pass-through selecting one of four DESC-prose tiers \
-                     depending on deity alignment: faint at 1, moderate at 2-4, strong at \
-                     5-10, overwhelming at 11+; PF1 Core Rulebook \
-                     `cr_abilities_class.lst`'s `BONUS:VAR|AlignmentAuraLVL|ClericLVL`)"
+                    // Provenance (ingest tokens, demoted out of the rendered sheet line -- SD-35 AT-35-E6-003-SWEEP):
+                    //   `BONUS:VAR|AlignmentAuraLVL|ClericLVL`
+                    "Cleric level {cleric_level} Aura: aura strength level {strength_level} (a pure \
+                     class-level pass-through selecting one of four DESC-prose tiers depending on \
+                     deity alignment: faint at 1, moderate at 2-4, strong at 5-10, overwhelming at \
+                     11+; PF1 Core Rulebook `cr_abilities_class.lst`'s)"
                 ),
             });
         }
@@ -57445,15 +57727,17 @@ fn ground_orphan_feat_facts(
             id: "feat.standalone.sharp_senses_perception_bonus".to_owned(),
             value: sharp_senses,
             detail: format!(
-                "Sharp Senses (APG) grants a +{sharp_senses} racial bonus on Perception checks. \
-                 Its corpus token is only BONUS:VAR|KeenSensesBonus|2, an INCREMENT to the same \
-                 variable the keen-senses racial trait already sets to 2 -- the feat's BENEFIT \
-                 prose states the resulting total, +4, and says it REPLACES the racial bonus \
-                 rather than stacking with it. Its own PREABILITY TYPE.KeenSenses prerequisite \
-                 guarantees that racial base, so +4 is exact. Perception is not among the three \
-                 skills compute_selected_skill_modifiers tracks (Climb/Intimidate/Swim), so this \
-                 grounds standalone; where a separate racial keen-senses +2 record also appears, \
-                 this +4 supersedes it and the two must not be added"
+                // Provenance (ingest tokens, demoted out of the rendered sheet line -- SD-35 AT-35-E6-003-SWEEP):
+                //   Its corpus token is only BONUS:VAR|KeenSensesBonus|2, an INCREMENT to the same
+                //   variable the keen-senses racial trait already sets to 2 -- the feat's BENEFIT
+                //   prose states the resulting total, +4, and says it REPLACES the racial bonus
+                //   rather than stacking with it.
+                "Sharp Senses (APG) grants a +{sharp_senses} racial bonus on Perception checks. Its \
+                 own PREABILITY TYPE.KeenSenses prerequisite guarantees that racial base, so +4 is \
+                 exact. Perception is not among the three skills compute_selected_skill_modifiers \
+                 tracks (Climb/Intimidate/Swim), so this grounds standalone; where a separate racial \
+                 keen-senses +2 record also appears, this +4 supersedes it and the two must not be \
+                 added"
             ),
         });
     }
@@ -57464,16 +57748,17 @@ fn ground_orphan_feat_facts(
             id: "feat.standalone.steel_soul_save_vs_spells".to_owned(),
             value: steel_soul,
             detail: format!(
+                // Provenance (ingest tokens, demoted out of the rendered sheet line -- SD-35 AT-35-E6-003-SWEEP):
+                //   Same increment-not-total shape as Sharp Senses: the token is
+                //   BONUS:VAR|SaveBonus_vs_Spells|2, incrementing the variable the dwarf Hardy
+                //   racial trait already sets to 2, and the BENEFIT prose states the +4 result and
+                //   that it REPLACES Hardy's bonus rather than stacking.
                 "Steel Soul (APG) grants a +{steel_soul} racial bonus on saving throws against \
-                 spells and spell-like abilities. Same increment-not-total shape as Sharp \
-                 Senses: the token is BONUS:VAR|SaveBonus_vs_Spells|2, incrementing the variable \
-                 the dwarf Hardy racial trait already sets to 2, and the BENEFIT prose states the \
-                 +4 result and that it REPLACES Hardy's bonus rather than stacking. Deliberately \
-                 NOT added to the Fortitude/Reflex/Will totals: it applies only against spells \
-                 and spell-like abilities, while those totals are the general unconditional \
-                 saves, so folding it in would overstate every save against a non-magical effect. \
-                 Grounds standalone, exactly as this engine already grounds the dwarf Hardy bonus \
-                 this feat supersedes"
+                 spells and spell-like abilities. Deliberately NOT added to the \
+                 Fortitude/Reflex/Will totals: it applies only against spells and spell-like \
+                 abilities, while those totals are the general unconditional saves, so folding it in \
+                 would overstate every save against a non-magical effect. Grounds standalone, \
+                 exactly as this engine already grounds the dwarf Hardy bonus this feat supersedes"
             ),
         });
     }
@@ -57484,13 +57769,14 @@ fn ground_orphan_feat_facts(
             id: "feat.standalone.deepsight_darkvision_feet".to_owned(),
             value: deepsight,
             detail: format!(
-                "Deepsight (APG) extends darkvision by {deepsight} feet \
-                 (BONUS:VISION|Darkvision|60). Its PREVISION:1,Darkvision=60 prerequisite fixes \
-                 the holder's base at 60 feet, so the BENEFIT prose's resulting range of 120 feet \
-                 is exact. This engine models no vision numerically anywhere -- racial darkvision \
-                 exists only as prose inside a race trait's detail string, never as a number -- so \
-                 the increment grounds standalone and the 120-foot total cannot be computed from \
-                 data here"
+                // Provenance (ingest tokens, demoted out of the rendered sheet line -- SD-35 AT-35-E6-003-SWEEP):
+                //   BONUS:VISION|Darkvision|60
+                //   Its PREVISION:1,Darkvision=60 prerequisite fixes the holder's base at 60 feet,
+                //   so the BENEFIT prose's resulting range of 120 feet is exact.
+                "Deepsight (APG) extends darkvision by {deepsight} feet. This engine models no \
+                 vision numerically anywhere -- racial darkvision exists only as prose inside a race \
+                 trait's detail string, never as a number -- so the increment grounds standalone and \
+                 the 120-foot total cannot be computed from data here"
             ),
         });
     }
@@ -57506,14 +57792,15 @@ fn ground_orphan_feat_facts(
             id: "feat.standalone.steadfast_personality_will_vs_mind_affecting".to_owned(),
             value: steadfast,
             detail: format!(
+                // Provenance (ingest tokens, demoted out of the rendered sheet line -- SD-35 AT-35-E6-003-SWEEP):
+                //   Both corpus tokens are needed: BONUS:SAVE|Will|CHA-WIS swaps Charisma in for
+                //   Wisdom, and BONUS:SAVE|Will|WIS|PREVARLT:WIS,0 adds Wisdom back only when it is
+                //   a penalty, matching the BENEFIT prose that a Wisdom penalty applies alongside
+                //   the Charisma modifier rather than being replaced by it.
                 "Steadfast Personality (ACG) changes Will saves against mind-affecting effects by \
                  {steadfast:+} for this character: Charisma ({charisma:+}) replaces Wisdom \
-                 ({wisdom_for_steadfast:+}), i.e. CHA - max(WIS, 0). Both corpus tokens are \
-                 needed: BONUS:SAVE|Will|CHA-WIS swaps Charisma in for Wisdom, and \
-                 BONUS:SAVE|Will|WIS|PREVARLT:WIS,0 adds Wisdom back only when it is a penalty, \
-                 matching the BENEFIT prose that a Wisdom penalty applies alongside the Charisma \
-                 modifier rather than being replaced by it. Deliberately NOT added to the Will \
-                 total: this applies ONLY against mind-affecting effects, whereas the computed \
+                 ({wisdom_for_steadfast:+}), i.e. CHA - max(WIS, 0). Deliberately NOT added to the \
+                 Will total: this applies ONLY against mind-affecting effects, whereas the computed \
                  Will total is the general save -- unlike Oracle's Sidestep Secret, which is \
                  unconditional and therefore is integrated. A zero here is a real result (equal \
                  Charisma and Wisdom), not an absent one"
@@ -57682,8 +57969,10 @@ fn ground_orphan_trait_facts(input: &CharacterInput, explanations: &mut Vec<Comp
             ),
             value: fact.bonus,
             detail: format!(
-                "{} grants a {:+} bonus on {} checks {} \
-                 (BONUS:SITUATION|{}=...|{}), transcribed from its corpus token. This is a \
+                // Provenance (ingest tokens, demoted out of the rendered sheet line -- SD-35 AT-35-E6-003-SWEEP):
+                //   BONUS:SITUATION|<skill>=<circumstance>|<bonus>
+                "{} grants a {:+} bonus on {} checks {}, transcribed from its corpus \
+                 situational-bonus entry. This is a \
                  SITUATIONAL bonus and is deliberately NOT added to any skill total: it applies \
                  only in the circumstance named here, and folding it into a general modifier \
                  would report a specific, checkable, wrong number on every ordinary {} check. \
@@ -57693,8 +57982,6 @@ fn ground_orphan_trait_facts(input: &CharacterInput, explanations: &mut Vec<Comp
                 fact.bonus,
                 fact.skill_name,
                 fact.circumstance,
-                fact.skill_name,
-                fact.bonus,
                 fact.skill_name
             ),
         });
@@ -57711,12 +57998,14 @@ fn ground_orphan_trait_facts(input: &CharacterInput, explanations: &mut Vec<Comp
             id: trait_effects::caster_level_subschool_fact_explanation_id(fact.trait_id),
             value: fact.bonus,
             detail: format!(
-                "{} lets you treat your caster level as {:+} for spells of the {} subschool \
-                 (BONUS:CASTERLEVEL|SUBSCHOOL.{}|{}), transcribed from its corpus token. This \
+                // Provenance (ingest tokens, demoted out of the rendered sheet line -- SD-35 AT-35-E6-003-SWEEP):
+                //   BONUS:CASTERLEVEL|SUBSCHOOL.<subschool>|<bonus>
+                "{} lets you treat your caster level as {:+} for spells of the {} subschool, \
+                 transcribed from its corpus caster-level entry. This \
                  engine computes no integrated per-subschool caster level total anywhere, so \
                  this grounds as a standalone flat record rather than folding into a total that \
                  would misstate every other subschool's spells",
-                fact.trait_name, fact.bonus, fact.subschool, fact.subschool, fact.bonus
+                fact.trait_name, fact.bonus, fact.subschool
             ),
         });
     }
@@ -57788,11 +58077,12 @@ fn ground_arg_and_pu_feat_facts(
             id: "feat.arg_standalone.flame_heart_fire_caster_level".to_owned(),
             value: flame_heart_caster_level,
             detail: format!(
+                // Provenance (ingest tokens, demoted out of the rendered sheet line -- SD-35 AT-35-E6-003-SWEEP):
+                //   BONUS:CASTERLEVEL|DESCRIPTOR.Fire|1
                 "Flame Heart (ARG) treats the caster level of fire-descriptor spells (and the \
-                 alchemist level of fire bombs) as {flame_heart_caster_level} higher \
-                 (BONUS:CASTERLEVEL|DESCRIPTOR.Fire|1). Deliberately NOT added to any \
-                 effective_caster_level record: those are the character's general caster level \
-                 for every spell, while this applies only to spells carrying the fire \
+                 alchemist level of fire bombs) as {flame_heart_caster_level} higher. Deliberately \
+                 NOT added to any effective_caster_level record: those are the character's general \
+                 caster level for every spell, while this applies only to spells carrying the fire \
                  descriptor, and this engine's spell records carry no descriptor to test"
             ),
         });
@@ -57804,14 +58094,15 @@ fn ground_arg_and_pu_feat_facts(
             id: "feat.arg_standalone.emotion_descriptor_save_bonus".to_owned(),
             value: emotion_save,
             detail: format!(
-                "Saving throws against effects with the EMOTION descriptor are \
-                 +{emotion_save} for this character. Fearless Curiosity and Intimidating \
-                 Confidence both write the same corpus variable (BONUS:VAR|FearlessCuriosityBonus|1 \
-                 each), PCGen's own way of saying they add -- and neither record states a literal \
-                 magnitude at all, printing the running total through a %1 substitution token instead, \
-                 so +1 alone and +2 together are read from the pair rather than off one row. \
-                 Deliberately NOT added to defense.total_save.will: that total is the general \
-                 Will save, and this applies only against emotion-descriptor effects"
+                // Provenance (ingest tokens, demoted out of the rendered sheet line -- SD-35 AT-35-E6-003-SWEEP):
+                //   BONUS:VAR|FearlessCuriosityBonus|1 each
+                "Saving throws against effects with the EMOTION descriptor are +{emotion_save} for \
+                 this character. Fearless Curiosity and Intimidating Confidence both write the same \
+                 corpus variable, PCGen's own way of saying they add -- and neither record states a \
+                 literal magnitude at all, printing the running total through a %1 substitution \
+                 token instead, so +1 alone and +2 together are read from the pair rather than off \
+                 one row. Deliberately NOT added to defense.total_save.will: that total is the \
+                 general Will save, and this applies only against emotion-descriptor effects"
             ),
         });
     }
@@ -57822,11 +58113,12 @@ fn ground_arg_and_pu_feat_facts(
             id: "feat.arg_standalone.aquatic_ancestry_swim_speed".to_owned(),
             value: swim_speed,
             detail: format!(
-                "Aquatic Ancestry (ARG) increases swim speed by {swim_speed} feet \
-                 (BONUS:MOVEADD|TYPE.Swim|10). This engine computes no movement total of any \
-                 kind, so this grounds standalone exactly as Fleet's base-speed bonus does. The \
-                 feat's amphibious special quality is a capability with no magnitude and is not \
-                 grounded as a number"
+                // Provenance (ingest tokens, demoted out of the rendered sheet line -- SD-35 AT-35-E6-003-SWEEP):
+                //   BONUS:MOVEADD|TYPE.Swim|10
+                "Aquatic Ancestry (ARG) increases swim speed by {swim_speed} feet. This engine \
+                 computes no movement total of any kind, so this grounds standalone exactly as \
+                 Fleet's base-speed bonus does. The feat's amphibious special quality is a \
+                 capability with no magnitude and is not grounded as a number"
             ),
         });
     }
@@ -57848,9 +58140,11 @@ fn ground_arg_and_pu_feat_facts(
             id: format!("feat.arg_situational_skill_bonus.{feat_slug}.{skill_slug}"),
             value: fact.bonus,
             detail: format!(
-                "{} (ARG) grants a {:+} bonus on {} checks {} \
-                 (BONUS:SITUATION|{}=...|{}), transcribed from its corpus token and confirmed \
-                 against its own BENEFIT prose. This is a SITUATIONAL bonus and is deliberately \
+                // Provenance (ingest tokens, demoted out of the rendered sheet line -- SD-35 AT-35-E6-003-SWEEP):
+                //   BONUS:SITUATION|<skill>=<circumstance>|<bonus>
+                "{} (ARG) grants a {:+} bonus on {} checks {}, transcribed from its corpus \
+                 situational-bonus entry and confirmed \
+                 against its own printed benefit. This is a SITUATIONAL bonus and is deliberately \
                  NOT added to any skill total: it applies only in the circumstance named here, \
                  and folding it into a general modifier would report a specific, checkable, \
                  wrong number on every ordinary {} check. Same treatment the Dwarf Stonecunning \
@@ -57859,8 +58153,6 @@ fn ground_arg_and_pu_feat_facts(
                 fact.bonus,
                 fact.skill_name,
                 fact.circumstance,
-                fact.skill_name,
-                fact.bonus,
                 fact.skill_name
             ),
         });
@@ -57877,20 +58169,22 @@ fn ground_arg_and_pu_feat_facts(
             id: "feat.arg_standalone.improvisation_untrained_skill_bonus".to_owned(),
             value: improvisation,
             detail: format!(
-                "Skill checks for skills this character has NO ranks in are \
-                 +{improvisation}. Improvisation and Improved Improvisation both write the one \
-                 corpus variable ImprovisationBonus (BONUS:VAR|ImprovisationBonus|2 each), \
-                 PCGen's own way of saying they add, and neither record states a literal -- both \
-                 print the running total through a %1 substitution token -- so +2 alone and +4 \
-                 together are read from the pair. The scope is the corpus's own: Improvisation \
-                 carries 26 companion BONUS:SKILL|<skill>|ImprovisationBonus|!PRESKILL:1,<skill>=1 \
-                 tokens, one per skill, each gated on having no rank in it. Deliberately NOT \
-                 added to skill.selected_modifier.climb/intimidate/swim: this engine's \
-                 deterministic posture pins all three at rank 1, and this bonus applies only \
-                 where there are no ranks. Improvisation's BONUS:VAR|UseUntrainedSkills|1 (use \
-                 trained-only skills untrained) is a capability with no magnitude, and Improved \
-                 Improvisation's BONUS:VAR|ACCHECK|ArmorCheckPenalty/2 halves a NONPROFICIENCY \
-                 penalty this engine models no proficiency state to incur"
+                // Provenance (ingest tokens, demoted out of the rendered sheet line -- SD-35 AT-35-E6-003-SWEEP):
+                //   BONUS:VAR|ImprovisationBonus|2 each
+                //   The scope is the corpus's own: Improvisation carries 26 companion
+                //   BONUS:SKILL|<skill>|ImprovisationBonus|!PRESKILL:1,<skill>=1 tokens, one per
+                //   skill, each gated on having no rank in it.
+                "Skill checks for skills this character has NO ranks in are +{improvisation}. \
+                 Improvisation and Improved Improvisation both write the one corpus variable \
+                 ImprovisationBonus, PCGen's own way of saying they add, and neither record states a \
+                 literal -- both print the running total through a %1 substitution token -- so +2 \
+                 alone and +4 together are read from the pair. Deliberately NOT added to \
+                 skill.selected_modifier.climb/intimidate/swim: this engine's deterministic posture \
+                 pins all three at rank 1, and this bonus applies only where there are no ranks. \
+                 Improvisation's own use-trained-only-skills-untrained clause \
+                 is a capability with no magnitude, and Improved Improvisation \
+                 halves an armor check penalty for nonproficiency that this engine \
+                 models no proficiency state to incur"
             ),
         });
     }
@@ -57905,18 +58199,20 @@ fn ground_arg_and_pu_feat_facts(
             id: "feat.arg_standalone.stretched_wings_fly_speed".to_owned(),
             value: fly_speed,
             detail: format!(
-                "Stretched Wings (ARG) increases fly speed by {fly_speed} feet \
-                 (BONUS:MOVEADD|TYPE.Fly|40), to 60 feet. Its BENEFIT prose states the resulting \
-                 total rather than the increment (\"Your strix racial fly speed increases to 60 \
-                 feet (average)\"), and the two reconcile exactly because the feat's own \
-                 PREABILITY:1,CATEGORY=Special Ability,Strix ~ Wing-Clipped fixes the base: \
-                 arg_abilities_race.lst's Wing-Clipped ~ Strix ~ Flight carries MOVE:Fly,20. This \
-                 engine computes no movement total of any kind, so this grounds standalone \
-                 exactly as Aquatic Ancestry's swim speed does. The feat's companion \
-                 BONUS:VAR|Maneuverability|1 is NOT grounded: it moves a manoeuvrability tier on \
-                 PCGen's own integer scale (the wing-clipped flight record sets \
-                 BONUS:VAR|Maneuverability|2|TYPE=Base for \"poor\"), and this engine has no \
-                 manoeuvrability dimension for a tier index to mean anything in"
+                // Provenance (ingest tokens, demoted out of the rendered sheet line -- SD-35 AT-35-E6-003-SWEEP):
+                //   BONUS:MOVEADD|TYPE.Fly|40
+                //   BONUS:VAR|Maneuverability|2|TYPE=Base for \"poor\"
+                //   Its BENEFIT prose states the resulting total rather than the increment (\"Your
+                //   strix racial fly speed increases to 60 feet (average)\"), and the two reconcile
+                //   exactly because the feat's own PREABILITY:1,CATEGORY=Special Ability,Strix ~
+                //   Wing-Clipped fixes the base: arg_abilities_race.lst's Wing-Clipped ~ Strix ~
+                //   Flight carries MOVE:Fly,20.
+                "Stretched Wings (ARG) increases fly speed by {fly_speed} feet, to 60 feet. This \
+                 engine computes no movement total of any kind, so this grounds standalone exactly \
+                 as Aquatic Ancestry's swim speed does. The feat's companion \
+                 manoeuvrability step is NOT grounded: it moves a manoeuvrability tier on \
+                 PCGen's own integer scale (the wing-clipped flight record sets), and this engine \
+                 has no manoeuvrability dimension for a tier index to mean anything in"
             ),
         });
     }
@@ -57929,16 +58225,17 @@ fn ground_arg_and_pu_feat_facts(
             id: "feat.arg_standalone.defiant_luck_uses_per_day".to_owned(),
             value: uses,
             detail: format!(
+                // Provenance (ingest tokens, demoted out of the rendered sheet line -- SD-35 AT-35-E6-003-SWEEP):
+                //   BONUS:VAR|DefiantLuckTimes|1 each
+                //   Unlike ARG's other per-day variables, DEFINE:DefiantLuckTimes|0 sits on the
+                //   Defiant Luck record itself, so this budget is wholly feat-determined rather
+                //   than an increment to a racial pool this engine does not model.
                 "Defiant Luck (ARG) is usable {uses} time(s) per day -- after a natural 1 on a \
-                 saving throw, or a confirmed critical hit against this character, that roll may \
-                 be rerolled. Defiant Luck and Bestow Luck both write the one corpus variable \
-                 DefiantLuckTimes (BONUS:VAR|DefiantLuckTimes|1 each) and neither states a \
-                 literal, printing the total through a %1 substitution token instead. Unlike \
-                 ARG's other per-day variables, DEFINE:DefiantLuckTimes|0 sits on the Defiant \
-                 Luck record itself, so this budget is wholly feat-determined rather than an \
-                 increment to a racial pool this engine does not model. No per-use consumption \
-                 is tracked -- this is the size of a daily pool, the same way Stunning Fist's \
-                 uses per day grounds"
+                 saving throw, or a confirmed critical hit against this character, that roll may be \
+                 rerolled. Defiant Luck and Bestow Luck both write the one corpus variable \
+                 DefiantLuckTimes and neither states a literal, printing the total through a %1 \
+                 substitution token instead. No per-use consumption is tracked -- this is the size \
+                 of a daily pool, the same way Stunning Fist's uses per day grounds"
             ),
         });
     }
@@ -57951,18 +58248,20 @@ fn ground_arg_and_pu_feat_facts(
             id: "feat.arg_standalone.fiend_sight_darkvision_feet".to_owned(),
             value: fiend_sight_darkvision,
             detail: format!(
-                "Fiend Sight (ARG) improves darkvision to {fiend_sight_darkvision} feet and \
-                 grants low-light vision. The record states the range absolutely and twice -- \
-                 VISION:Darkvision (120') and its BENEFIT prose -- over the 60-foot base its own \
-                 PREVISION:1,Darkvision=60 prerequisite fixes, so this is a doubling of a known \
-                 base rather than a free-floating claim; the same reconciliation the Deepsight \
-                 record performs, which reports its own 60-to-120 step as the increment its \
-                 BONUS:VISION token actually is. This engine models no vision numerically \
-                 anywhere, so the range grounds standalone. The feat's BONUS:VAR|FiendSightTier|1 \
-                 is a pick counter (STACK:YES MULT:YES, capped at two by \
-                 PREVARLT:FiendSightTier,2) whose only consumer is the record's own second pick, \
-                 granting the see-in-darkness universal monster ability -- a capability with no \
-                 magnitude, and no further range"
+                // Provenance (ingest tokens, demoted out of the rendered sheet line -- SD-35 AT-35-E6-003-SWEEP):
+                //   by PREVARLT:FiendSightTier,2
+                //   The record states the range absolutely and twice -- VISION:Darkvision (120')
+                //   and its BENEFIT prose -- over the 60-foot base its own
+                //   PREVISION:1,Darkvision=60 prerequisite fixes, so this is a doubling of a known
+                //   base rather than a free-floating claim; the same reconciliation the Deepsight
+                //   record performs, which reports its own 60-to-120 step as the increment its
+                //   BONUS:VISION token actually is.
+                "Fiend Sight (ARG) improves darkvision to {fiend_sight_darkvision} feet and grants \
+                 low-light vision. This engine models no vision numerically anywhere, so the range \
+                 grounds standalone. The feat's own tier counter is a pick counter \
+                 (STACK:YES MULT:YES, capped at two) whose only consumer is the record's own second \
+                 pick, granting the see-in-darkness universal monster ability -- a capability with \
+                 no magnitude, and no further range"
             ),
         });
     }
@@ -57973,11 +58272,12 @@ fn ground_arg_and_pu_feat_facts(
             id: "feat.arg_standalone.gnome_weapon_focus_attack_bonus".to_owned(),
             value: gnome_weapon_attack,
             detail: format!(
-                "Gnome Weapon Focus (ARG) grants a +{gnome_weapon_attack} bonus on attack rolls \
-                 with gnome weapons -- weapons with \"gnome\" in the title \
-                 (BONUS:WEAPONPROF=TYPE.Gnome|TOHIT|1). Deliberately NOT added to any attack \
-                 total: the bonus is scoped to a weapon TYPE and this engine's per-weapon attack \
-                 totals carry no gnome facet to test, unlike Weapon Focus whose target is a \
+                // Provenance (ingest tokens, demoted out of the rendered sheet line -- SD-35 AT-35-E6-003-SWEEP):
+                //   BONUS:WEAPONPROF=TYPE.Gnome|TOHIT|1
+                "Gnome Weapon Focus (ARG) grants a +{gnome_weapon_attack} bonus on attack rolls with \
+                 gnome weapons -- weapons with \"gnome\" in the title. Deliberately NOT added to any \
+                 attack total: the bonus is scoped to a weapon TYPE and this engine's per-weapon \
+                 attack totals carry no gnome facet to test, unlike Weapon Focus whose target is a \
                  specific weapon the player records"
             ),
         });
@@ -57996,13 +58296,14 @@ fn ground_arg_and_pu_feat_facts(
             id: "feat.pu_standalone.stamina_pool".to_owned(),
             value: facts.primary,
             detail: format!(
-                "Combat Stamina (Pathfinder Unchained) grants a stamina pool of \
-                 {} points: base attack bonus (+{base_attack_bonus}) + Constitution \
-                 modifier ({constitution:+}), transcribed from BONUS:VAR|StaminaPool|BAB+CON, \
-                 plus {extra} Extra Stamina pick(s) at +3 each (STACK:YES MULT:YES, capped at \
-                 three by the feat's own !PREABILITY:3 token). No stamina expenditure, combat \
-                 trick or per-round state is modelled here, so the pool grounds standalone as \
-                 a size rather than as a running resource",
+                // Provenance (ingest tokens, demoted out of the rendered sheet line -- SD-35 AT-35-E6-003-SWEEP):
+                //   !PREABILITY:3 token
+                "Combat Stamina (Pathfinder Unchained) grants a stamina pool of {} points: base \
+                 attack bonus (+{base_attack_bonus}) + Constitution modifier ({constitution:+}), \
+                 transcribed from the corpus's own pool formula, plus {extra} Extra Stamina pick(s) \
+                 at +3 each (STACK:YES MULT:YES, capped at three by the feat's own). No stamina \
+                 expenditure, combat trick or per-round state is modelled here, so the pool grounds \
+                 standalone as a size rather than as a running resource",
                 facts.primary
             ),
         });
@@ -58011,12 +58312,13 @@ fn ground_arg_and_pu_feat_facts(
                 id: "feat.pu_standalone.secondary_stamina_pool".to_owned(),
                 value: secondary,
                 detail: format!(
+                    // Provenance (ingest tokens, demoted out of the rendered sheet line -- SD-35 AT-35-E6-003-SWEEP):
+                    //   BONUS:VAR|SecondaryStaminaPool|CON
                     "Push the Limits (Pathfinder Unchained) grants a SECOND stamina pool of \
-                     {secondary} points, equal to the Constitution modifier \
-                     (BONUS:VAR|SecondaryStaminaPool|CON). Reported separately rather than \
-                     added into the primary pool above: its points are spendable only at 0 \
-                     primary stamina or while fatigued, conditions this engine does not \
-                     model, so summing the two would overstate what the character can spend"
+                     {secondary} points, equal to the Constitution modifier. Reported separately \
+                     rather than added into the primary pool above: its points are spendable only at \
+                     0 primary stamina or while fatigued, conditions this engine does not model, so \
+                     summing the two would overstate what the character can spend"
                 ),
             });
         }
@@ -58123,8 +58425,10 @@ fn ground_standalone_feat_skill_facts(
             id: format!("feat.arg_skill_bonus.{feat_slug}.{skill_slug}"),
             value: fact.bonus,
             detail: format!(
+                // Provenance (ingest tokens, demoted out of the rendered sheet line -- SD-35 AT-35-E6-003-SWEEP):
+                //   BONUS:SKILL|<skill>|<bonus>
                 "{} (ARG) grants a {:+} bonus on {} checks, transcribed from its corpus \
-                 BONUS:SKILL token and confirmed against its own BENEFIT prose. {}",
+                 skill-bonus entry and confirmed against its own printed benefit. {}",
                 fact.feat_key,
                 fact.bonus,
                 fact.skill_name,
@@ -58167,19 +58471,19 @@ fn ground_standalone_feat_skill_facts(
             id: format!("feat.master_craftsman_bonus.{skill_slug}"),
             value: fact.bonus,
             detail: format!(
+                // Provenance (ingest tokens, demoted out of the rendered sheet line -- SD-35 AT-35-E6-003-SWEEP):
+                //   The feat's own PRESKILL:1,TYPE.Craft=5,TYPE.Profession=5 prerequisite is NOT
+                //   asserted here -- prerequisite validation is feat_prereqs' job, and this
+                //   engine's deterministic skill posture pins ranks at 1, so no character it
+                //   currently composes could legally hold the feat.
                 "Master Craftsman grants a +{} bonus on {} checks (the player-chosen Craft or \
-                 Profession target, recorded via choice:master_craftsman_target). This grounds \
-                 as a standalone flat record; Craft and Profession are not among the three \
-                 skills compute_selected_skill_modifiers tracks (Climb/Intimidate/Swim), so \
-                 there is no total to layer it onto. The feat's own \
-                 PRESKILL:1,TYPE.Craft=5,TYPE.Profession=5 prerequisite is NOT asserted here -- \
-                 prerequisite validation is feat_prereqs' job, and this engine's deterministic \
-                 skill posture pins ranks at 1, so no character it currently composes could \
-                 legally hold the feat. That is a gap in what the engine represents, not a \
-                 reason to withhold a verified magnitude. Its second token \
-                 (MasterCraftsmanRanks, substituting skill ranks for caster level when \
-                 crafting magic items) stays ungrounded: this codebase models no item creation \
-                 to substitute into",
+                 Profession target, recorded via choice:master_craftsman_target). This grounds as a \
+                 standalone flat record; Craft and Profession are not among the three skills \
+                 compute_selected_skill_modifiers tracks (Climb/Intimidate/Swim), so there is no \
+                 total to layer it onto. That is a gap in what the engine represents, not a reason \
+                 to withhold a verified magnitude. Its second token (MasterCraftsmanRanks, \
+                 substituting skill ranks for caster level when crafting magic items) stays \
+                 ungrounded: this codebase models no item creation to substitute into",
                 fact.bonus, fact.skill_name
             ),
         });
@@ -86594,12 +86898,19 @@ mod generic_pool_group_selection_wiring_tests {
     #[test]
     fn pool_header_lookup_reaches_a_bare_plural_class_independent_base_record() {
         let merged = super::pool_header_record_by_normalized_suffix("Cleric", "Domain", None);
-        assert_eq!(
-            merged.get("DomainPowerTimes").map(String::as_str),
-            Some("3+WIS"),
-            "the bare, plural \"Domains\" base record's own DomainPowerTimes chain must merge \
-             when looked up by its singular registered name \"Domain\": {merged:?}"
+        let times = merged.get("DomainPowerTimes").unwrap_or_else(|| {
+            panic!(
+                "the bare, plural \"Domains\" base record's own DomainPowerTimes chain must \
+                 merge when looked up by its singular registered name \"Domain\": {:?}",
+                merged.keys().collect::<Vec<_>>()
+            )
+        });
+        // `3+WIS` -- asserted as what it computes, not as the text it was written in.
+        let resolved = crate::rules_core::record_vars::evaluate_with_bindings(
+            times,
+            &std::collections::BTreeMap::from([("WIS".to_string(), 4i64)]),
         );
+        assert_eq!(resolved, Some(7), "DomainPowerTimes is 3 + the caster's Wisdom modifier");
     }
 
     /// SD-32 T12 Epic 8 row 18 cycle 13: proves the existing `"<class> ~ "`-prefixed wildcard
@@ -86613,12 +86924,23 @@ mod generic_pool_group_selection_wiring_tests {
     #[test]
     fn pool_header_lookup_reaches_the_class_wide_registered_name_base_record() {
         let merged = super::pool_header_record_by_normalized_suffix("Shaman", "Spirit", None);
-        assert_eq!(
-            merged.get("ShamanSpiritLVL").map(String::as_str),
-            Some("ShamanLVL"),
-            "\"Shaman ~ Spirit\"'s own real ShamanSpiritLVL chain must merge when looked up by \
-             its own bare registered name: {merged:?}"
+        let spirit_level = merged.get("ShamanSpiritLVL").unwrap_or_else(|| {
+            panic!(
+                "\"Shaman ~ Spirit\"'s own real ShamanSpiritLVL chain must merge when looked \
+                 up by its own bare registered name: {:?}",
+                merged.keys().collect::<Vec<_>>()
+            )
+        });
+        assert!(
+            spirit_level.refs.iter().any(|r| r == "ShamanLVL"),
+            "ShamanSpiritLVL is the Shaman's own class level: {:?}",
+            spirit_level.refs
         );
+        let resolved = crate::rules_core::record_vars::evaluate_with_bindings(
+            spirit_level,
+            &std::collections::BTreeMap::from([("ShamanLVL".to_string(), 9i64)]),
+        );
+        assert_eq!(resolved, Some(9));
     }
 
     /// SD-32 T12 Epic 8 row 18 cycle 20: the new multi-terminal resolver genuinely resolves TWO
@@ -87131,8 +87453,7 @@ mod generic_pool_group_selection_wiring_tests {
     fn mountain_domain_foothold_desc_formula_needs_the_header_merge_to_resolve() {
         let ability_modifiers = crate::rules_core::pilot_compute::AbilityModifiers::default();
         let key = "Mountain Domain ~ Foothold";
-        let empty_header_vars: std::collections::BTreeMap<String, String> =
-            std::collections::BTreeMap::new();
+        let empty_header_vars = crate::rules_core::record_vars::ConvertedChain::new();
         assert!(
             super::class_feature_grant_consumer::resolved_description_for_formula_only_desc_argument(
                 key,
@@ -87423,7 +87744,7 @@ mod generic_pool_group_selection_wiring_tests {
     /// "Animal Domain" header's own chain) which itself needs `DomainLVL` -- bound ONLY on the
     /// CLERIC CLASS RECORD (`data/corpus/core_rulebook/class/cleric.json`, `BONUS:VAR|DomainLVL|
     /// ClericLVL`), never on any `class_feature` record at all (cycle 7's own receipt, "out of
-    /// `class_feature`'s ingestion scope entirely"). Row 21 restored `raw_tokens` onto all 168 real
+    /// `class_feature`'s ingestion scope entirely"). Row 21 restored the ingest token array onto all 168 real
     /// class records; this cycle's own NEW `class_record_bonus_vars` table (mirroring `class_
     /// feature_bonus_vars_any_record`'s shape one dir level up) is the missing READ side, merged
     /// into `resolve_pool_member_sole_magnitude` unconditionally (every owning class, not gated by

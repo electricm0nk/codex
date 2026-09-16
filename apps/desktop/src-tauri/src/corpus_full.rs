@@ -103,8 +103,7 @@ mod tests {
         let corpus = full_corpus_bundle();
         let (record, _) = equipment_id_resolve("Dogslicer", RuleSetId::Crb, corpus)
             .expect("ARG's real Dogslicer must resolve through the real desktop corpus bundle");
-        let wt = record.tokens.iter().find(|t| t.key == "WT").expect("real WT: token");
-        assert_eq!(wt.value, "1");
+        assert_eq!(record.weight_lbs, Some(1.0), "ARG Dogslicer's real settled weight");
     }
 }
 

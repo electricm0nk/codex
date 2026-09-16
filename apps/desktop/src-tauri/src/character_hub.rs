@@ -14,6 +14,7 @@
 
 use std::collections::BTreeMap;
 use std::path::{Path, PathBuf};
+use std::sync::OnceLock;
 
 use base64::Engine as _;
 use serde::{Deserialize, Serialize};
@@ -28,11 +29,14 @@ use codex::rules_core::damage_total::{resolve_weapon_damage_breakdown, WeaponDam
 use codex::rules_core::durability::{classify_durability, compute_max_hp, DurabilityStatus};
 use codex::rules_core::feat_effects;
 use codex::rules_core::level_up::{compute_level_up_grants_for_class, LevelUpPlan};
+use codex::rules_core::level_up_option_filter::{filter_option_pool, FEAT_POOL};
 use codex::rules_core::money;
+use codex::rules_core::sheet_rule::{held_set, CharacterFacts, HeldSeed};
 use codex::rules_core::pilot_compute::{
     ability_modifier, apply_human_ability_bonus, build_pilot_headless_receipt,
-    race_alternate_trait_selection_id, ComputationExplanation, HeadlessReceiptStatus,
-    RACE_ALTERNATE_TRAIT_CHOICE_ID, RACE_ALTERNATE_TRAIT_SELECTION_PREFIX,
+    compute_pilot_base_chassis, race_alternate_trait_selection_id, ComputationExplanation,
+    HeadlessReceiptStatus,
+    PilotBaseChassisComputation, RACE_ALTERNATE_TRAIT_CHOICE_ID, RACE_ALTERNATE_TRAIT_SELECTION_PREFIX,
 };
 use codex::rules_core::pilot_compute_corpus::{
     compute_pilot_with_corpus, CorpusDerivedSection, ResolvedEquipment,
@@ -459,7 +463,7 @@ pub struct CreateCharacterRequest {
     #[serde(default)]
     pub selected_traits: Vec<String>,
     /// **AT-34-E4-002 (second slice)**: the player's resolved choice for
-    /// each *fixed-choice* `%LIST` trait named in `selected_traits`
+    /// each *fixed-choice* open-slot trait named in `selected_traits`
     /// (`trait_effects::SKILL_CHOICE_TRAIT_BONUSES`) -- one
     /// `SelectedChoiceDto { choice_set_id, selection_id }` per such trait,
     /// with `choice_set_id` exactly `list_available_character_traits`'s
@@ -654,6 +658,150 @@ pub struct LoadSavedCharacterResponse {
     /// to re-equip it. Reuses `EquipmentSelectionImportDto` (already the
     /// export/import wire shape for the same data).
     pub equipment_selections: Vec<EquipmentSelectionImportDto>,
+    /// **SD-35 AT-35-E2-002 -- the "Rules and features" section.** Every held sheet rule's
+    /// line for this character (`codex::rules_core::sheet_rule::render_sheet` over the
+    /// `data/sheet_rules/` package, loaded once per process by [`sheet_rule_package`]),
+    /// grouped by kind: one final number, dice in final form, or the rule's words
+    /// (`decisions.md §1`). The frontend renders `label`, `value`, `also`, `prose` and
+    /// `condition` verbatim -- nothing here is re-derived on the far side of the boundary.
+    pub sheet_lines: Vec<SheetLineDto>,
+    /// Why `sheet_lines` is empty when it is empty for a reason other than "this character
+    /// holds no rule": the package directory could not be resolved or read. `None` when the
+    /// package loaded. Carried so the sheet can say so instead of showing an empty section.
+    pub sheet_rules_unavailable_reason: Option<String>,
+}
+
+/// Wire form of `sheet_rule::SheetLine` -- one line of the "Rules and features" section.
+#[derive(Debug, Clone, PartialEq, Eq, Serialize, Deserialize)]
+#[serde(rename_all = "camelCase")]
+pub struct SheetLineDto {
+    /// `<book>:<kind>:<slug>`, the same id `docs/work-inventory.json` keys the unit by.
+    pub id: String,
+    /// The record kind (`feat`, `class_feature`, ...); the section groups by it.
+    pub kind: String,
+    pub label: String,
+    /// `"number"`, `"dice"` or `"words"`.
+    pub form: String,
+    /// The value as the player writes it: `"+2"`, `"15"`, `"1d8+2"`; `""` for words.
+    pub value: String,
+    /// Second/third numbers on the line, already printed: `"6/day"`, `"CL 5"`, `"DC 15"`.
+    pub also: Vec<String>,
+    /// The rule's words with every slot filled.
+    pub prose: String,
+    /// The situational condition, when the rule has one: `"when jumping"`.
+    pub condition: Option<String>,
+}
+
+fn sheet_line_form(value: &codex::rules_core::sheet_rule::SheetLineValue) -> &'static str {
+    use codex::rules_core::sheet_rule::SheetLineValue;
+    match value {
+        SheetLineValue::Resolved(_) => "number",
+        SheetLineValue::Dice(_) => "dice",
+        SheetLineValue::Words => "words",
+    }
+}
+
+pub(crate) fn map_sheet_lines_dto(lines: &[codex::rules_core::sheet_rule::SheetLine]) -> Vec<SheetLineDto> {
+    lines
+        .iter()
+        .map(|line| SheetLineDto {
+            id: line.id.clone(),
+            kind: line.kind.clone(),
+            label: line.label.clone(),
+            form: sheet_line_form(&line.value).to_owned(),
+            value: line.printed.clone(),
+            also: line.also.iter().map(|(printed, _)| printed.clone()).collect(),
+            prose: line.prose.clone(),
+            condition: line.condition.clone(),
+        })
+        .collect()
+}
+
+/// The `data/sheet_rules/` package, loaded once per process -- the same shape
+/// `race_trait_picker::race_corpus` uses for `data/corpus/`. `Err` names why it is
+/// unavailable (no repo root, an unreadable directory, an empty package).
+fn sheet_rule_package() -> &'static Result<codex::rules_core::sheet_rule::SheetRulePackage, String> {
+    static PACKAGE: OnceLock<Result<codex::rules_core::sheet_rule::SheetRulePackage, String>> = OnceLock::new();
+    PACKAGE.get_or_init(|| {
+        let dir = crate::authoring_workbench::codex_repo_root()?.join("data/sheet_rules");
+        let load = codex::rules_core::corpus_loader::load_sheet_rules(&dir);
+        if load.package.rules.is_empty() {
+            return Err(format!(
+                "no sheet rules under {} ({} file diagnostics; regenerate with `cargo run --locked --bin sheet_rule_convert`)",
+                dir.display(),
+                load.diagnostics.len()
+            ));
+        }
+        Ok(load.package)
+    })
+}
+
+/// The "Rules and features" lines for a character: the chassis computation's held set --
+/// the character's own selections, the class-feature records the chassis grounded, and the
+/// racial traits the race resolver applied -- rendered through the live evaluator.
+pub(crate) fn sheet_lines_for(
+    input: &CharacterInput,
+    base: &PilotBaseChassisComputation,
+) -> (Vec<SheetLineDto>, Option<String>) {
+    match sheet_rule_package() {
+        Ok(package) => {
+            let race_traits: Vec<String> =
+                resolve_racial_traits_for_character(input).applied_traits.iter().map(|t| t.key.clone()).collect();
+            let computed = base.clone().with_sheet_rules(input, package, &race_traits);
+            (map_sheet_lines_dto(&computed.sheet_lines), None)
+        }
+        Err(reason) => (Vec::new(), Some(reason.clone())),
+    }
+}
+
+/// The per-character choice filter for the feat pool (SD-35 AT-35-E5-004; SD-34
+/// `decisions.md §17`): which feats THIS character qualifies for, and which it does not
+/// together with the requirement each one failed.
+///
+/// Built from the same three inputs the "Rules and features" section is rendered from —
+/// the `data/sheet_rules/` package, the chassis computation's held set, and the character's
+/// own facts — so the option list and the sheet agree by construction rather than by
+/// coincidence. `decisions.md §29.1`'s rule is one renderer with several consumers; this is
+/// another consumer of `sheet_rule`'s evaluator, not a second evaluator.
+///
+/// The third element is why the two lists are empty when the package could not be read: an
+/// unavailable package and "no feat qualifies" are different claims, and only the second is a
+/// statement about the rules.
+pub(crate) fn feat_options_for(
+    input: &CharacterInput,
+) -> (Vec<LevelUpOptionDto>, Vec<LevelUpRefusedOptionDto>, Option<String>) {
+    let package = match sheet_rule_package() {
+        Ok(package) => package,
+        Err(reason) => return (Vec::new(), Vec::new(), Some(reason.clone())),
+    };
+    let base = compute_pilot_base_chassis(input);
+    let mut seed = HeldSeed::from_character(input, &base);
+    seed.race_traits.extend(
+        resolve_racial_traits_for_character(input).applied_traits.iter().map(|t| t.key.clone()),
+    );
+    let facts = CharacterFacts::from_character(input, &base);
+    let held = held_set(package, &seed, &facts);
+
+    let filtered = filter_option_pool(package, &held, &facts, FEAT_POOL, &[]);
+    let eligible = filtered
+        .eligible
+        .iter()
+        .map(|option| LevelUpOptionDto {
+            id: option.id.clone(),
+            name: option.label.clone(),
+            condition: option.condition.clone(),
+        })
+        .collect();
+    let refused = filtered
+        .refused
+        .iter()
+        .map(|option| LevelUpRefusedOptionDto {
+            id: option.id.clone(),
+            name: option.label.clone(),
+            unmet: option.unmet.clone(),
+        })
+        .collect();
+    (eligible, refused, None)
 }
 
 /// Wire form of `pilot_compute::ComputationExplanation`.
@@ -1703,6 +1851,8 @@ pub(crate) fn load_saved_character_at_root(
         &corpus_receipt.corpus_derived.equipment_effects,
         corpus_receipt.base.ability_modifiers.strength,
     ));
+    let (sheet_lines, sheet_rules_unavailable_reason) =
+        sheet_lines_for(&envelope.character_input, &corpus_receipt.base);
 
     Ok(LoadSavedCharacterResponse {
         summary: summarize_envelope(&envelope),
@@ -1720,6 +1870,8 @@ pub(crate) fn load_saved_character_at_root(
         ability_scores: effective_ability_scores_dto(&envelope.character_input),
         skill_allocations: map_skill_allocations_dto(&envelope.character_input),
         equipment_selections: map_equipment_selections_dto(&envelope.character_input),
+        sheet_lines,
+        sheet_rules_unavailable_reason,
     })
 }
 
@@ -1871,6 +2023,42 @@ pub struct PreviewLevelUpResponse {
     pub resource_pool_changes: Vec<LevelUpResourcePoolDeltaDto>,
     /// True when `to_level` crosses this class's PF1 capstone.
     pub capstone_threshold: bool,
+    /// **SD-35 AT-35-E5-004 — the per-character choice filter.** The feat options THIS
+    /// character qualifies for at this level-up, joined over `SheetRule.applies` by
+    /// `codex::rules_core::level_up_option_filter::filter_option_pool`. Prerequisites are
+    /// `Applies`, converted from the source's `PRE*` rows at ingest; this side reads no token.
+    pub feat_options: Vec<LevelUpOptionDto>,
+    /// The feat options this character does **not** qualify for, each carrying the
+    /// requirement it failed in the rule's own words. A refusal is a number the sheet
+    /// reports, never an option that silently disappears from the list.
+    pub refused_feat_options: Vec<LevelUpRefusedOptionDto>,
+    /// Why both option lists are empty when they are empty for a reason other than "no
+    /// option qualifies": the `data/sheet_rules/` package could not be read. `None` when the
+    /// package loaded — same discipline as `sheet_rules_unavailable_reason`.
+    pub option_filter_unavailable_reason: Option<String>,
+}
+
+/// One option this character may take at this level-up.
+#[derive(Debug, Clone, Serialize, Deserialize)]
+#[serde(rename_all = "camelCase")]
+pub struct LevelUpOptionDto {
+    /// `<book>:<kind>:<slug>`, the same id `docs/work-inventory.json` keys the unit by.
+    pub id: String,
+    pub name: String,
+    /// The situational condition that prints on the line, when the gate included the option
+    /// situationally. `None` for an unconditional include.
+    pub condition: Option<String>,
+}
+
+/// One option this character may not take, and why — in the rule's words.
+#[derive(Debug, Clone, Serialize, Deserialize)]
+#[serde(rename_all = "camelCase")]
+pub struct LevelUpRefusedOptionDto {
+    pub id: String,
+    pub name: String,
+    /// The failing requirement, rendered verbatim by the engine
+    /// (`"requires Dodge"`, `"base attack bonus at least 6"`). Never empty.
+    pub unmet: String,
 }
 
 #[derive(Debug, Clone, Serialize, Deserialize)]
@@ -1954,7 +2142,13 @@ pub(crate) fn preview_level_up_at_root(
         to_level,
     );
 
+    let (feat_options, refused_feat_options, option_filter_unavailable_reason) =
+        feat_options_for(&envelope.character_input);
+
     Ok(PreviewLevelUpResponse {
+        feat_options,
+        refused_feat_options,
+        option_filter_unavailable_reason,
         from_level,
         to_level,
         character_level,
@@ -2582,17 +2776,33 @@ pub(crate) fn character_prereq_facts_at_root(
 ) -> Result<
     (
         codex::saved_character::SavedCharacterEnvelope,
-        codex::rules_core::feat_prereqs::pre_tokens::CharacterPrereqFacts,
+        codex::rules_core::feat_prereqs::PrereqFacts,
     ),
     String,
 > {
     let envelope = SavedCharacterStore::load(root).map_err(|err| err.message)?;
     let receipt = compute_pilot_with_corpus(&envelope.character_input, corpus_fixture_bundle());
-    let facts = codex::rules_core::feat_prereqs::character_prereq_facts(
-        &envelope.character_input,
-        receipt.base.base_attack_bonus,
-    );
+    let facts = prereq_facts_for(&envelope.character_input, &receipt.base)?;
     Ok((envelope, facts))
+}
+
+/// The prerequisite context for one character, built from THIS process's loaded
+/// `data/sheet_rules/` package -- the same one the sheet and the level-up option filter read,
+/// so a picker's verdict and the sheet cannot disagree (SD-35 `AT-35-E6-001`).
+///
+/// `Err` names why the package is unavailable. An unavailable package is not a verdict about
+/// the character, so every caller surfaces the reason rather than refusing a build.
+fn prereq_facts_for(
+    input: &CharacterInput,
+    base: &PilotBaseChassisComputation,
+) -> Result<codex::rules_core::feat_prereqs::PrereqFacts, String> {
+    let package = sheet_rule_package().as_ref().map_err(Clone::clone)?;
+    let race_traits: Vec<String> = resolve_racial_traits_for_character(input)
+        .applied_traits
+        .iter()
+        .map(|t| t.key.clone())
+        .collect();
+    Ok(codex::rules_core::feat_prereqs::PrereqFacts::new(package, input, base, &race_traits))
 }
 
 #[derive(Debug, Clone, Deserialize)]
@@ -2792,22 +3002,13 @@ pub(crate) fn feat_removal_dependency_refusal(
     before: &CharacterInput,
     after: &CharacterInput,
 ) -> Option<String> {
-    use codex::rules_core::feat_prereqs::{
-        character_prereq_facts, evaluate_feat_key_prerequisites,
-    };
+    use codex::rules_core::feat_prereqs::evaluate_feat_key_prerequisites;
 
-    let facts_before = character_prereq_facts(
-        before,
-        compute_pilot_with_corpus(before, corpus_fixture_bundle())
-            .base
-            .base_attack_bonus,
-    );
-    let facts_after = character_prereq_facts(
-        after,
-        compute_pilot_with_corpus(after, corpus_fixture_bundle())
-            .base
-            .base_attack_bonus,
-    );
+    let receipt_before = compute_pilot_with_corpus(before, corpus_fixture_bundle());
+    let receipt_after = compute_pilot_with_corpus(after, corpus_fixture_bundle());
+    // No package, no verdict: a removal is never refused over an unreadable rules package.
+    let Ok(facts_before) = prereq_facts_for(before, &receipt_before.base) else { return None };
+    let Ok(facts_after) = prereq_facts_for(after, &receipt_after.base) else { return None };
 
     for dependent in &after.chosen.selected_feats {
         let Some(report_after) = evaluate_feat_key_prerequisites(dependent, &facts_after) else {
@@ -4401,23 +4602,23 @@ pub fn export_character(app: tauri::AppHandle, request: ExportCharacterRequest) 
 ///
 /// A hand-maintained mirror of corpus facts is also how the identical table
 /// one layer down (`rules_tables::crb::race_tables`) silently drifted from
-/// the corpus on four races' ability modifiers: `BONUS:STAT|CON,WIS|2`
+/// the corpus on four races' ability modifiers: a +2 Con/Wis adjustment
 /// states two ability grants in one token and a transcription read only up
 /// to the comma. Deriving removes the class of defect rather than re-checking
 /// for it.
 ///
 /// # What is derived, and why that is not formula interpretation
 ///
-/// `decisions.md §24` forbids a general `BONUS:`/`DEFINE:`/`PREREQ:` formula
+/// `decisions.md §24` forbids a general bonus/variable/prerequisite formula
 /// interpreter and requires each feature to be a hand-modelled,
 /// corpus-verified pure function with a test. Every field below is exactly
 /// that: `codex::rules_core::race_creation`'s `fixed_ability_adjustments`
-/// reads the ability codes and magnitude off a `BONUS:STAT` chain's own
+/// reads the ability codes and magnitude off an ability-adjustment chain's own
 /// qualifiers, its `vision_reading` reads a `VISION:` token's own declared
 /// range, size and speed come from
 /// [`ResolvedRace`]'s already-modelled chassis-then-trait-override rule.
 /// Nothing is summed across traits, no PCGen variable is resolved, and no
-/// `PREREQ:` is evaluated.
+/// prerequisite is evaluated.
 #[derive(Debug, Clone, PartialEq, Serialize, Deserialize)]
 #[serde(rename_all = "camelCase")]
 pub struct RaceCreationChassisDto {
@@ -4478,7 +4679,7 @@ pub struct RaceCreationRosterResponse {
 /// (`codex::rules_core::race_creation`) so that `src/bin/v06_work_inventory.rs`
 /// -- which cannot depend on this crate -- can OBSERVE the same function
 /// rather than re-implement it. This wrapper is only the wire-DTO mapping;
-/// every refusal reason, every `BONUS:STAT` reading and the `VISION:`
+/// every refusal reason, every ability-adjustment reading and the vision
 /// rendering are that module's, unchanged by the move (SD-31
 /// `OPEN-ISSUES.md` rows 170/207/226).
 fn race_creation_chassis(
@@ -4704,11 +4905,11 @@ mod tests {
     ///
     /// Values transcribed from the rows that declare them, not from the
     /// engine: `data/corpus/beastiary/race_trait/aasimar/
-    /// aasimar_ability_scores.json` (`BONUS:STAT|WIS,CHA|2`), the matching
-    /// `tiefling_ability_scores.json` (`BONUS:STAT|DEX,INT|2` +
-    /// `BONUS:STAT|CHA|-2`) and `data/corpus/advanced_race_guide/race_trait/
-    /// changeling/changeling_ability_scores.json` (`BONUS:STAT|WIS,CHA|2` +
-    /// `BONUS:STAT|CON|-2`).
+    /// aasimar_ability_scores.json` (+2 Wis/Cha), the matching
+    /// `tiefling_ability_scores.json` (+2 Dex/Int and
+    /// -2 Cha) and `data/corpus/advanced_race_guide/race_trait/
+    /// changeling/changeling_ability_scores.json` (+2 Wis/Cha and
+    /// -2 Con).
     #[test]
     fn the_computed_class_races_serve_their_real_ability_magnitudes() {
         let expected: [ShippedRaceRow; 3] = [
@@ -4774,12 +4975,12 @@ mod tests {
                 ("dexterity".to_owned(), 4),
                 ("strength".to_owned(), -2),
             ]),
-            "Goblin ~ Ability Scores states +4 Dex in one BONUS:STAT chain and -2 Str/-2 Cha in a \
+            "Goblin ~ Ability Scores states +4 Dex in one adjustment chain and -2 Str/-2 Cha in a \
              second two-ability one"
         );
     }
 
-    /// `BONUS:STAT|STR,CHA|-2` names two abilities in one token. Reading
+    /// a -2 Str/Cha adjustment names two abilities in one statement. Reading
     /// only up to the comma is the transcription defect that silently
     /// drifted `race_tables.rs` from the corpus on four races, so the
     /// multi-ability chains are pinned explicitly across every race that
@@ -4950,7 +5151,7 @@ mod tests {
     /// producer-with-no-consumer trap.**
     ///
     /// `race_trait_picker::render_trait_description` re-renders a trait's
-    /// `DESC:` tokens against the character's own display values, and the Race
+    /// description statements against the character's own display values, and the Race
     /// Traits picker was its only consumer. `load_saved_character` — the one
     /// call the sheet a player lives in actually makes — carried the chosen
     /// trait *keys* and nothing else, so the sheet could name a trait and never
@@ -4962,7 +5163,7 @@ mod tests {
     /// `Fortunate One`. A baked string cannot pass this, and neither can the
     /// stored `data.description` — which is why the racial base below has to
     /// read "Three times per day" and the fed one "4 times per day", the
-    /// `PREVARLTEQ:...,3` gate ceasing to apply rather than a number being
+    /// an at-most-3 gate ceasing to apply rather than a number being
     /// substituted.
     #[test]
     fn a_loaded_characters_racial_trait_prose_states_the_number_its_own_feats_produce() {
@@ -5029,7 +5230,7 @@ mod tests {
     /// one.
     #[test]
     fn every_racial_trait_on_a_loaded_sheet_carries_rendered_prose_and_names_what_it_replaced() {
-        use codex::rules_core::pcgen_desc::leaked_pcgen_syntax;
+        use codex::pcgen_import::pcgen_desc::leaked_pcgen_syntax;
 
         let root = tempdir("sheet-racial-trait-coverage");
         saved_or_panic(
@@ -5108,7 +5309,7 @@ mod tests {
 
     /// **A top-level sheet number moving because of a racial-trait choice.**
     /// A Half-Elf Fighter 1 who takes `Dual Minded` (ARG p.42,
-    /// `BONUS:SAVE|Will|2`) saves and loads with Will +3 where the same build
+    /// a +2 Will bonus) saves and loads with Will +3 where the same build
     /// without it has +1 — on `snapshot.total_saves`, which the sheet prints at
     /// the top of the page.
     #[test]
@@ -5509,13 +5710,11 @@ mod tests {
     /// character-creation altitude, not just `generic_class_chassis::
     /// resolve`'s own isolated unit tests (`src/rules_core/pilot_compute/
     /// generic_class_chassis.rs`, which only proves the crate-internal
-    /// function in isolation). Iterates every one of the 61 conventional PC
-    /// classes `class_catalog_generic.rs` re-derives from the corpus (60 via
-    /// `load_generic_class_progressions`, plus Demoniac -- named separately
-    /// because THAT module's own formula evaluator does not bind the bare
-    /// `classlevel()` empty-key sentinel `generic_class_chassis::resolve`
-    /// binds; see that module's own doc comment, "All 61 resolve --
-    /// Demoniac closed on rebase, mid-cycle") at level 1, and asserts NONE
+    /// function in isolation). Iterates every one of the 62 conventional PC
+    /// classes `class_catalog_generic.rs` re-derives from the CONVERTED rules
+    /// (SD-35 `AT-35-E6-001`; Demoniac no longer needs naming separately --
+    /// the converter reads the bare `classlevel()` its run-time predecessor
+    /// refused) at level 1, and asserts NONE
     /// of them falls through to the `class_chassis.unsupported` diagnostic
     /// -- `compute_class_chassis`'s (`src/rules_core/pilot_compute/mod.rs`)
     /// only fallback when no dispatch arm, including `generic_class_
@@ -5524,34 +5723,25 @@ mod tests {
     /// player picking it at creation -- exactly the gap this cycle's brief
     /// asked to be either closed or precisely disproven with evidence.
     #[test]
-    fn all_61_generic_classes_reach_a_real_chassis_at_character_creation_altitude() {
+    fn all_62_generic_classes_reach_a_real_chassis_at_character_creation_altitude() {
         let repo_root = crate::authoring_workbench::codex_repo_root().expect("repo root");
         let (records, unresolved) =
             crate::class_catalog_generic::load_generic_class_progressions(&repo_root);
         assert!(
-            unresolved.is_empty() || unresolved.iter().all(|(_, name)| name == "Demoniac"),
-            "class_catalog_generic.rs's own unresolved list must contain only the named \
-             Demoniac gap, got: {unresolved:?}"
+            unresolved.is_empty(),
+            "every conventional class's converted progression must evaluate: {unresolved:?}"
         );
-        let mut names: Vec<String> = records.into_iter().map(|record| record.name).collect();
-        assert_eq!(
-            names.len(),
-            60,
-            "expected 60 of the 61 conventional PC classes from class_catalog_generic.rs's own \
-             re-derivation (Demoniac is the one named gap in THAT module, closed instead by \
-             generic_class_chassis::resolve's own CLASSLEVEL:: binding -- see this test's own \
-             doc comment)"
-        );
-        names.push("Demoniac".to_owned());
-        assert_eq!(names.len(), 61, "must cover all 61, not a partial sweep");
-
-        let slug = |name: &str| -> String {
-            name.trim().to_ascii_lowercase().split_whitespace().collect::<Vec<_>>().join("_")
-        };
+        // The record's own slug, never `slug(display_name)`: a record whose
+        // class name is redacted carries a codex-neutral display name while its
+        // dispatch id stays readable, and slugging the name would look up a
+        // class no dispatcher knows.
+        let names: Vec<(String, String)> =
+            records.into_iter().map(|record| (record.name, record.slug)).collect();
+        assert_eq!(names.len(), 62, "must cover all 62, not a partial sweep");
 
         let mut checked = 0usize;
-        for name in &names {
-            let class_id = format!("class:{}", slug(name));
+        for (name, slug) in &names {
+            let class_id = format!("class:{slug}");
             let diagnostics = claim_blocking_diagnostic_ids("race:human", &class_id, 1);
             assert!(
                 !diagnostics.contains("class_chassis.unsupported"),
@@ -5562,15 +5752,15 @@ mod tests {
             checked += 1;
         }
         assert_eq!(
-            checked, 61,
-            "must have exercised all 61 conventional classes, not a partial sweep"
+            checked, 62,
+            "must have exercised all 62 conventional classes, not a partial sweep"
         );
     }
 
     /// SD-32 T12 Epic 10 row 20 cycle 7: closes cycle 6's own named wiring
     /// gap ("`ground_companion_stat_block` has zero live callers anywhere
     /// in the crate") and proves it at the real character-creation
-    /// altitude, the same way `all_61_generic_classes_reach_a_real_
+    /// altitude, the same way `all_62_generic_classes_reach_a_real_
     /// chassis_at_character_creation_altitude` proved the class picker --
     /// through `CreateCharacterRequest` -> `compose_character_input` ->
     /// `build_pilot_headless_receipt`, never `generic_class_chassis::
@@ -7032,7 +7222,7 @@ mod tests {
     /// SD28-E25 adds a third, of the identical shape: `Masterwork Tool` is
     /// both a real purchasable item (`ultimate_equipment::equipment_tables`'s
     /// own `General` category, 50 gp) and a real equipment modifier
-    /// (`Equipmods`, no flat cost -- a `%CHOICE circumstance Bonus`),
+    /// (`Equipmods`, no flat cost -- a player-chosen circumstance bonus),
     /// sharing a `KEY:`. `equipment_catalog_rows()` chains UE's equipment
     /// before its equipmods, so the resolver's first match is the 50 gp
     /// item, not the free modifier the picker displays -- the same
@@ -7383,9 +7573,13 @@ mod tests {
         .expect_err("a Fighter 1 must not be able to take Improved Two-Weapon Fighting");
 
         assert!(error.contains("Improved Two-Weapon Fighting"), "{error}");
-        assert!(error.contains("base attack bonus +6"), "{error}");
-        assert!(error.contains("Two-Weapon Fighting feat"), "{error}");
-        assert!(error.contains("DEX 17"), "{error}");
+        // SD-35 `AT-35-E6-001`: the same three requirements, now in the converted gate's own
+        // words, and each with the character's own value where the engine holds one.
+        assert!(error.contains("base attack bonus at least 6"), "{error}");
+        assert!(error.contains("this character: 1"), "{error}");
+        assert!(error.contains("Two-Weapon Fighting"), "{error}");
+        assert!(error.contains("Dexterity"), "{error}");
+        assert!(error.contains("17"), "{error}");
 
         let after = SavedCharacterStore::load(&root).unwrap().character_input.chosen.selected_feats;
         assert_eq!(before, after, "a refused feat must not be written to disk");
@@ -10342,6 +10536,14 @@ mod tests {
     /// after the level-up, not before it. Re-adding a hand-authored
     /// `'Bonus combat feat'` string to cover the gap would be exactly the
     /// uncited-rules-data debt this slice exists to remove.
+    ///
+    /// The prerequisite-evaluation half of that scope note is no longer
+    /// outstanding: SD-35 AT-35-E5-004's `feat_options_for` performs it on
+    /// this response, and
+    /// `preview_level_up_filters_the_feat_options_by_this_characters_own_prerequisites`
+    /// below is its evidence. `pick_from_lists` staying empty here is now
+    /// only about which seam composes the list, not about whether the
+    /// options are filtered.
     #[test]
     fn preview_level_up_reports_fighters_real_level_2_grants() {
         let input = compose_character_input(&request_for("race:human", 1));
@@ -10375,6 +10577,148 @@ mod tests {
                 .iter()
                 .any(|effect| effect.description.is_empty())),
             "every reported grant effect must carry the engine's own description"
+        );
+    }
+
+    /// **SD-35 AT-35-E5-004's evidence.** The criterion: "a level-3 fixture's option list
+    /// excludes a failed-prereq option and includes a met one."
+    ///
+    /// The fixture is the level-3 Human Fighter `request_for` already builds — Strength 16,
+    /// Dexterity 14, no selected feats. Against the live `data/sheet_rules/` package:
+    ///
+    /// * **Leadership is excluded.** Its converted gate is character level at least 7, and
+    ///   this character is level 3. It is not silently dropped: it appears in
+    ///   `refused_feat_options` carrying the requirement in the rule's own words.
+    /// * **Power Attack is included.** Its gate is base attack bonus at least 1 (a level-3
+    ///   Fighter has +3) and a Strength score of at least 13 (this character has 16).
+    /// * **Mobility is included, and that is the sharpest half of the proof.** Its gate holds
+    ///   `core_rulebook:feat:dodge`, and this fixture holds Dodge because
+    ///   `compose_character_input` really put `feat:dodge` on `chosen.selected_feats`. The
+    ///   same option refused for a character without Dodge is offered to this one: the join
+    ///   reads THIS character's own selections, not a static eligibility table.
+    ///
+    /// Power Attack is the load-bearing half of this test, not decoration. Before this
+    /// cycle's converter fix the Strength half of that gate lowered to a bare corpus variable
+    /// whose only contributions were the records that RAISE the prerequisite floor — the base
+    /// `max(STRSCORE, AltSTRSCORE)` term belongs to no corpus record and was lost — so the
+    /// gate read 0, and a Strength-16 fighter was refused Power Attack. A filter that
+    /// excludes a met prerequisite is worse than no filter, because it looks like it works.
+    #[test]
+    fn preview_level_up_filters_the_feat_options_by_this_characters_own_prerequisites() {
+        let input = compose_character_input(&request_for("race:human", 3));
+        let root = saved_root_for("preview-feat-options-3", input);
+
+        let preview =
+            preview_level_up_at_root(&root, FIGHTER_CLASS_ID).expect("preview should compute");
+
+        assert_eq!(preview.character_level, 4, "a level-3 fixture leveling to 4");
+        assert_eq!(
+            preview.option_filter_unavailable_reason, None,
+            "the sheet-rule package must be readable for this test to mean anything"
+        );
+
+        let offered: Vec<&str> =
+            preview.feat_options.iter().map(|option| option.name.as_str()).collect();
+        assert!(
+            !offered.is_empty(),
+            "the live feat pool must produce a real option list, not an empty one"
+        );
+
+        // Excluded: a level-7 requirement a level-3 character cannot meet.
+        let leadership = preview
+            .refused_feat_options
+            .iter()
+            .find(|option| option.id == "core_rulebook:feat:leadership")
+            .unwrap_or_else(|| {
+                panic!(
+                    "Leadership must be refused at character level 3. offered={} refused={}",
+                    preview.feat_options.len(),
+                    preview.refused_feat_options.len(),
+                )
+            });
+        assert!(
+            leadership.unmet.contains("character level") && leadership.unmet.contains('7'),
+            "the refusal must name the requirement in the rule's words, got {:?}",
+            leadership.unmet
+        );
+        assert!(
+            !preview.feat_options.iter().any(|o| o.id == "core_rulebook:feat:leadership"),
+            "a failed-prereq option must not also be offered"
+        );
+
+        // Included: an ungated option is always on offer.
+        assert!(
+            preview.feat_options.iter().any(|o| o.id == "core_rulebook:feat:improved_initiative"),
+            "an option with no prerequisite must be offered; it was refused as {:?}",
+            preview
+                .refused_feat_options
+                .iter()
+                .find(|o| o.id == "core_rulebook:feat:improved_initiative")
+                .map(|o| o.unmet.as_str())
+        );
+
+        // Included because of a feat THIS character actually selected.
+        assert!(
+            preview.feat_options.iter().any(|o| o.id == "core_rulebook:feat:mobility"),
+            "Mobility's gate holds Dodge, which this fixture selected; it was refused as {:?}",
+            preview
+                .refused_feat_options
+                .iter()
+                .find(|o| o.id == "core_rulebook:feat:mobility")
+                .map(|o| o.unmet.as_str())
+        );
+        // A non-repeatable feat the character already holds is neither on offer nor a refusal
+        // — it is not a choice at all. This fixture really selected both.
+        for held in ["core_rulebook:feat:dodge", "core_rulebook:feat:power_attack"] {
+            assert!(
+                !preview.feat_options.iter().any(|o| o.id == held),
+                "{held} is already held and must not be offered again"
+            );
+            assert!(
+                !preview.refused_feat_options.iter().any(|o| o.id == held),
+                "{held} is already held and must not be reported as refused"
+            );
+        }
+
+        // A **repeatable** feat the character already holds stays on offer: Weapon Focus is
+        // taken again for a different weapon, and this fixture holds one. `repeatable` is the
+        // record's own flag, so this is the corpus's answer, not a special case.
+        assert!(
+            preview.feat_options.iter().any(|o| o.id == "core_rulebook:feat:weapon_focus"),
+            "Weapon Focus is repeatable and must remain on offer to a character who holds it"
+        );
+    }
+
+    /// Every option in the pool lands in exactly one of the two lists, and the two never
+    /// overlap: a refusal is a number this response reports, not a record that vanishes.
+    #[test]
+    fn no_feat_option_is_both_offered_and_refused() {
+        let input = compose_character_input(&request_for("race:human", 3));
+        let root = saved_root_for("preview-feat-options-disjoint", input);
+
+        let preview =
+            preview_level_up_at_root(&root, FIGHTER_CLASS_ID).expect("preview should compute");
+
+        let offered: BTreeSet<&str> =
+            preview.feat_options.iter().map(|option| option.id.as_str()).collect();
+        let refused: BTreeSet<&str> =
+            preview.refused_feat_options.iter().map(|option| option.id.as_str()).collect();
+
+        // The cycle receipt's census figure, re-derivable with
+        // `cargo test --locked no_feat_option_is_both_offered_and_refused -- --nocapture`.
+        println!(
+            "feat option census: offered={} refused={} considered={}",
+            preview.feat_options.len(),
+            preview.refused_feat_options.len(),
+            preview.feat_options.len() + preview.refused_feat_options.len()
+        );
+
+        assert_eq!(offered.len(), preview.feat_options.len(), "offered ids must be unique");
+        assert_eq!(refused.len(), preview.refused_feat_options.len(), "refused ids must be unique");
+        assert!(offered.is_disjoint(&refused));
+        assert!(
+            preview.refused_feat_options.iter().all(|option| !option.unmet.trim().is_empty()),
+            "every refusal must carry the requirement it failed"
         );
     }
 

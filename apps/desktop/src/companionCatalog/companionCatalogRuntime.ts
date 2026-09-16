@@ -38,7 +38,7 @@ function buildPreviewCatalog(): CompanionCatalogEntryDto[] {
       naturalAttackDamageBonuses: [
         { attack: 'Bite', bonus: '+1/2 Str modifier (minimum +0)', unparsedFormula: null },
       ],
-      // The Griffon's own row states no `BONUS:SKILL` ability-difference
+      // The Griffon's own row states no ability-difference skill
       // token — an empty list is the real corpus state, not an omission.
       skillAbilityDiffBonuses: [],
       statAdjustments: [
@@ -59,7 +59,6 @@ function buildPreviewCatalog(): CompanionCatalogEntryDto[] {
           delivery: null,
           typeSegments: ['SpecialQuality'],
           description: null,
-          descriptionVariants: [],
           statAdjustments: [],
           saveDcFormulas: [],
           sourcePage: null,
@@ -71,7 +70,6 @@ function buildPreviewCatalog(): CompanionCatalogEntryDto[] {
           delivery: null,
           typeSegments: ['CompanionAdvancement'],
           description: null,
-          descriptionVariants: [],
           statAdjustments: [
             { ability: 'STR', amount: 2 },
             { ability: 'CON', amount: 2 },
@@ -99,7 +97,7 @@ function buildPreviewCatalog(): CompanionCatalogEntryDto[] {
       naturalAttacks: [{ name: 'Slam', damageDice: null }],
       naturalAttackDamageBonuses: [],
       // Transcribed from `data/corpus/inner_sea_intrigue/companion/
-      // familiar_clockwork_spy.json`'s own `BONUS:SKILL|Climb,Swim|DEX-STR`
+      // familiar_clockwork_spy.json`'s own Climb/Swim Dex-minus-Str skill bonus
       // token.
       skillAbilityDiffBonuses: [
         { skills: ['Climb', 'Swim'], bonus: 'Dex modifier − Str modifier', unparsedFormula: null },
@@ -115,7 +113,6 @@ function buildPreviewCatalog(): CompanionCatalogEntryDto[] {
           delivery: 'Extraordinary',
           typeSegments: ['ClockworkSpyRacialAbility', 'SpecialQuality', 'Extraordinary'],
           description: null,
-          descriptionVariants: [],
           statAdjustments: [],
           saveDcFormulas: [],
           sourcePage: null,

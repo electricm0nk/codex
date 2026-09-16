@@ -3,7 +3,7 @@
 //!
 //! # Why this exists
 //!
-//! Wave 23's `class-field-fix` lane (`src/rules_core/cache_gen/class_feature.rs`
+//! Wave 23's `class-field-fix` lane (`src/pcgen_import/cache_gen/class_feature.rs`
 //! `true_class_by_key`, `OPEN-ISSUES.md` row 334) regenerated all 12,481
 //! `class_feature` corpus records and, while every headline claim about the
 //! `class` field correction reproduced exactly, the wave-23 integration

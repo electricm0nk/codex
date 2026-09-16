@@ -191,7 +191,7 @@ pub fn starting_wealth_gp(class_id: &str) -> Option<u32> {
         // reason is a corpus fact rather than an assumption: an Unchained
         // class is a `CATEGORY:CLASS` selection ability layered over the
         // base `CLASS:` record, and none of the four carries any token
-        // touching starting wealth (their `raw_tokens` in
+        // touching starting wealth (their ingest token array in
         // `data/corpus/pathfinder_unchained/class/*.json` are proficiency,
         // feature-grant and skill tokens only). The book changes what the
         // class DOES, not what it starts with.

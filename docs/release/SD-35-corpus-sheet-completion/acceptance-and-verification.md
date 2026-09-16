@@ -19,7 +19,8 @@ The closure gates, the command that proves each criterion, and the artifact each
 | AT-35-E1-003 | `artifacts/epic-1-tax-cut/build-time.json` before/after cold `cargo test --locked --no-run` wall time with commands; `cargo test -- --list` name-by-name diff, count unchanged | `build-time.json`, the consolidated binaries, the moved baselines |
 | AT-35-E1-004 | `scripts/verify.sh --only denominator-gate` default run lists every SD-35 `.md`, `violations=0`; `--only figure-provenance` exit 0 | the widened default scope |
 | AT-35-E1-005 | `python3 -m unittest scripts/tests/test_pcgen_residue_gate.py` (planted `raw_tokens` read fails; removed passes; `--closure` fails at baseline); `scripts/verify.sh --only pcgen-residue-gate`; `scripts/pcgen-residue-baseline.env` committed with the real first count | `scripts/pcgen_residue_gate.py`, the baseline file |
-| AT-35-E2-001 | `cargo run --locked --bin sheet_rule_convert -- --check` → `records=49438 converted=<n> refused=<n>` summing; `grep -rlE 'BONUS:\|DEFINE:\|PRE[A-Z]+:\|%CHOICE\|CL=' data/sheet_rules/ \| wc -l` → 0; per-kind converter gates green | `src/bin/sheet_rule_convert.rs`, `src/pcgen_import/sheet_rule/`, `data/sheet_rules/`, `data/sheet_rules/_refused.json` |
+| AT-35-E1-006 | `test -f docs/retro/sd34-book-completion-retrospective.md`; `grep -c sd34-book-completion-retrospective docs/release/SD-34-book-completion/references/README.md docs/release/SD-35-corpus-sheet-completion/references/README.md` → ≥1 each; the row map sums against `completion_atlas.py --book core_rulebook --check` + `--book ultimate_campaign --check` at `4c6c57eb9f`; SD-34 `progress.md` status reads closed-by-fold | `docs/retro/sd34-book-completion-retrospective.md`, `artifacts/epic-1-tax-cut/sd34-open-row-map.json` |
+| AT-35-E2-001 | `cargo run --locked --bin sheet_rule_convert -- --check` → `records=49450 converted=<n> refused=<n>` summing (`49438` before operator ruling B18, `decisions.md §21`); `grep -rlE 'BONUS:\|DEFINE:\|PRE[A-Z]+:\|%CHOICE\|CL=' data/sheet_rules/ \| wc -l` → 0; per-kind converter gates green | `src/bin/sheet_rule_convert.rs`, `src/pcgen_import/sheet_rule/`, `data/sheet_rules/`, `data/sheet_rules/_refused.json` |
 | AT-35-E2-002 | `cargo test --locked --lib sheet_rule` (one test per value form); 19 per-kind on-screen frontend tests green; `pcgen_residue_gate.py --check` unchanged from baseline | `src/rules_core/sheet_rule.rs`, the section in `CharacterSheet.tsx`, the tests |
 | AT-35-E2-003 | grep census: `grep -rln "oracle-unverifiable" src scripts apps tests \| wc -l` before == `grep -rln "sheet-complete" ... \| wc -l` after; `completion_atlas.py --check` `unclassified=0 overlap=0 done_evidence_violations=0` | the status, the rung, every consumer diff |
 | AT-35-E2-004 | `python3 scripts/token_coverage.py --check` exit 0 with sums; RED→GREEN on a planted double-count; `scripts/verify.sh --only token-coverage` | `artifacts/epic-2-sheet-rule/token-coverage.json`, `scripts/token_coverage.py`, its test |
@@ -35,7 +36,7 @@ The closure gates, the command that proves each criterion, and the artifact each
 | AT-35-E5-002 | atlas → D at 0; `completion_atlas.py --by-evidence` every sub-cause at 0, each named with mechanism in the receipt | receipts |
 | AT-35-E5-003 | atlas → U and Z at 0; `corpus_literal_sweep` examined-count moved by exactly the `beginner_box` record delta | receipts |
 | AT-35-E5-004 | atlas → X at 0; a desktop test: a level-3 fixture's option list excludes a failed-prereq option and includes a met one | the filter, the test |
-| AT-35-E5-005 | `completion_atlas.py --check` → `DONE=49438 of 49438`, every other bucket 0, exit 0; capability register re-derived with no row in a third state | `artifacts/epic-5-residues/completion-manifest.json`, `capability-register-closed.json` |
+| AT-35-E5-005 | `completion_atlas.py --check` → `DONE=49450 of 49450` (`49438 of 49438` when E5-005 closed; operator ruling B18, `decisions.md §21`, admitted 12 more), every other bucket 0, exit 0; capability register re-derived with no row in a third state | `artifacts/epic-5-residues/completion-manifest.json`, `capability-register-closed.json` |
 | AT-35-E6-001 | `pcgen_residue_gate.py --check` → `PcgenFormulaEvaluator`, `bonus_stack_reader`, `pre_tokens` at 0 live hits; oracle comparison agrees before and after; full workspace suite green | `artifacts/epic-6-pcgen-exit/oracle-parity-before.json`, receipts |
 | AT-35-E6-002 | `pcgen_residue_gate.py --check` → 0 `raw_tokens` hits under `src/rules_core/`; `gen_book_cache` output byte-identical on one book before and after the relocation | receipts, the diff transcript |
 | AT-35-E6-003 | `pcgen_residue_gate.py --check` → 0 hits under `apps/desktop/`; desktop crate + frontend suites green; the 19 on-screen tests pass | receipts |
@@ -54,7 +55,6 @@ python3 scripts/token_coverage.py --check                       # from AT-35-E2-
 cargo run --locked --bin sheet_rule_convert -- --check          # from AT-35-E2-001 onward; ids agree with the corpus
 python3 scripts/shape_engine_boundary.py --check                # content-anchored from AT-35-E1-002
 python3 scripts/missing_engine_tables.py --check
-python3 scripts/box_ledger.py --check
 python3 scripts/denominator_gate.py --check 'docs/release/SD-35-corpus-sheet-completion/*.md'   # explicit until AT-35-E1-004
 scripts/verify.sh --only pi-sweep
 cargo run --locked --bin corpus_literal_sweep                   # 0 findings (only when corpus records changed)
@@ -94,7 +94,10 @@ The scan checks **work**, never reports:
 
 ### 3a. Deliverable-integrity checks — specific to this bundle
 
-- **`completion_atlas.py --check` at HEAD → `DONE=49438 of 49438`.**
+- **`completion_atlas.py --check` at HEAD → `DONE=49450 of 49450`** (operator ruling B18,
+  `decisions.md §21`; `49438` is superseded). **The headline figure is the CORPUS one:
+  48,864 of 48,864 real `data/corpus` rules records = 100%**, denominator from
+  `artifacts/epic-7-closure/population-census-final.json`.
 - **`pcgen_residue_gate.py --check --closure` at HEAD → `live_files=0 live_hits=0`.** Then an
   independent grep by the scan itself, not the gate's own pattern list: `grep -rn 'raw_tokens\|PcgenFormulaEvaluator\|render_pcgen_desc' src/rules_core src/saved_character src/campaign src/homebrew_authoring apps/desktop` → no output.
 - **`sheet_rule_convert --check` at HEAD → ids agree with the corpus; `_refused.json` empty.**
@@ -103,9 +106,17 @@ The scan checks **work**, never reports:
 - **The completion manifest's evidence pointers resolve** on an independently drawn sample of at
   least 200 units across all 19 kinds; for each sampled `sheet-complete` unit, load its
   `SheetRule`, evaluate it for the probe character, and confirm the recorded form.
-- **The oracle parity artifacts** (`oracle-parity-epic2.json`, `-before.json`, `-after.json`)
-  each name `PCGEN_ORACLE_SHA` and show `disagree=0`, or every disagreement resolved by a
-  named commit.
+- **The oracle parity artifacts** each name `PCGEN_ORACLE_SHA` and show `disagree=0`, or every
+  disagreement resolved by a named commit. The three exist at these paths (produced by
+  `AT-35-E7-CLOSURE-CLEANUP`, `decisions.md §23`; before that they were named here but had never
+  been written, and ~20 per-cycle parity artifacts carried the evidence under other names):
+  `artifacts/epic-2-sheet-rule/oracle-parity-epic2.json`,
+  `artifacts/epic-6-pcgen-exit/oracle-parity-before.json`,
+  `artifacts/epic-6-pcgen-exit/oracle-parity-after.json`. Each carries `consolidated_from` naming
+  its source: the first two are the Epic 2 and Epic 6-start runs **verbatim**, re-filed, and the
+  third is a **real re-run** executed at HEAD against the PCGen exports pinned at
+  `PCGEN_ORACLE_SHA`. None shows `disagree=0`; the second clause applies and every disagreement is
+  named in the artifact's own `disagreements` array with both values and its oracle key.
 - **The tool side is intact** (`decisions.md §11`, what is kept): `cargo build --locked --bin
   sheet_rule_convert --bin gen_book_cache` exits 0; `python3 scripts/oracle_harness/run.py --help`
   exits 0; `scripts/pcgen-oracle-pin.env` and `scripts/fetch-pcgen-oracle.sh` present;
@@ -114,7 +125,15 @@ The scan checks **work**, never reports:
 - **The 19 on-screen tests exist and pass** in the frontend run.
 - **`build-time.json` shows after < before**, both measured cold.
 - **The capability register has no third state.**
-- **Every kanban row `complete`** with its receipt path resolving.
+- **Every kanban CRITERION row `complete`** with its receipt path resolving — the 29 rows
+  `AT-35-E1-001` … `AT-35-E6-004`, plus the closure rows. **Operator ruling S1, `decisions.md
+  §22`:** a "card" is a criterion row. The per-cycle rows `workflow-instruction.md §5` appends
+  ("one row per extra cycle … none of them an additional criterion") are the mechanical receipt
+  trail; each is read as evidence for its criterion, and is never itself an item the bundle owes.
+  Counting them as the bar cannot terminate — every cycle dispatched to close them appends one
+  more. `§5`'s forbidden move still stands **in both directions**: a criterion's `complete`
+  unsupported by its cycle rows does not satisfy it, and a cycle row is set only from its own
+  receipt, one row at a time, never by bulk relabel.
 
 **If anything is short: STOP.** No retrospective, no sweep, **no PR**. Report what is short
 with the command that shows it.

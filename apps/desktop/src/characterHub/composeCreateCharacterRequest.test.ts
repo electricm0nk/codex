@@ -25,7 +25,7 @@ const ZERO_ALLOCATION = { strength: 0, dexterity: 0, constitution: 0, intelligen
  *
  * PF1's "+2 to one ability score" races are Human, Half-Elf and Half-Orc —
  * derived by command from the corpus, not recalled: only their
- * `Racial Ability Scores` rows carry `BONUS:ABILITYPOOL|Ability Bonus|1`.
+ * `Racial Ability Scores` rows carry one `Ability Bonus` pool grant.
  * The creation form has always offered a stepper to distribute those points
  * and shown them in the on-screen calculated score.
  *

@@ -33,9 +33,9 @@ use std::collections::BTreeMap;
 use std::sync::OnceLock;
 
 use codex::rules_core::rules_tables::class_spell_levels;
+use codex::rules_core::sheet_rule::{Effect, SheetRule};
 
 use crate::authoring_workbench::codex_repo_root;
-use crate::class_catalog_generic::{tokens_from, walk_json_files};
 
 /// One `(spell key, level)` pair from a single class's spell list. The
 /// `key` matches `SpellCatalogEntryDto::key` exactly, so the frontend can
@@ -66,26 +66,33 @@ pub struct ClassSpellLevelsDto {
     /// v0.8 B-9: what `known: false` could not say -- whether this class
     /// casts at all. See [`SpellcastingStatus`].
     pub spellcasting: SpellcastingStatus,
-    /// The corpus record's own `FACT:SpellType|<X>` value (`Arcane`,
-    /// `Divine`, `Psychic`, ...) verbatim, or `None` when the record
-    /// carries no such token (a non-caster) or no record was found.
+    /// The class record's converted `SpellType` fact (`Arcane`, `Divine`,
+    /// `Psychic`, ...) verbatim, or `None` when the record declares no such
+    /// fact (a non-caster) or no record was found.
     pub spell_type: Option<String>,
 }
 
 /// v0.8 B-9 (audit item 45 / F-10): `known: false` alone conflated "a
 /// Fighter has no spells" with "the Oracle list was never transcribed",
 /// which forced the frontend to hand-list the casters -- a rules judgment
-/// §3.3 forbids in TypeScript. This reads the fact from the ingested
-/// corpus class record instead: PCGen tags every spellcasting class line
-/// with `FACT:SpellType|Arcane|Divine|Psychic` and no martial class with
-/// one (`data/corpus/<book>/class/<class>.json` `raw_tokens`; 49 of 168
-/// records carry it, every one a caster). Never a class-id list in Rust.
+/// §3.3 forbids in TypeScript. This reads the fact from the CONVERTED
+/// class record instead of a PCGen token (`decisions.md §11`): the ingest
+/// converter turns each class record's `FACT:SpellType|Arcane|Divine|
+/// Psychic` line into a `FactDeclare{name: "SpellType", ..}` effect on the
+/// record's `data/sheet_rules/<book>/class/<slug>.json` rule, and no
+/// martial class carries one. Never a class-id list in Rust.
 ///
 /// An Unchained record (`"Unchained Summoner"`) is a
-/// `"<Base> Class Selection..."` shell whose `TYPE` names its base class
-/// and which carries no `SpellType` of its own; it inherits its base
-/// record's answer, read from that record -- again a corpus token, not a
-/// list.
+/// `"<Base> Class Selection..."` shell whose converted `tags` name its
+/// base class and which declares no `SpellType` of its own; it inherits
+/// its base record's answer, read from that record -- again a converted
+/// fact, not a list. `pathfinder_unchained`'s `class` kind carries no
+/// sheet-rule conversion at all today (no `data/sheet_rules/
+/// pathfinder_unchained/class/` directory), so this hop is presently
+/// inert for every Unchained shell — each one reports `ClassNotInCorpus`
+/// until that book's classes convert, rather than the martial/caster
+/// answer a PCGen-token read of the un-ingested record could still give.
+/// Report absence, don't borrow the raw token to fill the gap.
 #[derive(Debug, Clone, Copy, PartialEq, Eq, Serialize, Deserialize)]
 #[serde(rename_all = "camelCase")]
 pub enum SpellcastingStatus {
@@ -124,45 +131,56 @@ fn normalize_class_id(identity: &str) -> String {
     format!("class:{slug}")
 }
 
-/// Every `data/corpus/<book>/class/*.json` record's facts, keyed by
-/// normalized class id. Identity is the record's own `class_id` (CRB/APG/
-/// ACG shape) or `name` (every other book), whichever it carries. Records
-/// with no `raw_tokens` are skipped -- they cannot answer either way.
+/// Every `data/sheet_rules/<book>/class/*.json` record's facts, keyed by
+/// normalized class id. Identity is the record's own converted `label`
+/// (the same field `class_chassis_sheet_rules::ClassChassis::display_name`
+/// reads for the same file). A file's facts are pooled across all of its
+/// rows -- most class files hold one rule, but a record that yields
+/// siblings (an alternate-progression toggle, for instance) still declares
+/// its `FACT:SpellType` and `TYPE` tags on the principal row, so scanning
+/// every row costs nothing and loses nothing.
+///
+/// A book/kind combination `data/sheet_rules/` has not converted at all
+/// (no `class/` directory under it) simply contributes no entries --
+/// `corpus_spell_type` then reports `ClassNotInCorpus` for every id that
+/// would have come from it, never a value read around the gap.
 fn corpus_class_facts() -> &'static BTreeMap<String, CorpusClassFacts> {
     static INDEX: OnceLock<BTreeMap<String, CorpusClassFacts>> = OnceLock::new();
     INDEX.get_or_init(|| {
         let mut index = BTreeMap::new();
         let Ok(repo_root) = codex_repo_root() else { return index };
-        let corpus_root = repo_root.join("data/corpus");
-        let Ok(books) = std::fs::read_dir(&corpus_root) else { return index };
+        let sheet_rules_root = repo_root.join("data/sheet_rules");
+        let Ok(books) = std::fs::read_dir(&sheet_rules_root) else { return index };
         for book in books.flatten() {
             let dir = book.path().join("class");
             if !dir.is_dir() {
                 continue;
             }
-            let mut files = Vec::new();
-            walk_json_files(&dir, &mut files);
+            let Ok(entries) = std::fs::read_dir(&dir) else { continue };
+            let mut files: Vec<_> = entries
+                .flatten()
+                .map(|e| e.path())
+                .filter(|p| p.extension().is_some_and(|e| e == "json"))
+                .collect();
+            files.sort();
             for file in files {
                 let Ok(text) = std::fs::read_to_string(&file) else { continue };
-                let Ok(doc) = serde_json::from_str::<serde_json::Value>(&text) else { continue };
-                let data = &doc["data"];
-                let Some(identity) = data["class_id"].as_str().or_else(|| data["name"].as_str()) else {
-                    continue;
-                };
-                let tokens = tokens_from(data);
-                if tokens.is_empty() {
-                    continue;
-                }
-                let spell_type = tokens
-                    .iter()
-                    .find_map(|(k, v)| if k == "FACT" { v.strip_prefix("SpellType|") } else { None })
-                    .map(str::to_owned);
-                let base_selection_of = tokens
-                    .iter()
-                    .find(|(k, _)| k == "TYPE")
-                    .and_then(|(_, v)| v.split_once(" Class Selection"))
-                    .map(|(base, _)| normalize_class_id(base));
-                index.insert(normalize_class_id(identity), CorpusClassFacts { spell_type, base_selection_of });
+                let Ok(rules) = serde_json::from_str::<Vec<SheetRule>>(&text) else { continue };
+                let Some(identity) = rules.first().map(|r| r.label.clone()) else { continue };
+                let spell_type = rules.iter().find_map(|rule| {
+                    rule.grants.iter().find_map(|effect| match effect {
+                        Effect::FactDeclare { name, value } if name == "SpellType" => {
+                            Some(value.clone())
+                        }
+                        _ => None,
+                    })
+                });
+                let base_selection_of = rules.iter().find_map(|rule| {
+                    rule.tags.iter().find_map(|tag| {
+                        tag.split_once(" Class Selection").map(|(base, _)| normalize_class_id(base))
+                    })
+                });
+                index.insert(normalize_class_id(&identity), CorpusClassFacts { spell_type, base_selection_of });
             }
         }
         index
@@ -171,7 +189,7 @@ fn corpus_class_facts() -> &'static BTreeMap<String, CorpusClassFacts> {
 
 /// Resolves a class id to its corpus spell type, following at most one
 /// `"<Base> Class Selection"` hop so an Unchained shell answers with its
-/// base class's token. `Err(())` when no record with tokens answers.
+/// base class's converted fact. `Err(())` when no converted record answers.
 fn corpus_spell_type(class_id: &str) -> Result<Option<String>, ()> {
     let index = corpus_class_facts();
     let facts = index.get(class_id).ok_or(())?;
@@ -324,17 +342,34 @@ mod tests {
         }
     }
 
-    /// An Unchained record is a `"<Base> Class Selection"` shell with no
-    /// `SpellType` of its own; its caster-ness is its base class's, read
-    /// from the base record -- never from a class-id list.
+    /// `pathfinder_unchained`'s `class` kind has no `data/sheet_rules/
+    /// pathfinder_unchained/class/` directory at all -- verified by `find
+    /// data/sheet_rules -maxdepth 1 -iname pathfinder_unchained -type d`
+    /// then listing it: `ability`, `class_feature`, `equipment_modifier`,
+    /// `feat`, `monster_ability`, `race_trait`, `skill`, `template`, no
+    /// `class`. Every one of its four "`<Base> Class Selection`" records
+    /// (Unchained Barbarian/Monk/Rogue/Summoner) is therefore absent from
+    /// [`corpus_class_facts`]'s index by any id, base-selection hop
+    /// included, so all three report `ClassNotInCorpus` -- the honest
+    /// answer, not a regression. Before this module ported off
+    /// `data/corpus/<book>/class/*.json` `raw_tokens` (`decisions.md
+    /// §11`), reading that un-ingested PCGen record directly could still
+    /// answer `NonCaster` for the two martial shells and
+    /// `CasterListNotIngested` for the caster one; this module no longer
+    /// reads the token that made that answer, so it does not know it.
+    /// Re-derive if a future cycle converts this book's `class` kind.
     #[test]
-    fn unchained_classes_inherit_their_base_records_caster_status() {
-        assert_eq!(
-            status_of("class:unchained_summoner"),
-            (SpellcastingStatus::CasterListNotIngested, Some("Arcane".to_owned()))
-        );
-        assert_eq!(status_of("class:unchained_barbarian"), (SpellcastingStatus::NonCaster, None));
-        assert_eq!(status_of("class:unchained_rogue"), (SpellcastingStatus::NonCaster, None));
+    fn unchained_classes_report_class_not_in_corpus_until_their_book_converts() {
+        for class_id in
+            ["class:unchained_summoner", "class:unchained_barbarian", "class:unchained_rogue"]
+        {
+            assert_eq!(
+                status_of(class_id),
+                (SpellcastingStatus::ClassNotInCorpus, None),
+                "{class_id}"
+            );
+            assert!(!levels_for(class_id).known, "{class_id}");
+        }
     }
 
     #[test]

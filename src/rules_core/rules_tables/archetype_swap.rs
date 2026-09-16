@@ -69,9 +69,13 @@ pub struct ArchetypeSwapEntry {
     /// archetype's flavour text, not any specific feature's mechanic.
     pub description: Option<&'static str>,
     pub source_page: Option<&'static str>,
-    /// Every top-level `PRE`-family token the master row carries,
-    /// verbatim and unparsed, in source order.
-    pub prerequisites: Option<&'static [&'static str]>,
+    // The master row's `PRE`-family tokens used to sit here, verbatim and
+    // unparsed. Nothing on the live side ever read them -- `archetype_resolver`
+    // leaves prerequisites to `feat_prereqs`, and `feat_prereqs` reads the
+    // CONVERTED `Applies` gate, never a token string. SD-35
+    // `AT-35-E6-003-SWEEP` cycle 2 moved all 409 rows to the converter side
+    // (`src/pcgen_import/archetype_swap_prereq_tokens.rs`), where the ingest
+    // format belongs (`decisions.md` §11). A move, not a removal.
     /// The base-class feature-slot IDs this archetype's own `TYPE:`
     /// facet names as replaced, verbatim, in source order. **Not
     /// paired 1:1 with `grants`** -- see this module's own doc comment.

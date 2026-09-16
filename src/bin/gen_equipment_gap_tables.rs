@@ -42,7 +42,7 @@ use std::path::{Path, PathBuf};
 
 use codex::rules_core::codex_neutral_name::{neutral_key, neutral_name};
 use codex::rules_core::equipment_resolver::{hand_authored_equipment_rows, EQUIPMENT_BOOK_ACG, EQUIPMENT_BOOK_APG, EQUIPMENT_BOOK_ARG, EQUIPMENT_BOOK_B1, EQUIPMENT_BOOK_CRB, EQUIPMENT_BOOK_UC, EQUIPMENT_BOOK_UE, EQUIPMENT_BOOK_UI, EQUIPMENT_BOOK_UM, EQUIPMENT_BOOK_UPSI, EQUIPMENT_BOOK_UW};
-use codex::rules_core::pcgen_desc::{leaked_pcgen_syntax, render_pcgen_desc};
+use codex::pcgen_import::pcgen_desc::{leaked_pcgen_syntax, render_pcgen_desc, RenderedPcgenDesc};
 use codex::rules_core::pi_screening::{declared_product_identity, DeclaredProductIdentity, PI_BLACKLIST_TERMS};
 use codex::rules_core::pi_table_sweep::screen_generated_table;
 use codex::rules_core::shape_b_v1::REDACTED_PI_MARKER;
@@ -221,13 +221,201 @@ const EQUIPMENT_BOOK_BB: &str = "BB";
 /// carrying_raw_pcgen_syntax` check exactly (`leaked_pcgen_syntax` on the
 /// rendered text, nothing else), so this refuses precisely what that test
 /// would otherwise catch downstream — never more, never less.
-fn safe_description(description: Option<String>) -> Option<String> {
+/// **SD-35 AT-35-E6-003-SWEEP cycle 5 — ships the RENDERED text, not the raw
+/// one.** Until this cycle the function rendered the description only to
+/// *decide* whether to keep it, then stored the RAW string on the row. But
+/// `equipment_gap_tables.rs` is chained straight into
+/// `equipment_resolver::equipment_catalog_rows()` and rendered by the desktop
+/// equipment catalog with no second substitution pass, so the raw `%CHOICE`
+/// / `%LIST` / `|`-argument tail reached the player's paper sheet verbatim —
+/// the same defect shape cycle 4 found in `ComputationExplanation.detail`, and
+/// a sheet-rule violation (`decisions.md` §1: a sheet line is a final number,
+/// dice in final form, or the rule's words — never ingest vocabulary).
+/// `epic-breakdown.md` AT-35-E6-003 states the fix exactly: "its `%N`
+/// substitution already happened in the converter". This *is* the converter
+/// side, so it happens here, once, at generation.
+/// **SD-35 AT-35-E6-003-SWEEP cycle 8.** The noun a row's OWN `CHOOSE:` token
+/// names, for the `%` its description leaves standing where that choice goes.
+///
+/// Read off the record, never guessed. The two shapes below are the only two
+/// the corpus actually presents on a `|%LIST`-tailed description — re-derive
+/// with the census in this cycle's receipt: 30 rows carry
+/// `CHOOSE:EQBUILDER.SPELL|…`, 4 carry `CHOOSE:SKILL|…`, and no `|%LIST`-tailed
+/// row in any of this generator's 19 input files carries any other shape. An
+/// unrecognised `CHOOSE:` returns `None` and the row falls through to the
+/// existing path unchanged, so a new corpus shape is named as remainder rather
+/// than given a fabricated noun.
+fn chosen_noun(choose: &str) -> Option<&'static str> {
+    match choose.split('|').next()?.trim() {
+        "EQBUILDER.SPELL" => Some("the chosen spell"),
+        "SKILL" => Some("the chosen skill"),
+        _ => None,
+    }
+}
+
+/// A description whose ENTIRE `|` argument tail is the `%LIST`/`%CHOICE`
+/// keyword is naming a **selection**, not a magnitude — and the sheet rule's
+/// answer for an unresolvable term is *the rule's words*
+/// (`decisions.md` §1). So `"Cast % at will|%LIST"` on an equipmod whose own
+/// `CHOOSE:` names a spell ships as *"Cast the chosen spell at will"*.
+///
+/// This is the distinction [`carries_an_unresolved_magnitude`]'s own doc
+/// comment already draws ("Nor is a `%CHOICE`/`%LIST` keyword: those stand in
+/// for a CHOICE the player already made … not for a magnitude") but which its
+/// code could not act on, because the bare `%` branch fires before the tail is
+/// ever consulted. Dropping the `%` instead — which is what
+/// `render_pcgen_desc` does — produces *"Cast at will"*, a sentence missing its
+/// object; keeping it raw prints `%LIST` on a paper character sheet. Naming the
+/// choice is the only rendering that is neither.
+///
+/// Deliberately narrow, and returns `None` (leaving the existing path to
+/// decide) for everything it does not claim:
+/// * the tail must be exactly `%LIST` or `%CHOICE` and nothing else;
+/// * a `%N` numbered reference or any other `%KEYWORD` in the prose disqualifies
+///   the whole string — those have a different source and this rule has no
+///   opinion about them;
+/// * `%%` is an escaped literal percent and renders as one, never as a choice;
+/// * at least one bare `%` must actually be substituted.
+fn substitute_chosen_selection(raw: &str, noun: &str) -> Option<String> {
+    let (prose, tail) = raw.split_once('|')?;
+    if !matches!(tail, "%LIST" | "%CHOICE") {
+        return None;
+    }
+    let mut out = String::new();
+    let mut substituted = 0usize;
+    let mut chars = prose.chars().peekable();
+    while let Some(ch) = chars.next() {
+        if ch != '%' {
+            out.push(ch);
+            continue;
+        }
+        match chars.peek().copied() {
+            // An escaped literal percent: a real character, not a hole.
+            Some('%') => {
+                chars.next();
+                out.push('%');
+            }
+            // `%1` / `%CHOICE` inside the prose: a different mechanism.
+            Some(next) if next.is_ascii_digit() || next.is_ascii_uppercase() => return None,
+            _ => {
+                if out.is_empty() {
+                    let mut noun_chars = noun.chars();
+                    if let Some(first) = noun_chars.next() {
+                        out.extend(first.to_uppercase());
+                        out.push_str(noun_chars.as_str());
+                    }
+                } else {
+                    out.push_str(noun);
+                }
+                substituted += 1;
+            }
+        }
+    }
+    if substituted == 0 {
+        return None;
+    }
+    // The same downstream check every other shipped description passes: if the
+    // substituted sentence would still read as ingest syntax, ship nothing.
+    if leaked_pcgen_syntax(&out).is_some() {
+        return None;
+    }
+    Some(out)
+}
+
+fn safe_description(description: Option<String>, choose: Option<&str>) -> Option<String> {
     let description = description?;
+    if let Some(noun) = choose.and_then(chosen_noun)
+        && let Some(words) = substitute_chosen_selection(&description, noun)
+    {
+        return Some(words);
+    }
     let rendered = render_pcgen_desc(&description);
     if leaked_pcgen_syntax(&rendered.text).is_some() {
         return None;
     }
-    Some(description)
+    if carries_an_unresolved_magnitude(&description, &rendered) {
+        return Some(description);
+    }
+    Some(trim_dangling_connective(&rendered.text))
+}
+
+/// A `%` that stands in for a NUMBER the row cannot supply — `+%d10 additional
+/// fire damage`, `Darkvision % ft.`, `a +%1 luck bonus` with no argument tail.
+///
+/// Rendering these is worse than leaving them. `render_pcgen_desc` drops the
+/// reference, so `+%d10 additional fire damage` becomes *"d10 additional fire
+/// damage"* — which reads as valid dice notation with the die COUNT silently
+/// missing, and `Darkvision % ft.` becomes *"Darkvision ft."*. The raw form at
+/// least shows the reader a `%` where a number belongs; the rendered form is a
+/// plausible-looking wrong number, which is the exact failure `AGENTS.md` rule 7
+/// and the sheet rule (`decisions.md` §1: *dice in final form*) both forbid.
+///
+/// So the row keeps its raw text, the hit stays in
+/// `scripts/pcgen_residue_gate.py`'s count, and it is named as the remainder
+/// rather than papered over. 55 of `equipment_gap_tables.rs`'s 1,014
+/// descriptions are this shape; re-derive by diffing the rendered and raw
+/// forms of every description that changed.
+///
+/// A `%%` is NOT this: it is an escaped literal percent (`20%% spell failure`
+/// -> `20% spell failure`), a real rendering with nothing missing. Nor is a
+/// `%CHOICE`/`%LIST` keyword: those stand in for a CHOICE the player already
+/// made and the sheet already names elsewhere, not for a magnitude.
+fn carries_an_unresolved_magnitude(raw: &str, rendered: &RenderedPcgenDesc) -> bool {
+    // A numbered `%N` is resolvable, but only from a `|` argument tail, and
+    // only when that tail resolved everything it was asked for. A BARE `%`
+    // has no such source and is always a hole.
+    let numbered_may_resolve = raw.contains('|') && rendered.dropped_args.is_empty();
+    let bytes = raw.as_bytes();
+    let mut i = 0;
+    while i < bytes.len() {
+        if bytes[i] != b'%' {
+            i += 1;
+            continue;
+        }
+        let next = bytes.get(i + 1).copied();
+        match next {
+            Some(b'%') => i += 2, // escaped literal percent
+            Some(c) if c.is_ascii_uppercase() => {
+                // A `%KEYWORD` choice reference; skip the whole keyword.
+                i += 1;
+                while i < bytes.len() && bytes[i].is_ascii_uppercase() {
+                    i += 1;
+                }
+            }
+            Some(c) if c.is_ascii_digit() => {
+                if !numbered_may_resolve {
+                    return true; // `%1` with no tail, or a tail that dropped
+                }
+                i += 2;
+            }
+            _ => return true, // `%d10`, `% ft.`: a bare hole with no source
+        }
+    }
+    false
+}
+
+/// A dropped `%CHOICE`/`%LIST` keyword can leave the sentence ending on the
+/// preposition that introduced it — *"Enhancement bonus to armor class of"*.
+/// That is not the rule's words, it is a truncation, so the connective goes
+/// with the keyword it introduced. Deletion only: never adds a word, never
+/// reorders one, and only ever cuts a trailing connective plus the punctuation
+/// around it.
+fn trim_dangling_connective(text: &str) -> String {
+    const CONNECTIVES: [&str; 12] =
+        ["of", "to", "against", "with", "by", "for", "in", "on", "from", "than", "and", "or"];
+    // Only a sentence that actually ends on a connective is touched; a
+    // well-formed one keeps its own trailing punctuation exactly as authored.
+    let mut kept = text.to_string();
+    loop {
+        let probe = kept.trim_end_matches([' ', ',', ';', ':']);
+        let last = probe.rsplit(' ').next().unwrap_or("").to_ascii_lowercase();
+        if !CONNECTIVES.contains(&last.as_str()) {
+            break;
+        }
+        let Some(cut) = probe.rfind(' ') else { break };
+        kept = probe[..cut].trim_end().to_string();
+    }
+    kept
 }
 
 /// Where the generated table lands, relative to the crate root.
@@ -732,6 +920,12 @@ struct BaseFields {
     description: Option<String>,
     cost_gp: Option<f64>,
     weight_lbs: Option<f64>,
+    /// The base row's own `CHOOSE:` token, inherited by the same rule as
+    /// `description`: a `.COPY=` row that states no `CHOOSE:` of its own makes
+    /// the same choice its base does, so the noun
+    /// [`substitute_chosen_selection`] needs travels with the inherited prose
+    /// rather than being lost with it.
+    choose: Option<String>,
 }
 
 /// Builds the base-record lookup used by [`parse_lst`]'s `.COPY=`
@@ -766,6 +960,10 @@ fn collect_base_fields(texts: &[String]) -> HashMap<String, BaseFields> {
                 description,
                 cost_gp: numeric(&fields, "COST:"),
                 weight_lbs: numeric(&fields, "WT:"),
+                choose: token_value(&fields, "CHOOSE:")
+                    .map(str::trim)
+                    .filter(|c| !c.is_empty())
+                    .map(str::to_string),
             });
         }
     }
@@ -821,6 +1019,10 @@ fn parse_lst(text: &str, category: &'static str, base_fields: &HashMap<String, B
         };
         let mut cost_gp = numeric(&fields, "COST:");
         let mut weight_lbs = numeric(&fields, "WT:");
+        let mut choose = token_value(&fields, "CHOOSE:")
+            .map(str::trim)
+            .filter(|c| !c.is_empty())
+            .map(str::to_string);
 
         // `.COPY=` inheritance: a field this row's own line leaves unstated
         // is inherited from the base record it declares itself a copy of —
@@ -837,6 +1039,9 @@ fn parse_lst(text: &str, category: &'static str, base_fields: &HashMap<String, B
             if weight_lbs.is_none() {
                 weight_lbs = inherited.weight_lbs;
             }
+            if choose.is_none() {
+                choose.clone_from(&inherited.choose);
+            }
         }
 
         out.push(ParsedRecord {
@@ -845,7 +1050,7 @@ fn parse_lst(text: &str, category: &'static str, base_fields: &HashMap<String, B
             category,
             cost_gp,
             weight_lbs,
-            description: safe_description(description),
+            description: safe_description(description, choose.as_deref()),
             line: line_number,
             name_pi_citation: None,
         });
@@ -1170,19 +1375,19 @@ mod safe_description_tests {
     #[test]
     fn a_description_whose_render_still_leaks_pcgen_syntax_is_refused() {
         let raw = "Intelligence %, Wisdom %, Charisma %, Ego Score %|IntItemStatINT|IntItemStatWIS|IntItemStatCHA|IntelligentItemEgo".to_string();
-        assert_eq!(safe_description(Some(raw)), None);
+        assert_eq!(safe_description(Some(raw), None), None);
     }
 
     /// A description with no PCGen substitution syntax at all is untouched.
     #[test]
     fn a_clean_description_passes_through_unchanged() {
         let raw = "Enhancement bonus increases by 4 (to a max of 5)".to_string();
-        assert_eq!(safe_description(Some(raw.clone())), Some(raw));
+        assert_eq!(safe_description(Some(raw.clone()), None), Some(raw));
     }
 
     #[test]
     fn none_stays_none() {
-        assert_eq!(safe_description(None), None);
+        assert_eq!(safe_description(None, None), None);
     }
 
     /// Empirical check, not assumed: a bare `%CHOICE` keyword reference
@@ -1192,16 +1397,164 @@ mod safe_description_tests {
     /// render). Prints the rendered result so a future reader can see
     /// exactly what `safe_description` decided, rather than trusting a
     /// bare pass/fail.
+    ///
+    /// **SD-35 AT-35-E6-003-SWEEP cycle 5:** the row now ships the RENDERED
+    /// text, not the raw one. Storing the raw `%CHOICE` put ingest vocabulary
+    /// on the shipped row, and `equipment_gap_tables.rs` is read straight
+    /// into `equipment_resolver::equipment_catalog_rows()` and onto the
+    /// player's sheet -- so `%CHOICE` was printing on a paper character
+    /// sheet, the same defect cycle 4 found in `ComputationExplanation`.
+    /// The substitution belongs in the converter (`decisions.md` §11,
+    /// `epic-breakdown.md` AT-35-E6-003: "its `%N` substitution already
+    /// happened in the converter"), so it happens here, once, at generation.
     #[test]
-    fn a_bare_choice_keyword_with_no_pipe_tail_survives() {
+    fn a_bare_choice_keyword_with_no_pipe_tail_ships_rendered_not_raw() {
         let raw = "Enhancement bonus to ability %CHOICE".to_string();
-        let result = safe_description(Some(raw));
+        let result = safe_description(Some(raw), None);
         assert_eq!(
             result.as_deref(),
-            Some("Enhancement bonus to ability %CHOICE"),
-            "a dropped %CHOICE that renders to clean, leak-free text must still ship -- \
-             matches production's own equipment catalog behavior"
+            Some("Enhancement bonus to ability"),
+            "a dropped %CHOICE must ship as the RENDERED sentence -- the shipped row is \
+             read onto the sheet verbatim, so raw ingest vocabulary here prints on it"
         );
+    }
+
+    /// A dropped keyword must not leave the sentence ending on the preposition
+    /// that introduced it: *"…armor class of"* is a truncation, not the rule's
+    /// words.
+    #[test]
+    fn a_dropped_keyword_does_not_leave_a_dangling_preposition() {
+        assert_eq!(
+            safe_description(Some("Deflection bonus to armor class of %CHOICE".to_string()), None)
+                .as_deref(),
+            Some("Deflection bonus to armor class")
+        );
+        // Deletion only: a sentence that never ended on a connective is untouched.
+        assert_eq!(
+            safe_description(Some("Enhancement bonus increases by 4".to_string()), None).as_deref(),
+            Some("Enhancement bonus increases by 4")
+        );
+    }
+
+    /// A `%` standing in for a NUMBER keeps its raw text. Rendering it would
+    /// turn `+%d10` into `d10` — valid-looking dice notation with the count
+    /// silently gone — which is a worse sheet line than an obvious `%`.
+    #[test]
+    fn a_percent_standing_in_for_a_number_is_left_raw_not_rendered() {
+        for raw in [
+            "+1d6 fire damage, on a critical hit deals +%d10 additional fire damage",
+            "Darkvision % ft.",
+            "a +%1 luck bonus",
+        ] {
+            assert_eq!(
+                safe_description(Some(raw.to_string()), None).as_deref(),
+                Some(raw),
+                "a missing magnitude must stay visible, not be rendered away"
+            );
+        }
+        // An ESCAPED percent is a real literal, not a missing number: it renders.
+        assert_eq!(
+            safe_description(Some("any spellcasting has a 20%% failure chance".to_string()), None)
+                .as_deref(),
+            Some("any spellcasting has a 20% failure chance")
+        );
+    }
+
+    /// The `|`-argument tail is ingest vocabulary too: when it RESOLVES, the
+    /// shipped row carries the resolved sentence and no tail at all.
+    #[test]
+    fn a_resolvable_pipe_argument_tail_never_reaches_the_shipped_row() {
+        let result = safe_description(Some("a +%1 luck bonus|2".to_string()), None)
+            .expect("renders clean");
+        assert_eq!(result, "a +2 luck bonus");
+    }
+}
+
+/// **SD-35 AT-35-E6-003-SWEEP cycle 8.** A `%` whose whole argument tail is the
+/// `%LIST`/`%CHOICE` keyword is a SELECTION, and the row's own `CHOOSE:` token
+/// says what is selected. Every case below is a real corpus row, named with the
+/// file its `CHOOSE:` was read from; none is a constructed fixture.
+#[cfg(test)]
+mod chosen_selection_tests {
+    use super::*;
+
+    /// `data/corpus/core_rulebook/equipment/equipmods/itempower_castzeroatwill.json`
+    /// — `SPROP:Cast % at will|%LIST` with `CHOOSE:EQBUILDER.SPELL|Arcane,Divine|0|0`.
+    /// Before this cycle the row shipped its raw text and `%LIST` printed on the
+    /// paper sheet.
+    #[test]
+    fn a_list_tailed_percent_ships_the_noun_its_own_choose_token_names() {
+        assert_eq!(
+            safe_description(
+                Some("Cast % at will|%LIST".to_string()),
+                Some("EQBUILDER.SPELL|Arcane,Divine|0|0"),
+            )
+            .as_deref(),
+            Some("Cast the chosen spell at will"),
+        );
+        // `itempower_fiveskill.json` — `CHOOSE:SKILL|TYPE=Base|TITLE=Skill Choice`.
+        assert_eq!(
+            safe_description(
+                Some("Item has 5 ranks in %|%LIST".to_string()),
+                Some("SKILL|TYPE=Base|TITLE=Skill Choice"),
+            )
+            .as_deref(),
+            Some("Item has 5 ranks in the chosen skill"),
+        );
+    }
+
+    /// `legendary_item_intelligent_item_spellcasting_1st_level_spell_1_per_day.json`
+    /// — the `%` opens the sentence, so the noun that replaces it is the
+    /// sentence's first word and is capitalised like one.
+    #[test]
+    fn a_sentence_initial_percent_is_capitalised() {
+        assert_eq!(
+            safe_description(
+                Some("% 1/day".to_string() + "|%LIST"),
+                Some("EQBUILDER.SPELL|Arcane,Divine|1|1"),
+            )
+            .as_deref(),
+            Some("The chosen spell 1/day"),
+        );
+    }
+
+    /// The rule claims only what it can read. An unrecognised `CHOOSE:` shape,
+    /// a tail that is not the bare keyword, and a `%N`/`%KEYWORD` reference in
+    /// the prose each fall through to the existing path — the row keeps its raw
+    /// text and stays in the residue gate's count as named remainder, rather
+    /// than being given a noun nobody derived.
+    #[test]
+    fn every_shape_the_rule_does_not_claim_falls_through_untouched() {
+        assert_eq!(chosen_noun("FEAT|TYPE=General"), None);
+        assert_eq!(substitute_chosen_selection("Cast % at will|CasterLevel", "the chosen spell"), None);
+        assert_eq!(substitute_chosen_selection("Cast %1 at will|%LIST", "the chosen spell"), None);
+        assert_eq!(substitute_chosen_selection("Cast %CHOICE at will|%LIST", "the chosen spell"), None);
+        // No bare `%` to substitute at all.
+        assert_eq!(substitute_chosen_selection("Cast at will|%LIST", "the chosen spell"), None);
+        // An escaped literal percent is a character, not a hole: it is not a
+        // substitution, so nothing is claimed here either.
+        assert_eq!(substitute_chosen_selection("a 20%% chance|%LIST", "the chosen spell"), None);
+        // And with an unrecognised CHOOSE the whole row is unchanged.
+        assert_eq!(
+            safe_description(Some("Cast % at will|%LIST".to_string()), Some("FEAT|TYPE=General"))
+                .as_deref(),
+            Some("Cast % at will|%LIST"),
+        );
+    }
+
+    /// The shipped sentence carries no ingest vocabulary — the property the
+    /// whole cycle exists to establish, asserted on the rendered result rather
+    /// than on the rule that produced it.
+    #[test]
+    fn the_shipped_sentence_carries_no_ingest_vocabulary() {
+        let shipped = safe_description(
+            Some("Cast % 3/day|%LIST".to_string()),
+            Some("EQBUILDER.SPELL|Arcane,Divine|3|3"),
+        )
+        .expect("renders");
+        assert!(!shipped.contains('%'), "{shipped}");
+        assert!(!shipped.contains('|'), "{shipped}");
+        assert_eq!(leaked_pcgen_syntax(&shipped), None);
     }
 }
 

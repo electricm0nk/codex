@@ -43,12 +43,17 @@ export function buildPreviewDetail(): LoadSavedCharacterResponse {
     // above.
     selectedTraits: [],
     // And no racial-trait resolution: every sentence in one is *rendered* by
-    // the engine from the corpus row's own `DESC:` tokens against this
+    // the engine from the corpus row's own description statements against this
     // character's feats. Hand-writing a sample here would put corpus-looking
     // rules prose on screen that no corpus produced — the fixture-in-a-
     // production-path failure `docs/governance/no-stub-mvp-doctrine.md`
     // prohibits. The preview says the section is unavailable instead.
     resolvedRacialTraits: null,
+    // SD-35 AT-35-E2-002: no sheet-rule lines either, for the same reason --
+    // every line is the engine's evaluation of a converted corpus rule, and a
+    // hand-written sample would be rules prose no corpus produced.
+    sheetLines: [],
+    sheetRulesUnavailableReason: 'Rules and features are rendered by the engine from the corpus; the preview has no engine.',
     summary: {
       characterId: PREVIEW_CHARACTER_ID,
       displayLabel: 'Aldric Ironhand',

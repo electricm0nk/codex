@@ -72,10 +72,22 @@ use std::collections::BTreeMap;
 
 use crate::rules_core::race_resolver::RaceCorpus;
 
-/// The PCGen `TYPE=` pool suffix prefix every Skinwalker kin master
-/// record's own `ABILITY:` token carries, read via
-/// [`RaceTraitRecord::automatic_trait_grants`](crate::rules_core::race_resolver::RaceTraitRecord::automatic_trait_grants).
-const POOL_PREFIX: &str = "TYPE=Skinwalker Change Shape ";
+// The pool prefix every Skinwalker kin master record's own `ABILITY:` grant
+// carries ahead of the kin name -- the ingest-format literal, and the
+// `strip_prefix` that reads past it -- moved to
+// `pcgen_import::race_trait_tokens::skinwalker_change_shape_kin` in SD-35
+// `AT-35-E6-003-SWEEP` cycle 14. A live module may not hold the ingest
+// format's vocabulary (`decisions.md` §11, `technical-design.md` §0).
+//
+// SD-35 `AT-35-E6-003-RULED` cycle 7 finished that move (`decisions.md` §19,
+// ruling B16): this module no longer NAMES the converter either. It asks the
+// race corpus which kin pool a record owns --
+// [`RaceTraitRecord::skinwalker_change_shape_kin`](crate::rules_core::race_resolver::RaceTraitRecord::skinwalker_change_shape_kin)
+// -- beside
+// [`RaceTraitRecord::automatic_trait_grants`](crate::rules_core::race_resolver::RaceTraitRecord::automatic_trait_grants),
+// which is where the grants it is derived from already came from. The prefix,
+// and the grammar that reads past it, stay on the converter side and are
+// KEPT for Starfinder (`decisions.md` §11).
 
 /// Every kin pool this cycle resolves, and the exact option `KEY:` strings
 /// PCGen's `.MOD` rows tag into it -- transcribed from the pinned oracle's
@@ -245,11 +257,7 @@ pub fn skinwalker_change_shape_options(corpus: &RaceCorpus) -> Vec<SkinwalkerCha
 
     let mut out = Vec::new();
     for record in corpus.traits_for("Skinwalker") {
-        let Some(suffix) = record
-            .automatic_trait_grants()
-            .into_iter()
-            .find_map(|grant| grant.strip_prefix(POOL_PREFIX).map(str::to_string))
-        else {
+        let Some(suffix) = record.skinwalker_change_shape_kin() else {
             continue;
         };
         let Some((_, option_keys)) = KIN_OPTION_KEYS.iter().find(|(kin, _)| *kin == suffix) else {

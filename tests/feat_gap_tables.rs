@@ -12,6 +12,7 @@
 //! These tests assert against the joined catalog, never against the
 //! generator's stdout, so a regenerated table that dropped rows fails here.
 
+use codex::pcgen_import::feat_prereq_tokens::feat_gap_rows_for_key;
 use codex::rules_core::rules_tables::feats_all::{all_feat_tables, hand_authored_feat_tables};
 use codex::rules_core::rules_tables::RuleSetId;
 use std::collections::BTreeSet;
@@ -295,10 +296,17 @@ fn no_gap_row_carries_an_empty_description_or_an_empty_prerequisite_list() {
                     entry.key
                 );
             }
-            if let Some(pres) = entry.prerequisites {
+            // The prerequisite half of this rule moved with the tokens to
+            // `pcgen_import::feat_prereq_tokens` (SD-35 AT-35-E6-003-SWEEP
+            // cycle 3, `decisions.md` §11): a checked-and-empty row is now
+            // an absent row, and that module's
+            // `every_row_still_names_the_record_it_was_taken_from` asserts
+            // no relocated row is empty. Re-asserted here over the gap rows
+            // this file owns, so the property is still proven from this side.
+            for tokens in feat_gap_rows_for_key(book.rule_set, entry.key) {
                 assert!(
-                    !pres.is_empty(),
-                    "{:?}/{} carries Some(&[]) instead of None",
+                    !tokens.is_empty(),
+                    "{:?}/{} carries an empty relocated token slice instead of no row",
                     book.rule_set,
                     entry.key
                 );

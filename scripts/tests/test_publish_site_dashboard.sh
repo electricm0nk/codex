@@ -49,9 +49,15 @@ trap cleanup EXIT
 # A fake "repo" -- just enough directory shape for the script's own path
 # math (`$REPO_ROOT/site/dashboard/PF1e-dashboard.json`).
 FAKE_REPO="$WORKROOT/fake-repo"
-mkdir -p "$FAKE_REPO/scripts" "$FAKE_REPO/site/dashboard"
+mkdir -p "$FAKE_REPO/scripts" "$FAKE_REPO/site/dashboard" "$FAKE_REPO/docs"
 cp "$SCRIPT" "$FAKE_REPO/scripts/publish-site-dashboard.sh"
 chmod +x "$FAKE_REPO/scripts/publish-site-dashboard.sh"
+# The producer's dominant input, and the file the `--check-pin` control
+# (cases 9-13) hashes. Every mode of the script under test reads it, so it
+# exists from the first case onward -- in the real repo it always does.
+PIN="$FAKE_REPO/site/dashboard/inventory-pin.json"
+INV="$FAKE_REPO/docs/work-inventory.json"
+printf '{"totals": {"units": 1}}\n' > "$INV"
 
 # A stand-in for scripts/site/build_public_status.py. The script under test
 # calls it on both paths (--check and a real run); the real one imports the
@@ -210,6 +216,77 @@ FAKE_FIGURE=2 run
 if echo "$OUT" | grep -q "STRICT_TIMEOUT_ENV=<unset>"; then
     pass "a real (non---check) run leaves PF1E_DASHBOARD_STRICT_TIMEOUT unset"
 else fail "a real (non---check) run leaves PF1E_DASHBOARD_STRICT_TIMEOUT unset" "$OUT (exit $ST)"; fi
+
+# ---------------------------------------------------------------------------
+# Cases 9-13: the `--check-pin` fast control.
+#
+# WHY: `--check` is CORRECT but costs ~15 minutes of real producer time
+# (measured 904 s on the shared checkout, 2026-09-10, at HEAD 00e44eee02), so
+# it only ever runs at the ~90-minute epic wrap-up gate. By then the cycle
+# that broke the feed has already pushed. Incident key
+# `site-dashboard-json-stale-after-inventory-move` fired three times that way,
+# and each time the disposition was "regenerate it in the wrap-up correction
+# cycle" -- a chore, not a control (AGENTS.md rule 8).
+#
+# `--check-pin` is the mechanism: a real regen records the sha256 of the
+# `docs/work-inventory.json` it rendered from into
+# `site/dashboard/inventory-pin.json`; `--check-pin` re-hashes that file and
+# compares. Milliseconds, no producer, no corpus -- cheap enough to sit in the
+# per-cycle push gate (workflow-instruction.md §6 step 3) instead of only in
+# the wrap-up.
+#
+# WHAT THIS PROOF DOES NOT COVER (AGENTS.md rule 7): the pin watches ONE
+# input. A dashboard made stale by something other than the inventory moving
+# -- a unit-ledger edit, an owner-state manifest change -- passes `--check-pin`
+# and is caught only by the full `--check`. The pin narrows the window on the
+# recorded cause; it does not replace the full check, which is why both stages
+# stay in verify.sh.
+# `$PIN` and `$INV` are set in the fake-repo setup above, because cases 1-8
+# exercise modes that now read them too.
+
+# --- 9. A real run records the pin. ----------------------------------------
+FAKE_FIGURE=2 run
+if [ "$ST" -eq 0 ] && [ -f "$PIN" ] && \
+   [ "$(python3 -c 'import json,sys;print(json.load(open(sys.argv[1]))["work_inventory_sha256"])' "$PIN")" \
+     = "$(sha256sum "$INV" | awk '{print $1}')" ]; then
+    pass "a real run records the work-inventory sha256 in site/dashboard/inventory-pin.json"
+else fail "a real run records the work-inventory sha256 in site/dashboard/inventory-pin.json" "$OUT (exit $ST)"; fi
+
+# --- 10. --check-pin passes when the inventory has not moved. --------------
+run --check-pin
+if [ "$ST" -eq 0 ] && echo "$OUT" | grep -q "matches"; then
+    pass "--check-pin passes when docs/work-inventory.json is unchanged"
+else fail "--check-pin passes when docs/work-inventory.json is unchanged" "$OUT (exit $ST)"; fi
+
+# --- 11. --check-pin CATCHES an inventory move -- the recorded incident. ---
+#          This is the whole point: it must go red the moment the inventory
+#          moves, before the 15-minute --check ever runs.
+printf '{"totals": {"units": 2}}\n' > "$INV"
+run --check-pin
+if [ "$ST" -eq 1 ] && echo "$OUT" | grep -q "docs/work-inventory.json has moved"; then
+    pass "--check-pin catches a moved docs/work-inventory.json"
+else fail "--check-pin catches a moved docs/work-inventory.json" "$OUT (exit $ST)"; fi
+
+# --- 12. --check fails FAST on a moved inventory, without running the ------
+#          producer at all. Proven by the absence of the fake producer's own
+#          stderr marker from the output: if the producer had run, its
+#          STRICT_TIMEOUT_ENV line would be there.
+run --check
+if [ "$ST" -eq 1 ] && echo "$OUT" | grep -q "docs/work-inventory.json has moved" \
+   && ! echo "$OUT" | grep -q "STRICT_TIMEOUT_ENV"; then
+    pass "--check fails fast on a moved inventory without invoking the producer"
+else fail "--check fails fast on a moved inventory without invoking the producer" "$OUT (exit $ST)"; fi
+
+# --- 13. A missing pin is a FAILURE, not a silent pass. --------------------
+#          The always-passes shape this file exists to prevent: an absent pin
+#          file must not read as "nothing to compare, therefore fine".
+FAKE_FIGURE=2 run
+rm -f "$PIN"
+run --check-pin
+if [ "$ST" -eq 1 ] && echo "$OUT" | grep -q "no pin recorded"; then
+    pass "--check-pin fails when the pin file is absent (not a silent pass)"
+else fail "--check-pin fails when the pin file is absent (not a silent pass)" "$OUT (exit $ST)"; fi
+FAKE_FIGURE=2 run   # restore the pin so the fake repo is left consistent
 
 echo "---------------------------------------------------------------"
 echo "passed: $PASSED  failed: $FAILED"

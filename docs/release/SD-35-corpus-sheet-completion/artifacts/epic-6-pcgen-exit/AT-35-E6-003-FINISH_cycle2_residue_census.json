@@ -1,0 +1,3169 @@
+{
+ "class_A_cfg_test": [
+  {
+   "root": "src/rules_core",
+   "file": "src/rules_core/class_feature_pool_catalog.rs",
+   "line": 897,
+   "pattern": "TYPE=",
+   "hits": 1,
+   "in_cfg_test": true,
+   "text": ".filter(|w| *w != \"TYPE=Auto\")"
+  },
+  {
+   "root": "src/rules_core",
+   "file": "src/rules_core/class_feature_pool_catalog.rs",
+   "line": 959,
+   "pattern": "TYPE=",
+   "hits": 1,
+   "in_cfg_test": true,
+   "text": ".filter(|w| !w.starts_with(\"TYPE=\") && !w.starts_with('!'))"
+  },
+  {
+   "root": "src/rules_core",
+   "file": "src/rules_core/class_feature_pool_catalog.rs",
+   "line": 1271,
+   "pattern": "BONUS:",
+   "hits": 1,
+   "in_cfg_test": true,
+   "text": "\"Terrifying Howl carries a real BONUS:VAR engine-effect token and must not reach the catalog\""
+  },
+  {
+   "root": "src/rules_core",
+   "file": "src/rules_core/class_feature_pool_catalog.rs",
+   "line": 1376,
+   "pattern": "PRE[A-Z]+:",
+   "hits": 1,
+   "in_cfg_test": true,
+   "text": "assert!(!poison.description.contains('|'), \"the |PRERULE:... tail must not leak into prose\");"
+  },
+  {
+   "root": "src/rules_core",
+   "file": "src/rules_core/corpus_loader.rs",
+   "line": 716,
+   "pattern": "BONUS:",
+   "hits": 1,
+   "in_cfg_test": true,
+   "text": ".expect(\"real BONUS:SKILL|Diplomacy|4|TYPE=Competence chain must be present\");"
+  },
+  {
+   "root": "src/rules_core",
+   "file": "src/rules_core/corpus_loader.rs",
+   "line": 716,
+   "pattern": "TYPE=",
+   "hits": 1,
+   "in_cfg_test": true,
+   "text": ".expect(\"real BONUS:SKILL|Diplomacy|4|TYPE=Competence chain must be present\");"
+  },
+  {
+   "root": "src/rules_core",
+   "file": "src/rules_core/damage_total.rs",
+   "line": 944,
+   "pattern": "PRE[A-Z]+:",
+   "hits": 1,
+   "in_cfg_test": true,
+   "text": "let text = \"Leather Armor\\tKEY:Leather Armor (Base)\\tTYPE:Armor.Light\\tCOST:10\\tWT:15\\tACCHECK:0\\tMAXDEX:6\\tSPELLFAILURE:10\\tBONUS:COMBAT|AC|2|TYPE=Armor|PREVAREQ:DisableArmorBonus,0\\n\";"
+  },
+  {
+   "root": "src/rules_core",
+   "file": "src/rules_core/damage_total.rs",
+   "line": 944,
+   "pattern": "TYPE=",
+   "hits": 1,
+   "in_cfg_test": true,
+   "text": "let text = \"Leather Armor\\tKEY:Leather Armor (Base)\\tTYPE:Armor.Light\\tCOST:10\\tWT:15\\tACCHECK:0\\tMAXDEX:6\\tSPELLFAILURE:10\\tBONUS:COMBAT|AC|2|TYPE=Armor|PREVAREQ:DisableArmorBonus,0\\n\";"
+  },
+  {
+   "root": "src/rules_core",
+   "file": "src/rules_core/damage_total.rs",
+   "line": 1085,
+   "pattern": "PRE[A-Z]+:",
+   "hits": 1,
+   "in_cfg_test": true,
+   "text": "let text = \"Leather Armor\\tKEY:Leather Armor (Base)\\tTYPE:Armor.Light\\tCOST:10\\tWT:15\\tACCHECK:0\\tMAXDEX:6\\tSPELLFAILURE:10\\tBONUS:COMBAT|AC|2|TYPE=Armor|PREVAREQ:DisableArmorBonus,0\\n\";"
+  },
+  {
+   "root": "src/rules_core",
+   "file": "src/rules_core/damage_total.rs",
+   "line": 1085,
+   "pattern": "TYPE=",
+   "hits": 1,
+   "in_cfg_test": true,
+   "text": "let text = \"Leather Armor\\tKEY:Leather Armor (Base)\\tTYPE:Armor.Light\\tCOST:10\\tWT:15\\tACCHECK:0\\tMAXDEX:6\\tSPELLFAILURE:10\\tBONUS:COMBAT|AC|2|TYPE=Armor|PREVAREQ:DisableArmorBonus,0\\n\";"
+  },
+  {
+   "root": "src/rules_core",
+   "file": "src/rules_core/damage_total.rs",
+   "line": 1139,
+   "pattern": "TYPE=",
+   "hits": 1,
+   "in_cfg_test": true,
+   "text": "+1 (Enhancement to Weapon)\\tKEY:Special Ability ~ +1 ~ Weapon\\tTYPE:Weapon\\tPLUS:1\\tCOST:0\\tBONUS:WEAPON|DAMAGE,TOHIT|1|TYPE=Enhancement\\n\";"
+  },
+  {
+   "root": "src/rules_core",
+   "file": "src/rules_core/damage_total.rs",
+   "line": 1162,
+   "pattern": "TYPE=",
+   "hits": 1,
+   "in_cfg_test": true,
+   "text": "Adamantine\\tKEY:Material ~ Adamantine ~ Weapon\\tTYPE:BaseMaterial.MasterworkQuality.Weapon\\tCOST:3000\\tBONUS:WEAPON|TOHIT|1|TYPE=Enhancement\\n\";"
+  },
+  {
+   "root": "src/rules_core",
+   "file": "src/rules_core/damage_total.rs",
+   "line": 1213,
+   "pattern": "TYPE=",
+   "hits": 1,
+   "in_cfg_test": true,
+   "text": "+1 to Hit and Damage\\tKEY:Special Ability ~ +1 ~ Amulet of Mighty Fists\\tTYPE:Amulet of Mighty Fists\\tPLUS:1\\tBONUS:WEAPONPROF=TYPE.Natural|TOHIT,DAMAGE|1|TYPE=Enhancement\\n\";"
+  },
+  {
+   "root": "src/rules_core",
+   "file": "src/rules_core/damage_total.rs",
+   "line": 1235,
+   "pattern": "TYPE=",
+   "hits": 1,
+   "in_cfg_test": true,
+   "text": "+1 to Hit and Damage\\tKEY:Special Ability ~ +1 ~ Amulet of Mighty Fists\\tTYPE:Amulet of Mighty Fists\\tPLUS:1\\tBONUS:WEAPONPROF=TYPE.Natural|TOHIT,DAMAGE|1|TYPE=Enhancement\\n\";"
+  },
+  {
+   "root": "src/rules_core",
+   "file": "src/rules_core/damage_total.rs",
+   "line": 1259,
+   "pattern": "TYPE=",
+   "hits": 1,
+   "in_cfg_test": true,
+   "text": "+1 (Enhancement to Weapon)\\tKEY:Special Ability ~ +1 ~ Weapon\\tTYPE:Weapon\\tPLUS:1\\tCOST:0\\tBONUS:WEAPON|DAMAGE,TOHIT|1|TYPE=Enhancement\\n\";"
+  },
+  {
+   "root": "src/rules_core",
+   "file": "src/rules_core/damage_total.rs",
+   "line": 1299,
+   "pattern": "PRE[A-Z]+:",
+   "hits": 1,
+   "in_cfg_test": true,
+   "text": "let text = \"Leather Armor\\tKEY:Leather Armor (Base)\\tTYPE:Armor.Light\\tCOST:10\\tWT:15\\tACCHECK:0\\tMAXDEX:6\\tSPELLFAILURE:10\\tBONUS:COMBAT|AC|2|TYPE=Armor|PREVAREQ:DisableArmorBonus,0\\n\";"
+  },
+  {
+   "root": "src/rules_core",
+   "file": "src/rules_core/damage_total.rs",
+   "line": 1299,
+   "pattern": "TYPE=",
+   "hits": 1,
+   "in_cfg_test": true,
+   "text": "let text = \"Leather Armor\\tKEY:Leather Armor (Base)\\tTYPE:Armor.Light\\tCOST:10\\tWT:15\\tACCHECK:0\\tMAXDEX:6\\tSPELLFAILURE:10\\tBONUS:COMBAT|AC|2|TYPE=Armor|PREVAREQ:DisableArmorBonus,0\\n\";"
+  },
+  {
+   "root": "src/rules_core",
+   "file": "src/rules_core/damage_total.rs",
+   "line": 1321,
+   "pattern": "BONUS:",
+   "hits": 1,
+   "in_cfg_test": true,
+   "text": ".expect(\"Weapon Specialization is a real Combat feat with a constant BONUS: token\");"
+  },
+  {
+   "root": "src/rules_core",
+   "file": "src/rules_core/damage_total.rs",
+   "line": 1367,
+   "pattern": "PRE[A-Z]+:",
+   "hits": 1,
+   "in_cfg_test": true,
+   "text": "let text = \"Leather Armor\\tKEY:Leather Armor (Base)\\tTYPE:Armor.Light\\tCOST:10\\tWT:15\\tACCHECK:0\\tMAXDEX:6\\tSPELLFAILURE:10\\tBONUS:COMBAT|AC|2|TYPE=Armor|PREVAREQ:DisableArmorBonus,0\\n\";"
+  },
+  {
+   "root": "src/rules_core",
+   "file": "src/rules_core/damage_total.rs",
+   "line": 1367,
+   "pattern": "TYPE=",
+   "hits": 1,
+   "in_cfg_test": true,
+   "text": "let text = \"Leather Armor\\tKEY:Leather Armor (Base)\\tTYPE:Armor.Light\\tCOST:10\\tWT:15\\tACCHECK:0\\tMAXDEX:6\\tSPELLFAILURE:10\\tBONUS:COMBAT|AC|2|TYPE=Armor|PREVAREQ:DisableArmorBonus,0\\n\";"
+  },
+  {
+   "root": "src/rules_core",
+   "file": "src/rules_core/derived_evaluator_fixture_check.rs",
+   "line": 1964,
+   "pattern": "BONUS:",
+   "hits": 1,
+   "in_cfg_test": true,
+   "text": "\"corpus_field\":\"BONUS:VAR|ScratchPowerBonus|2+ProbeLVL/4\","
+  },
+  {
+   "root": "src/rules_core",
+   "file": "src/rules_core/derived_evaluator_fixture_check.rs",
+   "line": 1966,
+   "pattern": "BONUS:",
+   "hits": 1,
+   "in_cfg_test": true,
+   "text": "\"alias_corpus_field\":\"BONUS:VAR|ProbeLVL|ProbeClassLVL\","
+  },
+  {
+   "root": "src/rules_core",
+   "file": "src/rules_core/derived_evaluator_fixture_check.rs",
+   "line": 2099,
+   "pattern": "BONUS:",
+   "hits": 1,
+   "in_cfg_test": true,
+   "text": "\"corpus_field\":\"BONUS:VAR|ScratchPowerBonus|2+ProbeLVL/4\","
+  },
+  {
+   "root": "src/rules_core",
+   "file": "src/rules_core/derived_evaluator_fixture_check.rs",
+   "line": 2101,
+   "pattern": "BONUS:",
+   "hits": 1,
+   "in_cfg_test": true,
+   "text": "\"alias_corpus_field\":\"BONUS:VAR|ProbeLVL|ProbeClassLVL\","
+  },
+  {
+   "root": "src/rules_core",
+   "file": "src/rules_core/derived_evaluator_fixture_check.rs",
+   "line": 2748,
+   "pattern": "BONUS:",
+   "hits": 1,
+   "in_cfg_test": true,
+   "text": "\"a monster with no BONUS:VAR|SLA_CL| token has no spell-like abilities, regardless \\"
+  },
+  {
+   "root": "src/rules_core",
+   "file": "src/rules_core/derived_evaluator_fixture_check.rs",
+   "line": 2912,
+   "pattern": "BONUS:",
+   "hits": 1,
+   "in_cfg_test": true,
+   "text": "\"corpus_field\":\"BONUS:VAR|SLA_CL|HD\","
+  },
+  {
+   "root": "src/rules_core",
+   "file": "src/rules_core/derived_evaluator_fixture_check.rs",
+   "line": 4963,
+   "pattern": "BONUS:",
+   "hits": 1,
+   "in_cfg_test": true,
+   "text": "\"Parrot's row states BONUS:WEAPONPROF=Claw|DAMAGE|\u2026\""
+  },
+  {
+   "root": "src/rules_core",
+   "file": "src/rules_core/derived_evaluator_fixture_check.rs",
+   "line": 5031,
+   "pattern": "BONUS:",
+   "hits": 1,
+   "in_cfg_test": true,
+   "text": "\"corpus_field\":\"BONUS:WEAPONPROF=Bite|DAMAGE|max(0,(STR/2))\","
+  },
+  {
+   "root": "src/rules_core",
+   "file": "src/rules_core/derived_evaluator_fixture_check.rs",
+   "line": 5169,
+   "pattern": "TYPE=",
+   "hits": 1,
+   "in_cfg_test": true,
+   "text": "assert_eq!(parse_companion_skill_ability_diff(\"4|TYPE=Racial\"), None);"
+  },
+  {
+   "root": "src/rules_core",
+   "file": "src/rules_core/derived_evaluator_fixture_check.rs",
+   "line": 5321,
+   "pattern": "BONUS:",
+   "hits": 1,
+   "in_cfg_test": true,
+   "text": "\"corpus_field\":\"BONUS:SKILL|Climb,Swim|DEX-STR\","
+  },
+  {
+   "root": "src/rules_core",
+   "file": "src/rules_core/derived_evaluator_fixture_check.rs",
+   "line": 5636,
+   "pattern": "DESC:",
+   "hits": 1,
+   "in_cfg_test": true,
+   "text": "\"corpus_field\":\"DESC:...|10+HD/2+CON\","
+  },
+  {
+   "root": "src/rules_core",
+   "file": "src/rules_core/derived_evaluator_fixture_check.rs",
+   "line": 5744,
+   "pattern": "DESC:",
+   "hits": 1,
+   "in_cfg_test": true,
+   "text": "\"corpus_field\":\"DESC:...|10+HD/2+CON\","
+  },
+  {
+   "root": "src/rules_core",
+   "file": "src/rules_core/encumbrance.rs",
+   "line": 453,
+   "pattern": "PRE[A-Z]+:",
+   "hits": 1,
+   "in_cfg_test": true,
+   "text": "Leather Armor\\tKEY:Leather Armor (Base)\\tTYPE:Armor.Light\\tCOST:10\\tWT:15\\tACCHECK:0\\tMAXDEX:6\\tSPELLFAILURE:10\\tBONUS:COMBAT|AC|2|TYPE=Armor|PREVAREQ:DisableArmorBonus,0"
+  },
+  {
+   "root": "src/rules_core",
+   "file": "src/rules_core/encumbrance.rs",
+   "line": 453,
+   "pattern": "TYPE=",
+   "hits": 1,
+   "in_cfg_test": true,
+   "text": "Leather Armor\\tKEY:Leather Armor (Base)\\tTYPE:Armor.Light\\tCOST:10\\tWT:15\\tACCHECK:0\\tMAXDEX:6\\tSPELLFAILURE:10\\tBONUS:COMBAT|AC|2|TYPE=Armor|PREVAREQ:DisableArmorBonus,0"
+  },
+  {
+   "root": "src/rules_core",
+   "file": "src/rules_core/encumbrance.rs",
+   "line": 454,
+   "pattern": "PRE[A-Z]+:",
+   "hits": 1,
+   "in_cfg_test": true,
+   "text": "Buckler\\tKEY:Buckler (Base)\\tTYPE:Shield.Buckler\\tCOST:5\\tWT:5\\tACCHECK:-1\\tSPELLFAILURE:5\\tBONUS:COMBAT|AC|1|TYPE=Shield|PREVAREQ:DisableShieldBonus,0"
+  },
+  {
+   "root": "src/rules_core",
+   "file": "src/rules_core/encumbrance.rs",
+   "line": 454,
+   "pattern": "TYPE=",
+   "hits": 1,
+   "in_cfg_test": true,
+   "text": "Buckler\\tKEY:Buckler (Base)\\tTYPE:Shield.Buckler\\tCOST:5\\tWT:5\\tACCHECK:-1\\tSPELLFAILURE:5\\tBONUS:COMBAT|AC|1|TYPE=Shield|PREVAREQ:DisableShieldBonus,0"
+  },
+  {
+   "root": "src/rules_core",
+   "file": "src/rules_core/encumbrance.rs",
+   "line": 609,
+   "pattern": "TYPE=",
+   "hits": 1,
+   "in_cfg_test": true,
+   "text": "\"Masterwork (Weapon)\\tKEY:Special Quality ~ Masterwork ~ Weapon\\tTYPE:MasterworkQuality.Weapon\\tCOST:0\\tBONUS:WEAPON|TOHIT|1|TYPE=Enhancement\\n\";"
+  },
+  {
+   "root": "src/rules_core",
+   "file": "src/rules_core/equipment_effects.rs",
+   "line": 731,
+   "pattern": "PRE[A-Z]+:",
+   "hits": 1,
+   "in_cfg_test": true,
+   "text": "Chain Shirt\\tKEY:Chain Shirt (Base)\\tTYPE:Armor.Light\\tCOST:100\\tWT:25\\tACCHECK:-2\\tMAXDEX:4\\tSPELLFAILURE:20\\tBONUS:COMBAT|AC|4|TYPE=Armor|PREVAREQ:DisableArmorBonus,0"
+  },
+  {
+   "root": "src/rules_core",
+   "file": "src/rules_core/equipment_effects.rs",
+   "line": 731,
+   "pattern": "TYPE=",
+   "hits": 1,
+   "in_cfg_test": true,
+   "text": "Chain Shirt\\tKEY:Chain Shirt (Base)\\tTYPE:Armor.Light\\tCOST:100\\tWT:25\\tACCHECK:-2\\tMAXDEX:4\\tSPELLFAILURE:20\\tBONUS:COMBAT|AC|4|TYPE=Armor|PREVAREQ:DisableArmorBonus,0"
+  },
+  {
+   "root": "src/rules_core",
+   "file": "src/rules_core/equipment_effects.rs",
+   "line": 732,
+   "pattern": "TYPE=",
+   "hits": 1,
+   "in_cfg_test": true,
+   "text": "+1 (Enhancement to Weapon)\\tKEY:Special Ability ~ +1 ~ Weapon\\tTYPE:Weapon\\tPLUS:1\\tCOST:0\\tBONUS:WEAPON|DAMAGE,TOHIT|1|TYPE=Enhancement"
+  },
+  {
+   "root": "src/rules_core",
+   "file": "src/rules_core/equipment_effects.rs",
+   "line": 733,
+   "pattern": "TYPE=",
+   "hits": 1,
+   "in_cfg_test": true,
+   "text": "Masterwork (Weapon)\\tKEY:Special Quality ~ Masterwork ~ Weapon\\tTYPE:MasterworkQuality.Weapon\\tCOST:0\\tBONUS:WEAPON|TOHIT|1|TYPE=Enhancement"
+  },
+  {
+   "root": "src/rules_core",
+   "file": "src/rules_core/equipment_effects.rs",
+   "line": 734,
+   "pattern": "TYPE=",
+   "hits": 1,
+   "in_cfg_test": true,
+   "text": "Flaming\\tKEY:Special Ability ~ Flaming ~ Weapon\\tTYPE:Weapon\\tCOST:0\\tBONUS:WEAPON|DAMAGE|2|TYPE=Enhancement"
+  },
+  {
+   "root": "src/rules_core",
+   "file": "src/rules_core/equipment_effects.rs",
+   "line": 896,
+   "pattern": "PRE[A-Z]+:",
+   "hits": 1,
+   "in_cfg_test": true,
+   "text": "Heavy Wooden Shield\\tKEY:Heavy Wooden Shield (Base)\\tTYPE:Shield.Heavy.Weapon.Resizable.Melee.ShieldBash.Close.Weapon Group Close.Nonmetal\\tCOST:7\\tWT:10\\tACCHECK:-2\\tDAMAGE:1d4\\tBONUS:COMBAT|AC|2|TYP"
+  },
+  {
+   "root": "src/rules_core",
+   "file": "src/rules_core/equipment_effects.rs",
+   "line": 896,
+   "pattern": "TYPE=",
+   "hits": 1,
+   "in_cfg_test": true,
+   "text": "Heavy Wooden Shield\\tKEY:Heavy Wooden Shield (Base)\\tTYPE:Shield.Heavy.Weapon.Resizable.Melee.ShieldBash.Close.Weapon Group Close.Nonmetal\\tCOST:7\\tWT:10\\tACCHECK:-2\\tDAMAGE:1d4\\tBONUS:COMBAT|AC|2|TYP"
+  },
+  {
+   "root": "src/rules_core",
+   "file": "src/rules_core/equipment_effects.rs",
+   "line": 966,
+   "pattern": "TYPE=",
+   "hits": 1,
+   "in_cfg_test": true,
+   "text": "Reinforced Leather (ARG)\\tKEY:Reinforced Leather (ARG)\\tTYPE:Armor.Light\\tCOST:120\\tWT:18\\tACCHECK:-1\\tMAXDEX:5\\tSPELLFAILURE:15\\tBONUS:COMBAT|AC|3|TYPE=Armor\\n\";"
+  },
+  {
+   "root": "src/rules_core",
+   "file": "src/rules_core/equipment_effects.rs",
+   "line": 972,
+   "pattern": "TYPE=",
+   "hits": 1,
+   "in_cfg_test": true,
+   "text": "Keen (ARG)\\tKEY:Special Ability ~ Keen ~ Weapon (ARG)\\tTYPE:Weapon\\tCOST:0\\tBONUS:WEAPON|TOHIT|1|TYPE=Enhancement\\n\";"
+  },
+  {
+   "root": "src/rules_core",
+   "file": "src/rules_core/equipment_effects.rs",
+   "line": 1035,
+   "pattern": "TYPE=",
+   "hits": 1,
+   "in_cfg_test": true,
+   "text": "Armor of Grim Triumph\\tKEY:Armor of Grim Triumph\\tTYPE:Armor.Magic.Medium.ArmorProfMedium.Suit.Specific\\tCOST:250\\tWT:40\\tACCHECK:-4\\tEQMOD:Special Ability ~ Enhancement Cost|12600.Special Ability ~ +"
+  },
+  {
+   "root": "src/rules_core",
+   "file": "src/rules_core/equipment_effects.rs",
+   "line": 1036,
+   "pattern": "PRE[A-Z]+:",
+   "hits": 1,
+   "in_cfg_test": true,
+   "text": "+1 (Enhancement to Armor)\\tKEY:Special Ability ~ +1 ~ Armor\\tTYPE:Armor\\tPLUS:1\\tBONUS:COMBAT|AC|1|TYPE=ArmorEnhancement|PREVAREQ:DisableArmorBonus,0\\n\\"
+  },
+  {
+   "root": "src/rules_core",
+   "file": "src/rules_core/equipment_effects.rs",
+   "line": 1036,
+   "pattern": "TYPE=",
+   "hits": 1,
+   "in_cfg_test": true,
+   "text": "+1 (Enhancement to Armor)\\tKEY:Special Ability ~ +1 ~ Armor\\tTYPE:Armor\\tPLUS:1\\tBONUS:COMBAT|AC|1|TYPE=ArmorEnhancement|PREVAREQ:DisableArmorBonus,0\\n\\"
+  },
+  {
+   "root": "src/rules_core",
+   "file": "src/rules_core/equipment_effects.rs",
+   "line": 1090,
+   "pattern": "TYPE=",
+   "hits": 1,
+   "in_cfg_test": true,
+   "text": "Rending Claw Blades\\tKEY:Rending Claw Blades\\tTYPE:Weapon.Resizable.Light.Melee.Slashing.Finesseable\\tCOST:305\\tWT:2\\tCRITMULT:x2\\tCRITRANGE:1\\tDAMAGE:1d4\\tEQMOD:Material ~ Steel\\tEQMOD:Special Abilit"
+  },
+  {
+   "root": "src/rules_core",
+   "file": "src/rules_core/equipment_effects.rs",
+   "line": 1091,
+   "pattern": "TYPE=",
+   "hits": 1,
+   "in_cfg_test": true,
+   "text": "+1 (Enhancement to Weapon)\\tKEY:Special Ability ~ +1 ~ Weapon\\tTYPE:Weapon\\tPLUS:1\\tCOST:0\\tBONUS:WEAPON|DAMAGE,TOHIT|1|TYPE=Enhancement\\n\\"
+  },
+  {
+   "root": "src/rules_core",
+   "file": "src/rules_core/equipment_effects.rs",
+   "line": 1107,
+   "pattern": "TYPE=",
+   "hits": 1,
+   "in_cfg_test": true,
+   "text": "\"base TOHIT|1 and the +1 modifier's own TOHIT|1 are the SAME TYPE=Enhancement bonus -- \\"
+  },
+  {
+   "root": "src/rules_core",
+   "file": "src/rules_core/equipment_effects.rs",
+   "line": 1143,
+   "pattern": "TYPE=",
+   "hits": 1,
+   "in_cfg_test": true,
+   "text": "+1 to Hit and Damage\\tKEY:Special Ability ~ +1 ~ Amulet of Mighty Fists\\tTYPE:Amulet of Mighty Fists\\tPLUS:1\\tBONUS:WEAPONPROF=TYPE.Natural|TOHIT,DAMAGE|1|TYPE=Enhancement\\n\\"
+  },
+  {
+   "root": "src/rules_core",
+   "file": "src/rules_core/equipment_effects.rs",
+   "line": 1144,
+   "pattern": "TYPE=",
+   "hits": 1,
+   "in_cfg_test": true,
+   "text": "+1 (Enhancement to Weapon)\\tKEY:Special Ability ~ +1 ~ Weapon\\tTYPE:Weapon\\tPLUS:1\\tCOST:0\\tBONUS:WEAPON|DAMAGE,TOHIT|1|TYPE=Enhancement\\n\";"
+  },
+  {
+   "root": "src/rules_core",
+   "file": "src/rules_core/equipment_effects.rs",
+   "line": 1351,
+   "pattern": "PRE[A-Z]+:",
+   "hits": 2,
+   "in_cfg_test": true,
+   "text": "Spell Resistance 13\\tFORMATCAT:FRONT\\tNAMEOPT:NORMAL\\tKEY:Special Ability ~ Spell Resistance / 13 ~ Armor\\tTYPE:Armor.Bracer.ArmorLike\\tPLUS:2\\tVISIBLE:QUALIFY\\tPREMULT:2,[PRETYPE:1,ArmorEnhancement],"
+  },
+  {
+   "root": "src/rules_core",
+   "file": "src/rules_core/equipment_effects.rs",
+   "line": 1352,
+   "pattern": "PRE[A-Z]+:",
+   "hits": 2,
+   "in_cfg_test": true,
+   "text": "Spell Resistance 19\\tFORMATCAT:FRONT\\tNAMEOPT:NORMAL\\tKEY:Special Ability ~ Spell Resistance / 19 ~ Armor\\tTYPE:Armor.Bracer.ArmorLike\\tPLUS:8\\tVISIBLE:QUALIFY\\tPREMULT:2,[PRETYPE:1,ArmorEnhancement],"
+  },
+  {
+   "root": "src/rules_core",
+   "file": "src/rules_core/feat_effects.rs",
+   "line": 4240,
+   "pattern": "TYPE=",
+   "hits": 1,
+   "in_cfg_test": true,
+   "text": "\"TYPE=NonStackingCrit -- holding it twice for one weapon is still once\""
+  },
+  {
+   "root": "src/rules_core",
+   "file": "src/rules_core/pilot_compute_corpus.rs",
+   "line": 783,
+   "pattern": "PRE[A-Z]+:",
+   "hits": 1,
+   "in_cfg_test": true,
+   "text": "Chain Shirt\\tKEY:Chain Shirt (Base)\\tTYPE:Armor.Light\\tCOST:100\\tWT:25\\tACCHECK:-2\\tMAXDEX:4\\tSPELLFAILURE:20\\tBONUS:COMBAT|AC|4|TYPE=Armor|PREVAREQ:DisableArmorBonus,0"
+  },
+  {
+   "root": "src/rules_core",
+   "file": "src/rules_core/pilot_compute_corpus.rs",
+   "line": 783,
+   "pattern": "TYPE=",
+   "hits": 1,
+   "in_cfg_test": true,
+   "text": "Chain Shirt\\tKEY:Chain Shirt (Base)\\tTYPE:Armor.Light\\tCOST:100\\tWT:25\\tACCHECK:-2\\tMAXDEX:4\\tSPELLFAILURE:20\\tBONUS:COMBAT|AC|4|TYPE=Armor|PREVAREQ:DisableArmorBonus,0"
+  },
+  {
+   "root": "src/rules_core",
+   "file": "src/rules_core/pilot_compute_corpus.rs",
+   "line": 786,
+   "pattern": "PRE[A-Z]+:",
+   "hits": 1,
+   "in_cfg_test": true,
+   "text": "Buckler\\tKEY:Buckler (Base)\\tTYPE:Shield.Light\\tCOST:5\\tWT:5\\tBONUS:COMBAT|AC|1|TYPE=Shield|PREVAREQ:DisableShieldBonus,0"
+  },
+  {
+   "root": "src/rules_core",
+   "file": "src/rules_core/pilot_compute_corpus.rs",
+   "line": 786,
+   "pattern": "TYPE=",
+   "hits": 1,
+   "in_cfg_test": true,
+   "text": "Buckler\\tKEY:Buckler (Base)\\tTYPE:Shield.Light\\tCOST:5\\tWT:5\\tBONUS:COMBAT|AC|1|TYPE=Shield|PREVAREQ:DisableShieldBonus,0"
+  },
+  {
+   "root": "src/rules_core",
+   "file": "src/rules_core/pilot_compute_corpus.rs",
+   "line": 787,
+   "pattern": "PRE[A-Z]+:",
+   "hits": 1,
+   "in_cfg_test": true,
+   "text": "Breastplate\\tKEY:Breastplate (Base)\\tTYPE:Armor.Medium\\tCOST:200\\tWT:30\\tACCHECK:-4\\tMAXDEX:3\\tSPELLFAILURE:25\\tBONUS:COMBAT|AC|6|TYPE=Armor|PREVAREQ:DisableArmorBonus,0"
+  },
+  {
+   "root": "src/rules_core",
+   "file": "src/rules_core/pilot_compute_corpus.rs",
+   "line": 787,
+   "pattern": "TYPE=",
+   "hits": 1,
+   "in_cfg_test": true,
+   "text": "Breastplate\\tKEY:Breastplate (Base)\\tTYPE:Armor.Medium\\tCOST:200\\tWT:30\\tACCHECK:-4\\tMAXDEX:3\\tSPELLFAILURE:25\\tBONUS:COMBAT|AC|6|TYPE=Armor|PREVAREQ:DisableArmorBonus,0"
+  },
+  {
+   "root": "src/rules_core",
+   "file": "src/rules_core/pilot_compute_corpus.rs",
+   "line": 788,
+   "pattern": "TYPE=",
+   "hits": 1,
+   "in_cfg_test": true,
+   "text": "+1 (Enhancement to Weapon)\\tKEY:Special Ability ~ +1 ~ Weapon\\tTYPE:Weapon\\tPLUS:1\\tCOST:0\\tBONUS:WEAPON|DAMAGE,TOHIT|1|TYPE=Enhancement"
+  },
+  {
+   "root": "src/rules_core",
+   "file": "src/rules_core/pilot_compute_corpus.rs",
+   "line": 1605,
+   "pattern": "PRE[A-Z]+:",
+   "hits": 1,
+   "in_cfg_test": true,
+   "text": "const CHAIN_SHIRT_FIXTURE_TEXT: &str = \"Chain Shirt\\tKEY:Chain Shirt (Base)\\tTYPE:Armor.Light\\tCOST:100\\tWT:25\\tACCHECK:-2\\tMAXDEX:4\\tSPELLFAILURE:20\\tBONUS:COMBAT|AC|4|TYPE=Armor|PREVAREQ:DisableArmo"
+  },
+  {
+   "root": "src/rules_core",
+   "file": "src/rules_core/pilot_compute_corpus.rs",
+   "line": 1605,
+   "pattern": "TYPE=",
+   "hits": 1,
+   "in_cfg_test": true,
+   "text": "const CHAIN_SHIRT_FIXTURE_TEXT: &str = \"Chain Shirt\\tKEY:Chain Shirt (Base)\\tTYPE:Armor.Light\\tCOST:100\\tWT:25\\tACCHECK:-2\\tMAXDEX:4\\tSPELLFAILURE:20\\tBONUS:COMBAT|AC|4|TYPE=Armor|PREVAREQ:DisableArmo"
+  },
+  {
+   "root": "src/rules_core",
+   "file": "src/rules_core/pilot_compute_corpus.rs",
+   "line": 1789,
+   "pattern": "TYPE=",
+   "hits": 1,
+   "in_cfg_test": true,
+   "text": "+1 (Enhancement to Weapon)\\tKEY:Special Ability ~ +1 ~ Weapon\\tTYPE:Weapon\\tPLUS:1\\tCOST:0\\tBONUS:WEAPON|DAMAGE,TOHIT|1|TYPE=Enhancement"
+  },
+  {
+   "root": "src/rules_core",
+   "file": "src/rules_core/skill_allocation.rs",
+   "line": 1290,
+   "pattern": "TYPE=",
+   "hits": 1,
+   "in_cfg_test": true,
+   "text": "\"{skill_id} is granted by Fighter's TYPE=Craft wildcard\""
+  },
+  {
+   "root": "src/rules_core",
+   "file": "src/rules_core/skill_allocation.rs",
+   "line": 1301,
+   "pattern": "TYPE=",
+   "hits": 1,
+   "in_cfg_test": true,
+   "text": "assert_eq!(total.class_skill_bonus, 3, \"granted by Fighter's TYPE=Profession wildcard\");"
+  },
+  {
+   "root": "src/rules_core",
+   "file": "src/rules_core/skill_allocation.rs",
+   "line": 1310,
+   "pattern": "TYPE=",
+   "hits": 1,
+   "in_cfg_test": true,
+   "text": "assert_eq!(total.class_skill_bonus, 3, \"{skill_id} is granted by Wizard's TYPE=Knowledge wildcard\");"
+  },
+  {
+   "root": "src/rules_core",
+   "file": "src/rules_core/skinwalker_change_shape.rs",
+   "line": 375,
+   "pattern": "TYPE=",
+   "hits": 1,
+   "in_cfg_test": true,
+   "text": ".any(|r| r.automatic_trait_grants().iter().any(|g| g == \"TYPE=Skinwalker Change Shape Default\"));"
+  },
+  {
+   "root": "src/rules_core",
+   "file": "src/rules_core/equipment_effects/arms_armor.rs",
+   "line": 271,
+   "pattern": "PRE[A-Z]+:",
+   "hits": 2,
+   "in_cfg_test": true,
+   "text": "let text = \"Leather Armor\\tKEY:Leather Armor (Base)\\tTYPE:Armor.Light\\tCOST:10\\tWT:15\\tACCHECK:0\\tMAXDEX:6\\tSPELLFAILURE:10\\tBONUS:COMBAT|AC|2|TYPE=Armor|PREVAREQ:DisableArmorBonus,0\\tBONUS:COMBAT|AC|"
+  },
+  {
+   "root": "src/rules_core",
+   "file": "src/rules_core/equipment_effects/arms_armor.rs",
+   "line": 271,
+   "pattern": "TYPE=",
+   "hits": 2,
+   "in_cfg_test": true,
+   "text": "let text = \"Leather Armor\\tKEY:Leather Armor (Base)\\tTYPE:Armor.Light\\tCOST:10\\tWT:15\\tACCHECK:0\\tMAXDEX:6\\tSPELLFAILURE:10\\tBONUS:COMBAT|AC|2|TYPE=Armor|PREVAREQ:DisableArmorBonus,0\\tBONUS:COMBAT|AC|"
+  },
+  {
+   "root": "src/rules_core",
+   "file": "src/rules_core/equipment_effects/arms_armor.rs",
+   "line": 287,
+   "pattern": "PRE[A-Z]+:",
+   "hits": 1,
+   "in_cfg_test": true,
+   "text": "let text = \"Buckler\\tKEY:Buckler (Base)\\tTYPE:Shield.Buckler\\tCOST:5\\tWT:5\\tACCHECK:-1\\tSPELLFAILURE:5\\tBONUS:COMBAT|AC|1|TYPE=Shield|PREVAREQ:DisableShieldBonus,0\\n\";"
+  },
+  {
+   "root": "src/rules_core",
+   "file": "src/rules_core/equipment_effects/arms_armor.rs",
+   "line": 287,
+   "pattern": "TYPE=",
+   "hits": 1,
+   "in_cfg_test": true,
+   "text": "let text = \"Buckler\\tKEY:Buckler (Base)\\tTYPE:Shield.Buckler\\tCOST:5\\tWT:5\\tACCHECK:-1\\tSPELLFAILURE:5\\tBONUS:COMBAT|AC|1|TYPE=Shield|PREVAREQ:DisableShieldBonus,0\\n\";"
+  },
+  {
+   "root": "src/rules_core",
+   "file": "src/rules_core/equipment_effects/arms_armor.rs",
+   "line": 312,
+   "pattern": "TYPE=",
+   "hits": 1,
+   "in_cfg_test": true,
+   "text": "let text = \"Knight-Inheritor's Ring\\tKEY:Knight-Inheritor's Ring\\tTYPE:SLOT_Ring.Ring.Magic\\tCOST:3000\\tWT:0\\tBONUS:COMBAT|AC|1|TYPE=Deflection\\n\";"
+  },
+  {
+   "root": "src/rules_core",
+   "file": "src/rules_core/equipment_effects/arms_armor.rs",
+   "line": 378,
+   "pattern": "PRE[A-Z]+:",
+   "hits": 2,
+   "in_cfg_test": true,
+   "text": "let text = \"+1 (Enhancement to Armor)\\tKEY:Special Ability ~ +1 ~ Armor\\tTYPE:Armor\\tPLUS:1\\tBONUS:COMBAT|AC|1|TYPE=ArmorEnhancement|PREVAREQ:DisableArmorBonus,0\\tBONUS:EQMARMOR|ACCHECK|1|TYPE=Enhance"
+  },
+  {
+   "root": "src/rules_core",
+   "file": "src/rules_core/equipment_effects/arms_armor.rs",
+   "line": 378,
+   "pattern": "TYPE=",
+   "hits": 2,
+   "in_cfg_test": true,
+   "text": "let text = \"+1 (Enhancement to Armor)\\tKEY:Special Ability ~ +1 ~ Armor\\tTYPE:Armor\\tPLUS:1\\tBONUS:COMBAT|AC|1|TYPE=ArmorEnhancement|PREVAREQ:DisableArmorBonus,0\\tBONUS:EQMARMOR|ACCHECK|1|TYPE=Enhance"
+  },
+  {
+   "root": "src/rules_core",
+   "file": "src/rules_core/equipment_effects/arms_armor.rs",
+   "line": 387,
+   "pattern": "TYPE=",
+   "hits": 1,
+   "in_cfg_test": true,
+   "text": "\"a +1 Armor Enhancement modifier's own TYPE=ArmorEnhancement chain is real AC magnitude\""
+  },
+  {
+   "root": "src/rules_core",
+   "file": "src/rules_core/equipment_effects/arms_armor.rs",
+   "line": 405,
+   "pattern": "TYPE=",
+   "hits": 2,
+   "in_cfg_test": true,
+   "text": "let text = \"Mithral\\tKEY:Material ~ Mithril ~ Armor / Light\\tTYPE:BaseMaterial.MasterworkQuality.Armor\\tCOST:1000\\tBONUS:EQMARMOR|ACCHECK|3|TYPE=Enhancement.REPLACE\\tBONUS:EQMARMOR|MAXDEX|2\\tBONUS:EQM"
+  },
+  {
+   "root": "src/rules_core",
+   "file": "src/rules_core/equipment_effects/arms_armor.rs",
+   "line": 425,
+   "pattern": "PRE[A-Z]+:",
+   "hits": 2,
+   "in_cfg_test": true,
+   "text": "let text = \"Leather Armor\\tKEY:Leather Armor (Base)\\tTYPE:Armor.Light\\tCOST:10\\tWT:15\\tACCHECK:0\\tMAXDEX:6\\tSPELLFAILURE:10\\tBONUS:COMBAT|AC|2|TYPE=Armor|PREVAREQ:DisableArmorBonus,0\\tBONUS:EQMARMOR|A"
+  },
+  {
+   "root": "src/rules_core",
+   "file": "src/rules_core/equipment_effects/arms_armor.rs",
+   "line": 425,
+   "pattern": "TYPE=",
+   "hits": 1,
+   "in_cfg_test": true,
+   "text": "let text = \"Leather Armor\\tKEY:Leather Armor (Base)\\tTYPE:Armor.Light\\tCOST:10\\tWT:15\\tACCHECK:0\\tMAXDEX:6\\tSPELLFAILURE:10\\tBONUS:COMBAT|AC|2|TYPE=Armor|PREVAREQ:DisableArmorBonus,0\\tBONUS:EQMARMOR|A"
+  },
+  {
+   "root": "src/rules_core",
+   "file": "src/rules_core/equipment_effects/arms_armor.rs",
+   "line": 447,
+   "pattern": "TYPE=",
+   "hits": 1,
+   "in_cfg_test": true,
+   "text": "let text = \"Sea-Knife\\tKEY:Sea-Knife\\tTYPE:Weapon.Resizable.Light.Melee.Piercing.Slashing.Exotic.Finesseable\\tCOST:8\\tWT:1\\tCRITMULT:x2\\tCRITRANGE:2\\tDAMAGE:1d4\\tEQMOD:Material ~ Steel\\tWIELD:Light\\tS"
+  },
+  {
+   "root": "src/rules_core",
+   "file": "src/rules_core/equipment_effects/arms_armor.rs",
+   "line": 455,
+   "pattern": "TYPE=",
+   "hits": 1,
+   "in_cfg_test": true,
+   "text": "\"a TYPE=Circumstance AC chain is situational, never a standing bonus this function reports\""
+  },
+  {
+   "root": "src/rules_core",
+   "file": "src/rules_core/equipment_effects/arms_armor.rs",
+   "line": 471,
+   "pattern": "TYPE=",
+   "hits": 1,
+   "in_cfg_test": true,
+   "text": "let base_text = \"Armor of Grim Triumph\\tKEY:Armor of Grim Triumph\\tTYPE:Armor.Magic.Medium.ArmorProfMedium.Suit.Specific\\tCOST:250\\tWT:40\\tACCHECK:-4\\tEQMOD:Special Ability ~ Enhancement Cost|12600.Sp"
+  },
+  {
+   "root": "src/rules_core",
+   "file": "src/rules_core/equipment_effects/arms_armor.rs",
+   "line": 475,
+   "pattern": "PRE[A-Z]+:",
+   "hits": 1,
+   "in_cfg_test": true,
+   "text": "let modifier_text = \"+1 (Enhancement to Armor)\\tKEY:Special Ability ~ +1 ~ Armor\\tTYPE:Armor\\tPLUS:1\\tBONUS:COMBAT|AC|1|TYPE=ArmorEnhancement|PREVAREQ:DisableArmorBonus,0\\n\";"
+  },
+  {
+   "root": "src/rules_core",
+   "file": "src/rules_core/equipment_effects/arms_armor.rs",
+   "line": 475,
+   "pattern": "TYPE=",
+   "hits": 1,
+   "in_cfg_test": true,
+   "text": "let modifier_text = \"+1 (Enhancement to Armor)\\tKEY:Special Ability ~ +1 ~ Armor\\tTYPE:Armor\\tPLUS:1\\tBONUS:COMBAT|AC|1|TYPE=ArmorEnhancement|PREVAREQ:DisableArmorBonus,0\\n\";"
+  },
+  {
+   "root": "src/rules_core",
+   "file": "src/rules_core/equipment_effects/arms_armor.rs",
+   "line": 511,
+   "pattern": "TYPE=",
+   "hits": 1,
+   "in_cfg_test": true,
+   "text": "let text = \"Cloak of the Manta Ray\\tKEY:Cloak of the Manta Ray\\tTYPE:Magic.Wondrous.Shoulders.Cloak\\tCOST:7200\\tWT:1\\tEQMOD:Material ~ Cloth\\tTEMPBONUS:PC|COMBAT|AC|3|TYPE=NaturalArmor\\n\";"
+  },
+  {
+   "root": "src/rules_core",
+   "file": "src/rules_core/equipment_effects/arms_armor.rs",
+   "line": 520,
+   "pattern": "TYPE=",
+   "hits": 1,
+   "in_cfg_test": true,
+   "text": "\"TEMPBONUS:PC|COMBAT|AC|3|TYPE=NaturalArmor is the item's real, literal +3 natural armor bonus\""
+  },
+  {
+   "root": "src/rules_core",
+   "file": "src/rules_core/equipment_effects/arms_armor.rs",
+   "line": 533,
+   "pattern": "TYPE=",
+   "hits": 2,
+   "in_cfg_test": true,
+   "text": "let text = \"Leather Armor\\tKEY:Leather Armor (Base)\\tTYPE:Armor.Light\\tCOST:10\\tWT:15\\tBONUS:COMBAT|AC|2|TYPE=Armor\\tTEMPBONUS:PC|COMBAT|AC|99|TYPE=NaturalArmor\\n\";"
+  },
+  {
+   "root": "src/rules_core",
+   "file": "src/rules_core/equipment_effects/arms_armor.rs",
+   "line": 541,
+   "pattern": "BONUS:",
+   "hits": 1,
+   "in_cfg_test": true,
+   "text": "\"the record's own real BONUS:COMBAT|AC chain must win over the TEMPBONUS fallback\""
+  },
+  {
+   "root": "src/rules_core",
+   "file": "src/rules_core/equipment_effects/arms_armor.rs",
+   "line": 554,
+   "pattern": "TYPE=",
+   "hits": 1,
+   "in_cfg_test": true,
+   "text": "let text = \"Fake EQ-Targeted Item\\tKEY:Fake EQ-Targeted Item\\tTYPE:Magic.Wondrous\\tCOST:1\\tWT:0\\tTEMPBONUS:EQ|COMBAT|AC|5|TYPE=NaturalArmor\\n\";"
+  },
+  {
+   "root": "src/rules_core",
+   "file": "src/rules_core/equipment_effects/equipmods.rs",
+   "line": 404,
+   "pattern": "TYPE=",
+   "hits": 1,
+   "in_cfg_test": true,
+   "text": "let text = \"+1 (Enhancement to Weapon)\\tKEY:Special Ability ~ +1 ~ Weapon\\tTYPE:Weapon\\tPLUS:1\\tCOST:0\\tBONUS:WEAPON|DAMAGE,TOHIT|1|TYPE=Enhancement\\n\";"
+  },
+  {
+   "root": "src/rules_core",
+   "file": "src/rules_core/equipment_effects/equipmods.rs",
+   "line": 426,
+   "pattern": "TYPE=",
+   "hits": 1,
+   "in_cfg_test": true,
+   "text": "let text = \"Adamantine\\tKEY:Material ~ Adamantine ~ Weapon\\tTYPE:BaseMaterial.MasterworkQuality.Weapon\\tCOST:3000\\tBONUS:WEAPON|TOHIT|1|TYPE=Enhancement\\n\";"
+  },
+  {
+   "root": "src/rules_core",
+   "file": "src/rules_core/equipment_effects/equipmods.rs",
+   "line": 450,
+   "pattern": "TYPE=",
+   "hits": 1,
+   "in_cfg_test": true,
+   "text": "let text = \"+3 (Enhancement to Weapon)\\tKEY:Special Ability ~ +3 ~ Weapon Reversed\\tTYPE:Weapon\\tPLUS:3\\tBONUS:WEAPON|TOHIT,DAMAGE|3|TYPE=Enhancement\\n\";"
+  },
+  {
+   "root": "src/rules_core",
+   "file": "src/rules_core/equipment_effects/equipmods.rs",
+   "line": 569,
+   "pattern": "TYPE=",
+   "hits": 1,
+   "in_cfg_test": true,
+   "text": "let text = \"+1 to Hit and Damage\\tKEY:Special Ability ~ +1 ~ Amulet of Mighty Fists\\tTYPE:Amulet of Mighty Fists\\tPLUS:1\\tBONUS:WEAPONPROF=TYPE.Natural|TOHIT,DAMAGE|1|TYPE=Enhancement\\n\";"
+  },
+  {
+   "root": "src/rules_core",
+   "file": "src/rules_core/equipment_effects/equipmods.rs",
+   "line": 627,
+   "pattern": "TYPE=",
+   "hits": 1,
+   "in_cfg_test": true,
+   "text": "let text = \"Proxy\\tKEY:Special Quality ~ WeaponProf Proxy\\tTYPE:Weapon\\tBONUS:WEAPONPROF=TYPE.Bow|TOHIT,DAMAGE|1|TYPE=Enhancement\\n\";"
+  },
+  {
+   "root": "src/rules_core",
+   "file": "src/rules_core/equipment_effects/equipmods.rs",
+   "line": 644,
+   "pattern": "TYPE=",
+   "hits": 1,
+   "in_cfg_test": true,
+   "text": "let text = \"Weapon Focus Proxy\\tKEY:Special Quality ~ Weapon Focus Proxy\\tTYPE:Weapon\\tBONUS:WEAPON|CRITMULT|1|TYPE=Enhancement\\n\";"
+  },
+  {
+   "root": "src/rules_core",
+   "file": "src/rules_core/equipment_effects/equipmods.rs",
+   "line": 660,
+   "pattern": "PRE[A-Z]+:",
+   "hits": 2,
+   "in_cfg_test": true,
+   "text": "let text = \"Spell Resistance 13\\tFORMATCAT:FRONT\\tNAMEOPT:NORMAL\\tKEY:Special Ability ~ Spell Resistance / 13 ~ Armor\\tTYPE:Armor.Bracer.ArmorLike\\tPLUS:2\\tVISIBLE:QUALIFY\\tPREMULT:2,[PRETYPE:1,ArmorE"
+  },
+  {
+   "root": "src/rules_core",
+   "file": "src/rules_core/equipment_effects/equipmods.rs",
+   "line": 673,
+   "pattern": "PRE[A-Z]+:",
+   "hits": 2,
+   "in_cfg_test": true,
+   "text": "let text = \"Spell Resistance 19\\tFORMATCAT:FRONT\\tNAMEOPT:NORMAL\\tKEY:Special Ability ~ Spell Resistance / 19 ~ Armor\\tTYPE:Armor.Bracer.ArmorLike\\tPLUS:8\\tVISIBLE:QUALIFY\\tPREMULT:2,[PRETYPE:1,ArmorE"
+  },
+  {
+   "root": "src/rules_core",
+   "file": "src/rules_core/equipment_effects/equipmods.rs",
+   "line": 689,
+   "pattern": "%CHOICE",
+   "hits": 3,
+   "in_cfg_test": true,
+   "text": "let text = \"BNS_SPL_RST\\tVISIBLE:NO\\tKEY:Special Ability ~ Bonus Spell Resistance\\tTYPE:Weapon.Belt.Body\\tCOST:10000*(%CHOICE-12)\\tSR:%CHOICE\\tSPROP:base spell resistance of %CHOICE\\tCHOOSE:NUMBER|MIN"
+  },
+  {
+   "root": "src/rules_core",
+   "file": "src/rules_core/equipment_effects/equipmods.rs",
+   "line": 701,
+   "pattern": "TYPE=",
+   "hits": 1,
+   "in_cfg_test": true,
+   "text": "let text = \"+1 (Enhancement to Weapon)\\tKEY:Special Ability ~ +1 ~ Weapon\\tTYPE:Weapon\\tPLUS:1\\tCOST:0\\tBONUS:WEAPON|DAMAGE,TOHIT|1|TYPE=Enhancement\\n\";"
+  },
+  {
+   "root": "src/rules_core",
+   "file": "src/rules_core/equipment_effects/equipmods.rs",
+   "line": 734,
+   "pattern": "TYPE=",
+   "hits": 1,
+   "in_cfg_test": true,
+   "text": "let text = \"Enhancement Bonus for Dissonance Main\\tKEY:Special Quality ~ Dissonance / Enhancement Bonus / Main\\tTYPE:Weapon\\tVISIBLE:NO\\tBONUS:VAR|DissonanceEnhancementBonusMain|1\\tBONUS:WEAPON|DAMAGE"
+  },
+  {
+   "root": "src/rules_core",
+   "file": "src/rules_core/equipment_effects/equipmods.rs",
+   "line": 758,
+   "pattern": "TYPE=",
+   "hits": 1,
+   "in_cfg_test": true,
+   "text": "let text = \"Fabricated\\tKEY:Fabricated Test Record\\tTYPE:Weapon\\tBONUS:WEAPON|TOHIT|SomeUndefinedVariable|TYPE=Enhancement\\n\";"
+  },
+  {
+   "root": "src/rules_core",
+   "file": "src/rules_core/equipment_effects/general.rs",
+   "line": 227,
+   "pattern": "PRE[A-Z]+:",
+   "hits": 1,
+   "in_cfg_test": true,
+   "text": "let text = \"Thieves' Tools\\tKEY:Thieves' Tools\\tTYPE:Goods.Tools.Thief.ThiefTools\\tCOST:30\\tWT:1\\tBONUS:SKILL|Disable Device|2|TYPE=Circumstance|PRETYPE:1,Masterwork\\n\";"
+  },
+  {
+   "root": "src/rules_core",
+   "file": "src/rules_core/equipment_effects/general.rs",
+   "line": 227,
+   "pattern": "TYPE=",
+   "hits": 1,
+   "in_cfg_test": true,
+   "text": "let text = \"Thieves' Tools\\tKEY:Thieves' Tools\\tTYPE:Goods.Tools.Thief.ThiefTools\\tCOST:30\\tWT:1\\tBONUS:SKILL|Disable Device|2|TYPE=Circumstance|PRETYPE:1,Masterwork\\n\";"
+  },
+  {
+   "root": "src/rules_core",
+   "file": "src/rules_core/equipment_effects/general.rs",
+   "line": 247,
+   "pattern": "TYPE=",
+   "hits": 1,
+   "in_cfg_test": true,
+   "text": "let text = \"Climber's Kit\\tKEY:Climber's Kit\\tTYPE:Goods.Tools.Masterwork.Resizable\\tCOST:80\\tWT:5\\tBONUS:SKILL|Climb|2|TYPE=Circumstance\\n\";"
+  },
+  {
+   "root": "src/rules_core",
+   "file": "src/rules_core/equipment_effects/general.rs",
+   "line": 278,
+   "pattern": "TYPE=",
+   "hits": 1,
+   "in_cfg_test": true,
+   "text": "let text = \"Elixir of Swimming\\tKEY:Elixir of Swimming\\tTYPE:Magic.Wondrous.Elixir.Consumable\\tCOST:250\\tWT:0\\tTEMPBONUS:ANYPC|SKILL|Swim|10|TYPE=Competence\\n\";"
+  },
+  {
+   "root": "src/rules_core",
+   "file": "src/rules_core/equipment_effects/general.rs",
+   "line": 319,
+   "pattern": "TYPE=",
+   "hits": 2,
+   "in_cfg_test": true,
+   "text": "let text = \"Hybrid\\tKEY:Hybrid\\tTYPE:Goods.Tools\\tCOST:1\\tWT:1\\tBONUS:SKILL|Climb|2|TYPE=Circumstance\\tTEMPBONUS:ANYPC|SKILL|Swim|99|TYPE=Competence\\n\";"
+  },
+  {
+   "root": "src/rules_core",
+   "file": "src/rules_core/equipment_effects/general.rs",
+   "line": 341,
+   "pattern": "TYPE=",
+   "hits": 1,
+   "in_cfg_test": true,
+   "text": "let text = \"Setting Stone (Invigoration)\\tKEY:Setting Stone (Invigoration)\\tTYPE:Wondrous\\tCOST:1\\tWT:0\\tTEMPBONUS:PC|SKILL|ALL|2|TYPE=Morale\\n\";"
+  },
+  {
+   "root": "src/rules_core",
+   "file": "src/rules_core/equipment_effects/general.rs",
+   "line": 355,
+   "pattern": "TYPE=",
+   "hits": 1,
+   "in_cfg_test": true,
+   "text": "let text = \"Lead Blades\\tKEY:Lead Blades\\tTYPE:Magic.Wondrous\\tCOST:1\\tWT:0\\tTEMPBONUS:EQ|Weapon,Melee|SKILL|Fake|5|TYPE=Temporary\\n\";"
+  },
+  {
+   "root": "src/rules_core",
+   "file": "src/rules_core/equipment_effects/general.rs",
+   "line": 374,
+   "pattern": "TYPE=",
+   "hits": 1,
+   "in_cfg_test": true,
+   "text": "let text = \"Ring of the Sea Strider\\t\\t\\t\\t\\t\\t\\t\\t\\t\\t\\t\\t\\t\\t\\t\\t\\tTYPE:Magic.Ring.LesserMedium\\tCOST:14000\\tWT:0\\t\\tMOVE:Swim,30\\tSOURCEPAGE:p.176\\tSPELLS:Magic Item|TIMES=1|CASTERLEVEL=7|Dimension"
+  },
+  {
+   "root": "src/rules_core",
+   "file": "src/rules_core/equipment_effects/general.rs",
+   "line": 395,
+   "pattern": "TYPE=",
+   "hits": 1,
+   "in_cfg_test": true,
+   "text": "let text = \"Climber's Kit\\tKEY:Climber's Kit\\tTYPE:Goods.Tools.Masterwork.Resizable\\tCOST:80\\tWT:5\\tBONUS:SKILL|Climb|2|TYPE=Circumstance\\n\";"
+  },
+  {
+   "root": "src/rules_core",
+   "file": "src/rules_core/equipment_effects/general.rs",
+   "line": 470,
+   "pattern": "TYPE=",
+   "hits": 1,
+   "in_cfg_test": true,
+   "text": "let text = \"Cloak of Resistance +1\\tKEY:Cloak of Resistance +1\\tTYPE:Magic.Wondrous.Shoulders\\tCOST:1000\\tWT:0.5\\tBONUS:VAR|FortitudeSave_ResistanceBonus,ReflexSave_ResistanceBonus,WillSave_Resistance"
+  },
+  {
+   "root": "src/rules_core",
+   "file": "src/rules_core/equipment_effects/general.rs",
+   "line": 491,
+   "pattern": "TYPE=",
+   "hits": 1,
+   "in_cfg_test": true,
+   "text": "let text = \"Climber's Kit\\tKEY:Climber's Kit\\tTYPE:Goods.Tools.Masterwork.Resizable\\tCOST:80\\tWT:5\\tBONUS:SKILL|Climb|2|TYPE=Circumstance\\n\";"
+  },
+  {
+   "root": "src/rules_core",
+   "file": "src/rules_core/equipment_effects/general.rs",
+   "line": 511,
+   "pattern": "TYPE=",
+   "hits": 1,
+   "in_cfg_test": true,
+   "text": "let base_text = \"Panoply of the Fierani Knight\\tKEY:Panoply of the Fierani Knight\\tTYPE:Armor.Magic.Heavy.ArmorProfHeavy.Suit.Specific\\tCOST:1500\\tWT:50\\tACCHECK:-6\\tEQMOD:Special Ability ~ Enhancemen"
+  },
+  {
+   "root": "src/rules_core",
+   "file": "src/rules_core/equipment_effects/general.rs",
+   "line": 515,
+   "pattern": "TYPE=",
+   "hits": 3,
+   "in_cfg_test": true,
+   "text": "let mithral_text = \"Mithral\\tKEY:Material ~ Mithril ~ Armor / Heavy\\tTYPE:BaseMaterial.MasterworkQuality.Armor\\tCOST:9000\\tBONUS:VAR|ArmorCheckPenalty|-3|TYPE=Enhancement\\tBONUS:EQMARMOR|ACCHECK|3|TYP"
+  },
+  {
+   "root": "src/rules_core",
+   "file": "src/rules_core/equipment_effects/intelligent_item.rs",
+   "line": 244,
+   "pattern": "PRE[A-Z]+:",
+   "hits": 1,
+   "in_cfg_test": true,
+   "text": "let text = \"Intelligent Magic Item Base\\tKEY:Intelligent Item ~ Base\\tTYPE:Weapon.Armor.Goods\\tCOST:500\\tBONUS:VAR|IntItemNegativeLevel|1|PREVARGTEQ:IntelligentItemEgo,20\\tBONUS:VAR|IntItemStatINT|10\\"
+  },
+  {
+   "root": "src/rules_core",
+   "file": "src/rules_core/equipment_effects/intelligent_item.rs",
+   "line": 352,
+   "pattern": "TYPE=",
+   "hits": 1,
+   "in_cfg_test": true,
+   "text": "let text = \"Masterwork (Weapon)\\tKEY:Special Quality ~ Masterwork ~ Weapon\\tTYPE:MasterworkQuality.Weapon\\tCOST:0\\tBONUS:WEAPON|TOHIT|1|TYPE=Enhancement\\n\";"
+  },
+  {
+   "root": "src/rules_core",
+   "file": "src/rules_core/equipment_effects/intelligent_item.rs",
+   "line": 367,
+   "pattern": "PRE[A-Z]+:",
+   "hits": 1,
+   "in_cfg_test": true,
+   "text": "let text = \"Conditional Proxy\\tKEY:Conditional Proxy\\tTYPE:Weapon.Armor.Goods\\tCOST:0\\tBONUS:VAR|IntItemStatWIS|99|PREVARGTEQ:SomeVar,1\\n\";"
+  },
+  {
+   "root": "src/rules_core",
+   "file": "src/rules_core/equipment_effects/magic_items.rs",
+   "line": 98,
+   "pattern": "TYPE=",
+   "hits": 1,
+   "in_cfg_test": true,
+   "text": "let text = \"Belt of Giant Strength +2\\tKEY:Belt of Giant Strength +2\\tTYPE:Magic.Wondrous.Belt\\tCOST:4000\\tWT:1\\tBONUS:STAT|STR|2|TYPE=Enhancement\\n\";"
+  },
+  {
+   "root": "src/rules_core",
+   "file": "src/rules_core/equipment_effects/magic_items.rs",
+   "line": 118,
+   "pattern": "TYPE=",
+   "hits": 1,
+   "in_cfg_test": true,
+   "text": "let text = \"Belt of Incredible Dexterity +2\\tKEY:Belt of Incredible Dexterity +2\\tTYPE:Magic.Wondrous.Belt\\tCOST:4000\\tWT:1\\tBONUS:STAT|DEX|2|TYPE=Enhancement\\n\";"
+  },
+  {
+   "root": "src/rules_core",
+   "file": "src/rules_core/equipment_effects/magic_items.rs",
+   "line": 138,
+   "pattern": "TYPE=",
+   "hits": 1,
+   "in_cfg_test": true,
+   "text": "let text = \"Potion of Bull's Strength\\tKEY:Potion of Bull's Strength\\tTYPE:Magic.Potion.Consumable.Combat Gear\\tCOST:300\\tWT:0\\tTEMPBONUS:ANYPC|STAT|STR|4|TYPE=Enhancement\\n\";"
+  },
+  {
+   "root": "src/rules_core",
+   "file": "src/rules_core/equipment_effects/magic_items.rs",
+   "line": 158,
+   "pattern": "TYPE=",
+   "hits": 2,
+   "in_cfg_test": true,
+   "text": "let text = \"Hybrid\\tKEY:Hybrid\\tTYPE:Magic.Wondrous.Belt\\tCOST:1\\tWT:1\\tBONUS:STAT|STR|2|TYPE=Enhancement\\tTEMPBONUS:ANYPC|STAT|DEX|99|TYPE=Enhancement\\n\";"
+  },
+  {
+   "root": "src/rules_core",
+   "file": "src/rules_core/pilot_compute/class_feature_grant_consumer.rs",
+   "line": 1315,
+   "pattern": "BONUS:",
+   "hits": 1,
+   "in_cfg_test": true,
+   "text": "assert!(out.len() > 100, \"population collapsed: only {} records carry BONUS:VAR\", out.len());"
+  },
+  {
+   "root": "src/rules_core",
+   "file": "src/rules_core/pilot_compute/class_feature_grant_consumer.rs",
+   "line": 1539,
+   "pattern": "PRE[A-Z]+:",
+   "hits": 1,
+   "in_cfg_test": true,
+   "text": "\"expected every live Gunslinger ~ Gun Training fact to be bare-PRECLASS:-gated \\"
+  },
+  {
+   "root": "src/rules_core",
+   "file": "src/rules_core/pilot_compute/class_feature_grant_consumer.rs",
+   "line": 1545,
+   "pattern": "PRE[A-Z]+:",
+   "hits": 1,
+   "in_cfg_test": true,
+   "text": "\"an uncorroborated bare-PRECLASS: pair must never resolve -- T7/D12 regression\""
+  },
+  {
+   "root": "src/rules_core",
+   "file": "src/rules_core/pilot_compute/domain_power.rs",
+   "line": 785,
+   "pattern": "PRE[A-Z]+:",
+   "hits": 1,
+   "in_cfg_test": true,
+   "text": "parse_pcgen_expr(\"PREVARLT:DomainHealingLVL,2\"),"
+  },
+  {
+   "root": "src/rules_core",
+   "file": "src/rules_core/pilot_compute/domain_power.rs",
+   "line": 1137,
+   "pattern": "TYPE=",
+   "hits": 1,
+   "in_cfg_test": true,
+   "text": "b.starts_with(\"VAR|Domain\") && b.ends_with(\"LVL|DomainLVL|TYPE=Domain\")"
+  },
+  {
+   "root": "src/rules_core",
+   "file": "src/rules_core/pilot_compute/domain_power.rs",
+   "line": 1144,
+   "pattern": "TYPE=",
+   "hits": 1,
+   "in_cfg_test": true,
+   "text": "&& b.ends_with(\"Times|DomainPowerTimes|TYPE=Domain\")"
+  },
+  {
+   "root": "src/rules_core",
+   "file": "src/rules_core/pilot_compute/domain_power.rs",
+   "line": 1162,
+   "pattern": "BONUS:",
+   "hits": 1,
+   "in_cfg_test": true,
+   "text": ".expect(\"domains.json must carry a BONUS:VAR|DomainPowerTimes| token\");"
+  },
+  {
+   "root": "src/rules_core",
+   "file": "src/rules_core/pilot_compute/mod.rs",
+   "line": 48763,
+   "pattern": "DESC:",
+   "hits": 1,
+   "in_cfg_test": true,
+   "text": "\"must quote the real base corpus DESC: {detail}\""
+  },
+  {
+   "root": "src/rules_core",
+   "file": "src/rules_core/pilot_compute/mod.rs",
+   "line": 48775,
+   "pattern": "DESC:",
+   "hits": 1,
+   "in_cfg_test": true,
+   "text": "\"must quote the real base corpus DESC: {detail}\""
+  },
+  {
+   "root": "src/rules_core",
+   "file": "src/rules_core/pilot_compute/mod.rs",
+   "line": 48795,
+   "pattern": "DESC:",
+   "hits": 1,
+   "in_cfg_test": true,
+   "text": "\"must quote the real base corpus DESC: {detail}\""
+  },
+  {
+   "root": "src/rules_core",
+   "file": "src/rules_core/pilot_compute/mod.rs",
+   "line": 48845,
+   "pattern": "DESC:",
+   "hits": 1,
+   "in_cfg_test": true,
+   "text": "\"must quote the real base corpus DESC: {detail}\""
+  },
+  {
+   "root": "src/rules_core",
+   "file": "src/rules_core/pilot_compute/mod.rs",
+   "line": 48863,
+   "pattern": "DESC:",
+   "hits": 1,
+   "in_cfg_test": true,
+   "text": "\"must quote the real base corpus DESC: {detail}\""
+  },
+  {
+   "root": "src/rules_core",
+   "file": "src/rules_core/pilot_compute/mod.rs",
+   "line": 48894,
+   "pattern": "DESC:",
+   "hits": 1,
+   "in_cfg_test": true,
+   "text": "\"must quote the real base corpus DESC: {detail}\""
+  },
+  {
+   "root": "src/rules_core",
+   "file": "src/rules_core/pilot_compute/mod.rs",
+   "line": 48939,
+   "pattern": "DESC:",
+   "hits": 1,
+   "in_cfg_test": true,
+   "text": "\"must quote the real base corpus DESC: {detail}\""
+  },
+  {
+   "root": "src/rules_core",
+   "file": "src/rules_core/pilot_compute/mod.rs",
+   "line": 48981,
+   "pattern": "DESC:",
+   "hits": 1,
+   "in_cfg_test": true,
+   "text": "\"must quote the real base corpus DESC: {detail}\""
+  },
+  {
+   "root": "src/rules_core",
+   "file": "src/rules_core/pilot_compute/mod.rs",
+   "line": 49062,
+   "pattern": "DESC:",
+   "hits": 1,
+   "in_cfg_test": true,
+   "text": "\"must quote the real base corpus DESC: {detail}\""
+  },
+  {
+   "root": "src/rules_core",
+   "file": "src/rules_core/pilot_compute/mod.rs",
+   "line": 49099,
+   "pattern": "DESC:",
+   "hits": 1,
+   "in_cfg_test": true,
+   "text": "\"must quote the real base corpus DESC: {detail}\""
+  },
+  {
+   "root": "src/rules_core",
+   "file": "src/rules_core/pilot_compute/mod.rs",
+   "line": 71633,
+   "pattern": "BONUS:",
+   "hits": 1,
+   "in_cfg_test": true,
+   "text": "additively-stacking level-15+ BONUS:VAR line\""
+  },
+  {
+   "root": "src/rules_core",
+   "file": "src/rules_core/pilot_compute/mod.rs",
+   "line": 74976,
+   "pattern": "BONUS:",
+   "hits": 2,
+   "in_cfg_test": true,
+   "text": "\"BONUS:SKILL|STAT.CHA|-4 and BONUS:SKILL|Intimidate|4 cancel on Intimidate\""
+  },
+  {
+   "root": "src/rules_core",
+   "file": "src/rules_core/pilot_compute/mod.rs",
+   "line": 76411,
+   "pattern": "BONUS:",
+   "hits": 1,
+   "in_cfg_test": true,
+   "text": "\"corpus `BONUS:SKILL|Swim|4|TYPE=Racial`: {:?}\","
+  },
+  {
+   "root": "src/rules_core",
+   "file": "src/rules_core/pilot_compute/mod.rs",
+   "line": 76411,
+   "pattern": "TYPE=",
+   "hits": 1,
+   "in_cfg_test": true,
+   "text": "\"corpus `BONUS:SKILL|Swim|4|TYPE=Racial`: {:?}\","
+  },
+  {
+   "root": "src/rules_core",
+   "file": "src/rules_core/pilot_compute/mod.rs",
+   "line": 83698,
+   "pattern": "BONUS:",
+   "hits": 1,
+   "in_cfg_test": true,
+   "text": "\"CHA - max(WIS, 0), per both corpus BONUS:SAVE tokens read together\""
+  },
+  {
+   "root": "src/rules_core",
+   "file": "src/rules_core/pilot_compute/mod.rs",
+   "line": 84944,
+   "pattern": "DESC:",
+   "hits": 1,
+   "in_cfg_test": true,
+   "text": "\"must quote the real base corpus DESC: {explanation:?}\""
+  },
+  {
+   "root": "src/rules_core",
+   "file": "src/rules_core/pilot_compute/mod.rs",
+   "line": 86885,
+   "pattern": "BONUS:",
+   "hits": 1,
+   "in_cfg_test": true,
+   "text": "\"the bare-key \\\"Air Domain\\\" header's own real BONUS:VAR chain must still merge in \\"
+  },
+  {
+   "root": "src/rules_core",
+   "file": "src/rules_core/pilot_compute/mod.rs",
+   "line": 87834,
+   "pattern": "BONUS:",
+   "hits": 1,
+   "in_cfg_test": true,
+   "text": "\"Earth Blessing's own members carry no BONUS:VAR at all -- the bonus_vars-only \\"
+  },
+  {
+   "root": "src/rules_core",
+   "file": "src/rules_core/pilot_compute/mod.rs",
+   "line": 87862,
+   "pattern": "BONUS:",
+   "hits": 1,
+   "in_cfg_test": true,
+   "text": "\"Order of the Beast's own members carry no BONUS:VAR at all -- the bonus_vars-only \\"
+  },
+  {
+   "root": "src/rules_core",
+   "file": "src/rules_core/rules_tables/companion_chassis.rs",
+   "line": 1368,
+   "pattern": "DESC:",
+   "hits": 1,
+   "in_cfg_test": true,
+   "text": "\"Animal Trick ~ Attack has one ungated DESC: token, which must be promoted\""
+  },
+  {
+   "root": "src/rules_core",
+   "file": "src/rules_core/rules_tables/companion_chassis.rs",
+   "line": 1380,
+   "pattern": "DESC:",
+   "hits": 1,
+   "in_cfg_test": true,
+   "text": "\"Animal Companion Feat ~ Toughness has one ungated DESC: token, which must be \\"
+  },
+  {
+   "root": "src/rules_core",
+   "file": "src/rules_core/rules_tables/companion_chassis.rs",
+   "line": 1673,
+   "pattern": "BONUS:",
+   "hits": 1,
+   "in_cfg_test": true,
+   "text": "\"`Pseudodragon ~ Tail` carries no TYPE:, no DESC: and no BONUS: \u2014 only an \\"
+  },
+  {
+   "root": "src/rules_core",
+   "file": "src/rules_core/rules_tables/companion_chassis.rs",
+   "line": 1673,
+   "pattern": "DESC:",
+   "hits": 1,
+   "in_cfg_test": true,
+   "text": "\"`Pseudodragon ~ Tail` carries no TYPE:, no DESC: and no BONUS: \u2014 only an \\"
+  },
+  {
+   "root": "src/rules_core",
+   "file": "src/rules_core/rules_tables/feats_all.rs",
+   "line": 1068,
+   "pattern": "DESC:",
+   "hits": 1,
+   "in_cfg_test": true,
+   "text": "\"Accursed's joined description must carry the real BENEFIT text, not just DESC:\""
+  },
+  {
+   "root": "src/rules_core",
+   "file": "src/rules_core/rules_tables/feats_all.rs",
+   "line": 1183,
+   "pattern": "DESC:",
+   "hits": 1,
+   "in_cfg_test": true,
+   "text": "\"Acrobatic Spellcaster's joined description must carry the real BENEFIT text, not just DESC:\""
+  },
+  {
+   "root": "src/rules_core",
+   "file": "src/rules_core/rules_tables/monster_chassis.rs",
+   "line": 887,
+   "pattern": "BONUS:",
+   "hits": 1,
+   "in_cfg_test": true,
+   "text": "let Some(rest) = field.strip_prefix(\"BONUS:STAT|\") else { continue };"
+  },
+  {
+   "root": "src/rules_core",
+   "file": "src/rules_core/rules_tables/monster_chassis.rs",
+   "line": 897,
+   "pattern": "BONUS:",
+   "hits": 1,
+   "in_cfg_test": true,
+   "text": "assert!(!expected.is_empty(), \"Demon (Balor)'s row carries no readable BONUS:STAT token\");"
+  },
+  {
+   "root": "src/rules_core",
+   "file": "src/rules_core/rules_tables/monster_chassis.rs",
+   "line": 926,
+   "pattern": "BONUS:",
+   "hits": 1,
+   "in_cfg_test": true,
+   "text": "\"Demon (Balor)'s row carries BONUS:VAR|SLA_CL|HD\""
+  },
+  {
+   "root": "src/rules_core",
+   "file": "src/rules_core/rules_tables/monster_chassis.rs",
+   "line": 940,
+   "pattern": "BONUS:",
+   "hits": 1,
+   "in_cfg_test": true,
+   "text": "\"Linnorm (Crag)'s row (b1_races.lst:269) carries BONUS:VAR|SLA_CL|HD but no \\"
+  },
+  {
+   "root": "src/rules_core",
+   "file": "src/rules_core/rules_tables/monster_chassis.rs",
+   "line": 1072,
+   "pattern": "DESC:",
+   "hits": 1,
+   "in_cfg_test": true,
+   "text": "72 orphan candidates refused during transcription as an unscreenable multi-DESC: \\"
+  },
+  {
+   "root": "src/rules_core",
+   "file": "src/rules_core/rules_tables/monster_chassis.rs",
+   "line": 1096,
+   "pattern": "DESC:",
+   "hits": 1,
+   "in_cfg_test": true,
+   "text": "closes -- the multi-`DESC:` `PRERULE`/`PREVAREQ`/`PREVARGT`/`PRESIZE*`/`PREHD`/ \\"
+  },
+  {
+   "root": "src/rules_core",
+   "file": "src/rules_core/rules_tables/monster_chassis.rs",
+   "line": 1099,
+   "pattern": "DESC:",
+   "hits": 1,
+   "in_cfg_test": true,
+   "text": "`DESC:` token's own verbatim text instead of guessing which one wins. 56 real \\"
+  },
+  {
+   "root": "src/rules_core",
+   "file": "src/rules_core/rules_tables/monster_chassis.rs",
+   "line": 1157,
+   "pattern": "DESC:",
+   "hits": 1,
+   "in_cfg_test": true,
+   "text": "moves because the sorted triple set gains 57 more members (the multi-`DESC:` \\"
+  },
+  {
+   "root": "src/rules_core",
+   "file": "src/rules_core/rules_tables/acg/archetype_tables.rs",
+   "line": 1435,
+   "pattern": "DESC:",
+   "hits": 1,
+   "in_cfg_test": true,
+   "text": "assert!(e.description.is_some(), \"{} has no DESC:\", e.key);"
+  },
+  {
+   "root": "src/rules_core",
+   "file": "src/rules_core/rules_tables/acg/archetype_tables.rs",
+   "line": 1449,
+   "pattern": "PRE[A-Z]+:",
+   "hits": 1,
+   "in_cfg_test": true,
+   "text": "assert_eq!(total_replaces, 391, \"total TYPE:/PREFACT: replaced-slot count across all 90 records\");"
+  },
+  {
+   "root": "src/rules_core",
+   "file": "src/rules_core/rules_tables/acg/archetype_tables.rs",
+   "line": 1481,
+   "pattern": "DESC:",
+   "hits": 1,
+   "in_cfg_test": true,
+   "text": "assert_eq!(resolved, 345, \"345 of 348 grants carry real DESC:/BENEFIT: text\");"
+  },
+  {
+   "root": "src/rules_core",
+   "file": "src/rules_core/rules_tables/advanced_race_guide/archetype_tables.rs",
+   "line": 1073,
+   "pattern": "DESC:",
+   "hits": 1,
+   "in_cfg_test": true,
+   "text": "assert!(e.description.is_some(), \"{} has no DESC:\", e.key);"
+  },
+  {
+   "root": "src/rules_core",
+   "file": "src/rules_core/rules_tables/advanced_race_guide/archetype_tables.rs",
+   "line": 1121,
+   "pattern": "DESC:",
+   "hits": 1,
+   "in_cfg_test": true,
+   "text": "assert_eq!(resolved, 343, \"343 of 346 grants carry real DESC:/BENEFIT: text -- the cleanest resolution rate of any table so far\");"
+  },
+  {
+   "root": "src/rules_core",
+   "file": "src/rules_core/rules_tables/apg/archetype_tables.rs",
+   "line": 1396,
+   "pattern": "DESC:",
+   "hits": 1,
+   "in_cfg_test": true,
+   "text": "assert!(e.description.is_none(), \"{} was expected to still lack DESC: -- re-check the corpus row if this now fails\", e.key);"
+  },
+  {
+   "root": "src/rules_core",
+   "file": "src/rules_core/rules_tables/apg/archetype_tables.rs",
+   "line": 1399,
+   "pattern": "DESC:",
+   "hits": 1,
+   "in_cfg_test": true,
+   "text": "assert!(e.description.is_some(), \"{} has no DESC:\", e.key);"
+  },
+  {
+   "root": "src/rules_core",
+   "file": "src/rules_core/rules_tables/apg/archetype_tables.rs",
+   "line": 1440,
+   "pattern": "DESC:",
+   "hits": 1,
+   "in_cfg_test": true,
+   "text": "assert_eq!(resolved, 364, \"364 of 392 grants carry real DESC:/BENEFIT: text -- see this module's own doc comment for the 28 that did not (1 failed lookup, 25 shared unresolved names across 5 sibling S"
+  },
+  {
+   "root": "src/rules_core",
+   "file": "src/rules_core/rules_tables/bestiary/mod.rs",
+   "line": 368,
+   "pattern": "DESC:",
+   "hits": 1,
+   "in_cfg_test": true,
+   "text": "(`decisions.md \u00a727b` round 9, +17): the multi-DESC: parse-refusal group closes; \\"
+  },
+  {
+   "root": "src/rules_core",
+   "file": "src/rules_core/rules_tables/bestiary/mod.rs",
+   "line": 476,
+   "pattern": "DESC:",
+   "hits": 1,
+   "in_cfg_test": true,
+   "text": "let text = record.description.expect(\"the row carries DESC: text\");"
+  },
+  {
+   "root": "src/rules_core",
+   "file": "src/rules_core/rules_tables/bestiary/mod.rs",
+   "line": 495,
+   "pattern": "DESC:",
+   "hits": 1,
+   "in_cfg_test": true,
+   "text": "let text = record.description.expect(\"the row carries DESC: text\");"
+  },
+  {
+   "root": "src/rules_core",
+   "file": "src/rules_core/rules_tables/bestiary_2/mod.rs",
+   "line": 477,
+   "pattern": "DESC:",
+   "hits": 1,
+   "in_cfg_test": true,
+   "text": ".expect(\"the row carries a DESC:\")"
+  },
+  {
+   "root": "src/rules_core",
+   "file": "src/rules_core/rules_tables/bestiary_5/mod.rs",
+   "line": 124,
+   "pattern": "PRE[A-Z]+:",
+   "hits": 1,
+   "in_cfg_test": true,
+   "text": "\"{key} was loaded only under PRECAMPAIGN:1,Occult Adventures, but Occult \\"
+  },
+  {
+   "root": "src/rules_core",
+   "file": "src/rules_core/rules_tables/book_of_the_damned_volume_2/mod.rs",
+   "line": 138,
+   "pattern": "DESC:",
+   "hits": 1,
+   "in_cfg_test": true,
+   "text": "let description = gaze.description.expect(\"the row carries a DESC: token\");"
+  },
+  {
+   "root": "src/rules_core",
+   "file": "src/rules_core/rules_tables/book_of_the_damned_volume_2/mod.rs",
+   "line": 141,
+   "pattern": "DESC:",
+   "hits": 1,
+   "in_cfg_test": true,
+   "text": "\"the summary DESC: was served instead of the full rules text: {description}\""
+  },
+  {
+   "root": "src/rules_core",
+   "file": "src/rules_core/rules_tables/crb/class_skill_tables.rs",
+   "line": 245,
+   "pattern": "TYPE=",
+   "hits": 1,
+   "in_cfg_test": true,
+   "text": "ClassSkillEntry::Family(family) => format!(\"TYPE={family}\"),"
+  },
+  {
+   "root": "src/rules_core",
+   "file": "src/rules_core/rules_tables/horror_adventures/mod.rs",
+   "line": 268,
+   "pattern": "DESC:",
+   "hits": 1,
+   "in_cfg_test": true,
+   "text": "set gains 9 new members (the 9 previously-unparseable multi-DESC: rows), \\"
+  },
+  {
+   "root": "src/rules_core",
+   "file": "src/rules_core/rules_tables/inner_sea_bestiary/mod.rs",
+   "line": 356,
+   "pattern": "DESC:",
+   "hits": 1,
+   "in_cfg_test": true,
+   "text": "let text = record.description.expect(\"the row carries DESC: text\");"
+  },
+  {
+   "root": "src/rules_core",
+   "file": "src/rules_core/rules_tables/inner_sea_combat/mod.rs",
+   "line": 168,
+   "pattern": "DESC:",
+   "hits": 1,
+   "in_cfg_test": true,
+   "text": "let description = mastery.description.expect(\"the row carries a DESC: token\");"
+  },
+  {
+   "root": "src/rules_core",
+   "file": "src/rules_core/rules_tables/pathfinder_unchained/barbarian_features.rs",
+   "line": 622,
+   "pattern": "BONUS:",
+   "hits": 1,
+   "in_cfg_test": true,
+   "text": ".map(|parts| format!(\"BONUS:{}\", parts.join(\"|\")))"
+  },
+  {
+   "root": "src/rules_core",
+   "file": "src/rules_core/rules_tables/pathfinder_unchained/barbarian_features.rs",
+   "line": 768,
+   "pattern": "BONUS:",
+   "hits": 1,
+   "in_cfg_test": true,
+   "text": "\"BONUS:VAR|RageDuration|2+var(\\\"STAT.2.MOD.NOTEMP\\\")+(2*RageLVL)\","
+  },
+  {
+   "root": "src/rules_core",
+   "file": "src/rules_core/rules_tables/pathfinder_unchained/barbarian_features.rs",
+   "line": 769,
+   "pattern": "BONUS:",
+   "hits": 1,
+   "in_cfg_test": true,
+   "text": "\"BONUS:VAR|RageBonus|2\","
+  },
+  {
+   "root": "src/rules_core",
+   "file": "src/rules_core/rules_tables/pathfinder_unchained/barbarian_features.rs",
+   "line": 770,
+   "pattern": "BONUS:",
+   "hits": 1,
+   "in_cfg_test": true,
+   "text": "\"BONUS:VAR|RageACPenalty|-2\","
+  },
+  {
+   "root": "src/rules_core",
+   "file": "src/rules_core/rules_tables/pathfinder_unchained/barbarian_features.rs",
+   "line": 771,
+   "pattern": "BONUS:",
+   "hits": 1,
+   "in_cfg_test": true,
+   "text": "\"BONUS:VAR|RageBonusHP|TL*2\","
+  },
+  {
+   "root": "src/rules_core",
+   "file": "src/rules_core/rules_tables/pathfinder_unchained/barbarian_features.rs",
+   "line": 778,
+   "pattern": "BONUS:",
+   "hits": 1,
+   "in_cfg_test": true,
+   "text": "assert!(line_290.contains(\"BONUS:VAR|RageLVL|BarbarianLVL\"));"
+  },
+  {
+   "root": "src/rules_core",
+   "file": "src/rules_core/rules_tables/pathfinder_unchained/barbarian_features.rs",
+   "line": 783,
+   "pattern": "BONUS:",
+   "hits": 1,
+   "in_cfg_test": true,
+   "text": "assert!(line.contains(\"BONUS:VAR|RageBonus|1\"), \"{feature} must add +1 RageBonus\");"
+  },
+  {
+   "root": "src/rules_core",
+   "file": "src/rules_core/rules_tables/pathfinder_unchained/barbarian_features.rs",
+   "line": 784,
+   "pattern": "BONUS:",
+   "hits": 1,
+   "in_cfg_test": true,
+   "text": "assert!(line.contains(\"BONUS:VAR|RageBonusHP|TL\"), \"{feature} must add TL temp HP\");"
+  },
+  {
+   "root": "src/rules_core",
+   "file": "src/rules_core/rules_tables/pathfinder_unchained/barbarian_features.rs",
+   "line": 891,
+   "pattern": "BONUS:",
+   "hits": 1,
+   "in_cfg_test": true,
+   "text": "\"Tireless Rage must still carry no BONUS: token -- if it gained one, the \\"
+  },
+  {
+   "root": "src/rules_core",
+   "file": "src/rules_core/rules_tables/pathfinder_unchained/barbarian_features.rs",
+   "line": 894,
+   "pattern": "DESC:",
+   "hits": 1,
+   "in_cfg_test": true,
+   "text": "let description = record[\"description\"].as_str().expect(\"Tireless Rage carries a DESC:\");"
+  },
+  {
+   "root": "src/rules_core",
+   "file": "src/rules_core/rules_tables/pathfinder_unchained/barbarian_features.rs",
+   "line": 986,
+   "pattern": "BONUS:",
+   "hits": 1,
+   "in_cfg_test": true,
+   "text": "\"BONUS:ABILITYPOOL|Unchained Rage Power|RagePowersLVL/2\","
+  },
+  {
+   "root": "src/rules_core",
+   "file": "src/rules_core/rules_tables/pathfinder_unchained/barbarian_features.rs",
+   "line": 990,
+   "pattern": "BONUS:",
+   "hits": 1,
+   "in_cfg_test": true,
+   "text": "\"BONUS:VAR|RagePowersLVL|BarbarianLVL\","
+  },
+  {
+   "root": "src/rules_core",
+   "file": "src/rules_core/rules_tables/pathfinder_unchained/barbarian_features.rs",
+   "line": 994,
+   "pattern": "BONUS:",
+   "hits": 1,
+   "in_cfg_test": true,
+   "text": "\"BONUS:VAR|TrapSenseBonus|BarbarianTrapSenseLVL/3\","
+  },
+  {
+   "root": "src/rules_core",
+   "file": "src/rules_core/rules_tables/pathfinder_unchained/barbarian_features.rs",
+   "line": 998,
+   "pattern": "BONUS:",
+   "hits": 1,
+   "in_cfg_test": true,
+   "text": "\"BONUS:VAR|BarbarianTrapSenseLVL|BarbarianLVL\","
+  },
+  {
+   "root": "src/rules_core",
+   "file": "src/rules_core/rules_tables/pathfinder_unchained/barbarian_features.rs",
+   "line": 1002,
+   "pattern": "BONUS:",
+   "hits": 1,
+   "in_cfg_test": true,
+   "text": "\"BONUS:VAR|BarbarianDR|(BarbarianDRLVL-4)/3\","
+  },
+  {
+   "root": "src/rules_core",
+   "file": "src/rules_core/rules_tables/pathfinder_unchained/barbarian_features.rs",
+   "line": 1006,
+   "pattern": "BONUS:",
+   "hits": 1,
+   "in_cfg_test": true,
+   "text": "\"BONUS:VAR|BarbarianDRLVL|BarbarianLVL\","
+  },
+  {
+   "root": "src/rules_core",
+   "file": "src/rules_core/rules_tables/pathfinder_unchained/barbarian_features.rs",
+   "line": 1010,
+   "pattern": "BONUS:",
+   "hits": 1,
+   "in_cfg_test": true,
+   "text": "\"BONUS:MOVEADD|TYPE=Walk|10|PREVARLT:ENCUMBERANCE,2,var(\\\"COUNT[EQTYPE.ARMOR.EQUIPPED.IS.HEAVY]\\\"),1\","
+  },
+  {
+   "root": "src/rules_core",
+   "file": "src/rules_core/rules_tables/pathfinder_unchained/barbarian_features.rs",
+   "line": 1010,
+   "pattern": "PRE[A-Z]+:",
+   "hits": 1,
+   "in_cfg_test": true,
+   "text": "\"BONUS:MOVEADD|TYPE=Walk|10|PREVARLT:ENCUMBERANCE,2,var(\\\"COUNT[EQTYPE.ARMOR.EQUIPPED.IS.HEAVY]\\\"),1\","
+  },
+  {
+   "root": "src/rules_core",
+   "file": "src/rules_core/rules_tables/pathfinder_unchained/barbarian_features.rs",
+   "line": 1010,
+   "pattern": "TYPE=",
+   "hits": 1,
+   "in_cfg_test": true,
+   "text": "\"BONUS:MOVEADD|TYPE=Walk|10|PREVARLT:ENCUMBERANCE,2,var(\\\"COUNT[EQTYPE.ARMOR.EQUIPPED.IS.HEAVY]\\\"),1\","
+  },
+  {
+   "root": "src/rules_core",
+   "file": "src/rules_core/rules_tables/pathfinder_unchained/barbarian_features.rs",
+   "line": 1014,
+   "pattern": "BONUS:",
+   "hits": 1,
+   "in_cfg_test": true,
+   "text": "\"BONUS:VAR|RageLVL|BarbarianLVL\","
+  },
+  {
+   "root": "src/rules_core",
+   "file": "src/rules_core/rules_tables/pathfinder_unchained/barbarian_features.rs",
+   "line": 1018,
+   "pattern": "BONUS:",
+   "hits": 1,
+   "in_cfg_test": true,
+   "text": "\"BONUS:VAR|UncannyDodgeLVL|1|PREVARGTEQ:BarbarianLVL,2|PREVAREQ:Barbarian_CF_UncannyDodge,0\","
+  },
+  {
+   "root": "src/rules_core",
+   "file": "src/rules_core/rules_tables/pathfinder_unchained/barbarian_features.rs",
+   "line": 1018,
+   "pattern": "PRE[A-Z]+:",
+   "hits": 2,
+   "in_cfg_test": true,
+   "text": "\"BONUS:VAR|UncannyDodgeLVL|1|PREVARGTEQ:BarbarianLVL,2|PREVAREQ:Barbarian_CF_UncannyDodge,0\","
+  },
+  {
+   "root": "src/rules_core",
+   "file": "src/rules_core/rules_tables/pathfinder_unchained/barbarian_features.rs",
+   "line": 1022,
+   "pattern": "BONUS:",
+   "hits": 1,
+   "in_cfg_test": true,
+   "text": "\"BONUS:VAR|UncannyDodgeLVL|1|PREVARGTEQ:BarbarianLVL,5|PREVAREQ:Barbarian_CF_ImprovedUncannyDodge,0\","
+  },
+  {
+   "root": "src/rules_core",
+   "file": "src/rules_core/rules_tables/pathfinder_unchained/barbarian_features.rs",
+   "line": 1022,
+   "pattern": "PRE[A-Z]+:",
+   "hits": 2,
+   "in_cfg_test": true,
+   "text": "\"BONUS:VAR|UncannyDodgeLVL|1|PREVARGTEQ:BarbarianLVL,5|PREVAREQ:Barbarian_CF_ImprovedUncannyDodge,0\","
+  },
+  {
+   "root": "src/rules_core",
+   "file": "src/rules_core/rules_tables/pathfinder_unchained/barbarian_features.rs",
+   "line": 1026,
+   "pattern": "BONUS:",
+   "hits": 1,
+   "in_cfg_test": true,
+   "text": "\"BONUS:VAR|UncannyDodgeFlankingLevel|BarbarianLVL|TYPE=EachClass.REPLACE|PREVARGTEQ:BarbarianLVL,2|PREVAREQ:Barbarian_CF_UncannyDodge,0\","
+  },
+  {
+   "root": "src/rules_core",
+   "file": "src/rules_core/rules_tables/pathfinder_unchained/barbarian_features.rs",
+   "line": 1026,
+   "pattern": "PRE[A-Z]+:",
+   "hits": 2,
+   "in_cfg_test": true,
+   "text": "\"BONUS:VAR|UncannyDodgeFlankingLevel|BarbarianLVL|TYPE=EachClass.REPLACE|PREVARGTEQ:BarbarianLVL,2|PREVAREQ:Barbarian_CF_UncannyDodge,0\","
+  },
+  {
+   "root": "src/rules_core",
+   "file": "src/rules_core/rules_tables/pathfinder_unchained/barbarian_features.rs",
+   "line": 1026,
+   "pattern": "TYPE=",
+   "hits": 1,
+   "in_cfg_test": true,
+   "text": "\"BONUS:VAR|UncannyDodgeFlankingLevel|BarbarianLVL|TYPE=EachClass.REPLACE|PREVARGTEQ:BarbarianLVL,2|PREVAREQ:Barbarian_CF_UncannyDodge,0\","
+  },
+  {
+   "root": "src/rules_core",
+   "file": "src/rules_core/rules_tables/pathfinder_unchained/monk_features.rs",
+   "line": 753,
+   "pattern": "BONUS:",
+   "hits": 1,
+   "in_cfg_test": true,
+   "text": ".map(|parts| format!(\"BONUS:{}\", parts.join(\"|\")))"
+  },
+  {
+   "root": "src/rules_core",
+   "file": "src/rules_core/rules_tables/pathfinder_unchained/monk_features.rs",
+   "line": 1064,
+   "pattern": "BONUS:",
+   "hits": 1,
+   "in_cfg_test": true,
+   "text": "\"{key} must still carry no BONUS: token -- if it gained one, the prose-derived \\"
+  },
+  {
+   "root": "src/rules_core",
+   "file": "src/rules_core/rules_tables/pathfinder_unchained/monk_features.rs",
+   "line": 1106,
+   "pattern": "BONUS:",
+   "hits": 1,
+   "in_cfg_test": true,
+   "text": "\"{key} must still carry no BONUS: token\""
+  },
+  {
+   "root": "src/rules_core",
+   "file": "src/rules_core/rules_tables/pathfinder_unchained/monk_features.rs",
+   "line": 1133,
+   "pattern": "BONUS:",
+   "hits": 1,
+   "in_cfg_test": true,
+   "text": "\"{key} carries no BONUS: token\""
+  },
+  {
+   "root": "src/rules_core",
+   "file": "src/rules_core/rules_tables/pathfinder_unchained/monk_features.rs",
+   "line": 1168,
+   "pattern": "BONUS:",
+   "hits": 1,
+   "in_cfg_test": true,
+   "text": "assert_bonus_token(\"Unchained Monk ~ AC Bonus\", \"BONUS:VAR|MonkACLVL|MonkLVL|TYPE=Level\");"
+  },
+  {
+   "root": "src/rules_core",
+   "file": "src/rules_core/rules_tables/pathfinder_unchained/monk_features.rs",
+   "line": 1168,
+   "pattern": "TYPE=",
+   "hits": 1,
+   "in_cfg_test": true,
+   "text": "assert_bonus_token(\"Unchained Monk ~ AC Bonus\", \"BONUS:VAR|MonkACLVL|MonkLVL|TYPE=Level\");"
+  },
+  {
+   "root": "src/rules_core",
+   "file": "src/rules_core/rules_tables/pathfinder_unchained/monk_features.rs",
+   "line": 1171,
+   "pattern": "BONUS:",
+   "hits": 1,
+   "in_cfg_test": true,
+   "text": "\"BONUS:ABILITYPOOL|Unchained Monk Bonus Feat|1+max((MonkBonusFeatLVL+2)/4,0)\","
+  },
+  {
+   "root": "src/rules_core",
+   "file": "src/rules_core/rules_tables/pathfinder_unchained/monk_features.rs",
+   "line": 1173,
+   "pattern": "BONUS:",
+   "hits": 1,
+   "in_cfg_test": true,
+   "text": "assert_bonus_token(\"Unchained Monk ~ Bonus Feat\", \"BONUS:VAR|MonkBonusFeatLVL|MonkLVL\");"
+  },
+  {
+   "root": "src/rules_core",
+   "file": "src/rules_core/rules_tables/pathfinder_unchained/monk_features.rs",
+   "line": 1176,
+   "pattern": "BONUS:",
+   "hits": 1,
+   "in_cfg_test": true,
+   "text": "\"BONUS:VAR|MonkFastMovementBonus|10*floor(MonkFastMovementLVL/3)\","
+  },
+  {
+   "root": "src/rules_core",
+   "file": "src/rules_core/rules_tables/pathfinder_unchained/monk_features.rs",
+   "line": 1180,
+   "pattern": "BONUS:",
+   "hits": 1,
+   "in_cfg_test": true,
+   "text": "\"BONUS:VAR|MonkFastMovementLVL|MonkLVL\","
+  },
+  {
+   "root": "src/rules_core",
+   "file": "src/rules_core/rules_tables/pathfinder_unchained/monk_features.rs",
+   "line": 1182,
+   "pattern": "BONUS:",
+   "hits": 1,
+   "in_cfg_test": true,
+   "text": "assert_bonus_token(\"Unchained Monk ~ Ki Pool\", \"BONUS:VAR|KiPoolLVL|MonkLVL\");"
+  },
+  {
+   "root": "src/rules_core",
+   "file": "src/rules_core/rules_tables/pathfinder_unchained/monk_features.rs",
+   "line": 1185,
+   "pattern": "BONUS:",
+   "hits": 1,
+   "in_cfg_test": true,
+   "text": "\"BONUS:VAR|Pool_Unchained_Ki_Power|(MonkLVL-2)/2\","
+  },
+  {
+   "root": "src/rules_core",
+   "file": "src/rules_core/rules_tables/pathfinder_unchained/monk_features.rs",
+   "line": 1189,
+   "pattern": "BONUS:",
+   "hits": 1,
+   "in_cfg_test": true,
+   "text": "\"BONUS:VAR|Pool_Unchained_Style_Strike|(MonkLVL-1)/4\","
+  },
+  {
+   "root": "src/rules_core",
+   "file": "src/rules_core/rules_tables/pathfinder_unchained/monk_features.rs",
+   "line": 1193,
+   "pattern": "BONUS:",
+   "hits": 1,
+   "in_cfg_test": true,
+   "text": "\"BONUS:VAR|StunningFistMonkLVL|MonkLVL\","
+  },
+  {
+   "root": "src/rules_core",
+   "file": "src/rules_core/rules_tables/pathfinder_unchained/monk_features.rs",
+   "line": 1209,
+   "pattern": "BONUS:",
+   "hits": 1,
+   "in_cfg_test": true,
+   "text": "\"BONUS:VAR|FlurryExtraAttacks|2+(Total_BAB>=11)+(Total_BAB>=6)+(Total_BAB>=11)+(Total_BAB>=16)\","
+  },
+  {
+   "root": "src/rules_core",
+   "file": "src/rules_core/rules_tables/pathfinder_unchained/monk_features.rs",
+   "line": 1210,
+   "pattern": "BONUS:",
+   "hits": 1,
+   "in_cfg_test": true,
+   "text": "\"BONUS:VAR|Total_BAB|BAB\","
+  },
+  {
+   "root": "src/rules_core",
+   "file": "src/rules_core/rules_tables/pathfinder_unchained/monk_features.rs",
+   "line": 1211,
+   "pattern": "BONUS:",
+   "hits": 1,
+   "in_cfg_test": true,
+   "text": "\"BONUS:VAR|FlurryAttacks|2+(Total_BAB>=6)+if(Total_BAB>=11,2,0)+(Total_BAB>=16)\","
+  },
+  {
+   "root": "src/rules_core",
+   "file": "src/rules_core/rules_tables/pathfinder_unchained/monk_features.rs",
+   "line": 1212,
+   "pattern": "BONUS:",
+   "hits": 1,
+   "in_cfg_test": true,
+   "text": "\"BONUS:VAR|FAB_1|FAB\","
+  },
+  {
+   "root": "src/rules_core",
+   "file": "src/rules_core/rules_tables/pathfinder_unchained/monk_features.rs",
+   "line": 1213,
+   "pattern": "BONUS:",
+   "hits": 1,
+   "in_cfg_test": true,
+   "text": "\"BONUS:VAR|FAB_2|FAB\","
+  },
+  {
+   "root": "src/rules_core",
+   "file": "src/rules_core/rules_tables/pathfinder_unchained/monk_features.rs",
+   "line": 1214,
+   "pattern": "BONUS:",
+   "hits": 1,
+   "in_cfg_test": true,
+   "text": "\"BONUS:VAR|FAB_3|FAB+if(FlurryAttacks==3,-5,0)\","
+  },
+  {
+   "root": "src/rules_core",
+   "file": "src/rules_core/rules_tables/pathfinder_unchained/monk_features.rs",
+   "line": 1215,
+   "pattern": "BONUS:",
+   "hits": 1,
+   "in_cfg_test": true,
+   "text": "\"BONUS:VAR|FAB_4|FAB-5\","
+  },
+  {
+   "root": "src/rules_core",
+   "file": "src/rules_core/rules_tables/pathfinder_unchained/monk_features.rs",
+   "line": 1216,
+   "pattern": "BONUS:",
+   "hits": 1,
+   "in_cfg_test": true,
+   "text": "\"BONUS:VAR|FAB_5|FAB-10\","
+  },
+  {
+   "root": "src/rules_core",
+   "file": "src/rules_core/rules_tables/pathfinder_unchained/monk_features.rs",
+   "line": 1217,
+   "pattern": "BONUS:",
+   "hits": 1,
+   "in_cfg_test": true,
+   "text": "\"BONUS:VAR|FAB_6|FAB-15\","
+  },
+  {
+   "root": "src/rules_core",
+   "file": "src/rules_core/rules_tables/pathfinder_unchained/monk_features.rs",
+   "line": 1218,
+   "pattern": "BONUS:",
+   "hits": 1,
+   "in_cfg_test": true,
+   "text": "\"BONUS:VAR|FAB_7|FAB\","
+  },
+  {
+   "root": "src/rules_core",
+   "file": "src/rules_core/rules_tables/pathfinder_unchained/monk_features.rs",
+   "line": 1243,
+   "pattern": "BONUS:",
+   "hits": 1,
+   "in_cfg_test": true,
+   "text": "\"BONUS:COMBAT|BASEAB|classlevel(\\\"Monk\\\",\\\"APPLIEDAS=NONEPIC\\\")|TYPE=Base.REPLACE\","
+  },
+  {
+   "root": "src/rules_core",
+   "file": "src/rules_core/rules_tables/pathfinder_unchained/monk_features.rs",
+   "line": 1243,
+   "pattern": "TYPE=",
+   "hits": 1,
+   "in_cfg_test": true,
+   "text": "\"BONUS:COMBAT|BASEAB|classlevel(\\\"Monk\\\",\\\"APPLIEDAS=NONEPIC\\\")|TYPE=Base.REPLACE\","
+  },
+  {
+   "root": "src/rules_core",
+   "file": "src/rules_core/rules_tables/pathfinder_unchained/monk_features.rs",
+   "line": 1244,
+   "pattern": "BONUS:",
+   "hits": 1,
+   "in_cfg_test": true,
+   "text": "\"BONUS:SAVE|BASE.Fortitude,BASE.Reflex|classlevel(\\\"Monk\\\",\\\"APPLIEDAS=NONEPIC\\\")/2+2\","
+  },
+  {
+   "root": "src/rules_core",
+   "file": "src/rules_core/rules_tables/pathfinder_unchained/monk_features.rs",
+   "line": 1245,
+   "pattern": "BONUS:",
+   "hits": 1,
+   "in_cfg_test": true,
+   "text": "\"BONUS:SAVE|BASE.Will|classlevel(\\\"Monk\\\",\\\"APPLIEDAS=NONEPIC\\\")/3\","
+  },
+  {
+   "root": "src/rules_core",
+   "file": "src/rules_core/rules_tables/pathfinder_unchained/monk_features.rs",
+   "line": 1253,
+   "pattern": "BONUS:",
+   "hits": 1,
+   "in_cfg_test": true,
+   "text": "(491_usize, \"BONUS:VAR|FlurryExtraAttacks|2+(Total_BAB>=11)+(Total_BAB>=6)+(Total_BAB>=11)+(Total_BAB>=16)\"),"
+  },
+  {
+   "root": "src/rules_core",
+   "file": "src/rules_core/rules_tables/pathfinder_unchained/monk_features.rs",
+   "line": 1254,
+   "pattern": "BONUS:",
+   "hits": 1,
+   "in_cfg_test": true,
+   "text": "(493, \"BONUS:VAR|Total_BAB|BAB\"),"
+  },
+  {
+   "root": "src/rules_core",
+   "file": "src/rules_core/rules_tables/pathfinder_unchained/monk_features.rs",
+   "line": 1255,
+   "pattern": "BONUS:",
+   "hits": 1,
+   "in_cfg_test": true,
+   "text": "(494, \"BONUS:VAR|FlurryAttacks|2+(Total_BAB>=6)+if(Total_BAB>=11,2,0)+(Total_BAB>=16)\"),"
+  },
+  {
+   "root": "src/rules_core",
+   "file": "src/rules_core/rules_tables/pathfinder_unchained/monk_features.rs",
+   "line": 1256,
+   "pattern": "BONUS:",
+   "hits": 1,
+   "in_cfg_test": true,
+   "text": "(496, \"BONUS:VAR|FAB_1|FAB\"),"
+  },
+  {
+   "root": "src/rules_core",
+   "file": "src/rules_core/rules_tables/pathfinder_unchained/monk_features.rs",
+   "line": 1257,
+   "pattern": "BONUS:",
+   "hits": 1,
+   "in_cfg_test": true,
+   "text": "(497, \"BONUS:VAR|FAB_2|FAB\"),"
+  },
+  {
+   "root": "src/rules_core",
+   "file": "src/rules_core/rules_tables/pathfinder_unchained/monk_features.rs",
+   "line": 1258,
+   "pattern": "BONUS:",
+   "hits": 1,
+   "in_cfg_test": true,
+   "text": "(498, \"BONUS:VAR|FAB_3|FAB+if(FlurryAttacks==3,-5,0)\"),"
+  },
+  {
+   "root": "src/rules_core",
+   "file": "src/rules_core/rules_tables/pathfinder_unchained/monk_features.rs",
+   "line": 1259,
+   "pattern": "BONUS:",
+   "hits": 1,
+   "in_cfg_test": true,
+   "text": "(499, \"BONUS:VAR|FAB_4|FAB-5\"),"
+  },
+  {
+   "root": "src/rules_core",
+   "file": "src/rules_core/rules_tables/pathfinder_unchained/monk_features.rs",
+   "line": 1260,
+   "pattern": "BONUS:",
+   "hits": 1,
+   "in_cfg_test": true,
+   "text": "(500, \"BONUS:VAR|FAB_5|FAB-10\"),"
+  },
+  {
+   "root": "src/rules_core",
+   "file": "src/rules_core/rules_tables/pathfinder_unchained/monk_features.rs",
+   "line": 1261,
+   "pattern": "BONUS:",
+   "hits": 1,
+   "in_cfg_test": true,
+   "text": "(501, \"BONUS:VAR|FAB_6|FAB-15\"),"
+  },
+  {
+   "root": "src/rules_core",
+   "file": "src/rules_core/rules_tables/pathfinder_unchained/monk_features.rs",
+   "line": 1262,
+   "pattern": "BONUS:",
+   "hits": 1,
+   "in_cfg_test": true,
+   "text": "(502, \"BONUS:VAR|FAB_7|FAB\"),"
+  },
+  {
+   "root": "src/rules_core",
+   "file": "src/rules_core/rules_tables/pathfinder_unchained/monk_features.rs",
+   "line": 1293,
+   "pattern": "BONUS:",
+   "hits": 1,
+   "in_cfg_test": true,
+   "text": "assert!(ac_tracker.contains(\"BONUS:VAR|MonkACBonus|min((MonkACLVL)/4,5)|TYPE=level\"));"
+  },
+  {
+   "root": "src/rules_core",
+   "file": "src/rules_core/rules_tables/pathfinder_unchained/monk_features.rs",
+   "line": 1293,
+   "pattern": "TYPE=",
+   "hits": 1,
+   "in_cfg_test": true,
+   "text": "assert!(ac_tracker.contains(\"BONUS:VAR|MonkACBonus|min((MonkACLVL)/4,5)|TYPE=level\"));"
+  },
+  {
+   "root": "src/rules_core",
+   "file": "src/rules_core/rules_tables/pathfinder_unchained/monk_features.rs",
+   "line": 1294,
+   "pattern": "BONUS:",
+   "hits": 1,
+   "in_cfg_test": true,
+   "text": "assert!(ac_tracker.contains(\"BONUS:VAR|MonkACStatBonus|max(WIS,0)|TYPE=Class|PREVARGTEQ:IsMonk,1\"));"
+  },
+  {
+   "root": "src/rules_core",
+   "file": "src/rules_core/rules_tables/pathfinder_unchained/monk_features.rs",
+   "line": 1294,
+   "pattern": "PRE[A-Z]+:",
+   "hits": 1,
+   "in_cfg_test": true,
+   "text": "assert!(ac_tracker.contains(\"BONUS:VAR|MonkACStatBonus|max(WIS,0)|TYPE=Class|PREVARGTEQ:IsMonk,1\"));"
+  },
+  {
+   "root": "src/rules_core",
+   "file": "src/rules_core/rules_tables/pathfinder_unchained/monk_features.rs",
+   "line": 1294,
+   "pattern": "TYPE=",
+   "hits": 1,
+   "in_cfg_test": true,
+   "text": "assert!(ac_tracker.contains(\"BONUS:VAR|MonkACStatBonus|max(WIS,0)|TYPE=Class|PREVARGTEQ:IsMonk,1\"));"
+  },
+  {
+   "root": "src/rules_core",
+   "file": "src/rules_core/rules_tables/pathfinder_unchained/monk_features.rs",
+   "line": 1298,
+   "pattern": "BONUS:",
+   "hits": 1,
+   "in_cfg_test": true,
+   "text": "assert!(ki_tracker.contains(\"BONUS:VAR|KiPoints|KiPoolLVL/2\"));"
+  },
+  {
+   "root": "src/rules_core",
+   "file": "src/rules_core/rules_tables/pathfinder_unchained/monk_features.rs",
+   "line": 1302,
+   "pattern": "BONUS:",
+   "hits": 1,
+   "in_cfg_test": true,
+   "text": "assert!(ki_stat.contains(\"BONUS:VAR|KiPoints|WIS\"));"
+  },
+  {
+   "root": "src/rules_core",
+   "file": "src/rules_core/rules_tables/pathfinder_unchained/rogue_features.rs",
+   "line": 736,
+   "pattern": "BONUS:",
+   "hits": 1,
+   "in_cfg_test": true,
+   "text": "\"Debilitating Injury must still carry no BONUS: chain -- if it gained one, the \\"
+  },
+  {
+   "root": "src/rules_core",
+   "file": "src/rules_core/rules_tables/pathfinder_unchained/rogue_features.rs",
+   "line": 748,
+   "pattern": "DESC:",
+   "hits": 1,
+   "in_cfg_test": true,
+   "text": "let description = record[\"description\"].as_str().expect(\"Debilitating Injury carries a DESC:\");"
+  },
+  {
+   "root": "src/rules_core",
+   "file": "src/rules_core/rules_tables/pathfinder_unchained/rogue_features.rs",
+   "line": 778,
+   "pattern": "DESC:",
+   "hits": 1,
+   "in_cfg_test": true,
+   "text": "\"the row carries no DESC: of its own\""
+  },
+  {
+   "root": "src/rules_core",
+   "file": "src/rules_core/rules_tables/pathfinder_unchained/rogue_features.rs",
+   "line": 782,
+   "pattern": "BONUS:",
+   "hits": 1,
+   "in_cfg_test": true,
+   "text": "\"the row carries no BONUS: chain\""
+  },
+  {
+   "root": "src/rules_core",
+   "file": "src/rules_core/rules_tables/ultimate_campaign/feat_tables.rs",
+   "line": 404,
+   "pattern": "DESC:",
+   "hits": 1,
+   "in_cfg_test": true,
+   "text": "assert!(e.description.is_some(), \"{} has no DESC:\", e.key);"
+  },
+  {
+   "root": "src/rules_core",
+   "file": "src/rules_core/rules_tables/ultimate_campaign/feat_tables.rs",
+   "line": 405,
+   "pattern": "PRE[A-Z]+:",
+   "hits": 1,
+   "in_cfg_test": true,
+   "text": "assert!(e.pretext.is_some(), \"{} has no PRETEXT:\", e.key);"
+  },
+  {
+   "root": "src/rules_core",
+   "file": "src/rules_core/rules_tables/ultimate_combat/archetype_tables.rs",
+   "line": 1264,
+   "pattern": "DESC:",
+   "hits": 1,
+   "in_cfg_test": true,
+   "text": "assert!(e.description.is_some(), \"{} has no DESC:\", e.key);"
+  },
+  {
+   "root": "src/rules_core",
+   "file": "src/rules_core/rules_tables/ultimate_combat/archetype_tables.rs",
+   "line": 1321,
+   "pattern": "DESC:",
+   "hits": 1,
+   "in_cfg_test": true,
+   "text": "assert_eq!(resolved, 306, \"306 of 366 grants carry real DESC:/BENEFIT: text: the original 294 of 354, plus all 10 of the 2 Gunslinger archetypes' own grants, plus both of Scout's own grants -- see thi"
+  },
+  {
+   "root": "src/rules_core",
+   "file": "src/rules_core/rules_tables/ultimate_combat/feat_tables.rs",
+   "line": 2772,
+   "pattern": "DESC:",
+   "hits": 1,
+   "in_cfg_test": true,
+   "text": "assert!(e.description.is_some(), \"{} has no DESC:\", e.key);"
+  },
+  {
+   "root": "src/rules_core",
+   "file": "src/rules_core/rules_tables/ultimate_intrigue/feat_tables.rs",
+   "line": 1138,
+   "pattern": "DESC:",
+   "hits": 1,
+   "in_cfg_test": true,
+   "text": "assert!(e.description.is_some(), \"{} has no DESC:\", e.key);"
+  },
+  {
+   "root": "src/rules_core",
+   "file": "src/rules_core/rules_tables/ultimate_magic/archetype_tables.rs",
+   "line": 1010,
+   "pattern": "DESC:",
+   "hits": 1,
+   "in_cfg_test": true,
+   "text": "assert!(e.description.is_some(), \"{} has no DESC:\", e.key);"
+  },
+  {
+   "root": "src/rules_core",
+   "file": "src/rules_core/rules_tables/ultimate_magic/archetype_tables.rs",
+   "line": 1061,
+   "pattern": "DESC:",
+   "hits": 1,
+   "in_cfg_test": true,
+   "text": "assert_eq!(resolved, 177, \"177 of 204 grants carry real DESC:/BENEFIT: text -- see this module's own doc comment for the 27 that did not\");"
+  },
+  {
+   "root": "src/rules_core",
+   "file": "src/rules_core/rules_tables/ultimate_magic/feat_tables.rs",
+   "line": 1629,
+   "pattern": "BONUS:",
+   "hits": 1,
+   "in_cfg_test": true,
+   "text": "\"{} has no DESC:, BENEFIT:, or BONUS: -- genuinely empty, should have been excluded\","
+  },
+  {
+   "root": "src/rules_core",
+   "file": "src/rules_core/rules_tables/ultimate_magic/feat_tables.rs",
+   "line": 1629,
+   "pattern": "DESC:",
+   "hits": 1,
+   "in_cfg_test": true,
+   "text": "\"{} has no DESC:, BENEFIT:, or BONUS: -- genuinely empty, should have been excluded\","
+  },
+  {
+   "root": "src/rules_core",
+   "file": "src/rules_core/rules_tables/ultimate_magic/feat_tables.rs",
+   "line": 1676,
+   "pattern": "DESC:",
+   "hits": 1,
+   "in_cfg_test": true,
+   "text": "assert_eq!(both, 123, \"records with both DESC: and BENEFIT:\");"
+  },
+  {
+   "root": "src/rules_core",
+   "file": "src/rules_core/rules_tables/ultimate_magic/feat_tables.rs",
+   "line": 1677,
+   "pattern": "DESC:",
+   "hits": 1,
+   "in_cfg_test": true,
+   "text": "assert_eq!(desc_only, 15, \"the 15 Masterpiece feats, DESC:-complete by design\");"
+  },
+  {
+   "root": "src/rules_core",
+   "file": "src/rules_core/rules_tables/ultimate_psionics/archetype_tables.rs",
+   "line": 386,
+   "pattern": "DESC:",
+   "hits": 1,
+   "in_cfg_test": true,
+   "text": "assert!(e.description.is_some(), \"{} has no DESC:\", e.key);"
+  },
+  {
+   "root": "src/rules_core",
+   "file": "src/rules_core/rules_tables/ultimate_psionics/archetype_tables.rs",
+   "line": 448,
+   "pattern": "DESC:",
+   "hits": 1,
+   "in_cfg_test": true,
+   "text": "assert_eq!(resolved, 65, \"65 of 75 grants carry real DESC:/BENEFIT: text\");"
+  },
+  {
+   "root": "src/rules_core",
+   "file": "src/rules_core/rules_tables/ultimate_psionics/feat_tables.rs",
+   "line": 2395,
+   "pattern": "DESC:",
+   "hits": 1,
+   "in_cfg_test": true,
+   "text": "\"{} has neither DESC: nor BENEFIT:\","
+  },
+  {
+   "root": "src/rules_core",
+   "file": "src/rules_core/rules_tables/ultimate_psionics/feat_tables.rs",
+   "line": 2433,
+   "pattern": "DESC:",
+   "hits": 1,
+   "in_cfg_test": true,
+   "text": "assert_eq!(desc_only, 216, \"Dreamscarred Press's own DESC:-is-complete convention -- see this module's doc comment\");"
+  },
+  {
+   "root": "src/rules_core",
+   "file": "src/rules_core/rules_tables/ultimate_psionics/feat_tables.rs",
+   "line": 2434,
+   "pattern": "DESC:",
+   "hits": 1,
+   "in_cfg_test": true,
+   "text": "assert_eq!(benefit_only, 0, \"no record in this book carries BENEFIT: without DESC:\");"
+  },
+  {
+   "root": "src/rules_core",
+   "file": "src/rules_core/rules_tables/ultimate_wilderness/archetype_tables.rs",
+   "line": 547,
+   "pattern": "DESC:",
+   "hits": 1,
+   "in_cfg_test": true,
+   "text": "assert!(e.description.is_some(), \"{} has no DESC:\", e.key);"
+  },
+  {
+   "root": "src/rules_core",
+   "file": "src/rules_core/rules_tables/ultimate_wilderness/archetype_tables.rs",
+   "line": 615,
+   "pattern": "DESC:",
+   "hits": 1,
+   "in_cfg_test": true,
+   "text": "assert_eq!(resolved, 104, \"104 of 121 grants carry real DESC:/BENEFIT: text -- see this module's own doc comment for the 17 that did not\");"
+  },
+  {
+   "root": "src/rules_core",
+   "file": "src/rules_core/rules_tables/ultimate_wilderness/feat_tables.rs",
+   "line": 1477,
+   "pattern": "DESC:",
+   "hits": 1,
+   "in_cfg_test": true,
+   "text": "assert!(e.description.is_some(), \"{} has no DESC:\", e.key);"
+  }
+ ],
+ "class_B_executable": [],
+ "class_C_uncounted_runtime": [
+  {
+   "root": "src/rules_core",
+   "file": "src/rules_core/class_feature_pool_catalog.rs",
+   "line": 114,
+   "in_cfg_test": false,
+   "text": "use crate::pcgen_import::pool_member_tokens;"
+  },
+  {
+   "root": "src/rules_core",
+   "file": "src/rules_core/class_feature_pool_catalog.rs",
+   "line": 469,
+   "in_cfg_test": false,
+   "text": "if !pool_member_tokens::has_no_engine_effect_token(data) {"
+  },
+  {
+   "root": "src/rules_core",
+   "file": "src/rules_core/class_feature_pool_catalog.rs",
+   "line": 472,
+   "in_cfg_test": false,
+   "text": "if pool_member_tokens::is_archetype_locked(data) {"
+  },
+  {
+   "root": "src/rules_core",
+   "file": "src/rules_core/class_feature_pool_catalog.rs",
+   "line": 475,
+   "in_cfg_test": false,
+   "text": "if pool_member_tokens::carries_more_than_one_desc_segment(data)"
+  },
+  {
+   "root": "src/rules_core",
+   "file": "src/rules_core/class_feature_pool_catalog.rs",
+   "line": 476,
+   "in_cfg_test": false,
+   "text": "&& !pool_member_tokens::shipped_description_is_the_already_regenerated_safe_multi_desc_join("
+  },
+  {
+   "root": "src/rules_core",
+   "file": "src/rules_core/composed_input.rs",
+   "line": 47,
+   "in_cfg_test": false,
+   "text": "use crate::pcgen_import::include_resolver::{"
+  },
+  {
+   "root": "src/rules_core",
+   "file": "src/rules_core/composed_input.rs",
+   "line": 50,
+   "in_cfg_test": false,
+   "text": "use crate::pcgen_import::ir_converter::{"
+  },
+  {
+   "root": "src/rules_core",
+   "file": "src/rules_core/composed_input.rs",
+   "line": 55,
+   "in_cfg_test": false,
+   "text": "use crate::pcgen_import::lst_parser::class::{"
+  },
+  {
+   "root": "src/rules_core",
+   "file": "src/rules_core/composed_input.rs",
+   "line": 58,
+   "in_cfg_test": false,
+   "text": "use crate::pcgen_import::lst_parser::equipment::{"
+  },
+  {
+   "root": "src/rules_core",
+   "file": "src/rules_core/composed_input.rs",
+   "line": 61,
+   "in_cfg_test": false,
+   "text": "use crate::pcgen_import::lst_parser::metadata::{"
+  },
+  {
+   "root": "src/rules_core",
+   "file": "src/rules_core/composed_input.rs",
+   "line": 64,
+   "in_cfg_test": false,
+   "text": "use crate::pcgen_import::lst_parser::race_ability::{"
+  },
+  {
+   "root": "src/rules_core",
+   "file": "src/rules_core/composed_input.rs",
+   "line": 67,
+   "in_cfg_test": false,
+   "text": "use crate::pcgen_import::lst_parser::spell::{"
+  },
+  {
+   "root": "src/rules_core",
+   "file": "src/rules_core/composed_input.rs",
+   "line": 70,
+   "in_cfg_test": false,
+   "text": "use crate::pcgen_import::lst_parser::spellcasting_class::{"
+  },
+  {
+   "root": "src/rules_core",
+   "file": "src/rules_core/corpus_loader.rs",
+   "line": 39,
+   "in_cfg_test": false,
+   "text": "use crate::pcgen_import::lst_parser::equipment::{"
+  },
+  {
+   "root": "src/rules_core",
+   "file": "src/rules_core/corpus_loader.rs",
+   "line": 42,
+   "in_cfg_test": false,
+   "text": "use crate::pcgen_import::lst_parser::spell::{LstSpellRecord, LstSpellRecordPayload};"
+  },
+  {
+   "root": "src/rules_core",
+   "file": "src/rules_core/corpus_loader.rs",
+   "line": 88,
+   "in_cfg_test": false,
+   "text": "package.push(crate::pcgen_import::ir_converter::convert_equipment_record(record));"
+  },
+  {
+   "root": "src/rules_core",
+   "file": "src/rules_core/corpus_loader.rs",
+   "line": 137,
+   "in_cfg_test": false,
+   "text": "package.push(crate::pcgen_import::ir_converter::convert_spell_record(record));"
+  },
+  {
+   "root": "src/rules_core",
+   "file": "src/rules_core/corpus_loader.rs",
+   "line": 380,
+   "in_cfg_test": false,
+   "text": "for (k, v) in crate::pcgen_import::ingest_record::token_pairs(data) {"
+  },
+  {
+   "root": "src/rules_core",
+   "file": "src/rules_core/corpus_loader.rs",
+   "line": 384,
+   "in_cfg_test": false,
+   "text": "for qualifiers in crate::pcgen_import::ingest_record::bonus_chain_qualifiers(data) {"
+  },
+  {
+   "root": "src/rules_core",
+   "file": "src/rules_core/corpus_loader.rs",
+   "line": 390,
+   "in_cfg_test": false,
+   "text": "let raw_bonus = crate::pcgen_import::ingest_record::rebuild_bonus_token(&qualifiers);"
+  },
+  {
+   "root": "src/rules_core",
+   "file": "src/rules_core/damage_total.rs",
+   "line": 106,
+   "in_cfg_test": false,
+   "text": "use crate::pcgen_import::lst_parser::equipment::EquipmentRecord;"
+  },
+  {
+   "root": "src/rules_core",
+   "file": "src/rules_core/derived_evaluator_fixture_check.rs",
+   "line": 29,
+   "in_cfg_test": false,
+   "text": "use crate::pcgen_import::ingest_record;"
+  },
+  {
+   "root": "src/rules_core",
+   "file": "src/rules_core/derived_evaluator_fixture_check.rs",
+   "line": 668,
+   "in_cfg_test": false,
+   "text": "if let Some(v) = ingest_record::first_token_value(&doc, \"DURATION\") {"
+  },
+  {
+   "root": "src/rules_core",
+   "file": "src/rules_core/derived_evaluator_fixture_check.rs",
+   "line": 1011,
+   "in_cfg_test": false,
+   "text": "if let Some(v) = ingest_record::first_token_value(&doc, \"RANGE\") {"
+  },
+  {
+   "root": "src/rules_core",
+   "file": "src/rules_core/derived_evaluator_fixture_check.rs",
+   "line": 1380,
+   "in_cfg_test": false,
+   "text": "for v in ingest_record::token_values(&doc, \"BONUS\") {"
+  },
+  {
+   "root": "src/rules_core",
+   "file": "src/rules_core/encumbrance.rs",
+   "line": 60,
+   "in_cfg_test": false,
+   "text": "use crate::pcgen_import::lst_parser::equipment::EquipmentRecord;"
+  },
+  {
+   "root": "src/rules_core",
+   "file": "src/rules_core/equipment_effects.rs",
+   "line": 51,
+   "in_cfg_test": false,
+   "text": "use crate::pcgen_import::lst_parser::equipment::EquipmentRecord;"
+  },
+  {
+   "root": "src/rules_core",
+   "file": "src/rules_core/equipment_resolver.rs",
+   "line": 18,
+   "in_cfg_test": false,
+   "text": "use crate::pcgen_import::lst_parser::equipment::EquipmentRecord;"
+  },
+  {
+   "root": "src/rules_core",
+   "file": "src/rules_core/equipment_resolver.rs",
+   "line": 19,
+   "in_cfg_test": false,
+   "text": "use crate::pcgen_import::source_content_payload::SourceContentPayload;"
+  },
+  {
+   "root": "src/rules_core",
+   "file": "src/rules_core/race_resolver.rs",
+   "line": 86,
+   "in_cfg_test": false,
+   "text": "use crate::pcgen_import::bonus_chain_reader::{self, DeclaredBonuses};"
+  },
+  {
+   "root": "src/rules_core",
+   "file": "src/rules_core/race_resolver.rs",
+   "line": 87,
+   "in_cfg_test": false,
+   "text": "use crate::pcgen_import::race_trait_tokens;"
+  },
+  {
+   "root": "src/rules_core",
+   "file": "src/rules_core/race_resolver.rs",
+   "line": 90,
+   "in_cfg_test": false,
+   "text": "use crate::pcgen_import::pcgen_desc::{render_pcgen_desc_tokens, PcgenDisplayValues, RenderedPcgenDesc};"
+  },
+  {
+   "root": "src/rules_core",
+   "file": "src/rules_core/race_resolver.rs",
+   "line": 91,
+   "in_cfg_test": false,
+   "text": "use crate::pcgen_import::ingest_payload::{RaceCacheData, RaceTraitCacheData};"
+  },
+  {
+   "root": "src/rules_core",
+   "file": "src/rules_core/race_resolver.rs",
+   "line": 213,
+   "in_cfg_test": false,
+   "text": "pub fn same_row_display_values(&self) -> PcgenDisplayValues {"
+  },
+  {
+   "root": "src/rules_core",
+   "file": "src/rules_core/race_resolver.rs",
+   "line": 219,
+   "in_cfg_test": false,
+   "text": "for (name, base) in race_trait_tokens::same_row_defines(&self.data) {"
+  },
+  {
+   "root": "src/rules_core",
+   "file": "src/rules_core/race_resolver.rs",
+   "line": 223,
+   "in_cfg_test": false,
+   "text": "for contribution in bonus_chain_reader::declared_bonuses(&self.data).var_contributions {"
+  },
+  {
+   "root": "src/rules_core",
+   "file": "src/rules_core/race_resolver.rs",
+   "line": 240,
+   "in_cfg_test": false,
+   "text": "let mut values = PcgenDisplayValues::new();"
+  },
+  {
+   "root": "src/rules_core",
+   "file": "src/rules_core/race_resolver.rs",
+   "line": 256,
+   "in_cfg_test": false,
+   "text": "pub fn display_values_with(&self, deltas: &FeatDisplayValueDeltas) -> PcgenDisplayValues {"
+  },
+  {
+   "root": "src/rules_core",
+   "file": "src/rules_core/race_resolver.rs",
+   "line": 283,
+   "in_cfg_test": false,
+   "text": "pub fn render_description(&self, values: &PcgenDisplayValues) -> RenderedPcgenDesc {"
+  },
+  {
+   "root": "src/rules_core",
+   "file": "src/rules_core/race_resolver.rs",
+   "line": 291,
+   "in_cfg_test": false,
+   "text": "return RenderedPcgenDesc {"
+  },
+  {
+   "root": "src/rules_core",
+   "file": "src/rules_core/race_resolver.rs",
+   "line": 296,
+   "in_cfg_test": false,
+   "text": "let tokens: Vec<&str> = race_trait_tokens::description_segments(&self.data);"
+  },
+  {
+   "root": "src/rules_core",
+   "file": "src/rules_core/race_resolver.rs",
+   "line": 298,
+   "in_cfg_test": false,
+   "text": "return RenderedPcgenDesc {"
+  },
+  {
+   "root": "src/rules_core",
+   "file": "src/rules_core/race_resolver.rs",
+   "line": 303,
+   "in_cfg_test": false,
+   "text": "render_pcgen_desc_tokens(&tokens, values)"
+  },
+  {
+   "root": "src/rules_core",
+   "file": "src/rules_core/race_resolver.rs",
+   "line": 318,
+   "in_cfg_test": false,
+   "text": "race_trait_tokens::automatic_ability_grants(&self.data)"
+  },
+  {
+   "root": "src/rules_core",
+   "file": "src/rules_core/race_resolver.rs",
+   "line": 418,
+   "in_cfg_test": false,
+   "text": "pub declared_bonuses: DeclaredBonuses,"
+  },
+  {
+   "root": "src/rules_core",
+   "file": "src/rules_core/race_resolver.rs",
+   "line": 583,
+   "in_cfg_test": false,
+   "text": "let requires_flag = race_trait_tokens::positive_prefact_flag(&record.data);"
+  },
+  {
+   "root": "src/rules_core",
+   "file": "src/rules_core/race_resolver.rs",
+   "line": 846,
+   "in_cfg_test": false,
+   "text": "declared_walk_speed_ft: race_trait_tokens::declared_walk_speed_ft(&record.data),"
+  },
+  {
+   "root": "src/rules_core",
+   "file": "src/rules_core/race_resolver.rs",
+   "line": 847,
+   "in_cfg_test": false,
+   "text": "declared_size: race_trait_tokens::declared_size(&record.data),"
+  },
+  {
+   "root": "src/rules_core",
+   "file": "src/rules_core/race_resolver.rs",
+   "line": 848,
+   "in_cfg_test": false,
+   "text": "declared_vision: race_trait_tokens::declared_vision_segments(&record.data),"
+  },
+  {
+   "root": "src/rules_core",
+   "file": "src/rules_core/race_resolver.rs",
+   "line": 849,
+   "in_cfg_test": false,
+   "text": "declared_bonuses: bonus_chain_reader::declared_bonuses(&record.data),"
+  },
+  {
+   "root": "src/rules_core",
+   "file": "src/rules_core/race_resolver.rs",
+   "line": 1142,
+   "in_cfg_test": false,
+   "text": "let pool_type_suffix = race_trait_tokens::adopted_race_pool_suffix(&record.data);"
+  },
+  {
+   "root": "src/rules_core",
+   "file": "src/rules_core/skinwalker_change_shape.rs",
+   "line": 73,
+   "in_cfg_test": false,
+   "text": "use crate::pcgen_import::race_trait_tokens;"
+  },
+  {
+   "root": "src/rules_core",
+   "file": "src/rules_core/skinwalker_change_shape.rs",
+   "line": 257,
+   "in_cfg_test": false,
+   "text": ".find_map(|grant| race_trait_tokens::skinwalker_change_shape_kin(&grant).map(str::to_string))"
+  },
+  {
+   "root": "src/rules_core",
+   "file": "src/rules_core/source_content.rs",
+   "line": 50,
+   "in_cfg_test": false,
+   "text": "pub use crate::pcgen_import::source_content_payload::SourceContentPayload;"
+  },
+  {
+   "root": "src/rules_core",
+   "file": "src/rules_core/spell_resolver.rs",
+   "line": 15,
+   "in_cfg_test": false,
+   "text": "use crate::pcgen_import::lst_parser::spell::LstSpellRecord;"
+  },
+  {
+   "root": "src/rules_core",
+   "file": "src/rules_core/spell_resolver.rs",
+   "line": 16,
+   "in_cfg_test": false,
+   "text": "use crate::pcgen_import::source_content_payload::SourceContentPayload;"
+  },
+  {
+   "root": "src/rules_core",
+   "file": "src/rules_core/trait_pool.rs",
+   "line": 51,
+   "in_cfg_test": false,
+   "text": "use crate::pcgen_import::ingest_record;"
+  },
+  {
+   "root": "src/rules_core",
+   "file": "src/rules_core/trait_pool.rs",
+   "line": 153,
+   "in_cfg_test": false,
+   "text": "ingest_record::type_token_suffix(data, RACE_TRAIT_TYPE_PREFIX).map(str::to_string);"
+  },
+  {
+   "root": "src/rules_core",
+   "file": "src/rules_core/equipment_effects/arms_armor.rs",
+   "line": 21,
+   "in_cfg_test": false,
+   "text": "use crate::pcgen_import::equipment_bonus_reader;"
+  },
+  {
+   "root": "src/rules_core",
+   "file": "src/rules_core/equipment_effects/arms_armor.rs",
+   "line": 22,
+   "in_cfg_test": false,
+   "text": "use crate::pcgen_import::lst_parser::equipment::EquipmentRecord;"
+  },
+  {
+   "root": "src/rules_core",
+   "file": "src/rules_core/equipment_effects/arms_armor.rs",
+   "line": 151,
+   "in_cfg_test": false,
+   "text": "&& !equipment_bonus_reader::declares_circumstance_bonus_type(bonus);"
+  },
+  {
+   "root": "src/rules_core",
+   "file": "src/rules_core/equipment_effects/equipmods.rs",
+   "line": 86,
+   "in_cfg_test": false,
+   "text": "use crate::pcgen_import::equipment_bonus_reader;"
+  },
+  {
+   "root": "src/rules_core",
+   "file": "src/rules_core/equipment_effects/equipmods.rs",
+   "line": 87,
+   "in_cfg_test": false,
+   "text": "use crate::pcgen_import::lst_parser::equipment::EquipmentRecord;"
+  },
+  {
+   "root": "src/rules_core",
+   "file": "src/rules_core/equipment_effects/equipmods.rs",
+   "line": 241,
+   "in_cfg_test": false,
+   "text": "if equipment_bonus_reader::roll_bonus_carries_enhancement_type(bonus) {"
+  },
+  {
+   "root": "src/rules_core",
+   "file": "src/rules_core/equipment_effects/general.rs",
+   "line": 19,
+   "in_cfg_test": false,
+   "text": "use crate::pcgen_import::lst_parser::equipment::EquipmentRecord;"
+  },
+  {
+   "root": "src/rules_core",
+   "file": "src/rules_core/equipment_effects/intelligent_item.rs",
+   "line": 66,
+   "in_cfg_test": false,
+   "text": "use crate::pcgen_import::lst_parser::equipment::EquipmentRecord;"
+  },
+  {
+   "root": "src/rules_core",
+   "file": "src/rules_core/equipment_effects/magic_items.rs",
+   "line": 22,
+   "in_cfg_test": false,
+   "text": "use crate::pcgen_import::lst_parser::equipment::EquipmentRecord;"
+  },
+  {
+   "root": "src/rules_core",
+   "file": "src/rules_core/pilot_compute/class_feature_grant_consumer.rs",
+   "line": 963,
+   "in_cfg_test": false,
+   "text": "let mut values = crate::pcgen_import::pcgen_desc::PcgenDisplayValues::new();"
+  },
+  {
+   "root": "src/rules_core",
+   "file": "src/rules_core/pilot_compute/class_feature_grant_consumer.rs",
+   "line": 968,
+   "in_cfg_test": false,
+   "text": "crate::pcgen_import::pcgen_desc::render_pcgen_desc_with_values(&record.raw_description, &values);"
+  },
+  {
+   "root": "src/rules_core",
+   "file": "src/rules_core/pilot_compute/class_feature_grant_consumer.rs",
+   "line": 972,
+   "in_cfg_test": false,
+   "text": "if crate::pcgen_import::pcgen_desc::leaked_pcgen_syntax(&rendered.text).is_some() {"
+  },
+  {
+   "root": "src/rules_core",
+   "file": "src/rules_core/pilot_compute/class_feature_grant_consumer.rs",
+   "line": 1036,
+   "in_cfg_test": false,
+   "text": "let args = crate::pcgen_import::pcgen_desc::desc_token_arguments(&record.raw_description);"
+  },
+  {
+   "root": "src/rules_core",
+   "file": "src/rules_core/pilot_compute/class_feature_grant_consumer.rs",
+   "line": 1068,
+   "in_cfg_test": false,
+   "text": "let mut values = crate::pcgen_import::pcgen_desc::PcgenDisplayValues::new();"
+  },
+  {
+   "root": "src/rules_core",
+   "file": "src/rules_core/pilot_compute/class_feature_grant_consumer.rs",
+   "line": 1081,
+   "in_cfg_test": false,
+   "text": "let rendered = crate::pcgen_import::pcgen_desc::render_pcgen_desc_with_values("
+  },
+  {
+   "root": "src/rules_core",
+   "file": "src/rules_core/pilot_compute/class_feature_grant_consumer.rs",
+   "line": 1088,
+   "in_cfg_test": false,
+   "text": "if crate::pcgen_import::pcgen_desc::leaked_pcgen_syntax(&rendered.text).is_some() {"
+  },
+  {
+   "root": "src/rules_core",
+   "file": "src/rules_core/rules_tables/simple_kind_tables.rs",
+   "line": 168,
+   "in_cfg_test": false,
+   "text": "let raw_token_count = crate::pcgen_import::ingest_record::token_count(data);"
+  },
+  {
+   "root": "src/rules_core",
+   "file": "src/rules_core/rules_tables/crb/json_cache.rs",
+   "line": 151,
+   "in_cfg_test": false,
+   "text": "pub rename: Option<crate::pcgen_import::cache_gen::equipment_gap::RenameInfo>,"
+  },
+  {
+   "root": "apps/desktop",
+   "file": "apps/desktop/src/boundary/loadClassFeatureDescriptions.ts",
+   "line": 10,
+   "in_cfg_test": false,
+   "text": "* already-PI-screened `cache_gen::class_feature` JSON cache directly from"
+  },
+  {
+   "root": "apps/desktop",
+   "file": "apps/desktop/src/boundary/loadClassFeaturePoolOptions.ts",
+   "line": 10,
+   "in_cfg_test": false,
+   "text": "* already-PI-screened `cache_gen::class_feature` JSON cache and serves every"
+  },
+  {
+   "root": "apps/desktop",
+   "file": "apps/desktop/src-tauri/src/corpus_fixtures.rs",
+   "line": 23,
+   "in_cfg_test": false,
+   "text": "use codex::pcgen_import::ir_converter::{convert_equipment_record, convert_spell_record};"
+  },
+  {
+   "root": "apps/desktop",
+   "file": "apps/desktop/src-tauri/src/corpus_fixtures.rs",
+   "line": 24,
+   "in_cfg_test": false,
+   "text": "use codex::pcgen_import::lst_parser::equipment::parse_equipment_entries;"
+  },
+  {
+   "root": "apps/desktop",
+   "file": "apps/desktop/src-tauri/src/corpus_fixtures.rs",
+   "line": 25,
+   "in_cfg_test": false,
+   "text": "use codex::pcgen_import::lst_parser::spell::parse_lst_spell_row;"
+  },
+  {
+   "root": "apps/desktop",
+   "file": "apps/desktop/src-tauri/src/corpus_fixtures.rs",
+   "line": 68,
+   "in_cfg_test": false,
+   "text": "let record: &'static codex::pcgen_import::lst_parser::spell::LstSpellRecord ="
+  },
+  {
+   "root": "apps/desktop",
+   "file": "apps/desktop/src-tauri/src/corpus_fixtures.rs",
+   "line": 79,
+   "in_cfg_test": false,
+   "text": "let entry: &'static codex::pcgen_import::lst_parser::equipment::EquipmentRecord ="
+  },
+  {
+   "root": "apps/desktop",
+   "file": "apps/desktop/src-tauri/src/feat_catalog.rs",
+   "line": 213,
+   "in_cfg_test": false,
+   "text": "let clean = |text: &str| codex::pcgen_import::pcgen_desc::leaked_pcgen_syntax(text).is_none();"
+  },
+  {
+   "root": "apps/desktop",
+   "file": "apps/desktop/src-tauri/src/race_trait_picker.rs",
+   "line": 114,
+   "in_cfg_test": false,
+   "text": "use codex::pcgen_import::race_trait_tokens;"
+  },
+  {
+   "root": "apps/desktop",
+   "file": "apps/desktop/src-tauri/src/race_trait_picker.rs",
+   "line": 529,
+   "in_cfg_test": false,
+   "text": "race_trait_tokens::exclusion_guard_flags(&record.data)"
+  },
+  {
+   "root": "apps/desktop",
+   "file": "apps/desktop/src-tauri/src/race_trait_picker.rs",
+   "line": 593,
+   "in_cfg_test": false,
+   "text": "for flags in race_trait_tokens::negated_fact_gates(&record.data) {"
+  },
+  {
+   "root": "apps/desktop",
+   "file": "apps/desktop/src-tauri/src/race_trait_picker.rs",
+   "line": 621,
+   "in_cfg_test": false,
+   "text": "if race_trait_tokens::declares_preability_negated_guard(&record.data) {"
+  },
+  {
+   "root": "apps/desktop",
+   "file": "apps/desktop/src-tauri/src/reach_gate.rs",
+   "line": 3417,
+   "in_cfg_test": false,
+   "text": "these rows' words from their own source rows, `src/pcgen_import/sheet_rule/` \\"
+  },
+  {
+   "root": "apps/desktop",
+   "file": "apps/desktop/src-tauri/src/reach_gate.rs",
+   "line": 3433,
+   "in_cfg_test": false,
+   "text": "converter deriving these rows' words from their own source rows, `src/pcgen_import/\\"
+  },
+  {
+   "root": "apps/desktop",
+   "file": "apps/desktop/src-tauri/src/reach_gate.rs",
+   "line": 3445,
+   "in_cfg_test": false,
+   "text": "converter, `src/pcgen_import/sheet_rule/`.\","
+  },
+  {
+   "root": "apps/desktop",
+   "file": "apps/desktop/src-tauri/src/reach_gate.rs",
+   "line": 3454,
+   "in_cfg_test": false,
+   "text": "words from their own source rows, `src/pcgen_import/sheet_rule/`.\","
+  },
+  {
+   "root": "apps/desktop",
+   "file": "apps/desktop/src-tauri/src/reach_gate.rs",
+   "line": 3475,
+   "in_cfg_test": false,
+   "text": "content exists; otherwise the converter, `src/pcgen_import/sheet_rule/`.\","
+  }
+ ]
+}

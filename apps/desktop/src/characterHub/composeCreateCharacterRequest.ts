@@ -95,7 +95,7 @@ export interface CreateCharacterFormFields {
    */
   selectedTraits?: readonly string[];
   /**
-   * The player's resolved skill choice for each *fixed-choice* `%LIST`
+   * The player's resolved skill choice for each *fixed-choice* open-slot
    * trait named in `selectedTraits` (AT-34-E4-002, second slice). Optional
    * so every existing caller and test composes unchanged; an absent field
    * means "no choice-based trait was taken", the real and common answer

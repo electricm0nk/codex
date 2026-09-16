@@ -14,7 +14,7 @@
 use std::path::{Path, PathBuf};
 use std::process::Command;
 
-use codex::rules_core::cache_gen::beastiary1;
+use codex::pcgen_import::cache_gen::beastiary1;
 
 fn real_now_iso8601() -> String {
     let output = Command::new("date")

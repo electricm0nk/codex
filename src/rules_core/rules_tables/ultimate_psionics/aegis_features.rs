@@ -8,7 +8,7 @@
 //! Every formula below is transcribed from the corpus's own already-
 //! ingested `BONUS:VAR`/`BONUS:ABILITYPOOL` tokens
 //! (`data/corpus/ultimate_psionics/class_feature/aegis/*.json`, each
-//! record's own `raw_tokens`), not from memory of the printed rulebook.
+//! record's own ingest token array), not from memory of the printed rulebook.
 //! Aegis's prime stat (`AegisPrimeStat`, `up_classes.lst:20`) is
 //! Intelligence for every one of the two records below that read it.
 //! `AegisCL`/`AegisDRLVL` (`up_classes.lst:23,25`) both resolve to plain

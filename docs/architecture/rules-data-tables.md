@@ -1,7 +1,13 @@
 # Rules Data Tables
 
 > Scope: the hand-transcribed, per-book Paizo table store rules-core queries for class chassis, race traits, feats, spells, equipment, and monster stat blocks.
-> Last verified: **2026-08-19 against `tranche/11`** (SD-31 wave 15, `SD31-W15-INTEGRATE-001`) for §"Chassis fields carry the TOKEN, never a computed number"; prior pass 2026-08-07 against tranche/8 (wiring_class/PI-screening convergence cycle). **Touched 2026-08-21 (SD-31 wave 29, integration cycle)**: added `RuleSetId::AdventurersGuide` (Adventurer's Guide's first compiled rule set, spell family only — `rules_tables::adventurers_guide::spell_list`) to the enum block below; every other row unchanged. **Path correction 2026-08-22**
+> Last verified: **2026-09-15 against `tranche/15`** (SD-35 closure epilogue) for the new
+> §"Two data stores, and which one a new rule goes in" section — verified against
+> `src/rules_core/rules_tables/mod.rs`, `data/sheet_rules/_report.json`, and
+> `src/rules_core/corpus_loader.rs`. **The §"Chassis fields carry the TOKEN, never a computed
+> number" convention below is now scoped to this store only**: the sheet-rule package carries no
+> token at all (`grep -rlE 'BONUS:|DEFINE:|PRE[A-Z]+:|%CHOICE|CL=' data/sheet_rules/ | wc -l` → `0`).
+> Prior pass **2026-08-19 against `tranche/11`** (SD-31 wave 15, `SD31-W15-INTEGRATE-001`) for §"Chassis fields carry the TOKEN, never a computed number"; prior pass 2026-08-07 against tranche/8 (wiring_class/PI-screening convergence cycle). **Touched 2026-08-21 (SD-31 wave 29, integration cycle)**: added `RuleSetId::AdventurersGuide` (Adventurer's Guide's first compiled rule set, spell family only — `rules_tables::adventurers_guide::spell_list`) to the enum block below; every other row unchanged. **Path correction 2026-08-22**
 > (SD-32 closure epilogue): src/bin/ingest_race_traits_arg.rs cite updated to
 > `src/bin/ingest_apg_race_traits.rs` (renamed by the function-based naming sweep, `8b6dd7511`);
 > no other content in this doc re-verified.
@@ -19,6 +25,30 @@ separate surface from [corpus-ingest.md](./corpus-ingest.md)'s
 authored by transcribing values out of the real PCGen `.lst` corpus by
 hand (or, in one documented case, generated programmatically from it),
 not produced by running the ingest pipeline's parsers at build time.
+
+## Two data stores, and which one a new rule goes in
+
+*New 2026-09-15 (SD-35 closure).* Since SD-35 the engine reads rule data from **two** stores, and
+the choice between them is not a matter of taste:
+
+| | `src/rules_core/rules_tables/` (this doc) | `data/sheet_rules/` ([corpus-ingest.md](./corpus-ingest.md)) |
+|---|---|---|
+| **What it holds** | the class/race/feat/spell/equipment **chassis** — the tables the PF1 core math needs | every corpus rules record, all 49,450 of them, as a renderable sheet line |
+| **How it is authored** | hand-transcribed from the books, in Rust, per book directory | generated whole by `cargo run --locked --bin sheet_rule_convert` from the pinned PCGen tree |
+| **Format** | Rust `const`/`fn` tables, per-book module, gated by `RuleSetId` | JSON in the `SheetRule` schema, `<book>/<kind>/<key>.json` |
+| **Carries source tokens?** | yes — a chassis field carries the TOKEN, never a computed number (see below) | **no**, never — the converter is the only thing that reads a token |
+| **Edited by hand?** | yes, that is the point | **never** — regenerated whole; `data/sheet_rules/GENERATED` says so |
+| **Loaded by** | direct Rust calls into `rules_tables::<book>::*` | `corpus_loader::load_sheet_rules` / `live_sheet_rules()` |
+
+**Which one to add to.** A number the PF1 core math *computes with* — BAB progression, save
+progression, skill ranks per level, a spell-slot table — is chassis, and belongs here, transcribed
+by hand and reviewable line by line. Anything that is a **rule a player writes on a sheet** — a
+feat's effect, a class feature's text, a racial trait, a monster ability — is not transcribed at
+all: it comes out of the converter, and the way to change it is to change the converter's mapping
+and regenerate.
+
+The two stores do not overlap and neither supersedes the other: the chassis is 31 computed
+classes' worth of core math, the sheet-rule package is the corpus.
 
 ## Per-book directory pattern
 
@@ -397,8 +427,12 @@ its 23 feat records live only in `rules_tables::ultimate_campaign`.
 Enumerated directly (grep every `CorpusRecordV1 {` / `CorpusRecord {` /
 `CacheRecord {` construction site under `src/`, 2026-08-07):
 
-- `src/rules_core/cache_gen/acg.rs`, `apg.rs`, `beastiary1.rs` — the three
-  original per-book dump generators (SD-26 Epic 3 shape).
+- `src/pcgen_import/cache_gen/acg.rs`, `apg.rs`, `beastiary1.rs` — the three
+  original per-book dump generators (SD-26 Epic 3 shape). **Path corrected
+  2026-09-15:** the whole `cache_gen/` tree moved from `src/rules_core/` to
+  `src/pcgen_import/` in SD-35 `AT-35-E6-002` — it reads PCGen tokens, so it is
+  converter-side code (see [overview.md](./overview.md) §"The converter/live boundary").
+  The code is unchanged; only its side of the boundary is.
 - `src/bin/gen_core_rulebook_cache.rs` — CRB.
 - `src/bin/gen_book_cache.rs` — Pathfinder Unchained + Advanced Race
   Guide (both books share one binary).
@@ -448,7 +482,8 @@ against the same class of loss:
 
 Every corpus record now carries a `wiring_class` — one of `Display`,
 `Static`, `Derived`, `Computed` (a strict lattice, highest-bar-wins) or
-`Ambiguous` — determined by `src/rules_core/wiring_class.rs`, the single
+`Ambiguous` — determined by `src/pcgen_import/wiring_class.rs` (moved there from
+`src/rules_core/` by SD-35 `AT-35-E6-002`), the single
 production port of the GE-01 reference determinator
 (`docs/release/GE-01-legacy-corpus-and-conversion-matrix/artifacts/wiring-class-determination.md`).
 Determination reads a unit's full **token closure**: its base `.lst` row

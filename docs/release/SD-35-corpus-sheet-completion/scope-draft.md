@@ -39,8 +39,9 @@ Four requirements, ruled in `decisions.md §1`, `§2`, `§3`, `§11`:
 
 ## 3. Where we actually stand
 
-Measured 2026-09-07 at `tranche/14` HEAD `5f6b18f4e3`, `docs/work-inventory.json`
-(`generated_at: 2026-09-07T13:06:14Z`). Re-derive commands in `content-unit-inventory.md`.
+Measured 2026-09-07 at `tranche/14` HEAD `5f6b18f4e3` and re-measured, identical, at the
+`tranche/15` cut `4c6c57eb9f`; `docs/work-inventory.json` `generated_at: 2026-09-07T13:06:14Z`.
+Re-derive commands in `content-unit-inventory.md`.
 
 | Bucket | Meaning | Units of 49,438 |
 |---|---|---:|
@@ -114,7 +115,7 @@ always named by mechanism (memory `name-a-remainder-by-mechanism`).
 
 | Epic | What | Population | Why this order |
 |---|---|---:|---|
-| 1 — Tax cut | batch-floor gate, content-anchored citations, test-suite consolidation, ratio row, **PCGen residue gate with its baseline** | instruments | every later build pays less; both counters exist from cycle 1 |
+| 1 — Tax cut | batch-floor gate, content-anchored citations, test-suite consolidation, ratio row, **PCGen residue gate with its baseline**, **SD-34's closure folded** (`decisions.md §12`) | instruments | every later build pays less; both counters exist from cycle 1; no debt carried |
 | 2 — Sheet rule | converter + our schema, live evaluator + on-screen section, `sheet-complete` status, token ledger, first corpus-wide conversion oracle-checked | all 23,315 | the finish line, made mechanical |
 | 3 — Place and surface | bucket B to zero, bucket C to zero | 15,769 | the biggest homogeneous swaths |
 | 4 — Resolve and verify | bucket M to zero by token family; bucket V through the oracle once | 4,726 | the compute-bearing tail |
@@ -184,7 +185,7 @@ variable name; the oracle parity artifacts before and after the exit agree (AT-3
 ## 10. Cross-references
 
 - `decisions.md §1`–`§4`, `§11` — the five rulings this scope rests on.
-- `epic-breakdown.md` — 29 criteria across 7 epics.
+- `epic-breakdown.md` — 30 criteria across 7 epics.
 - `technical-design.md` — the boundary, the converter, the evaluator, the status, the gates, the exit.
 - `content-unit-inventory.md` — every figure above with its re-derive command.
 - `../SD-34-book-completion/fable-review.md §1.b`, `artifacts/fable-review/TOKEN-MODEL.md` — the

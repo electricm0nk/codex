@@ -5,11 +5,11 @@
     {
       "kind": "ability",
       "label": "Abilities",
-      "done": 0,
-      "partial": 5,
+      "done": 5,
+      "partial": 0,
       "not_started": 0,
       "denominator": 5,
-      "pct": 0.0,
+      "pct": 100.0,
       "excluded_from_percentage": 0,
       "standing_breakdown": {
         "origin": 5
@@ -17,35 +17,35 @@
       "items": [
         {
           "name": "Racial Traits ~ Catfolk",
-          "doneness": "partial",
+          "doneness": "done",
           "type_facet": null,
           "standing": "origin",
           "display_name": "Racial Traits ~ Catfolk"
         },
         {
           "name": "Racial Traits ~ Ratfolk",
-          "doneness": "partial",
+          "doneness": "done",
           "type_facet": null,
           "standing": "origin",
           "display_name": "Racial Traits ~ Ratfolk"
         },
         {
           "name": "Racial Traits ~ Suli",
-          "doneness": "partial",
+          "doneness": "done",
           "type_facet": null,
           "standing": "origin",
           "display_name": "Racial Traits ~ Suli"
         },
         {
           "name": "Racial Traits ~ Vanara",
-          "doneness": "partial",
+          "doneness": "done",
           "type_facet": null,
           "standing": "origin",
           "display_name": "Racial Traits ~ Vanara"
         },
         {
           "name": "Racial Traits ~ Vishkanya",
-          "doneness": "partial",
+          "doneness": "done",
           "type_facet": null,
           "standing": "origin",
           "display_name": "Racial Traits ~ Vishkanya"
@@ -753,11 +753,11 @@
     {
       "kind": "language",
       "label": "Languages",
-      "done": 0,
+      "done": 13,
       "partial": 0,
-      "not_started": 13,
+      "not_started": 0,
       "denominator": 13,
-      "pct": 0.0,
+      "pct": 100.0,
       "excluded_from_percentage": 11,
       "standing_breakdown": {
         "origin": 13,
@@ -766,168 +766,168 @@
       "items": [
         {
           "name": "Adlet",
-          "doneness": "not-started",
+          "doneness": "done",
           "type_facet": "Spoken.Written.Read",
           "standing": "origin",
           "display_name": "Adlet"
         },
         {
           "name": "Aklo (cannot speak)",
-          "doneness": "not-started",
+          "doneness": "done",
           "type_facet": "Understand",
           "standing": "unclassified",
           "display_name": "Aklo (cannot speak)"
         },
         {
           "name": "Aquan (cannot speak)",
-          "doneness": "not-started",
+          "doneness": "done",
           "type_facet": "Understand",
           "standing": "unclassified",
           "display_name": "Aquan (cannot speak)"
         },
         {
           "name": "Auran (cannot speak)",
-          "doneness": "not-started",
+          "doneness": "done",
           "type_facet": "Understand",
           "standing": "unclassified",
           "display_name": "Auran (cannot speak)"
         },
         {
           "name": "Catfolk",
-          "doneness": "not-started",
+          "doneness": "done",
           "type_facet": "Spoken.Written.Read",
           "standing": "origin",
           "display_name": "Catfolk"
         },
         {
           "name": "Common (cannot speak)",
-          "doneness": "not-started",
+          "doneness": "done",
           "type_facet": "Understand",
           "standing": "unclassified",
           "display_name": "Common (cannot speak)"
         },
         {
           "name": "Flail Snail (Cannot Speak)",
-          "doneness": "not-started",
+          "doneness": "done",
           "type_facet": "Understand",
           "standing": "origin",
           "display_name": "Flail Snail (Cannot Speak)"
         },
         {
           "name": "Garuda",
-          "doneness": "not-started",
+          "doneness": "done",
           "type_facet": "Spoken.Written.Read",
           "standing": "origin",
           "display_name": "Garuda"
         },
         {
           "name": "Girtablilu",
-          "doneness": "not-started",
+          "doneness": "done",
           "type_facet": "Spoken.Written.Read",
           "standing": "origin",
           "display_name": "Girtablilu"
         },
         {
           "name": "Infernal (cannot speak)",
-          "doneness": "not-started",
+          "doneness": "done",
           "type_facet": "Understand",
           "standing": "unclassified",
           "display_name": "Infernal (cannot speak)"
         },
         {
           "name": "Kech",
-          "doneness": "not-started",
+          "doneness": "done",
           "type_facet": "Spoken.Written.Read",
           "standing": "origin",
           "display_name": "Kech"
         },
         {
           "name": "Plantspeech (fungi)",
-          "doneness": "not-started",
+          "doneness": "done",
           "type_facet": "Spoken.Written.Read",
           "standing": "unclassified",
           "display_name": "Plantspeech (fungi)"
         },
         {
           "name": "Plantspeech (gourds)",
-          "doneness": "not-started",
+          "doneness": "done",
           "type_facet": "Spoken.Written.Read",
           "standing": "unclassified",
           "display_name": "Plantspeech (gourds)"
         },
         {
           "name": "Plantspeech (seaweed)",
-          "doneness": "not-started",
+          "doneness": "done",
           "type_facet": "Spoken.Written.Read",
           "standing": "unclassified",
           "display_name": "Plantspeech (seaweed)"
         },
         {
           "name": "Plantspeech (trees)",
-          "doneness": "not-started",
+          "doneness": "done",
           "type_facet": "Spoken.Written.Read",
           "standing": "unclassified",
           "display_name": "Plantspeech (trees)"
         },
         {
           "name": "Sasquatch",
-          "doneness": "not-started",
+          "doneness": "done",
           "type_facet": "Spoken.Written.Read",
           "standing": "unclassified",
           "display_name": "Sasquatch"
         },
         {
           "name": "Shae",
-          "doneness": "not-started",
+          "doneness": "done",
           "type_facet": "Spoken.Written.Read",
           "standing": "origin",
           "display_name": "Shae"
         },
         {
           "name": "Sylvan (cannot speak)",
-          "doneness": "not-started",
+          "doneness": "done",
           "type_facet": "Understand",
           "standing": "unclassified",
           "display_name": "Sylvan (cannot speak)"
         },
         {
           "name": "Tanuki",
-          "doneness": "not-started",
+          "doneness": "done",
           "type_facet": "Spoken.Written.Read",
           "standing": "origin",
           "display_name": "Tanuki"
         },
         {
           "name": "Thriae",
-          "doneness": "not-started",
+          "doneness": "done",
           "type_facet": "Spoken.Written.Read",
           "standing": "origin",
           "display_name": "Thriae"
         },
         {
           "name": "Truespeech",
-          "doneness": "not-started",
+          "doneness": "done",
           "type_facet": "Spoken.Written.Read",
           "standing": "origin",
           "display_name": "Truespeech"
         },
         {
           "name": "Vanaran",
-          "doneness": "not-started",
+          "doneness": "done",
           "type_facet": "Spoken.Written.Read",
           "standing": "origin",
           "display_name": "Vanaran"
         },
         {
           "name": "Vishkanya",
-          "doneness": "not-started",
+          "doneness": "done",
           "type_facet": "Spoken.Written.Read",
           "standing": "origin",
           "display_name": "Vishkanya"
         },
         {
           "name": "Yithian",
-          "doneness": "not-started",
+          "doneness": "done",
           "type_facet": "Spoken.Written.Read",
           "standing": "origin",
           "display_name": "Yithian"
@@ -7668,11 +7668,11 @@
     {
       "kind": "race_trait",
       "label": "Race Traits",
-      "done": 111,
-      "partial": 41,
-      "not_started": 9,
+      "done": 161,
+      "partial": 0,
+      "not_started": 0,
       "denominator": 161,
-      "pct": 68.9,
+      "pct": 100.0,
       "excluded_from_percentage": 75,
       "standing_breakdown": {
         "unclassified": 75,
@@ -7730,7 +7730,7 @@
         },
         {
           "name": "Adlet",
-          "doneness": "not-started",
+          "doneness": "done",
           "type_facet": "AdletSelection",
           "standing": "origin",
           "display_name": "Adlet"
@@ -7758,14 +7758,14 @@
         },
         {
           "name": "Armor Bonus",
-          "doneness": "partial",
+          "doneness": "done",
           "type_facet": "Eidolon AC Bonus",
           "standing": "origin",
           "display_name": "Armor Bonus"
         },
         {
           "name": "Arms",
-          "doneness": "partial",
+          "doneness": "done",
           "type_facet": "Extraordinary.UnfetteredEidolonEvolution.SpecialQuality",
           "standing": "origin",
           "display_name": "Arms"
@@ -7800,7 +7800,7 @@
         },
         {
           "name": "Bear Lord (Grizzly Bear)",
-          "doneness": "partial",
+          "doneness": "done",
           "type_facet": "RacialTrait.AnimalLordRacialTrait.AnimalLord.SpecialQuality",
           "standing": "origin",
           "display_name": "Bear Lord (Grizzly Bear)"
@@ -7842,7 +7842,7 @@
         },
         {
           "name": "Burrow",
-          "doneness": "partial",
+          "doneness": "done",
           "type_facet": "Extraordinary.UnfetteredEidolonEvolution.SpecialQuality",
           "standing": "unclassified",
           "display_name": "Burrow"
@@ -7856,28 +7856,28 @@
         },
         {
           "name": "Canine Lord (Dog)",
-          "doneness": "partial",
+          "doneness": "done",
           "type_facet": "RacialTrait.AnimalLordRacialTrait.AnimalLord.SpecialQuality",
           "standing": "origin",
           "display_name": "Canine Lord (Dog)"
         },
         {
           "name": "Canine Lord (Hyena)",
-          "doneness": "partial",
+          "doneness": "done",
           "type_facet": "RacialTrait.AnimalLordRacialTrait.AnimalLord.SpecialQuality",
           "standing": "origin",
           "display_name": "Canine Lord (Hyena)"
         },
         {
           "name": "Canine Lord (Riding Dog)",
-          "doneness": "partial",
+          "doneness": "done",
           "type_facet": "RacialTrait.AnimalLordRacialTrait.AnimalLord.SpecialQuality",
           "standing": "origin",
           "display_name": "Canine Lord (Riding Dog)"
         },
         {
           "name": "Canine Lord (Wolf)",
-          "doneness": "partial",
+          "doneness": "done",
           "type_facet": "RacialTrait.AnimalLordRacialTrait.AnimalLord.SpecialQuality",
           "standing": "origin",
           "display_name": "Canine Lord (Wolf)"
@@ -7891,28 +7891,28 @@
         },
         {
           "name": "Cat Lord (Leopard)",
-          "doneness": "partial",
+          "doneness": "done",
           "type_facet": "RacialTrait.AnimalLordRacialTrait.AnimalLord.SpecialQuality",
           "standing": "origin",
           "display_name": "Cat Lord (Leopard)"
         },
         {
           "name": "Cat Lord (Lion)",
-          "doneness": "partial",
+          "doneness": "done",
           "type_facet": "RacialTrait.AnimalLordRacialTrait.AnimalLord.SpecialQuality",
           "standing": "origin",
           "display_name": "Cat Lord (Lion)"
         },
         {
           "name": "Cat Lord (Tiger)",
-          "doneness": "partial",
+          "doneness": "done",
           "type_facet": "RacialTrait.AnimalLordRacialTrait.AnimalLord.SpecialQuality",
           "standing": "origin",
           "display_name": "Cat Lord (Tiger)"
         },
         {
           "name": "Cat's Luck",
-          "doneness": "partial",
+          "doneness": "done",
           "type_facet": "RacialTraits.Catfolk Racial Trait.Catfolk Racial Default.SpecialQuality.Special Quality.Extraordinary",
           "standing": "origin",
           "display_name": "Cat's Luck"
@@ -7968,14 +7968,14 @@
         },
         {
           "name": "Claw",
-          "doneness": "partial",
+          "doneness": "done",
           "type_facet": "Extraordinary.UnfetteredEidolonEvolution.SpecialQuality",
           "standing": "origin",
           "display_name": "Claw"
         },
         {
           "name": "Climb",
-          "doneness": "partial",
+          "doneness": "done",
           "type_facet": "Extraordinary.UnfetteredEidolonEvolution.SpecialQuality",
           "standing": "unclassified",
           "display_name": "Climb"
@@ -8017,7 +8017,7 @@
         },
         {
           "name": "Crocodile Lord (Crocodile)",
-          "doneness": "partial",
+          "doneness": "done",
           "type_facet": "RacialTrait.AnimalLordRacialTrait.AnimalLord.SpecialQuality",
           "standing": "origin",
           "display_name": "Crocodile Lord (Crocodile)"
@@ -8038,7 +8038,7 @@
         },
         {
           "name": "Darkvision",
-          "doneness": "partial",
+          "doneness": "done",
           "type_facet": "RacialTraits.Ratfolk Racial Trait.Ratfolk Racial Default.SpecialQuality.Racial Vision",
           "standing": "unclassified",
           "display_name": "Darkvision"
@@ -8080,14 +8080,14 @@
         },
         {
           "name": "Dinosaur Lord (Deinonychus)",
-          "doneness": "partial",
+          "doneness": "done",
           "type_facet": "RacialTrait.AnimalLordRacialTrait.AnimalLord.SpecialQuality",
           "standing": "origin",
           "display_name": "Dinosaur Lord (Deinonychus)"
         },
         {
           "name": "Dinosaur Lord (Tyrannosaurus)",
-          "doneness": "partial",
+          "doneness": "done",
           "type_facet": "RacialTrait.AnimalLordRacialTrait.AnimalLord.SpecialQuality",
           "standing": "origin",
           "display_name": "Dinosaur Lord (Tyrannosaurus)"
@@ -8108,7 +8108,7 @@
         },
         {
           "name": "Dominion (Su)",
-          "doneness": "partial",
+          "doneness": "done",
           "type_facet": "RacialTrait.AnimalLordRacialTrait.SpecialQuality",
           "standing": "origin",
           "display_name": "Dominion (Su)"
@@ -8150,7 +8150,7 @@
         },
         {
           "name": "Elemental Assault",
-          "doneness": "partial",
+          "doneness": "done",
           "type_facet": "RacialTraits.Suli Racial Trait.Suli Racial Default.SpecialAttack.Special Attack.Special Ability.Supernatural",
           "standing": "origin",
           "display_name": "Elemental Assault"
@@ -8164,49 +8164,49 @@
         },
         {
           "name": "Energy Attacks",
-          "doneness": "partial",
+          "doneness": "done",
           "type_facet": "Supernatural.UnfetteredEidolonEvolution.SpecialQuality",
           "standing": "unclassified",
           "display_name": "Energy Attacks"
         },
         {
           "name": "Energy Resistance",
-          "doneness": "partial",
+          "doneness": "done",
           "type_facet": "RacialTraits.Suli Racial Trait.Suli Racial Default.SpecialQuality",
           "standing": "unclassified",
           "display_name": "Energy Resistance"
         },
         {
           "name": "Energy Resistance (Acid)",
-          "doneness": "partial",
+          "doneness": "done",
           "type_facet": "Extraordinary",
           "standing": "origin",
           "display_name": "Energy Resistance (Acid)"
         },
         {
           "name": "Energy Resistance (Cold)",
-          "doneness": "partial",
+          "doneness": "done",
           "type_facet": "Extraordinary",
           "standing": "origin",
           "display_name": "Energy Resistance (Cold)"
         },
         {
           "name": "Energy Resistance (Electricity)",
-          "doneness": "partial",
+          "doneness": "done",
           "type_facet": "Extraordinary",
           "standing": "origin",
           "display_name": "Energy Resistance (Electricity)"
         },
         {
           "name": "Energy Resistance (Fire)",
-          "doneness": "partial",
+          "doneness": "done",
           "type_facet": "Extraordinary",
           "standing": "origin",
           "display_name": "Energy Resistance (Fire)"
         },
         {
           "name": "Energy Resistance (Sonic)",
-          "doneness": "partial",
+          "doneness": "done",
           "type_facet": "Extraordinary",
           "standing": "origin",
           "display_name": "Energy Resistance (Sonic)"
@@ -8220,7 +8220,7 @@
         },
         {
           "name": "Eremite Standard",
-          "doneness": "not-started",
+          "doneness": "done",
           "type_facet": "EremiteSelection",
           "standing": "origin",
           "display_name": "Eremite Standard"
@@ -8262,14 +8262,14 @@
         },
         {
           "name": "Flight",
-          "doneness": "partial",
+          "doneness": "done",
           "type_facet": "Extraordinary.UnfetteredEidolonEvolution.SpecialQuality",
           "standing": "unclassified",
           "display_name": "Flight"
         },
         {
           "name": "Flight Additional",
-          "doneness": "partial",
+          "doneness": "done",
           "type_facet": "Extraordinary.UnfetteredEidolonEvolution.SpecialQuality",
           "standing": "origin",
           "display_name": "Flight Additional"
@@ -8325,7 +8325,7 @@
         },
         {
           "name": "Gore",
-          "doneness": "partial",
+          "doneness": "done",
           "type_facet": "RaceAbility.SpecialQuality",
           "standing": "unclassified",
           "display_name": "Gore (RaceAbility.SpecialQuality)"
@@ -8360,7 +8360,7 @@
         },
         {
           "name": "Huge",
-          "doneness": "partial",
+          "doneness": "done",
           "type_facet": "Extraordinary.UnfetteredEidolonEvolution.SpecialQuality",
           "standing": "unclassified",
           "display_name": "Huge"
@@ -8416,7 +8416,7 @@
         },
         {
           "name": "Improved Natural Armor",
-          "doneness": "partial",
+          "doneness": "done",
           "type_facet": "Extraordinary.UnfetteredEidolonEvolution.SpecialQuality",
           "standing": "unclassified",
           "display_name": "Improved Natural Armor"
@@ -8430,14 +8430,14 @@
         },
         {
           "name": "Keen Senses",
-          "doneness": "partial",
+          "doneness": "done",
           "type_facet": "RacialTraits.Vishkanya Racial Trait.Vishkanya Racial Default.SpecialQuality",
           "standing": "unclassified",
           "display_name": "Keen Senses"
         },
         {
           "name": "Kirin",
-          "doneness": "not-started",
+          "doneness": "done",
           "type_facet": "KirinSelection",
           "standing": "origin",
           "display_name": "Kirin"
@@ -8465,7 +8465,7 @@
         },
         {
           "name": "Languages",
-          "doneness": "partial",
+          "doneness": "done",
           "type_facet": "RacialTraits.Suli Racial Trait.Suli Racial Default.SpecialQuality.Racial Language",
           "standing": "unclassified",
           "display_name": "Languages (RacialTraits.Suli Racial Trait.Suli Racial Default.SpecialQuality.Racial Language)"
@@ -8486,7 +8486,7 @@
         },
         {
           "name": "Large",
-          "doneness": "partial",
+          "doneness": "done",
           "type_facet": "Extraordinary.UnfetteredEidolonEvolution.SpecialQuality",
           "standing": "unclassified",
           "display_name": "Large"
@@ -8507,7 +8507,7 @@
         },
         {
           "name": "Legs",
-          "doneness": "partial",
+          "doneness": "done",
           "type_facet": "Extraordinary.UnfetteredEidolonEvolution.SpecialQuality",
           "standing": "origin",
           "display_name": "Legs"
@@ -8528,28 +8528,28 @@
         },
         {
           "name": "Limber",
-          "doneness": "partial",
+          "doneness": "done",
           "type_facet": "RacialTraits.Vishkanya Racial Trait.Vishkanya Racial Default.SpecialQuality",
           "standing": "unclassified",
           "display_name": "Limber"
         },
         {
           "name": "Long Step",
-          "doneness": "not-started",
+          "doneness": "done",
           "type_facet": "Supernatural",
           "standing": "origin",
           "display_name": "Long Step"
         },
         {
           "name": "Low-Light Vision",
-          "doneness": "partial",
+          "doneness": "done",
           "type_facet": "RacialTraits.Catfolk Racial Trait.Catfolk Racial Default.SpecialQuality.Racial Vision",
           "standing": "unclassified",
           "display_name": "Low-Light Vision (RacialTraits.Catfolk Racial Trait.Catfolk Racial Default.SpecialQuality.Racial Vision)"
         },
         {
           "name": "Low-Light Vision",
-          "doneness": "partial",
+          "doneness": "done",
           "type_facet": "RacialTraits.Suli Racial Trait.Suli Racial Default.SpecialQuality.Racial Vision",
           "standing": "unclassified",
           "display_name": "Low-Light Vision (RacialTraits.Suli Racial Trait.Suli Racial Default.SpecialQuality.Racial Vision)"
@@ -8563,7 +8563,7 @@
         },
         {
           "name": "Low-Light Vision",
-          "doneness": "partial",
+          "doneness": "done",
           "type_facet": "RacialTraits.Vishkanya Racial Trait.Vishkanya Racial Default.SpecialQuality.Racial Vision",
           "standing": "unclassified",
           "display_name": "Low-Light Vision (RacialTraits.Vishkanya Racial Trait.Vishkanya Racial Default.SpecialQuality.Racial Vision)"
@@ -8591,14 +8591,14 @@
         },
         {
           "name": "Magical Flight",
-          "doneness": "partial",
+          "doneness": "done",
           "type_facet": "Supernatural.UnfetteredEidolonEvolution.SpecialQuality",
           "standing": "origin",
           "display_name": "Magical Flight"
         },
         {
           "name": "Magical Flight Additional",
-          "doneness": "partial",
+          "doneness": "done",
           "type_facet": "Supernatural.UnfetteredEidolonEvolution.SpecialQuality",
           "standing": "origin",
           "display_name": "Magical Flight Additional"
@@ -8612,7 +8612,7 @@
         },
         {
           "name": "Maharaja",
-          "doneness": "not-started",
+          "doneness": "done",
           "type_facet": "MaharajaSelection",
           "standing": "origin",
           "display_name": "Maharaja"
@@ -8682,21 +8682,21 @@
         },
         {
           "name": "Natural Armor Bonus",
-          "doneness": "partial",
+          "doneness": "done",
           "type_facet": "Eidolon AC Bonus",
           "standing": "origin",
           "display_name": "Natural Armor Bonus"
         },
         {
           "name": "Natural Hunter",
-          "doneness": "partial",
+          "doneness": "done",
           "type_facet": "RacialTraits.Catfolk Racial Trait.Catfolk Racial Default.SpecialQuality",
           "standing": "origin",
           "display_name": "Natural Hunter"
         },
         {
           "name": "Negotiator",
-          "doneness": "partial",
+          "doneness": "done",
           "type_facet": "RacialTraits.Suli Racial Trait.Suli Racial Default.SpecialQuality",
           "standing": "origin",
           "display_name": "Negotiator"
@@ -8724,14 +8724,14 @@
         },
         {
           "name": "Normal Speed",
-          "doneness": "partial",
+          "doneness": "done",
           "type_facet": "RacialTraits.Catfolk Racial Trait.Catfolk Racial Default.SpecialQuality.Racial Speed",
           "standing": "unclassified",
           "display_name": "Normal Speed (RacialTraits.Catfolk Racial Trait.Catfolk Racial Default.SpecialQuality.Racial Speed)"
         },
         {
           "name": "Normal Speed",
-          "doneness": "partial",
+          "doneness": "done",
           "type_facet": "RacialTraits.Suli Racial Trait.Suli Racial Default.SpecialQuality.Racial Speed",
           "standing": "unclassified",
           "display_name": "Normal Speed (RacialTraits.Suli Racial Trait.Suli Racial Default.SpecialQuality.Racial Speed)"
@@ -8745,7 +8745,7 @@
         },
         {
           "name": "Normal Speed",
-          "doneness": "partial",
+          "doneness": "done",
           "type_facet": "RacialTraits.Vishkanya Racial Trait.Vishkanya Racial Default.SpecialQuality.Racial Speed",
           "standing": "unclassified",
           "display_name": "Normal Speed (RacialTraits.Vishkanya Racial Trait.Vishkanya Racial Default.SpecialQuality.Racial Speed)"
@@ -8801,7 +8801,7 @@
         },
         {
           "name": "Poison Resistance",
-          "doneness": "partial",
+          "doneness": "done",
           "type_facet": "RacialTraits.Vishkanya Racial Trait.Vishkanya Racial Default.SpecialQuality",
           "standing": "origin",
           "display_name": "Poison Resistance"
@@ -8836,7 +8836,7 @@
         },
         {
           "name": "Primal Bandersnatch (+2 CR)",
-          "doneness": "partial",
+          "doneness": "done",
           "type_facet": "VariantBandersnatch.RacialAbility.SpecialQuality",
           "standing": "origin",
           "display_name": "Primal Bandersnatch (+2 CR)"
@@ -8864,14 +8864,14 @@
         },
         {
           "name": "Raptor Lord (Eagle)",
-          "doneness": "partial",
+          "doneness": "done",
           "type_facet": "RacialTrait.AnimalLordRacialTrait.AnimalLord.SpecialQuality",
           "standing": "origin",
           "display_name": "Raptor Lord (Eagle)"
         },
         {
           "name": "Raptor Lord (Falcon)",
-          "doneness": "partial",
+          "doneness": "done",
           "type_facet": "RacialTrait.AnimalLordRacialTrait.AnimalLord.SpecialQuality",
           "standing": "origin",
           "display_name": "Raptor Lord (Falcon)"
@@ -8885,7 +8885,7 @@
         },
         {
           "name": "Rat Lord (Giant Rat)",
-          "doneness": "partial",
+          "doneness": "done",
           "type_facet": "RacialTrait.AnimalLordRacialTrait.AnimalLord.SpecialQuality",
           "standing": "origin",
           "display_name": "Rat Lord (Giant Rat)"
@@ -8906,7 +8906,7 @@
         },
         {
           "name": "Reach",
-          "doneness": "partial",
+          "doneness": "done",
           "type_facet": "Extraordinary.UnfetteredEidolonEvolution.SpecialQuality",
           "standing": "unclassified",
           "display_name": "Reach"
@@ -8920,7 +8920,7 @@
         },
         {
           "name": "Rend",
-          "doneness": "partial",
+          "doneness": "done",
           "type_facet": "CerberiRacialAbility.SpecialAttack",
           "standing": "unclassified",
           "display_name": "Rend"
@@ -8934,14 +8934,14 @@
         },
         {
           "name": "Resistance",
-          "doneness": "partial",
+          "doneness": "done",
           "type_facet": "Extraordinary.UnfetteredEidolonEvolution.SpecialQuality",
           "standing": "unclassified",
           "display_name": "Resistance"
         },
         {
           "name": "Rodent Empathy",
-          "doneness": "partial",
+          "doneness": "done",
           "type_facet": "RacialTraits.Ratfolk Racial Trait.Ratfolk Racial Default.SpecialQuality",
           "standing": "origin",
           "display_name": "Rodent Empathy"
@@ -8976,14 +8976,14 @@
         },
         {
           "name": "Serpent Lord (Constrictor Snake)",
-          "doneness": "partial",
+          "doneness": "done",
           "type_facet": "RacialTrait.AnimalLordRacialTrait.AnimalLord.SpecialQuality",
           "standing": "origin",
           "display_name": "Serpent Lord (Constrictor Snake)"
         },
         {
           "name": "Serpent Lord (Venomous Snake)",
-          "doneness": "partial",
+          "doneness": "done",
           "type_facet": "RacialTrait.AnimalLordRacialTrait.AnimalLord.SpecialQuality",
           "standing": "origin",
           "display_name": "Serpent Lord (Venomous Snake)"
@@ -8997,28 +8997,28 @@
         },
         {
           "name": "Shark Lord (Shark)",
-          "doneness": "partial",
+          "doneness": "done",
           "type_facet": "RacialTrait.AnimalLordRacialTrait.AnimalLord.SpecialQuality",
           "standing": "origin",
           "display_name": "Shark Lord (Shark)"
         },
         {
           "name": "Slam",
-          "doneness": "partial",
+          "doneness": "done",
           "type_facet": "Extraordinary.UnfetteredEidolonEvolution.SpecialQuality",
           "standing": "unclassified",
           "display_name": "Slam"
         },
         {
           "name": "Slow Speed",
-          "doneness": "partial",
+          "doneness": "done",
           "type_facet": "RacialTraits.Ratfolk Racial Trait.Ratfolk Racial Default.SpecialQuality.Racial Speed",
           "standing": "unclassified",
           "display_name": "Slow Speed"
         },
         {
           "name": "Small",
-          "doneness": "partial",
+          "doneness": "done",
           "type_facet": "RacialTraits.Ratfolk Racial Trait.Ratfolk Racial Default.SpecialQuality.Racial Size",
           "standing": "unclassified",
           "display_name": "Small"
@@ -9039,35 +9039,35 @@
         },
         {
           "name": "Spell-Like Abilities",
-          "doneness": "partial",
+          "doneness": "done",
           "type_facet": "RacialTrait.AnimalLordRacialTrait.SpecialQuality.SpellLike",
           "standing": "unclassified",
           "display_name": "Spell-Like Abilities (RacialTrait.AnimalLordRacialTrait.SpecialQuality.SpellLike)"
         },
         {
           "name": "Spell-Like Abilities",
-          "doneness": "partial",
+          "doneness": "done",
           "type_facet": "RacialTrait.FeyCreatureRacialTrait.SpecialQuality",
           "standing": "unclassified",
           "display_name": "Spell-Like Abilities (RacialTrait.FeyCreatureRacialTrait.SpecialQuality)"
         },
         {
           "name": "Spell-Like Abilities",
-          "doneness": "partial",
+          "doneness": "done",
           "type_facet": "MaharajaRacialAbility.SpecialQuality.SpellLike",
           "standing": "unclassified",
           "display_name": "Spell-Like Abilities (MaharajaRacialAbility.SpecialQuality.SpellLike)"
         },
         {
           "name": "Spell-Like Abilities",
-          "doneness": "partial",
+          "doneness": "done",
           "type_facet": "SlimyDemodandRacialAbility.SpecialQuality.SpellLike",
           "standing": "unclassified",
           "display_name": "Spell-Like Abilities (SlimyDemodandRacialAbility.SpecialQuality.SpellLike)"
         },
         {
           "name": "Spell-Like Abilities",
-          "doneness": "partial",
+          "doneness": "done",
           "type_facet": "TarryDemodandRacialAbility.SpecialQuality.SpellLike",
           "standing": "unclassified",
           "display_name": "Spell-Like Abilities (TarryDemodandRacialAbility.SpecialQuality.SpellLike)"
@@ -9081,21 +9081,21 @@
         },
         {
           "name": "Standard Demilich",
-          "doneness": "not-started",
+          "doneness": "done",
           "type_facet": "DemilichSelection",
           "standing": "origin",
           "display_name": "Standard Demilich"
         },
         {
           "name": "Standard Kamadan",
-          "doneness": "not-started",
+          "doneness": "done",
           "type_facet": "VariantKamadan",
           "standing": "origin",
           "display_name": "Standard Kamadan"
         },
         {
           "name": "Sting",
-          "doneness": "partial",
+          "doneness": "done",
           "type_facet": "Extraordinary.UnfetteredEidolonEvolution.SpecialQuality",
           "standing": "unclassified",
           "display_name": "Sting"
@@ -9137,7 +9137,7 @@
         },
         {
           "name": "Swim",
-          "doneness": "partial",
+          "doneness": "done",
           "type_facet": "Extraordinary.UnfetteredEidolonEvolution.SpecialQuality",
           "standing": "unclassified",
           "display_name": "Swim"
@@ -9158,7 +9158,7 @@
         },
         {
           "name": "Tail Slap",
-          "doneness": "partial",
+          "doneness": "done",
           "type_facet": "Extraordinary.UnfetteredEidolonEvolution.SpecialQuality",
           "standing": "unclassified",
           "display_name": "Tail Slap"
@@ -9172,14 +9172,14 @@
         },
         {
           "name": "Tinker",
-          "doneness": "partial",
+          "doneness": "done",
           "type_facet": "RacialTraits.Ratfolk Racial Trait.Ratfolk Racial Default.SpecialQuality",
           "standing": "origin",
           "display_name": "Tinker"
         },
         {
           "name": "Toxic",
-          "doneness": "partial",
+          "doneness": "done",
           "type_facet": "RacialTraits.Vishkanya Racial Trait.Vishkanya Racial Default.SpecialQuality.Special Quality.Special Ability",
           "standing": "origin",
           "display_name": "Toxic"
@@ -9228,7 +9228,7 @@
         },
         {
           "name": "Vanish",
-          "doneness": "not-started",
+          "doneness": "done",
           "type_facet": "Supernatural",
           "standing": "origin",
           "display_name": "Vanish"
@@ -9249,14 +9249,14 @@
         },
         {
           "name": "Vishkanya ~ Toxic ~ Vishkanya Venom",
-          "doneness": "not-started",
+          "doneness": "done",
           "type_facet": null,
           "standing": "unclassified",
           "display_name": "Vishkanya ~ Toxic ~ Vishkanya Venom"
         },
         {
           "name": "Void Yai",
-          "doneness": "not-started",
+          "doneness": "done",
           "type_facet": "VoidYaiSelection",
           "standing": "origin",
           "display_name": "Void Yai"
@@ -9305,7 +9305,7 @@
         },
         {
           "name": "Weapon Training",
-          "doneness": "partial",
+          "doneness": "done",
           "type_facet": "Extraordinary.UnfetteredEidolonEvolution.SpecialQuality",
           "standing": "origin",
           "display_name": "Weapon Training"
@@ -9336,11 +9336,11 @@
     {
       "kind": "template",
       "label": "Templates",
-      "done": 0,
-      "partial": 10,
-      "not_started": 50,
+      "done": 60,
+      "partial": 0,
+      "not_started": 0,
       "denominator": 60,
-      "pct": 0.0,
+      "pct": 100.0,
       "excluded_from_percentage": 3,
       "standing_breakdown": {
         "unclassified": 3,
@@ -9349,441 +9349,441 @@
       "items": [
         {
           "name": "Adlet",
-          "doneness": "not-started",
+          "doneness": "done",
           "type_facet": null,
           "standing": "unclassified",
           "display_name": "Adlet"
         },
         {
           "name": "Animal Lord",
-          "doneness": "partial",
+          "doneness": "done",
           "type_facet": null,
           "standing": "origin",
           "display_name": "Animal Lord"
         },
         {
           "name": "Asura",
-          "doneness": "not-started",
+          "doneness": "done",
           "type_facet": null,
           "standing": "origin",
           "display_name": "Asura"
         },
         {
           "name": "Behemoth",
-          "doneness": "not-started",
+          "doneness": "done",
           "type_facet": null,
           "standing": "origin",
           "display_name": "Behemoth"
         },
         {
           "name": "Bog Nixie",
-          "doneness": "not-started",
+          "doneness": "done",
           "type_facet": null,
           "standing": "origin",
           "display_name": "Bog Nixie"
         },
         {
           "name": "Bonus Language ~ Catfolk",
-          "doneness": "not-started",
+          "doneness": "done",
           "type_facet": null,
           "standing": "origin",
           "display_name": "Bonus Language ~ Catfolk"
         },
         {
           "name": "Bonus Language ~ Vanaran",
-          "doneness": "not-started",
+          "doneness": "done",
           "type_facet": null,
           "standing": "origin",
           "display_name": "Bonus Language ~ Vanaran"
         },
         {
           "name": "Bonus Language ~ Vishkanya",
-          "doneness": "not-started",
+          "doneness": "done",
           "type_facet": null,
           "standing": "origin",
           "display_name": "Bonus Language ~ Vishkanya"
         },
         {
           "name": "Catfolk",
-          "doneness": "not-started",
+          "doneness": "done",
           "type_facet": null,
           "standing": "origin",
           "display_name": "Catfolk"
         },
         {
           "name": "Catfolk",
-          "doneness": "not-started",
+          "doneness": "done",
           "type_facet": "Race Builder Subtype",
           "standing": "origin",
           "display_name": "Catfolk (Race Builder Subtype)"
         },
         {
           "name": "Catfolk",
-          "doneness": "not-started",
+          "doneness": "done",
           "type_facet": null,
           "standing": "origin",
           "display_name": "Catfolk #3"
         },
         {
           "name": "Catfolk",
-          "doneness": "not-started",
+          "doneness": "done",
           "type_facet": "Racial Heritage",
           "standing": "origin",
           "display_name": "Catfolk (Racial Heritage)"
         },
         {
           "name": "Clockwork",
-          "doneness": "not-started",
+          "doneness": "done",
           "type_facet": null,
           "standing": "unclassified",
           "display_name": "Clockwork"
         },
         {
           "name": "Demodand",
-          "doneness": "not-started",
+          "doneness": "done",
           "type_facet": null,
           "standing": "origin",
           "display_name": "Demodand"
         },
         {
           "name": "Div",
-          "doneness": "not-started",
+          "doneness": "done",
           "type_facet": null,
           "standing": "origin",
           "display_name": "Div"
         },
         {
           "name": "Dread Corby",
-          "doneness": "not-started",
+          "doneness": "done",
           "type_facet": null,
           "standing": "origin",
           "display_name": "Dread Corby"
         },
         {
           "name": "Fey Creature",
-          "doneness": "partial",
+          "doneness": "done",
           "type_facet": null,
           "standing": "origin",
           "display_name": "Fey Creature"
         },
         {
           "name": "Fey Creature Has Good Flight Maneuverability",
-          "doneness": "partial",
+          "doneness": "done",
           "type_facet": null,
           "standing": "origin",
           "display_name": "Fey Creature Has Good Flight Maneuverability"
         },
         {
           "name": "Fey Creature Has Natural Armor",
-          "doneness": "partial",
+          "doneness": "done",
           "type_facet": null,
           "standing": "origin",
           "display_name": "Fey Creature Has Natural Armor"
         },
         {
           "name": "Fey Creature Has No Flight Maneuverability",
-          "doneness": "partial",
+          "doneness": "done",
           "type_facet": null,
           "standing": "origin",
           "display_name": "Fey Creature Has No Flight Maneuverability"
         },
         {
           "name": "Fey Creature Has No Natural Armor",
-          "doneness": "not-started",
+          "doneness": "done",
           "type_facet": null,
           "standing": "origin",
           "display_name": "Fey Creature Has No Natural Armor"
         },
         {
           "name": "Foo Creature",
-          "doneness": "partial",
+          "doneness": "done",
           "type_facet": null,
           "standing": "origin",
           "display_name": "Foo Creature"
         },
         {
           "name": "Graveknight",
-          "doneness": "partial",
+          "doneness": "done",
           "type_facet": null,
           "standing": "origin",
           "display_name": "Graveknight"
         },
         {
           "name": "Imperial Dragon Attacks (Colossal)",
-          "doneness": "not-started",
+          "doneness": "done",
           "type_facet": null,
           "standing": "origin",
           "display_name": "Imperial Dragon Attacks (Colossal)"
         },
         {
           "name": "Imperial Dragon Attacks (Gargantuan)",
-          "doneness": "not-started",
+          "doneness": "done",
           "type_facet": null,
           "standing": "origin",
           "display_name": "Imperial Dragon Attacks (Gargantuan)"
         },
         {
           "name": "Imperial Dragon Attacks (Huge)",
-          "doneness": "not-started",
+          "doneness": "done",
           "type_facet": null,
           "standing": "origin",
           "display_name": "Imperial Dragon Attacks (Huge)"
         },
         {
           "name": "Imperial Dragon Attacks (Large)",
-          "doneness": "not-started",
+          "doneness": "done",
           "type_facet": null,
           "standing": "origin",
           "display_name": "Imperial Dragon Attacks (Large)"
         },
         {
           "name": "Imperial Dragon Attacks (Medium)",
-          "doneness": "not-started",
+          "doneness": "done",
           "type_facet": null,
           "standing": "origin",
           "display_name": "Imperial Dragon Attacks (Medium)"
         },
         {
           "name": "Imperial Dragon Attacks (Small)",
-          "doneness": "not-started",
+          "doneness": "done",
           "type_facet": null,
           "standing": "origin",
           "display_name": "Imperial Dragon Attacks (Small)"
         },
         {
           "name": "Imperial Dragon Attacks (Tiny)",
-          "doneness": "not-started",
+          "doneness": "done",
           "type_facet": null,
           "standing": "origin",
           "display_name": "Imperial Dragon Attacks (Tiny)"
         },
         {
           "name": "Imperial Dragon Attacks HD (3)",
-          "doneness": "not-started",
+          "doneness": "done",
           "type_facet": null,
           "standing": "origin",
           "display_name": "Imperial Dragon Attacks HD (3)"
         },
         {
           "name": "Imperial Dragon Attacks HD (4)",
-          "doneness": "not-started",
+          "doneness": "done",
           "type_facet": null,
           "standing": "origin",
           "display_name": "Imperial Dragon Attacks HD (4)"
         },
         {
           "name": "Imperial Dragon Attacks HD (5)",
-          "doneness": "not-started",
+          "doneness": "done",
           "type_facet": null,
           "standing": "origin",
           "display_name": "Imperial Dragon Attacks HD (5)"
         },
         {
           "name": "Imperial Dragon Attacks HD (6)",
-          "doneness": "not-started",
+          "doneness": "done",
           "type_facet": null,
           "standing": "origin",
           "display_name": "Imperial Dragon Attacks HD (6)"
         },
         {
           "name": "Imperial Dragon Attacks HD (7)",
-          "doneness": "not-started",
+          "doneness": "done",
           "type_facet": null,
           "standing": "origin",
           "display_name": "Imperial Dragon Attacks HD (7)"
         },
         {
           "name": "Imperial Dragon Attacks HD (8)",
-          "doneness": "not-started",
+          "doneness": "done",
           "type_facet": null,
           "standing": "origin",
           "display_name": "Imperial Dragon Attacks HD (8)"
         },
         {
           "name": "Imperial Foo Creature",
-          "doneness": "partial",
+          "doneness": "done",
           "type_facet": null,
           "standing": "origin",
           "display_name": "Imperial Foo Creature"
         },
         {
           "name": "IsCatfolk",
-          "doneness": "not-started",
+          "doneness": "done",
           "type_facet": null,
           "standing": "origin",
           "display_name": "IsCatfolk"
         },
         {
           "name": "IsRatfolk",
-          "doneness": "not-started",
+          "doneness": "done",
           "type_facet": null,
           "standing": "origin",
           "display_name": "IsRatfolk"
         },
         {
           "name": "IsSuli",
-          "doneness": "not-started",
+          "doneness": "done",
           "type_facet": null,
           "standing": "origin",
           "display_name": "IsSuli"
         },
         {
           "name": "IsVanara",
-          "doneness": "not-started",
+          "doneness": "done",
           "type_facet": null,
           "standing": "origin",
           "display_name": "IsVanara"
         },
         {
           "name": "IsVishkanya",
-          "doneness": "not-started",
+          "doneness": "done",
           "type_facet": null,
           "standing": "origin",
           "display_name": "IsVishkanya"
         },
         {
           "name": "Jiang-Shi Vampire",
-          "doneness": "partial",
+          "doneness": "done",
           "type_facet": null,
           "standing": "origin",
           "display_name": "Jiang-Shi Vampire"
         },
         {
           "name": "Kami",
-          "doneness": "not-started",
+          "doneness": "done",
           "type_facet": null,
           "standing": "origin",
           "display_name": "Kami"
         },
         {
           "name": "Kyton",
-          "doneness": "not-started",
+          "doneness": "done",
           "type_facet": null,
           "standing": "origin",
           "display_name": "Kyton"
         },
         {
           "name": "Leshy",
-          "doneness": "not-started",
+          "doneness": "done",
           "type_facet": null,
           "standing": "origin",
           "display_name": "Leshy"
         },
         {
           "name": "Oni",
-          "doneness": "not-started",
+          "doneness": "done",
           "type_facet": null,
           "standing": "origin",
           "display_name": "Oni"
         },
         {
           "name": "Penanggalen",
-          "doneness": "partial",
+          "doneness": "done",
           "type_facet": null,
           "standing": "origin",
           "display_name": "Penanggalen"
         },
         {
           "name": "Rakshasa",
-          "doneness": "not-started",
+          "doneness": "done",
           "type_facet": null,
           "standing": "origin",
           "display_name": "Rakshasa"
         },
         {
           "name": "Ratfolk",
-          "doneness": "not-started",
+          "doneness": "done",
           "type_facet": "Race Builder Subtype",
           "standing": "origin",
           "display_name": "Ratfolk (Race Builder Subtype)"
         },
         {
           "name": "Ratfolk",
-          "doneness": "not-started",
+          "doneness": "done",
           "type_facet": null,
           "standing": "origin",
           "display_name": "Ratfolk"
         },
         {
           "name": "Ratfolk",
-          "doneness": "not-started",
+          "doneness": "done",
           "type_facet": "Racial Heritage",
           "standing": "origin",
           "display_name": "Ratfolk (Racial Heritage)"
         },
         {
           "name": "Ratfolk",
-          "doneness": "not-started",
+          "doneness": "done",
           "type_facet": null,
           "standing": "origin",
           "display_name": "Ratfolk #4"
         },
         {
           "name": "Sasquatch",
-          "doneness": "not-started",
+          "doneness": "done",
           "type_facet": null,
           "standing": "unclassified",
           "display_name": "Sasquatch"
         },
         {
           "name": "Suli",
-          "doneness": "not-started",
+          "doneness": "done",
           "type_facet": null,
           "standing": "origin",
           "display_name": "Suli"
         },
         {
           "name": "Vanara",
-          "doneness": "not-started",
+          "doneness": "done",
           "type_facet": "Race Builder Subtype",
           "standing": "origin",
           "display_name": "Vanara (Race Builder Subtype)"
         },
         {
           "name": "Vanara",
-          "doneness": "not-started",
+          "doneness": "done",
           "type_facet": null,
           "standing": "origin",
           "display_name": "Vanara"
         },
         {
           "name": "Vanara",
-          "doneness": "not-started",
+          "doneness": "done",
           "type_facet": "Racial Heritage",
           "standing": "origin",
           "display_name": "Vanara (Racial Heritage)"
         },
         {
           "name": "Vanara",
-          "doneness": "not-started",
+          "doneness": "done",
           "type_facet": null,
           "standing": "origin",
           "display_name": "Vanara #4"
         },
         {
           "name": "Vishkanya",
-          "doneness": "not-started",
+          "doneness": "done",
           "type_facet": "Race Builder Subtype",
           "standing": "origin",
           "display_name": "Vishkanya (Race Builder Subtype)"
         },
         {
           "name": "Vishkanya",
-          "doneness": "not-started",
+          "doneness": "done",
           "type_facet": null,
           "standing": "origin",
           "display_name": "Vishkanya"
         },
         {
           "name": "Vishkanya",
-          "doneness": "not-started",
+          "doneness": "done",
           "type_facet": "Racial Heritage",
           "standing": "origin",
           "display_name": "Vishkanya (Racial Heritage)"
         },
         {
           "name": "Vishkanya",
-          "doneness": "not-started",
+          "doneness": "done",
           "type_facet": null,
           "standing": "origin",
           "display_name": "Vishkanya #4"

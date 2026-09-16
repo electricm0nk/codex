@@ -712,6 +712,7 @@ pub fn wizard_school_zero_level_spells(
 #[cfg(test)]
 mod tests {
     use super::*;
+    use crate::pcgen_import::ingest_record;
     use crate::rules_core::rules_tables::acg::spell_list as acg_spell_list;
     use crate::rules_core::rules_tables::apg::spell_list as apg_spell_list;
     use crate::rules_core::rules_tables::crb::sorcerer_spell_list::SORCERER_SPELL_LIST;
@@ -754,11 +755,7 @@ mod tests {
                 .unwrap_or_else(|e| panic!("readable corpus json at {path:?}: {e}"));
             let json: serde_json::Value =
                 serde_json::from_str(&text).expect("valid corpus json");
-            let raw_tokens = json["data"]["raw_tokens"].as_array().expect("raw_tokens array");
-            let spellknown = raw_tokens
-                .iter()
-                .find(|t| t["key"].as_str() == Some("SPELLKNOWN"))
-                .and_then(|t| t["value"].as_str())
+            let spellknown = ingest_record::first_token_value(&json, "SPELLKNOWN")
                 .unwrap_or_else(|| panic!("{dir} carries a SPELLKNOWN token"));
             // `CLASS|Wizard=0|Spell One,Spell Two`
             let corpus_spells: Vec<&str> = spellknown

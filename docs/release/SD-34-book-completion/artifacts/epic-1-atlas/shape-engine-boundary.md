@@ -16,8 +16,8 @@ Re-derive: `python3 scripts/shape_engine_boundary.py --check`
 ```
 
 **It does not place the record, attach it, or display it.** Those are separate, later steps
-gated by the engine's own promotion ladder -- the real authority, quoted below with its line
-number re-verified at HEAD, not assumed:
+gated by the engine's own promotion ladder -- the real authority, quoted below from the live
+file by content anchor, not assumed:
 
 ```rust
                 if has_real_description
@@ -26,8 +26,10 @@ number re-verified at HEAD, not assumed:
                     && facts.class_feature_pool_catalog_holds(&unit.source_book, &unit.key)
 ```
 
-(`src/bin/v06_work_inventory.rs:16274` -- re-checked by content,
-not just path/line, on every run of this instrument.)
+(`src/bin/v06_work_inventory.rs`, inside `fn classify`, resolving to
+line 16475 at the time of this run -- found by searching for
+these exact four lines on every run of this instrument, so a refactor that moves them keeps this
+citation green and a change to any of them fails it.)
 
 None of the four conditions is "a value was computed". Fail the last one and the verdict is
 `class_feature_owner_matched_by_name_but_record_not_held_by_engine` -- a unit the shape engine
@@ -36,24 +38,25 @@ record it would attach to.
 
 ## The measured consequence
 
-- **26396** units in `docs/work-inventory.json` carry at least one
+- **26397** units in `docs/work-inventory.json` carry at least one
   magnitude token (`magnitude_token_count > 0`) -- re-derive:
   `python3 -c "import json; d=json.load(open('docs/work-inventory.json')); print(sum(1 for u in d['units'] if (u.get('magnitude_token_count') or 0) > 0))"`
-  (denominator: 26396 of the corpus's full unit population, printed by
+  (denominator: 26397 of the corpus's full unit population, printed by
   `scripts/completion_atlas.py --check`)
-- Of those **26396**, **8784** are still not
+- Of those **26397**, **0** are still not
   held by the engine (`status == engine-does-not-hold`) -- re-derive:
   `python3 -c "import json; d=json.load(open('docs/work-inventory.json')); m=[u for u in d['units'] if (u.get('magnitude_token_count') or 0) > 0]; print(sum(1 for u in m if u.get('status') == 'engine-does-not-hold'))"`
-  (denominator: 26396 magnitude-bearing units, computed immediately
+  (denominator: 26397 magnitude-bearing units, computed immediately
   above)
 
-**Roughly a third of the shape engine's own feedstock is still stuck downstream of it** (this
+**0.0% of the shape engine's own feedstock is still stuck downstream of it**
+(0 of 26397 magnitude-bearing units; this
 fraction moved from just over half, 13119/26396, at Epic 1's original AT-34-E1-004 cycle
-to 8784/26396 here, as Epic 3's per-bucket
-work closed real units -- see `decisions.md §12` L10: a count that drops from measurement
-work is closure, not a re-measurement artifact). This is exactly the gap Epic 2's tables and
-Epics 3-4's per-bucket work close -- the engine already works; the boundary is where its
-output goes next.
+to 0/26397 here, as Epic 3's per-bucket
+work and SD-35's corpus-wide conversion closed real units -- see `decisions.md §12` L10: a count
+that drops from measurement work is closure, not a re-measurement artifact). This is exactly the
+gap Epic 2's tables and Epics 3-4's per-bucket work close -- the engine already works; the
+boundary is where its output goes next.
 
 ## Why this is a fact, not an assumption
 
@@ -61,6 +64,7 @@ Both counts above and the citation are re-derived by
 `python3 scripts/shape_engine_boundary.py --check` on every invocation, against the live
 `docs/work-inventory.json` and the live `src/bin/v06_work_inventory.rs` -- never quoted from an
 earlier document (`decisions.md §12` L2). The instrument fails closed (non-zero exit, no
-artifact written) if the citation's line numbers stop containing the exact conditions quoted
-above, so a refactor that moves this code cannot leave a stale "fact" behind
-(`risks-and-open-questions.md §10`).
+artifact written) if the four quoted lines stop appearing, consecutively and exactly once,
+inside `fn classify` -- so a refactor cannot leave a stale
+"fact" behind, and a change to the ladder's conditions cannot pass unnoticed
+(`risks-and-open-questions.md §10`; SD-35 `AT-35-E1-002`).

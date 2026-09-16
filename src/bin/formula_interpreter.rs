@@ -9,7 +9,7 @@
 //!
 //! Thin CLI wrapper, same shape as `derived_evaluator_fixture_check.rs`: the
 //! real logic lives in
-//! [`codex::rules_core::pilot_compute::formula_interpreter_corpus_wide::run_corpus_wide_scan`],
+//! [`codex::pcgen_import::formula_interpreter_corpus_wide::run_corpus_wide_scan`],
 //! this binary only parses arguments, runs it, and reports.
 //!
 //! Exit codes: `0` the corpus-wide run completed and its population matched
@@ -18,7 +18,7 @@
 //! census -- a cycle that ran against a subset must fail loudly here, not
 //! report a partial run as complete.
 
-use codex::rules_core::pilot_compute::formula_interpreter_corpus_wide::{
+use codex::pcgen_import::formula_interpreter_corpus_wide::{
     run_corpus_wide_scan, ScanError,
 };
 use std::path::PathBuf;
@@ -44,7 +44,7 @@ fn main() -> ExitCode {
                      against every unit the closed Gate 1 census (artifacts/gate-1-shape-closure/\
                      ledger.json) placed in family F1..F9, fixture-checking the run's own \
                      population against that census before reporting. See the module doc of \
-                     codex::rules_core::pilot_compute::formula_interpreter_corpus_wide."
+                     codex::pcgen_import::formula_interpreter_corpus_wide."
                 );
                 return ExitCode::SUCCESS;
             }

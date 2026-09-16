@@ -1050,6 +1050,7 @@ mod tests {
 #[cfg(test)]
 mod fixture_check_tests {
     use super::*;
+    use crate::pcgen_import::ingest_record;
 
     const DOMAINS_HEADER_JSON: &str =
         include_str!("../../../data/corpus/core_rulebook/class_feature/domains/domains.json");
@@ -1108,13 +1109,7 @@ mod fixture_check_tests {
 
     /// Every `BONUS` token value on a corpus record, in file order.
     fn bonus_values(doc: &serde_json::Value) -> Vec<String> {
-        doc["data"]["raw_tokens"]
-            .as_array()
-            .expect("raw_tokens array")
-            .iter()
-            .filter(|t| t["key"].as_str() == Some("BONUS"))
-            .map(|t| t["value"].as_str().expect("BONUS value").to_owned())
-            .collect()
+        ingest_record::token_values(doc, "BONUS").into_iter().map(str::to_owned).collect()
     }
 
     /// Guarantee 1/2's structural half: confirms `domain_power_env`'s core
@@ -1188,14 +1183,8 @@ mod fixture_check_tests {
             (ANIMATE_SERVANT_JSON, CONSTRUCT_SUBDOMAIN_SELECTION),
         ] {
             let doc = parse(json);
-            let desc = doc["data"]["raw_tokens"]
-                .as_array()
-                .expect("raw_tokens")
-                .iter()
-                .find(|t| t["key"].as_str() == Some("DESC"))
-                .expect("a DESC token")["value"]
-                .as_str()
-                .expect("DESC value")
+            let desc = ingest_record::first_token_value(&doc, "DESC")
+                .expect("a DESC token")
                 .to_owned();
             let first_formula_segment = desc
                 .split('|')
