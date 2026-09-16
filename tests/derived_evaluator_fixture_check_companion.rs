@@ -162,6 +162,10 @@ fn companion_pinned_upstream_lst_still_hashes_to_the_pinned_sha256() {
         eprintln!("PCGEN_CORPUS_ROOT unset and no HOME; skipping");
         return;
     };
+    if !data_root.is_dir() {
+        eprintln!("skipped: no PCGen checkout at {data_root:?}");
+        return;
+    }
     let fixtures = load_companion_fixtures(&repo_root());
     assert!(!fixtures.is_empty(), "companion_entries must not be empty");
     // Hash each distinct file once; the fixture set names only a handful.
@@ -198,6 +202,10 @@ fn companion_pinned_corpus_field_is_byte_identical_to_the_upstream_lst() {
         eprintln!("PCGEN_CORPUS_ROOT unset and no HOME; skipping");
         return;
     };
+    if !data_root.is_dir() {
+        eprintln!("skipped: no PCGen checkout at {data_root:?}");
+        return;
+    }
     let fixtures = load_companion_fixtures(&repo_root());
     assert!(!fixtures.is_empty(), "companion_entries must not be empty");
     let mut lines: BTreeMap<String, Vec<String>> = BTreeMap::new();

@@ -374,6 +374,10 @@ fn class_feature_description_pinned_upstream_lst_still_hashes_to_the_pinned_sha2
         eprintln!("PCGEN_CORPUS_ROOT unset and no HOME; skipping");
         return;
     };
+    if !data_root.is_dir() {
+        eprintln!("skipped: no PCGen checkout at {data_root:?}");
+        return;
+    }
     let fixtures = load_class_feature_description_fixtures(&repo_root());
     assert!(!fixtures.is_empty(), "class_feature_description_entries must not be empty");
     let mut hashed: BTreeMap<String, String> = BTreeMap::new();
@@ -406,6 +410,10 @@ fn class_feature_description_pinned_corpus_field_is_byte_identical_to_the_upstre
         eprintln!("PCGEN_CORPUS_ROOT unset and no HOME; skipping");
         return;
     };
+    if !data_root.is_dir() {
+        eprintln!("skipped: no PCGen checkout at {data_root:?}");
+        return;
+    }
     let fixtures = load_class_feature_description_fixtures(&repo_root());
     assert!(!fixtures.is_empty(), "class_feature_description_entries must not be empty");
     let mut checked = 0usize;
@@ -441,6 +449,10 @@ fn class_feature_description_expected_values_are_re_derivable_from_the_pinned_co
         eprintln!("PCGEN_CORPUS_ROOT unset and no HOME; skipping");
         return;
     };
+    if !data_root.is_dir() {
+        eprintln!("skipped: no PCGen checkout at {data_root:?}");
+        return;
+    }
     let fixtures = load_class_feature_description_fixtures(&repo_root());
     assert!(!fixtures.is_empty(), "class_feature_description_entries must not be empty");
     let mut checked = 0usize;

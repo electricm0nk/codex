@@ -89,6 +89,8 @@ const CLASS_LEVELS: ClassSpellLevelsDto[] = [
   {
     classId: 'class:wizard',
     known: true,
+    spellcasting: 'listIngested',
+    spellType: 'Arcane',
     entries: [
       { key: 'Hideous Laughter', level: 2 },
       { key: 'Magic Missile', level: 1 },
@@ -99,12 +101,14 @@ const CLASS_LEVELS: ClassSpellLevelsDto[] = [
   {
     classId: 'class:bard',
     known: true,
+    spellcasting: 'listIngested',
+    spellType: 'Arcane',
     entries: [{ key: 'Hideous Laughter', level: 1 }],
   },
   // A real class the engine has ingested no spell list for. It names
   // itself in genuine corpus `CLASSES:` tags, so its levels are knowable —
   // they just are not known here, and must not be guessed.
-  { classId: 'class:magus', known: false, entries: [] },
+  { classId: 'class:magus', known: false, entries: [], spellcasting: 'casterListNotIngested', spellType: 'Arcane' },
 ];
 
 function selection(

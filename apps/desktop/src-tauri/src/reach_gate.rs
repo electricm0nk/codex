@@ -8797,6 +8797,7 @@ mod tests {
             companion_species: None,
             selected_traits: Vec::new(),
             trait_skill_choices: Vec::new(),
+            additional_choices: Vec::new(),
             saved_at: "2026-09-08T00:00:00Z".to_owned(),
         };
         match create_character_at_root(&root, &request, "test-version".to_owned()).expect("create call should not error") {

@@ -10,6 +10,9 @@ mod class_catalog_generic;
 mod class_feature_descriptions;
 mod class_feature_feat_bridge;
 mod class_feature_pool_picker;
+mod wizard_school_picker;
+mod dm_console_export;
+mod encounter_rating;
 mod class_spell_levels;
 /// The catalog-row → converted-record join, which moved into the library crate
 /// (`codex::rules_core::converted_prose`) in SD-35 `AT-35-E6-003-SWEEP` cycle 17 so the
@@ -57,6 +60,7 @@ use character_hub::{
     load_character_durability, load_character_money, load_character_portrait,
     list_race_creation_roster, load_saved_character, preview_level_up, purchase_equipment,
     record_and_prepare_spell_selection, remove_equipment_selection, remove_feat_selection,
+    add_trait_selection, remove_trait_selection, set_equipment_active_state,
     remove_spell_selection,
     save_character_portrait, set_skill_allocations, update_character_bio,
 };
@@ -67,6 +71,9 @@ use class_catalog::list_class_catalog;
 use class_feature_descriptions::list_class_feature_descriptions;
 use class_feature_feat_bridge::list_class_feature_feat_bridge_descriptions;
 use class_feature_pool_picker::list_class_feature_pool_options;
+use wizard_school_picker::list_wizard_school_options;
+use dm_console_export::export_dm_console;
+use encounter_rating::rate_encounter;
 use class_spell_levels::list_class_spell_levels;
 use corpus_ingest_diagnostic::corpus_ingest_diagnostic;
 use equipment_catalog::{list_equipment, list_equipment_catalog};
@@ -184,6 +191,9 @@ fn main() {
             record_and_prepare_spell_selection,
             add_feat_selection,
             remove_feat_selection,
+            add_trait_selection,
+            remove_trait_selection,
+            set_equipment_active_state,
             remove_spell_selection,
             remove_equipment_selection,
             set_skill_allocations,
@@ -247,6 +257,9 @@ fn main() {
             // regardless of selection, modelled on
             // `list_alternate_racial_traits`'s own precedent.
             list_class_feature_pool_options,
+            list_wizard_school_options,
+            export_dm_console,
+            rate_encounter,
             list_equipment,
             list_spells,
             list_feats,

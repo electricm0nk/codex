@@ -13,6 +13,8 @@ import { formatError, hasTauriRuntime } from './runtime';
  */
 
 export interface CharacterBioDto {
+  /** The human at the table playing this character (v0.8 B-1 / F-14). Wire key `playerName`. */
+  playerName: string;
   alignment: string;
   deity: string;
   sex: string;
@@ -24,6 +26,7 @@ export interface CharacterBioDto {
 }
 
 export const BLANK_CHARACTER_BIO: CharacterBioDto = {
+  playerName: '',
   alignment: '',
   deity: '',
   sex: '',

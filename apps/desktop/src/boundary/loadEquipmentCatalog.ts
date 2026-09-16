@@ -45,6 +45,13 @@ export interface EquipmentCatalogEntryDto {
    * never a fabricated 0. All 42 PU rows are `null` for this reason.
    */
   costGp: number | null;
+  /**
+   * v0.8 B-8: the record's weight in pounds. `null` where the corpus row
+   * records no weight (the `(Base)` template twins, all 42 PU rows) —
+   * genuinely absent, never a fabricated 0. Serialized as an explicit
+   * `null`, like `costGp`.
+   */
+  weightLbs: number | null;
   /** Which ingested book this record came from. */
   book: EquipmentBookDto;
   /**

@@ -18,7 +18,9 @@ import { hasTauriRuntime } from '../boundary/runtime';
  * two corpus records genuinely carry no description — `Backpack`
  * (`general.rs`) and `Material ~ Cloth` (`equipmods.rs`) — which keeps the
  * preview representative of the real catalog, where 974 of 3830 records
- * have none. */
+ * have none. Each row's `weightLbs` is likewise that record's own
+ * `weight_lbs` from the same tables (v0.8 F-15) — `null` where the table
+ * records none. */
 function buildPreviewCatalog(): EquipmentCatalogEntryDto[] {
   return [
     {
@@ -26,6 +28,7 @@ function buildPreviewCatalog(): EquipmentCatalogEntryDto[] {
       category: 'ArmsArmor',
       name: 'Longsword',
       costGp: 15,
+      weightLbs: 4,
       book: 'CRB',
       description: 'This sword is about 3-1/2 feet in length.',
     },
@@ -34,21 +37,23 @@ function buildPreviewCatalog(): EquipmentCatalogEntryDto[] {
       category: 'ArmsArmor',
       name: 'Chain Shirt',
       costGp: 100,
+      weightLbs: 25,
       book: 'CRB',
       description:
         'Covering the torso, this shirt is made up of thousands of interlocking metal rings.',
     },
-    { key: 'Backpack', category: 'General', name: 'Backpack', costGp: 2, book: 'CRB', description: null },
+    { key: 'Backpack', category: 'General', name: 'Backpack', costGp: 2, weightLbs: 2, book: 'CRB', description: null },
     {
       key: 'Potion of Aid',
       category: 'MagicItems',
       name: 'Potion of Aid',
       costGp: null,
+      weightLbs: 0,
       book: 'CRB',
       description:
         '+1 morale bonus on attack rolls and saves vs. fear, plus 1d8+1 temporary hp for 1 minute',
     },
-    { key: 'Material ~ Cloth', category: 'Equipmods', name: 'Cloth', costGp: 0, book: 'CRB', description: null },
+    { key: 'Material ~ Cloth', category: 'Equipmods', name: 'Cloth', costGp: 0, weightLbs: null, book: 'CRB', description: null },
   ];
 }
 

@@ -138,12 +138,12 @@ function verifiesTraitSkillChoicesDefaultsToEmptyAndPassesThroughWhenProvided() 
     {
       ...baseFields,
       selectedTraits: ['trait:trait_criminal'],
-      traitSkillChoices: [{ choiceSetId: 'trait_choice:trait:trait_criminal', selectionId: 'skill:intimidate' }],
+      traitSkillChoices: [{ choiceSetId: 'trait_choice:trait_criminal', selectionId: 'skill:intimidate' }],
     },
     deps
   );
   assertEqual(withChoices.traitSkillChoices.length, 1, 'provided traitSkillChoices passes through');
-  assertEqual(withChoices.traitSkillChoices[0]!.choiceSetId, 'trait_choice:trait:trait_criminal', 'choiceSetId');
+  assertEqual(withChoices.traitSkillChoices[0]!.choiceSetId, 'trait_choice:trait_criminal', 'choiceSetId');
   assertEqual(withChoices.traitSkillChoices[0]!.selectionId, 'skill:intimidate', 'selectionId');
 }
 
