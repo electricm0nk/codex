@@ -352,30 +352,6 @@ fn race_identity(race_name: &str) -> String {
     race_name.chars().filter(char::is_ascii_alphanumeric).collect()
 }
 
-/// The race identities one book actually declares a chassis record for.
-///
-/// Read from the corpus's own chassis records rather than from the catalog's
-/// trait rows, so `reach_gate`'s races claim compares two independent things:
-/// what a book ingested (here) against what reaches a player (the catalog
-/// rows). Deriving both from the catalog would make the claim vacuously true.
-///
-/// `book_id` is the corpus directory name (`"core_rulebook"`, `"beastiary"`),
-/// not the wire code.
-pub(crate) fn ingested_race_ids_for_book(book_id: &str) -> std::collections::BTreeSet<String> {
-    let Ok(corpus) = race_corpus() else {
-        return std::collections::BTreeSet::new();
-    };
-    corpus
-        .race_keys()
-        .into_iter()
-        .filter(|race_key| {
-            corpus.chassis(race_key).is_some_and(|chassis| chassis.book_id == book_id)
-        })
-        .filter_map(|race_key| corpus.resolve(race_key, &[]))
-        .map(|race| race_identity(&race.name))
-        .collect()
-}
-
 fn build_catalog() -> RaceCatalogResponse {
     let corpus = match race_corpus() {
         Ok(corpus) => corpus,

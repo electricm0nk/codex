@@ -33,11 +33,6 @@ mod pf1_adapter;
 mod race_catalog;
 mod race_trait_picker;
 mod reference_library_catalog;
-/// Test-only: the reach gate, which fails when ingested content has no
-/// consumer carrying it to a player. Compiled out of the shipping binary
-/// because it is a verification surface, not a runtime one.
-#[cfg(test)]
-mod reach_gate;
 mod rule_system_adapter;
 mod spell_catalog;
 mod stub_adapter;

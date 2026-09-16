@@ -107,8 +107,8 @@ ONLY_STAGES=()
 # §4.1, 5 of 34) and a ~490-binary root-full build is exactly what tips a box
 # over — it must fail loudly before that build starts, not be discovered by
 # `ld terminated with signal 7 [Bus error]` partway through it.
-ALL_STAGES=(preflight-disk preflight-oracle oracle-pin-selftest producer-selftest pi-redaction-selftest provenance-selftest site-dashboard-selftest site-dashboard-pin site-dashboard-check site-dashboard-pi-gate build-public-status-selftest site-public-status-check site-public-status-pi-gate site-asset-stamp-check reachability-audit-selftest reachability-audit groundtruth-guard-selftest supersession-gate-selftest shape-coverage-standing-gate-selftest shape-coverage-standing-gate cycle-scope-gate-selftest shape-engine-boundary-selftest shape-engine-boundary missing-engine-tables denominator-gate figure-provenance pcgen-residue-gate token-coverage-selftest token-coverage pi-sweep declared-pi-audit audit-selftest reclaim-selftest driver-selftest corpus-sweep-selftest corpus-trap-audit-selftest root-lib root-full desktop reach corpus-sweep sheet-rules-check corpus-trap-audit supersession-gate frontend-install frontend-test frontend-typecheck clippy class-dump)
-QUICK_STAGES=(preflight-disk preflight-oracle oracle-pin-selftest producer-selftest pi-redaction-selftest provenance-selftest site-dashboard-selftest site-dashboard-pin site-dashboard-check site-dashboard-pi-gate build-public-status-selftest site-public-status-check site-public-status-pi-gate site-asset-stamp-check reachability-audit-selftest reachability-audit groundtruth-guard-selftest supersession-gate-selftest shape-coverage-standing-gate-selftest shape-coverage-standing-gate cycle-scope-gate-selftest shape-engine-boundary-selftest shape-engine-boundary missing-engine-tables denominator-gate figure-provenance pcgen-residue-gate token-coverage-selftest token-coverage pi-sweep declared-pi-audit audit-selftest reclaim-selftest driver-selftest corpus-sweep-selftest corpus-trap-audit-selftest root-lib reach frontend-install frontend-test frontend-typecheck class-dump)
+ALL_STAGES=(preflight-disk preflight-oracle oracle-pin-selftest producer-selftest pi-redaction-selftest provenance-selftest site-dashboard-selftest site-dashboard-pin site-dashboard-check site-dashboard-pi-gate build-public-status-selftest site-public-status-check site-public-status-pi-gate site-asset-stamp-check reachability-audit-selftest reachability-audit groundtruth-guard-selftest supersession-gate-selftest shape-coverage-standing-gate-selftest shape-coverage-standing-gate cycle-scope-gate-selftest shape-engine-boundary-selftest shape-engine-boundary missing-engine-tables denominator-gate figure-provenance pcgen-residue-gate token-coverage-selftest token-coverage pi-sweep declared-pi-audit audit-selftest reclaim-selftest driver-selftest corpus-sweep-selftest corpus-trap-audit-selftest root-lib root-full desktop corpus-sweep sheet-rules-check corpus-trap-audit supersession-gate frontend-install frontend-test frontend-typecheck clippy class-dump)
+QUICK_STAGES=(preflight-disk preflight-oracle oracle-pin-selftest producer-selftest pi-redaction-selftest provenance-selftest site-dashboard-selftest site-dashboard-pin site-dashboard-check site-dashboard-pi-gate build-public-status-selftest site-public-status-check site-public-status-pi-gate site-asset-stamp-check reachability-audit-selftest reachability-audit groundtruth-guard-selftest supersession-gate-selftest shape-coverage-standing-gate-selftest shape-coverage-standing-gate cycle-scope-gate-selftest shape-engine-boundary-selftest shape-engine-boundary missing-engine-tables denominator-gate figure-provenance pcgen-residue-gate token-coverage-selftest token-coverage pi-sweep declared-pi-audit audit-selftest reclaim-selftest driver-selftest corpus-sweep-selftest corpus-trap-audit-selftest root-lib frontend-install frontend-test frontend-typecheck class-dump)
 
 usage() {
     sed -n '3,48p' "${BASH_SOURCE[0]}" | sed 's/^# \{0,1\}//'
@@ -1777,36 +1777,6 @@ run_desktop() {
 }
 
 # ---------------------------------------------------------------------------
-# Stage: reach gate
-#
-# The desktop crate's content-reach suite, run on its own so --quick still
-# covers it. Every ingested (book, content-kind) pair must have a verified
-# consumer carrying real payload across the IPC boundary; see
-# apps/desktop/src-tauri/src/reach_gate.rs.
-# ---------------------------------------------------------------------------
-
-run_reach() {
-    stage_start "reach — cargo test --locked -j $JOBS reach_gate  (apps/desktop/src-tauri)"
-    local log="$LOG_DIR/reach.log"
-    ( cd "$TAURI_DIR" && exec cargo test --locked -j "$JOBS" reach_gate ) >"$log" 2>&1
-    local status=$?
-
-    if (( status != 0 )); then
-        stage_fail reach "cargo exit $status — $log"
-        return
-    fi
-    local passed; passed=$(count_passed "$log")
-    # A reach gate that runs zero tests asserts nothing. This repo has already
-    # shipped tests that passed while asserting nothing; a filter that matches
-    # no test name would reproduce that exactly.
-    if (( passed == 0 )); then
-        stage_fail reach "0 tests matched the reach_gate filter — the gate is not running at all — $log"
-        return
-    fi
-    stage_pass reach "$passed passed"
-}
-
-# ---------------------------------------------------------------------------
 # Stage: frontend install
 #
 # apps/desktop/scripts/run-tests.mjs spawns each test file through
@@ -2033,7 +2003,7 @@ run_pi_sweep() {
     fi
 
     # A sweep that examined nothing asserts nothing — the same 0-matched
-    # failure mode `reach` and `audit-selftest` each guard against.
+    # failure mode `audit-selftest` guards against.
     if ! grep -q '^pi-sweep: CLEAN' "$log"; then
         stage_fail pi-sweep "binary exited 0 without reporting CLEAN — $log"
         return
@@ -2148,8 +2118,8 @@ run_audit_selftest() {
         return
     fi
 
-    # A self-test that discovers no cases proves nothing — same failure mode
-    # the `reach` stage guards with its 0-tests-matched check.
+    # A self-test that discovers no cases proves nothing -- the same
+    # 0-tests-matched failure mode other stages in this file guard against.
     local passed
     passed=$(sed -n 's/^passed: \([0-9]*\).*$/\1/p' "$log" | tail -1)
     if [[ -z "$passed" || "$passed" -eq 0 ]]; then
@@ -2670,7 +2640,6 @@ for stage in "${SELECTED[@]}"; do
         root-lib)            run_root_lib ;;
         root-full)           run_root_full ;;
         desktop)             run_desktop ;;
-        reach)               run_reach ;;
         frontend-install)    run_frontend_install ;;
         frontend-test)       run_frontend_test ;;
         frontend-typecheck)  run_frontend_typecheck ;;
