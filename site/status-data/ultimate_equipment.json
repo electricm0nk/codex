@@ -5,12 +5,12 @@
     {
       "kind": "ability",
       "label": "Abilities",
-      "done": 45,
+      "done": 46,
       "partial": 0,
       "not_started": 0,
-      "denominator": 45,
+      "denominator": 46,
       "pct": 100.0,
-      "excluded_from_percentage": 1,
+      "excluded_from_percentage": 0,
       "standing_breakdown": {
         "origin": 45,
         "unclassified": 1
@@ -343,12 +343,12 @@
     {
       "kind": "equipment",
       "label": "Equipment",
-      "done": 1224,
-      "partial": 15,
+      "done": 1424,
+      "partial": 0,
       "not_started": 0,
-      "denominator": 1239,
-      "pct": 98.8,
-      "excluded_from_percentage": 185,
+      "denominator": 1424,
+      "pct": 100.0,
+      "excluded_from_percentage": 0,
       "standing_breakdown": {
         "origin": 1239,
         "unclassified": 185
@@ -748,7 +748,7 @@
         },
         {
           "name": "Arrowbreak Bow",
-          "doneness": "partial",
+          "doneness": "done",
           "type_facet": "Magic.Cursed.Weapon.Resizable.Martial.Ranged.Standard.Piercing.Container.Projectile.Bow.Shortbow",
           "standing": "origin",
           "display_name": "Arrowbreak Bow"
@@ -1483,7 +1483,7 @@
         },
         {
           "name": "Blazing Robe",
-          "doneness": "partial",
+          "doneness": "done",
           "type_facet": "Magic.Wondrous.LesserMedium.Robe",
           "standing": "origin",
           "display_name": "Blazing Robe"
@@ -1560,49 +1560,49 @@
         },
         {
           "name": "Bodywrap of Mighty Strikes +1",
-          "doneness": "partial",
+          "doneness": "done",
           "type_facet": "Magic.Wondrous.LesserMinor.Robe",
           "standing": "origin",
           "display_name": "Bodywrap of Mighty Strikes +1"
         },
         {
           "name": "Bodywrap of Mighty Strikes +2",
-          "doneness": "partial",
+          "doneness": "done",
           "type_facet": "Magic.Wondrous.LesserMedium.Robe",
           "standing": "origin",
           "display_name": "Bodywrap of Mighty Strikes +2"
         },
         {
           "name": "Bodywrap of Mighty Strikes +3",
-          "doneness": "partial",
+          "doneness": "done",
           "type_facet": "Magic.Wondrous.GreaterMedium.Robe",
           "standing": "origin",
           "display_name": "Bodywrap of Mighty Strikes +3"
         },
         {
           "name": "Bodywrap of Mighty Strikes +4",
-          "doneness": "partial",
+          "doneness": "done",
           "type_facet": "Magic.Wondrous.LesserMajor.Robe",
           "standing": "origin",
           "display_name": "Bodywrap of Mighty Strikes +4"
         },
         {
           "name": "Bodywrap of Mighty Strikes +5",
-          "doneness": "partial",
+          "doneness": "done",
           "type_facet": "Magic.Wondrous.GreaterMajor.Robe",
           "standing": "origin",
           "display_name": "Bodywrap of Mighty Strikes +5"
         },
         {
           "name": "Bodywrap of Mighty Strikes +6",
-          "doneness": "partial",
+          "doneness": "done",
           "type_facet": "Magic.Wondrous.GreaterMajor.Robe",
           "standing": "origin",
           "display_name": "Bodywrap of Mighty Strikes +6"
         },
         {
           "name": "Bodywrap of Mighty Strikes +7",
-          "doneness": "partial",
+          "doneness": "done",
           "type_facet": "Magic.Wondrous.GreaterMajor.Robe",
           "standing": "origin",
           "display_name": "Bodywrap of Mighty Strikes +7"
@@ -1882,7 +1882,7 @@
         },
         {
           "name": "Bracers of the Merciful Knight",
-          "doneness": "partial",
+          "doneness": "done",
           "type_facet": "Magic.Wondrous.Bracer.LesserMedium",
           "standing": "origin",
           "display_name": "Bracers of the Merciful Knight"
@@ -6236,7 +6236,7 @@
         },
         {
           "name": "Nearfiring Bow",
-          "doneness": "partial",
+          "doneness": "done",
           "type_facet": "Magic.Cursed.Weapon.Resizable.Martial.Ranged.Standard.Piercing.Container.Projectile.Bow.Shortbow",
           "standing": "origin",
           "display_name": "Nearfiring Bow"
@@ -7706,7 +7706,7 @@
         },
         {
           "name": "Rod (Conduit)",
-          "doneness": "partial",
+          "doneness": "done",
           "type_facet": "Magic.Rod.GreaterMedium",
           "standing": "origin",
           "display_name": "Rod (Conduit)"
@@ -8077,7 +8077,7 @@
         },
         {
           "name": "Rod of Foiled Magic",
-          "doneness": "partial",
+          "doneness": "done",
           "type_facet": "Magic.Rod.Cursed",
           "standing": "origin",
           "display_name": "Rod of Foiled Magic"
@@ -8553,7 +8553,7 @@
         },
         {
           "name": "Shocking Robe",
-          "doneness": "partial",
+          "doneness": "done",
           "type_facet": "Magic.Wondrous.LesserMedium.Robe",
           "standing": "origin",
           "display_name": "Shocking Robe"
@@ -10002,7 +10002,7 @@
         },
         {
           "name": "Voidfrost Robe",
-          "doneness": "partial",
+          "doneness": "done",
           "type_facet": "Magic.Wondrous.LesserMedium.Robe",
           "standing": "origin",
           "display_name": "Voidfrost Robe"
@@ -10327,12 +10327,12 @@
     {
       "kind": "equipment_modifier",
       "label": "Equipment Modifiers",
-      "done": 152,
+      "done": 190,
       "partial": 0,
       "not_started": 0,
-      "denominator": 152,
+      "denominator": 190,
       "pct": 100.0,
-      "excluded_from_percentage": 38,
+      "excluded_from_percentage": 0,
       "standing_breakdown": {
         "origin": 152,
         "unclassified": 38
@@ -11673,12 +11673,12 @@
     {
       "kind": "skill",
       "label": "Skills",
-      "done": 0,
+      "done": 1,
       "partial": 0,
       "not_started": 0,
-      "denominator": 0,
-      "pct": 0.0,
-      "excluded_from_percentage": 1,
+      "denominator": 1,
+      "pct": 100.0,
+      "excluded_from_percentage": 0,
       "standing_breakdown": {
         "unclassified": 1
       },
@@ -11695,11 +11695,11 @@
     {
       "kind": "spell",
       "label": "Spells",
-      "done": 0,
-      "partial": 1,
+      "done": 1,
+      "partial": 0,
       "not_started": 0,
       "denominator": 1,
-      "pct": 0.0,
+      "pct": 100.0,
       "excluded_from_percentage": 0,
       "standing_breakdown": {
         "origin": 1
@@ -11707,7 +11707,7 @@
       "items": [
         {
           "name": "Medusa Mask Gaze",
-          "doneness": "partial",
+          "doneness": "done",
           "type_facet": "Arcane",
           "standing": "origin",
           "display_name": "Medusa Mask Gaze"

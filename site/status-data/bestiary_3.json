@@ -55,12 +55,12 @@
     {
       "kind": "companion",
       "label": "Companions",
-      "done": 64,
+      "done": 85,
       "partial": 0,
       "not_started": 0,
-      "denominator": 64,
+      "denominator": 85,
       "pct": 100.0,
-      "excluded_from_percentage": 21,
+      "excluded_from_percentage": 0,
       "standing_breakdown": {
         "origin": 64,
         "unclassified": 21
@@ -530,63 +530,63 @@
         },
         {
           "name": "Spell-Like Abilities",
-          "doneness": "partial",
+          "doneness": "done",
           "type_facet": "AugurRacialAbility.SpecialQuality.SpellLike",
           "standing": "unclassified",
           "display_name": "Spell-Like Abilities (AugurRacialAbility.SpecialQuality.SpellLike)"
         },
         {
           "name": "Spell-Like Abilities",
-          "doneness": "partial",
+          "doneness": "done",
           "type_facet": "CarbuncleRacialAbility.SpecialQuality.SpellLike",
           "standing": "unclassified",
           "display_name": "Spell-Like Abilities (CarbuncleRacialAbility.SpecialQuality.SpellLike)"
         },
         {
           "name": "Spell-Like Abilities",
-          "doneness": "partial",
+          "doneness": "done",
           "type_facet": "DoruRacialAbility.SpecialQuality.SpellLike",
           "standing": "unclassified",
           "display_name": "Spell-Like Abilities (DoruRacialAbility.SpecialQuality.SpellLike)"
         },
         {
           "name": "Spell-Like Abilities",
-          "doneness": "partial",
+          "doneness": "done",
           "type_facet": "FaerieDragonRacialAbility.SpecialQuality.SpellLike",
           "standing": "unclassified",
           "display_name": "Spell-Like Abilities (FaerieDragonRacialAbility.SpecialQuality.SpellLike)"
         },
         {
           "name": "Spell-Like Abilities",
-          "doneness": "partial",
+          "doneness": "done",
           "type_facet": "SpecialQuality.SpellLike",
           "standing": "unclassified",
           "display_name": "Spell-Like Abilities (SpecialQuality.SpellLike)"
         },
         {
           "name": "Spell-Like Abilities",
-          "doneness": "partial",
+          "doneness": "done",
           "type_facet": "RaktavarnaRacialAbility.SpecialQuality.SpellLike",
           "standing": "unclassified",
           "display_name": "Spell-Like Abilities (RaktavarnaRacialAbility.SpecialQuality.SpellLike)"
         },
         {
           "name": "Spell-Like Abilities",
-          "doneness": "partial",
+          "doneness": "done",
           "type_facet": "SpiritOniRacialAbility.SpecialQuality.SpellLike",
           "standing": "unclassified",
           "display_name": "Spell-Like Abilities (SpiritOniRacialAbility.SpecialQuality.SpellLike)"
         },
         {
           "name": "Spell-Like Abilities",
-          "doneness": "partial",
+          "doneness": "done",
           "type_facet": "SpriteRacialAbility.SpecialQuality.SpellLike",
           "standing": "unclassified",
           "display_name": "Spell-Like Abilities (SpriteRacialAbility.SpecialQuality.SpellLike)"
         },
         {
           "name": "Spell-Like Abilities",
-          "doneness": "partial",
+          "doneness": "done",
           "type_facet": "ZoogRacialAbility.SpecialQuality.SpellLike",
           "standing": "unclassified",
           "display_name": "Spell-Like Abilities (ZoogRacialAbility.SpecialQuality.SpellLike)"
@@ -666,12 +666,12 @@
     {
       "kind": "equipment",
       "label": "Equipment",
-      "done": 2,
+      "done": 4,
       "partial": 0,
       "not_started": 0,
-      "denominator": 2,
+      "denominator": 4,
       "pct": 100.0,
-      "excluded_from_percentage": 2,
+      "excluded_from_percentage": 0,
       "standing_breakdown": {
         "unclassified": 2,
         "origin": 2
@@ -753,12 +753,12 @@
     {
       "kind": "language",
       "label": "Languages",
-      "done": 13,
+      "done": 24,
       "partial": 0,
       "not_started": 0,
-      "denominator": 13,
+      "denominator": 24,
       "pct": 100.0,
-      "excluded_from_percentage": 11,
+      "excluded_from_percentage": 0,
       "standing_breakdown": {
         "origin": 13,
         "unclassified": 11
@@ -937,12 +937,12 @@
     {
       "kind": "monster_ability",
       "label": "Monster Abilities",
-      "done": 356,
-      "partial": 19,
+      "done": 696,
+      "partial": 0,
       "not_started": 0,
-      "denominator": 375,
-      "pct": 94.9,
-      "excluded_from_percentage": 321,
+      "denominator": 696,
+      "pct": 100.0,
+      "excluded_from_percentage": 0,
       "standing_breakdown": {
         "origin": 375,
         "unclassified": 321
@@ -1237,7 +1237,7 @@
         },
         {
           "name": "Binding Contract",
-          "doneness": "partial",
+          "doneness": "done",
           "type_facet": "ContractDevilRacialAbility.SpecialQuality.Supernatural",
           "standing": "origin",
           "display_name": "Binding Contract"
@@ -1615,7 +1615,7 @@
         },
         {
           "name": "Clockwork Traits",
-          "doneness": "partial",
+          "doneness": "done",
           "type_facet": "SpecialQuality.Extraordinary",
           "standing": "origin",
           "display_name": "Clockwork Traits"
@@ -1692,7 +1692,7 @@
         },
         {
           "name": "Cooperative Scrying",
-          "doneness": "partial",
+          "doneness": "done",
           "type_facet": "CaulbornRacialAbility.SpecialQuality.SpellLike",
           "standing": "origin",
           "display_name": "Cooperative Scrying"
@@ -1930,7 +1930,7 @@
         },
         {
           "name": "Devour Soul",
-          "doneness": "partial",
+          "doneness": "done",
           "type_facet": "DemilichRacialAbility.SpecialQuality.Supernatural",
           "standing": "unclassified",
           "display_name": "Devour Soul (DemilichRacialAbility.SpecialQuality.Supernatural)"
@@ -1979,7 +1979,7 @@
         },
         {
           "name": "Disease",
-          "doneness": "partial",
+          "doneness": "done",
           "type_facet": "MyceloidRacialAbility.SpecialQuality.Supernatural",
           "standing": "unclassified",
           "display_name": "Disease (MyceloidRacialAbility.SpecialQuality.Supernatural)"
@@ -2035,7 +2035,7 @@
         },
         {
           "name": "Dispelling Bite",
-          "doneness": "partial",
+          "doneness": "done",
           "type_facet": "LukwataRacialAbility.SpecialQuality.Supernatural",
           "standing": "origin",
           "display_name": "Dispelling Bite"
@@ -2154,14 +2154,14 @@
         },
         {
           "name": "Efficient Winding",
-          "doneness": "partial",
+          "doneness": "done",
           "type_facet": "ClockworkSoldierRacialAbility.SpecialQuality.Extraordinary",
           "standing": "unclassified",
           "display_name": "Efficient Winding"
         },
         {
           "name": "Eldritch Encrustation",
-          "doneness": "partial",
+          "doneness": "done",
           "type_facet": "LukwataRacialAbility.SpecialQuality.Supernatural",
           "standing": "origin",
           "display_name": "Eldritch Encrustation"
@@ -2616,7 +2616,7 @@
         },
         {
           "name": "Immunity to Magic",
-          "doneness": "partial",
+          "doneness": "done",
           "type_facet": "CaryatidColumnRacialAbility.SpecialQuality.Extraordinary",
           "standing": "unclassified",
           "display_name": "Immunity to Magic (CaryatidColumnRacialAbility.SpecialQuality.Extraordinary)"
@@ -2770,14 +2770,14 @@
         },
         {
           "name": "Keen Weapons",
-          "doneness": "partial",
+          "doneness": "done",
           "type_facet": "TerraCottaSoldierRacialAbility.SpecialQuality.Supernatural",
           "standing": "origin",
           "display_name": "Keen Weapons"
         },
         {
           "name": "Keepsake",
-          "doneness": "partial",
+          "doneness": "done",
           "type_facet": "GourdLeshyRacialAbility.SpecialQuality.Supernatural",
           "standing": "origin",
           "display_name": "Keepsake"
@@ -2847,7 +2847,7 @@
         },
         {
           "name": "Leshy Traits",
-          "doneness": "partial",
+          "doneness": "done",
           "type_facet": "SpecialQuality.Extraordinary",
           "standing": "unclassified",
           "display_name": "Leshy Traits"
@@ -2875,7 +2875,7 @@
         },
         {
           "name": "Light Lure",
-          "doneness": "partial",
+          "doneness": "done",
           "type_facet": "IkuTursoRacialAbility.SpecialQuality.Supernatural",
           "standing": "origin",
           "display_name": "Light Lure"
@@ -3015,7 +3015,7 @@
         },
         {
           "name": "Mirage",
-          "doneness": "partial",
+          "doneness": "done",
           "type_facet": "SargassumFiendRacialAbility.SpecialQuality.Supernatural",
           "standing": "unclassified",
           "display_name": "Mirage"
@@ -3099,7 +3099,7 @@
         },
         {
           "name": "Negative Energy Affinity",
-          "doneness": "partial",
+          "doneness": "done",
           "type_facet": "HungryFogRacialAbility.SpecialQuality",
           "standing": "unclassified",
           "display_name": "Negative Energy Affinity"
@@ -3120,7 +3120,7 @@
         },
         {
           "name": "None",
-          "doneness": "partial",
+          "doneness": "done",
           "type_facet": "AsurendraAdditional",
           "standing": "origin",
           "display_name": "None"
@@ -3694,7 +3694,7 @@
         },
         {
           "name": "Record Audio",
-          "doneness": "partial",
+          "doneness": "done",
           "type_facet": "ClockworkSpyRacialAbility.SpecialQuality.Supernatural",
           "standing": "origin",
           "display_name": "Record Audio"
@@ -3785,7 +3785,7 @@
         },
         {
           "name": "Ruinous",
-          "doneness": "partial",
+          "doneness": "done",
           "type_facet": "SpecialQuality.Supernatural",
           "standing": "origin",
           "display_name": "Ruinous"
@@ -3834,7 +3834,7 @@
         },
         {
           "name": "Sandstorm",
-          "doneness": "partial",
+          "doneness": "done",
           "type_facet": "AghashRacialAbility.SpecialQuality.Supernatural",
           "standing": "unclassified",
           "display_name": "Sandstorm"
@@ -3911,7 +3911,7 @@
         },
         {
           "name": "Scrimshaw Magic",
-          "doneness": "partial",
+          "doneness": "done",
           "type_facet": "TupilaqRacialAbility.SpecialQuality.SpellLike",
           "standing": "origin",
           "display_name": "Scrimshaw Magic"
@@ -4247,735 +4247,735 @@
         },
         {
           "name": "Spell-Like Abilities",
-          "doneness": "partial",
+          "doneness": "done",
           "type_facet": "SpecialQuality.SpellLike",
           "standing": "unclassified",
           "display_name": "Spell-Like Abilities (SpecialQuality.SpellLike)"
         },
         {
           "name": "Spell-Like Abilities",
-          "doneness": "partial",
+          "doneness": "done",
           "type_facet": "SpellLike",
           "standing": "unclassified",
           "display_name": "Spell-Like Abilities (SpellLike)"
         },
         {
           "name": "Spell-Like Abilities",
-          "doneness": "partial",
+          "doneness": "done",
           "type_facet": "AghashRacialAbility.SpecialQuality.SpellLike",
           "standing": "unclassified",
           "display_name": "Spell-Like Abilities (AghashRacialAbility.SpecialQuality.SpellLike)"
         },
         {
           "name": "Spell-Like Abilities",
-          "doneness": "partial",
+          "doneness": "done",
           "type_facet": "AghasuraRacialAbility.SpecialQuality.SpellLike",
           "standing": "unclassified",
           "display_name": "Spell-Like Abilities (AghasuraRacialAbility.SpecialQuality.SpellLike)"
         },
         {
           "name": "Spell-Like Abilities",
-          "doneness": "partial",
+          "doneness": "done",
           "type_facet": "SpecialQuality.SpellLike",
           "standing": "unclassified",
           "display_name": "Spell-Like Abilities (SpecialQuality.SpellLike) #5"
         },
         {
           "name": "Spell-Like Abilities",
-          "doneness": "partial",
+          "doneness": "done",
           "type_facet": "AkvanRacialAbility.SpecialQuality.SpellLike",
           "standing": "unclassified",
           "display_name": "Spell-Like Abilities (AkvanRacialAbility.SpecialQuality.SpellLike)"
         },
         {
           "name": "Spell-Like Abilities",
-          "doneness": "partial",
+          "doneness": "done",
           "type_facet": "xxx.SpecialQuality.SpellLike",
           "standing": "unclassified",
           "display_name": "Spell-Like Abilities (xxx.SpecialQuality.SpellLike)"
         },
         {
           "name": "Spell-Like Abilities",
-          "doneness": "partial",
+          "doneness": "done",
           "type_facet": "SpecialQuality.SpellLike",
           "standing": "unclassified",
           "display_name": "Spell-Like Abilities (SpecialQuality.SpellLike) #8"
         },
         {
           "name": "Spell-Like Abilities",
-          "doneness": "partial",
+          "doneness": "done",
           "type_facet": "AsurendraRacialAbility.SpecialQuality.SpellLike",
           "standing": "unclassified",
           "display_name": "Spell-Like Abilities (AsurendraRacialAbility.SpecialQuality.SpellLike)"
         },
         {
           "name": "Spell-Like Abilities",
-          "doneness": "partial",
+          "doneness": "done",
           "type_facet": "AtomieRacialAbility.SpecialQuality.SpellLike",
           "standing": "unclassified",
           "display_name": "Spell-Like Abilities (AtomieRacialAbility.SpecialQuality.SpellLike)"
         },
         {
           "name": "Spell-Like Abilities",
-          "doneness": "partial",
+          "doneness": "done",
           "type_facet": "AzruverdaRacialAbility.SpecialQuality.SpellLike",
           "standing": "unclassified",
           "display_name": "Spell-Like Abilities (AzruverdaRacialAbility.SpecialQuality.SpellLike)"
         },
         {
           "name": "Spell-Like Abilities",
-          "doneness": "partial",
+          "doneness": "done",
           "type_facet": "BakuRacialAbility.SpecialQuality.SpellLike",
           "standing": "unclassified",
           "display_name": "Spell-Like Abilities (BakuRacialAbility.SpecialQuality.SpellLike)"
         },
         {
           "name": "Spell-Like Abilities",
-          "doneness": "partial",
+          "doneness": "done",
           "type_facet": "BaregaraRacialAbility.SpecialQuality.SpellLike",
           "standing": "unclassified",
           "display_name": "Spell-Like Abilities (BaregaraRacialAbility.SpecialQuality.SpellLike)"
         },
         {
           "name": "Spell-Like Abilities",
-          "doneness": "partial",
+          "doneness": "done",
           "type_facet": "BerbalangRacialAbility.SpecialQuality.SpellLike",
           "standing": "unclassified",
           "display_name": "Spell-Like Abilities (BerbalangRacialAbility.SpecialQuality.SpellLike)"
         },
         {
           "name": "Spell-Like Abilities",
-          "doneness": "partial",
+          "doneness": "done",
           "type_facet": "BhutaRacialAbility.SpecialQuality.SpellLike",
           "standing": "unclassified",
           "display_name": "Spell-Like Abilities (BhutaRacialAbility.SpecialQuality.SpellLike)"
         },
         {
           "name": "Spell-Like Abilities",
-          "doneness": "partial",
+          "doneness": "done",
           "type_facet": "BogeymanRacialAbility.SpecialQuality.SpellLike",
           "standing": "unclassified",
           "display_name": "Spell-Like Abilities (BogeymanRacialAbility.SpecialQuality.SpellLike)"
         },
         {
           "name": "Spell-Like Abilities",
-          "doneness": "partial",
+          "doneness": "done",
           "type_facet": "BrainOozeRacialAbility.SpecialQuality.SpellLike",
           "standing": "unclassified",
           "display_name": "Spell-Like Abilities (BrainOozeRacialAbility.SpecialQuality.SpellLike)"
         },
         {
           "name": "Spell-Like Abilities",
-          "doneness": "partial",
+          "doneness": "done",
           "type_facet": "BrassGolemRacialAbility.SpecialQuality.SpellLike",
           "standing": "unclassified",
           "display_name": "Spell-Like Abilities (BrassGolemRacialAbility.SpecialQuality.SpellLike)"
         },
         {
           "name": "Spell-Like Abilities",
-          "doneness": "partial",
+          "doneness": "done",
           "type_facet": "CaulbornRacialAbility.SpecialQuality.SpellLike",
           "standing": "unclassified",
           "display_name": "Spell-Like Abilities (CaulbornRacialAbility.SpecialQuality.SpellLike)"
         },
         {
           "name": "Spell-Like Abilities",
-          "doneness": "partial",
+          "doneness": "done",
           "type_facet": "CerebricFungusRacialAbility.SpecialQuality.SpellLike",
           "standing": "unclassified",
           "display_name": "Spell-Like Abilities (CerebricFungusRacialAbility.SpecialQuality.SpellLike)"
         },
         {
           "name": "Spell-Like Abilities",
-          "doneness": "partial",
+          "doneness": "done",
           "type_facet": "ColdRiderRacialAbility.SpecialQuality.SpellLike",
           "standing": "unclassified",
           "display_name": "Spell-Like Abilities (ColdRiderRacialAbility.SpecialQuality.SpellLike)"
         },
         {
           "name": "Spell-Like Abilities",
-          "doneness": "partial",
+          "doneness": "done",
           "type_facet": "ColoxusRacialAbility.SpecialQuality.SpellLike",
           "standing": "unclassified",
           "display_name": "Spell-Like Abilities (ColoxusRacialAbility.SpecialQuality.SpellLike)"
         },
         {
           "name": "Spell-Like Abilities",
-          "doneness": "partial",
+          "doneness": "done",
           "type_facet": "ContractDevilRacialAbility.SpecialQuality.SpellLike",
           "standing": "unclassified",
           "display_name": "Spell-Like Abilities (ContractDevilRacialAbility.SpecialQuality.SpellLike)"
         },
         {
           "name": "Spell-Like Abilities",
-          "doneness": "partial",
+          "doneness": "done",
           "type_facet": "CriosphinxRacialAbility.SpecialQuality.SpellLike",
           "standing": "unclassified",
           "display_name": "Spell-Like Abilities (CriosphinxRacialAbility.SpecialQuality.SpellLike)"
         },
         {
           "name": "Spell-Like Abilities",
-          "doneness": "partial",
+          "doneness": "done",
           "type_facet": "CrucidaemonRacialAbility.SpecialQuality.SpellLike",
           "standing": "unclassified",
           "display_name": "Spell-Like Abilities (CrucidaemonRacialAbility.SpecialQuality.SpellLike)"
         },
         {
           "name": "Spell-Like Abilities",
-          "doneness": "partial",
+          "doneness": "done",
           "type_facet": "DandasukaRacialAbility.SpecialQuality.SpellLike",
           "standing": "unclassified",
           "display_name": "Spell-Like Abilities (DandasukaRacialAbility.SpecialQuality.SpellLike)"
         },
         {
           "name": "Spell-Like Abilities",
-          "doneness": "partial",
+          "doneness": "done",
           "type_facet": "DemilichRacialAbility.SpecialQuality.SpellLike",
           "standing": "unclassified",
           "display_name": "Spell-Like Abilities (DemilichRacialAbility.SpecialQuality.SpellLike)"
         },
         {
           "name": "Spell-Like Abilities",
-          "doneness": "partial",
+          "doneness": "done",
           "type_facet": "DisenchanterRacialAbility.SpecialQuality.SpellLike",
           "standing": "unclassified",
           "display_name": "Spell-Like Abilities (DisenchanterRacialAbility.SpecialQuality.SpellLike)"
         },
         {
           "name": "Spell-Like Abilities",
-          "doneness": "partial",
+          "doneness": "done",
           "type_facet": "DybbukRacialAbility.SpecialQuality.SpellLike",
           "standing": "unclassified",
           "display_name": "Spell-Like Abilities (DybbukRacialAbility.SpecialQuality.SpellLike)"
         },
         {
           "name": "Spell-Like Abilities",
-          "doneness": "partial",
+          "doneness": "done",
           "type_facet": "EremiteRacialAbility.SpecialQuality.SpellLike",
           "standing": "unclassified",
           "display_name": "Spell-Like Abilities (EremiteRacialAbility.SpecialQuality.SpellLike)"
         },
         {
           "name": "Spell-Like Abilities",
-          "doneness": "partial",
+          "doneness": "done",
           "type_facet": "FaunRacialAbility.SpecialQuality.SpellLike",
           "standing": "unclassified",
           "display_name": "Spell-Like Abilities (FaunRacialAbility.SpecialQuality.SpellLike)"
         },
         {
           "name": "Spell-Like Abilities",
-          "doneness": "partial",
+          "doneness": "done",
           "type_facet": "FireYaiRacialAbility.SpecialQuality.SpellLike",
           "standing": "unclassified",
           "display_name": "Spell-Like Abilities (FireYaiRacialAbility.SpecialQuality.SpellLike)"
         },
         {
           "name": "Spell-Like Abilities",
-          "doneness": "partial",
+          "doneness": "done",
           "type_facet": "FuathRacialAbility.SpecialQuality.SpellLike",
           "standing": "unclassified",
           "display_name": "Spell-Like Abilities (FuathRacialAbility.SpecialQuality.SpellLike)"
         },
         {
           "name": "Spell-Like Abilities",
-          "doneness": "partial",
+          "doneness": "done",
           "type_facet": "FungusLeshyRacialAbility.SpecialQuality.SpellLike",
           "standing": "unclassified",
           "display_name": "Spell-Like Abilities (FungusLeshyRacialAbility.SpecialQuality.SpellLike)"
         },
         {
           "name": "Spell-Like Abilities",
-          "doneness": "partial",
+          "doneness": "done",
           "type_facet": "GhawwasRacialAbility.SpecialQuality.SpellLike",
           "standing": "unclassified",
           "display_name": "Spell-Like Abilities (GhawwasRacialAbility.SpecialQuality.SpellLike)"
         },
         {
           "name": "Spell-Like Abilities",
-          "doneness": "partial",
+          "doneness": "done",
           "type_facet": "GirtabliluRacialAbility.SpecialQuality.SpellLike",
           "standing": "unclassified",
           "display_name": "Spell-Like Abilities (GirtabliluRacialAbility.SpecialQuality.SpellLike)"
         },
         {
           "name": "Spell-Like Abilities",
-          "doneness": "partial",
+          "doneness": "done",
           "type_facet": "GorynychRacialAbility.SpecialQuality.SpellLike",
           "standing": "unclassified",
           "display_name": "Spell-Like Abilities (GorynychRacialAbility.SpecialQuality.SpellLike)"
         },
         {
           "name": "Spell-Like Abilities",
-          "doneness": "partial",
+          "doneness": "done",
           "type_facet": "GourdLeshyRacialAbility.SpecialQuality.SpellLike",
           "standing": "unclassified",
           "display_name": "Spell-Like Abilities (GourdLeshyRacialAbility.SpecialQuality.SpellLike)"
         },
         {
           "name": "Spell-Like Abilities",
-          "doneness": "partial",
+          "doneness": "done",
           "type_facet": "GravenGuardianRacialAbility.SpecialQuality.SpellLike",
           "standing": "unclassified",
           "display_name": "Spell-Like Abilities (GravenGuardianRacialAbility.SpecialQuality.SpellLike)"
         },
         {
           "name": "Spell-Like Abilities",
-          "doneness": "partial",
+          "doneness": "done",
           "type_facet": "GrodairRacialAbility.SpecialQuality.SpellLike",
           "standing": "unclassified",
           "display_name": "Spell-Like Abilities (GrodairRacialAbility.SpecialQuality.SpellLike)"
         },
         {
           "name": "Spell-Like Abilities",
-          "doneness": "partial",
+          "doneness": "done",
           "type_facet": "GuecubuRacialAbility.SpecialQuality.SpellLike",
           "standing": "unclassified",
           "display_name": "Spell-Like Abilities (GuecubuRacialAbility.SpecialQuality.SpellLike)"
         },
         {
           "name": "Spell-Like Abilities",
-          "doneness": "partial",
+          "doneness": "done",
           "type_facet": "HekatonkheiresRacialAbility.SpecialQuality.SpellLike",
           "standing": "unclassified",
           "display_name": "Spell-Like Abilities (HekatonkheiresRacialAbility.SpecialQuality.SpellLike)"
         },
         {
           "name": "Spell-Like Abilities",
-          "doneness": "partial",
+          "doneness": "done",
           "type_facet": "HollowSerpentRacialAbility.SpecialQuality.SpellLike",
           "standing": "unclassified",
           "display_name": "Spell-Like Abilities (HollowSerpentRacialAbility.SpecialQuality.SpellLike)"
         },
         {
           "name": "Spell-Like Abilities",
-          "doneness": "partial",
+          "doneness": "done",
           "type_facet": "HumbabaRacialAbility.SpecialQuality.SpellLike",
           "standing": "unclassified",
           "display_name": "Spell-Like Abilities (HumbabaRacialAbility.SpecialQuality.SpellLike)"
         },
         {
           "name": "Spell-Like Abilities",
-          "doneness": "partial",
+          "doneness": "done",
           "type_facet": "IceYaiRacialAbility.SpecialQuality.SpellLike",
           "standing": "unclassified",
           "display_name": "Spell-Like Abilities (IceYaiRacialAbility.SpecialQuality.SpellLike)"
         },
         {
           "name": "Spell-Like Abilities",
-          "doneness": "partial",
+          "doneness": "done",
           "type_facet": "IncubusRacialAbility.SpecialQuality.SpellLike",
           "standing": "unclassified",
           "display_name": "Spell-Like Abilities (IncubusRacialAbility.SpecialQuality.SpellLike)"
         },
         {
           "name": "Spell-Like Abilities",
-          "doneness": "partial",
+          "doneness": "done",
           "type_facet": "InterlocutorRacialAbility.SpecialQuality.SpellLike",
           "standing": "unclassified",
           "display_name": "Spell-Like Abilities (InterlocutorRacialAbility.SpecialQuality.SpellLike)"
         },
         {
           "name": "Spell-Like Abilities",
-          "doneness": "partial",
+          "doneness": "done",
           "type_facet": "JinushigamiRacialAbility.SpecialQuality.SpellLike",
           "standing": "unclassified",
           "display_name": "Spell-Like Abilities (JinushigamiRacialAbility.SpecialQuality.SpellLike)"
         },
         {
           "name": "Spell-Like Abilities",
-          "doneness": "partial",
+          "doneness": "done",
           "type_facet": "JorogumoRacialAbility.SpecialQuality.SpellLike",
           "standing": "unclassified",
           "display_name": "Spell-Like Abilities (JorogumoRacialAbility.SpecialQuality.SpellLike)"
         },
         {
           "name": "Spell-Like Abilities",
-          "doneness": "partial",
+          "doneness": "done",
           "type_facet": "xxxRacialAbility.SpecialQuality.SpellLike",
           "standing": "unclassified",
           "display_name": "Spell-Like Abilities (xxxRacialAbility.SpecialQuality.SpellLike)"
         },
         {
           "name": "Spell-Like Abilities",
-          "doneness": "partial",
+          "doneness": "done",
           "type_facet": "KirinRacialAbility.SpecialQuality.SpellLike",
           "standing": "unclassified",
           "display_name": "Spell-Like Abilities (KirinRacialAbility.SpecialQuality.SpellLike)"
         },
         {
           "name": "Spell-Like Abilities",
-          "doneness": "partial",
+          "doneness": "done",
           "type_facet": "KodamaRacialAbility.SpecialQuality.SpellLike",
           "standing": "unclassified",
           "display_name": "Spell-Like Abilities (KodamaRacialAbility.SpecialQuality.SpellLike)"
         },
         {
           "name": "Spell-Like Abilities",
-          "doneness": "partial",
+          "doneness": "done",
           "type_facet": "KuwaRacialAbility.SpecialQuality.SpellLike",
           "standing": "unclassified",
           "display_name": "Spell-Like Abilities (KuwaRacialAbility.SpecialQuality.SpellLike)"
         },
         {
           "name": "Spell-Like Abilities",
-          "doneness": "partial",
+          "doneness": "done",
           "type_facet": "LammasuRacialAbility.SpecialQuality.SpellLike",
           "standing": "unclassified",
           "display_name": "Spell-Like Abilities (LammasuRacialAbility.SpecialQuality.SpellLike)"
         },
         {
           "name": "Spell-Like Abilities",
-          "doneness": "partial",
+          "doneness": "done",
           "type_facet": "LeafLeshyRacialAbility.SpecialQuality.SpellLike",
           "standing": "unclassified",
           "display_name": "Spell-Like Abilities (LeafLeshyRacialAbility.SpecialQuality.SpellLike)"
         },
         {
           "name": "Spell-Like Abilities",
-          "doneness": "partial",
+          "doneness": "done",
           "type_facet": "Legion Archon.SpecialQuality.SpellLike",
           "standing": "unclassified",
           "display_name": "Spell-Like Abilities (Legion Archon.SpecialQuality.SpellLike)"
         },
         {
           "name": "Spell-Like Abilities",
-          "doneness": "partial",
+          "doneness": "done",
           "type_facet": "SpecialQuality.SpellLike",
           "standing": "unclassified",
           "display_name": "Spell-Like Abilities (SpecialQuality.SpellLike) #57"
         },
         {
           "name": "Spell-Like Abilities",
-          "doneness": "partial",
+          "doneness": "done",
           "type_facet": "MaftetRacialAbility.SpecialQuality.SpellLike",
           "standing": "unclassified",
           "display_name": "Spell-Like Abilities (MaftetRacialAbility.SpecialQuality.SpellLike)"
         },
         {
           "name": "Spell-Like Abilities",
-          "doneness": "partial",
+          "doneness": "done",
           "type_facet": "ManananggalRacialAbility.SpecialQuality.SpellLike",
           "standing": "unclassified",
           "display_name": "Spell-Like Abilities (ManananggalRacialAbility.SpecialQuality.SpellLike)"
         },
         {
           "name": "Spell-Like Abilities",
-          "doneness": "partial",
+          "doneness": "done",
           "type_facet": "MobogoRacialAbility.SpecialQuality.SpellLike",
           "standing": "unclassified",
           "display_name": "Spell-Like Abilities (MobogoRacialAbility.SpecialQuality.SpellLike)"
         },
         {
           "name": "Spell-Like Abilities",
-          "doneness": "partial",
+          "doneness": "done",
           "type_facet": "MoonBeastRacialAbility.SpecialQuality.SpellLike",
           "standing": "unclassified",
           "display_name": "Spell-Like Abilities (MoonBeastRacialAbility.SpecialQuality.SpellLike)"
         },
         {
           "name": "Spell-Like Abilities",
-          "doneness": "partial",
+          "doneness": "done",
           "type_facet": "NixieRacialAbility.SpecialQuality.SpellLike",
           "standing": "unclassified",
           "display_name": "Spell-Like Abilities (NixieRacialAbility.SpecialQuality.SpellLike)"
         },
         {
           "name": "Spell-Like Abilities",
-          "doneness": "partial",
+          "doneness": "done",
           "type_facet": "NornRacialAbility.SpecialQuality.SpellLike",
           "standing": "unclassified",
           "display_name": "Spell-Like Abilities (NornRacialAbility.SpecialQuality.SpellLike)"
         },
         {
           "name": "Spell-Like Abilities",
-          "doneness": "partial",
+          "doneness": "done",
           "type_facet": "NuckelaveeRacialAbility.SpecialQuality.SpellLike",
           "standing": "unclassified",
           "display_name": "Spell-Like Abilities (NuckelaveeRacialAbility.SpecialQuality.SpellLike)"
         },
         {
           "name": "Spell-Like Abilities",
-          "doneness": "partial",
+          "doneness": "done",
           "type_facet": "NueRacialAbility.SpecialQuality.SpellLike",
           "standing": "unclassified",
           "display_name": "Spell-Like Abilities (NueRacialAbility.SpecialQuality.SpellLike)"
         },
         {
           "name": "Spell-Like Abilities",
-          "doneness": "partial",
+          "doneness": "done",
           "type_facet": "PairakaRacialAbility.SpecialQuality.SpellLike",
           "standing": "unclassified",
           "display_name": "Spell-Like Abilities (PairakaRacialAbility.SpecialQuality.SpellLike)"
         },
         {
           "name": "Spell-Like Abilities",
-          "doneness": "partial",
+          "doneness": "done",
           "type_facet": "PeriRacialAbility.SpecialQuality.SpellLike",
           "standing": "unclassified",
           "display_name": "Spell-Like Abilities (PeriRacialAbility.SpecialQuality.SpellLike)"
         },
         {
           "name": "Spell-Like Abilities",
-          "doneness": "partial",
+          "doneness": "done",
           "type_facet": "PopobalaRacialAbility.SpecialQuality.SpellLike",
           "standing": "unclassified",
           "display_name": "Spell-Like Abilities (PopobalaRacialAbility.SpecialQuality.SpellLike)"
         },
         {
           "name": "Spell-Like Abilities",
-          "doneness": "partial",
+          "doneness": "done",
           "type_facet": "PukwudgieRacialAbility.SpecialQuality.SpellLike",
           "standing": "unclassified",
           "display_name": "Spell-Like Abilities (PukwudgieRacialAbility.SpecialQuality.SpellLike)"
         },
         {
           "name": "Spell-Like Abilities",
-          "doneness": "partial",
+          "doneness": "done",
           "type_facet": "RoyalNagaRacialAbility.SpecialQuality.SpellLike",
           "standing": "unclassified",
           "display_name": "Spell-Like Abilities (RoyalNagaRacialAbility.SpecialQuality.SpellLike)"
         },
         {
           "name": "Spell-Like Abilities",
-          "doneness": "partial",
+          "doneness": "done",
           "type_facet": "RusalkaRacialAbility.SpecialQuality.SpellLike",
           "standing": "unclassified",
           "display_name": "Spell-Like Abilities (RusalkaRacialAbility.SpecialQuality.SpellLike)"
         },
         {
           "name": "Spell-Like Abilities",
-          "doneness": "partial",
+          "doneness": "done",
           "type_facet": "SchirRacialAbility.SpecialQuality.SpellLike",
           "standing": "unclassified",
           "display_name": "Spell-Like Abilities (SchirRacialAbility.SpecialQuality.SpellLike)"
         },
         {
           "name": "Spell-Like Abilities",
-          "doneness": "partial",
+          "doneness": "done",
           "type_facet": "SeaweedLeshyRacialAbility.SpecialQuality.SpellLike",
           "standing": "unclassified",
           "display_name": "Spell-Like Abilities (SeaweedLeshyRacialAbility.SpecialQuality.SpellLike)"
         },
         {
           "name": "Spell-Like Abilities",
-          "doneness": "partial",
+          "doneness": "done",
           "type_facet": "SepidRacialAbility.SpecialQuality.SpellLike",
           "standing": "unclassified",
           "display_name": "Spell-Like Abilities (SepidRacialAbility.SpecialQuality.SpellLike)"
         },
         {
           "name": "Spell-Like Abilities",
-          "doneness": "partial",
+          "doneness": "done",
           "type_facet": "ShaeRacialAbility.SpecialQuality.SpellLike",
           "standing": "unclassified",
           "display_name": "Spell-Like Abilities (ShaeRacialAbility.SpecialQuality.SpellLike)"
         },
         {
           "name": "Spell-Like Abilities",
-          "doneness": "partial",
+          "doneness": "done",
           "type_facet": "ShaggyDemodandRacialAbility.SpecialQuality.SpellLike",
           "standing": "unclassified",
           "display_name": "Spell-Like Abilities (ShaggyDemodandRacialAbility.SpecialQuality.SpellLike)"
         },
         {
           "name": "Spell-Like Abilities",
-          "doneness": "partial",
+          "doneness": "done",
           "type_facet": "SheduRacialAbility.SpecialQuality.SpellLike",
           "standing": "unclassified",
           "display_name": "Spell-Like Abilities (SheduRacialAbility.SpecialQuality.SpellLike)"
         },
         {
           "name": "Spell-Like Abilities",
-          "doneness": "partial",
+          "doneness": "done",
           "type_facet": "ShikigamiRacialAbility.SpecialQuality.SpellLike",
           "standing": "unclassified",
           "display_name": "Spell-Like Abilities (ShikigamiRacialAbility.SpecialQuality.SpellLike)"
         },
         {
           "name": "Spell-Like Abilities",
-          "doneness": "partial",
+          "doneness": "done",
           "type_facet": "ShinigamiRacialAbility.SpecialQuality.SpellLike",
           "standing": "unclassified",
           "display_name": "Spell-Like Abilities (ShinigamiRacialAbility.SpecialQuality.SpellLike)"
         },
         {
           "name": "Spell-Like Abilities",
-          "doneness": "partial",
+          "doneness": "done",
           "type_facet": "ShiraRacialAbility.SpecialQuality.SpellLike",
           "standing": "unclassified",
           "display_name": "Spell-Like Abilities (ShiraRacialAbility.SpecialQuality.SpellLike)"
         },
         {
           "name": "Spell-Like Abilities",
-          "doneness": "partial",
+          "doneness": "done",
           "type_facet": "SimurghRacialAbility.SpecialQuality.SpellLike",
           "standing": "unclassified",
           "display_name": "Spell-Like Abilities (SimurghRacialAbility.SpecialQuality.SpellLike)"
         },
         {
           "name": "Spell-Like Abilities",
-          "doneness": "partial",
+          "doneness": "done",
           "type_facet": "SleipnirRacialAbility.SpecialQuality.SpellLike",
           "standing": "unclassified",
           "display_name": "Spell-Like Abilities (SleipnirRacialAbility.SpecialQuality.SpellLike)"
         },
         {
           "name": "Spell-Like Abilities",
-          "doneness": "partial",
+          "doneness": "done",
           "type_facet": "SpiderEaterRacialAbility.SpecialQuality.SpellLike",
           "standing": "unclassified",
           "display_name": "Spell-Like Abilities (SpiderEaterRacialAbility.SpecialQuality.SpellLike)"
         },
         {
           "name": "Spell-Like Abilities",
-          "doneness": "partial",
+          "doneness": "done",
           "type_facet": "TanukiRacialAbility.SpecialQuality.SpellLike",
           "standing": "unclassified",
           "display_name": "Spell-Like Abilities (TanukiRacialAbility.SpecialQuality.SpellLike)"
         },
         {
           "name": "Spell-Like Abilities",
-          "doneness": "partial",
+          "doneness": "done",
           "type_facet": "TatakaRacialAbility.SpecialQuality.SpellLike",
           "standing": "unclassified",
           "display_name": "Spell-Like Abilities (TatakaRacialAbility.SpecialQuality.SpellLike)"
         },
         {
           "name": "Spell-Like Abilities",
-          "doneness": "partial",
+          "doneness": "done",
           "type_facet": "TempestBehemothRacialAbility.SpecialQuality.SpellLike",
           "standing": "unclassified",
           "display_name": "Spell-Like Abilities (TempestBehemothRacialAbility.SpecialQuality.SpellLike)"
         },
         {
           "name": "Spell-Like Abilities",
-          "doneness": "partial",
+          "doneness": "done",
           "type_facet": "ThalassicBehemothRacialAbility.SpecialQuality.SpellLike",
           "standing": "unclassified",
           "display_name": "Spell-Like Abilities (ThalassicBehemothRacialAbility.SpecialQuality.SpellLike)"
         },
         {
           "name": "Spell-Like Abilities",
-          "doneness": "partial",
+          "doneness": "done",
           "type_facet": "ThriaeQueenRacialAbility.SpecialQuality.SpellLike",
           "standing": "unclassified",
           "display_name": "Spell-Like Abilities (ThriaeQueenRacialAbility.SpecialQuality.SpellLike)"
         },
         {
           "name": "Spell-Like Abilities",
-          "doneness": "partial",
+          "doneness": "done",
           "type_facet": "ThriaeSeerRacialAbility.SpecialQuality.SpellLike",
           "standing": "unclassified",
           "display_name": "Spell-Like Abilities (ThriaeSeerRacialAbility.SpecialQuality.SpellLike)"
         },
         {
           "name": "Spell-Like Abilities",
-          "doneness": "partial",
+          "doneness": "done",
           "type_facet": "ThunderBehemothRacialAbility.SpecialQuality.SpellLike",
           "standing": "unclassified",
           "display_name": "Spell-Like Abilities (ThunderBehemothRacialAbility.SpecialQuality.SpellLike)"
         },
         {
           "name": "Spell-Like Abilities",
-          "doneness": "partial",
+          "doneness": "done",
           "type_facet": "ToshigamiRacialAbility.SpecialQuality.SpellLike",
           "standing": "unclassified",
           "display_name": "Spell-Like Abilities (ToshigamiRacialAbility.SpecialQuality.SpellLike)"
         },
         {
           "name": "Spell-Like Abilities",
-          "doneness": "partial",
+          "doneness": "done",
           "type_facet": "TripurasuraRacialAbility.SpecialQuality.SpellLike",
           "standing": "unclassified",
           "display_name": "Spell-Like Abilities (TripurasuraRacialAbility.SpecialQuality.SpellLike)"
         },
         {
           "name": "Spell-Like Abilities",
-          "doneness": "partial",
+          "doneness": "done",
           "type_facet": "TupilaqRacialAbility.SpecialQuality.SpellLike",
           "standing": "unclassified",
           "display_name": "Spell-Like Abilities (TupilaqRacialAbility.SpecialQuality.SpellLike)"
         },
         {
           "name": "Spell-Like Abilities",
-          "doneness": "partial",
+          "doneness": "done",
           "type_facet": "TzitzimitlRacialAbility.SpecialQuality.SpellLike",
           "standing": "unclassified",
           "display_name": "Spell-Like Abilities (TzitzimitlRacialAbility.SpecialQuality.SpellLike)"
         },
         {
           "name": "Spell-Like Abilities",
-          "doneness": "partial",
+          "doneness": "done",
           "type_facet": "UpasundaRacialAbility.SpecialQuality.SpellLike",
           "standing": "unclassified",
           "display_name": "Spell-Like Abilities (UpasundaRacialAbility.SpecialQuality.SpellLike)"
         },
         {
           "name": "Spell-Like Abilities",
-          "doneness": "partial",
+          "doneness": "done",
           "type_facet": "ValkyrieRacialAbility.SpecialQuality.SpellLike",
           "standing": "unclassified",
           "display_name": "Spell-Like Abilities (ValkyrieRacialAbility.SpecialQuality.SpellLike)"
         },
         {
           "name": "Spell-Like Abilities",
-          "doneness": "partial",
+          "doneness": "done",
           "type_facet": "VodyanoiRacialAbility.SpecialQuality.SpellLike",
           "standing": "unclassified",
           "display_name": "Spell-Like Abilities (VodyanoiRacialAbility.SpecialQuality.SpellLike)"
         },
         {
           "name": "Spell-Like Abilities",
-          "doneness": "partial",
+          "doneness": "done",
           "type_facet": "VoidYaiRacialAbility.SpecialQuality.SpellLike",
           "standing": "unclassified",
           "display_name": "Spell-Like Abilities (VoidYaiRacialAbility.SpecialQuality.SpellLike)"
         },
         {
           "name": "Spell-Like Abilities",
-          "doneness": "partial",
+          "doneness": "done",
           "type_facet": "VulnudaemonRacialAbility.SpecialQuality.SpellLike",
           "standing": "unclassified",
           "display_name": "Spell-Like Abilities (VulnudaemonRacialAbility.SpecialQuality.SpellLike)"
         },
         {
           "name": "Spell-Like Abilities",
-          "doneness": "partial",
+          "doneness": "done",
           "type_facet": "WaterYaiRacialAbility.SpecialQuality.SpellLike",
           "standing": "unclassified",
           "display_name": "Spell-Like Abilities (WaterYaiRacialAbility.SpecialQuality.SpellLike)"
         },
         {
           "name": "Spell-Like Abilities",
-          "doneness": "partial",
+          "doneness": "done",
           "type_facet": "YithianRacialAbility.SpecialQuality.SpellLike",
           "standing": "unclassified",
           "display_name": "Spell-Like Abilities (YithianRacialAbility.SpecialQuality.SpellLike)"
         },
         {
           "name": "Spell-Like Abilities",
-          "doneness": "partial",
+          "doneness": "done",
           "type_facet": "YukionnaRacialAbility.SpecialQuality.SpellLike",
           "standing": "unclassified",
           "display_name": "Spell-Like Abilities (YukionnaRacialAbility.SpecialQuality.SpellLike)"
         },
         {
           "name": "Spell-Like Abilities",
-          "doneness": "partial",
+          "doneness": "done",
           "type_facet": "ZuishinRacialAbility.SpecialQuality.SpellLike",
           "standing": "unclassified",
           "display_name": "Spell-Like Abilities (ZuishinRacialAbility.SpecialQuality.SpellLike)"
         },
         {
           "name": "Spell-Like Abilities",
-          "doneness": "partial",
+          "doneness": "done",
           "type_facet": "ZuvembieRacialAbility.SpecialQuality.SpellLike",
           "standing": "unclassified",
           "display_name": "Spell-Like Abilities (ZuvembieRacialAbility.SpecialQuality.SpellLike)"
         },
         {
           "name": "Spell-Like Ability",
-          "doneness": "partial",
+          "doneness": "done",
           "type_facet": "MyceloidRacialAbility.SpecialQuality.SpellLike",
           "standing": "origin",
           "display_name": "Spell-Like Ability"
@@ -5101,7 +5101,7 @@
         },
         {
           "name": "Split (Slashing or Sonic)",
-          "doneness": "partial",
+          "doneness": "done",
           "type_facet": "PlasmaOozeRacialAbility.SpecialQuality",
           "standing": "origin",
           "display_name": "Split (Slashing or Sonic)"
@@ -5479,7 +5479,7 @@
         },
         {
           "name": "Touch of Madness",
-          "doneness": "partial",
+          "doneness": "done",
           "type_facet": "CerebricFungusRacialAbility.SpecialQuality.SpellLike",
           "standing": "unclassified",
           "display_name": "Touch of Madness"
@@ -5535,14 +5535,14 @@
         },
         {
           "name": "Underworld Burrower",
-          "doneness": "partial",
+          "doneness": "done",
           "type_facet": "Extraordinary",
           "standing": "origin",
           "display_name": "Underworld Burrower"
         },
         {
           "name": "Unfettered Swimmer",
-          "doneness": "partial",
+          "doneness": "done",
           "type_facet": "Supernatural",
           "standing": "origin",
           "display_name": "Unfettered Swimmer"
@@ -5591,7 +5591,7 @@
         },
         {
           "name": "Verdant Burst",
-          "doneness": "partial",
+          "doneness": "done",
           "type_facet": "SpecialQuality.Supernatural",
           "standing": "origin",
           "display_name": "Verdant Burst"
@@ -5654,7 +5654,7 @@
         },
         {
           "name": "Void Trap",
-          "doneness": "partial",
+          "doneness": "done",
           "type_facet": "VoidYaiRacialAbility.SpecialQuality.Supernatural",
           "standing": "origin",
           "display_name": "Void Trap"
@@ -5668,7 +5668,7 @@
         },
         {
           "name": "Vulnerable to Dispel Magic",
-          "doneness": "partial",
+          "doneness": "done",
           "type_facet": "DisenchanterRacialAbility.SpecialQuality.Extraordinary",
           "standing": "origin",
           "display_name": "Vulnerable to Dispel Magic"
@@ -5787,7 +5787,7 @@
         },
         {
           "name": "Winding",
-          "doneness": "partial",
+          "doneness": "done",
           "type_facet": "SpecialQuality.Extraordinary",
           "standing": "unclassified",
           "display_name": "Winding"
@@ -5825,12 +5825,12 @@
     {
       "kind": "monster",
       "label": "Monsters",
-      "done": 242,
-      "partial": 9,
+      "done": 261,
+      "partial": 0,
       "not_started": 0,
-      "denominator": 251,
-      "pct": 96.4,
-      "excluded_from_percentage": 10,
+      "denominator": 261,
+      "pct": 100.0,
+      "excluded_from_percentage": 0,
       "standing_breakdown": {
         "origin": 251,
         "unclassified": 10
@@ -5922,7 +5922,7 @@
         },
         {
           "name": "Androsphinx",
-          "doneness": "partial",
+          "doneness": "done",
           "type_facet": "Magical Beast",
           "standing": "origin",
           "display_name": "Androsphinx"
@@ -6048,7 +6048,7 @@
         },
         {
           "name": "Bluehair anemone",
-          "doneness": "partial",
+          "doneness": "done",
           "type_facet": "Vermin",
           "standing": "origin",
           "display_name": "Bluehair anemone"
@@ -6188,7 +6188,7 @@
         },
         {
           "name": "Coffin anemone",
-          "doneness": "partial",
+          "doneness": "done",
           "type_facet": "Vermin",
           "standing": "origin",
           "display_name": "Coffin anemone"
@@ -6209,7 +6209,7 @@
         },
         {
           "name": "Common anemone",
-          "doneness": "partial",
+          "doneness": "done",
           "type_facet": "Vermin",
           "standing": "origin",
           "display_name": "Common anemone"
@@ -6251,7 +6251,7 @@
         },
         {
           "name": "Darkforest anemone",
-          "doneness": "partial",
+          "doneness": "done",
           "type_facet": "Vermin",
           "standing": "origin",
           "display_name": "Darkforest anemone"
@@ -6293,7 +6293,7 @@
         },
         {
           "name": "Deep tiger anemone",
-          "doneness": "partial",
+          "doneness": "done",
           "type_facet": "Vermin",
           "standing": "origin",
           "display_name": "Deep tiger anemone"
@@ -6867,7 +6867,7 @@
         },
         {
           "name": "Kirin",
-          "doneness": "partial",
+          "doneness": "done",
           "type_facet": "Magical Beast",
           "standing": "origin",
           "display_name": "Kirin"
@@ -6944,7 +6944,7 @@
         },
         {
           "name": "Maharaja",
-          "doneness": "partial",
+          "doneness": "done",
           "type_facet": "Outsider",
           "standing": "origin",
           "display_name": "Maharaja"
@@ -7301,7 +7301,7 @@
         },
         {
           "name": "Siren's bed anemone",
-          "doneness": "partial",
+          "doneness": "done",
           "type_facet": "Vermin",
           "standing": "origin",
           "display_name": "Siren's bed anemone"
@@ -7668,12 +7668,12 @@
     {
       "kind": "race_trait",
       "label": "Race Traits",
-      "done": 161,
+      "done": 236,
       "partial": 0,
       "not_started": 0,
-      "denominator": 161,
+      "denominator": 236,
       "pct": 100.0,
-      "excluded_from_percentage": 75,
+      "excluded_from_percentage": 0,
       "standing_breakdown": {
         "unclassified": 75,
         "origin": 161
@@ -9336,12 +9336,12 @@
     {
       "kind": "template",
       "label": "Templates",
-      "done": 60,
+      "done": 63,
       "partial": 0,
       "not_started": 0,
-      "denominator": 60,
+      "denominator": 63,
       "pct": 100.0,
-      "excluded_from_percentage": 3,
+      "excluded_from_percentage": 0,
       "standing_breakdown": {
         "unclassified": 3,
         "origin": 60

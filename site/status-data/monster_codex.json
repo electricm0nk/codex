@@ -34,12 +34,12 @@
     {
       "kind": "class_feature",
       "label": "Class Features",
-      "done": 56,
-      "partial": 1,
+      "done": 72,
+      "partial": 0,
       "not_started": 0,
-      "denominator": 57,
-      "pct": 98.2,
-      "excluded_from_percentage": 15,
+      "denominator": 72,
+      "pct": 100.0,
+      "excluded_from_percentage": 0,
       "standing_breakdown": {
         "origin": 57,
         "unclassified": 15
@@ -369,7 +369,7 @@
         },
         {
           "name": "Hungry Earth",
-          "doneness": "partial",
+          "doneness": "done",
           "type_facet": "Sorcerer Bloodline Bonus Spell",
           "standing": "origin",
           "display_name": "Hungry Earth"
@@ -554,12 +554,12 @@
     {
       "kind": "companion",
       "label": "Companions",
-      "done": 13,
+      "done": 15,
       "partial": 0,
       "not_started": 0,
-      "denominator": 13,
+      "denominator": 15,
       "pct": 100.0,
-      "excluded_from_percentage": 2,
+      "excluded_from_percentage": 0,
       "standing_breakdown": {
         "unclassified": 2,
         "origin": 13
@@ -675,11 +675,11 @@
     {
       "kind": "equipment",
       "label": "Equipment",
-      "done": 44,
-      "partial": 1,
+      "done": 45,
+      "partial": 0,
       "not_started": 0,
       "denominator": 45,
-      "pct": 97.8,
+      "pct": 100.0,
       "excluded_from_percentage": 0,
       "standing_breakdown": {
         "origin": 45
@@ -757,7 +757,7 @@
         },
         {
           "name": "Cloak of the Troll King",
-          "doneness": "partial",
+          "doneness": "done",
           "type_facet": "Magic.Wondrous.Cloak",
           "standing": "origin",
           "display_name": "Cloak of the Troll King"
@@ -1048,12 +1048,12 @@
     {
       "kind": "feat",
       "label": "Feats",
-      "done": 31,
+      "done": 32,
       "partial": 0,
       "not_started": 0,
-      "denominator": 31,
+      "denominator": 32,
       "pct": 100.0,
-      "excluded_from_percentage": 1,
+      "excluded_from_percentage": 0,
       "standing_breakdown": {
         "origin": 31,
         "unclassified": 1
@@ -1288,12 +1288,12 @@
     {
       "kind": "language",
       "label": "Languages",
-      "done": 0,
+      "done": 2,
       "partial": 0,
       "not_started": 0,
-      "denominator": 0,
-      "pct": 0.0,
-      "excluded_from_percentage": 2,
+      "denominator": 2,
+      "pct": 100.0,
+      "excluded_from_percentage": 0,
       "standing_breakdown": {
         "unclassified": 2
       },
@@ -1317,12 +1317,12 @@
     {
       "kind": "monster_ability",
       "label": "Monster Abilities",
-      "done": 1,
+      "done": 3,
       "partial": 0,
       "not_started": 0,
-      "denominator": 1,
+      "denominator": 3,
       "pct": 100.0,
-      "excluded_from_percentage": 2,
+      "excluded_from_percentage": 0,
       "standing_breakdown": {
         "unclassified": 2,
         "origin": 1
@@ -1354,11 +1354,11 @@
     {
       "kind": "monster",
       "label": "Monsters",
-      "done": 1,
-      "partial": 1,
+      "done": 2,
+      "partial": 0,
       "not_started": 0,
       "denominator": 2,
-      "pct": 50.0,
+      "pct": 100.0,
       "excluded_from_percentage": 0,
       "standing_breakdown": {
         "origin": 2
@@ -1373,7 +1373,7 @@
         },
         {
           "name": "Sootwing Bat",
-          "doneness": "partial",
+          "doneness": "done",
           "type_facet": "Undead",
           "standing": "origin",
           "display_name": "Sootwing Bat"
@@ -1383,12 +1383,12 @@
     {
       "kind": "race_trait",
       "label": "Race Traits",
-      "done": 11,
+      "done": 14,
       "partial": 0,
       "not_started": 0,
-      "denominator": 11,
+      "denominator": 14,
       "pct": 100.0,
-      "excluded_from_percentage": 3,
+      "excluded_from_percentage": 0,
       "standing_breakdown": {
         "origin": 11,
         "unclassified": 3

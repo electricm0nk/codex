@@ -5,12 +5,12 @@
     {
       "kind": "ability",
       "label": "Abilities",
-      "done": 46,
+      "done": 109,
       "partial": 0,
       "not_started": 0,
-      "denominator": 46,
+      "denominator": 109,
       "pct": 100.0,
-      "excluded_from_percentage": 63,
+      "excluded_from_percentage": 0,
       "standing_breakdown": {
         "unclassified": 63,
         "origin": 46
@@ -784,12 +784,12 @@
     {
       "kind": "class_feature",
       "label": "Class Features",
-      "done": 1387,
-      "partial": 5,
+      "done": 2698,
+      "partial": 0,
       "not_started": 0,
-      "denominator": 1392,
-      "pct": 99.6,
-      "excluded_from_percentage": 1306,
+      "denominator": 2698,
+      "pct": 100.0,
+      "excluded_from_percentage": 0,
       "standing_breakdown": {
         "origin": 1392,
         "unclassified": 1306
@@ -2190,7 +2190,7 @@
         },
         {
           "name": "Bardic Knowledge",
-          "doneness": "partial",
+          "doneness": "done",
           "type_facet": "Skald Class Feature.SkaldBardicKnowledge.SpecialQuality.Extraordinary.Bardic Knowledge",
           "standing": "unclassified",
           "display_name": "Bardic Knowledge"
@@ -2785,7 +2785,7 @@
         },
         {
           "name": "Blood Sanctuary",
-          "doneness": "partial",
+          "doneness": "done",
           "type_facet": "ClassFeatures.Bloodrager Class Feature.Defensive.Supernatural",
           "standing": "origin",
           "display_name": "Blood Sanctuary"
@@ -5410,7 +5410,7 @@
         },
         {
           "name": "Damage Reduction",
-          "doneness": "partial",
+          "doneness": "done",
           "type_facet": "Skald Class Feature.SkaldDamageReduction.SpecialQuality.Extraordinary",
           "standing": "unclassified",
           "display_name": "Damage Reduction (Skald Class Feature.SkaldDamageReduction.SpecialQuality.Extraordinary)"
@@ -9652,7 +9652,7 @@
         },
         {
           "name": "Hard to Fool",
-          "doneness": "partial",
+          "doneness": "done",
           "type_facet": "SlayerTalent.LesserSlayerTalent.Slayer Class Feature.SpecialQuality.Extraordinary",
           "standing": "unclassified",
           "display_name": "Hard to Fool (SlayerTalent.LesserSlayerTalent.Slayer Class Feature.SpecialQuality.Extraordinary)"
@@ -11136,7 +11136,7 @@
         },
         {
           "name": "Knockout",
-          "doneness": "partial",
+          "doneness": "done",
           "type_facet": "Brawler Class Feature.SpecialAttack.Extraordinary",
           "standing": "origin",
           "display_name": "Knockout (Brawler Class Feature.SpecialAttack.Extraordinary)"
@@ -11934,7 +11934,7 @@
         },
         {
           "name": "Master Slayer",
-          "doneness": "partial",
+          "doneness": "done",
           "type_facet": "Slayer Class Feature.SpecialAttack.Extraordinary.AttackOption",
           "standing": "origin",
           "display_name": "Master Slayer"
@@ -15938,7 +15938,7 @@
         },
         {
           "name": "Slowing Strike*",
-          "doneness": "partial",
+          "doneness": "done",
           "type_facet": "SlayerTalent.LesserSlayerTalent.Slayer Class Feature.SpecialAttack.Extraordinary.AttackOption",
           "standing": "origin",
           "display_name": "Slowing Strike*"
@@ -17156,7 +17156,7 @@
         },
         {
           "name": "Studied Combat",
-          "doneness": "partial",
+          "doneness": "done",
           "type_facet": "Investigator Class Feature.SpecialQuality.Extraordinary",
           "standing": "origin",
           "display_name": "Studied Combat"
@@ -17177,7 +17177,7 @@
         },
         {
           "name": "Studied Strike",
-          "doneness": "partial",
+          "doneness": "done",
           "type_facet": "Investigator Class Feature.SpecialQuality.Extraordinary",
           "standing": "unclassified",
           "display_name": "Studied Strike"
@@ -18031,14 +18031,14 @@
         },
         {
           "name": "Trap Sense",
-          "doneness": "partial",
+          "doneness": "done",
           "type_facet": "Investigator Class Feature.Internal",
           "standing": "unclassified",
           "display_name": "Trap Sense (Investigator Class Feature.Internal)"
         },
         {
           "name": "Trap Sense",
-          "doneness": "partial",
+          "doneness": "done",
           "type_facet": "Internal.Slayer Class Feature",
           "standing": "unclassified",
           "display_name": "Trap Sense (Internal.Slayer Class Feature)"
@@ -18059,7 +18059,7 @@
         },
         {
           "name": "Trapfinding",
-          "doneness": "partial",
+          "doneness": "done",
           "type_facet": "Investigator Class Feature.SpecialQuality.Trapfinding",
           "standing": "unclassified",
           "display_name": "Trapfinding (Investigator Class Feature.SpecialQuality.Trapfinding)"
@@ -19312,7 +19312,7 @@
         },
         {
           "name": "Well-Versed",
-          "doneness": "partial",
+          "doneness": "done",
           "type_facet": "Skald Class Feature.SkaldWellVersed.SpecialQuality.Extraordinary",
           "standing": "unclassified",
           "display_name": "Well-Versed"
@@ -19389,7 +19389,7 @@
         },
         {
           "name": "Wild Empathy",
-          "doneness": "partial",
+          "doneness": "done",
           "type_facet": "Hunter Class Feature.HunterWildEmpathy.SpecialQuality.Extraordinary",
           "standing": "unclassified",
           "display_name": "Wild Empathy (Hunter Class Feature.HunterWildEmpathy.SpecialQuality.Extraordinary)"
@@ -19863,11 +19863,11 @@
     {
       "kind": "equipment",
       "label": "Equipment",
-      "done": 220,
-      "partial": 1,
+      "done": 221,
+      "partial": 0,
       "not_started": 0,
       "denominator": 221,
-      "pct": 99.5,
+      "pct": 100.0,
       "excluded_from_percentage": 0,
       "standing_breakdown": {
         "origin": 221
@@ -20505,7 +20505,7 @@
         },
         {
           "name": "Helm of the Valkyrie",
-          "doneness": "partial",
+          "doneness": "done",
           "type_facet": "Magic.Wondrous.Headgear",
           "standing": "origin",
           "display_name": "Helm of the Valkyrie"
@@ -21425,12 +21425,12 @@
     {
       "kind": "equipment_modifier",
       "label": "Equipment Modifiers",
-      "done": 37,
-      "partial": 9,
+      "done": 48,
+      "partial": 0,
       "not_started": 0,
-      "denominator": 46,
-      "pct": 80.4,
-      "excluded_from_percentage": 2,
+      "denominator": 48,
+      "pct": 100.0,
+      "excluded_from_percentage": 0,
       "standing_breakdown": {
         "origin": 46,
         "unclassified": 2
@@ -21501,7 +21501,7 @@
         },
         {
           "name": "Burdenless",
-          "doneness": "partial",
+          "doneness": "done",
           "type_facet": null,
           "standing": "origin",
           "display_name": "Burdenless"
@@ -21557,14 +21557,14 @@
         },
         {
           "name": "Exclusionary",
-          "doneness": "partial",
+          "doneness": "done",
           "type_facet": null,
           "standing": "origin",
           "display_name": "Exclusionary"
         },
         {
           "name": "Exclusionary_AMF",
-          "doneness": "partial",
+          "doneness": "done",
           "type_facet": null,
           "standing": "origin",
           "display_name": "Exclusionary_AMF"
@@ -21676,21 +21676,21 @@
         },
         {
           "name": "Phantom_Ammunition",
-          "doneness": "partial",
+          "doneness": "done",
           "type_facet": null,
           "standing": "origin",
           "display_name": "Phantom_Ammunition"
         },
         {
           "name": "Prehensile",
-          "doneness": "partial",
+          "doneness": "done",
           "type_facet": null,
           "standing": "origin",
           "display_name": "Prehensile"
         },
         {
           "name": "Restful",
-          "doneness": "partial",
+          "doneness": "done",
           "type_facet": null,
           "standing": "origin",
           "display_name": "Restful"
@@ -21718,14 +21718,14 @@
         },
         {
           "name": "Sneaky",
-          "doneness": "partial",
+          "doneness": "done",
           "type_facet": null,
           "standing": "origin",
           "display_name": "Sneaky"
         },
         {
           "name": "Sneaky_AMF",
-          "doneness": "partial",
+          "doneness": "done",
           "type_facet": null,
           "standing": "origin",
           "display_name": "Sneaky_AMF"
@@ -21753,7 +21753,7 @@
         },
         {
           "name": "Spiteful",
-          "doneness": "partial",
+          "doneness": "done",
           "type_facet": null,
           "standing": "origin",
           "display_name": "Spiteful"
@@ -21777,12 +21777,12 @@
     {
       "kind": "feat",
       "label": "Feats",
-      "done": 123,
-      "partial": 5,
+      "done": 129,
+      "partial": 0,
       "not_started": 0,
-      "denominator": 128,
-      "pct": 96.1,
-      "excluded_from_percentage": 1,
+      "denominator": 129,
+      "pct": 100.0,
+      "excluded_from_percentage": 0,
       "standing_breakdown": {
         "origin": 128,
         "unclassified": 1
@@ -21860,7 +21860,7 @@
         },
         {
           "name": "Blasting Charge",
-          "doneness": "partial",
+          "doneness": "done",
           "type_facet": "General",
           "standing": "origin",
           "display_name": "Blasting Charge"
@@ -22014,7 +22014,7 @@
         },
         {
           "name": "Evolved Companion",
-          "doneness": "partial",
+          "doneness": "done",
           "type_facet": "General",
           "standing": "origin",
           "display_name": "Evolved Companion"
@@ -22231,7 +22231,7 @@
         },
         {
           "name": "Improved Spell Sharing",
-          "doneness": "partial",
+          "doneness": "done",
           "type_facet": "Teamwork",
           "standing": "origin",
           "display_name": "Improved Spell Sharing"
@@ -22434,7 +22434,7 @@
         },
         {
           "name": "Raging Absorption",
-          "doneness": "partial",
+          "doneness": "done",
           "type_facet": "Combat",
           "standing": "origin",
           "display_name": "Raging Absorption"
@@ -22595,7 +22595,7 @@
         },
         {
           "name": "Stalker's Focus",
-          "doneness": "partial",
+          "doneness": "done",
           "type_facet": "General",
           "standing": "origin",
           "display_name": "Stalker's Focus"
@@ -22696,12 +22696,12 @@
     {
       "kind": "race_trait",
       "label": "Race Traits",
-      "done": 126,
+      "done": 128,
       "partial": 0,
       "not_started": 0,
-      "denominator": 126,
+      "denominator": 128,
       "pct": 100.0,
-      "excluded_from_percentage": 2,
+      "excluded_from_percentage": 0,
       "standing_breakdown": {
         "origin": 126,
         "unclassified": 2
@@ -23608,12 +23608,12 @@
     {
       "kind": "spell",
       "label": "Spells",
-      "done": 128,
-      "partial": 7,
+      "done": 144,
+      "partial": 0,
       "not_started": 0,
-      "denominator": 135,
-      "pct": 94.8,
-      "excluded_from_percentage": 9,
+      "denominator": 144,
+      "pct": 100.0,
+      "excluded_from_percentage": 0,
       "standing_breakdown": {
         "origin": 135,
         "unclassified": 9
@@ -23726,7 +23726,7 @@
         },
         {
           "name": "Banshee Blast",
-          "doneness": "partial",
+          "doneness": "done",
           "type_facet": null,
           "standing": "origin",
           "display_name": "Banshee Blast"
@@ -23775,7 +23775,7 @@
         },
         {
           "name": "Bloatbomb",
-          "doneness": "partial",
+          "doneness": "done",
           "type_facet": null,
           "standing": "origin",
           "display_name": "Bloatbomb"
@@ -23866,7 +23866,7 @@
         },
         {
           "name": "Crimson Confession",
-          "doneness": "partial",
+          "doneness": "done",
           "type_facet": null,
           "standing": "origin",
           "display_name": "Crimson Confession"
@@ -23894,7 +23894,7 @@
         },
         {
           "name": "Discern Next of Kin",
-          "doneness": "partial",
+          "doneness": "done",
           "type_facet": null,
           "standing": "origin",
           "display_name": "Discern Next of Kin"
@@ -24258,7 +24258,7 @@
         },
         {
           "name": "Repair Undead",
-          "doneness": "partial",
+          "doneness": "done",
           "type_facet": null,
           "standing": "origin",
           "display_name": "Repair Undead"
@@ -24321,7 +24321,7 @@
         },
         {
           "name": "Silver Darts",
-          "doneness": "partial",
+          "doneness": "done",
           "type_facet": null,
           "standing": "origin",
           "display_name": "Silver Darts"
@@ -24496,7 +24496,7 @@
         },
         {
           "name": "Symbol of Laughter",
-          "doneness": "partial",
+          "doneness": "done",
           "type_facet": null,
           "standing": "origin",
           "display_name": "Symbol of Laughter"

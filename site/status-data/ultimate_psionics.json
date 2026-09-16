@@ -5,12 +5,12 @@
     {
       "kind": "ability",
       "label": "Abilities",
-      "done": 276,
+      "done": 281,
       "partial": 0,
       "not_started": 0,
-      "denominator": 276,
+      "denominator": 281,
       "pct": 100.0,
-      "excluded_from_percentage": 5,
+      "excluded_from_percentage": 0,
       "standing_breakdown": {
         "origin": 276,
         "unclassified": 5
@@ -1988,12 +1988,12 @@
     {
       "kind": "class_feature",
       "label": "Class Features",
-      "done": 1341,
-      "partial": 36,
+      "done": 1573,
+      "partial": 0,
       "not_started": 0,
-      "denominator": 1377,
-      "pct": 97.4,
-      "excluded_from_percentage": 196,
+      "denominator": 1573,
+      "pct": 100.0,
+      "excluded_from_percentage": 0,
       "standing_breakdown": {
         "origin": 1377,
         "unclassified": 196
@@ -2008,7 +2008,7 @@
         },
         {
           "name": "Aberration",
-          "doneness": "partial",
+          "doneness": "done",
           "type_facet": "PhrenicSlayerClassFeatures.SlayerFavoredEnemy.SpecialAttack.Extraordinary.AttackOption",
           "standing": "unclassified",
           "display_name": "Aberration"
@@ -2967,7 +2967,7 @@
         },
         {
           "name": "Altered Defense",
-          "doneness": "partial",
+          "doneness": "done",
           "type_facet": "CrypticClassFeatures.SpecialQuality.Supernatural",
           "standing": "origin",
           "display_name": "Altered Defense"
@@ -3002,7 +3002,7 @@
         },
         {
           "name": "Animal",
-          "doneness": "partial",
+          "doneness": "done",
           "type_facet": "PhrenicSlayerClassFeatures.SlayerFavoredEnemy.SpecialAttack.Extraordinary.AttackOption",
           "standing": "unclassified",
           "display_name": "Animal"
@@ -3681,7 +3681,7 @@
         },
         {
           "name": "Body Thief",
-          "doneness": "partial",
+          "doneness": "done",
           "type_facet": "BodySnatcherClassFeatures.SpecialQuality.Extraordinary",
           "standing": "origin",
           "display_name": "Body Thief"
@@ -3933,7 +3933,7 @@
         },
         {
           "name": "Cannibalize Suit",
-          "doneness": "partial",
+          "doneness": "done",
           "type_facet": "AegisClassFeatures.SpecialQuality.Supernatural",
           "standing": "origin",
           "display_name": "Cannibalize Suit"
@@ -4276,7 +4276,7 @@
         },
         {
           "name": "Combine Fighting Styles",
-          "doneness": "partial",
+          "doneness": "done",
           "type_facet": "AdaptiveWarriorClassFeatures.SpecialQuality.Supernatural",
           "standing": "origin",
           "display_name": "Combine Fighting Styles"
@@ -4339,7 +4339,7 @@
         },
         {
           "name": "Construct",
-          "doneness": "partial",
+          "doneness": "done",
           "type_facet": "PhrenicSlayerClassFeatures.SlayerFavoredEnemy.SpecialAttack.Extraordinary.AttackOption",
           "standing": "unclassified",
           "display_name": "Construct"
@@ -4395,7 +4395,7 @@
         },
         {
           "name": "Coordinated Strike",
-          "doneness": "partial",
+          "doneness": "done",
           "type_facet": "TacticianClassFeatures.SpecialQuality.Supernatural",
           "standing": "origin",
           "display_name": "Coordinated Strike"
@@ -4409,7 +4409,7 @@
         },
         {
           "name": "Cover Fire",
-          "doneness": "partial",
+          "doneness": "done",
           "type_facet": "MarksmanClassFeatures.SpecialAttack.Supernatural",
           "standing": "origin",
           "display_name": "Cover Fire"
@@ -4437,7 +4437,7 @@
         },
         {
           "name": "Craftsman",
-          "doneness": "partial",
+          "doneness": "done",
           "type_facet": "AegisClassFeatures.SpecialQuality",
           "standing": "origin",
           "display_name": "Craftsman"
@@ -4563,14 +4563,14 @@
         },
         {
           "name": "Damage Reduction",
-          "doneness": "partial",
+          "doneness": "done",
           "type_facet": "AegisClassFeatures.SpecialQuality",
           "standing": "unclassified",
           "display_name": "Damage Reduction"
         },
         {
           "name": "Dark Tempest ~ Blade Skills",
-          "doneness": "partial",
+          "doneness": "done",
           "type_facet": null,
           "standing": "origin",
           "display_name": "Dark Tempest ~ Blade Skills"
@@ -4640,7 +4640,7 @@
         },
         {
           "name": "Death Is Only the Beginning",
-          "doneness": "partial",
+          "doneness": "done",
           "type_facet": "BodySnatcherClassFeatures.SpecialQuality.Supernatural",
           "standing": "origin",
           "display_name": "Death Is Only the Beginning"
@@ -5025,7 +5025,7 @@
         },
         {
           "name": "Dragon",
-          "doneness": "partial",
+          "doneness": "done",
           "type_facet": "PhrenicSlayerClassFeatures.SlayerFavoredEnemy.SpecialAttack.Extraordinary.AttackOption",
           "standing": "unclassified",
           "display_name": "Dragon"
@@ -5214,7 +5214,7 @@
         },
         {
           "name": "Elude Attack",
-          "doneness": "partial",
+          "doneness": "done",
           "type_facet": "WilderClassFeatures.SpecialQuality.Extraordinary",
           "standing": "origin",
           "display_name": "Elude Attack"
@@ -5319,7 +5319,7 @@
         },
         {
           "name": "Enduring Body",
-          "doneness": "partial",
+          "doneness": "done",
           "type_facet": "WarMindClassFeatures.SpecialQuality.Extraordinary",
           "standing": "origin",
           "display_name": "Enduring Body"
@@ -5438,7 +5438,7 @@
         },
         {
           "name": "Enhanced Disruption",
-          "doneness": "partial",
+          "doneness": "done",
           "type_facet": "CrypticClassFeatures.SpecialQuality.Supernatural",
           "standing": "origin",
           "display_name": "Enhanced Disruption"
@@ -5452,7 +5452,7 @@
         },
         {
           "name": "Enhanced Mind Blade",
-          "doneness": "partial",
+          "doneness": "done",
           "type_facet": "SoulknifeClassFeatures.SpecialQuality",
           "standing": "origin",
           "display_name": "Enhanced Mind Blade"
@@ -5557,7 +5557,7 @@
         },
         {
           "name": "Evade Arrows",
-          "doneness": "partial",
+          "doneness": "done",
           "type_facet": "MarksmanClassFeatures.SpecialQuality.Supernatural",
           "standing": "origin",
           "display_name": "Evade Arrows"
@@ -5942,7 +5942,7 @@
         },
         {
           "name": "Favored Enemy",
-          "doneness": "partial",
+          "doneness": "done",
           "type_facet": "PhrenicSlayerClassFeatures.Internal",
           "standing": "unclassified",
           "display_name": "Favored Enemy (PhrenicSlayerClassFeatures.Internal)"
@@ -5963,7 +5963,7 @@
         },
         {
           "name": "Favored Weapon",
-          "doneness": "partial",
+          "doneness": "done",
           "type_facet": "MarksmanClassFeatures.SpecialAttack.Supernatural",
           "standing": "unclassified",
           "display_name": "Favored Weapon"
@@ -6047,7 +6047,7 @@
         },
         {
           "name": "Fearsome Insight",
-          "doneness": "partial",
+          "doneness": "done",
           "type_facet": "DreadClassFeatures.SpecialQuality",
           "standing": "origin",
           "display_name": "Fearsome Insight"
@@ -6103,7 +6103,7 @@
         },
         {
           "name": "Fey",
-          "doneness": "partial",
+          "doneness": "done",
           "type_facet": "PhrenicSlayerClassFeatures.SlayerFavoredEnemy.SpecialAttack.Extraordinary.AttackOption",
           "standing": "unclassified",
           "display_name": "Fey"
@@ -6131,7 +6131,7 @@
         },
         {
           "name": "Fire Adaptation",
-          "doneness": "partial",
+          "doneness": "done",
           "type_facet": "PyrokineticistClassFeatures.SpecialQuality.Extraordinary",
           "standing": "origin",
           "display_name": "Fire Adaptation"
@@ -6390,7 +6390,7 @@
         },
         {
           "name": "Form Mind Blade",
-          "doneness": "partial",
+          "doneness": "done",
           "type_facet": "SoulknifeClassFeatures.SpecialQuality.Supernatural",
           "standing": "origin",
           "display_name": "Form Mind Blade"
@@ -6453,7 +6453,7 @@
         },
         {
           "name": "Free Shift",
-          "doneness": "partial",
+          "doneness": "done",
           "type_facet": "MetamorphClassFeatures.SpecialQuality",
           "standing": "origin",
           "display_name": "Free Shift"
@@ -6789,7 +6789,7 @@
         },
         {
           "name": "Hand Afire",
-          "doneness": "partial",
+          "doneness": "done",
           "type_facet": "PyrokineticistClassFeatures.SpecialAttack.Psilike",
           "standing": "origin",
           "display_name": "Hand Afire"
@@ -6964,7 +6964,7 @@
         },
         {
           "name": "Heightened Senses",
-          "doneness": "partial",
+          "doneness": "done",
           "type_facet": "MysticArcherClassFeatures.SpecialQuality.Extraordinary",
           "standing": "unclassified",
           "display_name": "Heightened Senses"
@@ -6985,7 +6985,7 @@
         },
         {
           "name": "Hidden Pattern",
-          "doneness": "partial",
+          "doneness": "done",
           "type_facet": "CrypticClassFeatures.SpecialQuality.Extraordinary",
           "standing": "origin",
           "display_name": "Hidden Pattern"
@@ -7069,77 +7069,77 @@
         },
         {
           "name": "Humanoid (Aquatic)",
-          "doneness": "partial",
+          "doneness": "done",
           "type_facet": "PhrenicSlayerClassFeatures.SlayerFavoredEnemy.SpecialAttack.Extraordinary.AttackOption",
           "standing": "unclassified",
           "display_name": "Humanoid (Aquatic)"
         },
         {
           "name": "Humanoid (Dwarf)",
-          "doneness": "partial",
+          "doneness": "done",
           "type_facet": "PhrenicSlayerClassFeatures.SlayerFavoredEnemy.SpecialAttack.Extraordinary.AttackOption",
           "standing": "unclassified",
           "display_name": "Humanoid (Dwarf)"
         },
         {
           "name": "Humanoid (Elf)",
-          "doneness": "partial",
+          "doneness": "done",
           "type_facet": "PhrenicSlayerClassFeatures.SlayerFavoredEnemy.SpecialAttack.Extraordinary.AttackOption",
           "standing": "unclassified",
           "display_name": "Humanoid (Elf)"
         },
         {
           "name": "Humanoid (Giant)",
-          "doneness": "partial",
+          "doneness": "done",
           "type_facet": "PhrenicSlayerClassFeatures.SlayerFavoredEnemy.SpecialAttack.Extraordinary.AttackOption",
           "standing": "unclassified",
           "display_name": "Humanoid (Giant)"
         },
         {
           "name": "Humanoid (Gnoll)",
-          "doneness": "partial",
+          "doneness": "done",
           "type_facet": "PhrenicSlayerClassFeatures.SlayerFavoredEnemy.SpecialAttack.Extraordinary.AttackOption",
           "standing": "unclassified",
           "display_name": "Humanoid (Gnoll)"
         },
         {
           "name": "Humanoid (Gnome)",
-          "doneness": "partial",
+          "doneness": "done",
           "type_facet": "PhrenicSlayerClassFeatures.SlayerFavoredEnemy.SpecialAttack.Extraordinary.AttackOption",
           "standing": "unclassified",
           "display_name": "Humanoid (Gnome)"
         },
         {
           "name": "Humanoid (Goblinoid)",
-          "doneness": "partial",
+          "doneness": "done",
           "type_facet": "PhrenicSlayerClassFeatures.SlayerFavoredEnemy.SpecialAttack.Extraordinary.AttackOption",
           "standing": "unclassified",
           "display_name": "Humanoid (Goblinoid)"
         },
         {
           "name": "Humanoid (Halfling)",
-          "doneness": "partial",
+          "doneness": "done",
           "type_facet": "PhrenicSlayerClassFeatures.SlayerFavoredEnemy.SpecialAttack.Extraordinary.AttackOption",
           "standing": "unclassified",
           "display_name": "Humanoid (Halfling)"
         },
         {
           "name": "Humanoid (Human)",
-          "doneness": "partial",
+          "doneness": "done",
           "type_facet": "PhrenicSlayerClassFeatures.SlayerFavoredEnemy.SpecialAttack.Extraordinary.AttackOption",
           "standing": "unclassified",
           "display_name": "Humanoid (Human)"
         },
         {
           "name": "Humanoid (Orc)",
-          "doneness": "partial",
+          "doneness": "done",
           "type_facet": "PhrenicSlayerClassFeatures.SlayerFavoredEnemy.SpecialAttack.Extraordinary.AttackOption",
           "standing": "unclassified",
           "display_name": "Humanoid (Orc)"
         },
         {
           "name": "Humanoid (Reptilian)",
-          "doneness": "partial",
+          "doneness": "done",
           "type_facet": "PhrenicSlayerClassFeatures.SlayerFavoredEnemy.SpecialAttack.Extraordinary.AttackOption",
           "standing": "unclassified",
           "display_name": "Humanoid (Reptilian)"
@@ -7335,7 +7335,7 @@
         },
         {
           "name": "Improved Share",
-          "doneness": "partial",
+          "doneness": "done",
           "type_facet": "TacticianClassFeatures.SpecialQuality.Supernatural",
           "standing": "origin",
           "display_name": "Improved Share"
@@ -7426,7 +7426,7 @@
         },
         {
           "name": "Inevitable Strike",
-          "doneness": "partial",
+          "doneness": "done",
           "type_facet": "MysticArcherClassFeatures.SpecialAttack.Psilike",
           "standing": "origin",
           "display_name": "Inevitable Strike (MysticArcherClassFeatures.SpecialAttack.Psilike)"
@@ -7461,7 +7461,7 @@
         },
         {
           "name": "Infused Body",
-          "doneness": "partial",
+          "doneness": "done",
           "type_facet": "PsychicFistClassFeatures.SpecialQuality.Supernatural",
           "standing": "origin",
           "display_name": "Infused Body (PsychicFistClassFeatures.SpecialQuality.Supernatural)"
@@ -7727,7 +7727,7 @@
         },
         {
           "name": "Ki Power",
-          "doneness": "partial",
+          "doneness": "done",
           "type_facet": "PsychicFistClassFeatures.SpecialQuality.Supernatural",
           "standing": "origin",
           "display_name": "Ki Power"
@@ -7818,7 +7818,7 @@
         },
         {
           "name": "Leech Heat",
-          "doneness": "partial",
+          "doneness": "done",
           "type_facet": "PyrokineticistClassFeatures.SpecialAttack.Supernatural",
           "standing": "origin",
           "display_name": "Leech Heat"
@@ -7937,7 +7937,7 @@
         },
         {
           "name": "Magical Beast",
-          "doneness": "partial",
+          "doneness": "done",
           "type_facet": "PhrenicSlayerClassFeatures.SlayerFavoredEnemy.SpecialAttack.Extraordinary.AttackOption",
           "standing": "unclassified",
           "display_name": "Magical Beast"
@@ -8007,7 +8007,7 @@
         },
         {
           "name": "Manipulate Blaze",
-          "doneness": "partial",
+          "doneness": "done",
           "type_facet": "PyrokineticistClassFeatures.SpecialQuality.Supernatural",
           "standing": "origin",
           "display_name": "Manipulate Blaze"
@@ -8238,7 +8238,7 @@
         },
         {
           "name": "Melding Exchange",
-          "doneness": "partial",
+          "doneness": "done",
           "type_facet": "BodySnatcherClassFeatures.SpecialQuality.Supernatural",
           "standing": "origin",
           "display_name": "Melding Exchange"
@@ -8294,7 +8294,7 @@
         },
         {
           "name": "Mesmerizing Glow",
-          "doneness": "partial",
+          "doneness": "done",
           "type_facet": "PsychicFistClassFeatures.SpecialAttack.Supernatural",
           "standing": "origin",
           "display_name": "Mesmerizing Glow"
@@ -8665,7 +8665,7 @@
         },
         {
           "name": "Monstrous Humanoid",
-          "doneness": "partial",
+          "doneness": "done",
           "type_facet": "PhrenicSlayerClassFeatures.SlayerFavoredEnemy.SpecialAttack.Extraordinary.AttackOption",
           "standing": "unclassified",
           "display_name": "Monstrous Humanoid"
@@ -8707,7 +8707,7 @@
         },
         {
           "name": "Natural Shifter",
-          "doneness": "partial",
+          "doneness": "done",
           "type_facet": "MetamorphClassFeatures.SpecialQuality",
           "standing": "origin",
           "display_name": "Natural Shifter"
@@ -8833,7 +8833,7 @@
         },
         {
           "name": "Ooze",
-          "doneness": "partial",
+          "doneness": "done",
           "type_facet": "PhrenicSlayerClassFeatures.SlayerFavoredEnemy.SpecialAttack.Extraordinary.AttackOption",
           "standing": "unclassified",
           "display_name": "Ooze"
@@ -8854,63 +8854,63 @@
         },
         {
           "name": "Outsider (Air)",
-          "doneness": "partial",
+          "doneness": "done",
           "type_facet": "PhrenicSlayerClassFeatures.SlayerFavoredEnemy.SpecialAttack.Extraordinary.AttackOption",
           "standing": "unclassified",
           "display_name": "Outsider (Air)"
         },
         {
           "name": "Outsider (Chaotic)",
-          "doneness": "partial",
+          "doneness": "done",
           "type_facet": "PhrenicSlayerClassFeatures.SlayerFavoredEnemy.SpecialAttack.Extraordinary.AttackOption",
           "standing": "unclassified",
           "display_name": "Outsider (Chaotic)"
         },
         {
           "name": "Outsider (Earth)",
-          "doneness": "partial",
+          "doneness": "done",
           "type_facet": "PhrenicSlayerClassFeatures.SlayerFavoredEnemy.SpecialAttack.Extraordinary.AttackOption",
           "standing": "unclassified",
           "display_name": "Outsider (Earth)"
         },
         {
           "name": "Outsider (Evil)",
-          "doneness": "partial",
+          "doneness": "done",
           "type_facet": "PhrenicSlayerClassFeatures.SlayerFavoredEnemy.SpecialAttack.Extraordinary.AttackOption",
           "standing": "unclassified",
           "display_name": "Outsider (Evil)"
         },
         {
           "name": "Outsider (Fire)",
-          "doneness": "partial",
+          "doneness": "done",
           "type_facet": "PhrenicSlayerClassFeatures.SlayerFavoredEnemy.SpecialAttack.Extraordinary.AttackOption",
           "standing": "unclassified",
           "display_name": "Outsider (Fire)"
         },
         {
           "name": "Outsider (Good)",
-          "doneness": "partial",
+          "doneness": "done",
           "type_facet": "PhrenicSlayerClassFeatures.SlayerFavoredEnemy.SpecialAttack.Extraordinary.AttackOption",
           "standing": "unclassified",
           "display_name": "Outsider (Good)"
         },
         {
           "name": "Outsider (Lawful)",
-          "doneness": "partial",
+          "doneness": "done",
           "type_facet": "PhrenicSlayerClassFeatures.SlayerFavoredEnemy.SpecialAttack.Extraordinary.AttackOption",
           "standing": "unclassified",
           "display_name": "Outsider (Lawful)"
         },
         {
           "name": "Outsider (Native)",
-          "doneness": "partial",
+          "doneness": "done",
           "type_facet": "PhrenicSlayerClassFeatures.SlayerFavoredEnemy.SpecialAttack.Extraordinary.AttackOption",
           "standing": "unclassified",
           "display_name": "Outsider (Native)"
         },
         {
           "name": "Outsider (Water)",
-          "doneness": "partial",
+          "doneness": "done",
           "type_facet": "PhrenicSlayerClassFeatures.SlayerFavoredEnemy.SpecialAttack.Extraordinary.AttackOption",
           "standing": "unclassified",
           "display_name": "Outsider (Water)"
@@ -9421,7 +9421,7 @@
         },
         {
           "name": "Plant",
-          "doneness": "partial",
+          "doneness": "done",
           "type_facet": "PhrenicSlayerClassFeatures.SlayerFavoredEnemy.SpecialAttack.Extraordinary.AttackOption",
           "standing": "unclassified",
           "display_name": "Plant"
@@ -9526,7 +9526,7 @@
         },
         {
           "name": "Power Strike",
-          "doneness": "partial",
+          "doneness": "done",
           "type_facet": "DarkTempestClassFeatures.SpecialQuality.Supernatural",
           "standing": "origin",
           "display_name": "Power Strike"
@@ -9925,7 +9925,7 @@
         },
         {
           "name": "Psychic Strike",
-          "doneness": "partial",
+          "doneness": "done",
           "type_facet": "DarkTempestClassFeatures.SpecialQuality.Supernatural",
           "standing": "unclassified",
           "display_name": "Psychic Strike (DarkTempestClassFeatures.SpecialQuality.Supernatural)"
@@ -10338,7 +10338,7 @@
         },
         {
           "name": "Ranged Sneak Attack",
-          "doneness": "partial",
+          "doneness": "done",
           "type_facet": "MysticArcherClassFeatures.SpecialAttack.Extraordinary",
           "standing": "unclassified",
           "display_name": "Ranged Sneak Attack"
@@ -10457,7 +10457,7 @@
         },
         {
           "name": "Reconfigure",
-          "doneness": "partial",
+          "doneness": "done",
           "type_facet": "AegisClassFeatures.SpecialQuality",
           "standing": "origin",
           "display_name": "Reconfigure"
@@ -11360,7 +11360,7 @@
         },
         {
           "name": "Steal Life",
-          "doneness": "partial",
+          "doneness": "done",
           "type_facet": "VitalistClassFeatures.SpecialAttack.Supernatural",
           "standing": "unclassified",
           "display_name": "Steal Life"
@@ -11416,7 +11416,7 @@
         },
         {
           "name": "Strategy",
-          "doneness": "partial",
+          "doneness": "done",
           "type_facet": "TacticianClassFeatures.SpecialQuality.Supernatural.Strategy",
           "standing": "unclassified",
           "display_name": "Strategy"
@@ -11759,7 +11759,7 @@
         },
         {
           "name": "Teamwork Feats",
-          "doneness": "partial",
+          "doneness": "done",
           "type_facet": "TacticianClassFeatures.SpecialQuality",
           "standing": "unclassified",
           "display_name": "Teamwork Feats"
@@ -11955,7 +11955,7 @@
         },
         {
           "name": "Terror",
-          "doneness": "partial",
+          "doneness": "done",
           "type_facet": "DreadClassFeatures.SpecialQuality.Supernatural.CheckList",
           "standing": "unclassified",
           "display_name": "Terror"
@@ -12319,7 +12319,7 @@
         },
         {
           "name": "Transfer Wounds",
-          "doneness": "partial",
+          "doneness": "done",
           "type_facet": "VitalistClassFeatures.SpecialQuality.Supernatural",
           "standing": "origin",
           "display_name": "Transfer Wounds (VitalistClassFeatures.SpecialQuality.Supernatural)"
@@ -12473,14 +12473,14 @@
         },
         {
           "name": "Unchanging Pattern",
-          "doneness": "partial",
+          "doneness": "done",
           "type_facet": "CrypticClassFeatures.SpecialQuality.Supernatural",
           "standing": "origin",
           "display_name": "Unchanging Pattern"
         },
         {
           "name": "Undead",
-          "doneness": "partial",
+          "doneness": "done",
           "type_facet": "PhrenicSlayerClassFeatures.SlayerFavoredEnemy.SpecialAttack.Extraordinary.AttackOption",
           "standing": "unclassified",
           "display_name": "Undead"
@@ -12627,7 +12627,7 @@
         },
         {
           "name": "Vermin",
-          "doneness": "partial",
+          "doneness": "done",
           "type_facet": "PhrenicSlayerClassFeatures.SlayerFavoredEnemy.SpecialAttack.Extraordinary.AttackOption",
           "standing": "unclassified",
           "display_name": "Vermin"
@@ -12844,7 +12844,7 @@
         },
         {
           "name": "Weapon Afire",
-          "doneness": "partial",
+          "doneness": "done",
           "type_facet": "PyrokineticistClassFeatures.SpecialAttack.Psilike",
           "standing": "origin",
           "display_name": "Weapon Afire"
@@ -12942,7 +12942,7 @@
         },
         {
           "name": "Wild Surge",
-          "doneness": "partial",
+          "doneness": "done",
           "type_facet": "WilderClassFeatures.SpecialQuality.Supernatural",
           "standing": "origin",
           "display_name": "Wild Surge (WilderClassFeatures.SpecialQuality.Supernatural)"
@@ -12984,7 +12984,7 @@
         },
         {
           "name": "Wind Reader",
-          "doneness": "partial",
+          "doneness": "done",
           "type_facet": "MarksmanClassFeatures.SpecialAttack.Supernatural",
           "standing": "origin",
           "display_name": "Wind Reader"
@@ -13332,11 +13332,11 @@
     {
       "kind": "equipment",
       "label": "Equipment",
-      "done": 325,
-      "partial": 1,
+      "done": 326,
+      "partial": 0,
       "not_started": 0,
       "denominator": 326,
-      "pct": 99.7,
+      "pct": 100.0,
       "excluded_from_percentage": 0,
       "standing_breakdown": {
         "origin": 326
@@ -14471,7 +14471,7 @@
         },
         {
           "name": "Mind Arrow",
-          "doneness": "partial",
+          "doneness": "done",
           "type_facet": "Weapon.Ranged.Projectile.Piercing.MindArrow",
           "standing": "origin",
           "display_name": "Mind Arrow"
@@ -15629,12 +15629,12 @@
     {
       "kind": "equipment_modifier",
       "label": "Equipment Modifiers",
-      "done": 192,
-      "partial": 29,
+      "done": 226,
+      "partial": 0,
       "not_started": 0,
-      "denominator": 221,
-      "pct": 86.9,
-      "excluded_from_percentage": 5,
+      "denominator": 226,
+      "pct": 100.0,
+      "excluded_from_percentage": 0,
       "standing_breakdown": {
         "origin": 221,
         "unclassified": 5
@@ -15642,21 +15642,21 @@
       "items": [
         {
           "name": "AGILE",
-          "doneness": "partial",
+          "doneness": "done",
           "type_facet": null,
           "standing": "origin",
           "display_name": "AGILE"
         },
         {
           "name": "APORT",
-          "doneness": "partial",
+          "doneness": "done",
           "type_facet": null,
           "standing": "origin",
           "display_name": "APORT"
         },
         {
           "name": "AVERT",
-          "doneness": "partial",
+          "doneness": "done",
           "type_facet": null,
           "standing": "origin",
           "display_name": "AVERT"
@@ -15712,21 +15712,21 @@
         },
         {
           "name": "COLLI_A",
-          "doneness": "partial",
+          "doneness": "done",
           "type_facet": null,
           "standing": "origin",
           "display_name": "COLLI_A"
         },
         {
           "name": "COLLI_M",
-          "doneness": "partial",
+          "doneness": "done",
           "type_facet": null,
           "standing": "origin",
           "display_name": "COLLI_M"
         },
         {
           "name": "COLLI_R",
-          "doneness": "partial",
+          "doneness": "done",
           "type_facet": null,
           "standing": "origin",
           "display_name": "COLLI_R"
@@ -15761,7 +15761,7 @@
         },
         {
           "name": "CRYS_DEEP_ITEM",
-          "doneness": "partial",
+          "doneness": "done",
           "type_facet": null,
           "standing": "origin",
           "display_name": "CRYS_DEEP_ITEM"
@@ -15775,7 +15775,7 @@
         },
         {
           "name": "CRYS_MUN_ITEM",
-          "doneness": "partial",
+          "doneness": "done",
           "type_facet": null,
           "standing": "origin",
           "display_name": "CRYS_MUN_ITEM"
@@ -15859,7 +15859,7 @@
         },
         {
           "name": "DETERM",
-          "doneness": "partial",
+          "doneness": "done",
           "type_facet": null,
           "standing": "origin",
           "display_name": "DETERM"
@@ -15922,7 +15922,7 @@
         },
         {
           "name": "DUEL",
-          "doneness": "partial",
+          "doneness": "done",
           "type_facet": null,
           "standing": "origin",
           "display_name": "DUEL"
@@ -15978,28 +15978,28 @@
         },
         {
           "name": "ECTOPLAS",
-          "doneness": "partial",
+          "doneness": "done",
           "type_facet": null,
           "standing": "origin",
           "display_name": "ECTOPLAS"
         },
         {
           "name": "ENRGY_C",
-          "doneness": "partial",
+          "doneness": "done",
           "type_facet": null,
           "standing": "origin",
           "display_name": "ENRGY_C"
         },
         {
           "name": "ENRGY_E",
-          "doneness": "partial",
+          "doneness": "done",
           "type_facet": null,
           "standing": "origin",
           "display_name": "ENRGY_E"
         },
         {
           "name": "ENRGY_F",
-          "doneness": "partial",
+          "doneness": "done",
           "type_facet": null,
           "standing": "origin",
           "display_name": "ENRGY_F"
@@ -16097,7 +16097,7 @@
         },
         {
           "name": "FLOAT",
-          "doneness": "partial",
+          "doneness": "done",
           "type_facet": null,
           "standing": "origin",
           "display_name": "FLOAT"
@@ -16230,7 +16230,7 @@
         },
         {
           "name": "HEART",
-          "doneness": "partial",
+          "doneness": "done",
           "type_facet": null,
           "standing": "origin",
           "display_name": "HEART"
@@ -16272,14 +16272,14 @@
         },
         {
           "name": "LANDI",
-          "doneness": "partial",
+          "doneness": "done",
           "type_facet": null,
           "standing": "origin",
           "display_name": "LANDI"
         },
         {
           "name": "LNKED",
-          "doneness": "partial",
+          "doneness": "done",
           "type_facet": null,
           "standing": "origin",
           "display_name": "LNKED"
@@ -16328,28 +16328,28 @@
         },
         {
           "name": "MANIF_SHLD",
-          "doneness": "partial",
+          "doneness": "done",
           "type_facet": null,
           "standing": "origin",
           "display_name": "MANIF_SHLD"
         },
         {
           "name": "MANIF_WPN_A",
-          "doneness": "partial",
+          "doneness": "done",
           "type_facet": null,
           "standing": "origin",
           "display_name": "MANIF_WPN_A"
         },
         {
           "name": "MANIF_WPN_M",
-          "doneness": "partial",
+          "doneness": "done",
           "type_facet": null,
           "standing": "origin",
           "display_name": "MANIF_WPN_M"
         },
         {
           "name": "MANIF_WPN_R",
-          "doneness": "partial",
+          "doneness": "done",
           "type_facet": null,
           "standing": "origin",
           "display_name": "MANIF_WPN_R"
@@ -16370,7 +16370,7 @@
         },
         {
           "name": "MNDARMR",
-          "doneness": "partial",
+          "doneness": "done",
           "type_facet": null,
           "standing": "origin",
           "display_name": "MNDARMR"
@@ -16461,7 +16461,7 @@
         },
         {
           "name": "PHASING",
-          "doneness": "partial",
+          "doneness": "done",
           "type_facet": null,
           "standing": "origin",
           "display_name": "PHASING"
@@ -16566,14 +16566,14 @@
         },
         {
           "name": "PSISET",
-          "doneness": "partial",
+          "doneness": "done",
           "type_facet": null,
           "standing": "origin",
           "display_name": "PSISET"
         },
         {
           "name": "PSYCHIC",
-          "doneness": "partial",
+          "doneness": "done",
           "type_facet": null,
           "standing": "origin",
           "display_name": "PSYCHIC"
@@ -16846,7 +16846,7 @@
         },
         {
           "name": "QUICKN",
-          "doneness": "partial",
+          "doneness": "done",
           "type_facet": null,
           "standing": "origin",
           "display_name": "QUICKN"
@@ -16867,7 +16867,7 @@
         },
         {
           "name": "RBDNG",
-          "doneness": "partial",
+          "doneness": "done",
           "type_facet": null,
           "standing": "origin",
           "display_name": "RBDNG"
@@ -17056,7 +17056,7 @@
         },
         {
           "name": "WALL",
-          "doneness": "partial",
+          "doneness": "done",
           "type_facet": null,
           "standing": "origin",
           "display_name": "WALL"
@@ -17227,12 +17227,12 @@
     {
       "kind": "feat",
       "label": "Feats",
-      "done": 219,
-      "partial": 1,
+      "done": 222,
+      "partial": 0,
       "not_started": 0,
-      "denominator": 220,
-      "pct": 99.5,
-      "excluded_from_percentage": 2,
+      "denominator": 222,
+      "pct": 100.0,
+      "excluded_from_percentage": 0,
       "standing_breakdown": {
         "origin": 220,
         "unclassified": 2
@@ -17660,7 +17660,7 @@
         },
         {
           "name": "Expansive Collective",
-          "doneness": "partial",
+          "doneness": "done",
           "type_facet": "Psionic",
           "standing": "origin",
           "display_name": "Expansive Collective"
@@ -18847,12 +18847,12 @@
     {
       "kind": "monster_ability",
       "label": "Monster Abilities",
-      "done": 123,
-      "partial": 47,
+      "done": 191,
+      "partial": 0,
       "not_started": 0,
-      "denominator": 170,
-      "pct": 72.4,
-      "excluded_from_percentage": 21,
+      "denominator": 191,
+      "pct": 100.0,
+      "excluded_from_percentage": 0,
       "standing_breakdown": {
         "origin": 170,
         "unclassified": 21
@@ -18860,7 +18860,7 @@
       "items": [
         {
           "name": "Aberrant Nature",
-          "doneness": "partial",
+          "doneness": "done",
           "type_facet": "RacialTraits.SpecialQuality.Extraordinary.ElanRacialTrait.ElanRacialDefault",
           "standing": "origin",
           "display_name": "Aberrant Nature"
@@ -18888,7 +18888,7 @@
         },
         {
           "name": "Blindsight",
-          "doneness": "partial",
+          "doneness": "done",
           "type_facet": "SpecialQuality.AstralConstructMenuC",
           "standing": "origin",
           "display_name": "Blindsight"
@@ -18902,7 +18902,7 @@
         },
         {
           "name": "Buff",
-          "doneness": "partial",
+          "doneness": "done",
           "type_facet": "SpecialQuality.AstralConstructMenuA",
           "standing": "origin",
           "display_name": "Buff"
@@ -18923,7 +18923,7 @@
         },
         {
           "name": "Celerity",
-          "doneness": "partial",
+          "doneness": "done",
           "type_facet": "SpecialQuality.AstralConstructMenuA",
           "standing": "origin",
           "display_name": "Celerity"
@@ -18944,7 +18944,7 @@
         },
         {
           "name": "Cleave",
-          "doneness": "partial",
+          "doneness": "done",
           "type_facet": "SpecialQuality.AstralConstructMenuA",
           "standing": "origin",
           "display_name": "Cleave"
@@ -18958,7 +18958,7 @@
         },
         {
           "name": "Compact Form",
-          "doneness": "partial",
+          "doneness": "done",
           "type_facet": "SpecialQuality.AstralConstructMenuB",
           "standing": "origin",
           "display_name": "Compact Form"
@@ -18972,14 +18972,14 @@
         },
         {
           "name": "Concussion",
-          "doneness": "partial",
+          "doneness": "done",
           "type_facet": "SpecialQuality.AstralConstructMenuC",
           "standing": "origin",
           "display_name": "Concussion"
         },
         {
           "name": "Constrict",
-          "doneness": "partial",
+          "doneness": "done",
           "type_facet": "SpecialQuality.AstralConstructMenuC",
           "standing": "unclassified",
           "display_name": "Constrict"
@@ -19021,7 +19021,7 @@
         },
         {
           "name": "Deflection",
-          "doneness": "partial",
+          "doneness": "done",
           "type_facet": "SpecialQuality.AstralConstructMenuA",
           "standing": "origin",
           "display_name": "Deflection"
@@ -19042,21 +19042,21 @@
         },
         {
           "name": "Devastating Touch",
-          "doneness": "partial",
+          "doneness": "done",
           "type_facet": "SpecialAttack.Supernatural",
           "standing": "origin",
           "display_name": "Devastating Touch"
         },
         {
           "name": "Dimension Slide",
-          "doneness": "partial",
+          "doneness": "done",
           "type_facet": "SpecialQuality.AstralConstructMenuC",
           "standing": "origin",
           "display_name": "Dimension Slide"
         },
         {
           "name": "Dodge",
-          "doneness": "partial",
+          "doneness": "done",
           "type_facet": "SpecialQuality.AstralConstructMenuA",
           "standing": "origin",
           "display_name": "Dodge"
@@ -19077,35 +19077,35 @@
         },
         {
           "name": "Energy Bolt",
-          "doneness": "partial",
+          "doneness": "done",
           "type_facet": "SpecialQuality.AstralConstructMenuC",
           "standing": "origin",
           "display_name": "Energy Bolt"
         },
         {
           "name": "Energy Touch ~ Acid",
-          "doneness": "partial",
+          "doneness": "done",
           "type_facet": "SpecialQuality.AstralConstructMenuB",
           "standing": "origin",
           "display_name": "Energy Touch ~ Acid"
         },
         {
           "name": "Energy Touch ~ Cold",
-          "doneness": "partial",
+          "doneness": "done",
           "type_facet": "SpecialQuality.AstralConstructMenuB",
           "standing": "origin",
           "display_name": "Energy Touch ~ Cold"
         },
         {
           "name": "Energy Touch ~ Electricity",
-          "doneness": "partial",
+          "doneness": "done",
           "type_facet": "SpecialQuality.AstralConstructMenuB",
           "standing": "origin",
           "display_name": "Energy Touch ~ Electricity"
         },
         {
           "name": "Energy Touch ~ Fire",
-          "doneness": "partial",
+          "doneness": "done",
           "type_facet": "SpecialQuality.AstralConstructMenuB",
           "standing": "origin",
           "display_name": "Energy Touch ~ Fire"
@@ -19126,28 +19126,28 @@
         },
         {
           "name": "Extra Attack",
-          "doneness": "partial",
+          "doneness": "done",
           "type_facet": "SpecialQuality.AstralConstructMenuB",
           "standing": "origin",
           "display_name": "Extra Attack"
         },
         {
           "name": "Extra Buff",
-          "doneness": "partial",
+          "doneness": "done",
           "type_facet": "SpecialQuality.AstralConstructMenuC",
           "standing": "origin",
           "display_name": "Extra Buff"
         },
         {
           "name": "Extreme Damage Reduction",
-          "doneness": "partial",
+          "doneness": "done",
           "type_facet": "SpecialQuality.AstralConstructMenuC",
           "standing": "origin",
           "display_name": "Extreme Damage Reduction"
         },
         {
           "name": "Extreme Deflection",
-          "doneness": "partial",
+          "doneness": "done",
           "type_facet": "SpecialQuality.AstralConstructMenuC",
           "standing": "origin",
           "display_name": "Extreme Deflection"
@@ -19252,7 +19252,7 @@
         },
         {
           "name": "Fast Healing",
-          "doneness": "partial",
+          "doneness": "done",
           "type_facet": "SpecialQuality.AstralConstructMenuB",
           "standing": "unclassified",
           "display_name": "Fast Healing"
@@ -19287,7 +19287,7 @@
         },
         {
           "name": "Fly",
-          "doneness": "partial",
+          "doneness": "done",
           "type_facet": "SpecialQuality.AstralConstructMenuA",
           "standing": "unclassified",
           "display_name": "Fly"
@@ -19322,14 +19322,14 @@
         },
         {
           "name": "Grab",
-          "doneness": "partial",
+          "doneness": "done",
           "type_facet": "SpecialQuality.AstralConstructMenuB",
           "standing": "unclassified",
           "display_name": "Grab"
         },
         {
           "name": "Great Cleave",
-          "doneness": "partial",
+          "doneness": "done",
           "type_facet": "SpecialAttack.AstralConstructMenuB",
           "standing": "origin",
           "display_name": "Great Cleave"
@@ -19357,7 +19357,7 @@
         },
         {
           "name": "Heavy Deflection",
-          "doneness": "partial",
+          "doneness": "done",
           "type_facet": "SpecialQuality.AstralConstructMenuB",
           "standing": "origin",
           "display_name": "Heavy Deflection"
@@ -19378,35 +19378,35 @@
         },
         {
           "name": "Improved Buff",
-          "doneness": "partial",
+          "doneness": "done",
           "type_facet": "SpecialQuality.AstralConstructMenuB",
           "standing": "origin",
           "display_name": "Improved Buff"
         },
         {
           "name": "Improved Bull Rush",
-          "doneness": "partial",
+          "doneness": "done",
           "type_facet": "SpecialQuality.AstralConstructMenuA",
           "standing": "origin",
           "display_name": "Improved Bull Rush"
         },
         {
           "name": "Improved Critical",
-          "doneness": "partial",
+          "doneness": "done",
           "type_facet": "SpecialQuality.AstralConstructMenuB",
           "standing": "origin",
           "display_name": "Improved Critical"
         },
         {
           "name": "Improved Damage Reduction",
-          "doneness": "partial",
+          "doneness": "done",
           "type_facet": "SpecialQuality.AstralConstructMenuB",
           "standing": "origin",
           "display_name": "Improved Damage Reduction"
         },
         {
           "name": "Improved Fly",
-          "doneness": "partial",
+          "doneness": "done",
           "type_facet": "SpecialQuality.AstralConstructMenuB",
           "standing": "origin",
           "display_name": "Improved Fly"
@@ -19420,14 +19420,14 @@
         },
         {
           "name": "Improved Slam Attack",
-          "doneness": "partial",
+          "doneness": "done",
           "type_facet": "SpecialQuality.AstralConstructMenuA",
           "standing": "origin",
           "display_name": "Improved Slam Attack"
         },
         {
           "name": "Improved Swim",
-          "doneness": "partial",
+          "doneness": "done",
           "type_facet": "SpecialQuality.AstralConstructMenuB",
           "standing": "origin",
           "display_name": "Improved Swim"
@@ -19532,14 +19532,14 @@
         },
         {
           "name": "Mobility",
-          "doneness": "partial",
+          "doneness": "done",
           "type_facet": "SpecialQuality.AstralConstructMenuA",
           "standing": "origin",
           "display_name": "Mobility"
         },
         {
           "name": "Muscle",
-          "doneness": "partial",
+          "doneness": "done",
           "type_facet": "SpecialQuality.AstralConstructMenuB",
           "standing": "origin",
           "display_name": "Muscle"
@@ -19609,7 +19609,7 @@
         },
         {
           "name": "Poison Touch",
-          "doneness": "partial",
+          "doneness": "done",
           "type_facet": "SpecialQuality.AstralConstructMenuB",
           "standing": "origin",
           "display_name": "Poison Touch"
@@ -19623,28 +19623,28 @@
         },
         {
           "name": "Pounce",
-          "doneness": "partial",
+          "doneness": "done",
           "type_facet": "SpecialQuality.AstralConstructMenuB",
           "standing": "unclassified",
           "display_name": "Pounce"
         },
         {
           "name": "Power Attack",
-          "doneness": "partial",
+          "doneness": "done",
           "type_facet": "SpecialQuality.AstralConstructMenuA",
           "standing": "origin",
           "display_name": "Power Attack"
         },
         {
           "name": "Power Resistance",
-          "doneness": "partial",
+          "doneness": "done",
           "type_facet": "SpecialQuality.AstralConstructMenuC",
           "standing": "origin",
           "display_name": "Power Resistance (SpecialQuality.AstralConstructMenuC)"
         },
         {
           "name": "Power Resistance",
-          "doneness": "partial",
+          "doneness": "done",
           "type_facet": "SpecialQuality.Extraordinary",
           "standing": "origin",
           "display_name": "Power Resistance (SpecialQuality.Extraordinary)"
@@ -19707,7 +19707,7 @@
         },
         {
           "name": "Rend",
-          "doneness": "partial",
+          "doneness": "done",
           "type_facet": "SpecialQuality.AstralConstructMenuC",
           "standing": "unclassified",
           "display_name": "Rend"
@@ -19749,35 +19749,35 @@
         },
         {
           "name": "Resistance To Acid",
-          "doneness": "partial",
+          "doneness": "done",
           "type_facet": "SpecialQuality.AstralConstructMenuA",
           "standing": "origin",
           "display_name": "Resistance To Acid"
         },
         {
           "name": "Resistance To Cold",
-          "doneness": "partial",
+          "doneness": "done",
           "type_facet": "SpecialQuality.AstralConstructMenuA",
           "standing": "origin",
           "display_name": "Resistance To Cold"
         },
         {
           "name": "Resistance To Electricity",
-          "doneness": "partial",
+          "doneness": "done",
           "type_facet": "SpecialQuality.AstralConstructMenuA",
           "standing": "origin",
           "display_name": "Resistance To Electricity"
         },
         {
           "name": "Resistance To Fire",
-          "doneness": "partial",
+          "doneness": "done",
           "type_facet": "SpecialQuality.AstralConstructMenuA",
           "standing": "origin",
           "display_name": "Resistance To Fire"
         },
         {
           "name": "Resistance To Sonic",
-          "doneness": "partial",
+          "doneness": "done",
           "type_facet": "SpecialQuality.AstralConstructMenuA",
           "standing": "origin",
           "display_name": "Resistance To Sonic"
@@ -19791,7 +19791,7 @@
         },
         {
           "name": "Scent",
-          "doneness": "partial",
+          "doneness": "done",
           "type_facet": "RacialTraits.SpecialQuality.Extraordinary.DromiteRacialTrait.DromiteRacialDefault",
           "standing": "unclassified",
           "display_name": "Scent"
@@ -19826,7 +19826,7 @@
         },
         {
           "name": "Serpent's Bite",
-          "doneness": "partial",
+          "doneness": "done",
           "type_facet": "RacialTraits.SpecialAttack.Psilike.OphiduanRacialTrait.OphiduanRacialDefault",
           "standing": "origin",
           "display_name": "Serpent's Bite"
@@ -19861,7 +19861,7 @@
         },
         {
           "name": "Skills",
-          "doneness": "partial",
+          "doneness": "done",
           "type_facet": "SpecialQuality",
           "standing": "unclassified",
           "display_name": "Skills"
@@ -19882,7 +19882,7 @@
         },
         {
           "name": "Smite",
-          "doneness": "partial",
+          "doneness": "done",
           "type_facet": "SpecialQuality.AstralConstructMenuB",
           "standing": "origin",
           "display_name": "Smite"
@@ -19910,7 +19910,7 @@
         },
         {
           "name": "Spring Attack",
-          "doneness": "partial",
+          "doneness": "done",
           "type_facet": "SpecialQuality.AstralConstructMenuC",
           "standing": "origin",
           "display_name": "Spring Attack"
@@ -20043,7 +20043,7 @@
         },
         {
           "name": "Swim",
-          "doneness": "partial",
+          "doneness": "done",
           "type_facet": "SpecialQuality.AstralConstructMenuA",
           "standing": "origin",
           "display_name": "Swim"
@@ -20113,14 +20113,14 @@
         },
         {
           "name": "Trample",
-          "doneness": "partial",
+          "doneness": "done",
           "type_facet": "SpecialQuality.AstralConstructMenuB",
           "standing": "unclassified",
           "display_name": "Trample"
         },
         {
           "name": "Trip",
-          "doneness": "partial",
+          "doneness": "done",
           "type_facet": "SpecialQuality.AstralConstructMenuA",
           "standing": "unclassified",
           "display_name": "Trip"
@@ -20134,14 +20134,14 @@
         },
         {
           "name": "Two Menu A Abilities",
-          "doneness": "partial",
+          "doneness": "done",
           "type_facet": "SpecialQuality.AstralConstructMenuB",
           "standing": "origin",
           "display_name": "Two Menu A Abilities"
         },
         {
           "name": "Two Menu B Abilities",
-          "doneness": "partial",
+          "doneness": "done",
           "type_facet": "SpecialQuality.AstralConstructMenuC",
           "standing": "origin",
           "display_name": "Two Menu B Abilities"
@@ -20183,7 +20183,7 @@
         },
         {
           "name": "Whirlwind Attack",
-          "doneness": "partial",
+          "doneness": "done",
           "type_facet": "SpecialQuality.AstralConstructMenuC",
           "standing": "origin",
           "display_name": "Whirlwind Attack"
@@ -20200,12 +20200,12 @@
     {
       "kind": "monster",
       "label": "Monsters",
-      "done": 15,
-      "partial": 5,
+      "done": 21,
+      "partial": 0,
       "not_started": 0,
-      "denominator": 20,
-      "pct": 75.0,
-      "excluded_from_percentage": 1,
+      "denominator": 21,
+      "pct": 100.0,
+      "excluded_from_percentage": 0,
       "standing_breakdown": {
         "origin": 20,
         "unclassified": 1
@@ -20213,28 +20213,28 @@
       "items": [
         {
           "name": "Astral Construct (1st Level)",
-          "doneness": "partial",
+          "doneness": "done",
           "type_facet": "Construct",
           "standing": "origin",
           "display_name": "Astral Construct (1st Level)"
         },
         {
           "name": "Astral Construct (2nd Level)",
-          "doneness": "partial",
+          "doneness": "done",
           "type_facet": "Construct",
           "standing": "origin",
           "display_name": "Astral Construct (2nd Level)"
         },
         {
           "name": "Astral Construct (3rd Level)",
-          "doneness": "partial",
+          "doneness": "done",
           "type_facet": "Construct",
           "standing": "origin",
           "display_name": "Astral Construct (3rd Level)"
         },
         {
           "name": "Astral Construct (4th Level)",
-          "doneness": "partial",
+          "doneness": "done",
           "type_facet": "Construct",
           "standing": "origin",
           "display_name": "Astral Construct (4th Level)"
@@ -20276,7 +20276,7 @@
         },
         {
           "name": "Astral Swarm",
-          "doneness": "partial",
+          "doneness": "done",
           "type_facet": null,
           "standing": "origin",
           "display_name": "Astral Swarm"
@@ -23325,12 +23325,12 @@
     {
       "kind": "race_trait",
       "label": "Race Traits",
-      "done": 43,
+      "done": 47,
       "partial": 0,
       "not_started": 0,
-      "denominator": 43,
+      "denominator": 47,
       "pct": 100.0,
-      "excluded_from_percentage": 4,
+      "excluded_from_percentage": 0,
       "standing_breakdown": {
         "origin": 43,
         "unclassified": 4
@@ -23756,12 +23756,12 @@
     {
       "kind": "template",
       "label": "Templates",
-      "done": 103,
+      "done": 104,
       "partial": 0,
       "not_started": 0,
-      "denominator": 103,
+      "denominator": 104,
       "pct": 100.0,
-      "excluded_from_percentage": 1,
+      "excluded_from_percentage": 0,
       "standing_breakdown": {
         "origin": 103,
         "unclassified": 1

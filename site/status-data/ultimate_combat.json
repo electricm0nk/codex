@@ -5,12 +5,12 @@
     {
       "kind": "ability",
       "label": "Abilities",
-      "done": 4,
+      "done": 7,
       "partial": 0,
       "not_started": 0,
-      "denominator": 4,
+      "denominator": 7,
       "pct": 100.0,
-      "excluded_from_percentage": 3,
+      "excluded_from_percentage": 0,
       "standing_breakdown": {
         "unclassified": 3,
         "origin": 4
@@ -70,12 +70,12 @@
     {
       "kind": "class_feature",
       "label": "Class Features",
-      "done": 958,
+      "done": 1536,
       "partial": 0,
       "not_started": 0,
-      "denominator": 958,
+      "denominator": 1536,
       "pct": 100.0,
-      "excluded_from_percentage": 578,
+      "excluded_from_percentage": 0,
       "standing_breakdown": {
         "origin": 958,
         "unclassified": 578
@@ -10874,12 +10874,12 @@
     {
       "kind": "equipment",
       "label": "Equipment",
-      "done": 60,
+      "done": 185,
       "partial": 0,
       "not_started": 0,
-      "denominator": 60,
+      "denominator": 185,
       "pct": 100.0,
-      "excluded_from_percentage": 125,
+      "excluded_from_percentage": 0,
       "standing_breakdown": {
         "origin": 60,
         "unclassified": 125
@@ -12185,12 +12185,12 @@
     {
       "kind": "equipment_modifier",
       "label": "Equipment Modifiers",
-      "done": 22,
-      "partial": 1,
+      "done": 39,
+      "partial": 0,
       "not_started": 0,
-      "denominator": 23,
-      "pct": 95.7,
-      "excluded_from_percentage": 16,
+      "denominator": 39,
+      "pct": 100.0,
+      "excluded_from_percentage": 0,
       "standing_breakdown": {
         "origin": 23,
         "unclassified": 16
@@ -12254,7 +12254,7 @@
         },
         {
           "name": "DRYLOAD_PFUC",
-          "doneness": "partial",
+          "doneness": "done",
           "type_facet": null,
           "standing": "origin",
           "display_name": "DRYLOAD_PFUC"
@@ -12474,12 +12474,12 @@
     {
       "kind": "feat",
       "label": "Feats",
-      "done": 242,
-      "partial": 19,
+      "done": 263,
+      "partial": 0,
       "not_started": 0,
-      "denominator": 261,
-      "pct": 92.7,
-      "excluded_from_percentage": 2,
+      "denominator": 263,
+      "pct": 100.0,
+      "excluded_from_percentage": 0,
       "standing_breakdown": {
         "origin": 261,
         "unclassified": 2
@@ -12732,7 +12732,7 @@
         },
         {
           "name": "Crushing Blow",
-          "doneness": "partial",
+          "doneness": "done",
           "type_facet": "Combat",
           "standing": "origin",
           "display_name": "Crushing Blow"
@@ -12949,7 +12949,7 @@
         },
         {
           "name": "Djinni Spin",
-          "doneness": "partial",
+          "doneness": "done",
           "type_facet": "Combat",
           "standing": "origin",
           "display_name": "Djinni Spin"
@@ -12991,7 +12991,7 @@
         },
         {
           "name": "Dragon Ferocity",
-          "doneness": "partial",
+          "doneness": "done",
           "type_facet": "Combat",
           "standing": "origin",
           "display_name": "Dragon Ferocity"
@@ -13005,7 +13005,7 @@
         },
         {
           "name": "Dragon Style",
-          "doneness": "partial",
+          "doneness": "done",
           "type_facet": "Combat.Style",
           "standing": "origin",
           "display_name": "Dragon Style"
@@ -13033,7 +13033,7 @@
         },
         {
           "name": "Earth Child Topple",
-          "doneness": "partial",
+          "doneness": "done",
           "type_facet": "General",
           "standing": "origin",
           "display_name": "Earth Child Topple"
@@ -13054,7 +13054,7 @@
         },
         {
           "name": "Efreeti Touch",
-          "doneness": "partial",
+          "doneness": "done",
           "type_facet": "Combat",
           "standing": "origin",
           "display_name": "Efreeti Touch"
@@ -13446,14 +13446,14 @@
         },
         {
           "name": "Kirin Path",
-          "doneness": "partial",
+          "doneness": "done",
           "type_facet": "Combat",
           "standing": "origin",
           "display_name": "Kirin Path"
         },
         {
           "name": "Kirin Strike",
-          "doneness": "partial",
+          "doneness": "done",
           "type_facet": "Combat",
           "standing": "origin",
           "display_name": "Kirin Strike"
@@ -13509,7 +13509,7 @@
         },
         {
           "name": "Marid Coldsnap",
-          "doneness": "partial",
+          "doneness": "done",
           "type_facet": "Combat",
           "standing": "origin",
           "display_name": "Marid Coldsnap"
@@ -13712,7 +13712,7 @@
         },
         {
           "name": "Panther Claw",
-          "doneness": "partial",
+          "doneness": "done",
           "type_facet": "Combat",
           "standing": "origin",
           "display_name": "Panther Claw"
@@ -13838,14 +13838,14 @@
         },
         {
           "name": "Raging Brutality",
-          "doneness": "partial",
+          "doneness": "done",
           "type_facet": "General",
           "standing": "origin",
           "display_name": "Raging Brutality"
         },
         {
           "name": "Raging Deathblow",
-          "doneness": "partial",
+          "doneness": "done",
           "type_facet": "General",
           "standing": "origin",
           "display_name": "Raging Deathblow"
@@ -13859,7 +13859,7 @@
         },
         {
           "name": "Raging Throw",
-          "doneness": "partial",
+          "doneness": "done",
           "type_facet": "General",
           "standing": "origin",
           "display_name": "Raging Throw"
@@ -13971,21 +13971,21 @@
         },
         {
           "name": "Shaitan Earthblast",
-          "doneness": "partial",
+          "doneness": "done",
           "type_facet": "Combat",
           "standing": "origin",
           "display_name": "Shaitan Earthblast"
         },
         {
           "name": "Shaitan Skin",
-          "doneness": "partial",
+          "doneness": "done",
           "type_facet": "Combat",
           "standing": "origin",
           "display_name": "Shaitan Skin"
         },
         {
           "name": "Shaitan Style",
-          "doneness": "partial",
+          "doneness": "done",
           "type_facet": "Combat.Style",
           "standing": "origin",
           "display_name": "Shaitan Style"
@@ -13999,7 +13999,7 @@
         },
         {
           "name": "Shapeshifter Foil",
-          "doneness": "partial",
+          "doneness": "done",
           "type_facet": "General",
           "standing": "origin",
           "display_name": "Shapeshifter Foil"
@@ -14237,7 +14237,7 @@
         },
         {
           "name": "Tiger Claws",
-          "doneness": "partial",
+          "doneness": "done",
           "type_facet": "Combat",
           "standing": "origin",
           "display_name": "Tiger Claws"
@@ -14293,7 +14293,7 @@
         },
         {
           "name": "Two-Handed Thrower",
-          "doneness": "partial",
+          "doneness": "done",
           "type_facet": "Combat",
           "standing": "origin",
           "display_name": "Two-Handed Thrower"
@@ -14439,12 +14439,12 @@
     {
       "kind": "spell",
       "label": "Spells",
-      "done": 145,
-      "partial": 1,
+      "done": 147,
+      "partial": 0,
       "not_started": 0,
-      "denominator": 146,
-      "pct": 99.3,
-      "excluded_from_percentage": 1,
+      "denominator": 147,
+      "pct": 100.0,
+      "excluded_from_percentage": 0,
       "standing_breakdown": {
         "origin": 146,
         "unclassified": 1
@@ -14858,7 +14858,7 @@
         },
         {
           "name": "Life Conduit",
-          "doneness": "partial",
+          "doneness": "done",
           "type_facet": null,
           "standing": "origin",
           "display_name": "Life Conduit"

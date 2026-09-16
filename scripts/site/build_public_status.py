@@ -38,21 +38,24 @@ ruling — see SD-31-corpus-closure-grind/decisions.md §12 and §14):
    itself, its counts, its standing and its doneness are unaffected — only
    the display string is withheld.
 
-2. PUBLIC DONENESS BUCKETS. The internal six-value doneness verdict
-   (`pf1e_dashboard_producer.doneness_verdict`) is collapsed to the three
-   public buckets `done` / `partial` / `not-started` via
-   `DONENESS_TO_PUBLIC` below (see that mapping's own comment for the
-   per-value rationale).
+2. PUBLIC DONENESS BUCKETS (D5, operator ruling 2026-09-15, SD-36
+   consolidation — supersedes the six-value-producer-verdict rule this
+   file used until then). Doneness is read directly off the ledger's own
+   `status` field against `docs/work-inventory.json`'s own DONE vocabulary
+   (`DONE_STATUSES` below) — never derived from `wiring_class` or the
+   (now-retired) `pf1e_dashboard_producer.doneness_verdict` table. There is
+   no `partial` bucket any more: a status is either one of the inventory's
+   DONE words or one of its NOT-DONE words (`NOT_DONE_STATUSES`).
 
-3. STANDING AND THE DENOMINATOR (Decision 14). Every item also carries a
-   `standing` — one of `scripts/observer/provenance.py`'s nine canonical
-   statuses (or its `unclassified` bookkeeping value), reused rather than
-   reimplemented. `denominator = origin + variant`
-   (`provenance.DENOMINATOR_STATUSES`) — only items with a qualifying
-   standing count toward `done`/`denominator`/`pct` at every rollup level.
-   Every other standing is still SHOWN (the item's own `standing` field,
-   and each rollup's `standing_breakdown` + `excluded_from_percentage`) —
-   never silently dropped from view, only from the percentage math.
+3. STANDING (Decision 14, kept as a DISPLAY field only). Every item still
+   carries a `standing` — one of `scripts/observer/provenance.py`'s nine
+   canonical statuses (or its `unclassified` bookkeeping value), reused
+   rather than reimplemented — and each rollup still shows a
+   `standing_breakdown`. Under D5 it no longer gates the denominator: every
+   unit counts, full stop (`denominator = every unit`), overriding the
+   SD-31 `origin + variant`-only rule. `excluded_from_percentage` is always
+   0 now; kept in the schema rather than removed so a page/consumer built
+   against the old field never crashes.
 
 Usage:
     python3 scripts/site/build_public_status.py
@@ -67,73 +70,68 @@ UNITS_DIR = REPO_ROOT / "site" / "dashboard" / "units"
 OUTPUT = REPO_ROOT / "site" / "status-data.json"
 BOOK_DETAIL_DIR = REPO_ROOT / "site" / "status-data"
 
-# The (wiring_class, status, kind) -> doneness classification is genuinely
-# intricate (see pf1e_dashboard_producer.doneness_verdict's own docstring —
-# several rounds of documented QA corrections). Import and reuse it rather
-# than re-deriving a simplified version here, so this script's numbers can
-# never quietly disagree with the engineering-side doneness definition.
 sys.path.insert(0, str(REPO_ROOT / "scripts" / "observer"))
 # This module's own directory -- inserted explicitly (not relied on as
 # sys.path[0]) because test_build_public_status.py loads this file via
 # importlib.util.spec_from_file_location, which does NOT put the module's
 # own directory on sys.path the way running it as a script does.
 sys.path.insert(0, str(REPO_ROOT / "scripts" / "site"))
-import pf1e_dashboard_producer as producer  # noqa: E402
 import pi_redaction  # noqa: E402
 import provenance  # noqa: E402
 import pi_substring_allowlist  # noqa: E402
 
 REDACTED_PI_MARKER = pi_redaction.REDACTED_PI_MARKER
 
-# --- Public doneness buckets (operator ruling 2026-08-17) -----------------
+# --- Public doneness buckets (D5, operator ruling 2026-09-15) -------------
 #
-# "Anything that 'counts' should either be done, partial, or not started."
-# Derived from the producer's own six-value doneness_verdict() output, never
-# a re-implementation of its (wiring_class, status, kind) table:
-#
-#   done          -> done      the unchanged best-evidence bucket
-#   held          -> partial   real, partial progress recorded by the ladder
-#   in-progress   -> partial   same — real, partial progress
-#   not-started   -> not-started
-#   unmeasurable  -> not-started   JUDGEMENT CALL: we cannot yet measure
-#                    these units at all, so claiming ANY of "done" or
-#                    "partial" would overstate what is known. Under-claiming
-#                    is the correct direction here, not the flattering one.
-#   deferred      -> not-started   explicitly deferred work is not done and
-#                    not in progress; "not started" is the honest bucket.
+# Doneness is read straight off the ledger's own `status` word — one of
+# `docs/work-inventory.json`'s `status_vocabulary` keys — never derived
+# from `wiring_class`. The vocabulary itself already partitions into "real
+# evidence of some tier" (DONE_STATUSES) and "nothing usable yet"
+# (NOT_DONE_STATUSES); this is that same partition, not a re-derivation of
+# it, so a status this script has never seen is a loud KeyError, not a
+# silent guess (see the union-completeness assertion below).
 DONENESS_DONE = "done"
-DONENESS_PARTIAL = "partial"
 DONENESS_NOT_STARTED = "not-started"
-PUBLIC_DONENESS_VALUES = (DONENESS_DONE, DONENESS_PARTIAL, DONENESS_NOT_STARTED)
+PUBLIC_DONENESS_VALUES = (DONENESS_DONE, DONENESS_NOT_STARTED)
 
-DONENESS_TO_PUBLIC = {
-    producer.DONENESS_DONE: DONENESS_DONE,
-    producer.DONENESS_HELD: DONENESS_PARTIAL,
-    producer.DONENESS_IN_PROGRESS: DONENESS_PARTIAL,
-    producer.DONENESS_NOT_STARTED: DONENESS_NOT_STARTED,
-    producer.DONENESS_UNMEASURABLE: DONENESS_NOT_STARTED,
-    producer.DONENESS_DEFERRED: DONENESS_NOT_STARTED,
-}
-# Fail loud if the producer ever adds a seventh doneness value this mapping
-# does not know about — silently defaulting an unmapped verdict would be
-# exactly the kind of confidently-wrong figure this package keeps finding.
-_unmapped = set(producer.DONENESS_VALUES) - set(DONENESS_TO_PUBLIC)
-if _unmapped:
-    raise KeyError(
-        f"producer.DONENESS_VALUES has value(s) {sorted(_unmapped)} with no "
-        "entry in DONENESS_TO_PUBLIC — add one before regenerating."
-    )
+# The inventory's own "real evidence of some tier" words (status_vocabulary
+# in docs/work-inventory.json / the retired src/bin/v06_work_inventory.rs
+# STATUS_VOCABULARY): grounded, the two oracle dispositions, text-complete,
+# sheet-complete, and the two verification tiers that supersede them.
+DONE_STATUSES = frozenset({
+    "grounded",
+    "literal-verified",
+    "fixture-verified",
+    "ingested-magnitude",
+    "text-complete",
+    "sheet-complete",
+    "oracle-agree",
+    "oracle-unverifiable",
+})
+# The inventory's own "nothing usable yet" words.
+NOT_DONE_STATUSES = frozenset({
+    "deferred-with-reason",
+    "engine-does-not-hold",
+    "not-started",
+    "unmeasurable",
+    "unknown",  # pre-AT-33-E4-002 spelling of `unmeasurable`; see producer's own note.
+})
 
-# --- Standing / provenance (Decision 14) -----------------------------------
+DONENESS_TO_PUBLIC = {status: DONENESS_DONE for status in DONE_STATUSES}
+DONENESS_TO_PUBLIC.update({status: DONENESS_NOT_STARTED for status in NOT_DONE_STATUSES})
+assert DONE_STATUSES.isdisjoint(NOT_DONE_STATUSES), "a status word cannot be both done and not-done"
+
+# --- Standing / provenance (Decision 14, display only under D5) -----------
 #
 # `core_essentials` is the one already-decided packaging-artifact book
 # (decisions.md §9's census) -- every (object, book) pair naming it is
 # `packaging-artifact` unconditionally, per provenance.classify_unambiguous.
 PACKAGING_ARTIFACT_BOOKS = frozenset({"core_essentials"})
 
-# Only these standings count toward the published denominator. Reused
-# directly from provenance.py (never hand-listed) so a future change to the
-# canonical set is inherited automatically rather than silently missed here.
+# No longer gates the denominator (D5: every unit counts) -- kept only so
+# `standing_breakdown` and any external reader of this constant still see
+# the canonical provenance set.
 DENOMINATOR_STANDINGS = provenance.DENOMINATOR_STATUSES
 
 # Curated display labels for the unit "kind" facets. Fail-loud: an
@@ -233,10 +231,10 @@ def load_units_by_kind(units_dir: Path = UNITS_DIR):
 
 
 def classify_all(units_by_kind):
-    """Attach a raw (internal, six-value) doneness verdict to every row,
-    across every book (including ones not in BOOK_TITLES) — needed so the
-    overall headline matches the "everything in scope" definition rather
-    than only the shown books.
+    """Attach the raw inventory `status` word to every row, across every
+    book (including ones not in BOOK_TITLES) — needed so the overall
+    headline matches the "everything in scope" definition rather than only
+    the shown books.
 
     Returns a flat list of {kind, book, name, doneness_raw, type_facet}.
     Names and type_facets here are the TRUE, unredacted values — provenance
@@ -246,12 +244,17 @@ def classify_all(units_by_kind):
     out = []
     for kind, rows in units_by_kind.items():
         for row in rows:
-            doneness_raw = producer.doneness_verdict(row["wiring_class"], row["status"], kind)
+            status = row["status"]
+            if status not in DONE_STATUSES and status not in NOT_DONE_STATUSES:
+                raise KeyError(
+                    f"status {status!r} (kind {kind!r}) is in neither DONE_STATUSES nor "
+                    "NOT_DONE_STATUSES — add it to one before regenerating."
+                )
             out.append({
                 "kind": kind,
                 "book": row["book"],
                 "name": row["name"],
-                "doneness_raw": doneness_raw,
+                "doneness_raw": status,
                 "type_facet": row.get("type_facet") or None,
             })
     return out
@@ -283,7 +286,8 @@ def compute_standing(all_items):
 
 def attach_standing_and_public_doneness(all_items, standing_by_pair):
     """Mutates each item in place: adds `standing`, and replaces
-    `doneness_raw` with the public three-bucket `doneness`."""
+    `doneness_raw` (the raw inventory status word) with the public
+    two-bucket `doneness` (done / not-started, D5)."""
     for it in all_items:
         it["standing"] = standing_by_pair[(object_id(it), it["book"])]
         it["doneness"] = DONENESS_TO_PUBLIC[it.pop("doneness_raw")]
@@ -403,24 +407,23 @@ def _standing_breakdown(items):
 def _rollup(items):
     """{done, partial, not_started, denominator, pct, excluded_from_percentage,
     standing_breakdown} for a list of already-classified, already-redacted
-    items. `denominator` (and therefore `pct`) counts ONLY items whose
-    `standing` is in DENOMINATOR_STANDINGS (origin/errata-source/variant,
-    Decision 14 §5) — every other standing is still counted in
-    `standing_breakdown` and `excluded_from_percentage`, never silently
-    dropped."""
-    counted = [it for it in items if it["standing"] in DENOMINATOR_STANDINGS]
-    denominator = len(counted)
-    done_n = sum(1 for it in counted if it["doneness"] == DONENESS_DONE)
-    partial_n = sum(1 for it in counted if it["doneness"] == DONENESS_PARTIAL)
-    not_started_n = sum(1 for it in counted if it["doneness"] == DONENESS_NOT_STARTED)
+    items. D5 (2026-09-15): `denominator` counts EVERY item — `standing` no
+    longer gates the percentage math (it is retained purely as a displayed
+    `standing_breakdown`, and `excluded_from_percentage` is always 0 now).
+    There is no `partial` bucket under the D5 doneness rule; the field is
+    kept, always 0, so a consumer built against the old three-bucket schema
+    does not break."""
+    denominator = len(items)
+    done_n = sum(1 for it in items if it["doneness"] == DONENESS_DONE)
+    not_started_n = sum(1 for it in items if it["doneness"] == DONENESS_NOT_STARTED)
     pct = round(100 * done_n / denominator, 1) if denominator else 0.0
     return {
         "done": done_n,
-        "partial": partial_n,
+        "partial": 0,
         "not_started": not_started_n,
         "denominator": denominator,
         "pct": pct,
-        "excluded_from_percentage": len(items) - denominator,
+        "excluded_from_percentage": 0,
         "standing_breakdown": _standing_breakdown(items),
     }
 

@@ -5,12 +5,12 @@
     {
       "kind": "ability",
       "label": "Abilities",
-      "done": 311,
+      "done": 365,
       "partial": 0,
       "not_started": 0,
-      "denominator": 311,
+      "denominator": 365,
       "pct": 100.0,
-      "excluded_from_percentage": 54,
+      "excluded_from_percentage": 0,
       "standing_breakdown": {
         "origin": 311,
         "unclassified": 54
@@ -2576,12 +2576,12 @@
     {
       "kind": "class_feature",
       "label": "Class Features",
-      "done": 348,
-      "partial": 2,
+      "done": 604,
+      "partial": 0,
       "not_started": 0,
-      "denominator": 350,
-      "pct": 99.4,
-      "excluded_from_percentage": 254,
+      "denominator": 604,
+      "pct": 100.0,
+      "excluded_from_percentage": 0,
       "standing_breakdown": {
         "origin": 350,
         "unclassified": 254
@@ -2988,7 +2988,7 @@
         },
         {
           "name": "Bonus Feat",
-          "doneness": "partial",
+          "doneness": "done",
           "type_facet": "Unchained Monk Class Feature.SpecialQuality",
           "standing": "unclassified",
           "display_name": "Bonus Feat"
@@ -3912,7 +3912,7 @@
         },
         {
           "name": "Danger Sense",
-          "doneness": "partial",
+          "doneness": "done",
           "type_facet": "Unchained Rogue Class Feature",
           "standing": "origin",
           "display_name": "Danger Sense (Unchained Rogue Class Feature)"
@@ -4360,7 +4360,7 @@
         },
         {
           "name": "Greater Rage",
-          "doneness": "partial",
+          "doneness": "done",
           "type_facet": "Unchained Barbarian Class Feature.ClassFeatures.Internal.ClassFeatures.Rage.Greater Rage",
           "standing": "unclassified",
           "display_name": "Greater Rage"
@@ -4899,7 +4899,7 @@
         },
         {
           "name": "Master Strike",
-          "doneness": "partial",
+          "doneness": "done",
           "type_facet": "Unchained Rogue Class Feature.SpecialAttack.Extraordinary.AttackOption",
           "standing": "unclassified",
           "display_name": "Master Strike"
@@ -4934,7 +4934,7 @@
         },
         {
           "name": "Mighty Rage",
-          "doneness": "partial",
+          "doneness": "done",
           "type_facet": "Unchained Barbarian Class Feature.ClassFeatures.Internal.ClassFeatures.Rage.Mighty Rage",
           "standing": "unclassified",
           "display_name": "Mighty Rage"
@@ -6418,14 +6418,14 @@
         },
         {
           "name": "Stunning Fist",
-          "doneness": "partial",
+          "doneness": "done",
           "type_facet": "Unchained Monk Class Feature.SpecialQuality.Extraordinary.Stunning Fist",
           "standing": "unclassified",
           "display_name": "Stunning Fist"
         },
         {
           "name": "Style Strike",
-          "doneness": "partial",
+          "doneness": "done",
           "type_facet": "Unchained Monk Class Feature.SpecialQuality.Extraordinary.Style Strike",
           "standing": "origin",
           "display_name": "Style Strike"
@@ -6453,7 +6453,7 @@
         },
         {
           "name": "Superstition",
-          "doneness": "partial",
+          "doneness": "done",
           "type_facet": "Unchained Rage Power.SpecialQuality.Extraordinary",
           "standing": "unclassified",
           "display_name": "Superstition"
@@ -6586,7 +6586,7 @@
         },
         {
           "name": "Trapfinding",
-          "doneness": "partial",
+          "doneness": "done",
           "type_facet": "Unchained Rogue Class Feature.SpecialQuality.Extraordinary",
           "standing": "unclassified",
           "display_name": "Trapfinding"
@@ -7129,12 +7129,12 @@
     {
       "kind": "feat",
       "label": "Feats",
-      "done": 16,
+      "done": 17,
       "partial": 0,
       "not_started": 0,
-      "denominator": 16,
+      "denominator": 17,
       "pct": 100.0,
-      "excluded_from_percentage": 1,
+      "excluded_from_percentage": 0,
       "standing_breakdown": {
         "origin": 16,
         "unclassified": 1
@@ -7219,7 +7219,7 @@
         },
         {
           "name": "Endurance",
-          "doneness": "partial",
+          "doneness": "done",
           "type_facet": "Wound Threshold",
           "standing": "unclassified",
           "display_name": "Endurance"
@@ -7264,12 +7264,12 @@
     {
       "kind": "monster_ability",
       "label": "Monster Abilities",
-      "done": 0,
+      "done": 72,
       "partial": 0,
       "not_started": 0,
-      "denominator": 0,
-      "pct": 0.0,
-      "excluded_from_percentage": 72,
+      "denominator": 72,
+      "pct": 100.0,
+      "excluded_from_percentage": 0,
       "standing_breakdown": {
         "unclassified": 72
       },
@@ -7360,56 +7360,56 @@
         },
         {
           "name": "Eidolon Progession Lv.12",
-          "doneness": "partial",
+          "doneness": "done",
           "type_facet": "SpecialQuality.AgathionLVL12",
           "standing": "unclassified",
           "display_name": "Eidolon Progession Lv.12 (SpecialQuality.AgathionLVL12)"
         },
         {
           "name": "Eidolon Progession Lv.12",
-          "doneness": "partial",
+          "doneness": "done",
           "type_facet": "SpecialQuality.AngelLVL12",
           "standing": "unclassified",
           "display_name": "Eidolon Progession Lv.12 (SpecialQuality.AngelLVL12)"
         },
         {
           "name": "Eidolon Progession Lv.12",
-          "doneness": "partial",
+          "doneness": "done",
           "type_facet": "SpecialQuality.ArchonLVL12",
           "standing": "unclassified",
           "display_name": "Eidolon Progession Lv.12 (SpecialQuality.ArchonLVL12)"
         },
         {
           "name": "Eidolon Progession Lv.12",
-          "doneness": "partial",
+          "doneness": "done",
           "type_facet": "SpecialQuality.AzataLVL12",
           "standing": "unclassified",
           "display_name": "Eidolon Progession Lv.12 (SpecialQuality.AzataLVL12)"
         },
         {
           "name": "Eidolon Progession Lv.12",
-          "doneness": "partial",
+          "doneness": "done",
           "type_facet": "SpecialQuality.DaemonLVL12",
           "standing": "unclassified",
           "display_name": "Eidolon Progession Lv.12 (SpecialQuality.DaemonLVL12)"
         },
         {
           "name": "Eidolon Progession Lv.12",
-          "doneness": "partial",
+          "doneness": "done",
           "type_facet": "SpecialQuality.DemonLVL12",
           "standing": "unclassified",
           "display_name": "Eidolon Progession Lv.12 (SpecialQuality.DemonLVL12)"
         },
         {
           "name": "Eidolon Progession Lv.12",
-          "doneness": "partial",
+          "doneness": "done",
           "type_facet": "SpecialQuality.DevilLVL12",
           "standing": "unclassified",
           "display_name": "Eidolon Progession Lv.12 (SpecialQuality.DevilLVL12)"
         },
         {
           "name": "Eidolon Progession Lv.12",
-          "doneness": "partial",
+          "doneness": "done",
           "type_facet": "SpecialQuality.DivLVL12",
           "standing": "unclassified",
           "display_name": "Eidolon Progession Lv.12 (SpecialQuality.DivLVL12)"
@@ -7423,21 +7423,21 @@
         },
         {
           "name": "Eidolon Progession Lv.12",
-          "doneness": "partial",
+          "doneness": "done",
           "type_facet": "SpecialQuality.InevitableLVL12",
           "standing": "unclassified",
           "display_name": "Eidolon Progession Lv.12 (SpecialQuality.InevitableLVL12)"
         },
         {
           "name": "Eidolon Progession Lv.12",
-          "doneness": "partial",
+          "doneness": "done",
           "type_facet": "SpecialQuality.ProteanLVL12",
           "standing": "unclassified",
           "display_name": "Eidolon Progession Lv.12 (SpecialQuality.ProteanLVL12)"
         },
         {
           "name": "Eidolon Progession Lv.12",
-          "doneness": "partial",
+          "doneness": "done",
           "type_facet": "SpecialQuality.PsychopompLVL12",
           "standing": "unclassified",
           "display_name": "Eidolon Progession Lv.12 (SpecialQuality.PsychopompLVL12)"
@@ -7528,7 +7528,7 @@
         },
         {
           "name": "Eidolon Progession Lv.20",
-          "doneness": "partial",
+          "doneness": "done",
           "type_facet": "SpecialQuality.AgathionLVL20",
           "standing": "unclassified",
           "display_name": "Eidolon Progession Lv.20 (SpecialQuality.AgathionLVL20)"
@@ -7783,12 +7783,12 @@
     {
       "kind": "race_trait",
       "label": "Race Traits",
-      "done": 54,
+      "done": 105,
       "partial": 0,
       "not_started": 0,
-      "denominator": 54,
+      "denominator": 105,
       "pct": 100.0,
-      "excluded_from_percentage": 51,
+      "excluded_from_percentage": 0,
       "standing_breakdown": {
         "origin": 54,
         "unclassified": 51

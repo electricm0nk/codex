@@ -83,12 +83,12 @@
     {
       "kind": "class_feature",
       "label": "Class Features",
-      "done": 0,
+      "done": 6,
       "partial": 0,
       "not_started": 0,
-      "denominator": 0,
-      "pct": 0.0,
-      "excluded_from_percentage": 6,
+      "denominator": 6,
+      "pct": 100.0,
+      "excluded_from_percentage": 0,
       "standing_breakdown": {
         "unclassified": 6
       },
@@ -123,7 +123,7 @@
         },
         {
           "name": "Void",
-          "doneness": "partial",
+          "doneness": "done",
           "type_facet": "Internal.DomainAbility",
           "standing": "unclassified",
           "display_name": "Void (Internal.DomainAbility)"
@@ -140,12 +140,12 @@
     {
       "kind": "companion",
       "label": "Companions",
-      "done": 63,
-      "partial": 6,
+      "done": 80,
+      "partial": 0,
       "not_started": 0,
-      "denominator": 69,
-      "pct": 91.3,
-      "excluded_from_percentage": 11,
+      "denominator": 80,
+      "pct": 100.0,
+      "excluded_from_percentage": 0,
       "standing_breakdown": {
         "origin": 69,
         "unclassified": 11
@@ -328,7 +328,7 @@
         },
         {
           "name": "Comprehend Languages",
-          "doneness": "partial",
+          "doneness": "done",
           "type_facet": "Communicate.SpellLike",
           "standing": "origin",
           "display_name": "Comprehend Languages"
@@ -517,7 +517,7 @@
         },
         {
           "name": "Natural Weapons",
-          "doneness": "partial",
+          "doneness": "done",
           "type_facet": "SpecialAttack.Extraordinary",
           "standing": "origin",
           "display_name": "Natural Weapons"
@@ -601,7 +601,7 @@
         },
         {
           "name": "Read Magic",
-          "doneness": "partial",
+          "doneness": "done",
           "type_facet": "SpecialQuality.SpellLike",
           "standing": "origin",
           "display_name": "Read Magic"
@@ -650,7 +650,7 @@
         },
         {
           "name": "Speak with Animals (rodents only)",
-          "doneness": "partial",
+          "doneness": "done",
           "type_facet": "Communicate.SpellLike",
           "standing": "origin",
           "display_name": "Speak with Animals (rodents only)"
@@ -678,7 +678,7 @@
         },
         {
           "name": "Tail Lash",
-          "doneness": "partial",
+          "doneness": "done",
           "type_facet": "SpecialAttack.Extraordinary",
           "standing": "origin",
           "display_name": "Tail Lash"
@@ -699,7 +699,7 @@
         },
         {
           "name": "Visual Sensor",
-          "doneness": "partial",
+          "doneness": "done",
           "type_facet": "SpecialQuality.Supernatural",
           "standing": "origin",
           "display_name": "Visual Sensor"
@@ -716,12 +716,12 @@
     {
       "kind": "domain",
       "label": "Domains",
-      "done": 0,
+      "done": 3,
       "partial": 0,
       "not_started": 0,
-      "denominator": 0,
-      "pct": 0.0,
-      "excluded_from_percentage": 3,
+      "denominator": 3,
+      "pct": 100.0,
+      "excluded_from_percentage": 0,
       "standing_breakdown": {
         "unclassified": 3
       },
@@ -752,12 +752,12 @@
     {
       "kind": "equipment",
       "label": "Equipment",
-      "done": 4,
+      "done": 7,
       "partial": 0,
       "not_started": 0,
-      "denominator": 4,
+      "denominator": 7,
       "pct": 100.0,
-      "excluded_from_percentage": 3,
+      "excluded_from_percentage": 0,
       "standing_breakdown": {
         "origin": 4,
         "unclassified": 3
@@ -839,12 +839,12 @@
     {
       "kind": "language",
       "label": "Languages",
-      "done": 16,
+      "done": 26,
       "partial": 0,
       "not_started": 0,
-      "denominator": 16,
+      "denominator": 26,
       "pct": 100.0,
-      "excluded_from_percentage": 10,
+      "excluded_from_percentage": 0,
       "standing_breakdown": {
         "origin": 16,
         "unclassified": 10
@@ -1037,12 +1037,12 @@
     {
       "kind": "monster_ability",
       "label": "Monster Abilities",
-      "done": 479,
-      "partial": 117,
+      "done": 813,
+      "partial": 0,
       "not_started": 0,
-      "denominator": 596,
-      "pct": 80.4,
-      "excluded_from_percentage": 217,
+      "denominator": 813,
+      "pct": 100.0,
+      "excluded_from_percentage": 0,
       "standing_breakdown": {
         "origin": 596,
         "unclassified": 217
@@ -1204,7 +1204,7 @@
         },
         {
           "name": "Agonized Wail",
-          "doneness": "partial",
+          "doneness": "done",
           "type_facet": "SpecialAttack.Supernatural",
           "standing": "origin",
           "display_name": "Agonized Wail"
@@ -1218,7 +1218,7 @@
         },
         {
           "name": "Air Domain - Whirlwind",
-          "doneness": "partial",
+          "doneness": "done",
           "type_facet": "JuggernautDomain.SpecialQuality.SpellLike",
           "standing": "origin",
           "display_name": "Air Domain - Whirlwind"
@@ -1309,7 +1309,7 @@
         },
         {
           "name": "Animal Domain - Friendly Pack",
-          "doneness": "partial",
+          "doneness": "done",
           "type_facet": "JuggernautDomain.SpecialQuality.SpellLike",
           "standing": "origin",
           "display_name": "Animal Domain - Friendly Pack"
@@ -1386,7 +1386,7 @@
         },
         {
           "name": "Aura of Locusts",
-          "doneness": "partial",
+          "doneness": "done",
           "type_facet": "SpecialQuality.Supernatural.Aura",
           "standing": "origin",
           "display_name": "Aura of Locusts"
@@ -1414,7 +1414,7 @@
         },
         {
           "name": "Avian Mastery",
-          "doneness": "partial",
+          "doneness": "done",
           "type_facet": "SpecialQuality.Supernatural",
           "standing": "origin",
           "display_name": "Avian Mastery"
@@ -1428,7 +1428,7 @@
         },
         {
           "name": "Baleful Gaze",
-          "doneness": "partial",
+          "doneness": "done",
           "type_facet": "SpecialAttack.Supernatural",
           "standing": "origin",
           "display_name": "Baleful Gaze"
@@ -1477,7 +1477,7 @@
         },
         {
           "name": "Birth Spawn",
-          "doneness": "partial",
+          "doneness": "done",
           "type_facet": "SpecialQuality.Extraordinary",
           "standing": "origin",
           "display_name": "Birth Spawn"
@@ -1519,7 +1519,7 @@
         },
         {
           "name": "Blinding Flash",
-          "doneness": "partial",
+          "doneness": "done",
           "type_facet": "SpecialAttack.Supernatural",
           "standing": "origin",
           "display_name": "Blinding Flash"
@@ -1589,14 +1589,14 @@
         },
         {
           "name": "Breath Weapon",
-          "doneness": "partial",
+          "doneness": "done",
           "type_facet": "SpecialAttack.Extraordinary",
           "standing": "unclassified",
           "display_name": "Breath Weapon (SpecialAttack.Extraordinary)"
         },
         {
           "name": "Breath Weapon",
-          "doneness": "partial",
+          "doneness": "done",
           "type_facet": "SpecialAttack.Supernatural",
           "standing": "unclassified",
           "display_name": "Breath Weapon (SpecialAttack.Supernatural) #6"
@@ -1610,14 +1610,14 @@
         },
         {
           "name": "Breath Weapon",
-          "doneness": "partial",
+          "doneness": "done",
           "type_facet": "SpecialAttack.Supernatural",
           "standing": "unclassified",
           "display_name": "Breath Weapon (SpecialAttack.Supernatural) #8"
         },
         {
           "name": "Breath Weapon",
-          "doneness": "partial",
+          "doneness": "done",
           "type_facet": "SpecialAttack.Supernatural",
           "standing": "unclassified",
           "display_name": "Breath Weapon (SpecialAttack.Supernatural) #9"
@@ -1631,7 +1631,7 @@
         },
         {
           "name": "Breath Weapon",
-          "doneness": "partial",
+          "doneness": "done",
           "type_facet": "SpecialAttack.Supernatural",
           "standing": "unclassified",
           "display_name": "Breath Weapon (SpecialAttack.Supernatural) #11"
@@ -1785,7 +1785,7 @@
         },
         {
           "name": "Channel Life",
-          "doneness": "partial",
+          "doneness": "done",
           "type_facet": "SpecialQuality.Supernatural",
           "standing": "origin",
           "display_name": "Channel Life"
@@ -1806,7 +1806,7 @@
         },
         {
           "name": "Charm Domain - Friendship",
-          "doneness": "partial",
+          "doneness": "done",
           "type_facet": "JuggernautDomain.SpecialQuality.SpellLike",
           "standing": "origin",
           "display_name": "Charm Domain - Friendship"
@@ -1820,14 +1820,14 @@
         },
         {
           "name": "Clockwork Dragon Construction",
-          "doneness": "partial",
+          "doneness": "done",
           "type_facet": "SpecialQuality.Extraordinary",
           "standing": "origin",
           "display_name": "Clockwork Dragon Construction"
         },
         {
           "name": "Clockwork Dragon Specialization",
-          "doneness": "partial",
+          "doneness": "done",
           "type_facet": "SpecialQuality.Extraordinary",
           "standing": "origin",
           "display_name": "Clockwork Dragon Specialization"
@@ -1848,7 +1848,7 @@
         },
         {
           "name": "Cloying Gloom Blast",
-          "doneness": "partial",
+          "doneness": "done",
           "type_facet": "SpecialAttack.Supernatural",
           "standing": "origin",
           "display_name": "Cloying Gloom Blast"
@@ -1883,7 +1883,7 @@
         },
         {
           "name": "Collapsing Breath",
-          "doneness": "partial",
+          "doneness": "done",
           "type_facet": "SpecialAttack.Supernatural",
           "standing": "origin",
           "display_name": "Collapsing Breath"
@@ -1911,7 +1911,7 @@
         },
         {
           "name": "Command Aquatic Creature",
-          "doneness": "partial",
+          "doneness": "done",
           "type_facet": "SpecialAttack.Supernatural",
           "standing": "origin",
           "display_name": "Command Aquatic Creature"
@@ -1981,7 +1981,7 @@
         },
         {
           "name": "Construct Traits",
-          "doneness": "partial",
+          "doneness": "done",
           "type_facet": "SpecialQuality.Immunity",
           "standing": "unclassified",
           "display_name": "Construct Traits"
@@ -2107,7 +2107,7 @@
         },
         {
           "name": "Crushing Blow",
-          "doneness": "partial",
+          "doneness": "done",
           "type_facet": "SpecialAttack.Supernatural",
           "standing": "unclassified",
           "display_name": "Crushing Blow"
@@ -2128,7 +2128,7 @@
         },
         {
           "name": "Curse of Darkness",
-          "doneness": "partial",
+          "doneness": "done",
           "type_facet": "SpecialAttack.Supernatural",
           "standing": "origin",
           "display_name": "Curse of Darkness"
@@ -2149,7 +2149,7 @@
         },
         {
           "name": "Darkness Domain - Deeper Darkness",
-          "doneness": "partial",
+          "doneness": "done",
           "type_facet": "JuggernautDomain.SpecialQuality.SpellLike",
           "standing": "origin",
           "display_name": "Darkness Domain - Deeper Darkness"
@@ -2170,14 +2170,14 @@
         },
         {
           "name": "Dazing Gaze",
-          "doneness": "partial",
+          "doneness": "done",
           "type_facet": "SpecialAttack.Supernatural",
           "standing": "origin",
           "display_name": "Dazing Gaze"
         },
         {
           "name": "Dazing Strike",
-          "doneness": "partial",
+          "doneness": "done",
           "type_facet": "SpecialAttack.Supernatural",
           "standing": "origin",
           "display_name": "Dazing Strike"
@@ -2198,7 +2198,7 @@
         },
         {
           "name": "Death Domain - Lifesapper",
-          "doneness": "partial",
+          "doneness": "done",
           "type_facet": "JuggernautDomain.SpecialQuality.SpellLike",
           "standing": "origin",
           "display_name": "Death Domain - Lifesapper"
@@ -2303,14 +2303,14 @@
         },
         {
           "name": "Detect Scrying",
-          "doneness": "partial",
+          "doneness": "done",
           "type_facet": "SpecialQuality.SpellLike.Senses",
           "standing": "origin",
           "display_name": "Detect Scrying"
         },
         {
           "name": "Detect Undead",
-          "doneness": "partial",
+          "doneness": "done",
           "type_facet": "SpecialQuality.SpellLike.Senses",
           "standing": "origin",
           "display_name": "Detect Undead"
@@ -2359,7 +2359,7 @@
         },
         {
           "name": "Digestive Spew",
-          "doneness": "partial",
+          "doneness": "done",
           "type_facet": "SpecialAttack.Extraordinary",
           "standing": "origin",
           "display_name": "Digestive Spew"
@@ -2380,7 +2380,7 @@
         },
         {
           "name": "Disease",
-          "doneness": "partial",
+          "doneness": "done",
           "type_facet": "SpecialAttack.Extraordinary",
           "standing": "unclassified",
           "display_name": "Disease (SpecialAttack.Extraordinary)"
@@ -2408,7 +2408,7 @@
         },
         {
           "name": "Disease",
-          "doneness": "partial",
+          "doneness": "done",
           "type_facet": "SpecialAttack.Extraordinary",
           "standing": "unclassified",
           "display_name": "Disease (SpecialAttack.Extraordinary) #6"
@@ -2436,21 +2436,21 @@
         },
         {
           "name": "Disease (Demon Fever)",
-          "doneness": "partial",
+          "doneness": "done",
           "type_facet": "SpecialAttack.Supernatural",
           "standing": "origin",
           "display_name": "Disease (Demon Fever)"
         },
         {
           "name": "Disease (Devil Chills)",
-          "doneness": "partial",
+          "doneness": "done",
           "type_facet": "SpecialAttack.Supernatural",
           "standing": "origin",
           "display_name": "Disease (Devil Chills)"
         },
         {
           "name": "Disease (Leprosy)",
-          "doneness": "partial",
+          "doneness": "done",
           "type_facet": "SpecialAttack.Supernatural",
           "standing": "origin",
           "display_name": "Disease (Leprosy)"
@@ -2464,7 +2464,7 @@
         },
         {
           "name": "Disgusting Demise",
-          "doneness": "partial",
+          "doneness": "done",
           "type_facet": "SpecialAttack.Extraordinary",
           "standing": "origin",
           "display_name": "Disgusting Demise"
@@ -2513,7 +2513,7 @@
         },
         {
           "name": "Dominate",
-          "doneness": "partial",
+          "doneness": "done",
           "type_facet": "SpecialAttack.Supernatural",
           "standing": "unclassified",
           "display_name": "Dominate"
@@ -2541,7 +2541,7 @@
         },
         {
           "name": "Dreams of Madness",
-          "doneness": "partial",
+          "doneness": "done",
           "type_facet": "SpecialAttack.Supernatural",
           "standing": "origin",
           "display_name": "Dreams of Madness"
@@ -2611,14 +2611,14 @@
         },
         {
           "name": "Eel Dart",
-          "doneness": "partial",
+          "doneness": "done",
           "type_facet": "SpecialAttack.Extraordinary",
           "standing": "origin",
           "display_name": "Eel Dart"
         },
         {
           "name": "Efficient Winding",
-          "doneness": "partial",
+          "doneness": "done",
           "type_facet": "SpecialQuality.Extraordinary",
           "standing": "unclassified",
           "display_name": "Efficient Winding"
@@ -2674,7 +2674,7 @@
         },
         {
           "name": "Endure Elements",
-          "doneness": "partial",
+          "doneness": "done",
           "type_facet": "SpecialQuality.SpellLike",
           "standing": "origin",
           "display_name": "Endure Elements"
@@ -2758,14 +2758,14 @@
         },
         {
           "name": "Excruciating Burn",
-          "doneness": "partial",
+          "doneness": "done",
           "type_facet": "SpecialAttack.Extraordinary",
           "standing": "origin",
           "display_name": "Excruciating Burn"
         },
         {
           "name": "Explode",
-          "doneness": "partial",
+          "doneness": "done",
           "type_facet": "SpecialAttack.Extraordinary",
           "standing": "origin",
           "display_name": "Explode"
@@ -2884,7 +2884,7 @@
         },
         {
           "name": "Fear",
-          "doneness": "partial",
+          "doneness": "done",
           "type_facet": "SpecialQuality.Supernatural.Aura",
           "standing": "unclassified",
           "display_name": "Fear"
@@ -2898,7 +2898,7 @@
         },
         {
           "name": "Fear Aura",
-          "doneness": "partial",
+          "doneness": "done",
           "type_facet": "SpecialAttack.Supernatural",
           "standing": "unclassified",
           "display_name": "Fear Aura (SpecialAttack.Supernatural)"
@@ -2912,7 +2912,7 @@
         },
         {
           "name": "Fear Cone",
-          "doneness": "partial",
+          "doneness": "done",
           "type_facet": "SpecialAttack.Supernatural",
           "standing": "origin",
           "display_name": "Fear Cone (SpecialAttack.Supernatural)"
@@ -2940,7 +2940,7 @@
         },
         {
           "name": "Feather Fall",
-          "doneness": "partial",
+          "doneness": "done",
           "type_facet": "SpecialQuality.SpellLike",
           "standing": "unclassified",
           "display_name": "Feather Fall"
@@ -2961,14 +2961,14 @@
         },
         {
           "name": "Feed",
-          "doneness": "partial",
+          "doneness": "done",
           "type_facet": "SpecialAttack.Supernatural",
           "standing": "unclassified",
           "display_name": "Feed (SpecialAttack.Supernatural) #2"
         },
         {
           "name": "Feign Death",
-          "doneness": "partial",
+          "doneness": "done",
           "type_facet": "SpecialQuality.Extraordinary",
           "standing": "origin",
           "display_name": "Feign Death"
@@ -2982,7 +2982,7 @@
         },
         {
           "name": "Fighter Training",
-          "doneness": "partial",
+          "doneness": "done",
           "type_facet": "SpecialQuality.Extraordinary",
           "standing": "origin",
           "display_name": "Fighter Training"
@@ -3108,14 +3108,14 @@
         },
         {
           "name": "Frightful Presence",
-          "doneness": "partial",
+          "doneness": "done",
           "type_facet": "SpecialQuality.Supernatural",
           "standing": "unclassified",
           "display_name": "Frightful Presence (SpecialQuality.Supernatural) #2"
         },
         {
           "name": "Frightful Presence",
-          "doneness": "partial",
+          "doneness": "done",
           "type_facet": "SpecialQuality.Extraordinary.Aura",
           "standing": "unclassified",
           "display_name": "Frightful Presence (SpecialQuality.Extraordinary.Aura)"
@@ -3129,14 +3129,14 @@
         },
         {
           "name": "Fulvous Dreams",
-          "doneness": "partial",
+          "doneness": "done",
           "type_facet": "SpecialAttack.Supernatural",
           "standing": "origin",
           "display_name": "Fulvous Dreams"
         },
         {
           "name": "Fungal Blood or Flesh",
-          "doneness": "partial",
+          "doneness": "done",
           "type_facet": "SpecialAttack.Extraordinary",
           "standing": "origin",
           "display_name": "Fungal Blood or Flesh"
@@ -3150,7 +3150,7 @@
         },
         {
           "name": "Fungal Spores",
-          "doneness": "partial",
+          "doneness": "done",
           "type_facet": "SpecialAttack.Extraordinary",
           "standing": "origin",
           "display_name": "Fungal Spores"
@@ -3241,21 +3241,21 @@
         },
         {
           "name": "Great Old One Traits",
-          "doneness": "partial",
+          "doneness": "done",
           "type_facet": "SpecialQuality.Extraordinary.Supernatural",
           "standing": "origin",
           "display_name": "Great Old One Traits"
         },
         {
           "name": "Greater Invisibility",
-          "doneness": "partial",
+          "doneness": "done",
           "type_facet": "SpecialQuality.SpellLike",
           "standing": "origin",
           "display_name": "Greater Invisibility"
         },
         {
           "name": "Greater Slaying Arrow",
-          "doneness": "partial",
+          "doneness": "done",
           "type_facet": "SpecialAttack.Supernatural",
           "standing": "origin",
           "display_name": "Greater Slaying Arrow"
@@ -3311,7 +3311,7 @@
         },
         {
           "name": "Haste (self only)",
-          "doneness": "partial",
+          "doneness": "done",
           "type_facet": "SpecialQuality.SpellLike.ModifyMovement",
           "standing": "origin",
           "display_name": "Haste (self only)"
@@ -3332,7 +3332,7 @@
         },
         {
           "name": "Heat Beam",
-          "doneness": "partial",
+          "doneness": "done",
           "type_facet": "SpecialAttack.Supernatural",
           "standing": "origin",
           "display_name": "Heat Beam"
@@ -3346,7 +3346,7 @@
         },
         {
           "name": "Hedge Stride",
-          "doneness": "partial",
+          "doneness": "done",
           "type_facet": "SpecialQuality.Extraordinary",
           "standing": "origin",
           "display_name": "Hedge Stride"
@@ -3381,7 +3381,7 @@
         },
         {
           "name": "Hive Frenzy",
-          "doneness": "partial",
+          "doneness": "done",
           "type_facet": "SpecialQuality.Supernatural",
           "standing": "origin",
           "display_name": "Hive Frenzy"
@@ -3395,14 +3395,14 @@
         },
         {
           "name": "Horned Lord's Charge",
-          "doneness": "partial",
+          "doneness": "done",
           "type_facet": "SpecialAttack.Extraordinary",
           "standing": "origin",
           "display_name": "Horned Lord's Charge"
         },
         {
           "name": "Horrifying Ooze",
-          "doneness": "partial",
+          "doneness": "done",
           "type_facet": "SpecialAttack.Supernatural",
           "standing": "origin",
           "display_name": "Horrifying Ooze"
@@ -3430,7 +3430,7 @@
         },
         {
           "name": "Ice Staff",
-          "doneness": "partial",
+          "doneness": "done",
           "type_facet": "SpecialQuality.Supernatural",
           "standing": "origin",
           "display_name": "Ice Staff"
@@ -3479,14 +3479,14 @@
         },
         {
           "name": "Immortality",
-          "doneness": "partial",
+          "doneness": "done",
           "type_facet": "SpecialQuality.Extraordinary",
           "standing": "origin",
           "display_name": "Immortality (SpecialQuality.Extraordinary) #2"
         },
         {
           "name": "Immortality",
-          "doneness": "partial",
+          "doneness": "done",
           "type_facet": "SpecialQuality.Extraordinary",
           "standing": "origin",
           "display_name": "Immortality (SpecialQuality.Extraordinary) #3"
@@ -3563,7 +3563,7 @@
         },
         {
           "name": "Immunity to Magic",
-          "doneness": "partial",
+          "doneness": "done",
           "type_facet": "SpecialQuality.Extraordinary",
           "standing": "unclassified",
           "display_name": "Immunity to Magic (SpecialQuality.Extraordinary) #2"
@@ -3605,7 +3605,7 @@
         },
         {
           "name": "Impenetrable Skin",
-          "doneness": "partial",
+          "doneness": "done",
           "type_facet": "SpecialQuality.Extraordinary",
           "standing": "origin",
           "display_name": "Impenetrable Skin"
@@ -3682,7 +3682,7 @@
         },
         {
           "name": "Infiltrator Clockwork Dragon",
-          "doneness": "partial",
+          "doneness": "done",
           "type_facet": "SpecialQuality.Extraordinary.Supernatural",
           "standing": "origin",
           "display_name": "Infiltrator Clockwork Dragon"
@@ -3703,14 +3703,14 @@
         },
         {
           "name": "Insanity",
-          "doneness": "partial",
+          "doneness": "done",
           "type_facet": "SpecialQuality",
           "standing": "origin",
           "display_name": "Insanity"
         },
         {
           "name": "Inspire Hive",
-          "doneness": "partial",
+          "doneness": "done",
           "type_facet": "SpecialQuality.Supernatural",
           "standing": "origin",
           "display_name": "Inspire Hive"
@@ -3787,7 +3787,7 @@
         },
         {
           "name": "Knowledge Domain - Absorb Thoughts",
-          "doneness": "partial",
+          "doneness": "done",
           "type_facet": "JuggernautDomain.SpecialAttack.Supernatural",
           "standing": "origin",
           "display_name": "Knowledge Domain - Absorb Thoughts"
@@ -3955,14 +3955,14 @@
         },
         {
           "name": "Madness Domain - Confusion",
-          "doneness": "partial",
+          "doneness": "done",
           "type_facet": "JuggernautDomain.SpecialQuality.SpellLike",
           "standing": "origin",
           "display_name": "Madness Domain - Confusion"
         },
         {
           "name": "Mage Hand",
-          "doneness": "partial",
+          "doneness": "done",
           "type_facet": "SpecialQuality.SpellLike",
           "standing": "origin",
           "display_name": "Mage Hand"
@@ -4025,7 +4025,7 @@
         },
         {
           "name": "Mental Motivator",
-          "doneness": "partial",
+          "doneness": "done",
           "type_facet": "SpecialQuality.Supernatural",
           "standing": "origin",
           "display_name": "Mental Motivator"
@@ -4123,7 +4123,7 @@
         },
         {
           "name": "Mudball",
-          "doneness": "partial",
+          "doneness": "done",
           "type_facet": "SpecialAttack.Extraordinary",
           "standing": "origin",
           "display_name": "Mudball"
@@ -4137,7 +4137,7 @@
         },
         {
           "name": "Murmur",
-          "doneness": "partial",
+          "doneness": "done",
           "type_facet": "SpecialAttack.Supernatural",
           "standing": "origin",
           "display_name": "Murmur"
@@ -4179,7 +4179,7 @@
         },
         {
           "name": "Needle Cone",
-          "doneness": "partial",
+          "doneness": "done",
           "type_facet": "SpecialAttack.Extraordinary",
           "standing": "origin",
           "display_name": "Needle Cone"
@@ -4207,14 +4207,14 @@
         },
         {
           "name": "Night Terrors",
-          "doneness": "partial",
+          "doneness": "done",
           "type_facet": "SpecialAttack.Supernatural",
           "standing": "origin",
           "display_name": "Night Terrors"
         },
         {
           "name": "Nightfall Aura",
-          "doneness": "partial",
+          "doneness": "done",
           "type_facet": "SpecialQuality.Supernatural.Aura",
           "standing": "origin",
           "display_name": "Nightfall Aura"
@@ -4235,7 +4235,7 @@
         },
         {
           "name": "Nobility Domain - Inspirational",
-          "doneness": "partial",
+          "doneness": "done",
           "type_facet": "JuggernautDomain.SpecialQuality.SpellLike",
           "standing": "origin",
           "display_name": "Nobility Domain - Inspirational"
@@ -4249,14 +4249,14 @@
         },
         {
           "name": "Non-Euclidean",
-          "doneness": "partial",
+          "doneness": "done",
           "type_facet": "SpecialQuality.Extraordinary",
           "standing": "origin",
           "display_name": "Non-Euclidean"
         },
         {
           "name": "Noxious Breath",
-          "doneness": "partial",
+          "doneness": "done",
           "type_facet": "SpecialAttack.Supernatural",
           "standing": "unclassified",
           "display_name": "Noxious Breath"
@@ -4312,21 +4312,21 @@
         },
         {
           "name": "Overwhelming Mind",
-          "doneness": "partial",
+          "doneness": "done",
           "type_facet": "SpecialQuality.Extraordinary",
           "standing": "origin",
           "display_name": "Overwhelming Mind"
         },
         {
           "name": "Overwhelming Strength",
-          "doneness": "partial",
+          "doneness": "done",
           "type_facet": "SpecialAttack.Extraordinary",
           "standing": "origin",
           "display_name": "Overwhelming Strength"
         },
         {
           "name": "Paralysis",
-          "doneness": "partial",
+          "doneness": "done",
           "type_facet": "SpecialAttack.Supernatural",
           "standing": "unclassified",
           "display_name": "Paralysis"
@@ -4368,7 +4368,7 @@
         },
         {
           "name": "Phasing",
-          "doneness": "partial",
+          "doneness": "done",
           "type_facet": "SpecialQuality.Supernatural",
           "standing": "origin",
           "display_name": "Phasing"
@@ -4389,7 +4389,7 @@
         },
         {
           "name": "Piteous Moan",
-          "doneness": "partial",
+          "doneness": "done",
           "type_facet": "SpecialAttack.Supernatural.Aura",
           "standing": "origin",
           "display_name": "Piteous Moan"
@@ -4403,7 +4403,7 @@
         },
         {
           "name": "Planar Portal",
-          "doneness": "partial",
+          "doneness": "done",
           "type_facet": "SpecialQuality.Supernatural",
           "standing": "origin",
           "display_name": "Planar Portal"
@@ -4417,7 +4417,7 @@
         },
         {
           "name": "Plant Domain - Hedge",
-          "doneness": "partial",
+          "doneness": "done",
           "type_facet": "JuggernautDomain.SpecialQuality.SpellLike",
           "standing": "origin",
           "display_name": "Plant Domain - Hedge"
@@ -4438,7 +4438,7 @@
         },
         {
           "name": "Poison",
-          "doneness": "partial",
+          "doneness": "done",
           "type_facet": "SpecialAttack.Extraordinary",
           "standing": "unclassified",
           "display_name": "Poison (SpecialAttack.Extraordinary)"
@@ -4487,7 +4487,7 @@
         },
         {
           "name": "Poison",
-          "doneness": "partial",
+          "doneness": "done",
           "type_facet": "SpecialAttack.Extraordinary",
           "standing": "unclassified",
           "display_name": "Poison (SpecialAttack.Extraordinary) #8"
@@ -4634,7 +4634,7 @@
         },
         {
           "name": "Poison",
-          "doneness": "partial",
+          "doneness": "done",
           "type_facet": "YaoguaiMakersGift.SpecialAttack.Extraordinary",
           "standing": "unclassified",
           "display_name": "Poison (YaoguaiMakersGift.SpecialAttack.Extraordinary)"
@@ -4648,7 +4648,7 @@
         },
         {
           "name": "Poison Glands",
-          "doneness": "partial",
+          "doneness": "done",
           "type_facet": "SpecialAttack.Extraordinary",
           "standing": "origin",
           "display_name": "Poison Glands"
@@ -4704,7 +4704,7 @@
         },
         {
           "name": "Positive Energy Aura",
-          "doneness": "partial",
+          "doneness": "done",
           "type_facet": "SpecialQuality.Supernatural",
           "standing": "origin",
           "display_name": "Positive Energy Aura"
@@ -4788,7 +4788,7 @@
         },
         {
           "name": "Powerful Stench",
-          "doneness": "partial",
+          "doneness": "done",
           "type_facet": "SpecialQuality.Extraordinary.Aura",
           "standing": "origin",
           "display_name": "Powerful Stench"
@@ -4858,7 +4858,7 @@
         },
         {
           "name": "Profane Wishcraft",
-          "doneness": "partial",
+          "doneness": "done",
           "type_facet": "SpecialAttack.Supernatural",
           "standing": "origin",
           "display_name": "Profane Wishcraft"
@@ -4872,21 +4872,21 @@
         },
         {
           "name": "Protection from Evil",
-          "doneness": "partial",
+          "doneness": "done",
           "type_facet": "SpecialQuality.SpellLike",
           "standing": "unclassified",
           "display_name": "Protection from Evil"
         },
         {
           "name": "Protection from Good",
-          "doneness": "partial",
+          "doneness": "done",
           "type_facet": "SpecialQuality.SpellLike",
           "standing": "origin",
           "display_name": "Protection from Good"
         },
         {
           "name": "Protection from Law",
-          "doneness": "partial",
+          "doneness": "done",
           "type_facet": "SpecialQuality.SpellLike",
           "standing": "origin",
           "display_name": "Protection from Law"
@@ -4977,7 +4977,7 @@
         },
         {
           "name": "Read Magic",
-          "doneness": "partial",
+          "doneness": "done",
           "type_facet": "SpecialQuality.SpellLike",
           "standing": "origin",
           "display_name": "Read Magic"
@@ -5026,7 +5026,7 @@
         },
         {
           "name": "Reflexive Breath",
-          "doneness": "partial",
+          "doneness": "done",
           "type_facet": "SpecialAttack.Extraordinary",
           "standing": "origin",
           "display_name": "Reflexive Breath"
@@ -5089,14 +5089,14 @@
         },
         {
           "name": "Regurgitate",
-          "doneness": "partial",
+          "doneness": "done",
           "type_facet": "SpecialAttack.Extraordinary",
           "standing": "unclassified",
           "display_name": "Regurgitate"
         },
         {
           "name": "Rejuvenation",
-          "doneness": "partial",
+          "doneness": "done",
           "type_facet": "SpecialQuality.Extraordinary",
           "standing": "unclassified",
           "display_name": "Rejuvenation (SpecialQuality.Extraordinary)"
@@ -5117,7 +5117,7 @@
         },
         {
           "name": "Repose Domain - Rest Eternal",
-          "doneness": "partial",
+          "doneness": "done",
           "type_facet": "JuggernautDomain.SpecialAttack.Supernatural",
           "standing": "origin",
           "display_name": "Repose Domain - Rest Eternal"
@@ -5131,7 +5131,7 @@
         },
         {
           "name": "Resistance to Negative Energy ~ Output",
-          "doneness": "partial",
+          "doneness": "done",
           "type_facet": "SpecialQuality.Extraordinary.Resistance",
           "standing": "origin",
           "display_name": "Resistance to Negative Energy ~ Output"
@@ -5145,7 +5145,7 @@
         },
         {
           "name": "Reveal Visage",
-          "doneness": "partial",
+          "doneness": "done",
           "type_facet": "SpecialAttack.Supernatural",
           "standing": "origin",
           "display_name": "Reveal Visage"
@@ -5180,14 +5180,14 @@
         },
         {
           "name": "Sacred Site",
-          "doneness": "partial",
+          "doneness": "done",
           "type_facet": "SpecialQuality.Extraordinary",
           "standing": "origin",
           "display_name": "Sacred Site"
         },
         {
           "name": "Sanctuary",
-          "doneness": "partial",
+          "doneness": "done",
           "type_facet": "SpecialQuality.SpellLike",
           "standing": "origin",
           "display_name": "Sanctuary"
@@ -5201,7 +5201,7 @@
         },
         {
           "name": "Scrap Ball",
-          "doneness": "partial",
+          "doneness": "done",
           "type_facet": "SpecialAttack.Extraordinary",
           "standing": "origin",
           "display_name": "Scrap Ball"
@@ -5369,7 +5369,7 @@
         },
         {
           "name": "Shatter Spells",
-          "doneness": "partial",
+          "doneness": "done",
           "type_facet": "SpecialQuality.Supernatural",
           "standing": "origin",
           "display_name": "Shatter Spells"
@@ -5397,14 +5397,14 @@
         },
         {
           "name": "Shield",
-          "doneness": "partial",
+          "doneness": "done",
           "type_facet": "SpecialQuality.SpellLike",
           "standing": "origin",
           "display_name": "Shield"
         },
         {
           "name": "Shifting Breath",
-          "doneness": "partial",
+          "doneness": "done",
           "type_facet": "SpecialAttack.Supernatural",
           "standing": "origin",
           "display_name": "Shifting Breath"
@@ -5467,35 +5467,35 @@
         },
         {
           "name": "Sinful Bite (Gluttony)",
-          "doneness": "partial",
+          "doneness": "done",
           "type_facet": "SpecialAttack.Supernatural",
           "standing": "origin",
           "display_name": "Sinful Bite (Gluttony)"
         },
         {
           "name": "Sinful Bite (Greed)",
-          "doneness": "partial",
+          "doneness": "done",
           "type_facet": "SpecialAttack.Supernatural",
           "standing": "origin",
           "display_name": "Sinful Bite (Greed)"
         },
         {
           "name": "Sinful Bite (Lust)",
-          "doneness": "partial",
+          "doneness": "done",
           "type_facet": "SpecialAttack.Supernatural",
           "standing": "origin",
           "display_name": "Sinful Bite (Lust)"
         },
         {
           "name": "Sinful Bite (Pride)",
-          "doneness": "partial",
+          "doneness": "done",
           "type_facet": "SpecialAttack.Supernatural",
           "standing": "origin",
           "display_name": "Sinful Bite (Pride)"
         },
         {
           "name": "Sinful Bite (Sloth)",
-          "doneness": "partial",
+          "doneness": "done",
           "type_facet": "SpecialAttack.Supernatural",
           "standing": "origin",
           "display_name": "Sinful Bite (Sloth)"
@@ -5509,7 +5509,7 @@
         },
         {
           "name": "Skill Blessing",
-          "doneness": "partial",
+          "doneness": "done",
           "type_facet": "SpecialQuality.Supernatural",
           "standing": "origin",
           "display_name": "Skill Blessing"
@@ -5684,7 +5684,7 @@
         },
         {
           "name": "Spell Blessing",
-          "doneness": "partial",
+          "doneness": "done",
           "type_facet": "SpecialQuality.Supernatural",
           "standing": "origin",
           "display_name": "Spell Blessing"
@@ -5733,7 +5733,7 @@
         },
         {
           "name": "Spines",
-          "doneness": "partial",
+          "doneness": "done",
           "type_facet": "SpecialQuality.Extraordinary",
           "standing": "unclassified",
           "display_name": "Spines (SpecialQuality.Extraordinary)"
@@ -5796,7 +5796,7 @@
         },
         {
           "name": "Spores",
-          "doneness": "partial",
+          "doneness": "done",
           "type_facet": "SpecialAttack.Supernatural",
           "standing": "unclassified",
           "display_name": "Spores (SpecialAttack.Supernatural)"
@@ -5873,7 +5873,7 @@
         },
         {
           "name": "Steal Soul",
-          "doneness": "partial",
+          "doneness": "done",
           "type_facet": "SpecialAttack.Supernatural",
           "standing": "origin",
           "display_name": "Steal Soul"
@@ -5908,14 +5908,14 @@
         },
         {
           "name": "Strangling Ensnare",
-          "doneness": "partial",
+          "doneness": "done",
           "type_facet": "SpecialAttack.Extraordinary",
           "standing": "origin",
           "display_name": "Strangling Ensnare"
         },
         {
           "name": "Strength Domain - Vigorous",
-          "doneness": "partial",
+          "doneness": "done",
           "type_facet": "JuggernautDomain.SpecialQuality.SpellLike",
           "standing": "origin",
           "display_name": "Strength Domain - Vigorous"
@@ -5964,7 +5964,7 @@
         },
         {
           "name": "Sun Domain - Sunstrike",
-          "doneness": "partial",
+          "doneness": "done",
           "type_facet": "JuggernautDomain.SpecialQuality.SpellLike",
           "standing": "origin",
           "display_name": "Sun Domain - Sunstrike"
@@ -5999,7 +5999,7 @@
         },
         {
           "name": "Susceptible to Song",
-          "doneness": "partial",
+          "doneness": "done",
           "type_facet": "SpecialQuality.Extraordinary",
           "standing": "origin",
           "display_name": "Susceptible to Song"
@@ -6055,7 +6055,7 @@
         },
         {
           "name": "Tail Lash",
-          "doneness": "partial",
+          "doneness": "done",
           "type_facet": "SpecialAttack.Extraordinary",
           "standing": "origin",
           "display_name": "Tail Lash"
@@ -6153,7 +6153,7 @@
         },
         {
           "name": "Thunderous Blast",
-          "doneness": "partial",
+          "doneness": "done",
           "type_facet": "SpecialAttack.Supernatural",
           "standing": "origin",
           "display_name": "Thunderous Blast"
@@ -6167,7 +6167,7 @@
         },
         {
           "name": "Time Travel",
-          "doneness": "partial",
+          "doneness": "done",
           "type_facet": "SpecialQuality.Supernatural",
           "standing": "origin",
           "display_name": "Time Travel"
@@ -6181,14 +6181,14 @@
         },
         {
           "name": "Torturous Touch",
-          "doneness": "partial",
+          "doneness": "done",
           "type_facet": "SpecialAttack.Supernatural",
           "standing": "origin",
           "display_name": "Torturous Touch"
         },
         {
           "name": "Touch Attack",
-          "doneness": "partial",
+          "doneness": "done",
           "type_facet": "SpecialAttack.Supernatural",
           "standing": "unclassified",
           "display_name": "Touch Attack"
@@ -6202,7 +6202,7 @@
         },
         {
           "name": "Toxic Breath",
-          "doneness": "partial",
+          "doneness": "done",
           "type_facet": "SpecialQuality.Supernatural.Aura",
           "standing": "origin",
           "display_name": "Toxic Breath"
@@ -6251,7 +6251,7 @@
         },
         {
           "name": "Transformation",
-          "doneness": "partial",
+          "doneness": "done",
           "type_facet": "SpecialAttack.Supernatural",
           "standing": "unclassified",
           "display_name": "Transformation"
@@ -6314,7 +6314,7 @@
         },
         {
           "name": "Trickery Domain - Doubles",
-          "doneness": "partial",
+          "doneness": "done",
           "type_facet": "JuggernautDomain.SpecialQuality.SpellLike",
           "standing": "origin",
           "display_name": "Trickery Domain - Doubles"
@@ -6377,28 +6377,28 @@
         },
         {
           "name": "Unspeakable Presence",
-          "doneness": "partial",
+          "doneness": "done",
           "type_facet": "SpecialQuality.Supernatural.Aura",
           "standing": "origin",
           "display_name": "Unspeakable Presence (SpecialQuality.Supernatural.Aura)"
         },
         {
           "name": "Unspeakable Presence",
-          "doneness": "partial",
+          "doneness": "done",
           "type_facet": "SpecialQuality.Supernatural.Aura",
           "standing": "origin",
           "display_name": "Unspeakable Presence (SpecialQuality.Supernatural.Aura) #2"
         },
         {
           "name": "Unspeakable Presence",
-          "doneness": "partial",
+          "doneness": "done",
           "type_facet": "SpecialQuality.Supernatural.Aura",
           "standing": "origin",
           "display_name": "Unspeakable Presence (SpecialQuality.Supernatural.Aura) #3"
         },
         {
           "name": "Unspeakable Presence",
-          "doneness": "partial",
+          "doneness": "done",
           "type_facet": "SpecialQuality.Supernatural",
           "standing": "origin",
           "display_name": "Unspeakable Presence (SpecialQuality.Supernatural)"
@@ -6433,7 +6433,7 @@
         },
         {
           "name": "Vengeful Dreams",
-          "doneness": "partial",
+          "doneness": "done",
           "type_facet": "SpecialAttack.Supernatural",
           "standing": "origin",
           "display_name": "Vengeful Dreams"
@@ -6496,14 +6496,14 @@
         },
         {
           "name": "Vortex",
-          "doneness": "partial",
+          "doneness": "done",
           "type_facet": "SpecialAttack.Supernatural",
           "standing": "unclassified",
           "display_name": "Vortex"
         },
         {
           "name": "Vulnerable Tail",
-          "doneness": "partial",
+          "doneness": "done",
           "type_facet": "SpecialQuality.Supernatural",
           "standing": "origin",
           "display_name": "Vulnerable Tail"
@@ -6517,7 +6517,7 @@
         },
         {
           "name": "Vulnerable to Magic",
-          "doneness": "partial",
+          "doneness": "done",
           "type_facet": "SpecialQuality.Extraordinary",
           "standing": "origin",
           "display_name": "Vulnerable to Magic"
@@ -6573,14 +6573,14 @@
         },
         {
           "name": "Water Dependency",
-          "doneness": "partial",
+          "doneness": "done",
           "type_facet": "SpecialQuality.Extraordinary",
           "standing": "unclassified",
           "display_name": "Water Dependency (SpecialQuality.Extraordinary) #3"
         },
         {
           "name": "Water Domain - Surge",
-          "doneness": "partial",
+          "doneness": "done",
           "type_facet": "JuggernautDomain.SpecialQuality.SpellLike",
           "standing": "origin",
           "display_name": "Water Domain - Surge"
@@ -6608,7 +6608,7 @@
         },
         {
           "name": "Water Walk",
-          "doneness": "partial",
+          "doneness": "done",
           "type_facet": "SpecialQuality.SpellLike",
           "standing": "unclassified",
           "display_name": "Water Walk"
@@ -6622,7 +6622,7 @@
         },
         {
           "name": "Waveglide",
-          "doneness": "partial",
+          "doneness": "done",
           "type_facet": "SpecialQuality.Supernatural",
           "standing": "origin",
           "display_name": "Waveglide"
@@ -6636,7 +6636,7 @@
         },
         {
           "name": "Weather Domain - Weathermaker",
-          "doneness": "partial",
+          "doneness": "done",
           "type_facet": "JuggernautDomain.SpecialQuality.SpellLike",
           "standing": "origin",
           "display_name": "Weather Domain - Weathermaker"
@@ -6727,7 +6727,7 @@
         },
         {
           "name": "Yellow Sign",
-          "doneness": "partial",
+          "doneness": "done",
           "type_facet": "SpecialAttack.Supernatural",
           "standing": "origin",
           "display_name": "Yellow Sign"
@@ -6744,12 +6744,12 @@
     {
       "kind": "monster",
       "label": "Monsters",
-      "done": 184,
-      "partial": 19,
+      "done": 220,
+      "partial": 0,
       "not_started": 0,
-      "denominator": 203,
-      "pct": 90.6,
-      "excluded_from_percentage": 17,
+      "denominator": 220,
+      "pct": 100.0,
+      "excluded_from_percentage": 0,
       "standing_breakdown": {
         "origin": 203,
         "unclassified": 17
@@ -6792,7 +6792,7 @@
         },
         {
           "name": "Archaeopteryx",
-          "doneness": "partial",
+          "doneness": "done",
           "type_facet": "Animal",
           "standing": "origin",
           "display_name": "Archaeopteryx"
@@ -6820,7 +6820,7 @@
         },
         {
           "name": "Barometz",
-          "doneness": "partial",
+          "doneness": "done",
           "type_facet": "Plant",
           "standing": "origin",
           "display_name": "Barometz"
@@ -6869,7 +6869,7 @@
         },
         {
           "name": "Bull Shark",
-          "doneness": "partial",
+          "doneness": "done",
           "type_facet": "Animal",
           "standing": "origin",
           "display_name": "Bull Shark"
@@ -6988,14 +6988,14 @@
         },
         {
           "name": "Dire Weasel",
-          "doneness": "partial",
+          "doneness": "done",
           "type_facet": "Animal",
           "standing": "origin",
           "display_name": "Dire Weasel"
         },
         {
           "name": "Dodo",
-          "doneness": "partial",
+          "doneness": "done",
           "type_facet": "Animal",
           "standing": "origin",
           "display_name": "Dodo"
@@ -7226,14 +7226,14 @@
         },
         {
           "name": "Giant Flea",
-          "doneness": "partial",
+          "doneness": "done",
           "type_facet": "Vermin",
           "standing": "origin",
           "display_name": "Giant Flea"
         },
         {
           "name": "Giant Locust",
-          "doneness": "partial",
+          "doneness": "done",
           "type_facet": "Vermin",
           "standing": "origin",
           "display_name": "Giant Locust"
@@ -7247,14 +7247,14 @@
         },
         {
           "name": "Giant Seahorse",
-          "doneness": "partial",
+          "doneness": "done",
           "type_facet": "Animal",
           "standing": "origin",
           "display_name": "Giant Seahorse"
         },
         {
           "name": "Giant Tortoise",
-          "doneness": "partial",
+          "doneness": "done",
           "type_facet": "Animal",
           "standing": "origin",
           "display_name": "Giant Tortoise"
@@ -7268,7 +7268,7 @@
         },
         {
           "name": "Giant Weasel",
-          "doneness": "partial",
+          "doneness": "done",
           "type_facet": "Animal",
           "standing": "origin",
           "display_name": "Giant Weasel"
@@ -7282,7 +7282,7 @@
         },
         {
           "name": "Goliath Spider",
-          "doneness": "partial",
+          "doneness": "done",
           "type_facet": "Vermin",
           "standing": "origin",
           "display_name": "Goliath Spider"
@@ -7296,7 +7296,7 @@
         },
         {
           "name": "Great White Shark",
-          "doneness": "partial",
+          "doneness": "done",
           "type_facet": "Animal",
           "standing": "origin",
           "display_name": "Great White Shark"
@@ -7408,7 +7408,7 @@
         },
         {
           "name": "Immense Tortoise",
-          "doneness": "partial",
+          "doneness": "done",
           "type_facet": "Animal",
           "standing": "origin",
           "display_name": "Immense Tortoise"
@@ -7548,7 +7548,7 @@
         },
         {
           "name": "Locust Swarm",
-          "doneness": "partial",
+          "doneness": "done",
           "type_facet": "Vermin",
           "standing": "origin",
           "display_name": "Locust Swarm"
@@ -7590,7 +7590,7 @@
         },
         {
           "name": "Mammoth Flea",
-          "doneness": "partial",
+          "doneness": "done",
           "type_facet": "Vermin",
           "standing": "origin",
           "display_name": "Mammoth Flea"
@@ -7730,7 +7730,7 @@
         },
         {
           "name": "Platypus",
-          "doneness": "partial",
+          "doneness": "done",
           "type_facet": "Animal",
           "standing": "origin",
           "display_name": "Platypus"
@@ -7884,7 +7884,7 @@
         },
         {
           "name": "Sloth",
-          "doneness": "partial",
+          "doneness": "done",
           "type_facet": "Animal",
           "standing": "origin",
           "display_name": "Sloth"
@@ -8024,7 +8024,7 @@
         },
         {
           "name": "Tuatara",
-          "doneness": "partial",
+          "doneness": "done",
           "type_facet": "Animal",
           "standing": "origin",
           "display_name": "Tuatara"
@@ -8087,7 +8087,7 @@
         },
         {
           "name": "Walrus",
-          "doneness": "partial",
+          "doneness": "done",
           "type_facet": "Animal",
           "standing": "origin",
           "display_name": "Walrus"
@@ -8300,12 +8300,12 @@
     {
       "kind": "race_trait",
       "label": "Race Traits",
-      "done": 78,
+      "done": 144,
       "partial": 0,
       "not_started": 0,
-      "denominator": 78,
+      "denominator": 144,
       "pct": 100.0,
-      "excluded_from_percentage": 66,
+      "excluded_from_percentage": 0,
       "standing_breakdown": {
         "unclassified": 66,
         "origin": 78
@@ -9424,12 +9424,12 @@
     {
       "kind": "spell",
       "label": "Spells",
-      "done": 0,
-      "partial": 53,
+      "done": 56,
+      "partial": 0,
       "not_started": 0,
-      "denominator": 53,
-      "pct": 0.0,
-      "excluded_from_percentage": 3,
+      "denominator": 56,
+      "pct": 100.0,
+      "excluded_from_percentage": 0,
       "standing_breakdown": {
         "origin": 53,
         "unclassified": 3
@@ -9437,182 +9437,182 @@
       "items": [
         {
           "name": "Bestow Curse (30 ft. range)",
-          "doneness": "partial",
+          "doneness": "done",
           "type_facet": "Arcane.Divine",
           "standing": "origin",
           "display_name": "Bestow Curse (30 ft. range)"
         },
         {
           "name": "Charm Animal (snakes only)",
-          "doneness": "partial",
+          "doneness": "done",
           "type_facet": "Divine",
           "standing": "origin",
           "display_name": "Charm Animal (snakes only)"
         },
         {
           "name": "Charm Monster (vermin only)",
-          "doneness": "partial",
+          "doneness": "done",
           "type_facet": "Arcane.Divine",
           "standing": "origin",
           "display_name": "Charm Monster (vermin only)"
         },
         {
           "name": "Control Weather (alter storms)",
-          "doneness": "partial",
+          "doneness": "done",
           "type_facet": "Arcane.Divine",
           "standing": "origin",
           "display_name": "Control Weather (alter storms)"
         },
         {
           "name": "Control Weather (rain only)",
-          "doneness": "partial",
+          "doneness": "done",
           "type_facet": "Arcane.Divine",
           "standing": "origin",
           "display_name": "Control Weather (rain only)"
         },
         {
           "name": "Control Weather (windy or cold weather only)",
-          "doneness": "partial",
+          "doneness": "done",
           "type_facet": "Arcane.Divine",
           "standing": "origin",
           "display_name": "Control Weather (windy or cold weather only)"
         },
         {
           "name": "Dimension Door (within sacred site)",
-          "doneness": "partial",
+          "doneness": "done",
           "type_facet": "Arcane.Divine",
           "standing": "origin",
           "display_name": "Dimension Door (within sacred site)"
         },
         {
           "name": "Dominate Monster (vermin only)",
-          "doneness": "partial",
+          "doneness": "done",
           "type_facet": "Arcane.Divine",
           "standing": "origin",
           "display_name": "Dominate Monster (vermin only)"
         },
         {
           "name": "Empowered Cone of Cold",
-          "doneness": "partial",
+          "doneness": "done",
           "type_facet": "Arcane",
           "standing": "origin",
           "display_name": "Empowered Cone of Cold"
         },
         {
           "name": "Extended Animate Objects (Warsworn)",
-          "doneness": "partial",
+          "doneness": "done",
           "type_facet": "Arcane.Divine",
           "standing": "origin",
           "display_name": "Extended Animate Objects (Warsworn)"
         },
         {
           "name": "Fly (self only)",
-          "doneness": "partial",
+          "doneness": "done",
           "type_facet": "Arcane.Divine",
           "standing": "origin",
           "display_name": "Fly (self only)"
         },
         {
           "name": "Haste (self only)",
-          "doneness": "partial",
+          "doneness": "done",
           "type_facet": "Arcane.Divine",
           "standing": "origin",
           "display_name": "Haste (self only)"
         },
         {
           "name": "Hedge Stride",
-          "doneness": "partial",
+          "doneness": "done",
           "type_facet": "Divine",
           "standing": "origin",
           "display_name": "Hedge Stride"
         },
         {
           "name": "Hold Monster (vermin only)",
-          "doneness": "partial",
+          "doneness": "done",
           "type_facet": "Arcane.Divine",
           "standing": "origin",
           "display_name": "Hold Monster (vermin only)"
         },
         {
           "name": "Magic Jar (other formians only)",
-          "doneness": "partial",
+          "doneness": "done",
           "type_facet": "Arcane",
           "standing": "origin",
           "display_name": "Magic Jar (other formians only)"
         },
         {
           "name": "Miracle (Divine Realm)",
-          "doneness": "partial",
+          "doneness": "done",
           "type_facet": "Divine",
           "standing": "origin",
           "display_name": "Miracle (Divine Realm)"
         },
         {
           "name": "Plane Shift (Nightmare Lord)",
-          "doneness": "partial",
+          "doneness": "done",
           "type_facet": "Arcane.Divine",
           "standing": "origin",
           "display_name": "Plane Shift (Nightmare Lord)"
         },
         {
           "name": "Plane Shift (Ostiarius)",
-          "doneness": "partial",
+          "doneness": "done",
           "type_facet": "Arcane.Divine",
           "standing": "origin",
           "display_name": "Plane Shift (Ostiarius)"
         },
         {
           "name": "Plane Shift (Owb)",
-          "doneness": "partial",
+          "doneness": "done",
           "type_facet": "Arcane.Divine",
           "standing": "origin",
           "display_name": "Plane Shift (Owb)"
         },
         {
           "name": "Polymorph (self only/same size)",
-          "doneness": "partial",
+          "doneness": "done",
           "type_facet": "Arcane",
           "standing": "origin",
           "display_name": "Polymorph (self only/same size)"
         },
         {
           "name": "Purify Food and Drink (water only)",
-          "doneness": "partial",
+          "doneness": "done",
           "type_facet": "Divine",
           "standing": "origin",
           "display_name": "Purify Food and Drink (water only)"
         },
         {
           "name": "Quickened Charm Person",
-          "doneness": "partial",
+          "doneness": "done",
           "type_facet": "Arcane.Divine",
           "standing": "origin",
           "display_name": "Quickened Charm Person"
         },
         {
           "name": "Quickened Cure Serious Wounds",
-          "doneness": "partial",
+          "doneness": "done",
           "type_facet": "Arcane.Divine",
           "standing": "origin",
           "display_name": "Quickened Cure Serious Wounds"
         },
         {
           "name": "Quickened Dispel Magic (Greater)",
-          "doneness": "partial",
+          "doneness": "done",
           "type_facet": "Arcane.Divine",
           "standing": "unclassified",
           "display_name": "Quickened Dispel Magic (Greater)"
         },
         {
           "name": "Quickened Dominate Person",
-          "doneness": "partial",
+          "doneness": "done",
           "type_facet": "Arcane",
           "standing": "origin",
           "display_name": "Quickened Dominate Person"
         },
         {
           "name": "Quickened Feeblemind",
-          "doneness": "partial",
+          "doneness": "done",
           "type_facet": "Arcane",
           "standing": "origin",
           "display_name": "Quickened Feeblemind"
@@ -9626,196 +9626,196 @@
         },
         {
           "name": "Quickened Mirror Image",
-          "doneness": "partial",
+          "doneness": "done",
           "type_facet": "Arcane",
           "standing": "origin",
           "display_name": "Quickened Mirror Image"
         },
         {
           "name": "Quickened True Strike",
-          "doneness": "partial",
+          "doneness": "done",
           "type_facet": "Arcane.Divine",
           "standing": "origin",
           "display_name": "Quickened True Strike"
         },
         {
           "name": "Sending (dryads only)",
-          "doneness": "partial",
+          "doneness": "done",
           "type_facet": "Arcane.Divine",
           "standing": "origin",
           "display_name": "Sending (dryads only)"
         },
         {
           "name": "Sending (to the hive queen only)",
-          "doneness": "partial",
+          "doneness": "done",
           "type_facet": "Arcane.Divine",
           "standing": "origin",
           "display_name": "Sending (to the hive queen only)"
         },
         {
           "name": "Share Memory (Jinmenju)",
-          "doneness": "partial",
+          "doneness": "done",
           "type_facet": "Arcane",
           "standing": "origin",
           "display_name": "Share Memory (Jinmenju)"
         },
         {
           "name": "Silence (self only)",
-          "doneness": "partial",
+          "doneness": "done",
           "type_facet": "Arcane.Divine",
           "standing": "origin",
           "display_name": "Silence (self only)"
         },
         {
           "name": "Speak with Animals (aquatic only)",
-          "doneness": "partial",
+          "doneness": "done",
           "type_facet": "Arcane.Divine",
           "standing": "origin",
           "display_name": "Speak with Animals (aquatic only)"
         },
         {
           "name": "Speak with Animals (snakes only)",
-          "doneness": "partial",
+          "doneness": "done",
           "type_facet": "Arcane.Divine",
           "standing": "origin",
           "display_name": "Speak with Animals (snakes only)"
         },
         {
           "name": "Speak with Animals (winged animals only)",
-          "doneness": "partial",
+          "doneness": "done",
           "type_facet": "Arcane.Divine",
           "standing": "origin",
           "display_name": "Speak with Animals (winged animals only)"
         },
         {
           "name": "Spider Climb (self only)",
-          "doneness": "partial",
+          "doneness": "done",
           "type_facet": "Arcane.Divine",
           "standing": "origin",
           "display_name": "Spider Climb (self only)"
         },
         {
           "name": "Summon Monster II (Devilbound)",
-          "doneness": "partial",
+          "doneness": "done",
           "type_facet": "Arcane.Divine",
           "standing": "origin",
           "display_name": "Summon Monster II (Devilbound)"
         },
         {
           "name": "Summon Monster III (Magaav)",
-          "doneness": "partial",
+          "doneness": "done",
           "type_facet": "Arcane.Divine",
           "standing": "origin",
           "display_name": "Summon Monster III (Magaav)"
         },
         {
           "name": "Summon Monster IV (Sarglagon)",
-          "doneness": "partial",
+          "doneness": "done",
           "type_facet": "Arcane.Divine",
           "standing": "origin",
           "display_name": "Summon Monster IV (Sarglagon)"
         },
         {
           "name": "Summon Monster IX (Devilbound)",
-          "doneness": "partial",
+          "doneness": "done",
           "type_facet": "Arcane.Divine",
           "standing": "origin",
           "display_name": "Summon Monster IX (Devilbound)"
         },
         {
           "name": "Summon Monster IX (Yamaraj)",
-          "doneness": "partial",
+          "doneness": "done",
           "type_facet": "Arcane.Divine",
           "standing": "origin",
           "display_name": "Summon Monster IX (Yamaraj)"
         },
         {
           "name": "Summon Monster V (Devilbound)",
-          "doneness": "partial",
+          "doneness": "done",
           "type_facet": "Arcane.Divine",
           "standing": "origin",
           "display_name": "Summon Monster V (Devilbound)"
         },
         {
           "name": "Summon Monster VI (Devilbound)",
-          "doneness": "partial",
+          "doneness": "done",
           "type_facet": "Arcane.Divine",
           "standing": "origin",
           "display_name": "Summon Monster VI (Devilbound)"
         },
         {
           "name": "Summon Monster VII (Advodaza)",
-          "doneness": "partial",
+          "doneness": "done",
           "type_facet": "Arcane.Divine",
           "standing": "origin",
           "display_name": "Summon Monster VII (Advodaza)"
         },
         {
           "name": "Summon Monster VII (Devilbound)",
-          "doneness": "partial",
+          "doneness": "done",
           "type_facet": "Arcane.Divine",
           "standing": "origin",
           "display_name": "Summon Monster VII (Devilbound)"
         },
         {
           "name": "Summon Monster VII (Morrigna)",
-          "doneness": "partial",
+          "doneness": "done",
           "type_facet": "Arcane.Divine",
           "standing": "origin",
           "display_name": "Summon Monster VII (Morrigna)"
         },
         {
           "name": "Summon Monster VIII (Devilbound)",
-          "doneness": "partial",
+          "doneness": "done",
           "type_facet": "Arcane.Divine",
           "standing": "origin",
           "display_name": "Summon Monster VIII (Devilbound)"
         },
         {
           "name": "Summon Nature's Ally V (Oceanid)",
-          "doneness": "partial",
+          "doneness": "done",
           "type_facet": "Divine",
           "standing": "origin",
           "display_name": "Summon Nature's Ally V (Oceanid)"
         },
         {
           "name": "Summon Nature's Ally VI (Erlking)",
-          "doneness": "partial",
+          "doneness": "done",
           "type_facet": "Divine",
           "standing": "origin",
           "display_name": "Summon Nature's Ally VI (Erlking)"
         },
         {
           "name": "Summon Nature's Ally VII (swimming creatures only)",
-          "doneness": "partial",
+          "doneness": "done",
           "type_facet": "Divine",
           "standing": "origin",
           "display_name": "Summon Nature's Ally VII (swimming creatures only)"
         },
         {
           "name": "Summon Swarm (locusts only)",
-          "doneness": "partial",
+          "doneness": "done",
           "type_facet": "Arcane.Divine",
           "standing": "origin",
           "display_name": "Summon Swarm (locusts only)"
         },
         {
           "name": "Summon Swarm (rat swarm only)",
-          "doneness": "partial",
+          "doneness": "done",
           "type_facet": "Arcane.Divine",
           "standing": "origin",
           "display_name": "Summon Swarm (rat swarm only)"
         },
         {
           "name": "Telekinesis (Warsworn)",
-          "doneness": "partial",
+          "doneness": "done",
           "type_facet": "Arcane",
           "standing": "origin",
           "display_name": "Telekinesis (Warsworn)"
         },
         {
           "name": "Wood Shape (10 lbs. only)",
-          "doneness": "partial",
+          "doneness": "done",
           "type_facet": "Divine",
           "standing": "origin",
           "display_name": "Wood Shape (10 lbs. only)"
@@ -9832,12 +9832,12 @@
     {
       "kind": "template",
       "label": "Templates",
-      "done": 181,
+      "done": 183,
       "partial": 0,
       "not_started": 0,
-      "denominator": 181,
+      "denominator": 183,
       "pct": 100.0,
-      "excluded_from_percentage": 2,
+      "excluded_from_percentage": 0,
       "standing_breakdown": {
         "origin": 181,
         "unclassified": 2

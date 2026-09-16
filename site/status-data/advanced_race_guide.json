@@ -5,12 +5,12 @@
     {
       "kind": "ability",
       "label": "Abilities",
-      "done": 335,
+      "done": 352,
       "partial": 0,
       "not_started": 0,
-      "denominator": 335,
+      "denominator": 352,
       "pct": 100.0,
-      "excluded_from_percentage": 17,
+      "excluded_from_percentage": 0,
       "standing_breakdown": {
         "origin": 335,
         "unclassified": 17
@@ -2485,12 +2485,12 @@
     {
       "kind": "class_feature",
       "label": "Class Features",
-      "done": 493,
-      "partial": 1,
+      "done": 708,
+      "partial": 0,
       "not_started": 0,
-      "denominator": 494,
-      "pct": 99.8,
-      "excluded_from_percentage": 214,
+      "denominator": 708,
+      "pct": 100.0,
+      "excluded_from_percentage": 0,
       "standing_breakdown": {
         "origin": 494,
         "unclassified": 214
@@ -5298,7 +5298,7 @@
         },
         {
           "name": "Miasmatic Form",
-          "doneness": "partial",
+          "doneness": "done",
           "type_facet": "Sorcerer Bloodline Bonus Spell",
           "standing": "origin",
           "display_name": "Miasmatic Form (Sorcerer Bloodline Bonus Spell)"
@@ -7457,12 +7457,12 @@
     {
       "kind": "companion",
       "label": "Companions",
-      "done": 26,
+      "done": 32,
       "partial": 0,
       "not_started": 0,
-      "denominator": 26,
+      "denominator": 32,
       "pct": 100.0,
-      "excluded_from_percentage": 6,
+      "excluded_from_percentage": 0,
       "standing_breakdown": {
         "origin": 26,
         "unclassified": 6
@@ -7631,7 +7631,7 @@
         },
         {
           "name": "Poison",
-          "doneness": "partial",
+          "doneness": "done",
           "type_facet": "RaceAbility.SpecialAbility",
           "standing": "unclassified",
           "display_name": "Poison"
@@ -7697,12 +7697,12 @@
     {
       "kind": "equipment",
       "label": "Equipment",
-      "done": 143,
+      "done": 186,
       "partial": 0,
       "not_started": 0,
-      "denominator": 143,
+      "denominator": 186,
       "pct": 100.0,
-      "excluded_from_percentage": 43,
+      "excluded_from_percentage": 0,
       "standing_breakdown": {
         "origin": 143,
         "unclassified": 43
@@ -9015,12 +9015,12 @@
     {
       "kind": "equipment_modifier",
       "label": "Equipment Modifiers",
-      "done": 17,
-      "partial": 5,
+      "done": 29,
+      "partial": 0,
       "not_started": 0,
-      "denominator": 22,
-      "pct": 77.3,
-      "excluded_from_percentage": 7,
+      "denominator": 29,
+      "pct": 100.0,
+      "excluded_from_percentage": 0,
       "standing_breakdown": {
         "origin": 22,
         "unclassified": 7
@@ -9028,7 +9028,7 @@
       "items": [
         {
           "name": "AAPURIFIER_CELESTIAL",
-          "doneness": "partial",
+          "doneness": "done",
           "type_facet": null,
           "standing": "origin",
           "display_name": "AAPURIFIER_CELESTIAL"
@@ -9161,7 +9161,7 @@
         },
         {
           "name": "UNDWEAP",
-          "doneness": "partial",
+          "doneness": "done",
           "type_facet": null,
           "standing": "origin",
           "display_name": "UNDWEAP"
@@ -9175,21 +9175,21 @@
         },
         {
           "name": "WROOT_1",
-          "doneness": "partial",
+          "doneness": "done",
           "type_facet": null,
           "standing": "origin",
           "display_name": "WROOT_1"
         },
         {
           "name": "WROOT_2",
-          "doneness": "partial",
+          "doneness": "done",
           "type_facet": null,
           "standing": "origin",
           "display_name": "WROOT_2"
         },
         {
           "name": "WROOT_3",
-          "doneness": "partial",
+          "doneness": "done",
           "type_facet": null,
           "standing": "origin",
           "display_name": "WROOT_3"
@@ -9234,12 +9234,12 @@
     {
       "kind": "feat",
       "label": "Feats",
-      "done": 230,
-      "partial": 5,
+      "done": 236,
+      "partial": 0,
       "not_started": 0,
-      "denominator": 235,
-      "pct": 97.9,
-      "excluded_from_percentage": 1,
+      "denominator": 236,
+      "pct": 100.0,
+      "excluded_from_percentage": 0,
       "standing_breakdown": {
         "origin": 235,
         "unclassified": 1
@@ -9513,7 +9513,7 @@
         },
         {
           "name": "Born Alone",
-          "doneness": "partial",
+          "doneness": "done",
           "type_facet": "General",
           "standing": "origin",
           "display_name": "Born Alone"
@@ -9933,7 +9933,7 @@
         },
         {
           "name": "Ferocious Tenacity",
-          "doneness": "partial",
+          "doneness": "done",
           "type_facet": "Combat",
           "standing": "origin",
           "display_name": "Ferocious Tenacity"
@@ -10241,7 +10241,7 @@
         },
         {
           "name": "Improved Umbral Scion",
-          "doneness": "partial",
+          "doneness": "done",
           "type_facet": "General",
           "standing": "origin",
           "display_name": "Improved Umbral Scion"
@@ -10255,7 +10255,7 @@
         },
         {
           "name": "Incremental Elemental Assault",
-          "doneness": "partial",
+          "doneness": "done",
           "type_facet": "General",
           "standing": "origin",
           "display_name": "Incremental Elemental Assault"
@@ -10619,7 +10619,7 @@
         },
         {
           "name": "Spider Step",
-          "doneness": "partial",
+          "doneness": "done",
           "type_facet": "General",
           "standing": "unclassified",
           "display_name": "Spider Step"
@@ -10759,7 +10759,7 @@
         },
         {
           "name": "Tenacious Survivor",
-          "doneness": "partial",
+          "doneness": "done",
           "type_facet": "General",
           "standing": "origin",
           "display_name": "Tenacious Survivor"
@@ -10902,12 +10902,12 @@
     {
       "kind": "language",
       "label": "Languages",
-      "done": 0,
+      "done": 2,
       "partial": 0,
       "not_started": 0,
-      "denominator": 0,
-      "pct": 0.0,
-      "excluded_from_percentage": 2,
+      "denominator": 2,
+      "pct": 100.0,
+      "excluded_from_percentage": 0,
       "standing_breakdown": {
         "unclassified": 2
       },
@@ -10953,12 +10953,12 @@
     {
       "kind": "race_trait",
       "label": "Race Traits",
-      "done": 225,
+      "done": 315,
       "partial": 0,
       "not_started": 0,
-      "denominator": 225,
+      "denominator": 315,
       "pct": 100.0,
-      "excluded_from_percentage": 90,
+      "excluded_from_percentage": 0,
       "standing_breakdown": {
         "unclassified": 90,
         "origin": 225
@@ -14086,12 +14086,12 @@
     {
       "kind": "template",
       "label": "Templates",
-      "done": 39,
+      "done": 50,
       "partial": 0,
       "not_started": 0,
-      "denominator": 39,
+      "denominator": 50,
       "pct": 100.0,
-      "excluded_from_percentage": 11,
+      "excluded_from_percentage": 0,
       "standing_breakdown": {
         "unclassified": 11,
         "origin": 39

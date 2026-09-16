@@ -5,12 +5,12 @@
     {
       "kind": "ability",
       "label": "Abilities",
-      "done": 0,
+      "done": 8,
       "partial": 0,
       "not_started": 0,
-      "denominator": 0,
-      "pct": 0.0,
-      "excluded_from_percentage": 8,
+      "denominator": 8,
+      "pct": 100.0,
+      "excluded_from_percentage": 0,
       "standing_breakdown": {
         "unclassified": 8
       },
@@ -76,12 +76,12 @@
     {
       "kind": "equipment",
       "label": "Equipment",
-      "done": 69,
-      "partial": 1,
+      "done": 72,
+      "partial": 0,
       "not_started": 0,
-      "denominator": 70,
-      "pct": 98.6,
-      "excluded_from_percentage": 2,
+      "denominator": 72,
+      "pct": 100.0,
+      "excluded_from_percentage": 0,
       "standing_breakdown": {
         "origin": 70,
         "unclassified": 2
@@ -173,7 +173,7 @@
         },
         {
           "name": "Clever Sling Staff",
-          "doneness": "partial",
+          "doneness": "done",
           "type_facet": "Weapon.Magic.Resizable.Exotic.Ranged.Specific.Halfling.Bludgeoning.Container.Projectile.Sling",
           "standing": "origin",
           "display_name": "Clever Sling Staff"
@@ -596,12 +596,12 @@
     {
       "kind": "feat",
       "label": "Feats",
-      "done": 51,
+      "done": 72,
       "partial": 0,
       "not_started": 0,
-      "denominator": 51,
+      "denominator": 72,
       "pct": 100.0,
-      "excluded_from_percentage": 21,
+      "excluded_from_percentage": 0,
       "standing_breakdown": {
         "origin": 51,
         "unclassified": 21
@@ -1116,12 +1116,12 @@
     {
       "kind": "language",
       "label": "Languages",
-      "done": 0,
+      "done": 4,
       "partial": 0,
       "not_started": 0,
-      "denominator": 0,
-      "pct": 0.0,
-      "excluded_from_percentage": 4,
+      "denominator": 4,
+      "pct": 100.0,
+      "excluded_from_percentage": 0,
       "standing_breakdown": {
         "unclassified": 4
       },
@@ -1159,12 +1159,12 @@
     {
       "kind": "race_trait",
       "label": "Race Traits",
-      "done": 119,
+      "done": 142,
       "partial": 0,
       "not_started": 0,
-      "denominator": 119,
+      "denominator": 142,
       "pct": 100.0,
-      "excluded_from_percentage": 23,
+      "excluded_from_percentage": 0,
       "standing_breakdown": {
         "origin": 119,
         "unclassified": 23
@@ -2387,12 +2387,12 @@
     {
       "kind": "template",
       "label": "Templates",
-      "done": 0,
+      "done": 9,
       "partial": 0,
       "not_started": 0,
-      "denominator": 0,
-      "pct": 0.0,
-      "excluded_from_percentage": 9,
+      "denominator": 9,
+      "pct": 100.0,
+      "excluded_from_percentage": 0,
       "standing_breakdown": {
         "unclassified": 9
       },
@@ -2465,12 +2465,12 @@
     {
       "kind": "trait",
       "label": "Traits",
-      "done": 92,
+      "done": 96,
       "partial": 0,
       "not_started": 0,
-      "denominator": 92,
+      "denominator": 96,
       "pct": 100.0,
-      "excluded_from_percentage": 4,
+      "excluded_from_percentage": 0,
       "standing_breakdown": {
         "origin": 92,
         "unclassified": 4
