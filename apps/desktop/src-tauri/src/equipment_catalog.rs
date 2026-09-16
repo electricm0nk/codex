@@ -1333,12 +1333,15 @@ mod tests {
     }
 
     /// **One weight, not two.** Encumbrance reads each carried item's
-    /// weight off its corpus record's own `WT:` token
+    /// weight off its corpus record's own CONVERTED `weight_lbs`
     /// (`encumbrance::weight_and_cost_from_record`); this catalog reads
     /// the compiled table's `weight_lbs`. Both are transcriptions of the
-    /// same token, and this test proves they agree for every CRB catalog
-    /// row the corpus resolver can find -- so the picker's weight can
-    /// never disagree with the encumbrance tab's for the same item.
+    /// same source `WT:` token -- one at ingest time onto
+    /// `CorpusEquipmentRecord`, `decisions.md §11`'s converted shape, the
+    /// other into the hand-authored table -- and this test proves they
+    /// agree for every CRB catalog row the corpus resolver can find, so
+    /// the picker's weight can never disagree with the encumbrance tab's
+    /// for the same item.
     #[test]
     fn catalog_weight_agrees_with_the_encumbrance_corpus_read_for_every_resolvable_crb_row() {
         use codex::rules_core::equipment_resolver::equipment_id_resolve;
@@ -1353,11 +1356,7 @@ mod tests {
             let Some((record, _cell)) = equipment_id_resolve(&entry.key, RuleSetId::Crb, corpus) else {
                 continue;
             };
-            let corpus_weight = record
-                .tokens
-                .iter()
-                .find(|token| token.key == "WT")
-                .and_then(|token| token.value.parse::<f64>().ok());
+            let corpus_weight = record.weight_lbs;
             compared += 1;
             if corpus_weight != entry.weight_lbs {
                 disagreements.push(format!(

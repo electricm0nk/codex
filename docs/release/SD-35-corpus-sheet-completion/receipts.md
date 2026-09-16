@@ -117,3 +117,66 @@ Expected blocks, in order, all from Epic 7 (`AT-35-E7-003`):
     and the bundle's central deliverable is undone. Per ../template/template.md
     §6 step 5 the operator resolves. Options are named in
     deferral 1789509194439-at-35-e7-003-arch-144b36 and in the PR body.
+
+- cycle_id: 2026-09-16T00:47:00Z
+  row_or_kind: merge_conflict:pr-390-resolved
+  bundle: SD-35
+  branch: tranche/15
+  integration_target: develop
+  branch_tip_before: d122d22b33
+  branch_tip_after: 0f3fdb75eb
+  pr: 390
+  conflicted_files: 3
+  resolved_by: operator-ruling-option-1
+  outcome: resolved
+  root_workspace_test: "test result: ok. 3390 passed; 0 failed; 16 ignored; 0 measured; 0 filtered out"
+  desktop_crate_test: "test result: ok. 633 passed; 0 failed; 0 ignored; 0 measured; 0 filtered out"
+  pcgen_residue_gate: "live_files=0 live_hits=0 verdict=PASS"
+  completion_atlas: "population=49450 buckets=10 unclassified=0 overlap=0; DONE: 49450"
+  receipt_note: >
+    Operator ruling 2026-09-15 (option 1): ported class_spell_levels.rs onto
+    data/sheet_rules/ so it needs no PCGen token read, rather than registering
+    a gate exception. `git merge origin/develop` for real this time (the prior
+    receipt's trial was aborted before a build). class_catalog_generic.rs
+    resolved by taking tranche/15's side wholesale (`git checkout --ours`) --
+    SD-35 Epic 6's data/sheet_rules/-reading rewrite supersedes develop's
+    raw-token version outright, nothing on develop's side needed to survive.
+    class_spell_levels.rs was NOT itself a git conflict (only develop had
+    touched it since the fork point, so it merged in clean with develop's
+    v0.8 B-9 SpellcastingStatus feature intact), but its corpus_class_facts()
+    imported tokens_from/walk_json_files from class_catalog_generic.rs, which
+    no longer exports them post-rewrite. Ported corpus_class_facts() to read
+    data/sheet_rules/<book>/class/*.json (SheetRule, Effect::FactDeclare{name:
+    "SpellType", ..}) for the same two facts (spell_type, base_selection_of)
+    the raw-token reader derived, same "<Base> Class Selection" hop.
+    pathfinder_unchained's `class` kind carries no sheet-rule conversion at
+    all (no such directory under data/sheet_rules/), so its four Unchained
+    shells now report ClassNotInCorpus rather than the NonCaster/
+    CasterListNotIngested answer a PCGen-token read of the un-ingested record
+    could still give -- report absence, not a value read around the gap
+    (no-stub doctrine); replaced
+    unchained_classes_inherit_their_base_records_caster_status with
+    unchained_classes_report_class_not_in_corpus_until_their_book_converts to
+    assert the honest behavior. The two mechanical conflicts
+    (character_hub.rs, rule_system_adapter.rs) resolved exactly as the prior
+    receipt pre-analysed: both sides add fields to LoadSavedCharacterResponse
+    and its two constructors, kept both, develop's ability_scores/
+    skill_allocations/equipment_selections first then SD-35's sheet_lines/
+    sheet_rules_unavailable_reason. Two further breaks surfaced only on a
+    real build, neither a git conflict -- API drift across develop's 47
+    commits that the prior receipt's trial-merge-and-abort could not have
+    caught: equipment_catalog.rs's develop-added
+    catalog_weight_agrees_with_the_encumbrance_corpus_read_for_every_
+    resolvable_crb_row test read `record.tokens` off equipment_id_resolve's
+    result, but tranche/15's Epic 6 already changed that function to return
+    the converted CorpusEquipmentRecord (no .tokens field) -- fixed to read
+    the record's own settled weight_lbs directly; reach_gate.rs's
+    sheet_rule_lines_cross_the_ipc_carrying_label_and_value builds a
+    CreateCharacterRequest by hand and develop added a new
+    additional_choices field to that struct -- added
+    additional_choices: Vec::new() to the literal. Verified at the widest
+    build scope: cargo build/test --workspace at the repo root and
+    cargo build/test in apps/desktop/src-tauri (a separate workspace), both
+    green, both gates green. `git status --porcelain` empty after folding
+    the completion-atlas.json derived_at stamp and a live reclaim.sh
+    retro-log append picked up mid-run.
