@@ -57,9 +57,6 @@
 use codex::rules_core::pilot_compute::{
     compute_pilot_base_chassis,
 };
-use codex::rules_core::support_state_matrix::{
-    EvidenceFreshness, EvidenceTier, SupportState, seeded_current_truth,
-};
 use crate::common::{load, explanation};
 
 const BARBARIAN_LEVEL1_FIXTURE: &str = include_str!(
@@ -405,45 +402,3 @@ fn barbarian_level1_truth_is_unchanged_by_the_level2_widening() {
 
 // ----- Control plane: the matrix note names the level-2 widening -----
 
-#[test]
-fn matrix_barbarian_row_names_level_2_widening() {
-    let matrix = seeded_current_truth();
-    let barbarian = matrix
-        .row("class.barbarian.bounded_progression")
-        .expect("barbarian bounded_progression row must exist");
-
-    // Later promoted to Supported/ProductVisible by SD-19's Class
-    // Progression Catalog browser UI-surfacing work (2026-07-16).
-    assert_eq!(barbarian.support_state, SupportState::Supported);
-    assert_eq!(barbarian.evidence_tier, EvidenceTier::ProductVisible);
-    assert_eq!(
-        barbarian.evidence_freshness,
-        EvidenceFreshness::RefreshableFromLiveProof
-    );
-    assert!(
-        barbarian
-            .grounding_ref
-            .contains("sd13_barbarian_level2_progression"),
-        "barbarian row must cite the live SD13-E5 level-2 proof surface: {}",
-        barbarian.grounding_ref
-    );
-    let note = barbarian.blocker_or_lossiness_note;
-    assert!(
-        note.contains("level 2") || note.contains("level-2"),
-        "barbarian partial note must name the level-2 widening: {note}"
-    );
-    assert!(
-        note.contains("rage execution") || note.contains("rage-state execution"),
-        "barbarian partial note must keep naming the rage-state execution engine as unproven: \
-         {note}"
-    );
-    assert!(
-        note.to_lowercase().contains("uncanny dodge"),
-        "barbarian partial note must name Uncanny Dodge as newly grounded: {note}"
-    );
-    assert!(
-        note.to_lowercase().contains("rage power"),
-        "barbarian partial note must keep naming the Rage Power choice-list feature as \
-         unproven: {note}"
-    );
-}

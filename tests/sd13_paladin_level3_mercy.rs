@@ -46,7 +46,6 @@
 //! negative control, and the Fighter negative control.
 
 use codex::rules_core::pilot_compute::compute_pilot_base_chassis;
-use codex::rules_core::support_state_matrix::{SupportState, seeded_current_truth};
 mod common;
 use common::{load, explanation, has_explanation};
 
@@ -317,22 +316,3 @@ fn fighter_and_ranger_do_not_gain_paladin_level3_recognition() {
 
 // ----- Control plane: the matrix row's note names the level-3 widening and mercy -----
 
-#[test]
-fn matrix_paladin_row_names_level_3_widening_and_mercy() {
-    let matrix = seeded_current_truth();
-    let paladin = matrix
-        .row("class.paladin.hybrid_chassis_and_spell_burden")
-        .expect("paladin row must exist");
-
-    assert_eq!(paladin.support_state, SupportState::Supported);
-    assert!(
-        paladin.grounding_ref.contains("sd13_paladin_level3_mercy"),
-        "paladin row must cite the live SD13-E5 level-3 mercy proof surface: {}",
-        paladin.grounding_ref
-    );
-    let note = paladin.blocker_or_lossiness_note;
-    assert!(
-        note.to_lowercase().contains("mercy") && note.to_lowercase().contains("granted"),
-        "paladin partial note must name mercy as newly granted at level 3: {note}"
-    );
-}

@@ -78,9 +78,6 @@
 //! boundary in the same commit.
 
 use codex::rules_core::pilot_compute::{PilotBaseChassisComputation, compute_pilot_base_chassis};
-use codex::rules_core::support_state_matrix::{
-    EvidenceFreshness, EvidenceTier, SupportState, seeded_current_truth,
-};
 use crate::common::{load, explanation};
 
 const SORCERER_LEVEL13_FIXTURE: &str = include_str!(
@@ -456,29 +453,3 @@ fn multiclass_sorcerer_level14_is_not_promoted_by_this_slice() {
 
 // ----- Control plane: the matrix note names the level-14 widening -----
 
-#[test]
-fn matrix_sorcerer_row_names_level_14_widening() {
-    let matrix = seeded_current_truth();
-    let sorcerer = matrix
-        .row("class.sorcerer.progression_and_spell_burden")
-        .expect("sorcerer progression_and_spell_burden row must exist");
-
-    assert_eq!(sorcerer.support_state, SupportState::Supported);
-    assert_eq!(sorcerer.evidence_tier, EvidenceTier::ProductVisible);
-    assert_eq!(
-        sorcerer.evidence_freshness,
-        EvidenceFreshness::RefreshableFromLiveProof
-    );
-    assert!(
-        sorcerer
-            .grounding_ref
-            .contains("sd18_sorcerer_level14_widening"),
-        "sorcerer row must cite the live SD18 level-14 proof surface: {}",
-        sorcerer.grounding_ref
-    );
-    let note = sorcerer.blocker_or_lossiness_note;
-    assert!(
-        note.contains("level 14") || note.contains("level-14"),
-        "sorcerer partial note must name the level-14 widening: {note}"
-    );
-}

@@ -34,9 +34,6 @@
 //! control.
 
 use codex::rules_core::pilot_compute::compute_pilot_base_chassis;
-use codex::rules_core::support_state_matrix::{
-    EvidenceFreshness, EvidenceTier, SupportState, seeded_current_truth,
-};
 mod common;
 use common::load;
 
@@ -213,28 +210,3 @@ fn multiclass_bard_does_not_gain_bonus_records() {
 
 // ----- Control plane: the matrix names the bonus-spells grounding -----
 
-#[test]
-fn matrix_bard_row_names_the_bonus_spells_grounding() {
-    let matrix = seeded_current_truth();
-    let bard = matrix
-        .row("class.bard.progression_and_spell_burden")
-        .expect("bard progression_and_spell_burden row must exist");
-
-    assert_eq!(bard.support_state, SupportState::Supported);
-    assert_eq!(bard.evidence_tier, EvidenceTier::ProductVisible);
-    assert_eq!(
-        bard.evidence_freshness,
-        EvidenceFreshness::RefreshableFromLiveProof
-    );
-    assert!(
-        bard.grounding_ref.contains("sd13_bard_bonus_spells"),
-        "bard row must cite the live bonus-spells proof surface: {}",
-        bard.grounding_ref
-    );
-    assert!(
-        bard.blocker_or_lossiness_note
-            .contains("bonus_spells_per_day"),
-        "bard partial note must name the grounded bonus-spells records: {}",
-        bard.blocker_or_lossiness_note
-    );
-}

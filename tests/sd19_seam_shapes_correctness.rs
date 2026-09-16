@@ -10,8 +10,8 @@
 //! (c) `CharacterInput.spells_selected` round-trips through the existing
 //!     fixture-text parser (this repo has no serde anywhere in `rules_core` —
 //!     see the review note atop `technical-design.md` §3);
-//! (d) the new `MatrixSubjectType` variants construct and compare correctly
-//!     (same reason: no serde to round-trip through);
+//! (d) [retired, SD-36 D3: the `MatrixSubjectType` variants this proved were
+//!     part of the now-deleted support-state matrix];
 //! (e) an end-to-end call over all 13 real-corpus fixtures produces a
 //!     `CorpusPilotReceipt` whose `corpus_derived` is non-empty AND whose
 //!     `base` equals `compute_pilot_base_chassis` run on the same input
@@ -34,9 +34,6 @@ use codex::rules_core::pilot_compute_corpus::compute_pilot_with_corpus;
 use codex::rules_core::rules_tables::RuleSetId;
 use codex::rules_core::source_content::{SourcePackageContent, SourceRef};
 use codex::rules_core::spell_resolver::spell_id_resolve;
-use codex::rules_core::support_state_matrix::MatrixSubjectType;
-use codex::rules_core::rules_tables::crb::equipment_tables::EquipmentCategory;
-use codex::rules_core::rules_tables::crb::spell_list::Pf1SchoolId;
 
 const SPELL_FIXTURES: &[(&str, &str)] = &[
     ("abjuration", "Alarm"),
@@ -246,25 +243,6 @@ ability=charisma:10\n\
     assert!(result.diagnostics.is_empty());
     let input = result.character_input.expect("valid character input");
     assert!(input.chosen.spells_selected.is_empty());
-}
-
-// --- (d) MatrixSubjectType new variants construct and compare correctly ---
-
-#[test]
-fn matrix_subject_type_school_and_equipment_variants_construct_and_compare() {
-    let a = MatrixSubjectType::School(Pf1SchoolId::Abjuration);
-    let b = MatrixSubjectType::School(Pf1SchoolId::Abjuration);
-    let c = MatrixSubjectType::School(Pf1SchoolId::Conjuration);
-    assert_eq!(a, b);
-    assert_ne!(a, c);
-
-    let d = MatrixSubjectType::Equipment(EquipmentCategory::ArmsArmor);
-    let e = MatrixSubjectType::Equipment(EquipmentCategory::ArmsArmor);
-    let f = MatrixSubjectType::Equipment(EquipmentCategory::General);
-    assert_eq!(d, e);
-    assert_ne!(d, f);
-
-    assert_ne!(MatrixSubjectType::Class, MatrixSubjectType::Race);
 }
 
 // --- (e) end-to-end: 13 fixtures -> non-empty corpus_derived, base equality

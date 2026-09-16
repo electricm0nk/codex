@@ -41,7 +41,6 @@ mod reach_gate;
 mod rule_system_adapter;
 mod spell_catalog;
 mod stub_adapter;
-mod support_state_matrix_bridge;
 mod trait_picker;
 mod update;
 
@@ -85,7 +84,6 @@ use monster_catalog::list_monster_catalog;
 use race_catalog::list_race_catalog;
 use race_trait_picker::{list_alternate_racial_traits, resolve_race_alternate_selection};
 use spell_catalog::{list_spell_catalog, list_spells};
-use support_state_matrix_bridge::{build_support_state_matrix_snapshot, SupportStateMatrixSnapshot};
 use trait_picker::list_available_character_traits;
 use update::transaction::{
     is_install_eligible, perform_install, perform_restore_previous, verify_relaunch_artifact,
@@ -132,13 +130,6 @@ fn load_authoring_workbench_snapshot(
     build_authoring_workbench_snapshot(request)
 }
 
-/// Read-only SD-13 support-state/debt bridge for the SD-11 tester workbench.
-/// Returns the seeded SD-13 matrix truth verbatim; no filtering or promotion.
-#[tauri::command]
-fn load_support_state_matrix() -> SupportStateMatrixSnapshot {
-    build_support_state_matrix_snapshot()
-}
-
 /// Identifies which build of the Rust backend is actually running. `version`
 /// is the crate's own Cargo.toml version (not the npm frontend version, which
 /// is tracked separately); `gitCommit` is the short commit hash embedded at
@@ -173,7 +164,6 @@ fn main() {
         .invoke_handler(tauri::generate_handler![
             load_pilot_shell_snapshot,
             load_authoring_workbench_snapshot,
-            load_support_state_matrix,
             load_backend_health,
             browser_handoff::handoff_defect_report_to_browser,
             is_install_eligible,

@@ -44,9 +44,6 @@
 //! negative control, and the multiclass negative control.
 
 use codex::rules_core::pilot_compute::compute_pilot_base_chassis;
-use codex::rules_core::support_state_matrix::{
-    EvidenceFreshness, EvidenceTier, SupportState, seeded_current_truth,
-};
 use crate::common::{load, explanation};
 
 const BARBARIAN_LEVEL8_FIXTURE: &str =
@@ -313,31 +310,3 @@ fn multiclass_barbarian_level9_is_not_promoted_by_this_slice() {
 
 // ----- Control plane: the matrix note names the level-9 widening -----
 
-#[test]
-fn matrix_barbarian_row_names_level_9_widening() {
-    let matrix = seeded_current_truth();
-    let barbarian = matrix
-        .row("class.barbarian.bounded_progression")
-        .expect("barbarian bounded_progression row must exist");
-
-    // Later promoted to Supported/ProductVisible by SD-19's Class
-    // Progression Catalog browser UI-surfacing work (2026-07-16).
-    assert_eq!(barbarian.support_state, SupportState::Supported);
-    assert_eq!(barbarian.evidence_tier, EvidenceTier::ProductVisible);
-    assert_eq!(
-        barbarian.evidence_freshness,
-        EvidenceFreshness::RefreshableFromLiveProof
-    );
-    assert!(
-        barbarian
-            .grounding_ref
-            .contains("sd13_barbarian_level9_progression"),
-        "barbarian row must cite the live SD13-E5 level-9 proof surface: {}",
-        barbarian.grounding_ref
-    );
-    let note = barbarian.blocker_or_lossiness_note;
-    assert!(
-        note.contains("level 9") || note.contains("level-9"),
-        "barbarian partial note must name the level-9 widening: {note}"
-    );
-}

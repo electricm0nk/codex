@@ -77,7 +77,6 @@
 //! control, and the Fighter negative control.
 
 use codex::rules_core::pilot_compute::compute_pilot_base_chassis;
-use codex::rules_core::support_state_matrix::{SupportState, seeded_current_truth};
 use crate::common::{load, explanation, has_explanation};
 
 const PALADIN_LEVEL4_FIXTURE: &str =
@@ -370,23 +369,3 @@ fn paladin_level4_channel_positive_energy_dice_stays_at_2_after_the_level5_widen
 
 // ----- Control plane: the matrix row's note names the level-5 widening -----
 
-#[test]
-fn matrix_paladin_row_names_level_5_widening_and_effective_caster_level() {
-    let matrix = seeded_current_truth();
-    let paladin = matrix
-        .row("class.paladin.hybrid_chassis_and_spell_burden")
-        .expect("paladin row must exist");
-
-    assert_eq!(paladin.support_state, SupportState::Supported);
-    assert!(
-        paladin.grounding_ref.contains("sd13_paladin_level5_progression"),
-        "paladin row must cite the live SD13-E5 level-5 progression proof surface: {}",
-        paladin.grounding_ref
-    );
-    let note = paladin.blocker_or_lossiness_note;
-    assert!(
-        note.to_lowercase().contains("effective caster level")
-            || note.to_lowercase().contains("level 5"),
-        "paladin partial note must name the level-5 widening: {note}"
-    );
-}

@@ -39,9 +39,6 @@
 //! and their fixtures carry no slot-2 selection.
 
 use codex::rules_core::pilot_compute::compute_pilot_base_chassis;
-use codex::rules_core::support_state_matrix::{
-    EvidenceFreshness, EvidenceTier, SupportState, seeded_current_truth,
-};
 mod common;
 use common::load;
 
@@ -203,29 +200,3 @@ fn multiclass_monk_does_not_gain_slot_2_recognition() {
 
 // ----- Control plane: the matrix names the repeat-grant grounding -----
 
-#[test]
-fn matrix_monk_row_names_the_second_bonus_feat_grounding() {
-    let matrix = seeded_current_truth();
-    let monk = matrix
-        .row("class.monk.bounded_progression")
-        .expect("monk bounded_progression row must exist");
-
-    // Later promoted to Supported/ProductVisible by SD-19's Class
-    // Progression Catalog browser UI-surfacing work (2026-07-16).
-    assert_eq!(monk.support_state, SupportState::Supported);
-    assert_eq!(monk.evidence_tier, EvidenceTier::ProductVisible);
-    assert_eq!(
-        monk.evidence_freshness,
-        EvidenceFreshness::RefreshableFromLiveProof
-    );
-    assert!(
-        monk.grounding_ref.contains("sd13_monk_second_bonus_feat"),
-        "monk row must cite the live second-bonus-feat proof surface: {}",
-        monk.grounding_ref
-    );
-    assert!(
-        monk.blocker_or_lossiness_note.contains("bonus_feat_2"),
-        "monk partial note must name the grounded slot-2 record: {}",
-        monk.blocker_or_lossiness_note
-    );
-}

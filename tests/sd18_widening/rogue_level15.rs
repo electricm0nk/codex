@@ -47,9 +47,6 @@
 //! Fighter negative control, and the multiclass negative control.
 
 use codex::rules_core::pilot_compute::compute_pilot_base_chassis;
-use codex::rules_core::support_state_matrix::{
-    EvidenceFreshness, EvidenceTier, SupportState, seeded_current_truth,
-};
 use crate::common::{load, explanation};
 
 const ROGUE_LEVEL14_FIXTURE: &str = include_str!(
@@ -264,19 +261,3 @@ fn multiclass_rogue_level15_is_not_promoted_by_this_slice() {
 
 // ----- Control plane: the matrix note names the level-15 widening -----
 
-#[test]
-fn matrix_rogue_row_names_level_15_widening() {
-    let matrix = seeded_current_truth();
-    let rogue = matrix
-        .row("class.rogue.bounded_progression")
-        .expect("rogue bounded_progression row must exist");
-
-    assert_eq!(rogue.support_state, SupportState::Supported); // promoted by SD-19 Class Progression Catalog browser
-    assert_eq!(rogue.evidence_tier, EvidenceTier::ProductVisible);
-    assert_eq!(rogue.evidence_freshness, EvidenceFreshness::RefreshableFromLiveProof);
-    assert!(
-        rogue.grounding_ref.contains("sd18_rogue_level15_widening"),
-        "matrix grounding_ref must name the level-15 widening test: {}",
-        rogue.grounding_ref
-    );
-}

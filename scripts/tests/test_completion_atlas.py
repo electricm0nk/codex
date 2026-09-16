@@ -225,148 +225,24 @@ class TestMissingClearingMechanisms(unittest.TestCase):
         self.assertEqual(CA._missing_clearing_mechanisms(mutated), ["Z"])
 
 
-class TestCitationFailures(unittest.TestCase):
-    """AT-34-E1-002 condition 6, preserved by AT-35-E1-002: every bucket's
-    content anchor must resolve by search -- exactly once, inside the named
-    function -- and any change to the cited content must fail it."""
+class TestEvidenceSourceIsHistorical(unittest.TestCase):
+    """SD-36 D3: the generator (`src/bin/v06_work_inventory.rs`) is retired
+    and `docs/work-inventory.json` is a permanently frozen snapshot, so the
+    old content-anchor resolution machinery (`resolve_content_anchor`,
+    `_citation_failures`, `resolved_citations`, condition 6) is gone -- there
+    is no live source left to drift-check against. `evidence_source` stays
+    as a prose-only historical record of which generator status/evidence
+    string each bucket keyed on."""
 
-    def test_real_citations_all_resolve_and_match(self):
-        # This is the live acceptance evidence for condition 6: every
-        # bucket's anchor is searched for in the real, current
-        # src/bin/v06_work_inventory.rs on disk -- not assumed.
-        self.assertEqual(CA._citation_failures(), [])
-
-    def test_every_citation_is_a_content_anchor_not_a_line_pin(self):
+    def test_every_bucket_has_an_evidence_source_and_no_citation_key(self):
         for b in CA.BUCKET_ORDER:
-            cite = CA.BUCKET_DEFINITIONS[b]["citation"]
-            self.assertEqual(set(cite), {"file", "context_fn", "anchor"}, b)
-            self.assertNotIn("line", cite, b)
+            definition = CA.BUCKET_DEFINITIONS[b]
+            self.assertTrue(definition.get("evidence_source"), b)
+            self.assertNotIn("citation", definition, b)
 
-    def test_missing_citation_detected(self):
-        mutated = {b: dict(v) for b, v in CA.BUCKET_DEFINITIONS.items()}
-        mutated["A"].pop("citation", None)
-        failures = CA._citation_failures(mutated)
-        self.assertEqual(len(failures), 1)
-        self.assertIn("A", failures[0])
-
-    def test_wrong_function_detected(self):
-        mutated = {b: dict(v) for b, v in CA.BUCKET_DEFINITIONS.items()}
-        mutated["A"]["citation"] = dict(mutated["A"]["citation"])
-        mutated["A"]["citation"]["context_fn"] = "fn_that_does_not_exist_98765"
-        failures = CA._citation_failures(mutated)
-        self.assertEqual(len(failures), 1)
-        self.assertIn("does not resolve", failures[0])
-
-    def test_content_mismatch_detected_even_when_function_resolves(self):
-        # The function resolves (it exists) but no longer contains the cited
-        # content -- proves this asserts on CONTENT, not path/line
-        # (risks-and-open-questions.md §10).
-        mutated = {b: dict(v) for b, v in CA.BUCKET_DEFINITIONS.items()}
-        mutated["A"]["citation"] = dict(mutated["A"]["citation"])
-        mutated["A"]["citation"]["anchor"] = ["this_marker_definitely_does_not_appear_in_classify"]
-        failures = CA._citation_failures(mutated)
-        self.assertEqual(len(failures), 1)
-        self.assertIn("no longer contains", failures[0])
-
-    def test_nonexistent_file_detected(self):
-        mutated = {b: dict(v) for b, v in CA.BUCKET_DEFINITIONS.items()}
-        mutated["A"]["citation"] = {
-            "file": "src/bin/does_not_exist_98765.rs", "context_fn": "classify", "anchor": "x",
-        }
-        failures = CA._citation_failures(mutated)
-        self.assertEqual(len(failures), 1)
-        self.assertIn("does not resolve", failures[0])
-
-    def test_resolved_citations_carry_a_derived_line(self):
-        resolved = CA.resolved_citations()
-        for b in CA.BUCKET_ORDER:
-            self.assertIsInstance(resolved[b]["resolved_line"], int, b)
-            self.assertGreater(resolved[b]["resolved_line"], 0, b)
-
-
-_SYNTHETIC = [
-    "fn other() {",
-    '    status: "grounded",',
-    "}",
-    "",
-    "pub fn simple_kind_verdict(unit: &Unit) -> Verdict {",
-    "    if !text_only {",
-    "        if let Some(bonus) = grounded_magnitude {",
-    "            return Verdict {",
-    '                status: "grounded",',
-    "            };",
-    "        }",
-    "    }",
-    "    return Verdict {",
-    '        status: "grounded",',
-    "    };",
-    "}",
-]
-_SYNTHETIC_CITE = {
-    "file": "src/bin/v06_work_inventory.rs",
-    "context_fn": "simple_kind_verdict",
-    "anchor": [
-        "if let Some(bonus) = grounded_magnitude {",
-        "return Verdict {",
-        'status: "grounded",',
-    ],
-}
-
-
-class TestResolveContentAnchorRedGreen(unittest.TestCase):
-    """AT-35-E1-002's two proofs on synthetic text: moving the cited
-    function 50 lines keeps the anchor green; changing one cited line fails
-    it. Also the two ways an anchor can be wrong without the content
-    changing: ambiguity and a vanished function."""
-
-    def test_resolves_to_the_unique_block_inside_the_named_fn_GREEN(self):
-        r = CA.resolve_content_anchor(_SYNTHETIC_CITE, lines=_SYNTHETIC)
-        self.assertTrue(r["ok"], r)
-        self.assertEqual(r["line"], 7)
-        self.assertEqual(r["end_line"], 9)
-        self.assertEqual(r["fn_line"], 5)
-        self.assertEqual([s.strip() for s in r["source"]], _SYNTHETIC_CITE["anchor"])
-
-    def test_moving_the_function_fifty_lines_stays_GREEN(self):
-        moved = ["// %d" % i for i in range(50)] + _SYNTHETIC
-        r = CA.resolve_content_anchor(_SYNTHETIC_CITE, lines=moved)
-        self.assertTrue(r["ok"], r)
-        self.assertEqual(r["line"], 57)
-
-    def test_changing_one_cited_line_is_RED(self):
-        mutated = list(_SYNTHETIC)
-        mutated[8] = '                status: "text-complete",'
-        r = CA.resolve_content_anchor(_SYNTHETIC_CITE, lines=mutated)
-        self.assertFalse(r["ok"])
-        self.assertIn("no longer contains", r["reason"])
-
-    def test_single_line_anchor_that_occurs_twice_in_the_fn_is_RED_ambiguous(self):
-        cite = dict(_SYNTHETIC_CITE, anchor='status: "grounded",')
-        r = CA.resolve_content_anchor(cite, lines=_SYNTHETIC)
-        self.assertFalse(r["ok"])
-        self.assertIn("ambiguous", r["reason"])
-
-    def test_match_outside_the_named_fn_does_not_count(self):
-        # `fn other` also carries `status: "grounded",` -- only the named
-        # function's body is searched.
-        cite = dict(_SYNTHETIC_CITE, context_fn="other", anchor='status: "grounded",')
-        r = CA.resolve_content_anchor(cite, lines=_SYNTHETIC)
-        self.assertTrue(r["ok"], r)
-        self.assertEqual(r["line"], 2)
-
-    def test_vanished_function_is_RED(self):
-        cite = dict(_SYNTHETIC_CITE, context_fn="simple_kind_verdict_v2")
-        r = CA.resolve_content_anchor(cite, lines=_SYNTHETIC)
-        self.assertFalse(r["ok"])
-        self.assertIn("does not resolve", r["reason"])
-
-    def test_fn_name_is_matched_whole_not_as_a_prefix(self):
-        # `classify` must not match `classify_class_feature_delta(`.
-        lines = ["fn classify_class_feature_delta() {", "    marker();", "}"]
-        cite = {"file": "x.rs", "context_fn": "classify", "anchor": "marker();"}
-        r = CA.resolve_content_anchor(cite, lines=lines)
-        self.assertFalse(r["ok"])
-        self.assertIn("does not resolve", r["reason"])
+    def test_retired_resolution_machinery_is_gone(self):
+        for name in ("resolve_content_anchor", "_citation_failures", "resolved_citations", "read_source_lines"):
+            self.assertFalse(hasattr(CA, name), f"{name} should have been removed with the generator")
 
 
 class TestByKindAndByEvidence(unittest.TestCase):

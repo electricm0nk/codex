@@ -30,9 +30,6 @@
 //! green untouched.
 
 use codex::rules_core::pilot_compute::compute_pilot_base_chassis;
-use codex::rules_core::support_state_matrix::{
-    EvidenceFreshness, EvidenceTier, SupportState, seeded_current_truth,
-};
 mod common;
 use common::load;
 
@@ -172,29 +169,3 @@ fn multiclass_paladin_does_not_gain_mercy_slot_records() {
 
 // ----- Control plane: the matrix names the completed mercy slot family -----
 
-#[test]
-fn matrix_paladin_row_names_the_completed_mercy_family() {
-    let matrix = seeded_current_truth();
-    let paladin = matrix
-        .row("class.paladin.hybrid_chassis_and_spell_burden")
-        .expect("paladin hybrid_chassis_and_spell_burden row must exist");
-
-    assert_eq!(paladin.support_state, SupportState::Supported);
-    assert_eq!(paladin.evidence_tier, EvidenceTier::ProductVisible);
-    assert_eq!(
-        paladin.evidence_freshness,
-        EvidenceFreshness::RefreshableFromLiveProof
-    );
-    assert!(
-        paladin
-            .grounding_ref
-            .contains("sd13_paladin_mercies_two_and_three"),
-        "paladin row must cite the live mercy-slot proof surface: {}",
-        paladin.grounding_ref
-    );
-    assert!(
-        paladin.blocker_or_lossiness_note.contains("mercy_3"),
-        "paladin partial note must name the completed three-slot mercy family: {}",
-        paladin.blocker_or_lossiness_note
-    );
-}

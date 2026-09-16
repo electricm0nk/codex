@@ -77,9 +77,6 @@
 //! Rogue level-11-to-level-12 sibling-fix precedent exactly.
 
 use codex::rules_core::pilot_compute::{PilotBaseChassisComputation, compute_pilot_base_chassis};
-use codex::rules_core::support_state_matrix::{
-    EvidenceFreshness, EvidenceTier, SupportState, seeded_current_truth,
-};
 use crate::common::{load, explanation};
 
 const RANGER_LEVEL11_FIXTURE: &str = include_str!(
@@ -336,27 +333,3 @@ fn multiclass_ranger_level12_is_not_promoted_by_this_slice() {
 
 // ----- Control plane: the matrix note names the level-12 widening -----
 
-#[test]
-fn matrix_ranger_row_names_level_12_widening() {
-    let matrix = seeded_current_truth();
-    let ranger = matrix
-        .row("class.ranger.hybrid_chassis_and_spell_burden")
-        .expect("ranger hybrid_chassis_and_spell_burden row must exist");
-
-    assert_eq!(ranger.support_state, SupportState::Supported);
-    assert_eq!(ranger.evidence_tier, EvidenceTier::ProductVisible);
-    assert_eq!(
-        ranger.evidence_freshness,
-        EvidenceFreshness::RefreshableFromLiveProof
-    );
-    assert!(
-        ranger.grounding_ref.contains("sd18_ranger_level12_widening"),
-        "ranger row must cite the live SD18 level-12 proof surface: {}",
-        ranger.grounding_ref
-    );
-    let note = ranger.blocker_or_lossiness_note;
-    assert!(
-        note.contains("level 12") || note.contains("level-12"),
-        "ranger partial note must name the level-12 widening: {note}"
-    );
-}

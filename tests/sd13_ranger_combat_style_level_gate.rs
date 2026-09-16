@@ -27,7 +27,6 @@
 //! must stay green together.
 
 use codex::rules_core::pilot_compute::compute_pilot_base_chassis;
-use codex::rules_core::support_state_matrix::{seeded_current_truth, SupportState};
 mod common;
 use common::{load, explanation};
 
@@ -98,33 +97,3 @@ fn ranger_level1_combat_style_is_grounded_as_a_correct_level_gate_absence_not_a_
     );
 }
 
-#[test]
-fn matrix_ranger_row_note_no_longer_claims_a_level1_combat_style_choice() {
-    let matrix = seeded_current_truth();
-    let ranger = matrix
-        .row("class.ranger.hybrid_chassis_and_spell_burden")
-        .expect("ranger hybrid row must exist");
-
-    // Later promoted to Supported/ProductVisible by SD-19's Class Progression
-    // Catalog browser UI-surfacing work (2026-07-17).
-    assert_eq!(
-        ranger.support_state,
-        SupportState::Supported,
-        "ranger row must be Supported after the SD-19 class-row promotion"
-    );
-
-    let note = ranger.blocker_or_lossiness_note;
-    assert!(
-        !note.contains("the level-1 style choice and its level-2 bonus-feat grant"),
-        "ranger row note must not resurrect the retired mistaken level-1/level-2 split framing: \
-         {note}"
-    );
-    assert!(
-        note.contains("2nd level") || note.contains("level-2"),
-        "ranger row note must name the corrected 2nd-level combat-style milestone: {note}"
-    );
-    assert!(
-        note.contains("combat style"),
-        "ranger row note must still name the combat-style pillar: {note}"
-    );
-}

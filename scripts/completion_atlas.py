@@ -28,27 +28,28 @@ than a silent invariant.
 for any unit whose `(status, evidence)` pair matches nothing below, and
 `--check` fails closed on that -- `AT-34-E1-002` condition 1.
 
-`AT-34-E1-002` (this cycle) adds the remaining five fail-closed conditions on
-top of AT-34-E1-001's `unclassified`/`overlap` gate:
+`AT-34-E1-002` (this cycle) added four more fail-closed conditions on top of
+AT-34-E1-001's `unclassified`/`overlap` gate:
 
     3. a unit in DONE whose evidence does not support it
     4. a bucket with no named clearing mechanism
     5. a `derived_at` SHA that is not an ancestor of HEAD (staleness gate)
-    6. a bucket whose definition does not cite the source that emits the
-       evidence strings it keys on -- or whose citation no longer resolves,
-       or whose cited *content* changed (content, not path/line --
-       `risks-and-open-questions.md §10`)
 
-Each `BUCKET_DEFINITIONS` entry carries a `citation` that is a CONTENT
-ANCHOR (SD-35 `AT-35-E1-002`): `{file, context_fn, anchor}` -- the exact
-source line(s) that emit the marker/status string the bucket keys on, inside
-a named function of `src/bin/v06_work_inventory.rs`, resolved by search on
-every run (`resolve_content_anchor`). `shape_engine_boundary.py` and
-`missing_engine_tables.py` import the same resolver.
+Condition 6 (a bucket's `citation` content anchor into
+`src/bin/v06_work_inventory.rs` no longer resolving) is RETIRED as of SD-36
+D3: the generator is deleted and `docs/work-inventory.json` is now a frozen
+snapshot (`docs/work-inventory.FROZEN.md`), so there is no live source left
+to drift-check the citation against. `BUCKET_DEFINITIONS`'s `evidence_source`
+field keeps the prose citation of which generator status/evidence string
+each bucket keyed on, as a historical record only -- `resolve_content_anchor`
+and the `citation`/`resolved_line` machinery that used to verify it by
+search are gone (`missing_engine_tables.py` retired the same machinery for
+the same reason; `shape_engine_boundary.py`, the other importer of the old
+resolver, is retired outright).
 
 Output modes:
 
-    --check                 the fail-closed partition + the six conditions
+    --check                 the fail-closed partition + the remaining conditions
     --by-book               one row per book, bucket counts and percentages
     --by-kind [--book B]    one row per kind, bucket counts and percentages
     --by-evidence [--book B] [--bucket X]
@@ -63,7 +64,6 @@ import argparse
 import collections
 import json
 import os
-import re
 import subprocess
 import sys
 
@@ -85,27 +85,20 @@ _C_MARKERS = ("explanation_id", "diagnostic")
 
 _ENGINE_SRC = "src/bin/v06_work_inventory.rs"
 
-# --- content anchors (SD-35 AT-35-E1-002) -----------------------------------
+# --- content anchors: RETIRED (SD-36 D3) ------------------------------------
 #
-# Every bucket cites the source that emits the evidence/status string it keys
-# on as a CONTENT ANCHOR, not a `file:line` pin: `{file, context_fn, anchor}`
-# where `anchor` is the exact source line(s) -- stripped of indentation --
-# that must appear, consecutively and exactly once, inside the body of the
-# named function. `resolve_content_anchor` searches for it at check time, so
-# a refactor that moves the code keeps the citation green and any change to
-# the cited content (or a second copy of it, or the function vanishing)
-# still fails closed -- SD-34 AT-34-E1-002 condition 6, preserved.
-#
-# Why: the `file:line` pins this block carried before were re-derived by hand
-# in eleven separate SD-34 waves (32, 33, 35, 38, 40, 44, 45, 46, 47, 48, 50),
-# went silently stale twice on a doc-comment that happened to contain the
-# bare marker substring, and were found drifted at HEAD by wave 51 -- every
-# edit to `v06_work_inventory.rs` shifted them. `git log -p` on this file
-# keeps that history; it no longer needs to live here. The multi-line anchors
-# below are the minimum that is unique inside the named function (e.g.
-# `status: "grounded",` appears twice in `simple_kind_verdict`, so DONE's
-# anchor carries the `if let Some(bonus) = grounded_magnitude {` line above
-# its construction site).
+# Each bucket used to carry a `citation` CONTENT ANCHOR (SD-35 AT-35-E1-002):
+# `{file, context_fn, anchor}` naming the exact source line(s) in
+# `_ENGINE_SRC` that emitted the evidence/status string it keys on, resolved
+# by search at check time (`resolve_content_anchor`, AT-34-E1-002 condition
+# 6). `_ENGINE_SRC` (the generator) is deleted and `docs/work-inventory.json`
+# is now a permanently frozen snapshot (`docs/work-inventory.FROZEN.md`), so
+# there is nothing left to drift-check the citation against -- the anchors,
+# the resolver, and condition 6 are gone. `evidence_source` below keeps the
+# prose citation of which generator status/evidence string each bucket keyed
+# on, as a historical record only. `git log -p` on this file keeps the full
+# eleven-wave drift history the content anchors themselves were built to
+# stop repeating.
 
 BUCKET_DEFINITIONS = {
     "DONE": {
@@ -115,17 +108,6 @@ BUCKET_DEFINITIONS = {
             "src/bin/v06_work_inventory.rs (status in {grounded, text-complete, "
             "oracle-agree, oracle-unverifiable, sheet-complete})"
         ),
-        # The `grounded` construction site in `simple_kind_verdict` (one of
-        # the two DONE statuses): the fixture-verified magnitude arm.
-        "citation": {
-            "file": _ENGINE_SRC,
-            "context_fn": "simple_kind_verdict",
-            "anchor": [
-                "if let Some(bonus) = grounded_magnitude {",
-                "return Verdict {",
-                'status: "grounded",',
-            ],
-        },
     },
     "A": {
         "meaning": "engine has no table for this kind",
@@ -134,15 +116,6 @@ BUCKET_DEFINITIONS = {
             "src/bin/v06_work_inventory.rs "
             "(evidence contains 'has_no_engine_table')"
         ),
-        # The `companion` arm emitting the bucket-A marker in `classify`
-        # (the same site `missing_engine_tables.py` cites for `companion`).
-        "citation": {
-            "file": _ENGINE_SRC,
-            "context_fn": "classify",
-            "anchor": [
-                'Kind::Companion => engine_does_not_hold("companion_content_has_no_engine_table"),',
-            ],
-        },
     },
     "B": {
         "meaning": "table exists, record not in it",
@@ -151,15 +124,6 @@ BUCKET_DEFINITIONS = {
             "src/bin/v06_work_inventory.rs "
             "(evidence contains 'not_held_by_engine' / 'absent_from' / 'not_modelled')"
         ),
-        # The class-feature option-pool `not_held_by_engine` emission in
-        # `classify`.
-        "citation": {
-            "file": _ENGINE_SRC,
-            "context_fn": "classify",
-            "anchor": [
-                'return engine_does_not_hold("class_feature_option_pool_record_not_held_by_engine");',
-            ],
-        },
     },
     "C": {
         "meaning": "held and computed, never surfaced",
@@ -168,105 +132,36 @@ BUCKET_DEFINITIONS = {
             "src/bin/v06_work_inventory.rs "
             "(evidence contains 'explanation_id' / 'diagnostic')"
         ),
-        # The class-feature fallthrough naming both `explanation_id` and
-        # `diagnostic` in `classify`.
-        "citation": {
-            "file": _ENGINE_SRC,
-            "context_fn": "classify",
-            "anchor": [
-                'engine_does_not_hold("no_explanation_id_and_no_diagnostic_names_this_feature")',
-            ],
-        },
     },
     "D": {
         "meaning": "other engine gap (sub-causes enumerated, never a shrug)",
         "clears": "per named sub-cause",
         "evidence_source": "src/bin/v06_work_inventory.rs (status == engine-does-not-hold, no other bucket matched)",
-        # The shared `engine_does_not_hold` closure in `classify` that stamps
-        # `status: "engine-does-not-hold"` for every arm that falls through
-        # A/B/C -- this IS the D fallthrough.
-        "citation": {
-            "file": _ENGINE_SRC,
-            "context_fn": "classify",
-            "anchor": [
-                "let engine_does_not_hold = |evidence: &str| Verdict {",
-                'status: "engine-does-not-hold",',
-            ],
-        },
     },
     "M": {
         "meaning": "magnitude ingested, never computed or applied",
         "clears": "running the compute path (shape engine)",
         "evidence_source": "src/bin/v06_work_inventory.rs (status == ingested-magnitude)",
-        # The `ingested-magnitude` construction site in `simple_kind_verdict`
-        # (a held record whose magnitude the compute path has not run).
-        "citation": {
-            "file": _ENGINE_SRC,
-            "context_fn": "simple_kind_verdict",
-            "anchor": [
-                'status: "ingested-magnitude",',
-                'evidence: format!("{kind_label}_table_holds_record_magnitude_not_yet_computed"),',
-            ],
-        },
     },
     "V": {
         "meaning": "verified by proxy, never by the oracle",
         "clears": "the SD-33 oracle harness (scripts/oracle_harness/)",
         "evidence_source": "src/bin/v06_work_inventory.rs (status in {literal-verified, fixture-verified})",
-        # The `literal-verified` stamp in `apply_done_rung_stamps` (one of the
-        # two V statuses).
-        "citation": {
-            "file": _ENGINE_SRC,
-            "context_fn": "apply_done_rung_stamps",
-            "anchor": [
-                'item.verdict.status = "literal-verified";',
-            ],
-        },
     },
     "U": {
         "meaning": "instrument cannot express a verdict",
         "clears": "instrument correction",
         "evidence_source": "src/bin/v06_work_inventory.rs (status == unmeasurable)",
-        # The first `unmeasurable` construction site in `classify`: a feat
-        # whose served description is an upstream marker string, not prose.
-        "citation": {
-            "file": _ENGINE_SRC,
-            "context_fn": "classify",
-            "anchor": [
-                'status: "unmeasurable",',
-                'evidence: "feat_served_description_is_a_placeholder_marker_not_prose".to_string(),',
-            ],
-        },
     },
     "X": {
         "meaning": "deferred with a stated reason",
         "clears": "revisiting the stated condition",
         "evidence_source": "src/bin/v06_work_inventory.rs (status == deferred-with-reason)",
-        # The first `deferred-with-reason` construction site in `classify`:
-        # the Ultimate Campaign feat-table diagnostic.
-        "citation": {
-            "file": _ENGINE_SRC,
-            "context_fn": "classify",
-            "anchor": [
-                'status: "deferred-with-reason",',
-                'evidence: "engine_diagnostic:ultimate_campaign::feat_tables::DEFERRED_WITH_REASON"',
-            ],
-        },
     },
     "Z": {
         "meaning": "not started",
         "clears": "ordinary work",
         "evidence_source": "src/bin/v06_work_inventory.rs (status == not-started)",
-        # The only `not-started` construction site: a book with no compiled
-        # rule set, in `classify`.
-        "citation": {
-            "file": _ENGINE_SRC,
-            "context_fn": "classify",
-            "anchor": [
-                'status: "not-started",',
-                'evidence: "no_compiled_rule_set_for_book".to_string(),',
-            ],
-        },
     },
 }
 
@@ -421,144 +316,6 @@ def _missing_clearing_mechanisms(definitions: dict = BUCKET_DEFINITIONS) -> list
     return [b for b in BUCKET_ORDER if not definitions.get(b, {}).get("clears")]
 
 
-def read_source_lines(rel_path: str, repo_root: str = REPO_ROOT) -> "list[str] | None":
-    """The cited file's lines (newlines stripped), or None when it is absent."""
-    abs_path = os.path.join(repo_root, rel_path)
-    try:
-        with open(abs_path, "r", encoding="utf-8") as fh:
-            return fh.read().split("\n")
-    except OSError:
-        return None
-
-
-# A Rust function definition line: optional visibility / qualifiers, then
-# `fn <name>` followed by its generics or parameter list. `classify(` is
-# matched; `classify_class_feature_delta(` is not.
-_FN_DEF_RE = re.compile(
-    r"^(?P<indent>\s*)(?:pub(?:\([^)]*\))?\s+)?(?:(?:const|async|unsafe|extern\s+\"[^\"]*\")\s+)*"
-    r"fn\s+(?P<name>[A-Za-z_][A-Za-z0-9_]*)\s*[<(]"
-)
-
-
-def _fn_extents(lines: list, fn_name: str) -> list:
-    """Every `(start, end)` 0-indexed inclusive line span whose `fn fn_name`
-    definition opens it and whose closing `}` sits at the definition's own
-    indentation -- rustfmt's invariant, which `v06_work_inventory.rs` is
-    formatted under. A body that never closes runs to end of file."""
-    extents = []
-    for i, line in enumerate(lines):
-        m = _FN_DEF_RE.match(line)
-        if not m or m.group("name") != fn_name:
-            continue
-        indent = m.group("indent")
-        end = len(lines) - 1
-        for j in range(i + 1, len(lines)):
-            if lines[j] == indent + "}":
-                end = j
-                break
-        extents.append((i, end))
-    return extents
-
-
-def resolve_content_anchor(citation: dict, lines: "list[str] | None" = None,
-                           repo_root: str = REPO_ROOT) -> dict:
-    """Resolve a content anchor `{file, context_fn, anchor}` by search.
-
-    `anchor` is one line or a list of consecutive lines, compared after
-    stripping indentation. The anchor must occur EXACTLY ONCE inside the body
-    of `context_fn` (searched across every definition of that name). Returns
-    `{"ok": True, "line": <1-indexed first line>, "end_line": <1-indexed last
-    line>, "fn_line": <1-indexed fn definition line>, "source": [<the matched
-    lines as written>]}` or `{"ok": False, "reason": <why>}`.
-
-    A refactor that MOVES the function or the block keeps the anchor green; a
-    change to any cited line, a second copy of the block inside the function,
-    or the function/file disappearing fails closed (SD-34 AT-34-E1-002
-    condition 6, preserved by SD-35 AT-35-E1-002).
-
-    `lines` lets a caller (a test) resolve against text it supplies instead
-    of the file on disk."""
-    rel_path = citation.get("file")
-    fn_name = citation.get("context_fn")
-    anchor = citation.get("anchor")
-    if isinstance(anchor, str):
-        anchor = [anchor]
-    if not rel_path or not fn_name or not anchor:
-        return {"ok": False, "reason": "citation is missing file, context_fn, or anchor"}
-    wanted = [a.strip() for a in anchor]
-    if any(not w for w in wanted):
-        return {"ok": False, "reason": "anchor contains an empty line"}
-
-    if lines is None:
-        lines = read_source_lines(rel_path, repo_root)
-    if lines is None:
-        return {"ok": False, "reason": f"{rel_path} does not resolve (file not found)"}
-
-    extents = _fn_extents(lines, fn_name)
-    if not extents:
-        return {"ok": False, "reason": f"{rel_path}: fn {fn_name} does not resolve (no definition found)"}
-
-    hits = []
-    n = len(wanted)
-    for start, end in extents:
-        for i in range(start, end - n + 2):
-            if all(lines[i + k].strip() == wanted[k] for k in range(n)):
-                hits.append((start, i))
-    if not hits:
-        return {
-            "ok": False,
-            "reason": f"{rel_path}: fn {fn_name} no longer contains {wanted!r}",
-        }
-    if len(hits) > 1:
-        return {
-            "ok": False,
-            "reason": (
-                f"{rel_path}: fn {fn_name} contains {wanted!r} {len(hits)} times "
-                f"(lines {[h[1] + 1 for h in hits]}) -- ambiguous, lengthen the anchor"
-            ),
-        }
-    fn_start, i = hits[0]
-    return {
-        "ok": True,
-        "line": i + 1,
-        "end_line": i + n,
-        "fn_line": fn_start + 1,
-        "source": lines[i:i + n],
-    }
-
-
-def _citation_failures(definitions: dict = BUCKET_DEFINITIONS) -> list:
-    """Condition 6. Every bucket must cite, as a content anchor, the source
-    that emits the evidence string it keys on, and that anchor must resolve
-    by search at HEAD -- exactly once, inside the named function, with the
-    cited lines' CONTENT unchanged (`risks-and-open-questions.md §10`)."""
-    failures = []
-    for b in BUCKET_ORDER:
-        citation = definitions.get(b, {}).get("citation")
-        if not citation:
-            failures.append(f"{b}: no citation")
-            continue
-        resolved = resolve_content_anchor(citation)
-        if not resolved["ok"]:
-            failures.append(f"{b}: {resolved['reason']}")
-    return failures
-
-
-def resolved_citations(definitions: dict = BUCKET_DEFINITIONS) -> dict:
-    """Each bucket's citation with the line it resolved to at check time
-    (`resolved_line` is derived, never pinned; None when unresolved)."""
-    out = {}
-    for b in BUCKET_ORDER:
-        citation = definitions.get(b, {}).get("citation")
-        if not citation:
-            out[b] = None
-            continue
-        resolved = resolve_content_anchor(citation)
-        out[b] = dict(citation)
-        out[b]["resolved_line"] = resolved["line"] if resolved["ok"] else None
-    return out
-
-
 def _is_ancestor(sha: "str | None") -> bool:
     if not sha or sha == "unknown":
         return False
@@ -608,7 +365,6 @@ def cmd_check(args) -> int:
         staleness = _staleness_violation()
         done_violations = _done_evidence_violations(units)
         missing_clears = _missing_clearing_mechanisms()
-        citation_failures = _citation_failures()
 
         print(
             f"population={population} buckets={len(BUCKET_ORDER)} "
@@ -619,19 +375,15 @@ def cmd_check(args) -> int:
         print(f"done_evidence_violations={len(done_violations)}")
         print(f"missing_clearing_mechanisms={len(missing_clears)}")
         print(f"stale_derived_at={'True' if staleness else 'False'}")
-        print(f"citation_failures={len(citation_failures)}")
         if staleness:
             print(f"  staleness: {staleness}")
         for uid in done_violations[:20]:
             print(f"  done_evidence_violation: {uid}")
         for b in missing_clears:
             print(f"  missing_clearing_mechanism: {b}")
-        for f in citation_failures:
-            print(f"  citation_failure: {f}")
 
         d_causes = _sub_causes(units, "D")
         u_causes = _sub_causes(units, "U")
-        citations = resolved_citations()
         artifact = {
             "population": population,
             "derived_at": _head_sha(),
@@ -641,7 +393,6 @@ def cmd_check(args) -> int:
                     "meaning": BUCKET_DEFINITIONS[b]["meaning"],
                     "clears": BUCKET_DEFINITIONS[b]["clears"],
                     "evidence_source": BUCKET_DEFINITIONS[b]["evidence_source"],
-                    "citation": citations[b],
                 }
                 for b in BUCKET_ORDER
             },
@@ -650,7 +401,6 @@ def cmd_check(args) -> int:
             "done_evidence_violations": len(done_violations),
             "done_evidence_violation_ids": done_violations,
             "missing_clearing_mechanisms": missing_clears,
-            "citation_failures": citation_failures,
             "stale_derived_at": bool(staleness),
             "sub_causes": {
                 "D": dict(d_causes.most_common()) if d_causes else {},
@@ -669,7 +419,6 @@ def cmd_check(args) -> int:
             or done_violations
             or missing_clears
             or staleness
-            or citation_failures
         ):
             return 1
         return 0

@@ -26,7 +26,6 @@
 //! (grounded by earlier SD13-E4/E5 slices) are unaffected.
 
 use codex::rules_core::pilot_compute::compute_pilot_base_chassis;
-use codex::rules_core::support_state_matrix::{SupportState, seeded_current_truth};
 mod common;
 use common::{load, explanation, has_explanation};
 
@@ -288,30 +287,3 @@ fn fighter_and_barbarian_do_not_gain_druid_base_attack_or_save_grounding() {
 
 // ----- Control plane: the matrix row's note names the newly grounded pillar -----
 
-#[test]
-fn matrix_druid_row_note_names_base_attack_and_base_save_as_grounded() {
-    let matrix = seeded_current_truth();
-    let druid = matrix
-        .row("class.druid.progression_and_spell_burden")
-        .expect("druid row must exist");
-
-    // Later promoted to Supported/ProductVisible by SD-19's Class
-    // Progression Catalog browser UI-surfacing work (2026-07-16).
-    assert_eq!(druid.support_state, SupportState::Supported);
-    for token in ["base attack", "base save", "standalone"] {
-        assert!(
-            druid.blocker_or_lossiness_note.contains(token),
-            "druid blocker note must name '{token}' now that base attack/base save are \
-             grounded: {}",
-            druid.blocker_or_lossiness_note
-        );
-    }
-    // The still-unproven burdens stay named.
-    for token in ["animal companion", "prepared"] {
-        assert!(
-            druid.blocker_or_lossiness_note.contains(token),
-            "druid blocker note must still name the unproven '{token}' burden: {}",
-            druid.blocker_or_lossiness_note
-        );
-    }
-}

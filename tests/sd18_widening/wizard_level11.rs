@@ -50,9 +50,6 @@
 //! the Fighter negative control, and the multiclass negative control.
 
 use codex::rules_core::pilot_compute::compute_pilot_base_chassis;
-use codex::rules_core::support_state_matrix::{
-    EvidenceFreshness, EvidenceTier, SupportState, seeded_current_truth,
-};
 use crate::common::{load, explanation};
 
 const WIZARD_LEVEL10_FIXTURE: &str =
@@ -287,24 +284,3 @@ fn multiclass_wizard_level11_is_not_promoted_by_this_slice() {
 
 // ----- Control plane: the matrix note names the level-11 widening -----
 
-#[test]
-fn matrix_wizard_row_names_level_11_widening() {
-    let matrix = seeded_current_truth();
-    let wizard = matrix
-        .row("class.wizard.progression_and_spell_burden")
-        .expect("wizard progression_and_spell_burden row must exist");
-
-    assert_eq!(wizard.support_state, SupportState::Supported); // Later promoted to Supported/ProductVisible by SD-19's Class Progression Catalog browser UI-surfacing work (2026-07-17).
-    assert_eq!(wizard.evidence_tier, EvidenceTier::ProductVisible);
-    assert_eq!(wizard.evidence_freshness, EvidenceFreshness::RefreshableFromLiveProof);
-    assert!(
-        wizard.grounding_ref.contains("sd18_wizard_level11_widening"),
-        "wizard row must cite the live SD18 level-11 widening proof surface: {}",
-        wizard.grounding_ref
-    );
-    let note = wizard.blocker_or_lossiness_note;
-    assert!(
-        note.contains("level 11") || note.contains("level-11"),
-        "wizard partial note must name the level-11 widening: {note}"
-    );
-}

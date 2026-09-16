@@ -56,6 +56,5 @@ pub mod settled_corpus;
 pub mod spell_record;
 pub mod spell_resolver;
 pub mod spellbook;
-pub mod support_state_matrix;
 pub mod trait_effects;
 pub mod trait_pool;

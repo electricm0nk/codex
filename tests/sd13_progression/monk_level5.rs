@@ -71,9 +71,6 @@
 //! negative control, and the multiclass negative control.
 
 use codex::rules_core::pilot_compute::compute_pilot_base_chassis;
-use codex::rules_core::support_state_matrix::{
-    EvidenceFreshness, EvidenceTier, SupportState, seeded_current_truth,
-};
 use crate::common::{load, explanation, has_explanation};
 
 const MONK_LEVEL4_FIXTURE: &str =
@@ -445,37 +442,3 @@ fn multiclass_monk_level5_is_not_promoted_by_this_slice() {
 
 // ----- Control plane: the matrix note names the level-5 widening and Purity of Body -----
 
-#[test]
-fn matrix_monk_row_names_level_5_widening_and_purity_of_body() {
-    let matrix = seeded_current_truth();
-    let monk = matrix
-        .row("class.monk.bounded_progression")
-        .expect("monk bounded_progression row must exist");
-
-    // Later promoted to Supported/ProductVisible by SD-19's Class
-    // Progression Catalog browser UI-surfacing work (2026-07-16).
-    assert_eq!(monk.support_state, SupportState::Supported);
-    assert_eq!(monk.evidence_tier, EvidenceTier::ProductVisible);
-    assert_eq!(
-        monk.evidence_freshness,
-        EvidenceFreshness::RefreshableFromLiveProof
-    );
-    assert!(
-        monk.grounding_ref.contains("sd13_monk_level5_progression"),
-        "monk row must cite the live SD13-E5 level-5 proof surface: {}",
-        monk.grounding_ref
-    );
-    let note = monk.blocker_or_lossiness_note;
-    assert!(
-        note.to_lowercase().contains("purity of body"),
-        "monk partial note must name Purity of Body as newly grounded: {note}"
-    );
-    assert!(
-        note.to_lowercase().contains("high jump"),
-        "monk partial note must name High Jump as checked and confirmed not flat: {note}"
-    );
-    assert!(
-        note.contains("bonus feat"),
-        "monk partial note must keep naming the bonus feat's own mechanics as unproven: {note}"
-    );
-}

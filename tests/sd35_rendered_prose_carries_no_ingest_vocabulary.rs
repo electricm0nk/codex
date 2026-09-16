@@ -40,7 +40,9 @@ const SCANNED: &[&str] = &[
     "src/rules_core/pilot_compute/class_slayer.rs",
     "src/rules_core/pilot_compute/class_ultimate_combat.rs",
     "src/rules_core/derived_evaluator_fixture_check.rs",
-    "src/rules_core/support_state_matrix.rs",
+    // SD-36 D3: src/rules_core/support_state_matrix.rs (formerly scanned
+    // here) is retired -- the generator it fed and the debt/audit panels
+    // that read it are gone, so there is no more shipped prose to scan.
     // Cycle 11. The shipped content tables are prose this engine writes to a
     // sheet just as much as an explanation string is: `description` is printed
     // verbatim and `description_variables` supplies the words `%1`/`%2` are

@@ -51,9 +51,6 @@
 //! Fighter negative control, and the multiclass negative control.
 
 use codex::rules_core::pilot_compute::compute_pilot_base_chassis;
-use codex::rules_core::support_state_matrix::{
-    EvidenceFreshness, EvidenceTier, SupportState, seeded_current_truth,
-};
 use crate::common::{load, explanation};
 
 const MONK_LEVEL8_FIXTURE: &str =
@@ -330,29 +327,3 @@ fn multiclass_monk_level9_is_not_promoted_by_this_slice() {
 
 // ----- Control plane: the matrix note names the level-9 widening -----
 
-#[test]
-fn matrix_monk_row_names_level_9_widening() {
-    let matrix = seeded_current_truth();
-    let monk = matrix
-        .row("class.monk.bounded_progression")
-        .expect("monk bounded_progression row must exist");
-
-    // Later promoted to Supported/ProductVisible by SD-19's Class
-    // Progression Catalog browser UI-surfacing work (2026-07-16).
-    assert_eq!(monk.support_state, SupportState::Supported);
-    assert_eq!(monk.evidence_tier, EvidenceTier::ProductVisible);
-    assert_eq!(
-        monk.evidence_freshness,
-        EvidenceFreshness::RefreshableFromLiveProof
-    );
-    assert!(
-        monk.grounding_ref.contains("sd13_monk_level9_progression"),
-        "monk row must cite the live SD13-E5 level-9 proof surface: {}",
-        monk.grounding_ref
-    );
-    let note = monk.blocker_or_lossiness_note;
-    assert!(
-        note.contains("level 9") || note.contains("level-9"),
-        "monk partial note must name the level-9 widening: {note}"
-    );
-}

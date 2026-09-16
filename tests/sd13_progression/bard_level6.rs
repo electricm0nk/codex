@@ -62,9 +62,6 @@
 //! control, and the multiclass negative control.
 
 use codex::rules_core::pilot_compute::{ComputationExplanation, compute_pilot_base_chassis};
-use codex::rules_core::support_state_matrix::{
-    EvidenceFreshness, EvidenceTier, SupportState, seeded_current_truth,
-};
 use crate::common::{load, explanation};
 
 const BARD_LEVEL5_FIXTURE: &str =
@@ -519,29 +516,3 @@ fn multiclass_bard_level6_is_not_promoted_by_this_slice() {
 
 // ----- Control plane: the matrix note names the level-6 widening -----
 
-#[test]
-fn matrix_bard_row_names_level_6_widening() {
-    let matrix = seeded_current_truth();
-    let bard = matrix
-        .row("class.bard.progression_and_spell_burden")
-        .expect("bard progression_and_spell_burden row must exist");
-
-    assert_eq!(bard.support_state, SupportState::Supported);
-    assert_eq!(bard.evidence_tier, EvidenceTier::ProductVisible);
-    assert_eq!(bard.evidence_freshness, EvidenceFreshness::RefreshableFromLiveProof);
-    assert!(
-        bard.grounding_ref.contains("sd13_bard_level6_progression"),
-        "bard row must cite the live SD13-E5 level-6 proof surface: {}",
-        bard.grounding_ref
-    );
-    let note = bard.blocker_or_lossiness_note;
-    assert!(
-        note.contains("level 6") || note.contains("level-6"),
-        "bard partial note must name the level-6 widening: {note}"
-    );
-    assert!(
-        note.contains("Suggestion") || note.contains("suggestion"),
-        "bard partial note must name the newly checked, confirmed-not-flat Suggestion feature: \
-         {note}"
-    );
-}

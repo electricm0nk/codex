@@ -30,9 +30,6 @@
 //! negative controls are preserved.
 
 use codex::rules_core::pilot_compute::compute_pilot_base_chassis;
-use codex::rules_core::support_state_matrix::{
-    EvidenceFreshness, EvidenceTier, SupportState, seeded_current_truth,
-};
 mod common;
 use common::load;
 
@@ -190,33 +187,3 @@ fn multiclass_barbarian_does_not_gain_rage_power_records() {
 
 // ----- Control plane: the matrix names the completed slot family -----
 
-#[test]
-fn matrix_barbarian_row_names_the_completed_rage_power_family() {
-    let matrix = seeded_current_truth();
-    let barbarian = matrix
-        .row("class.barbarian.bounded_progression")
-        .expect("barbarian bounded_progression row must exist");
-
-    // Later promoted to Supported/ProductVisible by SD-19's Class
-    // Progression Catalog browser UI-surfacing work (2026-07-16).
-    assert_eq!(barbarian.support_state, SupportState::Supported);
-    assert_eq!(barbarian.evidence_tier, EvidenceTier::ProductVisible);
-    assert_eq!(
-        barbarian.evidence_freshness,
-        EvidenceFreshness::RefreshableFromLiveProof
-    );
-    assert!(
-        barbarian
-            .grounding_ref
-            .contains("sd13_barbarian_rage_power_slots"),
-        "barbarian row must cite the live rage-power-slot proof surface: {}",
-        barbarian.grounding_ref
-    );
-    assert!(
-        barbarian
-            .blocker_or_lossiness_note
-            .contains("rage_power_5"),
-        "barbarian partial note must name the completed five-slot family: {}",
-        barbarian.blocker_or_lossiness_note
-    );
-}

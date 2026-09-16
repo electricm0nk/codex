@@ -57,9 +57,6 @@
 //! control, and the multiclass negative control.
 
 use codex::rules_core::pilot_compute::compute_pilot_base_chassis;
-use codex::rules_core::support_state_matrix::{
-    EvidenceFreshness, EvidenceTier, SupportState, seeded_current_truth,
-};
 use crate::common::{load, explanation, has_explanation};
 
 const CLERIC_LEVEL5_FIXTURE: &str =
@@ -355,33 +352,3 @@ fn multiclass_cleric_level6_is_not_promoted_by_this_slice() {
 
 // ----- Control plane: the matrix note names the level-6 widening -----
 
-#[test]
-fn matrix_cleric_row_names_level_6_widening_and_touch_of_good_increase() {
-    let matrix = seeded_current_truth();
-    let cleric = matrix
-        .row("class.cleric.progression_and_spell_burden")
-        .expect("cleric progression_and_spell_burden row must exist");
-
-    // Later promoted to Supported/ProductVisible by SD-19's Class Progression
-    // Catalog browser UI-surfacing work (2026-07-16).
-    assert_eq!(cleric.support_state, SupportState::Supported);
-    assert_eq!(cleric.evidence_tier, EvidenceTier::ProductVisible);
-    assert_eq!(
-        cleric.evidence_freshness,
-        EvidenceFreshness::RefreshableFromLiveProof
-    );
-    assert!(
-        cleric.grounding_ref.contains("sd13_cleric_level6_progression"),
-        "cleric row must cite the live SD13-E5 level-6 proof surface: {}",
-        cleric.grounding_ref
-    );
-    let note = cleric.blocker_or_lossiness_note;
-    assert!(
-        note.contains("level 6") || note.contains("level-6"),
-        "cleric partial note must name the level-6 widening: {note}"
-    );
-    assert!(
-        note.contains("Touch of Good") || note.contains("touch of good"),
-        "cleric partial note must name the level-6 Touch of Good increase: {note}"
-    );
-}

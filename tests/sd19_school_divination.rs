@@ -29,9 +29,6 @@ use codex::rules_core::rules_tables::RuleSetId;
 use codex::rules_core::rules_tables::crb::spell_list::Pf1SchoolId;
 use codex::rules_core::source_content::{SourcePackageContent, SourceRef};
 use codex::rules_core::spell_resolver::spell_id_resolve;
-use codex::rules_core::support_state_matrix::{
-    EvidenceTier, MatrixSubjectType, SupportState, seeded_current_truth,
-};
 
 fn corpus_root() -> Option<PathBuf> {
     match std::env::var("CORPUS_ROOT") {
@@ -191,24 +188,3 @@ fn every_divination_spell_resolves_and_reaches_school_coverage() {
     );
 }
 
-#[test]
-fn divination_matrix_row_reflects_the_grounded_reachability_proof() {
-    let matrix = seeded_current_truth();
-    let row = matrix
-        .rows
-        .iter()
-        .find(|r| r.subject_type == MatrixSubjectType::School(Pf1SchoolId::Divination))
-        .expect("expected a School(Divination) row in the seeded matrix");
-
-    assert_eq!(row.support_state, SupportState::Supported);
-    assert_eq!(row.evidence_tier, EvidenceTier::ProductVisible);
-    assert!(
-        row.grounding_ref.contains("sd19_school_divination"),
-        "expected the row's grounding_ref to cite this cycle's proof test, got: {}",
-        row.grounding_ref
-    );
-    assert!(
-        !row.blocker_or_lossiness_note.is_empty(),
-        "expected a non-empty blocker_or_lossiness_note on a Partial row"
-    );
-}

@@ -11,9 +11,6 @@
 //! save, and no leakage onto non-Fighter classes.
 
 use codex::rules_core::pilot_compute::compute_pilot_base_chassis;
-use codex::rules_core::support_state_matrix::{
-    EvidenceTier, SupportState, seeded_current_truth,
-};
 mod common;
 use common::{load, explanation, has_explanation};
 
@@ -178,90 +175,3 @@ fn non_fighter_class_does_not_leak_bravery_seam() {
 
 // ----- Control plane: the matrix names Bravery as grounded, not unproven -----
 
-#[test]
-fn matrix_levels_2_10_names_bravery_as_grounded() {
-    let matrix = seeded_current_truth();
-    let row = matrix
-        .row("class.fighter.levels_2_10")
-        .expect("row must exist");
-
-    // Later promoted to Supported/ProductVisible by SD-19's Class
-    // Progression Catalog browser UI-surfacing work (2026-07-16).
-    assert_eq!(row.support_state, SupportState::Supported);
-    assert_eq!(row.evidence_tier, EvidenceTier::ProductVisible);
-    assert!(
-        row.blocker_or_lossiness_note.contains("Bravery"),
-        "levels-2-10 row note must still name Bravery: {}",
-        row.blocker_or_lossiness_note
-    );
-    assert!(
-        !row.blocker_or_lossiness_note
-            .contains("Bravery stays unproven"),
-        "levels-2-10 row must drop the now-false 'Bravery stays unproven' claim: {}",
-        row.blocker_or_lossiness_note
-    );
-    // The Weapon Training damage-roll half and the general feat-effect engine
-    // must remain honestly named as still-unproven.
-    assert!(
-        row.blocker_or_lossiness_note.contains("damage"),
-        "levels-2-10 row must keep naming the unproven Weapon Training damage-roll half: {}",
-        row.blocker_or_lossiness_note
-    );
-}
-
-#[test]
-fn matrix_preserves_fighter_level_1_and_other_accepted_rows() {
-    let matrix = seeded_current_truth();
-
-    let level_1 = matrix
-        .row("class.fighter.level_1_pilot")
-        .expect("level-1 row must exist");
-    // Later promoted to Supported/ProductVisible by SD-19's Class
-    // Progression Catalog browser UI-surfacing work (2026-07-16).
-    assert_eq!(level_1.support_state, SupportState::Supported);
-
-    assert!(
-        !matrix
-            .rows
-            .iter()
-            // school.abjuration/illusion.spell_reachability were later promoted to
-            // Supported/Product-visible by SD-19's operator-driven UI-surfacing work
-            // (2026-07-16) -- excluded here, not an unintended promotion by this slice.
-            .any(|r| (r.support_state == SupportState::Supported
-                && r.row_id != "school.abjuration.spell_reachability"
-                && r.row_id != "school.illusion.spell_reachability"
-                && r.row_id != "school.conjuration.spell_reachability"
-                && r.row_id != "school.divination.spell_reachability"
-                && r.row_id != "school.enchantment.spell_reachability"
-                && r.row_id != "school.evocation.spell_reachability"
-                && r.row_id != "school.necromancy.spell_reachability"
-                && r.row_id != "school.transmutation.spell_reachability"
-                && r.row_id != "school.universal.spell_reachability"
-                && r.row_id != "equipment.arms_armor.equipment_reachability"
-                && r.row_id != "equipment.general.equipment_reachability"
-                && r.row_id != "equipment.magic_items.equipment_reachability"
-                && r.row_id != "race.human.pilot_semantics"
-                && r.row_id != "race.dwarf.bounded_semantics"
-                && r.row_id != "race.elf.bounded_semantics"
-                && r.row_id != "race.gnome.bounded_semantics"
-                && r.row_id != "race.half_elf.bounded_semantics"
-                && r.row_id != "race.half_orc.bounded_semantics"
-                && r.row_id != "race.halfling.bounded_semantics"
-                && r.row_id != "class.fighter.level_1_pilot"
-                && r.row_id != "class.fighter.levels_2_10"
-                && r.row_id != "class.monk.bounded_progression"
-                && r.row_id != "class.druid.progression_and_spell_burden"
-                && r.row_id != "class.barbarian.bounded_progression"
-                && r.row_id != "class.cleric.progression_and_spell_burden"
-                && r.row_id != "class.wizard.progression_and_spell_burden"
-                && r.row_id != "class.rogue.bounded_progression"
-                && r.row_id != "class.sorcerer.progression_and_spell_burden"
-                && r.row_id != "class.bard.progression_and_spell_burden"
-                && r.row_id != "class.paladin.hybrid_chassis_and_spell_burden"
-                && r.row_id != "class.ranger.hybrid_chassis_and_spell_burden"
-                && r.row_id != "interaction.human_bonus_feat_ability_bonus.pilot_pressure"
-                && r.row_id != "equipment.equipmods.equipment_reachability")
-                || r.support_state == SupportState::Lossy),
-        "the Bravery slice must not promote any row to Supported or Lossy"
-    );
-}

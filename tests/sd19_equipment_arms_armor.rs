@@ -37,9 +37,6 @@ use codex::rules_core::pilot_compute_corpus::compute_pilot_with_corpus;
 use codex::rules_core::rules_tables::crb::equipment_tables::EquipmentCategory;
 use codex::rules_core::rules_tables::RuleSetId;
 use codex::rules_core::source_content::{SourcePackageContent, SourceRef};
-use codex::rules_core::support_state_matrix::{
-    EvidenceTier, MatrixSubjectType, SupportState, seeded_current_truth,
-};
 
 /// The record's corpus identity: its own `KEY:` when the source line carried
 /// one, else its name.
@@ -180,32 +177,3 @@ fn every_real_corpus_item_resolves_reaches_equipped_items_and_grounds_through_ta
     }
 }
 
-#[test]
-fn arms_armor_matrix_row_reflects_full_coverage() {
-    let matrix = seeded_current_truth();
-    let row = matrix
-        .rows
-        .iter()
-        .find(|r| r.subject_type == MatrixSubjectType::Equipment(EquipmentCategory::ArmsArmor))
-        .expect("expected an Equipment(ArmsArmor) row in the seeded matrix");
-
-    // Full reachability + full table-cell grounding achieved this cycle,
-    // and now promoted to Supported/Product-visible: the desktop app's
-    // Equipment Catalog browser (apps/desktop/src/equipmentCatalog/
-    // EquipmentCatalogScreen.tsx) surfaces the *full* category via the
-    // list_equipment_catalog Tauri command, satisfying the loop
-    // instruction's own definition of Supported/Product-visible.
-    assert_eq!(row.support_state, SupportState::Supported);
-    assert_eq!(row.evidence_tier, EvidenceTier::ProductVisible);
-    assert!(
-        row.grounding_ref.contains("sd19_equipment_arms_armor"),
-        "expected the row's grounding_ref to cite this cycle's proof test, got: {}",
-        row.grounding_ref
-    );
-    assert!(
-        row.blocker_or_lossiness_note.contains("310")
-            || row.blocker_or_lossiness_note.to_lowercase().contains("every"),
-        "expected the row's note to describe full coverage, got: {}",
-        row.blocker_or_lossiness_note
-    );
-}

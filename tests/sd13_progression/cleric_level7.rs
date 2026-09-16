@@ -67,9 +67,6 @@
 //! moves here now that level 7 is itself promoted into the supported tranche.
 
 use codex::rules_core::pilot_compute::compute_pilot_base_chassis;
-use codex::rules_core::support_state_matrix::{
-    EvidenceFreshness, EvidenceTier, SupportState, seeded_current_truth,
-};
 use crate::common::{load, explanation, has_explanation};
 
 const CLERIC_LEVEL6_FIXTURE: &str =
@@ -362,33 +359,3 @@ fn multiclass_cleric_level7_is_not_promoted_by_this_slice() {
 
 // ----- Control plane: the matrix note names the level-7 widening -----
 
-#[test]
-fn matrix_cleric_row_names_level_7_widening_and_channel_energy_and_domain_slot_increase() {
-    let matrix = seeded_current_truth();
-    let cleric = matrix
-        .row("class.cleric.progression_and_spell_burden")
-        .expect("cleric progression_and_spell_burden row must exist");
-
-    // Later promoted to Supported/ProductVisible by SD-19's Class Progression
-    // Catalog browser UI-surfacing work (2026-07-16).
-    assert_eq!(cleric.support_state, SupportState::Supported);
-    assert_eq!(cleric.evidence_tier, EvidenceTier::ProductVisible);
-    assert_eq!(
-        cleric.evidence_freshness,
-        EvidenceFreshness::RefreshableFromLiveProof
-    );
-    assert!(
-        cleric.grounding_ref.contains("sd13_cleric_level7_progression"),
-        "cleric row must cite the live SD13-E5 level-7 proof surface: {}",
-        cleric.grounding_ref
-    );
-    let note = cleric.blocker_or_lossiness_note;
-    assert!(
-        note.contains("level 7") || note.contains("level-7"),
-        "cleric partial note must name the level-7 widening: {note}"
-    );
-    assert!(
-        note.contains("4d6") || note.contains("four"),
-        "cleric partial note must name the level-7 Channel Energy die-count increase: {note}"
-    );
-}

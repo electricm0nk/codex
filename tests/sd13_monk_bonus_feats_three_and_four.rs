@@ -34,9 +34,6 @@
 //! one slot-1 record) stay green untouched.
 
 use codex::rules_core::pilot_compute::compute_pilot_base_chassis;
-use codex::rules_core::support_state_matrix::{
-    EvidenceFreshness, EvidenceTier, SupportState, seeded_current_truth,
-};
 mod common;
 use common::load;
 
@@ -188,30 +185,3 @@ fn multiclass_monk_does_not_gain_slot_3_or_4_recognition() {
 
 // ----- Control plane: the matrix names the completed slot family -----
 
-#[test]
-fn matrix_monk_row_names_the_completed_bonus_feat_family() {
-    let matrix = seeded_current_truth();
-    let monk = matrix
-        .row("class.monk.bounded_progression")
-        .expect("monk bounded_progression row must exist");
-
-    // Later promoted to Supported/ProductVisible by SD-19's Class
-    // Progression Catalog browser UI-surfacing work (2026-07-16).
-    assert_eq!(monk.support_state, SupportState::Supported);
-    assert_eq!(monk.evidence_tier, EvidenceTier::ProductVisible);
-    assert_eq!(
-        monk.evidence_freshness,
-        EvidenceFreshness::RefreshableFromLiveProof
-    );
-    assert!(
-        monk.grounding_ref
-            .contains("sd13_monk_bonus_feats_three_and_four"),
-        "monk row must cite the live slot-3/4 proof surface: {}",
-        monk.grounding_ref
-    );
-    assert!(
-        monk.blocker_or_lossiness_note.contains("bonus_feat_4"),
-        "monk partial note must name the completed four-slot family: {}",
-        monk.blocker_or_lossiness_note
-    );
-}

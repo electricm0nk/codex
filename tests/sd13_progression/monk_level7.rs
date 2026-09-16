@@ -77,9 +77,6 @@
 //! Fighter negative control, and the multiclass negative control.
 
 use codex::rules_core::pilot_compute::compute_pilot_base_chassis;
-use codex::rules_core::support_state_matrix::{
-    EvidenceFreshness, EvidenceTier, SupportState, seeded_current_truth,
-};
 use crate::common::{load, explanation, has_explanation};
 
 const MONK_LEVEL6_FIXTURE: &str =
@@ -474,33 +471,3 @@ fn multiclass_monk_level7_is_not_promoted_by_this_slice() {
 
 // ----- Control plane: the matrix note names the level-7 widening -----
 
-#[test]
-fn matrix_monk_row_names_level_7_widening() {
-    let matrix = seeded_current_truth();
-    let monk = matrix
-        .row("class.monk.bounded_progression")
-        .expect("monk bounded_progression row must exist");
-
-    // Later promoted to Supported/ProductVisible by SD-19's Class
-    // Progression Catalog browser UI-surfacing work (2026-07-16).
-    assert_eq!(monk.support_state, SupportState::Supported);
-    assert_eq!(monk.evidence_tier, EvidenceTier::ProductVisible);
-    assert_eq!(
-        monk.evidence_freshness,
-        EvidenceFreshness::RefreshableFromLiveProof
-    );
-    assert!(
-        monk.grounding_ref.contains("sd13_monk_level7_progression"),
-        "monk row must cite the live SD13-E5 level-7 proof surface: {}",
-        monk.grounding_ref
-    );
-    let note = monk.blocker_or_lossiness_note;
-    assert!(
-        note.contains("Wholeness of Body") || note.contains("wholeness of body"),
-        "monk partial note must name Wholeness of Body as checked-but-unproven: {note}"
-    );
-    assert!(
-        note.contains("bonus feat"),
-        "monk partial note must keep naming the bonus feat's own mechanics as unproven: {note}"
-    );
-}

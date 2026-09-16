@@ -33,9 +33,6 @@
 //! control.
 
 use codex::rules_core::pilot_compute::compute_pilot_base_chassis;
-use codex::rules_core::support_state_matrix::{
-    EvidenceFreshness, EvidenceTier, SupportState, seeded_current_truth,
-};
 mod common;
 use common::load;
 
@@ -242,31 +239,3 @@ fn multiclass_paladin_does_not_gain_bonus_records() {
 
 // ----- Control plane: the matrix names the bonus-spells grounding -----
 
-#[test]
-fn matrix_paladin_row_names_the_bonus_spells_grounding() {
-    let matrix = seeded_current_truth();
-    let paladin = matrix
-        .row("class.paladin.hybrid_chassis_and_spell_burden")
-        .expect("paladin hybrid_chassis_and_spell_burden row must exist");
-
-    assert_eq!(paladin.support_state, SupportState::Supported);
-    assert_eq!(paladin.evidence_tier, EvidenceTier::ProductVisible);
-    assert_eq!(
-        paladin.evidence_freshness,
-        EvidenceFreshness::RefreshableFromLiveProof
-    );
-    assert!(
-        paladin
-            .grounding_ref
-            .contains("sd13_paladin_bonus_spells"),
-        "paladin row must cite the live bonus-spells proof surface: {}",
-        paladin.grounding_ref
-    );
-    assert!(
-        paladin
-            .blocker_or_lossiness_note
-            .contains("bonus_spells_per_day"),
-        "paladin partial note must name the grounded bonus-spells records: {}",
-        paladin.blocker_or_lossiness_note
-    );
-}

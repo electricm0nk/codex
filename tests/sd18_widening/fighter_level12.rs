@@ -45,9 +45,6 @@
 //! and the multiclass negative control.
 
 use codex::rules_core::pilot_compute::compute_pilot_base_chassis;
-use codex::rules_core::support_state_matrix::{
-    EvidenceFreshness, EvidenceTier, SupportState, seeded_current_truth,
-};
 use crate::common::{load, explanation};
 
 const FIGHTER_LEVEL11_FIXTURE: &str = include_str!(
@@ -279,26 +276,3 @@ fn multiclass_fighter_level12_is_not_promoted_by_this_slice() {
 
 // ----- Control plane: the matrix note names the level-12 widening -----
 
-#[test]
-fn matrix_fighter_row_names_level_12_widening() {
-    let matrix = seeded_current_truth();
-    let fighter = matrix
-        .row("class.fighter.levels_2_10")
-        .expect("fighter levels_2_10 row must exist");
-
-    // Later promoted to Supported/ProductVisible by SD-19's Class
-    // Progression Catalog browser UI-surfacing work (2026-07-16).
-    assert_eq!(fighter.support_state, SupportState::Supported);
-    assert_eq!(fighter.evidence_tier, EvidenceTier::ProductVisible);
-    assert_eq!(fighter.evidence_freshness, EvidenceFreshness::RefreshableFromLiveProof);
-    assert!(
-        fighter.grounding_ref.contains("sd18_fighter_level12_widening"),
-        "fighter row must cite the live SD18 level-12 widening proof surface: {}",
-        fighter.grounding_ref
-    );
-    let note = fighter.blocker_or_lossiness_note;
-    assert!(
-        note.contains("level 12") || note.contains("level-12"),
-        "fighter partial note must name the level-12 widening: {note}"
-    );
-}

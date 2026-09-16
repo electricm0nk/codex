@@ -43,9 +43,6 @@
 //! negative control, and the multiclass negative control.
 
 use codex::rules_core::pilot_compute::compute_pilot_base_chassis;
-use codex::rules_core::support_state_matrix::{
-    EvidenceFreshness, EvidenceTier, SupportState, seeded_current_truth,
-};
 use crate::common::{load, explanation, has_explanation};
 
 const CLERIC_LEVEL1_FIXTURE: &str =
@@ -340,29 +337,3 @@ fn multiclass_cleric_level2_is_not_promoted_by_this_slice() {
 
 // ----- Control plane: the matrix note names the level-2 widening -----
 
-#[test]
-fn matrix_cleric_row_names_level_2_widening() {
-    let matrix = seeded_current_truth();
-    let cleric = matrix
-        .row("class.cleric.progression_and_spell_burden")
-        .expect("cleric progression_and_spell_burden row must exist");
-
-    // Later promoted to Supported/ProductVisible by SD-19's Class Progression
-    // Catalog browser UI-surfacing work (2026-07-16).
-    assert_eq!(cleric.support_state, SupportState::Supported);
-    assert_eq!(cleric.evidence_tier, EvidenceTier::ProductVisible);
-    assert_eq!(
-        cleric.evidence_freshness,
-        EvidenceFreshness::RefreshableFromLiveProof
-    );
-    assert!(
-        cleric.grounding_ref.contains("sd13_cleric_level2_progression"),
-        "cleric row must cite the live SD13-E5 level-2 proof surface: {}",
-        cleric.grounding_ref
-    );
-    let note = cleric.blocker_or_lossiness_note;
-    assert!(
-        note.contains("level 2") || note.contains("level-2"),
-        "cleric partial note must name the level-2 widening: {note}"
-    );
-}

@@ -47,9 +47,6 @@
 use codex::rules_core::pilot_compute::{
     ComputationExplanation, PilotBaseChassisComputation, compute_pilot_base_chassis,
 };
-use codex::rules_core::support_state_matrix::{
-    EvidenceFreshness, EvidenceTier, SupportState, seeded_current_truth,
-};
 mod common;
 use common::{load, explanation};
 
@@ -425,24 +422,3 @@ fn monk_level20_earlier_granted_features_carry_over() {
 
 // ----- Control plane: the matrix note names the level-20 widening -----
 
-#[test]
-fn matrix_monk_row_names_level_20_widening() {
-    let matrix = seeded_current_truth();
-    let monk = matrix
-        .row("class.monk.bounded_progression")
-        .expect("monk bounded_progression row must exist");
-
-    assert_eq!(monk.support_state, SupportState::Supported);
-    assert_eq!(monk.evidence_tier, EvidenceTier::ProductVisible);
-    assert_eq!(monk.evidence_freshness, EvidenceFreshness::RefreshableFromLiveProof);
-    assert!(
-        monk.grounding_ref.contains("sd49_monk_level20_capstone"),
-        "monk row must cite the live task #49 level-20 capstone proof surface: {}",
-        monk.grounding_ref
-    );
-    let note = monk.blocker_or_lossiness_note;
-    assert!(
-        note.contains("level 20") || note.contains("level-20"),
-        "monk partial note must name the level-20 widening: {note}"
-    );
-}

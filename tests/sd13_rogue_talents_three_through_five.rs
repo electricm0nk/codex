@@ -27,9 +27,6 @@
 //! Fighter and multiclass negative controls are preserved.
 
 use codex::rules_core::pilot_compute::compute_pilot_base_chassis;
-use codex::rules_core::support_state_matrix::{
-    EvidenceFreshness, EvidenceTier, SupportState, seeded_current_truth,
-};
 mod common;
 use common::load;
 
@@ -187,29 +184,3 @@ fn multiclass_rogue_does_not_gain_talent_slot_records() {
 
 // ----- Control plane: the matrix names the completed slot family -----
 
-#[test]
-fn matrix_rogue_row_names_the_completed_talent_slot_family() {
-    let matrix = seeded_current_truth();
-    let rogue = matrix
-        .row("class.rogue.bounded_progression")
-        .expect("rogue bounded_progression row must exist");
-
-    assert_eq!(rogue.support_state, SupportState::Supported); // promoted by SD-19 Class Progression Catalog browser
-    assert_eq!(rogue.evidence_tier, EvidenceTier::ProductVisible);
-    assert_eq!(
-        rogue.evidence_freshness,
-        EvidenceFreshness::RefreshableFromLiveProof
-    );
-    assert!(
-        rogue
-            .grounding_ref
-            .contains("sd13_rogue_talents_three_through_five"),
-        "rogue row must cite the live slot-3-5 proof surface: {}",
-        rogue.grounding_ref
-    );
-    assert!(
-        rogue.blocker_or_lossiness_note.contains("talent_5"),
-        "rogue partial note must name the completed five-slot family: {}",
-        rogue.blocker_or_lossiness_note
-    );
-}

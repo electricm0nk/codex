@@ -45,9 +45,6 @@
 //! negative control, and the multiclass negative control.
 
 use codex::rules_core::pilot_compute::compute_pilot_base_chassis;
-use codex::rules_core::support_state_matrix::{
-    EvidenceFreshness, EvidenceTier, SupportState, seeded_current_truth,
-};
 use crate::common::{load, explanation};
 
 const BARD_LEVEL3_FIXTURE: &str =
@@ -465,24 +462,3 @@ fn multiclass_bard_level4_is_not_promoted_by_this_slice() {
 
 // ----- Control plane: the matrix note names the level-4 widening -----
 
-#[test]
-fn matrix_bard_row_names_level_4_widening() {
-    let matrix = seeded_current_truth();
-    let bard = matrix
-        .row("class.bard.progression_and_spell_burden")
-        .expect("bard progression_and_spell_burden row must exist");
-
-    assert_eq!(bard.support_state, SupportState::Supported);
-    assert_eq!(bard.evidence_tier, EvidenceTier::ProductVisible);
-    assert_eq!(bard.evidence_freshness, EvidenceFreshness::RefreshableFromLiveProof);
-    assert!(
-        bard.grounding_ref.contains("sd13_bard_level4_progression"),
-        "bard row must cite the live SD13-E5 level-4 proof surface: {}",
-        bard.grounding_ref
-    );
-    let note = bard.blocker_or_lossiness_note;
-    assert!(
-        note.contains("level 4") || note.contains("level-4"),
-        "bard partial note must name the level-4 widening: {note}"
-    );
-}

@@ -50,9 +50,6 @@
 //! multiclass negative control.
 
 use codex::rules_core::pilot_compute::compute_pilot_base_chassis;
-use codex::rules_core::support_state_matrix::{
-    EvidenceFreshness, EvidenceTier, SupportState, seeded_current_truth,
-};
 use crate::common::{load, explanation, has_explanation};
 
 const RANGER_LEVEL1_FIXTURE: &str =
@@ -377,39 +374,3 @@ fn multiclass_ranger_level2_is_not_promoted_by_this_slice() {
 
 // ----- Control plane: the matrix note names the level-2 widening -----
 
-#[test]
-fn matrix_ranger_row_names_level_2_widening_and_combat_style_grounding() {
-    let matrix = seeded_current_truth();
-    let ranger = matrix
-        .row("class.ranger.hybrid_chassis_and_spell_burden")
-        .expect("ranger row must exist");
-
-    assert_eq!(ranger.support_state, SupportState::Supported);
-    assert_eq!(ranger.evidence_tier, EvidenceTier::ProductVisible);
-    assert_eq!(
-        ranger.evidence_freshness,
-        EvidenceFreshness::RefreshableFromLiveProof
-    );
-    assert!(
-        ranger.grounding_ref.contains("sd13_ranger_level2_progression"),
-        "ranger row must cite the live SD13-E5 level-2 proof surface: {}",
-        ranger.grounding_ref
-    );
-
-    let note = ranger.blocker_or_lossiness_note;
-    assert!(
-        note.contains("level 2") || note.contains("level-2"),
-        "ranger partial note must name the level-2 widening: {note}"
-    );
-    assert!(
-        note.contains("combat style") || note.contains("Combat Style"),
-        "ranger partial note must still name the combat-style pillar: {note}"
-    );
-    // The still-unproven burdens stay named.
-    for token in ["spell", "conditional-application"] {
-        assert!(
-            note.contains(token),
-            "ranger partial note must still name the unproven '{token}' burden: {note}"
-        );
-    }
-}

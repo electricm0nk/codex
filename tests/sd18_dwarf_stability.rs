@@ -23,9 +23,6 @@ use codex::rules_core::pilot_compute::{
     PilotBaseChassisComputation,
     compute_pilot_base_chassis,
 };
-use codex::rules_core::support_state_matrix::{
-    EvidenceFreshness, EvidenceTier, SupportState, seeded_current_truth,
-};
 mod common;
 use common::{load, explanation};
 
@@ -150,36 +147,3 @@ fn dwarf_bounded_semantics_note_moves_stability_out_of_unproven_list() {
 
 // ----- Control plane: the matrix row stays Partial/Computed, widened note -----
 
-#[test]
-fn matrix_dwarf_row_stays_partial_computed_and_grounding_ref_names_this_slice() {
-    let matrix = seeded_current_truth();
-    let dwarf = matrix
-        .row("race.dwarf.bounded_semantics")
-        .expect("dwarf row must exist");
-
-    // NOTE (2026-07-16, SD-19 Full-matrix closure): this slice's own honest
-    // Partial -> Partial widening claim below is historically accurate for THIS
-    // slice, but the row was later promoted to Supported/ProductVisible by the
-    // separate SD-19 Race Trait Catalog browser UI-surfacing work, which is why
-    // the assertions after this comment now read Supported/ProductVisible.
-    // Honest promotion: Partial -> Partial widening, NOT a jump to Supported.
-    // Stability is one more grounded family among several still-unproven ones
-    // (Defensive Training, Hatred, weapon familiarity), so the row does not
-    // reach Supported this cycle.
-    assert_eq!(dwarf.support_state, SupportState::Supported);
-    assert_eq!(dwarf.evidence_tier, EvidenceTier::ProductVisible);
-    assert_eq!(
-        dwarf.evidence_freshness,
-        EvidenceFreshness::RefreshableFromLiveProof
-    );
-    assert!(
-        dwarf.grounding_ref.contains("sd18_dwarf_stability"),
-        "dwarf row grounding_ref must cite this slice's proof surface: {}",
-        dwarf.grounding_ref
-    );
-    assert!(
-        dwarf.blocker_or_lossiness_note.contains("Stability"),
-        "dwarf row note must name Stability as grounded, not unproven: {}",
-        dwarf.blocker_or_lossiness_note
-    );
-}

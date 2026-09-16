@@ -57,9 +57,6 @@
 use codex::rules_core::pilot_compute::{
     ComputationExplanation, PilotBaseChassisComputation, compute_pilot_base_chassis,
 };
-use codex::rules_core::support_state_matrix::{
-    EvidenceFreshness, EvidenceTier, SupportState, seeded_current_truth,
-};
 use crate::common::{load, explanation, has_explanation};
 
 const DRUID_LEVEL2_FIXTURE: &str =
@@ -591,33 +588,3 @@ fn multiclass_druid_level3_is_not_promoted_by_this_slice() {
 
 // ----- Control plane: the matrix note names the level-3 widening and Trackless Step -----
 
-#[test]
-fn matrix_druid_row_names_level_3_widening_and_trackless_step() {
-    let matrix = seeded_current_truth();
-    let druid = matrix
-        .row("class.druid.progression_and_spell_burden")
-        .expect("druid progression_and_spell_burden row must exist");
-
-    // Later promoted to Supported/ProductVisible by SD-19's Class
-    // Progression Catalog browser UI-surfacing work (2026-07-16).
-    assert_eq!(druid.support_state, SupportState::Supported);
-    assert_eq!(druid.evidence_tier, EvidenceTier::ProductVisible);
-    assert_eq!(
-        druid.evidence_freshness,
-        EvidenceFreshness::RefreshableFromLiveProof
-    );
-    assert!(
-        druid.grounding_ref.contains("sd13_druid_level3_progression"),
-        "druid row must cite the live SD13-E5 level-3 proof surface: {}",
-        druid.grounding_ref
-    );
-    let note = druid.blocker_or_lossiness_note;
-    assert!(
-        note.contains("level 3") || note.contains("level-3"),
-        "druid partial note must name the level-3 widening: {note}"
-    );
-    assert!(
-        note.to_lowercase().contains("trackless step"),
-        "druid partial note must name the newly-grounded Trackless Step identity record: {note}"
-    );
-}

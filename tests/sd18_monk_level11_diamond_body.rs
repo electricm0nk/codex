@@ -51,9 +51,6 @@
 //! the multiclass negative control.
 
 use codex::rules_core::pilot_compute::compute_pilot_base_chassis;
-use codex::rules_core::support_state_matrix::{
-    EvidenceFreshness, EvidenceTier, SupportState, seeded_current_truth,
-};
 mod common;
 use common::{load, explanation};
 
@@ -307,26 +304,3 @@ fn multiclass_monk_level11_is_not_promoted_by_this_slice() {
 
 // ----- Control plane: the matrix note names the level-11 widening -----
 
-#[test]
-fn matrix_monk_row_names_level_11_widening() {
-    let matrix = seeded_current_truth();
-    let monk = matrix
-        .row("class.monk.bounded_progression")
-        .expect("monk bounded_progression row must exist");
-
-    // Later promoted to Supported/ProductVisible by SD-19's Class
-    // Progression Catalog browser UI-surfacing work (2026-07-16).
-    assert_eq!(monk.support_state, SupportState::Supported);
-    assert_eq!(monk.evidence_tier, EvidenceTier::ProductVisible);
-    assert_eq!(monk.evidence_freshness, EvidenceFreshness::RefreshableFromLiveProof);
-    assert!(
-        monk.grounding_ref.contains("sd18_monk_level11_diamond_body"),
-        "monk row must cite the live SD18 level-11 widening proof surface: {}",
-        monk.grounding_ref
-    );
-    let note = monk.blocker_or_lossiness_note;
-    assert!(
-        note.contains("level 11") || note.contains("level-11"),
-        "monk partial note must name the level-11 widening: {note}"
-    );
-}
