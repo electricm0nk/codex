@@ -540,7 +540,7 @@ mod tests {
     fn granted_feat_display_resolves_a_placeholder_label_to_the_source_derived_name() {
         use codex::rules_core::sheet_rule::{Provenance, Subject};
 
-        let placeholder = codex::rules_core::codex_neutral_name::neutral_name(
+        let redacted_label = codex::rules_core::codex_neutral_name::neutral_name(
             "feat",
             "core_rulebook",
             "feats.lst",
@@ -548,7 +548,7 @@ mod tests {
         );
         let feat = codex::rules_core::sheet_rule::SheetRule {
             id: "core_rulebook:feat:order_of_the_rack".to_owned(),
-            label: placeholder,
+            label: redacted_label,
             value: codex::rules_core::sheet_rule::SheetValue::Text,
             also: Vec::new(),
             prose: Vec::new(),

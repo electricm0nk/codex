@@ -375,9 +375,48 @@ findings. Disposition, most-severe first as reported:
 
 ### Baseline update (review finding 13)
 
-Deferred until this fix cycle's own final full `verify.sh` pass below, then updated once to
-the numbers that pass measures (rather than updating twice) -- see that pass's own note in
-`scripts/verify-baselines.env`.
+Resolved by this fix cycle's own final verify passes (below), updated once to the numbers
+those passes measured: `scripts/verify-baselines.env` `BASELINE_ROOT_LIB_TESTS` 3390 -> 3401,
+`BASELINE_ROOT_FULL_TESTS` 7855 -> 7875, `BASELINE_ROOT_TEST_BINARIES` 412 -> 414,
+`BASELINE_DESKTOP_TESTS` 592 -> 596. Full attribution (including the prior epic-e pass's own
+unrecorded growth folded in at the same time) in that file's own new dated block.
+
+### Fix cycle's final verification (two verify.sh passes)
+
+**Pass 1** (full, HEAD `bb5a2e09fc`), log
+`/tmp/claude-1000/-home-ubuntu-workspace-repos-codex/d7b37005-8466-4968-b248-1a4983d15f82/scratchpad/epic-epice-fix1-verify.log`:
+`RESULT: FAIL` -- `FAILED: 1 root-full`. All 45 other stages PASSED, including `root-lib
+(3401 passed)`, `desktop (596 passed)`, `clippy (root:0 desktop:0 warnings)`,
+`pcgen-residue-gate (live_files=0 live_hits=0)`. The single failure:
+`sd24_wired_integration_audit.rs`'s `placeholder_findings_are_ui_text_prose_or_the_one_
+documented_deferral` false-flagged this fix cycle's own new `let placeholder = ...` test
+variables in `level_up_option_filter.rs`, `class_chassis_sheet_rules.rs` and
+`class_feature_feat_bridge.rs` (11 hits: bare `placeholder` identifiers, none of the audit's
+existing UI-text/deferred-finding/comment-prose/anti-fabrication/PCGen-`p.xx`/bucket-F
+exclusions apply to a plain local variable name) -- a real, if narrow, audit finding against
+this cycle's own code, not a pre-existing issue. Fixed at the source: renamed the variable
+`placeholder` -> `redacted_label` everywhere it is a Rust identifier in those three files (11
+sites); the surrounding doc comments and assert-message English prose, which also say
+"placeholder" but are exempted (comment prose, or an incidental `"placeholder:"` substring
+match against the UI-text bucket), were left untouched -- confirmed by re-implementing the
+audit's own bucket logic in a standalone script over `git grep -nE '\bplaceholder\b' --
+apps/desktop/ apps/desktop/src-tauri/ src/` after the rename: 0 unexplained hits.
+
+Because the rename was made while pass 1's own `verify.sh` process was still running later
+stages (`corpus-sweep` onward), those later stages' PASS results reflect the renamed code
+(cargo picked up the file change and rebuilt), not a pre-rename snapshot -- but `root-full`'s
+own FAIL was captured before the rename, so it needed an independent re-run rather than being
+trusted from pass 1.
+
+**Pass 2** (`--only root-full --only clippy`, after the rename), log
+`/tmp/claude-1000/-home-ubuntu-workspace-repos-codex/d7b37005-8466-4968-b248-1a4983d15f82/scratchpad/epic-e-fix-rootfull-recheck.log`:
+`RESULT: PASS` -- `root-full (7875 passed across 414 suites, all 362 tests/*.rs suites
+executed)`, `clippy (root:0 desktop:0 warnings, 0 errors)`.
+
+Together, passes 1 and 2 cover all 46 stages green on the final tree. The mid-run-edit timing
+hazard itself (editing source while pass 1's later stages were still executing, so root-full's
+FAIL had to be independently re-verified rather than trusted from that same process) is logged
+as retro incident `1789664310234-sd36-epic-e-9097f7`.
 
 ## Blockers
 

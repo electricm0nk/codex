@@ -377,7 +377,7 @@ mod tests {
     fn a_placeholder_principal_label_resolves_to_the_source_derived_name() {
         use crate::rules_core::sheet_rule::{Provenance, Subject};
 
-        let placeholder = crate::rules_core::codex_neutral_name::neutral_name(
+        let redacted_label = crate::rules_core::codex_neutral_name::neutral_name(
             "class",
             "core_rulebook",
             "classes.lst",
@@ -385,7 +385,7 @@ mod tests {
         );
         let base = |target: BonusTarget, expr: Expr| SheetRule {
             id: "core_rulebook:class:order_of_the_rack".to_owned(),
-            label: placeholder.clone(),
+            label: redacted_label.clone(),
             value: SheetValue::Number(expr),
             also: Vec::new(),
             prose: Vec::new(),

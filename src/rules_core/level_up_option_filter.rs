@@ -610,20 +610,20 @@ mod tests {
     /// level-up DTO copies verbatim.
     #[test]
     fn a_placeholder_label_is_resolved_to_the_source_derived_name_not_printed_raw() {
-        let placeholder =
+        let redacted_label =
             crate::rules_core::codex_neutral_name::neutral_name("feat", "core_rulebook", "x.lst", 1);
         let mut package = SheetRulePackage::new();
         package.insert_rule(SheetRule {
             id: "core_rulebook:feat:order_of_the_rack".to_owned(),
-            label: placeholder.clone(),
-            ..option_rule("order_of_the_rack", &placeholder, Applies::Always)
+            label: redacted_label.clone(),
+            ..option_rule("order_of_the_rack", &redacted_label, Applies::Always)
         });
         package.insert_rule(SheetRule {
             id: "core_rulebook:feat:veiled_lodge".to_owned(),
-            label: placeholder.clone(),
+            label: redacted_label.clone(),
             ..option_rule(
                 "veiled_lodge",
-                &placeholder,
+                &redacted_label,
                 Applies::Compare {
                     lhs: Expr::AbilityScore(Ability::Str),
                     op: Cmp::Gte,
@@ -666,13 +666,13 @@ mod tests {
     /// Same invariant for the standalone `label_of` lookup used by prose/description text.
     #[test]
     fn label_of_resolves_a_placeholder_label_to_the_source_derived_name() {
-        let placeholder =
+        let redacted_label =
             crate::rules_core::codex_neutral_name::neutral_name("feat", "core_rulebook", "x.lst", 1);
         let mut package = SheetRulePackage::new();
         let id = "core_rulebook:feat:order_of_the_rack".to_owned();
         package.insert_rule(SheetRule {
             id: id.clone(),
-            label: placeholder,
+            label: redacted_label,
             ..option_rule("order_of_the_rack", "unused", Applies::Always)
         });
         package.finish();
