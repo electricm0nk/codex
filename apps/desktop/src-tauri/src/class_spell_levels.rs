@@ -33,7 +33,7 @@ use std::collections::BTreeMap;
 use std::sync::OnceLock;
 
 use codex::rules_core::rules_tables::class_spell_levels;
-use codex::rules_core::sheet_rule::{Effect, SheetRule};
+use codex::rules_core::sheet_rule::{self, Effect, SheetRule};
 
 use crate::authoring_workbench::codex_repo_root;
 
@@ -166,7 +166,12 @@ fn corpus_class_facts() -> &'static BTreeMap<String, CorpusClassFacts> {
             for file in files {
                 let Ok(text) = std::fs::read_to_string(&file) else { continue };
                 let Ok(rules) = serde_json::from_str::<Vec<SheetRule>>(&text) else { continue };
-                let Some(identity) = rules.first().map(|r| r.label.clone()) else { continue };
+                // SD-36 Epic E code-review finding 6: resolve through the shared placeholder-label
+                // resolver (`sheet_rule::display_label`), never the raw `label` field -- a record
+                // whose only converted label is the ingest placeholder (`"Codex-Named Unit
+                // (...)"`) must still be indexed under its real, source-derived id, the same
+                // fallback the four other audited read paths already use.
+                let Some(identity) = rules.first().map(sheet_rule::display_label) else { continue };
                 let spell_type = rules.iter().find_map(|rule| {
                     rule.grants.iter().find_map(|effect| match effect {
                         Effect::FactDeclare { name, value } if name == "SpellType" => {
@@ -388,6 +393,23 @@ mod tests {
     #[test]
     fn an_id_with_no_corpus_class_record_is_reported_unknown_not_non_caster() {
         assert_eq!(status_of("class:no_such_class"), (SpellcastingStatus::ClassNotInCorpus, None));
+    }
+
+    /// SD-36 Epic E code-review finding 6 (independent verifier, second fix cycle):
+    /// `corpus_class_facts` used to key each file's index entry on `rules.first().map(|r|
+    /// r.label.clone())` -- the RAW converted label, never resolved through
+    /// `sheet_rule::display_label` the way the four other read paths this epic already fixed
+    /// were. `data/sheet_rules/inner_sea_world_guide/class/hellknight.json` (one of 21 files
+    /// under `data/sheet_rules/*/class/*.json`, `grep -rl "Codex-Named Unit"
+    /// data/sheet_rules/*/class/*.json | wc -l`) carries a placeholder `"Codex-Named Unit
+    /// (...)"` first label, so the old code indexed it under a normalized ingest-identifier
+    /// slug, never under `class:hellknight` -- every real lookup for it missed silently and
+    /// reported `ClassNotInCorpus` even though the record is genuinely converted and present.
+    /// Hellknight carries no `FACT:SpellType`, so once correctly indexed under its real id the
+    /// honest answer is `NonCaster`, not `ClassNotInCorpus`.
+    #[test]
+    fn a_class_whose_only_label_is_a_placeholder_is_still_indexed_under_its_real_id() {
+        assert_eq!(status_of("class:hellknight"), (SpellcastingStatus::NonCaster, None));
     }
 
     /// The corpus token and the engine's own transcribed-list set agree:
