@@ -20899,7 +20899,7 @@ fn ground_or_block_warpriest_class_features(
         } else {
             "This chosen Blessing type's own minor/major power content beyond the single \
                  generically-resolved magnitude above (SD-36 Epic E PC4-1) remains unmodeled: \
-                 the generic pass grounds one real per-member formula or BONUS:VAR value, never \
+                 the generic pass grounds one real per-member formula or bonus value, never \
                  the type's full minor-then-major power progression. This does not block an \
                  otherwise-valid posture for this Blessing choice"
                 .to_owned()
