@@ -1075,7 +1075,7 @@ pub fn resolve_race_alternate_selection(
 #[cfg(test)]
 mod tests {
     use super::*;
-    use codex::pcgen_import::pcgen_desc::leaked_pcgen_syntax;
+    use codex_ingest::pcgen_import::pcgen_desc::leaked_pcgen_syntax;
 
     /// Every count below was derived by running this module against the real
     /// on-disk corpus:

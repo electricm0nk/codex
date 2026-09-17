@@ -188,7 +188,7 @@ fn corpus_book_dir(rule_set: RuleSetId) -> &'static str {
 /// it up is exactly what left the live side. Refusing whole is the disposition the rest of this
 /// crate takes — never a partial sentence. This is `equipment_catalog::row_description`'s shape,
 /// applied to the feat tables, with one difference stated deliberately: the refusal predicate is
-/// [`leaked_pcgen_syntax`](codex::pcgen_import::pcgen_desc::leaked_pcgen_syntax) rather than a bare
+/// [`leaked_pcgen_syntax`](codex_ingest::pcgen_import::pcgen_desc::leaked_pcgen_syntax) rather than a bare
 /// "contains a `%`". That function is a **refusal**, not a reader — it answers "does this string
 /// still show the ingest format", writes nothing and parses nothing — and it is the predicate the
 /// rest of this crate already sweeps every served description with. It matters here because the
@@ -479,7 +479,7 @@ mod tests {
     /// here, which is why the leak sweep below runs over every served row rather than a sample.
     #[test]
     fn converted_feat_prose_population() {
-        use codex::pcgen_import::pcgen_desc::leaked_pcgen_syntax;
+        use codex_ingest::pcgen_import::pcgen_desc::leaked_pcgen_syntax;
         use std::collections::BTreeMap;
 
         let catalog = build_feat_catalog();

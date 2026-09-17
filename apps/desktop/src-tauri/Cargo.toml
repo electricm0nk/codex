@@ -3,6 +3,14 @@ name = "codex-desktop"
 version = "0.16.0"
 edition = "2021"
 
+# SD-36 Epic A: this crate's new dev-only path dependency below points at a
+# member of the root workspace, which would otherwise make Cargo require
+# this crate to join that workspace too. It stays its own standalone
+# workspace root instead -- exactly the pre-existing shape (a separate
+# `Cargo.lock`, its own `target/`), never rolled into the root
+# `[workspace] members = ["crates/*"]`.
+[workspace]
+
 [build-dependencies]
 tauri-build = { version = "2", features = [] }
 
@@ -19,3 +27,14 @@ tauri = { version = "2", features = [] }
 tauri-plugin-opener = "2"
 tauri-plugin-dialog = "2"
 codex = { path = "../../.." }
+
+[dev-dependencies]
+# SD-36 Epic A / operator ruling D1: the PCGen converter and oracle crate is
+# a dev-dependency ONLY -- it must never appear in this crate's normal
+# dependency graph (verify.sh's `crate-wall` stage checks this with
+# `cargo tree -e normal,build`, and an awk check that every mention of this
+# package name in this manifest sits under this exact section header). The
+# 9 `#[cfg(test)]` sites that assert a player-facing description never
+# leaks raw PCGen syntax are the only reason this crate names the tool side
+# at all.
+codex-ingest = { path = "../../../crates/codex-ingest" }
