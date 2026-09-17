@@ -195,6 +195,18 @@ BOOK_TITLES = {
     "bestiary_6": "Bestiary 6",
     "bonus_bestiary": "Bonus Bestiary",
     "ultimate_campaign": "Ultimate Campaign",
+    # SD-36 Epic B round-5 (2026-09-17 orchestrator ruling): these 7 were
+    # real content books present in the unit ledger but missing from this
+    # allow-list, so their 3,365 units counted toward the frozen 100%
+    # headline while having no row on the public grid. Ruled real books;
+    # added with their proper Paizo titles.
+    "mythic_adventures": "Mythic Adventures",
+    "adventurers_guide": "Adventurer's Guide",
+    "inner_sea_magic": "Inner Sea Magic",
+    "inner_sea_faiths": "Inner Sea Faiths",
+    "inner_sea_temples": "Inner Sea Temples",
+    "inner_sea_taverns": "Inner Sea Taverns",
+    "beginner_box": "Beginner Box",
 }
 
 # A packaging artifact is not a sourcebook, so it must never be published as

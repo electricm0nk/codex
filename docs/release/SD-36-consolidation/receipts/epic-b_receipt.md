@@ -180,8 +180,15 @@ the plan" below.
   rules-data-tables,conventions,README,desktop-app}.md` (dead links,
   current-state table rows, and diagram nodes for the deleted matrix/bridge
   removed; historical narrative left as historical record).
-  `docs/governance/license-matrix.md` had 0 live mentions at execution time
-  (plan's "2 mentions" was stale); no edit made.
+  `docs/governance/license-matrix.md` had 0 live mentions of the retired
+  PF1e-dashboard producers at execution time (plan's "2 mentions" was
+  stale); no edit made **at that time** — corrected 2026-09-17, fix cycle
+  round 3 item 10 (superseded this line): lines 26/29 separately described
+  `docs/work-inventory.json` as a live regeneration source with a
+  re-derive command, which is exactly the surface D3's freeze retired, and
+  were reworded to state it is FROZEN and no longer regenerated. See "Fix
+  cycle round 3" item 10 below for the full disposition and the reproducing
+  diff.
 
 ## Corrections to the plan (recorded in `docs/retro/events/sd36-epic-b.jsonl`)
 
@@ -425,7 +432,14 @@ verification record. Full detail lives in `docs/retro/events/sd36-epic-b.jsonl`
    corrected in place (see "Verification" and item 4 of round 1's own
    list) to state the true count, 1, and name this exception explicitly —
    the grep is not driven to 0, and no future reader should re-derive "0"
-   without checking this section first.
+   without checking this section first. **Superseded 2026-09-17, fix cycle
+   round 3 item 2:** the orchestrator's round-3 ruling (a) widened this
+   epic's write scope specifically to repair this one dangling doc
+   comment; it was reworded to drop the reference to the retired
+   `seeded_current_truth` function instead of naming it. The grep now
+   reads 0 (`git grep -c seeded_current_truth -- tests src apps` → no
+   output, exit 1) — the "not driven to 0" disposition immediately above
+   no longer holds; see "Fix cycle round 3" item 2 below.
 2. **`scripts/observer/doneness.py` claimed 371 lines in round 1's own
    correction of finding 14; actual is 391** — round 1's own commit
    (`30f824f26e`) added 20 net lines to that exact file (the 1,300-combo
@@ -580,3 +594,96 @@ violations=0; `denominator-gate` files_checked=367 violations=0; `clippy`
 root:0 desktop:0 warnings), log `/tmp/codex-verify-poEqRA`, event
 `1789621031910-sd36-epic-b-0963e0`. Then the mandatory ONE full pass (item
 1 above) — **RESULT: PASS**, 45/45 stages, 0 failures.
+
+## Fix cycle round 5 (2026-09-17): third-pass post-round-4 findings, resolved under explicit orchestrator rulings
+
+A post-round-4 (`22195f059f`) third-party verification pass found 3
+problems inside this epic's own write scope, plus a re-quote of the
+original 10 round-2 findings for context. The orchestrator issued binding
+rulings (a)–(h), 2026-09-17. Re-checked every one of rulings (a)–(g)
+against HEAD `22195f059f` before doing new work — all were already
+satisfied by rounds 1–4 (`seeded_current_truth` grep = 0; the
+`pilot_compute`/`class_spell_levels.rs` scope-widenings are in place;
+`testing.md`'s three figures reproduce (360/121/262); `license-matrix.md`
+lines 26/29 already say FROZEN; `test_completion_atlas.py` is 42/42;
+`verify-baselines.env`'s opening sentence already names the runs that
+produced 7855/412) — so only ruling (h) and the two newly-named stale
+receipt statements needed real work this round:
+
+1. **Ruling (h): 7 real content books counted in the frozen 100% headline
+   had no BOOK_TITLES entry and no public-grid row** —
+   `mythic_adventures` (1,401 units), `adventurers_guide` (1,176),
+   `inner_sea_magic` (493), `inner_sea_faiths` (191), `inner_sea_temples`
+   (65), `inner_sea_taverns` (20), `beginner_box` (19); 3,365 units total.
+   RED first: added `test_committed_book_denominators_sum_to_overall` and
+   `test_book_denominator_gap_is_a_violation` to
+   `scripts/tests/test_check_frozen_status.py`, plus a per-book
+   denominator/done sum-reconciliation check in
+   `scripts/site/check_frozen_status.py::check()` — confirmed RED against
+   the committed (pre-fix) snapshot: `sum of book denominator across all
+   30 listed books (46085) != overall.denominator (49450)` (and the
+   matching `done` violation), `python3 -m unittest
+   scripts.tests.test_check_frozen_status -v` → 2 failures. Fixed at
+   source: added the 7 books to `BOOK_TITLES` in
+   `scripts/site/build_public_status.py` with their proper Paizo titles
+   (`Mythic Adventures`, `Adventurer's Guide`, `Inner Sea Magic`, `Inner
+   Sea Faiths`, `Inner Sea Temples`, `Inner Sea Taverns`, `Beginner Box`),
+   re-ran `python3 -m unittest scripts.tests.test_build_public_status` →
+   40/40 unchanged, then regenerated with `python3
+   scripts/site/build_public_status.py` → `Wrote site/status-data.json (37
+   books, overall 100.0%) and 37 book-detail files ... (49450 items
+   total)`; each of the 7 new books individually reads 100.0% (all units
+   are `done` under D5's global doneness partition). GREEN: `python3 -m
+   unittest scripts.tests.test_check_frozen_status -v` → 6/6;
+   `scripts/site/check_frozen_status.py` → `OK: ... frozen at 100% (49450
+   units)`; `python3 scripts/site/build_public_status.py --check` → `OK:
+   status-data.json and status-data/*.json are up to date`.
+   `check_frozen_status.py`'s `FROZEN_GENERATED_AT` bumped to the new
+   regen's stamp (`2026-09-17T07:32:59Z`) — a deliberate, reviewed
+   re-freeze per that constant's own documented convention;
+   `FROZEN_DENOMINATOR` (49,450) is unchanged. `site/status.html` needed no
+   edit: it renders `overview.books` from `status-data.json` at runtime
+   (`overview.books.forEach(...)`), so the 7 new rows appear automatically.
+   Recorded: `docs/retro/events/sd36-epic-b.jsonl` correction event
+   `1789630511596-sd36-epic-b-cc9614`.
+2. **Receipt line ~183: `docs/governance/license-matrix.md` "had 0 live
+   mentions at execution time...no edit made" is stale** — round-3 item 10
+   (above) DID reword lines 26/29. Fixed at source: added an inline
+   supersession note pointing at round-3 item 10, distinguishing "0 live
+   mentions of the retired producers" (still true) from "no edit made"
+   (false as of round 3, which reworded the file for a different reason:
+   the freeze-state description of `docs/work-inventory.json`).
+3. **Receipt round-2 section item 1 (~line 434): "the grep is not driven
+   to 0, and no future reader should re-derive 0 without checking this
+   section first" is stale** — round-3 item 2 (above) drove it to 0.
+   Fixed at source: added an inline supersession note at that exact
+   sentence pointing at round-3 item 2, with the re-verified command output
+   (`git grep -c seeded_current_truth -- tests src apps` → no output, exit
+   1). Both corrections recorded together in one retro event:
+   `1789630523431-sd36-epic-b-1b4162`.
+4. **Morning-log checkbox** (`/home/ubuntu/workspace/codex-morning-log-2026-09-16.md`)
+   still carried an OPEN item asking whether to widen Epic B's write scope
+   for `pilot_compute/mod.rs:51241` and stated the grep "now correctly
+   reports 1, not 0" — stale since round 3. Closed the checkbox and
+   corrected the figure in place (see that file).
+
+Re-verified this round: `bash scripts/verify.sh --only
+site-status-frozen-check --only site-public-status-check --only
+site-public-status-pi-gate --only build-public-status-selftest` →
+**RESULT: PASS**, 4/4 stages (`site-public-status-pi-gate`: 38 files
+scanned against 1,612 declared-PI names, zero leaked), log
+`/tmp/codex-verify-GGFhON`. `python3 -m unittest
+scripts.tests.test_check_frozen_status scripts.tests.test_build_public_status -v`
+→ 6/6 and 40/40, both green. No Rust files touched this round, so per
+ruling (h) a full `bash scripts/verify.sh` pass was not re-run.
+
+That `--only` run's own auto-emitted verification record (event
+`1789630625499-sd31-transcribe-e6d7b6`) landed in
+`docs/retro/events/sd31-transcribe.jsonl` instead of this epic's own
+shard — round 4 had already named this exact hazard (`RETRO_ACTOR` does
+not persist across separate tool-call shells; it must be exported in the
+SAME invocation that runs `verify.sh`), and it recurred this round because
+the export and the background `verify.sh` call were two separate Bash
+calls. Left the mis-filed record as-is (append-only log); recorded a
+correction event under this epic's own shard naming it:
+`1789630728270-sd36-epic-b-48b2c3`.

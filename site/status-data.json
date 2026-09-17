@@ -1,5 +1,5 @@
 {
-  "generated_at": "2026-09-16T02:53:07Z",
+  "generated_at": "2026-09-17T07:32:59Z",
   "doneness_values": [
     "done",
     "not-started"
@@ -214,6 +214,20 @@
       }
     },
     {
+      "id": "mythic_adventures",
+      "title": "Mythic Adventures",
+      "done": 1401,
+      "partial": 0,
+      "not_started": 0,
+      "denominator": 1401,
+      "pct": 100.0,
+      "excluded_from_percentage": 0,
+      "standing_breakdown": {
+        "origin": 1334,
+        "unclassified": 67
+      }
+    },
+    {
       "id": "inner_sea_gods",
       "title": "Inner Sea Gods",
       "done": 1385,
@@ -270,6 +284,20 @@
       }
     },
     {
+      "id": "adventurers_guide",
+      "title": "Adventurer's Guide",
+      "done": 1176,
+      "partial": 0,
+      "not_started": 0,
+      "denominator": 1176,
+      "pct": 100.0,
+      "excluded_from_percentage": 0,
+      "standing_breakdown": {
+        "origin": 745,
+        "unclassified": 431
+      }
+    },
+    {
       "id": "inner_sea_world_guide",
       "title": "Inner Sea World Guide",
       "done": 643,
@@ -281,6 +309,20 @@
       "standing_breakdown": {
         "unclassified": 453,
         "origin": 190
+      }
+    },
+    {
+      "id": "inner_sea_magic",
+      "title": "Inner Sea Magic",
+      "done": 493,
+      "partial": 0,
+      "not_started": 0,
+      "denominator": 493,
+      "pct": 100.0,
+      "excluded_from_percentage": 0,
+      "standing_breakdown": {
+        "unclassified": 152,
+        "origin": 341
       }
     },
     {
@@ -396,6 +438,20 @@
       }
     },
     {
+      "id": "inner_sea_faiths",
+      "title": "Inner Sea Faiths",
+      "done": 191,
+      "partial": 0,
+      "not_started": 0,
+      "denominator": 191,
+      "pct": 100.0,
+      "excluded_from_percentage": 0,
+      "standing_breakdown": {
+        "unclassified": 56,
+        "origin": 135
+      }
+    },
+    {
       "id": "bestiary_6",
       "title": "Bestiary 6",
       "done": 120,
@@ -424,6 +480,19 @@
       }
     },
     {
+      "id": "inner_sea_temples",
+      "title": "Inner Sea Temples",
+      "done": 65,
+      "partial": 0,
+      "not_started": 0,
+      "denominator": 65,
+      "pct": 100.0,
+      "excluded_from_percentage": 0,
+      "standing_breakdown": {
+        "origin": 65
+      }
+    },
+    {
       "id": "bonus_bestiary",
       "title": "Bonus Bestiary",
       "done": 34,
@@ -435,6 +504,34 @@
       "standing_breakdown": {
         "origin": 10,
         "unclassified": 24
+      }
+    },
+    {
+      "id": "inner_sea_taverns",
+      "title": "Inner Sea Taverns",
+      "done": 20,
+      "partial": 0,
+      "not_started": 0,
+      "denominator": 20,
+      "pct": 100.0,
+      "excluded_from_percentage": 0,
+      "standing_breakdown": {
+        "origin": 19,
+        "unclassified": 1
+      }
+    },
+    {
+      "id": "beginner_box",
+      "title": "Beginner Box",
+      "done": 19,
+      "partial": 0,
+      "not_started": 0,
+      "denominator": 19,
+      "pct": 100.0,
+      "excluded_from_percentage": 0,
+      "standing_breakdown": {
+        "unclassified": 6,
+        "origin": 13
       }
     }
   ]

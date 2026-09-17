@@ -22,6 +22,12 @@ Checks:
   4. Every book listed in overview["books"] has a matching, existing
      site/status-data/<id>.json file whose own per-kind done/partial/
      not_started/denominator sums reconcile with that book's rollup entry.
+  5. The per-book denominators (and done counts) in overview["books"] sum to
+     overall.denominator (and overall.done) — every unit in the frozen
+     headline has a book row behind it; a book silently dropped from the
+     public grid while still counted in the 100% headline (SD-36 Epic B
+     round-5 finding: 7 real books, 3,365 units) fails this loudly instead
+     of only showing up as a quiet grid gap.
 
 Usage:
     python3 scripts/site/check_frozen_status.py
@@ -41,7 +47,15 @@ FROZEN_DENOMINATOR = 49450
 # The exact `generated_at` the one-time D5 regen wrote. Changing this on
 # purpose is how a deliberate, reviewed re-freeze is recorded; any other
 # drift is a bug.
-FROZEN_GENERATED_AT = "2026-09-16T02:53:07Z"
+#
+# 2026-09-17 SD-36 Epic B round-5: re-frozen once more (deliberately,
+# reviewed) to add 7 real content books (mythic_adventures,
+# adventurers_guide, inner_sea_magic, inner_sea_faiths, inner_sea_temples,
+# inner_sea_taverns, beginner_box; 3,365 units) that were counted in the
+# 100% headline but had no BOOK_TITLES entry and so no public grid row.
+# FROZEN_DENOMINATOR is unchanged (100.0% of the same 49,450 units) --
+# only the book breakdown changed, from 30 books to 37.
+FROZEN_GENERATED_AT = "2026-09-17T07:32:59Z"
 
 
 def check(status_data_path: Path = STATUS_DATA, book_dir: Path = BOOK_DETAIL_DIR) -> list[str]:
@@ -88,6 +102,17 @@ def check(status_data_path: Path = STATUS_DATA, book_dir: Path = BOOK_DETAIL_DIR
                 violations.append(
                     f"book {book_id!r}: sum of kind {key} ({total}) != book {key} ({book.get(key)!r})"
                 )
+
+    books = overview.get("books", [])
+    for key in ("denominator", "done"):
+        book_total = sum(b.get(key, 0) for b in books)
+        overall_total = overall.get(key)
+        if book_total != overall_total:
+            violations.append(
+                f"sum of book {key} across all {len(books)} listed books ({book_total}) != "
+                f"overall.{key} ({overall_total!r}) — a book counted in the frozen headline "
+                "has no row on the public grid"
+            )
 
     return violations
 

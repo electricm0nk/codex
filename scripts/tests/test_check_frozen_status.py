@@ -54,6 +54,39 @@ class FrozenStatusCheckTests(unittest.TestCase):
         finally:
             tmp.unlink(missing_ok=True)
 
+    def test_committed_book_denominators_sum_to_overall(self):
+        """SD-36 Epic B round-5: a book with real units counted in the frozen
+        100% headline but omitted from overview["books"] (no public grid
+        row) must fail loudly, not just show up as a quiet grid gap."""
+        overview = json.loads((_REPO_ROOT / "site" / "status-data.json").read_text())
+        book_denominator = sum(b["denominator"] for b in overview["books"])
+        book_done = sum(b["done"] for b in overview["books"])
+        self.assertEqual(book_denominator, overview["overall"]["denominator"])
+        self.assertEqual(book_done, overview["overall"]["done"])
+
+    def test_book_denominator_gap_is_a_violation(self):
+        scratch = json.loads((_REPO_ROOT / "site" / "status-data.json").read_text())
+        # Drop one real book's row from the list while leaving overall alone
+        # -- reproduces the round-5 finding (units counted in the headline,
+        # no row on the grid) without touching the committed fixtures.
+        self.assertTrue(scratch["books"], "fixture has no books to drop")
+        dropped = scratch["books"].pop()
+        tmp = pathlib.Path(pathlib.Path(__file__).parent / "_scratch_status_data_gap.json")
+        try:
+            tmp.write_text(json.dumps(scratch))
+            violations = cfs.check(status_data_path=tmp, book_dir=_REPO_ROOT / "site" / "status-data")
+            self.assertTrue(
+                any("sum of book denominator" in v for v in violations),
+                "\n".join(violations),
+            )
+            self.assertTrue(
+                any("sum of book done" in v for v in violations),
+                "\n".join(violations),
+            )
+        finally:
+            tmp.unlink(missing_ok=True)
+        self.assertGreater(dropped["denominator"], 0)
+
 
 if __name__ == "__main__":
     unittest.main()
