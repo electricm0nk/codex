@@ -1482,7 +1482,8 @@ fn resolve_alternate_trait_choices(
             id: "race.alternate_trait.mutually_exclusive".to_owned(),
             message: format!(
                 "{} and {} cannot both be taken: ARG's own PREMULT self-exclusion guard on {} \
-                 names {}, which {} sets (arg_abilities_race.lst)",
+                 names {}, which {} sets (per the Advanced Race Guide's own exclusion rule for \
+                 that trait)",
                 conflict.name, conflict.blocked_by_name, conflict.name, conflict.flag,
                 conflict.blocked_by_name
             ),
@@ -5472,6 +5473,14 @@ mod tests {
                     .expect("the refusal must name the guard");
                 assert!(diagnostic.claim_blocking);
                 assert!(diagnostic.message.contains("Dwarf_Replace"), "{}", diagnostic.message);
+                // SD-36 Epic A / D6: a player-facing diagnostic must never name
+                // a PCGen source file. `arg_abilities_race.lst` leaked through
+                // here; the wording now names the rule neutrally instead.
+                assert!(
+                    !diagnostic.message.contains(".lst"),
+                    "diagnostic must not name a PCGen source file: {}",
+                    diagnostic.message
+                );
             }
         }
     }
