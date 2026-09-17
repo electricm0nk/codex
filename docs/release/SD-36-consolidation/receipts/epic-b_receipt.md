@@ -229,7 +229,14 @@ the plan" below.
 ## Verification
 
 - `python3 -m unittest` on every touched/new Python test file: green
-  (`test_build_public_status.py` 40/40, `test_check_frozen_status.py` 4/4,
+  (`test_build_public_status.py` 40/40, `test_check_frozen_status.py`
+  **6/6** (superseded by fix cycle round 5 item 1: the file grew from 4 to
+  6 tests when round-5 ruling (h) added `test_committed_book_denominators_sum_to_overall`
+  and `test_book_denominator_gap_is_a_violation`, the regression tests for
+  the 7-missing-books defect that ruling caught. Re-run:
+  `python3 -m unittest -v scripts/tests/test_check_frozen_status.py` →
+  Ran 6 tests, OK. The prior 4/4 figure recorded here is stale as of round
+  5; see "Fix cycle round 5" item 1 below for the full disposition),
   `test_completion_atlas.py` **42/42** (superseded by fix cycle round 3
   item 8: `test_bucket_u_matches_named_population` no longer pins the stale
   literal 202 — it now asserts bucket U against a second, independent count
@@ -687,3 +694,86 @@ the export and the background `verify.sh` call were two separate Bash
 calls. Left the mis-filed record as-is (append-only log); recorded a
 correction event under this epic's own shard naming it:
 `1789630728270-sd36-epic-b-48b2c3`.
+
+## Fix cycle round 6 (2026-09-17)
+
+A third-party verification pass on the round-5 landed commit (`69a7d99852`)
+found 3 problems, all inside this epic's own write scope. Rulings (a)-(g)
+were re-checked against HEAD `69a7d99852` before doing new work and all
+were still satisfied by rounds 1-5 (`seeded_current_truth` grep 0;
+`pilot_compute`/`class_spell_levels.rs` scope-widenings in place;
+`testing.md`'s figures reproduce; `license-matrix.md` lines 26/29 already
+say FROZEN; `test_completion_atlas.py` 42/42; `verify-baselines.env`'s
+opening sentence already names the runs behind 7855/412) — so all 3 new
+findings needed real work this round.
+
+1. **`scripts/tests/test_check_frozen_status.py` had no verify.sh stage
+   running it.** `git grep -n test_check_frozen_status -- scripts .github`
+   returned only the script's own docstring — no stage in `scripts/verify.sh`
+   and no `.github/workflows` file invoked it. This meant the round-5
+   regression tests written for ruling (h) —
+   `test_committed_book_denominators_sum_to_overall` and
+   `test_book_denominator_gap_is_a_violation`, which pin the exact
+   7-missing-books defect that ruling caught — were unexecuted by the
+   repo's gate, so that defect shape could silently recur undetected.
+   Fixed at source: added a new `site-status-frozen-check-selftest` stage
+   to `scripts/verify.sh` (in both `ALL_STAGES` and `QUICK_STAGES`, right
+   after `site-status-frozen-check`, same shape/posture as the sibling
+   `doneness-selftest`/`build-public-status-selftest`/`pi-redaction-selftest`
+   self-test stages already in the file — cheap stdlib `unittest`, no
+   build, no network), registered in the stage-dispatch `case` block, and
+   ran it: `bash scripts/verify.sh --only site-status-frozen-check-selftest`
+   → `PASS site-status-frozen-check-selftest (6 cases passed)`.
+2. **`docs/architecture/status.md` had no SD-36 closure epilogue and 9
+   live-voice citations of retired instruments.** The SD-36 design plan
+   §4 "Docs and skills" required `status.md` to "add the epilogue section
+   and mark the corpus-coverage sections historical"; the whole-epic diff
+   touched the file with exactly one deleted table row
+   (`git diff --stat 9a650cfd41..69a7d99852 -- docs/architecture/status.md`
+   → 1 deletion) and carried zero `SD-36` mentions
+   (`grep -c 'SD-36' docs/architecture/status.md` → 0 before this fix).
+   Every sibling architecture doc (`conventions.md`, `desktop-app.md`,
+   `overview.md`, `rules-data-tables.md`, `rules-engine.md`, `testing.md`)
+   already carries an explicit `(retired, SD-36 D3)` marker at each
+   live-voice reference to the retired instruments. Fixed at source: added
+   a `**SD-36 Epic B closure epilogue (2026-09-17, operator ruling D3)**`
+   paragraph to the file's header block (same convention every prior SD
+   closure used in this file — SD-32/SD-33/SD-35 all have one), naming
+   `v06_work_inventory.rs`, `support_state_matrix.rs` + its desktop bridge,
+   and `reach_gate.rs` as retired, stating that every "Corpus coverage"
+   section below is historical narrative about a retired instrument, and
+   pointing to the frozen `site/status-data.json` public snapshot as the
+   one live corpus-completion figure. Then marked all 9 live-voice
+   citations `(retired, SD-36 D3)` inline: the single `reach_gate` mention
+   (line 314 post-fix) and all 8 `v06_work_inventory` mentions
+   (`grep -c v06_work_inventory docs/architecture/status.md` → 8 before
+   this fix, matching the verifier's count exactly), at lines 334, 339,
+   378, 441, 1179, 1316, 1325, 1334 post-fix.
+3. **Receipt line 232 stated `test_check_frozen_status.py` 4/4, stale
+   since round 5.** The file now holds 6 tests
+   (`python3 -m unittest scripts/tests/test_check_frozen_status.py` →
+   Ran 6 tests, OK) after round-5 ruling (h) added the 2 regression tests
+   named in finding 1 above. Every neighbouring superseded figure in the
+   same "## Verification" list (e.g. the `test_completion_atlas.py` 42/42
+   entry two lines below) carries an inline "superseded by fix cycle
+   round N" note; this one did not. Fixed at source: reworded the line to
+   **6/6** with an inline note pointing at this round's own item 1 and the
+   round-5 disposition, matching the neighbouring entry's style exactly.
+
+Re-verified this round: `bash scripts/verify.sh --only
+site-status-frozen-check-selftest --only site-status-frozen-check --only
+site-public-status-check --only site-public-status-pi-gate --only
+build-public-status-selftest` → **RESULT: PASS**, 5/5 stages
+(`site-status-frozen-check-selftest`: 6 cases passed;
+`site-public-status-pi-gate`: 38 files scanned against 1,612 declared-PI
+names, zero leaked), log `/tmp/codex-verify-GWoaPY` (tee'd to
+`/tmp/claude-1000/-home-ubuntu-workspace-repos-codex/d7b37005-8466-4968-b248-1a4983d15f82/scratchpad/epic-b-fix6-verify.log`).
+`bash -n scripts/verify.sh`: syntax OK. No Rust files touched this round
+(only `scripts/verify.sh`, `docs/architecture/status.md`, and this
+receipt), so per the same posture ruling (h) established for round 5, a
+full `bash scripts/verify.sh` pass was not required or re-run. This
+round's auto-emitted verification record landed correctly under this
+epic's own shard (`RETRO_ACTOR=sd36-epic-b` exported in the same Bash
+invocation that ran `verify.sh`, avoiding the misfile hazard rounds 4/5
+each hit): `docs/retro/events/sd36-epic-b.jsonl` event
+`1789631705336-sd36-epic-b-08bd06`.

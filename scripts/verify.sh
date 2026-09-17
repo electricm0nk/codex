@@ -107,8 +107,8 @@ ONLY_STAGES=()
 # §4.1, 5 of 34) and a ~490-binary root-full build is exactly what tips a box
 # over — it must fail loudly before that build starts, not be discovered by
 # `ld terminated with signal 7 [Bus error]` partway through it.
-ALL_STAGES=(preflight-disk preflight-oracle oracle-pin-selftest producer-selftest doneness-selftest pi-redaction-selftest provenance-selftest site-status-frozen-check site-dashboard-pi-gate build-public-status-selftest site-public-status-check site-public-status-pi-gate site-asset-stamp-check reachability-audit-selftest reachability-audit groundtruth-guard-selftest supersession-gate-selftest shape-coverage-standing-gate-selftest shape-coverage-standing-gate cycle-scope-gate-selftest missing-engine-tables denominator-gate figure-provenance pcgen-residue-gate token-coverage-selftest token-coverage pi-sweep declared-pi-audit audit-selftest reclaim-selftest driver-selftest corpus-sweep-selftest corpus-trap-audit-selftest root-lib root-full desktop corpus-sweep sheet-rules-check corpus-trap-audit supersession-gate frontend-install frontend-test frontend-typecheck clippy class-dump)
-QUICK_STAGES=(preflight-disk preflight-oracle oracle-pin-selftest producer-selftest doneness-selftest pi-redaction-selftest provenance-selftest site-status-frozen-check site-dashboard-pi-gate build-public-status-selftest site-public-status-check site-public-status-pi-gate site-asset-stamp-check reachability-audit-selftest reachability-audit groundtruth-guard-selftest supersession-gate-selftest shape-coverage-standing-gate-selftest shape-coverage-standing-gate cycle-scope-gate-selftest missing-engine-tables denominator-gate figure-provenance pcgen-residue-gate token-coverage-selftest token-coverage pi-sweep declared-pi-audit audit-selftest reclaim-selftest driver-selftest corpus-sweep-selftest corpus-trap-audit-selftest root-lib frontend-install frontend-test frontend-typecheck class-dump)
+ALL_STAGES=(preflight-disk preflight-oracle oracle-pin-selftest producer-selftest doneness-selftest pi-redaction-selftest provenance-selftest site-status-frozen-check site-status-frozen-check-selftest site-dashboard-pi-gate build-public-status-selftest site-public-status-check site-public-status-pi-gate site-asset-stamp-check reachability-audit-selftest reachability-audit groundtruth-guard-selftest supersession-gate-selftest shape-coverage-standing-gate-selftest shape-coverage-standing-gate cycle-scope-gate-selftest missing-engine-tables denominator-gate figure-provenance pcgen-residue-gate token-coverage-selftest token-coverage pi-sweep declared-pi-audit audit-selftest reclaim-selftest driver-selftest corpus-sweep-selftest corpus-trap-audit-selftest root-lib root-full desktop corpus-sweep sheet-rules-check corpus-trap-audit supersession-gate frontend-install frontend-test frontend-typecheck clippy class-dump)
+QUICK_STAGES=(preflight-disk preflight-oracle oracle-pin-selftest producer-selftest doneness-selftest pi-redaction-selftest provenance-selftest site-status-frozen-check site-status-frozen-check-selftest site-dashboard-pi-gate build-public-status-selftest site-public-status-check site-public-status-pi-gate site-asset-stamp-check reachability-audit-selftest reachability-audit groundtruth-guard-selftest supersession-gate-selftest shape-coverage-standing-gate-selftest shape-coverage-standing-gate cycle-scope-gate-selftest missing-engine-tables denominator-gate figure-provenance pcgen-residue-gate token-coverage-selftest token-coverage pi-sweep declared-pi-audit audit-selftest reclaim-selftest driver-selftest corpus-sweep-selftest corpus-trap-audit-selftest root-lib frontend-install frontend-test frontend-typecheck class-dump)
 
 usage() {
     sed -n '3,48p' "${BASH_SOURCE[0]}" | sed 's/^# \{0,1\}//'
@@ -616,6 +616,55 @@ run_site_status_frozen_check() {
     fi
 
     stage_pass site-status-frozen-check "site/status-data.json is frozen at 100%"
+}
+
+# ---------------------------------------------------------------------------
+# Stage: site-status-frozen-check-selftest
+#
+# Runs `python3 -m unittest scripts/tests/test_check_frozen_status.py` --
+# the self-test for `scripts/site/check_frozen_status.py` itself (the
+# `run_site_status_frozen_check` stage above only exercises `check()`
+# against whatever is currently committed under `site/status-data*`; this
+# stage exercises the checker's OWN logic against synthetic fixtures, the
+# same "a self-test for a screen that raises on purpose deserves its own
+# gate" reasoning `producer-selftest`/`pi-redaction-selftest`/
+# `provenance-selftest`/`doneness-selftest`/`build-public-status-selftest`
+# already hold). Added SD-36 Epic B fix cycle round 6: the round-5 regression
+# tests written for ruling (h) -- `test_committed_book_denominators_sum_to_overall`
+# and `test_book_denominator_gap_is_a_violation`, which pin the exact
+# 7-missing-books defect that ruling caught -- previously had no verify.sh
+# stage running them at all, so a future regression of that same defect
+# shape would go undetected by the gate. Cheap (stdlib unittest, no build,
+# no network) -- in BOTH stage sets next to `site-status-frozen-check`.
+# ---------------------------------------------------------------------------
+
+run_site_status_frozen_check_selftest() {
+    stage_start "site-status-frozen-check-selftest — python3 -m unittest scripts/tests/test_check_frozen_status.py"
+    local log="$LOG_DIR/site-status-frozen-check-selftest.log"
+    local script="$REPO_ROOT/scripts/tests/test_check_frozen_status.py"
+
+    if [[ ! -f "$script" ]]; then
+        stage_fail site-status-frozen-check-selftest "self-test script missing at scripts/tests/test_check_frozen_status.py"
+        return
+    fi
+
+    ( cd "$REPO_ROOT" && exec python3 -m unittest -v "$script" ) >"$log" 2>&1
+    local status=$?
+
+    local ran
+    ran=$(sed -n 's/^Ran \([0-9]*\) tests\? in .*$/\1/p' "$log" | tail -1)
+
+    if (( status != 0 )); then
+        stage_fail site-status-frozen-check-selftest "self-test exit $status${ran:+; ran $ran} — $log"
+        return
+    fi
+
+    if [[ -z "$ran" || "$ran" -eq 0 ]]; then
+        stage_fail site-status-frozen-check-selftest "0 cases ran — the self-test asserts nothing — $log"
+        return
+    fi
+
+    stage_pass site-status-frozen-check-selftest "$ran cases passed"
 }
 
 # ---------------------------------------------------------------------------
@@ -2437,6 +2486,7 @@ for stage in "${SELECTED[@]}"; do
         pi-redaction-selftest) run_pi_redaction_selftest ;;
         provenance-selftest) run_provenance_selftest ;;
         site-status-frozen-check) run_site_status_frozen_check ;;
+        site-status-frozen-check-selftest) run_site_status_frozen_check_selftest ;;
         site-dashboard-pi-gate) run_site_dashboard_pi_gate ;;
         build-public-status-selftest) run_build_public_status_selftest ;;
         site-asset-stamp-check) run_site_asset_stamp_check ;;
