@@ -579,6 +579,19 @@ pub fn convert_record(tree: &PinnedTree, index: &CorpusIndex, record: &RecordRef
     if lines.is_empty() {
         lines.push(Line { seq: None, suffix: None, label: label.clone(), value: SheetValue::Text, also: Vec::new(), target: None, bonus_type: None, applies: Applies::Always, prose: Vec::new() });
     }
+    // SD-36 Epic E CONV-02: a single-line record's one line IS the record -- the assembled
+    // (OUTPUTNAME/PI-aware) `label` above is always right for it, and must never be second-
+    // guessed by comparing text, because the generic BONUS branch's own label format is
+    // LITERALLY `"{record.name} ({words})"` (see `bonus_targets`'s callers below) -- never
+    // equal to bare `record.name`, by construction, even when this is the record's only line
+    // (`core_rulebook:race_trait:human_ability_scores`'s sole line is
+    // "+2 to One Ability Score (ability bonus picks)", not "+2 to One Ability Score", even
+    // though the record IS that single ability-bonus pick and nothing else). Comparing
+    // `line.label == record.name` caught the Wolf/Staff MULTI-line cases only by coincidence
+    // (a record's other lines rarely collide with its own name) and broke every single-line
+    // record built this way. The real, precise line is "does a LATER line exist that this
+    // line's assembled label could be discarding" -- exactly `lines.len() > 1`.
+    let is_multi_line = lines.len() > 1;
     let mut principal_also = std::mem::take(&mut acc.also);
     for (i, line) in lines.into_iter().enumerate() {
         let id = match (&line.suffix, i) {
@@ -602,25 +615,19 @@ pub fn convert_record(tree: &PinnedTree, index: &CorpusIndex, record: &RecordRef
             // and derived alike.
             //
             // SD-36 Epic E CONV-02: the principal line (`i == 0`) only inherits the
-            // OUTPUTNAME-aware `label` computed above when it was itself pushed with the bare
-            // record name as a placeholder (`line.label == record.name`, e.g. the primary
-            // DAMAGE/UDAM line). A line that computed its OWN distinct descriptive label (a
-            // BONUS target's words, a spell-like ability's spell name, a natural attack's own
-            // name) keeps it, whichever index it lands at -- before this, the Wolf's Survival
-            // "track by scent" bonus printed as bare "Wolf" only because it happened to be the
-            // first BONUS row the closure walk reached, while its 6 sibling ability-score lines
-            // (never first) always kept their own labels correctly.
-            //
-            // `kind` in `{"equipment", "class"}` is the one exception: an item's principal row
-            // is the item a player holds and looks up by name (CONV-04), and a class's
-            // principal row is the class itself (`pilot_compute::class_chassis_sheet_rules`
-            // reads `principal.label` as the class's own display name) -- neither is one of the
-            // several effects the record grants, so the label always stays the record's own
-            // name even when, e.g., a Staff's first charge (a `SPELLS` line, "Dispel Magic") or
-            // a class's first chassis row (a `BONUS:COMBAT|BASEAB` line, "Warrior (base
-            // attack)") happens to be the first line pushed -- later lines already print their
-            // own descriptive labels via the `i != 0` branch below regardless of this rule.
-            label: strip_editorial_not_implemented_markers(&if i == 0 && (line.label == record.name || matches!(record.kind.as_str(), "equipment" | "class")) { label.clone() } else { line.label }),
+            // OUTPUTNAME-aware `label` computed above ONLY for a single-line record (see
+            // `is_multi_line` above) or for `kind` in `{"equipment", "class"}` -- an item's
+            // principal row is the item a player holds and looks up by name (CONV-04), and a
+            // class's principal row is the class itself
+            // (`pilot_compute::class_chassis_sheet_rules` reads `principal.label` as the
+            // class's own display name), so neither is one of the several effects the record
+            // grants even when it has more than one line. Every OTHER multi-line record's
+            // first line keeps its own distinct descriptive label, whichever index it lands
+            // at -- before this, the Wolf's Survival "track by scent" bonus printed as bare
+            // "Wolf" only because it happened to be the first BONUS row the closure walk
+            // reached, while its 6 sibling ability-score lines (never first) always kept their
+            // own labels correctly.
+            label: strip_editorial_not_implemented_markers(&if i == 0 && (!is_multi_line || matches!(record.kind.as_str(), "equipment" | "class")) { label.clone() } else { line.label }),
             value: line.value,
             also,
             prose: line_prose,
