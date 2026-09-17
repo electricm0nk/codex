@@ -165,13 +165,16 @@ paired, back-to-back, on a quiet box
 **Write integration tests into an existing family binary, not a new file**, unless the family is
 genuinely new. One more top-level `tests/<name>.rs` is one more link on every build anyone ever runs.
 
-### `scripts/verify.sh` — 49 stages
+### `scripts/verify.sh` — 45 stages
 
-`ALL_STAGES` is 49 stages; `--quick` runs 42 of them
+`ALL_STAGES` is 45 stages; `--quick` runs 38 of them
 (`python3 -c "import re;s=open('scripts/verify.sh').read();print(len(re.search(r'ALL_STAGES=\((.*?)\)',s,re.S).group(1).split()))"`).
 `scripts/verify.sh --list` prints the full/quick membership table. SD-35 added
 `cycle-scope-gate-selftest`, `pcgen-residue-gate`, `token-coverage-selftest`, `token-coverage`,
-and `sheet-rules-check`.
+and `sheet-rules-check`. SD-36 Epic B retired `site-dashboard-selftest`, `site-dashboard-pin`,
+`site-dashboard-check`, `shape-engine-boundary-selftest`, `shape-engine-boundary`, and `reach`
+(the live dashboard producer and reach-gate audit those stages exercised are gone — see
+`docs/work-inventory.FROZEN.md`), and added `site-status-frozen-check` and `doneness-selftest`.
 
 ### The four gates a cycle runs without a build
 
@@ -183,15 +186,17 @@ caught at the wrap-up is a failure the offending cycle already pushed:
 python3 scripts/pcgen_residue_gate.py --check        # live PCGen surface; monotonic, only goes down
 python3 scripts/token_coverage.py --check            # the remainder, named by token type, counts summing
 python3 scripts/denominator_gate.py --check-provenance  # NOT the same flag as --check
-./scripts/publish-site-dashboard.sh --check-pin      # the dashboard feed's one input, re-hashed
+python3 scripts/site/check_frozen_status.py          # the frozen PF1e public status snapshot, re-checked
 ```
 
 `--check` and `--check-provenance` are **different checks** and neither substitutes for the other:
 `--check` scans for unsourced figures by path; `--check-provenance` enforces that every figure in
 a "Figures + their re-derive commands" section carries its command **on its own line**.
-Likewise `--check-pin` watches one input of the dashboard feed in milliseconds; the full
-`publish-site-dashboard.sh --check` costs ~15 minutes of real producer time and catches staleness
-the pin cannot see. Both stages exist for that reason.
+`check_frozen_status.py` (SD-36 D3/D5) replaced the retired `publish-site-dashboard.sh
+--check-pin`/`--check` pair: the public status feed is now a frozen, committed snapshot
+(`docs/work-inventory.FROZEN.md`), not a live-regenerated one, so there is nothing left to
+stale-check against a producer — this gate only asserts the committed snapshot has not silently
+drifted from its frozen values.
 
 **The gate checks that a command is present and resolvable, not that it runs.** After adding a
 figure row, execute its command and confirm it prints the value you wrote.

@@ -15,11 +15,31 @@ its own kept test suite (`scripts/tests/test_pf1e_dashboard_producer.py`,
 the `producer-selftest` verify.sh stage) exercises its copy directly, and
 touching a 5,000+-line file with its own 1,000+-line test suite is a
 bigger, riskier change than this extraction's own scope. This module is
-therefore a second, independent copy of the same logic, proved identical
-to the producer's own `doneness_verdict` across every (wiring_class,
-status, kind) combination both modules define at extraction time (260 of
-260 match); a future cycle that actually deletes the producer should treat
-this module as the surviving, canonical one.
+therefore a second, independent copy of the same logic, proved identical to
+the producer's own `doneness_verdict` across every (wiring_class, status,
+kind) combination both modules define -- 1,300 of 1,300 match (5
+`WIRING_CLASS_VALUES` x the 13 status words this function's own branches
+resolve without raising x the 19 `kind` values in `docs/work-inventory.json`
+plus `None`), re-derived with:
+
+    python3 -c "
+    import sys,json,itertools
+    sys.path.insert(0,'scripts/observer')
+    import doneness as D, pf1e_dashboard_producer as P
+    inv=json.load(open('docs/work-inventory.json'))
+    kinds=sorted(set(u.get('kind') for u in inv['units']))+[None]
+    ws=list(P.WIRING_CLASS_VALUES)
+    ss=['deferred-with-reason','engine-does-not-hold','not-started','sheet-complete',
+        'unknown','unmeasurable','grounded','text-complete','ingested-magnitude',
+        'literal-verified','fixture-verified','oracle-agree','oracle-unverifiable']
+    combos=list(itertools.product(ws,ss,kinds))
+    mism=[c for c in combos if D.doneness_verdict(*c)!=P.doneness_verdict(*c)]
+    print('combos=%d mismatches=%d excluded_books_equal=%s' % (len(combos), len(mism), D.EXCLUDED_BOOKS==P.EXCLUDED_BOOKS))
+    "
+    # -> combos=1300 mismatches=0 excluded_books_equal=True
+
+a future cycle that actually deletes the producer should treat this module
+as the surviving, canonical one.
 """
 
 # CLOSED 2026-08-24 (`decisions.md §27b`, operator ruling 2026-08-23:

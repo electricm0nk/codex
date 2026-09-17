@@ -1,67 +1,155 @@
 {
   "buckets": {
     "A": {
+      "citation": {
+        "anchor": [
+          "Kind::Companion => engine_does_not_hold(\"companion_content_has_no_engine_table\"),"
+        ],
+        "context_fn": "classify",
+        "file": "src/bin/v06_work_inventory.rs",
+        "resolved_line": 16643
+      },
       "clears": "building the table (Epic 2)",
       "count": 0,
       "evidence_source": "src/bin/v06_work_inventory.rs (evidence contains 'has_no_engine_table')",
       "meaning": "engine has no table for this kind"
     },
     "B": {
+      "citation": {
+        "anchor": [
+          "return engine_does_not_hold(\"class_feature_option_pool_record_not_held_by_engine\");"
+        ],
+        "context_fn": "classify",
+        "file": "src/bin/v06_work_inventory.rs",
+        "resolved_line": 16242
+      },
       "clears": "placing the record (Epic 3/4)",
       "count": 0,
       "evidence_source": "src/bin/v06_work_inventory.rs (evidence contains 'not_held_by_engine' / 'absent_from' / 'not_modelled')",
       "meaning": "table exists, record not in it"
     },
     "C": {
+      "citation": {
+        "anchor": [
+          "engine_does_not_hold(\"no_explanation_id_and_no_diagnostic_names_this_feature\")"
+        ],
+        "context_fn": "classify",
+        "file": "src/bin/v06_work_inventory.rs",
+        "resolved_line": 16548
+      },
       "clears": "wiring the display/explanation path (Epic 3)",
       "count": 0,
       "evidence_source": "src/bin/v06_work_inventory.rs (evidence contains 'explanation_id' / 'diagnostic')",
       "meaning": "held and computed, never surfaced"
     },
     "D": {
+      "citation": {
+        "anchor": [
+          "let engine_does_not_hold = |evidence: &str| Verdict {",
+          "status: \"engine-does-not-hold\","
+        ],
+        "context_fn": "classify",
+        "file": "src/bin/v06_work_inventory.rs",
+        "resolved_line": 13576
+      },
       "clears": "per named sub-cause",
       "count": 0,
       "evidence_source": "src/bin/v06_work_inventory.rs (status == engine-does-not-hold, no other bucket matched)",
       "meaning": "other engine gap (sub-causes enumerated, never a shrug)"
     },
     "DONE": {
+      "citation": {
+        "anchor": [
+          "if let Some(bonus) = grounded_magnitude {",
+          "return Verdict {",
+          "status: \"grounded\","
+        ],
+        "context_fn": "simple_kind_verdict",
+        "file": "src/bin/v06_work_inventory.rs",
+        "resolved_line": 13348
+      },
       "clears": "\u2014",
       "count": 49450,
       "evidence_source": "src/bin/v06_work_inventory.rs (status in {grounded, text-complete, oracle-agree, oracle-unverifiable, sheet-complete})",
       "meaning": "nothing remains"
     },
     "M": {
+      "citation": {
+        "anchor": [
+          "status: \"ingested-magnitude\",",
+          "evidence: format!(\"{kind_label}_table_holds_record_magnitude_not_yet_computed\"),"
+        ],
+        "context_fn": "simple_kind_verdict",
+        "file": "src/bin/v06_work_inventory.rs",
+        "resolved_line": 13359
+      },
       "clears": "running the compute path (shape engine)",
       "count": 0,
       "evidence_source": "src/bin/v06_work_inventory.rs (status == ingested-magnitude)",
       "meaning": "magnitude ingested, never computed or applied"
     },
     "U": {
+      "citation": {
+        "anchor": [
+          "status: \"unmeasurable\",",
+          "evidence: \"feat_served_description_is_a_placeholder_marker_not_prose\".to_string(),"
+        ],
+        "context_fn": "classify",
+        "file": "src/bin/v06_work_inventory.rs",
+        "resolved_line": 13664
+      },
       "clears": "instrument correction",
       "count": 0,
       "evidence_source": "src/bin/v06_work_inventory.rs (status == unmeasurable)",
       "meaning": "instrument cannot express a verdict"
     },
     "V": {
+      "citation": {
+        "anchor": [
+          "item.verdict.status = \"literal-verified\";"
+        ],
+        "context_fn": "apply_done_rung_stamps",
+        "file": "src/bin/v06_work_inventory.rs",
+        "resolved_line": 17489
+      },
       "clears": "the SD-33 oracle harness (scripts/oracle_harness/)",
       "count": 0,
       "evidence_source": "src/bin/v06_work_inventory.rs (status in {literal-verified, fixture-verified})",
       "meaning": "verified by proxy, never by the oracle"
     },
     "X": {
+      "citation": {
+        "anchor": [
+          "status: \"deferred-with-reason\",",
+          "evidence: \"engine_diagnostic:ultimate_campaign::feat_tables::DEFERRED_WITH_REASON\""
+        ],
+        "context_fn": "classify",
+        "file": "src/bin/v06_work_inventory.rs",
+        "resolved_line": 13624
+      },
       "clears": "revisiting the stated condition",
       "count": 0,
       "evidence_source": "src/bin/v06_work_inventory.rs (status == deferred-with-reason)",
       "meaning": "deferred with a stated reason"
     },
     "Z": {
+      "citation": {
+        "anchor": [
+          "status: \"not-started\",",
+          "evidence: \"no_compiled_rule_set_for_book\".to_string(),"
+        ],
+        "context_fn": "classify",
+        "file": "src/bin/v06_work_inventory.rs",
+        "resolved_line": 13485
+      },
       "clears": "ordinary work",
       "count": 0,
       "evidence_source": "src/bin/v06_work_inventory.rs (status == not-started)",
       "meaning": "not started"
     }
   },
-  "derived_at": "82e2439ab202e9120f2fb4a46ac3ea9cb3da02d3",
+  "citation_failures": [],
+  "derived_at": "770bfacc131cd63295587a0d0a5f5c05e86a11f1",
   "done_evidence_violation_ids": [],
   "done_evidence_violations": 0,
   "missing_clearing_mechanisms": [],

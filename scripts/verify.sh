@@ -587,9 +587,9 @@ run_provenance_selftest() {
 # snapshot still reads pct=100.0, denominator=49450, not_started=0,
 # partial=0, the frozen generated_at stamp, and that every book's own
 # per-kind sums reconcile with its rollup. Cheap (Python + JSON, no build,
-# no cargo) -- in BOTH stage sets, the same posture `site-dashboard-check`
-# (retired) held. A failure here means the snapshot moved after the
-# freeze and needs operator review, not a re-regenerate-and-commit.
+# no cargo) -- in BOTH stage sets; this is the same posture the now-retired
+# `site-dashboard-check` stage held. A failure here means the snapshot moved
+# after the freeze and needs operator review, not a re-regenerate-and-commit.
 # ---------------------------------------------------------------------------
 
 run_site_status_frozen_check() {
@@ -634,7 +634,7 @@ run_site_status_frozen_check() {
 # cannot catch -- `declared-pi-audit` above is this exact same shape applied
 # to `data/corpus/`; this is that shape's `site/dashboard/` counterpart.
 # Cheap (a ~2.5s Paizo-scoped oracle sweep, no build) -- placed in BOTH stage
-# sets next to `site-dashboard-check`.
+# sets (formerly alongside the now-retired `site-dashboard-check`).
 # ---------------------------------------------------------------------------
 
 run_site_dashboard_pi_gate() {
@@ -753,9 +753,9 @@ run_site_asset_stamp_check() {
 # -- the operator's explicit self-maintaining requirement ("the data set...
 # needs to be a part of our normal process just like it is for our
 # pf1e-dashboard.html"), applied as its own named, directly-invoked gate
-# (rather than only transitively through `site-dashboard-check`'s call into
-# `scripts/publish-site-dashboard.sh --check`, which also reaches this same
-# script — see that script's own trailing step). Cheap (reads local repo
+# (historically only reachable transitively through the now-retired
+# `site-dashboard-check` stage's call into the also-deleted
+# `scripts/publish-site-dashboard.sh --check`). Cheap (reads local repo
 # files plus one pinned-oracle sweep for the redaction indices, no cargo
 # build), so it sits in both stage sets next to its own selftest and PI
 # gate. A failure here means: run
@@ -1353,7 +1353,7 @@ run_pcgen_residue_gate() {
 # self-test behind the `token-coverage` stage below, carrying the RED->GREEN
 # proof SD-35 `AT-35-E2-004` names: a planted double-count (one record twice
 # in the census, or one token twice on a record) fails the check; removing it
-# passes. Same shape as `shape-engine-boundary-selftest`: a zero case count is
+# passes. Same shape as the now-retired `shape-engine-boundary-selftest`: a zero case count is
 # a failure, not a vacuous pass. Cheap (Python, synthetic fixtures, no build)
 # -- in BOTH stage sets.
 # ---------------------------------------------------------------------------
@@ -2220,7 +2220,7 @@ run_corpus_trap_audit_selftest() {
 # **Own timeout wrapper is part of this stage's deliverable**
 # (`epic-breakdown.md`'s AT-34-E1-007 evidence, citing
 # `forward-scope-register.md D1.2`: a sibling stage,
-# `site-dashboard-check`, hung for two full 600s producer timeouts with
+# the now-retired `site-dashboard-check`, hung for two full 600s producer timeouts with
 # *no* wrapper in either `verify.sh` or the script it called, across three
 # separate diffs, before anyone noticed). `CORPUS_TRAP_AUDIT_TIMEOUT_S`
 # overrides the default, the same `${VAR:-default}` shape every other
