@@ -40,7 +40,7 @@ Lints the crate including its test targets, failing the build on any warning. Ve
 ```
 cd apps/desktop/src-tauri && cargo test --locked
 ```
-`apps/desktop/src-tauri` is a separate crate (`apps/desktop/src-tauri/Cargo.toml`, name `codex-desktop`) that depends on the root crate via a path dependency (`codex = { path = "../../.." }`). Its tests are **inline `#[cfg(test)]` modules**, not separate `tests/*.rs` files — the source files that carry one include `support_state_matrix_bridge.rs` (renamed from `sd13_support_state_matrix.rs` by SD-25 criterion 1.1), `spell_catalog.rs`, `corpus_fixtures.rs`, `race_catalog.rs`, `equipment_catalog.rs`, `main.rs`, `character_hub.rs`, `browser_handoff.rs`, `campaign_drive.rs`, `authoring_workbench.rs`, `class_catalog.rs`, `update/transaction.rs`, `characterHub/appendToCharacter.rs`, `characterHub/recomputeCharacter.rs`, `characterHub/reSaveCharacter.rs`, and — added by SD-25 Epic 3/5 — `rule_system_adapter.rs`, `pf1_adapter.rs`, `stub_adapter.rs`, `corpus_ingest_diagnostic.rs` (confirmed via `grep -rl "#\[cfg(test)\]" apps/desktop/src-tauri/src/`). SD-24 criterion 1.1 renamed the six `sd16_*`/`sd19_*`-prefixed files in this list to their current bare names (e.g. `sd19_spell_catalog.rs` → `spell_catalog.rs`, `sd16_browser_handoff.rs` → `browser_handoff.rs`); the command names they register (`list_spell_catalog`, `handoff_defect_report_to_browser`, etc.) did not change.
+`apps/desktop/src-tauri` is a separate crate (`apps/desktop/src-tauri/Cargo.toml`, name `codex-desktop`) that depends on the root crate via a path dependency (`codex = { path = "../../.." }`). Its tests are **inline `#[cfg(test)]` modules**, not separate `tests/*.rs` files — the source files that carry one include `spell_catalog.rs`, `corpus_fixtures.rs`, `race_catalog.rs`, `equipment_catalog.rs`, `main.rs`, `character_hub.rs`, `browser_handoff.rs`, `campaign_drive.rs`, `authoring_workbench.rs`, `class_catalog.rs`, `update/transaction.rs`, `characterHub/appendToCharacter.rs`, `characterHub/recomputeCharacter.rs`, `characterHub/reSaveCharacter.rs`, and — added by SD-25 Epic 3/5 — `rule_system_adapter.rs`, `pf1_adapter.rs`, `stub_adapter.rs`, `corpus_ingest_diagnostic.rs` (confirmed via `grep -rl "#\[cfg(test)\]" apps/desktop/src-tauri/src/`). (`support_state_matrix_bridge.rs` and `reach_gate.rs`, both formerly in this list, are retired, SD-36 D3.) SD-24 criterion 1.1 renamed the six `sd16_*`/`sd19_*`-prefixed files in this list to their current bare names (e.g. `sd19_spell_catalog.rs` → `spell_catalog.rs`, `sd16_browser_handoff.rs` → `browser_handoff.rs`); the command names they register (`list_spell_catalog`, `handoff_defect_report_to_browser`, etc.) did not change.
 
 ### Desktop frontend (TypeScript)
 
@@ -287,9 +287,11 @@ A **separate** artifact from the `key=value` character-input fixtures above, and
 of test entirely. It is the instrument that lets a `wiring_class: derived` unit reach `done`.
 
 **Why it exists.** `pf1e_dashboard_producer.doneness_verdict()` caps a `derived` unit at `held`
-however well it is wired, until the unit carries a `fixture-verified` stamp. The stamp is written
-by `v06_work_inventory::apply_done_rung_stamps()` from the report
-`bin/derived_evaluator_fixture_check` produces. So the bar for a `derived` unit is: *the engine's
+however well it is wired, until the unit carries a `fixture-verified` stamp. The stamp was written
+by `v06_work_inventory::apply_done_rung_stamps()` (that generator is retired, SD-36 D3;
+`docs/work-inventory.json` is now a frozen snapshot that already carries every stamp it ever
+wrote) from the report `bin/derived_evaluator_fixture_check` produces. So the bar for a `derived`
+unit was: *the engine's
 evaluator, run over this repo's own `data/corpus/` ingest, reproduces a value derived
 INDEPENDENTLY from the pinned PCGen oracle's `.lst` bytes.*
 

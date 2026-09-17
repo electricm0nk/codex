@@ -41,7 +41,7 @@ by whether a path is allowed to read PCGen's file format at all:
 
 | Side | Paths | May read PCGen? |
 |---|---|---|
-| **Converter / tools** — kept, intact, and reused for Starfinder | `src/pcgen_import/**` (including `cache_gen/`, which lived under `src/rules_core/` until SD-35 relocated it), `src/bin/sheet_rule_convert.rs`, `src/bin/gen_*`, `src/bin/enrich_*`, `src/bin/v06_work_inventory.rs`, `src/oracle_validation/**`, `scripts/**`, `tests/**` | **yes** |
+| **Converter / tools** — kept, intact, and reused for Starfinder | `src/pcgen_import/**` (including `cache_gen/`, which lived under `src/rules_core/` until SD-35 relocated it), `src/bin/sheet_rule_convert.rs`, `src/bin/gen_*`, `src/bin/enrich_*`, `src/oracle_validation/**`, `scripts/**`, `tests/**` | **yes** |
 | **Live** — everything that ships in the desktop binary's rule path | `src/rules_core/**`, `src/saved_character/**`, `src/campaign/**`, `src/homebrew_authoring/**`, `apps/desktop/**` | **no** |
 
 The live side therefore contains no PCGen token syntax (`BONUS:`, `DEFINE:`, `PRE*:`, `%CHOICE`,
@@ -74,7 +74,7 @@ depends on Tauri or any GUI framework; it is tested entirely through
 `cargo test` and the repo-root `tests/*.rs` integration suite. This is the
 plane the desktop app and, eventually, any other frontend would sit on top
 of. See [corpus-ingest.md](./corpus-ingest.md), [rules-engine.md](./rules-engine.md),
-[rules-data-tables.md](./rules-data-tables.md), [support-state-matrix.md](./support-state-matrix.md),
+[rules-data-tables.md](./rules-data-tables.md),
 [persistence.md](./persistence.md), and [homebrew-and-oracle.md](./homebrew-and-oracle.md).
 
 **The desktop app (`apps/desktop/`).** A React 18 + Tauri 2 application: a
@@ -126,7 +126,6 @@ flowchart TD
 
     subgraph tauri["apps/desktop/src-tauri/ — Tauri commands"]
         CH["character_hub.rs: create_character, load_saved_character, ..."]
-        SD13B["support_state_matrix_bridge.rs: read-only support-truth bridge"]
     end
 
     subgraph boundary["apps/desktop/src/boundary/*.ts"]
@@ -149,7 +148,6 @@ flowchart TD
     VM --> CH
     PCC2 --> CH
     CH --> BND --> UI
-    SD13B --> BND
 
     subgraph persist["side surfaces (headless, called from character_hub.rs / campaign_drive.rs)"]
         SAVED["saved_character/: SavedCharacterStore"]
@@ -162,9 +160,7 @@ flowchart TD
         COMP["composed_input.rs: compose() -> ComposedCharacterInput\n(no production caller; exercised by its own tests\nand tests/sd18_preloop_consumer_compose.rs)"]
         HB["homebrew_authoring/: PackageStore, PreviewBridge"]
         OV["oracle_validation/: GoldenCaseFixture, SelectedParityDimensions,\ncomparator/normalization/parity_report/pcgen_runner"]
-        SSM["support_state_matrix.rs: seeded_current_truth"]
     end
-    SD13B -.reads support truth.-> SSM
 ```
 
 `CharacterInput` (what the player chose) and `SourcePackageContent` (what the
@@ -176,13 +172,10 @@ production path, inside `pilot_compute_corpus.rs::compute_pilot_with_corpus`
 only by its own tests and `tests/sd18_preloop_consumer_compose.rs`, which is
 why it is drawn as a side surface. See [rules-engine.md](./rules-engine.md)
 §"The compute spine, end to end" for the full layer breakdown this diagram
-compresses. `homebrew_authoring/`, `oracle_validation/`, and
-`support_state_matrix.rs` are also side surfaces deliberately: none of
-them sits on the character-compute hot path above them, and
-`support_state_matrix.rs` in particular computes no mechanics at all — it is
-a documentary truth ledger the desktop bridge
-(`apps/desktop/src-tauri/src/support_state_matrix_bridge.rs`) reads read-only
-(see [support-state-matrix.md](./support-state-matrix.md)).
+compresses. `homebrew_authoring/` and `oracle_validation/` are also side
+surfaces deliberately: neither sits on the character-compute hot path above
+them. (The hand-seeded `support_state_matrix.rs` truth ledger and its
+read-only desktop bridge that used to appear here were retired, SD-36 D3.)
 
 ## Key invariants across all three planes
 
@@ -229,7 +222,6 @@ shaped the way it is:
 | `src/pcgen_import/` | PCGen `.pcc`/`.lst` parsing and canonical-IR projection | [corpus-ingest.md](./corpus-ingest.md) |
 | `src/rules_core/` (compute spine + per-domain engines) | `character_input.rs`, `composed_input.rs`, `pilot_compute.rs`, `pilot_compute_corpus.rs`, `contract.rs`, `spellbook.rs`, `skill_allocation.rs`, `feat_prereqs.rs`, `equipment_effects.rs`, `damage_total.rs`, `level_up.rs`, `encounters.rs`, `party_cr.rs` | [rules-engine.md](./rules-engine.md) |
 | `src/rules_core/rules_tables/` | Hand-transcribed per-book Paizo tables (`crb/`, `apg/`, `acg/`, `beastiary1/`) | [rules-data-tables.md](./rules-data-tables.md) |
-| `src/rules_core/support_state_matrix.rs` | Typed support/evidence-tier control-plane ledger | [support-state-matrix.md](./support-state-matrix.md) |
 | `src/saved_character/`, `src/campaign/` | Local on-disk persistence for one character / one campaign | [persistence.md](./persistence.md) |
 | `src/homebrew_authoring/`, `src/oracle_validation/` | Bounded homebrew package-authoring slice; the oracle-parity harness (comparator, normalization, parity-report writer, PCGen-runner wrapper) | [homebrew-and-oracle.md](./homebrew-and-oracle.md) |
 | `data/corpus/`, `data/stubs/` | Repo-resident JSON corpus cache — now six book directories (CRB, APG, ACG, Bestiary 1, Advanced Race Guide, Pathfinder Unchained; `ultimate_campaign` has no cache dir yet), written by eight distinct writers and stamped with `wiring_class` + PI-screened `license`/`pi_field`/`pi_marker`; `book_stub` future-state placeholders for the remaining out-of-scope books | [rules-data-tables.md](./rules-data-tables.md), [status.md](./status.md) |

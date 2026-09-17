@@ -107,8 +107,8 @@ ONLY_STAGES=()
 # §4.1, 5 of 34) and a ~490-binary root-full build is exactly what tips a box
 # over — it must fail loudly before that build starts, not be discovered by
 # `ld terminated with signal 7 [Bus error]` partway through it.
-ALL_STAGES=(preflight-disk preflight-oracle oracle-pin-selftest producer-selftest pi-redaction-selftest provenance-selftest site-dashboard-selftest site-dashboard-pin site-dashboard-check site-dashboard-pi-gate build-public-status-selftest site-public-status-check site-public-status-pi-gate site-asset-stamp-check reachability-audit-selftest reachability-audit groundtruth-guard-selftest supersession-gate-selftest shape-coverage-standing-gate-selftest shape-coverage-standing-gate cycle-scope-gate-selftest shape-engine-boundary-selftest shape-engine-boundary missing-engine-tables denominator-gate figure-provenance pcgen-residue-gate token-coverage-selftest token-coverage pi-sweep declared-pi-audit audit-selftest reclaim-selftest driver-selftest corpus-sweep-selftest corpus-trap-audit-selftest root-lib root-full desktop corpus-sweep sheet-rules-check corpus-trap-audit supersession-gate frontend-install frontend-test frontend-typecheck clippy class-dump)
-QUICK_STAGES=(preflight-disk preflight-oracle oracle-pin-selftest producer-selftest pi-redaction-selftest provenance-selftest site-dashboard-selftest site-dashboard-pin site-dashboard-check site-dashboard-pi-gate build-public-status-selftest site-public-status-check site-public-status-pi-gate site-asset-stamp-check reachability-audit-selftest reachability-audit groundtruth-guard-selftest supersession-gate-selftest shape-coverage-standing-gate-selftest shape-coverage-standing-gate cycle-scope-gate-selftest shape-engine-boundary-selftest shape-engine-boundary missing-engine-tables denominator-gate figure-provenance pcgen-residue-gate token-coverage-selftest token-coverage pi-sweep declared-pi-audit audit-selftest reclaim-selftest driver-selftest corpus-sweep-selftest corpus-trap-audit-selftest root-lib frontend-install frontend-test frontend-typecheck class-dump)
+ALL_STAGES=(preflight-disk preflight-oracle oracle-pin-selftest producer-selftest doneness-selftest pi-redaction-selftest provenance-selftest site-status-frozen-check site-dashboard-pi-gate build-public-status-selftest site-public-status-check site-public-status-pi-gate site-asset-stamp-check reachability-audit-selftest reachability-audit groundtruth-guard-selftest supersession-gate-selftest shape-coverage-standing-gate-selftest shape-coverage-standing-gate cycle-scope-gate-selftest missing-engine-tables denominator-gate figure-provenance pcgen-residue-gate token-coverage-selftest token-coverage pi-sweep declared-pi-audit audit-selftest reclaim-selftest driver-selftest corpus-sweep-selftest corpus-trap-audit-selftest root-lib root-full desktop corpus-sweep sheet-rules-check corpus-trap-audit supersession-gate frontend-install frontend-test frontend-typecheck clippy class-dump)
+QUICK_STAGES=(preflight-disk preflight-oracle oracle-pin-selftest producer-selftest doneness-selftest pi-redaction-selftest provenance-selftest site-status-frozen-check site-dashboard-pi-gate build-public-status-selftest site-public-status-check site-public-status-pi-gate site-asset-stamp-check reachability-audit-selftest reachability-audit groundtruth-guard-selftest supersession-gate-selftest shape-coverage-standing-gate-selftest shape-coverage-standing-gate cycle-scope-gate-selftest missing-engine-tables denominator-gate figure-provenance pcgen-residue-gate token-coverage-selftest token-coverage pi-sweep declared-pi-audit audit-selftest reclaim-selftest driver-selftest corpus-sweep-selftest corpus-trap-audit-selftest root-lib frontend-install frontend-test frontend-typecheck class-dump)
 
 usage() {
     sed -n '3,48p' "${BASH_SOURCE[0]}" | sed 's/^# \{0,1\}//'
@@ -440,6 +440,47 @@ run_producer_selftest() {
 }
 
 # ---------------------------------------------------------------------------
+# Stage: doneness-selftest
+#
+# Runs `python3 -m unittest scripts/tests/test_doneness.py` -- SD-36 D3
+# extracted `scripts/observer/doneness.py`'s doneness_verdict/EXCLUDED_BOOKS
+# out of the producer so `coverage_ledger.py` no longer needs the whole
+# 5,000+-line file; this self-test proves the extraction stays
+# byte-identical to the producer's own copy across every (wiring_class,
+# status, kind) combination both modules define. Cheap (Python, no build,
+# no network) -- in BOTH stage sets.
+# ---------------------------------------------------------------------------
+
+run_doneness_selftest() {
+    stage_start "doneness-selftest — python3 -m unittest scripts/tests/test_doneness.py"
+    local log="$LOG_DIR/doneness-selftest.log"
+    local script="$REPO_ROOT/scripts/tests/test_doneness.py"
+
+    if [[ ! -f "$script" ]]; then
+        stage_fail doneness-selftest "self-test script missing at scripts/tests/test_doneness.py"
+        return
+    fi
+
+    ( cd "$REPO_ROOT" && exec python3 -m unittest -v "$script" ) >"$log" 2>&1
+    local status=$?
+
+    local ran
+    ran=$(sed -n 's/^Ran \([0-9]*\) tests\? in .*$/\1/p' "$log" | tail -1)
+
+    if (( status != 0 )); then
+        stage_fail doneness-selftest "self-test exit $status${ran:+; ran $ran} — $log"
+        return
+    fi
+
+    if [[ -z "$ran" || "$ran" -eq 0 ]]; then
+        stage_fail doneness-selftest "0 cases ran — the self-test asserts nothing — $log"
+        return
+    fi
+
+    stage_pass doneness-selftest "$ran cases passed"
+}
+
+# ---------------------------------------------------------------------------
 # Stage: pi-redaction-selftest
 #
 # Runs `python3 -m unittest scripts/tests/test_pi_redaction.py` -- the
@@ -536,163 +577,45 @@ run_provenance_selftest() {
 }
 
 # ---------------------------------------------------------------------------
-# Stage: site-dashboard-selftest
+# Stage: site-status-frozen-check
 #
-# Runs `bash scripts/tests/test_publish_site_dashboard.sh` -- the detection
-# self-test for `scripts/publish-site-dashboard.sh`'s `--check` mode
-# (SD31-ATTRIB-003, operator request to version the public status feed).
-# Against a tiny FAKE producer (not the real one, so this is cheap and
-# deterministic), it proves `--check` reports "current" on an untouched
-# tree, is stable across repeated runs, catches a genuinely stale committed
-# copy, and never mutates the committed file on disk. Mutation-proven against
-# the real bug this cycle found and fixed: the first version of `--check`
-# rendered into a blank-slate scratch file instead of one seeded from the
-# committed copy, so it reported STALE unconditionally, even with nothing
-# changed -- sabotaging the seeding step reproduces exactly that (3 of 6
-# cases fail). Placed next to `producer-selftest`, same "self-test for a
-# check that raises on purpose deserves its own gate" reasoning.
+# SD-36 D3/D5 (docs/release/SD-36-consolidation): the PF1e public status
+# feed is now a FROZEN snapshot -- v06_work_inventory and the dashboard
+# producers that fed it are retired. Runs
+# `scripts/site/check_frozen_status.py` for real against the committed
+# site/status-data.json + site/status-data/<book>.json: asserts the
+# snapshot still reads pct=100.0, denominator=49450, not_started=0,
+# partial=0, the frozen generated_at stamp, and that every book's own
+# per-kind sums reconcile with its rollup. Cheap (Python + JSON, no build,
+# no cargo) -- in BOTH stage sets, the same posture `site-dashboard-check`
+# (retired) held. A failure here means the snapshot moved after the
+# freeze and needs operator review, not a re-regenerate-and-commit.
 # ---------------------------------------------------------------------------
 
-run_site_dashboard_selftest() {
-    stage_start "site-dashboard-selftest — bash scripts/tests/test_publish_site_dashboard.sh"
-    local log="$LOG_DIR/site-dashboard-selftest.log"
-    local script="$REPO_ROOT/scripts/tests/test_publish_site_dashboard.sh"
+run_site_status_frozen_check() {
+    stage_start "site-status-frozen-check — python3 scripts/site/check_frozen_status.py"
+    local log="$LOG_DIR/site-status-frozen-check.log"
+    local script="$REPO_ROOT/scripts/site/check_frozen_status.py"
 
     if [[ ! -f "$script" ]]; then
-        stage_fail site-dashboard-selftest "self-test script missing at scripts/tests/test_publish_site_dashboard.sh"
+        stage_fail site-status-frozen-check "script missing at scripts/site/check_frozen_status.py"
         return
     fi
 
-    bash "$script" >"$log" 2>&1
-    local status=$?
-
-    local tally
-    tally=$(sed -n 's/^passed: \([0-9]*\)  failed: \([0-9]*\)$/\1 passed, \2 failed/p' "$log" | tail -1)
-
-    if (( status != 0 )); then
-        stage_fail site-dashboard-selftest "self-test exit $status${tally:+; $tally} — $log"
-        return
-    fi
-
-    local passed
-    passed=$(sed -n 's/^passed: \([0-9]*\).*$/\1/p' "$log" | tail -1)
-    if [[ -z "$passed" || "$passed" -eq 0 ]]; then
-        stage_fail site-dashboard-selftest "0 cases ran — the self-test asserts nothing — $log"
-        return
-    fi
-
-    stage_pass site-dashboard-selftest "${tally:-$passed cases passed}"
-}
-
-# ---------------------------------------------------------------------------
-# Stage: site-dashboard-pin
-#
-# The fast half of the freshness gate, and the control for incident key
-# `site-dashboard-json-stale-after-inventory-move` (3 firings; 7 failing runs
-# of `site-dashboard-check`). `--check` below is correct but costs ~15 minutes
-# of real producer time (measured 904 s, 2026-09-10, HEAD 00e44eee02), which
-# is why it only ever ran at the ~90-minute epic wrap-up -- long after the
-# cycle that broke the feed had pushed. Every firing had one cause: the
-# inventory was regenerated and the feed derived from it was not.
-#
-# This stage re-hashes `docs/work-inventory.json` and compares it to the pin a
-# real publish recorded. Milliseconds, no producer, no cargo. The same command
-# is in `workflow-instruction.md` §6 step 3, so a cycle now goes red at its own
-# push gate instead of at the next wrap-up. It does NOT replace
-# `site-dashboard-check`: the pin watches one input, and a feed made stale by a
-# unit-ledger or owner-state change hashes clean here.
-# ---------------------------------------------------------------------------
-
-run_site_dashboard_pin() {
-    stage_start "site-dashboard-pin — scripts/publish-site-dashboard.sh --check-pin"
-    local log="$LOG_DIR/site-dashboard-pin.log"
-    local script="$REPO_ROOT/scripts/publish-site-dashboard.sh"
-
-    if [[ ! -f "$script" ]]; then
-        stage_fail site-dashboard-pin "script missing at scripts/publish-site-dashboard.sh"
-        return
-    fi
-
-    ( cd "$REPO_ROOT" && exec "$script" --check-pin ) >"$log" 2>&1
+    ( cd "$REPO_ROOT" && exec python3 "$script" ) >"$log" 2>&1
     local status=$?
 
     if (( status != 0 )); then
-        stage_fail site-dashboard-pin "the feed's recorded input moved — run ./scripts/publish-site-dashboard.sh and commit the refreshed feed — $log"
+        stage_fail site-status-frozen-check "exit $status — the frozen snapshot drifted — $log"
         return
     fi
 
-    if ! grep -q "input pin matches" "$log"; then
-        stage_fail site-dashboard-pin "exited 0 without confirming the pin — $log"
+    if ! grep -q "^OK: .* is frozen at 100%" "$log"; then
+        stage_fail site-status-frozen-check "exited 0 without confirming the freeze — $log"
         return
     fi
 
-    stage_pass site-dashboard-pin "docs/work-inventory.json matches the pin the feed was published from"
-}
-
-# ---------------------------------------------------------------------------
-# Stage: site-dashboard-check
-#
-# Runs `scripts/publish-site-dashboard.sh --check` for real, against the
-# actually-committed `site/dashboard/PF1e-dashboard.json` and the real
-# `scripts/observer/pf1e_dashboard_producer.py` -- the freshness gate the
-# operator asked for so the public site's copy can never silently drift from
-# what `docs/work-inventory.json` currently says. Cheap (reads local repo
-# files only, no pinned oracle, no cargo build), so it sits in both stage
-# sets next to its own selftest. A failure here means: run
-# `./scripts/publish-site-dashboard.sh` and commit the refreshed feed.
-# ---------------------------------------------------------------------------
-
-run_site_dashboard_check() {
-    # Own outer timeout wrapper (AT-34-E6-001 wave-27; same `${VAR:-default}`
-    # shape `corpus-trap-audit` above already uses, and the exact gap that
-    # stage's own comment names this stage for): `publish-site-dashboard.sh
-    # --check` invokes the real producer, which bounds each of its three
-    # state-dump binaries individually (`v06_class_state_dump`,
-    # `v06_content_state_dump` at the shared `PF1E_CLASS_STATE_TIMEOUT`
-    # default 600s each; `v06_work_inventory` at its own, wider
-    # `PF1E_WORK_INVENTORY_TIMEOUT` default 950s -- see that constant's own
-    # comment in pf1e_dashboard_producer.py for the 757s measurement behind
-    # it) but neither `verify.sh` nor the script it calls ever bounded the
-    # STAGE as a whole. Sum of all three cold: ~2150s worst case; rounded up
-    # with slack for the public-status projection's own `--check` and
-    # process overhead, not tightened further since this lane does not run
-    # the real producer to remeasure the full-stage wall time (forbidden by
-    # this cycle's own brief -- "do NOT run the inventory regenerator or the
-    # dashboard producer from a lane").
-    local timeout_s="${SITE_DASHBOARD_CHECK_TIMEOUT_S:-2400}"
-    stage_start "site-dashboard-check — timeout ${timeout_s}s scripts/publish-site-dashboard.sh --check"
-    local log="$LOG_DIR/site-dashboard-check.log"
-    local script="$REPO_ROOT/scripts/publish-site-dashboard.sh"
-
-    if [[ ! -f "$script" ]]; then
-        stage_fail site-dashboard-check "script missing at scripts/publish-site-dashboard.sh"
-        return
-    fi
-
-    ( cd "$REPO_ROOT" && exec timeout "${timeout_s}s" "$script" --check ) >"$log" 2>&1
-    local status=$?
-
-    if (( status == 124 )); then
-        stage_fail site-dashboard-check "timed out after ${timeout_s}s bounding its own runtime — the producer did not finish, and neither did any stale-cache fallback silently paper over it (PF1E_DASHBOARD_STRICT_TIMEOUT=1 in --check mode) — $log"
-        return
-    fi
-
-    if (( status == 3 )); then
-        stage_fail site-dashboard-check "a state-dump binary timed out inside the producer (StateDumpTimeout, loud by design under --check) before the stage's own ${timeout_s}s outer bound was reached — $log"
-        return
-    fi
-
-    if (( status != 0 )); then
-        stage_fail site-dashboard-check "exit $status — $log"
-        return
-    fi
-
-    if ! grep -q "is current" "$log"; then
-        stage_fail site-dashboard-check "exited 0 without confirming currency — $log"
-        return
-    fi
-
-    stage_pass site-dashboard-check "site/dashboard/PF1e-dashboard.json is current"
+    stage_pass site-status-frozen-check "site/status-data.json is frozen at 100%"
 }
 
 # ---------------------------------------------------------------------------
@@ -1206,107 +1129,17 @@ run_cycle_scope_gate_selftest() {
 }
 
 # ---------------------------------------------------------------------------
-# Stage: shape-engine-boundary-selftest
-#
-# Runs `python3 -m unittest scripts/tests/test_shape_engine_boundary.py` --
-# the self-test behind the `shape-engine-boundary` stage below, carrying the
-# two RED->GREEN proofs SD-35 `AT-35-E1-002` names (moving the cited function
-# 50 lines keeps its content anchor green; changing one cited condition
-# fails it). Same shape as `shape-coverage-standing-gate-selftest`: a zero
-# case count is a failure, not a vacuous pass. Cheap (Python, no build) --
-# in BOTH stage sets.
-# ---------------------------------------------------------------------------
-
-run_shape_engine_boundary_selftest() {
-    stage_start "shape-engine-boundary-selftest — python3 -m unittest scripts/tests/test_shape_engine_boundary.py"
-    local log="$LOG_DIR/shape-engine-boundary-selftest.log"
-    local script="$REPO_ROOT/scripts/tests/test_shape_engine_boundary.py"
-
-    if [[ ! -f "$script" ]]; then
-        stage_fail shape-engine-boundary-selftest "self-test script missing at scripts/tests/test_shape_engine_boundary.py"
-        return
-    fi
-
-    ( cd "$REPO_ROOT" && exec python3 -m unittest -v "$script" ) >"$log" 2>&1
-    local status=$?
-
-    local ran
-    ran=$(sed -n 's/^Ran \([0-9]*\) tests\? in .*$/\1/p' "$log" | tail -1)
-
-    if (( status != 0 )); then
-        stage_fail shape-engine-boundary-selftest "self-test exit $status${ran:+; ran $ran}  — $log"
-        return
-    fi
-
-    if [[ -z "$ran" || "$ran" -eq 0 ]]; then
-        stage_fail shape-engine-boundary-selftest "0 cases ran — the self-test asserts nothing — $log"
-        return
-    fi
-
-    stage_pass shape-engine-boundary-selftest "$ran cases passed"
-}
-
-# ---------------------------------------------------------------------------
-# Stage: shape-engine-boundary
-#
-# Runs `scripts/shape_engine_boundary.py --check` -- SD-34 `AT-34-E1-004`'s
-# committed fact (a shape engine turns a formula into a number and does not
-# place/attach/display the record), re-derived against the live
-# `docs/work-inventory.json` and the live `src/bin/v06_work_inventory.rs` on
-# every run. Fails when either count cannot be derived or the promotion
-# ladder's CONTENT ANCHOR no longer resolves -- the four cited lines gone,
-# changed, duplicated, or `fn classify` vanished (SD-35 `AT-35-E1-002`).
-# Wired here because SD-34 wave 51 found this instrument's citation already
-# drifted at HEAD: the gate worked, nobody had asked it -- an instrument
-# that is not a stage is not a gate (`workflow-instruction.md §12` row 31).
-# Cheap (Python + JSON, no build) -- in BOTH stage sets.
-# ---------------------------------------------------------------------------
-
-run_shape_engine_boundary() {
-    stage_start "shape-engine-boundary — python3 scripts/shape_engine_boundary.py --check"
-    local log="$LOG_DIR/shape-engine-boundary.log"
-    local script="$REPO_ROOT/scripts/shape_engine_boundary.py"
-
-    if [[ ! -f "$script" ]]; then
-        stage_fail shape-engine-boundary "script missing at scripts/shape_engine_boundary.py"
-        return
-    fi
-
-    ( cd "$REPO_ROOT" && exec python3 "$script" --check ) >"$log" 2>&1
-    local status=$?
-
-    local magnitude_bearing not_held citation_ok stale
-    magnitude_bearing=$(sed -n 's/^magnitude_bearing=\([0-9]*\) .*$/\1/p' "$log" | tail -1)
-    not_held=$(sed -n 's/^.* not_held_by_engine=\([0-9]*\) .*$/\1/p' "$log" | tail -1)
-    citation_ok=$(sed -n 's/^.* citation_ok=\([A-Za-z]*\)$/\1/p' "$log" | tail -1)
-    stale=$(sed -n 's/^STALE_CITATION: \(.*\)$/\1/p' "$log" | tail -1)
-    actual "SHAPE_ENGINE_MAGNITUDE_BEARING=${magnitude_bearing:-unknown}"
-    actual "SHAPE_ENGINE_NOT_HELD=${not_held:-unknown}"
-
-    if (( status != 0 )); then
-        stage_fail shape-engine-boundary "exit $status${stale:+ — stale citation: $stale} — $log"
-        return
-    fi
-
-    if [[ "$citation_ok" != True || -z "$magnitude_bearing" ]]; then
-        stage_fail shape-engine-boundary "exited 0 without printing citation_ok=True and a population — $log"
-        return
-    fi
-
-    stage_pass shape-engine-boundary "magnitude_bearing=${magnitude_bearing} not_held_by_engine=${not_held:-?} citation_ok=True"
-}
-
-# ---------------------------------------------------------------------------
 # Stage: missing-engine-tables
 #
 # Runs `scripts/missing_engine_tables.py --check` -- SD-34 `AT-34-E1-003`'s
 # per-kind enumeration of bucket A ("engine has no table for this kind"),
-# re-derived against the live inventory on every run. Fails on a bucket-A
-# kind with no engine-surface citation (`UnknownKindError`) or on a citation
-# whose CONTENT ANCHOR no longer resolves inside `fn classify` (SD-35
-# `AT-35-E1-002`). Same wave-51 lesson as `shape-engine-boundary`: both
-# pins were found stale at HEAD because neither instrument was a stage.
-# Cheap (Python + JSON, no build) -- in BOTH stage sets.
+# re-derived against the live (now frozen, SD-36 D3) inventory on every run.
+# Fails on a bucket-A kind with no engine-surface citation
+# (`UnknownKindError`). The CONTENT ANCHOR resolution this stage used to also
+# require (SD-35 `AT-35-E1-002`, against `src/bin/v06_work_inventory.rs`) is
+# retired along with that generator -- `engine_surface` in the written
+# artifact is now a historical citation only; see the script's own module
+# docstring. Cheap (Python + JSON, no build) -- in BOTH stage sets.
 # ---------------------------------------------------------------------------
 
 run_missing_engine_tables() {
@@ -1322,24 +1155,23 @@ run_missing_engine_tables() {
     ( cd "$REPO_ROOT" && exec python3 "$script" --check ) >"$log" 2>&1
     local status=$?
 
-    local population kinds cite_failures unknown
+    local population kinds unknown
     population=$(sed -n 's/^population=\([0-9]*\) kinds=[0-9]*$/\1/p' "$log" | tail -1)
     kinds=$(sed -n 's/^population=[0-9]* kinds=\([0-9]*\)$/\1/p' "$log" | tail -1)
-    cite_failures=$(sed -n 's/^citation_failures=\([0-9]*\)$/\1/p' "$log" | tail -1)
     unknown=$(sed -n 's/^UNKNOWN_KIND: \(.*\)$/\1/p' "$log" | tail -1)
     actual "MISSING_ENGINE_TABLES_POPULATION=${population:-unknown}"
 
     if (( status != 0 )); then
-        stage_fail missing-engine-tables "exit $status population=${population:-?} kinds=${kinds:-?} citation_failures=${cite_failures:-?}${unknown:+ — $unknown} — $log"
+        stage_fail missing-engine-tables "exit $status population=${population:-?} kinds=${kinds:-?}${unknown:+ — $unknown} — $log"
         return
     fi
 
-    if [[ -z "$population" || "$cite_failures" != 0 ]]; then
-        stage_fail missing-engine-tables "exited 0 without printing a population and citation_failures=0 — $log"
+    if [[ -z "$population" ]]; then
+        stage_fail missing-engine-tables "exited 0 without printing a population — $log"
         return
     fi
 
-    stage_pass missing-engine-tables "population=${population} kinds=${kinds:-?} citation_failures=0"
+    stage_pass missing-engine-tables "population=${population} kinds=${kinds:-?}"
 }
 
 # ---------------------------------------------------------------------------
@@ -2601,11 +2433,10 @@ for stage in "${SELECTED[@]}"; do
         preflight-oracle)    run_preflight_oracle ;;
         oracle-pin-selftest) run_oracle_pin_selftest ;;
         producer-selftest)   run_producer_selftest ;;
+        doneness-selftest)   run_doneness_selftest ;;
         pi-redaction-selftest) run_pi_redaction_selftest ;;
         provenance-selftest) run_provenance_selftest ;;
-        site-dashboard-selftest) run_site_dashboard_selftest ;;
-        site-dashboard-pin) run_site_dashboard_pin ;;
-        site-dashboard-check) run_site_dashboard_check ;;
+        site-status-frozen-check) run_site_status_frozen_check ;;
         site-dashboard-pi-gate) run_site_dashboard_pi_gate ;;
         build-public-status-selftest) run_build_public_status_selftest ;;
         site-asset-stamp-check) run_site_asset_stamp_check ;;
@@ -2618,8 +2449,6 @@ for stage in "${SELECTED[@]}"; do
         shape-coverage-standing-gate-selftest) run_shape_coverage_standing_gate_selftest ;;
         shape-coverage-standing-gate) run_shape_coverage_standing_gate ;;
         cycle-scope-gate-selftest) run_cycle_scope_gate_selftest ;;
-        shape-engine-boundary-selftest) run_shape_engine_boundary_selftest ;;
-        shape-engine-boundary) run_shape_engine_boundary ;;
         missing-engine-tables) run_missing_engine_tables ;;
         denominator-gate)    run_denominator_gate ;;
         figure-provenance)   run_figure_provenance ;;

@@ -253,9 +253,10 @@ are load-bearing for anyone touching this area:
   apart by field — SD-22's carry `data.id`, chassis records carry `data.key` —
   and `gen_book_cache` sweeps only the records whose key is in its own namespace
   rather than clearing the directory.
-* `v06_work_inventory::EngineFacts::holds_key` grounds `bestiary_1` monsters from
-  the **union** of the two tables. Either half alone silently reports the other
-  half's records as `not-ingested`.
+* `v06_work_inventory::EngineFacts::holds_key` (the generator is retired,
+  SD-36 D3; `docs/work-inventory.json` is now a frozen snapshot) grounded
+  `bestiary_1` monsters from the **union** of the two tables. Either half
+  alone silently reports the other half's records as `not-ingested`.
 * Assertions written about "Bestiary 1" before round 8 mean "the SD-22 table";
   the wire code no longer separates them, so those tests filter on the key
   namespace.
@@ -487,10 +488,11 @@ Every corpus record now carries a `wiring_class` — one of `Display`,
 production port of the GE-01 reference determinator
 (`docs/release/GE-01-legacy-corpus-and-conversion-matrix/artifacts/wiring-class-determination.md`).
 Determination reads a unit's full **token closure**: its base `.lst` row
-plus every `.MOD` row that targets it, not the base row alone. Both
-`v06_work_inventory`'s classifier and every `cache_gen`/ingest generator
-call this one module, so the two surfaces cannot drift against each other.
-The result is emitted per-unit into `docs/work-inventory.json`, stamped onto
+plus every `.MOD` row that targets it, not the base row alone. Both the
+now-retired `v06_work_inventory`'s classifier (SD-36 D3) and every
+`cache_gen`/ingest generator called this one module, so the two surfaces
+could not drift against each other. The result was emitted per-unit into
+`docs/work-inventory.json` (now a frozen snapshot), stamped onto
 every `data/corpus/**/*.json` record, and surfaced live on the operator
 dashboard as `by_wiring_class`. `Trap::WiringClassMismatch`
 (`src/pcgen_import/corpus_traps.rs`) fails when a record's stored flag

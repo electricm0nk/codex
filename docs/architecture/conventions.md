@@ -154,16 +154,14 @@ explain function, following an existing pair (e.g.
 open-coding a new shape. Full treatment in [rules-engine.md](./rules-engine.md)
 §"The compute spine, end to end."
 
-## Grounding-ref combined-literal idiom
+## Grounding-ref combined-literal idiom (RETIRED, SD-36 D3)
 
-`src/rules_core/support_state_matrix.rs`'s `grounding_ref` fields concatenate
-every test file proving a row's claim with `+`-joined string literals (e.g.
-`SD13_ROGUE_LEVEL1_TEST`), so each cited file stays independently
-substring-checkable via `grounding_ref.contains(...)`. **When a widening
-cycle adds new grounding evidence to an existing row**: extend the
-`+`-joined literal, never replace or drop a prior citation that still holds.
-Full treatment in [support-state-matrix.md](./support-state-matrix.md)
-§"Row structure and the grounding-reference pattern."
+`src/rules_core/support_state_matrix.rs` (deleted) used to concatenate every
+test file proving a row's claim with `+`-joined string literals (e.g.
+`SD13_ROGUE_LEVEL1_TEST`) in its `grounding_ref` fields, so each cited file
+stayed independently substring-checkable via `grounding_ref.contains(...)`.
+The support-state matrix is retired along with the idiom; there is no
+current surface this convention applies to.
 
 ## Adapt doctrine types to real codebase shape
 

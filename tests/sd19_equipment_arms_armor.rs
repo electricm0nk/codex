@@ -34,7 +34,6 @@ use codex::rules_core::character_input::{
 };
 use codex::rules_core::equipment_resolver::equipment_id_resolve;
 use codex::rules_core::pilot_compute_corpus::compute_pilot_with_corpus;
-use codex::rules_core::rules_tables::crb::equipment_tables::EquipmentCategory;
 use codex::rules_core::rules_tables::RuleSetId;
 use codex::rules_core::source_content::{SourcePackageContent, SourceRef};
 

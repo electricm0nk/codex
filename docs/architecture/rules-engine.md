@@ -333,8 +333,8 @@ Resolution here is deliberately generic: it reads a resolved corpus record's own
 field rather than dispatching through per-school or per-category code, per the module's doc comment.
 `TableCellRef { rule_set, table, row_key, column_key }` is the shared "this claim is anchored to a
 specific Paizo source-book table cell, not just a corpus record's existence" proof type — it recurs
-across `src/rules_core/pilot_compute_corpus.rs`, `src/rules_core/equipment_effects.rs`, and the support-state matrix's
-grounding-reference pattern (see [support-state-matrix.md](./support-state-matrix.md)).
+across `src/rules_core/pilot_compute_corpus.rs` and `src/rules_core/equipment_effects.rs`. (The
+retired support-state matrix's `grounding_ref` field used the same pattern, SD-36 D3.)
 
 ### 5. `src/rules_core/contract.rs` — the boundary contract and the only sanctioned exit surface
 
@@ -616,7 +616,7 @@ this document:
 
 - `tests/ge06_pilot_base_computation.rs` — proves `compute_pilot_base_chassis` against the deterministic GE-06 Human Fighter level-1 fixture (`tests/fixtures/rules_core/pf1_human_fighter_level1_ge06_deterministic_input.txt`), asserting ability modifiers and base chassis values only.
 - `tests/sd20_tabletop_readiness_integration.rs` — the Epic 8 integration-closure test: runs the full boundary-contract pipeline (`classify_character_input` → `compute_pilot_with_corpus` → `to_pilot_receipt` → `printed_sheet_cell_map`) against a fixture and asserts every defined sheet cell is a real, non-`Blocked` number matching a golden `expected_output`.
-- `tests/sd13_progression/barbarian_level6.rs` (representative of ~400 per-class/per-level widening tests; one module of the single `sd13_progression` binary since SD-35 `AT-35-E1-003` — run it with `cargo test --test sd13_progression barbarian_level6::`) — imports `support_state_matrix::seeded_current_truth` alongside chassis assertions, so a class/level widening and its matrix-row transition are proven together, not separately.
+- `tests/sd13_progression/barbarian_level6.rs` (representative of ~400 per-class/per-level widening tests; one module of the single `sd13_progression` binary since SD-35 `AT-35-E1-003` — run it with `cargo test --test sd13_progression barbarian_level6::`) — chassis assertions only; the matrix-row assertion this file used to pair them with was stripped when the support-state matrix was retired (SD-36 D3).
 
 See [testing.md](./testing.md) for the full test-organization convention.
 
@@ -636,5 +636,4 @@ See [testing.md](./testing.md) for the full test-organization convention.
 | What the GUI is allowed to render, or a new sheet cell | `src/rules_core/contract.rs`: `PilotReceipt`, `to_pilot_receipt`, `printed_sheet_cell_map` |
 | Corpus resolution for a chosen item/spell id | `src/rules_core/equipment_resolver.rs` / `src/rules_core/spell_resolver.rs` |
 | Whether something should count as claim-blocked | Re-read "The fail-honest pattern" above before writing a diagnostic |
-| Whether a capability is officially supported yet | [support-state-matrix.md](./support-state-matrix.md) |
 

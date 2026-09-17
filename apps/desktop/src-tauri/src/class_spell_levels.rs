@@ -307,12 +307,11 @@ mod tests {
             .map(|entry| entry.level)
     }
 
+    // ----- v0.8 B-9: caster-with-no-ingested-list vs non-caster -----
     /// The bug, at the surface the player actually reads: the catalog
     /// serves Hideous Laughter as level 1 (its record's minimum across
     /// classes), and this command supplies the real per-class answer that
     /// corrects it — 2 for a Wizard, 1 for a Bard.
-    // ----- v0.8 B-9: caster-with-no-ingested-list vs non-caster -----
-
     fn status_of(class_id: &str) -> (SpellcastingStatus, Option<String>) {
         let answer = levels_for(class_id);
         (answer.spellcasting, answer.spell_type)
