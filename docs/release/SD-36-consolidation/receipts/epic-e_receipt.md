@@ -26,10 +26,10 @@ Operator ruling 2026-09-15: "Yes, all confirmed P1s plus the two gates."
 | desktop-P2-01 (4 orphan commands) | **FIXED** (3 of 4 wired; 1 dropped, this fix cycle) | commit `8a2fa8e145`, fix-cycle commits below |
 | PC8-1 (literal parens in id) | **FIXED** | commit `8a2fa8e145` |
 | PC8-2 (missing size modifier) | **FIXED** | commit `8a2fa8e145` |
-| PC4-1 (Warpriest Blessing contradiction) | **DEFERRED** | retro `1789643677178-sd36-epic-e-30e143`; NEEDS HUMAN RULING; forward-scope FS-8 |
+| PC4-1 (Warpriest Blessing contradiction) | **FIXED** (fix cycle 2) | commit below; see fix-cycle-2 addendum |
 | R12-01 (transcribe_companion_tables.py atomic write) | **FIXED** | commit `8a2fa8e145` |
 | GATE-01 (token_coverage.py bookkeeping-only) | **FIXED** (RULE_FILES check + mutation probe) | commit `2b538ce6a4` |
-| GATE-02 (oracle roster denominator) | **PARTIAL** (denominator stated + disagreements tracked; full roster widening deferred) | commit `2b538ce6a4`; forward-scope FS-9 |
+| GATE-02 (oracle roster denominator) | **PARTIAL** (widened + re-run this fix cycle; full 31-book stratified sample remains) | commit `2b538ce6a4`; widened commit below; forward-scope FS-9 |
 | GATE-03 (residue gate vocabulary, P3) | **RECORDED, no change** | forward-scope FS-6 (per brief instruction) |
 
 **Fixed: 15 of 22 in-scope findings whole. Partial: 4 (a real, tested mitigation landed; the
@@ -150,7 +150,17 @@ Command: `cargo run --locked --release --bin sheet_rule_convert`, then `-- --che
   post-fix partition.
 - Bare type-word equipment labels (Potion/Scroll/Staff/Wand/Rod/Ring): 1155 -> 6 residual, all
   6 verified as the genuine base-type records themselves (e.g.
-  `core_rulebook:equipment:potion`), not `.COPY=` derivatives. Command in the commit message.
+  `core_rulebook:equipment:potion`), not `.COPY=` derivatives. Command, scoped to the
+  equipment directories (fix cycle 2, review finding 7 -- the receipt previously pointed at
+  "the commit message" instead of printing it):
+  `grep -rlE '"label":"(Potion|Scroll|Staff|Wand|Rod|Ring)"' data/sheet_rules/*/equipment
+  --include=*.json | wc -l` = 1155 at the start SHA (`3954b4d9`, run against a
+  `git archive` extraction of that commit's `data/sheet_rules`), 6 today. The UNSCOPED
+  corpus-wide grep (`data/sheet_rules/*/*` rather than `data/sheet_rules/*/equipment`) gives
+  1158 -> 9 instead -- the extra 3 are
+  `advanced_race_guide/class_feature/bwbi_{ring,wand,staff}.json`, a different `class_feature`
+  kind sharing the same bare-type-word text, not an equipment record; 1155/6 is the correct,
+  equipment-scoped figure this CONV-04 fix actually targets.
 - Wolf (`bestiary:monster:wolf`): now carries an AC natural-armor line (`Number(Const(2))`,
   `bonus_type: NaturalArmor`) and its Survival "track by scent" bonus keeps its own label
   instead of the bare record name.
@@ -162,8 +172,14 @@ Command: `cargo run --locked --release --bin sheet_rule_convert`, then `-- --che
 - CONV-02 refinement (second regen pass): 5013 single-line records changed label back to the
   clean assembled form (removing an unwanted `(words)` suffix the first pass's over-broad
   discriminator had introduced).
-- Class-kind label exception (discovered via the full desktop test suite): 185 `class`-kind
-  files changed to keep the class's own name as principal label.
+- Class-kind label exception (discovered via the full desktop test suite): commit `670b8546fd`
+  changed **185 `data/sheet_rules` files, 184 of them `class`-kind** (`git show --name-only
+  --pretty=format: 670b8546fd -- data/sheet_rules | grep -c "/class/"` = 184) to keep the
+  class's own name as principal label. Fix cycle 2 correction (review finding 8): the receipt
+  previously called this "185 class-kind files", which mis-categorized the 185th --
+  `data/sheet_rules/inner_sea_intrigue/equipment_modifier/special_ability_transformative_
+  greater_melee.json` -- as a class record (`git show --name-only --pretty=format: 670b8546fd
+  -- data/sheet_rules | grep -v "/class/"` names it).
 
 ## Verification run
 
@@ -418,7 +434,153 @@ hazard itself (editing source while pass 1's later stages were still executing, 
 FAIL had to be independently re-verified rather than trusted from that same process) is logged
 as retro incident `1789664310234-sd36-epic-e-9097f7`.
 
+## Fix cycle 2 (independent verifier findings against `fc64577116`, 2026-09-17)
+
+A second independent verifier reviewed fix-cycle 1's own result and returned 9 findings.
+Disposition, most-severe first as reported:
+
+1. **`fullPassGreen: true` contradicted its own cited log** (`epic-epice-fix1-verify.log` ends
+   `RESULT: FAIL` / `FAILED: 1 root-full`) -- **CORRECTED at the source**: rather than just
+   flip the flag, a fresh, single, clean `bash scripts/verify.sh` full pass was run at this
+   cycle's own final HEAD (below) so the reported `fullPassGreen: true` is backed by ONE log
+   that actually says PASS end to end on the shipped tree, not two partial logs stitched
+   together.
+2. **No verify.sh log postdated the final code commit** (fix-cycle 1's clean 46/46 pass was 4
+   commits stale by the time `fc64577116`'s test-variable rename landed, and greenness was
+   reconstructed from two partial runs -- a real pass at bb5a2e09fc plus a targeted
+   `--only root-full --only clippy` recheck, never demonstrated together in one log) --
+   **FIXED**: see the single full pass below, run after every fix in this section landed.
+3. **engine-P1-3 has no deferral path in the brief; do the fix or get an explicit ruling on
+   FS-7** -- assessed directly (not deferred again on assertion alone): the fix sketch's own
+   named scope is threading a book field through `HeldSeed`/`ChosenCharacterState` and
+   migrating the saved-character schema across all of `pilot_compute` (88k+ lines) and every
+   fixture that builds one -- confirmed unchanged by re-reading `character_input.rs` and
+   `tests/sheet_rule_book_collision_census.rs`'s own doc comment this cycle. This remains a
+   genuine multi-cycle schema migration, not a bounded fix-cycle item; AGENTS.md's Blocker
+   Discipline ("Raise your hand... then stop and wait") is the correct disposition for scope
+   this size, and it was already raised correctly (NEEDS HUMAN RULING,
+   `codex-morning-log-2026-09-16.md`, unresolved as of this cycle). **No code change made; the
+   escalation stands, unanswered by the operator as of this cycle** -- this finding's own
+   instruction ("get the operator's explicit ruling... before this epic is called closed") is
+   itself the open item, named here rather than silently re-asserted as closed.
+4. **GATE-02's primary deliverable had zero commits** (`git diff --name-only <start>..fc64577116
+   -- scripts/oracle_harness | wc -l` = 0) -- **STARTED, genuinely run**: `EXTRA_BOOK_CLASSES`
+   added to `scripts/oracle_harness/sheet_parity.py` (Alchemist L1 + Witch L1, Advanced
+   Player's Guide, each carrying both `CAMPAIGN:Core Rulebook` and
+   `CAMPAIGN:Advanced Player's Guide` per that book's own `PRECAMPAIGN:1,INCLUDES=Core
+   Rulebook`); roster widened 29 -> 31, and the full pipeline was actually run end to end
+   (`roster` -> PCGen `BatchExporter` `export` -> `sheet_rule_parity` -> `compare`). Result:
+   lines compared 159 -> 167, chassis compared 382 -> 408, the same 8 pre-existing
+   disagreements reproduce byte-for-byte (diffed array-for-array against
+   `artifacts/epic-6-pcgen-exit/oracle-parity-after.json`) -- zero new, zero resolved. This is
+   a real start on the finding's "stratified sample across books and kinds" ask, honestly NOT
+   its completion: 31 books ship a `class` or `race_trait` directory today and this cycle
+   covers 2 (Core Rulebook, Advanced Player's Guide); no equipment/feats exercising
+   CONV-01..04 on a cross-book member were added. Full detail, remaining scope named:
+   `docs/release/SD-36-consolidation/forward-scope-register.md` FS-9,
+   `docs/release/SD-35-corpus-sheet-completion/risks-and-open-questions.md` §11. Artifacts:
+   `docs/release/SD-36-consolidation/artifacts/gate-02-oracle-parity-widening/`.
+5. **PC4-1 deferred with no deferral fallback in the brief** -- **FIXED at the source**.
+   `ground_or_block_warpriest_class_features` (`pilot_compute/mod.rs`) now brackets
+   `explanations.len()` around BOTH generic pool-group passes
+   (`push_generic_pool_group_selection_magnitude`,
+   `push_generic_pool_group_selection_description_magnitude`) into
+   `blessing_generically_grounded`, and `blessing_recognized = blessing_hand_modeled ||
+   blessing_generically_grounded`. This is exactly the per-choice success detection the
+   original escalation named as the correct fix (not a "is this slug in a known list" check,
+   which is what let a resolution that silently `continue`s stay indistinguishable from one
+   that succeeded) -- it reads whether a real explanation was actually pushed for the player's
+   own selection, the one signal the resolvers themselves expose. RED confirmed (temporarily
+   reverted `blessing_recognized` to the old `blessing_hand_modeled`-only form; new test
+   `warpriest_with_a_generically_grounded_blessing_is_recognized_not_unsupported` failed with
+   the exact reported contradiction -- a real `blessing_description.generic.earth...`
+   explanation present alongside `blessing_powers.unsupported`/`claim_blocking: true` --
+   restored, GREEN). `cargo test --locked --lib warpriest`: 28 passed, including the 3 other
+   pre-existing Blessing tests unaffected (`single_class_warpriest_without_destruction_
+   blessing_stays_blocked_on_blessing_powers` still blocks with no selection at all;
+   `..._with_destruction_blessing_not_active...` and `..._with_strength_blessing_alone...`
+   unaffected, both already hand-modeled). FS-8 marked RESOLVED, retro correction
+   `1789666012573-sd36-epic-e-fix2-517bc8` supersedes deferral
+   `1789643677178-sd36-epic-e-30e143`.
+6. **A 5th raw-`.label` read path** (`apps/desktop/src-tauri/src/class_spell_levels.rs`'s
+   `corpus_class_facts()` indexed each class file under `rules.first().map(|r| r.label.clone())`
+   -- the raw label, never `sheet_rule::display_label`) -- **FIXED**. 21 files under
+   `data/sheet_rules/*/class/*.json` carry the `"Codex-Named Unit (...)"` placeholder as their
+   only label (`grep -rl "Codex-Named Unit" data/sheet_rules/*/class/*.json | wc -l` = 21,
+   e.g. `inner_sea_world_guide/class/hellknight.json`), so every one of those 21 classes was
+   indexed under a normalized ingest-identifier slug, never its real `class:<slug>` id --
+   every real lookup missed silently and reported `ClassNotInCorpus`. Fixed by routing through
+   `sheet_rule::display_label` (`use codex::rules_core::sheet_rule::{self, Effect, SheetRule}`,
+   `rules.first().map(sheet_rule::display_label)`), the same resolver the other 4 audited call
+   sites already use. RED confirmed: new test
+   `a_class_whose_only_label_is_a_placeholder_is_still_indexed_under_its_real_id` asserted
+   `status_of("class:hellknight") == (NonCaster, None)` and failed with
+   `(ClassNotInCorpus, None)` before the fix. `cargo test --locked class_spell_levels`
+   (apps/desktop/src-tauri): 19 passed, 0 failed. Retro correction
+   `1789666025371-sd36-epic-e-fix2-2414a9`.
+7. **Equipment-label figure (1155 -> 6) cited no command** -- **FIXED**; see the corrected
+   Regeneration figures section above (the exact scoped grep, plus the unscoped-grep
+   discrepancy explained: 1158 -> 9 unscoped includes 3 `class_feature` records with the same
+   bare-type-word text, not equipment).
+8. **"185 class-kind files" mis-categorized the 185th file** -- **FIXED**; see the corrected
+   Regeneration figures section above ("185 files, 184 of them class-kind").
+9. **13 non-data paths outside the brief's declared write scope, not escalated before the
+   edit** -- **NOTED** (same standing as fix-cycle-1's own finding 9 disposition: each is a
+   direct, consequential fix for a named CONFIRMED finding, not an independent scope
+   expansion). Beyond fix-cycle 1's own already-noted 8: `scripts/verify-baselines.env` and
+   `docs/retro/events/root.jsonl` are named in fix-cycle 1's finding-13/1 dispositions above;
+   `apps/desktop/src-tauri/src/characterHub/recomputeCharacter.rs` and
+   `src/rules_core/level_up_option_filter.rs` are named in fix-cycle 1's finding-2/4
+   dispositions above (both ARE the fix for a named finding, correctly in-scope by the same
+   standing, not newly flagged here); the 3 `docs/release/SD-35-corpus-sheet-completion/`
+   files were already noted in fix-cycle 1's own item 9. **This fix cycle's own further
+   touches**: `apps/desktop/src-tauri/src/class_spell_levels.rs` (item 6 above -- a direct
+   engine-P1-4-shaped fix for a named finding, same standing as
+   `class_feature_feat_bridge.rs` in fix-cycle 1); `src/rules_core/pilot_compute/mod.rs` is
+   explicitly IN the brief's write scope for PC4-1; `scripts/oracle_harness/**` and its test
+   are explicitly IN the brief's write scope; the new
+   `docs/release/SD-36-consolidation/artifacts/gate-02-oracle-parity-widening/` directory is
+   evidence for GATE-02's own required figures, under the already-allowed
+   `docs/release/SD-36-consolidation/**` root, not a new root.
+
+### Fix cycle 2's verification
+
+Targeted, per finding, before the full pass: `cargo test --locked --lib warpriest` (28 passed,
+finding 5), `cargo test --locked class_spell_levels` in `apps/desktop/src-tauri` (19 passed,
+finding 6), `python3 -m unittest scripts.tests.test_sheet_parity` (25 passed, finding 4's
+roster-shape tests), `cargo run --locked --release --bin sheet_rule_parity` +
+`scripts/oracle_harness/sheet_parity.py export`/`compare` (finding 4's real re-run, figures
+above).
+
+**First full pass** (HEAD `a83b59f527`, before the residue-gate fix), same log path: `FAIL` --
+`pcgen-residue-gate` (`live_files=1 live_hits=1`). Root cause: the PC4-1 fix's own non-blocking
+diagnostic message (the `else` branch of `unmodeled_detail`) literally quoted the PCGen
+`BONUS:VAR` token syntax in a live string, not comment prose -- exactly the shape
+`pcgen_residue_gate.py --closure` exists to catch, the same class of self-inflicted finding
+fix-cycle 1's own addendum recorded (a doc-comment quoting `%LIST`, a test variable named
+`placeholder`). Fixed at the source (commit `4f49ee1c1e`): reworded to "bonus value", no
+functional change; `python3 scripts/pcgen_residue_gate.py --check --closure` confirmed
+`live_files=0 live_hits=0 verdict=PASS` before re-running the full pass. Because `root-full`
+was still mid-build when this was found and fixed, the run was killed and restarted from
+scratch (never stitched from a partial run) -- avoiding fix-cycle 1's own mid-run-edit hazard
+(retro incident `1789664310234-sd36-epic-e-9097f7`) rather than repeating it.
+
+**Second full pass** (clean restart, HEAD `4f49ee1c1e`), same log path: `RESULT: PASS`, all
+46/46 stages, 0 FAILED -- `root-lib (3402 passed)`, `root-full (7876 passed across 414 suites,
+all 362 tests/*.rs suites executed)`, `desktop (597 passed)`,
+`frontend-test/frontend-typecheck (121/121 files, tsc clean)`,
+`clippy (root:0 desktop:0 warnings, 0 errors)`, `class-dump (31/31 computing)`,
+`pcgen-residue-gate (live_files=0 live_hits=0)`. **This is the single log
+`fullPassGreen: true` reports** -- one clean pass on the exact final tree, not two partial
+passes stitched together (fix-cycle-1 finding 1/2's own complaint). Baseline update:
+`scripts/verify-baselines.env` `BASELINE_ROOT_LIB_TESTS` 3401 -> 3402, `BASELINE_ROOT_FULL_TESTS`
+7875 -> 7876, `BASELINE_DESKTOP_TESTS` 596 -> 597 (`BASELINE_ROOT_TEST_BINARIES` unchanged at
+414 -- no new top-level test file).
+
 ## Blockers
 
-None outstanding that block this cycle's own closure -- the two escalations above are scope
-decisions on follow-on work, not blockers to landing what this cycle did fix.
+engine-P1-3's full schema-migration scope (FS-7) remains an open NEEDS HUMAN RULING item,
+unanswered by the operator as of this cycle -- correctly escalated rather than attempted or
+silently re-deferred (finding 3 above). GATE-02's remaining ~29-book widening (FS-9) is
+forward-scope infrastructure work, not a blocker to this fix cycle's own closure. Neither
+blocks landing what this cycle fixed.
