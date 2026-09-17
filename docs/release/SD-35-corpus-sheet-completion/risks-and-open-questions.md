@@ -177,3 +177,18 @@ does not have to re-derive them from the raw JSON:
 | 6-8 | chassis | `human_paladin_l10` | `save.{fortitude,reflex,will}.total` | 6/3/9 | 9/6/12 | every base save reads exactly 3 low at level 10 -- consistent with a missing Paladin class feature or divine-grace-shaped bonus, not re-derived further here |
 
 Re-derive from `python3 -c "import json; d=json.load(open('artifacts/epic-6-pcgen-exit/oracle-parity-after.json')); print(len(d['disagreements']))"` (run from this directory) -> 8. None of these 8 were introduced or fixed by SD-36 Epic E's converter/engine changes (the roster and its exports are unchanged); listed here per the GATE-02 finding's own instruction to track rather than leave undriven. Widening the roster to a cross-book stratified sample (the finding's primary ask) is deferred as its own follow-up -- see `docs/retro/events/sd36-epic-e.jsonl`.
+
+**Fix cycle 2 update (SD-36 Epic E, independent verifier finding 4):** the roster was genuinely
+widened, 29 -> 31 members, and re-run end to end (`scripts/oracle_harness/sheet_parity.py`'s
+`EXTRA_BOOK_CLASSES`: Alchemist L1 and Witch L1, both Advanced Player's Guide). New re-derive
+command: `python3 -c "import json; d=json.load(open('../SD-36-consolidation/artifacts/gate-02-oracle-parity-widening/sheet-parity.json')); s=d['summary']; print(s['lines']['compared'], s['chassis']['compared'], len(d['disagreements']))"`
+(run from this directory) -> `167 408 8`. The same 8 disagreements above reproduce
+byte-for-byte on the widened roster (verified by diffing the two `disagreements` arrays); the
+2 new members introduce zero new disagreements. This is a real, run START on the finding's
+primary ask, not its completion: 31 books ship a `class` or `race_trait` directory
+(`ls -d data/sheet_rules/*/{class,race_trait} 2>/dev/null | sed 's#.*/sheet_rules/##;
+s#/.*##' | sort -u | wc -l`), 2 are now covered (Core Rulebook, Advanced Player's Guide), and
+equipment/feats exercising CONV-01..04 on a cross-book member were not added -- both tracked as
+the FS-9 remainder in `docs/release/SD-36-consolidation/forward-scope-register.md`. (The 31
+count is `ls -d data/sheet_rules/*/{class,race_trait} 2>/dev/null | sed 's#.*/sheet_rules/##;
+s#/.*##' | sort -u | wc -l`, run from the repo root.)
