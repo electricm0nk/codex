@@ -20774,6 +20774,17 @@ fn ground_or_block_warpriest_class_features(
     // `census_class_feature_pool_group_names.py`) beyond Destruction and
     // Strength this file already hand-models by name below -- purely
     // additive.
+    // SD-36 Epic E PC4-1: recorded across BOTH generic passes below so `blessing_recognized`
+    // (used for the `blessing_powers.unsupported` / `blessing_minor_major_powers.unmodeled`
+    // diagnostic choice just below, and for `push_warpriest_other_features_deferred_diagnostic`)
+    // reflects whether resolution for the player's ACTUAL selection genuinely succeeded, never
+    // just whether the selection happens to be Destruction or Strength by name. Per-member
+    // resolution inside both resolvers can silently `continue` (an unrecognised slug, a formula
+    // the interpreter refuses, an empty header chain); bracketing `explanations.len()` around
+    // both calls is a direct success probe -- a real explanation was pushed for THIS character's
+    // selection, or it was not -- rather than a second, drifting copy of either resolver's own
+    // membership logic.
+    let blessing_generic_grounding_start = explanations.len();
     push_generic_pool_group_selection_magnitude(
         input,
         level,
@@ -20809,6 +20820,12 @@ fn ground_or_block_warpriest_class_features(
         ],
         explanations,
     );
+    // SD-36 Epic E PC4-1: true only if one of the two generic passes above actually pushed a
+    // real explanation for the player's own selection -- never a nominal "is this slug in a
+    // known list" check, which is exactly what let a Rune/Earth/etc. Blessing choice carry a
+    // genuine grounded magnitude AND a `claim_blocking: true` "not supported" diagnostic at the
+    // same time (SD-35 code review PC4-1, retro `1789643677178-sd36-epic-e-30e143`).
+    let blessing_generically_grounded = explanations.len() > blessing_generic_grounding_start;
 
     let blessing_selections: Vec<&str> = input
         .chosen
@@ -20864,12 +20881,12 @@ fn ground_or_block_warpriest_class_features(
             }
         }
     }
-    let blessing_recognized = blessing_selections.contains(&DESTRUCTION_BLESSING_SELECTION)
+    let blessing_hand_modeled = blessing_selections.contains(&DESTRUCTION_BLESSING_SELECTION)
         || blessing_selections.contains(&STRENGTH_BLESSING_SELECTION);
+    let blessing_recognized = blessing_hand_modeled || blessing_generically_grounded;
     if blessing_recognized {
-        diagnostics.push(ComputationDiagnostic {
-            id: "class_feature.acg.warpriest.blessing_minor_major_powers.unmodeled".to_owned(),
-            message: "Warpriest Blessing minor/major power content beyond Destruction's own \
+        let unmodeled_detail = if blessing_hand_modeled {
+            "Warpriest Blessing minor/major power content beyond Destruction's own \
                  Destructive Attacks and Strength's own Strength Surge remains unmodeled: which \
                  specific power the OTHER chosen Blessing type grants (minor at 1st level, major \
                  at a later level) is not implemented for any of the other 18 Blessing types. \
@@ -20878,18 +20895,31 @@ fn ground_or_block_warpriest_class_features(
                  a summon subsystem this engine lacks entirely -- a genuine architecture gap, not \
                  a transcription backlog. This does not block an otherwise-valid \
                  Destruction-Blessing or Strength-Blessing posture"
-                .to_owned(),
+                .to_owned()
+        } else {
+            "This chosen Blessing type's own minor/major power content beyond the single \
+                 generically-resolved magnitude above (SD-36 Epic E PC4-1) remains unmodeled: \
+                 the generic pass grounds one real per-member formula or BONUS:VAR value, never \
+                 the type's full minor-then-major power progression. This does not block an \
+                 otherwise-valid posture for this Blessing choice"
+                .to_owned()
+        };
+        diagnostics.push(ComputationDiagnostic {
+            id: "class_feature.acg.warpriest.blessing_minor_major_powers.unmodeled".to_owned(),
+            message: unmodeled_detail,
             claim_blocking: false,
         });
     } else {
         diagnostics.push(ComputationDiagnostic {
             id: "class_feature.acg.warpriest.blessing_powers.unsupported".to_owned(),
             message: "Warpriest remains blocked on its Blessing powers burden: no recognized \
-                 Destruction or Strength Blessing choice is present. Of the corpus's 33 \
+                 Destruction or Strength Blessing choice is present, and no OTHER Blessing \
+                 selection's own member content resolved generically either. Of the corpus's 33 \
                  Blessing types -- each carrying its own minor AND major power, 66 powers in \
-                 all -- exactly two powers are genuinely grounded in this codebase \
-                 (Destruction's Destructive Attacks and Strength's Strength Surge, both minor), \
-                 so no Warpriest Blessing-power support is claimed"
+                 all -- exactly two powers are hand-modeled in this codebase (Destruction's \
+                 Destructive Attacks and Strength's Strength Surge, both minor), plus whatever \
+                 the generic pool-group resolvers can reach per corpus record, so no Warpriest \
+                 Blessing-power support is claimed for this selection"
                 .to_owned(),
             claim_blocking: true,
         });
@@ -73697,6 +73727,57 @@ mod warpriest_dispatch_widening_safety_tests {
             })
             .expect("the active Destructive Attacks explanation must be grounded");
         assert_eq!(bonus.value, 1, "Warpriest level 1 Destructive Attacks bonus: max(1,0)=1: {:?}", bonus);
+    }
+
+    /// SD-36 Epic E PC4-1 (SD-35 code review): a Warpriest who chose Earth Blessing -- neither
+    /// hand-modeled Blessing -- gets a real generically-grounded magnitude from
+    /// `push_generic_pool_group_selection_description_magnitude` (Earth's own "Armor of Earth"
+    /// member, proven separately by
+    /// `warpriest_generic_blessing_description_pass_grounds_a_zero_bonus_var_blessing` at the
+    /// same level 8). Before this fix, `blessing_recognized` only ever checked for the literal
+    /// Destruction/Strength selection ids, so this exact character got BOTH a genuine grounded
+    /// explanation AND the `blessing_powers.unsupported` claim-blocking "no Blessing-power
+    /// support is claimed" diagnostic at the same time -- a real contradiction on one receipt.
+    /// The fix must resolve the contradiction: recognized (the narrower `unmodeled` note,
+    /// non-blocking), never `unsupported`.
+    #[test]
+    fn warpriest_with_a_generically_grounded_blessing_is_recognized_not_unsupported() {
+        let mut input = human_warpriest_input(8);
+        input.chosen.selected_choices.push(SelectedChoice {
+            choice_set_id: WARPRIEST_BLESSING_CHOICE_ID.to_owned(),
+            selection_id: "blessing:earth".to_owned(),
+        });
+
+        let receipt = build_pilot_headless_receipt(&input);
+
+        assert!(
+            receipt
+                .computation
+                .explanations
+                .iter()
+                .any(|e| e.id.starts_with("class_feature.acg.warpriest.blessing_description.generic.earth")),
+            "Earth Blessing's own member must still ground generically: {:?}",
+            receipt.computation.explanations
+        );
+        assert!(
+            !receipt
+                .computation
+                .diagnostics
+                .iter()
+                .any(|d| d.id == "class_feature.acg.warpriest.blessing_powers.unsupported"),
+            "a generically-grounded Blessing must never ALSO claim no Blessing-power support: {:?}",
+            receipt.computation.diagnostics
+        );
+        assert!(
+            receipt
+                .computation
+                .diagnostics
+                .iter()
+                .any(|d| d.id == "class_feature.acg.warpriest.blessing_minor_major_powers.unmodeled"
+                    && !d.claim_blocking),
+            "expected the non-blocking unmodeled note once a Blessing is recognized generically: {:?}",
+            receipt.computation.diagnostics
+        );
     }
 
     /// A single-class Human Warpriest with a real recorded and prepared
