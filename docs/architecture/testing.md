@@ -28,7 +28,7 @@ None of the standalone scripts below are wired into `npm test` or `cargo test` �
 ```
 cargo test --locked
 ```
-Runs the workspace's default test targets: unit tests inside `src/` plus every integration test file under `tests/*.rs`. As of this verification there are **453** files matching `tests/*.rs` (`ls tests/*.rs | wc -l`). Files are named by originating slice — `ge06_*`, `ge08_*`, `sd13_*`, `sd17_*`, `sd19_*`, `sd20_*`, `sd22_*`, `sd24_*`, `sd25_*`, `golden_case_*`, `pcc_*`, `character_*` — one behavior per file (see [Test conventions](#test-conventions)). The crate itself (`Cargo.toml:1-4`, name `codex`) has no `[workspace]` table, so this is a single standalone crate, not a Cargo workspace. The `sd24_*` files are SD-24's own standing regression suite: identifier-discipline and wired-integration four-check audits scoped to specific production files, the Fighter+Wizard multiclass dispatch/deterministic/integration proofs, and the equipment/spell-coverage audits (see [status.md](./status.md) and [rules-engine.md](./rules-engine.md)). The `sd25_*` files are SD-25's additions: nine per-class level-up explanation coverage/filter audits (`sd25_<class>_level_up_explanation_*`), and `tests/pcgen_runner_smoke.rs` — the smoke test proving `scripts/pcgen-run-character.sh` + `scripts/pcgen-normalize-output.py` compose into a real, invocable PCGen runner pipeline (its live-engine tier runs only against a real PCGen checkout; see [status.md](./status.md)'s oracle-parity row).
+Runs the workspace's default test targets: unit tests inside `src/` plus every integration test file under `tests/*.rs`. As of this verification there are **360** files matching `tests/*.rs` (`ls tests/*.rs | wc -l`). Files are named by originating slice — `ge06_*`, `ge08_*`, `sd13_*`, `sd17_*`, `sd19_*`, `sd20_*`, `sd22_*`, `sd24_*`, `sd25_*`, `golden_case_*`, `pcc_*`, `character_*` — one behavior per file (see [Test conventions](#test-conventions)). The crate itself (`Cargo.toml:1-4`, name `codex`) has no `[workspace]` table, so this is a single standalone crate, not a Cargo workspace. The `sd24_*` files are SD-24's own standing regression suite: identifier-discipline and wired-integration four-check audits scoped to specific production files, the Fighter+Wizard multiclass dispatch/deterministic/integration proofs, and the equipment/spell-coverage audits (see [status.md](./status.md) and [rules-engine.md](./rules-engine.md)). The `sd25_*` files are SD-25's additions: nine per-class level-up explanation coverage/filter audits (`sd25_<class>_level_up_explanation_*`), and `tests/pcgen_runner_smoke.rs` — the smoke test proving `scripts/pcgen-run-character.sh` + `scripts/pcgen-normalize-output.py` compose into a real, invocable PCGen runner pipeline (its live-engine tier runs only against a real PCGen checkout; see [status.md](./status.md)'s oracle-parity row).
 
 ```
 cargo clippy --locked --tests -- -D warnings
@@ -64,7 +64,7 @@ Runs `node scripts/run-tests.mjs` (`apps/desktop/package.json` `scripts.test`) �
 // summary. Each test file exits non-zero on its first failed assertion.
 ```
 
-Each test file is a self-executing script (no test-framework `describe`/`it` wrapper); it asserts directly and exits non-zero on the first failed assertion. There are currently **62** matching files (`find apps/desktop/src -iname "*.test.ts" | wc -l`). The runner prints `PASS <file>` / `FAIL <file>` per file and a `<n>/<total> test files passed.` summary line, exiting non-zero if any failed.
+Each test file is a self-executing script (no test-framework `describe`/`it` wrapper); it asserts directly and exits non-zero on the first failed assertion. There are currently **121** matching files (`find apps/desktop/src -iname "*.test.ts" | wc -l`). The runner prints `PASS <file>` / `FAIL <file>` per file and a `<n>/<total> test files passed.` summary line, exiting non-zero if any failed.
 
 ### Standalone scripts
 
@@ -219,7 +219,7 @@ The second is the shape rule: our data files carry none of the source format. Se
 
 ## The fixture grammar (`tests/fixtures/rules_core/`)
 
-There are **246** files under `tests/fixtures/rules_core/` (`ls tests/fixtures/rules_core/ | wc -l`), each a flat `key=value` deterministic-input file. The loader is `load_character_input_fixture` in `src/rules_core/character_input.rs:168-190`:
+There are **262** files under `tests/fixtures/rules_core/` (`ls tests/fixtures/rules_core/ | wc -l`), each a flat `key=value` deterministic-input file. The loader is `load_character_input_fixture` in `src/rules_core/character_input.rs:168-190`:
 
 ```rust
 pub fn load_character_input_fixture(input: &str) -> CharacterInputLoadResult {

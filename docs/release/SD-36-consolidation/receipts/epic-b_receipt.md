@@ -480,3 +480,98 @@ verification record. Full detail lives in `docs/retro/events/sd36-epic-b.jsonl`
    `RETRO_ACTOR=sd36-epic-b` first. Future cycles on this checkout should
    do the same until the stale `~/.bashrc` export is corrected by whoever
    owns that shell.
+
+## Fix cycle round 3 (2026-09-17): second independent verifier's findings on `e3ac53a2e1`, resolved under explicit orchestrator rulings
+
+A second independent verifier reviewed `e3ac53a2e1` (round 2's own fix) and
+found 10 problems. The orchestrator issued binding rulings (2026-09-17)
+before this round started; each finding is fixed at its source under those
+rulings. Full detail lives in `docs/retro/events/sd36-epic-b.jsonl`
+(`correction` event `1789620876006-sd36-epic-b-f5d5cd`; `verification`
+events `1789621031910-sd36-epic-b-0963e0` and
+`1789625175514-sd36-epic-b-d9a4db`); summary:
+
+1. **No green full `bash scripts/verify.sh` run existed at any SHA in this
+   epic.** Ruling (f): run one at HEAD. Ran `bash scripts/verify.sh` (full
+   mode, no `--only`) at head `e3ac53a2e1` in the background (PID 2226211,
+   started 2026-09-17T04:57:24Z, polled with `kill -0` in ≤9-minute loops
+   per the run instructions) → **RESULT: PASS**, all 45 stages passed, 0
+   failed, `root-full (7855 passed across 412 suites, all 360 tests/*.rs
+   suites executed)`, `clippy (root:0 desktop:0 warnings, 0 errors)`. Log:
+   `/tmp/claude-1000/-home-ubuntu-workspace-repos-codex/d7b37005-8466-4968-b248-1a4983d15f82/scratchpad/epic-b-final-verify.log`
+   (also `/tmp/codex-verify-l9VyxT`); recorded at
+   `docs/retro/events/sd36-epic-b.jsonl` event
+   `1789625175514-sd36-epic-b-d9a4db` (mode `full`, correctly filed under
+   `sd36-epic-b` — `RETRO_ACTOR=sd36-epic-b` was exported before the run).
+2. **`git grep -c seeded_current_truth -- tests src apps` = 1, not 0.**
+   Ruling (a): scope widened to permit editing
+   `src/rules_core/pilot_compute/mod.rs` ONLY to repair this dangling doc
+   comment. Restored the same fix `0aa1f77223` originally made (round 2
+   had reverted it believing the file was out of scope): line 51241 now
+   reads "...was recorded by this proof surface and applied to the
+   in-source carrier directly (the support-state matrix itself is retired,
+   SD-36 D3; this is now a historical note)." instead of the dangling
+   `(see \`seeded_current_truth\`)`. Re-verified:
+   `git grep -c seeded_current_truth -- tests src apps` → 0 matches (no
+   output, exit 1).
+3. **`apps/desktop/src-tauri/src/class_spell_levels.rs`'s clippy fix was
+   out of the brief's write-scope lists.** Ruling (a): ruled IN — kept
+   as-is, no revert. No edit made this round; noted here per the ruling.
+4. **Out-of-scope writes to `docs/retro/events/root.jsonl` (+3 records)
+   and `docs/retro/events/sd31-transcribe.jsonl` (+7 records, including
+   this epic's own `root-full`/`clippy` PASS at head `94d915609c`, id
+   `1789612785181-sd31-transcribe-177238`) in commit `d22950cd1f`.**
+   Ruling (b): the mis-filed records stay as-is (append-only log); added
+   ONE `correction` event under this epic's own shard naming both files,
+   the exact commit, the record counts (verified via `git show d22950cd1f
+   --numstat -- docs/retro/events/root.jsonl
+   docs/retro/events/sd31-transcribe.jsonl` → 3/7 insertions, matching
+   exactly), and the root cause (the `~/.bashrc` stale `RETRO_ACTOR`
+   export, since fixed by the orchestrator). Event id
+   `1789620876006-sd36-epic-b-f5d5cd`. Every `retro.py`/`verify.sh`
+   invocation this round explicitly exported `RETRO_ACTOR=sd36-epic-b`.
+5. **`docs/architecture/testing.md:31`: `**453**` files matching
+   `tests/*.rs` does not reproduce (`ls tests/*.rs | wc -l` → 360 at
+   HEAD).** Fixed at source: corrected `453` → `360`.
+6. **`docs/architecture/testing.md:67`: `**62**` matching `*.test.ts`
+   files does not reproduce (`find apps/desktop/src -iname "*.test.ts" |
+   wc -l` → 121 at HEAD).** Fixed at source: corrected `62` → `121`.
+7. **`docs/architecture/testing.md:222`: `**246**` files under
+   `tests/fixtures/rules_core/` does not reproduce (`ls
+   tests/fixtures/rules_core/ | wc -l` → 262 at HEAD).** Fixed at source:
+   corrected `246` → `262`.
+8. **`scripts/tests/test_completion_atlas.py::test_bucket_u_matches_named_population`
+   asserted a pinned, stale literal (202) against a frozen inventory whose
+   `status` Counter carries 0 `unmeasurable` units.** Ruling (d): TDD —
+   confirmed the test failed for the stated reason
+   (`AssertionError: 0 != 202`) before editing, then rewrote the assertion
+   to compare `CA.partition(...)`'s bucket-U count against a second,
+   independent count computed directly from the inventory
+   (`sum(1 for u in inv["units"] if u.get("status") == "unmeasurable")`)
+   rather than a pinned number, per the ruling. Re-ran the whole file:
+   `python3 -m unittest scripts/tests/test_completion_atlas.py -v` →
+   **42/42 PASS** (was 41/42 before this fix).
+9. **`scripts/verify-baselines.env:3862-3864`'s opening sentence claimed
+   the 7855/412 figures were measured on "THIS EPIC'S OWN GREEN RUN
+   (`bash scripts/verify.sh`)" when that full run's `RESULT` was `FAIL`.**
+   Ruling (e), then superseded by item 1 above: reworded the block to
+   lead with the fact that a genuine full-mode pass now confirms the
+   figures (head `e3ac53a2e1`, event `1789625175514-sd36-epic-b-d9a4db`,
+   log `/tmp/codex-verify-l9VyxT`), and kept the full provenance chain
+   (the original FAIL-mode measurement at `94d915609c`, its
+   `--only`-mode reproduction at `d22950cd1f`) below it so a future reader
+   can trace exactly which runs support the number.
+10. **`docs/governance/license-matrix.md` lines 26/29 still described
+    `docs/work-inventory.json` as a live regeneration source with a
+    re-derive command, unreworded by the freeze.** Ruling (c): reworded
+    both lines to state the file is FROZEN (`docs/work-inventory.FROZEN.md`,
+    SD-36 D3) and no longer regenerated, while keeping the one-time
+    derivation command as historical provenance for the 37-book list.
+
+Re-verified after all fixes: `bash scripts/verify.sh --only
+figure-provenance --only denominator-gate --only clippy` → **RESULT:
+PASS** (`figure-provenance` files_checked=297 figures_examined=631
+violations=0; `denominator-gate` files_checked=367 violations=0; `clippy`
+root:0 desktop:0 warnings), log `/tmp/codex-verify-poEqRA`, event
+`1789621031910-sd36-epic-b-0963e0`. Then the mandatory ONE full pass (item
+1 above) — **RESULT: PASS**, 45/45 stages, 0 failures.

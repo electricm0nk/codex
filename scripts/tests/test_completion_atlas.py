@@ -384,37 +384,30 @@ class TestLiveInventoryCheck(unittest.TestCase):
         self.assertLessEqual(result["counts"].get("A", 0), 449)
 
     def test_bucket_u_matches_named_population(self):
-        # `AT-34-E3-003` (`decisions.md §17`, operator ruling): 110 of the
-        # corpus-wide 140 `equipment_modifier` `unmeasurable` units (58 of
-        # them `core_rulebook`) moved to `DONE` -- internal equipment-
-        # modifier plumbing codes (BANE, FLM_BRST, FRT_HVY, ...) that carry
-        # zero magnitude tokens and no real description in their token
-        # closure, per `classify()`'s new `Kind::EquipmentModifier` rung
-        # immediately above the pre-existing `unmeasurable` fallback
-        # (`src/bin/v06_work_inventory.rs`, `equipment_modifier_is_internal_
-        # plumbing_no_player_facing_content_per_decisions_17`). 321 - 110 =
-        # 211.
-        #
-        # AT-34-E3-003 bucket-U cycle 2: the 9-of-30 `render_pcgen_desc`
-        # bare-percent-after-digit defect this ruling named but deferred is
-        # now fixed (`src/rules_core/pcgen_desc.rs`'s bare-`%` render branch
-        # gained the same digit-preceded exemption `leaked_pcgen_syntax`
-        # already had). 9 corpus-wide `equipment_modifier` units move
-        # `unmeasurable -> text-complete` on re-render alone, no reclassify
-        # rule change: 211 - 9 = 202. The remaining 21 (all `%CHOICE`/`%d<N>`
-        # unresolved-substitution units) are the OTHER named sub-cause --
-        # nearer bucket `X`'s "deliberately not modelled" shape, still
-        # awaiting its own ruling, untouched by this cycle. Re-derive:
+        # Formerly pinned to a hand-derived literal (202, `AT-34-E3-003`,
+        # `decisions.md §17`/§bucket-U-cycle-2 history). `docs/work-inventory.json`
+        # is now FROZEN (SD-36 Epic B, operator ruling D3 --
+        # `docs/work-inventory.FROZEN.md`) at a snapshot whose `status`
+        # Counter carries zero `unmeasurable` units -- the 202 figure was
+        # measured against a since-superseded corpus state and does not
+        # reproduce against the frozen one (independently confirmed:
         # `python3 -c "import json; from collections import Counter;
         # inv=json.load(open('docs/work-inventory.json'));
-        # rem=[u for u in inv['units'] if u['status']=='unmeasurable' and
-        # u['kind']=='equipment_modifier']; print(len(rem),
-        # Counter(u['book'] for u in rem))"` -> `21
-        # Counter({'core_rulebook': 10, 'ultimate_psionics': 6,
-        # 'advanced_class_guide': 4, 'ultimate_equipment': 1})`.
+        # print(Counter(u['status'] for u in inv['units'])['unmeasurable'])"`
+        # -> `0`).
+        #
+        # Per operator ruling (SD-36 Epic B fix cycle, 2026-09-17): assert
+        # bucket U against a second, independent implementation of the same
+        # count rather than a number pinned to one corpus snapshot, so the
+        # test keeps proving `_bucket_of`'s `unmeasurable -> "U"` mapping
+        # (the load-bearing claim) without re-encoding a value that only
+        # ever held for one frozen state of the data it reads.
         inv = CA._load_inventory()
         result = CA.partition(inv["units"])
-        self.assertEqual(result["counts"].get("U", 0), 202)
+        independent_u_count = sum(
+            1 for u in inv["units"] if u.get("status") == "unmeasurable"
+        )
+        self.assertEqual(result["counts"].get("U", 0), independent_u_count)
 
 
 if __name__ == "__main__":

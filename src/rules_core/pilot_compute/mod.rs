@@ -51237,8 +51237,9 @@ fn wizard_has_canonical_universal_selection(input: &CharacterInput) -> bool {
 /// identity, its grounded class-feature surfaces, and its remaining named
 /// burdens legible on the runtime path. The matrix file row transition
 /// (Unverified/Observed → Blocked/Computed, then Blocked → Partial once Scribe
-/// Scroll is grounded) is recorded by this proof surface and applied to the
-/// in-source carrier directly (see `seeded_current_truth`).
+/// Scroll is grounded) was recorded by this proof surface and applied to the
+/// in-source carrier directly (the support-state matrix itself is retired,
+/// SD-36 D3; this is now a historical note).
 ///
 /// A further SD13-E5 slice widens the level-1-only gate (`supported_wizard_level`,
 /// 1..=2) and extends every one of the formulas above to level 2 via the same
