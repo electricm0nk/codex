@@ -10,7 +10,6 @@ mod class_catalog_generic;
 mod class_feature_descriptions;
 mod class_feature_feat_bridge;
 mod class_feature_pool_picker;
-mod wizard_school_picker;
 mod dm_console_export;
 mod encounter_rating;
 mod class_spell_levels;
@@ -65,7 +64,6 @@ use class_catalog::list_class_catalog;
 use class_feature_descriptions::list_class_feature_descriptions;
 use class_feature_feat_bridge::list_class_feature_feat_bridge_descriptions;
 use class_feature_pool_picker::list_class_feature_pool_options;
-use wizard_school_picker::list_wizard_school_options;
 use dm_console_export::export_dm_console;
 use encounter_rating::rate_encounter;
 use class_spell_levels::list_class_spell_levels;
@@ -242,7 +240,6 @@ fn main() {
             // regardless of selection, modelled on
             // `list_alternate_racial_traits`'s own precedent.
             list_class_feature_pool_options,
-            list_wizard_school_options,
             export_dm_console,
             rate_encounter,
             list_equipment,

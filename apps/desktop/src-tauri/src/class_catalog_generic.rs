@@ -281,9 +281,25 @@ mod tests {
         let entries = generic_class_catalog_entries(&repo());
         let distinct: std::collections::BTreeSet<_> =
             entries.iter().map(|e| e.class_id.as_str()).collect();
-        // SD-36 Epic E CONV-05: 62 -> 81, same cause as
-        // `the_converted_package_carries_eighty_one_conventional_classes`.
-        assert_eq!(distinct.len(), 81);
+        // SD-36 Epic E fix cycle (review finding 2/12): before engine-P1-4's
+        // `display_label` fix, a redacted class's raw `Codex-Named Unit (<source_file>_
+        // <line>)` placeholder label was unique per (book, slug) pair by construction (it
+        // embeds the source line), so this count came out to 81 -- the SAME as the raw,
+        // undeduplicated (book, slug) row count `the_converted_package_carries_eighty_one_
+        // conventional_classes` still asserts. That was an artifact of the bug, not a real
+        // invariant: it hid that 3 slugs are genuinely reprinted, same name, across two
+        // different `CLASS_FAMILY_BOOKS` books each. Re-derive: group
+        // `load_generic_class_progressions(&repo()).0` by `.name` and print every group
+        // with more than one member -- exactly `Cyphermage` (slug `cyphermage`),
+        // `Hellknight` (slug `hellknight`), and `Red Mantis Assassin` (slug
+        // `red_mantis_assassin`) each appear twice, once per book -- 81 rows, 3 collapsed
+        // pairs, 78 distinct real names. This is the SAME 78 `generic_class_chassis.rs`'s own
+        // `all_seventy_eight_conventional_classes_resolve` already asserts over the
+        // identical `CLASS_FAMILY_BOOKS` set (that module dedupes by slug directly, keeping
+        // book-precedence order; this one dedupes implicitly by display name once the name
+        // is the real one). The two populations now agree because they are measuring the
+        // same real classes, not two different denominators (review finding 12).
+        assert_eq!(distinct.len(), 78);
         // None shares a display name with an existing CRB/PU row (would
         // silently merge into an unrelated progression otherwise).
         let crb_pu_names = [

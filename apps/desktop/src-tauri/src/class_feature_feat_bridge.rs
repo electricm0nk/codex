@@ -44,8 +44,10 @@
 //!    nothing to lend lends nothing. (Was: the feat catalog's exact-name lookup
 //!    answering `None`.)
 //!
-//! `granted_feat` is the granted rule's own `label` -- the feat's exact name,
-//! read off the record rather than parsed out of a token value.
+//! `granted_feat` is the granted rule's own display name (`granted_feat_display`, SD-36 Epic E
+//! engine-P1-4 -- never the raw `label` field, which can be the ingest pipeline's
+//! `Codex-Named Unit (...)` placeholder for a redacted feat), read off the record rather than
+//! parsed out of a token value.
 //!
 //! # Never double-serves a record `class_feature_descriptions.rs` already covers
 //!
@@ -156,6 +158,14 @@ fn feat_grants_by_class_feature(package: &SheetRulePackage) -> BTreeMap<RuleId, 
     out
 }
 
+/// SD-36 Epic E engine-P1-4: `feat.label` can be the ingest pipeline's raw `Codex-Named Unit
+/// (...)` placeholder (the feat's real name was redacted as Product Identity). Every caller
+/// that turns a granted feat into a player-facing string must go through this, never read
+/// `.label` directly -- see `granted_feat`'s call site below.
+fn granted_feat_display(feat: &codex::rules_core::sheet_rule::SheetRule) -> String {
+    codex::rules_core::sheet_rule::display_label(feat)
+}
+
 /// The single feat this class-feature rule's whole content grants, or `None`
 /// when one of the module doc comment's three refusals applies.
 fn sole_granted_feat<'a>(
@@ -235,11 +245,11 @@ fn load_class_feature_feat_bridge_descriptions(repo_root: &Path) -> Vec<ClassFea
                 // T4-L9 (`decisions.md §13`): this module's `class_slug` is a
                 // synthetic pool-group name, never a real class token (module
                 // doc comment), so the class-held join can never match these
-                // records. The granted rule's own `label` is the feat's exact
+                // records. The granted rule's own display name is the feat's exact
                 // name -- carried here so the frontend can gate reachability on
                 // the character holding THAT feat instead (see
                 // `ClassFeatureDescriptionDto::granted_feat`'s own doc comment).
-                granted_feat: Some(feat.label.clone()),
+                granted_feat: Some(granted_feat_display(feat)),
             });
         }
     }
@@ -516,6 +526,53 @@ mod tests {
         let b = list_class_feature_feat_bridge_descriptions();
         assert_eq!(a.len(), b.len());
         assert!(!a.is_empty());
+    }
+
+    /// SD-36 Epic E engine-P1-4 (review-caught fourth path): a granted feat whose real name
+    /// was redacted as Product Identity carries the ingest pipeline's `Codex-Named Unit (...)`
+    /// placeholder as its raw `label`. `ClassFeatureDescriptionDto::granted_feat` must resolve
+    /// it through `codex::rules_core::sheet_rule::display_label`, the same resolver
+    /// `render_sheet()` and the level-up option pools use -- `classFeaturesModel.ts` matches
+    /// `grantedFeat` against the character's own held-feat names, which are display-labels, so
+    /// a raw placeholder here would silently break that join as well as leaking the ingest
+    /// identifier to the player.
+    #[test]
+    fn granted_feat_display_resolves_a_placeholder_label_to_the_source_derived_name() {
+        use codex::rules_core::sheet_rule::{Provenance, Subject};
+
+        let placeholder = codex::rules_core::codex_neutral_name::neutral_name(
+            "feat",
+            "core_rulebook",
+            "feats.lst",
+            7,
+        );
+        let feat = codex::rules_core::sheet_rule::SheetRule {
+            id: "core_rulebook:feat:order_of_the_rack".to_owned(),
+            label: placeholder,
+            value: codex::rules_core::sheet_rule::SheetValue::Text,
+            also: Vec::new(),
+            prose: Vec::new(),
+            applies: codex::rules_core::sheet_rule::Applies::Always,
+            target: None,
+            bonus_type: None,
+            print: true,
+            pool: "feat".to_owned(),
+            tags: Vec::new(),
+            subject: Subject::Character,
+            repeatable: false,
+            granted_by: Vec::new(),
+            offers: None,
+            grants: Vec::new(),
+            provenance: Provenance::default(),
+        };
+
+        let resolved = granted_feat_display(&feat);
+
+        assert!(
+            !resolved.contains(codex::rules_core::codex_neutral_name::NAME_PREFIX),
+            "granted_feat must not carry the raw ingest placeholder: {resolved}"
+        );
+        assert_eq!(resolved, "Order Of The Rack");
     }
 }
 

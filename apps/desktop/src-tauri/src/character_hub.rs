@@ -3603,7 +3603,7 @@ fn resolve_characters_root(app: &tauri::AppHandle) -> Result<PathBuf, String> {
 /// Rejects: empty, any `..` path component (Windows and Unix separators
 /// both), a leading path separator, and a Windows drive prefix (`C:`) — a
 /// real character id is always the bare UUID this app itself generated.
-fn validate_character_id(character_id: &str) -> Result<(), String> {
+pub(crate) fn validate_character_id(character_id: &str) -> Result<(), String> {
     if character_id.is_empty() {
         return Err("character_id must not be empty".to_string());
     }
