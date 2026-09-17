@@ -82,13 +82,15 @@ class TestScan(_TreeCase):
                'use crate::bonus_stack_reader; use pre_tokens::parse;\n'
                '"BONUS:STAT|STR|2" "DEFINE:X|0" "PREFEAT:1,Dodge" "SAB:Text" "DESC:Words"\n'
                '"%CHOICE" "%LIST" "TYPE=Combat" let c = &r.raw_bonus_chains;\n'
-               'use codex::pcgen_import::race_trait_tokens;\n')
+               'use codex::pcgen_import::race_trait_tokens;\n'
+               'let s = r.lst_file; use codex_ingest::pcgen_import::y;\n')
         res = prg.scan(self.root)
         self.assertEqual(res.live_files, 2)
         for name in prg.PATTERNS:
             self.assertGreaterEqual(res.hits_by_pattern[name], 1, name)
-        # 12 token-syntax hits + raw_bonus_chains + pcgen_import (ruling B16).
-        self.assertEqual(res.hits_by_root["apps/desktop"], 14)
+        # 12 token-syntax hits + raw_bonus_chains + pcgen_import (ruling B16)
+        # + lst_file + codex_ingest + a second pcgen_import hit (D6).
+        self.assertEqual(res.hits_by_root["apps/desktop"], 17)
         self.assertEqual(res.hits_by_root["src/rules_core"], 1)
 
     def test_identifier_subset_is_reported_separately(self):
@@ -624,6 +626,76 @@ class TestShippedDataIsScanned(_TreeCase):
                "#[cfg(test)]\nmod tests {\n    const T: &str = \"raw_tokens\";\n}\n")
         res = prg.scan(self.root)
         self.assertNotIn("src/rules_core/prose.rs", res.files)
+
+
+class TestLstFileAndCrateWallPatterns(_TreeCase):
+    """SD-36 Epic A / operator ruling D6: the crate wall (`crates/codex-ingest`)
+    opens two new blind spots the same way B16 did for `pcgen_import`.
+
+    `lst_file` is a field name on `SourceRef` (`src/rules_core/source_content.rs`)
+    that leaked PCGen vocabulary onto the live side without ever spelling a
+    literal PCGen token or importing the converter -- so it needs its own
+    identifier pattern, the same shape as `raw_tokens` or `pre_tokens`.
+
+    `codex_ingest` is the new crate name once the converter and oracle move out
+    of `codex` (`crates/codex-ingest`, D1). A live-root import of it is exactly
+    the B16 shape one crate over: `use codex_ingest::pcgen_import::...` reads
+    the converter without spelling `pcgen_import` inside `codex`'s own tree.
+
+    D6 is explicit that this does NOT include a `\\.lst\\b` pattern: the 8,592
+    table-citation strings in `src/rules_core/rules_tables/**` are provenance,
+    not residue, and burn down in a future bundle when rules tables become a
+    data package.
+    """
+
+    def test_lst_file_identifier_is_a_hit(self):
+        _run(["--rebaseline", "--root", self.root, "--baseline", self.baseline])
+        _write(self.root, "src/rules_core/loader.rs",
+               "pub struct SourceRef { pub lst_file: String }\n")
+        code, out = _run(["--check", "--root", self.root, "--baseline", self.baseline])
+        self.assertEqual(code, 1, out)
+        self.assertIn("pattern lst_file files=1 hits=1", out)
+
+    def test_codex_ingest_in_a_live_root_outside_cfg_test_is_a_hit(self):
+        _write(self.root, "apps/desktop/src-tauri/src/main.rs",
+               "use codex_ingest::pcgen_import::pcgen_desc::leaked_pcgen_syntax;\n")
+        res = prg.scan(self.root)
+        self.assertEqual(res.hits_by_pattern["codex_ingest"], 1)
+        self.assertEqual(res.files_by_pattern["codex_ingest"], 1)
+
+    def test_codex_ingest_inside_cfg_test_is_not_a_hit(self):
+        _write(self.root, "apps/desktop/src-tauri/src/fixture_only.rs",
+               "#[cfg(test)]\n"
+               "mod tests {\n"
+               "    use codex_ingest::pcgen_import::pcgen_desc::leaked_pcgen_syntax;\n"
+               "    fn f() { let _ = leaked_pcgen_syntax(\"\"); }\n"
+               "}\n")
+        res = prg.scan(self.root)
+        self.assertEqual(res.hits_by_pattern["codex_ingest"], 0)
+        self.assertNotIn("apps/desktop/src-tauri/src/fixture_only.rs", res.files)
+
+    def test_codex_ingest_pcgen_import_path_form_fires_both_patterns(self):
+        _write(self.root, "src/rules_core/loader.rs",
+               "use codex_ingest::pcgen_import::lst_parser::equipment::EquipmentRecord;\n")
+        res = prg.scan(self.root)
+        self.assertEqual(res.hits_by_pattern["codex_ingest"], 1)
+        self.assertEqual(res.hits_by_pattern["pcgen_import"], 1)
+
+    def test_no_dot_lst_pattern_was_added(self):
+        # D6: the table-citation strings are provenance, not residue; do not
+        # add a `\.lst\b` pattern or a PROVENANCE_PATTERNS class.
+        self.assertNotIn(r"\.lst\b", prg.PATTERNS.values())
+        self.assertNotIn(".lst", prg.PATTERNS)
+
+    def test_lst_file_is_in_the_identifier_subset(self):
+        # Unlike `pcgen_import`/`codex_ingest` (runtime-import class, kept out
+        # of the authoring-time population), `lst_file` is a plain identifier
+        # leak -- same shape as `raw_tokens` -- so it belongs in the subset.
+        self.assertIn("lst_file", prg.IDENTIFIER_PATTERNS)
+
+    def test_codex_ingest_is_not_in_the_identifier_subset(self):
+        self.assertNotIn("codex_ingest", prg.IDENTIFIER_PATTERNS)
+        self.assertIn("codex_ingest", prg.RUNTIME_IMPORT_PATTERNS)
 
 
 class TestLiveRootsAreTheDesignBoundary(unittest.TestCase):

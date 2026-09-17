@@ -220,6 +220,13 @@ IDENTIFIER_PATTERNS = {
     "render_pcgen_desc": r"\brender_pcgen_desc\b",
     "bonus_stack_reader": r"\bbonus_stack_reader\b",
     "pre_tokens": r"\bpre_tokens\b",
+    # SD-36 Epic A / operator ruling D6. `SourceRef.lst_file` leaked PCGen
+    # vocabulary onto the live side (`src/rules_core/source_content.rs`) the
+    # same way `raw_tokens` does: a plain identifier, no literal token, no
+    # converter import. Renamed to `source_path`; this pattern is the ratchet
+    # that keeps it from coming back. Deliberately NOT `\.lst\b` -- the 8,592
+    # table-citation strings in `rules_tables/**` are provenance, not residue.
+    "lst_file": r"\blst_file\b",
 }
 TOKEN_SYNTAX_PATTERNS = {
     "BONUS:": r"\bBONUS:",
@@ -237,6 +244,14 @@ TOKEN_SYNTAX_PATTERNS = {
 # receipt's figure means.
 RUNTIME_IMPORT_PATTERNS = {
     "pcgen_import": r"\bpcgen_import\b",
+    # SD-36 Epic A (D1/D6): the converter and oracle move into their own
+    # crate, `crates/codex-ingest`. A live-root import of it is the same B16
+    # shape one crate over -- `use codex_ingest::pcgen_import::...` reads the
+    # converter from inside `codex`'s own tree without ever spelling
+    # `pcgen_import` there. `codex_ingest::pcgen_import::x` fires both
+    # patterns, which is intended: it is both a crate-wall breach and a
+    # converter read.
+    "codex_ingest": r"\bcodex_ingest\b",
 }
 PATTERNS = {**IDENTIFIER_PATTERNS, **TOKEN_SYNTAX_PATTERNS, **RUNTIME_IMPORT_PATTERNS}
 _COMPILED = {name: re.compile(rx) for name, rx in PATTERNS.items()}
