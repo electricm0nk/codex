@@ -234,7 +234,7 @@ fn chassis_from_rules(book: &str, slug: &str, rules: &[SheetRule]) -> Option<Cla
         book: book.to_string(),
         slug: slug.to_string(),
         level_var,
-        display_name: principal.label.clone(),
+        display_name: crate::rules_core::sheet_rule::display_label(principal),
         tags,
         max_level,
         base_attack: base_attack.clone(),
@@ -366,5 +366,58 @@ mod tests {
         // detective.json` carries exactly one line, a `CasterLevel` Number);
         // it must not appear as a chassis with a guessed progression.
         assert!(record("occult_adventures", "psychic_detective").is_none());
+    }
+
+    /// SD-36 Epic E engine-P1-4 (review-caught third path): a class whose principal record's
+    /// real name was redacted as Product Identity carries the ingest pipeline's placeholder
+    /// label. `ClassChassis::display_name` must resolve it through
+    /// `crate::rules_core::sheet_rule::display_label`, never `principal.label.clone()` raw --
+    /// the frontend prints `display_name` directly as the class's name.
+    #[test]
+    fn a_placeholder_principal_label_resolves_to_the_source_derived_name() {
+        use crate::rules_core::sheet_rule::{Provenance, Subject};
+
+        let placeholder = crate::rules_core::codex_neutral_name::neutral_name(
+            "class",
+            "core_rulebook",
+            "classes.lst",
+            42,
+        );
+        let base = |target: BonusTarget, expr: Expr| SheetRule {
+            id: "core_rulebook:class:order_of_the_rack".to_owned(),
+            label: placeholder.clone(),
+            value: SheetValue::Number(expr),
+            also: Vec::new(),
+            prose: Vec::new(),
+            applies: Applies::Always,
+            target: Some(target),
+            bonus_type: None,
+            print: true,
+            pool: String::new(),
+            tags: Vec::new(),
+            subject: Subject::Character,
+            repeatable: false,
+            granted_by: Vec::new(),
+            offers: None,
+            grants: Vec::new(),
+            provenance: Provenance::default(),
+        };
+        let level = Expr::ClassLevel("order_of_the_rack".to_owned());
+        let rules = vec![
+            base(BonusTarget::BaseAttack, level.clone()),
+            base(BonusTarget::BaseSave(Save::Fortitude), level.clone()),
+            base(BonusTarget::BaseSave(Save::Reflex), level.clone()),
+            base(BonusTarget::BaseSave(Save::Will), level),
+        ];
+
+        let chassis = chassis_from_rules("core_rulebook", "order_of_the_rack", &rules)
+            .expect("a full BAB+saves row set builds a chassis");
+
+        assert!(
+            !chassis.display_name.contains(crate::rules_core::codex_neutral_name::NAME_PREFIX),
+            "display_name must not carry the raw ingest placeholder: {}",
+            chassis.display_name
+        );
+        assert_eq!(chassis.display_name, "Order Of The Rack");
     }
 }

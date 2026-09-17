@@ -100,17 +100,17 @@ pub fn filter_option_pool(
         match evaluate_applies(&rule.applies, held, package, facts, EvalContext::default()) {
             Gate::Include => out.eligible.push(EligibleOption {
                 id: rule.id.clone(),
-                label: rule.label.clone(),
+                label: crate::rules_core::sheet_rule::display_label(rule),
                 condition: None,
             }),
             Gate::Situational(condition) => out.eligible.push(EligibleOption {
                 id: rule.id.clone(),
-                label: rule.label.clone(),
+                label: crate::rules_core::sheet_rule::display_label(rule),
                 condition: Some(condition),
             }),
             Gate::Exclude => out.refused.push(RefusedOption {
                 id: rule.id.clone(),
-                label: rule.label.clone(),
+                label: crate::rules_core::sheet_rule::display_label(rule),
                 unmet: unmet_words(package, held, facts, &rule.applies),
             }),
         }
@@ -350,10 +350,15 @@ pub fn save_word(save: Save) -> &'static str {
 }
 
 /// The referenced rule's own display label when the package carries it, else its slug in
-/// words. Never the raw id: an id is a locator, not something a player reads.
+/// words. Never the raw id: an id is a locator, not something a player reads. SD-36 Epic E
+/// engine-P1-4: a non-empty label can still be the ingest pipeline's `Codex-Named Unit (...)`
+/// placeholder, so this goes through [`crate::rules_core::sheet_rule::display_label`] rather
+/// than reading `rule.label` directly -- the same resolution `render_sheet()` applies.
 pub fn label_of(package: &SheetRulePackage, id: &str) -> String {
     match package.rule(id) {
-        Some(rule) if !rule.label.is_empty() => rule.label.clone(),
+        Some(rule) if !rule.label.is_empty() => {
+            crate::rules_core::sheet_rule::display_label(rule)
+        }
         _ => pretty(split_rule_id(id).2),
     }
 }
@@ -594,5 +599,84 @@ mod tests {
 
         assert_eq!(filtered.considered(), 1);
         assert_eq!(filtered.eligible[0].label, "Power Attack");
+    }
+
+    /// SD-36 Epic E engine-P1-4 (review-caught second path): a record whose real name was
+    /// redacted as Product Identity carries the ingest pipeline's placeholder label
+    /// (`codex_neutral_name::NAME_PREFIX`), never a player-facing word. `filter_option_pool`
+    /// must resolve it through [`crate::rules_core::sheet_rule::display_label`] the same way
+    /// `render_sheet()` does, both for an eligible option and a refused one -- the placeholder
+    /// must never reach `EligibleOption::label` / `RefusedOption::label`, which the desktop
+    /// level-up DTO copies verbatim.
+    #[test]
+    fn a_placeholder_label_is_resolved_to_the_source_derived_name_not_printed_raw() {
+        let placeholder =
+            crate::rules_core::codex_neutral_name::neutral_name("feat", "core_rulebook", "x.lst", 1);
+        let mut package = SheetRulePackage::new();
+        package.insert_rule(SheetRule {
+            id: "core_rulebook:feat:order_of_the_rack".to_owned(),
+            label: placeholder.clone(),
+            ..option_rule("order_of_the_rack", &placeholder, Applies::Always)
+        });
+        package.insert_rule(SheetRule {
+            id: "core_rulebook:feat:veiled_lodge".to_owned(),
+            label: placeholder.clone(),
+            ..option_rule(
+                "veiled_lodge",
+                &placeholder,
+                Applies::Compare {
+                    lhs: Expr::AbilityScore(Ability::Str),
+                    op: Cmp::Gte,
+                    rhs: Expr::Const(99),
+                },
+            )
+        });
+        package.finish();
+        let facts = facts_with_strength(10);
+        let held = held_set(&package, &HeldSeed::default(), &facts);
+
+        let filtered = filter_option_pool(&package, &held, &facts, FEAT_POOL, &[]);
+
+        assert!(
+            filtered.eligible.iter().all(|o| !o.label.contains(
+                crate::rules_core::codex_neutral_name::NAME_PREFIX
+            )),
+            "eligible option must not print the raw ingest placeholder: {:?}",
+            filtered.eligible
+        );
+        assert!(
+            filtered.refused.iter().all(|o| !o.label.contains(
+                crate::rules_core::codex_neutral_name::NAME_PREFIX
+            )),
+            "refused option must not print the raw ingest placeholder: {:?}",
+            filtered.refused
+        );
+        assert!(
+            filtered.eligible.iter().any(|o| o.label == "Order Of The Rack"),
+            "eligible label must fall back to the record's source-derived name: {:?}",
+            filtered.eligible
+        );
+        assert!(
+            filtered.refused.iter().any(|o| o.label == "Veiled Lodge"),
+            "refused label must fall back to the record's source-derived name: {:?}",
+            filtered.refused
+        );
+    }
+
+    /// Same invariant for the standalone `label_of` lookup used by prose/description text.
+    #[test]
+    fn label_of_resolves_a_placeholder_label_to_the_source_derived_name() {
+        let placeholder =
+            crate::rules_core::codex_neutral_name::neutral_name("feat", "core_rulebook", "x.lst", 1);
+        let mut package = SheetRulePackage::new();
+        let id = "core_rulebook:feat:order_of_the_rack".to_owned();
+        package.insert_rule(SheetRule {
+            id: id.clone(),
+            label: placeholder,
+            ..option_rule("order_of_the_rack", "unused", Applies::Always)
+        });
+        package.finish();
+
+        assert_eq!(label_of(&package, &id), "Order Of The Rack");
     }
 }

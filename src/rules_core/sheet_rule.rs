@@ -935,13 +935,18 @@ pub fn split_rule_id(id: &str) -> (&str, &str, &str) {
 /// (`provenance.pi.declared` carries `"name"`), a smaller remainder because the source row never
 /// carried one at all -- and carry the ingest pipeline's own internal placeholder as their only
 /// `label`: `"Codex-Named Unit (<source_file>_<line>)"`. That string is an ingest identifier,
-/// never a player-facing word, and must not reach a real character's printed sheet or the
-/// desktop DTO (both read `SheetLine.label`, which this function is the only writer of). Neither
-/// redaction nor a missing NAME token makes the record's real English name recoverable, so the
-/// fallback is the record's own SOURCE-DERIVED name: the slug half of its id, underscores to
-/// spaces, title-cased ("order_of_the_rack" -> "Order Of The Rack") -- readable, and traceable
+/// never a player-facing word, and must not reach a real character's printed sheet, the
+/// level-up option pools, or any desktop DTO. `pub` (not crate-private) because the raw-label
+/// leak found in the SD-36 Epic E review reached those surfaces through call sites outside this
+/// module entirely -- [`level_up_option_filter::filter_option_pool`] and `label_of`,
+/// `pilot_compute::class_chassis_sheet_rules`'s `ClassChassis::display_name`, and the desktop
+/// `class_feature_feat_bridge`'s `granted_feat` -- so every place that turns a [`SheetRule`]
+/// into a player-facing string must call this function rather than read `rule.label` itself.
+/// Neither redaction nor a missing NAME token makes the record's real English name recoverable,
+/// so the fallback is the record's own SOURCE-DERIVED name: the slug half of its id, underscores
+/// to spaces, title-cased ("order_of_the_rack" -> "Order Of The Rack") -- readable, and traceable
 /// back to the record, unlike an internal `source_file_line` citation.
-fn display_label(rule: &SheetRule) -> String {
+pub fn display_label(rule: &SheetRule) -> String {
     if !rule.label.starts_with(crate::rules_core::codex_neutral_name::NAME_PREFIX) {
         return rule.label.clone();
     }
