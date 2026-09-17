@@ -7,7 +7,7 @@ import type { CreateCharacterOutcome } from './loadCreateCharacter';
  * saved character.
  *
  * Invokes the `add_trait_selection` Tauri command, which loads the saved
- * character, records the trait (with its skill choice for a `%LIST` trait),
+ * character, records the trait (with its skill choice for an open-choice trait),
  * recomputes via the real rules-core engine, and either re-saves and returns
  * the fresh `Saved` envelope or leaves the on-disk character untouched and
  * returns `Blocked` with the real diagnostics — same invariant as
@@ -19,7 +19,7 @@ export interface AddTraitSelectionRequest {
   /** `trait_effects`' own wire id (e.g. `"trait:trait_acrobat"`). */
   traitId: string;
   /**
-   * For a `%LIST` trait (a picker option carrying a `choiceSetId`), the
+   * For an open-choice trait (a picker option carrying a `choiceSetId`), the
    * chosen skill id from that option's `skillOptions`. Omit for a flat trait.
    */
   skillChoice?: string | null;

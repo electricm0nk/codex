@@ -950,7 +950,7 @@ fn display_label(rule: &SheetRule) -> String {
 }
 
 fn title_case_slug(slug: &str) -> String {
-    slug.split(|c: char| c == '_' || c == '-')
+    slug.split(['_', '-'])
         .filter(|w| !w.is_empty())
         .map(|w| {
             let mut chars = w.chars();
@@ -2268,9 +2268,9 @@ mod evaluate_tests {
         let facts = fighter_facts();
         let held = HeldSet::default();
         let rule = package.rule("inner_sea_world_guide:class_feature:order_of_the_rack").expect("the ISWG Order of the Rack class feature converted");
-        assert!(rule.label.starts_with("Codex-Named Unit ("), "fixture assumption: this record's raw label is still the ingest placeholder");
+        assert!(rule.label.starts_with("Codex-Named Unit ("), "fixture assumption: this record's raw label is still the ingest-pipeline stand-in");
         let line = evaluate(rule, &held, package, &facts, EvalContext::default());
-        assert!(!line.label.starts_with("Codex-Named Unit ("), "the ingest placeholder must never reach SheetLine.label: {:?}", line.label);
+        assert!(!line.label.starts_with("Codex-Named Unit ("), "the ingest-pipeline stand-in must never reach SheetLine.label: {:?}", line.label);
         assert_eq!(line.label, "Order Of The Rack");
     }
 

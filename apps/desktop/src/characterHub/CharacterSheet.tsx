@@ -2633,7 +2633,7 @@ function FeatsTab(props: {
  * The character's chosen traits (v0.8 F-3, wired to real add/remove in SD-36 Epic E
  * desktop-P2-01). Names, prose and bonus lines come from the same
  * `list_available_character_traits` roster the create form's picker uses; see
- * `traitsTabModel.ts`. Adding offers every catalog trait not already held; a `%LIST` trait
+ * `traitsTabModel.ts`. Adding offers every catalog trait not already held; an open-choice trait
  * (one whose option carries `choiceSetId`) additionally offers its `skillOptions` before the
  * Add button commits.
  */
@@ -3588,7 +3588,7 @@ export function CharacterSheet(props: {
 
   /**
    * SD-36 Epic E desktop-P2-01: adds a character trait/drawback. `traitId` is one of
-   * `loadCharacterTraits()`'s own ids; `skillChoice` is required only for a `%LIST` trait
+   * `loadCharacterTraits()`'s own ids; `skillChoice` is required only for an open-choice trait
    * (one whose picker option carries a `choiceSetId`) and ignored otherwise.
    */
   async function handleAddTrait(traitId: string, skillChoice: string | null) {

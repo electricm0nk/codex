@@ -516,7 +516,7 @@ fn multi_line_records_keep_every_lines_own_label() {
 fn ac_natural_armor_var_idiom_becomes_an_ac_line() {
     let wolf = convert_unit("bestiary:monster:wolf");
     let ac_line = wolf.rules.iter().find(|r| matches!(&r.target, Some(BonusTarget::Ac)));
-    let ac_line = ac_line.expect(&format!("an AC line must exist for the Wolf's natural armor: rules={:?}", wolf.rules.iter().map(|r| (&r.id, &r.target)).collect::<Vec<_>>()));
+    let ac_line = ac_line.unwrap_or_else(|| panic!("an AC line must exist for the Wolf's natural armor: rules={:?}", wolf.rules.iter().map(|r| (&r.id, &r.target)).collect::<Vec<_>>()));
     assert_eq!(ac_line.value, SheetValue::Number(Expr::Const(2)), "the Wolf's AC_Natural_Armor value is 2");
     assert_eq!(ac_line.bonus_type.as_ref().map(|b| b.name.as_str()), Some("NaturalArmor"));
 }
