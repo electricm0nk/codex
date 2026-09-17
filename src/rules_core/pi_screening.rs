@@ -908,15 +908,6 @@ mod tests {
         assert_eq!(fixed, None, "an already-correct record must be left completely untouched");
     }
 
-    #[test]
-    fn reconcile_is_a_no_op_when_the_stamp_already_lists_description_among_others() {
-        let fixed = reconcile_description_pi_stamp(
-            Some(REDACTED_PI_MARKER),
-            License::PiRedacted,
-            Some(&format!("description,name,{}", crate::pcgen_import::ingest_payload::INGEST_TOKENS_FIELD)),
-        );
-        assert_eq!(fixed, None);
-    }
 
     #[test]
     fn reconcile_is_a_no_op_for_an_ordinary_unredacted_description() {

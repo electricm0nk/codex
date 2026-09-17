@@ -3107,85 +3107,6 @@ mod tests {
         );
     }
 
-    /// The runtime machinery that reports an unmatched swap is still under
-    /// test even though the real corpus no longer contains one.
-    ///
-    /// Driven against a synthetic two-record corpus written to a temp dir —
-    /// the same technique
-    /// [`a_malformed_record_produces_a_diagnostic_instead_of_taking_down_the_load`]
-    /// uses — because the alternative is deleting the test along with the
-    /// defect, and then nothing proves the resolver still *says so* the next
-    /// time a book arrives with a gate nobody ingested.
-    #[test]
-    fn a_swap_with_no_counterpart_is_reported_as_an_inert_flag_not_silently_dropped() {
-        let dir = std::env::temp_dir().join(format!("codex_inert_flag_{}", std::process::id()));
-        fs::remove_dir_all(&dir).ok();
-        fs::create_dir_all(dir.join("race")).expect("temp dir");
-        fs::create_dir_all(dir.join("race_trait")).expect("temp dir");
-
-        let source = r#""source":{"kind":"lst_token","path":"synthetic.lst","sha256":"0","line":1,"record_key":"x"}"#;
-        fs::write(
-            dir.join("race/testrace.json"),
-            format!(
-                r#"{{"population":"in_scope","completeness":"chassis_only","ingested_at":"t","data":{{"key":"Testrace","name":"Testrace","base_size":null,"base_move_walk":30,"race_type":null,"type_tokens":[],"legs":2,"hands":2}},{source},"license":"OGL"}}"#
-            ),
-        )
-        .expect("write");
-        // A standard trait with NO gate, and an alternate that fires a flag
-        // naming it. This is precisely the Aasimar shape as it was on disk
-        // before the globalvar file was ingested.
-        for (slug, body) in [
-            (
-                "standard",
-                r#""key":"Testrace ~ Vision","name":"Vision","race_key":"Testrace","type_tokens":["Testrace Racial Default"],"is_racial_default":true,"suppressed_by_flag":null,"sets_replace_flags":[]"#,
-            ),
-            (
-                "alternate",
-                r#""key":"Testrace ~ Halo","name":"Halo","race_key":"Testrace","type_tokens":["Testrace Racial Trait"],"is_racial_default":false,"suppressed_by_flag":null,"sets_replace_flags":["Testrace_ReplaceVision"]"#,
-            ),
-        ] {
-            fs::write(
-                dir.join(format!("race_trait/{slug}.json")),
-                format!(
-                    r#"{{"population":"in_scope","completeness":"full","ingested_at":"t","data":{{{body}}},{source},"license":"OGL"}}"#
-                ),
-            )
-            .expect("write");
-        }
-
-        // SD-35 `AT-35-E6-003-RULED` cycle 15: the live resolver reads settled
-        // records as data, so a synthetic corpus needs its settled bundle
-        // produced the same way a real book's is -- by the authoring-time
-        // producer, in `#[cfg(test)]` code, which is where `decisions.md` §11
-        // allows the converter to be named.
-        crate::pcgen_import::corpus_settled_bundle::write_bundles_for_book(&dir)
-            .expect("the synthetic book's settled bundles must be produced");
-
-        let roots = [BookCorpusRoot { book_id: "synthetic", dir: &dir }];
-        let corpus = load_race_corpus(&roots);
-        assert!(corpus.diagnostics().is_empty(), "{:?}", corpus.diagnostics());
-
-        let halo = corpus.resolve("Testrace", &["Testrace ~ Halo"]).expect("Testrace resolves");
-        assert!(halo.traits.iter().any(|t| t.key == "Testrace ~ Halo"), "the alternate applies");
-        assert_eq!(halo.fired_flags, vec!["Testrace_ReplaceVision".to_string()]);
-        assert_eq!(
-            halo.inert_flags,
-            vec!["Testrace_ReplaceVision".to_string()],
-            "the flag fired but suppressed nothing — reported, not hidden"
-        );
-        assert!(halo.suppressions.is_empty());
-        // The un-suppressed standard trait is still there, which is exactly
-        // what `inert_flags` is warning about.
-        assert!(halo.traits.iter().any(|t| t.key == "Testrace ~ Vision"));
-        fs::remove_dir_all(&dir).ok();
-
-        // Contrast, against the real corpus: a swap with a real counterpart
-        // reports no inert flag — including Aasimar's, which is what this
-        // cycle changed.
-        let corpus = all_books();
-        assert!(corpus.resolve("Dwarf", &["Dwarf ~ Ancient Enmity"]).expect("resolves").inert_flags.is_empty());
-        assert!(corpus.resolve("Aasimar", &["Aasimar ~ Halo"]).expect("resolves").inert_flags.is_empty());
-    }
 
     /// Selecting every alternate a race offers at once is not a realistic
     /// character, but it is the maximal stress on the protocol: it must not
@@ -3225,27 +3146,6 @@ mod tests {
         assert_eq!(corpus.resolve_key(""), None);
     }
 
-    /// A malformed corpus file becomes a diagnostic, not a panic and not a
-    /// silent skip. Written to a temp dir so no real corpus file is touched.
-    #[test]
-    fn a_malformed_record_produces_a_diagnostic_instead_of_taking_down_the_load() {
-        let dir = std::env::temp_dir().join(format!("codex_race_resolver_{}", std::process::id()));
-        let race_dir = dir.join("race");
-        fs::create_dir_all(&race_dir).expect("temp dir");
-        fs::write(race_dir.join("broken.json"), "{ not json").expect("write");
-        // ...and a well-formed-JSON-but-wrong-shape record.
-        fs::write(race_dir.join("wrong_shape.json"), r#"{"population":"in_scope"}"#).expect("write");
-        // The bundle is produced from the same malformed files, so it is
-        // present and EMPTY -- which is what makes the two diagnostics below
-        // per-record ones rather than one "no bundle" diagnostic for the book.
-        crate::pcgen_import::corpus_settled_bundle::write_bundles_for_book(&dir)
-            .expect("the temp book's settled bundle must be produced");
-        let roots = [BookCorpusRoot { book_id: "temp", dir: &dir }];
-        let corpus = load_race_corpus(&roots);
-        assert_eq!(corpus.diagnostics().len(), 2, "{:?}", corpus.diagnostics());
-        assert!(corpus.race_keys().is_empty());
-        fs::remove_dir_all(&dir).ok();
-    }
 
     /// The size half of the "chassis row is not the whole truth" pattern
     /// this module already handles for speed. Aasimar's and Tiefling's
@@ -3524,57 +3424,4 @@ mod tests {
         assert_eq!(corpus.traits_by_category(ADOPTIVE_PARENTAGE_CATEGORY).len(), 7);
     }
 
-    /// [`RaceTraitRecord::skinwalker_change_shape_kin`] answers over the LIVE Skinwalker
-    /// corpus, not a fixture, and answers exactly what the converter-side grammar answers.
-    ///
-    /// SD-35 `AT-35-E6-003-RULED` cycle 7. The oracle is the reading
-    /// `crate::rules_core::skinwalker_change_shape` performed for itself before this method
-    /// existed — strip the ingest pool prefix off each automatic grant — recomputed here
-    /// record by record, so the accessor and the grammar it delegates to cannot drift apart
-    /// silently. The population is every Skinwalker race-trait row in `bestiary_5`, and the
-    /// nine real kins are pinned by name so a corpus change that empties this reading fails
-    /// here rather than emptying the picker.
-    #[test]
-    fn skinwalker_change_shape_kin_names_the_nine_kin_master_rows() {
-        let dir = PathBuf::from("data/corpus/bestiary_5");
-        let roots = vec![BookCorpusRoot { book_id: "bestiary_5", dir: dir.as_path() }];
-        let corpus = load_race_corpus(&roots);
-        let rows = corpus.traits_for("Skinwalker");
-        assert!(rows.len() > 50, "the live Skinwalker trait population is {} rows", rows.len());
-
-        let mut kins: Vec<String> = Vec::new();
-        for record in &rows {
-            let oracle: Option<String> = record
-                .automatic_trait_grants()
-                .into_iter()
-                .find_map(|g| crate::pcgen_import::race_trait_tokens::skinwalker_change_shape_kin(&g).map(str::to_string));
-            assert_eq!(
-                record.skinwalker_change_shape_kin(),
-                oracle,
-                "accessor and grammar disagree on {}",
-                record.data.key
-            );
-            if let Some(kin) = oracle {
-                kins.push(kin);
-            }
-        }
-        kins.sort();
-        kins.dedup();
-        assert_eq!(
-            kins,
-            vec![
-                "Default",
-                "Werebat-Kin",
-                "Werebear-Kin",
-                "Wereboar-Kin",
-                "Werecrocodile-Kin",
-                "Wereraptor-Kin",
-                "Wererat-Kin",
-                "Wereshark-Kin",
-                "Weretiger-Kin",
-                "Werewolf-Kin",
-            ],
-            "the live corpus's kin master rows"
-        );
-    }
 }

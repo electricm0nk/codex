@@ -169,7 +169,7 @@ use super::rules_tables::RuleSetId;
 // chain`/`class_level_variable_name` directly, rather than a second, duplicated implementation --
 // both live inside the `codex` crate, so `pub(crate)` is enough; no `tests/`-crate-visible `pub`
 // is needed or added.
-pub(crate) mod class_feature_grant_consumer;
+pub mod class_feature_grant_consumer;
 mod class_slayer;
 mod class_ultimate_combat;
 pub mod prestige_class_entry_gate;
@@ -6660,7 +6660,7 @@ const MAX_SUPPORTED_CLERIC_LEVEL: u8 = 20;
 // and no domain spell-list contents, mirroring the Fighter bonus-feat choice-slot
 // seam pattern.
 const CLERIC_DOMAIN_CHOICE_ID: &str = "choice:cleric_domain";
-const GOOD_DOMAIN_SELECTION: &str = "domain:good";
+pub const GOOD_DOMAIN_SELECTION: &str = "domain:good";
 const HEALING_DOMAIN_SELECTION: &str = "domain:healing";
 // SD-31 wave 25 (OPERATOR-RULINGS-2026-08-21.md section 20): two further
 // domains grounded for real via `domain_power`'s interpreted magnitude
@@ -6669,16 +6669,16 @@ const HEALING_DOMAIN_SELECTION: &str = "domain:healing";
 // `domain_power::DOMAIN_POWER_CATALOG`'s own doc comment for why Evil/
 // Darkness/Madness (the same formula shape, but an enemy-facing debuff) stay
 // unground.
-const WAR_DOMAIN_SELECTION: &str = "domain:war";
-const STRENGTH_DOMAIN_SELECTION: &str = "domain:strength";
+pub const WAR_DOMAIN_SELECTION: &str = "domain:war";
+pub const STRENGTH_DOMAIN_SELECTION: &str = "domain:strength";
 // SD-31 wave 26 (OPERATOR-RULINGS-2026-08-21.md section 20, "PROVE BEFORE YOU
 // EXTEND" satisfied first against Good/Healing before either was added -- see
 // `domain_power`'s own `fixture_check_tests` module doc): two more domains,
 // both scanned corpus-wide for the same self-application-safe shape (a
 // beneficial effect on a touched/self target, never an enemy-facing debuff)
 // Good/War/Strength already establish.
-const DESTRUCTION_DOMAIN_SELECTION: &str = "domain:destruction";
-const GLORY_DOMAIN_SELECTION: &str = "domain:glory";
+pub const DESTRUCTION_DOMAIN_SELECTION: &str = "domain:destruction";
+pub const GLORY_DOMAIN_SELECTION: &str = "domain:glory";
 // SD-34 wave 37 lane A (bucket D's "domain-vs-class_feature dual-
 // representation" mechanism gap, `wave36_laneC_creature_type_collision_
 // disposition_cycle_receipt.md` next-cycle plan item 5): Undead Subdomain's
@@ -6702,7 +6702,7 @@ const GLORY_DOMAIN_SELECTION: &str = "domain:glory";
 // declining to model granting a bonus to another creature: refuse to claim
 // what would be a plausible-looking but wrong number, rather than fabricate
 // one.
-const UNDEAD_SUBDOMAIN_SELECTION: &str = "domain:undead_subdomain";
+pub const UNDEAD_SUBDOMAIN_SELECTION: &str = "domain:undead_subdomain";
 // SD-34 wave 38 lane A (wave 37 lane A's own next-cycle plan item 1): the
 // second APG SUBDOMAIN this catalog grounds. Confirmed a real, legal
 // Cleric/Inquisitor subdomain by direct corpus read
@@ -6719,7 +6719,7 @@ const UNDEAD_SUBDOMAIN_SELECTION: &str = "domain:undead_subdomain";
 // uses-per-day count, genuinely different from the shared `3+WIS` chain
 // (`domain_power::DomainPowerSpec::uses_per_day_formula`, added alongside
 // this entry).
-const CONSTRUCT_SUBDOMAIN_SELECTION: &str = "domain:construct_subdomain";
+pub const CONSTRUCT_SUBDOMAIN_SELECTION: &str = "domain:construct_subdomain";
 
 /// v0.6 alpha swarm, risks item 8 (Cleric Good domain closure, generalized
 /// task #64 to every real base class whose own domain-choice class feature

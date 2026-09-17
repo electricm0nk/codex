@@ -180,7 +180,6 @@ pub fn equipment_record_from_json(data: &serde_json::Value) -> Option<EquipmentR
 ///
 /// The population is the whole corpus, every book, walked in sorted order so
 /// two runs on the same tree compare the same records in the same order.
-#[cfg(test)]
 pub fn every_live_corpus_equipment_pair(
 ) -> Vec<(EquipmentRecord, codex::rules_core::equipment_record::CorpusEquipmentRecord)> {
     use crate::pcgen_import::ir_converter::equipment_record_to_corpus;
