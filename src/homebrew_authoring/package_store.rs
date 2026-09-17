@@ -760,6 +760,9 @@ fn io_error(path: &Path, err: std::io::Error) -> PackageStoreError {
 /// several files one package save writes) leaves every file it has not yet reached at
 /// whatever it was before -- never truncated or half-written. This closes the single-FILE
 /// half-write window per file; it does not make the whole loop in `save()` one transaction.
+/// No `fsync` on the temp file or its parent directory either (same caveat as
+/// `saved_character::local_store`'s own `atomic_write_prepare` doc comment): a process-crash
+/// guarantee, not a power-loss one on a filesystem's default journaling mode.
 fn atomic_write(path: &Path, contents: &[u8]) -> std::io::Result<()> {
     let mut tmp_name = path.file_name().map(|n| n.to_os_string()).unwrap_or_default();
     tmp_name.push(".tmp");

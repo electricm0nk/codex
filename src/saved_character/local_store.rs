@@ -26,7 +26,15 @@ const CHARACTER_INPUT_FILE: &str = "authoritative_character_input.txt";
 /// touching `path` itself, and hand back the temp path for the caller to `fs::rename` into
 /// place. `write` on a temp file that a crash interrupts leaves only the `.tmp` file
 /// corrupted; `path` (and whatever `load()` currently reads from it) is untouched until the
-/// rename, which on every platform this app ships to is a single filesystem metadata update.
+/// rename, which on every platform this app ships to is a single filesystem metadata update
+/// -- so `path` never observes a torn write. This does NOT add an `fsync` on the temp file
+/// or its parent directory, so the guarantee is a process-crash guarantee, not a power-loss
+/// one: on ext4's default `data=ordered` (and equivalent journaling defaults elsewhere), an
+/// OS crash or power cut before the temp file's dirty pages reach disk can still leave `path`
+/// renamed onto data the filesystem never persisted. Closing that residual window is a
+/// separate, deliberate durability change (two extra `fsync` calls per save), not implied by
+/// "atomic" alone -- review-caught (SD-36 Epic E fix cycle, finding 14) and recorded rather
+/// than silently assumed.
 fn atomic_write_prepare(path: &Path, contents: &[u8]) -> std::io::Result<std::path::PathBuf> {
     let mut tmp_name = path.file_name().map(|n| n.to_os_string()).unwrap_or_default();
     tmp_name.push(".tmp");

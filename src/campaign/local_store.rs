@@ -312,7 +312,10 @@ fn write_asset_group(dir: &Path, assets: &[CampaignAsset]) -> Result<(), Campaig
 /// the single-FILE half-write window; it does not make the whole multi-file `save()` call one
 /// transaction -- a crash between two different files' renames can still leave the config
 /// JSON and an asset file from different save attempts, the same residual window
-/// `saved_character::local_store`'s equivalent fix documents.
+/// `saved_character::local_store`'s equivalent fix documents. No `fsync` on the temp file or
+/// its parent directory either, so (same caveat as `saved_character::local_store`'s own
+/// `atomic_write_prepare` doc comment) this is a process-crash guarantee, not a power-loss
+/// one on a filesystem's default journaling mode.
 fn atomic_write(path: &Path, contents: &[u8]) -> std::io::Result<()> {
     let mut tmp_name = path.file_name().map(|n| n.to_os_string()).unwrap_or_default();
     tmp_name.push(".tmp");
