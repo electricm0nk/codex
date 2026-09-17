@@ -536,6 +536,19 @@ fn copy_equipment_records_keep_the_specific_items_own_name() {
     }
 }
 
+/// engine-P2-1: a source `.lst` row doubles the `SPROP:` token key into its own free-text
+/// value (`SPROP:SPROP:On command...`); the doubled echo must not reach player-facing prose.
+#[test]
+fn sprop_does_not_leak_a_doubled_token_key_into_prose() {
+    let c = convert_unit("inner_sea_intrigue:equipment_modifier:special_ability_transformative_greater_melee");
+    let special = c.rules[0].prose.iter().find(|s| matches!(s.family, ProseFamily::Special)).expect("a Special prose segment");
+    for piece in &special.pieces {
+        if let ProsePiece::Text(t) = piece {
+            assert!(!t.contains("SPROP:"), "the doubled token key leaked into prose: {t:?}");
+        }
+    }
+}
+
 /// CONV-05: a record with two independent BONUS terms, one convertible and one not, must still
 /// print the term the converter CAN read -- degradation must be per-line, not record-wide.
 /// `advanced_race_guide:equipment:elixir_of_forceful_exhalation` carries a trivial +4 Swim

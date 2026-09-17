@@ -611,13 +611,16 @@ pub fn convert_record(tree: &PinnedTree, index: &CorpusIndex, record: &RecordRef
             // first BONUS row the closure walk reached, while its 6 sibling ability-score lines
             // (never first) always kept their own labels correctly.
             //
-            // `kind == "equipment"` is the one exception: an item's principal row is the item a
-            // player holds and looks up by name (CONV-04), never one of the effects it grants,
-            // so its label always stays the item's own name even when, e.g., a Staff's first
-            // charge (a `SPELLS` line, "Dispel Magic") happens to be the first line pushed --
-            // its later charges already print their own spell names via the `i != 0` branch
-            // below regardless of this rule.
-            label: strip_editorial_not_implemented_markers(&if i == 0 && (line.label == record.name || record.kind == "equipment") { label.clone() } else { line.label }),
+            // `kind` in `{"equipment", "class"}` is the one exception: an item's principal row
+            // is the item a player holds and looks up by name (CONV-04), and a class's
+            // principal row is the class itself (`pilot_compute::class_chassis_sheet_rules`
+            // reads `principal.label` as the class's own display name) -- neither is one of the
+            // several effects the record grants, so the label always stays the record's own
+            // name even when, e.g., a Staff's first charge (a `SPELLS` line, "Dispel Magic") or
+            // a class's first chassis row (a `BONUS:COMBAT|BASEAB` line, "Warrior (base
+            // attack)") happens to be the first line pushed -- later lines already print their
+            // own descriptive labels via the `i != 0` branch below regardless of this rule.
+            label: strip_editorial_not_implemented_markers(&if i == 0 && (line.label == record.name || matches!(record.kind.as_str(), "equipment" | "class")) { label.clone() } else { line.label }),
             value: line.value,
             also,
             prose: line_prose,
@@ -844,6 +847,13 @@ fn convert_token(ctx: &mut RecordCtx, acc: &mut Acc, out: &mut Converted, key: &
             }
         }
         "SPROP" | "SAB" => {
+            // SD-36 Epic E engine-P2-1: a handful of source `.lst` rows double the token key
+            // into the free-text value itself (`SPROP:SPROP:On command...`), so the value the
+            // tokenizer hands us after splitting on the FIRST colon still starts with the same
+            // key echoed back. Strip that echo before it reaches player-facing prose --
+            // `inner_sea_intrigue:equipment_modifier:special_ability_transformative_greater_melee`
+            // is the one live corpus record this fires on today.
+            let v = v.strip_prefix(&format!("{key}:")).unwrap_or(v);
             if v == ".CLEAR" {
                 acc.special.clear();
             } else if let Some(seg) = convert_positional(ctx, ProseFamily::Special, v, key.to_ascii_lowercase().as_str())? {

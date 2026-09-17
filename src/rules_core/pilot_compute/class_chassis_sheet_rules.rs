@@ -353,8 +353,18 @@ mod tests {
 
     #[test]
     fn a_record_with_no_chassis_rows_is_absent_rather_than_half_built() {
-        // Inner Sea Gods' Evangelist converts no BaseAttack/BaseSave row at
-        // all; it must not appear as a chassis with guessed progressions.
-        assert!(record("inner_sea_gods", "evangelist").is_none());
+        // Evangelist used to be this test's example: before SD-36 Epic E
+        // CONV-05, its converted record's own BAB/save formulas were wiped
+        // to WORDS by an unrelated degrading token elsewhere on the same
+        // record (`convert.rs`'s old record-wide degradation policy). CONV-05
+        // fixed that -- Evangelist now correctly resolves a real chassis (¾
+        // BAB, good Reflex; see `generic_class_chassis.rs`'s
+        // `all_seventy_eight_conventional_classes_resolve`) -- so it no
+        // longer exercises "no chassis rows at all". `occult_adventures`'s
+        // Psychic Detective genuinely converts no `BaseAttack`/`BaseSave` row
+        // (verified: `data/sheet_rules/occult_adventures/class/psychic_
+        // detective.json` carries exactly one line, a `CasterLevel` Number);
+        // it must not appear as a chassis with a guessed progression.
+        assert!(record("occult_adventures", "psychic_detective").is_none());
     }
 }

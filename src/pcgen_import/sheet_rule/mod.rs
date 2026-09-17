@@ -1103,9 +1103,22 @@ mod term_level_refusal_gate {
         );
     }
 
-    /// Every degraded record reached the sheet, and prints its WORDS: the converter could not
-    /// write one of its terms, so it writes none of them as a number
-    /// (`decisions.md` §1 form 3). A partly-read magnitude never reaches a sheet total.
+    /// Every degraded record reached the sheet. Before SD-36 Epic E CONV-05, degradation was
+    /// record-wide -- ANY unlowerable term wiped EVERY line the record produced to Text, so a
+    /// degraded record printed no number anywhere. CONV-05 tracks degradation per OCCURRENCE
+    /// instead (`RecordCtx::current_seq`/`current_seq_degraded`, `convert.rs`): a sibling term
+    /// the converter genuinely could not lower still wipes to Text, but a term on the SAME
+    /// record that converted cleanly (`advanced_class_guide:class:bloodrager`'s BAB/save
+    /// progressions, degraded only because an unrelated token elsewhere on the same giant class
+    /// record could not lower) now correctly keeps its own number. A partly-read magnitude
+    /// still never reaches a sheet total -- that per-occurrence guarantee is unit-tested
+    /// directly against real corpus rows in `tests/sheet_rule_convert_gate.rs`'s
+    /// `a_sibling_terms_degradation_does_not_erase_a_convertible_terms_number` -- this gate
+    /// checks the coarser, record-level invariants the on-disk census can see: every degraded
+    /// record still converts (never falls into `_refused.json`) and still has a rule file, and
+    /// pins the corpus-wide count of "numbered lines inside a degraded record" as a re-derivable
+    /// baseline so a large, unexplained jump (a fix regressing back toward record-wide wiping,
+    /// or a new mass-degrading token) still fails loudly.
     #[test]
     fn every_degraded_record_converted_and_prints_its_words() {
         let refused: BTreeSet<String> = refused_report().entries.into_iter().map(|e| e.id).collect();
@@ -1134,12 +1147,15 @@ mod term_level_refusal_gate {
                 }
             }
         }
+        // Re-derive with: `python3 -c "import json; tokens=json.load(open('data/sheet_rules/_tokens.json')); refused={e['id'] for e in json.load(open('data/sheet_rules/_refused.json'))['entries']}; degraded=[e for e in tokens['entries'] if e.get('degradations') and e['id'] not in refused]; print(len(degraded))"` for record count, and the loop above (without `numbered.truncate`) for the line count.
+        assert_eq!(degraded.len(), 423, "degraded-record count moved -- re-derive and update this pin (command in the doc comment)");
+        let numbered_count = numbered.len();
         still_refused.truncate(10);
         missing.truncate(10);
         numbered.truncate(10);
         assert!(still_refused.is_empty(), "degraded records must still convert: {still_refused:?}");
         assert!(missing.is_empty(), "degraded records must have a rule file: {missing:?}");
-        assert!(numbered.is_empty(), "a degraded record must print words, never a partly-read number: {numbered:?}");
+        assert_eq!(numbered_count, 620, "numbered-lines-inside-a-degraded-record count moved (CONV-05 baseline) -- re-derive and update this pin, or investigate if it jumped unexpectedly: sample {numbered:?}");
     }
 
     /// The report's own sums: a degraded record is a CONVERTED record, and the per-shape

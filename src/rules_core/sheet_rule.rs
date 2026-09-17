@@ -929,6 +929,40 @@ pub fn split_rule_id(id: &str) -> (&str, &str, &str) {
     (book, kind, slug)
 }
 
+/// SD-36 Epic E engine-P1-4. `~553` real, player-holdable records (class_feature, trait, class,
+/// template, feat, race_trait) have no name the converter could recover from the corpus -- most
+/// because the record's own NAME is Product Identity and was correctly redacted at ingest
+/// (`provenance.pi.declared` carries `"name"`), a smaller remainder because the source row never
+/// carried one at all -- and carry the ingest pipeline's own internal placeholder as their only
+/// `label`: `"Codex-Named Unit (<source_file>_<line>)"`. That string is an ingest identifier,
+/// never a player-facing word, and must not reach a real character's printed sheet or the
+/// desktop DTO (both read `SheetLine.label`, which this function is the only writer of). Neither
+/// redaction nor a missing NAME token makes the record's real English name recoverable, so the
+/// fallback is the record's own SOURCE-DERIVED name: the slug half of its id, underscores to
+/// spaces, title-cased ("order_of_the_rack" -> "Order Of The Rack") -- readable, and traceable
+/// back to the record, unlike an internal `source_file_line` citation.
+fn display_label(rule: &SheetRule) -> String {
+    if !rule.label.starts_with(crate::rules_core::codex_neutral_name::NAME_PREFIX) {
+        return rule.label.clone();
+    }
+    let (_, _, slug) = split_rule_id(&rule.id);
+    title_case_slug(slug)
+}
+
+fn title_case_slug(slug: &str) -> String {
+    slug.split(|c: char| c == '_' || c == '-')
+        .filter(|w| !w.is_empty())
+        .map(|w| {
+            let mut chars = w.chars();
+            match chars.next() {
+                Some(c) => c.to_uppercase().chain(chars.flat_map(char::to_lowercase)).collect(),
+                None => String::new(),
+            }
+        })
+        .collect::<Vec<String>>()
+        .join(" ")
+}
+
 impl SheetRulePackage {
     pub fn new() -> Self {
         Self::default()
@@ -1370,8 +1404,20 @@ impl<'a> Evaluator<'a> {
             Expr::ChallengeRating => Rat::int(self.facts.challenge_rating),
             Expr::Speed(mode) => Rat::int(self.facts.speeds.get(mode).copied().unwrap_or(0)),
             Expr::HighestSpellLevel(_) => Rat::int(self.facts.highest_spell_level),
-            Expr::MasterLevel => Rat::int(self.facts.master_level),
-            Expr::MasterVar(_) => Rat::ZERO,
+            // SD-36 Epic E engine-P1-2: the companion/eidolon master's facts are not yet a
+            // live link on `CharacterFacts` (`from_character` hard-codes `master_level: 0`,
+            // and no `MasterVar` table exists) -- the design's own mapping table states the
+            // intended behavior is "renders Words until [master facts] land"
+            // (`mapping-table.v1.json`), matching the sibling prereq-reporting path
+            // (`feat_prereqs/converted_gate.rs`'s `Expr::MasterLevel | Expr::MasterVar(_) =>
+            // Some("this character has no master")`). A hard 0/false here would permanently
+            // exclude a `MasterVar >= 1` gate, permanently include a `MasterVar == 0` gate, and
+            // print a fixed "+0" for a direct value (e.g. the Clockwork Spy's Tinkering) --
+            // wrong in all three shapes, never merely absent.
+            Expr::MasterLevel | Expr::MasterVar(_) => {
+                self.unresolved.set(true);
+                Rat::ZERO
+            }
             Expr::Var(v) => self.var(v),
             Expr::Sum(terms) => terms.iter().fold(Rat::ZERO, |acc, t| acc.add(self.expr(t))),
             Expr::Mul(a, b) => self.expr(a).mul(self.expr(b)),
@@ -1561,7 +1607,21 @@ impl<'a> Evaluator<'a> {
                 if self.applies(inner).includes() { Gate::Exclude } else { Gate::Include }
             }
             Applies::Compare { lhs, op, rhs } => {
-                if self.compare(lhs, *op, rhs) { Gate::Include } else { Gate::Exclude }
+                let result = self.compare(lhs, *op, rhs);
+                // SD-36 Epic E engine-P1-2: a gate comparing a `MasterVar`/`MasterLevel` term
+                // has no real master-facts link to compare against yet (`expr()` sets
+                // `unresolved` for both). A hard bool here is wrong in BOTH directions -- a
+                // `Gte 1` gate permanently excludes a bonus that should sometimes show, an
+                // `Eq 0` gate permanently includes one that should be conditional -- so an
+                // unresolved comparison reads as words, matching
+                // `feat_prereqs/converted_gate.rs`'s sibling treatment of the same terms.
+                if self.unresolved.replace(false) {
+                    Gate::Situational("this character has no master".into())
+                } else if result {
+                    Gate::Include
+                } else {
+                    Gate::Exclude
+                }
             }
             Applies::Holds { what, count } => {
                 if self.holds(what, *count) { Gate::Include } else { Gate::Exclude }
@@ -1660,12 +1720,24 @@ impl<'a> Evaluator<'a> {
             let mut text = String::new();
             let mut slots = 0usize;
             let mut nonzero = false;
+            // SD-36 Epic E engine-P1-1: a `Slot` (or a `Dice` modifier) wrapping an unresolved
+            // `Choice`/`MasterVar` term set `self.unresolved` inside `self.expr()`/`self.dice()`,
+            // but the very next statement unconditionally cleared it before the (zero) value
+            // was printed -- the core rulebook's Spell Resistance weapon/armor enhancement's
+            // "SR" StatBlock line printed "SR: 0" instead of falling back to words, even though
+            // the sibling `ChoiceName` piece on the SAME record correctly read
+            // "(choice not yet made)". Track it per SEGMENT instead of discarding it per piece,
+            // and substitute the whole segment's text with the same words `ChoiceName` already
+            // uses when any piece in it was unresolved.
+            let mut seg_unresolved = false;
             for p in &s.pieces {
                 match p {
                     ProsePiece::Text(t) => text.push_str(t),
                     ProsePiece::Slot(e) => {
                         let n = self.expr(e).trunc();
-                        self.unresolved.set(false);
+                        if self.unresolved.replace(false) {
+                            seg_unresolved = true;
+                        }
                         slots += 1;
                         nonzero |= n != 0;
                         text.push_str(&n.to_string());
@@ -1673,9 +1745,14 @@ impl<'a> Evaluator<'a> {
                     ProsePiece::ChoiceName(id) => text.push_str(&self.choice_names(id)),
                     ProsePiece::Dice { dice, modifier } => {
                         text.push_str(&self.dice(dice, modifier.as_ref(), None));
-                        self.unresolved.set(false);
+                        if self.unresolved.replace(false) {
+                            seg_unresolved = true;
+                        }
                     }
                 }
+            }
+            if seg_unresolved {
+                text = "(choice not yet made)".to_string();
             }
             if s.suppress_when_all_zero && slots > 0 && !nonzero {
                 continue;
@@ -1732,7 +1809,7 @@ impl<'a> Evaluator<'a> {
         SheetLine {
             id: rule.id.clone(),
             kind: kind.to_string(),
-            label: rule.label.clone(),
+            label: display_label(rule),
             value,
             printed,
             also,
@@ -2134,6 +2211,67 @@ mod evaluate_tests {
 
         let unmade = rule_with_value(SheetValue::Number(Expr::Sum(vec![Expr::Const(1), Expr::Choice("nobody:offers:this".into())])));
         assert_eq!(evaluate(&unmade, &held, package, &facts, EvalContext::default()).value, SheetLineValue::Words, "an unmade numeric choice prints as words");
+    }
+
+    /// SD-36 Epic E engine-P1-1: the real CRB Spell Resistance weapon/armor enhancement's
+    /// "SR" StatBlock `Slot` over an unmade `Choice` must fall back to words, exactly like the
+    /// sibling `ChoiceName` piece on the SAME record already does -- never a silent "SR: 0".
+    #[test]
+    fn a_slot_over_an_unresolved_choice_falls_back_to_words_not_a_silent_zero() {
+        let package = package();
+        let facts = fighter_facts();
+        let held = HeldSet::default();
+        let rule = package.rule("core_rulebook:equipment_modifier:special_ability_bonus_spell_resistance").expect("the CRB Spell Resistance enhancement converted");
+        let line = evaluate(rule, &held, package, &facts, EvalContext::default());
+        assert!(!line.prose.contains("SR: 0"), "a Slot over an unmade Choice must not print a silent 0: {}", line.prose);
+        assert!(line.prose.contains("SR: (choice not yet made)"), "{}", line.prose);
+
+        let mut chosen_facts = facts;
+        chosen_facts.choices.insert(rule.id.clone(), vec![("18".into(), "18".into())]);
+        let line = evaluate(rule, &held, package, &chosen_facts, EvalContext::default());
+        assert!(line.prose.contains("SR: 18"), "once chosen, the real value prints: {}", line.prose);
+    }
+
+    /// SD-36 Epic E engine-P1-2: `MasterVar`/`MasterLevel` must render as words, not a
+    /// deterministic 0/false, until a real master-facts link exists -- matching the design
+    /// doc's own stated intent and the sibling prereq-reporting path
+    /// (`feat_prereqs/converted_gate.rs`'s `Expr::MasterLevel | Expr::MasterVar(_) =>
+    /// Some("this character has no master")`).
+    #[test]
+    fn master_var_and_master_level_render_as_words_not_a_deterministic_zero() {
+        let package = package();
+        let facts = fighter_facts();
+        let held = HeldSet::default();
+
+        let direct = rule_with_value(SheetValue::Number(Expr::MasterVar(var_id("Tinkering"))));
+        assert_eq!(evaluate(&direct, &held, package, &facts, EvalContext::default()).value, SheetLineValue::Words, "a direct MasterVar value is words, never a hard 0");
+
+        let mut gte_gated = rule_with_value(SheetValue::Text);
+        gte_gated.applies = Applies::Compare { lhs: Expr::MasterLevel, op: Cmp::Gte, rhs: Expr::Const(1) };
+        let gte_line = evaluate(&gte_gated, &held, package, &facts, EvalContext::default());
+        assert_eq!(gte_line.condition.as_deref(), Some("this character has no master"), "a `MasterLevel >= 1` gate must not permanently exclude");
+
+        let mut eq_gated = rule_with_value(SheetValue::Text);
+        eq_gated.applies = Applies::Compare { lhs: Expr::MasterVar(var_id("Something")), op: Cmp::Eq, rhs: Expr::Const(0) };
+        let eq_line = evaluate(&eq_gated, &held, package, &facts, EvalContext::default());
+        assert_eq!(eq_line.condition.as_deref(), Some("this character has no master"), "a `MasterVar == 0` gate must not permanently include");
+    }
+
+    /// SD-36 Epic E engine-P1-4: a record with no recoverable corpus name (most commonly a
+    /// PI-redacted NAME field) must never print the ingest pipeline's own internal placeholder
+    /// on a real character's sheet -- `render_sheet()`/the desktop DTO both read `SheetLine.label`,
+    /// which is the only thing under test here. `inner_sea_world_guide:class_feature:order_of_
+    /// the_rack` (a real Hellknight Order feature, PI-redacted name) is the finding's own example.
+    #[test]
+    fn a_placeholder_labelled_record_prints_its_source_derived_name_not_the_ingest_identifier() {
+        let package = package();
+        let facts = fighter_facts();
+        let held = HeldSet::default();
+        let rule = package.rule("inner_sea_world_guide:class_feature:order_of_the_rack").expect("the ISWG Order of the Rack class feature converted");
+        assert!(rule.label.starts_with("Codex-Named Unit ("), "fixture assumption: this record's raw label is still the ingest placeholder");
+        let line = evaluate(rule, &held, package, &facts, EvalContext::default());
+        assert!(!line.label.starts_with("Codex-Named Unit ("), "the ingest placeholder must never reach SheetLine.label: {:?}", line.label);
+        assert_eq!(line.label, "Order Of The Rack");
     }
 
     /// The per-kind gate: every rule of every kind in the live package evaluates for a probe

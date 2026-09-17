@@ -123,7 +123,7 @@ mod tests {
     use super::*;
 
     #[test]
-    fn all_sixty_two_conventional_classes_resolve() {
+    fn all_seventy_eight_conventional_classes_resolve() {
         // SD-35 `AT-35-E6-001`: 62, not the 61 this module counted while it
         // read `data/corpus/<book>/class/`. Two independent movements, both
         // re-derivable and neither a relabel:
@@ -136,20 +136,30 @@ mod tests {
         //       Re-derive: `ls data/corpus/adventurers_guide/class/ | wc -l`
         //       against `ls data/sheet_rules/adventurers_guide/class/ | wc -l`.
         //
-        //   -1  `inner_sea_gods`'s Evangelist. Its converted record carries a
+        //   -1  `inner_sea_gods`'s Evangelist. Its converted record carried a
         //       degradation on another of its own tokens, and the converter's
-        //       standing policy (`convert.rs`, "the partly-read magnitudes are
-        //       dropped rather than folded into a sheet total -- a wrong
-        //       computed number looks right, an omitted one does not") turns
-        //       every magnitude on a degraded record into the rule's own
-        //       WORDS. Under `decisions.md` §1 that record is done as prose;
-        //       it is not a chassis, and this module refuses it rather than
-        //       inventing one. Re-derive: the four
-        //       `inner_sea_gods:class:evangelist` rules carry
-        //       `"value":"Text"` and `"target":null`.
+        //       OLD, record-wide degradation policy turned every magnitude on
+        //       the record into the rule's own WORDS even though the class's
+        //       own BAB/save formulas were perfectly clean. 62 was the count
+        //       under that bug.
+        //
+        // SD-36 Epic E CONV-05 fixed degradation to be per-occurrence rather
+        // than record-wide (`convert.rs`, `RecordCtx::current_seq_degraded`):
+        // a class record's BAB/save formulas now print their real numbers
+        // whenever THEY converted cleanly, regardless of an unrelated
+        // degrading token elsewhere on the same record. This un-hid a real,
+        // correct chassis for Evangelist (¾ BAB, good Reflex -- a genuine PF1
+        // progression, verified directly against
+        // `data/sheet_rules/inner_sea_gods/class/evangelist.json`) and 15
+        // other prestige classes across `CLASS_FAMILY_BOOKS` that had the
+        // exact same masking bug, moving the count from 62 to 78. Re-derive:
+        // `python3 -c "import json,glob; tokens=json.load(open('data/sheet_rules/_tokens.json')); degraded={e['id'] for e in tokens['entries'] if e.get('degradations')}; print(sum(1 for f in glob.glob('data/sheet_rules/*/class/*.json') if (d:=json.load(open(f))) and d[0]['id'] in degraded and any(r.get('target')=='BaseAttack' for r in d)))"`
+        // counts the previously-masked, now-resolving records (20 corpus-wide;
+        // the subset inside `CLASS_FAMILY_BOOKS`, deduplicated by slug against
+        // book precedence order, is this test's +16).
         assert_eq!(
             generic_class_records().len(),
-            62,
+            78,
             "the converted chassis population over CLASS_FAMILY_BOOKS"
         );
         let mut resolved = 0usize;
@@ -158,7 +168,7 @@ mod tests {
             assert!(resolve(&class_id, 1).is_some(), "{bare} must resolve a real chassis at level 1");
             resolved += 1;
         }
-        assert_eq!(resolved, 62, "every conventional class must resolve a real chassis");
+        assert_eq!(resolved, 78, "every conventional class must resolve a real chassis");
     }
 
     #[test]
@@ -184,9 +194,15 @@ mod tests {
 
     #[test]
     fn a_class_whose_converted_record_is_words_is_not_a_chassis() {
-        // Evangelist, above: prose, not a number. Refusing is the contract --
-        // never a guessed progression.
-        assert!(resolve("class:evangelist", 1).is_none());
+        // Evangelist now DOES resolve (a real, correct chassis CONV-05 un-hid,
+        // see `all_seventy_eight_conventional_classes_resolve` above), so it
+        // no longer exercises this guard. `occult_adventures:class:psychic_
+        // detective` genuinely carries no `BaseAttack`/`BaseSave` row at all
+        // (verified: `data/sheet_rules/occult_adventures/class/psychic_
+        // detective.json` has exactly one line, a `CasterLevel` Number, no
+        // `target: BaseAttack`) -- refusing it is the contract, never a
+        // guessed progression.
+        assert!(resolve("class:psychic_detective", 1).is_none());
     }
 
     #[test]
