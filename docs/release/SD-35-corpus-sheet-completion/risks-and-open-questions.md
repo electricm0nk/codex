@@ -161,3 +161,19 @@ mechanical control or a named escalation.
 - The per-kind on-screen test could pass on a fixture that holds a record the converter never
   refuses. That is the point — it proves the section, not the mapping; the mappings are proven by the
   per-kind converter gates.
+
+## 11. Oracle parity roster — 8 tracked disagreements (SD-36 Epic E GATE-02)
+
+`decisions.md`'s cited "lines compared 156→159 ... disagree 2→2" figure is 8 individually
+tracked disagreements in `artifacts/epic-6-pcgen-exit/oracle-parity-after.json`, never hidden
+by an allow-list but also never previously named as open items here. Named so a future cycle
+does not have to re-derive them from the raw JSON:
+
+| # | Family | Character | Unit | Ours | Oracle | Cause (traced) |
+|---|--------|-----------|------|------|--------|-----------------|
+| 1 | lines | `deterministic_human_fighter_l1` | `target:WeaponAttack:{"Chosen": "core_rulebook:feat:weapon_focus"}` | 0 | 1 | Weapon Focus's own value resolves via `Expr::Var`, whose binding did not fold into the export join at the time of this run |
+| 2 | lines | `half_elf_fighter_l1` | `target:Pool:favored_class` | 1 | 2 | `core_rulebook:race_trait:half_elf_multitalented`'s Multitalented bonus (Const 1) undercounts PCGen's favored-class pool size by 1 |
+| 3-5 | chassis | `halfling_fighter_l1` | `save.{fortitude,reflex,will}.total` | 1/1/2 | 2/2/3 | every base save reads exactly 1 low for this race -- a Halfling-specific save-modifier gap, not a Fortitude/Reflex/Will-specific one |
+| 6-8 | chassis | `human_paladin_l10` | `save.{fortitude,reflex,will}.total` | 6/3/9 | 9/6/12 | every base save reads exactly 3 low at level 10 -- consistent with a missing Paladin class feature or divine-grace-shaped bonus, not re-derived further here |
+
+Re-derive from `python3 -c "import json; d=json.load(open('artifacts/epic-6-pcgen-exit/oracle-parity-after.json')); print(len(d['disagreements']))"` (run from this directory) -> 8. None of these 8 were introduced or fixed by SD-36 Epic E's converter/engine changes (the roster and its exports are unchanged); listed here per the GATE-02 finding's own instruction to track rather than leave undriven. Widening the roster to a cross-book stratified sample (the finding's primary ask) is deferred as its own follow-up -- see `docs/retro/events/sd36-epic-e.jsonl`.

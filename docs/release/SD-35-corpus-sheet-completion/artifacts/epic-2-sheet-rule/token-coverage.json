@@ -3076,6 +3076,10 @@
   "partition": {
    "token_types": 233,
    "ok": true
+  },
+  "rule_files": {
+   "checked": 49450,
+   "ok": true
   }
  },
  "verdict": "PASS"
