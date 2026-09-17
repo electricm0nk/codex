@@ -214,7 +214,7 @@ pub mod domain_power;
 // character's numbers, read from `data/sheet_rules/`. It replaces the verbatim `DESC:` token
 // constants and the run-time PCGen renderer this file used to hold.
 pub mod resolved_prose;
-pub(crate) use class_slayer::*;
+pub use class_slayer::*;
 use class_ultimate_combat::compute_uc_class_chassis;
 use domain_power::*;
 
@@ -2798,7 +2798,7 @@ const CAVALIER_CHALLENGE_ARMOR_CLASS_PENALTY: i16 = -2;
 /// Cavalier's Challenge uses per day: `(CavalierLVL+2)/3`, verified
 /// directly against `apg_abilities_class.lst`'s own
 /// `BONUS:VAR|CavalierChallengeTimes|(CavalierLVL+2)/3`.
-pub(crate) fn cavalier_challenge_uses_per_day(level: u8) -> i16 {
+pub fn cavalier_challenge_uses_per_day(level: u8) -> i16 {
     (i16::from(level) + 2) / 3
 }
 
@@ -2811,7 +2811,7 @@ pub(crate) fn cavalier_challenge_uses_per_day(level: u8) -> i16 {
 /// a specific archetype, and this repo ingests no Cavalier archetype at
 /// all -- provably vacuous here, the same check that cleared Alchemist's
 /// Gnome-only and Ultimate-Magic-gated Bomb terms.
-pub(crate) fn cavalier_bonus_combat_feat_count(level: u8) -> i16 {
+pub fn cavalier_bonus_combat_feat_count(level: u8) -> i16 {
     i16::from(level) / 6
 }
 
@@ -7346,7 +7346,7 @@ fn animal_companion_table_index(master_level: u8) -> usize {
 /// This has a live consumer -- the companion's own `.armor_class`
 /// explanation record -- so widening Hit Dice without widening this would
 /// have shipped an understated Armor Class from master level 3 upward.
-pub(crate) fn animal_companion_natural_armor_bonus(master_level: u8) -> i16 {
+pub fn animal_companion_natural_armor_bonus(master_level: u8) -> i16 {
     let clamped = master_level.clamp(1, MAX_ANIMAL_COMPANION_MASTER_LEVEL);
     2 * (i16::from(clamped) / 3)
 }
@@ -7369,7 +7369,7 @@ pub(crate) fn animal_companion_natural_armor_bonus(master_level: u8) -> i16 {
 /// (`BONUS:ABILITYPOOL|Companion Stat Increase|1` at master levels 4, 9,
 /// 14 and 20, `apg_companionmods.lst:77,82,87,93`), which is a chooser
 /// input with no canonical default and stays deferred.
-pub(crate) fn animal_companion_stat_bonus(master_level: u8) -> i16 {
+pub fn animal_companion_stat_bonus(master_level: u8) -> i16 {
     let clamped = master_level.clamp(1, MAX_ANIMAL_COMPANION_MASTER_LEVEL);
     i16::from(clamped) / 3
 }
@@ -12232,7 +12232,7 @@ const UNDINE_OOZE_BREATH_TRAIT_KEY: &str = "Undine ~ Ooze Breath";
 /// `(unit_id, formula_field_name, raw_formula)` — the exact `BONUS:VAR` formula text transcribed
 /// verbatim from the pinned oracle, never hand-duplicated elsewhere in this file. See the section
 /// doc above for why this table is the shared source of truth for both compute and gate.
-pub(crate) const UNDINE_RACE_TRAIT_FORMULAS: &[(&str, &str, &str)] = &[
+pub const UNDINE_RACE_TRAIT_FORMULAS: &[(&str, &str, &str)] = &[
     ("advanced_race_guide:race_trait:undine_acid_breath", "Undine_AcidBreath_Times", "1"),
     (
         "advanced_race_guide:race_trait:undine_acid_breath",
@@ -15036,7 +15036,7 @@ fn active_alchemist_mutagen_bonus(
 /// own light-armor check and Dodge's own AC bonus already established --
 /// the base formula is the real, complete answer for this closure's
 /// scope.
-pub(crate) fn alchemist_bomb_damage_dice(level: u8) -> i16 {
+pub fn alchemist_bomb_damage_dice(level: u8) -> i16 {
     1 + (i16::from(level) - 1) / 2
 }
 
@@ -15044,7 +15044,7 @@ pub(crate) fn alchemist_bomb_damage_dice(level: u8) -> i16 {
 /// Intelligence modifier added to bomb damage (deepening 2026-07-26,
 /// task #4), verified directly against `apg_abilities_class.lst`'s own
 /// `BONUS:VAR|AlchemistBombDamageBonus|INT`.
-pub(crate) fn alchemist_bomb_damage_bonus(intelligence_modifier: i16) -> i16 {
+pub fn alchemist_bomb_damage_bonus(intelligence_modifier: i16) -> i16 {
     intelligence_modifier
 }
 
@@ -15053,7 +15053,7 @@ pub(crate) fn alchemist_bomb_damage_bonus(intelligence_modifier: i16) -> i16 {
 /// directly against `apg_abilities_class.lst`'s own
 /// `BONUS:VAR|AlchemistBombDC|10+(AlchemistBombLVL/2)+INT`, the same
 /// flat-DC standalone shape Blessing's/Mutagen's own DC-style facts use.
-pub(crate) fn alchemist_bomb_dc(level: u8, intelligence_modifier: i16) -> i16 {
+pub fn alchemist_bomb_dc(level: u8, intelligence_modifier: i16) -> i16 {
     10 + i16::from(level) / 2 + intelligence_modifier
 }
 
@@ -16040,7 +16040,7 @@ fn active_inquisitor_purity_judgment_bonus(input: &CharacterInput) -> Option<(u8
 /// consumer was never actually required, only a genuinely verified
 /// magnitude. No Knowledge-skill total exists anywhere in this codebase,
 /// so this grounds only the flat bonus value.
-pub(crate) fn inquisitor_monster_lore_bonus(wisdom_modifier: i16) -> i16 {
+pub fn inquisitor_monster_lore_bonus(wisdom_modifier: i16) -> i16 {
     wisdom_modifier
 }
 
@@ -16052,7 +16052,7 @@ pub(crate) fn inquisitor_monster_lore_bonus(wisdom_modifier: i16) -> i16 {
 /// Monster Lore above: no Initiative total exists anywhere in this
 /// codebase (confirmed directly), so this grounds only the flat bonus
 /// value.
-pub(crate) fn inquisitor_cunning_initiative_bonus(wisdom_modifier: i16) -> i16 {
+pub fn inquisitor_cunning_initiative_bonus(wisdom_modifier: i16) -> i16 {
     wisdom_modifier
 }
 
@@ -16083,7 +16083,7 @@ fn inquisitor_track_bonus(level: u8) -> i16 {
 /// own Fervor uses/day: this grounds only the flat daily pool size --
 /// which creature type (and subtype, for humanoid/outsider) is imbued,
 /// and how the rounds are spent/tracked across a day, is not modeled.
-pub(crate) fn inquisitor_bane_pool_rounds(level: u8) -> i16 {
+pub fn inquisitor_bane_pool_rounds(level: u8) -> i16 {
     i16::from(level)
 }
 
@@ -17226,7 +17226,7 @@ fn oracle_level_with_battlecry_revelation(input: &CharacterInput) -> Option<u8> 
 /// `ORACLE_BATTLECRY_UPGRADE_LEVEL` (10) -- `BONUS:VAR|OracleBattlecryBonus|1`
 /// plus `|1|PRECLASS:1,Oracle=10` (the two flat additions sum to +2, they
 /// do not replace one another).
-pub(crate) fn oracle_battlecry_bonus(oracle_level: u8) -> i16 {
+pub fn oracle_battlecry_bonus(oracle_level: u8) -> i16 {
     if oracle_level >= ORACLE_BATTLECRY_UPGRADE_LEVEL {
         ORACLE_BATTLECRY_UPGRADED_BONUS
     } else {
@@ -18462,7 +18462,7 @@ fn push_oracle_other_features_deferred_diagnostic(
 /// (`PREVARGTEQ:WitchHexAbilityLVL,16`) -- `WitchHexAbilityLVL` resolves
 /// to `WitchLVL` directly, confirmed unconditional (no delayed-grant gate
 /// the way Shaman's Healer's Touch has).
-pub(crate) fn witch_ward_bonus(level: u8) -> i16 {
+pub fn witch_ward_bonus(level: u8) -> i16 {
     let mut bonus = 2;
     if level >= 8 {
         bonus += 1;
@@ -18666,7 +18666,7 @@ const SUMMONER_TWIN_EIDOLON_LEVEL: u8 = 20;
 
 /// Bond Senses: `BONUS:VAR|BondSensesRounds|classlevel("Summoner")` --
 /// rounds per day the summoner may share the eidolon's senses.
-pub(crate) fn summoner_bond_senses_rounds_per_day(level: u8) -> i16 {
+pub fn summoner_bond_senses_rounds_per_day(level: u8) -> i16 {
     i16::from(level)
 }
 
@@ -18674,17 +18674,17 @@ pub(crate) fn summoner_bond_senses_rounds_per_day(level: u8) -> i16 {
 /// -- 1/day at 6th, +1 every four levels after (6->1, 10->2, 14->3, 18->4).
 /// The formula is self-gating (it is 0 below 6th), and its first non-zero
 /// value lands exactly on the independently-confirmed grant level.
-pub(crate) fn summoner_makers_call_uses_per_day(level: u8) -> i16 {
+pub fn summoner_makers_call_uses_per_day(level: u8) -> i16 {
     (i16::from(level) - 2) / 4
 }
 
 /// Merge Forms: `BONUS:VAR|MergeFormsRounds|classlevel("Summoner")`.
-pub(crate) fn summoner_merge_forms_rounds_per_day(level: u8) -> i16 {
+pub fn summoner_merge_forms_rounds_per_day(level: u8) -> i16 {
     i16::from(level)
 }
 
 /// Twin Eidolon: `BONUS:VAR|TwinEidolonMinutes|classlevel("Summoner")`.
-pub(crate) fn summoner_twin_eidolon_minutes_per_day(level: u8) -> i16 {
+pub fn summoner_twin_eidolon_minutes_per_day(level: u8) -> i16 {
     i16::from(level)
 }
 
@@ -18694,7 +18694,7 @@ pub(crate) fn summoner_twin_eidolon_minutes_per_day(level: u8) -> i16 {
 /// creatures remain for %3 **minutes** (instead of %3 rounds)", where `%3`
 /// is this variable. Worth pinning, because the summoned-creature default
 /// really is rounds and this ability's whole point is upgrading that unit.
-pub(crate) fn summoner_summon_monster_duration_minutes(level: u8) -> i16 {
+pub fn summoner_summon_monster_duration_minutes(level: u8) -> i16 {
     i16::from(level)
 }
 
@@ -44726,18 +44726,18 @@ fn monk_ac_bonus_dodge_progression(level: u8) -> i16 {
 /// swift action, you gain a +20 bonus". Only the +20 costs ki. An earlier
 /// deferral of this feature cited the ki cost as a blocker for the whole
 /// ability; that conflated the two clauses.
-pub(crate) fn monk_high_jump_acrobatics_bonus(level: u8) -> i16 {
+pub fn monk_high_jump_acrobatics_bonus(level: u8) -> i16 {
     i16::from(level)
 }
 
 /// Monk Wholeness of Body's self-heal magnitude: `WholenessOfBody =
 /// WholenessOfBodyLVL = MonkLVL` hit points, for 2 ki points -- verified
 /// against the corpus's own two `BONUS:VAR` tokens.
-pub(crate) fn monk_wholeness_of_body_healing(level: u8) -> i16 {
+pub fn monk_wholeness_of_body_healing(level: u8) -> i16 {
     i16::from(level)
 }
 
-pub(crate) fn monk_scorpion_style_dc(level: u8, wisdom_modifier: i16) -> i16 {
+pub fn monk_scorpion_style_dc(level: u8, wisdom_modifier: i16) -> i16 {
     10 + i16::from(level) / 2 + wisdom_modifier
 }
 

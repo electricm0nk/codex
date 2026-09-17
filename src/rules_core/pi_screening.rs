@@ -209,7 +209,7 @@ fn canonicalize(s: &str, apply_rn_fold: bool, apply_char_fold: bool) -> String {
 /// `(?<![a-z0-9])term(?![a-z0-9])` against an already-canonicalized (lowercase
 /// -only) haystack, so checking `is_ascii_alphanumeric()` on either boundary
 /// byte reproduces the same `[a-z0-9]` class Python excludes.
-pub(crate) fn word_bounded_contains(haystack: &str, needle: &str) -> bool {
+pub fn word_bounded_contains(haystack: &str, needle: &str) -> bool {
     if needle.is_empty() {
         return false;
     }

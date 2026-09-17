@@ -6,7 +6,7 @@
 //! rather than inventing a second implementation of the bar. The test file
 //! keeps its own guarantee-3/guarantee-4 provenance checks (which do not
 //! belong in a report the generator consumes) and now calls
-//! [`run_bar_check`] for the bar itself, so the two can never drift apart.
+//! `codex_ingest::bar_check::run_bar_check` for the bar itself, so the two can never drift apart.
 //!
 //! The bar, precisely: the engine's evaluator, run over the real corpus
 //! record, must produce exactly the value the fixture's pinned corpus
@@ -107,102 +107,10 @@ pub struct BarCheckReport {
     pub fixtures_total: usize,
 }
 
-/// Runs the `derived` bar over every fixture entry, exactly as
-/// `tests/derived_evaluator_fixture_check.rs::engine_evaluator_output_equals_the_corpus_derived_expected_value`
-/// does, factored out so both the test and `v06_work_inventory` call the
-/// same code.
-pub fn run_bar_check(repo_root: &Path) -> BarCheckReport {
-    let equipment = run_equipment_bar_check(repo_root);
-    let monster = run_monster_bar_check(repo_root);
-    let monster_sla = run_monster_sla_bar_check(repo_root);
-    let spell = run_spell_bar_check(repo_root);
-    let spell_range = run_spell_range_bar_check(repo_root);
-    let class_feature =
-        crate::oracle_validation::class_feature_scaling_bar_check::run_class_feature_bar_check(
-            repo_root,
-        );
-    let monster_ability = run_monster_ability_bar_check(repo_root);
-    let monster_ability_formula = run_monster_ability_formula_bar_check(repo_root);
-    let companion = run_companion_bar_check(repo_root);
-    let companion_skill = run_companion_skill_bar_check(repo_root);
-    let companion_save_dc = run_companion_save_dc_bar_check(repo_root);
-    let class_feature_description = run_class_feature_description_bar_check(repo_root);
-    let race_trait_formula =
-        crate::oracle_validation::race_trait_formula_bar_check::run_race_trait_formula_bar_check(
-            repo_root,
-        );
-    let mut cleared = equipment.cleared;
-    cleared.extend(monster.cleared);
-    cleared.extend(monster_sla.cleared);
-    cleared.extend(spell.cleared);
-    cleared.extend(spell_range.cleared);
-    cleared.extend(class_feature.cleared);
-    cleared.extend(monster_ability.cleared);
-    cleared.extend(monster_ability_formula.cleared);
-    cleared.extend(companion.cleared);
-    cleared.extend(companion_skill.cleared);
-    cleared.extend(companion_save_dc.cleared);
-    cleared.extend(class_feature_description.cleared);
-    cleared.extend(race_trait_formula.cleared);
-    let mut failures = equipment.failures;
-    failures.extend(monster.failures);
-    failures.extend(monster_sla.failures);
-    failures.extend(spell.failures);
-    failures.extend(spell_range.failures);
-    failures.extend(class_feature.failures);
-    failures.extend(monster_ability.failures);
-    failures.extend(monster_ability_formula.failures);
-    failures.extend(companion.failures);
-    failures.extend(companion_skill.failures);
-    failures.extend(companion_save_dc.failures);
-    failures.extend(class_feature_description.failures);
-    failures.extend(race_trait_formula.failures);
-    let mut engine_does_not_hold = equipment.engine_does_not_hold;
-    engine_does_not_hold.extend(monster.engine_does_not_hold);
-    engine_does_not_hold.extend(monster_sla.engine_does_not_hold);
-    engine_does_not_hold.extend(spell.engine_does_not_hold);
-    engine_does_not_hold.extend(spell_range.engine_does_not_hold);
-    engine_does_not_hold.extend(class_feature.engine_does_not_hold);
-    engine_does_not_hold.extend(monster_ability.engine_does_not_hold);
-    engine_does_not_hold.extend(monster_ability_formula.engine_does_not_hold);
-    engine_does_not_hold.extend(companion.engine_does_not_hold);
-    engine_does_not_hold.extend(companion_skill.engine_does_not_hold);
-    engine_does_not_hold.extend(companion_save_dc.engine_does_not_hold);
-    engine_does_not_hold.extend(class_feature_description.engine_does_not_hold);
-    engine_does_not_hold.extend(race_trait_formula.engine_does_not_hold);
-    // A unit that FAILED any seam must never be reported cleared by another
-    // one. `cleared` is a union across seams and `failures` is keyed by
-    // `unit_id`, so a unit covered by two seams could otherwise be stamped on
-    // the strength of the seam it passed while the seam it failed only ever
-    // showed up in a report nothing reads. Subtracting here keeps
-    // `apply_done_rung_stamps`'s input honest for every seam added later, not
-    // just today's.
-    for id in failures.keys().chain(engine_does_not_hold.keys()) {
-        cleared.remove(id);
-    }
-    BarCheckReport {
-        cleared,
-        failures,
-        engine_does_not_hold,
-        fixtures_total: equipment.fixtures_total
-            + monster.fixtures_total
-            + monster_sla.fixtures_total
-            + spell.fixtures_total
-            + spell_range.fixtures_total
-            + class_feature.fixtures_total
-            + monster_ability.fixtures_total
-            + monster_ability_formula.fixtures_total
-            + companion.fixtures_total
-            + companion_skill.fixtures_total
-            + class_feature_description.fixtures_total
-            + race_trait_formula.fixtures_total,
-    }
-}
-
-/// The `kind=equipment` half of [`run_bar_check`] — the original, sole
+/// The `kind=equipment` half of `codex_ingest::bar_check::run_bar_check` — the original, sole
 /// implementation before the `kind=monster` seam below existed. Unchanged
 /// in behaviour; only its name moved, to make room for the merge.
-fn run_equipment_bar_check(repo_root: &Path) -> BarCheckReport {
+pub fn run_equipment_bar_check(repo_root: &Path) -> BarCheckReport {
     let fixtures = load_fixtures(repo_root);
     let fixtures_total = fixtures.len();
     let books: BTreeSet<String> = fixtures.iter().map(|f| f.book.clone()).collect();
@@ -439,13 +347,13 @@ fn monster_registry_book(book: &str) -> &str {
     }
 }
 
-/// The `kind=monster` half of [`run_bar_check`]. Resolves each fixture
+/// The `kind=monster` half of `codex_ingest::bar_check::run_bar_check`. Resolves each fixture
 /// entry through the SAME `monster_chassis::MONSTER_BOOKS` registry
 /// `v06_work_inventory`'s own `grounded` verdict for `monster` already
 /// reads (`monster_resolve_returned_a_real_stat_block`) -- this is not a
 /// second, parallel monster table, it is the one the engine already serves
 /// to the desktop app's monster catalog.
-fn run_monster_bar_check(repo_root: &Path) -> BarCheckReport {
+pub fn run_monster_bar_check(repo_root: &Path) -> BarCheckReport {
     let fixtures = load_monster_fixtures(repo_root);
     let fixtures_total = fixtures.len();
 
@@ -835,13 +743,13 @@ pub fn all_spell_caster_level_durations(
         .collect()
 }
 
-/// The `kind=spell` half of [`run_bar_check`]. Reads the SAME
+/// The `kind=spell` half of `codex_ingest::bar_check::run_bar_check`. Reads the SAME
 /// `data/corpus/<book>/spell/` JSON cache the desktop app's spell catalog
 /// is wired to read for its own `duration` field
 /// (`apps/desktop/src-tauri/src/spell_catalog.rs`'s
 /// `caster_level_duration_for`) -- this is not a second, parallel spell
 /// table.
-fn run_spell_bar_check(repo_root: &Path) -> BarCheckReport {
+pub fn run_spell_bar_check(repo_root: &Path) -> BarCheckReport {
     let fixtures = load_spell_fixtures(repo_root);
     let fixtures_total = fixtures.len();
     let books: BTreeSet<String> = fixtures.iter().map(|f| f.book.clone()).collect();
@@ -1052,10 +960,10 @@ pub fn all_spell_caster_level_ranges(repo_root: &Path) -> BTreeMap<(String, Stri
         .collect()
 }
 
-/// The `kind=spell` `RANGE:` half of [`run_bar_check`]. Reads the SAME
+/// The `kind=spell` `RANGE:` half of `codex_ingest::bar_check::run_bar_check`. Reads the SAME
 /// `data/corpus/<book>/spell/` JSON cache [`run_spell_bar_check`] and the
 /// desktop app's spell catalog both read.
-fn run_spell_range_bar_check(repo_root: &Path) -> BarCheckReport {
+pub fn run_spell_range_bar_check(repo_root: &Path) -> BarCheckReport {
     let fixtures = load_spell_range_fixtures(repo_root);
     let fixtures_total = fixtures.len();
     let books: BTreeSet<String> = fixtures.iter().map(|f| f.book.clone()).collect();
@@ -1538,7 +1446,7 @@ pub fn load_monster_sla_fixtures(repo_root: &Path) -> Vec<MonsterSlaFixture> {
 /// emits one row per spell with a save DC; banking the unit on the first row
 /// that happened to agree would be exactly the "evidence weaker than its
 /// class requires" the anti-gaming rule forbids.
-fn run_monster_sla_bar_check(repo_root: &Path) -> BarCheckReport {
+pub fn run_monster_sla_bar_check(repo_root: &Path) -> BarCheckReport {
     let fixtures = load_monster_sla_fixtures(repo_root);
     let fixtures_total = fixtures.len();
 
@@ -3066,13 +2974,13 @@ fn load_monster_ability_fixtures_field(repo_root: &Path, field: &str) -> Vec<Mon
         .collect()
 }
 
-/// The `kind=monster_ability` half of [`run_bar_check`].
+/// The `kind=monster_ability` half of `codex_ingest::bar_check::run_bar_check`.
 ///
 /// Resolves through the SAME `monster_chassis::MONSTER_BOOKS` registry
 /// `v06_work_inventory`'s own `grounded` verdict for `monster_ability` already
 /// reads, and the same one the desktop monster catalog serves from — not a
 /// second, parallel table.
-fn run_monster_ability_bar_check(repo_root: &Path) -> BarCheckReport {
+pub fn run_monster_ability_bar_check(repo_root: &Path) -> BarCheckReport {
     let fixtures = load_monster_ability_fixtures(repo_root);
     let fixtures_total = fixtures.len();
 
@@ -3175,7 +3083,7 @@ fn run_monster_ability_bar_check(repo_root: &Path) -> BarCheckReport {
     BarCheckReport { cleared, failures, engine_does_not_hold, fixtures_total }
 }
 
-/// The second sub-seam's half of [`run_bar_check`] — `kind=monster_ability`
+/// The second sub-seam's half of `codex_ingest::bar_check::run_bar_check` — `kind=monster_ability`
 /// rows whose DC argument states the FULL Universal Monster Rule formula
 /// rather than a summed literal. Resolves through the SAME
 /// `monster_chassis::MONSTER_BOOKS` registry [`run_monster_ability_bar_check`]
@@ -3183,7 +3091,7 @@ fn run_monster_ability_bar_check(repo_root: &Path) -> BarCheckReport {
 /// differs (the evaluator needs the owner resolved BEFORE it can produce a
 /// value at all, since this shape's ability row states no independent
 /// constant).
-fn run_monster_ability_formula_bar_check(repo_root: &Path) -> BarCheckReport {
+pub fn run_monster_ability_formula_bar_check(repo_root: &Path) -> BarCheckReport {
     let fixtures = load_monster_ability_formula_fixtures(repo_root);
     let fixtures_total = fixtures.len();
 
@@ -3595,11 +3503,11 @@ pub fn load_companion_skill_fixtures(repo_root: &Path) -> Vec<CompanionSkillFixt
         .collect()
 }
 
-/// The `kind=companion` skill-bonus half of [`run_bar_check`]. Runs against
+/// The `kind=companion` skill-bonus half of `codex_ingest::bar_check::run_bar_check`. Runs against
 /// the SHIPPED tables, exactly as [`run_companion_bar_check`] does and for
 /// the same reason: a transcription that dropped the token must fail here,
 /// not pass silently against a corpus file no player reads.
-fn run_companion_skill_bar_check(repo_root: &Path) -> BarCheckReport {
+pub fn run_companion_skill_bar_check(repo_root: &Path) -> BarCheckReport {
     let fixtures = load_companion_skill_fixtures(repo_root);
     let fixtures_total = fixtures.len();
 
@@ -3867,12 +3775,12 @@ pub fn load_companion_save_dc_fixtures(repo_root: &Path) -> Vec<CompanionSaveDcF
         .collect()
 }
 
-/// The `kind=companion` save-DC half of [`run_bar_check`]. Runs against the
+/// The `kind=companion` save-DC half of `codex_ingest::bar_check::run_bar_check`. Runs against the
 /// SHIPPED tables (`companion_chassis::COMPANION_BOOKS`), exactly as
 /// [`run_companion_skill_bar_check`] does and for the same reason: a
 /// transcription that dropped the `DESC:` argument must fail here, not pass
 /// silently against a corpus file no player reads.
-fn run_companion_save_dc_bar_check(repo_root: &Path) -> BarCheckReport {
+pub fn run_companion_save_dc_bar_check(repo_root: &Path) -> BarCheckReport {
     let fixtures = load_companion_save_dc_fixtures(repo_root);
     let fixtures_total = fixtures.len();
 
@@ -4122,7 +4030,7 @@ fn ability_modifiers_from_fixture_inputs(
     }
 }
 
-/// The `class_feature_description_entries` half of [`run_bar_check`]. Runs the REAL production
+/// The `class_feature_description_entries` half of `codex_ingest::bar_check::run_bar_check`. Runs the REAL production
 /// resolver (`pilot_compute::class_feature_grant_consumer::resolve_pcgen_var_chain`) against the
 /// SAME live corpus
 /// record (`class_feature_grant_consumer::class_feature_record_tokens`) the shipped engine reads
@@ -4130,7 +4038,7 @@ fn ability_modifiers_from_fixture_inputs(
 /// PCGen variable name the fixture names. A unit clears only when EVERY (arg, level) pair
 /// matches; any mismatch, or any level the production resolver could not reach at all, fails the
 /// whole unit rather than partially crediting it.
-fn run_class_feature_description_bar_check(repo_root: &Path) -> BarCheckReport {
+pub fn run_class_feature_description_bar_check(repo_root: &Path) -> BarCheckReport {
     let fixtures = load_class_feature_description_fixtures(repo_root);
     let fixtures_total = fixtures.len();
 
@@ -4286,14 +4194,14 @@ pub fn load_companion_fixtures(repo_root: &Path) -> Vec<CompanionFixture> {
         .collect()
 }
 
-/// The `kind=companion` half of [`run_bar_check`].
+/// The `kind=companion` half of `codex_ingest::bar_check::run_bar_check`.
 ///
 /// Runs against the SHIPPED tables (`companion_chassis::COMPANION_BOOKS`) —
 /// the same records `companion_catalog` serves and the reach gate judges —
 /// rather than against `data/corpus/`, so a transcription that dropped the
 /// token fails here rather than passing on a corpus file no player reads.
 /// Same choice `run_monster_bar_check` makes, and for the same reason.
-fn run_companion_bar_check(repo_root: &Path) -> BarCheckReport {
+pub fn run_companion_bar_check(repo_root: &Path) -> BarCheckReport {
     let fixtures = load_companion_fixtures(repo_root);
     let fixtures_total = fixtures.len();
 
