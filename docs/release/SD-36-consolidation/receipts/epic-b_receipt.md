@@ -777,3 +777,127 @@ epic's own shard (`RETRO_ACTOR=sd36-epic-b` exported in the same Bash
 invocation that ran `verify.sh`, avoiding the misfile hazard rounds 4/5
 each hit): `docs/retro/events/sd36-epic-b.jsonl` event
 `1789631705336-sd36-epic-b-08bd06`.
+
+## Fix cycle round 7 (2026-09-17)
+
+An independent verifier reviewed HEAD `a65eb769c2` (round 6's landed
+commit) and found 6 problems. All are fixed at their source this round,
+under the standing rulings (a)-(h) re-checked against this HEAD first.
+
+1. **`docs/architecture/testing.md:168`/`:170` said "45 stages" / "38 of
+   them"; round 6 added a 46th stage (`site-status-frozen-check-selftest`)
+   to both `ALL_STAGES` and `QUICK_STAGES` without updating this figure —
+   the exact defect class round 1 had already corrected once (49/42 →
+   45/38), now re-stale.** Re-ran the doc's own printed command:
+   `python3 -c "import re;s=open('scripts/verify.sh').read();print(len(re.search(r'ALL_STAGES=\((.*?)\)',s,re.S).group(1).split()))"`
+   → **46**; the equivalent for `QUICK_STAGES` → **39**;
+   `bash scripts/verify.sh --list` prints 46 stage rows, confirmed by
+   direct count. Fixed at source: `testing.md:168`/`:170` now read "46
+   stages" / "`ALL_STAGES` is 46 stages; `--quick` runs 39 of them".
+2. **`testing.md:176-177`'s sentence enumerating what SD-36 Epic B added
+   to the stage list did not name `site-status-frozen-check-selftest`,
+   the third stage this epic added (round 6, commit `a65eb769c2`) — only
+   `site-status-frozen-check` and `doneness-selftest` were named.** Fixed
+   at source: the sentence now reads "...added `site-status-frozen-check`,
+   `site-status-frozen-check-selftest`, and `doneness-selftest`."
+3. **No full `bash scripts/verify.sh` run existed at any SHA reflecting
+   round 6's `scripts/verify.sh` edit (the 46-stage configuration).** The
+   only full-mode log on this epic (`epic-b-final-verify.log`, `RESULT:
+   PASS`, 45 stages) predates commit `22195f059f` and therefore predates
+   rounds 5-6, which both edited `scripts/verify.sh` itself. Per ruling
+   (f): ran ONE full `bash scripts/verify.sh` pass at HEAD in the
+   background (PID 2363925, started 2026-09-17, `RETRO_ACTOR=sd36-epic-b`
+   exported in the same shell invocation as the launch, polled with
+   `kill -0` in ≤9-minute loops, never `pgrep`). Result and log path
+   recorded below under "Re-verified this round".
+4. **Scope disposition needed for `race_catalog.rs` and the retro-shard
+   misfiles.** `apps/desktop/src-tauri/src/race_catalog.rs` (commit
+   `94d915609c`, removing the now-dead `ingested_race_ids_for_book`) is
+   **not** on the brief's NOT-in-scope list (`pcgen_import`,
+   `oracle_validation`, `pilot_compute`, `Cargo.toml`, `src/lib.rs`,
+   `.github/`, SD-35 records) and is a direct, necessary consequence of
+   deleting `reach_gate.rs` — the only caller of that function — which
+   is itself explicitly in scope (appendix step 5 / brief line 25). No
+   orchestrator ruling was needed for it, unlike `pilot_compute/mod.rs`
+   and `class_spell_levels.rs` (both outside the appendix's edit lists
+   and covered by ruling (a)); this paragraph is that confirmation for
+   the record. `docs/retro/events/root.jsonl` (+3) and
+   `docs/retro/events/sd31-transcribe.jsonl` (+7, plus later
+   auto-emitted verify.sh records from rounds 4-5's own runs) are the
+   SAME misfiles rounds 3-5 already disclosed and dispositioned (ruling
+   (b): append-only, left as-is) — re-confirmed this round via `git show
+   d22950cd1f --numstat -- docs/retro/events/root.jsonl
+   docs/retro/events/sd31-transcribe.jsonl` (3/7 insertions, unchanged).
+   Recorded one more correction event per ruling (b)'s instruction to add
+   ONE this round, `--actor sd36-epic-b` passed explicitly:
+   `docs/retro/events/sd36-epic-b.jsonl` event
+   `1789632457329-sd36-epic-b-e15df9`.
+5. **Dangling `reach_gate`/`v06_work_inventory` doc-comment citations
+   outside `docs/architecture/status.md`.** Round 6 marked status.md's 9
+   live-voice citations `(retired, SD-36 D3)` but never swept `src/` or
+   `apps/`. Re-derived counts at HEAD: `git grep -c reach_gate -- src apps`
+   → **126** hits across 62 files; `git grep -c v06_work_inventory --
+   src apps tests` → **240** hits across 92 files. The SD-36 design plan
+   §4 rules this class "prose only; tidy optional", so it is not a scope
+   violation of the brief, but leaving it unnamed after round 6 selectively
+   fixed the equivalent citations in one file would leave the repo
+   silently inconsistent about the same defect. Disclosed rather than
+   swept (366 sites across 60+ files is a materially larger tidy than this
+   fix round's remit): `docs/retro/events/sd36-epic-b.jsonl` deferral
+   event `1789632483837-sd36-epic-b-fc3ade`, naming both counts and the
+   commands that produced them.
+6. **`pf1e_dashboard_producer.py`'s dead `cargo run --bin
+   v06_work_inventory` path and 2 live-voice pointers to deleted
+   scripts were not named in the original full-deletion deferral's
+   "remaining work."** `load_work_inventory()` (lines 680-699) still
+   calls `_load_cached_dump('v06_work_inventory', ..., bin_args=
+   ['--summary'])`, which shells out to a binary this epic deleted
+   (`src/bin/v06_work_inventory.rs`); the same file's docstring (lines
+   515-520) still tells a reader to run
+   `scripts/publish-site-dashboard.sh --check`, also deleted; and
+   `site/dashboard/inventory-pin.json`'s `_comment` field describes
+   itself as written by that same deleted script and a `--check-pin` flow
+   that no longer exists anywhere in the tree. Neither the producer file
+   nor `inventory-pin.json` is in this epic's declared write scope (the
+   producer is deliberately untouched per the original deferral; the pin
+   file is not in the §5 snapshot list), so per no-stub-doctrine
+   discipline these are named rather than silently left for a future
+   reader to rediscover: `docs/retro/events/sd36-epic-b.jsonl` deferral
+   event `1789632483959-sd36-epic-b-95fb25`, `--corrects` the original
+   producer-deletion deferral (`1789532346156-sd36-epic-b-fe7d41`) with
+   all 3 sites and a proposed interim fix.
+
+**Re-verified this round: ONE full `bash scripts/verify.sh` pass at HEAD**
+(background PID 2363925, `RETRO_ACTOR=sd36-epic-b` exported in the same
+shell invocation that launched it, polled with `kill -0` in ≤9-minute
+loops — never `pgrep`) → **RESULT: PASS**, all **46/46** stages passed
+(the round-6-added `site-status-frozen-check-selftest` executed and
+passed for the first time in a full-mode run: `6 cases passed`),
+`root-full (7855 passed across 412 suites, all 360 tests/*.rs suites
+executed)`, `desktop` PASS, `frontend-test (121/121 files)`, `clippy
+(root:0 desktop:0 warnings, 0 errors)`, `class-dump (31/31 computing)`,
+0 `test result: FAILED` lines anywhere in the log (`grep -c "test result:
+FAILED"` → 0; `grep -c "PASS "` → 46; `grep -n "RESULT:"` → `RESULT:
+PASS`). Log: `/tmp/claude-1000/-home-ubuntu-workspace-repos-codex/d7b37005-8466-4968-b248-1a4983d15f82/scratchpad/epic-b-fix5-verify.log`
+(internal per-stage logs under `/tmp/codex-verify-mzo1dG`). This is the
+first full pass to execute the current 46-stage configuration end to end
+— every prior full pass on this epic (`epic-b-final-verify.log`,
+`epic-b-fix6-verify.log`) predates round 5/6's edits to `scripts/verify.sh`
+itself. Recorded: `docs/retro/events/sd36-epic-b.jsonl` verification event
+`1789636081100-sd36-epic-b-bf862d` (landed correctly under this epic's own
+shard on the first try this round — no `RETRO_ACTOR` misfile).
+
+No new `NEEDS HUMAN RULING` items this round — all 6 problems closed under
+rulings already issued ((a) confirmed for `pilot_compute`/
+`class_spell_levels.rs`, no ruling needed for `race_catalog.rs`; (b) one
+more correction event added naming the standing root.jsonl/sd31-
+transcribe.jsonl misfiles; (f) the full pass above; (h) the 7-book grid
+fix from round 5 re-confirmed still standing). Two items are disclosed as
+named deferrals rather than executed (the 366-site src/apps doc-comment
+sweep; the 3 additional `pf1e_dashboard_producer.py`/`inventory-pin.json`
+no-stub smells) because both sit outside this epic's declared write scope
+and the design plan explicitly rules the first "tidy optional." The
+`/home/ubuntu/workspace/codex-morning-log-2026-09-16.md` NEEDS HUMAN
+RULING section carried no open items at the start of this round (all
+prior rounds' checkboxes already closed); nothing new required an entry
+this round.

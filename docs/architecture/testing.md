@@ -165,16 +165,17 @@ paired, back-to-back, on a quiet box
 **Write integration tests into an existing family binary, not a new file**, unless the family is
 genuinely new. One more top-level `tests/<name>.rs` is one more link on every build anyone ever runs.
 
-### `scripts/verify.sh` — 45 stages
+### `scripts/verify.sh` — 46 stages
 
-`ALL_STAGES` is 45 stages; `--quick` runs 38 of them
+`ALL_STAGES` is 46 stages; `--quick` runs 39 of them
 (`python3 -c "import re;s=open('scripts/verify.sh').read();print(len(re.search(r'ALL_STAGES=\((.*?)\)',s,re.S).group(1).split()))"`).
 `scripts/verify.sh --list` prints the full/quick membership table. SD-35 added
 `cycle-scope-gate-selftest`, `pcgen-residue-gate`, `token-coverage-selftest`, `token-coverage`,
 and `sheet-rules-check`. SD-36 Epic B retired `site-dashboard-selftest`, `site-dashboard-pin`,
 `site-dashboard-check`, `shape-engine-boundary-selftest`, `shape-engine-boundary`, and `reach`
 (the live dashboard producer and reach-gate audit those stages exercised are gone — see
-`docs/work-inventory.FROZEN.md`), and added `site-status-frozen-check` and `doneness-selftest`.
+`docs/work-inventory.FROZEN.md`), and added `site-status-frozen-check`,
+`site-status-frozen-check-selftest`, and `doneness-selftest`.
 
 ### The four gates a cycle runs without a build
 
