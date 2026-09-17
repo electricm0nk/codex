@@ -46,6 +46,9 @@ import {
   removeFeatSelection,
   removeSpellSelection,
 } from '../boundary/removeSelection';
+import { addTraitSelection } from '../boundary/addTraitSelection';
+import { removeTraitSelection } from '../boundary/removeTraitSelection';
+import { setEquipmentActiveState } from '../boundary/setEquipmentActiveState';
 import { listEquipment } from '../boundary/listEquipment';
 import { listSpells } from '../boundary/listSpells';
 import { listFeats, listFeatsForCharacter } from '../boundary/listFeats';
@@ -1681,6 +1684,8 @@ function GearTab(props: {
   onAttachModifier: (item: ResolvedEquipmentDto) => void;
   /** See `WeaponsTab.onRemoveWeapon` — the same command, no refund. */
   onRemoveItem: (itemId: string) => void;
+  /** SD-36 Epic E desktop-P2-01: stow (SelectedInactive) or re-equip (EquippedActive) a carried item. */
+  onSetActiveState: (itemId: string, activeState: 'EquippedActive' | 'SelectedInactive') => void;
   money: CharacterMoneyDto;
   moneyBusy: boolean;
   moneyError: string | null;
@@ -1744,6 +1749,22 @@ function GearTab(props: {
                   style={{ ...addItemButtonStyle, fontSize: '0.7rem', padding: '0.3rem 0.6rem' }}
                 >
                   Attach Modifier
+                </button>
+                <button
+                  type="button"
+                  aria-label={`Stow ${item.equipmentRecordName}`}
+                  onClick={() => props.onSetActiveState(item.itemId, 'SelectedInactive')}
+                  style={{ ...addItemButtonStyle, fontSize: '0.7rem', padding: '0.3rem 0.6rem' }}
+                >
+                  Stow
+                </button>
+                <button
+                  type="button"
+                  aria-label={`Re-equip ${item.equipmentRecordName}`}
+                  onClick={() => props.onSetActiveState(item.itemId, 'EquippedActive')}
+                  style={{ ...addItemButtonStyle, fontSize: '0.7rem', padding: '0.3rem 0.6rem' }}
+                >
+                  Re-equip
                 </button>
                 <button
                   type="button"
@@ -2486,6 +2507,10 @@ function FeatsTab(props: {
    * character recorded is the one that unmatches.
    */
   onRemoveFeat: (featId: string, target: string | null) => void;
+  /** SD-36 Epic E desktop-P2-01: records a new trait/drawback selection. */
+  onAddTrait: (traitId: string, skillChoice: string | null) => void;
+  /** SD-36 Epic E desktop-P2-01: removes a held trait/drawback selection. */
+  onRemoveTrait: (traitId: string) => void;
 }) {
   const [catalog, setCatalog] = useState<ItemPickerEntry[] | null>(null);
   // Derived from the same response the picker rows come from, so the caption
@@ -2599,23 +2624,27 @@ function FeatsTab(props: {
           </div>
         ))
       )}
-      <TraitsSection selectedTraits={props.selectedTraits} />
+      <TraitsSection selectedTraits={props.selectedTraits} onAddTrait={props.onAddTrait} onRemoveTrait={props.onRemoveTrait} />
     </div>
   );
 }
 
 /**
- * The character's chosen traits (v0.8 F-3). `selectedTraits` was persisted,
- * loaded and carried through every refresh with no render site at all, so
- * a trait picked at creation was invisible from then on. Names, prose and
- * bonus lines come from the same `list_available_character_traits` roster
- * the create form's picker uses; see `traitsTabModel.ts`. Traits are
- * add-at-creation only today — the add/remove commands are a backend
- * ticket (B-4), so this section offers no mutation affordance rather than
- * a dead one.
+ * The character's chosen traits (v0.8 F-3, wired to real add/remove in SD-36 Epic E
+ * desktop-P2-01). Names, prose and bonus lines come from the same
+ * `list_available_character_traits` roster the create form's picker uses; see
+ * `traitsTabModel.ts`. Adding offers every catalog trait not already held; a `%LIST` trait
+ * (one whose option carries `choiceSetId`) additionally offers its `skillOptions` before the
+ * Add button commits.
  */
-function TraitsSection(props: { selectedTraits: string[] }) {
+function TraitsSection(props: {
+  selectedTraits: string[];
+  onAddTrait: (traitId: string, skillChoice: string | null) => void;
+  onRemoveTrait: (traitId: string) => void;
+}) {
   const [catalog, setCatalog] = useState<CharacterTraitOptionDto[] | null>(null);
+  const [pendingTraitId, setPendingTraitId] = useState<string>('');
+  const [pendingSkillChoice, setPendingSkillChoice] = useState<string>('');
   useEffect(() => {
     let cancelled = false;
     loadCharacterTraits()
@@ -2636,6 +2665,9 @@ function TraitsSection(props: { selectedTraits: string[] }) {
   }, []);
 
   const rows = resolveSelectedTraits(props.selectedTraits, catalog ?? []);
+  const available = (catalog ?? []).filter((option) => !props.selectedTraits.includes(option.id));
+  const pendingOption = available.find((option) => option.id === pendingTraitId) ?? null;
+
   return (
     <div style={{ marginTop: '1.5rem' }}>
       <p style={{ color: 'var(--color-text-muted)', fontSize: '0.66rem', letterSpacing: '0.06em', margin: '0 0 0.6rem', textTransform: 'uppercase' }}>
@@ -2645,17 +2677,62 @@ function TraitsSection(props: { selectedTraits: string[] }) {
         <p style={{ color: 'var(--color-text-faint)', margin: 0, textAlign: 'center' }}>No traits selected.</p>
       ) : (
         rows.map((row) => (
-          <div key={row.id} style={{ borderBottom: '1px solid var(--color-border)', padding: '0.5rem 0' }}>
-            <div style={{ alignItems: 'baseline', display: 'flex', gap: '0.6rem', justifyContent: 'space-between' }}>
-              <span style={{ fontWeight: 700 }}>{row.name}</span>
-              {row.grants ? <span style={{ fontSize: '0.78rem', fontVariantNumeric: 'tabular-nums' }}>{row.grants}</span> : null}
+          <div key={row.id} style={{ alignItems: 'baseline', borderBottom: '1px solid var(--color-border)', display: 'flex', gap: '0.6rem', justifyContent: 'space-between', padding: '0.5rem 0' }}>
+            <div style={{ flex: 1 }}>
+              <div style={{ alignItems: 'baseline', display: 'flex', gap: '0.6rem', justifyContent: 'space-between' }}>
+                <span style={{ fontWeight: 700 }}>{row.name}</span>
+                {row.grants ? <span style={{ fontSize: '0.78rem', fontVariantNumeric: 'tabular-nums' }}>{row.grants}</span> : null}
+              </div>
+              {row.description ? (
+                <p style={{ color: 'var(--color-text-muted)', fontSize: '0.78rem', margin: '0.25rem 0 0' }}>{row.description}</p>
+              ) : null}
             </div>
-            {row.description ? (
-              <p style={{ color: 'var(--color-text-muted)', fontSize: '0.78rem', margin: '0.25rem 0 0' }}>{row.description}</p>
-            ) : null}
+            <button type="button" onClick={() => props.onRemoveTrait(row.id)} style={{ flexShrink: 0 }}>
+              Remove
+            </button>
           </div>
         ))
       )}
+      {available.length > 0 ? (
+        <div style={{ alignItems: 'center', display: 'flex', gap: '0.5rem', marginTop: '0.75rem' }}>
+          <select
+            aria-label="Trait to add"
+            value={pendingTraitId}
+            onChange={(event) => {
+              setPendingTraitId(event.target.value);
+              setPendingSkillChoice('');
+            }}
+          >
+            <option value="">Add a trait…</option>
+            {available.map((option) => (
+              <option key={option.id} value={option.id}>
+                {option.name}
+              </option>
+            ))}
+          </select>
+          {pendingOption?.choiceSetId && pendingOption.skillOptions.length > 0 ? (
+            <select aria-label="Skill for chosen trait" value={pendingSkillChoice} onChange={(event) => setPendingSkillChoice(event.target.value)}>
+              <option value="">Choose a skill…</option>
+              {pendingOption.skillOptions.map((skill) => (
+                <option key={skill.skillId} value={skill.skillId}>
+                  {skill.name}
+                </option>
+              ))}
+            </select>
+          ) : null}
+          <button
+            type="button"
+            disabled={!pendingTraitId}
+            onClick={() => {
+              props.onAddTrait(pendingTraitId, pendingSkillChoice || null);
+              setPendingTraitId('');
+              setPendingSkillChoice('');
+            }}
+          >
+            Add
+          </button>
+        </div>
+      ) : null}
     </div>
   );
 }
@@ -3509,6 +3586,77 @@ export function CharacterSheet(props: {
     }
   }
 
+  /**
+   * SD-36 Epic E desktop-P2-01: adds a character trait/drawback. `traitId` is one of
+   * `loadCharacterTraits()`'s own ids; `skillChoice` is required only for a `%LIST` trait
+   * (one whose picker option carries a `choiceSetId`) and ignored otherwise.
+   */
+  async function handleAddTrait(traitId: string, skillChoice: string | null) {
+    setMutationError(null);
+    try {
+      const outcome = await addTraitSelection({
+        characterId: props.row.characterId,
+        traitId,
+        skillChoice,
+        savedAt: new Date().toISOString(),
+      });
+      if (outcome.kind === 'Blocked') {
+        setMutationError(blockedMessageFromDiagnostics(outcome.diagnostics));
+        return;
+      }
+      await republishFromDisk();
+      await refreshEngineRecords();
+    } catch (cause: unknown) {
+      setMutationError(cause instanceof Error ? cause.message : String(cause));
+    }
+  }
+
+  /** The inverse of {@link handleAddTrait} -- removes a held trait and its skill choice. */
+  async function handleRemoveTrait(traitId: string) {
+    setMutationError(null);
+    try {
+      const outcome = await removeTraitSelection({
+        characterId: props.row.characterId,
+        traitId,
+        savedAt: new Date().toISOString(),
+      });
+      if (outcome.kind === 'Blocked') {
+        setMutationError(blockedMessageFromDiagnostics(outcome.diagnostics));
+        return;
+      }
+      await republishFromDisk();
+      await refreshEngineRecords();
+    } catch (cause: unknown) {
+      setMutationError(cause instanceof Error ? cause.message : String(cause));
+    }
+  }
+
+  /**
+   * SD-36 Epic E desktop-P2-01: stows, re-equips, or marks absent a carried item. Unlike
+   * `handleRemoveEquipment` this does not drop the item or its modifiers -- it flips
+   * `activeState` on the first carried copy, the same case-insensitive first-match rule
+   * `apply_remove_equipment_selection` uses.
+   */
+  async function handleSetEquipmentActiveState(itemId: string, activeState: 'EquippedActive' | 'Absent' | 'SelectedInactive') {
+    setMutationError(null);
+    try {
+      const outcome = await setEquipmentActiveState({
+        characterId: props.row.characterId,
+        itemId,
+        activeState,
+        savedAt: new Date().toISOString(),
+      });
+      if (outcome.kind === 'Blocked') {
+        setMutationError(blockedMessageFromDiagnostics(outcome.diagnostics));
+        return;
+      }
+      await republishFromDisk();
+      await refreshEngineRecords();
+    } catch (cause: unknown) {
+      setMutationError(cause instanceof Error ? cause.message : String(cause));
+    }
+  }
+
   /** Forgets a spell for its own source class, in every acquisition mode. */
   async function handleRemoveSpell(spellId: string, sourceClassId: string) {
     setMutationError(null);
@@ -4312,6 +4460,7 @@ export function CharacterSheet(props: {
                   onAddGear={() => setItemPickerOpen('gear')}
                   onAttachModifier={handleAttachModifier}
                   onRemoveItem={(itemId) => void handleRemoveEquipment(itemId)}
+                  onSetActiveState={(itemId, activeState) => void handleSetEquipmentActiveState(itemId, activeState)}
                   money={money}
                   moneyBusy={moneyBusy}
                   moneyError={moneyError}
@@ -4324,6 +4473,8 @@ export function CharacterSheet(props: {
             chosenFeatTargets={props.detail?.chosenFeatTargets ?? []}
             onAddFeat={() => setItemPickerOpen('feat')}
             onRemoveFeat={(featId, target) => void handleRemoveFeat(featId, target)}
+            onAddTrait={(traitId, skillChoice) => void handleAddTrait(traitId, skillChoice)}
+            onRemoveTrait={(traitId) => void handleRemoveTrait(traitId)}
           />
               ) : tab === 'Pets' ? (
                 <PetsTab snapshot={snapshot} />

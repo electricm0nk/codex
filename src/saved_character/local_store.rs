@@ -22,6 +22,19 @@ use super::{
 const ENVELOPE_FILE: &str = "envelope.txt";
 const CHARACTER_INPUT_FILE: &str = "authoritative_character_input.txt";
 
+/// SD-36 Epic E desktop-P1-02: write `contents` to a `<name>.tmp` sibling of `path`, never
+/// touching `path` itself, and hand back the temp path for the caller to `fs::rename` into
+/// place. `write` on a temp file that a crash interrupts leaves only the `.tmp` file
+/// corrupted; `path` (and whatever `load()` currently reads from it) is untouched until the
+/// rename, which on every platform this app ships to is a single filesystem metadata update.
+fn atomic_write_prepare(path: &Path, contents: &[u8]) -> std::io::Result<std::path::PathBuf> {
+    let mut tmp_name = path.file_name().map(|n| n.to_os_string()).unwrap_or_default();
+    tmp_name.push(".tmp");
+    let tmp_path = path.with_file_name(tmp_name);
+    fs::write(&tmp_path, contents)?;
+    Ok(tmp_path)
+}
+
 pub struct SavedCharacterStore;
 
 impl SavedCharacterStore {
@@ -65,16 +78,23 @@ impl SavedCharacterStore {
 
         validate_character_input(&envelope.character_input)?;
 
+        // SD-36 Epic E desktop-P1-02 (SD-34 R14-02): write both files to `.tmp` siblings
+        // FIRST, then rename both into place. A crash before either rename leaves the
+        // previous save (if any) completely untouched -- `load()` never sees a half-written
+        // file. The residual window this does NOT close: a crash BETWEEN the two renames
+        // still leaves a fresh envelope paired with a stale character-input file (or vice
+        // versa) if the process is killed mid-way through the second `fs::rename` -- closing
+        // that fully would need a single-file bundle format or a two-phase commit marker,
+        // out of scope for this fix. That window is now nanoseconds-wide (two renames back
+        // to back) rather than however long `render_character_input` takes to run.
         let envelope_path = root.join(ENVELOPE_FILE);
-        fs::write(&envelope_path, render_envelope(envelope))
-            .map_err(|err| io_error(&envelope_path, err))?;
-
         let character_input_path = root.join(CHARACTER_INPUT_FILE);
-        fs::write(
-            &character_input_path,
-            render_character_input(&envelope.character_input),
-        )
-        .map_err(|err| io_error(&character_input_path, err))?;
+        let envelope_tmp = atomic_write_prepare(&envelope_path, render_envelope(envelope).as_bytes())
+            .map_err(|err| io_error(&envelope_path, err))?;
+        let character_input_tmp = atomic_write_prepare(&character_input_path, render_character_input(&envelope.character_input).as_bytes())
+            .map_err(|err| io_error(&character_input_path, err))?;
+        fs::rename(&envelope_tmp, &envelope_path).map_err(|err| io_error(&envelope_path, err))?;
+        fs::rename(&character_input_tmp, &character_input_path).map_err(|err| io_error(&character_input_path, err))?;
 
         Ok(())
     }
@@ -657,6 +677,59 @@ mod tests {
                 "Special Quality ~ Masterwork ~ Weapon".to_owned(),
             ]
         );
+
+        fs::remove_dir_all(&root).ok();
+    }
+
+    /// SD-36 Epic E desktop-P1-02 (SD-34 R14-02): a save that fails partway through
+    /// writing must leave the PREVIOUS successful save completely intact -- not a fresh
+    /// envelope paired with a stale/missing character-input file. Forces the failure
+    /// deterministically by pre-creating the second temp file's path as a DIRECTORY, so
+    /// `atomic_write_prepare`'s `fs::write` for the character-input file fails outright,
+    /// after the envelope's own temp file already wrote successfully -- the exact
+    /// "partway through" shape the old two-sequential-`fs::write` code was vulnerable to.
+    #[test]
+    fn a_save_that_fails_partway_through_leaves_the_previous_version_intact() {
+        let root = tempdir("atomic-save-partial-failure");
+        let v1 = envelope_with(vec![]);
+        SavedCharacterStore::save(&v1, &root).expect("the first save should succeed");
+        let loaded_v1 = SavedCharacterStore::load(&root).expect("v1 loads");
+
+        // Sabotage the SECOND file's temp path: a directory can't be `fs::write`n over.
+        let sabotage_path = root.join(format!("{CHARACTER_INPUT_FILE}.tmp"));
+        fs::create_dir_all(&sabotage_path).expect("sabotage directory should be creatable");
+
+        let mut v2 = envelope_with(vec![]);
+        v2.display_label = "Second Save That Must Not Land".to_owned();
+        let result = SavedCharacterStore::save(&v2, &root);
+        assert!(result.is_err(), "the sabotaged save must report failure, not silently half-succeed");
+
+        fs::remove_dir_all(&sabotage_path).ok();
+        let loaded_after_failure = SavedCharacterStore::load(&root).expect("v1 must still load after the failed v2 save");
+        assert_eq!(
+            loaded_after_failure.display_label, loaded_v1.display_label,
+            "a failed save must not touch the previously-saved envelope"
+        );
+        assert_eq!(loaded_after_failure.display_label, "Local Store Test Character", "v2's label must never have landed");
+
+        fs::remove_dir_all(&root).ok();
+    }
+
+    /// A successful save must leave no `.tmp` leftovers -- the atomic-write helper's temp
+    /// files are an implementation detail, never a third file `load()` (or a directory
+    /// listing) has to know to ignore.
+    #[test]
+    fn a_successful_save_leaves_no_tmp_files_behind() {
+        let root = tempdir("atomic-save-no-tmp-leftovers");
+        let envelope = envelope_with(vec![]);
+        SavedCharacterStore::save(&envelope, &root).expect("save should succeed");
+
+        let entries: Vec<String> = fs::read_dir(&root)
+            .expect("root should be readable")
+            .filter_map(|e| e.ok())
+            .map(|e| e.file_name().to_string_lossy().into_owned())
+            .collect();
+        assert!(!entries.iter().any(|n| n.ends_with(".tmp")), "no .tmp file should remain after a successful save: {entries:?}");
 
         fs::remove_dir_all(&root).ok();
     }

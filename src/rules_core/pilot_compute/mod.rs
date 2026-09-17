@@ -9113,6 +9113,7 @@ pub fn compute_pilot_base_chassis(input: &CharacterInput) -> PilotBaseChassisCom
         &ability_modifiers,
         base_attack_bonus,
         &mut explanations,
+        &mut diagnostics,
     );
 
     let total_saves = compute_total_saves(
@@ -58467,7 +58468,12 @@ fn ground_standalone_feat_skill_facts(
         &effective_character_feats(input),
         &input.chosen.selected_choices,
     ) {
-        let skill_slug = fact.skill_name.to_lowercase().replace(' ', "_");
+        // SD-36 Epic E PC8-1: `slugify_id_segment`, not the naive
+        // `.to_lowercase().replace(' ', "_")` every sibling record here still uses -- a
+        // Craft/Profession skill name carries its own parenthetical subtype
+        // ("Craft (Armor)", "Profession (Siege Engineer)"), and the naive slug put the literal
+        // `(`/`)` characters into a wire-format explanation id.
+        let skill_slug = slugify_id_segment(&fact.skill_name);
         explanations.push(ComputationExplanation {
             id: format!("feat.master_craftsman_bonus.{skill_slug}"),
             value: fact.bonus,
@@ -58704,8 +58710,15 @@ fn ground_per_weapon_combat_totals(
     ability_modifiers: &AbilityModifiers,
     base_attack_bonus: i16,
     explanations: &mut Vec<ComputationExplanation>,
+    diagnostics: &mut Vec<ComputationDiagnostic>,
 ) {
     use crate::rules_core::feat_effects;
+
+    // SD-36 Epic E PC8-2: PF1 Table 8-1's size modifier applies to attack rolls the same way
+    // `compute_combat_baseline` already applies it to its GE-06 fixture posture (`decisions.md`
+    // §28 defect 1) -- every Small/Large race got a wrong per-weapon attack total here before,
+    // silently missing the size term that same sibling function has carried since SD-27.
+    let size_attack_modifier = combat_size_modifiers(input, diagnostics).armor_class_and_attack;
 
     let strength_modifier = ability_modifiers.strength;
     let dexterity_modifier = ability_modifiers.dexterity;
@@ -58819,8 +58832,11 @@ fn ground_per_weapon_combat_totals(
                 .to_owned(),
         };
 
-        let attack_total =
-            base_attack_bonus + attack_ability_modifier + focus_bonus + nonproficiency_penalty;
+        let attack_total = base_attack_bonus
+            + attack_ability_modifier
+            + focus_bonus
+            + nonproficiency_penalty
+            + size_attack_modifier;
         let focus_detail = if focus_bonus == 0 {
             " No Weapon Focus or Greater Weapon Focus names this weapon, so no feat bonus applies to \
              the attack roll."
@@ -58837,7 +58853,8 @@ fn ground_per_weapon_combat_totals(
             detail: format!(
                 "Attack bonus with the equipped {}: base attack bonus (+{base_attack_bonus}) + \
                  governing ability modifier ({attack_ability_modifier:+}) + weapon feats \
-                 ({focus_bonus:+}) + nonproficiency penalty ({nonproficiency_penalty}) = \
+                 ({focus_bonus:+}) + nonproficiency penalty ({nonproficiency_penalty}) + size \
+                 modifier ({size_attack_modifier:+}) = \
                  {attack_total}.{focus_detail}{finesse_detail}{proficiency_detail} Only the Focus \
                  feats reach this total -- the Specialization feats are damage and Improved \
                  Critical is threat range, both grounded separately. Separate from \
@@ -61650,7 +61667,7 @@ mod standalone_feat_skill_facts_consumer_wiring_tests {
         let fact = computation
             .explanations
             .iter()
-            .find(|e| e.id == "feat.master_craftsman_bonus.craft_(armor)")
+            .find(|e| e.id == "feat.master_craftsman_bonus.craft_armor")
             .expect("expected the Craft (armor) Master Craftsman fact to be grounded");
         assert_eq!(fact.value, 2, "{:?}", fact);
     }
@@ -61671,14 +61688,14 @@ mod standalone_feat_skill_facts_consumer_wiring_tests {
 
         assert!(
             computation.explanations.iter().any(
-                |e| e.id == "feat.master_craftsman_bonus.craft_(armor)" && e.value == 2
+                |e| e.id == "feat.master_craftsman_bonus.craft_armor" && e.value == 2
             ),
             "{:?}",
             computation.explanations
         );
         assert!(
             computation.explanations.iter().any(|e| e.id
-                == "feat.master_craftsman_bonus.profession_(siege_engineer)"
+                == "feat.master_craftsman_bonus.profession_siege_engineer"
                 && e.value == 2),
             "{:?}",
             computation.explanations
@@ -77752,6 +77769,38 @@ mod per_weapon_attack_total_tests {
         // to the output. The fixture carries Weapon Focus (Longsword), worth
         // +1, wired in at stage 3.
         assert_eq!(record.value, 6, "BAB(+1) + STR(+4) + Weapon Focus(+1): {record:?}");
+    }
+
+    /// SD-36 Epic E PC8-2: the per-weapon attack total must apply PF1 Table 8-1's size
+    /// modifier the same way `compute_combat_baseline` already does -- every Small/Large
+    /// character's real size bonus/penalty to attack was silently missing here before this
+    /// fix. A Gnome (Small, `race_size_for_race_token` +1 to AC/attack) also carries a -2
+    /// Strength racial adjustment relative to the Human fixture, so the TOTAL is not simply
+    /// "+1 higher" -- this asserts the size term is present and non-zero, and that the total
+    /// is exactly base attack bonus + governing ability modifier + weapon feats +
+    /// nonproficiency penalty + size modifier, so a future change cannot silently drop the
+    /// size term back out while leaving the total looking plausible.
+    #[test]
+    fn a_small_races_per_weapon_attack_total_carries_the_real_size_modifier() {
+        let mut small = fixture();
+        small.chosen.race_id = "race:gnome".to_owned();
+        let receipt = build_pilot_headless_receipt(&small);
+        let record = receipt
+            .computation
+            .explanations
+            .iter()
+            .find(|e| e.id == "combat.weapon_attack_bonus.longsword")
+            .expect("the equipped Longsword must ground a per-weapon attack total");
+        assert!(record.detail.contains("size modifier (+1)"), "a Small race gets PF1's +1 size bonus to attack: {record:?}");
+
+        let medium = build_pilot_headless_receipt(&fixture());
+        let medium_record = medium
+            .computation
+            .explanations
+            .iter()
+            .find(|e| e.id == "combat.weapon_attack_bonus.longsword")
+            .expect("the Human fixture's Longsword total");
+        assert!(medium_record.detail.contains("size modifier (+0)"), "a Medium race gets no size term: {medium_record:?}");
     }
 
     /// Stage 2 is additive: the pre-existing GE-06 baseline total must be

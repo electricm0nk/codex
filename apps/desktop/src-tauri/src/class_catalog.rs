@@ -157,7 +157,21 @@ mod tests {
         //     degraded, so every magnitude on it is the rule's own WORDS
         //     (`decisions.md` §1) and it is not a chassis at all.
         // 1108 + 10 + 10 + 10 - 10 = 1128.
-        assert_eq!(response.entries.len(), 1128);
+        //
+        // SD-36 Epic E CONV-05 fixed degradation to be per-occurrence rather
+        // than record-wide (`src/pcgen_import/sheet_rule/convert.rs`): a
+        // class record's clean BAB/save formulas now print their real
+        // numbers even when an unrelated token elsewhere on the SAME record
+        // degrades. This un-hid Evangelist's real chassis (10 more prestige
+        // levels, reversing the "- Evangelist" line above) plus 18 other
+        // (book, slug) pairs across `CLASS_FAMILY_BOOKS` with the identical
+        // masking bug (verified by hand for Evangelist: 3/4 BAB, good Reflex
+        // -- a genuine PF1 progression). 19 newly-resolving records x 10
+        // prestige levels each = 190 more rows: 1128 + 190 = 1318. Re-derive
+        // the 19 count: `generic_class_catalog_entries`' own
+        // `load_generic_class_progressions` now returns 81 records, not 62
+        // (see `class_catalog_generic.rs`'s tests).
+        assert_eq!(response.entries.len(), 1318);
 
         let counts = |class_id: &str| {
             response

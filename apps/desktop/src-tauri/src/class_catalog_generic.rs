@@ -203,7 +203,7 @@ mod tests {
     }
 
     #[test]
-    fn the_converted_package_carries_sixty_two_conventional_classes() {
+    fn the_converted_package_carries_eighty_one_conventional_classes() {
         let (records, unresolved) = load_generic_class_progressions(&repo());
         assert!(
             unresolved.is_empty(),
@@ -211,7 +211,15 @@ mod tests {
         );
         // 62, not the old 61 -- see the module doc's "Population" section for
         // the two movements and how to re-derive each.
-        assert_eq!(records.len(), 62);
+        //
+        // SD-36 Epic E CONV-05: 62 -> 81. Degradation is now per-occurrence
+        // rather than record-wide (`convert.rs`), un-hiding 19 (book, slug)
+        // pairs across `CLASS_FAMILY_BOOKS` whose clean BAB/save formulas an
+        // unrelated degrading token on the same record used to wipe to
+        // words -- Evangelist's own real chassis (3/4 BAB, good Reflex) is
+        // one of them. See `character_hub.rs`'s
+        // `all_81_generic_classes_reach_a_real_chassis_at_character_creation_altitude`.
+        assert_eq!(records.len(), 81);
     }
 
     #[test]
@@ -273,7 +281,9 @@ mod tests {
         let entries = generic_class_catalog_entries(&repo());
         let distinct: std::collections::BTreeSet<_> =
             entries.iter().map(|e| e.class_id.as_str()).collect();
-        assert_eq!(distinct.len(), 62);
+        // SD-36 Epic E CONV-05: 62 -> 81, same cause as
+        // `the_converted_package_carries_eighty_one_conventional_classes`.
+        assert_eq!(distinct.len(), 81);
         // None shares a display name with an existing CRB/PU row (would
         // silently merge into an unrelated progression otherwise).
         let crb_pu_names = [

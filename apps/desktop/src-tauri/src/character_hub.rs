@@ -3591,6 +3591,36 @@ fn resolve_characters_root(app: &tauri::AppHandle) -> Result<PathBuf, String> {
     Ok(characters_root_from_app_data_dir(&app_data_dir))
 }
 
+/// SD-36 Epic E desktop-P1-01 (SD-34 R11-01). `resolve_character_root` joined
+/// a client-supplied `character_id` straight onto the characters root with no
+/// validation at all — a `character_id` of `"../../../../Documents"` (or any
+/// string containing a path separator or an absolute-path prefix) escaped the
+/// characters directory entirely, and `delete_character` routes through this
+/// same function to `std::fs::remove_dir_all`. This is the ONE choke point
+/// (`resolve_character_root` backs 40+ command call sites): reject the shape
+/// here, once, rather than at each caller.
+///
+/// Rejects: empty, any `..` path component (Windows and Unix separators
+/// both), a leading path separator, and a Windows drive prefix (`C:`) — a
+/// real character id is always the bare UUID this app itself generated.
+fn validate_character_id(character_id: &str) -> Result<(), String> {
+    if character_id.is_empty() {
+        return Err("character_id must not be empty".to_string());
+    }
+    if character_id.starts_with('/') || character_id.starts_with('\\') {
+        return Err(format!("character_id must not be an absolute path: {character_id:?}"));
+    }
+    if character_id.chars().nth(1) == Some(':') {
+        return Err(format!("character_id must not carry a drive prefix: {character_id:?}"));
+    }
+    for component in character_id.split(['/', '\\']) {
+        if component == ".." {
+            return Err(format!("character_id must not contain a '..' path component: {character_id:?}"));
+        }
+    }
+    Ok(())
+}
+
 /// `pub(crate)` (rather than private) so the `characterHub` submodule's
 /// commands (e.g. `appendToCharacter` — SD-24 Epic 7, Criterion 7.1) can
 /// resolve the same on-disk character root this module's own commands use,
@@ -3599,6 +3629,7 @@ pub(crate) fn resolve_character_root(
     app: &tauri::AppHandle,
     character_id: &str,
 ) -> Result<PathBuf, String> {
+    validate_character_id(character_id)?;
     Ok(resolve_characters_root(app)?.join(character_id))
 }
 
@@ -4751,6 +4782,55 @@ mod tests {
     use codex::rules_core::pilot_compute::HeadlessReceiptStatus;
     use std::collections::BTreeSet;
 
+    // ----- SD-36 Epic E desktop-P1-01: character_id path-traversal validation -----
+
+    #[test]
+    fn a_real_generated_character_id_validates() {
+        assert!(validate_character_id("3f2a9c7e-1b4d-4a5f-9e6c-2d8b7a1f0c3e").is_ok());
+        assert!(validate_character_id("plain-alphanumeric-id-123").is_ok());
+    }
+
+    #[test]
+    fn an_empty_character_id_is_rejected() {
+        assert!(validate_character_id("").is_err());
+    }
+
+    #[test]
+    fn a_dotdot_traversal_is_rejected_in_any_position_or_separator_style() {
+        for id in [
+            "..",
+            "../../../../Documents",
+            "..\\..\\Windows",
+            "safe/../../etc/passwd",
+            "safe\\..\\..\\secrets",
+            "foo/..",
+        ] {
+            assert!(validate_character_id(id).is_err(), "{id:?} must be rejected");
+        }
+    }
+
+    #[test]
+    fn an_absolute_path_is_rejected() {
+        for id in ["/etc/passwd", "\\\\server\\share", "/tmp/x"] {
+            assert!(validate_character_id(id).is_err(), "{id:?} must be rejected");
+        }
+    }
+
+    #[test]
+    fn a_windows_drive_prefix_is_rejected() {
+        assert!(validate_character_id("C:\\Windows\\System32").is_err());
+        assert!(validate_character_id("C:/Windows").is_err());
+    }
+
+    #[test]
+    fn resolve_character_root_rejects_a_traversal_id_before_touching_the_filesystem() {
+        // No AppHandle available in a unit test; the validator runs and returns Err
+        // BEFORE `resolve_characters_root` (which needs the handle) is ever reached --
+        // confirmed here by calling `validate_character_id` directly, the exact guard
+        // `resolve_character_root` now runs first.
+        assert!(validate_character_id("../../elsewhere").is_err());
+    }
+
     // ----- Race-creation roster (the 7 -> 18 widening) -----
 
     fn roster_race(race_id: &str) -> RaceCreationChassisDto {
@@ -5723,7 +5803,7 @@ mod tests {
     /// player picking it at creation -- exactly the gap this cycle's brief
     /// asked to be either closed or precisely disproven with evidence.
     #[test]
-    fn all_62_generic_classes_reach_a_real_chassis_at_character_creation_altitude() {
+    fn all_81_generic_classes_reach_a_real_chassis_at_character_creation_altitude() {
         let repo_root = crate::authoring_workbench::codex_repo_root().expect("repo root");
         let (records, unresolved) =
             crate::class_catalog_generic::load_generic_class_progressions(&repo_root);
@@ -5737,7 +5817,16 @@ mod tests {
         // class no dispatcher knows.
         let names: Vec<(String, String)> =
             records.into_iter().map(|record| (record.name, record.slug)).collect();
-        assert_eq!(names.len(), 62, "must cover all 62, not a partial sweep");
+        // SD-36 Epic E CONV-05: was 62. `load_generic_class_progressions` iterates
+        // `class_chassis_sheet_rules::records(&CLASS_FAMILY_BOOKS)` per (book, slug) pair,
+        // never deduplicated by slug the way `generic_class_chassis::generic_class_records()`
+        // is -- CONV-05 fixed degradation to be per-occurrence rather than record-wide
+        // (`convert.rs`), un-hiding 19 (book, slug) pairs within `CLASS_FAMILY_BOOKS` whose
+        // clean BAB/save formulas an unrelated degrading token on the same record used to wipe
+        // to words (verified by hand for `inner_sea_gods:class:evangelist`: a genuine PF1 3/4
+        // BAB + good Reflex progression). 62 + 19 = 81. Re-derive:
+        // `class_catalog_generic::load_generic_class_progressions(&repo_root).0.len()`.
+        assert_eq!(names.len(), 81, "must cover all 81, not a partial sweep");
 
         let mut checked = 0usize;
         for (name, slug) in &names {
@@ -5752,15 +5841,15 @@ mod tests {
             checked += 1;
         }
         assert_eq!(
-            checked, 62,
-            "must have exercised all 62 conventional classes, not a partial sweep"
+            checked, 81,
+            "must have exercised all 81 conventional classes, not a partial sweep"
         );
     }
 
     /// SD-32 T12 Epic 10 row 20 cycle 7: closes cycle 6's own named wiring
     /// gap ("`ground_companion_stat_block` has zero live callers anywhere
     /// in the crate") and proves it at the real character-creation
-    /// altitude, the same way `all_62_generic_classes_reach_a_real_
+    /// altitude, the same way `all_81_generic_classes_reach_a_real_
     /// chassis_at_character_creation_altitude` proved the class picker --
     /// through `CreateCharacterRequest` -> `compose_character_input` ->
     /// `build_pilot_headless_receipt`, never `generic_class_chassis::

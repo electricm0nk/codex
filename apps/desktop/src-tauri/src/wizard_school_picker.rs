@@ -18,6 +18,19 @@
 //! (`unmet_wizard_spellbook_conditions`) accepts exactly one triple; this
 //! command reports whatever that gate accepts today and will widen by
 //! itself when the engine does.
+//!
+//! **SD-36 Epic E desktop-P2-01: NOT YET WIRED TO A CREATION-FLOW UI STEP.**
+//! `list_wizard_school_options` is registered and unit-tested, but no
+//! frontend code invokes it and `CreateCharacterForm.tsx` offers no school
+//! picker for a Wizard -- a real gap the SD-35 review confirmed. Wiring it
+//! needs a genuine new step in the creation flow (choose specialty, then
+//! choose from `supportedOpposedPairs` for that specialty, recording both
+//! under `WIZARD_SCHOOL_SPECIALIZATION_CHOICE_ID` /
+//! `WIZARD_OPPOSED_SCHOOLS_CHOICE_ID` via `SelectedChoiceDto`), not a
+//! one-line button -- deliberately deferred rather than rushed alongside
+//! this same cycle's Traits add/remove and equipment stow/re-equip wiring
+//! (`CharacterSheet.tsx`'s `TraitsSection`/`GearTab`, both existing screens
+//! extended in place). Retro: `docs/retro/events/sd36-epic-e.jsonl`.
 
 use std::sync::OnceLock;
 

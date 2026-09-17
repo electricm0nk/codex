@@ -66,7 +66,7 @@ impl CampaignStore {
             message: format!("failed to serialize campaign snapshot: {err}"),
         })?;
         let config_path = config_dir.join(format!("{}.json", sanitize_filename(&snapshot.name)));
-        fs::write(&config_path, json).map_err(|err| io_error(&config_path, err))?;
+        atomic_write(&config_path, json.as_bytes()).map_err(|err| io_error(&config_path, err))?;
 
         write_asset_group(&campaign_dir.join(RESOURCES_DIR), &snapshot.assets.resources)?;
         write_asset_group(&campaign_dir.join(ADVENTURE_LOG_DIR), &snapshot.assets.adventure_log)?;
@@ -301,9 +301,24 @@ fn write_asset_group(dir: &Path, assets: &[CampaignAsset]) -> Result<(), Campaig
     fs::create_dir_all(dir).map_err(|err| io_error(dir, err))?;
     for asset in assets {
         let path = dir.join(format!("{}.md", sanitize_filename(&asset.title)));
-        fs::write(&path, &asset.body).map_err(|err| io_error(&path, err))?;
+        atomic_write(&path, asset.body.as_bytes()).map_err(|err| io_error(&path, err))?;
     }
     Ok(())
+}
+
+/// SD-36 Epic E desktop-P1-02 (SD-34 R14-02): write `contents` to a `<name>.tmp` sibling of
+/// `path` then `fs::rename` it into place, so a crash mid-write leaves the file at `path`
+/// (the previous save, if any) untouched rather than truncated or half-written. This closes
+/// the single-FILE half-write window; it does not make the whole multi-file `save()` call one
+/// transaction -- a crash between two different files' renames can still leave the config
+/// JSON and an asset file from different save attempts, the same residual window
+/// `saved_character::local_store`'s equivalent fix documents.
+fn atomic_write(path: &Path, contents: &[u8]) -> std::io::Result<()> {
+    let mut tmp_name = path.file_name().map(|n| n.to_os_string()).unwrap_or_default();
+    tmp_name.push(".tmp");
+    let tmp_path = path.with_file_name(tmp_name);
+    fs::write(&tmp_path, contents)?;
+    fs::rename(&tmp_path, path)
 }
 
 /// Reads back every `.md` file in `dir` as a `CampaignAsset`, using the
@@ -407,6 +422,58 @@ mod tests {
         CampaignStore::save(&snapshot, &root).expect("save should succeed");
         let loaded = CampaignStore::load(&root).expect("load should succeed");
         assert_eq!(loaded, snapshot);
+
+        let _ = fs::remove_dir_all(&root);
+    }
+
+    /// SD-36 Epic E desktop-P1-02: a successful save leaves no `.tmp` leftovers -- the
+    /// atomic-write helper's temp files are an implementation detail.
+    #[test]
+    fn a_successful_save_leaves_no_tmp_files_behind() {
+        let root = temp_root("no-tmp-leftovers");
+        let _ = fs::remove_dir_all(&root);
+        CampaignStore::save(&sample_snapshot(), &root).expect("save should succeed");
+
+        fn collect_names(dir: &std::path::Path, out: &mut Vec<String>) {
+            let Ok(entries) = fs::read_dir(dir) else { return };
+            for entry in entries.flatten() {
+                let path = entry.path();
+                if path.is_dir() {
+                    collect_names(&path, out);
+                } else if let Some(name) = path.file_name() {
+                    out.push(name.to_string_lossy().into_owned());
+                }
+            }
+        }
+        let mut names = Vec::new();
+        collect_names(&root, &mut names);
+        assert!(!names.iter().any(|n| n.ends_with(".tmp")), "no .tmp file should remain after a successful save: {names:?}");
+
+        let _ = fs::remove_dir_all(&root);
+    }
+
+    /// SD-36 Epic E desktop-P1-02 (SD-34 R14-02): a write that fails partway through must
+    /// not leave a truncated/half-written file at the real path -- forced deterministically
+    /// by pre-creating the asset's `.tmp` path as a directory, so `atomic_write`'s `fs::write`
+    /// fails before the file at the real path is ever touched.
+    #[test]
+    fn a_write_that_fails_partway_through_does_not_touch_the_previous_file() {
+        let root = temp_root("atomic-write-partial-failure");
+        let _ = fs::remove_dir_all(&root);
+        CampaignStore::save(&sample_snapshot(), &root).expect("the first save should succeed");
+        let previous = fs::read_to_string(root.join("resources").join("Primer.md")).expect("Primer.md exists after the first save");
+
+        let sabotage_path = root.join("resources").join("Primer.md.tmp");
+        fs::create_dir_all(&sabotage_path).expect("sabotage directory should be creatable");
+
+        let mut updated = sample_snapshot();
+        updated.assets.resources[0].body = "# Primer, rewritten".to_owned();
+        let result = CampaignStore::save(&updated, &root);
+        assert!(result.is_err(), "the sabotaged save must report failure");
+
+        fs::remove_dir_all(&sabotage_path).ok();
+        let after_failure = fs::read_to_string(root.join("resources").join("Primer.md")).expect("Primer.md must still exist after the failed save");
+        assert_eq!(after_failure, previous, "a failed write must not touch the previous file's content");
 
         let _ = fs::remove_dir_all(&root);
     }
