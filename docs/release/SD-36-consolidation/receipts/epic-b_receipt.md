@@ -223,15 +223,16 @@ the plan" below.
 
 - `python3 -m unittest` on every touched/new Python test file: green
   (`test_build_public_status.py` 40/40, `test_check_frozen_status.py` 4/4,
-  `test_completion_atlas.py` **41/42** (corrected 2026-09-17: this receipt
-  originally claimed 42/42; `test_bucket_u_matches_named_population` fails
-  `AssertionError: 0 != 202` at `test_completion_atlas.py:417` — confirmed
-  PRE-EXISTING, not an Epic B regression: `partition()` over the frozen
-  `docs/work-inventory.json` yields `Counter({'DONE': 49450})` under BOTH
-  the pre-epic and post-epic `completion_atlas.py`, so bucket U was already
-  0 before this epic touched the file; tracked as a known, unresolved issue
-  in `docs/retro/events/sd36-epic-b.jsonl`, not fixed here — its root cause
-  is outside this epic's scope), `test_missing_engine_tables.py` 11/11,
+  `test_completion_atlas.py` **42/42** (superseded by fix cycle round 3
+  item 8: `test_bucket_u_matches_named_population` no longer pins the stale
+  literal 202 — it now asserts bucket U against a second, independent count
+  computed directly from the frozen `docs/work-inventory.json`
+  (`sum(1 for u in inv["units"] if u.get("status") == "unmeasurable")`),
+  which is 0, matching `partition()`'s own bucket-U count of 0. Re-run
+  `python3 -m unittest scripts.tests.test_completion_atlas -v` → Ran 42
+  tests, OK. The prior 41/42 figure recorded here (and the `AssertionError:
+  0 != 202` it cited) is stale as of round 3; see "Fix cycle round 3" item 8
+  below for the full disposition), `test_missing_engine_tables.py` 11/11,
   `test_denominator_gate.py` 57/57, `test_doneness.py` 5/5,
   `test_coverage_ledger.py` + `test_shape_ledger.py` 88/88.
 - `cargo test --locked --no-run -j 6` at root: compiles clean, 0 errors,
@@ -240,10 +241,14 @@ the plan" below.
   clean, 0 errors, 0 warnings.
 - `cargo test --locked -j 6 --test sd24_wired_integration_audit`: 5/5 pass.
 - `bash -n scripts/verify.sh`: syntax OK, checked after every edit to the file.
-- `git grep -c seeded_current_truth -- tests src apps`: 1 match (corrected
-  2026-09-17, fix cycle round 2 — the true count was never 0; see that
-  section for the reproducing command and the out-of-scope-file reason it
-  was not driven to 0).
+- `git grep -c seeded_current_truth -- tests src apps`: **0 matches**
+  (superseded by fix cycle round 3 item 2: round 2's "1 match, out of
+  scope" figure recorded here is stale — the orchestrator's round-3 scope
+  widening (ruling (a)) permitted repairing the one remaining hit, a
+  dangling doc comment at `src/rules_core/pilot_compute/mod.rs:51241`.
+  Re-run at HEAD: `git grep -c seeded_current_truth -- tests src apps` →
+  no output, exit 1, i.e. 0 matches. See "Fix cycle round 3" item 2 below
+  for the exact wording change).
 - `git grep -n support_state_matrix:: -- tests src apps`: 0 matches.
 - **First full `bash scripts/verify.sh` pass: RESULT FAIL.** 0 test
   failures anywhere; 2 stages red:
