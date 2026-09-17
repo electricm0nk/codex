@@ -145,7 +145,7 @@ fn walk_corpus(repo: &Path) -> Vec<CorpusEntry> {
     out
 }
 
-fn record_from_json(unit: &InventoryUnit, path: &Path) -> Option<RecordRef> {
+fn record_from_json(tree: &PinnedTree, unit: &InventoryUnit, path: &Path) -> Option<RecordRef> {
     let text = std::fs::read_to_string(path).ok()?;
     let rec: CorpusRecord = serde_json::from_str(&text).ok()?;
     let data = &rec.data;
@@ -160,7 +160,22 @@ fn record_from_json(unit: &InventoryUnit, path: &Path) -> Option<RecordRef> {
         .or_else(|| src.get("record_key").and_then(|v| v.as_str()))
         .map(|s| s.trim_start_matches("CLASS:").to_string())
         .unwrap_or_else(|| unit.corpus_key.clone().unwrap_or_else(|| unit.name.clone()));
-    let name = data.get("name").and_then(|v| v.as_str()).map(|s| s.to_string()).unwrap_or_else(|| unit.name.clone());
+    let mut name = data.get("name").and_then(|v| v.as_str()).map(|s| s.to_string()).unwrap_or_else(|| unit.name.clone());
+    // SD-36 Epic E CONV-04: a `.COPY=` row's OWN head names the BASE record it inherits from
+    // (`Potion.COPY=Oil of Darkness`, `Longsword (Base).COPY=Longsword`) -- the corpus ingest's
+    // `data.name` field for such a row carries that base/generic word, never the specific
+    // item's own name, while `key` (read from the row's own `KEY:` token above) already carries
+    // the specific name correctly in every such case. Detected from the row's own source text
+    // (never inferred from shape alone), so a legitimate non-`.COPY=` divergence between `key`
+    // and `name` -- e.g. `Repeating Heavy Crossbow (Base)` (key) vs `Repeating Heavy Crossbow`
+    // (name), where `name` is the better display string -- is left untouched.
+    if let Some(idx) = tree.file_index(&rel_path)
+        && line > 0
+        && let Some(head) = tree.files[idx].lines.get(line - 1).and_then(|l| l.split('\t').next())
+        && head.contains(".COPY=")
+    {
+        name = key.clone();
+    }
     let mut shipped_tokens: Option<Vec<(String, String)>> = data.get("raw_tokens").and_then(|v| v.as_array()).map(|arr| {
         arr.iter()
             .filter_map(|t| Some((t.get("key")?.as_str()?.to_string(), t.get("value")?.as_str()?.to_string())))
@@ -314,7 +329,7 @@ pub fn load_population(repo: &Path, tree: &PinnedTree) -> Result<Vec<RecordRef>,
                 }
             })
             .copied();
-        let rec = idx.and_then(|i| record_from_json(u, &entries[i].path));
+        let rec = idx.and_then(|i| record_from_json(tree, u, &entries[i].path));
         out.push(rec.unwrap_or_else(|| {
             let (rel_path, line) = source_row_in_tree(tree, u).unwrap_or_default();
             let joined = !rel_path.is_empty();

@@ -211,6 +211,19 @@ pub struct RecordCtx<'a> {
     /// inside the row (a prose argument, SD-35 `AT-35-E6-003` cycle 6) records the same
     /// `under` the row-level `Err` path recorded.
     pub current_under: Option<String>,
+    /// SD-36 Epic E CONV-05: a per-occurrence sequence number for the row being converted
+    /// right now, distinct from `current_under` -- two DIFFERENT rows on the same record often
+    /// share one generic census key (every `TEMPBONUS` row's `under` is the literal string
+    /// `"TEMPBONUS"` regardless of its own sub-shape), so `under` alone cannot tell which of
+    /// several same-headed rows actually degraded. `Line::seq` tags a pushed line with this
+    /// value; [`RecordCtx::current_seq_degraded`] tells the row loop whether THIS occurrence
+    /// degraded, however deep the degrading call was (a direct `Err`, or a nested prose-slot
+    /// fallback that still returns `Ok`).
+    pub current_seq: Option<usize>,
+    /// Set by [`RecordCtx::refuse_under`] whenever the current occurrence (`current_seq`)
+    /// degrades, so only the lines THAT occurrence pushed are wiped at assembly, never a
+    /// sibling occurrence's already-successful line.
+    pub current_seq_degraded: bool,
     /// Defect-list lines (`_defects/`), keyed by defect kind.
     pub defects: BTreeMap<String, Vec<String>>,
     /// Variable ids this record referenced through `Expr::Var`, with their source names.
@@ -245,6 +258,8 @@ impl<'a> RecordCtx<'a> {
             tokens: BTreeSet::new(),
             refusal_under: BTreeMap::new(),
             current_under: None,
+            current_seq: None,
+            current_seq_degraded: false,
             defects: BTreeMap::new(),
             var_names: BTreeMap::new(),
             var_labels: BTreeMap::new(),
@@ -286,6 +301,7 @@ impl<'a> RecordCtx<'a> {
         } else {
             self.degraded_under.entry(shape.clone()).or_default().insert(under.to_string());
             self.degradations.insert(shape);
+            self.current_seq_degraded = true;
         }
     }
 

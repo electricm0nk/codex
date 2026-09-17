@@ -64,6 +64,12 @@ pub fn token_key(key: &str, value: &str) -> String {
 
 /// A value line the record yields (principal first).
 struct Line {
+    /// SD-36 Epic E CONV-05: the per-occurrence sequence number ([`RecordCtx::current_seq`])
+    /// active when this line was pushed (`None` for the no-token single-line fallback), so a
+    /// sibling ROW's degradation -- even one sharing the same generic census `under` key, like
+    /// two different `TEMPBONUS` rows on one record -- wipes only the line(s) that occurrence
+    /// itself pushed, never a different occurrence's already-successful line.
+    seq: Option<usize>,
     suffix: Option<String>,
     label: String,
     value: SheetValue,
@@ -428,6 +434,13 @@ pub fn convert_record(tree: &PinnedTree, index: &CorpusIndex, record: &RecordRef
         }
     }
 
+    // SD-36 Epic E CONV-05: a per-occurrence sequence number, distinct from the shared census
+    // `under` key -- see [`RecordCtx::current_seq`]'s doc for why `under` alone can't tell two
+    // same-headed rows (e.g. two `TEMPBONUS` rows) apart. `failed_seqs` collects every
+    // occurrence that degraded, whether directly (an `Err` from `convert_token`) or through a
+    // nested prose-slot fallback that still returns `Ok`.
+    let mut seq: usize = 0;
+    let mut failed_seqs: BTreeSet<usize> = BTreeSet::new();
     for row in &closure.rows {
         let level_gate = row.level_gate;
         for (key, value) in &row.tokens {
@@ -474,11 +487,18 @@ pub fn convert_record(tree: &PinnedTree, index: &CorpusIndex, record: &RecordRef
                 ctx.refuse_under(&under, trow.token_type);
                 continue;
             }
+            seq += 1;
             ctx.current_under = Some(under.clone());
+            ctx.current_seq = Some(seq);
+            ctx.current_seq_degraded = false;
             if let Err(tt) = convert_token(&mut ctx, &mut acc, &mut out, key, value, level_gate, row.kind) {
                 ctx.refuse_under(&under, tt);
             }
+            if ctx.current_seq_degraded {
+                failed_seqs.insert(seq);
+            }
             ctx.current_under = None;
+            ctx.current_seq = None;
         }
     }
 
@@ -531,10 +551,24 @@ pub fn convert_record(tree: &PinnedTree, index: &CorpusIndex, record: &RecordRef
     // converter can write is the number the player would write: the rule prints its words
     // (`decisions.md` §1 form 3). The partly-read magnitudes are dropped rather than folded
     // into a sheet total -- a wrong computed number looks right, an omitted one does not.
+    // SD-36 Epic E CONV-05: degradation is per-ROW, not record-wide. A term the converter
+    // could not lower must not erase a SIBLING term's own line just because both live on the
+    // same record (`advanced_race_guide:equipment:elixir_of_forceful_exhalation`'s trivially
+    // convertible +4 Swim competence bonus was wiped alongside a genuinely unconvertible
+    // SITUATION-shaped sibling, even though the two are different `TEMPBONUS` rows). A line
+    // whose own occurrence (`seq`) is one that actually degraded is wiped to `Text`; a line
+    // with no token of its own (`seq: None`, the no-token single-line fallback) keeps the old
+    // whole-record behaviour, since it has no narrower occurrence to attribute this to.
     let degraded = !ctx.degradations.is_empty();
     if degraded {
         acc.also.clear();
-        for line in acc.lines.iter_mut() {
+    }
+    for line in acc.lines.iter_mut() {
+        let this_degraded = match line.seq {
+            Some(s) => failed_seqs.contains(&s),
+            None => degraded,
+        };
+        if this_degraded {
             line.value = SheetValue::Text;
             line.also.clear();
             line.target = None;
@@ -543,7 +577,7 @@ pub fn convert_record(tree: &PinnedTree, index: &CorpusIndex, record: &RecordRef
     }
     let mut lines: Vec<Line> = std::mem::take(&mut acc.lines).into_iter().filter(|l| l.applies != Applies::Never).collect();
     if lines.is_empty() {
-        lines.push(Line { suffix: None, label: label.clone(), value: SheetValue::Text, also: Vec::new(), target: None, bonus_type: None, applies: Applies::Always, prose: Vec::new() });
+        lines.push(Line { seq: None, suffix: None, label: label.clone(), value: SheetValue::Text, also: Vec::new(), target: None, bonus_type: None, applies: Applies::Always, prose: Vec::new() });
     }
     let mut principal_also = std::mem::take(&mut acc.also);
     for (i, line) in lines.into_iter().enumerate() {
@@ -566,7 +600,24 @@ pub fn convert_record(tree: &PinnedTree, index: &CorpusIndex, record: &RecordRef
             // editorial admission in the record NAME (`... ~ Agile (Not Implemented)`), not
             // only in a description. One scrub here covers every line's label -- principal
             // and derived alike.
-            label: strip_editorial_not_implemented_markers(&if i == 0 { label.clone() } else { line.label }),
+            //
+            // SD-36 Epic E CONV-02: the principal line (`i == 0`) only inherits the
+            // OUTPUTNAME-aware `label` computed above when it was itself pushed with the bare
+            // record name as a placeholder (`line.label == record.name`, e.g. the primary
+            // DAMAGE/UDAM line). A line that computed its OWN distinct descriptive label (a
+            // BONUS target's words, a spell-like ability's spell name, a natural attack's own
+            // name) keeps it, whichever index it lands at -- before this, the Wolf's Survival
+            // "track by scent" bonus printed as bare "Wolf" only because it happened to be the
+            // first BONUS row the closure walk reached, while its 6 sibling ability-score lines
+            // (never first) always kept their own labels correctly.
+            //
+            // `kind == "equipment"` is the one exception: an item's principal row is the item a
+            // player holds and looks up by name (CONV-04), never one of the effects it grants,
+            // so its label always stays the item's own name even when, e.g., a Staff's first
+            // charge (a `SPELLS` line, "Dispel Magic") happens to be the first line pushed --
+            // its later charges already print their own spell names via the `i != 0` branch
+            // below regardless of this rule.
+            label: strip_editorial_not_implemented_markers(&if i == 0 && (line.label == record.name || record.kind == "equipment") { label.clone() } else { line.label }),
             value: line.value,
             also,
             prose: line_prose,
@@ -863,8 +914,12 @@ fn convert_token(ctx: &mut RecordCtx, acc: &mut Acc, out: &mut Converted, key: &
             text_stat(ctx, acc, label, &shown, key);
         }
         "CRITRANGE" | "ALTCRITRANGE" => {
-            let n: i32 = v.parse().unwrap_or(20);
-            let text = if n >= 20 { "20".to_string() } else { format!("{n}-20") };
+            // SD-36 Epic E CONV-01: PCGen's `CRITRANGE:<n>` is a COUNT of the top d20 values
+            // that threaten, not the range's low bound -- `CRITRANGE:2` (the CRB Longsword)
+            // threatens on 19-20, `CRITRANGE:3` (Rapier) on 18-20. The low bound is `21-n`.
+            let n: i32 = v.parse().unwrap_or(1);
+            let low = 21 - n;
+            let text = if low >= 20 { "20".to_string() } else { format!("{low}-20") };
             push_stat(acc, if key == "CRITRANGE" { "Critical threat" } else { "Alternate critical threat" }, vec![ProsePiece::Text(text)]);
         }
         "CRITMULT" | "ALTCRITMULT" | "UMULT" => {
@@ -876,6 +931,7 @@ fn convert_token(ctx: &mut RecordCtx, acc: &mut Acc, out: &mut Converted, key: &
             // Row DAMAGE / ALTDAMAGE: Dice; `0` / `Special` -> Text.
             match dice_literal(v) {
                 Some((dice, modifier)) => acc.lines.push(Line {
+                    seq: ctx.current_seq,
                     suffix: if key == "ALTDAMAGE" { Some("alt".into()) } else { None },
                     label: if key == "ALTDAMAGE" { format!("{} (second head)", ctx.record.name) } else { ctx.record.name.clone() },
                     value: SheetValue::Dice { dice, modifier, size_steps: None },
@@ -898,9 +954,9 @@ fn convert_token(ctx: &mut RecordCtx, acc: &mut Acc, out: &mut Converted, key: &
                 for (i, p) in parts.iter().enumerate() {
                     arr[i] = p.to_string();
                 }
-                acc.lines.push(Line { suffix: None, label: ctx.record.name.clone(), value: SheetValue::DiceBySize(arr), also: Vec::new(), target: None, bonus_type: None, applies: Applies::Always, prose: Vec::new() });
+                acc.lines.push(Line { seq: ctx.current_seq, suffix: None, label: ctx.record.name.clone(), value: SheetValue::DiceBySize(arr), also: Vec::new(), target: None, bonus_type: None, applies: Applies::Always, prose: Vec::new() });
             } else if let Some((dice, modifier)) = dice_literal(parts.first().unwrap_or(&"")) {
-                acc.lines.push(Line { suffix: None, label: ctx.record.name.clone(), value: SheetValue::Dice { dice, modifier, size_steps: None }, also: Vec::new(), target: None, bonus_type: None, applies: gates_of(ctx, &[], level_gate)?, prose: Vec::new() });
+                acc.lines.push(Line { seq: ctx.current_seq, suffix: None, label: ctx.record.name.clone(), value: SheetValue::Dice { dice, modifier, size_steps: None }, also: Vec::new(), target: None, bonus_type: None, applies: gates_of(ctx, &[], level_gate)?, prose: Vec::new() });
             } else {
                 return Err("UDAM (shape)".into());
             }
@@ -924,13 +980,13 @@ fn convert_token(ctx: &mut RecordCtx, acc: &mut Acc, out: &mut Converted, key: &
                         // A fixed damage amount (Fine creatures deal 1 point): a final number.
                         let n: i32 = parts[3].trim().parse().unwrap_or(0);
                         let label = if count > 1 { format!("{count} {name}") } else { name.clone() };
-                        acc.lines.push(Line { suffix: Some(format!("natural{i}")), label, value: SheetValue::Number(Expr::Const(n)), also: Vec::new(), target: None, bonus_type: None, applies: Applies::Always, prose: Vec::new() });
+                        acc.lines.push(Line { seq: ctx.current_seq, suffix: Some(format!("natural{i}")), label, value: SheetValue::Number(Expr::Const(n)), also: Vec::new(), target: None, bonus_type: None, applies: Applies::Always, prose: Vec::new() });
                         continue;
                     }
                     None if parts[3].trim() == "0" => {
                         // A touch attack with no damage die: words, like `DAMAGE:0`.
                         let label = if count > 1 { format!("{count} {name}") } else { name.clone() };
-                        acc.lines.push(Line { suffix: Some(format!("natural{i}")), label, value: SheetValue::Text, also: Vec::new(), target: None, bonus_type: None, applies: Applies::Always, prose: vec![ProseSegment { family: ProseFamily::Special, pieces: vec![ProsePiece::Text("touch attack, no damage".into())], applies: None, pick_last: false, suppress_when_all_zero: false }] });
+                        acc.lines.push(Line { seq: ctx.current_seq, suffix: Some(format!("natural{i}")), label, value: SheetValue::Text, also: Vec::new(), target: None, bonus_type: None, applies: Applies::Always, prose: vec![ProseSegment { family: ProseFamily::Special, pieces: vec![ProsePiece::Text("touch attack, no damage".into())], applies: None, pick_last: false, suppress_when_all_zero: false }] });
                         continue;
                     }
                     None => return Err("NATURALATTACKS (die shape)".into()),
@@ -946,7 +1002,7 @@ fn convert_token(ctx: &mut RecordCtx, acc: &mut Acc, out: &mut Converted, key: &
                     }
                 }
                 let label = if count > 1 { format!("{count} {name}") } else { name.clone() };
-                acc.lines.push(Line { suffix: Some(format!("natural{i}")), label, value: SheetValue::Dice { dice, modifier, size_steps: None }, also: Vec::new(), target: None, bonus_type: None, applies: Applies::Always, prose });
+                acc.lines.push(Line { seq: ctx.current_seq, suffix: Some(format!("natural{i}")), label, value: SheetValue::Dice { dice, modifier, size_steps: None }, also: Vec::new(), target: None, bonus_type: None, applies: Applies::Always, prose });
             }
         }
         // ---- stat-block numbers --------------------------------------------------------------
@@ -1141,7 +1197,14 @@ fn convert_token(ctx: &mut RecordCtx, acc: &mut Acc, out: &mut Converted, key: &
             let when = if situational { Applies::all(vec![when, Applies::Situational { text: "when active".into() }]) } else { when };
             match sub.as_str() {
                 "VAR" => {
-                    // Row BONUS:VAR: a typed contribution to a corpus variable, never a sheet line.
+                    // Row BONUS:VAR: a typed contribution to a corpus variable, never a sheet
+                    // line -- EXCEPT `AC_Natural_Armor` (SD-36 Epic E CONV-03). PCGen folds
+                    // this one named variable into AC through a single shared system rule
+                    // (`BONUS:COMBAT|AC|max(AC_Natural_Armor,0)|TYPE=NaturalArmor`) that is
+                    // never itself a corpus row and so is never converted -- without a line
+                    // here, every record using this idiom (2,162 corpus hits, most Bestiary
+                    // monsters, e.g. the Wolf's `BONUS:VAR|AC_Natural_Armor|2|TYPE=Base`)
+                    // prints an AC with no natural-armor bonus at all.
                     let expr = convert_formula(ctx, &formula)?;
                     if target.contains("[redacted") {
                         return Err("BONUS:VAR ([redacted PI] value)".into());
@@ -1150,6 +1213,19 @@ fn convert_token(ctx: &mut RecordCtx, acc: &mut Acc, out: &mut Converted, key: &
                         let id = super::ctx::var_id(name);
                         out.var_labels.entry(id.clone()).or_insert_with(|| name.trim().to_string());
                         out.var_contribs.push((id, name.trim().to_ascii_uppercase(), VarContribution { rule_id: ctx.record.id.clone(), expr: expr.clone(), bonus_type: bonus_type.clone(), when: when.clone() }));
+                        if name.trim().eq_ignore_ascii_case("AC_Natural_Armor") {
+                            acc.lines.push(Line {
+                                seq: ctx.current_seq,
+                                suffix: Some(format!("natarmor{}", acc.lines.len())),
+                                label: format!("{} (natural armor)", ctx.record.name),
+                                value: SheetValue::Number(expr.clone()),
+                                also: Vec::new(),
+                                target: Some(BonusTarget::Ac),
+                                bonus_type: Some(BonusType { name: "NaturalArmor".into(), mode: StackMode::Plain }),
+                                applies: when.clone(),
+                                prose: Vec::new(),
+                            });
+                        }
                     }
                 }
                 // SD-35 AT-35-E4-001 adds EQM / EQMWEAPON / ITEMCOST: an equipment
@@ -1175,13 +1251,13 @@ fn convert_token(ctx: &mut RecordCtx, acc: &mut Acc, out: &mut Converted, key: &
                         WeaponRef::Group(g) => format!("{g} weapons"),
                         _ => "chosen weapon".into(),
                     };
-                    acc.lines.push(Line { suffix: Some(format!("weapon{}", acc.lines.len())), label: format!("{wname} {words}"), value: SheetValue::Number(expr), also: Vec::new(), target: Some(bt), bonus_type: bonus_type.clone(), applies: when, prose: Vec::new() });
+                    acc.lines.push(Line { seq: ctx.current_seq, suffix: Some(format!("weapon{}", acc.lines.len())), label: format!("{wname} {words}"), value: SheetValue::Number(expr), also: Vec::new(), target: Some(bt), bonus_type: bonus_type.clone(), applies: when, prose: Vec::new() });
                 }
                 other => {
                     let expr = convert_formula(ctx, &formula)?;
                     let targets = bonus_targets(ctx, other, &target)?;
                     for (bt, words) in targets {
-                        acc.lines.push(Line { suffix: Some(format!("bonus{}", acc.lines.len())), label: format!("{} ({words})", ctx.record.name), value: SheetValue::Number(expr.clone()), also: Vec::new(), target: Some(bt), bonus_type: bonus_type.clone(), applies: when.clone(), prose: Vec::new() });
+                        acc.lines.push(Line { seq: ctx.current_seq, suffix: Some(format!("bonus{}", acc.lines.len())), label: format!("{} ({words})", ctx.record.name), value: SheetValue::Number(expr.clone()), also: Vec::new(), target: Some(bt), bonus_type: bonus_type.clone(), applies: when.clone(), prose: Vec::new() });
                     }
                 }
             }
@@ -1255,7 +1331,7 @@ fn convert_token(ctx: &mut RecordCtx, acc: &mut Acc, out: &mut Converted, key: &
                         SheetValue::Text
                     }
                 };
-                acc.lines.push(Line { suffix: Some(format!("spell{}_{}", acc.lines.len(), slug(&spell))), label: spell.clone(), value, also, target: None, bonus_type: None, applies: when.clone(), prose });
+                acc.lines.push(Line { seq: ctx.current_seq, suffix: Some(format!("spell{}_{}", acc.lines.len(), slug(&spell))), label: spell.clone(), value, also, target: None, bonus_type: None, applies: when.clone(), prose });
                 let _ = i;
             }
         }

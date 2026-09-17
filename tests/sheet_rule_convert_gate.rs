@@ -466,3 +466,85 @@ fn no_converted_prose_carries_the_source_literal_percent_escape() {
         hits.iter().take(12).collect::<Vec<_>>()
     );
 }
+
+// ---- SD-36 Epic E: SD-35 code-review correctness fixes ----------------------------------------
+
+/// CONV-01: PCGen's `CRITRANGE:<n>` is a COUNT of the top d20 values that threaten, so the real
+/// range is `(21-n)-20`, not `<n>-20`. The CRB Longsword (`CRITRANGE:2`) really threatens on
+/// 19-20; `cr_equip_arms_armor.lst:167`'s Rapier (`CRITRANGE:3`) really threatens on 18-20.
+#[test]
+fn critrange_prints_the_real_low_bound_not_the_raw_token_count() {
+    let longsword = convert_unit("core_rulebook:equipment:longsword");
+    let principal = &longsword.rules[0];
+    assert!(
+        principal.prose.iter().any(|s| matches!(&s.family, ProseFamily::StatBlock(l) if l == "Critical threat")
+            && s.pieces.iter().any(|p| *p == ProsePiece::Text("19-20".to_string()))),
+        "CRITRANGE:2 must read 19-20, not 2-20: {:?}",
+        principal.prose
+    );
+
+    let rapier = convert_unit("core_rulebook:equipment:rapier");
+    let principal = &rapier.rules[0];
+    assert!(
+        principal.prose.iter().any(|s| matches!(&s.family, ProseFamily::StatBlock(l) if l == "Critical threat")
+            && s.pieces.iter().any(|p| *p == ProsePiece::Text("18-20".to_string()))),
+        "CRITRANGE:3 must read 18-20, not 3-20: {:?}",
+        principal.prose
+    );
+}
+
+/// CONV-02: the Wolf's `BONUS:SITUATION|Survival=Track by scent|4|TYPE=Racial` row
+/// (`b1_races.lst:414`) must keep its own descriptive label (mentioning Survival), not the bare
+/// record name "Wolf" -- the label every OTHER line on this same record already keeps correctly.
+#[test]
+fn multi_line_records_keep_every_lines_own_label() {
+    let wolf = convert_unit("bestiary:monster:wolf");
+    assert!(wolf.refusals.is_empty(), "refusals: {:?}", wolf.refusals);
+    let survival = wolf
+        .rules
+        .iter()
+        .find(|r| matches!(&r.target, Some(BonusTarget::SkillSituation { situation, .. }) if situation == "track by scent"))
+        .expect("the Survival track-by-scent line converted");
+    assert_ne!(survival.label, "Wolf", "the Survival bonus must not print as the bare record name: {:?}", survival);
+    assert!(survival.label.to_ascii_lowercase().contains("survival"), "label should describe the Survival bonus: {}", survival.label);
+}
+
+/// CONV-03: PCGen's indirect natural-armor idiom (`BONUS:VAR|AC_Natural_Armor|X|TYPE=Base`, used
+/// by the Wolf at `b1_races.lst:414`) must fold into a real AC line; today it silently becomes
+/// only a variable contribution with no consumer, so no AC line exists at all.
+#[test]
+fn ac_natural_armor_var_idiom_becomes_an_ac_line() {
+    let wolf = convert_unit("bestiary:monster:wolf");
+    let ac_line = wolf.rules.iter().find(|r| matches!(&r.target, Some(BonusTarget::Ac)));
+    let ac_line = ac_line.expect(&format!("an AC line must exist for the Wolf's natural armor: rules={:?}", wolf.rules.iter().map(|r| (&r.id, &r.target)).collect::<Vec<_>>()));
+    assert_eq!(ac_line.value, SheetValue::Number(Expr::Const(2)), "the Wolf's AC_Natural_Armor value is 2");
+    assert_eq!(ac_line.bonus_type.as_ref().map(|b| b.name.as_str()), Some("NaturalArmor"));
+}
+
+/// CONV-04: a `.COPY=` equipment record's printed label must be the specific item's own name,
+/// never the generic base-item-type word before `.COPY=`.
+#[test]
+fn copy_equipment_records_keep_the_specific_items_own_name() {
+    for (unit, expected) in [
+        ("core_rulebook:equipment:oil_of_darkness", "Oil of Darkness"),
+        ("core_rulebook:equipment:staff_of_abjuration", "Staff of Abjuration"),
+        ("core_rulebook:equipment:scroll_of_power_word_stun", "Scroll of Power Word Stun"),
+        ("core_rulebook:equipment:longsword", "Longsword"),
+    ] {
+        let c = convert_unit(unit);
+        assert_eq!(c.rules[0].label, expected, "{unit} must print its own name, not the .COPY= base word");
+    }
+}
+
+/// CONV-05: a record with two independent BONUS terms, one convertible and one not, must still
+/// print the term the converter CAN read -- degradation must be per-line, not record-wide.
+/// `advanced_race_guide:equipment:elixir_of_forceful_exhalation` carries a trivial +4 Swim
+/// competence bonus (`TEMPBONUS:ANYPC|SKILL|Swim|4|TYPE=Competence`) alongside a SITUATION-shaped
+/// TEMPBONUS the converter can't lower; the +4 Swim bonus must still reach the sheet.
+#[test]
+fn a_sibling_terms_degradation_does_not_erase_a_convertible_terms_number() {
+    let c = convert_unit("advanced_race_guide:equipment:elixir_of_forceful_exhalation");
+    assert!(!c.degradations.is_empty(), "the record still carries a genuinely unconvertible term");
+    let swim_bonus = c.rules.iter().find(|r| matches!(r.value, SheetValue::Number(_)) && matches!(&r.target, Some(BonusTarget::Skill(_))));
+    assert!(swim_bonus.is_some(), "the convertible +4 Swim competence bonus must still print a Number, not be wiped by the sibling degradation: {:?}", c.rules);
+}

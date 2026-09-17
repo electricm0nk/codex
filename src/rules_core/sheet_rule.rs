@@ -2099,7 +2099,9 @@ mod evaluate_tests {
         let line = evaluate(rule, &held, package, &facts, EvalContext::default());
         assert_eq!(line.value, SheetLineValue::Dice("1d8".into()));
         assert_eq!(line.printed, "1d8");
-        assert!(line.prose.contains("Critical threat: 2-20"), "{}", line.prose);
+        // SD-36 Epic E CONV-01: `CRITRANGE:2` is a COUNT of the top d20 values that threaten,
+        // so the CRB Longsword's real threat range is 19-20, not the raw token value "2-20".
+        assert!(line.prose.contains("Critical threat: 19-20"), "{}", line.prose);
 
         let plus_two = rule_with_value(SheetValue::Dice { dice: "1d8".into(), modifier: Some(Expr::Const(2)), size_steps: None });
         assert_eq!(evaluate(&plus_two, &held, package, &facts, EvalContext::default()).value, SheetLineValue::Dice("1d8+2".into()));
