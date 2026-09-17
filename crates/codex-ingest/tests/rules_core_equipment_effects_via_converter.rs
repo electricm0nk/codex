@@ -36,7 +36,7 @@ Darkleaf Cloth\tKEY:Material ~ Darkleaf Cloth ~ Clothing\tTYPE:BaseMaterial.Mast
     fn corpus_from(text: &str, source_file: &str) -> SourcePackageContent<'static> {
         let result = parse_equipment_entries(source_file, text);
         assert!(result.diagnostics.is_empty(), "fixture text must parse cleanly: {:?}", result.diagnostics);
-        let source_ref = SourceRef { lst_file: source_file.to_string(), line: 1 };
+        let source_ref = SourceRef { source_path: source_file.to_string(), line: 1 };
         let mut corpus = SourcePackageContent::empty("advanced_race_guide", source_ref);
         for record in result.entries {
             let record: &'static EquipmentRecord = Box::leak(Box::new(record));
@@ -242,7 +242,7 @@ Flaming\tKEY:Special Ability ~ Flaming ~ Weapon\tTYPE:Weapon\tCOST:0\tBONUS:WEAP
     fn corpus_with_fixture() -> SourcePackageContent<'static> {
         let result = parse_equipment_entries("cr_equip_arms_armor.lst", FIXTURE_TEXT);
         assert!(result.diagnostics.is_empty(), "fixture text must parse cleanly: {:?}", result.diagnostics);
-        let source_ref = SourceRef { lst_file: "cr_equip_arms_armor.lst".to_string(), line: 1 };
+        let source_ref = SourceRef { source_path: "cr_equip_arms_armor.lst".to_string(), line: 1 };
         let mut corpus = SourcePackageContent::empty("core_rulebook", source_ref);
         for record in result.entries {
             let record: &'static EquipmentRecord = Box::leak(Box::new(record));
@@ -411,7 +411,7 @@ Material Steel\tKEY:Material ~ Steel\tTYPE:Weapon\tCOST:0\n";
     fn arg_corpus(text: &str, source_file: &str) -> SourcePackageContent<'static> {
         let result = parse_equipment_entries(source_file, text);
         assert!(result.diagnostics.is_empty(), "fixture text must parse cleanly: {:?}", result.diagnostics);
-        let source_ref = SourceRef { lst_file: source_file.to_string(), line: 1 };
+        let source_ref = SourceRef { source_path: source_file.to_string(), line: 1 };
         let mut corpus = SourcePackageContent::empty("advanced_race_guide", source_ref);
         for record in result.entries {
             let record: &'static EquipmentRecord = Box::leak(Box::new(record));
@@ -634,7 +634,7 @@ Unarmed Strike\tKEY:Unarmed Strike\tTYPE:Weapon.Resizable.Melee.Special.Unarmed.
     fn corpus_with_fixture() -> SourcePackageContent<'static> {
         let result = parse_equipment_entries("cr_equipmods.lst", INTELLIGENT_ITEM_FIXTURE_TEXT);
         assert!(result.diagnostics.is_empty(), "fixture text must parse cleanly: {:?}", result.diagnostics);
-        let source_ref = SourceRef { lst_file: "cr_equipmods.lst".to_string(), line: 1 };
+        let source_ref = SourceRef { source_path: "cr_equipmods.lst".to_string(), line: 1 };
         let mut corpus = SourcePackageContent::empty("core_rulebook", source_ref);
         for record in result.entries {
             let record: &'static EquipmentRecord = Box::leak(Box::new(record));
@@ -728,7 +728,7 @@ Spell Resistance 19\tFORMATCAT:FRONT\tNAMEOPT:NORMAL\tKEY:Special Ability ~ Spel
     fn corpus_with_fixture() -> SourcePackageContent<'static> {
         let result = parse_equipment_entries("cr_equipmods.lst", FIXTURE_TEXT);
         assert!(result.diagnostics.is_empty(), "fixture text must parse cleanly: {:?}", result.diagnostics);
-        let source_ref = SourceRef { lst_file: "cr_equipmods.lst".to_string(), line: 1 };
+        let source_ref = SourceRef { source_path: "cr_equipmods.lst".to_string(), line: 1 };
         let mut corpus = SourcePackageContent::empty("core_rulebook", source_ref);
         for record in result.entries {
             let record: &'static EquipmentRecord = Box::leak(Box::new(record));

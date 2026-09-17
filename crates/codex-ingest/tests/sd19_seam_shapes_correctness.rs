@@ -85,7 +85,7 @@ fn record_line(fixture: &str) -> &str {
 
 fn build_corpus() -> SourcePackageContent<'static> {
     let source_ref = SourceRef {
-        lst_file: "sd19_seam_crb_fixtures".to_string(),
+        source_path: "sd19_seam_crb_fixtures".to_string(),
         line: 1,
     };
     let mut corpus = SourcePackageContent::empty("sd19_seam_shapes_correctness", source_ref);

@@ -72,7 +72,7 @@ pub struct BookCorpusRoot<'a> {
 pub fn load_equipment_corpus<'a>(roots: &[BookCorpusRoot<'_>]) -> SourcePackageContent<'a> {
     let mut package = SourcePackageContent::empty(
         "corpus_loader",
-        SourceRef { lst_file: String::new(), line: 0 },
+        SourceRef { source_path: String::new(), line: 0 },
     );
     for root in roots {
         let equipment_dir = root.dir.join("equipment");
@@ -136,7 +136,7 @@ pub fn load_equipment_corpus<'a>(roots: &[BookCorpusRoot<'_>]) -> SourcePackageC
 pub fn load_spell_corpus<'a>(roots: &[BookCorpusRoot<'_>]) -> SourcePackageContent<'a> {
     let mut package = SourcePackageContent::empty(
         "corpus_loader",
-        SourceRef { lst_file: String::new(), line: 0 },
+        SourceRef { source_path: String::new(), line: 0 },
     );
     for root in roots {
         let spell_dir = root.dir.join("spell");
@@ -161,7 +161,7 @@ pub fn load_spell_corpus<'a>(roots: &[BookCorpusRoot<'_>]) -> SourcePackageConte
                     let record: &'static CorpusSpellRecord = Box::leak(Box::new(record));
                     package.push(SourceContentRecord::spell(
                         SourceRef {
-                            lst_file: record.source_path.clone(),
+                            source_path: record.source_path.clone(),
                             line: record.line_number as u32,
                         },
                         record,
@@ -364,7 +364,7 @@ fn load_diagnostic(path: &Path, message: &str) -> crate::rules_core::source_cont
         severity: SourceContentSeverity::Error,
         kind: SourceContentDiagnosticKind::MalformedRecord,
         message: message.to_string(),
-        source_ref: SourceRef { lst_file: path.display().to_string(), line: 0 },
+        source_ref: SourceRef { source_path: path.display().to_string(), line: 0 },
     }
 }
 

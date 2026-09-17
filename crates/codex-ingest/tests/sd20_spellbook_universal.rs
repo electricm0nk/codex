@@ -49,7 +49,7 @@ fn corpus_with_permanency() -> SourcePackageContent<'static> {
     assert_eq!(record.school.as_deref(), Some("Universal"));
 
     let source_ref = SourceRef {
-        lst_file: "sd20_spellbook_universal".to_string(),
+        source_path: "sd20_spellbook_universal".to_string(),
         line: 1,
     };
     let mut corpus = SourcePackageContent::empty("sd20_spellbook_universal", source_ref);

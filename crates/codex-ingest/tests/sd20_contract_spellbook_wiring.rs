@@ -54,7 +54,7 @@ use codex::rules_core::spellbook::compute_spellbook_coverage;
 
 fn empty_corpus(name: &str) -> SourcePackageContent<'static> {
     let source_ref = SourceRef {
-        lst_file: name.to_string(),
+        source_path: name.to_string(),
         line: 1,
     };
     SourcePackageContent::empty(name.to_string(), source_ref)
@@ -71,7 +71,7 @@ fn wizard_with_shield_prepared() -> (CharacterInput, SourcePackageContent<'stati
         .record
         .expect("fixture-shaped raw_lst_row must parse into a real LstSpellRecord");
     let source_ref = SourceRef {
-        lst_file: "sd20_contract_spellbook_wiring".to_string(),
+        source_path: "sd20_contract_spellbook_wiring".to_string(),
         line: 1,
     };
     let mut corpus = SourcePackageContent::empty("sd20_contract_spellbook_wiring", source_ref);

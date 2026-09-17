@@ -429,7 +429,7 @@ fn v3_malformed_record_produces_error_diagnostic_naming_the_kind() {
         "canonical diagnostic message must name the offending kind: got `{}`",
         canonical.message
     );
-    assert_eq!(canonical.source_ref.lst_file, "bad_meta.lst");
+    assert_eq!(canonical.source_ref.source_path, "bad_meta.lst");
     assert_eq!(canonical.source_ref.line, 17);
 }
 
@@ -457,7 +457,7 @@ fn v4_lossy_mapping_diagnostic_carries_the_token_source_ref() {
 
     assert_eq!(diag.severity, SourceContentSeverity::Warning);
     assert_eq!(diag.kind, SourceContentDiagnosticKind::LossyMapping);
-    assert_eq!(diag.source_ref.lst_file, "cr_equip.lst");
+    assert_eq!(diag.source_ref.source_path, "cr_equip.lst");
     assert_eq!(diag.source_ref.line, 88);
     assert!(diag.message.contains("OSTYPE"));
 
@@ -535,7 +535,7 @@ fn v5_records_by_kind_sorts_by_lst_file_then_line() {
     let sorted: Vec<IrContentRecord<'_>> = pkg.records_by_kind(SourceContentKind::Class);
     assert_eq!(sorted.len(), class_fixtures.len());
 
-    // Expected order: by (lst_file, line) ascending. Within
+    // Expected order: by (source_path, line) ascending. Within
     // "a.lst": 1, 3, 5. Within "b.lst": 2, 4.
     let expected_order = [
         ("a.lst", 1u32),
@@ -546,8 +546,8 @@ fn v5_records_by_kind_sorts_by_lst_file_then_line() {
     ];
     for (i, (path, line)) in expected_order.iter().enumerate() {
         assert_eq!(
-            sorted[i].source_ref.lst_file, *path,
-            "record {} lst_file mismatch",
+            sorted[i].source_ref.source_path, *path,
+            "record {} source_path mismatch",
             i
         );
         assert_eq!(
@@ -560,7 +560,7 @@ fn v5_records_by_kind_sorts_by_lst_file_then_line() {
     // Race-kind filter returns exactly the one Race record.
     let races = pkg.records_by_kind(SourceContentKind::Race);
     assert_eq!(races.len(), 1);
-    assert_eq!(races[0].source_ref.lst_file, "a.lst");
+    assert_eq!(races[0].source_ref.source_path, "a.lst");
     assert_eq!(races[0].source_ref.line, 2);
 
     // Same input built twice yields identical order.

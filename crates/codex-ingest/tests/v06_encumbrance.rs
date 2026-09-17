@@ -37,7 +37,7 @@ Backpack\tKEY:Backpack\tTYPE:General\tCOST:2\tWT:2
 fn corpus_from(text: &str) -> SourcePackageContent<'static> {
     let result = parse_equipment_entries("cr_equip_arms_armor.lst", text);
     assert!(result.diagnostics.is_empty(), "fixture text must parse cleanly: {:?}", result.diagnostics);
-    let source_ref = SourceRef { lst_file: "cr_equip_arms_armor.lst".to_string(), line: 1 };
+    let source_ref = SourceRef { source_path: "cr_equip_arms_armor.lst".to_string(), line: 1 };
     let mut corpus = SourcePackageContent::empty("core_rulebook", source_ref);
     for record in result.entries {
         let record: &'static EquipmentRecord = Box::leak(Box::new(record));

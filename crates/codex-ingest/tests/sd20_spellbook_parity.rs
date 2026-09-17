@@ -258,7 +258,7 @@ fn spellbook_abjuration_parity_fixture_round_trips_through_the_real_engine() {
     let parsed = parse_lst_spell_row("sd20_spellbook_parity", 1, raw_line);
     let record = parsed.record.expect("fixture's raw_lst_row must parse into a real LstSpellRecord");
     let source_ref = SourceRef {
-        lst_file: "sd20_spellbook_parity".to_string(),
+        source_path: "sd20_spellbook_parity".to_string(),
         line: 1,
     };
     let mut corpus = SourcePackageContent::empty("sd20_spellbook_parity", source_ref);

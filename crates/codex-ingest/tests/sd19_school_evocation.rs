@@ -135,7 +135,7 @@ fn every_evocation_spell_resolves_and_reaches_school_coverage() {
     );
 
     let source_ref = SourceRef {
-        lst_file: cr_spells.display().to_string(),
+        source_path: cr_spells.display().to_string(),
         line: 1,
     };
     let mut corpus = SourcePackageContent::empty("sd19_school_evocation", source_ref);

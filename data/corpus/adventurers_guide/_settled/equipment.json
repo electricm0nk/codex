@@ -35,7 +35,7 @@
       },
       "source_ref": {
         "line": 1,
-        "lst_file": ""
+        "source_path": ""
       }
     },
     "anderos_salve_and_mulibrous_tincture.json": {
@@ -72,7 +72,7 @@
       },
       "source_ref": {
         "line": 1,
-        "lst_file": ""
+        "source_path": ""
       }
     },
     "applecheek.json": {
@@ -109,7 +109,7 @@
       },
       "source_ref": {
         "line": 1,
-        "lst_file": ""
+        "source_path": ""
       }
     },
     "bands_of_unbreakable_camaraderie.json": {
@@ -146,7 +146,7 @@
       },
       "source_ref": {
         "line": 1,
-        "lst_file": ""
+        "source_path": ""
       }
     },
     "banner_of_the_scarlet_rose.json": {
@@ -183,7 +183,7 @@
       },
       "source_ref": {
         "line": 1,
-        "lst_file": ""
+        "source_path": ""
       }
     },
     "banshee_s_howl.json": {
@@ -220,7 +220,7 @@
       },
       "source_ref": {
         "line": 1,
-        "lst_file": ""
+        "source_path": ""
       }
     },
     "boniface_paint.json": {
@@ -257,7 +257,7 @@
       },
       "source_ref": {
         "line": 1,
-        "lst_file": ""
+        "source_path": ""
       }
     },
     "branding_iron_common.json": {
@@ -294,7 +294,7 @@
       },
       "source_ref": {
         "line": 1,
-        "lst_file": ""
+        "source_path": ""
       }
     },
     "branding_iron_custom_shape.json": {
@@ -331,7 +331,7 @@
       },
       "source_ref": {
         "line": 1,
-        "lst_file": ""
+        "source_path": ""
       }
     },
     "caparison.json": {
@@ -368,7 +368,7 @@
       },
       "source_ref": {
         "line": 1,
-        "lst_file": ""
+        "source_path": ""
       }
     },
     "caparison_of_resistance_1_mount.json": {
@@ -405,7 +405,7 @@
       },
       "source_ref": {
         "line": 1,
-        "lst_file": ""
+        "source_path": ""
       }
     },
     "caparison_of_resistance_1_rider.json": {
@@ -442,7 +442,7 @@
       },
       "source_ref": {
         "line": 1,
-        "lst_file": ""
+        "source_path": ""
       }
     },
     "caparison_of_resistance_2_mount.json": {
@@ -479,7 +479,7 @@
       },
       "source_ref": {
         "line": 1,
-        "lst_file": ""
+        "source_path": ""
       }
     },
     "caparison_of_resistance_2_rider.json": {
@@ -516,7 +516,7 @@
       },
       "source_ref": {
         "line": 1,
-        "lst_file": ""
+        "source_path": ""
       }
     },
     "caparison_of_resistance_3_mount.json": {
@@ -553,7 +553,7 @@
       },
       "source_ref": {
         "line": 1,
-        "lst_file": ""
+        "source_path": ""
       }
     },
     "caparison_of_resistance_3_rider.json": {
@@ -590,7 +590,7 @@
       },
       "source_ref": {
         "line": 1,
-        "lst_file": ""
+        "source_path": ""
       }
     },
     "caparison_of_resistance_4_mount.json": {
@@ -627,7 +627,7 @@
       },
       "source_ref": {
         "line": 1,
-        "lst_file": ""
+        "source_path": ""
       }
     },
     "caparison_of_resistance_4_rider.json": {
@@ -664,7 +664,7 @@
       },
       "source_ref": {
         "line": 1,
-        "lst_file": ""
+        "source_path": ""
       }
     },
     "caparison_of_resistance_5_mount.json": {
@@ -701,7 +701,7 @@
       },
       "source_ref": {
         "line": 1,
-        "lst_file": ""
+        "source_path": ""
       }
     },
     "caparison_of_resistance_5_rider.json": {
@@ -738,7 +738,7 @@
       },
       "source_ref": {
         "line": 1,
-        "lst_file": ""
+        "source_path": ""
       }
     },
     "cloak_of_heavenly_fire.json": {
@@ -775,7 +775,7 @@
       },
       "source_ref": {
         "line": 1,
-        "lst_file": ""
+        "source_path": ""
       }
     },
     "codex_named_unit_equipment_adventurers_guide_ag_equip_arms_armor_lst_1.json": {
@@ -812,7 +812,7 @@
       },
       "source_ref": {
         "line": 1,
-        "lst_file": ""
+        "source_path": ""
       }
     },
     "codex_named_unit_equipment_adventurers_guide_ag_equip_arms_armor_lst_10.json": {
@@ -849,7 +849,7 @@
       },
       "source_ref": {
         "line": 1,
-        "lst_file": ""
+        "source_path": ""
       }
     },
     "codex_named_unit_equipment_adventurers_guide_ag_equip_arms_armor_lst_11.json": {
@@ -886,7 +886,7 @@
       },
       "source_ref": {
         "line": 1,
-        "lst_file": ""
+        "source_path": ""
       }
     },
     "codex_named_unit_equipment_adventurers_guide_ag_equip_arms_armor_lst_17.json": {
@@ -923,7 +923,7 @@
       },
       "source_ref": {
         "line": 1,
-        "lst_file": ""
+        "source_path": ""
       }
     },
     "codex_named_unit_equipment_adventurers_guide_ag_equip_arms_armor_lst_19.json": {
@@ -960,7 +960,7 @@
       },
       "source_ref": {
         "line": 1,
-        "lst_file": ""
+        "source_path": ""
       }
     },
     "codex_named_unit_equipment_adventurers_guide_ag_equip_arms_armor_lst_20.json": {
@@ -997,7 +997,7 @@
       },
       "source_ref": {
         "line": 1,
-        "lst_file": ""
+        "source_path": ""
       }
     },
     "codex_named_unit_equipment_adventurers_guide_ag_equip_arms_armor_lst_28.json": {
@@ -1034,7 +1034,7 @@
       },
       "source_ref": {
         "line": 1,
-        "lst_file": ""
+        "source_path": ""
       }
     },
     "codex_named_unit_equipment_adventurers_guide_ag_equip_arms_armor_lst_6.json": {
@@ -1071,7 +1071,7 @@
       },
       "source_ref": {
         "line": 1,
-        "lst_file": ""
+        "source_path": ""
       }
     },
     "codex_named_unit_equipment_adventurers_guide_ag_equip_arms_armor_lst_7.json": {
@@ -1108,7 +1108,7 @@
       },
       "source_ref": {
         "line": 1,
-        "lst_file": ""
+        "source_path": ""
       }
     },
     "codex_named_unit_equipment_adventurers_guide_ag_equip_arms_armor_lst_9.json": {
@@ -1145,7 +1145,7 @@
       },
       "source_ref": {
         "line": 1,
-        "lst_file": ""
+        "source_path": ""
       }
     },
     "codex_named_unit_equipment_adventurers_guide_ag_equip_general_lst_27.json": {
@@ -1182,7 +1182,7 @@
       },
       "source_ref": {
         "line": 1,
-        "lst_file": ""
+        "source_path": ""
       }
     },
     "codex_named_unit_equipment_adventurers_guide_ag_equip_magic_items_lst_2.json": {
@@ -1219,7 +1219,7 @@
       },
       "source_ref": {
         "line": 1,
-        "lst_file": ""
+        "source_path": ""
       }
     },
     "codex_named_unit_equipment_adventurers_guide_ag_equip_magic_items_lst_25.json": {
@@ -1256,7 +1256,7 @@
       },
       "source_ref": {
         "line": 1,
-        "lst_file": ""
+        "source_path": ""
       }
     },
     "codex_named_unit_equipment_adventurers_guide_ag_equip_magic_items_lst_43.json": {
@@ -1293,7 +1293,7 @@
       },
       "source_ref": {
         "line": 1,
-        "lst_file": ""
+        "source_path": ""
       }
     },
     "codex_named_unit_equipment_adventurers_guide_ag_equip_magic_items_lst_44.json": {
@@ -1330,7 +1330,7 @@
       },
       "source_ref": {
         "line": 1,
-        "lst_file": ""
+        "source_path": ""
       }
     },
     "codex_named_unit_equipment_adventurers_guide_ag_equip_magic_items_lst_45.json": {
@@ -1367,7 +1367,7 @@
       },
       "source_ref": {
         "line": 1,
-        "lst_file": ""
+        "source_path": ""
       }
     },
     "codex_named_unit_equipment_adventurers_guide_ag_equip_magic_items_lst_46.json": {
@@ -1404,7 +1404,7 @@
       },
       "source_ref": {
         "line": 1,
-        "lst_file": ""
+        "source_path": ""
       }
     },
     "codex_named_unit_equipment_adventurers_guide_ag_equip_magic_items_lst_47.json": {
@@ -1441,7 +1441,7 @@
       },
       "source_ref": {
         "line": 1,
-        "lst_file": ""
+        "source_path": ""
       }
     },
     "cooking_powder.json": {
@@ -1478,7 +1478,7 @@
       },
       "source_ref": {
         "line": 1,
-        "lst_file": ""
+        "source_path": ""
       }
     },
     "crimson_bluff.json": {
@@ -1515,7 +1515,7 @@
       },
       "source_ref": {
         "line": 1,
-        "lst_file": ""
+        "source_path": ""
       }
     },
     "devil_catcher.json": {
@@ -1552,7 +1552,7 @@
       },
       "source_ref": {
         "line": 1,
-        "lst_file": ""
+        "source_path": ""
       }
     },
     "dhoti_of_style_mastery.json": {
@@ -1589,7 +1589,7 @@
       },
       "source_ref": {
         "line": 1,
-        "lst_file": ""
+        "source_path": ""
       }
     },
     "discretion_charm.json": {
@@ -1626,7 +1626,7 @@
       },
       "source_ref": {
         "line": 1,
-        "lst_file": ""
+        "source_path": ""
       }
     },
     "dust_of_hex_hiding.json": {
@@ -1663,7 +1663,7 @@
       },
       "source_ref": {
         "line": 1,
-        "lst_file": ""
+        "source_path": ""
       }
     },
     "efreeti_horns.json": {
@@ -1700,7 +1700,7 @@
       },
       "source_ref": {
         "line": 1,
-        "lst_file": ""
+        "source_path": ""
       }
     },
     "elven_leafblade.json": {
@@ -1737,7 +1737,7 @@
       },
       "source_ref": {
         "line": 1,
-        "lst_file": ""
+        "source_path": ""
       }
     },
     "elven_thornblade.json": {
@@ -1774,7 +1774,7 @@
       },
       "source_ref": {
         "line": 1,
-        "lst_file": ""
+        "source_path": ""
       }
     },
     "elven_vengeance.json": {
@@ -1811,7 +1811,7 @@
       },
       "source_ref": {
         "line": 1,
-        "lst_file": ""
+        "source_path": ""
       }
     },
     "equipmods/special_ability_agile_maiden_armor.json": {
@@ -1848,7 +1848,7 @@
       },
       "source_ref": {
         "line": 1,
-        "lst_file": ""
+        "source_path": ""
       }
     },
     "erinyes_company_cloak.json": {
@@ -1885,7 +1885,7 @@
       },
       "source_ref": {
         "line": 1,
-        "lst_file": ""
+        "source_path": ""
       }
     },
     "eye_of_the_mantis.json": {
@@ -1922,7 +1922,7 @@
       },
       "source_ref": {
         "line": 1,
-        "lst_file": ""
+        "source_path": ""
       }
     },
     "first_aid_gloves.json": {
@@ -1959,7 +1959,7 @@
       },
       "source_ref": {
         "line": 1,
-        "lst_file": ""
+        "source_path": ""
       }
     },
     "gelugon_plate.json": {
@@ -1996,7 +1996,7 @@
       },
       "source_ref": {
         "line": 1,
-        "lst_file": ""
+        "source_path": ""
       }
     },
     "gloves_of_unfolding_wind.json": {
@@ -2033,7 +2033,7 @@
       },
       "source_ref": {
         "line": 1,
-        "lst_file": ""
+        "source_path": ""
       }
     },
     "golden_eagle_epaulets.json": {
@@ -2070,7 +2070,7 @@
       },
       "source_ref": {
         "line": 1,
-        "lst_file": ""
+        "source_path": ""
       }
     },
     "greathelm_of_the_mammoth_lord.json": {
@@ -2107,7 +2107,7 @@
       },
       "source_ref": {
         "line": 1,
-        "lst_file": ""
+        "source_path": ""
       }
     },
     "halcyon_bonded_mask.json": {
@@ -2144,7 +2144,7 @@
       },
       "source_ref": {
         "line": 1,
-        "lst_file": ""
+        "source_path": ""
       }
     },
     "hellknight_half_plate_barding.json": {
@@ -2181,7 +2181,7 @@
       },
       "source_ref": {
         "line": 1,
-        "lst_file": ""
+        "source_path": ""
       }
     },
     "hellknight_leather_barding.json": {
@@ -2218,7 +2218,7 @@
       },
       "source_ref": {
         "line": 1,
-        "lst_file": ""
+        "source_path": ""
       }
     },
     "hellknight_plate_barding.json": {
@@ -2255,7 +2255,7 @@
       },
       "source_ref": {
         "line": 1,
-        "lst_file": ""
+        "source_path": ""
       }
     },
     "helm_of_the_fanged_crown.json": {
@@ -2292,7 +2292,7 @@
       },
       "source_ref": {
         "line": 1,
-        "lst_file": ""
+        "source_path": ""
       }
     },
     "ioun_spite_bracers.json": {
@@ -2329,7 +2329,7 @@
       },
       "source_ref": {
         "line": 1,
-        "lst_file": ""
+        "source_path": ""
       }
     },
     "ironbound_ring_master_s.json": {
@@ -2366,7 +2366,7 @@
       },
       "source_ref": {
         "line": 1,
-        "lst_file": ""
+        "source_path": ""
       }
     },
     "ironbound_ring_minion_s.json": {
@@ -2403,7 +2403,7 @@
       },
       "source_ref": {
         "line": 1,
-        "lst_file": ""
+        "source_path": ""
       }
     },
     "jar_of_lightning.json": {
@@ -2440,7 +2440,7 @@
       },
       "source_ref": {
         "line": 1,
-        "lst_file": ""
+        "source_path": ""
       }
     },
     "lantern_honey.json": {
@@ -2477,7 +2477,7 @@
       },
       "source_ref": {
         "line": 1,
-        "lst_file": ""
+        "source_path": ""
       }
     },
     "lantern_of_hidden_light.json": {
@@ -2514,7 +2514,7 @@
       },
       "source_ref": {
         "line": 1,
-        "lst_file": ""
+        "source_path": ""
       }
     },
     "liberator_s_key.json": {
@@ -2551,7 +2551,7 @@
       },
       "source_ref": {
         "line": 1,
-        "lst_file": ""
+        "source_path": ""
       }
     },
     "maiden_s_aegis.json": {
@@ -2588,7 +2588,7 @@
       },
       "source_ref": {
         "line": 1,
-        "lst_file": ""
+        "source_path": ""
       }
     },
     "maiden_s_helm.json": {
@@ -2625,7 +2625,7 @@
       },
       "source_ref": {
         "line": 1,
-        "lst_file": ""
+        "source_path": ""
       }
     },
     "maiden_s_panoply.json": {
@@ -2662,7 +2662,7 @@
       },
       "source_ref": {
         "line": 1,
-        "lst_file": ""
+        "source_path": ""
       }
     },
     "maiden_s_promise_pair.json": {
@@ -2699,7 +2699,7 @@
       },
       "source_ref": {
         "line": 1,
-        "lst_file": ""
+        "source_path": ""
       }
     },
     "mammoth_hide.json": {
@@ -2736,7 +2736,7 @@
       },
       "source_ref": {
         "line": 1,
-        "lst_file": ""
+        "source_path": ""
       }
     },
     "mammoth_lance.json": {
@@ -2773,7 +2773,7 @@
       },
       "source_ref": {
         "line": 1,
-        "lst_file": ""
+        "source_path": ""
       }
     },
     "mantis_blade.json": {
@@ -2810,7 +2810,7 @@
       },
       "source_ref": {
         "line": 1,
-        "lst_file": ""
+        "source_path": ""
       }
     },
     "mantis_embrace.json": {
@@ -2847,7 +2847,7 @@
       },
       "source_ref": {
         "line": 1,
-        "lst_file": ""
+        "source_path": ""
       }
     },
     "mask_of_the_mantis.json": {
@@ -2884,7 +2884,7 @@
       },
       "source_ref": {
         "line": 1,
-        "lst_file": ""
+        "source_path": ""
       }
     },
     "mithral_horseshoes.json": {
@@ -2921,7 +2921,7 @@
       },
       "source_ref": {
         "line": 1,
-        "lst_file": ""
+        "source_path": ""
       }
     },
     "monastic_warden.json": {
@@ -2958,7 +2958,7 @@
       },
       "source_ref": {
         "line": 1,
-        "lst_file": ""
+        "source_path": ""
       }
     },
     "mountainshaper_s_girdle.json": {
@@ -2995,7 +2995,7 @@
       },
       "source_ref": {
         "line": 1,
-        "lst_file": ""
+        "source_path": ""
       }
     },
     "nostalgia_oil.json": {
@@ -3032,7 +3032,7 @@
       },
       "source_ref": {
         "line": 1,
-        "lst_file": ""
+        "source_path": ""
       }
     },
     "pathfinder_chronicle.json": {
@@ -3069,7 +3069,7 @@
       },
       "source_ref": {
         "line": 1,
-        "lst_file": ""
+        "source_path": ""
       }
     },
     "phantom_ash.json": {
@@ -3106,7 +3106,7 @@
       },
       "source_ref": {
         "line": 1,
-        "lst_file": ""
+        "source_path": ""
       }
     },
     "red_stalker_armor.json": {
@@ -3143,7 +3143,7 @@
       },
       "source_ref": {
         "line": 1,
-        "lst_file": ""
+        "source_path": ""
       }
     },
     "ring_of_retreat.json": {
@@ -3180,7 +3180,7 @@
       },
       "source_ref": {
         "line": 1,
-        "lst_file": ""
+        "source_path": ""
       }
     },
     "rod_storm_kindler_s.json": {
@@ -3217,7 +3217,7 @@
       },
       "source_ref": {
         "line": 1,
-        "lst_file": ""
+        "source_path": ""
       }
     },
     "sawtooth_sabre.json": {
@@ -3254,7 +3254,7 @@
       },
       "source_ref": {
         "line": 1,
-        "lst_file": ""
+        "source_path": ""
       }
     },
     "scarsalve.json": {
@@ -3291,7 +3291,7 @@
       },
       "source_ref": {
         "line": 1,
-        "lst_file": ""
+        "source_path": ""
       }
     },
     "signifer_mask.json": {
@@ -3328,7 +3328,7 @@
       },
       "source_ref": {
         "line": 1,
-        "lst_file": ""
+        "source_path": ""
       }
     },
     "sparkle_smoke.json": {
@@ -3365,7 +3365,7 @@
       },
       "source_ref": {
         "line": 1,
-        "lst_file": ""
+        "source_path": ""
       }
     },
     "spice_black_cumin.json": {
@@ -3402,7 +3402,7 @@
       },
       "source_ref": {
         "line": 1,
-        "lst_file": ""
+        "source_path": ""
       }
     },
     "spice_flaming_sumac.json": {
@@ -3439,7 +3439,7 @@
       },
       "source_ref": {
         "line": 1,
-        "lst_file": ""
+        "source_path": ""
       }
     },
     "spice_golden_cardamom.json": {
@@ -3476,7 +3476,7 @@
       },
       "source_ref": {
         "line": 1,
-        "lst_file": ""
+        "source_path": ""
       }
     },
     "spice_striped_nutmeg.json": {
@@ -3513,7 +3513,7 @@
       },
       "source_ref": {
         "line": 1,
-        "lst_file": ""
+        "source_path": ""
       }
     },
     "spice_sunrise_cinnamon.json": {
@@ -3550,7 +3550,7 @@
       },
       "source_ref": {
         "line": 1,
-        "lst_file": ""
+        "source_path": ""
       }
     },
     "spice_tiger_cloves.json": {
@@ -3587,7 +3587,7 @@
       },
       "source_ref": {
         "line": 1,
-        "lst_file": ""
+        "source_path": ""
       }
     },
     "spice_violet_salt.json": {
@@ -3624,7 +3624,7 @@
       },
       "source_ref": {
         "line": 1,
-        "lst_file": ""
+        "source_path": ""
       }
     },
     "sterling_salt.json": {
@@ -3661,7 +3661,7 @@
       },
       "source_ref": {
         "line": 1,
-        "lst_file": ""
+        "source_path": ""
       }
     },
     "subtle_slippers.json": {
@@ -3698,7 +3698,7 @@
       },
       "source_ref": {
         "line": 1,
-        "lst_file": ""
+        "source_path": ""
       }
     },
     "sunblock_kohl.json": {
@@ -3735,7 +3735,7 @@
       },
       "source_ref": {
         "line": 1,
-        "lst_file": ""
+        "source_path": ""
       }
     },
     "talonstrike_sword.json": {
@@ -3772,7 +3772,7 @@
       },
       "source_ref": {
         "line": 1,
-        "lst_file": ""
+        "source_path": ""
       }
     },
     "tiller_s_gum.json": {
@@ -3809,7 +3809,7 @@
       },
       "source_ref": {
         "line": 1,
-        "lst_file": ""
+        "source_path": ""
       }
     },
     "tiller_s_pendant.json": {
@@ -3846,7 +3846,7 @@
       },
       "source_ref": {
         "line": 1,
-        "lst_file": ""
+        "source_path": ""
       }
     },
     "traveling_master_s_turban.json": {
@@ -3883,7 +3883,7 @@
       },
       "source_ref": {
         "line": 1,
-        "lst_file": ""
+        "source_path": ""
       }
     },
     "wayfinder.json": {
@@ -3920,7 +3920,7 @@
       },
       "source_ref": {
         "line": 1,
-        "lst_file": ""
+        "source_path": ""
       }
     },
     "wayfinder_ebon.json": {
@@ -3957,7 +3957,7 @@
       },
       "source_ref": {
         "line": 1,
-        "lst_file": ""
+        "source_path": ""
       }
     },
     "wayfinder_of_hidden_strength.json": {
@@ -3994,7 +3994,7 @@
       },
       "source_ref": {
         "line": 1,
-        "lst_file": ""
+        "source_path": ""
       }
     },
     "wayfinder_shining.json": {
@@ -4031,7 +4031,7 @@
       },
       "source_ref": {
         "line": 1,
-        "lst_file": ""
+        "source_path": ""
       }
     },
     "wayfinder_vanishing.json": {
@@ -4068,7 +4068,7 @@
       },
       "source_ref": {
         "line": 1,
-        "lst_file": ""
+        "source_path": ""
       }
     },
     "whispering_shell.json": {
@@ -4105,7 +4105,7 @@
       },
       "source_ref": {
         "line": 1,
-        "lst_file": ""
+        "source_path": ""
       }
     },
     "zoic_fetish_amphibian.json": {
@@ -4142,7 +4142,7 @@
       },
       "source_ref": {
         "line": 1,
-        "lst_file": ""
+        "source_path": ""
       }
     },
     "zoic_fetish_bird.json": {
@@ -4179,7 +4179,7 @@
       },
       "source_ref": {
         "line": 1,
-        "lst_file": ""
+        "source_path": ""
       }
     },
     "zoic_fetish_fish.json": {
@@ -4216,7 +4216,7 @@
       },
       "source_ref": {
         "line": 1,
-        "lst_file": ""
+        "source_path": ""
       }
     },
     "zoic_fetish_mammal.json": {
@@ -4253,7 +4253,7 @@
       },
       "source_ref": {
         "line": 1,
-        "lst_file": ""
+        "source_path": ""
       }
     },
     "zoic_fetish_reptile.json": {
@@ -4290,7 +4290,7 @@
       },
       "source_ref": {
         "line": 1,
-        "lst_file": ""
+        "source_path": ""
       }
     }
   }

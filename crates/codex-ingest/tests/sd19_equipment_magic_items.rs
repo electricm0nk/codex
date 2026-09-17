@@ -124,7 +124,7 @@ fn every_real_corpus_item_resolves_reaches_equipped_items_and_grounds_through_ta
     );
 
     let source_ref = SourceRef {
-        lst_file: cr_equip_magic_items.display().to_string(),
+        source_path: cr_equip_magic_items.display().to_string(),
         line: 1,
     };
     let mut corpus = SourcePackageContent::empty("sd19_equipment_magic_items", source_ref);

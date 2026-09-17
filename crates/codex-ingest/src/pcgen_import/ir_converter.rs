@@ -278,7 +278,7 @@ impl IRDiagnostic {
     ///   [`SourceContentDiagnosticKind::PartialTranslation`] (severity
     ///   Info) — converter-internal notes do not block projection.
     ///
-    /// Provenance: `source_ref.lst_file <- source_path`,
+    /// Provenance: `source_ref.source_path <- source_path`,
     /// `source_ref.line <- line_number.unwrap_or(0) as u32`. The
     /// `line: u32` rounding is intentional: container-level diagnostics
     /// (where `line_number == None`) anchor to `line == 0`, the
@@ -1634,7 +1634,7 @@ mod tests {
         let record = fake_spell();
         let rec = convert_spell_record(&record);
         assert_eq!(rec.kind, SourceContentKind::Spell);
-        assert_eq!(rec.source_ref.lst_file, "spells.lst");
+        assert_eq!(rec.source_ref.source_path, "spells.lst");
         assert_eq!(rec.source_ref.line, 11);
     }
 
@@ -1665,7 +1665,7 @@ mod tests {
         let canonical = d.to_canonical();
         assert_eq!(canonical.severity, SourceContentSeverity::Error);
         assert_eq!(canonical.kind, SourceContentDiagnosticKind::MalformedRecord);
-        assert_eq!(canonical.source_ref.lst_file, "x.lst");
+        assert_eq!(canonical.source_ref.source_path, "x.lst");
         assert_eq!(canonical.source_ref.line, 2);
     }
 

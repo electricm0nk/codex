@@ -132,7 +132,7 @@ fn every_abjuration_spell_resolves_and_reaches_school_coverage() {
     assert!(!abjuration_records.is_empty(), "corpus-existence check must find Abjuration records");
 
     let source_ref = SourceRef {
-        lst_file: cr_spells.display().to_string(),
+        source_path: cr_spells.display().to_string(),
         line: 1,
     };
     let mut corpus = SourcePackageContent::empty("sd19_school_abjuration", source_ref);

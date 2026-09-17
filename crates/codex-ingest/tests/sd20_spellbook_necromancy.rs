@@ -47,7 +47,7 @@ fn corpus_with_chill_touch() -> SourcePackageContent<'static> {
     assert_eq!(record.school.as_deref(), Some("Necromancy"));
 
     let source_ref = SourceRef {
-        lst_file: "sd20_spellbook_necromancy".to_string(),
+        source_path: "sd20_spellbook_necromancy".to_string(),
         line: 1,
     };
     let mut corpus = SourcePackageContent::empty("sd20_spellbook_necromancy", source_ref);

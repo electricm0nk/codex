@@ -40,7 +40,7 @@
       },
       "source_ref": {
         "line": 1,
-        "lst_file": ""
+        "source_path": ""
       }
     },
     "equip_longsword.json": {
@@ -83,7 +83,7 @@
       },
       "source_ref": {
         "line": 1,
-        "lst_file": ""
+        "source_path": ""
       }
     }
   }

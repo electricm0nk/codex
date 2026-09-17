@@ -46,7 +46,7 @@ fn corpus_with_comprehend_languages() -> SourcePackageContent<'static> {
     assert_eq!(record.school.as_deref(), Some("Divination"));
 
     let source_ref = SourceRef {
-        lst_file: "sd20_spellbook_divination".to_string(),
+        source_path: "sd20_spellbook_divination".to_string(),
         line: 1,
     };
     let mut corpus = SourcePackageContent::empty("sd20_spellbook_divination", source_ref);

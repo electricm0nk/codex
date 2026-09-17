@@ -137,7 +137,7 @@ Potion\tKEY:Potion of Blur\tTYPE:Magic.Potion\tCOST:300
     fn corpus_from(text: &str) -> SourcePackageContent<'static> {
         let result = parse_equipment_entries("test.lst", text);
         let source_ref = SourceRef {
-            lst_file: "test.lst".to_string(),
+            source_path: "test.lst".to_string(),
             line: 1,
         };
         let mut corpus = SourcePackageContent::empty("test", source_ref);

@@ -374,6 +374,6 @@ fn d5_source_ref_constructor_matches_parser_layout() {
     // Smoke test: the canonical `SourceRef` constructor accepts
     // (path, line) just like the parser's own source layout.
     let r = SourceRef::new("cr_classes.lst".to_string(), 42);
-    assert_eq!(r.lst_file, "cr_classes.lst");
+    assert_eq!(r.source_path, "cr_classes.lst");
     assert_eq!(r.line, 42);
 }

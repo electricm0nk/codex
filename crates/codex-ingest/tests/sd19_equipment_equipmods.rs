@@ -166,7 +166,7 @@ fn every_addressable_real_corpus_item_resolves_reaches_equipped_items_and_ground
     );
 
     let source_ref = SourceRef {
-        lst_file: cr_equipmods.display().to_string(),
+        source_path: cr_equipmods.display().to_string(),
         line: 1,
     };
     let mut corpus = SourcePackageContent::empty("sd19_equipment_equipmods", source_ref);

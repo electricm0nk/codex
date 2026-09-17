@@ -47,7 +47,7 @@ fn corpus_with_color_spray() -> SourcePackageContent<'static> {
     assert_eq!(record.school.as_deref(), Some("Illusion"));
 
     let source_ref = SourceRef {
-        lst_file: "sd20_spellbook_illusion".to_string(),
+        source_path: "sd20_spellbook_illusion".to_string(),
         line: 1,
     };
     let mut corpus = SourcePackageContent::empty("sd20_spellbook_illusion", source_ref);

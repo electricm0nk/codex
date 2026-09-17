@@ -38,7 +38,7 @@ fn corpus_from(text: &str) -> SourcePackageContent<'static> {
         result.diagnostics
     );
     let source_ref = SourceRef {
-        lst_file: "cr_equip_magic_items.lst".to_string(),
+        source_path: "cr_equip_magic_items.lst".to_string(),
         line: 1,
     };
     let mut corpus = SourcePackageContent::empty("core_rulebook", source_ref);

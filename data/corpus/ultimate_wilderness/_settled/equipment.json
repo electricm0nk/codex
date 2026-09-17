@@ -35,7 +35,7 @@
       },
       "source_ref": {
         "line": 1,
-        "lst_file": ""
+        "source_path": ""
       }
     },
     "adhesive_strip.json": {
@@ -72,7 +72,7 @@
       },
       "source_ref": {
         "line": 1,
-        "lst_file": ""
+        "source_path": ""
       }
     },
     "alchemical_pheromones_aggression.json": {
@@ -109,7 +109,7 @@
       },
       "source_ref": {
         "line": 1,
-        "lst_file": ""
+        "source_path": ""
       }
     },
     "alchemical_pheromones_arousal.json": {
@@ -146,7 +146,7 @@
       },
       "source_ref": {
         "line": 1,
-        "lst_file": ""
+        "source_path": ""
       }
     },
     "alchemical_pheromones_simple.json": {
@@ -183,7 +183,7 @@
       },
       "source_ref": {
         "line": 1,
-        "lst_file": ""
+        "source_path": ""
       }
     },
     "alchemical_pheromones_susceptibility.json": {
@@ -220,7 +220,7 @@
       },
       "source_ref": {
         "line": 1,
-        "lst_file": ""
+        "source_path": ""
       }
     },
     "alchemical_resin.json": {
@@ -257,7 +257,7 @@
       },
       "source_ref": {
         "line": 1,
-        "lst_file": ""
+        "source_path": ""
       }
     },
     "altitude_fern.json": {
@@ -294,7 +294,7 @@
       },
       "source_ref": {
         "line": 1,
-        "lst_file": ""
+        "source_path": ""
       }
     },
     "angelstep.json": {
@@ -331,7 +331,7 @@
       },
       "source_ref": {
         "line": 1,
-        "lst_file": ""
+        "source_path": ""
       }
     },
     "animal_repellant_sack.json": {
@@ -368,7 +368,7 @@
       },
       "source_ref": {
         "line": 1,
-        "lst_file": ""
+        "source_path": ""
       }
     },
     "animal_repellent.json": {
@@ -405,7 +405,7 @@
       },
       "source_ref": {
         "line": 1,
-        "lst_file": ""
+        "source_path": ""
       }
     },
     "backpack_carrier.json": {
@@ -442,7 +442,7 @@
       },
       "source_ref": {
         "line": 1,
-        "lst_file": ""
+        "source_path": ""
       }
     },
     "backpack_hydration.json": {
@@ -479,7 +479,7 @@
       },
       "source_ref": {
         "line": 1,
-        "lst_file": ""
+        "source_path": ""
       }
     },
     "backpack_weaponrack.json": {
@@ -516,7 +516,7 @@
       },
       "source_ref": {
         "line": 1,
-        "lst_file": ""
+        "source_path": ""
       }
     },
     "belt_of_spirit_vines.json": {
@@ -553,7 +553,7 @@
       },
       "source_ref": {
         "line": 1,
-        "lst_file": ""
+        "source_path": ""
       }
     },
     "bestial_rags_bat.json": {
@@ -599,7 +599,7 @@
       },
       "source_ref": {
         "line": 1,
-        "lst_file": ""
+        "source_path": ""
       }
     },
     "bestial_rags_bear.json": {
@@ -645,7 +645,7 @@
       },
       "source_ref": {
         "line": 1,
-        "lst_file": ""
+        "source_path": ""
       }
     },
     "bestial_rags_bull.json": {
@@ -691,7 +691,7 @@
       },
       "source_ref": {
         "line": 1,
-        "lst_file": ""
+        "source_path": ""
       }
     },
     "bestial_rags_deinonychus.json": {
@@ -737,7 +737,7 @@
       },
       "source_ref": {
         "line": 1,
-        "lst_file": ""
+        "source_path": ""
       }
     },
     "bestial_rags_falcon.json": {
@@ -783,7 +783,7 @@
       },
       "source_ref": {
         "line": 1,
-        "lst_file": ""
+        "source_path": ""
       }
     },
     "bestial_rags_frog.json": {
@@ -829,7 +829,7 @@
       },
       "source_ref": {
         "line": 1,
-        "lst_file": ""
+        "source_path": ""
       }
     },
     "bestial_rags_lizard.json": {
@@ -875,7 +875,7 @@
       },
       "source_ref": {
         "line": 1,
-        "lst_file": ""
+        "source_path": ""
       }
     },
     "bestial_rags_monkey.json": {
@@ -921,7 +921,7 @@
       },
       "source_ref": {
         "line": 1,
-        "lst_file": ""
+        "source_path": ""
       }
     },
     "bestial_rags_mouse.json": {
@@ -967,7 +967,7 @@
       },
       "source_ref": {
         "line": 1,
-        "lst_file": ""
+        "source_path": ""
       }
     },
     "bestial_rags_owl.json": {
@@ -1013,7 +1013,7 @@
       },
       "source_ref": {
         "line": 1,
-        "lst_file": ""
+        "source_path": ""
       }
     },
     "bestial_rags_snake.json": {
@@ -1059,7 +1059,7 @@
       },
       "source_ref": {
         "line": 1,
-        "lst_file": ""
+        "source_path": ""
       }
     },
     "bestial_rags_stag.json": {
@@ -1105,7 +1105,7 @@
       },
       "source_ref": {
         "line": 1,
-        "lst_file": ""
+        "source_path": ""
       }
     },
     "bestial_rags_tiger.json": {
@@ -1151,7 +1151,7 @@
       },
       "source_ref": {
         "line": 1,
-        "lst_file": ""
+        "source_path": ""
       }
     },
     "bestial_rags_wolf.json": {
@@ -1197,7 +1197,7 @@
       },
       "source_ref": {
         "line": 1,
-        "lst_file": ""
+        "source_path": ""
       }
     },
     "bestial_rags_wolverine.json": {
@@ -1243,7 +1243,7 @@
       },
       "source_ref": {
         "line": 1,
-        "lst_file": ""
+        "source_path": ""
       }
     },
     "black_amaranth.json": {
@@ -1280,7 +1280,7 @@
       },
       "source_ref": {
         "line": 1,
-        "lst_file": ""
+        "source_path": ""
       }
     },
     "bloody_mandrake.json": {
@@ -1317,7 +1317,7 @@
       },
       "source_ref": {
         "line": 1,
-        "lst_file": ""
+        "source_path": ""
       }
     },
     "bone_reed.json": {
@@ -1354,7 +1354,7 @@
       },
       "source_ref": {
         "line": 1,
-        "lst_file": ""
+        "source_path": ""
       }
     },
     "bottled_sunlight.json": {
@@ -1391,7 +1391,7 @@
       },
       "source_ref": {
         "line": 1,
-        "lst_file": ""
+        "source_path": ""
       }
     },
     "breezeblown_dandelion.json": {
@@ -1428,7 +1428,7 @@
       },
       "source_ref": {
         "line": 1,
-        "lst_file": ""
+        "source_path": ""
       }
     },
     "breezeblown_dandelion_flower.json": {
@@ -1465,7 +1465,7 @@
       },
       "source_ref": {
         "line": 1,
-        "lst_file": ""
+        "source_path": ""
       }
     },
     "camouflaged_canvas.json": {
@@ -1502,7 +1502,7 @@
       },
       "source_ref": {
         "line": 1,
-        "lst_file": ""
+        "source_path": ""
       }
     },
     "cloud_puff.json": {
@@ -1539,7 +1539,7 @@
       },
       "source_ref": {
         "line": 1,
-        "lst_file": ""
+        "source_path": ""
       }
     },
     "coat_of_mist.json": {
@@ -1576,7 +1576,7 @@
       },
       "source_ref": {
         "line": 1,
-        "lst_file": ""
+        "source_path": ""
       }
     },
     "companion_cold_weather_outfit.json": {
@@ -1613,7 +1613,7 @@
       },
       "source_ref": {
         "line": 1,
-        "lst_file": ""
+        "source_path": ""
       }
     },
     "cooler_chest.json": {
@@ -1650,7 +1650,7 @@
       },
       "source_ref": {
         "line": 1,
-        "lst_file": ""
+        "source_path": ""
       }
     },
     "cushioned_inserts.json": {
@@ -1687,7 +1687,7 @@
       },
       "source_ref": {
         "line": 1,
-        "lst_file": ""
+        "source_path": ""
       }
     },
     "dragon_rose.json": {
@@ -1724,7 +1724,7 @@
       },
       "source_ref": {
         "line": 1,
-        "lst_file": ""
+        "source_path": ""
       }
     },
     "dream_lichen.json": {
@@ -1761,7 +1761,7 @@
       },
       "source_ref": {
         "line": 1,
-        "lst_file": ""
+        "source_path": ""
       }
     },
     "duo_saw.json": {
@@ -1798,7 +1798,7 @@
       },
       "source_ref": {
         "line": 1,
-        "lst_file": ""
+        "source_path": ""
       }
     },
     "efficient_tent.json": {
@@ -1835,7 +1835,7 @@
       },
       "source_ref": {
         "line": 1,
-        "lst_file": ""
+        "source_path": ""
       }
     },
     "equipmods/special_ability_ambushing_ranged.json": {
@@ -1872,7 +1872,7 @@
       },
       "source_ref": {
         "line": 1,
-        "lst_file": ""
+        "source_path": ""
       }
     },
     "equipmods/special_ability_jawbreaker_shield.json": {
@@ -1909,7 +1909,7 @@
       },
       "source_ref": {
         "line": 1,
-        "lst_file": ""
+        "source_path": ""
       }
     },
     "equipmods/special_ability_plummeting_ranged.json": {
@@ -1946,7 +1946,7 @@
       },
       "source_ref": {
         "line": 1,
-        "lst_file": ""
+        "source_path": ""
       }
     },
     "fairy_cap.json": {
@@ -1983,7 +1983,7 @@
       },
       "source_ref": {
         "line": 1,
-        "lst_file": ""
+        "source_path": ""
       }
     },
     "field_survival_guide.json": {
@@ -2020,7 +2020,7 @@
       },
       "source_ref": {
         "line": 1,
-        "lst_file": ""
+        "source_path": ""
       }
     },
     "filter_scarf.json": {
@@ -2057,7 +2057,7 @@
       },
       "source_ref": {
         "line": 1,
-        "lst_file": ""
+        "source_path": ""
       }
     },
     "fireapple_tree.json": {
@@ -2094,7 +2094,7 @@
       },
       "source_ref": {
         "line": 1,
-        "lst_file": ""
+        "source_path": ""
       }
     },
     "fishweed.json": {
@@ -2131,7 +2131,7 @@
       },
       "source_ref": {
         "line": 1,
-        "lst_file": ""
+        "source_path": ""
       }
     },
     "flame_retardant_outfit.json": {
@@ -2168,7 +2168,7 @@
       },
       "source_ref": {
         "line": 1,
-        "lst_file": ""
+        "source_path": ""
       }
     },
     "fortifying_fertilizer.json": {
@@ -2205,7 +2205,7 @@
       },
       "source_ref": {
         "line": 1,
-        "lst_file": ""
+        "source_path": ""
       }
     },
     "goblin_fishing_lure.json": {
@@ -2242,7 +2242,7 @@
       },
       "source_ref": {
         "line": 1,
-        "lst_file": ""
+        "source_path": ""
       }
     },
     "goblinvine.json": {
@@ -2279,7 +2279,7 @@
       },
       "source_ref": {
         "line": 1,
-        "lst_file": ""
+        "source_path": ""
       }
     },
     "goodberry_bush.json": {
@@ -2316,7 +2316,7 @@
       },
       "source_ref": {
         "line": 1,
-        "lst_file": ""
+        "source_path": ""
       }
     },
     "grabbing_vines.json": {
@@ -2353,7 +2353,7 @@
       },
       "source_ref": {
         "line": 1,
-        "lst_file": ""
+        "source_path": ""
       }
     },
     "greensurge_bomb.json": {
@@ -2390,7 +2390,7 @@
       },
       "source_ref": {
         "line": 1,
-        "lst_file": ""
+        "source_path": ""
       }
     },
     "guiding_scarab.json": {
@@ -2430,7 +2430,7 @@
       },
       "source_ref": {
         "line": 1,
-        "lst_file": ""
+        "source_path": ""
       }
     },
     "harness_of_grabbing_vines.json": {
@@ -2467,7 +2467,7 @@
       },
       "source_ref": {
         "line": 1,
-        "lst_file": ""
+        "source_path": ""
       }
     },
     "harness_of_hovering.json": {
@@ -2504,7 +2504,7 @@
       },
       "source_ref": {
         "line": 1,
-        "lst_file": ""
+        "source_path": ""
       }
     },
     "helping_hands_vines.json": {
@@ -2541,7 +2541,7 @@
       },
       "source_ref": {
         "line": 1,
-        "lst_file": ""
+        "source_path": ""
       }
     },
     "herald_seed.json": {
@@ -2578,7 +2578,7 @@
       },
       "source_ref": {
         "line": 1,
-        "lst_file": ""
+        "source_path": ""
       }
     },
     "hunter_s_stand.json": {
@@ -2615,7 +2615,7 @@
       },
       "source_ref": {
         "line": 1,
-        "lst_file": ""
+        "source_path": ""
       }
     },
     "hunter_s_stand_all_weather_cover.json": {
@@ -2652,7 +2652,7 @@
       },
       "source_ref": {
         "line": 1,
-        "lst_file": ""
+        "source_path": ""
       }
     },
     "hunter_s_stand_camouflage_blind.json": {
@@ -2689,7 +2689,7 @@
       },
       "source_ref": {
         "line": 1,
-        "lst_file": ""
+        "source_path": ""
       }
     },
     "inside_pocket.json": {
@@ -2726,7 +2726,7 @@
       },
       "source_ref": {
         "line": 1,
-        "lst_file": ""
+        "source_path": ""
       }
     },
     "insulated_flask.json": {
@@ -2763,7 +2763,7 @@
       },
       "source_ref": {
         "line": 1,
-        "lst_file": ""
+        "source_path": ""
       }
     },
     "leechwort.json": {
@@ -2800,7 +2800,7 @@
       },
       "source_ref": {
         "line": 1,
-        "lst_file": ""
+        "source_path": ""
       }
     },
     "liniment.json": {
@@ -2837,7 +2837,7 @@
       },
       "source_ref": {
         "line": 1,
-        "lst_file": ""
+        "source_path": ""
       }
     },
     "love_in_idleness.json": {
@@ -2874,7 +2874,7 @@
       },
       "source_ref": {
         "line": 1,
-        "lst_file": ""
+        "source_path": ""
       }
     },
     "merfolk_s_comb.json": {
@@ -2911,7 +2911,7 @@
       },
       "source_ref": {
         "line": 1,
-        "lst_file": ""
+        "source_path": ""
       }
     },
     "mimameith.json": {
@@ -2948,7 +2948,7 @@
       },
       "source_ref": {
         "line": 1,
-        "lst_file": ""
+        "source_path": ""
       }
     },
     "moly.json": {
@@ -2985,7 +2985,7 @@
       },
       "source_ref": {
         "line": 1,
-        "lst_file": ""
+        "source_path": ""
       }
     },
     "nature_climbing_harness.json": {
@@ -3022,7 +3022,7 @@
       },
       "source_ref": {
         "line": 1,
-        "lst_file": ""
+        "source_path": ""
       }
     },
     "nepenthe.json": {
@@ -3059,7 +3059,7 @@
       },
       "source_ref": {
         "line": 1,
-        "lst_file": ""
+        "source_path": ""
       }
     },
     "nightsage.json": {
@@ -3096,7 +3096,7 @@
       },
       "source_ref": {
         "line": 1,
-        "lst_file": ""
+        "source_path": ""
       }
     },
     "palm_of_decadent_feasts.json": {
@@ -3133,7 +3133,7 @@
       },
       "source_ref": {
         "line": 1,
-        "lst_file": ""
+        "source_path": ""
       }
     },
     "poison_blistercap_spore.json": {
@@ -3170,7 +3170,7 @@
       },
       "source_ref": {
         "line": 1,
-        "lst_file": ""
+        "source_path": ""
       }
     },
     "poison_blue_star.json": {
@@ -3207,7 +3207,7 @@
       },
       "source_ref": {
         "line": 1,
-        "lst_file": ""
+        "source_path": ""
       }
     },
     "poison_cloudthorn_venom.json": {
@@ -3244,7 +3244,7 @@
       },
       "source_ref": {
         "line": 1,
-        "lst_file": ""
+        "source_path": ""
       }
     },
     "poison_crone_s_curse.json": {
@@ -3281,7 +3281,7 @@
       },
       "source_ref": {
         "line": 1,
-        "lst_file": ""
+        "source_path": ""
       }
     },
     "poison_draughtcap_fungus.json": {
@@ -3318,7 +3318,7 @@
       },
       "source_ref": {
         "line": 1,
-        "lst_file": ""
+        "source_path": ""
       }
     },
     "poison_goblin_s_eye.json": {
@@ -3355,7 +3355,7 @@
       },
       "source_ref": {
         "line": 1,
-        "lst_file": ""
+        "source_path": ""
       }
     },
     "poison_jackalroot_essence.json": {
@@ -3392,7 +3392,7 @@
       },
       "source_ref": {
         "line": 1,
-        "lst_file": ""
+        "source_path": ""
       }
     },
     "poison_nymph_s_lure.json": {
@@ -3429,7 +3429,7 @@
       },
       "source_ref": {
         "line": 1,
-        "lst_file": ""
+        "source_path": ""
       }
     },
     "poison_red_bedlam.json": {
@@ -3466,7 +3466,7 @@
       },
       "source_ref": {
         "line": 1,
-        "lst_file": ""
+        "source_path": ""
       }
     },
     "poison_siphon_tree.json": {
@@ -3503,7 +3503,7 @@
       },
       "source_ref": {
         "line": 1,
-        "lst_file": ""
+        "source_path": ""
       }
     },
     "poison_starving_nettle.json": {
@@ -3540,7 +3540,7 @@
       },
       "source_ref": {
         "line": 1,
-        "lst_file": ""
+        "source_path": ""
       }
     },
     "poison_styx_sap.json": {
@@ -3577,7 +3577,7 @@
       },
       "source_ref": {
         "line": 1,
-        "lst_file": ""
+        "source_path": ""
       }
     },
     "poison_third_eye.json": {
@@ -3614,7 +3614,7 @@
       },
       "source_ref": {
         "line": 1,
-        "lst_file": ""
+        "source_path": ""
       }
     },
     "poison_violet_venom.json": {
@@ -3651,7 +3651,7 @@
       },
       "source_ref": {
         "line": 1,
-        "lst_file": ""
+        "source_path": ""
       }
     },
     "poison_witch_hunter_s_sword.json": {
@@ -3688,7 +3688,7 @@
       },
       "source_ref": {
         "line": 1,
-        "lst_file": ""
+        "source_path": ""
       }
     },
     "portal_oak.json": {
@@ -3725,7 +3725,7 @@
       },
       "source_ref": {
         "line": 1,
-        "lst_file": ""
+        "source_path": ""
       }
     },
     "privacy_shelter.json": {
@@ -3762,7 +3762,7 @@
       },
       "source_ref": {
         "line": 1,
-        "lst_file": ""
+        "source_path": ""
       }
     },
     "propagation_pod.json": {
@@ -3799,7 +3799,7 @@
       },
       "source_ref": {
         "line": 1,
-        "lst_file": ""
+        "source_path": ""
       }
     },
     "red_flame_torch.json": {
@@ -3836,7 +3836,7 @@
       },
       "source_ref": {
         "line": 1,
-        "lst_file": ""
+        "source_path": ""
       }
     },
     "restful_birch.json": {
@@ -3873,7 +3873,7 @@
       },
       "source_ref": {
         "line": 1,
-        "lst_file": ""
+        "source_path": ""
       }
     },
     "riding_bee_queen.json": {
@@ -3910,7 +3910,7 @@
       },
       "source_ref": {
         "line": 1,
-        "lst_file": ""
+        "source_path": ""
       }
     },
     "riding_bee_queen_combat_trained.json": {
@@ -3947,7 +3947,7 @@
       },
       "source_ref": {
         "line": 1,
-        "lst_file": ""
+        "source_path": ""
       }
     },
     "riding_bee_worker.json": {
@@ -3984,7 +3984,7 @@
       },
       "source_ref": {
         "line": 1,
-        "lst_file": ""
+        "source_path": ""
       }
     },
     "riding_bee_worker_combat_trained.json": {
@@ -4021,7 +4021,7 @@
       },
       "source_ref": {
         "line": 1,
-        "lst_file": ""
+        "source_path": ""
       }
     },
     "rootsense_boots.json": {
@@ -4058,7 +4058,7 @@
       },
       "source_ref": {
         "line": 1,
-        "lst_file": ""
+        "source_path": ""
       }
     },
     "salvation_cactus.json": {
@@ -4095,7 +4095,7 @@
       },
       "source_ref": {
         "line": 1,
-        "lst_file": ""
+        "source_path": ""
       }
     },
     "seedpod.json": {
@@ -4138,7 +4138,7 @@
       },
       "source_ref": {
         "line": 1,
-        "lst_file": ""
+        "source_path": ""
       }
     },
     "seeing_slime.json": {
@@ -4175,7 +4175,7 @@
       },
       "source_ref": {
         "line": 1,
-        "lst_file": ""
+        "source_path": ""
       }
     },
     "sheltershrub.json": {
@@ -4212,7 +4212,7 @@
       },
       "source_ref": {
         "line": 1,
-        "lst_file": ""
+        "source_path": ""
       }
     },
     "shrinking_berries.json": {
@@ -4249,7 +4249,7 @@
       },
       "source_ref": {
         "line": 1,
-        "lst_file": ""
+        "source_path": ""
       }
     },
     "silent_piton.json": {
@@ -4286,7 +4286,7 @@
       },
       "source_ref": {
         "line": 1,
-        "lst_file": ""
+        "source_path": ""
       }
     },
     "slippers_of_the_primordial_wilds.json": {
@@ -4323,7 +4323,7 @@
       },
       "source_ref": {
         "line": 1,
-        "lst_file": ""
+        "source_path": ""
       }
     },
     "snakebite_kit.json": {
@@ -4360,7 +4360,7 @@
       },
       "source_ref": {
         "line": 1,
-        "lst_file": ""
+        "source_path": ""
       }
     },
     "speed_sheath.json": {
@@ -4397,7 +4397,7 @@
       },
       "source_ref": {
         "line": 1,
-        "lst_file": ""
+        "source_path": ""
       }
     },
     "stretch_cords.json": {
@@ -4434,7 +4434,7 @@
       },
       "source_ref": {
         "line": 1,
-        "lst_file": ""
+        "source_path": ""
       }
     },
     "tanner_s_kit.json": {
@@ -4471,7 +4471,7 @@
       },
       "source_ref": {
         "line": 1,
-        "lst_file": ""
+        "source_path": ""
       }
     },
     "tent_cover.json": {
@@ -4508,7 +4508,7 @@
       },
       "source_ref": {
         "line": 1,
-        "lst_file": ""
+        "source_path": ""
       }
     },
     "tree_of_knowledge.json": {
@@ -4545,7 +4545,7 @@
       },
       "source_ref": {
         "line": 1,
-        "lst_file": ""
+        "source_path": ""
       }
     },
     "tree_of_woe.json": {
@@ -4582,7 +4582,7 @@
       },
       "source_ref": {
         "line": 1,
-        "lst_file": ""
+        "source_path": ""
       }
     },
     "trekking_pole.json": {
@@ -4619,7 +4619,7 @@
       },
       "source_ref": {
         "line": 1,
-        "lst_file": ""
+        "source_path": ""
       }
     },
     "wading_boots.json": {
@@ -4656,7 +4656,7 @@
       },
       "source_ref": {
         "line": 1,
-        "lst_file": ""
+        "source_path": ""
       }
     },
     "waist_pouch.json": {
@@ -4693,7 +4693,7 @@
       },
       "source_ref": {
         "line": 1,
-        "lst_file": ""
+        "source_path": ""
       }
     },
     "waterwalk_reeds.json": {
@@ -4730,7 +4730,7 @@
       },
       "source_ref": {
         "line": 1,
-        "lst_file": ""
+        "source_path": ""
       }
     },
     "windup_music_box.json": {
@@ -4767,7 +4767,7 @@
       },
       "source_ref": {
         "line": 1,
-        "lst_file": ""
+        "source_path": ""
       }
     },
     "wing_hooks.json": {
@@ -4804,7 +4804,7 @@
       },
       "source_ref": {
         "line": 1,
-        "lst_file": ""
+        "source_path": ""
       }
     },
     "winterbite.json": {
@@ -4841,7 +4841,7 @@
       },
       "source_ref": {
         "line": 1,
-        "lst_file": ""
+        "source_path": ""
       }
     }
   }

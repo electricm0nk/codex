@@ -39,7 +39,7 @@ fn corpus_with_shield() -> SourcePackageContent<'static> {
     assert_eq!(record.school.as_deref(), Some("Abjuration"));
 
     let source_ref = SourceRef {
-        lst_file: "sd20_spellbook_abjuration".to_string(),
+        source_path: "sd20_spellbook_abjuration".to_string(),
         line: 1,
     };
     let mut corpus = SourcePackageContent::empty("sd20_spellbook_abjuration", source_ref);

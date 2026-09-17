@@ -45,7 +45,7 @@ fn corpus_with_mage_armor() -> SourcePackageContent<'static> {
     assert_eq!(record.school.as_deref(), Some("Conjuration"));
 
     let source_ref = SourceRef {
-        lst_file: "sd20_spellbook_conjuration".to_string(),
+        source_path: "sd20_spellbook_conjuration".to_string(),
         line: 1,
     };
     let mut corpus = SourcePackageContent::empty("sd20_spellbook_conjuration", source_ref);

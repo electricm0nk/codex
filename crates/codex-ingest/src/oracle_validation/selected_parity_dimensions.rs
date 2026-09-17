@@ -249,7 +249,7 @@ mod tests {
         SourcePackageContent::empty(
             "core_rulebook",
             codex::rules_core::source_content::SourceRef {
-                lst_file: "test.lst".to_string(),
+                source_path: "test.lst".to_string(),
                 line: 1,
             },
         )

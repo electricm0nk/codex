@@ -46,7 +46,7 @@ fn corpus_with_charm_person() -> SourcePackageContent<'static> {
     assert_eq!(record.school.as_deref(), Some("Enchantment"));
 
     let source_ref = SourceRef {
-        lst_file: "sd20_spellbook_enchantment".to_string(),
+        source_path: "sd20_spellbook_enchantment".to_string(),
         line: 1,
     };
     let mut corpus = SourcePackageContent::empty("sd20_spellbook_enchantment", source_ref);

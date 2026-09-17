@@ -35,7 +35,7 @@
       },
       "source_ref": {
         "line": 1,
-        "lst_file": ""
+        "source_path": ""
       }
     },
     "annulus.json": {
@@ -72,7 +72,7 @@
       },
       "source_ref": {
         "line": 1,
-        "lst_file": ""
+        "source_path": ""
       }
     },
     "astral_armor.json": {
@@ -111,7 +111,7 @@
       },
       "source_ref": {
         "line": 1,
-        "lst_file": ""
+        "source_path": ""
       }
     },
     "astral_juggernaut.json": {
@@ -150,7 +150,7 @@
       },
       "source_ref": {
         "line": 1,
-        "lst_file": ""
+        "source_path": ""
       }
     },
     "astral_skin.json": {
@@ -187,7 +187,7 @@
       },
       "source_ref": {
         "line": 1,
-        "lst_file": ""
+        "source_path": ""
       }
     },
     "astral_suit_ram_1.json": {
@@ -230,7 +230,7 @@
       },
       "source_ref": {
         "line": 1,
-        "lst_file": ""
+        "source_path": ""
       }
     },
     "astral_suit_ram_2.json": {
@@ -273,7 +273,7 @@
       },
       "source_ref": {
         "line": 1,
-        "lst_file": ""
+        "source_path": ""
       }
     },
     "astral_suit_ram_3.json": {
@@ -316,7 +316,7 @@
       },
       "source_ref": {
         "line": 1,
-        "lst_file": ""
+        "source_path": ""
       }
     },
     "astral_suit_ram_4.json": {
@@ -359,7 +359,7 @@
       },
       "source_ref": {
         "line": 1,
-        "lst_file": ""
+        "source_path": ""
       }
     },
     "astral_warrior_weapon_bludgeoning.json": {
@@ -404,7 +404,7 @@
       },
       "source_ref": {
         "line": 1,
-        "lst_file": ""
+        "source_path": ""
       }
     },
     "astral_warrior_weapon_piercing.json": {
@@ -449,7 +449,7 @@
       },
       "source_ref": {
         "line": 1,
-        "lst_file": ""
+        "source_path": ""
       }
     },
     "astral_warrior_weapon_slashing.json": {
@@ -494,7 +494,7 @@
       },
       "source_ref": {
         "line": 1,
-        "lst_file": ""
+        "source_path": ""
       }
     },
     "aura_monocle_good_evil.json": {
@@ -531,7 +531,7 @@
       },
       "source_ref": {
         "line": 1,
-        "lst_file": ""
+        "source_path": ""
       }
     },
     "aura_monocle_greater.json": {
@@ -568,7 +568,7 @@
       },
       "source_ref": {
         "line": 1,
-        "lst_file": ""
+        "source_path": ""
       }
     },
     "aura_monocle_law_chaos.json": {
@@ -605,7 +605,7 @@
       },
       "source_ref": {
         "line": 1,
-        "lst_file": ""
+        "source_path": ""
       }
     },
     "belt_of_ectoplasmic_safety.json": {
@@ -642,7 +642,7 @@
       },
       "source_ref": {
         "line": 1,
-        "lst_file": ""
+        "source_path": ""
       }
     },
     "boots_of_gravity_binding.json": {
@@ -679,7 +679,7 @@
       },
       "source_ref": {
         "line": 1,
-        "lst_file": ""
+        "source_path": ""
       }
     },
     "boots_of_landing.json": {
@@ -716,7 +716,7 @@
       },
       "source_ref": {
         "line": 1,
-        "lst_file": ""
+        "source_path": ""
       }
     },
     "boots_of_skating.json": {
@@ -753,7 +753,7 @@
       },
       "source_ref": {
         "line": 1,
-        "lst_file": ""
+        "source_path": ""
       }
     },
     "boots_of_stomping.json": {
@@ -790,7 +790,7 @@
       },
       "source_ref": {
         "line": 1,
-        "lst_file": ""
+        "source_path": ""
       }
     },
     "boots_of_temporal_acceleration.json": {
@@ -827,7 +827,7 @@
       },
       "source_ref": {
         "line": 1,
-        "lst_file": ""
+        "source_path": ""
       }
     },
     "boots_of_the_beast_1d3.json": {
@@ -864,7 +864,7 @@
       },
       "source_ref": {
         "line": 1,
-        "lst_file": ""
+        "source_path": ""
       }
     },
     "boots_of_the_beast_1d4.json": {
@@ -901,7 +901,7 @@
       },
       "source_ref": {
         "line": 1,
-        "lst_file": ""
+        "source_path": ""
       }
     },
     "boots_of_the_beast_1d6.json": {
@@ -938,7 +938,7 @@
       },
       "source_ref": {
         "line": 1,
-        "lst_file": ""
+        "source_path": ""
       }
     },
     "boots_of_the_beast_1d8.json": {
@@ -975,7 +975,7 @@
       },
       "source_ref": {
         "line": 1,
-        "lst_file": ""
+        "source_path": ""
       }
     },
     "boots_of_the_beast_2d6.json": {
@@ -1012,7 +1012,7 @@
       },
       "source_ref": {
         "line": 1,
-        "lst_file": ""
+        "source_path": ""
       }
     },
     "boots_of_the_beast_3d6.json": {
@@ -1049,7 +1049,7 @@
       },
       "source_ref": {
         "line": 1,
-        "lst_file": ""
+        "source_path": ""
       }
     },
     "boots_of_the_beast_4d6.json": {
@@ -1086,7 +1086,7 @@
       },
       "source_ref": {
         "line": 1,
-        "lst_file": ""
+        "source_path": ""
       }
     },
     "boots_of_the_beast_5d6.json": {
@@ -1123,7 +1123,7 @@
       },
       "source_ref": {
         "line": 1,
-        "lst_file": ""
+        "source_path": ""
       }
     },
     "boots_of_the_beast_6d6.json": {
@@ -1160,7 +1160,7 @@
       },
       "source_ref": {
         "line": 1,
-        "lst_file": ""
+        "source_path": ""
       }
     },
     "boots_of_the_nomad.json": {
@@ -1202,7 +1202,7 @@
       },
       "source_ref": {
         "line": 1,
-        "lst_file": ""
+        "source_path": ""
       }
     },
     "bracers_of_disruption.json": {
@@ -1244,7 +1244,7 @@
       },
       "source_ref": {
         "line": 1,
-        "lst_file": ""
+        "source_path": ""
       }
     },
     "bracers_of_martial_surging.json": {
@@ -1281,7 +1281,7 @@
       },
       "source_ref": {
         "line": 1,
-        "lst_file": ""
+        "source_path": ""
       }
     },
     "cacophonous_bell.json": {
@@ -1318,7 +1318,7 @@
       },
       "source_ref": {
         "line": 1,
-        "lst_file": ""
+        "source_path": ""
       }
     },
     "charm_of_perservation.json": {
@@ -1355,7 +1355,7 @@
       },
       "source_ref": {
         "line": 1,
-        "lst_file": ""
+        "source_path": ""
       }
     },
     "charms_of_friendly_interception.json": {
@@ -1392,7 +1392,7 @@
       },
       "source_ref": {
         "line": 1,
-        "lst_file": ""
+        "source_path": ""
       }
     },
     "circlet_of_the_sheltered_mind.json": {
@@ -1434,7 +1434,7 @@
       },
       "source_ref": {
         "line": 1,
-        "lst_file": ""
+        "source_path": ""
       }
     },
     "cognizance_crystal_1.json": {
@@ -1471,7 +1471,7 @@
       },
       "source_ref": {
         "line": 1,
-        "lst_file": ""
+        "source_path": ""
       }
     },
     "cognizance_crystal_11.json": {
@@ -1508,7 +1508,7 @@
       },
       "source_ref": {
         "line": 1,
-        "lst_file": ""
+        "source_path": ""
       }
     },
     "cognizance_crystal_13.json": {
@@ -1545,7 +1545,7 @@
       },
       "source_ref": {
         "line": 1,
-        "lst_file": ""
+        "source_path": ""
       }
     },
     "cognizance_crystal_15.json": {
@@ -1582,7 +1582,7 @@
       },
       "source_ref": {
         "line": 1,
-        "lst_file": ""
+        "source_path": ""
       }
     },
     "cognizance_crystal_17.json": {
@@ -1619,7 +1619,7 @@
       },
       "source_ref": {
         "line": 1,
-        "lst_file": ""
+        "source_path": ""
       }
     },
     "cognizance_crystal_3.json": {
@@ -1656,7 +1656,7 @@
       },
       "source_ref": {
         "line": 1,
-        "lst_file": ""
+        "source_path": ""
       }
     },
     "cognizance_crystal_5.json": {
@@ -1693,7 +1693,7 @@
       },
       "source_ref": {
         "line": 1,
-        "lst_file": ""
+        "source_path": ""
       }
     },
     "cognizance_crystal_7.json": {
@@ -1730,7 +1730,7 @@
       },
       "source_ref": {
         "line": 1,
-        "lst_file": ""
+        "source_path": ""
       }
     },
     "cognizance_crystal_9.json": {
@@ -1767,7 +1767,7 @@
       },
       "source_ref": {
         "line": 1,
-        "lst_file": ""
+        "source_path": ""
       }
     },
     "coin_of_brotherhood.json": {
@@ -1804,7 +1804,7 @@
       },
       "source_ref": {
         "line": 1,
-        "lst_file": ""
+        "source_path": ""
       }
     },
     "companion_stone_diplomacy.json": {
@@ -1844,7 +1844,7 @@
       },
       "source_ref": {
         "line": 1,
-        "lst_file": ""
+        "source_path": ""
       }
     },
     "companion_stone_electrical_protection.json": {
@@ -1886,7 +1886,7 @@
       },
       "source_ref": {
         "line": 1,
-        "lst_file": ""
+        "source_path": ""
       }
     },
     "companion_stone_far_sight.json": {
@@ -1923,7 +1923,7 @@
       },
       "source_ref": {
         "line": 1,
-        "lst_file": ""
+        "source_path": ""
       }
     },
     "companion_stone_fire.json": {
@@ -1960,7 +1960,7 @@
       },
       "source_ref": {
         "line": 1,
-        "lst_file": ""
+        "source_path": ""
       }
     },
     "companion_stone_fortify.json": {
@@ -1997,7 +1997,7 @@
       },
       "source_ref": {
         "line": 1,
-        "lst_file": ""
+        "source_path": ""
       }
     },
     "companion_stone_truthful_dealings.json": {
@@ -2034,7 +2034,7 @@
       },
       "source_ref": {
         "line": 1,
-        "lst_file": ""
+        "source_path": ""
       }
     },
     "cowardly_cryptic_s_goggles.json": {
@@ -2071,7 +2071,7 @@
       },
       "source_ref": {
         "line": 1,
-        "lst_file": ""
+        "source_path": ""
       }
     },
     "crawling_tattoo.json": {
@@ -2108,7 +2108,7 @@
       },
       "source_ref": {
         "line": 1,
-        "lst_file": ""
+        "source_path": ""
       }
     },
     "crawling_tattoo_concussion.json": {
@@ -2145,7 +2145,7 @@
       },
       "source_ref": {
         "line": 1,
-        "lst_file": ""
+        "source_path": ""
       }
     },
     "crawling_tattoo_energy_bolt.json": {
@@ -2182,7 +2182,7 @@
       },
       "source_ref": {
         "line": 1,
-        "lst_file": ""
+        "source_path": ""
       }
     },
     "creature_of_habit_s_medallion.json": {
@@ -2219,7 +2219,7 @@
       },
       "source_ref": {
         "line": 1,
-        "lst_file": ""
+        "source_path": ""
       }
     },
     "crown_of_chaos.json": {
@@ -2256,7 +2256,7 @@
       },
       "source_ref": {
         "line": 1,
-        "lst_file": ""
+        "source_path": ""
       }
     },
     "crown_of_traded_will.json": {
@@ -2293,7 +2293,7 @@
       },
       "source_ref": {
         "line": 1,
-        "lst_file": ""
+        "source_path": ""
       }
     },
     "crystal_anchor_body.json": {
@@ -2330,7 +2330,7 @@
       },
       "source_ref": {
         "line": 1,
-        "lst_file": ""
+        "source_path": ""
       }
     },
     "crystal_anchor_comprehension.json": {
@@ -2367,7 +2367,7 @@
       },
       "source_ref": {
         "line": 1,
-        "lst_file": ""
+        "source_path": ""
       }
     },
     "crystal_anchor_creation.json": {
@@ -2404,7 +2404,7 @@
       },
       "source_ref": {
         "line": 1,
-        "lst_file": ""
+        "source_path": ""
       }
     },
     "crystal_anchor_energy.json": {
@@ -2441,7 +2441,7 @@
       },
       "source_ref": {
         "line": 1,
-        "lst_file": ""
+        "source_path": ""
       }
     },
     "crystal_anchor_ghost.json": {
@@ -2478,7 +2478,7 @@
       },
       "source_ref": {
         "line": 1,
-        "lst_file": ""
+        "source_path": ""
       }
     },
     "crystal_anchor_mind.json": {
@@ -2515,7 +2515,7 @@
       },
       "source_ref": {
         "line": 1,
-        "lst_file": ""
+        "source_path": ""
       }
     },
     "crystal_anchor_travel.json": {
@@ -2552,7 +2552,7 @@
       },
       "source_ref": {
         "line": 1,
-        "lst_file": ""
+        "source_path": ""
       }
     },
     "crystal_bow_1.json": {
@@ -2589,7 +2589,7 @@
       },
       "source_ref": {
         "line": 1,
-        "lst_file": ""
+        "source_path": ""
       }
     },
     "crystal_bow_2.json": {
@@ -2626,7 +2626,7 @@
       },
       "source_ref": {
         "line": 1,
-        "lst_file": ""
+        "source_path": ""
       }
     },
     "crystal_bow_3.json": {
@@ -2663,7 +2663,7 @@
       },
       "source_ref": {
         "line": 1,
-        "lst_file": ""
+        "source_path": ""
       }
     },
     "crystal_gauntlets_1.json": {
@@ -2700,7 +2700,7 @@
       },
       "source_ref": {
         "line": 1,
-        "lst_file": ""
+        "source_path": ""
       }
     },
     "crystal_gauntlets_2.json": {
@@ -2737,7 +2737,7 @@
       },
       "source_ref": {
         "line": 1,
-        "lst_file": ""
+        "source_path": ""
       }
     },
     "crystal_gauntlets_3.json": {
@@ -2774,7 +2774,7 @@
       },
       "source_ref": {
         "line": 1,
-        "lst_file": ""
+        "source_path": ""
       }
     },
     "crystal_grip_1.json": {
@@ -2811,7 +2811,7 @@
       },
       "source_ref": {
         "line": 1,
-        "lst_file": ""
+        "source_path": ""
       }
     },
     "crystal_grip_2.json": {
@@ -2848,7 +2848,7 @@
       },
       "source_ref": {
         "line": 1,
-        "lst_file": ""
+        "source_path": ""
       }
     },
     "crystal_grip_3.json": {
@@ -2885,7 +2885,7 @@
       },
       "source_ref": {
         "line": 1,
-        "lst_file": ""
+        "source_path": ""
       }
     },
     "crystal_hilt_light_1.json": {
@@ -2922,7 +2922,7 @@
       },
       "source_ref": {
         "line": 1,
-        "lst_file": ""
+        "source_path": ""
       }
     },
     "crystal_hilt_light_2.json": {
@@ -2959,7 +2959,7 @@
       },
       "source_ref": {
         "line": 1,
-        "lst_file": ""
+        "source_path": ""
       }
     },
     "crystal_hilt_light_3.json": {
@@ -2996,7 +2996,7 @@
       },
       "source_ref": {
         "line": 1,
-        "lst_file": ""
+        "source_path": ""
       }
     },
     "crystal_hilt_one_handed_1.json": {
@@ -3033,7 +3033,7 @@
       },
       "source_ref": {
         "line": 1,
-        "lst_file": ""
+        "source_path": ""
       }
     },
     "crystal_hilt_one_handed_2.json": {
@@ -3070,7 +3070,7 @@
       },
       "source_ref": {
         "line": 1,
-        "lst_file": ""
+        "source_path": ""
       }
     },
     "crystal_hilt_one_handed_3.json": {
@@ -3107,7 +3107,7 @@
       },
       "source_ref": {
         "line": 1,
-        "lst_file": ""
+        "source_path": ""
       }
     },
     "crystal_hilt_two_handed_1.json": {
@@ -3144,7 +3144,7 @@
       },
       "source_ref": {
         "line": 1,
-        "lst_file": ""
+        "source_path": ""
       }
     },
     "crystal_hilt_two_handed_2.json": {
@@ -3181,7 +3181,7 @@
       },
       "source_ref": {
         "line": 1,
-        "lst_file": ""
+        "source_path": ""
       }
     },
     "crystal_hilt_two_handed_3.json": {
@@ -3218,7 +3218,7 @@
       },
       "source_ref": {
         "line": 1,
-        "lst_file": ""
+        "source_path": ""
       }
     },
     "crystal_mask_detection.json": {
@@ -3258,7 +3258,7 @@
       },
       "source_ref": {
         "line": 1,
-        "lst_file": ""
+        "source_path": ""
       }
     },
     "crystal_mask_discernment.json": {
@@ -3298,7 +3298,7 @@
       },
       "source_ref": {
         "line": 1,
-        "lst_file": ""
+        "source_path": ""
       }
     },
     "crystal_mask_dread.json": {
@@ -3338,7 +3338,7 @@
       },
       "source_ref": {
         "line": 1,
-        "lst_file": ""
+        "source_path": ""
       }
     },
     "crystal_mask_insightful_detection.json": {
@@ -3378,7 +3378,7 @@
       },
       "source_ref": {
         "line": 1,
-        "lst_file": ""
+        "source_path": ""
       }
     },
     "crystal_mask_knowledge.json": {
@@ -3415,7 +3415,7 @@
       },
       "source_ref": {
         "line": 1,
-        "lst_file": ""
+        "source_path": ""
       }
     },
     "crystal_mask_languages.json": {
@@ -3452,7 +3452,7 @@
       },
       "source_ref": {
         "line": 1,
-        "lst_file": ""
+        "source_path": ""
       }
     },
     "crystal_mask_mindarmor.json": {
@@ -3489,7 +3489,7 @@
       },
       "source_ref": {
         "line": 1,
-        "lst_file": ""
+        "source_path": ""
       }
     },
     "crystal_mask_psionic_craft.json": {
@@ -3529,7 +3529,7 @@
       },
       "source_ref": {
         "line": 1,
-        "lst_file": ""
+        "source_path": ""
       }
     },
     "crystal_shard.json": {
@@ -3572,7 +3572,7 @@
       },
       "source_ref": {
         "line": 1,
-        "lst_file": ""
+        "source_path": ""
       }
     },
     "crystal_spaulders_1.json": {
@@ -3614,7 +3614,7 @@
       },
       "source_ref": {
         "line": 1,
-        "lst_file": ""
+        "source_path": ""
       }
     },
     "crystal_spaulders_2.json": {
@@ -3656,7 +3656,7 @@
       },
       "source_ref": {
         "line": 1,
-        "lst_file": ""
+        "source_path": ""
       }
     },
     "crystal_spaulders_3.json": {
@@ -3698,7 +3698,7 @@
       },
       "source_ref": {
         "line": 1,
-        "lst_file": ""
+        "source_path": ""
       }
     },
     "dancing_robes_of_sharatwan.json": {
@@ -3740,7 +3740,7 @@
       },
       "source_ref": {
         "line": 1,
-        "lst_file": ""
+        "source_path": ""
       }
     },
     "deadly_fist.json": {
@@ -3783,7 +3783,7 @@
       },
       "source_ref": {
         "line": 1,
-        "lst_file": ""
+        "source_path": ""
       }
     },
     "disruptor.json": {
@@ -3825,7 +3825,7 @@
       },
       "source_ref": {
         "line": 1,
-        "lst_file": ""
+        "source_path": ""
       }
     },
     "dissipating_gloves.json": {
@@ -3862,7 +3862,7 @@
       },
       "source_ref": {
         "line": 1,
-        "lst_file": ""
+        "source_path": ""
       }
     },
     "dissonance.json": {
@@ -3909,7 +3909,7 @@
       },
       "source_ref": {
         "line": 1,
-        "lst_file": ""
+        "source_path": ""
       }
     },
     "dorje.json": {
@@ -3946,7 +3946,7 @@
       },
       "source_ref": {
         "line": 1,
-        "lst_file": ""
+        "source_path": ""
       }
     },
     "earring_of_resistance_1.json": {
@@ -3983,7 +3983,7 @@
       },
       "source_ref": {
         "line": 1,
-        "lst_file": ""
+        "source_path": ""
       }
     },
     "earring_of_resistance_2.json": {
@@ -4020,7 +4020,7 @@
       },
       "source_ref": {
         "line": 1,
-        "lst_file": ""
+        "source_path": ""
       }
     },
     "earring_of_resistance_3.json": {
@@ -4057,7 +4057,7 @@
       },
       "source_ref": {
         "line": 1,
-        "lst_file": ""
+        "source_path": ""
       }
     },
     "earring_of_resistance_4.json": {
@@ -4094,7 +4094,7 @@
       },
       "source_ref": {
         "line": 1,
-        "lst_file": ""
+        "source_path": ""
       }
     },
     "earring_of_resistance_5.json": {
@@ -4131,7 +4131,7 @@
       },
       "source_ref": {
         "line": 1,
-        "lst_file": ""
+        "source_path": ""
       }
     },
     "empathic_monocle.json": {
@@ -4168,7 +4168,7 @@
       },
       "source_ref": {
         "line": 1,
-        "lst_file": ""
+        "source_path": ""
       }
     },
     "empathic_monocle_greater.json": {
@@ -4205,7 +4205,7 @@
       },
       "source_ref": {
         "line": 1,
-        "lst_file": ""
+        "source_path": ""
       }
     },
     "equipmods/agile.json": {
@@ -4242,7 +4242,7 @@
       },
       "source_ref": {
         "line": 1,
-        "lst_file": ""
+        "source_path": ""
       }
     },
     "equipmods/aport.json": {
@@ -4279,7 +4279,7 @@
       },
       "source_ref": {
         "line": 1,
-        "lst_file": ""
+        "source_path": ""
       }
     },
     "equipmods/avert.json": {
@@ -4316,7 +4316,7 @@
       },
       "source_ref": {
         "line": 1,
-        "lst_file": ""
+        "source_path": ""
       }
     },
     "equipmods/bodyfeed.json": {
@@ -4353,7 +4353,7 @@
       },
       "source_ref": {
         "line": 1,
-        "lst_file": ""
+        "source_path": ""
       }
     },
     "equipmods/chall.json": {
@@ -4390,7 +4390,7 @@
       },
       "source_ref": {
         "line": 1,
-        "lst_file": ""
+        "source_path": ""
       }
     },
     "equipmods/colli_a.json": {
@@ -4427,7 +4427,7 @@
       },
       "source_ref": {
         "line": 1,
-        "lst_file": ""
+        "source_path": ""
       }
     },
     "equipmods/colli_m.json": {
@@ -4464,7 +4464,7 @@
       },
       "source_ref": {
         "line": 1,
-        "lst_file": ""
+        "source_path": ""
       }
     },
     "equipmods/colli_r.json": {
@@ -4501,7 +4501,7 @@
       },
       "source_ref": {
         "line": 1,
-        "lst_file": ""
+        "source_path": ""
       }
     },
     "equipmods/coupgr_a.json": {
@@ -4538,7 +4538,7 @@
       },
       "source_ref": {
         "line": 1,
-        "lst_file": ""
+        "source_path": ""
       }
     },
     "equipmods/coupgr_m.json": {
@@ -4575,7 +4575,7 @@
       },
       "source_ref": {
         "line": 1,
-        "lst_file": ""
+        "source_path": ""
       }
     },
     "equipmods/coupgr_r.json": {
@@ -4612,7 +4612,7 @@
       },
       "source_ref": {
         "line": 1,
-        "lst_file": ""
+        "source_path": ""
       }
     },
     "equipmods/crys_deep.json": {
@@ -4654,7 +4654,7 @@
       },
       "source_ref": {
         "line": 1,
-        "lst_file": ""
+        "source_path": ""
       }
     },
     "equipmods/crys_deep_item.json": {
@@ -4691,7 +4691,7 @@
       },
       "source_ref": {
         "line": 1,
-        "lst_file": ""
+        "source_path": ""
       }
     },
     "equipmods/crys_mun.json": {
@@ -4733,7 +4733,7 @@
       },
       "source_ref": {
         "line": 1,
-        "lst_file": ""
+        "source_path": ""
       }
     },
     "equipmods/crys_mun_item.json": {
@@ -4770,7 +4770,7 @@
       },
       "source_ref": {
         "line": 1,
-        "lst_file": ""
+        "source_path": ""
       }
     },
     "equipmods/determ.json": {
@@ -4807,7 +4807,7 @@
       },
       "source_ref": {
         "line": 1,
-        "lst_file": ""
+        "source_path": ""
       }
     },
     "equipmods/determ_drs.json": {
@@ -4844,7 +4844,7 @@
       },
       "source_ref": {
         "line": 1,
-        "lst_file": ""
+        "source_path": ""
       }
     },
     "equipmods/disloc_a.json": {
@@ -4881,7 +4881,7 @@
       },
       "source_ref": {
         "line": 1,
-        "lst_file": ""
+        "source_path": ""
       }
     },
     "equipmods/disloc_grt_a.json": {
@@ -4918,7 +4918,7 @@
       },
       "source_ref": {
         "line": 1,
-        "lst_file": ""
+        "source_path": ""
       }
     },
     "equipmods/disloc_grt_m.json": {
@@ -4955,7 +4955,7 @@
       },
       "source_ref": {
         "line": 1,
-        "lst_file": ""
+        "source_path": ""
       }
     },
     "equipmods/disloc_grt_r.json": {
@@ -4992,7 +4992,7 @@
       },
       "source_ref": {
         "line": 1,
-        "lst_file": ""
+        "source_path": ""
       }
     },
     "equipmods/disloc_m.json": {
@@ -5029,7 +5029,7 @@
       },
       "source_ref": {
         "line": 1,
-        "lst_file": ""
+        "source_path": ""
       }
     },
     "equipmods/disloc_r.json": {
@@ -5066,7 +5066,7 @@
       },
       "source_ref": {
         "line": 1,
-        "lst_file": ""
+        "source_path": ""
       }
     },
     "equipmods/dissip.json": {
@@ -5103,7 +5103,7 @@
       },
       "source_ref": {
         "line": 1,
-        "lst_file": ""
+        "source_path": ""
       }
     },
     "equipmods/duel.json": {
@@ -5140,7 +5140,7 @@
       },
       "source_ref": {
         "line": 1,
-        "lst_file": ""
+        "source_path": ""
       }
     },
     "equipmods/ectoplas.json": {
@@ -5177,7 +5177,7 @@
       },
       "source_ref": {
         "line": 1,
-        "lst_file": ""
+        "source_path": ""
       }
     },
     "equipmods/enrgy_c.json": {
@@ -5214,7 +5214,7 @@
       },
       "source_ref": {
         "line": 1,
-        "lst_file": ""
+        "source_path": ""
       }
     },
     "equipmods/enrgy_e.json": {
@@ -5251,7 +5251,7 @@
       },
       "source_ref": {
         "line": 1,
-        "lst_file": ""
+        "source_path": ""
       }
     },
     "equipmods/enrgy_f.json": {
@@ -5288,7 +5288,7 @@
       },
       "source_ref": {
         "line": 1,
-        "lst_file": ""
+        "source_path": ""
       }
     },
     "equipmods/enrgy_gc.json": {
@@ -5325,7 +5325,7 @@
       },
       "source_ref": {
         "line": 1,
-        "lst_file": ""
+        "source_path": ""
       }
     },
     "equipmods/enrgy_ge.json": {
@@ -5362,7 +5362,7 @@
       },
       "source_ref": {
         "line": 1,
-        "lst_file": ""
+        "source_path": ""
       }
     },
     "equipmods/enrgy_gf.json": {
@@ -5399,7 +5399,7 @@
       },
       "source_ref": {
         "line": 1,
-        "lst_file": ""
+        "source_path": ""
       }
     },
     "equipmods/float.json": {
@@ -5436,7 +5436,7 @@
       },
       "source_ref": {
         "line": 1,
-        "lst_file": ""
+        "source_path": ""
       }
     },
     "equipmods/ftlst.json": {
@@ -5473,7 +5473,7 @@
       },
       "source_ref": {
         "line": 1,
-        "lst_file": ""
+        "source_path": ""
       }
     },
     "equipmods/fuse_armr_hvy.json": {
@@ -5510,7 +5510,7 @@
       },
       "source_ref": {
         "line": 1,
-        "lst_file": ""
+        "source_path": ""
       }
     },
     "equipmods/fuse_armr_lt.json": {
@@ -5547,7 +5547,7 @@
       },
       "source_ref": {
         "line": 1,
-        "lst_file": ""
+        "source_path": ""
       }
     },
     "equipmods/fuse_armr_med.json": {
@@ -5584,7 +5584,7 @@
       },
       "source_ref": {
         "line": 1,
-        "lst_file": ""
+        "source_path": ""
       }
     },
     "equipmods/fuse_armr_shld.json": {
@@ -5621,7 +5621,7 @@
       },
       "source_ref": {
         "line": 1,
-        "lst_file": ""
+        "source_path": ""
       }
     },
     "equipmods/gleam.json": {
@@ -5658,7 +5658,7 @@
       },
       "source_ref": {
         "line": 1,
-        "lst_file": ""
+        "source_path": ""
       }
     },
     "equipmods/guardn.json": {
@@ -5695,7 +5695,7 @@
       },
       "source_ref": {
         "line": 1,
-        "lst_file": ""
+        "source_path": ""
       }
     },
     "equipmods/heart.json": {
@@ -5732,7 +5732,7 @@
       },
       "source_ref": {
         "line": 1,
-        "lst_file": ""
+        "source_path": ""
       }
     },
     "equipmods/invdr.json": {
@@ -5769,7 +5769,7 @@
       },
       "source_ref": {
         "line": 1,
-        "lst_file": ""
+        "source_path": ""
       }
     },
     "equipmods/knout.json": {
@@ -5806,7 +5806,7 @@
       },
       "source_ref": {
         "line": 1,
-        "lst_file": ""
+        "source_path": ""
       }
     },
     "equipmods/landi.json": {
@@ -5843,7 +5843,7 @@
       },
       "source_ref": {
         "line": 1,
-        "lst_file": ""
+        "source_path": ""
       }
     },
     "equipmods/lnked.json": {
@@ -5880,7 +5880,7 @@
       },
       "source_ref": {
         "line": 1,
-        "lst_file": ""
+        "source_path": ""
       }
     },
     "equipmods/lnkst.json": {
@@ -5917,7 +5917,7 @@
       },
       "source_ref": {
         "line": 1,
-        "lst_file": ""
+        "source_path": ""
       }
     },
     "equipmods/lucky.json": {
@@ -5954,7 +5954,7 @@
       },
       "source_ref": {
         "line": 1,
-        "lst_file": ""
+        "source_path": ""
       }
     },
     "equipmods/manif_shld.json": {
@@ -5991,7 +5991,7 @@
       },
       "source_ref": {
         "line": 1,
-        "lst_file": ""
+        "source_path": ""
       }
     },
     "equipmods/manif_wpn_a.json": {
@@ -6028,7 +6028,7 @@
       },
       "source_ref": {
         "line": 1,
-        "lst_file": ""
+        "source_path": ""
       }
     },
     "equipmods/manif_wpn_m.json": {
@@ -6065,7 +6065,7 @@
       },
       "source_ref": {
         "line": 1,
-        "lst_file": ""
+        "source_path": ""
       }
     },
     "equipmods/manif_wpn_r.json": {
@@ -6102,7 +6102,7 @@
       },
       "source_ref": {
         "line": 1,
-        "lst_file": ""
+        "source_path": ""
       }
     },
     "equipmods/material_crystal_deep.json": {
@@ -6144,7 +6144,7 @@
       },
       "source_ref": {
         "line": 1,
-        "lst_file": ""
+        "source_path": ""
       }
     },
     "equipmods/material_crystal_deep_item.json": {
@@ -6181,7 +6181,7 @@
       },
       "source_ref": {
         "line": 1,
-        "lst_file": ""
+        "source_path": ""
       }
     },
     "equipmods/material_crystal_mundane.json": {
@@ -6223,7 +6223,7 @@
       },
       "source_ref": {
         "line": 1,
-        "lst_file": ""
+        "source_path": ""
       }
     },
     "equipmods/material_crystal_mundane_item.json": {
@@ -6260,7 +6260,7 @@
       },
       "source_ref": {
         "line": 1,
-        "lst_file": ""
+        "source_path": ""
       }
     },
     "equipmods/mindcru.json": {
@@ -6297,7 +6297,7 @@
       },
       "source_ref": {
         "line": 1,
-        "lst_file": ""
+        "source_path": ""
       }
     },
     "equipmods/mindfeed.json": {
@@ -6334,7 +6334,7 @@
       },
       "source_ref": {
         "line": 1,
-        "lst_file": ""
+        "source_path": ""
       }
     },
     "equipmods/mndarmr.json": {
@@ -6371,7 +6371,7 @@
       },
       "source_ref": {
         "line": 1,
-        "lst_file": ""
+        "source_path": ""
       }
     },
     "equipmods/murmr.json": {
@@ -6408,7 +6408,7 @@
       },
       "source_ref": {
         "line": 1,
-        "lst_file": ""
+        "source_path": ""
       }
     },
     "equipmods/murmr_g.json": {
@@ -6445,7 +6445,7 @@
       },
       "source_ref": {
         "line": 1,
-        "lst_file": ""
+        "source_path": ""
       }
     },
     "equipmods/parrying.json": {
@@ -6482,7 +6482,7 @@
       },
       "source_ref": {
         "line": 1,
-        "lst_file": ""
+        "source_path": ""
       }
     },
     "equipmods/phasing.json": {
@@ -6519,7 +6519,7 @@
       },
       "source_ref": {
         "line": 1,
-        "lst_file": ""
+        "source_path": ""
       }
     },
     "equipmods/pkin_a.json": {
@@ -6556,7 +6556,7 @@
       },
       "source_ref": {
         "line": 1,
-        "lst_file": ""
+        "source_path": ""
       }
     },
     "equipmods/pkin_br_a.json": {
@@ -6593,7 +6593,7 @@
       },
       "source_ref": {
         "line": 1,
-        "lst_file": ""
+        "source_path": ""
       }
     },
     "equipmods/pkin_br_m.json": {
@@ -6630,7 +6630,7 @@
       },
       "source_ref": {
         "line": 1,
-        "lst_file": ""
+        "source_path": ""
       }
     },
     "equipmods/pkin_br_r.json": {
@@ -6667,7 +6667,7 @@
       },
       "source_ref": {
         "line": 1,
-        "lst_file": ""
+        "source_path": ""
       }
     },
     "equipmods/pkin_m.json": {
@@ -6704,7 +6704,7 @@
       },
       "source_ref": {
         "line": 1,
-        "lst_file": ""
+        "source_path": ""
       }
     },
     "equipmods/pkin_r.json": {
@@ -6741,7 +6741,7 @@
       },
       "source_ref": {
         "line": 1,
-        "lst_file": ""
+        "source_path": ""
       }
     },
     "equipmods/plusn_dis_a.json": {
@@ -6788,7 +6788,7 @@
       },
       "source_ref": {
         "line": 1,
-        "lst_file": ""
+        "source_path": ""
       }
     },
     "equipmods/plusn_dis_m.json": {
@@ -6835,7 +6835,7 @@
       },
       "source_ref": {
         "line": 1,
-        "lst_file": ""
+        "source_path": ""
       }
     },
     "equipmods/plusn_drs.json": {
@@ -6877,7 +6877,7 @@
       },
       "source_ref": {
         "line": 1,
-        "lst_file": ""
+        "source_path": ""
       }
     },
     "equipmods/plusn_svs.json": {
@@ -6924,7 +6924,7 @@
       },
       "source_ref": {
         "line": 1,
-        "lst_file": ""
+        "source_path": ""
       }
     },
     "equipmods/psibane_a.json": {
@@ -6966,7 +6966,7 @@
       },
       "source_ref": {
         "line": 1,
-        "lst_file": ""
+        "source_path": ""
       }
     },
     "equipmods/psibane_m.json": {
@@ -7008,7 +7008,7 @@
       },
       "source_ref": {
         "line": 1,
-        "lst_file": ""
+        "source_path": ""
       }
     },
     "equipmods/psibane_r.json": {
@@ -7050,7 +7050,7 @@
       },
       "source_ref": {
         "line": 1,
-        "lst_file": ""
+        "source_path": ""
       }
     },
     "equipmods/psiblade.json": {
@@ -7087,7 +7087,7 @@
       },
       "source_ref": {
         "line": 1,
-        "lst_file": ""
+        "source_path": ""
       }
     },
     "equipmods/psiset.json": {
@@ -7124,7 +7124,7 @@
       },
       "source_ref": {
         "line": 1,
-        "lst_file": ""
+        "source_path": ""
       }
     },
     "equipmods/psychic.json": {
@@ -7161,7 +7161,7 @@
       },
       "source_ref": {
         "line": 1,
-        "lst_file": ""
+        "source_path": ""
       }
     },
     "equipmods/psydis.json": {
@@ -7198,7 +7198,7 @@
       },
       "source_ref": {
         "line": 1,
-        "lst_file": ""
+        "source_path": ""
       }
     },
     "equipmods/pwr_crwl.json": {
@@ -7235,7 +7235,7 @@
       },
       "source_ref": {
         "line": 1,
-        "lst_file": ""
+        "source_path": ""
       }
     },
     "equipmods/pwr_drj.json": {
@@ -7272,7 +7272,7 @@
       },
       "source_ref": {
         "line": 1,
-        "lst_file": ""
+        "source_path": ""
       }
     },
     "equipmods/pwr_erng.json": {
@@ -7309,7 +7309,7 @@
       },
       "source_ref": {
         "line": 1,
-        "lst_file": ""
+        "source_path": ""
       }
     },
     "equipmods/pwr_gwi.json": {
@@ -7346,7 +7346,7 @@
       },
       "source_ref": {
         "line": 1,
-        "lst_file": ""
+        "source_path": ""
       }
     },
     "equipmods/pwr_mdst.json": {
@@ -7383,7 +7383,7 @@
       },
       "source_ref": {
         "line": 1,
-        "lst_file": ""
+        "source_path": ""
       }
     },
     "equipmods/pwr_mdst_g.json": {
@@ -7420,7 +7420,7 @@
       },
       "source_ref": {
         "line": 1,
-        "lst_file": ""
+        "source_path": ""
       }
     },
     "equipmods/pwr_pcwn_g.json": {
@@ -7457,7 +7457,7 @@
       },
       "source_ref": {
         "line": 1,
-        "lst_file": ""
+        "source_path": ""
       }
     },
     "equipmods/pwr_pcwn_l.json": {
@@ -7494,7 +7494,7 @@
       },
       "source_ref": {
         "line": 1,
-        "lst_file": ""
+        "source_path": ""
       }
     },
     "equipmods/pwr_pcwn_t.json": {
@@ -7531,7 +7531,7 @@
       },
       "source_ref": {
         "line": 1,
-        "lst_file": ""
+        "source_path": ""
       }
     },
     "equipmods/pwr_ps.json": {
@@ -7568,7 +7568,7 @@
       },
       "source_ref": {
         "line": 1,
-        "lst_file": ""
+        "source_path": ""
       }
     },
     "equipmods/pwr_pt.json": {
@@ -7605,7 +7605,7 @@
       },
       "source_ref": {
         "line": 1,
-        "lst_file": ""
+        "source_path": ""
       }
     },
     "equipmods/pwr_thrdi.json": {
@@ -7642,7 +7642,7 @@
       },
       "source_ref": {
         "line": 1,
-        "lst_file": ""
+        "source_path": ""
       }
     },
     "equipmods/pwrrst_13.json": {
@@ -7679,7 +7679,7 @@
       },
       "source_ref": {
         "line": 1,
-        "lst_file": ""
+        "source_path": ""
       }
     },
     "equipmods/pwrrst_15.json": {
@@ -7716,7 +7716,7 @@
       },
       "source_ref": {
         "line": 1,
-        "lst_file": ""
+        "source_path": ""
       }
     },
     "equipmods/pwrrst_17.json": {
@@ -7753,7 +7753,7 @@
       },
       "source_ref": {
         "line": 1,
-        "lst_file": ""
+        "source_path": ""
       }
     },
     "equipmods/pwrrst_19.json": {
@@ -7790,7 +7790,7 @@
       },
       "source_ref": {
         "line": 1,
-        "lst_file": ""
+        "source_path": ""
       }
     },
     "equipmods/pwrstor.json": {
@@ -7827,7 +7827,7 @@
       },
       "source_ref": {
         "line": 1,
-        "lst_file": ""
+        "source_path": ""
       }
     },
     "equipmods/quickn.json": {
@@ -7864,7 +7864,7 @@
       },
       "source_ref": {
         "line": 1,
-        "lst_file": ""
+        "source_path": ""
       }
     },
     "equipmods/radiant.json": {
@@ -7922,7 +7922,7 @@
       },
       "source_ref": {
         "line": 1,
-        "lst_file": ""
+        "source_path": ""
       }
     },
     "equipmods/rbdng.json": {
@@ -7959,7 +7959,7 @@
       },
       "source_ref": {
         "line": 1,
-        "lst_file": ""
+        "source_path": ""
       }
     },
     "equipmods/rngd.json": {
@@ -7996,7 +7996,7 @@
       },
       "source_ref": {
         "line": 1,
-        "lst_file": ""
+        "source_path": ""
       }
     },
     "equipmods/scgbn.json": {
@@ -8033,7 +8033,7 @@
       },
       "source_ref": {
         "line": 1,
-        "lst_file": ""
+        "source_path": ""
       }
     },
     "equipmods/scgbn_svs.json": {
@@ -8070,7 +8070,7 @@
       },
       "source_ref": {
         "line": 1,
-        "lst_file": ""
+        "source_path": ""
       }
     },
     "equipmods/seeing.json": {
@@ -8110,7 +8110,7 @@
       },
       "source_ref": {
         "line": 1,
-        "lst_file": ""
+        "source_path": ""
       }
     },
     "equipmods/soulbreak.json": {
@@ -8147,7 +8147,7 @@
       },
       "source_ref": {
         "line": 1,
-        "lst_file": ""
+        "source_path": ""
       }
     },
     "equipmods/special_ability_agile_melee.json": {
@@ -8184,7 +8184,7 @@
       },
       "source_ref": {
         "line": 1,
-        "lst_file": ""
+        "source_path": ""
       }
     },
     "equipmods/special_ability_aporter_armor.json": {
@@ -8221,7 +8221,7 @@
       },
       "source_ref": {
         "line": 1,
-        "lst_file": ""
+        "source_path": ""
       }
     },
     "equipmods/special_ability_averter_shield.json": {
@@ -8258,7 +8258,7 @@
       },
       "source_ref": {
         "line": 1,
-        "lst_file": ""
+        "source_path": ""
       }
     },
     "equipmods/special_ability_bodyfeeder_melee.json": {
@@ -8295,7 +8295,7 @@
       },
       "source_ref": {
         "line": 1,
-        "lst_file": ""
+        "source_path": ""
       }
     },
     "equipmods/special_ability_challenger_melee.json": {
@@ -8332,7 +8332,7 @@
       },
       "source_ref": {
         "line": 1,
-        "lst_file": ""
+        "source_path": ""
       }
     },
     "equipmods/special_ability_collision_ammunition.json": {
@@ -8369,7 +8369,7 @@
       },
       "source_ref": {
         "line": 1,
-        "lst_file": ""
+        "source_path": ""
       }
     },
     "equipmods/special_ability_collision_melee.json": {
@@ -8406,7 +8406,7 @@
       },
       "source_ref": {
         "line": 1,
-        "lst_file": ""
+        "source_path": ""
       }
     },
     "equipmods/special_ability_collision_ranged.json": {
@@ -8443,7 +8443,7 @@
       },
       "source_ref": {
         "line": 1,
-        "lst_file": ""
+        "source_path": ""
       }
     },
     "equipmods/special_ability_coup_de_grace_ammunition.json": {
@@ -8480,7 +8480,7 @@
       },
       "source_ref": {
         "line": 1,
-        "lst_file": ""
+        "source_path": ""
       }
     },
     "equipmods/special_ability_coup_de_grace_melee.json": {
@@ -8517,7 +8517,7 @@
       },
       "source_ref": {
         "line": 1,
-        "lst_file": ""
+        "source_path": ""
       }
     },
     "equipmods/special_ability_coup_de_grace_ranged.json": {
@@ -8554,7 +8554,7 @@
       },
       "source_ref": {
         "line": 1,
-        "lst_file": ""
+        "source_path": ""
       }
     },
     "equipmods/special_ability_determination_armor.json": {
@@ -8591,7 +8591,7 @@
       },
       "source_ref": {
         "line": 1,
-        "lst_file": ""
+        "source_path": ""
       }
     },
     "equipmods/special_ability_dislocator_ammunition.json": {
@@ -8628,7 +8628,7 @@
       },
       "source_ref": {
         "line": 1,
-        "lst_file": ""
+        "source_path": ""
       }
     },
     "equipmods/special_ability_dislocator_great_ammunition.json": {
@@ -8665,7 +8665,7 @@
       },
       "source_ref": {
         "line": 1,
-        "lst_file": ""
+        "source_path": ""
       }
     },
     "equipmods/special_ability_dislocator_great_melee.json": {
@@ -8702,7 +8702,7 @@
       },
       "source_ref": {
         "line": 1,
-        "lst_file": ""
+        "source_path": ""
       }
     },
     "equipmods/special_ability_dislocator_great_ranged.json": {
@@ -8739,7 +8739,7 @@
       },
       "source_ref": {
         "line": 1,
-        "lst_file": ""
+        "source_path": ""
       }
     },
     "equipmods/special_ability_dislocator_melee.json": {
@@ -8776,7 +8776,7 @@
       },
       "source_ref": {
         "line": 1,
-        "lst_file": ""
+        "source_path": ""
       }
     },
     "equipmods/special_ability_dislocator_ranged.json": {
@@ -8813,7 +8813,7 @@
       },
       "source_ref": {
         "line": 1,
-        "lst_file": ""
+        "source_path": ""
       }
     },
     "equipmods/special_ability_dissipater_melee.json": {
@@ -8850,7 +8850,7 @@
       },
       "source_ref": {
         "line": 1,
-        "lst_file": ""
+        "source_path": ""
       }
     },
     "equipmods/special_ability_dueling_luck_bonus_melee.json": {
@@ -8887,7 +8887,7 @@
       },
       "source_ref": {
         "line": 1,
-        "lst_file": ""
+        "source_path": ""
       }
     },
     "equipmods/special_ability_ectoplasmic_armor.json": {
@@ -8924,7 +8924,7 @@
       },
       "source_ref": {
         "line": 1,
-        "lst_file": ""
+        "source_path": ""
       }
     },
     "equipmods/special_ability_energy_cold_greater_ranged.json": {
@@ -8961,7 +8961,7 @@
       },
       "source_ref": {
         "line": 1,
-        "lst_file": ""
+        "source_path": ""
       }
     },
     "equipmods/special_ability_energy_cold_ranged.json": {
@@ -8998,7 +8998,7 @@
       },
       "source_ref": {
         "line": 1,
-        "lst_file": ""
+        "source_path": ""
       }
     },
     "equipmods/special_ability_energy_electricity_greater_ranged.json": {
@@ -9035,7 +9035,7 @@
       },
       "source_ref": {
         "line": 1,
-        "lst_file": ""
+        "source_path": ""
       }
     },
     "equipmods/special_ability_energy_electricity_ranged.json": {
@@ -9072,7 +9072,7 @@
       },
       "source_ref": {
         "line": 1,
-        "lst_file": ""
+        "source_path": ""
       }
     },
     "equipmods/special_ability_energy_fire_greater_ranged.json": {
@@ -9109,7 +9109,7 @@
       },
       "source_ref": {
         "line": 1,
-        "lst_file": ""
+        "source_path": ""
       }
     },
     "equipmods/special_ability_energy_fire_ranged.json": {
@@ -9146,7 +9146,7 @@
       },
       "source_ref": {
         "line": 1,
-        "lst_file": ""
+        "source_path": ""
       }
     },
     "equipmods/special_ability_fatalist_weapon.json": {
@@ -9183,7 +9183,7 @@
       },
       "source_ref": {
         "line": 1,
-        "lst_file": ""
+        "source_path": ""
       }
     },
     "equipmods/special_ability_floating_armor.json": {
@@ -9220,7 +9220,7 @@
       },
       "source_ref": {
         "line": 1,
-        "lst_file": ""
+        "source_path": ""
       }
     },
     "equipmods/special_ability_fusing_armor_heavy.json": {
@@ -9257,7 +9257,7 @@
       },
       "source_ref": {
         "line": 1,
-        "lst_file": ""
+        "source_path": ""
       }
     },
     "equipmods/special_ability_fusing_armor_light.json": {
@@ -9294,7 +9294,7 @@
       },
       "source_ref": {
         "line": 1,
-        "lst_file": ""
+        "source_path": ""
       }
     },
     "equipmods/special_ability_fusing_armor_medium.json": {
@@ -9331,7 +9331,7 @@
       },
       "source_ref": {
         "line": 1,
-        "lst_file": ""
+        "source_path": ""
       }
     },
     "equipmods/special_ability_fusing_shield.json": {
@@ -9368,7 +9368,7 @@
       },
       "source_ref": {
         "line": 1,
-        "lst_file": ""
+        "source_path": ""
       }
     },
     "equipmods/special_ability_gleaming_armor.json": {
@@ -9405,7 +9405,7 @@
       },
       "source_ref": {
         "line": 1,
-        "lst_file": ""
+        "source_path": ""
       }
     },
     "equipmods/special_ability_guardian_weapon.json": {
@@ -9442,7 +9442,7 @@
       },
       "source_ref": {
         "line": 1,
-        "lst_file": ""
+        "source_path": ""
       }
     },
     "equipmods/special_ability_heartening_shield.json": {
@@ -9479,7 +9479,7 @@
       },
       "source_ref": {
         "line": 1,
-        "lst_file": ""
+        "source_path": ""
       }
     },
     "equipmods/special_ability_invader_ammunition.json": {
@@ -9516,7 +9516,7 @@
       },
       "source_ref": {
         "line": 1,
-        "lst_file": ""
+        "source_path": ""
       }
     },
     "equipmods/special_ability_knockout_weapon.json": {
@@ -9553,7 +9553,7 @@
       },
       "source_ref": {
         "line": 1,
-        "lst_file": ""
+        "source_path": ""
       }
     },
     "equipmods/special_ability_landing_armor.json": {
@@ -9590,7 +9590,7 @@
       },
       "source_ref": {
         "line": 1,
-        "lst_file": ""
+        "source_path": ""
       }
     },
     "equipmods/special_ability_linked_armor.json": {
@@ -9627,7 +9627,7 @@
       },
       "source_ref": {
         "line": 1,
-        "lst_file": ""
+        "source_path": ""
       }
     },
     "equipmods/special_ability_linked_striking_weapon.json": {
@@ -9664,7 +9664,7 @@
       },
       "source_ref": {
         "line": 1,
-        "lst_file": ""
+        "source_path": ""
       }
     },
     "equipmods/special_ability_lucky_melee.json": {
@@ -9701,7 +9701,7 @@
       },
       "source_ref": {
         "line": 1,
-        "lst_file": ""
+        "source_path": ""
       }
     },
     "equipmods/special_ability_manifester_ammunition.json": {
@@ -9738,7 +9738,7 @@
       },
       "source_ref": {
         "line": 1,
-        "lst_file": ""
+        "source_path": ""
       }
     },
     "equipmods/special_ability_manifester_melee.json": {
@@ -9775,7 +9775,7 @@
       },
       "source_ref": {
         "line": 1,
-        "lst_file": ""
+        "source_path": ""
       }
     },
     "equipmods/special_ability_manifester_ranged.json": {
@@ -9812,7 +9812,7 @@
       },
       "source_ref": {
         "line": 1,
-        "lst_file": ""
+        "source_path": ""
       }
     },
     "equipmods/special_ability_manifester_shield.json": {
@@ -9849,7 +9849,7 @@
       },
       "source_ref": {
         "line": 1,
-        "lst_file": ""
+        "source_path": ""
       }
     },
     "equipmods/special_ability_mindarmor_armor.json": {
@@ -9886,7 +9886,7 @@
       },
       "source_ref": {
         "line": 1,
-        "lst_file": ""
+        "source_path": ""
       }
     },
     "equipmods/special_ability_mindcrusher_melee.json": {
@@ -9923,7 +9923,7 @@
       },
       "source_ref": {
         "line": 1,
-        "lst_file": ""
+        "source_path": ""
       }
     },
     "equipmods/special_ability_mindfeeder_melee.json": {
@@ -9960,7 +9960,7 @@
       },
       "source_ref": {
         "line": 1,
-        "lst_file": ""
+        "source_path": ""
       }
     },
     "equipmods/special_ability_murmuring_armor.json": {
@@ -9997,7 +9997,7 @@
       },
       "source_ref": {
         "line": 1,
-        "lst_file": ""
+        "source_path": ""
       }
     },
     "equipmods/special_ability_murmuring_greater_armor.json": {
@@ -10034,7 +10034,7 @@
       },
       "source_ref": {
         "line": 1,
-        "lst_file": ""
+        "source_path": ""
       }
     },
     "equipmods/special_ability_parrying_melee.json": {
@@ -10071,7 +10071,7 @@
       },
       "source_ref": {
         "line": 1,
-        "lst_file": ""
+        "source_path": ""
       }
     },
     "equipmods/special_ability_phasing_armor.json": {
@@ -10108,7 +10108,7 @@
       },
       "source_ref": {
         "line": 1,
-        "lst_file": ""
+        "source_path": ""
       }
     },
     "equipmods/special_ability_power_choice_earring_of_resistance.json": {
@@ -10145,7 +10145,7 @@
       },
       "source_ref": {
         "line": 1,
-        "lst_file": ""
+        "source_path": ""
       }
     },
     "equipmods/special_ability_power_choice_green_white_ioun_stone.json": {
@@ -10182,7 +10182,7 @@
       },
       "source_ref": {
         "line": 1,
-        "lst_file": ""
+        "source_path": ""
       }
     },
     "equipmods/special_ability_power_choice_mind_stone.json": {
@@ -10219,7 +10219,7 @@
       },
       "source_ref": {
         "line": 1,
-        "lst_file": ""
+        "source_path": ""
       }
     },
     "equipmods/special_ability_power_choice_mind_stone_greater.json": {
@@ -10256,7 +10256,7 @@
       },
       "source_ref": {
         "line": 1,
-        "lst_file": ""
+        "source_path": ""
       }
     },
     "equipmods/special_ability_power_choice_third_eye.json": {
@@ -10293,7 +10293,7 @@
       },
       "source_ref": {
         "line": 1,
-        "lst_file": ""
+        "source_path": ""
       }
     },
     "equipmods/special_ability_power_effect_completion.json": {
@@ -10330,7 +10330,7 @@
       },
       "source_ref": {
         "line": 1,
-        "lst_file": ""
+        "source_path": ""
       }
     },
     "equipmods/special_ability_power_effect_power_trigger.json": {
@@ -10367,7 +10367,7 @@
       },
       "source_ref": {
         "line": 1,
-        "lst_file": ""
+        "source_path": ""
       }
     },
     "equipmods/special_ability_power_effect_psicrown_greater.json": {
@@ -10404,7 +10404,7 @@
       },
       "source_ref": {
         "line": 1,
-        "lst_file": ""
+        "source_path": ""
       }
     },
     "equipmods/special_ability_power_effect_psicrown_lesser.json": {
@@ -10441,7 +10441,7 @@
       },
       "source_ref": {
         "line": 1,
-        "lst_file": ""
+        "source_path": ""
       }
     },
     "equipmods/special_ability_power_effect_psicrown_true.json": {
@@ -10478,7 +10478,7 @@
       },
       "source_ref": {
         "line": 1,
-        "lst_file": ""
+        "source_path": ""
       }
     },
     "equipmods/special_ability_power_effect_single_use.json": {
@@ -10515,7 +10515,7 @@
       },
       "source_ref": {
         "line": 1,
-        "lst_file": ""
+        "source_path": ""
       }
     },
     "equipmods/special_ability_power_effect_single_use_crawling.json": {
@@ -10552,7 +10552,7 @@
       },
       "source_ref": {
         "line": 1,
-        "lst_file": ""
+        "source_path": ""
       }
     },
     "equipmods/special_ability_power_resistance_13_armor.json": {
@@ -10589,7 +10589,7 @@
       },
       "source_ref": {
         "line": 1,
-        "lst_file": ""
+        "source_path": ""
       }
     },
     "equipmods/special_ability_power_resistance_15_armor.json": {
@@ -10626,7 +10626,7 @@
       },
       "source_ref": {
         "line": 1,
-        "lst_file": ""
+        "source_path": ""
       }
     },
     "equipmods/special_ability_power_resistance_17_armor.json": {
@@ -10663,7 +10663,7 @@
       },
       "source_ref": {
         "line": 1,
-        "lst_file": ""
+        "source_path": ""
       }
     },
     "equipmods/special_ability_power_resistance_19_armor.json": {
@@ -10700,7 +10700,7 @@
       },
       "source_ref": {
         "line": 1,
-        "lst_file": ""
+        "source_path": ""
       }
     },
     "equipmods/special_ability_power_storing_melee.json": {
@@ -10737,7 +10737,7 @@
       },
       "source_ref": {
         "line": 1,
-        "lst_file": ""
+        "source_path": ""
       }
     },
     "equipmods/special_ability_psibane_ammunition.json": {
@@ -10779,7 +10779,7 @@
       },
       "source_ref": {
         "line": 1,
-        "lst_file": ""
+        "source_path": ""
       }
     },
     "equipmods/special_ability_psibane_melee.json": {
@@ -10821,7 +10821,7 @@
       },
       "source_ref": {
         "line": 1,
-        "lst_file": ""
+        "source_path": ""
       }
     },
     "equipmods/special_ability_psibane_ranged.json": {
@@ -10863,7 +10863,7 @@
       },
       "source_ref": {
         "line": 1,
-        "lst_file": ""
+        "source_path": ""
       }
     },
     "equipmods/special_ability_psicrystal_setting_weapon.json": {
@@ -10900,7 +10900,7 @@
       },
       "source_ref": {
         "line": 1,
-        "lst_file": ""
+        "source_path": ""
       }
     },
     "equipmods/special_ability_psionic_blade_weapon.json": {
@@ -10937,7 +10937,7 @@
       },
       "source_ref": {
         "line": 1,
-        "lst_file": ""
+        "source_path": ""
       }
     },
     "equipmods/special_ability_psychic_melee.json": {
@@ -10974,7 +10974,7 @@
       },
       "source_ref": {
         "line": 1,
-        "lst_file": ""
+        "source_path": ""
       }
     },
     "equipmods/special_ability_psychodisruptive_weapon.json": {
@@ -11011,7 +11011,7 @@
       },
       "source_ref": {
         "line": 1,
-        "lst_file": ""
+        "source_path": ""
       }
     },
     "equipmods/special_ability_psychokinetic_ammunition.json": {
@@ -11048,7 +11048,7 @@
       },
       "source_ref": {
         "line": 1,
-        "lst_file": ""
+        "source_path": ""
       }
     },
     "equipmods/special_ability_psychokinetic_burst_ammunition.json": {
@@ -11085,7 +11085,7 @@
       },
       "source_ref": {
         "line": 1,
-        "lst_file": ""
+        "source_path": ""
       }
     },
     "equipmods/special_ability_psychokinetic_burst_melee.json": {
@@ -11122,7 +11122,7 @@
       },
       "source_ref": {
         "line": 1,
-        "lst_file": ""
+        "source_path": ""
       }
     },
     "equipmods/special_ability_psychokinetic_burst_ranged.json": {
@@ -11159,7 +11159,7 @@
       },
       "source_ref": {
         "line": 1,
-        "lst_file": ""
+        "source_path": ""
       }
     },
     "equipmods/special_ability_psychokinetic_melee.json": {
@@ -11196,7 +11196,7 @@
       },
       "source_ref": {
         "line": 1,
-        "lst_file": ""
+        "source_path": ""
       }
     },
     "equipmods/special_ability_psychokinetic_ranged.json": {
@@ -11233,7 +11233,7 @@
       },
       "source_ref": {
         "line": 1,
-        "lst_file": ""
+        "source_path": ""
       }
     },
     "equipmods/special_ability_quickness_armor.json": {
@@ -11270,7 +11270,7 @@
       },
       "source_ref": {
         "line": 1,
-        "lst_file": ""
+        "source_path": ""
       }
     },
     "equipmods/special_ability_radiant_psionic_armor.json": {
@@ -11328,7 +11328,7 @@
       },
       "source_ref": {
         "line": 1,
-        "lst_file": ""
+        "source_path": ""
       }
     },
     "equipmods/special_ability_ranged_shield.json": {
@@ -11365,7 +11365,7 @@
       },
       "source_ref": {
         "line": 1,
-        "lst_file": ""
+        "source_path": ""
       }
     },
     "equipmods/special_ability_rebounding_thrown.json": {
@@ -11402,7 +11402,7 @@
       },
       "source_ref": {
         "line": 1,
-        "lst_file": ""
+        "source_path": ""
       }
     },
     "equipmods/special_ability_scourgebane_weapon.json": {
@@ -11439,7 +11439,7 @@
       },
       "source_ref": {
         "line": 1,
-        "lst_file": ""
+        "source_path": ""
       }
     },
     "equipmods/special_ability_seeing_armor.json": {
@@ -11479,7 +11479,7 @@
       },
       "source_ref": {
         "line": 1,
-        "lst_file": ""
+        "source_path": ""
       }
     },
     "equipmods/special_ability_soulbreaker_melee.json": {
@@ -11516,7 +11516,7 @@
       },
       "source_ref": {
         "line": 1,
-        "lst_file": ""
+        "source_path": ""
       }
     },
     "equipmods/special_ability_sundering_melee.json": {
@@ -11553,7 +11553,7 @@
       },
       "source_ref": {
         "line": 1,
-        "lst_file": ""
+        "source_path": ""
       }
     },
     "equipmods/special_ability_suppression_ammunition.json": {
@@ -11590,7 +11590,7 @@
       },
       "source_ref": {
         "line": 1,
-        "lst_file": ""
+        "source_path": ""
       }
     },
     "equipmods/special_ability_suppression_melee.json": {
@@ -11627,7 +11627,7 @@
       },
       "source_ref": {
         "line": 1,
-        "lst_file": ""
+        "source_path": ""
       }
     },
     "equipmods/special_ability_suppression_ranged.json": {
@@ -11664,7 +11664,7 @@
       },
       "source_ref": {
         "line": 1,
-        "lst_file": ""
+        "source_path": ""
       }
     },
     "equipmods/special_ability_teleporting_thrown.json": {
@@ -11701,7 +11701,7 @@
       },
       "source_ref": {
         "line": 1,
-        "lst_file": ""
+        "source_path": ""
       }
     },
     "equipmods/special_ability_time_buttress_shield.json": {
@@ -11738,7 +11738,7 @@
       },
       "source_ref": {
         "line": 1,
-        "lst_file": ""
+        "source_path": ""
       }
     },
     "equipmods/special_ability_vanishing_armor.json": {
@@ -11775,7 +11775,7 @@
       },
       "source_ref": {
         "line": 1,
-        "lst_file": ""
+        "source_path": ""
       }
     },
     "equipmods/special_ability_wall_shield.json": {
@@ -11812,7 +11812,7 @@
       },
       "source_ref": {
         "line": 1,
-        "lst_file": ""
+        "source_path": ""
       }
     },
     "equipmods/special_ability_whistling_weapon.json": {
@@ -11849,7 +11849,7 @@
       },
       "source_ref": {
         "line": 1,
-        "lst_file": ""
+        "source_path": ""
       }
     },
     "equipmods/special_ability_wrenching_ranged.json": {
@@ -11886,7 +11886,7 @@
       },
       "source_ref": {
         "line": 1,
-        "lst_file": ""
+        "source_path": ""
       }
     },
     "equipmods/special_quality_dancing_robes_of_sharatwan_armor_bonus.json": {
@@ -11928,7 +11928,7 @@
       },
       "source_ref": {
         "line": 1,
-        "lst_file": ""
+        "source_path": ""
       }
     },
     "equipmods/special_quality_dancing_robes_of_sharatwan_determination.json": {
@@ -11965,7 +11965,7 @@
       },
       "source_ref": {
         "line": 1,
-        "lst_file": ""
+        "source_path": ""
       }
     },
     "equipmods/special_quality_dissonance_enhancement_bonus_alt.json": {
@@ -12012,7 +12012,7 @@
       },
       "source_ref": {
         "line": 1,
-        "lst_file": ""
+        "source_path": ""
       }
     },
     "equipmods/special_quality_dissonance_enhancement_bonus_main.json": {
@@ -12059,7 +12059,7 @@
       },
       "source_ref": {
         "line": 1,
-        "lst_file": ""
+        "source_path": ""
       }
     },
     "equipmods/special_quality_dissonance_whistling_alt.json": {
@@ -12096,7 +12096,7 @@
       },
       "source_ref": {
         "line": 1,
-        "lst_file": ""
+        "source_path": ""
       }
     },
     "equipmods/special_quality_dissonance_whistling_main.json": {
@@ -12133,7 +12133,7 @@
       },
       "source_ref": {
         "line": 1,
-        "lst_file": ""
+        "source_path": ""
       }
     },
     "equipmods/special_quality_gloves_of_calling.json": {
@@ -12170,7 +12170,7 @@
       },
       "source_ref": {
         "line": 1,
-        "lst_file": ""
+        "source_path": ""
       }
     },
     "equipmods/special_quality_severis_enhancement_bonus.json": {
@@ -12217,7 +12217,7 @@
       },
       "source_ref": {
         "line": 1,
-        "lst_file": ""
+        "source_path": ""
       }
     },
     "equipmods/special_quality_severis_scourgebane.json": {
@@ -12254,7 +12254,7 @@
       },
       "source_ref": {
         "line": 1,
-        "lst_file": ""
+        "source_path": ""
       }
     },
     "equipmods/sundering.json": {
@@ -12291,7 +12291,7 @@
       },
       "source_ref": {
         "line": 1,
-        "lst_file": ""
+        "source_path": ""
       }
     },
     "equipmods/suppress_a.json": {
@@ -12328,7 +12328,7 @@
       },
       "source_ref": {
         "line": 1,
-        "lst_file": ""
+        "source_path": ""
       }
     },
     "equipmods/suppress_m.json": {
@@ -12365,7 +12365,7 @@
       },
       "source_ref": {
         "line": 1,
-        "lst_file": ""
+        "source_path": ""
       }
     },
     "equipmods/suppress_r.json": {
@@ -12402,7 +12402,7 @@
       },
       "source_ref": {
         "line": 1,
-        "lst_file": ""
+        "source_path": ""
       }
     },
     "equipmods/timebut.json": {
@@ -12439,7 +12439,7 @@
       },
       "source_ref": {
         "line": 1,
-        "lst_file": ""
+        "source_path": ""
       }
     },
     "equipmods/tporting.json": {
@@ -12476,7 +12476,7 @@
       },
       "source_ref": {
         "line": 1,
-        "lst_file": ""
+        "source_path": ""
       }
     },
     "equipmods/vanish.json": {
@@ -12513,7 +12513,7 @@
       },
       "source_ref": {
         "line": 1,
-        "lst_file": ""
+        "source_path": ""
       }
     },
     "equipmods/wall.json": {
@@ -12550,7 +12550,7 @@
       },
       "source_ref": {
         "line": 1,
-        "lst_file": ""
+        "source_path": ""
       }
     },
     "equipmods/whstl.json": {
@@ -12587,7 +12587,7 @@
       },
       "source_ref": {
         "line": 1,
-        "lst_file": ""
+        "source_path": ""
       }
     },
     "equipmods/whstl_dis_a.json": {
@@ -12624,7 +12624,7 @@
       },
       "source_ref": {
         "line": 1,
-        "lst_file": ""
+        "source_path": ""
       }
     },
     "equipmods/whstl_dis_m.json": {
@@ -12661,7 +12661,7 @@
       },
       "source_ref": {
         "line": 1,
-        "lst_file": ""
+        "source_path": ""
       }
     },
     "equipmods/wpn_call.json": {
@@ -12698,7 +12698,7 @@
       },
       "source_ref": {
         "line": 1,
-        "lst_file": ""
+        "source_path": ""
       }
     },
     "equipmods/wrnch.json": {
@@ -12735,7 +12735,7 @@
       },
       "source_ref": {
         "line": 1,
-        "lst_file": ""
+        "source_path": ""
       }
     },
     "eyes_of_disarming_glances.json": {
@@ -12772,7 +12772,7 @@
       },
       "source_ref": {
         "line": 1,
-        "lst_file": ""
+        "source_path": ""
       }
     },
     "eyes_of_expanded_vision.json": {
@@ -12812,7 +12812,7 @@
       },
       "source_ref": {
         "line": 1,
-        "lst_file": ""
+        "source_path": ""
       }
     },
     "eyes_of_power_leech.json": {
@@ -12849,7 +12849,7 @@
       },
       "source_ref": {
         "line": 1,
-        "lst_file": ""
+        "source_path": ""
       }
     },
     "eyes_of_power_leech_vampiric.json": {
@@ -12886,7 +12886,7 @@
       },
       "source_ref": {
         "line": 1,
-        "lst_file": ""
+        "source_path": ""
       }
     },
     "fear_drinker_s_amulet.json": {
@@ -12923,7 +12923,7 @@
       },
       "source_ref": {
         "line": 1,
-        "lst_file": ""
+        "source_path": ""
       }
     },
     "fear_drinker_s_amulet_greater.json": {
@@ -12960,7 +12960,7 @@
       },
       "source_ref": {
         "line": 1,
-        "lst_file": ""
+        "source_path": ""
       }
     },
     "flurry_of_fists.json": {
@@ -13003,7 +13003,7 @@
       },
       "source_ref": {
         "line": 1,
-        "lst_file": ""
+        "source_path": ""
       }
     },
     "flurry_of_strikes.json": {
@@ -13046,7 +13046,7 @@
       },
       "source_ref": {
         "line": 1,
-        "lst_file": ""
+        "source_path": ""
       }
     },
     "gauntlet_of_the_thunder_shield.json": {
@@ -13083,7 +13083,7 @@
       },
       "source_ref": {
         "line": 1,
-        "lst_file": ""
+        "source_path": ""
       }
     },
     "gladiator_s_gauze.json": {
@@ -13120,7 +13120,7 @@
       },
       "source_ref": {
         "line": 1,
-        "lst_file": ""
+        "source_path": ""
       }
     },
     "glove_of_calling.json": {
@@ -13157,7 +13157,7 @@
       },
       "source_ref": {
         "line": 1,
-        "lst_file": ""
+        "source_path": ""
       }
     },
     "gloves_of_object_reading.json": {
@@ -13194,7 +13194,7 @@
       },
       "source_ref": {
         "line": 1,
-        "lst_file": ""
+        "source_path": ""
       }
     },
     "gloves_of_the_beast_1d3.json": {
@@ -13231,7 +13231,7 @@
       },
       "source_ref": {
         "line": 1,
-        "lst_file": ""
+        "source_path": ""
       }
     },
     "gloves_of_the_beast_1d4.json": {
@@ -13268,7 +13268,7 @@
       },
       "source_ref": {
         "line": 1,
-        "lst_file": ""
+        "source_path": ""
       }
     },
     "gloves_of_the_beast_1d6.json": {
@@ -13305,7 +13305,7 @@
       },
       "source_ref": {
         "line": 1,
-        "lst_file": ""
+        "source_path": ""
       }
     },
     "gloves_of_the_beast_1d8.json": {
@@ -13342,7 +13342,7 @@
       },
       "source_ref": {
         "line": 1,
-        "lst_file": ""
+        "source_path": ""
       }
     },
     "gloves_of_the_beast_2d6.json": {
@@ -13379,7 +13379,7 @@
       },
       "source_ref": {
         "line": 1,
-        "lst_file": ""
+        "source_path": ""
       }
     },
     "gloves_of_the_beast_3d6.json": {
@@ -13416,7 +13416,7 @@
       },
       "source_ref": {
         "line": 1,
-        "lst_file": ""
+        "source_path": ""
       }
     },
     "gloves_of_the_beast_4d6.json": {
@@ -13453,7 +13453,7 @@
       },
       "source_ref": {
         "line": 1,
-        "lst_file": ""
+        "source_path": ""
       }
     },
     "gloves_of_the_beast_5d6.json": {
@@ -13490,7 +13490,7 @@
       },
       "source_ref": {
         "line": 1,
-        "lst_file": ""
+        "source_path": ""
       }
     },
     "gloves_of_the_beast_6d6.json": {
@@ -13527,7 +13527,7 @@
       },
       "source_ref": {
         "line": 1,
-        "lst_file": ""
+        "source_path": ""
       }
     },
     "gloves_of_titan_s_grip.json": {
@@ -13564,7 +13564,7 @@
       },
       "source_ref": {
         "line": 1,
-        "lst_file": ""
+        "source_path": ""
       }
     },
     "goggles_of_far_sight.json": {
@@ -13601,7 +13601,7 @@
       },
       "source_ref": {
         "line": 1,
-        "lst_file": ""
+        "source_path": ""
       }
     },
     "groundscorn_boots.json": {
@@ -13638,7 +13638,7 @@
       },
       "source_ref": {
         "line": 1,
-        "lst_file": ""
+        "source_path": ""
       }
     },
     "headband_of_interrogation.json": {
@@ -13675,7 +13675,7 @@
       },
       "source_ref": {
         "line": 1,
-        "lst_file": ""
+        "source_path": ""
       }
     },
     "headband_of_the_great_village_1_creature.json": {
@@ -13721,7 +13721,7 @@
       },
       "source_ref": {
         "line": 1,
-        "lst_file": ""
+        "source_path": ""
       }
     },
     "headband_of_the_great_village_2_creatures.json": {
@@ -13767,7 +13767,7 @@
       },
       "source_ref": {
         "line": 1,
-        "lst_file": ""
+        "source_path": ""
       }
     },
     "headband_of_the_great_village_3_creatures.json": {
@@ -13813,7 +13813,7 @@
       },
       "source_ref": {
         "line": 1,
-        "lst_file": ""
+        "source_path": ""
       }
     },
     "heartstaff.json": {
@@ -13868,7 +13868,7 @@
       },
       "source_ref": {
         "line": 1,
-        "lst_file": ""
+        "source_path": ""
       }
     },
     "helm_of_attitude_adjustment.json": {
@@ -13905,7 +13905,7 @@
       },
       "source_ref": {
         "line": 1,
-        "lst_file": ""
+        "source_path": ""
       }
     },
     "helm_of_the_hydra.json": {
@@ -13951,7 +13951,7 @@
       },
       "source_ref": {
         "line": 1,
-        "lst_file": ""
+        "source_path": ""
       }
     },
     "improved_mind_armor_heavy.json": {
@@ -13988,7 +13988,7 @@
       },
       "source_ref": {
         "line": 1,
-        "lst_file": ""
+        "source_path": ""
       }
     },
     "improved_mind_armor_light.json": {
@@ -14025,7 +14025,7 @@
       },
       "source_ref": {
         "line": 1,
-        "lst_file": ""
+        "source_path": ""
       }
     },
     "improved_mind_armor_medium.json": {
@@ -14062,7 +14062,7 @@
       },
       "source_ref": {
         "line": 1,
-        "lst_file": ""
+        "source_path": ""
       }
     },
     "ioun_stone_dull_grey.json": {
@@ -14099,7 +14099,7 @@
       },
       "source_ref": {
         "line": 1,
-        "lst_file": ""
+        "source_path": ""
       }
     },
     "ioun_stone_green_and_white.json": {
@@ -14136,7 +14136,7 @@
       },
       "source_ref": {
         "line": 1,
-        "lst_file": ""
+        "source_path": ""
       }
     },
     "ioun_stone_rainbow.json": {
@@ -14173,7 +14173,7 @@
       },
       "source_ref": {
         "line": 1,
-        "lst_file": ""
+        "source_path": ""
       }
     },
     "lava_walker_s_boots.json": {
@@ -14210,7 +14210,7 @@
       },
       "source_ref": {
         "line": 1,
-        "lst_file": ""
+        "source_path": ""
       }
     },
     "leather_of_confined_spaces.json": {
@@ -14255,7 +14255,7 @@
       },
       "source_ref": {
         "line": 1,
-        "lst_file": ""
+        "source_path": ""
       }
     },
     "mantle_of_the_void.json": {
@@ -14292,7 +14292,7 @@
       },
       "source_ref": {
         "line": 1,
-        "lst_file": ""
+        "source_path": ""
       }
     },
     "map_of_the_mind.json": {
@@ -14329,7 +14329,7 @@
       },
       "source_ref": {
         "line": 1,
-        "lst_file": ""
+        "source_path": ""
       }
     },
     "mask_of_confounded_foes.json": {
@@ -14366,7 +14366,7 @@
       },
       "source_ref": {
         "line": 1,
-        "lst_file": ""
+        "source_path": ""
       }
     },
     "meld_stone_alchemist.json": {
@@ -14406,7 +14406,7 @@
       },
       "source_ref": {
         "line": 1,
-        "lst_file": ""
+        "source_path": ""
       }
     },
     "meld_stone_inflitrator.json": {
@@ -14446,7 +14446,7 @@
       },
       "source_ref": {
         "line": 1,
-        "lst_file": ""
+        "source_path": ""
       }
     },
     "meld_stone_nimble_trickster.json": {
@@ -14486,7 +14486,7 @@
       },
       "source_ref": {
         "line": 1,
-        "lst_file": ""
+        "source_path": ""
       }
     },
     "mender_s_vestments_extra_1d6.json": {
@@ -14528,7 +14528,7 @@
       },
       "source_ref": {
         "line": 1,
-        "lst_file": ""
+        "source_path": ""
       }
     },
     "mender_s_vestments_extra_time.json": {
@@ -14570,7 +14570,7 @@
       },
       "source_ref": {
         "line": 1,
-        "lst_file": ""
+        "source_path": ""
       }
     },
     "mender_s_vestments_extra_time_and_1d6.json": {
@@ -14616,7 +14616,7 @@
       },
       "source_ref": {
         "line": 1,
-        "lst_file": ""
+        "source_path": ""
       }
     },
     "mind_armor_heavy.json": {
@@ -14653,7 +14653,7 @@
       },
       "source_ref": {
         "line": 1,
-        "lst_file": ""
+        "source_path": ""
       }
     },
     "mind_armor_light.json": {
@@ -14690,7 +14690,7 @@
       },
       "source_ref": {
         "line": 1,
-        "lst_file": ""
+        "source_path": ""
       }
     },
     "mind_armor_medium.json": {
@@ -14727,7 +14727,7 @@
       },
       "source_ref": {
         "line": 1,
-        "lst_file": ""
+        "source_path": ""
       }
     },
     "mind_arrow.json": {
@@ -14772,7 +14772,7 @@
       },
       "source_ref": {
         "line": 1,
-        "lst_file": ""
+        "source_path": ""
       }
     },
     "mind_blade_light_bludgeoning.json": {
@@ -14817,7 +14817,7 @@
       },
       "source_ref": {
         "line": 1,
-        "lst_file": ""
+        "source_path": ""
       }
     },
     "mind_blade_light_piercing.json": {
@@ -14862,7 +14862,7 @@
       },
       "source_ref": {
         "line": 1,
-        "lst_file": ""
+        "source_path": ""
       }
     },
     "mind_blade_light_slashing.json": {
@@ -14907,7 +14907,7 @@
       },
       "source_ref": {
         "line": 1,
-        "lst_file": ""
+        "source_path": ""
       }
     },
     "mind_blade_one_handed_bludgeoning.json": {
@@ -14952,7 +14952,7 @@
       },
       "source_ref": {
         "line": 1,
-        "lst_file": ""
+        "source_path": ""
       }
     },
     "mind_blade_one_handed_piercing.json": {
@@ -14997,7 +14997,7 @@
       },
       "source_ref": {
         "line": 1,
-        "lst_file": ""
+        "source_path": ""
       }
     },
     "mind_blade_one_handed_slashing.json": {
@@ -15042,7 +15042,7 @@
       },
       "source_ref": {
         "line": 1,
-        "lst_file": ""
+        "source_path": ""
       }
     },
     "mind_blade_two_handed_bludgeoning.json": {
@@ -15087,7 +15087,7 @@
       },
       "source_ref": {
         "line": 1,
-        "lst_file": ""
+        "source_path": ""
       }
     },
     "mind_blade_two_handed_piercing.json": {
@@ -15132,7 +15132,7 @@
       },
       "source_ref": {
         "line": 1,
-        "lst_file": ""
+        "source_path": ""
       }
     },
     "mind_blade_two_handed_slashing.json": {
@@ -15177,7 +15177,7 @@
       },
       "source_ref": {
         "line": 1,
-        "lst_file": ""
+        "source_path": ""
       }
     },
     "mind_bolt_long_range_bludgeoning.json": {
@@ -15222,7 +15222,7 @@
       },
       "source_ref": {
         "line": 1,
-        "lst_file": ""
+        "source_path": ""
       }
     },
     "mind_bolt_long_range_piercing.json": {
@@ -15267,7 +15267,7 @@
       },
       "source_ref": {
         "line": 1,
-        "lst_file": ""
+        "source_path": ""
       }
     },
     "mind_bolt_long_range_slashing.json": {
@@ -15312,7 +15312,7 @@
       },
       "source_ref": {
         "line": 1,
-        "lst_file": ""
+        "source_path": ""
       }
     },
     "mind_bolt_medium_range_bludgeoning.json": {
@@ -15357,7 +15357,7 @@
       },
       "source_ref": {
         "line": 1,
-        "lst_file": ""
+        "source_path": ""
       }
     },
     "mind_bolt_medium_range_piercing.json": {
@@ -15402,7 +15402,7 @@
       },
       "source_ref": {
         "line": 1,
-        "lst_file": ""
+        "source_path": ""
       }
     },
     "mind_bolt_medium_range_slashing.json": {
@@ -15447,7 +15447,7 @@
       },
       "source_ref": {
         "line": 1,
-        "lst_file": ""
+        "source_path": ""
       }
     },
     "mind_bolt_short_range_bludgeoning.json": {
@@ -15492,7 +15492,7 @@
       },
       "source_ref": {
         "line": 1,
-        "lst_file": ""
+        "source_path": ""
       }
     },
     "mind_bolt_short_range_piercing.json": {
@@ -15537,7 +15537,7 @@
       },
       "source_ref": {
         "line": 1,
-        "lst_file": ""
+        "source_path": ""
       }
     },
     "mind_bolt_short_range_slashing.json": {
@@ -15582,7 +15582,7 @@
       },
       "source_ref": {
         "line": 1,
-        "lst_file": ""
+        "source_path": ""
       }
     },
     "mind_dagger.json": {
@@ -15627,7 +15627,7 @@
       },
       "source_ref": {
         "line": 1,
-        "lst_file": ""
+        "source_path": ""
       }
     },
     "mind_sharing_circlets.json": {
@@ -15664,7 +15664,7 @@
       },
       "source_ref": {
         "line": 1,
-        "lst_file": ""
+        "source_path": ""
       }
     },
     "mind_shield.json": {
@@ -15701,7 +15701,7 @@
       },
       "source_ref": {
         "line": 1,
-        "lst_file": ""
+        "source_path": ""
       }
     },
     "mind_shield_heavy.json": {
@@ -15744,7 +15744,7 @@
       },
       "source_ref": {
         "line": 1,
-        "lst_file": ""
+        "source_path": ""
       }
     },
     "mind_shield_tower.json": {
@@ -15781,7 +15781,7 @@
       },
       "source_ref": {
         "line": 1,
-        "lst_file": ""
+        "source_path": ""
       }
     },
     "mind_stone.json": {
@@ -15818,7 +15818,7 @@
       },
       "source_ref": {
         "line": 1,
-        "lst_file": ""
+        "source_path": ""
       }
     },
     "mind_stone_greater.json": {
@@ -15855,7 +15855,7 @@
       },
       "source_ref": {
         "line": 1,
-        "lst_file": ""
+        "source_path": ""
       }
     },
     "mind_xephyr_knife.json": {
@@ -15900,7 +15900,7 @@
       },
       "source_ref": {
         "line": 1,
-        "lst_file": ""
+        "source_path": ""
       }
     },
     "mirror_of_lost_recollections.json": {
@@ -15937,7 +15937,7 @@
       },
       "source_ref": {
         "line": 1,
-        "lst_file": ""
+        "source_path": ""
       }
     },
     "mirror_of_mind_switch.json": {
@@ -15974,7 +15974,7 @@
       },
       "source_ref": {
         "line": 1,
-        "lst_file": ""
+        "source_path": ""
       }
     },
     "mirror_of_suggestion.json": {
@@ -16011,7 +16011,7 @@
       },
       "source_ref": {
         "line": 1,
-        "lst_file": ""
+        "source_path": ""
       }
     },
     "mirror_of_time_hop.json": {
@@ -16048,7 +16048,7 @@
       },
       "source_ref": {
         "line": 1,
-        "lst_file": ""
+        "source_path": ""
       }
     },
     "moldev.json": {
@@ -16090,7 +16090,7 @@
       },
       "source_ref": {
         "line": 1,
-        "lst_file": ""
+        "source_path": ""
       }
     },
     "pattern_breaker_s_gloves.json": {
@@ -16127,7 +16127,7 @@
       },
       "source_ref": {
         "line": 1,
-        "lst_file": ""
+        "source_path": ""
       }
     },
     "pearl_brain_lock.json": {
@@ -16164,7 +16164,7 @@
       },
       "source_ref": {
         "line": 1,
-        "lst_file": ""
+        "source_path": ""
       }
     },
     "pearl_breath_crisis.json": {
@@ -16201,7 +16201,7 @@
       },
       "source_ref": {
         "line": 1,
-        "lst_file": ""
+        "source_path": ""
       }
     },
     "pearl_mind_seed.json": {
@@ -16238,7 +16238,7 @@
       },
       "source_ref": {
         "line": 1,
-        "lst_file": ""
+        "source_path": ""
       }
     },
     "pearl_personality_parasite.json": {
@@ -16275,7 +16275,7 @@
       },
       "source_ref": {
         "line": 1,
-        "lst_file": ""
+        "source_path": ""
       }
     },
     "plate_of_the_juggernaut.json": {
@@ -16317,7 +16317,7 @@
       },
       "source_ref": {
         "line": 1,
-        "lst_file": ""
+        "source_path": ""
       }
     },
     "power_stone.json": {
@@ -16354,7 +16354,7 @@
       },
       "source_ref": {
         "line": 1,
-        "lst_file": ""
+        "source_path": ""
       }
     },
     "psicrown.json": {
@@ -16391,7 +16391,7 @@
       },
       "source_ref": {
         "line": 1,
-        "lst_file": ""
+        "source_path": ""
       }
     },
     "psicrown_astral_legion.json": {
@@ -16428,7 +16428,7 @@
       },
       "source_ref": {
         "line": 1,
-        "lst_file": ""
+        "source_path": ""
       }
     },
     "psicrown_beast.json": {
@@ -16465,7 +16465,7 @@
       },
       "source_ref": {
         "line": 1,
-        "lst_file": ""
+        "source_path": ""
       }
     },
     "psicrown_cautious_warrior.json": {
@@ -16502,7 +16502,7 @@
       },
       "source_ref": {
         "line": 1,
-        "lst_file": ""
+        "source_path": ""
       }
     },
     "psicrown_discerning_watcher.json": {
@@ -16539,7 +16539,7 @@
       },
       "source_ref": {
         "line": 1,
-        "lst_file": ""
+        "source_path": ""
       }
     },
     "psicrown_dominator.json": {
@@ -16576,7 +16576,7 @@
       },
       "source_ref": {
         "line": 1,
-        "lst_file": ""
+        "source_path": ""
       }
     },
     "psicrown_evader.json": {
@@ -16613,7 +16613,7 @@
       },
       "source_ref": {
         "line": 1,
-        "lst_file": ""
+        "source_path": ""
       }
     },
     "psicrown_fiery_ruin.json": {
@@ -16650,7 +16650,7 @@
       },
       "source_ref": {
         "line": 1,
-        "lst_file": ""
+        "source_path": ""
       }
     },
     "psicrown_force_and_fire.json": {
@@ -16687,7 +16687,7 @@
       },
       "source_ref": {
         "line": 1,
-        "lst_file": ""
+        "source_path": ""
       }
     },
     "psicrown_kinetic_control.json": {
@@ -16724,7 +16724,7 @@
       },
       "source_ref": {
         "line": 1,
-        "lst_file": ""
+        "source_path": ""
       }
     },
     "psicrown_lesser_dominator.json": {
@@ -16761,7 +16761,7 @@
       },
       "source_ref": {
         "line": 1,
-        "lst_file": ""
+        "source_path": ""
       }
     },
     "psicrown_lesser_force_and_fire.json": {
@@ -16798,7 +16798,7 @@
       },
       "source_ref": {
         "line": 1,
-        "lst_file": ""
+        "source_path": ""
       }
     },
     "psicrown_of_the_crystal_mind.json": {
@@ -16835,7 +16835,7 @@
       },
       "source_ref": {
         "line": 1,
-        "lst_file": ""
+        "source_path": ""
       }
     },
     "psicrown_temporal_juggler.json": {
@@ -16872,7 +16872,7 @@
       },
       "source_ref": {
         "line": 1,
-        "lst_file": ""
+        "source_path": ""
       }
     },
     "psicrown_traveler.json": {
@@ -16909,7 +16909,7 @@
       },
       "source_ref": {
         "line": 1,
-        "lst_file": ""
+        "source_path": ""
       }
     },
     "psicrystal_crown.json": {
@@ -16951,7 +16951,7 @@
       },
       "source_ref": {
         "line": 1,
-        "lst_file": ""
+        "source_path": ""
       }
     },
     "psicrystal_harness.json": {
@@ -16993,7 +16993,7 @@
       },
       "source_ref": {
         "line": 1,
-        "lst_file": ""
+        "source_path": ""
       }
     },
     "psicrystal_staff.json": {
@@ -17035,7 +17035,7 @@
       },
       "source_ref": {
         "line": 1,
-        "lst_file": ""
+        "source_path": ""
       }
     },
     "psicrystal_staff_greater.json": {
@@ -17086,7 +17086,7 @@
       },
       "source_ref": {
         "line": 1,
-        "lst_file": ""
+        "source_path": ""
       }
     },
     "psionatrix_clairsentience.json": {
@@ -17123,7 +17123,7 @@
       },
       "source_ref": {
         "line": 1,
-        "lst_file": ""
+        "source_path": ""
       }
     },
     "psionatrix_metacreativity.json": {
@@ -17160,7 +17160,7 @@
       },
       "source_ref": {
         "line": 1,
-        "lst_file": ""
+        "source_path": ""
       }
     },
     "psionatrix_psychokinesis.json": {
@@ -17197,7 +17197,7 @@
       },
       "source_ref": {
         "line": 1,
-        "lst_file": ""
+        "source_path": ""
       }
     },
     "psionatrix_psychometabolism.json": {
@@ -17234,7 +17234,7 @@
       },
       "source_ref": {
         "line": 1,
-        "lst_file": ""
+        "source_path": ""
       }
     },
     "psionatrix_psychoportation.json": {
@@ -17271,7 +17271,7 @@
       },
       "source_ref": {
         "line": 1,
-        "lst_file": ""
+        "source_path": ""
       }
     },
     "psionatrix_telepathy.json": {
@@ -17308,7 +17308,7 @@
       },
       "source_ref": {
         "line": 1,
-        "lst_file": ""
+        "source_path": ""
       }
     },
     "psionic_restraint_average.json": {
@@ -17345,7 +17345,7 @@
       },
       "source_ref": {
         "line": 1,
-        "lst_file": ""
+        "source_path": ""
       }
     },
     "psionic_restraint_damping.json": {
@@ -17382,7 +17382,7 @@
       },
       "source_ref": {
         "line": 1,
-        "lst_file": ""
+        "source_path": ""
       }
     },
     "psionic_restraint_greater.json": {
@@ -17419,7 +17419,7 @@
       },
       "source_ref": {
         "line": 1,
-        "lst_file": ""
+        "source_path": ""
       }
     },
     "psionic_restraint_lesser.json": {
@@ -17456,7 +17456,7 @@
       },
       "source_ref": {
         "line": 1,
-        "lst_file": ""
+        "source_path": ""
       }
     },
     "psionic_tattoo.json": {
@@ -17493,7 +17493,7 @@
       },
       "source_ref": {
         "line": 1,
-        "lst_file": ""
+        "source_path": ""
       }
     },
     "psychoactive_skin_chameleon.json": {
@@ -17533,7 +17533,7 @@
       },
       "source_ref": {
         "line": 1,
-        "lst_file": ""
+        "source_path": ""
       }
     },
     "psychoactive_skin_claw.json": {
@@ -17570,7 +17570,7 @@
       },
       "source_ref": {
         "line": 1,
-        "lst_file": ""
+        "source_path": ""
       }
     },
     "psychoactive_skin_defender.json": {
@@ -17607,7 +17607,7 @@
       },
       "source_ref": {
         "line": 1,
-        "lst_file": ""
+        "source_path": ""
       }
     },
     "psychoactive_skin_fiery_response.json": {
@@ -17644,7 +17644,7 @@
       },
       "source_ref": {
         "line": 1,
-        "lst_file": ""
+        "source_path": ""
       }
     },
     "psychoactive_skin_hero.json": {
@@ -17681,7 +17681,7 @@
       },
       "source_ref": {
         "line": 1,
-        "lst_file": ""
+        "source_path": ""
       }
     },
     "psychoactive_skin_iron.json": {
@@ -17718,7 +17718,7 @@
       },
       "source_ref": {
         "line": 1,
-        "lst_file": ""
+        "source_path": ""
       }
     },
     "psychoactive_skin_nimbleness.json": {
@@ -17758,7 +17758,7 @@
       },
       "source_ref": {
         "line": 1,
-        "lst_file": ""
+        "source_path": ""
       }
     },
     "psychoactive_skin_proteus.json": {
@@ -17795,7 +17795,7 @@
       },
       "source_ref": {
         "line": 1,
-        "lst_file": ""
+        "source_path": ""
       }
     },
     "psychoactive_skin_psion.json": {
@@ -17837,7 +17837,7 @@
       },
       "source_ref": {
         "line": 1,
-        "lst_file": ""
+        "source_path": ""
       }
     },
     "psychoactive_skin_spider.json": {
@@ -17877,7 +17877,7 @@
       },
       "source_ref": {
         "line": 1,
-        "lst_file": ""
+        "source_path": ""
       }
     },
     "psychoactive_skin_troll.json": {
@@ -17914,7 +17914,7 @@
       },
       "source_ref": {
         "line": 1,
-        "lst_file": ""
+        "source_path": ""
       }
     },
     "quiver_of_recall.json": {
@@ -17951,7 +17951,7 @@
       },
       "source_ref": {
         "line": 1,
-        "lst_file": ""
+        "source_path": ""
       }
     },
     "reverse_capacitor.json": {
@@ -17988,7 +17988,7 @@
       },
       "source_ref": {
         "line": 1,
-        "lst_file": ""
+        "source_path": ""
       }
     },
     "ring_of_altered_perception.json": {
@@ -18025,7 +18025,7 @@
       },
       "source_ref": {
         "line": 1,
-        "lst_file": ""
+        "source_path": ""
       }
     },
     "ring_of_missile_protection.json": {
@@ -18062,7 +18062,7 @@
       },
       "source_ref": {
         "line": 1,
-        "lst_file": ""
+        "source_path": ""
       }
     },
     "ring_of_psionics_2.json": {
@@ -18099,7 +18099,7 @@
       },
       "source_ref": {
         "line": 1,
-        "lst_file": ""
+        "source_path": ""
       }
     },
     "ring_of_psionics_4.json": {
@@ -18136,7 +18136,7 @@
       },
       "source_ref": {
         "line": 1,
-        "lst_file": ""
+        "source_path": ""
       }
     },
     "ring_of_psionics_6.json": {
@@ -18173,7 +18173,7 @@
       },
       "source_ref": {
         "line": 1,
-        "lst_file": ""
+        "source_path": ""
       }
     },
     "ring_self_sufficiency.json": {
@@ -18213,7 +18213,7 @@
       },
       "source_ref": {
         "line": 1,
-        "lst_file": ""
+        "source_path": ""
       }
     },
     "rug_of_object_sliding_10000_lbs.json": {
@@ -18250,7 +18250,7 @@
       },
       "source_ref": {
         "line": 1,
-        "lst_file": ""
+        "source_path": ""
       }
     },
     "rug_of_object_sliding_2500_lbs.json": {
@@ -18287,7 +18287,7 @@
       },
       "source_ref": {
         "line": 1,
-        "lst_file": ""
+        "source_path": ""
       }
     },
     "rug_of_object_sliding_5000_lbs.json": {
@@ -18324,7 +18324,7 @@
       },
       "source_ref": {
         "line": 1,
-        "lst_file": ""
+        "source_path": ""
       }
     },
     "rug_of_object_sliding_500_lbs.json": {
@@ -18361,7 +18361,7 @@
       },
       "source_ref": {
         "line": 1,
-        "lst_file": ""
+        "source_path": ""
       }
     },
     "setting_stone_invigoration.json": {
@@ -18398,7 +18398,7 @@
       },
       "source_ref": {
         "line": 1,
-        "lst_file": ""
+        "source_path": ""
       }
     },
     "setting_stone_kenosis.json": {
@@ -18435,7 +18435,7 @@
       },
       "source_ref": {
         "line": 1,
-        "lst_file": ""
+        "source_path": ""
       }
     },
     "setting_stone_power_echo_3rd.json": {
@@ -18472,7 +18472,7 @@
       },
       "source_ref": {
         "line": 1,
-        "lst_file": ""
+        "source_path": ""
       }
     },
     "setting_stone_power_echo_6th.json": {
@@ -18509,7 +18509,7 @@
       },
       "source_ref": {
         "line": 1,
-        "lst_file": ""
+        "source_path": ""
       }
     },
     "setting_stone_power_echo_9th.json": {
@@ -18546,7 +18546,7 @@
       },
       "source_ref": {
         "line": 1,
-        "lst_file": ""
+        "source_path": ""
       }
     },
     "setting_stone_reconstruction.json": {
@@ -18583,7 +18583,7 @@
       },
       "source_ref": {
         "line": 1,
-        "lst_file": ""
+        "source_path": ""
       }
     },
     "severis.json": {
@@ -18630,7 +18630,7 @@
       },
       "source_ref": {
         "line": 1,
-        "lst_file": ""
+        "source_path": ""
       }
     },
     "shadow_shirt.json": {
@@ -18674,7 +18674,7 @@
       },
       "source_ref": {
         "line": 1,
-        "lst_file": ""
+        "source_path": ""
       }
     },
     "shard_1.json": {
@@ -18711,7 +18711,7 @@
       },
       "source_ref": {
         "line": 1,
-        "lst_file": ""
+        "source_path": ""
       }
     },
     "shard_10.json": {
@@ -18748,7 +18748,7 @@
       },
       "source_ref": {
         "line": 1,
-        "lst_file": ""
+        "source_path": ""
       }
     },
     "shard_2.json": {
@@ -18785,7 +18785,7 @@
       },
       "source_ref": {
         "line": 1,
-        "lst_file": ""
+        "source_path": ""
       }
     },
     "shard_3.json": {
@@ -18822,7 +18822,7 @@
       },
       "source_ref": {
         "line": 1,
-        "lst_file": ""
+        "source_path": ""
       }
     },
     "shard_4.json": {
@@ -18859,7 +18859,7 @@
       },
       "source_ref": {
         "line": 1,
-        "lst_file": ""
+        "source_path": ""
       }
     },
     "shard_5.json": {
@@ -18896,7 +18896,7 @@
       },
       "source_ref": {
         "line": 1,
-        "lst_file": ""
+        "source_path": ""
       }
     },
     "shard_6.json": {
@@ -18933,7 +18933,7 @@
       },
       "source_ref": {
         "line": 1,
-        "lst_file": ""
+        "source_path": ""
       }
     },
     "shard_7.json": {
@@ -18970,7 +18970,7 @@
       },
       "source_ref": {
         "line": 1,
-        "lst_file": ""
+        "source_path": ""
       }
     },
     "shard_8.json": {
@@ -19007,7 +19007,7 @@
       },
       "source_ref": {
         "line": 1,
-        "lst_file": ""
+        "source_path": ""
       }
     },
     "shard_9.json": {
@@ -19044,7 +19044,7 @@
       },
       "source_ref": {
         "line": 1,
-        "lst_file": ""
+        "source_path": ""
       }
     },
     "shimmering_vest.json": {
@@ -19081,7 +19081,7 @@
       },
       "source_ref": {
         "line": 1,
-        "lst_file": ""
+        "source_path": ""
       }
     },
     "shimmering_vest_greater.json": {
@@ -19118,7 +19118,7 @@
       },
       "source_ref": {
         "line": 1,
-        "lst_file": ""
+        "source_path": ""
       }
     },
     "skinwalker_s_leather.json": {
@@ -19161,7 +19161,7 @@
       },
       "source_ref": {
         "line": 1,
-        "lst_file": ""
+        "source_path": ""
       }
     },
     "sliver_prison.json": {
@@ -19198,7 +19198,7 @@
       },
       "source_ref": {
         "line": 1,
-        "lst_file": ""
+        "source_path": ""
       }
     },
     "snatching_gloves.json": {
@@ -19235,7 +19235,7 @@
       },
       "source_ref": {
         "line": 1,
-        "lst_file": ""
+        "source_path": ""
       }
     },
     "strengthbleeder.json": {
@@ -19283,7 +19283,7 @@
       },
       "source_ref": {
         "line": 1,
-        "lst_file": ""
+        "source_path": ""
       }
     },
     "student_s_robes.json": {
@@ -19349,7 +19349,7 @@
       },
       "source_ref": {
         "line": 1,
-        "lst_file": ""
+        "source_path": ""
       }
     },
     "suffocating_collar.json": {
@@ -19386,7 +19386,7 @@
       },
       "source_ref": {
         "line": 1,
-        "lst_file": ""
+        "source_path": ""
       }
     },
     "surge_crystal_1.json": {
@@ -19423,7 +19423,7 @@
       },
       "source_ref": {
         "line": 1,
-        "lst_file": ""
+        "source_path": ""
       }
     },
     "surge_crystal_2.json": {
@@ -19460,7 +19460,7 @@
       },
       "source_ref": {
         "line": 1,
-        "lst_file": ""
+        "source_path": ""
       }
     },
     "surge_crystal_3.json": {
@@ -19497,7 +19497,7 @@
       },
       "source_ref": {
         "line": 1,
-        "lst_file": ""
+        "source_path": ""
       }
     },
     "survivor_s_sleeping_bag.json": {
@@ -19534,7 +19534,7 @@
       },
       "source_ref": {
         "line": 1,
-        "lst_file": ""
+        "source_path": ""
       }
     },
     "sutra_of_tranquil_thought.json": {
@@ -19571,7 +19571,7 @@
       },
       "source_ref": {
         "line": 1,
-        "lst_file": ""
+        "source_path": ""
       }
     },
     "sycophant_s_ring.json": {
@@ -19608,7 +19608,7 @@
       },
       "source_ref": {
         "line": 1,
-        "lst_file": ""
+        "source_path": ""
       }
     },
     "synaptic_mask.json": {
@@ -19645,7 +19645,7 @@
       },
       "source_ref": {
         "line": 1,
-        "lst_file": ""
+        "source_path": ""
       }
     },
     "synaptic_shard_guarded_flank.json": {
@@ -19682,7 +19682,7 @@
       },
       "source_ref": {
         "line": 1,
-        "lst_file": ""
+        "source_path": ""
       }
     },
     "synaptic_shard_medic.json": {
@@ -19719,7 +19719,7 @@
       },
       "source_ref": {
         "line": 1,
-        "lst_file": ""
+        "source_path": ""
       }
     },
     "synaptic_shard_precision.json": {
@@ -19756,7 +19756,7 @@
       },
       "source_ref": {
         "line": 1,
-        "lst_file": ""
+        "source_path": ""
       }
     },
     "synaptic_shard_shifting_steps.json": {
@@ -19793,7 +19793,7 @@
       },
       "source_ref": {
         "line": 1,
-        "lst_file": ""
+        "source_path": ""
       }
     },
     "tactician_s_chessboard.json": {
@@ -19830,7 +19830,7 @@
       },
       "source_ref": {
         "line": 1,
-        "lst_file": ""
+        "source_path": ""
       }
     },
     "tempest_s_blade.json": {
@@ -19872,7 +19872,7 @@
       },
       "source_ref": {
         "line": 1,
-        "lst_file": ""
+        "source_path": ""
       }
     },
     "third_eye_aware.json": {
@@ -19912,7 +19912,7 @@
       },
       "source_ref": {
         "line": 1,
-        "lst_file": ""
+        "source_path": ""
       }
     },
     "third_eye_conceal.json": {
@@ -19949,7 +19949,7 @@
       },
       "source_ref": {
         "line": 1,
-        "lst_file": ""
+        "source_path": ""
       }
     },
     "third_eye_concentrate.json": {
@@ -19986,7 +19986,7 @@
       },
       "source_ref": {
         "line": 1,
-        "lst_file": ""
+        "source_path": ""
       }
     },
     "third_eye_dominate.json": {
@@ -20023,7 +20023,7 @@
       },
       "source_ref": {
         "line": 1,
-        "lst_file": ""
+        "source_path": ""
       }
     },
     "third_eye_energy_ray.json": {
@@ -20060,7 +20060,7 @@
       },
       "source_ref": {
         "line": 1,
-        "lst_file": ""
+        "source_path": ""
       }
     },
     "third_eye_expose.json": {
@@ -20097,7 +20097,7 @@
       },
       "source_ref": {
         "line": 1,
-        "lst_file": ""
+        "source_path": ""
       }
     },
     "third_eye_gather.json": {
@@ -20134,7 +20134,7 @@
       },
       "source_ref": {
         "line": 1,
-        "lst_file": ""
+        "source_path": ""
       }
     },
     "third_eye_penetrate.json": {
@@ -20171,7 +20171,7 @@
       },
       "source_ref": {
         "line": 1,
-        "lst_file": ""
+        "source_path": ""
       }
     },
     "third_eye_powerthieve.json": {
@@ -20208,7 +20208,7 @@
       },
       "source_ref": {
         "line": 1,
-        "lst_file": ""
+        "source_path": ""
       }
     },
     "third_eye_repudiate.json": {
@@ -20245,7 +20245,7 @@
       },
       "source_ref": {
         "line": 1,
-        "lst_file": ""
+        "source_path": ""
       }
     },
     "third_eye_sense.json": {
@@ -20282,7 +20282,7 @@
       },
       "source_ref": {
         "line": 1,
-        "lst_file": ""
+        "source_path": ""
       }
     },
     "third_eye_talented.json": {
@@ -20319,7 +20319,7 @@
       },
       "source_ref": {
         "line": 1,
-        "lst_file": ""
+        "source_path": ""
       }
     },
     "third_eye_view.json": {
@@ -20356,7 +20356,7 @@
       },
       "source_ref": {
         "line": 1,
-        "lst_file": ""
+        "source_path": ""
       }
     },
     "torc_of_free_will.json": {
@@ -20393,7 +20393,7 @@
       },
       "source_ref": {
         "line": 1,
-        "lst_file": ""
+        "source_path": ""
       }
     },
     "torc_of_interrogation.json": {
@@ -20430,7 +20430,7 @@
       },
       "source_ref": {
         "line": 1,
-        "lst_file": ""
+        "source_path": ""
       }
     },
     "torc_of_leech_freedom.json": {
@@ -20467,7 +20467,7 @@
       },
       "source_ref": {
         "line": 1,
-        "lst_file": ""
+        "source_path": ""
       }
     },
     "torc_of_power_preservation.json": {
@@ -20504,7 +20504,7 @@
       },
       "source_ref": {
         "line": 1,
-        "lst_file": ""
+        "source_path": ""
       }
     },
     "warblade_staff.json": {
@@ -20546,7 +20546,7 @@
       },
       "source_ref": {
         "line": 1,
-        "lst_file": ""
+        "source_path": ""
       }
     },
     "warblade_staff_greater.json": {
@@ -20588,7 +20588,7 @@
       },
       "source_ref": {
         "line": 1,
-        "lst_file": ""
+        "source_path": ""
       }
     },
     "warrior_s_bracer_archer_path.json": {
@@ -20630,7 +20630,7 @@
       },
       "source_ref": {
         "line": 1,
-        "lst_file": ""
+        "source_path": ""
       }
     },
     "warrior_s_bracer_ascetic_path.json": {
@@ -20672,7 +20672,7 @@
       },
       "source_ref": {
         "line": 1,
-        "lst_file": ""
+        "source_path": ""
       }
     },
     "warrior_s_bracer_assassin_s_path.json": {
@@ -20714,7 +20714,7 @@
       },
       "source_ref": {
         "line": 1,
-        "lst_file": ""
+        "source_path": ""
       }
     },
     "warrior_s_bracer_brawling_path.json": {
@@ -20756,7 +20756,7 @@
       },
       "source_ref": {
         "line": 1,
-        "lst_file": ""
+        "source_path": ""
       }
     },
     "warrior_s_bracer_dervish_path.json": {
@@ -20798,7 +20798,7 @@
       },
       "source_ref": {
         "line": 1,
-        "lst_file": ""
+        "source_path": ""
       }
     },
     "warrior_s_bracer_feral_warrior_path.json": {
@@ -20840,7 +20840,7 @@
       },
       "source_ref": {
         "line": 1,
-        "lst_file": ""
+        "source_path": ""
       }
     },
     "warrior_s_bracer_gladiator_path.json": {
@@ -20882,7 +20882,7 @@
       },
       "source_ref": {
         "line": 1,
-        "lst_file": ""
+        "source_path": ""
       }
     },
     "warrior_s_bracer_infiltrator_path.json": {
@@ -20924,7 +20924,7 @@
       },
       "source_ref": {
         "line": 1,
-        "lst_file": ""
+        "source_path": ""
       }
     },
     "warrior_s_bracer_interceptor_path.json": {
@@ -20966,7 +20966,7 @@
       },
       "source_ref": {
         "line": 1,
-        "lst_file": ""
+        "source_path": ""
       }
     },
     "warrior_s_bracer_mind_knight_path.json": {
@@ -21008,7 +21008,7 @@
       },
       "source_ref": {
         "line": 1,
-        "lst_file": ""
+        "source_path": ""
       }
     },
     "warrior_s_bracer_survivor_path.json": {
@@ -21050,7 +21050,7 @@
       },
       "source_ref": {
         "line": 1,
-        "lst_file": ""
+        "source_path": ""
       }
     },
     "warrior_s_bracer_weaponmaster_path.json": {
@@ -21092,7 +21092,7 @@
       },
       "source_ref": {
         "line": 1,
-        "lst_file": ""
+        "source_path": ""
       }
     },
     "warrior_s_scabbard.json": {
@@ -21129,7 +21129,7 @@
       },
       "source_ref": {
         "line": 1,
-        "lst_file": ""
+        "source_path": ""
       }
     },
     "wooden_shirt.json": {
@@ -21166,7 +21166,7 @@
       },
       "source_ref": {
         "line": 1,
-        "lst_file": ""
+        "source_path": ""
       }
     },
     "xephyr_knife.json": {
@@ -21209,7 +21209,7 @@
       },
       "source_ref": {
         "line": 1,
-        "lst_file": ""
+        "source_path": ""
       }
     }
   }

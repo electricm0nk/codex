@@ -76,7 +76,7 @@ fn corpus_with_fighter_gear() -> SourcePackageContent<'static> {
         "fixture text must parse cleanly: {:?}",
         result.diagnostics
     );
-    let source_ref = SourceRef { lst_file: "arg_equip_arms_armor.lst".to_string(), line: 1 };
+    let source_ref = SourceRef { source_path: "arg_equip_arms_armor.lst".to_string(), line: 1 };
     let mut corpus = SourcePackageContent::empty("advanced_race_guide", source_ref);
     for record in result.entries {
         let record: &'static EquipmentRecord = Box::leak(Box::new(record));

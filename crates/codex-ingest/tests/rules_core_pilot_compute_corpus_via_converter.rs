@@ -799,7 +799,7 @@ mod corpus_aware_posture_widening_tests {
     fn corpus_with_fixture() -> SourcePackageContent<'static> {
         let result = parse_equipment_entries("cr_equip_arms_armor.lst", FIXTURE_TEXT);
         assert!(result.diagnostics.is_empty(), "fixture text must parse cleanly: {:?}", result.diagnostics);
-        let source_ref = SourceRef { lst_file: "cr_equip_arms_armor.lst".to_string(), line: 1 };
+        let source_ref = SourceRef { source_path: "cr_equip_arms_armor.lst".to_string(), line: 1 };
         let mut corpus = SourcePackageContent::empty("core_rulebook", source_ref);
         for record in result.entries {
             let record: &'static EquipmentRecord = Box::leak(Box::new(record));
@@ -1027,7 +1027,7 @@ mod tests {
         let result =
             parse_equipment_entries("cr_equip_arms_armor.lst", LONGSWORD_AND_ENHANCEMENT_FIXTURE_TEXT);
         assert!(result.diagnostics.is_empty(), "fixture text must parse cleanly: {:?}", result.diagnostics);
-        let source_ref = SourceRef { lst_file: "cr_equip_arms_armor.lst".to_string(), line: 1 };
+        let source_ref = SourceRef { source_path: "cr_equip_arms_armor.lst".to_string(), line: 1 };
         let mut corpus = SourcePackageContent::empty("core_rulebook", source_ref);
         for record in result.entries {
             let record: &'static EquipmentRecord = Box::leak(Box::new(record));
@@ -1044,7 +1044,7 @@ Longsword\tKEY:Longsword (Base)\tTYPE:Weapon.Melee.Martial\tCOST:15\tWT:4\tCRITM
     fn corpus_with_chain_shirt() -> SourcePackageContent<'static> {
         let result = parse_equipment_entries("cr_equip_arms_armor.lst", CHAIN_SHIRT_FIXTURE_TEXT);
         assert!(result.diagnostics.is_empty(), "fixture text must parse cleanly: {:?}", result.diagnostics);
-        let source_ref = SourceRef { lst_file: "cr_equip_arms_armor.lst".to_string(), line: 1 };
+        let source_ref = SourceRef { source_path: "cr_equip_arms_armor.lst".to_string(), line: 1 };
         let mut corpus = SourcePackageContent::empty("core_rulebook", source_ref);
         for record in result.entries {
             let record: &'static EquipmentRecord = Box::leak(Box::new(record));

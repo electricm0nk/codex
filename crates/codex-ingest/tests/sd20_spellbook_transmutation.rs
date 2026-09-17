@@ -51,7 +51,7 @@ fn corpus_with_enlarge_person() -> SourcePackageContent<'static> {
     assert_eq!(record.school.as_deref(), Some("Transmutation"));
 
     let source_ref = SourceRef {
-        lst_file: "sd20_spellbook_transmutation".to_string(),
+        source_path: "sd20_spellbook_transmutation".to_string(),
         line: 1,
     };
     let mut corpus = SourcePackageContent::empty("sd20_spellbook_transmutation", source_ref);
