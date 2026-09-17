@@ -16,11 +16,18 @@ freezes at 100%).
 3. `b8ff0e895b` — feat(sd36,epic-b): retire reach_gate.rs (separate, revertable commit)
 4. `94d915609c` — fix(sd36,epic-b): fold the reach_gate retirement's remaining edits
 5. `d22950cd1f` — docs(sd36,epic-b): freeze sidecar, docs sweep, verify.sh gate fixes, baselines, closure
-6. (this cycle's fix commit — corrects the 15 findings in "Fix cycle
-   (2026-09-17)" below: reverted 2 out-of-scope writes, corrected 6
-   unreproducing receipt/baseline figures, fixed 2 stale doc sections and 5
-   stale prose mentions in `scripts/verify.sh`, re-ran the affected verify
-   stages at this new HEAD)
+6. `30f824f26e` — fix(sd36,epic-b): correct 15 independent-verifier findings
+   on d22950cd1f (corrects the 15 findings in "Fix cycle (2026-09-17)"
+   below: reverted 2 out-of-scope writes, corrected 6 unreproducing
+   receipt/baseline figures, fixed 2 stale doc sections and 5 stale prose
+   mentions in `scripts/verify.sh`, re-ran the affected verify stages at
+   this new HEAD)
+7. (this cycle's fix commit — corrects the 5 findings in "Fix cycle round 2
+   (2026-09-17)" below: a second independent verifier found round 1 itself
+   shipped 2 unreproducing figures, left a self-inflicted dangling
+   reference undisclosed, ran no full pass at any SHA while raising two
+   test-count floors, and filed the epic's own closing verification record
+   under the wrong retro shard)
 
 ## D5: public status page frozen at 100%
 
@@ -153,7 +160,10 @@ the plan" below.
   citing a since-retired script does not fail `figure-provenance` forever
   (see "Corrections to the plan").
 - `pf1e_dashboard_producer.py`'s only two real remaining importers narrowed:
-  new `scripts/observer/doneness.py` (371 lines, `wc -l`, incl. full
+  new `scripts/observer/doneness.py` (391 lines, `wc -l` — corrected
+  2026-09-17, fix cycle round 2; the earlier "371" was already stale at
+  commit time, since this same fix cycle's own commit added the 20-line
+  cross-check docstring below after that count was taken), incl. full
   historical doc comments, verified byte-identical to the producer's own
   `doneness_verdict`/`EXCLUDED_BOOKS` across all 1,300 (wiring_class,
   status, kind) combinations both modules define — corrected 2026-09-17:
@@ -230,7 +240,10 @@ the plan" below.
   clean, 0 errors, 0 warnings.
 - `cargo test --locked -j 6 --test sd24_wired_integration_audit`: 5/5 pass.
 - `bash -n scripts/verify.sh`: syntax OK, checked after every edit to the file.
-- `git grep -c seeded_current_truth -- tests src apps`: 0 matches.
+- `git grep -c seeded_current_truth -- tests src apps`: 1 match (corrected
+  2026-09-17, fix cycle round 2 — the true count was never 0; see that
+  section for the reproducing command and the out-of-scope-file reason it
+  was not driven to 0).
 - `git grep -n support_state_matrix:: -- tests src apps`: 0 matches.
 - **First full `bash scripts/verify.sh` pass: RESULT FAIL.** 0 test
   failures anywhere; 2 stages red:
@@ -311,7 +324,15 @@ diff. Full detail lives in `docs/retro/events/sd36-epic-b.jsonl`
    rewrites this file when run manually; no verify.sh stage invokes it).
 4. **Out-of-scope edit to `src/rules_core/pilot_compute/mod.rs`** (a
    doc-comment-only change, named in the brief's own "NOT in scope" list)
-   — reverted to its pre-epic wording.
+   — reverted to its pre-epic wording. **Correction 2026-09-17, fix cycle
+   round 2:** this revert was incomplete as a fix — the "pre-epic wording"
+   it restored reads `(see \`seeded_current_truth\`)`, and
+   `seeded_current_truth` is a function *this same epic* deleted elsewhere
+   (in-scope, as part of retiring `support_state_matrix`), so the restored
+   wording is now a dangling reference, and the earlier "0 matches" grep
+   claims above were false. See "Fix cycle round 2" below for the
+   disposition (documented as a known exception, not edited, since the
+   file remains named NOT in scope and other concurrent work touches it).
 5. **Stale architecture doc: retired `--check-pin` gate** —
    `docs/architecture/testing.md`'s "four gates a cycle runs without a
    build" section named `./scripts/publish-site-dashboard.sh --check-pin`
@@ -359,8 +380,103 @@ diff. Full detail lives in `docs/retro/events/sd36-epic-b.jsonl`
     13 status words × 19 `kind` values + `None`), 0 mismatches. The command
     now lives in `scripts/observer/doneness.py`'s own module docstring.
 14. **`scripts/observer/doneness.py` described as "~250 lines"; actual
-    `wc -l` is 371** — corrected above.
+    `wc -l` is 371** — corrected above (superseded 2026-09-17, fix cycle
+    round 2: this fix cycle's own edit to the same file — the 1,300-combo
+    docstring below — added 20 net lines after 371 was measured, so the
+    figure this receipt shipped as the correction was already stale at
+    commit time; true count is 391, see round 2 below).
 15. **5 stale prose mentions of retired stages in `scripts/verify.sh`**
     (lines formerly ~590, 637, 756, 1356, 2223) — each reworded to mark
     `site-dashboard-check` / `shape-engine-boundary-selftest` as
     "now-retired" rather than reading as live cross-references.
+
+## Fix cycle round 2 (2026-09-17): second independent verifier's findings
+
+A second independent verifier reviewed this epic's own fix commit
+(`30f824f26e`, the round-1 fix above) and found 5 further problems: 2
+receipt/baseline figures that still did not reproduce, 1 self-inflicted
+dangling reference round 1's own revert had reintroduced without
+disclosing it, 1 pair of raised test-count floors with no green run
+behind them, and 1 retro-shard misfile affecting the epic's own closing
+verification record. Full detail lives in `docs/retro/events/sd36-epic-b.jsonl`
+(`note` event `1789619363981-sd36-epic-b-58650c`, `correction` event
+`1789619388222-sd36-epic-b-dd96b5`); summary:
+
+1. **`git grep -c seeded_current_truth -- tests src apps`: round 1 claimed
+   0, actual is 1** — `src/rules_core/pilot_compute/mod.rs:51241`. Root
+   cause: round 1's revert of that file (to comply with the brief's "NOT
+   in scope: `src/rules_core/pilot_compute`") restored wording that reads
+   `(see \`seeded_current_truth\`)`, but `seeded_current_truth` is a
+   function *this epic itself* deleted elsewhere (in-scope, as part of
+   retiring `support_state_matrix`) — so the "pre-epic wording" round 1
+   restored is only correct pre-epic; post-epic it is a dangling
+   reference. **Disposition:** left unedited. The file remains named NOT
+   in scope by the brief specifically to avoid collision with concurrent
+   epics working in `src/rules_core/pilot_compute` (crate-split/PCGen
+   work); a one-line doc-comment fix there would need either an explicit
+   operator ruling to widen this epic's write scope, or a dedicated future
+   cycle owned by whichever epic does hold that scope. Recorded as a
+   NEEDS HUMAN RULING item rather than edited. The claim above is
+   corrected in place (see "Verification" and item 4 of round 1's own
+   list) to state the true count, 1, and name this exception explicitly —
+   the grep is not driven to 0, and no future reader should re-derive "0"
+   without checking this section first.
+2. **`scripts/observer/doneness.py` claimed 371 lines in round 1's own
+   correction of finding 14; actual is 391** — round 1's own commit
+   (`30f824f26e`) added 20 net lines to that exact file (the 1,300-combo
+   re-derive docstring, `git diff --numstat d22950cd1f 30f824f26e --
+   scripts/observer/doneness.py` → `+25 -5`) after the 371 figure was
+   measured against the pre-edit tree (`git show d22950cd1f:scripts/observer/doneness.py
+   | wc -l` → 371), so round 1 shipped its own correction already stale.
+   Corrected above (both mentions) to 391, re-derived with
+   `wc -l scripts/observer/doneness.py` on this HEAD.
+3. **Dangling reference left undisclosed** — see item 1; round 1's item 4
+   described the pilot_compute revert as complete ("reverted to its
+   pre-epic wording") without noting that wording no longer resolves.
+   Corrected: round 1's item 4 above now carries an explicit
+   correction note.
+4. **Two raised floors, no green run at any SHA covering them** —
+   `BASELINE_DESKTOP_TESTS` (570→592) and `BASELINE_FRONTEND_TEST_FILES`
+   (101→121) were raised in `d22950cd1f` from a `full`-mode run whose
+   overall `RESULT` was `FAIL` (root-full/clippy baseline mismatch, since
+   corrected); round 1's own `--only` fix-verification run covered 9
+   stages, neither of which was `desktop` or `frontend-test`. Re-run this
+   cycle: `bash scripts/verify.sh --only desktop --only frontend-test` →
+   **RESULT: PASS** — `desktop (592 passed)`, `frontend-test (121/121
+   files)`, exactly matching both raised floors, confirming they hold at
+   HEAD `30f824f26e` (log: `/tmp/codex-verify-E2512m`; recorded at
+   `docs/retro/events/sd36-epic-b.jsonl` event
+   `1789619341796-sd36-epic-b-5726d4`). A first attempt at this run
+   (`/tmp/codex-verify-PGAKTI`) also passed identically but filed its
+   verification record under actor `sd31-transcribe` because of the
+   `~/.bashrc` `RETRO_ACTOR` issue in item 5 below — caught via
+   `git status --porcelain` before committing, reverted with
+   `git checkout -- docs/retro/events/sd31-transcribe.jsonl`, and re-run
+   with `RETRO_ACTOR=sd36-epic-b` exported explicitly.
+
+   Re-verified the doc/baseline edits in this round against the gates that
+   check figure provenance: `bash scripts/verify.sh --only figure-provenance
+   --only denominator-gate --only doneness-selftest` → **RESULT: PASS**
+   (`figure-provenance` files_checked=297 figures_examined=631 violations=0;
+   `denominator-gate` files_checked=367 violations=0; `doneness-selftest` 5
+   cases passed), log `/tmp/codex-verify-CeJ2dz`, recorded at event
+   `1789619492659-sd36-epic-b-a895db`.
+5. **The epic's first full-run-FAIL closing verification record
+   (root-full+clippy PASS, head `94d915609c`, event
+   `1789612785181-sd31-transcribe-177238`) is filed under actor
+   `sd31-transcribe`, not `sd36-epic-b`** — root cause identified this
+   cycle: `~/.bashrc` (lines 135-137) carries a stale
+   `export RETRO_ACTOR=sd31-transcribe` left over from an earlier
+   session's shell, which silently overrides `retro.py`'s own
+   worktree-name fallback for every command run in this shell without an
+   explicit override. Not fixed at the source (`~/.bashrc` is a shared,
+   session-wide file outside this brief's write grant and outside the
+   repo entirely; other concurrent sessions on this box may depend on its
+   current contents). **Disposition:** documented via a `note` event
+   (`1789619363981-sd36-epic-b-58650c`) in this epic's own shard
+   cross-referencing the canonical record's id, file and head so a reader
+   of `sd36-epic-b.jsonl` can find it; every subsequent `verify.sh`/
+   `retro.py` invocation in this fix cycle explicitly exported
+   `RETRO_ACTOR=sd36-epic-b` first. Future cycles on this checkout should
+   do the same until the stale `~/.bashrc` export is corrected by whoever
+   owns that shell.
