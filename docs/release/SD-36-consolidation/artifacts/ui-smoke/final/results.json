@@ -43,10 +43,10 @@
   },
   {
     "id": "settings-theme-select-and-manage-themes-modal",
-    "status": "red",
-    "screenshot": "/home/ubuntu/workspace/repos/codex/docs/release/SD-36-consolidation/artifacts/ui-smoke/final/settings-theme-select-and-manage-themes-modal.FAILED.png",
-    "rendered_excerpt": "⚙\n\nP1\nPathfinder 1e\nFantasy d20\n\nSA\nSolarus Arcanum\nComing soon\n\nTM\nTraveller MGT 2e\nComing soon\n\nCR\nCyberpunk Red\nComing soon\n\nS1\nStarfinder 1e\nComing soon\n\nWOD\nWorld of Darkness\nComing soon\n\nNEW CHARACTER\n\nLOAD CHARACTER\n\nCAMPAIGN MANAGER\nChoose a local Drive-synced folder under ⚙ Settings → Google Drive to enable the Campaign Manager.\n\nDM TOOLKIT\nBrowse Equipment Catalog\nBrowse Spell Catalog\nBr",
-    "reason": "marker not found on screen: 'Community themes'"
+    "status": "green",
+    "screenshot": "/home/ubuntu/workspace/repos/codex/docs/release/SD-36-consolidation/artifacts/ui-smoke/final/settings-theme-select-and-manage-themes-modal.png",
+    "rendered_excerpt": "⚙\n\nP1\nPathfinder 1e\nFantasy d20\n\nSA\nSolarus Arcanum\nComing soon\n\nTM\nTraveller MGT 2e\nComing soon\n\nCR\nCyberpunk Red\nComing soon\n\nS1\nStarfinder 1e\nComing soon\n\nWOD\nWorld of Darkness\nComing soon\n\nNEW CHARACTER\n\nLOAD CHARACTER\n\nCAMPAIGN MANAGER\n\nDM TOOLKIT\nBrowse Equipment Catalog\nBrowse Spell Catalog\nBrowse Class Progression\nBrowse Race Traits\nBrowse Monster Catalog\nBrowse Companion Catalog\nBrowse In",
+    "reason": null
   },
   {
     "id": "settings-tab-google-drive",
@@ -327,5 +327,159 @@
     "screenshot": "/home/ubuntu/workspace/repos/codex/docs/release/SD-36-consolidation/artifacts/ui-smoke/final/sheet-action-add-spell.png",
     "rendered_excerpt": "⚙\n☰ Menu\n✕\nSmoke Test PC — Wizard 1\nPROGRESSION\n«\n\nLevel\n1\n+\nCaster Level\n1\nRACE\nElf\nCLASS\nWizard 1\nLevel 1 Wizard\nSkill points: 3\nFeat\nNEXT\nLevel 2 Wizard\nSkill points: 3\nCharacter Name\nSmoke Test PC\nCampaign\n—\nABILITIES\n\nSTR\n16\n+3\nDEX\n16\n+3\nCON\n12\n+1\nINT\n12\n+1\nWIS\n12\n+1\nCHA\n8\n-1\nINITIATIVE\n+3\nHIT POINTS\n7 / 7\nARMOR CLASS\n\nAC\n17\nTOUCH\n13\nFLAT-FOOTED\n14\nATTACK\n\nBAB\n+0\nMELEE\n+0\nCMB\n+3\nCMD\n16\nSAVING",
     "reason": null
+  },
+  {
+    "id": "sheet-action-level-up-dialog",
+    "status": "green",
+    "screenshot": "/home/ubuntu/workspace/repos/codex/docs/release/SD-36-consolidation/artifacts/ui-smoke/final/sheet-action-level-up-dialog.png",
+    "rendered_excerpt": "⚙\n☰ Menu\n✕\nSmoke Test PC — Wizard 1\nPROGRESSION\n«\n\nLevel\n1\n+\nCaster Level\n1\nRACE\nElf\nCLASS\nWizard 1\nLevel 1 Wizard\nSkill points: 3\nFeat\nNEXT\nLevel 2 Wizard\nSkill points: 3\nCharacter Name\nSmoke Test PC\nCampaign\n—\nABILITIES\n\nSTR\n16\n+3\nDEX\n16\n+3\nCON\n12\n+1\nINT\n12\n+1\nWIS\n12\n+1\nCHA\n8\n-1\nINITIATIVE\n+3\nHIT POINTS\n7 / 7\nARMOR CLASS\n\nAC\n17\nTOUCH\n13\nFLAT-FOOTED\n14\nATTACK\n\nBAB\n+0\nMELEE\n+0\nCMB\n+3\nCMD\n16\nSAVING",
+    "reason": null
+  },
+  {
+    "id": "sheet-action-skill-allocation-dialog",
+    "status": "green",
+    "screenshot": "/home/ubuntu/workspace/repos/codex/docs/release/SD-36-consolidation/artifacts/ui-smoke/final/sheet-action-skill-allocation-dialog.png",
+    "rendered_excerpt": "⚙\n☰ Menu\n✕\nSmoke Test PC — Wizard 1\nPROGRESSION\n«\n\nLevel\n1\n+\nCaster Level\n1\nRACE\nElf\nCLASS\nWizard 1\nLevel 1 Wizard\nSkill points: 3\nFeat\nNEXT\nLevel 2 Wizard\nSkill points: 3\nCharacter Name\nSmoke Test PC\nCampaign\n—\nABILITIES\n\nSTR\n16\n+3\nDEX\n16\n+3\nCON\n12\n+1\nINT\n12\n+1\nWIS\n12\n+1\nCHA\n8\n-1\nINITIATIVE\n+3\nHIT POINTS\n7 / 7\nARMOR CLASS\n\nAC\n17\nTOUCH\n13\nFLAT-FOOTED\n14\nATTACK\n\nBAB\n+0\nMELEE\n+0\nCMB\n+3\nCMD\n16\nSAVING",
+    "reason": null
+  },
+  {
+    "id": "sheet-action-hp-adjust",
+    "status": "green",
+    "screenshot": "/home/ubuntu/workspace/repos/codex/docs/release/SD-36-consolidation/artifacts/ui-smoke/final/sheet-action-hp-adjust.png",
+    "rendered_excerpt": "⚙\n☰ Menu\n✕\nSmoke Test PC — Wizard 1\nPROGRESSION\n«\n\nLevel\n1\n+\nCaster Level\n1\nRACE\nElf\nCLASS\nWizard 1\nLevel 1 Wizard\nSkill points: 3\nFeat\nNEXT\nLevel 2 Wizard\nSkill points: 3\nCharacter Name\nSmoke Test PC\nCampaign\n—\nABILITIES\n\nSTR\n16\n+3\nDEX\n16\n+3\nCON\n12\n+1\nINT\n12\n+1\nWIS\n12\n+1\nCHA\n8\n-1\nINITIATIVE\n+3\nHIT POINTS\n7 / 7\nARMOR CLASS\n\nAC\n17\nTOUCH\n13\nFLAT-FOOTED\n14\nATTACK\n\nBAB\n+0\nMELEE\n+0\nCMB\n+3\nCMD\n16\nSAVING",
+    "reason": null
+  },
+  {
+    "id": "sheet-action-money-adjust",
+    "status": "green",
+    "screenshot": "/home/ubuntu/workspace/repos/codex/docs/release/SD-36-consolidation/artifacts/ui-smoke/final/sheet-action-money-adjust.png",
+    "rendered_excerpt": "⚙\n☰ Menu\n✕\nSmoke Test PC — Wizard 1\nPROGRESSION\n«\n\nLevel\n1\n+\nCaster Level\n1\nRACE\nElf\nCLASS\nWizard 1\nLevel 1 Wizard\nSkill points: 3\nFeat\nNEXT\nLevel 2 Wizard\nSkill points: 3\nCharacter Name\nSmoke Test PC\nCampaign\n—\nABILITIES\n\nSTR\n16\n+3\nDEX\n16\n+3\nCON\n12\n+1\nINT\n12\n+1\nWIS\n12\n+1\nCHA\n8\n-1\nINITIATIVE\n+3\nHIT POINTS\n7 / 7\nARMOR CLASS\n\nAC\n17\nTOUCH\n13\nFLAT-FOOTED\n14\nATTACK\n\nBAB\n+0\nMELEE\n+0\nCMB\n+3\nCMD\n16\nSAVING",
+    "reason": null
+  },
+  {
+    "id": "sheet-action-trait-add",
+    "status": "green",
+    "screenshot": "/home/ubuntu/workspace/repos/codex/docs/release/SD-36-consolidation/artifacts/ui-smoke/final/sheet-action-trait-add.png",
+    "rendered_excerpt": "⚙\n☰ Menu\n✕\nSmoke Test PC — Wizard 1\nPROGRESSION\n«\n\nLevel\n1\n+\nCaster Level\n1\nRACE\nElf\nCLASS\nWizard 1\nLevel 1 Wizard\nSkill points: 3\nFeat\nNEXT\nLevel 2 Wizard\nSkill points: 3\nCharacter Name\nSmoke Test PC\nCampaign\n—\nABILITIES\n\nSTR\n16\n+3\nDEX\n16\n+3\nCON\n12\n+1\nINT\n12\n+1\nWIS\n12\n+1\nCHA\n8\n-1\nINITIATIVE\n+3\nHIT POINTS\n7 / 7\nARMOR CLASS\n\nAC\n17\nTOUCH\n13\nFLAT-FOOTED\n14\nATTACK\n\nBAB\n+0\nMELEE\n+0\nCMB\n+3\nCMD\n16\nSAVING",
+    "reason": null
+  },
+  {
+    "id": "sheet-menu-recompute",
+    "status": "green",
+    "screenshot": "/home/ubuntu/workspace/repos/codex/docs/release/SD-36-consolidation/artifacts/ui-smoke/final/sheet-menu-recompute.png",
+    "rendered_excerpt": "⚙\n☰ Menu\n✕\nSmoke Test PC — Wizard 1\nPROGRESSION\n«\n\nLevel\n1\n+\nCaster Level\n1\nRecomputed derived stats from the current on-disk build.\n\nRACE\nElf\nCLASS\nWizard 1\nLevel 1 Wizard\nSkill points: 3\nFeat\nNEXT\nLevel 2 Wizard\nSkill points: 3\nCharacter Name\nSmoke Test PC\nCampaign\n—\nABILITIES\n\nSTR\n16\n+3\nDEX\n16\n+3\nCON\n12\n+1\nINT\n12\n+1\nWIS\n12\n+1\nCHA\n8\n-1\nINITIATIVE\n+3\nHIT POINTS\n7 / 7\nARMOR CLASS\n\nAC\n17\nTOUCH\n13\nF",
+    "reason": null
+  },
+  {
+    "id": "sheet-menu-clone",
+    "status": "green",
+    "screenshot": "/home/ubuntu/workspace/repos/codex/docs/release/SD-36-consolidation/artifacts/ui-smoke/final/sheet-menu-clone.png",
+    "rendered_excerpt": "⚙\n☰ Menu\n✕\nSmoke Test PC — Wizard 1\nPROGRESSION\n«\n\nLevel\n1\n+\nCaster Level\n1\nCloned as \"Smoke Test PC (Copy)\".\n\nRACE\nElf\nCLASS\nWizard 1\nLevel 1 Wizard\nSkill points: 3\nFeat\nNEXT\nLevel 2 Wizard\nSkill points: 3\nCharacter Name\nSmoke Test PC\nCampaign\n—\nABILITIES\n\nSTR\n16\n+3\nDEX\n16\n+3\nCON\n12\n+1\nINT\n12\n+1\nWIS\n12\n+1\nCHA\n8\n-1\nINITIATIVE\n+3\nHIT POINTS\n7 / 7\nARMOR CLASS\n\nAC\n17\nTOUCH\n13\nFLAT-FOOTED\n14\nATTACK\n\nB",
+    "reason": null
+  },
+  {
+    "id": "sheet-menu-export",
+    "status": "green",
+    "screenshot": "/home/ubuntu/workspace/repos/codex/docs/release/SD-36-consolidation/artifacts/ui-smoke/final/sheet-menu-export.png",
+    "rendered_excerpt": "⚙\n☰ Menu\nOpen\nRecompute\nClone\nExport\nPrint\n✕\nSmoke Test PC — Wizard 1\nPROGRESSION\n«\n\nLevel\n1\n+\nCaster Level\n1\nRACE\nElf\nCLASS\nWizard 1\nLevel 1 Wizard\nSkill points: 3\nFeat\nNEXT\nLevel 2 Wizard\nSkill points: 3\nCharacter Name\nSmoke Test PC\nCampaign\n—\nABILITIES\n\nSTR\n16\n+3\nDEX\n16\n+3\nCON\n12\n+1\nINT\n12\n+1\nWIS\n12\n+1\nCHA\n8\n-1\nINITIATIVE\n+3\nHIT POINTS\n7 / 7\nARMOR CLASS\n\nAC\n17\nTOUCH\n13\nFLAT-FOOTED\n14\nATTACK\n\nBA",
+    "reason": null
+  },
+  {
+    "id": "sheet-close",
+    "status": "green",
+    "screenshot": "/home/ubuntu/workspace/repos/codex/docs/release/SD-36-consolidation/artifacts/ui-smoke/final/sheet-close.png",
+    "rendered_excerpt": "⚙\nLoad Character\n\n\nSmoke Test PC\nElf Wizard 1\nLast modified: Sep 18, 2026\n\nSmoke Test PC\nElf Wizard 1\nLast modified: Sep 18, 2026\n\nSmoke Test PC (Copy)\nElf Wizard 1\nLast modified: Sep 18, 2026\n\nSmoke Test PC\nElf Wizard 1\nLast modified: Sep 18, 2026\n\nSmoke Test PC\nElf Wizard 1\nLast modified: Sep 18, 2026\n\nSmoke Test PC\nElf Wizard 1\nLast modified: Sep 18, 2026\n\nSmoke Test PC\nElf Wizard 1\nLast modifi",
+    "reason": null
+  },
+  {
+    "id": "dm-toolkit-open-and-kind-tabs",
+    "status": "green",
+    "screenshot": "/home/ubuntu/workspace/repos/codex/docs/release/SD-36-consolidation/artifacts/ui-smoke/final/dm-toolkit-open-and-kind-tabs.png",
+    "rendered_excerpt": "⚙\nDMCAMPAIGN CONSOLE\nWorld\nTimeline\nPlaces\nPeople\nClues\nScenes\nRules\n\nExport GM copy\nExport player handout\nEncounter builder\nBack\nWORLD\n6 WORLD NOTES\n+ New world note\n\n\nWORLD NOTE\nGM ONLY\nSmoke Test World Record Edited\n\nWORLD NOTE\nGM ONLY\nSmoke Test World Record\n\nWORLD NOTE\nGM ONLY\nSmoke Test World Record\n\nWORLD NOTE\nGM ONLY\nSmoke Test World Record\n\nWORLD NOTE\nGM ONLY\nSmoke Test World Record\n\nWORL",
+    "reason": null
+  },
+  {
+    "id": "dm-toolkit-create-record",
+    "status": "green",
+    "screenshot": "/home/ubuntu/workspace/repos/codex/docs/release/SD-36-consolidation/artifacts/ui-smoke/final/dm-toolkit-create-record.png",
+    "rendered_excerpt": "⚙\nDMCAMPAIGN CONSOLE\nWorld\nTimeline\nPlaces\nPeople\nClues\nScenes\nRules\n\nExport GM copy\nExport player handout\nEncounter builder\nBack\nWORLD\n7 WORLD NOTES\n+ New world note\n\n\nWORLD NOTE\nGM ONLY\nSmoke Test World Record Edited\n\nWORLD NOTE\nGM ONLY\nSmoke Test World Record\n\nWORLD NOTE\nGM ONLY\nSmoke Test World Record\n\nWORLD NOTE\nGM ONLY\nSmoke Test World Record\n\nWORLD NOTE\nGM ONLY\nSmoke Test World Record\n\nWORL",
+    "reason": null
+  },
+  {
+    "id": "dm-toolkit-edit-record",
+    "status": "green",
+    "screenshot": "/home/ubuntu/workspace/repos/codex/docs/release/SD-36-consolidation/artifacts/ui-smoke/final/dm-toolkit-edit-record.png",
+    "rendered_excerpt": "⚙\nDMCAMPAIGN CONSOLE\nWorld\nTimeline\nPlaces\nPeople\nClues\nScenes\nRules\n\nExport GM copy\nExport player handout\nEncounter builder\nBack\nWORLD\n8 WORLD NOTES\n+ New world note\n\n\nWORLD NOTE\nGM ONLY\nSmoke Test World Record Edited\n\nWORLD NOTE\nGM ONLY\nSmoke Test World Record\n\nWORLD NOTE\nGM ONLY\nSmoke Test World Record\n\nWORLD NOTE\nGM ONLY\nSmoke Test World Record\n\nWORLD NOTE\nGM ONLY\nSmoke Test World Record\n\nWORL",
+    "reason": null
+  },
+  {
+    "id": "dm-toolkit-delete-record",
+    "status": "green",
+    "screenshot": "/home/ubuntu/workspace/repos/codex/docs/release/SD-36-consolidation/artifacts/ui-smoke/final/dm-toolkit-delete-record.png",
+    "rendered_excerpt": "⚙\nDMCAMPAIGN CONSOLE\nWorld\nTimeline\nPlaces\nPeople\nClues\nScenes\nRules\n\nExport GM copy\nExport player handout\nEncounter builder\nBack\nWORLD\n8 WORLD NOTES\n+ New world note\n\n\nWORLD NOTE\nGM ONLY\nSmoke Test World Record Edited\n\nWORLD NOTE\nGM ONLY\nSmoke Test World Record\n\nWORLD NOTE\nGM ONLY\nSmoke Test World Record\n\nWORLD NOTE\nGM ONLY\nSmoke Test World Record\n\nWORLD NOTE\nGM ONLY\nSmoke Test World Record\n\nWORL",
+    "reason": null
+  },
+  {
+    "id": "dm-toolkit-export",
+    "status": "green",
+    "screenshot": "/home/ubuntu/workspace/repos/codex/docs/release/SD-36-consolidation/artifacts/ui-smoke/final/dm-toolkit-export.png",
+    "rendered_excerpt": "⚙\nDMCAMPAIGN CONSOLE\nWorld\nTimeline\nPlaces\nPeople\nClues\nScenes\nRules\n\nExport GM copy\nExport player handout\nEncounter builder\nBack\nWORLD\n8 WORLD NOTES\n+ New world note\n\n\nWORLD NOTE\nGM ONLY\nSmoke Test World Record Edited\n\nWORLD NOTE\nGM ONLY\nSmoke Test World Record\n\nWORLD NOTE\nGM ONLY\nSmoke Test World Record\n\nWORLD NOTE\nGM ONLY\nSmoke Test World Record\n\nWORLD NOTE\nGM ONLY\nSmoke Test World Record\n\nWORL",
+    "reason": null
+  },
+  {
+    "id": "encounter-builder-add-monster-and-rating",
+    "status": "green",
+    "screenshot": "/home/ubuntu/workspace/repos/codex/docs/release/SD-36-consolidation/artifacts/ui-smoke/final/encounter-builder-add-monster-and-rating.png",
+    "rendered_excerpt": "⚙\nDM\nEncounter builder\nstrawman — party-strength rating only; no XP budget, treasure or saving yet\nBack to console\nPARTY\n\nSmoke Test PC\nLevel 1 — read from the saved build by the engine\n×\nADD A SAVED CHARACTER\n\nAldric Ironhand\nSmoke Test PC\nSmoke Test PC\nGrukk Ragef\nPal20\nSmoke Test PC\nSylvana Capstone\nSmoke Test PC\nSmoke Test PC\nSmoke Test PC (Copy)\nSmoke Test PC\nPicker Bloodrager 20\nSmoke Test P",
+    "reason": null
+  },
+  {
+    "id": "campaign-manager-list",
+    "status": "green",
+    "screenshot": "/home/ubuntu/workspace/repos/codex/docs/release/SD-36-consolidation/artifacts/ui-smoke/final/campaign-manager-list.png",
+    "rendered_excerpt": "⚙\nCampaign Manager\n\n\nSmoke Campaign\nPathfinder 1e · 0 in party\nUpdated Sep 17, 2026\n\nSmoke Campaign\nPathfinder 1e · 0 in party\nUpdated Sep 18, 2026\n\nSmoke Campaign\nPathfinder 1e · 0 in party\nUpdated Sep 18, 2026\n\nSmoke Campaign\nPathfinder 1e · 0 in party\nUpdated Sep 18, 2026\n\nSmoke Campaign\nPathfinder 1e · 0 in party\nUpdated Sep 18, 2026\n\nSmoke Campaign\nPathfinder 1e · 0 in party\nUpdated Sep 18, 2",
+    "reason": null
+  },
+  {
+    "id": "campaign-create",
+    "status": "green",
+    "screenshot": "/home/ubuntu/workspace/repos/codex/docs/release/SD-36-consolidation/artifacts/ui-smoke/final/campaign-create.png",
+    "rendered_excerpt": "⚙\nEdit campaign\nBack\nCampaign name\n\nCampaign rule set\n\nCampaign description\n\nCampaign members\n×\n+ Add member\nSave\nParty (0)\nCharacters from your saved list — Drive-synced character sync and format validation aren't wired yet, so this uses the same characters Load Character does.\n\nNo saved characters yet.",
+    "reason": "auto-relaunch"
+  },
+  {
+    "id": "campaign-edit",
+    "status": "green",
+    "screenshot": "/home/ubuntu/workspace/repos/codex/docs/release/SD-36-consolidation/artifacts/ui-smoke/final/campaign-edit.png",
+    "rendered_excerpt": "⚙\nCampaign Manager\n\n\nSmoke Campaign\nPathfinder 1e · 0 in party\nUpdated Sep 17, 2026\n\nSmoke Campaign\nPathfinder 1e · 0 in party\nUpdated Sep 18, 2026\n\nSmoke Campaign\nPathfinder 1e · 0 in party\nUpdated Sep 18, 2026\n\nSmoke Campaign\nPathfinder 1e · 0 in party\nUpdated Sep 18, 2026\n\nSmoke Campaign\nPathfinder 1e · 0 in party\nUpdated Sep 18, 2026\n\nSmoke Campaign\nPathfinder 1e · 0 in party\nUpdated Sep 18, 2",
+    "reason": null
+  },
+  {
+    "id": "campaign-sheet-tabs",
+    "status": "green",
+    "screenshot": "/home/ubuntu/workspace/repos/codex/docs/release/SD-36-consolidation/artifacts/ui-smoke/final/campaign-sheet-tabs.png",
+    "rendered_excerpt": "⚙\n☰ Menu\n✕\nSmoke Campaign — Pathfinder 1e\nPARTY (0)\n\nNo party members yet — add some from Edit Campaign.\n\nParty Resources\nAdventure Log\nMaps\nWiki\n+\nNothing here yet.\n\nSelect an entry on the left, or add a new one.\n\nEntries are saved locally for now; syncing them as markdown files to the campaign's Drive folder is not yet wired.",
+    "reason": null
+  },
+  {
+    "id": "manual-character-import",
+    "status": "manual",
+    "screenshot": null,
+    "rendered_excerpt": null,
+    "reason": "handleImport opens a native OS file-open dialog (Tauri's dialog plugin) -- xdotool has no DOM to drive inside it."
+  },
+  {
+    "id": "manual-character-export",
+    "status": "manual",
+    "screenshot": null,
+    "rendered_excerpt": null,
+    "reason": "handleExport / the sheet menu's 'Export' item open a native OS file-save dialog."
+  },
+  {
+    "id": "manual-portrait-upload",
+    "status": "manual",
+    "screenshot": null,
+    "rendered_excerpt": null,
+    "reason": "PortraitUpload opens a native OS file-open dialog for the image file."
   }
 ]

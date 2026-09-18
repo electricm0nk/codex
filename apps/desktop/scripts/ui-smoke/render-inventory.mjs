@@ -76,6 +76,18 @@ function main() {
       '`apps/desktop/.claude/skills/run-desktop/SKILL.md`).',
   );
   lines.push('');
+  lines.push(
+    '**Denominator discipline**: `results.json` always carries one entry per selected row, written as `not-run` ' +
+      "before any row executes and replaced in place as each finishes, so a killed/interrupted run's row count " +
+      'still matches its own denominator instead of a shorter file being mistaken for a complete run. ' +
+      '**`--resume`** (with `--out <dir>` pointed at a directory already holding a `results.json`): skips ' +
+      "re-running any row whose entry there is already `green` or `manual`, and re-runs every other row " +
+      "(`not-run`, `red`, `blocked`, or missing entirely). **Auto-recover**: two consecutive command-channel " +
+      'stalls trigger one app relaunch + retry of the current row (capped at 3 relaunches per run); a retry ' +
+      "that then passes is logged with reason `auto-relaunch`. See `spec.json`'s own top-level `$comment` for " +
+      'the full contract.',
+  );
+  lines.push('');
 
   for (const [screen, screenRows] of byScreen) {
     lines.push(`## ${screen}`);

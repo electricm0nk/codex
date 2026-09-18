@@ -28,6 +28,7 @@ import {
   screenContains,
   sleepMs,
 } from './lib/probe.mjs';
+import { applyResult, buildResumeState, buildSkeleton, hasNotRun, summaryLine } from './lib/resultsSkeleton.mjs';
 
 const HERE = dirname(fileURLToPath(import.meta.url));
 const SPEC_PATH = join(HERE, 'spec.json');
@@ -59,7 +60,7 @@ const LANDING_TARGET_NAMES = ['New\nCharacter', 'Load\nCharacter'];
 const LANDING_MARKER_PREFIX = 'Browse ';
 
 function parseArgs(argv) {
-  const args = { only: null, from: null, out: null, keep: false, xdotool: false };
+  const args = { only: null, from: null, out: null, keep: false, xdotool: false, resume: false };
   for (let i = 0; i < argv.length; i += 1) {
     const arg = argv[i];
     if (arg === '--only') {
@@ -70,6 +71,14 @@ function parseArgs(argv) {
       args.out = argv[++i];
     } else if (arg === '--keep') {
       args.keep = true;
+    } else if (arg === '--resume') {
+      // See this flag's own top-level $comment entry in spec.json for the
+      // full contract. Short version: when --out already holds a
+      // results.json, skip re-running any row whose entry there is
+      // 'green' or 'manual' (carry it forward verbatim) and re-run every
+      // other row ('not-run', 'red', 'blocked', or missing entirely) --
+      // see lib/resultsSkeleton.mjs's buildResumeState.
+      args.resume = true;
     } else if (arg === '--xdotool') {
       // Drives click/type/key via `driver.sh` (xdotool) instead of the DOM
       // command channel -- kept only for direct comparison against the
@@ -86,6 +95,39 @@ function loadSpec() {
   const parsed = JSON.parse(readFileSync(SPEC_PATH, 'utf8'));
   const byId = new Map(parsed.rows.map((row) => [row.id, row]));
   return { rows: parsed.rows, byId };
+}
+
+/**
+ * Reads a previous run's results.json at `outDir` for `--resume`. Returns
+ * `null` (never throws) on a missing file, an empty file, invalid JSON, or
+ * anything that doesn't parse to an array -- all treated the same as "no
+ * prior results", which `buildResumeState` already handles by re-running
+ * everything.
+ */
+function readResultsFile(outDir) {
+  const path = join(outDir, 'results.json');
+  if (!existsSync(path)) {
+    return null;
+  }
+  let raw;
+  try {
+    raw = readFileSync(path, 'utf8');
+  } catch {
+    return null;
+  }
+  if (!raw || !raw.trim()) {
+    return null;
+  }
+  try {
+    const parsed = JSON.parse(raw);
+    return Array.isArray(parsed) ? parsed : null;
+  } catch {
+    return null;
+  }
+}
+
+function writeResults(outDir, results) {
+  writeFileSync(join(outDir, 'results.json'), JSON.stringify(results, null, 2));
 }
 
 function selectRows(spec, args) {
@@ -530,11 +572,34 @@ function resetToLanding(maxAttempts = 6) {
 // 'Loading' placeholder remains -- so the budget is genuinely spent waiting
 // out real async content, not returned unused the moment a static marker
 // happens to be there from the start.
-function waitForMarker(marker, timeoutMs = 12000) {
+//
+// **A `selectsNonEmpty` select can race the exact same way, with no
+// 'Loading' text to catch it.** Reproduced directly (2026-09-18,
+// sheet-action-trait-add): TraitsSection's own heading ('TRAITS', a static
+// label rendered regardless of load state) satisfies `marker` on the very
+// first poll, but its 'Trait to add' `<select>` only exists once
+// `loadCharacterTraits()`'s own async fetch resolves AND renders no
+// 'Loading' placeholder of its own while pending -- so the OLD marker+
+// Loading-only wait returned before that fetch had a chance to settle,
+// and assertRow's separate, non-polling `selectsNonEmpty` check then read
+// a snapshot taken before the select ever mounted. Generalized rather than
+// special-cased to this one row (the same race is latent for ANY row
+// declaring `selectsNonEmpty` against an independently-fetched select):
+// this function now also polls, within the SAME budget, until every select
+// the row lists in `selectsNonEmpty` is present. It deliberately does NOT
+// also require a positive `optionCount` here -- a select that mounts with
+// zero options and stays that way is a real defect assertRow's own
+// zero-options check must still catch, not something to wait out.
+function waitForRowSettled(row, timeoutMs = 12000) {
   const deadline = Date.now() + timeoutMs;
+  const requiredSelects = row.selectsNonEmpty ?? [];
   for (;;) {
     const { snapshot } = latestSnapshot({ requireFresh: false, timeoutMs: 500 });
-    if (screenContains(snapshot, marker) && !screenContains(snapshot, 'Loading')) {
+    const settled =
+      screenContains(snapshot, row.marker) &&
+      !screenContains(snapshot, 'Loading') &&
+      requiredSelects.every((name) => findSelect(snapshot, name));
+    if (settled) {
       return snapshot;
     }
     if (Date.now() >= deadline) {
@@ -628,7 +693,7 @@ function runRow(row, spec, outDir) {
     throw cause;
   }
 
-  const snapshot = waitForMarker(row.marker);
+  const snapshot = waitForRowSettled(row);
   const problems = assertRow(row, snapshot);
   const renderedExcerpt = (snapshot?.bodyText ?? '').slice(0, 400);
 
@@ -667,7 +732,34 @@ function main() {
   mkdirSync(outDir, { recursive: true });
 
   const spec = loadSpec();
-  const rows = selectRows(spec, args);
+  const selected = selectRows(spec, args);
+
+  // Denominator discipline: `results` always holds exactly one entry per
+  // SELECTED row, from this very first write, before any row has actually
+  // executed. A run killed mid-way (e.g. a shell call hitting its own
+  // timeout) leaves behind a results.json whose row count still matches the
+  // run's own denominator -- the unexecuted rows show up as explicit
+  // `not-run` entries, never as a shorter array that a reader could mistake
+  // for a complete run (see spec.json's own top-level $comment and
+  // lib/resultsSkeleton.mjs's header for the cycle-2 incident this exists
+  // to prevent). `rows` is the subset actually executed this invocation --
+  // under `--resume` that is fewer than `selected` (green/manual rows from
+  // a previous results.json at this --out are preserved, not re-run; see
+  // buildResumeState).
+  let results;
+  let rows;
+  if (args.resume) {
+    const previous = readResultsFile(outDir);
+    ({ results, toRun: rows } = buildResumeState(selected, previous));
+    console.log(
+      `--resume: ${selected.length - rows.length}/${selected.length} rows already green/manual in ` +
+        `${join(outDir, 'results.json')}, re-running ${rows.length}.`,
+    );
+  } else {
+    results = buildSkeleton(selected);
+    rows = selected;
+  }
+  writeResults(outDir, results);
 
   const alreadyAlive = driver.isAlive();
   if (!alreadyAlive) {
@@ -737,18 +829,14 @@ function main() {
     lastSeenTs = existing?.ts ?? 0;
   }
 
-  const results = [];
-  let green = 0;
-  let red = 0;
-  let blocked = 0;
-  let manual = 0;
-
-  for (const row of rows) {
-    let result;
+  // Runs one row and always returns a definite result object (never lets an
+  // uncaught exception propagate) -- shared by the main loop and the
+  // auto-relaunch retry below so both go through identical error handling.
+  function executeRow(row) {
     try {
-      result = runRow(row, spec, outDir);
+      return runRow(row, spec, outDir);
     } catch (cause) {
-      result = {
+      return {
         id: row.id,
         status: 'red',
         screenshot: null,
@@ -756,16 +844,89 @@ function main() {
         reason: `runner exception: ${cause instanceof Error ? cause.message : String(cause)}`,
       };
     }
-    results.push(result);
-    if (result.status === 'green') green += 1;
-    else if (result.status === 'red') red += 1;
-    else if (result.status === 'blocked') blocked += 1;
-    else if (result.status === 'manual') manual += 1;
+  }
 
-    const marker = { green: 'PASS', red: 'FAIL', blocked: 'BLOCKED', manual: 'MANUAL' }[result.status];
+  // Auto-recover: a "command-channel stall" is a row that never actually
+  // got a real answer out of the webview -- a click/type/key/select whose
+  // own long retry budget (CLICK_TARGET_WAIT_MS, see its own comment) still
+  // ran out, or resetToLanding() itself never reaching a recognizable
+  // screen -- as opposed to a row that ran cleanly but asserted false (a
+  // genuine marker/expect/forbid mismatch). Two of these BACK TO BACK is
+  // the signature of the whole webview/IPC pipeline being wedged (this
+  // file's own CLICK_TARGET_WAIT_MS comment documents a single such stall
+  // measured at 80+ seconds; a wedge outlasting even that budget twice in a
+  // row is a process-level problem a fresh launch actually fixes, not
+  // something more waiting inside the same process recovers from).
+  function looksLikeChannelStall(result) {
+    if (result.status === 'blocked') {
+      return true;
+    }
+    if (result.status !== 'red' || !result.reason) {
+      return false;
+    }
+    return /target not found|no probe report acknowledged|(type|key|select) command failed/i.test(result.reason);
+  }
+
+  const MAX_AUTO_RELAUNCHES = 3;
+  let consecutiveStalls = 0;
+  let autoRelaunches = 0;
+
+  for (const row of rows) {
+    let result = executeRow(row);
+
+    if (looksLikeChannelStall(result)) {
+      consecutiveStalls += 1;
+    } else {
+      consecutiveStalls = 0;
+    }
+
+    if (consecutiveStalls >= 2 && autoRelaunches < MAX_AUTO_RELAUNCHES) {
+      autoRelaunches += 1;
+      console.log(
+        `run.mjs: 2 consecutive rows stalled on the command channel -- relaunching the app ` +
+          `(auto-relaunch ${autoRelaunches}/${MAX_AUTO_RELAUNCHES}) and retrying '${row.id}'.`,
+      );
+      driver.stop();
+      const staleTs = readProbeFile(probePath)?.ts ?? 0;
+      const launchResult = driver.launch();
+      if (launchResult.status === 0) {
+        const firstProbeTimeoutMs = Number(process.env.RUN_DESKTOP_FIRST_PROBE_TIMEOUT_MS) || 180000;
+        const { snapshot } = pollForFreshProbe(probePath, staleTs, firstProbeTimeoutMs, 250);
+        if (snapshot) {
+          lastSeenTs = snapshot.ts ?? 0;
+          sleepMs(1500); // same cold-launch settle as the initial launch above.
+          const retryResult = executeRow(row);
+          if (retryResult.status === 'green') {
+            // "log 'auto-relaunch' in that row's reason if it then passes".
+            retryResult.reason = 'auto-relaunch';
+            consecutiveStalls = 0;
+          } else if (!looksLikeChannelStall(retryResult)) {
+            // Recovered enough to get a real (non-stall) answer, even if
+            // that answer was a genuine red assertion failure -- the
+            // channel itself is no longer wedged.
+            consecutiveStalls = 0;
+          } else {
+            // Still stalling even after a fresh process -- keep the streak
+            // alive (at 1, not 2) so two MORE consecutive stalls earns
+            // another relaunch, up to the cap, rather than relaunching on
+            // every single row from here on.
+            consecutiveStalls = 1;
+          }
+          result = retryResult;
+        } else {
+          console.error(`run.mjs: auto-relaunch ${autoRelaunches} produced no fresh probe report -- continuing without retrying '${row.id}'.`);
+        }
+      } else {
+        console.error(`run.mjs: auto-relaunch ${autoRelaunches}'s driver.sh launch failed -- continuing without retrying '${row.id}'.`);
+      }
+    }
+
+    results = applyResult(results, result);
+
+    const marker = { green: 'PASS', red: 'FAIL', blocked: 'BLOCKED', manual: 'MANUAL', 'not-run': 'SKIP' }[result.status];
     console.log(`${marker}  ${result.id}${result.reason ? `  -- ${result.reason}` : ''}`);
 
-    writeFileSync(join(outDir, 'results.json'), JSON.stringify(results, null, 2));
+    writeResults(outDir, results);
   }
 
   // Fallback clipboard extraction is only reachable when the probe file
@@ -782,14 +943,17 @@ function main() {
   }
 
   console.log('');
-  console.log(`${green}/${rows.length} green, ${red} red, ${blocked} blocked, ${manual} manual.`);
+  console.log(summaryLine(results));
   console.log(`Evidence: ${outDir}`);
 
   if (!args.keep) {
     driver.stop();
   }
 
-  process.exitCode = red > 0 || blocked > 0 ? 1 : 0;
+  const anyNotRun = hasNotRun(results);
+  const anyRed = results.some((r) => r.status === 'red');
+  const anyBlocked = results.some((r) => r.status === 'blocked');
+  process.exitCode = anyRed || anyBlocked || anyNotRun ? 1 : 0;
 }
 
 main();
