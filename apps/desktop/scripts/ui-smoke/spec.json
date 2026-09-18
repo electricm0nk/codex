@@ -1,5 +1,5 @@
 {
-  "$comment": "Row shape: {id, screen, setup?: [rowIds], steps: [{op, target?, text?, key?, ticks?, ms?}], marker, expect: [string], forbid?: [string], selectsNonEmpty?: [selectName], manual?: reason, notes}. Generated docs/testing/ui-smoke-inventory.md is rendered FROM this file by render-inventory.mjs -- edit this file, not the doc. Names in `target`/`selectsNonEmpty` are matched against the live uiProbe.ts snapshot's targets/selects by exact `name` (trimmed textContent || aria-label || placeholder || title || id, and select#<n> for the handful of anonymous <select>s -- see uiProbe.ts). Global forbid strings (applied by run.mjs to every row, not repeated here): 'could be read from the corpus', 'failure', 'Failed to load', 'requires the desktop runtime', 'undefined', 'NaN', '[object Object]', and 'Loading' still present after the row's wait budget.",
+  "$comment": "Row shape: {id, screen, setup?: [rowIds], steps: [{op, target?, text?, key?, ticks?, ms?}], marker, expect: [string], forbid?: [string], allowGlobalForbid?: [string], selectsNonEmpty?: [selectName], manual?: reason, notes}. Generated docs/testing/ui-smoke-inventory.md is rendered FROM this file by render-inventory.mjs -- edit this file, not the doc. Names in `target`/`selectsNonEmpty` are matched against the live uiProbe.ts snapshot's targets/selects by exact `name` (trimmed textContent || aria-label || placeholder || title || id, and select#<n> for the handful of anonymous <select>s -- see uiProbe.ts). `expect`/`marker`/`forbid` strings are matched against bodyText, which is captured via `innerText` (respects CSS, e.g. `text-transform: uppercase` renders the text differently than its mixed-case source prop/string) -- assert the case that actually renders, not the source string. Global forbid strings (applied by run.mjs to every row unless listed in that row's own `allowGlobalForbid`): 'could be read from the corpus', 'failure', 'Failed to load', 'requires the desktop runtime', 'undefined', 'NaN', '[object Object]', and 'Loading' still present after the row's wait budget.",
   "rows": [
     {
       "id": "landing-render",
@@ -7,12 +7,12 @@
       "steps": [],
       "marker": "Corpus Ingest Diagnostic",
       "expect": [
-        "New", "Character", "Load", "Campaign", "Manager", "DM", "Toolkit",
+        "NEW CHARACTER", "LOAD CHARACTER", "CAMPAIGN MANAGER", "DM TOOLKIT",
         "Browse Equipment Catalog", "Browse Spell Catalog", "Browse Class Progression",
         "Browse Race Traits", "Browse Monster Catalog", "Browse Companion Catalog",
         "Browse Intelligent Item Components", "Corpus Ingest Diagnostic"
       ],
-      "notes": "Every landing affordance from LandingScreen.tsx in one render check -- action banners, all seven browse links, and the diagnostic link."
+      "notes": "Every landing affordance from LandingScreen.tsx in one render check -- action banners, all seven browse links, and the diagnostic link. Banner titles are asserted in the CASE THEY ACTUALLY RENDER: ActionBanner's title span carries `textTransform: 'uppercase'`, and uiProbe.ts's bodyText is captured via `innerText` (which reflects applied CSS, unlike `textContent`), so the live screen text is 'NEW CHARACTER' etc., not the mixed-case prop string 'New\\nCharacter'. Confirmed live 2026-09-17 against the running app's own probe snapshot -- the original mixed-case single-word expects were a spec defect, not an app defect (see docs/testing/ui-smoke-inventory.md history)."
     },
     {
       "id": "landing-ruleset-chips",
@@ -34,10 +34,10 @@
     {
       "id": "settings-open",
       "screen": "settings",
-      "steps": [{ "op": "click", "target": "Open settings" }],
-      "marker": "Options",
+      "steps": [{ "op": "click", "target": "⚙" }],
+      "marker": "OPTIONS",
       "expect": ["Appearance", "Google Drive", "Update", "Bug Report", "Enhancement Request", "Developer"],
-      "notes": "SettingsModal's options rail renders all six SETTINGS_TABS at once regardless of the active tab."
+      "notes": "SettingsModal's options rail renders all six SETTINGS_TABS at once regardless of the active tab. The gear button's target name is '⚙' (its trimmed textContent, per uiProbe.ts's nameOf() priority), not its aria-label 'Open settings' (App.tsx) -- textContent wins over aria-label whenever both are non-empty. Marker is 'OPTIONS' (uppercase) -- same CSS-uppercase-transform-vs-innerText mismatch as landing-render: the rail's own section label renders as 'OPTIONS', the mixed-case 'Options' string never appears at all. Confirmed live 2026-09-17."
     },
     {
       "id": "settings-tab-appearance",
@@ -66,9 +66,9 @@
       "screen": "settings",
       "setup": ["settings-open"],
       "steps": [{ "op": "click", "target": "Google Drive" }],
-      "marker": "you@example.com",
-      "expect": ["you@example.com", "My Drive/TTRPG Campaigns"],
-      "notes": "GoogleDrivePanel's account-email and folder-path fields, matched by placeholder."
+      "marker": "Google account",
+      "expect": ["Google account", "My Drive/TTRPG Campaigns"],
+      "notes": "GoogleDrivePanel's account and folder-path fields. 'you@example.com' (the account field's own `placeholder` attribute) can NEVER appear in bodyText -- uiProbe.ts captures bodyText via `innerText`, which does not include an empty input's placeholder text at all (that's a separate DOM attribute, not rendered content); this row was unpassable as originally written. Reassigned to 'Google account' (the field's own visible label) as marker, and kept 'My Drive/TTRPG Campaigns', which DOES render live -- inside the folder field's help text ('Destination folder for campaign subfolders, e.g. My Drive/TTRPG Campaigns.'), not its placeholder. Confirmed live 2026-09-17."
     },
     {
       "id": "settings-tab-update",
@@ -86,7 +86,8 @@
       "steps": [{ "op": "click", "target": "Bug Report" }],
       "marker": "Report a bug",
       "expect": ["Observed behavior", "Expected behavior", "Reproduction steps", "Preserve bug draft (not yet submittable)"],
-      "notes": "BugReportComposer render, empty-state submit button reads 'Preserve bug draft' until required fields are filled."
+      "allowGlobalForbid": ["failure"],
+      "notes": "BugReportComposer render, empty-state submit button reads 'Preserve bug draft' until required fields are filled. allowGlobalForbid suppresses the global 'failure' forbid string here only -- the tab's own intro copy reads 'captures an observable failure with structured, required fields', describing what the form is FOR, not reporting an actual one; confirmed live 2026-09-17 this is the sole source of that string on this screen."
     },
     {
       "id": "settings-tab-enhancement",
@@ -103,9 +104,9 @@
       "setup": ["settings-open"],
       "steps": [{ "op": "click", "target": "Developer" }],
       "marker": "Developer",
-      "expect": ["Backend", "Build", "Platform", "Feature check", "Data source"],
+      "expect": ["BACKEND", "BUILD", "PLATFORM", "FEATURE CHECK", "DATA SOURCE"],
       "forbid": ["Unreachable"],
-      "notes": "Per DoD: the Developer tab's Backend card must show a reachable version/commit, never 'Unreachable', when the Tauri IPC bridge is alive (load_backend_health)."
+      "notes": "Per DoD: the Developer tab's Backend card must show a reachable version/commit, never 'Unreachable', when the Tauri IPC bridge is alive (load_backend_health). Section labels are asserted in the CASE THEY ACTUALLY RENDER -- same CSS-uppercase-transform-vs-innerText mismatch as landing-render (see its own note); 'Backend'/'Build' incidentally passed before only via coincidental substring hits elsewhere on the page ('Backend feature check' heading, 'Builds ship from...' body text), not the labels themselves. Confirmed live 2026-09-17."
     },
     {
       "id": "settings-close-esc",

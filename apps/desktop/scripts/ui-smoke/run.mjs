@@ -110,6 +110,16 @@ function latestSnapshot({ requireFresh = false, timeoutMs = 3000 } = {}) {
 
 // ----------------------------------------------------------- step execution
 const VIEWPORT_SCROLL_THRESHOLD_Y = 1150;
+// How long clickByName will keep polling for a target that isn't on screen
+// YET before giving up. The screen just navigated to (by a preceding step in
+// the same row) can mount its own content -- a search box, a tab bar -- a
+// beat after the navigation-triggering mutation itself, e.g. behind an async
+// catalog-data fetch; a single immediate read races that and throws a false
+// TargetNotFoundError for an element that was about to exist. Observed
+// directly: rows whose FIRST click (from the already-settled landing screen)
+// succeeded but whose SECOND click (into the just-mounted next screen) did
+// not find its target on the first try.
+const CLICK_TARGET_WAIT_MS = 10000;
 
 class TargetNotFoundError extends Error {
   constructor(name) {
@@ -120,8 +130,17 @@ class TargetNotFoundError extends Error {
 
 /** Clicks the named target, scrolling it into view first if the probe says it's below the fold. */
 function clickByName(name) {
-  let { snapshot } = latestSnapshot();
-  let target = findTarget(snapshot, name);
+  const deadline = Date.now() + CLICK_TARGET_WAIT_MS;
+  let snapshot;
+  let target;
+  for (;;) {
+    ({ snapshot } = latestSnapshot());
+    target = findTarget(snapshot, name);
+    if (target || Date.now() >= deadline) {
+      break;
+    }
+    sleepMs(150);
+  }
   if (target && target.rect.y > VIEWPORT_SCROLL_THRESHOLD_Y) {
     driver.scroll(960, 600, 6);
     ({ snapshot } = latestSnapshot({ requireFresh: true, timeoutMs: 3000 }));
@@ -131,7 +150,24 @@ function clickByName(name) {
     throw new TargetNotFoundError(name);
   }
   const { x, y } = centerOf(target.rect);
+  const baselineTs = snapshot?.ts ?? 0;
   driver.click(x, y);
+  // The first click issued after any idle gap in this webview (the very
+  // first click of a fresh launch; also, empirically, a row's own first
+  // click after the gap since the previous row) can be silently swallowed
+  // -- no exception, no DOM mutation, and an identical click moments later
+  // succeeds with nothing else different. A same-coordinate immediate
+  // re-click was tried as a fix and reverted: firing two clicks ~1.2s apart
+  // was caught putting WebKitGTK into a stuck state where every further
+  // click AND key event stopped registering for the rest of the process's
+  // life. 2000ms is well outside any double-click gesture window (GTK's own
+  // default multi-click timeout is a few hundred ms), so a single retry
+  // after a full 2s wait targets the same swallowed-first-click pattern
+  // without that risk.
+  const { fresh } = pollForFreshProbe(probePath, baselineTs, 2000, 100);
+  if (!fresh) {
+    driver.click(x, y);
+  }
 }
 
 function runStep(step) {
@@ -199,7 +235,16 @@ function resetToLanding(maxAttempts = 6) {
 }
 
 // ------------------------------------------------------------- assertions
-function waitForMarker(marker, timeoutMs = 6000) {
+// This webview's input-to-paint latency under Xvfb/software rendering has
+// been measured directly to vary wildly -- anywhere from well under a
+// second up to 60+ seconds for the SAME click on the SAME element in
+// different sessions, with no observed correlation to system load (CPU/RAM
+// were idle-normal throughout). 12s is a practical compromise: generous
+// enough to absorb most of the variance seen without making a full spec
+// walk impractically slow; a row that still needs longer than this is
+// flagged RED and the cause (harness timeout vs. real app defect) should be
+// re-checked by hand rather than assumed either way.
+function waitForMarker(marker, timeoutMs = 12000) {
   const deadline = Date.now() + timeoutMs;
   for (;;) {
     const { snapshot } = latestSnapshot({ requireFresh: false, timeoutMs: 500 });
@@ -224,7 +269,14 @@ function assertRow(row, snapshot) {
       problems.push(`expected string missing: '${needle}'`);
     }
   }
-  const forbidList = [...GLOBAL_FORBID, ...(row.forbid ?? [])];
+  // allowGlobalForbid opts a row OUT of specific GLOBAL_FORBID entries whose
+  // wording is a false positive on that one screen's own legitimate copy
+  // (e.g. the Bug Report tab's own description text uses the word
+  // "failure" to explain what the form is FOR, not to report one) — it
+  // never touches the row's own `forbid` list, only which global entries
+  // apply to this row.
+  const allowed = new Set(row.allowGlobalForbid ?? []);
+  const forbidList = [...GLOBAL_FORBID.filter((needle) => !allowed.has(needle)), ...(row.forbid ?? [])];
   for (const needle of forbidList) {
     if (screenContains(snapshot, needle)) {
       problems.push(`forbidden string present: '${needle}'`);
@@ -330,6 +382,22 @@ function main() {
 
   const alreadyAlive = driver.isAlive();
   if (!alreadyAlive) {
+    // A probe file from a PREVIOUS session (this agent's earlier launch, a
+    // manual test edit, anything) can still be sitting at `probePath` —
+    // driver.sh's `stop` kills processes, it does not clean up this file.
+    // Capture its `ts` (0 if none) as a floor so the post-launch wait below
+    // requires a snapshot strictly newer than whatever was already there,
+    // rather than accepting stale leftover content as proof the NEW process
+    // is ready. Without this, `sinceTs=0` is satisfied instantly by the old
+    // file, rows start clicking real (but stale) coordinates against a
+    // webview that has not painted its first real frame yet, and the
+    // failure mode is a broad, confusing cascade of "could not reach the
+    // landing screen" / "target not found" across nearly every row — not a
+    // clean, attributable error. Observed directly: this exact cascade,
+    // traced back to a leftover probe file from the prior negative-proof
+    // run this same cycle.
+    const staleTs = readProbeFile(probePath)?.ts ?? 0;
+
     console.log(`Launching app for agent '${agent}'...`);
     const launchResult = driver.launch();
     if (launchResult.status !== 0) {
@@ -338,13 +406,23 @@ function main() {
       process.exitCode = 1;
       return;
     }
-    // Wait for the very first probe report — proof the DEV-only
-    // installUiProbe() hook is wired up and the React app has painted at
-    // least once, not just that the OS window exists.
-    const { snapshot } = pollForFreshProbe(probePath, 0, 60000, 250);
+    // Wait for the very first FRESH probe report (strictly newer than any
+    // stale leftover — see above) — proof the DEV-only installUiProbe()
+    // hook is wired up and the React app has painted at least once, not
+    // just that the OS window exists. driver.sh's own window-wait only
+    // proves the OS-level window was mapped; on a cold run that lands well
+    // before Vite has finished cold-transforming this app's
+    // (corpus-data-heavy) module graph for the browser, so the first real
+    // paint can trail the window by a good while longer than a warm run's
+    // near-instant one. Measured once on this box: ~61s after the window
+    // appeared, on the very first launch of a session. Default here is
+    // deliberately generous; override with RUN_DESKTOP_FIRST_PROBE_TIMEOUT_MS
+    // if a slower box needs more.
+    const firstProbeTimeoutMs = Number(process.env.RUN_DESKTOP_FIRST_PROBE_TIMEOUT_MS) || 180000;
+    const { snapshot } = pollForFreshProbe(probePath, staleTs, firstProbeTimeoutMs, 250);
     if (!snapshot) {
       console.error(
-        `run.mjs: app launched but no UI probe report arrived within 60s at ${probePath}. ` +
+        `run.mjs: app launched but no UI probe report arrived within ${firstProbeTimeoutMs}ms at ${probePath}. ` +
           `Either main.tsx's installUiProbe() call, ui_probe.rs's registration in generate_handler!, ` +
           `or CODEX_UI_PROBE_FILE propagation into the tauri dev child process is broken.`,
       );
@@ -354,6 +432,16 @@ function main() {
       return;
     }
     lastSeenTs = snapshot.ts ?? 0;
+    // A probe report proves React has painted, but not that WebKitGTK's
+    // input pipeline is accepting synthetic (xdotool) events yet — observed
+    // directly: the very first click issued immediately after this point
+    // (e.g. the first row's own click step) can silently miss on a cold
+    // launch even though the exact same click succeeds a moment later once
+    // the app is "warm" (findTarget/coords were correct both times; only
+    // the click's effect was missing). A short settle delay here costs
+    // nothing on every row after the first but avoids a first-row false RED
+    // on a fresh launch.
+    sleepMs(1500);
   } else {
     console.log(`Reusing live app for agent '${agent}'.`);
     const existing = readProbeFile(probePath);
