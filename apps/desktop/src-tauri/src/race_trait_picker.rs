@@ -482,6 +482,10 @@ fn race_corpus() -> &'static Result<RaceCorpus, String> {
     static CORPUS: OnceLock<Result<RaceCorpus, String>> = OnceLock::new();
     CORPUS.get_or_init(|| {
         let corpus_root = corpus_root_dir()?;
+        if !corpus_root.is_dir() {
+            // See `race_catalog::race_corpus`'s identical guard.
+            return Err(format!("corpus root not found: {}", corpus_root.display()));
+        }
         let book_dirs: Vec<PathBuf> = RACE_CORPUS_BOOKS.iter().map(|book| corpus_root.join(book)).collect();
         let roots: Vec<BookCorpusRoot<'_>> = RACE_CORPUS_BOOKS
             .iter()

@@ -536,6 +536,24 @@ pub struct ResolvedRace {
 pub fn load_race_corpus(roots: &[BookCorpusRoot<'_>]) -> RaceCorpus {
     let mut corpus = RaceCorpus::default();
     for root in roots {
+        // A book directory that does not exist at all is a different fact
+        // from a present book that simply has no `race/` or `race_trait/`
+        // subdirectory (APG, Inner Sea Races and others legitimately have
+        // only one of the two) -- that second case stays silent, exactly as
+        // `load_chassis_dir`/`load_trait_dir` already handle it below. This
+        // check catches the first case: the whole corpus root, or one book
+        // under it, missing outright -- e.g. a packaged build whose
+        // `codex_repo_root()` resolved to a directory with no bundled
+        // `data/corpus` at all. Silently contributing zero races here is
+        // exactly how "No race could be read from the corpus" reached a
+        // player with no path in the diagnostics naming why.
+        if !root.dir.is_dir() {
+            corpus.push_diag(
+                root.dir,
+                format!("book directory not found: {}", root.dir.display()),
+            );
+            continue;
+        }
         corpus.load_chassis_dir(root);
         corpus.load_trait_dir(root);
     }
@@ -2202,13 +2220,21 @@ mod tests {
         );
     }
 
-    /// A book root that does not exist contributes nothing and does not panic.
+    /// A book root that does not exist contributes nothing, does not panic,
+    /// and names the missing path in a diagnostic rather than degrading
+    /// silently -- the loud-not-silent fix for the desktop "No race could be
+    /// read from the corpus" defect, which had no diagnostic naming why.
     #[test]
-    fn a_nonexistent_book_dir_contributes_nothing_without_panicking() {
+    fn a_missing_book_dir_is_named_in_diagnostics() {
         let roots = [BookCorpusRoot { book_id: "nope", dir: Path::new("data/corpus/nope") }];
         let corpus = load_race_corpus(&roots);
         assert!(corpus.race_keys().is_empty());
-        assert!(corpus.diagnostics().is_empty());
+        assert_eq!(corpus.diagnostics().len(), 1);
+        assert!(
+            corpus.diagnostics()[0].message.contains("data/corpus/nope"),
+            "diagnostic must name the full missing path: {:?}",
+            corpus.diagnostics()[0]
+        );
     }
 
     /// The unmodified default race: every racial default applies, nothing is

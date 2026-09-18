@@ -270,6 +270,14 @@ pub(crate) fn race_corpus() -> &'static Result<RaceCorpus, String> {
     static CORPUS: OnceLock<Result<RaceCorpus, String>> = OnceLock::new();
     CORPUS.get_or_init(|| {
         let corpus_root = corpus_root_dir()?;
+        if !corpus_root.is_dir() {
+            // Loud, not silent: `codex_repo_root()` resolved to *something*,
+            // but that something carries no `data/corpus` at all -- the
+            // packaged-build shape that used to reach the player as a bare
+            // "No race could be read from the corpus." with no path to
+            // debug from.
+            return Err(format!("corpus root not found: {}", corpus_root.display()));
+        }
         let book_dirs: Vec<PathBuf> =
             RACE_CORPUS_BOOKS.iter().map(|book| corpus_root.join(book)).collect();
         let roots: Vec<BookCorpusRoot<'_>> = RACE_CORPUS_BOOKS
@@ -404,6 +412,31 @@ mod tests {
     use super::*;
     use codex::rules_core::rules_tables::crb::race_tables::RaceId;
     use std::collections::{BTreeMap, BTreeSet};
+
+    /// Every book this catalog declares must actually resolve under the real
+    /// corpus root, with a real settled race-trait bundle -- the exact fact a
+    /// packaged build that resolves `codex_repo_root()` to the wrong place
+    /// gets wrong, and the exact fact `race_corpus()`'s own diagnostics now
+    /// name when it does. Failure names the missing path directly, rather
+    /// than leaving a debugger to guess which of `RACE_CORPUS_BOOKS` broke.
+    #[test]
+    fn every_race_corpus_book_resolves_under_the_corpus_root() {
+        let corpus_root = corpus_root_dir().expect("corpus root must resolve in a source checkout");
+        for book in RACE_CORPUS_BOOKS {
+            let book_dir = corpus_root.join(book);
+            assert!(
+                book_dir.is_dir(),
+                "RACE_CORPUS_BOOKS book {book:?} must exist as a directory under the corpus root: {}",
+                book_dir.display()
+            );
+            let settled_race_trait = book_dir.join("_settled/race_trait.json");
+            assert!(
+                settled_race_trait.is_file(),
+                "book {book:?} must carry a settled race_trait bundle: {}",
+                settled_race_trait.display()
+            );
+        }
+    }
 
     /// Every count in this module's tests was derived by running the catalog
     /// itself, never quoted from a doc:

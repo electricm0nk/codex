@@ -75,6 +75,19 @@ pub fn load_equipment_corpus<'a>(roots: &[BookCorpusRoot<'_>]) -> SourcePackageC
         SourceRef { source_path: String::new(), line: 0 },
     );
     for root in roots {
+        // A whole book directory missing (e.g. a packaged build whose
+        // resolved root has no bundled `data/corpus`) is a different fact
+        // from a present book that simply carries no `equipment/`
+        // subdirectory -- the latter stays silent below, unchanged. See
+        // `race_resolver::load_race_corpus`'s identical guard for the same
+        // "loud, not silent" fix.
+        if !root.dir.is_dir() {
+            package.push_diagnostic(load_diagnostic(
+                root.dir,
+                &format!("book directory not found: {}", root.dir.display()),
+            ));
+            continue;
+        }
         let equipment_dir = root.dir.join("equipment");
         if !equipment_dir.is_dir() {
             continue;
@@ -139,6 +152,14 @@ pub fn load_spell_corpus<'a>(roots: &[BookCorpusRoot<'_>]) -> SourcePackageConte
         SourceRef { source_path: String::new(), line: 0 },
     );
     for root in roots {
+        // See `load_equipment_corpus`'s identical guard above.
+        if !root.dir.is_dir() {
+            package.push_diagnostic(load_diagnostic(
+                root.dir,
+                &format!("book directory not found: {}", root.dir.display()),
+            ));
+            continue;
+        }
         let spell_dir = root.dir.join("spell");
         if !spell_dir.is_dir() {
             continue;

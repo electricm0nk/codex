@@ -164,3 +164,23 @@ export async function loadRaceRosterSurface(): Promise<RaceRosterSurface> {
   const response = await loadRaceCreationRoster();
   return { options: raceOptionsFromChassis(response.races), diagnostics: response.diagnostics };
 }
+
+/**
+ * What `CreateCharacterForm` shows in place of the picker when the roster
+ * carries no options, or `null` when the roster is usable and the form
+ * should render it normally.
+ *
+ * Includes the backend's own `diagnostics` text (e.g. `corpus root not
+ * found: /path/to/wherever/this/build/looked`) whenever it is non-empty, so
+ * a packaged build that cannot find `data/corpus` shows the operator the
+ * exact path it tried rather than the bare, undebuggable "No race could be
+ * read from the corpus." this repo shipped before diagnostics named a path.
+ */
+export function rosterErrorMessage(surface: RaceRosterSurface): string | null {
+  if (surface.options.length > 0) {
+    return null;
+  }
+  return surface.diagnostics.length > 0
+    ? `No race could be read from the corpus: ${surface.diagnostics.join('; ')}`
+    : 'No race could be read from the corpus.';
+}

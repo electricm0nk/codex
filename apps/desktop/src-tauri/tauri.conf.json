@@ -30,13 +30,15 @@
       "app",
       "dmg"
     ],
-    "resources": [
-      "resources/authoring_workbench/guard-stance-package/",
-      "resources/corpus_fixtures/",
-      "resources/corpus_fixtures/spell/",
-      "resources/corpus_fixtures/equipment/",
-      "resources/corpus_fixtures/_settled/"
-    ],
+    "resources": {
+      "resources/authoring_workbench/guard-stance-package/": "resources/authoring_workbench/guard-stance-package/",
+      "resources/corpus_fixtures/": "resources/corpus_fixtures/",
+      "resources/corpus_fixtures/spell/": "resources/corpus_fixtures/spell/",
+      "resources/corpus_fixtures/equipment/": "resources/corpus_fixtures/equipment/",
+      "resources/corpus_fixtures/_settled/": "resources/corpus_fixtures/_settled/",
+      "../../../data/corpus/": "data/corpus/",
+      "../../../data/sheet_rules/": "data/sheet_rules/"
+    },
     "icon": [
       "icons/icon.png",
       "icons/icon.ico",

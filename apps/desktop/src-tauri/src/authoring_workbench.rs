@@ -6,6 +6,7 @@
 
 use serde::{Deserialize, Serialize};
 use std::path::{Path, PathBuf};
+use std::sync::OnceLock;
 
 use codex::homebrew_authoring::package_manifest::PackageValidationState;
 use codex::homebrew_authoring::package_store::PackageStore;
@@ -159,16 +160,45 @@ pub struct PreviewEnvelope {
     pub blocked_claims: Vec<String>,
 }
 
+/// The Tauri-resolved resource directory for a packaged build, set once from
+/// `main.rs`'s `.setup()` hook via [`set_app_resource_dir`]. A test binary or
+/// a dev build that never calls that setter leaves this unset, and every
+/// reader here treats "unset" exactly like every other absent candidate
+/// source — never a panic, never assumed.
+static APP_RESOURCE_DIR: OnceLock<PathBuf> = OnceLock::new();
+
+/// Records the real resource directory Tauri computed for this running app
+/// (`app.path().resource_dir()`), so [`packaged_resource_candidates`] (and
+/// therefore [`codex_repo_root`]) can consult the one candidate this process
+/// actually knows to be correct, ahead of the exe-relative Linux layout
+/// guesses and the `CODEX_DESKTOP_RESOURCE_DIR` env override below. Setting it
+/// twice is a no-op — the first call wins, matching every other
+/// `OnceLock`-cached value in this crate.
+pub fn set_app_resource_dir(dir: PathBuf) {
+    let _ = APP_RESOURCE_DIR.set(dir);
+}
+
 /// Resolve the codex repo root for repo-relative package paths.
 ///
-/// Order of truth: the `CODEX_REPO_ROOT` environment variable (set by an
-/// operator or launcher when the app runs outside a source checkout), then the
-/// compile-time `CARGO_MANIFEST_DIR` walk that works for dev builds and tests.
-/// The compile-time path is baked at build time and does not exist on tester
-/// machines running a published bundle, which is why the env override exists.
+/// Order of truth:
+/// 1. The `CODEX_REPO_ROOT` environment variable (set by an operator or
+///    launcher when the app runs outside a source checkout).
+/// 2. The first [`packaged_resource_candidates`] candidate for `data/corpus`
+///    that actually exists on disk, taken as evidence that its parent
+///    directory is a real resource root (the packaged-app case: every
+///    catalog loader that calls this function needs `data/corpus` under the
+///    root it gets back, and this is the check that used to be missing).
+/// 3. The compile-time `CARGO_MANIFEST_DIR` walk that works for dev builds
+///    and tests. The compile-time path is baked at build time and does not
+///    exist on tester machines running a published bundle, which is why the
+///    two steps above exist.
 pub fn codex_repo_root() -> Result<PathBuf, String> {
     if let Ok(root) = std::env::var("CODEX_REPO_ROOT") {
         return Ok(PathBuf::from(root));
+    }
+
+    if let Some(root) = first_candidate_root_carrying_corpus(&packaged_resource_root_candidates()) {
+        return Ok(root);
     }
 
     PathBuf::from(env!("CARGO_MANIFEST_DIR"))
@@ -177,6 +207,24 @@ pub fn codex_repo_root() -> Result<PathBuf, String> {
         .and_then(|p| p.parent())
         .map(PathBuf::from)
         .ok_or_else(|| "cannot determine codex repo root from CARGO_MANIFEST_DIR".to_string())
+}
+
+/// The first candidate root, in priority order, whose `data/corpus`
+/// subdirectory actually exists on disk — the selection rule behind step 2
+/// of [`codex_repo_root`]'s doc comment, split out as a pure function of an
+/// explicit candidate list.
+///
+/// Kept separate from [`packaged_resource_root_candidates`] (which reads
+/// process-global environment variables and `std::env::current_exe()`) so it
+/// is unit-testable without mutating that shared, process-wide state — state
+/// every other test in this binary can also read concurrently. An earlier
+/// version of this fix's own test set `CODEX_DESKTOP_RESOURCE_DIR` directly
+/// and was flaky by construction: doing so mid-test-run made an unrelated,
+/// concurrently-running fixture test resolve `codex_repo_root()` into this
+/// test's own tempdir. Testing this pure function instead needs no such
+/// mutation.
+fn first_candidate_root_carrying_corpus(candidates: &[PathBuf]) -> Option<PathBuf> {
+    candidates.iter().find(|root| root.join("data/corpus").is_dir()).cloned()
 }
 
 /// Resolve a requested package root: absolute paths pass through, repo-relative
@@ -214,8 +262,18 @@ fn resolve_packaged_resource_path(package_root: &str) -> Result<PathBuf, String>
     Ok(candidates[0].clone())
 }
 
-fn packaged_resource_candidates(package_root: &str) -> Vec<PathBuf> {
+/// The candidate resource-root directories themselves, in priority order —
+/// before any particular package path is joined on. Shared by
+/// [`packaged_resource_candidates`] (which joins a package-relative path onto
+/// each one) and [`codex_repo_root`] (which instead asks each root directly
+/// whether it carries `data/corpus`, so it can hand back the root itself
+/// rather than a path one level too deep).
+fn packaged_resource_root_candidates() -> Vec<PathBuf> {
     let mut roots = Vec::new();
+
+    if let Some(app_resource_dir) = APP_RESOURCE_DIR.get() {
+        roots.push(app_resource_dir.clone());
+    }
 
     if let Ok(resource_dir) = std::env::var("CODEX_DESKTOP_RESOURCE_DIR") {
         roots.push(PathBuf::from(resource_dir));
@@ -256,11 +314,14 @@ fn packaged_resource_candidates(package_root: &str) -> Vec<PathBuf> {
     // for bundled builds, while cargo unit tests run directly from src-tauri.
     roots.push(PathBuf::from(env!("CARGO_MANIFEST_DIR")));
 
-    let mut candidates = Vec::new();
-    for root in roots {
-        candidates.push(root.join(package_root));
-    }
-    candidates
+    roots
+}
+
+fn packaged_resource_candidates(package_root: &str) -> Vec<PathBuf> {
+    packaged_resource_root_candidates()
+        .into_iter()
+        .map(|root| root.join(package_root))
+        .collect()
 }
 
 /// Build the GE08 authoring workbench snapshot from the headless substrate.
@@ -406,6 +467,66 @@ pub fn build_authoring_workbench_snapshot(
 #[cfg(test)]
 mod tests {
     use super::*;
+
+    /// The packaged-build fix this test pins: given a candidate root list
+    /// like the one Tauri's own resolved resource directory would produce
+    /// (via [`packaged_resource_root_candidates`]), `codex_repo_root()`'s
+    /// selection rule picks the first candidate that actually carries
+    /// `data/corpus/` on disk, and returns the root itself -- not one path
+    /// segment too deep -- since every caller joins it with `data/corpus`
+    /// again. Before this fix, nothing in `codex_repo_root()` ever asked a
+    /// packaged resource candidate this question at all; it only ever
+    /// consulted `CODEX_REPO_ROOT` or the compile-time `CARGO_MANIFEST_DIR`
+    /// walk, which is exactly why a binary built or unpacked elsewhere
+    /// (any packaged build) reproduced "No race could be read from the
+    /// corpus.": every catalog loader's corpus root resolved to a directory
+    /// with no `data/corpus` under it, and nothing pushed a diagnostic
+    /// naming why.
+    ///
+    /// Tested here as a pure function of an explicit candidate list, not by
+    /// mutating `CODEX_DESKTOP_RESOURCE_DIR` (the env var
+    /// `packaged_resource_root_candidates` itself reads): that env var is
+    /// process-global state every other test in this binary can also read
+    /// concurrently, and an earlier version of this test mutated it directly
+    /// -- proven flaky, not merely suspected, when doing so made an
+    /// unrelated, concurrently-running fixture test below resolve
+    /// `codex_repo_root()` into this test's own tempdir mid-run.
+    #[test]
+    fn first_candidate_root_carrying_corpus_picks_the_one_with_a_real_data_corpus_dir() {
+        let tempdir = std::env::temp_dir().join(format!(
+            "codex-desktop-authoring-workbench-test-{}-{:?}",
+            std::process::id(),
+            std::thread::current().id()
+        ));
+        std::fs::create_dir_all(tempdir.join("data/corpus/core_rulebook"))
+            .expect("test fixture directory should be creatable");
+
+        // A decoy candidate ahead of the real one in priority order, which
+        // carries no `data/corpus` at all and must be skipped rather than
+        // returned or treated as an error.
+        let decoy = PathBuf::from("/definitely/not/a/real/codex-desktop-test-decoy-root");
+        let candidates = vec![decoy, tempdir.clone()];
+
+        let result = first_candidate_root_carrying_corpus(&candidates);
+
+        let _ = std::fs::remove_dir_all(&tempdir);
+
+        assert_eq!(
+            result,
+            Some(tempdir),
+            "the first candidate that actually carries data/corpus must win, and win as itself \
+             (not one path segment too deep), so callers can join it with data/corpus again"
+        );
+    }
+
+    #[test]
+    fn first_candidate_root_carrying_corpus_is_none_when_no_candidate_carries_it() {
+        let candidates = vec![
+            PathBuf::from("/definitely/not/a/real/codex-desktop-test-decoy-root-one"),
+            PathBuf::from("/definitely/not/a/real/codex-desktop-test-decoy-root-two"),
+        ];
+        assert_eq!(first_candidate_root_carrying_corpus(&candidates), None);
+    }
 
     fn snapshot_for(fixture: &str) -> AuthoringWorkbenchSnapshot {
         build_authoring_workbench_snapshot(AuthoringWorkbenchRequest {

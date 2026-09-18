@@ -36,6 +36,7 @@ mod rule_system_adapter;
 mod spell_catalog;
 mod stub_adapter;
 mod trait_picker;
+mod ui_probe;
 mod update;
 
 use serde::Serialize;
@@ -149,6 +150,16 @@ fn main() {
         .plugin(tauri_plugin_opener::init())
         .plugin(tauri_plugin_dialog::init())
         .setup(|app| {
+            // SD-36: hand the Tauri-resolved resource directory to
+            // `codex_repo_root()` before anything else runs, so every corpus
+            // loader (race/equipment/spell catalogs, character creation,
+            // authoring workbench) can find `data/corpus` in a packaged
+            // build instead of only ever finding it in a source checkout.
+            use tauri::Manager;
+            if let Ok(resource_dir) = app.path().resource_dir() {
+                authoring_workbench::set_app_resource_dir(resource_dir);
+            }
+
             if let Err(err) = character_hub::seed_default_character_if_needed(app.handle()) {
                 eprintln!("Failed to seed default character: {err}");
             }
@@ -257,7 +268,8 @@ fn main() {
             list_alternate_racial_traits,
             resolve_race_alternate_selection,
             list_available_character_traits,
-            corpus_ingest_diagnostic
+            corpus_ingest_diagnostic,
+            ui_probe::record_ui_probe
         ])
         .run(tauri::generate_context!())
         .expect("error while running codex");

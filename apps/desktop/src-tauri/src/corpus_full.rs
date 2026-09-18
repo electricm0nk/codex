@@ -80,6 +80,30 @@ pub fn full_corpus_bundle() -> &'static SourcePackageContent<'static> {
 mod tests {
     use super::*;
 
+    /// Every book this module declares must actually resolve under the real
+    /// corpus root, with a real settled equipment bundle -- the same shape
+    /// as `race_catalog::tests::every_race_corpus_book_resolves_under_the_corpus_root`,
+    /// pinned here for the equipment content-kind this module loads.
+    /// Failure names the missing path directly.
+    #[test]
+    fn every_corpus_full_book_resolves_under_the_corpus_root() {
+        let corpus_root = corpus_root_dir().expect("corpus root must resolve in a source checkout");
+        for book in BOOKS {
+            let book_dir = corpus_root.join(book);
+            assert!(
+                book_dir.is_dir(),
+                "BOOKS entry {book:?} must exist as a directory under the corpus root: {}",
+                book_dir.display()
+            );
+            let settled_equipment = book_dir.join("_settled/equipment.json");
+            assert!(
+                settled_equipment.is_file(),
+                "book {book:?} must carry a settled equipment bundle: {}",
+                settled_equipment.display()
+            );
+        }
+    }
+
     #[test]
     fn full_corpus_bundle_carries_real_equipment_from_multiple_books_and_the_fixture_spells() {
         let corpus = full_corpus_bundle();
