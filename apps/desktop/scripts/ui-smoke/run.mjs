@@ -204,6 +204,19 @@ function runSteps(steps) {
 // -------------------------------------------------------- reset-to-landing
 function isOnLanding(snapshot) {
   if (!snapshot) return false;
+  // A modal (e.g. SettingsModal) overlays the landing screen without
+  // unmounting it -- LandingScreen's own targets (New/Load Character, the
+  // Browse-* links) stay present in the DOM, just visually covered. Without
+  // this check, isOnLanding() false-positives "already on landing" while a
+  // dialog is still open from a previous row, so resetToLanding() skips
+  // closing it. The next row's own "open settings" click then lands on the
+  // now-covering modal backdrop (position:fixed, zIndex 1000, onClick=
+  // onClose) instead of the real gear button underneath (zIndex 950),
+  // closing the modal instead of opening it -- observed directly as a
+  // strict pass/fail alternation across consecutive runs of the same row.
+  if (Array.isArray(snapshot.dialogs) && snapshot.dialogs.length > 0) {
+    return false;
+  }
   if (LANDING_TARGET_NAMES.some((name) => findTarget(snapshot, name))) {
     return true;
   }

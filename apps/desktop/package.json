@@ -8,7 +8,9 @@
     "typecheck": "tsc --noEmit",
     "test": "node scripts/run-tests.mjs",
     "build": "vite build",
-    "tauri:check": "cargo check --manifest-path src-tauri/Cargo.toml"
+    "tauri:check": "cargo check --manifest-path src-tauri/Cargo.toml",
+    "ui-smoke": "node scripts/ui-smoke/run.mjs",
+    "ui-smoke:doc": "node scripts/ui-smoke/render-inventory.mjs"
   },
   "dependencies": {
     "@tauri-apps/api": "^2.0.0",
