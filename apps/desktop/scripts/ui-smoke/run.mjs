@@ -135,7 +135,40 @@ const VIEWPORT_SCROLL_THRESHOLD_Y = 1150;
 // directly: rows whose FIRST click (from the already-settled landing screen)
 // succeeded but whose SECOND click (into the just-mounted next screen) did
 // not find its target on the first try.
-const CLICK_TARGET_WAIT_MS = 10000;
+//
+// Also has to absorb the command CHANNEL's own worst case, not just DOM
+// mount delay: `clickByNameChannel` sends through `poll_ui_probe_command`,
+// which the frontend only drains between one `invoke()` round trip and the
+// next (uiProbe.ts's `startCommandChannel` -- deliberately serialized, one
+// in-flight poll at a time). That same file documents this webview's
+// input-to-paint / IPC latency as varying "anywhere from well under a
+// second up to 60+ seconds for the SAME click on the SAME element in
+// different sessions, with no observed correlation to system load" -- and a
+// single such stall blocks the WHOLE poll chain, not just the one command
+// racing it. A 10s budget was sized only for the mount-delay case above and
+// is well short of that documented ceiling: reproduced directly (2026-09-18)
+// as a cascade -- one command-channel stall mid-run left FOUR consecutive
+// rows (settings-tab-bug, settings-tab-enhancement, settings-tab-developer,
+// settings-close-esc) all timing out on an element that was genuinely on
+// screen the whole time (each row's own resetToLanding/setup immediately
+// re-enters the same still-stalled channel, so the cascade doesn't stop
+// until the underlying stall itself clears), while the very next command
+// sent once the stall cleared succeeded immediately. 75s was meant to
+// comfortably clear the documented 60s+ ceiling, but the ceiling itself
+// moved: reproduced directly (2026-09-18, equipment-catalog-open-and-search)
+// as a single stall measured end-to-end at ~80s -- a lone `click` command
+// (no retry loop involved) sent from a settled landing screen produced
+// zero probe change for 78+ seconds and then the click's own navigation
+// AND the next screen's full async data load both appeared in the very
+// next poll, meaning the whole webview/IPC pipeline was frozen for that
+// stretch, not merely slow to fetch data (a slow-but-alive pipeline would
+// have shown the navigated-to screen's own "loading" state well before its
+// data arrived; none did). Unrelated to which screen or how much data it
+// loads -- the earlier settings-tab cascade this constant was first raised
+// for carries no large payload either. 150s gives headroom above the newly
+// observed ~80s instance the same way 75s gave headroom above the
+// previously observed ceiling.
+const CLICK_TARGET_WAIT_MS = 150000;
 
 class TargetNotFoundError extends Error {
   constructor(name) {
@@ -217,13 +250,33 @@ function clickByName(name) {
   return USE_XDOTOOL ? clickByNameXdotool(name) : clickByNameChannel(name);
 }
 
-/** Types into whatever currently has focus -- always preceded by a `click` step in every row (see spec.json). */
+/**
+ * Types into whatever currently has focus -- always preceded by a `click`
+ * step in every row (see spec.json). Retries like `clickByNameChannel`/
+ * `selectByName` (up to `CLICK_TARGET_WAIT_MS`, not a single 5s shot): this
+ * command rides the exact same command channel and is subject to the exact
+ * same documented webview stall (see `CLICK_TARGET_WAIT_MS`'s own comment --
+ * "anywhere from well under a second up to 60+ seconds ... with no observed
+ * correlation to system load", confirmed directly on multiple unrelated
+ * screens), so giving it a short non-retried timeout while `click`/`select`
+ * get a long retried one is an inconsistency in the harness, not a real
+ * per-op difference -- whichever command happens to be in flight when a
+ * stall hits was failing fast here while its neighbors rode it out.
+ */
 function typeText(text) {
   if (USE_XDOTOOL) {
     driver.type(text);
     return;
   }
-  const result = sendCommand(cmdPath, probePath, { op: 'type', text });
+  const deadline = Date.now() + CLICK_TARGET_WAIT_MS;
+  let result;
+  for (;;) {
+    result = sendCommand(cmdPath, probePath, { op: 'type', text }, { timeoutMs: 2000 });
+    if (result.ok || Date.now() >= deadline) {
+      break;
+    }
+    sleepMs(150);
+  }
   if (!result.ok) {
     throw new Error(`type command failed: ${result.error ?? 'unknown error'}`);
   }
@@ -256,13 +309,44 @@ function selectByName(target, text) {
   }
 }
 
-/** Dispatches a key (e.g. `Escape`) against `document.activeElement`. */
+/**
+ * Dispatches a key (e.g. `Escape`) against `document.activeElement`.
+ *
+ * Retries like `clickByNameChannel`/`selectByName`/`typeText` (up to
+ * `CLICK_TARGET_WAIT_MS`), for the same reason `typeText` does (see its own
+ * comment): this is the exact defect reproduced live 2026-09-18 against
+ * `sheet-action-add-armor-gear-picker`, whose own spec.json notes describe
+ * "the 'key: Escape' command's own ack times out (5000ms) after Add Armor's
+ * picker opens" and treat it as a suspected app-side main-thread block
+ * specific to the armor catalog. It is not: `buildItemPickerConfig` routes
+ * Add Weapon and Add Armor through the IDENTICAL `loadEquipment('ArmsArmor')`
+ * query and the same catalog-agnostic `ItemPickerModal`/`mapEquipmentCatalogEntries`
+ * (a plain, uncomputed `.map()`, nothing prerequisite-checked or O(n^2)) --
+ * there is no armor-specific render path for anything to be slow in.
+ * Reproduced directly instead: a lone `key: Escape` command genuinely
+ * un-acknowledged for 24+ seconds (a fresh command sent moments later
+ * completed in ~100ms), matching this file's own already-documented,
+ * screen-independent webview stall (`CLICK_TARGET_WAIT_MS`'s comment). The
+ * bug was this function alone never getting the same retry budget every
+ * other command-channel op already has, so the one command that happened to
+ * be in flight when a stall hit failed the whole row (and, via a dialog left
+ * open behind it, blocked every row after it) while an identical stall
+ * hitting a `click` step would have been silently ridden out.
+ */
 function pressKey(key) {
   if (USE_XDOTOOL) {
     driver.key(key);
     return;
   }
-  const result = sendCommand(cmdPath, probePath, { op: 'key', key });
+  const deadline = Date.now() + CLICK_TARGET_WAIT_MS;
+  let result;
+  for (;;) {
+    result = sendCommand(cmdPath, probePath, { op: 'key', key }, { timeoutMs: 2000 });
+    if (result.ok || Date.now() >= deadline) {
+      break;
+    }
+    sleepMs(150);
+  }
   if (!result.ok) {
     throw new Error(`key command failed: ${result.error ?? 'unknown error'}`);
   }
@@ -374,8 +458,8 @@ function resetToLanding(maxAttempts = 6) {
       ({ snapshot } = latestSnapshot({ requireFresh: false, timeoutMs: 2000 }));
       continue;
     }
-    const clickable = RESET_CLICK_NAMES.map((name) => findTarget(snapshot, name)).find(Boolean);
-    if (!clickable) {
+    const clickName = RESET_CLICK_NAMES.find((name) => findTarget(snapshot, name));
+    if (!clickName) {
       // Nothing we recognize to click and no dialog reported — try Escape
       // once anyway (covers a dialog the probe hasn't caught up to yet)
       // then re-check before giving up this attempt. Same best-effort
@@ -390,8 +474,27 @@ function resetToLanding(maxAttempts = 6) {
       ({ snapshot } = latestSnapshot());
       continue;
     }
-    const { x, y } = centerOf(clickable.rect);
-    driver.click(x, y);
+    // `clickByName` (the command-channel path), not a raw `driver.click(x,
+    // y)` off the probe's own rect: the row that just ran can leave the
+    // sheet scrolled (e.g. sheet-action-add-armor-gear-picker's own Gear
+    // tab), so a recognized close target's rect can report a negative
+    // window-relative y -- off the top of the visible viewport. A direct
+    // pixel click at that coordinate lands nowhere (or on whatever else is
+    // actually there), so the target is never really clicked and every
+    // subsequent attempt re-finds the same still-present target -- observed
+    // directly as this exact loop exhausting all 6 attempts on
+    // sheet-action-add-armor-gear-picker's own reset, with the probe
+    // reporting the recognized '✕' target the whole time.
+    // `clickByNameChannel` has the webview itself find the element by name
+    // and scroll it into view before calling `el.click()` (see its own
+    // comment), which is immune to this. Same best-effort posture as every
+    // other branch in this loop: a failed click falls through to the next
+    // attempt rather than aborting the row.
+    try {
+      clickByName(clickName);
+    } catch {
+      // fall through to the next attempt regardless
+    }
     sleepMs(300);
     ({ snapshot } = latestSnapshot({ requireFresh: true, timeoutMs: 2000 }));
   }

@@ -3,13 +3,20 @@
     "id": "landing-render",
     "status": "green",
     "screenshot": "/home/ubuntu/workspace/repos/codex/docs/release/SD-36-consolidation/artifacts/ui-smoke/final/landing-render.png",
-    "rendered_excerpt": "⚙\n\nP1\nPathfinder 1e\nFantasy d20\n\nSA\nSolarus Arcanum\nComing soon\n\nTM\nTraveller MGT 2e\nComing soon\n\nCR\nCyberpunk Red\nComing soon\n\nS1\nStarfinder 1e\nComing soon\n\nWOD\nWorld of Darkness\nComing soon\n\nNEW CHARACTER\n\nLOAD CHARACTER\n\nCAMPAIGN MANAGER\nChoose a local Drive-synced folder under ⚙ Settings → Google Drive to enable the Campaign Manager.\n\nDM TOOLKIT\nBrowse Equipment Catalog\nBrowse Spell Catalog\nBr",
+    "rendered_excerpt": "⚙\n\nP1\nPathfinder 1e\nFantasy d20\n\nSA\nSolarus Arcanum\nComing soon\n\nTM\nTraveller MGT 2e\nComing soon\n\nCR\nCyberpunk Red\nComing soon\n\nS1\nStarfinder 1e\nComing soon\n\nWOD\nWorld of Darkness\nComing soon\n\nNEW CHARACTER\n\nLOAD CHARACTER\n\nCAMPAIGN MANAGER\n\nDM TOOLKIT\nBrowse Equipment Catalog\nBrowse Spell Catalog\nBrowse Class Progression\nBrowse Race Traits\nBrowse Monster Catalog\nBrowse Companion Catalog\nBrowse In",
     "reason": null
   },
   {
     "id": "landing-ruleset-chips",
     "status": "green",
     "screenshot": "/home/ubuntu/workspace/repos/codex/docs/release/SD-36-consolidation/artifacts/ui-smoke/final/landing-ruleset-chips.png",
+    "rendered_excerpt": "⚙\n\nP1\nPathfinder 1e\nFantasy d20\n\nSA\nSolarus Arcanum\nComing soon\n\nTM\nTraveller MGT 2e\nComing soon\n\nCR\nCyberpunk Red\nComing soon\n\nS1\nStarfinder 1e\nComing soon\n\nWOD\nWorld of Darkness\nComing soon\n\nNEW CHARACTER\n\nLOAD CHARACTER\n\nCAMPAIGN MANAGER\n\nDM TOOLKIT\nBrowse Equipment Catalog\nBrowse Spell Catalog\nBrowse Class Progression\nBrowse Race Traits\nBrowse Monster Catalog\nBrowse Companion Catalog\nBrowse In",
+    "reason": null
+  },
+  {
+    "id": "settings-tab-google-drive-disconnect",
+    "status": "green",
+    "screenshot": "/home/ubuntu/workspace/repos/codex/docs/release/SD-36-consolidation/artifacts/ui-smoke/final/settings-tab-google-drive-disconnect.png",
     "rendered_excerpt": "⚙\n\nP1\nPathfinder 1e\nFantasy d20\n\nSA\nSolarus Arcanum\nComing soon\n\nTM\nTraveller MGT 2e\nComing soon\n\nCR\nCyberpunk Red\nComing soon\n\nS1\nStarfinder 1e\nComing soon\n\nWOD\nWorld of Darkness\nComing soon\n\nNEW CHARACTER\n\nLOAD CHARACTER\n\nCAMPAIGN MANAGER\nChoose a local Drive-synced folder under ⚙ Settings → Google Drive to enable the Campaign Manager.\n\nDM TOOLKIT\nBrowse Equipment Catalog\nBrowse Spell Catalog\nBr",
     "reason": null
   },
@@ -36,10 +43,10 @@
   },
   {
     "id": "settings-theme-select-and-manage-themes-modal",
-    "status": "green",
-    "screenshot": "/home/ubuntu/workspace/repos/codex/docs/release/SD-36-consolidation/artifacts/ui-smoke/final/settings-theme-select-and-manage-themes-modal.png",
+    "status": "red",
+    "screenshot": "/home/ubuntu/workspace/repos/codex/docs/release/SD-36-consolidation/artifacts/ui-smoke/final/settings-theme-select-and-manage-themes-modal.FAILED.png",
     "rendered_excerpt": "⚙\n\nP1\nPathfinder 1e\nFantasy d20\n\nSA\nSolarus Arcanum\nComing soon\n\nTM\nTraveller MGT 2e\nComing soon\n\nCR\nCyberpunk Red\nComing soon\n\nS1\nStarfinder 1e\nComing soon\n\nWOD\nWorld of Darkness\nComing soon\n\nNEW CHARACTER\n\nLOAD CHARACTER\n\nCAMPAIGN MANAGER\nChoose a local Drive-synced folder under ⚙ Settings → Google Drive to enable the Campaign Manager.\n\nDM TOOLKIT\nBrowse Equipment Catalog\nBrowse Spell Catalog\nBr",
-    "reason": null
+    "reason": "marker not found on screen: 'Community themes'"
   },
   {
     "id": "settings-tab-google-drive",
@@ -57,80 +64,87 @@
   },
   {
     "id": "settings-tab-bug",
-    "status": "blocked",
-    "screenshot": null,
-    "rendered_excerpt": null,
-    "reason": "could not reach the landing screen within 6 reset attempts"
+    "status": "green",
+    "screenshot": "/home/ubuntu/workspace/repos/codex/docs/release/SD-36-consolidation/artifacts/ui-smoke/final/settings-tab-bug.png",
+    "rendered_excerpt": "⚙\n\nP1\nPathfinder 1e\nFantasy d20\n\nSA\nSolarus Arcanum\nComing soon\n\nTM\nTraveller MGT 2e\nComing soon\n\nCR\nCyberpunk Red\nComing soon\n\nS1\nStarfinder 1e\nComing soon\n\nWOD\nWorld of Darkness\nComing soon\n\nNEW CHARACTER\n\nLOAD CHARACTER\n\nCAMPAIGN MANAGER\nChoose a local Drive-synced folder under ⚙ Settings → Google Drive to enable the Campaign Manager.\n\nDM TOOLKIT\nBrowse Equipment Catalog\nBrowse Spell Catalog\nBr",
+    "reason": null
   },
   {
     "id": "settings-tab-enhancement",
-    "status": "blocked",
-    "screenshot": null,
-    "rendered_excerpt": null,
-    "reason": "could not reach the landing screen within 6 reset attempts"
+    "status": "green",
+    "screenshot": "/home/ubuntu/workspace/repos/codex/docs/release/SD-36-consolidation/artifacts/ui-smoke/final/settings-tab-enhancement.png",
+    "rendered_excerpt": "⚙\n\nP1\nPathfinder 1e\nFantasy d20\n\nSA\nSolarus Arcanum\nComing soon\n\nTM\nTraveller MGT 2e\nComing soon\n\nCR\nCyberpunk Red\nComing soon\n\nS1\nStarfinder 1e\nComing soon\n\nWOD\nWorld of Darkness\nComing soon\n\nNEW CHARACTER\n\nLOAD CHARACTER\n\nCAMPAIGN MANAGER\nChoose a local Drive-synced folder under ⚙ Settings → Google Drive to enable the Campaign Manager.\n\nDM TOOLKIT\nBrowse Equipment Catalog\nBrowse Spell Catalog\nBr",
+    "reason": null
   },
   {
     "id": "settings-tab-developer",
-    "status": "blocked",
-    "screenshot": null,
-    "rendered_excerpt": null,
-    "reason": "could not reach the landing screen within 6 reset attempts"
+    "status": "green",
+    "screenshot": "/home/ubuntu/workspace/repos/codex/docs/release/SD-36-consolidation/artifacts/ui-smoke/final/settings-tab-developer.png",
+    "rendered_excerpt": "⚙\n\nP1\nPathfinder 1e\nFantasy d20\n\nSA\nSolarus Arcanum\nComing soon\n\nTM\nTraveller MGT 2e\nComing soon\n\nCR\nCyberpunk Red\nComing soon\n\nS1\nStarfinder 1e\nComing soon\n\nWOD\nWorld of Darkness\nComing soon\n\nNEW CHARACTER\n\nLOAD CHARACTER\n\nCAMPAIGN MANAGER\nChoose a local Drive-synced folder under ⚙ Settings → Google Drive to enable the Campaign Manager.\n\nDM TOOLKIT\nBrowse Equipment Catalog\nBrowse Spell Catalog\nBr",
+    "reason": null
   },
   {
     "id": "settings-close-esc",
-    "status": "blocked",
-    "screenshot": null,
-    "rendered_excerpt": null,
-    "reason": "could not reach the landing screen within 6 reset attempts"
+    "status": "green",
+    "screenshot": "/home/ubuntu/workspace/repos/codex/docs/release/SD-36-consolidation/artifacts/ui-smoke/final/settings-close-esc.png",
+    "rendered_excerpt": "⚙\n\nP1\nPathfinder 1e\nFantasy d20\n\nSA\nSolarus Arcanum\nComing soon\n\nTM\nTraveller MGT 2e\nComing soon\n\nCR\nCyberpunk Red\nComing soon\n\nS1\nStarfinder 1e\nComing soon\n\nWOD\nWorld of Darkness\nComing soon\n\nNEW CHARACTER\n\nLOAD CHARACTER\n\nCAMPAIGN MANAGER\nChoose a local Drive-synced folder under ⚙ Settings → Google Drive to enable the Campaign Manager.\n\nDM TOOLKIT\nBrowse Equipment Catalog\nBrowse Spell Catalog\nBr",
+    "reason": null
+  },
+  {
+    "id": "settings-tab-google-drive-save",
+    "status": "green",
+    "screenshot": "/home/ubuntu/workspace/repos/codex/docs/release/SD-36-consolidation/artifacts/ui-smoke/final/settings-tab-google-drive-save.png",
+    "rendered_excerpt": "⚙\n\nP1\nPathfinder 1e\nFantasy d20\n\nSA\nSolarus Arcanum\nComing soon\n\nTM\nTraveller MGT 2e\nComing soon\n\nCR\nCyberpunk Red\nComing soon\n\nS1\nStarfinder 1e\nComing soon\n\nWOD\nWorld of Darkness\nComing soon\n\nNEW CHARACTER\n\nLOAD CHARACTER\n\nCAMPAIGN MANAGER\n\nDM TOOLKIT\nBrowse Equipment Catalog\nBrowse Spell Catalog\nBrowse Class Progression\nBrowse Race Traits\nBrowse Monster Catalog\nBrowse Companion Catalog\nBrowse In",
+    "reason": null
   },
   {
     "id": "equipment-catalog-open-and-search",
-    "status": "red",
-    "screenshot": null,
-    "rendered_excerpt": null,
-    "reason": "target not found: 'Search by name…'"
+    "status": "green",
+    "screenshot": "/home/ubuntu/workspace/repos/codex/docs/release/SD-36-consolidation/artifacts/ui-smoke/final/equipment-catalog-open-and-search.png",
+    "rendered_excerpt": "⚙\nEquipment Catalog\nBack\nEvery real corpus record the engine knows about — 8119 items across 29 ingested books: Core Rulebook, Advanced Player's Guide, Advanced Class Guide, Bestiary 1, Advanced Race Guide, Pathfinder Unchained, AG, B2, B3, B4, BB, BOTD2, HA, ISC, ISG, ISI, ISM, ISR, ISTEM, ISWG, MC, MYTHIC, OA, UC, UE, UI, UM, UPSI and UW. Not what any one character has equipped. 2791 carry no fl",
+    "reason": null
   },
   {
     "id": "equipment-catalog-chip-filter-and-back",
-    "status": "red",
-    "screenshot": null,
-    "rendered_excerpt": null,
-    "reason": "target not found: 'Magic Items'"
+    "status": "green",
+    "screenshot": "/home/ubuntu/workspace/repos/codex/docs/release/SD-36-consolidation/artifacts/ui-smoke/final/equipment-catalog-chip-filter-and-back.png",
+    "rendered_excerpt": "⚙\n\nP1\nPathfinder 1e\nFantasy d20\n\nSA\nSolarus Arcanum\nComing soon\n\nTM\nTraveller MGT 2e\nComing soon\n\nCR\nCyberpunk Red\nComing soon\n\nS1\nStarfinder 1e\nComing soon\n\nWOD\nWorld of Darkness\nComing soon\n\nNEW CHARACTER\n\nLOAD CHARACTER\n\nCAMPAIGN MANAGER\n\nDM TOOLKIT\nBrowse Equipment Catalog\nBrowse Spell Catalog\nBrowse Class Progression\nBrowse Race Traits\nBrowse Monster Catalog\nBrowse Companion Catalog\nBrowse In",
+    "reason": null
   },
   {
     "id": "spell-catalog-open-and-search",
-    "status": "red",
-    "screenshot": null,
-    "rendered_excerpt": null,
-    "reason": "target not found: 'Search by name…'"
+    "status": "green",
+    "screenshot": "/home/ubuntu/workspace/repos/codex/docs/release/SD-36-consolidation/artifacts/ui-smoke/final/spell-catalog-open-and-search.png",
+    "rendered_excerpt": "⚙\nSpell Catalog\nBack\nEvery real corpus record the engine knows about — 2481 spells across the Core Rulebook, Advanced Player's Guide, Advanced Class Guide, Advanced Race Guide, Ultimate Intrigue, Ultimate Magic, Occult Adventures, Ultimate Combat, Inner Sea Gods and Ultimate Wilderness. Not what any one character has selected. 32 carry no school in the corpus and appear only under “All”. Level sho",
+    "reason": null
   },
   {
     "id": "spell-catalog-chip-filter-and-back",
-    "status": "red",
-    "screenshot": null,
-    "rendered_excerpt": null,
-    "reason": "target not found: 'Back'"
+    "status": "green",
+    "screenshot": "/home/ubuntu/workspace/repos/codex/docs/release/SD-36-consolidation/artifacts/ui-smoke/final/spell-catalog-chip-filter-and-back.png",
+    "rendered_excerpt": "⚙\n\nP1\nPathfinder 1e\nFantasy d20\n\nSA\nSolarus Arcanum\nComing soon\n\nTM\nTraveller MGT 2e\nComing soon\n\nCR\nCyberpunk Red\nComing soon\n\nS1\nStarfinder 1e\nComing soon\n\nWOD\nWorld of Darkness\nComing soon\n\nNEW CHARACTER\n\nLOAD CHARACTER\n\nCAMPAIGN MANAGER\n\nDM TOOLKIT\nBrowse Equipment Catalog\nBrowse Spell Catalog\nBrowse Class Progression\nBrowse Race Traits\nBrowse Monster Catalog\nBrowse Companion Catalog\nBrowse In",
+    "reason": null
   },
   {
     "id": "class-catalog-open-and-search",
-    "status": "red",
-    "screenshot": null,
-    "rendered_excerpt": null,
-    "reason": "target not found: 'Search by class name…'"
+    "status": "green",
+    "screenshot": "/home/ubuntu/workspace/repos/codex/docs/release/SD-36-consolidation/artifacts/ui-smoke/final/class-catalog-open-and-search.png",
+    "rendered_excerpt": "⚙\nClass Progression\nBack\nEvery real corpus-grounded level row the engine knows about — 1318 rows across 93 classes. Not what any one character has selected.\n\nAll (1318)\nBarbarian (20)\nBard (20)\nCleric (20)\nDruid (20)\nFighter (20)\nMonk (20)\nPaladin (20)\nRanger (20)\nRogue (20)\nSorcerer (20)\nWizard (20)\nUnchained Barbarian (20)\nUnchained Monk (20)\nUnchained Rogue (20)\nUnchained Summoner (20)\nAldori S",
+    "reason": null
   },
   {
     "id": "class-catalog-back",
-    "status": "red",
-    "screenshot": null,
-    "rendered_excerpt": null,
-    "reason": "target not found: 'Back'"
+    "status": "green",
+    "screenshot": "/home/ubuntu/workspace/repos/codex/docs/release/SD-36-consolidation/artifacts/ui-smoke/final/class-catalog-back.png",
+    "rendered_excerpt": "⚙\n\nP1\nPathfinder 1e\nFantasy d20\n\nSA\nSolarus Arcanum\nComing soon\n\nTM\nTraveller MGT 2e\nComing soon\n\nCR\nCyberpunk Red\nComing soon\n\nS1\nStarfinder 1e\nComing soon\n\nWOD\nWorld of Darkness\nComing soon\n\nNEW CHARACTER\n\nLOAD CHARACTER\n\nCAMPAIGN MANAGER\n\nDM TOOLKIT\nBrowse Equipment Catalog\nBrowse Spell Catalog\nBrowse Class Progression\nBrowse Race Traits\nBrowse Monster Catalog\nBrowse Companion Catalog\nBrowse In",
+    "reason": null
   },
   {
     "id": "race-catalog-open-and-search",
-    "status": "red",
-    "screenshot": null,
-    "rendered_excerpt": null,
-    "reason": "target not found: 'Search by trait or race name…'"
+    "status": "green",
+    "screenshot": "/home/ubuntu/workspace/repos/codex/docs/release/SD-36-consolidation/artifacts/ui-smoke/final/race-catalog-open-and-search.png",
+    "rendered_excerpt": "⚙\nRace Traits\nBack\nStandard traits\nAlternate racial traits\nEvery real corpus-grounded racial trait the engine knows about — 373 trait rows across 39 races. Not what any one character has selected.\n\nAll (373)\nAasimar (9)\nCatfolk (9)\nChangeling (9)\nDhampir (12)\nDrow (13)\nDuergar (10)\nDwarf (12)\nElf (9)\nFetchling (11)\nGillman (9)\nGnome (12)\nGoblin (7)\nGrippli (10)\nHalf-Elf (10)\nHalf-Orc (9)\nHalfling ",
+    "reason": null
   },
   {
     "id": "race-catalog-alternate-traits-tab",
@@ -143,21 +157,21 @@
     "id": "race-catalog-back",
     "status": "green",
     "screenshot": "/home/ubuntu/workspace/repos/codex/docs/release/SD-36-consolidation/artifacts/ui-smoke/final/race-catalog-back.png",
-    "rendered_excerpt": "⚙\n\nP1\nPathfinder 1e\nFantasy d20\n\nSA\nSolarus Arcanum\nComing soon\n\nTM\nTraveller MGT 2e\nComing soon\n\nCR\nCyberpunk Red\nComing soon\n\nS1\nStarfinder 1e\nComing soon\n\nWOD\nWorld of Darkness\nComing soon\n\nNEW CHARACTER\n\nLOAD CHARACTER\n\nCAMPAIGN MANAGER\nChoose a local Drive-synced folder under ⚙ Settings → Google Drive to enable the Campaign Manager.\n\nDM TOOLKIT\nBrowse Equipment Catalog\nBrowse Spell Catalog\nBr",
+    "rendered_excerpt": "⚙\n\nP1\nPathfinder 1e\nFantasy d20\n\nSA\nSolarus Arcanum\nComing soon\n\nTM\nTraveller MGT 2e\nComing soon\n\nCR\nCyberpunk Red\nComing soon\n\nS1\nStarfinder 1e\nComing soon\n\nWOD\nWorld of Darkness\nComing soon\n\nNEW CHARACTER\n\nLOAD CHARACTER\n\nCAMPAIGN MANAGER\n\nDM TOOLKIT\nBrowse Equipment Catalog\nBrowse Spell Catalog\nBrowse Class Progression\nBrowse Race Traits\nBrowse Monster Catalog\nBrowse Companion Catalog\nBrowse In",
     "reason": null
   },
   {
     "id": "monster-catalog-open-and-search",
-    "status": "red",
-    "screenshot": "/home/ubuntu/workspace/repos/codex/docs/release/SD-36-consolidation/artifacts/ui-smoke/final/monster-catalog-open-and-search.FAILED.png",
+    "status": "green",
+    "screenshot": "/home/ubuntu/workspace/repos/codex/docs/release/SD-36-consolidation/artifacts/ui-smoke/final/monster-catalog-open-and-search.png",
     "rendered_excerpt": "⚙\nMonster Catalog\nBack\nEvery real stat block the engine knows about, across Bestiary 1, Bonus Bestiary, Monster Codex, Book of the Damned, Volume 1, Book of the Damned, Volume 2, Inner Sea World Guide, Bestiary 2, Bestiary 3, Bestiary 4, Inner Sea Bestiary, Inner Sea Gods, Ultimate Psionics, HA and OA — 1243 monsters. Armor Class, hit points and saves are not shown because they are not ingested: P",
-    "reason": "forbidden string present: 'failure'"
+    "reason": null
   },
   {
     "id": "monster-catalog-back",
     "status": "green",
     "screenshot": "/home/ubuntu/workspace/repos/codex/docs/release/SD-36-consolidation/artifacts/ui-smoke/final/monster-catalog-back.png",
-    "rendered_excerpt": "⚙\n\nP1\nPathfinder 1e\nFantasy d20\n\nSA\nSolarus Arcanum\nComing soon\n\nTM\nTraveller MGT 2e\nComing soon\n\nCR\nCyberpunk Red\nComing soon\n\nS1\nStarfinder 1e\nComing soon\n\nWOD\nWorld of Darkness\nComing soon\n\nNEW CHARACTER\n\nLOAD CHARACTER\n\nCAMPAIGN MANAGER\nChoose a local Drive-synced folder under ⚙ Settings → Google Drive to enable the Campaign Manager.\n\nDM TOOLKIT\nBrowse Equipment Catalog\nBrowse Spell Catalog\nBr",
+    "rendered_excerpt": "⚙\n\nP1\nPathfinder 1e\nFantasy d20\n\nSA\nSolarus Arcanum\nComing soon\n\nTM\nTraveller MGT 2e\nComing soon\n\nCR\nCyberpunk Red\nComing soon\n\nS1\nStarfinder 1e\nComing soon\n\nWOD\nWorld of Darkness\nComing soon\n\nNEW CHARACTER\n\nLOAD CHARACTER\n\nCAMPAIGN MANAGER\n\nDM TOOLKIT\nBrowse Equipment Catalog\nBrowse Spell Catalog\nBrowse Class Progression\nBrowse Race Traits\nBrowse Monster Catalog\nBrowse Companion Catalog\nBrowse In",
     "reason": null
   },
   {
@@ -171,7 +185,7 @@
     "id": "companion-catalog-back",
     "status": "green",
     "screenshot": "/home/ubuntu/workspace/repos/codex/docs/release/SD-36-consolidation/artifacts/ui-smoke/final/companion-catalog-back.png",
-    "rendered_excerpt": "⚙\n\nP1\nPathfinder 1e\nFantasy d20\n\nSA\nSolarus Arcanum\nComing soon\n\nTM\nTraveller MGT 2e\nComing soon\n\nCR\nCyberpunk Red\nComing soon\n\nS1\nStarfinder 1e\nComing soon\n\nWOD\nWorld of Darkness\nComing soon\n\nNEW CHARACTER\n\nLOAD CHARACTER\n\nCAMPAIGN MANAGER\nChoose a local Drive-synced folder under ⚙ Settings → Google Drive to enable the Campaign Manager.\n\nDM TOOLKIT\nBrowse Equipment Catalog\nBrowse Spell Catalog\nBr",
+    "rendered_excerpt": "⚙\n\nP1\nPathfinder 1e\nFantasy d20\n\nSA\nSolarus Arcanum\nComing soon\n\nTM\nTraveller MGT 2e\nComing soon\n\nCR\nCyberpunk Red\nComing soon\n\nS1\nStarfinder 1e\nComing soon\n\nWOD\nWorld of Darkness\nComing soon\n\nNEW CHARACTER\n\nLOAD CHARACTER\n\nCAMPAIGN MANAGER\n\nDM TOOLKIT\nBrowse Equipment Catalog\nBrowse Spell Catalog\nBrowse Class Progression\nBrowse Race Traits\nBrowse Monster Catalog\nBrowse Companion Catalog\nBrowse In",
     "reason": null
   },
   {
@@ -185,7 +199,7 @@
     "id": "intelligent-item-catalog-back",
     "status": "green",
     "screenshot": "/home/ubuntu/workspace/repos/codex/docs/release/SD-36-consolidation/artifacts/ui-smoke/final/intelligent-item-catalog-back.png",
-    "rendered_excerpt": "⚙\n\nP1\nPathfinder 1e\nFantasy d20\n\nSA\nSolarus Arcanum\nComing soon\n\nTM\nTraveller MGT 2e\nComing soon\n\nCR\nCyberpunk Red\nComing soon\n\nS1\nStarfinder 1e\nComing soon\n\nWOD\nWorld of Darkness\nComing soon\n\nNEW CHARACTER\n\nLOAD CHARACTER\n\nCAMPAIGN MANAGER\nChoose a local Drive-synced folder under ⚙ Settings → Google Drive to enable the Campaign Manager.\n\nDM TOOLKIT\nBrowse Equipment Catalog\nBrowse Spell Catalog\nBr",
+    "rendered_excerpt": "⚙\n\nP1\nPathfinder 1e\nFantasy d20\n\nSA\nSolarus Arcanum\nComing soon\n\nTM\nTraveller MGT 2e\nComing soon\n\nCR\nCyberpunk Red\nComing soon\n\nS1\nStarfinder 1e\nComing soon\n\nWOD\nWorld of Darkness\nComing soon\n\nNEW CHARACTER\n\nLOAD CHARACTER\n\nCAMPAIGN MANAGER\n\nDM TOOLKIT\nBrowse Equipment Catalog\nBrowse Spell Catalog\nBrowse Class Progression\nBrowse Race Traits\nBrowse Monster Catalog\nBrowse Companion Catalog\nBrowse In",
     "reason": null
   },
   {
@@ -197,275 +211,121 @@
   },
   {
     "id": "create-character-render",
-    "status": "red",
-    "screenshot": "/home/ubuntu/workspace/repos/codex/docs/release/SD-36-consolidation/artifacts/ui-smoke/final/create-character-render.FAILED.png",
-    "rendered_excerpt": "⚙\nCreate a character\nBack\nCharacter name\n\nPlayer name\n\nRace\n\nClass\n\nFighter is fully computed at every level offered here.\n\nLoading class preview…\n\nLevel\n\nHP\n13\nAlignment\n\nDeity\n\nPhysical Attributes\nSize\nMedium\nSex\n\nVision\nDarkvision 60 ft.\nHeight\n4'1\"\n🎲\nWeight\n185 lb\n🎲\nAge\n\nEyes\n\nHair\n\nRacial Traits\nResolving racial traits…\nAlternate Racial Traits\nLoading alternate racial traits…\nTraits\nLoading",
-    "reason": "'Loading' still present after the row's wait budget"
+    "status": "green",
+    "screenshot": "/home/ubuntu/workspace/repos/codex/docs/release/SD-36-consolidation/artifacts/ui-smoke/final/create-character-render.png",
+    "rendered_excerpt": "⚙\nCreate a character\nBack\nCharacter name\n\nPlayer name\n\nRace\n\nClass\n\nFighter is fully computed at every level offered here.\n\nFighter 1: BAB +1 · Fort +2 · Ref +0 · Will +0\n\nLevel\n\nHP\n13\nAlignment\n\nDeity\n\nPhysical Attributes\nSize\nMedium\nSex\n\nVision\nDarkvision 60 ft.\nHeight\n4'3\"\n🎲\nWeight\n171 lb\n🎲\nAge\n\nEyes\n\nHair\n\nRacial Traits\n+2 Constitution, +2 Wisdom, -2 Charisma · Racial trait (CRB)\nDwarves are",
+    "reason": null
   },
   {
     "id": "create-character-fill-and-submit",
-    "status": "manual",
-    "screenshot": null,
-    "rendered_excerpt": null,
-    "reason": "Ability-score-method selection and the 'Create character' submit were not exercised live under this cycle's read-only scope (CreateCharacterForm.tsx is another agent's territory this cycle) -- run manually, confirm the post-submit success text, then fold the confirmed marker/expect back into this row."
+    "status": "green",
+    "screenshot": "/home/ubuntu/workspace/repos/codex/docs/release/SD-36-consolidation/artifacts/ui-smoke/final/create-character-fill-and-submit.png",
+    "rendered_excerpt": "⚙\nCreate a character\nBack\nCharacter name\n\nPlayer name\n\nRace\n\nClass\n\nWizard is fully computed at every level offered here.\n\nWizard 1: BAB +0 · Fort +0 · Ref +0 · Will +2\n\nLevel\n\nHP\n7\nAlignment\n\nDeity\n\nPhysical Attributes\nSize\nMedium\nSex\n\nVision\nLow-light vision\nHeight\n5'6\"\n🎲\nWeight\n106 lb\n🎲\nAge\n\nEyes\n\nHair\n\nRacial Traits\n+2 Dexterity, +2 Intelligence, -2 Constitution · Racial trait (CRB)\nElves ar",
+    "reason": null
   },
   {
     "id": "create-character-back",
     "status": "green",
     "screenshot": "/home/ubuntu/workspace/repos/codex/docs/release/SD-36-consolidation/artifacts/ui-smoke/final/create-character-back.png",
-    "rendered_excerpt": "⚙\n\nP1\nPathfinder 1e\nFantasy d20\n\nSA\nSolarus Arcanum\nComing soon\n\nTM\nTraveller MGT 2e\nComing soon\n\nCR\nCyberpunk Red\nComing soon\n\nS1\nStarfinder 1e\nComing soon\n\nWOD\nWorld of Darkness\nComing soon\n\nNEW CHARACTER\n\nLOAD CHARACTER\n\nCAMPAIGN MANAGER\nChoose a local Drive-synced folder under ⚙ Settings → Google Drive to enable the Campaign Manager.\n\nDM TOOLKIT\nBrowse Equipment Catalog\nBrowse Spell Catalog\nBr",
+    "rendered_excerpt": "⚙\n\nP1\nPathfinder 1e\nFantasy d20\n\nSA\nSolarus Arcanum\nComing soon\n\nTM\nTraveller MGT 2e\nComing soon\n\nCR\nCyberpunk Red\nComing soon\n\nS1\nStarfinder 1e\nComing soon\n\nWOD\nWorld of Darkness\nComing soon\n\nNEW CHARACTER\n\nLOAD CHARACTER\n\nCAMPAIGN MANAGER\n\nDM TOOLKIT\nBrowse Equipment Catalog\nBrowse Spell Catalog\nBrowse Class Progression\nBrowse Race Traits\nBrowse Monster Catalog\nBrowse Companion Catalog\nBrowse In",
     "reason": null
   },
   {
     "id": "load-character-render",
     "status": "green",
     "screenshot": "/home/ubuntu/workspace/repos/codex/docs/release/SD-36-consolidation/artifacts/ui-smoke/final/load-character-render.png",
-    "rendered_excerpt": "⚙\nLoad Character\n\n\nGrukk Ragef\nDwarf Barbarian 3\nLast modified: Aug 20, 2026\n\nTest Rogue\nDwarf Rogue 1\nLast modified: Aug 20, 2026\n\nTest Paladi\nDwarf Paladin 4\nLast modified: Aug 17, 2026\n\nFixture Seam T\nDwarf Slayer 3\nLast modified: Aug 17, 2026\n\nSD31 F4-007 Changeling Test\nChangeling Fighter 1\nLast modified: Aug 17, 2026\n\nVoss Unfettered\nHuman Unchained Barbarian 2\nLast modified: Aug 17, 2026\n\nK",
+    "rendered_excerpt": "⚙\nLoad Character\n\n\nSmoke Test PC\nElf Wizard 1\nLast modified: Sep 18, 2026\n\nSmoke Test PC\nElf Wizard 1\nLast modified: Sep 18, 2026\n\nSmoke Test PC\nElf Wizard 1\nLast modified: Sep 18, 2026\n\nSmoke Test PC\nElf Wizard 1\nLast modified: Sep 18, 2026\n\nSmoke Test PC\nElf Wizard 1\nLast modified: Sep 18, 2026\n\nSmoke Test PC\nElf Wizard 1\nLast modified: Sep 18, 2026\n\nSmoke Test PC\nElf Wizard 1\nLast modified: Sep",
     "reason": null
   },
   {
     "id": "load-character-select-and-open",
-    "status": "manual",
-    "screenshot": null,
-    "rendered_excerpt": null,
-    "reason": "Selecting a specific row requires a row-name target this cycle's read-only pass over LoadCharacterScreen.tsx did not confirm (row click handler is selectRow(row.characterId); the rendered row's accessible name was not traced to a specific field). Run manually, click the seeded character's row, click Load, confirm the sheet opens, then fold the confirmed steps back into this row."
+    "status": "green",
+    "screenshot": "/home/ubuntu/workspace/repos/codex/docs/release/SD-36-consolidation/artifacts/ui-smoke/final/load-character-select-and-open.png",
+    "rendered_excerpt": "⚙\n☰ Menu\n✕\nSmoke Test PC — Wizard 1\nPROGRESSION\n«\n\nLevel\n1\n+\nCaster Level\n1\nRACE\nElf\nCLASS\nWizard 1\nLevel 1 Wizard\nSkill points: 3\nFeat\nNEXT\nLevel 2 Wizard\nSkill points: 3\nCharacter Name\nSmoke Test PC\nCampaign\n—\nABILITIES\n\nSTR\n16\n+3\nDEX\n16\n+3\nCON\n12\n+1\nINT\n12\n+1\nWIS\n12\n+1\nCHA\n8\n-1\nINITIATIVE\n+3\nHIT POINTS\n7 / 7\nARMOR CLASS\n\nAC\n17\nTOUCH\n13\nFLAT-FOOTED\n14\nATTACK\n\nBAB\n+0\nMELEE\n+0\nCMB\n+3\nCMD\n16\nSAVING",
+    "reason": null
   },
   {
     "id": "load-character-delete-clone",
-    "status": "manual",
-    "screenshot": null,
-    "rendered_excerpt": null,
-    "reason": "Delete goes through window.confirm() (a native modal xdotool cannot address via the DOM probe) and Clone mutates the on-disk save set -- both degrade to manual per the harness brief's own guidance for window.confirm-gated actions."
+    "status": "green",
+    "screenshot": "/home/ubuntu/workspace/repos/codex/docs/release/SD-36-consolidation/artifacts/ui-smoke/final/load-character-delete-clone.png",
+    "rendered_excerpt": "⚙\nLoad Character\n\n\nSmoke Test PC\nElf Wizard 1\nLast modified: Sep 18, 2026\n\nSmoke Test PC\nElf Wizard 1\nLast modified: Sep 18, 2026\n\nSmoke Test PC\nElf Wizard 1\nLast modified: Sep 18, 2026\n\nSmoke Test PC\nElf Wizard 1\nLast modified: Sep 18, 2026\n\nSmoke Test PC\nElf Wizard 1\nLast modified: Sep 18, 2026\n\nSmoke Test PC\nElf Wizard 1\nLast modified: Sep 18, 2026\n\nSmoke Test PC\nElf Wizard 1\nLast modified: Sep",
+    "reason": null
   },
   {
     "id": "sheet-open-for-tabs",
-    "status": "manual",
-    "screenshot": null,
-    "rendered_excerpt": null,
-    "reason": "Reaching the sheet depends on load-character-select-and-open, which is itself manual this cycle (see its own note). Once that row is confirmed, point every sheet-* row's `setup` at it instead of leaving this placeholder."
+    "status": "green",
+    "screenshot": "/home/ubuntu/workspace/repos/codex/docs/release/SD-36-consolidation/artifacts/ui-smoke/final/sheet-open-for-tabs.png",
+    "rendered_excerpt": "⚙\n☰ Menu\n✕\nSmoke Test PC — Wizard 1\nPROGRESSION\n«\n\nLevel\n1\n+\nCaster Level\n1\nRACE\nElf\nCLASS\nWizard 1\nLevel 1 Wizard\nSkill points: 3\nFeat\nNEXT\nLevel 2 Wizard\nSkill points: 3\nCharacter Name\nSmoke Test PC\nCampaign\n—\nABILITIES\n\nSTR\n16\n+3\nDEX\n16\n+3\nCON\n12\n+1\nINT\n12\n+1\nWIS\n12\n+1\nCHA\n8\n-1\nINITIATIVE\n+3\nHIT POINTS\n7 / 7\nARMOR CLASS\n\nAC\n17\nTOUCH\n13\nFLAT-FOOTED\n14\nATTACK\n\nBAB\n+0\nMELEE\n+0\nCMB\n+3\nCMD\n16\nSAVING",
+    "reason": null
   },
   {
     "id": "sheet-tab-weapons",
-    "status": "red",
-    "screenshot": null,
-    "rendered_excerpt": null,
-    "reason": "target not found: 'Weapons'"
+    "status": "green",
+    "screenshot": "/home/ubuntu/workspace/repos/codex/docs/release/SD-36-consolidation/artifacts/ui-smoke/final/sheet-tab-weapons.png",
+    "rendered_excerpt": "⚙\n☰ Menu\n✕\nSmoke Test PC — Wizard 1\nPROGRESSION\n«\n\nLevel\n1\n+\nCaster Level\n1\nRACE\nElf\nCLASS\nWizard 1\nLevel 1 Wizard\nSkill points: 3\nFeat\nNEXT\nLevel 2 Wizard\nSkill points: 3\nCharacter Name\nSmoke Test PC\nCampaign\n—\nABILITIES\n\nSTR\n16\n+3\nDEX\n16\n+3\nCON\n12\n+1\nINT\n12\n+1\nWIS\n12\n+1\nCHA\n8\n-1\nINITIATIVE\n+3\nHIT POINTS\n7 / 7\nARMOR CLASS\n\nAC\n17\nTOUCH\n13\nFLAT-FOOTED\n14\nATTACK\n\nBAB\n+0\nMELEE\n+0\nCMB\n+3\nCMD\n16\nSAVING",
+    "reason": null
   },
   {
     "id": "sheet-tab-defense",
-    "status": "red",
-    "screenshot": null,
-    "rendered_excerpt": null,
-    "reason": "target not found: 'Defense'"
+    "status": "green",
+    "screenshot": "/home/ubuntu/workspace/repos/codex/docs/release/SD-36-consolidation/artifacts/ui-smoke/final/sheet-tab-defense.png",
+    "rendered_excerpt": "⚙\n☰ Menu\n✕\nSmoke Test PC — Wizard 1\nPROGRESSION\n«\n\nLevel\n1\n+\nCaster Level\n1\nRACE\nElf\nCLASS\nWizard 1\nLevel 1 Wizard\nSkill points: 3\nFeat\nNEXT\nLevel 2 Wizard\nSkill points: 3\nCharacter Name\nSmoke Test PC\nCampaign\n—\nABILITIES\n\nSTR\n16\n+3\nDEX\n16\n+3\nCON\n12\n+1\nINT\n12\n+1\nWIS\n12\n+1\nCHA\n8\n-1\nINITIATIVE\n+3\nHIT POINTS\n7 / 7\nARMOR CLASS\n\nAC\n17\nTOUCH\n13\nFLAT-FOOTED\n14\nATTACK\n\nBAB\n+0\nMELEE\n+0\nCMB\n+3\nCMD\n16\nSAVING",
+    "reason": null
   },
   {
     "id": "sheet-tab-gear",
-    "status": "red",
-    "screenshot": null,
-    "rendered_excerpt": null,
-    "reason": "target not found: 'Gear'"
+    "status": "green",
+    "screenshot": "/home/ubuntu/workspace/repos/codex/docs/release/SD-36-consolidation/artifacts/ui-smoke/final/sheet-tab-gear.png",
+    "rendered_excerpt": "⚙\n☰ Menu\n✕\nSmoke Test PC — Wizard 1\nPROGRESSION\n«\n\nLevel\n1\n+\nCaster Level\n1\nRACE\nElf\nCLASS\nWizard 1\nLevel 1 Wizard\nSkill points: 3\nFeat\nNEXT\nLevel 2 Wizard\nSkill points: 3\nCharacter Name\nSmoke Test PC\nCampaign\n—\nABILITIES\n\nSTR\n16\n+3\nDEX\n16\n+3\nCON\n12\n+1\nINT\n12\n+1\nWIS\n12\n+1\nCHA\n8\n-1\nINITIATIVE\n+3\nHIT POINTS\n7 / 7\nARMOR CLASS\n\nAC\n17\nTOUCH\n13\nFLAT-FOOTED\n14\nATTACK\n\nBAB\n+0\nMELEE\n+0\nCMB\n+3\nCMD\n16\nSAVING",
+    "reason": null
   },
   {
     "id": "sheet-tab-spells",
-    "status": "red",
-    "screenshot": null,
-    "rendered_excerpt": null,
-    "reason": "target not found: 'Spells'"
+    "status": "green",
+    "screenshot": "/home/ubuntu/workspace/repos/codex/docs/release/SD-36-consolidation/artifacts/ui-smoke/final/sheet-tab-spells.png",
+    "rendered_excerpt": "⚙\n☰ Menu\n✕\nSmoke Test PC — Wizard 1\nPROGRESSION\n«\n\nLevel\n1\n+\nCaster Level\n1\nRACE\nElf\nCLASS\nWizard 1\nLevel 1 Wizard\nSkill points: 3\nFeat\nNEXT\nLevel 2 Wizard\nSkill points: 3\nCharacter Name\nSmoke Test PC\nCampaign\n—\nABILITIES\n\nSTR\n16\n+3\nDEX\n16\n+3\nCON\n12\n+1\nINT\n12\n+1\nWIS\n12\n+1\nCHA\n8\n-1\nINITIATIVE\n+3\nHIT POINTS\n7 / 7\nARMOR CLASS\n\nAC\n17\nTOUCH\n13\nFLAT-FOOTED\n14\nATTACK\n\nBAB\n+0\nMELEE\n+0\nCMB\n+3\nCMD\n16\nSAVING",
+    "reason": null
   },
   {
     "id": "sheet-tab-pets",
-    "status": "red",
-    "screenshot": null,
-    "rendered_excerpt": null,
-    "reason": "target not found: 'Pets'"
+    "status": "green",
+    "screenshot": "/home/ubuntu/workspace/repos/codex/docs/release/SD-36-consolidation/artifacts/ui-smoke/final/sheet-tab-pets.png",
+    "rendered_excerpt": "⚙\n☰ Menu\n✕\nSmoke Test PC — Wizard 1\nPROGRESSION\n«\n\nLevel\n1\n+\nCaster Level\n1\nRACE\nElf\nCLASS\nWizard 1\nLevel 1 Wizard\nSkill points: 3\nFeat\nNEXT\nLevel 2 Wizard\nSkill points: 3\nCharacter Name\nSmoke Test PC\nCampaign\n—\nABILITIES\n\nSTR\n16\n+3\nDEX\n16\n+3\nCON\n12\n+1\nINT\n12\n+1\nWIS\n12\n+1\nCHA\n8\n-1\nINITIATIVE\n+3\nHIT POINTS\n7 / 7\nARMOR CLASS\n\nAC\n17\nTOUCH\n13\nFLAT-FOOTED\n14\nATTACK\n\nBAB\n+0\nMELEE\n+0\nCMB\n+3\nCMD\n16\nSAVING",
+    "reason": null
   },
   {
     "id": "sheet-tab-feats",
-    "status": "red",
-    "screenshot": null,
-    "rendered_excerpt": null,
-    "reason": "target not found: 'Feats'"
+    "status": "green",
+    "screenshot": "/home/ubuntu/workspace/repos/codex/docs/release/SD-36-consolidation/artifacts/ui-smoke/final/sheet-tab-feats.png",
+    "rendered_excerpt": "⚙\n☰ Menu\n✕\nSmoke Test PC — Wizard 1\nPROGRESSION\n«\n\nLevel\n1\n+\nCaster Level\n1\nRACE\nElf\nCLASS\nWizard 1\nLevel 1 Wizard\nSkill points: 3\nFeat\nNEXT\nLevel 2 Wizard\nSkill points: 3\nCharacter Name\nSmoke Test PC\nCampaign\n—\nABILITIES\n\nSTR\n16\n+3\nDEX\n16\n+3\nCON\n12\n+1\nINT\n12\n+1\nWIS\n12\n+1\nCHA\n8\n-1\nINITIATIVE\n+3\nHIT POINTS\n7 / 7\nARMOR CLASS\n\nAC\n17\nTOUCH\n13\nFLAT-FOOTED\n14\nATTACK\n\nBAB\n+0\nMELEE\n+0\nCMB\n+3\nCMD\n16\nSAVING",
+    "reason": null
   },
   {
     "id": "sheet-tab-actions",
-    "status": "red",
-    "screenshot": null,
-    "rendered_excerpt": null,
-    "reason": "target not found: 'Actions'"
+    "status": "green",
+    "screenshot": "/home/ubuntu/workspace/repos/codex/docs/release/SD-36-consolidation/artifacts/ui-smoke/final/sheet-tab-actions.png",
+    "rendered_excerpt": "⚙\n☰ Menu\n✕\nSmoke Test PC — Wizard 1\nPROGRESSION\n«\n\nLevel\n1\n+\nCaster Level\n1\nRACE\nElf\nCLASS\nWizard 1\nLevel 1 Wizard\nSkill points: 3\nFeat\nNEXT\nLevel 2 Wizard\nSkill points: 3\nCharacter Name\nSmoke Test PC\nCampaign\n—\nABILITIES\n\nSTR\n16\n+3\nDEX\n16\n+3\nCON\n12\n+1\nINT\n12\n+1\nWIS\n12\n+1\nCHA\n8\n-1\nINITIATIVE\n+3\nHIT POINTS\n7 / 7\nARMOR CLASS\n\nAC\n17\nTOUCH\n13\nFLAT-FOOTED\n14\nATTACK\n\nBAB\n+0\nMELEE\n+0\nCMB\n+3\nCMD\n16\nSAVING",
+    "reason": null
   },
   {
     "id": "sheet-action-add-armor-gear-picker",
-    "status": "red",
-    "screenshot": null,
-    "rendered_excerpt": null,
-    "reason": "target not found: 'Gear'"
+    "status": "green",
+    "screenshot": "/home/ubuntu/workspace/repos/codex/docs/release/SD-36-consolidation/artifacts/ui-smoke/final/sheet-action-add-armor-gear-picker.png",
+    "rendered_excerpt": "⚙\n☰ Menu\n✕\nSmoke Test PC — Wizard 1\nPROGRESSION\n«\n\nLevel\n1\n+\nCaster Level\n1\nRACE\nElf\nCLASS\nWizard 1\nLevel 1 Wizard\nSkill points: 3\nFeat\nNEXT\nLevel 2 Wizard\nSkill points: 3\nCharacter Name\nSmoke Test PC\nCampaign\n—\nABILITIES\n\nSTR\n16\n+3\nDEX\n16\n+3\nCON\n12\n+1\nINT\n12\n+1\nWIS\n12\n+1\nCHA\n8\n-1\nINITIATIVE\n+3\nHIT POINTS\n7 / 7\nARMOR CLASS\n\nAC\n17\nTOUCH\n13\nFLAT-FOOTED\n14\nATTACK\n\nBAB\n+0\nMELEE\n+0\nCMB\n+3\nCMD\n16\nSAVING",
+    "reason": null
   },
   {
     "id": "sheet-action-add-feat",
-    "status": "red",
-    "screenshot": null,
-    "rendered_excerpt": null,
-    "reason": "target not found: 'Feats'"
+    "status": "green",
+    "screenshot": "/home/ubuntu/workspace/repos/codex/docs/release/SD-36-consolidation/artifacts/ui-smoke/final/sheet-action-add-feat.png",
+    "rendered_excerpt": "⚙\n☰ Menu\n✕\nSmoke Test PC — Wizard 1\nPROGRESSION\n«\n\nLevel\n1\n+\nCaster Level\n1\nRACE\nElf\nCLASS\nWizard 1\nLevel 1 Wizard\nSkill points: 3\nFeat\nNEXT\nLevel 2 Wizard\nSkill points: 3\nCharacter Name\nSmoke Test PC\nCampaign\n—\nABILITIES\n\nSTR\n16\n+3\nDEX\n16\n+3\nCON\n12\n+1\nINT\n12\n+1\nWIS\n12\n+1\nCHA\n8\n-1\nINITIATIVE\n+3\nHIT POINTS\n7 / 7\nARMOR CLASS\n\nAC\n17\nTOUCH\n13\nFLAT-FOOTED\n14\nATTACK\n\nBAB\n+0\nMELEE\n+0\nCMB\n+3\nCMD\n16\nSAVING",
+    "reason": null
   },
   {
     "id": "sheet-action-add-spell",
-    "status": "manual",
-    "screenshot": null,
-    "rendered_excerpt": null,
-    "reason": "Only reachable when the seeded/loaded character is a caster the 'Add Spell' affordance is offered for (addSpellAffordanceModel.ts); confirm the seed character qualifies before trusting this unattended."
-  },
-  {
-    "id": "sheet-action-level-up-dialog",
-    "status": "red",
-    "screenshot": null,
-    "rendered_excerpt": null,
-    "reason": "target not found: 'Level up'"
-  },
-  {
-    "id": "sheet-action-skill-allocation-dialog",
-    "status": "red",
-    "screenshot": null,
-    "rendered_excerpt": null,
-    "reason": "target not found: 'Manage skill allocation'"
-  },
-  {
-    "id": "sheet-action-hp-adjust",
-    "status": "red",
-    "screenshot": null,
-    "rendered_excerpt": null,
-    "reason": "target not found: 'Defense'"
-  },
-  {
-    "id": "sheet-action-money-adjust",
-    "status": "red",
-    "screenshot": null,
-    "rendered_excerpt": null,
-    "reason": "target not found: 'Gear'"
-  },
-  {
-    "id": "sheet-action-trait-add",
-    "status": "red",
-    "screenshot": null,
-    "rendered_excerpt": null,
-    "reason": "target not found: 'Actions'"
-  },
-  {
-    "id": "sheet-menu-recompute",
-    "status": "red",
-    "screenshot": null,
-    "rendered_excerpt": null,
-    "reason": "target not found: '☰ Menu'"
-  },
-  {
-    "id": "sheet-menu-clone",
-    "status": "manual",
-    "screenshot": null,
-    "rendered_excerpt": null,
-    "reason": "Clone mutates the on-disk save set (produces a new saved character each run) -- confirm success and then delete the clone by hand (see load-character-delete-clone) rather than letting an unattended run accumulate clones."
-  },
-  {
-    "id": "sheet-menu-export",
-    "status": "manual",
-    "screenshot": null,
-    "rendered_excerpt": null,
-    "reason": "Actually selecting 'Export' opens a native OS save dialog (see the top-level manual-character-export row) -- this row only proves the menu itself renders all five items; do not click Export from here unattended."
-  },
-  {
-    "id": "sheet-close",
-    "status": "red",
-    "screenshot": null,
-    "rendered_excerpt": null,
-    "reason": "target not found: '✕'"
-  },
-  {
-    "id": "dm-toolkit-open-and-kind-tabs",
-    "status": "manual",
-    "screenshot": null,
-    "rendered_excerpt": null,
-    "reason": "Requires at least one campaign to exist (DmToolkitScreen shows an empty-state message otherwise: 'Create one in Campaign Manager first.') -- run campaign-create first if the profile has none, then confirm the seven DM_RECORD_KINDS tab labels render together."
-  },
-  {
-    "id": "dm-toolkit-create-record",
-    "status": "red",
-    "screenshot": null,
-    "rendered_excerpt": null,
-    "reason": "target not found: '+ New world'"
-  },
-  {
-    "id": "dm-toolkit-edit-record",
-    "status": "manual",
-    "screenshot": null,
-    "rendered_excerpt": null,
-    "reason": "Editing an existing record requires selecting a specific list row first, whose accessible name (the record's own title) this cycle's read-only pass did not enumerate against seeded data. Run manually and fold the confirmed row-select step back in."
-  },
-  {
-    "id": "dm-toolkit-delete-record",
-    "status": "manual",
-    "screenshot": null,
-    "rendered_excerpt": null,
-    "reason": "Same dependency as dm-toolkit-edit-record, plus deleteDmRecord's own confirmation UI was not traced this cycle."
-  },
-  {
-    "id": "dm-toolkit-export",
-    "status": "manual",
-    "screenshot": null,
-    "rendered_excerpt": null,
-    "reason": "exportConsole() drives runDmConsoleExport, whose completion surface (native save dialog vs. in-app confirmation) was not confirmed live this cycle."
-  },
-  {
-    "id": "encounter-builder-add-monster-and-rating",
-    "status": "manual",
-    "screenshot": null,
-    "rendered_excerpt": null,
-    "reason": "A numeric rating only appears once both a party member AND a monster are added (rate_encounter needs both); this cycle's read-only pass confirmed the empty-state copy but did not add a party member live. Run manually: add a saved character AND the Ankheg row, then confirm 'Rating' shows a CR/difficulty word plus a number, not the empty-state sentence."
-  },
-  {
-    "id": "campaign-manager-list",
-    "status": "manual",
-    "screenshot": null,
-    "rendered_excerpt": null,
-    "reason": "The Campaign Manager banner is gated disabled until a local Drive folder is configured (see landing-campaign-gate) -- confirm Google Drive settings are configured on the smoke profile first, or this click is a no-op on a fresh profile."
-  },
-  {
-    "id": "campaign-create",
-    "status": "red",
-    "screenshot": null,
-    "rendered_excerpt": null,
-    "reason": "target not found: 'Campaign\nManager'"
-  },
-  {
-    "id": "campaign-edit",
-    "status": "red",
-    "screenshot": null,
-    "rendered_excerpt": null,
-    "reason": "target not found: 'Campaign\nManager'"
-  },
-  {
-    "id": "campaign-sheet-tabs",
-    "status": "red",
-    "screenshot": null,
-    "rendered_excerpt": null,
-    "reason": "target not found: 'Campaign\nManager'"
-  },
-  {
-    "id": "manual-character-import",
-    "status": "manual",
-    "screenshot": null,
-    "rendered_excerpt": null,
-    "reason": "handleImport opens a native OS file-open dialog (Tauri's dialog plugin) -- xdotool has no DOM to drive inside it."
-  },
-  {
-    "id": "manual-character-export",
-    "status": "manual",
-    "screenshot": null,
-    "rendered_excerpt": null,
-    "reason": "handleExport / the sheet menu's 'Export' item open a native OS file-save dialog."
-  },
-  {
-    "id": "manual-portrait-upload",
-    "status": "manual",
-    "screenshot": null,
-    "rendered_excerpt": null,
-    "reason": "PortraitUpload opens a native OS file-open dialog for the image file."
+    "status": "green",
+    "screenshot": "/home/ubuntu/workspace/repos/codex/docs/release/SD-36-consolidation/artifacts/ui-smoke/final/sheet-action-add-spell.png",
+    "rendered_excerpt": "⚙\n☰ Menu\n✕\nSmoke Test PC — Wizard 1\nPROGRESSION\n«\n\nLevel\n1\n+\nCaster Level\n1\nRACE\nElf\nCLASS\nWizard 1\nLevel 1 Wizard\nSkill points: 3\nFeat\nNEXT\nLevel 2 Wizard\nSkill points: 3\nCharacter Name\nSmoke Test PC\nCampaign\n—\nABILITIES\n\nSTR\n16\n+3\nDEX\n16\n+3\nCON\n12\n+1\nINT\n12\n+1\nWIS\n12\n+1\nCHA\n8\n-1\nINITIATIVE\n+3\nHIT POINTS\n7 / 7\nARMOR CLASS\n\nAC\n17\nTOUCH\n13\nFLAT-FOOTED\n14\nATTACK\n\nBAB\n+0\nMELEE\n+0\nCMB\n+3\nCMD\n16\nSAVING",
+    "reason": null
   }
 ]

@@ -269,7 +269,8 @@ fn main() {
             resolve_race_alternate_selection,
             list_available_character_traits,
             corpus_ingest_diagnostic,
-            ui_probe::record_ui_probe
+            ui_probe::record_ui_probe,
+            ui_probe::poll_ui_probe_command
         ])
         .run(tauri::generate_context!())
         .expect("error while running codex");
