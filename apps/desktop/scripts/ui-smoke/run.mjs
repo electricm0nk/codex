@@ -18,6 +18,7 @@ import { fileURLToPath } from 'node:url';
 
 import * as driver from './lib/driver.mjs';
 import { extractScreenText } from './lib/clipboard.mjs';
+import { sendCommand } from './lib/commandChannel.mjs';
 import {
   centerOf,
   findSelect,
@@ -48,12 +49,17 @@ const GLOBAL_FORBID = [
 // to the landing page. Reset-to-landing tries each, in order, against
 // whatever is currently on screen, re-reading the probe between clicks.
 const RESET_CLICK_NAMES = ['Back', 'Cancel', 'Close', '✕', '×', 'Close settings', 'Close character'];
+// The candidates reset-to-landing clicks specifically to dismiss an OPEN
+// dialog/modal (see resetToLanding's own comment) -- same idea as
+// RESET_CLICK_NAMES but tried only after Escape, and only while the probe
+// reports at least one open `role=dialog`.
+const RESET_CLOSE_NAMES = ['Close settings', 'Close', '✕', '×', 'Cancel', 'Back'];
 // Any one of these being present is treated as "we are on the landing screen".
 const LANDING_TARGET_NAMES = ['New\nCharacter', 'Load\nCharacter'];
 const LANDING_MARKER_PREFIX = 'Browse ';
 
 function parseArgs(argv) {
-  const args = { only: null, from: null, out: null, keep: false };
+  const args = { only: null, from: null, out: null, keep: false, xdotool: false };
   for (let i = 0; i < argv.length; i += 1) {
     const arg = argv[i];
     if (arg === '--only') {
@@ -64,6 +70,11 @@ function parseArgs(argv) {
       args.out = argv[++i];
     } else if (arg === '--keep') {
       args.keep = true;
+    } else if (arg === '--xdotool') {
+      // Drives click/type/key via `driver.sh` (xdotool) instead of the DOM
+      // command channel -- kept only for direct comparison against the
+      // channel's own behavior; not the default path.
+      args.xdotool = true;
     } else {
       throw new Error(`unrecognized argument: ${arg}`);
     }
@@ -98,7 +109,12 @@ function selectRows(spec, args) {
 
 // ------------------------------------------------------------- probe access
 let probePath;
+let cmdPath;
 let lastSeenTs = 0;
+// Set from --xdotool in main() before any row runs. Default (false) routes
+// click/type/select/key through the DOM command channel; true falls back to
+// driver.sh (xdotool) for direct comparison -- see parseArgs' own comment.
+let USE_XDOTOOL = false;
 
 function latestSnapshot({ requireFresh = false, timeoutMs = 3000 } = {}) {
   const { snapshot, fresh } = pollForFreshProbe(probePath, requireFresh ? lastSeenTs : 0, timeoutMs);
@@ -128,8 +144,35 @@ class TargetNotFoundError extends Error {
   }
 }
 
-/** Clicks the named target, scrolling it into view first if the probe says it's below the fold. */
-function clickByName(name) {
+/**
+ * Clicks the named target through the DOM command channel: the webview
+ * itself finds the element (same name-matching the probe uses -- see
+ * `uiProbe.ts`'s `matchCommandTarget`), scrolls it into view, and calls
+ * `el.click()`. Retries the *send* (not just the wait) for up to
+ * `CLICK_TARGET_WAIT_MS`, because the target this call is racing may not be
+ * mounted yet at all (a screen the previous step just navigated to can
+ * mount its own content -- a search box, a tab bar -- a beat later, see
+ * `CLICK_TARGET_WAIT_MS`'s own comment); a single command's own
+ * `sendCommand` ack timeout is much shorter and is not what's being waited
+ * out here.
+ */
+function clickByNameChannel(name) {
+  const deadline = Date.now() + CLICK_TARGET_WAIT_MS;
+  let result;
+  for (;;) {
+    result = sendCommand(cmdPath, probePath, { op: 'click', target: name }, { timeoutMs: 2000 });
+    if (result.ok || Date.now() >= deadline) {
+      break;
+    }
+    sleepMs(150);
+  }
+  if (!result.ok) {
+    throw new TargetNotFoundError(`${name}${result.error ? ` (${result.error})` : ''}`);
+  }
+}
+
+/** Clicks the named target via xdotool, scrolling it into view first if the probe says it's below the fold. Only reached with --xdotool. */
+function clickByNameXdotool(name) {
   const deadline = Date.now() + CLICK_TARGET_WAIT_MS;
   let snapshot;
   let target;
@@ -170,19 +213,77 @@ function clickByName(name) {
   }
 }
 
+function clickByName(name) {
+  return USE_XDOTOOL ? clickByNameXdotool(name) : clickByNameChannel(name);
+}
+
+/** Types into whatever currently has focus -- always preceded by a `click` step in every row (see spec.json). */
+function typeText(text) {
+  if (USE_XDOTOOL) {
+    driver.type(text);
+    return;
+  }
+  const result = sendCommand(cmdPath, probePath, { op: 'type', text });
+  if (!result.ok) {
+    throw new Error(`type command failed: ${result.error ?? 'unknown error'}`);
+  }
+}
+
+/**
+ * Picks `text` (an <option>'s own text/value) on the `<select>` located by
+ * `target`. DOM-command-channel only (`executeCommand`'s own `select` case
+ * in uiProbe.ts already supported this op; run.mjs just never exposed it
+ * before now) -- added because CreateCharacterForm's race/class selects
+ * carry no accessible name of their own (`nameOf()` reports a `<select>`'s
+ * full concatenated option text, since it has non-empty textContent, never
+ * its `id`), so `target` must be a substring unique to the WANTED select's
+ * option list (e.g. an option's own text), not the select's id. No
+ * `--xdotool` fallback: this op did not exist before, so there is no prior
+ * xdotool-based behavior to preserve parity with.
+ */
+function selectByName(target, text) {
+  const deadline = Date.now() + CLICK_TARGET_WAIT_MS;
+  let result;
+  for (;;) {
+    result = sendCommand(cmdPath, probePath, { op: 'select', target, text }, { timeoutMs: 2000 });
+    if (result.ok || Date.now() >= deadline) {
+      break;
+    }
+    sleepMs(150);
+  }
+  if (!result.ok) {
+    throw new TargetNotFoundError(`${target}${result.error ? ` (${result.error})` : ''}`);
+  }
+}
+
+/** Dispatches a key (e.g. `Escape`) against `document.activeElement`. */
+function pressKey(key) {
+  if (USE_XDOTOOL) {
+    driver.key(key);
+    return;
+  }
+  const result = sendCommand(cmdPath, probePath, { op: 'key', key });
+  if (!result.ok) {
+    throw new Error(`key command failed: ${result.error ?? 'unknown error'}`);
+  }
+}
+
 function runStep(step) {
   switch (step.op) {
     case 'click':
       clickByName(step.target);
       break;
     case 'type':
-      driver.type(step.text);
+      typeText(step.text);
+      break;
+    case 'select':
+      selectByName(step.target, step.text);
       break;
     case 'key':
-      driver.key(step.key);
+      pressKey(step.key);
       break;
     case 'scroll':
-      driver.scroll(960, 600, step.ticks ?? 5);
+      driver.scroll(960, 600, step.ticks ?? 5, step.direction ?? 'down');
       break;
     case 'wait':
       sleepMs(step.ms ?? 500);
@@ -230,11 +331,61 @@ function resetToLanding(maxAttempts = 6) {
     if (isOnLanding(snapshot)) {
       return true;
     }
+    if (Array.isArray(snapshot?.dialogs) && snapshot.dialogs.length > 0) {
+      // A dialog/modal is open (isOnLanding's own dialog guard is exactly
+      // why this branch, not the plain click-a-recognized-name branch
+      // below, runs first): Escape closes most of this app's dialogs
+      // outright (LevelUpDialog, SkillAllocationDialog, ItemPickerModal,
+      // ThemeBrowserModal all wire a keydown handler for it), but
+      // SettingsModal historically did not reliably respond to a lone
+      // Escape from this harness -- so this also tries a named close/
+      // cancel control every attempt, not only as a last resort once
+      // nothing else is recognized (the previous behavior, which is what
+      // let a still-open SettingsModal block every row after it for the
+      // rest of a run -- see docs/release/SD-36-consolidation/artifacts/
+      // ui-smoke/final/RECEIPT.md's "4 blocked" rows).
+      //
+      // `pressKey` can throw (a `key` command that never gets acknowledged
+      // within its own timeout, e.g. under a transient command-channel
+      // backlog) -- reset-to-landing is a best-effort retry loop, so a
+      // single failed Escape must fall through to the next attempt rather
+      // than aborting the whole row the way an uncaught exception would.
+      try {
+        pressKey('Escape');
+      } catch {
+        // fall through to the next attempt regardless
+      }
+      sleepMs(220);
+      ({ snapshot } = latestSnapshot());
+      if (isOnLanding(snapshot)) {
+        return true;
+      }
+      const closeName = RESET_CLOSE_NAMES.find((name) => findTarget(snapshot, name));
+      if (closeName) {
+        try {
+          clickByName(closeName);
+        } catch {
+          // The close/cancel control the probe just reported can still
+          // vanish before the click lands (another close path won the
+          // race) -- fall through to the next attempt either way.
+        }
+        sleepMs(300);
+      }
+      ({ snapshot } = latestSnapshot({ requireFresh: false, timeoutMs: 2000 }));
+      continue;
+    }
     const clickable = RESET_CLICK_NAMES.map((name) => findTarget(snapshot, name)).find(Boolean);
     if (!clickable) {
-      // Nothing we recognize to click — try Escape once (closes any open
-      // dialog/modal) then re-check before giving up this attempt.
-      driver.key('Escape');
+      // Nothing we recognize to click and no dialog reported — try Escape
+      // once anyway (covers a dialog the probe hasn't caught up to yet)
+      // then re-check before giving up this attempt. Same best-effort
+      // posture as the dialog branch above: a failed Escape falls through
+      // rather than aborting the row.
+      try {
+        pressKey('Escape');
+      } catch {
+        // fall through to the next attempt regardless
+      }
       sleepMs(220);
       ({ snapshot } = latestSnapshot());
       continue;
@@ -257,11 +408,30 @@ function resetToLanding(maxAttempts = 6) {
 // walk impractically slow; a row that still needs longer than this is
 // flagged RED and the cause (harness timeout vs. real app defect) should be
 // re-checked by hand rather than assumed either way.
+//
+// **Finding the marker is not the same as the screen being settled.** A
+// screen whose marker is a static heading present from the very first paint
+// (e.g. CreateCharacterForm's "Create a character", rendered by the parent
+// page regardless of the form's own load state) used to make this function
+// return within one poll interval of the triggering click -- long before any
+// of that screen's OWN async content (a race roster, a class-catalog
+// preview, an alternate-traits menu, all independently `useEffect`-fetched)
+// had a chance to resolve. `assertRow`'s blanket 'Loading' forbid check then
+// fired against a screen the row's own wait budget never actually spent any
+// time waiting out -- observed directly: create-character-render read
+// "'Loading' still present after the row's wait budget" while its own
+// underlying fetch (`list_race_creation_roster`) in fact completed in well
+// under a second once actually waited for (see the SD-36 UI-smoke DOM
+// command channel cycle's own measurements). This function now keeps
+// polling, within the SAME budget, until the marker is present AND no
+// 'Loading' placeholder remains -- so the budget is genuinely spent waiting
+// out real async content, not returned unused the moment a static marker
+// happens to be there from the start.
 function waitForMarker(marker, timeoutMs = 12000) {
   const deadline = Date.now() + timeoutMs;
   for (;;) {
     const { snapshot } = latestSnapshot({ requireFresh: false, timeoutMs: 500 });
-    if (screenContains(snapshot, marker)) {
+    if (screenContains(snapshot, marker) && !screenContains(snapshot, 'Loading')) {
       return snapshot;
     }
     if (Date.now() >= deadline) {
@@ -386,6 +556,9 @@ function main() {
 
   probePath = `/tmp/run-desktop-driver-${agent}.ui-probe.json`;
   process.env.CODEX_UI_PROBE_FILE = probePath;
+  cmdPath = `/tmp/run-desktop-driver-${agent}.ui-probe-cmd.json`;
+  process.env.CODEX_UI_PROBE_CMD_FILE = cmdPath;
+  USE_XDOTOOL = args.xdotool;
 
   const outDir = resolve(args.out ?? join(driver.APP_ROOT, 'scripts', 'ui-smoke', '.out', agent));
   mkdirSync(outDir, { recursive: true });

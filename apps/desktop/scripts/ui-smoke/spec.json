@@ -1,5 +1,5 @@
 {
-  "$comment": "Row shape: {id, screen, setup?: [rowIds], steps: [{op, target?, text?, key?, ticks?, ms?}], marker, expect: [string], forbid?: [string], allowGlobalForbid?: [string], selectsNonEmpty?: [selectName], manual?: reason, notes}. Generated docs/testing/ui-smoke-inventory.md is rendered FROM this file by render-inventory.mjs -- edit this file, not the doc. Names in `target`/`selectsNonEmpty` are matched against the live uiProbe.ts snapshot's targets/selects by exact `name` (trimmed textContent || aria-label || placeholder || title || id, and select#<n> for the handful of anonymous <select>s -- see uiProbe.ts). `expect`/`marker`/`forbid` strings are matched against bodyText, which is captured via `innerText` (respects CSS, e.g. `text-transform: uppercase` renders the text differently than its mixed-case source prop/string) -- assert the case that actually renders, not the source string. Global forbid strings (applied by run.mjs to every row unless listed in that row's own `allowGlobalForbid`): 'could be read from the corpus', 'failure', 'Failed to load', 'requires the desktop runtime', 'undefined', 'NaN', '[object Object]', and 'Loading' still present after the row's wait budget.",
+  "$comment": "Row shape: {id, screen, setup?: [rowIds], steps: [{op, target?, text?, key?, ticks?, ms?}], marker, expect: [string], forbid?: [string], allowGlobalForbid?: [string], selectsNonEmpty?: [selectName], manual?: reason, notes}. `setup` is FLAT, not recursive: it runs only the listed rows' own `steps`, never THEIR `setup` -- a row meant to be reused as another row's setup entry must list every ancestor it itself needs, explicitly, in order (see e.g. `settings-theme-select-and-manage-themes-modal`'s own setup). `op: 'select'` (target, text) picks an `<option>` on the `<select>` located by `target` -- added to run.mjs because CreateCharacterForm's race/class selects carry no accessible name of their own (a `<select>`'s `nameOf()` is its full concatenated option text, since that's non-empty textContent, so `target` must be a substring unique to the wanted select's own option list, e.g. one of its option's exact text, not the select's id); `text` is matched against each `<option>`'s own text/value. `op: 'scroll'` takes an optional `direction: 'up'|'down'` (default 'down', unchanged from before) -- 'up' exists because resetToLanding() (run before every row's own setup/steps) clicks RESET_CLICK_NAMES by raw xdotool coordinate, not the DOM channel, and cannot recover a target scrolled to a negative on-screen y (a tall form's own 'Back'/'Cancel' pushed off the top by content added below it, e.g. a create-character outcome panel) -- a row that leaves the page scrolled down should scroll back up as its own last step so the NEXT row's resetToLanding can find a landing-reachable control; see create-character-fill-and-submit's own trailing scroll step. Generated docs/testing/ui-smoke-inventory.md is rendered FROM this file by render-inventory.mjs -- edit this file, not the doc. Names in `target`/`selectsNonEmpty` are matched against the live uiProbe.ts snapshot's targets/selects by exact `name` (trimmed textContent || aria-label || placeholder || title || id, and select#<n> for the handful of anonymous <select>s -- see uiProbe.ts). `expect`/`marker`/`forbid` strings are matched against bodyText, which is captured via `innerText` (respects CSS, e.g. `text-transform: uppercase` renders the text differently than its mixed-case source prop/string) -- assert the case that actually renders, not the source string. Global forbid strings (applied by run.mjs to every row unless listed in that row's own `allowGlobalForbid`): 'could be read from the corpus', 'failure', 'Failed to load', 'requires the desktop runtime', 'undefined', 'NaN', '[object Object]', and 'Loading' still present after the row's wait budget.",
   "rows": [
     {
       "id": "landing-render",
@@ -28,7 +28,7 @@
       "steps": [],
       "marker": "Campaign",
       "expect": ["Choose a local Drive-synced folder under ⚙ Settings → Google Drive to enable the Campaign Manager."],
-      "notes": "computeCampaignManagerAccessGate(isGoogleDriveConfigured()): on a fresh profile with no Drive folder configured, the Campaign Manager banner is disabled and shows this exact hint (campaignManagerAccessGate.ts)."
+      "notes": "computeCampaignManagerAccessGate(isGoogleDriveConfigured()): on a fresh profile with no Drive folder configured, the Campaign Manager banner is disabled and shows this exact hint (campaignManagerAccessGate.ts). This row is only meaningful on a profile where Drive is genuinely unconfigured -- as of this cycle, settings-tab-google-drive-save (now real, needed by every campaign-*/dm-toolkit-*/encounter-builder-* row) genuinely configures Drive via saveGoogleDriveConfig(), which persists in this profile's real localStorage across the whole run and across cycles on a shared, non-reset dev profile. Once any such row has ever run against this profile, this row's own disabled-state assertion no longer holds and it will read red -- not a regression in this row's own logic, but an inherent, expected conflict between asserting the pre-configuration state and exercising the real post-configuration flows on the same persistent storage. A clean read of this row needs a Drive-unconfigured profile (e.g. --only this row alone on a profile that has never run a Drive-save row, or clearing localStorage's google-drive-config key by hand first)."
     },
 
     {
@@ -116,6 +116,24 @@
       "marker": "Corpus Ingest Diagnostic",
       "expect": ["Corpus Ingest Diagnostic"],
       "notes": "Esc closes the modal (SettingsModal's own keydown handler) and lands back on the landing screen underneath it."
+    },
+    {
+      "id": "settings-tab-google-drive-save",
+      "screen": "settings",
+      "steps": [
+        { "op": "click", "target": "⚙" },
+        { "op": "click", "target": "Google Drive" },
+        { "op": "click", "target": "you@example.com" },
+        { "op": "type", "text": "ui-smoke@example.com" },
+        { "op": "click", "target": "My Drive/TTRPG Campaigns" },
+        { "op": "type", "text": "/tmp/claude-1000/-home-ubuntu-workspace-repos-codex/6badc5b8-ae3b-4359-80c5-cd0b1598973e/scratchpad/ui-smoke/drive" },
+        { "op": "click", "target": "Save" },
+        { "op": "key", "key": "Escape" }
+      ],
+      "marker": "Corpus Ingest Diagnostic",
+      "expect": ["Corpus Ingest Diagnostic"],
+      "forbid": ["Choose a local Drive-synced folder"],
+      "notes": "Real GoogleDrivePanel Save: fills the account-email and folder-path fields (matched by their own `placeholder`, per uiProbe.ts's nameOf() chain, since neither carries an aria-label) and clicks Save, which calls saveGoogleDriveConfig() and is confirmed live to render 'Connected as ui-smoke@example.com -- campaigns will be created under ...'. Escape closes the modal back to landing; CharacterHubPage only recomputes computeCampaignManagerAccessGate() on ITS OWN next render, which the modal's close (a state change in App.tsx, re-rendering the whole subtree) reliably triggers -- confirmed live: the Campaign Manager banner's disabledHint ('Choose a local Drive-synced folder...') is gone immediately after this row, which is exactly the forbid check here. Every downstream row that needs Campaign Manager access (campaign-*, dm-toolkit-*, encounter-builder-*) depends on this row first. Safe to compose from ANY screen, not just landing: the ⚙ gear is a global affordance (present on every screen this harness visits) and Escape returns to whichever screen was underneath, unchanged -- but this row itself is only ever invoked fresh from landing (resetToLanding() runs before any row's own setup/steps), so 'Corpus Ingest Diagnostic' is a safe marker either way."
     },
 
     {
@@ -316,14 +334,18 @@
       "setup": ["create-character-render"],
       "steps": [
         { "op": "click", "target": "character-name" },
-        { "op": "type", "text": "UI Smoke Test Character" },
+        { "op": "type", "text": "Smoke Test PC" },
         { "op": "click", "target": "player-name" },
-        { "op": "type", "text": "UI Smoke Harness" }
+        { "op": "type", "text": "UI Smoke Harness" },
+        { "op": "select", "target": "Elf (CRB)", "text": "Elf (CRB)" },
+        { "op": "select", "target": "Wizard", "text": "Wizard" },
+        { "op": "click", "target": "Create character" },
+        { "op": "scroll", "ticks": 40, "direction": "up" },
+        { "op": "key", "key": "Shift" }
       ],
-      "marker": "Create a character",
-      "expect": ["UI Smoke Test Character", "UI Smoke Harness"],
-      "manual": "Ability-score-method selection and the 'Create character' submit were not exercised live under this cycle's read-only scope (CreateCharacterForm.tsx is another agent's territory this cycle) -- run manually, confirm the post-submit success text, then fold the confirmed marker/expect back into this row.",
-      "notes": "Fills the two plain-text identity fields DOM-addressable by id (see uiProbe.ts's id fallback); race/class/alignment/sex/age are <select>s exercised separately via selectsNonEmpty, not by simulated option choice (no 'select value' op in this harness)."
+      "marker": "Smoke Test PC is ready",
+      "expect": ["Smoke Test PC is ready", "Your character was computed and saved.", "ARMOR CLASS", "FORTITUDE SAVE"],
+      "notes": "Real submit, confirmed live 2026-09-17: fills the two plain-text identity fields (DOM-addressable by id), picks Race=Elf (CRB) and Class=Wizard via the new `select` op (Wizard so the caster-only sheet-action-add-spell row downstream has a real character to load), and clicks Create character. buildCreateCharacterOutcomeSurface's real headline/detail/highlight text renders ('<name> is ready' / 'Your character was computed and saved.' / uppercase ARMOR CLASS·MELEE ATTACK BONUS·BASE ATTACK BONUS·FORTITUDE SAVE·REFLEX SAVE·WILL SAVE tiles -- uppercase per the same CSS-textTransform-vs-innerText note as landing-render). The select targets are option-text substrings unique to each select's own concatenated option list (see the select op's own $comment entry), not the selects' ids. This mints a fresh saved 'Smoke Test PC' character on every run -- by design, so load-character-select-and-open and its downstream sheet-* rows have a character whose exact name this profile's many pre-existing fixture characters cannot collide with by EXACT match (this profile carries two unrelated 'Aldric Ironhand' saves already, which made that name ambiguous for a name-matched click). The trailing scroll-up + key are both load-bearing, not cosmetic: the outcome panel pushes 'Back' to a negative on-screen y, which broke the NEXT row's resetToLanding() (raw xdotool coordinate click against the probe's cached rects) until fixed -- confirmed live 2026-09-17 that a pure xdotool scroll does NOT itself trigger a fresh probe report (uiProbe.ts's MutationObserver fires on DOM mutation, not scroll/resize), so the probe file kept serving PRE-scroll rects to the next row no matter how many ticks were scrolled; a harmless DOM-command-channel `key` step right after the scroll forces `executeCommand`'s unconditional post-command `report()` (see uiProbe.ts's startCommandChannel), which re-reads getBoundingClientRect() against the NOW-scrolled page and writes the corrected rects other rows' resetToLanding() reads."
     },
     {
       "id": "create-character-back",
@@ -348,36 +370,44 @@
     {
       "id": "load-character-select-and-open",
       "screen": "load",
-      "setup": ["load-character-render"],
-      "steps": [{ "op": "wait", "ms": 500 }],
-      "marker": "Load",
-      "expect": [],
-      "manual": "Selecting a specific row requires a row-name target this cycle's read-only pass over LoadCharacterScreen.tsx did not confirm (row click handler is selectRow(row.characterId); the rendered row's accessible name was not traced to a specific field). Run manually, click the seeded character's row, click Load, confirm the sheet opens, then fold the confirmed steps back into this row.",
-      "notes": "See load-character-render for the always-present action bar; this row is the 'select + Open' half of the DoD item."
+      "setup": ["create-character-render", "create-character-fill-and-submit"],
+      "steps": [
+        { "op": "click", "target": "Back" },
+        { "op": "click", "target": "Load\nCharacter" },
+        { "op": "click", "target": "Smoke Test PC" },
+        { "op": "click", "target": "Load" }
+      ],
+      "marker": "☰ Menu",
+      "expect": ["☰ Menu"],
+      "notes": "Real row+Load, confirmed live 2026-09-17. The setup mints a fresh 'Smoke Test PC' (see create-character-fill-and-submit's own note on why not the seeded/legacy 'Aldric Ironhand' -- ambiguous by exact-name match on this profile), then this row's own steps back out to landing, open Load Character, click the row by its own displayLabel (matches via the prefix tier: CharacterListRow's button textContent is displayLabel followed by raceLabel/classSummary/savedAt with no separator, so an exact name is a startsWith prefix of it, same mechanism the existing landing-render rows already rely on), and Load into the sheet. Every sheet-* row below points its own `setup` at this row."
     },
     {
       "id": "load-character-delete-clone",
       "screen": "load",
-      "steps": [],
-      "marker": "Load",
-      "expect": [],
-      "manual": "Delete goes through window.confirm() (a native modal xdotool cannot address via the DOM probe) and Clone mutates the on-disk save set -- both degrade to manual per the harness brief's own guidance for window.confirm-gated actions.",
-      "notes": "Clone-then-delete-the-clone is the DoD's own churn-safe pattern; do it by hand each cycle rather than automating a native dialog."
+      "setup": ["create-character-render", "create-character-fill-and-submit", "load-character-select-and-open", "sheet-menu-clone"],
+      "steps": [
+        { "op": "click", "target": "✕" },
+        { "op": "click", "target": "Smoke Test PC (Copy)" },
+        { "op": "click", "target": "Delete" }
+      ],
+      "marker": "Deleted",
+      "expect": ["Deleted", "(Copy)"],
+      "notes": "Real delete, confirmed live 2026-09-17: LoadCharacterScreen's handleDelete() is gated by a plain `window.confirm(...)`, and in this Xvfb + WebKitGTK harness that call resolves `true` immediately with no interactive dialog ever appearing on screen (observed directly, repeatedly) -- so unlike the Tauri-plugin native file dialogs (manual-character-import/export, manual-portrait-upload), this one is not actually unaddressable, it is simply automatic. The clone-then-delete-the-clone churn-safe pattern is the DoD's own guidance; this row does both halves for real and leaves the profile exactly as it found it (net of the fresh non-clone 'Smoke Test PC' the setup chain also mints, same as every other row that depends on create-character-fill-and-submit)."
     },
 
     {
       "id": "sheet-open-for-tabs",
       "screen": "sheet",
+      "setup": ["create-character-render", "create-character-fill-and-submit", "load-character-select-and-open"],
       "steps": [],
       "marker": "☰ Menu",
-      "expect": [],
-      "manual": "Reaching the sheet depends on load-character-select-and-open, which is itself manual this cycle (see its own note). Once that row is confirmed, point every sheet-* row's `setup` at it instead of leaving this placeholder.",
-      "notes": "Placeholder anchor row: every sheet-tab-* / sheet-action-* row below declares `setup: [\"sheet-open-for-tabs\"]` so wiring the real navigation once fixes all of them."
+      "expect": ["☰ Menu"],
+      "notes": "Real anchor row now that load-character-select-and-open is confirmed live: every sheet-tab-* / sheet-action-* row below declares `setup: [\"sheet-open-for-tabs\"]`, so this one row reaching the sheet for real (loading the fresh caster 'Smoke Test PC') is what makes all of them real."
     },
     {
       "id": "sheet-tab-weapons",
       "screen": "sheet",
-      "setup": ["sheet-open-for-tabs"],
+      "setup": ["create-character-render", "create-character-fill-and-submit", "load-character-select-and-open"],
       "steps": [{ "op": "click", "target": "Weapons" }],
       "marker": "Add Weapon",
       "expect": ["Add Weapon"],
@@ -386,16 +416,16 @@
     {
       "id": "sheet-tab-defense",
       "screen": "sheet",
-      "setup": ["sheet-open-for-tabs"],
+      "setup": ["create-character-render", "create-character-fill-and-submit", "load-character-select-and-open"],
       "steps": [{ "op": "click", "target": "Defense" }],
-      "marker": "Damage Reduction",
-      "expect": ["Damage Reduction"],
-      "notes": "SHEET_TABS[1]. Damage/Heal HP-adjust controls also live on this tab (see sheet-action-hp-adjust)."
+      "marker": "HIT POINTS",
+      "expect": ["HIT POINTS", "EQUIPMENT EFFECTS", "SAVING THROWS"],
+      "notes": "SHEET_TABS[1]. Damage/Heal HP-adjust controls also live on this tab (see sheet-action-hp-adjust). Marker changed from 'Damage Reduction' to 'HIT POINTS' (uppercase per the section heading's own CSS text-transform, same innerText-vs-source-case note as landing-render), confirmed live 2026-09-17: this row now actually reaches the Defense tab (previously cascaded red from sheet-open-for-tabs being manual), and the 'Damage Reduction' section is honest-empty -- it does not render at all -- for a character with no DR source, which every character this row can now load is (the freshly-created 'Smoke Test PC'). 'HIT POINTS'/'EQUIPMENT EFFECTS'/'SAVING THROWS' are unconditional DefenseTab content."
     },
     {
       "id": "sheet-tab-gear",
       "screen": "sheet",
-      "setup": ["sheet-open-for-tabs"],
+      "setup": ["create-character-render", "create-character-fill-and-submit", "load-character-select-and-open"],
       "steps": [{ "op": "click", "target": "Gear" }],
       "marker": "Add Armor",
       "expect": ["Add Armor", "Add Gear"],
@@ -404,7 +434,7 @@
     {
       "id": "sheet-tab-spells",
       "screen": "sheet",
-      "setup": ["sheet-open-for-tabs"],
+      "setup": ["create-character-render", "create-character-fill-and-submit", "load-character-select-and-open"],
       "steps": [{ "op": "click", "target": "Spells" }],
       "marker": "Spells",
       "expect": ["Spells"],
@@ -413,7 +443,7 @@
     {
       "id": "sheet-tab-pets",
       "screen": "sheet",
-      "setup": ["sheet-open-for-tabs"],
+      "setup": ["create-character-render", "create-character-fill-and-submit", "load-character-select-and-open"],
       "steps": [{ "op": "click", "target": "Pets" }],
       "marker": "Pets",
       "expect": ["Pets"],
@@ -422,7 +452,7 @@
     {
       "id": "sheet-tab-feats",
       "screen": "sheet",
-      "setup": ["sheet-open-for-tabs"],
+      "setup": ["create-character-render", "create-character-fill-and-submit", "load-character-select-and-open"],
       "steps": [{ "op": "click", "target": "Feats" }],
       "marker": "Add Feat",
       "expect": ["Add Feat"],
@@ -431,7 +461,7 @@
     {
       "id": "sheet-tab-actions",
       "screen": "sheet",
-      "setup": ["sheet-open-for-tabs"],
+      "setup": ["create-character-render", "create-character-fill-and-submit", "load-character-select-and-open"],
       "steps": [{ "op": "click", "target": "Actions" }],
       "marker": "Actions",
       "expect": ["Actions"],
@@ -440,19 +470,19 @@
     {
       "id": "sheet-action-add-armor-gear-picker",
       "screen": "sheet",
-      "setup": ["sheet-open-for-tabs", "sheet-tab-gear"],
+      "setup": ["create-character-render", "create-character-fill-and-submit", "load-character-select-and-open", "sheet-tab-gear"],
       "steps": [
         { "op": "click", "target": "Add Armor" },
         { "op": "key", "key": "Escape" }
       ],
       "marker": "Add Armor",
       "expect": ["Add Armor"],
-      "notes": "ItemPickerModal (role=dialog, h2 title = the kind's own title, here 'Add Armor'; portals to document.body, see uiProbe.ts) opened via the Gear tab's Add Armor button (dispatch table in CharacterSheet.tsx also backs Add Gear/Add Spell/Add Feat through the same modal), then closed with Escape."
+      "notes": "ItemPickerModal (role=dialog, h2 title = the kind's own title, here 'Add Armor'; portals to document.body, see uiProbe.ts) opened via the Gear tab's Add Armor button (dispatch table in CharacterSheet.tsx also backs Add Gear/Add Spell/Add Feat through the same modal), then closed with Escape. This row is now reachable for the first time (previously cascaded red from sheet-open-for-tabs being manual) and, unlike sheet-action-add-feat's identical click-then-Escape shape (confirmed green live 2026-09-17), consistently reproduces red on THIS specific catalog: the 'key: Escape' command's own ack times out (5000ms) after Add Armor's picker opens, on every one of 3 separate fresh-launch attempts this cycle -- app defect, not a spec/harness wiring issue (steps unchanged from the pre-existing spec; only `setup` was rewired). Escalated live 2026-09-17: a direct 30-SECOND wait for the Escape ack (well past any plausible IPC/render slowness) STILL timed out, and a screenshot taken right after showed the Gear tab rendered normally with no dialog open at all -- this is not the modal being merely slow, the whole DOM command channel's poll loop (uiProbe.ts's self-rescheduling setTimeout chain) appears to stop entirely after opening this specific catalog, most likely a main-thread-blocking render/layout cost specific to the armor item list. In a natural sequential run (not isolated --only), this cascades: every row after it in the SAME app session also reports 'could not reach the landing screen' until the app is relaunched (confirmed live: sheet-action-level-up-dialog, sheet-action-skill-allocation-dialog and sheet-action-hp-adjust all cascaded BLOCKED immediately after this row's own failure in one continuous run). Left red per this cycle's own brief rather than softened; a real fix likely needs the armor catalog's own render path profiled, not a harness timeout increase (30s already exceeded)."
     },
     {
       "id": "sheet-action-add-feat",
       "screen": "sheet",
-      "setup": ["sheet-open-for-tabs", "sheet-tab-feats"],
+      "setup": ["create-character-render", "create-character-fill-and-submit", "load-character-select-and-open", "sheet-tab-feats"],
       "steps": [
         { "op": "click", "target": "Add Feat" },
         { "op": "key", "key": "Escape" }
@@ -464,32 +494,28 @@
     {
       "id": "sheet-action-add-spell",
       "screen": "sheet",
-      "setup": ["sheet-open-for-tabs", "sheet-tab-spells"],
+      "setup": ["create-character-render", "create-character-fill-and-submit", "load-character-select-and-open", "sheet-tab-spells"],
       "steps": [
         { "op": "click", "target": "Add Spell" },
         { "op": "key", "key": "Escape" }
       ],
       "marker": "Add Spell",
       "expect": ["Add Spell"],
-      "manual": "Only reachable when the seeded/loaded character is a caster the 'Add Spell' affordance is offered for (addSpellAffordanceModel.ts); confirm the seed character qualifies before trusting this unattended.",
-      "notes": "Same ItemPickerModal, spell-catalog mode; dialog h2 title is 'Add Spell'."
+      "notes": "Same ItemPickerModal, spell-catalog mode; dialog h2 title is 'Add Spell'. Real row, confirmed live 2026-09-17: sheet-open-for-tabs now loads the fresh 'Smoke Test PC' (Elf Wizard 1, created by create-character-fill-and-submit) -- resolveAddSpellAffordance offers 'Add Spell' for a Wizard (listIngested/classNotInCorpus both resolve to Offered), unlike this profile's Human-Fighter seed/legacy characters, which addSpellAffordanceModel.ts would withhold it for."
     },
     {
       "id": "sheet-action-level-up-dialog",
       "screen": "sheet",
-      "setup": ["sheet-open-for-tabs"],
-      "steps": [
-        { "op": "click", "target": "Level up" },
-        { "op": "key", "key": "Escape" }
-      ],
+      "setup": ["create-character-render", "create-character-fill-and-submit", "load-character-select-and-open"],
+      "steps": [{ "op": "click", "target": "+" }],
       "marker": "Level up",
       "expect": ["Level up"],
-      "notes": "LevelUpDialog (role=dialog, aria-label + h2 both 'Level up'; portals to document.body) opened via the round accent button beside the Level stat tile."
+      "notes": "LevelUpDialog (role=dialog, aria-label + h2 both 'Level up'; portals to document.body) opened via the round accent button beside the Level stat tile. That button's own accessible name is its icon glyph '+' (no aria-label of its own), not 'Level up' as originally guessed -- confirmed live 2026-09-17 (this row previously always cascaded red from sheet-open-for-tabs being manual, so the guess was never exercised). Deliberately does NOT close the dialog with a trailing Escape (unlike sheet-action-add-armor-gear-picker/add-feat/add-spell, whose marker text is ALSO the name of the still-present triggering button, so it survives closing): 'Level up' appears nowhere else on the sheet once the dialog closes, so asserting it must happen while still open. resetToLanding()'s own Escape-first dialog handling (confirmed to cover LevelUpDialog, see its own comment) closes it for whatever row runs next."
     },
     {
       "id": "sheet-action-skill-allocation-dialog",
       "screen": "sheet",
-      "setup": ["sheet-open-for-tabs"],
+      "setup": ["create-character-render", "create-character-fill-and-submit", "load-character-select-and-open"],
       "steps": [
         { "op": "click", "target": "Manage skill allocation" },
         { "op": "key", "key": "Escape" }
@@ -501,7 +527,7 @@
     {
       "id": "sheet-action-hp-adjust",
       "screen": "sheet",
-      "setup": ["sheet-open-for-tabs", "sheet-tab-defense"],
+      "setup": ["create-character-render", "create-character-fill-and-submit", "load-character-select-and-open", "sheet-tab-defense"],
       "steps": [
         { "op": "click", "target": "amount" },
         { "op": "type", "text": "1" },
@@ -510,14 +536,14 @@
         { "op": "type", "text": "1" },
         { "op": "click", "target": "Heal" }
       ],
-      "marker": "Hit Points",
-      "expect": ["Hit Points", "Nonlethal"],
-      "notes": "DurabilityPanel lives inside DefenseTab. Both buttons are disabled until the 'amount' input holds a positive number, so a bare click (no type step first) would silently no-op -- this row damages then heals the same amount back so a repeated unattended run is net-zero on HP."
+      "marker": "HIT POINTS",
+      "expect": ["HIT POINTS", "NONLETHAL"],
+      "notes": "DurabilityPanel lives inside DefenseTab. Both buttons are disabled until the 'amount' input holds a positive number, so a bare click (no type step first) would silently no-op -- this row damages then heals the same amount back so a repeated unattended run is net-zero on HP. Marker/expect uppercased (CSS text-transform vs innerText, same note as sheet-tab-defense) -- confirmed live 2026-09-17."
     },
     {
       "id": "sheet-action-money-adjust",
       "screen": "sheet",
-      "setup": ["sheet-open-for-tabs", "sheet-tab-gear"],
+      "setup": ["create-character-render", "create-character-fill-and-submit", "load-character-select-and-open", "sheet-tab-gear"],
       "steps": [
         { "op": "click", "target": "gp amount" },
         { "op": "type", "text": "1" },
@@ -526,24 +552,24 @@
         { "op": "type", "text": "1" },
         { "op": "click", "target": "Spend" }
       ],
-      "marker": "Money",
-      "expect": ["Money", "GP"],
-      "notes": "MoneyPanel lives inside the Gear tab, not a standalone tab of its own. Same disabled-until-typed constraint as HP; this row adds then spends the same 1gp back for a net-zero unattended run. The Gear tab also has its own unrelated 'Add' buttons (Add Armor/Add Gear) -- MoneyPanel's plain 'Add' is only unambiguous while no ItemPickerModal is open, which sheet-action-add-armor-gear-picker's own Escape guarantees by the time this row's reset-to-landing/setup chain re-runs it independently."
+      "marker": "MONEY",
+      "expect": ["MONEY", "GP"],
+      "notes": "MoneyPanel lives inside the Gear tab, not a standalone tab of its own. Same disabled-until-typed constraint as HP; this row adds then spends the same 1gp back for a net-zero unattended run. The Gear tab also has its own unrelated 'Add' buttons (Add Armor/Add Gear) -- MoneyPanel's plain 'Add' is only unambiguous while no ItemPickerModal is open, which sheet-action-add-armor-gear-picker's own Escape guarantees by the time this row's reset-to-landing/setup chain re-runs it independently. Marker/expect uppercased ('MONEY' not 'Money') -- same CSS text-transform-vs-innerText note as sheet-tab-defense; confirmed live 2026-09-17."
     },
     {
       "id": "sheet-action-trait-add",
       "screen": "sheet",
-      "setup": ["sheet-open-for-tabs", "sheet-tab-actions"],
+      "setup": ["create-character-render", "create-character-fill-and-submit", "load-character-select-and-open", "sheet-tab-feats"],
       "steps": [],
-      "marker": "Add a trait…",
-      "expect": [],
+      "marker": "TRAITS",
+      "expect": ["TRAITS"],
       "selectsNonEmpty": ["Trait to add"],
-      "notes": "'Trait to add' select plus an 'Add' confirm button. Only rendered when `available.length > 0`, i.e. the character has an un-taken trait remaining -- honest-empty otherwise."
+      "notes": "'Trait to add' select (aria-label confirmed exact live 2026-09-17, 54 options) plus an 'Add' confirm button, inside TraitsSection -- which CharacterSheet.tsx renders at the END of FeatsTab, not ActionsTab as originally guessed (setup now points at sheet-tab-feats, not sheet-tab-actions; confirmed live by reading the source directly after the original guess produced no 'Add a trait…' text on the Actions tab). Marker changed from the select's own default-option text 'Add a trait…' (a <select>'s option text is not reliable innerText content across browsers/webviews) to the section's own always-present heading, rendered uppercase 'TRAITS' via CSS text-transform (same innerText-vs-source-case note as landing-render). Only rendered when `available.length > 0`, i.e. the character has an un-taken trait remaining -- true for the freshly-created 'Smoke Test PC', which starts with none of the 53 ultimate_campaign traits taken."
     },
     {
       "id": "sheet-menu-recompute",
       "screen": "sheet",
-      "setup": ["sheet-open-for-tabs"],
+      "setup": ["create-character-render", "create-character-fill-and-submit", "load-character-select-and-open"],
       "steps": [
         { "op": "click", "target": "☰ Menu" },
         { "op": "click", "target": "Recompute" }
@@ -555,30 +581,28 @@
     {
       "id": "sheet-menu-clone",
       "screen": "sheet",
-      "setup": ["sheet-open-for-tabs"],
+      "setup": ["create-character-render", "create-character-fill-and-submit", "load-character-select-and-open"],
       "steps": [
         { "op": "click", "target": "☰ Menu" },
         { "op": "click", "target": "Clone" }
       ],
-      "marker": "Cloning…",
-      "expect": [],
-      "manual": "Clone mutates the on-disk save set (produces a new saved character each run) -- confirm success and then delete the clone by hand (see load-character-delete-clone) rather than letting an unattended run accumulate clones.",
-      "notes": "Top menu bar 'Clone' item; onCloned triggers CharacterHubPage's reload()."
+      "marker": "Cloned as",
+      "expect": ["Cloned as", "(Copy)"],
+      "notes": "Top menu bar 'Clone' item; onCloned triggers CharacterHubPage's reload(). Real click, confirmed live 2026-09-17: the status line reads exactly `Cloned as \"Smoke Test PC (Copy)\".` -- load-character-delete-clone (setup: [..., \"sheet-menu-clone\"]) deletes the clone this row produces right after, so an unattended repeated run does not accumulate clones (see that row's own note on why the delete half is safe to automate too)."
     },
     {
       "id": "sheet-menu-export",
       "screen": "sheet",
-      "setup": ["sheet-open-for-tabs"],
+      "setup": ["create-character-render", "create-character-fill-and-submit", "load-character-select-and-open"],
       "steps": [{ "op": "click", "target": "☰ Menu" }],
       "marker": "Export",
       "expect": ["Open", "Recompute", "Clone", "Export", "Print"],
-      "manual": "Actually selecting 'Export' opens a native OS save dialog (see the top-level manual-character-export row) -- this row only proves the menu itself renders all five items; do not click Export from here unattended.",
-      "notes": "menuItems dispatch table in CharacterSheet.tsx."
+      "notes": "menuItems dispatch table in CharacterSheet.tsx. This row only opens the menu and reads its five item labels -- it never clicks 'Export' itself (that opens a native OS save dialog via Tauri's dialog plugin, a genuinely unaddressable different mechanism from the window.confirm() calls this cycle confirmed DO auto-resolve -- see the top-level manual-character-export row), so it was never actually unsafe to run unattended; the prior 'manual' flag skipped it without ever exercising its own steps at all (run.mjs returns 'manual' before running a manual row's steps), which is exactly the mislabeled-for-lack-of-tracing case this cycle's brief called out. Confirmed live 2026-09-17."
     },
     {
       "id": "sheet-close",
       "screen": "sheet",
-      "setup": ["sheet-open-for-tabs"],
+      "setup": ["create-character-render", "create-character-fill-and-submit", "load-character-select-and-open"],
       "steps": [{ "op": "click", "target": "✕" }],
       "marker": "Load",
       "expect": ["Load"],
@@ -588,102 +612,159 @@
     {
       "id": "dm-toolkit-open-and-kind-tabs",
       "screen": "dm-toolkit",
-      "steps": [{ "op": "click", "target": "DM\nToolkit" }],
+      "setup": ["settings-tab-google-drive-save", "campaign-manager-list", "campaign-create"],
+      "steps": [
+        { "op": "click", "target": "Save" },
+        { "op": "click", "target": "Cancel" },
+        { "op": "click", "target": "DM\nToolkit" }
+      ],
       "marker": "World",
-      "expect": ["World", "Timeline", "Place", "Person", "Clue", "Scene", "Rule"],
-      "manual": "Requires at least one campaign to exist (DmToolkitScreen shows an empty-state message otherwise: 'Create one in Campaign Manager first.') -- run campaign-create first if the profile has none, then confirm the seven DM_RECORD_KINDS tab labels render together.",
-      "notes": "All seven record-kind tabs (World/Timeline/Place/Person/Clue/Scene/Rule) render simultaneously as a nav row, not one at a time."
+      "expect": ["World", "Timeline", "Place", "People", "Clue", "Scene", "Rule"],
+      "notes": "All seven record-kind tabs render simultaneously as a nav row, not one at a time. Real row, confirmed live 2026-09-17: the actual rendered tab labels are the plural DM_KIND_LABELS[...].tab strings ('Places', 'People', 'Clues', 'Scenes', 'Rules'), not the singular record-kind names this row's own `expect` list originally used -- most singular forms are true substrings of their plural rendering (Place/Places, Clue/Clues, Scene/Scenes, Rule/Rules), which `screenContains` matches, but 'Person'/'People' is an irregular plural (not a substring at all) and was fixed to 'People' after failing live. The setup chain configures Drive, lands on Campaign Manager, and creates 'Smoke Campaign' (via campaign-create, ending on its Edit screen); this row's own first two steps click that Edit screen's 'Save' (confirmed live to land on campaign-list, persisting the campaign) and then campaign-list's 'Cancel' back to landing, satisfying DmToolkitScreen's own 'at least one campaign must exist' gate before clicking DM Toolkit."
     },
     {
       "id": "dm-toolkit-create-record",
       "screen": "dm-toolkit",
-      "setup": ["dm-toolkit-open-and-kind-tabs"],
-      "steps": [{ "op": "click", "target": "+ New world" }],
-      "marker": "World",
-      "expect": ["World"],
-      "notes": "startCreate() for the active kind ('World' by default); button label is dynamic ('+ New ' + DM_KIND_LABELS[kind].singular.toLowerCase())."
+      "setup": ["settings-tab-google-drive-save", "campaign-manager-list", "campaign-create", "dm-toolkit-open-and-kind-tabs"],
+      "steps": [
+        { "op": "click", "target": "+ New world note" },
+        { "op": "type", "text": "Smoke Test World Record" },
+        { "op": "click", "target": "Save" }
+      ],
+      "marker": "Smoke Test World Record",
+      "expect": ["Smoke Test World Record"],
+      "notes": "startCreate() for the active kind ('World' by default); button label is dynamic ('+ New ' + DM_KIND_LABELS[kind].singular.toLowerCase()) and renders as '+ New world note' (DM_KIND_LABELS.World.singular is 'World note'), not '+ New world' as originally guessed. RecordForm's Title <input> carries `autoFocus` and no accessible name of its own, so the `type` step here needs no preceding `click` -- confirmed live 2026-09-17 the field is already focused the instant the form mounts. Real create, title shows in both the record list and the detail pane once saved."
     },
     {
       "id": "dm-toolkit-edit-record",
       "screen": "dm-toolkit",
-      "setup": ["dm-toolkit-open-and-kind-tabs"],
-      "steps": [],
-      "marker": "World",
-      "expect": [],
-      "manual": "Editing an existing record requires selecting a specific list row first, whose accessible name (the record's own title) this cycle's read-only pass did not enumerate against seeded data. Run manually and fold the confirmed row-select step back in.",
-      "notes": "Record detail pane is editable inline once selected (draftFromRecord/updateDmRecord)."
+      "setup": ["settings-tab-google-drive-save", "campaign-manager-list", "campaign-create", "dm-toolkit-open-and-kind-tabs", "dm-toolkit-create-record"],
+      "steps": [
+        { "op": "click", "target": "Smoke Test World Record" },
+        { "op": "click", "target": "Edit" },
+        { "op": "type", "text": "Smoke Test World Record Edited" },
+        { "op": "click", "target": "Save" }
+      ],
+      "marker": "Smoke Test World Record Edited",
+      "expect": ["Smoke Test World Record Edited"],
+      "notes": "Record detail pane is editable inline once selected (draftFromRecord/updateDmRecord). Real row, confirmed live 2026-09-17: the list row's own accessible name is its VisibilityBadge text plus title concatenated with no separator ('World noteGM onlySmoke Test World Record'), so it is only addressable via the `contains` match tier -- targeting the record's own title text (a real substring) finds it. RecordForm re-mounts (and re-autoFocuses its Title input) on entering edit mode, so the `type` step again needs no preceding `click`, same as dm-toolkit-create-record."
     },
     {
       "id": "dm-toolkit-delete-record",
       "screen": "dm-toolkit",
-      "setup": ["dm-toolkit-open-and-kind-tabs"],
-      "steps": [],
-      "marker": "World",
-      "expect": [],
-      "manual": "Same dependency as dm-toolkit-edit-record, plus deleteDmRecord's own confirmation UI was not traced this cycle.",
-      "notes": "deleteDmRecord in dmRecordModel.ts."
+      "setup": ["settings-tab-google-drive-save", "campaign-manager-list", "campaign-create", "dm-toolkit-open-and-kind-tabs"],
+      "steps": [
+        { "op": "click", "target": "+ New world note" },
+        { "op": "type", "text": "Smoke Test World Record To Delete" },
+        { "op": "click", "target": "Save" },
+        { "op": "click", "target": "Smoke Test World Record To Delete" },
+        { "op": "click", "target": "Delete" }
+      ],
+      "marker": "WORLD",
+      "expect": ["WORLD"],
+      "forbid": ["Smoke Test World Record To Delete"],
+      "notes": "deleteDmRecord in dmRecordModel.ts, gated by `window.confirm(...)`. Real row, confirmed live 2026-09-17: same as load-character-delete-clone's own note, `window.confirm()` resolves `true` immediately with no interactive dialog ever appearing in this Xvfb + WebKitGTK harness, so this is genuinely automatable, not merely tolerated. DmToolkitScreen always operates on `campaigns[0]` (the FIRST campaign, not the most recently created one), so every dm-toolkit-* row's separately-created 'Smoke Campaign' actually accumulates records in the SAME shared campaign across repeated cycles/reruns rather than each getting an isolated one (confirmed live: 'No world notes yet' failed here because an earlier cycle's leftover records were still present) -- this row creates and deletes a record under its OWN distinctly-titled name ('...To Delete', not dm-toolkit-create-record's plain title) and asserts that specific title's absence via `forbid`, which stays correct regardless of how many unrelated records other rows/cycles have left behind in the shared campaign."
     },
     {
       "id": "dm-toolkit-export",
       "screen": "dm-toolkit",
-      "setup": ["dm-toolkit-open-and-kind-tabs"],
-      "steps": [{ "op": "click", "target": "Export (GM)" }],
-      "marker": "Export",
-      "expect": [],
-      "manual": "exportConsole() drives runDmConsoleExport, whose completion surface (native save dialog vs. in-app confirmation) was not confirmed live this cycle.",
-      "notes": "Two export buttons exist -- GM ('Export (GM)') and player-facing ('Export (players)'); label text inferred from exportConsole('gm')/('players') call sites, not confirmed on screen."
+      "setup": ["settings-tab-google-drive-save", "campaign-manager-list", "campaign-create", "dm-toolkit-open-and-kind-tabs"],
+      "steps": [],
+      "marker": "Export GM copy",
+      "expect": ["Export GM copy", "Export player handout"],
+      "notes": "Two export buttons exist -- GM ('Export GM copy') and player-facing ('Export player handout'); confirmed live 2026-09-17 (both label texts differ from the originally-guessed 'Export (GM)'/'Export (players)'). This row only proves both buttons render -- it never clicks either: exportConsole() -> runDmConsoleExport -> a real Tauri `save()` native OS file dialog (dmConsoleExportFlow.ts), the same genuinely-unaddressable mechanism as manual-character-export, not the window.confirm() class of dialog this cycle confirmed auto-resolves. The row was previously flagged 'manual' without ever running its own steps at all (a manual row returns before setup/steps run) -- exactly the mislabeled-for-lack-of-tracing case, now traced and safe."
     },
 
     {
       "id": "encounter-builder-add-monster-and-rating",
       "screen": "dm-toolkit",
-      "setup": ["dm-toolkit-open-and-kind-tabs"],
       "steps": [
-        { "op": "click", "target": "Encounters" },
+        { "op": "click", "target": "New\nCharacter" },
+        { "op": "click", "target": "character-name" },
+        { "op": "type", "text": "Smoke Test PC" },
+        { "op": "click", "target": "player-name" },
+        { "op": "type", "text": "UI Smoke Harness" },
+        { "op": "select", "target": "Elf (CRB)", "text": "Elf (CRB)" },
+        { "op": "select", "target": "Wizard", "text": "Wizard" },
+        { "op": "click", "target": "Create character" },
+        { "op": "click", "target": "Back" },
+        { "op": "click", "target": "⚙" },
+        { "op": "click", "target": "Google Drive" },
+        { "op": "click", "target": "you@example.com" },
+        { "op": "type", "text": "ui-smoke@example.com" },
+        { "op": "click", "target": "My Drive/TTRPG Campaigns" },
+        { "op": "type", "text": "/tmp/claude-1000/-home-ubuntu-workspace-repos-codex/6badc5b8-ae3b-4359-80c5-cd0b1598973e/scratchpad/ui-smoke/drive" },
+        { "op": "click", "target": "Save" },
+        { "op": "key", "key": "Escape" },
+        { "op": "click", "target": "Campaign\nManager" },
+        { "op": "click", "target": "Create" },
+        { "op": "click", "target": "campaign-name" },
+        { "op": "type", "text": "Smoke Campaign" },
+        { "op": "click", "target": "player@example.com" },
+        { "op": "type", "text": "player1@example.com" },
+        { "op": "click", "target": "Create campaign" },
+        { "op": "click", "target": "Save" },
+        { "op": "click", "target": "Cancel" },
+        { "op": "click", "target": "DM\nToolkit" },
+        { "op": "click", "target": "Encounter builder" },
+        { "op": "click", "target": "Smoke Test PC" },
         { "op": "click", "target": "Search monsters" },
-        { "op": "type", "text": "Ankheg" }
+        { "op": "type", "text": "Ankheg" },
+        { "op": "click", "target": "AnkhegCR 3" },
+        { "op": "wait", "ms": 8000 }
       ],
-      "marker": "Rating",
-      "expect": ["Add at least one party member and one monster."],
-      "manual": "A numeric rating only appears once both a party member AND a monster are added (rate_encounter needs both); this cycle's read-only pass confirmed the empty-state copy but did not add a party member live. Run manually: add a saved character AND the Ankheg row, then confirm 'Rating' shows a CR/difficulty word plus a number, not the empty-state sentence.",
-      "notes": "EncounterBuilderScreen.tsx; opened via DmToolkitScreen's 'Encounters' quiet-button (setShowEncounters)."
+      "marker": "RATING",
+      "expect": ["ENCOUNTER LEVEL"],
+      "forbid": ["Add at least one party member and one monster."],
+      "notes": "EncounterBuilderScreen.tsx; opened via DmToolkitScreen's 'Encounters' quiet-button (setShowEncounters) -- actually labeled 'Encounter builder' on screen, not 'Encounters' as originally guessed. Fully self-contained (no `setup` reuse) rather than composed from other rows: this row crosses three unrelated screen families (character creation, Drive settings, campaign creation) in one linear path, and run.mjs's `setup` is flat/non-recursive (see the top-level $comment), so composing it from smaller rows would silently skip THEIR OWN ancestors -- a single explicit steps list here is the correct, verified-live-2026-09-17 shape rather than a fragile-looking shortcut. Adds the freshly-created 'Smoke Test PC' as a party member (exact-name match; monster search result's own accessible name is 'AnkhegCR 3', its name plus CR concatenated with no separator) and confirms the engine's real rating renders (uppercase 'RATING'/'ENCOUNTER LEVEL' headings, same CSS-transform note as landing-render) in place of the 'Add at least one party member and one monster.' empty state. The trailing `wait` is load-bearing: `rate_encounter`'s IPC round trip after adding the monster reproducibly took longer than waitForMarker's own 12s budget on 2 separate fresh-launch attempts this cycle (both reached the correct rated state seconds after the row had already reported red), consistent with this harness's own documented wildly-varying IPC latency."
     },
 
     {
       "id": "campaign-manager-list",
       "screen": "campaign-list",
+      "setup": ["settings-tab-google-drive-save"],
       "steps": [{ "op": "click", "target": "Campaign\nManager" }],
       "marker": "Load",
       "expect": ["Load", "Create", "Edit", "Cancel"],
-      "manual": "The Campaign Manager banner is gated disabled until a local Drive folder is configured (see landing-campaign-gate) -- confirm Google Drive settings are configured on the smoke profile first, or this click is a no-op on a fresh profile.",
-      "notes": "CampaignManagerScreen's always-present action bar."
+      "notes": "CampaignManagerScreen's always-present action bar. Real row, confirmed live 2026-09-17 now that settings-tab-google-drive-save configures a local Drive folder first, un-gating the Campaign Manager banner (see landing-campaign-gate)."
     },
     {
       "id": "campaign-create",
       "screen": "campaign-create",
-      "setup": ["campaign-manager-list"],
-      "steps": [{ "op": "click", "target": "Create" }],
-      "marker": "player@example.com",
-      "expect": ["player@example.com"],
-      "notes": "CreateCampaignScreen render; party-member email field matched by placeholder."
+      "setup": ["settings-tab-google-drive-save", "campaign-manager-list"],
+      "steps": [
+        { "op": "click", "target": "Create" },
+        { "op": "click", "target": "campaign-name" },
+        { "op": "type", "text": "Smoke Campaign" },
+        { "op": "click", "target": "player@example.com" },
+        { "op": "type", "text": "player1@example.com" },
+        { "op": "click", "target": "Create campaign" }
+      ],
+      "marker": "Edit campaign",
+      "expect": ["Edit campaign"],
+      "notes": "Real create, confirmed live 2026-09-17: fills the campaign name (by id, no accessible label of its own) and one member email (by placeholder, same shape as CreateCampaignScreen's own field), then submits. createCampaign()'s onCreated navigates straight to EditCampaignScreen ('Edit campaign' h2) for the new campaign -- reaching that screen IS the confirmation this row checks, since the submitted field VALUES ('Smoke Campaign', 'player1@example.com') are input values, not rendered text, and so don't appear in bodyText themselves (campaign-manager-list's own list-row text is where the created name becomes checkable prose -- see campaign-edit)."
     },
     {
       "id": "campaign-edit",
       "screen": "campaign-edit",
-      "setup": ["campaign-manager-list"],
-      "steps": [{ "op": "click", "target": "Edit" }],
-      "marker": "player@example.com",
-      "expect": ["player@example.com"],
-      "notes": "EditCampaignScreen shares the same party-member field shape as CreateCampaignScreen."
+      "setup": ["settings-tab-google-drive-save", "campaign-manager-list", "campaign-create"],
+      "steps": [{ "op": "click", "target": "Save" }],
+      "marker": "Campaign Manager",
+      "expect": ["Smoke Campaign"],
+      "notes": "EditCampaignScreen shares the same party-member field shape as CreateCampaignScreen. Real edit+save, confirmed live 2026-09-17: campaign-create's setup already lands here; this row's own click submits handleSave() (updateCampaign + writeCampaignLocalFolderArtifacts), whose onSaved() navigates back to Campaign Manager -- EditCampaignScreen's own transient 'Saved. Wrote ...' status text is set and then the component unmounts on the same tick (confirmed live: never actually observable via the probe), so the real, stable confirmation is the campaign-list screen's own row for 'Smoke Campaign' rendering afterward, which IS real textContent."
     },
     {
       "id": "campaign-sheet-tabs",
       "screen": "campaign-sheet",
-      "setup": ["campaign-manager-list"],
-      "steps": [{ "op": "click", "target": "Load" }],
+      "setup": ["settings-tab-google-drive-save", "campaign-manager-list", "campaign-create"],
+      "steps": [
+        { "op": "click", "target": "Save" },
+        { "op": "click", "target": "Smoke Campaign" },
+        { "op": "click", "target": "Load" }
+      ],
       "marker": "Party Resources",
       "expect": ["Party Resources", "Adventure Log", "Maps", "Wiki"],
-      "notes": "CampaignSheet's ASSET_TABS render together as a tab row over the shared markdown-asset panel."
+      "notes": "CampaignSheet's ASSET_TABS render together as a tab row over the shared markdown-asset panel. Real row, confirmed live 2026-09-17: 'Save' returns from the Edit screen to the Campaign Manager list (see campaign-edit's own note), where the freshly-created 'Smoke Campaign' row is selected by its own real list-row text and then Loaded."
     },
 
     {
