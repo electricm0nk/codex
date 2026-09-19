@@ -212,7 +212,7 @@ fn enrich_one(path: &Path, data_root: &Path) -> Outcome {
 
 fn main() {
     let data_root = pcgen_data_root();
-    let corpus_root = PathBuf::from("data/corpus");
+    let corpus_root = codex_ingest::repo_root().join("data/corpus");
     let files = find_class_json_files(&corpus_root);
 
     let mut total_enriched = 0u32;

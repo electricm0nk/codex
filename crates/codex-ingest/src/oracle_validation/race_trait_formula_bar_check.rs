@@ -236,9 +236,14 @@ mod race_trait_formula_bar_check_tests {
     use crate::pcgen_import::formula_reproduction_harness::FormulaEvalError;
 
     fn repo_root() -> std::path::PathBuf {
-        std::path::PathBuf::from(
-            std::env::var("CODEX_REPO_ROOT").unwrap_or_else(|_| ".".to_string()),
-        )
+        // SD-36 Epic A: this crate's manifest dir is no longer the repo
+        // root (`crates/codex-ingest`, two levels down), so a `"."`
+        // fallback silently pointed here instead of the real repo root
+        // once the converter moved out of `codex`. `crate::repo_root()` is
+        // the canonical resolver; `CODEX_REPO_ROOT` still wins when set.
+        std::env::var("CODEX_REPO_ROOT")
+            .map(std::path::PathBuf::from)
+            .unwrap_or_else(|_| crate::repo_root())
     }
 
     /// The real gate, run against the real committed fixture and the real

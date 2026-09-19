@@ -67,7 +67,7 @@ const CONFIG: EnrichConfig = EnrichConfig {
 
 fn main() {
     let data_root = shared::pcgen_data_root();
-    let corpus_root = PathBuf::from("data/corpus");
+    let corpus_root = codex_ingest::repo_root().join("data/corpus");
 
     let mut total_enriched = 0u32;
     let mut total_no_citation = 0u32;

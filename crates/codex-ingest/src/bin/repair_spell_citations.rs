@@ -237,7 +237,7 @@ fn repair_one(
 
 fn main() {
     let data_root = pcgen_data_root();
-    let corpus_root = PathBuf::from("data/corpus");
+    let corpus_root = codex_ingest::repo_root().join("data/corpus");
 
     let mut total_repaired = 0u32;
     let mut total_already_correct = 0u32;

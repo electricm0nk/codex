@@ -478,7 +478,7 @@ fn main() {
         return;
     }
 
-    let corpus_root = PathBuf::from("data/corpus");
+    let corpus_root = codex_ingest::repo_root().join("data/corpus");
     let books = [
         "core_rulebook",
         "advanced_players_guide",

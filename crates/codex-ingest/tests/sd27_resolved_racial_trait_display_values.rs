@@ -51,15 +51,26 @@ use codex::rules_core::corpus_loader::BookCorpusRoot;
 use codex::rules_core::feat_effects::display_value_deltas_from_feats;
 use codex_ingest::pcgen_import::pcgen_desc::leaked_pcgen_syntax;
 use codex::rules_core::race_resolver::{load_race_corpus, RaceCorpus};
-use std::path::Path;
 
 fn corpus() -> RaceCorpus {
+    // SD-36 Epic A: this crate's manifest dir is no longer the repo root
+    // (`crates/codex-ingest`, two levels down), so these bare relative
+    // paths need `codex_ingest::repo_root()` now. Leaked (test-only, lives
+    // for the process) so `BookCorpusRoot`'s `&'static Path` fields can
+    // reference them.
+    let root = codex_ingest::repo_root();
     let roots = [
-        BookCorpusRoot { book_id: "core_rulebook", dir: Path::new("data/corpus/core_rulebook") },
-        BookCorpusRoot { book_id: "beastiary", dir: Path::new("data/corpus/beastiary") },
+        BookCorpusRoot {
+            book_id: "core_rulebook",
+            dir: Box::leak(Box::new(root.join("data/corpus/core_rulebook"))).as_path(),
+        },
+        BookCorpusRoot {
+            book_id: "beastiary",
+            dir: Box::leak(Box::new(root.join("data/corpus/beastiary"))).as_path(),
+        },
         BookCorpusRoot {
             book_id: "advanced_race_guide",
-            dir: Path::new("data/corpus/advanced_race_guide"),
+            dir: Box::leak(Box::new(root.join("data/corpus/advanced_race_guide"))).as_path(),
         },
     ];
     let corpus = load_race_corpus(&roots);

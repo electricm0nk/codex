@@ -54,8 +54,6 @@ const TARGET_BOOKS: &[&str] = &[
     "ultimate_wilderness",
 ];
 
-use std::path::PathBuf;
-
 use codex_ingest::pcgen_import::cache_gen::enrich_raw_tokens_shared::{
     self as shared, EnrichConfig, Outcome,
 };
@@ -88,7 +86,7 @@ const CONFIG: EnrichConfig = EnrichConfig {
 
 fn main() {
     let data_root = shared::pcgen_data_root();
-    let corpus_root = PathBuf::from("data/corpus");
+    let corpus_root = codex_ingest::repo_root().join("data/corpus");
 
     let mut total_enriched = 0u32;
     let mut total_no_citation = 0u32;
@@ -141,7 +139,7 @@ mod tests {
     use serde_json::Value;
     use std::collections::BTreeSet;
     use std::fs;
-    use std::path::Path;
+    use std::path::{Path, PathBuf};
 
     /// A throwaway `PCGEN_CORPUS_ROOT`-shaped book directory plus a
     /// throwaway `data/corpus`-shaped spell JSON, both under

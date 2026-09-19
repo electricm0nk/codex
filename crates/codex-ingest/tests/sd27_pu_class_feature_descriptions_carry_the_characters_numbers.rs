@@ -78,8 +78,9 @@ use codex::rules_core::sheet_rule::{slug, ProseFamily};
 
 /// The same shared deterministic fixture every sibling PU pin uses, so all of
 /// them describe the same posture rather than several different ones.
-const FIXTURE: &str =
-    "tests/fixtures/rules_core/pf1_human_fighter_level1_ge06_deterministic_input.txt";
+fn fixture_path() -> PathBuf {
+    repo_root().join("tests/fixtures/rules_core/pf1_human_fighter_level1_ge06_deterministic_input.txt")
+}
 
 /// The four Unchained class tokens, and the corpus directory each one's records
 /// live in.
@@ -211,7 +212,8 @@ fn references_an_argument(raw: &str) -> bool {
 }
 
 fn fixture() -> CharacterInput {
-    let text = std::fs::read_to_string(FIXTURE).expect("shared deterministic fixture is readable");
+    let text =
+        std::fs::read_to_string(fixture_path()).expect("shared deterministic fixture is readable");
     load_character_input_fixture(&text)
         .character_input
         .expect("shared deterministic fixture loads")

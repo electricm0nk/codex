@@ -188,7 +188,7 @@ fn patch_one(path: &Path, data_root: &Path, wiring_index: &WiringClassIndex) -> 
 
 fn main() {
     let data_root = pcgen_data_root();
-    let corpus_root = PathBuf::from("data/corpus");
+    let corpus_root = codex_ingest::repo_root().join("data/corpus");
     let book = "pathfinder_unchained";
     let pu_book_dir = data_root.join("pathfinder/paizo/roleplaying_game/pathfinder_unchained");
     let wiring_index = WiringClassIndex::build(book, &pu_book_dir);

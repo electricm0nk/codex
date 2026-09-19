@@ -161,15 +161,15 @@ mod tests {
         );
     }
 
-    /// The one test here that deliberately loads a SINGLE book —
-    /// `a_race_resolves_from_its_own_book_alone_without_the_alternate_trait_book`
-    /// — needs a hand-built root, and that is a real property rather than a
-    /// stale scope. Its `arg()`/`b1()` siblings are gone: they existed only to
-    /// feed the hardcoded `all_books()` list that
-    /// [`app_loaded_books`] replaced.
-    fn crb() -> BookCorpusRoot<'static> {
-        BookCorpusRoot { book_id: "core_rulebook", dir: Box::leak(Box::new(codex_ingest::repo_root().join("data/corpus/core_rulebook"))).as_path() }
-    }
+    // The one test that deliberately loads a SINGLE book --
+    // `a_race_resolves_from_its_own_book_alone_without_the_alternate_trait_book`
+    // -- needs a hand-built root, and that is a real property rather than a
+    // stale scope. It stayed behind in `src/rules_core/race_resolver.rs`'s
+    // own in-crate test module rather than moving here (SD-36 Epic A,
+    // `7bb6f312e2`), so its `crb()` helper moved with it, not to this file.
+    // Its `arg()`/`b1()` siblings are gone entirely: they existed only to
+    // feed the hardcoded `all_books()` list that `app_loaded_books` (below)
+    // replaced.
 
     /// The books the shipped app really loads, read out of its own
     /// `RACE_CORPUS_BOOKS` declaration.

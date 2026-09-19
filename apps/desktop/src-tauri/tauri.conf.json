@@ -36,7 +36,7 @@
       "resources/corpus_fixtures/spell/": "resources/corpus_fixtures/spell/",
       "resources/corpus_fixtures/equipment/": "resources/corpus_fixtures/equipment/",
       "resources/corpus_fixtures/_settled/": "resources/corpus_fixtures/_settled/",
-      "../../../data/corpus/": "data/corpus/",
+      "resources/corpus_bundle/": "data/corpus/",
       "../../../data/sheet_rules/": "data/sheet_rules/"
     },
     "icon": [

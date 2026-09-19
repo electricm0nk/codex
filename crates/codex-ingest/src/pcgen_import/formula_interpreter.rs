@@ -1535,8 +1535,13 @@ mod tests {
     #[test]
     fn corpus_shape_coverage() {
         use std::collections::BTreeSet;
-        let repo_root = std::env::var("CODEX_REPO_ROOT").unwrap_or_else(|_| ".".to_string());
-        let corpus_dir = std::path::Path::new(&repo_root).join("data/corpus");
+        // SD-36 Epic A: `"."` used to equal the repo root here (this crate's
+        // manifest dir was the repo root before the converter moved into
+        // its own crate); `crate::repo_root()` is the post-move equivalent.
+        let repo_root = std::env::var("CODEX_REPO_ROOT")
+            .map(std::path::PathBuf::from)
+            .unwrap_or_else(|_| crate::repo_root());
+        let corpus_dir = repo_root.join("data/corpus");
         if !corpus_dir.is_dir() {
             eprintln!(
                 "corpus_shape_coverage: {corpus_dir:?} not found (CODEX_REPO_ROOT unset or wrong \
@@ -1575,8 +1580,9 @@ mod tests {
         let total = recognised + refused;
         eprintln!(
             "corpus_shape_coverage: {total} distinct BONUS/DEFINE formula-field candidates \
-             scanned across data/corpus ({repo_root}); {recognised} parse under this module's \
+             scanned across data/corpus ({}); {recognised} parse under this module's \
              grammar, {refused} REFUSED (this is the headline refusal count).\nSample refusals:\n  {}",
+            repo_root.display(),
             refusal_samples.join("\n  ")
         );
         // This is a coverage report, not a pass/fail gate on its own — the headline numbers go in

@@ -168,7 +168,7 @@ jobs:
             apps/desktop/src-tauri -> target
 
       - name: Run core crate tests
-        run: cargo test --locked
+        run: cargo test --locked --workspace
 
       - name: Run desktop shell tests
         working-directory: apps/desktop/src-tauri

@@ -1,7 +1,8 @@
 #!/usr/bin/env bash
 # ---------------------------------------------------------------------------
 # test_corpus_literal_sweep.sh — detection self-test for the
-# `corpus_literal_sweep` binary (src/bin/corpus_literal_sweep.rs).
+# `corpus_literal_sweep` binary
+# (crates/codex-ingest/src/bin/corpus_literal_sweep.rs).
 #
 # WHY THIS EXISTS
 # ---------------
@@ -32,8 +33,10 @@
 set -uo pipefail
 
 REPO="$(cd "$(dirname "${BASH_SOURCE[0]}")/../.." && pwd)"
-[ -f "$REPO/src/bin/corpus_literal_sweep.rs" ] || {
-  echo "FATAL: corpus_literal_sweep.rs not found under $REPO/src/bin" >&2; exit 2; }
+# SD-36 Epic A moved this bin into its own crate (git commit eac1dd8bc6):
+# crates/codex-ingest/src/bin/corpus_literal_sweep.rs.
+[ -f "$REPO/crates/codex-ingest/src/bin/corpus_literal_sweep.rs" ] || {
+  echo "FATAL: corpus_literal_sweep.rs not found under $REPO/crates/codex-ingest/src/bin" >&2; exit 2; }
 
 PASSED=0
 FAILED=0
@@ -46,10 +49,10 @@ BOOK="testbook"
 # Build once; every case then runs the same binary. `cargo run` would rebuild
 # nothing but still take the target-dir lock on each of the twelve calls.
 BIN="$REPO/.corpus-literal-sweep-selftest-bin"
-build_log=$(cd "$REPO" && cargo build --locked --quiet --bin corpus_literal_sweep 2>&1)
+build_log=$(cd "$REPO" && cargo build --locked --quiet -p codex-ingest --bin corpus_literal_sweep 2>&1)
 build_status=$?
 if [ "$build_status" -ne 0 ]; then
-  echo "FATAL: cargo build --bin corpus_literal_sweep failed (exit $build_status)" >&2
+  echo "FATAL: cargo build -p codex-ingest --bin corpus_literal_sweep failed (exit $build_status)" >&2
   echo "$build_log" >&2
   exit 2
 fi

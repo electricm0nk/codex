@@ -107,8 +107,8 @@ ONLY_STAGES=()
 # §4.1, 5 of 34) and a ~490-binary root-full build is exactly what tips a box
 # over — it must fail loudly before that build starts, not be discovered by
 # `ld terminated with signal 7 [Bus error]` partway through it.
-ALL_STAGES=(preflight-disk preflight-oracle oracle-pin-selftest producer-selftest doneness-selftest pi-redaction-selftest provenance-selftest site-status-frozen-check site-status-frozen-check-selftest site-dashboard-pi-gate build-public-status-selftest site-public-status-check site-public-status-pi-gate site-asset-stamp-check reachability-audit-selftest reachability-audit groundtruth-guard-selftest supersession-gate-selftest shape-coverage-standing-gate-selftest shape-coverage-standing-gate cycle-scope-gate-selftest missing-engine-tables denominator-gate figure-provenance pcgen-residue-gate token-coverage-selftest token-coverage pi-sweep declared-pi-audit audit-selftest reclaim-selftest driver-selftest corpus-sweep-selftest corpus-trap-audit-selftest root-lib root-full desktop corpus-sweep sheet-rules-check corpus-trap-audit supersession-gate frontend-install frontend-test frontend-typecheck clippy class-dump)
-QUICK_STAGES=(preflight-disk preflight-oracle oracle-pin-selftest producer-selftest doneness-selftest pi-redaction-selftest provenance-selftest site-status-frozen-check site-status-frozen-check-selftest site-dashboard-pi-gate build-public-status-selftest site-public-status-check site-public-status-pi-gate site-asset-stamp-check reachability-audit-selftest reachability-audit groundtruth-guard-selftest supersession-gate-selftest shape-coverage-standing-gate-selftest shape-coverage-standing-gate cycle-scope-gate-selftest missing-engine-tables denominator-gate figure-provenance pcgen-residue-gate token-coverage-selftest token-coverage pi-sweep declared-pi-audit audit-selftest reclaim-selftest driver-selftest corpus-sweep-selftest corpus-trap-audit-selftest root-lib frontend-install frontend-test frontend-typecheck class-dump)
+ALL_STAGES=(preflight-disk preflight-oracle oracle-pin-selftest producer-selftest doneness-selftest pi-redaction-selftest provenance-selftest site-status-frozen-check site-status-frozen-check-selftest site-dashboard-pi-gate build-public-status-selftest site-public-status-check site-public-status-pi-gate site-asset-stamp-check reachability-audit-selftest reachability-audit groundtruth-guard-selftest supersession-gate-selftest shape-coverage-standing-gate-selftest shape-coverage-standing-gate cycle-scope-gate-selftest missing-engine-tables denominator-gate figure-provenance pcgen-residue-gate crate-wall token-coverage-selftest token-coverage pi-sweep declared-pi-audit audit-selftest reclaim-selftest driver-selftest corpus-sweep-selftest corpus-trap-audit-selftest root-lib root-full ingest-full desktop corpus-sweep sheet-rules-check corpus-trap-audit supersession-gate frontend-install frontend-test frontend-typecheck clippy class-dump)
+QUICK_STAGES=(preflight-disk preflight-oracle oracle-pin-selftest producer-selftest doneness-selftest pi-redaction-selftest provenance-selftest site-status-frozen-check site-status-frozen-check-selftest site-dashboard-pi-gate build-public-status-selftest site-public-status-check site-public-status-pi-gate site-asset-stamp-check reachability-audit-selftest reachability-audit groundtruth-guard-selftest supersession-gate-selftest shape-coverage-standing-gate-selftest shape-coverage-standing-gate cycle-scope-gate-selftest missing-engine-tables denominator-gate figure-provenance pcgen-residue-gate crate-wall token-coverage-selftest token-coverage pi-sweep declared-pi-audit audit-selftest reclaim-selftest driver-selftest corpus-sweep-selftest corpus-trap-audit-selftest root-lib frontend-install frontend-test frontend-typecheck class-dump)
 
 usage() {
     sed -n '3,48p' "${BASH_SOURCE[0]}" | sed 's/^# \{0,1\}//'
@@ -1396,6 +1396,90 @@ run_pcgen_residue_gate() {
 }
 
 # ---------------------------------------------------------------------------
+# Stage: crate-wall (SD-36 Epic A / operator ruling D1)
+#
+# Cheap, no build: the mechanical proof that `codex-desktop` can never link
+# the PCGen converter/oracle crate (`crates/codex-ingest`) through its normal
+# dependency graph, only through `[dev-dependencies]`. Four independent
+# checks, each catching a different way the wall could quietly develop a
+# hole (a new normal dep, a reversed dep direction, a manifest edit under
+# the wrong section header, a runtime import the residue gate's own
+# `codex_ingest` pattern exists to catch).
+# ---------------------------------------------------------------------------
+
+run_crate_wall() {
+    stage_start "crate-wall — codex-ingest reaches codex-desktop only via [dev-dependencies]"
+    local log="$LOG_DIR/crate-wall.log"
+    : >"$log"
+    local ok=0
+
+    local tree_log="$LOG_DIR/crate-wall-tree.log"
+    ( cd "$TAURI_DIR" && exec cargo tree --locked -e normal,build --prefix none ) >"$tree_log" 2>&1
+    local tree_status=$?
+    local ingest_lines codex_lines
+    ingest_lines=$(count_matching '^codex-ingest ' "$tree_log")
+    codex_lines=$(count_matching '^codex ' "$tree_log")
+    {
+        printf 'cargo tree (normal,build) in apps/desktop/src-tauri: exit=%s codex-ingest-lines=%s codex-lines=%s\n' \
+            "$tree_status" "${ingest_lines:-NaN}" "${codex_lines:-NaN}"
+    } >>"$log"
+    if (( tree_status != 0 )); then
+        printf '    cargo tree failed (exit %s) — %s\n' "$tree_status" "$tree_log"
+        ok=1
+    elif [[ "${ingest_lines:-NaN}" != "0" ]]; then
+        printf "    codex-ingest appears %s time(s) in codex-desktop's normal+build graph — %s\n" \
+            "${ingest_lines:-NaN}" "$tree_log"
+        ok=1
+    elif [[ ! "${codex_lines:-}" =~ ^[1-9][0-9]*$ ]]; then
+        printf '    codex does not appear in the tree at all (%s lines) -- the tree was not actually read — %s\n' \
+            "${codex_lines:-NaN}" "$tree_log"
+        ok=1
+    fi
+
+    local meta_log="$LOG_DIR/crate-wall-metadata.log"
+    ( cd "$REPO_ROOT" && exec cargo metadata --locked --format-version 1 --no-deps ) 2>"$meta_log" \
+        | python3 -c '
+import json, sys
+m = json.load(sys.stdin)
+p = {x["name"]: x for x in m["packages"]}
+assert "codex" in p, "codex package missing from metadata"
+assert "codex-ingest" in p, "codex-ingest package missing from metadata"
+assert not any(d["name"] == "codex-ingest" for d in p["codex"]["dependencies"]), \
+    "codex depends on codex-ingest"
+assert any(d["name"] == "codex" for d in p["codex-ingest"]["dependencies"]), \
+    "codex-ingest does not depend on codex"
+' >>"$meta_log" 2>&1
+    local meta_status=$?
+    if (( meta_status != 0 )); then
+        printf '    cargo metadata dependency-direction check failed (exit %s) — %s\n' "$meta_status" "$meta_log"
+        ok=1
+    fi
+    printf 'cargo metadata dependency-direction check: exit=%s\n' "$meta_status" >>"$log"
+
+    local manifest="$TAURI_DIR/Cargo.toml"
+    if ! awk '/^\[/{s=$0} /codex-ingest/ && s!="[dev-dependencies]"{bad=1} END{exit bad}' "$manifest"; then
+        printf '    codex-ingest is named outside [dev-dependencies] in %s\n' "$manifest"
+        ok=1
+    fi
+    printf 'manifest section check on %s: %s\n' "$manifest" "$([[ $ok == 0 ]] && echo ok || echo checked)" >>"$log"
+
+    local gate_log="$LOG_DIR/crate-wall-residue.log"
+    ( cd "$REPO_ROOT" && exec python3 scripts/pcgen_residue_gate.py --check ) >"$gate_log" 2>&1
+    local gate_status=$?
+    if (( gate_status != 0 )); then
+        printf '    pcgen_residue_gate.py --check failed (exit %s) — %s\n' "$gate_status" "$gate_log"
+        ok=1
+    fi
+    cat "$gate_log" >>"$log"
+
+    if (( ok != 0 )); then
+        stage_fail crate-wall "see $log"
+        return
+    fi
+    stage_pass crate-wall "0 codex-ingest in normal+build graph, dep direction codex-ingest->codex confirmed, manifest + residue gate clean"
+}
+
+# ---------------------------------------------------------------------------
 # Stage: token-coverage-selftest
 #
 # Runs `python3 -m unittest scripts/tests/test_token_coverage.py` -- the
@@ -1580,7 +1664,8 @@ run_root_lib() {
 # ---------------------------------------------------------------------------
 
 expected_test_suites() {
-    find "$REPO_ROOT/tests" -maxdepth 1 -name '*.rs' -printf '%f\n' 2>/dev/null \
+    local dir="${1:-$REPO_ROOT/tests}"
+    find "$dir" -maxdepth 1 -name '*.rs' -printf '%f\n' 2>/dev/null \
         | sed 's/\.rs$//' | sort
 }
 
@@ -1629,6 +1714,54 @@ run_root_full() {
         return
     fi
     stage_pass root-full "$passed passed across $binaries suites, all $(expected_test_suites | grep -c .) tests/*.rs suites executed"
+}
+
+# ---------------------------------------------------------------------------
+# Stage: codex-ingest crate full sweep (SD-36 Epic A)
+#
+# The PCGen converter and oracle harness's own crate, walled off from `codex`
+# (operator ruling D1). Same shape as root-full and the same reason: a
+# workspace member with its own `tests/*.rs` auto-discovery needs the same
+# never-executed check root-full already has, not merely an aggregate floor.
+# `cargo test --locked --no-fail-fast -p codex-ingest` at the repo root
+# builds against the SAME workspace `Cargo.lock` as root-full/root-lib (one
+# build graph — this is why CI's `cargo test --locked` becomes `--locked
+# --workspace`, never a separate lockfile for this crate).
+# ---------------------------------------------------------------------------
+
+run_ingest_full() {
+    stage_start "ingest-full — cargo test --locked --no-fail-fast -p codex-ingest -j $JOBS  (repo root)"
+    local log="$LOG_DIR/ingest-full.log"
+    ( cd "$REPO_ROOT" && exec cargo test --locked --no-fail-fast -p codex-ingest -j "$JOBS" ) >"$log" 2>&1
+    local status=$?
+
+    local passed binaries
+    passed=$(count_passed "$log")
+    binaries=$(count_running "$log")
+
+    local missing missing_n
+    missing=$(comm -23 <(expected_test_suites "$REPO_ROOT/crates/codex-ingest/tests") <(executed_test_suites "$log"))
+    missing_n=0
+    [[ -n "$missing" ]] && missing_n=$(printf '%s\n' "$missing" | grep -c .)
+
+    if (( status != 0 )); then
+        stage_fail ingest-full "cargo exit $status; $passed passed across $binaries suites — $log"
+        return
+    fi
+
+    local ok=0
+    check_floor "ingest full tests" "$passed" "$BASELINE_INGEST_FULL_TESTS" BASELINE_INGEST_FULL_TESTS || ok=1
+    check_floor "ingest test binaries executed" "$binaries" "$BASELINE_INGEST_TEST_BINARIES" BASELINE_INGEST_TEST_BINARIES || ok=1
+    if (( missing_n > 0 )); then
+        printf '    %s codex-ingest tests/*.rs file(s) present but NEVER EXECUTED (no "Running" line in the log): %s\n' \
+            "$missing_n" "$(printf '%s' "$missing" | tr '\n' ' ')"
+        ok=1
+    fi
+    if (( ok != 0 )); then
+        stage_fail ingest-full "$passed passed across $binaries suites, $missing_n suite(s) never ran — $log"
+        return
+    fi
+    stage_pass ingest-full "$passed passed across $binaries suites, all $(expected_test_suites "$REPO_ROOT/crates/codex-ingest/tests" | grep -c .) tests/*.rs suites executed"
 }
 
 # ---------------------------------------------------------------------------
@@ -1783,18 +1916,20 @@ clippy_one_crate() {
 }
 
 run_clippy() {
-    stage_start "clippy — cargo clippy --locked --tests -j $JOBS  (BOTH crates)"
+    stage_start "clippy — cargo clippy --locked --tests -j $JOBS  (THREE crates)"
     local ok=0 summary=()
 
-    # Both crates, for the same reason the test stages are split: the root
-    # invocation does not reach apps/desktop/src-tauri at all.
-    local names=(root desktop)
-    local dirs=("$REPO_ROOT" "$TAURI_DIR")
-    local ceilings=("$BASELINE_CLIPPY_WARNINGS_ROOT" "$BASELINE_CLIPPY_WARNINGS_DESKTOP")
-    local vars=(BASELINE_CLIPPY_WARNINGS_ROOT BASELINE_CLIPPY_WARNINGS_DESKTOP)
+    # Three crates now: root `codex` never reaches apps/desktop/src-tauri
+    # (separate crate/lockfile) OR crates/codex-ingest (a workspace member,
+    # but the root package with no `default-members` means a bare
+    # `cargo clippy` here still lints `codex` alone, same as build/test).
+    local names=(root desktop ingest)
+    local dirs=("$REPO_ROOT" "$TAURI_DIR" "$REPO_ROOT/crates/codex-ingest")
+    local ceilings=("$BASELINE_CLIPPY_WARNINGS_ROOT" "$BASELINE_CLIPPY_WARNINGS_DESKTOP" "$BASELINE_CLIPPY_WARNINGS_INGEST")
+    local vars=(BASELINE_CLIPPY_WARNINGS_ROOT BASELINE_CLIPPY_WARNINGS_DESKTOP BASELINE_CLIPPY_WARNINGS_INGEST)
 
     local i label status errors warnings log
-    for i in 0 1; do
+    for i in 0 1 2; do
         label="${names[$i]}"
         read -r status errors warnings log <<<"$(clippy_one_crate "$label" "${dirs[$i]}")"
         actual "${vars[$i]}=$warnings"
@@ -1910,7 +2045,7 @@ run_declared_pi_audit() {
     stage_start "declared-pi-audit — corpus NAMEISPI:/DESCISPI: declarations vs. what shipped"
     local log="$LOG_DIR/declared-pi-audit.log"
 
-    ( cd "$REPO_ROOT" && exec cargo run --locked --quiet -j "$JOBS" --bin declared_pi_shipping_audit ) >"$log" 2>&1
+    ( cd "$REPO_ROOT" && exec cargo run --locked --quiet -j "$JOBS" -p codex-ingest --bin declared_pi_shipping_audit ) >"$log" 2>&1
     local status=$?
 
     if (( status != 0 )); then
@@ -2136,7 +2271,7 @@ run_corpus_sweep() {
     stage_start "corpus-sweep — cargo run --locked --bin corpus_literal_sweep  (repo root)"
     local log="$LOG_DIR/corpus-sweep.log"
 
-    ( cd "$REPO_ROOT" && exec cargo run --locked --quiet -j "$JOBS" --bin corpus_literal_sweep ) >"$log" 2>&1
+    ( cd "$REPO_ROOT" && exec cargo run --locked --quiet -j "$JOBS" -p codex-ingest --bin corpus_literal_sweep ) >"$log" 2>&1
     local status=$?
 
     local summary
@@ -2192,7 +2327,7 @@ run_corpus_sweep() {
 run_sheet_rule_convert_check() {
     stage_start "sheet-rules-check — cargo run --locked --bin sheet_rule_convert -- --check  (repo root)"
     local log="$LOG_DIR/sheet-rules-check.log"
-    ( cd "$REPO_ROOT" && exec cargo run --locked --quiet -j "$JOBS" --bin sheet_rule_convert -- --check ) >"$log" 2>&1
+    ( cd "$REPO_ROOT" && exec cargo run --locked --quiet -j "$JOBS" -p codex-ingest --bin sheet_rule_convert -- --check ) >"$log" 2>&1
     local status=$?
     if [[ "$status" -ne 0 ]]; then
         stage_fail sheet-rules-check "package stale, source-format literal, or a variable with no table (exit $status) — $log"
@@ -2295,7 +2430,7 @@ run_corpus_trap_audit() {
     local population
     population=$(find "$REPO_ROOT/data/corpus" -mindepth 3 -maxdepth 3 -type f -name '*.json' 2>/dev/null | wc -l | tr -d ' ')
 
-    ( cd "$REPO_ROOT" && exec timeout "${timeout_s}s" cargo run --locked --quiet -j "$JOBS" --bin v06_corpus_trap_report -- --audit --json ) >"$log" 2>&1
+    ( cd "$REPO_ROOT" && exec timeout "${timeout_s}s" cargo run --locked --quiet -j "$JOBS" -p codex-ingest --bin v06_corpus_trap_report -- --audit --json ) >"$log" 2>&1
     local status=$?
 
     if (( status == 124 )); then
@@ -2503,6 +2638,7 @@ for stage in "${SELECTED[@]}"; do
         denominator-gate)    run_denominator_gate ;;
         figure-provenance)   run_figure_provenance ;;
         pcgen-residue-gate)  run_pcgen_residue_gate ;;
+        crate-wall)          run_crate_wall ;;
         token-coverage-selftest) run_token_coverage_selftest ;;
         token-coverage)      run_token_coverage ;;
         pi-sweep)            run_pi_sweep ;;
@@ -2518,6 +2654,7 @@ for stage in "${SELECTED[@]}"; do
         supersession-gate)   run_supersession_gate ;;
         root-lib)            run_root_lib ;;
         root-full)           run_root_full ;;
+        ingest-full)         run_ingest_full ;;
         desktop)             run_desktop ;;
         frontend-install)    run_frontend_install ;;
         frontend-test)       run_frontend_test ;;

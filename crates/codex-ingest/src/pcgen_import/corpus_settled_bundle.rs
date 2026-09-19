@@ -241,14 +241,16 @@ mod tests {
     use super::*;
     use codex::rules_core::settled_corpus::{read_equipment_bundle, read_race_bundle, read_race_trait_bundle};
 
-    const CRB: &str = "data/corpus/core_rulebook";
+    fn crb() -> PathBuf {
+        crate::repo_root().join("data/corpus/core_rulebook")
+    }
 
     /// The generator's own traversal rule is the live loaders' rule: the real
     /// corpus contains both a `_parity/` directory and `LICENSE.json` files,
     /// and neither reaches a bundle key.
     #[test]
     fn the_generator_walks_exactly_the_files_the_live_loader_walks() {
-        let kind_dir = Path::new(CRB).join(EQUIPMENT_KIND);
+        let kind_dir = crb().join(EQUIPMENT_KIND);
         let files = find_json_files(&kind_dir);
         assert!(!files.is_empty(), "CRB states real equipment records");
         assert!(
@@ -273,7 +275,7 @@ mod tests {
     fn every_on_disk_equipment_bundle_matches_the_run_time_call_it_replaced() {
         let mut books = 0usize;
         let mut compared = 0usize;
-        for book_dir in codex::rules_core::settled_corpus::corpus_book_dirs(std::path::Path::new(codex::rules_core::settled_corpus::CORPUS_ROOT)) {
+        for book_dir in codex::rules_core::settled_corpus::corpus_book_dirs(&crate::repo_root().join(codex::rules_core::settled_corpus::CORPUS_ROOT)) {
             let Some(fresh) = equipment_bundle(&book_dir) else { continue };
             let on_disk = read_equipment_bundle(&book_dir)
                 .unwrap_or_else(|err| panic!("{}: {err}", book_dir.display()));
@@ -304,7 +306,7 @@ mod tests {
     fn every_on_disk_race_bundle_matches_the_run_time_call_it_replaced() {
         let mut chassis = 0usize;
         let mut traits = 0usize;
-        for book_dir in codex::rules_core::settled_corpus::corpus_book_dirs(std::path::Path::new(codex::rules_core::settled_corpus::CORPUS_ROOT)) {
+        for book_dir in codex::rules_core::settled_corpus::corpus_book_dirs(&crate::repo_root().join(codex::rules_core::settled_corpus::CORPUS_ROOT)) {
             if let Some(fresh) = race_bundle(&book_dir) {
                 let on_disk = read_race_bundle(&book_dir)
                     .unwrap_or_else(|err| panic!("{}: {err}", book_dir.display()));
@@ -331,7 +333,7 @@ mod tests {
     #[test]
     fn no_on_disk_bundle_has_drifted_from_the_corpus() {
         let mut drifted = Vec::new();
-        for book_dir in codex::rules_core::settled_corpus::corpus_book_dirs(std::path::Path::new(codex::rules_core::settled_corpus::CORPUS_ROOT)) {
+        for book_dir in codex::rules_core::settled_corpus::corpus_book_dirs(&crate::repo_root().join(codex::rules_core::settled_corpus::CORPUS_ROOT)) {
             drifted.extend(drifted_bundles_for_book(&book_dir));
         }
         assert!(drifted.is_empty(), "drifted bundles: {drifted:?}");

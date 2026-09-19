@@ -69,7 +69,7 @@ fn main() -> ExitCode {
     match mode {
         Some("corpus-wide") => {
             let Some(output) = output else { return fatal("--corpus-wide needs --output <path>") };
-            let repo_root = repo_root.unwrap_or_else(|| codex_ingest::repo_root());
+            let repo_root = repo_root.unwrap_or_else(codex_ingest::repo_root);
             let corpus_root = corpus_root.unwrap_or_else(|| repo_root.join(CORPUS_RECORDS_REL));
             run_corpus_wide(&repo_root, &corpus_root, &output)
         }

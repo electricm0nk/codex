@@ -190,9 +190,18 @@ fn placeholder_findings_are_ui_text_prose_or_the_one_documented_deferral() {
     // Bucket A: real UI-affordance text (HTML/JSX `placeholder="…"` /
     // `placeholder={…}` prop, its TS type declaration, or the CSS
     // `::placeholder` pseudo-class) — a legitimate product feature, not a
-    // stub marker.
-    let is_ui_placeholder_text =
-        |line: &str| line.contains("placeholder=") || line.contains("placeholder:") || line.contains("::placeholder");
+    // stub marker. Widened SD-36 (ui-smoke harness, 2026-09-17) to
+    // `uiProbe.ts`'s `nameOf()` reading the same real DOM `placeholder`
+    // attribute (`el.getAttribute('placeholder')` / the local it's bound
+    // to) as one more accessible-name source, same non-stub category as the
+    // JSX prop -- it reads the attribute, it does not fabricate one.
+    let is_ui_placeholder_text = |line: &str| {
+        line.contains("placeholder=")
+            || line.contains("placeholder:")
+            || line.contains("::placeholder")
+            || (line.starts_with("apps/desktop/src/testSupport/uiProbe.ts:")
+                && (line.contains("getAttribute('placeholder')") || line.contains("placeholder.trim()")))
+    };
 
     // Bucket B: the one genuine, documented, deferred finding (see module
     // doc comment). Matched by its distinctive literal markers so any
@@ -297,6 +306,24 @@ fn placeholder_findings_are_ui_text_prose_or_the_one_documented_deferral() {
     // (SD-36 D3): `apps/desktop/src-tauri/src/reach_gate.rs` is deleted, so
     // no hit can ever start with that path again.
 
+    // Bucket H (SD-36 ui-smoke harness, 2026-09-17): `spec.json`'s own
+    // `$comment` schema note and three rows' `notes` fields document the
+    // real DOM `placeholder` attribute the harness reads/avoids (e.g. "the
+    // account field's own `placeholder` attribute can NEVER appear in
+    // bodyText" -- explaining why a row's `marker` was reassigned AWAY from
+    // placeholder text, the opposite of fabricating one). JSON prose has no
+    // `//` comment syntax for Bucket C's filter to catch, so this is scoped
+    // the same way buckets D-F are: by path AND by each hit's own
+    // distinctive substring, so an unrelated future stub marker landing in
+    // this same file still fails.
+    let is_ui_smoke_spec_placeholder_prose = |line: &str| {
+        line.starts_with("apps/desktop/scripts/ui-smoke/spec.json:")
+            && (line.contains("trimmed textContent || aria-label || placeholder || title || id")
+                || line.contains("the account field's own `placeholder` attribute) can NEVER appear in bodyText")
+                || line.contains("matched by their own `placeholder`, per uiProbe.ts's nameOf() chain")
+                || line.contains("one member email (by placeholder, same shape as CreateCampaignScreen"))
+    };
+
     let unexplained: Vec<&String> = hits
         .iter()
         .filter(|line| {
@@ -306,6 +333,7 @@ fn placeholder_findings_are_ui_text_prose_or_the_one_documented_deferral() {
                 && !is_anti_fabrication_explanation_text(line)
                 && !is_pcgen_pxx_source_page_token(line)
                 && !is_reviewed_placeholder_shape_text(line)
+                && !is_ui_smoke_spec_placeholder_prose(line)
         })
         .collect();
 

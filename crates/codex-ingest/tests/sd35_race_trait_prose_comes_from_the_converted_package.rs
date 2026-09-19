@@ -27,7 +27,7 @@
 //! criterion's business.
 
 use std::collections::BTreeMap;
-use std::path::{Path, PathBuf};
+use std::path::PathBuf;
 
 use codex_ingest::pcgen_import::bonus_chain_reader;
 use codex_ingest::pcgen_import::pcgen_desc::{
@@ -41,7 +41,7 @@ use codex::rules_core::race_resolver::{load_race_corpus, RaceCorpus, RaceTraitRe
 /// Every book directory under `data/corpus/`, so the population is the shipped corpus and not a
 /// roster this file chose.
 fn corpus_roots() -> Vec<(String, PathBuf)> {
-    let mut roots: Vec<(String, PathBuf)> = std::fs::read_dir("data/corpus")
+    let mut roots: Vec<(String, PathBuf)> = std::fs::read_dir(codex_ingest::repo_root().join("data/corpus"))
         .expect("data/corpus is readable")
         .filter_map(Result::ok)
         .filter(|entry| entry.path().is_dir())
@@ -263,6 +263,6 @@ fn a_var_id_minted_from_a_name_addresses_the_converters_own_table() {
 /// The corpus directory this file reads is the one the converted package was built from.
 #[test]
 fn the_corpus_directory_exists() {
-    assert!(Path::new("data/corpus").is_dir());
-    assert!(Path::new("data/sheet_rules").is_dir());
+    assert!(codex_ingest::repo_root().join("data/corpus").is_dir());
+    assert!(codex_ingest::repo_root().join("data/sheet_rules").is_dir());
 }
