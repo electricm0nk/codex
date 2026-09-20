@@ -335,7 +335,7 @@ resolves through `~/.sdkman/candidates/java/current` to Temurin 25).
 | Retrospective written | awaiting | Epic D step 1 (workflow-instruction §11) |
 | Worktree sweep | awaiting | Epic D step 1 (workflow-instruction §11) |
 | Architecture docs updated | done | D1 (2026-09-20 full-set rewrite) |
-| Graphify run | done (graphify exit=1, receipt filed) | Step 3 receipt above; operator to decide retry-vs-proceed per script's own non-refusal policy |
+| Graphify run | done (graphify exit=0, final tree) | Retry against final tree failed identically (dedup-collapse guard, node delta -1); resolved via graphify's documented `update --force` flag — see the three graphify:update receipt blocks above (retry-fail, force-retry-fail via GRAPHIFY_FORCE=1, then success via `update --force`) |
 | PR open and merged | pending | Step 5/6 — PR to be opened; operator merges |
 
 ---
@@ -399,3 +399,59 @@ SD-35 record. POST-MERGE cleanup for the operator (nothing deleted here):
   updater feed) — never delete per standing convention.
 
 Nothing above was deleted; this is inventory only, for the operator to action after merge.
+
+- cycle_id: 2026-09-20T14:02:52Z (marker-A)
+  row_or_kind: graphify:update
+  bundle: SD-36
+  branch: c1d38d3c4ecf2c9b864ce730f70c63bada372acd
+  integration_target: develop
+  branch_tip: c1d38d3c
+  graphify_exit_code: 1
+  outcome: failed
+  wall_clock_seconds: 1423.5
+  log_path: graphify-out/.truth-up-run-2026-09-20T14:02:52Z.log
+  evidence_tier_before: (recorded by operator at receipt read time)
+  evidence_tier_after: (recorded by operator at receipt read time)
+  receipt_note: graphify exited 1; operator to decide retry-vs-proceed (see log)
+
+- cycle_id: 2026-09-20T14:26:00Z
+  row_or_kind: graphify:update (retry, final tree)
+  bundle: SD-36
+  branch: c1d38d3c4ecf2c9b864ce730f70c63bada372acd
+  integration_target: develop
+  branch_tip: c1d38d3c
+  command: /home/ubuntu/.local/bin/graphify cluster-only /home/ubuntu/workspace/repos/codex --budget 500000 --exclude node_modules,target,dist,build,.git,out,dist-ssr,.next,coverage
+  graphify_exit_code: 1
+  outcome: failed
+  wall_clock_seconds: 1423.5
+  log_path: graphify-out/.truth-up-run-2026-09-20T14:02:52Z.log
+  receipt_note: >
+    Identical failure on retry against the FINAL tree: dedup-collapse guard
+    refused to overwrite graph.json because the rebuild had 648327 nodes vs
+    existing 648328 (net -1). Also tried GRAPHIFY_FORCE=1 env var with
+    `cluster-only` directly (not honored by that subcommand -- same
+    refusal). Escalated per instructions to `graphify --help`, which
+    documents `update <path> --force` ("overwrite graph.json even if the
+    rebuild has fewer nodes ... use after refactors that delete code"),
+    exactly this bundle's situation (SD-36 removed dead/superseded test
+    code). Ran the documented command below instead.
+
+- cycle_id: 2026-09-20T14:47:32Z
+  row_or_kind: graphify:update (force, documented flag)
+  bundle: SD-36
+  branch: c1d38d3c4ecf2c9b864ce730f70c63bada372acd
+  integration_target: develop
+  branch_tip: c1d38d3c
+  command: /home/ubuntu/.local/bin/graphify update /home/ubuntu/workspace/repos/codex --force
+  graphify_exit_code: 0
+  outcome: success
+  result: "graphify-out/graph.json, graph.html, GRAPH_REPORT.md rewritten: 51852 nodes, 92977 edges, 2749 communities"
+  receipt_note: >
+    Used graphify's own documented `--force` flag on the `update` subcommand
+    (accepts a node-count shrink after refactors that delete code -- SD-36's
+    dead-test/superseded-code removal is exactly that case). Ran only
+    against the gitignored graphify-out/ output directory; graph.json was
+    not hand-edited. Node/edge counts differ from the `cluster-only` run's
+    648327/655946 because `update` performs a raw AST re-extraction+rebuild
+    rather than the prior semantic cluster-only pass; graph.json is
+    regenerated, gitignored corpus data, not a tracked artifact.
