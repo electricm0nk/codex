@@ -188,15 +188,78 @@ pub fn find_boundary_row(module: &str) -> NegControlRow {
         .1
 }
 
+/// Parses a `class:<class_id>:<level>` token into (class_id, level),
+/// mirroring `apply_class_level`'s own trailing-colon split
+/// (`src/rules_core/character_input.rs`) so the vacuity guards below check
+/// the LOADED character against the same rule the production parser uses,
+/// not a re-derived one.
+pub fn parse_class_colon_level(token: &str) -> (&str, u8) {
+    let (class_id, level_text) = token
+        .rsplit_once(':')
+        .unwrap_or_else(|| panic!("rows.rs: '{token}' is not a class:id:level token"));
+    let level: u8 = level_text
+        .parse()
+        .unwrap_or_else(|_| panic!("rows.rs: '{token}' has a non-numeric level"));
+    (class_id, level)
+}
+
+/// Parses every `class_level=class:<id>:<level>` line in a (possibly
+/// multi-line) substitution string, in order.
+pub fn parse_class_level_lines(text: &str) -> Vec<(String, u8)> {
+    text.lines()
+        .filter_map(|line| line.strip_prefix("class_level="))
+        .map(|token| {
+            let (class_id, level) = parse_class_colon_level(token);
+            (class_id.to_owned(), level)
+        })
+        .collect()
+}
+
 /// Expands to one `#[test] fn $fn_name()` performing the exact
 /// boundary-negative-control assert this shape always performed.
+///
+/// SD-36 Epic C2 vacuity-guard addendum (operator ruling 2026-09-20): a
+/// `fighter_does_not_gain_*`-style audit found `MULTICLASS_NEG_ROWS` rows
+/// whose `new_sub` silently no-op'd (a literal backslash-n instead of a
+/// real newline), so the substitution never happened and the negative
+/// control passed for the wrong reason. These asserts (added, none of the
+/// pre-existing ones changed) make that impossible: they prove the
+/// substitution actually fired and that the LOADED character carries the
+/// level the row claims, before the original assert runs.
 #[macro_export]
 macro_rules! sd18_boundary_neg_control_test {
     ($fn_name:ident, $module:expr, $fixture:expr) => {
         #[test]
         fn $fn_name() {
             let row = $crate::rows::find_boundary_row($module);
+            assert_eq!(
+                $fixture.matches(row.old_sub).count(),
+                1,
+                "{}: fixture must contain old_sub '{}' exactly once before substitution",
+                $module,
+                row.old_sub
+            );
             let modified = $fixture.replace(row.old_sub, row.new_sub);
+            assert_ne!(
+                modified, $fixture,
+                "{}: substituting '{}' -> '{}' must change the fixture",
+                $module, row.old_sub, row.new_sub
+            );
+            let loaded = $crate::common::load(&modified);
+            let (expect_class_id, expect_level) =
+                $crate::rows::parse_class_colon_level(row.new_sub);
+            assert!(
+                loaded
+                    .chosen
+                    .class_levels
+                    .iter()
+                    .any(|cl| cl.class_id == expect_class_id && cl.level == expect_level),
+                "{}: loaded character must have {} at level {} after substitution, got {:?}",
+                $module,
+                expect_class_id,
+                expect_level,
+                loaded.chosen.class_levels
+            );
             let computation = $crate::support::compute(&modified);
             assert!(
                 !computation.explanations.iter().any(|e| {
@@ -304,13 +367,68 @@ pub fn find_multiclass_row(module: &str) -> MulticlassNegControlRow {
         .1
 }
 
+/// SD-36 Epic C2 vacuity-guard addendum (operator ruling 2026-09-20, see
+/// `sd18_boundary_neg_control_test!`'s doc comment for the finding this
+/// answers): this is the shape the original 64-row defect lived in.
+/// Beyond proving the substitution fired, this macro additionally proves
+/// the mutated fixture has exactly two `class_level=` lines and that the
+/// LOADED character carries exactly two class entries matching the row's
+/// `new_sub` — the check that would have failed the original defect
+/// (a literal backslash-n collapses both lines into one, so this count
+/// comes out 1, not 2).
 #[macro_export]
 macro_rules! sd18_multiclass_neg_control_test {
     ($fn_name:ident, $module:expr, $fixture:expr) => {
         #[test]
         fn $fn_name() {
             let row = $crate::rows::find_multiclass_row($module);
+            assert_eq!(
+                $fixture.matches(row.old_sub).count(),
+                1,
+                "{}: fixture must contain old_sub '{}' exactly once before substitution",
+                $module,
+                row.old_sub
+            );
             let modified = $fixture.replace(row.old_sub, row.new_sub);
+            assert_ne!(
+                modified, $fixture,
+                "{}: substituting '{}' -> '{}' must change the fixture",
+                $module, row.old_sub, row.new_sub
+            );
+            let class_level_lines = modified
+                .lines()
+                .filter(|l| l.starts_with("class_level="))
+                .count();
+            assert_eq!(
+                class_level_lines, 2,
+                "{}: multiclass fixture must have exactly two class_level lines after \
+                 substitution, got {} in:\n{}",
+                $module, class_level_lines, modified
+            );
+            let loaded = $crate::common::load(&modified);
+            assert_eq!(
+                loaded.chosen.class_levels.len(),
+                2,
+                "{}: loaded character must have exactly two class entries after multiclass \
+                 substitution, got {:?}",
+                $module,
+                loaded.chosen.class_levels
+            );
+            for (expect_class_id, expect_level) in $crate::rows::parse_class_level_lines(row.new_sub) {
+                assert!(
+                    loaded
+                        .chosen
+                        .class_levels
+                        .iter()
+                        .any(|cl| cl.class_id == expect_class_id && cl.level == expect_level),
+                    "{}: loaded character must have {} at level {} after multiclass \
+                     substitution, got {:?}",
+                    $module,
+                    expect_class_id,
+                    expect_level,
+                    loaded.chosen.class_levels
+                );
+            }
             let computation = $crate::support::compute(&modified);
             assert!(
                 !computation.explanations.iter().any(|e| {

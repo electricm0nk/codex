@@ -497,6 +497,18 @@ assertion:
   bespoke" accounting (`docs/release/SD-36-consolidation/receipts.md`) for what this excluded and
   why. No test is ever deleted, merged, renamed, `#[ignore]`d, or made vacuous by this kind of pass;
   the emitted test list stays byte-identical.
+- **Vacuity guards.** Every fixture-mutating macro asserts the substitution happened and the loaded
+  character is what the row says — not only that the post-substitution computation's assertions
+  still pass. A negative control that mutates a fixture via `.replace(old_sub, new_sub)` can pass
+  for the wrong reason if the substitution silently no-ops or produces garbage (SD-36 Epic C2's own
+  `MULTICLASS_NEG_ROWS` sabotage-4 finding: a literal backslash-n instead of a real newline meant
+  `new_sub` never actually added the second `class_level=` line, so 64 rows passed vacuously). The
+  guard: before the replace, assert the fixture contains `old_sub` the expected number of times;
+  after, assert the fixture actually changed, and assert the LOADED character (not just the
+  computation's explanations) carries the class id/level the row's `new_sub` claims — see
+  `sd18_boundary_neg_control_test!`/`sd18_multiclass_neg_control_test!` in
+  `tests/sd18_widening/rows.rs` and `multiclass_negative_controls!` in
+  `tests/sd13_progression/rows.rs`.
 - **How to add a row.** Extract the row's fields (fixture, prefixes/exact-ids, message text,
   `.replace()` strings, whatever the macro's row syntax takes) mechanically from the existing
   test's own source — never hand-type or re-derive a value — and confirm the extracted fields
@@ -529,7 +541,12 @@ assertion:
   ```
   Full results for this repo's own C2.1/C2.2 pass:
   `docs/release/SD-36-consolidation/receipts.md`'s Epic C2.1/C2.2 evidence section and this
-  cycle's `baseline.md`.
+  cycle's `baseline.md`. Note (sabotage 4, the vacuity-guard follow-up): the first three sabotages
+  above all sit in per-class chassis magnitude formulas and never touch the multiclass gate, so
+  none of them could ever trip a `multiclass_*_is_not_promoted_by_this_slice` test — a defect
+  shaped like the multiclass gate itself (widening `supported_<class>_level` to wrongly recognize
+  a class inside a multiclass mix) needs its own sabotage, run against both the current and
+  pre-rewrite trees the same way, to prove that shape's sensitivity specifically.
 
 ## Path helpers for tests
 

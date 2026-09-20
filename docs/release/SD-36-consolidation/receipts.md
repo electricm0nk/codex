@@ -260,6 +260,79 @@ at the time that commit was made, and lands in the commit that follows this
 docs pass, not in `45ef7e2327`. Verified: `git show 45ef7e2327 --name-status
 | grep -c 'tests/sd18_widening\|tests/sd13_progression'` → `0`.
 
+### Vacuity guards + multiclass sabotage parity (2026-09-20 follow-up)
+
+An audit of the table-driven rewrite found that all 64 rows of
+`MULTICLASS_NEG_ROWS` (`tests/sd18_widening/rows.rs`) had been passing
+vacuously: `new_sub` held a literal backslash-n instead of a real newline, so
+`fixture.replace(row.old_sub, row.new_sub)` never added the second
+`class_level=` line, the character loaded with one garbage class, and both
+negative-control asserts passed for the wrong reason. The escaping had
+already been fixed by the time of this follow-up, but only 1 of the 64 rows
+had been sensitivity-checked, and none of the three sabotages above ever
+touched a multiclass test — a real gap in the safety net.
+
+**Guards added** (all additions, no pre-existing assert changed): in
+`tests/sd18_widening/rows.rs`, `sd18_boundary_neg_control_test!` and
+`sd18_multiclass_neg_control_test!` now assert the fixture contains
+`old_sub` exactly once before the substitution, that the substitution
+actually changed the fixture, and that the LOADED character (`tests/common`'s
+`load`, parsed via `src/rules_core/character_input.rs`'s own
+`apply_class_level` rule) carries the class id/level `new_sub` claims — for
+the multiclass macro, that the mutated fixture has exactly two
+`class_level=` lines and the loaded character has exactly two class entries
+matching `new_sub`. `tests/sd13_progression/rows.rs`'s
+`multiclass_negative_controls!` macro gets the identical guard (its
+`recognition_negative_controls!` macro does no substitution, so needs none).
+Two new helper fns (`parse_class_colon_level`, `parse_class_level_lines`)
+derive the expected class id/level by parsing the row's own `new_sub`/`$to`
+string, rather than widening every row by hand with a duplicate field.
+
+**Guard-bite proof**: re-introduced the original defect (`\\n` in place of a
+real newline) in `MULTICLASS_NEG_ROWS`'s `barbarian_level12` row —
+`multiclass_barbarian_level12_is_not_promoted_by_this_slice` now fails on
+`"barbarian_level12: multiclass fixture must have exactly two class_level
+lines after substitution, got 1"`. Separately mismatched one boundary row's
+`old_sub` (`barbarian_level12`'s `NegControlRow`) — `barbarian_level_21_is_
+not_promoted_by_this_slice` now fails on `"fixture must contain old_sub
+'class:barbarian:99' exactly once ... left: 0 right: 1"`. Both edits
+reverted; `git diff --stat tests/sd18_widening/rows.rs
+tests/sd13_progression/rows.rs` shows only the guard additions themselves.
+
+**Sabotage 4 — multiclass promotion, sabotage-parity proof**: the two
+existing sabotage sites above (class chassis magnitude constants) don't
+touch the multiclass gate at all, so they were never going to trip a
+multiclass negative control; sabotage 4 targets the gate directly.
+`src/rules_core/pilot_compute/class_barbarian.rs`'s
+`supported_barbarian_level` widened from matching only a genuinely
+single-class Barbarian (`[class_level]` slice pattern) to `.find()`-ing a
+Barbarian entry anywhere in `class_levels`, so a Barbarian+Fighter mix
+wrongly grounds Barbarian's namespaced `class_chassis.barbarian.*`/
+`class_feature.barbarian.*` explanations (patch:
+`/tmp/.../scratchpad/sd36/c2/sabotage-4.patch`). Run against the CURRENT
+(rewritten) tree, `cargo test --locked -j 2 --no-fail-fast --test
+sd18_widening --test sd13_progression`: **18 failures**, all multiclass
+Barbarian negative controls — the 9 Barbarian rows of `sd18_widening`'s 64
+`MULTICLASS_NEG_ROWS` (`barbarian_level12`..`barbarian_level20`) plus the 9
+Barbarian multiclass tests in `sd13_progression`
+(`barbarian_level2`..`barbarian_level10`); every other multiclass negative
+control (bard, cleric, monk, paladin, ranger, rogue, sorcerer) stays green,
+as expected for a Barbarian-only gate change
+(`sabotage-4-after.failed.txt`). Ran the identical patch against a worktree
+of the PRE-REWRITE commit `5ee77f8d85` (`git worktree add
+<scratch>/wt-before 5ee77f8d85`, `CARGO_TARGET_DIR=<scratch>/wt-before-target`,
+same command; worktree removed after): **18 failures**, the same 18 test
+names (`sabotage-4-before.failed.txt`). `diff sabotage-4-before.failed.txt
+sabotage-4-after.failed.txt` — no output, identical sets. The rewrite did not
+weaken these 18 tests' sensitivity to this defect shape.
+
+**Re-verification after the guards landed**: `-- --list` for both families,
+sorted and diffed against `list-sd18-before.txt`/`list-sd13-before.txt` —
+identical (no output). Full run, `cargo test --locked -j 2 --no-fail-fast
+--test sd18_widening --test sd13_progression`: `test result: ok. 1136
+passed; 0 failed` / `test result: ok. 891 passed; 0 failed`. `cargo clippy
+--locked --tests -j 2 -- -D warnings`: clean.
+
 ---
 
 ## Epic C2 evidence (criterion C2.5 — 2026-09-20)
