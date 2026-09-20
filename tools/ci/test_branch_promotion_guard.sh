@@ -1,8 +1,13 @@
 #!/usr/bin/env bash
-# tests/sd16-e5-f1/test_branch_promotion_guard.sh
+# tools/ci/test_branch_promotion_guard.sh
 #
 # Unit tests for the SD-16 / Tranche 2.x release-channel branch governance
 # policy (feature --> develop --> test --> main).
+#
+# SD-36 Epic C2 (C2.4): moved here from `tests/sd16-e5-f1/` — a shell script,
+# not a Rust test binary, so it never belonged under Cargo's `tests/`
+# discovery root. The empty `tests/sd16-e5-f1/` directory is left in place
+# (nothing else lives there); this file is the only thing that moved.
 #
 # This test exercises `verify_promotion_source` from
 # `tools/ci/branch-promotion-guard.sh`. The same function is what the GitHub
@@ -10,7 +15,7 @@
 # wiring is intact, the runtime enforcement matches the unit-tested policy.
 #
 # Run:
-#   bash tests/sd16-e5-f1/test_branch_promotion_guard.sh
+#   bash tools/ci/test_branch_promotion_guard.sh
 
 set -euo pipefail
 

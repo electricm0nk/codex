@@ -60,23 +60,14 @@ use codex::rules_core::derived_evaluator_fixture_check::{
 };
 use codex::rules_core::rules_tables::monster_chassis::MONSTER_BOOKS;
 
-fn repo_root() -> PathBuf {
-    PathBuf::from(env!("CARGO_MANIFEST_DIR"))
-}
+#[path = "support/paths.rs"]
+mod paths;
+use paths::{pcgen_data_root, repo_root};
 
 fn sha256_hex(bytes: &[u8]) -> String {
     let mut hasher = Sha256::new();
     hasher.update(bytes);
     hasher.finalize().iter().map(|b| format!("{b:02x}")).collect()
-}
-
-/// Same resolution rule `pcgen_data_root()` in the equipment test file uses.
-fn pcgen_data_root() -> Option<PathBuf> {
-    if let Ok(root) = std::env::var("PCGEN_CORPUS_ROOT") {
-        return Some(PathBuf::from(root));
-    }
-    let home = std::env::var("HOME").ok()?;
-    Some(PathBuf::from(home).join("workspace").join("repos").join("pcgen").join("data"))
 }
 
 /// The one alias `derived_evaluator_fixture_check.rs::monster_registry_book`

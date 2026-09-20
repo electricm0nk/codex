@@ -206,3 +206,79 @@ $ du -c -sh data/corpus data/sheet_rules | tail -1
 
 ---
 
+## §9 — Unattended UI test-and-repair; fix on the fly; ui-smoke receipts live under `artifacts/ui-smoke/`
+
+**Operator ruling, 2026-09-17:**
+
+> *"No race could be read from the corpus" on Create Character. Go unattended, fix it on the fly, bundle EVERYTHING (~490 MB: `data/corpus` + `data/sheet_rules`). Build a real red-green UI harness."*
+
+**Decision.** The operator reported a packaged-build defect (Create Character showing no race
+roster) and authorized an unattended session to both diagnose and fix it, and to build the
+regression harness that should have caught it, rather than hand-patching the one symptom. Two
+things followed from this ruling, both already reflected elsewhere in this package and recorded
+here as the ruling that authorized them:
+
+1. **The corpus-bundle fix is §8 above** — "bundle everything" is read against the standing
+   no-PCGen-residue ruling (§3/§11) rather than literally, per §8's own reasoning.
+2. **A red-green UI smoke harness is built and run to closure, unattended, across three repair
+   cycles:**
+   - `apps/desktop/scripts/ui-smoke/spec.json` (69 rows) + a generated
+     `docs/testing/ui-smoke-inventory.md`, driven by a DEV-only DOM command channel
+     (`record_ui_probe` / `apps/desktop/src/testSupport/uiProbe.ts`) rather than `xdotool`
+     coordinate clicks, which fail 100% of the time against small text links under
+     Xvfb+WebKitGTK (cycle 1 finding).
+   - Long runs (20-40+ minutes) go `nohup` + pid-poll, never a single foreground `Bash` call, and
+     every run pre-fills a **not-run skeleton** for every row before starting, so a truncated run
+     leaves visible `not-run` rows instead of a partial file silently reported complete (cycle 2's
+     own failure mode, corrected in cycle 3).
+   - Closed 2026-09-18 at commit `89bfbf1142`: 69 rows, 66 green, 3 true-manual (native OS file
+     dialogs: import/export/portrait), 0 red/blocked/not-run.
+
+**Enforced by:**
+- `apps/desktop/scripts/ui-smoke/spec.json` and its generated inventory doc are the harness's own
+  spec of record; re-run via the cycle-3 script (`ui-smoke-repair-cycle3-…js`, session-scoped, see
+  `sd36-ui-smoke-run` session memory for the resume handle) whenever a UI regression is suspected.
+- Receipts live under `docs/release/SD-36-consolidation/artifacts/ui-smoke/final/` — the closing
+  cycle's row-by-row results and the receipt that supersedes the two prior (superseded, not
+  reverted, per the append-only-history discipline: `5b08fb88a6`, `3d4cebd470`).
+- The corpus-root fix itself: `apps/desktop/src-tauri/src/authoring_workbench.rs`'s
+  `codex_repo_root()` no longer falls back to a compile-time `CARGO_MANIFEST_DIR` path on a
+  packaged build.
+- The long-run dispatch discipline this ruling forced into the open (nohup+poll, not-run
+  skeleton) is generalised into this bundle's own `ENVIRONMENT GUARD` and recorded as Lesson 1/2/3
+  of `docs/retro/sd36-retrospective.md`.
+
+---
+
+## §10 — Complete architecture-docs update added to Epic D closure
+
+**Operator ruling, 2026-09-20:**
+
+> *"Rewrite the architecture docs in full before this bundle closes — not a delta patch, the
+> living-documentation set brought current against everything B/A/E/C1 touched."*
+
+**Decision.** Epic D's original scope (`epic-breakdown.md` D1) already required a refresh of
+`docs/architecture/`'s boundary/rules-engine/desktop-app/status/testing sections for topics
+touched by this bundle. This ruling widens that from a targeted delta to a **complete rewrite
+pass** across the whole `docs/architecture/` set — every doc's "Last verified" header brought to
+this bundle's own HEAD, not just the sections this bundle's own epics happened to touch — and adds
+it explicitly to the closure gate rather than leaving it as an optional tidy.
+
+**Result:** `docs/architecture/README.md`'s "Last verified" header now reads
+**2026-09-20 against `tranche/16` (`b22ea9e113`, SD-36 Epic D)**. Nine existing docs updated,
+one retired doc deleted (`support-state-matrix.md`, matching Epic B's own retirement of the
+module it described), two new docs added (`getting-started.md`, `glossary.md`). Full diffstat and
+per-doc breakdown recorded in `release-notes.md`'s "Architecture-docs rewrite (D1)" section.
+
+**Enforced by:**
+- `git diff --stat 50572eebad..HEAD -- docs/architecture/` (the tranche/15-cut tree vs. this
+  bundle's HEAD) — the acceptance evidence `epic-breakdown.md` D1 already names, now satisfied at
+  full-set scope rather than delta scope.
+- `docs/architecture/README.md`'s own "Last verified" header, updated in place per that doc's own
+  maintenance contract (§Maintenance contract, that same file).
+- This ruling is recorded here, and the closure receipt (`receipts.md`, "Architecture-truth-up
+  receipt") records the pass as complete before Epic D's graphify/PR steps run — per
+  `docs/release/SD-36-consolidation/kanban.md`'s own D1 row.
+
+---
+

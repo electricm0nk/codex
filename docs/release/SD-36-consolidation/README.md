@@ -1,6 +1,6 @@
 ---
 title: SD-36 — Consolidation — Release Package
-status: planning-ready
+status: in-progress — Epics B, A, E, C1 done; D1 (architecture docs) done; D2/D3 written; C2 and D4–D6 remaining
 bundle_id: SD-36
 slug: consolidation
 scope: docs/release/SD-36-consolidation
@@ -51,7 +51,19 @@ SD-36 **consolidates and cleans the codebase after SD-35**: green CI, PCGen wall
 
 ## 3. Status
 
-- Package authored 2026-09-15 evening from the plan document. Awaiting launch.
+- Package authored 2026-09-15 evening from the plan document.
+- **Done:** Epic B (freeze status, retire producers — closed 2026-09-17, 46/46 `verify.sh` PASS);
+  Epic E (SD-35 code-review correctness, 22 findings, folded in per operator ruling — closed
+  2026-09-17); Epic A (PCGen crate wall — closed 2026-09-19); Epic C1 (source refactor — closed
+  2026-09-20); Epic D1 (architecture-docs full-set rewrite, `decisions.md §10` — closed
+  2026-09-20).
+- **Written this pass (2026-09-20):** Epic D2 (`docs/retro/sd36-retrospective.md`) and D3
+  (`release-notes.md`, re-derived), plus corrections to `kanban.md`/`progress.md` (Epic B's row
+  was stale at `open`; Epic E had no row) and this status field.
+- **Remaining:** Epic C2 (table-driven test rewrite — not started; its own acceptance command
+  needs correcting first per the retrospective's Finding 1); Epic D4 (graphify), D5 (PR open and
+  merged), D6 (worktree sweep). See `docs/retro/sd36-retrospective.md`'s "Epic status, as of this
+  writing" table and `release-notes.md`'s "Known follow-ups" for the full, re-derivable picture.
 
 ## 4. Reading guide
 

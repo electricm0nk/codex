@@ -112,6 +112,61 @@ production-test-logic scope beyond the A5/A9/A10 batch this cycle inherited).
 
 ---
 
+## Epic C2 evidence (criterion C2.5 — 2026-09-20)
+
+### C2.5 — Oracle tests kept, run once against the real PCGen corpus
+
+Nothing under `#[ignore]` was deleted or edited by this cycle: `git grep -c
+'^#\[ignore\]\|    #\[ignore\]' -- tests` shows 21 hits across 20 files
+(`tests/sd22_*_resolves.rs`), and the same pattern over
+`crates/codex-ingest/tests` shows 31 hits across 6 files (a 7th match,
+`pcgen_runner_smoke.rs`, only mentions `` `#[ignore]` `` in a doc comment —
+it has zero real `#[ignore]` attributes, confirmed by `grep -c '#\[ignore\]'
+crates/codex-ingest/tests/pcgen_runner_smoke.rs` = 0).
+
+Both sets were run once, for real, against the pinned PCGen checkout's data
+directory (`PCGEN_CORPUS_ROOT=$HOME/workspace/repos/pcgen/data`, the same
+default `tests/support/paths.rs`'s `pcgen_data_root()` resolves to):
+
+```
+PCGEN_CORPUS_ROOT=$HOME/workspace/repos/pcgen/data cargo test --locked \
+  --no-fail-fast --test sd22_acg_class_hunter_resolves \
+  --test sd22_apg_class_inquisitor_resolves --test sd22_acg_class_warpriest_resolves \
+  --test sd22_apg_class_oracle_resolves --test sd22_acg_class_skald_resolves \
+  --test sd22_acg_class_shaman_resolves --test sd22_acg_class_arcanist_resolves \
+  --test sd22_apg_class_summoner_resolves --test sd22_acg_class_bloodrager_resolves \
+  --test sd22_acg_class_brawler_resolves --test sd22_acg_class_swashbuckler_resolves \
+  --test sd22_apg_class_alchemist_resolves --test sd22_acg_class_investigator_resolves \
+  --test sd22_acg_spell_list_resolves --test sd22_apg_spell_list_resolves \
+  --test sd22_apg_equipment_resolves --test sd22_apg_class_witch_resolves \
+  --test sd22_acg_class_slayer_resolves --test sd22_apg_class_cavalier_resolves \
+  --test sd22_acg_equipment_resolves -- --ignored --test-threads=2
+```
+
+Result: **21 passed, 0 failed** (root `tests/`, one file —
+`sd22_acg_class_warpriest_resolves.rs` — carries 2 `#[ignore]` tests, all
+others 1 each). Same shape for `crates/codex-ingest`:
+
+```
+PCGEN_CORPUS_ROOT=$HOME/workspace/repos/pcgen/data cargo test --locked \
+  --no-fail-fast -p codex-ingest --test sd17_a_include_graph \
+  --test sd17_b_spellcasting_class --test sd31_e2_ground_truth_agreement \
+  --test sd27_feat_prerequisite_enforcement --test pcgen_runner_smoke \
+  --test sd17_b_monster_stat_block --test sd17_b1_martial_class -- \
+  --ignored --test-threads=2
+```
+
+Result: **31 passed, 0 failed** (`sd17_a_include_graph` 1,
+`sd17_b1_martial_class` 5, `sd17_b_monster_stat_block` 7,
+`sd17_b_spellcasting_class` 14, `sd27_feat_prerequisite_enforcement` 3,
+`sd31_e2_ground_truth_agreement` 1; `pcgen_runner_smoke` has none, all its
+tests are unconditional). Total: **52 oracle/grounding tests kept, run once
+against the real PCGen corpus this cycle, 52/52 green** — the JAVA_HOME
+hazard recorded in A10 above did not recur (`java -version` on this box now
+resolves through `~/.sdkman/candidates/java/current` to Temurin 25).
+
+---
+
 ## Cycle receipts
 
 | Cycle | Epic | Status | Baseline command | Output |

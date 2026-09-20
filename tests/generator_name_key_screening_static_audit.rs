@@ -52,9 +52,9 @@ use std::collections::BTreeSet;
 use std::fs;
 use std::path::{Path, PathBuf};
 
-fn repo_root() -> PathBuf {
-    PathBuf::from(env!("CARGO_MANIFEST_DIR"))
-}
+#[path = "support/paths.rs"]
+mod paths;
+use paths::repo_root;
 
 /// Symbols this bundle has established as the sanctioned way to screen a
 /// `name`/`key` identity field against Product Identity -- the union of

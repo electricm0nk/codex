@@ -178,9 +178,9 @@ fn books_stating_a_record_count() -> Vec<String> {
 /// own.
 const NON_RECORD_DIRS: &[&str] = &["_parity", "_settled"];
 
-fn repo_root() -> PathBuf {
-    PathBuf::from(env!("CARGO_MANIFEST_DIR"))
-}
+#[path = "support/paths.rs"]
+mod paths;
+use paths::repo_root;
 
 fn book_dir(book: &str) -> PathBuf {
     repo_root().join("data/corpus").join(book)

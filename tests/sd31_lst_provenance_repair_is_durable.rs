@@ -29,11 +29,11 @@
 
 use std::collections::BTreeMap;
 use std::fs;
-use std::path::{Path, PathBuf};
+use std::path::PathBuf;
 
-fn corpus_root() -> PathBuf {
-    Path::new(env!("CARGO_MANIFEST_DIR")).join("data/corpus")
-}
+#[path = "support/paths.rs"]
+mod paths;
+use paths::corpus_root;
 
 fn record_files(book: &str) -> Vec<PathBuf> {
     let mut out = Vec::new();

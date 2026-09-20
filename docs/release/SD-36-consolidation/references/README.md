@@ -60,8 +60,10 @@ Doctrine pointers, skill pointers, and sibling-bundle pointers.
 
 ## Retrospectives and lessons
 
+- `../../retro/sd36-retrospective.md` — **this bundle's own retrospective** (D2); written 2026-09-20 against HEAD `b22ea9e113`, before Epic C2 and the rest of Epic D closure — re-run its Figures table before treating it as final
 - `../../retro/sd31-retrospective.md` — SD-31 retrospective (worked example for SD-36's own retrospective at closure)
 - `../../retro/sd34-retrospective.md` — SD-34 retrospective (batch-big and verify-once lessons)
+- `../../retro/sd35-corpus-sheet-completion-retrospective.md` — SD-35 retrospective (the "engine holds it is the wrong finish line" finding Epic E's own correctness pass extends one level down, to rendering)
 
 ---
 

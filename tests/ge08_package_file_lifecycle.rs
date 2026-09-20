@@ -13,8 +13,11 @@ use codex::homebrew_authoring::SourcePackage;
 use codex::homebrew_authoring::package_manifest::PackageValidationState;
 use codex::homebrew_authoring::package_store::PackageStore;
 
+#[path = "support/paths.rs"]
+mod paths;
+
 fn fixture_root() -> PathBuf {
-    PathBuf::from(env!("CARGO_MANIFEST_DIR")).join("tests/fixtures/authoring_workbench/guard-stance-package")
+    paths::fixture_root("authoring_workbench/guard-stance-package")
 }
 
 fn fresh_temp_dir(label: &str) -> PathBuf {

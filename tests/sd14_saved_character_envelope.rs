@@ -13,9 +13,11 @@ use std::fs;
 use std::path::PathBuf;
 use std::time::{SystemTime, UNIX_EPOCH};
 
+#[path = "support/paths.rs"]
+mod paths;
+
 fn fixture_root() -> PathBuf {
-    PathBuf::from(env!("CARGO_MANIFEST_DIR"))
-        .join("tests/fixtures/sd14/pf1_human_fighter_level1_saved_character")
+    paths::fixture_root("sd14/pf1_human_fighter_level1_saved_character")
 }
 
 fn fresh_temp_dir(label: &str) -> PathBuf {
