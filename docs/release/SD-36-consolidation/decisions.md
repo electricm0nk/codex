@@ -153,3 +153,56 @@ The reason: B's deletions reduce A's scope (A doesn't have to move what B alread
 
 ---
 
+## §8 — Ship a sanitised corpus bundle, not the raw corpus
+
+**Operator ruling, 2026-09-17:**
+
+> *"bundle everything (~490 MB)"*
+
+**Decision.** The operator's directive was to bundle the desktop app's full data dependency so a packaged build never has an empty race roster (the defect commit `217f712bab` was chasing). Read literally, "everything" is `data/corpus/` (237 MB) plus `data/sheet_rules/` (254 MB) — measured together:
+
+```
+$ du -c -sh data/corpus data/sheet_rules | tail -1
+491M	total
+```
+
+— matching the ruling's own "~490 MB" figure. But `data/corpus/**/*.json` carries ingest-time PCGen residue (`raw_tokens`/`raw_bonus_chains` arrays, unstripped `DESC:`-token trailing clauses, free-text provenance fields that can themselves quote token syntax) that no live consumer reads and that `decisions.md` §11 / the residue gate's ruling B17 forbid on the shipped side, with **zero** carve-outs (`scripts/pcgen_residue_gate.py`'s `EXCLUDED_PREFIXES` is empty by a prior, standing ruling). Bundling `data/corpus/` verbatim, as commit `3e1a8f8d39` did on an interim basis, puts PCGen token text on a tester's disk. The standing "nothing of PCGen in the shipped product" ruling outranks the literal "bundle everything" instruction where the two collide: the fix is a bundle that ships the SAME population the raw corpus does, with the residue removed, not a bundle that ships the residue too.
+
+**Implementation:**
+- `scripts/gen-corpus-bundle.mjs` (Node — see "why Node" below) mirrors only the six `data/corpus/<book>/<kind>/` directories the live loaders (`src/rules_core/corpus_loader.rs`, `race_resolver.rs`, `trait_pool.rs`) actually read, trims each record to the fields that loader reads, and strips every occurrence of the residue gate's own pattern vocabulary from every surviving string as a defense-in-depth net.
+- `data/sheet_rules/` ships RAW (254 MB, unchanged) because it already carries no residue — confirmed by running the full gate after the corpus-bundle change:
+
+  ```
+  $ python3 scripts/pcgen_residue_gate.py --check --closure
+  ...
+  shipped_data_files=0 shipped_data_hits=0 shipped_scanned=68815
+  live_files=0 live_hits=0 verdict=PASS
+  ```
+
+  (`shipped_scanned=68815` = 54,775 `data/sheet_rules/` files + 14,029 sanitised corpus-bundle files + 11 other bundled-resource files; re-derive with `find data/sheet_rules -type f | wc -l` and `find apps/desktop/src-tauri/resources/corpus_bundle -type f | wc -l`.)
+
+- Net shipped size: **64 MB** (sanitised corpus bundle) **+ 254 MB** (`data/sheet_rules`, raw) **= 318 MB** shipped, against the ruling's ~490 MB "bundle everything" figure — the difference is entirely the ~173 MB of PCGen ingest scaffolding (`raw_tokens`, `raw_bonus_chains`, unread fields) the sanitiser strips from `data/corpus/`'s 237 MB, not a reduction in the RECORD POPULATION shipped.
+
+  ```
+  $ du -sh data/corpus apps/desktop/src-tauri/resources/corpus_bundle data/sheet_rules
+  237M	data/corpus
+  64M	apps/desktop/src-tauri/resources/corpus_bundle
+  254M	data/sheet_rules
+  ```
+
+- **Why Node, not Python, for the generator.** `.github/workflows/publish-tester-release.yml` builds the desktop app on `ubuntu-latest`, `macos-latest`, AND `windows-latest` (`publish-tester-release`, `publish-tester-release-macos`, `publish-tester-release-windows` jobs) — every one of those already runs `npm ci`/`npx tauri build`, so Node.js is guaranteed; Python is not pinned or installed on the macOS/Windows runners at all for this app. The generator is therefore `scripts/gen-corpus-bundle.mjs`, ported 1:1 from the original Python draft with zero new dependencies.
+- **Why `scripts/`, not `apps/desktop/scripts/`, despite the SD-36 workflow instruction's own working assumption.** `apps/desktop/**` is a `LIVE_ROOT` for the residue gate with no carve-outs. A generator that sanitises PCGen vocabulary must NAME that vocabulary in its own source (`raw_tokens`, `BONUS:`, `PRE[A-Z]+:`, ...) to remove it. Verified directly: an earlier draft at `apps/desktop/scripts/gen-corpus-bundle.mjs` made the gate fail (`apps/desktop files=1 hits=4`, from the generator's own pattern array, not from anything it copied) before any bundle content was even considered; moving the file to repo-root `scripts/` (a non-live, tooling root) restored `live_files=0 live_hits=0 verdict=PASS`. `scripts/gen-corpus-bundle.mjs`'s own header comment records this as a verified, not merely asserted, fact.
+
+**Parity, not merely presence, is the proof nothing was lost.** `apps/desktop/src-tauri/src/corpus_bundle_parity_test.rs` (`cargo test -p codex-desktop corpus_bundle_parity`) regenerates the bundle and runs the SAME production loaders against the raw corpus and the bundle in turn, per book, asserting equal equipment/spell record counts, equal race rosters (`RaceCorpus::race_keys()`), and zero loader diagnostics on both sides (which also proves `validate_license` still accepts every race/race-trait record the sanitiser produced — license/PI fields are the one thing the trim step must never break). Mutation-proved during this cycle: temporarily narrowing the generator's kind list to drop `race`/`race_trait` made the test fail and name the exact books and missing race ids (`advanced_race_guide`, `beastiary`, `bestiary_2`, `bestiary_5`, `bestiary_6`, `core_rulebook` — 6 books, matching every book in the raw corpus that carries a `race/` or `race_trait/` directory); reverting the generator made it pass again.
+
+**Scope of the parity claim, stated precisely.** "Equal to the raw corpus" holds for the population `corpus_loader.rs`/`race_resolver.rs`/`trait_pool.rs` read, over the six mirrored kind directories — that is what the parity test above proves, and it is the only population any live game-mechanics path reads. It does not (and, by the residue-avoidance rationale above, should not by default) extend to `apps/desktop/src-tauri/src/reference_library_catalog.rs`, a registered Tauri command reading twelve corpus kind directories (only one of which, `trait_generic`, is mirrored) that no frontend currently invokes. That module fixed its own separate defect this cycle — it resolved its corpus root from a hardcoded, build-time `CARGO_MANIFEST_DIR` path rather than `codex_repo_root()`, so it returned nothing at all on any packaged build regardless of bundle coverage — and now refuses (a named error, not a silent empty catalog) any of its eleven un-bundled kinds when its resolved root is not a full source checkout. See `scripts/gen-corpus-bundle.mjs`'s own comment for the maintenance note if that command is ever wired into the UI.
+
+**Enforced by:**
+- `scripts/verify.sh --only corpus-bundle` (regenerates, asserts non-empty output, asserts 0 residue hits both by a scoped grep over the bundle and by the full `pcgen_residue_gate.py --check --closure`).
+- `scripts/verify.sh --only tauri-resources-tracked` (every `tauri.conf.json` `bundle.resources` key resolves to at least one git-tracked file on a clean checkout — the `.gitkeep` under the gitignored `corpus_bundle/` counts; this is the check that would have caught commit `3e1a8f8d39`'s untracked-resource defect).
+- `cargo test -p codex-desktop corpus_bundle_parity` (correctness: same population, not just same file count).
+- `apps/desktop/package.json`'s `build` script (`node ../../scripts/gen-corpus-bundle.mjs && vite build`), reached by `tauri.conf.json`'s `beforeBuildCommand: "npm run build"` on every `tauri build` invocation (dev is unaffected: `beforeDevCommand` resolves the repo corpus directly).
+- `.github/workflows/publish-tester-release.yml` and `.github/workflows/tranche-3-ci.yml`: an explicit "Generate corpus bundle" step runs `node scripts/gen-corpus-bundle.mjs` before the desktop crate's `cargo test` step in both the `test`/`desktop-typecheck-and-test` jobs (the three `publish-tester-release*` build jobs generate it implicitly via `beforeBuildCommand`).
+
+---
+

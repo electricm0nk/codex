@@ -7,7 +7,7 @@
     "dev": "vite",
     "typecheck": "tsc --noEmit",
     "test": "node scripts/run-tests.mjs",
-    "build": "vite build",
+    "build": "node ../../scripts/gen-corpus-bundle.mjs && vite build",
     "tauri:check": "cargo check --manifest-path src-tauri/Cargo.toml",
     "ui-smoke": "node scripts/ui-smoke/run.mjs",
     "ui-smoke:doc": "node scripts/ui-smoke/render-inventory.mjs"
