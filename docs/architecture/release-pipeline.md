@@ -1,137 +1,149 @@
 # Release pipeline
 
-> Scope: how a commit on `develop` or `main` becomes a tagged, schema-validated tester release, and how branches get promoted between channels.
-> Last verified: 2026-08-11 against tranche/9 (SD-29 Epic 9, Build Version Numbering — the §Version stamp section was re-derived in full; the rest of this document was last verified 2026-07-22 against tranche/5-3 at SD-25 closure and its line numbers may have drifted). **Path correction
-> 2026-08-22** (SD-32 closure epilogue): the `check-release-manifest.yml` `paths:` filter note
-> corrected — `sd16`/`sd17` no longer resolve either (see the item's own updated text below); no
-> other content in this doc re-verified.
+> Scope: how a commit on `develop` or `main` becomes a tagged, schema-validated tester release, how branches get promoted between channels, and how the public `campaign-codex.org` status site is deployed.
+> Last verified: **2026-09-20 against `tranche/16`, HEAD `b22ea9e113`**. Re-derived the version stamp (`0.16.0`, tranche/16), the job graph (`stamp`/`test`/three platform publishes/`finalize`, unchanged in shape), the `tools/ci/test_branch_promotion_guard.sh` path (moved from `tests/sd16-e5-f1/` — SD-36 Epic C2, already reflected in the working tree at the time of this pass), and added the `deploy-site.yml` workflow (new since the last pass, publishes the public status site, not the desktop app). Line-number citations from the prior pass are dropped in favor of step/job names, which drift less between passes on a 1,000+ line workflow file.
 > Maintenance: updated at SD closure — see [README.md](./README.md) §Maintenance contract
 
 ## Overview
 
-Two independent systems cooperate here:
+Three independent systems live under `.github/workflows/`:
 
-1. **Publish**: `.github/workflows/publish-tester-release.yml` turns a push to `develop` or `main` into a multi-platform GitHub Release with a schema-validated update manifest, and (conditionally) advances the `update-index` branch's channel pointer.
+1. **Publish** (`publish-tester-release.yml`): turns a push to `develop` or `main` into a multi-platform GitHub Release with a schema-validated update manifest, and (conditionally) advances the `update-index` branch's channel pointer.
 2. **Promotion**: a chain of branch-source guards and an evidence gate control which branch may open a PR into which downstream branch (`develop` → `test` → `main`), independent of the publish workflow.
+3. **Site deploy** (`deploy-site.yml`): pushes `site/**` to Cloudflare Pages on a push to `main` — a separate concern from the desktop app release, sharing only the same repo and the same `main` branch.
 
-These systems share doctrine constants (tranche id, release-notes path, required sections) but are enforced by separate code paths that must be kept in sync by hand — see [The pinned-SD-16 quirk](#the-pinned-sd-16-quirk) below.
+Systems 1 and 2 share doctrine constants (tranche id, release-notes path, required sections) but are enforced by separate code paths kept in sync by hand — see [The pinned-SD-16 quirk](#the-pinned-sd-16-quirk) below.
+
+```mermaid
+flowchart LR
+    feature["feature/*"] -->|PR| develop
+    develop -->|"allow-only-develop-into-test.yml\n(source must be develop)"| test
+    test -->|"allow-only-test-into-main.yml\n(source must be test)"| main
+    develop -->|push| PublishAlpha["publish-tester-release.yml\nchannel=alpha (prerelease)"]
+    main -->|push| PublishStable["publish-tester-release.yml\nchannel=stable"]
+    main -->|"push, site/** changed"| DeploySite["deploy-site.yml\nCloudflare Pages"]
+    PublishAlpha --> UpdateIndex["update-index branch\nchannels/alpha.json"]
+    PublishStable --> UpdateIndex2["update-index branch\nchannels/stable.json"]
+```
+*The three independent flows a commit on `develop`/`main` can trigger — branch promotion, a tester release, and (main only) a site deploy.*
 
 ## The publish pipeline (`publish-tester-release.yml`)
 
-Trigger: `push` to `develop` or `main` (`.github/workflows/publish-tester-release.yml:8-12`). `develop` publishes to the `alpha` channel (prerelease); `main` publishes to `stable`; `beta` is reserved — no workflow trigger publishes it today (line 6).
+Trigger: `push` to `develop` or `main`. `develop` publishes to the `alpha` channel (prerelease); `main` publishes to `stable`; `beta` is reserved — no workflow trigger publishes it today.
 
-Job graph:
+Job graph (job names verified against the file's own `needs:` declarations):
 
+```mermaid
+flowchart TD
+    stamp --> publish_linux["publish-tester-release (linux)"]
+    stamp --> publish_macos["publish-tester-release-macos"]
+    stamp --> publish_windows["publish-tester-release-windows"]
+    test --> publish_linux
+    test --> publish_macos
+    test --> publish_windows
+    stamp --> finalize
+    test --> finalize
+    publish_linux --> finalize
+    publish_macos --> finalize
+    publish_windows --> finalize
 ```
-stamp ──┬──┬─→ publish-tester-release (linux)   ──┐
-test  ──┘  ├─→ publish-tester-release-macos      ─┼─→ finalize
-           └─→ publish-tester-release-windows    ─┘
-(finalize's needs: also lists stamp and test directly, in addition to the three publish jobs)
-```
+*`stamp` and `test` declare no `needs:` of their own and run in parallel; every downstream job fans in from both.*
 
-`stamp` and `test` declare no `needs:` of their own — they run in parallel
-(`test` does its own fresh `actions/checkout`; it does not consume the
-stamped sources). Every downstream job fans in from both.
-
-- **`stamp`** (`publish-tester-release.yml:18-122`): checks out, derives `VERSION="0.9.${GITHUB_RUN_NUMBER}"` (line 97, re-derived 2026-08-11), and rewrites `apps/desktop/package.json` and `apps/desktop/src-tauri/tauri.conf.json` in place. The stamped files are uploaded as the `stamped-sources` artifact so every downstream job (including the three platform builds) reads the exact same version — this replaced an earlier design where each platform job re-derived its own version and could disagree (see the `SD16-F-WINDOWS` comments at lines 22-26, 41-57).
-- **`test`** (lines 98-144): `cargo test --locked` at repo root, `cargo test --locked` in `apps/desktop/src-tauri`, `npm run typecheck` and `npm test` in `apps/desktop`. All three platform-publish jobs `needs: [test, stamp]`, so a red test run blocks every artifact build.
-- **`publish-tester-release`** (linux, lines 146-387): downloads the stamped sources, runs `npx tauri build --bundles deb,appimage --ci`, stages the `.deb`/`.AppImage` into `release-staging/`, writes a `provenance.json` receipt, generates and validates `update-manifest.json`, computes checksums, and uploads everything as the `platform-linux` artifact. It does **not** call `gh release create` itself.
-- **`publish-tester-release-macos`** (lines 396-463) and **`publish-tester-release-windows`** (lines 473-570) mirror this on `macos-latest` / `windows-latest`, building `.app`/`.dmg` and `.msi`/`.exe` respectively, uploading `platform-macos` / `platform-windows` artifacts. Neither is code-signed yet (macOS DMG ships unsigned; Windows testers click through SmartScreen — see comments at lines 389-395, 506-508).
-- **`finalize`** (lines 586-946) is the single writer of the GitHub release, the unified `update-manifest.json`, and the `update-index` branch push (comment block at lines 580-585). It downloads whichever platform artifacts succeeded (`continue-on-error: true` per download, lines 606-620 — a missing platform does not fail the run), rebuilds a unified manifest with whichever optional platform blocks are present, validates it twice, creates the GitHub release with `gh release create`, then emits and pushes the channel index.
+- **`stamp`**: checks out, derives `VERSION="0.16.${GITHUB_RUN_NUMBER}"`, and rewrites `apps/desktop/package.json` and `apps/desktop/src-tauri/tauri.conf.json` in place. The stamped files are uploaded as the `stamped-sources` artifact so every downstream job reads the exact same version.
+- **`test`**: `cargo test --locked` at repo root, `cargo test --locked` in `apps/desktop/src-tauri`, `npm run typecheck` and `npm test` in `apps/desktop`. All three platform-publish jobs `needs: [test, stamp]`, so a red test run blocks every artifact build.
+- **`publish-tester-release`** (linux): downloads the stamped sources, runs `npx tauri build --bundles deb,appimage --ci` (which itself runs `apps/desktop`'s `build` npm script — and therefore `scripts/gen-corpus-bundle.mjs` — before `vite build`; see [desktop-app.md](./desktop-app.md)), stages the `.deb`/`.AppImage` into `release-staging/`, writes a `provenance.json` receipt, generates and validates `update-manifest.json`, computes checksums, and uploads everything as the `platform-linux` artifact. It does **not** call `gh release create` itself.
+- **`publish-tester-release-macos`** and **`publish-tester-release-windows`** mirror this on `macos-latest` / `windows-latest`, building `.app`/`.dmg` and `.msi`/`.exe` respectively, uploading `platform-macos` / `platform-windows` artifacts. Neither is code-signed (macOS DMG ships unsigned; Windows testers click through SmartScreen).
+- **`finalize`** is the single writer of the GitHub release, the unified `update-manifest.json`, and the `update-index` branch push. It downloads whichever platform artifacts succeeded (`continue-on-error: true` per download — a missing platform does not fail the run), rebuilds a unified manifest with whichever optional platform blocks are present, validates it twice, creates the GitHub release with `gh release create`, then emits and pushes the channel index.
 
 ### Version stamp
 
-`VERSION="0.9.${GITHUB_RUN_NUMBER}"` (`publish-tester-release.yml:97`) is the sole place the build number is minted; every other consumer reads `needs.stamp.outputs.version`. The three files that must carry a matching `<major>.<tranche-base>.<build>` triple are `apps/desktop/package.json`, `apps/desktop/src-tauri/tauri.conf.json`, and `apps/desktop/src-tauri/Cargo.toml` — as of this verification all three are committed at `0.9.0` (confirmed via `node -p "require('./apps/desktop/package.json').version"`, `node -p "require('./apps/desktop/src-tauri/tauri.conf.json').version"`, and `grep -n '^version' apps/desktop/src-tauri/Cargo.toml`; `apps/desktop/src-tauri/Cargo.lock`'s `codex-desktop` entry carries the same triple and must be moved with them). The workflow's in-line comment describing "the repo keeps `0.<tranche>.0` as the committed placeholder" is accurate in shape: the three files are kept at the tranche's `.0` placeholder and the stamp step overwrites `package.json` / `tauri.conf.json` at publish time with the real build number (it does not touch `Cargo.toml`).
+`VERSION="0.16.${GITHUB_RUN_NUMBER}"` is the sole place the build number is minted; every other consumer reads `needs.stamp.outputs.version`. The three files that must carry a matching `<major>.<tranche-base>.<build>` triple are `apps/desktop/package.json`, `apps/desktop/src-tauri/tauri.conf.json`, and `apps/desktop/src-tauri/Cargo.toml` — as of this verification all three are committed at **`0.16.0`** (`node -p "require('./apps/desktop/package.json').version"`, `node -p "require('./apps/desktop/src-tauri/tauri.conf.json').version"`, `grep '^version' apps/desktop/src-tauri/Cargo.toml`). The three files are kept at the tranche's `.0` placeholder and the stamp step overwrites `package.json` / `tauri.conf.json` at publish time with the real build number (it does not touch `Cargo.toml`).
 
-Versioning semantics (`docs/release/SD-22/decisions.md:52`, `docs/release/SD-29-corpus-wide-catch-up-lanes/decisions.md §14`, and `apps/desktop/src/release/buildVersionTriple.test.ts`):
+Versioning semantics (`docs/release/SD-22/decisions.md:52`, `apps/desktop/src/release/buildVersionTriple.test.ts`):
 - **major**: stays `0` until the first publish to `main`.
-- **tranche-base** (the `9` in `0.9.x`): bumped only when a new `tranche/N` branch is cut for the next bundle — explicitly *not* at a bundle's own closure while still on the same tranche branch. The test's anchor comment records that an SD-22 Epic 7 cycle bumped this to `0.6` in error and it was reverted (also called out in the workflow comment above the stamp step). Advances to date: `0.5` (tranche/5) → `0.7` (tranche/7, SD-27) → `0.8` (tranche/8, SD-28) → `0.9` (tranche/9, SD-29 Epic 9, 2026-08-11).
+- **tranche-base** (the `16` in `0.16.x`): bumped only when a new `tranche/N` branch is cut for the next bundle — explicitly *not* at a bundle's own closure while still on the same tranche branch. Advances to date, most recent first: `0.9` (tranche/9, SD-29) → … → `0.15` (tranche/15, SD-35) → `0.16` (tranche/16, SD-36).
 - **build**: the monotonic `GITHUB_RUN_NUMBER`.
 
-The build label surfaced in the desktop UI is `Codex <version>` — `formatWorkbenchBuildLabel` in `apps/desktop/src/testerWorkbench/status/createWorkbenchStatus.ts:72-73` (`BUILD_PREFIX = 'Codex'` at line 61; both the function and the file were renamed from `formatSd11WorkbenchBuildLabel` / `sd11/status/createSd11WorkbenchStatus.ts` by SD-25 criterion 1.1).
+The build label surfaced in the desktop UI is `Codex <version>` — `formatWorkbenchBuildLabel` in `apps/desktop/src/testerWorkbench/status/createWorkbenchStatus.ts` (`BUILD_PREFIX = 'Codex'`).
 
 Guard tests that keep the three files and the fixtures honest:
-- `apps/desktop/src/release/buildVersionTriple.test.ts` (the fuller original, formerly `sd21/`; renamed to `release/` by SD-29's function-based-naming sweep) — asserts `package.json`, `tauri.conf.json`, and `Cargo.toml` versions are identical and match `^\d+\.\d+\.\d+$`, that the triple starts with `0.9.` on tranche/9, **and** that the workflow's stamp reuses the repo files' own `major.tranche` while taking its build position from `GITHUB_RUN_NUMBER` (a relationship check, not two independent literals) with no hardcoded triple anywhere in the stamp.
-- `apps/desktop/src/releaseChecks/buildVersionTriple.test.ts` — an SD-28-era partial duplicate of the above (the file-agreement + tranche-anchor half only; no workflow-stamp checks). Both anchors are moved together at each tranche cut. Deduping the pair is deferred to SD-29 Epic 10 (`docs/retro/events/sd29-e9-version.jsonl`).
-- `apps/desktop/src/releaseChecks/buildLabelFixtureFreshness.test.ts` — asserts three named fixture files (`apps/desktop/src/testerWorkbench/loadTesterWorkbenchSurface.test.ts`, `apps/desktop/src/testerWorkbench/status/createWorkbenchStatus.test.ts`, `apps/desktop/src/testSupport/makeSurface.ts`) carry the *current* `Codex <version>-test` label literal and not the specific prior-bump literal, `Codex 0.8.0-test` as of the tranche/9 cut. **This is the sweep the version bump is easy to miss:** the freshness test names only three files, but **seven** `src/**` files carry `<version>-test` literals (12 occurrences) and all seven move with the triple — `git grep -l '0\.9\.0-test' -- apps/desktop/src` (7 files; occurrence count cross-checked with `awk '{n+=gsub(/0\.9\.0-test/,"")} END{print n}'` → 12, since `grep -o` is not trustworthy here per `AGENTS.md` §Concurrency and Measurement).
+- `apps/desktop/src/release/buildVersionTriple.test.ts` — asserts `package.json`, `tauri.conf.json`, and `Cargo.toml` versions are identical and match `^\d+\.\d+\.\d+$`, that the triple starts with `0.16.` on tranche/16, **and** that the workflow's stamp reuses the repo files' own `major.tranche` while taking its build position from `GITHUB_RUN_NUMBER` (a relationship check, not two independent literals).
+- `apps/desktop/src/releaseChecks/buildVersionTriple.test.ts` — a partial duplicate (file-agreement + tranche-anchor half only). Both anchors move together at each tranche cut.
+- `apps/desktop/src/releaseChecks/buildLabelFixtureFreshness.test.ts` — asserts named fixture files carry the *current* `Codex <version>-test` label literal. Re-derive the exact file/occurrence count at each tranche cut with `git grep -l '0\.16\.0-test' -- apps/desktop/src` — this is the sweep a version bump is easy to miss (per [conventions.md](./conventions.md)'s `AGENTS.md` §Concurrency and Measurement guidance: `grep -o` is not trustworthy for occurrence counts here; use `awk '{n+=gsub(/PATTERN/,"")} END{print n}'`).
 
 ### Manifest generation + dual validation
 
-`write_release_manifest.py` (`scripts/release/write_release_manifest.py`) builds `update-manifest.json` against `schemas/update/update-manifest.schema.json`. It hard-codes `TRANCHE_ID = "STC-CODEX-SD-16"` (line 58) and `SCHEMA_VERSION = "1.1.0"` (line 57), computes the AppImage's sha256/size from the file on disk (`_appimage_identity`, lines 89-101), and — since `SD16-F-WINDOWS` — accepts complete-triple-or-nothing `--windows-msi-*` / `--macos-dmg-*` flag sets (`_optional_platform_block`, lines 146-179) so a partial platform block can never be emitted.
+`scripts/release/write_release_manifest.py` builds `update-manifest.json` against `schemas/update/update-manifest.schema.json`. It hard-codes `TRANCHE_ID = "STC-CODEX-SD-16"` and `SCHEMA_VERSION = "1.1.0"`, computes the AppImage's sha256/size from the file on disk (`_appimage_identity`), and accepts complete-triple-or-nothing `--windows-msi-*` / `--macos-dmg-*` flag sets (`_optional_platform_block`) so a partial platform block can never be emitted.
 
 Each publish job's manifest is checked twice, by two different scripts:
-1. `scripts/release/validate_manifest.py --manifest update-manifest.json --schema schemas/update/update-manifest.schema.json` — pure `jsonschema.Draft202012Validator` check against the wire schema (`publish-tester-release.yml:326-334`).
-2. `tools/release/check_release_manifest_against_dev_schema.py update-manifest.json` — re-validates against the same schema, then re-runs `tools/release/check_release_manifest.py`'s `_coherence_check` (tranche_id / release_notes_path binding) against the manifest (`publish-tester-release.yml:336-341`; the script itself explains why it exists at `tools/release/check_release_manifest_against_dev_schema.py:8-12` — `tools/release/check_release_manifest.py` normally validates the *legacy* `tools/release/release-manifest.schema.json` shape, not the dev `schemas/update/` shape).
+1. `scripts/release/validate_manifest.py --manifest update-manifest.json --schema schemas/update/update-manifest.schema.json` — pure `jsonschema.Draft202012Validator` check against the wire schema.
+2. `tools/release/check_release_manifest_against_dev_schema.py update-manifest.json` — re-validates against the same schema, then re-runs `tools/release/check_release_manifest.py`'s `_coherence_check` (tranche_id / release_notes_path binding) against the manifest (`tools/release/check_release_manifest.py` normally validates the *legacy* `tools/release/release-manifest.schema.json` shape, not the dev `schemas/update/` shape — the dev-schema shim exists because those two schemas disagree, see below).
 
-The `finalize` job repeats both validations against the unified manifest (`publish-tester-release.yml:747-754`).
+The `finalize` job repeats both validations against the unified manifest.
 
 ### Tag forms
 
-Two tag strings coexist by design (comment at `publish-tester-release.yml:266-273`):
+Two tag strings coexist by design:
 
 | Form | Shape | Used by |
 |---|---|---|
-| `MANIFEST_TAG` | `${channel}/v${VERSION}-${SHORT_SHA}` (e.g. `alpha/v0.5.96-a1b2c3d4`) | Satisfies `schemas/update/update-manifest.schema.json`'s `tag` pattern `^(alpha\|beta\|stable)/.+$`; stored as the manifest's `tag` field and as the mirror path under `manifests/<MANIFEST_TAG>/` on `update-index`. |
-| `RELEASE_TAG` | `${channel}-v${VERSION}-${SHORT_SHA}` (e.g. `alpha-v0.5.96-a1b2c3d4`) | The actual `gh release create` tag and the URL path segment (GitHub tags cannot contain `/` without becoming a nested ref, so the slash is replaced with a hyphen for the release tag specifically). |
+| `MANIFEST_TAG` | `${channel}/v${VERSION}-${SHORT_SHA}` (e.g. `alpha/v0.16.96-a1b2c3d4`) | Satisfies `schemas/update/update-manifest.schema.json`'s `tag` pattern `^(alpha\|beta\|stable)/.+$`; stored as the manifest's `tag` field and as the mirror path under `manifests/<MANIFEST_TAG>/` on `update-index`. |
+| `RELEASE_TAG` | `${channel}-v${VERSION}-${SHORT_SHA}` (e.g. `alpha-v0.16.96-a1b2c3d4`) | The actual `gh release create` tag and the URL path segment (GitHub tags cannot contain `/` without becoming a nested ref, so the slash is replaced with a hyphen). |
 
-Both are computed twice, identically: in the linux publish job (lines 283-284) and in `finalize`'s `resolve` step (lines 636-637) — `finalize`'s computation is the one the actual `gh release create` uses.
+Both are computed twice, identically: once in the linux publish job, once in `finalize`'s own `resolve` step — `finalize`'s computation is the one the actual `gh release create` uses.
 
 ### Channel-index emit + push
 
 After `gh release create` succeeds, `finalize` prepares and pushes a channel-index pointer to the **protected `update-index` branch**:
 
-- `tools/release/emit_channel_index.py` reads a schema-valid `update-manifest.json`, validates it, cross-checks `manifest.channel == args.channel`, and emits `channels/<channel>.json` validated against `schemas/update/channel-index.schema.json` (lines 91-107).
-- The `Update channel index on update-index branch` step (`publish-tester-release.yml:904-945`) does a hard reset + fetch/checkout (or orphan-create if the branch doesn't exist yet), writes the channel-index JSON and a full manifest mirror under `manifests/<MANIFEST_TAG>/update-manifest.json`, commits as `github-actions[bot]`, and pushes `HEAD:update-index`.
+- `tools/release/emit_channel_index.py` reads a schema-valid `update-manifest.json`, validates it, cross-checks `manifest.channel == args.channel`, and emits `channels/<channel>.json` validated against `schemas/update/channel-index.schema.json`.
+- The `Update channel index on update-index branch` step does a hard reset + fetch/checkout (or orphan-create if the branch doesn't exist yet), writes the channel-index JSON and a full manifest mirror under `manifests/<MANIFEST_TAG>/update-manifest.json`, commits as `github-actions[bot]`, and pushes `HEAD:update-index`.
 
 ### The fail-loud gate
 
-Both the emit and push steps are gated by `hashFiles('docs/release/SD-16/tranche-*/manifest.yaml') != ''` (lines 793, 816, 905). If no file matches that glob, a dedicated step fails the whole job loudly instead of letting the channel-index steps silently no-op:
-
-```yaml
-- name: Assert channel-index gate preconditions
-  if: success() && github.event_name == 'push' && (github.ref_name == 'develop' || github.ref_name == 'main') && hashFiles('docs/release/SD-16/tranche-*/manifest.yaml') == ''
-  run: |
-    echo "::error::channel-index: no tranche manifest matched docs/release/SD-16/tranche-*/manifest.yaml — the channel-index steps would be silently skipped and the update-index branch would never move. Failing loudly instead."
-    exit 1
-```
-(`publish-tester-release.yml:792-796`)
+Both the emit and push steps are gated by `hashFiles('docs/release/SD-16/tranche-*/manifest.yaml') != ''`. If no file matches that glob, a dedicated step (`Assert channel-index gate preconditions`) fails the whole job loudly instead of letting the channel-index steps silently no-op — the step's own `::error::` message names exactly this failure mode.
 
 ## Branch promotion chain
 
+```mermaid
+flowchart LR
+    fb["feature/*"] --> develop
+    develop -->|"alpha"| test
+    test -->|"beta"| main
+    main -->|"stable"| main2["(published)"]
 ```
-feature/*  →  develop (alpha)  →  test (beta)  →  main (stable)
-```
+*`feature/* → develop (alpha) → test (beta) → main (stable)`.*
 
 Enforcement is layered:
 
-1. **GitHub-side branch protection** (not visible in-repo except as the documented intent in `.github/branch-protection-rulesets/`) blocks direct pushes to the protected branches.
-2. **`allow-only-*` workflows** are the second enforcement layer, run on `pull_request_target`:
-   - `.github/workflows/allow-only-develop-into-test.yml` — PRs into `test` must come from this repo's `develop` branch (not a same-named fork branch). Also restores `develop` from `test` if `develop` is ever deleted (lines 47-88).
-   - `.github/workflows/allow-only-test-into-main.yml` — PRs into `main` must come from `test`; symmetric `restore-test-branch` job.
-   - Both delegate the actual check to `bash tools/ci/branch-promotion-guard.sh` via `EXPECTED_SOURCE`/`SOURCE_BRANCH`/`HEAD_REPO`/`BASE_REPO` env vars (`allow-only-develop-into-test.yml:39-45`).
-3. **`tools/ci/branch-promotion-guard.sh`** defines `verify_promotion_source()` (lines 29-47): rejects when `head_repo != base_repo` (forks) or `source_branch != expected`. It is sourceable (for unit tests) or directly runnable (as the Action step body). Unit tests live at `tests/sd16-e5-f1/test_branch_promotion_guard.sh`; the guard script's own header states: "Both the GitHub Actions workflows and the unit tests MUST exercise the same `verify_promotion_source` function. Drift between this file and the workflows fails the test suite." (`branch-promotion-guard.sh:17-19`).
+1. **GitHub-side branch protection** (not visible in-repo except as documented intent in `.github/branch-protection-rulesets/`) blocks direct pushes to the protected branches.
+2. **`allow-only-*` workflows** run on `pull_request_target`:
+   - `.github/workflows/allow-only-develop-into-test.yml` — PRs into `test` must come from this repo's `develop` branch (not a same-named fork branch). Its `restore-develop-branch` job fires on `delete` of the `develop` ref and re-creates `develop` from `test` — a self-healing guard against `develop` ever being deleted.
+   - `.github/workflows/allow-only-test-into-main.yml` — PRs into `main` must come from `test`; symmetric `restore-test-branch` job, which is why `test` is a durable, self-healing release gate and should never be deleted by hand even when it looks stale — deleting it triggers the very restore job that recreates it from `main`.
+   - Both delegate the actual check to `bash tools/ci/branch-promotion-guard.sh` via `EXPECTED_SOURCE`/`SOURCE_BRANCH`/`HEAD_REPO`/`BASE_REPO` env vars.
+3. **`tools/ci/branch-promotion-guard.sh`** defines `verify_promotion_source()`: rejects when `head_repo != base_repo` (forks) or `source_branch != expected`. It is sourceable (for unit tests) or directly runnable (as the Action step body). Unit tests live at `tools/ci/test_branch_promotion_guard.sh` (moved here from *tests/sd16-e5-f1/test_branch_promotion_guard.sh*, a path that no longer exists, by SD-36 Epic C2's test-side rewrite); the guard script's own header states: "Both the GitHub Actions workflows and the unit tests MUST exercise the same `verify_promotion_source` function. Drift between this file and the workflows fails the test suite."
 4. **`.github/workflows/promotion-gates.yml`** — runs on `pull_request_target` into `test` or `main`, and is the evidence-rich self-blocking gate:
-   - Determines the lane (`test` → `beta`, `main` → `stable`, lines 52-70).
-   - Runs `python3 scripts/release/check_promotion_evidence.py --self-test` first (lines 72-79) — the CI job fails immediately if the checker's own built-in test suite is red, before it ever evaluates a real PR.
-   - Fetches the PR body via REST (line 81-98, because `pull_request_target`'s event payload can truncate long bodies), resolves the most recent alpha/beta release via REST, and (stable lane only) downloads `provenance.json` from the most recent beta release's assets.
-   - Runs `python3 scripts/release/check_promotion_evidence.py --lane <beta|stable> ...` (lines 158-214) and captures `gate_report.txt`.
-   - Posts/updates a single PR comment (marker `<!-- promotion-gate-evidence -->`, lines 241-281) and sets a commit status with context `sd16-e5-f3a/promotion-gate` (lines 283-303) — this is what branch protection is expected to require.
-   - Fails the job (`exit 1`) when the gate is blocked (lines 305-310).
-5. **`.github/workflows/check-release-manifest.yml`** — a PR-time gate, scoped by `paths:` filters (`tools/release/**`, `apps/desktop/src/sd11/update/**`, `apps/desktop/src/sd15/**`, `apps/desktop/src/sd16/**`, `apps/desktop/src/sd17/**`, `release-manifest.json`, `docs/release/**/release-notes.md`, and the two workflow files themselves — lines 24-32). If a `release-manifest.json`-shaped file changed, it runs `tools/release/check_release_manifest.py` against every changed manifest and posts a failure-summary comment on failure (lines 94-116). **Latent gap, now wider:** SD-25 criterion 1.1 renamed the `sd11/` frontend directory to `testerWorkbench/` and `sd15/` to `operatorTriage/`, and a later sweep (`06d926e90`, 2026-08-10) moved the old sd16/feedback and sd16/update subdirectories up one level to `apps/desktop/src/feedback/` and `apps/desktop/src/update/`; the sd17 directory was never real in this checkout (`find apps/desktop/src -maxdepth 1 -iname 'sd17*'` finds nothing). None of the four globs (`sd11/update/**`, `sd15/**`, `sd16/**`, `sd17/**`) match a real path today — this workflow's entire `paths:` filter has gone stale. `check-release-manifest.yml`'s YAML itself is untouched by this correction (out of `docs/architecture/`'s own scope); this note only corrects the doc's prior claim that `sd16`/`sd17` "still resolve".
-6. **`.github/workflows/tranche-3-ci.yml`** — **tranche/3-specific**, not a generic template. Guards that slice PRs target `tranche/3` (never `develop`, per the header comment's "devops/tranche-branch-governance refusal", lines 3-19), runs the same test+typecheck+test lane as the publish workflow's `test` job on every push/PR to `tranche/3` (lines 54-99), and validates any touched `docs/release/**/manifest.yaml` or `release-notes.md` via `check_release_manifest.py` (lines 101-151). `.github/branch-protection-rulesets/README.md`'s "To add a new tranche" procedure and the `_note` fields inside `tranche-2-7.json`'s status-check rules (lines 51, 56 — "The .github/workflows/tranche-2-7-ci.yml file (parallel to tranche-3-ci.yml) has not been authored yet") both establish that later tranches are expected to get their own parallel `<tranche>-ci.yml`; none has been authored for `tranche/5` either.
+   - Determines the lane (`test` → `beta`, `main` → `stable`).
+   - Runs `python3 scripts/release/check_promotion_evidence.py --self-test` first — the CI job fails immediately if the checker's own built-in test suite is red, before it ever evaluates a real PR.
+   - Fetches the PR body via REST (because `pull_request_target`'s event payload can truncate long bodies), resolves the most recent alpha/beta release via REST, and (stable lane only) downloads `provenance.json` from the most recent beta release's assets.
+   - Runs `python3 scripts/release/check_promotion_evidence.py --lane <beta|stable> ...` and captures `gate_report.txt`.
+   - Posts/updates a single PR comment (marker `<!-- promotion-gate-evidence -->`) and sets a commit status with context `sd16-e5-f3a/promotion-gate` — this is what branch protection is expected to require.
+   - Fails the job (`exit 1`) when the gate is blocked.
+5. **`.github/workflows/check-release-manifest.yml`** — a PR-time gate, scoped by `paths:` filters: `tools/release/**`, `apps/desktop/src/testerWorkbench/update/**`, `apps/desktop/src/operatorTriage/**`, `apps/desktop/src/sd16/**`, `apps/desktop/src/sd17/**`, `release-manifest.json`, `docs/release/**/release-notes.md`, and the two workflow files themselves. If a `release-manifest.json`-shaped file changed, it runs `tools/release/check_release_manifest.py` against every changed manifest and posts a failure-summary comment on failure. **Two of the six globs are still stale**: `apps/desktop/src/sd16/**` and `apps/desktop/src/sd17/**` resolve to nothing in this checkout (`sd16/`'s subdirectories moved to `apps/desktop/src/feedback/` and `apps/desktop/src/update/` in 2026-08-10's `06d926e90`; `sd17/` never existed here) — the `testerWorkbench/update` and `operatorTriage` globs were fixed since the last pass (they used to read `sd11/update/**`/`sd15/**`), but the `sd16`/`sd17` globs were not; this workflow's own YAML is out of `docs/architecture/`'s write scope, so this is recorded here as a known, narrower gap rather than corrected in place.
+6. **`.github/workflows/tranche-3-ci.yml`** — **tranche/3-specific**, not a generic template. Guards that slice PRs target `tranche/3` (never `develop`, per the header comment's "devops/tranche-branch-governance refusal"), runs the same test+typecheck+test lane as the publish workflow's `test` job on every push/PR to `tranche/3`, and validates any touched `docs/release/**/manifest.yaml` or `release-notes.md` via `check_release_manifest.py`. No later tranche (including `tranche/16`, the current one) has its own parallel `<tranche>-ci.yml` — `ls .github/workflows/ | grep tranche` shows only `tranche-3-ci.yml`.
 
 ### `scripts/release/promote-alpha-to-beta.sh` / `promote-beta-to-stable.sh`
 
-Local, human-run helpers (not invoked by any workflow) that evaluate the same doctrine gates as `check_promotion_evidence.py` but against real `gh` calls, and print (or write to `--body-out`) a ready-to-paste PR body carrying the `tranche_id:` / `release_notes_path:` / evidence keys the CI gate expects. Both source `scripts/release/_lib-gates.sh` for shared helpers (`validate_release_notes`, `known_issues_has_marker`, `release_url_for_tag`, `is_valid_evidence`, `emit_pr_body`). Neither script ever calls `gh pr create` — confirmed by `scripts/release/test-promotion-gates.test.sh`'s final assertion (`test-promotion-gates.test.sh:337-341`), which greps a full log of every `gh` invocation across the suite for the literal `pr create` and fails if found.
+Local, human-run helpers (not invoked by any workflow) that evaluate the same doctrine gates as `check_promotion_evidence.py` but against real `gh` calls, and print (or write to `--body-out`) a ready-to-paste PR body carrying the `tranche_id:` / `release_notes_path:` / evidence keys the CI gate expects. Both source `scripts/release/_lib-gates.sh` for shared helpers. Neither script ever calls `gh pr create` — `scripts/release/test-promotion-gates.test.sh`'s final assertion greps a full log of every `gh` invocation across the suite for the literal `pr create` and fails if found.
 
 ## The release-notes CI contract
 
-`release_notes_path` is regex-locked in two independent schemas, which must be kept in agreement by hand:
+`release_notes_path` is regex-locked in two independent schemas, kept in agreement by hand:
 
-- `schemas/update/update-manifest.schema.json:69` — `"pattern": "^docs/release/[^/]+/release-notes\\.md$"`
-- `tools/release/release-manifest.schema.json:23` — `"pattern": "^docs/release/.+/release-notes\\.md$"` (looser: allows nested subdirectories under `docs/release/`, where the update-manifest schema requires exactly one path segment).
+- `schemas/update/update-manifest.schema.json` — `"pattern": "^docs/release/[^/]+/release-notes\\.md$"`
+- `tools/release/release-manifest.schema.json` — `"pattern": "^docs/release/.+/release-notes\\.md$"` (looser: allows nested subdirectories, where the update-manifest schema requires exactly one path segment).
 
-The seven required release-notes section headers are asserted in `tools/release/check_release_manifest.py`'s `REQUIRED_NOTES_SECTIONS` (lines 35-43):
+The seven required release-notes section headers are asserted in `tools/release/check_release_manifest.py`'s `REQUIRED_NOTES_SECTIONS`:
 
 ```python
 REQUIRED_NOTES_SECTIONS = [
@@ -145,17 +157,31 @@ REQUIRED_NOTES_SECTIONS = [
 ]
 ```
 
-The same seven headers (as literal `## `-prefixed strings, and order-checked) are independently re-declared in `scripts/release/check_promotion_evidence.py:82-90` (`REQUIRED_NOTE_SECTIONS`) and `scripts/release/_lib-gates.sh:15-23` (`REQUIRED_NOTE_SECTIONS` bash array) — three separate lists that must stay in sync by convention, not by shared import (the Python promotion-gate checker and the schema-side checker are deliberately different modules; see `check_promotion_evidence.py:1-56`'s "stdlib only" note).
+The same seven headers (as literal `## `-prefixed strings, order-checked) are independently re-declared in `scripts/release/check_promotion_evidence.py`'s `REQUIRED_NOTE_SECTIONS` and `scripts/release/_lib-gates.sh`'s `REQUIRED_NOTE_SECTIONS` bash array — three separate lists kept in sync by convention, not shared import (the Python promotion-gate checker is deliberately stdlib-only).
 
 ## The pinned-SD-16 quirk
 
-Several pipeline surfaces are still pinned to frozen SD-16-era identifiers even though newer bundles (SD-17 through SD-22, tranche/5) exist. This is the manifest contract's frozen identity — intentional, not an oversight to "fix":
+Several pipeline surfaces are still pinned to frozen SD-16-era identifiers even though eight further bundles (SD-17 through SD-36) have shipped since. This is the manifest contract's frozen identity — intentional, not an oversight to "fix":
 
-1. **`docs/release/SD-16/release-notes.md` hardcoded as the publish workflow's notes source.** `publish-tester-release.yml` reads/writes this exact path at multiple steps: the `Validate tranche release notes` step (line 213), the manifest-generation `--release-notes-path` argument (line 298), the `Stage tranche release notes` copy (line 362), the `finalize` job's manifest rebuild (lines 719, 721, 734), and the release-notes fallback when creating the GitHub release (line 775). Every tester release published today ships the SD-16 release-notes file regardless of which SD's code actually changed.
-2. **`tranche_id` is a JSON Schema `const` locked to `"STC-CODEX-SD-16"`.** `schemas/update/update-manifest.schema.json:53` (`"const": "STC-CODEX-SD-16"`, with an explicit doc-comment "Locked... for the duration of this contract") and `schemas/update/channel-index.schema.json:60` both enforce this; `scripts/release/write_release_manifest.py:58` emits exactly that constant (`TRANCHE_ID = "STC-CODEX-SD-16"`).
-3. **`codex-tranche-2-5` is a separate pinned constant inside the promotion-gate surface** (distinct from the manifest's `STC-CODEX-SD-16`): `scripts/release/check_promotion_evidence.py:78` (`TRANCHE_ID = "codex-tranche-2-5"`) and `scripts/release/_lib-gates.sh:11` (`TRANCHE_ID="codex-tranche-2-5"`) both gate the promotion-evidence PR-body and manifest checks against this literal string, independent of the update-manifest schema's `STC-CODEX-SD-16` pin.
+1. **`docs/release/SD-16/release-notes.md` hardcoded as the publish workflow's notes source.** `publish-tester-release.yml` reads/writes this exact path at multiple steps (release-notes validation, manifest generation's `--release-notes-path`, staging the notes into the release, the `finalize` job's manifest rebuild, and the release-notes fallback when creating the GitHub release). Every tester release published today ships the SD-16 release-notes file regardless of which SD's code actually changed.
+2. **`tranche_id` is a JSON Schema `const` locked to `"STC-CODEX-SD-16"`.** `schemas/update/update-manifest.schema.json` and `schemas/update/channel-index.schema.json` both enforce this; `scripts/release/write_release_manifest.py`'s `TRANCHE_ID` emits exactly that constant.
+3. **`codex-tranche-2-5` is a separate pinned constant inside the promotion-gate surface** (distinct from the manifest's `STC-CODEX-SD-16`): `scripts/release/check_promotion_evidence.py`'s `TRANCHE_ID` and `scripts/release/_lib-gates.sh`'s `TRANCHE_ID` both gate the promotion-evidence PR-body and manifest checks against this literal string, independent of the update-manifest schema's pin.
 
-These three pins are consistent with each other only in the sense that they all currently point at old identifiers; they are not the *same* identifier, and nothing in the codebase currently derives one from another. A future contract bump that changes any of the three needs to touch every file listed above plus its corresponding test fixtures (`scripts/release/test-promotion-gates.test.sh`, `scripts/release/__tests__/fixtures/`, `scripts/release/check_promotion_evidence.py`'s embedded `_t_*` self-tests).
+These three pins are consistent with each other only in the sense that they all point at old identifiers; they are not the *same* identifier, and nothing in the codebase currently derives one from another. A future contract bump that changes any of the three needs to touch every file listed above plus its corresponding test fixtures (`scripts/release/test-promotion-gates.test.sh`, `scripts/release/__tests__/fixtures/`, `scripts/release/check_promotion_evidence.py`'s embedded `_t_*` self-tests).
+
+## The site-deploy workflow (`deploy-site.yml`)
+
+A separate, smaller lane, unrelated to the desktop-app release above except for sharing `main`:
+
+- **Trigger**: `push` to `main` with `paths: ['site/**', '.github/workflows/deploy-site.yml']`, plus manual `workflow_dispatch`.
+- **What it deploys**: the static `site/` tree (the `campaign-codex.org` public status page — see [status.md](./status.md) for what that page reports) to the Cloudflare Pages project `codex` (default URL `https://codex-3cc.pages.dev/`, custom domain `https://campaign-codex.org/`).
+- **Concurrency**: `group: deploy-site`, `cancel-in-progress: false` — deploys are serialized rather than raced, unlike `publish-tester-release.yml` (see below).
+- **Permissions**: `contents: read` only; the Cloudflare side is authenticated via the `CLOUDFLARE_API_TOKEN` repository secret.
+- **Not gated by any test job** — a push to `main` touching only `site/**` deploys directly, without running `cargo test`/`npm test` first (those only run for a real app-code push via `publish-tester-release.yml`'s own `test` job).
+
+## Installer contents and size
+
+Bundle targets, per `tauri.conf.json`: `deb`, `appimage` (Linux), `msi`, `nsis` (Windows), `app`, `dmg` (macOS). Bundled resources: `resources/authoring_workbench/guard-stance-package/`, `resources/corpus_fixtures/` (small hand-authored fixtures), and `resources/corpus_bundle/` mapped to `data/corpus/` inside the package — the sanitized runtime corpus mirror described in [desktop-app.md](./desktop-app.md)'s "The corpus-bundle build step". That bundle alone is **64 MiB** across **14,029** JSON files (`du -sh apps/desktop/src-tauri/resources/corpus_bundle/`; `find … -name '*.json' | wc -l`) — the dominant contributor to installed size alongside the Tauri/WebView2/webkit runtime itself. No installer artifact from a real `tauri build` run was inspected for this pass (that would mean running a build, out of this doc-only pass's scope) — the 64 MiB corpus-bundle figure is the one concretely re-derivable number; total installer size per platform is not independently re-verified here.
 
 ## Scripts and tools inventory
 
@@ -167,37 +193,60 @@ These three pins are consistent with each other only in the sense that they all 
 | `scripts/release/promote-beta-to-stable.sh` | Local helper: evaluates the 6 beta→stable gates (including provenance.json download) and prints/writes the PR body. | Run manually by an operator. |
 | `scripts/release/validate_manifest.py` | Validates an `update-manifest.json` against `schemas/update/update-manifest.schema.json` via `jsonschema`. | `publish-tester-release.yml` (linux publish job and `finalize`). |
 | `scripts/release/write_release_manifest.py` | Builds and writes a schema-conformant `update-manifest.json`, computing AppImage/MSI/DMG sha256+size from disk. | `publish-tester-release.yml` (linux publish job and `finalize`). |
-| `scripts/release/test-promotion-gates.test.sh` | Bash self-test for `promote-alpha-to-beta.sh` / `promote-beta-to-stable.sh` against a stubbed `gh`. | Run manually (`bash scripts/release/test-promotion-gates.test.sh`); not wired into any workflow found in `.github/workflows/`. |
-| `scripts/release/__tests__/test-write-release-manifest.test.sh` | Bash self-test for `write_release_manifest.py` / `validate_manifest.py` round-trip, including a malformed-sha256 negative case. | Run manually (`bash scripts/release/__tests__/test-write-release-manifest.test.sh`). |
-| `scripts/tranche/validate-tranche-notes.py` | Validates a tranche manifest YAML + its bound release-notes.md (required sections, order, non-empty). | `publish-tester-release.yml`'s `Validate tranche release notes` step (linux publish job, line 213). |
-| `scripts/tranche/tests/test_validate_tranche_notes.py` | `unittest`-based test suite for `validate-tranche-notes.py` (9 cases as run). | Run manually (`python3 scripts/tranche/tests/test_validate_tranche_notes.py`). |
-| `tools/ci/branch-promotion-guard.sh` | Defines `verify_promotion_source()`; sourceable for tests or directly runnable as the Action step body. | `allow-only-develop-into-test.yml`, `allow-only-test-into-main.yml`; unit-tested by `tests/sd16-e5-f1/test_branch_promotion_guard.sh`. |
+| `scripts/release/test-promotion-gates.test.sh` | Bash self-test for `promote-alpha-to-beta.sh` / `promote-beta-to-stable.sh` against a stubbed `gh`. | Run manually; not wired into any workflow. |
+| `scripts/release/__tests__/test-write-release-manifest.test.sh` | Bash self-test for `write_release_manifest.py` / `validate_manifest.py` round-trip, including a malformed-sha256 negative case. | Run manually. |
+| `scripts/tranche/validate-tranche-notes.py` | Validates a tranche manifest YAML + its bound release-notes.md (required sections, order, non-empty). | `publish-tester-release.yml`'s `Validate tranche release notes` step. |
+| `scripts/tranche/tests/test_validate_tranche_notes.py` | `unittest`-based test suite for `validate-tranche-notes.py`. | Run manually. |
+| `tools/ci/branch-promotion-guard.sh` | Defines `verify_promotion_source()`; sourceable for tests or directly runnable as the Action step body. | `allow-only-develop-into-test.yml`, `allow-only-test-into-main.yml`; unit-tested by `tools/ci/test_branch_promotion_guard.sh`. |
+| `tools/ci/test_branch_promotion_guard.sh` | Unit tests for `verify_promotion_source()` — moved here from `tests/sd16-e5-f1/` by SD-36 Epic C2. | Run manually; the same function it tests is exercised live by the `allow-only-*` workflows. |
 | `tools/release/check_release_manifest.py` | Validates release-manifest.json files against the legacy `tools/release/release-manifest.schema.json` shape plus tranche_id/release_notes_path coherence against the working tree. | `check-release-manifest.yml`, `tranche-3-ci.yml`. |
 | `tools/release/check_release_manifest_against_dev_schema.py` | Validates a manifest against the dev `schemas/update/update-manifest.schema.json` shape, then re-runs `check_release_manifest.py`'s `_coherence_check`. | `publish-tester-release.yml` (both the linux job's "Validate release manifest (gate)" step and `finalize`). |
-| `tools/release/emit_channel_index.py` | Emits and validates a `channels/<channel>.json` pointer from a schema-valid manifest. | `publish-tester-release.yml`'s `finalize` job (both the always-run "Emit alpha channel index" step and the gated "Prepare channel index payload" step). |
+| `tools/release/emit_channel_index.py` | Emits and validates a `channels/<channel>.json` pointer from a schema-valid manifest. | `publish-tester-release.yml`'s `finalize` job. |
 | `tools/release/release-manifest.schema.json` | The legacy release-manifest schema (`schema_version: "v1"`, `platform_artifacts` array, linux-only). | Consumed by `check_release_manifest.py`. |
-| `tools/release/test_check_release_manifest.py` | `unittest` suite for `check_release_manifest.py` (9 cases as run, uses a `TmpRepo` fixture class). | Run manually (`python3 tools/release/test_check_release_manifest.py`). |
-| `tools/release/test_check_release_manifest_against_dev_schema.py` | `unittest` suite for the dev-schema shim (2 cases as run). | Run manually. |
-| `tools/release/test_emit_channel_index.py` | `unittest` suite for `emit_channel_index.py` (3 cases as run, including a malformed-tag and wrong-channel negative case). | Run manually. |
+| `tools/release/test_check_release_manifest.py` | `unittest` suite for `check_release_manifest.py`. | Run manually. |
+| `tools/release/test_check_release_manifest_against_dev_schema.py` | `unittest` suite for the dev-schema shim. | Run manually. |
+| `tools/release/test_emit_channel_index.py` | `unittest` suite for `emit_channel_index.py`. | Run manually. |
 
-All Python validators that call `jsonschema.validate`/`Draft202012Validator` need the `jsonschema` pip package (pinned to `4.21.1` everywhere it is installed in CI, e.g. `publish-tester-release.yml:324`, `check-release-manifest.yml:82`). It is already importable in this workspace (`python3 -c "import jsonschema"` exits 0).
+All Python validators that call `jsonschema.validate`/`Draft202012Validator` need the `jsonschema` pip package (pinned to `4.21.1` in CI). It is already importable in this workspace (`python3 -c "import jsonschema"` exits 0).
 
 ## Workflow trigger and permissions summary
 
 | Workflow | Trigger | Top-level `permissions:` | Concurrency group |
 |---|---|---|---|
-| `publish-tester-release.yml` | `push` to `develop`, `main` | `contents: write` (line 15) | none declared |
+| `publish-tester-release.yml` | `push` to `develop`, `main` | `contents: write` | none declared |
 | `promotion-gates.yml` | `pull_request_target` → `test`, `main` | `{}` (job grants its own: `contents: read`, `pull-requests: write`, `issues: write`, `statuses: write`) | none declared |
 | `allow-only-develop-into-test.yml` | `pull_request_target` → `test`, `delete` | `{}` (the `restore-develop-branch` job grants `contents: write`) | none declared |
 | `allow-only-test-into-main.yml` | `pull_request_target` → `main`, `delete` | `{}` (the `restore-test-branch` job grants `contents: write`) | none declared |
 | `check-release-manifest.yml` | `pull_request` → `develop`, `test`, `main` (path-filtered) | `contents: read`, `pull-requests: read` | none declared |
-| `tranche-3-ci.yml` | `pull_request` → `tranche/3`, `push` → `tranche/3` | `contents: read`, `pull-requests: read` | `tranche-3-${{ github.ref }}`, `cancel-in-progress: true` (lines 32-34) |
+| `tranche-3-ci.yml` | `pull_request` → `tranche/3`, `push` → `tranche/3` | `contents: read`, `pull-requests: read` | `tranche-3-${{ github.ref }}`, `cancel-in-progress: true` |
+| `deploy-site.yml` | `push` to `main` (path-filtered: `site/**`), `workflow_dispatch` | `contents: read` | `deploy-site`, `cancel-in-progress: false` |
 
-`publish-tester-release.yml` is the only workflow here with no `concurrency:` block — two pushes to `develop` in quick succession can run two full `finalize` jobs concurrently, each pushing to the shared `update-index` branch (mitigated only by each push being a fast-forward-or-fail `git push origin HEAD:update-index`, not by the workflow itself serializing runs). `tranche-3-ci.yml` is the only workflow with an explicit `concurrency:` group, and it cancels in-progress runs on the same ref.
+`publish-tester-release.yml` remains the only workflow that runs on every commit to `develop`/`main` with no `concurrency:` block — two pushes to `develop` in quick succession can run two full `finalize` jobs concurrently, each pushing to the shared `update-index` branch (mitigated only by each push being a fast-forward-or-fail `git push origin HEAD:update-index`, not by the workflow itself serializing runs). `deploy-site.yml` and `tranche-3-ci.yml` are the only two workflows with an explicit `concurrency:` group.
+
+## How to extend
+
+**Add a new tranche-specific CI workflow** (worked example: what a hypothetical `tranche-16-ci.yml` would need, following `tranche-3-ci.yml`'s precedent — none exists yet for any tranche after 3):
+1. Copy `tranche-3-ci.yml`'s trigger shape (`pull_request`/`push` scoped to the one branch, never `develop`).
+2. Reuse the same `test`+`typecheck`+`test` lane `publish-tester-release.yml`'s `test` job runs, so the two never silently diverge.
+3. Add the `docs/release/**/manifest.yaml`/`release-notes.md` validation step via `check_release_manifest.py`, matching `tranche-3-ci.yml`'s own step.
+4. Give it its own `concurrency:` group (`tranche-N-${{ github.ref }}`, `cancel-in-progress: true`) so it doesn't inherit `publish-tester-release.yml`'s lack of one.
+
+**Bump the tranche-base version at a new tranche cut**: update `apps/desktop/package.json`, `apps/desktop/src-tauri/tauri.conf.json`, and `apps/desktop/src-tauri/Cargo.toml` (and `Cargo.lock`'s `codex-desktop` entry) to the new `0.<N>.0` together, in the same commit; re-run `git grep -l '0\.<old>\.0-test' -- apps/desktop/src` and move every hit, then confirm `buildLabelFixtureFreshness.test.ts` still names a file that actually carries the new literal.
+
+**Add a required release-notes section**: it must be added to all three lists at once — `tools/release/check_release_manifest.py`'s `REQUIRED_NOTES_SECTIONS`, `scripts/release/check_promotion_evidence.py`'s `REQUIRED_NOTE_SECTIONS`, and `scripts/release/_lib-gates.sh`'s bash array — plus every fixture release-notes.md the promotion-gate test suite reads.
+
+## Pitfalls
+
+- **The SD-16 pins are not stale references to fix** — see "The pinned-SD-16 quirk" above. Three separate literal identifiers (`STC-CODEX-SD-16`, the release-notes path, `codex-tranche-2-5`) are all deliberately frozen contract values; changing one without the others and their fixtures breaks the pipeline.
+- **A `paths:` filter that names a moved directory silently stops firing** — `check-release-manifest.yml`'s `sd16/**`/`sd17/**` globs are the live example: they resolve to nothing today, so a change under the app's real `feedback/`/`update/` directories that should trigger this gate does not, unless it also happens to touch one of the filter's still-live globs. Whenever a directory this filter names gets renamed, update the filter in the same commit.
+- **Line-number citations in this doc rot fast.** `publish-tester-release.yml` is 1,000+ lines and grows every bundle; this pass deliberately cites step/job names instead of line ranges for exactly that reason. Do not reintroduce line-number citations without expecting them to be wrong again within a tranche or two.
+- **`GITHUB_RUN_NUMBER` is monotonic repo-wide, not per-branch** — a build number is never reused across channels, but it also never resets, so "build 42" on its own says nothing about which tranche it came from; always read it alongside the `major.tranche` prefix.
+- **`deploy-site.yml` shares no gate with the app release** — a broken `cargo test`/`npm test` on `main` does not block a `site/**`-only push from deploying. Do not assume a green site deploy says anything about app-code health, or vice versa.
 
 ## Related docs
 
 - [testing.md](./testing.md) — the full verification command set, including the standalone scripts referenced in the inventory table above.
 - [overview.md](./overview.md) — system-level architecture context.
 - [conventions.md](./conventions.md) — repo-wide coding and doc conventions.
-- [status.md](./status.md) — current SD/tranche state.
+- [status.md](./status.md) — current SD/tranche state, and what the deployed public status site (`site/`) actually reports.
+- [desktop-app.md](./desktop-app.md) — the corpus-bundle build step this pipeline's `tauri build` step depends on.

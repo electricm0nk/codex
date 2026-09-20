@@ -1,7 +1,7 @@
 # Persistence
 
 > Scope: how saved characters and campaigns are typed, stored on disk, and reached from the desktop shell.
-> Last verified: 2026-07-21 against deeff110a104
+> Last verified: **2026-09-20 against `tranche/16`, HEAD `b22ea9e113`** (SD-36 consolidation, architecture-docs truth-up). Re-derived the on-disk bundle layout — a saved character now writes up to **six** files, not two, since `character_hub.rs` grew four sidecar files (bio/money/HP, alongside the pre-existing portrait) whose writes never went through `SavedCharacterEnvelope`/`CharacterInput` at all. Prior pass: 2026-07-21 against `deeff110a104`.
 > Maintenance: updated at SD closure — see [README.md](./README.md) §Maintenance contract
 
 This covers the two local-store boundaries under `src/`: `src/saved_character/`
@@ -29,13 +29,40 @@ schema_version 1 envelopes (no `game_system` line) still load, via
 `Authoritative` — there is no autosave/recovery revision kind implemented yet,
 only the type headroom for one.
 
+### The saved-character model
+
+```mermaid
+erDiagram
+    SavedCharacterEnvelope ||--|| CharacterInput : "character_input"
+    SavedCharacterEnvelope {
+        string character_id
+        string revision_id
+        string revision_kind
+        string saved_at
+        int schema_version
+        string game_system
+        string display_label
+    }
+    CharacterInput ||--o{ ClassLevel : "classes"
+    CharacterInput ||--o{ EquipmentSelection : "chosen.equipment_selections"
+    CharacterInput ||--o{ SpellSelection : "chosen.spells_selected"
+    CharacterInput ||--o{ FeatSelection : "chosen.feats_selected"
+    CharacterInput ||--o{ TraitSelection : "chosen.traits_selected"
+    CharacterInput ||--o{ SkillAllocation : "chosen.skill_allocations"
+    SavedCharacterEnvelope ||--o| CharacterBioDto : "bio.json (sidecar)"
+    SavedCharacterEnvelope ||--o| StoredMoney : "money.json (sidecar)"
+    SavedCharacterEnvelope ||--o| StoredHp : "hp.json (sidecar)"
+    SavedCharacterEnvelope ||--o| Portrait : "portrait.png (sidecar)"
+```
+*The envelope wraps one `CharacterInput`; four further sidecar files hang off the same bundle directory but carry no `CharacterInput`/envelope relationship of their own — see "On-disk bundle layout" below.*
+
 ### On-disk bundle layout
 
 `src/saved_character/local_store.rs` defines `SavedCharacterStore`, a
 concrete unit struct (`pub struct SavedCharacterStore;`) with associated
 functions `save`, `load`, and `list_all`. Its own module doc comment states
-the layout precisely: one directory (the bundle root) containing exactly two
-files, named by the constants at the top of the file —
+the layout precisely: one directory (the bundle root) containing two
+authoritative files, named by the constants at the top of the file —
 
 ```rust
 const ENVELOPE_FILE: &str = "envelope.txt";
@@ -52,6 +79,37 @@ const CHARACTER_INPUT_FILE: &str = "authoritative_character_input.txt";
   encoding — is documented in [testing.md](./testing.md); this module only
   consumes it.
 
+**Four further sidecar files can exist in the same bundle directory, written
+directly by `apps/desktop/src-tauri/src/character_hub.rs` rather than through
+`SavedCharacterStore::save`/the envelope grammar** — none of them are part of
+`SavedCharacterEnvelope` or `CharacterInput`; each is its own independent
+JSON file, present only once the corresponding feature has been used at least
+once for that character:
+
+| File | Constant | Written by | Absent means |
+|---|---|---|---|
+| `portrait.png` | `PORTRAIT_FILE_NAME` | `save_character_portrait` | no portrait uploaded yet — `load_character_portrait` returns `None`, not an error |
+| `bio.json` | `BIO_FILE_NAME` | `update_character_bio` | no bio saved yet — `load_character_bio` returns `CharacterBioDto::default()` (all-empty), not an error |
+| `money.json` | `MONEY_FILE_NAME` | `adjust_character_money` | zero balance — `load_character_money` returns a zero `CharacterMoneyDto`, not an error |
+| `hp.json` | `HP_FILE_NAME` | `adjust_character_hp` | current HP defaults to computed max HP — `load_character_durability` derives a default rather than erroring |
+
+All four share one design rationale, stated directly in `character_hub.rs`'s
+own comments: each is data the rules engine does not need to compute a
+character (money and HP tracking, narrative bio fields, a portrait image),
+so none of it belongs in `CharacterInput` — putting it there would make it
+rules-engine-visible and force every consumer of `CharacterInput` to handle
+fields with no mechanical meaning. Each sidecar's write function requires the
+character to already exist (checked via `SavedCharacterStore::load` for
+bio, `root.exists()` for the portrait) — none of the four is ever the first
+write to a character's directory. `money.json` persists only the canonical
+`total_copper` integer; the platinum/gold/silver/copper breakdown in the wire
+DTO is always derived fresh via `money::copper_to_denominations`, never
+stored redundantly. `hp.json` persists current HP and accumulated nonlethal
+damage; `adjust_character_hp_at_root` clamps healing at computed max HP and
+floors nonlethal recovery at zero. Portraits are capped at
+`MAX_PORTRAIT_BYTES = 3 * 1024 * 1024` bytes as a defensive backstop (the
+frontend crops/resizes before sending bytes — see [desktop-app.md](./desktop-app.md)).
+
 `SavedCharacterStore::save` refuses to write a record it cannot honestly read
 back: `validate_character_input` rejects any field containing a newline (the
 grammar is line-based) and enforces that `selected_choices` entries have the
@@ -59,11 +117,15 @@ exact colon-segment shape the loader expects (`choice_set_id` = exactly two
 segments, `selection_id` = at least two) — see the doc comment directly above
 `validate_character_input` in `local_store.rs`. `SavedCharacterStore::save`
 also validates the envelope fields are single-line before writing
-`envelope.txt`.
+`envelope.txt`. The four sidecar writers above do not share this validation
+path — each does its own narrow shape check (e.g. bio field values just need
+to serialize as JSON; there is no line-based grammar to protect there).
 
 `SavedCharacterStore::list_all(characters_root)` walks every subdirectory of
 `characters_root`, sorted by file name, and calls `load` on each
-independently. A `NotFound` root returns an empty `SavedCharacterListing`
+independently — `load` reads only `envelope.txt` and
+`authoritative_character_input.txt`; the sidecar files are not touched by
+listing. A `NotFound` root returns an empty `SavedCharacterListing`
 (not an error — no characters yet is not a failure). One unreadable
 subdirectory is collected into `SavedCharacterListing::unreadable_entries`
 (as a `SavedCharacterListingError { entry_name, message }`) without failing
@@ -103,11 +165,34 @@ layout under a campaign's own directory:
 ```text
 <campaign_dir>/
   .config/<sanitized name>.json   # CampaignSnapshot minus `assets`
+  .config/nonce                   # conflict-detection sidecar (see below)
   resources/<sanitized title>.md
   adventure-log/<sanitized title>.md
   maps/<sanitized title>.md
   wiki/<sanitized title>.md
 ```
+
+```mermaid
+erDiagram
+    CampaignSnapshot ||--o{ CampaignMember : "members"
+    CampaignSnapshot ||--|| CampaignAssets : "assets"
+    CampaignAssets ||--o{ CampaignAsset : "resources"
+    CampaignAssets ||--o{ CampaignAsset : "adventure_log"
+    CampaignAssets ||--o{ CampaignAsset : "maps"
+    CampaignAssets ||--o{ CampaignAsset : "wiki"
+    CampaignSnapshot {
+        string id
+        string name
+        string rule_set_id
+        string description
+        int schema_version
+    }
+    CampaignAsset {
+        string title
+        string body
+    }
+```
+*Empty asset groups never get a subdirectory of their own (`write_asset_group` early-returns on an empty slice).*
 
 The JSON config carries every `CampaignSnapshot` field except `assets`
 (`config_only.assets = CampaignAssets::default()` before serializing); each
@@ -116,8 +201,6 @@ markdown asset is written verbatim as its own `.md` file, named from
 files fresh on every call — an edit made outside the app (e.g. in Obsidian)
 between save and load is honored, per the module doc comment and the
 `load_honors_an_external_obsidian_style_edit_to_an_asset_markdown_file` test.
-Empty asset groups never get a subdirectory (`write_asset_group` early-returns
-on an empty slice).
 
 `CampaignStore::list_all(campaigns_root)` mirrors
 `SavedCharacterStore::list_all` exactly: a missing root returns an empty
@@ -144,38 +227,46 @@ conflict.
 
 ## Reaching these stores from the desktop
 
-`apps/desktop/src-tauri/src/character_hub.rs` wraps `SavedCharacterStore`
-behind Tauri commands (`create_character`, `clone_character`,
-`list_saved_characters`, `load_saved_character`, `level_up_character`,
-`add_equipment_selection`, `add_spell_selection`, `delete_character`,
-`export_character`, `export_character_json`, `import_character`, plus the
-portrait commands below); its `characterHub/` submodule (SD-24 Epic 7) adds
-three more mutation-adjacent commands over the same store —
-`append_to_character` (batch equipment append, corpus-validated),
-`recompute_character` (load + recompute, never mutates or re-saves), and
-`re_save_character` (re-saves under a freshly minted `{id}.rev.N` revision,
-refusing on an `expectedRevisionId` mismatch). `apps/desktop/src-tauri/src/campaign_drive.rs`
-wraps `CampaignStore` behind `write_campaign_drive_artifacts`, `drive_list_campaigns`,
-`drive_load_campaign`, `drive_save_campaign`, and `drive_delete_campaign`.
-See [desktop-app.md](./desktop-app.md) for the full command inventory,
-including which of these commands have no frontend caller yet.
+```mermaid
+flowchart LR
+    subgraph Rust["apps/desktop/src-tauri/src/"]
+        CH["character_hub.rs\n(+ characterHub/ submodule)"] --> SCS["SavedCharacterStore\n(src/saved_character/local_store.rs)"]
+        CD["campaign_drive.rs"] --> CS["CampaignStore\n(src/campaign/local_store.rs)"]
+    end
+    SCS --> Disk1["&lt;characters_root&gt;/&lt;id&gt;/\nenvelope.txt, authoritative_character_input.txt,\nportrait.png?, bio.json?, money.json?, hp.json?"]
+    CS --> Disk2["&lt;campaign_dir&gt;/\n.config/&lt;name&gt;.json, .config/nonce,\nresources|adventure-log|maps|wiki/*.md"]
+```
+*Two independent Tauri-command surfaces, two independent headless stores, two independent on-disk layouts.*
 
-**Revision-id advancement is inconsistent by design today.** `level_up_character`,
-`add_equipment_selection`, and `add_spell_selection` all route through the
-shared `mutate_saved_character_at_root` load → mutate → recompute → re-save
-tail, but none of them advance `revision_id` — every mutation keeps whatever
-`revision_id` was already on disk. Only the new `re_save_character` command
-computes a fresh `{id}.rev.N` (`N` derived from the on-disk revision); every
-other write path that persists a `SavedCharacterEnvelope` (`create_character`,
-`clone_character`, `seed_default_character_if_needed`, `import_character`)
-still hardcodes `revision_id: "{id}.rev.1"` at construction time.
-`campaign_drive.rs`'s own module doc comment describes itself as "the thin
-Tauri-command adapter over the headless `codex::campaign` crate ... it
-deserializes the frontend's already-JSON campaign payloads into a typed
-`CampaignSnapshot` and delegates all real file I/O to
-`codex::campaign::local_store::CampaignStore`". The full command inventory
-and request/response DTO shapes are catalogued in
-[desktop-app.md](./desktop-app.md); this file only names the entry points.
+`apps/desktop/src-tauri/src/character_hub.rs` (and its `characterHub/`
+submodule) wraps `SavedCharacterStore` behind the character mutation
+commands catalogued in full in [desktop-app.md](./desktop-app.md)'s command
+inventory table: `create_character`, `clone_character`, `list_saved_characters`,
+`load_saved_character`, `level_up_character`, `preview_level_up`, the
+equipment/spell/feat/trait/skill mutation commands, the four sidecar
+commands (bio/money/HP/portrait), `delete_character`, `export_character(_json)`,
+`import_character`, plus `append_to_character` / `recompute_character` /
+`re_save_character` over the `RuleSystemAdapter` seam. `campaign_drive.rs`
+wraps `CampaignStore` behind `write_campaign_drive_artifacts`,
+`drive_list_campaigns`, `drive_load_campaign`, `drive_save_campaign`, and
+`drive_delete_campaign`.
+
+**Revision-id advancement is inconsistent by design today.** Most mutation
+commands route through the shared `mutate_saved_character_at_root` load →
+mutate → recompute → re-save tail and never advance `revision_id` — every
+mutation keeps whatever `revision_id` was already on disk. Only
+`re_save_character` computes a fresh `{id}.rev.N` (`N` derived from the
+on-disk revision); every other write path that persists a
+`SavedCharacterEnvelope` (`create_character`, `clone_character`,
+`seed_default_character_if_needed`, `import_character`) still hardcodes
+`revision_id: "{id}.rev.1"` at construction time. `campaign_drive.rs`'s own
+module doc comment describes itself as "the thin Tauri-command adapter over
+the headless `codex::campaign` crate ... it deserializes the frontend's
+already-JSON campaign payloads into a typed `CampaignSnapshot` and delegates
+all real file I/O to `codex::campaign::local_store::CampaignStore`". The full
+command inventory and request/response DTO shapes are catalogued in
+[desktop-app.md](./desktop-app.md); this file only names the entry points and
+the on-disk shape they write.
 
 Characters root on disk: `character_hub.rs`'s
 `characters_root_from_app_data_dir` joins the OS app-data directory with a
@@ -187,21 +278,37 @@ Campaigns root: there is no fixed app-data subdirectory — every
 local directory; the name reflects a not-yet-implemented Google Drive sync
 feature — see the module doc comment's note that "Google OAuth / Drive
 API integration does not exist ... the 'Drive folder' is really just a local
-path").
+path", and [desktop-app.md](./desktop-app.md)'s State-approach section for
+why campaigns actually live in `localStorage` today, with the Drive folder
+as a one-way write-through mirror).
+
+## Versioning and migration rules
+
+- **`SavedCharacterEnvelope`**: `CURRENT_SAVED_CHARACTER_SCHEMA_VERSION = 2`.
+  A schema_version 1 envelope (no `game_system` line) still loads — the
+  gap is filled by `local_store::derive_legacy_game_system`, which derives a
+  short id like `"pf1"` from the `content_or_rules_provenance` lineage
+  prefix rather than requiring a migration pass over old files on disk. There
+  is no write-side upgrade: an old file is read compatibly, but the next save
+  of that character writes schema_version 2 going forward (no migration
+  script rewrites old files in place).
+- **`CampaignSnapshot`**: `CURRENT_CAMPAIGN_SCHEMA_VERSION = 1` since the
+  type's introduction — there is no legacy format to migrate from, and no
+  version-2 shape exists yet.
+- **Sidecar files** (`bio.json`, `money.json`, `hp.json`, `portrait.png`) carry
+  no schema-version field of their own. Each loader treats "file absent" as
+  the only backward-compatibility case it needs to handle (see the table
+  above); a genuinely incompatible future shape change to one of these would
+  need its own versioning scheme, which does not exist today.
 
 ### Portrait storage
 
 `character_hub.rs` stores a character's portrait as `portrait.png`
-(`const PORTRAIT_FILE_NAME: &str = "portrait.png"`) written directly into
-that character's own bundle directory — the same directory as `envelope.txt`
-and `authoritative_character_input.txt` — via `save_character_portrait`,
-`load_character_portrait`, and `delete_character_portrait`. `save_character_portrait`
-requires the character to already exist (`root.exists()` check) — a portrait
-is never the first write to a character directory, per the doc comment above
-it. Portraits are capped at `MAX_PORTRAIT_BYTES = 3 * 1024 * 1024` bytes as a
-defensive backstop (the frontend crops/resizes before sending bytes).
-`load_character_portrait` returns the bytes re-encoded as a
-`data:image/png;base64,...` URL, or `None` if no portrait file exists.
+written directly into that character's own bundle directory via
+`save_character_portrait`, `load_character_portrait`, and
+`delete_character_portrait`. `load_character_portrait` returns the bytes
+re-encoded as a `data:image/png;base64,...` URL, or `None` if no portrait
+file exists.
 
 ## Design rule: no `*Backend` trait, no trait-object indirection
 
@@ -211,3 +318,52 @@ persistence backend in this codebase. Full statement of the rule, its source
 citation, and the "when to introduce a trait seam" guidance: see
 [conventions.md](./conventions.md) §"Concrete zero-field `*Store` structs,
 no `*Backend` trait."
+
+## How to extend
+
+**Add a new sidecar file to a saved character** (worked example: `bio.json`):
+1. Pick a file name constant (`const FOO_FILE_NAME: &str = "foo.json"`) in
+   `character_hub.rs`, next to the four existing ones.
+2. Write a `save_foo_at_root(root: &Path, foo: &FooDto) -> Result<(), String>`
+   that first checks the character already exists (`SavedCharacterStore::load`
+   or `root.exists()`) and a `load_foo_at_root(root: &Path) -> Result<FooDto,
+   String>` that returns an honest default (never an error) when the file is
+   absent.
+3. Wrap both in thin `#[tauri::command]` functions taking `tauri::AppHandle` +
+   a request DTO, resolving the root via `resolve_character_root`.
+4. Register both in `main.rs`'s `generate_handler!`, add `boundary/*.ts`
+   wrappers, and add the file to this doc's sidecar table and
+   [desktop-app.md](./desktop-app.md)'s mutation-command table.
+
+**Add a new persistence backend** (e.g. a cloud sync target): do not add a
+`dyn *Backend` trait seam preemptively — per the design rule above, this
+codebase waits for a second concrete implementation to actually exist before
+introducing trait-object indirection.
+
+## Pitfalls
+
+- **A sidecar file is not part of `CharacterInput` or the envelope, and will
+  not appear in an exported character JSON** unless `export_character`'s
+  payload builder is explicitly extended to read it — `export_character`
+  builds its payload from the real on-disk envelope, and the four sidecar
+  files sit outside that envelope by design. Adding a fifth sidecar file
+  without checking whether export/import needs to carry it is an easy way to
+  ship a feature that silently disappears on export/import round-trip.
+- **`SavedCharacterStore::list_all` never reads the sidecar files** — a
+  listing surface that wants to show, say, a character's current HP without
+  a full `load_saved_character` round trip cannot get it from `list_all`
+  alone; it would need to open `hp.json` itself, per-character, which is a
+  different (and today unimplemented) code path.
+- **Revision-id advancement is inconsistent on purpose, not a bug to "fix"
+  uniformly** — see "Reaching these stores from the desktop" above. A new
+  mutation command copied from `add_equipment_selection`'s shape will
+  correctly *not* advance `revision_id`, matching every other mutation
+  command except `re_save_character`.
+- **The campaign nonce file has no `CampaignSnapshot` field of its own** — a
+  refactor that tries to fold `CampaignSnapshot` and its on-disk shape into
+  one 1:1 mapping will find the nonce is deliberately outside that mapping;
+  see "Conflict detection" above for why.
+- **A missing characters/campaigns root is not an error** — both `list_all`
+  implementations return an empty listing for a `NotFound` root. A caller
+  that treats an empty listing as "something went wrong" rather than "no
+  records yet" will misreport a fresh install.

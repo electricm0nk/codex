@@ -1,7 +1,16 @@
 # Homebrew authoring and oracle validation
 
-> Scope: the headless GE-08 package-authoring surface, the GE-05 pilot oracle-parity surface, and the SD-33 corpus-wide oracle harness (`scripts/oracle_harness/`), as they exist today.
-> Last verified: **2026-08-25 against `tranche/13`** (SD-33 closure epilogue) for the new §"The SD-33 corpus-wide oracle harness" section; every other section carries its 2026-07-23 tranche/5-4 (SD-26 Epic 6 closure) verification, path-corrected 2026-08-22, and is otherwise unchanged.
+> Scope: the headless GE-08 package-authoring surface (`src/homebrew_authoring/`, root `codex` crate), the GE-05 pilot oracle-parity surface (`crates/codex-ingest/src/oracle_validation/`), and the SD-33 corpus-wide oracle harness (`scripts/oracle_harness/`), as they exist today.
+> Last verified: **2026-09-20 against `tranche/16` (`b22ea9e113`)** for the SD-36 Epic A crate move:
+> the old src/oracle_validation/ directory does not exist any more — it moved whole to
+> `crates/codex-ingest/src/oracle_validation/` (operator ruling D1, see
+> [corpus-ingest.md](./corpus-ingest.md) §"The crate wall"), and grew two submodules since the prior
+> pass (`class_feature_scaling_bar_check.rs`, `race_trait_formula_bar_check.rs` — 8 total, not 6).
+> `src/homebrew_authoring/` is unaffected: it reads and computes no PCGen token, so it stayed in the
+> root `codex` crate. This pass also added the oracle-harness flow diagram and the "How to extend"/
+> "Pitfalls" sections. Prior pass **2026-08-25 against `tranche/13`** (SD-33 closure epilogue)
+> verified §"The SD-33 corpus-wide oracle harness"; the rest of this document's substance is
+> otherwise unchanged since 2026-07-23 (SD-26 Epic 6 closure).
 > Maintenance: updated at SD closure — see [README.md](./README.md) §Maintenance contract
 
 Both modules covered here are deliberately narrow, bounded proof slices, not
@@ -9,6 +18,13 @@ general subsystems. Each module's own doc comment states its non-goals
 explicitly — this file repeats those non-goals verbatim because they are load
 -bearing for anyone tempted to widen either surface without reading the code
 first.
+
+`homebrew_authoring` computes nothing from PCGen data — its one proof package is entirely
+hand-authored — so it lives in the root `codex` crate and ships in the desktop binary.
+`oracle_validation` exists to compare against PCGen's own output, so it lives in `codex-ingest`
+alongside the converter and never ships; see [corpus-ingest.md](./corpus-ingest.md) §"The crate
+wall" for the mechanical enforcement (`crate-wall` verify stage, `cargo tree` proof) and which crate
+may depend on which.
 
 ## `homebrew_authoring/`: headless package-authoring surface
 
@@ -118,16 +134,44 @@ effect computation, provenance checks) lives in the desktop crate.
 
 ## `oracle_validation/`: the oracle-parity surface, today
 
-`src/oracle_validation/mod.rs`'s module doc comment: "Oracle-validation and
+`crates/codex-ingest/src/oracle_validation/mod.rs`'s module doc comment: "Oracle-validation and
 parity-harness surface (GE-05 / SD-26 Epic 2). Exposes the GE05-E2-F1
 golden-case fixture schema, the GE06-E3-F1 selected parity-dimension adapter,
 the Oracle-Harness comparator, the normalization-rule engine, the parity
-report writer, and the Rust-side PCGen runner wrapper." Six submodules exist:
-`golden_fixture`, `selected_parity_dimensions`, `comparator`, `normalization`,
-`parity_report`, and `pcgen_runner`. The first two carry the fixture/dimension
-schema; the last four are the in-crate parity harness — a normalized PCGen
-output can now be compared, dimension by dimension, against Codex's computed
-output and rendered into a real `PASS`/`FAIL` parity report.
+report writer, and the Rust-side PCGen runner wrapper." Eight submodules exist today (six as of
+SD-26; SD-35 added the two bar-check modules below): `golden_fixture`, `selected_parity_dimensions`,
+`comparator`, `normalization`, `parity_report`, `pcgen_runner`, `class_feature_scaling_bar_check`,
+and `race_trait_formula_bar_check`. The first two carry the fixture/dimension schema; the middle four
+are the in-crate parity harness — a normalized PCGen output can now be compared, dimension by
+dimension, against Codex's computed output and rendered into a real `PASS`/`FAIL` parity report; the
+last two are oracle-side halves of `derived_evaluator_fixture_check::run_bar_check`'s aggregate
+report (see below).
+
+### `class_feature_scaling_bar_check.rs` / `race_trait_formula_bar_check.rs`: the oracle-side bar-check halves
+
+SD-35 `AT-35-E6-001`/`AT-35-E6-003-RULED` cycle 17 moved two checks out of
+`src/rules_core/derived_evaluator_fixture_check.rs` into this crate, because both read the ingest
+format directly and `decisions.md` §11/§19 forbid that on the live side:
+
+- **`class_feature_scaling_bar_check.rs`** walks `data/corpus/<book>/class_feature/` and reads each
+  record's raw `BONUS:VAR|<name>|<formula>` tokens through the converter's own ingest-row accessor —
+  the `kind=class_feature` level-scaling check.
+- **`race_trait_formula_bar_check.rs`** drives the PCGen formula interpreter
+  (`crate::pcgen_import::formula_interpreter::PcgenFormulaEvaluator`) over a committed fixture roster
+  to prove the shipped `UNDINE_RACE_TRAIT_FORMULAS` table (imported from
+  `codex::rules_core::pilot_compute::UNDINE_RACE_TRAIT_FORMULAS`) transcribes each formula correctly —
+  the `kind=race_trait` FORMULA-shape check.
+
+**The check logic itself is unchanged from where it used to live** — same functions, same control
+flow, same failure strings, same mutation-proof tests; only the address moved. The aggregator that
+stitches these two together with `derived_evaluator_fixture_check.rs`'s other `run_*_bar_check`
+helpers also moved, to `crates/codex-ingest/src/bar_check.rs::run_bar_check` — this was "the ONE live
+read the old crate had of the tool side" per that file's own doc comment, so moving the aggregator
+(rather than moving the oracle calls into `codex`) is what let the oracle harness live entirely on
+the `codex-ingest` side of the wall. The per-kind helpers that don't name the oracle
+(`run_equipment_bar_check`, `run_monster_bar_check`, and the rest) stayed in
+`src/rules_core/derived_evaluator_fixture_check.rs`, made `pub` so `bar_check.rs` can call them
+across the crate boundary.
 
 ### `golden_fixture.rs`: typed golden-case fixture
 
@@ -234,7 +278,7 @@ without a live PCGen invocation.
 
 ### The pilot-case verification (Criterion 2.5)
 
-`tests/sd26_pilot_case_verification.rs` drives the whole harness end to end
+`crates/codex-ingest/tests/sd26_pilot_case_verification.rs` drives the whole harness end to end
 against a real `.pcg` build:
 `full_pipeline_runs_end_to_end_and_finds_two_genuine_skill_mismatches` runs the
 PCGen runner, normalizes, and compares — and the two skill mismatches it finds
@@ -247,13 +291,36 @@ over it is the fail-honest discipline working as designed.
 
 ## The SD-33 corpus-wide oracle harness (`scripts/oracle_harness/`)
 
-Distinct from the `oracle_validation/` Rust crate above (which is the narrow
-GE-05 pilot-case proof slice): `scripts/oracle_harness/` is a standalone
-Python harness built to compare **thousands** of engine-computed magnitudes
-against real PCGen BatchExporter output in one run, for `docs/work-inventory.json`'s
-`fixture-verified` and `literal-verified` populations. It does not replace
-`oracle_validation/`; it is a second, larger-scale comparison surface that
-reads the same kind of real PCGen export text.
+Distinct from the `oracle_validation/` Rust module above (the narrow
+GE-05 pilot-case proof slice, part of the `codex-ingest` crate): `scripts/oracle_harness/` is a
+standalone Python harness built to compare **thousands** of engine-computed magnitudes against real
+PCGen BatchExporter output in one run, for `docs/work-inventory.json`'s `fixture-verified` and
+`literal-verified` populations. It does not replace `oracle_validation/`; it is a second,
+larger-scale comparison surface that reads the same kind of real PCGen export text.
+
+```mermaid
+flowchart TD
+    pcg[".pcg fixture set\n(charbuild_remainder_generate.py:\n1 L20 .pcg per class, 1 L1 .pcg per race)"]
+    pcgen["Real PCGen, headless BatchExporter\n(pinned checkout, scripts/pcgen-run-character.sh)"]
+    export["computed-values.txt.ftl export\n(KEY=VALUE per line)"]
+    oracle_export["oracle_export.py\nparses into a dict"]
+    ours["'ours' probes\n(one-time-use bins, e.g. compute_equipment_effects\ncallers — all 11 deleted post-use; see Pitfalls below)"]
+    compare["compare.py::compare_unit\n(ours, oracle) -> agree | disagree | unverifiable"]
+    run["run.py\n--oracle-export --ours --output"]
+    results["results.json\n{unit_id, ours, oracle, verdict}[]"]
+    box["scripts/box_ledger.py\nTHE-BOX.md (see testing.md)"]
+
+    pcg --> pcgen --> export --> oracle_export
+    ours --> compare
+    oracle_export --> compare
+    compare --> run --> results --> box
+```
+
+*The pilot-case proof slice (`oracle_validation/`, above) runs one `.pcg` end to end through Rust;
+this harness runs the same real-PCGen/real-export shape at corpus scale, in Python, because the
+population it grades (thousands of units) makes a per-case Rust integration test impractical.
+`verdict` is always one of exactly three values — `unverifiable` is data, never an exception and
+never silently folded into `agree`.*
 
 - **`compare.py`**: `compare_unit` answers, for one unit, `(ours, oracle,
   verdict)` where `verdict` is exactly one of `"agree"`, `"disagree"`, or
@@ -295,7 +362,7 @@ reads the same kind of real PCGen export text.
   probes when the intended build called for 18, silently understating every
   computed DC by 4 (103 units affected, fixed).
 
-### The per-type AC isolator (**the `e5_ac_isolator` bin was deleted 2026-08-27**)
+### The per-type AC isolator (**all `AT-33-E5-*` "ours" probe bins, including `e5_ac_isolator`, were deleted 2026-08-27/28, `84760e4326`**)
 
 The original AC-shape harness computed `oracle = item AC.TOTAL - baseline
 AC.TOTAL` — a whole-character diff that conflates the item's own
@@ -314,9 +381,14 @@ match/skip-Circumstance/first-match predicate
 `arms_armor::armor_class_bonus_from_bonus_chains` /
 `arms_armor::apply_eqmod_armor_class_bonus` use, read-only. It never decides
 `armor_class_bonus` itself — it calls `compute_equipment_effects` for that,
-like every other `AT-33-E5-*` "ours" probe (`src/bin/e5_*_ours.rs`), each of
-which pairs one population shape with the field(s) of the engine's real
-compute path it reads to produce the `ours` half of a `run.py` comparison.
+like every other `AT-33-E5-*` "ours" probe did (each paired one population shape with the field(s)
+of the engine's real compute path it read to produce the `ours` half of a `run.py` comparison).
+**All 11 of these probe bins, including `e5_ac_isolator`, are deleted** (`84760e4326`, "delete 11
+dead SD-33 remediation probe bins") — they were one-time-use, their `results.json` evidence is
+already committed under `docs/release/SD-33-computed-value-verification/artifacts/`, and stale
+compiled copies of some may still sit in an untracked `target/debug/` from before the deletion (not
+a sign the source still exists — `git log --diff-filter=D -- '*_ours.rs'` is the re-derive command).
+A future corpus-wide comparison run writes new, purpose-built probes rather than resurrecting these.
 
 ## Relationship to the fail-honest pattern and test locations
 
@@ -327,17 +399,60 @@ substitutes a fabricated value when it cannot ground a claim (`preview_bridge.rs
 three-way `PreviewStatus` split and `golden_fixture.rs`'s `ClaimTier` gating
 are both direct applications of it).
 
-Tests live under the repo-root `tests/` directory, not inline in these
-modules: `tests/golden_case_fixture_schema.rs` covers `golden_fixture.rs`;
-`tests/ge06_selected_parity_dimensions.rs` covers
-`selected_parity_dimensions.rs`; `tests/sd26_comparator.rs` covers
-`comparator.rs`; `tests/sd26_normalization.rs` covers `normalization.rs`;
-`tests/sd26_parity_report.rs` covers `parity_report.rs`;
-`tests/sd26_pcgen_runner.rs` covers `pcgen_runner.rs` (including a real
-end-to-end PCGen-engine invocation); `tests/sd26_pilot_case_verification.rs`
-drives the full comparator harness against a real `.pcg` build;
-`tests/ge08_preview_bridge.rs`,
-`tests/ge08_package_file_lifecycle.rs`, and
-`tests/ge08_validation_and_diagnostics.rs` cover `homebrew_authoring/`, with
-fixture data under `tests/fixtures/authoring_workbench/`. See
-[testing.md](./testing.md) for the repo's test-layout conventions generally.
+Tests are split by crate, not inline in these modules — and the split follows the crate wall
+exactly, which is a useful sanity check that nothing crossed it by accident. `oracle_validation/`'s
+tests moved with the module to `crates/codex-ingest/tests/` (SD-36 Epic A): `golden_case_fixture_schema.rs`
+covers `golden_fixture.rs`; `ge06_selected_parity_dimensions.rs` covers `selected_parity_dimensions.rs`;
+`sd26_comparator.rs` covers `comparator.rs`; `sd26_normalization.rs` covers `normalization.rs`;
+`sd26_parity_report.rs` covers `parity_report.rs`; `sd26_pcgen_runner.rs` covers `pcgen_runner.rs`
+(including a real end-to-end PCGen-engine invocation); `sd26_pilot_case_verification.rs` drives the
+full comparator harness against a real `.pcg` build. `homebrew_authoring/`, unaffected by the crate
+move, keeps its tests at the repo-root `tests/` directory: `tests/ge08_preview_bridge.rs`,
+`tests/ge08_package_file_lifecycle.rs`, and `tests/ge08_validation_and_diagnostics.rs`, with fixture
+data under `tests/fixtures/authoring_workbench/`. See [testing.md](./testing.md) for the repo's
+test-layout conventions generally.
+
+## How to extend
+
+- **A new homebrew-authorable record kind** (beyond the one feat/effect/prerequisite proof shape):
+  extend `src/homebrew_authoring/mod.rs`'s `SourcePackage`, its validation in
+  `recompute_validation`, and `package_store.rs`'s render/parse pair together — the module's own doc
+  comment states the one-package/one-feat/one-effect scope is deliberate, so widening it is a real
+  scope decision, not a bug fix; get an explicit ruling before doing it (`AGENTS.md`'s "no stub
+  MVP"/scope-expansion doctrine applies here as anywhere else).
+- **A new oracle comparison dimension**: add it to `selected_parity_dimensions.rs`'s bounded set,
+  stamped with the same `ClaimTierFloor::Computed` every existing dimension carries — never a claim
+  the module cannot back. It lives in `crates/codex-ingest/`, so it can read PCGen normalized output
+  freely; it must not be called from anything in the root `codex` crate.
+- **A new corpus-wide oracle probe** (`scripts/oracle_harness/`-shaped, not the pilot-case Rust
+  harness): follow `compare.py`'s three-way verdict contract (`agree`/`disagree`/`unverifiable`,
+  never an exception, never folded into `agree`) and delete the probe binary once its `results.json`
+  evidence is committed — see the Pitfalls entry below for why leaving it around causes confusion,
+  not reuse value.
+- **A new normalization rule**: add it to `normalization.rs`'s `default_normalization_rules()` list,
+  in the position the new rule needs to run relative to the existing two (rules thread a working
+  `(value_string, value_i16)` pair, so ordering is semantically significant, not just cosmetic).
+
+## Pitfalls
+
+- **The old src/oracle_validation/ directory no longer exists — it is `crates/codex-ingest/src/oracle_validation/`.**
+  Any doc, comment, or dispatch prompt written before 2026-09-20 that cites the old path is stale;
+  verify before trusting it.
+- **A stale compiled binary in `target/debug/` is not evidence that its source still exists.** All 11
+  `AT-33-E5-*` "ours" probe bins (including `e5_ac_isolator`) were deleted from source in
+  `84760e4326` but can still show up as build artifacts from before that commit on a machine that
+  hasn't cleaned its target directory. `git log --diff-filter=D -- '*_ours.rs'` (or `git ls-files` for
+  the current state) is the re-derive command, not `ls target/debug/`.
+- **The GE-05 pilot-case harness (`oracle_validation/`) and the SD-33 corpus-wide harness
+  (`scripts/oracle_harness/`) are two different tools with two different scales, and neither replaces
+  the other.** The pilot-case harness proves one `.pcg` end to end in Rust with typed comparison
+  results; the corpus-wide harness grades thousands of units in Python against
+  `docs/work-inventory.json` populations. A gap found by one does not imply the other is clean.
+- **`homebrew_authoring`'s one shipped package (`SourcePackage::guard_stance_proof()`) is a proof
+  case, not a template to copy verbatim for a real feature.** Its constants
+  (`GUARD_STANCE_PACKAGE_ID`, `GUARD_STANCE_FEAT_ID`, ...) are identifiers for that one proof, and the
+  module's own doc comment is explicit that no broad package-authoring vocabulary exists yet.
+- **`PreviewBridge`'s bounded AC computation (`BASE_ARMOR_CLASS_WITHOUT_BONUS_FEAT_SLOT`, 16) is
+  derived from one specific pinned baseline (GE-06's Dodge-selected 17), not re-derived from the live
+  combat path.** If the GE-06 deterministic baseline ever changes, this constant's derivation comment
+  is the thing to re-check — it will not update itself.
