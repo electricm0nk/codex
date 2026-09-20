@@ -1,7 +1,18 @@
 # Update & Feedback
 
 > Scope: The desktop app's self-update chain and its feedback/defect-report submission chain, including exactly what is real vs. stubbed today.
-> Last verified: **2026-09-20 against `tranche/16`, HEAD `b22ea9e113`**. Re-derived the four native transaction commands (unchanged in shape since the last pass — `perform_retention_sweep` is still real, tested, and still not registered in `generate_handler!`), the `apps/desktop/src/update/Ui.tsx` composition (now assembled from separate panel components rather than described as one file), and the current feedback-directory layout. Added coverage of the controlled-defect SHA-256 mismatch harness (`update/controlledDefect.ts` / `feedback/controlledDefectPayload.ts`), which existed at the prior pass but was undocumented here.
+> Last verified: **2026-09-20 against `tranche/16`, HEAD `424e93e93c`** — SD-36 docs-truth capability
+> pass: checked this document's stub/real claims (`perform_install` stub, `perform_retention_sweep`
+> unregistered, the transport-less submit flow) against the code and confirmed each is still precisely
+> true; `testerWorkbench`/`TesterWorkbenchSurface` here are cited only as real path/type names, not as
+> product-wide framing, so they needed no correction. No substantive change this pass beyond this
+> header refresh. Prior pass **2026-09-20 against `b22ea9e113`** re-derived the four native transaction
+> commands (unchanged in shape since the pass before that — `perform_retention_sweep` is still real,
+> tested, and still not registered in `generate_handler!`), the `apps/desktop/src/update/Ui.tsx`
+> composition (now assembled from separate panel components rather than described as one file), and
+> the current feedback-directory layout, and added coverage of the controlled-defect SHA-256 mismatch
+> harness (`update/controlledDefect.ts` / `feedback/controlledDefectPayload.ts`), which existed at the
+> pass before that but was undocumented until then.
 > Maintenance: updated at SD closure — see [README.md](./README.md) §Maintenance contract
 
 Both subsystems share one ethos, stated verbatim in multiple places in the source: **never claim more than is proven.** A failed or missing piece degrades honestly to `'unknown'` / a named reason string, never to a fabricated success. This document traces both chains through the real files and calls out, precisely, where that posture currently means "not wired yet."

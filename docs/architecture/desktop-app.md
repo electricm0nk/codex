@@ -1,7 +1,7 @@
 # Desktop App
 
 > Scope: How the Tauri desktop shell is built, how it talks to the Rust backend, and how its frontend surfaces are organized.
-> Last verified: **2026-09-20 against `tranche/16`, HEAD `b22ea9e113`** (SD-36 consolidation, architecture-docs truth-up). Full re-derivation of the command inventory (**75** registered commands, re-counted directly from `generate_handler![...]`), the `CharacterHubPage` Mode machine, the boundary layer, the corpus-root resolution chain, the ui-smoke harness, and the character-mutation surfaces added since the 2026-09-15 pass (equipment purchase/attach, feat/trait selection, skill allocation, bio/money/HP sidecars, DM Toolkit). Several claims in the prior pass were stale and are corrected here (see "Corrections since the last pass" below) rather than annotated as deprecated.
+> Last verified: **2026-09-20 against `tranche/16`, HEAD `424e93e93c`** (SD-36 consolidation, architecture-docs truth-up; capability-claims pass). Full re-derivation of the command inventory (**75** registered commands, re-counted directly from `generate_handler![...]`), the `CharacterHubPage` Mode machine, the boundary layer, the corpus-root resolution chain, the ui-smoke harness, and the character-mutation surfaces added since the 2026-09-15 pass (equipment purchase/attach, feat/trait selection, skill allocation, bio/money/HP sidecars, DM Toolkit). Several claims in the prior pass were stale and are corrected here (see "Corrections since the last pass" below) rather than annotated as deprecated. This pass additionally re-audits every capability/limitation claim in the file against a fresh instrument run and the code, correcting the "Create" section's Fighter-1-3-only claim (see §"Character flow" — the create-flow class picker offers all 31 classes the engine computes end to end, with a precisely-named 11-class UI-surface gap, not the single-class ceiling this doc previously stated).
 > Maintenance: updated at SD closure — see [README.md](./README.md) §Maintenance contract
 
 ## Corrections since the last pass
@@ -141,12 +141,12 @@ Grouped by the Rust file that defines each command:
 | `characterHub/recomputeCharacter.rs` | `recompute_character` | Load + recompute without mutating, via `RuleSystemAdapter` | `CharacterSheet.tsx`'s `☰ Menu` "Recompute" |
 | `characterHub/reSaveCharacter.rs` | `re_save_character` | Re-saves under a freshly minted `{id}.rev.N`, via `RuleSystemAdapter` | none — no frontend caller |
 | `campaign_drive.rs` | `write_campaign_drive_artifacts`, `drive_list_campaigns`, `drive_load_campaign`, `drive_save_campaign`, `drive_delete_campaign` | `CampaignStore` wrapper over a local "Drive folder" path | only `write_campaign_drive_artifacts` is called, as a one-way mirror (see [persistence.md](./persistence.md)) |
-| `equipment_catalog.rs` | `list_equipment_catalog`, `list_equipment` | Full CRB equipment table; additive filtered query | `EquipmentCatalogScreen.tsx`; `CharacterSheet.tsx`'s item pickers |
-| `spell_catalog.rs` | `list_spell_catalog`, `list_spells` | Full CRB spell list; additive filtered query | `SpellCatalogScreen.tsx`; `CharacterSheet.tsx`'s spell picker |
-| `feat_catalog.rs` | `list_feat_catalog`, `list_feats`, `list_weapon_targets` | Full feat catalog; filtered query; the weapon-name options a "Weapon Focus"-shaped feat's target picker offers | `FeatsTab`/`buildItemPickerConfig` |
-| `class_catalog.rs` | `list_class_catalog` | Full CRB class progression table | `ClassCatalogScreen.tsx` |
+| `equipment_catalog.rs` | `list_equipment_catalog`, `list_equipment` | The equipment table store of **every ingested PF1 book**, not CRB alone (module's own header doc comment) — **8,119** entries test-pinned (`:1237`) across **29** distinct books; the full book roster and its derivation live in [status.md](./status.md)'s capability matrix, not restated here; additive filtered query | `EquipmentCatalogScreen.tsx`; `CharacterSheet.tsx`'s item pickers |
+| `spell_catalog.rs` | `list_spell_catalog`, `list_spells` | **2,481** entries test-pinned (`:945`) across **26** distinct books, exhaustive; the full book roster and its derivation live in [status.md](./status.md)'s capability matrix, not restated here; additive filtered query | `SpellCatalogScreen.tsx`; `CharacterSheet.tsx`'s spell picker |
+| `feat_catalog.rs` | `list_feat_catalog`, `list_feats`, `list_weapon_targets` | Full feat catalog (2,227 entries across 23 books, see [rules-data-tables.md](./rules-data-tables.md)); filtered query; the weapon-name options a "Weapon Focus"-shaped feat's target picker offers | `FeatsTab`/`buildItemPickerConfig` |
+| `class_catalog.rs` | `list_class_catalog` | Class progression table, **1,318** rows test-pinned (`class_catalog.rs`'s own test) — the 11 CRB + 4 Pathfinder Unchained hand-tabled classes at 20 levels each, plus a much larger converted-corpus set of generic PC-class and prestige-class progressions; this is a reference/browse catalog, not a claim that every listed class/level reaches `Computed` (see [rules-engine.md](./rules-engine.md) §1 for which classes actually do) | `ClassCatalogScreen.tsx` |
 | `class_spell_levels.rs` | `list_class_spell_levels` | Per-class spell levels (corrects the record's own MIN-across-classes `level`) | `SpellsTab`/`spellsTabModel.ts` |
-| `race_catalog.rs` | `list_race_catalog` | Full CRB race trait table | `RaceCatalogScreen.tsx` |
+| `race_catalog.rs` | `list_race_catalog` | Race trait table across **6** books (`RACE_CATALOG_BOOKS`: CRB, Bestiary 1, Bestiary 2, Bestiary 5, Bestiary 6, Advanced Race Guide), not CRB alone | `RaceCatalogScreen.tsx` |
 | `race_trait_picker.rs` | `list_alternate_racial_traits`, `resolve_race_alternate_selection` | Alternate-racial-trait swap menu and resolution | `CreateCharacterForm.tsx` racial-trait picker |
 | `trait_picker.rs` | `list_available_character_traits` | Pathfinder "character trait" (background trait) catalog | `TraitsTab` |
 | `monster_catalog.rs` | `list_monster_catalog` | Bestiary 1's 46 hand-modelled `beastiary1::MonsterStatBlock` rows plus the book's 280-row `monster_chassis` complement, 326 of the book's 330 monster units reaching the wire under one `BOOK_B1` code (4 excluded `.MOD` overlay rows) — see [rules-data-tables.md](./rules-data-tables.md) §"One book is served by two tables, deliberately" | `MonsterCatalogScreen.tsx` |
@@ -409,11 +409,30 @@ fallback — `boundary/loadCreateCharacter.ts` throws outside a Tauri runtime, s
 Manager (gated), DM Toolkit (real, see above), and the seven catalog browsers.
 
 **Create** (`CreateCharacterForm.tsx`) drives the DI chain in the sequence diagram above.
-`characterHubModel.ts`'s `CLASS_OPTIONS` records each class's `supportLevel`
-(`'full' | 'partial-human-only' | 'none'`), verified against `character_hub.rs`'s own tests: **only
-single-class Fighter at levels 1-3 reaches `Computed` for any race**; every other class/level
-combination returns real claim-blocking diagnostics, verbatim. See [status.md](./status.md) for the
-current-state summary of this ceiling.
+`characterHubModel.ts`'s `CLASS_OPTIONS` (`characterHubModel.ts:409-471`) offers **31** classes —
+every one of the 11 Core Rulebook classes, APG's 6, ACG's 10, and Pathfinder Unchained's 4
+(Unchained Barbarian/Monk/Rogue/Summoner) — each marked `supportLevel: 'full'` with
+`levelOptions: EVERY_CLASS_LEVEL` (every level 1-20). This is not an overclaim: a fresh
+`cargo run --bin v06_class_state_dump` run (2026-09-20, `class_count=31`, `computed_count=31`,
+`blocked_count=0`) confirms all 31 reach `HeadlessReceiptStatus::Computed` at every level 1-20, with
+zero blocked levels. **That dump sweeps class and level only — it holds race fixed to a single Human
+fixture** (`src/bin/v06_class_state_dump.rs:307-330`; the dump's own `input_posture` field names no
+race dimension), so "for every level 1-20" is proven, "for every race" is not proven by this
+instrument. Race-creation breadth is a separate, corpus-wide figure, not restated here — see
+[status.md](./status.md) §Posture for the exact 39-race / 30-chassis-tested / 18-complete breakdown,
+its book scope (CRB, Bestiary 1, Bestiary 2, Bestiary 5, Bestiary 6, ARG), and its evidence citations,
+and [rules-engine.md](./rules-engine.md) §"Entry points" and
+[rules-data-tables.md](./rules-data-tables.md) §"Engine state dumps" for the engine-side evidence.
+
+The picker is, in one precise respect, narrower than the engine itself: 11 more classes reach
+`Computed` at the engine level (2 of Ultimate Combat's 3 — Gunslinger, Ninja — plus 9 of the 27
+"untabled" exotic base classes) but are not yet offered in this create-flow picker. This is a real,
+current UI-surface gap, not an engine gap. No prestige class ever reaches `Computed` (entry-gating
+only, by design), so its absence from this picker is correct rather than a gap. See
+[status.md](./status.md) §"Class/level compute coverage — corpus-wide" for the full corpus-wide
+class-coverage table (the distinct-class-id total, the per-family breakdown, and the named
+exceptions — blocked-only-on-weapon-proficiency, prestige with/without chassis,
+computed-but-not-in-picker) — not restated here.
 
 **Sheet** (`CharacterSheet.tsx`) renders a Pathbuilder-style three-column layout, consuming
 `LoadSavedCharacterResponse`'s `PilotSnapshotDto` (ability modifiers, BAB, saves, baseline AC, skill

@@ -27,8 +27,11 @@ never at run time** — see §"The converter/live boundary" below. PCGen itself 
 treated as the parity oracle: a comparator
 (`crates/codex-ingest/src/oracle_validation/`) checks Codex's computed output against
 PCGen's own runtime behavior, dimension by dimension, and renders a `PASS`/`FAIL`
-parity report — but no character yet reaches a *passing* parity verdict (the
-pilot run currently reports a real mismatch; see [status.md](./status.md)).
+parity report. The comparator itself exists and is tested — it normalizes PCGen output and reports
+real per-dimension matches/mismatches — but a *passing* end-to-end parity claim for any character is
+a separate, further-out question this doc set does not verify (see [status.md](./status.md)'s "Core
+engine: compute coverage and proof surfaces" table, "Oracle-parity comparator" row, for the current
+scope statement — no claim of a current passing or failing run is made either way).
 Every number the app shows a user is either
 computed for real, with a machine-checkable explanation record, or explicitly
 withheld as "blocked"; the codebase never fabricates a value it cannot prove.

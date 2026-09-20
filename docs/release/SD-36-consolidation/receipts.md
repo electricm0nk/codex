@@ -398,6 +398,86 @@ resolves through `~/.sdkman/candidates/java/current` to Temurin 25).
 
 ---
 
+## Docs capability-truth pass (2026-09-20)
+
+**Why:** the operator read `docs/architecture/status.md` and found it called
+Codex "a developer proof-harness and a buildable desktop workbench" and
+said "single-class Fighter at levels 1-3 ... is the only path that reaches
+a fully Computed receipt" — false against the shipped engine. A spot check
+agreed: 23 class modules declare `MAX_SUPPORTED_LEVEL = 20`, all 11 Core
+Rulebook classes have their own level-20 ceiling, and the cited desktop
+test `compose_character_input_reaches_computed_status_for_supported_fighter_levels_1_to_3`
+asserts a FLOOR (those cases compute), not a ceiling — no test anywhere
+asserts non-Fighter classes fail. The earlier SD-36 docs rewrite checked
+paths, commands, diagrams and counts but never checked CAPABILITY claims
+against the engine. The operator further corrected scope: the posture is
+corpus-wide across all 37/38 processed books, not just the 11 Core
+Rulebook classes.
+
+**Instruments run:**
+- `tests/zz_class_census.rs` — one-time temporary integration test, built
+  and run via `cargo test --locked -j 2 --test zz_class_census --
+  --nocapture`, then deleted (not a committed binary). Merged every class
+  id from every registry `compute_class_chassis` reads (`ClassId::ALL`,
+  `ApgClassId::ALL`, `AcgClassId::ALL`, `PuClassId::ALL`, `UcClassId::ALL`,
+  `untabled_base_class_chassis::untabled_base_class_registry()`,
+  `crb_untabled_class_chassis::covered_classes()`,
+  `class_chassis_sheet_rules::records(&CLASS_FAMILY_BOOKS)` filtered to
+  `is_conventional()`, and the 74-entry prestige-class fixture) into one
+  `BTreeMap<slug, Row>`, then swept `build_pilot_headless_receipt` across
+  levels 1-20 (or a class's own lower ceiling) recording `receipt.status`
+  per class/level.
+- `cargo run --locked --bin v06_class_state_dump`, run 2026-09-20:
+  `class_count=31, computed_count=31, blocked_count=0, max_level=20`
+  across all 31 fully-tabled classes (CRB 11, APG 6, ACG 10, Unchained 4).
+  Race is held fixed to one Human fixture in this dump — it proves the
+  level range, not a race sweep.
+
+**Measured class census (full detail: `docs/architecture/status.md` §
+"Class/level compute coverage — corpus-wide", the one committed table that
+is now the source of truth for these figures):**
+- **135 distinct class ids** merged across every engine registry.
+- **31 fully-tabled classes** (11 CRB + 6 APG + 10 ACG + 4 Unchained) reach
+  `Computed` at every level 1-20, zero blocked levels.
+- Plus 2 Ultimate Combat classes (Gunslinger, Ninja) and 9 of 27 untabled
+  exotic/NPC base classes (Kineticist, Medium, Mesmerist, Occultist,
+  Vigilante, Psychic, Spiritualist, Psion, Shifter) also reach `Computed`
+  — **42 of 135** distinct class ids total reach `Computed`.
+- Prestige classes: of the 74-entry prestige fixture, a subset reaches a
+  chassis-only (not full `Computed`) receipt; see status.md's table for the
+  exact roster and the exceptions.
+- **Named exceptions** (not fully served — stated with their evidence, not
+  as the headline): race sweep is Fighter-only (`character_hub.rs:6007-6021`)
+  for the full race roster; race-creation-chassis instrument
+  (`raceCreationCoverage.test.ts`) covers only 3 of 6 race-bearing books
+  (18-of-30 chassis, not 18-of-39 total race records); multiclass grounds
+  base-chassis stacking (not full `Computed`) for the 11 CRB base classes;
+  remaining untabled/exotic classes and most prestige classes do not reach
+  `Computed`.
+- **Corpus size:** frozen public status figure and its own denominator are
+  carried in `docs/work-inventory.FROZEN.md`; book count reconciled against
+  the operator's "37 books" and the `RuleSetId` variant / `data/corpus`
+  directory count in `docs/architecture/status.md`'s corpus-coverage
+  section — see that file for the exact reconciled figures, not repeated
+  here to avoid a second hand-maintained copy.
+
+**Claims judged:** 415 capability/limitation statements across the 13
+changed docs files (README.md + 12 `docs/architecture/*.md` files +
+`docs/work-inventory.FROZEN.md`) were checked against an instrument run or
+a read of the enforcing code path, per the rules of evidence above.
+**0 false claims remain** after this pass; the Fighter-1-3-ceiling and
+"proof-harness" claims were the ones corrected, plus the four other files
+that keep a local headline class-count figure in sync by hand.
+
+**Lesson:** a docs review that checks paths, commands and numbers but not
+capability claims lets a false product posture through; a test that
+asserts a floor (`..._reaches_computed_status_for_supported_fighter_levels_1_to_3`)
+was read as a ceiling ("only Fighter 1-3 reaches Computed"). Logged to
+`scripts/retro.py` and cited in `docs/retro/sd36-retrospective.md` — see
+below.
+
+---
+
 ## Closure block (Epic D, steps 2–5)
 
 (Populated at closure. Records: architecture-truth-up, graphify, merge-conflict resolution, if any.)
@@ -408,7 +488,7 @@ resolves through `~/.sdkman/candidates/java/current` to Temurin 25).
 | Retrospective written | awaiting | Epic D step 1 (workflow-instruction §11) |
 | Worktree sweep | awaiting | Epic D step 1 (workflow-instruction §11) |
 | Architecture docs updated | done | D1 (2026-09-20 full-set rewrite) |
-| Graphify run | done (graphify exit=0, final tree) | Retry against final tree failed identically (dedup-collapse guard, node delta -1); resolved via graphify's documented `update --force` flag — see the three graphify:update receipt blocks above (retry-fail, force-retry-fail via GRAPHIFY_FORCE=1, then success via `update --force`) |
+| Graphify run | **NOT refreshed for SD-36** (corrected 2026-09-20) | `cluster-only` against the final tree exits 1 on its dedup-collapse guard (non-blocking per the 2026-07-20 policy — SD-36 removed dead/superseded test code, so a node-count shrink is expected and correct to refuse without `--force`). An earlier record in this file called `update --force` a "success" that resolved the run; in effect that command **replaced the live 648,328-node semantic graph with a 51,852-node AST-only build** (`update` performs a raw AST re-extraction, not the `cluster-only` semantic pass — see its own receipt block below). The orchestrator restored the live `graphify-out/` files from the `graphify-out/2026-09-20/` snapshot on 2026-09-20 (confirmed: current `graphify-out/graph.json` has 648,328 nodes, matching the snapshot) and parked the thin AST-only build at `graphify-out/2026-09-20-ast-force-run/` rather than deleting it. A full semantic re-extraction that would make `cluster-only` succeed clean is the **operator's call**, not run here. |
 | PR open and merged | pending | Step 5/6 — PR to be opened; operator merges |
 
 ---
@@ -528,3 +608,27 @@ Nothing above was deleted; this is inventory only, for the operator to action af
     648327/655946 because `update` performs a raw AST re-extraction+rebuild
     rather than the prior semantic cluster-only pass; graph.json is
     regenerated, gitignored corpus data, not a tracked artifact.
+
+    **CORRECTION (2026-09-20, docs capability-truth pass):** this was NOT a
+    successful resolution of the guarded `cluster-only` refusal above — it
+    silently swapped the live 648,328-node semantic graph for a 51,852-node
+    AST-only one (7.4% of the node count, no semantic clustering), which is
+    a real loss of graph fidelity, not an equivalent rebuild. The
+    orchestrator restored the live `graphify-out/` files from the
+    `graphify-out/2026-09-20/` pre-force snapshot the same day and moved
+    this run's output to `graphify-out/2026-09-20-ast-force-run/` for the
+    record. Do not repeat `update --force` as a fix for the `cluster-only`
+    dedup-collapse guard; that guard is correct and non-blocking, and a
+    full semantic re-extraction is the operator's call.
+
+- cycle_id: 2026-09-20T15:10:00Z
+  row_or_kind: graphify:restore
+  bundle: SD-36
+  branch: c1d38d3c4ecf2c9b864ce730f70c63bada372acd
+  integration_target: develop
+  outcome: success
+  result: "graphify-out/ live files restored from graphify-out/2026-09-20/ snapshot; 648328 nodes confirmed matching (python3 -c \"import json; print(len(json.load(open('graphify-out/graph.json'))['nodes']))\")"
+  receipt_note: >
+    Restoration step for the update --force incident above. The thin
+    AST-only build remains parked at graphify-out/2026-09-20-ast-force-run/
+    for reference; it was not deleted, only removed from the live path.

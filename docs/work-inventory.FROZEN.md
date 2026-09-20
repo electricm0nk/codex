@@ -33,12 +33,14 @@ not deleted, and why editing it (even to "fix" a stale-looking field) is
 out of scope for any bundle that has not been explicitly authorized to
 redesign the ingestion producer:
 
-- `src/pcgen_import/sheet_rule/mod.rs:280` (`load_population`, the sheet-rule
-  pipeline population)
+- `crates/codex-ingest/src/pcgen_import/sheet_rule/mod.rs:294` (`load_population`, the sheet-rule
+  pipeline population — moved from `src/pcgen_import/` by SD-36 Epic A's crate-wall move, operator
+  ruling D1; see [architecture/corpus-ingest.md](./architecture/corpus-ingest.md) §"The crate wall")
 - `src/rules_core/class_feature_pool_catalog.rs` (multiple call sites)
 - `src/rules_core/rules_tables/companion_chassis.rs` (multiple call sites)
-- `src/bin/gen_cache_class_feature.rs`
-- `src/pcgen_import/formula_interpreter_corpus_wide.rs` (multiple call sites)
+- `crates/codex-ingest/src/bin/gen_cache_class_feature.rs` (moved from `src/bin/`, same Epic A move)
+- `crates/codex-ingest/src/pcgen_import/formula_interpreter_corpus_wide.rs` (multiple call sites;
+  moved from `src/pcgen_import/`, same Epic A move)
 - Root tests: `equipment_gap_tables`, `feat_gap_tables`,
   `sd35_class_feature_catalogs_read_converted_prose`,
   `sheet_rule_convert_gate`, and others (`git grep -l work-inventory.json --

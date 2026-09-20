@@ -1,7 +1,7 @@
 # Rules engine
 
 > Scope: The headless PF1 rules-computation spine — from chosen character input through the deterministic chassis engine to the boundary contract the GUI consumes.
-> Last verified: **2026-09-20 against `tranche/16` (`b22ea9e113`)** for the SD-36 Epic C1 split of the
+> Last verified: **2026-09-20 against `tranche/16` (`424e93e93c`)** for the SD-36 Epic C1 split of the
 > old, single `pilot_compute.rs` file into `src/rules_core/pilot_compute/` (41 submodules; `mod.rs`
 > itself is now a 297-line module-declaration/re-export shim, not the compute body), for
 > `src/support/paths.rs` (Epic C1.3's shared path-helper module), and for the module map, compute
@@ -12,7 +12,11 @@
 > `src/rules_core/` names either any more; see [corpus-ingest.md](./corpus-ingest.md) §"The crate
 > wall." Prior pass 2026-09-15 against tranche/15 (SD-35 closure) verified the sheet-rule layer
 > (§"The sheet rule" below) and the fail-honest/per-domain-engine catalog sections, which are
-> otherwise unchanged by the C1 split — it moved code, not behavior.
+> otherwise unchanged by the C1 split — it moved code, not behavior. **This pass** (capability-claims
+> audit, same day) re-checked every class/level/multiclass capability and limitation claim in this
+> file against a fresh `v06_class_state_dump` run and the dispatch code, and corrected the multiclass
+> section's stale "Fighter+Wizard only" claim — `table_class_id` recognizes all 11 CRB classes today
+> (see §"Multiclass base-chassis dispatch" below).
 > Maintenance: updated at SD closure — see [README.md](./README.md) §Maintenance contract
 
 This document orients a contributor entering `src/rules_core/` cold. It describes the compute spine
@@ -195,6 +199,13 @@ spine consumes: it owns the `CharacterInput` and holds the borrowed `SourcePacka
 
 ### 3. `src/rules_core/pilot_compute/` — the deterministic chassis engine
 
+**A naming note, once, for a newcomer:** "pilot" here is a historical module name (`pilot_compute`,
+`PilotReceipt`, `build_pilot_headless_receipt`, …) inherited from this engine's original prototype
+phase, well before all 31 fully-tabled classes reached `Computed`. It is not a scope statement and
+does not mean this subsystem is a limited trial today — it is the live compute spine for every
+class/level combination named in the [class/level coverage catalog](#3-src_rules_corepilot_compute---the-deterministic-chassis-engine)
+below.
+
 *Restructured 2026-09-20, SD-36 Epic C1.* Before Epic C1, `pilot_compute.rs` was one ~88,800-line
 file (test code included) — by far the largest in `rules_core`. Epic C1 split it into a directory of
 41 submodules plus a 297-line `mod.rs`, **as a pure code-move**: every submodule opens with `use
@@ -247,7 +258,7 @@ flowchart TD
     subgraph untabled["Classes with no hand-authored chassis table"]
         crb_untabled["crb_untabled_class_chassis.rs\nCRB's 7 NPC/Ex-* classes"]
         base_untabled["untabled_base_class_chassis.rs +\nuntabled_base_class_feature_roster.rs\n20 real base classes, no table"]
-        generic_chassis["generic_class_chassis.rs\n60 more PC classes, catalog-only until wired"]
+        generic_chassis["generic_class_chassis.rs\n78 more PC classes across 14 books,\nlive-dispatched BAB/save chassis (no\nper-class hand-authored explainer)"]
     end
 
     subgraph converted["Converted-corpus readers"]
@@ -299,23 +310,35 @@ records or pushes a named claim-blocking diagnostic and stops. This gate-then-ex
 at every level band; the functions' own doc comments record which named sub-features are grounded
 versus still claim-blocked as of the current level ceiling for that class.
 
-**Multiclass base-chassis dispatch (SD-24 Epic 5).** `compute_multiclass_base_chassis`
-(`class_occult_and_psionic.rs`) fires whenever `input.chosen.class_levels.len() >= 2`;
-`is_supported_multiclass_mix` gates it to combinations where every class level is individually
-supported — today that means Fighter + Wizard only, at any split of total level 1-10
-(deterministically proven level-by-level, both solo-to-multiclass transition directions, in
-`tests/sd24_multiclass_deterministic.rs`/`tests/sd24_multiclass_integration.rs`). Base attack bonus
-and saves stack per PF1's canonical additive multiclass rule: each class's own fractional BAB/save
-progression is summed *before* flooring once for the total, reading the fractional classification
-from `class_tables.rs`'s own `good_saves_for(ClassId) -> Option<(bool, bool, bool)>`
-(`multiclass_good_saves`) rather than a second, independently-maintained copy. `fighter_level_in_mix`/
-`wizard_level_in_mix` resolve each class's own sub-level from the mix so that class's per-level
-named-feature/spell-baseline explainers (e.g. `explain_wizard_level1_prepared_spell_baseline`) keep
-firing once a second class joins, instead of silently going quiet the moment the build stops being
-single-class. This grounds the base-chassis/explanation layer only — it does not by itself get a
-Fighter+Wizard multiclass build to `HeadlessReceiptStatus::Computed` end-to-end (spellbook and other
-per-domain diagnostics can still block); see [status.md](./status.md) for the current
-`Computed`-reachability ceiling.
+**Multiclass base-chassis dispatch (SD-24 Epic 5; widened v0.6 alpha swarm task 4).**
+`compute_multiclass_base_chassis` (`class_occult_and_psionic.rs`) fires whenever
+`input.chosen.class_levels.len() >= 2`; `is_supported_multiclass_mix` gates it to combinations where
+every class level is individually supported. **This is no longer Fighter+Wizard-only**: the gate's
+own doc comment records the widening — `multiclass_class_level_supported` bottoms out in
+`table_class_id` (`class_shared_core.rs`), which today recognizes all **11 Core Rulebook classes**
+(Fighter, Wizard, Rogue, Ranger, Paladin, Sorcerer, Cleric, Druid, Barbarian, Bard, Monk — Monk was
+the last one added, closing a gap where its chassis table existed but no string mapping reached it).
+So: any length-2+ mix of these 11 classes, at any per-class level within each class's own 20-level
+ceiling, gets real base-chassis (BAB/save) stacking. Base attack bonus and saves stack per PF1's
+canonical additive multiclass rule: each class's own fractional BAB/save progression is summed
+*before* flooring once for the total, reading the fractional classification from `class_tables.rs`'s
+own `good_saves_for(ClassId) -> Option<(bool, bool, bool)>` (`multiclass_good_saves`) rather than a
+second, independently-maintained copy. `fighter_level_in_mix`/`wizard_level_in_mix`-shaped helpers
+resolve each class's own sub-level from the mix so that class's per-level named-feature/spell-baseline
+explainers (e.g. `explain_wizard_level1_prepared_spell_baseline`) keep firing once a second class
+joins, instead of silently going quiet the moment the build stops being single-class.
+`tests/sd21_multiclass_fighter_wizard_chassis_computes.rs` and the `sd24_multiclass_*` deterministic
+suite prove the mechanism concretely for Fighter+Wizard (originally to total level 10; the gate itself
+carries no total-level cap beyond each class's own 20-level ceiling) — no test file exercises every
+other pair of the 11 individually, so treat "the gate accepts them" (proven directly from
+`table_class_id`'s own source, not a test) and "a given untested pair reaches `Computed` end-to-end"
+as two different claims. This grounds the base-chassis/explanation layer only — it does not by itself
+get any multiclass build to `HeadlessReceiptStatus::Computed` end-to-end (spellbook and other
+per-domain diagnostics can still block). A multiclass mix containing an APG/ACG/Unchained/Ultimate
+Combat/exotic-untabled class is a real, separate limitation: `table_class_id` never registers those
+classes, so `compute_class_chassis`'s own APG/ACG/Unchained/UC dispatch arms each carry a comment
+stating that class-containing multiclass mix "cannot reach this path at all" — see
+`class_occult_and_psionic.rs`'s dispatch arms for each family's own comment.
 
 **Core output types** (`PilotBaseChassisComputation`, `ComputationExplanation`, `ComputationDiagnostic`,
 `HeadlessReceiptStatus` and `PilotHeadlessReceipt` are all defined in `class_shared_core.rs` beside
@@ -462,11 +485,26 @@ this wave).
 
 Wave 27's dispatch reframed the program's remaining wall as "features for characters that cannot
 exist" and asked how many of the 157 not-done `class` units are Monk-shaped — a chassis table
-present, only the `table_class_id` dispatch mapping missing. **The census answer is zero**: every
-class with a real chassis table anywhere in the codebase (34 total, across CRB/APG/ACG/Pathfinder
-Unchained/Ultimate Combat) is already dispatched. See [status.md](./status.md)'s wave 27 section for
-the full breakdown of where the remaining 157 classes actually sit (prestige entry-requirement gap,
-net-new base-class tables, structurally-non-PC-class records, unstarted books).
+present, only the `table_class_id` dispatch mapping missing. **The census answer, as of wave 27, was
+zero**: every class with a real chassis table anywhere in the codebase *at that time* (34 total,
+across CRB/APG/ACG/Pathfinder Unchained/Ultimate Combat) was already dispatched. **This count is now
+stale and current work has widened it far past 34, corpus-wide, not just within CRB/APG/ACG/Unchained/
+UC**: `untabled_base_class_chassis::resolve` and `crb_untabled_class_chassis::resolve`
+(`src/rules_core/pilot_compute/untabled_base_class_chassis.rs`, `class_shared_core.rs:3411-3413`) since
+gave all 27 "untabled" base classes (20 exotic + 7 CRB NPC/Ex) a real BAB/save chassis, and
+`generic_class_chassis::resolve` — dispatched from `compute_class_chassis`
+(`class_occult_and_psionic.rs:997`) — independently gives a further 78 conventional PC classes across
+its 14 `CLASS_FAMILY_BOOKS` a real chassis too, test-asserted by
+`generic_class_records().len() == 78` (`generic_class_chassis.rs`, `all_seventy_eight_conventional_classes_resolve`,
+7/7 passing). **This "31 + 3 + 27 + 78 = 139" arithmetic is wave 27's own count, historical, and is
+now known to be wrong as a distinct-class total** — it double-counts classes that appear in more than
+one registry (19 of the 78 also appear in the untabled-exotic registry, 3 more in the Ultimate Combat
+registry). Do not cite 139, 78, or any other total from this subsection as current — the real,
+overlap-corrected corpus-wide count and the full per-family breakdown live in
+[status.md](./status.md)'s "Class/level compute coverage — corpus-wide" table, the one place this
+repo's class head-counts are maintained; not restated here. The wave-by-wave narrative that used to live in status.md
+(including its own former "wave 27" section) was deleted outright by SD-36 Epic B — see `docs/retro/`
+for the retired history.
 
 - **`class_feature_grant_consumer.rs`'s `resolve_pcgen_var_chain` now seeds the six ability-modifier
   abbreviations** (STR/DEX/CON/INT/WIS/CHA) before its fixed-point `BONUS:VAR` pass, so a

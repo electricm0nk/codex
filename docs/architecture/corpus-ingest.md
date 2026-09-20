@@ -1,19 +1,24 @@
 # Corpus Ingest
 
 > Scope: the crate wall between the PCGen converter/oracle and the live engine, and how real PCGen corpus files (`.pcc`/`.lst` data files) are parsed and projected into the canonical source-IR the rules engine consumes.
-> Last verified: **2026-09-20 against `tranche/16` (`b22ea9e113`)** for the new §"The crate wall"
-> section and the path corrections it required throughout this document: the old src/pcgen_import/
-> and src/oracle_validation/ directories do not exist any more — SD-36 Epic A (operator ruling D1)
-> moved the whole converter/oracle tree to `crates/codex-ingest/src/pcgen_import/` and
-> `crates/codex-ingest/src/oracle_validation/`, and every generator/enrichment binary that used to
-> live at `src/bin/*` moved to `crates/codex-ingest/src/bin/*` (only `pi_sweep_rules_tables.rs`,
-> `v06_class_state_dump.rs`, and `v06_content_state_dump.rs` remain in `src/bin/`, re-derived with
-> `ls src/bin/` vs `ls crates/codex-ingest/src/bin/`). This pass also added the converter-pipeline
-> flowchart, the corpus record erDiagram, and the generated PCGen-free desktop corpus bundle section.
-> Prior pass **2026-09-15 against `tranche/15`** (SD-35 closure epilogue) verified §"The sheet-rule
-> converter" and the `cache_gen` relocation (unaffected in substance by the Epic A crate move — only
-> the path prefix changed); the parsing-pipeline stages (1-6) are otherwise unchanged since the
-> 2026-08-07 tranche/8 pass.
+> Last verified: **2026-09-20 against `tranche/16` (`424e93e93c`)** — SD-36 docs-truth capability pass:
+> corrected the "how to onboard a book" section's book-count framing (was a vague "~30+"; now the
+> reconciled 37 `RuleSetId` variants / 38 tracked books / 39 `data/corpus/` directories, each with its
+> own denominator and re-derive command) and the stale pre-Epic-A paths this document's own §"The
+> crate wall" pass had already corrected elsewhere but had not swept from
+> `docs/work-inventory.FROZEN.md`'s reader list (fixed there, not here — see that file). Prior pass
+> **2026-09-20 against `b22ea9e113`** added §"The crate wall" and the path corrections it required
+> throughout this document: the old src/pcgen_import/ and src/oracle_validation/ directories do not
+> exist any more — SD-36 Epic A (operator ruling D1) moved the whole converter/oracle tree to
+> `crates/codex-ingest/src/pcgen_import/` and `crates/codex-ingest/src/oracle_validation/`, and every
+> generator/enrichment binary that used to live at `src/bin/*` moved to `crates/codex-ingest/src/bin/*`
+> (only `pi_sweep_rules_tables.rs`, `v06_class_state_dump.rs`, and `v06_content_state_dump.rs` remain
+> in `src/bin/`, re-derived with `ls src/bin/` vs `ls crates/codex-ingest/src/bin/`). That pass also
+> added the converter-pipeline flowchart, the corpus record erDiagram, and the generated PCGen-free
+> desktop corpus bundle section. Prior pass **2026-09-15 against `tranche/15`** (SD-35 closure
+> epilogue) verified §"The sheet-rule converter" and the `cache_gen` relocation (unaffected in
+> substance by the Epic A crate move — only the path prefix changed); the parsing-pipeline stages
+> (1-6) are otherwise unchanged since the 2026-08-07 tranche/8 pass.
 > Maintenance: updated at SD closure — see [README.md](./README.md) §Maintenance contract
 
 ## The crate wall
@@ -712,9 +717,20 @@ section summarizes, is itself marked RETIRED as of SD-36 Epic B (operator ruling
 `docs/work-inventory.json` reached 49,450 of 49,450 units and is now a frozen snapshot
 (`docs/work-inventory.FROZEN.md`); the two tools the playbook was built around
 (the `v06_work_inventory` binary and the desktop crate's former reach_gate.rs) are both deleted, and none of its
-commands run any more. It stays as the historical record of how this repo's ~30+ book directories
-(see [rules-data-tables.md](./rules-data-tables.md)'s module map) were actually onboarded, and is the
-starting point a future ingestion effort (Starfinder, most plausibly — this is why the converter and
+commands run any more. It stays as the historical record of how this repo's 38 tracked books were
+actually onboarded — `data/corpus/` holds 39 directories (`ls -d data/corpus/*/ | wc -l`), one more
+than the tracked-book count because `beastiary/` and `bestiary/` are Bestiary 1's chassis half and
+hand-modelled half served under one `RuleSetId::Bestiary1`/one display name, not two books (see
+`apps/desktop/src-tauri/src/monster_catalog.rs:222-231`); the compiled `RuleSetId` enum has 37
+variants (`awk '/pub enum RuleSetId/,/^}/' src/rules_core/rules_tables/mod.rs | grep -cE "^\s+[A-Z][A-Za-z0-9_]*,\s*$"`),
+one of which (`Ce`, `core_essentials`) is folded into other books' race data rather than tracked as
+its own book in `docs/work-inventory.json`'s `totals.by_book` (37 keys there, not 38: it has
+Beginner Box, 19 units, but not `core_essentials` — `python3 -c "import json;print(len(json.load(open('docs/work-inventory.json'))['totals']['by_book']))"`
+→ 37); so tracked books = `RuleSetId` (37) − `core_essentials` (1) + Beginner Box (1) = 38 — see
+[rules-data-tables.md](./rules-data-tables.md)'s module map for the per-book table. All three figures
+(37/38/39) are correct for what each one denominates; they are not in tension with each other once
+each is read against its own denominator, and it is the starting point a future ingestion effort
+(Starfinder, most plausibly — this is why the converter and
 oracle harness were *kept*, not deleted, in `crates/codex-ingest/`) would adapt rather than redesign
 from nothing.
 

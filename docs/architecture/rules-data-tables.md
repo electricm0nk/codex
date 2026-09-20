@@ -1,7 +1,7 @@
 # Rules Data Tables
 
 > Scope: the hand-transcribed, per-book Paizo table store rules-core queries for class chassis, race traits, feats, spells, equipment, and monster stat blocks.
-> Last verified: **2026-09-20 against `tranche/16` (`b22ea9e113`)** for the `RuleSetId` enum, now
+> Last verified: **2026-09-20 against `tranche/16` (`424e93e93c`)** for the `RuleSetId` enum, now
 > **37** populated variants, not the prior pass's 30 — four Inner Sea setting books (`InnerSeaFaiths`,
 > `InnerSeaMagic`, `InnerSeaTaverns`, `InnerSeaTemples`) were added since, re-derived directly with
 > `python3 -c "import re; src=open('src/rules_core/rules_tables/mod.rs').read(); src=re.sub(r'//.*','',src); body=re.search(r'pub enum RuleSetId \{(.*?)\n\}', src, re.S).group(1); print(len(re.findall(r'^\s*([A-Za-z0-9_]+)\s*,', body, re.M)))"`
@@ -15,6 +15,10 @@
 > `src/rules_core/corpus_loader.rs`. **The §"Chassis fields carry the TOKEN, never a computed
 > number" convention below is scoped to this store only**: the sheet-rule package carries no
 > token at all (`grep -rlE 'BONUS:|DEFINE:|PRE[A-Z]+:|%CHOICE|CL=' data/sheet_rules/ | wc -l` → `0`).
+> **This pass** (capability-claims audit, same day) corrected §"Engine state dumps"'s stale claim that
+> `v06_class_state_dump` sweeps 27 classes — it sweeps 31 (CRB/APG/ACG/Pathfinder Unchained) — and
+> added the scope caveat for `v06_content_state_dump`'s 13-book coverage so it is never cited as a
+> corpus-coverage instrument.
 > Maintenance: updated at SD closure — see [README.md](./README.md) §Maintenance contract
 
 ## Purpose
@@ -32,14 +36,22 @@ not produced by running the ingest pipeline's parsers at build time.
 
 ## Module map
 
-`src/rules_core/rules_tables/mod.rs` declares 45 `pub mod` book/support directories today — far more
-than the four this doc describes in per-book structural detail below. The four (`crb`, `apg`, `acg`,
-`beastiary1`) are the fully-authored books with a rich per-class/per-monster file layout; the
-remaining ~40 are narrower — often a single record family (feats-only, spells-only,
-companion-only) registered under their own `RuleSetId` per the table below, following
-`monster_chassis`/`feats_all`'s shared cross-book table shape rather than a bespoke per-book
-directory layout. `find src/rules_core/rules_tables -mindepth 1 -maxdepth 1 -type d | wc -l` is the
-re-derive command for the live count.
+`src/rules_core/rules_tables/mod.rs` declares 45 `pub mod` items today
+(`grep -cE "^pub mod " src/rules_core/rules_tables/mod.rs`) — far more than
+the four this doc describes in per-book structural detail below. Of those
+45 declarations, 37 are book/support **directories**
+(`find src/rules_core/rules_tables -mindepth 1 -maxdepth 1 -type d | wc -l`)
+and 8 are single **files** with no sibling directory (`archetype_swap`,
+`class_spell_levels`, `companion_chassis`, `equipment_gap_tables`,
+`feat_gap_tables`, `simple_kind_tables`, `feats_all`, `monster_chassis`).
+The four (`crb`, `apg`, `acg`, `beastiary1`) are the fully-authored books
+with a rich per-class/per-monster file layout; the remaining 41 `pub mod`
+items (45 minus the four — 33 directories plus all 8 files) are narrower —
+often a single record family (feats-only, spells-only, companion-only)
+registered under their own `RuleSetId` per the table below, following
+`monster_chassis`/`feats_all`'s shared cross-book table shape (both are
+among the 8 files, not directories) rather than a bespoke per-book
+directory layout.
 
 ```mermaid
 flowchart TD
@@ -110,8 +122,9 @@ classes' worth of core math, the sheet-rule package is the corpus.
 ## Per-book directory pattern
 
 Four book directories carry the rich, per-class/per-monster file layout this section documents in
-full — the rest of the 45 declared `pub mod` directories (see the module map above) are narrower,
-single-family books following the pattern in "Adding a new book" below, not this one:
+full — the rest of the 45 declared `pub mod` items (37 directories, 8 shared-table files; see the
+module map above) are narrower, single-family books following the pattern in "Adding a new book"
+below, not this one:
 
 ```
 pub mod acg;
@@ -661,11 +674,17 @@ and both exist for the same reason: the operator's status dashboard used to
 derive its numbers by regex-scraping hand-written English prose, and prose
 goes stale the moment somebody forgets to edit it.
 
-- **`v06_class_state_dump`** — sweeps all 27 CRB/APG/ACG classes across
-  levels 1-20 through the real `build_pilot_headless_receipt` pipeline,
-  reporting per class whether every level reaches
-  `HeadlessReceiptStatus::Computed` and, when it does not, the claim-blocking
-  diagnostics that name the remaining gap.
+- **`v06_class_state_dump`** — sweeps all **31** CRB/APG/ACG/Pathfinder Unchained classes (11 + 6 + 10
+  + 4 — the binary imports `ClassId`, `ApgClassId`, `AcgClassId`, and `PuClassId`,
+  `src/bin/v06_class_state_dump.rs:61-65`) across levels 1-20 through the real
+  `build_pilot_headless_receipt` pipeline, reporting per class whether every level reaches
+  `HeadlessReceiptStatus::Computed` and, when it does not, the claim-blocking diagnostics that name
+  the remaining gap. Run fresh (2026-09-20): `class_count=31`, `computed_count=31`,
+  `blocked_count=0` — every swept class reaches `Computed` at every level 1-20, zero blocked levels.
+  **It does not sweep** Ultimate Combat's 3 classes, the 27 "untabled" exotic/NPC base classes, or any
+  prestige class — those are covered by inline tests in `combat.rs` and
+  `untabled_base_class_features.rs` instead (see [rules-engine.md](./rules-engine.md) §"Entry points"
+  and §"Multiclass base-chassis dispatch" for that coverage and for multiclass's own real scope).
 - **`v06_content_state_dump`** — reports per-book ingested record counts
   (counted from `ClassId::ALL`, `SPELL_LIST`, `equipment_tables()`,
   `MonsterId::ALL`, `all_feat_tables()` — see `feats_all.rs` above for that
@@ -680,6 +699,20 @@ goes stale the moment somebody forgets to edit it.
   explicit lower bound: a feat whose effect needs a context this engine does
   not model (an opponent, an ally, a combat action) cannot show up as a delta
   and is reported unwired.
+
+  **Scope caveat, stated plainly so this binary is never mistaken for a corpus-coverage instrument:**
+  its own `use` block only ever imported `ClassId`/`SPELL_LIST`/`equipment_tables()`/`MonsterId::ALL`/
+  `all_feat_tables()` (`src/bin/v06_content_state_dump.rs:14-27,36-58`), a fixed set that covers 13 of
+  the corpus's 38 tracked books (`core_rulebook`, `advanced_players_guide`, `advanced_class_guide`,
+  `bestiary_1`, `advanced_race_guide`, `pathfinder_unchained`, `ultimate_campaign`,
+  `ultimate_intrigue`, `ultimate_equipment`, `ultimate_wilderness`, `ultimate_combat`,
+  `ultimate_magic`, `ultimate_psionics`) and never grew past it. Its only historical caller
+  (`scripts/observer/pf1e_dashboard_producer.py`) is itself retired, and nothing in
+  `scripts/verify.sh` runs this binary (`grep -n content_state_dump scripts/verify.sh` → no hits) — it
+  is retired ops tooling kept in the tree, not a measure of the engine's real content breadth. The
+  desktop catalogs' own test-pinned counts (equipment 8,119, spells 2,481, feats 2,227 across 23
+  books, race traits across 6 books — see [desktop-app.md](./desktop-app.md)'s command inventory) are
+  the wider, current, correct source for "how much content does the engine actually serve."
 
 The counting discipline is shared with
 `apps/desktop/src-tauri/src/corpus_ingest_diagnostic.rs`, which reports the

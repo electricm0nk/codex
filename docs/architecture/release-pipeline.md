@@ -1,7 +1,17 @@
 # Release pipeline
 
 > Scope: how a commit on `develop` or `main` becomes a tagged, schema-validated tester release, how branches get promoted between channels, and how the public `campaign-codex.org` status site is deployed.
-> Last verified: **2026-09-20 against `tranche/16`, HEAD `b22ea9e113`**. Re-derived the version stamp (`0.16.0`, tranche/16), the job graph (`stamp`/`test`/three platform publishes/`finalize`, unchanged in shape), the `tools/ci/test_branch_promotion_guard.sh` path (moved from `tests/sd16-e5-f1/` — SD-36 Epic C2, already reflected in the working tree at the time of this pass), and added the `deploy-site.yml` workflow (new since the last pass, publishes the public status site, not the desktop app). Line-number citations from the prior pass are dropped in favor of step/job names, which drift less between passes on a 1,000+ line workflow file.
+> Last verified: **2026-09-20 against `tranche/16`, HEAD `424e93e93c`** — SD-36 docs-truth capability
+> pass: checked this document's claims against the fact sheet and found no capability/scope claim in
+> it that needed correction (it describes CI/release mechanics, not product-wide coverage or "N books"/
+> "pilot"/"proof harness" framing); no substantive change this pass beyond this header refresh. Prior
+> pass **2026-09-20 against `b22ea9e113`** re-derived the version stamp (`0.16.0`, tranche/16), the job
+> graph (`stamp`/`test`/three platform publishes/`finalize`, unchanged in shape), the
+> `tools/ci/test_branch_promotion_guard.sh` path (moved from `tests/sd16-e5-f1/` — SD-36 Epic C2,
+> already reflected in the working tree at the time of that pass), and added the `deploy-site.yml`
+> workflow (new since the pass before that, publishes the public status site, not the desktop app).
+> Line-number citations from earlier passes are dropped in favor of step/job names, which drift less
+> between passes on a 1,000+ line workflow file.
 > Maintenance: updated at SD closure — see [README.md](./README.md) §Maintenance contract
 
 ## Overview

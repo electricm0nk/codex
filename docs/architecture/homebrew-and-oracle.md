@@ -1,13 +1,17 @@
 # Homebrew authoring and oracle validation
 
 > Scope: the headless GE-08 package-authoring surface (`src/homebrew_authoring/`, root `codex` crate), the GE-05 pilot oracle-parity surface (`crates/codex-ingest/src/oracle_validation/`), and the SD-33 corpus-wide oracle harness (`scripts/oracle_harness/`), as they exist today.
-> Last verified: **2026-09-20 against `tranche/16` (`b22ea9e113`)** for the SD-36 Epic A crate move:
-> the old src/oracle_validation/ directory does not exist any more — it moved whole to
-> `crates/codex-ingest/src/oracle_validation/` (operator ruling D1, see
-> [corpus-ingest.md](./corpus-ingest.md) §"The crate wall"), and grew two submodules since the prior
-> pass (`class_feature_scaling_bar_check.rs`, `race_trait_formula_bar_check.rs` — 8 total, not 6).
-> `src/homebrew_authoring/` is unaffected: it reads and computes no PCGen token, so it stayed in the
-> root `codex` crate. This pass also added the oracle-harness flow diagram and the "How to extend"/
+> Last verified: **2026-09-20 against `tranche/16` (`424e93e93c`)** — SD-36 docs-truth capability pass:
+> re-checked this document's "one proof package" framing for `homebrew_authoring` against the code
+> (`grep -rn "pub fn.*_proof\b" src/homebrew_authoring/` still returns exactly one hit,
+> `guard_stance_proof()` — the claim holds unchanged) and confirmed no other capability/scope claim in
+> this document is stale; no other correction was needed this pass. Prior pass **2026-09-20 against
+> `b22ea9e113`** covered the SD-36 Epic A crate move: the old src/oracle_validation/ directory does not
+> exist any more — it moved whole to `crates/codex-ingest/src/oracle_validation/` (operator ruling D1,
+> see [corpus-ingest.md](./corpus-ingest.md) §"The crate wall"), and grew two submodules since the pass
+> before that (`class_feature_scaling_bar_check.rs`, `race_trait_formula_bar_check.rs` — 8 total, not
+> 6). `src/homebrew_authoring/` is unaffected: it reads and computes no PCGen token, so it stayed in
+> the root `codex` crate. That pass also added the oracle-harness flow diagram and the "How to extend"/
 > "Pitfalls" sections. Prior pass **2026-08-25 against `tranche/13`** (SD-33 closure epilogue)
 > verified §"The SD-33 corpus-wide oracle harness"; the rest of this document's substance is
 > otherwise unchanged since 2026-07-23 (SD-26 Epic 6 closure).

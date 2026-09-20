@@ -1,7 +1,15 @@
 # Persistence
 
 > Scope: how saved characters and campaigns are typed, stored on disk, and reached from the desktop shell.
-> Last verified: **2026-09-20 against `tranche/16`, HEAD `b22ea9e113`** (SD-36 consolidation, architecture-docs truth-up). Re-derived the on-disk bundle layout — a saved character now writes up to **six** files, not two, since `character_hub.rs` grew four sidecar files (bio/money/HP, alongside the pre-existing portrait) whose writes never went through `SavedCharacterEnvelope`/`CharacterInput` at all. Prior pass: 2026-07-21 against `deeff110a104`.
+> Last verified: **2026-09-20 against `tranche/16`, HEAD `424e93e93c`** — SD-36 docs-truth capability
+> pass: checked this document's claims against the fact sheet and found no capability/scope claim in
+> it that needed correction (it describes on-disk mechanics, not product-wide coverage or "N books"/
+> "pilot"/"proof harness" framing); no substantive change this pass beyond this header refresh. Prior
+> pass **2026-09-20 against `b22ea9e113`** (SD-36 consolidation, architecture-docs truth-up) re-derived
+> the on-disk bundle layout — a saved character now writes up to **six** files, not two, since
+> `character_hub.rs` grew four sidecar files (bio/money/HP, alongside the pre-existing portrait) whose
+> writes never went through `SavedCharacterEnvelope`/`CharacterInput` at all. Pass before that:
+> 2026-07-21 against `deeff110a104`.
 > Maintenance: updated at SD closure — see [README.md](./README.md) §Maintenance contract
 
 This covers the two local-store boundaries under `src/`: `src/saved_character/`

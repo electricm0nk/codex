@@ -244,6 +244,38 @@ being silently carried forward as an all-green cycle. Logged as a retro `note`,
 specific types (`incident`, `deferral`) because this is a gap in the gate's own design, observed
 once, not yet a recorded recurrence with its own `recurrence_key`.
 
+### 9. A docs review that checks paths and numbers but not capability claims lets a false product posture through, and a guarded exit "resolved" with a force flag silently swapped a semantic graph for a thin one
+
+Two findings from the 2026-09-20 docs capability-truth pass, both logged as retro events in
+`docs/retro/events/sd31-transcribe.jsonl` (the log's own task-derived filename; content is this
+bundle's):
+
+- **Correction `1789930012760-sd31-transcribe-c8d51e`**: an earlier SD-36 docs pass left
+  `docs/architecture/status.md` claiming "single-class Fighter at levels 1-3 ... is the only path
+  that reaches a fully Computed receipt" and describing Codex as "a developer proof-harness," even
+  though the cited test name
+  (`compose_character_input_reaches_computed_status_for_supported_fighter_levels_1_to_3`) asserts
+  a floor, not a ceiling — no test anywhere asserts non-Fighter classes fail. That earlier pass
+  checked paths, commands, diagrams and counts but never checked capability claims against the
+  engine. Corrected via `cargo run --locked --bin v06_class_state_dump` and the one-time
+  `tests/zz_class_census.rs` registry-merge instrument: 31 fully-tabled classes reach `Computed`
+  at every level 1-20, and 42 of 135 distinct class ids reach `Computed` corpus-wide — see
+  `docs/release/SD-36-consolidation/receipts.md` § "Docs capability-truth pass (2026-09-20)" and
+  `status.md`'s class-coverage table, the source of truth for these figures.
+- **Incident `1789930020421-sd31-transcribe-16d652`**: a prior cycle's guarded `graphify
+  cluster-only` exit 1 (dedup-collapse guard, non-blocking per the 2026-07-20 policy) was
+  "resolved" with `graphify update --force`, which replaced the live 648,328-node semantic graph
+  with a 51,852-node AST-only build (7.4% of the node count, no semantic clustering) — and
+  `receipts.md` recorded that swap as a success. A same-day snapshot at `graphify-out/2026-09-20/`
+  made recovery possible: the live files were restored from it, the thin build was parked at
+  `graphify-out/2026-09-20-ast-force-run/` rather than deleted, and `receipts.md`'s closure table
+  now states plainly that graphify was **not** refreshed for SD-36. A full semantic re-extraction
+  is left as the operator's call.
+
+**The generalised finding:** a guarded exit exists to be read, not defeated with the first force
+flag documented in `--help`; and a test that proves something works is a floor on the claim space,
+never license to state the untested remainder as broken.
+
 ---
 
 ## What the retro log's own numbers say, independent of the seven lessons above

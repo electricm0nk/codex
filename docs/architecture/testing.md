@@ -3,12 +3,13 @@
 > Scope: testing philosophy and the full verification command set for this repo — this file
 > doubles as the "how do I verify my change" runbook and as the reference for how this repo
 > writes a test.
-> Last verified: **2026-09-20 against `tranche/16`** (SD-36 Epic D truth-up, HEAD `5ee77f8d85` +
-> this cycle's Epic C2 working-tree state: the `crates/codex-ingest` split (Epic A) and the
-> `pilot_compute` submodule split (Epic C1) are both committed and reflected below; the table-driven
-> `tests/sd18_widening`/`tests/sd13_progression` rewrite (Epic C2.1/C2.2) **has now landed**,
-> uncommitted as of this pass — both families' `rows.rs` exist and are documented in "Table-driven
-> test families" and in their own section below).
+> Last verified: **2026-09-20 against `tranche/16` (`424e93e93c`)** (SD-36 Epic D truth-up +
+> this cycle's Epic C2 landed state: the `crates/codex-ingest` split (Epic A), the
+> `pilot_compute` submodule split (Epic C1), and the table-driven `tests/sd18_widening`/
+> `tests/sd13_progression` rewrite with vacuity guards and sabotage-parity proof (Epic C2.1/C2.2)
+> are all committed and reflected below — both families' `rows.rs` exist and are documented in
+> "Table-driven test families" and in their own section below; fixed a stale internal anchor link
+> to that section left over from the "Epic C2, in progress" → "Epic C2, done" heading rename.
 > Prior verification history (SD-35, SD-33, SD-31 sections) is retained only where its content is
 > still current; superseded figures were replaced, not appended to.
 > Maintenance: updated at SD closure — see [README.md](./README.md) §Maintenance contract
@@ -794,7 +795,7 @@ you edit a fixture here, both lanes must be re-run and their verdicts must agree
   information.
 - **Don't write a new top-level `tests/<name>.rs` for one more row of an existing templated
   family.** Add a module to that family's roster instead — see
-  [The `tests/sd18_widening/` and `tests/sd13_progression/` families](#the-testssd18_widening-and-testssd13_progression-families-epic-c2-in-progress)
+  [The `tests/sd18_widening/` and `tests/sd13_progression/` families](#the-testssd18_widening-and-testssd13_progression-families-epic-c2-done)
   above.
 - **Don't treat a `#[cfg(test)]`-only helper as dead code you can delete.** Several
   `src/support/paths.rs` functions (`corpus_root_if_set`, `pcgen_corpus_root`, `corpus_subdir`)

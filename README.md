@@ -2,16 +2,19 @@
 
 Codex is a Rust + Tauri replacement effort for PCGen. PCGen is the heritage application and oracle substrate; Codex is the new program and implementation surface.
 
-**Architecture and design documentation** for anyone — human or agent — working in this repo lives at [`docs/architecture/`](docs/architecture/README.md). Start there for the system map, module boundaries, design conventions, and the current real-vs-stubbed capability status.
+> Last verified: **2026-09-20 against `tranche/16`, HEAD `424e93e93c`** (SD-36 consolidation docs-truth pass).
+
+**Architecture and design documentation** for anyone — human or agent — working in this repo lives at [`docs/architecture/`](docs/architecture/README.md). Start there for the system map, module boundaries, design conventions, and the current real-vs-stubbed capability status. First stop for setup: [`docs/architecture/README.md`](docs/architecture/README.md) (doc-set index and reading paths) and [`docs/architecture/getting-started.md`](docs/architecture/getting-started.md) (toolchain setup, the full build/test/run command set, and `scripts/verify.sh`).
 
 ## Current state
 
-**Current truthful posture:** Codex is a **developer proof harness plus a buildable desktop workbench surface**, not a finished end-user product.
+**Current truthful posture:** Codex's PF1e compute engine is not a single-class proof slice. Across the 38-book corpus it has ingested, all 31 fully-tabled classes (Core Rulebook, Advanced Player's Guide, Advanced Class Guide, Pathfinder Unchained) reach a fully `Computed` sheet at every level 1-20 (proven by a fresh instrument run that sweeps class and level, not race — see status.md for the exact scope), 2 of Ultimate Combat's 3 classes and 9 further "untabled" exotic base classes reach `Computed` too (42 of 135 distinct class ids corpus-wide — see status.md's class/level compute-coverage table), and the desktop app is a real, wired, end-to-end character-creation/leveling/equipment/DM-toolkit/encounter-builder/campaign-manager product, independently verified at 66 of 69 automated UI flows green. **Separately** — this is a different measurement and must not be conflated with the compute claim above (status.md says so explicitly) — the corpus's ingestion/classification state is a frozen snapshot at 100% of 49,450 catalogued units as of 2026-09-15 (see status.md's "Corpus coverage"): that figure answers "is every corpus unit present and classified," not "does the compute engine produce a value for it today." See [`docs/architecture/status.md`](docs/architecture/status.md) for the evidence-backed capability matrix and the real named limitations (Samurai, 18 of 27 "untabled" base classes, prestige classes, and multiclass beyond the 11 CRB base classes each have a specific, documented gap).
 
 The maintained, closure-updated statement of what is real vs stubbed today is
 [`docs/architecture/status.md`](docs/architecture/status.md) — it supersedes any
 snapshot list this README used to carry. The full verification command set is
-[`docs/architecture/testing.md`](docs/architecture/testing.md). This README does
+[`docs/architecture/testing.md`](docs/architecture/testing.md) and
+[`docs/architecture/getting-started.md`](docs/architecture/getting-started.md). This README does
 not grant implementation authority by itself; use the bounded handoff or source
 STC for scoped work.
 
@@ -20,14 +23,16 @@ STC for scoped work.
 ```text
 codex/
   src/
-    pcgen_import/        # GE-03 importer foothold
-    rules_core/          # GE-06 bounded pilot computation surfaces
-    homebrew_authoring/  # GE-08 bounded package/preview surfaces
-  tests/                 # bounded proof harness
-  apps/desktop/          # React + Tauri desktop shell/workbench surface
-  docs/release/          # every SD-NN bundle's full docs, including release-notes.md — see below
-  AGENTS.md              # repo-root conduct surface for coding harnesses
-  README.md              # first-contact onboarding surface
+    rules_core/          # PF1e compute engine: rule-data tables, pilot compute chassis, boundary contract
+    homebrew_authoring/  # homebrew package authoring + preview surfaces (e.g. the Guard Stance proof package)
+    saved_character/     # saved-character on-disk persistence
+    campaign/             # campaign on-disk persistence
+  crates/codex-ingest/    # PCGen .pcc/.lst corpus ingest + oracle-parity comparator — dev-dependency of the desktop shell only, never a runtime dependency of the live sheet engine
+  tests/                  # integration test suite (`cargo test --locked`)
+  apps/desktop/           # React + Tauri desktop app — the real, wired character-sheet product surface
+  docs/release/           # every SD-NN bundle's full docs, including release-notes.md — see below
+  AGENTS.md               # repo-root conduct surface for coding harnesses
+  README.md               # first-contact onboarding surface
 ```
 
 ### Documentation structure
@@ -121,7 +126,7 @@ apps/desktop/src-tauri/target/debug/codex
 
 ## Build and verification surfaces
 
-### Core proof harness
+### Root crate test suite
 
 From the repo root:
 
@@ -129,12 +134,17 @@ From the repo root:
 cargo test
 ```
 
-### Focused bounded proof slices
+### Focused test slices, by grand-epic origin
 
 ```bash
-cargo test ge06_
-cargo test ge08_
+cargo test ge06_    # rules-engine / pilot-compute tests
+cargo test ge08_    # homebrew-authoring (Guard Stance) tests
 ```
+
+`scripts/verify.sh` is the one gate this repo trusts for a full pass (root suite, `crates/codex-ingest`,
+the desktop Rust crate, lint, and the frontend) — see
+[`docs/architecture/getting-started.md`](docs/architecture/getting-started.md) §"`scripts/verify.sh`"
+for the full stage list and the nohup-and-poll pattern a full run needs (it takes roughly 1-2 hours).
 
 ### Desktop/frontend verification
 
@@ -147,14 +157,14 @@ npm run tauri:check
 npx tauri build --debug
 ```
 
-## Run the current demo
+## Run the app
 
-### Headless proof walkthrough
+### Headless test walkthrough
 
 1. Complete the getting-started steps above.
 2. Run `cargo test` from the repo root.
-3. Run `cargo test ge06_` to verify the bounded deterministic pilot surface.
-4. Run `cargo test ge08_` to verify the bounded Guard Stance homebrew/workbench surface.
+3. Run `cargo test ge06_` to verify the rules-engine / pilot-compute tests.
+4. Run `cargo test ge08_` to verify the homebrew-authoring (Guard Stance) tests.
 
 ### GUI walkthrough
 
@@ -172,16 +182,46 @@ apps/desktop/src-tauri/target/debug/codex
 ```
 
 Expected current behavior:
-- the app is a bounded GE-08 workbench surface
-- it loads the Guard Stance proof package
-- it displays package state, preview state, and a structured snapshot
+- the app opens on the real Character Hub — create, load, clone, and level up a character; every
+  class/level combination the create-flow's own picker offers (`CLASS_OPTIONS`, the 31 fully-tabled
+  CRB/APG/ACG/Pathfinder Unchained classes, at levels 1-20) reaches a fully computed sheet
+  (`v06_class_state_dump`: `class_count=31, computed_count=31, blocked_count=0`). The engine itself
+  computes more than the picker currently offers — see [`docs/architecture/status.md`](docs/architecture/status.md)'s
+  capability matrix, which also lists the classes that do **not** reach a fully computed sheet
+  (Samurai, 18 of 27 "untabled" base classes, and every prestige class)
+- the DM Toolkit, encounter builder, campaign manager, and equipment/spell/class/race/monster
+  catalogs are all real, wired features reachable from here, not stubs or placeholders
+- the GE-08 homebrew authoring workbench (the Guard Stance proof package's validate/persist/preview
+  round trip) is one real feature within this surface, not the whole app
+
+For driving the app without a graphical session, see
+[`docs/architecture/getting-started.md`](docs/architecture/getting-started.md) §"Running the desktop
+app" — the `run-desktop` skill launches and drives it under a virtual (Xvfb) display, and is how the
+66-of-69-green UI-smoke regression suite cited in
+[`docs/architecture/status.md`](docs/architecture/status.md) is produced.
 
 ## Known limitations
 
-- a headless shell can build the desktop binary but cannot launch the GTK GUI successfully
-- the current UI surface is bounded and demo-oriented, not a general character builder
-- only the Linux desktop onboarding/build path was verified in the GE-10 pass
-- product breadth, parity, and release packaging remain unfinished
+- the desktop's own class-creation picker currently offers only the 31 fully-tabled classes
+  (CRB/APG/ACG/Unchained); the engine can already compute more (Ultimate Combat's Gunslinger and
+  Ninja, plus 9 further "untabled" exotic base classes) but the picker does not yet expose them —
+  a UI-surface gap, not an engine gap
+- Samurai and 18 of 27 "untabled" base classes have a real BAB/save chassis but do not reach a
+  fully `Computed` sheet — each is blocked only on unknown weapon-proficiency data
+- no prestige class ever reaches `Computed` — entry-requirement gating is real for the ingested
+  prestige classes, and most of those have a real BAB/save chassis too, but the reason none reach
+  `Computed` is a missing gate arm, not an absence of chassis data — see
+  [`docs/architecture/status.md`](docs/architecture/status.md)'s class-coverage table for the exact
+  figures and evidence
+- multiclass is limited to combinations of the 11 CRB base classes; a mix containing an
+  APG/ACG/Unchained/Ultimate-Combat/exotic class is not reachable through the supported-chassis gate
+- character level is capped at 20, matching PF1's own rule; the engine refuses level 21+ rather
+  than silently accepting it
+- only the Linux desktop onboarding/build path has been verified; do not assume parity on another
+  platform until you have repeated the proof there
+
+See [`docs/architecture/status.md`](docs/architecture/status.md) for the full evidence-backed
+capability matrix and every limitation's citation.
 
 ## Troubleshooting
 
