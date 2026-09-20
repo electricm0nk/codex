@@ -168,6 +168,16 @@ fn pcgen_gradle_wrapper_is_runnable(pcgen_repo_dir: &Path) -> bool {
     if !gradlew.is_file() {
         return false;
     }
+    // A cone-mode sparse checkout (scripts/fetch-pcgen-oracle.sh, as CI runs
+    // it) always keeps root-level files, so `gradlew` alone being present
+    // and executable is not proof the headless export can actually run --
+    // CI runs 35050389421 and 35045137495 both had a runnable `gradlew` but
+    // no `code/` tree, so the batch export failed on a missing template
+    // instead of this guard skipping cleanly. Check for that template too.
+    let batch_export_template = pcgen_repo_dir.join("code/testsuite/base-xml.ftl");
+    if !batch_export_template.is_file() {
+        return false;
+    }
     #[cfg(unix)]
     {
         use std::os::unix::fs::PermissionsExt;
@@ -203,10 +213,12 @@ fn full_pipeline_runs_end_to_end_against_the_real_pu_pilot_case() {
     let pcgen_repo_dir = default_pcgen_repo_dir();
     if !pcgen_gradle_wrapper_is_runnable(&pcgen_repo_dir) {
         eprintln!(
-            "[skip] sd27_pathfinder_unchained_parity: real PCGen Gradle wrapper not found/executable at {} \
-             (set $PCGEN_REPO_DIR to a checked-out PCGen repo to run this end-to-end; \
-             GitHub Actions runners do not check out the companion PCGen repo)",
-            pcgen_repo_dir.join("gradlew").display()
+            "[skip] sd27_pathfinder_unchained_parity: real PCGen headless export not available under {} \
+             (needs both an executable gradlew and code/testsuite/base-xml.ftl; set \
+             $PCGEN_REPO_DIR to a full PCGen checkout to run this end-to-end -- CI's \
+             sparse oracle fetch keeps root-level files like gradlew but not the code/ \
+             Gradle project)",
+            pcgen_repo_dir.display()
         );
         return;
     }

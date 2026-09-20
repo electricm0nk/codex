@@ -146,6 +146,9 @@ jobs:
     name: Test before publish
     runs-on: ubuntu-latest
 
+    # TWIN: .github/workflows/pr-tests.yml runs this same lane on every PR
+    # into develop, so a broken suite is caught before merge instead of only
+    # here, after. If you change a step in this job, change it there too.
     steps:
       - uses: actions/checkout@v7
 
@@ -166,6 +169,19 @@ jobs:
           workspaces: |
             . -> target
             apps/desktop/src-tauri -> target
+
+      # Fetches the pinned PCGen oracle checkout so `cargo test` has a real
+      # corpus to read. Without this step, CI runs 35050389421 ("Publish
+      # tester release" on develop after PR #391) and 35045137495 both hit
+      # `PinnedTree::load(...).expect(...)` panics in oracle-reading tests —
+      # PR #391 guarded one lib test, but the wider `cargo test` run reaches
+      # dozens more that assume the oracle is present. The oracle is test
+      # input only; it is never shipped.
+      - name: Fetch the pinned PCGen oracle (test input only; never shipped)
+        run: |
+          scripts/fetch-pcgen-oracle.sh --dest "$HOME/workspace/repos/pcgen" --quiet
+          echo "PCGEN_REPO_DIR=$HOME/workspace/repos/pcgen" >> "$GITHUB_ENV"
+          echo "PCGEN_CORPUS_ROOT=$HOME/workspace/repos/pcgen/data" >> "$GITHUB_ENV"
 
       - name: Run core crate tests
         run: cargo test --locked --workspace

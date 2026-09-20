@@ -1294,9 +1294,17 @@ mod term_level_refusal_gate {
     /// converted rule of a record whose base row is a `.COPY=` row stating `VISIBLE:NO`. A
     /// record the package does not hold under its own id is **counted and reported**, never
     /// excused.
+    ///
+    /// GitHub CI never fetches the pinned PCGen checkout, so this gate skips -- never
+    /// false-passes -- when it is absent; `scripts/verify.sh`'s `preflight-oracle` stage
+    /// guarantees the checkout is present for a local full run, where this gate always executes.
     #[test]
     fn a_copy_rows_own_visible_no_reaches_the_converted_rule() {
         let pinned = closure::corpus_root();
+        if !pinned.join(closure::BOOKS_RELATIVE).is_dir() {
+            eprintln!("skipping: no pinned PCGen corpus checkout at {pinned:?}");
+            return;
+        }
         let mut rows: BTreeMap<String, Vec<String>> = BTreeMap::new();
         let mut row_text = |rel: &str, line: usize| -> Option<String> {
             let lines = rows.entry(rel.to_string()).or_insert_with(|| {

@@ -1,0 +1,89 @@
+name: PR tests (develop)
+
+# Runs the same test lane as the `test` job in publish-tester-release.yml,
+# but on every pull request into develop, instead of only after a push has
+# already landed. Before this workflow existed, a PR could merge into
+# develop, and only the post-merge publish workflow would catch a broken
+# test suite (CI runs 35050389421 and 35045137495 both found the missing
+# PCGen oracle fetch this way, after the merge had already happened).
+#
+# TWIN: the steps below are copied verbatim from the `test` job in
+# .github/workflows/publish-tester-release.yml (checkout, Linux deps, Rust
+# toolchain, rust-cache, oracle fetch, root `cargo test`, desktop-shell
+# `cargo test`, Node setup, npm install, typecheck, frontend test). If you
+# change one, change the other — that is the whole point of this file
+# existing separately from relying on the post-merge lane alone.
+
+on:
+  pull_request:
+    branches:
+      - develop
+
+permissions:
+  contents: read
+
+concurrency:
+  group: pr-tests-${{ github.ref }}
+  cancel-in-progress: true
+
+jobs:
+  test:
+    name: Test (PR into develop)
+    runs-on: ubuntu-latest
+
+    steps:
+      - uses: actions/checkout@v7
+
+      - name: Install Linux build dependencies
+        run: |
+          sudo apt-get update -y
+          sudo apt-get install -y \
+            libwebkit2gtk-4.1-dev \
+            libappindicator3-dev \
+            librsvg2-dev \
+            patchelf
+
+      - uses: dtolnay/rust-toolchain@stable
+
+      - name: Cache Rust build artifacts
+        uses: Swatinem/rust-cache@v2
+        with:
+          workspaces: |
+            . -> target
+            apps/desktop/src-tauri -> target
+
+      # Fetches the pinned PCGen oracle checkout so `cargo test` has a real
+      # corpus to read. Without this step, CI runs 35050389421 ("Publish
+      # tester release" on develop after PR #391) and 35045137495 both hit
+      # `PinnedTree::load(...).expect(...)` panics in oracle-reading tests —
+      # PR #391 guarded one lib test, but the wider `cargo test` run reaches
+      # dozens more that assume the oracle is present. The oracle is test
+      # input only; it is never shipped.
+      - name: Fetch the pinned PCGen oracle (test input only; never shipped)
+        run: |
+          scripts/fetch-pcgen-oracle.sh --dest "$HOME/workspace/repos/pcgen" --quiet
+          echo "PCGEN_REPO_DIR=$HOME/workspace/repos/pcgen" >> "$GITHUB_ENV"
+          echo "PCGEN_CORPUS_ROOT=$HOME/workspace/repos/pcgen/data" >> "$GITHUB_ENV"
+
+      - name: Run core crate tests
+        run: cargo test --locked
+
+      - name: Run desktop shell tests
+        working-directory: apps/desktop/src-tauri
+        run: cargo test --locked
+
+      - uses: actions/setup-node@v6
+        with:
+          node-version: '22'
+
+      - name: Install npm dependencies
+        working-directory: apps/desktop
+        run: npm ci
+
+      - name: Typecheck frontend
+        working-directory: apps/desktop
+        run: npm run typecheck
+
+      - name: Run frontend tests
+        working-directory: apps/desktop
+        run: npm test

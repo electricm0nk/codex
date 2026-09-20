@@ -164,6 +164,16 @@ fn pcgen_gradle_wrapper_is_runnable(pcgen_repo_dir: &Path) -> bool {
     if !gradlew.is_file() {
         return false;
     }
+    // A cone-mode sparse checkout (scripts/fetch-pcgen-oracle.sh, as CI runs
+    // it) always keeps root-level files, so `gradlew` alone being present
+    // and executable is not proof the headless export can actually run --
+    // CI runs 35050389421 and 35045137495 both had a runnable `gradlew` but
+    // no `code/` tree, so the batch export failed on a missing template
+    // instead of this guard skipping cleanly. Check for that template too.
+    let batch_export_template = pcgen_repo_dir.join("code/testsuite/base-xml.ftl");
+    if !batch_export_template.is_file() {
+        return false;
+    }
     #[cfg(unix)]
     {
         use std::os::unix::fs::PermissionsExt;
@@ -214,9 +224,24 @@ fn gradle_wrapper_runnable_check_requires_executable_gradlew() {
             .expect("permissions should update");
     }
 
+    // A cone-mode sparse checkout (scripts/fetch-pcgen-oracle.sh) always
+    // keeps root-level files, so an executable `gradlew` with no `code/`
+    // tree behind it is exactly the shape CI runs 35050389421 and
+    // 35045137495 hit: the guard must still refuse until the batch export
+    // template is present too.
+    assert!(
+        !pcgen_gradle_wrapper_is_runnable(&temp),
+        "executable gradlew without the batch export template must still be treated as not runnable"
+    );
+
+    let testsuite_dir = temp.join("code/testsuite");
+    std::fs::create_dir_all(&testsuite_dir).expect("code/testsuite directory should be creatable");
+    std::fs::write(testsuite_dir.join("base-xml.ftl"), "")
+        .expect("batch export template placeholder should write");
+
     assert!(
         pcgen_gradle_wrapper_is_runnable(&temp),
-        "present executable gradlew should be treated as runnable"
+        "present executable gradlew plus the batch export template should be treated as runnable"
     );
     std::fs::remove_dir_all(&temp).expect("temp directory should be removable");
 }
@@ -243,10 +268,12 @@ fn full_pipeline_runs_end_to_end_against_the_real_arg_pilot_case() {
     let pcgen_repo_dir = default_pcgen_repo_dir();
     if !pcgen_gradle_wrapper_is_runnable(&pcgen_repo_dir) {
         eprintln!(
-            "[skip] sd27_advanced_race_guide_parity: real PCGen Gradle wrapper not found/executable at {} \
-             (set $PCGEN_REPO_DIR to a checked-out PCGen repo to run this end-to-end; \
-             GitHub Actions runners do not check out the companion PCGen repo)",
-            pcgen_repo_dir.join("gradlew").display()
+            "[skip] sd27_advanced_race_guide_parity: real PCGen headless export not available under {} \
+             (needs both an executable gradlew and code/testsuite/base-xml.ftl; set \
+             $PCGEN_REPO_DIR to a full PCGen checkout to run this end-to-end -- CI's \
+             sparse oracle fetch keeps root-level files like gradlew but not the code/ \
+             Gradle project)",
+            pcgen_repo_dir.display()
         );
         return;
     }
