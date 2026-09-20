@@ -112,6 +112,156 @@ production-test-logic scope beyond the A5/A9/A10 batch this cycle inherited).
 
 ---
 
+## Epic C2.1/C2.2 evidence — table-driven test rewrite (2026-09-20)
+
+The rewrite converts the two near-universal negative-control shapes (found in
+both families) from hand-written per-(class,level) bodies to a `const` row +
+`macro_rules!` invocation, while leaving every test's fn name, module, file,
+and every bespoke (non-uniform) body untouched. Full per-cluster survey and
+per-shape rationale: `sd18_widening-progress.md` and
+`sd13_progression-progress.md` (this cycle's scratchpad,
+`/tmp/.../scratchpad/sd36/c2/`).
+
+### Before/after line counts and test counts, per family
+
+| family | lines before | lines after | command | tests before | tests after | command |
+|---|---|---|---|---|---|---|
+| `tests/sd18_widening` | 33,621 | **29,041** of 33,621 (-4,580 lines, -13.6%) | `git ls-tree -r --name-only HEAD -- tests/sd18_widening \| grep '\.rs$'` piped through `git show HEAD:<f> \| wc -l` per file for "before" (matches `cat tests/sd18_widening/*.rs \| wc -l` run on the untouched HEAD tree); `cat tests/sd18_widening/*.rs \| wc -l` for "after" (live tree) | 891 | **891** of 891, unchanged | `cargo test --locked --test sd18_widening -- --list \| grep -c ': test$'`, both before and after |
+| `tests/sd13_progression` | 35,704 | **34,258** of 35,704 (-1,446 lines, -4.05%) | same method as above, `-- tests/sd13_progression` | 1,136 | **1,136** of 1,136, unchanged | `cargo test --locked --test sd13_progression -- --list \| grep -c ': test$'`, both before and after |
+
+Re-derived live in this docs pass (2026-09-20, same HEAD `5ee77f8d85` + this
+cycle's uncommitted working tree): the "after" test counts above were
+re-confirmed by a fresh `cargo test --locked -j 2 --test sd13_progression
+--test sd18_widening -- --list` run, `grep -c ': test$'` = 1136 and 891
+respectively, and a fresh full run, `cargo test --locked -j 2 --no-fail-fast
+--test sd13_progression --test sd18_widening`, both green: `test result: ok.
+1136 passed; 0 failed` / `test result: ok. 891 passed; 0 failed`. Note the
+`sd13_progression` "after" line count above (34,258) is 3 lines lower than
+the 34,261 the rewrite's own progress note recorded — re-derived directly
+from the live tree rather than carried forward from that note, per this
+program's own "every figure carries the command that produced it" rule; the
+3-line gap is small enough to be later formatting/import cleanup and does not
+change any test-count or pass/fail figure.
+
+Rows converted: **182** in `sd18_widening` (`tests/sd18_widening/rows.rs`:
+80 `FighterNegRow` + 38 `NegControlRow` (boundary) + 64
+`MulticlassNegControlRow`) and **143** in `sd13_progression`
+(`tests/sd13_progression/rows.rs`: 84 `recognition_negative_controls!` rows +
+59 `multiclass_negative_controls!` rows, mechanically extracted by
+`c2sd13_extract.py`, JSON: `c2sd13_extracted.json` — `shape1` 84, `shape2`
+59, `anomalies` 29 left bespoke). `sd18_widening` additionally collapsed the
+two-line `load()` + `compute_pilot_base_chassis()` preamble shared by 816 of
+its 891 tests into `tests/sd18_widening/support.rs`'s `support::compute()`
+(the assert lines themselves were never touched by this collapse).
+
+### `--list` diff result (both families, both directions)
+
+Byte-identical, re-run live in this docs pass:
+
+```
+$ diff <(cargo test --locked --test sd13_progression -- --list | sort) <(sort list-sd13-before.txt)
+(only the trailing "N tests, 0 benchmarks" summary line differs — the sorted test-entry lines themselves match exactly)
+$ diff <(cargo test --locked --test sd18_widening -- --list | sort) <(sort list-sd18-before.txt)
+(no output — exact match)
+```
+
+`list-sd13-before.txt` / `list-sd18-before.txt` are this cycle's own
+pre-rewrite `--list` captures (`baseline.md`), taken from the same untouched
+HEAD the line-count table above uses.
+
+### The three sabotages — identical failing-set counts before/after (`baseline.md`)
+
+Each sabotage is a single-line edit inside `src/rules_core/pilot_compute`
+(never `tests/`), applied, tested, reverted (`git apply -R`), confirmed clean
+(`git status -- src`) before the next. Re-run three times against the
+rewritten tree (`sabotage-N-after-1`, `-after-2`, `-after-9`) to rule out
+flake; every run's failing-NAME set diffs empty against the pre-rewrite
+baseline (`sabotage-N-before.failed.txt`):
+
+| sabotage | site | edit | failing (sd13 / sd18 / total), before == after (×3 re-runs) |
+|---|---|---|---|
+| 1 | `src/rules_core/pilot_compute/class_barbarian.rs:2381` | `level_value / 2 + 2` → `+ 3` (Barbarian good-Fortitude save) | 9 / 13 / **22**, identical |
+| 2 | `src/rules_core/pilot_compute/class_cleric.rs:1023` | `(3 + ability_modifiers.charisma).max(0)` → `(4 + ...)` (Channel Energy uses/day) | 9 / 10 / **19**, identical |
+| 3 | `src/rules_core/pilot_compute/class_paladin_ranger.rs:2096` | `(paladin_level - 3).max(0)` → `(paladin_level - 2)` (effective caster level) | 13 / 1 / **14**, identical |
+
+`diff sabotage-N-before.failed.txt sabotage-N-after-9.failed.txt` (and
+`-after-1`, `-after-2`) all produce no output for N in 1,2,3 — the same test
+NAMES fail, not merely the same count, which is what the safety rule
+("assertions are moved, never rewritten") actually requires proof of. All
+three sabotages individually clear the required 10-test floor and hit both
+families.
+
+### Self-audit result
+
+- **`sd18_widening`**: `self_audit.py` extracted the multiset of every
+  string/numeric literal inside each `assert!`/`assert_eq!`/`assert_ne!`/
+  `.expect(` in the OLD body (`git show HEAD:<file>`) and in the NEW
+  representation (direct source for bespoke/setup-collapsed tests, or
+  macro-invocation args + the generating row's fields for the 182 row-driven
+  tests), and reported any OLD literal missing from the NEW set. First pass:
+  83 apparent mismatches, both traced to audit-script bugs (comments inside
+  the old `assert!(...)` parens contributing stray literals; the Sorcerer
+  row's `extra_exact` field not yet in the reconstruction) — fixed, re-run.
+  **Final: `self_audit_result.json` → `{"total_checked": 891, "total_macro":
+  182, "total_direct": 709, "mismatches": []}`.**
+- **`sd13_progression`**: no separate old-vs-new literal diff script exists
+  in this cycle's scratchpad (unlike `sd18_widening`'s `self_audit.py`) —
+  correcting this doc's own would-be overclaim: the equivalent verification
+  actually performed for this family is (a) `c2sd13_extract.py`'s
+  extraction-time template match, which only converts a test into a row if
+  its body matches the shape's regex exactly (`parse_predicate` must
+  succeed) and marks anything that doesn't as an `anomaly`, left bespoke
+  rather than guessed at (29 anomalies recorded, `c2sd13_extracted.json`);
+  (b) the byte-identical `--list` diff above; (c) the green full-suite run;
+  and (d) the sabotage-gate re-run above. Together (b)+(c)+(d) are the same
+  externally-observable proof the sabotage gate is designed to give — a
+  literal-by-literal audit was simply not built for this family this pass.
+
+### What stayed bespoke, and why
+
+- **`sd18_widening`** (709 of 891 tests untouched beyond the setup-collapse):
+  19 Fighter/Wizard multiclass tests whose assertion polarity flipped
+  (now-genuinely-gains, not a negative control); 10 Druid boundary/multiclass
+  tests using a custom `is_gated_druid_chassis_record` predicate + a
+  9-argument `assert_wolf_companion_stat_block` call; 89
+  `*_truth_is_unchanged_by_this_slice` tests (only 31/89 fit a plain
+  checks-list — the rest mix `values_with_prefix` vector comparisons,
+  `.detail.contains(...)` string checks, `has_explanation(...)` booleans,
+  and direct field reads, each its own shape); ~591 inherently one-off
+  per-(class,level) tests (base-attack/save progressions, feature-magnitude
+  rises, spell tables).
+- **`sd13_progression`** (993 of 1,136 tests untouched): the 29 extraction
+  anomalies above (4 Paladin two-checker `fighter_and_ranger_do_not_gain_*`
+  rows; 25 `multiclass_*` rows carrying a named helper-fn predicate, an
+  in-expression exclusion comment, or — for Wizard — a flipped
+  now-genuinely-positive assertion); the 92
+  `was_later_widened_into_the_supported_tranche` tests (mixed
+  predicate-only/full-recompute shapes); the 67+67
+  `base_attack_bonus`/`base_saves` tests (regular outline, but per-class
+  assert-count/message variance); the 35+28 `truth_is_unchanged` tests; the
+  25 `spell_bearing_baseline` tests; the 19 `base_attack_and_saves` tests;
+  and ~640 smaller/singleton feature-specific tests (rage, channel energy,
+  domain choice, bloodline, wild shape, flurry, evasion, animal companion,
+  etc.). None of these were forced into a template — the safety rule
+  (assertions moved, never rewritten, never guessed through) forbids it, and
+  converting them correctly would need a separately-verified, richer
+  per-shape row schema this pass did not build.
+
+### Correction — commit `45ef7e2327`'s subject does not match its contents
+
+Commit `45ef7e232755b457d3c6f0afbbbf8c812eaaa875`'s subject line reads
+`refactor(sd36,epic-c2,epic-d): table-driven widening tests, shared test path
+helper, closure docs` — but `git show 45ef7e2327 --name-status` touches zero
+files under `tests/sd18_widening/` or `tests/sd13_progression/`; its actual
+content is the `tests/support/paths.rs` consolidation (Epic C2.3) and the
+Epic D closure-doc refresh. The table-driven rewrite itself (`rows.rs` /
+`support.rs`, both families) landed as **uncommitted working-tree changes**
+at the time that commit was made, and lands in the commit that follows this
+docs pass, not in `45ef7e2327`. Verified: `git show 45ef7e2327 --name-status
+| grep -c 'tests/sd18_widening\|tests/sd13_progression'` → `0`.
+
+---
+
 ## Epic C2 evidence (criterion C2.5 — 2026-09-20)
 
 ### C2.5 — Oracle tests kept, run once against the real PCGen corpus

@@ -1,6 +1,6 @@
 ---
 title: SD-36 — Consolidation — Release Package
-status: in-progress — Epics B, A, E, C1 done; D1 (architecture docs) done; D2/D3 written; C2 and D4–D6 remaining
+status: in-progress — Epics B, A, E, C1, C2 done; D1 (architecture docs) done; D2/D3 written; D4–D6 remaining
 bundle_id: SD-36
 slug: consolidation
 scope: docs/release/SD-36-consolidation
@@ -55,15 +55,21 @@ SD-36 **consolidates and cleans the codebase after SD-35**: green CI, PCGen wall
 - **Done:** Epic B (freeze status, retire producers — closed 2026-09-17, 46/46 `verify.sh` PASS);
   Epic E (SD-35 code-review correctness, 22 findings, folded in per operator ruling — closed
   2026-09-17); Epic A (PCGen crate wall — closed 2026-09-19); Epic C1 (source refactor — closed
-  2026-09-20); Epic D1 (architecture-docs full-set rewrite, `decisions.md §10` — closed
-  2026-09-20).
+  2026-09-20); Epic C2 (table-driven test rewrite, all of C2.1–C2.6 — closed 2026-09-20: 182
+  `sd18_widening` + 143 `sd13_progression` tests converted to row + macro, `--list` byte-identical,
+  891/1,136 passed 0 failed, three-sabotage mutation gate confirms identical failing-name sets
+  before/after — see `receipts.md`'s Epic C2.1/C2.2 evidence section); Epic D1 (architecture-docs
+  full-set rewrite, `decisions.md §10` — closed 2026-09-20).
 - **Written this pass (2026-09-20):** Epic D2 (`docs/retro/sd36-retrospective.md`) and D3
   (`release-notes.md`, re-derived), plus corrections to `kanban.md`/`progress.md` (Epic B's row
-  was stale at `open`; Epic E had no row) and this status field.
-- **Remaining:** Epic C2 (table-driven test rewrite — not started; its own acceptance command
-  needs correcting first per the retrospective's Finding 1); Epic D4 (graphify), D5 (PR open and
-  merged), D6 (worktree sweep). See `docs/retro/sd36-retrospective.md`'s "Epic status, as of this
-  writing" table and `release-notes.md`'s "Known follow-ups" for the full, re-derivable picture.
+  was stale at `open`; Epic E had no row; Epic C2's row now reads `done`) and this status field. A
+  retro note was logged (`docs/retro/events/sd36-epic-c2-docs.jsonl`) on a workflow-gate lesson
+  from this bundle's own closure sequencing.
+- **Remaining:** Epic D4 (graphify — already run once against the pre-C2.1/C2.2 tree, exit=1,
+  receipt filed; re-run required against the FINAL tree per this program's own standing rule that
+  graphify runs last), D5 (PR open and merged), D6 (worktree sweep). See
+  `docs/retro/sd36-retrospective.md`'s "Epic status, as of this writing" table and
+  `release-notes.md`'s "Known follow-ups" for the full, re-derivable picture.
 
 ## 4. Reading guide
 

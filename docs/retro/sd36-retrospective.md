@@ -19,6 +19,12 @@ retrospective and release notes are written now, per this cycle's brief, so both
 updated rather than authored from memory at the very end; a second pass after C2 and the PR
 should re-run every command below and correct the C2/PR/sweep rows.
 
+**Addendum, second pass, 2026-09-20 (same day, later cycle):** Epic C2.1/C2.2 has since landed —
+see the "Epic status" table below and `receipts.md`'s Epic C2.1/C2.2 evidence section — and Lesson
+8 below is this pass's own finding about the gap in how the first pass's gate carried C2.1/C2.2
+forward. The PR/merge/worktree-sweep steps of Epic D (D4–D6) had not landed as of this addendum
+either; that part of the original sentence above still holds.
+
 ```
 EVENTS  201   (since 2026-09-15, 15 shards, retro window matches the bundle's own cut date)
     74  resolution      49  verification
@@ -72,7 +78,7 @@ python3 scripts/retro.py summary --since 2026-09-15
 
 ---
 
-## The seven lessons this bundle is required to carry forward
+## The eight lessons this bundle is required to carry forward
 
 ### 1. A 10-minute shell limit truncated a 69-row UI suite at row 47, and the partial file was reported complete
 
@@ -209,6 +215,34 @@ workaround:** every `Bash` call in this bundle's `ENVIRONMENT GUARD` now opens w
 CARGO_TARGET_DIR`. The lesson is not "remember to check PATH" (a warning, which `AGENTS.md` rule 8
 says is not a control) — it is "the dispatch contract states the export explicitly, every call,"
 which is what actually stopped the recurrence for the rest of the bundle.
+
+### 8. A workflow gate that only re-checks "verify green" after a refuted criterion lets a declined criterion through
+
+Lesson 2's own row above (`epic-breakdown.md`'s C2.1/C2.2 acceptance command literally returning
+`0`/never reproducing its claimed "2,219" figure) was recorded, correctly, as a refuted claim —
+retro correction `1789886083389-epic-c2-test-rewrite-6b6500`. But a refuted acceptance criterion
+and an *undone* one are not the same fact, and this bundle's own gate design conflated them for a
+full pass: the C2D gap-closure cycle re-checked "does the suite still run green" and closed
+C2.3–C2.6, then let C2.1/C2.2 — the criterion actually refuted — carry forward as an unstarted
+line item rather than a named, gated blocker, because nothing in that cycle's own re-check
+specifically re-tested *that* criterion. `kanban.md` and this retrospective's own "Epic status"
+table above both show the resulting two-pass shape: "partial" written once, corrected to "done"
+only in a second pass dispatched separately to close the gap.
+
+**The generalised finding, named once so the next bundle doesn't rediscover it as a fresh
+surprise:** when an acceptance criterion is refuted and the fix agent's own disposition on it is
+to decline (defer, escalate, or explicitly leave for a later dispatch — see `AGENTS.md` "Blocker
+Discipline"), a workflow gate that only re-checks "is the suite green" on the next cycle sees green
+and proceeds; it never re-tests the SPECIFIC refuted criterion, only a proxy for it ("nothing new
+broke"). **The mechanical fix**, not merely a caution repeated in the next dispatch prompt (per
+`AGENTS.md` rule 8, "a warning is not a control"): a refuted criterion must be tracked as its own
+named item, separate from "green suite," and the gate must re-test that exact item every cycle
+until it clears; a decline on a named criterion halts the run for an operator ruling rather than
+being silently carried forward as an all-green cycle. Logged as a retro `note`,
+`1789907922441-sd36-epic-c2-docs-2876ec`
+(`docs/retro/events/sd36-epic-c2-docs.jsonl`) — filed as `note` rather than one of the more
+specific types (`incident`, `deferral`) because this is a gap in the gate's own design, observed
+once, not yet a recorded recurrence with its own `recurrence_key`.
 
 ---
 
@@ -353,7 +387,7 @@ should read this deferral before opening the PR, not after hitting the conflict 
 | A — PCGen wall | done, 1 cycle | done, matches | `receipts.md` Epic A evidence section; A2 residue-gate closure gap now closed 2026-09-20 (see Figures table) |
 | E — SD-35 code-review correctness (not in kanban) | (absent) | **done**, 2 fix cycles, 16/22 fixed whole, 3 partial, 4 deferred-with-retro | `receipts/epic-e_receipt.md` |
 | C1 — source refactor | done, 1 cycle | matches | `b22ea9e113` |
-| C2 — test rewrite | open, 0 cycles | **partial** (corrected 2026-09-20, C2D gap-closure pass): C2.3/C2.4/C2.5 done, C2.6 baselines re-synced; C2.1/C2.2 (the table-driven rewrite, ~75,000 lines / 186 files) still not started — `tests/sd18_widening/rows.rs` does not exist | `find tests -iname rows.rs` (no output); `receipts.md` Epic C2 evidence section; `docs/retro/events/epic-c2d-gap-closure.jsonl` |
+| C2 — test rewrite | open, 0 cycles | **done** (corrected 2026-09-20, second pass after this document was first written): C2.3/C2.4/C2.5/C2.6 done in the earlier C2D gap-closure pass; C2.1/C2.2 (the table-driven rewrite) landed this pass — `tests/sd18_widening/rows.rs` (182 rows) and `tests/sd13_progression/rows.rs` (143 rows) both exist, `--list` byte-identical both families, 891/1,136 passed 0 failed, three-sabotage mutation gate identical failing-name sets before/after | `find tests -iname rows.rs` (2 hits); `receipts.md` Epic C2.1/C2.2 evidence section; `docs/retro/events/epic-c2d-gap-closure.jsonl`, `docs/retro/events/sd36-epic-c2-docs.jsonl` |
 | D — closure | open, 0 cycles | in progress: D1 (architecture docs) done; D2/D3 (this document + release-notes.md) in progress; D4-D6 not started | `docs/architecture/README.md` "Last verified" header |
 
 This table, and the corrected `kanban.md`/`progress.md` rows alongside it, are themselves subject

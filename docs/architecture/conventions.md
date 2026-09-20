@@ -3,7 +3,7 @@
 > Scope: naming standards and cross-cutting code conventions — the rules a new contributor
 > follows to name a file, a function, a test, a branch, or a commit the way this repo already
 > does, plus the structural idioms every plane converges on independently.
-> Last verified: **2026-09-20 against `tranche/16`** (SD-36 Epic D truth-up, HEAD `b22ea9e113` +
+> Last verified: **2026-09-20 against `tranche/16`** (SD-36 Epic D truth-up, HEAD `5ee77f8d85` +
 > this cycle's Epic C2 working-tree state — see `docs/architecture/README.md`'s provenance note).
 > Maintenance: updated at SD closure — see [README.md](./README.md) §Maintenance contract
 
@@ -75,10 +75,15 @@ across `src/rules_core/` (SD-36 Epic C1.3; `git grep -c 'fn repo_root' -- src` m
 1 hit). `tests/support/paths.rs` is the parallel set for integration tests (brought in per-file via
 `#[path = "support/paths.rs"] mod paths;`, because a `tests/*.rs` binary compiles as its own crate
 and cannot reach `codex`'s `pub(crate)` items) — it replaced 32 local copies across 26 files (SD-36
-Epic C2.3; as of this pass it is real and in use but not yet committed to git — see
-[testing.md](./testing.md) §"Path helpers for tests" for that caveat). **When you need a
-repo-root-relative path in a new file, `use` one of these — do not write a ninth copy of
-`PathBuf::from(env!("CARGO_MANIFEST_DIR"))`.**
+Epic C2.3; committed in `45ef7e2327` — see [testing.md](./testing.md) §"Path helpers for tests").
+**When you need a repo-root-relative path in a new file, `use` one of these — do not write a ninth
+copy of `PathBuf::from(env!("CARGO_MANIFEST_DIR"))`.**
+
+**A table-driven test family's row data lives in a family-local `rows.rs`; a shared per-test setup
+helper lives in a family-local `support.rs`** — both named exactly that, one per family directory
+(`tests/sd18_widening/rows.rs` + `tests/sd18_widening/support.rs`, `tests/sd13_progression/rows.rs`),
+never merged into `main.rs` or duplicated per file. See [testing.md](./testing.md) §"Table-driven
+test families" for the pattern these two file names hold (SD-36 Epic C2.1/C2.2).
 
 ### Rust function families
 

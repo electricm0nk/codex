@@ -9,17 +9,20 @@ date: 2026-09-20
 
 Measured baselines (before/after, each row re-derived with its own command) and bundle summary.
 
-**Status at time of writing:** Epics B, A, E and C1 are committed and closed. Epic C2's core
-deliverable — the table-driven test rewrite (C2.1/C2.2) — has not started
-(`tests/sd18_widening/rows.rs` does not exist); C2.3 (path-helper consolidation), C2.4 (branch-
-promotion test move) and C2.5 (oracle tests kept and re-run against the real corpus) are done, and
-C2.6's baseline drift is corrected (`scripts/verify-baselines.env`'s new C2D block). Epic D's own
-D1 (architecture docs) is done; D2 (`docs/retro/sd36-retrospective.md`) is written alongside this
-document; D4 (graphify), D5 (PR/merge) and D6 (worktree sweep) have not run. The "After (SD-36)"
-column below is therefore **current-HEAD (`b22ea9e113`) plus this cycle's uncommitted C2D fixes,
-not final-closure** — several rows (test-entry counts, `sd18_widening`/`sd13_progression` line
-counts) will move again once C2.1/C2.2 land, and this table should be re-derived a second time at
-that point rather than trusted as-is past this date.
+**Status at time of writing:** Epics B, A, E, C1 and now C2 are committed-or-ready and closed. Epic
+C2's core deliverable — the table-driven test rewrite (C2.1/C2.2) — **is done**:
+`tests/sd18_widening/rows.rs` and `tests/sd13_progression/rows.rs` both exist, 182 and 143 tests
+respectively now expand from row + macro data instead of hand-written bodies, `--list` output is
+byte-identical before/after in both families, both families run green (891 / 1,136 passed, 0
+failed), and the three-sabotage mutation gate (`receipts.md`'s new Epic C2.1/C2.2 evidence section)
+confirms the same test NAMES fail before and after, three re-runs each. C2.3 (path-helper
+consolidation), C2.4 (branch-promotion test move) and C2.5 (oracle tests kept and re-run against the
+real corpus) were already done; C2.6's baseline drift is corrected
+(`scripts/verify-baselines.env`'s C2D block). Epic D's own D1 (architecture docs) is done; D2
+(`docs/retro/sd36-retrospective.md`) is written; D4 (graphify), D5 (PR/merge) and D6 (worktree
+sweep) have not run. The "After (SD-36)" column below reflects **current-HEAD (`5ee77f8d85`) plus
+this cycle's uncommitted C2.1/C2.2 rewrite and this docs pass — still not final-closure** (nothing
+in this docs pass was committed) — re-derive this table again once C2 lands and Epic D closes.
 
 ---
 
@@ -28,25 +31,26 @@ that point rather than trusted as-is past this date.
 **Cut date:** 2026-09-15 (`tranche/16` from `origin/develop` at `50572eebad`, SD-35's PR #390 merge).
 
 **What changed so far:** dashboard freeze and producer retirement (Epic B), a PCGen crate wall
-(Epic A), 22 SD-35 code-review correctness findings folded in as Epic E, and a source-side bloat
-cut (`pilot_compute` split + path-helper consolidation, Epic C1). Not yet landed: the test-side
-bloat cut (Epic C2) and bundle closure (rest of Epic D).
+(Epic A), 22 SD-35 code-review correctness findings folded in as Epic E, a source-side bloat cut
+(`pilot_compute` split + path-helper consolidation, Epic C1), and now a test-side bloat cut
+(table-driven `sd18_widening`/`sd13_progression` rewrite, Epic C2.1/C2.2). Not yet landed: the rest
+of bundle closure (Epic D4–D6).
 
 ---
 
 ## Measured baselines
 
-| Figure | Before (SD-35 cut, 2026-09-15) | After (current HEAD `b22ea9e113`) | Command | Change / why |
+| Figure | Before (SD-35 cut, 2026-09-15) | After (current HEAD `5ee77f8d85` + uncommitted C2.1/C2.2 rewrite) | Command | Change / why |
 |---|---|---|---|---|
 | src lines, root | 465,469 | **337,790** | `find src -name '*.rs' \| xargs cat \| wc -l` | down 127,679: Epic B deleted 55,827 lines outright; Epic A moved `src/pcgen_import`/`src/oracle_validation` (and their `#[cfg(test)]` modules) into `crates/codex-ingest`, which is why this row is NOT the whole story — see the next row |
 | src lines, `crates/codex-ingest` | 0 (crate did not exist) | **81,177** | `find crates/codex-ingest/src -name '*.rs' \| xargs cat \| wc -l` | new crate; Epic A moves, not new code (`technical-design.md §2`) |
 | src lines, root + ingest combined | 465,469 | **418,967** | sum of the two rows above | net reduction 46,502 lines across the whole workspace — this is the number that reflects Epic B's actual deletion, since the ingest move is a relocation, not a cut |
 | `pilot_compute/mod.rs` | 88,828 | **297** | `wc -l src/rules_core/pilot_compute/mod.rs` | C1 split into 42 submodules (`ls src/rules_core/pilot_compute/*.rs \| wc -l`); largest is `prestige_class_features_campaign.rs` at 6,160 lines, under `technical-design.md §3`'s ≤6,600 target |
-| tests lines, root | 182,070 | **138,095** | `find tests -name '*.rs' \| xargs cat \| wc -l` | down 43,975 so far, mostly Epic A's move of ~82 tool-test suites; Epic C2 (not yet run) is expected to cut a further ~49,000 from `sd18_widening`/`sd13_progression` alone |
+| tests lines, root | 182,070 | **132,069** | `find tests -name '*.rs' \| xargs cat \| wc -l` | down 50,001 total, of which 6,026 is this pass's C2.1/C2.2 cut (see the row below) on top of Epic A's earlier move of ~82 tool-test suites |
 | tests lines, `crates/codex-ingest/tests` | 0 | **37,085** | `find crates/codex-ingest/tests -name '*.rs' \| xargs cat \| wc -l` | new crate, Epic A moves |
-| `sd18_widening` + `sd13_progression` lines | ~75,000 (design estimate) | **69,325**, unchanged | `find tests/sd18_widening tests/sd13_progression -name '*.rs' \| xargs cat \| wc -l` | Epic C2 has not landed; this row will not move until it does |
-| `sd18_widening` test-list entries | claimed "2,219" in `epic-breakdown.md` C2.1/C2.2 — **does not reproduce** | **891** | `cargo test --locked --test sd18_widening -- --list \| grep -c ': test$'` | the acceptance command as literally written (`grep sd18_widening` over the combined `--list` output) returns 0, because `--list` lines never carry the binary name as a substring; corrected per-binary counts recorded in `docs/retro/sd36-retrospective.md` (retro correction `1789886083389-epic-c2-test-rewrite-6b6500`) |
-| `sd13_progression` test-list entries | (same claim, same non-reproduction) | **1,136** | `cargo test --locked --test sd13_progression -- --list \| grep -c ': test$'` | see above |
+| `sd18_widening` + `sd13_progression` lines | 69,325 (SD-36 cut, pre-C2) | **63,299** of 69,325 (-6,026 lines, -8.7%) | `find tests/sd18_widening tests/sd13_progression -name '*.rs' \| xargs cat \| wc -l` | Epic C2.1/C2.2 landed this pass: `sd18_widening` 29,041 of 33,621 (-13.6% of that family, 182 rows converted); `sd13_progression` 34,258 of 35,704 (-4.05% of that family, 143 rows converted) — full breakdown, sabotage-gate proof, and self-audit result in `receipts.md`'s Epic C2.1/C2.2 evidence section. Smaller than the design doc's ~75,000→~26,000 estimate: only the two near-universal negative-control shapes were mechanically convertible without risking the safety rule (assertions moved, never rewritten) — see receipts.md "What stayed bespoke" |
+| `sd18_widening` test-list entries | claimed "2,219" in `epic-breakdown.md` C2.1/C2.2 — **does not reproduce** | **891**, unchanged before/after the rewrite | `cargo test --locked --test sd18_widening -- --list \| grep -c ': test$'` | the acceptance command as literally written (`grep sd18_widening` over the combined `--list` output) returns 0, because `--list` lines never carry the binary name as a substring; corrected per-binary counts recorded in `docs/retro/sd36-retrospective.md` (retro correction `1789886083389-epic-c2-test-rewrite-6b6500`); `--list` diff before vs. after the row-conversion is byte-identical (`receipts.md`) |
+| `sd13_progression` test-list entries | (same claim, same non-reproduction) | **1,136**, unchanged before/after the rewrite | `cargo test --locked --test sd13_progression -- --list \| grep -c ': test$'` | see above; `--list` diff also byte-identical |
 | `BASELINE_ROOT_LIB_TESTS` | 3390 (cut) | **2587** | `scripts/verify-baselines.env`, SD-36 Epic C2D block (LONG RUN to re-derive: `cargo test --locked --lib -j2`) | −803 net vs. the cut; the Epic A A10 recording below (2581) undercounted by 6 — those 6 tests landed with the corpus-bundle/C1 commits after A10 was recorded and the baseline wasn't bumped until this pass's `verify.sh` run caught it (`receipts.md` C2.5/C2.6 note) |
 | `BASELINE_ROOT_FULL_TESTS` | 8919/8926 (cut, two nearby recordings) | **6203** | `scripts/verify-baselines.env` (LONG RUN: `cargo test --locked --no-fail-fast -j2`) | same stale-baseline correction as the row above (+7 vs. the 6196 A10 recording); clean run at this recording (`verify2-C2D-1.log`: 50/50 stages PASS, exit 0 — the JAVA_HOME hazard the A10 note describes did not recur here) |
 | `BASELINE_ROOT_TEST_BINARIES` | 419 (cut) | **285** | `scripts/verify-baselines.env`; cross-check `find tests -maxdepth 1 -name '*.rs' \| wc -l` = 279 | −134, the suite files Epic A moved out of root |
@@ -160,21 +164,24 @@ gitignored, both are simply pending their own commit like `tests/support/paths.r
    `python3 scripts/pcgen_residue_gate.py --check --closure` → `live_files=0 live_hits=0
    verdict=PASS` (matches `verify2-C2D-1.log`'s `pcgen-residue-gate` stage). The sanitised-bundle
    fix does close the regression; no further action needed here.
-2. **Epic C2's table-driven rewrite (C2.1/C2.2) has still not started** — `tests/sd18_widening/`
-   and `tests/sd13_progression/` remain 90 and 96 per-row files respectively, unchanged from the
-   SD-35 cut (`git status --porcelain tests/sd18_widening tests/sd13_progression` empty; no
-   `rows.rs` exists in either directory). What this cycle DID close: C2.3 (`tests/support/paths.rs`
-   is now tracked, not left as a pending-commit hazard — see the D1 section's staging note), C2.4
-   (branch-promotion test already moved, see `git status` `RM` line), and C2.5 (both oracle test
-   sets — 21 in root `tests/`, 31 in `crates/codex-ingest/tests` — re-run once against the real
-   PCGen corpus this pass, 52/52 green; see `receipts.md`'s new Epic C2 section). C2.1/C2.2's own
-   acceptance command as literally written also does not reproduce (see the test-entry rows in the
-   baseline table above) — correct that command before dispatching the rewrite, not after. The
-   rewrite itself (~75,000 lines across 186 files into `rows.rs` + a `paste!`-driven macro,
-   `technical-design.md` §3) is a multi-day, high-risk-of-silent-corruption effort on its own —
-   each row's assertions encode genuinely distinct PF1e rule values per (class, level), not
-   interchangeable boilerplate — and was deliberately not attempted as a rushed pass alongside the
-   smaller C2.3/C2.5/C2.6/D3 fixes in this cycle. Scope it as its own dispatch.
+2. ~~**Epic C2's table-driven rewrite (C2.1/C2.2) has still not started.**~~ **Closed 2026-09-20.**
+   `tests/sd18_widening/rows.rs` and `tests/sd13_progression/rows.rs` both now exist; 182
+   (`sd18_widening`) and 143 (`sd13_progression`) tests expand from row + macro data (the two
+   near-universal negative-control shapes) instead of hand-written bodies; `--list` output is
+   byte-identical before/after in both families; both families run green (891 / 1,136 passed, 0
+   failed); the three-sabotage mutation gate confirms the same test NAMES fail before and after
+   (`receipts.md`'s Epic C2.1/C2.2 evidence section has the full breakdown, sabotage results, and
+   self-audit outcome). This is smaller than the design doc's ~75,000→~26,000, all-tests-converted
+   estimate — only the two shapes mechanically verifiable as a clean 1:1 extraction (no silently
+   dropped exception cases) were converted this pass; the remaining bespoke tests in each family
+   (~591 in `sd18_widening`, ~993 in `sd13_progression`) keep their original bodies, per the safety
+   rule (assertions moved, never rewritten, never guessed through) — see receipts.md "What stayed
+   bespoke" for the full per-shape accounting. C2.3 (`tests/support/paths.rs` tracked), C2.4
+   (branch-promotion test moved), C2.5 (both oracle test sets — 21 in root `tests/`, 31 in
+   `crates/codex-ingest/tests` — re-run once against the real PCGen corpus, 52/52 green) and C2.6
+   (`scripts/verify-baselines.env` C2D block re-synced) were already closed in an earlier pass. All
+   of C2.1–C2.6 are now done; nothing of Epic C2 remains open. (Uncommitted as of this docs pass —
+   this cycle's brief does not authorize a commit; the rewrite lands in the commit that follows.)
 3. **Settled-only loader** (named in the Epic D brief as a known follow-up; not otherwise detailed
    in this bundle's own package documents at time of writing — carry forward to the next STC
    scoping pass rather than left unstated here).

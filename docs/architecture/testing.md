@@ -3,11 +3,12 @@
 > Scope: testing philosophy and the full verification command set for this repo — this file
 > doubles as the "how do I verify my change" runbook and as the reference for how this repo
 > writes a test.
-> Last verified: **2026-09-20 against `tranche/16`** (SD-36 Epic D truth-up, HEAD `b22ea9e113` +
+> Last verified: **2026-09-20 against `tranche/16`** (SD-36 Epic D truth-up, HEAD `5ee77f8d85` +
 > this cycle's Epic C2 working-tree state: the `crates/codex-ingest` split (Epic A) and the
 > `pilot_compute` submodule split (Epic C1) are both committed and reflected below; the table-driven
-> `tests/sd18_widening`/`tests/sd13_progression` rewrite (Epic C2.1/C2.2) has **not** landed yet —
-> those two families are still one file per row, as documented in their own section below).
+> `tests/sd18_widening`/`tests/sd13_progression` rewrite (Epic C2.1/C2.2) **has now landed**,
+> uncommitted as of this pass — both families' `rows.rs` exist and are documented in "Table-driven
+> test families" and in their own section below).
 > Prior verification history (SD-35, SD-33, SD-31 sections) is retained only where its content is
 > still current; superseded figures were replaced, not appended to.
 > Maintenance: updated at SD closure — see [README.md](./README.md) §Maintenance contract
@@ -431,28 +432,104 @@ via `#[path = "support/paths.rs"] mod paths;` (see [Path helpers](#path-helpers-
   unless the family is genuinely new — one more `tests/<name>.rs` is one more link on every build
   anyone ever runs.
 
-## The `tests/sd18_widening/` and `tests/sd13_progression/` families (Epic C2 in progress)
+## The `tests/sd18_widening/` and `tests/sd13_progression/` families (Epic C2, done)
 
 These are the two "roster + per-row module" families the tax cut above created, and the ones
-SD-36 Epic C2 is midway through consolidating further:
+SD-36 Epic C2.1/C2.2 further consolidated by moving their two near-universal shapes to table rows
+(see [Table-driven test families](#table-driven-test-families) below for the general pattern):
 
 - **`tests/sd18_widening/main.rs`** declares a `roster!` macro expanding to one `mod <class>_level<N>;`
-  per row (e.g. `barbarian_level12`, `bard_level11_inspire`) — each still its own file with its
-  own unchanged `#[test]` functions. Run one row: `cargo test --test sd18_widening
-  <class>_level<N>::`. Run one class: `cargo test --test sd18_widening <class>_level`.
+  per row (e.g. `barbarian_level12`, `bard_level11_inspire`) — each still its own file. Run one row:
+  `cargo test --test sd18_widening <class>_level<N>::`. Run one class: `cargo test --test
+  sd18_widening <class>_level`.
 - **`tests/sd13_progression/main.rs`** is the same shape for the SD-13 per-class per-level
   progression proofs (`barbarian_level2` .. `barbarian_level10`, etc.).
-- **As of this verification, both families are still one file per (class, level) row** — the
-  further consolidation epic-breakdown.md's C2.1/C2.2 describe (a `rows.rs` with a `const ROWS`
-  table and a macro emitting one `#[test]` per row, collapsing ~75,000 lines to ~26,000 with the
-  same 2,219-entry `--list` output) has **not landed**. Don't assume a `rows.rs` exists in either
-  directory until you've checked; if you're picking up that epic, the proof obligation is a
-  `cargo test --locked -- --list` diff that is byte-identical before and after, saved as an
-  artifact (`epic-breakdown.md` C2.1/C2.2) — the row COUNT changing while the entry TEXT stays the
-  same is not sufficient.
+- **As of this verification, both families still have one file per (class, level) row** — the
+  per-row `mod` structure itself was never the target of C2.1/C2.2; what moved was the BODY of the
+  two near-universal negative-control shapes inside those files, onto `rows.rs` + a macro
+  (`tests/sd18_widening/rows.rs`: 182 rows; `tests/sd13_progression/rows.rs`: 143 rows), while every
+  bespoke test kept its own hand-written body in its own file. `cargo test --locked -- --list` is
+  byte-identical before and after in both families (saved artifact:
+  `docs/release/SD-36-consolidation/receipts.md`'s Epic C2.1/C2.2 evidence section) — the row COUNT
+  the macro expands to matches the entry TEXT exactly, which is the actual proof obligation, not
+  merely a matching total. The design doc's ~75,000→~26,000, all-tests-converted estimate did not
+  fully land: only the two shapes with a clean, mechanically-verified 1:1 extraction were converted
+  this pass (receipts.md's "What stayed bespoke" table has the per-shape reasons for the rest).
 - Both families' shared `mod common;` (`tests/common/mod.rs`) provides `load()`/`explanation()`
   helpers hand-extracted from 300+ duplicate copies (SD-34 fable-review finding R10-F2); brought
-  in via `#[path = "../common/mod.rs"] mod common;` from `main.rs`.
+  in via `#[path = "../common/mod.rs"] mod common;` from `main.rs`. `tests/sd18_widening/support.rs`
+  additionally collapses the `load()` + `compute_pilot_base_chassis()` two-line preamble that opened
+  816 of that family's 891 tests into one `support::compute(fixture)` call (assert lines untouched).
+
+## Table-driven test families
+
+The pattern `sd18_widening`/`sd13_progression` (Epic C2.1/C2.2) established for converting a
+large, near-duplicated hand-written test family into table data, without ever rewriting an
+assertion:
+
+- **The shape.** A `rows.rs` (or, for a family whose macro can't hold a runtime `const` — see
+  below — the per-row struct-literal syntax at each invocation site) defines a `struct Row { ... }`
+  per convertible test shape, plus a `macro_rules!` that takes one or more row blocks and expands
+  each into a full `#[test] fn <name>() { ... }` with the row's fields substituted into the exact
+  assertion the hand-written body used. The macro invocation sits in the SAME file, under the SAME
+  module, with the SAME fn name the hand-written test had, so `cargo test -- --list` output never
+  changes shape — only where the test BODY's text lives changes. See
+  `tests/sd13_progression/rows.rs`'s `recognition_negative_controls!` / `multiclass_negative_controls!`
+  and their invocation in `tests/sd13_progression/barbarian_level2.rs`, or
+  `tests/sd18_widening/rows.rs`'s `sd18_fighter_neg_control_test!` macro, for worked examples.
+  (Design note: a `macro_rules!` cannot iterate a *runtime* `const ROWS: &[Row]` to emit top-level
+  items — Rust macros are compile-time/syntactic — so "the rows table" is expressed as the macro's
+  own invocation syntax at each call site, one struct-literal-shaped row per test, immediately
+  followed by the macro call that turns it into a `#[test]`.)
+- **The support.rs helper pattern.** Separately from row/macro conversion, a family-local
+  `support.rs` (`tests/sd18_widening/support.rs`) collapses a setup preamble every test shares
+  (here, `load(fixture)` + `compute_pilot_base_chassis(&_)`) into one helper fn, leaving every
+  test's own assert lines completely untouched — this is a mechanical, scripted substitution
+  (`collapse_setup.py`), never a hand-edit, and only ever touches the fixed preamble lines, verified
+  first that no site referenced the intermediate variable again (which would have broken the
+  collapse).
+- **THE SAFETY RULE: assertions are moved, never rewritten.** Every `assert!`/`assert_eq!`/
+  `.expect(` in a converted test's old body must survive in the new row/macro form with the exact
+  same expected values and the exact same subject expression — as DATA in the row, not re-derived,
+  re-typed, or "cleaned up" code. A body that doesn't match the shape's template exactly (a helper-fn
+  call, an in-expression comment, a different assert count, a flipped assertion polarity) is left
+  bespoke, not forced into the template and not guessed at — see either family's "what stayed
+  bespoke" accounting (`docs/release/SD-36-consolidation/receipts.md`) for what this excluded and
+  why. No test is ever deleted, merged, renamed, `#[ignore]`d, or made vacuous by this kind of pass;
+  the emitted test list stays byte-identical.
+- **How to add a row.** Extract the row's fields (fixture, prefixes/exact-ids, message text,
+  `.replace()` strings, whatever the macro's row syntax takes) mechanically from the existing
+  test's own source — never hand-type or re-derive a value — and confirm the extracted fields
+  reconstruct the original predicate/assertion exactly before accepting the row (this repo's own
+  conversion scripts, e.g. `c2sd13_extract.py`, do this as a regex match-or-reject: anything that
+  doesn't reconstruct exactly is excluded and flagged, never silently approximated). Then invoke
+  the macro at the exact call site the old test body occupied, with the same fn name. Re-run
+  `--list` before/after and diff byte-identical; re-run the full family green.
+- **Sabotage-parity: how to prove a test refactor is safe.** A `--list` diff and a green run prove
+  the test still exists and still passes — neither proves the assertion still catches the thing it
+  was written to catch. The way this repo proves that: apply a single-line, real defect into the
+  `src/` code path the test exercises (never into `tests/`), run the suite, save the exact set of
+  failing test NAMES, revert the defect (`git apply -R`), confirm `git status -- src` is clean, then
+  repeat for a couple more independent single-line defects — each one should trip well over a
+  double-digit number of tests, in more than one test family if the shape is shared. After the
+  test-file rewrite, re-apply each same defect and diff the new failing-NAME set against the
+  pre-rewrite one: an empty diff (same test NAMES, not just the same count) is the proof the
+  safety rule actually held. Worked example, three sabotages against both families, run three times
+  each to rule out flake, all producing an empty diff:
+  ```
+  # apply a single-line defect in src/, e.g.:
+  #   src/rules_core/pilot_compute/class_barbarian.rs:2381
+  #   let fortitude_save = level_value / 2 + 2;  ->  + 3;
+  cargo test --locked -j 2 --no-fail-fast --test sd13_progression --test sd18_widening \
+    2>&1 | grep '^test .* FAILED$' | sed 's/ \.\.\. FAILED$//' | sort > failed-before.txt
+  git apply -R defect.patch   # revert, confirm `git status -- src` is clean
+  # ... after the test-file rewrite lands ...
+  # re-apply the SAME defect, re-run the same command into failed-after.txt
+  diff failed-before.txt failed-after.txt   # must be empty
+  ```
+  Full results for this repo's own C2.1/C2.2 pass:
+  `docs/release/SD-36-consolidation/receipts.md`'s Epic C2.1/C2.2 evidence section and this
+  cycle's `baseline.md`.
 
 ## Path helpers for tests
 
