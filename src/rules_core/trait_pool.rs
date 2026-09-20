@@ -47,11 +47,12 @@
 //! `kind: trait` schema `decisions.md §25` specifies) and lossless.
 
 use std::fs;
-use std::path::{Path, PathBuf};
+use std::path::Path;
 
 use crate::rules_core::corpus_loader::BookCorpusRoot;
 use crate::rules_core::race_resolver::AdoptedRaceSelector;
 use crate::rules_core::sheet_rule::SheetRulePackage;
+use crate::support::paths::find_json_files;
 
 /// The converted package's tag for a Trait record's race-adoptable pool: the
 /// rule's [`tags`](crate::rules_core::sheet_rule::SheetRule::tags) read
@@ -199,28 +200,6 @@ fn converted_race_trait_pool(
     None
 }
 
-fn find_json_files(dir: &Path) -> Vec<PathBuf> {
-    let mut out = Vec::new();
-    let mut stack = vec![dir.to_path_buf()];
-    while let Some(current) = stack.pop() {
-        let Ok(entries) = fs::read_dir(&current) else { continue };
-        for entry in entries.flatten() {
-            let path = entry.path();
-            let file_name = entry.file_name();
-            let file_name = file_name.to_string_lossy();
-            if path.is_dir() {
-                stack.push(path);
-            } else if file_name == "LICENSE.json" {
-                continue;
-            } else if path.extension().and_then(|e| e.to_str()) == Some("json") {
-                out.push(path);
-            }
-        }
-    }
-    out.sort();
-    out
-}
-
 /// One resolved Trait member of an Adopted-Race option's pool.
 #[derive(Debug, Clone, PartialEq, Eq)]
 pub struct AdoptedRaceTraitGrant {
@@ -293,6 +272,7 @@ pub fn resolve_adopted_race_options(
 #[cfg(test)]
 mod tests {
     use super::*;
+    use std::path::PathBuf;
 
     fn oread_selector() -> AdoptedRaceSelector {
         AdoptedRaceSelector {

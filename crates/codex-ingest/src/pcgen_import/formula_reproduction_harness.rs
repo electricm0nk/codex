@@ -62,31 +62,63 @@ use std::collections::BTreeMap;
 /// One hand-modelled function whose doc comment cites a PCGen `BONUS:`/`DEFINE:` token.
 #[derive(Debug, Clone, PartialEq, Eq)]
 pub struct HandModelledCitation {
-    pub file: &'static str,
+    pub file: String,
     pub function_name: String,
     /// The first doc-comment line (source-order) that contains the citation, verbatim.
     pub cited_line: String,
 }
 
-/// The fixed set of files this program's hand-modelled `class_*` per-feature formula functions
-/// live in (`pilot_compute`'s own module list, `mod.rs`'s lines 166-168, plus `mod.rs` itself —
-/// not a curated subset of THEIR CONTENTS, only of which files constitute "the hand-modelled
-/// function home"). Adding a new `pilot_compute` submodule of hand-modelled functions means
-/// adding its path here for the enumerator to see it; the enumerator does not otherwise choose
-/// which functions inside these files count — that is [`citations_in_source`]'s job, driven by
-/// the doc-comment text alone.
-const HAND_MODELLED_FUNCTION_HOME_FILES: &[(&str, &str)] = &[
-    ("pilot_compute/mod.rs", include_str!("../../../../src/rules_core/pilot_compute/mod.rs")),
-    ("pilot_compute/class_slayer.rs", include_str!("../../../../src/rules_core/pilot_compute/class_slayer.rs")),
-    (
-        "pilot_compute/class_ultimate_combat.rs",
-        include_str!("../../../../src/rules_core/pilot_compute/class_ultimate_combat.rs"),
-    ),
-    (
-        "pilot_compute/class_feature_grant_consumer.rs",
-        include_str!("../../../../src/rules_core/pilot_compute/class_feature_grant_consumer.rs"),
-    ),
-];
+/// The hand-modelled `class_*` per-feature formula functions' home directory:
+/// `<repo root>/src/rules_core/pilot_compute`. Not a curated subset of its
+/// CONTENTS, only the directory that constitutes "the hand-modelled function
+/// home" — the enumerator does not otherwise choose which functions inside
+/// these files count, that is [`citations_in_source`]'s job, driven by the
+/// doc-comment text alone.
+///
+/// SD-36 Epic C1: this used to be a hand-typed `const` list of
+/// `(path, include_str!(path))` pairs, one entry per `pilot_compute`
+/// submodule. It went stale twice on real submodule splits (the original C1
+/// split, then a later re-split adding `class_occult_and_psionic.rs`,
+/// `prestige_class_features_campaign.rs`,
+/// `feat_pillar_and_pool_aggregation.rs`, `class_wizard_prepared_spellbook.rs`)
+/// — each time silently narrowing this floor to whatever files happened to be
+/// listed, exactly the "count moved because the population moved" bug this
+/// module's own doc warns a proxy must be validated against. [`pilot_compute_source_files`]
+/// walks the directory at run time instead, so a future split needs no edit
+/// here to stay counted.
+fn pilot_compute_dir() -> std::path::PathBuf {
+    std::path::Path::new(env!("CARGO_MANIFEST_DIR")).join("../../src/rules_core/pilot_compute")
+}
+
+/// `(relative path, file contents)` for every `pilot_compute/*.rs` submodule, sorted by path for
+/// determinism.
+fn pilot_compute_source_files() -> Vec<(String, String)> {
+    let dir = pilot_compute_dir();
+    let mut paths: Vec<std::path::PathBuf> = std::fs::read_dir(&dir)
+        .unwrap_or_else(|e| panic!("cannot read dir {}: {e}", dir.display()))
+        .map(|entry| entry.unwrap_or_else(|e| panic!("cannot read dir entry: {e}")).path())
+        .filter(|p| p.extension().is_some_and(|ext| ext == "rs"))
+        .collect();
+    paths.sort();
+    assert!(
+        !paths.is_empty(),
+        "no *.rs files found under {} -- directory walk is broken",
+        dir.display()
+    );
+    paths
+        .into_iter()
+        .map(|path| {
+            let file_name = path
+                .file_name()
+                .and_then(|n| n.to_str())
+                .unwrap_or_else(|| panic!("non-UTF8 file name in {}", path.display()))
+                .to_string();
+            let text = std::fs::read_to_string(&path)
+                .unwrap_or_else(|e| panic!("cannot read {}: {e}", path.display()));
+            (format!("pilot_compute/{file_name}"), text)
+        })
+        .collect()
+}
 
 /// The live, re-derived denominator: every hand-modelled function across the files above whose
 /// immediately-preceding `///` doc-comment block cites a `BONUS:` or `DEFINE:` PCGen token.
@@ -96,7 +128,7 @@ const HAND_MODELLED_FUNCTION_HOME_FILES: &[(&str, &str)] = &[
 /// doc comment at all, invisible to this scan). Report it as a conservative FLOOR on the real
 /// population, per the standing "validate a proxy where it makes its confident claim" rule.
 pub fn enumerate_hand_modelled_citations() -> Vec<HandModelledCitation> {
-    HAND_MODELLED_FUNCTION_HOME_FILES
+    pilot_compute_source_files()
         .iter()
         .flat_map(|(file, text)| citations_in_source(file, text))
         .collect()
@@ -107,7 +139,7 @@ pub fn enumerate_hand_modelled_citations() -> Vec<HandModelledCitation> {
 /// real source files — the same "test the discriminator on hand-labelled cases before trusting
 /// it on the whole corpus" discipline `decisions.md` Decision 7 REFINED used for
 /// `closure_states_universal_sheet_modifier`.
-fn citations_in_source(file: &'static str, text: &str) -> Vec<HandModelledCitation> {
+fn citations_in_source(file: &str, text: &str) -> Vec<HandModelledCitation> {
     let mut out = Vec::new();
     let mut doc_buf: Vec<&str> = Vec::new();
     for raw_line in text.lines() {
@@ -127,7 +159,7 @@ fn citations_in_source(file: &'static str, text: &str) -> Vec<HandModelledCitati
                 .find(|l| l.contains("BONUS:") || l.contains("DEFINE:"))
             {
                 out.push(HandModelledCitation {
-                    file,
+                    file: file.to_string(),
                     function_name,
                     cited_line: (*cited_line).to_string(),
                 });

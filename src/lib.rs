@@ -10,3 +10,4 @@ pub mod campaign;
 pub mod homebrew_authoring;
 pub mod rules_core;
 pub mod saved_character;
+pub(crate) mod support;

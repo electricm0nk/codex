@@ -588,10 +588,10 @@ pub mod prose_derived {
 mod tests {
     use super::*;
     use std::path::PathBuf;
+    use crate::support::paths::corpus_subdir;
 
     fn corpus_dir() -> PathBuf {
-        PathBuf::from(env!("CARGO_MANIFEST_DIR"))
-            .join("data/corpus/pathfinder_unchained/class_feature/barbarian_unchained_class")
+        corpus_subdir("pathfinder_unchained/class_feature/barbarian_unchained_class")
     }
 
     /// Every `data` block under the ingested Barbarian feature directory.

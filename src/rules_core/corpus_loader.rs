@@ -211,40 +211,10 @@ fn spell_record_from_json(path: &Path, data: &serde_json::Value) -> Option<Corpu
     Some(CorpusSpellRecord::from_corpus_json_fields(path.display().to_string(), name, school))
 }
 
-fn find_json_files(dir: &Path) -> Vec<std::path::PathBuf> {
-    let mut out = Vec::new();
-    let mut stack = vec![dir.to_path_buf()];
-    while let Some(current) = stack.pop() {
-        let Ok(entries) = fs::read_dir(&current) else { continue };
-        for entry in entries.flatten() {
-            let path = entry.path();
-            let file_name = entry.file_name();
-            let file_name = file_name.to_string_lossy();
-            if path.is_dir() {
-                if file_name == "_parity" {
-                    continue;
-                }
-                stack.push(path);
-            } else if file_name == "LICENSE.json" {
-                continue;
-            } else if path.extension().and_then(|e| e.to_str()) == Some("json") {
-                out.push(path);
-            }
-        }
-    }
-    // Sorted, because the ORDER records are pushed into a
-    // `SourcePackageContent` is significant -- a resolver reading that package
-    // decides a key collision by position. Unsorted, that order is `read_dir`
-    // order, which is the filesystem's, which is stable for one directory on
-    // one machine and NOT stable across two checkouts of the same corpus. That
-    // is the shape of nondeterminism that looks like a code change when two
-    // agents compare measurements taken in different worktrees. Path order is a
-    // property of the corpus itself, so every checkout of it agrees.
-    // `race_resolver::find_json_files`, which copied this traversal, already
-    // sorts for the same reason.
-    out.sort();
-    out
-}
+// `find_json_files` moved to `crate::support::paths` (SD-36 Epic C1): this
+// traversal used to be copied byte-for-byte in `race_resolver.rs` too. See
+// that module for the note on why the result is sorted.
+use crate::support::paths::find_json_files;
 
 /// The result of loading `data/sheet_rules/` (SD-35 AT-35-E2-002).
 pub struct SheetRuleLoad {

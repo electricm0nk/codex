@@ -2049,34 +2049,10 @@ fn classify(data: &CorpusRaceTraitRecord, has_positive_gate: bool) -> TraitRole 
     }
 }
 
-/// Same traversal rule as [`corpus_loader`](crate::rules_core::corpus_loader):
-/// recurse, skip `_parity/` and `LICENSE.json`, take `*.json`. Duplicated
-/// rather than shared because that module's copy is private and this cycle's
-/// write scope does not include editing it.
-fn find_json_files(dir: &Path) -> Vec<PathBuf> {
-    let mut out = Vec::new();
-    let mut stack = vec![dir.to_path_buf()];
-    while let Some(current) = stack.pop() {
-        let Ok(entries) = fs::read_dir(&current) else { continue };
-        for entry in entries.flatten() {
-            let path = entry.path();
-            let file_name = entry.file_name();
-            let file_name = file_name.to_string_lossy();
-            if path.is_dir() {
-                if file_name == "_parity" {
-                    continue;
-                }
-                stack.push(path);
-            } else if file_name == "LICENSE.json" {
-                continue;
-            } else if path.extension().and_then(|e| e.to_str()) == Some("json") {
-                out.push(path);
-            }
-        }
-    }
-    out.sort();
-    out
-}
+// `find_json_files` moved to `crate::support::paths` (SD-36 Epic C1): it was
+// duplicated here byte-for-byte from `corpus_loader.rs` because that module's
+// copy used to be private; both now share the one copy.
+use crate::support::paths::find_json_files;
 
 #[cfg(test)]
 mod tests {

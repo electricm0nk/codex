@@ -874,12 +874,7 @@ mod tests {
     // them an independent check on the settled table rather than a restatement
     // of it. A `#[cfg(test)]` region is not live code (`decisions.md` §18/B15).
     use super::*;
-
-    fn repo_root() -> PathBuf {
-        PathBuf::from(env!("CARGO_MANIFEST_DIR"))
-    }
-
-
+    use crate::support::paths::{corpus_root, repo_root};
 
     /// The two records that superficially resemble
     /// `WEAPON_PROFICIENCY_GRANT_CLASS_TABLE_MATCHES`'s members (same
@@ -1205,7 +1200,7 @@ mod tests {
                 slug = slug.replace("__", "_");
             }
             let slug = slug.trim_matches('_');
-            let found = std::fs::read_dir(repo_root().join("data/corpus"))
+            let found = std::fs::read_dir(corpus_root())
                 .unwrap()
                 .flatten()
                 .any(|book| {

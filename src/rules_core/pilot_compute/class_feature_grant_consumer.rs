@@ -180,6 +180,7 @@ use std::sync::OnceLock;
 use serde_json::Value;
 
 use crate::rules_core::record_vars::{self, ConvertedChain, SeedAbilityMods};
+use crate::support::paths::{corpus_root, repo_root};
 use super::{AbilityModifiers, ComputationExplanation, pu_feature_slug};
 
 /// SD-34 `decisions.md` §18 ruling: the anti-fabrication gates for
@@ -205,10 +206,6 @@ use super::{AbilityModifiers, ComputationExplanation, pu_feature_slug};
 /// actually gate this mechanism's own `docs/work-inventory.json` verdict.
 /// The citation-based property above is now the ONLY gate, for every class
 /// this module serves, with no exceptions.
-fn repo_root() -> PathBuf {
-    PathBuf::from(env!("CARGO_MANIFEST_DIR"))
-}
-
 fn walk_json_files(dir: &Path, out: &mut Vec<PathBuf>) {
     let Ok(entries) = std::fs::read_dir(dir) else { return };
     let mut entries: Vec<_> = entries.flatten().collect();
@@ -587,7 +584,7 @@ fn corpus_records_with_real_description() -> &'static BTreeMap<String, String> {
     static TABLE: OnceLock<BTreeMap<String, String>> = OnceLock::new();
     TABLE.get_or_init(|| {
         let mut out = BTreeMap::new();
-        let corpus_root = repo_root().join("data/corpus");
+        let corpus_root = corpus_root();
         let Ok(books) = std::fs::read_dir(&corpus_root) else { return out };
         let mut book_dirs: Vec<_> = books.flatten().collect();
         book_dirs.sort_by_key(|e| e.file_name());
@@ -878,7 +875,7 @@ pub(crate) fn class_feature_bonus_vars_any_record()
 /// each one's corpus `KEY:` and its `data` object to `visit`. The ONE corpus walk both tables
 /// above share, so they can never disagree about which files exist or in what order.
 fn for_each_class_feature_record(mut visit: impl FnMut(&str, &str, &Value)) {
-    let corpus_root = repo_root().join("data/corpus");
+    let corpus_root = corpus_root();
     let Ok(books) = std::fs::read_dir(&corpus_root) else { return };
     let mut book_dirs: Vec<_> = books.flatten().collect();
     book_dirs.sort_by_key(|e| e.file_name());

@@ -42,6 +42,8 @@ use std::collections::BTreeMap;
 use std::path::{Path, PathBuf};
 use std::sync::OnceLock;
 
+use crate::support::paths::repo_root;
+
 use crate::rules_core::sheet_rule::{
     evaluate_expr_from_facts, Applies, BonusTarget, CharacterFacts, Cmp, Expr, Save, SheetRule,
     SheetValue,
@@ -139,10 +141,6 @@ impl ClassChassis {
         }
         Some(rows)
     }
-}
-
-fn repo_root() -> PathBuf {
-    PathBuf::from(env!("CARGO_MANIFEST_DIR"))
 }
 
 /// The number `applies` states as this class's own level ceiling: the
