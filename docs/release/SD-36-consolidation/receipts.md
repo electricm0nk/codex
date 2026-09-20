@@ -184,9 +184,68 @@ resolves through `~/.sdkman/candidates/java/current` to Temurin 25).
 | Acceptance criteria 100% | awaiting | all epics → complete |
 | Retrospective written | awaiting | Epic D step 1 (workflow-instruction §11) |
 | Worktree sweep | awaiting | Epic D step 1 (workflow-instruction §11) |
-| Architecture docs updated | awaiting | Step 2 receipt above |
-| Graphify run | awaiting | Step 3 receipt above |
-| PR open and merged | awaiting | Step 5/6 |
+| Architecture docs updated | done | D1 (2026-09-20 full-set rewrite) |
+| Graphify run | done (graphify exit=1, receipt filed) | Step 3 receipt above; operator to decide retry-vs-proceed per script's own non-refusal policy |
+| PR open and merged | pending | Step 5/6 — PR to be opened; operator merges |
 
 ---
 
+
+- cycle_id: 2026-09-20T10:27:50Z
+  row_or_kind: graphify:update
+  bundle: SD-36
+  branch: 45ef7e232755b457d3c6f0afbbbf8c812eaaa875
+  integration_target: develop
+  branch_tip: 45ef7e23
+  graphify_exit_code: 1
+  outcome: failed
+  wall_clock_seconds: 1365.9
+  log_path: graphify-out/.truth-up-run-2026-09-20T10:27:50Z.log
+  evidence_tier_before: (recorded by operator at receipt read time)
+  evidence_tier_after: (recorded by operator at receipt read time)
+  receipt_note: graphify exited 1; operator to decide retry-vs-proceed (see log)
+
+---
+
+## Epic D6 — worktree/branch inventory (read-only, 2026-09-20)
+
+`git worktree list`:
+
+```
+/home/ubuntu/workspace/repos/codex                45ef7e2327 [tranche/16]
+/home/ubuntu/workspace/worktrees/codex-ci-oracle  29cbe1fa2a [fix/ci-fetch-pcgen-oracle]
+```
+
+`git branch -a`:
+
+```
+  develop
++ fix/ci-fetch-pcgen-oracle
+  fix/pcgen-pinned-tree-ci-guard
+  sd36/package
+* tranche/16
+  remotes/origin/HEAD -> origin/develop
+  remotes/origin/develop
+  remotes/origin/fix/ci-fetch-pcgen-oracle
+  remotes/origin/fix/pcgen-pinned-tree-ci-guard
+  remotes/origin/main
+  remotes/origin/sd36/package
+  remotes/origin/test
+  remotes/origin/tranche/16
+  remotes/origin/update-index
+```
+
+`tranche/15` is already gone (no local or remote ref) — confirmed closed per prior
+SD-35 record. POST-MERGE cleanup for the operator (nothing deleted here):
+
+- Worktree `~/workspace/worktrees/codex-ci-oracle` (branch `fix/ci-fetch-pcgen-oracle`) —
+  stale lane; sweep after tranche/16 merges if the branch is confirmed superseded.
+- Local branch `fix/ci-fetch-pcgen-oracle` — mirrors the worktree above.
+- Local branch `fix/pcgen-pinned-tree-ci-guard` — no active worktree; verify merged-by-content
+  (not commit count, per standing convention) before deleting.
+- Local branch `sd36/package` — SD-36 packaging scratch branch; verify superseded by
+  `tranche/16` before deleting.
+- `test` and `update-index` remote branches are infra (self-healing release gate,
+  updater feed) — never delete per standing convention.
+
+Nothing above was deleted; this is inventory only, for the operator to action after merge.

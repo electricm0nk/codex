@@ -17,7 +17,7 @@ Live cycle-by-cycle progress. Populated as the bundle runs.
 | E (SD-35 code-review correctness, folded in) | **done** (added to this table 2026-09-20 — had no row) | 2 | 1 of 1 | Closed 2026-09-17 (fix cycle 2); 16/22 findings fixed whole, 3 partial, 4 deferred with retro |
 | A (crate wall) | done | 1 | 1 of 1 | Completed 2026-09-19; crate-wall verify stage green; A2 residue-gate `--closure` regression open, see release-notes.md |
 | C (bloat cuts) | in progress | 2 | 1.5 of 2 | C1 completed 2026-09-20; C2 sub-criteria C2.3/C2.4/C2.5/C2.6 closed this pass (path helpers tracked, branch-promotion test moved, oracle tests re-run 52/52 green, verify-baselines.env re-synced — `receipts.md`); C2.1/C2.2 (the table-driven rewrite itself, ~75,000 lines / 186 files) still awaiting its own dispatch — its own acceptance command needs correcting first (retrospective Finding 1) |
-| D (closure) | in progress | 1 | D1 of 6 items | D1 (architecture docs, full-set rewrite) completed 2026-09-20; D2 (retrospective) and D3 (release notes) written this pass; D4 (graphify), D5 (PR/merge), D6 (worktree sweep) await C2 completion per the epic order in `decisions.md §7` |
+| D (closure) | in progress | 2 | D1–D4 of 6 items | D1 (architecture docs), D2 (retrospective), D3 (release notes) completed 2026-09-20; D4 (graphify against final tree) run 2026-09-20 — graphify exit=1 (dedup-refusal warning, `receipts.md`), receipt filed per script's non-refusal policy; D6 read-only inventory (`git worktree list`/`git branch`) recorded in `receipts.md`, no deletions; D5 — PR open, operator merges |
 
 ---
 
@@ -35,6 +35,7 @@ Live cycle-by-cycle progress. Populated as the bundle runs.
 | 5 | C1 | Source refactor: split pilot_compute into 42 submodules, consolidate path helpers, lock clippy warnings | C1.1–C1.5 | green | 2026-09-20; 47 files changed (42 new pilot_compute modules + 2 support modules); largest submodule 6,160 lines |
 | 6 | D1 | Architecture-docs full-set rewrite per §10 operator ruling | D1 | green | 2026-09-20; 9 docs updated, 1 deleted, 2 added; `docs/architecture/README.md` "Last verified" header current |
 | 7 | D2/D3 | Retrospective written, release notes re-derived and rewritten | D2, D3 | green (docs only, no code touched) | 2026-09-20; `docs/retro/sd36-retrospective.md` new; `release-notes.md` rewritten with re-derived figures and Known follow-ups |
+| 8 | D4/D6 | Graphify run against final repo tree; worktree/branch inventory recorded (read-only) | D4, D6 (partial) | graphify exit=1 (receipt filed, pipeline continues per operator directive) | 2026-09-20; `graphify cluster-only` ran 1365.9s against 648,327-node existing graph, refused to overwrite `graph.json` on a net -1 node count (dedup-collapse guard); receipt + full log in `receipts.md`/`graphify-out/.truth-up-run-2026-09-20T10:27:50Z.log`; `git worktree list`/`git branch` captured for D5/D6 operator cleanup, nothing deleted |
 
 ---
 
