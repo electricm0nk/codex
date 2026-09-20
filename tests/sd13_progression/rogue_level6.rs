@@ -53,6 +53,7 @@
 
 use codex::rules_core::pilot_compute::compute_pilot_base_chassis;
 use crate::common::{load, explanation, has_explanation};
+use crate::rows::{multiclass_negative_controls, recognition_negative_controls};
 
 const ROGUE_LEVEL5_FIXTURE: &str =
     include_str!("../fixtures/rules_core/pf1_human_rogue_level5_sd13_deterministic_input.txt");
@@ -295,51 +296,24 @@ fn rogue_level5_truth_is_unchanged_by_this_slice() {
     );
 }
 
-// ----- Negative control: the rogue path must not leak onto other classes -----
-
-#[test]
-fn fighter_does_not_gain_rogue_level6_recognition() {
-    let fighter = load(FIGHTER_FIXTURE);
-    let fighter_computation = compute_pilot_base_chassis(&fighter);
-    assert!(
-        !fighter_computation
-            .explanations
-            .iter()
-            .any(|e| e.id.starts_with("class_chassis.rogue.")
-                || e.id == ROGUE_EVASION_ID
-                || e.id == ROGUE_TRAP_SENSE_ID
-                || e.id == ROGUE_UNCANNY_DODGE_ID),
-        "the Fighter chassis must not surface any rogue-namespaced explanation: {:?}",
-        fighter_computation.explanations
-    );
-}
-
-// ----- Negative control: multiclass Rogue is not promoted -----
-
-#[test]
-fn multiclass_rogue_level6_is_not_promoted_by_this_slice() {
-    let multiclass = ROGUE_LEVEL6_FIXTURE.replace(
-        "class_level=class:rogue:6",
-        "class_level=class:rogue:6\nclass_level=class:fighter:1",
-    );
-    let input = load(&multiclass);
-    let computation = compute_pilot_base_chassis(&input);
-    assert!(
-        !computation
-            .explanations
-            .iter()
-            .any(|e| e.id.starts_with("class_chassis.rogue.")
-                || e.id == ROGUE_EVASION_ID
-                || e.id == ROGUE_TRAP_SENSE_ID
-                || e.id == ROGUE_UNCANNY_DODGE_ID),
-        "multiclass Rogue must not gain any bounded rogue chassis explanation: {:?}",
-        computation.explanations
-    );
-    assert!(
-        computation.diagnostics.iter().any(|d| d.claim_blocking),
-        "multiclass Rogue must stay claim-blocked in this slice"
-    );
-}
-
 // ----- Control plane: the matrix note names the level-6 widening -----
+
+// ----- Table-driven negative controls (SD-36 Epic C2.1/C2.2) -----
+
+recognition_negative_controls! {
+    fighter_does_not_gain_rogue_level6_recognition(FIGHTER_FIXTURE) {
+        prefixes: ["class_chassis.rogue."],
+        exact: [ROGUE_EVASION_ID, ROGUE_TRAP_SENSE_ID, ROGUE_UNCANNY_DODGE_ID],
+        message: "the Fighter chassis must not surface any rogue-namespaced explanation: {:?}",
+    },
+}
+
+multiclass_negative_controls! {
+    multiclass_rogue_level6_is_not_promoted_by_this_slice(ROGUE_LEVEL6_FIXTURE, "class_level=class:rogue:6" => "class_level=class:rogue:6\nclass_level=class:fighter:1") {
+        prefixes: ["class_chassis.rogue."],
+        exact: [ROGUE_EVASION_ID, ROGUE_TRAP_SENSE_ID, ROGUE_UNCANNY_DODGE_ID],
+        message: "multiclass Rogue must not gain any bounded rogue chassis explanation: {:?}",
+        blocked_message: "multiclass Rogue must stay claim-blocked in this slice",
+    },
+}
 

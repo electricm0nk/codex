@@ -58,6 +58,7 @@ use codex::rules_core::pilot_compute::{
     compute_pilot_base_chassis,
 };
 use crate::common::{load, explanation};
+use crate::rows::{multiclass_negative_controls, recognition_negative_controls};
 
 const BARBARIAN_LEVEL1_FIXTURE: &str = include_str!(
     "../fixtures/rules_core/pf1_human_barbarian_level1_sd13_deterministic_input.txt"
@@ -343,46 +344,6 @@ fn barbarian_level_3_was_later_widened_into_the_supported_tranche() {
     );
 }
 
-// ----- Negative control: the barbarian path must not leak onto other classes -----
-
-#[test]
-fn fighter_does_not_gain_barbarian_level2_recognition() {
-    let fighter = load(FIGHTER_FIXTURE);
-    let fighter_computation = compute_pilot_base_chassis(&fighter);
-    assert!(
-        !fighter_computation
-            .explanations
-            .iter()
-            .any(|e| e.id.starts_with("class_chassis.barbarian.")),
-        "the Fighter chassis must not surface any barbarian-namespaced explanation: {:?}",
-        fighter_computation.explanations
-    );
-}
-
-// ----- Negative control: multiclass Barbarian is not promoted -----
-
-#[test]
-fn multiclass_barbarian_level2_is_not_promoted_by_this_slice() {
-    let multiclass = BARBARIAN_LEVEL2_FIXTURE.replace(
-        "class_level=class:barbarian:2",
-        "class_level=class:barbarian:2\nclass_level=class:fighter:1",
-    );
-    let input = load(&multiclass);
-    let computation = compute_pilot_base_chassis(&input);
-    assert!(
-        !computation
-            .explanations
-            .iter()
-            .any(|e| e.id.starts_with("class_chassis.barbarian.")),
-        "multiclass Barbarian must not gain any bounded barbarian chassis explanation: {:?}",
-        computation.explanations
-    );
-    assert!(
-        computation.diagnostics.iter().any(|d| d.claim_blocking),
-        "multiclass Barbarian must stay claim-blocked in this slice"
-    );
-}
-
 // ----- Barbarian level 1 stays unchanged -----
 
 #[test]
@@ -401,4 +362,23 @@ fn barbarian_level1_truth_is_unchanged_by_the_level2_widening() {
 }
 
 // ----- Control plane: the matrix note names the level-2 widening -----
+
+// ----- Table-driven negative controls (SD-36 Epic C2.1/C2.2) -----
+
+recognition_negative_controls! {
+    fighter_does_not_gain_barbarian_level2_recognition(FIGHTER_FIXTURE) {
+        prefixes: ["class_chassis.barbarian."],
+        exact: [],
+        message: "the Fighter chassis must not surface any barbarian-namespaced explanation: {:?}",
+    },
+}
+
+multiclass_negative_controls! {
+    multiclass_barbarian_level2_is_not_promoted_by_this_slice(BARBARIAN_LEVEL2_FIXTURE, "class_level=class:barbarian:2" => "class_level=class:barbarian:2\nclass_level=class:fighter:1") {
+        prefixes: ["class_chassis.barbarian."],
+        exact: [],
+        message: "multiclass Barbarian must not gain any bounded barbarian chassis explanation: {:?}",
+        blocked_message: "multiclass Barbarian must stay claim-blocked in this slice",
+    },
+}
 

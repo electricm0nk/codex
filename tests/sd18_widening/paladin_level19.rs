@@ -83,8 +83,8 @@
 //! out-of-range boundary, mirroring the Barbarian/Cleric/Fighter/Bard
 //! level-N-to-level-(N+1) sibling-fix precedent exactly.
 
-use codex::rules_core::pilot_compute::{PilotBaseChassisComputation, compute_pilot_base_chassis};
-use crate::common::{load, explanation, has_explanation};
+use codex::rules_core::pilot_compute::PilotBaseChassisComputation;
+use crate::common::{explanation, has_explanation};
 
 const PALADIN_LEVEL18_FIXTURE: &str = include_str!(
     "../fixtures/rules_core/pf1_human_paladin_level18_sd18_widening_deterministic_input.txt"
@@ -94,9 +94,6 @@ const PALADIN_LEVEL19_FIXTURE: &str = include_str!(
     "../fixtures/rules_core/pf1_human_paladin_level19_sd18_widening_deterministic_input.txt"
 );
 
-const FIGHTER_FIXTURE: &str = include_str!(
-    "../fixtures/rules_core/pf1_human_fighter_level1_ge06_deterministic_input.txt"
-);
 
 const PER_DAY_PREFIX: &str = "class_chassis.paladin.partial_caster.base_spells_per_day.";
 
@@ -126,8 +123,7 @@ fn values_with_prefix(
 
 #[test]
 fn paladin_level19_base_attack_genuinely_rises_saves_stay_put() {
-    let input = load(PALADIN_LEVEL19_FIXTURE);
-    let computation = compute_pilot_base_chassis(&input);
+    let computation = crate::support::compute(PALADIN_LEVEL19_FIXTURE);
 
     let base_attack = explanation(&computation, BASE_ATTACK_ID);
     assert_eq!(
@@ -165,8 +161,7 @@ fn paladin_level19_base_attack_genuinely_rises_saves_stay_put() {
 
 #[test]
 fn paladin_level19_smite_evil_uses_and_damage_bonus_genuinely_rise() {
-    let input = load(PALADIN_LEVEL19_FIXTURE);
-    let computation = compute_pilot_base_chassis(&input);
+    let computation = crate::support::compute(PALADIN_LEVEL19_FIXTURE);
 
     let uses_per_day = explanation(&computation, SMITE_EVIL_USES_PER_DAY_ID);
     assert_eq!(
@@ -189,8 +184,7 @@ fn paladin_level19_smite_evil_uses_and_damage_bonus_genuinely_rise() {
 
 #[test]
 fn paladin_level19_base_spells_per_day_match_the_raw_table_row() {
-    let input = load(PALADIN_LEVEL19_FIXTURE);
-    let computation = compute_pilot_base_chassis(&input);
+    let computation = crate::support::compute(PALADIN_LEVEL19_FIXTURE);
 
     assert_eq!(
         values_with_prefix(&computation, PER_DAY_PREFIX),
@@ -209,8 +203,7 @@ fn paladin_level19_base_spells_per_day_match_the_raw_table_row() {
 
 #[test]
 fn paladin_level19_spell_level_access_stays_four() {
-    let input = load(PALADIN_LEVEL19_FIXTURE);
-    let computation = compute_pilot_base_chassis(&input);
+    let computation = crate::support::compute(PALADIN_LEVEL19_FIXTURE);
 
     let access = explanation(&computation, SPELL_LEVEL_ACCESS_ID);
     assert_eq!(
@@ -272,8 +265,7 @@ fn paladin_level19_spell_level_access_stays_four() {
 
 #[test]
 fn paladin_level19_does_not_introduce_a_seventh_mercy_slot() {
-    let input = load(PALADIN_LEVEL19_FIXTURE);
-    let computation = compute_pilot_base_chassis(&input);
+    let computation = crate::support::compute(PALADIN_LEVEL19_FIXTURE);
 
     assert!(
         !computation
@@ -303,8 +295,7 @@ fn paladin_level19_does_not_introduce_a_seventh_mercy_slot() {
 
 #[test]
 fn paladin_level19_still_claim_blocks_overall() {
-    let input = load(PALADIN_LEVEL19_FIXTURE);
-    let computation = compute_pilot_base_chassis(&input);
+    let computation = crate::support::compute(PALADIN_LEVEL19_FIXTURE);
 
     assert!(
         computation.diagnostics.iter().any(|d| d.claim_blocking),
@@ -317,8 +308,7 @@ fn paladin_level19_still_claim_blocks_overall() {
 
 #[test]
 fn paladin_level18_truth_is_unchanged_by_this_slice() {
-    let input = load(PALADIN_LEVEL18_FIXTURE);
-    let computation = compute_pilot_base_chassis(&input);
+    let computation = crate::support::compute(PALADIN_LEVEL18_FIXTURE);
 
     let base_attack = explanation(&computation, BASE_ATTACK_ID);
     assert_eq!(base_attack.value, 18, "Paladin level 18 base attack bonus must stay 18");
@@ -340,43 +330,11 @@ fn paladin_level18_truth_is_unchanged_by_this_slice() {
 
 // ----- Negative control: the paladin path must not leak onto other classes -----
 
-#[test]
-fn fighter_does_not_gain_paladin_level19_recognition() {
-    let fighter = load(FIGHTER_FIXTURE);
-    let fighter_computation = compute_pilot_base_chassis(&fighter);
-    assert!(
-        !fighter_computation
-            .explanations
-            .iter()
-            .any(|e| e.id.starts_with("class_chassis.paladin.")),
-        "the Fighter chassis must not surface any paladin-namespaced explanation: {:?}",
-        fighter_computation.explanations
-    );
-}
+crate::sd18_fighter_neg_control_test!(fighter_does_not_gain_paladin_level19_recognition, "paladin");
 
 // ----- Negative control: multiclass Paladin is not promoted -----
 
-#[test]
-fn multiclass_paladin_level19_is_not_promoted_by_this_slice() {
-    let multiclass = PALADIN_LEVEL19_FIXTURE.replace(
-        "class_level=class:paladin:19",
-        "class_level=class:paladin:19\nclass_level=class:fighter:1",
-    );
-    let input = load(&multiclass);
-    let computation = compute_pilot_base_chassis(&input);
-    assert!(
-        !computation
-            .explanations
-            .iter()
-            .any(|e| e.id.starts_with("class_chassis.paladin.")),
-        "multiclass Paladin must not gain any bounded paladin chassis explanation: {:?}",
-        computation.explanations
-    );
-    assert!(
-        computation.diagnostics.iter().any(|d| d.claim_blocking),
-        "multiclass Paladin must stay claim-blocked in this slice"
-    );
-}
+crate::sd18_multiclass_neg_control_test!(multiclass_paladin_level19_is_not_promoted_by_this_slice, "paladin_level19", PALADIN_LEVEL19_FIXTURE);
 
 // ----- Control plane: the matrix note names the level-19 widening -----
 

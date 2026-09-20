@@ -50,6 +50,7 @@
 
 use codex::rules_core::pilot_compute::compute_pilot_base_chassis;
 use crate::common::{load, explanation};
+use crate::rows::{multiclass_negative_controls, recognition_negative_controls};
 
 const MONK_LEVEL9_FIXTURE: &str =
     include_str!("../fixtures/rules_core/pf1_human_monk_level9_sd13_deterministic_input.txt");
@@ -259,47 +260,24 @@ fn monk_level_13_was_later_widened_into_the_supported_tranche() {
     );
 }
 
-// ----- Negative control: the monk path must not leak onto other classes -----
-
-#[test]
-fn fighter_does_not_gain_monk_level10_recognition() {
-    let fighter = load(FIGHTER_FIXTURE);
-    let fighter_computation = compute_pilot_base_chassis(&fighter);
-    assert!(
-        !fighter_computation
-            .explanations
-            .iter()
-            .any(|e| e.id.starts_with("class_chassis.monk.")
-                || e.id.starts_with("class_feature.monk.")),
-        "the Fighter chassis must not surface any monk-namespaced explanation: {:?}",
-        fighter_computation.explanations
-    );
-}
-
-// ----- Negative control: multiclass Monk is not promoted -----
-
-#[test]
-fn multiclass_monk_level10_is_not_promoted_by_this_slice() {
-    let multiclass = MONK_LEVEL10_FIXTURE.replace(
-        "class_level=class:monk:10",
-        "class_level=class:monk:10\nclass_level=class:fighter:1",
-    );
-    let input = load(&multiclass);
-    let computation = compute_pilot_base_chassis(&input);
-    assert!(
-        !computation
-            .explanations
-            .iter()
-            .any(|e| e.id.starts_with("class_chassis.monk.")
-                || e.id.starts_with("class_feature.monk.")),
-        "multiclass Monk must not gain any bounded monk explanation: {:?}",
-        computation.explanations
-    );
-    assert!(
-        computation.diagnostics.iter().any(|d| d.claim_blocking),
-        "multiclass Monk must stay claim-blocked in this slice"
-    );
-}
-
 // ----- Control plane: the matrix note names the level-10 widening -----
+
+// ----- Table-driven negative controls (SD-36 Epic C2.1/C2.2) -----
+
+recognition_negative_controls! {
+    fighter_does_not_gain_monk_level10_recognition(FIGHTER_FIXTURE) {
+        prefixes: ["class_chassis.monk.", "class_feature.monk."],
+        exact: [],
+        message: "the Fighter chassis must not surface any monk-namespaced explanation: {:?}",
+    },
+}
+
+multiclass_negative_controls! {
+    multiclass_monk_level10_is_not_promoted_by_this_slice(MONK_LEVEL10_FIXTURE, "class_level=class:monk:10" => "class_level=class:monk:10\nclass_level=class:fighter:1") {
+        prefixes: ["class_chassis.monk.", "class_feature.monk."],
+        exact: [],
+        message: "multiclass Monk must not gain any bounded monk explanation: {:?}",
+        blocked_message: "multiclass Monk must stay claim-blocked in this slice",
+    },
+}
 

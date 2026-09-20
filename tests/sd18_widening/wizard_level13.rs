@@ -58,8 +58,7 @@
 //! `tests/sd18_wizard_level12_widening.rs` to a "level 14 is not promoted"
 //! boundary in the same commit.
 
-use codex::rules_core::pilot_compute::compute_pilot_base_chassis;
-use crate::common::{load, explanation};
+use crate::common::explanation;
 
 const WIZARD_LEVEL12_FIXTURE: &str = include_str!(
     "../fixtures/rules_core/pf1_human_wizard_level12_sd18_widening_deterministic_input.txt"
@@ -69,16 +68,12 @@ const WIZARD_LEVEL13_FIXTURE: &str = include_str!(
     "../fixtures/rules_core/pf1_human_wizard_level13_sd18_widening_deterministic_input.txt"
 );
 
-const FIGHTER_FIXTURE: &str = include_str!(
-    "../fixtures/rules_core/pf1_human_fighter_level1_ge06_deterministic_input.txt"
-);
 
 // ----- Base attack bonus at level 13 stays unchanged (integer-division coincidence) -----
 
 #[test]
 fn wizard_level13_base_attack_bonus_is_grounded_and_stays_unchanged() {
-    let input = load(WIZARD_LEVEL13_FIXTURE);
-    let computation = compute_pilot_base_chassis(&input);
+    let computation = crate::support::compute(WIZARD_LEVEL13_FIXTURE);
 
     let base_attack = explanation(&computation, "class_chassis.wizard.base_attack_bonus");
     assert_eq!(
@@ -93,8 +88,7 @@ fn wizard_level13_base_attack_bonus_is_grounded_and_stays_unchanged() {
 
 #[test]
 fn wizard_level13_base_saves_are_grounded_and_stay_unchanged() {
-    let input = load(WIZARD_LEVEL13_FIXTURE);
-    let computation = compute_pilot_base_chassis(&input);
+    let computation = crate::support::compute(WIZARD_LEVEL13_FIXTURE);
 
     let fortitude = explanation(&computation, "class_chassis.wizard.base_save.fortitude");
     assert_eq!(
@@ -119,8 +113,7 @@ fn wizard_level13_base_saves_are_grounded_and_stay_unchanged() {
 
 #[test]
 fn wizard_level13_specialist_bonus_slot_genuinely_rises_to_seven() {
-    let input = load(WIZARD_LEVEL13_FIXTURE);
-    let computation = compute_pilot_base_chassis(&input);
+    let computation = crate::support::compute(WIZARD_LEVEL13_FIXTURE);
 
     let slot = explanation(&computation, "class_chassis.wizard.specialist_bonus_slot");
     assert_eq!(
@@ -136,8 +129,7 @@ fn wizard_level13_specialist_bonus_slot_genuinely_rises_to_seven() {
 
 #[test]
 fn wizard_level13_intense_spells_bonus_damage_stays_unchanged() {
-    let input = load(WIZARD_LEVEL13_FIXTURE);
-    let computation = compute_pilot_base_chassis(&input);
+    let computation = crate::support::compute(WIZARD_LEVEL13_FIXTURE);
 
     let intense = explanation(&computation, "class_chassis.wizard.intense_bonus_damage");
     assert_eq!(
@@ -152,8 +144,7 @@ fn wizard_level13_intense_spells_bonus_damage_stays_unchanged() {
 
 #[test]
 fn wizard_level13_grants_carry_over_unchanged() {
-    let input = load(WIZARD_LEVEL13_FIXTURE);
-    let computation = compute_pilot_base_chassis(&input);
+    let computation = crate::support::compute(WIZARD_LEVEL13_FIXTURE);
 
     let force_missile = explanation(
         &computation,
@@ -178,8 +169,7 @@ fn wizard_level13_grants_carry_over_unchanged() {
 
 #[test]
 fn wizard_level13_still_recognizes_the_spell_bearing_baseline_and_claim_blocks_burdens() {
-    let input = load(WIZARD_LEVEL13_FIXTURE);
-    let computation = compute_pilot_base_chassis(&input);
+    let computation = crate::support::compute(WIZARD_LEVEL13_FIXTURE);
 
     assert!(
         computation
@@ -212,8 +202,7 @@ fn wizard_level13_still_recognizes_the_spell_bearing_baseline_and_claim_blocks_b
 
 #[test]
 fn wizard_level12_truth_is_unchanged_by_this_slice() {
-    let input = load(WIZARD_LEVEL12_FIXTURE);
-    let computation = compute_pilot_base_chassis(&input);
+    let computation = crate::support::compute(WIZARD_LEVEL12_FIXTURE);
 
     let base_attack = explanation(&computation, "class_chassis.wizard.base_attack_bonus");
     assert_eq!(base_attack.value, 6, "Wizard level 12 base attack bonus must stay 6");
@@ -234,51 +223,11 @@ fn wizard_level12_truth_is_unchanged_by_this_slice() {
 // widening tests. PF1 has no 21st character level; this is a pure
 // implementation-gate check only.)
 
-#[test]
-fn wizard_level_21_is_not_promoted_by_this_slice() {
-    let level_21 = WIZARD_LEVEL13_FIXTURE.replace("class:wizard:13", "class:wizard:21");
-    let input = load(&level_21);
-    let computation = compute_pilot_base_chassis(&input);
-    assert!(
-        !computation
-            .explanations
-            .iter()
-            .any(|e| (e.id.starts_with("class_chassis.wizard.")
-                || e.id.starts_with("class_feature.wizard.")
-                || e.id == "class_chassis.spell_baseline.wizard")
-                // SD-34 decisions.md section 18 (`bfe90f020a`, 2026-08-29) widened the
-                // anti-fabrication gate BY CONSTRUCTION for Wizard: class_feature_grant_
-                // consumer now emits a real, citation-backed class_feature.wizard.
-                // corpus_record.* id for any grant fact with a renderable corpus record,
-                // at any Wizard level -- that commit widened the sd13_* acceptance tests
-                // it named but never reached these later sd18_* widening siblings. Same
-                // carve-out, same reasoning, applied here.
-                && !e.id.starts_with("class_feature.wizard.corpus_record.")
-                // AT-34-E3-001 cycle 6 (`49d72f5e03`, 2026-08-28) grounded Wizard Weapon
-                // and Armor Proficiency unconditionally (real PF1 content, any level) --
-                // pre-existing, already-tested, not promotion by this slice.
-                && e.id != "class_feature.wizard.weapon_and_armor_proficiency"),
-        "level-21 Wizard must not gain any bounded wizard explanation: {:?}",
-        computation.explanations
-    );
-}
+crate::sd18_boundary_neg_control_test!(wizard_level_21_is_not_promoted_by_this_slice, "wizard_level13", WIZARD_LEVEL13_FIXTURE);
 
 // ----- Negative control: the wizard path must not leak onto other classes -----
 
-#[test]
-fn fighter_does_not_gain_wizard_level13_recognition() {
-    let fighter = load(FIGHTER_FIXTURE);
-    let fighter_computation = compute_pilot_base_chassis(&fighter);
-    assert!(
-        !fighter_computation
-            .explanations
-            .iter()
-            .any(|e| e.id.starts_with("class_chassis.wizard.")
-                || e.id.starts_with("class_feature.wizard.")),
-        "the Fighter chassis must not surface any wizard-namespaced explanation: {:?}",
-        fighter_computation.explanations
-    );
-}
+crate::sd18_fighter_neg_control_test!(fighter_does_not_gain_wizard_level13_recognition, "wizard");
 
 // ----- Negative control: multiclass Wizard is not promoted -----
 
@@ -297,8 +246,7 @@ fn multiclass_wizard_level13_is_not_promoted_by_this_slice() {
         "class_level=class:wizard:13",
         "class_level=class:wizard:13\nclass_level=class:rogue:1",
     );
-    let input = load(&multiclass);
-    let computation = compute_pilot_base_chassis(&input);
+    let computation = crate::support::compute(&multiclass);
 // (v0.6 swarm update) The v0.6 alpha swarm's multiclass BAB/save-stacking
     // generalization (task 4) widened the Wizard+Rogue multiclass mix into a
     // genuinely supported combination (Rogue now joins Fighter as a class

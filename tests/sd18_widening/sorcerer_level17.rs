@@ -70,8 +70,8 @@
 //! supported/grounded row, mirroring the exact fix every prior level-N cycle
 //! made for its own siblings.
 
-use codex::rules_core::pilot_compute::{PilotBaseChassisComputation, compute_pilot_base_chassis};
-use crate::common::{load, explanation};
+use codex::rules_core::pilot_compute::PilotBaseChassisComputation;
+use crate::common::explanation;
 
 const SORCERER_LEVEL16_FIXTURE: &str = include_str!(
     "../fixtures/rules_core/pf1_human_sorcerer_level16_sd18_widening_deterministic_input.txt"
@@ -81,9 +81,6 @@ const SORCERER_LEVEL17_FIXTURE: &str = include_str!(
     "../fixtures/rules_core/pf1_human_sorcerer_level17_sd18_widening_deterministic_input.txt"
 );
 
-const FIGHTER_FIXTURE: &str = include_str!(
-    "../fixtures/rules_core/pf1_human_fighter_level1_ge06_deterministic_input.txt"
-);
 
 const PER_DAY_PREFIX: &str = "class_chassis.sorcerer.spontaneous.base_spells_per_day.";
 const KNOWN_PREFIX: &str = "class_chassis.sorcerer.spontaneous.spells_known.";
@@ -104,8 +101,7 @@ fn values_with_prefix(
 
 #[test]
 fn sorcerer_level17_base_attack_bonus_is_grounded() {
-    let input = load(SORCERER_LEVEL17_FIXTURE);
-    let computation = compute_pilot_base_chassis(&input);
+    let computation = crate::support::compute(SORCERER_LEVEL17_FIXTURE);
 
     let base_attack = explanation(&computation, "class_chassis.sorcerer.base_attack_bonus");
     assert_eq!(
@@ -120,8 +116,7 @@ fn sorcerer_level17_base_attack_bonus_is_grounded() {
 
 #[test]
 fn sorcerer_level17_base_saves_are_grounded() {
-    let input = load(SORCERER_LEVEL17_FIXTURE);
-    let computation = compute_pilot_base_chassis(&input);
+    let computation = crate::support::compute(SORCERER_LEVEL17_FIXTURE);
 
     let fortitude = explanation(&computation, "class_chassis.sorcerer.base_save.fortitude");
     assert_eq!(
@@ -149,8 +144,7 @@ fn sorcerer_level17_base_saves_are_grounded() {
 
 #[test]
 fn sorcerer_level17_base_spells_per_day_match_the_raw_table_row() {
-    let input = load(SORCERER_LEVEL17_FIXTURE);
-    let computation = compute_pilot_base_chassis(&input);
+    let computation = crate::support::compute(SORCERER_LEVEL17_FIXTURE);
 
     assert_eq!(
         values_with_prefix(&computation, PER_DAY_PREFIX),
@@ -173,8 +167,7 @@ fn sorcerer_level17_base_spells_per_day_match_the_raw_table_row() {
 
 #[test]
 fn sorcerer_level17_spells_known_match_the_raw_table_row() {
-    let input = load(SORCERER_LEVEL17_FIXTURE);
-    let computation = compute_pilot_base_chassis(&input);
+    let computation = crate::support::compute(SORCERER_LEVEL17_FIXTURE);
 
     assert_eq!(
         values_with_prefix(&computation, KNOWN_PREFIX),
@@ -199,8 +192,7 @@ fn sorcerer_level17_spells_known_match_the_raw_table_row() {
 
 #[test]
 fn sorcerer_level17_spell_level_access_stays_at_eight() {
-    let input = load(SORCERER_LEVEL17_FIXTURE);
-    let computation = compute_pilot_base_chassis(&input);
+    let computation = crate::support::compute(SORCERER_LEVEL17_FIXTURE);
 
     let access = explanation(
         &computation,
@@ -218,8 +210,7 @@ fn sorcerer_level17_spell_level_access_stays_at_eight() {
 
 #[test]
 fn sorcerer_level17_bonus_spells_and_save_dcs_extend_to_eighth_level() {
-    let input = load(SORCERER_LEVEL17_FIXTURE);
-    let computation = compute_pilot_base_chassis(&input);
+    let computation = crate::support::compute(SORCERER_LEVEL17_FIXTURE);
 
     let dc8 = explanation(
         &computation,
@@ -261,8 +252,7 @@ fn sorcerer_level17_bonus_spells_and_save_dcs_extend_to_eighth_level() {
 
 #[test]
 fn sorcerer_level17_still_recognizes_the_bloodline_choice() {
-    let input = load(SORCERER_LEVEL17_FIXTURE);
-    let computation = compute_pilot_base_chassis(&input);
+    let computation = crate::support::compute(SORCERER_LEVEL17_FIXTURE);
 
     let choice = explanation(&computation, "class_chassis.sorcerer.bloodline_choice");
     assert_eq!(
@@ -280,8 +270,7 @@ fn sorcerer_level17_still_recognizes_the_bloodline_choice() {
 
 #[test]
 fn sorcerer_level17_still_recognizes_the_spell_bearing_baseline_and_claim_blocks_burdens() {
-    let input = load(SORCERER_LEVEL17_FIXTURE);
-    let computation = compute_pilot_base_chassis(&input);
+    let computation = crate::support::compute(SORCERER_LEVEL17_FIXTURE);
 
     assert!(
         computation
@@ -334,8 +323,7 @@ fn sorcerer_level17_still_recognizes_the_spell_bearing_baseline_and_claim_blocks
 
 #[test]
 fn sorcerer_level17_does_not_fabricate_any_bloodline_entry() {
-    let input = load(SORCERER_LEVEL17_FIXTURE);
-    let computation = compute_pilot_base_chassis(&input);
+    let computation = crate::support::compute(SORCERER_LEVEL17_FIXTURE);
 
     assert!(
         !computation
@@ -363,8 +351,7 @@ fn sorcerer_level17_does_not_fabricate_any_bloodline_entry() {
 
 #[test]
 fn sorcerer_level16_truth_is_unchanged_by_this_slice() {
-    let input = load(SORCERER_LEVEL16_FIXTURE);
-    let computation = compute_pilot_base_chassis(&input);
+    let computation = crate::support::compute(SORCERER_LEVEL16_FIXTURE);
 
     let base_attack = explanation(&computation, "class_chassis.sorcerer.base_attack_bonus");
     assert_eq!(base_attack.value, 8, "Sorcerer level 16 base attack bonus must stay 8");
@@ -388,45 +375,11 @@ fn sorcerer_level16_truth_is_unchanged_by_this_slice() {
 
 // ----- Negative control: the sorcerer path must not leak onto other classes -----
 
-#[test]
-fn fighter_does_not_gain_sorcerer_level17_recognition() {
-    let fighter = load(FIGHTER_FIXTURE);
-    let fighter_computation = compute_pilot_base_chassis(&fighter);
-    assert!(
-        !fighter_computation
-            .explanations
-            .iter()
-            .any(|e| e.id.starts_with("class_chassis.sorcerer.")
-                || e.id == "class_chassis.spell_baseline.sorcerer"),
-        "the Fighter chassis must not surface any sorcerer-namespaced explanation: {:?}",
-        fighter_computation.explanations
-    );
-}
+crate::sd18_fighter_neg_control_test!(fighter_does_not_gain_sorcerer_level17_recognition, "sorcerer");
 
 // ----- Negative control: multiclass Sorcerer is not promoted -----
 
-#[test]
-fn multiclass_sorcerer_level17_is_not_promoted_by_this_slice() {
-    let multiclass = SORCERER_LEVEL17_FIXTURE.replace(
-        "class_level=class:sorcerer:17",
-        "class_level=class:sorcerer:17\nclass_level=class:fighter:1",
-    );
-    let input = load(&multiclass);
-    let computation = compute_pilot_base_chassis(&input);
-    assert!(
-        !computation
-            .explanations
-            .iter()
-            .any(|e| e.id.starts_with("class_chassis.sorcerer.")
-                || e.id == "class_chassis.spell_baseline.sorcerer"),
-        "multiclass Sorcerer must not gain any bounded sorcerer chassis explanation: {:?}",
-        computation.explanations
-    );
-    assert!(
-        computation.diagnostics.iter().any(|d| d.claim_blocking),
-        "multiclass Sorcerer must stay claim-blocked in this slice"
-    );
-}
+crate::sd18_multiclass_neg_control_test!(multiclass_sorcerer_level17_is_not_promoted_by_this_slice, "sorcerer_level17", SORCERER_LEVEL17_FIXTURE);
 
 // ----- Control plane: the matrix note names the level-17 widening -----
 

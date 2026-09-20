@@ -53,8 +53,7 @@
 //! also preserves the accepted Monk level-1..level-11 truth (unchanged),
 //! the Fighter negative control, and the multiclass negative control.
 
-use codex::rules_core::pilot_compute::compute_pilot_base_chassis;
-use crate::common::{load, explanation};
+use crate::common::explanation;
 
 const MONK_LEVEL11_FIXTURE: &str = include_str!(
     "../fixtures/rules_core/pf1_human_monk_level11_sd18_diamond_body_deterministic_input.txt"
@@ -64,9 +63,6 @@ const MONK_LEVEL12_FIXTURE: &str = include_str!(
     "../fixtures/rules_core/pf1_human_monk_level12_sd18_widening_deterministic_input.txt"
 );
 
-const FIGHTER_FIXTURE: &str = include_str!(
-    "../fixtures/rules_core/pf1_human_fighter_level1_ge06_deterministic_input.txt"
-);
 
 const MONK_STILL_MIND_ID: &str = "class_feature.monk.still_mind";
 const MONK_EVASION_ID: &str = "class_feature.monk.evasion";
@@ -82,8 +78,7 @@ const MONK_UNARMED_DIE_COUNT_ID: &str = "class_chassis.monk.unarmed_strike_damag
 
 #[test]
 fn monk_level12_base_attack_and_saves_genuinely_rise() {
-    let input = load(MONK_LEVEL12_FIXTURE);
-    let computation = compute_pilot_base_chassis(&input);
+    let computation = crate::support::compute(MONK_LEVEL12_FIXTURE);
 
     let base_attack = explanation(&computation, "class_chassis.monk.base_attack_bonus");
     assert_eq!(
@@ -111,8 +106,7 @@ fn monk_level12_base_attack_and_saves_genuinely_rise() {
 
 #[test]
 fn monk_level12_unarmed_die_steps_up_and_ki_pool_rises() {
-    let input = load(MONK_LEVEL12_FIXTURE);
-    let computation = compute_pilot_base_chassis(&input);
+    let computation = crate::support::compute(MONK_LEVEL12_FIXTURE);
 
     let unarmed = explanation(&computation, MONK_UNARMED_DIE_ID);
     assert_eq!(
@@ -149,8 +143,7 @@ fn monk_level12_unarmed_die_steps_up_and_ki_pool_rises() {
 
 #[test]
 fn monk_level12_flurry_attack_bonus_rises() {
-    let input = load(MONK_LEVEL12_FIXTURE);
-    let computation = compute_pilot_base_chassis(&input);
+    let computation = crate::support::compute(MONK_LEVEL12_FIXTURE);
 
     let attack_bonus = explanation(
         &computation,
@@ -177,8 +170,7 @@ fn monk_level12_flurry_attack_bonus_rises() {
 
 #[test]
 fn monk_level12_slow_fall_reach_rises() {
-    let input = load(MONK_LEVEL12_FIXTURE);
-    let computation = compute_pilot_base_chassis(&input);
+    let computation = crate::support::compute(MONK_LEVEL12_FIXTURE);
 
     let slow_fall = explanation(&computation, MONK_SLOW_FALL_ID);
     assert_eq!(
@@ -208,8 +200,7 @@ fn monk_level12_abundant_step_caster_level_was_later_grounded() {
     // execution itself stays unmodeled. This is the same "was later
     // widened" flip `tests/sd13_monk_level9_progression.rs` established for
     // its own superseded boundary.
-    let input = load(MONK_LEVEL12_FIXTURE);
-    let computation = compute_pilot_base_chassis(&input);
+    let computation = crate::support::compute(MONK_LEVEL12_FIXTURE);
 
     let abundant_step = explanation(&computation, "class_chassis.monk.abundant_step_caster_level");
     assert_eq!(
@@ -223,8 +214,7 @@ fn monk_level12_abundant_step_caster_level_was_later_grounded() {
 
 #[test]
 fn monk_level12_granted_features_and_choices_carry_over() {
-    let input = load(MONK_LEVEL12_FIXTURE);
-    let computation = compute_pilot_base_chassis(&input);
+    let computation = crate::support::compute(MONK_LEVEL12_FIXTURE);
 
     let still_mind = explanation(&computation, MONK_STILL_MIND_ID);
     assert_eq!(still_mind.value, 2, "Still Mind must stay the flat +2 at level 12");
@@ -261,8 +251,7 @@ fn monk_level12_granted_features_and_choices_carry_over() {
 
 #[test]
 fn monk_level11_truth_is_unchanged_by_this_slice() {
-    let input = load(MONK_LEVEL11_FIXTURE);
-    let computation = compute_pilot_base_chassis(&input);
+    let computation = crate::support::compute(MONK_LEVEL11_FIXTURE);
 
     let base_attack = explanation(&computation, "class_chassis.monk.base_attack_bonus");
     assert_eq!(base_attack.value, 8, "Monk level 11 base attack bonus must stay 8");
@@ -287,8 +276,7 @@ fn monk_level11_truth_is_unchanged_by_this_slice() {
 #[test]
 fn monk_level_13_was_later_widened_into_the_supported_tranche() {
     let level_13 = MONK_LEVEL12_FIXTURE.replace("class:monk:12", "class:monk:13");
-    let input = load(&level_13);
-    let computation = compute_pilot_base_chassis(&input);
+    let computation = crate::support::compute(&level_13);
     assert!(
         computation
             .explanations
@@ -302,45 +290,11 @@ fn monk_level_13_was_later_widened_into_the_supported_tranche() {
 
 // ----- Negative control: the monk path must not leak onto other classes -----
 
-#[test]
-fn fighter_does_not_gain_monk_level12_recognition() {
-    let fighter = load(FIGHTER_FIXTURE);
-    let fighter_computation = compute_pilot_base_chassis(&fighter);
-    assert!(
-        !fighter_computation
-            .explanations
-            .iter()
-            .any(|e| e.id.starts_with("class_chassis.monk.")
-                || e.id.starts_with("class_feature.monk.")),
-        "the Fighter chassis must not surface any monk-namespaced explanation: {:?}",
-        fighter_computation.explanations
-    );
-}
+crate::sd18_fighter_neg_control_test!(fighter_does_not_gain_monk_level12_recognition, "monk");
 
 // ----- Negative control: multiclass Monk is not promoted -----
 
-#[test]
-fn multiclass_monk_level12_is_not_promoted_by_this_slice() {
-    let multiclass = MONK_LEVEL12_FIXTURE.replace(
-        "class_level=class:monk:12",
-        "class_level=class:monk:12\nclass_level=class:fighter:1",
-    );
-    let input = load(&multiclass);
-    let computation = compute_pilot_base_chassis(&input);
-    assert!(
-        !computation
-            .explanations
-            .iter()
-            .any(|e| e.id.starts_with("class_chassis.monk.")
-                || e.id.starts_with("class_feature.monk.")),
-        "multiclass Monk must not gain any bounded monk explanation: {:?}",
-        computation.explanations
-    );
-    assert!(
-        computation.diagnostics.iter().any(|d| d.claim_blocking),
-        "multiclass Monk must stay claim-blocked in this slice"
-    );
-}
+crate::sd18_multiclass_neg_control_test!(multiclass_monk_level12_is_not_promoted_by_this_slice, "monk_level12", MONK_LEVEL12_FIXTURE);
 
 // ----- Control plane: the matrix note names the level-12 widening -----
 

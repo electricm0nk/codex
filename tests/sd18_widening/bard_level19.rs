@@ -78,8 +78,7 @@
 //! already-generalized tiered if/else chain (Inspire Competence's flat
 //! magnitude).
 
-use codex::rules_core::pilot_compute::compute_pilot_base_chassis;
-use crate::common::{load, explanation};
+use crate::common::explanation;
 
 const BARD_LEVEL18_FIXTURE: &str = include_str!(
     "../fixtures/rules_core/pf1_human_bard_level18_sd18_widening_deterministic_input.txt"
@@ -89,9 +88,6 @@ const BARD_LEVEL19_FIXTURE: &str = include_str!(
     "../fixtures/rules_core/pf1_human_bard_level19_sd18_widening_deterministic_input.txt"
 );
 
-const FIGHTER_FIXTURE: &str = include_str!(
-    "../fixtures/rules_core/pf1_human_fighter_level1_ge06_deterministic_input.txt"
-);
 
 const INSPIRE_COURAGE_ID: &str = "class_chassis.bard.inspire_courage_bonus";
 const INSPIRE_COMPETENCE_ID: &str = "class_feature.bard.inspire_competence";
@@ -106,8 +102,7 @@ const INSPIRE_HEROICS_TARGET_COUNT_ID: &str = "class_feature.bard.inspire_heroic
 
 #[test]
 fn bard_level19_base_attack_genuinely_rises_saves_stay_put() {
-    let input = load(BARD_LEVEL19_FIXTURE);
-    let computation = compute_pilot_base_chassis(&input);
+    let computation = crate::support::compute(BARD_LEVEL19_FIXTURE);
 
     let base_attack = explanation(&computation, "class_chassis.bard.base_attack_bonus");
     assert_eq!(
@@ -143,8 +138,7 @@ fn bard_level19_base_attack_genuinely_rises_saves_stay_put() {
 
 #[test]
 fn bard_level19_knowledge_stays_rounds_genuinely_rises() {
-    let input = load(BARD_LEVEL19_FIXTURE);
-    let computation = compute_pilot_base_chassis(&input);
+    let computation = crate::support::compute(BARD_LEVEL19_FIXTURE);
 
     let knowledge = explanation(&computation, "class_chassis.bard.bardic_knowledge");
     assert_eq!(
@@ -185,8 +179,7 @@ fn bard_level19_knowledge_stays_rounds_genuinely_rises() {
 
 #[test]
 fn bard_level19_frightening_tune_dc_stays_put() {
-    let input = load(BARD_LEVEL19_FIXTURE);
-    let computation = compute_pilot_base_chassis(&input);
+    let computation = crate::support::compute(BARD_LEVEL19_FIXTURE);
 
     let dc = explanation(&computation, FRIGHTENING_TUNE_DC_ID);
     assert_eq!(
@@ -201,8 +194,7 @@ fn bard_level19_frightening_tune_dc_stays_put() {
 
 #[test]
 fn bard_level19_inspire_competence_genuinely_rises_others_stay_put() {
-    let input = load(BARD_LEVEL19_FIXTURE);
-    let computation = compute_pilot_base_chassis(&input);
+    let computation = crate::support::compute(BARD_LEVEL19_FIXTURE);
 
     let inspire_courage = explanation(&computation, INSPIRE_COURAGE_ID);
     assert_eq!(
@@ -232,8 +224,7 @@ fn bard_level19_inspire_competence_genuinely_rises_others_stay_put() {
 
 #[test]
 fn bard_level19_inspire_heroics_carries_over() {
-    let input = load(BARD_LEVEL19_FIXTURE);
-    let computation = compute_pilot_base_chassis(&input);
+    let computation = crate::support::compute(BARD_LEVEL19_FIXTURE);
 
     let save_bonus = explanation(&computation, INSPIRE_HEROICS_SAVE_BONUS_ID);
     assert_eq!(
@@ -262,8 +253,7 @@ fn bard_level19_inspire_heroics_carries_over() {
 
 #[test]
 fn bard_level19_soothing_performance_carries_over() {
-    let input = load(BARD_LEVEL19_FIXTURE);
-    let computation = compute_pilot_base_chassis(&input);
+    let computation = crate::support::compute(BARD_LEVEL19_FIXTURE);
 
     let soothing_performance = explanation(&computation, SOOTHING_PERFORMANCE_ID);
     assert_eq!(
@@ -278,8 +268,7 @@ fn bard_level19_soothing_performance_carries_over() {
 
 #[test]
 fn bard_level19_still_claim_blocks_the_performance_execution_burden() {
-    let input = load(BARD_LEVEL19_FIXTURE);
-    let computation = compute_pilot_base_chassis(&input);
+    let computation = crate::support::compute(BARD_LEVEL19_FIXTURE);
 
     match computation
         .diagnostics
@@ -306,8 +295,7 @@ fn bard_level19_still_claim_blocks_the_performance_execution_burden() {
 
 #[test]
 fn bard_level18_truth_is_unchanged_by_this_slice() {
-    let input = load(BARD_LEVEL18_FIXTURE);
-    let computation = compute_pilot_base_chassis(&input);
+    let computation = crate::support::compute(BARD_LEVEL18_FIXTURE);
 
     let inspire_competence = explanation(&computation, INSPIRE_COMPETENCE_ID);
     assert_eq!(inspire_competence.value, 5, "Bard level 18 Inspire Competence must stay +5");
@@ -327,59 +315,11 @@ fn bard_level18_truth_is_unchanged_by_this_slice() {
 
 // ----- Negative control: the bard path must not leak onto other classes -----
 
-#[test]
-fn fighter_does_not_gain_bard_level19_recognition() {
-    let fighter = load(FIGHTER_FIXTURE);
-    let fighter_computation = compute_pilot_base_chassis(&fighter);
-    assert!(
-        !fighter_computation
-            .explanations
-            .iter()
-            .any(|e| e.id.starts_with("class_chassis.bard.")
-                || e.id.starts_with("class_feature.bard.")),
-        "the Fighter chassis must not surface any bard-namespaced explanation: {:?}",
-        fighter_computation.explanations
-    );
-}
+crate::sd18_fighter_neg_control_test!(fighter_does_not_gain_bard_level19_recognition, "bard");
 
 // ----- Negative control: multiclass Bard is not promoted -----
 
-#[test]
-fn multiclass_bard_level19_is_not_promoted_by_this_slice() {
-    let multiclass = BARD_LEVEL19_FIXTURE.replace(
-        "class_level=class:bard:19",
-        "class_level=class:bard:19\nclass_level=class:fighter:1",
-    );
-    let input = load(&multiclass);
-    let computation = compute_pilot_base_chassis(&input);
-    assert!(
-        !computation
-            .explanations
-            .iter()
-            .any(|e| (e.id.starts_with("class_chassis.bard.")
-                || e.id.starts_with("class_feature.bard."))
-                // (v0.6 alpha swarm, risks item 8) bardic-performance-
-                // execution's not-performing explanation is checked
-                // unconditionally, regardless of level bound or
-                // single-class status (mirrors the spell-posture
-                // classes' and Barbarian's gate-ordering fix)
-                && e.id != "class_feature.bard.bardic_performance_execution.not_performing"
-                // SD-34 wave 34 lane A (`docs/release/SD-34-book-completion/artifacts/
-                // bucket-d-mining/wave34_laneA_weapon_and_armor_proficiency_cycle_
-                // receipt.md`): Bard's own Weapon and Armor Proficiency identity
-                // grant is now genuinely grounded as a level-independent, always-on
-                // +0 record (true since level 1, mirrors the same "no gate to lift"
-                // idiom as Jack-of-All-Trades) -- not a bounded, level-gated feature
-                // this slice's negative control is checking for.
-                && e.id != "class_feature.bard.weapon_and_armor_proficiency"),
-        "multiclass Bard must not gain any bounded bard explanation: {:?}",
-        computation.explanations
-    );
-    assert!(
-        computation.diagnostics.iter().any(|d| d.claim_blocking),
-        "multiclass Bard must stay claim-blocked in this slice"
-    );
-}
+crate::sd18_multiclass_neg_control_test!(multiclass_bard_level19_is_not_promoted_by_this_slice, "bard_level19", BARD_LEVEL19_FIXTURE);
 
 // ----- Control plane: the matrix note names the level-19 widening -----
 

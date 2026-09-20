@@ -42,9 +42,9 @@
 //! the multiclass negative control.
 
 use codex::rules_core::pilot_compute::{
-    ComputationExplanation, PilotBaseChassisComputation, compute_pilot_base_chassis,
+    ComputationExplanation, PilotBaseChassisComputation,
 };
-use crate::common::{load, explanation};
+use crate::common::explanation;
 
 const DRUID_LEVEL11_FIXTURE: &str = include_str!(
     "../fixtures/rules_core/pf1_human_druid_level11_sd18_widening_deterministic_input.txt"
@@ -54,9 +54,6 @@ const DRUID_LEVEL12_FIXTURE: &str = include_str!(
     "../fixtures/rules_core/pf1_human_druid_level12_sd18_widening_deterministic_input.txt"
 );
 
-const FIGHTER_FIXTURE: &str = include_str!(
-    "../fixtures/rules_core/pf1_human_fighter_level1_ge06_deterministic_input.txt"
-);
 
 const DRUID_WOODLAND_STRIDE_ID: &str = "class_feature.druid.woodland_stride";
 const DRUID_TRACKLESS_STEP_ID: &str = "class_feature.druid.trackless_step";
@@ -274,8 +271,7 @@ fn assert_animal_companion_burden_is_closed_but_discloses_its_gaps(
 
 #[test]
 fn druid_level12_base_attack_and_saves_genuinely_rise() {
-    let input = load(DRUID_LEVEL12_FIXTURE);
-    let computation = compute_pilot_base_chassis(&input);
+    let computation = crate::support::compute(DRUID_LEVEL12_FIXTURE);
 
     let base_attack = explanation(&computation, "class_chassis.druid.base_attack_bonus");
     assert_eq!(
@@ -308,8 +304,7 @@ fn druid_level12_base_attack_and_saves_genuinely_rise() {
 
 #[test]
 fn druid_level12_wild_empathy_rises_to_thirteen() {
-    let input = load(DRUID_LEVEL12_FIXTURE);
-    let computation = compute_pilot_base_chassis(&input);
+    let computation = crate::support::compute(DRUID_LEVEL12_FIXTURE);
 
     let wild_empathy = explanation(&computation, "class_chassis.druid.wild_empathy");
     assert_eq!(
@@ -324,8 +319,7 @@ fn druid_level12_wild_empathy_rises_to_thirteen() {
 
 #[test]
 fn druid_level12_remaining_pillars_carry_over_unchanged() {
-    let input = load(DRUID_LEVEL12_FIXTURE);
-    let computation = compute_pilot_base_chassis(&input);
+    let computation = crate::support::compute(DRUID_LEVEL12_FIXTURE);
 
     let nature_sense = explanation(&computation, "class_chassis.druid.nature_sense");
     assert_eq!(nature_sense.value, 2, "Nature Sense must stay the flat +2 at level 12");
@@ -356,8 +350,7 @@ fn druid_level12_remaining_pillars_carry_over_unchanged() {
 
 #[test]
 fn druid_level12_does_not_fabricate_wild_shape_execution() {
-    let input = load(DRUID_LEVEL12_FIXTURE);
-    let computation = compute_pilot_base_chassis(&input);
+    let computation = crate::support::compute(DRUID_LEVEL12_FIXTURE);
 
     assert!(
         !computation
@@ -383,8 +376,7 @@ fn druid_level12_does_not_fabricate_wild_shape_execution() {
 
 #[test]
 fn druid_level12_grounds_the_animal_companion_and_holds_the_prepared_divine_posture() {
-    let input = load(DRUID_LEVEL12_FIXTURE);
-    let computation = compute_pilot_base_chassis(&input);
+    let computation = crate::support::compute(DRUID_LEVEL12_FIXTURE);
 
     // Superseded premise, corrected 2026-07-29. This test used to require
     // `class_feature.druid.animal_companion.unsupported` to fire claim-blocking
@@ -433,8 +425,7 @@ fn druid_level12_grounds_the_animal_companion_and_holds_the_prepared_divine_post
 
 #[test]
 fn druid_level11_truth_is_unchanged_by_this_slice() {
-    let input = load(DRUID_LEVEL11_FIXTURE);
-    let computation = compute_pilot_base_chassis(&input);
+    let computation = crate::support::compute(DRUID_LEVEL11_FIXTURE);
 
     let wild_empathy = explanation(&computation, "class_chassis.druid.wild_empathy");
     assert_eq!(wild_empathy.value, 12, "Druid level 11 Wild Empathy must stay 12");
@@ -481,8 +472,7 @@ fn druid_level_16_was_later_widened_into_the_supported_tranche() {
     // modifier (+1 on this fixture) = 17; Nature Sense stays the flat PF1 CRB
     // +2.
     let level_16 = DRUID_LEVEL12_FIXTURE.replace("class:druid:12", "class:druid:16");
-    let input = load(&level_16);
-    let computation = compute_pilot_base_chassis(&input);
+    let computation = crate::support::compute(&level_16);
 
     let base_attack = explanation(&computation, "class_chassis.druid.base_attack_bonus");
     assert_eq!(
@@ -535,8 +525,7 @@ fn druid_level_21_is_not_promoted_by_this_slice() {
     // this is a pure implementation-gate check that the level range really is
     // bounded rather than open-ended.
     let level_21 = DRUID_LEVEL12_FIXTURE.replace("class:druid:12", "class:druid:21");
-    let input = load(&level_21);
-    let computation = compute_pilot_base_chassis(&input);
+    let computation = crate::support::compute(&level_21);
 
     // Note this deliberately uses the raw prefixes rather than
     // `is_gated_druid_chassis_record`: at level 21 the animal companion must be
@@ -568,20 +557,7 @@ fn druid_level_21_is_not_promoted_by_this_slice() {
 
 // ----- Negative control: the druid path must not leak onto other classes -----
 
-#[test]
-fn fighter_does_not_gain_druid_level12_recognition() {
-    let fighter = load(FIGHTER_FIXTURE);
-    let fighter_computation = compute_pilot_base_chassis(&fighter);
-    assert!(
-        !fighter_computation
-            .explanations
-            .iter()
-            .any(|e| e.id.starts_with("class_chassis.druid.")
-                || e.id.starts_with("class_feature.druid.")),
-        "the Fighter chassis must not surface any druid-namespaced explanation: {:?}",
-        fighter_computation.explanations
-    );
-}
+crate::sd18_fighter_neg_control_test!(fighter_does_not_gain_druid_level12_recognition, "druid");
 
 // ----- Negative control: multiclass Druid is not promoted -----
 
@@ -591,8 +567,7 @@ fn multiclass_druid_level12_is_not_promoted_by_this_slice() {
         "class_level=class:druid:12",
         "class_level=class:druid:12\nclass_level=class:fighter:1",
     );
-    let input = load(&multiclass);
-    let computation = compute_pilot_base_chassis(&input);
+    let computation = crate::support::compute(&multiclass);
 
     // The bounded single-class druid chassis is still withheld from a
     // multiclass mix -- unchanged, and still the point of this control.

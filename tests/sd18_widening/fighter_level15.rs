@@ -46,8 +46,7 @@
 //! also preserves the accepted Fighter level-1..level-14 truth (unchanged)
 //! and the multiclass negative control.
 
-use codex::rules_core::pilot_compute::compute_pilot_base_chassis;
-use crate::common::{load, explanation};
+use crate::common::explanation;
 
 const FIGHTER_LEVEL14_FIXTURE: &str = include_str!(
     "../fixtures/rules_core/pf1_human_fighter_level14_sd18_widening_deterministic_input.txt"
@@ -61,8 +60,7 @@ const FIGHTER_LEVEL15_FIXTURE: &str = include_str!(
 
 #[test]
 fn fighter_level15_base_attack_and_poor_saves_rise_fortitude_stays() {
-    let input = load(FIGHTER_LEVEL15_FIXTURE);
-    let computation = compute_pilot_base_chassis(&input);
+    let computation = crate::support::compute(FIGHTER_LEVEL15_FIXTURE);
 
     assert!(
         !computation.diagnostics.iter().any(|d| d.claim_blocking),
@@ -101,8 +99,7 @@ fn fighter_level15_base_attack_and_poor_saves_rise_fortitude_stays() {
 
 #[test]
 fn fighter_level15_armor_training_rises_to_rank_four() {
-    let input = load(FIGHTER_LEVEL15_FIXTURE);
-    let computation = compute_pilot_base_chassis(&input);
+    let computation = crate::support::compute(FIGHTER_LEVEL15_FIXTURE);
 
     let armor_training = explanation(&computation, "class_feature.fighter.armor_training");
     assert_eq!(
@@ -117,8 +114,7 @@ fn fighter_level15_armor_training_rises_to_rank_four() {
 
 #[test]
 fn fighter_level15_weapon_training_and_bravery_stay_unchanged() {
-    let input = load(FIGHTER_LEVEL15_FIXTURE);
-    let computation = compute_pilot_base_chassis(&input);
+    let computation = crate::support::compute(FIGHTER_LEVEL15_FIXTURE);
 
     let weapon_training = explanation(&computation, "class_feature.fighter.weapon_training");
     assert_eq!(
@@ -160,8 +156,7 @@ fn fighter_level15_weapon_training_and_bravery_stay_unchanged() {
 
 #[test]
 fn fighter_level15_baseline_melee_attack_bonus_rises_armor_class_unchanged() {
-    let input = load(FIGHTER_LEVEL15_FIXTURE);
-    let computation = compute_pilot_base_chassis(&input);
+    let computation = crate::support::compute(FIGHTER_LEVEL15_FIXTURE);
 
     // Baseline melee attack bonus rises by the base-attack-bonus delta (+1)
     // only, since Weapon Training's first-group bonus stays unchanged at
@@ -184,8 +179,7 @@ fn fighter_level15_baseline_melee_attack_bonus_rises_armor_class_unchanged() {
 
 #[test]
 fn fighter_level14_truth_is_unchanged_by_this_slice() {
-    let input = load(FIGHTER_LEVEL14_FIXTURE);
-    let computation = compute_pilot_base_chassis(&input);
+    let computation = crate::support::compute(FIGHTER_LEVEL14_FIXTURE);
 
     let bab = explanation(&computation, "class_chassis.base_attack_bonus");
     assert_eq!(bab.value, 14, "Fighter level 14 base attack bonus must stay 14");
@@ -213,8 +207,7 @@ fn multiclass_fighter_level15_is_not_promoted_by_this_slice() {
         "class_level=class:fighter:15",
         "class_level=class:fighter:15\nclass_level=class:rogue:1",
     );
-    let input = load(&multiclass);
-    let computation = compute_pilot_base_chassis(&input);
+    let computation = crate::support::compute(&multiclass);
 // (v0.6 swarm update) The v0.6 alpha swarm's multiclass BAB/save-stacking
     // generalization (task 4) widened the Fighter+Rogue multiclass mix into a
     // genuinely supported combination (via the table-driven

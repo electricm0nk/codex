@@ -71,8 +71,7 @@
 //! supported/grounded row rather than the out-of-range boundary, mirroring
 //! the Ranger/Bard/Rogue/Fighter level-17 cycles' identical fix.
 
-use codex::rules_core::pilot_compute::compute_pilot_base_chassis;
-use crate::common::{load, explanation};
+use crate::common::explanation;
 
 const WIZARD_LEVEL16_FIXTURE: &str = include_str!(
     "../fixtures/rules_core/pf1_human_wizard_level16_sd18_widening_deterministic_input.txt"
@@ -82,16 +81,12 @@ const WIZARD_LEVEL17_FIXTURE: &str = include_str!(
     "../fixtures/rules_core/pf1_human_wizard_level17_sd18_widening_deterministic_input.txt"
 );
 
-const FIGHTER_FIXTURE: &str = include_str!(
-    "../fixtures/rules_core/pf1_human_fighter_level1_ge06_deterministic_input.txt"
-);
 
 // ----- Base attack bonus at level 17 stays put (integer-division coincidence) -----
 
 #[test]
 fn wizard_level17_base_attack_bonus_is_grounded_and_stays_put() {
-    let input = load(WIZARD_LEVEL17_FIXTURE);
-    let computation = compute_pilot_base_chassis(&input);
+    let computation = crate::support::compute(WIZARD_LEVEL17_FIXTURE);
 
     let base_attack = explanation(&computation, "class_chassis.wizard.base_attack_bonus");
     assert_eq!(
@@ -106,8 +101,7 @@ fn wizard_level17_base_attack_bonus_is_grounded_and_stays_put() {
 
 #[test]
 fn wizard_level17_base_saves_are_grounded_and_stay_put() {
-    let input = load(WIZARD_LEVEL17_FIXTURE);
-    let computation = compute_pilot_base_chassis(&input);
+    let computation = crate::support::compute(WIZARD_LEVEL17_FIXTURE);
 
     let fortitude = explanation(&computation, "class_chassis.wizard.base_save.fortitude");
     assert_eq!(
@@ -135,8 +129,7 @@ fn wizard_level17_base_saves_are_grounded_and_stay_put() {
 
 #[test]
 fn wizard_level17_specialist_bonus_slot_genuinely_rises_to_nine() {
-    let input = load(WIZARD_LEVEL17_FIXTURE);
-    let computation = compute_pilot_base_chassis(&input);
+    let computation = crate::support::compute(WIZARD_LEVEL17_FIXTURE);
 
     let slot = explanation(&computation, "class_chassis.wizard.specialist_bonus_slot");
     assert_eq!(
@@ -152,8 +145,7 @@ fn wizard_level17_specialist_bonus_slot_genuinely_rises_to_nine() {
 
 #[test]
 fn wizard_level17_intense_spells_bonus_damage_stays_put() {
-    let input = load(WIZARD_LEVEL17_FIXTURE);
-    let computation = compute_pilot_base_chassis(&input);
+    let computation = crate::support::compute(WIZARD_LEVEL17_FIXTURE);
 
     let intense = explanation(&computation, "class_chassis.wizard.intense_bonus_damage");
     assert_eq!(
@@ -168,8 +160,7 @@ fn wizard_level17_intense_spells_bonus_damage_stays_put() {
 
 #[test]
 fn wizard_level17_grants_carry_over_unchanged() {
-    let input = load(WIZARD_LEVEL17_FIXTURE);
-    let computation = compute_pilot_base_chassis(&input);
+    let computation = crate::support::compute(WIZARD_LEVEL17_FIXTURE);
 
     let force_missile = explanation(
         &computation,
@@ -194,8 +185,7 @@ fn wizard_level17_grants_carry_over_unchanged() {
 
 #[test]
 fn wizard_level17_still_recognizes_the_spell_bearing_baseline_and_claim_blocks_burdens() {
-    let input = load(WIZARD_LEVEL17_FIXTURE);
-    let computation = compute_pilot_base_chassis(&input);
+    let computation = crate::support::compute(WIZARD_LEVEL17_FIXTURE);
 
     assert!(
         computation
@@ -228,8 +218,7 @@ fn wizard_level17_still_recognizes_the_spell_bearing_baseline_and_claim_blocks_b
 
 #[test]
 fn wizard_level16_truth_is_unchanged_by_this_slice() {
-    let input = load(WIZARD_LEVEL16_FIXTURE);
-    let computation = compute_pilot_base_chassis(&input);
+    let computation = crate::support::compute(WIZARD_LEVEL16_FIXTURE);
 
     let base_attack = explanation(&computation, "class_chassis.wizard.base_attack_bonus");
     assert_eq!(base_attack.value, 8, "Wizard level 16 base attack bonus must stay 8");
@@ -243,20 +232,7 @@ fn wizard_level16_truth_is_unchanged_by_this_slice() {
 
 // ----- Negative control: the wizard path must not leak onto other classes -----
 
-#[test]
-fn fighter_does_not_gain_wizard_level17_recognition() {
-    let fighter = load(FIGHTER_FIXTURE);
-    let fighter_computation = compute_pilot_base_chassis(&fighter);
-    assert!(
-        !fighter_computation
-            .explanations
-            .iter()
-            .any(|e| e.id.starts_with("class_chassis.wizard.")
-                || e.id.starts_with("class_feature.wizard.")),
-        "the Fighter chassis must not surface any wizard-namespaced explanation: {:?}",
-        fighter_computation.explanations
-    );
-}
+crate::sd18_fighter_neg_control_test!(fighter_does_not_gain_wizard_level17_recognition, "wizard");
 
 // ----- Negative control: multiclass Wizard is not promoted -----
 
@@ -275,8 +251,7 @@ fn multiclass_wizard_level17_is_not_promoted_by_this_slice() {
         "class_level=class:wizard:17",
         "class_level=class:wizard:17\nclass_level=class:rogue:1",
     );
-    let input = load(&multiclass);
-    let computation = compute_pilot_base_chassis(&input);
+    let computation = crate::support::compute(&multiclass);
 // (v0.6 swarm update) The v0.6 alpha swarm's multiclass BAB/save-stacking
     // generalization (task 4) widened the Wizard+Rogue multiclass mix into a
     // genuinely supported combination (Rogue now joins Fighter as a class

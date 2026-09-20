@@ -61,6 +61,7 @@ use codex::rules_core::pilot_compute::{
     ComputationExplanation, PilotBaseChassisComputation, compute_pilot_base_chassis,
 };
 use crate::common::{load, explanation, has_explanation};
+use crate::rows::{recognition_negative_controls};
 
 const DRUID_LEVEL3_FIXTURE: &str =
     include_str!("../fixtures/rules_core/pf1_human_druid_level3_sd13_deterministic_input.txt");
@@ -567,26 +568,6 @@ fn druid_level_5_was_later_widened_into_the_supported_tranche() {
     );
 }
 
-// ----- Negative control: the druid path must not leak onto other classes -----
-
-#[test]
-fn fighter_does_not_gain_druid_level4_recognition() {
-    let fighter = load(FIGHTER_FIXTURE);
-    let fighter_computation = compute_pilot_base_chassis(&fighter);
-    assert!(
-        !fighter_computation
-            .explanations
-            .iter()
-            .any(|e| e.id.starts_with("class_chassis.druid.")
-                || e.id == "class_chassis.spell_baseline.druid"
-                || e.id == DRUID_WOODLAND_STRIDE_ID
-                || e.id == DRUID_TRACKLESS_STEP_ID
-                || e.id == DRUID_RESIST_NATURES_LURE_ID),
-        "the Fighter chassis must not surface any druid-namespaced explanation: {:?}",
-        fighter_computation.explanations
-    );
-}
-
 // ----- Negative control: multiclass Druid is not promoted -----
 
 #[test]
@@ -630,4 +611,14 @@ fn multiclass_druid_level4_is_not_promoted_by_this_slice() {
 }
 
 // ----- Control plane: the matrix note names the level-4 widening and Resist Nature's Lure -----
+
+// ----- Table-driven negative controls (SD-36 Epic C2.1/C2.2) -----
+
+recognition_negative_controls! {
+    fighter_does_not_gain_druid_level4_recognition(FIGHTER_FIXTURE) {
+        prefixes: ["class_chassis.druid."],
+        exact: ["class_chassis.spell_baseline.druid", DRUID_WOODLAND_STRIDE_ID, DRUID_TRACKLESS_STEP_ID, DRUID_RESIST_NATURES_LURE_ID],
+        message: "the Fighter chassis must not surface any druid-namespaced explanation: {:?}",
+    },
+}
 

@@ -65,8 +65,7 @@
 //! truth (unchanged), the Fighter negative control, and the multiclass
 //! negative control.
 
-use codex::rules_core::pilot_compute::compute_pilot_base_chassis;
-use crate::common::{load, explanation};
+use crate::common::explanation;
 
 const ROGUE_LEVEL19_FIXTURE: &str = include_str!(
     "../fixtures/rules_core/pf1_human_rogue_level19_sd18_widening_deterministic_input.txt"
@@ -76,9 +75,6 @@ const ROGUE_LEVEL20_FIXTURE: &str = include_str!(
     "../fixtures/rules_core/pf1_human_rogue_level20_sd18_widening_deterministic_input.txt"
 );
 
-const FIGHTER_FIXTURE: &str = include_str!(
-    "../fixtures/rules_core/pf1_human_fighter_level1_ge06_deterministic_input.txt"
-);
 
 const ROGUE_EVASION_ID: &str = "class_feature.rogue.evasion";
 const ROGUE_TRAP_SENSE_ID: &str = "class_feature.rogue.trap_sense";
@@ -90,8 +86,7 @@ const ROGUE_MASTER_STRIKE_ID: &str = "class_feature.rogue.master_strike";
 
 #[test]
 fn rogue_level20_base_attack_and_reflex_rise() {
-    let input = load(ROGUE_LEVEL20_FIXTURE);
-    let computation = compute_pilot_base_chassis(&input);
+    let computation = crate::support::compute(ROGUE_LEVEL20_FIXTURE);
 
     let base_attack = explanation(&computation, "class_chassis.rogue.base_attack_bonus");
     assert_eq!(
@@ -128,8 +123,7 @@ fn rogue_level20_base_attack_and_reflex_rise() {
 
 #[test]
 fn rogue_level20_sneak_attack_stays_at_ten() {
-    let input = load(ROGUE_LEVEL20_FIXTURE);
-    let computation = compute_pilot_base_chassis(&input);
+    let computation = crate::support::compute(ROGUE_LEVEL20_FIXTURE);
 
     let sneak_attack = explanation(&computation, "class_chassis.rogue.sneak_attack");
     assert_eq!(
@@ -144,8 +138,7 @@ fn rogue_level20_sneak_attack_stays_at_ten() {
 
 #[test]
 fn rogue_level20_gains_tenth_talent_slot() {
-    let input = load(ROGUE_LEVEL20_FIXTURE);
-    let computation = compute_pilot_base_chassis(&input);
+    let computation = crate::support::compute(ROGUE_LEVEL20_FIXTURE);
 
     let slot_ten = explanation(&computation, "class_chassis.rogue.talent_10_choice");
     assert_eq!(
@@ -167,8 +160,7 @@ fn rogue_level20_gains_tenth_talent_slot() {
 
 #[test]
 fn rogue_level20_gains_master_strike() {
-    let input = load(ROGUE_LEVEL20_FIXTURE);
-    let computation = compute_pilot_base_chassis(&input);
+    let computation = crate::support::compute(ROGUE_LEVEL20_FIXTURE);
 
     // SD-32 Epic 1 (compute-library wiring): the fixture's Intelligence 12
     // (modifier +1) is now run through the SAME formula_interpreter-backed
@@ -198,8 +190,7 @@ fn rogue_level20_gains_master_strike() {
 
 #[test]
 fn rogue_level20_trap_sense_stays_trapfinding_rises() {
-    let input = load(ROGUE_LEVEL20_FIXTURE);
-    let computation = compute_pilot_base_chassis(&input);
+    let computation = crate::support::compute(ROGUE_LEVEL20_FIXTURE);
 
     let trap_sense = explanation(&computation, ROGUE_TRAP_SENSE_ID);
     assert_eq!(
@@ -222,8 +213,7 @@ fn rogue_level20_trap_sense_stays_trapfinding_rises() {
 
 #[test]
 fn rogue_level20_remaining_pillars_carry_over() {
-    let input = load(ROGUE_LEVEL20_FIXTURE);
-    let computation = compute_pilot_base_chassis(&input);
+    let computation = crate::support::compute(ROGUE_LEVEL20_FIXTURE);
 
     for id in [
         ROGUE_EVASION_ID,
@@ -242,8 +232,7 @@ fn rogue_level20_remaining_pillars_carry_over() {
 
 #[test]
 fn rogue_level19_truth_is_unchanged_by_this_slice() {
-    let input = load(ROGUE_LEVEL19_FIXTURE);
-    let computation = compute_pilot_base_chassis(&input);
+    let computation = crate::support::compute(ROGUE_LEVEL19_FIXTURE);
 
     let sneak_attack = explanation(&computation, "class_chassis.rogue.sneak_attack");
     assert_eq!(sneak_attack.value, 10, "Rogue level 19 sneak attack must stay 10d6");
@@ -277,80 +266,15 @@ fn rogue_level19_truth_is_unchanged_by_this_slice() {
 
 // ----- Negative control: level 21 stays unrecognized by this slice -----
 
-#[test]
-fn rogue_level_21_is_not_promoted_by_this_slice() {
-    let level_21 = ROGUE_LEVEL20_FIXTURE.replace("class:rogue:20", "class:rogue:21");
-    let input = load(&level_21);
-    let computation = compute_pilot_base_chassis(&input);
-    assert!(
-        !computation
-            .explanations
-            .iter()
-            .any(|e| (e.id.starts_with("class_chassis.rogue.")
-                || e.id.starts_with("class_feature.rogue."))
-                // SD-34 wave 34 lane A (`docs/release/SD-34-book-completion/artifacts/
-                // bucket-d-mining/wave34_laneA_weapon_and_armor_proficiency_cycle_
-                // receipt.md`): Rogue's own Weapon and Armor Proficiency identity
-                // grant is now genuinely grounded as a level-independent, always-on
-                // +0 record (true since level 1, mirrors the same "no gate to lift"
-                // idiom as Jack-of-All-Trades) -- not a bounded, level-gated feature
-                // this slice's negative control is checking for.
-                && e.id != "class_feature.rogue.weapon_and_armor_proficiency"),
-        "level-21 Rogue must not gain any bounded rogue explanation (PF1 has no 21st character \
-         level; this is a pure implementation-gate check): {:?}",
-        computation.explanations
-    );
-}
+crate::sd18_boundary_neg_control_test!(rogue_level_21_is_not_promoted_by_this_slice, "rogue_level20", ROGUE_LEVEL20_FIXTURE);
 
 // ----- Negative control: the rogue path must not leak onto other classes -----
 
-#[test]
-fn fighter_does_not_gain_rogue_level20_recognition() {
-    let fighter = load(FIGHTER_FIXTURE);
-    let fighter_computation = compute_pilot_base_chassis(&fighter);
-    assert!(
-        !fighter_computation
-            .explanations
-            .iter()
-            .any(|e| e.id.starts_with("class_chassis.rogue.")
-                || e.id.starts_with("class_feature.rogue.")),
-        "the Fighter chassis must not surface any rogue-namespaced explanation: {:?}",
-        fighter_computation.explanations
-    );
-}
+crate::sd18_fighter_neg_control_test!(fighter_does_not_gain_rogue_level20_recognition, "rogue");
 
 // ----- Negative control: multiclass Rogue is not promoted -----
 
-#[test]
-fn multiclass_rogue_level20_is_not_promoted_by_this_slice() {
-    let multiclass = ROGUE_LEVEL20_FIXTURE.replace(
-        "class_level=class:rogue:20",
-        "class_level=class:rogue:20\nclass_level=class:fighter:1",
-    );
-    let input = load(&multiclass);
-    let computation = compute_pilot_base_chassis(&input);
-    assert!(
-        !computation
-            .explanations
-            .iter()
-            .any(|e| (e.id.starts_with("class_chassis.rogue.")
-                || e.id.starts_with("class_feature.rogue."))
-                // SD-34 wave 34 lane A (`docs/release/SD-34-book-completion/artifacts/
-                // bucket-d-mining/wave34_laneA_weapon_and_armor_proficiency_cycle_
-                // receipt.md`): Rogue's own Weapon and Armor Proficiency identity
-                // grant is now genuinely grounded as a level-independent, always-on
-                // +0 record (true since level 1, mirrors the same "no gate to lift"
-                // idiom as Jack-of-All-Trades) -- not a bounded, level-gated feature
-                // this slice's negative control is checking for.
-                && e.id != "class_feature.rogue.weapon_and_armor_proficiency"),
-        "multiclass Rogue must not gain any bounded rogue explanation: {:?}",
-        computation.explanations
-    );
-    assert!(
-        computation.diagnostics.iter().any(|d| d.claim_blocking),
-        "multiclass Rogue must stay claim-blocked in this slice"
-    );
-}
+crate::sd18_multiclass_neg_control_test!(multiclass_rogue_level20_is_not_promoted_by_this_slice, "rogue_level20", ROGUE_LEVEL20_FIXTURE);
 
 // ----- Control plane: the matrix note names the level-20 widening -----
 

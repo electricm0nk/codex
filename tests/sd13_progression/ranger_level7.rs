@@ -53,6 +53,7 @@
 
 use codex::rules_core::pilot_compute::compute_pilot_base_chassis;
 use crate::common::{load, explanation, has_explanation};
+use crate::rows::{multiclass_negative_controls, recognition_negative_controls};
 
 const RANGER_LEVEL7_FIXTURE: &str =
     include_str!("../fixtures/rules_core/pf1_human_ranger_level7_sd13_deterministic_input.txt");
@@ -288,53 +289,24 @@ fn ranger_level_8_was_later_widened_into_the_supported_tranche() {
     );
 }
 
-// ----- Negative control: the grounding must not leak onto other classes -----
-
-#[test]
-fn fighter_does_not_gain_ranger_level7_recognition() {
-    let fighter = load(FIGHTER_FIXTURE);
-    let fighter_computation = compute_pilot_base_chassis(&fighter);
-    assert!(
-        !fighter_computation
-            .explanations
-            .iter()
-            .any(|e| e.id.starts_with("class_chassis.ranger.")
-                || e.id == ENDURANCE_ID
-                || e.id == FAVORED_TERRAIN_ID
-                || e.id == HUNTERS_BOND_ID
-                || e.id == WOODLAND_STRIDE_ID),
-        "the Fighter chassis must not surface any ranger-namespaced explanation: {:?}",
-        fighter_computation.explanations
-    );
-}
-
-// ----- Negative control: multiclass Ranger is not promoted -----
-
-#[test]
-fn multiclass_ranger_level7_is_not_promoted_by_this_slice() {
-    let multiclass = RANGER_LEVEL7_FIXTURE.replace(
-        "class_level=class:ranger:7",
-        "class_level=class:ranger:7\nclass_level=class:fighter:1",
-    );
-    let input = load(&multiclass);
-    let computation = compute_pilot_base_chassis(&input);
-    assert!(
-        !computation
-            .explanations
-            .iter()
-            .any(|e| e.id.starts_with("class_chassis.ranger.")
-                || e.id == ENDURANCE_ID
-                || e.id == FAVORED_TERRAIN_ID
-                || e.id == HUNTERS_BOND_ID
-                || e.id == WOODLAND_STRIDE_ID),
-        "multiclass Ranger must not gain any bounded ranger chassis explanation: {:?}",
-        computation.explanations
-    );
-    assert!(
-        computation.diagnostics.iter().any(|d| d.claim_blocking),
-        "multiclass Ranger must stay claim-blocked in this slice"
-    );
-}
-
 // ----- Control plane: the matrix note names the level-7 widening -----
+
+// ----- Table-driven negative controls (SD-36 Epic C2.1/C2.2) -----
+
+recognition_negative_controls! {
+    fighter_does_not_gain_ranger_level7_recognition(FIGHTER_FIXTURE) {
+        prefixes: ["class_chassis.ranger."],
+        exact: [ENDURANCE_ID, FAVORED_TERRAIN_ID, HUNTERS_BOND_ID, WOODLAND_STRIDE_ID],
+        message: "the Fighter chassis must not surface any ranger-namespaced explanation: {:?}",
+    },
+}
+
+multiclass_negative_controls! {
+    multiclass_ranger_level7_is_not_promoted_by_this_slice(RANGER_LEVEL7_FIXTURE, "class_level=class:ranger:7" => "class_level=class:ranger:7\nclass_level=class:fighter:1") {
+        prefixes: ["class_chassis.ranger."],
+        exact: [ENDURANCE_ID, FAVORED_TERRAIN_ID, HUNTERS_BOND_ID, WOODLAND_STRIDE_ID],
+        message: "multiclass Ranger must not gain any bounded ranger chassis explanation: {:?}",
+        blocked_message: "multiclass Ranger must stay claim-blocked in this slice",
+    },
+}
 

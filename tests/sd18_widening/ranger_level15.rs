@@ -81,8 +81,8 @@
 //! Barbarian/Bard/Cleric/Druid/Fighter/Monk/Paladin/Rogue level-N-to-
 //! level-(N+1) sibling-fix precedent exactly.
 
-use codex::rules_core::pilot_compute::{PilotBaseChassisComputation, compute_pilot_base_chassis};
-use crate::common::{load, explanation, has_explanation};
+use codex::rules_core::pilot_compute::PilotBaseChassisComputation;
+use crate::common::{explanation, has_explanation};
 
 const RANGER_LEVEL14_FIXTURE: &str = include_str!(
     "../fixtures/rules_core/pf1_human_ranger_level14_sd18_fourth_combat_style_feat_deterministic_input.txt"
@@ -92,9 +92,6 @@ const RANGER_LEVEL15_FIXTURE: &str = include_str!(
     "../fixtures/rules_core/pf1_human_ranger_level15_sd18_fourth_favored_enemy_deterministic_input.txt"
 );
 
-const FIGHTER_FIXTURE: &str = include_str!(
-    "../fixtures/rules_core/pf1_human_fighter_level1_ge06_deterministic_input.txt"
-);
 
 const PER_DAY_PREFIX: &str = "class_chassis.ranger.partial_caster.base_spells_per_day.";
 
@@ -121,8 +118,7 @@ fn values_with_prefix(
 
 #[test]
 fn ranger_level15_base_attack_bonus_genuinely_rises() {
-    let input = load(RANGER_LEVEL15_FIXTURE);
-    let computation = compute_pilot_base_chassis(&input);
+    let computation = crate::support::compute(RANGER_LEVEL15_FIXTURE);
 
     let base_attack = explanation(&computation, "class_chassis.ranger.base_attack_bonus");
     assert_eq!(
@@ -136,8 +132,7 @@ fn ranger_level15_base_attack_bonus_genuinely_rises() {
 
 #[test]
 fn ranger_level15_good_saves_stay_poor_will_genuinely_rises() {
-    let input = load(RANGER_LEVEL15_FIXTURE);
-    let computation = compute_pilot_base_chassis(&input);
+    let computation = crate::support::compute(RANGER_LEVEL15_FIXTURE);
 
     let fortitude = explanation(&computation, "class_chassis.ranger.base_save.fortitude");
     assert_eq!(
@@ -159,8 +154,7 @@ fn ranger_level15_good_saves_stay_poor_will_genuinely_rises() {
 
 #[test]
 fn ranger_level15_base_spells_per_day_match_the_raw_table_row() {
-    let input = load(RANGER_LEVEL15_FIXTURE);
-    let computation = compute_pilot_base_chassis(&input);
+    let computation = crate::support::compute(RANGER_LEVEL15_FIXTURE);
 
     assert_eq!(
         values_with_prefix(&computation, PER_DAY_PREFIX),
@@ -179,8 +173,7 @@ fn ranger_level15_base_spells_per_day_match_the_raw_table_row() {
 
 #[test]
 fn ranger_level15_spell_level_access_stays_four() {
-    let input = load(RANGER_LEVEL15_FIXTURE);
-    let computation = compute_pilot_base_chassis(&input);
+    let computation = crate::support::compute(RANGER_LEVEL15_FIXTURE);
 
     let access = explanation(
         &computation,
@@ -197,8 +190,7 @@ fn ranger_level15_spell_level_access_stays_four() {
 
 #[test]
 fn ranger_level15_fourth_favored_enemy_is_recognized_open_ended() {
-    let input = load(RANGER_LEVEL15_FIXTURE);
-    let computation = compute_pilot_base_chassis(&input);
+    let computation = crate::support::compute(RANGER_LEVEL15_FIXTURE);
 
     let choice = explanation(&computation, FAVORED_ENEMY_4_CHOICE_ID);
     assert_eq!(
@@ -216,8 +208,7 @@ fn ranger_level15_fourth_favored_enemy_is_recognized_open_ended() {
 
 #[test]
 fn ranger_level15_bonus_increase_target_names_the_fourth_favored_enemy() {
-    let input = load(RANGER_LEVEL15_FIXTURE);
-    let computation = compute_pilot_base_chassis(&input);
+    let computation = crate::support::compute(RANGER_LEVEL15_FIXTURE);
 
     let choice = explanation(&computation, FAVORED_ENEMY_BONUS_INCREASE_3_CHOICE_ID);
     assert_eq!(
@@ -236,8 +227,7 @@ fn ranger_level15_bonus_increase_target_names_the_fourth_favored_enemy() {
 
 #[test]
 fn ranger_level15_fourth_favored_enemy_bonus_is_four_when_self_targeted() {
-    let input = load(RANGER_LEVEL15_FIXTURE);
-    let computation = compute_pilot_base_chassis(&input);
+    let computation = crate::support::compute(RANGER_LEVEL15_FIXTURE);
 
     let skill_bonus = explanation(&computation, FAVORED_ENEMY_4_SKILL_BONUS_ID);
     assert_eq!(
@@ -265,8 +255,7 @@ fn ranger_level15_fourth_favored_enemy_absent_grounds_nothing() {
             "choice=choice:ranger_favored_enemy_bonus_increase_target_3:enemy:fourth\n",
             "",
         );
-    let input = load(&without_fourth);
-    let computation = compute_pilot_base_chassis(&input);
+    let computation = crate::support::compute(&without_fourth);
 
     assert!(
         !has_explanation(&computation, FAVORED_ENEMY_4_CHOICE_ID),
@@ -286,8 +275,7 @@ fn ranger_level15_fourth_favored_enemy_absent_grounds_nothing() {
 
 #[test]
 fn ranger_level15_still_claim_blocks_overall() {
-    let input = load(RANGER_LEVEL15_FIXTURE);
-    let computation = compute_pilot_base_chassis(&input);
+    let computation = crate::support::compute(RANGER_LEVEL15_FIXTURE);
 
     assert!(
         computation.diagnostics.iter().any(|d| d.claim_blocking),
@@ -300,8 +288,7 @@ fn ranger_level15_still_claim_blocks_overall() {
 
 #[test]
 fn ranger_level14_truth_is_unchanged_by_this_slice() {
-    let input = load(RANGER_LEVEL14_FIXTURE);
-    let computation = compute_pilot_base_chassis(&input);
+    let computation = crate::support::compute(RANGER_LEVEL14_FIXTURE);
 
     let base_attack = explanation(&computation, "class_chassis.ranger.base_attack_bonus");
     assert_eq!(base_attack.value, 14, "Ranger level 14 base attack bonus must stay 14");
@@ -331,53 +318,11 @@ fn ranger_level14_truth_is_unchanged_by_this_slice() {
 
 // ----- Negative control: the ranger path must not leak onto other classes -----
 
-#[test]
-fn fighter_does_not_gain_ranger_level15_recognition() {
-    let fighter = load(FIGHTER_FIXTURE);
-    let fighter_computation = compute_pilot_base_chassis(&fighter);
-    assert!(
-        !fighter_computation
-            .explanations
-            .iter()
-            .any(|e| e.id.starts_with("class_chassis.ranger.")
-                || e.id.starts_with("class_feature.ranger.")),
-        "the Fighter chassis must not surface any ranger-namespaced explanation: {:?}",
-        fighter_computation.explanations
-    );
-}
+crate::sd18_fighter_neg_control_test!(fighter_does_not_gain_ranger_level15_recognition, "ranger");
 
 // ----- Negative control: multiclass Ranger is not promoted -----
 
-#[test]
-fn multiclass_ranger_level15_is_not_promoted_by_this_slice() {
-    let multiclass = RANGER_LEVEL15_FIXTURE.replace(
-        "class_level=class:ranger:15",
-        "class_level=class:ranger:15\nclass_level=class:fighter:1",
-    );
-    let input = load(&multiclass);
-    let computation = compute_pilot_base_chassis(&input);
-    assert!(
-        !computation
-            .explanations
-            .iter()
-            .any(|e| (e.id.starts_with("class_chassis.ranger.")
-                || e.id.starts_with("class_feature.ranger."))
-                // SD-34 wave 34 lane A (`docs/release/SD-34-book-completion/artifacts/
-                // bucket-d-mining/wave34_laneA_weapon_and_armor_proficiency_cycle_
-                // receipt.md`): Ranger's own Weapon and Armor Proficiency identity
-                // grant is now genuinely grounded as a level-independent, always-on
-                // +0 record (true since level 1, mirrors the same "no gate to lift"
-                // idiom as Jack-of-All-Trades) -- not a bounded, level-gated feature
-                // this slice's negative control is checking for.
-                && e.id != "class_feature.ranger.weapon_and_armor_proficiency"),
-        "multiclass Ranger must not gain any bounded ranger chassis explanation: {:?}",
-        computation.explanations
-    );
-    assert!(
-        computation.diagnostics.iter().any(|d| d.claim_blocking),
-        "multiclass Ranger must stay claim-blocked in this slice"
-    );
-}
+crate::sd18_multiclass_neg_control_test!(multiclass_ranger_level15_is_not_promoted_by_this_slice, "ranger_level15", RANGER_LEVEL15_FIXTURE);
 
 // ----- Control plane: the matrix note names the level-15 widening -----
 

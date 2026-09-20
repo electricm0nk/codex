@@ -59,6 +59,7 @@
 
 use codex::rules_core::pilot_compute::compute_pilot_base_chassis;
 use crate::common::{load, explanation, has_explanation};
+use crate::rows::{recognition_negative_controls};
 
 const WIZARD_LEVEL6_FIXTURE: &str =
     include_str!("../fixtures/rules_core/pf1_human_wizard_level6_sd13_deterministic_input.txt");
@@ -279,23 +280,6 @@ fn wizard_level_8_was_later_widened_into_the_supported_tranche() {
     );
 }
 
-// ----- Negative control: the wizard path must not leak onto other classes -----
-
-#[test]
-fn fighter_does_not_gain_wizard_level7_recognition() {
-    let fighter = load(FIGHTER_FIXTURE);
-    let fighter_computation = compute_pilot_base_chassis(&fighter);
-    assert!(
-        !fighter_computation
-            .explanations
-            .iter()
-            .any(|e| e.id.starts_with("class_chassis.wizard.")
-                || e.id == "class_chassis.spell_baseline.wizard"),
-        "the Fighter chassis must not surface any wizard-namespaced explanation: {:?}",
-        fighter_computation.explanations
-    );
-}
-
 // ----- Negative control: multiclass Wizard is not promoted -----
 
 // SD-24 Epic 5 (criterion 5.1) correction: this control used to pair Wizard
@@ -342,4 +326,14 @@ fn multiclass_wizard_level7_is_not_promoted_by_this_slice() {
 }
 
 // ----- Control plane: the matrix note names the level-7 widening -----
+
+// ----- Table-driven negative controls (SD-36 Epic C2.1/C2.2) -----
+
+recognition_negative_controls! {
+    fighter_does_not_gain_wizard_level7_recognition(FIGHTER_FIXTURE) {
+        prefixes: ["class_chassis.wizard."],
+        exact: ["class_chassis.spell_baseline.wizard"],
+        message: "the Fighter chassis must not surface any wizard-namespaced explanation: {:?}",
+    },
+}
 

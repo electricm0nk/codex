@@ -47,6 +47,7 @@ use codex::rules_core::pilot_compute::{
     ComputationExplanation, PilotBaseChassisComputation, compute_pilot_base_chassis,
 };
 use crate::common::{load, explanation};
+use crate::rows::{recognition_negative_controls};
 
 const DRUID_LEVEL8_FIXTURE: &str =
     include_str!("../fixtures/rules_core/pf1_human_druid_level8_sd13_deterministic_input.txt");
@@ -484,23 +485,6 @@ fn druid_level_10_was_later_widened_into_the_supported_tranche() {
     );
 }
 
-// ----- Negative control: the druid path must not leak onto other classes -----
-
-#[test]
-fn fighter_does_not_gain_druid_level9_recognition() {
-    let fighter = load(FIGHTER_FIXTURE);
-    let fighter_computation = compute_pilot_base_chassis(&fighter);
-    assert!(
-        !fighter_computation
-            .explanations
-            .iter()
-            .any(|e| e.id.starts_with("class_chassis.druid.")
-                || e.id.starts_with("class_feature.druid.")),
-        "the Fighter chassis must not surface any druid-namespaced explanation: {:?}",
-        fighter_computation.explanations
-    );
-}
-
 // ----- Negative control: multiclass Druid is not promoted -----
 
 #[test]
@@ -544,4 +528,14 @@ fn multiclass_druid_level9_is_not_promoted_by_this_slice() {
 }
 
 // ----- Control plane: the matrix note names the level-9 widening -----
+
+// ----- Table-driven negative controls (SD-36 Epic C2.1/C2.2) -----
+
+recognition_negative_controls! {
+    fighter_does_not_gain_druid_level9_recognition(FIGHTER_FIXTURE) {
+        prefixes: ["class_chassis.druid.", "class_feature.druid."],
+        exact: [],
+        message: "the Fighter chassis must not surface any druid-namespaced explanation: {:?}",
+    },
+}
 

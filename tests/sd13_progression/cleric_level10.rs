@@ -42,6 +42,7 @@
 
 use codex::rules_core::pilot_compute::compute_pilot_base_chassis;
 use crate::common::{load, explanation};
+use crate::rows::{multiclass_negative_controls, recognition_negative_controls};
 
 const CLERIC_LEVEL9_FIXTURE: &str =
     include_str!("../fixtures/rules_core/pf1_human_cleric_level9_sd13_deterministic_input.txt");
@@ -263,45 +264,24 @@ fn cleric_level_21_is_not_promoted_by_this_slice() {
     );
 }
 
-// ----- Negative control: the cleric path must not leak onto other classes -----
-
-#[test]
-fn fighter_does_not_gain_cleric_level10_recognition() {
-    let fighter = load(FIGHTER_FIXTURE);
-    let fighter_computation = compute_pilot_base_chassis(&fighter);
-    assert!(
-        !fighter_computation
-            .explanations
-            .iter()
-            .any(|e| e.id.starts_with("class_chassis.cleric.")),
-        "the Fighter chassis must not surface any cleric-namespaced explanation: {:?}",
-        fighter_computation.explanations
-    );
-}
-
-// ----- Negative control: multiclass Cleric is not promoted -----
-
-#[test]
-fn multiclass_cleric_level10_is_not_promoted_by_this_slice() {
-    let multiclass = CLERIC_LEVEL10_FIXTURE.replace(
-        "class_level=class:cleric:10",
-        "class_level=class:cleric:10\nclass_level=class:fighter:1",
-    );
-    let input = load(&multiclass);
-    let computation = compute_pilot_base_chassis(&input);
-    assert!(
-        !computation
-            .explanations
-            .iter()
-            .any(|e| e.id.starts_with("class_chassis.cleric.")),
-        "multiclass Cleric must not gain any bounded cleric chassis explanation: {:?}",
-        computation.explanations
-    );
-    assert!(
-        computation.diagnostics.iter().any(|d| d.claim_blocking),
-        "multiclass Cleric must stay claim-blocked in this slice"
-    );
-}
-
 // ----- Control plane: the matrix note names the level-10 widening -----
+
+// ----- Table-driven negative controls (SD-36 Epic C2.1/C2.2) -----
+
+recognition_negative_controls! {
+    fighter_does_not_gain_cleric_level10_recognition(FIGHTER_FIXTURE) {
+        prefixes: ["class_chassis.cleric."],
+        exact: [],
+        message: "the Fighter chassis must not surface any cleric-namespaced explanation: {:?}",
+    },
+}
+
+multiclass_negative_controls! {
+    multiclass_cleric_level10_is_not_promoted_by_this_slice(CLERIC_LEVEL10_FIXTURE, "class_level=class:cleric:10" => "class_level=class:cleric:10\nclass_level=class:fighter:1") {
+        prefixes: ["class_chassis.cleric."],
+        exact: [],
+        message: "multiclass Cleric must not gain any bounded cleric chassis explanation: {:?}",
+        blocked_message: "multiclass Cleric must stay claim-blocked in this slice",
+    },
+}
 
