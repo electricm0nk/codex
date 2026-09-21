@@ -107,8 +107,8 @@ ONLY_STAGES=()
 # §4.1, 5 of 34) and a ~490-binary root-full build is exactly what tips a box
 # over — it must fail loudly before that build starts, not be discovered by
 # `ld terminated with signal 7 [Bus error]` partway through it.
-ALL_STAGES=(preflight-disk preflight-oracle oracle-pin-selftest producer-selftest doneness-selftest pi-redaction-selftest provenance-selftest site-status-frozen-check site-status-frozen-check-selftest site-dashboard-pi-gate build-public-status-selftest site-public-status-check site-public-status-pi-gate site-asset-stamp-check reachability-audit-selftest reachability-audit groundtruth-guard-selftest supersession-gate-selftest shape-coverage-standing-gate-selftest shape-coverage-standing-gate cycle-scope-gate-selftest missing-engine-tables denominator-gate figure-provenance corpus-bundle tauri-resources-tracked pcgen-residue-gate crate-wall token-coverage-selftest token-coverage pi-sweep declared-pi-audit audit-selftest reclaim-selftest driver-selftest corpus-sweep-selftest corpus-trap-audit-selftest root-lib root-full ingest-full desktop corpus-sweep sheet-rules-check corpus-trap-audit supersession-gate frontend-install frontend-test frontend-typecheck clippy class-dump)
-QUICK_STAGES=(preflight-disk preflight-oracle oracle-pin-selftest producer-selftest doneness-selftest pi-redaction-selftest provenance-selftest site-status-frozen-check site-status-frozen-check-selftest site-dashboard-pi-gate build-public-status-selftest site-public-status-check site-public-status-pi-gate site-asset-stamp-check reachability-audit-selftest reachability-audit groundtruth-guard-selftest supersession-gate-selftest shape-coverage-standing-gate-selftest shape-coverage-standing-gate cycle-scope-gate-selftest missing-engine-tables denominator-gate figure-provenance corpus-bundle tauri-resources-tracked pcgen-residue-gate crate-wall token-coverage-selftest token-coverage pi-sweep declared-pi-audit audit-selftest reclaim-selftest driver-selftest corpus-sweep-selftest corpus-trap-audit-selftest root-lib frontend-install frontend-test frontend-typecheck class-dump)
+ALL_STAGES=(preflight-disk preflight-oracle oracle-pin-selftest producer-selftest doneness-selftest pi-redaction-selftest provenance-selftest site-status-frozen-check site-status-frozen-check-selftest site-dashboard-pi-gate build-public-status-selftest site-public-status-check site-public-status-pi-gate site-asset-stamp-check reachability-audit-selftest reachability-audit groundtruth-guard-selftest supersession-gate-selftest shape-coverage-standing-gate-selftest shape-coverage-standing-gate cycle-scope-gate-selftest missing-engine-tables denominator-gate figure-provenance corpus-bundle tauri-resources-tracked pcgen-residue-gate crate-wall token-coverage-selftest token-coverage pi-sweep declared-pi-audit audit-selftest reclaim-selftest driver-selftest corpus-sweep-selftest corpus-trap-audit-selftest root-lib root-full ingest-full desktop corpus-sweep sheet-rules-check corpus-trap-audit supersession-gate frontend-install frontend-test frontend-typecheck clippy class-dump class-census)
+QUICK_STAGES=(preflight-disk preflight-oracle oracle-pin-selftest producer-selftest doneness-selftest pi-redaction-selftest provenance-selftest site-status-frozen-check site-status-frozen-check-selftest site-dashboard-pi-gate build-public-status-selftest site-public-status-check site-public-status-pi-gate site-asset-stamp-check reachability-audit-selftest reachability-audit groundtruth-guard-selftest supersession-gate-selftest shape-coverage-standing-gate-selftest shape-coverage-standing-gate cycle-scope-gate-selftest missing-engine-tables denominator-gate figure-provenance corpus-bundle tauri-resources-tracked pcgen-residue-gate crate-wall token-coverage-selftest token-coverage pi-sweep declared-pi-audit audit-selftest reclaim-selftest driver-selftest corpus-sweep-selftest corpus-trap-audit-selftest root-lib frontend-install frontend-test frontend-typecheck class-dump class-census)
 
 usage() {
     sed -n '3,48p' "${BASH_SOURCE[0]}" | sed 's/^# \{0,1\}//'
@@ -2802,6 +2802,66 @@ PY
     esac
 }
 
+run_class_census() {
+    stage_start "class-census — cargo run --locked --bin class_census -- --json  (repo root)"
+    local log="$LOG_DIR/class-census.log"
+    local json="$LOG_DIR/class-census.json"
+    ( cd "$REPO_ROOT" && exec cargo run --locked --quiet -j "$JOBS" --bin class_census -- --json "$json" ) >"$log" 2>&1
+    local status=$?
+
+    if (( status != 0 )); then
+        stage_fail class-census "binary exit $status — $log"
+        return
+    fi
+
+    # Baselines can only rise (mirrors `run_class_dump`'s own posture): the
+    # stage fails if either measured floor drops below what was last
+    # recorded in scripts/verify-baselines.env, never on a rise.
+    local report
+    report=$(python3 - "$json" "$BASELINE_CENSUS_IDS" "$BASELINE_CENSUS_COMPUTED" <<'PY'
+import json, sys
+
+path, expected_ids, expected_computed = sys.argv[1], int(sys.argv[2]), int(sys.argv[3])
+try:
+    with open(path) as handle:
+        doc = json.load(handle)
+except Exception as exc:                       # shape change must be loud
+    print(f"FAIL unparseable census: {exc}")
+    raise SystemExit(0)
+
+ids = doc.get("ids")
+computed = doc.get("computed")
+if not isinstance(ids, int) or not isinstance(computed, int):
+    print("FAIL census document carries no integer `ids`/`computed`")
+    raise SystemExit(0)
+
+if ids < expected_ids:
+    print(f"FAIL ids {ids} below baseline {expected_ids}")
+elif computed < expected_computed:
+    print(f"FAIL computed {computed} below baseline {expected_computed} (ids={ids})")
+else:
+    print(f"OK ids={ids} computed={computed}")
+    print(f"ACTUAL BASELINE_CENSUS_IDS={ids}")
+    print(f"ACTUAL BASELINE_CENSUS_COMPUTED={computed}")
+PY
+)
+    local py_status=$?
+    if (( py_status != 0 )); then
+        stage_fail class-census "census parser exit $py_status — $json"
+        return
+    fi
+
+    local verdict; verdict=$(printf '%s\n' "$report" | head -1)
+    while IFS= read -r line; do
+        [[ -n "$line" ]] && actual "$line"
+    done < <(printf '%s\n' "$report" | sed -n 's/^ACTUAL //p')
+
+    case "$verdict" in
+        OK*)   stage_pass class-census "${verdict#OK }" ;;
+        *)     stage_fail class-census "${verdict#FAIL } — $json" ;;
+    esac
+}
+
 # ---------------------------------------------------------------------------
 # Run
 # ---------------------------------------------------------------------------
@@ -2864,6 +2924,7 @@ for stage in "${SELECTED[@]}"; do
         frontend-typecheck)  run_frontend_typecheck ;;
         clippy)              run_clippy ;;
         class-dump)          run_class_dump ;;
+        class-census)        run_class_census ;;
     esac
 done
 

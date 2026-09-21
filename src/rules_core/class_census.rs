@@ -58,10 +58,13 @@ use std::collections::BTreeMap;
 #[cfg(test)]
 use std::collections::BTreeSet;
 
+use crate::rules_core::character_input::{CharacterInput, load_character_input_fixture};
+use crate::rules_core::class_seeds::{FIXTURE_RELATIVE_PATH, input_for};
 use crate::rules_core::pilot_compute::class_chassis_sheet_rules;
 use crate::rules_core::pilot_compute::crb_untabled_class_chassis;
 use crate::rules_core::pilot_compute::generic_class_chassis_covered_classes;
 use crate::rules_core::pilot_compute::untabled_base_class_chassis::untabled_base_class_registry;
+use crate::rules_core::pilot_compute::{HeadlessReceiptStatus, build_pilot_headless_receipt};
 use crate::rules_core::rules_tables::acg::AcgClassId;
 use crate::rules_core::rules_tables::apg::ApgClassId;
 use crate::rules_core::rules_tables::crb::class_tables::ClassId;
@@ -334,6 +337,197 @@ pub fn family_counts(entries: &BTreeMap<String, ClassCensusEntry>) -> BTreeMap<C
     counts
 }
 
+// ---------------------------------------------------------------------------
+// F0b: the base-class sweep and the deterministic sheet dump.
+//
+// F0a (above) only merges the registries; nothing here computes a status.
+// F0b adds the sweep itself -- but only for NON-prestige ids. A prestige
+// class alone is never a legitimate Computed measurement (it needs a
+// carrier class per the entry gate, `epic-f-class-completion.md` §2) so
+// prestige rows are left for the next F0 step and reported
+// `"not_swept_yet"` by `src/bin/class_census.rs` rather than swept here
+// with a misleading single-class posture.
+// ---------------------------------------------------------------------------
+
+/// One claim-blocking diagnostic from a class sweep, plus exactly which
+/// levels it fires at. Mirrors `v06_class_state_dump`'s own
+/// `BlockingDiagnostic` shape -- the two describe the same kind of evidence
+/// and should describe it the same way.
+#[derive(Debug, Clone)]
+pub struct CensusBlockingDiagnostic {
+    pub id: String,
+    pub message: String,
+    pub levels: Vec<u8>,
+}
+
+/// One non-prestige class's real, engine-derived state across its own
+/// level sweep (`1..=entry.max_level`, alone, no other class levels).
+#[derive(Debug, Clone)]
+pub struct ClassSweepResult {
+    pub class_id: String,
+    pub family: ClassFamily,
+    pub books: Vec<String>,
+    pub registries: Vec<&'static str>,
+    pub max_level: u8,
+    pub levels_computed: Vec<u8>,
+    pub levels_blocked: Vec<u8>,
+    pub blocking: Vec<CensusBlockingDiagnostic>,
+}
+
+impl ClassSweepResult {
+    /// Every swept level reached `HeadlessReceiptStatus::Computed`.
+    pub fn computed(&self) -> bool {
+        self.levels_blocked.is_empty()
+    }
+}
+
+/// Load the shared deterministic pilot input fixture -- the exact same file
+/// and loader `v06_class_state_dump` uses, read at runtime from
+/// `CARGO_MANIFEST_DIR` rather than `include_str!`ed (this is a lib
+/// function a `src/bin/*.rs` target calls, and only ever from a repo
+/// checkout).
+pub fn load_sweep_fixture() -> Result<CharacterInput, String> {
+    let fixture_path = repo_root().join(FIXTURE_RELATIVE_PATH);
+    let fixture_text = std::fs::read_to_string(&fixture_path)
+        .map_err(|e| format!("could not read {}: {e}", fixture_path.display()))?;
+    let load = load_character_input_fixture(&fixture_text);
+    if !load.diagnostics.is_empty() {
+        return Err(format!(
+            "shared deterministic fixture failed to load cleanly: {:?}",
+            load.diagnostics
+        ));
+    }
+    load.character_input
+        .ok_or_else(|| "shared deterministic fixture produced no CharacterInput record".to_owned())
+}
+
+/// Sweep one class -- alone, `1..=entry.max_level`, the same real fixed
+/// loadout plus canonical seeds `v06_class_state_dump` uses (via
+/// [`crate::rules_core::class_seeds::input_for`]) -- and collect its real
+/// engine state. A panic inside the compute pipeline is itself a real,
+/// reportable blocker rather than a crash (mirrors
+/// `v06_class_state_dump`'s own `state_for`).
+pub fn sweep_class(fixture: &CharacterInput, entry: &ClassCensusEntry) -> ClassSweepResult {
+    let class_name = entry.class_id.strip_prefix("class:").unwrap_or(&entry.class_id);
+    let mut levels_computed = Vec::new();
+    let mut levels_blocked = Vec::new();
+    let mut blocking: Vec<CensusBlockingDiagnostic> = Vec::new();
+
+    for level in 1..=entry.max_level {
+        let input = input_for(fixture, class_name, level);
+
+        // Same posture as `v06_class_state_dump::state_for`: a panic is
+        // caught and reported as a named blocking diagnostic rather than
+        // aborting the whole sweep.
+        let outcome = std::panic::catch_unwind(std::panic::AssertUnwindSafe(|| {
+            build_pilot_headless_receipt(&input)
+        }));
+
+        let receipt = match outcome {
+            Ok(receipt) => receipt,
+            Err(payload) => {
+                let detail = payload
+                    .downcast_ref::<&str>()
+                    .map(|s| (*s).to_owned())
+                    .or_else(|| payload.downcast_ref::<String>().cloned())
+                    .unwrap_or_else(|| "<non-string panic payload>".to_owned());
+                levels_blocked.push(level);
+                let id = "engine.panic".to_owned();
+                match blocking.iter_mut().find(|b| b.id == id) {
+                    Some(existing) => existing.levels.push(level),
+                    None => blocking.push(CensusBlockingDiagnostic {
+                        id,
+                        message: format!(
+                            "the compute pipeline PANICS for {} at level {level} instead of \
+                             returning a receipt, so no status can be derived: {detail}",
+                            entry.class_id
+                        ),
+                        levels: vec![level],
+                    }),
+                }
+                continue;
+            }
+        };
+
+        if receipt.status == HeadlessReceiptStatus::Computed {
+            levels_computed.push(level);
+        } else {
+            levels_blocked.push(level);
+        }
+        for d in receipt.computation.diagnostics.iter().filter(|d| d.claim_blocking) {
+            match blocking.iter_mut().find(|b| b.id == d.id) {
+                Some(existing) => {
+                    // The engine legitimately emits the same diagnostic more
+                    // than once per computation; we want the set of
+                    // affected levels, not a multiset.
+                    if existing.levels.last() != Some(&level) {
+                        existing.levels.push(level);
+                    }
+                }
+                None => blocking.push(CensusBlockingDiagnostic {
+                    id: d.id.clone(),
+                    message: d.message.clone(),
+                    levels: vec![level],
+                }),
+            }
+        }
+    }
+
+    ClassSweepResult {
+        class_id: entry.class_id.clone(),
+        family: entry.family,
+        books: entry.books.clone(),
+        registries: entry.registries.clone(),
+        max_level: entry.max_level,
+        levels_computed,
+        levels_blocked,
+        blocking,
+    }
+}
+
+/// Sweep every NON-prestige class id in `entries`, alone, `1..=max_level`
+/// each. Prestige ids are deliberately excluded -- see this section's doc
+/// comment above.
+pub fn sweep_non_prestige(
+    fixture: &CharacterInput,
+    entries: &BTreeMap<String, ClassCensusEntry>,
+) -> Vec<ClassSweepResult> {
+    entries.values().filter(|e| !e.is_prestige).map(|e| sweep_class(fixture, e)).collect()
+}
+
+/// The full headless receipt for one class at one level, rendered as
+/// stable, sorted, timestamp-free text -- what `class_census --sheet-dump`
+/// prints. Explanations and diagnostics are sorted by id with a stable sort
+/// (so genuine same-id repeats keep their relative emission order), which
+/// is what makes two runs byte-identical regardless of any incidental
+/// ordering inside the compute pipeline itself.
+pub fn sheet_dump_text(fixture: &CharacterInput, class_name: &str, level: u8) -> String {
+    let input = input_for(fixture, class_name, level);
+    let receipt = build_pilot_headless_receipt(&input);
+
+    let mut explanations = receipt.computation.explanations.clone();
+    explanations.sort_by(|a, b| a.id.cmp(&b.id));
+    let mut diagnostics = receipt.computation.diagnostics.clone();
+    diagnostics.sort_by(|a, b| a.id.cmp(&b.id));
+
+    let mut out = String::new();
+    out.push_str(&format!("class: class:{class_name}\n"));
+    out.push_str(&format!("level: {level}\n"));
+    out.push_str(&format!("status: {:?}\n", receipt.status));
+    out.push_str(&format!("explanations: {}\n", explanations.len()));
+    for e in &explanations {
+        out.push_str(&format!("  id={} value={} detail={}\n", e.id, e.value, e.detail));
+    }
+    out.push_str(&format!("diagnostics: {}\n", diagnostics.len()));
+    for d in &diagnostics {
+        out.push_str(&format!(
+            "  id={} claim_blocking={} message={}\n",
+            d.id, d.claim_blocking, d.message
+        ));
+    }
+    out
+}
+
 #[cfg(test)]
 mod tests {
     use super::*;
@@ -503,5 +697,53 @@ mod tests {
         // Measured directly: `find data/sheet_rules -maxdepth 1 -type d
         // ! -path data/sheet_rules ! -name '_*' | wc -l`.
         assert!(books.len() >= 30, "measured book-dir count looks too small: {} ({:?})", books.len(), books);
+    }
+
+    // -----------------------------------------------------------------
+    // F0b RED-first tests (docs/release/SD-36-consolidation/
+    // epic-f-class-completion.md §2): the sweep itself and the
+    // determinism of `--sheet-dump`'s output. Both fail to compile before
+    // `sweep_non_prestige`/`sheet_dump_text` exist, which is this
+    // codebase's own established RED shape for a new lib API (see
+    // `every_registry_is_swept_once`'s F0a precedent).
+    // -----------------------------------------------------------------
+
+    #[test]
+    fn sweep_covers_exactly_the_non_prestige_ids() {
+        let entries = census();
+        let expected: BTreeSet<String> =
+            entries.values().filter(|e| !e.is_prestige).map(|e| e.class_id.clone()).collect();
+        // 61 = 135 - Prestige's 74, the same partition
+        // `every_registry_is_swept_once` measures per family
+        // (11+6+10+4=31 tabled + 3 UltimateCombat + 20 UntabledExoticBase +
+        // 7 CrbNpcEx = 61).
+        assert_eq!(expected.len(), 61, "non-prestige count moved off 135-74=61");
+
+        let fixture = load_sweep_fixture().expect("shared deterministic fixture must load cleanly");
+        let results = sweep_non_prestige(&fixture, &entries);
+        let actual: BTreeSet<String> = results.iter().map(|r| r.class_id.clone()).collect();
+        assert_eq!(
+            actual, expected,
+            "sweep_non_prestige must cover exactly the registry's non-prestige ids, no more, no fewer"
+        );
+        assert_eq!(results.len(), expected.len(), "an id was swept more than once");
+        assert!(
+            results.iter().all(|r| r.family != ClassFamily::Prestige),
+            "no prestige row may appear in the non-prestige sweep"
+        );
+    }
+
+    #[test]
+    fn sheet_dump_text_is_deterministic_across_two_runs() {
+        let fixture = load_sweep_fixture().expect("shared deterministic fixture must load cleanly");
+        let first = sheet_dump_text(&fixture, "fighter", 5);
+        let second = sheet_dump_text(&fixture, "fighter", 5);
+        assert_eq!(
+            first, second,
+            "two runs of sheet_dump_text for the same class/level must be byte-for-byte identical"
+        );
+        assert!(first.contains("class: class:fighter"));
+        assert!(first.contains("level: 5"));
+        assert!(!first.is_empty());
     }
 }
