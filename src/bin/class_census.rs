@@ -70,6 +70,18 @@
 //!   `--json` in one invocation -- when both are given, `--sheet-dump` wins
 //!   and `--json` is ignored, the same "the narrower ask wins" precedent
 //!   `v06_class_state_dump`'s own sibling binaries use.
+//! - `--sheet-dump <build> --with-sheet-rules` (SD-36 Epic F §3b.3, the
+//!   blast-radius instrument): `<build>` widens to accept a multiclass mix
+//!   (`fighter:4+wizard:4`). Output adds the converted print path -- this
+//!   build's held rule ids (`HELD|`) and rendered sheet lines (`LINE|`),
+//!   from the same `held_set`/`render_sheet` calls the desktop's
+//!   `sheet_lines_for` makes -- to the headless receipt's own explanations
+//!   and diagnostics (`EXPL|`/`DIAG|`), every line under a stable prefix so
+//!   a before/after diff classifies cleanly
+//!   (`codex::rules_core::class_census::sheet_dump_with_rules_text`).
+//!   `--race <race-id>` optionally overrides the fixture's own race
+//!   (`--race dwarf` or `--race race:dwarf`); meaningful only alongside
+//!   `--sheet-dump`.
 //!
 //! This binary is an operator/ops surface (like `v06_class_state_dump`),
 //! not an app runtime surface -- nothing in the shipped app calls it.
@@ -78,7 +90,8 @@ use std::process::Command;
 
 use codex::rules_core::class_census::{
     ClassSweepResult, census, load_mix_panel, load_sweep_fixture, mix_panel_blocking_histogram,
-    sheet_dump_text, sweep_mix_panel, sweep_non_prestige, sweep_prestige,
+    parse_sheet_dump_build, sheet_dump_text, sheet_dump_with_rules_text, sweep_mix_panel,
+    sweep_non_prestige, sweep_prestige,
 };
 
 /// The non-prestige sweep's own `(computed, blocked)` partition --
@@ -122,15 +135,7 @@ fn parse_sheet_dump_arg(raw: &str) -> Result<(String, u8), String> {
     Ok((class_name.to_owned(), level))
 }
 
-fn run_sheet_dump(raw_arg: &str) -> i32 {
-    let (class_name, level) = match parse_sheet_dump_arg(raw_arg) {
-        Ok(pair) => pair,
-        Err(message) => {
-            eprintln!("class_census: {message}");
-            return 2;
-        }
-    };
-
+fn run_sheet_dump(raw_arg: &str, with_sheet_rules: bool, race_override: Option<&str>) -> i32 {
     let fixture = match load_sweep_fixture() {
         Ok(fixture) => fixture,
         Err(message) => {
@@ -139,6 +144,25 @@ fn run_sheet_dump(raw_arg: &str) -> i32 {
         }
     };
 
+    if with_sheet_rules {
+        let build = match parse_sheet_dump_build(raw_arg) {
+            Ok(build) => build,
+            Err(message) => {
+                eprintln!("class_census: {message}");
+                return 2;
+            }
+        };
+        print!("{}", sheet_dump_with_rules_text(&fixture, &build, race_override));
+        return 0;
+    }
+
+    let (class_name, level) = match parse_sheet_dump_arg(raw_arg) {
+        Ok(pair) => pair,
+        Err(message) => {
+            eprintln!("class_census: {message}");
+            return 2;
+        }
+    };
     print!("{}", sheet_dump_text(&fixture, &class_name, level));
     0
 }
@@ -364,7 +388,9 @@ fn run_json(json_path: &str) -> i32 {
 }
 
 fn usage() -> String {
-    "usage: class_census --json <path> | class_census --sheet-dump <class-id>:<level>".to_owned()
+    "usage: class_census --json <path> | class_census --sheet-dump <class-id>:<level> \
+     | class_census --sheet-dump <build> --with-sheet-rules [--race <race-id>]"
+        .to_owned()
 }
 
 fn main() {
@@ -372,6 +398,8 @@ fn main() {
 
     let mut json_path: Option<String> = None;
     let mut sheet_dump_arg: Option<String> = None;
+    let mut with_sheet_rules = false;
+    let mut race_override: Option<String> = None;
 
     let mut i = 0;
     while i < args.len() {
@@ -392,6 +420,18 @@ fn main() {
                 sheet_dump_arg = Some(value.clone());
                 i += 2;
             }
+            "--with-sheet-rules" => {
+                with_sheet_rules = true;
+                i += 1;
+            }
+            "--race" => {
+                let Some(value) = args.get(i + 1) else {
+                    eprintln!("class_census: --race needs a race id\n{}", usage());
+                    std::process::exit(2);
+                };
+                race_override = Some(value.clone());
+                i += 2;
+            }
             other => {
                 eprintln!("class_census: unknown argument {other:?}\n{}", usage());
                 std::process::exit(2);
@@ -400,7 +440,7 @@ fn main() {
     }
 
     let exit_code = if let Some(raw) = sheet_dump_arg {
-        run_sheet_dump(&raw)
+        run_sheet_dump(&raw, with_sheet_rules, race_override.as_deref())
     } else if let Some(path) = json_path {
         run_json(&path)
     } else {

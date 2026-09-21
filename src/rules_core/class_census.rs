@@ -538,6 +538,151 @@ pub fn sheet_dump_text(fixture: &CharacterInput, class_name: &str, level: u8) ->
 }
 
 // ---------------------------------------------------------------------------
+// F1 §3b.3 -- the blast-radius instrument: `--sheet-dump <build>
+// --with-sheet-rules` adds the converted print path (held rule ids,
+// rendered sheet lines) to the same headless receipt `sheet_dump_text`
+// already prints, so a before/after diff across the link-repair converter
+// change classifies cleanly by prefix (`EXPL|`, `DIAG|`, `HELD|`, `LINE|`).
+// ---------------------------------------------------------------------------
+
+/// Parses a `--sheet-dump` BUILD spec for the `--with-sheet-rules` mode: one
+/// `<class-id>:<level>` pair, or several joined by `+` for a multiclass mix
+/// (`"fighter:4+wizard:4"`). Each segment splits on its OWN last `:` (a
+/// class id already contains one, e.g. `class:fighter`) and accepts an
+/// optional `class:` prefix -- the same shape
+/// `src/bin/class_census.rs`'s single-class `parse_sheet_dump_arg` already
+/// parses, generalized to more than one segment.
+pub fn parse_sheet_dump_build(raw: &str) -> Result<Vec<(String, u8)>, String> {
+    if raw.trim().is_empty() {
+        return Err("--sheet-dump build spec is empty".to_owned());
+    }
+    raw.split('+')
+        .map(|segment| {
+            let (id_part, level_part) = segment.rsplit_once(':').ok_or_else(|| {
+                format!("--sheet-dump expects <class-id>:<level>, got {segment:?} (whole build: {raw:?})")
+            })?;
+            let level: u8 = level_part
+                .parse()
+                .map_err(|e| format!("--sheet-dump level {level_part:?} is not a valid u8: {e}"))?;
+            let class_name = id_part.strip_prefix("class:").unwrap_or(id_part);
+            if class_name.is_empty() {
+                return Err(format!("--sheet-dump class id is empty in {segment:?}"));
+            }
+            Ok((class_name.to_owned(), level))
+        })
+        .collect()
+}
+
+/// The real production-shaped input for a `--sheet-dump --with-sheet-rules`
+/// build: one class ([`input_for`]) or a multiclass mix ([`input_for_mix`]),
+/// with `race_override` substituted for the fixture's own race when given.
+/// `race_override` may be a bare slug (`"dwarf"`) or already `race:`-prefixed
+/// (`"race:dwarf"`) -- both reach the same `chosen.race_id` shape
+/// [`CharacterFacts::from_character`] and the race table readers expect.
+fn input_for_sheet_dump_build(
+    fixture: &CharacterInput,
+    build: &[(String, u8)],
+    race_override: Option<&str>,
+) -> CharacterInput {
+    let mut input = match build {
+        [(class_name, level)] => input_for(fixture, class_name, *level),
+        classes => {
+            let refs: Vec<(&str, u8)> = classes.iter().map(|(c, l)| (c.as_str(), *l)).collect();
+            input_for_mix(fixture, &refs)
+        }
+    };
+    if let Some(race) = race_override {
+        input.chosen.race_id =
+            if race.starts_with("race:") { race.to_owned() } else { format!("race:{race}") };
+    }
+    input
+}
+
+/// `class_census --sheet-dump <build> --with-sheet-rules`'s full output.
+///
+/// Adds the converted print path to the same headless-receipt evidence
+/// [`sheet_dump_text`] prints: this build's held rule ids (`HELD|`) and
+/// rendered sheet lines (`LINE|`), from the SAME `held_set`/`render_sheet`
+/// calls the desktop's `sheet_lines_for` makes (`character_hub.rs`), built
+/// from [`HeldSeed::from_character`]/[`CharacterFacts::from_character`]
+/// exactly as that function does. It seeds no extra racial sub-traits: the
+/// race resolver that supplies the desktop's `extra_race_traits` argument
+/// (`resolve_racial_traits_for_character`) is desktop-crate code this
+/// `rules_core`-only instrument cannot reach (§3.4a) -- a bare `HeldSeed`
+/// still resolves every rule seeded by class/feat/trait/equipment/spell/
+/// skill/race, just not a race's own gated sub-traits (languages, weapon
+/// familiarity).
+///
+/// Every section is sorted by its own stable key and no timestamp appears
+/// anywhere, so two runs over the same build produce byte-identical text
+/// (`sheet_dump_with_rules_text_is_deterministic_across_two_runs`). When the
+/// process-wide package handle ([`crate::rules_core::sheet_rule_package::package`])
+/// itself is unavailable, `HELD|`/`LINE|` are replaced by one named
+/// `PACKAGE_ERROR|` line -- never silently omitted, never a fabricated
+/// empty held set.
+pub fn sheet_dump_with_rules_text(
+    fixture: &CharacterInput,
+    build: &[(String, u8)],
+    race_override: Option<&str>,
+) -> String {
+    use crate::rules_core::sheet_rule::{CharacterFacts, HeldSeed, held_set, render_sheet};
+
+    let input = input_for_sheet_dump_build(fixture, build, race_override);
+    let receipt = build_pilot_headless_receipt(&input);
+
+    let mut out = String::new();
+    let build_label = build.iter().map(|(c, l)| format!("{c}:{l}")).collect::<Vec<_>>().join("+");
+    out.push_str(&format!("BUILD| {build_label}\n"));
+    if let Some(race) = race_override {
+        out.push_str(&format!("RACE_OVERRIDE| {race}\n"));
+    }
+    out.push_str(&format!("STATUS| {:?}\n", receipt.status));
+
+    let mut explanations = receipt.computation.explanations.clone();
+    explanations.sort_by(|a, b| a.id.cmp(&b.id));
+    for e in &explanations {
+        out.push_str(&format!("EXPL| id={} value={} detail={}\n", e.id, e.value, e.detail));
+    }
+
+    let mut diagnostics = receipt.computation.diagnostics.clone();
+    diagnostics.sort_by(|a, b| a.id.cmp(&b.id));
+    for d in &diagnostics {
+        out.push_str(&format!("DIAG| id={} claim_blocking={} message={}\n", d.id, d.claim_blocking, d.message));
+    }
+
+    match crate::rules_core::sheet_rule_package::package() {
+        Ok(package) => {
+            let seed = HeldSeed::from_character(&input, &receipt.computation);
+            let facts = CharacterFacts::from_character(&input, &receipt.computation);
+            let held = held_set(package, &seed, &facts);
+            let mut held_ids: Vec<&str> =
+                held.rules.keys().filter(|id| !held.removed.contains(*id)).map(String::as_str).collect();
+            held_ids.sort_unstable();
+            for id in held_ids {
+                out.push_str(&format!("HELD| {id}\n"));
+            }
+
+            let mut lines = render_sheet(package, &seed, &facts);
+            lines.sort_by(|a, b| a.id.cmp(&b.id));
+            for line in &lines {
+                out.push_str(&format!(
+                    "LINE| id={} kind={} label={} printed={} condition={}\n",
+                    line.id,
+                    line.kind,
+                    line.label,
+                    line.printed,
+                    line.condition.as_deref().unwrap_or("-"),
+                ));
+            }
+        }
+        Err(reason) => {
+            out.push_str(&format!("PACKAGE_ERROR| {reason}\n"));
+        }
+    }
+    out
+}
+
+// ---------------------------------------------------------------------------
 // F0c: prestige classes in the census -- the deterministic carrier build.
 //
 // A prestige class is never a legitimate `Computed` measurement ALONE (§2 of
@@ -1685,6 +1830,115 @@ mod tests {
         assert!(first.contains("class: class:fighter"));
         assert!(first.contains("level: 5"));
         assert!(!first.is_empty());
+    }
+
+    // -----------------------------------------------------------------
+    // F1 §3b.3 -- `--sheet-dump <build> --with-sheet-rules` (RED first: the
+    // module `rules_core::sheet_rule_package` and these functions did not
+    // exist before this commit).
+    // -----------------------------------------------------------------
+
+    #[test]
+    fn parse_sheet_dump_build_reads_a_single_class() {
+        assert_eq!(parse_sheet_dump_build("wizard:5"), Ok(vec![("wizard".to_owned(), 5)]));
+        assert_eq!(parse_sheet_dump_build("class:wizard:5"), Ok(vec![("wizard".to_owned(), 5)]));
+    }
+
+    #[test]
+    fn parse_sheet_dump_build_reads_a_multiclass_mix() {
+        assert_eq!(
+            parse_sheet_dump_build("fighter:4+wizard:4"),
+            Ok(vec![("fighter".to_owned(), 4), ("wizard".to_owned(), 4)])
+        );
+        assert_eq!(
+            parse_sheet_dump_build("class:fighter:4+class:wizard:9"),
+            Ok(vec![("fighter".to_owned(), 4), ("wizard".to_owned(), 9)])
+        );
+    }
+
+    #[test]
+    fn parse_sheet_dump_build_rejects_malformed_segments() {
+        assert!(parse_sheet_dump_build("").is_err());
+        assert!(parse_sheet_dump_build("wizard").is_err(), "no level at all");
+        assert!(parse_sheet_dump_build("wizard:notanumber").is_err());
+        assert!(parse_sheet_dump_build(":5").is_err(), "empty class id");
+        assert!(parse_sheet_dump_build("fighter:4+").is_err(), "trailing + with an empty segment");
+    }
+
+    #[test]
+    fn sheet_dump_with_rules_text_is_deterministic_across_two_runs() {
+        let fixture = load_sweep_fixture().expect("shared deterministic fixture must load cleanly");
+        let build = parse_sheet_dump_build("wizard:5").expect("valid build spec");
+        let first = sheet_dump_with_rules_text(&fixture, &build, None);
+        let second = sheet_dump_with_rules_text(&fixture, &build, None);
+        assert_eq!(
+            first, second,
+            "two runs of sheet_dump_with_rules_text for the same build must be byte-for-byte identical"
+        );
+        assert!(first.contains("BUILD| wizard:5"));
+        assert!(first.contains("STATUS| Computed"), "the deterministic Wizard fixture reaches Computed:\n{first}");
+        assert!(first.lines().any(|l| l.starts_with("EXPL| ")), "no EXPL| lines:\n{first}");
+        // The package loads for real in this checkout (`data/sheet_rules/`
+        // is present), so this build must reach the held/rendered section,
+        // never the `PACKAGE_ERROR|` fallback.
+        assert!(!first.contains("PACKAGE_ERROR|"), "the real package must load:\n{first}");
+        assert!(first.lines().any(|l| l.starts_with("HELD| ")), "no HELD| lines:\n{first}");
+        // Wizard's own class rule must be among the held ids -- the most
+        // basic possible proof the held set is real, not empty.
+        assert!(
+            first.lines().any(|l| l.starts_with("HELD| ") && l.contains(":class:wizard")),
+            "Wizard's own class rule must be held:\n{first}"
+        );
+    }
+
+    #[test]
+    fn sheet_dump_with_rules_text_covers_a_multiclass_mix_build() {
+        let fixture = load_sweep_fixture().expect("shared deterministic fixture must load cleanly");
+        let build = parse_sheet_dump_build("fighter:4+wizard:4").expect("valid mix build spec");
+        let text = sheet_dump_with_rules_text(&fixture, &build, None);
+        assert!(text.contains("BUILD| fighter:4+wizard:4"));
+        assert!(
+            text.lines().any(|l| l.starts_with("HELD| ") && l.contains(":class:fighter")),
+            "Fighter's own class rule must be held in the mix:\n{text}"
+        );
+        assert!(
+            text.lines().any(|l| l.starts_with("HELD| ") && l.contains(":class:wizard")),
+            "Wizard's own class rule must be held in the mix:\n{text}"
+        );
+    }
+
+    #[test]
+    fn sheet_dump_with_rules_text_applies_a_race_override() {
+        let fixture = load_sweep_fixture().expect("shared deterministic fixture must load cleanly");
+        let build = parse_sheet_dump_build("fighter:1").expect("valid build spec");
+        let default_race = sheet_dump_with_rules_text(&fixture, &build, None);
+        let overridden = sheet_dump_with_rules_text(&fixture, &build, Some("dwarf"));
+        assert!(overridden.contains("RACE_OVERRIDE| dwarf"));
+        assert_ne!(
+            default_race, overridden,
+            "a real race override must change the output (a different race is a different held set)"
+        );
+        // Bare slug and pre-prefixed form reach the identical result.
+        let overridden_prefixed = sheet_dump_with_rules_text(&fixture, &build, Some("race:dwarf"));
+        assert_eq!(
+            overridden.replacen("RACE_OVERRIDE| dwarf", "RACE_OVERRIDE| race:dwarf", 1),
+            overridden_prefixed
+        );
+    }
+
+    #[test]
+    fn every_line_in_sheet_dump_with_rules_text_carries_a_known_stable_prefix() {
+        let fixture = load_sweep_fixture().expect("shared deterministic fixture must load cleanly");
+        let build = parse_sheet_dump_build("wizard:5").expect("valid build spec");
+        let text = sheet_dump_with_rules_text(&fixture, &build, None);
+        const KNOWN_PREFIXES: &[&str] =
+            &["BUILD| ", "RACE_OVERRIDE| ", "STATUS| ", "EXPL| ", "DIAG| ", "HELD| ", "LINE| ", "PACKAGE_ERROR| "];
+        for line in text.lines() {
+            assert!(
+                KNOWN_PREFIXES.iter().any(|p| line.starts_with(p)),
+                "line has no known stable prefix, diffs cannot classify it: {line:?}"
+            );
+        }
     }
 
     // -----------------------------------------------------------------
