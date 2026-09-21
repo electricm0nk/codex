@@ -251,7 +251,63 @@ pub fn describe_prof(prof: &ProfRef) -> String {
         ProfRef::WeaponAllOf(tags) => {
             format!("{} weapons", join(tags.iter().map(|t| pretty(t)).collect(), " "))
         }
-        ProfRef::WeaponSet { label, .. } => format!("{} weapons", pretty(label)),
+        ProfRef::WeaponSet { label, members } => describe_weapon_set(label, members),
+    }
+}
+
+/// A `WeaponSet`'s label is the oracle's own `TYPE=` selector text -- dot-separated conjunctions
+/// (`Light.Martial`) and camelCase compounds (`SiegeFirearm`, `OneHandedFireArm`) alike, neither
+/// of which [`pretty`]'s underscore/hyphen replacement touches, so it printed the raw PCGen tag
+/// casing verbatim (`"KoboldTailAttachment weapons"`, `"Auto weapons"`) on the live paper sheet
+/// (F1 re-check round 1, finding 5). `Auto` is PCGen's own bookkeeping word for a fixed
+/// proficiency bundle (grapple, touch spells, ranged touch spells, splash weapons, unarmed
+/// strikes) with no natural-language reading of its own -- printed as its member list instead,
+/// per the doctrine that the sheet prints rule text a player can read; every other label is split
+/// on dots and camelCase boundaries and lowercased, same as `WeaponAllOf`'s sibling arm.
+fn describe_weapon_set(label: &str, members: &[String]) -> String {
+    if label.eq_ignore_ascii_case("Auto") && !members.is_empty() {
+        return join_with_and(members);
+    }
+    format!("{} weapons", pretty_weapon_set_label(label))
+}
+
+/// `"Light.Martial"` -> `"light martial"`; `"SiegeFirearm"` -> `"siege firearm"`;
+/// `"KoboldTailAttachment"` -> `"kobold tail attachment"`.
+fn pretty_weapon_set_label(label: &str) -> String {
+    label.split('.').map(split_camel_words).collect::<Vec<_>>().join(" ").to_lowercase()
+}
+
+/// Splits a camelCase or PascalCase run into space-separated words: `"OneHandedFireArm"` ->
+/// `"One Handed Fire Arm"`. A segment with no internal case change (`"Martial"`, already all one
+/// case) passes through unchanged.
+fn split_camel_words(segment: &str) -> String {
+    let mut words: Vec<String> = Vec::new();
+    let mut current = String::new();
+    let mut prev_lower = false;
+    for c in segment.chars() {
+        if c.is_uppercase() && prev_lower {
+            words.push(std::mem::take(&mut current));
+        }
+        current.push(c);
+        prev_lower = c.is_lowercase();
+    }
+    if !current.is_empty() {
+        words.push(current);
+    }
+    words.join(" ")
+}
+
+/// `["Grapple", "Ray Spells", "Touch Spells"]` -> `"Grapple, Ray Spells, and Touch Spells"`
+/// (Oxford comma, and the natural one/two-item forms with no trailing comma).
+fn join_with_and(items: &[String]) -> String {
+    match items {
+        [] => String::new(),
+        [only] => only.clone(),
+        [a, b] => format!("{a} and {b}"),
+        _ => {
+            let (last, rest) = items.split_last().expect("non-empty checked above");
+            format!("{}, and {}", rest.join(", "), last)
+        }
     }
 }
 
@@ -694,5 +750,55 @@ mod tests {
         let words = describe_prof(&ProfRef::WeaponAllOf(tags));
 
         assert_eq!(words, "martial ranged weapons");
+    }
+
+    /// F1 re-check round 1, finding 5: `describe_prof`'s `WeaponSet` arm must split the oracle's
+    /// own dotted and camelCase `TYPE=` tag text into readable words, the same as `WeaponAllOf`'s
+    /// fix already does for its own tag list -- never the raw PCGen tag casing verbatim.
+    #[test]
+    fn describe_prof_prints_a_dotted_weapon_set_label_as_words() {
+        let words = describe_prof(&ProfRef::WeaponSet { label: "Light.Martial".to_owned(), members: vec!["Dagger".to_owned()] });
+
+        assert_eq!(words, "light martial weapons");
+    }
+
+    #[test]
+    fn describe_prof_prints_a_camel_case_weapon_set_label_as_words() {
+        let words = describe_prof(&ProfRef::WeaponSet {
+            label: "OneHandedFireArm".to_owned(),
+            members: vec!["Pistol".to_owned()],
+        });
+
+        assert_eq!(words, "one handed fire arm weapons");
+    }
+
+    #[test]
+    fn describe_prof_prints_a_second_camel_case_weapon_set_label_as_words() {
+        let words = describe_prof(&ProfRef::WeaponSet { label: "SiegeFirearm".to_owned(), members: vec!["Cannon".to_owned()] });
+
+        assert_eq!(words, "siege firearm weapons");
+    }
+
+    #[test]
+    fn describe_prof_prints_kobold_tail_attachment_as_words_not_raw_casing() {
+        let words = describe_prof(&ProfRef::WeaponSet {
+            label: "KoboldTailAttachment".to_owned(),
+            members: vec!["Kobold Tail Attachment".to_owned()],
+        });
+
+        assert_eq!(words, "kobold tail attachment weapons");
+    }
+
+    /// `Auto` is PCGen's own bookkeeping word with no natural-language reading of its own --
+    /// printed as its member list, per the doctrine that the sheet prints rule text.
+    #[test]
+    fn describe_prof_prints_auto_weapon_set_as_its_member_list_not_the_bookkeeping_word() {
+        let words = describe_prof(&ProfRef::WeaponSet {
+            label: "Auto".to_owned(),
+            members: vec!["Grapple".to_owned(), "Ray Spells".to_owned(), "Touch Spells".to_owned(), "Splash Weapon".to_owned(), "Unarmed Strike".to_owned()],
+        });
+
+        assert_eq!(words, "Grapple, Ray Spells, Touch Spells, Splash Weapon, and Unarmed Strike");
+        assert!(!words.contains("Auto"), "the raw bookkeeping word must never reach the printed sheet");
     }
 }

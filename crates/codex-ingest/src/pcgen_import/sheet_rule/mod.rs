@@ -942,8 +942,16 @@ pub fn write_output(out_dir: &Path, rendered: &BTreeMap<String, Vec<u8>>) -> std
 }
 
 pub fn write_var_names(repo: &Path, run: &Run) -> std::io::Result<()> {
-    let dir = repo.join("scripts/oracle_harness");
-    std::fs::create_dir_all(&dir)?;
+    write_var_names_to(&repo.join("scripts/oracle_harness"), run)
+}
+
+/// Write `var_names.json` to an arbitrary directory (e.g. a `--dump` scratch dir), the same
+/// content `write_var_names` writes to the tracked `scripts/oracle_harness/` -- so a `--dump` run
+/// emits this file too, and a structural diff can cover it (SD-36 Epic F1 re-check round 1,
+/// finding 3: a real run's blast radius on this tracked file was otherwise unmeasured by any
+/// `--dump`-based diff).
+pub fn write_var_names_to(dir: &Path, run: &Run) -> std::io::Result<()> {
+    std::fs::create_dir_all(dir)?;
     let mut text = serde_json::to_string_pretty(&run.var_names).unwrap();
     text.push('\n');
     std::fs::write(dir.join("var_names.json"), text)

@@ -27,7 +27,13 @@ use super::closure::{tokenize_row, PinnedTree};
 
 /// weapon display name (as the oracle names it, e.g. `"Katana"`) -> every `TYPE:` tag it
 /// carries, own row + `.MOD` rows unioned -- exactly what PCGen itself would check a `TYPE=`
-/// selector against.
+/// selector against. Tags are folded to their `to_ascii_lowercase` key: PCGen's own data mixes
+/// spellings of the same tag across books (`uc_profs_weapon.lst` spells it `OneHandedFireArm`
+/// while `acg_abilities_class.lst`'s `AUTO:WEAPONPROF|TYPE=OnehandedFirearm` selector spells it
+/// differently), and PCGen itself resolves `TYPE=` case-insensitively -- a literal-spelling match
+/// here would silently drop a real, resolvable grant (F1 re-check round 1, finding 1). The
+/// weapon's own display NAME (the map key) is never folded -- only the TYPE tags used for
+/// matching are, so members/labels still print the oracle's literal spelling.
 pub struct WeaponMembershipIndex {
     by_weapon: BTreeMap<String, BTreeSet<String>>,
 }
@@ -78,7 +84,7 @@ impl WeaponMembershipIndex {
                     for seg in v.split('.') {
                         let seg = seg.trim();
                         if !seg.is_empty() {
-                            entry.insert(seg.to_string());
+                            entry.insert(seg.to_ascii_lowercase());
                         }
                     }
                 }
@@ -87,11 +93,13 @@ impl WeaponMembershipIndex {
         WeaponMembershipIndex { by_weapon }
     }
 
-    /// Every weapon whose accumulated tag set is a superset of `tags` (exact, case-sensitive
-    /// match on the oracle's own literal spelling -- never a name-similarity guess), name-sorted
-    /// for a deterministic converter output.
+    /// Every weapon whose accumulated tag set is a superset of `tags` (case-insensitive match on
+    /// the oracle's own tag spelling -- PCGen itself resolves `TYPE=` case-insensitively, and the
+    /// corpus spells the same tag differently across books; never a name-similarity guess),
+    /// name-sorted for a deterministic converter output.
     pub fn members_with_all(&self, tags: &[String]) -> Vec<String> {
-        self.by_weapon.iter().filter(|(_, t)| tags.iter().all(|tag| t.contains(tag))).map(|(name, _)| name.clone()).collect()
+        let needles: Vec<String> = tags.iter().map(|t| t.to_ascii_lowercase()).collect();
+        self.by_weapon.iter().filter(|(_, t)| needles.iter().all(|tag| t.contains(tag))).map(|(name, _)| name.clone()).collect()
     }
 }
 
@@ -161,6 +169,33 @@ mod tests {
         )]);
         let idx = WeaponMembershipIndex::build(&tree);
         assert_eq!(idx.members_with_all(&["Light".to_string(), "Martial".to_string()]), vec!["Handaxe".to_string()]);
+    }
+
+    /// F1 re-check round 1, finding 1: PCGen's own corpus spells the same weapon-proficiency tag
+    /// with different capitalization across books (`uc_profs_weapon.lst` declares
+    /// `TYPE:OneHandedFireArm`; `acg_abilities_class.lst`'s `AUTO:WEAPONPROF` selectors read
+    /// `TYPE=OnehandedFirearm`/`TYPE=TwohandedFirearm`). A selector must resolve against a
+    /// differently-cased member tag rather than silently dropping the whole grant.
+    #[test]
+    fn membership_matching_is_case_insensitive_on_the_oracle_tag_spelling() {
+        let tree = tree_from_lines(vec![(
+            "uc_profs_weapon.lst",
+            vec![
+                "Pistol\t\t\t\tTYPE:Martial.OneHandedFireArm",
+                "Musket\t\t\t\tTYPE:Martial.TwoHandedFireArm",
+            ],
+        )]);
+        let idx = WeaponMembershipIndex::build(&tree);
+        assert_eq!(
+            idx.members_with_all(&["OnehandedFirearm".to_string()]),
+            vec!["Pistol".to_string()],
+            "TYPE=OnehandedFirearm must resolve to the same member TYPE=OneHandedFireArm returns"
+        );
+        assert_eq!(
+            idx.members_with_all(&["TwohandedFirearm".to_string()]),
+            vec!["Musket".to_string()],
+            "TYPE=TwohandedFirearm must resolve to the same member TYPE=TwoHandedFireArm returns"
+        );
     }
 
     /// A `_pfs/` overlay row is excluded, matching every other closure index's own B9 rule.
