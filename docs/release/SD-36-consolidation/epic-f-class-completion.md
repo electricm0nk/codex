@@ -108,11 +108,31 @@ Measured over all `data/sheet_rules/*/class/*.json` (185 files): **178 of 185** 
 `ultimate_psionics/gifted_blade_marksman_power_list`, `ultimate_psionics/unlocked_talent`,
 `bestiary/sorcerer_cleric_arcane`, `ultimate_intrigue/vwarlock`, `ultimate_intrigue/vcabalist`.
 Four of these live in `CLASS_FAMILY_BOOKS` (`generic_class_chassis.rs:57-73`), so they can enter
-the 78-record generic population and reach `Computed` with no hit die. `ClassChassis`
-(`class_chassis_sheet_rules.rs:62-84`) does not read the prose row yet. A reader is needed, not
+the 78-record generic population and reach `Computed` with no hit die. A reader is needed, not
 a converter change — moved to F0 as a prerequisite of F3 (review finding 3; was originally
 placed in F4, too late for F3 which needs it first), returning `Option<u8>`: `None` for the 7
-named exceptions, never a fabricated `0`. **The roster/census rule must not silently drop these
+named exceptions, never a fabricated `0`.
+
+> **F0-check fix (this cycle, finding 5):** `ClassChassis` did not carry this reader at F0's
+> original close-out ("F0 closed" was declared while this named territory item was untouched —
+> `git diff --stat` across all five F0 commits showed zero changes to
+> `class_chassis_sheet_rules.rs`). Landed now: `pub hit_die: Option<u8>` on `ClassChassis`,
+> read off the principal rule's `StatBlock "Hit die"` prose the same way `BaseAttack`/`BaseSave`
+> are already read off `target`. Measured over the real chassis-bearing population (177 records
+> — 185 total minus the 7 named exceptions above, MINUS an 8th, previously unnoted exception,
+> `core_rulebook/monk`, whose principal rule degraded entirely to `value: Text` with no
+> `BaseAttack`/`BaseSave` row either, so it was already absent from `records()` before this fix):
+> every one of the 177 carries a real hit die, 0 named exceptions within the population `record()`
+> actually returns. §2's territory list also names `pub skill_ranks_per_level: Option<u8>`,
+> assumed to be converted the same way `hit_die` is; measured instead (`grep -rho
+> '"StatBlock":"[^"]*"' data/sheet_rules/*/class/*.json | sort | uniq -c` → only `178
+> "StatBlock":"Hit die"`, no other label at all, across all 185 class files): this repo's
+> corpus carries NO such row today. The field and its reader are landed and real (same
+> `stat_block_prose_text` helper, generalized to any label), but honestly return `None` for
+> every record until a future converter change starts emitting it — see
+> `docs/retro/events/sub-agent-f0-check-fix.jsonl`.
+
+**The roster/census rule must not silently drop these
 7 classes.** F4's roster rule (§6) omits a class from the Create picker only for a NAMED reason
 (`hit_die_absent` | `not_computed` | `prestige` | `ex_state`); `hit_die_absent` is a distinct
 reason from `not_computed` — a class can be `Computed` by the census (it has no chassis-blocking
@@ -260,6 +280,20 @@ stays a test oracle and a parity test asserts the two lists are equal, 74 of 74)
   no caster level — any prestige chassis expression keyed to caster level would then evaluate 0,
   a confidently wrong number in a row the census calls Computed, not an artefact of a real
   build).
+  > **`scripts/retro.py` correction (F0-check fix, this cycle):** the 23/43/66/2/6 figures above
+  > were measured against the carrier rule AS ORIGINALLY WRITTEN, which recursed into
+  > `Applies::Not`/`Applies::AtLeast` when scanning for a caster-kind mention -- an ungrounded
+  > mention inside either (a NEGATION or one OPTIONAL alternative among several) got counted the
+  > same as a mandatory, positive requirement. Fixed to scan only mandatory, positive top-level
+  > gate terms; a caster signal (`HighestSpellLevel`/`CasterLevel`) reachable ONLY through
+  > `Not`/`AtLeast` now reports `Unknown` instead of a wrong carrier. Re-measured split: 55
+  > fighter, 6 wizard-only, 5 cleric-only, 1 dual-caster (`mystic_theurge` only -- `evangelist`'s
+  > dual-caster clause is one optional `AtLeast` alternative, not two independent mandatory
+  > terms), 7 Unknown (`dragon_disciple`, `evangelist`, `pure_legion_enforcer` -- the finding's
+  > own three named defects -- plus `dark_tempest`, `elocater`, `psion_uncarnate`, `thrallherd`,
+  > each carrying a mandatory `HighestSpellLevel(Any)` term this two-carrier model cannot ground
+  > to either Arcane or Divine). See `docs/retro/events/sub-agent-f0-check-fix.jsonl` and
+  > `src/rules_core/class_census.rs`'s `determine_carriers`/`gate_has_any_caster_signal`.
   - carrier = `wizard` if the converted `applies` gate contains `HighestSpellLevel "Arcane"` (and
     not `"Divine"`); `cleric` if `"Divine"` (and not `"Arcane"`); else `fighter`.
   - **Dual-caster case (`mystic_theurge`, `evangelist` — both Arcane AND Divine terms):** a
@@ -331,7 +365,7 @@ is not 135 the agent records a `scripts/retro.py correction`, never a silent cha
 
 | Criterion | Acceptance command |
 |---|---|
-| F0.1 RED truth (review finding 12d: pinned, not self-authored) | `cargo run --locked --bin class_census -- --json /tmp/census.json` prints `ids=135 computed=42 blocked=93` (42 of 135 computed, 93 of 135 blocked), AND `cargo test --locked --lib class_census::tests::census_id_set_matches_the_published_partition` green: the merged id set equals `status.md`'s own partition 31+3+20+7+74, and `computed==42` is asserted against that partition at F0 landing time — the instrument is pinned to the previously published census before it is allowed to move, not left to author its own denominator in the same batch that reads it |
+| F0.1 RED truth (review finding 12d: pinned, not self-authored) | `cargo run --locked --bin class_census -- --json /tmp/census.json` prints `ids=135 computed=42 blocked=19` (42 of 61 non-prestige computed, 19 of 61 non-prestige blocked — an F0-check fix corrected `blocked` from `ids - computed`, which folded the 74 never-swept prestige ids into "blocked" and printed a false `blocked=93 of 135`), AND `cargo test --locked -j 2 --lib class_census::tests::census_id_set_matches_the_published_partition -- --exact` green with a non-zero test count (the bare filter without `-- --exact` previously matched and silently passed 0 tests): the merged id set equals `status.md`'s own partition 31+3+20+7+74, and `computed==42` is asserted against that partition at F0 landing time — the instrument is pinned to the previously published census before it is allowed to move, not left to author its own denominator in the same batch that reads it |
 | F0.2 stage (review finding 10: the original command cannot pass for a correctly registered stage) | `bash scripts/verify.sh --list` prints one row per stage headed `stage  full  quick` (verified: 51 rows today, e.g. `sheet-rules-check    yes   no`; `bash scripts/verify.sh --list \| grep -c class-dump` -> 1, not 2 — a correctly registered stage appears once, with `yes`/`yes` in its two columns, never twice). `bash scripts/verify.sh --list \| grep -E '^class-census +yes +yes'` prints the row (asserts membership in BOTH stage sets by the columns, not a row count); `bash scripts/verify.sh --only class-census` green |
 | F0.3 generated table | `python3 scripts/gen_class_status_table.py --check` exits 0; `python3 -m pytest scripts/tests/test_gen_class_status_table.py -q` green |
 | F0.4 list parity | `cargo test --locked --lib class_census` green (prestige list == fixture's 74 of 74; no id in two families) |

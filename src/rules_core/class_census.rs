@@ -60,6 +60,9 @@ use std::collections::BTreeSet;
 #[cfg(test)]
 use std::process::Command;
 
+#[cfg(test)]
+use crate::rules_core::sheet_rule::ClassRef;
+
 use crate::rules_core::character_input::{
     CharacterClassLevel, CharacterInput, load_character_input_fixture,
 };
@@ -588,36 +591,104 @@ fn expr_mentions_spell_kind(expr: &Expr, kind: &SpellKind) -> bool {
     }
 }
 
+/// `true` when `expr` reads ANY caster signal -- a specific-kind
+/// `HighestSpellLevel` term or a bare `CasterLevel` term (which names no
+/// kind at all). Used only by [`gate_has_any_caster_signal`] to detect a
+/// gate this rule cannot ground, never to pick a carrier itself.
+fn expr_mentions_any_caster_signal(expr: &Expr) -> bool {
+    match expr {
+        Expr::HighestSpellLevel(_) | Expr::CasterLevel(_) => true,
+        Expr::Sum(terms) => terms.iter().any(expr_mentions_any_caster_signal),
+        Expr::Mul(a, b) | Expr::Div(a, b) | Expr::Min(a, b) | Expr::Max(a, b) => {
+            expr_mentions_any_caster_signal(a) || expr_mentions_any_caster_signal(b)
+        }
+        Expr::Floor(inner) | Expr::Ceil(inner) => expr_mentions_any_caster_signal(inner),
+        _ => false,
+    }
+}
+
+/// `true` only when `term` is a MANDATORY, POSITIVE clause naming `kind` --
+/// a bare `Applies::Compare` (never a clause reachable only through
+/// `Applies::Not`, which NEGATES the requirement, or `Applies::AtLeast`,
+/// which makes it one OPTIONAL alternative among several, not something
+/// every carrier build must satisfy). This is the fix for the F0-check
+/// finding: `gate_mentions_spell_kind` used to recurse into both, so
+/// `class:pure_legion_enforcer`'s "Special: Cannot cast divine spells"
+/// (`Not(HighestSpellLevel(Divine) >= 1)`) picked cleric -- the one carrier
+/// its own gate forbids -- and `class:dragon_disciple`'s
+/// `AtLeast{3, [..., HighestSpellLevel(Arcane) >= 1, ...]}` (an optional
+/// alternative, not the class's real "spontaneous arcane caster"
+/// requirement) picked wizard, a prepared caster the gate never asks for.
+fn top_level_mandatory_positive_term_mentions_spell_kind(term: &Applies, kind: &SpellKind) -> bool {
+    matches!(term, Applies::Compare { lhs, rhs, .. }
+        if expr_mentions_spell_kind(lhs, kind) || expr_mentions_spell_kind(rhs, kind))
+}
+
+/// `true` when a MANDATORY, POSITIVE top-level term of `gate` names `kind`
+/// -- see [`top_level_mandatory_positive_term_mentions_spell_kind`]. Only
+/// looks at `top_level_terms(gate)`, i.e. the top-level `Applies::All`
+/// flattened one level; a `Not`/`AtLeast` term stays exactly that (never
+/// unwrapped further), so a caster mention nested inside either is never
+/// counted as mandatory.
 fn gate_mentions_spell_kind(gate: &Applies, kind: &SpellKind) -> bool {
+    top_level_terms(gate)
+        .iter()
+        .any(|term| top_level_mandatory_positive_term_mentions_spell_kind(term, kind))
+}
+
+/// `true` when ANY clause of `gate`, at any depth (including inside
+/// `Applies::Not`/`Applies::AtLeast`), reads a caster signal -- a
+/// `HighestSpellLevel` of any kind, or a bare `CasterLevel` term. This is
+/// the full recursive scan the old, over-eager `gate_mentions_spell_kind`
+/// used to be; kept only to detect a gate [`determine_carriers`] cannot
+/// ground with confidence (finding 4's guard), never to select a carrier.
+fn gate_has_any_caster_signal(gate: &Applies) -> bool {
     match gate {
-        Applies::All(terms) => terms.iter().any(|t| gate_mentions_spell_kind(t, kind)),
-        Applies::AtLeast { of, .. } => of.iter().any(|t| gate_mentions_spell_kind(t, kind)),
-        Applies::Not(inner) => gate_mentions_spell_kind(inner, kind),
+        Applies::All(terms) => terms.iter().any(gate_has_any_caster_signal),
+        Applies::AtLeast { of, .. } => of.iter().any(gate_has_any_caster_signal),
+        Applies::Not(inner) => gate_has_any_caster_signal(inner),
         Applies::Compare { lhs, rhs, .. } => {
-            expr_mentions_spell_kind(lhs, kind) || expr_mentions_spell_kind(rhs, kind)
+            expr_mentions_any_caster_signal(lhs) || expr_mentions_any_caster_signal(rhs)
         }
         _ => false,
     }
 }
 
 /// The carrier-selection rule, fully specified in `epic-f-class-completion.md`
-/// §2 (review finding 14, CONFIRMED): wizard if the gate mentions Arcane
-/// (and not Divine); cleric if Divine (and not Arcane); a SECOND,
-/// independent carrier for the dual-caster case (both Arcane AND Divine --
-/// `mystic_theurge`, `evangelist`); fighter otherwise (the floor-5 case,
-/// measured at 66 of 74 -- 23 with a bare `BaseAttack` term, 43 with
-/// neither a caster nor a BAB term at all). Pure and total: every gate shape
-/// resolves to a non-empty answer, so a class only ever goes unnamed when
-/// its converted record cannot be loaded at all (handled one layer up, in
-/// [`carrier_assignment`]) -- never a silently-guessed carrier.
-pub fn determine_carriers(gate: &Applies) -> Vec<PrestigeCarrier> {
+/// §2 (review finding 14) and tightened by the F0-check fix for findings 1
+/// and 4: wizard if a MANDATORY, POSITIVE top-level term of the gate names
+/// Arcane (and not Divine); cleric if Divine (and not Arcane); a SECOND,
+/// independent carrier for the dual-caster case (both Arcane AND Divine as
+/// two separate mandatory terms -- `mystic_theurge`); fighter when no
+/// mandatory caster term is present AND the gate carries no caster signal
+/// anywhere else either (the floor-5 case). When neither branch applies --
+/// the gate carries a caster signal (`HighestSpellLevel`/`CasterLevel`)
+/// ONLY inside a `Not` or `AtLeast` clause, so no carrier can be named
+/// without either violating the class's own gate (`pure_legion_enforcer`)
+/// or guessing past an unmodelled requirement (`dragon_disciple`'s
+/// spontaneous-caster clause, `evangelist`'s optional dual-caster
+/// alternative) -- this returns `Err`, named by the gate itself, rather
+/// than a confidently-wrong carrier. A class only otherwise goes unnamed
+/// when its converted record cannot be loaded at all (handled one layer
+/// up, in [`carrier_assignment`]).
+pub fn determine_carriers(gate: &Applies) -> Result<Vec<PrestigeCarrier>, String> {
     let arcane = gate_mentions_spell_kind(gate, &SpellKind::Arcane);
     let divine = gate_mentions_spell_kind(gate, &SpellKind::Divine);
     match (arcane, divine) {
-        (true, true) => vec![PrestigeCarrier::Wizard, PrestigeCarrier::Cleric],
-        (true, false) => vec![PrestigeCarrier::Wizard],
-        (false, true) => vec![PrestigeCarrier::Cleric],
-        (false, false) => vec![PrestigeCarrier::Fighter],
+        (true, true) => Ok(vec![PrestigeCarrier::Wizard, PrestigeCarrier::Cleric]),
+        (true, false) => Ok(vec![PrestigeCarrier::Wizard]),
+        (false, true) => Ok(vec![PrestigeCarrier::Cleric]),
+        (false, false) => {
+            if gate_has_any_caster_signal(gate) {
+                Err(format!(
+                    "gate references a caster level or spell-kind term only inside a Not/AtLeast \
+                     clause -- never as a mandatory, positive top-level term -- so no carrier can \
+                     be named with confidence: {gate:?}"
+                ))
+            } else {
+                Ok(vec![PrestigeCarrier::Fighter])
+            }
+        }
     }
 }
 
@@ -922,7 +993,7 @@ pub fn carrier_assignment(entry: &ClassCensusEntry) -> Result<Vec<PrestigeCarrie
     let gate = prestige_applies_gate(&entry.books, slug).ok_or_else(|| {
         format!("{}: no converted class record found in {:?}", entry.class_id, entry.books)
     })?;
-    Ok(determine_carriers(&gate))
+    determine_carriers(&gate).map_err(|reason| format!("{}: {reason}", entry.class_id))
 }
 
 /// Build the real production-shaped multiclass input for a carrier class
@@ -1058,8 +1129,34 @@ pub struct PrestigeCensusRow {
     pub carriers: Vec<PrestigeCarrier>,
     pub mixes: Vec<(PrestigeMixSweep, CarrierEntryGate)>,
     pub entry_gate_status: &'static str,
+    /// The row's own combined status -- `"computed"` when every mix reached
+    /// `Computed`, `"blocked"` when at least one mix has an empty `mixes`
+    /// vec, that must always mean the carrier was never named (`"unknown"`),
+    /// never a vacuous `Vec::iter().all()` over zero mixes reading as
+    /// trivially true (F0-check finding 4). `load_error` and an
+    /// undeterminable carrier (`carrier_unknown_reason`) both land here.
+    pub status: &'static str,
+    /// Set only when the converted gate loads but [`determine_carriers`]
+    /// cannot ground it with confidence (F0-check finding 1/4) -- named by
+    /// the gate itself, distinct from [`Self::load_error`] (record missing
+    /// entirely).
+    pub carrier_unknown_reason: Option<String>,
     pub alone: ClassSweepResult,
     pub load_error: Option<String>,
+}
+
+/// The row-level status derived from its carrier mixes: `"unknown"` for an
+/// empty `mixes` (carrier could not be named, or the record could not be
+/// loaded at all -- never treated as vacuously `"computed"`), `"computed"`
+/// when every mix reached `Computed`, `"blocked"` otherwise.
+fn combined_mix_status(mixes: &[(PrestigeMixSweep, CarrierEntryGate)]) -> &'static str {
+    if mixes.is_empty() {
+        "unknown"
+    } else if mixes.iter().all(|(sweep, _)| sweep.computed()) {
+        "computed"
+    } else {
+        "blocked"
+    }
 }
 
 fn combine_entry_gate_status(mixes: &[(PrestigeMixSweep, CarrierEntryGate)]) -> &'static str {
@@ -1093,6 +1190,8 @@ pub fn build_prestige_row(fixture: &CharacterInput, entry: &ClassCensusEntry) ->
             carriers: Vec::new(),
             mixes: Vec::new(),
             entry_gate_status: "unknown",
+            status: "unknown",
+            carrier_unknown_reason: None,
             alone,
             load_error: Some(format!(
                 "no converted class record found for {} in {:?} -- reported unknown, never defaulted",
@@ -1101,7 +1200,26 @@ pub fn build_prestige_row(fixture: &CharacterInput, entry: &ClassCensusEntry) ->
         };
     };
 
-    let carriers = determine_carriers(&gate);
+    let carriers = match determine_carriers(&gate) {
+        Ok(carriers) => carriers,
+        // The gate loads but no carrier can be named with confidence
+        // (F0-check findings 1/4): report unknown by the class's own name,
+        // never a carrier the gate forbids or a guessed dual requirement.
+        Err(reason) => {
+            return PrestigeCensusRow {
+                class_id: entry.class_id.clone(),
+                books: entry.books.clone(),
+                max_level: entry.max_level,
+                carriers: Vec::new(),
+                mixes: Vec::new(),
+                entry_gate_status: "unknown",
+                status: "unknown",
+                carrier_unknown_reason: Some(format!("{}: {reason}", entry.class_id)),
+                alone,
+                load_error: None,
+            };
+        }
+    };
     let mixes: Vec<(PrestigeMixSweep, CarrierEntryGate)> = carriers
         .iter()
         .map(|carrier| {
@@ -1112,6 +1230,7 @@ pub fn build_prestige_row(fixture: &CharacterInput, entry: &ClassCensusEntry) ->
         .collect();
 
     let entry_gate_status = combine_entry_gate_status(&mixes);
+    let status = combined_mix_status(&mixes);
 
     PrestigeCensusRow {
         class_id: entry.class_id.clone(),
@@ -1120,6 +1239,8 @@ pub fn build_prestige_row(fixture: &CharacterInput, entry: &ClassCensusEntry) ->
         carriers,
         mixes,
         entry_gate_status,
+        status,
+        carrier_unknown_reason: None,
         alone,
         load_error: None,
     }
@@ -1347,6 +1468,70 @@ mod tests {
     }
 
     #[test]
+    fn census_id_set_matches_the_published_partition() {
+        // F0-check finding 3 (RED first): the F0.1 acceptance row
+        // (`epic-f-class-completion.md` §2) names this exact test as the
+        // review-finding-12d pin -- the instrument tied to `status.md`'s
+        // PREVIOUSLY published partition (31+3+20+7+74=135 ids, 42 of 61
+        // non-prestige Computed) BEFORE this same batch is allowed to read
+        // its own denominator. `every_registry_is_swept_once` pins only the
+        // per-family COUNTS; nothing before this test asserted the merged
+        // id SET partitions cleanly (no id double-counted inside one
+        // family's own set, only across families) or ran the real sweep to
+        // pin `computed` itself -- until this test, the acceptance row's
+        // own `cargo test ... census_id_set_matches_the_published_partition`
+        // command matched zero tests and passed vacuously.
+        let entries = census();
+        assert_eq!(entries.len(), 135, "merged census id set moved off the published 135");
+
+        let mut by_family: BTreeMap<ClassFamily, BTreeSet<String>> = BTreeMap::new();
+        for entry in entries.values() {
+            by_family.entry(entry.family).or_default().insert(entry.class_id.clone());
+        }
+        let non_prestige_total: usize = by_family
+            .iter()
+            .filter(|(family, _)| **family != ClassFamily::Prestige)
+            .map(|(_, ids)| ids.len())
+            .sum();
+        assert_eq!(non_prestige_total, 61, "non-prestige id SET moved off the published 31+3+20+7=61");
+        assert_eq!(
+            by_family.get(&ClassFamily::Prestige).map(BTreeSet::len).unwrap_or(0),
+            74,
+            "prestige id SET moved off the published 74"
+        );
+        // The SET-level check the count-only test does not make: summing
+        // each family's own de-duplicated SET size must still reach 135 --
+        // a duplicate class id inside one family's `BTreeSet` would
+        // silently undercount only THAT family's own set without this
+        // line, while `every_registry_is_swept_once`'s literal per-family
+        // counts (measured off `entries`, the same map) would not catch it
+        // either, since both would still read off the same underlying map.
+        let union_of_family_sets: usize = by_family.values().map(BTreeSet::len).sum();
+        assert_eq!(
+            union_of_family_sets, 135,
+            "family id sets do not partition the full published 135 -- {by_family:?}"
+        );
+
+        // The real, engine-derived half of review finding 12d's pin:
+        // `computed` against `status.md`'s own previously published 42 (of
+        // the 61 non-prestige ids), run through the exact shared fixture
+        // every other sweep in this module uses -- never read back off the
+        // artifact JSON this same batch also writes.
+        let fixture = load_sweep_fixture().expect("shared deterministic fixture must load cleanly");
+        let previous_hook = std::panic::take_hook();
+        std::panic::set_hook(Box::new(|_| {}));
+        let results = sweep_non_prestige(&fixture, &entries);
+        std::panic::set_hook(previous_hook);
+        assert_eq!(results.len(), 61, "non-prestige sweep population moved off the published 61");
+        let computed = results.iter().filter(|r| r.computed()).count();
+        assert_eq!(
+            computed, 42,
+            "measured non-prestige Computed count moved off the previously published 42 of 61 -- \
+             log a scripts/retro.py correction before raising this pin"
+        );
+    }
+
+    #[test]
     fn prestige_list_matches_the_entry_requirement_fixture() {
         use crate::rules_core::pilot_compute::prestige_class_entry_gate::prestige_class_entry_requirements;
 
@@ -1538,7 +1723,15 @@ mod tests {
         let prestige = prestige_entries(&entries);
         assert_eq!(prestige.len(), 74, "measured prestige population moved off 74");
 
-        let mut unknown: Vec<String> = Vec::new();
+        // `carrier_assignment`'s `Err` covers two distinct root causes, kept
+        // apart here by their own distinguishable message shape: a LOAD
+        // failure ("no converted class record found...", still pinned at 0
+        // -- every converted prestige class record loads) versus a gate that
+        // loads fine but that the carrier rule cannot GROUND with confidence
+        // (F0-check findings 1/4: a caster signal reachable only through
+        // `Not`/`AtLeast`, never as a mandatory positive top-level term).
+        let mut load_failures: Vec<String> = Vec::new();
+        let mut ungroundable: Vec<String> = Vec::new();
         for entry in &prestige {
             match carrier_assignment(entry) {
                 Ok(carriers) => {
@@ -1549,19 +1742,163 @@ mod tests {
                         entry.class_id
                     );
                 }
-                Err(reason) => unknown.push(reason),
+                Err(reason) if reason.contains("no converted class record found") => {
+                    load_failures.push(reason)
+                }
+                Err(reason) => ungroundable.push(reason),
             }
         }
-        // Measured today: every one of the 74 converted prestige class
-        // records loads (the same `class_chassis_sheet_rules::records` scan
-        // that found the `Prestige` tag in the first place also proves the
-        // record itself is loadable), so this is pinned at 0 -- a future
-        // corpus change that makes a record unloadable must surface here BY
-        // NAME, never silently drop the row from the census.
         assert!(
-            unknown.is_empty(),
+            load_failures.is_empty(),
             "prestige class(es) with no loadable converted gate (must be named, not silently \
-             dropped): {unknown:?}"
+             dropped): {load_failures:?}"
+        );
+        // Measured after the F0-check fix for findings 1/4: these 7 gates
+        // each carry a mandatory, top-level caster-level term this
+        // two-carrier (wizard-Arcane/cleric-Divine) model cannot ground --
+        // three (`dragon_disciple`, `evangelist`, `pure_legion_enforcer`)
+        // are the named finding-1 defects (a caster mention reachable only
+        // through `Not`/`AtLeast`); the other four (`dark_tempest`,
+        // `elocater`, `psion_uncarnate`, `thrallherd`) carry a mandatory,
+        // top-level `HighestSpellLevel(Any)` term -- a real caster
+        // requirement neither Arcane- nor Divine-specific, so this model
+        // (which only knows wizard-for-Arcane and cleric-for-Divine) cannot
+        // pick one without guessing either. Re-derive with `cargo test
+        // --locked -j 2 --lib \
+        // class_census::tests::every_prestige_class_gets_a_carrier_or_is_named_unknown \
+        // -- --nocapture`.
+        assert_eq!(
+            ungroundable.len(),
+            7,
+            "measured ungroundable-gate prestige count moved off 7: {ungroundable:?}"
+        );
+        for expected in [
+            "class:dark_tempest",
+            "class:dragon_disciple",
+            "class:elocater",
+            "class:evangelist",
+            "class:psion_uncarnate",
+            "class:pure_legion_enforcer",
+            "class:thrallherd",
+        ] {
+            assert!(
+                ungroundable.iter().any(|r| r.starts_with(expected)),
+                "{expected} expected among the ungroundable prestige gates: {ungroundable:?}"
+            );
+        }
+    }
+
+    #[test]
+    fn a_prestige_row_referencing_caster_level_names_a_caster_carrier_or_reports_unknown() {
+        // F0-check findings 1 and 4 (RED first): a prestige class whose
+        // gate reads a caster level / spell-kind term ONLY inside a
+        // `Not` (a negation -- "cannot cast X") or an `AtLeast` (one
+        // OPTIONAL alternative among several) is a caster-SHAPED gate the
+        // carrier rule cannot ground -- it must report `Unknown` by name,
+        // never a carrier the gate itself forbids (`pure_legion_enforcer`
+        // picking cleric although its own text is "Cannot cast divine
+        // spells") or a guessed carrier past an unmodelled requirement
+        // (`dragon_disciple`'s spontaneous-arcane-caster clause,
+        // `evangelist`'s optional dual-caster alternative).
+        let pure_legion_enforcer_gate = Applies::All(vec![
+            Applies::Situational { text: "Special: Cannot cast divine spells.".to_owned() },
+            Applies::Not(Box::new(Applies::Compare {
+                lhs: Expr::HighestSpellLevel(SpellKind::Divine),
+                op: Cmp::Gte,
+                rhs: Expr::Const(1),
+            })),
+        ]);
+        let err = determine_carriers(&pure_legion_enforcer_gate)
+            .expect_err("a Not-wrapped Divine term must never select cleric");
+        assert!(
+            err.contains("Not") || err.contains("AtLeast"),
+            "reason should name why the gate could not be grounded: {err}"
+        );
+
+        let dragon_disciple_gate = Applies::AtLeast {
+            n: 3,
+            of: vec![
+                Applies::Situational { text: "requires a spontaneous caster".to_owned() },
+                Applies::Compare {
+                    lhs: Expr::HighestSpellLevel(SpellKind::Arcane),
+                    op: Cmp::Gte,
+                    rhs: Expr::Const(1),
+                },
+                Applies::Not(Box::new(Applies::Compare {
+                    lhs: Expr::ClassLevel("sorcerer".to_owned()),
+                    op: Cmp::Gte,
+                    rhs: Expr::Const(1),
+                })),
+            ],
+        };
+        determine_carriers(&dragon_disciple_gate)
+            .expect_err("an AtLeast-wrapped Arcane term must never select wizard");
+
+        let evangelist_gate = Applies::AtLeast {
+            n: 1,
+            of: vec![
+                Applies::Compare { lhs: Expr::BaseAttack, op: Cmp::Gte, rhs: Expr::Const(5) },
+                Applies::AtLeast {
+                    n: 1,
+                    of: vec![
+                        Applies::Compare {
+                            lhs: Expr::HighestSpellLevel(SpellKind::Divine),
+                            op: Cmp::Gte,
+                            rhs: Expr::Const(3),
+                        },
+                        Applies::Compare {
+                            lhs: Expr::HighestSpellLevel(SpellKind::Arcane),
+                            op: Cmp::Gte,
+                            rhs: Expr::Const(3),
+                        },
+                    ],
+                },
+                Applies::Situational { text: "5 ranks".to_owned() },
+            ],
+        };
+        determine_carriers(&evangelist_gate)
+            .expect_err("an optional dual-caster alternative must never select both wizard and cleric");
+
+        // A bare `Expr::CasterLevel` (no `HighestSpellLevel` at all) buried
+        // in a `Not` is caster-shaped too and must also report Unknown --
+        // `gate_has_any_caster_signal` reads `CasterLevel`, not only
+        // `HighestSpellLevel`.
+        let bare_caster_level_gate = Applies::Not(Box::new(Applies::Compare {
+            lhs: Expr::CasterLevel(ClassRef::Holder),
+            op: Cmp::Gte,
+            rhs: Expr::Const(1),
+        }));
+        determine_carriers(&bare_caster_level_gate)
+            .expect_err("a Not-wrapped bare CasterLevel term must never fall through to Fighter");
+
+        // The real corpus rows named in the F0-check finding must exhibit
+        // the same behaviour through the full `carrier_assignment` path,
+        // not only the synthetic-gate unit coverage above.
+        let entries = census();
+        for class_id in ["class:pure_legion_enforcer", "class:dragon_disciple", "class:evangelist"] {
+            let entry = entries.get(class_id).unwrap_or_else(|| panic!("{class_id} must be in the census"));
+            let result = carrier_assignment(entry);
+            assert!(
+                result.is_err(),
+                "{class_id}: expected Unknown (Err) -- got {result:?}"
+            );
+        }
+
+        // A class whose caster term IS mandatory and top-level (never
+        // wrapped in Not/AtLeast) must still ground normally --
+        // `arcane_archer` (§0.7) and `mystic_theurge` (both terms
+        // independently mandatory) are unaffected by this guard.
+        let arcane_archer =
+            entries.get("class:arcane_archer").expect("arcane_archer must be in the census");
+        assert_eq!(
+            carrier_assignment(arcane_archer).expect("arcane_archer's gate must ground"),
+            vec![PrestigeCarrier::Wizard]
+        );
+        let mystic_theurge =
+            entries.get("class:mystic_theurge").expect("mystic_theurge must be in the census");
+        assert_eq!(
+            carrier_assignment(mystic_theurge).expect("mystic_theurge's gate must ground"),
+            vec![PrestigeCarrier::Wizard, PrestigeCarrier::Cleric]
         );
     }
 
@@ -1581,36 +1918,88 @@ mod tests {
         let mut cleric_only = 0usize;
         let mut dual = 0usize;
         let mut fighter = 0usize;
+        let mut unknown = 0usize;
         let mut dual_names: Vec<&str> = Vec::new();
+        let mut unknown_names: Vec<&str> = Vec::new();
         for entry in &prestige {
-            let carriers = carrier_assignment(entry).unwrap_or_else(|e| panic!("{e}"));
-            match carriers.as_slice() {
-                [PrestigeCarrier::Wizard] => wizard_only += 1,
-                [PrestigeCarrier::Cleric] => cleric_only += 1,
-                [PrestigeCarrier::Fighter] => fighter += 1,
-                [PrestigeCarrier::Wizard, PrestigeCarrier::Cleric] => {
-                    dual += 1;
-                    dual_names.push(&entry.class_id);
+            match carrier_assignment(entry) {
+                Ok(carriers) => match carriers.as_slice() {
+                    [PrestigeCarrier::Wizard] => wizard_only += 1,
+                    [PrestigeCarrier::Cleric] => cleric_only += 1,
+                    [PrestigeCarrier::Fighter] => fighter += 1,
+                    [PrestigeCarrier::Wizard, PrestigeCarrier::Cleric] => {
+                        dual += 1;
+                        dual_names.push(&entry.class_id);
+                    }
+                    other => panic!("{}: unexpected carrier shape {other:?}", entry.class_id),
+                },
+                // F0-check findings 1/4: a caster-shaped gate the rule
+                // cannot ground (a caster signal reachable only through
+                // Not/AtLeast) is Unknown, not guessed into a bucket.
+                Err(_) => {
+                    unknown += 1;
+                    unknown_names.push(&entry.class_id);
                 }
-                other => panic!("{}: unexpected carrier shape {other:?}", entry.class_id),
             }
         }
         assert_eq!(
-            wizard_only + cleric_only + dual + fighter,
+            wizard_only + cleric_only + dual + fighter + unknown,
             74,
             "carrier buckets must partition all 74 prestige classes"
         );
-        // §2's own review-finding-14 evidence named exactly these two ids
-        // as the dual-caster case.
+        // F0-check finding 7(b): §2's own review-finding-14 evidence
+        // (23 BAB-term + 43 neither = 66 fighter-carrier, 2 dual, 6
+        // single-caster) was measured BEFORE the F0-check fix for findings
+        // 1/4, and disagreed with the implementation's own pre-fix
+        // measurement (59/2/13) by 7 classes without a logged correction.
+        // Both are now superseded: pin the full four-way split the fixed
+        // carrier rule actually measures (`scripts/retro.py` correction
+        // logged in this cycle's F0-check-fix commit body), not only the
+        // dual count.
+        assert_eq!(wizard_only, 6, "measured wizard-only prestige carrier count moved off 6");
+        assert_eq!(cleric_only, 5, "measured cleric-only prestige carrier count moved off 5");
+        assert_eq!(fighter, 55, "measured fighter-floor prestige carrier count moved off 55");
+        // Measured after the F0-check fix for findings 1/4: mystic_theurge
+        // is the only class whose Arcane AND Divine terms are BOTH
+        // mandatory, positive, top-level clauses (grounding independently
+        // to wizard and cleric). evangelist's dual-caster clause is one
+        // OPTIONAL alternative inside an `AtLeast`, and dragon_disciple's
+        // Arcane clause and pure_legion_enforcer's Divine clause are each
+        // reachable only through an `AtLeast`/`Not` -- all three are now
+        // Unknown, not guessed.
         assert_eq!(
-            dual, 2,
-            "measured dual-caster (Arcane AND Divine) prestige count moved off the reviewed \
-             evidence's 2 (mystic_theurge, evangelist): got {dual_names:?}"
+            dual, 1,
+            "measured dual-caster (BOTH terms mandatory and top-level) prestige count moved off \
+             the F0-check-fixed 1 (mystic_theurge only): got {dual_names:?}"
         );
         assert!(
-            dual_names.contains(&"class:mystic_theurge") && dual_names.contains(&"class:evangelist"),
-            "dual-caster ids moved off the reviewed evidence: {dual_names:?}"
+            dual_names.contains(&"class:mystic_theurge"),
+            "the one dual-caster id moved off mystic_theurge: {dual_names:?}"
         );
+        // Also 7, for the same two root causes named in
+        // `every_prestige_class_gets_a_carrier_or_is_named_unknown`'s own
+        // comment (three Not/AtLeast-only caster mentions, four mandatory
+        // top-level `HighestSpellLevel(Any)` terms this model cannot assign
+        // to either carrier without guessing).
+        assert_eq!(
+            unknown, 7,
+            "measured ungroundable-gate prestige count moved off the F0-check-fixed 7: \
+             got {unknown_names:?}"
+        );
+        for expected in [
+            "class:dark_tempest",
+            "class:dragon_disciple",
+            "class:elocater",
+            "class:evangelist",
+            "class:psion_uncarnate",
+            "class:pure_legion_enforcer",
+            "class:thrallherd",
+        ] {
+            assert!(
+                unknown_names.contains(&expected),
+                "{expected} expected Unknown, got bucketed: {unknown_names:?}"
+            );
+        }
     }
 
     #[test]
@@ -1653,24 +2042,53 @@ mod tests {
         // future corpus edit happened to leave no real class exercising one
         // of them.
         let bab_only = Applies::Compare { lhs: Expr::BaseAttack, op: Cmp::Gte, rhs: Expr::Const(5) };
-        assert_eq!(determine_carriers(&bab_only), vec![PrestigeCarrier::Fighter]);
+        assert_eq!(determine_carriers(&bab_only).unwrap(), vec![PrestigeCarrier::Fighter]);
 
         let arcane_only = Applies::Compare {
             lhs: Expr::HighestSpellLevel(SpellKind::Arcane),
             op: Cmp::Gte,
             rhs: Expr::Const(1),
         };
-        assert_eq!(determine_carriers(&arcane_only), vec![PrestigeCarrier::Wizard]);
+        assert_eq!(determine_carriers(&arcane_only).unwrap(), vec![PrestigeCarrier::Wizard]);
 
         let divine_only = Applies::Compare {
             lhs: Expr::HighestSpellLevel(SpellKind::Divine),
             op: Cmp::Gte,
             rhs: Expr::Const(1),
         };
-        assert_eq!(determine_carriers(&divine_only), vec![PrestigeCarrier::Cleric]);
+        assert_eq!(determine_carriers(&divine_only).unwrap(), vec![PrestigeCarrier::Cleric]);
 
         let dual = Applies::All(vec![arcane_only, divine_only]);
-        assert_eq!(determine_carriers(&dual), vec![PrestigeCarrier::Wizard, PrestigeCarrier::Cleric]);
+        assert_eq!(
+            determine_carriers(&dual).unwrap(),
+            vec![PrestigeCarrier::Wizard, PrestigeCarrier::Cleric]
+        );
+
+        // A caster signal reachable only through Not/AtLeast must never
+        // fall through to Fighter (F0-check findings 1/4).
+        let not_wrapped = Applies::Not(Box::new(Applies::Compare {
+            lhs: Expr::HighestSpellLevel(SpellKind::Arcane),
+            op: Cmp::Gte,
+            rhs: Expr::Const(1),
+        }));
+        assert!(determine_carriers(&not_wrapped).is_err());
+
+        let at_least_wrapped = Applies::AtLeast {
+            n: 1,
+            of: vec![Applies::Compare {
+                lhs: Expr::HighestSpellLevel(SpellKind::Divine),
+                op: Cmp::Gte,
+                rhs: Expr::Const(1),
+            }],
+        };
+        assert!(determine_carriers(&at_least_wrapped).is_err());
+
+        // A gate with no caster signal at all, anywhere, still floors to
+        // Fighter -- the guard only fires for a caster signal it can see
+        // but cannot ground.
+        let no_caster_signal_at_all =
+            Applies::Not(Box::new(Applies::Compare { lhs: Expr::BaseAttack, op: Cmp::Gte, rhs: Expr::Const(1) }));
+        assert_eq!(determine_carriers(&no_caster_signal_at_all).unwrap(), vec![PrestigeCarrier::Fighter]);
     }
 
     #[test]
@@ -2017,5 +2435,59 @@ mod tests {
         } else {
             assert!(histogram.is_empty(), "zero Blocked rows in the sample must produce an empty histogram");
         }
+    }
+
+    #[test]
+    fn mix_panel_blocking_histogram_counts_rows_not_raw_occurrences() {
+        // F0-check finding 7(a) (RED first): on today's real corpus every
+        // one of the 185 mix-panel rows is Computed, so
+        // `mix_panel_blocking_histogram_sums_to_the_blocked_row_count`'s
+        // only live assertion is `histogram.is_empty()` -- the counting
+        // rule itself (rows, not occurrences; per-row ids already
+        // deduplicated) is exercised by no test with even one blocked row.
+        // This test builds a synthetic `MixPanelSweepResult` vector with a
+        // KNOWN shape and asserts the exact resulting map, independent of
+        // whatever the live corpus happens to measure.
+        fn row(key: &str, computed: bool, ids: &[&str]) -> MixPanelSweepResult {
+            MixPanelSweepResult {
+                key: key.to_owned(),
+                source_file: "synthetic".to_owned(),
+                test_fn: "synthetic".to_owned(),
+                classes: vec![("fighter".to_owned(), 1)],
+                computed,
+                blocking_diagnostic_ids: ids.iter().map(|s| (*s).to_owned()).collect(),
+            }
+        }
+
+        let synthetic = vec![
+            row("a", true, &[]),
+            row("b", false, &["class_chassis.unsupported"]),
+            row("c", false, &["class_chassis.unsupported", "combat.baseline_unsupported"]),
+            // A THIRD row also blocked by "class_chassis.unsupported" --
+            // proves the histogram counts this id 3 (three ROWS), never 4
+            // (which a raw-occurrence count could never produce here
+            // anyway, since each row's own id list is already
+            // deduplicated) and never 1 (which a buggy "set of ids seen at
+            // all" implementation would produce).
+            row("d", false, &["class_chassis.unsupported"]),
+            row("e", true, &[]),
+        ];
+
+        let histogram = mix_panel_blocking_histogram(&synthetic);
+
+        let mut expected: BTreeMap<String, usize> = BTreeMap::new();
+        expected.insert("class_chassis.unsupported".to_owned(), 3);
+        expected.insert("combat.baseline_unsupported".to_owned(), 1);
+        assert_eq!(
+            histogram, expected,
+            "histogram must count exactly the known synthetic shape: 3 rows blocked by \
+             class_chassis.unsupported, 1 by combat.baseline_unsupported"
+        );
+
+        // The blocked-row count itself, independent of the histogram, is
+        // the other half of the "sums to the blocked row count" name this
+        // sibling test carries: 3 of the 5 synthetic rows are blocked.
+        let blocked_count = synthetic.iter().filter(|r| !r.computed).count();
+        assert_eq!(blocked_count, 3);
     }
 }

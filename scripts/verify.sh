@@ -2815,51 +2815,33 @@ run_class_census() {
     fi
 
     # Baselines can only rise (mirrors `run_class_dump`'s own posture): the
-    # stage fails if either measured floor drops below what was last
-    # recorded in scripts/verify-baselines.env, never on a rise.
+    # stage fails if ANY of the four measured floors §2 declares drops
+    # below what was last recorded in scripts/verify-baselines.env, never
+    # on a rise. F0-check finding 6: this used to check only
+    # `BASELINE_CENSUS_IDS`/`BASELINE_CENSUS_COMPUTED` -- the other two
+    # (`BASELINE_CENSUS_PRESTIGE_ALONE_BLOCKED`/`BASELINE_CENSUS_MIX_COMPUTED`)
+    # were declared in verify-baselines.env with no consumer at all. The
+    # check itself now lives in scripts/check_class_census_baselines.py
+    # (unit-tested by scripts/tests/test_check_class_census_baselines.py,
+    # including a negative control per baseline) rather than an inline,
+    # untested heredoc.
     local report
-    report=$(python3 - "$json" "$BASELINE_CENSUS_IDS" "$BASELINE_CENSUS_COMPUTED" <<'PY'
-import json, sys
-
-path, expected_ids, expected_computed = sys.argv[1], int(sys.argv[2]), int(sys.argv[3])
-try:
-    with open(path) as handle:
-        doc = json.load(handle)
-except Exception as exc:                       # shape change must be loud
-    print(f"FAIL unparseable census: {exc}")
-    raise SystemExit(0)
-
-ids = doc.get("ids")
-computed = doc.get("computed")
-if not isinstance(ids, int) or not isinstance(computed, int):
-    print("FAIL census document carries no integer `ids`/`computed`")
-    raise SystemExit(0)
-
-if ids < expected_ids:
-    print(f"FAIL ids {ids} below baseline {expected_ids}")
-elif computed < expected_computed:
-    print(f"FAIL computed {computed} below baseline {expected_computed} (ids={ids})")
-else:
-    print(f"OK ids={ids} computed={computed}")
-    print(f"ACTUAL BASELINE_CENSUS_IDS={ids}")
-    print(f"ACTUAL BASELINE_CENSUS_COMPUTED={computed}")
-PY
-)
+    report=$(cd "$REPO_ROOT" && python3 scripts/check_class_census_baselines.py "$json" \
+        --baseline-ids "$BASELINE_CENSUS_IDS" \
+        --baseline-computed "$BASELINE_CENSUS_COMPUTED" \
+        --baseline-prestige-alone-blocked "$BASELINE_CENSUS_PRESTIGE_ALONE_BLOCKED" \
+        --baseline-mix-computed "$BASELINE_CENSUS_MIX_COMPUTED")
     local py_status=$?
-    if (( py_status != 0 )); then
-        stage_fail class-census "census parser exit $py_status — $json"
-        return
-    fi
 
-    local verdict; verdict=$(printf '%s\n' "$report" | head -1)
     while IFS= read -r line; do
         [[ -n "$line" ]] && actual "$line"
     done < <(printf '%s\n' "$report" | sed -n 's/^ACTUAL //p')
 
-    case "$verdict" in
-        OK*)   ;;
-        *)     stage_fail class-census "${verdict#FAIL } — $json"; return ;;
-    esac
+    if (( py_status != 0 )); then
+        local fail_lines; fail_lines=$(printf '%s\n' "$report" | grep '^FAIL ' | tr '\n' ';')
+        stage_fail class-census "${fail_lines:-baseline check exit $py_status} — $json"
+        return
+    fi
 
     # F0e: the same stage also checks docs/architecture/status.md's
     # generated class-coverage table for drift against THIS run's own
@@ -2874,7 +2856,8 @@ PY
         return
     fi
 
-    stage_pass class-census "${verdict#OK }; $(tail -1 "$table_log")"
+    local ok_line; ok_line=$(printf '%s\n' "$report" | grep '^OK ' | head -1)
+    stage_pass class-census "${ok_line#OK }; $(tail -1 "$table_log")"
 }
 
 # ---------------------------------------------------------------------------

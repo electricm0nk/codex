@@ -45,8 +45,8 @@ use std::sync::OnceLock;
 use crate::support::paths::repo_root;
 
 use crate::rules_core::sheet_rule::{
-    evaluate_expr_from_facts, Applies, BonusTarget, CharacterFacts, Cmp, Expr, Save, SheetRule,
-    SheetValue,
+    evaluate_expr_from_facts, Applies, BonusTarget, CharacterFacts, Cmp, Expr, ProseFamily,
+    ProsePiece, Save, SheetRule, SheetValue,
 };
 
 /// The default level ceiling for a class whose converted record states none:
@@ -81,6 +81,27 @@ pub struct ClassChassis {
     base_attack: Expr,
     /// Fortitude, Reflex, Will.
     saves: [Expr; 3],
+    /// This class's hit die size (`d10` -> `10`), read off the principal
+    /// rule's `StatBlock "Hit die"` prose row — `None` for the 7 records
+    /// (of 185) that carry no such row, never a fabricated value (F0-check
+    /// finding 5; review finding 13 / `epic-f-class-completion.md` §0.4).
+    /// A hard prerequisite of F3: HP cannot be computed without it.
+    pub hit_die: Option<u8>,
+    /// This class's skill ranks gained per level, read off the principal
+    /// rule's `StatBlock "Skill ranks per level"` prose row the same way
+    /// [`Self::hit_die`] reads `"Hit die"` — `None` when the row is absent.
+    /// Measured over the full corpus at authoring time (F0-check finding
+    /// 5): NO class record in this corpus carries a `StatBlock` prose row
+    /// under this or any other label besides `"Hit die"` (`grep -rho
+    /// '"StatBlock":"[^"]*"' data/sheet_rules/*/class/*.json | sort | uniq
+    /// -c` -> `178 "StatBlock":"Hit die"`, nothing else, across all 185
+    /// class files) -- this reader is real and wired, but today returns
+    /// `None` for every one of the 185 records, an honest absence rather
+    /// than a fabricated skill-point figure (`docs/governance/
+    /// no-stub-mvp-doctrine.md`). See `docs/retro/events/
+    /// sub-agent-f0-check-fix.jsonl` for the correction against §2's
+    /// assumption that this row already exists like `"Hit die"` does.
+    pub skill_ranks_per_level: Option<u8>,
 }
 
 /// One row of a class's printed progression table: `(level, base attack bonus,
@@ -181,6 +202,47 @@ fn number_of(rule: &SheetRule) -> Option<&Expr> {
     }
 }
 
+/// The plain text of a `StatBlock` prose segment labeled `label` on
+/// `rule`, or `None` when no such row exists OR its pieces are not ALL
+/// plain `ProsePiece::Text` (a slot/choice/dice piece cannot be resolved
+/// statically here — honest absence, never a guessed evaluation of a
+/// character-dependent piece at read-record time). `pick_last`/`applies`
+/// are ignored: every StatBlock row observed in this corpus today
+/// (`"Hit die"`) carries neither, and reading only the first unconditional
+/// match keeps this the same "principal row wins" precedent
+/// `chassis_from_rules` already applies to `BaseAttack`.
+fn stat_block_prose_text(rule: &SheetRule, label: &str) -> Option<String> {
+    let segment = rule.prose.iter().find(|seg| match &seg.family {
+        ProseFamily::StatBlock(l) => l == label,
+        _ => false,
+    })?;
+    let mut text = String::new();
+    for piece in &segment.pieces {
+        match piece {
+            ProsePiece::Text(s) => text.push_str(s),
+            _ => return None,
+        }
+    }
+    Some(text)
+}
+
+/// Parses a hit-die StatBlock row's text (`"d10"`) into its numeric size
+/// (`10`). `None` for any shape other than a bare `d<digits>` — never a
+/// guessed size for text this parser does not recognize.
+fn parse_die_size(text: &str) -> Option<u8> {
+    text.strip_prefix('d')?.parse().ok()
+}
+
+/// Parses a skill-ranks-per-level StatBlock row's text into its numeric
+/// value. The corpus carries no such row today (see
+/// [`ClassChassis::skill_ranks_per_level`]'s own doc comment) so this is
+/// exercised by no real record yet, but is written to the same "plain
+/// digits, nothing else" contract [`parse_die_size`] uses — never a
+/// guessed rank count for a shape this parser does not recognize.
+fn parse_skill_ranks(text: &str) -> Option<u8> {
+    text.trim().parse().ok()
+}
+
 /// Builds one class's chassis from its converted rule file's rows, or `None`
 /// when the file is not a chassis-bearing class record.
 fn chassis_from_rules(book: &str, slug: &str, rules: &[SheetRule]) -> Option<ClassChassis> {
@@ -228,6 +290,9 @@ fn chassis_from_rules(book: &str, slug: &str, rules: &[SheetRule]) -> Option<Cla
         } else {
             DEFAULT_MAX_LEVEL
         });
+    let hit_die = stat_block_prose_text(principal, "Hit die").and_then(|text| parse_die_size(&text));
+    let skill_ranks_per_level =
+        stat_block_prose_text(principal, "Skill ranks per level").and_then(|text| parse_skill_ranks(&text));
     Some(ClassChassis {
         book: book.to_string(),
         slug: slug.to_string(),
@@ -237,6 +302,8 @@ fn chassis_from_rules(book: &str, slug: &str, rules: &[SheetRule]) -> Option<Cla
         max_level,
         base_attack: base_attack.clone(),
         saves: [fort.clone(), refl.clone(), will.clone()],
+        hit_die,
+        skill_ranks_per_level,
     })
 }
 
@@ -365,6 +432,174 @@ mod tests {
         // it must not appear as a chassis with a guessed progression.
         assert!(record("occult_adventures", "psychic_detective").is_none());
     }
+
+    // -----------------------------------------------------------------
+    // F0-check finding 5 (RED first): the `hit_die`/`skill_ranks_per_level`
+    // readers `epic-f-class-completion.md` §2's F0 territory list required
+    // and F0's five landed commits never added.
+    // -----------------------------------------------------------------
+
+    #[test]
+    fn hit_die_is_read_off_the_stat_block_prose_row() {
+        let warrior = record("core_rulebook", "warrior").expect("CRB carries the Warrior class");
+        assert_eq!(warrior.hit_die, Some(10), "Warrior's printed hit die is d10");
+        let commoner = record("core_rulebook", "commoner").expect("CRB carries the Commoner class");
+        assert_eq!(commoner.hit_die, Some(6), "Commoner's printed hit die is d6");
+        let wizard = record("core_rulebook", "wizard").expect("CRB carries the Wizard class");
+        assert_eq!(wizard.hit_die, Some(6), "Wizard's printed hit die is d6");
+    }
+
+    #[test]
+    fn every_chassis_bearing_class_in_the_corpus_has_a_hit_die() {
+        // §0.4 (review finding 13): 178 of 185 class records carry the
+        // `StatBlock "Hit die"` prose row; the 7 that do not
+        // (`occult_adventures/psychic_detective`, three
+        // `ultimate_psionics/*`, `bestiary/sorcerer_cleric_arcane`, two
+        // `ultimate_intrigue/*`) are named by id. Measured directly
+        // (F0-check finding 5): every one of those same 7 records ALSO
+        // carries no `BaseAttack`/`BaseSave` row at all, so `record()`
+        // already returns `None` for every one of them
+        // (`a_record_with_no_chassis_rows_is_absent_rather_than_half_built`,
+        // above). A further, previously unnoted eighth exception measured
+        // the same way: `core_rulebook/monk` carries the `"Hit die"` row
+        // but its principal rule degraded entirely to `value: Text` (no
+        // `BaseAttack`/`BaseSave` row either) -- same "record()
+        // returns None, never a half-built chassis" outcome, for a
+        // different, unrelated reason (degradation, not an absent row).
+        // 185 - 7 - 1 = 177 is the real chassis-bearing population
+        // measured today: there is no record in this corpus with a REAL
+        // chassis (BAB + all three saves) but a missing hit die. This test
+        // proves that fact directly, over the full corpus, rather than
+        // trusting it stays true by construction.
+        let books = crate::rules_core::class_census::prestige_scan_books();
+        let book_refs: Vec<&str> = books.iter().map(String::as_str).collect();
+        let all = records(&book_refs);
+        assert_eq!(all.len(), 177, "measured chassis-bearing population moved off 177");
+        let missing: Vec<String> = all
+            .values()
+            .filter(|chassis| chassis.hit_die.is_none())
+            .map(|chassis| format!("{}:{}", chassis.book, chassis.slug))
+            .collect();
+        assert!(
+            missing.is_empty(),
+            "chassis-bearing class(es) with no hit die (must be named, not silently defaulted): \
+             {missing:?}"
+        );
+    }
+
+    #[test]
+    fn the_seven_hit_die_absent_records_have_no_chassis_at_all() {
+        // The other half of the same fact: none of §0.4's 7 named
+        // exceptions appears in `records()` in the first place (they
+        // convert no BaseAttack/BaseSave row either), so `hit_die` cannot
+        // even be queried on them today -- named directly, by id, so a
+        // future corpus change that gives one of these seven a real
+        // chassis (and then needs a real hit die too) surfaces here.
+        for (book, slug) in [
+            ("occult_adventures", "psychic_detective"),
+            ("ultimate_psionics", "gifted_blade"),
+            ("ultimate_psionics", "gifted_blade_marksman_power_list"),
+            ("ultimate_psionics", "unlocked_talent"),
+            ("bestiary", "sorcerer_cleric_arcane"),
+            ("ultimate_intrigue", "vwarlock"),
+            ("ultimate_intrigue", "vcabalist"),
+        ] {
+            assert!(
+                record(book, slug).is_none(),
+                "{book}:{slug} was expected to carry no chassis at all (§0.4's 7 named \
+                 hit-die-absent exceptions) -- it now resolves one, so its hit_die must be \
+                 re-examined, not silently accepted as None"
+            );
+        }
+    }
+
+    #[test]
+    fn skill_ranks_per_level_is_an_honest_absence_over_the_whole_corpus_today() {
+        // F0-check finding 5: §2's territory list assumed
+        // `skill_ranks_per_level` is converted the same way `hit_die` is
+        // (a `StatBlock` prose row, `None` only for the same 7 named
+        // exceptions). Measured directly instead (`grep -rho
+        // '"StatBlock":"[^"]*"' data/sheet_rules/*/class/*.json | sort |
+        // uniq -c` -> only `178 "StatBlock":"Hit die"`, no other label at
+        // all, across all 185 class files): this data does not exist in
+        // the corpus yet. The reader is real and wired (same
+        // `stat_block_prose_text` helper `hit_die` uses, generalized to
+        // any label) -- it is simply never fed a matching row today. This
+        // test pins that honest absence directly, over the full corpus,
+        // rather than letting a silently-`None` field look untested.
+        let books = crate::rules_core::class_census::prestige_scan_books();
+        let book_refs: Vec<&str> = books.iter().map(String::as_str).collect();
+        let all = records(&book_refs);
+        assert_eq!(all.len(), 177, "measured chassis-bearing population moved off 177");
+        assert!(
+            all.values().all(|chassis| chassis.skill_ranks_per_level.is_none()),
+            "a class record now carries a Skill ranks per level StatBlock row -- this test (and \
+             the F0-check finding 5 correction logged at docs/retro/events/\
+             sub-agent-f0-check-fix.jsonl) must be updated, not left silently green"
+        );
+    }
+
+    #[test]
+    fn stat_block_prose_text_ignores_a_row_with_a_non_text_piece() {
+        // Direct unit coverage of the helper's own contract: a piece this
+        // reader cannot resolve statically (here, a `Slot`) must make the
+        // whole row unreadable, never a truncated guess -- built from the
+        // real Fighter record's own JSON shape with only the `prose` field
+        // replaced, rather than hand-listing every `SheetRule` field.
+        let mut rule: SheetRule = serde_json::from_str(FIGHTER_PRINCIPAL_RULE_JSON)
+            .expect("fixture JSON must parse as a SheetRule");
+        rule.prose = vec![crate::rules_core::sheet_rule::ProseSegment {
+            family: ProseFamily::StatBlock("Hit die".to_owned()),
+            pieces: vec![
+                ProsePiece::Text("d".to_owned()),
+                ProsePiece::Slot(crate::rules_core::sheet_rule::Expr::Level),
+            ],
+            applies: None,
+            pick_last: false,
+            suppress_when_all_zero: false,
+        }];
+        assert_eq!(stat_block_prose_text(&rule, "Hit die"), None);
+
+        // A row entirely of Text pieces DOES resolve, concatenated.
+        rule.prose = vec![crate::rules_core::sheet_rule::ProseSegment {
+            family: ProseFamily::StatBlock("Hit die".to_owned()),
+            pieces: vec![ProsePiece::Text("d".to_owned()), ProsePiece::Text("10".to_owned())],
+            applies: None,
+            pick_last: false,
+            suppress_when_all_zero: false,
+        }];
+        assert_eq!(stat_block_prose_text(&rule, "Hit die"), Some("d10".to_owned()));
+
+        // A label that does not match any row resolves to None.
+        assert_eq!(stat_block_prose_text(&rule, "Skill ranks per level"), None);
+    }
+
+    /// The real `core_rulebook:class:fighter` principal rule's own JSON
+    /// shape (its `prose` field is overwritten by the test above), used so
+    /// this test does not have to hand-list every `SheetRule` field.
+    const FIGHTER_PRINCIPAL_RULE_JSON: &str = r#"{
+        "id": "core_rulebook:class:fighter",
+        "label": "Fighter",
+        "value": {"Number": {"ClassLevel": "fighter"}},
+        "prose": [],
+        "applies": {"All": [
+            {"Compare": {"lhs": {"ClassLevel": "fighter"}, "op": "Lte", "rhs": {"Const": 20}}}
+        ]},
+        "target": "BaseAttack",
+        "print": true,
+        "pool": "",
+        "tags": ["Base", "PC"],
+        "subject": "Character",
+        "repeatable": false,
+        "grants": [],
+        "provenance": {
+            "book": "core_rulebook",
+            "kind": "class",
+            "closure_rows": ["pathfinder/paizo/roleplaying_game/core_rulebook/cr_classes.lst:139"],
+            "oracle_pin": "0000000000000000000000000000000000000000",
+            "converter_version": "sheet_rule_convert/0.15.0"
+        }
+    }"#;
 
     /// SD-36 Epic E engine-P1-4 (review-caught third path): a class whose principal record's
     /// real name was redacted as Product Identity carries the ingest pipeline's placeholder

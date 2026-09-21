@@ -25,7 +25,14 @@
 //! own `alone_status` negative control (the same class swept with NO
 //! carrier at all -- expected Blocked, `BASELINE_CENSUS_PRESTIGE_ALONE_BLOCKED`)
 //! and a printed, non-blocking `entry_gate` verdict (`met`/`unmet`/`unknown`,
-//! or `partially-met` for the dual-caster case). See
+//! or `partially-met` for the dual-caster case). A gate that reads a
+//! caster-level/spell-kind term ONLY through `Applies::Not` (a negation) or
+//! `Applies::AtLeast` (one optional alternative among several) -- never as a
+//! mandatory, positive top-level term -- cannot be grounded to a carrier
+//! with confidence (F0-check fix for findings 1/4); such a row reports
+//! `carrier: []`, `entry_gate: "unknown"`, `status: "Unknown"`, and
+//! `carrier_unknown_reason` naming the gate, rather than a carrier the
+//! gate's own text forbids. See
 //! `docs/release/SD-36-consolidation/artifacts/epic-f/census-f0c.json` for a
 //! committed sample.
 //!
@@ -70,9 +77,21 @@
 use std::process::Command;
 
 use codex::rules_core::class_census::{
-    census, load_mix_panel, load_sweep_fixture, mix_panel_blocking_histogram, sheet_dump_text,
-    sweep_mix_panel, sweep_non_prestige, sweep_prestige,
+    ClassSweepResult, census, load_mix_panel, load_sweep_fixture, mix_panel_blocking_histogram,
+    sheet_dump_text, sweep_mix_panel, sweep_non_prestige, sweep_prestige,
 };
+
+/// The non-prestige sweep's own `(computed, blocked)` partition --
+/// `results.len()` (`non_prestige_swept`) is its own denominator, NEVER the
+/// full merged census `ids` (which also carries the prestige ids `results`
+/// never contains at all). F0-check finding 2 (RED first): factored out of
+/// `run_json` so the partition invariant can be pinned by a test that does
+/// not have to shell out to the bin itself.
+fn partition_non_prestige(results: &[ClassSweepResult]) -> (usize, usize) {
+    let computed = results.iter().filter(|r| r.computed()).count();
+    let blocked = results.len() - computed;
+    (computed, blocked)
+}
 
 fn real_now_iso8601() -> String {
     let output = Command::new("date")
@@ -146,8 +165,14 @@ fn run_json(json_path: &str) -> i32 {
     let results = sweep_non_prestige(&fixture, &entries);
     std::panic::set_hook(previous_hook);
 
-    let computed = results.iter().filter(|r| r.computed()).count();
-    let blocked = ids - computed;
+    // F0-check finding 2 (RED first): `blocked` is a count over the
+    // NON-PRESTIGE sweep, exactly as `computed` is -- never `ids -
+    // computed`. The old `ids - computed` silently folded every one of the
+    // 74 prestige ids (never swept in `results` at all) into "blocked", so
+    // `blocked` (93) + `computed` (42) equalled the FULL merged `ids` (135)
+    // instead of `non_prestige_swept` (61) -- see
+    // `partition_non_prestige_never_folds_in_the_prestige_ids` below.
+    let (computed, blocked) = partition_non_prestige(&results);
 
     let classes: Vec<serde_json::Value> = results
         .iter()
@@ -183,8 +208,13 @@ fn run_json(json_path: &str) -> i32 {
     std::panic::set_hook(previous_hook);
 
     let prestige_alone_blocked = prestige_rows.iter().filter(|r| !r.alone.computed()).count();
-    let prestige_mix_computed =
-        prestige_rows.iter().filter(|r| r.mixes.iter().all(|(sweep, _)| sweep.computed())).count();
+    // `r.status` (not a raw `mixes.iter().all(..)`, which reads vacuously
+    // true over an EMPTY `mixes` vec) is the row's own combined status --
+    // F0-check finding 4: a row whose carrier could not be named at all
+    // (empty `mixes`, `status == "unknown"`) must never silently count as
+    // Computed.
+    let prestige_mix_computed = prestige_rows.iter().filter(|r| r.status == "computed").count();
+    let prestige_mix_unknown = prestige_rows.iter().filter(|r| r.status == "unknown").count();
 
     let prestige: Vec<serde_json::Value> = prestige_rows
         .iter()
@@ -194,8 +224,14 @@ fn run_json(json_path: &str) -> i32 {
                 "books": row.books,
                 "max_level": row.max_level,
                 "carrier": row.carriers.iter().map(|c| c.slug()).collect::<Vec<_>>(),
+                "status": match row.status {
+                    "computed" => "Computed",
+                    "blocked" => "Blocked",
+                    _ => "Unknown",
+                },
                 "entry_gate": row.entry_gate_status,
                 "load_error": row.load_error,
+                "carrier_unknown_reason": row.carrier_unknown_reason,
                 "mixes": row.mixes.iter().map(|(sweep, gate)| serde_json::json!({
                     "carrier": sweep.carrier.slug(),
                     "carrier_level": sweep.carrier_level,
@@ -288,6 +324,7 @@ fn run_json(json_path: &str) -> i32 {
         "prestige_swept": prestige_rows.len(),
         "prestige_alone_blocked": prestige_alone_blocked,
         "prestige_mix_computed": prestige_mix_computed,
+        "prestige_mix_unknown": prestige_mix_unknown,
         "classes": classes,
         "prestige": prestige,
         "mix_panel_swept": mix_panel_results.len(),
@@ -311,10 +348,11 @@ fn run_json(json_path: &str) -> i32 {
 
     println!("ids={ids} computed={computed} blocked={blocked}");
     println!(
-        "prestige_swept={} prestige_alone_blocked={} prestige_mix_computed={}",
+        "prestige_swept={} prestige_alone_blocked={} prestige_mix_computed={} prestige_mix_unknown={}",
         prestige_rows.len(),
         prestige_alone_blocked,
-        prestige_mix_computed
+        prestige_mix_computed,
+        prestige_mix_unknown
     );
     println!(
         "mix_panel_swept={} mix_panel_computed={} mix_panel_blocked={}",
@@ -371,4 +409,55 @@ fn main() {
     };
 
     std::process::exit(exit_code);
+}
+
+#[cfg(test)]
+mod tests {
+    use super::*;
+    use codex::rules_core::class_census::load_sweep_fixture;
+
+    /// F0-check finding 2 (RED first, `cargo test --locked -j 2 --bin
+    /// class_census`): `partition_non_prestige`'s own `(computed, blocked)`
+    /// pair must sum to the non-prestige population it was measured over
+    /// (`results.len()`) -- NEVER the full merged census `ids`, which also
+    /// carries the 74 prestige ids `sweep_non_prestige` never sweeps at
+    /// all. This is the exact invariant whose violation (`blocked = ids -
+    /// computed`) made `docs/architecture/status.md` print "93 of 135" for
+    /// a population of 61.
+    #[test]
+    fn partition_non_prestige_never_folds_in_the_prestige_ids() {
+        let entries = census();
+        let ids = entries.len();
+        let fixture = load_sweep_fixture().expect("shared deterministic fixture must load cleanly");
+
+        let previous_hook = std::panic::take_hook();
+        std::panic::set_hook(Box::new(|_| {}));
+        let results = sweep_non_prestige(&fixture, &entries);
+        std::panic::set_hook(previous_hook);
+
+        let (computed, blocked) = partition_non_prestige(&results);
+
+        assert_eq!(
+            computed + blocked,
+            results.len(),
+            "computed + blocked must partition exactly the non-prestige population swept"
+        );
+        // The real corpus has prestige ids at all (74, measured elsewhere),
+        // so the non-prestige population is strictly smaller than the full
+        // merged census -- proving the two denominators are genuinely
+        // different, not coincidentally equal in this fixture.
+        assert!(
+            results.len() < ids,
+            "non-prestige population ({}) must be strictly smaller than the full census ({ids}) \
+             -- otherwise this test cannot distinguish the fixed denominator from the old bug",
+            results.len()
+        );
+        assert_ne!(
+            computed + blocked,
+            ids,
+            "computed + blocked ({}) must NOT equal the full merged ids ({ids}) -- that is \
+             exactly the F0-check finding 2 regression shape (`blocked = ids - computed`)",
+            computed + blocked
+        );
+    }
 }

@@ -159,6 +159,15 @@ def render_headline_table(doc):
     ids = doc["ids"]
     computed = doc["computed"]
     blocked = doc["blocked"]
+    # `computed`/`blocked` are counted over the NON-prestige sweep only
+    # (`sweep_non_prestige` in `src/bin/class_census.rs`) -- their
+    # denominator is `non_prestige_swept`, never the full merged `ids`
+    # (which also includes the 74 prestige ids this column never sweeps).
+    # F0-check finding 2: the two figures used to print "of {ids}" (135),
+    # silently folding every prestige id into a row labelled
+    # "(non-prestige)". `non_prestige_swept` is a required field precisely
+    # so this denominator is never re-derived by subtraction.
+    non_prestige_swept = doc["non_prestige_swept"]
     prestige_swept = doc["prestige_swept"]
     prestige_alone_blocked = doc["prestige_alone_blocked"]
     prestige_mix_computed = doc["prestige_mix_computed"]
@@ -166,12 +175,20 @@ def render_headline_table(doc):
     mix_computed = doc["mix_panel_computed"]
     mix_blocked = doc["mix_panel_blocked"]
 
+    if computed + blocked != non_prestige_swept:
+        raise ValueError(
+            f"census drift: computed ({computed}) + blocked ({blocked}) != "
+            f"non_prestige_swept ({non_prestige_swept}) -- the non-prestige "
+            "sweep's own two counts no longer partition its own population"
+        )
+
     lines = [
         "| Quantity | Count | Denominator | Census JSON field |",
         "|---|---|---|---|",
         f"| Distinct class ids, corpus-wide, across all engine registries | **{ids}** | — | `ids` |",
-        f"| ...reach `Computed` at every swept level (non-prestige) | **{computed}** | of {ids} | `computed` |",
-        f"| ...reach `Computed` at no level (non-prestige) | **{blocked}** | of {ids} | `blocked` |",
+        f"| Non-prestige ids actually swept (`ids` minus the {prestige_swept} prestige ids, never swept alone here) | **{non_prestige_swept}** | of {ids} | `non_prestige_swept` |",
+        f"| ...reach `Computed` at every swept level (non-prestige) | **{computed}** | of {non_prestige_swept} | `computed` |",
+        f"| ...reach `Computed` at no level (non-prestige) | **{blocked}** | of {non_prestige_swept} | `blocked` |",
         f"| Prestige ids swept (never measured alone — see the carrier rule below) | **{prestige_swept}** | of {ids} total ids | `prestige_swept` |",
         f"| ...Blocked alone (negative control) | **{prestige_alone_blocked}** | of {prestige_swept} | `prestige_alone_blocked` |",
         f"| ...`Computed` in their deterministic carrier mix | **{prestige_mix_computed}** | of {prestige_swept} | `prestige_mix_computed` |",
@@ -185,6 +202,7 @@ def render_headline_table(doc):
 def render_family_table(doc, rows):
     ids = doc["ids"]
     computed = doc["computed"]
+    non_prestige_swept = doc["non_prestige_swept"]
     prestige_swept = doc["prestige_swept"]
     prestige_mix_computed = doc["prestige_mix_computed"]
 
@@ -200,18 +218,29 @@ def render_family_table(doc, rows):
         f"{prestige_swept} | n/a alone (never a legitimate measurement — see headline "
         f"numbers: {prestige_mix_computed} of {prestige_swept} `Computed` in carrier mix) |"
     )
-    total_ids = sum(r["ids"] for r in rows) + prestige_swept
-    lines.append(
-        f"| **Total** | | **{total_ids}** | **{computed}** of {total_ids} non-prestige "
-        f"ids Computed alone (prestige carrier-mix result kept separate, per headline "
-        f"numbers above — the bin's own `--json` output never folds the two together) |"
-    )
+    # F0-check finding 2: the family rows' own ids sum is the NON-prestige
+    # population -- it must equal `non_prestige_swept`, never `ids` (which
+    # also carries the 74 prestige ids this per-family loop never visits).
+    non_prestige_ids = sum(r["ids"] for r in rows)
+    if non_prestige_ids != non_prestige_swept:
+        raise ValueError(
+            f"family_rows' own ids sum ({non_prestige_ids}) != doc['non_prestige_swept'] "
+            f"({non_prestige_swept}) — the non-prestige partition no longer sums to its "
+            "own population; this is a real drift the generator must not paper over"
+        )
+    total_ids = non_prestige_ids + prestige_swept
     if total_ids != ids:
         raise ValueError(
             f"family_rows + prestige_swept ({total_ids}) != doc['ids'] ({ids}) — "
             "the census's own partition no longer sums to its own total; this is a "
             "real drift the generator must not paper over"
         )
+    lines.append(
+        f"| **Total** | | **{total_ids}** ({non_prestige_ids} non-prestige + {prestige_swept} "
+        f"prestige) | **{computed}** of {non_prestige_ids} non-prestige ids Computed alone "
+        f"(prestige carrier-mix result kept separate, per headline numbers above — the "
+        f"bin's own `--json` output never folds the two together) |"
+    )
     return "\n".join(lines)
 
 
@@ -293,7 +322,16 @@ def apply_block(content, block):
 
 def run(args):
     doc = load_census(args.json)
-    rendered = render_block(doc)
+    try:
+        rendered = render_block(doc)
+    except ValueError as exc:
+        # A denominator/population mismatch inside the census document
+        # itself (F0-check finding 2's own drift guards) is a real,
+        # reportable failure -- print it and exit 1 the same way a
+        # marker-splice ValueError already does below, never an uncaught
+        # traceback.
+        print(f"FAIL {exc}")
+        return 1
 
     status_md_path = args.status_md
     with open(status_md_path, "r", encoding="utf-8") as fh:
