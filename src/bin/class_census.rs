@@ -12,20 +12,32 @@
 //! `codex::rules_core::class_seeds`), and reports each one's real
 //! engine-derived `HeadlessReceiptStatus`.
 //!
-//! Prestige ids are listed but never swept here: a prestige class computed
-//! *alone* is not a legitimate measurement (PF1's own prestige classes have
-//! entry requirements only a carrier build can satisfy). Each prestige row
-//! is reported `"status": "not_swept_yet"` and the carrier-mix sweep is a
-//! later F0 step. Reporting a confidently-wrong Blocked/Computed verdict for
-//! a class this binary has not actually swept would be worse than saying so
-//! plainly.
+//! A prestige class is never a legitimate `Computed` measurement ALONE (PF1's
+//! own prestige entry requirements only a carrier build can satisfy). F0c
+//! (`epic-f-class-completion.md` §2, review finding 14) adds the
+//! deterministic carrier build: each prestige class's converted `applies`
+//! gate picks a carrier (`wizard`/`cleric`/`fighter`, or both `wizard` AND
+//! `cleric` independently for the two dual-caster prestige classes), the
+//! carrier's own level is the smallest one meeting every translatable
+//! numeric entry-gate term (floor 5, capped so `carrier + prestige max_level
+//! <= 20`), and the prestige class's own levels `1..=max_level` are swept in
+//! that mix for its real, engine-derived status. Each row also carries its
+//! own `alone_status` negative control (the same class swept with NO
+//! carrier at all -- expected Blocked, `BASELINE_CENSUS_PRESTIGE_ALONE_BLOCKED`)
+//! and a printed, non-blocking `entry_gate` verdict (`met`/`unmet`/`unknown`,
+//! or `partially-met` for the dual-caster case). See
+//! `docs/release/SD-36-consolidation/artifacts/epic-f/census-f0c.json` for a
+//! committed sample.
 //!
 //! # Modes
 //!
-//! - `--json <path>`: sweep every non-prestige id, write the full document
-//!   to `<path>`, and print `ids=<N> computed=<M> blocked=<K>` to stdout
-//!   (`N` = the full merged census, `M` = non-prestige classes whose every
-//!   swept level reached `Computed`, `K = N - M`).
+//! - `--json <path>`: sweep every non-prestige id, plus every prestige id in
+//!   its carrier mix(es) and alone, write the full document to `<path>`, and
+//!   print `ids=<N> computed=<M> blocked=<K>` to stdout (`N` = the full
+//!   merged census, `M` = non-prestige classes whose every swept level
+//!   reached `Computed`, `K = N - M` -- the prestige carrier-mix figures are
+//!   printed separately, see below, and never fold into `M`/`K`: the epic's
+//!   own two-part acceptance number keeps the two measurements distinct).
 //! - `--sheet-dump <class-id>:<level>`: print one class/level's full
 //!   headless receipt (every explanation and every diagnostic) as stable,
 //!   sorted, timestamp-free text to stdout and exit. `<class-id>` may be
@@ -39,7 +51,9 @@
 
 use std::process::Command;
 
-use codex::rules_core::class_census::{ClassCensusEntry, census, load_sweep_fixture, sheet_dump_text, sweep_non_prestige};
+use codex::rules_core::class_census::{
+    census, load_sweep_fixture, sheet_dump_text, sweep_non_prestige, sweep_prestige,
+};
 
 fn real_now_iso8601() -> String {
     let output = Command::new("date")
@@ -141,19 +155,52 @@ fn run_json(json_path: &str) -> i32 {
         })
         .collect();
 
-    let mut prestige_entries: Vec<&ClassCensusEntry> =
-        entries.values().filter(|e| e.is_prestige).collect();
-    prestige_entries.sort_by(|a, b| a.class_id.cmp(&b.class_id));
-    let prestige: Vec<serde_json::Value> = prestige_entries
+    // F0c: every prestige id, in its own carrier mix(es) plus alone (the
+    // negative control). Same silenced-panic-hook posture as the
+    // non-prestige sweep above.
+    let previous_hook = std::panic::take_hook();
+    std::panic::set_hook(Box::new(|_| {}));
+    let prestige_rows = sweep_prestige(&fixture, &entries);
+    std::panic::set_hook(previous_hook);
+
+    let prestige_alone_blocked = prestige_rows.iter().filter(|r| !r.alone.computed()).count();
+    let prestige_mix_computed =
+        prestige_rows.iter().filter(|r| r.mixes.iter().all(|(sweep, _)| sweep.computed())).count();
+
+    let prestige: Vec<serde_json::Value> = prestige_rows
         .iter()
-        .map(|e| {
+        .map(|row| {
             serde_json::json!({
-                "class_id": e.class_id,
-                "family": e.family.label(),
-                "books": e.books,
-                "registries": e.registries,
-                "max_level": e.max_level,
-                "status": "not_swept_yet",
+                "class_id": row.class_id,
+                "books": row.books,
+                "max_level": row.max_level,
+                "carrier": row.carriers.iter().map(|c| c.slug()).collect::<Vec<_>>(),
+                "entry_gate": row.entry_gate_status,
+                "load_error": row.load_error,
+                "mixes": row.mixes.iter().map(|(sweep, gate)| serde_json::json!({
+                    "carrier": sweep.carrier.slug(),
+                    "carrier_level": sweep.carrier_level,
+                    "status": if sweep.computed() { "Computed" } else { "Blocked" },
+                    "levels_computed": sweep.levels_computed,
+                    "levels_blocked": sweep.levels_blocked,
+                    "blocking_diagnostics": sweep.blocking.iter().map(|b| serde_json::json!({
+                        "id": b.id,
+                        "message": b.message,
+                        "levels": b.levels,
+                    })).collect::<Vec<_>>(),
+                    "entry_gate": {
+                        "status": gate.status,
+                        "met": gate.met,
+                        "unmet": gate.unmet,
+                        "unknown": gate.unknown,
+                    },
+                })).collect::<Vec<_>>(),
+                "alone_status": if row.alone.computed() { "Computed" } else { "Blocked" },
+                "alone_blocking_diagnostics": row.alone.blocking.iter().map(|b| serde_json::json!({
+                    "id": b.id,
+                    "message": b.message,
+                    "levels": b.levels,
+                })).collect::<Vec<_>>(),
             })
         })
         .collect();
@@ -166,16 +213,25 @@ fn run_json(json_path: &str) -> i32 {
             "{} with the class swapped to the class under test, swept over 1..=max_level (per \
              the merged registry's own max_level, not a fixed 20), plus the canonical per-class \
              choice/spell seeds compose_character_input applies (pf1_adapter.rs, mirrored in \
-             codex::rules_core::class_seeds). A class counts as computed only when every level \
-             in its own sweep reaches HeadlessReceiptStatus::Computed. Prestige ids are listed, \
-             never swept alone -- see this binary's module doc comment.",
+             codex::rules_core::class_seeds). A non-prestige class counts as computed only when \
+             every level in its own sweep reaches HeadlessReceiptStatus::Computed. A prestige \
+             class is never measured alone -- 'alone_status' is a negative control, expected \
+             Blocked -- its real Computed measurement is the carrier-mix sweep in 'mixes' (§2, \
+             epic-f-class-completion.md, review finding 14): the carrier(s) its own converted \
+             entry gate selects (wizard/cleric/fighter, or both independently for the \
+             dual-caster case), at the smallest level meeting every translatable numeric \
+             entry-gate term (floor 5, capped at carrier + prestige max_level <= 20). \
+             'entry_gate' is printed rule text, non-blocking by design -- it never gates \
+             'mixes[].status'.",
             codex::rules_core::class_seeds::FIXTURE_RELATIVE_PATH,
         ),
         "ids": ids,
         "computed": computed,
         "blocked": blocked,
         "non_prestige_swept": results.len(),
-        "prestige_not_swept_yet": prestige.len(),
+        "prestige_swept": prestige_rows.len(),
+        "prestige_alone_blocked": prestige_alone_blocked,
+        "prestige_mix_computed": prestige_mix_computed,
         "classes": classes,
         "prestige": prestige,
     });
@@ -193,6 +249,12 @@ fn run_json(json_path: &str) -> i32 {
     }
 
     println!("ids={ids} computed={computed} blocked={blocked}");
+    println!(
+        "prestige_swept={} prestige_alone_blocked={} prestige_mix_computed={}",
+        prestige_rows.len(),
+        prestige_alone_blocked,
+        prestige_mix_computed
+    );
     0
 }
 

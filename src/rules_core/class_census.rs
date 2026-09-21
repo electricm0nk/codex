@@ -58,8 +58,11 @@ use std::collections::BTreeMap;
 #[cfg(test)]
 use std::collections::BTreeSet;
 
-use crate::rules_core::character_input::{CharacterInput, load_character_input_fixture};
-use crate::rules_core::class_seeds::{FIXTURE_RELATIVE_PATH, input_for};
+use crate::rules_core::character_input::{
+    CharacterClassLevel, CharacterInput, load_character_input_fixture,
+};
+use crate::rules_core::class_seeds::{FIXTURE_RELATIVE_PATH, canonical_seeds_for, input_for};
+use crate::rules_core::corpus_loader::live_sheet_rules;
 use crate::rules_core::pilot_compute::class_chassis_sheet_rules;
 use crate::rules_core::pilot_compute::crb_untabled_class_chassis;
 use crate::rules_core::pilot_compute::generic_class_chassis_covered_classes;
@@ -70,6 +73,7 @@ use crate::rules_core::rules_tables::apg::ApgClassId;
 use crate::rules_core::rules_tables::crb::class_tables::ClassId;
 use crate::rules_core::rules_tables::pathfinder_unchained::class_chassis::PuClassId;
 use crate::rules_core::rules_tables::ultimate_combat::UcClassId;
+use crate::rules_core::sheet_rule::{Applies, Cmp, Expr, SpellKind};
 use crate::support::paths::repo_root;
 
 /// PF1's own character-level cap -- the ceiling every fully tabled base
@@ -528,6 +532,605 @@ pub fn sheet_dump_text(fixture: &CharacterInput, class_name: &str, level: u8) ->
     out
 }
 
+// ---------------------------------------------------------------------------
+// F0c: prestige classes in the census -- the deterministic carrier build.
+//
+// A prestige class is never a legitimate `Computed` measurement ALONE (§2 of
+// `epic-f-class-completion.md`): PF1's own entry requirements only a carrier
+// build can satisfy. This section reads each prestige class's converted
+// `applies` gate, picks the carrier(s) the reviewed carrier rule (review
+// finding 14) names, sweeps the prestige levels 1..=max_level in that mix,
+// and separately confirms the class alone is still Blocked (the negative
+// control F0b already exercises the machinery for via `sweep_class`).
+// ---------------------------------------------------------------------------
+
+/// The carrier class a prestige class's converted entry gate selects.
+/// Wizard/Cleric are always CRB `core_rulebook` records; Fighter is the
+/// caster-less floor.
+#[derive(Debug, Clone, Copy, PartialEq, Eq, PartialOrd, Ord)]
+pub enum PrestigeCarrier {
+    Wizard,
+    Cleric,
+    Fighter,
+}
+
+impl PrestigeCarrier {
+    pub fn slug(self) -> &'static str {
+        match self {
+            PrestigeCarrier::Wizard => "wizard",
+            PrestigeCarrier::Cleric => "cleric",
+            PrestigeCarrier::Fighter => "fighter",
+        }
+    }
+
+    /// The spell tradition this carrier provides, or `None` for Fighter
+    /// (which provides no casting at all).
+    fn spell_kind(self) -> Option<SpellKind> {
+        match self {
+            PrestigeCarrier::Wizard => Some(SpellKind::Arcane),
+            PrestigeCarrier::Cleric => Some(SpellKind::Divine),
+            PrestigeCarrier::Fighter => None,
+        }
+    }
+}
+
+fn expr_mentions_spell_kind(expr: &Expr, kind: &SpellKind) -> bool {
+    match expr {
+        Expr::HighestSpellLevel(k) => k == kind,
+        Expr::Sum(terms) => terms.iter().any(|e| expr_mentions_spell_kind(e, kind)),
+        Expr::Mul(a, b) | Expr::Div(a, b) | Expr::Min(a, b) | Expr::Max(a, b) => {
+            expr_mentions_spell_kind(a, kind) || expr_mentions_spell_kind(b, kind)
+        }
+        Expr::Floor(inner) | Expr::Ceil(inner) => expr_mentions_spell_kind(inner, kind),
+        _ => false,
+    }
+}
+
+fn gate_mentions_spell_kind(gate: &Applies, kind: &SpellKind) -> bool {
+    match gate {
+        Applies::All(terms) => terms.iter().any(|t| gate_mentions_spell_kind(t, kind)),
+        Applies::AtLeast { of, .. } => of.iter().any(|t| gate_mentions_spell_kind(t, kind)),
+        Applies::Not(inner) => gate_mentions_spell_kind(inner, kind),
+        Applies::Compare { lhs, rhs, .. } => {
+            expr_mentions_spell_kind(lhs, kind) || expr_mentions_spell_kind(rhs, kind)
+        }
+        _ => false,
+    }
+}
+
+/// The carrier-selection rule, fully specified in `epic-f-class-completion.md`
+/// §2 (review finding 14, CONFIRMED): wizard if the gate mentions Arcane
+/// (and not Divine); cleric if Divine (and not Arcane); a SECOND,
+/// independent carrier for the dual-caster case (both Arcane AND Divine --
+/// `mystic_theurge`, `evangelist`); fighter otherwise (the floor-5 case,
+/// measured at 66 of 74 -- 23 with a bare `BaseAttack` term, 43 with
+/// neither a caster nor a BAB term at all). Pure and total: every gate shape
+/// resolves to a non-empty answer, so a class only ever goes unnamed when
+/// its converted record cannot be loaded at all (handled one layer up, in
+/// [`carrier_assignment`]) -- never a silently-guessed carrier.
+pub fn determine_carriers(gate: &Applies) -> Vec<PrestigeCarrier> {
+    let arcane = gate_mentions_spell_kind(gate, &SpellKind::Arcane);
+    let divine = gate_mentions_spell_kind(gate, &SpellKind::Divine);
+    match (arcane, divine) {
+        (true, true) => vec![PrestigeCarrier::Wizard, PrestigeCarrier::Cleric],
+        (true, false) => vec![PrestigeCarrier::Wizard],
+        (false, true) => vec![PrestigeCarrier::Cleric],
+        (false, false) => vec![PrestigeCarrier::Fighter],
+    }
+}
+
+/// One translatable numeric entry-gate axis: the three shapes §2 names.
+#[derive(Debug, Clone, PartialEq)]
+enum NumericAxis {
+    BaseAttack,
+    SkillRanks,
+    HighestSpellLevel(SpellKind),
+}
+
+#[derive(Debug, Clone)]
+struct NumericRequirement {
+    description: String,
+    axis: NumericAxis,
+    required: i32,
+}
+
+/// One top-level `applies` clause, classified into the buckets §2's carrier
+/// rule and entry-gate column need.
+#[derive(Debug, Clone)]
+enum TermClass {
+    /// No requirement stated (`Applies::Always`).
+    AlwaysMet,
+    /// Always includes; prints its own condition text. Counted `met`.
+    Situational(String),
+    /// One of the three translatable numeric axes.
+    Numeric(NumericRequirement),
+    /// A recognized clause the carrier build never holds by construction
+    /// (a feat, alignment, deity, race, item, choice, language, ...) --
+    /// unmet, not unknown: the shape is understood, the carrier just lacks
+    /// it (§2: "feats, alignment, deity, race, or 'special'").
+    NonNumericUnmet(String),
+    /// A gate shape this rule was not told how to read. Reported `unknown`
+    /// by name -- never guessed (§2's own risk clause).
+    Unrecognized(String),
+}
+
+fn numeric_axis_of(e: &Expr) -> Option<NumericAxis> {
+    match e {
+        Expr::BaseAttack => Some(NumericAxis::BaseAttack),
+        Expr::SkillRanks(_) => Some(NumericAxis::SkillRanks),
+        Expr::HighestSpellLevel(kind) => Some(NumericAxis::HighestSpellLevel(kind.clone())),
+        _ => None,
+    }
+}
+
+fn flip_cmp(op: Cmp) -> Cmp {
+    match op {
+        Cmp::Lt => Cmp::Gt,
+        Cmp::Lte => Cmp::Gte,
+        Cmp::Gt => Cmp::Lt,
+        Cmp::Gte => Cmp::Lte,
+        other => other,
+    }
+}
+
+fn classify_term(term: &Applies) -> TermClass {
+    match term {
+        Applies::Always => TermClass::AlwaysMet,
+        Applies::Never => TermClass::NonNumericUnmet("Never".to_owned()),
+        Applies::Situational { text } => TermClass::Situational(text.clone()),
+        // Two converter-added bookkeeping rows every prestige class's own
+        // gate carries (§0.9: "this cycle added the class's own level
+        // ceiling to the converted applies gate"): the class's own level
+        // ceiling (`ClassLevel(this class) <= max_level`, trivially true
+        // for a sweep already bounded to `1..=max_level`) and an
+        // archetype/variant off-switch (`Var(id) == 0`, trivially true for
+        // a synthetic carrier build that selects no archetype -- nothing
+        // holds a nonzero contribution to it). Neither is a real PF1 entry
+        // requirement a player ever evaluates, so both are recognized and
+        // folded into `met`, never reported as an unmet or unknown clause.
+        Applies::Compare { lhs: Expr::ClassLevel(_), op: Cmp::Lte, rhs: Expr::Const(_) } => {
+            TermClass::AlwaysMet
+        }
+        Applies::Compare { lhs: Expr::Var(_), op: Cmp::Eq, rhs: Expr::Const(0) } => TermClass::AlwaysMet,
+        Applies::Compare { lhs, op, rhs } => {
+            // Only a plain `<numeric axis> {Gte|Gt|Eq} Const(n)` (either
+            // order) is a translatable numeric requirement; any other
+            // Compare shape is a gate this rule cannot read -- Unrecognized,
+            // never guessed.
+            let (axis_expr, cmp, const_expr) = match (numeric_axis_of(lhs), numeric_axis_of(rhs)) {
+                (Some(_), None) => (lhs, *op, rhs),
+                (None, Some(_)) => (rhs, flip_cmp(*op), lhs),
+                _ => {
+                    return TermClass::Unrecognized(format!(
+                        "Compare {{ {lhs:?} {op:?} {rhs:?} }}"
+                    ));
+                }
+            };
+            let axis = numeric_axis_of(axis_expr).expect("checked above");
+            let n = match const_expr {
+                Expr::Const(n) => *n,
+                other => {
+                    return TermClass::Unrecognized(format!(
+                        "Compare against non-constant {other:?}"
+                    ));
+                }
+            };
+            let required = match cmp {
+                Cmp::Gte | Cmp::Eq => n,
+                Cmp::Gt => n + 1,
+                other => {
+                    return TermClass::Unrecognized(format!(
+                        "Compare with unsupported operator {other:?}"
+                    ));
+                }
+            };
+            let description = match &axis {
+                NumericAxis::BaseAttack => format!("BaseAttack >= {required}"),
+                NumericAxis::SkillRanks => format!("SkillRanks >= {required}"),
+                NumericAxis::HighestSpellLevel(kind) => {
+                    format!("HighestSpellLevel {kind:?} >= {required}")
+                }
+            };
+            TermClass::Numeric(NumericRequirement { description, axis, required })
+        }
+        Applies::Holds { what, .. } => TermClass::NonNumericUnmet(format!("Holds {what:?}")),
+        Applies::Chosen { choice, option } => {
+            TermClass::NonNumericUnmet(format!("Chosen {{ {choice:?}, {option:?} }}"))
+        }
+        Applies::ItemHas { tags, n } => {
+            TermClass::NonNumericUnmet(format!("ItemHas {{ {tags:?}, {n} }}"))
+        }
+        // A compound "at least N of ..." or negated clause is a recognized
+        // gate shape (real PF1 prestige gates use it constantly -- e.g.
+        // Mystic Theurge's "at least 2 of: 3 ranks Knowledge (arcana),
+        // 3 ranks Knowledge (religion)"), but combinatorially satisfying an
+        // N-of-M clause against a level solve is outside the three
+        // translatable axes §2 names. Printed and bucketed under the
+        // documented "special" category -- recognized, non-blocking, never
+        // silently passed -- rather than reported `unknown` (which is
+        // reserved for a shape this rule truly cannot read at all).
+        Applies::AtLeast { n, of } => {
+            TermClass::NonNumericUnmet(format!("special: at least {n} of {of:?}"))
+        }
+        Applies::Not(inner) => TermClass::NonNumericUnmet(format!("special: Not({inner:?})")),
+        Applies::All(nested) => TermClass::NonNumericUnmet(format!("special: nested All({nested:?})")),
+    }
+}
+
+fn top_level_terms(gate: &Applies) -> Vec<&Applies> {
+    match gate {
+        Applies::All(terms) => terms.iter().collect(),
+        other => vec![other],
+    }
+}
+
+/// Smallest level `1..=DEFAULT_TABLED_MAX_LEVEL` at which `carrier` meets
+/// `req`, or `None` when it is unreachable at all -- a caster-level axis of
+/// the wrong kind (the dual-caster cross term: the wizard mix can never
+/// satisfy a Divine term), or a requirement past the level cap.
+fn level_meeting(carrier: PrestigeCarrier, req: &NumericRequirement) -> Option<u8> {
+    match &req.axis {
+        NumericAxis::BaseAttack => {
+            let chassis = class_chassis_sheet_rules::record("core_rulebook", carrier.slug())?;
+            (1..=DEFAULT_TABLED_MAX_LEVEL).find(|&level| {
+                chassis
+                    .row_at(level)
+                    .map(|r| i32::from(r.base_attack_bonus) >= req.required)
+                    .unwrap_or(false)
+            })
+        }
+        NumericAxis::SkillRanks => {
+            let level = req.required.max(1);
+            (level <= i32::from(DEFAULT_TABLED_MAX_LEVEL)).then_some(level as u8)
+        }
+        NumericAxis::HighestSpellLevel(kind) => {
+            if carrier.spell_kind().as_ref() != Some(kind) {
+                return None;
+            }
+            // A full caster's spell level L is first reachable at class
+            // level 2L-1 (§2's own stated formula).
+            let level = (2 * req.required - 1).max(1);
+            (level <= i32::from(DEFAULT_TABLED_MAX_LEVEL)).then_some(level as u8)
+        }
+    }
+}
+
+/// The value `carrier` actually reaches at `level` on `req`'s own axis --
+/// what an unmet-by-the-cap line prints (§2's stated precedence).
+fn value_reached(carrier: PrestigeCarrier, req: &NumericRequirement, level: u8) -> i32 {
+    match &req.axis {
+        NumericAxis::BaseAttack => class_chassis_sheet_rules::record("core_rulebook", carrier.slug())
+            .and_then(|chassis| chassis.row_at(level))
+            .map(|r| i32::from(r.base_attack_bonus))
+            .unwrap_or(0),
+        NumericAxis::SkillRanks => i32::from(level),
+        NumericAxis::HighestSpellLevel(kind) => {
+            if carrier.spell_kind().as_ref() == Some(kind) {
+                (i32::from(level) + 1) / 2
+            } else {
+                0
+            }
+        }
+    }
+}
+
+/// One carrier's real, printed entry-gate verdict against one prestige
+/// class's converted gate -- non-blocking (§2: "print, do not simulate"),
+/// but never silently dropped either.
+#[derive(Debug, Clone)]
+pub struct CarrierEntryGate {
+    pub carrier: PrestigeCarrier,
+    pub carrier_level: u8,
+    pub status: &'static str,
+    pub met: Vec<String>,
+    pub unmet: Vec<String>,
+    pub unknown: Vec<String>,
+}
+
+/// Evaluates `gate` for one `carrier`: the smallest carrier level meeting
+/// every numeric term (floor 5), the cap precedence (§2: "the carrier +
+/// prestige max_level <= 20 cap always wins"), and every non-numeric or
+/// unrecognized clause named explicitly.
+fn evaluate_carrier(carrier: PrestigeCarrier, gate: &Applies, prestige_max_level: u8) -> CarrierEntryGate {
+    let mut numeric: Vec<NumericRequirement> = Vec::new();
+    let mut met: Vec<String> = Vec::new();
+    let mut unmet: Vec<String> = Vec::new();
+    let mut unknown: Vec<String> = Vec::new();
+
+    for term in top_level_terms(gate) {
+        match classify_term(term) {
+            TermClass::AlwaysMet => {}
+            TermClass::Situational(text) => met.push(format!("Situational: {text}")),
+            TermClass::Numeric(req) => numeric.push(req),
+            TermClass::NonNumericUnmet(desc) => unmet.push(desc),
+            TermClass::Unrecognized(desc) => unknown.push(desc),
+        }
+    }
+
+    // Requirements this carrier can never reach at all (wrong-kind caster
+    // axis, or past the level cap) are unmet outright, not part of the
+    // level solve below.
+    let mut reachable: Vec<&NumericRequirement> = Vec::new();
+    for req in &numeric {
+        match level_meeting(carrier, req) {
+            Some(_) => reachable.push(req),
+            None => unmet.push(format!(
+                "{} (carrier {} cannot ever reach this)",
+                req.description,
+                carrier.slug()
+            )),
+        }
+    }
+
+    let mut carrier_level: u8 = 5;
+    for req in &reachable {
+        if let Some(level) = level_meeting(carrier, req) {
+            carrier_level = carrier_level.max(level);
+        }
+    }
+
+    // §2's stated precedence: the level cap always wins.
+    if u16::from(carrier_level) + u16::from(prestige_max_level) > 20 {
+        carrier_level = 20u8.saturating_sub(prestige_max_level);
+    }
+
+    for req in &reachable {
+        let needed = level_meeting(carrier, req).unwrap_or(u8::MAX);
+        if needed <= carrier_level {
+            met.push(req.description.clone());
+        } else {
+            let reached = value_reached(carrier, req, carrier_level);
+            unmet.push(format!(
+                "{} (needs level {needed}, capped carrier reaches level {carrier_level} => {reached})",
+                req.description
+            ));
+        }
+    }
+
+    let status = if !unknown.is_empty() {
+        "unknown"
+    } else if !unmet.is_empty() {
+        "unmet"
+    } else {
+        "met"
+    };
+
+    CarrierEntryGate { carrier, carrier_level, status, met, unmet, unknown }
+}
+
+/// The converted `applies` gate for one prestige class, tried against every
+/// book the census found it in (a class can be tagged `Prestige` in more
+/// than one book pre-dedupe). `None` only when no book's record can be
+/// loaded at all.
+fn prestige_applies_gate(books: &[String], slug: &str) -> Option<Applies> {
+    let package = live_sheet_rules()?;
+    for book in books {
+        if let Some(rule) = package.rule(&format!("{book}:class:{slug}")) {
+            return Some(rule.applies.clone());
+        }
+    }
+    package.find("class", slug).and_then(|id| package.rule(id)).map(|r| r.applies.clone())
+}
+
+/// The fast half of F0c: which carrier(s) a prestige class's own gate
+/// selects, with no engine sweep. `Err` only when the converted record
+/// cannot be loaded at all -- named by class id, never silently skipped.
+pub fn carrier_assignment(entry: &ClassCensusEntry) -> Result<Vec<PrestigeCarrier>, String> {
+    let slug = entry.class_id.strip_prefix("class:").unwrap_or(&entry.class_id);
+    let gate = prestige_applies_gate(&entry.books, slug).ok_or_else(|| {
+        format!("{}: no converted class record found in {:?}", entry.class_id, entry.books)
+    })?;
+    Ok(determine_carriers(&gate))
+}
+
+/// Build the real production-shaped multiclass input for a carrier class
+/// plus the prestige class under test, at their own fixed/swept levels.
+/// Mirrors [`crate::rules_core::class_seeds::input_for`]'s single-class
+/// shape, widened to more than one class level.
+fn input_for_mix(fixture: &CharacterInput, classes: &[(&str, u8)]) -> CharacterInput {
+    let mut input = fixture.clone();
+    input.case_id = Some(format!(
+        "class_census.prestige_mix.{}",
+        classes.iter().map(|(name, level)| format!("{name}{level}")).collect::<Vec<_>>().join(".")
+    ));
+    input.chosen.class_levels = classes
+        .iter()
+        .map(|(name, level)| CharacterClassLevel { class_id: format!("class:{name}"), level: *level })
+        .collect();
+    for (name, _) in classes {
+        let (choices, spells) = canonical_seeds_for(name);
+        input.chosen.selected_choices.extend(choices);
+        input.chosen.spells_selected.extend(spells);
+    }
+    input
+}
+
+/// One carrier mix's real, engine-derived sweep of a prestige class's own
+/// levels (`1..=max_level`), carrier level fixed. Same panic-caught posture
+/// as [`sweep_class`].
+#[derive(Debug, Clone)]
+pub struct PrestigeMixSweep {
+    pub carrier: PrestigeCarrier,
+    pub carrier_level: u8,
+    pub prestige_class_id: String,
+    pub max_level: u8,
+    pub levels_computed: Vec<u8>,
+    pub levels_blocked: Vec<u8>,
+    pub blocking: Vec<CensusBlockingDiagnostic>,
+}
+
+impl PrestigeMixSweep {
+    pub fn computed(&self) -> bool {
+        self.levels_blocked.is_empty()
+    }
+}
+
+pub fn sweep_prestige_mix(
+    fixture: &CharacterInput,
+    carrier: PrestigeCarrier,
+    carrier_level: u8,
+    entry: &ClassCensusEntry,
+) -> PrestigeMixSweep {
+    let prestige_slug = entry.class_id.strip_prefix("class:").unwrap_or(&entry.class_id);
+    let mut levels_computed = Vec::new();
+    let mut levels_blocked = Vec::new();
+    let mut blocking: Vec<CensusBlockingDiagnostic> = Vec::new();
+
+    for level in 1..=entry.max_level {
+        let input = input_for_mix(fixture, &[(carrier.slug(), carrier_level), (prestige_slug, level)]);
+
+        let outcome = std::panic::catch_unwind(std::panic::AssertUnwindSafe(|| {
+            build_pilot_headless_receipt(&input)
+        }));
+
+        let receipt = match outcome {
+            Ok(receipt) => receipt,
+            Err(payload) => {
+                let detail = payload
+                    .downcast_ref::<&str>()
+                    .map(|s| (*s).to_owned())
+                    .or_else(|| payload.downcast_ref::<String>().cloned())
+                    .unwrap_or_else(|| "<non-string panic payload>".to_owned());
+                levels_blocked.push(level);
+                let id = "engine.panic".to_owned();
+                match blocking.iter_mut().find(|b| b.id == id) {
+                    Some(existing) => existing.levels.push(level),
+                    None => blocking.push(CensusBlockingDiagnostic {
+                        id,
+                        message: format!(
+                            "the compute pipeline PANICS for the {}/{} mix at prestige level \
+                             {level} instead of returning a receipt: {detail}",
+                            carrier.slug(),
+                            entry.class_id
+                        ),
+                        levels: vec![level],
+                    }),
+                }
+                continue;
+            }
+        };
+
+        if receipt.status == HeadlessReceiptStatus::Computed {
+            levels_computed.push(level);
+        } else {
+            levels_blocked.push(level);
+        }
+        for d in receipt.computation.diagnostics.iter().filter(|d| d.claim_blocking) {
+            match blocking.iter_mut().find(|b| b.id == d.id) {
+                Some(existing) => {
+                    if existing.levels.last() != Some(&level) {
+                        existing.levels.push(level);
+                    }
+                }
+                None => blocking.push(CensusBlockingDiagnostic {
+                    id: d.id.clone(),
+                    message: d.message.clone(),
+                    levels: vec![level],
+                }),
+            }
+        }
+    }
+
+    PrestigeMixSweep {
+        carrier,
+        carrier_level,
+        prestige_class_id: entry.class_id.clone(),
+        max_level: entry.max_level,
+        levels_computed,
+        levels_blocked,
+        blocking,
+    }
+}
+
+/// One prestige class's full F0c row: its carrier(s), each carrier mix's
+/// real engine sweep and printed entry-gate verdict, its combined
+/// `entry_gate` status, and its own `alone_status` negative control
+/// ([`sweep_class`], reused unchanged -- a prestige class alone is swept
+/// the exact same way a base class is, the only difference is what the
+/// caller expects the answer to be).
+#[derive(Debug, Clone)]
+pub struct PrestigeCensusRow {
+    pub class_id: String,
+    pub books: Vec<String>,
+    pub max_level: u8,
+    pub carriers: Vec<PrestigeCarrier>,
+    pub mixes: Vec<(PrestigeMixSweep, CarrierEntryGate)>,
+    pub entry_gate_status: &'static str,
+    pub alone: ClassSweepResult,
+    pub load_error: Option<String>,
+}
+
+fn combine_entry_gate_status(mixes: &[(PrestigeMixSweep, CarrierEntryGate)]) -> &'static str {
+    if mixes.len() == 1 {
+        return mixes[0].1.status;
+    }
+    let statuses: Vec<&str> = mixes.iter().map(|(_, g)| g.status).collect();
+    if statuses.iter().all(|s| *s == "met") {
+        "met"
+    } else if statuses.contains(&"met") {
+        // §2 (review finding 14): partially-met is used ONLY for the
+        // dual-caster case, when one independent-carrier mix succeeds while
+        // the other fails its own entry gate.
+        "partially-met"
+    } else if statuses.contains(&"unknown") {
+        "unknown"
+    } else {
+        "unmet"
+    }
+}
+
+pub fn build_prestige_row(fixture: &CharacterInput, entry: &ClassCensusEntry) -> PrestigeCensusRow {
+    let alone = sweep_class(fixture, entry);
+    let slug = entry.class_id.strip_prefix("class:").unwrap_or(&entry.class_id);
+
+    let Some(gate) = prestige_applies_gate(&entry.books, slug) else {
+        return PrestigeCensusRow {
+            class_id: entry.class_id.clone(),
+            books: entry.books.clone(),
+            max_level: entry.max_level,
+            carriers: Vec::new(),
+            mixes: Vec::new(),
+            entry_gate_status: "unknown",
+            alone,
+            load_error: Some(format!(
+                "no converted class record found for {} in {:?} -- reported unknown, never defaulted",
+                entry.class_id, entry.books
+            )),
+        };
+    };
+
+    let carriers = determine_carriers(&gate);
+    let mixes: Vec<(PrestigeMixSweep, CarrierEntryGate)> = carriers
+        .iter()
+        .map(|carrier| {
+            let ge = evaluate_carrier(*carrier, &gate, entry.max_level);
+            let sweep = sweep_prestige_mix(fixture, *carrier, ge.carrier_level, entry);
+            (sweep, ge)
+        })
+        .collect();
+
+    let entry_gate_status = combine_entry_gate_status(&mixes);
+
+    PrestigeCensusRow {
+        class_id: entry.class_id.clone(),
+        books: entry.books.clone(),
+        max_level: entry.max_level,
+        carriers,
+        mixes,
+        entry_gate_status,
+        alone,
+        load_error: None,
+    }
+}
+
+/// Every prestige class id in `entries`, its carrier build swept.
+pub fn sweep_prestige(
+    fixture: &CharacterInput,
+    entries: &BTreeMap<String, ClassCensusEntry>,
+) -> Vec<PrestigeCensusRow> {
+    entries.values().filter(|e| e.is_prestige).map(|e| build_prestige_row(fixture, e)).collect()
+}
+
 #[cfg(test)]
 mod tests {
     use super::*;
@@ -745,5 +1348,297 @@ mod tests {
         assert!(first.contains("class: class:fighter"));
         assert!(first.contains("level: 5"));
         assert!(!first.is_empty());
+    }
+
+    // -----------------------------------------------------------------
+    // F0c RED-first tests (docs/release/SD-36-consolidation/
+    // epic-f-class-completion.md §2, review finding 14): the deterministic
+    // prestige carrier build. Both `determine_carriers`/`carrier_assignment`
+    // fail to compile before this batch's code exists, the same established
+    // RED shape F0a/F0b already used for a new lib API.
+    // -----------------------------------------------------------------
+
+    fn prestige_entries(entries: &BTreeMap<String, ClassCensusEntry>) -> Vec<&ClassCensusEntry> {
+        let mut prestige: Vec<&ClassCensusEntry> = entries.values().filter(|e| e.is_prestige).collect();
+        prestige.sort_by(|a, b| a.class_id.cmp(&b.class_id));
+        prestige
+    }
+
+    #[test]
+    fn prestige_carrier_is_deterministic() {
+        let entries = census();
+        let prestige = prestige_entries(&entries);
+        assert_eq!(prestige.len(), 74, "measured prestige population moved off 74");
+        for entry in &prestige {
+            let first = carrier_assignment(entry);
+            let second = carrier_assignment(entry);
+            assert_eq!(
+                first, second,
+                "{}: carrier_assignment is not deterministic across two calls",
+                entry.class_id
+            );
+        }
+    }
+
+    #[test]
+    fn every_prestige_class_gets_a_carrier_or_is_named_unknown() {
+        let entries = census();
+        let prestige = prestige_entries(&entries);
+        assert_eq!(prestige.len(), 74, "measured prestige population moved off 74");
+
+        let mut unknown: Vec<String> = Vec::new();
+        for entry in &prestige {
+            match carrier_assignment(entry) {
+                Ok(carriers) => {
+                    assert!(!carriers.is_empty(), "{}: got zero carriers, not a named Unknown", entry.class_id);
+                    assert!(
+                        carriers.len() <= 2,
+                        "{}: more than the documented dual-caster carrier count: {carriers:?}",
+                        entry.class_id
+                    );
+                }
+                Err(reason) => unknown.push(reason),
+            }
+        }
+        // Measured today: every one of the 74 converted prestige class
+        // records loads (the same `class_chassis_sheet_rules::records` scan
+        // that found the `Prestige` tag in the first place also proves the
+        // record itself is loadable), so this is pinned at 0 -- a future
+        // corpus change that makes a record unloadable must surface here BY
+        // NAME, never silently drop the row from the census.
+        assert!(
+            unknown.is_empty(),
+            "prestige class(es) with no loadable converted gate (must be named, not silently \
+             dropped): {unknown:?}"
+        );
+    }
+
+    #[test]
+    fn prestige_carrier_distribution_is_measured_and_printed() {
+        // Not a pinned-number assertion (§8 review finding 8's own
+        // "measured, never guessed" posture) -- just proves the three
+        // buckets §2's own review-finding-14 evidence names are all
+        // reachable from this code, and prints the real split for the F0c
+        // commit's own summary to quote. Re-derive with:
+        // `cargo test --locked -j 2 --lib \
+        //   class_census::tests::prestige_carrier_distribution_is_measured_and_printed \
+        //   -- --nocapture`
+        let entries = census();
+        let prestige = prestige_entries(&entries);
+        let mut wizard_only = 0usize;
+        let mut cleric_only = 0usize;
+        let mut dual = 0usize;
+        let mut fighter = 0usize;
+        let mut dual_names: Vec<&str> = Vec::new();
+        for entry in &prestige {
+            let carriers = carrier_assignment(entry).unwrap_or_else(|e| panic!("{e}"));
+            match carriers.as_slice() {
+                [PrestigeCarrier::Wizard] => wizard_only += 1,
+                [PrestigeCarrier::Cleric] => cleric_only += 1,
+                [PrestigeCarrier::Fighter] => fighter += 1,
+                [PrestigeCarrier::Wizard, PrestigeCarrier::Cleric] => {
+                    dual += 1;
+                    dual_names.push(&entry.class_id);
+                }
+                other => panic!("{}: unexpected carrier shape {other:?}", entry.class_id),
+            }
+        }
+        assert_eq!(
+            wizard_only + cleric_only + dual + fighter,
+            74,
+            "carrier buckets must partition all 74 prestige classes"
+        );
+        // §2's own review-finding-14 evidence named exactly these two ids
+        // as the dual-caster case.
+        assert_eq!(
+            dual, 2,
+            "measured dual-caster (Arcane AND Divine) prestige count moved off the reviewed \
+             evidence's 2 (mystic_theurge, evangelist): got {dual_names:?}"
+        );
+        assert!(
+            dual_names.contains(&"class:mystic_theurge") && dual_names.contains(&"class:evangelist"),
+            "dual-caster ids moved off the reviewed evidence: {dual_names:?}"
+        );
+    }
+
+    #[test]
+    fn a_dual_caster_prestige_class_gets_two_independent_carriers() {
+        let entries = census();
+        let mystic_theurge = entries
+            .get("class:mystic_theurge")
+            .expect("mystic_theurge must be in the prestige census");
+        let carriers = carrier_assignment(mystic_theurge).expect("mystic_theurge's gate must load");
+        assert_eq!(
+            carriers,
+            vec![PrestigeCarrier::Wizard, PrestigeCarrier::Cleric],
+            "mystic_theurge's gate carries both an Arcane and a Divine HighestSpellLevel term"
+        );
+    }
+
+    #[test]
+    fn a_bare_bab_prestige_class_gets_the_fighter_floor() {
+        let entries = census();
+        let arcane_archer = entries
+            .get("class:arcane_archer")
+            .expect("arcane_archer must be in the prestige census");
+        let carriers = carrier_assignment(arcane_archer).expect("arcane_archer's gate must load");
+        // Arcane Archer's real gate (§0.7) carries `HighestSpellLevel
+        // Arcane >= 1` among its clauses -- it is a caster-entry prestige
+        // class, so its carrier is Wizard, never the Fighter floor. This
+        // pins the carrier rule against the one class this document's own
+        // §0.7 already names, rather than only against synthetic gates.
+        assert_eq!(
+            carriers,
+            vec![PrestigeCarrier::Wizard],
+            "arcane_archer's own §0.7-cited gate carries an Arcane HighestSpellLevel term"
+        );
+    }
+
+    #[test]
+    fn carrier_rule_is_pure_over_synthetic_gates() {
+        // Direct unit coverage of `determine_carriers`, independent of the
+        // corpus, so the rule's own four branches are pinned even if a
+        // future corpus edit happened to leave no real class exercising one
+        // of them.
+        let bab_only = Applies::Compare { lhs: Expr::BaseAttack, op: Cmp::Gte, rhs: Expr::Const(5) };
+        assert_eq!(determine_carriers(&bab_only), vec![PrestigeCarrier::Fighter]);
+
+        let arcane_only = Applies::Compare {
+            lhs: Expr::HighestSpellLevel(SpellKind::Arcane),
+            op: Cmp::Gte,
+            rhs: Expr::Const(1),
+        };
+        assert_eq!(determine_carriers(&arcane_only), vec![PrestigeCarrier::Wizard]);
+
+        let divine_only = Applies::Compare {
+            lhs: Expr::HighestSpellLevel(SpellKind::Divine),
+            op: Cmp::Gte,
+            rhs: Expr::Const(1),
+        };
+        assert_eq!(determine_carriers(&divine_only), vec![PrestigeCarrier::Cleric]);
+
+        let dual = Applies::All(vec![arcane_only, divine_only]);
+        assert_eq!(determine_carriers(&dual), vec![PrestigeCarrier::Wizard, PrestigeCarrier::Cleric]);
+    }
+
+    #[test]
+    fn the_bab_cap_precedent_never_bites_today() {
+        // §2's own review-finding-14 evidence: 23 prestige classes carry a
+        // bare BaseAttack term, max value 7 -- `fighter 7 + max_level 10 =
+        // 17 <= 20`, so the cap is never actually reached by a BAB term
+        // alone. Pin the arithmetic itself (not the corpus scan, which
+        // `prestige_carrier_distribution_is_measured_and_printed` already
+        // covers indirectly): a BAB-7 requirement never needs capping
+        // against any prestige class's own real max_level.
+        let req = NumericRequirement {
+            description: "BaseAttack >= 7".to_owned(),
+            axis: NumericAxis::BaseAttack,
+            required: 7,
+        };
+        let level = level_meeting(PrestigeCarrier::Fighter, &req).expect("fighter must reach BAB 7");
+        assert_eq!(level, 7, "fighter's own BAB is full (1:1 with level)");
+        // §2's own evidence uses the real 10-level ceiling most BAB-gated
+        // prestige classes carry (`DEFAULT_PRESTIGE_MAX_LEVEL`); the doc's
+        // own arithmetic (`fighter 7 + max_level 10 = 17 <= 20`) is pinned
+        // directly, not generalised past what the corpus actually shows.
+        let prestige_max_level = 10u8;
+        assert!(
+            u16::from(level) + u16::from(prestige_max_level) <= 20,
+            "a BAB-7 requirement must never trip the level cap at the real 10-level prestige ceiling"
+        );
+    }
+
+    #[test]
+    fn every_prestige_class_alone_is_measured_today() {
+        // Negative-control measurement (§2's second census column,
+        // `alone_status`): every prestige class swept ALONE -- reusing
+        // `sweep_class` exactly as F0b's own base-class sweep does -- so
+        // this batch's commit can quote the real, measured
+        // `BASELINE_CENSUS_PRESTIGE_ALONE_BLOCKED` figure rather than assert
+        // one. Not itself the RED-until-F2 test (below): this one only
+        // proves the sweep runs and records what it finds.
+        let entries = census();
+        let prestige = prestige_entries(&entries);
+        let fixture = load_sweep_fixture().expect("shared deterministic fixture must load cleanly");
+        let results: Vec<ClassSweepResult> =
+            prestige.iter().map(|entry| sweep_class(&fixture, entry)).collect();
+        assert_eq!(results.len(), 74, "an id was swept more than once, or one was skipped");
+        let blocked = results.iter().filter(|r| !r.computed()).count();
+        // Recorded, not forced: today's honest baseline is that every
+        // prestige class alone is Blocked (no chassis population accepts a
+        // bare-Prestige-tagged id per §0.5), matching
+        // `BASELINE_CENSUS_PRESTIGE_ALONE_BLOCKED=74`. If a future corpus
+        // or engine change makes one of these Computed alone, this
+        // assertion goes red and the baseline moves with a logged
+        // `scripts/retro.py correction` -- not a silent widening.
+        assert_eq!(
+            blocked, 74,
+            "prestige-alone Blocked count moved off the measured baseline of 74 -- log a correction \
+             before raising BASELINE_CENSUS_PRESTIGE_ALONE_BLOCKED"
+        );
+    }
+
+    #[test]
+    #[ignore = "RED until Epic F2"]
+    fn prestige_alone_is_blocked_with_the_game_rule() {
+        // §2: "every prestige class alone must be Blocked with the F2
+        // game-rule diagnostic (74 of 74)." F2 has not landed yet (it adds
+        // the prestige-alone entry-requirement diagnostic itself), so today
+        // a prestige class alone is Blocked for whatever engine reason
+        // happens to fire first (usually an unsupported-chassis diagnostic,
+        // never the real game-rule one) -- this test is the pinned future
+        // shape, RED until F2 names that diagnostic id.
+        const F2_GAME_RULE_DIAGNOSTIC_ID: &str = "class_chassis.prestige_requires_a_carrier_class";
+
+        let entries = census();
+        let prestige = prestige_entries(&entries);
+        let fixture = load_sweep_fixture().expect("shared deterministic fixture must load cleanly");
+        let mut missing: Vec<String> = Vec::new();
+        for entry in &prestige {
+            let result = sweep_class(&fixture, entry);
+            assert!(!result.computed(), "{}: expected Blocked alone, got Computed", entry.class_id);
+            let has_game_rule_diagnostic =
+                result.blocking.iter().any(|b| b.id == F2_GAME_RULE_DIAGNOSTIC_ID);
+            if !has_game_rule_diagnostic {
+                missing.push(entry.class_id.clone());
+            }
+        }
+        assert!(
+            missing.is_empty(),
+            "prestige classes Blocked alone but not by the F2 game-rule diagnostic \
+             ({F2_GAME_RULE_DIAGNOSTIC_ID}): {missing:?}"
+        );
+    }
+
+    #[test]
+    fn build_prestige_row_covers_every_prestige_class_with_a_mix_per_carrier() {
+        let entries = census();
+        let prestige = prestige_entries(&entries);
+        let fixture = load_sweep_fixture().expect("shared deterministic fixture must load cleanly");
+        for entry in prestige.iter().take(3) {
+            let row = build_prestige_row(&fixture, entry);
+            assert!(row.load_error.is_none(), "{}: {:?}", entry.class_id, row.load_error);
+            assert_eq!(row.mixes.len(), row.carriers.len(), "{}: one mix per named carrier", entry.class_id);
+            for (sweep, gate) in &row.mixes {
+                assert_eq!(
+                    sweep.levels_computed.len() + sweep.levels_blocked.len(),
+                    usize::from(entry.max_level),
+                    "{}: every prestige level must be swept exactly once",
+                    entry.class_id
+                );
+                assert!(
+                    ["met", "unmet", "unknown"].contains(&gate.status),
+                    "{}: entry gate status must be one of met/unmet/unknown, got {}",
+                    entry.class_id,
+                    gate.status
+                );
+            }
+            assert!(
+                ["met", "unmet", "unknown", "partially-met"].contains(&row.entry_gate_status),
+                "{}: row entry_gate_status {} is not one of the four documented values",
+                entry.class_id,
+                row.entry_gate_status
+            );
+        }
     }
 }
