@@ -463,6 +463,9 @@ fn effect_words(package: &SheetRulePackage, effect: &Effect) -> String {
         Effect::FactDeclare { name, value } => {
             format!("Declares {} as {value}", words_of_id(name))
         }
+        Effect::GatedFactGrant { fact, when } => {
+            format!("Grants {} when {}", fact_words(fact), describe_gate(package, when))
+        }
     }
 }
 

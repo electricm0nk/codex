@@ -1414,10 +1414,20 @@ fn convert_token(ctx: &mut RecordCtx, acc: &mut Acc, out: &mut Converted, key: &
                 "EQUIP" => items.into_iter().map(|e| Fact::Equipment(tag_word(&e))).collect(),
                 _ => return Err(format!("AUTO ({head})")),
             };
+            // Review finding 1 (`epic-f-class-completion.md` §0.1a/§3.1 item 4): `when` is the
+            // PRE-gate on the individual fact (which named weapon/armor/shield/language), not
+            // on the whole rule -- `Grant.when` already carries the rule-level gate elsewhere
+            // and must not be conflated with this one. An ungated row (`when == Applies::Always`,
+            // the common case) keeps emitting the plain, existing `FactGrant` shape so today's
+            // converted JSON deserializes unchanged; a gated row emits the new
+            // `Effect::GatedFactGrant` instead of silently discarding its own condition.
             for f in facts {
-                acc.grants.push(Effect::FactGrant(f));
+                if when == Applies::Always {
+                    acc.grants.push(Effect::FactGrant(f));
+                } else {
+                    acc.grants.push(Effect::GatedFactGrant { fact: f, when: when.clone() });
+                }
             }
-            let _ = when;
         }
         // `MONCCSKILL` is `MONCSKILL`'s cross-class twin (SD-35 AT-35-E4-001).
         "CSKILL" | "CCSKILL" | "MONCSKILL" | "MONCCSKILL" => {

@@ -474,6 +474,17 @@ pub enum Effect {
     Waives(RuleId),
     Revokes(RuleId),
     FactDeclare { name: String, value: String },
+    /// A fact grant that is conditional on `when` -- the PRE-gate a PCGen `AUTO:WEAPONPROF`
+    /// (etc.) row carries on the individual fact, distinct from `Grant.when` (which gates
+    /// whether the character may hold the whole RULE, not one fact inside it; SD-36 Epic F1-2,
+    /// review finding 1). Added as a new variant, never a field on `FactGrant`, so every
+    /// existing converted `{"FactGrant": ...}` row (ungated: the common case) still
+    /// deserializes byte-for-byte unchanged -- the future population diff this enables stays
+    /// small (`ungated_fact_grants_deserialize_unchanged`). `resolve_gated_fact_grant` is the
+    /// paper-sheet-doctrine reader: the fact counts only when `when` is decidable and true from
+    /// the character's own facts; otherwise its condition prints and the fact is withheld,
+    /// never approximated as granted.
+    GatedFactGrant { fact: Fact, when: Applies },
 }
 
 #[derive(Debug, Clone, PartialEq, Serialize, Deserialize)]
@@ -2031,6 +2042,42 @@ pub fn held_set(package: &SheetRulePackage, seed: &HeldSeed, facts: &CharacterFa
     held
 }
 
+/// How a gated fact grant (`Effect::GatedFactGrant`) resolved against a held set (paper-sheet
+/// doctrine, SD-36 Epic F1-2 / review finding 1: a conditional proficiency is printed, never
+/// granted unconditionally).
+#[derive(Debug, Clone, PartialEq)]
+pub enum GatedFact {
+    /// `when` decided `Include`: the fact is granted plainly.
+    Granted(Fact),
+    /// `when` decided `Include`-with-caveat (`Gate::Situational`): the fact is NOT granted --
+    /// its condition prints instead, exactly as an undecidable gate must never be approximated
+    /// as a granted proficiency.
+    Conditional { fact: Fact, condition: String },
+    /// `when` decided `Exclude`: not granted, nothing to print.
+    Excluded,
+}
+
+/// The facts-collection half of `Effect::GatedFactGrant`'s contract: a live consumer folding a
+/// held rule's `grants` calls this for every `GatedFactGrant` it meets (mirrors how `held_set`'s
+/// own fixpoint already evaluates `Grant.when` and `rule.applies` through the same
+/// `evaluate_applies`/`Evaluator` machinery, one level down at the per-fact grain). The grant
+/// counts only when `when` is decidable and true from the input; otherwise the condition is
+/// printed as text and the grant is not counted.
+pub fn resolve_gated_fact_grant(
+    fact: &Fact,
+    when: &Applies,
+    package: &SheetRulePackage,
+    held: &HeldSet,
+    facts: &CharacterFacts,
+    ctx: EvalContext,
+) -> GatedFact {
+    match evaluate_applies(when, held, package, facts, ctx) {
+        Gate::Include => GatedFact::Granted(fact.clone()),
+        Gate::Situational(condition) => GatedFact::Conditional { fact: fact.clone(), condition },
+        Gate::Exclude => GatedFact::Excluded,
+    }
+}
+
 /// Every held, printed rule's line, grouped by kind then label: the "Rules and features" section.
 /// A `#bonusN` sibling is a bonus line with its own gate (`applies`), held alongside its
 /// principal: it prints only when that gate includes -- an unbroken chain shirt's "Broken"
@@ -2557,6 +2604,43 @@ mod evaluate_tests {
             assert_eq!(rounds, Some(SheetLineValue::Resolved(expected)), "bard {level}: {:?}", line.also);
         }
     }
+
+    /// SD-36 Epic F1-2 (review finding 1): `Effect::GatedFactGrant` is a NEW variant, never a
+    /// field added to `FactGrant`, so an ungated proficiency grant's on-disk shape must not
+    /// move. These three real `data/sheet_rules/` files each hold one class's weapon-list AUTO
+    /// row that the pinned oracle leaves UNGATED (no PRE token on the row at all --
+    /// `cr_abilities_class.lst` Wizard/Druid, `uc_abilities_class.lst` Samurai): read the exact
+    /// bytes `render()` (`sheet_rule/mod.rs`) wrote, round-trip `Vec<SheetRule> -> JSON`, and
+    /// assert the bytes are identical -- the new variant existing must not perturb how the old
+    /// one serializes, so the future population diff (the converter change in this same commit)
+    /// stays small.
+    #[test]
+    fn ungated_fact_grants_deserialize_unchanged() {
+        for rel in [
+            "core_rulebook/class_feature/weapon_and_armor_proficiency_druid.json",
+            "core_rulebook/class_feature/wizard_weapon_and_armor_proficiency.json",
+            "ultimate_combat/class_feature/samurai_proficiencies.json",
+        ] {
+            let path = repo().join("data/sheet_rules").join(rel);
+            let original = std::fs::read(&path).unwrap_or_else(|e| panic!("{rel}: {e}"));
+            let rules: Vec<SheetRule> = serde_json::from_slice(&original).unwrap_or_else(|e| panic!("{rel}: not valid SheetRule JSON: {e}"));
+            assert!(
+                rules.iter().any(|r| r.grants.iter().any(|g| matches!(g, Effect::FactGrant(Fact::Proficiency(_))))),
+                "{rel}: fixture assumption -- carries an ungated `FactGrant(Proficiency(..))` row"
+            );
+            assert!(
+                !rules.iter().any(|r| r.grants.iter().any(|g| matches!(g, Effect::GatedFactGrant { .. }))),
+                "{rel}: fixture assumption -- carries no gated row (this file proves the UNGATED shape is unaffected)"
+            );
+            let mut roundtrip = serde_json::to_string(&rules).unwrap();
+            roundtrip.push('\n');
+            assert_eq!(
+                roundtrip.as_bytes(),
+                original.as_slice(),
+                "{rel}: an ungated FactGrant row must serialize byte-for-byte unchanged now that GatedFactGrant exists"
+            );
+        }
+    }
 }
 
 #[cfg(test)]
@@ -2610,5 +2694,54 @@ mod tests {
         let back: SheetRule = serde_json::from_str(&json).unwrap();
         assert_eq!(back, rule);
         assert_eq!(rule.var_ids(), vec!["v0123456789abcdef".to_string()]);
+    }
+
+    /// `resolve_gated_fact_grant` (SD-36 Epic F1-2): the facts-collection half of the contract.
+    /// A gate that decides plainly `Include` from the input counts the fact.
+    #[test]
+    fn a_decidable_true_gated_fact_grant_is_counted() {
+        let package = SheetRulePackage::new();
+        let held = HeldSet::default();
+        let facts = CharacterFacts { level: 5, ..Default::default() };
+        let fact = Fact::Proficiency(ProfRef::Weapon("Longsword".into()));
+        let when = Applies::Compare { lhs: Expr::Level, op: Cmp::Gte, rhs: Expr::Const(1) };
+        let resolved = resolve_gated_fact_grant(&fact, &when, &package, &held, &facts, EvalContext::default());
+        assert_eq!(resolved, GatedFact::Granted(fact));
+    }
+
+    /// A gate that decides plainly `Exclude` withholds the fact silently -- never granted, and
+    /// (per the paper-sheet doctrine this fixes) nothing to print either: the character simply
+    /// does not meet the condition.
+    #[test]
+    fn a_decidable_false_gated_fact_grant_is_silently_withheld() {
+        let package = SheetRulePackage::new();
+        let held = HeldSet::default();
+        let facts = CharacterFacts { level: 5, ..Default::default() };
+        let fact = Fact::Proficiency(ProfRef::Weapon("Longsword".into()));
+        let when = Applies::Compare { lhs: Expr::Level, op: Cmp::Gte, rhs: Expr::Const(99) };
+        let resolved = resolve_gated_fact_grant(&fact, &when, &package, &held, &facts, EvalContext::default());
+        assert_eq!(resolved, GatedFact::Excluded);
+    }
+
+    /// A gate the engine cannot decide from the input (same `MasterVar` shape
+    /// `eq_gated_master_var_...`-style tests elsewhere in this module exercise) must NEVER be
+    /// approximated as a granted proficiency: the fact is withheld and its condition text is
+    /// returned for the paper sheet to print instead -- the exact hazard review finding 1 named
+    /// (`docs/governance/no-stub-mvp-doctrine.md`).
+    #[test]
+    fn an_undecidable_gated_fact_grant_prints_its_condition_and_withholds_the_fact() {
+        let package = SheetRulePackage::new();
+        let held = HeldSet::default();
+        let facts = CharacterFacts::default();
+        let fact = Fact::Proficiency(ProfRef::Weapon("Katana".into()));
+        let when = Applies::Compare { lhs: Expr::MasterVar(var_id("Something")), op: Cmp::Eq, rhs: Expr::Const(0) };
+        let resolved = resolve_gated_fact_grant(&fact, &when, &package, &held, &facts, EvalContext::default());
+        match resolved {
+            GatedFact::Conditional { fact: f, condition } => {
+                assert_eq!(f, Fact::Proficiency(ProfRef::Weapon("Katana".into())));
+                assert!(!condition.is_empty(), "the condition prints as words, never a silent grant");
+            }
+            other => panic!("an undecidable gate must never be approximated as granted or silently dropped: {other:?}"),
+        }
     }
 }
