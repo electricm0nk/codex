@@ -1,0 +1,4655 @@
+{
+  "audit_sample": [
+    {
+      "applies": "Always",
+      "build": "brawler_L20",
+      "closure_rows": [
+        "pathfinder/paizo/roleplaying_game/advanced_class_guide/acg_abilities_class.lst:890"
+      ],
+      "id": "advanced_class_guide:class_feature:brawler_weapon_and_armor_proficiency",
+      "kind": "class_feature",
+      "label": "Weapon and Armor Proficiency",
+      "tags": [
+        "Brawler Class Feature",
+        "SpecialQuality"
+      ],
+      "verdict": "PASS",
+      "verify": "by=Class:brawler@1 (build plays brawler:20)"
+    },
+    {
+      "applies": "Always",
+      "build": "arcanist_L20",
+      "closure_rows": [
+        "pathfinder/paizo/roleplaying_game/advanced_class_guide/acg_abilities_class.lst:67",
+        "pathfinder/paizo/roleplaying_game/advanced_class_guide/acg_abilities_class.lst:81",
+        "pathfinder/paizo/roleplaying_game/advanced_class_guide/acg_abilities_class.lst:82",
+        "pathfinder/paizo/roleplaying_game/advanced_class_guide/acg_abilities_class.lst:83",
+        "pathfinder/paizo/roleplaying_game/advanced_class_guide/acg_abilities_class.lst:84",
+        "pathfinder/paizo/roleplaying_game/advanced_class_guide/acg_abilities_class.lst:85",
+        "pathfinder/paizo/roleplaying_game/advanced_class_guide/acg_abilities_class.lst:86",
+        "pathfinder/paizo/roleplaying_game/advanced_class_guide/acg_abilities_class.lst:87",
+        "pathfinder/paizo/roleplaying_game/advanced_class_guide/acg_abilities_class.lst:88",
+        "pathfinder/paizo/roleplaying_game/advanced_class_guide/acg_abilities_class.lst:89",
+        "pathfinder/paizo/roleplaying_game/advanced_class_guide/acg_abilities_class.lst:90",
+        "pathfinder/paizo/roleplaying_game/advanced_class_guide/acg_abilities_race.lst:180"
+      ],
+      "id": "advanced_class_guide:class_feature:arcanist_arcanist_exploits",
+      "kind": "class_feature",
+      "label": "Arcanist Exploits",
+      "tags": [
+        "Class Feature",
+        "Arcanist Class Feature",
+        "SpecialAttack",
+        "Special Attack",
+        "ArcanistArcanistExploits"
+      ],
+      "verdict": "PASS",
+      "verify": "by=Class:arcanist@1 (build plays arcanist:20)"
+    },
+    {
+      "applies": "Always",
+      "build": "brawler_L14",
+      "closure_rows": [
+        "pathfinder/paizo/roleplaying_game/advanced_class_guide/acg_abilities_class.lst:1028",
+        "pathfinder/paizo/roleplaying_game/advanced_class_guide/acg_abilities_class.lst:1030",
+        "pathfinder/paizo/roleplaying_game/advanced_class_guide/acg_abilities_class.lst:1031",
+        "pathfinder/paizo/roleplaying_game/advanced_class_guide/acg_abilities_class.lst:1032",
+        "pathfinder/paizo/roleplaying_game/advanced_class_guide/acg_abilities_class.lst:1033",
+        "pathfinder/paizo/roleplaying_game/advanced_class_guide/acg_abilities_class.lst:1034",
+        "pathfinder/paizo/roleplaying_game/advanced_class_guide/acg_abilities_class.lst:1035",
+        "pathfinder/paizo/roleplaying_game/advanced_class_guide/acg_abilities_class.lst:1036",
+        "pathfinder/paizo/roleplaying_game/advanced_class_guide/acg_abilities_class.lst:1037",
+        "pathfinder/paizo/roleplaying_game/advanced_class_guide/acg_abilities_class.lst:1038",
+        "pathfinder/paizo/roleplaying_game/advanced_class_guide/acg_abilities_class.lst:1039",
+        "pathfinder/paizo/roleplaying_game/advanced_class_guide/acg_abilities_class.lst:1040",
+        "pathfinder/paizo/roleplaying_game/advanced_class_guide/acg_abilities_class.lst:1041",
+        "pathfinder/paizo/roleplaying_game/advanced_class_guide/acg_abilities_class.lst:1042",
+        "pathfinder/paizo/roleplaying_game/advanced_class_guide/acg_abilities_class.lst:1043",
+        "pathfinder/paizo/roleplaying_game/advanced_class_guide/acg_abilities_class.lst:1044"
+      ],
+      "id": "advanced_class_guide:class_feature:brawler_close_weapon_mastery",
+      "kind": "class_feature",
+      "label": "Close Weapon Mastery",
+      "tags": [
+        "Brawler Class Feature",
+        "SpecialAttack",
+        "Extraordinary"
+      ],
+      "verdict": "PASS",
+      "verify": "by=Class:brawler@5 (build plays brawler:14)"
+    },
+    {
+      "applies": {
+        "Situational": {
+          "text": "when active"
+        }
+      },
+      "build": "barbarian_L1",
+      "closure_rows": [
+        "pathfinder/paizo/roleplaying_game/core_rulebook/cr_abilities_class.lst:421"
+      ],
+      "id": "core_rulebook:class_feature:barbarian_rage#bonus3",
+      "kind": "class_feature",
+      "label": "Rage (Con)",
+      "tags": [
+        "BarbarianClassFeatures",
+        "ClassFeatures",
+        "Rage"
+      ],
+      "verdict": "PASS",
+      "verify": "[sibling of base core_rulebook:class_feature:barbarian_rage] by=Rule:core_rulebook:class_feature:barbarian_standard_class_full (held by this build); by=Rule:core_rulebook:class_feature:barbarian_standard_class_full (held by this build)"
+    },
+    {
+      "applies": "Always",
+      "build": "arcanist_L20",
+      "closure_rows": [
+        "pathfinder/paizo/roleplaying_game/advanced_class_guide/acg_abilities_class.lst:77"
+      ],
+      "id": "advanced_class_guide:class_feature:arcanist_spells_castable",
+      "kind": "class_feature",
+      "label": "Arcanist ~ Spells Castable",
+      "tags": [],
+      "verdict": "PASS",
+      "verify": "by=Rule:advanced_class_guide:class_feature:arcanist_spells_prepared (held by this build)"
+    },
+    {
+      "applies": {
+        "Situational": {
+          "text": "when active"
+        }
+      },
+      "build": "barbarian_L7",
+      "closure_rows": [
+        "pathfinder/paizo/roleplaying_game/core_rulebook/cr_abilities_class.lst:412"
+      ],
+      "id": "core_rulebook:class_feature:rage",
+      "kind": "class_feature",
+      "label": "Rage (Will save)",
+      "tags": [
+        "BarbarianClassFeatures",
+        "ClassFeatures",
+        "SpecialQuality",
+        "Extraordinary",
+        "Rage",
+        "AttackOption"
+      ],
+      "verdict": "PASS",
+      "verify": "by=Rule:core_rulebook:class_feature:barbarian_rage (held by this build)"
+    },
+    {
+      "applies": "Always",
+      "build": "gunslinger_L7",
+      "closure_rows": [
+        "pathfinder/paizo/roleplaying_game/ultimate_combat/uc_abilities_class.lst:37",
+        "pathfinder/paizo/roleplaying_game/ultimate_combat/uc_abilities_class.lst:823",
+        "pathfinder/paizo/roleplaying_game/ultimate_combat/uc_abilities_class.lst:843"
+      ],
+      "id": "ultimate_combat:class_feature:gunslinger_gunsmith",
+      "kind": "class_feature",
+      "label": "Gunsmith",
+      "tags": [
+        "GunslingerClassFeatures",
+        "SpecialQuality"
+      ],
+      "verdict": "PASS",
+      "verify": "by=Rule:ultimate_combat:ability:gunslinger (held by this build)"
+    },
+    {
+      "applies": "Always",
+      "build": "gunslinger_L20",
+      "closure_rows": [
+        "pathfinder/paizo/roleplaying_game/ultimate_combat/uc_abilities_class.lst:71"
+      ],
+      "id": "ultimate_combat:class_feature:gunslinger_lightning_reload",
+      "kind": "class_feature",
+      "label": "Lightning Reload",
+      "tags": [
+        "SpecialQuality",
+        "DeedsLVL11",
+        "Extraordinary"
+      ],
+      "verdict": "PASS",
+      "verify": "by=Rule:ultimate_combat:class_feature:gunslinger_deeds (held by this build); by=Rule:ultimate_combat:class_feature:gunslinger_deeds (held by this build)"
+    },
+    {
+      "applies": "Always",
+      "build": "brawler_L14",
+      "closure_rows": [
+        "pathfinder/paizo/roleplaying_game/advanced_class_guide/acg_abilities_class.lst:1051",
+        "pathfinder/paizo/roleplaying_game/advanced_class_guide/acg_abilities_class.lst:1058",
+        "pathfinder/paizo/roleplaying_game/advanced_class_guide/acg_abilities_class.lst:1059",
+        "pathfinder/paizo/roleplaying_game/advanced_class_guide/acg_abilities_class.lst:1060",
+        "pathfinder/paizo/roleplaying_game/advanced_class_guide/acg_abilities_class.lst:1061"
+      ],
+      "id": "advanced_class_guide:class_feature:brawler_brawler_s_strike",
+      "kind": "class_feature",
+      "label": "Brawler's Strike",
+      "tags": [
+        "Brawler Class Feature",
+        "SpecialAttack",
+        "Extraordinary"
+      ],
+      "verdict": "PASS",
+      "verify": "by=Class:brawler@5 (build plays brawler:14)"
+    },
+    {
+      "applies": "Always",
+      "build": "gunslinger_L20",
+      "closure_rows": [
+        "pathfinder/paizo/roleplaying_game/ultimate_combat/uc_abilities_class.lst:77"
+      ],
+      "id": "ultimate_combat:class_feature:gunslinger_cheat_death",
+      "kind": "class_feature",
+      "label": "Cheat Death",
+      "tags": [
+        "SpecialQuality",
+        "DeedsLVL19",
+        "DeedHasCost",
+        "Extraordinary"
+      ],
+      "verdict": "PASS",
+      "verify": "by=Rule:ultimate_combat:class_feature:gunslinger_deeds (held by this build); by=Rule:ultimate_combat:class_feature:gunslinger_deeds (held by this build)"
+    },
+    {
+      "applies": "Always",
+      "build": "gunslinger_L20",
+      "closure_rows": [
+        "pathfinder/paizo/roleplaying_game/ultimate_combat/uc_abilities_class.lst:69"
+      ],
+      "id": "ultimate_combat:class_feature:gunslinger_bleeding_wound",
+      "kind": "class_feature",
+      "label": "Bleeding Wound",
+      "tags": [
+        "SpecialQuality",
+        "DeedsLVL11",
+        "DeedHasCost",
+        "Extraordinary"
+      ],
+      "verdict": "PASS",
+      "verify": "by=Rule:ultimate_combat:class_feature:gunslinger_deeds (held by this build); by=Rule:ultimate_combat:class_feature:gunslinger_deeds (held by this build)"
+    },
+    {
+      "applies": {
+        "Situational": {
+          "text": "when active"
+        }
+      },
+      "build": "barbarian_L1",
+      "closure_rows": [
+        "pathfinder/paizo/roleplaying_game/core_rulebook/cr_abilities_class.lst:421"
+      ],
+      "id": "core_rulebook:class_feature:barbarian_rage",
+      "kind": "class_feature",
+      "label": "Rage (Will save)",
+      "tags": [
+        "BarbarianClassFeatures",
+        "ClassFeatures",
+        "Rage"
+      ],
+      "verdict": "PASS",
+      "verify": "by=Rule:core_rulebook:class_feature:barbarian_standard_class_full (held by this build); by=Rule:core_rulebook:class_feature:barbarian_standard_class_full (held by this build)"
+    },
+    {
+      "applies": "Always",
+      "build": "gunslinger_L20",
+      "closure_rows": [
+        "pathfinder/paizo/roleplaying_game/ultimate_combat/uc_abilities_class.lst:66"
+      ],
+      "id": "ultimate_combat:class_feature:gunslinger_startling_shot",
+      "kind": "class_feature",
+      "label": "Startling Shot",
+      "tags": [
+        "SpecialQuality",
+        "DeedsLVL7",
+        "Extraordinary"
+      ],
+      "verdict": "PASS",
+      "verify": "by=Rule:ultimate_combat:class_feature:gunslinger_deeds (held by this build); by=Rule:ultimate_combat:class_feature:gunslinger_deeds (held by this build)"
+    },
+    {
+      "applies": "Always",
+      "build": "gunslinger_L1",
+      "closure_rows": [
+        "pathfinder/paizo/roleplaying_game/ultimate_combat/uc_abilities_class.lst:57"
+      ],
+      "id": "ultimate_combat:class_feature:gunslinger_deadeye",
+      "kind": "class_feature",
+      "label": "Deadeye",
+      "tags": [
+        "SpecialQuality",
+        "DeedsLVL1",
+        "DeedHasCost",
+        "Extraordinary"
+      ],
+      "verdict": "PASS",
+      "verify": "by=Rule:ultimate_combat:class_feature:gunslinger_deeds (held by this build); by=Rule:ultimate_combat:class_feature:gunslinger_deeds (held by this build)"
+    },
+    {
+      "applies": "Always",
+      "build": "barbarian_L1",
+      "closure_rows": [
+        "pathfinder/paizo/roleplaying_game/core_rulebook/cr_abilities_class.lst:420"
+      ],
+      "id": "core_rulebook:class_feature:barbarian_fast_movement",
+      "kind": "class_feature",
+      "label": "Fast Movement",
+      "tags": [
+        "BarbarianClassFeatures",
+        "ClassFeatures",
+        "SpecialQuality",
+        "Extraordinary",
+        "ModifyMovement",
+        "Fast Movement"
+      ],
+      "verdict": "PASS",
+      "verify": "by=Rule:core_rulebook:class_feature:barbarian_standard_class_full (held by this build); by=Rule:core_rulebook:class_feature:barbarian_standard_class_full (held by this build)"
+    },
+    {
+      "applies": "Always",
+      "build": "kineticist_L7",
+      "closure_rows": [
+        "pathfinder/paizo/roleplaying_game/occult_adventures/oa_abilities_class.lst:604"
+      ],
+      "id": "occult_adventures:class_feature:kineticist_blast_simple_blasts",
+      "kind": "class_feature",
+      "label": "Simple Blasts",
+      "tags": [
+        "Kineticist Class Feature",
+        "KB_Simple",
+        "SpecialQuality"
+      ],
+      "verdict": "PASS",
+      "verify": "by=Rule:occult_adventures:class_feature:kineticist_kinetic_blast (held by this build)"
+    },
+    {
+      "applies": "Always",
+      "build": "rogue_L1",
+      "closure_rows": [
+        "pathfinder/paizo/roleplaying_game/core_rulebook/cr_abilities_class.lst:2868",
+        "pathfinder/paizo/roleplaying_game/pathfinder_unchained/pu_abilities_class.lst:602"
+      ],
+      "id": "core_rulebook:class_feature:sneak_attack",
+      "kind": "class_feature",
+      "label": "Sneak Attack",
+      "tags": [
+        "RogueClassFeatures",
+        "AlchemistClassFeatures",
+        "SpecialAttack",
+        "Extraordinary",
+        "AttackOption",
+        "Unchained Rogue Class Feature"
+      ],
+      "verdict": "PASS",
+      "verify": "by=Rule:core_rulebook:class_feature:rogue_sneak_attack (held by this build)"
+    },
+    {
+      "applies": "Always",
+      "build": "brawler_L14",
+      "closure_rows": [
+        "pathfinder/paizo/roleplaying_game/advanced_class_guide/acg_abilities_class.lst:1072",
+        "pathfinder/paizo/roleplaying_game/advanced_class_guide/acg_abilities_class.lst:1073",
+        "pathfinder/paizo/roleplaying_game/advanced_class_guide/acg_abilities_class.lst:1074",
+        "pathfinder/paizo/roleplaying_game/advanced_class_guide/acg_abilities_class.lst:1075",
+        "pathfinder/paizo/roleplaying_game/advanced_class_guide/acg_abilities_class.lst:1076",
+        "pathfinder/paizo/roleplaying_game/advanced_class_guide/acg_abilities_class.lst:1077",
+        "pathfinder/paizo/roleplaying_game/advanced_class_guide/acg_abilities_class.lst:1078",
+        "pathfinder/paizo/roleplaying_game/advanced_class_guide/acg_abilities_class.lst:1079",
+        "pathfinder/paizo/roleplaying_game/advanced_class_guide/acg_abilities_class.lst:1080",
+        "pathfinder/paizo/roleplaying_game/advanced_class_guide/acg_abilities_class.lst:1081",
+        "pathfinder/paizo/roleplaying_game/advanced_class_guide/acg_abilities_class.lst:1082"
+      ],
+      "id": "advanced_class_guide:class_feature:brawler_maneuver_training#bonus2",
+      "kind": "class_feature",
+      "label": "Maneuver Training (maneuver training iii selection picks)",
+      "tags": [
+        "Brawler Class Feature",
+        "Extraordinary"
+      ],
+      "verdict": "PASS",
+      "verify": "[sibling of base advanced_class_guide:class_feature:brawler_maneuver_training] by=Class:brawler@3 (build plays brawler:14)"
+    },
+    {
+      "applies": "Always",
+      "build": "arcanist_L14",
+      "closure_rows": [
+        "pathfinder/paizo/roleplaying_game/advanced_class_guide/acg_abilities_class.lst:76"
+      ],
+      "id": "advanced_class_guide:class_feature:arcanist_spells_prepared",
+      "kind": "class_feature",
+      "label": "Arcanist Spells Prepared",
+      "tags": [
+        "Arcanist Class Feature",
+        "SpecialQuality"
+      ],
+      "verdict": "PASS",
+      "verify": "by=Class:arcanist@1 (build plays arcanist:14)"
+    },
+    {
+      "applies": "Always",
+      "build": "paladin_L20",
+      "closure_rows": [
+        "pathfinder/paizo/roleplaying_game/core_rulebook/cr_abilities_class.lst:1363"
+      ],
+      "id": "core_rulebook:class_feature:paladin_holy_champion",
+      "kind": "class_feature",
+      "label": "Holy Champion",
+      "tags": [
+        "PaladinClassFeatures",
+        "SpecialQuality",
+        "Supernatural"
+      ],
+      "verdict": "PASS",
+      "verify": "by=Rule:core_rulebook:class_feature:paladin_class (held by this build)"
+    },
+    {
+      "applies": "Always",
+      "build": "samurai_L7",
+      "closure_rows": [
+        "pathfinder/paizo/roleplaying_game/ultimate_combat/uc_abilities_class.lst:198"
+      ],
+      "id": "ultimate_combat:class_feature:samurai_mounted_archer",
+      "kind": "class_feature",
+      "label": "Mounted Archer",
+      "tags": [
+        "SamuraiClassFeatures",
+        "SpecialQuality",
+        "Extraordinary"
+      ],
+      "verdict": "PASS",
+      "verify": "by=Rule:ultimate_combat:ability:samurai (held by this build)"
+    },
+    {
+      "applies": {
+        "Not": {
+          "Holds": {
+            "count": 1,
+            "what": {
+              "Alignment": [
+                "CE",
+                "NE",
+                "LE"
+              ]
+            }
+          }
+        }
+      },
+      "build": "mix_fighter6_wizard4",
+      "closure_rows": [
+        "pathfinder/paizo/roleplaying_game/core_rulebook/cr_abilities_class.lst:108"
+      ],
+      "id": "core_rulebook:class_feature:wizard_class__d9affb050e701218",
+      "kind": "class_feature",
+      "label": "Wizard",
+      "tags": [],
+      "verdict": "PASS",
+      "verify": "by=Class:wizard@1 (build plays wizard:4)"
+    },
+    {
+      "applies": "Always",
+      "build": "samurai_L20",
+      "closure_rows": [
+        "pathfinder/paizo/roleplaying_game/ultimate_combat/uc_abilities_class.lst:197"
+      ],
+      "id": "ultimate_combat:class_feature:samurai_weapon_expertise",
+      "kind": "class_feature",
+      "label": "Weapon Expertise",
+      "tags": [
+        "SamuraiClassFeatures",
+        "SpecialQuality",
+        "Extraordinary"
+      ],
+      "verdict": "PASS",
+      "verify": "by=Rule:ultimate_combat:ability:samurai (held by this build)"
+    },
+    {
+      "applies": {
+        "Situational": {
+          "text": "when active"
+        }
+      },
+      "build": "mix_barbarian12_fighter1",
+      "closure_rows": [
+        "pathfinder/paizo/roleplaying_game/core_rulebook/cr_abilities_class.lst:421"
+      ],
+      "id": "core_rulebook:class_feature:barbarian_rage#bonus2",
+      "kind": "class_feature",
+      "label": "Rage (Str)",
+      "tags": [
+        "BarbarianClassFeatures",
+        "ClassFeatures",
+        "Rage"
+      ],
+      "verdict": "PASS",
+      "verify": "[sibling of base core_rulebook:class_feature:barbarian_rage] by=Rule:core_rulebook:class_feature:barbarian_standard_class_full (held by this build); by=Rule:core_rulebook:class_feature:barbarian_standard_class_full (held by this build)"
+    },
+    {
+      "applies": "Always",
+      "build": "mix_cleric5_rogue3",
+      "closure_rows": [
+        "pathfinder/paizo/roleplaying_game/core_rulebook/cr_abilities_class.lst:2862"
+      ],
+      "id": "core_rulebook:class_feature:trap_sense",
+      "kind": "class_feature",
+      "label": "Trap Sense",
+      "tags": [
+        "SpecialQuality",
+        "Extraordinary",
+        "Defensive",
+        "BarbarianClassFeatures",
+        "ClassFeatures"
+      ],
+      "verdict": "PASS",
+      "verify": "by=Rule:core_rulebook:class_feature:rogue_trap_sense (held by this build)"
+    },
+    {
+      "applies": "Always",
+      "build": "paladin_L20",
+      "closure_rows": [
+        "pathfinder/paizo/roleplaying_game/core_rulebook/cr_abilities_class.lst:2876"
+      ],
+      "id": "core_rulebook:class_feature:aura_of_good",
+      "kind": "class_feature",
+      "label": "Aura of Good",
+      "tags": [
+        "SpecialQuality",
+        "Extraordinary",
+        "Aura",
+        "ClericClassFeatures",
+        "PaladinClassFeatures"
+      ],
+      "verdict": "PASS",
+      "verify": "by=Rule:core_rulebook:class_feature:paladin_aura_of_good (held by this build)"
+    },
+    {
+      "applies": "Always",
+      "build": "rogue_L20",
+      "closure_rows": [
+        "pathfinder/paizo/roleplaying_game/core_rulebook/cr_abilities_class.lst:2868",
+        "pathfinder/paizo/roleplaying_game/pathfinder_unchained/pu_abilities_class.lst:602"
+      ],
+      "id": "core_rulebook:class_feature:sneak_attack",
+      "kind": "class_feature",
+      "label": "Sneak Attack",
+      "tags": [
+        "RogueClassFeatures",
+        "AlchemistClassFeatures",
+        "SpecialAttack",
+        "Extraordinary",
+        "AttackOption",
+        "Unchained Rogue Class Feature"
+      ],
+      "verdict": "PASS",
+      "verify": "by=Rule:core_rulebook:class_feature:rogue_sneak_attack (held by this build)"
+    },
+    {
+      "applies": "Always",
+      "build": "oracle_L1",
+      "closure_rows": [
+        "pathfinder/paizo/roleplaying_game/advanced_players_guide/apg_abilities_class.lst:478"
+      ],
+      "id": "advanced_players_guide:class_feature:oracle_orisons",
+      "kind": "class_feature",
+      "label": "Orisons",
+      "tags": [
+        "OracleClassFeatures",
+        "SpecialQuality"
+      ],
+      "verdict": "PASS",
+      "verify": "by=Rule:advanced_players_guide:ability:oracle (held by this build)"
+    },
+    {
+      "applies": "Always",
+      "build": "samurai_L7",
+      "closure_rows": [
+        "pathfinder/paizo/roleplaying_game/ultimate_combat/uc_abilities_class.lst:189"
+      ],
+      "id": "ultimate_combat:class_feature:samurai_order",
+      "kind": "class_feature",
+      "label": "Order",
+      "tags": [
+        "SamuraiClassFeatures",
+        "SpecialQuality",
+        "Extraordinary"
+      ],
+      "verdict": "PASS",
+      "verify": "by=Rule:ultimate_combat:ability:samurai (held by this build)"
+    },
+    {
+      "applies": {
+        "Situational": {
+          "text": "when active"
+        }
+      },
+      "build": "barbarian_L20",
+      "closure_rows": [
+        "pathfinder/paizo/roleplaying_game/core_rulebook/cr_abilities_class.lst:421"
+      ],
+      "id": "core_rulebook:class_feature:barbarian_rage#bonus2",
+      "kind": "class_feature",
+      "label": "Rage (Str)",
+      "tags": [
+        "BarbarianClassFeatures",
+        "ClassFeatures",
+        "Rage"
+      ],
+      "verdict": "PASS",
+      "verify": "[sibling of base core_rulebook:class_feature:barbarian_rage] by=Rule:core_rulebook:class_feature:barbarian_standard_class_full (held by this build); by=Rule:core_rulebook:class_feature:barbarian_standard_class_full (held by this build)"
+    },
+    {
+      "applies": "Always",
+      "build": "arcanist_L20",
+      "closure_rows": [
+        "pathfinder/paizo/roleplaying_game/advanced_class_guide/acg_abilities_class.lst:66",
+        "pathfinder/paizo/roleplaying_game/advanced_class_guide/acg_abilities_race.lst:96"
+      ],
+      "id": "advanced_class_guide:class_feature:arcanist_arcane_reservoir",
+      "kind": "class_feature",
+      "label": "Arcane Reservoir",
+      "tags": [
+        "Class Feature",
+        "Arcanist Class Feature",
+        "SpecialAttack",
+        "Special Attack",
+        "ArcanistArcaneReservoir",
+        "Supernatural"
+      ],
+      "verdict": "PASS",
+      "verify": "by=Class:arcanist@1 (build plays arcanist:20)"
+    },
+    {
+      "applies": "Always",
+      "build": "samurai_L14",
+      "closure_rows": [
+        "pathfinder/paizo/roleplaying_game/ultimate_combat/uc_abilities_class.lst:191",
+        "pathfinder/paizo/roleplaying_game/ultimate_combat/uc_abilities_class.lst:210",
+        "pathfinder/paizo/roleplaying_game/ultimate_combat/uc_abilities_class.lst:211",
+        "pathfinder/paizo/roleplaying_game/ultimate_combat/uc_abilities_class.lst:212"
+      ],
+      "id": "ultimate_combat:class_feature:samurai_bonus_feat",
+      "kind": "class_feature",
+      "label": "Bonus Feat",
+      "tags": [
+        "SamuraiClassFeatures",
+        "SpecialQuality"
+      ],
+      "verdict": "PASS",
+      "verify": "by=Rule:ultimate_combat:ability:samurai (held by this build)"
+    },
+    {
+      "applies": {
+        "Situational": {
+          "text": "when active"
+        }
+      },
+      "build": "mix_barbarian12_fighter1",
+      "closure_rows": [
+        "pathfinder/paizo/roleplaying_game/core_rulebook/cr_abilities_class.lst:412"
+      ],
+      "id": "core_rulebook:class_feature:rage#bonus2",
+      "kind": "class_feature",
+      "label": "Rage (Str)",
+      "tags": [
+        "BarbarianClassFeatures",
+        "ClassFeatures",
+        "SpecialQuality",
+        "Extraordinary",
+        "Rage",
+        "AttackOption"
+      ],
+      "verdict": "PASS",
+      "verify": "[sibling of base core_rulebook:class_feature:rage] by=Rule:core_rulebook:class_feature:barbarian_rage (held by this build)"
+    },
+    {
+      "applies": "Always",
+      "build": "arcanist_L7",
+      "closure_rows": [
+        "pathfinder/paizo/roleplaying_game/advanced_class_guide/acg_abilities_class.lst:67",
+        "pathfinder/paizo/roleplaying_game/advanced_class_guide/acg_abilities_class.lst:81",
+        "pathfinder/paizo/roleplaying_game/advanced_class_guide/acg_abilities_class.lst:82",
+        "pathfinder/paizo/roleplaying_game/advanced_class_guide/acg_abilities_class.lst:83",
+        "pathfinder/paizo/roleplaying_game/advanced_class_guide/acg_abilities_class.lst:84",
+        "pathfinder/paizo/roleplaying_game/advanced_class_guide/acg_abilities_class.lst:85",
+        "pathfinder/paizo/roleplaying_game/advanced_class_guide/acg_abilities_class.lst:86",
+        "pathfinder/paizo/roleplaying_game/advanced_class_guide/acg_abilities_class.lst:87",
+        "pathfinder/paizo/roleplaying_game/advanced_class_guide/acg_abilities_class.lst:88",
+        "pathfinder/paizo/roleplaying_game/advanced_class_guide/acg_abilities_class.lst:89",
+        "pathfinder/paizo/roleplaying_game/advanced_class_guide/acg_abilities_class.lst:90",
+        "pathfinder/paizo/roleplaying_game/advanced_class_guide/acg_abilities_race.lst:180"
+      ],
+      "id": "advanced_class_guide:class_feature:arcanist_arcanist_exploits",
+      "kind": "class_feature",
+      "label": "Arcanist Exploits",
+      "tags": [
+        "Class Feature",
+        "Arcanist Class Feature",
+        "SpecialAttack",
+        "Special Attack",
+        "ArcanistArcanistExploits"
+      ],
+      "verdict": "PASS",
+      "verify": "by=Class:arcanist@1 (build plays arcanist:7)"
+    },
+    {
+      "applies": "Always",
+      "build": "brawler_L7",
+      "closure_rows": [
+        "pathfinder/paizo/roleplaying_game/advanced_class_guide/acg_abilities_class.lst:898",
+        "pathfinder/paizo/roleplaying_game/advanced_class_guide/acg_abilities_race.lst:104"
+      ],
+      "id": "advanced_class_guide:class_feature:brawler_martial_flexibility",
+      "kind": "class_feature",
+      "label": "Martial Flexibility",
+      "tags": [
+        "Brawler Class Feature",
+        "SpecialQuality",
+        "Extraordinary"
+      ],
+      "verdict": "PASS",
+      "verify": "by=Class:brawler@1 (build plays brawler:7)"
+    },
+    {
+      "applies": "Always",
+      "build": "rogue_L7",
+      "closure_rows": [
+        "pathfinder/paizo/roleplaying_game/core_rulebook/cr_abilities_class.lst:2868",
+        "pathfinder/paizo/roleplaying_game/pathfinder_unchained/pu_abilities_class.lst:602"
+      ],
+      "id": "core_rulebook:class_feature:sneak_attack",
+      "kind": "class_feature",
+      "label": "Sneak Attack",
+      "tags": [
+        "RogueClassFeatures",
+        "AlchemistClassFeatures",
+        "SpecialAttack",
+        "Extraordinary",
+        "AttackOption",
+        "Unchained Rogue Class Feature"
+      ],
+      "verdict": "PASS",
+      "verify": "by=Rule:core_rulebook:class_feature:rogue_sneak_attack (held by this build)"
+    },
+    {
+      "applies": "Always",
+      "build": "paladin_L7",
+      "closure_rows": [
+        "pathfinder/paizo/roleplaying_game/core_rulebook/cr_abilities_class.lst:1357"
+      ],
+      "id": "core_rulebook:class_feature:paladin_smite_evil",
+      "kind": "class_feature",
+      "label": "Smite Evil",
+      "tags": [
+        "PaladinClassFeatures",
+        "SpecialAttack",
+        "Supernatural",
+        "Smite Evil"
+      ],
+      "verdict": "PASS",
+      "verify": "by=Rule:core_rulebook:class_feature:paladin_class (held by this build)"
+    },
+    {
+      "applies": "Always",
+      "build": "rogue_L14",
+      "closure_rows": [
+        "pathfinder/paizo/roleplaying_game/core_rulebook/cr_abilities_class.lst:1617"
+      ],
+      "id": "core_rulebook:class_feature:rogue_trapfinding#bonus1",
+      "kind": "class_feature",
+      "label": "Trapfinding (Disable Device)",
+      "tags": [
+        "RogueClassFeatures",
+        "RangerClassFeatures",
+        "SpecialQuality",
+        "Extraordinary",
+        "Trapfinding"
+      ],
+      "verdict": "PASS",
+      "verify": "[sibling of base core_rulebook:class_feature:rogue_trapfinding] by=Rule:core_rulebook:class_feature:rogue_standard_class (held by this build); by=Rule:core_rulebook:class_feature:rogue_standard_class (held by this build)"
+    },
+    {
+      "applies": "Always",
+      "build": "samurai_L1",
+      "closure_rows": [
+        "pathfinder/paizo/roleplaying_game/ultimate_combat/uc_abilities_class.lst:188",
+        "pathfinder/paizo/roleplaying_game/ultimate_wilderness/uw_feats.lst:164"
+      ],
+      "id": "ultimate_combat:class_feature:samurai_mount",
+      "kind": "class_feature",
+      "label": "Mount",
+      "tags": [
+        "SamuraiClassFeatures",
+        "SpecialQuality",
+        "Extraordinary",
+        "Animal Companion",
+        "Mount"
+      ],
+      "verdict": "PASS",
+      "verify": "by=Rule:ultimate_combat:ability:samurai (held by this build)"
+    },
+    {
+      "applies": "Always",
+      "build": "mix_fighter6_wizard4",
+      "closure_rows": [
+        "pathfinder/paizo/roleplaying_game/core_rulebook/cr_abilities_class.lst:2631"
+      ],
+      "id": "core_rulebook:class_feature:transmutation_wizard_spells",
+      "kind": "class_feature",
+      "label": "Transmutation Wizard Spells",
+      "tags": [],
+      "verdict": "PASS",
+      "verify": "by=Rule:core_rulebook:class_feature:wizard_spells__be003b3984191a51 (held by this build)"
+    }
+  ],
+  "audit_seed": 20260921,
+  "census_comparison": {
+    "blocked_after": 19,
+    "blocked_before": 19,
+    "class_status_changes": [],
+    "classes_fully_identical": true,
+    "computed_after": 42,
+    "computed_before": 42,
+    "ids_after": 135,
+    "ids_before": 135,
+    "levels_changes": []
+  },
+  "gate_pass": false,
+  "per_build": [
+    {
+      "added_correct": [
+        {
+          "condition": "-",
+          "id": "advanced_class_guide:class_feature:arcanist_arcane_reservoir",
+          "kind": "class_feature",
+          "label": "Arcane Reservoir",
+          "printed": "",
+          "verify": "by=Class:arcanist@1 (build plays arcanist:1)"
+        },
+        {
+          "condition": "-",
+          "id": "advanced_class_guide:class_feature:arcanist_arcanist_exploits",
+          "kind": "class_feature",
+          "label": "Arcanist Exploits",
+          "printed": "+1",
+          "verify": "by=Class:arcanist@1 (build plays arcanist:1)"
+        },
+        {
+          "condition": "-",
+          "id": "advanced_class_guide:class_feature:arcanist_cantrips",
+          "kind": "class_feature",
+          "label": "Cantrips",
+          "printed": "",
+          "verify": "by=Class:arcanist@1 (build plays arcanist:1)"
+        },
+        {
+          "condition": "-",
+          "id": "advanced_class_guide:class_feature:arcanist_consume_spells",
+          "kind": "class_feature",
+          "label": "Consume Spells",
+          "printed": "",
+          "verify": "by=Class:arcanist@1 (build plays arcanist:1)"
+        },
+        {
+          "condition": "-",
+          "id": "advanced_class_guide:class_feature:arcanist_spells_castable",
+          "kind": "class_feature",
+          "label": "Arcanist ~ Spells Castable",
+          "printed": "",
+          "verify": "by=Rule:advanced_class_guide:class_feature:arcanist_spells_prepared (held by this build)"
+        },
+        {
+          "condition": "-",
+          "id": "advanced_class_guide:class_feature:arcanist_spells_prepared",
+          "kind": "class_feature",
+          "label": "Arcanist Spells Prepared",
+          "printed": "",
+          "verify": "by=Class:arcanist@1 (build plays arcanist:1)"
+        },
+        {
+          "condition": "-",
+          "id": "advanced_class_guide:class_feature:arcanist_weapon_and_armor_proficiency",
+          "kind": "class_feature",
+          "label": "Weapon and Armor Proficiency",
+          "printed": "",
+          "verify": "by=Class:arcanist@1 (build plays arcanist:1)"
+        },
+        {
+          "condition": "-",
+          "id": "core_rulebook:class_feature:weapon_prof_simple",
+          "kind": "class_feature",
+          "label": "Weapon Prof ~ Simple",
+          "printed": "",
+          "verify": "by=Rule:advanced_class_guide:class_feature:arcanist_weapon_and_armor_proficiency (held by this build)"
+        }
+      ],
+      "build": "arcanist:1",
+      "changed_value": [],
+      "duplicate": [],
+      "held_after": 37,
+      "held_before": 29,
+      "lines_after": 24,
+      "lines_before": 16,
+      "name": "arcanist_L1",
+      "removed": [],
+      "unclassified": []
+    },
+    {
+      "added_correct": [
+        {
+          "condition": "-",
+          "id": "advanced_class_guide:class_feature:arcanist_arcane_reservoir",
+          "kind": "class_feature",
+          "label": "Arcane Reservoir",
+          "printed": "",
+          "verify": "by=Class:arcanist@1 (build plays arcanist:14)"
+        },
+        {
+          "condition": "-",
+          "id": "advanced_class_guide:class_feature:arcanist_arcanist_exploits",
+          "kind": "class_feature",
+          "label": "Arcanist Exploits",
+          "printed": "+7",
+          "verify": "by=Class:arcanist@1 (build plays arcanist:14)"
+        },
+        {
+          "condition": "-",
+          "id": "advanced_class_guide:class_feature:arcanist_cantrips",
+          "kind": "class_feature",
+          "label": "Cantrips",
+          "printed": "",
+          "verify": "by=Class:arcanist@1 (build plays arcanist:14)"
+        },
+        {
+          "condition": "-",
+          "id": "advanced_class_guide:class_feature:arcanist_consume_spells",
+          "kind": "class_feature",
+          "label": "Consume Spells",
+          "printed": "",
+          "verify": "by=Class:arcanist@1 (build plays arcanist:14)"
+        },
+        {
+          "condition": "-",
+          "id": "advanced_class_guide:class_feature:arcanist_greater_arcanist_exploits",
+          "kind": "class_feature",
+          "label": "Greater Exploits",
+          "printed": "",
+          "verify": "by=Class:arcanist@11 (build plays arcanist:14)"
+        },
+        {
+          "condition": "-",
+          "id": "advanced_class_guide:class_feature:arcanist_spells_castable",
+          "kind": "class_feature",
+          "label": "Arcanist ~ Spells Castable",
+          "printed": "",
+          "verify": "by=Rule:advanced_class_guide:class_feature:arcanist_spells_prepared (held by this build)"
+        },
+        {
+          "condition": "-",
+          "id": "advanced_class_guide:class_feature:arcanist_spells_prepared",
+          "kind": "class_feature",
+          "label": "Arcanist Spells Prepared",
+          "printed": "",
+          "verify": "by=Class:arcanist@1 (build plays arcanist:14)"
+        },
+        {
+          "condition": "-",
+          "id": "advanced_class_guide:class_feature:arcanist_weapon_and_armor_proficiency",
+          "kind": "class_feature",
+          "label": "Weapon and Armor Proficiency",
+          "printed": "",
+          "verify": "by=Class:arcanist@1 (build plays arcanist:14)"
+        },
+        {
+          "condition": "-",
+          "id": "core_rulebook:class_feature:weapon_prof_simple",
+          "kind": "class_feature",
+          "label": "Weapon Prof ~ Simple",
+          "printed": "",
+          "verify": "by=Rule:advanced_class_guide:class_feature:arcanist_weapon_and_armor_proficiency (held by this build)"
+        }
+      ],
+      "build": "arcanist:14",
+      "changed_value": [],
+      "duplicate": [],
+      "held_after": 38,
+      "held_before": 29,
+      "lines_after": 25,
+      "lines_before": 16,
+      "name": "arcanist_L14",
+      "removed": [],
+      "unclassified": []
+    },
+    {
+      "added_correct": [
+        {
+          "condition": "-",
+          "id": "advanced_class_guide:class_feature:arcanist_arcane_reservoir",
+          "kind": "class_feature",
+          "label": "Arcane Reservoir",
+          "printed": "",
+          "verify": "by=Class:arcanist@1 (build plays arcanist:20)"
+        },
+        {
+          "condition": "-",
+          "id": "advanced_class_guide:class_feature:arcanist_arcanist_exploits",
+          "kind": "class_feature",
+          "label": "Arcanist Exploits",
+          "printed": "+10",
+          "verify": "by=Class:arcanist@1 (build plays arcanist:20)"
+        },
+        {
+          "condition": "-",
+          "id": "advanced_class_guide:class_feature:arcanist_cantrips",
+          "kind": "class_feature",
+          "label": "Cantrips",
+          "printed": "",
+          "verify": "by=Class:arcanist@1 (build plays arcanist:20)"
+        },
+        {
+          "condition": "-",
+          "id": "advanced_class_guide:class_feature:arcanist_consume_spells",
+          "kind": "class_feature",
+          "label": "Consume Spells",
+          "printed": "",
+          "verify": "by=Class:arcanist@1 (build plays arcanist:20)"
+        },
+        {
+          "condition": "-",
+          "id": "advanced_class_guide:class_feature:arcanist_greater_arcanist_exploits",
+          "kind": "class_feature",
+          "label": "Greater Exploits",
+          "printed": "",
+          "verify": "by=Class:arcanist@11 (build plays arcanist:20)"
+        },
+        {
+          "condition": "-",
+          "id": "advanced_class_guide:class_feature:arcanist_magical_supremacy",
+          "kind": "class_feature",
+          "label": "Magical Supremacy",
+          "printed": "",
+          "verify": "by=Class:arcanist@20 (build plays arcanist:20)"
+        },
+        {
+          "condition": "-",
+          "id": "advanced_class_guide:class_feature:arcanist_spells_castable",
+          "kind": "class_feature",
+          "label": "Arcanist ~ Spells Castable",
+          "printed": "",
+          "verify": "by=Rule:advanced_class_guide:class_feature:arcanist_spells_prepared (held by this build)"
+        },
+        {
+          "condition": "-",
+          "id": "advanced_class_guide:class_feature:arcanist_spells_prepared",
+          "kind": "class_feature",
+          "label": "Arcanist Spells Prepared",
+          "printed": "",
+          "verify": "by=Class:arcanist@1 (build plays arcanist:20)"
+        },
+        {
+          "condition": "-",
+          "id": "advanced_class_guide:class_feature:arcanist_weapon_and_armor_proficiency",
+          "kind": "class_feature",
+          "label": "Weapon and Armor Proficiency",
+          "printed": "",
+          "verify": "by=Class:arcanist@1 (build plays arcanist:20)"
+        },
+        {
+          "condition": "-",
+          "id": "core_rulebook:class_feature:weapon_prof_simple",
+          "kind": "class_feature",
+          "label": "Weapon Prof ~ Simple",
+          "printed": "",
+          "verify": "by=Rule:advanced_class_guide:class_feature:arcanist_weapon_and_armor_proficiency (held by this build)"
+        }
+      ],
+      "build": "arcanist:20",
+      "changed_value": [],
+      "duplicate": [],
+      "held_after": 39,
+      "held_before": 29,
+      "lines_after": 26,
+      "lines_before": 16,
+      "name": "arcanist_L20",
+      "removed": [],
+      "unclassified": []
+    },
+    {
+      "added_correct": [
+        {
+          "condition": "-",
+          "id": "advanced_class_guide:class_feature:arcanist_arcane_reservoir",
+          "kind": "class_feature",
+          "label": "Arcane Reservoir",
+          "printed": "",
+          "verify": "by=Class:arcanist@1 (build plays arcanist:7)"
+        },
+        {
+          "condition": "-",
+          "id": "advanced_class_guide:class_feature:arcanist_arcanist_exploits",
+          "kind": "class_feature",
+          "label": "Arcanist Exploits",
+          "printed": "+4",
+          "verify": "by=Class:arcanist@1 (build plays arcanist:7)"
+        },
+        {
+          "condition": "-",
+          "id": "advanced_class_guide:class_feature:arcanist_cantrips",
+          "kind": "class_feature",
+          "label": "Cantrips",
+          "printed": "",
+          "verify": "by=Class:arcanist@1 (build plays arcanist:7)"
+        },
+        {
+          "condition": "-",
+          "id": "advanced_class_guide:class_feature:arcanist_consume_spells",
+          "kind": "class_feature",
+          "label": "Consume Spells",
+          "printed": "",
+          "verify": "by=Class:arcanist@1 (build plays arcanist:7)"
+        },
+        {
+          "condition": "-",
+          "id": "advanced_class_guide:class_feature:arcanist_spells_castable",
+          "kind": "class_feature",
+          "label": "Arcanist ~ Spells Castable",
+          "printed": "",
+          "verify": "by=Rule:advanced_class_guide:class_feature:arcanist_spells_prepared (held by this build)"
+        },
+        {
+          "condition": "-",
+          "id": "advanced_class_guide:class_feature:arcanist_spells_prepared",
+          "kind": "class_feature",
+          "label": "Arcanist Spells Prepared",
+          "printed": "",
+          "verify": "by=Class:arcanist@1 (build plays arcanist:7)"
+        },
+        {
+          "condition": "-",
+          "id": "advanced_class_guide:class_feature:arcanist_weapon_and_armor_proficiency",
+          "kind": "class_feature",
+          "label": "Weapon and Armor Proficiency",
+          "printed": "",
+          "verify": "by=Class:arcanist@1 (build plays arcanist:7)"
+        },
+        {
+          "condition": "-",
+          "id": "core_rulebook:class_feature:weapon_prof_simple",
+          "kind": "class_feature",
+          "label": "Weapon Prof ~ Simple",
+          "printed": "",
+          "verify": "by=Rule:advanced_class_guide:class_feature:arcanist_weapon_and_armor_proficiency (held by this build)"
+        }
+      ],
+      "build": "arcanist:7",
+      "changed_value": [],
+      "duplicate": [],
+      "held_after": 37,
+      "held_before": 29,
+      "lines_after": 24,
+      "lines_before": 16,
+      "name": "arcanist_L7",
+      "removed": [],
+      "unclassified": []
+    },
+    {
+      "added_correct": [
+        {
+          "condition": "-",
+          "id": "core_rulebook:class_feature:barbarian_fast_movement",
+          "kind": "class_feature",
+          "label": "Fast Movement",
+          "printed": "",
+          "verify": "by=Rule:core_rulebook:class_feature:barbarian_standard_class_full (held by this build); by=Rule:core_rulebook:class_feature:barbarian_standard_class_full (held by this build)"
+        },
+        {
+          "condition": "when active",
+          "id": "core_rulebook:class_feature:barbarian_rage",
+          "kind": "class_feature",
+          "label": "Rage (Will save)",
+          "printed": "+1",
+          "verify": "by=Rule:core_rulebook:class_feature:barbarian_standard_class_full (held by this build); by=Rule:core_rulebook:class_feature:barbarian_standard_class_full (held by this build)"
+        },
+        {
+          "condition": "when active",
+          "id": "core_rulebook:class_feature:barbarian_rage#bonus1",
+          "kind": "class_feature",
+          "label": "Rage (AC)",
+          "printed": "-2",
+          "verify": "[sibling of base core_rulebook:class_feature:barbarian_rage] by=Rule:core_rulebook:class_feature:barbarian_standard_class_full (held by this build); by=Rule:core_rulebook:class_feature:barbarian_standard_class_full (held by this build)"
+        },
+        {
+          "condition": "when active",
+          "id": "core_rulebook:class_feature:barbarian_rage#bonus2",
+          "kind": "class_feature",
+          "label": "Rage (Str)",
+          "printed": "+2",
+          "verify": "[sibling of base core_rulebook:class_feature:barbarian_rage] by=Rule:core_rulebook:class_feature:barbarian_standard_class_full (held by this build); by=Rule:core_rulebook:class_feature:barbarian_standard_class_full (held by this build)"
+        },
+        {
+          "condition": "when active",
+          "id": "core_rulebook:class_feature:barbarian_rage#bonus3",
+          "kind": "class_feature",
+          "label": "Rage (Con)",
+          "printed": "+2",
+          "verify": "[sibling of base core_rulebook:class_feature:barbarian_rage] by=Rule:core_rulebook:class_feature:barbarian_standard_class_full (held by this build); by=Rule:core_rulebook:class_feature:barbarian_standard_class_full (held by this build)"
+        },
+        {
+          "condition": "when active",
+          "id": "core_rulebook:class_feature:rage",
+          "kind": "class_feature",
+          "label": "Rage (Will save)",
+          "printed": "+1",
+          "verify": "by=Rule:core_rulebook:class_feature:barbarian_rage (held by this build)"
+        },
+        {
+          "condition": "when active",
+          "id": "core_rulebook:class_feature:rage#bonus1",
+          "kind": "class_feature",
+          "label": "Rage (AC)",
+          "printed": "-2",
+          "verify": "[sibling of base core_rulebook:class_feature:rage] by=Rule:core_rulebook:class_feature:barbarian_rage (held by this build)"
+        },
+        {
+          "condition": "when active",
+          "id": "core_rulebook:class_feature:rage#bonus2",
+          "kind": "class_feature",
+          "label": "Rage (Str)",
+          "printed": "+2",
+          "verify": "[sibling of base core_rulebook:class_feature:rage] by=Rule:core_rulebook:class_feature:barbarian_rage (held by this build)"
+        },
+        {
+          "condition": "when active",
+          "id": "core_rulebook:class_feature:rage#bonus3",
+          "kind": "class_feature",
+          "label": "Rage (Con)",
+          "printed": "+2",
+          "verify": "[sibling of base core_rulebook:class_feature:rage] by=Rule:core_rulebook:class_feature:barbarian_rage (held by this build)"
+        },
+        {
+          "condition": "when active",
+          "id": "core_rulebook:class_feature:standard_rage",
+          "kind": "class_feature",
+          "label": "Standard Rage (AC)",
+          "printed": "-2",
+          "verify": "by=Rule:core_rulebook:class_feature:rage (held by this build)"
+        },
+        {
+          "condition": "when active",
+          "id": "core_rulebook:class_feature:standard_rage#bonus1",
+          "kind": "class_feature",
+          "label": "Standard Rage (Will save)",
+          "printed": "+2",
+          "verify": "[sibling of base core_rulebook:class_feature:standard_rage] by=Rule:core_rulebook:class_feature:rage (held by this build)"
+        },
+        {
+          "condition": "when active",
+          "id": "core_rulebook:class_feature:standard_rage#bonus2",
+          "kind": "class_feature",
+          "label": "Standard Rage (Str)",
+          "printed": "+4",
+          "verify": "[sibling of base core_rulebook:class_feature:standard_rage] by=Rule:core_rulebook:class_feature:rage (held by this build)"
+        },
+        {
+          "condition": "when active",
+          "id": "core_rulebook:class_feature:standard_rage#bonus3",
+          "kind": "class_feature",
+          "label": "Standard Rage (Con)",
+          "printed": "+4",
+          "verify": "[sibling of base core_rulebook:class_feature:standard_rage] by=Rule:core_rulebook:class_feature:rage (held by this build)"
+        }
+      ],
+      "build": "barbarian:1",
+      "changed_value": [],
+      "duplicate": [
+        {
+          "against": "class_feature.barbarian.uncanny_dodge",
+          "against_label": "value=0 detail=Barbarian Uncanny Dodge at barbarian level 1: correctly absent at level 1 by PF1 Core Rulebook level gate; the at-grant ",
+          "against_source": "EXPL",
+          "id": "core_rulebook:class_feature:barbarian_uncanny_dodge_tracker",
+          "kind": "class_feature",
+          "label": "Barbarian ~ Uncanny Dodge Tracker",
+          "score": 0.852
+        }
+      ],
+      "held_after": 54,
+      "held_before": 39,
+      "lines_after": 39,
+      "lines_before": 25,
+      "name": "barbarian_L1",
+      "removed": [],
+      "unclassified": []
+    },
+    {
+      "added_correct": [
+        {
+          "condition": "-",
+          "id": "core_rulebook:class_feature:barbarian_fast_movement",
+          "kind": "class_feature",
+          "label": "Fast Movement",
+          "printed": "",
+          "verify": "by=Rule:core_rulebook:class_feature:barbarian_standard_class_full (held by this build); by=Rule:core_rulebook:class_feature:barbarian_standard_class_full (held by this build)"
+        },
+        {
+          "condition": "when active",
+          "id": "core_rulebook:class_feature:barbarian_rage",
+          "kind": "class_feature",
+          "label": "Rage (Will save)",
+          "printed": "+1",
+          "verify": "by=Rule:core_rulebook:class_feature:barbarian_standard_class_full (held by this build); by=Rule:core_rulebook:class_feature:barbarian_standard_class_full (held by this build)"
+        },
+        {
+          "condition": "when active",
+          "id": "core_rulebook:class_feature:barbarian_rage#bonus1",
+          "kind": "class_feature",
+          "label": "Rage (AC)",
+          "printed": "-2",
+          "verify": "[sibling of base core_rulebook:class_feature:barbarian_rage] by=Rule:core_rulebook:class_feature:barbarian_standard_class_full (held by this build); by=Rule:core_rulebook:class_feature:barbarian_standard_class_full (held by this build)"
+        },
+        {
+          "condition": "when active",
+          "id": "core_rulebook:class_feature:barbarian_rage#bonus2",
+          "kind": "class_feature",
+          "label": "Rage (Str)",
+          "printed": "+2",
+          "verify": "[sibling of base core_rulebook:class_feature:barbarian_rage] by=Rule:core_rulebook:class_feature:barbarian_standard_class_full (held by this build); by=Rule:core_rulebook:class_feature:barbarian_standard_class_full (held by this build)"
+        },
+        {
+          "condition": "when active",
+          "id": "core_rulebook:class_feature:barbarian_rage#bonus3",
+          "kind": "class_feature",
+          "label": "Rage (Con)",
+          "printed": "+2",
+          "verify": "[sibling of base core_rulebook:class_feature:barbarian_rage] by=Rule:core_rulebook:class_feature:barbarian_standard_class_full (held by this build); by=Rule:core_rulebook:class_feature:barbarian_standard_class_full (held by this build)"
+        },
+        {
+          "condition": "when active",
+          "id": "core_rulebook:class_feature:rage",
+          "kind": "class_feature",
+          "label": "Rage (Will save)",
+          "printed": "+1",
+          "verify": "by=Rule:core_rulebook:class_feature:barbarian_rage (held by this build)"
+        },
+        {
+          "condition": "when active",
+          "id": "core_rulebook:class_feature:rage#bonus1",
+          "kind": "class_feature",
+          "label": "Rage (AC)",
+          "printed": "-2",
+          "verify": "[sibling of base core_rulebook:class_feature:rage] by=Rule:core_rulebook:class_feature:barbarian_rage (held by this build)"
+        },
+        {
+          "condition": "when active",
+          "id": "core_rulebook:class_feature:rage#bonus2",
+          "kind": "class_feature",
+          "label": "Rage (Str)",
+          "printed": "+2",
+          "verify": "[sibling of base core_rulebook:class_feature:rage] by=Rule:core_rulebook:class_feature:barbarian_rage (held by this build)"
+        },
+        {
+          "condition": "when active",
+          "id": "core_rulebook:class_feature:rage#bonus3",
+          "kind": "class_feature",
+          "label": "Rage (Con)",
+          "printed": "+2",
+          "verify": "[sibling of base core_rulebook:class_feature:rage] by=Rule:core_rulebook:class_feature:barbarian_rage (held by this build)"
+        },
+        {
+          "condition": "when active",
+          "id": "core_rulebook:class_feature:standard_rage",
+          "kind": "class_feature",
+          "label": "Standard Rage (AC)",
+          "printed": "-2",
+          "verify": "by=Rule:core_rulebook:class_feature:rage (held by this build)"
+        },
+        {
+          "condition": "when active",
+          "id": "core_rulebook:class_feature:standard_rage#bonus1",
+          "kind": "class_feature",
+          "label": "Standard Rage (Will save)",
+          "printed": "+3",
+          "verify": "[sibling of base core_rulebook:class_feature:standard_rage] by=Rule:core_rulebook:class_feature:rage (held by this build)"
+        },
+        {
+          "condition": "when active",
+          "id": "core_rulebook:class_feature:standard_rage#bonus2",
+          "kind": "class_feature",
+          "label": "Standard Rage (Str)",
+          "printed": "+6",
+          "verify": "[sibling of base core_rulebook:class_feature:standard_rage] by=Rule:core_rulebook:class_feature:rage (held by this build)"
+        },
+        {
+          "condition": "when active",
+          "id": "core_rulebook:class_feature:standard_rage#bonus3",
+          "kind": "class_feature",
+          "label": "Standard Rage (Con)",
+          "printed": "+6",
+          "verify": "[sibling of base core_rulebook:class_feature:standard_rage] by=Rule:core_rulebook:class_feature:rage (held by this build)"
+        }
+      ],
+      "build": "barbarian:14",
+      "changed_value": [],
+      "duplicate": [
+        {
+          "against": "class_feature.barbarian.uncanny_dodge",
+          "against_label": "value=0 detail=Barbarian Uncanny Dodge granted at barbarian level 14 (PF1 Core Rulebook, 2nd-level barbarian class feature, part of the",
+          "against_source": "EXPL",
+          "id": "core_rulebook:class_feature:barbarian_uncanny_dodge_tracker",
+          "kind": "class_feature",
+          "label": "Barbarian ~ Uncanny Dodge Tracker",
+          "score": 0.852
+        }
+      ],
+      "held_after": 76,
+      "held_before": 39,
+      "lines_after": 39,
+      "lines_before": 25,
+      "name": "barbarian_L14",
+      "removed": [],
+      "unclassified": []
+    },
+    {
+      "added_correct": [
+        {
+          "condition": "-",
+          "id": "core_rulebook:class_feature:barbarian_fast_movement",
+          "kind": "class_feature",
+          "label": "Fast Movement",
+          "printed": "",
+          "verify": "by=Rule:core_rulebook:class_feature:barbarian_standard_class_full (held by this build); by=Rule:core_rulebook:class_feature:barbarian_standard_class_full (held by this build)"
+        },
+        {
+          "condition": "when active",
+          "id": "core_rulebook:class_feature:barbarian_rage",
+          "kind": "class_feature",
+          "label": "Rage (Will save)",
+          "printed": "+1",
+          "verify": "by=Rule:core_rulebook:class_feature:barbarian_standard_class_full (held by this build); by=Rule:core_rulebook:class_feature:barbarian_standard_class_full (held by this build)"
+        },
+        {
+          "condition": "when active",
+          "id": "core_rulebook:class_feature:barbarian_rage#bonus1",
+          "kind": "class_feature",
+          "label": "Rage (AC)",
+          "printed": "-2",
+          "verify": "[sibling of base core_rulebook:class_feature:barbarian_rage] by=Rule:core_rulebook:class_feature:barbarian_standard_class_full (held by this build); by=Rule:core_rulebook:class_feature:barbarian_standard_class_full (held by this build)"
+        },
+        {
+          "condition": "when active",
+          "id": "core_rulebook:class_feature:barbarian_rage#bonus2",
+          "kind": "class_feature",
+          "label": "Rage (Str)",
+          "printed": "+2",
+          "verify": "[sibling of base core_rulebook:class_feature:barbarian_rage] by=Rule:core_rulebook:class_feature:barbarian_standard_class_full (held by this build); by=Rule:core_rulebook:class_feature:barbarian_standard_class_full (held by this build)"
+        },
+        {
+          "condition": "when active",
+          "id": "core_rulebook:class_feature:barbarian_rage#bonus3",
+          "kind": "class_feature",
+          "label": "Rage (Con)",
+          "printed": "+2",
+          "verify": "[sibling of base core_rulebook:class_feature:barbarian_rage] by=Rule:core_rulebook:class_feature:barbarian_standard_class_full (held by this build); by=Rule:core_rulebook:class_feature:barbarian_standard_class_full (held by this build)"
+        },
+        {
+          "condition": "-",
+          "id": "core_rulebook:class_feature:barbarian_tireless_rage",
+          "kind": "class_feature",
+          "label": "Tireless Rage",
+          "printed": "",
+          "verify": "by=Rule:core_rulebook:class_feature:barbarian_standard_class_full (held by this build); by=Rule:core_rulebook:class_feature:barbarian_standard_class_full (held by this build)"
+        },
+        {
+          "condition": "when active",
+          "id": "core_rulebook:class_feature:rage",
+          "kind": "class_feature",
+          "label": "Rage (Will save)",
+          "printed": "+1",
+          "verify": "by=Rule:core_rulebook:class_feature:barbarian_rage (held by this build)"
+        },
+        {
+          "condition": "when active",
+          "id": "core_rulebook:class_feature:rage#bonus1",
+          "kind": "class_feature",
+          "label": "Rage (AC)",
+          "printed": "-2",
+          "verify": "[sibling of base core_rulebook:class_feature:rage] by=Rule:core_rulebook:class_feature:barbarian_rage (held by this build)"
+        },
+        {
+          "condition": "when active",
+          "id": "core_rulebook:class_feature:rage#bonus2",
+          "kind": "class_feature",
+          "label": "Rage (Str)",
+          "printed": "+2",
+          "verify": "[sibling of base core_rulebook:class_feature:rage] by=Rule:core_rulebook:class_feature:barbarian_rage (held by this build)"
+        },
+        {
+          "condition": "when active",
+          "id": "core_rulebook:class_feature:rage#bonus3",
+          "kind": "class_feature",
+          "label": "Rage (Con)",
+          "printed": "+2",
+          "verify": "[sibling of base core_rulebook:class_feature:rage] by=Rule:core_rulebook:class_feature:barbarian_rage (held by this build)"
+        },
+        {
+          "condition": "when active",
+          "id": "core_rulebook:class_feature:standard_rage",
+          "kind": "class_feature",
+          "label": "Standard Rage (AC)",
+          "printed": "-2",
+          "verify": "by=Rule:core_rulebook:class_feature:rage (held by this build)"
+        },
+        {
+          "condition": "when active",
+          "id": "core_rulebook:class_feature:standard_rage#bonus1",
+          "kind": "class_feature",
+          "label": "Standard Rage (Will save)",
+          "printed": "+4",
+          "verify": "[sibling of base core_rulebook:class_feature:standard_rage] by=Rule:core_rulebook:class_feature:rage (held by this build)"
+        },
+        {
+          "condition": "when active",
+          "id": "core_rulebook:class_feature:standard_rage#bonus2",
+          "kind": "class_feature",
+          "label": "Standard Rage (Str)",
+          "printed": "+8",
+          "verify": "[sibling of base core_rulebook:class_feature:standard_rage] by=Rule:core_rulebook:class_feature:rage (held by this build)"
+        },
+        {
+          "condition": "when active",
+          "id": "core_rulebook:class_feature:standard_rage#bonus3",
+          "kind": "class_feature",
+          "label": "Standard Rage (Con)",
+          "printed": "+8",
+          "verify": "[sibling of base core_rulebook:class_feature:standard_rage] by=Rule:core_rulebook:class_feature:rage (held by this build)"
+        }
+      ],
+      "build": "barbarian:20",
+      "changed_value": [],
+      "duplicate": [
+        {
+          "against": "class_feature.barbarian.uncanny_dodge",
+          "against_label": "value=0 detail=Barbarian Uncanny Dodge granted at barbarian level 20 (PF1 Core Rulebook, 2nd-level barbarian class feature, part of the",
+          "against_source": "EXPL",
+          "id": "core_rulebook:class_feature:barbarian_uncanny_dodge_tracker",
+          "kind": "class_feature",
+          "label": "Barbarian ~ Uncanny Dodge Tracker",
+          "score": 0.852
+        }
+      ],
+      "held_after": 78,
+      "held_before": 39,
+      "lines_after": 40,
+      "lines_before": 25,
+      "name": "barbarian_L20",
+      "removed": [],
+      "unclassified": []
+    },
+    {
+      "added_correct": [
+        {
+          "condition": "-",
+          "id": "core_rulebook:class_feature:barbarian_fast_movement",
+          "kind": "class_feature",
+          "label": "Fast Movement",
+          "printed": "",
+          "verify": "by=Rule:core_rulebook:class_feature:barbarian_standard_class_full (held by this build); by=Rule:core_rulebook:class_feature:barbarian_standard_class_full (held by this build)"
+        },
+        {
+          "condition": "when active",
+          "id": "core_rulebook:class_feature:barbarian_rage",
+          "kind": "class_feature",
+          "label": "Rage (Will save)",
+          "printed": "+1",
+          "verify": "by=Rule:core_rulebook:class_feature:barbarian_standard_class_full (held by this build); by=Rule:core_rulebook:class_feature:barbarian_standard_class_full (held by this build)"
+        },
+        {
+          "condition": "when active",
+          "id": "core_rulebook:class_feature:barbarian_rage#bonus1",
+          "kind": "class_feature",
+          "label": "Rage (AC)",
+          "printed": "-2",
+          "verify": "[sibling of base core_rulebook:class_feature:barbarian_rage] by=Rule:core_rulebook:class_feature:barbarian_standard_class_full (held by this build); by=Rule:core_rulebook:class_feature:barbarian_standard_class_full (held by this build)"
+        },
+        {
+          "condition": "when active",
+          "id": "core_rulebook:class_feature:barbarian_rage#bonus2",
+          "kind": "class_feature",
+          "label": "Rage (Str)",
+          "printed": "+2",
+          "verify": "[sibling of base core_rulebook:class_feature:barbarian_rage] by=Rule:core_rulebook:class_feature:barbarian_standard_class_full (held by this build); by=Rule:core_rulebook:class_feature:barbarian_standard_class_full (held by this build)"
+        },
+        {
+          "condition": "when active",
+          "id": "core_rulebook:class_feature:barbarian_rage#bonus3",
+          "kind": "class_feature",
+          "label": "Rage (Con)",
+          "printed": "+2",
+          "verify": "[sibling of base core_rulebook:class_feature:barbarian_rage] by=Rule:core_rulebook:class_feature:barbarian_standard_class_full (held by this build); by=Rule:core_rulebook:class_feature:barbarian_standard_class_full (held by this build)"
+        },
+        {
+          "condition": "when active",
+          "id": "core_rulebook:class_feature:rage",
+          "kind": "class_feature",
+          "label": "Rage (Will save)",
+          "printed": "+1",
+          "verify": "by=Rule:core_rulebook:class_feature:barbarian_rage (held by this build)"
+        },
+        {
+          "condition": "when active",
+          "id": "core_rulebook:class_feature:rage#bonus1",
+          "kind": "class_feature",
+          "label": "Rage (AC)",
+          "printed": "-2",
+          "verify": "[sibling of base core_rulebook:class_feature:rage] by=Rule:core_rulebook:class_feature:barbarian_rage (held by this build)"
+        },
+        {
+          "condition": "when active",
+          "id": "core_rulebook:class_feature:rage#bonus2",
+          "kind": "class_feature",
+          "label": "Rage (Str)",
+          "printed": "+2",
+          "verify": "[sibling of base core_rulebook:class_feature:rage] by=Rule:core_rulebook:class_feature:barbarian_rage (held by this build)"
+        },
+        {
+          "condition": "when active",
+          "id": "core_rulebook:class_feature:rage#bonus3",
+          "kind": "class_feature",
+          "label": "Rage (Con)",
+          "printed": "+2",
+          "verify": "[sibling of base core_rulebook:class_feature:rage] by=Rule:core_rulebook:class_feature:barbarian_rage (held by this build)"
+        },
+        {
+          "condition": "when active",
+          "id": "core_rulebook:class_feature:standard_rage",
+          "kind": "class_feature",
+          "label": "Standard Rage (AC)",
+          "printed": "-2",
+          "verify": "by=Rule:core_rulebook:class_feature:rage (held by this build)"
+        },
+        {
+          "condition": "when active",
+          "id": "core_rulebook:class_feature:standard_rage#bonus1",
+          "kind": "class_feature",
+          "label": "Standard Rage (Will save)",
+          "printed": "+2",
+          "verify": "[sibling of base core_rulebook:class_feature:standard_rage] by=Rule:core_rulebook:class_feature:rage (held by this build)"
+        },
+        {
+          "condition": "when active",
+          "id": "core_rulebook:class_feature:standard_rage#bonus2",
+          "kind": "class_feature",
+          "label": "Standard Rage (Str)",
+          "printed": "+4",
+          "verify": "[sibling of base core_rulebook:class_feature:standard_rage] by=Rule:core_rulebook:class_feature:rage (held by this build)"
+        },
+        {
+          "condition": "when active",
+          "id": "core_rulebook:class_feature:standard_rage#bonus3",
+          "kind": "class_feature",
+          "label": "Standard Rage (Con)",
+          "printed": "+4",
+          "verify": "[sibling of base core_rulebook:class_feature:standard_rage] by=Rule:core_rulebook:class_feature:rage (held by this build)"
+        }
+      ],
+      "build": "barbarian:7",
+      "changed_value": [],
+      "duplicate": [
+        {
+          "against": "class_feature.barbarian.uncanny_dodge",
+          "against_label": "value=0 detail=Barbarian Uncanny Dodge granted at barbarian level 7 (PF1 Core Rulebook, 2nd-level barbarian class feature, part of the ",
+          "against_source": "EXPL",
+          "id": "core_rulebook:class_feature:barbarian_uncanny_dodge_tracker",
+          "kind": "class_feature",
+          "label": "Barbarian ~ Uncanny Dodge Tracker",
+          "score": 0.852
+        }
+      ],
+      "held_after": 75,
+      "held_before": 39,
+      "lines_after": 39,
+      "lines_before": 25,
+      "name": "barbarian_L7",
+      "removed": [],
+      "unclassified": []
+    },
+    {
+      "added_correct": [
+        {
+          "condition": "-",
+          "id": "advanced_class_guide:class_feature:brawler_brawler_s_cunning",
+          "kind": "class_feature",
+          "label": "Brawler's Cunning",
+          "printed": "",
+          "verify": "by=Class:brawler@1 (build plays brawler:1)"
+        },
+        {
+          "condition": "-",
+          "id": "advanced_class_guide:class_feature:brawler_martial_flexibility",
+          "kind": "class_feature",
+          "label": "Martial Flexibility",
+          "printed": "",
+          "verify": "by=Class:brawler@1 (build plays brawler:1)"
+        },
+        {
+          "condition": "-",
+          "id": "advanced_class_guide:class_feature:brawler_martial_training",
+          "kind": "class_feature",
+          "label": "Martial Training",
+          "printed": "",
+          "verify": "by=Class:brawler@1 (build plays brawler:1)"
+        },
+        {
+          "condition": "-",
+          "id": "advanced_class_guide:class_feature:brawler_weapon_and_armor_proficiency",
+          "kind": "class_feature",
+          "label": "Weapon and Armor Proficiency",
+          "printed": "",
+          "verify": "by=Class:brawler@1 (build plays brawler:1)"
+        },
+        {
+          "condition": "-",
+          "id": "core_rulebook:class_feature:weapon_prof_simple",
+          "kind": "class_feature",
+          "label": "Weapon Prof ~ Simple",
+          "printed": "",
+          "verify": "by=Rule:advanced_class_guide:class_feature:brawler_weapon_and_armor_proficiency (held by this build)"
+        }
+      ],
+      "build": "brawler:1",
+      "changed_value": [],
+      "duplicate": [],
+      "held_after": 31,
+      "held_before": 26,
+      "lines_after": 19,
+      "lines_before": 14,
+      "name": "brawler_L1",
+      "removed": [],
+      "unclassified": []
+    },
+    {
+      "added_correct": [
+        {
+          "condition": "-",
+          "id": "advanced_class_guide:class_feature:brawler_bonus_feats",
+          "kind": "class_feature",
+          "label": "Bonus Feats (brawler bonus feat picks)",
+          "printed": "+5",
+          "verify": "by=Class:brawler@2 (build plays brawler:14)"
+        },
+        {
+          "condition": "-",
+          "id": "advanced_class_guide:class_feature:brawler_brawler_s_cunning",
+          "kind": "class_feature",
+          "label": "Brawler's Cunning",
+          "printed": "",
+          "verify": "by=Class:brawler@1 (build plays brawler:14)"
+        },
+        {
+          "condition": "-",
+          "id": "advanced_class_guide:class_feature:brawler_brawler_s_flurry",
+          "kind": "class_feature",
+          "label": "Brawler's Flurry",
+          "printed": "",
+          "verify": "by=Class:brawler@2 (build plays brawler:14)"
+        },
+        {
+          "condition": "-",
+          "id": "advanced_class_guide:class_feature:brawler_brawler_s_strike",
+          "kind": "class_feature",
+          "label": "Brawler's Strike",
+          "printed": "+1",
+          "verify": "by=Class:brawler@5 (build plays brawler:14)"
+        },
+        {
+          "condition": "-",
+          "id": "advanced_class_guide:class_feature:brawler_close_weapon_mastery",
+          "kind": "class_feature",
+          "label": "Close Weapon Mastery",
+          "printed": "",
+          "verify": "by=Class:brawler@5 (build plays brawler:14)"
+        },
+        {
+          "condition": "-",
+          "id": "advanced_class_guide:class_feature:brawler_knockout",
+          "kind": "class_feature",
+          "label": "Knockout",
+          "printed": "",
+          "verify": "by=Class:brawler@4 (build plays brawler:14)"
+        },
+        {
+          "condition": "-",
+          "id": "advanced_class_guide:class_feature:brawler_maneuver_training",
+          "kind": "class_feature",
+          "label": "Maneuver Training (maneuver training i selection picks)",
+          "printed": "+1",
+          "verify": "by=Class:brawler@3 (build plays brawler:14)"
+        },
+        {
+          "condition": "-",
+          "id": "advanced_class_guide:class_feature:brawler_maneuver_training#bonus1",
+          "kind": "class_feature",
+          "label": "Maneuver Training (maneuver training ii selection picks)",
+          "printed": "+1",
+          "verify": "[sibling of base advanced_class_guide:class_feature:brawler_maneuver_training] by=Class:brawler@3 (build plays brawler:14)"
+        },
+        {
+          "condition": "-",
+          "id": "advanced_class_guide:class_feature:brawler_maneuver_training#bonus2",
+          "kind": "class_feature",
+          "label": "Maneuver Training (maneuver training iii selection picks)",
+          "printed": "+1",
+          "verify": "[sibling of base advanced_class_guide:class_feature:brawler_maneuver_training] by=Class:brawler@3 (build plays brawler:14)"
+        },
+        {
+          "condition": "-",
+          "id": "advanced_class_guide:class_feature:brawler_maneuver_training#bonus3",
+          "kind": "class_feature",
+          "label": "Maneuver Training (maneuver training iv selection picks)",
+          "printed": "+0",
+          "verify": "[sibling of base advanced_class_guide:class_feature:brawler_maneuver_training] by=Class:brawler@3 (build plays brawler:14)"
+        },
+        {
+          "condition": "-",
+          "id": "advanced_class_guide:class_feature:brawler_maneuver_training#bonus4",
+          "kind": "class_feature",
+          "label": "Maneuver Training (maneuver training v selection picks)",
+          "printed": "+0",
+          "verify": "[sibling of base advanced_class_guide:class_feature:brawler_maneuver_training] by=Class:brawler@3 (build plays brawler:14)"
+        },
+        {
+          "condition": "-",
+          "id": "advanced_class_guide:class_feature:brawler_martial_flexibility",
+          "kind": "class_feature",
+          "label": "Martial Flexibility",
+          "printed": "",
+          "verify": "by=Class:brawler@1 (build plays brawler:14)"
+        },
+        {
+          "condition": "-",
+          "id": "advanced_class_guide:class_feature:brawler_martial_training",
+          "kind": "class_feature",
+          "label": "Martial Training",
+          "printed": "",
+          "verify": "by=Class:brawler@1 (build plays brawler:14)"
+        },
+        {
+          "condition": "-",
+          "id": "advanced_class_guide:class_feature:brawler_weapon_and_armor_proficiency",
+          "kind": "class_feature",
+          "label": "Weapon and Armor Proficiency",
+          "printed": "",
+          "verify": "by=Class:brawler@1 (build plays brawler:14)"
+        },
+        {
+          "condition": "-",
+          "id": "core_rulebook:class_feature:weapon_prof_simple",
+          "kind": "class_feature",
+          "label": "Weapon Prof ~ Simple",
+          "printed": "",
+          "verify": "by=Rule:advanced_class_guide:class_feature:brawler_weapon_and_armor_proficiency (held by this build)"
+        }
+      ],
+      "build": "brawler:14",
+      "changed_value": [],
+      "duplicate": [],
+      "held_after": 55,
+      "held_before": 26,
+      "lines_after": 29,
+      "lines_before": 14,
+      "name": "brawler_L14",
+      "removed": [],
+      "unclassified": []
+    },
+    {
+      "added_correct": [
+        {
+          "condition": "-",
+          "id": "advanced_class_guide:class_feature:brawler_awesome_blow",
+          "kind": "class_feature",
+          "label": "Awesome Blow",
+          "printed": "",
+          "verify": "by=Class:brawler@16 (build plays brawler:20)"
+        },
+        {
+          "condition": "-",
+          "id": "advanced_class_guide:class_feature:brawler_bonus_feats",
+          "kind": "class_feature",
+          "label": "Bonus Feats (brawler bonus feat picks)",
+          "printed": "+7",
+          "verify": "by=Class:brawler@2 (build plays brawler:20)"
+        },
+        {
+          "condition": "-",
+          "id": "advanced_class_guide:class_feature:brawler_brawler_s_cunning",
+          "kind": "class_feature",
+          "label": "Brawler's Cunning",
+          "printed": "",
+          "verify": "by=Class:brawler@1 (build plays brawler:20)"
+        },
+        {
+          "condition": "-",
+          "id": "advanced_class_guide:class_feature:brawler_brawler_s_flurry",
+          "kind": "class_feature",
+          "label": "Brawler's Flurry",
+          "printed": "",
+          "verify": "by=Class:brawler@2 (build plays brawler:20)"
+        },
+        {
+          "condition": "-",
+          "id": "advanced_class_guide:class_feature:brawler_brawler_s_strike",
+          "kind": "class_feature",
+          "label": "Brawler's Strike",
+          "printed": "+1",
+          "verify": "by=Class:brawler@5 (build plays brawler:20)"
+        },
+        {
+          "condition": "-",
+          "id": "advanced_class_guide:class_feature:brawler_close_weapon_mastery",
+          "kind": "class_feature",
+          "label": "Close Weapon Mastery",
+          "printed": "",
+          "verify": "by=Class:brawler@5 (build plays brawler:20)"
+        },
+        {
+          "condition": "-",
+          "id": "advanced_class_guide:class_feature:brawler_improved_awesome_blow",
+          "kind": "class_feature",
+          "label": "Improved Awesome Blow",
+          "printed": "",
+          "verify": "by=Class:brawler@20 (build plays brawler:20)"
+        },
+        {
+          "condition": "-",
+          "id": "advanced_class_guide:class_feature:brawler_knockout",
+          "kind": "class_feature",
+          "label": "Knockout",
+          "printed": "",
+          "verify": "by=Class:brawler@4 (build plays brawler:20)"
+        },
+        {
+          "condition": "-",
+          "id": "advanced_class_guide:class_feature:brawler_maneuver_training",
+          "kind": "class_feature",
+          "label": "Maneuver Training (maneuver training i selection picks)",
+          "printed": "+1",
+          "verify": "by=Class:brawler@3 (build plays brawler:20)"
+        },
+        {
+          "condition": "-",
+          "id": "advanced_class_guide:class_feature:brawler_maneuver_training#bonus1",
+          "kind": "class_feature",
+          "label": "Maneuver Training (maneuver training ii selection picks)",
+          "printed": "+1",
+          "verify": "[sibling of base advanced_class_guide:class_feature:brawler_maneuver_training] by=Class:brawler@3 (build plays brawler:20)"
+        },
+        {
+          "condition": "-",
+          "id": "advanced_class_guide:class_feature:brawler_maneuver_training#bonus2",
+          "kind": "class_feature",
+          "label": "Maneuver Training (maneuver training iii selection picks)",
+          "printed": "+1",
+          "verify": "[sibling of base advanced_class_guide:class_feature:brawler_maneuver_training] by=Class:brawler@3 (build plays brawler:20)"
+        },
+        {
+          "condition": "-",
+          "id": "advanced_class_guide:class_feature:brawler_maneuver_training#bonus3",
+          "kind": "class_feature",
+          "label": "Maneuver Training (maneuver training iv selection picks)",
+          "printed": "+1",
+          "verify": "[sibling of base advanced_class_guide:class_feature:brawler_maneuver_training] by=Class:brawler@3 (build plays brawler:20)"
+        },
+        {
+          "condition": "-",
+          "id": "advanced_class_guide:class_feature:brawler_maneuver_training#bonus4",
+          "kind": "class_feature",
+          "label": "Maneuver Training (maneuver training v selection picks)",
+          "printed": "+1",
+          "verify": "[sibling of base advanced_class_guide:class_feature:brawler_maneuver_training] by=Class:brawler@3 (build plays brawler:20)"
+        },
+        {
+          "condition": "-",
+          "id": "advanced_class_guide:class_feature:brawler_martial_flexibility",
+          "kind": "class_feature",
+          "label": "Martial Flexibility",
+          "printed": "",
+          "verify": "by=Class:brawler@1 (build plays brawler:20)"
+        },
+        {
+          "condition": "-",
+          "id": "advanced_class_guide:class_feature:brawler_martial_training",
+          "kind": "class_feature",
+          "label": "Martial Training",
+          "printed": "",
+          "verify": "by=Class:brawler@1 (build plays brawler:20)"
+        },
+        {
+          "condition": "-",
+          "id": "advanced_class_guide:class_feature:brawler_weapon_and_armor_proficiency",
+          "kind": "class_feature",
+          "label": "Weapon and Armor Proficiency",
+          "printed": "",
+          "verify": "by=Class:brawler@1 (build plays brawler:20)"
+        },
+        {
+          "condition": "-",
+          "id": "core_rulebook:class_feature:weapon_prof_simple",
+          "kind": "class_feature",
+          "label": "Weapon Prof ~ Simple",
+          "printed": "",
+          "verify": "by=Rule:advanced_class_guide:class_feature:brawler_weapon_and_armor_proficiency (held by this build)"
+        }
+      ],
+      "build": "brawler:20",
+      "changed_value": [],
+      "duplicate": [],
+      "held_after": 57,
+      "held_before": 26,
+      "lines_after": 31,
+      "lines_before": 14,
+      "name": "brawler_L20",
+      "removed": [],
+      "unclassified": []
+    },
+    {
+      "added_correct": [
+        {
+          "condition": "-",
+          "id": "advanced_class_guide:class_feature:brawler_bonus_feats",
+          "kind": "class_feature",
+          "label": "Bonus Feats (brawler bonus feat picks)",
+          "printed": "+2",
+          "verify": "by=Class:brawler@2 (build plays brawler:7)"
+        },
+        {
+          "condition": "-",
+          "id": "advanced_class_guide:class_feature:brawler_brawler_s_cunning",
+          "kind": "class_feature",
+          "label": "Brawler's Cunning",
+          "printed": "",
+          "verify": "by=Class:brawler@1 (build plays brawler:7)"
+        },
+        {
+          "condition": "-",
+          "id": "advanced_class_guide:class_feature:brawler_brawler_s_flurry",
+          "kind": "class_feature",
+          "label": "Brawler's Flurry",
+          "printed": "",
+          "verify": "by=Class:brawler@2 (build plays brawler:7)"
+        },
+        {
+          "condition": "-",
+          "id": "advanced_class_guide:class_feature:brawler_brawler_s_strike",
+          "kind": "class_feature",
+          "label": "Brawler's Strike",
+          "printed": "+0",
+          "verify": "by=Class:brawler@5 (build plays brawler:7)"
+        },
+        {
+          "condition": "-",
+          "id": "advanced_class_guide:class_feature:brawler_close_weapon_mastery",
+          "kind": "class_feature",
+          "label": "Close Weapon Mastery",
+          "printed": "",
+          "verify": "by=Class:brawler@5 (build plays brawler:7)"
+        },
+        {
+          "condition": "-",
+          "id": "advanced_class_guide:class_feature:brawler_knockout",
+          "kind": "class_feature",
+          "label": "Knockout",
+          "printed": "",
+          "verify": "by=Class:brawler@4 (build plays brawler:7)"
+        },
+        {
+          "condition": "-",
+          "id": "advanced_class_guide:class_feature:brawler_maneuver_training",
+          "kind": "class_feature",
+          "label": "Maneuver Training (maneuver training i selection picks)",
+          "printed": "+1",
+          "verify": "by=Class:brawler@3 (build plays brawler:7)"
+        },
+        {
+          "condition": "-",
+          "id": "advanced_class_guide:class_feature:brawler_maneuver_training#bonus1",
+          "kind": "class_feature",
+          "label": "Maneuver Training (maneuver training ii selection picks)",
+          "printed": "+1",
+          "verify": "[sibling of base advanced_class_guide:class_feature:brawler_maneuver_training] by=Class:brawler@3 (build plays brawler:7)"
+        },
+        {
+          "condition": "-",
+          "id": "advanced_class_guide:class_feature:brawler_maneuver_training#bonus2",
+          "kind": "class_feature",
+          "label": "Maneuver Training (maneuver training iii selection picks)",
+          "printed": "+0",
+          "verify": "[sibling of base advanced_class_guide:class_feature:brawler_maneuver_training] by=Class:brawler@3 (build plays brawler:7)"
+        },
+        {
+          "condition": "-",
+          "id": "advanced_class_guide:class_feature:brawler_maneuver_training#bonus3",
+          "kind": "class_feature",
+          "label": "Maneuver Training (maneuver training iv selection picks)",
+          "printed": "+0",
+          "verify": "[sibling of base advanced_class_guide:class_feature:brawler_maneuver_training] by=Class:brawler@3 (build plays brawler:7)"
+        },
+        {
+          "condition": "-",
+          "id": "advanced_class_guide:class_feature:brawler_maneuver_training#bonus4",
+          "kind": "class_feature",
+          "label": "Maneuver Training (maneuver training v selection picks)",
+          "printed": "+0",
+          "verify": "[sibling of base advanced_class_guide:class_feature:brawler_maneuver_training] by=Class:brawler@3 (build plays brawler:7)"
+        },
+        {
+          "condition": "-",
+          "id": "advanced_class_guide:class_feature:brawler_martial_flexibility",
+          "kind": "class_feature",
+          "label": "Martial Flexibility",
+          "printed": "",
+          "verify": "by=Class:brawler@1 (build plays brawler:7)"
+        },
+        {
+          "condition": "-",
+          "id": "advanced_class_guide:class_feature:brawler_martial_training",
+          "kind": "class_feature",
+          "label": "Martial Training",
+          "printed": "",
+          "verify": "by=Class:brawler@1 (build plays brawler:7)"
+        },
+        {
+          "condition": "-",
+          "id": "advanced_class_guide:class_feature:brawler_weapon_and_armor_proficiency",
+          "kind": "class_feature",
+          "label": "Weapon and Armor Proficiency",
+          "printed": "",
+          "verify": "by=Class:brawler@1 (build plays brawler:7)"
+        },
+        {
+          "condition": "-",
+          "id": "core_rulebook:class_feature:weapon_prof_simple",
+          "kind": "class_feature",
+          "label": "Weapon Prof ~ Simple",
+          "printed": "",
+          "verify": "by=Rule:advanced_class_guide:class_feature:brawler_weapon_and_armor_proficiency (held by this build)"
+        }
+      ],
+      "build": "brawler:7",
+      "changed_value": [],
+      "duplicate": [],
+      "held_after": 55,
+      "held_before": 26,
+      "lines_after": 29,
+      "lines_before": 14,
+      "name": "brawler_L7",
+      "removed": [],
+      "unclassified": []
+    },
+    {
+      "added_correct": [],
+      "build": "cleric:1",
+      "changed_value": [],
+      "duplicate": [],
+      "held_after": 41,
+      "held_before": 38,
+      "lines_after": 24,
+      "lines_before": 24,
+      "name": "cleric_L1",
+      "removed": [],
+      "unclassified": []
+    },
+    {
+      "added_correct": [],
+      "build": "cleric:14",
+      "changed_value": [],
+      "duplicate": [],
+      "held_after": 41,
+      "held_before": 38,
+      "lines_after": 24,
+      "lines_before": 24,
+      "name": "cleric_L14",
+      "removed": [],
+      "unclassified": []
+    },
+    {
+      "added_correct": [],
+      "build": "cleric:20",
+      "changed_value": [],
+      "duplicate": [],
+      "held_after": 41,
+      "held_before": 38,
+      "lines_after": 24,
+      "lines_before": 24,
+      "name": "cleric_L20",
+      "removed": [],
+      "unclassified": []
+    },
+    {
+      "added_correct": [],
+      "build": "cleric:7",
+      "changed_value": [],
+      "duplicate": [],
+      "held_after": 41,
+      "held_before": 38,
+      "lines_after": 24,
+      "lines_before": 24,
+      "name": "cleric_L7",
+      "removed": [],
+      "unclassified": []
+    },
+    {
+      "added_correct": [],
+      "build": "fighter:5",
+      "changed_value": [],
+      "duplicate": [],
+      "held_after": 66,
+      "held_before": 66,
+      "lines_after": 18,
+      "lines_before": 18,
+      "name": "dwarf_fighter_L5",
+      "removed": [],
+      "unclassified": []
+    },
+    {
+      "added_correct": [
+        {
+          "condition": "-",
+          "id": "core_rulebook:class_feature:wizard_arcane_school",
+          "kind": "class_feature",
+          "label": "Arcane School",
+          "printed": "",
+          "verify": "by=Rule:core_rulebook:class_feature:wizard_class__d9affb050e701218 (held by this build)"
+        },
+        {
+          "condition": "-",
+          "id": "core_rulebook:class_feature:wizard_class__d9affb050e701218",
+          "kind": "class_feature",
+          "label": "Wizard",
+          "printed": "",
+          "verify": "by=Class:wizard@1 (build plays wizard:5)"
+        },
+        {
+          "condition": "-",
+          "id": "core_rulebook:class_feature:wizard_spells__d203917b8596067b",
+          "kind": "class_feature",
+          "label": "Spells",
+          "printed": "",
+          "verify": "by=Rule:core_rulebook:class_feature:wizard_class__d9affb050e701218 (held by this build)"
+        }
+      ],
+      "build": "wizard:5",
+      "changed_value": [],
+      "duplicate": [],
+      "held_after": 65,
+      "held_before": 60,
+      "lines_after": 38,
+      "lines_before": 35,
+      "name": "elf_wizard_L5",
+      "removed": [],
+      "unclassified": []
+    },
+    {
+      "added_correct": [
+        {
+          "condition": "-",
+          "id": "core_rulebook:class_feature:wizard_arcane_school",
+          "kind": "class_feature",
+          "label": "Arcane School",
+          "printed": "",
+          "verify": "by=Rule:core_rulebook:class_feature:wizard_class__d9affb050e701218 (held by this build)"
+        },
+        {
+          "condition": "-",
+          "id": "core_rulebook:class_feature:wizard_class__d9affb050e701218",
+          "kind": "class_feature",
+          "label": "Wizard",
+          "printed": "",
+          "verify": "by=Class:wizard@1 (build plays wizard:5)"
+        },
+        {
+          "condition": "-",
+          "id": "core_rulebook:class_feature:wizard_spells__d203917b8596067b",
+          "kind": "class_feature",
+          "label": "Spells",
+          "printed": "",
+          "verify": "by=Rule:core_rulebook:class_feature:wizard_class__d9affb050e701218 (held by this build)"
+        }
+      ],
+      "build": "wizard:5",
+      "changed_value": [],
+      "duplicate": [],
+      "held_after": 65,
+      "held_before": 60,
+      "lines_after": 38,
+      "lines_before": 35,
+      "name": "gnome_wizard_L5_ARG_alt_traits",
+      "removed": [],
+      "unclassified": []
+    },
+    {
+      "added_correct": [
+        {
+          "condition": "-",
+          "id": "ultimate_combat:class_feature:gunslinger_deadeye",
+          "kind": "class_feature",
+          "label": "Deadeye",
+          "printed": "",
+          "verify": "by=Rule:ultimate_combat:class_feature:gunslinger_deeds (held by this build); by=Rule:ultimate_combat:class_feature:gunslinger_deeds (held by this build)"
+        },
+        {
+          "condition": "-",
+          "id": "ultimate_combat:class_feature:gunslinger_deeds",
+          "kind": "class_feature",
+          "label": "Deeds",
+          "printed": "",
+          "verify": "by=Rule:ultimate_combat:ability:gunslinger (held by this build)"
+        },
+        {
+          "condition": "-",
+          "id": "ultimate_combat:class_feature:gunslinger_gunslinger_s_dodge",
+          "kind": "class_feature",
+          "label": "Gunslinger's Dodge",
+          "printed": "",
+          "verify": "by=Rule:ultimate_combat:class_feature:gunslinger_deeds (held by this build); by=Rule:ultimate_combat:class_feature:gunslinger_deeds (held by this build)"
+        },
+        {
+          "condition": "-",
+          "id": "ultimate_combat:class_feature:gunslinger_gunsmith",
+          "kind": "class_feature",
+          "label": "Gunsmith",
+          "printed": "+1",
+          "verify": "by=Rule:ultimate_combat:ability:gunslinger (held by this build)"
+        },
+        {
+          "condition": "-",
+          "id": "ultimate_combat:class_feature:gunslinger_quick_clear",
+          "kind": "class_feature",
+          "label": "Quick Clear",
+          "printed": "",
+          "verify": "by=Rule:ultimate_combat:class_feature:gunslinger_deeds (held by this build); by=Rule:ultimate_combat:class_feature:gunslinger_deeds (held by this build)"
+        },
+        {
+          "condition": "-",
+          "id": "ultimate_combat:feat:gunsmithing",
+          "kind": "feat",
+          "label": "Gunsmithing",
+          "printed": "",
+          "verify": "by=Rule:ultimate_combat:class_feature:gunslinger_gunsmith (held by this build)"
+        }
+      ],
+      "build": "gunslinger:1",
+      "changed_value": [],
+      "duplicate": [],
+      "held_after": 40,
+      "held_before": 33,
+      "lines_after": 26,
+      "lines_before": 20,
+      "name": "gunslinger_L1",
+      "removed": [],
+      "unclassified": []
+    },
+    {
+      "added_correct": [
+        {
+          "condition": "-",
+          "id": "ultimate_combat:class_feature:gunslinger_bleeding_wound",
+          "kind": "class_feature",
+          "label": "Bleeding Wound",
+          "printed": "",
+          "verify": "by=Rule:ultimate_combat:class_feature:gunslinger_deeds (held by this build); by=Rule:ultimate_combat:class_feature:gunslinger_deeds (held by this build)"
+        },
+        {
+          "condition": "-",
+          "id": "ultimate_combat:class_feature:gunslinger_bonus_feats",
+          "kind": "class_feature",
+          "label": "Bonus Feats",
+          "printed": "",
+          "verify": "by=Rule:ultimate_combat:ability:gunslinger (held by this build)"
+        },
+        {
+          "condition": "-",
+          "id": "ultimate_combat:class_feature:gunslinger_dead_shot",
+          "kind": "class_feature",
+          "label": "Dead Shot",
+          "printed": "",
+          "verify": "by=Rule:ultimate_combat:class_feature:gunslinger_deeds (held by this build); by=Rule:ultimate_combat:class_feature:gunslinger_deeds (held by this build)"
+        },
+        {
+          "condition": "-",
+          "id": "ultimate_combat:class_feature:gunslinger_deadeye",
+          "kind": "class_feature",
+          "label": "Deadeye",
+          "printed": "",
+          "verify": "by=Rule:ultimate_combat:class_feature:gunslinger_deeds (held by this build); by=Rule:ultimate_combat:class_feature:gunslinger_deeds (held by this build)"
+        },
+        {
+          "condition": "-",
+          "id": "ultimate_combat:class_feature:gunslinger_deeds",
+          "kind": "class_feature",
+          "label": "Deeds",
+          "printed": "",
+          "verify": "by=Rule:ultimate_combat:ability:gunslinger (held by this build)"
+        },
+        {
+          "condition": "-",
+          "id": "ultimate_combat:class_feature:gunslinger_expert_loading",
+          "kind": "class_feature",
+          "label": "Expert Loading",
+          "printed": "",
+          "verify": "by=Rule:ultimate_combat:class_feature:gunslinger_deeds (held by this build); by=Rule:ultimate_combat:class_feature:gunslinger_deeds (held by this build)"
+        },
+        {
+          "condition": "-",
+          "id": "ultimate_combat:class_feature:gunslinger_gunslinger_s_dodge",
+          "kind": "class_feature",
+          "label": "Gunslinger's Dodge",
+          "printed": "",
+          "verify": "by=Rule:ultimate_combat:class_feature:gunslinger_deeds (held by this build); by=Rule:ultimate_combat:class_feature:gunslinger_deeds (held by this build)"
+        },
+        {
+          "condition": "-",
+          "id": "ultimate_combat:class_feature:gunslinger_gunsmith",
+          "kind": "class_feature",
+          "label": "Gunsmith",
+          "printed": "+1",
+          "verify": "by=Rule:ultimate_combat:ability:gunslinger (held by this build)"
+        },
+        {
+          "condition": "-",
+          "id": "ultimate_combat:class_feature:gunslinger_lightning_reload",
+          "kind": "class_feature",
+          "label": "Lightning Reload",
+          "printed": "",
+          "verify": "by=Rule:ultimate_combat:class_feature:gunslinger_deeds (held by this build); by=Rule:ultimate_combat:class_feature:gunslinger_deeds (held by this build)"
+        },
+        {
+          "condition": "-",
+          "id": "ultimate_combat:class_feature:gunslinger_pistol_whip",
+          "kind": "class_feature",
+          "label": "Pistol-Whip",
+          "printed": "",
+          "verify": "by=Rule:ultimate_combat:class_feature:gunslinger_deeds (held by this build); by=Rule:ultimate_combat:class_feature:gunslinger_deeds (held by this build)"
+        },
+        {
+          "condition": "-",
+          "id": "ultimate_combat:class_feature:gunslinger_quick_clear",
+          "kind": "class_feature",
+          "label": "Quick Clear",
+          "printed": "",
+          "verify": "by=Rule:ultimate_combat:class_feature:gunslinger_deeds (held by this build); by=Rule:ultimate_combat:class_feature:gunslinger_deeds (held by this build)"
+        },
+        {
+          "condition": "-",
+          "id": "ultimate_combat:class_feature:gunslinger_startling_shot",
+          "kind": "class_feature",
+          "label": "Startling Shot",
+          "printed": "",
+          "verify": "by=Rule:ultimate_combat:class_feature:gunslinger_deeds (held by this build); by=Rule:ultimate_combat:class_feature:gunslinger_deeds (held by this build)"
+        },
+        {
+          "condition": "-",
+          "id": "ultimate_combat:class_feature:gunslinger_targeting",
+          "kind": "class_feature",
+          "label": "Targeting",
+          "printed": "",
+          "verify": "by=Rule:ultimate_combat:class_feature:gunslinger_deeds (held by this build); by=Rule:ultimate_combat:class_feature:gunslinger_deeds (held by this build)"
+        },
+        {
+          "condition": "-",
+          "id": "ultimate_combat:class_feature:gunslinger_utility_shot",
+          "kind": "class_feature",
+          "label": "Utility Shot",
+          "printed": "",
+          "verify": "by=Rule:ultimate_combat:class_feature:gunslinger_deeds (held by this build); by=Rule:ultimate_combat:class_feature:gunslinger_deeds (held by this build)"
+        },
+        {
+          "condition": "-",
+          "id": "ultimate_combat:feat:gunsmithing",
+          "kind": "feat",
+          "label": "Gunsmithing",
+          "printed": "",
+          "verify": "by=Rule:ultimate_combat:class_feature:gunslinger_gunsmith (held by this build)"
+        }
+      ],
+      "build": "gunslinger:14",
+      "changed_value": [],
+      "duplicate": [],
+      "held_after": 60,
+      "held_before": 44,
+      "lines_after": 38,
+      "lines_before": 23,
+      "name": "gunslinger_L14",
+      "removed": [],
+      "unclassified": []
+    },
+    {
+      "added_correct": [
+        {
+          "condition": "-",
+          "id": "ultimate_combat:class_feature:gunslinger_bleeding_wound",
+          "kind": "class_feature",
+          "label": "Bleeding Wound",
+          "printed": "",
+          "verify": "by=Rule:ultimate_combat:class_feature:gunslinger_deeds (held by this build); by=Rule:ultimate_combat:class_feature:gunslinger_deeds (held by this build)"
+        },
+        {
+          "condition": "-",
+          "id": "ultimate_combat:class_feature:gunslinger_bonus_feats",
+          "kind": "class_feature",
+          "label": "Bonus Feats",
+          "printed": "",
+          "verify": "by=Rule:ultimate_combat:ability:gunslinger (held by this build)"
+        },
+        {
+          "condition": "-",
+          "id": "ultimate_combat:class_feature:gunslinger_cheat_death",
+          "kind": "class_feature",
+          "label": "Cheat Death",
+          "printed": "",
+          "verify": "by=Rule:ultimate_combat:class_feature:gunslinger_deeds (held by this build); by=Rule:ultimate_combat:class_feature:gunslinger_deeds (held by this build)"
+        },
+        {
+          "condition": "-",
+          "id": "ultimate_combat:class_feature:gunslinger_dead_shot",
+          "kind": "class_feature",
+          "label": "Dead Shot",
+          "printed": "",
+          "verify": "by=Rule:ultimate_combat:class_feature:gunslinger_deeds (held by this build); by=Rule:ultimate_combat:class_feature:gunslinger_deeds (held by this build)"
+        },
+        {
+          "condition": "-",
+          "id": "ultimate_combat:class_feature:gunslinger_deadeye",
+          "kind": "class_feature",
+          "label": "Deadeye",
+          "printed": "",
+          "verify": "by=Rule:ultimate_combat:class_feature:gunslinger_deeds (held by this build); by=Rule:ultimate_combat:class_feature:gunslinger_deeds (held by this build)"
+        },
+        {
+          "condition": "-",
+          "id": "ultimate_combat:class_feature:gunslinger_death_s_shot",
+          "kind": "class_feature",
+          "label": "Death's Shot",
+          "printed": "",
+          "verify": "by=Rule:ultimate_combat:class_feature:gunslinger_deeds (held by this build); by=Rule:ultimate_combat:class_feature:gunslinger_deeds (held by this build)"
+        },
+        {
+          "condition": "-",
+          "id": "ultimate_combat:class_feature:gunslinger_deeds",
+          "kind": "class_feature",
+          "label": "Deeds",
+          "printed": "",
+          "verify": "by=Rule:ultimate_combat:ability:gunslinger (held by this build)"
+        },
+        {
+          "condition": "-",
+          "id": "ultimate_combat:class_feature:gunslinger_evasive",
+          "kind": "class_feature",
+          "label": "Evasive",
+          "printed": "",
+          "verify": "by=Rule:ultimate_combat:class_feature:gunslinger_deeds (held by this build); by=Rule:ultimate_combat:class_feature:gunslinger_deeds (held by this build)"
+        },
+        {
+          "condition": "-",
+          "id": "ultimate_combat:class_feature:gunslinger_expert_loading",
+          "kind": "class_feature",
+          "label": "Expert Loading",
+          "printed": "",
+          "verify": "by=Rule:ultimate_combat:class_feature:gunslinger_deeds (held by this build); by=Rule:ultimate_combat:class_feature:gunslinger_deeds (held by this build)"
+        },
+        {
+          "condition": "-",
+          "id": "ultimate_combat:class_feature:gunslinger_gunslinger_s_dodge",
+          "kind": "class_feature",
+          "label": "Gunslinger's Dodge",
+          "printed": "",
+          "verify": "by=Rule:ultimate_combat:class_feature:gunslinger_deeds (held by this build); by=Rule:ultimate_combat:class_feature:gunslinger_deeds (held by this build)"
+        },
+        {
+          "condition": "-",
+          "id": "ultimate_combat:class_feature:gunslinger_gunsmith",
+          "kind": "class_feature",
+          "label": "Gunsmith",
+          "printed": "+1",
+          "verify": "by=Rule:ultimate_combat:ability:gunslinger (held by this build)"
+        },
+        {
+          "condition": "-",
+          "id": "ultimate_combat:class_feature:gunslinger_lightning_reload",
+          "kind": "class_feature",
+          "label": "Lightning Reload",
+          "printed": "",
+          "verify": "by=Rule:ultimate_combat:class_feature:gunslinger_deeds (held by this build); by=Rule:ultimate_combat:class_feature:gunslinger_deeds (held by this build)"
+        },
+        {
+          "condition": "-",
+          "id": "ultimate_combat:class_feature:gunslinger_menacing_shot",
+          "kind": "class_feature",
+          "label": "Menacing Shot",
+          "printed": "",
+          "verify": "by=Rule:ultimate_combat:class_feature:gunslinger_deeds (held by this build); by=Rule:ultimate_combat:class_feature:gunslinger_deeds (held by this build)"
+        },
+        {
+          "condition": "-",
+          "id": "ultimate_combat:class_feature:gunslinger_pistol_whip",
+          "kind": "class_feature",
+          "label": "Pistol-Whip",
+          "printed": "",
+          "verify": "by=Rule:ultimate_combat:class_feature:gunslinger_deeds (held by this build); by=Rule:ultimate_combat:class_feature:gunslinger_deeds (held by this build)"
+        },
+        {
+          "condition": "-",
+          "id": "ultimate_combat:class_feature:gunslinger_quick_clear",
+          "kind": "class_feature",
+          "label": "Quick Clear",
+          "printed": "",
+          "verify": "by=Rule:ultimate_combat:class_feature:gunslinger_deeds (held by this build); by=Rule:ultimate_combat:class_feature:gunslinger_deeds (held by this build)"
+        },
+        {
+          "condition": "-",
+          "id": "ultimate_combat:class_feature:gunslinger_slinger_s_luck",
+          "kind": "class_feature",
+          "label": "Slinger's Luck",
+          "printed": "",
+          "verify": "by=Rule:ultimate_combat:class_feature:gunslinger_deeds (held by this build); by=Rule:ultimate_combat:class_feature:gunslinger_deeds (held by this build)"
+        },
+        {
+          "condition": "-",
+          "id": "ultimate_combat:class_feature:gunslinger_startling_shot",
+          "kind": "class_feature",
+          "label": "Startling Shot",
+          "printed": "",
+          "verify": "by=Rule:ultimate_combat:class_feature:gunslinger_deeds (held by this build); by=Rule:ultimate_combat:class_feature:gunslinger_deeds (held by this build)"
+        },
+        {
+          "condition": "-",
+          "id": "ultimate_combat:class_feature:gunslinger_stunning_shot",
+          "kind": "class_feature",
+          "label": "Stunning Shot",
+          "printed": "",
+          "verify": "by=Rule:ultimate_combat:class_feature:gunslinger_deeds (held by this build); by=Rule:ultimate_combat:class_feature:gunslinger_deeds (held by this build)"
+        },
+        {
+          "condition": "-",
+          "id": "ultimate_combat:class_feature:gunslinger_targeting",
+          "kind": "class_feature",
+          "label": "Targeting",
+          "printed": "",
+          "verify": "by=Rule:ultimate_combat:class_feature:gunslinger_deeds (held by this build); by=Rule:ultimate_combat:class_feature:gunslinger_deeds (held by this build)"
+        },
+        {
+          "condition": "-",
+          "id": "ultimate_combat:class_feature:gunslinger_true_grit",
+          "kind": "class_feature",
+          "label": "True Grit",
+          "printed": "",
+          "verify": "by=Rule:ultimate_combat:ability:gunslinger (held by this build)"
+        },
+        {
+          "condition": "-",
+          "id": "ultimate_combat:class_feature:gunslinger_utility_shot",
+          "kind": "class_feature",
+          "label": "Utility Shot",
+          "printed": "",
+          "verify": "by=Rule:ultimate_combat:class_feature:gunslinger_deeds (held by this build); by=Rule:ultimate_combat:class_feature:gunslinger_deeds (held by this build)"
+        },
+        {
+          "condition": "-",
+          "id": "ultimate_combat:feat:gunsmithing",
+          "kind": "feat",
+          "label": "Gunsmithing",
+          "printed": "",
+          "verify": "by=Rule:ultimate_combat:class_feature:gunslinger_gunsmith (held by this build)"
+        }
+      ],
+      "build": "gunslinger:20",
+      "changed_value": [],
+      "duplicate": [],
+      "held_after": 67,
+      "held_before": 44,
+      "lines_after": 45,
+      "lines_before": 23,
+      "name": "gunslinger_L20",
+      "removed": [],
+      "unclassified": []
+    },
+    {
+      "added_correct": [
+        {
+          "condition": "-",
+          "id": "ultimate_combat:class_feature:gunslinger_bonus_feats",
+          "kind": "class_feature",
+          "label": "Bonus Feats",
+          "printed": "",
+          "verify": "by=Rule:ultimate_combat:ability:gunslinger (held by this build)"
+        },
+        {
+          "condition": "-",
+          "id": "ultimate_combat:class_feature:gunslinger_dead_shot",
+          "kind": "class_feature",
+          "label": "Dead Shot",
+          "printed": "",
+          "verify": "by=Rule:ultimate_combat:class_feature:gunslinger_deeds (held by this build); by=Rule:ultimate_combat:class_feature:gunslinger_deeds (held by this build)"
+        },
+        {
+          "condition": "-",
+          "id": "ultimate_combat:class_feature:gunslinger_deadeye",
+          "kind": "class_feature",
+          "label": "Deadeye",
+          "printed": "",
+          "verify": "by=Rule:ultimate_combat:class_feature:gunslinger_deeds (held by this build); by=Rule:ultimate_combat:class_feature:gunslinger_deeds (held by this build)"
+        },
+        {
+          "condition": "-",
+          "id": "ultimate_combat:class_feature:gunslinger_deeds",
+          "kind": "class_feature",
+          "label": "Deeds",
+          "printed": "",
+          "verify": "by=Rule:ultimate_combat:ability:gunslinger (held by this build)"
+        },
+        {
+          "condition": "-",
+          "id": "ultimate_combat:class_feature:gunslinger_gunslinger_s_dodge",
+          "kind": "class_feature",
+          "label": "Gunslinger's Dodge",
+          "printed": "",
+          "verify": "by=Rule:ultimate_combat:class_feature:gunslinger_deeds (held by this build); by=Rule:ultimate_combat:class_feature:gunslinger_deeds (held by this build)"
+        },
+        {
+          "condition": "-",
+          "id": "ultimate_combat:class_feature:gunslinger_gunsmith",
+          "kind": "class_feature",
+          "label": "Gunsmith",
+          "printed": "+1",
+          "verify": "by=Rule:ultimate_combat:ability:gunslinger (held by this build)"
+        },
+        {
+          "condition": "-",
+          "id": "ultimate_combat:class_feature:gunslinger_pistol_whip",
+          "kind": "class_feature",
+          "label": "Pistol-Whip",
+          "printed": "",
+          "verify": "by=Rule:ultimate_combat:class_feature:gunslinger_deeds (held by this build); by=Rule:ultimate_combat:class_feature:gunslinger_deeds (held by this build)"
+        },
+        {
+          "condition": "-",
+          "id": "ultimate_combat:class_feature:gunslinger_quick_clear",
+          "kind": "class_feature",
+          "label": "Quick Clear",
+          "printed": "",
+          "verify": "by=Rule:ultimate_combat:class_feature:gunslinger_deeds (held by this build); by=Rule:ultimate_combat:class_feature:gunslinger_deeds (held by this build)"
+        },
+        {
+          "condition": "-",
+          "id": "ultimate_combat:class_feature:gunslinger_startling_shot",
+          "kind": "class_feature",
+          "label": "Startling Shot",
+          "printed": "",
+          "verify": "by=Rule:ultimate_combat:class_feature:gunslinger_deeds (held by this build); by=Rule:ultimate_combat:class_feature:gunslinger_deeds (held by this build)"
+        },
+        {
+          "condition": "-",
+          "id": "ultimate_combat:class_feature:gunslinger_targeting",
+          "kind": "class_feature",
+          "label": "Targeting",
+          "printed": "",
+          "verify": "by=Rule:ultimate_combat:class_feature:gunslinger_deeds (held by this build); by=Rule:ultimate_combat:class_feature:gunslinger_deeds (held by this build)"
+        },
+        {
+          "condition": "-",
+          "id": "ultimate_combat:class_feature:gunslinger_utility_shot",
+          "kind": "class_feature",
+          "label": "Utility Shot",
+          "printed": "",
+          "verify": "by=Rule:ultimate_combat:class_feature:gunslinger_deeds (held by this build); by=Rule:ultimate_combat:class_feature:gunslinger_deeds (held by this build)"
+        },
+        {
+          "condition": "-",
+          "id": "ultimate_combat:feat:gunsmithing",
+          "kind": "feat",
+          "label": "Gunsmithing",
+          "printed": "",
+          "verify": "by=Rule:ultimate_combat:class_feature:gunslinger_gunsmith (held by this build)"
+        }
+      ],
+      "build": "gunslinger:7",
+      "changed_value": [],
+      "duplicate": [],
+      "held_after": 57,
+      "held_before": 44,
+      "lines_after": 35,
+      "lines_before": 23,
+      "name": "gunslinger_L7",
+      "removed": [],
+      "unclassified": []
+    },
+    {
+      "added_correct": [
+        {
+          "condition": "-",
+          "id": "occult_adventures:class_feature:kineticist_blast_simple_blasts",
+          "kind": "class_feature",
+          "label": "Simple Blasts",
+          "printed": "",
+          "verify": "by=Rule:occult_adventures:class_feature:kineticist_kinetic_blast (held by this build)"
+        }
+      ],
+      "build": "kineticist:1",
+      "changed_value": [],
+      "duplicate": [],
+      "held_after": 55,
+      "held_before": 53,
+      "lines_after": 32,
+      "lines_before": 31,
+      "name": "kineticist_L1",
+      "removed": [],
+      "unclassified": []
+    },
+    {
+      "added_correct": [
+        {
+          "condition": "-",
+          "id": "occult_adventures:class_feature:kineticist_blast_composite_blasts",
+          "kind": "class_feature",
+          "label": "Composite Blasts",
+          "printed": "",
+          "verify": "by=Rule:occult_adventures:class_feature:kineticist_expanded_element (held by this build)"
+        },
+        {
+          "condition": "-",
+          "id": "occult_adventures:class_feature:kineticist_blast_simple_blasts",
+          "kind": "class_feature",
+          "label": "Simple Blasts",
+          "printed": "",
+          "verify": "by=Rule:occult_adventures:class_feature:kineticist_kinetic_blast (held by this build)"
+        }
+      ],
+      "build": "kineticist:14",
+      "changed_value": [],
+      "duplicate": [],
+      "held_after": 63,
+      "held_before": 60,
+      "lines_after": 40,
+      "lines_before": 38,
+      "name": "kineticist_L14",
+      "removed": [],
+      "unclassified": []
+    },
+    {
+      "added_correct": [
+        {
+          "condition": "-",
+          "id": "occult_adventures:class_feature:kineticist_blast_composite_blasts",
+          "kind": "class_feature",
+          "label": "Composite Blasts",
+          "printed": "",
+          "verify": "by=Rule:occult_adventures:class_feature:kineticist_expanded_element (held by this build)"
+        },
+        {
+          "condition": "-",
+          "id": "occult_adventures:class_feature:kineticist_blast_simple_blasts",
+          "kind": "class_feature",
+          "label": "Simple Blasts",
+          "printed": "",
+          "verify": "by=Rule:occult_adventures:class_feature:kineticist_kinetic_blast (held by this build)"
+        }
+      ],
+      "build": "kineticist:20",
+      "changed_value": [],
+      "duplicate": [],
+      "held_after": 66,
+      "held_before": 63,
+      "lines_after": 43,
+      "lines_before": 41,
+      "name": "kineticist_L20",
+      "removed": [],
+      "unclassified": []
+    },
+    {
+      "added_correct": [
+        {
+          "condition": "-",
+          "id": "occult_adventures:class_feature:kineticist_blast_composite_blasts",
+          "kind": "class_feature",
+          "label": "Composite Blasts",
+          "printed": "",
+          "verify": "by=Rule:occult_adventures:class_feature:kineticist_expanded_element (held by this build)"
+        },
+        {
+          "condition": "-",
+          "id": "occult_adventures:class_feature:kineticist_blast_simple_blasts",
+          "kind": "class_feature",
+          "label": "Simple Blasts",
+          "printed": "",
+          "verify": "by=Rule:occult_adventures:class_feature:kineticist_kinetic_blast (held by this build)"
+        }
+      ],
+      "build": "kineticist:7",
+      "changed_value": [],
+      "duplicate": [],
+      "held_after": 62,
+      "held_before": 59,
+      "lines_after": 39,
+      "lines_before": 37,
+      "name": "kineticist_L7",
+      "removed": [],
+      "unclassified": []
+    },
+    {
+      "added_correct": [],
+      "build": "magus:1",
+      "changed_value": [],
+      "duplicate": [],
+      "held_after": 39,
+      "held_before": 39,
+      "lines_after": 23,
+      "lines_before": 23,
+      "name": "magus_L1",
+      "removed": [],
+      "unclassified": []
+    },
+    {
+      "added_correct": [
+        {
+          "condition": "-",
+          "id": "ultimate_magic:class_feature:magus_heavy_armor__f079958a93c2b816",
+          "kind": "class_feature",
+          "label": "Heavy Armor",
+          "printed": "",
+          "verify": "by=Rule:ultimate_magic:ability:magus (held by this build)"
+        },
+        {
+          "condition": "-",
+          "id": "ultimate_magic:class_feature:magus_medium_armor__19e3ff3cdad45116",
+          "kind": "class_feature",
+          "label": "Medium Armor",
+          "printed": "",
+          "verify": "by=Rule:ultimate_magic:ability:magus (held by this build)"
+        }
+      ],
+      "build": "magus:14",
+      "changed_value": [],
+      "duplicate": [],
+      "held_after": 69,
+      "held_before": 67,
+      "lines_after": 33,
+      "lines_before": 31,
+      "name": "magus_L14",
+      "removed": [],
+      "unclassified": []
+    },
+    {
+      "added_correct": [
+        {
+          "condition": "-",
+          "id": "ultimate_magic:class_feature:magus_heavy_armor__f079958a93c2b816",
+          "kind": "class_feature",
+          "label": "Heavy Armor",
+          "printed": "",
+          "verify": "by=Rule:ultimate_magic:ability:magus (held by this build)"
+        },
+        {
+          "condition": "-",
+          "id": "ultimate_magic:class_feature:magus_medium_armor__19e3ff3cdad45116",
+          "kind": "class_feature",
+          "label": "Medium Armor",
+          "printed": "",
+          "verify": "by=Rule:ultimate_magic:ability:magus (held by this build)"
+        }
+      ],
+      "build": "magus:20",
+      "changed_value": [],
+      "duplicate": [],
+      "held_after": 71,
+      "held_before": 69,
+      "lines_after": 35,
+      "lines_before": 33,
+      "name": "magus_L20",
+      "removed": [],
+      "unclassified": []
+    },
+    {
+      "added_correct": [
+        {
+          "condition": "-",
+          "id": "ultimate_magic:class_feature:magus_medium_armor__19e3ff3cdad45116",
+          "kind": "class_feature",
+          "label": "Medium Armor",
+          "printed": "",
+          "verify": "by=Rule:ultimate_magic:ability:magus (held by this build)"
+        }
+      ],
+      "build": "magus:7",
+      "changed_value": [],
+      "duplicate": [],
+      "held_after": 53,
+      "held_before": 52,
+      "lines_after": 30,
+      "lines_before": 29,
+      "name": "magus_L7",
+      "removed": [],
+      "unclassified": []
+    },
+    {
+      "added_correct": [
+        {
+          "condition": "-",
+          "id": "core_rulebook:class_feature:barbarian_damage_reduction",
+          "kind": "class_feature",
+          "label": "Damage Reduction",
+          "printed": "",
+          "verify": "by=Rule:core_rulebook:class_feature:barbarian_standard_class_full (held by this build); by=Rule:core_rulebook:class_feature:barbarian_standard_class_full (held by this build)"
+        },
+        {
+          "condition": "-",
+          "id": "core_rulebook:class_feature:barbarian_fast_movement",
+          "kind": "class_feature",
+          "label": "Fast Movement",
+          "printed": "",
+          "verify": "by=Rule:core_rulebook:class_feature:barbarian_standard_class_full (held by this build); by=Rule:core_rulebook:class_feature:barbarian_standard_class_full (held by this build)"
+        },
+        {
+          "condition": "when active",
+          "id": "core_rulebook:class_feature:barbarian_rage",
+          "kind": "class_feature",
+          "label": "Rage (Will save)",
+          "printed": "+1",
+          "verify": "by=Rule:core_rulebook:class_feature:barbarian_standard_class_full (held by this build); by=Rule:core_rulebook:class_feature:barbarian_standard_class_full (held by this build)"
+        },
+        {
+          "condition": "when active",
+          "id": "core_rulebook:class_feature:barbarian_rage#bonus1",
+          "kind": "class_feature",
+          "label": "Rage (AC)",
+          "printed": "-2",
+          "verify": "[sibling of base core_rulebook:class_feature:barbarian_rage] by=Rule:core_rulebook:class_feature:barbarian_standard_class_full (held by this build); by=Rule:core_rulebook:class_feature:barbarian_standard_class_full (held by this build)"
+        },
+        {
+          "condition": "when active",
+          "id": "core_rulebook:class_feature:barbarian_rage#bonus2",
+          "kind": "class_feature",
+          "label": "Rage (Str)",
+          "printed": "+2",
+          "verify": "[sibling of base core_rulebook:class_feature:barbarian_rage] by=Rule:core_rulebook:class_feature:barbarian_standard_class_full (held by this build); by=Rule:core_rulebook:class_feature:barbarian_standard_class_full (held by this build)"
+        },
+        {
+          "condition": "when active",
+          "id": "core_rulebook:class_feature:barbarian_rage#bonus3",
+          "kind": "class_feature",
+          "label": "Rage (Con)",
+          "printed": "+2",
+          "verify": "[sibling of base core_rulebook:class_feature:barbarian_rage] by=Rule:core_rulebook:class_feature:barbarian_standard_class_full (held by this build); by=Rule:core_rulebook:class_feature:barbarian_standard_class_full (held by this build)"
+        },
+        {
+          "condition": "-",
+          "id": "core_rulebook:class_feature:barbarian_uncanny_dodge_tracker",
+          "kind": "class_feature",
+          "label": "Barbarian ~ Uncanny Dodge Tracker",
+          "printed": "",
+          "verify": "by=Rule:core_rulebook:class_feature:barbarian_standard_class_full (held by this build); by=Rule:core_rulebook:class_feature:barbarian_standard_class_full (held by this build)"
+        },
+        {
+          "condition": "when active",
+          "id": "core_rulebook:class_feature:rage",
+          "kind": "class_feature",
+          "label": "Rage (Will save)",
+          "printed": "+1",
+          "verify": "by=Rule:core_rulebook:class_feature:barbarian_rage (held by this build)"
+        },
+        {
+          "condition": "when active",
+          "id": "core_rulebook:class_feature:rage#bonus1",
+          "kind": "class_feature",
+          "label": "Rage (AC)",
+          "printed": "-2",
+          "verify": "[sibling of base core_rulebook:class_feature:rage] by=Rule:core_rulebook:class_feature:barbarian_rage (held by this build)"
+        },
+        {
+          "condition": "when active",
+          "id": "core_rulebook:class_feature:rage#bonus2",
+          "kind": "class_feature",
+          "label": "Rage (Str)",
+          "printed": "+2",
+          "verify": "[sibling of base core_rulebook:class_feature:rage] by=Rule:core_rulebook:class_feature:barbarian_rage (held by this build)"
+        },
+        {
+          "condition": "when active",
+          "id": "core_rulebook:class_feature:rage#bonus3",
+          "kind": "class_feature",
+          "label": "Rage (Con)",
+          "printed": "+2",
+          "verify": "[sibling of base core_rulebook:class_feature:rage] by=Rule:core_rulebook:class_feature:barbarian_rage (held by this build)"
+        },
+        {
+          "condition": "when active",
+          "id": "core_rulebook:class_feature:standard_rage",
+          "kind": "class_feature",
+          "label": "Standard Rage (AC)",
+          "printed": "-2",
+          "verify": "by=Rule:core_rulebook:class_feature:rage (held by this build)"
+        },
+        {
+          "condition": "when active",
+          "id": "core_rulebook:class_feature:standard_rage#bonus1",
+          "kind": "class_feature",
+          "label": "Standard Rage (Will save)",
+          "printed": "+3",
+          "verify": "[sibling of base core_rulebook:class_feature:standard_rage] by=Rule:core_rulebook:class_feature:rage (held by this build)"
+        },
+        {
+          "condition": "when active",
+          "id": "core_rulebook:class_feature:standard_rage#bonus2",
+          "kind": "class_feature",
+          "label": "Standard Rage (Str)",
+          "printed": "+6",
+          "verify": "[sibling of base core_rulebook:class_feature:standard_rage] by=Rule:core_rulebook:class_feature:rage (held by this build)"
+        },
+        {
+          "condition": "when active",
+          "id": "core_rulebook:class_feature:standard_rage#bonus3",
+          "kind": "class_feature",
+          "label": "Standard Rage (Con)",
+          "printed": "+6",
+          "verify": "[sibling of base core_rulebook:class_feature:standard_rage] by=Rule:core_rulebook:class_feature:rage (held by this build)"
+        },
+        {
+          "condition": "-",
+          "id": "core_rulebook:class_feature:trap_sense",
+          "kind": "class_feature",
+          "label": "Trap Sense",
+          "printed": "",
+          "verify": "by=Rule:core_rulebook:class_feature:barbarian_trap_sense (held by this build)"
+        }
+      ],
+      "build": "barbarian:12+fighter:1",
+      "changed_value": [],
+      "duplicate": [],
+      "held_after": 77,
+      "held_before": 36,
+      "lines_after": 40,
+      "lines_before": 24,
+      "name": "mix_barbarian12_fighter1",
+      "removed": [],
+      "unclassified": []
+    },
+    {
+      "added_correct": [
+        {
+          "condition": "-",
+          "id": "core_rulebook:class_feature:cleric_aura",
+          "kind": "class_feature",
+          "label": "Aura",
+          "printed": "",
+          "verify": "by=Rule:core_rulebook:class_feature:cleric_class__73d4c97ff8bc8b4b (held by this build)"
+        },
+        {
+          "condition": "-",
+          "id": "core_rulebook:class_feature:cleric_orisons",
+          "kind": "class_feature",
+          "label": "Orisons",
+          "printed": "",
+          "verify": "by=Rule:core_rulebook:class_feature:cleric_class__73d4c97ff8bc8b4b (held by this build)"
+        },
+        {
+          "condition": "-",
+          "id": "core_rulebook:class_feature:cleric_spontaneous_casting",
+          "kind": "class_feature",
+          "label": "Spontaneous Casting",
+          "printed": "",
+          "verify": "by=Rule:core_rulebook:class_feature:cleric_class__73d4c97ff8bc8b4b (held by this build)"
+        },
+        {
+          "condition": "-",
+          "id": "core_rulebook:class_feature:evasion_output",
+          "kind": "class_feature",
+          "label": "Evasion",
+          "printed": "",
+          "verify": "by=Rule:core_rulebook:class_feature:evasion (held by this build)"
+        },
+        {
+          "condition": "-",
+          "id": "core_rulebook:class_feature:rogue_evasion",
+          "kind": "class_feature",
+          "label": "Evasion",
+          "printed": "",
+          "verify": "by=Rule:core_rulebook:class_feature:rogue_standard_class (held by this build); by=Rule:core_rulebook:class_feature:rogue_standard_class (held by this build)"
+        },
+        {
+          "condition": "-",
+          "id": "core_rulebook:class_feature:rogue_trapfinding",
+          "kind": "class_feature",
+          "label": "Trapfinding (Perception (trapfinding))",
+          "printed": "+1",
+          "verify": "by=Rule:core_rulebook:class_feature:rogue_standard_class (held by this build); by=Rule:core_rulebook:class_feature:rogue_standard_class (held by this build)"
+        },
+        {
+          "condition": "-",
+          "id": "core_rulebook:class_feature:rogue_trapfinding#bonus1",
+          "kind": "class_feature",
+          "label": "Trapfinding (Disable Device)",
+          "printed": "+1",
+          "verify": "[sibling of base core_rulebook:class_feature:rogue_trapfinding] by=Rule:core_rulebook:class_feature:rogue_standard_class (held by this build); by=Rule:core_rulebook:class_feature:rogue_standard_class (held by this build)"
+        },
+        {
+          "condition": "-",
+          "id": "core_rulebook:class_feature:sneak_attack",
+          "kind": "class_feature",
+          "label": "Sneak Attack",
+          "printed": "",
+          "verify": "by=Rule:core_rulebook:class_feature:rogue_sneak_attack (held by this build)"
+        },
+        {
+          "condition": "-",
+          "id": "core_rulebook:class_feature:trap_sense",
+          "kind": "class_feature",
+          "label": "Trap Sense",
+          "printed": "",
+          "verify": "by=Rule:core_rulebook:class_feature:rogue_trap_sense (held by this build)"
+        }
+      ],
+      "build": "cleric:5+rogue:3",
+      "changed_value": [],
+      "duplicate": [],
+      "held_after": 82,
+      "held_before": 45,
+      "lines_after": 39,
+      "lines_before": 30,
+      "name": "mix_cleric5_rogue3",
+      "removed": [],
+      "unclassified": []
+    },
+    {
+      "added_correct": [
+        {
+          "condition": "-",
+          "id": "core_rulebook:ability:appraise",
+          "kind": "ability",
+          "label": "Appraise",
+          "printed": "",
+          "verify": "by=Rule:core_rulebook:class_feature:wizard_class_skills (held by this build)"
+        },
+        {
+          "condition": "-",
+          "id": "core_rulebook:ability:craft",
+          "kind": "ability",
+          "label": "Craft",
+          "printed": "",
+          "verify": "by=Rule:core_rulebook:class_feature:wizard_class_skills (held by this build)"
+        },
+        {
+          "condition": "-",
+          "id": "core_rulebook:ability:fly",
+          "kind": "ability",
+          "label": "Fly",
+          "printed": "",
+          "verify": "by=Rule:core_rulebook:class_feature:wizard_class_skills (held by this build)"
+        },
+        {
+          "condition": "-",
+          "id": "core_rulebook:ability:knowledge",
+          "kind": "ability",
+          "label": "Knowledge",
+          "printed": "",
+          "verify": "by=Rule:core_rulebook:class_feature:wizard_class_skills (held by this build)"
+        },
+        {
+          "condition": "-",
+          "id": "core_rulebook:ability:linguistics",
+          "kind": "ability",
+          "label": "Linguistics",
+          "printed": "",
+          "verify": "by=Rule:core_rulebook:class_feature:wizard_class_skills (held by this build)"
+        },
+        {
+          "condition": "-",
+          "id": "core_rulebook:ability:profession",
+          "kind": "ability",
+          "label": "Profession",
+          "printed": "",
+          "verify": "by=Rule:core_rulebook:class_feature:wizard_class_skills (held by this build)"
+        },
+        {
+          "condition": "-",
+          "id": "core_rulebook:ability:spellcraft",
+          "kind": "ability",
+          "label": "Spellcraft",
+          "printed": "",
+          "verify": "by=Rule:core_rulebook:class_feature:wizard_class_skills (held by this build)"
+        },
+        {
+          "condition": "-",
+          "id": "core_rulebook:class_feature:abjuration_wizard_spells",
+          "kind": "class_feature",
+          "label": "Abjuration Wizard Spells",
+          "printed": "",
+          "verify": "by=Rule:core_rulebook:class_feature:wizard_spells__be003b3984191a51 (held by this build)"
+        },
+        {
+          "condition": "-",
+          "id": "core_rulebook:class_feature:conjuration_wizard_spells",
+          "kind": "class_feature",
+          "label": "Conjuration Wizard Spells",
+          "printed": "",
+          "verify": "by=Rule:core_rulebook:class_feature:wizard_spells__be003b3984191a51 (held by this build)"
+        },
+        {
+          "condition": "-",
+          "id": "core_rulebook:class_feature:divination_wizard_spells",
+          "kind": "class_feature",
+          "label": "Divination Wizard Spells",
+          "printed": "",
+          "verify": "by=Rule:core_rulebook:class_feature:wizard_spells__be003b3984191a51 (held by this build)"
+        },
+        {
+          "condition": "-",
+          "id": "core_rulebook:class_feature:enchantment_wizard_spells",
+          "kind": "class_feature",
+          "label": "Enchantment Wizard Spells",
+          "printed": "",
+          "verify": "by=Rule:core_rulebook:class_feature:wizard_spells__be003b3984191a51 (held by this build)"
+        },
+        {
+          "condition": "-",
+          "id": "core_rulebook:class_feature:evocation_wizard_spells",
+          "kind": "class_feature",
+          "label": "Evocation Wizard Spells",
+          "printed": "",
+          "verify": "by=Rule:core_rulebook:class_feature:wizard_spells__be003b3984191a51 (held by this build)"
+        },
+        {
+          "condition": "-",
+          "id": "core_rulebook:class_feature:illusion_wizard_spells",
+          "kind": "class_feature",
+          "label": "Illusion Wizard Spells",
+          "printed": "",
+          "verify": "by=Rule:core_rulebook:class_feature:wizard_spells__be003b3984191a51 (held by this build)"
+        },
+        {
+          "condition": "-",
+          "id": "core_rulebook:class_feature:necromancy_wizard_spells",
+          "kind": "class_feature",
+          "label": "Necromancy Wizard Spells",
+          "printed": "",
+          "verify": "by=Rule:core_rulebook:class_feature:wizard_spells__be003b3984191a51 (held by this build)"
+        },
+        {
+          "condition": "-",
+          "id": "core_rulebook:class_feature:transmutation_wizard_spells",
+          "kind": "class_feature",
+          "label": "Transmutation Wizard Spells",
+          "printed": "",
+          "verify": "by=Rule:core_rulebook:class_feature:wizard_spells__be003b3984191a51 (held by this build)"
+        },
+        {
+          "condition": "-",
+          "id": "core_rulebook:class_feature:universal_wizard_spells",
+          "kind": "class_feature",
+          "label": "Universal Wizard Spells",
+          "printed": "",
+          "verify": "by=Rule:core_rulebook:class_feature:wizard_spells__be003b3984191a51 (held by this build)"
+        },
+        {
+          "condition": "-",
+          "id": "core_rulebook:class_feature:wizard_arcane_bond",
+          "kind": "class_feature",
+          "label": "Arcane Bond",
+          "printed": "+1",
+          "verify": "by=Rule:core_rulebook:class_feature:wizard_class__d9affb050e701218 (held by this build)"
+        },
+        {
+          "condition": "-",
+          "id": "core_rulebook:class_feature:wizard_arcane_school",
+          "kind": "class_feature",
+          "label": "Arcane School",
+          "printed": "",
+          "verify": "by=Rule:core_rulebook:class_feature:wizard_class__d9affb050e701218 (held by this build)"
+        },
+        {
+          "condition": "-",
+          "id": "core_rulebook:class_feature:wizard_cantrips",
+          "kind": "class_feature",
+          "label": "Cantrips",
+          "printed": "",
+          "verify": "by=Rule:core_rulebook:class_feature:wizard_class__d9affb050e701218 (held by this build)"
+        },
+        {
+          "condition": "-",
+          "id": "core_rulebook:class_feature:wizard_class__d9affb050e701218",
+          "kind": "class_feature",
+          "label": "Wizard",
+          "printed": "",
+          "verify": "by=Class:wizard@1 (build plays wizard:4)"
+        },
+        {
+          "condition": "-",
+          "id": "core_rulebook:class_feature:wizard_spells__be003b3984191a51",
+          "kind": "class_feature",
+          "label": "Wizard Spells",
+          "printed": "",
+          "verify": "by=Rule:core_rulebook:class_feature:wizard_cantrips (held by this build)"
+        },
+        {
+          "condition": "-",
+          "id": "core_rulebook:class_feature:wizard_spells__d203917b8596067b",
+          "kind": "class_feature",
+          "label": "Spells",
+          "printed": "",
+          "verify": "by=Rule:core_rulebook:class_feature:wizard_class__d9affb050e701218 (held by this build)"
+        }
+      ],
+      "build": "fighter:6+wizard:4",
+      "changed_value": [],
+      "duplicate": [],
+      "held_after": 68,
+      "held_before": 41,
+      "lines_after": 45,
+      "lines_before": 23,
+      "name": "mix_fighter6_wizard4",
+      "removed": [],
+      "unclassified": []
+    },
+    {
+      "added_correct": [
+        {
+          "condition": "-",
+          "id": "advanced_players_guide:class_feature:oracle_orisons",
+          "kind": "class_feature",
+          "label": "Orisons",
+          "printed": "",
+          "verify": "by=Rule:advanced_players_guide:ability:oracle (held by this build)"
+        }
+      ],
+      "build": "oracle:1",
+      "changed_value": [],
+      "duplicate": [],
+      "held_after": 31,
+      "held_before": 28,
+      "lines_after": 17,
+      "lines_before": 16,
+      "name": "oracle_L1",
+      "removed": [],
+      "unclassified": []
+    },
+    {
+      "added_correct": [
+        {
+          "condition": "-",
+          "id": "advanced_players_guide:class_feature:oracle_orisons",
+          "kind": "class_feature",
+          "label": "Orisons",
+          "printed": "",
+          "verify": "by=Rule:advanced_players_guide:ability:oracle (held by this build)"
+        }
+      ],
+      "build": "oracle:14",
+      "changed_value": [],
+      "duplicate": [],
+      "held_after": 31,
+      "held_before": 28,
+      "lines_after": 17,
+      "lines_before": 16,
+      "name": "oracle_L14",
+      "removed": [],
+      "unclassified": []
+    },
+    {
+      "added_correct": [
+        {
+          "condition": "-",
+          "id": "advanced_players_guide:class_feature:oracle_orisons",
+          "kind": "class_feature",
+          "label": "Orisons",
+          "printed": "",
+          "verify": "by=Rule:advanced_players_guide:ability:oracle (held by this build)"
+        }
+      ],
+      "build": "oracle:20",
+      "changed_value": [],
+      "duplicate": [],
+      "held_after": 31,
+      "held_before": 28,
+      "lines_after": 17,
+      "lines_before": 16,
+      "name": "oracle_L20",
+      "removed": [],
+      "unclassified": []
+    },
+    {
+      "added_correct": [
+        {
+          "condition": "-",
+          "id": "advanced_players_guide:class_feature:oracle_orisons",
+          "kind": "class_feature",
+          "label": "Orisons",
+          "printed": "",
+          "verify": "by=Rule:advanced_players_guide:ability:oracle (held by this build)"
+        }
+      ],
+      "build": "oracle:7",
+      "changed_value": [],
+      "duplicate": [],
+      "held_after": 31,
+      "held_before": 28,
+      "lines_after": 17,
+      "lines_before": 16,
+      "name": "oracle_L7",
+      "removed": [],
+      "unclassified": []
+    },
+    {
+      "added_correct": [
+        {
+          "condition": "-",
+          "id": "core_rulebook:class_feature:aura_of_good",
+          "kind": "class_feature",
+          "label": "Aura of Good",
+          "printed": "",
+          "verify": "by=Rule:core_rulebook:class_feature:paladin_aura_of_good (held by this build)"
+        },
+        {
+          "condition": "-",
+          "id": "core_rulebook:class_feature:paladin_aura_of_good",
+          "kind": "class_feature",
+          "label": "Aura of Good",
+          "printed": "",
+          "verify": "by=Rule:core_rulebook:class_feature:paladin_class (held by this build)"
+        },
+        {
+          "condition": "-",
+          "id": "core_rulebook:class_feature:paladin_smite_evil",
+          "kind": "class_feature",
+          "label": "Smite Evil",
+          "printed": "",
+          "verify": "by=Rule:core_rulebook:class_feature:paladin_class (held by this build)"
+        }
+      ],
+      "build": "paladin:1",
+      "changed_value": [],
+      "duplicate": [],
+      "held_after": 43,
+      "held_before": 39,
+      "lines_after": 23,
+      "lines_before": 20,
+      "name": "paladin_L1",
+      "removed": [],
+      "unclassified": []
+    },
+    {
+      "added_correct": [
+        {
+          "condition": "-",
+          "id": "core_rulebook:class_feature:aura_of_good",
+          "kind": "class_feature",
+          "label": "Aura of Good",
+          "printed": "",
+          "verify": "by=Rule:core_rulebook:class_feature:paladin_aura_of_good (held by this build)"
+        },
+        {
+          "condition": "-",
+          "id": "core_rulebook:class_feature:channel_positive_energy",
+          "kind": "class_feature",
+          "label": "Channel Positive Energy",
+          "printed": "",
+          "verify": "by=Rule:core_rulebook:class_feature:paladin_channel_positive_energy (held by this build)"
+        },
+        {
+          "condition": "-",
+          "id": "core_rulebook:class_feature:paladin_aura_of_faith",
+          "kind": "class_feature",
+          "label": "Aura of Faith",
+          "printed": "",
+          "verify": "by=Rule:core_rulebook:class_feature:paladin_class (held by this build)"
+        },
+        {
+          "condition": "-",
+          "id": "core_rulebook:class_feature:paladin_aura_of_good",
+          "kind": "class_feature",
+          "label": "Aura of Good",
+          "printed": "",
+          "verify": "by=Rule:core_rulebook:class_feature:paladin_class (held by this build)"
+        },
+        {
+          "condition": "-",
+          "id": "core_rulebook:class_feature:paladin_aura_of_justice",
+          "kind": "class_feature",
+          "label": "Aura of Justice",
+          "printed": "",
+          "verify": "by=Rule:core_rulebook:class_feature:paladin_class (held by this build)"
+        },
+        {
+          "condition": "-",
+          "id": "core_rulebook:class_feature:paladin_channel_positive_energy",
+          "kind": "class_feature",
+          "label": "Channel Positive Energy",
+          "printed": "",
+          "verify": "by=Rule:core_rulebook:class_feature:paladin_class (held by this build)"
+        },
+        {
+          "condition": "-",
+          "id": "core_rulebook:class_feature:paladin_smite_evil",
+          "kind": "class_feature",
+          "label": "Smite Evil",
+          "printed": "",
+          "verify": "by=Rule:core_rulebook:class_feature:paladin_class (held by this build)"
+        }
+      ],
+      "build": "paladin:14",
+      "changed_value": [],
+      "duplicate": [],
+      "held_after": 68,
+      "held_before": 43,
+      "lines_after": 31,
+      "lines_before": 24,
+      "name": "paladin_L14",
+      "removed": [],
+      "unclassified": []
+    },
+    {
+      "added_correct": [
+        {
+          "condition": "-",
+          "id": "core_rulebook:class_feature:aura_of_good",
+          "kind": "class_feature",
+          "label": "Aura of Good",
+          "printed": "",
+          "verify": "by=Rule:core_rulebook:class_feature:paladin_aura_of_good (held by this build)"
+        },
+        {
+          "condition": "-",
+          "id": "core_rulebook:class_feature:channel_positive_energy",
+          "kind": "class_feature",
+          "label": "Channel Positive Energy",
+          "printed": "",
+          "verify": "by=Rule:core_rulebook:class_feature:paladin_channel_positive_energy (held by this build)"
+        },
+        {
+          "condition": "-",
+          "id": "core_rulebook:class_feature:paladin_aura_of_faith",
+          "kind": "class_feature",
+          "label": "Aura of Faith",
+          "printed": "",
+          "verify": "by=Rule:core_rulebook:class_feature:paladin_class (held by this build)"
+        },
+        {
+          "condition": "-",
+          "id": "core_rulebook:class_feature:paladin_aura_of_good",
+          "kind": "class_feature",
+          "label": "Aura of Good",
+          "printed": "",
+          "verify": "by=Rule:core_rulebook:class_feature:paladin_class (held by this build)"
+        },
+        {
+          "condition": "-",
+          "id": "core_rulebook:class_feature:paladin_aura_of_justice",
+          "kind": "class_feature",
+          "label": "Aura of Justice",
+          "printed": "",
+          "verify": "by=Rule:core_rulebook:class_feature:paladin_class (held by this build)"
+        },
+        {
+          "condition": "-",
+          "id": "core_rulebook:class_feature:paladin_channel_positive_energy",
+          "kind": "class_feature",
+          "label": "Channel Positive Energy",
+          "printed": "",
+          "verify": "by=Rule:core_rulebook:class_feature:paladin_class (held by this build)"
+        },
+        {
+          "condition": "-",
+          "id": "core_rulebook:class_feature:paladin_holy_champion",
+          "kind": "class_feature",
+          "label": "Holy Champion",
+          "printed": "+5",
+          "verify": "by=Rule:core_rulebook:class_feature:paladin_class (held by this build)"
+        },
+        {
+          "condition": "-",
+          "id": "core_rulebook:class_feature:paladin_smite_evil",
+          "kind": "class_feature",
+          "label": "Smite Evil",
+          "printed": "",
+          "verify": "by=Rule:core_rulebook:class_feature:paladin_class (held by this build)"
+        }
+      ],
+      "build": "paladin:20",
+      "changed_value": [],
+      "duplicate": [
+        {
+          "against": "class_chassis.paladin.aura_of_righteousness",
+          "against_label": "value=0 detail=Paladin Aura of Righteousness granted at paladin level 20 (PF1 Core Rulebook, 17th-level paladin class feature): \"At 17t",
+          "against_source": "EXPL",
+          "id": "core_rulebook:class_feature:paladin_aura_of_righteousness",
+          "kind": "class_feature",
+          "label": "Aura of Righteousness",
+          "score": 0.84
+        }
+      ],
+      "held_after": 70,
+      "held_before": 43,
+      "lines_after": 33,
+      "lines_before": 24,
+      "name": "paladin_L20",
+      "removed": [],
+      "unclassified": []
+    },
+    {
+      "added_correct": [
+        {
+          "condition": "-",
+          "id": "core_rulebook:class_feature:aura_of_good",
+          "kind": "class_feature",
+          "label": "Aura of Good",
+          "printed": "",
+          "verify": "by=Rule:core_rulebook:class_feature:paladin_aura_of_good (held by this build)"
+        },
+        {
+          "condition": "-",
+          "id": "core_rulebook:class_feature:channel_positive_energy",
+          "kind": "class_feature",
+          "label": "Channel Positive Energy",
+          "printed": "",
+          "verify": "by=Rule:core_rulebook:class_feature:paladin_channel_positive_energy (held by this build)"
+        },
+        {
+          "condition": "-",
+          "id": "core_rulebook:class_feature:paladin_aura_of_good",
+          "kind": "class_feature",
+          "label": "Aura of Good",
+          "printed": "",
+          "verify": "by=Rule:core_rulebook:class_feature:paladin_class (held by this build)"
+        },
+        {
+          "condition": "-",
+          "id": "core_rulebook:class_feature:paladin_channel_positive_energy",
+          "kind": "class_feature",
+          "label": "Channel Positive Energy",
+          "printed": "",
+          "verify": "by=Rule:core_rulebook:class_feature:paladin_class (held by this build)"
+        },
+        {
+          "condition": "-",
+          "id": "core_rulebook:class_feature:paladin_smite_evil",
+          "kind": "class_feature",
+          "label": "Smite Evil",
+          "printed": "",
+          "verify": "by=Rule:core_rulebook:class_feature:paladin_class (held by this build)"
+        }
+      ],
+      "build": "paladin:7",
+      "changed_value": [],
+      "duplicate": [],
+      "held_after": 65,
+      "held_before": 42,
+      "lines_after": 28,
+      "lines_before": 23,
+      "name": "paladin_L7",
+      "removed": [],
+      "unclassified": []
+    },
+    {
+      "added_correct": [
+        {
+          "condition": "-",
+          "id": "core_rulebook:class_feature:rogue_trapfinding",
+          "kind": "class_feature",
+          "label": "Trapfinding (Perception (trapfinding))",
+          "printed": "+1",
+          "verify": "by=Rule:core_rulebook:class_feature:rogue_standard_class (held by this build); by=Rule:core_rulebook:class_feature:rogue_standard_class (held by this build)"
+        },
+        {
+          "condition": "-",
+          "id": "core_rulebook:class_feature:rogue_trapfinding#bonus1",
+          "kind": "class_feature",
+          "label": "Trapfinding (Disable Device)",
+          "printed": "+1",
+          "verify": "[sibling of base core_rulebook:class_feature:rogue_trapfinding] by=Rule:core_rulebook:class_feature:rogue_standard_class (held by this build); by=Rule:core_rulebook:class_feature:rogue_standard_class (held by this build)"
+        },
+        {
+          "condition": "-",
+          "id": "core_rulebook:class_feature:sneak_attack",
+          "kind": "class_feature",
+          "label": "Sneak Attack",
+          "printed": "",
+          "verify": "by=Rule:core_rulebook:class_feature:rogue_sneak_attack (held by this build)"
+        }
+      ],
+      "build": "rogue:1",
+      "changed_value": [],
+      "duplicate": [],
+      "held_after": 47,
+      "held_before": 42,
+      "lines_after": 29,
+      "lines_before": 26,
+      "name": "rogue_L1",
+      "removed": [],
+      "unclassified": []
+    },
+    {
+      "added_correct": [
+        {
+          "condition": "-",
+          "id": "core_rulebook:class_feature:rogue_trapfinding",
+          "kind": "class_feature",
+          "label": "Trapfinding (Perception (trapfinding))",
+          "printed": "+7",
+          "verify": "by=Rule:core_rulebook:class_feature:rogue_standard_class (held by this build); by=Rule:core_rulebook:class_feature:rogue_standard_class (held by this build)"
+        },
+        {
+          "condition": "-",
+          "id": "core_rulebook:class_feature:rogue_trapfinding#bonus1",
+          "kind": "class_feature",
+          "label": "Trapfinding (Disable Device)",
+          "printed": "+7",
+          "verify": "[sibling of base core_rulebook:class_feature:rogue_trapfinding] by=Rule:core_rulebook:class_feature:rogue_standard_class (held by this build); by=Rule:core_rulebook:class_feature:rogue_standard_class (held by this build)"
+        },
+        {
+          "condition": "-",
+          "id": "core_rulebook:class_feature:sneak_attack",
+          "kind": "class_feature",
+          "label": "Sneak Attack",
+          "printed": "",
+          "verify": "by=Rule:core_rulebook:class_feature:rogue_sneak_attack (held by this build)"
+        }
+      ],
+      "build": "rogue:14",
+      "changed_value": [],
+      "duplicate": [
+        {
+          "against": "class_feature.rogue.uncanny_dodge",
+          "against_label": "value=0 detail=Rogue Uncanny Dodge granted at rogue level 14 (PF1 Core Rulebook, 4th-level rogue class feature, part of the \"Rogue tale",
+          "against_source": "EXPL",
+          "id": "core_rulebook:class_feature:rogue_uncanny_dodge_tracker",
+          "kind": "class_feature",
+          "label": "Rogue ~ Uncanny Dodge Tracker",
+          "score": 0.826
+        }
+      ],
+      "held_after": 69,
+      "held_before": 42,
+      "lines_after": 30,
+      "lines_before": 26,
+      "name": "rogue_L14",
+      "removed": [],
+      "unclassified": []
+    },
+    {
+      "added_correct": [
+        {
+          "condition": "-",
+          "id": "core_rulebook:class_feature:rogue_trapfinding",
+          "kind": "class_feature",
+          "label": "Trapfinding (Perception (trapfinding))",
+          "printed": "+10",
+          "verify": "by=Rule:core_rulebook:class_feature:rogue_standard_class (held by this build); by=Rule:core_rulebook:class_feature:rogue_standard_class (held by this build)"
+        },
+        {
+          "condition": "-",
+          "id": "core_rulebook:class_feature:rogue_trapfinding#bonus1",
+          "kind": "class_feature",
+          "label": "Trapfinding (Disable Device)",
+          "printed": "+10",
+          "verify": "[sibling of base core_rulebook:class_feature:rogue_trapfinding] by=Rule:core_rulebook:class_feature:rogue_standard_class (held by this build); by=Rule:core_rulebook:class_feature:rogue_standard_class (held by this build)"
+        },
+        {
+          "condition": "-",
+          "id": "core_rulebook:class_feature:sneak_attack",
+          "kind": "class_feature",
+          "label": "Sneak Attack",
+          "printed": "",
+          "verify": "by=Rule:core_rulebook:class_feature:rogue_sneak_attack (held by this build)"
+        }
+      ],
+      "build": "rogue:20",
+      "changed_value": [],
+      "duplicate": [
+        {
+          "against": "class_feature.rogue.uncanny_dodge",
+          "against_label": "value=0 detail=Rogue Uncanny Dodge granted at rogue level 20 (PF1 Core Rulebook, 4th-level rogue class feature, part of the \"Rogue tale",
+          "against_source": "EXPL",
+          "id": "core_rulebook:class_feature:rogue_uncanny_dodge_tracker",
+          "kind": "class_feature",
+          "label": "Rogue ~ Uncanny Dodge Tracker",
+          "score": 0.826
+        }
+      ],
+      "held_after": 69,
+      "held_before": 42,
+      "lines_after": 30,
+      "lines_before": 26,
+      "name": "rogue_L20",
+      "removed": [],
+      "unclassified": []
+    },
+    {
+      "added_correct": [
+        {
+          "condition": "-",
+          "id": "core_rulebook:class_feature:rogue_trapfinding",
+          "kind": "class_feature",
+          "label": "Trapfinding (Perception (trapfinding))",
+          "printed": "+3",
+          "verify": "by=Rule:core_rulebook:class_feature:rogue_standard_class (held by this build); by=Rule:core_rulebook:class_feature:rogue_standard_class (held by this build)"
+        },
+        {
+          "condition": "-",
+          "id": "core_rulebook:class_feature:rogue_trapfinding#bonus1",
+          "kind": "class_feature",
+          "label": "Trapfinding (Disable Device)",
+          "printed": "+3",
+          "verify": "[sibling of base core_rulebook:class_feature:rogue_trapfinding] by=Rule:core_rulebook:class_feature:rogue_standard_class (held by this build); by=Rule:core_rulebook:class_feature:rogue_standard_class (held by this build)"
+        },
+        {
+          "condition": "-",
+          "id": "core_rulebook:class_feature:sneak_attack",
+          "kind": "class_feature",
+          "label": "Sneak Attack",
+          "printed": "",
+          "verify": "by=Rule:core_rulebook:class_feature:rogue_sneak_attack (held by this build)"
+        }
+      ],
+      "build": "rogue:7",
+      "changed_value": [],
+      "duplicate": [
+        {
+          "against": "class_feature.rogue.uncanny_dodge",
+          "against_label": "value=0 detail=Rogue Uncanny Dodge granted at rogue level 7 (PF1 Core Rulebook, 4th-level rogue class feature, part of the \"Rogue talen",
+          "against_source": "EXPL",
+          "id": "core_rulebook:class_feature:rogue_uncanny_dodge_tracker",
+          "kind": "class_feature",
+          "label": "Rogue ~ Uncanny Dodge Tracker",
+          "score": 0.826
+        }
+      ],
+      "held_after": 69,
+      "held_before": 42,
+      "lines_after": 30,
+      "lines_before": 26,
+      "name": "rogue_L7",
+      "removed": [],
+      "unclassified": []
+    },
+    {
+      "added_correct": [
+        {
+          "condition": "-",
+          "id": "ultimate_combat:class_feature:samurai_challenge",
+          "kind": "class_feature",
+          "label": "Challenge",
+          "printed": "",
+          "verify": "by=Rule:ultimate_combat:ability:samurai (held by this build)"
+        },
+        {
+          "condition": "-",
+          "id": "ultimate_combat:class_feature:samurai_mount",
+          "kind": "class_feature",
+          "label": "Mount",
+          "printed": "",
+          "verify": "by=Rule:ultimate_combat:ability:samurai (held by this build)"
+        },
+        {
+          "condition": "-",
+          "id": "ultimate_combat:class_feature:samurai_order",
+          "kind": "class_feature",
+          "label": "Order",
+          "printed": "+1",
+          "verify": "by=Rule:ultimate_combat:ability:samurai (held by this build)"
+        },
+        {
+          "condition": "-",
+          "id": "ultimate_combat:class_feature:samurai_resolve",
+          "kind": "class_feature",
+          "label": "Resolve",
+          "printed": "",
+          "verify": "by=Rule:ultimate_combat:ability:samurai (held by this build)"
+        }
+      ],
+      "build": "samurai:1",
+      "changed_value": [],
+      "duplicate": [],
+      "held_after": 55,
+      "held_before": 50,
+      "lines_after": 29,
+      "lines_before": 25,
+      "name": "samurai_L1",
+      "removed": [],
+      "unclassified": []
+    },
+    {
+      "added_correct": [
+        {
+          "condition": "-",
+          "id": "ultimate_combat:class_feature:samurai_banner",
+          "kind": "class_feature",
+          "label": "Banner",
+          "printed": "",
+          "verify": "by=Rule:ultimate_combat:ability:samurai (held by this build)"
+        },
+        {
+          "condition": "-",
+          "id": "ultimate_combat:class_feature:samurai_bonus_feat",
+          "kind": "class_feature",
+          "label": "Bonus Feat",
+          "printed": "+2",
+          "verify": "by=Rule:ultimate_combat:ability:samurai (held by this build)"
+        },
+        {
+          "condition": "-",
+          "id": "ultimate_combat:class_feature:samurai_challenge",
+          "kind": "class_feature",
+          "label": "Challenge",
+          "printed": "",
+          "verify": "by=Rule:ultimate_combat:ability:samurai (held by this build)"
+        },
+        {
+          "condition": "-",
+          "id": "ultimate_combat:class_feature:samurai_demanding_challenge",
+          "kind": "class_feature",
+          "label": "Demanding Challenge",
+          "printed": "",
+          "verify": "by=Rule:ultimate_combat:ability:samurai (held by this build)"
+        },
+        {
+          "condition": "-",
+          "id": "ultimate_combat:class_feature:samurai_greater_banner",
+          "kind": "class_feature",
+          "label": "Greater Banner",
+          "printed": "",
+          "verify": "by=Rule:ultimate_combat:ability:samurai (held by this build)"
+        },
+        {
+          "condition": "-",
+          "id": "ultimate_combat:class_feature:samurai_greater_resolve",
+          "kind": "class_feature",
+          "label": "Greater Resolve",
+          "printed": "",
+          "verify": "by=Rule:ultimate_combat:ability:samurai (held by this build)"
+        },
+        {
+          "condition": "-",
+          "id": "ultimate_combat:class_feature:samurai_honorable_stand",
+          "kind": "class_feature",
+          "label": "Honorable Stand",
+          "printed": "",
+          "verify": "by=Rule:ultimate_combat:ability:samurai (held by this build)"
+        },
+        {
+          "condition": "-",
+          "id": "ultimate_combat:class_feature:samurai_mount",
+          "kind": "class_feature",
+          "label": "Mount",
+          "printed": "",
+          "verify": "by=Rule:ultimate_combat:ability:samurai (held by this build)"
+        },
+        {
+          "condition": "-",
+          "id": "ultimate_combat:class_feature:samurai_mounted_archer",
+          "kind": "class_feature",
+          "label": "Mounted Archer",
+          "printed": "",
+          "verify": "by=Rule:ultimate_combat:ability:samurai (held by this build)"
+        },
+        {
+          "condition": "-",
+          "id": "ultimate_combat:class_feature:samurai_order",
+          "kind": "class_feature",
+          "label": "Order",
+          "printed": "+1",
+          "verify": "by=Rule:ultimate_combat:ability:samurai (held by this build)"
+        },
+        {
+          "condition": "-",
+          "id": "ultimate_combat:class_feature:samurai_resolve",
+          "kind": "class_feature",
+          "label": "Resolve",
+          "printed": "",
+          "verify": "by=Rule:ultimate_combat:ability:samurai (held by this build)"
+        },
+        {
+          "condition": "-",
+          "id": "ultimate_combat:class_feature:samurai_weapon_expertise",
+          "kind": "class_feature",
+          "label": "Weapon Expertise",
+          "printed": "+1",
+          "verify": "by=Rule:ultimate_combat:ability:samurai (held by this build)"
+        }
+      ],
+      "build": "samurai:14",
+      "changed_value": [],
+      "duplicate": [],
+      "held_after": 63,
+      "held_before": 50,
+      "lines_after": 37,
+      "lines_before": 25,
+      "name": "samurai_L14",
+      "removed": [],
+      "unclassified": []
+    },
+    {
+      "added_correct": [
+        {
+          "condition": "-",
+          "id": "ultimate_combat:class_feature:samurai_banner",
+          "kind": "class_feature",
+          "label": "Banner",
+          "printed": "",
+          "verify": "by=Rule:ultimate_combat:ability:samurai (held by this build)"
+        },
+        {
+          "condition": "-",
+          "id": "ultimate_combat:class_feature:samurai_bonus_feat",
+          "kind": "class_feature",
+          "label": "Bonus Feat",
+          "printed": "+3",
+          "verify": "by=Rule:ultimate_combat:ability:samurai (held by this build)"
+        },
+        {
+          "condition": "-",
+          "id": "ultimate_combat:class_feature:samurai_challenge",
+          "kind": "class_feature",
+          "label": "Challenge",
+          "printed": "",
+          "verify": "by=Rule:ultimate_combat:ability:samurai (held by this build)"
+        },
+        {
+          "condition": "-",
+          "id": "ultimate_combat:class_feature:samurai_demanding_challenge",
+          "kind": "class_feature",
+          "label": "Demanding Challenge",
+          "printed": "",
+          "verify": "by=Rule:ultimate_combat:ability:samurai (held by this build)"
+        },
+        {
+          "condition": "-",
+          "id": "ultimate_combat:class_feature:samurai_greater_banner",
+          "kind": "class_feature",
+          "label": "Greater Banner",
+          "printed": "",
+          "verify": "by=Rule:ultimate_combat:ability:samurai (held by this build)"
+        },
+        {
+          "condition": "-",
+          "id": "ultimate_combat:class_feature:samurai_greater_resolve",
+          "kind": "class_feature",
+          "label": "Greater Resolve",
+          "printed": "",
+          "verify": "by=Rule:ultimate_combat:ability:samurai (held by this build)"
+        },
+        {
+          "condition": "-",
+          "id": "ultimate_combat:class_feature:samurai_honorable_stand",
+          "kind": "class_feature",
+          "label": "Honorable Stand",
+          "printed": "",
+          "verify": "by=Rule:ultimate_combat:ability:samurai (held by this build)"
+        },
+        {
+          "condition": "-",
+          "id": "ultimate_combat:class_feature:samurai_last_stand",
+          "kind": "class_feature",
+          "label": "Last Stand",
+          "printed": "",
+          "verify": "by=Rule:ultimate_combat:ability:samurai (held by this build)"
+        },
+        {
+          "condition": "-",
+          "id": "ultimate_combat:class_feature:samurai_mount",
+          "kind": "class_feature",
+          "label": "Mount",
+          "printed": "",
+          "verify": "by=Rule:ultimate_combat:ability:samurai (held by this build)"
+        },
+        {
+          "condition": "-",
+          "id": "ultimate_combat:class_feature:samurai_mounted_archer",
+          "kind": "class_feature",
+          "label": "Mounted Archer",
+          "printed": "",
+          "verify": "by=Rule:ultimate_combat:ability:samurai (held by this build)"
+        },
+        {
+          "condition": "-",
+          "id": "ultimate_combat:class_feature:samurai_order",
+          "kind": "class_feature",
+          "label": "Order",
+          "printed": "+1",
+          "verify": "by=Rule:ultimate_combat:ability:samurai (held by this build)"
+        },
+        {
+          "condition": "-",
+          "id": "ultimate_combat:class_feature:samurai_resolve",
+          "kind": "class_feature",
+          "label": "Resolve",
+          "printed": "",
+          "verify": "by=Rule:ultimate_combat:ability:samurai (held by this build)"
+        },
+        {
+          "condition": "-",
+          "id": "ultimate_combat:class_feature:samurai_true_resolve",
+          "kind": "class_feature",
+          "label": "True Resolve",
+          "printed": "",
+          "verify": "by=Rule:ultimate_combat:ability:samurai (held by this build)"
+        },
+        {
+          "condition": "-",
+          "id": "ultimate_combat:class_feature:samurai_weapon_expertise",
+          "kind": "class_feature",
+          "label": "Weapon Expertise",
+          "printed": "+1",
+          "verify": "by=Rule:ultimate_combat:ability:samurai (held by this build)"
+        }
+      ],
+      "build": "samurai:20",
+      "changed_value": [],
+      "duplicate": [],
+      "held_after": 65,
+      "held_before": 50,
+      "lines_after": 39,
+      "lines_before": 25,
+      "name": "samurai_L20",
+      "removed": [],
+      "unclassified": []
+    },
+    {
+      "added_correct": [
+        {
+          "condition": "-",
+          "id": "ultimate_combat:class_feature:samurai_banner",
+          "kind": "class_feature",
+          "label": "Banner",
+          "printed": "",
+          "verify": "by=Rule:ultimate_combat:ability:samurai (held by this build)"
+        },
+        {
+          "condition": "-",
+          "id": "ultimate_combat:class_feature:samurai_bonus_feat",
+          "kind": "class_feature",
+          "label": "Bonus Feat",
+          "printed": "+1",
+          "verify": "by=Rule:ultimate_combat:ability:samurai (held by this build)"
+        },
+        {
+          "condition": "-",
+          "id": "ultimate_combat:class_feature:samurai_challenge",
+          "kind": "class_feature",
+          "label": "Challenge",
+          "printed": "",
+          "verify": "by=Rule:ultimate_combat:ability:samurai (held by this build)"
+        },
+        {
+          "condition": "-",
+          "id": "ultimate_combat:class_feature:samurai_mount",
+          "kind": "class_feature",
+          "label": "Mount",
+          "printed": "",
+          "verify": "by=Rule:ultimate_combat:ability:samurai (held by this build)"
+        },
+        {
+          "condition": "-",
+          "id": "ultimate_combat:class_feature:samurai_mounted_archer",
+          "kind": "class_feature",
+          "label": "Mounted Archer",
+          "printed": "",
+          "verify": "by=Rule:ultimate_combat:ability:samurai (held by this build)"
+        },
+        {
+          "condition": "-",
+          "id": "ultimate_combat:class_feature:samurai_order",
+          "kind": "class_feature",
+          "label": "Order",
+          "printed": "+1",
+          "verify": "by=Rule:ultimate_combat:ability:samurai (held by this build)"
+        },
+        {
+          "condition": "-",
+          "id": "ultimate_combat:class_feature:samurai_resolve",
+          "kind": "class_feature",
+          "label": "Resolve",
+          "printed": "",
+          "verify": "by=Rule:ultimate_combat:ability:samurai (held by this build)"
+        },
+        {
+          "condition": "-",
+          "id": "ultimate_combat:class_feature:samurai_weapon_expertise",
+          "kind": "class_feature",
+          "label": "Weapon Expertise",
+          "printed": "+1",
+          "verify": "by=Rule:ultimate_combat:ability:samurai (held by this build)"
+        }
+      ],
+      "build": "samurai:7",
+      "changed_value": [],
+      "duplicate": [],
+      "held_after": 59,
+      "held_before": 50,
+      "lines_after": 33,
+      "lines_before": 25,
+      "name": "samurai_L7",
+      "removed": [],
+      "unclassified": []
+    },
+    {
+      "added_correct": [],
+      "build": "summoner:1",
+      "changed_value": [],
+      "duplicate": [],
+      "held_after": 50,
+      "held_before": 49,
+      "lines_after": 16,
+      "lines_before": 16,
+      "name": "summoner_L1",
+      "removed": [],
+      "unclassified": []
+    },
+    {
+      "added_correct": [],
+      "build": "summoner:14",
+      "changed_value": [],
+      "duplicate": [],
+      "held_after": 54,
+      "held_before": 53,
+      "lines_after": 20,
+      "lines_before": 20,
+      "name": "summoner_L14",
+      "removed": [],
+      "unclassified": []
+    },
+    {
+      "added_correct": [],
+      "build": "summoner:20",
+      "changed_value": [],
+      "duplicate": [],
+      "held_after": 58,
+      "held_before": 57,
+      "lines_after": 24,
+      "lines_before": 24,
+      "name": "summoner_L20",
+      "removed": [],
+      "unclassified": []
+    },
+    {
+      "added_correct": [],
+      "build": "summoner:7",
+      "changed_value": [],
+      "duplicate": [],
+      "held_after": 51,
+      "held_before": 50,
+      "lines_after": 17,
+      "lines_before": 17,
+      "name": "summoner_L7",
+      "removed": [],
+      "unclassified": []
+    },
+    {
+      "added_correct": [],
+      "build": "unchained_monk:1",
+      "changed_value": [],
+      "duplicate": [],
+      "held_after": 32,
+      "held_before": 32,
+      "lines_after": 20,
+      "lines_before": 20,
+      "name": "unchained_monk_L1",
+      "removed": [],
+      "unclassified": []
+    },
+    {
+      "added_correct": [],
+      "build": "unchained_monk:14",
+      "changed_value": [],
+      "duplicate": [],
+      "held_after": 41,
+      "held_before": 41,
+      "lines_after": 29,
+      "lines_before": 29,
+      "name": "unchained_monk_L14",
+      "removed": [],
+      "unclassified": []
+    },
+    {
+      "added_correct": [],
+      "build": "unchained_monk:20",
+      "changed_value": [],
+      "duplicate": [],
+      "held_after": 44,
+      "held_before": 44,
+      "lines_after": 32,
+      "lines_before": 32,
+      "name": "unchained_monk_L20",
+      "removed": [],
+      "unclassified": []
+    },
+    {
+      "added_correct": [],
+      "build": "unchained_monk:7",
+      "changed_value": [],
+      "duplicate": [],
+      "held_after": 39,
+      "held_before": 39,
+      "lines_after": 27,
+      "lines_before": 27,
+      "name": "unchained_monk_L7",
+      "removed": [],
+      "unclassified": []
+    },
+    {
+      "added_correct": [],
+      "build": "vigilante:1",
+      "changed_value": [],
+      "duplicate": [],
+      "held_after": 54,
+      "held_before": 53,
+      "lines_after": 20,
+      "lines_before": 20,
+      "name": "vigilante_L1",
+      "removed": [],
+      "unclassified": []
+    },
+    {
+      "added_correct": [],
+      "build": "vigilante:14",
+      "changed_value": [],
+      "duplicate": [],
+      "held_after": 78,
+      "held_before": 77,
+      "lines_after": 24,
+      "lines_before": 24,
+      "name": "vigilante_L14",
+      "removed": [],
+      "unclassified": []
+    },
+    {
+      "added_correct": [],
+      "build": "vigilante:20",
+      "changed_value": [],
+      "duplicate": [],
+      "held_after": 80,
+      "held_before": 79,
+      "lines_after": 26,
+      "lines_before": 26,
+      "name": "vigilante_L20",
+      "removed": [],
+      "unclassified": []
+    },
+    {
+      "added_correct": [],
+      "build": "vigilante:7",
+      "changed_value": [],
+      "duplicate": [],
+      "held_after": 77,
+      "held_before": 76,
+      "lines_after": 23,
+      "lines_before": 23,
+      "name": "vigilante_L7",
+      "removed": [],
+      "unclassified": []
+    },
+    {
+      "added_correct": [],
+      "build": "warrior:1",
+      "changed_value": [],
+      "duplicate": [],
+      "held_after": 36,
+      "held_before": 36,
+      "lines_after": 21,
+      "lines_before": 21,
+      "name": "warrior_L1",
+      "removed": [],
+      "unclassified": []
+    },
+    {
+      "added_correct": [],
+      "build": "warrior:14",
+      "changed_value": [],
+      "duplicate": [],
+      "held_after": 36,
+      "held_before": 36,
+      "lines_after": 21,
+      "lines_before": 21,
+      "name": "warrior_L14",
+      "removed": [],
+      "unclassified": []
+    },
+    {
+      "added_correct": [],
+      "build": "warrior:20",
+      "changed_value": [],
+      "duplicate": [],
+      "held_after": 36,
+      "held_before": 36,
+      "lines_after": 21,
+      "lines_before": 21,
+      "name": "warrior_L20",
+      "removed": [],
+      "unclassified": []
+    },
+    {
+      "added_correct": [],
+      "build": "warrior:7",
+      "changed_value": [],
+      "duplicate": [],
+      "held_after": 36,
+      "held_before": 36,
+      "lines_after": 21,
+      "lines_before": 21,
+      "name": "warrior_L7",
+      "removed": [],
+      "unclassified": []
+    },
+    {
+      "added_correct": [
+        {
+          "condition": "-",
+          "id": "core_rulebook:class_feature:wizard_arcane_school",
+          "kind": "class_feature",
+          "label": "Arcane School",
+          "printed": "",
+          "verify": "by=Rule:core_rulebook:class_feature:wizard_class__d9affb050e701218 (held by this build)"
+        },
+        {
+          "condition": "-",
+          "id": "core_rulebook:class_feature:wizard_class__d9affb050e701218",
+          "kind": "class_feature",
+          "label": "Wizard",
+          "printed": "",
+          "verify": "by=Class:wizard@1 (build plays wizard:1)"
+        },
+        {
+          "condition": "-",
+          "id": "core_rulebook:class_feature:wizard_spells__d203917b8596067b",
+          "kind": "class_feature",
+          "label": "Spells",
+          "printed": "",
+          "verify": "by=Rule:core_rulebook:class_feature:wizard_class__d9affb050e701218 (held by this build)"
+        }
+      ],
+      "build": "wizard:1",
+      "changed_value": [],
+      "duplicate": [],
+      "held_after": 57,
+      "held_before": 52,
+      "lines_after": 38,
+      "lines_before": 35,
+      "name": "wizard_L1",
+      "removed": [],
+      "unclassified": []
+    },
+    {
+      "added_correct": [
+        {
+          "condition": "-",
+          "id": "core_rulebook:class_feature:wizard_arcane_school",
+          "kind": "class_feature",
+          "label": "Arcane School",
+          "printed": "",
+          "verify": "by=Rule:core_rulebook:class_feature:wizard_class__d9affb050e701218 (held by this build)"
+        },
+        {
+          "condition": "-",
+          "id": "core_rulebook:class_feature:wizard_class__d9affb050e701218",
+          "kind": "class_feature",
+          "label": "Wizard",
+          "printed": "",
+          "verify": "by=Class:wizard@1 (build plays wizard:11)"
+        },
+        {
+          "condition": "-",
+          "id": "core_rulebook:class_feature:wizard_spells__d203917b8596067b",
+          "kind": "class_feature",
+          "label": "Spells",
+          "printed": "",
+          "verify": "by=Rule:core_rulebook:class_feature:wizard_class__d9affb050e701218 (held by this build)"
+        }
+      ],
+      "build": "wizard:11",
+      "changed_value": [],
+      "duplicate": [],
+      "held_after": 66,
+      "held_before": 61,
+      "lines_after": 38,
+      "lines_before": 35,
+      "name": "wizard_L11",
+      "removed": [],
+      "unclassified": []
+    },
+    {
+      "added_correct": [
+        {
+          "condition": "-",
+          "id": "core_rulebook:class_feature:wizard_arcane_school",
+          "kind": "class_feature",
+          "label": "Arcane School",
+          "printed": "",
+          "verify": "by=Rule:core_rulebook:class_feature:wizard_class__d9affb050e701218 (held by this build)"
+        },
+        {
+          "condition": "-",
+          "id": "core_rulebook:class_feature:wizard_class__d9affb050e701218",
+          "kind": "class_feature",
+          "label": "Wizard",
+          "printed": "",
+          "verify": "by=Class:wizard@1 (build plays wizard:20)"
+        },
+        {
+          "condition": "-",
+          "id": "core_rulebook:class_feature:wizard_spells__d203917b8596067b",
+          "kind": "class_feature",
+          "label": "Spells",
+          "printed": "",
+          "verify": "by=Rule:core_rulebook:class_feature:wizard_class__d9affb050e701218 (held by this build)"
+        }
+      ],
+      "build": "wizard:20",
+      "changed_value": [],
+      "duplicate": [],
+      "held_after": 66,
+      "held_before": 61,
+      "lines_after": 38,
+      "lines_before": 35,
+      "name": "wizard_L20",
+      "removed": [],
+      "unclassified": []
+    },
+    {
+      "added_correct": [
+        {
+          "condition": "-",
+          "id": "core_rulebook:class_feature:wizard_arcane_school",
+          "kind": "class_feature",
+          "label": "Arcane School",
+          "printed": "",
+          "verify": "by=Rule:core_rulebook:class_feature:wizard_class__d9affb050e701218 (held by this build)"
+        },
+        {
+          "condition": "-",
+          "id": "core_rulebook:class_feature:wizard_class__d9affb050e701218",
+          "kind": "class_feature",
+          "label": "Wizard",
+          "printed": "",
+          "verify": "by=Class:wizard@1 (build plays wizard:5)"
+        },
+        {
+          "condition": "-",
+          "id": "core_rulebook:class_feature:wizard_spells__d203917b8596067b",
+          "kind": "class_feature",
+          "label": "Spells",
+          "printed": "",
+          "verify": "by=Rule:core_rulebook:class_feature:wizard_class__d9affb050e701218 (held by this build)"
+        }
+      ],
+      "build": "wizard:5",
+      "changed_value": [],
+      "duplicate": [],
+      "held_after": 66,
+      "held_before": 61,
+      "lines_after": 38,
+      "lines_before": 35,
+      "name": "wizard_L5",
+      "removed": [],
+      "unclassified": []
+    }
+  ],
+  "removed_unexplained": 0,
+  "totals": {
+    "added_correct": 349,
+    "changed_value": 0,
+    "duplicate": 8,
+    "removed": 0,
+    "unclassified": 0
+  }
+}
