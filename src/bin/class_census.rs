@@ -29,6 +29,24 @@
 //! `docs/release/SD-36-consolidation/artifacts/epic-f/census-f0c.json` for a
 //! committed sample.
 //!
+//! F0d (`epic-f-class-completion.md` §2 "Mix panel", §5 review finding 8)
+//! adds the multiclass mix panel: every EXISTING multiclass
+//! negative-control test's own (class, level) + (class, level) input,
+//! extracted mechanically (`scripts/extract_multiclass_census_panel.py`,
+//! never retyped) into the committed
+//! `tests/fixtures/rules_core/multiclass_census_panel.json` (185 rows,
+//! measured -- see that script's own doc comment for the exact grep
+//! commands and per-source counts), re-swept here through the same shared
+//! canonical fixture every other sweep in this bin uses, and reported
+//! with a histogram of claim-blocking diagnostic ids across the panel
+//! (`mix_panel_blocking_histogram` in the JSON; every row's blocking ids
+//! are already deduplicated per row before the histogram counts rows, not
+//! raw occurrences). See
+//! `docs/release/SD-36-consolidation/artifacts/epic-f/census-f0d.json` for
+//! a committed sample and
+//! `docs/release/SD-36-consolidation/artifacts/epic-f/mix-panel-histogram.md`
+//! for the human-readable top-blockers writeup.
+//!
 //! # Modes
 //!
 //! - `--json <path>`: sweep every non-prestige id, plus every prestige id in
@@ -52,7 +70,8 @@
 use std::process::Command;
 
 use codex::rules_core::class_census::{
-    census, load_sweep_fixture, sheet_dump_text, sweep_non_prestige, sweep_prestige,
+    census, load_mix_panel, load_sweep_fixture, mix_panel_blocking_histogram, sheet_dump_text,
+    sweep_mix_panel, sweep_non_prestige, sweep_prestige,
 };
 
 fn real_now_iso8601() -> String {
@@ -205,6 +224,43 @@ fn run_json(json_path: &str) -> i32 {
         })
         .collect();
 
+    // F0d: the multiclass mix panel -- every EXISTING multiclass
+    // negative-control test's own (class, level) input, re-swept through
+    // the shared canonical fixture, plus a histogram of claim-blocking
+    // diagnostic ids across the panel. `load_mix_panel` reads the
+    // committed, mechanically-extracted
+    // `tests/fixtures/rules_core/multiclass_census_panel.json`; failure to
+    // load it is a real error (the file is a committed dependency of this
+    // bin, not optional), not a silently-empty panel.
+    let mix_panel = load_mix_panel().unwrap_or_else(|e| {
+        eprintln!("class_census: {e}");
+        std::process::exit(1);
+    });
+    let previous_hook = std::panic::take_hook();
+    std::panic::set_hook(Box::new(|_| {}));
+    let mix_panel_results = sweep_mix_panel(&fixture, &mix_panel);
+    std::panic::set_hook(previous_hook);
+
+    let mix_panel_computed = mix_panel_results.iter().filter(|r| r.computed).count();
+    let mix_panel_blocked = mix_panel_results.len() - mix_panel_computed;
+    let mix_panel_histogram = mix_panel_blocking_histogram(&mix_panel_results);
+
+    let mix_panel_json: Vec<serde_json::Value> = mix_panel_results
+        .iter()
+        .map(|r| {
+            serde_json::json!({
+                "key": r.key,
+                "source_file": r.source_file,
+                "test_fn": r.test_fn,
+                "classes": r.classes,
+                "status": if r.computed { "Computed" } else { "Blocked" },
+                "blocking_diagnostic_ids": r.blocking_diagnostic_ids,
+            })
+        })
+        .collect();
+    let mix_panel_histogram_json: serde_json::Value =
+        serde_json::Value::Object(mix_panel_histogram.iter().map(|(id, n)| (id.clone(), serde_json::json!(n))).collect());
+
     let document = serde_json::json!({
         "generated_at": real_now_iso8601(),
         "generated_by": "cargo run --bin class_census -- --json <path>",
@@ -234,6 +290,11 @@ fn run_json(json_path: &str) -> i32 {
         "prestige_mix_computed": prestige_mix_computed,
         "classes": classes,
         "prestige": prestige,
+        "mix_panel_swept": mix_panel_results.len(),
+        "mix_panel_computed": mix_panel_computed,
+        "mix_panel_blocked": mix_panel_blocked,
+        "mix_panel": mix_panel_json,
+        "mix_panel_blocking_histogram": mix_panel_histogram_json,
     });
 
     let text = match serde_json::to_string_pretty(&document) {
@@ -254,6 +315,12 @@ fn run_json(json_path: &str) -> i32 {
         prestige_rows.len(),
         prestige_alone_blocked,
         prestige_mix_computed
+    );
+    println!(
+        "mix_panel_swept={} mix_panel_computed={} mix_panel_blocked={}",
+        mix_panel_results.len(),
+        mix_panel_computed,
+        mix_panel_blocked
     );
     0
 }

@@ -302,22 +302,28 @@ stays a test oracle and a parity test asserts the two lists are equal, 74 of 74)
 - Mix panel: the existing multiclass negative-control mixes, re-used as census rows, each with a
   histogram of claim-blocking diagnostic ids. This is the measurement F3 needs before any F3
   code is written. **The input count is measured here, not asserted as 183** (review finding 8,
-  detailed in §5): no file in the repo states 183; F0 derives
-  `BASELINE_CENSUS_MIX_COMPUTED` from the reproducible command sequence §5 specifies and
-  records that command next to the number.
+  detailed in §5): no file in the repo states 183; F0d derives it mechanically
+  (`scripts/extract_multiclass_census_panel.py`) from the reproducible command sequence §5
+  specifies — **measured 2026-09-21: 185** (88 `tests/sd18_widening/` + 84
+  `tests/sd13_progression/` + 13 hand-written top-level files; see
+  `scripts/verify-baselines.env`'s `BASELINE_CENSUS_MIX_COMPUTED` entry for the exact commands)
+  — and records that command next to the number.
 
 **Output:** `--json <path>`: per class {family, book, max_level, status per level,
 blocking-diagnostic ids, entry_gate, alone_status, in_desktop_roster}. Stage fails if any
 count falls below its baseline. Baselines can only rise:
 `BASELINE_CENSUS_IDS=135`, `BASELINE_CENSUS_COMPUTED=42`,
-`BASELINE_CENSUS_MIX_COMPUTED=<measured at F0, by the §5 command sequence, review finding 8 —
-never guessed or copied from this document's own prose>`,
+`BASELINE_CENSUS_MIX_COMPUTED=185` (measured at F0d, by the §5 command sequence, review finding 8
+— never guessed or copied from this document's own prose; provenance in
+`scripts/verify-baselines.env`),
 `BASELINE_CENSUS_PRESTIGE_ALONE_BLOCKED=74`.
 
 **Final acceptance number for the epic: 135 of 135** (61 base-type ids alone at every level +
 74 prestige ids in their canonical mix at every prestige level), **mix panel
-`BASELINE_CENSUS_MIX_COMPUTED` of itself** (review finding 8: the figure is measured by F0's
-command sequence in §5, not hardcoded here as 183 — no source in the repo states 183),
+`BASELINE_CENSUS_MIX_COMPUTED`=185 of itself** (review finding 8: the figure is measured by F0d's
+command sequence in §5, not hardcoded here as 183 — no source in the repo states 183; F0d's own
+sweep of all 185 rows against the shared canonical fixture measured 185 of 185 Computed, 0
+Blocked — see `docs/release/SD-36-consolidation/artifacts/epic-f/mix-panel-histogram.md`),
 prestige-alone Blocked 74 of 74. **Classes excluded by a game rule: none.** Ex-Barbarian,
 Ex-Paladin (and `ex_antipaladin` if the census finds it a distinct id — then the 135 rises and
 the correction is logged) are legal sheet states and stay counted. If the measured denominator
@@ -342,6 +348,23 @@ Also a hard prerequisite of F3 (review finding 3): F3 cannot compute HP or skill
 `hit_die` and `skill_ranks_per_level` on `ClassChassis`, both added here.
 **Size: 10-13 agent-hours** (was 8-10; +2-3 for the two `ClassChassis` readers moved in from F4
 per review finding 3). **Full verify passes: 0** (scoped: `--lib`, the bin, the new stage).
+
+**F0d landed (2026-09-21): the mix panel, measured.** Delivered:
+`scripts/extract_multiclass_census_panel.py` (mechanical extractor, + unit tests in
+`scripts/tests/test_extract_multiclass_census_panel.py`), the committed
+`tests/fixtures/rules_core/multiclass_census_panel.json` (185 rows), `MixPanelRow`/
+`load_mix_panel`/`sweep_mix_panel_row`/`sweep_mix_panel`/`mix_panel_blocking_histogram` in
+`src/rules_core/class_census.rs`, the `--json` output's new `mix_panel*` fields in
+`src/bin/class_census.rs`, and two new RED-first tests:
+`mix_panel_size_matches_the_measured_multiclass_negative_control_count` (the sync test this
+section calls for — re-derives 88+84+13=185 fresh by grep on every run, never a bare pinned
+literal alone) and `sweep_mix_panel_row_reports_a_real_status_and_dedupes_blocking_ids`.
+Measured result: **185 of 185 mix-panel rows reach Computed, 0 Blocked**, under the census's own
+shared canonical fixture — see
+`docs/release/SD-36-consolidation/artifacts/epic-f/mix-panel-histogram.md` for the finding and
+why it differs from each negative-control test's own (Blocked, but against a different,
+individually-tuned) fixture. Committed artifact:
+`docs/release/SD-36-consolidation/artifacts/epic-f/census-f0d.json`.
 
 ---
 
@@ -1045,9 +1068,9 @@ really has `class_levels.len() >= 2`. Sabotage parity re-proven: remove the gene
 | Criterion | Acceptance command |
 |---|---|
 | F3.0 unknown, not zero (review finding 3) | for every census class where `ClassChassis.hit_die` or `.skill_ranks_per_level` is `None`, the census reports that class's HP/skill-point figures `Unknown` (named list, not a silent 0); `cargo test --locked --lib a_class_missing_hit_die_reports_hp_unknown` and `..._missing_skill_ranks_reports_skill_points_unknown` green |
-| F3.1 (review finding 8: denominator is measured, not 183) | census `mix_computed == BASELINE_CENSUS_MIX_COMPUTED` (F0's measured figure, provenance = the §5 command sequence) of itself; prestige canonical mixes 74 of 74 |
+| F3.1 (review finding 8: denominator is measured, not 183; measured at F0d = 185) | census `mix_computed == BASELINE_CENSUS_MIX_COMPUTED` (185, F0d's measured figure, provenance = the §5 command sequence and `scripts/verify-baselines.env`) of itself; prestige canonical mixes 74 of 74 — **already true as of F0d, unconditionally**: F0d's own sweep of the panel against the census's shared canonical fixture measured `mix_panel_computed=185` (0 Blocked) BEFORE any F3 code exists (`docs/release/SD-36-consolidation/artifacts/epic-f/census-f0d.json`, `mix-panel-histogram.md`). F3's own multiclass BAB/save/HP/skill-point work is therefore not what makes THIS panel's 185 mixes reach Computed under this fixture; F3's real work list must come from the classes/fixture shapes the panel does NOT cover (§5's own "What claim-blocks..." histogram premise did not hold against this fixture — recorded, not silently dropped) |
 | F3.2 | `--list` diffs for `sd18_widening` (891 of 891) and `sd13_progression` (1,136 of 1,136): IDENTICAL |
-| F3.3 (review finding 8) | sabotage log: `BASELINE_CENSUS_MIX_COMPUTED` red under sabotage (of the measured total), 0 red restored (artifact under `artifacts/epic-f/`, cites the same measured figure as F3.1 — never a separate hardcoded number) |
+| F3.3 (review finding 8; measured at F0d = 185) | sabotage log: `BASELINE_CENSUS_MIX_COMPUTED` (185) red under sabotage (of the measured total), 0 red restored (artifact under `artifacts/epic-f/`, cites the same measured figure as F3.1 — never a separate hardcoded number) |
 | F3.4 | `cargo test --locked --test sd21_multiclass_fighter_wizard_chassis_computes --test sd24_multiclass_integration` green |
 
 RED first: `tests/sd36_multiclass_any_class.rs` — `[barbarian 12, fighter 1]`,

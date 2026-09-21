@@ -1,0 +1,2787 @@
+{
+  "generated_by": "scripts/extract_multiclass_census_panel.py",
+  "source_of_truth": "docs/release/SD-36-consolidation/epic-f-class-completion.md \u00a72 (F0), review finding 8 (\u00a75) -- every row is one EXISTING multiclass negative-control test's own (class, level) input pair, extracted mechanically from its source, never retyped.",
+  "denominator_commands": [
+    "cargo test --locked --test sd18_widening -- --list | grep -c multiclass",
+    "cargo test --locked --test sd13_progression -- --list | grep -c multiclass",
+    "find tests -maxdepth 1 -name '*.rs' -print0 | xargs -0 grep -l 'fn multiclass_.*_is_not_promoted_by_this_slice' | wc -l"
+  ],
+  "row_count": 185,
+  "rows": [
+    {
+      "key": "sd13_progression::multiclass_barbarian_level10_is_not_promoted_by_this_slice",
+      "source_file": "tests/sd13_progression/barbarian_level10.rs",
+      "test_fn": "multiclass_barbarian_level10_is_not_promoted_by_this_slice",
+      "classes": [
+        [
+          "barbarian",
+          10
+        ],
+        [
+          "fighter",
+          1
+        ]
+      ]
+    },
+    {
+      "key": "sd13_progression::multiclass_barbarian_level2_is_not_promoted_by_this_slice",
+      "source_file": "tests/sd13_progression/barbarian_level2.rs",
+      "test_fn": "multiclass_barbarian_level2_is_not_promoted_by_this_slice",
+      "classes": [
+        [
+          "barbarian",
+          2
+        ],
+        [
+          "fighter",
+          1
+        ]
+      ]
+    },
+    {
+      "key": "sd13_progression::multiclass_barbarian_level3_is_not_promoted_by_this_slice",
+      "source_file": "tests/sd13_progression/barbarian_level3.rs",
+      "test_fn": "multiclass_barbarian_level3_is_not_promoted_by_this_slice",
+      "classes": [
+        [
+          "barbarian",
+          3
+        ],
+        [
+          "fighter",
+          1
+        ]
+      ]
+    },
+    {
+      "key": "sd13_progression::multiclass_barbarian_level4_is_not_promoted_by_this_slice",
+      "source_file": "tests/sd13_progression/barbarian_level4.rs",
+      "test_fn": "multiclass_barbarian_level4_is_not_promoted_by_this_slice",
+      "classes": [
+        [
+          "barbarian",
+          4
+        ],
+        [
+          "fighter",
+          1
+        ]
+      ]
+    },
+    {
+      "key": "sd13_progression::multiclass_barbarian_level5_is_not_promoted_by_this_slice",
+      "source_file": "tests/sd13_progression/barbarian_level5.rs",
+      "test_fn": "multiclass_barbarian_level5_is_not_promoted_by_this_slice",
+      "classes": [
+        [
+          "barbarian",
+          5
+        ],
+        [
+          "fighter",
+          1
+        ]
+      ]
+    },
+    {
+      "key": "sd13_progression::multiclass_barbarian_level6_is_not_promoted_by_this_slice",
+      "source_file": "tests/sd13_progression/barbarian_level6.rs",
+      "test_fn": "multiclass_barbarian_level6_is_not_promoted_by_this_slice",
+      "classes": [
+        [
+          "barbarian",
+          6
+        ],
+        [
+          "fighter",
+          1
+        ]
+      ]
+    },
+    {
+      "key": "sd13_progression::multiclass_barbarian_level7_is_not_promoted_by_this_slice",
+      "source_file": "tests/sd13_progression/barbarian_level7.rs",
+      "test_fn": "multiclass_barbarian_level7_is_not_promoted_by_this_slice",
+      "classes": [
+        [
+          "barbarian",
+          7
+        ],
+        [
+          "fighter",
+          1
+        ]
+      ]
+    },
+    {
+      "key": "sd13_progression::multiclass_barbarian_level8_is_not_promoted_by_this_slice",
+      "source_file": "tests/sd13_progression/barbarian_level8.rs",
+      "test_fn": "multiclass_barbarian_level8_is_not_promoted_by_this_slice",
+      "classes": [
+        [
+          "barbarian",
+          8
+        ],
+        [
+          "fighter",
+          1
+        ]
+      ]
+    },
+    {
+      "key": "sd13_progression::multiclass_barbarian_level9_is_not_promoted_by_this_slice",
+      "source_file": "tests/sd13_progression/barbarian_level9.rs",
+      "test_fn": "multiclass_barbarian_level9_is_not_promoted_by_this_slice",
+      "classes": [
+        [
+          "barbarian",
+          9
+        ],
+        [
+          "fighter",
+          1
+        ]
+      ]
+    },
+    {
+      "key": "sd13_progression::multiclass_bard_level10_is_not_promoted_by_this_slice",
+      "source_file": "tests/sd13_progression/bard_level10.rs",
+      "test_fn": "multiclass_bard_level10_is_not_promoted_by_this_slice",
+      "classes": [
+        [
+          "bard",
+          10
+        ],
+        [
+          "fighter",
+          1
+        ]
+      ]
+    },
+    {
+      "key": "sd13_progression::multiclass_bard_level2_is_not_promoted_by_this_slice",
+      "source_file": "tests/sd13_progression/bard_level2.rs",
+      "test_fn": "multiclass_bard_level2_is_not_promoted_by_this_slice",
+      "classes": [
+        [
+          "bard",
+          2
+        ],
+        [
+          "fighter",
+          1
+        ]
+      ]
+    },
+    {
+      "key": "sd13_progression::multiclass_bard_level3_is_not_promoted_by_this_slice",
+      "source_file": "tests/sd13_progression/bard_level3.rs",
+      "test_fn": "multiclass_bard_level3_is_not_promoted_by_this_slice",
+      "classes": [
+        [
+          "bard",
+          3
+        ],
+        [
+          "fighter",
+          1
+        ]
+      ]
+    },
+    {
+      "key": "sd13_progression::multiclass_bard_level4_is_not_promoted_by_this_slice",
+      "source_file": "tests/sd13_progression/bard_level4.rs",
+      "test_fn": "multiclass_bard_level4_is_not_promoted_by_this_slice",
+      "classes": [
+        [
+          "bard",
+          4
+        ],
+        [
+          "fighter",
+          1
+        ]
+      ]
+    },
+    {
+      "key": "sd13_progression::multiclass_bard_level5_is_not_promoted_by_this_slice",
+      "source_file": "tests/sd13_progression/bard_level5.rs",
+      "test_fn": "multiclass_bard_level5_is_not_promoted_by_this_slice",
+      "classes": [
+        [
+          "bard",
+          5
+        ],
+        [
+          "fighter",
+          1
+        ]
+      ]
+    },
+    {
+      "key": "sd13_progression::multiclass_bard_level6_is_not_promoted_by_this_slice",
+      "source_file": "tests/sd13_progression/bard_level6.rs",
+      "test_fn": "multiclass_bard_level6_is_not_promoted_by_this_slice",
+      "classes": [
+        [
+          "bard",
+          6
+        ],
+        [
+          "fighter",
+          1
+        ]
+      ]
+    },
+    {
+      "key": "sd13_progression::multiclass_bard_level7_is_not_promoted_by_this_slice",
+      "source_file": "tests/sd13_progression/bard_level7.rs",
+      "test_fn": "multiclass_bard_level7_is_not_promoted_by_this_slice",
+      "classes": [
+        [
+          "bard",
+          7
+        ],
+        [
+          "fighter",
+          1
+        ]
+      ]
+    },
+    {
+      "key": "sd13_progression::multiclass_bard_level8_is_not_promoted_by_this_slice",
+      "source_file": "tests/sd13_progression/bard_level8.rs",
+      "test_fn": "multiclass_bard_level8_is_not_promoted_by_this_slice",
+      "classes": [
+        [
+          "bard",
+          8
+        ],
+        [
+          "fighter",
+          1
+        ]
+      ]
+    },
+    {
+      "key": "sd13_progression::multiclass_bard_level9_is_not_promoted_by_this_slice",
+      "source_file": "tests/sd13_progression/bard_level9.rs",
+      "test_fn": "multiclass_bard_level9_is_not_promoted_by_this_slice",
+      "classes": [
+        [
+          "bard",
+          9
+        ],
+        [
+          "fighter",
+          1
+        ]
+      ]
+    },
+    {
+      "key": "sd13_progression::multiclass_cleric_level10_is_not_promoted_by_this_slice",
+      "source_file": "tests/sd13_progression/cleric_level10.rs",
+      "test_fn": "multiclass_cleric_level10_is_not_promoted_by_this_slice",
+      "classes": [
+        [
+          "cleric",
+          10
+        ],
+        [
+          "fighter",
+          1
+        ]
+      ]
+    },
+    {
+      "key": "sd13_progression::multiclass_cleric_level2_is_not_promoted_by_this_slice",
+      "source_file": "tests/sd13_progression/cleric_level2.rs",
+      "test_fn": "multiclass_cleric_level2_is_not_promoted_by_this_slice",
+      "classes": [
+        [
+          "cleric",
+          2
+        ],
+        [
+          "fighter",
+          1
+        ]
+      ]
+    },
+    {
+      "key": "sd13_progression::multiclass_cleric_level3_is_not_promoted_by_this_slice",
+      "source_file": "tests/sd13_progression/cleric_level3.rs",
+      "test_fn": "multiclass_cleric_level3_is_not_promoted_by_this_slice",
+      "classes": [
+        [
+          "cleric",
+          3
+        ],
+        [
+          "fighter",
+          1
+        ]
+      ]
+    },
+    {
+      "key": "sd13_progression::multiclass_cleric_level4_is_not_promoted_by_this_slice",
+      "source_file": "tests/sd13_progression/cleric_level4.rs",
+      "test_fn": "multiclass_cleric_level4_is_not_promoted_by_this_slice",
+      "classes": [
+        [
+          "cleric",
+          4
+        ],
+        [
+          "fighter",
+          1
+        ]
+      ]
+    },
+    {
+      "key": "sd13_progression::multiclass_cleric_level5_is_not_promoted_by_this_slice",
+      "source_file": "tests/sd13_progression/cleric_level5.rs",
+      "test_fn": "multiclass_cleric_level5_is_not_promoted_by_this_slice",
+      "classes": [
+        [
+          "cleric",
+          5
+        ],
+        [
+          "fighter",
+          1
+        ]
+      ]
+    },
+    {
+      "key": "sd13_progression::multiclass_cleric_level6_is_not_promoted_by_this_slice",
+      "source_file": "tests/sd13_progression/cleric_level6.rs",
+      "test_fn": "multiclass_cleric_level6_is_not_promoted_by_this_slice",
+      "classes": [
+        [
+          "cleric",
+          6
+        ],
+        [
+          "fighter",
+          1
+        ]
+      ]
+    },
+    {
+      "key": "sd13_progression::multiclass_cleric_level7_is_not_promoted_by_this_slice",
+      "source_file": "tests/sd13_progression/cleric_level7.rs",
+      "test_fn": "multiclass_cleric_level7_is_not_promoted_by_this_slice",
+      "classes": [
+        [
+          "cleric",
+          7
+        ],
+        [
+          "fighter",
+          1
+        ]
+      ]
+    },
+    {
+      "key": "sd13_progression::multiclass_cleric_level8_is_not_promoted_by_this_slice",
+      "source_file": "tests/sd13_progression/cleric_level8.rs",
+      "test_fn": "multiclass_cleric_level8_is_not_promoted_by_this_slice",
+      "classes": [
+        [
+          "cleric",
+          8
+        ],
+        [
+          "fighter",
+          1
+        ]
+      ]
+    },
+    {
+      "key": "sd13_progression::multiclass_cleric_level9_is_not_promoted_by_this_slice",
+      "source_file": "tests/sd13_progression/cleric_level9.rs",
+      "test_fn": "multiclass_cleric_level9_is_not_promoted_by_this_slice",
+      "classes": [
+        [
+          "cleric",
+          9
+        ],
+        [
+          "fighter",
+          1
+        ]
+      ]
+    },
+    {
+      "key": "sd13_progression::multiclass_druid_level10_is_not_promoted_by_this_slice",
+      "source_file": "tests/sd13_progression/druid_level10.rs",
+      "test_fn": "multiclass_druid_level10_is_not_promoted_by_this_slice",
+      "classes": [
+        [
+          "druid",
+          10
+        ],
+        [
+          "fighter",
+          1
+        ]
+      ]
+    },
+    {
+      "key": "sd13_progression::multiclass_druid_level2_is_not_promoted_by_this_slice",
+      "source_file": "tests/sd13_progression/druid_level2.rs",
+      "test_fn": "multiclass_druid_level2_is_not_promoted_by_this_slice",
+      "classes": [
+        [
+          "druid",
+          2
+        ],
+        [
+          "fighter",
+          1
+        ]
+      ]
+    },
+    {
+      "key": "sd13_progression::multiclass_druid_level3_is_not_promoted_by_this_slice",
+      "source_file": "tests/sd13_progression/druid_level3.rs",
+      "test_fn": "multiclass_druid_level3_is_not_promoted_by_this_slice",
+      "classes": [
+        [
+          "druid",
+          3
+        ],
+        [
+          "fighter",
+          1
+        ]
+      ]
+    },
+    {
+      "key": "sd13_progression::multiclass_druid_level4_is_not_promoted_by_this_slice",
+      "source_file": "tests/sd13_progression/druid_level4.rs",
+      "test_fn": "multiclass_druid_level4_is_not_promoted_by_this_slice",
+      "classes": [
+        [
+          "druid",
+          4
+        ],
+        [
+          "fighter",
+          1
+        ]
+      ]
+    },
+    {
+      "key": "sd13_progression::multiclass_druid_level5_is_not_promoted_by_this_slice",
+      "source_file": "tests/sd13_progression/druid_level5.rs",
+      "test_fn": "multiclass_druid_level5_is_not_promoted_by_this_slice",
+      "classes": [
+        [
+          "druid",
+          5
+        ],
+        [
+          "fighter",
+          1
+        ]
+      ]
+    },
+    {
+      "key": "sd13_progression::multiclass_druid_level6_is_not_promoted_by_this_slice",
+      "source_file": "tests/sd13_progression/druid_level6.rs",
+      "test_fn": "multiclass_druid_level6_is_not_promoted_by_this_slice",
+      "classes": [
+        [
+          "druid",
+          6
+        ],
+        [
+          "fighter",
+          1
+        ]
+      ]
+    },
+    {
+      "key": "sd13_progression::multiclass_druid_level7_is_not_promoted_by_this_slice",
+      "source_file": "tests/sd13_progression/druid_level7.rs",
+      "test_fn": "multiclass_druid_level7_is_not_promoted_by_this_slice",
+      "classes": [
+        [
+          "druid",
+          7
+        ],
+        [
+          "fighter",
+          1
+        ]
+      ]
+    },
+    {
+      "key": "sd13_progression::multiclass_druid_level8_is_not_promoted_by_this_slice",
+      "source_file": "tests/sd13_progression/druid_level8.rs",
+      "test_fn": "multiclass_druid_level8_is_not_promoted_by_this_slice",
+      "classes": [
+        [
+          "druid",
+          8
+        ],
+        [
+          "fighter",
+          1
+        ]
+      ]
+    },
+    {
+      "key": "sd13_progression::multiclass_druid_level9_is_not_promoted_by_this_slice",
+      "source_file": "tests/sd13_progression/druid_level9.rs",
+      "test_fn": "multiclass_druid_level9_is_not_promoted_by_this_slice",
+      "classes": [
+        [
+          "druid",
+          9
+        ],
+        [
+          "fighter",
+          1
+        ]
+      ]
+    },
+    {
+      "key": "sd13_progression::multiclass_monk_level10_is_not_promoted_by_this_slice",
+      "source_file": "tests/sd13_progression/monk_level10.rs",
+      "test_fn": "multiclass_monk_level10_is_not_promoted_by_this_slice",
+      "classes": [
+        [
+          "monk",
+          10
+        ],
+        [
+          "fighter",
+          1
+        ]
+      ]
+    },
+    {
+      "key": "sd13_progression::multiclass_monk_level2_is_not_promoted_by_this_slice",
+      "source_file": "tests/sd13_progression/monk_level2.rs",
+      "test_fn": "multiclass_monk_level2_is_not_promoted_by_this_slice",
+      "classes": [
+        [
+          "monk",
+          2
+        ],
+        [
+          "fighter",
+          1
+        ]
+      ]
+    },
+    {
+      "key": "sd13_progression::multiclass_monk_level3_is_not_promoted_by_this_slice",
+      "source_file": "tests/sd13_progression/monk_level3.rs",
+      "test_fn": "multiclass_monk_level3_is_not_promoted_by_this_slice",
+      "classes": [
+        [
+          "monk",
+          3
+        ],
+        [
+          "fighter",
+          1
+        ]
+      ]
+    },
+    {
+      "key": "sd13_progression::multiclass_monk_level4_is_not_promoted_by_this_slice",
+      "source_file": "tests/sd13_progression/monk_level4.rs",
+      "test_fn": "multiclass_monk_level4_is_not_promoted_by_this_slice",
+      "classes": [
+        [
+          "monk",
+          4
+        ],
+        [
+          "fighter",
+          1
+        ]
+      ]
+    },
+    {
+      "key": "sd13_progression::multiclass_monk_level5_is_not_promoted_by_this_slice",
+      "source_file": "tests/sd13_progression/monk_level5.rs",
+      "test_fn": "multiclass_monk_level5_is_not_promoted_by_this_slice",
+      "classes": [
+        [
+          "monk",
+          5
+        ],
+        [
+          "fighter",
+          1
+        ]
+      ]
+    },
+    {
+      "key": "sd13_progression::multiclass_monk_level6_is_not_promoted_by_this_slice",
+      "source_file": "tests/sd13_progression/monk_level6.rs",
+      "test_fn": "multiclass_monk_level6_is_not_promoted_by_this_slice",
+      "classes": [
+        [
+          "monk",
+          6
+        ],
+        [
+          "fighter",
+          1
+        ]
+      ]
+    },
+    {
+      "key": "sd13_progression::multiclass_monk_level7_is_not_promoted_by_this_slice",
+      "source_file": "tests/sd13_progression/monk_level7.rs",
+      "test_fn": "multiclass_monk_level7_is_not_promoted_by_this_slice",
+      "classes": [
+        [
+          "monk",
+          7
+        ],
+        [
+          "fighter",
+          1
+        ]
+      ]
+    },
+    {
+      "key": "sd13_progression::multiclass_monk_level8_is_not_promoted_by_this_slice",
+      "source_file": "tests/sd13_progression/monk_level8.rs",
+      "test_fn": "multiclass_monk_level8_is_not_promoted_by_this_slice",
+      "classes": [
+        [
+          "monk",
+          8
+        ],
+        [
+          "fighter",
+          1
+        ]
+      ]
+    },
+    {
+      "key": "sd13_progression::multiclass_monk_level9_is_not_promoted_by_this_slice",
+      "source_file": "tests/sd13_progression/monk_level9.rs",
+      "test_fn": "multiclass_monk_level9_is_not_promoted_by_this_slice",
+      "classes": [
+        [
+          "monk",
+          9
+        ],
+        [
+          "fighter",
+          1
+        ]
+      ]
+    },
+    {
+      "key": "sd13_progression::multiclass_paladin_level10_is_not_promoted_by_this_slice",
+      "source_file": "tests/sd13_progression/paladin_level10.rs",
+      "test_fn": "multiclass_paladin_level10_is_not_promoted_by_this_slice",
+      "classes": [
+        [
+          "paladin",
+          10
+        ],
+        [
+          "fighter",
+          1
+        ]
+      ]
+    },
+    {
+      "key": "sd13_progression::multiclass_paladin_level8_is_not_promoted_by_this_slice",
+      "source_file": "tests/sd13_progression/paladin_level8.rs",
+      "test_fn": "multiclass_paladin_level8_is_not_promoted_by_this_slice",
+      "classes": [
+        [
+          "paladin",
+          8
+        ],
+        [
+          "fighter",
+          1
+        ]
+      ]
+    },
+    {
+      "key": "sd13_progression::multiclass_paladin_level9_is_not_promoted_by_this_slice",
+      "source_file": "tests/sd13_progression/paladin_level9.rs",
+      "test_fn": "multiclass_paladin_level9_is_not_promoted_by_this_slice",
+      "classes": [
+        [
+          "paladin",
+          9
+        ],
+        [
+          "fighter",
+          1
+        ]
+      ]
+    },
+    {
+      "key": "sd13_progression::multiclass_ranger_level10_is_not_promoted_by_this_slice",
+      "source_file": "tests/sd13_progression/ranger_level10.rs",
+      "test_fn": "multiclass_ranger_level10_is_not_promoted_by_this_slice",
+      "classes": [
+        [
+          "ranger",
+          10
+        ],
+        [
+          "fighter",
+          1
+        ]
+      ]
+    },
+    {
+      "key": "sd13_progression::multiclass_ranger_level2_is_not_promoted_by_this_slice",
+      "source_file": "tests/sd13_progression/ranger_level2.rs",
+      "test_fn": "multiclass_ranger_level2_is_not_promoted_by_this_slice",
+      "classes": [
+        [
+          "ranger",
+          2
+        ],
+        [
+          "fighter",
+          1
+        ]
+      ]
+    },
+    {
+      "key": "sd13_progression::multiclass_ranger_level3_is_not_promoted_by_this_slice",
+      "source_file": "tests/sd13_progression/ranger_level3.rs",
+      "test_fn": "multiclass_ranger_level3_is_not_promoted_by_this_slice",
+      "classes": [
+        [
+          "ranger",
+          3
+        ],
+        [
+          "fighter",
+          1
+        ]
+      ]
+    },
+    {
+      "key": "sd13_progression::multiclass_ranger_level4_is_not_promoted_by_this_slice",
+      "source_file": "tests/sd13_progression/ranger_level4.rs",
+      "test_fn": "multiclass_ranger_level4_is_not_promoted_by_this_slice",
+      "classes": [
+        [
+          "ranger",
+          4
+        ],
+        [
+          "fighter",
+          1
+        ]
+      ]
+    },
+    {
+      "key": "sd13_progression::multiclass_ranger_level5_is_not_promoted_by_this_slice",
+      "source_file": "tests/sd13_progression/ranger_level5.rs",
+      "test_fn": "multiclass_ranger_level5_is_not_promoted_by_this_slice",
+      "classes": [
+        [
+          "ranger",
+          5
+        ],
+        [
+          "fighter",
+          1
+        ]
+      ]
+    },
+    {
+      "key": "sd13_progression::multiclass_ranger_level6_is_not_promoted_by_this_slice",
+      "source_file": "tests/sd13_progression/ranger_level6.rs",
+      "test_fn": "multiclass_ranger_level6_is_not_promoted_by_this_slice",
+      "classes": [
+        [
+          "ranger",
+          6
+        ],
+        [
+          "fighter",
+          1
+        ]
+      ]
+    },
+    {
+      "key": "sd13_progression::multiclass_ranger_level7_is_not_promoted_by_this_slice",
+      "source_file": "tests/sd13_progression/ranger_level7.rs",
+      "test_fn": "multiclass_ranger_level7_is_not_promoted_by_this_slice",
+      "classes": [
+        [
+          "ranger",
+          7
+        ],
+        [
+          "fighter",
+          1
+        ]
+      ]
+    },
+    {
+      "key": "sd13_progression::multiclass_ranger_level8_is_not_promoted_by_this_slice",
+      "source_file": "tests/sd13_progression/ranger_level8.rs",
+      "test_fn": "multiclass_ranger_level8_is_not_promoted_by_this_slice",
+      "classes": [
+        [
+          "ranger",
+          8
+        ],
+        [
+          "fighter",
+          1
+        ]
+      ]
+    },
+    {
+      "key": "sd13_progression::multiclass_ranger_level9_is_not_promoted_by_this_slice",
+      "source_file": "tests/sd13_progression/ranger_level9.rs",
+      "test_fn": "multiclass_ranger_level9_is_not_promoted_by_this_slice",
+      "classes": [
+        [
+          "ranger",
+          9
+        ],
+        [
+          "fighter",
+          1
+        ]
+      ]
+    },
+    {
+      "key": "sd13_progression::multiclass_rogue_level10_is_not_promoted_by_this_slice",
+      "source_file": "tests/sd13_progression/rogue_level10.rs",
+      "test_fn": "multiclass_rogue_level10_is_not_promoted_by_this_slice",
+      "classes": [
+        [
+          "rogue",
+          10
+        ],
+        [
+          "fighter",
+          1
+        ]
+      ]
+    },
+    {
+      "key": "sd13_progression::multiclass_rogue_level2_is_not_promoted_by_this_slice",
+      "source_file": "tests/sd13_progression/rogue_level2.rs",
+      "test_fn": "multiclass_rogue_level2_is_not_promoted_by_this_slice",
+      "classes": [
+        [
+          "rogue",
+          2
+        ],
+        [
+          "fighter",
+          1
+        ]
+      ]
+    },
+    {
+      "key": "sd13_progression::multiclass_rogue_level3_is_not_promoted_by_this_slice",
+      "source_file": "tests/sd13_progression/rogue_level3.rs",
+      "test_fn": "multiclass_rogue_level3_is_not_promoted_by_this_slice",
+      "classes": [
+        [
+          "rogue",
+          3
+        ],
+        [
+          "fighter",
+          1
+        ]
+      ]
+    },
+    {
+      "key": "sd13_progression::multiclass_rogue_level4_is_not_promoted_by_this_slice",
+      "source_file": "tests/sd13_progression/rogue_level4.rs",
+      "test_fn": "multiclass_rogue_level4_is_not_promoted_by_this_slice",
+      "classes": [
+        [
+          "rogue",
+          4
+        ],
+        [
+          "fighter",
+          1
+        ]
+      ]
+    },
+    {
+      "key": "sd13_progression::multiclass_rogue_level5_is_not_promoted_by_this_slice",
+      "source_file": "tests/sd13_progression/rogue_level5.rs",
+      "test_fn": "multiclass_rogue_level5_is_not_promoted_by_this_slice",
+      "classes": [
+        [
+          "rogue",
+          5
+        ],
+        [
+          "fighter",
+          1
+        ]
+      ]
+    },
+    {
+      "key": "sd13_progression::multiclass_rogue_level6_is_not_promoted_by_this_slice",
+      "source_file": "tests/sd13_progression/rogue_level6.rs",
+      "test_fn": "multiclass_rogue_level6_is_not_promoted_by_this_slice",
+      "classes": [
+        [
+          "rogue",
+          6
+        ],
+        [
+          "fighter",
+          1
+        ]
+      ]
+    },
+    {
+      "key": "sd13_progression::multiclass_rogue_level7_is_not_promoted_by_this_slice",
+      "source_file": "tests/sd13_progression/rogue_level7.rs",
+      "test_fn": "multiclass_rogue_level7_is_not_promoted_by_this_slice",
+      "classes": [
+        [
+          "rogue",
+          7
+        ],
+        [
+          "fighter",
+          1
+        ]
+      ]
+    },
+    {
+      "key": "sd13_progression::multiclass_rogue_level8_is_not_promoted_by_this_slice",
+      "source_file": "tests/sd13_progression/rogue_level8.rs",
+      "test_fn": "multiclass_rogue_level8_is_not_promoted_by_this_slice",
+      "classes": [
+        [
+          "rogue",
+          8
+        ],
+        [
+          "fighter",
+          1
+        ]
+      ]
+    },
+    {
+      "key": "sd13_progression::multiclass_rogue_level9_is_not_promoted_by_this_slice",
+      "source_file": "tests/sd13_progression/rogue_level9.rs",
+      "test_fn": "multiclass_rogue_level9_is_not_promoted_by_this_slice",
+      "classes": [
+        [
+          "rogue",
+          9
+        ],
+        [
+          "fighter",
+          1
+        ]
+      ]
+    },
+    {
+      "key": "sd13_progression::multiclass_sorcerer_level10_is_not_promoted_by_this_slice",
+      "source_file": "tests/sd13_progression/sorcerer_level10.rs",
+      "test_fn": "multiclass_sorcerer_level10_is_not_promoted_by_this_slice",
+      "classes": [
+        [
+          "sorcerer",
+          10
+        ],
+        [
+          "fighter",
+          1
+        ]
+      ]
+    },
+    {
+      "key": "sd13_progression::multiclass_sorcerer_level2_is_not_promoted_by_this_slice",
+      "source_file": "tests/sd13_progression/sorcerer_level2.rs",
+      "test_fn": "multiclass_sorcerer_level2_is_not_promoted_by_this_slice",
+      "classes": [
+        [
+          "sorcerer",
+          2
+        ],
+        [
+          "fighter",
+          1
+        ]
+      ]
+    },
+    {
+      "key": "sd13_progression::multiclass_sorcerer_level3_is_not_promoted_by_this_slice",
+      "source_file": "tests/sd13_progression/sorcerer_level3.rs",
+      "test_fn": "multiclass_sorcerer_level3_is_not_promoted_by_this_slice",
+      "classes": [
+        [
+          "sorcerer",
+          3
+        ],
+        [
+          "fighter",
+          1
+        ]
+      ]
+    },
+    {
+      "key": "sd13_progression::multiclass_sorcerer_level4_is_not_promoted_by_this_slice",
+      "source_file": "tests/sd13_progression/sorcerer_level4.rs",
+      "test_fn": "multiclass_sorcerer_level4_is_not_promoted_by_this_slice",
+      "classes": [
+        [
+          "sorcerer",
+          4
+        ],
+        [
+          "fighter",
+          1
+        ]
+      ]
+    },
+    {
+      "key": "sd13_progression::multiclass_sorcerer_level5_is_not_promoted_by_this_slice",
+      "source_file": "tests/sd13_progression/sorcerer_level5.rs",
+      "test_fn": "multiclass_sorcerer_level5_is_not_promoted_by_this_slice",
+      "classes": [
+        [
+          "sorcerer",
+          5
+        ],
+        [
+          "fighter",
+          1
+        ]
+      ]
+    },
+    {
+      "key": "sd13_progression::multiclass_sorcerer_level6_is_not_promoted_by_this_slice",
+      "source_file": "tests/sd13_progression/sorcerer_level6.rs",
+      "test_fn": "multiclass_sorcerer_level6_is_not_promoted_by_this_slice",
+      "classes": [
+        [
+          "sorcerer",
+          6
+        ],
+        [
+          "fighter",
+          1
+        ]
+      ]
+    },
+    {
+      "key": "sd13_progression::multiclass_sorcerer_level7_is_not_promoted_by_this_slice",
+      "source_file": "tests/sd13_progression/sorcerer_level7.rs",
+      "test_fn": "multiclass_sorcerer_level7_is_not_promoted_by_this_slice",
+      "classes": [
+        [
+          "sorcerer",
+          7
+        ],
+        [
+          "fighter",
+          1
+        ]
+      ]
+    },
+    {
+      "key": "sd13_progression::multiclass_sorcerer_level8_is_not_promoted_by_this_slice",
+      "source_file": "tests/sd13_progression/sorcerer_level8.rs",
+      "test_fn": "multiclass_sorcerer_level8_is_not_promoted_by_this_slice",
+      "classes": [
+        [
+          "sorcerer",
+          8
+        ],
+        [
+          "fighter",
+          1
+        ]
+      ]
+    },
+    {
+      "key": "sd13_progression::multiclass_sorcerer_level9_is_not_promoted_by_this_slice",
+      "source_file": "tests/sd13_progression/sorcerer_level9.rs",
+      "test_fn": "multiclass_sorcerer_level9_is_not_promoted_by_this_slice",
+      "classes": [
+        [
+          "sorcerer",
+          9
+        ],
+        [
+          "fighter",
+          1
+        ]
+      ]
+    },
+    {
+      "key": "sd13_progression::multiclass_wizard_level10_is_not_promoted_by_this_slice",
+      "source_file": "tests/sd13_progression/wizard_level10.rs",
+      "test_fn": "multiclass_wizard_level10_is_not_promoted_by_this_slice",
+      "classes": [
+        [
+          "wizard",
+          10
+        ],
+        [
+          "rogue",
+          1
+        ]
+      ]
+    },
+    {
+      "key": "sd13_progression::multiclass_wizard_level2_is_not_promoted_by_this_slice",
+      "source_file": "tests/sd13_progression/wizard_level2.rs",
+      "test_fn": "multiclass_wizard_level2_is_not_promoted_by_this_slice",
+      "classes": [
+        [
+          "wizard",
+          2
+        ],
+        [
+          "rogue",
+          1
+        ]
+      ]
+    },
+    {
+      "key": "sd13_progression::multiclass_wizard_level3_is_not_promoted_by_this_slice",
+      "source_file": "tests/sd13_progression/wizard_level3.rs",
+      "test_fn": "multiclass_wizard_level3_is_not_promoted_by_this_slice",
+      "classes": [
+        [
+          "wizard",
+          3
+        ],
+        [
+          "rogue",
+          1
+        ]
+      ]
+    },
+    {
+      "key": "sd13_progression::multiclass_wizard_level4_is_not_promoted_by_this_slice",
+      "source_file": "tests/sd13_progression/wizard_level4.rs",
+      "test_fn": "multiclass_wizard_level4_is_not_promoted_by_this_slice",
+      "classes": [
+        [
+          "wizard",
+          4
+        ],
+        [
+          "rogue",
+          1
+        ]
+      ]
+    },
+    {
+      "key": "sd13_progression::multiclass_wizard_level5_is_not_promoted_by_this_slice",
+      "source_file": "tests/sd13_progression/wizard_level5.rs",
+      "test_fn": "multiclass_wizard_level5_is_not_promoted_by_this_slice",
+      "classes": [
+        [
+          "wizard",
+          5
+        ],
+        [
+          "rogue",
+          1
+        ]
+      ]
+    },
+    {
+      "key": "sd13_progression::multiclass_wizard_level6_is_not_promoted_by_this_slice",
+      "source_file": "tests/sd13_progression/wizard_level6.rs",
+      "test_fn": "multiclass_wizard_level6_is_not_promoted_by_this_slice",
+      "classes": [
+        [
+          "wizard",
+          6
+        ],
+        [
+          "rogue",
+          1
+        ]
+      ]
+    },
+    {
+      "key": "sd13_progression::multiclass_wizard_level7_is_not_promoted_by_this_slice",
+      "source_file": "tests/sd13_progression/wizard_level7.rs",
+      "test_fn": "multiclass_wizard_level7_is_not_promoted_by_this_slice",
+      "classes": [
+        [
+          "wizard",
+          7
+        ],
+        [
+          "rogue",
+          1
+        ]
+      ]
+    },
+    {
+      "key": "sd13_progression::multiclass_wizard_level8_is_not_promoted_by_this_slice",
+      "source_file": "tests/sd13_progression/wizard_level8.rs",
+      "test_fn": "multiclass_wizard_level8_is_not_promoted_by_this_slice",
+      "classes": [
+        [
+          "wizard",
+          8
+        ],
+        [
+          "rogue",
+          1
+        ]
+      ]
+    },
+    {
+      "key": "sd13_progression::multiclass_wizard_level9_is_not_promoted_by_this_slice",
+      "source_file": "tests/sd13_progression/wizard_level9.rs",
+      "test_fn": "multiclass_wizard_level9_is_not_promoted_by_this_slice",
+      "classes": [
+        [
+          "wizard",
+          9
+        ],
+        [
+          "rogue",
+          1
+        ]
+      ]
+    },
+    {
+      "key": "sd18_widening::multiclass_barbarian_level12_is_not_promoted_by_this_slice",
+      "source_file": "tests/sd18_widening/barbarian_level12.rs",
+      "test_fn": "multiclass_barbarian_level12_is_not_promoted_by_this_slice",
+      "classes": [
+        [
+          "barbarian",
+          12
+        ],
+        [
+          "fighter",
+          1
+        ]
+      ]
+    },
+    {
+      "key": "sd18_widening::multiclass_barbarian_level13_is_not_promoted_by_this_slice",
+      "source_file": "tests/sd18_widening/barbarian_level13.rs",
+      "test_fn": "multiclass_barbarian_level13_is_not_promoted_by_this_slice",
+      "classes": [
+        [
+          "barbarian",
+          13
+        ],
+        [
+          "fighter",
+          1
+        ]
+      ]
+    },
+    {
+      "key": "sd18_widening::multiclass_barbarian_level14_is_not_promoted_by_this_slice",
+      "source_file": "tests/sd18_widening/barbarian_level14.rs",
+      "test_fn": "multiclass_barbarian_level14_is_not_promoted_by_this_slice",
+      "classes": [
+        [
+          "barbarian",
+          14
+        ],
+        [
+          "fighter",
+          1
+        ]
+      ]
+    },
+    {
+      "key": "sd18_widening::multiclass_barbarian_level15_is_not_promoted_by_this_slice",
+      "source_file": "tests/sd18_widening/barbarian_level15.rs",
+      "test_fn": "multiclass_barbarian_level15_is_not_promoted_by_this_slice",
+      "classes": [
+        [
+          "barbarian",
+          15
+        ],
+        [
+          "fighter",
+          1
+        ]
+      ]
+    },
+    {
+      "key": "sd18_widening::multiclass_barbarian_level16_is_not_promoted_by_this_slice",
+      "source_file": "tests/sd18_widening/barbarian_level16.rs",
+      "test_fn": "multiclass_barbarian_level16_is_not_promoted_by_this_slice",
+      "classes": [
+        [
+          "barbarian",
+          16
+        ],
+        [
+          "fighter",
+          1
+        ]
+      ]
+    },
+    {
+      "key": "sd18_widening::multiclass_barbarian_level17_is_not_promoted_by_this_slice",
+      "source_file": "tests/sd18_widening/barbarian_level17.rs",
+      "test_fn": "multiclass_barbarian_level17_is_not_promoted_by_this_slice",
+      "classes": [
+        [
+          "barbarian",
+          17
+        ],
+        [
+          "fighter",
+          1
+        ]
+      ]
+    },
+    {
+      "key": "sd18_widening::multiclass_barbarian_level18_is_not_promoted_by_this_slice",
+      "source_file": "tests/sd18_widening/barbarian_level18.rs",
+      "test_fn": "multiclass_barbarian_level18_is_not_promoted_by_this_slice",
+      "classes": [
+        [
+          "barbarian",
+          18
+        ],
+        [
+          "fighter",
+          1
+        ]
+      ]
+    },
+    {
+      "key": "sd18_widening::multiclass_barbarian_level19_is_not_promoted_by_this_slice",
+      "source_file": "tests/sd18_widening/barbarian_level19.rs",
+      "test_fn": "multiclass_barbarian_level19_is_not_promoted_by_this_slice",
+      "classes": [
+        [
+          "barbarian",
+          19
+        ],
+        [
+          "fighter",
+          1
+        ]
+      ]
+    },
+    {
+      "key": "sd18_widening::multiclass_barbarian_level20_is_not_promoted_by_this_slice",
+      "source_file": "tests/sd18_widening/barbarian_level20.rs",
+      "test_fn": "multiclass_barbarian_level20_is_not_promoted_by_this_slice",
+      "classes": [
+        [
+          "barbarian",
+          20
+        ],
+        [
+          "fighter",
+          1
+        ]
+      ]
+    },
+    {
+      "key": "sd18_widening::multiclass_bard_level11_is_not_promoted_by_this_slice",
+      "source_file": "tests/sd18_widening/bard_level11_inspire.rs",
+      "test_fn": "multiclass_bard_level11_is_not_promoted_by_this_slice",
+      "classes": [
+        [
+          "bard",
+          11
+        ],
+        [
+          "fighter",
+          1
+        ]
+      ]
+    },
+    {
+      "key": "sd18_widening::multiclass_bard_level12_is_not_promoted_by_this_slice",
+      "source_file": "tests/sd18_widening/bard_level12.rs",
+      "test_fn": "multiclass_bard_level12_is_not_promoted_by_this_slice",
+      "classes": [
+        [
+          "bard",
+          12
+        ],
+        [
+          "fighter",
+          1
+        ]
+      ]
+    },
+    {
+      "key": "sd18_widening::multiclass_bard_level13_is_not_promoted_by_this_slice",
+      "source_file": "tests/sd18_widening/bard_level13.rs",
+      "test_fn": "multiclass_bard_level13_is_not_promoted_by_this_slice",
+      "classes": [
+        [
+          "bard",
+          13
+        ],
+        [
+          "fighter",
+          1
+        ]
+      ]
+    },
+    {
+      "key": "sd18_widening::multiclass_bard_level14_is_not_promoted_by_this_slice",
+      "source_file": "tests/sd18_widening/bard_level14.rs",
+      "test_fn": "multiclass_bard_level14_is_not_promoted_by_this_slice",
+      "classes": [
+        [
+          "bard",
+          14
+        ],
+        [
+          "fighter",
+          1
+        ]
+      ]
+    },
+    {
+      "key": "sd18_widening::multiclass_bard_level15_is_not_promoted_by_this_slice",
+      "source_file": "tests/sd18_widening/bard_level15.rs",
+      "test_fn": "multiclass_bard_level15_is_not_promoted_by_this_slice",
+      "classes": [
+        [
+          "bard",
+          15
+        ],
+        [
+          "fighter",
+          1
+        ]
+      ]
+    },
+    {
+      "key": "sd18_widening::multiclass_bard_level16_is_not_promoted_by_this_slice",
+      "source_file": "tests/sd18_widening/bard_level16.rs",
+      "test_fn": "multiclass_bard_level16_is_not_promoted_by_this_slice",
+      "classes": [
+        [
+          "bard",
+          16
+        ],
+        [
+          "fighter",
+          1
+        ]
+      ]
+    },
+    {
+      "key": "sd18_widening::multiclass_bard_level17_is_not_promoted_by_this_slice",
+      "source_file": "tests/sd18_widening/bard_level17.rs",
+      "test_fn": "multiclass_bard_level17_is_not_promoted_by_this_slice",
+      "classes": [
+        [
+          "bard",
+          17
+        ],
+        [
+          "fighter",
+          1
+        ]
+      ]
+    },
+    {
+      "key": "sd18_widening::multiclass_bard_level18_is_not_promoted_by_this_slice",
+      "source_file": "tests/sd18_widening/bard_level18.rs",
+      "test_fn": "multiclass_bard_level18_is_not_promoted_by_this_slice",
+      "classes": [
+        [
+          "bard",
+          18
+        ],
+        [
+          "fighter",
+          1
+        ]
+      ]
+    },
+    {
+      "key": "sd18_widening::multiclass_bard_level19_is_not_promoted_by_this_slice",
+      "source_file": "tests/sd18_widening/bard_level19.rs",
+      "test_fn": "multiclass_bard_level19_is_not_promoted_by_this_slice",
+      "classes": [
+        [
+          "bard",
+          19
+        ],
+        [
+          "fighter",
+          1
+        ]
+      ]
+    },
+    {
+      "key": "sd18_widening::multiclass_bard_level20_is_not_promoted_by_this_slice",
+      "source_file": "tests/sd18_widening/bard_level20.rs",
+      "test_fn": "multiclass_bard_level20_is_not_promoted_by_this_slice",
+      "classes": [
+        [
+          "bard",
+          20
+        ],
+        [
+          "fighter",
+          1
+        ]
+      ]
+    },
+    {
+      "key": "sd18_widening::multiclass_cleric_level11_is_not_promoted_by_this_slice",
+      "source_file": "tests/sd18_widening/cleric_level11.rs",
+      "test_fn": "multiclass_cleric_level11_is_not_promoted_by_this_slice",
+      "classes": [
+        [
+          "cleric",
+          11
+        ],
+        [
+          "fighter",
+          1
+        ]
+      ]
+    },
+    {
+      "key": "sd18_widening::multiclass_cleric_level12_is_not_promoted_by_this_slice",
+      "source_file": "tests/sd18_widening/cleric_level12.rs",
+      "test_fn": "multiclass_cleric_level12_is_not_promoted_by_this_slice",
+      "classes": [
+        [
+          "cleric",
+          12
+        ],
+        [
+          "fighter",
+          1
+        ]
+      ]
+    },
+    {
+      "key": "sd18_widening::multiclass_cleric_level13_is_not_promoted_by_this_slice",
+      "source_file": "tests/sd18_widening/cleric_level13.rs",
+      "test_fn": "multiclass_cleric_level13_is_not_promoted_by_this_slice",
+      "classes": [
+        [
+          "cleric",
+          13
+        ],
+        [
+          "fighter",
+          1
+        ]
+      ]
+    },
+    {
+      "key": "sd18_widening::multiclass_cleric_level14_is_not_promoted_by_this_slice",
+      "source_file": "tests/sd18_widening/cleric_level14.rs",
+      "test_fn": "multiclass_cleric_level14_is_not_promoted_by_this_slice",
+      "classes": [
+        [
+          "cleric",
+          14
+        ],
+        [
+          "fighter",
+          1
+        ]
+      ]
+    },
+    {
+      "key": "sd18_widening::multiclass_cleric_level15_is_not_promoted_by_this_slice",
+      "source_file": "tests/sd18_widening/cleric_level15.rs",
+      "test_fn": "multiclass_cleric_level15_is_not_promoted_by_this_slice",
+      "classes": [
+        [
+          "cleric",
+          15
+        ],
+        [
+          "fighter",
+          1
+        ]
+      ]
+    },
+    {
+      "key": "sd18_widening::multiclass_cleric_level16_is_not_promoted_by_this_slice",
+      "source_file": "tests/sd18_widening/cleric_level16.rs",
+      "test_fn": "multiclass_cleric_level16_is_not_promoted_by_this_slice",
+      "classes": [
+        [
+          "cleric",
+          16
+        ],
+        [
+          "fighter",
+          1
+        ]
+      ]
+    },
+    {
+      "key": "sd18_widening::multiclass_cleric_level17_is_not_promoted_by_this_slice",
+      "source_file": "tests/sd18_widening/cleric_level17.rs",
+      "test_fn": "multiclass_cleric_level17_is_not_promoted_by_this_slice",
+      "classes": [
+        [
+          "cleric",
+          17
+        ],
+        [
+          "fighter",
+          1
+        ]
+      ]
+    },
+    {
+      "key": "sd18_widening::multiclass_cleric_level18_is_not_promoted_by_this_slice",
+      "source_file": "tests/sd18_widening/cleric_level18.rs",
+      "test_fn": "multiclass_cleric_level18_is_not_promoted_by_this_slice",
+      "classes": [
+        [
+          "cleric",
+          18
+        ],
+        [
+          "fighter",
+          1
+        ]
+      ]
+    },
+    {
+      "key": "sd18_widening::multiclass_cleric_level19_is_not_promoted_by_this_slice",
+      "source_file": "tests/sd18_widening/cleric_level19.rs",
+      "test_fn": "multiclass_cleric_level19_is_not_promoted_by_this_slice",
+      "classes": [
+        [
+          "cleric",
+          19
+        ],
+        [
+          "fighter",
+          1
+        ]
+      ]
+    },
+    {
+      "key": "sd18_widening::multiclass_cleric_level20_is_not_promoted_by_this_slice",
+      "source_file": "tests/sd18_widening/cleric_level20.rs",
+      "test_fn": "multiclass_cleric_level20_is_not_promoted_by_this_slice",
+      "classes": [
+        [
+          "cleric",
+          20
+        ],
+        [
+          "fighter",
+          1
+        ]
+      ]
+    },
+    {
+      "key": "sd18_widening::multiclass_druid_level11_is_not_promoted_by_this_slice",
+      "source_file": "tests/sd18_widening/druid_level11.rs",
+      "test_fn": "multiclass_druid_level11_is_not_promoted_by_this_slice",
+      "classes": [
+        [
+          "druid",
+          11
+        ],
+        [
+          "fighter",
+          1
+        ]
+      ]
+    },
+    {
+      "key": "sd18_widening::multiclass_druid_level12_is_not_promoted_by_this_slice",
+      "source_file": "tests/sd18_widening/druid_level12.rs",
+      "test_fn": "multiclass_druid_level12_is_not_promoted_by_this_slice",
+      "classes": [
+        [
+          "druid",
+          12
+        ],
+        [
+          "fighter",
+          1
+        ]
+      ]
+    },
+    {
+      "key": "sd18_widening::multiclass_druid_level13_is_not_promoted_by_this_slice",
+      "source_file": "tests/sd18_widening/druid_level13.rs",
+      "test_fn": "multiclass_druid_level13_is_not_promoted_by_this_slice",
+      "classes": [
+        [
+          "druid",
+          13
+        ],
+        [
+          "fighter",
+          1
+        ]
+      ]
+    },
+    {
+      "key": "sd18_widening::multiclass_druid_level14_is_not_promoted_by_this_slice",
+      "source_file": "tests/sd18_widening/druid_level14.rs",
+      "test_fn": "multiclass_druid_level14_is_not_promoted_by_this_slice",
+      "classes": [
+        [
+          "druid",
+          14
+        ],
+        [
+          "fighter",
+          1
+        ]
+      ]
+    },
+    {
+      "key": "sd18_widening::multiclass_druid_level15_is_not_promoted_by_this_slice",
+      "source_file": "tests/sd18_widening/druid_level15.rs",
+      "test_fn": "multiclass_druid_level15_is_not_promoted_by_this_slice",
+      "classes": [
+        [
+          "druid",
+          15
+        ],
+        [
+          "fighter",
+          1
+        ]
+      ]
+    },
+    {
+      "key": "sd18_widening::multiclass_fighter_level12_is_not_promoted_by_this_slice",
+      "source_file": "tests/sd18_widening/fighter_level12.rs",
+      "test_fn": "multiclass_fighter_level12_is_not_promoted_by_this_slice",
+      "classes": [
+        [
+          "fighter",
+          12
+        ],
+        [
+          "rogue",
+          1
+        ]
+      ]
+    },
+    {
+      "key": "sd18_widening::multiclass_fighter_level13_is_not_promoted_by_this_slice",
+      "source_file": "tests/sd18_widening/fighter_level13.rs",
+      "test_fn": "multiclass_fighter_level13_is_not_promoted_by_this_slice",
+      "classes": [
+        [
+          "fighter",
+          13
+        ],
+        [
+          "rogue",
+          1
+        ]
+      ]
+    },
+    {
+      "key": "sd18_widening::multiclass_fighter_level14_is_not_promoted_by_this_slice",
+      "source_file": "tests/sd18_widening/fighter_level14.rs",
+      "test_fn": "multiclass_fighter_level14_is_not_promoted_by_this_slice",
+      "classes": [
+        [
+          "fighter",
+          14
+        ],
+        [
+          "rogue",
+          1
+        ]
+      ]
+    },
+    {
+      "key": "sd18_widening::multiclass_fighter_level15_is_not_promoted_by_this_slice",
+      "source_file": "tests/sd18_widening/fighter_level15.rs",
+      "test_fn": "multiclass_fighter_level15_is_not_promoted_by_this_slice",
+      "classes": [
+        [
+          "fighter",
+          15
+        ],
+        [
+          "rogue",
+          1
+        ]
+      ]
+    },
+    {
+      "key": "sd18_widening::multiclass_fighter_level16_is_not_promoted_by_this_slice",
+      "source_file": "tests/sd18_widening/fighter_level16.rs",
+      "test_fn": "multiclass_fighter_level16_is_not_promoted_by_this_slice",
+      "classes": [
+        [
+          "fighter",
+          16
+        ],
+        [
+          "rogue",
+          1
+        ]
+      ]
+    },
+    {
+      "key": "sd18_widening::multiclass_fighter_level17_is_not_promoted_by_this_slice",
+      "source_file": "tests/sd18_widening/fighter_level17.rs",
+      "test_fn": "multiclass_fighter_level17_is_not_promoted_by_this_slice",
+      "classes": [
+        [
+          "fighter",
+          17
+        ],
+        [
+          "rogue",
+          1
+        ]
+      ]
+    },
+    {
+      "key": "sd18_widening::multiclass_fighter_level18_is_not_promoted_by_this_slice",
+      "source_file": "tests/sd18_widening/fighter_level18.rs",
+      "test_fn": "multiclass_fighter_level18_is_not_promoted_by_this_slice",
+      "classes": [
+        [
+          "fighter",
+          18
+        ],
+        [
+          "rogue",
+          1
+        ]
+      ]
+    },
+    {
+      "key": "sd18_widening::multiclass_fighter_level19_is_not_promoted_by_this_slice",
+      "source_file": "tests/sd18_widening/fighter_level19.rs",
+      "test_fn": "multiclass_fighter_level19_is_not_promoted_by_this_slice",
+      "classes": [
+        [
+          "fighter",
+          19
+        ],
+        [
+          "rogue",
+          1
+        ]
+      ]
+    },
+    {
+      "key": "sd18_widening::multiclass_fighter_level20_is_not_promoted_by_this_slice",
+      "source_file": "tests/sd18_widening/fighter_level20.rs",
+      "test_fn": "multiclass_fighter_level20_is_not_promoted_by_this_slice",
+      "classes": [
+        [
+          "fighter",
+          20
+        ],
+        [
+          "rogue",
+          1
+        ]
+      ]
+    },
+    {
+      "key": "sd18_widening::multiclass_monk_level12_is_not_promoted_by_this_slice",
+      "source_file": "tests/sd18_widening/monk_level12.rs",
+      "test_fn": "multiclass_monk_level12_is_not_promoted_by_this_slice",
+      "classes": [
+        [
+          "monk",
+          12
+        ],
+        [
+          "fighter",
+          1
+        ]
+      ]
+    },
+    {
+      "key": "sd18_widening::multiclass_paladin_level12_is_not_promoted_by_this_slice",
+      "source_file": "tests/sd18_widening/paladin_level12.rs",
+      "test_fn": "multiclass_paladin_level12_is_not_promoted_by_this_slice",
+      "classes": [
+        [
+          "paladin",
+          12
+        ],
+        [
+          "fighter",
+          1
+        ]
+      ]
+    },
+    {
+      "key": "sd18_widening::multiclass_paladin_level13_is_not_promoted_by_this_slice",
+      "source_file": "tests/sd18_widening/paladin_level13.rs",
+      "test_fn": "multiclass_paladin_level13_is_not_promoted_by_this_slice",
+      "classes": [
+        [
+          "paladin",
+          13
+        ],
+        [
+          "fighter",
+          1
+        ]
+      ]
+    },
+    {
+      "key": "sd18_widening::multiclass_paladin_level14_is_not_promoted_by_this_slice",
+      "source_file": "tests/sd18_widening/paladin_level14.rs",
+      "test_fn": "multiclass_paladin_level14_is_not_promoted_by_this_slice",
+      "classes": [
+        [
+          "paladin",
+          14
+        ],
+        [
+          "fighter",
+          1
+        ]
+      ]
+    },
+    {
+      "key": "sd18_widening::multiclass_paladin_level15_is_not_promoted_by_this_slice",
+      "source_file": "tests/sd18_widening/paladin_level15.rs",
+      "test_fn": "multiclass_paladin_level15_is_not_promoted_by_this_slice",
+      "classes": [
+        [
+          "paladin",
+          15
+        ],
+        [
+          "fighter",
+          1
+        ]
+      ]
+    },
+    {
+      "key": "sd18_widening::multiclass_paladin_level16_is_not_promoted_by_this_slice",
+      "source_file": "tests/sd18_widening/paladin_level16.rs",
+      "test_fn": "multiclass_paladin_level16_is_not_promoted_by_this_slice",
+      "classes": [
+        [
+          "paladin",
+          16
+        ],
+        [
+          "fighter",
+          1
+        ]
+      ]
+    },
+    {
+      "key": "sd18_widening::multiclass_paladin_level17_is_not_promoted_by_this_slice",
+      "source_file": "tests/sd18_widening/paladin_level17.rs",
+      "test_fn": "multiclass_paladin_level17_is_not_promoted_by_this_slice",
+      "classes": [
+        [
+          "paladin",
+          17
+        ],
+        [
+          "fighter",
+          1
+        ]
+      ]
+    },
+    {
+      "key": "sd18_widening::multiclass_paladin_level18_is_not_promoted_by_this_slice",
+      "source_file": "tests/sd18_widening/paladin_level18.rs",
+      "test_fn": "multiclass_paladin_level18_is_not_promoted_by_this_slice",
+      "classes": [
+        [
+          "paladin",
+          18
+        ],
+        [
+          "fighter",
+          1
+        ]
+      ]
+    },
+    {
+      "key": "sd18_widening::multiclass_paladin_level19_is_not_promoted_by_this_slice",
+      "source_file": "tests/sd18_widening/paladin_level19.rs",
+      "test_fn": "multiclass_paladin_level19_is_not_promoted_by_this_slice",
+      "classes": [
+        [
+          "paladin",
+          19
+        ],
+        [
+          "fighter",
+          1
+        ]
+      ]
+    },
+    {
+      "key": "sd18_widening::multiclass_paladin_level20_is_not_promoted_by_this_slice",
+      "source_file": "tests/sd18_widening/paladin_level20.rs",
+      "test_fn": "multiclass_paladin_level20_is_not_promoted_by_this_slice",
+      "classes": [
+        [
+          "paladin",
+          20
+        ],
+        [
+          "fighter",
+          1
+        ]
+      ]
+    },
+    {
+      "key": "sd18_widening::multiclass_ranger_level12_is_not_promoted_by_this_slice",
+      "source_file": "tests/sd18_widening/ranger_level12.rs",
+      "test_fn": "multiclass_ranger_level12_is_not_promoted_by_this_slice",
+      "classes": [
+        [
+          "ranger",
+          12
+        ],
+        [
+          "fighter",
+          1
+        ]
+      ]
+    },
+    {
+      "key": "sd18_widening::multiclass_ranger_level13_is_not_promoted_by_this_slice",
+      "source_file": "tests/sd18_widening/ranger_level13.rs",
+      "test_fn": "multiclass_ranger_level13_is_not_promoted_by_this_slice",
+      "classes": [
+        [
+          "ranger",
+          13
+        ],
+        [
+          "fighter",
+          1
+        ]
+      ]
+    },
+    {
+      "key": "sd18_widening::multiclass_ranger_level14_is_not_promoted_by_this_slice",
+      "source_file": "tests/sd18_widening/ranger_level14.rs",
+      "test_fn": "multiclass_ranger_level14_is_not_promoted_by_this_slice",
+      "classes": [
+        [
+          "ranger",
+          14
+        ],
+        [
+          "fighter",
+          1
+        ]
+      ]
+    },
+    {
+      "key": "sd18_widening::multiclass_ranger_level15_is_not_promoted_by_this_slice",
+      "source_file": "tests/sd18_widening/ranger_level15.rs",
+      "test_fn": "multiclass_ranger_level15_is_not_promoted_by_this_slice",
+      "classes": [
+        [
+          "ranger",
+          15
+        ],
+        [
+          "fighter",
+          1
+        ]
+      ]
+    },
+    {
+      "key": "sd18_widening::multiclass_ranger_level18_is_not_promoted_by_this_slice",
+      "source_file": "tests/sd18_widening/ranger_level18.rs",
+      "test_fn": "multiclass_ranger_level18_is_not_promoted_by_this_slice",
+      "classes": [
+        [
+          "ranger",
+          18
+        ],
+        [
+          "fighter",
+          1
+        ]
+      ]
+    },
+    {
+      "key": "sd18_widening::multiclass_ranger_level19_is_not_promoted_by_this_slice",
+      "source_file": "tests/sd18_widening/ranger_level19.rs",
+      "test_fn": "multiclass_ranger_level19_is_not_promoted_by_this_slice",
+      "classes": [
+        [
+          "ranger",
+          19
+        ],
+        [
+          "fighter",
+          1
+        ]
+      ]
+    },
+    {
+      "key": "sd18_widening::multiclass_rogue_level12_is_not_promoted_by_this_slice",
+      "source_file": "tests/sd18_widening/rogue_level12.rs",
+      "test_fn": "multiclass_rogue_level12_is_not_promoted_by_this_slice",
+      "classes": [
+        [
+          "rogue",
+          12
+        ],
+        [
+          "fighter",
+          1
+        ]
+      ]
+    },
+    {
+      "key": "sd18_widening::multiclass_rogue_level13_is_not_promoted_by_this_slice",
+      "source_file": "tests/sd18_widening/rogue_level13.rs",
+      "test_fn": "multiclass_rogue_level13_is_not_promoted_by_this_slice",
+      "classes": [
+        [
+          "rogue",
+          13
+        ],
+        [
+          "fighter",
+          1
+        ]
+      ]
+    },
+    {
+      "key": "sd18_widening::multiclass_rogue_level14_is_not_promoted_by_this_slice",
+      "source_file": "tests/sd18_widening/rogue_level14.rs",
+      "test_fn": "multiclass_rogue_level14_is_not_promoted_by_this_slice",
+      "classes": [
+        [
+          "rogue",
+          14
+        ],
+        [
+          "fighter",
+          1
+        ]
+      ]
+    },
+    {
+      "key": "sd18_widening::multiclass_rogue_level15_is_not_promoted_by_this_slice",
+      "source_file": "tests/sd18_widening/rogue_level15.rs",
+      "test_fn": "multiclass_rogue_level15_is_not_promoted_by_this_slice",
+      "classes": [
+        [
+          "rogue",
+          15
+        ],
+        [
+          "fighter",
+          1
+        ]
+      ]
+    },
+    {
+      "key": "sd18_widening::multiclass_rogue_level16_is_not_promoted_by_this_slice",
+      "source_file": "tests/sd18_widening/rogue_level16.rs",
+      "test_fn": "multiclass_rogue_level16_is_not_promoted_by_this_slice",
+      "classes": [
+        [
+          "rogue",
+          16
+        ],
+        [
+          "fighter",
+          1
+        ]
+      ]
+    },
+    {
+      "key": "sd18_widening::multiclass_rogue_level17_is_not_promoted_by_this_slice",
+      "source_file": "tests/sd18_widening/rogue_level17.rs",
+      "test_fn": "multiclass_rogue_level17_is_not_promoted_by_this_slice",
+      "classes": [
+        [
+          "rogue",
+          17
+        ],
+        [
+          "fighter",
+          1
+        ]
+      ]
+    },
+    {
+      "key": "sd18_widening::multiclass_rogue_level18_is_not_promoted_by_this_slice",
+      "source_file": "tests/sd18_widening/rogue_level18.rs",
+      "test_fn": "multiclass_rogue_level18_is_not_promoted_by_this_slice",
+      "classes": [
+        [
+          "rogue",
+          18
+        ],
+        [
+          "fighter",
+          1
+        ]
+      ]
+    },
+    {
+      "key": "sd18_widening::multiclass_rogue_level19_is_not_promoted_by_this_slice",
+      "source_file": "tests/sd18_widening/rogue_level19.rs",
+      "test_fn": "multiclass_rogue_level19_is_not_promoted_by_this_slice",
+      "classes": [
+        [
+          "rogue",
+          19
+        ],
+        [
+          "fighter",
+          1
+        ]
+      ]
+    },
+    {
+      "key": "sd18_widening::multiclass_rogue_level20_is_not_promoted_by_this_slice",
+      "source_file": "tests/sd18_widening/rogue_level20.rs",
+      "test_fn": "multiclass_rogue_level20_is_not_promoted_by_this_slice",
+      "classes": [
+        [
+          "rogue",
+          20
+        ],
+        [
+          "fighter",
+          1
+        ]
+      ]
+    },
+    {
+      "key": "sd18_widening::multiclass_sorcerer_level11_is_not_promoted_by_this_slice",
+      "source_file": "tests/sd18_widening/sorcerer_level11.rs",
+      "test_fn": "multiclass_sorcerer_level11_is_not_promoted_by_this_slice",
+      "classes": [
+        [
+          "sorcerer",
+          11
+        ],
+        [
+          "fighter",
+          1
+        ]
+      ]
+    },
+    {
+      "key": "sd18_widening::multiclass_sorcerer_level12_is_not_promoted_by_this_slice",
+      "source_file": "tests/sd18_widening/sorcerer_level12.rs",
+      "test_fn": "multiclass_sorcerer_level12_is_not_promoted_by_this_slice",
+      "classes": [
+        [
+          "sorcerer",
+          12
+        ],
+        [
+          "fighter",
+          1
+        ]
+      ]
+    },
+    {
+      "key": "sd18_widening::multiclass_sorcerer_level13_is_not_promoted_by_this_slice",
+      "source_file": "tests/sd18_widening/sorcerer_level13.rs",
+      "test_fn": "multiclass_sorcerer_level13_is_not_promoted_by_this_slice",
+      "classes": [
+        [
+          "sorcerer",
+          13
+        ],
+        [
+          "fighter",
+          1
+        ]
+      ]
+    },
+    {
+      "key": "sd18_widening::multiclass_sorcerer_level14_is_not_promoted_by_this_slice",
+      "source_file": "tests/sd18_widening/sorcerer_level14.rs",
+      "test_fn": "multiclass_sorcerer_level14_is_not_promoted_by_this_slice",
+      "classes": [
+        [
+          "sorcerer",
+          14
+        ],
+        [
+          "fighter",
+          1
+        ]
+      ]
+    },
+    {
+      "key": "sd18_widening::multiclass_sorcerer_level15_is_not_promoted_by_this_slice",
+      "source_file": "tests/sd18_widening/sorcerer_level15.rs",
+      "test_fn": "multiclass_sorcerer_level15_is_not_promoted_by_this_slice",
+      "classes": [
+        [
+          "sorcerer",
+          15
+        ],
+        [
+          "fighter",
+          1
+        ]
+      ]
+    },
+    {
+      "key": "sd18_widening::multiclass_sorcerer_level16_is_not_promoted_by_this_slice",
+      "source_file": "tests/sd18_widening/sorcerer_level16.rs",
+      "test_fn": "multiclass_sorcerer_level16_is_not_promoted_by_this_slice",
+      "classes": [
+        [
+          "sorcerer",
+          16
+        ],
+        [
+          "fighter",
+          1
+        ]
+      ]
+    },
+    {
+      "key": "sd18_widening::multiclass_sorcerer_level17_is_not_promoted_by_this_slice",
+      "source_file": "tests/sd18_widening/sorcerer_level17.rs",
+      "test_fn": "multiclass_sorcerer_level17_is_not_promoted_by_this_slice",
+      "classes": [
+        [
+          "sorcerer",
+          17
+        ],
+        [
+          "fighter",
+          1
+        ]
+      ]
+    },
+    {
+      "key": "sd18_widening::multiclass_sorcerer_level18_is_not_promoted_by_this_slice",
+      "source_file": "tests/sd18_widening/sorcerer_level18.rs",
+      "test_fn": "multiclass_sorcerer_level18_is_not_promoted_by_this_slice",
+      "classes": [
+        [
+          "sorcerer",
+          18
+        ],
+        [
+          "fighter",
+          1
+        ]
+      ]
+    },
+    {
+      "key": "sd18_widening::multiclass_sorcerer_level19_is_not_promoted_by_this_slice",
+      "source_file": "tests/sd18_widening/sorcerer_level19.rs",
+      "test_fn": "multiclass_sorcerer_level19_is_not_promoted_by_this_slice",
+      "classes": [
+        [
+          "sorcerer",
+          19
+        ],
+        [
+          "fighter",
+          1
+        ]
+      ]
+    },
+    {
+      "key": "sd18_widening::multiclass_sorcerer_level20_is_not_promoted_by_this_slice",
+      "source_file": "tests/sd18_widening/sorcerer_level20.rs",
+      "test_fn": "multiclass_sorcerer_level20_is_not_promoted_by_this_slice",
+      "classes": [
+        [
+          "sorcerer",
+          20
+        ],
+        [
+          "fighter",
+          1
+        ]
+      ]
+    },
+    {
+      "key": "sd18_widening::multiclass_wizard_level11_is_not_promoted_by_this_slice",
+      "source_file": "tests/sd18_widening/wizard_level11.rs",
+      "test_fn": "multiclass_wizard_level11_is_not_promoted_by_this_slice",
+      "classes": [
+        [
+          "wizard",
+          11
+        ],
+        [
+          "rogue",
+          1
+        ]
+      ]
+    },
+    {
+      "key": "sd18_widening::multiclass_wizard_level12_is_not_promoted_by_this_slice",
+      "source_file": "tests/sd18_widening/wizard_level12.rs",
+      "test_fn": "multiclass_wizard_level12_is_not_promoted_by_this_slice",
+      "classes": [
+        [
+          "wizard",
+          12
+        ],
+        [
+          "rogue",
+          1
+        ]
+      ]
+    },
+    {
+      "key": "sd18_widening::multiclass_wizard_level13_is_not_promoted_by_this_slice",
+      "source_file": "tests/sd18_widening/wizard_level13.rs",
+      "test_fn": "multiclass_wizard_level13_is_not_promoted_by_this_slice",
+      "classes": [
+        [
+          "wizard",
+          13
+        ],
+        [
+          "rogue",
+          1
+        ]
+      ]
+    },
+    {
+      "key": "sd18_widening::multiclass_wizard_level14_is_not_promoted_by_this_slice",
+      "source_file": "tests/sd18_widening/wizard_level14.rs",
+      "test_fn": "multiclass_wizard_level14_is_not_promoted_by_this_slice",
+      "classes": [
+        [
+          "wizard",
+          14
+        ],
+        [
+          "rogue",
+          1
+        ]
+      ]
+    },
+    {
+      "key": "sd18_widening::multiclass_wizard_level15_is_not_promoted_by_this_slice",
+      "source_file": "tests/sd18_widening/wizard_level15.rs",
+      "test_fn": "multiclass_wizard_level15_is_not_promoted_by_this_slice",
+      "classes": [
+        [
+          "wizard",
+          15
+        ],
+        [
+          "rogue",
+          1
+        ]
+      ]
+    },
+    {
+      "key": "sd18_widening::multiclass_wizard_level16_is_not_promoted_by_this_slice",
+      "source_file": "tests/sd18_widening/wizard_level16.rs",
+      "test_fn": "multiclass_wizard_level16_is_not_promoted_by_this_slice",
+      "classes": [
+        [
+          "wizard",
+          16
+        ],
+        [
+          "rogue",
+          1
+        ]
+      ]
+    },
+    {
+      "key": "sd18_widening::multiclass_wizard_level17_is_not_promoted_by_this_slice",
+      "source_file": "tests/sd18_widening/wizard_level17.rs",
+      "test_fn": "multiclass_wizard_level17_is_not_promoted_by_this_slice",
+      "classes": [
+        [
+          "wizard",
+          17
+        ],
+        [
+          "rogue",
+          1
+        ]
+      ]
+    },
+    {
+      "key": "sd18_widening::multiclass_wizard_level18_is_not_promoted_by_this_slice",
+      "source_file": "tests/sd18_widening/wizard_level18.rs",
+      "test_fn": "multiclass_wizard_level18_is_not_promoted_by_this_slice",
+      "classes": [
+        [
+          "wizard",
+          18
+        ],
+        [
+          "rogue",
+          1
+        ]
+      ]
+    },
+    {
+      "key": "sd18_widening::multiclass_wizard_level19_is_not_promoted_by_this_slice",
+      "source_file": "tests/sd18_widening/wizard_level19.rs",
+      "test_fn": "multiclass_wizard_level19_is_not_promoted_by_this_slice",
+      "classes": [
+        [
+          "wizard",
+          19
+        ],
+        [
+          "rogue",
+          1
+        ]
+      ]
+    },
+    {
+      "key": "sd18_widening::multiclass_wizard_level20_is_not_promoted_by_this_slice",
+      "source_file": "tests/sd18_widening/wizard_level20.rs",
+      "test_fn": "multiclass_wizard_level20_is_not_promoted_by_this_slice",
+      "classes": [
+        [
+          "wizard",
+          20
+        ],
+        [
+          "rogue",
+          1
+        ]
+      ]
+    },
+    {
+      "key": "top_level::multiclass_barbarian_is_not_promoted_by_this_slice",
+      "source_file": "tests/sd13_barbarian_level1_chassis_baseline.rs",
+      "test_fn": "multiclass_barbarian_is_not_promoted_by_this_slice",
+      "classes": [
+        [
+          "barbarian",
+          1
+        ],
+        [
+          "fighter",
+          1
+        ]
+      ]
+    },
+    {
+      "key": "top_level::multiclass_barbarian_level11_is_not_promoted_by_this_slice",
+      "source_file": "tests/sd18_barbarian_level11_greater_rage.rs",
+      "test_fn": "multiclass_barbarian_level11_is_not_promoted_by_this_slice",
+      "classes": [
+        [
+          "barbarian",
+          11
+        ],
+        [
+          "fighter",
+          1
+        ]
+      ]
+    },
+    {
+      "key": "top_level::multiclass_druid_level20_is_not_promoted_by_this_slice",
+      "source_file": "tests/v06_druid_level16_to_20_widening.rs",
+      "test_fn": "multiclass_druid_level20_is_not_promoted_by_this_slice",
+      "classes": [
+        [
+          "druid",
+          20
+        ],
+        [
+          "fighter",
+          1
+        ]
+      ]
+    },
+    {
+      "key": "top_level::multiclass_fighter_level11_is_not_promoted_by_this_slice",
+      "source_file": "tests/sd18_fighter_level11_armor_training3.rs",
+      "test_fn": "multiclass_fighter_level11_is_not_promoted_by_this_slice",
+      "classes": [
+        [
+          "fighter",
+          11
+        ],
+        [
+          "rogue",
+          1
+        ]
+      ]
+    },
+    {
+      "key": "top_level::multiclass_monk_is_not_promoted_by_this_slice",
+      "source_file": "tests/sd13_monk_level1_chassis_baseline.rs",
+      "test_fn": "multiclass_monk_is_not_promoted_by_this_slice",
+      "classes": [
+        [
+          "monk",
+          1
+        ],
+        [
+          "fighter",
+          1
+        ]
+      ]
+    },
+    {
+      "key": "top_level::multiclass_monk_level11_is_not_promoted_by_this_slice",
+      "source_file": "tests/sd18_monk_level11_diamond_body.rs",
+      "test_fn": "multiclass_monk_level11_is_not_promoted_by_this_slice",
+      "classes": [
+        [
+          "monk",
+          11
+        ],
+        [
+          "fighter",
+          1
+        ]
+      ]
+    },
+    {
+      "key": "top_level::multiclass_paladin_level11_is_not_promoted_by_this_slice",
+      "source_file": "tests/sd18_paladin_level11_aura_of_justice.rs",
+      "test_fn": "multiclass_paladin_level11_is_not_promoted_by_this_slice",
+      "classes": [
+        [
+          "paladin",
+          11
+        ],
+        [
+          "fighter",
+          1
+        ]
+      ]
+    },
+    {
+      "key": "top_level::multiclass_ranger_is_not_promoted_by_this_slice",
+      "source_file": "tests/sd13_ranger_level1_chassis_and_class_feature_separation.rs",
+      "test_fn": "multiclass_ranger_is_not_promoted_by_this_slice",
+      "classes": [
+        [
+          "ranger",
+          1
+        ],
+        [
+          "fighter",
+          1
+        ]
+      ]
+    },
+    {
+      "key": "top_level::multiclass_ranger_level11_is_not_promoted_by_this_slice",
+      "source_file": "tests/sd18_ranger_level11_quarry.rs",
+      "test_fn": "multiclass_ranger_level11_is_not_promoted_by_this_slice",
+      "classes": [
+        [
+          "ranger",
+          11
+        ],
+        [
+          "fighter",
+          1
+        ]
+      ]
+    },
+    {
+      "key": "top_level::multiclass_ranger_level16_is_not_promoted_by_this_slice",
+      "source_file": "tests/sd18_ranger_level16_improved_evasion.rs",
+      "test_fn": "multiclass_ranger_level16_is_not_promoted_by_this_slice",
+      "classes": [
+        [
+          "ranger",
+          16
+        ],
+        [
+          "fighter",
+          1
+        ]
+      ]
+    },
+    {
+      "key": "top_level::multiclass_ranger_level17_is_not_promoted_by_this_slice",
+      "source_file": "tests/sd18_ranger_level17_hide_in_plain_sight.rs",
+      "test_fn": "multiclass_ranger_level17_is_not_promoted_by_this_slice",
+      "classes": [
+        [
+          "ranger",
+          17
+        ],
+        [
+          "fighter",
+          1
+        ]
+      ]
+    },
+    {
+      "key": "top_level::multiclass_rogue_is_not_promoted_by_this_slice",
+      "source_file": "tests/sd13_rogue_level1_chassis_baseline.rs",
+      "test_fn": "multiclass_rogue_is_not_promoted_by_this_slice",
+      "classes": [
+        [
+          "rogue",
+          1
+        ],
+        [
+          "fighter",
+          1
+        ]
+      ]
+    },
+    {
+      "key": "top_level::multiclass_rogue_level11_is_not_promoted_by_this_slice",
+      "source_file": "tests/sd18_rogue_level11_sneak_attack.rs",
+      "test_fn": "multiclass_rogue_level11_is_not_promoted_by_this_slice",
+      "classes": [
+        [
+          "rogue",
+          11
+        ],
+        [
+          "fighter",
+          1
+        ]
+      ]
+    }
+  ]
+}

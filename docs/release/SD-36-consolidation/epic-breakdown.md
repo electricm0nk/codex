@@ -157,9 +157,9 @@ see `kanban.md` / `progress.md` — nothing in this section is a completion clai
 | Criterion | Acceptance command / evidence |
 |---|---|
 | F3.0 unknown, not zero | every census class with `ClassChassis.hit_die`/`.skill_ranks_per_level == None` reports HP/skill-points `Unknown` (named list); `cargo test --locked --lib a_class_missing_hit_die_reports_hp_unknown` and `..._missing_skill_ranks_reports_skill_points_unknown` green |
-| F3.1 (measured denominator) | census `mix_computed == BASELINE_CENSUS_MIX_COMPUTED` (F0's measured figure) of itself; prestige canonical mixes 74 of 74 |
+| F3.1 (measured denominator = 185, F0d) | census `mix_computed == BASELINE_CENSUS_MIX_COMPUTED` (185, F0d's measured figure) of itself; prestige canonical mixes 74 of 74 — already true as of F0d (185 of 185 Computed, 0 Blocked, under the shared canonical fixture; `docs/release/SD-36-consolidation/artifacts/epic-f/census-f0d.json`) |
 | F3.2 | `--list` diffs for `sd18_widening` (891 of 891) and `sd13_progression` (1,136 of 1,136): IDENTICAL |
-| F3.3 | sabotage log: `BASELINE_CENSUS_MIX_COMPUTED` red under sabotage (of the measured total), 0 red restored |
+| F3.3 (measured denominator = 185, F0d) | sabotage log: `BASELINE_CENSUS_MIX_COMPUTED` (185) red under sabotage (of the measured total), 0 red restored |
 | F3.4 | `cargo test --locked --test sd21_multiclass_fighter_wizard_chassis_computes --test sd24_multiclass_integration` green |
 
 ### F4 — Desktop
