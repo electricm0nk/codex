@@ -79,6 +79,38 @@ pub(crate) struct GenericChassisRow {
     pub(crate) will_save: i16,
 }
 
+/// One covered class's registration: its `"class:<slug>"` id, the book its
+/// converted record actually came from (book-precedence deduplicated, see
+/// [`generic_class_records`]), its converted level ceiling, and its
+/// converted `tags`. SD-36 Epic F0a
+/// (`docs/release/SD-36-consolidation/epic-f-class-completion.md` §2): the
+/// permanent class-census instrument (`rules_core::class_census`) merges
+/// this list with every other class registry the engine reads, the same
+/// shape [`crb_untabled_class_chassis::covered_classes`](super::crb_untabled_class_chassis::covered_classes)
+/// already exposes for its own population.
+pub(crate) struct GenericChassisMeta {
+    pub(crate) class_id: String,
+    pub(crate) book: String,
+    pub(crate) max_level: u8,
+    pub(crate) tags: Vec<String>,
+}
+
+/// The full registration list -- every conventional class
+/// [`generic_class_records`] actually resolved a chassis for (78 as of
+/// this batch; see `all_seventy_eight_conventional_classes_resolve` below
+/// for how that count is itself re-derived).
+pub(crate) fn covered_classes() -> Vec<GenericChassisMeta> {
+    generic_class_records()
+        .iter()
+        .map(|(slug, chassis)| GenericChassisMeta {
+            class_id: format!("class:{slug}"),
+            book: chassis.book.clone(),
+            max_level: chassis.max_level,
+            tags: chassis.tags.clone(),
+        })
+        .collect()
+}
+
 /// Loaded once per process, keyed by the converted record's own slug -- the
 /// same `"class:<slug>"` id convention every other dispatch arm in
 /// `compute_class_chassis` uses. Two books stating the same class slug keep

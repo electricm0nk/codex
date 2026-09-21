@@ -218,6 +218,15 @@ pub use class_slayer::*;
 use class_ultimate_combat::compute_uc_class_chassis;
 use domain_power::*;
 
+/// SD-36 Epic F0a (`docs/release/SD-36-consolidation/epic-f-class-completion.md`
+/// §2): a re-export, not a visibility widening of the `generic_class_chassis`
+/// module itself (still crate-private, `mod generic_class_chassis;` above).
+/// `rules_core::class_census`, a sibling of `pilot_compute` rather than a
+/// child of it, needs `generic_class_chassis::covered_classes()` to build
+/// the merged census; this is the one seam that lets it in without widening
+/// anything else this module's own private items rely on staying private.
+pub(crate) use generic_class_chassis::covered_classes as generic_class_chassis_covered_classes;
+
 // SD-36 Epic C1 (`docs/release/SD-36-consolidation/technical-design.md` §3):
 // this file used to hold ~88,800 lines of per-class dispatch, per-class
 // tests, and shared combat/race/feat/companion/spellcasting machinery
