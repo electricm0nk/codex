@@ -36,7 +36,27 @@ and reports:
   - an explicit summary line for the record/rule/var_table counts so F1.6's acceptance command
     has one thing to read instead of re-deriving it by hand -- and a GATE failure, not just a
     printed pair, when `records` or `converted` moves against the baseline `_report.json` (F1
-    re-check round 1, finding 2: a moved count previously printed but was never flagged).
+    re-check round 1, finding 2: a moved count previously printed but was never flagged);
+  - EXPECTED delta classes, named, counted and explained rather than allowed blanket (F1
+    re-check round 3, finding 1, ORCHESTRATOR RULING): `granted_by`/`grants` growth (F1's own
+    declared purpose), `_vars/` tables added for a `GatedFactGrant`'s condition variables, the
+    corpus's newly-held rule ids, and `provenance` deltas on the EXACT pinned record list in
+    `structural_diff_expected_provenance_deltas.json` (the `current_class` closure-tracker fix
+    re-attributing `SUBCLASSLEVEL` rows to their class chassis) -- a `provenance` delta on any
+    record NOT on that list still gates, same as any delta to any other field.
+
+`missing_grant_signatures` (round 3, finding 1) matches baseline grants to fresh ones with a
+real maximum bipartite match (`_max_bipartite_match`, Kuhn's algorithm) over the `grant_covers`
+edge, not a greedy order-dependent scan -- an identical multiset of grants presented in a
+different order on the fresh side (e.g. a bare and a gated grant of one signature, swapped)
+now matches fully instead of reporting a spurious loss. Baseline-side EXACT duplicates (two or
+three grants restating the identical content under different book capitalization, e.g. three
+`picaroon_weapon_proficiency` `WeaponGroup` grants folding to F1-3's one `WeaponSet`) are
+collapsed to one representative (`_old_effects_deduplicated`) BEFORE matching, so a real dedup
+is never counted as a loss of the collapsed duplicates -- a pair that only SHARES a signature
+but genuinely differs (a different gate, or for a `WeaponSet` a different member list) is never
+collapsed, so a genuine drop still cannot hide behind an untouched sibling (round 1's own
+contract, unchanged).
 
 Usage:
     python3 structural_diff.py <scratch_dump_dir> [--baseline data/sheet_rules] [--max-examples N] [--report-only]
@@ -55,6 +75,43 @@ import sys
 from collections import Counter, defaultdict
 
 ALLOWED_GROWING_FIELDS = {"granted_by", "grants"}
+
+# SD-36 Epic F1 re-check round 3, finding 1 (ORCHESTRATOR RULING): the `current_class` closure
+# fix's `provenance.closure_rows` growth is an EXPECTED delta only for this EXACT, generated
+# record list -- never a blanket allowance for the `provenance` field. See the data file's own
+# `_purpose`/`_command` for how it was produced and how to regenerate it.
+_EXPECTED_PROVENANCE_DELTAS_PATH = os.path.join(os.path.dirname(os.path.abspath(__file__)), "structural_diff_expected_provenance_deltas.json")
+
+
+def _load_expected_provenance_deltas() -> frozenset[str]:
+    try:
+        with open(_EXPECTED_PROVENANCE_DELTAS_PATH, "r", encoding="utf-8") as fh:
+            data = json.load(fh)
+    except (OSError, json.JSONDecodeError):
+        return frozenset()
+    records = data.get("records", [])
+    assert len(records) == data.get("_count"), f"{_EXPECTED_PROVENANCE_DELTAS_PATH}: _count {data.get('_count')} != len(records) {len(records)} -- regenerate with _command"
+    return frozenset(records)
+
+
+EXPECTED_PROVENANCE_DELTA_RECORDS = _load_expected_provenance_deltas()
+
+# SD-36 Epic F1 re-check round 3, finding 1 (ORCHESTRATOR RULING: "the ONE added rule -- name it
+# and its cause"). A newly-held rule id is never gated (SS3.5 allows new content), but every one
+# measured on this branch must be named and explained, not just counted. Verified (`git log
+# --oneline -- crates/codex-ingest/src/pcgen_import/sheet_rule/closure.rs`): the `current_class`
+# fix in commit 71c729e408 correctly attributes a 5th `BONUS:ABILITYPOOL|Psion Feat` occurrence
+# from the Psion subclass block (`up_classes.lst`, previously misattributed off Psion by the
+# pre-fix closure build) to the Psion chassis, alongside the four it already held -- same value
+# and gate shape as its siblings (`ClassLevel(psion)/5 + 1`, applicable at levels 1-20).
+KNOWN_ADDED_RULE_CAUSES = {
+    "ultimate_psionics:class:psion#bonus5": (
+        "the `current_class` closure fix (commit 71c729e408) correctly attributes a 5th "
+        "`BONUS:ABILITYPOOL|Psion Feat` occurrence in the Psion subclass block to the Psion "
+        "chassis, alongside the four it already held (same value/gate shape: "
+        "ClassLevel(psion)/5 + 1, levels 1-20)"
+    ),
+}
 
 
 def edge_diff(old_list: object, new_list: object) -> tuple[list[str], list[str]]:
@@ -174,30 +231,85 @@ def grant_covers(old_effect: object, new_effect: object) -> bool:
     return True
 
 
-def missing_grant_signatures(old_list: object, new_list: object) -> list[tuple[tuple, int]]:
-    """Every baseline grant with no COVERING fresh grant left after a greedy one-to-one match
-    (each fresh grant covers at most one baseline grant; [`grant_covers`] decides coverage, not
-    bare signature equality), grouped by signature as `(signature, missing_count)` for reporting
-    -- still the multiset-by-signature shape the caller expects, but content-aware rather than a
-    target-only `Counter` diff (SD-36 Epic F1 re-check round 2, finding 2), so a grant dropped
-    from a rule that still carries an unrelated grant of the matching signature is still named
-    (F1 re-check round 1, finding 2's own gate contract: a genuine loss must never hide behind an
-    untouched sibling grant), and so is a gate deleted or a `WeaponSet` emptied/replaced under an
-    unchanged label and target, which a signature-only count could not see at all."""
-    old_effects = list(old_list or [])
-    new_effects = list(new_list or [])
-    used = [False] * len(new_effects)
-    missing: Counter = Counter()
-    for old in old_effects:
-        covered = False
-        for i, new in enumerate(new_effects):
-            if used[i]:
+def _grants_are_duplicates(a: object, b: object) -> bool:
+    """Whether two BASELINE grants restate the identical content -- the same target signature,
+    the same gate, and (for a `WeaponSet`) the identical member list, never merely an
+    overlapping one -- so collapsing them loses nothing (SD-36 Epic F1 re-check round 3, finding
+    1). A pair that only SHARES a signature but genuinely differs (a different gate, or a
+    `WeaponSet` with a different member list) is never a duplicate here; it stays two distinct
+    entries so a real drop of one of them cannot hide behind the other."""
+    if grant_signature(a) != grant_signature(b) or _gate_of(a) != _gate_of(b):
+        return False
+    a_ws = _weapon_set_of(_fact_of(a))
+    b_ws = _weapon_set_of(_fact_of(b))
+    if a_ws is None and b_ws is None:
+        return True
+    a_members = set((a_ws or {}).get("members") or [])
+    b_members = set((b_ws or {}).get("members") or [])
+    return a_members == b_members
+
+
+def _old_effects_deduplicated(old_effects: list) -> list:
+    """Collapse an exact-duplicate run within the BASELINE side itself, before it is ever matched
+    against the fresh side (SD-36 Epic F1 re-check round 3, finding 1): several baseline grants
+    that restate the identical content under different book capitalization (e.g. three
+    `picaroon_weapon_proficiency` bare `WeaponGroup` grants -- two byte-identical, the third a
+    case variant -- that F1-3 folds to the ONE fresh `WeaponSet` grant naming them all) are the
+    SAME proficiency stated more than once, not several proficiencies; reading that fold as
+    `removed grants: 2` calls a real dedup a loss. Keeps one representative per
+    [`_grants_are_duplicates`] equivalence class, in first-seen order."""
+    reps: list = []
+    for effect in old_effects:
+        if not any(_grants_are_duplicates(effect, rep) for rep in reps):
+            reps.append(effect)
+    return reps
+
+
+def _max_bipartite_match(old_effects: list, new_effects: list) -> set[int]:
+    """The maximum 1:1 matching between baseline (`old_effects`, already duplicate-collapsed)
+    and fresh effects under [`grant_covers`] as the edge predicate -- Kuhn's augmenting-path
+    algorithm, not a single greedy left-to-right scan (SD-36 Epic F1 re-check round 3, finding
+    1): the greedy scan was order-dependent, so an identical MULTISET of grants presented in a
+    different order on the fresh side (a bare and a gated grant of one signature, swapped) could
+    report a spurious loss when the greedy scan's first pick used up a fresh grant a LATER
+    baseline grant needed instead. An augmenting-path search can always re-route an earlier
+    match to make room, so it finds the true maximum regardless of list order. Returns the set
+    of OLD indices the matching covers."""
+    adj = [[j for j, new in enumerate(new_effects) if grant_covers(old, new)] for old in old_effects]
+    match_of_new: dict[int, int] = {}
+
+    def try_match(i: int, visited: set[int]) -> bool:
+        for j in adj[i]:
+            if j in visited:
                 continue
-            if grant_covers(old, new):
-                used[i] = True
-                covered = True
-                break
-        if not covered:
+            visited.add(j)
+            if j not in match_of_new or try_match(match_of_new[j], visited):
+                match_of_new[j] = i
+                return True
+        return False
+
+    for i in range(len(old_effects)):
+        try_match(i, set())
+    return set(match_of_new.values())
+
+
+def missing_grant_signatures(old_list: object, new_list: object) -> list[tuple[tuple, int]]:
+    """Every baseline grant (after [`_old_effects_deduplicated`] collapses exact duplicates)
+    with no covering fresh grant left after [`_max_bipartite_match`]'s real maximum match --
+    [`grant_covers`] decides coverage, not bare signature equality -- grouped by signature as
+    `(signature, missing_count)` for reporting (SD-36 Epic F1 re-check rounds 2 and 3, finding
+    2 then finding 1), so a grant dropped from a rule that still carries an unrelated grant of
+    the matching signature is still named (F1 re-check round 1, finding 2's own gate contract: a
+    genuine loss must never hide behind an untouched sibling grant), so is a gate deleted or a
+    `WeaponSet` emptied/replaced under an unchanged label and target (round 2), and an
+    exact-duplicate collapse on the baseline side itself is never miscounted as that same kind
+    of loss (round 3)."""
+    old_effects = _old_effects_deduplicated(list(old_list or []))
+    new_effects = list(new_list or [])
+    matched = _max_bipartite_match(old_effects, new_effects)
+    missing: Counter = Counter()
+    for i, old in enumerate(old_effects):
+        if i not in matched:
             missing[grant_signature(old)] += 1
     return sorted(missing.items())
 
@@ -298,6 +410,7 @@ def main() -> int:
     removed_rule_ids = sorted(base_ids - fresh_ids)
 
     unexpected_field_deltas: list[tuple[str, str]] = []
+    expected_provenance_deltas: list[str] = []
     added_edges_by_target_kind: Counter[str] = Counter()
     added_edges_total = 0
     removed_granted_by: list[tuple[str, str]] = []
@@ -306,6 +419,13 @@ def main() -> int:
     for rid in sorted(base_ids & fresh_ids):
         old, new = base_rules[rid], fresh_rules[rid]
         for field in diff_rule(old, new):
+            # SD-36 Epic F1 re-check round 3, finding 1 (ORCHESTRATOR RULING): a `provenance`
+            # delta is expected ONLY for a record on the pinned, generated list -- never a
+            # blanket allowance for the field. A record off that list, or any OTHER field on
+            # ANY record (including one on the list), still gates.
+            if field == "provenance" and rid in EXPECTED_PROVENANCE_DELTA_RECORDS:
+                expected_provenance_deltas.append(rid)
+                continue
             unexpected_field_deltas.append((rid, field))
 
         edges_removed, edges_added = edge_diff(old.get("granted_by"), new.get("granted_by"))
@@ -344,6 +464,20 @@ def main() -> int:
         print(f"  {kind}: {n}")
     print(f"  TOTAL: {added_edges_total}")
     print(f"  added grants (total): {added_grants_total}")
+    print()
+    print("== expected delta classes (named, counted, explained -- never a blanket allowance) ==")
+    print(f"  added granted_by edges: {added_edges_total}  (F1's own declared purpose -- a bare AUTO reference now resolving through its parent ability category; SS3.5 permits growth)")
+    print(f"  added grants: {added_grants_total}  (F1-2 GatedFactGrant wrapping / F1-3 WeaponSet expansion of a previously-bare selector; see grant_signature/grant_covers)")
+    print(f"  added _vars/ tables: {len(added_vars)}  (condition variables an added GatedFactGrant's `when` now references)")
+    print(f"  added _defects/ files: {len(added_defects)}")
+    print(f"  provenance deltas on the pinned current_class-fix record list: {len(expected_provenance_deltas)} of {len(EXPECTED_PROVENANCE_DELTA_RECORDS)} pinned records (see structural_diff_expected_provenance_deltas.json)")
+    if added_rule_ids:
+        print(f"  added rule ids: {len(added_rule_ids)}")
+        for rid in added_rule_ids[: args.max_examples]:
+            cause = KNOWN_ADDED_RULE_CAUSES.get(rid, "cause not yet named -- explain before treating this as expected")
+            print(f"    {rid}: {cause}")
+        if len(added_rule_ids) > args.max_examples:
+            print(f"    ... and {len(added_rule_ids) - args.max_examples} more")
     print()
     print(f"unexpected field deltas: {len(unexpected_field_deltas)}")
     for rid, field in unexpected_field_deltas[: args.max_examples]:

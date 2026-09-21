@@ -206,26 +206,31 @@ fn package_carries_no_source_format_literal() {
     assert!(hits.is_empty(), "{} files carry a source-format literal, e.g. {:?}", hits.len(), hits.iter().take(5).collect::<Vec<_>>());
 }
 
-/// SD-36 Epic F1 re-check round 2, finding 2: fix 1 made every spelling of an
+/// SD-36 Epic F1 re-check round 2, finding 2 (round 3 fix): fix 1 made every spelling of an
 /// `AUTO:WEAPONPROF|TYPE=` selector resolve (rather than silently drop), so a record whose
 /// PCGen source states the same selector under two or three differently-capitalized book
 /// spellings (`OnehandedFirearm` / `OneHandedFirearm` / `OneHandedFireArm`, all the identical
 /// 9-weapon oracle set) converted to that many identical-content grants -- duplicate lines on
 /// the printed sheet. `convert_record` now dedupes a record's own `WeaponSet` grants by
-/// resolved member set (`dedup_weapon_set_grants`, `convert.rs`); this gate re-proves the
-/// invariant against the WHOLE generated package, not only the picaroon unit the finding named,
-/// so a future selector change cannot silently reopen it.
+/// resolved member set (`dedup_weapon_set_grants`, `convert.rs`).
+///
+/// This gate reads a FRESH in-process conversion (`run(&s.tree, &s.index, &s.closures)`), never
+/// `package_files()` -- the tracked `data/sheet_rules` on this branch predates F1
+/// (`package_on_disk_is_fresh_and_clean` fails on it: `grep -rl WeaponSet data/sheet_rules | wc
+/// -l` is 0, so a `package_files()`-backed version of this test would pass vacuously no matter
+/// whether `dedup_weapon_set_grants` runs). Running the whole corpus through the converter
+/// in-process, not only the picaroon unit the finding named, means a future selector change
+/// anywhere cannot silently reopen the duplicate-grant defect. Proved load-bearing by hand:
+/// red (offenders non-empty, `advanced_class_guide:class_feature:picaroon_weapon_proficiency`
+/// among them) with the `dedup_weapon_set_grants` call in `convert_record` commented out, green
+/// with it restored.
 #[test]
 fn no_rule_carries_two_weapon_set_grants_with_the_same_resolved_member_set() {
-    let files = package_files();
+    let s = shared();
+    let r = run(&s.tree, &s.index, &s.closures);
     let mut offenders: Vec<String> = Vec::new();
-    for (rel, bytes) in &files {
-        let parts: Vec<&str> = rel.split('/').collect();
-        if parts.len() != 3 {
-            continue; // not a per-unit rule file (`_report.json`, `_vars/*`, ...)
-        }
-        let Ok(rules) = serde_json::from_slice::<Vec<SheetRule>>(bytes) else { continue };
-        for rule in &rules {
+    for (rel, rules) in &r.files {
+        for rule in rules {
             let mut seen: Vec<&Vec<String>> = Vec::new();
             for g in &rule.grants {
                 let members = match g {
@@ -243,7 +248,62 @@ fn no_rule_carries_two_weapon_set_grants_with_the_same_resolved_member_set() {
             }
         }
     }
-    assert!(offenders.is_empty(), "records with a duplicate-content WeaponSet grant (same resolved member set, different raw label): {offenders:?}");
+    assert!(offenders.is_empty(), "records with a duplicate-content WeaponSet grant (same resolved member set, different raw label), from a fresh in-process conversion: {offenders:?}");
+}
+
+/// SD-36 Epic F1 re-check round 3, finding 4: enumerates every `WeaponSet` member set that
+/// carries more than one raw label, from a FRESH in-process conversion (never a fixture), so a
+/// fourth multi-label family cannot appear silently -- a future selector spelling divergence
+/// fails this test by name instead of quietly printing two different lines for the one
+/// proficiency (`src/rules_core/level_up_option_filter.rs`'s `pretty_weapon_set_label` doc
+/// comment cites this test and this test's own denominator). Measured today: 63 `WeaponSet`
+/// grants / 27 distinct member sets, exactly 3 multi-label (the one/two-handed firearm families
+/// and the siege family) -- every one of the 3 must fold to a single printed phrase via
+/// `describe_prof`, the same public entry point the sheet renderer calls.
+#[test]
+fn no_fifth_multi_label_weapon_set_family_appears_silently() {
+    use codex::rules_core::level_up_option_filter::describe_prof;
+    use std::collections::{BTreeMap, BTreeSet};
+
+    let s = shared();
+    let r = run(&s.tree, &s.index, &s.closures);
+
+    let mut sets: BTreeMap<Vec<String>, BTreeSet<String>> = BTreeMap::new();
+    let mut total_ws_grants = 0usize;
+    for rules in r.files.values() {
+        for rule in rules {
+            for g in &rule.grants {
+                let fact = match g {
+                    Effect::FactGrant(f) => Some(f),
+                    Effect::GatedFactGrant { fact, .. } => Some(fact),
+                    _ => None,
+                };
+                if let Some(Fact::Proficiency(ProfRef::WeaponSet { label, members })) = fact {
+                    total_ws_grants += 1;
+                    let mut sorted_members = members.clone();
+                    sorted_members.sort();
+                    sets.entry(sorted_members).or_default().insert(label.clone());
+                }
+            }
+        }
+    }
+    let multi: Vec<(&Vec<String>, &BTreeSet<String>)> = sets.iter().filter(|(_, labels)| labels.len() > 1).collect();
+    assert_eq!(total_ws_grants, 63, "WeaponSet grant count moved -- re-derive this test's denominator");
+    assert_eq!(sets.len(), 27, "distinct WeaponSet member-set count moved -- re-derive this test's denominator");
+    assert_eq!(
+        multi.len(),
+        3,
+        "a new multi-label member set appeared: {:?}",
+        multi.iter().map(|(_, l)| l).collect::<Vec<_>>()
+    );
+    for (members, labels) in &multi {
+        let sample_members: Vec<String> = members.iter().take(1).cloned().collect();
+        let pretty: BTreeSet<String> = labels
+            .iter()
+            .map(|l| describe_prof(&ProfRef::WeaponSet { label: l.clone(), members: sample_members.clone() }))
+            .collect();
+        assert_eq!(pretty.len(), 1, "member set with labels {labels:?} still prints {pretty:?} -- a multi-label family must fold to one phrase");
+    }
 }
 
 /// SD-35 AT-35-E5-003 -- the live-package gate for bucket U's

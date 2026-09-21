@@ -27,6 +27,18 @@ Round 2 (finding 2) adds four more mutations `grant_signature` alone (wrapper-ag
 plus one non-mutation pin: a `WeaponSet` whose members merely GROW under the same label (a real
 oracle-driven set growth, or F1-3's own bare-tag expansion) must not gate.
 
+Round 3 (finding 1) pins the two shapes `missing_grant_signatures`'s greedy, order-dependent,
+non-deduplicating match got wrong on the real corpus:
+
+    (h1) the real `picaroon_weapon_proficiency` shape -- three baseline bare `WeaponGroup`
+         grants (two byte-identical, one a case variant) folding, after F1-3's dedup, to the ONE
+         fresh `WeaponSet` naming them all -- a real dedup, not a loss, must not gate.
+    (h2) a reordered identical multiset -- baseline `[bare A, gated A(when X)]`, fresh
+         `[gated A(when X), bare A]` (the same two grants, swapped) -- the greedy scan's first
+         pick (bare A covers the lenient bare-covers-gated rule against fresh's gated A) used up
+         the fresh grant the second baseline grant actually needed, reporting a spurious loss;
+         the maximum bipartite match must not gate.
+
 Run:
     python3 docs/release/SD-36-consolidation/artifacts/epic-f/scripts/structural_diff_test.py
 """
@@ -315,6 +327,109 @@ class StructuralDiffGateTest(unittest.TestCase):
         self.assertEqual(code, 1, out)
         self.assertIn("removed grants: 1", out)
 
+    def test_h1_the_picaroon_shape_an_exact_duplicate_collapse_does_not_gate(self):
+        """SD-36 Epic F1 re-check round 3, finding 1: the real
+        `advanced_class_guide:class_feature:picaroon_weapon_proficiency` shape -- the baseline
+        holds THREE bare `WeaponGroup` grants of one folded signature (two byte-identical
+        `OnehandedFirearm`, one a case variant `OneHandedFirearm`), and F1-3's
+        `dedup_weapon_set_grants` folds them, on the fresh side, to the ONE `WeaponSet` grant
+        that names them all. Before the fix, `missing_grant_signatures`'s greedy one-fresh-per-
+        one-baseline match let the single fresh grant cover only the FIRST baseline grant,
+        reporting the other two as `removed grants: 2` -- a real dedup miscounted as a loss."""
+        base = base_rules()
+        base["advanced_class_guide/class_feature/picaroon_weapon_proficiency.json"] = [
+            {
+                "id": "advanced_class_guide:class_feature:picaroon_weapon_proficiency",
+                "label": "Picaroon Weapon Proficiency",
+                "value": "Text",
+                "granted_by": [],
+                "grants": [
+                    {"FactGrant": {"Proficiency": {"WeaponGroup": "OnehandedFirearm"}}},
+                    {"FactGrant": {"Proficiency": {"WeaponGroup": "OnehandedFirearm"}}},
+                    {"FactGrant": {"Proficiency": {"WeaponGroup": "OneHandedFirearm"}}},
+                ],
+            }
+        ]
+        fresh = base_rules()
+        fresh["advanced_class_guide/class_feature/picaroon_weapon_proficiency.json"] = [
+            {
+                "id": "advanced_class_guide:class_feature:picaroon_weapon_proficiency",
+                "label": "Picaroon Weapon Proficiency",
+                "value": "Text",
+                "granted_by": [],
+                "grants": [
+                    {
+                        "FactGrant": {
+                            "Proficiency": {
+                                "WeaponSet": {"label": "OnehandedFirearm", "members": ["Pistol", "Musket", "Blunderbuss"]}
+                            }
+                        }
+                    }
+                ],
+            }
+        ]
+        code, out = self.run_diff(base, fresh)
+        self.assertEqual(code, 0, out)
+        self.assertIn("removed grants: 0", out)
+
+    def test_h2_a_reordered_identical_multiset_does_not_gate(self):
+        """SD-36 Epic F1 re-check round 3, finding 1 (latent hazard): the baseline holds a bare
+        grant and a gated grant of the SAME signature; the fresh side holds the identical two
+        grants, merely reordered. Before the fix, the greedy scan matched the bare baseline
+        grant against the fresh GATED one first (a bare baseline grant covers any fresh gate),
+        leaving no fresh grant left for the baseline's own gated grant -- a spurious
+        `removed grants: 1` for an unchanged multiset. The maximum bipartite match finds the
+        exact pairing regardless of order."""
+        base = base_rules()
+        rec = base["ultimate_combat/class_feature/samurai_proficiencies.json"][0]
+        rec["grants"] = [
+            {"FactGrant": {"Proficiency": {"WeaponGroup": "Samurai"}}},
+            {
+                "GatedFactGrant": {
+                    "fact": {"Proficiency": {"WeaponGroup": "Samurai"}},
+                    "when": {"Compare": {"lhs": {"Var": "v1"}, "op": "Eq", "rhs": {"Const": 0}}},
+                }
+            },
+        ]
+        fresh = base_rules()
+        fresh["ultimate_combat/class_feature/samurai_proficiencies.json"][0]["grants"] = [
+            {
+                "GatedFactGrant": {
+                    "fact": {"Proficiency": {"WeaponGroup": "Samurai"}},
+                    "when": {"Compare": {"lhs": {"Var": "v1"}, "op": "Eq", "rhs": {"Const": 0}}},
+                }
+            },
+            {"FactGrant": {"Proficiency": {"WeaponGroup": "Samurai"}}},
+        ]
+        code, out = self.run_diff(base, fresh)
+        self.assertEqual(code, 0, out)
+        self.assertIn("removed grants: 0", out)
+
+    def test_h3_a_genuine_drop_does_not_hide_behind_an_untouched_duplicate_sibling(self):
+        """The duplicate-collapse in h1 must not weaken round 1's own contract: the baseline
+        holds TWO grants of one signature that are NOT duplicates of each other (a bare grant
+        and a genuinely gated one) -- `_grants_are_duplicates` requires the same gate, so these
+        never collapse. The fresh side drops the gated one and keeps only the bare one; that
+        drop must still gate, not hide behind the untouched bare sibling."""
+        base = base_rules()
+        rec = base["ultimate_combat/class_feature/samurai_proficiencies.json"][0]
+        rec["grants"] = [
+            {"FactGrant": {"Proficiency": {"WeaponGroup": "Samurai"}}},
+            {
+                "GatedFactGrant": {
+                    "fact": {"Proficiency": {"WeaponGroup": "Samurai"}},
+                    "when": {"Compare": {"lhs": {"Var": "v1"}, "op": "Eq", "rhs": {"Const": 0}}},
+                }
+            },
+        ]
+        fresh = base_rules()
+        fresh["ultimate_combat/class_feature/samurai_proficiencies.json"][0]["grants"] = [
+            {"FactGrant": {"Proficiency": {"WeaponGroup": "Samurai"}}},
+        ]
+        code, out = self.run_diff(base, fresh)
+        self.assertEqual(code, 1, out)
+        self.assertIn("removed grants: 1", out)
+
     def test_a_weapon_sets_members_growing_under_the_same_label_does_not_gate(self):
         """The non-mutation sibling of g3/g4: the baseline's member list is a SUBSET of the
         fresh one (a real oracle-driven set growth, or F1-3's bare-tag expansion where the
@@ -341,6 +456,41 @@ class StructuralDiffGateTest(unittest.TestCase):
         code, out = self.run_diff(base, fresh)
         self.assertEqual(code, 0, out)
         self.assertIn("verdict=PASS", out)
+
+    def test_a_provenance_delta_on_the_pinned_current_class_fix_record_does_not_gate(self):
+        """SD-36 Epic F1 re-check round 3, finding 1 (ORCHESTRATOR RULING): a `provenance` delta
+        on a record from `structural_diff_expected_provenance_deltas.json`'s pinned list -- the
+        `current_class` closure fix's `closure_rows` growth -- is an expected, named, counted
+        delta class, not a field-delta failure. `ultimate_psionics:class:psion` is on that
+        list."""
+        rid = "ultimate_psionics:class:psion"
+        self.assertIn(rid, structural_diff.EXPECTED_PROVENANCE_DELTA_RECORDS, "fixture assumption: this id must be on the pinned list")
+        base = base_rules()
+        base["ultimate_psionics/class/psion.json"] = [
+            {"id": rid, "label": "Psion", "value": "Text", "granted_by": [], "grants": [], "provenance": {"closure_rows": ["a:1"]}}
+        ]
+        fresh = base_rules()
+        fresh["ultimate_psionics/class/psion.json"] = [
+            {"id": rid, "label": "Psion", "value": "Text", "granted_by": [], "grants": [], "provenance": {"closure_rows": ["a:1", "a:2"]}}
+        ]
+        code, out = self.run_diff(base, fresh)
+        self.assertEqual(code, 0, out)
+        self.assertIn("unexpected field deltas: 0", out)
+        self.assertIn("provenance deltas on the pinned current_class-fix record list: 1", out)
+
+    def test_a_provenance_delta_on_an_unpinned_record_still_gates(self):
+        """The pinned list is an EXACT enumeration, never a blanket allowance for the field: the
+        identical `provenance` mutation on a record NOT on the pinned list still fails."""
+        rid = "core_rulebook:class_feature:arcane_bloodline_school_power"
+        self.assertNotIn(rid, structural_diff.EXPECTED_PROVENANCE_DELTA_RECORDS, "fixture assumption: this id must NOT be on the pinned list")
+        base = base_rules()
+        base["core_rulebook/class_feature/arcane_bloodline_school_power.json"][0]["provenance"] = {"closure_rows": ["a:1"]}
+        fresh = base_rules()
+        fresh["core_rulebook/class_feature/arcane_bloodline_school_power.json"][0]["provenance"] = {"closure_rows": ["a:1", "a:2"]}
+        code, out = self.run_diff(base, fresh)
+        self.assertEqual(code, 1, out)
+        self.assertIn("unexpected field deltas: 1", out)
+        self.assertIn("arcane_bloodline_school_power: provenance", out)
 
     def test_report_only_flag_keeps_exit_zero(self):
         base = base_rules()

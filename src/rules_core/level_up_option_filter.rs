@@ -285,22 +285,39 @@ fn describe_weapon_set(label: &str, members: &[String]) -> String {
 /// `"Light.Martial"` -> `"light martial"`; `"SiegeFirearm"` -> `"siege firearm"`;
 /// `"KoboldTailAttachment"` -> `"kobold tail attachment"`.
 ///
-/// One family of oracle `TYPE=` tags is genuinely ambiguous this way: PF1's one/two-handed
-/// firearm proficiency selector is spelled three different ways across sourcebooks
-/// (`OnehandedFirearm`, `OneHandedFirearm`, `OneHandedFireArm`), and a plain camelCase split
-/// reads their INCIDENTAL capitalization, not the selector's real word boundaries -- two, three
-/// and four words respectively for what is, at ingest, the identical resolved weapon set (SD-36
-/// Epic F1 re-check round 2, finding 2: "the printed phrase is a function of which book's
-/// capitalization the selector used"). `canonical_hand_firearm_words` recognizes that one
-/// compound ahead of the generic split so every spelling reads the same way; every other label
-/// (there is no other same-set, differently-spelled label in the corpus today) keeps the plain
-/// camelCase split unchanged.
+/// THREE families of oracle `TYPE=` tags are multi-label for the same resolved weapon set today
+/// (measured, SD-36 Epic F1 re-check round 3, finding 4: `cargo run --locked -j 8 -p
+/// codex-ingest --bin sheet_rule_convert -- --dump <scratch>`, then a Python walk of every
+/// `grants` entry's `Proficiency::WeaponSet` across the dump grouping by `frozenset(members)` --
+/// 63 `WeaponSet` grants / 27 distinct member sets, 3 of which carry more than one label):
+///
+///   - PF1's one-handed firearm selector, spelled three ways across sourcebooks
+///     (`OnehandedFirearm`, `OneHandedFirearm`, `OneHandedFireArm`; 9-member set) and its
+///     two-handed sibling (`TwohandedFirearm`/`TwoHandedFirearm`; 11-member set) -- a plain
+///     camelCase split reads their INCIDENTAL capitalization, not the selector's real word
+///     boundaries (SD-36 Epic F1 re-check round 2, finding 2: "the printed phrase is a function
+///     of which book's capitalization the selector used").
+///   - PF1's siege weapon selector (`SiegeWeapon`, `advanced_class_guide`'s and
+///     `ultimate_combat`'s Siege Engineer feat/class feature) and its `mythic_adventures`
+///     sibling `SiegeEngine` (`up_classes.lst`'s own equipment rows carry BOTH `TYPE=SiegeEngine`
+///     and `TYPE=SiegeWeapon` on every siege item -- PCGen's own data treats them as synonyms,
+///     never two categories); 18-member set, identical under both labels.
+///
+/// `canonical_multi_label_words` recognizes all three families (case-insensitively) ahead of the
+/// generic split, so every spelling reads the same way -- the paper-sheet doctrine that the same
+/// proficiency reads the same way on every sheet, regardless of which book's tag a selector used.
+/// Every other label (measured: no fourth family exists in the corpus today, by the same walk)
+/// keeps the plain camelCase split unchanged.
+/// `codex_ingest::sheet_rule_convert_gate::no_fifth_multi_label_weapon_set_family_appears_silently`
+/// (this crate cannot read the corpus -- SD-36 Epic A's wall) re-derives the measurement above
+/// from a fresh in-process conversion, so a future selector addition cannot reopen this without
+/// a test failure naming the new family.
 fn pretty_weapon_set_label(label: &str) -> String {
     label
         .split('.')
         .map(|segment| {
             let lower = segment.to_ascii_lowercase();
-            match canonical_hand_firearm_words(&lower) {
+            match canonical_multi_label_words(&lower) {
                 Some(words) => words.to_string(),
                 None => split_camel_words(segment).to_lowercase(),
             }
@@ -309,13 +326,17 @@ fn pretty_weapon_set_label(label: &str) -> String {
         .join(" ")
 }
 
-/// The one compound this corpus states under multiple incidental capitalizations for the same
-/// resolved weapon set. Matched against the FULLY LOWERCASED segment, so it fires regardless of
-/// which of the three spellings produced it.
-fn canonical_hand_firearm_words(lower_segment: &str) -> Option<&'static str> {
+/// The three compounds this corpus states under multiple incidental spellings for the same
+/// resolved weapon set (see [`pretty_weapon_set_label`]'s docstring for the measurement).
+/// Matched against the FULLY LOWERCASED segment, so each fires regardless of which spelling
+/// produced it. `"siegeengine"` maps to the SAME output `"SiegeWeapon"` reaches through the
+/// generic camelCase split (`"siege weapon"`) -- one canonical route, not a second phrase to
+/// keep in sync -- so [`describe_weapon_set`]'s `" weapon"`-suffix fold still applies to it.
+fn canonical_multi_label_words(lower_segment: &str) -> Option<&'static str> {
     match lower_segment {
         "onehandedfirearm" => Some("one handed fire arm"),
         "twohandedfirearm" => Some("two handed fire arm"),
+        "siegeengine" => Some("siege weapon"),
         _ => None,
     }
 }
@@ -875,14 +896,22 @@ mod tests {
         assert!(!words.contains("weapon weapons"), "must never repeat the noun: {words:?}");
     }
 
-    /// The `SiegeEngine` sibling label (`mythic_adventures:ability:siege_engines_weapon_group`)
-    /// gets the same treatment for the same reason, even though "siege engine weapons" would
-    /// not literally repeat a word -- both labels end in a noun that already implies the group,
-    /// so neither gets the generic " weapons" suffix appended after it.
+    /// SD-36 Epic F1 re-check round 3, finding 4: `SiegeEngine`
+    /// (`mythic_adventures:ability:siege_engines_weapon_group`) and `SiegeWeapon` resolve to the
+    /// BYTE-IDENTICAL 18-member set (measured: `ultimate_combat/uc_profs_weapon.lst`'s own siege
+    /// weapon rows carry both `TYPE=SiegeEngine` and `TYPE=SiegeWeapon` on every item; PCGen's
+    /// own data treats them as synonyms, never two categories). Before this fix each
+    /// label kept its own suffix fold ("siege weapons" vs. "siege engines") -- the exact
+    /// mechanism the finding named: the same resolved proficiency read two ways depending on
+    /// which book's tag the selector used. Ruling: fold to the one canonical phrase (the book's
+    /// own DESC text for the Siege Engineer feat reads "proficient with all siege weapons").
     #[test]
-    fn describe_prof_prints_siege_engine_without_a_redundant_weapons_suffix() {
-        let words = describe_prof(&ProfRef::WeaponSet { label: "SiegeEngine".to_owned(), members: vec!["Ballista".to_owned()] });
+    fn describe_prof_prints_siege_engine_the_same_as_siege_weapon() {
+        let members = vec!["Ballista".to_owned()];
+        let siege_weapon = describe_prof(&ProfRef::WeaponSet { label: "SiegeWeapon".to_owned(), members: members.clone() });
+        let siege_engine = describe_prof(&ProfRef::WeaponSet { label: "SiegeEngine".to_owned(), members });
 
-        assert_eq!(words, "siege engines");
+        assert_eq!(siege_weapon, "siege weapons");
+        assert_eq!(siege_weapon, siege_engine, "the identical resolved 18-member set must read the same way regardless of which book's tag named it");
     }
 }

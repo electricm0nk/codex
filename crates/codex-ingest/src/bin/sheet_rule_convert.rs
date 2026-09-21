@@ -1,11 +1,11 @@
 //! `sheet_rule_convert` -- the ingest-time converter (SD-35 AT-35-E2-001).
 //!
 //! ```text
-//! cargo run --locked --bin sheet_rule_convert -- --write # regenerate data/sheet_rules/ whole
-//! cargo run --locked --bin sheet_rule_convert -- --check # verify the package is fresh and clean
-//! cargo run --locked --bin sheet_rule_convert -- --one <unit id>   # print one unit's conversion
-//! cargo run --locked --bin sheet_rule_convert -- --dump <dir>      # write a fresh conversion to
-//!                                                                   # a SCRATCH dir, never data/sheet_rules
+//! cargo run --locked -p codex-ingest --bin sheet_rule_convert -- --write # regenerate data/sheet_rules/ whole
+//! cargo run --locked -p codex-ingest --bin sheet_rule_convert -- --check # verify the package is fresh and clean
+//! cargo run --locked -p codex-ingest --bin sheet_rule_convert -- --one <unit id>   # print one unit's conversion
+//! cargo run --locked -p codex-ingest --bin sheet_rule_convert -- --dump <dir>      # write a fresh conversion to
+//!                                                                                   # a SCRATCH dir, never data/sheet_rules
 //! ```
 //!
 //! Prints `records=<n> converted=<n> refused=<n>` (summing to the population) on every run, and
