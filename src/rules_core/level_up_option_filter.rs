@@ -273,11 +273,15 @@ fn describe_weapon_set(label: &str, members: &[String]) -> String {
     // group noun -- PCGen's `SiegeWeapon`/`SiegeEngine` tags -- must not get a second "weapons"
     // appended after it (`"siege weapon weapons"`, the stutter the finding named); the label's
     // own noun, pluralized, already reads as the sheet's proficiency-line noun.
+    //
+    // `SiegeEngine` never needs an " engine"/" engines" arm here: `canonical_multi_label_words`
+    // (below) folds `"siegeengine"` upstream to the SAME `"siege weapon"` text `SiegeWeapon`
+    // reaches through the generic camelCase split, so it is caught by the " weapon" arm above.
+    // Measured on dump-r4 (SD-36 Epic F1 polish backlog item 4): 30 distinct WeaponSet labels
+    // in the whole corpus, exactly one (`SiegeEngine`) would otherwise lowercase to something
+    // ending in "engine", and it is intercepted before reaching this point.
     if let Some(prefix) = pretty.strip_suffix(" weapon").or_else(|| pretty.strip_suffix(" weapons")) {
         return format!("{prefix} weapons");
-    }
-    if let Some(prefix) = pretty.strip_suffix(" engine").or_else(|| pretty.strip_suffix(" engines")) {
-        return format!("{prefix} engines");
     }
     format!("{pretty} weapons")
 }

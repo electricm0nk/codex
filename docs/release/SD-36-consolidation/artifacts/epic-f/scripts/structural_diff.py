@@ -231,14 +231,45 @@ def grant_covers(old_effect: object, new_effect: object) -> bool:
     return True
 
 
+def _fact_shape_of(effect: object) -> str:
+    """The literal shape key of a grant's fact -- e.g. `"WeaponGroup"`, `"WeaponTag"`,
+    `"WeaponAllOf"`, `"WeaponSet"` for a `Proficiency`, or the fact's own dict key otherwise.
+    Unlike `grant_signature`, this does NOT fold the four `Proficiency` spellings together: it
+    exists so `_grants_are_duplicates` can require the SAME shape as well as the same folded
+    signature (SD-36 Epic F1 polish backlog item 3) -- `grant_signature`'s fold is deliberately
+    coarser (SS3.5 sanctions a bare tag EXPANDING to a `WeaponSet` naming the same tag as a
+    non-duplicate evolution, handled separately by `grant_covers`), but two BASELINE grants of
+    different shapes (e.g. `WeaponGroup("a")` and `WeaponTag("a")`) are not the same fact
+    restated twice and must never collapse as if they were."""
+    fact = _fact_of(effect)
+    if not isinstance(fact, dict):
+        return "raw"
+    prof = fact.get("Proficiency") if isinstance(fact, dict) else None
+    if isinstance(prof, dict):
+        for key in ("WeaponGroup", "WeaponTag", "WeaponAllOf", "WeaponSet"):
+            if key in prof:
+                return f"Proficiency.{key}"
+        return "Proficiency.other:" + json.dumps(prof, sort_keys=True)
+    return "fact:" + json.dumps(fact, sort_keys=True)
+
+
 def _grants_are_duplicates(a: object, b: object) -> bool:
     """Whether two BASELINE grants restate the identical content -- the same target signature,
-    the same gate, and (for a `WeaponSet`) the identical member list, never merely an
-    overlapping one -- so collapsing them loses nothing (SD-36 Epic F1 re-check round 3, finding
-    1). A pair that only SHARES a signature but genuinely differs (a different gate, or a
+    the same FACT SHAPE (not merely the same folded signature -- SD-36 Epic F1 polish backlog
+    item 3: `grant_signature` deliberately folds `WeaponGroup`/`WeaponTag`/`WeaponAllOf`/
+    `WeaponSet` of the same tag text to one `("prof_tag", ...)` value for GROUPING and
+    `grant_covers` purposes, so a cross-shape baseline pair like `WeaponGroup("a")` +
+    `WeaponTag("a")` must not collapse here even though they share a signature), the same gate,
+    and (for a `WeaponSet`) the identical member list, never merely an overlapping one -- so
+    collapsing them loses nothing (SD-36 Epic F1 re-check round 3, finding 1). A pair that only
+    SHARES a signature but genuinely differs (a different shape, a different gate, or a
     `WeaponSet` with a different member list) is never a duplicate here; it stays two distinct
-    entries so a real drop of one of them cannot hide behind the other."""
-    if grant_signature(a) != grant_signature(b) or _gate_of(a) != _gate_of(b):
+    entries so a real drop of one of them cannot hide behind the other. Tag-case variants of the
+    SAME shape (e.g. two `WeaponGroup` grants differing only in book capitalization, such as
+    `picaroon_weapon_proficiency`'s three grants) still collapse, since `_fact_shape_of` is
+    case-preserving on the KEY, not the tag text, and `grant_signature` already lowercases the
+    tag text for the equality check above."""
+    if grant_signature(a) != grant_signature(b) or _fact_shape_of(a) != _fact_shape_of(b) or _gate_of(a) != _gate_of(b):
         return False
     a_ws = _weapon_set_of(_fact_of(a))
     b_ws = _weapon_set_of(_fact_of(b))
@@ -367,6 +398,28 @@ def diff_rule(old: dict, new: dict) -> list[str]:
     return sorted(k for k in keys if old.get(k) != new.get(k))
 
 
+def _provenance_delta_is_closure_rows_growth_only(old_prov: object, new_prov: object) -> bool:
+    """Whether a `provenance` delta on a pinned record matches the narrow contract
+    `structural_diff_expected_provenance_deltas.json` itself states: this grows ONLY
+    `provenance.closure_rows` (no other field). The pinned-record allowance in `main()` used to
+    accept ANY change to the whole `provenance` object once `rid` was on the pinned list --
+    including a corrupted `book`, `oracle_pin` or `converter_version`, or `closure_rows`
+    SHRINKING (SD-36 Epic F1 polish backlog item 2). Requires BOTH sides to be dicts, the set of
+    differing subkeys to be exactly `{"closure_rows"}`, and the baseline `closure_rows` list to
+    be a subset of the fresh one -- anything else (a different differing subkey, or a
+    `closure_rows` value that is not a superset) is not covered and falls through to gate like
+    any other field delta."""
+    if not isinstance(old_prov, dict) or not isinstance(new_prov, dict):
+        return False
+    keys = (set(old_prov.keys()) | set(new_prov.keys()))
+    differing = {k for k in keys if old_prov.get(k) != new_prov.get(k)}
+    if differing != {"closure_rows"}:
+        return False
+    old_rows = set(old_prov.get("closure_rows") or [])
+    new_rows = set(new_prov.get("closure_rows") or [])
+    return old_rows.issubset(new_rows)
+
+
 def main() -> int:
     ap = argparse.ArgumentParser()
     ap.add_argument("scratch_dir", help="a directory `sheet_rule_convert --dump <dir>` wrote (never data/sheet_rules)")
@@ -423,7 +476,9 @@ def main() -> int:
             # delta is expected ONLY for a record on the pinned, generated list -- never a
             # blanket allowance for the field. A record off that list, or any OTHER field on
             # ANY record (including one on the list), still gates.
-            if field == "provenance" and rid in EXPECTED_PROVENANCE_DELTA_RECORDS:
+            if field == "provenance" and rid in EXPECTED_PROVENANCE_DELTA_RECORDS and _provenance_delta_is_closure_rows_growth_only(
+                old.get("provenance"), new.get("provenance")
+            ):
                 expected_provenance_deltas.append(rid)
                 continue
             unexpected_field_deltas.append((rid, field))
@@ -503,6 +558,10 @@ def main() -> int:
     failures: list[str] = []
     if removed_rule_ids:
         failures.append(f"removed rule ids: {len(removed_rule_ids)}")
+    if removed_vars:
+        failures.append(f"removed _vars/ files: {len(removed_vars)}")
+    if removed_defects:
+        failures.append(f"removed _defects/ files: {len(removed_defects)}")
     if unexpected_field_deltas:
         failures.append(f"unexpected field deltas: {len(unexpected_field_deltas)}")
     if removed_granted_by:

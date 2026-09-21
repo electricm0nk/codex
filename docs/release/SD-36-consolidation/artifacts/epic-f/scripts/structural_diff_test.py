@@ -492,6 +492,89 @@ class StructuralDiffGateTest(unittest.TestCase):
         self.assertIn("unexpected field deltas: 1", out)
         self.assertIn("arcane_bloodline_school_power: provenance", out)
 
+    def test_a_pinned_records_oracle_pin_change_still_gates(self):
+        """SD-36 Epic F1 polish backlog item 2: the pinned-record provenance allowance is
+        `structural_diff_expected_provenance_deltas.json`'s own narrower contract -- it grows
+        ONLY `closure_rows`, no other field. A pinned record whose `oracle_pin` also changed
+        (alongside a legitimate `closure_rows` growth) must still gate, since the allowance's
+        differing-subkeys set is then `{closure_rows, oracle_pin}`, not exactly `{closure_rows}`."""
+        rid = "ultimate_psionics:class:psion"
+        self.assertIn(rid, structural_diff.EXPECTED_PROVENANCE_DELTA_RECORDS, "fixture assumption: this id must be on the pinned list")
+        base = base_rules()
+        base["ultimate_psionics/class/psion.json"] = [
+            {
+                "id": rid,
+                "label": "Psion",
+                "value": "Text",
+                "granted_by": [],
+                "grants": [],
+                "provenance": {"closure_rows": ["a:1"], "oracle_pin": "psion_v1.lst"},
+            }
+        ]
+        fresh = base_rules()
+        fresh["ultimate_psionics/class/psion.json"] = [
+            {
+                "id": rid,
+                "label": "Psion",
+                "value": "Text",
+                "granted_by": [],
+                "grants": [],
+                "provenance": {"closure_rows": ["a:1", "a:2"], "oracle_pin": "psion_v2.lst"},
+            }
+        ]
+        code, out = self.run_diff(base, fresh)
+        self.assertEqual(code, 1, out)
+        self.assertIn("unexpected field deltas: 1", out)
+        self.assertIn("psion: provenance", out)
+
+    def test_a_pinned_records_closure_rows_shrinking_still_gates(self):
+        """SD-36 Epic F1 polish backlog item 2: the allowance requires the baseline `closure_rows`
+        to be a SUBSET of the fresh one (growth-only), never merely a different value. A pinned
+        record whose `closure_rows` list SHRINKS -- a real row dropped, not a fold-fix addition --
+        must still gate."""
+        rid = "ultimate_psionics:class:psion"
+        self.assertIn(rid, structural_diff.EXPECTED_PROVENANCE_DELTA_RECORDS, "fixture assumption: this id must be on the pinned list")
+        base = base_rules()
+        base["ultimate_psionics/class/psion.json"] = [
+            {
+                "id": rid,
+                "label": "Psion",
+                "value": "Text",
+                "granted_by": [],
+                "grants": [],
+                "provenance": {"closure_rows": ["a:1", "a:2"]},
+            }
+        ]
+        fresh = base_rules()
+        fresh["ultimate_psionics/class/psion.json"] = [
+            {"id": rid, "label": "Psion", "value": "Text", "granted_by": [], "grants": [], "provenance": {"closure_rows": ["a:1"]}}
+        ]
+        code, out = self.run_diff(base, fresh)
+        self.assertEqual(code, 1, out)
+        self.assertIn("unexpected field deltas: 1", out)
+        self.assertIn("psion: provenance", out)
+
+    def test_cross_shape_baseline_pair_is_not_a_duplicate(self):
+        """SD-36 Epic F1 polish backlog item 3: `grant_signature` folds `WeaponGroup`/
+        `WeaponTag`/`WeaponAllOf`/`WeaponSet` of the same tag text to one `("prof_tag", ...)`
+        value for GROUPING and `grant_covers` purposes -- but two BASELINE grants of DIFFERENT
+        shapes naming the same tag (`WeaponGroup("Samurai")` and `WeaponTag("Samurai")`) are not
+        the same fact restated twice and must not collapse via `_grants_are_duplicates`. Dropping
+        one of them on the fresh side must still gate as a genuine loss, not hide as a dedup."""
+        base = base_rules()
+        rec = base["ultimate_combat/class_feature/samurai_proficiencies.json"][0]
+        rec["grants"] = [
+            {"FactGrant": {"Proficiency": {"WeaponGroup": "Samurai"}}},
+            {"FactGrant": {"Proficiency": {"WeaponTag": "Samurai"}}},
+        ]
+        fresh = base_rules()
+        fresh["ultimate_combat/class_feature/samurai_proficiencies.json"][0]["grants"] = [
+            {"FactGrant": {"Proficiency": {"WeaponGroup": "Samurai"}}},
+        ]
+        code, out = self.run_diff(base, fresh)
+        self.assertEqual(code, 1, out)
+        self.assertIn("removed grants: 1", out)
+
     def test_report_only_flag_keeps_exit_zero(self):
         base = base_rules()
         fresh = base_rules()

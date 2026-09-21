@@ -297,10 +297,9 @@ fn no_fifth_multi_label_weapon_set_family_appears_silently() {
         multi.iter().map(|(_, l)| l).collect::<Vec<_>>()
     );
     for (members, labels) in &multi {
-        let sample_members: Vec<String> = members.iter().take(1).cloned().collect();
         let pretty: BTreeSet<String> = labels
             .iter()
-            .map(|l| describe_prof(&ProfRef::WeaponSet { label: l.clone(), members: sample_members.clone() }))
+            .map(|l| describe_prof(&ProfRef::WeaponSet { label: l.clone(), members: (*members).clone() }))
             .collect();
         assert_eq!(pretty.len(), 1, "member set with labels {labels:?} still prints {pretty:?} -- a multi-label family must fold to one phrase");
     }
