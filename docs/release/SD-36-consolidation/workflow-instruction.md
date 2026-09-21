@@ -14,9 +14,13 @@ Per-cycle launch procedure, eligibility checks, and dispatch discipline.
 ## 0. Bundle at a glance
 
 - **Branch:** `tranche/16`
-- **Epics / criteria:** 4 / 1+ (B: 9 criteria; A: 11; C: 10; D: 6)
+- **Epics / criteria:** 5 / 1+ (B: 9 criteria; A: 11; C: 10; D: 6; F: 25 — F0.1-4, F1.1-9, F1b.0-5,
+  F2.1-3, F3.0-4, F4.1-4, F5.1-3)
 - **Dispatch mechanism:** Workflow tool from live orchestrating session
 - **First concrete build value:** 0.16.0
+- **Epic F (2026-09-21 addition):** class completion, scoped between D1 and D2–D6 per operator
+  ruling `decisions.md §11`. Own worktree + own `CARGO_TARGET_DIR` for every converter run — never
+  the shared tree; one `cargo` command at a time, `-j 2`. Full plan: `epic-f-class-completion.md`.
 
 ---
 
@@ -110,7 +114,24 @@ Run to completion inside the turn — commit and push before ending. No "waiting
 | A (PCGen wall) | A1–A11 | no | `crates/` (new), `src/pcgen_import/`, `src/oracle_validation/`, `src/rules_core/` (test module eviction), `tests/`, `apps/desktop/src-tauri/` | B complete |
 | C1 (source refactor) | C1.1–C1.5 | no | `src/rules_core/pilot_compute/` (split), `src/support/` (new), `src/bin/`, `scripts/verify.sh` | A complete |
 | C2 (test rewrite) | C2.1–C2.6 | no | `tests/sd18_widening/`, `tests/sd13_progression/`, `tests/common/`, `tools/ci/` | C1 complete |
-| D (closure) | D1–D6 | no | `docs/architecture/`, `docs/retro/`, `docs/release/SD-36-consolidation/`, GitHub PR | C2 complete |
+| D1 (architecture docs) | D1 | no | `docs/architecture/` | C2 complete |
+| F0 (census instrument) | F0.1–F0.4 | no | `src/rules_core/class_census.rs` (new), `src/rules_core/pilot_compute/generic_class_chassis.rs`, `src/rules_core/pilot_compute/class_chassis_sheet_rules.rs`, `src/bin/class_census.rs` (new), `scripts/gen_class_status_table.py` (new), `scripts/verify.sh` | D1 complete |
+| F1 (converter link repair) | F1.1–F1.9 | no, own worktree + own `CARGO_TARGET_DIR` | `crates/codex-ingest/src/pcgen_import/sheet_rule/{convert,prereq,ctx,closure}.rs`, `src/rules_core/sheet_rule.rs` (schema only), new `src/rules_core/pilot_compute/class_proficiency_sheet_rules.rs` | F0 complete; F1b's n=1/n=5 gate must pass before the population run is committed |
+| F1b (print-path reconciliation) | F1b.0–F1b.5 | no, shared tree, Rust only | `src/rules_core/sheet_rule.rs` (`rule_for_explanation`), `src/rules_core/pilot_compute/class_shared_core.rs:40-52` | F1's converter change authored + n=1 (not the population commit) |
+| F2 (gate arm, prestige alone) | F2.1–F2.3 | no | `class_shared_core.rs`, `generic_class_chassis.rs`, `apps/desktop/src-tauri/src/class_catalog_generic.rs`, `class_occult_and_psionic.rs` | F1 population commit + F1b landed |
+| F3 (multiclass fold) | F3.0–F3.4 | no, same files as F2 -> strictly sequential after F2 | `class_shared_core.rs`, `class_occult_and_psionic.rs`, `tests/sd18_widening/`, `tests/sd13_progression/`, new `tests/sd36_multiclass_any_class.rs` | F2 complete |
+| F4 (desktop) | F4.1–F4.4 | frontend authoring MAY overlap F1 converter authoring (disjoint files, no cargo); Rust roster command after F3 | `apps/desktop/src-tauri/src/character_hub.rs`, `apps/desktop/src-tauri/src/main.rs`, `apps/desktop/src-tauri/src/pf1_adapter.rs`, new `src/rules_core/class_seeds.rs`, `apps/desktop/src/characterHub/`, `apps/desktop/scripts/ui-smoke/spec.json` | F3 complete (Rust roster); frontend may start earlier |
+| F5 (Epic F closure deltas) | F5.1–F5.3 | no | `docs/architecture/status.md`, `docs/architecture/rules-engine.md`, `docs/release/SD-36-consolidation/**`, `scripts/verify-baselines.env` | F4 complete |
+| D2–D6 (bundle closure) | D2–D6 | no | `docs/retro/`, `docs/release/SD-36-consolidation/`, GitHub PR | F5 complete (Epic F must close before graphify/PR per the standing "graphify runs against the FINAL repo state" rule) |
+
+**Converter-run discipline (F1, F1b's regeneration step):** one agent, own `git worktree`, own
+`CARGO_TARGET_DIR` (`mkdir -p "$CARGO_TARGET_DIR"`, deleted after), never the shared checkout.
+`cargo` always `-j 2`, one `cargo` command running at a time across the whole session (22 GiB RAM,
+no swap — a second concurrent `cargo` invocation is a resource hazard, not a speed gain). The
+`--check` gate (`cargo run --locked --quiet -j 2 -p codex-ingest --bin sheet_rule_convert --
+--check`) must be green BEFORE the resolver change is authored, and the structural diff after the
+full run must show only the allowed deltas (`granted_by`/`grants`/`closure_complete` additions;
+`_defects/unresolved-references.json` shrinking) — any other delta is a STOP, not a rebaseline.
 
 ---
 

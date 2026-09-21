@@ -171,3 +171,122 @@ Gate: `bash scripts/verify.sh` runs clippy stages (one per crate after C1); any 
 
 ---
 
+## §6 — Epic F: class completion architecture
+
+### Problem
+
+A permanent census instrument measured the engine's true class coverage corpus-wide (61 base-type
+ids + 74 prestige-type ids = 135 distinct class ids, across every registry
+`compute_class_chassis`'s dispatch chain reads, not only the 31-id desktop Create picker's own
+registry): **42 of 135** reach `HeadlessReceiptStatus::Computed` at every swept level. The real
+remainder is not "Core Rulebook only" — it spans untabled exotic classes blocked solely on a
+missing weapon-proficiency answer, 56 chassis-bearing prestige classes with no gate arm checking
+their chassis at all, and a corpus-wide link defect that drops class-feature grants (including
+proficiency, class skills, languages) before the converted path ever sees them. Full measurement:
+`docs/release/SD-36-consolidation/artifacts/epic-f/docs-truth/class-census.md`; full plan:
+`epic-f-class-completion.md`.
+
+### Solution — six architectural pieces, each read-not-invent (paper-sheet doctrine)
+
+**1. Census instrument** (`src/rules_core/class_census.rs`, `src/bin/class_census.rs`). Merges
+every class registry the dispatch chain reads into one `BTreeMap<slug, Row>`; sweeps base classes
+alone (level 1..=max) and prestige classes only in a deterministic carrier mix (never alone, for
+the Computed column — a second `alone_status` column asserts all 74 of 74 prestige ids are
+`Blocked` with a named game-rule diagnostic, a negative control). Gains `--sheet-dump <dir>` and
+`--only <class>` for F1b's headless whole-character render. Baselines can only rise
+(`BASELINE_CENSUS_IDS=135`, `BASELINE_CENSUS_COMPUTED=42`, `BASELINE_CENSUS_MIX_COMPUTED=<measured,
+never guessed>`, `BASELINE_CENSUS_PRESTIGE_ALONE_BLOCKED=74`).
+
+**2. Resolver fix** (`crates/codex-ingest/src/pcgen_import/sheet_rule/{prereq,ctx}.rs`). The
+converter's `resolve_rule(category, name)` looks up `(category, key)` literally; when a category
+is a CHILD `ABILITYCATEGORY` (e.g. "Wizard Class Feature", parent "Special Ability"), the record is
+indexed under the parent and the literal lookup misses. Fix: on a miss, retry with the parent
+(child->parent map built from the oracle's own `ABILITYCATEGORY` rows already in the closure tree),
+keeping KEY-exact matching (never a name-similarity guess). Closes 4,456 of 11,925 unresolved
+references (option A, `decisions.md §12`). Carries the AUTO grant's PRE-gate onto the emitted
+effect (`Effect::GatedFactGrant { fact, when }`) rather than discarding it (`let _ = when;` today)
+— the engine evaluates `when` at effect-application time (fixpoint step 3), never approximating an
+undecidable gate as granted.
+
+**3. WeaponSet-at-ingest** (`convert.rs` + `closure.rs`). Weapon-group membership (e.g. Samurai's
+katana/naginata/wakizashi tier) lives on the oracle's weapon-PROFICIENCY rows, not on the 19
+converted record kinds; adding a `weapon_proficiency` kind would move the frozen 49,450-record
+count. Instead: resolve membership at ingest from a read-only index over the oracle's
+`*_profs_weapon.lst` rows (never a record), store it on the GRANTING rule as
+`ProfRef::WeaponSet { label, members }`. Record count stays 49,450; the delta lives inside
+existing rules' `grants`.
+
+**4. Proficiency reader** (`src/rules_core/pilot_compute/class_proficiency_sheet_rules.rs`, new,
+sibling of `class_chassis_sheet_rules.rs`). Builds a `HeldSeed` for one `(class, level)`, runs the
+existing `held_set` fixpoint, collects `Effect::FactGrant(Fact::Proficiency(..))` from the held
+rules (the converted path does NOT fold `FactGrant` into `CharacterFacts` — the reader does its own
+collection). `weapon_tables::class_weapon_proficiency`'s 42 hand-pinned rows keep first precedence
+(ruling 7: no `rules_tables` move before Starfinder); the reader is the fallback for every other
+class (`decisions.md §13`: read the converted record, never author ~93 new Rust rows). Returns
+`Some(empty)` only when the class's `closure_complete` flag is true (no unresolved reference in its
+grant closure carries a weapon grant, and no unfindable reference at all); otherwise `Unknown` —
+never a fabricated "proficient with nothing". Requires a process-wide, lazily-loaded
+`SheetRulePackage` handle at the `rules_core` layer (mirroring the desktop's own
+`character_hub.rs` `OnceLock` precedent, one layer too high for `rules_core`'s pure functions to
+reach today) with a named `Err` fallback, never a silent empty package or a panic.
+
+**5. Print-path reconciliation rule** (F1b, `class_shared_core.rs:40-52`
+`with_sheet_rules`/`reconcile_sheet_lines`). Option A's corpus-wide link repair surfaces
+previously-unresolved class-feature/race-trait/ability rules onto the converted print path for the
+first time — sibling-amplified well beyond the raw 4,456 edge count (measured offline before the
+population run, not assumed). A `rule_for_explanation(package, class_slug, explanation_id) ->
+Matched | Ambiguous | None` join (longest-common-prefix in whole underscore-joined words, minimum
+`class_slug` + one feature word, explicit refusal of the bare class-principal rule id) resolves a
+bespoke facet id to its converted rule id, so a duplicate line is caught by identity (one rule id
+prints once, `held_set` already guarantees this) and a numeric disagreement is caught by a
+TEST-ONLY population assertion (`tests/sd36_sheet_value_agreement.rs`, 0 disagreements required
+before shipping) — never a runtime "who wins" branch, since the doctrine requires nothing left to
+reconcile live on a shipped sheet.
+
+**6. Gate arm** (`class_shared_core.rs` `is_supported_generic_class_family_single_class`,
+`has_supported_class_chassis`). A new arm covers the `generic_class_chassis` registry's 78 class
+records (56 prestige-tagged, 22 already covered by an earlier arm), excluding `Prestige`-tagged
+records from the Computed gate. Paired with a claim-blocking `prestige_class.requires_base_class_
+levels` diagnostic for a prestige class taken alone (no base-class levels) — chassis numbers are
+never emitted for that case. Falsifiable acceptance: census `computed == 42` of 135 BOTH before and
+after this arm lands, since the 22 non-prestige ids already reach Computed through an existing arm
+(a rise would mean a double-count bug, not progress).
+
+**7. Multiclass fold** (`class_occult_and_psionic.rs` `multiclass_class_level_supported`,
+`class_shared_core.rs` `multiclass_good_saves`). One generic fold, zero per-class rewrites: BAB
+(sum), saves (fractional), HP (per-class hit die x levels + Con), skill points (per-class ranks x
+levels + Int), class-skill union and weapon-proficiency union computed once for the character;
+class-feature text, spell slots/caster level and per-class pools taken verbatim from each class's
+isolated single-class run, re-scoped `multiclass.<class>.<original id>`. HP and skill-point figures
+require two new `ClassChassis` readers (`hit_die: Option<u8>`, `skill_ranks_per_level:
+Option<u8>`, both parsed from the converted `StatBlock` prose — same family as the entry-
+requirements gate already read in F0) built as an F0/F1 prerequisite, not F3 or F4: a class with
+`None` for either field reports `Unknown`, never a silently-zeroed total.
+
+**8. Class creation roster** (`apps/desktop/src-tauri/src/character_hub.rs`
+`list_class_creation_roster`, mirror of `list_race_creation_roster`). A class is offered iff the
+census says Computed at every level — engine-derived, so the picker can never again offer an
+uncomputable class. Prestige classes appear only in level-up, with their printed entry
+requirements and met/unmet note (`decisions.md §14`). Ex-* states (Ex-Barbarian, Ex-Paladin, and
+`ex_antipaladin` if distinct) are census-only, never offered at creation — they are reached only
+through the game's own fall-from-grace mechanic. Reads the desktop's existing process-wide package
+handle, not a fresh 135x20-receipt census sweep at picker-open time.
+
+### Enforcement
+
+1. **Census gate:** `bash scripts/verify.sh --only class-census` green; baselines in
+   `scripts/verify-baselines.env` can only rise.
+2. **Converter structural diff:** same file set, same rule-id set, every rule's JSON minus
+   `granted_by`/`grants`/`closure_complete` byte-identical; `records 49450 -> 49450`; added edges
+   per kind matches the mechanism-A table exactly or the difference is explained row by row.
+3. **Print-path population test:** `cargo test --locked --test sd36_sheet_value_agreement` — 0
+   disagreements across every census class at levels 1/10/max — is a hard gate on the F1
+   population commit landing at all.
+4. **Residue and frozen-status gates stay 0 of 0 / green** through every Epic F batch:
+   `python3 scripts/pcgen_residue_gate.py --check --closure`; `python3 scripts/site/
+   check_frozen_status.py --check`; `git status --porcelain -- data/corpus site | wc -l` -> 0.
+5. Full detail, every acceptance command, every RED-first test and the adversarial review log:
+   `epic-f-class-completion.md`.
+
+---
+

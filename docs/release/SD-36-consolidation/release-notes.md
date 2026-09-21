@@ -200,11 +200,59 @@ gitignored, both are simply pending their own commit like `tests/support/paths.r
 
 ## Deferred work
 
-See `forward-scope-register.md` for the full deferral register (FS-1 through FS-9): semantic
+See `forward-scope-register.md` for the full deferral register (FS-1 through FS-13): semantic
 dedups in `pilot_compute`, SD-34 correctness P1s, `rules_tables` → data-package migration,
 `pf1e_dashboard_producer.py` extraction, CI oracle fetch, GATE-03 vocabulary widening, the
-engine-P1-3 book-tie-break schema migration, and GATE-02's roster widening (FS-8, the Warpriest
+engine-P1-3 book-tie-break schema migration, GATE-02's roster widening (FS-8, the Warpriest
 Blessing contradiction, was resolved during this bundle and is marked so in that register, not
-left listed as open).
+left listed as open), and Epic F's four link-mechanism forward-scope rows (FS-10 through FS-13:
+mechanisms B/D/E/F of the unresolved-reference table, with the small class-closure-blocking
+subsets — 5 rows of mechanism D, 15 of mechanism F — that Epic F itself closes named separately
+from the corpus-wide remainder that stays deferred).
+
+---
+
+## Epic F — Class completion (IN PROGRESS — scoped 2026-09-21, no batch closed yet)
+
+**This section makes no completion claim.** Epic F is scoped into this bundle per the operator's
+2026-09-21 ruling (`decisions.md §11`) to close class-content gaps before PR #393 merges, rather
+than deferring them to a successor bundle. Full plan, every command, every file:line, RED-first
+tests and the adversarial review that sized it: `epic-f-class-completion.md`. Criteria tables:
+`epic-breakdown.md`'s "Epic F — Class completion" section.
+
+**Measured baseline (not yet moved by any Epic F work):** a permanent census instrument
+(`docs/release/SD-36-consolidation/artifacts/epic-f/docs-truth/class-census.md`, generated
+2026-09-20 against `tranche/16` @ `424e93e93c`) found **42 of 135** distinct class ids
+corpus-wide reach `HeadlessReceiptStatus::Computed` at every swept level — a wider, corrected
+denominator than the "31 of 31" (desktop Create picker) and "42 of 42" (the four fully-tabled
+registries) figures quoted elsewhere in this bundle's own docs, each of which was true only of
+its own narrower registry population (`epic-f-class-completion.md §3` names the three specific
+corrections). **Target: 135 of 135.**
+
+**Status of each batch, all open, nothing closed:**
+
+| Batch | What it does | Status |
+|---|---|---|
+| F0 | Permanent census instrument (replaces the deleted one-shot `zz_class_census.rs`) | open |
+| F1 | Converter link repair, Option A (all 4,456 of 11,925 fixable references) + weapon-proficiency reader | open |
+| F1b | Print-path reconciliation (new batch, required by Option A's blast radius) | open |
+| F2 | Gate arm for the `generic_class_chassis` registry + prestige-alone diagnostic | open |
+| F3 | Multiclass fold for every class with a chassis | open |
+| F4 | Desktop creation/level-up roster, engine-derived | open |
+| F5 | Epic F's own closure deltas (docs, baselines, forward-scope register) | open |
+
+**Sizing:** 100-140 agent-hours (`epic-f-class-completion.md §8`), risen from an original
+81-115 estimate after an adversarial review of the plan itself found and closed nine design
+gaps in the Option-A execution (§12 of that document — a dropped proficiency gate, a broken
+facet-to-rule join, a missing HP/skill-point prerequisite, a restated-not-resized F2 batch, a
+missing package-load architecture, a self-contradictory runtime-vs-test reconciliation rule, an
+under-counted print-surface blast radius, an unsourced "183" denominator now measured instead,
+and a broken converter command corrected everywhere it appeared).
+
+**What Epic D closure is waiting on:** D2 (retrospective) and D3 (this release-notes document)
+were written against the pre-Epic-F tree; D4 (graphify) ran once against that same pre-Epic-F
+tree and must re-run against the tree Epic F leaves, per the standing "graphify runs against the
+FINAL repo state" rule; D5 (PR merge) and D6 (worktree sweep) do not proceed until Epic F's F5
+closes. See `kanban.md`'s D2–D6 row for the current block state.
 
 ---

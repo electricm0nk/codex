@@ -282,3 +282,174 @@ per-doc breakdown recorded in `release-notes.md`'s "Architecture-docs rewrite (D
 
 ---
 
+## §11 — Close the class gaps inside SD-36, before PR #393 merges
+
+**Operator ruling, 2026-09-21:**
+
+> *"Close the class gaps INSIDE SD-36 before PR #393 merges."*
+
+**Decision.** A permanent census instrument (`tests/zz_class_census.rs`, run once, then deleted —
+`docs/release/SD-36-consolidation/artifacts/epic-f/docs-truth/class-census.md`, generated
+2026-09-20 against `tranche/16` @ `424e93e93c`) measured the engine's true class coverage,
+corpus-wide across every registry `compute_class_chassis`'s dispatch chain reads: **42 of 135**
+distinct class ids reach `HeadlessReceiptStatus::Computed` at every swept level. The prior
+"31 of 31" / "42 of 42" figures quoted elsewhere in this bundle's own docs were each true of a
+narrower registry population, not the corpus-wide one this census measures — see that document's
+§3 "The refuted claims, verified by this instrument" for the three specific corrections.
+
+Rather than defer class completion to a successor bundle, the operator ruled the gap closes
+inside SD-36 itself, as **Epic F — Class completion**, scoped between Epic D's D1 (architecture
+docs, already done) and D2–D6 (retrospective, release notes, graphify, PR, worktree sweep — held
+until Epic F lands). **Epic order, corrected:** B → E → A → C → D(docs) → **F** → D(closure).
+
+**Target: 135 of 135** — 61 base-type ids alone at every level, plus 74 prestige ids in their
+canonical carrier mix at every prestige level (prestige classes are never swept alone for the
+Computed column; a separate `alone_status` column requires all 74 of 74 to be `Blocked` with a
+named game-rule diagnostic, per §14 below). Full batch plan (F0–F5), every command, every
+file:line, RED-first tests, sizing (100-140 agent-hours) and the adversarial review that raised it
+from an original 81-115: `docs/release/SD-36-consolidation/epic-f-class-completion.md`.
+
+**Enforced by:**
+- `epic-breakdown.md`'s Epic F criteria tables (F0.1–F5.3).
+- The census baseline `BASELINE_CENSUS_IDS=135`, `BASELINE_CENSUS_COMPUTED=42` (can only rise,
+  never fall) in `scripts/verify-baselines.env`, set once F0 lands.
+- `kanban.md` / `progress.md` Epic F rows, all `open` until each batch's acceptance commands pass.
+
+---
+
+## §12 — Converter link fix scope = Option A (all 4,456 parent-category links)
+
+**Operator ruling, 2026-09-21:**
+
+> *"Converter link fix scope = option A."*
+
+**Decision.** `data/sheet_rules/_defects/unresolved-references.json` carries 11,925 unresolved
+references, classified by mechanism (`unres2.py`, copied into this bundle at
+`docs/release/SD-36-consolidation/artifacts/epic-f/scripts/unres2.py`):
+
+| # | Mechanism | Rows | Fixed by parent-category map? |
+|---|---|---|---|
+| A | Child ability category; target IS a converted record under the parent | **4,456** | **Yes — all** |
+| B | Child category; target exists in the oracle but is not a converted unit | 63 of 11,925 | No |
+| D | Plain category; target IS a converted record; resolver misses for another cause | 3,033 of 11,925 | No — not diagnosed |
+| E | Plain category; target exists in the oracle but its book/family is not ingested | 3,565 of 11,925 | No — correct as a defect |
+| F | Target found nowhere (bracketed, comma-joined, case, nested-paren syntax) | 808 of 11,925 | No — 3+ small parser causes |
+
+Two options were weighed: **B** — fix only the 99 of 11,925 proficiency-related mechanism-A rows
+needed to unblock the census; **A** — fix all 4,456 of 11,925 mechanism-A rows corpus-wide, since
+the resolver defect is generic (parent-category lookup) and the same fix closes every child-
+category miss at once, not just the ones a class happens to need this cycle. **Ruled: Option A.**
+
+**Consequences accepted, named in the ruling:** a new print-path reconciliation batch (F1b) is
+required, because holding ~4,456 previously-unresolved rules (amplified by sibling rules —
+measured, not assumed, before the population run — see `epic-f-class-completion.md` §3b.0)
+surfaces new lines on live character sheets that must be de-duplicated against the bespoke
+`pilot_compute` path, one extra full `scripts/verify.sh` pass, and +25-35 agent-hours over
+option B (later revised further by an adversarial review of Epic F's own execution plan — see
+`epic-f-class-completion.md` §12's review log — to a total of 100-140 agent-hours; the review's
+five additional findings were correctness fixes to option A's execution, not a reason to revisit
+this ruling).
+
+**Mechanisms B (63 of 11,925), D (3,033 of 11,925), E (3,565 of 11,925), F (808 of 11,925) stay out
+of scope**, recorded in `forward-scope-register.md` with their per-book/per-cause breakdown —
+**EXCEPT** the rows that sit inside a class's own grant closure and keep that class's
+`closure_complete` flag false: measured at 2 closures / 5 rows for mechanism D (Antipaladin 1,
+Sanguine Angel 4) and 7 closures / 15 rows for mechanism F (Alchemist 9, Slayer 1, Ex-Antipaladin
+1, Diabolist 1, Exalted 1, Magus 1, Marksman 1) — 9 classes, 16 rows of the D+F total, per the
+class-closure simulation (`docs/release/SD-36-consolidation/artifacts/epic-f/scripts/closure.py`).
+Those 16 rows are Epic F's own job (each fixed by its named parser cause), because leaving them
+open would leave a class's proficiency answer `Unknown` rather than a real answer. Every other D/E/F/B
+row is a genuine forward-scope deferral, not a closure gap.
+
+**Enforced by:**
+- `epic-f-class-completion.md` §1 (the mechanism table, reproducible via `unres2.py`) and §3
+  (the converter change and its structural-diff gate).
+- `forward-scope-register.md`'s new rows for mechanisms B/D/E/F, each naming its count and its
+  re-derive command, and naming which D/F rows Epic F itself closes.
+- F1.3/F1.6 in `epic-breakdown.md` (links closed = 11,925 - 4,456 = 7,469 of 11,925, or the
+  difference explained row by row; structural diff proves no other field moved).
+
+---
+
+## §13 — Weapon proficiency is read from the converted record, not authored as new Rust rows
+
+**Operator ruling, 2026-09-21** (restates and extends §2/§7's ruling-7 "no `rules_tables` move
+before Starfinder" against the specific question Epic F raised — do the ~93 classes still
+missing a weapon-proficiency answer get their own hand-typed Rust table rows, or does the engine
+read the record the converter already produced):
+
+> *"Read the proficiency answer from the converted record; ruling 7 forbids moving `rules_tables`
+> to data before Starfinder, it does not forbid a new reader over existing converted data."*
+
+**Decision.** `src/rules_core/rules_tables/crb/weapon_tables.rs` keeps its 42 hand-transcribed
+rows verbatim (first precedence, unchanged, ruling 7). For every other class, a new
+`class_proficiency_sheet_rules.rs` reader builds a `HeldSeed` for that one class, runs the
+existing `held_set` fixpoint, and collects `Effect::FactGrant(Fact::Proficiency(..))` from the
+held rules — the same converted vocabulary `data/sheet_rules/` already carries (0.1 in
+`epic-f-class-completion.md`: 159 class_feature + 6 class + others already hold a converted
+proficiency grant today; the defect is the broken LINK from class to grant, not a missing
+converted fact). **Reasoning:**
+1. Ruling 7 forbids moving `rules_tables` **to data**; it says nothing about authoring **new**
+   data as a Rust literal instead of reading data that already exists. Precedent: `class_chassis_
+   sheet_rules.rs` already reads `data/sheet_rules/<book>/class/<slug>.json` at runtime, and
+   `apps/desktop/src-tauri/tauri.conf.json:40` already bundles `data/sheet_rules/` as a shipped
+   resource (0.9).
+2. Ruling 4 (§3, prior ruling) named 93 hand-typed rows as the fabricated-row hazard this bundle
+   exists to avoid — the doctrine's "no fabricated row… never a rule row from DESC prose alone"
+   applies exactly as hard to typing 93 new proficiency rows by hand as it did to the 42 that
+   already ship without an oracle pin (0.6; F1 adds that pin as part of the same batch, F1.2).
+3. The residue gate is already 0 of 0 on the converted vocabulary — reading MORE of it adds no
+   PCGen surface; authoring 93 new Rust literals from the same source prose would.
+4. **Known-empty vs unknown**, never fabricated: the converter writes a per-class
+   `closure_complete` boolean; the reader returns `Some(empty-set)` only when true, `Unknown`
+   otherwise. A class whose closure carries a still-gated AUTO grant (review finding 1 in
+   `epic-f-class-completion.md` §0.1a) also reads `Unknown`, not `Some(set)`, until the gate is
+   carried onto the effect (§3.1 item 4).
+
+**Enforced by:**
+- `epic-f-class-completion.md` §3.4 (the reader design) and §0.6 (no converter-backed weapon pin
+  exists today; F1 adds one).
+- F1.2 in `epic-breakdown.md`: reader output matches each of the 42 static rows AND each reader
+  row is independently re-derived from oracle rows.
+- `scripts/pcgen_residue_gate.py --check --closure` stays 0 of 0 through F1 (F1.7).
+
+---
+
+## §14 — Prestige classes: legal only in a mix, entry gate printed; Ex-* classes census-only
+
+**Operator ruling, 2026-09-21:**
+
+> *"Unmet prestige entry requirements PRINT met/unmet and never block. Ex-* classes are
+> census-only, not offered in the Create picker."*
+
+**Decision, two parts.**
+
+1. **Prestige entry requirements print, never block.** A prestige class's converted `applies`
+   gate already carries its entry requirements in Codex vocabulary (0.7 in
+   `epic-f-class-completion.md`: e.g. Arcane Archer — `BaseAttack >= 6`, three feats,
+   `HighestSpellLevel Arcane >= 1`). F0's census reports each requirement `met` or `unmet` in a
+   printed `entry_gate` column; unmet requirements never count against a class's `Computed`
+   status and never raise a claim-blocking diagnostic — the paper-sheet doctrine's "print the
+   rule text, do not simulate" applies to entry gates exactly as it does to every other rule.
+   A prestige class taken **alone** (no base-class levels) is the one case that DOES block: F2
+   adds a claim-blocking diagnostic `prestige_class.requires_base_class_levels`
+   ("A prestige class cannot be a character's first class. Add levels in a base class first."),
+   and the census's `alone_status` column requires all 74 of 74 prestige ids to be `Blocked`
+   with that diagnostic — a negative control proving the rule fires, not a carve-out.
+2. **Ex-* classes (Ex-Barbarian, Ex-Paladin, and `ex_antipaladin` if the census finds it a
+   distinct id) are census-only.** They are legal sheet STATES — a character who breaks their
+   code falls to one — and stay counted in the census denominator (they do not shrink the 135).
+   They are never offered as a choice in the desktop Create Character picker: F4's roster rule
+   only ever offers a class the census reports Computed at every level, grouped by family, and
+   Ex-* states are reached by the game's own fall-from-grace mechanic, not by a player picking
+   "Ex-Paladin" at character creation.
+
+**Enforced by:**
+- `epic-f-class-completion.md` §2 (F0's `entry_gate`/`alone_status` columns) and §4 (F2's
+  prestige-alone diagnostic and its acceptance row F2.2).
+- `epic-breakdown.md` F0.1/F2.2/F4 criteria; census `alone_blocked=74` of 74.
+- `epic-f-class-completion.md` §6 (F4's roster rule: "Ex-* states: census-only, never offered at
+  creation").
+
+---
+

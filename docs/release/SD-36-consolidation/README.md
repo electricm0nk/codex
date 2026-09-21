@@ -1,6 +1,6 @@
 ---
 title: SD-36 — Consolidation — Release Package
-status: in-progress — Epics B, A, E, C1, C2 done; D1 (architecture docs) done; D2/D3 written; D4–D6 remaining
+status: in-progress — Epics B, A, E, C1, C2 done; D1 (architecture docs) done; D2/D3 written; Epic F (class completion) scoped 2026-09-21, all of F0–F5 open; D4–D6 held until Epic F closes
 bundle_id: SD-36
 slug: consolidation
 scope: docs/release/SD-36-consolidation
@@ -32,7 +32,7 @@ The bundle's intent, scope, and acceptance-evidence obligations live in [`scope-
 | Slug | `consolidation` |
 | Canonical branch | `tranche/16` — cut 2026-09-15 at origin/develop commit 50572eebad (SD-35's PR #390 merge); `decisions.md §2` |
 | Kanban board | local-file `./kanban.md` |
-| Epics / criteria | 4 / 1+ (B: dashboard freeze, A: crate wall, C: bloat cuts, D: closure) |
+| Epics / criteria | 5 / 1+ (B: dashboard freeze, A: crate wall, C: bloat cuts, F: class completion, D: closure) |
 | Target version | `0.16.0`, stamped at cut in one commit (version-bump surfaces: `.github/workflows/publish-tester-release.yml`, `apps/desktop/package.json`, `apps/desktop/src-tauri/Cargo.toml` + `Cargo.lock`, `apps/desktop/src-tauri/tauri.conf.json`, 7 desktop test fixtures) |
 | Dispatch mechanism | `Workflow` tool, invoked from a live session, per `workflow-instruction.md §2` |
 | Cadence | N/A — dispatch is a live `Workflow` session, not a timer loop |
@@ -40,12 +40,20 @@ The bundle's intent, scope, and acceptance-evidence obligations live in [`scope-
 
 ## 2. What this bundle is
 
-SD-36 **consolidates and cleans the codebase after SD-35**: green CI, PCGen walled off, dashboard frozen, bloat cut, disk reclaimed. Four epic phases:
+SD-36 **consolidates and cleans the codebase after SD-35**: green CI, PCGen walled off, dashboard frozen, bloat cut, disk reclaimed — and, per the operator's 2026-09-21 ruling, class-content gaps closed before this bundle's PR merges. Five epic phases:
 
 - **Epic B** — freeze the PF1e status page (100% complete), retire the producers (`v06_work_inventory`, `support_state_matrix`, `reach_gate`, dashboard cron jobs).
 - **Epic A** — wall off PCGen (oracle + converter) in a dedicated `crates/codex-ingest` so the desktop can never link it. Close two gate blind spots.
 - **Epic C** — cut bloat: split `pilot_compute/mod.rs` into ~36 submodules, consolidate path helpers, rewrite table-driven tests.
-- **Epic D** — closure: architecture-docs refresh, retrospective, PR.
+- **Epic F** — class completion: a permanent corpus-wide census (measured 42 of 135 class ids
+  reach `Computed`, target 135 of 135), a corpus-wide converter link-repair (Option A, all 4,456
+  of 11,925 unresolved references it can fix), print-path reconciliation, a generic gate arm,
+  multiclass for every class with a chassis, and a desktop creation/level-up roster. Scoped
+  2026-09-21 (`decisions.md §11`); see `epic-f-class-completion.md` for the full plan. All of
+  F0–F5 are **open**.
+- **Epic D** — closure: architecture-docs refresh, retrospective, PR. D1 (architecture docs) is
+  done; D2–D6 are held until Epic F closes, per the standing "graphify runs against the FINAL
+  repo state" rule.
 
 **Operator goal (2026-09-15):** CI green today; then a tight, clean codebase before UI work and before Starfinder; nothing of PCGen in live code, enforced by the build not by a script; disk reclaimed.
 
@@ -65,11 +73,20 @@ SD-36 **consolidates and cleans the codebase after SD-35**: green CI, PCGen wall
   was stale at `open`; Epic E had no row; Epic C2's row now reads `done`) and this status field. A
   retro note was logged (`docs/retro/events/sd36-epic-c2-docs.jsonl`) on a workflow-gate lesson
   from this bundle's own closure sequencing.
-- **Remaining:** Epic D4 (graphify — already run once against the pre-C2.1/C2.2 tree, exit=1,
-  receipt filed; re-run required against the FINAL tree per this program's own standing rule that
-  graphify runs last), D5 (PR open and merged), D6 (worktree sweep). See
-  `docs/retro/sd36-retrospective.md`'s "Epic status, as of this writing" table and
-  `release-notes.md`'s "Known follow-ups" for the full, re-derivable picture.
+- **Scoped this pass (2026-09-21):** Epic F — class completion. A permanent census instrument
+  measured the engine's true corpus-wide class coverage: **42 of 135** distinct class ids reach
+  `Computed` at every swept level (narrower registry counts quoted elsewhere in this bundle's own
+  docs, e.g. "31 of 31", "42 of 42", were each true of a smaller population — see
+  `epic-f-class-completion.md §3`). Target: **135 of 135**. Batches F0 (census), F1 (converter
+  link repair, Option A) + F1b (print-path reconciliation), F2 (gate arm, prestige-alone), F3
+  (multiclass fold), F4 (desktop roster), F5 (closure deltas) are scoped and **all open** — see
+  `kanban.md`. Full plan, every command, RED-first tests, review log: `epic-f-class-completion.md`.
+  Decisions: `decisions.md §11–§14`. Nothing in this pass claims any F0–F5 batch is done.
+- **Remaining:** Epic F's F0–F5 (all open, see above), then Epic D's D4 (graphify — already run
+  once against the pre-Epic-F tree, exit=1, receipt filed; must re-run against the tree Epic F
+  leaves, per this program's own standing rule that graphify runs last), D5 (PR open and merged),
+  D6 (worktree sweep). See `docs/retro/sd36-retrospective.md`'s "Epic status, as of this writing"
+  table and `release-notes.md`'s "Known follow-ups" for the full, re-derivable picture.
 
 ## 4. Reading guide
 

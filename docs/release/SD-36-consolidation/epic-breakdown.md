@@ -9,6 +9,13 @@ date: 2026-09-15
 
 Acceptance criteria per epic, grouped with acceptance commands. Read this before dispatch.
 
+**Epic order (corrected 2026-09-21, Epic F scoped in):** B → E → A → C → D(docs) → F →
+D(closure). Epic D's own D1 (architecture-docs full-set rewrite) landed early, ahead of D2–D6
+(retrospective, release notes, graphify, PR, worktree sweep); Epic F — class completion — is
+scoped between D1 and the rest of D per the operator's 2026-09-21 ruling to close the class
+gaps inside this bundle before PR #393 merges (`decisions.md §11`). Full detail:
+`epic-f-class-completion.md`.
+
 ---
 
 ## Epic B — Freeze PF1e status page, retire producers (one batch, one pass)
@@ -90,6 +97,87 @@ Total: 55,827 lines.
 | D4. Graphify run | `ls -la docs/release/SD-36-consolidation/receipts.md` (exists); contains `graphify:update` receipt block with exit code |
 | D5. PR open and merged | `gh pr list --state merged --base develop \| grep 'tranche/16'` (1+ rows); CI run for merged PR is green (`gh run list --limit 1 --jq '.[] \| select(.name == "Publish tester release") \| .conclusion'` shows "success") |
 | D6. Worktree swept | Closure receipt shows `git worktree list` count and `git branch` in main tree; worktrees removed, branches cleaned (tranche/15 deleted) |
+
+---
+
+## Epic F — Class completion (scoped between D1 and D2–D6, operator ruling 2026-09-21)
+
+Measured baseline: **42 of 135** class ids reach `HeadlessReceiptStatus::Computed` at every
+swept level, corpus-wide, across every registry the engine's dispatch chain reads
+(`docs/release/SD-36-consolidation/artifacts/epic-f/docs-truth/class-census.md`, generated
+2026-09-20 against `424e93e93c`). Target: **135 of 135**. Full plan, every command, every
+file:line, RED-first tests, flip lists, risk, size and order:
+`docs/release/SD-36-consolidation/epic-f-class-completion.md`. Batches F0–F5 are **open** —
+see `kanban.md` / `progress.md` — nothing in this section is a completion claim.
+
+### F0 — Permanent census instrument (RED first)
+
+| Criterion | Acceptance command / evidence |
+|---|---|
+| F0.1 RED truth | `cargo run --locked --bin class_census -- --json /tmp/census.json` prints `ids=135 computed=42 blocked=93` (42 of 135 computed, 93 of 135 blocked) |
+| F0.2 stage | `bash scripts/verify.sh --list \| grep -c class-census` -> 2; `bash scripts/verify.sh --only class-census` green |
+| F0.3 generated table | `python3 scripts/gen_class_status_table.py --check` exits 0; `python3 -m pytest scripts/tests/test_gen_class_status_table.py -q` green |
+| F0.4 list parity | `cargo test --locked --lib class_census` green (prestige list == fixture's 74 of 74; no id in two families) |
+
+### F1 — Link repair corpus-wide (Option A) + class weapon proficiency
+
+| Criterion | Acceptance command / evidence |
+|---|---|
+| F1.1 reproducible before | `cargo run --locked --quiet -j 2 -p codex-ingest --bin sheet_rule_convert -- --check` exits 0 at the pre-change commit |
+| F1.2 oracle pin for the reader | `cargo test --locked -p codex-ingest --test class_weapon_proficiency_via_converter` green (reader output == each of the 42 static rows, each re-derived from oracle rows) |
+| F1.3 links closed | `data/sheet_rules/_defects/unresolved-references.json` length: 11,925 - 4,456 = **7,469** (or the difference explained per row); mechanism A = 0 |
+| F1.4 no silent drop | `cargo test --locked -p codex-ingest automatic_grants_are_never_dropped_silently` green |
+| F1.5 coverage | census: classes blocked on `combat.baseline_weapon_proficiency_unknown` -> 0 of 135 |
+| F1.6 structural diff | `unexpected field deltas: 0`, `records 49450 -> 49450`, added edges per kind == mechanism A's per-kind table |
+| F1.7 gates | `python3 scripts/pcgen_residue_gate.py --check --closure` 0 of 0; `python3 scripts/site/check_frozen_status.py --check`; `git status --porcelain -- data/corpus site \| wc -l` -> 0 |
+| F1.8 gate carried, not dropped | `cargo test --locked -p codex-ingest a_pre_gated_weapon_proficiency_is_not_granted_unconditionally` green; `grep -n 'let _ = when' crates/codex-ingest/src/pcgen_import/sheet_rule/convert.rs` -> 0 hits |
+| F1.9 package handle | `cargo test --locked --lib rules_core::sheet_rule_package` green (named `Err`, never panic, never silent empty); load-time and memory figures recorded in the F1 receipt |
+
+### F1b — Print-path reconciliation
+
+| Criterion | Acceptance command / evidence |
+|---|---|
+| F1b.0 sibling-amplified count | offline script run against the real A-target list; table of `edges / (1+siblings) total / split by print:true` committed; 4,456 never reused as a print-surface size |
+| F1b.1 instrument | `cargo run --locked --bin class_census -- --sheet-dump /tmp/dump --only wizard` writes 3 files |
+| F1b.2 n=1 / n=5 receipts | both artifacts exist; each reports `changed-value=0 removed-unexplained=0 duplicate=0` |
+| F1b.3 join | `cargo test --locked --lib rule_for_explanation` green, including `a_facet_id_never_joins_to_the_class_principal_rule` and `the_three_known_good_pairs_still_join` |
+| F1b.4 agreement (test-only) | `cargo test --locked --test sd36_sheet_value_agreement` green (0 disagreements out of every joined pair, all census classes, levels 1/10/max) |
+| F1b.5 fixtures | `ls docs/release/SD-36-consolidation/artifacts/epic-f/fixture-rebaseline-*.md \| wc -l` == number of fixture files changed in the commit |
+
+### F2 — Gate arm, CLASS_FAMILY_BOOKS, prestige alone
+
+| Criterion | Acceptance command / evidence |
+|---|---|
+| F2.1 | `cargo test --locked --lib generic_class_chassis` green with the re-measured pin (78 -> measured; ceiling 96) |
+| F2.2 | `cargo test --locked --lib prestige_alone` green; census `alone_blocked=74` of 74 |
+| F2.3 (falsifiable) | census `computed == 42` of 135 BEFORE F2's gate-arm change AND `computed == 42` of 135 AFTER it |
+
+### F3 — Multiclass for every class with a chassis
+
+| Criterion | Acceptance command / evidence |
+|---|---|
+| F3.0 unknown, not zero | every census class with `ClassChassis.hit_die`/`.skill_ranks_per_level == None` reports HP/skill-points `Unknown` (named list); `cargo test --locked --lib a_class_missing_hit_die_reports_hp_unknown` and `..._missing_skill_ranks_reports_skill_points_unknown` green |
+| F3.1 (measured denominator) | census `mix_computed == BASELINE_CENSUS_MIX_COMPUTED` (F0's measured figure) of itself; prestige canonical mixes 74 of 74 |
+| F3.2 | `--list` diffs for `sd18_widening` (891 of 891) and `sd13_progression` (1,136 of 1,136): IDENTICAL |
+| F3.3 | sabotage log: `BASELINE_CENSUS_MIX_COMPUTED` red under sabotage (of the measured total), 0 red restored |
+| F3.4 | `cargo test --locked --test sd21_multiclass_fighter_wizard_chassis_computes --test sd24_multiclass_integration` green |
+
+### F4 — Desktop
+
+| Criterion | Acceptance command / evidence |
+|---|---|
+| F4.1 | `cd apps/desktop/src-tauri && cargo test --locked list_class_creation_roster` green; roster length == census computed base count |
+| F4.2 | `cd apps/desktop && npm test -- classRoster characterHubModel characterProgression skillsModel` green; `npm run typecheck` green |
+| F4.3 | `grep -c 'canonical_seeds_for' src/bin/v06_class_state_dump.rs apps/desktop/src-tauri/src/pf1_adapter.rs` shows imports only; `git grep -c 'fn canonical_seeds_for' -- src apps` -> 1 |
+| F4.4 | ui-smoke rows green: `create-character-samurai`, `-magus`, `-warrior`, `-kineticist`, `-inquisitor-generic` and `level-up-fighter6-into-arcane-archer` |
+
+### F5 — Closure deltas
+
+| Criterion | Acceptance command / evidence |
+|---|---|
+| F5.1 | `docs/architecture/status.md` class table regenerated between markers, `scripts/gen_class_status_table.py --check` exits 0; five head-count sites updated together; grep at `status.md:70` re-run to zero stale hits |
+| F5.2 | `decisions.md` §11–§14, `technical-design.md` Epic F section, `workflow-instruction.md` §0/§3 rows, `kanban.md`/`progress.md`/`receipts.md`/`release-notes.md`/`forward-scope-register.md` all updated |
+| F5.3 | `scripts/verify-baselines.env` re-derived; PR #393 body updated; graphify run LAST against the final tree |
 
 ---
 
