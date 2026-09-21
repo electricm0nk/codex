@@ -192,10 +192,18 @@ proficiency, class skills, languages) before the converted path ever sees them. 
 every class registry the dispatch chain reads into one `BTreeMap<slug, Row>`; sweeps base classes
 alone (level 1..=max) and prestige classes only in a deterministic carrier mix (never alone, for
 the Computed column — a second `alone_status` column asserts all 74 of 74 prestige ids are
-`Blocked` with a named game-rule diagnostic, a negative control). Gains `--sheet-dump <dir>` and
-`--only <class>` for F1b's headless whole-character render. Baselines can only rise
+`Blocked` with a named game-rule diagnostic, a negative control). The carrier is `wizard`/`cleric`
+by the gate's caster term, `fighter` otherwise, with the `carrier + max_level <= 20` cap taking
+precedence over an unmet numeric requirement when the two conflict; the two prestige ids needing
+both an Arcane and a Divine caster term (`mystic_theurge`, `evangelist`) get a second, independent
+carrier rather than picking one arbitrarily. A row's Computed status is therefore a property of
+the class in a legal build, not an artefact of which carrier the census happened to pick — a new
+`carrier` column names it, and a row whose chassis expression references caster level without a
+named caster carrier reports `Unknown`, never a confidently-wrong 0. Gains `--sheet-dump <dir>`
+and `--only <class>` for F1b's headless whole-character render. Baselines can only rise
 (`BASELINE_CENSUS_IDS=135`, `BASELINE_CENSUS_COMPUTED=42`, `BASELINE_CENSUS_MIX_COMPUTED=<measured,
-never guessed>`, `BASELINE_CENSUS_PRESTIGE_ALONE_BLOCKED=74`).
+never guessed>`, `BASELINE_CENSUS_PRESTIGE_ALONE_BLOCKED=74`), and the merged id set is itself
+pinned to `status.md`'s own published partition (31+3+20+7+74) before the instrument may move.
 
 **2. Resolver fix** (`crates/codex-ingest/src/pcgen_import/sheet_rule/{prereq,ctx}.rs`). The
 converter's `resolve_rule(category, name)` looks up `(category, key)` literally; when a category
@@ -225,7 +233,10 @@ collection). `weapon_tables::class_weapon_proficiency`'s 42 hand-pinned rows kee
 class (`decisions.md §13`: read the converted record, never author ~93 new Rust rows). Returns
 `Some(empty)` only when the class's `closure_complete` flag is true (no unresolved reference in its
 grant closure carries a weapon grant, and no unfindable reference at all); otherwise `Unknown` —
-never a fabricated "proficient with nothing". Requires a process-wide, lazily-loaded
+never a fabricated "proficient with nothing". The converted vocabulary itself already carries junk
+tags (`Auto`, `KoboldTailAttachment`) that match no tier, weapon group, or `WeaponSet` — every row
+the reader returns must be re-derivable from a named oracle row, not only the 42 hand-pinned static
+rows; an unrecognized tag makes that class's answer `Unknown` too. Requires a process-wide, lazily-loaded
 `SheetRulePackage` handle at the `rules_core` layer (mirroring the desktop's own
 `character_hub.rs` `OnceLock` precedent, one layer too high for `rules_core`'s pure functions to
 reach today) with a named `Err` fallback, never a silent empty package or a panic.
@@ -253,7 +264,9 @@ after this arm lands, since the 22 non-prestige ids already reach Computed throu
 (a rise would mean a double-count bug, not progress).
 
 **7. Multiclass fold** (`class_occult_and_psionic.rs` `multiclass_class_level_supported`,
-`class_shared_core.rs` `multiclass_good_saves`). One generic fold, zero per-class rewrites: BAB
+`multiclass_good_saves` — corrected: this function lives in `class_occult_and_psionic.rs:3808`,
+not `class_shared_core.rs`, which ends before the line originally cited). One generic fold, zero
+per-class rewrites: BAB
 (sum), saves (fractional), HP (per-class hit die x levels + Con), skill points (per-class ranks x
 levels + Int), class-skill union and weapon-proficiency union computed once for the character;
 class-feature text, spell slots/caster level and per-class pools taken verbatim from each class's
@@ -261,16 +274,25 @@ isolated single-class run, re-scoped `multiclass.<class>.<original id>`. HP and 
 require two new `ClassChassis` readers (`hit_die: Option<u8>`, `skill_ranks_per_level:
 Option<u8>`, both parsed from the converted `StatBlock` prose — same family as the entry-
 requirements gate already read in F0) built as an F0/F1 prerequisite, not F3 or F4: a class with
-`None` for either field reports `Unknown`, never a silently-zeroed total.
+`None` for either field reports `Unknown`, never a silently-zeroed total. Good/poor save
+derivation reads a new public `ClassChassis::save_shape(index) -> Option<SaveProgression>`
+accessor (`class_chassis_sheet_rules.rs`, alongside the private `saves` field it exposes), with
+explicit `Degraded`/`Unrecognized` arms so a class whose converted save formula did not survive
+conversion cleanly (a known failure mode: it prints as words, not an `Expr`) stays `Blocked` in
+a mix rather than being silently folded in as `poor`.
 
 **8. Class creation roster** (`apps/desktop/src-tauri/src/character_hub.rs`
 `list_class_creation_roster`, mirror of `list_race_creation_roster`). A class is offered iff the
-census says Computed at every level — engine-derived, so the picker can never again offer an
-uncomputable class. Prestige classes appear only in level-up, with their printed entry
-requirements and met/unmet note (`decisions.md §14`). Ex-* states (Ex-Barbarian, Ex-Paladin, and
-`ex_antipaladin` if distinct) are census-only, never offered at creation — they are reached only
-through the game's own fall-from-grace mechanic. Reads the desktop's existing process-wide package
-handle, not a fresh 135x20-receipt census sweep at picker-open time.
+census says Computed at every level AND its `hit_die` reader returns `Some` — engine-derived, so
+the picker can never again offer an uncomputable class, or a Computed class with no HP figure to
+print (7 of 185 class records carry no hit-die prose row; 4 of the 7 are generic-family classes
+that can otherwise reach Computed). Every excluded class carries a NAMED reason
+(`hit_die_absent | not_computed | prestige | ex_state`), never a bare boolean, so the census and
+the roster can never silently diverge. Prestige classes appear only in level-up, with their
+printed entry requirements and met/unmet note (`decisions.md §14`). Ex-* states (Ex-Barbarian,
+Ex-Paladin, and `ex_antipaladin` if distinct) are census-only, never offered at creation — they
+are reached only through the game's own fall-from-grace mechanic. Reads the desktop's existing
+process-wide package handle, not a fresh 135x20-receipt census sweep at picker-open time.
 
 ### Enforcement
 

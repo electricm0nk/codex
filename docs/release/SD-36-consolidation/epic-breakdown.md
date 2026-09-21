@@ -114,8 +114,8 @@ see `kanban.md` / `progress.md` — nothing in this section is a completion clai
 
 | Criterion | Acceptance command / evidence |
 |---|---|
-| F0.1 RED truth | `cargo run --locked --bin class_census -- --json /tmp/census.json` prints `ids=135 computed=42 blocked=93` (42 of 135 computed, 93 of 135 blocked) |
-| F0.2 stage | `bash scripts/verify.sh --list \| grep -c class-census` -> 2; `bash scripts/verify.sh --only class-census` green |
+| F0.1 RED truth (review finding 12d) | `cargo run --locked --bin class_census -- --json /tmp/census.json` prints `ids=135 computed=42 blocked=93`; AND `cargo test --locked --lib class_census::tests::census_id_set_matches_the_published_partition` green (merged id set == `status.md`'s partition 31+3+20+7+74, pinned before the instrument may move) |
+| F0.2 stage (review finding 10) | `bash scripts/verify.sh --list \| grep -E '^class-census +yes +yes'` prints the row (membership in both stage sets by the columns — `--list` is one row per stage headed `stage full quick`, so `-> 2` cannot pass for a correctly registered stage); `bash scripts/verify.sh --only class-census` green |
 | F0.3 generated table | `python3 scripts/gen_class_status_table.py --check` exits 0; `python3 -m pytest scripts/tests/test_gen_class_status_table.py -q` green |
 | F0.4 list parity | `cargo test --locked --lib class_census` green (prestige list == fixture's 74 of 74; no id in two families) |
 
@@ -124,8 +124,8 @@ see `kanban.md` / `progress.md` — nothing in this section is a completion clai
 | Criterion | Acceptance command / evidence |
 |---|---|
 | F1.1 reproducible before | `cargo run --locked --quiet -j 2 -p codex-ingest --bin sheet_rule_convert -- --check` exits 0 at the pre-change commit |
-| F1.2 oracle pin for the reader | `cargo test --locked -p codex-ingest --test class_weapon_proficiency_via_converter` green (reader output == each of the 42 static rows, each re-derived from oracle rows) |
-| F1.3 links closed | `data/sheet_rules/_defects/unresolved-references.json` length: 11,925 - 4,456 = **7,469** (or the difference explained per row); mechanism A = 0 |
+| F1.2 oracle pin for the reader (extended, review finding 15) | `cargo test --locked -p codex-ingest --test class_weapon_proficiency_via_converter` green (reader output == each of the 42 static rows AND every other reader row re-derived from a named oracle row — tier, `Weapon Group <x>`, or expanded `WeaponSet`); `an_unrecognized_proficiency_tag_makes_the_class_unknown` green (e.g. `Auto`, `KoboldTailAttachment` -> `Unknown`, never fabricated) |
+| F1.3 links closed (per-edge pin, review finding 12a) | `data/sheet_rules/_defects/unresolved-references.json` length: 11,925 - 4,456 = **7,469** (or the difference explained per row); mechanism A = 0 AND D/E/F unchanged at 3,033/3,565/808; per-edge: each added edge's target rule `provenance.closure_rows` contains the named oracle line (a count match alone does not rule out an edge landing on a colliding slug, e.g. `wizard`) |
 | F1.4 no silent drop | `cargo test --locked -p codex-ingest automatic_grants_are_never_dropped_silently` green |
 | F1.5 coverage | census: classes blocked on `combat.baseline_weapon_proficiency_unknown` -> 0 of 135 |
 | F1.6 structural diff | `unexpected field deltas: 0`, `records 49450 -> 49450`, added edges per kind == mechanism A's per-kind table |
@@ -142,7 +142,7 @@ see `kanban.md` / `progress.md` — nothing in this section is a completion clai
 | F1b.2 n=1 / n=5 receipts | both artifacts exist; each reports `changed-value=0 removed-unexplained=0 duplicate=0` |
 | F1b.3 join | `cargo test --locked --lib rule_for_explanation` green, including `a_facet_id_never_joins_to_the_class_principal_rule` and `the_three_known_good_pairs_still_join` |
 | F1b.4 agreement (test-only) | `cargo test --locked --test sd36_sheet_value_agreement` green (0 disagreements out of every joined pair, all census classes, levels 1/10/max) |
-| F1b.5 fixtures | `ls docs/release/SD-36-consolidation/artifacts/epic-f/fixture-rebaseline-*.md \| wc -l` == number of fixture files changed in the commit |
+| F1b.5 fixtures (script, review finding 12c) | `python3 scripts/tests/check_fixture_rebaseline_receipts.py` exits 0: diffs `git show --name-only HEAD`'s fixture paths against the `fixture-rebaseline-*.md` receipt filenames, non-zero on any mismatch |
 
 ### F2 — Gate arm, CLASS_FAMILY_BOOKS, prestige alone
 
@@ -168,8 +168,9 @@ see `kanban.md` / `progress.md` — nothing in this section is a completion clai
 |---|---|
 | F4.1 | `cd apps/desktop/src-tauri && cargo test --locked list_class_creation_roster` green; roster length == census computed base count |
 | F4.2 | `cd apps/desktop && npm test -- classRoster characterHubModel characterProgression skillsModel` green; `npm run typecheck` green |
-| F4.3 | `grep -c 'canonical_seeds_for' src/bin/v06_class_state_dump.rs apps/desktop/src-tauri/src/pf1_adapter.rs` shows imports only; `git grep -c 'fn canonical_seeds_for' -- src apps` -> 1 |
+| F4.3 (strengthened, review finding 12b) | `git grep -c 'fn canonical_seeds_for' -- src apps` -> 1 (the single definition) AND `git grep -n 'use .*canonical_seeds_for' -- src/bin apps` -> 2 (both call sites import it) |
 | F4.4 | ui-smoke rows green: `create-character-samurai`, `-magus`, `-warrior`, `-kineticist`, `-inquisitor-generic` and `level-up-fighter6-into-arcane-archer` |
+| F4.5 (new, review finding 13) | `cargo test --locked --lib no_computed_class_is_unoffered_without_a_named_reason` green: `in_desktop_roster == false` always carries `hit_die_absent \| not_computed \| prestige \| ex_state`; the 7 `hit_die_absent` classes (0.4) asserted present by id |
 
 ### F5 — Closure deltas
 

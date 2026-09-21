@@ -23,6 +23,12 @@ section 3b (F1b), sections 8 and 9 rewritten. **Amended again 2026-09-21 against
 review's 9 findings** — all 9 verified against the code/data, all 9 CONFIRMED and closed in place
 (design, order, a carrier rule, an acceptance command, or a size changed; nothing merely noted).
 Total size rose from 81-115 to 100-140 agent-hours; the three operator rulings (§9) are unchanged.
+**Amended a third time 2026-09-21: the same adversarial review's remaining 6 findings (10-15 of
+15; an orchestration bug truncated the first pass at 9) applied** — all 6 re-verified against the
+code/data, all 6 CONFIRMED and closed in place (a save-shape accessor, a carrier precedence rule,
+four strengthened acceptance rows, a named-exception rule, an acceptance command that could not
+pass, and an oracle-pin extension). No size range changed; each fix is absorbed inside its
+batch's existing hour estimate as noted at the fix site.
 See §12 for the full review log.
 
 **Status:** scoped this pass, docs only, no code touched. F0–F5 are all **open** on `kanban.md` /
@@ -94,12 +100,25 @@ Upper bound: 41 of 136 chassis-bearing class records have no outgoing grant edge
 (script in §1 notes; the 41 includes records whose class id is PI-redacted, where a
 slug-keyed count cannot see the edge — so 41 is a ceiling, not a count).
 
-**0.4 Hit die is already converted.** Every class principal rule carries
-`"prose":[{"family":{"StatBlock":"Hit die"},"pieces":[{"Text":"d10"}]}]`
-(`python3 -c "import json;print(json.load(open('data/sheet_rules/ultimate_combat/class/samurai.json'))[0]['prose'])"`).
-`ClassChassis` (`class_chassis_sheet_rules.rs:62-84`) does not read it yet. A reader is needed,
-not a converter change — moved to F0 as a prerequisite of F3 (review finding 3; was originally
-placed in F4, too late for F3 which needs it first).
+**0.4 Hit die is already converted — for 178 of 185 class records, 7 named exceptions (review
+finding 13, CONFIRMED, corrects the document's "every class principal rule carries" claim).**
+Measured over all `data/sheet_rules/*/class/*.json` (185 files): **178 of 185** carry the
+`{"family":{"StatBlock":"Hit die"},...}` prose row; the 7 without it are
+`occult_adventures/psychic_detective`, `ultimate_psionics/gifted_blade`,
+`ultimate_psionics/gifted_blade_marksman_power_list`, `ultimate_psionics/unlocked_talent`,
+`bestiary/sorcerer_cleric_arcane`, `ultimate_intrigue/vwarlock`, `ultimate_intrigue/vcabalist`.
+Four of these live in `CLASS_FAMILY_BOOKS` (`generic_class_chassis.rs:57-73`), so they can enter
+the 78-record generic population and reach `Computed` with no hit die. `ClassChassis`
+(`class_chassis_sheet_rules.rs:62-84`) does not read the prose row yet. A reader is needed, not
+a converter change — moved to F0 as a prerequisite of F3 (review finding 3; was originally
+placed in F4, too late for F3 which needs it first), returning `Option<u8>`: `None` for the 7
+named exceptions, never a fabricated `0`. **The roster/census rule must not silently drop these
+7 classes.** F4's roster rule (§6) omits a class from the Create picker only for a NAMED reason
+(`hit_die_absent` | `not_computed` | `prestige` | `ex_state`); `hit_die_absent` is a distinct
+reason from `not_computed` — a class can be `Computed` by the census (it has no chassis-blocking
+diagnostic) and still be `hit_die_absent` (no HP figure to print), and the roster excludes it
+under that name rather than reporting it `Blocked`. New F4 acceptance row (F4.5) and RED test
+below.
 
 **0.5 The 78 generic classes are 56 prestige + 22 base** (`docs/architecture/status.md:163-166`).
 A naive `is_supported_generic_class_family_single_class` would report 56 prestige classes
@@ -229,17 +248,55 @@ stays a test oracle and a parity test asserts the two lists are equal, 74 of 74)
 
 **Sweep.**
 - Base class: alone, level 1..=max_level, fixed race (as today), canonical seeds.
-- Prestige class: NEVER alone for the Computed column. One deterministic mix per class:
-  - carrier = `wizard` if the converted `applies` gate contains `HighestSpellLevel "Arcane"`;
-    `cleric` if `"Divine"`; else `fighter`;
+- Prestige class: NEVER alone for the Computed column. One deterministic mix per class.
+  **Carrier rule, fully specified (review finding 14, CONFIRMED — the prior two-clause version
+  had no stated precedence and made a prestige row's Computed status an artefact of the carrier,
+  not the class).** Verified over the 74 prestige ids (77 tagged records before the 3
+  cross-book slug dedupes the census already performs): 23 carry a `BaseAttack`/total-AB
+  requirement, max value 7 (`fighter 7 + max_level 10 = 17 <= 20` — the cap is never actually
+  reached by a BAB term alone, so this axis is safe as originally written); `mystic_theurge` and
+  `evangelist` each carry BOTH an Arcane and a Divine `HighestSpellLevel` term; 43 carry
+  neither a caster nor a BAB term at all (their carrier falls to the floor-5 `fighter`, who has
+  no caster level — any prestige chassis expression keyed to caster level would then evaluate 0,
+  a confidently wrong number in a row the census calls Computed, not an artefact of a real
+  build).
+  - carrier = `wizard` if the converted `applies` gate contains `HighestSpellLevel "Arcane"` (and
+    not `"Divine"`); `cleric` if `"Divine"` (and not `"Arcane"`); else `fighter`.
+  - **Dual-caster case (`mystic_theurge`, `evangelist` — both Arcane AND Divine terms):** a
+    single-class carrier cannot ground both. Use a **second, independent carrier**: report TWO
+    mixes for the row, `[wizard N, <prestige> M]` and `[cleric N, <prestige> M]`, and the census
+    column `carrier` (new, below) names both; the row is Computed only when BOTH mixes reach
+    Computed (so a Computed verdict on a dual-caster prestige class is never grounded in only
+    half of what it legally needs).
   - carrier level = smallest level meeting every NUMERIC requirement in the gate
-    (`BaseAttack >= n`, skill ranks n -> level n, spell level L -> caster level 2L-1), floor 5,
-    capped so carrier + prestige max_level <= 20;
+    (`BaseAttack >= n`, skill ranks n -> level n, spell level L -> caster level 2L-1), floor 5.
+  - **Precedence when the cap bites (previously unstated): the `carrier + prestige max_level <=
+    20` cap always wins.** If the smallest level meeting every numeric requirement would push
+    the mix over 20, the carrier level is capped at `20 - prestige max_level` instead, and the
+    now-unmet numeric term (there is always at least one once the cap has bitten) is listed in
+    `entry_gate: unmet` with its required value AND the value the capped carrier actually
+    reaches — this is a real, printed shortfall, not a silently-dropped requirement, and it
+    counts the same as any other unmet entry-gate term (2, below): non-blocking, printed, never
+    simulated as met.
   - prestige levels swept 1..=max_level with the carrier fixed.
-  - Requirements the carrier cannot meet (feats, alignment, deity, race, "special") are
-    reported in a column `entry_gate: met|unmet` with the unmet terms listed. They do NOT
-    count against Computed: the entry gate is printed rule text and is already non-blocking
-    by design (`prestige_entry_gate.met|unmet`). Paper-sheet doctrine: print, do not simulate.
+  - Requirements the carrier cannot meet (feats, alignment, deity, race, "special", or a numeric
+    term the cap left unmet per the precedence above) are reported in a column
+    `entry_gate: met|unmet|partially-met` with every unmet term listed. `partially-met` is used
+    only for the dual-caster case when one of the two independent-carrier mixes fails its own
+    entry gate while the other succeeds — named explicitly, never folded into a single verdict.
+    They do NOT count against Computed: the entry gate is printed rule text and is already
+    non-blocking by design (`prestige_entry_gate.met|unmet|partially-met`). Paper-sheet
+    doctrine: print, do not simulate.
+  - **New census column `carrier`** (review finding 14): names the carrier class(es) used for
+    each prestige row (`wizard` | `cleric` | `fighter` | `wizard+cleric` for the dual-caster
+    case). **New test:** any prestige row whose chassis expression (the converted record's
+    `value`/effects, read the same way F1's reader already reads them) references a caster
+    level (`Expr::CasterLevel` or a `HighestSpellLevel` read) must have a caster carrier
+    (`wizard`, `cleric`, or both) named in that column; if it does not (e.g. a future prestige
+    record this rule cannot classify), the row reports `entry_gate: unknown` and
+    `status: Unknown` for that class — **never a confidently-wrong 0** the way the un-fixed
+    43-of-74 floor-5-fighter case would produce today. RED test:
+    `a_prestige_row_referencing_caster_level_names_a_caster_carrier_or_reports_unknown`.
 - Second column `alone_status`: every prestige class alone must be `Blocked` with the F2
   game-rule diagnostic (74 of 74). This is a negative control, not an exclusion.
 - Mix panel: the existing multiclass negative-control mixes, re-used as census rows, each with a
@@ -268,13 +325,15 @@ is not 135 the agent records a `scripts/retro.py correction`, never a silent cha
 
 | Criterion | Acceptance command |
 |---|---|
-| F0.1 RED truth | `cargo run --locked --bin class_census -- --json /tmp/census.json` prints `ids=135 computed=42 blocked=93` (42 of 135 computed, 93 of 135 blocked) |
-| F0.2 stage | `bash scripts/verify.sh --list \| grep -c class-census` -> 2; `bash scripts/verify.sh --only class-census` green |
+| F0.1 RED truth (review finding 12d: pinned, not self-authored) | `cargo run --locked --bin class_census -- --json /tmp/census.json` prints `ids=135 computed=42 blocked=93` (42 of 135 computed, 93 of 135 blocked), AND `cargo test --locked --lib class_census::tests::census_id_set_matches_the_published_partition` green: the merged id set equals `status.md`'s own partition 31+3+20+7+74, and `computed==42` is asserted against that partition at F0 landing time — the instrument is pinned to the previously published census before it is allowed to move, not left to author its own denominator in the same batch that reads it |
+| F0.2 stage (review finding 10: the original command cannot pass for a correctly registered stage) | `bash scripts/verify.sh --list` prints one row per stage headed `stage  full  quick` (verified: 51 rows today, e.g. `sheet-rules-check    yes   no`; `bash scripts/verify.sh --list \| grep -c class-dump` -> 1, not 2 — a correctly registered stage appears once, with `yes`/`yes` in its two columns, never twice). `bash scripts/verify.sh --list \| grep -E '^class-census +yes +yes'` prints the row (asserts membership in BOTH stage sets by the columns, not a row count); `bash scripts/verify.sh --only class-census` green |
 | F0.3 generated table | `python3 scripts/gen_class_status_table.py --check` exits 0; `python3 -m pytest scripts/tests/test_gen_class_status_table.py -q` green |
 | F0.4 list parity | `cargo test --locked --lib class_census` green (prestige list == fixture's 74 of 74; no id in two families) |
 
 RED-first tests: `class_census::tests::every_registry_is_swept_once` (135, partition sums
-31+3+20+7+74=135), `prestige_carrier_is_deterministic`, `prestige_alone_is_blocked_with_the_game_rule`
+31+3+20+7+74=135), `census_id_set_matches_the_published_partition` (review finding 12d),
+`prestige_carrier_is_deterministic`, `a_prestige_row_referencing_caster_level_names_a_caster_carrier_or_reports_unknown`
+(review finding 14), `prestige_alone_is_blocked_with_the_game_rule`
 (RED until F2). Risks: carrier rule meets a requirement shape it cannot parse -> row reports
 `entry_gate: unknown` and the test lists every such class by name (no silent default).
 **Amendment (option A):** the bin also takes `--sheet-dump <dir>` and `--only <class>` — the headless
@@ -387,6 +446,20 @@ weapon record cannot answer (`Light`, `Thrown`) is ALSO expanded to a `WeaponSet
 Record count stays 49,450; the delta is inside existing rules' `grants`.
 Pin: a converter-backed test re-derives each `WeaponSet.members` from the oracle rows.
 
+**Junk tags already in the converted vocabulary (review finding 15, CONFIRMED).** The
+vocabulary the reader will consume already contains values that are neither a tier, a
+`Weapon Group <x>` tag, nor a members list: measured over all 716 converted proficiency facts
+(`data/sheet_rules/**/*.json`, `ProfRef::WeaponGroup` values), besides the expected joined
+conjunctions (`Light.Martial`, `Martial.Ranged`, `Martial.Thrown`, `OneHanded.Simple`, ...) there
+are **`Auto` (11 occurrences)** and **`KoboldTailAttachment` (2 occurrences)** — neither is a
+PF1 weapon tier or weapon group, and F1.2 as originally written pins only the 42 hand-typed
+static rows, leaving every OTHER reader row — exactly the new surface F1 adds — unpinned. Fix
+scheduled inside F1.2 below: every `ProfRef` the reader returns for a census class must be
+re-derivable from a named oracle row (a tier, a `Weapon Group <x>` tag, or an expanded
+`WeaponSet`); a tag matching none of the three (starting with the two named here) makes that
+class's proficiency answer `Unknown`, never a fabricated membership. RED test:
+`an_unrecognized_proficiency_tag_makes_the_class_unknown`.
+
 ### 3.4 Live consumption — read the converted record; do NOT add ~93 Rust rows
 
 - Ruling 7 forbids MOVING `rules_tables` to data before Starfinder; it does not require new
@@ -488,8 +561,8 @@ n=1 / n=5 sheet diffs. Only then the population commit.
 | Criterion | Acceptance command |
 |---|---|
 | F1.1 reproducible before | `cargo run --locked --quiet -j 2 -p codex-ingest --bin sheet_rule_convert -- --check` exits 0 at the pre-change commit |
-| F1.2 oracle pin for the reader | `cargo test --locked -p codex-ingest --test class_weapon_proficiency_via_converter` green: reader output == each of the 42 static rows, AND each reader row re-derived from oracle rows |
-| F1.3 links closed | `python3 -c "import json;print(len(json.load(open('data/sheet_rules/_defects/unresolved-references.json'))))"` -> 11,925 - 4,456 = **7,469** (or the difference explained per row); `python3 docs/release/SD-36-consolidation/artifacts/epic-f/scripts/unres2.py` reports mechanism A = 0 |
+| F1.2 oracle pin for the reader (extended, review finding 15) | `cargo test --locked -p codex-ingest --test class_weapon_proficiency_via_converter` green: reader output == each of the 42 static rows, AND every reader row for every census class re-derived from a named oracle row (tier, `Weapon Group <x>`, or expanded `WeaponSet` — not only the 42 static rows), AND `an_unrecognized_proficiency_tag_makes_the_class_unknown` green (a class whose closure carries `Auto`, `KoboldTailAttachment`, or any other tag matching none of the three shapes reports `Unknown`, never a fabricated proficiency) |
+| F1.3 links closed (per-edge pin, review finding 12a) | `python3 -c "import json;print(len(json.load(open('data/sheet_rules/_defects/unresolved-references.json'))))"` -> 11,925 - 4,456 = **7,469** (or the difference explained per row); `python3 docs/release/SD-36-consolidation/artifacts/epic-f/scripts/unres2.py` reports mechanism A = 0 AND D/E/F unchanged at 3,033/3,565/808 (a drop in D/E/F means the retry stole rows from a different mechanism, not a real fix); AND for each of the 4,456 added edges, a per-edge correctness assertion that the TARGET rule's `provenance.closure_rows` contains the oracle line the reference names — a count match alone (4,456 edges added) is satisfied equally by an edge written to the right record and one written to a colliding record of the same slug (0.3's own hypothesis: `wizard` collides across `class_feature/wizard.json` and two `wizard_class__<hash>.json` records), so the count is necessary but not sufficient and the per-edge pin is required to close the row |
 | F1.4 no silent drop | `cargo test --locked -p codex-ingest automatic_grants_are_never_dropped_silently` green |
 | F1.5 coverage | census: classes blocked on `combat.baseline_weapon_proficiency_unknown` -> 0 of 135 |
 | F1.6 structural diff | diff script: `unexpected field deltas: 0`, `records 49450 -> 49450`, added edges per kind == 3.1's table |
@@ -789,7 +862,7 @@ no `UPDATE_SNAPSHOTS`-style env run without the receipt. One owner per fixture f
 | F1b.2 n=1 / n=5 receipts | both artifacts exist; each reports `changed-value=0 removed-unexplained=0 duplicate=0` |
 | F1b.3 join | `cargo test --locked --lib rule_for_explanation` green, INCLUDING `a_facet_id_never_joins_to_the_class_principal_rule` and `the_three_known_good_pairs_still_join` (review finding 2) |
 | F1b.4 agreement (test-only, review finding 6) | `cargo test --locked --test sd36_sheet_value_agreement` green (0 disagreements out of every joined pair, all census classes, at levels 1/10/max; this is the ONLY place the check runs — no runtime diagnostic exists to also assert empty) |
-| F1b.5 fixtures | `ls docs/release/SD-36-consolidation/artifacts/epic-f/fixture-rebaseline-*.md \| wc -l` == number of fixture files changed in the commit (`git show --stat`) |
+| F1b.5 fixtures (script, not a human read, review finding 12c) | `python3 scripts/tests/check_fixture_rebaseline_receipts.py` (new): diffs the fixture paths `git show --name-only HEAD` lists for the commit against the filenames the `fixture-rebaseline-*.md` receipts name, and exits non-zero on any mismatch (a file changed with no receipt, or a receipt naming a file the commit did not touch) — replaces comparing `ls \| wc -l` against a count a human reads off `git show --stat`, which is not a command that can fail |
 
 **Size: 20-30 agent-hours** (instrument 3-4; **sibling-amplified count script, review finding 7,
 +1-2 (new)**; n=1/n=5 + classification 4-6 — likely to rise once the true (not 4,456) figure is
@@ -860,10 +933,39 @@ the pin test lists every shadowed slug. **Size: 4-6 agent-hours.**
 the isolated single-class input passes `has_supported_class_chassis` OR the class is a prestige
 class with a chassis row at that level. A mix needs >= 1 non-prestige class (the F2 rule).
 `table_class_id` stays for the CRB table path. `multiclass_good_saves`
-(`class_shared_core.rs`, near 3796): when no CRB table row exists, good/poor is derived from
-the `ClassChassis` row at level 1 (save 2 = good, 0 = poor; prestige uses the PF1 prestige
-progression that the record's own expression states — derive from the Expr shape, never from
-the class name). Fractional rule and floor-once unchanged.
+(**corrected location, review finding 11, CONFIRMED**: `class_occult_and_psionic.rs:3808`, not
+`class_shared_core.rs` — that file ends at line 3718, before the document's originally cited
+`near 3796`; the delegating call is `class_occult_and_psionic.rs:3804-3810`,
+`good_saves_for(table_class_id(class_id)?)`): when no CRB table row exists, good/poor for a
+GENERIC (non-table) class needs deriving from the `ClassChassis` row, which is not
+implementable as originally written.
+
+**Save-shape derivation (review finding 11, CONFIRMED — not implementable from the record as
+described, and the target function was misattributed).** `ClassChassis.saves` is a PRIVATE
+`[Expr; 3]` (`class_chassis_sheet_rules.rs:62-84`) with no public accessor today, so "derive
+good/poor from the Expr shape" requires a new reader (unplanned in the original text). Worse,
+the shape can be ABSENT even when the field is present: a save formula that degraded at
+conversion prints WORDS, not an `Expr` — the exact bug whose per-occurrence fix moved the
+generic-class population 62 -> 78 (`generic_class_chassis.rs:139-160` documents the
+degradation-masking history) — so a shape classifier that assumes every `Expr` cleanly matches a
+"good" or "poor" progression shape will silently misclassify a degraded save as poor rather than
+flagging it. **Fix:** add `impl ClassChassis { pub fn save_shape(&self, index: usize) ->
+Option<SaveProgression> }` in `class_chassis_sheet_rules.rs` (the file that already owns the
+private `saves` field), where `SaveProgression` is a new enum `{ Good, Poor, Degraded,
+Unrecognized }`: `Degraded` when the record's prose/expr pairing shows the known
+words-not-Expr symptom, `Unrecognized` when the `Expr` shape matches neither the good nor the
+poor closed-form (`level/2+2` vs `level/3`, PF1's only two class-level save shapes) after
+degradation is ruled out. `multiclass_good_saves`'s generic-class arm calls `save_shape`, not a
+bare good/poor bool. **RED test** (before the arm is written):
+`every_generic_class_save_shape_is_recognized_or_named` — iterates all 78 generic-class
+records at all three save indices, asserts `save_shape` returns `Some(Good)` or `Some(Poor)` for
+each, and on a `Degraded`/`Unrecognized`/`None` result FAILS BY NAME (record id, save index),
+listing every such record rather than passing on average agreement. **A class with any
+`Degraded`/`Unrecognized`/`None` save shape stays `Blocked` in a mix** (the mix's
+`multiclass_class_level_supported` gate returns false for it), never folded in as `poor` by a
+silent default — a wrong save progression on a printed sheet is exactly the fabricated-number
+hazard the doctrine forbids. Fractional rule and floor-once unchanged for classes with a
+recognized shape.
 
 **Prerequisite readers moved to F0/F1 (review finding 3 — CONFIRMED).** F3 as originally
 written promised to compute, once per character, "HP (per-class hit die x levels + Con)" and
@@ -951,10 +1053,15 @@ really has `class_levels.len() >= 2`. Sabotage parity re-proven: remove the gene
 RED first: `tests/sd36_multiclass_any_class.rs` — `[barbarian 12, fighter 1]`,
 `[fighter 6, arcane_archer 3]`, `[magus 4, samurai 2]`, `[wizard 5, loremaster 2]` reach
 Computed; BAB/saves/HP/skill-point totals asserted against hand-worked PF1 values (oracle
-first — presence is not correctness). Risks: a bespoke class module that reads character
-level where it should read class level (each found by the histogram, fixed generically in the
-fold, not per class). **Size: 17-26 agent-hours** (was 16-24; +1-2 for F3.0's Unknown-not-zero
-tests, review finding 3) — **the least certain figure in this document.**
+first — presence is not correctness); `every_generic_class_save_shape_is_recognized_or_named`
+(review finding 11, RED today: `save_shape` does not exist). Risks: a bespoke class module that
+reads character level where it should read class level (each found by the histogram, fixed
+generically in the fold, not per class); a generic class whose save `Expr` is `Degraded` or
+`Unrecognized` stays `Blocked` in a mix rather than silently folding as poor (review finding
+11). **Size: 17-26 agent-hours** (was 16-24; +1-2 for F3.0's Unknown-not-zero
+tests, review finding 3; the `save_shape` accessor and its RED test are absorbed inside this
+range — a small addition to an existing reader, not a new sub-batch) — **the least certain
+figure in this document.**
 
 ---
 
@@ -976,22 +1083,33 @@ with its printed entry requirements and met/unmet note; character level cap 20 k
 `characterProgression.ts`, `spellsTabModel.ts`, `skillsModel.ts`, `classPreviewModel.ts` and
 their three test files; `apps/desktop/scripts/ui-smoke/spec.json`.
 
-Roster rule: a class is offered iff the census says Computed at every level (engine-derived,
-so the picker can never again offer an uncomputable class). Creation roster = base + NPC
-classes, grouped by family; prestige classes appear ONLY in level-up. Ex-* states: census-only,
-never offered at creation (ruled 2026-09-21, §9/§14).
+Roster rule: a class is offered iff the census says Computed at every level AND
+`ClassChassis.hit_die.is_some()` (engine-derived, so the picker can never again offer an
+uncomputable class — and never a Computed class with no HP figure to print, review finding
+13). Creation roster = base + NPC classes, grouped by family; prestige classes appear ONLY in
+level-up. Ex-* states: census-only, never offered at creation (ruled 2026-09-21, §9/§14).
+**Named-exception guarantee (review finding 13, CONFIRMED — a class the census calls Computed
+that the roster silently omits is otherwise an unexplained gap).** `in_desktop_roster == false`
+on any census row implies a NAMED reason from a closed enum, never a bare boolean:
+`hit_die_absent` (the 7 of 185 identified in 0.4 — the failure mode this finding names),
+`not_computed`, `prestige`, or `ex_state`. The roster and the census both read the same reason
+field, so the two can never silently diverge.
 
 | Criterion | Acceptance command |
 |---|---|
 | F4.1 | `cd apps/desktop/src-tauri && cargo test --locked list_class_creation_roster` green; roster length == census computed base count |
 | F4.2 | `cd apps/desktop && npm test -- classRoster characterHubModel characterProgression skillsModel` green; `npm run typecheck` green |
-| F4.3 | `grep -c 'canonical_seeds_for' src/bin/v06_class_state_dump.rs apps/desktop/src-tauri/src/pf1_adapter.rs` shows imports only; `git grep -c 'fn canonical_seeds_for' -- src apps` -> 1 |
+| F4.3 (strengthened, review finding 12b) | `git grep -c 'fn canonical_seeds_for' -- src apps` -> 1 (the single definition) AND `git grep -n 'use .*canonical_seeds_for' -- src/bin apps` -> 2 (both call sites import it rather than each declaring their own copy — a `grep -c` on the bare call-site name alone would print the same count whether the second file imports the shared function or redefines it, so the `use` check is required to prove single-source) |
 | F4.4 | ui-smoke rows green: `create-character-samurai`, `-magus`, `-warrior`, `-kineticist`, `-inquisitor-generic` (one per newly offered family) and `level-up-fighter6-into-arcane-archer` |
+| F4.5 (new, review finding 13) | `cargo test --locked --lib no_computed_class_is_unoffered_without_a_named_reason` green: every census row with `in_desktop_roster == false` carries one of `hit_die_absent \| not_computed \| prestige \| ex_state`; the 7 `hit_die_absent` classes named in 0.4 are asserted present under that reason by id |
 
 RED first: roster command test (fails: command absent); `classRoster.test.ts`; seed-parity
-test (dump bin and adapter produce identical seeds for all seeded classes). Risks: the 7
-desktop version fixtures and any snapshot that pins 31 options; ui-smoke needs the DOM-probe
-harness (no browser on this box). **Size: 12-16 agent-hours.**
+test (dump bin and adapter produce identical seeds for all seeded classes);
+`no_computed_class_is_unoffered_without_a_named_reason` (review finding 13, RED today: the
+reason enum does not exist, and the 7 `hit_die_absent` classes are silently dropped by a bare
+`None` check with no name attached). Risks: the 7 desktop version fixtures and any snapshot
+that pins 31 options; ui-smoke needs the DOM-probe harness (no browser on this box). **Size:
+12-16 agent-hours** (the named-reason enum and its test are absorbed inside this range).
 
 ---
 
@@ -1105,12 +1223,16 @@ raise (AGENTS.md Blocker Discipline), not a line to re-baseline.
 
 ## 12. Review log — adversarial review, 2026-09-21
 
-Nine findings against the prior version of this document. Each was independently re-verified against
-the code and data (commands run, files read — not taken on the reviewer's word), then this document
-was amended in place. **All nine were CONFIRMED; none were rejected.** No finding required a
-carve-out or a softened acceptance criterion; every fix either strengthened an acceptance row or
-added one. Total size rose from 81-115 to 100-140 agent-hours (§8); the three operator
-rulings (§9) are untouched by any of the nine.
+Fifteen findings in total against the prior version of this document (an orchestration bug
+applied only the first 9 in the earlier pass; the remaining 6 — findings 10-15 — are applied
+below). Each was independently re-verified against the code and data (commands run, files
+read — not taken on the reviewer's word), then this document was amended in place. **All
+fifteen were CONFIRMED; none were rejected.** No finding required a carve-out or a softened
+acceptance criterion; every fix either strengthened an acceptance row or added one. Total size
+rose from 81-115 to 100-140 agent-hours (§8) from findings 1-9; findings 10-15 changed no size
+range (each is absorbed inside its batch's existing estimate, noted at the fix site) but
+strengthen six acceptance rows, add a public accessor, a carrier precedence rule, and a
+named-exception rule. The three operator rulings (§9) are untouched by any of the fifteen.
 
 | # | Section | Verdict | Evidence checked | What changed |
 |---|---|---|---|---|
@@ -1123,6 +1245,12 @@ rulings (§9) are untouched by any of the nine.
 | 7 | 3b.1 blast radius | **CONFIRMED** | Read `held_set`'s `add` closure (`sheet_rule.rs:1892-1899`): every held rule also holds its siblings via `siblings_of` (`:1066-1069`), unconditionally. Computed `71862/49450 ≈ 1.45` rules per record from `_report.json` — matches the reviewer's ratio exactly, confirming sibling amplification is the common case, not an edge case. | New 3b.0: the 4,456 edge count is explicitly NOT the print-surface size; a new offline sibling-count script is scheduled before F1b's n=1 (new step 0), its output replaces 4,456 in 3b's sizing; new F1b.0 acceptance row; F1b size +1-2h |
 | 8 | 5 (F3)/F0 baselines/F3.1, the "183" figure | **CONFIRMED** | `git grep -n '\b183\b' -- docs/architecture docs/release/SD-36-consolidation`: only unrelated `POOL.183.*` export rows, no doc states 183. Counted `"stay claim-blocked"`: 235 total under `tests/`, split 80 in `sd13_progression/` (incl. its 2-row macro shell), 78 in `sd18_widening/` (incl. its 64-row `MULTICLASS_NEG_ROWS`) — close to but not exactly the reviewer's 78/15 split (78/78, i.e. 14 individual sd18_widening files, not 15 — immaterial to the finding, which is that 183 is unsourced either way). | Every hardcoded "183" replaced with `BASELINE_CENSUS_MIX_COMPUTED`, a value F0 must derive from a stated, reproducible command sequence (never asserted from this document's own arithmetic) — F0's baseline definition, F3.1, F3.3, and the epic's final acceptance line all updated to reference the measured baseline instead of a literal |
 | 9 | 0.8/§1 step 1/F1.1, broken command | **CONFIRMED** | Ran it: `cargo run --locked --bin sheet_rule_convert -- --check` from repo root -> `error: no bin target named 'sheet_rule_convert' in default-run packages`, exit 101. Ran the corrected form: `cargo run --locked --quiet -j 2 -p codex-ingest --bin sheet_rule_convert -- --check` -> green, `records=49450 converted=49450 refused=0 rules=71862 var_tables=5309 verdict=PASS (121.2s)`. | Every occurrence of the bare command in the document (0.8, §1 step 1, §1 step 3's `--one` calls, F1.1) corrected to include `-j 2 -p codex-ingest`; 0.8 records the verified-green baseline output so a future reader does not have to re-derive it |
+| 10 | F0.2, acceptance command | **CONFIRMED** | Ran it myself: `bash scripts/verify.sh --list` prints a 51-line table headed `stage  full  quick`, one row per stage (e.g. `class-dump           yes   yes`). `bash scripts/verify.sh --list \| grep -c class-dump` -> **1**, not 2 — the original F0.2 row asserted `-> 2` for a correctly registered stage, which only a double-registration bug could produce. | F0.2 rewritten to `grep -E '^class-census +yes +yes'` (asserts membership in both stage sets by the columns, not a row count) plus the existing `--only class-census` green check |
+| 11 | 5 (F3), save derivation | **CONFIRMED** | Read `ClassChassis` (`class_chassis_sheet_rules.rs:62-84`): `saves: [Expr; 3]` and `base_attack: Expr` are private, no accessor. `git grep -n multiclass_good_saves -- src` -> defined at `class_occult_and_psionic.rs:3808`, not `class_shared_core.rs` (`wc -l` on that file: 3718 lines, ends before the document's cited `near 3796`). Read `generic_class_chassis.rs:139-160`'s documented degradation-masking history (words-not-Expr bug, 62 -> 78 fix). | Corrected the file/line citation; added `ClassChassis::save_shape(index) -> Option<SaveProgression>` (`Good\|Poor\|Degraded\|Unrecognized`) as a new named accessor in `class_chassis_sheet_rules.rs`; new RED test `every_generic_class_save_shape_is_recognized_or_named` over all 78 generic records, fails by name; a `Degraded`/`Unrecognized`/`None` shape keeps that class `Blocked` in a mix rather than folding as poor |
+| 12 | F1.3, F4.3, F1b.5, F0.1, weak acceptance | **CONFIRMED** | (a) Confirmed the collision risk is real: `ls data/sheet_rules/core_rulebook/class_feature/ \| grep wizard` lists both `wizard.json` (FavoredClass ability) and two `wizard_class__<hash>.json` records. Confirmed `_defects` length 11,925 myself. (b) Confirmed `fn canonical_seeds_for` is defined once (`src/bin/v06_class_state_dump.rs:129`) with no `use` import anywhere yet (F4 has not built the second caller). (c)/(d) read the document's own acceptance rows directly: none of the four commands can fail on their own stated criterion. | (a) F1.3 gets a per-edge `provenance.closure_rows` pin plus a D/E/F-unchanged assertion (3,033/3,565/808); (b) F4.3 gets a `use .*canonical_seeds_for` count alongside the definition count; (c) F1b.5 becomes a script (`check_fixture_rebaseline_receipts.py`) that diffs `git show --name-only` against the receipt filenames and can exit non-zero; (d) F0.1 gets a cross-check test pinning the merged id set to `status.md`'s own 31+3+20+7+74 partition before the instrument is allowed to move |
+| 13 | 0.4 / 6 (F4), hit die absent | **CONFIRMED** | Measured myself over all 185 `data/sheet_rules/*/class/*.json`: 178 carry the `StatBlock "Hit die"` prose row, 7 do not — `occult_adventures/psychic_detective`, `ultimate_psionics/{gifted_blade, gifted_blade_marksman_power_list, unlocked_talent}`, `bestiary/sorcerer_cleric_arcane`, `ultimate_intrigue/{vwarlock, vcabalist}` — exact match to the reviewer's list. Confirmed 4 of the 7 live in `CLASS_FAMILY_BOOKS` (`generic_class_chassis.rs:57-73`), so they can enter the 78-record generic population. | 0.4 corrected to "178 of 185; 7 named exceptions" with the list; roster rule (§6) now requires `hit_die.is_some()` in addition to Computed; new named-reason enum (`hit_die_absent \| not_computed \| prestige \| ex_state`) so `in_desktop_roster == false` is never a bare boolean; new F4.5 acceptance row + RED test `no_computed_class_is_unoffered_without_a_named_reason` |
+| 14 | 2 (F0), prestige carrier | **CONFIRMED** | Measured myself over the 77 tagged-`Prestige` records (74 distinct ids after the 3 cross-book slug dedupes the census already performs — `cyphermage`, `hellknight`, `red_mantis_assassin` each appear in two books): 23 carry a `BaseAttack` requirement, max value 7 (cap-safe on that axis alone, confirmed); `mystic_theurge` and `evangelist` each carry BOTH `HighestSpellLevel Arcane` and `HighestSpellLevel Divine` terms (confirmed by direct read of both records' `applies`); 43 carry neither a caster nor a BAB term (confirmed — these fall to the floor-5 fighter carrier with no caster level at all). | Cap-bites precedence stated explicitly (cap wins; the newly-unmet numeric term is listed in `entry_gate: unmet` with both its required and reached values); dual-caster case gets a second, independent carrier (`wizard`+`cleric`, both must reach Computed); new census column `carrier`; new test `a_prestige_row_referencing_caster_level_names_a_caster_carrier_or_reports_unknown` — a row whose chassis expression references caster level without a named caster carrier reports `Unknown`, never a confidently-wrong 0 |
+| 15 | 3.3 (WeaponSet) / F1.2, proficiency vocabulary | **CONFIRMED** | Measured myself over all converted `ProfRef::WeaponGroup` values in `data/sheet_rules/**/*.json`: besides the expected tier/group joins, found `Auto` (11 occurrences) and `KoboldTailAttachment` (2 occurrences) — neither a PF1 weapon tier nor weapon group, exact match to the reviewer's evidence. Confirmed the 49,450 freeze premise is unaffected (records/converted are input counts). | F1.2 extended: every `ProfRef` the reader returns for a census class must be re-derivable from a named oracle row (tier, `Weapon Group <x>`, or expanded `WeaponSet`), not only the 42 static rows; new RED test `an_unrecognized_proficiency_tag_makes_the_class_unknown` — a tag matching none of the three shapes (starting with `Auto`, `KoboldTailAttachment`) makes that class's proficiency answer `Unknown`, never a fabricated membership |
 
 ---
 
