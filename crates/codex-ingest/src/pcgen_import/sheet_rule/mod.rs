@@ -373,8 +373,31 @@ pub fn build_index(tree: &PinnedTree, records: Vec<RecordRef>) -> (CorpusIndex, 
         let cat_u = r.category.to_ascii_uppercase();
         let key_u = r.key.to_ascii_uppercase();
         let name_u = r.name.to_ascii_uppercase();
-        index.by_cat_key.entry((cat_u.clone(), key_u.clone())).or_insert(r.id.clone());
-        index.by_cat_name.entry((cat_u.clone(), name_u.clone())).or_insert(r.id.clone());
+        // First wins (unchanged): `by_cat_key`/`by_cat_name` keep resolving a direct-category
+        // hit exactly as before. A pair claimed by more than one DIFFERENT record id is ALSO
+        // recorded as ambiguous, so the parent-category retry (`resolve_rule_in_checked`) can
+        // refuse to guess among them instead of silently inheriting whichever loaded first (F1
+        // adversarial finding 4).
+        let cat_key_pair = (cat_u.clone(), key_u.clone());
+        match index.by_cat_key.get(&cat_key_pair) {
+            Some(existing) if *existing != r.id => {
+                index.ambiguous_cat_key.insert(cat_key_pair);
+            }
+            Some(_) => {}
+            None => {
+                index.by_cat_key.insert(cat_key_pair, r.id.clone());
+            }
+        }
+        let cat_name_pair = (cat_u.clone(), name_u.clone());
+        match index.by_cat_name.get(&cat_name_pair) {
+            Some(existing) if *existing != r.id => {
+                index.ambiguous_cat_name.insert(cat_name_pair);
+            }
+            Some(_) => {}
+            None => {
+                index.by_cat_name.insert(cat_name_pair, r.id.clone());
+            }
+        }
         index.by_kind_name.entry((r.kind.clone(), key_u.clone())).or_insert(r.id.clone());
         index.by_kind_name.entry((r.kind.clone(), name_u.clone())).or_insert(r.id.clone());
         if r.kind == "class" {
@@ -1023,8 +1046,39 @@ pub fn check(out_dir: &Path, run: &Run) -> Result<(), Vec<String>> {
     if run.report.converted + run.report.refused != run.report.records {
         problems.push("converted + refused != records".into());
     }
-    problems.truncate(200);
     if problems.is_empty() { Ok(()) } else { Err(problems) }
+}
+
+#[cfg(test)]
+mod check_tests {
+    use super::*;
+
+    /// F1 adversarial finding 4: a `problems.truncate(200)` here used to silently hide everything
+    /// past the 200th problem, so `--check` could never state the TRUE delta on a run whose
+    /// structural diff is large by design (Option A's up-to-4,456 new edges, plus this branch's
+    /// own +570 `_vars/` files) -- the 200 slots were consumed before a single named record even
+    /// printed. A synthetic `Run` with 250 rendered rule files checked against an EMPTY on-disk
+    /// directory produces one "missing on disk" problem per rendered file -- 250 from `files`,
+    /// plus the three fixed files `render()` always emits (`_refused.json`/`_tokens.json`/
+    /// `_report.json`) -- 253 in all; `check` must report every one, never cap at 200.
+    #[test]
+    fn check_reports_every_problem_not_just_the_first_two_hundred() {
+        let run = Run {
+            files: (0..250).map(|i| (format!("book/kind/r{i:04}.json"), Vec::new())).collect(),
+            vars: BTreeMap::new(),
+            var_names: BTreeMap::new(),
+            refused: RefusedReport::default(),
+            tokens: TokenCensus::default(),
+            defects: BTreeMap::new(),
+            report: Report::default(),
+        };
+        // Never created, never written to -- `read_output` treats a missing directory as empty,
+        // exactly like a fresh checkout before the first `sheet_rule_convert` run.
+        let empty_dir = std::env::temp_dir().join(format!("sheet_rule_check_test_{}_{}", std::process::id(), line!()));
+        let err = check(&empty_dir, &run).expect_err("every rendered file missing on disk must fail the check");
+        let expected = run.files.len() + 3;
+        assert_eq!(err.len(), expected, "check() must report every problem, never truncate: got {} of {expected}", err.len());
+    }
 }
 
 /// Load everything and run once: the tree, the population, the index, the conversion.

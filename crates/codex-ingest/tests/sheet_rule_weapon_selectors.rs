@@ -1,9 +1,10 @@
 //! SD-36 Epic F1-3 -- weapon selectors resolved at ingest (`epic-f-class-completion.md`
-//! §3.2/§3.3, review finding 15). Today's `AUTO:WEAPONPROF|TYPE=` arm in `convert.rs` joins a
-//! conjunctive selector into one lossy word (`"Light.Martial"`) and treats every other `TYPE=`
-//! value as a bare `WeaponGroup`, including tags that name no real tier, weapon group, or
-//! membership at all (`Auto`, `KoboldTailAttachment`) -- these read as a fabricated granted
-//! proficiency. Live-corpus, real-oracle tests (`convert_record` over the pinned tree, exactly
+//! §3.2/§3.3, review finding 15; F1 adversarial finding 1). Today's `AUTO:WEAPONPROF|TYPE=` arm
+//! in `convert.rs` joins a conjunctive selector into one lossy word (`"Light.Martial"`) and
+//! treats every other `TYPE=` value as a bare `WeaponGroup`, even tags whose members exist only
+//! as an accumulated tag on the weapons that carry them (`Samurai`, `Auto`,
+//! `KoboldTailAttachment` all resolve this way -- none of them are junk; every one of them has
+//! live oracle members). Live-corpus, real-oracle tests (`convert_record` over the pinned tree, exactly
 //! what `sheet_rule_convert --one <id>` prints for n=1 -- never writing `data/sheet_rules/`,
 //! matching `sheet_rule_link_repair.rs`'s and `sheet_rule_gated_fact_grants.rs`'s own
 //! in-memory `run()`/`convert_record` pattern).
@@ -19,8 +20,9 @@
 //!   answer directly (`WeaponTableEntry` has no weight-class field), so it must ALSO expand to a
 //!   set, not a two-element `WeaponAllOf`.
 //! - `core_rulebook:class_feature:weapon_prof_auto` (`cr_abilities_class.lst:2799`, `KEY:Weapon
-//!   Prof ~ Auto`): `AUTO:WEAPONPROF|TYPE=Auto` -- review finding 15's own first named junk tag.
-//!   Granted internally by 11 different class/archetype records (the finding's own "11
+//!   Prof ~ Auto`): `AUTO:WEAPONPROF|TYPE=Auto` -- review finding 15 named this a junk tag, and
+//!   F1 adversarial finding 1 found that wrong: `Auto` resolves to five real oracle members.
+//!   Granted internally by 11+ different class/archetype records (the finding's own "11
 //!   occurrences" figure), all sharing this one record's conversion.
 //! - `core_rulebook:class_feature:weapon_and_armor_proficiency_commoner`
 //!   (`cr_abilities_class.lst:2825`): Commoner's "proficient with one simple weapon" is
@@ -152,8 +154,11 @@ fn marksman_conjunction_is_a_list_not_a_joined_word() {
 
     assert!(!members.is_empty(), "a real list, never an empty set");
     // Independently checked against core_rulebook/cr_profs_weapon.lst:44-53: every one of these
-    // carries BOTH a `Martial` and a `Light` TYPE dot-segment on its own base row.
-    for w in ["Handaxe", "Kukri", "Short Sword", "Starknife", "Sap", "Throwing Axe", "Light Hammer", "Light Pick", "Spiked Armor"] {
+    // carries BOTH a `Martial` and a `Light` TYPE dot-segment on its own base row. Four of them
+    // carry a `KEY:` distinct from their NAME field, so the member list names them by that KEY
+    // (`Sword (Short)`, `Axe (Throwing)`, `Hammer (Light)`, `Pick (Light)`) -- F1 finding 2's
+    // identity fix, which this same conjunction pins.
+    for w in ["Handaxe", "Kukri", "Sword (Short)", "Starknife", "Sap", "Axe (Throwing)", "Hammer (Light)", "Pick (Light)", "Spiked Armor"] {
         assert!(members.contains(&w.to_string()), "{w} is Martial+Light in the pinned oracle and must be a member: {:?}", members);
     }
     // "Light Flail"'s own TYPE facet (`cr_profs_weapon.lst:56`) carries no `Light` dot-segment
@@ -161,30 +166,42 @@ fn marksman_conjunction_is_a_list_not_a_joined_word() {
     assert!(!members.contains(&"Light Flail".to_string()), "Light Flail must not be a false-positive member (its own TYPE facet has no Light tag): {:?}", members);
 }
 
-/// Review finding 15: `TYPE=Auto` is a PCGen bookkeeping marker (PF1's own baseline weapons --
-/// Unarmed Strike, Grapple, Splash Weapon -- carry `Auto` as an incidental TYPE tag, but no class
-/// ever intentionally grants "the Auto weapons" as a feature), never a real weapon group or
-/// membership set. It must become a named defect, not a fabricated proficiency, and the record
-/// must still convert (no-carve-outs: an unfindable membership is a number to report, not a
-/// reason to drop the whole record).
+/// F1 adversarial finding 1: `TYPE=Auto` is NOT PCGen bookkeeping with no members -- it selects
+/// five live weapon-proficiency rows in the pinned oracle (`cr_profs_weapon.lst:10-14`: Grapple,
+/// Ray Spells, Touch Spells, Splash Weapon, Unarmed Strike -- PF1's own universal proficiencies).
+/// A hardcoded carve-out that short-circuits before the membership lookup discards a real,
+/// resolvable grant; `TYPE=Auto` must resolve through `members_with_all` like every other
+/// non-tier selector and become a real `WeaponSet`, never a manufactured defect.
 #[test]
-fn an_unrecognized_proficiency_tag_becomes_a_defect_not_a_grant() {
+fn type_auto_resolves_through_membership_to_its_five_real_members_not_a_defect() {
     let c = convert_unit("core_rulebook:class_feature:weapon_prof_auto");
     assert!(c.refusals.is_empty(), "the record must still convert: {:?}", c.refusals);
-
-    let grants: Vec<&Effect> = c.rules.iter().flat_map(|r| r.grants.iter()).collect();
     assert!(
-        !grants.iter().filter_map(|g| effect_fact(g)).any(|f| matches!(f, Fact::Proficiency(_))),
-        "TYPE=Auto must never become a granted proficiency of any shape: {:?}",
-        grants
-    );
-
-    let lines = c.defects.get("unrecognized-proficiency-tag").cloned().unwrap_or_default();
-    assert!(
-        lines.iter().any(|l| l.contains("weapon_prof_auto") && l.contains("TYPE=Auto")),
-        "expected an unrecognized-proficiency-tag defect naming the TYPE=Auto selector: {:?}",
+        c.defects.get("unrecognized-proficiency-tag").is_none_or(|lines| lines.is_empty()),
+        "TYPE=Auto resolves cleanly against the oracle; it must carry no unrecognized-proficiency-tag defect: {:?}",
         c.defects
     );
+
+    let grants: Vec<&Effect> = c.rules.iter().flat_map(|r| r.grants.iter()).collect();
+    let members = grants
+        .iter()
+        .find_map(|g| match effect_fact(g) {
+            Some(Fact::Proficiency(ProfRef::WeaponSet { label, members })) if label == "Auto" => Some(members.clone()),
+            _ => None,
+        })
+        .unwrap_or_else(|| panic!("expected a FactGrant/GatedFactGrant carrying a WeaponSet labeled \"Auto\": {:?}", grants));
+
+    // Independently checked against core_rulebook/cr_profs_weapon.lst:10-14: exactly these five
+    // rows carry an `Auto` TYPE dot-segment on their own base row.
+    for w in ["Grapple", "Splash Weapon", "Unarmed Strike"] {
+        assert!(members.contains(&w.to_string()), "{w} carries TYPE:Auto in the pinned oracle and must be a member: {:?}", members);
+    }
+    // These two carry a `KEY:` distinct from their NAME field (`Spells (Ray)` / `Spells
+    // (Touch)`) -- pins F1 finding 2's identity fix at the same time.
+    for w in ["Spells (Ray)", "Spells (Touch)"] {
+        assert!(members.contains(&w.to_string()), "{w} carries TYPE:Auto and is keyed by its KEY: field, not its NAME: {:?}", members);
+    }
+    assert_eq!(members.len(), 5, "exactly the five Auto rows, no more, no fewer: {:?}", members);
 }
 
 /// Commoner's "proficient with one simple weapon" is `BONUS:ABILITYPOOL|Simple Weapon

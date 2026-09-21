@@ -12,13 +12,13 @@
 //! the pinned tree already read, building `weapon name -> its full accumulated tag set`, then
 //! answering "every weapon whose tag set is a superset of these tags" for a selector.
 //!
-//! **What this proof does NOT cover** (`AGENTS.md` rule 7): a weapon whose `.MOD` row targets it
-//! by a `KEY:` token that differs from its own base row's literal NAME field will not merge --
-//! this index joins purely on the row's own literal name (stripped of a trailing `.MOD`), the
-//! same identity PCGen's `.MOD` mechanism uses for every weapon this module's callers need
-//! (Katana/Naginata/Wakizashi carry no `KEY:` override in the pinned oracle). A weapon declared
-//! only under a `KEY:` alias distinct from its display name is a known gap for later hardening,
-//! not silently claimed correct here.
+//! A row's identity is its `KEY:` token when it carries one, else its own literal NAME field
+//! (stripped of a trailing `.MOD`) -- the same identity the rest of the converted proficiency
+//! vocabulary uses (`ProfRef::Weapon` keys by KEY when present). A `.MOD` row addresses its
+//! target the same way PCGen does: by that identity, whether it is a KEY or a bare NAME (Katana's
+//! `.MOD` row targets it by NAME because Katana carries no `KEY:` override; Short Sword's would
+//! target it by `Sword (Short)`, its `KEY:`). Either way the `.MOD` row's tags union onto the
+//! SAME entry as the base row's, matching PCGen's own accumulation (F1 adversarial finding 2).
 
 use std::collections::{BTreeMap, BTreeSet};
 use std::sync::OnceLock;
@@ -58,10 +58,18 @@ impl WeaponMembershipIndex {
                     continue;
                 }
                 let (name, tokens) = tokenize_row(trimmed);
-                let weapon = base_weapon_name(&name);
-                if weapon.is_empty() {
+                let base_name = base_weapon_name(&name);
+                if base_name.is_empty() {
                     continue;
                 }
+                // A row's identity is its `KEY:` token when it carries one, else its own literal
+                // NAME (stripped of a trailing `.MOD`) -- the same identity every other converted
+                // proficiency vocabulary uses (`ProfRef::Weapon` keys by KEY when present). A
+                // `.MOD` row that targets the weapon BY that KEY (PCGen's own convention: the
+                // `.MOD` row's name field is the base row's KEY, not its display NAME) therefore
+                // resolves to the identical identity and its tags union onto the same entry,
+                // rather than starting a second, phantom one (F1 adversarial finding 2).
+                let weapon = tokens.iter().find(|(k, _)| k == "KEY").map(|(_, v)| v.trim()).filter(|v| !v.is_empty()).unwrap_or(base_name);
                 let entry = by_weapon.entry(weapon.to_string()).or_default();
                 for (k, v) in &tokens {
                     if k != "TYPE" {
@@ -172,5 +180,36 @@ mod tests {
         let tree = tree_from_lines(vec![("cr_equip_arms_armor.lst", vec!["Katana\t\tTYPE:Samurai.Weapon"])]);
         let idx = WeaponMembershipIndex::build(&tree);
         assert!(idx.members_with_all(&["Samurai".to_string()]).is_empty());
+    }
+
+    /// F1 adversarial finding 2 (`cr_profs_weapon.lst:53,143`): a row that carries a `KEY:`
+    /// distinct from its literal NAME is identified by that KEY -- the same identity every other
+    /// converted proficiency uses (`ProfRef::Weapon("Sword (Short)")`, never `"Short Sword"`) --
+    /// and a `.MOD` row addressed by that KEY unions its tags onto the SAME entry rather than
+    /// starting a phantom second one under the un-keyed name.
+    #[test]
+    fn a_key_field_is_the_weapons_identity_and_a_mod_row_addressed_by_key_unions_onto_it() {
+        let tree = tree_from_lines(vec![(
+            "cr_profs_weapon.lst",
+            vec![
+                "Short Sword\t\t\tKEY:Sword (Short)\tTYPE:Martial.Light.Melee",
+                "Sword (Short).MOD\t\tTYPE:Weapon Group Blades Light",
+            ],
+        )]);
+        let idx = WeaponMembershipIndex::build(&tree);
+        assert_eq!(
+            idx.members_with_all(&["Light".to_string(), "Martial".to_string()]),
+            vec!["Sword (Short)".to_string()],
+            "the base row's tags must be filed under the KEY, not the literal NAME"
+        );
+        assert_eq!(
+            idx.members_with_all(&["Weapon Group Blades Light".to_string()]),
+            vec!["Sword (Short)".to_string()],
+            "the .MOD row's tags (addressed by KEY) must union onto the same entry as the base row, not a separate one"
+        );
+        assert!(
+            idx.members_with_all(&["Light".to_string()]).iter().all(|n| n != "Short Sword"),
+            "the un-keyed literal NAME must never appear as a member identity once a KEY exists"
+        );
     }
 }

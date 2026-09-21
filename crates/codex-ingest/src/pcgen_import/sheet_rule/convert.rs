@@ -390,32 +390,27 @@ fn is_weapon_reach(tag: &str) -> bool {
     matches!(tag, "Melee" | "Ranged")
 }
 
-/// SD-36 Epic F1-3 (`epic-f-class-completion.md` §3.1 item 3/§3.2/§3.3, review finding 15):
-/// literal tags confirmed junk -- PCGen bookkeeping markers, not a real weapon culture/group a
-/// class ever intentionally selects, even though they happen to co-occur on some unrelated
-/// weapon's own base `TYPE:` facet (`Auto` marks PF1's own baseline defaults -- Unarmed Strike,
-/// Grapple, Splash Weapon -- never a class-granted set; `KoboldTailAttachment`'s only source row
-/// is a commented-out equipment stub). A tag here is NEVER emitted as a proficiency, regardless
-/// of what an oracle membership lookup would otherwise find for it.
-const JUNK_PROFICIENCY_TAGS: &[&str] = &["Auto", "KoboldTailAttachment"];
-
 /// Split an `AUTO:WEAPONPROF`'s `TYPE=`/`TYPE.` selector into a `ProfRef`, or record a defect
-/// and return `None` when the selector is junk -- never a fabricated proficiency (SD-36 Epic
-/// F1-3). `w` is the selector as split from the row, e.g. `"TYPE=Light.Martial"`.
+/// and return `None` when the selector names no real oracle member -- never a fabricated
+/// proficiency (SD-36 Epic F1-3). `w` is the selector as split from the row, e.g.
+/// `"TYPE=Light.Martial"`.
 ///
 /// - A single tag that is a tier, or already reads `Weapon Group <x>` (matches
 ///   `WeaponTableEntry::weapon_group` directly): unchanged from today's `ProfRef::WeaponGroup`.
 /// - A conjunction (2+ dot-segments) whose every tag is a tier and/or a reach facet: a real
 ///   list, `ProfRef::WeaponAllOf` -- never the old lossy joined word.
-/// - Anything else (a lone membership tag like `Samurai`, or a conjunction carrying a tag the
-///   live weapon record cannot answer, e.g. `Light`/`Thrown`): resolved AT INGEST against the
-///   oracle's own weapon-proficiency rows via `membership`. A non-empty result becomes
-///   `ProfRef::WeaponSet`; an empty one (or a [`JUNK_PROFICIENCY_TAGS`] hit) is a named defect,
-///   never a grant, and the caller emits no fact for it.
+/// - Anything else (a lone membership tag like `Samurai`, `Auto` or `KoboldTailAttachment`, or a
+///   conjunction carrying a tag the live weapon record cannot answer, e.g. `Light`/`Thrown`):
+///   resolved AT INGEST against the oracle's own weapon-proficiency rows via `membership`, the
+///   same as every other non-tier selector (F1 adversarial finding 1 -- there is no hardcoded
+///   exclusion list here: both `Auto` and `KoboldTailAttachment` resolve to real, live members,
+///   and a two-name carve-out in front of the new machinery would have silently dropped them).
+///   A non-empty result becomes `ProfRef::WeaponSet`; an empty one is a named defect, never a
+///   grant, and the caller emits no fact for it.
 fn weapon_type_selector(ctx: &mut RecordCtx, membership: &WeaponMembershipIndex, w: &str) -> Option<ProfRef> {
     let raw = w.strip_prefix("TYPE=").or_else(|| w.strip_prefix("TYPE.")).unwrap_or(w);
     let segments = tags_of(raw);
-    if segments.is_empty() || segments.iter().any(|s| JUNK_PROFICIENCY_TAGS.iter().any(|j| j.eq_ignore_ascii_case(s))) {
+    if segments.is_empty() {
         ctx.defect("unrecognized-proficiency-tag", format!("{}: {w}", ctx.record.id));
         return None;
     }

@@ -76,10 +76,20 @@ pub struct RecordRef {
 #[derive(Default)]
 pub struct CorpusIndex {
     pub records: Vec<RecordRef>,
-    /// `(CATEGORY upper, KEY upper)` -> rule id (first wins; ambiguity recorded).
+    /// `(CATEGORY upper, KEY upper)` -> rule id (first wins; ambiguity recorded in
+    /// [`CorpusIndex::ambiguous_cat_key`]).
     pub by_cat_key: BTreeMap<(String, String), RuleId>,
-    /// `(CATEGORY upper, NAME upper)` -> rule id.
+    /// `(CATEGORY upper, NAME upper)` -> rule id (first wins; ambiguity recorded in
+    /// [`CorpusIndex::ambiguous_cat_name`]).
     pub by_cat_name: BTreeMap<(String, String), RuleId>,
+    /// Every `(CATEGORY upper, KEY upper)` pair `build_index` saw declared by more than one
+    /// DIFFERENT record id -- `by_cat_key` itself still holds the first one (first-wins, so a
+    /// direct-category hit that happens to be unambiguous elsewhere keeps working), but
+    /// [`resolve_rule_in_checked`]'s parent retry consults this set so it can refuse to guess
+    /// among them (F1 adversarial finding 4).
+    pub ambiguous_cat_key: BTreeSet<(String, String)>,
+    /// The `by_cat_name` twin of [`CorpusIndex::ambiguous_cat_key`].
+    pub ambiguous_cat_name: BTreeSet<(String, String)>,
     /// `(kind, KEY-or-NAME upper)` -> rule id.
     pub by_kind_name: BTreeMap<(String, String), RuleId>,
     /// class NAME upper -> (rule id, class id).
@@ -110,24 +120,69 @@ pub struct CorpusIndex {
 /// direct lookup already uses, just against a different category string, so a parent hit is
 /// always the exact same record PCGen's own tool would resolve to.
 ///
-/// **Ambiguity rule:** a child category name that `PinnedTree::build_indexes` found declared
-/// under two DIFFERENT parents anywhere in the tree is left OUT of `ability_category_parent`
-/// entirely. Such a name therefore has no parent to retry here, and a miss under it stays a miss
-/// — exactly like an unmapped category — so the caller's own defect path
-/// (`resolve_holdable_rule`) records it as an unresolved reference rather than the resolver
+/// **Ambiguity rule (parent category):** a child category name that `PinnedTree::build_indexes`
+/// found declared under two DIFFERENT parents anywhere in the tree is left OUT of
+/// `ability_category_parent` entirely. Such a name therefore has no parent to retry here, and a
+/// miss under it stays a miss — exactly like an unmapped category — so the caller's own defect
+/// path (`resolve_holdable_rule`) records it as an unresolved reference rather than the resolver
 /// guessing which of several candidate parents is the right one.
+///
+/// **Ambiguity rule (parent-retry TARGET, F1 adversarial finding 4):** the parent category
+/// itself may be unambiguous while the `(parent, key-or-name)` pair the retry looks up under it
+/// still names more than one converted record (two unrelated records that merely share a display
+/// name or key under the same broad category, e.g. `Special Ability`). Unlike the direct lookup
+/// (whose own ambiguity is vanishingly rare and, where it exists, is left as today's first-wins
+/// behavior to avoid widening this fix's blast radius), the retry NEVER guesses here: see
+/// [`resolve_rule_in_checked`].
 pub fn resolve_rule_in(tree: &PinnedTree, index: &CorpusIndex, category: &str, name: &str) -> Option<RuleId> {
+    match resolve_rule_in_checked(tree, index, category, name) {
+        RuleLookup::Found(id) => Some(id),
+        RuleLookup::Ambiguous | RuleLookup::Missing => None,
+    }
+}
+
+/// The three ways [`resolve_rule_in_checked`] can end: a real, unambiguous target; a target that
+/// exists but names more than one candidate record (never resolved, never guessed); or no target
+/// at all.
+#[derive(Debug, Clone, PartialEq, Eq)]
+pub enum RuleLookup {
+    Found(RuleId),
+    Ambiguous,
+    Missing,
+}
+
+/// [`resolve_rule_in`]'s full-detail twin: distinguishes an ambiguous parent-retry target from a
+/// plain miss, so the caller (`resolve_holdable_rule`) can record the two as separate, correctly
+/// named defect kinds instead of folding an ambiguous match into the generic
+/// `unresolved-references` bucket (F1 adversarial finding 4).
+pub fn resolve_rule_in_checked(tree: &PinnedTree, index: &CorpusIndex, category: &str, name: &str) -> RuleLookup {
     let cat = category.trim().to_ascii_uppercase();
     let n = name.trim().to_ascii_uppercase();
     if let Some(id) = lookup_exact(index, &cat, &n) {
-        return Some(id);
+        return RuleLookup::Found(id);
     }
-    if let Some(parent) = tree.ability_category_parent.get(&cat)
-        && let Some(id) = lookup_exact(index, parent, &n)
-    {
-        return Some(id);
+    let Some(parent) = tree.ability_category_parent.get(&cat) else {
+        return RuleLookup::Missing;
+    };
+    // KEY takes priority over NAME, the same order `lookup_exact` uses -- an ambiguous KEY hit
+    // must never silently fall through to the NAME map, which could return an entirely
+    // different (and equally unchosen) candidate.
+    let key_pair = (parent.clone(), n.clone());
+    if index.by_cat_key.contains_key(&key_pair) {
+        return if index.ambiguous_cat_key.contains(&key_pair) {
+            RuleLookup::Ambiguous
+        } else {
+            RuleLookup::Found(index.by_cat_key[&key_pair].clone())
+        };
     }
-    None
+    if index.by_cat_name.contains_key(&key_pair) {
+        return if index.ambiguous_cat_name.contains(&key_pair) {
+            RuleLookup::Ambiguous
+        } else {
+            RuleLookup::Found(index.by_cat_name[&key_pair].clone())
+        };
+    }
+    RuleLookup::Missing
 }
 
 fn lookup_exact(index: &CorpusIndex, category: &str, name: &str) -> Option<RuleId> {
@@ -365,6 +420,13 @@ impl<'a> RecordCtx<'a> {
         resolve_rule_in(self.tree, self.index, category, name)
     }
 
+    /// [`RecordCtx::resolve_rule`]'s full-detail twin (F1 adversarial finding 4): distinguishes
+    /// an ambiguous parent-retry target from a plain miss, so `resolve_holdable_rule` can record
+    /// the two as separate, correctly named defect kinds.
+    pub fn resolve_rule_checked(&self, category: &str, name: &str) -> RuleLookup {
+        resolve_rule_in_checked(self.tree, self.index, category, name)
+    }
+
     pub fn resolve_kind(&self, kind: &str, name: &str) -> Option<RuleId> {
         let n = name.trim().to_ascii_uppercase();
         self.index.by_kind_name.get(&(kind.to_string(), n)).cloned()
@@ -564,6 +626,47 @@ mod tests {
         index.by_cat_key.insert(("SPECIAL ABILITY".into(), "SOME TARGET".into()), "book:kind:some_target".into());
         let id = resolve_rule_in(&tree, &index, "Ambiguous Category", "Some Target");
         assert!(id.is_none(), "an unmapped (including formerly-ambiguous) category must miss, never guess a parent");
+    }
+
+    /// F1 adversarial finding 4: unlike an ambiguous CATEGORY (above), an ambiguous parent-retry
+    /// TARGET -- two DIFFERENT records both claiming the same `(parent, key-or-name)` pair -- is
+    /// not caught by `ability_category_parent` at all; `by_cat_key`'s own `.or_insert` silently
+    /// kept only the first. `resolve_rule_in` must miss (never guess), and
+    /// `resolve_rule_in_checked` must report `Ambiguous`, not `Missing`, so the caller can name it
+    /// as its own defect kind rather than folding it into a plain unresolved reference.
+    #[test]
+    fn an_ambiguous_parent_retry_target_is_reported_distinctly_from_a_plain_miss() {
+        let tree = tree_with_parent(&[("CHILD", "PARENT")]);
+        let mut index = CorpusIndex::default();
+        // Two different record ids both loaded under the SAME (parent, key) pair -- `build_index`
+        // keeps the first in `by_cat_key` (unchanged, first-wins) but must ALSO mark the pair
+        // ambiguous.
+        index.by_cat_key.insert(("PARENT".into(), "SMITE GOOD".into()), "book:kind:first_loaded".into());
+        index.ambiguous_cat_key.insert(("PARENT".into(), "SMITE GOOD".into()));
+
+        assert!(
+            resolve_rule_in(&tree, &index, "Child", "Smite Good").is_none(),
+            "resolve_rule_in must never silently resolve to the first-loaded candidate of an ambiguous target"
+        );
+        assert_eq!(
+            resolve_rule_in_checked(&tree, &index, "Child", "Smite Good"),
+            RuleLookup::Ambiguous,
+            "resolve_rule_in_checked must distinguish this from a plain Missing"
+        );
+    }
+
+    /// A direct-category hit is unaffected by an ambiguous entry that exists only under some
+    /// OTHER category -- ambiguity is scoped to the exact `(category, key/name)` pair, not the
+    /// key/name alone.
+    #[test]
+    fn ambiguity_under_one_category_does_not_leak_into_a_different_categorys_lookup() {
+        let tree = tree_with_parent(&[]);
+        let mut index = CorpusIndex::default();
+        index.by_cat_key.insert(("OTHER CATEGORY".into(), "X".into()), "book:kind:direct".into());
+        index.ambiguous_cat_key.insert(("SOME OTHER PAIR".into(), "X".into()));
+
+        let id = resolve_rule_in(&tree, &index, "Other Category", "X");
+        assert_eq!(id.as_deref(), Some("book:kind:direct"));
     }
 
     #[test]

@@ -4,12 +4,20 @@
 //! cargo run --locked --bin sheet_rule_convert            # regenerate data/sheet_rules/ whole
 //! cargo run --locked --bin sheet_rule_convert -- --check # verify the package is fresh and clean
 //! cargo run --locked --bin sheet_rule_convert -- --one <unit id>   # print one unit's conversion
+//! cargo run --locked --bin sheet_rule_convert -- --dump <dir>      # write a fresh conversion to
+//!                                                                   # a SCRATCH dir, never data/sheet_rules
 //! ```
 //!
 //! Prints `records=<n> converted=<n> refused=<n>` (summing to the population) on every run, and
 //! the refusal counts per token type. `--check` exits non-zero when the on-disk package differs
 //! from a fresh conversion, carries a source-format literal, or references a variable with no
 //! table (`blockers.md` B10).
+//!
+//! `--dump <dir>` (SD-36 Epic F1 adversarial finding 4, `epic-f-class-completion.md` §3.5): writes
+//! the SAME rendered package `--check` would compare against, but to an arbitrary directory the
+//! caller names -- never `data/sheet_rules` -- so a structural diff
+//! (`docs/release/SD-36-consolidation/artifacts/epic-f/scripts/structural_diff.py`) can compare a
+//! full fresh run against the on-disk baseline without a corpus-wide write to the tracked package.
 
 
 use codex_ingest::pcgen_import::sheet_rule;
@@ -40,6 +48,15 @@ fn main() {
         return;
     }
     let check = args.iter().any(|a| a == "--check");
+    let dump_dir = args.iter().position(|a| a == "--dump").and_then(|pos| args.get(pos + 1)).map(std::path::PathBuf::from);
+    if let Some(d) = &dump_dir {
+        // Never the tracked package: `--dump` exists so a structural diff can run a full fresh
+        // conversion without a corpus-wide write to `data/sheet_rules` (F1 adversarial finding 4).
+        if d == &out_dir {
+            eprintln!("sheet_rule_convert: --dump must not target data/sheet_rules; pass a scratch directory");
+            std::process::exit(2);
+        }
+    }
     let started = std::time::Instant::now();
     let (run, _index) = match sheet_rule::convert_repo(&repo) {
         Ok(x) => x,
@@ -49,6 +66,15 @@ fn main() {
         }
     };
     let r = &run.report;
+    if let Some(d) = &dump_dir {
+        let rendered = sheet_rule::render(&run);
+        if let Err(e) = sheet_rule::write_output(d, &rendered) {
+            eprintln!("sheet_rule_convert: writing {}: {e}", d.display());
+            std::process::exit(2);
+        }
+        println!("records={} converted={} refused={} rules={} var_tables={} dumped={} -> {} ({:.1}s)", r.records, r.converted, r.refused, r.rules_written, r.var_tables, rendered.len(), d.display(), started.elapsed().as_secs_f64());
+        return;
+    }
     if check {
         match sheet_rule::check(&out_dir, &run) {
             Ok(()) => {

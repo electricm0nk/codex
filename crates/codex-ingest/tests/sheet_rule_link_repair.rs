@@ -8,7 +8,7 @@
 use std::sync::OnceLock;
 
 use codex_ingest::pcgen_import::sheet_rule::closure::{corpus_root, Closure, PinnedTree};
-use codex_ingest::pcgen_import::sheet_rule::ctx::{resolve_rule_in, CorpusIndex};
+use codex_ingest::pcgen_import::sheet_rule::ctx::{resolve_rule_in, resolve_rule_in_checked, CorpusIndex, RuleLookup};
 use codex_ingest::pcgen_import::sheet_rule::{build_index, load_population, run, Run};
 use codex::rules_core::sheet_rule::Granter;
 
@@ -150,4 +150,43 @@ fn automatic_grants_are_never_dropped_silently() {
         }
     }
     assert!(dropped.is_empty(), "{} automatic grant(s) of Wizard's neither resolve nor carry a defect row -- silently dropped: {dropped:?}", dropped.len());
+}
+
+/// F1 adversarial finding 4: the parent-category retry's TARGET lookup (`by_cat_key`/
+/// `by_cat_name`, built with `.or_insert`) is not de-ambiguated the way the child->parent MAP
+/// already is -- a `(parent category, key)` pair claimed by more than one DIFFERENT converted
+/// record silently resolved to whichever one loaded first. Proved against the REAL pinned oracle,
+/// not a synthetic fixture: `Combat Feat` is a real CHILD ability category whose declared parent
+/// is `Feat` (`PinnedTree::ability_category_parent`, built from the tree's own `ABILITYCATEGORY:`
+/// rows), and `Alertness` is a real `KEY` more than one distinct converted FEAT record shares
+/// under the parent category `Feat` (the SRD feat "Alertness" is declared as its own record in
+/// more than one sourcebook). The retry must never guess between them; it must miss, and the
+/// checked variant must report `Ambiguous`, not `Missing`, so the caller
+/// (`resolve_holdable_rule`, pinned separately in `prereq.rs`'s own unit tests) can name it as a
+/// distinct defect kind.
+#[test]
+fn an_ambiguous_parent_retry_target_never_resolves_to_a_first_loaded_guess() {
+    let s = shared();
+    assert_eq!(
+        s.tree.ability_category_parent.get("COMBAT FEAT").map(|p| p.as_str()),
+        Some("FEAT"),
+        "sanity: Combat Feat's declared parent in the pinned oracle must still be Feat"
+    );
+    assert!(
+        s.index.ambiguous_cat_key.contains(&("FEAT".to_string(), "ALERTNESS".to_string())),
+        "sanity: the pinned corpus really does carry more than one FEAT record keyed ALERTNESS \
+         (a reprint across sourcebooks) -- if this ever becomes false the test needs a new n=1, \
+         not a weaker assertion"
+    );
+
+    assert!(
+        resolve_rule_in(&s.tree, &s.index, "Combat Feat", "Alertness").is_none(),
+        "an ambiguous parent-retry target must never resolve to whichever candidate loaded first"
+    );
+    assert_eq!(
+        resolve_rule_in_checked(&s.tree, &s.index, "Combat Feat", "Alertness"),
+        RuleLookup::Ambiguous,
+        "resolve_rule_in_checked must report Ambiguous, not Missing, so the caller can record a \
+         distinct, named defect instead of a plain unresolved reference"
+    );
 }

@@ -248,7 +248,9 @@ pub fn describe_prof(prof: &ProfRef) -> String {
         ProfRef::ShieldGroup(tag) => format!("{} shields", pretty(tag)),
         ProfRef::DeityFavoredWeapon => "the deity's favored weapon".to_owned(),
         ProfRef::Chosen(choice) => format!("the weapon chosen for {}", pretty(choice)),
-        ProfRef::WeaponAllOf(tags) => join(tags.iter().map(|t| pretty(t)).collect(), " "),
+        ProfRef::WeaponAllOf(tags) => {
+            format!("{} weapons", join(tags.iter().map(|t| pretty(t)).collect(), " "))
+        }
         ProfRef::WeaponSet { label, .. } => format!("{} weapons", pretty(label)),
     }
 }
@@ -680,5 +682,17 @@ mod tests {
         package.finish();
 
         assert_eq!(label_of(&package, &id), "Order Of The Rack");
+    }
+
+    /// F1 adversarial finding 6: `describe_prof` must print every `ProfRef` arm with the same
+    /// "<tags> weapons" shape -- `WeaponAllOf` (a `TYPE=A.B` conjunction) is a sibling of
+    /// `WeaponGroup`/`WeaponTag`/`WeaponSet`, not a bare tag list with no noun.
+    #[test]
+    fn describe_prof_prints_weapon_all_of_with_the_weapons_noun_like_its_siblings() {
+        let tags: Vec<Tag> = vec!["martial".to_owned(), "ranged".to_owned()];
+
+        let words = describe_prof(&ProfRef::WeaponAllOf(tags));
+
+        assert_eq!(words, "martial ranged weapons");
     }
 }

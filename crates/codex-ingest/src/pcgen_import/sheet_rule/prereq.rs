@@ -1,7 +1,7 @@
 //! The PREREQ rows: `PRE<kind>:...` and `!PRE<kind>:...` -> our two-valued `Applies` (plus
 //! `Situational`, `SYNTHESIS.md` C9). Each arm cites the mapping-table row it transcribes.
 
-use super::ctx::{split_top_level, RecordCtx};
+use super::ctx::{split_top_level, RecordCtx, RuleLookup};
 use super::formula::{ability, cmp_expr, convert_formula};
 use codex::rules_core::sheet_rule::{Applies, Cmp, DeityRef, Expr, Holdable, ProfRef, SpellKind};
 
@@ -684,18 +684,36 @@ fn convert_pre(ctx: &mut RecordCtx, kind: &str, body: &str) -> Result<Applies, S
 
 /// Resolve an ability-shaped reference `(category, name)` to a `Holdable`, splitting a
 /// parameterised feat (`Weapon Focus (Longsword)`) into base id + option (C18).
+///
+/// F1 adversarial finding 4: a parent-category retry that lands on an AMBIGUOUS target (more
+/// than one converted record shares the same `(parent category, key-or-name)`) is recorded under
+/// its own named defect, `ambiguous-parent-category-target`, distinct from a plain
+/// `unresolved-references` miss -- never silently resolved to whichever candidate loaded first.
 pub fn resolve_holdable_rule(ctx: &mut RecordCtx, category: &str, name: &str) -> Holdable {
-    if let Some(id) = ctx.resolve_rule(category, name) {
-        return Holdable::Rule(id);
+    match ctx.resolve_rule_checked(category, name) {
+        RuleLookup::Found(id) => return Holdable::Rule(id),
+        RuleLookup::Ambiguous => {
+            ctx.defect("ambiguous-parent-category-target", format!("{}: {category}|{name}", ctx.record.id));
+            return Holdable::MissingRule { pool: super::ctx::slug(category), name: name.to_string() };
+        }
+        RuleLookup::Missing => {}
     }
     if let Some((base, option)) = name.rsplit_once(" (")
         && option.ends_with(')')
-        && let Some(id) = ctx.resolve_rule(category, base)
     {
-        // Parameterised: base rule held with the option chosen. Expressed as the rule; the
-        // option narrows at pick time through the record's own choice.
-        let _ = option;
-        return Holdable::Rule(id);
+        match ctx.resolve_rule_checked(category, base) {
+            RuleLookup::Found(id) => {
+                // Parameterised: base rule held with the option chosen. Expressed as the rule;
+                // the option narrows at pick time through the record's own choice.
+                let _ = option;
+                return Holdable::Rule(id);
+            }
+            RuleLookup::Ambiguous => {
+                ctx.defect("ambiguous-parent-category-target", format!("{}: {category}|{base}", ctx.record.id));
+                return Holdable::MissingRule { pool: super::ctx::slug(category), name: name.to_string() };
+            }
+            RuleLookup::Missing => {}
+        }
     }
     ctx.defect("unresolved-references", format!("{}: {category}|{name}", ctx.record.id));
     Holdable::MissingRule { pool: super::ctx::slug(category), name: name.to_string() }
@@ -704,6 +722,98 @@ pub fn resolve_holdable_rule(ctx: &mut RecordCtx, category: &str, name: &str) ->
 #[cfg(test)]
 mod tests {
     use super::*;
+    use super::super::closure::{Closure, PinnedTree};
+    use super::super::ctx::{CorpusIndex, RecordRef};
+    use std::collections::{BTreeMap, BTreeSet};
+    use std::path::PathBuf;
+
+    /// A minimal `PinnedTree` carrying only an `ability_category_parent` entry -- everything
+    /// else `resolve_holdable_rule` never reads through `RecordCtx::resolve_rule_checked`.
+    fn tree_with_parent(pairs: &[(&str, &str)]) -> PinnedTree {
+        PinnedTree {
+            root: PathBuf::new(),
+            book_paths: BTreeMap::new(),
+            files: Vec::new(),
+            mod_index: BTreeMap::new(),
+            base_index: BTreeMap::new(),
+            keyed_index: BTreeMap::new(),
+            define_index: BTreeMap::new(),
+            bonus_var_index: BTreeMap::new(),
+            class_rows: BTreeMap::new(),
+            level_lines: BTreeMap::new(),
+            fact_index: BTreeMap::new(),
+            pfs_base_keys: BTreeSet::new(),
+            ability_category_parent: pairs.iter().map(|(c, p)| (c.to_string(), p.to_string())).collect(),
+        }
+    }
+
+    fn minimal_record(id: &str) -> RecordRef {
+        RecordRef {
+            id: id.to_string(),
+            book: "book".into(),
+            kind: "feat".into(),
+            name: "Source Record".into(),
+            key: "SOURCE RECORD".into(),
+            category: "FEAT".into(),
+            type_facet: String::new(),
+            rel_path: "book/source.lst".into(),
+            line: 1,
+            shipped_tokens: None,
+            prerequisites: Vec::new(),
+            copy_base_key: None,
+            license_pi: false,
+            pi_fields: Vec::new(),
+            description: None,
+            class_name: None,
+            joined: true,
+        }
+    }
+
+    /// F1 adversarial finding 4, the `resolve_holdable_rule` half: an ambiguous parent-retry
+    /// target must be recorded under its OWN named defect kind
+    /// (`ambiguous-parent-category-target`), never folded into `unresolved-references`, and
+    /// `resolve_holdable_rule` must return `MissingRule` (never guess a `Rule`).
+    #[test]
+    fn an_ambiguous_parent_retry_target_gets_its_own_named_defect() {
+        let tree = tree_with_parent(&[("COMBAT FEAT", "FEAT")]);
+        let mut index = CorpusIndex::default();
+        index.by_cat_key.insert(("FEAT".into(), "ALERTNESS".into()), "book:feat:alertness_first".into());
+        index.ambiguous_cat_key.insert(("FEAT".into(), "ALERTNESS".into()));
+        let record = minimal_record("book:feat:antipaladin_smite_good");
+        let closure = Closure::default();
+        let mut ctx = RecordCtx::new(&tree, &index, &record, &closure);
+
+        let held = resolve_holdable_rule(&mut ctx, "Combat Feat", "Alertness");
+
+        assert!(matches!(held, Holdable::MissingRule { .. }), "an ambiguous target must never resolve to a Rule: {held:?}");
+        assert!(
+            ctx.defects.get("ambiguous-parent-category-target").is_some_and(|lines| lines.iter().any(|l| l.contains("Combat Feat|Alertness"))),
+            "expected an ambiguous-parent-category-target defect naming the reference: {:?}",
+            ctx.defects
+        );
+        assert!(
+            ctx.defects.get("unresolved-references").is_none_or(|lines| lines.is_empty()),
+            "an ambiguous target is a distinct defect kind from a plain miss: {:?}",
+            ctx.defects
+        );
+    }
+
+    /// The same reference resolves cleanly (a `Rule`, no defect) once the ambiguity is gone --
+    /// proves the ambiguity check, not the retry itself, is what refused the match above.
+    #[test]
+    fn an_unambiguous_parent_retry_target_still_resolves_normally() {
+        let tree = tree_with_parent(&[("COMBAT FEAT", "FEAT")]);
+        let mut index = CorpusIndex::default();
+        index.by_cat_key.insert(("FEAT".into(), "ALERTNESS".into()), "book:feat:alertness_only".into());
+        let record = minimal_record("book:feat:antipaladin_smite_good");
+        let closure = Closure::default();
+        let mut ctx = RecordCtx::new(&tree, &index, &record, &closure);
+
+        let held = resolve_holdable_rule(&mut ctx, "Combat Feat", "Alertness");
+
+        assert_eq!(held, Holdable::Rule("book:feat:alertness_only".into()));
+        assert!(ctx.defects.is_empty(), "a clean resolution must carry no defect: {:?}", ctx.defects);
+    }
 
     #[test]
     fn size_ranks_are_the_pathfinder_ordinals() {

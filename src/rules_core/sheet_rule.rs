@@ -759,6 +759,11 @@ impl SheetRule {
                 max.var_ids(&mut out);
             }
         }
+        for g in &self.grants {
+            if let Effect::GatedFactGrant { when, .. } = g {
+                when.var_ids(&mut out);
+            }
+        }
         out.sort();
         out.dedup();
         out
@@ -2712,6 +2717,43 @@ mod tests {
         let back: SheetRule = serde_json::from_str(&json).unwrap();
         assert_eq!(back, rule);
         assert_eq!(rule.var_ids(), vec!["v0123456789abcdef".to_string()]);
+    }
+
+    /// F1 adversarial finding 3: `Effect::GatedFactGrant { when, .. }` is the FIRST effect to
+    /// carry an `Applies`, and `var_ids()` must walk `self.grants` to see it -- otherwise a
+    /// variable named ONLY by a gated grant's condition gets no `_vars/` table (mod.rs:793) and
+    /// the B10 "variable has no table" self-check (mod.rs:1016) can never catch that, since both
+    /// consumers read this same function.
+    #[test]
+    fn var_ids_walks_a_gated_grants_condition_even_when_no_other_slot_names_the_var() {
+        let rule = SheetRule {
+            id: "advanced_class_guide:class_feature:brawler_weapon_and_armor_proficiency".into(),
+            label: "Brawler Weapon and Armor Proficiency".into(),
+            value: SheetValue::Text,
+            also: vec![],
+            prose: vec![],
+            applies: Applies::Always,
+            target: None,
+            bonus_type: None,
+            print: true,
+            pool: "class_feature".into(),
+            tags: vec![],
+            subject: Subject::Character,
+            repeatable: false,
+            granted_by: vec![],
+            offers: None,
+            grants: vec![Effect::GatedFactGrant {
+                fact: Fact::Proficiency(ProfRef::WeaponGroup("simple".into())),
+                when: Applies::Compare {
+                    lhs: Expr::Var("vbd1b25ed3410aaeb".into()),
+                    op: Cmp::Eq,
+                    rhs: Expr::Const(0),
+                },
+            }],
+            provenance: Provenance::default(),
+        };
+
+        assert_eq!(rule.var_ids(), vec!["vbd1b25ed3410aaeb".to_string()]);
     }
 
     /// `resolve_gated_fact_grant` (SD-36 Epic F1-2): the facts-collection half of the contract.
