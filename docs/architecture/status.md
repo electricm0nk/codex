@@ -89,60 +89,47 @@ introductory paragraph) — see "Refuted claims" below for the wrong figures
 ("139 classes", "16 of 74", "none of the 78", "no prestige class has a
 chassis") this table replaces everywhere.
 
-Measured 2026-09-20 against this same HEAD by a one-time registry-merge
-instrument: a temporary integration test (`tests/zz_class_census.rs`,
-built, run once via `cargo test --locked -j 2 --test zz_class_census --
---nocapture`, then deleted — no committed binary keeps a merged
-corpus-wide class census live day to day) enumerated every class id from
-every registry the engine's `compute_class_chassis` dispatch chain reads —
-`ClassId::ALL` (CRB), `ApgClassId::ALL`, `AcgClassId::ALL`, `PuClassId::ALL`,
-`UcClassId::ALL`, `untabled_base_class_chassis::untabled_base_class_registry()`,
-`crb_untabled_class_chassis::covered_classes()`,
-`class_chassis_sheet_rules::records(&CLASS_FAMILY_BOOKS)` filtered to
-`is_conventional()` (`generic_class_chassis`'s own 14-book population, read
-via this public sibling since `generic_class_chassis` itself is
-crate-private), and the 74-entry
-`tests/fixtures/rules_core/prestige-class-entry-requirements.json` — merged
-every distinct id into one `BTreeMap<slug, Row>` (an id found in more than
-one registry becomes one row listing all of them), then swept
-`build_pilot_headless_receipt` — the real compute pipeline — across levels
-1-20 (or a class's own lower ceiling) for every row, recording
-`receipt.status` and every claim-blocking diagnostic id. Re-derive by
-writing the same merge against the same registries and re-running the same
-sweep; nothing below is guessed or carried forward from an older count.
+**Provenance history:** measured 2026-09-20 by a one-time registry-merge
+instrument (`tests/zz_class_census.rs`, built, run once, then deleted).
+SD-36 Epic F batch F0 (2026-09-21) replaced that throwaway instrument with
+a **permanent** one — `src/rules_core/class_census.rs` +
+`src/bin/class_census.rs`, exercised every run by `scripts/verify.sh`'s
+`class-census` stage — and F0e (below) replaced the hand-written table
+itself with one generated mechanically from that instrument's own `--json`
+output, so this table can never again silently drift from what the engine
+actually measures.
 
-**Headline set algebra** (each row is `len()` of a filter over the 135-row
-merged set; command above re-derives every one of them):
+<!-- class-census:begin -->
+**Generated table — do not hand-edit this region.** Produced by `python3 scripts/gen_class_status_table.py` from a fresh `cargo run --locked -j 2 --bin class_census -- --json /tmp/census.json` sweep (`class_census`'s own `source_of_truth`: `codex::rules_core::pilot_compute::build_pilot_headless_receipt`). Re-derive and check for drift with `python3 scripts/gen_class_status_table.py --check` (also run as part of `scripts/verify.sh`'s `class-census` stage). Where this generated table disagrees with an earlier hand-written version of this section, the census wins — see the F0e commit body (`feat(sd36,epic-f0e): status.md class table generated from the census; F0 closed`) for what changed and why.
 
-| Quantity | Count | Denominator |
-|---|---|---|
-| Distinct class ids, corpus-wide, across all engine registries | **135** | — |
-| ...with a real BAB/save chassis from ≥1 registry | **117** | of 135 |
-| ...reach `Computed` at every swept level | **42** | of 135 |
-| ...reach `Computed` at no level | **93** | of 135 |
-| ...reach `Computed` at *some* levels (partial) | **0** | of 135 |
-| Prestige-tagged names (`TYPE:...Prestige`, all 158 oracle books) ingested in this repo | **74** | of 131 named corpus-wide |
-| ...of the 74 ingested, with a real chassis (`generic_class_chassis`) | **56** | of 74 |
-| ...of the 74 ingested, with no chassis registry at all | **18** | of 74 (56+18=74) |
-| Blocked *only* on `combat.baseline_weapon_proficiency_unknown` | **19** | of 135 |
-| Reach `Computed` but **not** offered in the desktop Create picker | **11** | of 42 computed |
-| Multiclass-supported families | **1** (CRB, 11 classes) | of 8 chassis-bearing families the engine dispatches (CRB/APG/ACG/Unchained/UC/untabled-exotic/CRB-NPC/prestige — the per-family breakdown table below has one row per family) |
+**Headline numbers** (each states its own denominator and the exact census JSON field it is read from; re-derive with `cargo run --locked -j 2 --bin class_census -- --json /tmp/census.json`, which also prints these same numbers to stdout as `ids=... computed=... blocked=...` / `prestige_swept=... prestige_alone_blocked=... prestige_mix_computed=...` / `mix_panel_swept=... mix_panel_computed=... mix_panel_blocked=...`):
 
-**Per-family breakdown** (a strict partition of the 135 — every class id
-counted in exactly one row, no overlap; 31+3+20+7+74 = 135, and, within the
-prestige row's own 74, 56 with a chassis + 18 without = 74):
+| Quantity | Count | Denominator | Census JSON field |
+|---|---|---|---|
+| Distinct class ids, corpus-wide, across all engine registries | **135** | — | `ids` |
+| ...reach `Computed` at every swept level (non-prestige) | **42** | of 135 | `computed` |
+| ...reach `Computed` at no level (non-prestige) | **93** | of 135 | `blocked` |
+| Prestige ids swept (never measured alone — see the carrier rule below) | **74** | of 135 total ids | `prestige_swept` |
+| ...Blocked alone (negative control) | **74** | of 74 | `prestige_alone_blocked` |
+| ...`Computed` in their deterministic carrier mix | **0** | of 74 | `prestige_mix_computed` |
+| Multiclass mix-panel rows swept (existing negative-control inputs, re-used) | **185** | — | `mix_panel_swept` |
+| ...reach `Computed` | **185** | of 185 | `mix_panel_computed` |
+| ...stay `Blocked` | **0** | of 185 | `mix_panel_blocked` |
 
-| Family | Book(s) | Ids | Chassis | `Computed` (all swept levels) | In desktop picker |
-|---|---|---|---|---|---|
-| CRB | core_rulebook | 11 | 11 | 11 | 11 |
-| APG | advanced_players_guide | 6 | 6 | 6 | 6 |
-| ACG | advanced_class_guide | 10 | 10 | 10 | 10 |
-| Pathfinder Unchained | pathfinder_unchained | 4 | 4 | 4 | 4 |
-| Ultimate Combat | ultimate_combat | 3 | 3 | 2 (Gunslinger, Ninja) | 0 |
-| Untabled exotic base classes | occult_adventures, ultimate_magic, ultimate_wilderness, ultimate_intrigue, ultimate_psionics | 20 | 20 | 9 | 0 |
-| CRB NPC / Ex-* classes | core_rulebook | 7 | 7 | 0 | 0 |
-| Prestige, ingested (entry-gated only) | 11 source books: advanced_players_guide, adventurers_guide, book_of_the_damned_volume_1/2, core_rulebook, inner_sea_combat/gods/intrigue/magic/world_guide, ultimate_psionics | 74 | 56 | 0 | 0 |
-| **Total** | | **135** | **117** | **42** | **31** |
+**Per-family breakdown** (a partition of the merged census: every non-prestige id is in exactly one family row above, every prestige id is in the Prestige row; the census JSON reports no per-id chassis field, so no Chassis column is printed here — see this script's own module docstring for why the old hand-counted 117-of-135 / 56-of-74 chassis figures are retired rather than carried forward unmeasured):
+
+| Family | Book(s) | Ids | `Computed` (all swept levels, alone) |
+|---|---|---|---|
+| CRB | core_rulebook | 11 | 11 |
+| APG | advanced_players_guide | 6 | 6 |
+| ACG | advanced_class_guide | 10 | 10 |
+| Pathfinder Unchained | pathfinder_unchained | 4 | 4 |
+| Ultimate Combat | ultimate_combat | 3 | 2 |
+| Untabled exotic base classes | advanced_players_guide, occult_adventures, ultimate_intrigue, ultimate_magic, ultimate_psionics, ultimate_wilderness | 20 | 9 |
+| CRB NPC / Ex-* classes | core_rulebook | 7 | 0 |
+| Prestige | see per-class `books` in the census JSON (11 source books) | 74 | n/a alone (never a legitimate measurement — see headline numbers: 0 of 74 `Computed` in carrier mix) |
+| **Total** | | **135** | **42** of 135 non-prestige ids Computed alone (prestige carrier-mix result kept separate, per headline numbers above — the bin's own `--json` output never folds the two together) |
+<!-- class-census:end -->
 
 Row-by-row evidence:
 - **CRB/APG/ACG/Unchained (31, all `Computed`)**: `cargo run --locked --bin

@@ -2857,9 +2857,24 @@ PY
     done < <(printf '%s\n' "$report" | sed -n 's/^ACTUAL //p')
 
     case "$verdict" in
-        OK*)   stage_pass class-census "${verdict#OK }" ;;
-        *)     stage_fail class-census "${verdict#FAIL } — $json" ;;
+        OK*)   ;;
+        *)     stage_fail class-census "${verdict#FAIL } — $json"; return ;;
     esac
+
+    # F0e: the same stage also checks docs/architecture/status.md's
+    # generated class-coverage table for drift against THIS run's own
+    # freshly-produced census JSON (never a second `cargo run` -- `--json`
+    # reuses the file already written above), so a census that moves
+    # without a regenerated table fails this stage, not a separate one.
+    local table_log="$LOG_DIR/class-census-table.log"
+    ( cd "$REPO_ROOT" && exec python3 scripts/gen_class_status_table.py --json "$json" --check ) >"$table_log" 2>&1
+    local table_status=$?
+    if (( table_status != 0 )); then
+        stage_fail class-census "status.md class-coverage table drift (exit $table_status) — $table_log"
+        return
+    fi
+
+    stage_pass class-census "${verdict#OK }; $(tail -1 "$table_log")"
 }
 
 # ---------------------------------------------------------------------------
