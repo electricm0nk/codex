@@ -98,6 +98,45 @@ pub struct CorpusIndex {
     pub own_defines: BTreeMap<RuleId, BTreeSet<String>>,
 }
 
+/// Resolve `(category, name)` to a rule id: KEY-exact join first, then display-name-exact join,
+/// both under `category`. If both miss AND `category` is a CHILD `ABILITYCATEGORY` (per
+/// `PinnedTree::ability_category_parent`, built from the tree's own `ABILITYCATEGORY:` rows —
+/// never a hardcoded list), retry the same two EXACT lookups under the category's PARENT. This
+/// closes SD-36 Epic F mechanism A (`epic-f-class-completion.md` §1/§3.1 item 1): a reference
+/// naming a child ability category (e.g. `Wizard Class Feature`) whose target record is indexed
+/// under the parent category the corpus actually uses (`Special Ability`).
+///
+/// The retry never falls back to a name-similarity guess — it is the same two exact indices the
+/// direct lookup already uses, just against a different category string, so a parent hit is
+/// always the exact same record PCGen's own tool would resolve to.
+///
+/// **Ambiguity rule:** a child category name that `PinnedTree::build_indexes` found declared
+/// under two DIFFERENT parents anywhere in the tree is left OUT of `ability_category_parent`
+/// entirely. Such a name therefore has no parent to retry here, and a miss under it stays a miss
+/// — exactly like an unmapped category — so the caller's own defect path
+/// (`resolve_holdable_rule`) records it as an unresolved reference rather than the resolver
+/// guessing which of several candidate parents is the right one.
+pub fn resolve_rule_in(tree: &PinnedTree, index: &CorpusIndex, category: &str, name: &str) -> Option<RuleId> {
+    let cat = category.trim().to_ascii_uppercase();
+    let n = name.trim().to_ascii_uppercase();
+    if let Some(id) = lookup_exact(index, &cat, &n) {
+        return Some(id);
+    }
+    if let Some(parent) = tree.ability_category_parent.get(&cat)
+        && let Some(id) = lookup_exact(index, parent, &n)
+    {
+        return Some(id);
+    }
+    None
+}
+
+fn lookup_exact(index: &CorpusIndex, category: &str, name: &str) -> Option<RuleId> {
+    if let Some(id) = index.by_cat_key.get(&(category.to_string(), name.to_string())) {
+        return Some(id.clone());
+    }
+    index.by_cat_name.get(&(category.to_string(), name.to_string())).cloned()
+}
+
 #[derive(Debug, Clone)]
 pub struct OwnContribution {
     pub formula: String,
@@ -319,18 +358,11 @@ impl<'a> RecordCtx<'a> {
         self.index.skills.get(&key).cloned().unwrap_or_else(|| slug(name))
     }
 
-    /// Resolve `(category, name)` to a rule id: KEY join first, then display name, then any
-    /// kind's key/name for the category-less callers.
+    /// Resolve `(category, name)` to a rule id. Delegates to [`resolve_rule_in`] (a free
+    /// function so the parent-category retry has a unit-test surface that does not need a whole
+    /// `RecordCtx`).
     pub fn resolve_rule(&self, category: &str, name: &str) -> Option<RuleId> {
-        let cat = category.trim().to_ascii_uppercase();
-        let n = name.trim().to_ascii_uppercase();
-        if let Some(id) = self.index.by_cat_key.get(&(cat.clone(), n.clone())) {
-            return Some(id.clone());
-        }
-        if let Some(id) = self.index.by_cat_name.get(&(cat, n)) {
-            return Some(id.clone());
-        }
-        None
+        resolve_rule_in(self.tree, self.index, category, name)
     }
 
     pub fn resolve_kind(&self, kind: &str, name: &str) -> Option<RuleId> {
@@ -475,6 +507,71 @@ pub fn fold_typed(contribs: Vec<(Option<BonusType>, Expr)>) -> Expr {
 #[cfg(test)]
 mod tests {
     use super::*;
+
+    /// A minimal `PinnedTree` for `resolve_rule_in` unit tests: no files on disk, only the
+    /// `ability_category_parent` map under test (everything else `resolve_rule_in` never reads).
+    fn tree_with_parent(pairs: &[(&str, &str)]) -> PinnedTree {
+        PinnedTree {
+            root: std::path::PathBuf::new(),
+            book_paths: BTreeMap::new(),
+            files: Vec::new(),
+            mod_index: BTreeMap::new(),
+            base_index: BTreeMap::new(),
+            keyed_index: BTreeMap::new(),
+            define_index: BTreeMap::new(),
+            bonus_var_index: BTreeMap::new(),
+            class_rows: BTreeMap::new(),
+            level_lines: BTreeMap::new(),
+            fact_index: BTreeMap::new(),
+            pfs_base_keys: BTreeSet::new(),
+            ability_category_parent: pairs.iter().map(|(c, p)| (c.to_string(), p.to_string())).collect(),
+        }
+    }
+
+    /// SD-36 Epic F1-1, mechanism A (`epic-f-class-completion.md` §1/§3.1 item 1): a reference
+    /// naming a CHILD ability category resolves through its declared PARENT when the exact
+    /// `(category, key)` join misses under the child name itself.
+    #[test]
+    fn a_child_category_reference_resolves_through_its_parent() {
+        let tree = tree_with_parent(&[("WIZARD CLASS FEATURE", "SPECIAL ABILITY")]);
+        let mut index = CorpusIndex::default();
+        index.by_cat_key.insert(("SPECIAL ABILITY".into(), "WIZARD ~ WEAPON AND ARMOR PROFICIENCY".into()), "core_rulebook:class_feature:wizard_weapon_and_armor_proficiency".into());
+        let id = resolve_rule_in(&tree, &index, "Wizard Class Feature", "Wizard ~ Weapon and Armor Proficiency");
+        assert_eq!(id.as_deref(), Some("core_rulebook:class_feature:wizard_weapon_and_armor_proficiency"));
+    }
+
+    /// A hit under the reference's OWN category must win before any parent retry is even
+    /// attempted -- the retry is a fallback for a miss, never a second candidate to choose among.
+    #[test]
+    fn a_direct_match_never_needs_the_parent_retry() {
+        let tree = tree_with_parent(&[("CHILD", "PARENT")]);
+        let mut index = CorpusIndex::default();
+        index.by_cat_key.insert(("CHILD".into(), "X".into()), "book:kind:direct".into());
+        index.by_cat_key.insert(("PARENT".into(), "X".into()), "book:kind:wrong".into());
+        let id = resolve_rule_in(&tree, &index, "Child", "X");
+        assert_eq!(id.as_deref(), Some("book:kind:direct"), "the direct hit wins; the parent retry must not even be consulted");
+    }
+
+    /// An ambiguous child category (one `build_indexes` left OUT of `ability_category_parent`
+    /// because its declarations disagreed on the parent -- proven directly in closure.rs's own
+    /// tests) has no parent to retry here: the miss stays a miss, which is what lets the caller's
+    /// normal defect path (`resolve_holdable_rule`) record it, rather than the resolver guessing
+    /// between candidate parents.
+    #[test]
+    fn an_ambiguous_parent_match_stays_a_defect() {
+        let tree = tree_with_parent(&[]); // no entry at all -- exactly what an ambiguous name leaves behind
+        let mut index = CorpusIndex::default();
+        index.by_cat_key.insert(("SPECIAL ABILITY".into(), "SOME TARGET".into()), "book:kind:some_target".into());
+        let id = resolve_rule_in(&tree, &index, "Ambiguous Category", "Some Target");
+        assert!(id.is_none(), "an unmapped (including formerly-ambiguous) category must miss, never guess a parent");
+    }
+
+    #[test]
+    fn a_category_with_no_known_parent_at_all_simply_misses() {
+        let tree = tree_with_parent(&[]);
+        let index = CorpusIndex::default();
+        assert!(resolve_rule_in(&tree, &index, "Nothing Here", "X").is_none());
+    }
 
     #[test]
     fn var_id_is_case_folded_and_opaque() {

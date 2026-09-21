@@ -152,6 +152,17 @@ pub struct PinnedTree {
     pub fact_index: BTreeMap<String, Vec<(String, RowRef)>>,
     /// `_pfs/` files: every `(family, CATEGORY, KEY)` whose BASE row sits in an overlay file.
     pub pfs_base_keys: BTreeSet<(FileFamily, String, String)>,
+    /// Child `ABILITYCATEGORY` name (upper) -> its declared parent `CATEGORY` (upper), for every
+    /// `ABILITYCATEGORY:<name>...CATEGORY:<parent>...` row in the tree whose parent differs from
+    /// its own name (a category that names itself under its own `CATEGORY:` token, e.g. `Special
+    /// Ability`, is not a child of anything). `_pfs/` overlay rows are excluded, same as
+    /// `define_index`/`bonus_var_index`.
+    ///
+    /// A child name declared with two DIFFERENT parents anywhere in the tree is left OUT of this
+    /// map entirely -- [`super::ctx::resolve_rule_in`]'s parent retry must never guess between
+    /// them, so an ambiguous child category resolves exactly like one with no known parent (a
+    /// miss, which reaches `resolve_holdable_rule`'s own defect row, same as today).
+    pub ability_category_parent: BTreeMap<String, String>,
 }
 
 /// Split a raw row into its name field and `(KEY, VALUE)` tokens, tab-separated. A field with
@@ -365,6 +376,7 @@ impl PinnedTree {
             level_lines: BTreeMap::new(),
             fact_index: BTreeMap::new(),
             pfs_base_keys: BTreeSet::new(),
+            ability_category_parent: BTreeMap::new(),
         };
         tree.build_indexes();
         Ok(tree)
@@ -380,6 +392,8 @@ impl PinnedTree {
         let mut level_lines: BTreeMap<String, Vec<LevelLine>> = BTreeMap::new();
         let mut fact_index: BTreeMap<String, Vec<(String, RowRef)>> = BTreeMap::new();
         let mut pfs_base_keys = BTreeSet::new();
+        let mut ability_category_parent: BTreeMap<String, String> = BTreeMap::new();
+        let mut ability_category_ambiguous: BTreeSet<String> = BTreeSet::new();
         for (fi, file) in self.files.iter().enumerate() {
             let mut current_class: Option<String> = None;
             for (li, raw) in file.lines.iter().enumerate() {
@@ -398,7 +412,21 @@ impl PinnedTree {
                         }
                     }
                     RowShape::Plain | RowShape::Copy(_) => {
-                        if file.family == FileFamily::Class {
+                        // Only a GENUINE `CLASS:` header row re-anchors `current_class`. Every
+                        // other `Plain`/`Copy`-shaped row in a Class-family file -- notably
+                        // `SUBCLASS:<School>` and `SUBCLASSLEVEL:<n>` rows, which `row_identity`
+                        // also classifies as `Plain` (neither starts with `CLASS:`, neither is a
+                        // pure-digit level line) -- must NOT clobber it. Before this fix, the
+                        // last such row before a numbered level line silently stole every
+                        // following level line's attribution (SD-36 Epic F silent-miss
+                        // diagnosis: Wizard's own level-1 self-grant, `cr_classes.lst:301`, filed
+                        // under `current_class="SUBCLASSLEVEL:1"` -- a key nothing ever looks
+                        // up -- because it sits after eight `SUBCLASS:`/`SUBCLASSLEVEL:1` row
+                        // pairs). Checked on the RAW row text (before `row_identity` strips the
+                        // `CLASS:` prefix), so a `.COPY=`-shaped class header
+                        // (`CLASS:X.COPY=Y`) still counts.
+                        let is_class_header = file.family == FileFamily::Class && raw.trim_start().to_ascii_uppercase().starts_with("CLASS:");
+                        if is_class_header {
                             current_class = Some(id.key.clone());
                             class_rows.entry(id.key.clone()).or_default().push(row);
                         }
@@ -417,7 +445,32 @@ impl PinnedTree {
                 if file.is_pfs {
                     continue;
                 }
-                let (_, tokens) = tokenize_row(raw);
+                let (name, tokens) = tokenize_row(raw);
+                // `ABILITYCATEGORY:<name>` rows declare a category, sometimes as a CHILD of
+                // another (`CATEGORY:<parent>` token on the same row, differing from its own
+                // name) -- the map `resolve_rule_in`'s parent retry reads, built here from the
+                // tree's own rows, never a hardcoded list (`epic-f-class-completion.md` §3.1
+                // item 1).
+                let upper_name = name.to_ascii_uppercase();
+                if let Some(rest) = upper_name.strip_prefix("ABILITYCATEGORY:") {
+                    let own = rest.trim().to_string();
+                    if !own.is_empty()
+                        && let Some((_, v)) = tokens.iter().find(|(k, _)| k.eq_ignore_ascii_case("CATEGORY"))
+                    {
+                        let parent = v.trim().to_ascii_uppercase();
+                        if !parent.is_empty() && parent != own {
+                            match ability_category_parent.get(&own) {
+                                Some(existing) if existing != &parent => {
+                                    ability_category_ambiguous.insert(own);
+                                }
+                                Some(_) => {}
+                                None => {
+                                    ability_category_parent.insert(own, parent);
+                                }
+                            }
+                        }
+                    }
+                }
                 for (k, v) in &tokens {
                     match k.as_str() {
                         "DEFINE" => {
@@ -445,6 +498,9 @@ impl PinnedTree {
                 }
             }
         }
+        for name in &ability_category_ambiguous {
+            ability_category_parent.remove(name);
+        }
         self.mod_index = mod_index;
         self.base_index = base_index;
         self.keyed_index = keyed_index;
@@ -454,6 +510,7 @@ impl PinnedTree {
         self.level_lines = level_lines;
         self.fact_index = fact_index;
         self.pfs_base_keys = pfs_base_keys;
+        self.ability_category_parent = ability_category_parent;
     }
 
     pub fn row_text(&self, r: RowRef) -> &str {
@@ -661,5 +718,117 @@ mod tests {
         assert_eq!(file_family("x/cr_equipmods.lst"), FileFamily::EquipmentModifier);
         assert_eq!(file_family("x/cr_equip_arms_armor.lst"), FileFamily::Equipment);
         assert_eq!(file_family("x/b1_races.lst"), FileFamily::Race);
+    }
+
+    /// A `PinnedTree` built directly from in-memory lines (no corpus checkout on disk), for
+    /// indexer unit tests that must not pay the ~75s cold build / whole-tree-load cost the live
+    /// oracle checkout carries.
+    fn tree_from_lines(files: Vec<(&str, Vec<&str>)>) -> PinnedTree {
+        let mut tree = PinnedTree {
+            root: PathBuf::new(),
+            book_paths: BTreeMap::new(),
+            files: files
+                .into_iter()
+                .map(|(name, lines)| LstFile {
+                    rel_path: name.to_string(),
+                    book: "test".to_string(),
+                    family: file_family(name),
+                    is_pfs: false,
+                    lines: lines.into_iter().map(|s| s.to_string()).collect(),
+                })
+                .collect(),
+            mod_index: BTreeMap::new(),
+            base_index: BTreeMap::new(),
+            keyed_index: BTreeMap::new(),
+            define_index: BTreeMap::new(),
+            bonus_var_index: BTreeMap::new(),
+            class_rows: BTreeMap::new(),
+            level_lines: BTreeMap::new(),
+            fact_index: BTreeMap::new(),
+            pfs_base_keys: BTreeSet::new(),
+            ability_category_parent: BTreeMap::new(),
+        };
+        tree.build_indexes();
+        tree
+    }
+
+    /// SD-36 Epic F1-1 -- the closure-indexer silent miss (`epic-f-class-completion.md` §0.3):
+    /// eight `SUBCLASS:`/`SUBCLASSLEVEL:1` row pairs between a class's `CLASS:` header and its
+    /// own level-1 self-grant must not steal `current_class` attribution, or the self-grant files
+    /// under a `SUBCLASSLEVEL:1` key no real record ever looks up and silently vanishes from the
+    /// class's own closure (no crash, no defect -- diagnosed on Wizard, `cr_classes.lst:277-301`).
+    #[test]
+    fn a_subclass_row_does_not_steal_current_class_from_its_level_lines() {
+        let tree = tree_from_lines(vec![(
+            "cr_classes.lst",
+            vec![
+                "CLASS:Wizard\tHD:6",
+                "SUBCLASS:Abjurer\tCOST:0",
+                "SUBCLASSLEVEL:1\tABILITY:Class|AUTOMATIC|Abjurer Bonus",
+                "SUBCLASS:Evoker\tCOST:0",
+                "SUBCLASSLEVEL:1\tABILITY:Class|AUTOMATIC|Evoker Bonus",
+                "1\tABILITY:Class|AUTOMATIC|Wizard",
+            ],
+        )]);
+        assert!(!tree.level_lines.contains_key("SUBCLASSLEVEL:1"), "no real class is ever keyed 'SUBCLASSLEVEL:1'; this key must not exist");
+        let wizard_lines = tree.level_lines.get("WIZARD").expect("Wizard's own level-1 self-grant must attach to WIZARD");
+        assert_eq!(wizard_lines.len(), 1, "exactly the one real level-1 line, not the SUBCLASS/SUBCLASSLEVEL rows");
+        assert_eq!(wizard_lines[0].level, 1);
+    }
+
+    /// A genuine second `CLASS:` header row (a real continuation, e.g. Wizard's own second and
+    /// third `CLASS:Wizard` declarations in the pinned oracle) still re-anchors `current_class`
+    /// and is still recorded in `class_rows` -- the fix narrows what counts as a header, it does
+    /// not stop recognising real ones.
+    #[test]
+    fn a_second_class_header_row_still_reanchors_current_class() {
+        let tree = tree_from_lines(vec![(
+            "cr_classes.lst",
+            vec!["CLASS:Wizard\tHD:6", "CLASS:Wizard\tSPELLTYPE:Arcane", "1\tABILITY:Class|AUTOMATIC|Wizard"],
+        )]);
+        assert_eq!(tree.class_rows.get("WIZARD").map(Vec::len), Some(2), "two header rows, both recorded");
+        let wizard_lines = tree.level_lines.get("WIZARD").unwrap();
+        assert_eq!(wizard_lines.len(), 1);
+    }
+
+    /// A `.COPY=`-shaped class header (`CLASS:X.COPY=Y`) still counts as a header: the RAW-text
+    /// check runs before `row_identity` strips the `CLASS:` prefix.
+    #[test]
+    fn a_copy_shaped_class_header_still_reanchors_current_class() {
+        let tree = tree_from_lines(vec![("cr_classes.lst", vec!["CLASS:Ranger (Skirmisher).COPY=Ranger\tHD:8", "1\tABILITY:Class|AUTOMATIC|Ranger (Skirmisher)"])]);
+        let lines = tree.level_lines.get("RANGER (SKIRMISHER)").expect("a .COPY= class header still re-anchors current_class");
+        assert_eq!(lines.len(), 1);
+    }
+
+    /// §3.1 item 1 -- the child->parent `ABILITYCATEGORY` map, built from the tree's own rows
+    /// only (never a hardcoded list).
+    #[test]
+    fn ability_category_parent_maps_a_child_to_its_declared_parent() {
+        let tree = tree_from_lines(vec![("cr_abilitycategories.lst", vec!["ABILITYCATEGORY:Wizard Class Feature\tCATEGORY:Special Ability"])]);
+        assert_eq!(tree.ability_category_parent.get("WIZARD CLASS FEATURE"), Some(&"SPECIAL ABILITY".to_string()));
+    }
+
+    /// A category that declares itself under its own `CATEGORY:` token (e.g. `Special Ability`)
+    /// is not a child of anything and must not appear as one.
+    #[test]
+    fn ability_category_parent_excludes_a_self_referential_category() {
+        let tree = tree_from_lines(vec![("cr_abilitycategories.lst", vec!["ABILITYCATEGORY:Special Ability\tCATEGORY:Special Ability"])]);
+        assert!(!tree.ability_category_parent.contains_key("SPECIAL ABILITY"));
+    }
+
+    /// A child name declared under two DIFFERENT parents anywhere in the tree is ambiguous and
+    /// must be left out of the map entirely -- the resolver must never guess between them.
+    #[test]
+    fn ability_category_parent_excludes_a_name_declared_under_two_different_parents() {
+        let tree = tree_from_lines(vec![("cr_abilitycategories.lst", vec!["ABILITYCATEGORY:Weird\tCATEGORY:Special Ability", "ABILITYCATEGORY:Weird\tCATEGORY:Feat"])]);
+        assert!(!tree.ability_category_parent.contains_key("WEIRD"), "two different declared parents for the same child name: ambiguous, must not guess");
+    }
+
+    /// The same child name declared with the SAME parent more than once (a real, harmless
+    /// occurrence in the pinned oracle) is not ambiguous.
+    #[test]
+    fn ability_category_parent_tolerates_a_repeated_identical_declaration() {
+        let tree = tree_from_lines(vec![("cr_abilitycategories.lst", vec!["ABILITYCATEGORY:Wizard Class Feature\tCATEGORY:Special Ability", "ABILITYCATEGORY:Wizard Class Feature\tCATEGORY:Special Ability"])]);
+        assert_eq!(tree.ability_category_parent.get("WIZARD CLASS FEATURE"), Some(&"SPECIAL ABILITY".to_string()));
     }
 }
