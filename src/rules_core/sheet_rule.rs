@@ -422,6 +422,22 @@ pub enum ProfRef {
     DeityFavoredWeapon,
     /// The weapon the player chose on this rule.
     Chosen(ChoiceId),
+    /// A conjunctive weapon selector (PCGen's `TYPE=Martial.Ranged`) whose every tag the live
+    /// `WeaponTableEntry` can answer directly -- a tier (`proficiency`) AND/OR a reach
+    /// (`is_melee`/`is_ranged`). SD-36 Epic F1-3 (`epic-f-class-completion.md` §3.2/§3.3): today's
+    /// converter joined a conjunction into one lossy word (`"Light.Martial"`); this is the list
+    /// instead. A conjunct carrying a tag the table cannot answer (e.g. `Light`, `Thrown`) is
+    /// never put here -- it becomes a [`ProfRef::WeaponSet`] instead, expanded at ingest.
+    WeaponAllOf(Vec<Tag>),
+    /// A named membership selector the live weapon table cannot answer generically: a weapon
+    /// culture/group tag such as `Samurai` (`uc_profs_weapon.lst:100`'s `Katana.MOD
+    /// TYPE:Samurai.HeavyBlade` -- membership exists only as an ADDED tag on the weapons that
+    /// carry it, never its own record), or a conjunction containing an unanswerable tag
+    /// (`Light.Martial`). `members` is the literal weapon name list, resolved AT INGEST from the
+    /// oracle's own weapon-proficiency rows (its base row plus every `.MOD` row naming it) --
+    /// never hand-typed (SD-36 Epic F1-3, review finding 15). `label` is the selector's own tag
+    /// text, kept for display; matching at read time is against `members`, never `label`.
+    WeaponSet { label: Tag, members: Vec<String> },
 }
 
 #[derive(Debug, Clone, PartialEq, Serialize, Deserialize)]
@@ -1570,6 +1586,8 @@ impl<'a> Evaluator<'a> {
                 }
                 ProfRef::DeityFavoredWeapon => false,
                 ProfRef::Chosen(c) => self.facts.choices.get(c).is_some_and(|v| !v.is_empty()),
+                ProfRef::WeaponAllOf(tags) => tags.iter().all(|t| self.facts.proficiencies.contains(t)),
+                ProfRef::WeaponSet { members, .. } => members.iter().any(|m| self.facts.proficiencies.contains(m)),
             },
             Holdable::Language(l) => self.facts.languages.contains(l),
             Holdable::Movement { mode, min } => self.facts.speeds.get(mode).copied().unwrap_or(0) >= i64::from(*min),

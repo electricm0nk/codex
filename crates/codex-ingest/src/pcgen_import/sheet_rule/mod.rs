@@ -33,6 +33,7 @@ pub mod formula;
 pub mod prereq;
 pub mod prose;
 pub mod table;
+pub mod weapon_membership;
 
 use std::collections::{BTreeMap, BTreeSet};
 use std::path::{Path, PathBuf};

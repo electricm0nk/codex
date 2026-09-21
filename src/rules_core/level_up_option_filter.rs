@@ -248,6 +248,8 @@ pub fn describe_prof(prof: &ProfRef) -> String {
         ProfRef::ShieldGroup(tag) => format!("{} shields", pretty(tag)),
         ProfRef::DeityFavoredWeapon => "the deity's favored weapon".to_owned(),
         ProfRef::Chosen(choice) => format!("the weapon chosen for {}", pretty(choice)),
+        ProfRef::WeaponAllOf(tags) => join(tags.iter().map(|t| pretty(t)).collect(), " "),
+        ProfRef::WeaponSet { label, .. } => format!("{} weapons", pretty(label)),
     }
 }
 

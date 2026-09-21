@@ -80,10 +80,8 @@ fn a_pre_gated_weapon_proficiency_is_not_granted_unconditionally() {
     assert!(marksman.refusals.is_empty(), "marksman refusals: {:?}", marksman.refusals);
     let marksman_grants: Vec<&Effect> = marksman.rules.iter().flat_map(|r| r.grants.iter()).collect();
 
-    for (fact, label) in [
-        (Fact::Proficiency(ProfRef::WeaponGroup("Light.Martial".into())), "the Light.Martial conjunction"),
-        (Fact::Proficiency(ProfRef::ShieldGroup("Buckler".into())), "the Buckler shield proficiency"),
-    ] {
+    {
+        let (fact, label) = (Fact::Proficiency(ProfRef::ShieldGroup("Buckler".into())), "the Buckler shield proficiency");
         assert!(
             !marksman_grants.iter().any(|g| matches!(g, Effect::FactGrant(f) if *f == fact)),
             "Marksman: {label} must not convert to an unconditional FactGrant (its PRE-gate \
@@ -97,6 +95,22 @@ fn a_pre_gated_weapon_proficiency_is_not_granted_unconditionally() {
         let when = gated.unwrap_or_else(|| panic!("Marksman: {label} must convert to a GatedFactGrant carrying its PRE-gate: {marksman_grants:?}"));
         assert_ne!(*when, Applies::Always, "Marksman: {label}'s gate must not collapse to Applies::Always -- it has a real PRE token");
     }
+
+    // The `TYPE=Light.Martial` conjunction (SD-36 Epic F1-3, `sheet_rule_weapon_selectors.rs`
+    // pins its own member list against the oracle rows): it must still keep this record's own
+    // PRE-gate, whatever shape F1-3 converts the selector itself to -- not the plain unconditional
+    // FactGrant this test's whole point rules out.
+    assert!(
+        !marksman_grants.iter().any(|g| matches!(g, Effect::FactGrant(Fact::Proficiency(ProfRef::WeaponSet { label, .. })) if label == "Light.Martial")),
+        "Marksman: the Light.Martial conjunction must not convert to an unconditional FactGrant (its PRE-gate was dropped): {:?}",
+        marksman_grants
+    );
+    let light_martial_when = marksman_grants.iter().find_map(|g| match g {
+        Effect::GatedFactGrant { fact: Fact::Proficiency(ProfRef::WeaponSet { label, .. }), when } if label == "Light.Martial" => Some(when),
+        _ => None,
+    });
+    let when = light_martial_when.unwrap_or_else(|| panic!("Marksman: the Light.Martial conjunction must convert to a GatedFactGrant carrying its PRE-gate: {marksman_grants:?}"));
+    assert_ne!(*when, Applies::Always, "Marksman: the Light.Martial conjunction's gate must not collapse to Applies::Always -- it has a real PRE token");
 
     let bard = convert_unit("core_rulebook:class_feature:bard_weapon_proficiencies");
     assert!(bard.refusals.is_empty(), "bard refusals: {:?}", bard.refusals);
