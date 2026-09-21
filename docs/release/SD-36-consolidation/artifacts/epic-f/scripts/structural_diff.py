@@ -83,15 +83,22 @@ def _fact_of(effect: object) -> object:
 
 
 def grant_signature(effect: object) -> tuple:
-    """A `grants` entry reduced to `(fact kind, target)` -- gating-wrapper-agnostic (F1-2:
-    `FactGrant` vs `GatedFactGrant` around the same fact is the SAME signature) and, for a
-    `Proficiency` fact, tag-case-insensitive with `WeaponGroup`/`WeaponTag`/`WeaponAllOf`/
+    """A `grants` entry reduced to `(fact kind, target)` -- gating-wrapper-agnostic for GROUPING
+    purposes (F1-2: `FactGrant` vs `GatedFactGrant` around the same fact share a signature) and,
+    for a `Proficiency` fact, tag-case-insensitive with `WeaponGroup`/`WeaponTag`/`WeaponAllOf`/
     `WeaponSet` all folded to the same `("prof_tag", <lowercased tag text>)` shape (F1-3: a bare
-    tag expanding to a `WeaponSet`/`WeaponAllOf` naming the identical tag is the SAME signature).
+    tag expanding to a `WeaponSet`/`WeaponAllOf` naming the identical tag shares a signature).
     Anything this function does not recognize (a non-`Proficiency` fact, a `Weapon`/`ArmorGroup`/
     `ShieldGroup`/`Chosen`/`DeityFavoredWeapon` proficiency, or a non-fact `Effect` such as
     `FactDeclare`) falls back to an exact serialized match -- unrecognized shapes get no
-    transformation leniency, only the two named above do."""
+    transformation leniency, only the two named above do.
+
+    Signature EQUALITY alone is never enough to call a fresh grant a non-removal, though: it is
+    the necessary first half of [`grant_covers`]'s check, which also re-tests the gate and, for a
+    `WeaponSet`, the member list -- see that function's docstring (SD-36 Epic F1 re-check round
+    2, finding 2: this function alone folded a gate deletion and a `WeaponSet` member swap or
+    wipe to "no change", since it looks at target identity only, never at whether the gate or the
+    member content survived)."""
     fact = _fact_of(effect)
     if not isinstance(fact, dict):
         return ("raw", json.dumps(effect, sort_keys=True))
@@ -109,15 +116,89 @@ def grant_signature(effect: object) -> tuple:
     return ("fact", json.dumps(fact, sort_keys=True))
 
 
+def _gate_of(effect: object) -> str | None:
+    """`None` for a bare `FactGrant` (ungated); the serialized `when` expression for a
+    `GatedFactGrant`. Two gated grants compare equal here only when their `when` expressions are
+    identical -- a gate that survives with DIFFERENT wording is not the same condition, even
+    though `grant_signature` (target-only) cannot tell them apart."""
+    if isinstance(effect, dict):
+        gated = effect.get("GatedFactGrant")
+        if isinstance(gated, dict):
+            return json.dumps(gated.get("when"), sort_keys=True)
+    return None
+
+
+def _weapon_set_of(fact: object) -> dict | None:
+    if not isinstance(fact, dict):
+        return None
+    prof = fact.get("Proficiency")
+    if isinstance(prof, dict) and isinstance(prof.get("WeaponSet"), dict):
+        return prof["WeaponSet"]
+    return None
+
+
+def grant_covers(old_effect: object, new_effect: object) -> bool:
+    """Whether `new_effect` is an allowed EVOLUTION of `old_effect`, never a genuine content
+    loss, under SS3.5's two sanctioned transformations plus the two directions/leniencies those
+    transformations actually need (SD-36 Epic F1 re-check round 2, finding 2 -- the prior
+    `grant_signature`-only check was wrapper-agnostic and label-only in BOTH directions, so it
+    could not fail on either mutation below even though neither is a shape F1's own work
+    produces):
+
+      - target: `grant_signature(old_effect) == grant_signature(new_effect)` (unchanged from
+        before -- a different target, under the same or a different shape, is never covered).
+      - gate: a bare baseline grant (`old_effect` carries no `when`) may cover a gated OR a bare
+        fresh grant -- F1-2's sanctioned wrap goes bare -> gated, never the other direction. A
+        GATED baseline grant covers only a fresh grant carrying the SAME `when` expression:
+        `GatedFactGrant -> FactGrant` (the gate deleted) and a `when` swapped for a different one
+        between two gated grants are both a removal of the baseline's own condition, never an
+        allowed evolution.
+      - `WeaponSet` content: when BOTH sides resolve a `WeaponSet` fact under the folded label,
+        the baseline's member list must be a SUBSET of the fresh one -- F1-3's bare-tag ->
+        `WeaponSet` expansion still covers (the baseline side then carries no member list at all,
+        so this check does not apply), and a real oracle-driven set GROWTH still covers, but a
+        replaced or emptied member list under the same unchanged label does not.
+    """
+    if grant_signature(old_effect) != grant_signature(new_effect):
+        return False
+    old_gate = _gate_of(old_effect)
+    if old_gate is not None and old_gate != _gate_of(new_effect):
+        return False
+    old_ws = _weapon_set_of(_fact_of(old_effect))
+    new_ws = _weapon_set_of(_fact_of(new_effect))
+    if old_ws is not None and new_ws is not None:
+        old_members = set(old_ws.get("members") or [])
+        new_members = set(new_ws.get("members") or [])
+        if not old_members.issubset(new_members):
+            return False
+    return True
+
+
 def missing_grant_signatures(old_list: object, new_list: object) -> list[tuple[tuple, int]]:
-    """Every grant SIGNATURE present on the baseline side more times than on the fresh side, as
-    `(signature, missing_count)` -- a multiset (`Counter`) comparison, not a set one, so a grant
-    dropped from a rule that still carries an unrelated grant of the matching signature is still
-    named (F1 re-check round 1, finding 2's own gate contract: a genuine loss must never hide
-    behind an untouched sibling grant)."""
-    old_sigs = Counter(grant_signature(e) for e in (old_list or []))
-    new_sigs = Counter(grant_signature(e) for e in (new_list or []))
-    missing = old_sigs - new_sigs
+    """Every baseline grant with no COVERING fresh grant left after a greedy one-to-one match
+    (each fresh grant covers at most one baseline grant; [`grant_covers`] decides coverage, not
+    bare signature equality), grouped by signature as `(signature, missing_count)` for reporting
+    -- still the multiset-by-signature shape the caller expects, but content-aware rather than a
+    target-only `Counter` diff (SD-36 Epic F1 re-check round 2, finding 2), so a grant dropped
+    from a rule that still carries an unrelated grant of the matching signature is still named
+    (F1 re-check round 1, finding 2's own gate contract: a genuine loss must never hide behind an
+    untouched sibling grant), and so is a gate deleted or a `WeaponSet` emptied/replaced under an
+    unchanged label and target, which a signature-only count could not see at all."""
+    old_effects = list(old_list or [])
+    new_effects = list(new_list or [])
+    used = [False] * len(new_effects)
+    missing: Counter = Counter()
+    for old in old_effects:
+        covered = False
+        for i, new in enumerate(new_effects):
+            if used[i]:
+                continue
+            if grant_covers(old, new):
+                used[i] = True
+                covered = True
+                break
+        if not covered:
+            missing[grant_signature(old)] += 1
     return sorted(missing.items())
 
 

@@ -15,6 +15,18 @@ reported as a removed rule id but likewise never gated; (d) was printed as an un
 (e) and (f) produced NO change in the report at all. This pin proves all six now gate (exit 1)
 and are each named in the printed report.
 
+Round 2 (finding 2) adds four more mutations `grant_signature` alone (wrapper-agnostic and
+`WeaponSet`-content-blind in BOTH directions) could not see either, now closed by
+`grant_covers`'s directional gate check and `WeaponSet` member-subset check:
+
+    (g1) a `GatedFactGrant`'s gate deleted (-> bare `FactGrant`)        -> removed grant
+    (g2) a `GatedFactGrant`'s `when` swapped for a different condition  -> removed grant
+    (g3) a `WeaponSet`'s members replaced under the same label          -> removed grant
+    (g4) a `WeaponSet`'s members emptied under the same label           -> removed grant
+
+plus one non-mutation pin: a `WeaponSet` whose members merely GROW under the same label (a real
+oracle-driven set growth, or F1-3's own bare-tag expansion) must not gate.
+
 Run:
     python3 docs/release/SD-36-consolidation/artifacts/epic-f/scripts/structural_diff_test.py
 """
@@ -216,6 +228,105 @@ class StructuralDiffGateTest(unittest.TestCase):
                     }
                 ],
             }
+        ]
+        code, out = self.run_diff(base, fresh)
+        self.assertEqual(code, 0, out)
+        self.assertIn("removed grants: 0", out)
+
+    def test_g1_an_ungated_conditional_proficiency_gates(self):
+        """SD-36 Epic F1 re-check round 2, finding 2 (mutation g1): the baseline holds a
+        `GatedFactGrant` (a conditional proficiency); the fresh side holds the SAME fact as a
+        bare `FactGrant` -- the gate deleted, so the proficiency is now unconditional. Before the
+        fix `grant_signature` unwrapped `GatedFactGrant` in BOTH directions, so this produced
+        `removed grants: 0`, verdict=PASS."""
+        base = base_rules()
+        rec = base["ultimate_combat/class_feature/samurai_proficiencies.json"][0]
+        rec["grants"] = [
+            {
+                "GatedFactGrant": {
+                    "fact": {"Proficiency": {"WeaponGroup": "Samurai"}},
+                    "when": {"Compare": {"lhs": {"Var": "v1"}, "op": "Eq", "rhs": {"Const": 0}}},
+                }
+            }
+        ]
+        fresh = base_rules()
+        fresh["ultimate_combat/class_feature/samurai_proficiencies.json"][0]["grants"] = [
+            {"FactGrant": {"Proficiency": {"WeaponGroup": "Samurai"}}}
+        ]
+        code, out = self.run_diff(base, fresh)
+        self.assertEqual(code, 1, out)
+        self.assertIn("removed grants: 1", out)
+        self.assertIn("samurai_proficiencies", out)
+
+    def test_g2_a_gate_swapped_for_a_different_condition_gates(self):
+        """Mutation g2: both sides carry a `GatedFactGrant` around the SAME fact, but the `when`
+        changed to a different (here, always-true) condition -- still a removal of the baseline's
+        own condition, not a wrap. Before the fix, gating was unwrapped entirely, so the two
+        `when` values were never compared."""
+        base = base_rules()
+        rec = base["ultimate_combat/class_feature/samurai_proficiencies.json"][0]
+        rec["grants"] = [
+            {
+                "GatedFactGrant": {
+                    "fact": {"Proficiency": {"WeaponGroup": "Samurai"}},
+                    "when": {"Compare": {"lhs": {"Var": "v1"}, "op": "Eq", "rhs": {"Const": 0}}},
+                }
+            }
+        ]
+        fresh = base_rules()
+        fresh["ultimate_combat/class_feature/samurai_proficiencies.json"][0]["grants"] = [
+            {"GatedFactGrant": {"fact": {"Proficiency": {"WeaponGroup": "Samurai"}}, "when": {"Const": True}}}
+        ]
+        code, out = self.run_diff(base, fresh)
+        self.assertEqual(code, 1, out)
+        self.assertIn("removed grants: 1", out)
+
+    def test_g3_a_weapon_sets_members_replaced_under_the_same_label_gates(self):
+        """Mutation g3: both sides carry a `WeaponSet` under the identical folded label, but the
+        fresh side's member list is a totally different set of weapons -- content-destroying
+        fabrication `grant_signature` alone (label-only) could not see, since it discarded
+        `members` entirely."""
+        base = base_rules()
+        rec = base["ultimate_combat/class_feature/samurai_proficiencies.json"][0]
+        rec["grants"] = [
+            {"FactGrant": {"Proficiency": {"WeaponSet": {"label": "Samurai", "members": ["Katana", "Naginata", "Wakizashi"]}}}}
+        ]
+        fresh = base_rules()
+        fresh["ultimate_combat/class_feature/samurai_proficiencies.json"][0]["grants"] = [
+            {"FactGrant": {"Proficiency": {"WeaponSet": {"label": "Samurai", "members": ["Holy Avenger", "Vorpal Sword of Doom"]}}}}
+        ]
+        code, out = self.run_diff(base, fresh)
+        self.assertEqual(code, 1, out)
+        self.assertIn("removed grants: 1", out)
+
+    def test_g4_a_weapon_sets_members_emptied_under_the_same_label_gates(self):
+        """Mutation g4: same shape as g3, but the fresh side's member list is wiped to empty --
+        the emptied-set sibling of a replaced one, same blind spot."""
+        base = base_rules()
+        rec = base["ultimate_combat/class_feature/samurai_proficiencies.json"][0]
+        rec["grants"] = [
+            {"FactGrant": {"Proficiency": {"WeaponSet": {"label": "Samurai", "members": ["Katana", "Naginata", "Wakizashi"]}}}}
+        ]
+        fresh = base_rules()
+        fresh["ultimate_combat/class_feature/samurai_proficiencies.json"][0]["grants"] = [
+            {"FactGrant": {"Proficiency": {"WeaponSet": {"label": "Samurai", "members": []}}}}
+        ]
+        code, out = self.run_diff(base, fresh)
+        self.assertEqual(code, 1, out)
+        self.assertIn("removed grants: 1", out)
+
+    def test_a_weapon_sets_members_growing_under_the_same_label_does_not_gate(self):
+        """The non-mutation sibling of g3/g4: the baseline's member list is a SUBSET of the
+        fresh one (a real oracle-driven set growth, or F1-3's bare-tag expansion where the
+        baseline carries no member list at all) -- never a removal, must not gate."""
+        base = base_rules()
+        rec = base["ultimate_combat/class_feature/samurai_proficiencies.json"][0]
+        rec["grants"] = [
+            {"FactGrant": {"Proficiency": {"WeaponSet": {"label": "Samurai", "members": ["Katana", "Naginata"]}}}}
+        ]
+        fresh = base_rules()
+        fresh["ultimate_combat/class_feature/samurai_proficiencies.json"][0]["grants"] = [
+            {"FactGrant": {"Proficiency": {"WeaponSet": {"label": "Samurai", "members": ["Katana", "Naginata", "Wakizashi"]}}}}
         ]
         code, out = self.run_diff(base, fresh)
         self.assertEqual(code, 0, out)

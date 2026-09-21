@@ -268,13 +268,56 @@ fn describe_weapon_set(label: &str, members: &[String]) -> String {
     if label.eq_ignore_ascii_case("Auto") && !members.is_empty() {
         return join_with_and(members);
     }
-    format!("{} weapons", pretty_weapon_set_label(label))
+    let pretty = pretty_weapon_set_label(label);
+    // SD-36 Epic F1 re-check round 2, finding 2: a label whose own last word already IS the
+    // group noun -- PCGen's `SiegeWeapon`/`SiegeEngine` tags -- must not get a second "weapons"
+    // appended after it (`"siege weapon weapons"`, the stutter the finding named); the label's
+    // own noun, pluralized, already reads as the sheet's proficiency-line noun.
+    if let Some(prefix) = pretty.strip_suffix(" weapon").or_else(|| pretty.strip_suffix(" weapons")) {
+        return format!("{prefix} weapons");
+    }
+    if let Some(prefix) = pretty.strip_suffix(" engine").or_else(|| pretty.strip_suffix(" engines")) {
+        return format!("{prefix} engines");
+    }
+    format!("{pretty} weapons")
 }
 
 /// `"Light.Martial"` -> `"light martial"`; `"SiegeFirearm"` -> `"siege firearm"`;
 /// `"KoboldTailAttachment"` -> `"kobold tail attachment"`.
+///
+/// One family of oracle `TYPE=` tags is genuinely ambiguous this way: PF1's one/two-handed
+/// firearm proficiency selector is spelled three different ways across sourcebooks
+/// (`OnehandedFirearm`, `OneHandedFirearm`, `OneHandedFireArm`), and a plain camelCase split
+/// reads their INCIDENTAL capitalization, not the selector's real word boundaries -- two, three
+/// and four words respectively for what is, at ingest, the identical resolved weapon set (SD-36
+/// Epic F1 re-check round 2, finding 2: "the printed phrase is a function of which book's
+/// capitalization the selector used"). `canonical_hand_firearm_words` recognizes that one
+/// compound ahead of the generic split so every spelling reads the same way; every other label
+/// (there is no other same-set, differently-spelled label in the corpus today) keeps the plain
+/// camelCase split unchanged.
 fn pretty_weapon_set_label(label: &str) -> String {
-    label.split('.').map(split_camel_words).collect::<Vec<_>>().join(" ").to_lowercase()
+    label
+        .split('.')
+        .map(|segment| {
+            let lower = segment.to_ascii_lowercase();
+            match canonical_hand_firearm_words(&lower) {
+                Some(words) => words.to_string(),
+                None => split_camel_words(segment).to_lowercase(),
+            }
+        })
+        .collect::<Vec<_>>()
+        .join(" ")
+}
+
+/// The one compound this corpus states under multiple incidental capitalizations for the same
+/// resolved weapon set. Matched against the FULLY LOWERCASED segment, so it fires regardless of
+/// which of the three spellings produced it.
+fn canonical_hand_firearm_words(lower_segment: &str) -> Option<&'static str> {
+    match lower_segment {
+        "onehandedfirearm" => Some("one handed fire arm"),
+        "twohandedfirearm" => Some("two handed fire arm"),
+        _ => None,
+    }
 }
 
 /// Splits a camelCase or PascalCase run into space-separated words: `"OneHandedFireArm"` ->
@@ -800,5 +843,46 @@ mod tests {
 
         assert_eq!(words, "Grapple, Ray Spells, Touch Spells, Splash Weapon, and Unarmed Strike");
         assert!(!words.contains("Auto"), "the raw bookkeeping word must never reach the printed sheet");
+    }
+
+    /// SD-36 Epic F1 re-check round 2, finding 2: `advanced_class_guide:class_feature:
+    /// picaroon_weapon_proficiency` states the same one-handed-firearm selector under all three
+    /// real book spellings (`acg_abilities_class.lst` vs. the archetype's `ultimate_combat`
+    /// reprint), all resolving to the identical 9-weapon set. Before this step, "the printed
+    /// phrase is a function of which book's capitalization the selector used" -- three
+    /// differently-worded lines for the one proficiency. All three must now read identically.
+    #[test]
+    fn describe_prof_prints_every_book_spelling_of_the_picaroon_selector_identically() {
+        let members = vec!["Pistol".to_owned()];
+        let onehandedfirearm = describe_prof(&ProfRef::WeaponSet { label: "OnehandedFirearm".to_owned(), members: members.clone() });
+        let one_handed_firearm = describe_prof(&ProfRef::WeaponSet { label: "OneHandedFirearm".to_owned(), members: members.clone() });
+        let one_handed_fire_arm = describe_prof(&ProfRef::WeaponSet { label: "OneHandedFireArm".to_owned(), members });
+
+        assert_eq!(onehandedfirearm, "one handed fire arm weapons");
+        assert_eq!(onehandedfirearm, one_handed_firearm, "all three book spellings must read the same way");
+        assert_eq!(one_handed_firearm, one_handed_fire_arm, "all three book spellings must read the same way");
+    }
+
+    /// SD-36 Epic F1 re-check round 2, finding 2: `SiegeWeapon` (`advanced_class_guide`'s and
+    /// `ultimate_combat`'s Siege Engineer feat/class feature) split-and-suffixed to "siege
+    /// weapon weapons" -- the label's own last word IS the appended noun. The label's own noun,
+    /// pluralized, is the line; it must never gain a second "weapons".
+    #[test]
+    fn describe_prof_prints_siege_weapon_without_the_weapons_stutter() {
+        let words = describe_prof(&ProfRef::WeaponSet { label: "SiegeWeapon".to_owned(), members: vec!["Ballista".to_owned()] });
+
+        assert_eq!(words, "siege weapons");
+        assert!(!words.contains("weapon weapons"), "must never repeat the noun: {words:?}");
+    }
+
+    /// The `SiegeEngine` sibling label (`mythic_adventures:ability:siege_engines_weapon_group`)
+    /// gets the same treatment for the same reason, even though "siege engine weapons" would
+    /// not literally repeat a word -- both labels end in a noun that already implies the group,
+    /// so neither gets the generic " weapons" suffix appended after it.
+    #[test]
+    fn describe_prof_prints_siege_engine_without_a_redundant_weapons_suffix() {
+        let words = describe_prof(&ProfRef::WeaponSet { label: "SiegeEngine".to_owned(), members: vec!["Ballista".to_owned()] });
+
+        assert_eq!(words, "siege engines");
     }
 }

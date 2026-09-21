@@ -727,7 +727,7 @@ fn sheet_rule_package() -> &'static Result<codex::rules_core::sheet_rule::SheetR
         let load = codex::rules_core::corpus_loader::load_sheet_rules(&dir);
         if load.package.rules.is_empty() {
             return Err(format!(
-                "no sheet rules under {} ({} file diagnostics; regenerate with `cargo run --locked --bin sheet_rule_convert`)",
+                "no sheet rules under {} ({} file diagnostics; regenerate with `cargo run --locked -p codex-ingest --bin sheet_rule_convert -- --write`)",
                 dir.display(),
                 load.diagnostics.len()
             ));

@@ -930,7 +930,7 @@ pub fn write_output(out_dir: &Path, rendered: &BTreeMap<String, Vec<u8>>) -> std
         std::fs::remove_dir_all(out_dir)?;
     }
     std::fs::create_dir_all(out_dir)?;
-    std::fs::write(out_dir.join("GENERATED"), b"GENERATED FILE TREE -- written by `cargo run --locked --bin sheet_rule_convert`; regenerated whole; never hand-edited.\n")?;
+    std::fs::write(out_dir.join("GENERATED"), b"GENERATED FILE TREE -- written by `cargo run --locked -p codex-ingest --bin sheet_rule_convert -- --write`; regenerated whole; never hand-edited.\n")?;
     for (rel, bytes) in rendered {
         let p = out_dir.join(rel);
         if let Some(parent) = p.parent() {
@@ -1131,7 +1131,7 @@ mod term_level_refusal_gate {
 
     fn refused_report() -> RefusedReport {
         let text = std::fs::read_to_string(package_dir().join("_refused.json"))
-            .expect("data/sheet_rules/_refused.json is generated (cargo run --locked --bin sheet_rule_convert)");
+            .expect("data/sheet_rules/_refused.json is generated (cargo run --locked -p codex-ingest --bin sheet_rule_convert -- --write)");
         serde_json::from_str(&text).expect("_refused.json parses")
     }
 

@@ -2155,7 +2155,7 @@ mod evaluate_tests {
             let started = std::time::Instant::now();
             let load = load_sheet_rules(&repo().join("data/sheet_rules"));
             assert!(load.diagnostics.is_empty(), "every package file parses: {:?}", &load.diagnostics[..load.diagnostics.len().min(3)]);
-            assert!(load.rule_files > 40_000, "the package is generated (cargo run --locked --bin sheet_rule_convert): {} files", load.rule_files);
+            assert!(load.rule_files > 40_000, "the package is generated (cargo run --locked -p codex-ingest --bin sheet_rule_convert -- --write): {} files", load.rule_files);
             eprintln!(
                 "sheet_rules package: {} rule files, {} var files, {} rules, loaded in {:?}",
                 load.rule_files,

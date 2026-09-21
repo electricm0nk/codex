@@ -120,7 +120,7 @@ fn dice_literal_reads_a_modifier() {
 
 fn package_files() -> BTreeMap<String, Vec<u8>> {
     let out = read_output(&repo().join("data/sheet_rules"));
-    assert!(!out.is_empty(), "data/sheet_rules/ is generated (cargo run --locked --bin sheet_rule_convert)");
+    assert!(!out.is_empty(), "data/sheet_rules/ is generated (cargo run --locked -p codex-ingest --bin sheet_rule_convert -- --write)");
     out
 }
 
@@ -204,6 +204,46 @@ fn package_carries_no_source_format_literal() {
     let files = package_files();
     let hits = shape_violations(&files);
     assert!(hits.is_empty(), "{} files carry a source-format literal, e.g. {:?}", hits.len(), hits.iter().take(5).collect::<Vec<_>>());
+}
+
+/// SD-36 Epic F1 re-check round 2, finding 2: fix 1 made every spelling of an
+/// `AUTO:WEAPONPROF|TYPE=` selector resolve (rather than silently drop), so a record whose
+/// PCGen source states the same selector under two or three differently-capitalized book
+/// spellings (`OnehandedFirearm` / `OneHandedFirearm` / `OneHandedFireArm`, all the identical
+/// 9-weapon oracle set) converted to that many identical-content grants -- duplicate lines on
+/// the printed sheet. `convert_record` now dedupes a record's own `WeaponSet` grants by
+/// resolved member set (`dedup_weapon_set_grants`, `convert.rs`); this gate re-proves the
+/// invariant against the WHOLE generated package, not only the picaroon unit the finding named,
+/// so a future selector change cannot silently reopen it.
+#[test]
+fn no_rule_carries_two_weapon_set_grants_with_the_same_resolved_member_set() {
+    let files = package_files();
+    let mut offenders: Vec<String> = Vec::new();
+    for (rel, bytes) in &files {
+        let parts: Vec<&str> = rel.split('/').collect();
+        if parts.len() != 3 {
+            continue; // not a per-unit rule file (`_report.json`, `_vars/*`, ...)
+        }
+        let Ok(rules) = serde_json::from_slice::<Vec<SheetRule>>(bytes) else { continue };
+        for rule in &rules {
+            let mut seen: Vec<&Vec<String>> = Vec::new();
+            for g in &rule.grants {
+                let members = match g {
+                    Effect::FactGrant(Fact::Proficiency(ProfRef::WeaponSet { members, .. })) => Some(members),
+                    Effect::GatedFactGrant { fact: Fact::Proficiency(ProfRef::WeaponSet { members, .. }), .. } => Some(members),
+                    _ => None,
+                };
+                if let Some(members) = members {
+                    if seen.contains(&members) {
+                        offenders.push(format!("{rel}:{}", rule.id));
+                    } else {
+                        seen.push(members);
+                    }
+                }
+            }
+        }
+    }
+    assert!(offenders.is_empty(), "records with a duplicate-content WeaponSet grant (same resolved member set, different raw label): {offenders:?}");
 }
 
 /// SD-35 AT-35-E5-003 -- the live-package gate for bucket U's

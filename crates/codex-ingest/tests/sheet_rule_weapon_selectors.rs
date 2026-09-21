@@ -221,3 +221,50 @@ fn single_simple_weapon_choice_stays_a_choice() {
         grants
     );
 }
+
+/// SD-36 Epic F1 re-check round 2, finding 2: `advanced_class_guide:class_feature:
+/// picaroon_weapon_proficiency` (`acg_abilities_class.lst:3917`) states its one-handed-firearm
+/// proficiency selector three times, spelled `OnehandedFirearm`, `OneHandedFirearm` and
+/// `OneHandedFireArm` across the three books that reference it -- and every spelling resolves
+/// to the SAME 9-weapon oracle set (`Buckler Gun`, `Pepperbox`, `Pistol`, ...) now that F1-1
+/// makes every spelling resolve at all. Before this step's dedup that was three identical
+/// grants -- three duplicate lines on this ONE record's printed sheet; `convert_record` must
+/// keep exactly one.
+#[test]
+fn picaroon_weapon_proficiency_carries_one_grant_not_three_identical_ones() {
+    let c = convert_unit("advanced_class_guide:class_feature:picaroon_weapon_proficiency");
+    assert!(c.refusals.is_empty(), "picaroon refusals: {:?}", c.refusals);
+
+    let grants: Vec<&Effect> = c.rules.iter().flat_map(|r| r.grants.iter()).collect();
+    let weapon_sets: Vec<&Vec<String>> = grants
+        .iter()
+        .filter_map(|g| match effect_fact(g) {
+            Some(Fact::Proficiency(ProfRef::WeaponSet { members, .. })) => Some(members),
+            _ => None,
+        })
+        .collect();
+    assert_eq!(weapon_sets.len(), 1, "three book spellings of the same selector must fold to one grant, not stay three: {:?}", grants);
+    assert!(weapon_sets[0].contains(&"Pistol".to_string()) && weapon_sets[0].len() == 9, "the surviving grant is still the real 9-weapon one-handed-firearm set: {:?}", weapon_sets[0]);
+}
+
+/// SD-36 Epic F1 re-check round 2, finding 2: `advanced_class_guide:class_feature:
+/// musketeer_weapon_proficiency` (`acg_abilities_class.lst`) grants BOTH one-handed and
+/// two-handed firearm proficiency on the SAME record -- two genuinely different resolved sets
+/// that must both survive the dedup pass (it keys on the full member LIST, never the tag
+/// prefix the two selectors share).
+#[test]
+fn musketeer_keeps_both_its_genuinely_different_firearm_sets() {
+    let c = convert_unit("advanced_class_guide:class_feature:musketeer_weapon_proficiency");
+    assert!(c.refusals.is_empty(), "musketeer refusals: {:?}", c.refusals);
+
+    let grants: Vec<&Effect> = c.rules.iter().flat_map(|r| r.grants.iter()).collect();
+    let weapon_sets: Vec<&Vec<String>> = grants
+        .iter()
+        .filter_map(|g| match effect_fact(g) {
+            Some(Fact::Proficiency(ProfRef::WeaponSet { members, .. })) => Some(members),
+            _ => None,
+        })
+        .collect();
+    assert_eq!(weapon_sets.len(), 2, "one-handed and two-handed firearms are genuinely different sets and must both survive: {:?}", grants);
+    assert_ne!(weapon_sets[0], weapon_sets[1], "the two surviving grants must not resolve to the same members (that would mean a real fabrication slipped past the dedup key): {:?}", weapon_sets);
+}

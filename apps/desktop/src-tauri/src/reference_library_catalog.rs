@@ -373,7 +373,7 @@ mod tests {
     fn pkg() -> &'static SheetRulePackage {
         live_sheet_rules().expect(
             "data/sheet_rules/ must be present -- regenerate with \
-             `cargo run --locked --bin sheet_rule_convert`",
+             `cargo run --locked -p codex-ingest --bin sheet_rule_convert -- --write`",
         )
     }
 

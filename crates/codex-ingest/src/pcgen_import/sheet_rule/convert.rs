@@ -428,6 +428,43 @@ fn weapon_type_selector(ctx: &mut RecordCtx, membership: &WeaponMembershipIndex,
     Some(ProfRef::WeaponSet { label: segments.join("."), members })
 }
 
+/// A `WeaponSet` grant's dedup key: what the selector actually resolves to (its member list,
+/// already name-sorted and case-normalized by `WeaponMembershipIndex::members_with_all`), plus
+/// whether the grant is gated and on what -- never the raw per-book selector spelling that
+/// became `ProfRef::WeaponSet.label`. Two grants with the same key are the SAME proficiency
+/// stated twice under different book capitalization (SD-36 Epic F1 re-check round 2, finding
+/// 2), not two different ones; a non-`WeaponSet` effect, or two `WeaponSet` grants whose gates
+/// genuinely differ, never collapse.
+fn weapon_set_dedup_key(effect: &Effect) -> Option<(bool, Vec<String>, Option<String>)> {
+    match effect {
+        Effect::FactGrant(Fact::Proficiency(ProfRef::WeaponSet { members, .. })) => Some((false, members.clone(), None)),
+        Effect::GatedFactGrant { fact: Fact::Proficiency(ProfRef::WeaponSet { members, .. }), when } => Some((true, members.clone(), Some(format!("{when:?}")))),
+        _ => None,
+    }
+}
+
+/// Drop a record's later `WeaponSet` grants once an earlier one already resolved to the same
+/// member set under the same gate (SD-36 Epic F1 re-check round 2, finding 2): a record whose
+/// PCGen source states one selector under two or three differently-capitalized spellings
+/// (`OnehandedFirearm` / `OneHandedFirearm` / `OneHandedFireArm`) converted, after F1-1 made
+/// every spelling resolve, to that many identical-content grants -- duplicate lines on the
+/// printed sheet. Every other grant shape, and a `WeaponSet` pair whose gates genuinely
+/// differ, is left exactly as it was, in its original order.
+fn dedup_weapon_set_grants(grants: Vec<Effect>) -> Vec<Effect> {
+    let mut seen: Vec<(bool, Vec<String>, Option<String>)> = Vec::new();
+    let mut out = Vec::with_capacity(grants.len());
+    for g in grants {
+        if let Some(key) = weapon_set_dedup_key(&g) {
+            if seen.contains(&key) {
+                continue;
+            }
+            seen.push(key);
+        }
+        out.push(g);
+    }
+    out
+}
+
 /// Which prose families the corpus record declares product identity for.
 fn declared_pi(record: &RecordRef) -> (bool, bool) {
     let name = record.pi_fields.iter().any(|f| f == "name");
@@ -552,6 +589,15 @@ pub fn convert_record(tree: &PinnedTree, index: &CorpusIndex, record: &RecordRef
         }
     }
 
+    // SD-36 Epic F1 re-check round 2, finding 2: fix 1 made every spelling of the same oracle
+    // weapon-proficiency tag resolve (rather than the earlier round's silent drop), so a record
+    // whose PCGen source states the same selector under two or three book-specific spellings
+    // (`OnehandedFirearm` / `OneHandedFirearm` / `OneHandedFireArm`) now converts to that many
+    // separately-worded grants of the SAME resolved weapon set -- duplicate lines on one
+    // record's printed sheet. A `WeaponSet` grant is identified by what it actually resolves
+    // to (its member list), never by which book's capitalization produced the label, so once
+    // two grants resolve to the same member set only the first survives.
+    acc.grants = dedup_weapon_set_grants(acc.grants);
     // ---- assemble -------------------------------------------------------------------------
     let label = {
         let base = record.name.clone();
