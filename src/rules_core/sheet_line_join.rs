@@ -92,39 +92,122 @@ const CORPUS_RECORD_MARKER: &str = "corpus_record";
 const TIER_SCOPED: u8 = 0;
 const TIER_BARE: u8 = 1;
 
-/// Split an underscore-joined string into its non-empty words.
-fn words(s: &str) -> Vec<&str> {
-    s.split('_').filter(|w| !w.is_empty()).collect()
+/// Split an underscore-joined string into its non-empty words, then merge a lone `"s"`
+/// word-token into the token immediately before it.
+///
+/// This is the mechanical undoing of the corpus's OWN apostrophe-to-underscore convention:
+/// `nature's` converts to the slug fragment `nature_s`, `efreeti's` to `efreeti_s` -- a bare,
+/// single-letter `"s"` segment is never a real English word on its own anywhere in this
+/// population, it is always the tail of a possessive the converter's own slugifier split at
+/// the underscore. Evidenced by real, committed slugs that only join once this merge runs
+/// (SD-36 Epic F1b stage-4 fix pass, the dedup receipt's own §7.1 "11 dropped matches"
+/// population diff): `core_rulebook:class_feature:druid_resist_nature_s_lure` (the facet's own
+/// tail spells it `resist_natures_lure`, one word, no underscore) and
+/// `adventurers_guide:class_feature:asavir_efreeti_s_blessing`. A structural fact about how the
+/// corpus encodes possessives, applied identically to every slug this module ever splits into
+/// words -- never a per-facet list.
+fn words(s: &str) -> Vec<String> {
+    let raw: Vec<&str> = s.split('_').filter(|w| !w.is_empty()).collect();
+    let mut out: Vec<String> = Vec::with_capacity(raw.len());
+    for w in raw {
+        if w == "s" && !out.is_empty() {
+            out.last_mut().expect("checked non-empty above").push('s');
+        } else {
+            out.push(w.to_owned());
+        }
+    }
+    out
+}
+
+/// Two words are the SAME word for join purposes when they are equal, or differ only by a
+/// trailing grammatical `"s"` (`"feat"` <-> `"feats"`, `"strike"` <-> `"strikes"`).
+///
+/// A second, independent normalisation class from [`words`]'s own apostrophe-merge: this one is
+/// plain English pluralisation, not the corpus's possessive-slug convention, and the two never
+/// overlap in practice (a possessive splits into a bare one-letter `"s"` TOKEN merged away
+/// before this function ever runs; a plural is a real word that already ends in `s`). Evidenced
+/// by real, committed slugs where a facet's own tail names the concept in one number and the
+/// converted rule's slug names it in the other (SD-36 Epic F1b stage-4 fix pass, dedup receipt
+/// §7.1): `class_feature.acg.brawler.bonus_feat_count` (facet says "feat") must reach
+/// `advanced_class_guide:class_feature:brawler_bonus_feats` (rule says "feats"), and
+/// `class_feature.pu.unchained_monk.style_strikes_known` (facet says "strikes") must reach
+/// `pathfinder_unchained:class_feature:unchained_monk_style_strike` (rule says "strike"). A
+/// class-agnostic grammatical fact, never a per-facet list.
+fn words_eq(a: &str, b: &str) -> bool {
+    a == b || format!("{a}s") == b || format!("{b}s") == a
+}
+
+/// The longest common prefix of `query` and `candidate`, word by word, where two words match
+/// when [`words_eq`] says so. Returns `(len, exact)`: `len` is the matched word count (the
+/// join's own coverage/excess arithmetic, unchanged by normalisation); `exact` is true only
+/// when EVERY matched word pair was a literal, un-normalised match.
+///
+/// `exact` exists so a normalisation-dependent match (a plural substitution, or `words`'s own
+/// apostrophe merge) can never unseat an already-correct LITERAL match into a manufactured tie
+/// -- `consider`'s own ranking treats it as the lowest-priority tiebreak, after (coverage,
+/// excess, tier), so it only ever matters between two candidates already tied on all three.
+/// Evidenced by a real population regression the stage-4 fix pass's own re-run population scan
+/// surfaced (dedup receipt §7.1): once `words_eq` lets a facet's singular "deed"/"feat" match a
+/// rule's plural "deeds"/"feats", TWO real, distinct GENERIC pool-container records
+/// (`advanced_class_guide:class_feature:swashbuckler_deeds`, the umbrella "Swashbucklers spend
+/// panache points to accomplish deeds" record; `advanced_class_guide:class_feature:
+/// warpriest_bonus_feats`, the umbrella bonus-feat-progression record) start tying, at the SAME
+/// (coverage, excess, tier), against an ALREADY-correct, exact, more specific sibling match
+/// (`swashbuckler_evasive`, `warpriest_focus_weapon`) the join held cleanly before this
+/// normalisation existed -- turning a `Matched` into a manufactured `Ambiguous`, a real
+/// `some -> ambiguous` regression this tiebreak closes back to zero.
+fn longest_common_prefix(query: &[String], candidate: &[String]) -> (usize, bool) {
+    let mut len = 0;
+    let mut exact = true;
+    for (a, b) in query.iter().zip(candidate.iter()) {
+        if a == b {
+            len += 1;
+        } else if words_eq(a, b) {
+            len += 1;
+            exact = false;
+        } else {
+            break;
+        }
+    }
+    (len, exact)
 }
 
 /// One qualifying candidate, ranked by (`coverage` descending, `excess` ascending, `tier`
-/// ascending) -- the higher this tuple, the better the match. `coverage` is how many of the
-/// facet's own tail words (never counting `class_slug`'s own words) the match explains; `excess`
-/// is how many of the CANDIDATE's own words are left over past that match (0 = an exact stem).
+/// ascending, `exact` descending) -- the higher this tuple, the better the match. `coverage` is
+/// how many of the facet's own tail words (never counting `class_slug`'s own words) the match
+/// explains; `excess` is how many of the CANDIDATE's own words are left over past that match (0
+/// = an exact stem); `exact` is whether every matched word was literal, never a tokenisation
+/// normalisation (see [`longest_common_prefix`]) -- the lowest-priority key, since it only ever
+/// decides an otherwise-genuine tie.
 struct Candidate<'a> {
     coverage: usize,
     excess: usize,
     tier: u8,
+    exact: bool,
     slug: &'a str,
 }
 
 /// Folds a new candidate into the running best set: strictly better replaces it, tied joins it,
-/// worse is dropped. `best` never mixes candidates of different (coverage, excess, tier).
-fn consider<'a>(best: &mut Vec<Candidate<'a>>, coverage: usize, excess: usize, tier: u8, slug: &'a str) {
+/// worse is dropped. `best` never mixes candidates of different (coverage, excess, tier, exact).
+fn consider<'a>(best: &mut Vec<Candidate<'a>>, coverage: usize, excess: usize, tier: u8, exact: bool, slug: &'a str) {
     if let Some(top) = best.first() {
-        let cmp = coverage.cmp(&top.coverage).then(excess.cmp(&top.excess).reverse()).then(tier.cmp(&top.tier).reverse());
+        let cmp = coverage
+            .cmp(&top.coverage)
+            .then(excess.cmp(&top.excess).reverse())
+            .then(tier.cmp(&top.tier).reverse())
+            .then(exact.cmp(&top.exact));
         match cmp {
             std::cmp::Ordering::Greater => {
                 best.clear();
-                best.push(Candidate { coverage, excess, tier, slug });
+                best.push(Candidate { coverage, excess, tier, exact, slug });
             }
             std::cmp::Ordering::Equal => {
-                best.push(Candidate { coverage, excess, tier, slug });
+                best.push(Candidate { coverage, excess, tier, exact, slug });
             }
             std::cmp::Ordering::Less => {}
         }
     } else {
-        best.push(Candidate { coverage, excess, tier, slug });
+        best.push(Candidate { coverage, excess, tier, exact, slug });
     }
 }
 
@@ -173,7 +256,7 @@ pub fn rule_for_explanation(package: &SheetRulePackage, class_slug: &str, explan
         // `gunslinger_gunslinger_initiative` are real, existing slugs, not typos) -- trying the
         // raw tail first is what lets an exact match to one of THESE win outright, before any
         // collapsed/looser interpretation below gets a vote.
-        let raw_query: Vec<&str> = class_words.iter().copied().chain(tail_words.iter().copied()).collect();
+        let raw_query: Vec<String> = class_words.iter().cloned().chain(tail_words.iter().cloned()).collect();
         for slug in package.slugs_of_kind(CLASS_FEATURE_KIND) {
             // Refuses the bare class slug (the class's own principal rule) explicitly, on top
             // of the length check below already excluding it -- belt and suspenders, per the
@@ -182,7 +265,7 @@ pub fn rule_for_explanation(package: &SheetRulePackage, class_slug: &str, explan
                 continue;
             }
             let candidate_words = words(slug);
-            let lcp = raw_query.iter().zip(candidate_words.iter()).take_while(|(a, b)| a == b).count();
+            let (lcp, exact) = longest_common_prefix(&raw_query, &candidate_words);
             if lcp < min_scoped_len {
                 continue;
             }
@@ -198,7 +281,7 @@ pub fn rule_for_explanation(package: &SheetRulePackage, class_slug: &str, explan
             if coverage < tail_words.len() && excess > 0 {
                 continue;
             }
-            consider(&mut best, coverage, excess, TIER_SCOPED, slug);
+            consider(&mut best, coverage, excess, TIER_SCOPED, exact, slug);
         }
 
         // Scoped tier, against a COLLAPSED tail: only tried when the raw tail itself starts
@@ -213,13 +296,13 @@ pub fn rule_for_explanation(package: &SheetRulePackage, class_slug: &str, explan
         // attempt to explain.
         if tail_words.len() > class_words.len() && tail_words[..class_words.len()] == class_words[..] {
             let collapsed_tail = &tail_words[class_words.len()..];
-            let collapsed_query: Vec<&str> = class_words.iter().copied().chain(collapsed_tail.iter().copied()).collect();
+            let collapsed_query: Vec<String> = class_words.iter().cloned().chain(collapsed_tail.iter().cloned()).collect();
             for slug in package.slugs_of_kind(CLASS_FEATURE_KIND) {
                 if slug == class_slug || !slug.starts_with(&scope_prefix) {
                     continue;
                 }
                 let candidate_words = words(slug);
-                let lcp = collapsed_query.iter().zip(candidate_words.iter()).take_while(|(a, b)| a == b).count();
+                let (lcp, exact) = longest_common_prefix(&collapsed_query, &candidate_words);
                 if lcp < min_scoped_len {
                     continue;
                 }
@@ -236,7 +319,7 @@ pub fn rule_for_explanation(package: &SheetRulePackage, class_slug: &str, explan
                 if coverage < original_tail_len && excess > 0 {
                     continue;
                 }
-                consider(&mut best, coverage, excess, TIER_SCOPED, slug);
+                consider(&mut best, coverage, excess, TIER_SCOPED, exact, slug);
             }
         }
 
@@ -262,11 +345,11 @@ pub fn rule_for_explanation(package: &SheetRulePackage, class_slug: &str, explan
                 continue;
             }
             let candidate_words = words(slug);
-            let lcp = tail_words.iter().zip(candidate_words.iter()).take_while(|(a, b)| a == b).count();
+            let (lcp, exact) = longest_common_prefix(&tail_words, &candidate_words);
             if lcp != tail_words.len() || lcp != candidate_words.len() {
                 continue;
             }
-            consider(&mut best, lcp, 0, TIER_BARE, slug);
+            consider(&mut best, lcp, 0, TIER_BARE, exact, slug);
         }
     }
 
@@ -633,6 +716,119 @@ mod tests {
         // A nested window landing on a class-named final segment, reached only via the sliding
         // window (the fuller windows fail to qualify at all): `class_feature.fighter.x.fighter`.
         assert_eq!(rule_for_explanation(&pkg, "fighter", "class_feature.fighter.x.fighter"), JoinResult::None);
+    }
+
+    /// SD-36 Epic F1b stage-4 fix pass (dedup receipt §7.1, "the 11 dropped matches"): the
+    /// blocker-1 refusal rule that closed the magus/skald one-word coincidences also dropped 11
+    /// OTHER facets from `Matched` to `None` as an unnamed side effect (every one `before: None`
+    /// in the pre-R2 naive walk too, so none is a shipped regression). Of the 11, these six
+    /// (plus the 2 skald `raging_*` cases already pinned refused above, and 1 magus retarget)
+    /// are pure TOKENISATION variants -- the corpus's own possessive-apostrophe convention
+    /// (`words`'s merge) or plain English singular/plural (`words_eq`) -- recovered here by that
+    /// one mechanical normalisation, never a per-facet list. See `dedup-receipt.md` §7.1 for the
+    /// full population diff and the other three, which stay refused (real content divergence,
+    /// not a tokenisation variant).
+    #[test]
+    fn real_package_tokenisation_variants_recover_six_of_the_eleven_dropped_matches() {
+        let pkg = crate::rules_core::sheet_rule_package::package()
+            .as_ref()
+            .expect("the real data/sheet_rules/ package loads in this checkout");
+        // Possessive-apostrophe split: the facet's own tail spells the word `natures` (one
+        // word, no underscore); the real converted rule's slug spells it `nature_s` (the
+        // corpus's own apostrophe-to-underscore convention, `words`'s merge undoes it).
+        assert_eq!(
+            rule_for_explanation(pkg, "druid", "class_feature.druid.resist_natures_lure"),
+            JoinResult::Matched("core_rulebook:class_feature:druid_resist_nature_s_lure".into())
+        );
+        // Singular/plural (`words_eq`): the facet asks "how many bonus feat(s)" (`_count`, a
+        // qualifier over a shorter, real stem the candidate already fully explains -- zero
+        // leftover words of its own); the real rule's slug names the concept in the plural.
+        assert_eq!(
+            rule_for_explanation(pkg, "brawler", "class_feature.acg.brawler.bonus_feat_count"),
+            JoinResult::Matched("advanced_class_guide:class_feature:brawler_bonus_feats".into())
+        );
+        assert_eq!(
+            rule_for_explanation(pkg, "swashbuckler", "class_feature.acg.swashbuckler.bonus_feat_count"),
+            JoinResult::Matched("advanced_class_guide:class_feature:swashbuckler_bonus_feats".into())
+        );
+        assert_eq!(
+            rule_for_explanation(pkg, "unchained_monk", "class_feature.pu.unchained_monk.bonus_feats_known"),
+            JoinResult::Matched("pathfinder_unchained:class_feature:unchained_monk_bonus_feat".into())
+        );
+        assert_eq!(
+            rule_for_explanation(pkg, "unchained_monk", "class_feature.pu.unchained_monk.style_strikes_known"),
+            JoinResult::Matched("pathfinder_unchained:class_feature:unchained_monk_style_strike".into())
+        );
+        // The apostrophe merge also recovers a SECOND, unrelated facet through the sliding
+        // window (`efreeti's` -> `efreeti_s`, at a nested dot-segment position, not the tail's
+        // own leading word) -- onto the MORE SPECIFIC of two real sibling records that share
+        // the merged stem (`asavir_efreeti_s_blessing_mount`, which also explains the tail's own
+        // "mount" word, over the shorter `asavir_efreeti_s_blessing`): a real, mechanically
+        // justified outcome of "the fullest full-consumption candidate wins" (`dedup-receipt.md`
+        // §7.1 names the one content nuance this raises -- the sibling's own prose does not
+        // carry a fire-resistance clause, a converted-package content question, not a join
+        // defect: this join reports what the corpus supports, same as `desktop-print-paths.md`'s
+        // `weapon_and_armor_proficiency` naming-inconsistency finding).
+        assert_eq!(
+            rule_for_explanation(
+                pkg,
+                "asavir",
+                "class_feature.adventurers_guide.asavir.efreeti_blessing_mount.fire_resistance"
+            ),
+            JoinResult::Matched("adventurers_guide:class_feature:asavir_efreeti_s_blessing_mount".into())
+        );
+    }
+
+    /// SD-36 Epic F1b stage-4 fix pass, dedup receipt §7.1: the `words_eq` plural/singular
+    /// normalisation, run over the REAL population, creates a manufactured tie between an
+    /// already-correct EXACT match and a real, distinct GENERIC pool-container record that only
+    /// ties because of the normalisation (`swashbuckler_deeds`'s own tail describes the whole
+    /// deed family, "Swashbucklers spend panache points to accomplish deeds"; `warpriest_
+    /// bonus_feats`'s own tail describes the class's whole bonus-feat progression) -- a real
+    /// `some -> ambiguous` regression the population re-run surfaced. `longest_common_prefix`'s
+    /// own `exact` tiebreak (a literal match beats a normalisation-dependent one on an otherwise
+    /// genuine tie) closes it back to the pre-normalisation `Matched` answer, without narrowing
+    /// `words_eq` itself (which the six recoveries above still need).
+    #[test]
+    fn real_package_an_exact_match_beats_a_normalised_tie_against_a_generic_pool_container() {
+        let pkg = crate::rules_core::sheet_rule_package::package()
+            .as_ref()
+            .expect("the real data/sheet_rules/ package loads in this checkout");
+        assert_eq!(
+            rule_for_explanation(pkg, "swashbuckler", "class_feature.acg.swashbuckler.deed.evasive_grant"),
+            JoinResult::Matched("advanced_class_guide:class_feature:swashbuckler_evasive".into())
+        );
+        assert_eq!(
+            rule_for_explanation(pkg, "warpriest", "class_feature.acg.warpriest.focus_weapon.bonus_feat_granted"),
+            JoinResult::Matched("advanced_class_guide:class_feature:warpriest_focus_weapon".into())
+        );
+    }
+
+    /// The other six of the same 11 (dedup receipt §7.1): real content divergence, not a
+    /// tokenisation variant, so the refusal rule is correct to keep refusing them -- a
+    /// tokenisation normalisation must never widen into "drop any word the candidate lacks".
+    #[test]
+    fn real_package_genuine_content_divergence_among_the_eleven_stays_refused() {
+        let pkg = crate::rules_core::sheet_rule_package::package()
+            .as_ref()
+            .expect("the real data/sheet_rules/ package loads in this checkout");
+        // The facet names an extra descriptive word ("combat") the real rule's own slug never
+        // uses at all -- not a plural/apostrophe variant, a different word placed mid-tail.
+        assert_eq!(
+            rule_for_explanation(pkg, "cavalier", "class_feature.apg.cavalier.bonus_combat_feat_count"),
+            JoinResult::None
+        );
+        // The facet's trailing words ("flanking_level") and the rule's own trailing word
+        // ("tracker") name genuinely different concepts past the shared "uncanny_dodge" stem.
+        assert_eq!(
+            rule_for_explanation(pkg, "bloodrager", "class_feature.acg.bloodrager.uncanny_dodge_flanking_level"),
+            JoinResult::None
+        );
+        // "attack" and "of_blows" are unrelated words, not a tokenisation of the same word.
+        assert_eq!(
+            rule_for_explanation(pkg, "unchained_monk", "class_feature.pu.unchained_monk.flurry_attack_count"),
+            JoinResult::None
+        );
     }
 
     #[test]

@@ -289,9 +289,35 @@ export function unmatchedClassFeatureDescriptions(
   );
 }
 
-/** Splits an underscore-joined slug into its non-empty words. */
+/**
+ * Splits an underscore-joined slug into its non-empty words, then merges a lone `'s'`
+ * word-token into the token immediately before it -- the mechanical undoing of the corpus's own
+ * apostrophe-to-underscore convention (`nature's` -> `nature_s`, `efreeti's` -> `efreeti_s`), a
+ * bare single-letter `'s'` segment never being a real word on its own anywhere in this
+ * population. Mirrors `sheet_line_join.rs::words`'s own doc comment exactly (SD-36 Epic F1b
+ * stage-4 fix pass, dedup receipt §7.1) -- the same structural fact, applied identically here.
+ */
 function wordsOf(s: string): string[] {
-  return s.split('_').filter((word) => word.length > 0);
+  const raw = s.split('_').filter((word) => word.length > 0);
+  const out: string[] = [];
+  for (const w of raw) {
+    if (w === 's' && out.length > 0) {
+      out[out.length - 1] += 's';
+    } else {
+      out.push(w);
+    }
+  }
+  return out;
+}
+
+/**
+ * Two words are the SAME word for join purposes when they are equal, or differ only by a
+ * trailing grammatical `'s'` (`'feat'` <-> `'feats'`). Mirrors `sheet_line_join.rs::words_eq`
+ * exactly (SD-36 Epic F1b stage-4 fix pass, dedup receipt §7.1) -- plain English pluralisation,
+ * independent of `wordsOf`'s own possessive-apostrophe merge.
+ */
+function wordsEq(a: string, b: string): boolean {
+  return a === b || `${a}s` === b || `${b}s` === a;
 }
 
 /** One `class_feature` sheet line's own slug, as {@link ruleForExplanation} compares it. */
@@ -299,7 +325,7 @@ function slugOfLine(line: SheetLineDto): string {
   return line.id.slice(line.id.lastIndexOf(':') + 1).split('#')[0] ?? '';
 }
 
-type JoinCandidate = { coverage: number; excess: number; tier: 0 | 1; line: SheetLineDto };
+type JoinCandidate = { coverage: number; excess: number; tier: 0 | 1; exact: boolean; line: SheetLineDto };
 
 /**
  * Review finding 5 (SD-36 Epic F1b stage-4 adversarial check): a TypeScript port of
@@ -346,28 +372,53 @@ function ruleForExplanation(
   const candidateLines = sheetLines.filter((line) => line.kind === 'class_feature');
 
   let best: JoinCandidate[] = [];
-  const consider = (coverage: number, excess: number, tier: 0 | 1, line: SheetLineDto): void => {
+  // `exact` is the lowest-priority tiebreak, after (coverage, excess, tier): a literal match
+  // beats a normalisation-dependent one on an otherwise genuine tie, so `wordsEq`'s plural
+  // equivalence can never unseat an already-correct exact match into a manufactured Ambiguous
+  // (mirrors `sheet_line_join.rs::consider`/`longest_common_prefix` exactly, dedup receipt §7.1).
+  const consider = (coverage: number, excess: number, tier: 0 | 1, exact: boolean, line: SheetLineDto): void => {
     const top = best[0];
     if (top === undefined) {
-      best = [{ coverage, excess, tier, line }];
+      best = [{ coverage, excess, tier, exact, line }];
       return;
     }
     if (
       coverage > top.coverage ||
       (coverage === top.coverage && excess < top.excess) ||
-      (coverage === top.coverage && excess === top.excess && tier < top.tier)
+      (coverage === top.coverage && excess === top.excess && tier < top.tier) ||
+      (coverage === top.coverage && excess === top.excess && tier === top.tier && exact && !top.exact)
     ) {
-      best = [{ coverage, excess, tier, line }];
-    } else if (coverage === top.coverage && excess === top.excess && tier === top.tier) {
-      best.push({ coverage, excess, tier, line });
+      best = [{ coverage, excess, tier, exact, line }];
+    } else if (
+      coverage === top.coverage &&
+      excess === top.excess &&
+      tier === top.tier &&
+      exact === top.exact
+    ) {
+      best.push({ coverage, excess, tier, exact, line });
     }
   };
-  const lcpOf = (query: readonly string[], candidate: readonly string[]): number => {
+  /** Mirrors `sheet_line_join.rs::longest_common_prefix` exactly: `exact` is true only when
+   * every matched word pair was literal, never a `wordsEq` normalisation. */
+  const lcpOf = (query: readonly string[], candidate: readonly string[]): { n: number; exact: boolean } => {
     let n = 0;
-    while (n < query.length && n < candidate.length && query[n] === candidate[n]) {
-      n += 1;
+    let exact = true;
+    while (n < query.length && n < candidate.length) {
+      const a = query[n];
+      const b = candidate[n];
+      if (a === undefined || b === undefined) {
+        break;
+      }
+      if (a === b) {
+        n += 1;
+      } else if (wordsEq(a, b)) {
+        n += 1;
+        exact = false;
+      } else {
+        break;
+      }
     }
-    return n;
+    return { n, exact };
   };
 
   for (let i = 0; i < restSegs.length; i += 1) {
@@ -386,7 +437,7 @@ function ruleForExplanation(
         continue;
       }
       const candidateWords = wordsOf(slug);
-      const lcp = lcpOf(rawQuery, candidateWords);
+      const { n: lcp, exact } = lcpOf(rawQuery, candidateWords);
       if (lcp < minScopedLen) {
         continue;
       }
@@ -395,7 +446,7 @@ function ruleForExplanation(
       if (coverage < tailWords.length && excess > 0) {
         continue;
       }
-      consider(coverage, excess, 0, line);
+      consider(coverage, excess, 0, exact, line);
     }
 
     // Scoped tier, collapsed tail (a redundant repeat of the class's own words at the tail's
@@ -410,7 +461,7 @@ function ruleForExplanation(
           continue;
         }
         const candidateWords = wordsOf(slug);
-        const lcp = lcpOf(collapsedQuery, candidateWords);
+        const { n: lcp, exact } = lcpOf(collapsedQuery, candidateWords);
         if (lcp < minScopedLen) {
           continue;
         }
@@ -419,7 +470,7 @@ function ruleForExplanation(
         if (coverage < originalTailLen && excess > 0) {
           continue;
         }
-        consider(coverage, excess, 0, line);
+        consider(coverage, excess, 0, exact, line);
       }
     }
 
@@ -431,11 +482,11 @@ function ruleForExplanation(
         continue;
       }
       const candidateWords = wordsOf(slug);
-      const lcp = lcpOf(tailWords, candidateWords);
+      const { n: lcp, exact } = lcpOf(tailWords, candidateWords);
       if (lcp !== tailWords.length || lcp !== candidateWords.length) {
         continue;
       }
-      consider(lcp, 0, 1, line);
+      consider(lcp, 0, 1, exact, line);
     }
   }
 

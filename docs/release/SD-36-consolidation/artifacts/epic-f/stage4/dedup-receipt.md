@@ -103,6 +103,11 @@ shipped behavior yet, see §4).
 
 ## 2. Population scan (`class_census --duplicates`)
 
+**SUPERSEDED by the stage-4 fix pass, §7.6.** The two tables immediately below are the R2-only
+snapshot (before the stage-4 blocker-1/blocker-2 fixes existed on this branch) and are kept here
+verbatim for history; they are NOT the shipped join's current answer. §7.6 restates both tables
+against the actually-shipped code, with every transition since this snapshot named.
+
 **Denominator, exactly, stated by the report itself
 (`<scratch>/duplicates-after.json:population`):** every non-prestige census entry at its own
 `max_level`, every prestige class's first-named carrier build at its own `max_level`, and every
@@ -321,11 +326,17 @@ RED tests added (`sheet_line_join.rs`, all against the REAL committed `data/shee
   pins is still real and still reachable, just at a tail length where BOTH candidates fully
   explain it)
 
-All three of the finding's confirmed-wrong joins are now closed:
+All three of the finding's confirmed-wrong joins are now closed -- **correction (stage-4
+blocker-2, §7.6): the magus row below was originally stated as `None` here; it is actually
+`Matched(magus_magus_arcana)`, a DIFFERENT, better match the fix's own refusal rule newly makes
+reachable (the previous, wrong candidate `magus_arcana_pool_strike` is gone either way; the row
+retargets rather than empties). Reproduced fresh against the committed tree (row
+`magus:20` in `duplicates-after-fix.json`, `HELD|`/`LINE|` at `<scratch>/sheets/post_r2_fixed/
+magus_L20.txt` lines 121/160):**
 
 | Facet | Wrong (pre-fix) | Corrected (post-fix) |
 |---|---|---|
-| `class_feature.untabled.magus.magus_arcana.pool` (magus:20) | `Matched(magus_arcana_pool_strike)` | `None` |
+| `class_feature.untabled.magus.magus_arcana.pool` (magus:20) | `Matched(magus_arcana_pool_strike)` | `Matched(magus_magus_arcana)` |
 | `class_feature.acg.skald.raging_climber` (skald:20) | `Matched(skald_raging_song)` | `None` |
 | `class_feature.acg.skald.raging_swimmer` (skald:20) | `Matched(skald_raging_song)` | `None` |
 
@@ -474,6 +485,246 @@ claimed the frontend already called this function directly ("no second copy anyw
 as of the finding's own evidence. Corrected to name the TypeScript port explicitly and why a
 wire boundary makes a literal shared call impossible.
 
+## 7.6 Stage-4 blocker-2 close-out: the 11 dropped matches, the duplicate ruling
+
+Spec: same as above. Blockers: `<scratch>/stage4-blockers-2.json` (2 findings, both against
+THIS receipt's own text, not the join's behavior). Both fixed at their root; the second finding
+also surfaced a real, unnamed side effect (the 11 dropped matches) that needed closing.
+
+### 7.6.1 The 11 dropped matches, named with mechanism
+
+Root-caused by diffing `<scratch>/duplicates-after.json` (the population scan from BEFORE the
+blocker-1 fix, i.e. R2 with the one-word-coincidence bug still live) against
+`<scratch>/duplicates-after-fix.json` (AFTER blocker-1, before this fix pass) by
+`(class, explanation_id)` key -- reproduced fresh here, not quoted from the earlier finding:
+**11 rows go `matched -> none`**, 1 retargets (magus, §7.1's own correction above), 1
+`ambiguous -> matched` (an unrelated, separately-closed improvement). Every one of the 11 has
+`before: None` in the ORIGINAL pre-R2 naive walk too (`duplicates-after.json`'s own `before`
+field), so none of the 11 is a shipped regression -- all were unreachable before R2 existed at
+all, and blocker-1's refusal rule cost the population 11 of the NEW gains R2 itself opened up,
+not 3.
+
+**Mechanism, per row.** Word-for-word comparison of each facet's tail against its target's own
+slug (`class_slug` stripped) shows exactly two shapes:
+
+| # | Facet (class.tail) | Dropped target | Shape |
+|---|---|---|---|
+| 1 | `druid.resist_natures_lure` | `druid_resist_nature_s_lure` | TOKENISATION: the corpus's own possessive-apostrophe convention (`nature's` -> `nature_s`, a bare `"s"` word-token) vs. the facet's own merged `natures` |
+| 2 | `brawler.bonus_feat_count` | `brawler_bonus_feats` | TOKENISATION: plural/singular (`feat` <-> `feats`); `_count` is a facet-only qualifier over an otherwise fully-consumed stem |
+| 3 | `swashbuckler.bonus_feat_count` | `swashbuckler_bonus_feats` | Same as #2 |
+| 4 | `unchained_monk.bonus_feats_known` | `unchained_monk_bonus_feat` | TOKENISATION: plural/singular (`feats` <-> `feat`); `_known` is a facet-only qualifier |
+| 5 | `unchained_monk.style_strikes_known` | `unchained_monk_style_strike` | TOKENISATION: plural/singular (`strikes` <-> `strike`); `_known` is a facet-only qualifier |
+| 6 | `asavir.efreeti_blessing_mount.fire_resistance` | `asavir_efreeti_s_blessing_mount` (a MORE specific sibling than the facet's own literal `asavir_efreeti_s_blessing`, see below) | TOKENISATION: possessive-apostrophe (`efreeti's` -> `efreeti_s`), through the sliding window |
+| 7 | `cavalier.bonus_combat_feat_count` | `cavalier_bonus_feat` | GENUINE DIVERGENCE: the facet names an extra descriptive word ("combat") the rule's own slug never uses at all -- not a plural/apostrophe variant, a different word placed mid-tail |
+| 8 | `bloodrager.uncanny_dodge_flanking_level` | `bloodrager_uncanny_dodge_tracker` | GENUINE DIVERGENCE: the facet's trailing words ("flanking_level") and the rule's own trailing word ("tracker") name different concepts past the shared "uncanny_dodge" stem |
+| 9 | `unchained_monk.flurry_attack_count` | `unchained_monk_flurry_of_blows` | GENUINE DIVERGENCE: "attack" and "of_blows" are unrelated words, not a tokenisation of the same word |
+| 10 | `skald.raging_climber` | (refuses; the finding's own case) | one-word coincidence ("raging"), correctly still refused |
+| 11 | `skald.raging_swimmer` | (refuses; the finding's own case) | Same as #10 |
+
+**The fix (one mechanical rule, two normalisation classes, never a per-facet list):**
+
+1. **Possessive-apostrophe merge** (`sheet_line_join.rs::words`): a lone single-letter `"s"`
+   word-token, split off by the corpus's own apostrophe-to-underscore slugifier, merges into the
+   token immediately before it. Evidenced by real, committed slugs
+   (`druid_resist_nature_s_lure`, `asavir_efreeti_s_blessing`/`_mount`) -- a structural fact
+   about the corpus's own encoding, applied identically everywhere `words()` is called.
+2. **Plural/singular equivalence** (`sheet_line_join.rs::words_eq`): two words match when equal,
+   OR when one is the other plus a trailing `"s"` (`feat`/`feats`, `strike`/`strikes`).
+   Independent of #1 (a possessive splits into a bare `"s"` token merged away by #1 before this
+   function runs; a plural is a real word already ending in `s`).
+3. **Exact-beats-normalised tiebreak** (`sheet_line_join.rs::longest_common_prefix`/
+   `Candidate::exact`/`consider`): when #1/#2 create a genuine tie on (coverage, excess, tier)
+   between two candidates, the one reached WITHOUT any normalisation wins. Needed because #2,
+   run over the REAL population, manufactured two new ties between an already-correct EXACT
+   match and a real, distinct GENERIC pool-container record that only ties because of the
+   plural equivalence -- a real `some -> ambiguous` regression (below) the tiebreak closes.
+
+**Population re-run** (`class_census --duplicates`, TRACKED package, no swap needed: the target
+RULES for all 9 recoverable facets above already exist in the currently committed
+`data/sheet_rules/` -- this fix needs no corpus regeneration at all, only the join's own word
+comparison; verified `git status --short` empty before and after this whole step):
+
+| Metric | Before this fix (`duplicates-after-fix.json`) | After this fix (`<scratch>/duplicates-tokfix2.json`) |
+|---|---|---|
+| Matched | 1111 | 1137 |
+| Ambiguous | 4 | 4 |
+| None | 899 | 873 |
+
+Transition diff (`(class, explanation_id)` key, 1071 distinct facets both sides): **`none ->
+matched`: 26.** Zero of every other transition kind (`matched -> none`, `matched -> ambiguous`,
+`ambiguous -> none`, `matched -> different matched`, `ambiguous -> matched`) -- a clean,
+strictly-additive fix, verified over the WHOLE population, not just the 11 named above. The 26
+include the 6 recoverable of the 11 (druid, brawler, swashbuckler, 2x unchained_monk, asavir)
+plus 20 MORE possessive-apostrophe facets elsewhere in the population this same mechanical rule
+also reaches for the first time (`hunter's_bond`, `maker's_call`, `warrior's_path`, `djinni's_
+blessing`(+mount), `janni's_blessing`(+mount), `marid's_blessing_mount`, `shaitan's_blessing`,
+`shifter's_fury`, `weather's_fury`, `steed's_reach`, `swashbuckler's_grace`/`_edge`,
+`warpriest.blessing_dc`/`_uses_per_day` -> `warpriest_blessings`) -- named here as evidence the
+rule is genuinely mechanical (it recovers every possessive-apostrophe/plural stem the population
+happens to carry, not just the 6 the blocker's own finding enumerated), not tuned to the 6.
+
+**Which of the 11 now match, which stay `None`, and why** (re-run against the real package,
+pinned by `real_package_tokenisation_variants_recover_six_of_the_eleven_dropped_matches` and
+`real_package_genuine_content_divergence_among_the_eleven_stays_refused`,
+`sheet_line_join.rs`):
+
+| # | Facet | Result | Why |
+|---|---|---|---|
+| 1 | `druid.resist_natures_lure` | `Matched(druid_resist_nature_s_lure)` | recovered, rule #1 |
+| 2 | `brawler.bonus_feat_count` | `Matched(brawler_bonus_feats)` | recovered, rule #2 |
+| 3 | `swashbuckler.bonus_feat_count` | `Matched(swashbuckler_bonus_feats)` | recovered, rule #2 |
+| 4 | `unchained_monk.bonus_feats_known` | `Matched(unchained_monk_bonus_feat)` | recovered, rule #2 |
+| 5 | `unchained_monk.style_strikes_known` | `Matched(unchained_monk_style_strike)` | recovered, rule #2 |
+| 6 | `asavir.efreeti_blessing_mount.fire_resistance` | `Matched(asavir_efreeti_s_blessing_mount)` | recovered, rule #1 -- retargets to the MORE SPECIFIC of two real sibling records sharing the merged stem (also explains the tail's own "mount" word); see the content nuance this raises below |
+| 7 | `cavalier.bonus_combat_feat_count` | `None` | stays refused -- genuine divergence (#7 above), correctly not a tokenisation variant |
+| 8 | `bloodrager.uncanny_dodge_flanking_level` | `None` | stays refused -- genuine divergence (#8 above) |
+| 9 | `unchained_monk.flurry_attack_count` | `None` | stays refused -- genuine divergence (#9 above) |
+| 10 | `skald.raging_climber` | `None` | stays refused -- one-word coincidence, unaffected by this fix (test `real_package_skald_raging_climber_and_swimmer_never_join_raging_song_on_one_word` still green) |
+| 11 | `skald.raging_swimmer` | `None` | stays refused -- same as #10 |
+
+**Content nuance on #6 (`asavir_efreeti_s_blessing_mount`):** this sibling's own prose is "Your
+hoof attacks deal an additional 1d6 points of fire damage" -- it does NOT itself carry a
+fire-resistance clause (that lives on the shorter `asavir_efreeti_s_blessing`, "gaining fire
+resistance 5. It also deals..."), while the facet's own tail literally asks about
+`fire_resistance`. The join's own scoring is correct and defensible (`_mount` explains MORE of
+the tail -- the word "mount" too -- with zero leftover words either way, exactly the "fullest
+full-consumption candidate wins" rule every other recovered facet above also relies on); this is
+a converted-PACKAGE content question (which sibling record actually carries which clause of the
+ability), not a join defect -- the same class of finding as §3's `weapon_and_armor_proficiency`
+naming inconsistency. Named here for whoever owns the asavir facet-id/record-split shape;
+outside this step's file ownership (data/sheet_rules is not touched by this step).
+
+**Exact-beats-normalised tiebreak, evidenced:** the plural rule alone (#2), before the tiebreak
+(#3) existed, turned 2 already-correct `Matched` rows into `Ambiguous` --
+`swashbuckler.deed.evasive_grant` (`Matched(swashbuckler_evasive)` -> tied against
+`swashbuckler_deeds`, the real umbrella "Swashbucklers spend panache points to accomplish deeds"
+record, once "deed" matches its plural "deeds") and `warpriest.focus_weapon.
+bonus_feat_granted` (`Matched(warpriest_focus_weapon)` -> tied against `warpriest_bonus_feats`,
+the real umbrella bonus-feat-progression record, once "feat" matches "feats"). Root-caused,
+fixed with the tiebreak, and pinned by
+`real_package_an_exact_match_beats_a_normalised_tie_against_a_generic_pool_container` -- both
+rows verified back to their pre-normalisation `Matched` answer, 0 regressions in the final
+population re-run table above.
+
+**TS mirror.** `apps/desktop/src/characterHub/classFeaturesModel.ts`'s `wordsOf`/`ruleForExplanation`
+ported both normalisation rules and the `exact` tiebreak byte-for-byte from the Rust source
+(`wordsOf`'s apostrophe merge, a new `wordsEq` helper, `lcpOf` returning `{n, exact}`,
+`JoinCandidate.exact` as the same lowest-priority tiebreak key in `consider`). RED tests added
+(`classFeaturesModel.test.ts`): `verifiesTokenisationVariantsDropTheNoticeSameAsTheRustJoin`
+(the possessive-apostrophe and plural/singular recoveries, mirroring
+`druid_resist_nature_s_lure`/`brawler_bonus_feats`) and
+`verifiesAnExactMatchBeatsANormalisedTieAndStillDropsTheNotice` (the `swashbuckler_deeds`/
+`swashbuckler_evasive` tiebreak case). `npm run typecheck` clean; `npm test` 125/125 test files
+green.
+
+### 7.6.2 The 8 "duplicate" lines, judged
+
+Rendered fresh with `--sheet-dump <build> --with-sheet-rules`, post-repair package (temporary
+`rsync` swap + `git checkout -- data/sheet_rules && git clean -fd data/sheet_rules` restore,
+`git status --short` empty before and after) -- the tracker/duplicate shape does not manifest at
+all in the TRACKED package alone (confirmed: `barbarian:1/7/14/20` against tracked, no swap,
+hold ONLY `barbarian_uncanny_dodge`/`barbarian_improved_uncanny_dodge`, never the `_tracker`
+sibling -- the tracker is held only once the post-repair package's `granted_by` edges exist,
+an unrelated ingest-side fix landed on a different branch/step, swapped in here only to
+reproduce the finding, never committed).
+
+`barbarian:5` (as this step specified) reproduces the Barbarian pair (the tracker becomes held
+at any barbarian level once the swap is active, not only the 70-build manifest's own
+1/7/14/20 sample -- confirmed by also checking those four directly, same result). `paladin:11`
+(as this step specified) reproduces NOTHING: Aura of Righteousness is a 17th-level paladin
+feature and correctly prints no line at any of the paladin build's records at level 11 (`EXPL|
+... correctly absent at level 11 by PF1 Core Rulebook level gate` -- the level gate is exactly
+right; this is not a bug). The actual paladin duplicate is at `paladin:20` (17th level Aura of
+Righteousness IS active there), which the original stage-3/stage-4 receipts already used and
+this step re-confirms.
+
+**Exact rendered lines, quoted verbatim** (`SheetLine.label` + `SheetLine.prose`, the same two
+fields a player reads on the actual sheet -- `printed` is empty on every one of these four
+records, all `SheetValue::Text`/`Words`):
+
+| Record | Label | Prose (verbatim, empty means no body text at all) |
+|---|---|---|
+| `core_rulebook:class_feature:barbarian_uncanny_dodge` (held/printed at every barbarian level via the R2 join) | "Uncanny Dodge" | *(empty -- no `prose` field in the source record)* |
+| `core_rulebook:class_feature:barbarian_uncanny_dodge_tracker` (held via the unrelated `granted_by` chassis edge, post-repair only) | "Barbarian ~ Uncanny Dodge Tracker" | *(empty -- no `prose` field in the source record)* |
+| `core_rulebook:class_feature:rogue_uncanny_dodge` | "Uncanny Dodge" | *(empty)* |
+| `core_rulebook:class_feature:rogue_uncanny_dodge_tracker` | "Rogue ~ Uncanny Dodge Tracker" | *(empty)* |
+| `class_chassis.paladin.aura_of_righteousness` (the bespoke `pilot_compute` EXPLANATION, a Class Features section row, NOT a `render_sheet` LINE) | "Aura of Righteousness" (its `ClassFeatureRow` label, from `classFeaturesModel.ts`) | `Paladin Aura of Righteousness granted at paladin level 20 (PF1 Core Rulebook, 17th-level paladin class feature): "At 17th level, a paladin gains DR 5/evil and immunity to compulsion spells and spell-like abilities." This stays a bounded grant-only identity record (value 0, non-fabricated) because two of its three clauses remain ungrounded: compulsion immunity needs a spell-effect-type engine, and the ally +4 morale bonus against fear and compulsion applies to OTHER creatures within 10 feet, which this codebase models nowhere. Its DR clause IS grounded, separately, as class_chassis.paladin.damage_reduction.` |
+| `core_rulebook:class_feature:paladin_aura_of_righteousness` (the converted RULE, a `render_sheet` LINE) | "Aura of Righteousness" | `You gain DR 5/Evil and immunity to compulsion spells and spell-like abilities. Each ally within 10 feet or you gains a +4 morale bonus on saving throws against fear compulsion . This ability functions only while you are conscious, not if you are unconscious or dead.` + `DR: 5/Evil` |
+
+**Ruling, per the paper-sheet doctrine's own test ("if the two lines carry the same visible
+text, a player sees a duplicate ... if the texts genuinely differ, keep both"):**
+
+- **Barbarian/Rogue Uncanny Dodge Tracker (7 rows: barbarian 1/7/14/20, rogue 7/14/20): KEEP
+  BOTH, texts genuinely differ.** The two records' LABELS are different strings ("Uncanny Dodge"
+  vs "Barbarian ~ Uncanny Dodge Tracker" / "Rogue ~ Uncanny Dodge Tracker") and neither carries
+  any body prose at all -- there is no shared visible SENTENCE for a player to read twice, only
+  two differently-labelled, content-free rows. This matches the existing R3 ruling this receipt
+  already carried ("two distinct oracle records, both print -- that is what the book says"),
+  now re-confirmed against the EXACT rendered text rather than the stage-3 classifier's own
+  fuzzy text-similarity proxy (which flags these at score 0.852/0.826 because it compares the
+  tracker's label against the BESPOKE EXPL text for the base ability, not against the base
+  RULE's own line -- a known, already-named proxy limitation, §4). **Separately named, NOT a
+  duplication finding:** the `_tracker` records' own content is genuinely empty (no `prose`
+  field at all in the source JSON) -- a real converted-package content gap (candidate fix:
+  `print: false` at ingest, since these records exist only to feed the shared "Uncanny Dodge
+  Flanking Level"/"Uncanny Dodge LVL" `_vars/*.json` contribution tables, not to be read
+  directly). The fix belongs in the ingest converter (`crates/codex-ingest`) or
+  `src/rules_core/sheet_rule.rs`'s `held_set`/`render_sheet` -- **outside this step's granted
+  file ownership** (`sheet_line_join.rs`/`class_census.rs`/`classFeaturesModel.ts`/this receipt
+  only), and touching either risks colliding with other in-flight work on this branch. Named for
+  whoever owns the ingest converter or `sheet_rule.rs` next, not silently fixed and not silently
+  dropped.
+- **Paladin Aura of Righteousness (1 row, paladin:20): KEEP BOTH, texts genuinely differ.** The
+  bespoke EXPL text is a paraphrase-with-caveats (what the ability does, WHY two of its three
+  clauses are not computed) from a completely different render path
+  (`pilot_compute`/`ExplanationDto`, shown in the Class Features section) than the converted
+  RULE's own full official rules text (`SheetRule`/`render_sheet`, shown in Rules and features).
+  These are not the same sentence by any reasonable reading -- the EXPL is honest about its own
+  gaps, the LINE is the verbatim book text -- so this is the SAME shape R3 already ruled on for
+  the trackers, independently re-confirmed here by direct quote rather than the classifier's
+  0.84 fuzzy score.
+
+**Net: `duplicate=8` at the 70-build gate is the correct, named, non-blocking outcome, not an
+unresolved defect** -- every one of the 8 is judged above by exact quoted text, not left as an
+unexamined "suspected" flag.
+
+### 7.6.3 The 70-build gate, re-run
+
+`render_before_sheets.sh` (rebuilt, TRACKED package, this step's binary) /
+`render_after_sheets.sh`-equivalent (rebuilt, swap + restore, this step's binary) re-rendered
+all 70 builds; `classify_sheet_diff.py` (updated, see below) re-run over the fresh pair:
+
+```
+gate_pass=False totals={'added_correct': 202, 'duplicate': 8, 'changed_value': 0, 'changed_value_accepted': 6, 'removed': 0, 'unclassified': 0}
+removed_unexplained=0
+```
+
+(`<scratch>/blast-radius-classify-tokfix.json`, `<scratch>/blast-radius-receipt-tokfix.md`.)
+
+- **`duplicate=8`: the named ruling above (§7.6.2), not a blocker.**
+- **`changed_value=0`, `changed_value_accepted=6`: matches the orchestrator ruling's citation,
+  with one honest correction.** `classify_sheet_diff.py` was updated (`RAGE_BONUS_ACCEPTED_
+  TRANSITIONS`, a mechanical id-AND-value rule: only `core_rulebook:class_feature:standard_
+  rage#bonus1/2/3`, and only when the value actually changed to exactly the documented
+  Greater/Mighty Rage progression, is excluded from the gate-blocking `changed_value` count --
+  never a bare build list) to carry the class the orchestrator ruling names, with its CRB
+  citation, in a new `changed_value_accepted` bucket the gate formula excludes. Re-run against
+  THIS render pair, only **6** of the ruling's named 9 rows actually differ: `barbarian:14` and
+  `barbarian:20` each show all 3 sibling lines change (`+2/+4/+4` -> `+3/+6/+6` /
+  `+4/+8/+8`, exactly as the ruling states). `mix_barbarian12_fighter1`'s own three lines are
+  **already `+3/+6/+6` on BOTH sides of this render pair** (barbarian level 12 alone already
+  crosses the Greater Rage threshold; verified directly, `grep standard_rage#bonus
+  sheets/{before,after}/mix_barbarian12_fighter1.txt` are byte-identical) -- not a regression,
+  not a missing row, simply already-settled going into this comparison, so `classify_build`
+  correctly reports no diff for it at all. `changed_value=0` (the gate-blocking count) is
+  unaffected either way.
+- `removed=0`, `unclassified=0`: clean, matching the expected criteria exactly.
+
+**`gate_pass=False` is accurate but not a blocker**, same reasoning as §4/§7's own prior
+findings: `duplicate=8` is judged and named (§7.6.2), `changed_value_accepted=6` is a cited,
+mechanical correctness-fix classification, not a defect, and both are the SAME already-understood
+rows, not a new unexplained population.
+
 ## 8. Commands run, this fix pass
 
 ```
@@ -491,6 +742,27 @@ python3 <scratch>/adv_join_fixed.py                                     # 0 mism
 classify_sheet_diff.py --before pre_r2_baseline --after post_r2_fixed --dump dump-after ...
 ```
 
+## 9. Commands run, stage-4 blocker-2 fix pass (this step)
+
+```
+cargo test --locked -j 8 --lib rules_core::sheet_line_join::   # 23/23 green (20 prior + 3 new)
+cargo test --locked -j 8 --lib                                  # 2666/2666 green, 7 ignored
+cargo clippy --locked -j 8 --lib --bins -- -D warnings           # clean
+python3 scripts/pcgen_residue_gate.py --check --closure            # verdict=PASS (checked after every swap+restore)
+cd apps/desktop && npm run typecheck                               # clean
+cd apps/desktop && npm test                                        # 125/125 test files green (incl. classFeaturesModel.test.ts)
+class_census --duplicates <scratch>/duplicates-tokfix.json          # tracked package, before the exact-tiebreak fix
+class_census --duplicates <scratch>/duplicates-tokfix2.json         # tracked package, after the exact-tiebreak fix (final)
+render_before.sh    -> <scratch>/sheets/before   # rebuilt, tracked package, no swap, this step's binary
+rsync -a <scratch>/dump-after/ data/sheet_rules/    # temporary swap
+render_after_par.sh -> <scratch>/sheets/after    # rebuilt, post-repair package, this step's binary
+git checkout -- data/sheet_rules && git clean -fd data/sheet_rules   # restore, confirmed empty
+classify_sheet_diff.py --before sheets/before --after sheets/after --dump dump-after \
+  --out-json <scratch>/blast-radius-classify-tokfix.json --out-receipt <scratch>/blast-radius-receipt-tokfix.md \
+  --census-before <scratch>/census-before.json --census-after <scratch>/census-after2.json
+```
+
 Worktree clean (`git status --short`) before this step's commit; `data/sheet_rules` untouched by
 this step's own commit (every swap restored via `git checkout -- data/sheet_rules && git clean
--fd data/sheet_rules`, confirmed empty each time).
+-fd data/sheet_rules`, confirmed empty each time -- checked before and after both the population
+scan's own swap and the 70-build gate's re-render swap in this step).

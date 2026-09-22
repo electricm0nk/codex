@@ -209,6 +209,31 @@ def verify_added_correct(rule_id: str, dump_dir: str, held_after: set, build_cla
     return False, f"{sibling_note}granted_by present ({len(granted_by)} edges) but none names a granter real for this build: {granted_by}"
 
 
+# SD-36 Epic F1b stage-4 fix pass, orchestrator ruling 1 (dedup-receipt.md §7 fix pass): the
+# Barbarian "Standard Rage" Will/Str/Con bonus siblings change value once the corrected join
+# (R2) reaches the Greater/Mighty Rage sibling record the old naive walk never joined at all
+# (dedup-receipt.md §4) -- BEFORE, every level prints base Rage's numbers regardless of level;
+# AFTER, level 14+ prints the real, textbook-correct Greater Rage numbers and level 20 prints
+# Mighty Rage's. This is a mechanical id-AND-value rule, not a hardcoded build list: only these
+# three record ids, and only when the value actually changed to exactly the documented
+# progression below, are accepted; any OTHER id, or this id with any OTHER value change, is
+# still a STOP (`changed_value`, gate-blocking).
+RAGE_BONUS_ACCEPTED_TRANSITIONS = {
+    # Will save: base Rage +2 -> Greater Rage +3 (level 11+) -> Mighty Rage +4 (level 20)
+    "core_rulebook:class_feature:standard_rage#bonus1": {("+2", "+3"), ("+2", "+4")},
+    # Str: base Rage +4 -> Greater Rage +6 -> Mighty Rage +8
+    "core_rulebook:class_feature:standard_rage#bonus2": {("+4", "+6"), ("+4", "+8")},
+    # Con: base Rage +4 -> Greater Rage +6 -> Mighty Rage +8
+    "core_rulebook:class_feature:standard_rage#bonus3": {("+4", "+6"), ("+4", "+8")},
+}
+RAGE_ACCEPTED_CITATION = (
+    "PF1 Core Rulebook Barbarian Rage progression: Greater Rage (granted at barbarian level 11) "
+    "is +6 Str/+6 Con/+3 Will; Mighty Rage (level 20) is +8 Str/+8 Con/+4 Will. Accepted as a "
+    "correctness fix, not a join defect -- orchestrator ruling 1, SD-36 Epic F1, dedup-receipt.md "
+    "§7 fix pass."
+)
+
+
 def classify_build(before, after, dump_dir):
     bline, aline = before["line"], after["line"]
     bexpl = before["expl"]  # EXPL is identical before/after (verified globally); use before's
@@ -230,6 +255,7 @@ def classify_build(before, after, dump_dir):
         "added_correct": [],
         "duplicate": [],
         "changed_value": [],
+        "changed_value_accepted": [],
         "removed": [],
         "unclassified": [],
     }
@@ -255,7 +281,20 @@ def classify_build(before, after, dump_dir):
             result["removed"].append({"id": rid, "before": row._asdict(), "explained": False, "reason": "no newly-held waiver/revoke names this id"})
 
     for rid in changed_ids:
-        result["changed_value"].append({"id": rid, "before": bline[rid]._asdict(), "after": aline[rid]._asdict()})
+        b, a = bline[rid], aline[rid]
+        accepted_pairs = RAGE_BONUS_ACCEPTED_TRANSITIONS.get(rid)
+        if accepted_pairs is not None and (b.printed, a.printed) in accepted_pairs:
+            result["changed_value_accepted"].append(
+                {
+                    "id": rid,
+                    "before": b._asdict(),
+                    "after": a._asdict(),
+                    "classification": "changed-value-accepted",
+                    "citation": RAGE_ACCEPTED_CITATION,
+                }
+            )
+        else:
+            result["changed_value"].append({"id": rid, "before": b._asdict(), "after": a._asdict()})
 
     for rid in added_ids:
         row = aline[rid]
@@ -356,12 +395,14 @@ def main():
     all_added_correct = []  # (build, entry)
     all_duplicate = []
     all_changed = []
+    all_changed_accepted = []
     all_removed = []
     all_unclassified = []
     for r in per_build:
         totals["added_correct"] += len(r["added_correct"])
         totals["duplicate"] += len(r["duplicate"])
         totals["changed_value"] += len(r["changed_value"])
+        totals["changed_value_accepted"] += len(r["changed_value_accepted"])
         totals["removed"] += len(r["removed"])
         totals["unclassified"] += len(r["unclassified"])
         for e in r["added_correct"]:
@@ -370,6 +411,8 @@ def main():
             all_duplicate.append((r["name"], e))
         for e in r["changed_value"]:
             all_changed.append((r["name"], e))
+        for e in r["changed_value_accepted"]:
+            all_changed_accepted.append((r["name"], e))
         for e in r["removed"]:
             all_removed.append((r["name"], e))
         for e in r["unclassified"]:
@@ -454,12 +497,12 @@ def main():
     with open(args.out_json, "w", encoding="utf-8") as f:
         json.dump(out, f, indent=2, sort_keys=True)
 
-    write_receipt(args.out_receipt, per_build, totals, removed_unexplained, gate_pass, all_duplicate, all_changed, all_removed, all_unclassified, audit_results, census_comparison, args, held_added_total)
+    write_receipt(args.out_receipt, per_build, totals, removed_unexplained, gate_pass, all_duplicate, all_changed, all_changed_accepted, all_removed, all_unclassified, audit_results, census_comparison, args, held_added_total)
 
     print(f"gate_pass={gate_pass} totals={dict(totals)} removed_unexplained={removed_unexplained}")
 
 
-def write_receipt(path, per_build, totals, removed_unexplained, gate_pass, all_duplicate, all_changed, all_removed, all_unclassified, audit_results, census_comparison, args, held_added_total):
+def write_receipt(path, per_build, totals, removed_unexplained, gate_pass, all_duplicate, all_changed, all_changed_accepted, all_removed, all_unclassified, audit_results, census_comparison, args, held_added_total):
     lines = []
     w = lines.append
     w("# F1b stage-3 blast-radius receipt")
@@ -518,10 +561,25 @@ def write_receipt(path, per_build, totals, removed_unexplained, gate_pass, all_d
     w("")
     w(
         f"**Totals:** added-correct={totals['added_correct']}, duplicate={totals['duplicate']}, "
-        f"changed-value={totals['changed_value']}, removed={totals['removed']} "
+        f"changed-value={totals['changed_value']}, "
+        f"changed-value-accepted={totals['changed_value_accepted']}, removed={totals['removed']} "
         f"(unexplained={removed_unexplained}), unclassified={totals['unclassified']}"
     )
     w("")
+    if all_changed_accepted:
+        w("## Changed-value-accepted rows (orchestrator ruling 1)")
+        w("")
+        w(
+            "Excluded from the gate-blocking `changed-value` count: a named, cited correctness "
+            "fix, not a join defect. See `RAGE_BONUS_ACCEPTED_TRANSITIONS` in this script for the "
+            "exact id-and-value rule (never a bare build list)."
+        )
+        w("")
+        w("| build | id | before | after | citation |")
+        w("|---|---|---|---|---|")
+        for build_name, e in all_changed_accepted:
+            w(f"| {build_name} | `{e['id']}` | {e['before']['printed']} | {e['after']['printed']} | {e['citation']} |")
+        w("")
     w("## Duplicate pairs (top 20 by similarity score, of {})".format(len(all_duplicate)))
     w("")
     if all_duplicate:

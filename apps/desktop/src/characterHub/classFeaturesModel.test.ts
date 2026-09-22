@@ -681,6 +681,91 @@ function verifiesAOneWordCoincidenceNeverDropsTheNotice() {
   assertEqual(surface.notComputed.length, 1, 'a one-word coincidence must never suppress the notice');
 }
 
+/**
+ * SD-36 Epic F1b stage-4 fix pass (dedup receipt §7.1, "the 11 dropped matches"): the TS
+ * mirror's own `wordsOf`/`wordsEq` port of the two tokenisation-normalisation rules
+ * (`sheet_line_join.rs`'s possessive-apostrophe merge and plural/singular equivalence) must drop
+ * the notice exactly where the Rust join now matches, so the frontend never shows a stale
+ * "not computed" notice next to a rule line the engine already prints.
+ */
+function verifiesTokenisationVariantsDropTheNoticeSameAsTheRustJoin() {
+  const druid: HeldClass[] = [{ classId: 'class:druid', classLabel: 'Druid', level: 20 }];
+  const possessiveNotices = [explanation('class_feature.druid.resist_natures_lure.unsupported', 0, 'resist nature’s lure is not grounded here')];
+  const possessiveSurface = buildClassFeatureSurface(possessiveNotices, druid, [], [
+    {
+      id: 'core_rulebook:class_feature:druid_resist_nature_s_lure',
+      kind: 'class_feature',
+      label: 'Resist Nature’s Lure',
+      form: 'words',
+      value: '',
+      also: [],
+      prose: 'A druid gains a bonus on saving throws against the spell-like and supernatural abilities of fey.',
+      condition: null,
+    },
+  ]);
+  assertEqual(
+    possessiveSurface.notComputed.length,
+    0,
+    'the possessive-apostrophe stem match (nature_s <-> natures) drops the notice, same as the Rust join'
+  );
+
+  const brawler: HeldClass[] = [{ classId: 'class:brawler', classLabel: 'Brawler', level: 20 }];
+  const pluralNotices = [explanation('class_feature.acg.brawler.bonus_feat_count.unsupported', 0, 'bonus feat count is not grounded here')];
+  const pluralSurface = buildClassFeatureSurface(pluralNotices, brawler, [], [
+    {
+      id: 'advanced_class_guide:class_feature:brawler_bonus_feats',
+      kind: 'class_feature',
+      label: 'Bonus Feats',
+      form: 'words',
+      value: '',
+      also: [],
+      prose: 'A brawler gains a bonus feat at 5th level and every four levels thereafter.',
+      condition: null,
+    },
+  ]);
+  assertEqual(pluralSurface.notComputed.length, 0, 'the singular/plural stem match (feat <-> feats) drops the notice, same as the Rust join');
+}
+
+/**
+ * SD-36 Epic F1b stage-4 fix pass (dedup receipt §7.1): the plural/singular normalisation must
+ * never manufacture a tie between an already-correct EXACT match and a real, distinct GENERIC
+ * pool-container record that only ties because of the normalisation (`swashbuckler_deeds`, the
+ * whole-family umbrella record, sharing "deed(s)" with the facet's own generic word) -- the
+ * ported `exact` tiebreak must keep dropping the notice here, matching the Rust join's own
+ * `real_package_an_exact_match_beats_a_normalised_tie_against_a_generic_pool_container` test.
+ */
+function verifiesAnExactMatchBeatsANormalisedTieAndStillDropsTheNotice() {
+  const swashbuckler: HeldClass[] = [{ classId: 'class:swashbuckler', classLabel: 'Swashbuckler', level: 20 }];
+  const notices = [explanation('class_feature.acg.swashbuckler.deed.evasive_grant.unsupported', 0, 'evasive grant is not grounded here')];
+  const surface = buildClassFeatureSurface(notices, swashbuckler, [], [
+    {
+      id: 'advanced_class_guide:class_feature:swashbuckler_deeds',
+      kind: 'class_feature',
+      label: 'Deeds',
+      form: 'words',
+      value: '',
+      also: [],
+      prose: 'Swashbucklers spend panache points to accomplish deeds.',
+      condition: null,
+    },
+    {
+      id: 'advanced_class_guide:class_feature:swashbuckler_evasive',
+      kind: 'class_feature',
+      label: 'Evasive',
+      form: 'words',
+      value: '',
+      also: [],
+      prose: 'At 11th level, while a swashbuckler has at least 1 panache point, she gains the benefits of evasion.',
+      condition: null,
+    },
+  ]);
+  assertEqual(
+    surface.notComputed.length,
+    0,
+    'the exact match (swashbuckler_evasive) must win outright, not tie with the generic swashbuckler_deeds container'
+  );
+}
+
 async function main() {
   verifiesANoticeWithASheetRuleLeavesTheNotComputedLane();
   verifiesALevel11RoguesSneakAttackKeepsItsMagnitudeAndCitation();
@@ -713,6 +798,8 @@ async function main() {
   verifiesABridgeRecordIgnoresTheClassHeldArmEvenIfClassSlugCoincidentallyMatchesAHeldClass();
   verifiesANoticeIsDroppedByTheSameStemMatchTheRustJoinUses();
   verifiesAOneWordCoincidenceNeverDropsTheNotice();
+  verifiesTokenisationVariantsDropTheNoticeSameAsTheRustJoin();
+  verifiesAnExactMatchBeatsANormalisedTieAndStillDropsTheNotice();
 }
 
 main().catch((error: unknown) => {
