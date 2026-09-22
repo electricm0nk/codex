@@ -199,6 +199,10 @@ pub(crate) mod companion_base_stat_table;
 /// reference-library browser rather than mirroring the derivation a second
 /// time.
 pub mod class_chassis_sheet_rules;
+/// SD-36 Epic F §3.4: a class's weapon proficiency read from the converted package -- the
+/// source for every class without a `CLASS_WEAPON_PROFICIENCIES` row. `pub` so the
+/// codex-ingest oracle pin (`class_weapon_proficiency_via_converter.rs`) can call it.
+pub mod class_proficiency_sheet_rules;
 mod generic_class_chassis;
 /// SD-34 `AT-34-E3-001` (`decisions.md §14`, mechanism `class_absent_from_
 /// ClassId_ALL_and_book_class_id_enums`) -- see its own module doc comment.
