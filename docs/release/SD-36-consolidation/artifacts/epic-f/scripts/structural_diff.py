@@ -113,6 +113,48 @@ KNOWN_ADDED_RULE_CAUSES = {
     ),
 }
 
+# SD-36 Epic F1 stage 5 (population run, ORCHESTRATOR spec 3.5 step 1): the NATURALATTACKS
+# suffix fix (rule-gap-receipt.md: `acc.lines.len()` replacing the per-occurrence-local index)
+# renumbers the WHOLE `#natural<N>` id family on every record whose accumulator held any lines
+# before its NATURALATTACKS arm ran -- not only the 306 previously-colliding groups. That is a
+# much bigger raw id churn (1,290 old ids replaced by 1,659 new ones, net +369 -- the 369
+# previously-shadowed rules rule-gap-receipt.md named) than a naive read of "369 changed ids"
+# suggests, PLUS 6 ids where the old and new numbering coincidentally reuse the same suffix
+# number for DIFFERENT attack content (a record's whole family shifted, and that one slot
+# happened to land on a shared number both sides already used).
+#
+# This is still a single, mechanical, content-preserving rename, not 1,955 separate defects:
+# `naturalattacks_rename_scan.py` (this directory) proves it by loading every touched record
+# file on BOTH sides, filtering to `#natural<N>`-suffixed entries, and asserting the MULTISET of
+# every field OTHER than `id` is identical between the old and new array for that file -- nothing
+# added, nothing dropped, nothing changed in content, only which numeric suffix a given attack's
+# id carries. The exact, pinned id lists it produces are committed beside this script
+# (`structural_diff_naturalattacks_renames.json`); regenerate with the command named in that
+# file's own `_command` field.
+_NATURALATTACKS_RENAMES_PATH = os.path.join(os.path.dirname(os.path.abspath(__file__)), "structural_diff_naturalattacks_renames.json")
+
+
+def _load_naturalattacks_renames() -> tuple[frozenset[str], frozenset[str], frozenset[str]]:
+    try:
+        with open(_NATURALATTACKS_RENAMES_PATH, "r", encoding="utf-8") as fh:
+            data = json.load(fh)
+    except (OSError, json.JSONDecodeError):
+        return frozenset(), frozenset(), frozenset()
+    old_ids = data.get("old_ids", [])
+    new_ids = data.get("new_ids", [])
+    content_shift_ids = data.get("content_shift_ids", [])
+    assert len(old_ids) == data.get("_old_count"), f"{_NATURALATTACKS_RENAMES_PATH}: _old_count mismatch -- regenerate with _command"
+    assert len(new_ids) == data.get("_new_count"), f"{_NATURALATTACKS_RENAMES_PATH}: _new_count mismatch -- regenerate with _command"
+    assert len(content_shift_ids) == data.get("_content_shift_count"), f"{_NATURALATTACKS_RENAMES_PATH}: _content_shift_count mismatch -- regenerate with _command"
+    return frozenset(old_ids), frozenset(new_ids), frozenset(content_shift_ids)
+
+
+NATURALATTACKS_RENAMED_OLD_IDS, NATURALATTACKS_RENAMED_NEW_IDS, NATURALATTACKS_CONTENT_SHIFT_IDS = _load_naturalattacks_renames()
+# The only fields a `#natural<N>` rename ever touches on a shared id (an attack's own printed
+# text and its dice/value) -- an id in NATURALATTACKS_CONTENT_SHIFT_IDS with any OTHER field
+# delta (a `when` gate, `subject`, `print`, `granted_by`, ...) is not covered and still gates.
+_NATURALATTACKS_CONTENT_SHIFT_ALLOWED_FIELDS = {"label", "value"}
+
 
 def edge_diff(old_list: object, new_list: object) -> tuple[list[str], list[str]]:
     """Diff two `granted_by`/`grants` lists as SETS of edges (each edge serialized to a stable
@@ -459,11 +501,19 @@ def main() -> int:
     fresh_rules = rules_by_id(fresh["rule_files"])
     base_ids = set(base_rules)
     fresh_ids = set(fresh_rules)
-    added_rule_ids = sorted(fresh_ids - base_ids)
-    removed_rule_ids = sorted(base_ids - fresh_ids)
+    added_rule_ids_raw = sorted(fresh_ids - base_ids)
+    removed_rule_ids_raw = sorted(base_ids - fresh_ids)
+    # SD-36 Epic F1 stage 5: the NATURALATTACKS suffix-fix rename -- an exact, pinned id list
+    # (see the module-level comment above), never a blanket allowance. Anything off these two
+    # pinned sets still gates as an ordinary added/removed rule id.
+    naturalattacks_removed_ids = sorted(set(removed_rule_ids_raw) & NATURALATTACKS_RENAMED_OLD_IDS)
+    naturalattacks_added_ids = sorted(set(added_rule_ids_raw) & NATURALATTACKS_RENAMED_NEW_IDS)
+    added_rule_ids = sorted(set(added_rule_ids_raw) - NATURALATTACKS_RENAMED_NEW_IDS)
+    removed_rule_ids = sorted(set(removed_rule_ids_raw) - NATURALATTACKS_RENAMED_OLD_IDS)
 
     unexpected_field_deltas: list[tuple[str, str]] = []
     expected_provenance_deltas: list[str] = []
+    naturalattacks_content_shift_deltas: list[tuple[str, str]] = []
     added_edges_by_target_kind: Counter[str] = Counter()
     added_edges_total = 0
     removed_granted_by: list[tuple[str, str]] = []
@@ -480,6 +530,13 @@ def main() -> int:
                 old.get("provenance"), new.get("provenance")
             ):
                 expected_provenance_deltas.append(rid)
+                continue
+            # SD-36 Epic F1 stage 5: a `#natural<N>` id the old and new numbering both happen
+            # to reuse for different attack content (module-level comment above) -- pinned by
+            # id AND restricted to the two fields that rename can ever touch; any other field
+            # delta on this same id, or any delta on an id off the pinned list, still gates.
+            if rid in NATURALATTACKS_CONTENT_SHIFT_IDS and field in _NATURALATTACKS_CONTENT_SHIFT_ALLOWED_FIELDS:
+                naturalattacks_content_shift_deltas.append((rid, field))
                 continue
             unexpected_field_deltas.append((rid, field))
 
@@ -526,6 +583,14 @@ def main() -> int:
     print(f"  added _vars/ tables: {len(added_vars)}  (condition variables an added GatedFactGrant's `when` now references)")
     print(f"  added _defects/ files: {len(added_defects)}")
     print(f"  provenance deltas on the pinned current_class-fix record list: {len(expected_provenance_deltas)} of {len(EXPECTED_PROVENANCE_DELTA_RECORDS)} pinned records (see structural_diff_expected_provenance_deltas.json)")
+    print(
+        f"  naturalattacks suffix-fix rename: {len(naturalattacks_removed_ids)} of {len(NATURALATTACKS_RENAMED_OLD_IDS)} "
+        f"pinned old ids -> {len(naturalattacks_added_ids)} of {len(NATURALATTACKS_RENAMED_NEW_IDS)} pinned new ids "
+        f"(net +{len(naturalattacks_added_ids) - len(naturalattacks_removed_ids)}), plus "
+        f"{len(naturalattacks_content_shift_deltas)} field deltas on {len(set(r for r, _ in naturalattacks_content_shift_deltas))} "
+        f"of {len(NATURALATTACKS_CONTENT_SHIFT_IDS)} pinned same-id content-shift ids "
+        f"(see structural_diff_naturalattacks_renames.json -- content-preserved per file, not a genuine loss)"
+    )
     if added_rule_ids:
         print(f"  added rule ids: {len(added_rule_ids)}")
         for rid in added_rule_ids[: args.max_examples]:

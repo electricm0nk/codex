@@ -668,26 +668,24 @@ mod tests {
     }
 
     /// SD-36 Epic F1 rule-gap investigation
-    /// (`docs/release/SD-36-consolidation/artifacts/epic-f/stage4/rule-gap-receipt.md`):
+    /// (`docs/release/SD-36-consolidation/artifacts/epic-f/stage4/rule-gap-receipt.md`,
+    /// closed by stage 5's population run,
+    /// `docs/release/SD-36-consolidation/artifacts/epic-f/stage5/population-receipt.md`):
     /// `data/sheet_rules/_report.json`'s `rules_written` -- the converter's own count of
-    /// `SheetRule` JSON entries it wrote -- must equal the loaded package's rule count PLUS
-    /// every rule a [`DuplicateRuleId`](crate::rules_core::source_content::
-    /// SourceContentDiagnosticKind::DuplicateRuleId) diagnostic named as shadowed. Anything
-    /// left over is a rule that vanished for some OTHER, unnamed reason (a file the walk
-    /// never reached, a silent deserialize failure, ...) and this test fails loudly rather
-    /// than letting that happen quietly.
-    ///
-    /// This checkout's TRACKED `data/sheet_rules/` is deliberately NOT regenerated in this
-    /// stage, so today every one of these diagnostics is the SAME already-fixed, single
-    /// named class: a `NATURALATTACKS` suffix collision
-    /// (`crates/codex-ingest/src/pcgen_import/sheet_rule/convert.rs`'s `#naturalN` suffix,
-    /// fixed to be record-global rather than reset per token occurrence --
-    /// `sheet_rule_natural_attack_suffix_collision.rs` proves the fix directly against the
-    /// converter). The pinned count below is that class's current, exact size: it can only
-    /// move to 0 (the next `sheet_rule_convert -- --write` regen, once this stage's
-    /// invariant against touching `data/sheet_rules/` no longer applies) -- if it moves any
-    /// OTHER way, or a diagnostic shows up whose message is not a `#natural` suffix, this
-    /// test names the surprise instead of silently re-pinning a bigger or different number.
+    /// `SheetRule` JSON entries it wrote -- must equal the loaded package's rule count
+    /// exactly, with ZERO [`DuplicateRuleId`](crate::rules_core::source_content::
+    /// SourceContentDiagnosticKind::DuplicateRuleId) diagnostics. Stage 4 found and fixed the
+    /// root cause (`crates/codex-ingest/src/pcgen_import/sheet_rule/convert.rs`'s
+    /// `NATURALATTACKS` arm minted a per-occurrence-local `#naturalN` suffix instead of the
+    /// record-global running count every other multi-emit arm uses); stage 5's
+    /// `sheet_rule_convert -- --write` regenerated the tracked package with that fix, so the
+    /// 369 previously-shadowed rules (306 duplicate-id groups) are now live, distinct ids,
+    /// and NO rule vanishes into a silent `BTreeMap` overwrite any more. If this test ever
+    /// sees a non-zero diagnostic count again, that means a FUTURE converter change reopened
+    /// the collision (or a new one) -- it is a live defect, not an expected class, and must
+    /// be investigated and fixed at the source (see
+    /// `crates/codex-ingest/tests/sheet_rule_natural_attack_suffix_collision.rs` for the
+    /// regression fixtures), never re-pinned to a new number.
     #[test]
     fn the_real_package_accounts_for_every_converted_rule() {
         let dir = crate::support::paths::repo_root().join("data/sheet_rules");
@@ -697,44 +695,20 @@ mod tests {
         let report: serde_json::Value = serde_json::from_str(&report_text).expect("_report.json is valid JSON");
         let rules_written = report["rules_written"].as_u64().expect("_report.json carries a rules_written count") as usize;
 
-        let parse_failures: Vec<_> = load
-            .diagnostics
-            .iter()
-            .filter(|d| d.kind != crate::rules_core::source_content::SourceContentDiagnosticKind::DuplicateRuleId)
-            .collect();
-        assert!(parse_failures.is_empty(), "every rule file must parse cleanly: {:?}", &parse_failures[..parse_failures.len().min(3)]);
-
-        let not_natural_attack_suffix: Vec<_> = load.diagnostics.iter().filter(|d| !d.message.contains("#natural")).collect();
         assert!(
-            not_natural_attack_suffix.is_empty(),
-            "an unjustified duplicate-id class appeared (only the NATURALATTACKS #naturalN \
-             collision is a known, already-fixed cause) -- investigate and re-derive this \
-             test before re-pinning: {:?}",
-            not_natural_attack_suffix
-        );
-
-        const KNOWN_NATURALATTACKS_SUFFIX_COLLISION_COUNT: usize = 369;
-        assert_eq!(
-            load.diagnostics.len(),
-            KNOWN_NATURALATTACKS_SUFFIX_COLLISION_COUNT,
-            "the known NATURALATTACKS-suffix duplicate-id count moved -- if it dropped to 0, \
-             `data/sheet_rules/` was regenerated with the convert.rs fix and this whole test \
-             (and its sibling exclusion in sheet_rule.rs's evaluate_tests::package()) can be \
-             deleted; if it changed any other way, re-derive it with \
-             /tmp/claude-1000/-home-ubuntu-workspace-repos-codex/\
-             6badc5b8-ae3b-4359-80c5-cd0b1598973e/scratchpad/sd36/f1/rule_gap_scan.py before \
-             updating the pin"
+            load.diagnostics.is_empty(),
+            "every converted rule must load as a distinct, live rule -- a DuplicateRuleId (or \
+             any other) diagnostic here means a rule is being silently shadowed again: {:?}",
+            &load.diagnostics[..load.diagnostics.len().min(3)]
         );
 
         assert_eq!(
-            load.package.rules.len() + load.diagnostics.len(),
-            rules_written,
-            "package.rules.len() ({}) + shadowed-duplicate count ({}) must equal \
-             _report.json's rules_written ({rules_written}) -- every converted rule is \
-             accounted for as either LIVE or a named, justified exclusion, never an \
-             unexplained gap",
             load.package.rules.len(),
-            load.diagnostics.len()
+            rules_written,
+            "package.rules.len() ({}) must equal _report.json's rules_written ({rules_written}) \
+             now that no rule is shadowed by a duplicate id -- every converted rule is \
+             accounted for as LIVE, never an unexplained gap",
+            load.package.rules.len()
         );
     }
 }

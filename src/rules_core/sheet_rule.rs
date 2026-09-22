@@ -2154,25 +2154,21 @@ mod evaluate_tests {
     /// The live package, loaded once per test process from `data/sheet_rules/`.
     ///
     /// SD-36 Epic F1 rule-gap investigation
-    /// (`docs/release/SD-36-consolidation/artifacts/epic-f/stage4/rule-gap-receipt.md`):
-    /// this checkout's TRACKED `data/sheet_rules/` predates the `NATURALATTACKS` suffix-
-    /// collision fix in `crates/codex-ingest/src/pcgen_import/sheet_rule/convert.rs`
-    /// (invariant of this stage: that directory is not regenerated here), so the loader's own
-    /// new `DuplicateRuleId` diagnostic still fires against it -- every one of the SAME
-    /// justified, named class (`corpus_loader::tests::the_real_package_accounts_for_every_
-    /// converted_rule` pins the exact count and proves the class). Only THAT class is
-    /// tolerated here; any other diagnostic kind still fails loudly.
+    /// (`docs/release/SD-36-consolidation/artifacts/epic-f/stage4/rule-gap-receipt.md`),
+    /// closed by stage 5's population run
+    /// (`docs/release/SD-36-consolidation/artifacts/epic-f/stage5/population-receipt.md`):
+    /// the `NATURALATTACKS` suffix-collision fix in
+    /// `crates/codex-ingest/src/pcgen_import/sheet_rule/convert.rs` is now baked into the
+    /// TRACKED `data/sheet_rules/` (stage 5's `sheet_rule_convert -- --write` regen), so the
+    /// loader's `DuplicateRuleId` diagnostic no longer fires against it at all
+    /// (`corpus_loader::tests::the_real_package_accounts_for_every_converted_rule` asserts
+    /// zero). No diagnostic of any kind is tolerated here.
     fn package() -> &'static SheetRulePackage {
         static P: OnceLock<SheetRulePackage> = OnceLock::new();
         P.get_or_init(|| {
             let started = std::time::Instant::now();
             let load = load_sheet_rules(&repo().join("data/sheet_rules"));
-            let unexpected: Vec<_> = load
-                .diagnostics
-                .iter()
-                .filter(|d| d.kind != crate::rules_core::source_content::SourceContentDiagnosticKind::DuplicateRuleId)
-                .collect();
-            assert!(unexpected.is_empty(), "every package file parses: {:?}", &unexpected[..unexpected.len().min(3)]);
+            assert!(load.diagnostics.is_empty(), "every package file parses: {:?}", &load.diagnostics[..load.diagnostics.len().min(3)]);
             assert!(load.rule_files > 40_000, "the package is generated (cargo run --locked -p codex-ingest --bin sheet_rule_convert -- --write): {} files", load.rule_files);
             eprintln!(
                 "sheet_rules package: {} rule files, {} var files, {} rules, loaded in {:?}",
