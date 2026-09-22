@@ -290,6 +290,214 @@ export function unmatchedClassFeatureDescriptions(
 }
 
 /**
+ * Splits an underscore-joined slug into its non-empty words, then merges a lone `'s'`
+ * word-token into the token immediately before it -- the mechanical undoing of the corpus's own
+ * apostrophe-to-underscore convention (`nature's` -> `nature_s`, `efreeti's` -> `efreeti_s`), a
+ * bare single-letter `'s'` segment never being a real word on its own anywhere in this
+ * population. Mirrors `sheet_line_join.rs::words`'s own doc comment exactly (SD-36 Epic F1b
+ * stage-4 fix pass, dedup receipt §7.1) -- the same structural fact, applied identically here.
+ */
+function wordsOf(s: string): string[] {
+  const raw = s.split('_').filter((word) => word.length > 0);
+  const out: string[] = [];
+  for (const w of raw) {
+    if (w === 's' && out.length > 0) {
+      out[out.length - 1] += 's';
+    } else {
+      out.push(w);
+    }
+  }
+  return out;
+}
+
+/**
+ * Two words are the SAME word for join purposes when they are equal, or differ only by a
+ * trailing grammatical `'s'` (`'feat'` <-> `'feats'`). Mirrors `sheet_line_join.rs::words_eq`
+ * exactly (SD-36 Epic F1b stage-4 fix pass, dedup receipt §7.1) -- plain English pluralisation,
+ * independent of `wordsOf`'s own possessive-apostrophe merge.
+ */
+function wordsEq(a: string, b: string): boolean {
+  return a === b || `${a}s` === b || `${b}s` === a;
+}
+
+/** One `class_feature` sheet line's own slug, as {@link ruleForExplanation} compares it. */
+function slugOfLine(line: SheetLineDto): string {
+  return line.id.slice(line.id.lastIndexOf(':') + 1).split('#')[0] ?? '';
+}
+
+type JoinCandidate = { coverage: number; excess: number; tier: 0 | 1; exact: boolean; line: SheetLineDto };
+
+/**
+ * Review finding 5 (SD-36 Epic F1b stage-4 adversarial check): a TypeScript port of
+ * `rule_for_explanation` (`src/rules_core/sheet_line_join.rs`) -- spec 3b.2's own instruction is
+ * that the frontend join and `HeldSeed::from_character`'s join are ONE mechanical rule, compared
+ * "through a `rule_id` the DTO already carries as the line id -- no new wire field". A wire
+ * boundary means this cannot literally be the same function call, so this is a byte-for-byte
+ * mirror of the Rust algorithm's shape (two tiers, the sliding window, the collapsed-tail credit
+ * cap, the partial-match-with-leftover refusal, the explicit principal-rule guard on both
+ * tiers) -- every rule here has a named counterpart in `sheet_line_join.rs`'s own doc comment,
+ * kept in lockstep by that shared spec, not a second, independently-evolving algorithm.
+ *
+ * Candidates are drawn from the character's OWN currently-rendered `class_feature` sheet lines,
+ * not the full converted package (unavailable across the wire) -- this can only make the join
+ * MORE conservative than the Rust original, never less safe: every refusal rule here is a
+ * standalone property of one candidate's own shape against the tail, never a comparison that
+ * depends on which OTHER candidates happen to be visible, so restricting the pool can only drop
+ * a would-be match (the notice stays, safely), never accept one the full-package join would have
+ * refused. And any rule the Rust join WOULD hold for this exact facet is, by construction,
+ * already present among these lines: `HeldSeed::from_character` runs this same join over the
+ * full package for every `class_feature.*` facet (`.unsupported` or not) and holds/prints
+ * whatever it matches, so the winning candidate for THIS facet is never missing from the pool.
+ */
+function ruleForExplanation(
+  classSlug: string,
+  explanationId: string,
+  sheetLines: readonly SheetLineDto[]
+): JoinCandidate['line'][] | null {
+  const rest = explanationId.startsWith('class_feature.')
+    ? explanationId.slice('class_feature.'.length)
+    : explanationId;
+  const segs = rest.split('.').filter((s) => s !== 'corpus_record');
+  const classAt = segs.indexOf(classSlug);
+  if (classAt === -1) {
+    return null;
+  }
+  const restSegs = segs.slice(classAt + 1);
+  if (restSegs.length === 0) {
+    return null;
+  }
+  const classWords = wordsOf(classSlug);
+  const scopePrefix = `${classSlug}_`;
+  const minScopedLen = classWords.length + 1;
+  const candidateLines = sheetLines.filter((line) => line.kind === 'class_feature');
+
+  let best: JoinCandidate[] = [];
+  // `exact` is the lowest-priority tiebreak, after (coverage, excess, tier): a literal match
+  // beats a normalisation-dependent one on an otherwise genuine tie, so `wordsEq`'s plural
+  // equivalence can never unseat an already-correct exact match into a manufactured Ambiguous
+  // (mirrors `sheet_line_join.rs::consider`/`longest_common_prefix` exactly, dedup receipt §7.1).
+  const consider = (coverage: number, excess: number, tier: 0 | 1, exact: boolean, line: SheetLineDto): void => {
+    const top = best[0];
+    if (top === undefined) {
+      best = [{ coverage, excess, tier, exact, line }];
+      return;
+    }
+    if (
+      coverage > top.coverage ||
+      (coverage === top.coverage && excess < top.excess) ||
+      (coverage === top.coverage && excess === top.excess && tier < top.tier) ||
+      (coverage === top.coverage && excess === top.excess && tier === top.tier && exact && !top.exact)
+    ) {
+      best = [{ coverage, excess, tier, exact, line }];
+    } else if (
+      coverage === top.coverage &&
+      excess === top.excess &&
+      tier === top.tier &&
+      exact === top.exact
+    ) {
+      best.push({ coverage, excess, tier, exact, line });
+    }
+  };
+  /** Mirrors `sheet_line_join.rs::longest_common_prefix` exactly: `exact` is true only when
+   * every matched word pair was literal, never a `wordsEq` normalisation. */
+  const lcpOf = (query: readonly string[], candidate: readonly string[]): { n: number; exact: boolean } => {
+    let n = 0;
+    let exact = true;
+    while (n < query.length && n < candidate.length) {
+      const a = query[n];
+      const b = candidate[n];
+      if (a === undefined || b === undefined) {
+        break;
+      }
+      if (a === b) {
+        n += 1;
+      } else if (wordsEq(a, b)) {
+        n += 1;
+        exact = false;
+      } else {
+        break;
+      }
+    }
+    return { n, exact };
+  };
+
+  for (let i = 0; i < restSegs.length; i += 1) {
+    const tailWords = wordsOf(restSegs.slice(i).join('_'));
+    if (tailWords.length === 0) {
+      continue;
+    }
+    const originalTailLen = tailWords.length;
+    const rawQuery = [...classWords, ...tailWords];
+
+    // Scoped tier, raw tail: refuses a partial match (coverage < the tail's own length) whose
+    // candidate still has unexplained leftover words -- a one-word coincidence, not a stem.
+    for (const line of candidateLines) {
+      const slug = slugOfLine(line);
+      if (slug === classSlug || !slug.startsWith(scopePrefix)) {
+        continue;
+      }
+      const candidateWords = wordsOf(slug);
+      const { n: lcp, exact } = lcpOf(rawQuery, candidateWords);
+      if (lcp < minScopedLen) {
+        continue;
+      }
+      const coverage = lcp - classWords.length;
+      const excess = candidateWords.length - lcp;
+      if (coverage < tailWords.length && excess > 0) {
+        continue;
+      }
+      consider(coverage, excess, 0, exact, line);
+    }
+
+    // Scoped tier, collapsed tail (a redundant repeat of the class's own words at the tail's
+    // own head): credited only for the collapsed words actually explained, never promoted to
+    // the full original tail length; same partial-match-with-leftover refusal.
+    if (tailWords.length > classWords.length && classWords.every((w, idx) => tailWords[idx] === w)) {
+      const collapsedTail = tailWords.slice(classWords.length);
+      const collapsedQuery = [...classWords, ...collapsedTail];
+      for (const line of candidateLines) {
+        const slug = slugOfLine(line);
+        if (slug === classSlug || !slug.startsWith(scopePrefix)) {
+          continue;
+        }
+        const candidateWords = wordsOf(slug);
+        const { n: lcp, exact } = lcpOf(collapsedQuery, candidateWords);
+        if (lcp < minScopedLen) {
+          continue;
+        }
+        const coverage = lcp - classWords.length;
+        const excess = candidateWords.length - lcp;
+        if (coverage < originalTailLen && excess > 0) {
+          continue;
+        }
+        consider(coverage, excess, 0, exact, line);
+      }
+    }
+
+    // Bare tier: no class prefix required, but an EXACT match only (the whole tail consumed AND
+    // no leftover candidate words) -- and never the class's own principal rule either.
+    for (const line of candidateLines) {
+      const slug = slugOfLine(line);
+      if (slug === classSlug) {
+        continue;
+      }
+      const candidateWords = wordsOf(slug);
+      const { n: lcp, exact } = lcpOf(tailWords, candidateWords);
+      if (lcp !== tailWords.length || lcp !== candidateWords.length) {
+        continue;
+      }
+      consider(lcp, 0, 1, exact, line);
+    }
+  }
+
+  if (best.length === 0) {
+    return null;
+  }
+  const byId = new Map(best.map((c) => [c.line.id, c.line]));
+  return Array.from(byId.values());
+}
+
+/**
  * SD-35 AT-35-E2-002: whether a `.unsupported` notice names a record the
  * "Rules and features" section already renders from its sheet rule.
  *
@@ -297,10 +505,14 @@ export function unmatchedClassFeatureDescriptions(
  * (`epic-breakdown.md` AT-35-E2-002): a facet the chassis could not ground
  * but whose corpus record converted to a `SheetRule` prints as that rule's
  * line -- the number, the dice, or the words -- so the notice would only say
- * "not computed" next to a line that computes it. The join is the same
- * `<class>_<feature>` / `<feature>` slug the engine's seed uses
- * (`sheet_rule::held_set`): the notice's segments after the class token,
- * joined with `_`, matched against a `class_feature` line's id slug.
+ * "not computed" next to a line that computes it. For a facet with a class
+ * ({@link ruleForExplanation}): review finding 5's corrected mechanical join,
+ * matching `HeldSeed::from_character`'s join exactly (both `Ambiguous` -- more
+ * than one candidate line ties -- and no match at all leave the notice in
+ * place, same as the Rust join's own `JoinResult::Ambiguous`/`None`). For a
+ * facet with no class segment at all (the pre-namespacing `class_chassis.*`
+ * family, which `rule_for_explanation` has no class slug to scope to), the
+ * bare slug-equality check this replaces is unchanged.
  */
 function noticeHasSheetRule(
   trimmedId: string,
@@ -310,21 +522,17 @@ function noticeHasSheetRule(
   if (sheetLines.length === 0) {
     return false;
   }
+  if (classToken !== null) {
+    const matches = ruleForExplanation(classToken, trimmedId, sheetLines);
+    return matches !== null && matches.length === 1;
+  }
   const segments = trimmedId.split('.').slice(1);
-  const classIndex = classToken === null ? -1 : segments.indexOf(classToken);
-  const featureSegments = stripRecordFamily(classIndex >= 0 ? segments.slice(classIndex + 1) : segments);
+  const featureSegments = stripRecordFamily(segments);
   if (featureSegments.length === 0) {
     return false;
   }
   const feature = featureSegments.join('_');
-  const candidates = classToken === null ? [feature] : [`${classToken}_${feature}`, feature];
-  return sheetLines.some((line) => {
-    if (line.kind !== 'class_feature') {
-      return false;
-    }
-    const slug = line.id.slice(line.id.lastIndexOf(':') + 1).split('#')[0] ?? '';
-    return candidates.includes(slug);
-  });
+  return sheetLines.some((line) => line.kind === 'class_feature' && slugOfLine(line) === feature);
 }
 
 export function buildClassFeatureSurface(

@@ -422,6 +422,22 @@ pub enum ProfRef {
     DeityFavoredWeapon,
     /// The weapon the player chose on this rule.
     Chosen(ChoiceId),
+    /// A conjunctive weapon selector (PCGen's `TYPE=Martial.Ranged`) whose every tag the live
+    /// `WeaponTableEntry` can answer directly -- a tier (`proficiency`) AND/OR a reach
+    /// (`is_melee`/`is_ranged`). SD-36 Epic F1-3 (`epic-f-class-completion.md` §3.2/§3.3): today's
+    /// converter joined a conjunction into one lossy word (`"Light.Martial"`); this is the list
+    /// instead. A conjunct carrying a tag the table cannot answer (e.g. `Light`, `Thrown`) is
+    /// never put here -- it becomes a [`ProfRef::WeaponSet`] instead, expanded at ingest.
+    WeaponAllOf(Vec<Tag>),
+    /// A named membership selector the live weapon table cannot answer generically: a weapon
+    /// culture/group tag such as `Samurai` (`uc_profs_weapon.lst:100`'s `Katana.MOD
+    /// TYPE:Samurai.HeavyBlade` -- membership exists only as an ADDED tag on the weapons that
+    /// carry it, never its own record), or a conjunction containing an unanswerable tag
+    /// (`Light.Martial`). `members` is the literal weapon name list, resolved AT INGEST from the
+    /// oracle's own weapon-proficiency rows (its base row plus every `.MOD` row naming it) --
+    /// never hand-typed (SD-36 Epic F1-3, review finding 15). `label` is the selector's own tag
+    /// text, kept for display; matching at read time is against `members`, never `label`.
+    WeaponSet { label: Tag, members: Vec<String> },
 }
 
 #[derive(Debug, Clone, PartialEq, Serialize, Deserialize)]
@@ -474,6 +490,17 @@ pub enum Effect {
     Waives(RuleId),
     Revokes(RuleId),
     FactDeclare { name: String, value: String },
+    /// A fact grant that is conditional on `when` -- the PRE-gate a PCGen `AUTO:WEAPONPROF`
+    /// (etc.) row carries on the individual fact, distinct from `Grant.when` (which gates
+    /// whether the character may hold the whole RULE, not one fact inside it; SD-36 Epic F1-2,
+    /// review finding 1). Added as a new variant, never a field on `FactGrant`, so every
+    /// existing converted `{"FactGrant": ...}` row (ungated: the common case) still
+    /// deserializes byte-for-byte unchanged -- the future population diff this enables stays
+    /// small (`ungated_fact_grants_deserialize_unchanged`). `resolve_gated_fact_grant` is the
+    /// paper-sheet-doctrine reader: the fact counts only when `when` is decidable and true from
+    /// the character's own facts; otherwise its condition prints and the fact is withheld,
+    /// never approximated as granted.
+    GatedFactGrant { fact: Fact, when: Applies },
 }
 
 #[derive(Debug, Clone, PartialEq, Serialize, Deserialize)]
@@ -730,6 +757,11 @@ impl SheetRule {
             if let OptionSet::Number { min, max } = &c.from {
                 min.var_ids(&mut out);
                 max.var_ids(&mut out);
+            }
+        }
+        for g in &self.grants {
+            if let Effect::GatedFactGrant { when, .. } = g {
+                when.var_ids(&mut out);
             }
         }
         out.sort();
@@ -1063,6 +1095,14 @@ impl SheetRulePackage {
         self.rules.values().filter(move |r| split_rule_id(&r.id).1 == kind)
     }
 
+    /// Every distinct slug held under `kind` (one per record file, no `#` siblings, several
+    /// books may share a slug -- this yields it once). The candidate pool
+    /// [`crate::rules_core::sheet_line_join::rule_for_explanation`] searches when it has no
+    /// exact slug to hand `find` directly.
+    pub fn slugs_of_kind<'a>(&'a self, kind: &str) -> impl Iterator<Item = &'a str> + 'a {
+        self.by_kind_slug.get(kind).into_iter().flat_map(|m| m.keys().map(String::as_str))
+    }
+
     /// The siblings a record file carries alongside its principal rule (`id#suffix`).
     fn siblings_of<'a>(&'a self, id: &str) -> Vec<&'a RuleId> {
         let prefix = format!("{id}#");
@@ -1374,11 +1414,37 @@ struct Evaluator<'a> {
     unresolved: std::cell::Cell<bool>,
     /// Variables under evaluation, to stop a self-referential contribution recursing.
     visiting: std::cell::RefCell<Vec<VarId>>,
+    /// Set only while `held_set`'s fixpoint is testing whether ONE specific not-yet-held
+    /// candidate rule's own `applies` clause is satisfied (`evaluating_self`, below). A real
+    /// corpus record can gate its own `applies` on a var that record is itself the sole (or a)
+    /// contributor to (`core_rulebook:class_feature:fighter_class`: `DEFINE:Fighter_CFP_Level|0`
+    /// / `BONUS:VAR|Fighter_CFP_Level|FighterLVL` on the SAME row that a `.MOD`
+    /// `PREVARGTEQ:Fighter_CFP_Level,20` gates the Weapon Mastery capstone grant with) --
+    /// `var()`'s `held.holds(rule_id)` gate on each contribution, and its `declared_by` gate, are
+    /// both correct in general (an unrelated character must never read another character's
+    /// contribution to a same-named var), but applied unconditionally they make a candidate's own
+    /// contribution invisible to its own not-yet-decided gate: it can never become held, because
+    /// it is not yet held. This field names the ONE rule id whose own contributions and
+    /// declarations count even before `held` contains it -- set only for that one pre-check, by
+    /// `held_set` itself, never for ordinary already-held line evaluation.
+    evaluating_self: Option<RuleId>,
 }
 
 impl<'a> Evaluator<'a> {
     fn new(package: &'a SheetRulePackage, held: &'a HeldSet, facts: &'a CharacterFacts, ctx: EvalContext) -> Self {
-        Evaluator { package, held, facts, ctx, unresolved: std::cell::Cell::new(false), visiting: std::cell::RefCell::new(Vec::new()) }
+        Evaluator { package, held, facts, ctx, unresolved: std::cell::Cell::new(false), visiting: std::cell::RefCell::new(Vec::new()), evaluating_self: None }
+    }
+
+    /// See [`Evaluator::evaluating_self`]'s doc comment: `held_set`'s fixpoint uses this, and
+    /// only this, to let a not-yet-held candidate rule's `applies` clause read its OWN
+    /// contributions to a var it declares.
+    fn evaluating(mut self, id: &RuleId) -> Self {
+        self.evaluating_self = Some(id.clone());
+        self
+    }
+
+    fn rule_counts_as_held(&self, id: &str) -> bool {
+        self.held.holds(id) || self.evaluating_self.as_deref().is_some_and(|s| s == id)
     }
 
     fn class_level(&self, class: &str) -> i64 {
@@ -1468,7 +1534,7 @@ impl<'a> Evaluator<'a> {
     /// type that also has `Replace` contributions is `max(plain + stack, replace)`.
     fn var(&self, id: &str) -> Rat {
         let Some(table) = self.package.vars.get(id) else { return Rat::ZERO };
-        if !table.declared_by.iter().any(|d| self.held.holds(d)) {
+        if !table.declared_by.iter().any(|d| self.rule_counts_as_held(d)) {
             return Rat::ZERO;
         }
         if self.visiting.borrow().iter().any(|v| v == id) {
@@ -1479,16 +1545,17 @@ impl<'a> Evaluator<'a> {
         let mut plain_max: BTreeMap<&str, Rat> = BTreeMap::new();
         let mut replace_max: BTreeMap<&str, Rat> = BTreeMap::new();
         for c in &table.contributions {
-            if !self.held.holds(&c.rule_id) {
+            if !self.rule_counts_as_held(&c.rule_id) {
                 continue;
             }
             let holder = self.held.rules.get(&c.rule_id).cloned().unwrap_or_default();
-            let inner = Evaluator::new(
+            let mut inner = Evaluator::new(
                 self.package,
                 self.held,
                 self.facts,
                 EvalContext { holder_class: holder.holder_class, spell_level: holder.spell_level.unwrap_or(0), item_tags: Vec::new() },
             );
+            inner.evaluating_self = self.evaluating_self.clone();
             *inner.visiting.borrow_mut() = self.visiting.borrow().clone();
             if !inner.applies(&c.when).includes() {
                 continue;
@@ -1559,6 +1626,8 @@ impl<'a> Evaluator<'a> {
                 }
                 ProfRef::DeityFavoredWeapon => false,
                 ProfRef::Chosen(c) => self.facts.choices.get(c).is_some_and(|v| !v.is_empty()),
+                ProfRef::WeaponAllOf(tags) => tags.iter().all(|t| self.facts.proficiencies.contains(t)),
+                ProfRef::WeaponSet { members, .. } => members.iter().any(|m| self.facts.proficiencies.contains(m)),
             },
             Holdable::Language(l) => self.facts.languages.contains(l),
             Holdable::Movement { mode, min } => self.facts.speeds.get(mode).copied().unwrap_or(0) >= i64::from(*min),
@@ -1923,20 +1992,15 @@ pub fn held_set(package: &SheetRulePackage, seed: &HeldSeed, facts: &CharacterFa
             add(&mut held, id, HeldRule::default());
         }
     }
+    // SD-36 Epic F1b R2 (`epic-f-class-completion.md` §3b.2, review finding 2): the mechanical
+    // facet-to-rule join, corrected -- see `sheet_line_join::rule_for_explanation`'s own doc
+    // comment for why the old exact-tail walk this replaced was systematically wrong. Both
+    // `Ambiguous` and `None` mean the same thing here: no converted rule for this facet, the
+    // bespoke explanation keeps printing alone and R3's "who wins" question never arises.
     for (class, explanation_id) in &seed.class_features {
-        let rest = explanation_id.strip_prefix("class_feature.").unwrap_or(explanation_id);
-        let segs: Vec<&str> = rest.split('.').collect();
-        let mut found = None;
-        'outer: for i in 0..segs.len() {
-            let tail = segs[i..].join("_");
-            for candidate in [format!("{class}_{tail}"), tail.clone()] {
-                if let Some(id) = package.find("class_feature", &candidate) {
-                    found = Some(id.clone());
-                    break 'outer;
-                }
-            }
-        }
-        if let Some(id) = found {
+        if let crate::rules_core::sheet_line_join::JoinResult::Matched(id) =
+            crate::rules_core::sheet_line_join::rule_for_explanation(package, class, explanation_id)
+        {
             add(&mut held, &id, HeldRule { holder_class: Some(class.clone()), ..Default::default() });
         }
     }
@@ -1986,8 +2050,13 @@ pub fn held_set(package: &SheetRulePackage, seed: &HeldSeed, facts: &CharacterFa
                     spell_level: via.as_ref().and_then(|v| v.spell_level).unwrap_or(0),
                     item_tags: Vec::new(),
                 };
-                let ev = Evaluator::new(package, &held, facts, ctx);
-                if ev.applies(&grant.when).includes() && ev.applies(&rule.applies).includes() {
+                let ev = Evaluator::new(package, &held, facts, ctx.clone());
+                // `rule.applies` (never `grant.when`, which is the SEPARATE grant-path
+                // condition, not the candidate's own gate) is evaluated with the candidate's own
+                // id "counting as held" for this one pre-check -- see `Evaluator::evaluating_self`
+                // doc comment.
+                let self_ev = Evaluator::new(package, &held, facts, ctx).evaluating(&id);
+                if ev.applies(&grant.when).includes() && self_ev.applies(&rule.applies).includes() {
                     let mut e = via.unwrap_or_default();
                     e.via = match &grant.by {
                         Granter::Rule(g) => Some(g.clone()),
@@ -2031,6 +2100,47 @@ pub fn held_set(package: &SheetRulePackage, seed: &HeldSeed, facts: &CharacterFa
     held
 }
 
+/// How a gated fact grant (`Effect::GatedFactGrant`) resolved against a held set (paper-sheet
+/// doctrine, SD-36 Epic F1-2 / review finding 1: a conditional proficiency is printed, never
+/// granted unconditionally).
+#[derive(Debug, Clone, PartialEq)]
+pub enum GatedFact {
+    /// `when` decided `Include`: the fact is granted plainly.
+    Granted(Fact),
+    /// `when` decided `Include`-with-caveat (`Gate::Situational`): the fact is NOT granted --
+    /// its condition prints instead, exactly as an undecidable gate must never be approximated
+    /// as a granted proficiency.
+    Conditional { fact: Fact, condition: String },
+    /// `when` decided `Exclude`: not granted, nothing to print.
+    Excluded,
+}
+
+/// The facts-collection half of `Effect::GatedFactGrant`'s contract: a live consumer folding a
+/// held rule's `grants` calls this for every `GatedFactGrant` it meets (mirrors how `held_set`'s
+/// own fixpoint already evaluates `Grant.when` and `rule.applies` through the same
+/// `evaluate_applies`/`Evaluator` machinery, one level down at the per-fact grain). The grant
+/// counts only when `when` is decidable and true from the input; otherwise the condition is
+/// printed as text and the grant is not counted.
+pub fn resolve_gated_fact_grant(
+    fact: &Fact,
+    when: &Applies,
+    package: &SheetRulePackage,
+    held: &HeldSet,
+    facts: &CharacterFacts,
+    ctx: EvalContext,
+) -> GatedFact {
+    match evaluate_applies(when, held, package, facts, ctx) {
+        Gate::Include => GatedFact::Granted(fact.clone()),
+        Gate::Situational(condition) => GatedFact::Conditional { fact: fact.clone(), condition },
+        Gate::Exclude => GatedFact::Excluded,
+    }
+}
+
+/// The dedup key `render_sheet` compares consecutive lines on below: `(kind, label, printed,
+/// also, condition)`, exactly the tuple documented at its one use site. Named (rather than an
+/// inline tuple type) so the dedup accumulator doesn't trip `clippy::type_complexity`.
+type SheetLineDedupKey = (String, String, String, Vec<(String, SheetLineValue)>, Option<String>);
+
 /// Every held, printed rule's line, grouped by kind then label: the "Rules and features" section.
 /// A `#bonusN` sibling is a bonus line with its own gate (`applies`), held alongside its
 /// principal: it prints only when that gate includes -- an unbroken chain shirt's "Broken"
@@ -2057,6 +2167,30 @@ pub fn render_sheet(package: &SheetRulePackage, seed: &HeldSeed, facts: &Charact
         })
         .collect();
     lines.sort_by(|a, b| a.kind.cmp(&b.kind).then(a.label.cmp(&b.label)).then(a.id.cmp(&b.id)));
+    // SD-36 Epic F1 merge-readiness blocker 3: `held.rules` is keyed by rule id, so two
+    // DIFFERENT ids can each be held and each `print: true` while rendering byte-identical
+    // visible content -- a bare, class-agnostic record PF1 writes once (`wild_empathy`,
+    // `aura_of_good`, `channel_positive_energy`, `timeless_body`, `evasion_output`) explicitly
+    // `granted_by`-aliased by a class-scoped record with the same label, and a `#bonusN` sibling
+    // family whose un-filled pick slots all fall back to the same generic placeholder text
+    // (`hunter_teamwork_feats#bonus1..N`, unfilled teamwork-feat picks; a weapon-group training
+    // tier repeating an earlier tier's own group). Neither shape is a legitimate repeat: a real
+    // repeated pick folds into ONE line's own value via `HeldCount`, never N separately-held
+    // rule ids with the identical printed line, so any second (and later) rule id producing the
+    // SAME (kind, label, printed, also, condition) as an earlier one in this already-sorted list
+    // is a pure display artifact and is dropped, keeping only the first (stable on the existing
+    // kind/label/id sort, so which of several identical rules "wins" is deterministic, never
+    // which one a HashMap iteration happened to visit first).
+    let mut seen: Vec<SheetLineDedupKey> = Vec::new();
+    lines.retain(|l| {
+        let key = (l.kind.clone(), l.label.clone(), l.printed.clone(), l.also.clone(), l.condition.clone());
+        if seen.contains(&key) {
+            false
+        } else {
+            seen.push(key);
+            true
+        }
+    });
     lines
 }
 
@@ -2079,13 +2213,24 @@ mod evaluate_tests {
     }
 
     /// The live package, loaded once per test process from `data/sheet_rules/`.
+    ///
+    /// SD-36 Epic F1 rule-gap investigation
+    /// (`docs/release/SD-36-consolidation/artifacts/epic-f/stage4/rule-gap-receipt.md`),
+    /// closed by stage 5's population run
+    /// (`docs/release/SD-36-consolidation/artifacts/epic-f/stage5/population-receipt.md`):
+    /// the `NATURALATTACKS` suffix-collision fix in
+    /// `crates/codex-ingest/src/pcgen_import/sheet_rule/convert.rs` is now baked into the
+    /// TRACKED `data/sheet_rules/` (stage 5's `sheet_rule_convert -- --write` regen), so the
+    /// loader's `DuplicateRuleId` diagnostic no longer fires against it at all
+    /// (`corpus_loader::tests::the_real_package_accounts_for_every_converted_rule` asserts
+    /// zero). No diagnostic of any kind is tolerated here.
     fn package() -> &'static SheetRulePackage {
         static P: OnceLock<SheetRulePackage> = OnceLock::new();
         P.get_or_init(|| {
             let started = std::time::Instant::now();
             let load = load_sheet_rules(&repo().join("data/sheet_rules"));
             assert!(load.diagnostics.is_empty(), "every package file parses: {:?}", &load.diagnostics[..load.diagnostics.len().min(3)]);
-            assert!(load.rule_files > 40_000, "the package is generated (cargo run --locked --bin sheet_rule_convert): {} files", load.rule_files);
+            assert!(load.rule_files > 40_000, "the package is generated (cargo run --locked -p codex-ingest --bin sheet_rule_convert -- --write): {} files", load.rule_files);
             eprintln!(
                 "sheet_rules package: {} rule files, {} var files, {} rules, loaded in {:?}",
                 load.rule_files,
@@ -2327,19 +2472,24 @@ mod evaluate_tests {
         let mut package = SheetRulePackage::new();
         let mut a = rule_with_value(SheetValue::Text);
         a.id = "core_rulebook:feat:seed".into();
+        a.label = "Seed".into();
         a.grants = vec![Effect::FactDeclare { name: "Trained".into(), value: "true".into() }];
         let mut b = rule_with_value(SheetValue::Number(Expr::Const(2)));
         b.id = "core_rulebook:class_feature:granted".into();
+        b.label = "Granted".into();
         b.granted_by = vec![Grant { by: Granter::Rule(a.id.clone()), when: Applies::Compare { lhs: Expr::Level, op: Cmp::Gte, rhs: Expr::Const(3) } }];
         let mut c = rule_with_value(SheetValue::Text);
         c.id = "core_rulebook:class_feature:by_fact".into();
+        c.label = "By Fact".into();
         c.granted_by = vec![Grant { by: Granter::Rule(b.id.clone()), when: Applies::Always }];
         c.applies = Applies::Holds { what: Holdable::Fact { name: "Trained".into(), value: "true".into() }, count: 1 };
         let mut d = rule_with_value(SheetValue::Text);
         d.id = "core_rulebook:class_feature:waived".into();
+        d.label = "Waived".into();
         d.granted_by = vec![Grant { by: Granter::Rule(a.id.clone()), when: Applies::Always }];
         let mut e = rule_with_value(SheetValue::Text);
         e.id = "core_rulebook:feat:waiver".into();
+        e.label = "Waiver".into();
         e.grants = vec![Effect::Waives(d.id.clone())];
         for r in [a, b, c, d, e] {
             package.insert_rule(r);
@@ -2362,6 +2512,158 @@ mod evaluate_tests {
         let ids: Vec<&str> = lines.iter().map(|l| l.id.as_str()).collect();
         assert_eq!(ids, vec!["core_rulebook:class_feature:by_fact", "core_rulebook:class_feature:granted", "core_rulebook:feat:seed", "core_rulebook:feat:waiver"], "grouped by kind then label; the waived rule is off the sheet");
         assert_eq!(lines[1].printed, "2");
+    }
+
+    /// SD-36 Epic F1 merge-readiness blocker 2 fallout: a rule may gate its OWN `applies` on a
+    /// var that the SAME rule is the sole contributor to (real corpus shape: core_rulebook's
+    /// "Fighter" class_feature, `CATEGORY:Class`, `DEFINE:Fighter_CFP_Level|0` plus
+    /// `BONUS:VAR|Fighter_CFP_Level|FighterLVL`, is gated for its own Weapon Mastery pool grant
+    /// on a `.MOD` row reading `PREVARGTEQ:Fighter_CFP_Level,20` -- the SAME record both writes
+    /// and reads `Fighter_CFP_Level`). `var()`'s `held.holds(rule_id)` gate on each contribution,
+    /// and its `declared_by` gate, are both correct in general (an unrelated character must never
+    /// see someone else's contribution to a same-named var) -- but naively applied during the
+    /// fixpoint's own `rule.applies` pre-check for a CANDIDATE rule not yet in `held`, they make
+    /// this rule's own contribution invisible to its own gate: it can never become held, because
+    /// it is not yet held. `held_set` must special-case exactly this -- the candidate's own
+    /// not-yet-held contributions count toward evaluating its OWN `applies` clause -- without
+    /// letting an unrelated character see them (a character with no levels in the class must
+    /// still read 0).
+    #[test]
+    fn a_rule_may_gate_its_own_applies_on_a_var_only_it_itself_contributes() {
+        let mut package = SheetRulePackage::new();
+        let mut self_gated = rule_with_value(SheetValue::Text);
+        self_gated.id = "core_rulebook:class_feature:self_gated".into();
+        self_gated.granted_by = vec![Grant { by: Granter::Class { id: "fighter".into(), at_level: 1 }, when: Applies::Compare { lhs: Expr::ClassLevel("fighter".into()), op: Cmp::Gte, rhs: Expr::Const(1) } }];
+        self_gated.applies = Applies::Compare { lhs: Expr::Var("vselfgate".into()), op: Cmp::Gte, rhs: Expr::Const(20) };
+        package.insert_rule(self_gated);
+        package.insert_var(VarTable {
+            var: "vselfgate".into(),
+            label: String::new(),
+            declared_by: vec!["core_rulebook:class_feature:self_gated".into()],
+            contributions: vec![VarContribution {
+                rule_id: "core_rulebook:class_feature:self_gated".into(),
+                expr: Expr::ClassLevel("fighter".into()),
+                bonus_type: None,
+                when: Applies::Always,
+            }],
+            provenance: VarProvenance::default(),
+        });
+        package.finish();
+        let seed = HeldSeed { classes: vec![("fighter".into(), 20)], ..Default::default() };
+        let facts = CharacterFacts { level: 20, class_levels: vec![("fighter".into(), 20)], ..Default::default() };
+        let held = held_set(&package, &seed, &facts);
+        assert!(held.holds("core_rulebook:class_feature:self_gated"), "the rule's own contribution to its own gate's var must count toward evaluating that gate, or a real corpus record (Fighter's Weapon Mastery capstone gate) can never become held");
+
+        // An unrelated character (no fighter levels at all) must still read the var as 0, never
+        // borrowing the rule's own contribution when the rule was never reachable in the first
+        // place (`granted_by` never satisfied, so it is never a fixpoint candidate at all).
+        let seed0 = HeldSeed { classes: vec![("fighter".into(), 0)], ..Default::default() };
+        let facts0 = CharacterFacts { level: 1, class_levels: vec![], ..Default::default() };
+        let held0 = held_set(&package, &seed0, &facts0);
+        assert!(!held0.holds("core_rulebook:class_feature:self_gated"));
+    }
+
+    /// SD-36 Epic F1 merge-readiness blocker 3: two DIFFERENT rule ids that are both held and
+    /// both `print: true` can render the exact same visible line (real corpus shape: PF1 writes
+    /// some class features' rule text ONCE, class-agnostic, and a class-scoped record explicitly
+    /// grants it as a "counts as" alias -- `core_rulebook:class_feature:wild_empathy`'s own
+    /// `granted_by` lists `core_rulebook:class_feature:druid_wild_empathy` and
+    /// `ranger_wild_empathy` by name; both the bare and the class-scoped record are held and
+    /// printed once Druid's own Wild Empathy is granted, and both carry the identical
+    /// `kind`/`label`/`printed`/`condition`). `held.rules` is keyed by rule id, so this can never
+    /// be a legitimately-repeated same-id line (a real repeat count folds into ONE line's own
+    /// value via `HeldCount`, never N separate identical lines) -- any second rule id producing
+    /// byte-identical visible content is a pure display artifact and `render_sheet` must keep
+    /// only the first (by its own existing kind/label/id sort order), never print it twice.
+    #[test]
+    fn render_sheet_folds_two_different_rule_ids_with_identical_visible_content_into_one_line() {
+        let mut package = SheetRulePackage::new();
+        let mut bare = rule_with_value(SheetValue::Text);
+        bare.id = "core_rulebook:class_feature:wild_empathy".into();
+        bare.label = "Wild Empathy".into();
+        bare.granted_by = vec![Grant { by: Granter::Rule("core_rulebook:class_feature:druid_wild_empathy".into()), when: Applies::Always }];
+        let mut scoped = rule_with_value(SheetValue::Text);
+        scoped.id = "core_rulebook:class_feature:druid_wild_empathy".into();
+        scoped.label = "Wild Empathy".into();
+        for r in [bare, scoped] {
+            package.insert_rule(r);
+        }
+        package.finish();
+        let seed = HeldSeed { rule_ids: vec!["core_rulebook:class_feature:druid_wild_empathy".into()], ..Default::default() };
+        let facts = CharacterFacts::default();
+        let held = held_set(&package, &seed, &facts);
+        assert!(held.holds("core_rulebook:class_feature:wild_empathy"), "the bare record's own granted_by makes it held whenever its class-scoped alias is");
+        assert!(held.holds("core_rulebook:class_feature:druid_wild_empathy"));
+        let lines = render_sheet(&package, &seed, &facts);
+        let wild_empathy_lines: Vec<&SheetLine> = lines.iter().filter(|l| l.label == "Wild Empathy").collect();
+        assert_eq!(wild_empathy_lines.len(), 1, "two rule ids, byte-identical visible content: exactly one line on the sheet, not a duplicate: {:?}", wild_empathy_lines.iter().map(|l| &l.id).collect::<Vec<_>>());
+    }
+
+    /// SD-36 Epic F1b R2 (review finding 2): `held_set`'s facet-to-rule join now goes through
+    /// `sheet_line_join::rule_for_explanation`. A facet that joins holds and prints its rule
+    /// exactly once; a facet that cannot join mechanically (`knockout_dc` has no rule
+    /// `brawler_knockout_dc`) does NOT fall back to the class's own PRINCIPAL rule
+    /// (`advanced_class_guide:class_feature:brawler`, kept unheld here on purpose) the way the
+    /// old naive tail-walk used to -- and, critically, failing to join never disturbs a
+    /// DIFFERENT rule this build holds through an unrelated path (the seeded feat here): an
+    /// unjoinable facet is reported by the population scan, never silently dropping or removing
+    /// another line.
+    #[test]
+    fn an_unjoinable_facet_never_falls_back_to_the_class_principal_and_never_disturbs_other_held_rules() {
+        let mut package = SheetRulePackage::new();
+        let mut principal = rule_with_value(SheetValue::Text);
+        principal.id = "advanced_class_guide:class_feature:brawler".into();
+        let mut knockout = rule_with_value(SheetValue::Text);
+        knockout.id = "advanced_class_guide:class_feature:brawler_knockout".into();
+        let mut unrelated = rule_with_value(SheetValue::Text);
+        unrelated.id = "core_rulebook:feat:acrobatic".into();
+        for r in [principal, knockout, unrelated] {
+            package.insert_rule(r);
+        }
+        package.finish();
+        let seed = HeldSeed {
+            classes: vec![("brawler".into(), 1)],
+            feats: vec!["acrobatic".into()],
+            // The unjoinable facet: no rule in this package shares `brawler` PLUS this
+            // facet's own next word ("unrelated") -- must join to nothing, never to the
+            // `brawler` principal above, and never to `brawler_knockout` (a real stem match
+            // for a DIFFERENT facet, see the sibling test below, but not this one).
+            class_features: vec![("brawler".into(), "class_feature.acg.brawler.unrelated_thing".into())],
+            ..Default::default()
+        };
+        let facts = CharacterFacts::default();
+        let held = held_set(&package, &seed, &facts);
+        assert!(!held.holds("advanced_class_guide:class_feature:brawler"), "the class principal is never a fallback for an unjoined facet");
+        assert!(!held.holds("advanced_class_guide:class_feature:brawler_knockout"), "an unrelated real rule is not a fallback either");
+        assert!(held.holds("core_rulebook:feat:acrobatic"), "an unjoinable facet must not disturb a rule held through an unrelated path");
+        let lines = render_sheet(&package, &seed, &facts);
+        let ids: Vec<&str> = lines.iter().map(|l| l.id.as_str()).collect();
+        assert_eq!(ids, vec!["core_rulebook:feat:acrobatic"], "only the unrelated rule prints; the unjoinable facet contributes no line of its own here (the bespoke explanation, not this join, is what still shows its number)");
+    }
+
+    /// The corrected join finds a real, more specific rule when one exists, and it prints
+    /// exactly once (`held_set`'s `add` already refuses a second insert of the same rule id --
+    /// R1's "nothing to build").
+    #[test]
+    fn a_joinable_facet_holds_and_prints_its_rule_exactly_once() {
+        let mut package = SheetRulePackage::new();
+        let mut principal = rule_with_value(SheetValue::Text);
+        principal.id = "advanced_class_guide:class_feature:brawler".into();
+        let mut knockout = rule_with_value(SheetValue::Text);
+        knockout.id = "advanced_class_guide:class_feature:brawler_knockout".into();
+        for r in [principal, knockout] {
+            package.insert_rule(r);
+        }
+        package.finish();
+        let seed = HeldSeed {
+            classes: vec![("brawler".into(), 1)],
+            class_features: vec![("brawler".into(), "class_feature.acg.brawler.knockout".into())],
+            ..Default::default()
+        };
+        let facts = CharacterFacts::default();
+        let lines = render_sheet(&package, &seed, &facts);
+        let ids: Vec<&str> = lines.iter().map(|l| l.id.as_str()).collect();
+        assert_eq!(ids, vec!["advanced_class_guide:class_feature:brawler_knockout"], "joins to the specific rule, not the principal, and prints once");
     }
 
     /// The `Var` fold: two Racial +2s to one variable stack (4), two Enhancement bonuses take
@@ -2557,6 +2859,43 @@ mod evaluate_tests {
             assert_eq!(rounds, Some(SheetLineValue::Resolved(expected)), "bard {level}: {:?}", line.also);
         }
     }
+
+    /// SD-36 Epic F1-2 (review finding 1): `Effect::GatedFactGrant` is a NEW variant, never a
+    /// field added to `FactGrant`, so an ungated proficiency grant's on-disk shape must not
+    /// move. These three real `data/sheet_rules/` files each hold one class's weapon-list AUTO
+    /// row that the pinned oracle leaves UNGATED (no PRE token on the row at all --
+    /// `cr_abilities_class.lst` Wizard/Druid, `uc_abilities_class.lst` Samurai): read the exact
+    /// bytes `render()` (`sheet_rule/mod.rs`) wrote, round-trip `Vec<SheetRule> -> JSON`, and
+    /// assert the bytes are identical -- the new variant existing must not perturb how the old
+    /// one serializes, so the future population diff (the converter change in this same commit)
+    /// stays small.
+    #[test]
+    fn ungated_fact_grants_deserialize_unchanged() {
+        for rel in [
+            "core_rulebook/class_feature/weapon_and_armor_proficiency_druid.json",
+            "core_rulebook/class_feature/wizard_weapon_and_armor_proficiency.json",
+            "ultimate_combat/class_feature/samurai_proficiencies.json",
+        ] {
+            let path = repo().join("data/sheet_rules").join(rel);
+            let original = std::fs::read(&path).unwrap_or_else(|e| panic!("{rel}: {e}"));
+            let rules: Vec<SheetRule> = serde_json::from_slice(&original).unwrap_or_else(|e| panic!("{rel}: not valid SheetRule JSON: {e}"));
+            assert!(
+                rules.iter().any(|r| r.grants.iter().any(|g| matches!(g, Effect::FactGrant(Fact::Proficiency(_))))),
+                "{rel}: fixture assumption -- carries an ungated `FactGrant(Proficiency(..))` row"
+            );
+            assert!(
+                !rules.iter().any(|r| r.grants.iter().any(|g| matches!(g, Effect::GatedFactGrant { .. }))),
+                "{rel}: fixture assumption -- carries no gated row (this file proves the UNGATED shape is unaffected)"
+            );
+            let mut roundtrip = serde_json::to_string(&rules).unwrap();
+            roundtrip.push('\n');
+            assert_eq!(
+                roundtrip.as_bytes(),
+                original.as_slice(),
+                "{rel}: an ungated FactGrant row must serialize byte-for-byte unchanged now that GatedFactGrant exists"
+            );
+        }
+    }
 }
 
 #[cfg(test)]
@@ -2610,5 +2949,91 @@ mod tests {
         let back: SheetRule = serde_json::from_str(&json).unwrap();
         assert_eq!(back, rule);
         assert_eq!(rule.var_ids(), vec!["v0123456789abcdef".to_string()]);
+    }
+
+    /// F1 adversarial finding 3: `Effect::GatedFactGrant { when, .. }` is the FIRST effect to
+    /// carry an `Applies`, and `var_ids()` must walk `self.grants` to see it -- otherwise a
+    /// variable named ONLY by a gated grant's condition gets no `_vars/` table (mod.rs:793) and
+    /// the B10 "variable has no table" self-check (mod.rs:1016) can never catch that, since both
+    /// consumers read this same function.
+    #[test]
+    fn var_ids_walks_a_gated_grants_condition_even_when_no_other_slot_names_the_var() {
+        let rule = SheetRule {
+            id: "advanced_class_guide:class_feature:brawler_weapon_and_armor_proficiency".into(),
+            label: "Brawler Weapon and Armor Proficiency".into(),
+            value: SheetValue::Text,
+            also: vec![],
+            prose: vec![],
+            applies: Applies::Always,
+            target: None,
+            bonus_type: None,
+            print: true,
+            pool: "class_feature".into(),
+            tags: vec![],
+            subject: Subject::Character,
+            repeatable: false,
+            granted_by: vec![],
+            offers: None,
+            grants: vec![Effect::GatedFactGrant {
+                fact: Fact::Proficiency(ProfRef::WeaponGroup("simple".into())),
+                when: Applies::Compare {
+                    lhs: Expr::Var("vbd1b25ed3410aaeb".into()),
+                    op: Cmp::Eq,
+                    rhs: Expr::Const(0),
+                },
+            }],
+            provenance: Provenance::default(),
+        };
+
+        assert_eq!(rule.var_ids(), vec!["vbd1b25ed3410aaeb".to_string()]);
+    }
+
+    /// `resolve_gated_fact_grant` (SD-36 Epic F1-2): the facts-collection half of the contract.
+    /// A gate that decides plainly `Include` from the input counts the fact.
+    #[test]
+    fn a_decidable_true_gated_fact_grant_is_counted() {
+        let package = SheetRulePackage::new();
+        let held = HeldSet::default();
+        let facts = CharacterFacts { level: 5, ..Default::default() };
+        let fact = Fact::Proficiency(ProfRef::Weapon("Longsword".into()));
+        let when = Applies::Compare { lhs: Expr::Level, op: Cmp::Gte, rhs: Expr::Const(1) };
+        let resolved = resolve_gated_fact_grant(&fact, &when, &package, &held, &facts, EvalContext::default());
+        assert_eq!(resolved, GatedFact::Granted(fact));
+    }
+
+    /// A gate that decides plainly `Exclude` withholds the fact silently -- never granted, and
+    /// (per the paper-sheet doctrine this fixes) nothing to print either: the character simply
+    /// does not meet the condition.
+    #[test]
+    fn a_decidable_false_gated_fact_grant_is_silently_withheld() {
+        let package = SheetRulePackage::new();
+        let held = HeldSet::default();
+        let facts = CharacterFacts { level: 5, ..Default::default() };
+        let fact = Fact::Proficiency(ProfRef::Weapon("Longsword".into()));
+        let when = Applies::Compare { lhs: Expr::Level, op: Cmp::Gte, rhs: Expr::Const(99) };
+        let resolved = resolve_gated_fact_grant(&fact, &when, &package, &held, &facts, EvalContext::default());
+        assert_eq!(resolved, GatedFact::Excluded);
+    }
+
+    /// A gate the engine cannot decide from the input (same `MasterVar` shape
+    /// `eq_gated_master_var_...`-style tests elsewhere in this module exercise) must NEVER be
+    /// approximated as a granted proficiency: the fact is withheld and its condition text is
+    /// returned for the paper sheet to print instead -- the exact hazard review finding 1 named
+    /// (`docs/governance/no-stub-mvp-doctrine.md`).
+    #[test]
+    fn an_undecidable_gated_fact_grant_prints_its_condition_and_withholds_the_fact() {
+        let package = SheetRulePackage::new();
+        let held = HeldSet::default();
+        let facts = CharacterFacts::default();
+        let fact = Fact::Proficiency(ProfRef::Weapon("Katana".into()));
+        let when = Applies::Compare { lhs: Expr::MasterVar(var_id("Something")), op: Cmp::Eq, rhs: Expr::Const(0) };
+        let resolved = resolve_gated_fact_grant(&fact, &when, &package, &held, &facts, EvalContext::default());
+        match resolved {
+            GatedFact::Conditional { fact: f, condition } => {
+                assert_eq!(f, Fact::Proficiency(ProfRef::Weapon("Katana".into())));
+                assert!(!condition.is_empty(), "the condition prints as words, never a silent grant");
+            }
+            other => panic!("an undecidable gate must never be approximated as granted or silently dropped: {other:?}"),
+        }
     }
 }

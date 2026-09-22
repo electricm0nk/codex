@@ -503,19 +503,32 @@ weapon record cannot answer (`Light`, `Thrown`) is ALSO expanded to a `WeaponSet
 Record count stays 49,450; the delta is inside existing rules' `grants`.
 Pin: a converter-backed test re-derives each `WeaponSet.members` from the oracle rows.
 
-**Junk tags already in the converted vocabulary (review finding 15, CONFIRMED).** The
-vocabulary the reader will consume already contains values that are neither a tier, a
-`Weapon Group <x>` tag, nor a members list: measured over all 716 converted proficiency facts
-(`data/sheet_rules/**/*.json`, `ProfRef::WeaponGroup` values), besides the expected joined
-conjunctions (`Light.Martial`, `Martial.Ranged`, `Martial.Thrown`, `OneHanded.Simple`, ...) there
-are **`Auto` (11 occurrences)** and **`KoboldTailAttachment` (2 occurrences)** — neither is a
-PF1 weapon tier or weapon group, and F1.2 as originally written pins only the 42 hand-typed
-static rows, leaving every OTHER reader row — exactly the new surface F1 adds — unpinned. Fix
-scheduled inside F1.2 below: every `ProfRef` the reader returns for a census class must be
-re-derivable from a named oracle row (a tier, a `Weapon Group <x>` tag, or an expanded
-`WeaponSet`); a tag matching none of the three (starting with the two named here) makes that
-class's proficiency answer `Unknown`, never a fabricated membership. RED test:
-`an_unrecognized_proficiency_tag_makes_the_class_unknown`.
+**`Auto` and `KoboldTailAttachment` are real, resolvable selectors, not junk (review finding 15
+CONFIRMED as originally written; SUPERSEDED by F1 adversarial finding 1 and the F1 re-check round
+1 spec-divergence finding — ruling below).** The vocabulary the reader consumes was originally
+measured to contain `Auto` (11 occurrences) and `KoboldTailAttachment` (2 occurrences) alongside
+the expected joined conjunctions (`Light.Martial`, `Martial.Ranged`, `Martial.Thrown`,
+`OneHanded.Simple`, ...), and this section first called both junk — neither a PF1 weapon tier
+nor a weapon group. That call was wrong: both tags name real, live oracle members. `TYPE=Auto`
+selects five live weapon-proficiency rows (`cr_profs_weapon.lst:10-14` — Grapple, Ray Spells,
+Touch Spells, Splash Weapon, Unarmed Strike, PF1's universal proficiencies, each tagged
+`TYPE:Auto....`); `TYPE=KoboldTailAttachment` selects one (`arg_profs_weapon.lst:22`,
+`Kobold Tail Attachment  TYPE:Melee.Light.Natural.KoboldTailAttachment`). A converter carve-out
+that special-cased these two names in front of the new membership machinery (F1 adversarial
+finding 1) would have silently discarded both grants instead of resolving them, and did so for
+one commit on this branch before being removed; the ruling stands: both resolve through
+`WeaponMembershipIndex::members_with_all` like every other non-tier selector, no exclusion list.
+F1.2 as originally written pinned only the 42 hand-typed static rows, leaving every OTHER reader
+row — exactly the new surface F1 adds — unpinned regardless of this ruling. Fix scheduled inside
+F1.2 below: every `ProfRef` the reader returns for a census class must be re-derivable from a
+named oracle row (a tier, a `Weapon Group <x>` tag, or an expanded `WeaponSet`); a tag matching
+NONE of the three shapes — genuinely member-less against the pinned oracle, which `Auto` and
+`KoboldTailAttachment` are not — makes that class's proficiency answer `Unknown`, never a
+fabricated membership. RED test: `an_unrecognized_proficiency_tag_makes_the_class_unknown`,
+against a selector with no real oracle member (a synthetic/fabricated tag in the test fixture,
+since a full-corpus measurement after this ruling landed found 0 of 49,450 converted records
+carry a genuinely member-less `TYPE=` selector — `_defects/unrecognized-proficiency-tag.json` is
+empty on a fresh `--dump`), never against `Auto` or `KoboldTailAttachment`.
 
 ### 3.4 Live consumption — read the converted record; do NOT add ~93 Rust rows
 
@@ -618,7 +631,7 @@ n=1 / n=5 sheet diffs. Only then the population commit.
 | Criterion | Acceptance command |
 |---|---|
 | F1.1 reproducible before | `cargo run --locked --quiet -j 2 -p codex-ingest --bin sheet_rule_convert -- --check` exits 0 at the pre-change commit |
-| F1.2 oracle pin for the reader (extended, review finding 15) | `cargo test --locked -p codex-ingest --test class_weapon_proficiency_via_converter` green: reader output == each of the 42 static rows, AND every reader row for every census class re-derived from a named oracle row (tier, `Weapon Group <x>`, or expanded `WeaponSet` — not only the 42 static rows), AND `an_unrecognized_proficiency_tag_makes_the_class_unknown` green (a class whose closure carries `Auto`, `KoboldTailAttachment`, or any other tag matching none of the three shapes reports `Unknown`, never a fabricated proficiency) |
+| F1.2 oracle pin for the reader (extended, review finding 15; ruling corrected by F1 adversarial finding 1 and the F1 re-check round 1 spec-divergence finding) | `cargo test --locked -p codex-ingest --test class_weapon_proficiency_via_converter` green: reader output == each of the 42 static rows, AND every reader row for every census class re-derived from a named oracle row (tier, `Weapon Group <x>`, or expanded `WeaponSet` — not only the 42 static rows), AND `an_unrecognized_proficiency_tag_makes_the_class_unknown` green (a class whose closure carries a `TYPE=` selector matching none of the three shapes against the pinned oracle — a genuinely member-less tag, proven with a synthetic fixture, since the live corpus carries none — reports `Unknown`, never a fabricated proficiency; `Auto` and `KoboldTailAttachment` are NOT such tags — both resolve to real oracle members, `cr_profs_weapon.lst:10-14` and `arg_profs_weapon.lst:22`, and must convert like any other selector) |
 | F1.3 links closed (per-edge pin, review finding 12a) | `python3 -c "import json;print(len(json.load(open('data/sheet_rules/_defects/unresolved-references.json'))))"` -> 11,925 - 4,456 = **7,469** (or the difference explained per row); `python3 docs/release/SD-36-consolidation/artifacts/epic-f/scripts/unres2.py` reports mechanism A = 0 AND D/E/F unchanged at 3,033/3,565/808 (a drop in D/E/F means the retry stole rows from a different mechanism, not a real fix); AND for each of the 4,456 added edges, a per-edge correctness assertion that the TARGET rule's `provenance.closure_rows` contains the oracle line the reference names — a count match alone (4,456 edges added) is satisfied equally by an edge written to the right record and one written to a colliding record of the same slug (0.3's own hypothesis: `wizard` collides across `class_feature/wizard.json` and two `wizard_class__<hash>.json` records), so the count is necessary but not sufficient and the per-edge pin is required to close the row |
 | F1.4 no silent drop | `cargo test --locked -p codex-ingest automatic_grants_are_never_dropped_silently` green |
 | F1.5 coverage | census: classes blocked on `combat.baseline_weapon_proficiency_unknown` -> 0 of 135 |
@@ -1307,7 +1320,7 @@ named-exception rule. The three operator rulings (§9) are untouched by any of t
 | 12 | F1.3, F4.3, F1b.5, F0.1, weak acceptance | **CONFIRMED** | (a) Confirmed the collision risk is real: `ls data/sheet_rules/core_rulebook/class_feature/ \| grep wizard` lists both `wizard.json` (FavoredClass ability) and two `wizard_class__<hash>.json` records. Confirmed `_defects` length 11,925 myself. (b) Confirmed `fn canonical_seeds_for` is defined once (`src/bin/v06_class_state_dump.rs:129`) with no `use` import anywhere yet (F4 has not built the second caller). (c)/(d) read the document's own acceptance rows directly: none of the four commands can fail on their own stated criterion. | (a) F1.3 gets a per-edge `provenance.closure_rows` pin plus a D/E/F-unchanged assertion (3,033/3,565/808); (b) F4.3 gets a `use .*canonical_seeds_for` count alongside the definition count; (c) F1b.5 becomes a script (`check_fixture_rebaseline_receipts.py`) that diffs `git show --name-only` against the receipt filenames and can exit non-zero; (d) F0.1 gets a cross-check test pinning the merged id set to `status.md`'s own 31+3+20+7+74 partition before the instrument is allowed to move |
 | 13 | 0.4 / 6 (F4), hit die absent | **CONFIRMED** | Measured myself over all 185 `data/sheet_rules/*/class/*.json`: 178 carry the `StatBlock "Hit die"` prose row, 7 do not — `occult_adventures/psychic_detective`, `ultimate_psionics/{gifted_blade, gifted_blade_marksman_power_list, unlocked_talent}`, `bestiary/sorcerer_cleric_arcane`, `ultimate_intrigue/{vwarlock, vcabalist}` — exact match to the reviewer's list. Confirmed 4 of the 7 live in `CLASS_FAMILY_BOOKS` (`generic_class_chassis.rs:57-73`), so they can enter the 78-record generic population. | 0.4 corrected to "178 of 185; 7 named exceptions" with the list; roster rule (§6) now requires `hit_die.is_some()` in addition to Computed; new named-reason enum (`hit_die_absent \| not_computed \| prestige \| ex_state`) so `in_desktop_roster == false` is never a bare boolean; new F4.5 acceptance row + RED test `no_computed_class_is_unoffered_without_a_named_reason` |
 | 14 | 2 (F0), prestige carrier | **CONFIRMED** | Measured myself over the 77 tagged-`Prestige` records (74 distinct ids after the 3 cross-book slug dedupes the census already performs — `cyphermage`, `hellknight`, `red_mantis_assassin` each appear in two books): 23 carry a `BaseAttack` requirement, max value 7 (cap-safe on that axis alone, confirmed); `mystic_theurge` and `evangelist` each carry BOTH `HighestSpellLevel Arcane` and `HighestSpellLevel Divine` terms (confirmed by direct read of both records' `applies`); 43 carry neither a caster nor a BAB term (confirmed — these fall to the floor-5 fighter carrier with no caster level at all). | Cap-bites precedence stated explicitly (cap wins; the newly-unmet numeric term is listed in `entry_gate: unmet` with both its required and reached values); dual-caster case gets a second, independent carrier (`wizard`+`cleric`, both must reach Computed); new census column `carrier`; new test `a_prestige_row_referencing_caster_level_names_a_caster_carrier_or_reports_unknown` — a row whose chassis expression references caster level without a named caster carrier reports `Unknown`, never a confidently-wrong 0 |
-| 15 | 3.3 (WeaponSet) / F1.2, proficiency vocabulary | **CONFIRMED** | Measured myself over all converted `ProfRef::WeaponGroup` values in `data/sheet_rules/**/*.json`: besides the expected tier/group joins, found `Auto` (11 occurrences) and `KoboldTailAttachment` (2 occurrences) — neither a PF1 weapon tier nor weapon group, exact match to the reviewer's evidence. Confirmed the 49,450 freeze premise is unaffected (records/converted are input counts). | F1.2 extended: every `ProfRef` the reader returns for a census class must be re-derivable from a named oracle row (tier, `Weapon Group <x>`, or expanded `WeaponSet`), not only the 42 static rows; new RED test `an_unrecognized_proficiency_tag_makes_the_class_unknown` — a tag matching none of the three shapes (starting with `Auto`, `KoboldTailAttachment`) makes that class's proficiency answer `Unknown`, never a fabricated membership |
+| 15 | 3.3 (WeaponSet) / F1.2, proficiency vocabulary | **CONFIRMED, ruling later corrected** | Measured myself over all converted `ProfRef::WeaponGroup` values in `data/sheet_rules/**/*.json`: besides the expected tier/group joins, found `Auto` (11 occurrences) and `KoboldTailAttachment` (2 occurrences) — neither a PF1 weapon tier nor weapon group, exact match to the reviewer's evidence. Confirmed the 49,450 freeze premise is unaffected (records/converted are input counts). **This finding's "neither is a PF1 weapon tier or weapon group" reading was later shown wrong by F1 adversarial finding 1 and the F1 re-check round 1 spec-divergence finding: both tags are real, resolvable oracle members (`cr_profs_weapon.lst:10-14`'s five `TYPE:Auto` rows; `arg_profs_weapon.lst:22`'s `TYPE:...KoboldTailAttachment` row), not junk — a converter carve-out excluding them by name was written and then removed on this branch precisely because it discarded two real grants. §3.3 and the F1.2 acceptance row were amended in place rather than only noted here.** | F1.2 extended: every `ProfRef` the reader returns for a census class must be re-derivable from a named oracle row (tier, `Weapon Group <x>`, or expanded `WeaponSet`), not only the 42 static rows; RED test `an_unrecognized_proficiency_tag_makes_the_class_unknown` — a tag matching none of the three shapes (a genuinely member-less tag, proven with a synthetic fixture, NOT `Auto` or `KoboldTailAttachment`) makes that class's proficiency answer `Unknown`, never a fabricated membership |
 
 ---
 

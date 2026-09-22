@@ -1,0 +1,110 @@
+{
+  "_purpose": "SD-36 Epic F1 stage-6 merge-readiness blocker 2. F1.6's gate command (`structural_diff.py data/sheet_rules --baseline <tranche/16 worktree>/data/sheet_rules`) diffs this branch's on-disk RECORD FIELDS against the tranche/16 merge baseline -- a different denominator from stage5/merge-readiness-blockers-receipt.md's 176-build RENDERED-LINE population diff (that receipt's §1d covers the printed sheet; this file covers the underlying JSON records, including fields no build in the census population ever renders). Every one of the 35 (rule id, field) pairs below, and every one of the 6 new `#spell1_<spell>` sub-rule ids, is the SAME §1a mechanism named in that receipt: `closure.rs`'s corpus-wide `bonus_var_index` builder now splits a comma-separated `BONUS:VAR|<target1>,<target2>|...` token's target field on `,` before indexing (previously indexed verbatim as one combined key, so `variable_rows(<target1>)` and `variable_rows(<target2>)` each found nothing and `resolve_variable` silently baked a genuinely multi-record variable to a flat CONVERT-time constant). Fixing that join lets these 9 previously CONST/Never/bare-AbilityMod fields resolve through to their real, multi-contribution `Var`/`Compare{Var ...}` shape for the first time -- verified per record below against the declaring `_vars/*.json` table (every referenced var has a real `declared_by` + >=1 `contributions` entry, except `v1f4425cc693e0ae4` on `inquisitor_domain_isolation_subdomain`, which is declared with zero contributions -- see `families` below). This is an enumerated, counted, explained EXPECTED delta class, never a blanket allowance: a delta off this exact (rule id, field) list, or a new rule id off this exact list, still gates like any other field delta or added id.",
+  "_command_to_reproduce": "git worktree add --detach <scratch>/wt-t16 $(git rev-parse tranche/16) && python3 docs/release/SD-36-consolidation/artifacts/epic-f/scripts/structural_diff.py data/sheet_rules --baseline <scratch>/wt-t16/data/sheet_rules --max-examples 100000 | grep -A40 'unexpected field deltas:'",
+  "_verification_method": "corpus_loader.rs:360 bakes the package path at COMPILE time via `env!(\"CARGO_MANIFEST_DIR\")`, so rendering the tranche/16 side needs a real symlink-farm swap root (every path symlinked to this worktree except `data/sheet_rules`, which points at the tranche/16 copy) plus its own rebuild -- a plain `cd` into a tranche/16 checkout still renders THIS branch's baked-in data/sheet_rules and silently reports zero changes. structural_diff.py itself needs no such swap (it reads both trees directly off disk by path), but any FOLLOW-ON render-based re-check of these records must use the swap root, not a cd.",
+  "families": [
+    {
+      "name": "bloodrage main/#bonus2",
+      "count": 2,
+      "mechanism": "BloodrageStrBonus/BloodrageConBonus comma-split target now found; matches stage5 receipt §1d's already-named Bloodrage Greater/Mighty scaling (Ruling 1) -- the only 2 of the 35 already named by a prior receipt.",
+      "vars": ["v1d990cb6fdc8ff95", "v5063ec2eefdcadb8"],
+      "reachability": "reachable and already rendered -- stage5 receipt §1d names this exact scaling in the 176-build population."
+    },
+    {
+      "name": "demon_nabasu#spell1N_* also (CasterLevel)",
+      "count": 9,
+      "mechanism": "each spell-like ability's flat `CasterLevel: Const 8` becomes `Var \"Nabasu Caster Level\"` (v44b366a7b7c2ef40), which sums the monster's own base 8 with a real second contribution from `bestiary:monster_ability:nabasu_consume_life` -- a level-scaling caster-level bonus off a nabasu's Devour Essence kill count that a flattened Const could never carry.",
+      "vars": ["v44b366a7b7c2ef40"],
+      "reachability": "reachable on any build that dumps the demon_nabasu monster record (not exercised by the class_census 176-build population, which sweeps player classes/races, not bestiary monsters)."
+    },
+    {
+      "name": "diabolist_damned / diabolist_infernal_charisma prose",
+      "count": 2,
+      "mechanism": "each ability's printed DC/bonus slot goes from a bare `Const` to `Sum[Const, Var]`, where the Var (v56dfc1ef0030b792 / v39f9d867bf9fa880) is declared by the ability itself and fed by `book_of_the_damned_volume_1:class:diabolist`'s own `ClassLevel(diabolist)` contribution -- a level-scaling class feature previously frozen at its level-1 value.",
+      "vars": ["v56dfc1ef0030b792", "v39f9d867bf9fa880"],
+      "reachability": "reachable on any build holding the diabolist prestige class (not in the 34-family census list)."
+    },
+    {
+      "name": "death_attack prose",
+      "count": 1,
+      "mechanism": "the DC slot (`Sum[Const 10, AbilityMod Int]`) and the paralysis-duration slot (bare `Const 0`) both become their real Vars (vaa26de33b7ea1a05 \"Death Attack DC\", v0be81376ff606fc7 \"Death Attack Duration\"), each fed by three real contributions: the base `core_rulebook:class_feature:death_attack` row, `core_rulebook:class_feature:assassin_death_attack`'s own scaling, and `advanced_players_guide:class:master_spy`'s doubled class-level contribution -- a cross-class join the flattened Const could never carry.",
+      "vars": ["vaa26de33b7ea1a05", "v0be81376ff606fc7"],
+      "reachability": "reachable on any build holding Assassin or Master Spy (not in the 34-family census list)."
+    },
+    {
+      "name": "draconic_bloodline_breath_weapon also+prose",
+      "count": 2,
+      "mechanism": "the breath-weapon uses-per-day expression (a baked sorcerer-level formula) becomes `Var \"Sorcerer Draconic Breath Weapon Times\"` (vfb687b53001048ab), fed by the sorcerer's own row AND a real second contribution from `core_rulebook:class_feature:dragon_disciple_breath_weapon` (the Dragon Disciple prestige class's own extra-use grant) -- a cross-class join, same shape as death_attack.",
+      "vars": ["vfb687b53001048ab"],
+      "reachability": "reachable on any build holding a draconic-bloodline Sorcerer (not in the 34-family census list -- sorcerer_L20 in the census has no draconic bloodline selected)."
+    },
+    {
+      "name": "racial_sla_* (dancing_lights, daze, deeper_darkness, faerie_fire, feather_fall, levitate) applies/also/value",
+      "count": 15,
+      "mechanism": "each drow innate SLA's `applies` goes from `Always` to `Compare{Var \"Racial SLA <Spell> At Will\" Eq 0}`, and (for deeper_darkness/faerie_fire/feather_fall/levitate) its `value`/`also` uses-per-day slot goes from `Const 1` to the SAME var read as a count -- the drow-noble At-Will variant (fed by `advanced_race_guide:feat:greater_drow_nobility` and `bestiary:race_trait:drow_noble_spell_like_abilities`) now correctly gates the N/day line off when the at-will version applies, matching each var's real 2-contribution declaration. This also produces the paired `#spell1_<spell>` sub-rule (new rule id, below) for the At-Will printed line itself.",
+      "vars": ["vac9f1127eab7d1ac", "v1bba094cd9b93a5c", "v6a29bfa3d90617d8", "v537764d3fa3d88e7", "vf830133a6e1b5a69", "v0abb821d4b9d0235", "vdb3ac31a77812bb7", "v737ae28174bbd76a", "vcd3482816edac939", "vf3886f08a793ad87"],
+      "reachability": "NOT reachable in any renderable build today: `--race drow`/`drow_noble`/`svirfneblin` on wizard:5 in the census render only `advanced_race_guide:race:drow` plus a `DIAG| id=race.semantics.unverified ... chosen race race:drow has no grounded race semantics in this slice` line -- no racial_sla_* record is ever held (`grep -i racial_sla\\|levitate\\|sla_` across all 6 census race-variant render dumps returns nothing). The one semantic gate change in this family (racial_sla_levitate `applies` Always -> Compare{Var Eq 0}) is therefore unreachable on paper today, same as the other 5 -- named specifically per the polish item, since it is the one delta in this set whose PRINTED output could move once race semantics are grounded."
+    },
+    {
+      "name": "racial_sla_* (open_close, prestidigitation, unseen_servant) also",
+      "count": 3,
+      "mechanism": "each gnome innate SLA's save-DC ability modifier goes from a bare `AbilityMod Cha` to `Var \"Racial SLA <Spell> DCMod\"`, fed by the base record's own Cha contribution AND `inner_sea_races:race_trait:gnome_utilitarian_magic`'s `Int - Cha` swap contribution (PF1's gnome innate-SLA DC uses Intelligence, not Charisma) -- a real second-record join the flattened `AbilityMod Cha` could never carry.",
+      "vars": ["v4f68b4cbebc0ec65", "v5c97c6d24f49dde2", "vf1163bc035dcd35b"],
+      "reachability": "same as the drow family: no census race variant renders any racial_sla_* record (gnome not among the 3 race variants swept)."
+    },
+    {
+      "name": "inquisitor_domain_isolation_subdomain / inquisitor_domain_venom_subdomain applies",
+      "count": 2,
+      "mechanism": "each subdomain's second `AtLeast` arm swaps its `Never` fallback for `Compare{Var \"Inquisitor Domain <Subdomain>\" Gte 1}` -- the comma-split fix now resolves a var name that previously matched nothing. `v1f4425cc693e0ae4` (isolation) is declared with ZERO contributions (`declared_by: [], contributions: []`) -- no PCGen row anywhere in the pinned tree feeds it, so this half of the gate is behaviourally identical to the `Never` it replaced (both always evaluate false). `vd23a03a26a700ef4` (venom) DOES carry one real contribution (`ultimate_wilderness:deity:ragadahn`, Const 1, Always) -- a genuinely reachable gate for a character worshipping Ragadahn and taking the Venom domain's isolation-style subdomain choice, just not exercised by the 34-family census (no domain/deity selection dimension).",
+      "vars": ["v1f4425cc693e0ae4", "vd23a03a26a700ef4"],
+      "reachability": "isolation: unreachable in principle (zero-contribution var, same truth value as before). venom: reachable in principle (one real contribution) but not exercised by the census population."
+    }
+  ],
+  "_field_delta_count": 35,
+  "field_deltas": [
+    ["advanced_class_guide:class_feature:bloodrager_bloodrage", "prose"],
+    ["advanced_class_guide:class_feature:bloodrager_bloodrage#bonus2", "value"],
+    ["bestiary:monster:demon_nabasu#spell11_hold_person_mass", "also"],
+    ["bestiary:monster:demon_nabasu#spell12_regenerate", "also"],
+    ["bestiary:monster:demon_nabasu#spell13_summon_monster_iv_nabasu", "also"],
+    ["bestiary:monster:demon_nabasu#spell14_enervation", "also"],
+    ["bestiary:monster:demon_nabasu#spell15_silence", "also"],
+    ["bestiary:monster:demon_nabasu#spell16_vampiric_touch", "also"],
+    ["bestiary:monster:demon_nabasu#spell17_deeper_darkness", "also"],
+    ["bestiary:monster:demon_nabasu#spell18_telekinesis", "also"],
+    ["bestiary:monster:demon_nabasu#spell19_teleport_greater_self_plus_objects", "also"],
+    ["book_of_the_damned_volume_1:class_feature:diabolist_damned", "prose"],
+    ["book_of_the_damned_volume_1:class_feature:diabolist_infernal_charisma", "prose"],
+    ["core_rulebook:class_feature:death_attack", "prose"],
+    ["core_rulebook:class_feature:draconic_bloodline_breath_weapon", "also"],
+    ["core_rulebook:class_feature:draconic_bloodline_breath_weapon", "prose"],
+    ["core_rulebook:race_trait:racial_sla_dancing_lights", "applies"],
+    ["core_rulebook:race_trait:racial_sla_daze", "applies"],
+    ["core_rulebook:race_trait:racial_sla_deeper_darkness", "also"],
+    ["core_rulebook:race_trait:racial_sla_deeper_darkness", "applies"],
+    ["core_rulebook:race_trait:racial_sla_deeper_darkness", "value"],
+    ["core_rulebook:race_trait:racial_sla_faerie_fire", "also"],
+    ["core_rulebook:race_trait:racial_sla_faerie_fire", "applies"],
+    ["core_rulebook:race_trait:racial_sla_faerie_fire", "value"],
+    ["core_rulebook:race_trait:racial_sla_feather_fall", "also"],
+    ["core_rulebook:race_trait:racial_sla_feather_fall", "applies"],
+    ["core_rulebook:race_trait:racial_sla_feather_fall", "value"],
+    ["core_rulebook:race_trait:racial_sla_levitate", "also"],
+    ["core_rulebook:race_trait:racial_sla_levitate", "applies"],
+    ["core_rulebook:race_trait:racial_sla_levitate", "value"],
+    ["core_rulebook:race_trait:racial_sla_open_close", "also"],
+    ["core_rulebook:race_trait:racial_sla_prestidigitation", "also"],
+    ["core_rulebook:race_trait:racial_sla_unseen_servant", "also"],
+    ["horror_adventures:class_feature:inquisitor_domain_isolation_subdomain", "applies"],
+    ["ultimate_wilderness:class_feature:inquisitor_domain_venom_subdomain", "applies"]
+  ],
+  "_new_rule_id_count": 6,
+  "new_rule_ids": {
+    "core_rulebook:race_trait:racial_sla_dancing_lights#spell1_dancing_lights": "the drow-noble At-Will variant of Dancing Lights: a new sub-rule printing \"At will\" when Var vac9f1127eab7d1ac (fed by advanced_race_guide:feat:greater_drow_nobility + bestiary:race_trait:drow_noble_spell_like_abilities) is >=1, paired with the N/day principal's new applies-gate above; not held by any renderable build today (no census race variant reaches any racial_sla_* record).",
+    "core_rulebook:race_trait:racial_sla_daze#spell1_daze": "same At-Will-variant mechanism as dancing_lights, for Daze (Var v1bba094cd9b93a5c); unreachable today for the same reason.",
+    "core_rulebook:race_trait:racial_sla_deeper_darkness#spell1_deeper_darkness": "same mechanism, for Deeper Darkness (Var v537764d3fa3d88e7); unreachable today for the same reason.",
+    "core_rulebook:race_trait:racial_sla_faerie_fire#spell1_faerie_fire": "same mechanism, for Faerie Fire (Var v0abb821d4b9d0235); unreachable today for the same reason.",
+    "core_rulebook:race_trait:racial_sla_feather_fall#spell1_feather_fall": "same mechanism, for Feather Fall (Var v737ae28174bbd76a); unreachable today for the same reason.",
+    "core_rulebook:race_trait:racial_sla_levitate#spell1_levitate": "same mechanism, for Levitate (Var vf3886f08a793ad87); unreachable today for the same reason. (The 7th new rule id measured by structural_diff.py, ultimate_psionics:class:psion#bonus5, is a pre-existing, already-explained entry in structural_diff.py's own KNOWN_ADDED_RULE_CAUSES -- not part of this pin.)"
+  }
+}

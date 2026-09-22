@@ -468,6 +468,14 @@ pub enum SourceContentDiagnosticKind {
     /// the underlying entry but the canonical shape does not
     /// surface them.
     PartialTranslation,
+    /// SD-36 Epic F1 rule-gap investigation
+    /// (`docs/release/SD-36-consolidation/artifacts/epic-f/stage4/rule-gap-receipt.md`):
+    /// two rule files (or two entries in one file) minted the SAME `RuleId`. The package's
+    /// `BTreeMap<RuleId, SheetRule>` keeps only the later write; the earlier rule for that id
+    /// is entirely absent from the live package -- never a partial or lossy projection of it,
+    /// its whole content is gone. Surfaced loudly (never a silent overwrite) so a caller can
+    /// tell a genuine, still-present converter defect from an already-fixed one.
+    DuplicateRuleId,
 }
 
 /// Canonical diagnostic surfaced by source-IR projection.

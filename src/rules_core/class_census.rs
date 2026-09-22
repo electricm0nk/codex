@@ -538,6 +538,359 @@ pub fn sheet_dump_text(fixture: &CharacterInput, class_name: &str, level: u8) ->
 }
 
 // ---------------------------------------------------------------------------
+// F1 §3b.3 -- the blast-radius instrument: `--sheet-dump <build>
+// --with-sheet-rules` adds the converted print path (held rule ids,
+// rendered sheet lines) to the same headless receipt `sheet_dump_text`
+// already prints, so a before/after diff across the link-repair converter
+// change classifies cleanly by prefix (`EXPL|`, `DIAG|`, `HELD|`, `LINE|`).
+// ---------------------------------------------------------------------------
+
+/// Parses a `--sheet-dump` BUILD spec for the `--with-sheet-rules` mode: one
+/// `<class-id>:<level>` pair, or several joined by `+` for a multiclass mix
+/// (`"fighter:4+wizard:4"`). Each segment splits on its OWN last `:` (a
+/// class id already contains one, e.g. `class:fighter`) and accepts an
+/// optional `class:` prefix -- the same shape
+/// `src/bin/class_census.rs`'s single-class `parse_sheet_dump_arg` already
+/// parses, generalized to more than one segment.
+pub fn parse_sheet_dump_build(raw: &str) -> Result<Vec<(String, u8)>, String> {
+    if raw.trim().is_empty() {
+        return Err("--sheet-dump build spec is empty".to_owned());
+    }
+    raw.split('+')
+        .map(|segment| {
+            let (id_part, level_part) = segment.rsplit_once(':').ok_or_else(|| {
+                format!("--sheet-dump expects <class-id>:<level>, got {segment:?} (whole build: {raw:?})")
+            })?;
+            let level: u8 = level_part
+                .parse()
+                .map_err(|e| format!("--sheet-dump level {level_part:?} is not a valid u8: {e}"))?;
+            let class_name = id_part.strip_prefix("class:").unwrap_or(id_part);
+            if class_name.is_empty() {
+                return Err(format!("--sheet-dump class id is empty in {segment:?}"));
+            }
+            Ok((class_name.to_owned(), level))
+        })
+        .collect()
+}
+
+/// The real production-shaped input for a `--sheet-dump --with-sheet-rules`
+/// build: one class ([`input_for`]) or a multiclass mix ([`input_for_mix`]),
+/// with `race_override` substituted for the fixture's own race when given.
+/// `race_override` may be a bare slug (`"dwarf"`) or already `race:`-prefixed
+/// (`"race:dwarf"`) -- both reach the same `chosen.race_id` shape
+/// [`CharacterFacts::from_character`] and the race table readers expect.
+fn input_for_sheet_dump_build(
+    fixture: &CharacterInput,
+    build: &[(String, u8)],
+    race_override: Option<&str>,
+) -> CharacterInput {
+    let mut input = match build {
+        [(class_name, level)] => input_for(fixture, class_name, *level),
+        classes => {
+            let refs: Vec<(&str, u8)> = classes.iter().map(|(c, l)| (c.as_str(), *l)).collect();
+            input_for_mix(fixture, &refs)
+        }
+    };
+    if let Some(race) = race_override {
+        input.chosen.race_id =
+            if race.starts_with("race:") { race.to_owned() } else { format!("race:{race}") };
+    }
+    input
+}
+
+/// `class_census --sheet-dump <build> --with-sheet-rules`'s full output.
+///
+/// Adds the converted print path to the same headless-receipt evidence
+/// [`sheet_dump_text`] prints: this build's held rule ids (`HELD|`) and
+/// rendered sheet lines (`LINE|`), from the SAME `held_set`/`render_sheet`
+/// calls the desktop's `sheet_lines_for` makes (`character_hub.rs`), built
+/// from [`HeldSeed::from_character`]/[`CharacterFacts::from_character`]
+/// exactly as that function does. It seeds no extra racial sub-traits: the
+/// race resolver that supplies the desktop's `extra_race_traits` argument
+/// (`resolve_racial_traits_for_character`) is desktop-crate code this
+/// `rules_core`-only instrument cannot reach (§3.4a) -- a bare `HeldSeed`
+/// still resolves every rule seeded by class/feat/trait/equipment/spell/
+/// skill/race, just not a race's own gated sub-traits (languages, weapon
+/// familiarity).
+///
+/// Every section is sorted by its own stable key and no timestamp appears
+/// anywhere, so two runs over the same build produce byte-identical text
+/// (`sheet_dump_with_rules_text_is_deterministic_across_two_runs`). When the
+/// process-wide package handle ([`crate::rules_core::sheet_rule_package::package`])
+/// itself is unavailable, `HELD|`/`LINE|` are replaced by one named
+/// `PACKAGE_ERROR|` line -- never silently omitted, never a fabricated
+/// empty held set.
+pub fn sheet_dump_with_rules_text(
+    fixture: &CharacterInput,
+    build: &[(String, u8)],
+    race_override: Option<&str>,
+) -> String {
+    use crate::rules_core::sheet_rule::{CharacterFacts, HeldSeed, held_set, render_sheet};
+
+    let input = input_for_sheet_dump_build(fixture, build, race_override);
+    let receipt = build_pilot_headless_receipt(&input);
+
+    let mut out = String::new();
+    let build_label = build.iter().map(|(c, l)| format!("{c}:{l}")).collect::<Vec<_>>().join("+");
+    out.push_str(&format!("BUILD| {build_label}\n"));
+    if let Some(race) = race_override {
+        out.push_str(&format!("RACE_OVERRIDE| {race}\n"));
+    }
+    out.push_str(&format!("STATUS| {:?}\n", receipt.status));
+
+    let mut explanations = receipt.computation.explanations.clone();
+    explanations.sort_by(|a, b| a.id.cmp(&b.id));
+    for e in &explanations {
+        out.push_str(&format!("EXPL| id={} value={} detail={}\n", e.id, e.value, e.detail));
+    }
+
+    let mut diagnostics = receipt.computation.diagnostics.clone();
+    diagnostics.sort_by(|a, b| a.id.cmp(&b.id));
+    for d in &diagnostics {
+        out.push_str(&format!("DIAG| id={} claim_blocking={} message={}\n", d.id, d.claim_blocking, d.message));
+    }
+
+    match crate::rules_core::sheet_rule_package::package() {
+        Ok(package) => {
+            let seed = HeldSeed::from_character(&input, &receipt.computation);
+            let facts = CharacterFacts::from_character(&input, &receipt.computation);
+            let held = held_set(package, &seed, &facts);
+            let mut held_ids: Vec<&str> =
+                held.rules.keys().filter(|id| !held.removed.contains(*id)).map(String::as_str).collect();
+            held_ids.sort_unstable();
+            for id in held_ids {
+                out.push_str(&format!("HELD| {id}\n"));
+            }
+
+            let mut lines = render_sheet(package, &seed, &facts);
+            lines.sort_by(|a, b| a.id.cmp(&b.id));
+            for line in &lines {
+                out.push_str(&format!(
+                    "LINE| id={} kind={} label={} printed={} condition={}\n",
+                    line.id,
+                    line.kind,
+                    line.label,
+                    line.printed,
+                    line.condition.as_deref().unwrap_or("-"),
+                ));
+            }
+        }
+        Err(reason) => {
+            out.push_str(&format!("PACKAGE_ERROR| {reason}\n"));
+        }
+    }
+    out
+}
+
+// ---------------------------------------------------------------------------
+// SD-36 Epic F1b R2/population scan (`epic-f-class-completion.md` §3b.2,
+// §3b.6 "population scan"): `class_census --duplicates` reports, per
+// facet-to-rule join, what the OLD (pre-R2) naive tail walk resolved to
+// versus what the CORRECTED join (`sheet_line_join::rule_for_explanation`)
+// resolves to -- a precise, mechanical measurement of exactly which facets
+// the fix changes the answer for, over a real, named population. This
+// replaces the coarse label-text proxy the print-paths investigation used
+// (`desktop-print-paths.md` §4), which existed only because R2 did not
+// exist yet on this branch.
+// ---------------------------------------------------------------------------
+
+/// Measurement-only reproduction of `HeldSeed::from_character`'s PRE-R2 exact-tail walk
+/// (`sheet_rule.rs`, before SD-36 Epic F1b): tries `{class}_{tail}` then bare `{tail}` for each
+/// leading run of the remaining dot-segments, longest first, first exact-slug hit wins. Kept
+/// here, never in production code, solely so this scan can report how many facets the R2 fix
+/// actually changes the answer for -- it decides nothing about what holds or prints.
+fn pre_r2_naive_join(package: &crate::rules_core::sheet_rule::SheetRulePackage, class: &str, explanation_id: &str) -> Option<crate::rules_core::sheet_rule::RuleId> {
+    let rest = explanation_id.strip_prefix("class_feature.").unwrap_or(explanation_id);
+    let segs: Vec<&str> = rest.split('.').collect();
+    for i in 0..segs.len() {
+        let tail = segs[i..].join("_");
+        for candidate in [format!("{class}_{tail}"), tail.clone()] {
+            if let Some(id) = package.find("class_feature", &candidate) {
+                return Some(id.clone());
+            }
+        }
+    }
+    None
+}
+
+/// One bespoke class-feature facet's before/after join, in one build.
+#[derive(Debug, Clone, serde::Serialize)]
+pub struct DuplicateFacetRow {
+    pub build: String,
+    pub class: String,
+    pub explanation_id: String,
+    /// The PRE-R2 naive walk's answer, if any.
+    pub before: Option<String>,
+    /// `true` when `before` is the class's own PRINCIPAL `class_feature` rule (the exact
+    /// mis-join review finding 2 names -- a facet id collapsing onto `<class_slug>` with no
+    /// feature-word suffix). This is what would print a spurious, duplicate class_feature line
+    /// for this class today.
+    pub before_is_principal: bool,
+    /// The CORRECTED join's answer: `"matched:<id>"`, `"ambiguous:<id>|<id>|..."`, or `"none"`.
+    pub after: String,
+    /// `true` when `before != after` (in the `Some(id) == JoinResult::Matched(id)` sense) --
+    /// the R2 fix changed this facet's join.
+    pub changed: bool,
+}
+
+/// Every `class_feature.*` facet a build's chassis grounds, before/after R2, for the given
+/// (already-computed) build.
+pub fn scan_duplicates_for_build(
+    package: &crate::rules_core::sheet_rule::SheetRulePackage,
+    build_label: &str,
+    input: &CharacterInput,
+    computation: &crate::rules_core::pilot_compute::PilotBaseChassisComputation,
+) -> Vec<DuplicateFacetRow> {
+    use crate::rules_core::sheet_line_join::{JoinResult, rule_for_explanation};
+    use crate::rules_core::sheet_rule::HeldSeed;
+
+    let seed = HeldSeed::from_character(input, computation);
+    let mut rows = Vec::with_capacity(seed.class_features.len());
+    for (class, explanation_id) in &seed.class_features {
+        let before = pre_r2_naive_join(package, class, explanation_id);
+        let principal = package.find("class_feature", class).cloned();
+        let before_is_principal = before.is_some() && before == principal;
+        let after_result = rule_for_explanation(package, class, explanation_id);
+        let after = match &after_result {
+            JoinResult::Matched(id) => format!("matched:{id}"),
+            JoinResult::Ambiguous(ids) => format!("ambiguous:{}", ids.join("|")),
+            JoinResult::None => "none".to_owned(),
+        };
+        let changed = match (&before, &after_result) {
+            (Some(b), JoinResult::Matched(a)) => b != a,
+            (Some(_), _) => true,
+            (None, JoinResult::Matched(_)) => true,
+            (None, _) => false,
+        };
+        rows.push(DuplicateFacetRow {
+            build: build_label.to_owned(),
+            class: class.clone(),
+            explanation_id: explanation_id.clone(),
+            before,
+            before_is_principal,
+            after,
+            changed,
+        });
+    }
+    rows
+}
+
+/// The scan's aggregate counts, plus every row (for the receipt and for naming unjoinable
+/// pairs). `builds_scanned` and `facets_scanned` are this report's own stated denominators --
+/// no figure here is quoted without one.
+#[derive(Debug, Clone, Default, serde::Serialize)]
+pub struct DuplicateScanReport {
+    pub population: String,
+    pub builds_scanned: usize,
+    pub facets_scanned: usize,
+    pub before_principal_mismatches: usize,
+    pub after_matched: usize,
+    pub after_ambiguous: usize,
+    pub after_none: usize,
+    pub changed_by_r2: usize,
+    /// Review finding 3: named, counted prestige classes the scan could NOT build a carrier for
+    /// (no converted gate, gate did not resolve to a known carrier, or no carrier at all) --
+    /// `"<class_id>: <reason>"` each, straight from [`carrier_assignment`]'s own named `Err`.
+    /// Never silently folded into `builds_scanned`'s denominator; the population string and the
+    /// stage receipt's own denominator must both be read against `prestige_swept -
+    /// prestige_skipped.len()`, not against `prestige_swept` alone.
+    pub prestige_skipped: Vec<String>,
+    pub rows: Vec<DuplicateFacetRow>,
+}
+
+fn summarize(population: &str, builds_scanned: usize, prestige_skipped: Vec<String>, rows: Vec<DuplicateFacetRow>) -> DuplicateScanReport {
+    let before_principal_mismatches = rows.iter().filter(|r| r.before_is_principal).count();
+    let after_matched = rows.iter().filter(|r| r.after.starts_with("matched:")).count();
+    let after_ambiguous = rows.iter().filter(|r| r.after.starts_with("ambiguous:")).count();
+    let after_none = rows.iter().filter(|r| r.after == "none").count();
+    let changed_by_r2 = rows.iter().filter(|r| r.changed).count();
+    DuplicateScanReport {
+        population: population.to_owned(),
+        builds_scanned,
+        facets_scanned: rows.len(),
+        before_principal_mismatches,
+        after_matched,
+        after_ambiguous,
+        after_none,
+        changed_by_r2,
+        prestige_skipped,
+        rows,
+    }
+}
+
+/// `class_census --duplicates`'s population: every NON-prestige census entry at its own
+/// `max_level` (the same denominator [`sweep_non_prestige`] already sweeps), every prestige
+/// class's carrier build at its own `max_level` (one carrier per class -- the first one
+/// [`determine_carriers`] names, when it can be named at all), and every row of the committed
+/// multiclass mix panel ([`load_mix_panel`]). A prestige class whose carrier cannot be
+/// determined contributes no row and is not counted in `builds_scanned` -- honest, not silently
+/// padded.
+pub fn duplicate_scan(
+    fixture: &CharacterInput,
+    entries: &BTreeMap<String, ClassCensusEntry>,
+    package: &crate::rules_core::sheet_rule::SheetRulePackage,
+) -> DuplicateScanReport {
+    let mut rows = Vec::new();
+    let mut builds = 0usize;
+    let mut prestige_skipped = Vec::new();
+
+    for e in entries.values().filter(|e| !e.is_prestige) {
+        let slug = e.class_id.strip_prefix("class:").unwrap_or(&e.class_id);
+        let input = input_for(fixture, slug, e.max_level);
+        let receipt = build_pilot_headless_receipt(&input);
+        builds += 1;
+        rows.extend(scan_duplicates_for_build(package, &format!("{slug}:{}", e.max_level), &input, &receipt.computation));
+    }
+
+    for e in entries.values().filter(|e| e.is_prestige) {
+        let slug = e.class_id.strip_prefix("class:").unwrap_or(&e.class_id).to_owned();
+        // Review finding 3: every prestige entry the sweep names must be accounted for, one way
+        // or the other -- `carrier_assignment` already names WHY a class cannot be carried
+        // (no converted gate at all, or a gate that does not resolve to a known carrier), so a
+        // class this loop cannot build a carrier for is pushed to `prestige_skipped` with that
+        // reason, never silently dropped from the denominator.
+        let carriers = match carrier_assignment(e) {
+            Ok(carriers) => carriers,
+            Err(reason) => {
+                prestige_skipped.push(reason);
+                continue;
+            }
+        };
+        let Some(carrier) = carriers.into_iter().next() else {
+            prestige_skipped.push(format!("{}: carrier_assignment returned no carrier", e.class_id));
+            continue;
+        };
+        let gate = prestige_applies_gate(&e.books, &slug)
+            .expect("carrier_assignment already loaded this class's gate successfully above");
+        let ge = evaluate_carrier(carrier, &gate, e.max_level);
+        let input = input_for_mix(fixture, &[(carrier.slug(), ge.carrier_level), (slug.as_str(), e.max_level)]);
+        let receipt = build_pilot_headless_receipt(&input);
+        builds += 1;
+        let label = format!("{}:{}+{}:{}", carrier.slug(), ge.carrier_level, slug, e.max_level);
+        rows.extend(scan_duplicates_for_build(package, &label, &input, &receipt.computation));
+    }
+
+    if let Ok(panel) = load_mix_panel() {
+        for row in &panel {
+            let classes: Vec<(&str, u8)> = row.classes.iter().map(|(c, l)| (c.as_str(), *l)).collect();
+            let input = input_for_mix(fixture, &classes);
+            let receipt = build_pilot_headless_receipt(&input);
+            builds += 1;
+            let label = format!("mix_panel::{}", row.key);
+            rows.extend(scan_duplicates_for_build(package, &label, &input, &receipt.computation));
+        }
+    }
+
+    let population = format!(
+        "every non-prestige census entry @ own max_level + {} of {} prestige carriers ({} named, no carrier determinable) @ own max_level + the full multiclass mix panel",
+        entries.values().filter(|e| e.is_prestige).count() - prestige_skipped.len(),
+        entries.values().filter(|e| e.is_prestige).count(),
+        prestige_skipped.len(),
+    );
+    summarize(&population, builds, prestige_skipped, rows)
+}
+
+// ---------------------------------------------------------------------------
 // F0c: prestige classes in the census -- the deterministic carrier build.
 //
 // A prestige class is never a legitimate `Computed` measurement ALONE (§2 of
@@ -1685,6 +2038,115 @@ mod tests {
         assert!(first.contains("class: class:fighter"));
         assert!(first.contains("level: 5"));
         assert!(!first.is_empty());
+    }
+
+    // -----------------------------------------------------------------
+    // F1 §3b.3 -- `--sheet-dump <build> --with-sheet-rules` (RED first: the
+    // module `rules_core::sheet_rule_package` and these functions did not
+    // exist before this commit).
+    // -----------------------------------------------------------------
+
+    #[test]
+    fn parse_sheet_dump_build_reads_a_single_class() {
+        assert_eq!(parse_sheet_dump_build("wizard:5"), Ok(vec![("wizard".to_owned(), 5)]));
+        assert_eq!(parse_sheet_dump_build("class:wizard:5"), Ok(vec![("wizard".to_owned(), 5)]));
+    }
+
+    #[test]
+    fn parse_sheet_dump_build_reads_a_multiclass_mix() {
+        assert_eq!(
+            parse_sheet_dump_build("fighter:4+wizard:4"),
+            Ok(vec![("fighter".to_owned(), 4), ("wizard".to_owned(), 4)])
+        );
+        assert_eq!(
+            parse_sheet_dump_build("class:fighter:4+class:wizard:9"),
+            Ok(vec![("fighter".to_owned(), 4), ("wizard".to_owned(), 9)])
+        );
+    }
+
+    #[test]
+    fn parse_sheet_dump_build_rejects_malformed_segments() {
+        assert!(parse_sheet_dump_build("").is_err());
+        assert!(parse_sheet_dump_build("wizard").is_err(), "no level at all");
+        assert!(parse_sheet_dump_build("wizard:notanumber").is_err());
+        assert!(parse_sheet_dump_build(":5").is_err(), "empty class id");
+        assert!(parse_sheet_dump_build("fighter:4+").is_err(), "trailing + with an empty segment");
+    }
+
+    #[test]
+    fn sheet_dump_with_rules_text_is_deterministic_across_two_runs() {
+        let fixture = load_sweep_fixture().expect("shared deterministic fixture must load cleanly");
+        let build = parse_sheet_dump_build("wizard:5").expect("valid build spec");
+        let first = sheet_dump_with_rules_text(&fixture, &build, None);
+        let second = sheet_dump_with_rules_text(&fixture, &build, None);
+        assert_eq!(
+            first, second,
+            "two runs of sheet_dump_with_rules_text for the same build must be byte-for-byte identical"
+        );
+        assert!(first.contains("BUILD| wizard:5"));
+        assert!(first.contains("STATUS| Computed"), "the deterministic Wizard fixture reaches Computed:\n{first}");
+        assert!(first.lines().any(|l| l.starts_with("EXPL| ")), "no EXPL| lines:\n{first}");
+        // The package loads for real in this checkout (`data/sheet_rules/`
+        // is present), so this build must reach the held/rendered section,
+        // never the `PACKAGE_ERROR|` fallback.
+        assert!(!first.contains("PACKAGE_ERROR|"), "the real package must load:\n{first}");
+        assert!(first.lines().any(|l| l.starts_with("HELD| ")), "no HELD| lines:\n{first}");
+        // Wizard's own class rule must be among the held ids -- the most
+        // basic possible proof the held set is real, not empty.
+        assert!(
+            first.lines().any(|l| l.starts_with("HELD| ") && l.contains(":class:wizard")),
+            "Wizard's own class rule must be held:\n{first}"
+        );
+    }
+
+    #[test]
+    fn sheet_dump_with_rules_text_covers_a_multiclass_mix_build() {
+        let fixture = load_sweep_fixture().expect("shared deterministic fixture must load cleanly");
+        let build = parse_sheet_dump_build("fighter:4+wizard:4").expect("valid mix build spec");
+        let text = sheet_dump_with_rules_text(&fixture, &build, None);
+        assert!(text.contains("BUILD| fighter:4+wizard:4"));
+        assert!(
+            text.lines().any(|l| l.starts_with("HELD| ") && l.contains(":class:fighter")),
+            "Fighter's own class rule must be held in the mix:\n{text}"
+        );
+        assert!(
+            text.lines().any(|l| l.starts_with("HELD| ") && l.contains(":class:wizard")),
+            "Wizard's own class rule must be held in the mix:\n{text}"
+        );
+    }
+
+    #[test]
+    fn sheet_dump_with_rules_text_applies_a_race_override() {
+        let fixture = load_sweep_fixture().expect("shared deterministic fixture must load cleanly");
+        let build = parse_sheet_dump_build("fighter:1").expect("valid build spec");
+        let default_race = sheet_dump_with_rules_text(&fixture, &build, None);
+        let overridden = sheet_dump_with_rules_text(&fixture, &build, Some("dwarf"));
+        assert!(overridden.contains("RACE_OVERRIDE| dwarf"));
+        assert_ne!(
+            default_race, overridden,
+            "a real race override must change the output (a different race is a different held set)"
+        );
+        // Bare slug and pre-prefixed form reach the identical result.
+        let overridden_prefixed = sheet_dump_with_rules_text(&fixture, &build, Some("race:dwarf"));
+        assert_eq!(
+            overridden.replacen("RACE_OVERRIDE| dwarf", "RACE_OVERRIDE| race:dwarf", 1),
+            overridden_prefixed
+        );
+    }
+
+    #[test]
+    fn every_line_in_sheet_dump_with_rules_text_carries_a_known_stable_prefix() {
+        let fixture = load_sweep_fixture().expect("shared deterministic fixture must load cleanly");
+        let build = parse_sheet_dump_build("wizard:5").expect("valid build spec");
+        let text = sheet_dump_with_rules_text(&fixture, &build, None);
+        const KNOWN_PREFIXES: &[&str] =
+            &["BUILD| ", "RACE_OVERRIDE| ", "STATUS| ", "EXPL| ", "DIAG| ", "HELD| ", "LINE| ", "PACKAGE_ERROR| "];
+        for line in text.lines() {
+            assert!(
+                KNOWN_PREFIXES.iter().any(|p| line.starts_with(p)),
+                "line has no known stable prefix, diffs cannot classify it: {line:?}"
+            );
+        }
     }
 
     // -----------------------------------------------------------------

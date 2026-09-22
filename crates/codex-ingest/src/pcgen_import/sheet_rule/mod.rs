@@ -33,6 +33,7 @@ pub mod formula;
 pub mod prereq;
 pub mod prose;
 pub mod table;
+pub mod weapon_membership;
 
 use std::collections::{BTreeMap, BTreeSet};
 use std::path::{Path, PathBuf};
@@ -372,8 +373,31 @@ pub fn build_index(tree: &PinnedTree, records: Vec<RecordRef>) -> (CorpusIndex, 
         let cat_u = r.category.to_ascii_uppercase();
         let key_u = r.key.to_ascii_uppercase();
         let name_u = r.name.to_ascii_uppercase();
-        index.by_cat_key.entry((cat_u.clone(), key_u.clone())).or_insert(r.id.clone());
-        index.by_cat_name.entry((cat_u.clone(), name_u.clone())).or_insert(r.id.clone());
+        // First wins (unchanged): `by_cat_key`/`by_cat_name` keep resolving a direct-category
+        // hit exactly as before. A pair claimed by more than one DIFFERENT record id is ALSO
+        // recorded as ambiguous, so the parent-category retry (`resolve_rule_in_checked`) can
+        // refuse to guess among them instead of silently inheriting whichever loaded first (F1
+        // adversarial finding 4).
+        let cat_key_pair = (cat_u.clone(), key_u.clone());
+        match index.by_cat_key.get(&cat_key_pair) {
+            Some(existing) if *existing != r.id => {
+                index.ambiguous_cat_key.insert(cat_key_pair);
+            }
+            Some(_) => {}
+            None => {
+                index.by_cat_key.insert(cat_key_pair, r.id.clone());
+            }
+        }
+        let cat_name_pair = (cat_u.clone(), name_u.clone());
+        match index.by_cat_name.get(&cat_name_pair) {
+            Some(existing) if *existing != r.id => {
+                index.ambiguous_cat_name.insert(cat_name_pair);
+            }
+            Some(_) => {}
+            None => {
+                index.by_cat_name.insert(cat_name_pair, r.id.clone());
+            }
+        }
         index.by_kind_name.entry((r.kind.clone(), key_u.clone())).or_insert(r.id.clone());
         index.by_kind_name.entry((r.kind.clone(), name_u.clone())).or_insert(r.id.clone());
         if r.kind == "class" {
@@ -906,7 +930,7 @@ pub fn write_output(out_dir: &Path, rendered: &BTreeMap<String, Vec<u8>>) -> std
         std::fs::remove_dir_all(out_dir)?;
     }
     std::fs::create_dir_all(out_dir)?;
-    std::fs::write(out_dir.join("GENERATED"), b"GENERATED FILE TREE -- written by `cargo run --locked --bin sheet_rule_convert`; regenerated whole; never hand-edited.\n")?;
+    std::fs::write(out_dir.join("GENERATED"), b"GENERATED FILE TREE -- written by `cargo run --locked -p codex-ingest --bin sheet_rule_convert -- --write`; regenerated whole; never hand-edited.\n")?;
     for (rel, bytes) in rendered {
         let p = out_dir.join(rel);
         if let Some(parent) = p.parent() {
@@ -918,8 +942,16 @@ pub fn write_output(out_dir: &Path, rendered: &BTreeMap<String, Vec<u8>>) -> std
 }
 
 pub fn write_var_names(repo: &Path, run: &Run) -> std::io::Result<()> {
-    let dir = repo.join("scripts/oracle_harness");
-    std::fs::create_dir_all(&dir)?;
+    write_var_names_to(&repo.join("scripts/oracle_harness"), run)
+}
+
+/// Write `var_names.json` to an arbitrary directory (e.g. a `--dump` scratch dir), the same
+/// content `write_var_names` writes to the tracked `scripts/oracle_harness/` -- so a `--dump` run
+/// emits this file too, and a structural diff can cover it (SD-36 Epic F1 re-check round 1,
+/// finding 3: a real run's blast radius on this tracked file was otherwise unmeasured by any
+/// `--dump`-based diff).
+pub fn write_var_names_to(dir: &Path, run: &Run) -> std::io::Result<()> {
+    std::fs::create_dir_all(dir)?;
     let mut text = serde_json::to_string_pretty(&run.var_names).unwrap();
     text.push('\n');
     std::fs::write(dir.join("var_names.json"), text)
@@ -1022,8 +1054,39 @@ pub fn check(out_dir: &Path, run: &Run) -> Result<(), Vec<String>> {
     if run.report.converted + run.report.refused != run.report.records {
         problems.push("converted + refused != records".into());
     }
-    problems.truncate(200);
     if problems.is_empty() { Ok(()) } else { Err(problems) }
+}
+
+#[cfg(test)]
+mod check_tests {
+    use super::*;
+
+    /// F1 adversarial finding 4: a `problems.truncate(200)` here used to silently hide everything
+    /// past the 200th problem, so `--check` could never state the TRUE delta on a run whose
+    /// structural diff is large by design (Option A's up-to-4,456 new edges, plus this branch's
+    /// own +570 `_vars/` files) -- the 200 slots were consumed before a single named record even
+    /// printed. A synthetic `Run` with 250 rendered rule files checked against an EMPTY on-disk
+    /// directory produces one "missing on disk" problem per rendered file -- 250 from `files`,
+    /// plus the three fixed files `render()` always emits (`_refused.json`/`_tokens.json`/
+    /// `_report.json`) -- 253 in all; `check` must report every one, never cap at 200.
+    #[test]
+    fn check_reports_every_problem_not_just_the_first_two_hundred() {
+        let run = Run {
+            files: (0..250).map(|i| (format!("book/kind/r{i:04}.json"), Vec::new())).collect(),
+            vars: BTreeMap::new(),
+            var_names: BTreeMap::new(),
+            refused: RefusedReport::default(),
+            tokens: TokenCensus::default(),
+            defects: BTreeMap::new(),
+            report: Report::default(),
+        };
+        // Never created, never written to -- `read_output` treats a missing directory as empty,
+        // exactly like a fresh checkout before the first `sheet_rule_convert` run.
+        let empty_dir = std::env::temp_dir().join(format!("sheet_rule_check_test_{}_{}", std::process::id(), line!()));
+        let err = check(&empty_dir, &run).expect_err("every rendered file missing on disk must fail the check");
+        let expected = run.files.len() + 3;
+        assert_eq!(err.len(), expected, "check() must report every problem, never truncate: got {} of {expected}", err.len());
+    }
 }
 
 /// Load everything and run once: the tree, the population, the index, the conversion.
@@ -1068,7 +1131,7 @@ mod term_level_refusal_gate {
 
     fn refused_report() -> RefusedReport {
         let text = std::fs::read_to_string(package_dir().join("_refused.json"))
-            .expect("data/sheet_rules/_refused.json is generated (cargo run --locked --bin sheet_rule_convert)");
+            .expect("data/sheet_rules/_refused.json is generated (cargo run --locked -p codex-ingest --bin sheet_rule_convert -- --write)");
         serde_json::from_str(&text).expect("_refused.json parses")
     }
 
@@ -1148,14 +1211,14 @@ mod term_level_refusal_gate {
             }
         }
         // Re-derive with: `python3 -c "import json; tokens=json.load(open('data/sheet_rules/_tokens.json')); refused={e['id'] for e in json.load(open('data/sheet_rules/_refused.json'))['entries']}; degraded=[e for e in tokens['entries'] if e.get('degradations') and e['id'] not in refused]; print(len(degraded))"` for record count, and the loop above (without `numbered.truncate`) for the line count.
-        assert_eq!(degraded.len(), 423, "degraded-record count moved -- re-derive and update this pin (command in the doc comment)");
+        assert_eq!(degraded.len(), 424, "degraded-record count moved -- re-derive and update this pin (command in the doc comment)");
         let numbered_count = numbered.len();
         still_refused.truncate(10);
         missing.truncate(10);
         numbered.truncate(10);
         assert!(still_refused.is_empty(), "degraded records must still convert: {still_refused:?}");
         assert!(missing.is_empty(), "degraded records must have a rule file: {missing:?}");
-        assert_eq!(numbered_count, 620, "numbered-lines-inside-a-degraded-record count moved (CONV-05 baseline) -- re-derive and update this pin, or investigate if it jumped unexpectedly: sample {numbered:?}");
+        assert_eq!(numbered_count, 624, "numbered-lines-inside-a-degraded-record count moved (CONV-05 baseline) -- re-derive and update this pin, or investigate if it jumped unexpectedly: sample {numbered:?}");
     }
 
     /// The report's own sums: a degraded record is a CONVERTED record, and the per-shape

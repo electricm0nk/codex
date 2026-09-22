@@ -2517,7 +2517,7 @@ run_corpus_sweep() {
 # ---------------------------------------------------------------------------
 # Stage: sheet-rules-check
 #
-# Runs `cargo run --locked --bin sheet_rule_convert -- --check` -- `AT-35-E2-001`
+# Runs `cargo run --locked -p codex-ingest --bin sheet_rule_convert -- --check` -- `AT-35-E2-001`
 # (`docs/release/SD-35-corpus-sheet-completion/epic-breakdown.md`): the generated
 # `data/sheet_rules/` package equals a fresh conversion of every
 # `docs/work-inventory.json` unit byte for byte, carries no source-format
@@ -2526,7 +2526,7 @@ run_corpus_sweep() {
 # to the population. Needs the pinned oracle checkout (`preflight-oracle`).
 # ---------------------------------------------------------------------------
 run_sheet_rule_convert_check() {
-    stage_start "sheet-rules-check — cargo run --locked --bin sheet_rule_convert -- --check  (repo root)"
+    stage_start "sheet-rules-check — cargo run --locked -p codex-ingest --bin sheet_rule_convert -- --check  (repo root)"
     local log="$LOG_DIR/sheet-rules-check.log"
     ( cd "$REPO_ROOT" && exec cargo run --locked --quiet -j "$JOBS" -p codex-ingest --bin sheet_rule_convert -- --check ) >"$log" 2>&1
     local status=$?

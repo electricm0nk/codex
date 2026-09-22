@@ -1,0 +1,1 @@
+{"var":"v44b366a7b7c2ef40","label":"Nabasu Caster Level","declared_by":["bestiary:monster:demon_nabasu"],"contributions":[{"rule_id":"bestiary:monster:demon_nabasu","expr":{"Const":8},"when":"Always"},{"rule_id":"bestiary:monster_ability:nabasu_consume_life","expr":{"Var":"vd95be35ef634fce1"},"when":"Always"}],"provenance":{}}

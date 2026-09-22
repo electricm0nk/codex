@@ -14,6 +14,7 @@ use super::formula::{convert_formula, integer_literal};
 use super::prereq::{convert_pre_token, resolve_holdable_rule};
 use super::prose::{convert_desc_like, convert_labelled, convert_positional, decode_entities, expand_output_name, pi_hit, strip_editorial_not_implemented_markers};
 use super::table::{row_for_head, MapsTo};
+use super::weapon_membership::{self, WeaponMembershipIndex};
 use codex::rules_core::sheet_rule::*;
 
 pub const CONVERTER_VERSION: &str = "sheet_rule_convert/0.15.0";
@@ -378,6 +379,92 @@ fn tags_of(value: &str) -> Vec<String> {
     value.split('.').map(|s| s.trim().to_string()).filter(|s| !s.is_empty()).collect()
 }
 
+/// PF1's three weapon proficiency tiers -- directly answerable by
+/// `WeaponTableEntry::proficiency`, no oracle lookup needed.
+fn is_weapon_tier(tag: &str) -> bool {
+    matches!(tag, "Simple" | "Martial" | "Exotic")
+}
+
+/// The reach facets `WeaponTableEntry::is_melee`/`is_ranged` answer directly.
+fn is_weapon_reach(tag: &str) -> bool {
+    matches!(tag, "Melee" | "Ranged")
+}
+
+/// Split an `AUTO:WEAPONPROF`'s `TYPE=`/`TYPE.` selector into a `ProfRef`, or record a defect
+/// and return `None` when the selector names no real oracle member -- never a fabricated
+/// proficiency (SD-36 Epic F1-3). `w` is the selector as split from the row, e.g.
+/// `"TYPE=Light.Martial"`.
+///
+/// - A single tag that is a tier, or already reads `Weapon Group <x>` (matches
+///   `WeaponTableEntry::weapon_group` directly): unchanged from today's `ProfRef::WeaponGroup`.
+/// - A conjunction (2+ dot-segments) whose every tag is a tier and/or a reach facet: a real
+///   list, `ProfRef::WeaponAllOf` -- never the old lossy joined word.
+/// - Anything else (a lone membership tag like `Samurai`, `Auto` or `KoboldTailAttachment`, or a
+///   conjunction carrying a tag the live weapon record cannot answer, e.g. `Light`/`Thrown`):
+///   resolved AT INGEST against the oracle's own weapon-proficiency rows via `membership`, the
+///   same as every other non-tier selector (F1 adversarial finding 1 -- there is no hardcoded
+///   exclusion list here: both `Auto` and `KoboldTailAttachment` resolve to real, live members,
+///   and a two-name carve-out in front of the new machinery would have silently dropped them).
+///   A non-empty result becomes `ProfRef::WeaponSet`; an empty one is a named defect, never a
+///   grant, and the caller emits no fact for it.
+fn weapon_type_selector(ctx: &mut RecordCtx, membership: &WeaponMembershipIndex, w: &str) -> Option<ProfRef> {
+    let raw = w.strip_prefix("TYPE=").or_else(|| w.strip_prefix("TYPE.")).unwrap_or(w);
+    let segments = tags_of(raw);
+    if segments.is_empty() {
+        ctx.defect("unrecognized-proficiency-tag", format!("{}: {w}", ctx.record.id));
+        return None;
+    }
+    if segments.len() > 1 && segments.iter().all(|s| is_weapon_tier(s) || is_weapon_reach(s)) {
+        return Some(ProfRef::WeaponAllOf(segments));
+    }
+    if segments.len() == 1 && (is_weapon_tier(&segments[0]) || segments[0].starts_with("Weapon Group ")) {
+        return Some(ProfRef::WeaponGroup(tag_word(w)));
+    }
+    let members = membership.members_with_all(&segments);
+    if members.is_empty() {
+        ctx.defect("unrecognized-proficiency-tag", format!("{}: {w}", ctx.record.id));
+        return None;
+    }
+    Some(ProfRef::WeaponSet { label: segments.join("."), members })
+}
+
+/// A `WeaponSet` grant's dedup key: what the selector actually resolves to (its member list,
+/// already name-sorted and case-normalized by `WeaponMembershipIndex::members_with_all`), plus
+/// whether the grant is gated and on what -- never the raw per-book selector spelling that
+/// became `ProfRef::WeaponSet.label`. Two grants with the same key are the SAME proficiency
+/// stated twice under different book capitalization (SD-36 Epic F1 re-check round 2, finding
+/// 2), not two different ones; a non-`WeaponSet` effect, or two `WeaponSet` grants whose gates
+/// genuinely differ, never collapse.
+fn weapon_set_dedup_key(effect: &Effect) -> Option<(bool, Vec<String>, Option<String>)> {
+    match effect {
+        Effect::FactGrant(Fact::Proficiency(ProfRef::WeaponSet { members, .. })) => Some((false, members.clone(), None)),
+        Effect::GatedFactGrant { fact: Fact::Proficiency(ProfRef::WeaponSet { members, .. }), when } => Some((true, members.clone(), Some(format!("{when:?}")))),
+        _ => None,
+    }
+}
+
+/// Drop a record's later `WeaponSet` grants once an earlier one already resolved to the same
+/// member set under the same gate (SD-36 Epic F1 re-check round 2, finding 2): a record whose
+/// PCGen source states one selector under two or three differently-capitalized spellings
+/// (`OnehandedFirearm` / `OneHandedFirearm` / `OneHandedFireArm`) converted, after F1-1 made
+/// every spelling resolve, to that many identical-content grants -- duplicate lines on the
+/// printed sheet. Every other grant shape, and a `WeaponSet` pair whose gates genuinely
+/// differ, is left exactly as it was, in its original order.
+fn dedup_weapon_set_grants(grants: Vec<Effect>) -> Vec<Effect> {
+    let mut seen: Vec<(bool, Vec<String>, Option<String>)> = Vec::new();
+    let mut out = Vec::with_capacity(grants.len());
+    for g in grants {
+        if let Some(key) = weapon_set_dedup_key(&g) {
+            if seen.contains(&key) {
+                continue;
+            }
+            seen.push(key);
+        }
+        out.push(g);
+    }
+    out
+}
+
 /// Which prose families the corpus record declares product identity for.
 fn declared_pi(record: &RecordRef) -> (bool, bool) {
     let name = record.pi_fields.iter().any(|f| f == "name");
@@ -502,6 +589,15 @@ pub fn convert_record(tree: &PinnedTree, index: &CorpusIndex, record: &RecordRef
         }
     }
 
+    // SD-36 Epic F1 re-check round 2, finding 2: fix 1 made every spelling of the same oracle
+    // weapon-proficiency tag resolve (rather than the earlier round's silent drop), so a record
+    // whose PCGen source states the same selector under two or three book-specific spellings
+    // (`OnehandedFirearm` / `OneHandedFirearm` / `OneHandedFireArm`) now converts to that many
+    // separately-worded grants of the SAME resolved weapon set -- duplicate lines on one
+    // record's printed sheet. A `WeaponSet` grant is identified by what it actually resolves
+    // to (its member list), never by which book's capitalization produced the label, so once
+    // two grants resolve to the same member set only the first survives.
+    acc.grants = dedup_weapon_set_grants(acc.grants);
     // ---- assemble -------------------------------------------------------------------------
     let label = {
         let base = record.name.clone();
@@ -980,7 +1076,23 @@ fn convert_token(ctx: &mut RecordCtx, acc: &mut Acc, out: &mut Converted, key: &
         }
         "NATURALATTACKS" => {
             // Row NATURALATTACKS: one Dice line per entry (name, count, die).
-            for (i, entry) in v.split('|').enumerate() {
+            //
+            // SD-36 Epic F1 rule-gap investigation (`docs/release/SD-36-consolidation/
+            // artifacts/epic-f/stage4/rule-gap-receipt.md`): the suffix used to be
+            // `format!("natural{i}")` where `i` is this ONE token occurrence's own
+            // `v.split('|')` position, reset to 0 every time this arm runs. A record whose
+            // source row carries the tag more than once (either two `|`-separated groups in
+            // one `NATURALATTACKS:` field across two rows, or -- the shape every real
+            // collision in the corpus turned out to be -- two or three separate
+            // `NATURALATTACKS:` tab fields on the SAME `.lst` line, each a single entry) hits
+            // this arm multiple times, each restarting `i` at 0: two single-entry occurrences
+            // both mint `#natural0`, and `SheetRulePackage::insert_rule`'s `BTreeMap<RuleId,
+            // _>` silently keeps only the last write, dropping the earlier attack's rule from
+            // the live package with no diagnostic. `acc.lines.len()` is the running,
+            // record-global line count every OTHER multi-emit arm in this match already uses
+            // for exactly this reason (`weapon{}` / `bonus{}` / `spell{}_` a few arms below) --
+            // unique per record regardless of how many times a token occurs, unlike `i`.
+            for entry in v.split('|') {
                 let parts: Vec<&str> = entry.split(',').map(|s| s.trim()).collect();
                 if parts.len() < 4 {
                     return Err("NATURALATTACKS (shape)".into());
@@ -997,13 +1109,13 @@ fn convert_token(ctx: &mut RecordCtx, acc: &mut Acc, out: &mut Converted, key: &
                         // A fixed damage amount (Fine creatures deal 1 point): a final number.
                         let n: i32 = parts[3].trim().parse().unwrap_or(0);
                         let label = if count > 1 { format!("{count} {name}") } else { name.clone() };
-                        acc.lines.push(Line { seq: ctx.current_seq, suffix: Some(format!("natural{i}")), label, value: SheetValue::Number(Expr::Const(n)), also: Vec::new(), target: None, bonus_type: None, applies: Applies::Always, prose: Vec::new() });
+                        acc.lines.push(Line { seq: ctx.current_seq, suffix: Some(format!("natural{}", acc.lines.len())), label, value: SheetValue::Number(Expr::Const(n)), also: Vec::new(), target: None, bonus_type: None, applies: Applies::Always, prose: Vec::new() });
                         continue;
                     }
                     None if parts[3].trim() == "0" => {
                         // A touch attack with no damage die: words, like `DAMAGE:0`.
                         let label = if count > 1 { format!("{count} {name}") } else { name.clone() };
-                        acc.lines.push(Line { seq: ctx.current_seq, suffix: Some(format!("natural{i}")), label, value: SheetValue::Text, also: Vec::new(), target: None, bonus_type: None, applies: Applies::Always, prose: vec![ProseSegment { family: ProseFamily::Special, pieces: vec![ProsePiece::Text("touch attack, no damage".into())], applies: None, pick_last: false, suppress_when_all_zero: false }] });
+                        acc.lines.push(Line { seq: ctx.current_seq, suffix: Some(format!("natural{}", acc.lines.len())), label, value: SheetValue::Text, also: Vec::new(), target: None, bonus_type: None, applies: Applies::Always, prose: vec![ProseSegment { family: ProseFamily::Special, pieces: vec![ProsePiece::Text("touch attack, no damage".into())], applies: None, pick_last: false, suppress_when_all_zero: false }] });
                         continue;
                     }
                     None => return Err("NATURALATTACKS (die shape)".into()),
@@ -1019,7 +1131,7 @@ fn convert_token(ctx: &mut RecordCtx, acc: &mut Acc, out: &mut Converted, key: &
                     }
                 }
                 let label = if count > 1 { format!("{count} {name}") } else { name.clone() };
-                acc.lines.push(Line { seq: ctx.current_seq, suffix: Some(format!("natural{i}")), label, value: SheetValue::Dice { dice, modifier, size_steps: None }, also: Vec::new(), target: None, bonus_type: None, applies: Applies::Always, prose });
+                acc.lines.push(Line { seq: ctx.current_seq, suffix: Some(format!("natural{}", acc.lines.len())), label, value: SheetValue::Dice { dice, modifier, size_steps: None }, also: Vec::new(), target: None, bonus_type: None, applies: Applies::Always, prose });
             }
         }
         // ---- stat-block numbers --------------------------------------------------------------
@@ -1395,29 +1507,43 @@ fn convert_token(ctx: &mut RecordCtx, acc: &mut Acc, out: &mut Converted, key: &
             let choice = ctx.choice_id.clone().unwrap_or_else(|| ctx.record.id.clone());
             let facts: Vec<Fact> = match head.as_str() {
                 "LANG" => items.into_iter().map(|l| if l.contains("%LIST") { Fact::Chosen(choice.clone()) } else { Fact::Language(tag_word(&l)) }).collect(),
-                "WEAPONPROF" => items
-                    .into_iter()
-                    .map(|w| {
+                "WEAPONPROF" => {
+                    let membership = weapon_membership::index(ctx.tree);
+                    let mut out = Vec::with_capacity(items.len());
+                    for w in items {
                         if w.contains("%LIST") {
-                            Fact::Proficiency(ProfRef::Chosen(choice.clone()))
+                            out.push(Fact::Proficiency(ProfRef::Chosen(choice.clone())));
                         } else if w.starts_with("TYPE=") || w.starts_with("TYPE.") {
-                            Fact::Proficiency(ProfRef::WeaponGroup(tag_word(&w)))
+                            if let Some(p) = weapon_type_selector(ctx, membership, &w) {
+                                out.push(Fact::Proficiency(p));
+                            }
                         } else if w.eq_ignore_ascii_case("DEITYWEAPONS") {
-                            Fact::Proficiency(ProfRef::DeityFavoredWeapon)
+                            out.push(Fact::Proficiency(ProfRef::DeityFavoredWeapon));
                         } else {
-                            Fact::Proficiency(ProfRef::Weapon(tag_word(&w)))
+                            out.push(Fact::Proficiency(ProfRef::Weapon(tag_word(&w))));
                         }
-                    })
-                    .collect(),
+                    }
+                    out
+                }
                 "ARMORPROF" => items.into_iter().map(|a| if a.contains("%LIST") { Fact::Chosen(choice.clone()) } else { Fact::Proficiency(ProfRef::ArmorGroup(tag_word(&a))) }).collect(),
                 "SHIELDPROF" => items.into_iter().map(|a| if a.contains("%LIST") { Fact::Chosen(choice.clone()) } else { Fact::Proficiency(ProfRef::ShieldGroup(tag_word(&a))) }).collect(),
                 "EQUIP" => items.into_iter().map(|e| Fact::Equipment(tag_word(&e))).collect(),
                 _ => return Err(format!("AUTO ({head})")),
             };
+            // Review finding 1 (`epic-f-class-completion.md` §0.1a/§3.1 item 4): `when` is the
+            // PRE-gate on the individual fact (which named weapon/armor/shield/language), not
+            // on the whole rule -- `Grant.when` already carries the rule-level gate elsewhere
+            // and must not be conflated with this one. An ungated row (`when == Applies::Always`,
+            // the common case) keeps emitting the plain, existing `FactGrant` shape so today's
+            // converted JSON deserializes unchanged; a gated row emits the new
+            // `Effect::GatedFactGrant` instead of silently discarding its own condition.
             for f in facts {
-                acc.grants.push(Effect::FactGrant(f));
+                if when == Applies::Always {
+                    acc.grants.push(Effect::FactGrant(f));
+                } else {
+                    acc.grants.push(Effect::GatedFactGrant { fact: f, when: when.clone() });
+                }
             }
-            let _ = when;
         }
         // `MONCCSKILL` is `MONCSKILL`'s cross-class twin (SD-35 AT-35-E4-001).
         "CSKILL" | "CCSKILL" | "MONCSKILL" | "MONCCSKILL" => {

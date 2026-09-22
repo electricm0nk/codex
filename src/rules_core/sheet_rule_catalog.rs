@@ -463,6 +463,9 @@ fn effect_words(package: &SheetRulePackage, effect: &Effect) -> String {
         Effect::FactDeclare { name, value } => {
             format!("Declares {} as {value}", words_of_id(name))
         }
+        Effect::GatedFactGrant { fact, when } => {
+            format!("Grants {} when {}", fact_words(fact), describe_gate(package, when))
+        }
     }
 }
 
@@ -877,7 +880,7 @@ mod tests {
     fn every_unsettled_slot_in_the_live_package_renders_as_words_not_as_the_characterless_zero() {
         let dir = std::path::Path::new(env!("CARGO_MANIFEST_DIR")).join("data/sheet_rules");
         if !dir.is_dir() {
-            panic!("{} is not a directory -- regenerate with `cargo run --locked --bin sheet_rule_convert`", dir.display());
+            panic!("{} is not a directory -- regenerate with `cargo run --locked -p codex-ingest --bin sheet_rule_convert -- --write`", dir.display());
         }
         let load = crate::rules_core::corpus_loader::load_sheet_rules(&dir);
         let package = load.package;
@@ -1096,7 +1099,7 @@ mod tests {
         let dir = std::path::Path::new(env!("CARGO_MANIFEST_DIR")).join("data/sheet_rules");
         if !dir.is_dir() {
             panic!(
-                "{} is not a directory -- regenerate with `cargo run --locked --bin sheet_rule_convert`",
+                "{} is not a directory -- regenerate with `cargo run --locked -p codex-ingest --bin sheet_rule_convert -- --write`",
                 dir.display()
             );
         }
