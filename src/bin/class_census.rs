@@ -89,9 +89,9 @@
 use std::process::Command;
 
 use codex::rules_core::class_census::{
-    ClassSweepResult, census, load_mix_panel, load_sweep_fixture, mix_panel_blocking_histogram,
-    parse_sheet_dump_build, sheet_dump_text, sheet_dump_with_rules_text, sweep_mix_panel,
-    sweep_non_prestige, sweep_prestige,
+    ClassSweepResult, census, duplicate_scan, load_mix_panel, load_sweep_fixture,
+    mix_panel_blocking_histogram, parse_sheet_dump_build, sheet_dump_text,
+    sheet_dump_with_rules_text, sweep_mix_panel, sweep_non_prestige, sweep_prestige,
 };
 
 /// The non-prestige sweep's own `(computed, blocked)` partition --
@@ -389,8 +389,58 @@ fn run_json(json_path: &str) -> i32 {
 
 fn usage() -> String {
     "usage: class_census --json <path> | class_census --sheet-dump <class-id>:<level> \
-     | class_census --sheet-dump <build> --with-sheet-rules [--race <race-id>]"
+     | class_census --sheet-dump <build> --with-sheet-rules [--race <race-id>] \
+     | class_census --duplicates <path>"
         .to_owned()
+}
+
+/// SD-36 Epic F1b R2 population scan (`epic-f-class-completion.md` §3b.2/§3b.6): writes
+/// [`codex::rules_core::class_census::DuplicateScanReport`] as JSON to `json_path` and prints a
+/// one-line summary. Uses the process-wide `data/sheet_rules/` package handle -- same contract
+/// as `--sheet-dump --with-sheet-rules`: a named `PACKAGE_ERROR`-shaped exit, never a silent
+/// empty scan, when the package cannot load.
+fn run_duplicates(json_path: &str) -> i32 {
+    let fixture = match load_sweep_fixture() {
+        Ok(fixture) => fixture,
+        Err(message) => {
+            eprintln!("class_census: {message}");
+            return 1;
+        }
+    };
+    let package = match codex::rules_core::sheet_rule_package::package() {
+        Ok(package) => package,
+        Err(reason) => {
+            eprintln!("class_census: data/sheet_rules/ package did not load: {reason}");
+            return 1;
+        }
+    };
+    let entries = census();
+    let report = duplicate_scan(&fixture, &entries, package);
+
+    let json = match serde_json::to_string_pretty(&report) {
+        Ok(json) => json,
+        Err(e) => {
+            eprintln!("class_census: could not serialize the duplicate-scan report: {e}");
+            return 1;
+        }
+    };
+    if let Err(e) = std::fs::write(json_path, json) {
+        eprintln!("class_census: could not write {json_path}: {e}");
+        return 1;
+    }
+    println!(
+        "population={:?} builds_scanned={} facets_scanned={} before_principal_mismatches={} \
+         after_matched={} after_ambiguous={} after_none={} changed_by_r2={}",
+        report.population,
+        report.builds_scanned,
+        report.facets_scanned,
+        report.before_principal_mismatches,
+        report.after_matched,
+        report.after_ambiguous,
+        report.after_none,
+        report.changed_by_r2
+    );
+    0
 }
 
 fn main() {
@@ -400,6 +450,7 @@ fn main() {
     let mut sheet_dump_arg: Option<String> = None;
     let mut with_sheet_rules = false;
     let mut race_override: Option<String> = None;
+    let mut duplicates_path: Option<String> = None;
 
     let mut i = 0;
     while i < args.len() {
@@ -432,6 +483,14 @@ fn main() {
                 race_override = Some(value.clone());
                 i += 2;
             }
+            "--duplicates" => {
+                let Some(value) = args.get(i + 1) else {
+                    eprintln!("class_census: --duplicates needs an output path\n{}", usage());
+                    std::process::exit(2);
+                };
+                duplicates_path = Some(value.clone());
+                i += 2;
+            }
             other => {
                 eprintln!("class_census: unknown argument {other:?}\n{}", usage());
                 std::process::exit(2);
@@ -441,6 +500,8 @@ fn main() {
 
     let exit_code = if let Some(raw) = sheet_dump_arg {
         run_sheet_dump(&raw, with_sheet_rules, race_override.as_deref())
+    } else if let Some(path) = duplicates_path {
+        run_duplicates(&path)
     } else if let Some(path) = json_path {
         run_json(&path)
     } else {

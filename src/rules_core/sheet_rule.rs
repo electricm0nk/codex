@@ -1095,6 +1095,14 @@ impl SheetRulePackage {
         self.rules.values().filter(move |r| split_rule_id(&r.id).1 == kind)
     }
 
+    /// Every distinct slug held under `kind` (one per record file, no `#` siblings, several
+    /// books may share a slug -- this yields it once). The candidate pool
+    /// [`crate::rules_core::sheet_line_join::rule_for_explanation`] searches when it has no
+    /// exact slug to hand `find` directly.
+    pub fn slugs_of_kind<'a>(&'a self, kind: &str) -> impl Iterator<Item = &'a str> + 'a {
+        self.by_kind_slug.get(kind).into_iter().flat_map(|m| m.keys().map(String::as_str))
+    }
+
     /// The siblings a record file carries alongside its principal rule (`id#suffix`).
     fn siblings_of<'a>(&'a self, id: &str) -> Vec<&'a RuleId> {
         let prefix = format!("{id}#");
@@ -1957,20 +1965,15 @@ pub fn held_set(package: &SheetRulePackage, seed: &HeldSeed, facts: &CharacterFa
             add(&mut held, id, HeldRule::default());
         }
     }
+    // SD-36 Epic F1b R2 (`epic-f-class-completion.md` §3b.2, review finding 2): the mechanical
+    // facet-to-rule join, corrected -- see `sheet_line_join::rule_for_explanation`'s own doc
+    // comment for why the old exact-tail walk this replaced was systematically wrong. Both
+    // `Ambiguous` and `None` mean the same thing here: no converted rule for this facet, the
+    // bespoke explanation keeps printing alone and R3's "who wins" question never arises.
     for (class, explanation_id) in &seed.class_features {
-        let rest = explanation_id.strip_prefix("class_feature.").unwrap_or(explanation_id);
-        let segs: Vec<&str> = rest.split('.').collect();
-        let mut found = None;
-        'outer: for i in 0..segs.len() {
-            let tail = segs[i..].join("_");
-            for candidate in [format!("{class}_{tail}"), tail.clone()] {
-                if let Some(id) = package.find("class_feature", &candidate) {
-                    found = Some(id.clone());
-                    break 'outer;
-                }
-            }
-        }
-        if let Some(id) = found {
+        if let crate::rules_core::sheet_line_join::JoinResult::Matched(id) =
+            crate::rules_core::sheet_line_join::rule_for_explanation(package, class, explanation_id)
+        {
             add(&mut held, &id, HeldRule { holder_class: Some(class.clone()), ..Default::default() });
         }
     }
@@ -2447,6 +2450,73 @@ mod evaluate_tests {
         let ids: Vec<&str> = lines.iter().map(|l| l.id.as_str()).collect();
         assert_eq!(ids, vec!["core_rulebook:class_feature:by_fact", "core_rulebook:class_feature:granted", "core_rulebook:feat:seed", "core_rulebook:feat:waiver"], "grouped by kind then label; the waived rule is off the sheet");
         assert_eq!(lines[1].printed, "2");
+    }
+
+    /// SD-36 Epic F1b R2 (review finding 2): `held_set`'s facet-to-rule join now goes through
+    /// `sheet_line_join::rule_for_explanation`. A facet that joins holds and prints its rule
+    /// exactly once; a facet that cannot join mechanically (`knockout_dc` has no rule
+    /// `brawler_knockout_dc`) does NOT fall back to the class's own PRINCIPAL rule
+    /// (`advanced_class_guide:class_feature:brawler`, kept unheld here on purpose) the way the
+    /// old naive tail-walk used to -- and, critically, failing to join never disturbs a
+    /// DIFFERENT rule this build holds through an unrelated path (the seeded feat here): an
+    /// unjoinable facet is reported by the population scan, never silently dropping or removing
+    /// another line.
+    #[test]
+    fn an_unjoinable_facet_never_falls_back_to_the_class_principal_and_never_disturbs_other_held_rules() {
+        let mut package = SheetRulePackage::new();
+        let mut principal = rule_with_value(SheetValue::Text);
+        principal.id = "advanced_class_guide:class_feature:brawler".into();
+        let mut knockout = rule_with_value(SheetValue::Text);
+        knockout.id = "advanced_class_guide:class_feature:brawler_knockout".into();
+        let mut unrelated = rule_with_value(SheetValue::Text);
+        unrelated.id = "core_rulebook:feat:acrobatic".into();
+        for r in [principal, knockout, unrelated] {
+            package.insert_rule(r);
+        }
+        package.finish();
+        let seed = HeldSeed {
+            classes: vec![("brawler".into(), 1)],
+            feats: vec!["acrobatic".into()],
+            // The unjoinable facet: no rule in this package shares `brawler` PLUS this
+            // facet's own next word ("unrelated") -- must join to nothing, never to the
+            // `brawler` principal above, and never to `brawler_knockout` (a real stem match
+            // for a DIFFERENT facet, see the sibling test below, but not this one).
+            class_features: vec![("brawler".into(), "class_feature.acg.brawler.unrelated_thing".into())],
+            ..Default::default()
+        };
+        let facts = CharacterFacts::default();
+        let held = held_set(&package, &seed, &facts);
+        assert!(!held.holds("advanced_class_guide:class_feature:brawler"), "the class principal is never a fallback for an unjoined facet");
+        assert!(!held.holds("advanced_class_guide:class_feature:brawler_knockout"), "an unrelated real rule is not a fallback either");
+        assert!(held.holds("core_rulebook:feat:acrobatic"), "an unjoinable facet must not disturb a rule held through an unrelated path");
+        let lines = render_sheet(&package, &seed, &facts);
+        let ids: Vec<&str> = lines.iter().map(|l| l.id.as_str()).collect();
+        assert_eq!(ids, vec!["core_rulebook:feat:acrobatic"], "only the unrelated rule prints; the unjoinable facet contributes no line of its own here (the bespoke explanation, not this join, is what still shows its number)");
+    }
+
+    /// The corrected join finds a real, more specific rule when one exists, and it prints
+    /// exactly once (`held_set`'s `add` already refuses a second insert of the same rule id --
+    /// R1's "nothing to build").
+    #[test]
+    fn a_joinable_facet_holds_and_prints_its_rule_exactly_once() {
+        let mut package = SheetRulePackage::new();
+        let mut principal = rule_with_value(SheetValue::Text);
+        principal.id = "advanced_class_guide:class_feature:brawler".into();
+        let mut knockout = rule_with_value(SheetValue::Text);
+        knockout.id = "advanced_class_guide:class_feature:brawler_knockout".into();
+        for r in [principal, knockout] {
+            package.insert_rule(r);
+        }
+        package.finish();
+        let seed = HeldSeed {
+            classes: vec![("brawler".into(), 1)],
+            class_features: vec![("brawler".into(), "class_feature.acg.brawler.knockout".into())],
+            ..Default::default()
+        };
+        let facts = CharacterFacts::default();
+        let lines = render_sheet(&package, &seed, &facts);
+        let ids: Vec<&str> = lines.iter().map(|l| l.id.as_str()).collect();
+        assert_eq!(ids, vec!["advanced_class_guide:class_feature:brawler_knockout"], "joins to the specific rule, not the principal, and prints once");
     }
 
     /// The `Var` fold: two Racial +2s to one variable stack (4), two Enhancement bonuses take

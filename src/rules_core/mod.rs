@@ -48,6 +48,7 @@ pub mod race_resolver;
 pub mod racial_sla;
 pub mod rules_tables;
 pub mod shape_b_v1;
+pub mod sheet_line_join;
 pub mod sheet_rule;
 pub mod sheet_rule_catalog;
 pub mod sheet_rule_package;

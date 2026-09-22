@@ -683,6 +683,188 @@ pub fn sheet_dump_with_rules_text(
 }
 
 // ---------------------------------------------------------------------------
+// SD-36 Epic F1b R2/population scan (`epic-f-class-completion.md` §3b.2,
+// §3b.6 "population scan"): `class_census --duplicates` reports, per
+// facet-to-rule join, what the OLD (pre-R2) naive tail walk resolved to
+// versus what the CORRECTED join (`sheet_line_join::rule_for_explanation`)
+// resolves to -- a precise, mechanical measurement of exactly which facets
+// the fix changes the answer for, over a real, named population. This
+// replaces the coarse label-text proxy the print-paths investigation used
+// (`desktop-print-paths.md` §4), which existed only because R2 did not
+// exist yet on this branch.
+// ---------------------------------------------------------------------------
+
+/// Measurement-only reproduction of `HeldSeed::from_character`'s PRE-R2 exact-tail walk
+/// (`sheet_rule.rs`, before SD-36 Epic F1b): tries `{class}_{tail}` then bare `{tail}` for each
+/// leading run of the remaining dot-segments, longest first, first exact-slug hit wins. Kept
+/// here, never in production code, solely so this scan can report how many facets the R2 fix
+/// actually changes the answer for -- it decides nothing about what holds or prints.
+fn pre_r2_naive_join(package: &crate::rules_core::sheet_rule::SheetRulePackage, class: &str, explanation_id: &str) -> Option<crate::rules_core::sheet_rule::RuleId> {
+    let rest = explanation_id.strip_prefix("class_feature.").unwrap_or(explanation_id);
+    let segs: Vec<&str> = rest.split('.').collect();
+    for i in 0..segs.len() {
+        let tail = segs[i..].join("_");
+        for candidate in [format!("{class}_{tail}"), tail.clone()] {
+            if let Some(id) = package.find("class_feature", &candidate) {
+                return Some(id.clone());
+            }
+        }
+    }
+    None
+}
+
+/// One bespoke class-feature facet's before/after join, in one build.
+#[derive(Debug, Clone, serde::Serialize)]
+pub struct DuplicateFacetRow {
+    pub build: String,
+    pub class: String,
+    pub explanation_id: String,
+    /// The PRE-R2 naive walk's answer, if any.
+    pub before: Option<String>,
+    /// `true` when `before` is the class's own PRINCIPAL `class_feature` rule (the exact
+    /// mis-join review finding 2 names -- a facet id collapsing onto `<class_slug>` with no
+    /// feature-word suffix). This is what would print a spurious, duplicate class_feature line
+    /// for this class today.
+    pub before_is_principal: bool,
+    /// The CORRECTED join's answer: `"matched:<id>"`, `"ambiguous:<id>|<id>|..."`, or `"none"`.
+    pub after: String,
+    /// `true` when `before != after` (in the `Some(id) == JoinResult::Matched(id)` sense) --
+    /// the R2 fix changed this facet's join.
+    pub changed: bool,
+}
+
+/// Every `class_feature.*` facet a build's chassis grounds, before/after R2, for the given
+/// (already-computed) build.
+pub fn scan_duplicates_for_build(
+    package: &crate::rules_core::sheet_rule::SheetRulePackage,
+    build_label: &str,
+    input: &CharacterInput,
+    computation: &crate::rules_core::pilot_compute::PilotBaseChassisComputation,
+) -> Vec<DuplicateFacetRow> {
+    use crate::rules_core::sheet_line_join::{JoinResult, rule_for_explanation};
+    use crate::rules_core::sheet_rule::HeldSeed;
+
+    let seed = HeldSeed::from_character(input, computation);
+    let mut rows = Vec::with_capacity(seed.class_features.len());
+    for (class, explanation_id) in &seed.class_features {
+        let before = pre_r2_naive_join(package, class, explanation_id);
+        let principal = package.find("class_feature", class).cloned();
+        let before_is_principal = before.is_some() && before == principal;
+        let after_result = rule_for_explanation(package, class, explanation_id);
+        let after = match &after_result {
+            JoinResult::Matched(id) => format!("matched:{id}"),
+            JoinResult::Ambiguous(ids) => format!("ambiguous:{}", ids.join("|")),
+            JoinResult::None => "none".to_owned(),
+        };
+        let changed = match (&before, &after_result) {
+            (Some(b), JoinResult::Matched(a)) => b != a,
+            (Some(_), _) => true,
+            (None, JoinResult::Matched(_)) => true,
+            (None, _) => false,
+        };
+        rows.push(DuplicateFacetRow {
+            build: build_label.to_owned(),
+            class: class.clone(),
+            explanation_id: explanation_id.clone(),
+            before,
+            before_is_principal,
+            after,
+            changed,
+        });
+    }
+    rows
+}
+
+/// The scan's aggregate counts, plus every row (for the receipt and for naming unjoinable
+/// pairs). `builds_scanned` and `facets_scanned` are this report's own stated denominators --
+/// no figure here is quoted without one.
+#[derive(Debug, Clone, Default, serde::Serialize)]
+pub struct DuplicateScanReport {
+    pub population: String,
+    pub builds_scanned: usize,
+    pub facets_scanned: usize,
+    pub before_principal_mismatches: usize,
+    pub after_matched: usize,
+    pub after_ambiguous: usize,
+    pub after_none: usize,
+    pub changed_by_r2: usize,
+    pub rows: Vec<DuplicateFacetRow>,
+}
+
+fn summarize(population: &str, builds_scanned: usize, rows: Vec<DuplicateFacetRow>) -> DuplicateScanReport {
+    let before_principal_mismatches = rows.iter().filter(|r| r.before_is_principal).count();
+    let after_matched = rows.iter().filter(|r| r.after.starts_with("matched:")).count();
+    let after_ambiguous = rows.iter().filter(|r| r.after.starts_with("ambiguous:")).count();
+    let after_none = rows.iter().filter(|r| r.after == "none").count();
+    let changed_by_r2 = rows.iter().filter(|r| r.changed).count();
+    DuplicateScanReport {
+        population: population.to_owned(),
+        builds_scanned,
+        facets_scanned: rows.len(),
+        before_principal_mismatches,
+        after_matched,
+        after_ambiguous,
+        after_none,
+        changed_by_r2,
+        rows,
+    }
+}
+
+/// `class_census --duplicates`'s population: every NON-prestige census entry at its own
+/// `max_level` (the same denominator [`sweep_non_prestige`] already sweeps), every prestige
+/// class's carrier build at its own `max_level` (one carrier per class -- the first one
+/// [`determine_carriers`] names, when it can be named at all), and every row of the committed
+/// multiclass mix panel ([`load_mix_panel`]). A prestige class whose carrier cannot be
+/// determined contributes no row and is not counted in `builds_scanned` -- honest, not silently
+/// padded.
+pub fn duplicate_scan(
+    fixture: &CharacterInput,
+    entries: &BTreeMap<String, ClassCensusEntry>,
+    package: &crate::rules_core::sheet_rule::SheetRulePackage,
+) -> DuplicateScanReport {
+    let mut rows = Vec::new();
+    let mut builds = 0usize;
+
+    for e in entries.values().filter(|e| !e.is_prestige) {
+        let slug = e.class_id.strip_prefix("class:").unwrap_or(&e.class_id);
+        let input = input_for(fixture, slug, e.max_level);
+        let receipt = build_pilot_headless_receipt(&input);
+        builds += 1;
+        rows.extend(scan_duplicates_for_build(package, &format!("{slug}:{}", e.max_level), &input, &receipt.computation));
+    }
+
+    for e in entries.values().filter(|e| e.is_prestige) {
+        let slug = e.class_id.strip_prefix("class:").unwrap_or(&e.class_id).to_owned();
+        let Some(gate) = prestige_applies_gate(&e.books, &slug) else { continue };
+        let Ok(carriers) = determine_carriers(&gate) else { continue };
+        let Some(carrier) = carriers.into_iter().next() else { continue };
+        let ge = evaluate_carrier(carrier, &gate, e.max_level);
+        let input = input_for_mix(fixture, &[(carrier.slug(), ge.carrier_level), (slug.as_str(), e.max_level)]);
+        let receipt = build_pilot_headless_receipt(&input);
+        builds += 1;
+        let label = format!("{}:{}+{}:{}", carrier.slug(), ge.carrier_level, slug, e.max_level);
+        rows.extend(scan_duplicates_for_build(package, &label, &input, &receipt.computation));
+    }
+
+    if let Ok(panel) = load_mix_panel() {
+        for row in &panel {
+            let classes: Vec<(&str, u8)> = row.classes.iter().map(|(c, l)| (c.as_str(), *l)).collect();
+            let input = input_for_mix(fixture, &classes);
+            let receipt = build_pilot_headless_receipt(&input);
+            builds += 1;
+            let label = format!("mix_panel::{}", row.key);
+            rows.extend(scan_duplicates_for_build(package, &label, &input, &receipt.computation));
+        }
+    }
+
+    summarize(
+        "every non-prestige census entry @ own max_level + every prestige class's first-named carrier @ own max_level + the full multiclass mix panel",
+        builds,
+        rows,
+    )
+}
+
+// ---------------------------------------------------------------------------
 // F0c: prestige classes in the census -- the deterministic carrier build.
 //
 // A prestige class is never a legitimate `Computed` measurement ALONE (§2 of
