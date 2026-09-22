@@ -632,3 +632,39 @@ Nothing above was deleted; this is inventory only, for the operator to action af
     Restoration step for the update --force incident above. The thin
     AST-only build remains parked at graphify-out/2026-09-20-ast-force-run/
     for reference; it was not deleted, only removed from the live path.
+
+---
+
+## Epic F1/F1b landed (2026-09-22)
+
+- merge_sha: d56a93d1d8 ("merge(sd36,epic-f1): converter link repair, gated grants, weapon sets, de-dup join, repaired rule package (Epic F1/F1b)")
+- post_merge_fix_sha: 6ae4093252 ("fix(sd36,epic-f1): post-merge verify fixes round 1")
+- branch: tranche/16
+- verify_log: /tmp/claude-1000/-home-ubuntu-workspace-repos-codex/6badc5b8-ae3b-4359-80c5-cd0b1598973e/scratchpad/sd36/f1/verify-f1-2.log
+- verify_result: "verify.sh full: PASS (51/51 stages, including token-coverage, clippy, class-census, corpus-sweep, corpus-trap-audit, supersession-gate)"
+- stage_receipts: docs/release/SD-36-consolidation/artifacts/epic-f/ (stage3/ blast-radius classify + receipt; scripts/ structural-diff tooling and its own deltas JSON; census-f0*.json; mix-panel-histogram.md)
+- headline_numbers:
+  - links_closed: 4456 (converter child-category link repair, corpus-wide)
+  - links_unresolved_remaining: 7469 (by mechanism, post-repair)
+  - edges_added: 4491
+  - shadowed_rules_recovered: 369
+  - changed_sheet_values: 33 (all cited to PF1 text — Barbarian/Bloodrager Greater Rage and Mighty Rage, Track, Precise Strike now match the Core Rulebook)
+  - join_population_builds: 313
+- gate_checks:
+  - pcgen_residue_gate: "python3 scripts/pcgen_residue_gate.py --check --closure" → PASS (0 hits, verdict=PASS)
+  - sheet_rule_convert_check: "cargo run --locked --quiet -j 8 -p codex-ingest --bin sheet_rule_convert -- --check" → exit 0
+  - class_status_table_check: "python3 scripts/gen_class_status_table.py --check" → OK, unchanged (ids=135 computed=42, matches docs/architecture/status.md and README.md "42 of 61")
+  - frozen_corpus_record_count: 49,450 — unmoved this cycle
+  - data/corpus/** and site/**: untouched this cycle
+- receipt_note: >
+    F1 (converter link repair, Option A, + weapon proficiency reader) and
+    F1b (print-path reconciliation) landed together in one merge to
+    tranche/16, followed by one post-merge verify-fix round that took the
+    branch from token-coverage FAIL (root cause: stale coverage baseline
+    after the link-repair change, see
+    docs/retro/events/sd31-transcribe.jsonl id
+    1790078285617-sd31-transcribe-9fead3) to full verify.sh PASS (id
+    1790082796980-sd31-transcribe-28bec4). F2-F5 remain open on this
+    branch; D2-D6 bundle closure (including the final graphify run) stays
+    blocked on F5 per the standing "graphify runs against the FINAL repo
+    state" rule.
