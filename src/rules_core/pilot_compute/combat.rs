@@ -888,8 +888,8 @@ pub(super) fn compute_combat_baseline(
     // applies -- but a future deity surface must revisit this, not assume
     // these two classes are always non-proficient.
     let longsword = equipped_weapon_stat_block(LONGSWORD_ITEM_ID);
-    let proficiency_verdict =
-        longsword.and_then(|weapon| character_is_proficient_with(input, weapon));
+    let full_verdict = longsword.map(|weapon| character_weapon_proficiency(input, weapon));
+    let proficiency_verdict = full_verdict.as_ref().and_then(WeaponProficiencyVerdict::proficient);
     let nonproficiency_penalty = match proficiency_verdict {
         Some(false) => WEAPON_NONPROFICIENCY_ATTACK_PENALTY,
         Some(true) => 0,
@@ -898,16 +898,23 @@ pub(super) fn compute_combat_baseline(
         None => 0,
     };
     if proficiency_verdict.is_none() {
+        // SD-36 Epic F step 2: the reason is the converted-record reader's own
+        // (`class_proficiency_sheet_rules`), per class -- a class with neither a
+        // static row nor a Known converted answer.
+        let reason = match &full_verdict {
+            Some(WeaponProficiencyVerdict::Unknown { reason }) => reason.clone(),
+            _ => format!("{LONGSWORD_ITEM_ID} is missing from the weapon table"),
+        };
         diagnostics.push(ComputationDiagnostic {
             id: "combat.baseline_weapon_proficiency_unknown".to_owned(),
             message: format!(
                 "the baseline melee attack bonus applies PF1's \
                  {WEAPON_NONPROFICIENCY_ATTACK_PENALTY} nonproficiency penalty only when \
                  this character's proficiency with {LONGSWORD_ITEM_ID} is actually known, \
-                 and it is not: at least one class in {:?} has no ingested \
-                 rules_tables::crb::weapon_tables::CLASS_WEAPON_PROFICIENCIES record (or the \
-                 Longsword itself is missing from the weapon table), so the attack total \
-                 below is NOT claimed to be correct",
+                 and it is not: at least one class in {:?} has neither a \
+                 rules_tables::crb::weapon_tables::CLASS_WEAPON_PROFICIENCIES row nor a Known \
+                 answer from the converted rule package ({reason}), so the attack total below \
+                 is NOT claimed to be correct",
                 input
                     .chosen
                     .class_levels
@@ -968,6 +975,13 @@ pub(super) fn compute_combat_baseline(
                  combat.baseline_weapon_proficiency_unknown)"
             .to_owned(),
     };
+    // Paper-sheet doctrine: a converted grant the class-level facts cannot
+    // decide is printed with its condition, never counted. Empty for every
+    // static-row class.
+    let nonproficiency_detail = format!(
+        "{nonproficiency_detail}{}",
+        full_verdict.as_ref().map(WeaponProficiencyVerdict::printed_detail).unwrap_or_default()
+    );
 
     let class_label = class_summary_label(input);
     explanations.push(ComputationExplanation {
@@ -1986,19 +2000,15 @@ mod weapon_finesse_tests {
 /// SD-31 wave 27 (chassis-coverage census, `cargo test
 /// ultimate_combat_chassis_gate_tests`, 4 passed).
 ///
-/// **What is genuinely still open, and why this is NOT a chassis/dispatch
-/// gap:** Samurai still never reaches `Computed` (Gunslinger does, and as
-/// of SD-34 wave 34 lane C, so does Ninja), and the one remaining
-/// claim-blocker is `combat.baseline_weapon_proficiency_unknown` --
-/// `rules_tables::crb::weapon_tables::CLASS_WEAPON_PROFICIENCIES` carries
-/// no row for Samurai (`weapon_tables.rs`'s own doc comment explains why:
-/// Samurai's real corpus token, `AUTO:WEAPONPROF|TYPE=Samurai`, is a weapon
-/// TYPE selector this table has no representation for at all -- an
-/// all-empty row would be indistinguishable from a real "proficient with
-/// nothing" claim, so none is added). `gunslinger_and_ninja_reach_computed_
-/// status_samurai_does_not` below pins exactly this shape. Closing Samurai
-/// would need this table's schema to grow a weapon-TYPE-selector
-/// representation first, a larger change than a transcription.
+/// **Samurai's proficiency (closed by SD-36 Epic F step 2):**
+/// `rules_tables::crb::weapon_tables::CLASS_WEAPON_PROFICIENCIES` still
+/// carries no row for Samurai -- its real corpus token,
+/// `AUTO:WEAPONPROF|TYPE=Samurai`, is a weapon TYPE selector that table has
+/// no representation for. The converted record answers instead: the
+/// converter expands the selector to a `WeaponSet` (Katana, Naginata,
+/// Wakizashi) at ingest, and `character_weapon_proficiency` falls back to
+/// `class_proficiency_sheet_rules` for a class without a static row.
+/// `all_three_uc_classes_reach_computed_status_at_level_5` below pins it.
 #[cfg(test)]
 mod ultimate_combat_chassis_gate_tests {
     use super::{
@@ -2045,21 +2055,8 @@ mod ultimate_combat_chassis_gate_tests {
     /// `defense.total_save.unsupported` / `skill.selected_modifier.unsupported`
     /// blockers this gate used to cause are GONE for all three classes.
     ///
-    /// This does NOT claim every one of the three now reaches `Computed`.
-    /// Samurai does not, at level 5: the shared fixture this test (and the
-    /// sibling `class_ultimate_combat.rs` tests) borrows is built as a
-    /// Fighter, but proficiency is resolved from `CLASS_WEAPON_
-    /// PROFICIENCIES` keyed on `class_id`, not from the fixture's own
-    /// stored data, so re-pointing `class_levels` at a class this table
-    /// does not cover leaves a genuine, SEPARATE `combat.baseline_weapon_
-    /// proficiency_unknown` gap -- a proficiency-model concern, not a
-    /// chassis-recognition one. Gunslinger's own proficiency gap was closed
-    /// the wave this gate first widened (its corpus record is unambiguous:
-    /// Simple+Martial tiers); Ninja's was closed by SD-34 wave 34 lane C
-    /// (a real, if partial, named-weapon transcription -- see
-    /// `weapon_tables.rs`'s own doc comment); Samurai's corpus record
-    /// carries only a weapon-TYPE selector this table has no representation
-    /// for, so it alone is asserted to stay blocked here.
+    /// Whether each class then reaches `Computed` is pinned separately by
+    /// `all_three_uc_classes_reach_computed_status_at_level_5`.
     #[test]
     fn the_four_chassis_integration_blockers_are_gone_for_all_three_uc_classes() {
         for class_id in [GUNSLINGER_CLASS_ID, NINJA_CLASS_ID, SAMURAI_CLASS_ID] {
@@ -2085,22 +2082,24 @@ mod ultimate_combat_chassis_gate_tests {
         }
     }
 
-    /// Gunslinger and (as of SD-34 wave 34 lane C) Ninja both reach
-    /// `Computed` at level 5: their weapon proficiency IS resolved
-    /// (`weapon_tables.rs`'s `class:gunslinger`/`class:ninja` entries),
-    /// unlike Samurai, which still carries the `combat.baseline_weapon_
-    /// proficiency_unknown` claim-blocker (its corpus record is a weapon
-    /// TYPE selector this table has no representation for). Renamed from
-    /// `gunslinger_alone_reaches_computed_status` -- the word "alone" is
-    /// load-bearing (wave-20 integration fix, `OPEN-ISSUES.md` row 331): a
-    /// version of this test naming only Gunslinger would have stayed green
-    /// silently under a stale name the moment Ninja was fixed, exactly the
-    /// failure shape this test itself was built to prevent for the next
-    /// class widening too.
+    /// All three UC classes reach `Computed` at level 5. Gunslinger and (as
+    /// of SD-34 wave 34 lane C) Ninja through their static
+    /// `weapon_tables.rs` rows; Samurai, which has no static row, through
+    /// the converted record (SD-36 Epic F step 2: its
+    /// `samurai_proficiencies` grant plus the Simple/Martial tiers its class
+    /// line grants, read by `class_proficiency_sheet_rules`) -- before that
+    /// fallback it stayed blocked on `combat.baseline_weapon_proficiency_
+    /// unknown`. Renamed from `gunslinger_and_ninja_reach_computed_status_
+    /// samurai_does_not`; the name stays load-bearing (wave-20 integration
+    /// fix, `OPEN-ISSUES.md` row 331).
     #[test]
-    fn gunslinger_and_ninja_reach_computed_status_samurai_does_not() {
+    fn all_three_uc_classes_reach_computed_status_at_level_5() {
         use super::HeadlessReceiptStatus;
-        for (class_id, name) in [(GUNSLINGER_CLASS_ID, "gunslinger"), (NINJA_CLASS_ID, "ninja")] {
+        for (class_id, name) in [
+            (GUNSLINGER_CLASS_ID, "gunslinger"),
+            (NINJA_CLASS_ID, "ninja"),
+            (SAMURAI_CLASS_ID, "samurai"),
+        ] {
             let receipt = build_pilot_headless_receipt(&single_class(class_id, 5));
             let blocking: Vec<String> = receipt
                 .computation
@@ -2113,19 +2112,6 @@ mod ultimate_combat_chassis_gate_tests {
                 receipt.status,
                 HeadlessReceiptStatus::Computed,
                 "{name} level 5 must reach Computed, blockers: {blocking:?}"
-            );
-        }
-
-        {
-            let (class_id, name) = (SAMURAI_CLASS_ID, "samurai");
-            let other_receipt = build_pilot_headless_receipt(&single_class(class_id, 5));
-            assert_ne!(
-                other_receipt.status,
-                HeadlessReceiptStatus::Computed,
-                "{name} level 5 must NOT reach Computed (still blocked on \
-                 combat.baseline_weapon_proficiency_unknown) -- if this now fails, this test's \
-                 name and the underlying scoping decision both need revisiting, not just this \
-                 assertion"
             );
         }
     }

@@ -2488,8 +2488,11 @@ pub(crate) fn equipped_weapon_stat_block(
 pub(crate) const WEAPON_NONPROFICIENCY_ATTACK_PENALTY: i16 = -4;
 
 /// Whether this character is proficient with `weapon`, or `None` when at
-/// least one class in the mix has no ingested proficiency record and the
-/// question therefore cannot be answered honestly.
+/// least one class in the mix has no answer -- neither a static
+/// `CLASS_WEAPON_PROFICIENCIES` row nor a Known answer from the converted
+/// record -- and the question therefore cannot be answered honestly.
+/// [`character_weapon_proficiency`] is the same verdict with its printed
+/// conditions and its Unknown reason; this is its boolean projection.
 ///
 /// **`None` means "unknown", never "not proficient"** --
 /// `class_weapon_proficiency`'s own contract. A caller that collapsed
@@ -2498,34 +2501,88 @@ pub(crate) const WEAPON_NONPROFICIENCY_ATTACK_PENALTY: i16 = -4;
 /// fabricated-number failure mode this whole fix exists to remove, just
 /// pointing the other way.
 ///
+/// v0.6 alpha swarm, risks item #89 / tasks #80+#86 (2026-07-29); feat
+/// grants added by the combat feat-effects slice (2026-07-29); the
+/// converted-record fallback by SD-36 Epic F step 2.
+pub(crate) fn character_is_proficient_with(
+    input: &CharacterInput,
+    weapon: &weapon_tables::WeaponTableEntry,
+) -> Option<bool> {
+    character_weapon_proficiency(input, weapon).proficient()
+}
+
+/// One weapon's proficiency verdict for a whole character.
+#[derive(Debug, Clone, PartialEq, Eq)]
+pub(crate) enum WeaponProficiencyVerdict {
+    /// Decided. `printed` carries every converted grant the class-level
+    /// facts could not decide (a gated grant, a player's pick, a deity's
+    /// weapon), each with its condition: printed on the sheet, never
+    /// counted (paper-sheet doctrine).
+    Known { proficient: bool, printed: Vec<String> },
+    /// Not decidable from what the engine holds; `reason` names why, per
+    /// class, and reaches the claim-blocking diagnostic verbatim.
+    Unknown { reason: String },
+}
+
+impl WeaponProficiencyVerdict {
+    pub(crate) fn proficient(&self) -> Option<bool> {
+        match self {
+            WeaponProficiencyVerdict::Known { proficient, .. } => Some(*proficient),
+            WeaponProficiencyVerdict::Unknown { .. } => None,
+        }
+    }
+
+    /// `" Printed, not counted: ..."` for the explanation text, or empty.
+    pub(crate) fn printed_detail(&self) -> String {
+        match self {
+            WeaponProficiencyVerdict::Known { printed, .. } if !printed.is_empty() => {
+                format!(" Printed, not counted: {}.", printed.join("; "))
+            }
+            _ => String::new(),
+        }
+    }
+}
+
+/// Whether this character is proficient with `weapon`, with the words the
+/// sheet prints and, when it cannot be decided, the reason.
+///
 /// Multiclass follows PF1's actual rule: proficiency is the UNION across
 /// classes, so a Fighter/Wizard is proficient with everything Fighter is.
 /// A single non-proficient class in the mix must not remove a
-/// proficiency another class genuinely grants.
+/// proficiency another class genuinely grants. A class with no answer
+/// makes the whole verdict Unknown (unchanged from before the fallback).
 ///
 /// **Feats are checked before classes, and before the unknown-class
 /// bail-out.** The three CRB proficiency-granting feats (Simple/Martial/
 /// Exotic Weapon Proficiency) grant proficiency outright, so a character
 /// holding one has a KNOWN answer for that weapon even if some class in
 /// the mix has no ingested record. Checking classes first and returning
-/// `None` would throw away a fact the input states explicitly.
+/// Unknown would throw away a fact the input states explicitly.
 ///
-/// v0.6 alpha swarm, risks item #89 / tasks #80+#86 (2026-07-29); feat
-/// grants added by the combat feat-effects slice (2026-07-29).
-pub(crate) fn character_is_proficient_with(
+/// **Per class, one mechanical rule** (SD-36 Epic F §3.4): the static
+/// `weapon_tables::class_weapon_proficiency` row first (the 42 rows answer
+/// exactly as before); otherwise the converted record
+/// (`class_proficiency_sheet_rules::class_weapon_proficiency_view`), matched
+/// per weapon by [`converted_view_covers_weapon`]; the reader's `Unknown`
+/// stays Unknown and carries its reason.
+pub(crate) fn character_weapon_proficiency(
     input: &CharacterInput,
     weapon: &weapon_tables::WeaponTableEntry,
-) -> Option<bool> {
+) -> WeaponProficiencyVerdict {
+    use crate::rules_core::pilot_compute::class_proficiency_sheet_rules::{
+        class_weapon_proficiency_view, ProficiencyAnswer,
+    };
     let grants = crate::rules_core::feat_effects::weapon_proficiency_grants_from_feats(
         &effective_character_feats(input),
         &input.chosen.selected_choices,
     );
+    let granted = || WeaponProficiencyVerdict::Known { proficient: true, printed: Vec::new() };
     // Simple Weapon Proficiency grants the whole Simple tier, exactly as a
     // class's own `AUTO:WEAPONPROF|TYPE=Simple` does.
     if grants.grants_simple_tier
         && weapon.proficiency == Some(weapon_tables::WeaponProficiency::Simple)
     {
-        return Some(true);
+        return granted();
     }
     // Martial/Exotic Weapon Proficiency name one weapon each. The recorded
     // target is a display name (`weapon:Longsword`), so it joins on the
@@ -2537,17 +2594,95 @@ pub(crate) fn character_is_proficient_with(
         .iter()
         .any(|name| normalize_weapon_identity(name) == normalize_weapon_identity(weapon.key))
     {
-        return Some(true);
+        return granted();
     }
 
     let mut any_proficient = false;
+    let mut printed: Vec<String> = Vec::new();
+    let mut unknown: Vec<String> = Vec::new();
     for class_level in &input.chosen.class_levels {
-        let proficiency = weapon_tables::class_weapon_proficiency(&class_level.class_id)?;
-        if weapon_tables::class_is_proficient_with(proficiency, weapon) {
-            any_proficient = true;
+        if let Some(proficiency) = weapon_tables::class_weapon_proficiency(&class_level.class_id) {
+            if weapon_tables::class_is_proficient_with(proficiency, weapon) {
+                any_proficient = true;
+            }
+            continue;
+        }
+        let slug = crate::rules_core::sheet_rule::id_slug(&class_level.class_id);
+        match class_weapon_proficiency_view(&slug, class_level.level) {
+            ProficiencyAnswer::Unknown { reason } => {
+                unknown.push(format!("{} level {}: {reason}", class_level.class_id, class_level.level));
+            }
+            ProficiencyAnswer::Known(view) => {
+                if converted_view_covers_weapon(&view, weapon) {
+                    any_proficient = true;
+                }
+                printed.extend(
+                    view.printed_conditions.iter().map(|c| format!("{} (converted record): {c}", class_level.class_id)),
+                );
+            }
         }
     }
-    Some(any_proficient)
+    if !unknown.is_empty() {
+        return WeaponProficiencyVerdict::Unknown { reason: unknown.join("; ") };
+    }
+    WeaponProficiencyVerdict::Known { proficient: any_proficient, printed }
+}
+
+/// Whether a class's CONVERTED proficiency answer covers `weapon`. Only
+/// counted grants decide it; `printed_conditions` (a gated grant, a
+/// player's pick, a deity's favored weapon) never do -- the engine holds no
+/// deity fact, and a pick is printed with its choice, not assumed.
+///
+/// - tier: the weapon's `proficiency` facet;
+/// - named: the weapon's `proficiency_name` (the `PROFICIENCY:WEAPON`
+///   namespace a converted `ProfRef::Weapon` carries), case-insensitively
+///   as PCGen matches (`pure_legion_enforcer` names `falchion`);
+/// - group: the weapon's `Weapon Group <x>` facet;
+/// - all-of: every conjunct holds -- a tier, `Melee` or `Ranged`. The reader
+///   already refuses any other conjunct as Unknown, and every converted
+///   conjunction is pinned answerable
+///   (`every_converted_weapon_all_of_conjunct_is_answerable_by_the_weapon_table`);
+///   an unanswerable conjunct here is therefore never counted;
+/// - set: membership by the weapon's own record name (`key`), the same
+///   identifier the converted equipment rules carry as their label.
+pub(crate) fn converted_view_covers_weapon(
+    view: &crate::rules_core::pilot_compute::class_proficiency_sheet_rules::ClassWeaponProficiencyView,
+    weapon: &weapon_tables::WeaponTableEntry,
+) -> bool {
+    use weapon_tables::WeaponProficiency;
+    let tier_of = |tag: &str| match tag {
+        "Simple" => Some(WeaponProficiency::Simple),
+        "Martial" => Some(WeaponProficiency::Martial),
+        "Exotic" => Some(WeaponProficiency::Exotic),
+        _ => None,
+    };
+    if weapon.proficiency.is_some_and(|tier| view.tiers.contains(&tier)) {
+        return true;
+    }
+    if weapon
+        .proficiency_name
+        .is_some_and(|name| view.named.iter().any(|n| n.eq_ignore_ascii_case(name)))
+    {
+        return true;
+    }
+    if weapon
+        .weapon_group
+        .is_some_and(|group| view.groups.iter().any(|g| g.eq_ignore_ascii_case(group)))
+    {
+        return true;
+    }
+    let conjunct_holds = |tag: &String| match tag.as_str() {
+        "Melee" => weapon.is_melee,
+        "Ranged" => weapon.is_ranged,
+        other => tier_of(other).is_some_and(|tier| weapon.proficiency == Some(tier)),
+    };
+    if view.all_of.iter().any(|tags| !tags.is_empty() && tags.iter().all(conjunct_holds)) {
+        return true;
+    }
+    let wanted = normalize_weapon_identity(weapon.key);
+    view.sets
+        .iter()
+        .any(|set| set.members.iter().any(|member| normalize_weapon_identity(member) == wanted))
 }
 
 /// Grounds the per-weapon combat surfaces for every equipped weapon that
@@ -2694,7 +2829,8 @@ pub(super) fn ground_per_weapon_combat_totals(
         // attack bonus for it. Feat grants are already folded in by
         // `character_is_proficient_with`, so Martial/Exotic Weapon
         // Proficiency naming this weapon removes the penalty here.
-        let proficiency_verdict = character_is_proficient_with(input, weapon);
+        let full_verdict = character_weapon_proficiency(input, weapon);
+        let proficiency_verdict = full_verdict.proficient();
         let nonproficiency_penalty = match proficiency_verdict {
             Some(false) => WEAPON_NONPROFICIENCY_ATTACK_PENALTY,
             // `None` is "unknown", never "not proficient" -- refuse to
@@ -2712,11 +2848,16 @@ pub(super) fn ground_per_weapon_combat_totals(
                  Simple/Martial/Exotic Weapon Proficiency feat naming it), so no nonproficiency \
                  penalty applies."
                 .to_owned(),
-            None => " Proficiency is UNRESOLVED (a class in the mix has no ingested proficiency \
-                 record), so no nonproficiency penalty is applied in either direction and this \
-                 total is not claimed to account for one."
-                .to_owned(),
+            None => format!(
+                " Proficiency is UNRESOLVED ({}), so no nonproficiency penalty is applied in \
+                 either direction and this total is not claimed to account for one.",
+                match &full_verdict {
+                    WeaponProficiencyVerdict::Unknown { reason } => reason.as_str(),
+                    WeaponProficiencyVerdict::Known { .. } => "",
+                }
+            ),
         };
+        let proficiency_detail = format!("{proficiency_detail}{}", full_verdict.printed_detail());
 
         let attack_total = base_attack_bonus
             + attack_ability_modifier
@@ -3082,3 +3223,207 @@ mod slayer_dispatch_widening_safety_tests {
     }
 }
 
+
+/// SD-36 Epic F step 2 (`epic-f-class-completion.md` §3.4): a class with no static
+/// `CLASS_WEAPON_PROFICIENCIES` row falls back to the converted record
+/// (`class_proficiency_sheet_rules::class_weapon_proficiency_view`). The 42 static rows keep
+/// first precedence; the reader's `Unknown` keeps the claim-blocking diagnostic and now names
+/// its reason.
+#[cfg(test)]
+mod converted_record_proficiency_fallback_tests {
+    use super::{
+        build_pilot_headless_receipt, character_is_proficient_with, character_weapon_proficiency,
+        CharacterClassLevel, CharacterInput, WeaponProficiencyVerdict,
+    };
+    use crate::rules_core::character_input::load_character_input_fixture;
+    use crate::rules_core::rules_tables::crb::weapon_tables::{
+        self, WeaponProficiency, WeaponTableEntry,
+    };
+    use crate::rules_core::sheet_rule::{Effect, Fact, ProfRef};
+    use crate::rules_core::sheet_rule_package;
+
+    const FIGHTER_LEVEL_1_FIXTURE: &str = include_str!(
+        "../../../tests/fixtures/rules_core/pf1_human_fighter_level1_ge06_deterministic_input.txt"
+    );
+    const PROFICIENCY_UNKNOWN: &str = "combat.baseline_weapon_proficiency_unknown";
+
+    fn single_class(class_id: &str, level: u8) -> CharacterInput {
+        let result = load_character_input_fixture(FIGHTER_LEVEL_1_FIXTURE);
+        assert!(result.diagnostics.is_empty(), "fixture should load cleanly");
+        let mut input = result.character_input.expect("valid fixture");
+        input.chosen.class_levels =
+            vec![CharacterClassLevel { class_id: class_id.to_owned(), level }];
+        input
+    }
+
+    fn crb_weapon(key: &str) -> &'static WeaponTableEntry {
+        weapon_tables::WEAPON_TABLE.iter().find(|w| w.key == key).expect("CRB weapon table row")
+    }
+
+    /// The Katana is an Ultimate Combat weapon the CRB-only `WEAPON_TABLE` has no row for. Its
+    /// stat facts here are read from the CONVERTED equipment record's own tags
+    /// (`ultimate_combat:equipment:katana`), never typed from memory.
+    fn converted_weapon(slug: &str) -> WeaponTableEntry {
+        let package = sheet_rule_package::package().as_ref().expect("converted package loads");
+        let id = package.find("equipment", slug).expect("converted equipment record");
+        let rule = package.rule(id).expect("rule");
+        let has = |tag: &str| rule.tags.iter().any(|t| t == tag);
+        let proficiency = [
+            ("Simple", WeaponProficiency::Simple),
+            ("Martial", WeaponProficiency::Martial),
+            ("Exotic", WeaponProficiency::Exotic),
+        ]
+        .into_iter()
+        .find(|(tag, _)| has(tag))
+        .map(|(_, tier)| tier);
+        let label: &'static str = Box::leak(rule.label.clone().into_boxed_str());
+        let group: Option<&'static str> = rule
+            .tags
+            .iter()
+            .filter_map(|t| t.strip_prefix("Weapon Group "))
+            .find(|g| !g.starts_with("Melee") && !g.starts_with("Ranged"))
+            .map(|g| &*Box::leak(g.to_owned().into_boxed_str()));
+        WeaponTableEntry {
+            key: label,
+            damage_die: "1d8",
+            critical_threat_range_width: 1,
+            critical_multiplier: 2,
+            proficiency_name: Some(label),
+            proficiency,
+            weapon_group: group,
+            is_melee: has("Melee"),
+            is_ranged: has("Ranged"),
+        }
+    }
+
+    fn blocking_ids(input: &CharacterInput) -> Vec<(String, String)> {
+        build_pilot_headless_receipt(input)
+            .computation
+            .diagnostics
+            .into_iter()
+            .filter(|d| d.claim_blocking)
+            .map(|d| (d.id, d.message))
+            .collect()
+    }
+
+    /// Samurai has no static row. Its converted `samurai_proficiencies` record grants the
+    /// `Samurai` weapon set (Katana, Naginata, Wakizashi) expanded at ingest; the Katana is
+    /// Exotic, so only set membership can make a Samurai proficient with it.
+    #[test]
+    fn samurai_at_level_5_is_proficient_with_the_katana_via_its_weapon_set() {
+        assert!(weapon_tables::class_weapon_proficiency("class:samurai").is_none(), "no static row");
+        let input = single_class("class:samurai", 5);
+        let katana = converted_weapon("katana");
+        assert_eq!(katana.proficiency, Some(WeaponProficiency::Exotic), "the converted Katana is Exotic");
+        assert_eq!(character_is_proficient_with(&input, &katana), Some(true));
+        // The Longsword (the combat baseline's one question) is Martial: a Samurai tier grant.
+        assert_eq!(character_is_proficient_with(&input, crb_weapon("Longsword")), Some(true));
+        // An Exotic CRB weapon outside the set stays non-proficient -- a known, not an unknown.
+        assert_eq!(crb_weapon("Dire Flail").proficiency, Some(WeaponProficiency::Exotic));
+        assert_eq!(character_is_proficient_with(&input, crb_weapon("Dire Flail")), Some(false));
+        let blocking = blocking_ids(&input);
+        assert!(!blocking.iter().any(|(id, _)| id == PROFICIENCY_UNKNOWN), "{blocking:?}");
+    }
+
+    /// Commoner (measured, reader-19 caveat 1): its converted proficiency record grants one pick
+    /// into pool `simple_weapon_proficiency_choice`, a pool no converted rule is a member of, so
+    /// the reader cannot see the pick at all -- it is neither counted nor printed. The census
+    /// input seeds no Commoner weapon choice. What the converted record DOES answer is the
+    /// baseline's question: the Longsword (Martial) is covered by none of Commoner's grants,
+    /// and a one-simple-weapon pick never covers a Martial weapon. If the converter ever links
+    /// that pool, the printed-choice assertion below fails and this pin must be revisited.
+    #[test]
+    fn commoner_one_simple_weapon_pick_is_not_visible_so_only_the_longsword_answer_is_pinned() {
+        use crate::rules_core::pilot_compute::class_proficiency_sheet_rules::{
+            class_weapon_proficiency_view, ProficiencyAnswer,
+        };
+        let input = single_class("class:commoner", 1);
+        let ProficiencyAnswer::Known(view) = class_weapon_proficiency_view("commoner", 1) else {
+            panic!("commoner reads Known from the converted record");
+        };
+        assert!(view.tiers.is_empty(), "no blanket tier: {view:?}");
+        assert!(
+            view.printed_conditions.is_empty(),
+            "the simple-weapon pick is not linked in the package, so nothing prints: {view:?}"
+        );
+        assert_eq!(character_is_proficient_with(&input, crb_weapon("Longsword")), Some(false));
+        let blocking = blocking_ids(&input);
+        assert!(!blocking.iter().any(|(id, _)| id == PROFICIENCY_UNKNOWN), "{blocking:?}");
+    }
+
+    /// A class with no static row whose converted answer is Unknown keeps the claim-blocking
+    /// diagnostic, and the answer now carries the reader's reason. Synthetic: a class id with
+    /// no converted record at all (it has no chassis either, so the combat baseline never runs
+    /// for it -- the verdict itself is asserted). Real, through the whole receipt: Magus, whose
+    /// converted closure reaches no weapon grant (its `TYPE=WeaponProfMartial` grant-by-type is
+    /// not converted, `_defects/grant-by-type.json`).
+    #[test]
+    fn a_class_with_no_row_and_incomplete_closure_keeps_the_diagnostic() {
+        let synthetic = single_class("class:fixture_class_with_no_record", 1);
+        match character_weapon_proficiency(&synthetic, crb_weapon("Longsword")) {
+            WeaponProficiencyVerdict::Unknown { reason } => assert!(
+                reason.contains("no converted class record for `fixture_class_with_no_record`"),
+                "{reason}"
+            ),
+            known => panic!("a class with no row and no record must be Unknown, got {known:?}"),
+        }
+
+        assert!(weapon_tables::class_weapon_proficiency("class:magus").is_none());
+        let magus = single_class("class:magus", 1);
+        assert_eq!(character_is_proficient_with(&magus, crb_weapon("Longsword")), None);
+        let blocking = blocking_ids(&magus);
+        let diagnostic = blocking
+            .iter()
+            .find(|(id, _)| id == PROFICIENCY_UNKNOWN)
+            .unwrap_or_else(|| panic!("magus must keep {PROFICIENCY_UNKNOWN}: {blocking:?}"));
+        assert!(
+            diagnostic.1.contains("class:magus level 1: the converted closure of `magus` at level 1 grants no weapon proficiency"),
+            "the diagnostic must name the reader's reason: {}",
+            diagnostic.1
+        );
+    }
+
+    /// Marksman's racial-gated Sling Staff is printed with its condition, never counted
+    /// (paper-sheet doctrine): the condition reaches the baseline attack explanation.
+    #[test]
+    fn a_printed_condition_reaches_the_receipt_as_explanation_text() {
+        let receipt = build_pilot_headless_receipt(&single_class("class:marksman", 1));
+        let baseline = receipt
+            .computation
+            .explanations
+            .iter()
+            .find(|e| e.id == "combat.baseline_melee_attack_bonus")
+            .expect("baseline melee explanation");
+        assert!(
+            baseline.detail.contains("Sling Staff") && baseline.detail.contains("only when"),
+            "{}",
+            baseline.detail
+        );
+    }
+
+    /// Review finding 15 / the step-2 WeaponAllOf contract: every conjunctive selector the
+    /// converter wrote is answerable by the weapon table (a tier, `Melee`, `Ranged`); a
+    /// conjunct the table cannot answer was expanded to a `WeaponSet` at ingest instead.
+    #[test]
+    fn every_converted_weapon_all_of_conjunct_is_answerable_by_the_weapon_table() {
+        let package = sheet_rule_package::package().as_ref().expect("converted package loads");
+        let answerable = ["Simple", "Martial", "Exotic", "Melee", "Ranged"];
+        let mut seen = 0usize;
+        for rule in package.rules.values() {
+            for effect in &rule.grants {
+                let fact = match effect {
+                    Effect::FactGrant(fact) | Effect::GatedFactGrant { fact, .. } => fact,
+                    _ => continue,
+                };
+                if let Fact::Proficiency(ProfRef::WeaponAllOf(tags)) = fact {
+                    seen += 1;
+                    assert!(!tags.is_empty(), "{}: empty conjunction", rule.id);
+                    for tag in tags {
+                        assert!(answerable.contains(&tag.as_str()), "{}: conjunct `{tag}` in {tags:?}", rule.id);
+                    }
+                }
+            }
+        }
+        assert!(seen > 0, "the package carries WeaponAllOf selectors (Marksman's Martial + Ranged)");
+    }
+}

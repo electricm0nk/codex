@@ -1866,10 +1866,14 @@ mod tests {
         );
 
         // The real, engine-derived half of review finding 12d's pin:
-        // `computed` against `status.md`'s own previously published 42 (of
-        // the 61 non-prestige ids), run through the exact shared fixture
-        // every other sweep in this module uses -- never read back off the
-        // artifact JSON this same batch also writes.
+        // `computed` against the published figure (of the 61 non-prestige
+        // ids), run through the exact shared fixture every other sweep in
+        // this module uses -- never read back off the artifact JSON this
+        // same batch also writes. Raised 42 -> 59 by SD-36 Epic F step 2
+        // (the proficiency fallback to the converted record: 17 of the 19
+        // classes blocked only on `combat.baseline_weapon_proficiency_unknown`
+        // gained an answer; antipaladin and magus stay Unknown), logged as a
+        // scripts/retro.py correction.
         let fixture = load_sweep_fixture().expect("shared deterministic fixture must load cleanly");
         let previous_hook = std::panic::take_hook();
         std::panic::set_hook(Box::new(|_| {}));
@@ -1878,8 +1882,8 @@ mod tests {
         assert_eq!(results.len(), 61, "non-prestige sweep population moved off the published 61");
         let computed = results.iter().filter(|r| r.computed()).count();
         assert_eq!(
-            computed, 42,
-            "measured non-prestige Computed count moved off the previously published 42 of 61 -- \
+            computed, 59,
+            "measured non-prestige Computed count moved off the published 59 of 61 -- \
              log a scripts/retro.py correction before raising this pin"
         );
     }
