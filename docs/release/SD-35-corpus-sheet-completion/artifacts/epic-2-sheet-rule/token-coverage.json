@@ -41,7 +41,7 @@
     "family": "prereq",
     "maps_to": "Applies"
    },
-   "carrying": 9998,
+   "carrying": 10001,
    "carrying_non_done": 0,
    "converted_non_done": 0,
    "refused_non_done": 0,
@@ -67,7 +67,7 @@
     "family": "prereq",
     "maps_to": "Applies"
    },
-   "carrying": 133,
+   "carrying": 134,
    "carrying_non_done": 0,
    "converted_non_done": 0,
    "refused_non_done": 0,
@@ -210,7 +210,7 @@
     "family": "bonus",
     "maps_to": "Number(Expr) -> Choice.count of the pool's Choice (the sheet prints the picks, not the pool size)"
    },
-   "carrying": 1774,
+   "carrying": 1775,
    "carrying_non_done": 0,
    "converted_non_done": 0,
    "refused_non_done": 0,
@@ -984,7 +984,7 @@
     "family": "formula",
     "maps_to": "Metadata(ignored-by-sheet)"
    },
-   "carrying": 6501,
+   "carrying": 6502,
    "carrying_non_done": 0,
    "converted_non_done": 0,
    "refused_non_done": 0,
