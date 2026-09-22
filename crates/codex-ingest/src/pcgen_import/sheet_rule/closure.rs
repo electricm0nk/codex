@@ -479,10 +479,54 @@ impl PinnedTree {
                             }
                         }
                         "BONUS" => {
+                            // `CATEGORY:Aligned Class` rows (real PCGen shape, `isg_abilities.lst`:
+                            // Inner Sea Gods' Evangelist prestige class re-exports EVERY base
+                            // class's own level-tracking var under a MIRROR record of the same
+                            // name -- `Fighter`/`Vigilante` `CATEGORY:Aligned Class` both carry
+                            // `BONUS:VAR|<Class>_CFP_Level,<Class>LVL|EvangelistLVL-1`, comma-target
+                            // rows that (correctly, per the fix above) now surface under the base
+                            // class's own `<Class>LVL` name too. That row is never part of the base
+                            // class's OWN record family -- it is a DIFFERENT class's (Evangelist's)
+                            // own progression view -- so it must not count toward whether the base
+                            // class's own `<Class>LVL` needs cross-record `Var` aggregation:
+                            // `class_chassis_sheet_rules.rs`'s `row_at` evaluates a class's base
+                            // chassis with an EMPTY package/held set (its own doc comment: "no
+                            // `Var`, no held-set lookup" is a stated, load-bearing assumption for
+                            // the overwhelming majority of class progressions), so losing the
+                            // in-record fold here turns Fighter's own `Weapon Mastery` capstone
+                            // gate and Vigilante's own base attack bonus into an unconditional 0 --
+                            // an unrelated prestige class an ordinary build never takes must never
+                            // change what a base class's OWN chassis reads. A structural PCGen
+                            // category, excluded the same mechanical way `.MOD` rows are already
+                            // scoped to their own file family above -- never a per-class name.
+                            if id.category == "ALIGNED CLASS" {
+                                continue;
+                            }
                             if let Some(rest) = v.strip_prefix("VAR|")
-                                && let Some((name, _)) = rest.split_once('|')
+                                && let Some((names, _)) = rest.split_once('|')
                             {
-                                define_or_push(&mut bonus_var_index, name, row);
+                                // `BONUS:VAR|<target>|...` names ONE OR MORE comma-separated
+                                // target variables (PCGen's own grammar; `bonus_chain_reader.rs`'s
+                                // `var_contributions` and `mod.rs`'s per-record
+                                // `own_var_contribs` builder both already split on `,` for exactly
+                                // this reason). Indexing the raw, unsplit field as one combined
+                                // key (`"BloodrageStrBonus,BloodrageConBonus"`) instead of the two
+                                // real names it names left `variable_rows("BloodrageStrBonus")`
+                                // and `variable_rows("BloodrageConBonus")` unable to find this row
+                                // at all under EITHER real name -- so `resolve_variable`'s
+                                // same-record-only check saw only the DEFINE row and silently
+                                // folded a genuinely multi-record, level-scaling variable
+                                // (`Bloodrager ~ Bloodrage`'s Str line, gated identically to its
+                                // already-correctly-Var Con/Will siblings by `Bloodrager ~
+                                // Greater/Mighty Bloodrage`) to a flat, never-scaling constant
+                                // (SD-36 Epic F1 merge-readiness blocker 2: the printed sheet
+                                // block showed Con/Will upgrading at 11th/20th level while Str
+                                // silently never did -- an internally inconsistent, PF1-wrong
+                                // read). A mechanical grammar fix, not a per-class one: it applies
+                                // identically to every multi-target `BONUS:VAR` row in the corpus.
+                                for name in names.split(',') {
+                                    define_or_push(&mut bonus_var_index, name, row);
+                                }
                             }
                         }
                         "FACT" => {
@@ -830,5 +874,60 @@ mod tests {
     fn ability_category_parent_tolerates_a_repeated_identical_declaration() {
         let tree = tree_from_lines(vec![("cr_abilitycategories.lst", vec!["ABILITYCATEGORY:Wizard Class Feature\tCATEGORY:Special Ability", "ABILITYCATEGORY:Wizard Class Feature\tCATEGORY:Special Ability"])]);
         assert_eq!(tree.ability_category_parent.get("WIZARD CLASS FEATURE"), Some(&"SPECIAL ABILITY".to_string()));
+    }
+
+    /// SD-36 Epic F1 merge-readiness blocker 2 -- `BONUS:VAR|<target>|...` names ONE OR MORE
+    /// comma-separated target variables (real corpus shape: `Bloodrager ~ Bloodrage`'s own
+    /// `BONUS:VAR|BloodrageStrBonus,BloodrageConBonus|4`, and its `Greater`/`Mighty Bloodrage`
+    /// siblings' `...|2` continuations). `variable_rows` must find this ONE row under BOTH real
+    /// target names, not only under the literal, unsplit `"X,Y"` string -- otherwise
+    /// `resolve_variable`'s same-record-only check sees just the local `DEFINE` row for each name
+    /// and silently folds a genuinely multi-record, level-scaling variable to a flat constant
+    /// (diagnosed: Str froze at the base value while Con/Will, saved only by an unrelated
+    /// external single-var reference elsewhere in the corpus, correctly stayed dynamic).
+    #[test]
+    fn variable_rows_finds_a_comma_separated_bonus_var_target_under_each_of_its_own_names() {
+        let tree = tree_from_lines(vec![(
+            "acg_abilities_class.lst",
+            vec![
+                "Bloodrage\tKEY:Bloodrager ~ Bloodrage\tCATEGORY:Special Ability\tDEFINE:BloodrageStrBonus|0\tDEFINE:BloodrageConBonus|0\tBONUS:VAR|BloodrageStrBonus,BloodrageConBonus|4",
+                "Greater Bloodrage\tKEY:Bloodrager ~ Greater Bloodrage\tCATEGORY:Special Ability\tBONUS:VAR|BloodrageStrBonus,BloodrageConBonus|2",
+                "Mighty Bloodrage\tKEY:Bloodrager ~ Mighty Bloodrage\tCATEGORY:Special Ability\tBONUS:VAR|BloodrageStrBonus,BloodrageConBonus|2",
+            ],
+        )]);
+        let str_rows = tree.variable_rows("BloodrageStrBonus");
+        let con_rows = tree.variable_rows("BloodrageConBonus");
+        // The base row (DEFINE + BONUS:VAR, deduped to one) plus the Greater and Mighty
+        // BONUS:VAR rows -- 3 distinct rows, for EACH name.
+        assert_eq!(str_rows.len(), 3, "BloodrageStrBonus must be found on the base, Greater AND Mighty rows, not just the base row");
+        assert_eq!(con_rows.len(), 3, "BloodrageConBonus must be found on the base, Greater AND Mighty rows, not just the base row");
+        // Str and Con must see the SAME row set (both target names sit on every one of these
+        // rows) -- the whole point of the bug being closed.
+        assert_eq!(str_rows, con_rows);
+    }
+
+    /// SD-36 Epic F1 merge-readiness fallout: a `CATEGORY:Aligned Class` row (real PCGen shape,
+    /// `isg_abilities.lst`: Inner Sea Gods' Evangelist prestige class re-exports EVERY base
+    /// class's own level var under a mirror record of the same name, e.g.
+    /// `BONUS:VAR|Vigilante_CFP_Level,VigilanteLVL|EvangelistLVL-1`) must NOT count toward
+    /// `variable_rows`'s corpus-wide index -- it is a DIFFERENT class's (Evangelist's) own
+    /// progression view, never part of the base class's own record family, and counting it
+    /// defeats the in-record fold `class_chassis_sheet_rules.rs`'s empty-package `row_at` reader
+    /// depends on for the base class's OWN chassis (a bare `<Class>LVL` var falling back to a
+    /// cross-record `Var` there reads as an unconditional 0, not the class's real progression).
+    #[test]
+    fn variable_rows_excludes_an_aligned_class_minus_one_mirror_row() {
+        let tree = tree_from_lines(vec![
+            (
+                "ui_classes.lst",
+                vec!["CLASS:Vigilante\tHD:8\tDEFINE:VigilanteLVL|0\tBONUS:COMBAT|BASEAB|VigilanteLVL*3/4|TYPE=Base.REPLACE"],
+            ),
+            (
+                "isg_abilities.lst",
+                vec!["Vigilante\tCATEGORY:Aligned Class\tTYPE:Aligned Class\tBONUS:VAR|Vigilante_CFP_Level,VigilanteLVL|EvangelistLVL-1"],
+            ),
+        ]);
+        let rows = tree.variable_rows("VigilanteLVL");
+        assert_eq!(rows.len(), 1, "only the base class's own DEFINE row -- the Aligned Class mirror row is excluded: {rows:?}");
     }
 }
