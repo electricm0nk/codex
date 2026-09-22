@@ -1,0 +1,115 @@
+# SD-36 Epic F1 -- proficiency-reader remainder
+
+The named remainder of `every_census_class_has_a_known_proficiency_answer`
+(`src/rules_core/rules_tables/crb/weapon_tables.rs`). That test walks every class in
+`codex::rules_core::class_census::census()` (135) that has no static `CLASS_WEAPON_PROFICIENCIES`
+row, asks the converted-record reader (`class_proficiency_sheet_rules::class_weapon_proficiency_view`)
+at every level `1..=max_level`, and passes only when the set of classes answering Unknown at any
+level equals the `| class:` rows of the table below -- no silent tolerance in either direction. A
+class that gains an answer must leave this table in the same commit; a class that loses one fails
+the test by name.
+
+Command: `cargo test --locked -j 8 --lib every_census_class_has_a_known_proficiency_answer -- --nocapture`
+(prints the population line and every Unknown class with the reader's reason). Measured 2026-09-22
+on tranche/16 (package unchanged since F1b, no converter run in this batch).
+
+## Measured
+
+- Census classes: **135** (61 non-prestige + 74 prestige). With a static row: **42** (all non-prestige).
+  Walked by the reader: **93** (19 non-prestige + 74 prestige).
+- Known at every level: **29 of 93** (17 of the 19 non-prestige; 12 of the 74 prestige).
+- Unknown: **64 of 93** -- **2 non-prestige** (antipaladin, magus: the only two of the 61 non-prestige
+  census classes not Computed, `census-f1-reader.json`) and **62 prestige** (prestige classes are Blocked alone
+  until F2 regardless -- census `prestige_alone_blocked` = 74 of 74).
+- Every reason is the same reader verdict: "the converted closure of `<class>` at level 1 grants no
+  weapon proficiency, and the package carries no closure-complete attestation that none is owed".
+  The mechanism column says WHY the closure is empty, classified from
+  offline evidence (test-side, never read by live code): the oracle class lines
+  (`~/workspace/repos/pcgen/data/pathfinder/**/*class*.lst`, `ABILITY:`/`AUTO:WEAPONPROF` tokens
+  naming a weapon proficiency, PRE-gates excluded), the converted package's `granted_by` edges, and
+  `data/sheet_rules/_defects/grant-by-type.json` restricted to the converted closure (live code never
+  reads `_defects/`).
+
+## Mechanisms
+
+| code | mechanism | classes | detail | closes in |
+|---|---|---|---|---|
+| A | grant-by-type not converted | 5 | the proficiency grant is a PCGen `TYPE=WeaponProf...` grant-by-type (`_defects/grant-by-type.json`), which the converter does not convert, so the converted walk reaches no weapon grant | converter: grant-by-type (spec §3.1(3)) + package regeneration |
+| B | proficiency record not converted | 1 | the oracle class line grants a named proficiency ability that has no converted record | converter: convert the record + regenerate |
+| C | proficiency record not linked to the class | 2 | the proficiency record IS converted but carries no `granted_by` edge to this class (the oracle grants it from the class line) | converter: class-line link repair (F1 option A residue) + regenerate |
+| D | proficiency record converted without its grant | 2 | the class's `... ~ Weapon and Armor Proficiency` record is converted and linked, but carries no `Proficiency` fact | converter: convert the record's weapon grant + regenerate |
+| E | no weapon grant anywhere; attestation missing | 54 | neither the oracle class lines nor any rule in the converted closure names a weapon-proficiency grant (the class adds none), so the true answer is empty -- but spec §3.4 allows `Known(empty)` only with the per-class `closure_complete` attestation, which the converter does not write yet, so the reader answers Unknown rather than fabricate 'proficient with nothing' | converter: write `closure_complete` (spec §3.4) + regenerate |
+
+Every mechanism closes in the converter + a package regeneration; none is closable in this batch
+(invariant: no converter run, data/sheet_rules not regenerated). None is a per-class special case
+in live code, and none is closed by a new Rust row (rules_tables stay Rust until Starfinder; the
+42 static rows stay).
+
+## Remainder (the test reads the `| class:` rows)
+
+| class | family | mechanism | evidence |
+|---|---|---|---|
+| class:aldori_swordlord | prestige | E: no weapon grant anywhere; attestation missing | oracle class lines: no weapon-proficiency grant; converted closure: no dropped `WeaponProf` grant-by-type |
+| class:antipaladin | base | A: grant-by-type not converted | advanced_players_guide:ability:antipaladin: Internal\|TYPE=WeaponProfMartial |
+| class:arcane_trickster | prestige | E: no weapon grant anywhere; attestation missing | oracle class lines: no weapon-proficiency grant; converted closure: no dropped `WeaponProf` grant-by-type |
+| class:argent_dramaturge | prestige | E: no weapon grant anywhere; attestation missing | oracle class lines: no weapon-proficiency grant; converted closure: no dropped `WeaponProf` grant-by-type |
+| class:aspis_agent | prestige | E: no weapon grant anywhere; attestation missing | oracle class lines: no weapon-proficiency grant; converted closure: no dropped `WeaponProf` grant-by-type |
+| class:battle_herald | prestige | E: no weapon grant anywhere; attestation missing | oracle class lines: no weapon-proficiency grant; converted closure: no dropped `WeaponProf` grant-by-type |
+| class:bellflower_tiller | prestige | E: no weapon grant anywhere; attestation missing | oracle class lines: no weapon-proficiency grant; converted closure: no dropped `WeaponProf` grant-by-type |
+| class:body_snatcher | prestige | E: no weapon grant anywhere; attestation missing | oracle class lines: no weapon-proficiency grant; converted closure: no dropped `WeaponProf` grant-by-type |
+| class:cerebremancer | prestige | E: no weapon grant anywhere; attestation missing | oracle class lines: no weapon-proficiency grant; converted closure: no dropped `WeaponProf` grant-by-type |
+| class:cyphermage | prestige | E: no weapon grant anywhere; attestation missing | oracle class lines: no weapon-proficiency grant; converted closure: no dropped `WeaponProf` grant-by-type |
+| class:dark_tempest | prestige | E: no weapon grant anywhere; attestation missing | oracle class lines: no weapon-proficiency grant; converted closure: no dropped `WeaponProf` grant-by-type |
+| class:death_slayer | prestige | E: no weapon grant anywhere; attestation missing | oracle class lines: no weapon-proficiency grant; converted closure: no dropped `WeaponProf` grant-by-type |
+| class:diabolist | prestige | E: no weapon grant anywhere; attestation missing | oracle class lines: no weapon-proficiency grant; converted closure: no dropped `WeaponProf` grant-by-type |
+| class:divine_scion | prestige | D: proficiency record converted without its grant | oracle `Divine Scion ~ Weapon and Armor Proficiency`: converted as inner_sea_magic:class_feature:divine_scion_weapon_and_armor_proficiency, linked, but carries no proficiency grant |
+| class:dragon_disciple | prestige | E: no weapon grant anywhere; attestation missing | oracle class lines: no weapon-proficiency grant; converted closure: no dropped `WeaponProf` grant-by-type |
+| class:duelist | prestige | E: no weapon grant anywhere; attestation missing | oracle class lines: no weapon-proficiency grant; converted closure: no dropped `WeaponProf` grant-by-type |
+| class:eldritch_knight | prestige | E: no weapon grant anywhere; attestation missing | oracle class lines: no weapon-proficiency grant; converted closure: no dropped `WeaponProf` grant-by-type |
+| class:enchanting_courtesan | prestige | E: no weapon grant anywhere; attestation missing | oracle class lines: no weapon-proficiency grant; converted closure: no dropped `WeaponProf` grant-by-type |
+| class:exalted | prestige | D: proficiency record converted without its grant | oracle `Exalted ~ Weapon and Armor Proficiency`: converted as inner_sea_gods:ability:exalted_weapon_and_armor_proficiency, linked, but carries no proficiency grant |
+| class:golden_legionnaire | prestige | C: proficiency record not linked to the class | oracle `Weapon Prof ~ Auto`: converted as core_rulebook:class_feature:weapon_prof_auto but not linked to the class; oracle `Weapon Prof ~ Martial`: converted as core_rulebook:class_feature:weapon_prof_martial but not linked to the class; oracle `Weapon Prof ~ Simple`: converted as core_rulebook:class_feature:weapon_prof_simple but not linked to the class |
+| class:gray_corsair | prestige | E: no weapon grant anywhere; attestation missing | oracle class lines: no weapon-proficiency grant; converted closure: no dropped `WeaponProf` grant-by-type |
+| class:harrower | prestige | E: no weapon grant anywhere; attestation missing | oracle class lines: no weapon-proficiency grant; converted closure: no dropped `WeaponProf` grant-by-type |
+| class:hellknight | prestige | E: no weapon grant anywhere; attestation missing | oracle class lines: no weapon-proficiency grant; converted closure: no dropped `WeaponProf` grant-by-type |
+| class:hellknight_signifer | prestige | E: no weapon grant anywhere; attestation missing | oracle class lines: no weapon-proficiency grant; converted closure: no dropped `WeaponProf` grant-by-type |
+| class:holy_vindicator | prestige | A: grant-by-type not converted | advanced_players_guide:ability:holy_vindicator: Internal\|TYPE=WeaponProfMartial |
+| class:horizon_walker | prestige | E: no weapon grant anywhere; attestation missing | oracle class lines: no weapon-proficiency grant; converted closure: no dropped `WeaponProf` grant-by-type |
+| class:lantern_bearer | prestige | E: no weapon grant anywhere; attestation missing | oracle class lines: no weapon-proficiency grant; converted closure: no dropped `WeaponProf` grant-by-type |
+| class:lion_blade | prestige | B: proficiency record not converted | oracle `Lion Blade ~ Weapon and Armor Proficiency`: no converted record |
+| class:loremaster | prestige | E: no weapon grant anywhere; attestation missing | oracle class lines: no weapon-proficiency grant; converted closure: no dropped `WeaponProf` grant-by-type |
+| class:low_templar | prestige | A: grant-by-type not converted | inner_sea_world_guide:class:low_templar: Internal\|TYPE=WeaponProfMartial |
+| class:magaambyan_arcanist | prestige | E: no weapon grant anywhere; attestation missing | oracle class lines: no weapon-proficiency grant; converted closure: no dropped `WeaponProf` grant-by-type |
+| class:magus | base | A: grant-by-type not converted | ultimate_magic:ability:magus: Internal\|TYPE=WeaponProfMartial |
+| class:mammoth_rider | prestige | E: no weapon grant anywhere; attestation missing | oracle class lines: no weapon-proficiency grant; converted closure: no dropped `WeaponProf` grant-by-type |
+| class:master_chymist | prestige | E: no weapon grant anywhere; attestation missing | oracle class lines: no weapon-proficiency grant; converted closure: no dropped `WeaponProf` grant-by-type |
+| class:master_spy | prestige | E: no weapon grant anywhere; attestation missing | oracle class lines: no weapon-proficiency grant; converted closure: no dropped `WeaponProf` grant-by-type |
+| class:metaforge | prestige | E: no weapon grant anywhere; attestation missing | oracle class lines: no weapon-proficiency grant; converted closure: no dropped `WeaponProf` grant-by-type |
+| class:metamind | prestige | E: no weapon grant anywhere; attestation missing | oracle class lines: no weapon-proficiency grant; converted closure: no dropped `WeaponProf` grant-by-type |
+| class:metamorph | prestige | E: no weapon grant anywhere; attestation missing | oracle class lines: no weapon-proficiency grant; converted closure: no dropped `WeaponProf` grant-by-type |
+| class:mystic_archer | prestige | E: no weapon grant anywhere; attestation missing | oracle class lines: no weapon-proficiency grant; converted closure: no dropped `WeaponProf` grant-by-type |
+| class:mystic_theurge | prestige | E: no weapon grant anywhere; attestation missing | oracle class lines: no weapon-proficiency grant; converted closure: no dropped `WeaponProf` grant-by-type |
+| class:nature_warden | prestige | E: no weapon grant anywhere; attestation missing | oracle class lines: no weapon-proficiency grant; converted closure: no dropped `WeaponProf` grant-by-type |
+| class:pathfinder_chronicler | prestige | E: no weapon grant anywhere; attestation missing | oracle class lines: no weapon-proficiency grant; converted closure: no dropped `WeaponProf` grant-by-type |
+| class:pathfinder_delver | prestige | E: no weapon grant anywhere; attestation missing | oracle class lines: no weapon-proficiency grant; converted closure: no dropped `WeaponProf` grant-by-type |
+| class:pathfinder_savant | prestige | E: no weapon grant anywhere; attestation missing | oracle class lines: no weapon-proficiency grant; converted closure: no dropped `WeaponProf` grant-by-type |
+| class:psicrystal_imprinter | prestige | E: no weapon grant anywhere; attestation missing | oracle class lines: no weapon-proficiency grant; converted closure: no dropped `WeaponProf` grant-by-type |
+| class:psion_uncarnate | prestige | E: no weapon grant anywhere; attestation missing | oracle class lines: no weapon-proficiency grant; converted closure: no dropped `WeaponProf` grant-by-type |
+| class:psychic_fist | prestige | E: no weapon grant anywhere; attestation missing | oracle class lines: no weapon-proficiency grant; converted closure: no dropped `WeaponProf` grant-by-type |
+| class:pyrokineticist | prestige | E: no weapon grant anywhere; attestation missing | oracle class lines: no weapon-proficiency grant; converted closure: no dropped `WeaponProf` grant-by-type |
+| class:rage_prophet | prestige | E: no weapon grant anywhere; attestation missing | oracle class lines: no weapon-proficiency grant; converted closure: no dropped `WeaponProf` grant-by-type |
+| class:red_mantis_assassin | prestige | C: proficiency record not linked to the class | oracle `RMA Weapon Proficiencies`: converted as inner_sea_world_guide:class_feature:rma_weapon_proficiencies but not linked to the class; oracle class line `ABILITY:...\|TYPE=WeaponProfMartial` (grant-by-type, not converted) |
+| class:rivethun_emissary | prestige | E: no weapon grant anywhere; attestation missing | oracle class lines: no weapon-proficiency grant; converted closure: no dropped `WeaponProf` grant-by-type |
+| class:sanguine_angel | prestige | E: no weapon grant anywhere; attestation missing | oracle class lines: no weapon-proficiency grant; converted closure: no dropped `WeaponProf` grant-by-type |
+| class:sentinel | prestige | A: grant-by-type not converted | inner_sea_gods:ability:sentinel_weapon_and_armor_proficiency: Internal\|TYPE=WeaponProfMartial; oracle `Sentinel ~ Weapon and Armor Proficiency`: converted as inner_sea_gods:ability:sentinel_weapon_and_armor_proficiency, linked, but carries no proficiency grant |
+| class:soul_archer | prestige | E: no weapon grant anywhere; attestation missing | oracle class lines: no weapon-proficiency grant; converted closure: no dropped `WeaponProf` grant-by-type |
+| class:stalwart_defender | prestige | E: no weapon grant anywhere; attestation missing | oracle class lines: no weapon-proficiency grant; converted closure: no dropped `WeaponProf` grant-by-type |
+| class:steel_falcon | prestige | E: no weapon grant anywhere; attestation missing | oracle class lines: no weapon-proficiency grant; converted closure: no dropped `WeaponProf` grant-by-type |
+| class:storm_kindler | prestige | E: no weapon grant anywhere; attestation missing | oracle class lines: no weapon-proficiency grant; converted closure: no dropped `WeaponProf` grant-by-type |
+| class:student_of_war | prestige | E: no weapon grant anywhere; attestation missing | oracle class lines: no weapon-proficiency grant; converted closure: no dropped `WeaponProf` grant-by-type |
+| class:telekinetic_weaponmaster | prestige | E: no weapon grant anywhere; attestation missing | oracle class lines: no weapon-proficiency grant; converted closure: no dropped `WeaponProf` grant-by-type |
+| class:thrallherd | prestige | E: no weapon grant anywhere; attestation missing | oracle class lines: no weapon-proficiency grant; converted closure: no dropped `WeaponProf` grant-by-type |
+| class:twilight_talon | prestige | E: no weapon grant anywhere; attestation missing | oracle class lines: no weapon-proficiency grant; converted closure: no dropped `WeaponProf` grant-by-type |
+| class:ulfen_guard | prestige | E: no weapon grant anywhere; attestation missing | oracle class lines: no weapon-proficiency grant; converted closure: no dropped `WeaponProf` grant-by-type |
+| class:war_mind | prestige | E: no weapon grant anywhere; attestation missing | oracle class lines: no weapon-proficiency grant; converted closure: no dropped `WeaponProf` grant-by-type |
+| class:westcrown_devil | prestige | E: no weapon grant anywhere; attestation missing | oracle class lines: no weapon-proficiency grant; converted closure: no dropped `WeaponProf` grant-by-type |

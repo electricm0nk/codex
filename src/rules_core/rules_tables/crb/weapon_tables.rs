@@ -1043,6 +1043,74 @@ mod class_weapon_proficiency_tests {
         assert_eq!(CLASS_WEAPON_PROFICIENCIES.len(), 42);
     }
 
+    /// SD-36 Epic F1 (spec §3.4, F1.2/F1.5): the 42 static rows above stay; every census class
+    /// WITHOUT one is answered by the converted-record reader
+    /// (`class_proficiency_sheet_rules::class_weapon_proficiency_view`). This walks every class in
+    /// `class_census::census()` with no static row, at every level `1..=max_level`, and collects
+    /// each class the reader still answers Unknown, with its reason. The test passes only when that
+    /// set equals the enumerated remainder recorded, with a mechanism per class, in
+    /// `docs/release/SD-36-consolidation/artifacts/epic-f/reader-remainder.md` -- no silent
+    /// tolerance: a class that gains an answer must leave the record, and a class that loses one
+    /// fails here by name.
+    #[test]
+    fn every_census_class_has_a_known_proficiency_answer() {
+        use crate::rules_core::class_census::census;
+        use crate::rules_core::pilot_compute::class_proficiency_sheet_rules::{
+            class_weapon_proficiency_view, ProficiencyAnswer,
+        };
+        use std::collections::BTreeMap;
+
+        const REMAINDER: &str = include_str!(
+            "../../../../docs/release/SD-36-consolidation/artifacts/epic-f/reader-remainder.md"
+        );
+        let recorded: BTreeMap<String, ()> = REMAINDER
+            .lines()
+            .filter_map(|line| line.strip_prefix("| class:"))
+            .map(|rest| (format!("class:{}", rest.split('|').next().unwrap_or("").trim()), ()))
+            .collect();
+
+        let entries = census();
+        let mut walked = 0usize;
+        let mut known = 0usize;
+        let mut unknown: BTreeMap<String, String> = BTreeMap::new();
+        for entry in entries.values() {
+            if class_weapon_proficiency(&entry.class_id).is_some() {
+                continue;
+            }
+            walked += 1;
+            let slug = crate::rules_core::sheet_rule::id_slug(&entry.class_id);
+            let first_unknown = (1..=entry.max_level).find_map(|level| {
+                match class_weapon_proficiency_view(&slug, level) {
+                    ProficiencyAnswer::Known(_) => None,
+                    ProficiencyAnswer::Unknown { reason } => Some(format!("level {level}: {reason}")),
+                }
+            });
+            match first_unknown {
+                Some(reason) => {
+                    unknown.insert(entry.class_id.clone(), reason);
+                }
+                None => known += 1,
+            }
+        }
+        eprintln!(
+            "census classes: {}; with a static row: {}; walked by the reader: {walked}; \
+             Known at every level: {known}; Unknown: {}",
+            entries.len(),
+            entries.len() - walked,
+            unknown.len()
+        );
+        for (class_id, reason) in &unknown {
+            eprintln!("UNKNOWN {class_id} -- {reason}");
+        }
+        let unknown_ids: Vec<&String> = unknown.keys().collect();
+        let recorded_ids: Vec<&String> = recorded.keys().collect();
+        assert_eq!(
+            unknown_ids, recorded_ids,
+            "the classes the reader answers Unknown must equal the remainder recorded in \
+             reader-remainder.md (with a mechanism per class); Unknown with reasons: {unknown:#?}"
+        );
+    }
+
     /// Each Unchained class's grants against the class it replaces. Three
     /// match exactly; the Unchained Monk does not, and the difference is
     /// pinned rather than tolerated -- PU's `AUTO:WEAPONPROF` names 16

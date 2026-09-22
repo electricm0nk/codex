@@ -6656,11 +6656,36 @@ mod tests {
             std::fs::remove_dir_all(&root).ok();
         }
 
+        // SD-36 Epic F1 (2026-09-22): the converted-record proficiency reader closed Samurai, so
+        // of this roster only Magus is still Blocked (its converted closure grants no weapon
+        // proficiency -- `reader-remainder.md`), and that too closes once the converter converts
+        // grant-by-type. The non-vacuity guard therefore no longer rests on the wealth roster: a
+        // prestige class alone is a genuinely blocked build (no base-class levels; census
+        // `prestige_alone_blocked` = 74 of 74) and stays Blocked through F2, which only replaces
+        // its diagnostic with `prestige_class.requires_base_class_levels`.
+        let prestige_alone = "class:eldritch_knight";
+        let root = tempdir("create-character-starting-wealth-blocked-prestige-alone");
+        let request = request_for_class("race:human", prestige_alone, 1);
+        let response = create_character_at_root(&root, &request, "test-version".to_owned())
+            .expect("create call should not error");
+        match response {
+            CreateCharacterResponse::Blocked { .. } => blocked_classes_seen.push(prestige_alone),
+            CreateCharacterResponse::Saved { .. } => panic!(
+                "{prestige_alone} alone must be Blocked -- a prestige class cannot be a first class"
+            ),
+        }
+        assert_eq!(
+            load_character_money_at_root(&root).unwrap().total_copper,
+            0,
+            "{prestige_alone} alone is Blocked, so it must never be granted wealth"
+        );
+        std::fs::remove_dir_all(&root).ok();
+
         assert!(
             !blocked_classes_seen.is_empty(),
-            "every wealth-recognized class now reaches Computed, so this test proves nothing \
-             about the Blocked path any more -- replace it with a genuinely blocked fixture \
-             (e.g. an unsupported multiclass build) rather than deleting the invariant"
+            "no build in this test is Blocked, so it proves nothing about the Blocked path -- \
+             replace the prestige-alone fixture with another genuinely blocked build rather than \
+             deleting the invariant"
         );
     }
 

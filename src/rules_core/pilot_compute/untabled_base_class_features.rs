@@ -1464,66 +1464,126 @@ mod untabled_class_chassis_gate_tests {
         assert!(!has_supported_class_chassis(&single_class("class:arcane_archer", 5)));
     }
 
-    /// The real deliverable for the nine classes this cycle also gave a
-    /// real `CLASS_WEAPON_PROFICIENCIES` row (`weapon_tables.rs`): every
-    /// one of the four integration blockers is gone, and the receipt
-    /// reaches `Computed` for real -- the same two-part proof
-    /// `gunslinger_alone_reaches_computed_status` established for UC.
-    #[test]
-    fn the_nine_classes_with_a_real_proficiency_row_reach_computed() {
-        for class_id in [
-            "class:kineticist", "class:medium", "class:mesmerist", "class:occultist",
-            "class:vigilante", "class:psychic", "class:spiritualist", "class:psion",
-            "class:shifter",
-        ] {
-            let receipt = build_pilot_headless_receipt(&single_class(class_id, 1));
-            let blocking: Vec<String> = receipt
-                .computation
-                .diagnostics
-                .iter()
-                .filter(|d| d.claim_blocking)
-                .map(|d| d.id.clone())
-                .collect();
-            assert_eq!(
-                receipt.status,
-                HeadlessReceiptStatus::Computed,
-                "{class_id} level 1 must reach Computed, blockers: {blocking:?}"
-            );
-        }
+    /// The Epic F1 proficiency-reader remainder, read from its committed record
+    /// (`reader-remainder.md`, pinned against the reader itself by
+    /// `weapon_tables::every_census_class_has_a_known_proficiency_answer`): the non-prestige
+    /// class ids that still answer Unknown, each with a named mechanism there.
+    fn non_prestige_reader_remainder() -> Vec<String> {
+        const REMAINDER: &str = include_str!(
+            "../../../docs/release/SD-36-consolidation/artifacts/epic-f/reader-remainder.md"
+        );
+        REMAINDER
+            .lines()
+            .filter_map(|line| line.strip_prefix("| class:"))
+            .filter_map(|rest| {
+                let mut cells = rest.split('|').map(str::trim);
+                let slug = cells.next()?;
+                (cells.next()? == "base").then(|| format!("class:{slug}"))
+            })
+            .collect()
     }
 
-    /// The remaining 18 (27 minus the 9 above minus Antipaladin, which sits
-    /// in the same registry but was not paired with a weapon-proficiency
-    /// row this cycle either) still honestly carry
-    /// `combat.baseline_weapon_proficiency_unknown` -- the gate fix alone
-    /// does not fabricate a proficiency answer nothing was ingested for.
+    fn claim_blocking_ids(receipt: &super::PilotHeadlessReceipt) -> Vec<String> {
+        receipt
+            .computation
+            .diagnostics
+            .iter()
+            .filter(|d| d.claim_blocking)
+            .map(|d| d.id.clone())
+            .collect()
+    }
+
+    /// Meaning changed by SD-36 Epic F1 (was
+    /// `the_nine_classes_with_a_real_proficiency_row_reach_computed`, which pinned only the nine
+    /// classes given a static `CLASS_WEAPON_PROFICIENCIES` row in SD-34). With the converted-record
+    /// reader as the fallback, EVERY class both untabled registries cover reaches `Computed` at
+    /// level 1 -- except the named non-prestige reader remainder (`reader-remainder.md`), which must
+    /// NOT reach it and must be blocked on exactly the proficiency diagnostic. A class leaving the
+    /// remainder flips here with no edit; a class that silently stops computing fails by name.
     #[test]
-    fn a_class_without_a_new_proficiency_row_still_reports_proficiency_unknown() {
-        let receipt = build_pilot_headless_receipt(&single_class("class:magus", 1));
-        assert_ne!(receipt.status, HeadlessReceiptStatus::Computed);
+    fn every_untabled_class_outside_the_named_reader_remainder_reaches_computed() {
+        let remainder = non_prestige_reader_remainder();
         assert!(
-            receipt
-                .computation
-                .diagnostics
-                .iter()
-                .any(|d| d.id == "combat.baseline_weapon_proficiency_unknown" && d.claim_blocking),
-            "{:?}",
-            receipt.computation.diagnostics
+            remainder.iter().all(|id| id == "class:antipaladin" || id == "class:magus"),
+            "the recorded non-prestige remainder moved: {remainder:?}"
         );
-        assert!(
-            !receipt
-                .computation
-                .diagnostics
-                .iter()
-                .any(|d| d.claim_blocking
-                    && (d.id == "class_chassis.unsupported"
-                        || d.id == "combat.baseline_unsupported"
-                        || d.id == "defense.total_save.unsupported"
-                        || d.id == "skill.selected_modifier.unsupported")),
-            "the chassis-gate blockers specifically must be gone even though the class is \
-             still Blocked overall: {:?}",
-            receipt.computation.diagnostics
-        );
+        let mut class_ids: Vec<String> = untabled_base_class_chassis::untabled_base_class_registry()
+            .iter()
+            .map(|meta| meta.class_id.clone())
+            .collect();
+        class_ids.extend(crb_untabled_class_chassis::covered_classes().into_iter().map(|meta| meta.class_id));
+        let mut computed = 0usize;
+        let mut held_back = 0usize;
+        for class_id in &class_ids {
+            let receipt = build_pilot_headless_receipt(&single_class(class_id, 1));
+            let blocking = claim_blocking_ids(&receipt);
+            if remainder.contains(class_id) {
+                held_back += 1;
+                assert_ne!(receipt.status, HeadlessReceiptStatus::Computed, "{class_id} is in the recorded remainder");
+                assert_eq!(
+                    blocking,
+                    vec!["combat.baseline_weapon_proficiency_unknown".to_string()],
+                    "{class_id} (recorded remainder) must be blocked on the proficiency answer alone"
+                );
+            } else {
+                computed += 1;
+                assert_eq!(
+                    receipt.status,
+                    HeadlessReceiptStatus::Computed,
+                    "{class_id} level 1 must reach Computed, blockers: {blocking:?}"
+                );
+            }
+        }
+        // Denominator: the classes the two untabled registries cover (27 + the CRB NPC/Ex-* set).
+        assert_eq!(computed + held_back, class_ids.len());
+        assert!(computed > 9, "more than the SD-34 nine must compute now: {computed} of {}", class_ids.len());
+    }
+
+    /// Replaces `a_class_without_a_new_proficiency_row_still_reports_proficiency_unknown`: the
+    /// "unknown stays unknown" contract lives on. Synthetic half (always has a case, even once the
+    /// real remainder is empty): a class with no converted record reads Unknown from the reader,
+    /// never an empty "proficient with nothing". Real half: every non-prestige class in the
+    /// recorded reader remainder (its closure is incomplete -- `reader-remainder.md` names the
+    /// mechanism) keeps the claim-blocking `combat.baseline_weapon_proficiency_unknown`, while the
+    /// chassis-gate blockers stay gone.
+    #[test]
+    fn a_class_whose_converted_closure_is_incomplete_still_reports_proficiency_unknown() {
+        use crate::rules_core::pilot_compute::class_proficiency_sheet_rules::{
+            class_weapon_proficiency_view, ProficiencyAnswer,
+        };
+        match class_weapon_proficiency_view("fixture_class_with_no_record", 1) {
+            ProficiencyAnswer::Unknown { reason } => {
+                assert!(reason.contains("no converted class record"), "{reason}")
+            }
+            ProficiencyAnswer::Known(view) => panic!("a class with no record must be Unknown, got {view:?}"),
+        }
+
+        for class_id in non_prestige_reader_remainder() {
+            let receipt = build_pilot_headless_receipt(&single_class(&class_id, 1));
+            assert_ne!(receipt.status, HeadlessReceiptStatus::Computed, "{class_id}");
+            assert!(
+                receipt
+                    .computation
+                    .diagnostics
+                    .iter()
+                    .any(|d| d.id == "combat.baseline_weapon_proficiency_unknown" && d.claim_blocking),
+                "{class_id}: {:?}",
+                receipt.computation.diagnostics
+            );
+            assert!(
+                !receipt
+                    .computation
+                    .diagnostics
+                    .iter()
+                    .any(|d| d.claim_blocking
+                        && (d.id == "class_chassis.unsupported"
+                            || d.id == "combat.baseline_unsupported"
+                            || d.id == "defense.total_save.unsupported"
+                            || d.id == "skill.selected_modifier.unsupported")),
+                "{class_id}: the chassis-gate blockers must stay gone: {:?}",
+                receipt.computation.diagnostics
+            );
+        }
     }
 }
 
