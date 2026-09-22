@@ -113,9 +113,11 @@ Ruling 1's citation to the shapes it did not enumerate:
   (`BONUS:VAR|SwashbucklerPreciseStrikeBonus|SwashbucklerDeedsLVL`, and
   `SwashbucklerDeedsLVL` = swashbuckler class level) -- matches exactly.
 
-No OTHER changed value exists anywhere in the 176-build population. Re-derive:
-`python3 classify_final.py` (this session's scratchpad) against `wide_final2` (this branch, both
-fixes) vs `wide_swap` (tranche/16), `changed=33`.
+No OTHER changed RENDERED value exists anywhere in the 176-build population (record-field deltas
+that no build in this population renders -- bestiary monsters, prestige classes, unswept race/
+deity combinations -- are a separate denominator, stated against the tranche/16 merge baseline in
+§6). Re-derive: `python3 classify_final.py` (this session's scratchpad) against `wide_final2`
+(this branch, both fixes) vs `wide_swap` (tranche/16), `changed=33`.
 
 ## 2. Blocker 3 -- new duplicate visible lines
 
@@ -249,10 +251,94 @@ live in a file the forward scan has not reached yet; file order is not name orde
 - `cargo test --locked -j 8 --lib sheet_rule`: 60 passed, 0 failed, 1 ignored.
 - `cargo clippy --locked --tests -j 8 --no-deps` (`crates/codex-ingest`, `-D warnings`): clean.
 - `cargo clippy --locked --tests -j 8 --manifest-path apps/desktop/src-tauri/Cargo.toml
-  -- -D warnings`: clean. (A workspace-wide, dependency-inclusive `cargo clippy -- -D warnings`
-  from the repo root, or from `crates/codex-ingest` without `--no-deps`, fails on a
-  `clippy::type_complexity` lint at `src/rules_core/sheet_rule.rs:2179` -- confirmed byte-identical
-  on the previous commit `1ed2ac9132` before this correction touched anything, so it is pre-existing
-  and unrelated to this fix, not introduced by it.)
+  -- -D warnings`: clean.
+- **Correction (stage 6):** this section previously stated that `cargo clippy --locked --tests
+  -j 8 --no-deps -- -D warnings` from the repo root failed on a `clippy::type_complexity` lint at
+  `src/rules_core/sheet_rule.rs:2179` and called it "pre-existing and unrelated to this fix, not
+  introduced by it" -- true only relative to this branch's own previous commit (`1ed2ac9132`, the
+  `let mut seen: Vec<(String, String, String, Vec<(String, SheetLineValue)>, Option<String>)>`
+  dedup accumulator Blocker 3's own fix, §2 above, introduced), never relative to tranche/16 --
+  the actual merge baseline, which carries no `let mut seen` in that file at all
+  (`git show tranche/16:src/rules_core/sheet_rule.rs | grep -n 'let mut seen'` -> no output), so
+  root-crate clippy was NOT clean against the baseline this branch merges onto. Fixed at stage 6
+  by naming the tuple `type SheetLineDedupKey = (String, String, String,
+  Vec<(String, SheetLineValue)>, Option<String>)` (the lint's own suggested fix; the tuple is
+  exactly the documented `(kind, label, printed, also, condition)` key, already named in prose two
+  lines above it) -- no `#[allow(...)]`. `cargo clippy --locked --tests -j 8 --no-deps
+  -- -D warnings` now exits 0 for both the root crate and `-p codex-ingest`.
 - `python3 scripts/pcgen_residue_gate.py --check --closure`: `verdict=PASS`.
 - `git status --porcelain -- data/corpus site`: empty.
+
+## 6. Structural diff vs tranche/16 (stage 6, merge-readiness blocker 2) -- 35 record-field deltas + 7 new rule ids, enumerated and pinned
+
+**Denominator.** §1's 33-changed-value figure and this section's 35/7 are two DIFFERENT
+denominators over the SAME `data/sheet_rules` regen, and neither one covers the other:
+
+- §1d: 33 changed **rendered LINE values**, across the 176-build class-census population
+  (`--sheet-dump <build> --with-sheet-rules`, `classify_final.py`) -- what a real character sheet
+  prints.
+- §6 (here): 35 changed **on-disk RECORD FIELDS**, diffed at the JSON-record level against
+  tranche/16 (the actual merge baseline, not this branch's own previous commit), whether or not
+  any build in the 176-population ever renders that record. Command:
+
+  ```
+  git worktree add --detach <scratch>/wt-t16 $(git rev-parse tranche/16)
+  python3 docs/release/SD-36-consolidation/artifacts/epic-f/scripts/structural_diff.py \
+    data/sheet_rules --baseline <scratch>/wt-t16/data/sheet_rules --max-examples 100000
+  ```
+
+  Before this section's fix: `unexpected field deltas: 35`, `new rule ids: 7`, `verdict=FAIL`.
+
+**Verification method note (§ blocker-2 polish item).** `src/rules_core/corpus_loader.rs:360`
+bakes the package path at COMPILE time via `env!("CARGO_MANIFEST_DIR")`, so RENDERING "against
+tranche/16" by simply `cd`-ing into a tranche/16 worktree silently reads THIS branch's own baked
+`data/sheet_rules` regardless of cwd, and falsely reports "0 changes everywhere". `structural_diff.py`
+itself is unaffected (it reads both trees directly off disk by path, never through the compiled
+binary), but any follow-on RENDER-based re-check of these records needs the symlink-farm swap
+root (every path symlinked to this worktree except `data/sheet_rules`, which points at the
+tranche/16 copy) rebuilt against its own `CARGO_TARGET_DIR`, not a plain `cd`.
+
+**Mechanism, all 35.** Every one of the 35 deltas is §1a's own comma-split `BONUS:VAR` index fix
+(`closure.rs`) reaching a field that had never been reachable before: a field baked to a flattened
+`Const`/`Never`/bare-`AbilityMod` at CONVERT time (because the pre-fix indexer could not find the
+row under either comma-split name) now resolves through the repaired join to its real,
+multi-contribution `Var`/`Compare{Var ...}` -- verified per record against the declaring
+`_vars/*.json` table (every referenced var has a real `declared_by` + at least one `contributions`
+entry, with the one exception named below). Pinned, enumerated and explained per family, never a
+blanket allowance, in `docs/release/SD-36-consolidation/artifacts/epic-f/scripts/
+structural_diff_bonus_var_split_record_deltas.json` (same pattern as
+`structural_diff_expected_provenance_deltas.json` / `structural_diff_naturalattacks_renames.json`):
+
+| Family | Deltas | Mechanism | Reachability |
+| --- | --- | --- | --- |
+| `bloodrager_bloodrage` main / `#bonus2` | 2 | `BloodrageStrBonus`/`BloodrageConBonus` comma-split target found | reachable -- already named by §1d's own Greater/Mighty Bloodrage scaling (the only 2 of the 35 a prior receipt already names) |
+| `demon_nabasu#spell1N_*` `also` (CasterLevel) | 9 | flat `Const 8` -> `Var "Nabasu Caster Level"`, fed by the monster's own row plus `nabasu_consume_life`'s real second contribution | reachable on any build dumping the bestiary monster record (not in the 34-family class census) |
+| `diabolist_damned` / `diabolist_infernal_charisma` `prose` | 2 | printed DC/bonus slot: bare `Const` -> `Sum[Const, Var]`, fed by `book_of_the_damned_volume_1:class:diabolist`'s own `ClassLevel` contribution | reachable on any build holding the Diabolist prestige class (not in the census) |
+| `death_attack` `prose` | 1 | DC and paralysis-duration slots each resolve to a real Var fed by Assassin's own row plus Master Spy's doubled class-level contribution | reachable on any build holding Assassin or Master Spy (not in the census) |
+| `draconic_bloodline_breath_weapon` `also`+`prose` | 2 | uses/day expression -> `Var "Sorcerer Draconic Breath Weapon Times"`, fed by the sorcerer's own row plus Dragon Disciple's real second contribution | reachable on a draconic-bloodline Sorcerer (the census `sorcerer_L20` build has no bloodline selected) |
+| `racial_sla_{dancing_lights,daze,deeper_darkness,faerie_fire,feather_fall,levitate}` `applies`/`also`/`value` | 15 | `applies: Always` -> `Compare{Var "... At Will" Eq 0}`; N/day count -> the same Var (drow-noble At-Will variant, fed by 2 real contributions) | **not reachable in any renderable build today** -- `--race drow`/`drow_noble`/`svirfneblin` on `wizard:5` renders only `advanced_race_guide:race:drow` plus `DIAG| id=race.semantics.unverified ... chosen race race:drow has no grounded race semantics in this slice`; no `racial_sla_*` record is held on any side. `racial_sla_levitate`'s `applies` swap is the one SEMANTIC gate change in the whole 35 (the other 34 are value-shape only) -- named specifically since it is the one delta whose PRINTED output could move once race semantics are grounded, same as `levitate`'s sibling spells above it in this row |
+| `racial_sla_{open_close,prestidigitation,unseen_servant}` `also` | 3 | save-DC modifier: bare `AbilityMod Cha` -> `Var "... DCMod"`, fed by the base record's own Cha contribution plus `gnome_utilitarian_magic`'s `Int - Cha` swap (PF1 gnome innate SLAs use Int, not Cha) | not reachable today -- same reason (no census race variant is gnome) |
+| `inquisitor_domain_isolation_subdomain` / `inquisitor_domain_venom_subdomain` `applies` | 2 | second `AtLeast` arm: `Never` -> `Compare{Var "..." Gte 1}` | isolation's var (`v1f4425cc693e0ae4`) is declared with **zero** contributions anywhere in the pinned tree -- behaviourally identical to the `Never` it replaced (both always false). venom's var (`vd23a03a26a700ef4`) carries one real contribution (`ultimate_wilderness:deity:ragadahn`) -- reachable in principle for a Ragadahn-worshipping Inquisitor taking that subdomain, just not exercised by the census (no domain/deity selection dimension) |
+
+**New rule ids, all 7.** `new rule ids` is informational only (`structural_diff.py`'s own
+contract: SS3.5 permits new content, so it never gates the run) but every one measured must still
+be named. 6 are the racial-SLA family's paired `#spell1_<spell>` At-Will sub-rule (one per drow
+spell in the row above), each printing "At will" when its family's gate Var is >=1 -- unreachable
+today for the identical reason. The 7th, `ultimate_psionics:class:psion#bonus5`, is a pre-existing
+entry in `structural_diff.py`'s own `KNOWN_ADDED_RULE_CAUSES` (the `current_class` closure fix,
+commit `71c729e408`) -- not part of this pin, already explained before this section existed.
+
+**Verified, not assumed.** For every family above: (1) the referenced `Var`(s) resolve to a real
+`_vars/*.json` table with a non-empty `declared_by` (except the one named zero-contribution
+exception); (2) the old value is a `Const`/`Never`/bare-`AbilityMod`, the new value is an
+expression over that Var, matching §1a's fix direction exactly, never a different or fabricated
+shape; (3) `records`/`converted` hold at 49,450 -> 49,450 and `removed granted_by edges` /
+`removed grants` are both 0 in the same run. Re-derive per-record content with a diff of the two
+worktrees' JSON directly (no rendering, no build needed).
+
+**Result.** With the pin in place: `unexpected field deltas: 0`, `verdict=PASS` (same command as
+above). `structural_diff_test.py` (24 pre-existing + 2 new tests covering this pin: one pinned
+pair does not gate, one unpinned field on the same record still gates) is 26/26 green -- the four
+original planted mutations (`test_a_value_field_change_gates`, `test_b_removed_rule_gates`,
+`test_c_renamed_field_gates`, `test_d_moved_record_count_gates`) still FAIL the gate as designed;
+nothing was widened.

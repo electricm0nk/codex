@@ -113,6 +113,34 @@ KNOWN_ADDED_RULE_CAUSES = {
     ),
 }
 
+# SD-36 Epic F1 stage 6 (merge-readiness blocker 2, F1.6 vs the tranche/16 merge baseline). The
+# comma-split `BONUS:VAR` index fix (`closure.rs`, stage-5 receipt §1a) does not only change
+# RENDERED lines (that population is stage5/merge-readiness-blockers-receipt.md's own
+# denominator) -- it also changes 35 on-disk RECORD FIELDS and adds 6 new `#spell1_<spell>`
+# sub-rule ids that a rendered-line diff against the census population never reaches (bestiary
+# monsters, prestige classes, and drow/gnome innate SLAs are all off the 34-family census list).
+# Each is the SAME mechanism, named and reachability-checked per family in the pinned data file's
+# own `families` list -- never a blanket allowance: a delta off the pinned (rule id, field) list,
+# or a new rule id off the pinned list, still gates like any other.
+_BONUS_VAR_SPLIT_DELTAS_PATH = os.path.join(os.path.dirname(os.path.abspath(__file__)), "structural_diff_bonus_var_split_record_deltas.json")
+
+
+def _load_bonus_var_split_deltas() -> tuple[frozenset[tuple[str, str]], dict[str, str]]:
+    try:
+        with open(_BONUS_VAR_SPLIT_DELTAS_PATH, "r", encoding="utf-8") as fh:
+            data = json.load(fh)
+    except (OSError, json.JSONDecodeError):
+        return frozenset(), {}
+    field_deltas = data.get("field_deltas", [])
+    assert len(field_deltas) == data.get("_field_delta_count"), f"{_BONUS_VAR_SPLIT_DELTAS_PATH}: _field_delta_count {data.get('_field_delta_count')} != len(field_deltas) {len(field_deltas)} -- regenerate with _command_to_reproduce"
+    new_rule_ids = data.get("new_rule_ids", {})
+    assert len(new_rule_ids) == data.get("_new_rule_id_count"), f"{_BONUS_VAR_SPLIT_DELTAS_PATH}: _new_rule_id_count {data.get('_new_rule_id_count')} != len(new_rule_ids) {len(new_rule_ids)} -- regenerate with _command_to_reproduce"
+    return frozenset((rid, field) for rid, field in field_deltas), dict(new_rule_ids)
+
+
+EXPECTED_BONUS_VAR_SPLIT_FIELD_DELTAS, BONUS_VAR_SPLIT_NEW_RULE_CAUSES = _load_bonus_var_split_deltas()
+KNOWN_ADDED_RULE_CAUSES.update(BONUS_VAR_SPLIT_NEW_RULE_CAUSES)
+
 # SD-36 Epic F1 stage 5 (population run, ORCHESTRATOR spec 3.5 step 1): the NATURALATTACKS
 # suffix fix (rule-gap-receipt.md: `acc.lines.len()` replacing the per-occurrence-local index)
 # renumbers the WHOLE `#natural<N>` id family on every record whose accumulator held any lines
@@ -514,6 +542,7 @@ def main() -> int:
     unexpected_field_deltas: list[tuple[str, str]] = []
     expected_provenance_deltas: list[str] = []
     naturalattacks_content_shift_deltas: list[tuple[str, str]] = []
+    expected_bonus_var_split_deltas: list[tuple[str, str]] = []
     added_edges_by_target_kind: Counter[str] = Counter()
     added_edges_total = 0
     removed_granted_by: list[tuple[str, str]] = []
@@ -537,6 +566,14 @@ def main() -> int:
             # delta on this same id, or any delta on an id off the pinned list, still gates.
             if rid in NATURALATTACKS_CONTENT_SHIFT_IDS and field in _NATURALATTACKS_CONTENT_SHIFT_ALLOWED_FIELDS:
                 naturalattacks_content_shift_deltas.append((rid, field))
+                continue
+            # SD-36 Epic F1 stage 6 (merge-readiness blocker 2): a field the comma-split
+            # BONUS:VAR index fix (stage5 receipt §1a) newly resolves through to a real,
+            # multi-contribution Var/Compare{Var} -- pinned by EXACT (rule id, field) pair (see
+            # the module-level comment above); any other field delta on this same id, or any
+            # delta on a pair off the pinned list, still gates.
+            if (rid, field) in EXPECTED_BONUS_VAR_SPLIT_FIELD_DELTAS:
+                expected_bonus_var_split_deltas.append((rid, field))
                 continue
             unexpected_field_deltas.append((rid, field))
 
@@ -590,6 +627,13 @@ def main() -> int:
         f"{len(naturalattacks_content_shift_deltas)} field deltas on {len(set(r for r, _ in naturalattacks_content_shift_deltas))} "
         f"of {len(NATURALATTACKS_CONTENT_SHIFT_IDS)} pinned same-id content-shift ids "
         f"(see structural_diff_naturalattacks_renames.json -- content-preserved per file, not a genuine loss)"
+    )
+    print(
+        f"  bonus_var_index comma-split fix (stage5 §1a): {len(expected_bonus_var_split_deltas)} of "
+        f"{len(EXPECTED_BONUS_VAR_SPLIT_FIELD_DELTAS)} pinned (rule id, field) record deltas -- a "
+        f"flattened Const/Never/bare-AbilityMod now resolving to its real multi-contribution Var "
+        f"(see structural_diff_bonus_var_split_record_deltas.json for the per-family mechanism and "
+        f"reachability)"
     )
     if added_rule_ids:
         print(f"  added rule ids: {len(added_rule_ids)}")

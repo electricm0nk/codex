@@ -575,6 +575,59 @@ class StructuralDiffGateTest(unittest.TestCase):
         self.assertEqual(code, 1, out)
         self.assertIn("removed grants: 1", out)
 
+    def test_a_pinned_bonus_var_split_delta_does_not_gate(self):
+        """SD-36 Epic F1 stage 6 (merge-readiness blocker 2): a (rule id, field) pair pinned in
+        `structural_diff_bonus_var_split_record_deltas.json` -- the comma-split `BONUS:VAR` index
+        fix resolving a previously-flattened field to its real multi-contribution `Var` -- is an
+        expected, named, counted delta class, not a field-delta failure."""
+        rid, field = "core_rulebook:race_trait:racial_sla_levitate", "applies"
+        self.assertIn((rid, field), structural_diff.EXPECTED_BONUS_VAR_SPLIT_FIELD_DELTAS, "fixture assumption: this pair must be on the pinned list")
+        base = base_rules()
+        base["core_rulebook/race_trait/racial_sla_levitate.json"] = [
+            {"id": rid, "label": "Levitate", "value": "Text", "applies": "Always", "granted_by": [], "grants": []}
+        ]
+        fresh = base_rules()
+        fresh["core_rulebook/race_trait/racial_sla_levitate.json"] = [
+            {
+                "id": rid,
+                "label": "Levitate",
+                "value": "Text",
+                "applies": {"Compare": {"lhs": {"Var": "vf3886f08a793ad87"}, "op": "Eq", "rhs": {"Const": 0}}},
+                "granted_by": [],
+                "grants": [],
+            }
+        ]
+        code, out = self.run_diff(base, fresh)
+        self.assertEqual(code, 0, out)
+        self.assertIn("unexpected field deltas: 0", out)
+        self.assertIn("bonus_var_index comma-split fix (stage5 §1a): 1", out)
+
+    def test_an_unpinned_field_delta_on_the_same_record_still_gates(self):
+        """The pinned list is an EXACT (rule id, field) enumeration, never a blanket allowance for
+        the record: a DIFFERENT field changing on the same pinned record (`label`, which is not
+        among `racial_sla_levitate`'s pinned `applies`/`also`/`value` triple) still fails."""
+        rid = "core_rulebook:race_trait:racial_sla_levitate"
+        self.assertNotIn((rid, "label"), structural_diff.EXPECTED_BONUS_VAR_SPLIT_FIELD_DELTAS, "fixture assumption: this pair must NOT be on the pinned list")
+        base = base_rules()
+        base["core_rulebook/race_trait/racial_sla_levitate.json"] = [
+            {"id": rid, "label": "Levitate", "value": {"Number": {"Const": 1}}, "applies": "Always", "granted_by": [], "grants": []}
+        ]
+        fresh = base_rules()
+        fresh["core_rulebook/race_trait/racial_sla_levitate.json"] = [
+            {
+                "id": rid,
+                "label": "Levitate (SLA)",
+                "value": {"Number": {"Const": 1}},
+                "applies": "Always",
+                "granted_by": [],
+                "grants": [],
+            }
+        ]
+        code, out = self.run_diff(base, fresh)
+        self.assertEqual(code, 1, out)
+        self.assertIn("unexpected field deltas: 1", out)
+        self.assertIn("racial_sla_levitate: label", out)
+
     def test_report_only_flag_keeps_exit_zero(self):
         base = base_rules()
         fresh = base_rules()

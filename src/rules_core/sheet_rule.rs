@@ -2136,6 +2136,11 @@ pub fn resolve_gated_fact_grant(
     }
 }
 
+/// The dedup key `render_sheet` compares consecutive lines on below: `(kind, label, printed,
+/// also, condition)`, exactly the tuple documented at its one use site. Named (rather than an
+/// inline tuple type) so the dedup accumulator doesn't trip `clippy::type_complexity`.
+type SheetLineDedupKey = (String, String, String, Vec<(String, SheetLineValue)>, Option<String>);
+
 /// Every held, printed rule's line, grouped by kind then label: the "Rules and features" section.
 /// A `#bonusN` sibling is a bonus line with its own gate (`applies`), held alongside its
 /// principal: it prints only when that gate includes -- an unbroken chain shirt's "Broken"
@@ -2176,7 +2181,7 @@ pub fn render_sheet(package: &SheetRulePackage, seed: &HeldSeed, facts: &Charact
     // is a pure display artifact and is dropped, keeping only the first (stable on the existing
     // kind/label/id sort, so which of several identical rules "wins" is deterministic, never
     // which one a HashMap iteration happened to visit first).
-    let mut seen: Vec<(String, String, String, Vec<(String, SheetLineValue)>, Option<String>)> = Vec::new();
+    let mut seen: Vec<SheetLineDedupKey> = Vec::new();
     lines.retain(|l| {
         let key = (l.kind.clone(), l.label.clone(), l.printed.clone(), l.also.clone(), l.condition.clone());
         if seen.contains(&key) {
