@@ -174,3 +174,85 @@ about root-crate unit-test pass/fail, a narrower and still-accurate statement on
 the population-wide census sweep this receipt covers was simply never run by any prior stage).
 This receipt supersedes all of them for `changed_value` and `duplicate` figures at the corrected,
 full-population denominator (176 builds / 34 families) stated in §0 above.
+
+## 5. Blocker 1c owner-exclusion correction
+
+**Problem.** §1c's fix excluded every `CATEGORY:Aligned Class` `BONUS:VAR` row from
+`bonus_var_index` outright. That over-reaches on the one shape where the Aligned Class row IS the
+owning record for the name it targets: Inner Sea Gods' Evangelist prestige class's own `Winter
+Witch` row (`pathfinder/paizo/campaign_setting/inner_sea_gods/support/abilities_rowpg.lst:24`)
+declares `BONUS:VAR|WinterWitchLVL|EvangelistLVL-1` and then consumes that SAME name on the SAME
+row (`BONUS:CASTERLEVEL|Witch|WinterWitchLVL-2`) -- no other row anywhere in the pinned tree ever
+claims `WinterWitchLVL` (the Reign of Winter Player's Guide `CLASS:Winter Witch` row that would is
+an Adventure Path book, outside both `BOOKS_RELATIVE` and `EXTRA_BOOK_DIRS`, so it is never loaded
+into `PinnedTree`). Excluding the row left `WinterWitchLVL` DEFINEd nowhere in the tree, which
+`resolve_variable` (`ctx.rs`) reads as C1(c) (undefined -> `Const(0)` + an `undefined-variables`
+defect) and silently baked `inner_sea_gods:ability:winter_witch#bonus1`'s caster-level bonus to a
+flat, never-scaling constant -- the same "level-scaling var baked to a constant" defect shape §1a
+(Blocker 2) closed, reintroduced by §1c's own fix, and named by no receipt on the branch until now.
+Not reachable on paper today (`Winter Witch`'s `applies` is `Holds{MissingRule{class, "Winter
+Witch"}}`, held in 0 of the 176-build population, no `--sheet-dump` line affected) -- a silent
+data/defect-register regression, not a wrong printed row, but an unnamed one until this section.
+
+**Before (tranche/16, and this branch before the correction):**
+```json
+{"id":"inner_sea_gods:ability:winter_witch#bonus1", "value":{"Number":{"Sum":[{"Var":"vd80705684a527b14"},{"Const":-1},{"Const":-2}]}}, ...}
+```
+**After 1c's original fix (HEAD `1ed2ac9132`, the regression):**
+```json
+{"id":"inner_sea_gods:ability:winter_witch#bonus1", "value":{"Number":{"Const":-2}}, ...}
+```
+`data/sheet_rules/_defects/undefined-variables.json` also gained
+`inner_sea_gods:ability:winter_witch: WinterWitchLVL` (absent on tranche/16, absent again after
+this correction).
+
+**Root-caused fix, at the root (`closure.rs`'s `build_indexes`).** A `CATEGORY:Aligned Class`
+`BONUS:VAR` contribution is no longer decided inline: it is buffered
+(`aligned_class_pending: Vec<(name, RowRef, row's own id.key)>`) while the single forward scan
+builds `class_rows` (every file's genuine `CLASS:<name>` headers, tree-wide), then resolved in one
+second pass once the scan completes: **indexed only when no genuine `CLASS:<key>` row exists
+anywhere else in the pinned tree under this row's own identity key** -- otherwise it is a mirror of
+an externally-owned base class and stays excluded, exactly as §1c intended. One mechanical,
+class-name-free predicate: `Vigilante`/`Fighter`/every other base class's own `CLASS:` header
+exists elsewhere in the tree (a real class an Aligned Class row merely mirrors), so those stay
+excluded; `Winter Witch` has none in scope, so its row -- the only declarer of its own target name
+-- is kept. The second pass is necessary (not optional) because a row's owning `CLASS:` header can
+live in a file the forward scan has not reached yet; file order is not name order.
+
+**RED-first test:** `variable_rows_keeps_an_aligned_class_row_that_owns_its_own_target_var`
+(`closure.rs`), reproducing the real `Winter Witch` row verbatim and asserting
+`variable_rows("WinterWitchLVL")` stays non-empty. Confirmed RED against the pre-fix code
+(`assertion left == right failed ... left: 0 right: 1`), GREEN after. The stage-5 fix's own guard,
+`variable_rows_excludes_an_aligned_class_minus_one_mirror_row` (Vigilante), stays green unchanged.
+
+**Regenerate + verify:**
+- `cargo run --locked -j 8 -p codex-ingest --bin sheet_rule_convert -- --check` before the
+  correction: `verdict=FAIL`, `stale on disk: _defects/undefined-variables.json`,
+  `stale on disk: inner_sea_gods/ability/winter_witch.json` (exactly the two files this section
+  predicts, nothing else).
+- `-- --write`: `records=49450 converted=49450 refused=0` (frozen count unchanged), then
+  `-- --check` again: `verdict=PASS`.
+- `structural_diff.py` (a `--dump` of this branch vs. a read-only worktree of this branch's
+  PREVIOUS commit, `1ed2ac9132`): file set unchanged (`+0 -0` everywhere), zero added/removed
+  `granted_by` edges or grants, zero var/defect FILE additions, and exactly **one** unexpected
+  field delta: `inner_sea_gods:ability:winter_witch#bonus1: value` -- the script's own gate treats
+  any unexpected field delta as a script-level FAIL by design (it only names growth classes from
+  the ORIGINAL F1 diff as expected), so its printed `verdict=FAIL` here is the script correctly
+  reporting the scope of THIS content-correcting change, not a defect: it is the one delta this
+  fix intends, and the only one that exists.
+- `grep -c WinterWitchLVL data/sheet_rules/_defects/undefined-variables.json` -> `0`.
+- **Changed files, this correction, full list:** `crates/codex-ingest/src/pcgen_import/sheet_rule/
+  closure.rs` (source), `data/sheet_rules/inner_sea_gods/ability/winter_witch.json`,
+  `data/sheet_rules/_defects/undefined-variables.json` (one line removed). No other file in
+  `data/sheet_rules/` differs from the previous commit.
+- `cargo test --locked -j 8 -p codex-ingest --lib`: 645 passed, 0 failed, 11 ignored.
+- `cargo test --locked -j 8 --lib sheet_rule`: 60 passed, 0 failed, 1 ignored.
+- `cargo clippy --locked --tests -j 8 --no-deps` (`crates/codex-ingest`, `-D warnings`): clean.
+- `cargo clippy --locked --tests -j 8 --manifest-path apps/desktop/src-tauri/Cargo.toml
+  -- -D warnings`: clean. (A workspace-wide, dependency-inclusive `cargo clippy -- -D warnings`
+  from the repo root, or from `crates/codex-ingest` without `--no-deps`, fails on a
+  `clippy::type_complexity` lint at `src/rules_core/sheet_rule.rs:2179` -- confirmed byte-identical
+  on the previous commit `1ed2ac9132` before this correction touched anything, so it is pre-existing
+  and unrelated to this fix, not introduced by it.)
+- `python3 scripts/pcgen_residue_gate.py --check --closure`: `verdict=PASS`.
+- `git status --porcelain -- data/corpus site`: empty.

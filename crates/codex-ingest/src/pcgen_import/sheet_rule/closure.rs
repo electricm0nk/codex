@@ -394,6 +394,12 @@ impl PinnedTree {
         let mut pfs_base_keys = BTreeSet::new();
         let mut ability_category_parent: BTreeMap<String, String> = BTreeMap::new();
         let mut ability_category_ambiguous: BTreeSet<String> = BTreeSet::new();
+        // `CATEGORY:Aligned Class` `BONUS:VAR` contributions (name upper, row, the row's own
+        // `id.key` upper) buffered here instead of indexed inline -- see the comment where they
+        // are pushed, below. Deferred to a second pass over `class_rows` because a row's OWNER
+        // may live in a file the forward scan has not reached yet (`class_rows` is built file by
+        // file, in the same single pass, and file order is not name order).
+        let mut aligned_class_pending: Vec<(String, RowRef, String)> = Vec::new();
         for (fi, file) in self.files.iter().enumerate() {
             let mut current_class: Option<String> = None;
             for (li, raw) in file.lines.iter().enumerate() {
@@ -479,29 +485,6 @@ impl PinnedTree {
                             }
                         }
                         "BONUS" => {
-                            // `CATEGORY:Aligned Class` rows (real PCGen shape, `isg_abilities.lst`:
-                            // Inner Sea Gods' Evangelist prestige class re-exports EVERY base
-                            // class's own level-tracking var under a MIRROR record of the same
-                            // name -- `Fighter`/`Vigilante` `CATEGORY:Aligned Class` both carry
-                            // `BONUS:VAR|<Class>_CFP_Level,<Class>LVL|EvangelistLVL-1`, comma-target
-                            // rows that (correctly, per the fix above) now surface under the base
-                            // class's own `<Class>LVL` name too. That row is never part of the base
-                            // class's OWN record family -- it is a DIFFERENT class's (Evangelist's)
-                            // own progression view -- so it must not count toward whether the base
-                            // class's own `<Class>LVL` needs cross-record `Var` aggregation:
-                            // `class_chassis_sheet_rules.rs`'s `row_at` evaluates a class's base
-                            // chassis with an EMPTY package/held set (its own doc comment: "no
-                            // `Var`, no held-set lookup" is a stated, load-bearing assumption for
-                            // the overwhelming majority of class progressions), so losing the
-                            // in-record fold here turns Fighter's own `Weapon Mastery` capstone
-                            // gate and Vigilante's own base attack bonus into an unconditional 0 --
-                            // an unrelated prestige class an ordinary build never takes must never
-                            // change what a base class's OWN chassis reads. A structural PCGen
-                            // category, excluded the same mechanical way `.MOD` rows are already
-                            // scoped to their own file family above -- never a per-class name.
-                            if id.category == "ALIGNED CLASS" {
-                                continue;
-                            }
                             if let Some(rest) = v.strip_prefix("VAR|")
                                 && let Some((names, _)) = rest.split_once('|')
                             {
@@ -524,8 +507,39 @@ impl PinnedTree {
                                 // silently never did -- an internally inconsistent, PF1-wrong
                                 // read). A mechanical grammar fix, not a per-class one: it applies
                                 // identically to every multi-target `BONUS:VAR` row in the corpus.
-                                for name in names.split(',') {
-                                    define_or_push(&mut bonus_var_index, name, row);
+                                //
+                                // `CATEGORY:Aligned Class` rows (real PCGen shape,
+                                // `isg_abilities.lst`: Inner Sea Gods' Evangelist prestige class
+                                // re-exports EVERY base class's own level-tracking var under a
+                                // MIRROR record of the same name -- `Fighter`/`Vigilante`
+                                // `CATEGORY:Aligned Class` both carry
+                                // `BONUS:VAR|<Class>_CFP_Level,<Class>LVL|EvangelistLVL-1`) are
+                                // NEVER indexed inline here -- buffered instead, and resolved once
+                                // `class_rows` (every file's own `CLASS:` headers) is complete
+                                // below. Blocker 1c (stage 5) excluded every such row outright, but
+                                // that over-reaches on the record that OWNS its own target var --
+                                // Inner Sea Gods' `Winter Witch` row's `BONUS:VAR|WinterWitchLVL|
+                                // EvangelistLVL-1` declares a name no OTHER row in the pinned tree
+                                // ever claims (the Reign of Winter book that would is an Adventure
+                                // Path, outside `BOOKS_RELATIVE`/`EXTRA_BOOK_DIRS`), so excluding it
+                                // left `WinterWitchLVL` DEFINEd nowhere -- `resolve_variable`
+                                // (`ctx.rs`) reads that as C1(c), undefined, and flattened
+                                // `winter_witch#bonus1`'s caster level to a constant. The correct,
+                                // mechanical (never per-class) line: an Aligned Class row's target
+                                // is excluded only when some OTHER record -- a genuine `CLASS:`
+                                // header anywhere in the tree, keyed the same as this row's own
+                                // identity -- already owns that class name; Vigilante's and
+                                // Fighter's own `CLASS:` rows exist elsewhere in the tree (real
+                                // base classes an Aligned Class row merely mirrors), so those stay
+                                // excluded exactly as blocker 1c intended.
+                                if id.category == "ALIGNED CLASS" {
+                                    for name in names.split(',') {
+                                        aligned_class_pending.push((name.trim().to_ascii_uppercase(), row, id.key.clone()));
+                                    }
+                                } else {
+                                    for name in names.split(',') {
+                                        define_or_push(&mut bonus_var_index, name, row);
+                                    }
                                 }
                             }
                         }
@@ -544,6 +558,16 @@ impl PinnedTree {
         }
         for name in &ability_category_ambiguous {
             ability_category_parent.remove(name);
+        }
+        // Resolve the buffered `Aligned Class` `BONUS:VAR` contributions now that `class_rows`
+        // holds every file's `CLASS:` headers, tree-wide: a contribution is indexed only when NO
+        // genuine `CLASS:<key>` row (the row's own identity key) exists anywhere else in the tree
+        // -- otherwise it is a mirror of an externally-owned base class, excluded exactly as
+        // blocker 1c intended.
+        for (name, row, key) in aligned_class_pending {
+            if !class_rows.contains_key(&key) {
+                define_or_push(&mut bonus_var_index, &name, row);
+            }
         }
         self.mod_index = mod_index;
         self.base_index = base_index;
@@ -929,5 +953,34 @@ mod tests {
         ]);
         let rows = tree.variable_rows("VigilanteLVL");
         assert_eq!(rows.len(), 1, "only the base class's own DEFINE row -- the Aligned Class mirror row is excluded: {rows:?}");
+    }
+
+    /// SD-36 Epic F1 merge-readiness blocker 1c correction: the exclusion above must not reach
+    /// past the row's OWN file family. Inner Sea Gods' `Winter Witch` `CATEGORY:Aligned Class`
+    /// row (real corpus shape, `abilities_rowpg.lst:24`) is the record that OWNS
+    /// `WinterWitchLVL` -- no `CLASS:Winter Witch` row exists ANYWHERE in the pinned tree (the
+    /// Reign of Winter Player's Guide that carries one is an Adventure Path book, outside both
+    /// `BOOKS_RELATIVE` and `EXTRA_BOOK_DIRS`) -- so this row must stay indexed: excluding it
+    /// turns `WinterWitchLVL` into a name DEFINEd nowhere in the tree, which `resolve_variable`
+    /// (`ctx.rs`) reads as C1(c) (undefined -> `Const(0)` + an `undefined-variables` defect),
+    /// flattening `inner_sea_gods:ability:winter_witch#bonus1`'s caster-level bonus from
+    /// `EvangelistLVL - 1 - 2` to a flat, never-scaling `-2`.
+    #[test]
+    fn variable_rows_keeps_an_aligned_class_row_that_owns_its_own_target_var() {
+        let tree = tree_from_lines(vec![(
+            "abilities_rowpg.lst",
+            vec![concat!(
+                "Winter Witch\tCATEGORY:Aligned Class\tTYPE:Aligned Class\t",
+                "PREABILITY:1,CATEGORY=Class,Winter Witch\tBONUS:PCLEVEL|Winter Witch|EvangelistLVL-1\t",
+                "BONUS:VAR|WinterWitchLVL|EvangelistLVL-1\tADD:SPELLCASTER|Witch\t",
+                "BONUS:CASTERLEVEL|Witch|WinterWitchLVL-2\tBONUS:PCLEVEL|Witch|var(\"WinterWitchLVL\")-2",
+            )],
+        )]);
+        let rows = tree.variable_rows("WinterWitchLVL");
+        assert_eq!(
+            rows.len(),
+            1,
+            "no CLASS:Winter Witch row exists anywhere in the pinned tree -- this Aligned Class row is the ONLY declarer, so it must stay indexed: {rows:?}"
+        );
     }
 }
