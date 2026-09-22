@@ -1211,14 +1211,14 @@ mod term_level_refusal_gate {
             }
         }
         // Re-derive with: `python3 -c "import json; tokens=json.load(open('data/sheet_rules/_tokens.json')); refused={e['id'] for e in json.load(open('data/sheet_rules/_refused.json'))['entries']}; degraded=[e for e in tokens['entries'] if e.get('degradations') and e['id'] not in refused]; print(len(degraded))"` for record count, and the loop above (without `numbered.truncate`) for the line count.
-        assert_eq!(degraded.len(), 423, "degraded-record count moved -- re-derive and update this pin (command in the doc comment)");
+        assert_eq!(degraded.len(), 424, "degraded-record count moved -- re-derive and update this pin (command in the doc comment)");
         let numbered_count = numbered.len();
         still_refused.truncate(10);
         missing.truncate(10);
         numbered.truncate(10);
         assert!(still_refused.is_empty(), "degraded records must still convert: {still_refused:?}");
         assert!(missing.is_empty(), "degraded records must have a rule file: {missing:?}");
-        assert_eq!(numbered_count, 620, "numbered-lines-inside-a-degraded-record count moved (CONV-05 baseline) -- re-derive and update this pin, or investigate if it jumped unexpectedly: sample {numbered:?}");
+        assert_eq!(numbered_count, 624, "numbered-lines-inside-a-degraded-record count moved (CONV-05 baseline) -- re-derive and update this pin, or investigate if it jumped unexpectedly: sample {numbered:?}");
     }
 
     /// The report's own sums: a degraded record is a CONVERTED record, and the per-shape
