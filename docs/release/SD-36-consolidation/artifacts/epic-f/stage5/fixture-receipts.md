@@ -156,3 +156,66 @@ Fixed defects: none (the only failure in scope, Classification 1, was a stale pi
 Classification 2 is out of this step's scope and not fixed).
 STOPs: none — no `changed-value` or `removed-unexplained` line appeared; the one non-Rage-line movement
 found (the `exalted` degradation) is a newly-surfaced `added-correct` join fix, not a changed value.
+
+---
+
+# S5:suite-desktop — fixture receipts
+
+Spec: `docs/release/SD-36-consolidation/epic-f-class-completion.md` 3b, review finding 12 (Fixture Protocol).
+Tree: commit `f9dac29276` on `sd36/epic-f1` (S5:suite-ingest, immediately prior).
+
+## Runs and logs
+
+1. Desktop crate: `cargo test --locked -j 8 --no-fail-fast --manifest-path apps/desktop/src-tauri/Cargo.toml`
+   — `suite-desktop.log` (`nohup`, single binary target `src/main.rs`, ends `EXIT=0`).
+2. Frontend: `cd apps/desktop && npm run typecheck && npm test` — `suite-desktop-frontend.log`
+   (`nohup`, ends `EXIT=0`).
+
+## Command and evidence
+
+```
+grep -c '^test result' suite-desktop.log     # 1 (single unittest binary, src/main.rs)
+grep -n 'FAILED' suite-desktop.log           # 0 matches
+grep -n '^EXIT=' suite-desktop.log           # line 627: EXIT=0
+```
+`test result: ok. 612 passed; 0 failed; 0 ignored; 0 measured; 0 filtered out; finished in 360.33s`
+— includes `corpus_bundle_parity_test::sanitised_corpus_bundle_has_the_same_race_equipment_and_spell_population_as_the_raw_corpus`
+(the corpus-bundle parity test named in this step's instructions) and every catalog-count-pinning test
+(`equipment_catalog`, `spell_catalog`, `reference_library_catalog`, `race_trait_picker`, `character_hub`),
+all `ok`.
+
+```
+grep -n 'FAIL' suite-desktop-frontend.log | grep -v 'PASS'   # 0 matches
+grep -c 'PASS ' suite-desktop-frontend.log                   # 125
+grep -n '^EXIT=' suite-desktop-frontend.log                  # EXIT=0
+```
+`typecheck`: `tsc --noEmit` → `TC=0`. `npm test`: `125/125 test files passed.`
+
+## Classification
+
+**Nothing failed in either run.** The desktop crate's single test binary (612 tests, one `test result:`
+line, matching the 611-filtered/612-total and 609-filtered/612-total counts already observed in this
+tree's earlier targeted gate runs — `gate-desktop-bundle-parity.log`, `gate-desktop-sheetrule.log`, both
+pre-dating this step, same population) and the frontend's 125 test files all ran green on the first
+attempt. There is no pinned count/fixture/snapshot that moved, so nothing to classify under (A); no
+defect surfaced, so nothing under (B); no pre-existing failure, so nothing under (C); and no changed
+value to check against Ruling 1 (the 9 accepted Rage lines were already re-baselined in prior epic-f1
+commits and are not touched by the desktop crate's own fixtures, which hold no Rage-value pins).
+
+## Supplementary invariant checks
+
+- `python3 scripts/pcgen_residue_gate.py --check --closure` → `verdict=PASS` (live_hits=0,
+  identifier_hits=0, shipped_scanned=69389).
+- `git status --porcelain -- data/corpus site` → empty both before and after this step.
+- `python3 -c "import json;r=json.load(open('data/sheet_rules/_report.json'));print(r['records'],r['converted'])"`
+  → `49450 49450` — frozen record count unmoved.
+- `python3 scripts/site/check_frozen_status.py --check` → `OK: ... frozen at 100% (49450 units)`.
+
+## Result
+
+Pass/fail counts before: not run yet on this tree this step (first invocation).
+Pass/fail counts after: desktop crate 612/612 passed, 0 failed, `EXIT=0`; frontend 125/125 test files
+passed, typecheck `TC=0`, `EXIT=0`.
+Re-baselined tests: none.
+Fixed defects: none.
+STOPs: none.
