@@ -257,7 +257,9 @@ reported to the orchestrator as a named, non-blocking finding, not silently reso
   collision -- confirmed NOT needed: the desktop Rust backend calls the SAME
   `HeldSeed::from_character`/`held_set` this step already fixed, `character_hub.rs:778,783`, so
   no separate Rust change was needed there). Named for whoever picks up F4 (Desktop) or a
-  dedicated frontend follow-up.
+  dedicated frontend follow-up. **RESOLVED at the stage-4 fix pass, §7.5**: this was flagged by
+  that step's own adversarial check as a live desync (not just a named follow-up), and fixed
+  there.
 - **The reversed-word-order `weapon_and_armor_proficiency_<class>` naming (14 records, §3)** is a
   converter/ingest-side naming inconsistency, not a join defect -- harmless today only because
   every one of the 14 records is `print: false`. Named for whoever owns the converter's class
@@ -281,3 +283,214 @@ class_census --json <scratch>/census-after2.json           # post-repair package
 render_before_sheets.sh / render_after_sheets.sh           # 70-build manifest, both halves
 classify_sheet_diff.py --before ... --after ... --census-before ... --census-after ...
 ```
+
+## 7. Stage-4 fix pass (adversarial check, 5 blockers)
+
+Spec: same as above. Blockers: `<scratch>/stage4-blockers.json`, from the stage-4 adversarial
+check. Fixed at their root, one at a time, RED test first, then re-verified over the real
+population and the real sheet render.
+
+### 7.1 Blocker 1 -- scoped-tier and collapsed-tail one-word coincidences (CONFIRMED, fixed)
+
+Root cause, as diagnosed: the collapsed-tail arm credited a partial match with the WHOLE
+original tail's coverage merely for consuming the (shorter) collapsed tail. Fixed by capping
+collapsed-tail credit at the words actually explained (never promoted), and adding one shared
+refusal rule to BOTH the raw-scoped and collapsed-scoped tiers: a candidate that explains
+strictly less than its tail AND still has its own unexplained leftover words is refused outright
+(dropped before scoring), never scored into a confident `Matched`.
+
+Tracing the ACTUAL live mechanism (not assumed from the finding's own diagnosis) found a second,
+independent source of the same defect the finding's evidence did not name: the BARE tier. Its
+"whole tail is a matched PREFIX of the candidate" rule let a candidate with its own extra
+trailing words win (`magus_arcana_pool` -> `magus_arcana_pool_strike`, `strike` never asked for)
+purely because it happened to have the highest raw `coverage` of any tier. Confirmed by
+instrumenting the live join and re-running the `magus_arcana_pool` case: BEFORE this
+sub-fix, the bare-tier candidate (coverage=3, excess=1) beat the properly-refused collapsed-tier
+candidate outright on the primary `coverage` key -- the collapsed-arm fix alone was
+insufficient. Fixed by requiring the bare tier's own match to be EXACT (`excess == 0`): the
+whole tail consumed AND no leftover candidate words, not merely a prefix relationship.
+
+RED tests added (`sheet_line_join.rs`, all against the REAL committed `data/sheet_rules/`):
+- `real_package_magus_arcana_pool_never_joins_the_unrelated_pool_strike_arcana`
+- `real_package_skald_raging_climber_and_swimmer_never_join_raging_song_on_one_word`
+  (also covers `raging_leaper`, the finding's own third worked example)
+- `a_partial_match_with_its_own_leftover_words_is_refused_not_tied` (synthetic regression guard)
+- `two_candidates_that_both_fully_explain_the_tail_and_only_then_diverge_are_ambiguous`
+  (renamed/re-scoped from the pre-fix `two_candidates_with_the_same_leftover_...` test, which
+  used a tail the fix now correctly refuses to `None` -- the genuine-tie invariant this test
+  pins is still real and still reachable, just at a tail length where BOTH candidates fully
+  explain it)
+
+All three of the finding's confirmed-wrong joins are now closed:
+
+| Facet | Wrong (pre-fix) | Corrected (post-fix) |
+|---|---|---|
+| `class_feature.untabled.magus.magus_arcana.pool` (magus:20) | `Matched(magus_arcana_pool_strike)` | `None` |
+| `class_feature.acg.skald.raging_climber` (skald:20) | `Matched(skald_raging_song)` | `None` |
+| `class_feature.acg.skald.raging_swimmer` (skald:20) | `Matched(skald_raging_song)` | `None` |
+
+### 7.2 Blocker 2 -- bare-tier principal guard (CONFIRMED, fixed)
+
+Root cause confirmed exactly as diagnosed: the bare tier's own comment claiming a bare
+class-slug-only candidate "could never fully consume a real (non-empty) tail" is false whenever
+a later dot-segment equals the class slug (`class_feature.<class>.<class>`, or any nested
+sliding-window position landing there) -- the sliding window makes this reachable, and the bare
+tier had no guard against it. Fixed: `if slug == class_slug { continue }` added to the bare-tier
+loop, matching the scoped tier's own guard.
+
+RED test: `bare_tier_never_returns_the_class_principal_rule_either` -- both the direct
+`class_feature.fighter.fighter` shape and a nested `class_feature.fighter.x.fighter` window,
+against a package containing ONLY the class principal rule (so a pre-fix run would provably
+return `Matched(fighter)`, not `None`, at the bare tier alone).
+
+### 7.3 Blocker 3 -- population scan denominator (CONFIRMED, fixed)
+
+Root cause confirmed exactly as diagnosed: `prestige_applies_gate`/`determine_carriers` failures
+were silently `continue`d in `duplicate_scan`, dropping 7 of 74 prestige classes from
+`builds_scanned`'s denominator with no count and no name. Fixed: `duplicate_scan`'s prestige
+loop now calls the ALREADY-NAMED `carrier_assignment` (the same named-`Err` function
+`census --json`'s `carrier_assignment_summary` already uses elsewhere), collects every skip's
+own reason string into a new `DuplicateScanReport::prestige_skipped: Vec<String>` field, and the
+`population` string is corrected to state the true denominator: **"every non-prestige census
+entry @ own max_level + N of 74 prestige carriers (M named, no carrier determinable) @ own
+max_level + the full multiclass mix panel"**. `class_census --duplicates`'s one-line summary now
+also prints `prestige_skipped=[...]`.
+
+Re-run: `prestige_skipped` names exactly the 7 classes the finding's own evidence named --
+`dark_tempest`, `dragon_disciple`, `elocater`, `evangelist`, `psion_uncarnate`,
+`pure_legion_enforcer`, `thrallherd` -- each with `determine_carriers`'s own reason ("gate
+references a caster level or spell-kind term only inside a Not/AtLeast clause..."). Population
+string now reads `"... + 67 of 74 prestige carriers (7 named, no carrier determinable) @ own
+max_level + ..."`. `builds_scanned` itself is UNCHANGED at 313 (the skip logic was always
+skip-and-continue; only the naming was missing), confirming this was a reporting defect, not a
+population-size defect.
+
+### 7.4 Blocker 4 -- the 70-build gate's blind spot to the join itself (CONFIRMED, fixed)
+
+Root cause confirmed exactly as diagnosed: stage-3's re-run rendered BOTH halves with R2 already
+in the tree, so every newly-joined facet was identical on both sides and the classifier's
+delta-only methodology could not see it -- `class_census --duplicates`'s own before/after
+columns (which DO isolate the join, since `pre_r2_naive_join` and `rule_for_explanation` are run
+against the identical package for every row) were already the right instrument for the join
+itself; §2/§7.1-7.3 above are that evidence. What §4 of the original receipt could not do is
+show the join's effect in the actual RENDERED SHEET TEXT a player reads -- so this step produced
+that render, genuinely isolating the join as the only variable:
+
+1. `src/rules_core/sheet_rule.rs`'s ONE join call-site was TEMPORARILY swapped (never committed)
+   to call a byte-accurate copy of `pre_r2_naive_join` instead of `rule_for_explanation`; a
+   `class_census` binary was built from that tree and copied out
+   (`<scratch>/class_census_pre_r2_baseline`); the source edit was then reverted
+   (`git checkout -- src/rules_core/sheet_rule.rs`, confirmed clean) BEFORE building the real,
+   fixed `class_census` binary (`<scratch>/class_census_post_r2_fixed`) from this step's actual
+   committed code.
+2. Both binaries rendered the SAME 70-build manifest against the SAME package (the post-repair
+   `<scratch>/dump-after`, swapped in via the documented `rsync` + `git checkout --`/`git clean
+   -fd` procedure, confirmed `git status --short data/sheet_rules` empty before and after both
+   swaps): `<scratch>/sheets/pre_r2_baseline/*.txt` (naive walk) and
+   `<scratch>/sheets/post_r2_fixed/*.txt` (this step's corrected join). The join is now the ONLY
+   variable between the two render sets.
+3. `classify_sheet_diff.py --before pre_r2_baseline --after post_r2_fixed` (§4's own tool,
+   pointed at these two new directories):
+
+```
+gate_pass=False totals={'added_correct': 0, 'duplicate': 0, 'changed_value': 0, 'removed': 0, 'unclassified': 4} removed_unexplained=0
+```
+
+(`<scratch>/blast-radius-classify-stage4fix.json`, `<scratch>/blast-radius-receipt-stage4fix.md`.)
+
+This is the genuine pre-R2-vs-post-R2-fixed delta the finding asked for -- and this time it
+really does isolate the join: **66 of 70 builds are byte-identical** (verified by direct `diff`
+over every pair, not just the classifier's own summary); the other 4
+(`oracle_L1`/`L7`/`L14`/`L20`) each gain exactly one new HELD/LINE pair,
+`advanced_players_guide:class_feature:oracle_clouded_vision` ("Clouded Vision"), and nothing
+else changes anywhere (0 duplicate, 0 changed-value, 0 removed, across all 70 builds).
+
+The classifier reports these 4 as `unclassified`, not `added_correct` -- its own ADDED-CORRECT
+check requires a `granted_by` edge on the record to auto-verify the character legitimately
+holds it, and `oracle_clouded_vision`'s converted record carries none (a separate, pre-existing
+gap in that record's own conversion, unrelated to the join). Hand-traced instead: the facet is
+`class_feature.apg.oracle.clouded_vision_curse.vision_range_cap` -- its own tail literally names
+the Clouded Vision curse, matching only `oracle_clouded_vision` and no other record, at every
+level tested (Oracle 1/7/14/20 all carry this curse facet). Confirmed correct, not blindly
+accepted.
+
+Cross-checked against the population scan: the population scan's own 313-build set includes
+only `oracle:20` (its census `max_level`), not `oracle:1`/`7`/`14` (those three exist only in
+this 70-build manifest) -- so `duplicates-after-fix.json` names this exact facet as
+`none -> matched` for `oracle:20` alone, and this render independently confirms the SAME fix
+reaches the SAME rule correctly at three MORE levels the population scan never swept. Zero
+regressions (no `some -> none`/`some -> ambiguous`/`some -> DIFFERENT matched` anywhere in
+either instrument) is the headline result the finding asked this render to actually be able to
+show.
+
+**Hand-audit of newly-matched facets.** A fixed-seed (`20260921`) random sample of 40 of the
+597 `before=None -> after=Matched` facets from the re-run population scan
+(`<scratch>/duplicates-after-fix.json`) was drawn and eyeballed for target-slug plausibility
+against the facet's own tail words (`<scratch>/adv_join_fixed.py`'s own printed sample) --
+every sampled pair is a legible, on-topic stem match (e.g.
+`eidolon.bite_damage_die -> summoner_eidolon`,
+`pu.unchained_barbarian.rage_powers_known -> unchained_barbarian_rage_powers`,
+`vigilante_specialization.pool -> vigilante_vigilante_specialization`), none reproduces the
+one-word-coincidence shape §7.1 fixed.
+
+**Independent cross-validation.** `<scratch>/adv_join_fixed.py`, a from-scratch Python
+reimplementation of the CORRECTED algorithm (every rule mirrored from the Rust source, not
+copy-pasted), run over the same 2014-facet population: **0 mismatches** against the Rust join's
+own `after` column for every one of the 1071 distinct `(class, explanation_id)` facets in the
+population. This is a second, independent implementation agreeing byte-for-byte with the fixed
+Rust code, not the same code re-run.
+
+### 7.5 Blocker 5 -- desktop frontend join desync (CONFIRMED, fixed)
+
+Root cause confirmed exactly as diagnosed: `classFeaturesModel.ts`'s `noticeHasSheetRule` was
+still the pre-R2 exact-slug walk (`candidates = [\`${classToken}_${feature}\`, feature]`),
+untouched by the Rust-side R2 fix, so a facet the Rust join now matches to a real STEM rule kept
+BOTH its printed rule line and its "not computed" notice.
+
+Fixed by porting `rule_for_explanation` to TypeScript
+(`classFeaturesModel.ts::ruleForExplanation`) -- the same two tiers, the same sliding window,
+the same collapsed-tail credit cap, the same partial-match-with-leftover refusal, the same
+explicit principal-rule guard on both tiers -- and wiring `noticeHasSheetRule` to call it
+instead of the stale candidate list. Per spec 3b.2's own instruction ("through a `rule_id` the
+DTO already carries as the line id -- no new wire field"), candidates are the character's own
+currently-rendered `class_feature` sheet lines (`SheetLineDto.id`), not a new wire field; this
+can only make the join MORE conservative than the Rust original (every refusal rule is a
+standalone property of one candidate's own shape, never a comparison against other candidates),
+and the winning candidate for any facet the Rust join actually holds is, by construction, always
+present among these lines (`HeldSeed::from_character` already ran this same join server-side for
+every `class_feature.*` facet and held/printed whatever it matched).
+
+RED tests (`classFeaturesModel.test.ts`):
+- `verifiesANoticeIsDroppedByTheSameStemMatchTheRustJoinUses` -- spec 3b.2's own worked example
+  (`brawler_knockout_dc` -> `brawler_knockout`): pre-fix, the notice would have survived
+  alongside the printed line (the exact desync the finding named); post-fix, the notice is
+  dropped.
+- `verifiesAOneWordCoincidenceNeverDropsTheNotice` -- the `raging_climber`/`skald_raging_song`
+  shape §7.1 fixed, mirrored on the frontend: a one-word coincidence must never suppress a real
+  notice either.
+
+`src/rules_core/sheet_line_join.rs`'s own module doc comment previously (and incorrectly)
+claimed the frontend already called this function directly ("no second copy anywhere") -- false
+as of the finding's own evidence. Corrected to name the TypeScript port explicitly and why a
+wire boundary makes a literal shared call impossible.
+
+## 8. Commands run, this fix pass
+
+```
+cargo test --lib -j 8 rules_core::sheet_line_join::     # 20/20 green (16 original + 4 new; 1 renamed/re-scoped)
+cargo test --locked -j 8 --lib                          # 2663/2663 green, 7 ignored
+cargo clippy --locked -j 8 --lib --bins -- -D warnings  # clean
+python3 scripts/pcgen_residue_gate.py --check --closure   # verdict=PASS
+cd apps/desktop && npm run typecheck                      # clean
+cd apps/desktop && npm test                                # 125/125 test files green
+class_census --duplicates <scratch>/duplicates-after-fix.json          # tracked package
+class_census --duplicates <scratch>/duplicates-postrepair-fix.json     # post-repair package (swap+restore, identical figures)
+python3 <scratch>/adv_join_fixed.py                                     # 0 mismatches vs Rust, over 1071 distinct facets
+<scratch>/render_variant.sh <scratch>/class_census_pre_r2_baseline  <scratch>/sheets/pre_r2_baseline   # temp source swap, reverted before commit
+<scratch>/render_variant.sh <scratch>/class_census_post_r2_fixed <scratch>/sheets/post_r2_fixed         # this step's real, committed code
+classify_sheet_diff.py --before pre_r2_baseline --after post_r2_fixed --dump dump-after ...
+```
+
+Worktree clean (`git status --short`) before this step's commit; `data/sheet_rules` untouched by
+this step's own commit (every swap restored via `git checkout -- data/sheet_rules && git clean
+-fd data/sheet_rules`, confirmed empty each time).

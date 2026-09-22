@@ -29,9 +29,11 @@
 //!    (`{class_slug}_...`) -- this is what keeps the join from ever crossing classes, and a
 //!    candidate must share at least `class_slug`'s own words PLUS one feature word; `class_slug`
 //!    alone is never a valid match length, and the bare class slug (the class's own principal
-//!    rule) is refused explicitly, so no accounting slip can ever return it. But PF1 also writes
-//!    plenty of rule text ONCE and grants it from several classes with no owning-class prefix at
-//!    all (`uncanny_dodge`, shared by Rogue's base rule and Ninja's borrowed one) -- for these, a
+//!    rule) is refused explicitly IN BOTH TIERS, so no accounting slip can ever return it (a
+//!    nested sliding-window tail can equal the bare class slug even in the tier with no class
+//!    prefix requirement, so the guard is not redundant there). But PF1 also writes plenty of
+//!    rule text ONCE and grants it from several classes with no owning-class prefix at all
+//!    (`uncanny_dodge`, shared by Rogue's base rule and Ninja's borrowed one) -- for these, a
 //!    BARE tier matches the tail alone (no class prefix) against every `class_feature` slug, but
 //!    only when the candidate's words start with the WHOLE remaining tail, never a partial run
 //!    (this is what keeps a bare match from ever drifting into an unrelated rule by a one-word
@@ -39,6 +41,15 @@
 //!    tail words the match actually explains ("coverage") -- so a fuller, more specific match
 //!    always outranks a shorter partial one regardless of which tier found it; a class-scoped
 //!    match wins a true tie against a bare one, since it carries the extra class-identity check.
+//!    A SCOPED candidate that explains strictly less than the tail AND still has its own
+//!    unexplained leftover words is refused outright, not merely outscored: sharing one feature
+//!    word with a candidate that then diverges is a coincidence, not a stem match, and is worth
+//!    `None`/`Ambiguous`, never a confident wrong `Matched` (`magus_arcana.pool` must never
+//!    resolve to the unrelated `magus_arcana_pool_strike`, an arcana named "Pool Strike"; a
+//!    `raging_*` facet must never resolve to `skald_raging_song` on the shared word "raging"
+//!    alone). A candidate that fully explains the tail, or that itself has no leftover words (a
+//!    real, shorter stem the facet merely asks more detail of, e.g. `knockout_dc` ->
+//!    `brawler_knockout`), is unaffected by this refusal.
 //! 2. **A sliding window over dot-segments, not just the full tail.** Some facet ids nest a
 //!    named sub-feature ahead of its own attribute
 //!    (`class_feature.untabled.dread.dread_manifesting.power_points` -- `dread_manifesting` is
@@ -118,9 +129,13 @@ fn consider<'a>(best: &mut Vec<Candidate<'a>>, coverage: usize, excess: usize, t
 }
 
 /// The mechanical facet-to-rule join. See the module doc comment for the corrected algorithm;
-/// this function is the one place it is implemented -- `HeldSeed::from_character`'s held-set
-/// fixpoint and the desktop's `noticeHasSheetRule` (through the `rule_id` its DTO already
-/// carries) both call it, no second copy anywhere.
+/// this function is the one Rust place it is implemented -- `HeldSeed::from_character`'s
+/// held-set fixpoint calls it directly. The desktop frontend's `noticeHasSheetRule`
+/// (`apps/desktop/src/characterHub/classFeaturesModel.ts::ruleForExplanation`, review finding
+/// 5) cannot call this function across the wire boundary, so it is a byte-for-byte TypeScript
+/// port instead, kept in lockstep by this shared spec (`epic-f-class-completion.md` §3b.2) and
+/// by this module's own tests pinning the exact algorithm shape -- a deliberate, named mirror,
+/// not an independent second algorithm.
 pub fn rule_for_explanation(package: &SheetRulePackage, class_slug: &str, explanation_id: &str) -> JoinResult {
     let rest = explanation_id.strip_prefix("class_feature.").unwrap_or(explanation_id);
     let segs: Vec<&str> = rest.split('.').filter(|s| *s != CORPUS_RECORD_MARKER).collect();
@@ -171,7 +186,19 @@ pub fn rule_for_explanation(package: &SheetRulePackage, class_slug: &str, explan
             if lcp < min_scoped_len {
                 continue;
             }
-            consider(&mut best, lcp - class_words.len(), candidate_words.len() - lcp, TIER_SCOPED, slug);
+            let coverage = lcp - class_words.len();
+            let excess = candidate_words.len() - lcp;
+            // A partial match (the candidate does not explain the whole tail) AND a candidate
+            // that itself has unexplained leftover words is a one-word coincidence, not a real
+            // stem match (review finding 1, the magus/skald population cases) -- refused
+            // outright (dropped from `best`, never scored), leaving `None`/`Ambiguous` as the
+            // honest outcome instead of a confident, wrong `Matched`. A candidate that fully
+            // consumes the tail, or that itself has no leftover words (a shorter, real stem the
+            // facet merely asks more detail of), is unaffected.
+            if coverage < tail_words.len() && excess > 0 {
+                continue;
+            }
+            consider(&mut best, coverage, excess, TIER_SCOPED, slug);
         }
 
         // Scoped tier, against a COLLAPSED tail: only tried when the raw tail itself starts
@@ -196,25 +223,50 @@ pub fn rule_for_explanation(package: &SheetRulePackage, class_slug: &str, explan
                 if lcp < min_scoped_len {
                     continue;
                 }
-                let matched_collapsed_words = lcp - class_words.len();
-                let coverage =
-                    if matched_collapsed_words == collapsed_tail.len() { original_tail_len } else { matched_collapsed_words };
-                consider(&mut best, coverage, candidate_words.len() - lcp, TIER_SCOPED, slug);
+                // Credited only for the collapsed words this match actually explains -- never
+                // promoted to `original_tail_len` (review finding 1: that promotion is what let
+                // a one-word coincidence in the collapsed tail outscore every honest competitor
+                // and win outright, e.g. `magus_arcana.pool` -> `magus_arcana_pool_strike`).
+                let coverage = lcp - class_words.len();
+                let excess = candidate_words.len() - lcp;
+                // Same partial-match-with-leftover refusal as the raw scoped tier, measured
+                // against the true original tail length (never the collapsed one) -- a collapsed
+                // match that does not explain the WHOLE original tail, and whose candidate still
+                // has words of its own left over, is refused rather than scored.
+                if coverage < original_tail_len && excess > 0 {
+                    continue;
+                }
+                consider(&mut best, coverage, excess, TIER_SCOPED, slug);
             }
         }
 
-        // Bare tier: no class prefix required, but the ENTIRE remaining RAW tail must be a
-        // matched prefix of the candidate -- never a partial tail match. This is the one thing
-        // that keeps a bare match from ever drifting into an unrelated rule by a one-word
-        // coincidence, and it is why this tier never needs its own "never the principal" guard:
-        // a bare class-slug-only candidate could never fully consume a real (non-empty) tail.
+        // Bare tier: no class prefix required, but the candidate must be an EXACT match for the
+        // whole remaining RAW tail -- the ENTIRE tail consumed AND no leftover words of the
+        // candidate's own. Review finding 1's real population evidence (`magus_arcana.pool` ->
+        // `magus_arcana_pool_strike`) turned out to be won by THIS tier, not (only) the scoped
+        // one the finding's own mechanism description named: `pool_strike`'s first three words
+        // literally are the raw tail `magus_arcana_pool`, so requiring only "the tail is a
+        // matched PREFIX of the candidate" (candidate may have its own trailing words, here
+        // `strike`) is exactly the same one-word/one-stem coincidence the scoped tier had, just
+        // with no class-prefix check to even narrow it. Requiring `excess == 0` here -- a real
+        // stem match, not a longer candidate that merely starts the same way -- is what keeps a
+        // bare match from ever drifting into an unrelated rule by a coincidence at all. It still
+        // refuses the class's own principal rule explicitly (review finding 2): a nested
+        // sliding-window tail CAN equal the bare class slug (a later dot-segment named after the
+        // class, e.g. a facet id shaped `class_feature.<class>.<class>`), so the comment this
+        // replaced -- "a bare class-slug-only candidate could never fully consume a real
+        // (non-empty) tail" -- was wrong, and the spec's "never under any circumstance" guard
+        // belongs here too, not only in the scoped tier.
         for slug in package.slugs_of_kind(CLASS_FEATURE_KIND) {
-            let candidate_words = words(slug);
-            let lcp = tail_words.iter().zip(candidate_words.iter()).take_while(|(a, b)| a == b).count();
-            if lcp != tail_words.len() {
+            if slug == class_slug {
                 continue;
             }
-            consider(&mut best, lcp, candidate_words.len() - lcp, TIER_BARE, slug);
+            let candidate_words = words(slug);
+            let lcp = tail_words.iter().zip(candidate_words.iter()).take_while(|(a, b)| a == b).count();
+            if lcp != tail_words.len() || lcp != candidate_words.len() {
+                continue;
+            }
+            consider(&mut best, lcp, 0, TIER_BARE, slug);
         }
     }
 
@@ -325,9 +377,14 @@ mod tests {
     }
 
     #[test]
-    fn two_candidates_with_the_same_leftover_past_the_same_prefix_are_ambiguous() {
+    fn two_candidates_that_both_fully_explain_the_tail_and_only_then_diverge_are_ambiguous() {
+        // The facet's tail is fully explained ("strike", 1 word, coverage == tail length) by
+        // both candidates -- they only diverge on a THIRD word neither's own tail ever asked
+        // about, so this is a real, distinguishable tie, not the one-word-coincidence shape
+        // review finding 1 refuses (that shape has partial coverage; this one has full coverage
+        // with each candidate independently more specific).
         let pkg = package(&["brawler", "brawler_strike_types", "brawler_strike_options"]);
-        match rule_for_explanation(&pkg, "brawler", "class_feature.brawler.strike_bonus") {
+        match rule_for_explanation(&pkg, "brawler", "class_feature.brawler.strike") {
             JoinResult::Ambiguous(mut ids) => {
                 ids.sort();
                 assert_eq!(
@@ -340,6 +397,19 @@ mod tests {
             }
             other => panic!("expected Ambiguous, got {other:?}"),
         }
+    }
+
+    /// Review finding 1: a SCOPED candidate that explains only PART of the facet's tail (here,
+    /// "strike" of "strike_bonus" -- "bonus" is never addressed) AND itself has leftover words
+    /// of its own ("types"/"options") is a one-word coincidence, not a real stem match. Refusing
+    /// both means the tie collapses to `None`, not a confident (or even a merely surfaced-tied)
+    /// `Matched`/`Ambiguous` -- `None` and `Ambiguous` are equally safe to a caller (see
+    /// [`JoinResult`]'s own doc comment), but a coincidence this thin should not be dignified
+    /// with a named tie either.
+    #[test]
+    fn a_partial_match_with_its_own_leftover_words_is_refused_not_tied() {
+        let pkg = package(&["brawler", "brawler_strike_types", "brawler_strike_options"]);
+        assert_eq!(rule_for_explanation(&pkg, "brawler", "class_feature.brawler.strike_bonus"), JoinResult::None);
     }
 
     #[test]
@@ -506,6 +576,63 @@ mod tests {
             rule_for_explanation(pkg, "gunslinger", "class_feature.uc.gunslinger.gunslinger_initiative"),
             JoinResult::Matched("ultimate_combat:class_feature:gunslinger_gunslinger_initiative".into())
         );
+    }
+
+    /// Review finding 1, confirmed-wrong join #1: the collapsed-tail arm used to credit
+    /// `magus_arcana.pool` with the WHOLE original tail (3 words) merely for consuming the
+    /// 2-word collapsed tail, letting it beat every honest competitor and land on an unrelated
+    /// arcana literally named "Pool Strike". The real sheet held this rule with `granted_by:
+    /// null` and it was the only `magus_arcana_*` record held on a magus:20 build -- this join
+    /// was the sole cause. Neither `None` nor `Ambiguous` prints a rule line, so either is safe;
+    /// `Matched(magus_arcana_pool_strike)` is the one forbidden outcome.
+    #[test]
+    fn real_package_magus_arcana_pool_never_joins_the_unrelated_pool_strike_arcana() {
+        let pkg = crate::rules_core::sheet_rule_package::package()
+            .as_ref()
+            .expect("the real data/sheet_rules/ package loads in this checkout");
+        match rule_for_explanation(pkg, "magus", "class_feature.untabled.magus.magus_arcana.pool") {
+            JoinResult::Matched(id) if id == "ultimate_magic:class_feature:magus_arcana_pool_strike" => {
+                panic!("must never join the collapsed-tail one-word coincidence to an unrelated arcana, got {id}")
+            }
+            _ => {}
+        }
+    }
+
+    /// Review finding 1, confirmed-wrong joins #2/#3: a SCOPED match sharing only the class
+    /// prefix plus the single word "raging" must never beat the real `rage_power_raging_climber`
+    /// / `rage_power_raging_swimmer` records (which this package does carry) by landing on the
+    /// unrelated `skald_raging_song`.
+    #[test]
+    fn real_package_skald_raging_climber_and_swimmer_never_join_raging_song_on_one_word() {
+        let pkg = crate::rules_core::sheet_rule_package::package()
+            .as_ref()
+            .expect("the real data/sheet_rules/ package loads in this checkout");
+        for facet in ["raging_climber", "raging_swimmer", "raging_leaper"] {
+            let id = format!("class_feature.acg.skald.{facet}");
+            match rule_for_explanation(pkg, "skald", &id) {
+                JoinResult::Matched(rid) if rid == "advanced_class_guide:class_feature:skald_raging_song" => {
+                    panic!("{facet}: must never join a one-word 'raging' coincidence to skald_raging_song, got {rid}")
+                }
+                _ => {}
+            }
+        }
+    }
+
+    /// Review finding 2: the bare tier had no principal-rule guard. A nested sliding-window tail
+    /// can equal the bare class slug (`class_feature.fighter.fighter`, or any id whose LAST
+    /// dot-segment is the class's own name), which the bare tier's "whole remaining tail is a
+    /// matched prefix" rule alone does not exclude -- the class's own principal rule slug IS a
+    /// one-word, zero-excess match for a one-word tail equal to the class slug.
+    #[test]
+    fn bare_tier_never_returns_the_class_principal_rule_either() {
+        // Only the class's own principal rule exists in this package -- pre-fix, the bare tier
+        // (no principal guard) would match it outright, since a one-word tail equal to the class
+        // slug is trivially "the whole remaining tail, fully consumed" by the class's own slug.
+        let pkg = package(&["fighter"]);
+        assert_eq!(rule_for_explanation(&pkg, "fighter", "class_feature.fighter.fighter"), JoinResult::None);
+        // A nested window landing on a class-named final segment, reached only via the sliding
+        // window (the fuller windows fail to qualify at all): `class_feature.fighter.x.fighter`.
+        assert_eq!(rule_for_explanation(&pkg, "fighter", "class_feature.fighter.x.fighter"), JoinResult::None);
     }
 
     #[test]

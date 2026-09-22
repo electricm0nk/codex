@@ -629,6 +629,58 @@ function verifiesANoticeWithASheetRuleLeavesTheNotComputedLane() {
   assertEqual(withLines.notComputed[0].id, 'class_feature.fighter.weapon_training.unsupported', 'the notice with no class_feature line stays -- a feat line of the same slug is not its rule');
 }
 
+/**
+ * Review finding 5 (SD-36 Epic F1b stage-4 adversarial check): the frontend's join was still the
+ * pre-R2 exact-slug walk (`candidates = [\`${classToken}_${feature}\`, feature]`), stale relative
+ * to the corrected `rule_for_explanation` -- so a facet the Rust join now matches to a real STEM
+ * rule (`class_feature.acg.brawler.knockout_dc` -> `brawler_knockout`, spec 3b.2's own worked
+ * example) kept BOTH its printed rule line AND its "not computed" notice, since the old TS walk
+ * only ever tried the exact slugs `brawler_knockout_dc`/`knockout_dc`, neither of which exists.
+ * The ported join must suppress the notice here, exactly as `HeldSeed::from_character` would.
+ */
+function verifiesANoticeIsDroppedByTheSameStemMatchTheRustJoinUses() {
+  const brawler: HeldClass[] = [{ classId: 'class:brawler', classLabel: 'Brawler', level: 20 }];
+  const notices = [explanation('class_feature.acg.brawler.knockout_dc.unsupported', 0, 'knockout DC is not grounded here')];
+  const surface = buildClassFeatureSurface(notices, brawler, [], [
+    {
+      id: 'advanced_class_guide:class_feature:brawler_knockout',
+      kind: 'class_feature',
+      label: 'Knockout',
+      form: 'words',
+      value: '',
+      also: [],
+      prose: 'A brawler can attempt to knock an opponent unconscious with an unarmed strike.',
+      condition: null,
+    },
+  ]);
+  assertEqual(surface.notComputed.length, 0, 'the stem match (brawler_knockout) drops the notice, same as the Rust join');
+  assertEqual(surface.features.length, 0, 'the sheet line itself is not an ExplanationDto and does not become a feature row');
+}
+
+/**
+ * Review finding 1's own confirmed-wrong-join evidence, mirrored here: a one-word coincidence
+ * must never suppress a real "not computed" notice either. If the frontend's ported join ever
+ * regressed to accepting a partial match with its own leftover words, this notice would
+ * wrongly disappear behind an unrelated, only-superficially-similar sheet line.
+ */
+function verifiesAOneWordCoincidenceNeverDropsTheNotice() {
+  const skald: HeldClass[] = [{ classId: 'class:skald', classLabel: 'Skald', level: 20 }];
+  const notices = [explanation('class_feature.acg.skald.raging_climber.unsupported', 0, 'raging climber is not grounded here')];
+  const surface = buildClassFeatureSurface(notices, skald, [], [
+    {
+      id: 'advanced_class_guide:class_feature:skald_raging_song',
+      kind: 'class_feature',
+      label: 'Raging Song',
+      form: 'words',
+      value: '',
+      also: [],
+      prose: 'unrelated rule text sharing only the word "raging"',
+      condition: null,
+    },
+  ]);
+  assertEqual(surface.notComputed.length, 1, 'a one-word coincidence must never suppress the notice');
+}
+
 async function main() {
   verifiesANoticeWithASheetRuleLeavesTheNotComputedLane();
   verifiesALevel11RoguesSneakAttackKeepsItsMagnitudeAndCitation();
@@ -659,6 +711,8 @@ async function main() {
   verifiesABridgeRecordNeverSurfacesWhenTheGrantedFeatIsNotHeld();
   verifiesTheFeatHeldCheckFoldsBothSelectedFeatsShapes();
   verifiesABridgeRecordIgnoresTheClassHeldArmEvenIfClassSlugCoincidentallyMatchesAHeldClass();
+  verifiesANoticeIsDroppedByTheSameStemMatchTheRustJoinUses();
+  verifiesAOneWordCoincidenceNeverDropsTheNotice();
 }
 
 main().catch((error: unknown) => {

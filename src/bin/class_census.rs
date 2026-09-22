@@ -430,7 +430,7 @@ fn run_duplicates(json_path: &str) -> i32 {
     }
     println!(
         "population={:?} builds_scanned={} facets_scanned={} before_principal_mismatches={} \
-         after_matched={} after_ambiguous={} after_none={} changed_by_r2={}",
+         after_matched={} after_ambiguous={} after_none={} changed_by_r2={} prestige_skipped={:?}",
         report.population,
         report.builds_scanned,
         report.facets_scanned,
@@ -438,7 +438,8 @@ fn run_duplicates(json_path: &str) -> i32 {
         report.after_matched,
         report.after_ambiguous,
         report.after_none,
-        report.changed_by_r2
+        report.changed_by_r2,
+        report.prestige_skipped
     );
     0
 }

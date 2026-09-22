@@ -788,10 +788,17 @@ pub struct DuplicateScanReport {
     pub after_ambiguous: usize,
     pub after_none: usize,
     pub changed_by_r2: usize,
+    /// Review finding 3: named, counted prestige classes the scan could NOT build a carrier for
+    /// (no converted gate, gate did not resolve to a known carrier, or no carrier at all) --
+    /// `"<class_id>: <reason>"` each, straight from [`carrier_assignment`]'s own named `Err`.
+    /// Never silently folded into `builds_scanned`'s denominator; the population string and the
+    /// stage receipt's own denominator must both be read against `prestige_swept -
+    /// prestige_skipped.len()`, not against `prestige_swept` alone.
+    pub prestige_skipped: Vec<String>,
     pub rows: Vec<DuplicateFacetRow>,
 }
 
-fn summarize(population: &str, builds_scanned: usize, rows: Vec<DuplicateFacetRow>) -> DuplicateScanReport {
+fn summarize(population: &str, builds_scanned: usize, prestige_skipped: Vec<String>, rows: Vec<DuplicateFacetRow>) -> DuplicateScanReport {
     let before_principal_mismatches = rows.iter().filter(|r| r.before_is_principal).count();
     let after_matched = rows.iter().filter(|r| r.after.starts_with("matched:")).count();
     let after_ambiguous = rows.iter().filter(|r| r.after.starts_with("ambiguous:")).count();
@@ -806,6 +813,7 @@ fn summarize(population: &str, builds_scanned: usize, rows: Vec<DuplicateFacetRo
         after_ambiguous,
         after_none,
         changed_by_r2,
+        prestige_skipped,
         rows,
     }
 }
@@ -824,6 +832,7 @@ pub fn duplicate_scan(
 ) -> DuplicateScanReport {
     let mut rows = Vec::new();
     let mut builds = 0usize;
+    let mut prestige_skipped = Vec::new();
 
     for e in entries.values().filter(|e| !e.is_prestige) {
         let slug = e.class_id.strip_prefix("class:").unwrap_or(&e.class_id);
@@ -835,9 +844,24 @@ pub fn duplicate_scan(
 
     for e in entries.values().filter(|e| e.is_prestige) {
         let slug = e.class_id.strip_prefix("class:").unwrap_or(&e.class_id).to_owned();
-        let Some(gate) = prestige_applies_gate(&e.books, &slug) else { continue };
-        let Ok(carriers) = determine_carriers(&gate) else { continue };
-        let Some(carrier) = carriers.into_iter().next() else { continue };
+        // Review finding 3: every prestige entry the sweep names must be accounted for, one way
+        // or the other -- `carrier_assignment` already names WHY a class cannot be carried
+        // (no converted gate at all, or a gate that does not resolve to a known carrier), so a
+        // class this loop cannot build a carrier for is pushed to `prestige_skipped` with that
+        // reason, never silently dropped from the denominator.
+        let carriers = match carrier_assignment(e) {
+            Ok(carriers) => carriers,
+            Err(reason) => {
+                prestige_skipped.push(reason);
+                continue;
+            }
+        };
+        let Some(carrier) = carriers.into_iter().next() else {
+            prestige_skipped.push(format!("{}: carrier_assignment returned no carrier", e.class_id));
+            continue;
+        };
+        let gate = prestige_applies_gate(&e.books, &slug)
+            .expect("carrier_assignment already loaded this class's gate successfully above");
         let ge = evaluate_carrier(carrier, &gate, e.max_level);
         let input = input_for_mix(fixture, &[(carrier.slug(), ge.carrier_level), (slug.as_str(), e.max_level)]);
         let receipt = build_pilot_headless_receipt(&input);
@@ -857,11 +881,13 @@ pub fn duplicate_scan(
         }
     }
 
-    summarize(
-        "every non-prestige census entry @ own max_level + every prestige class's first-named carrier @ own max_level + the full multiclass mix panel",
-        builds,
-        rows,
-    )
+    let population = format!(
+        "every non-prestige census entry @ own max_level + {} of {} prestige carriers ({} named, no carrier determinable) @ own max_level + the full multiclass mix panel",
+        entries.values().filter(|e| e.is_prestige).count() - prestige_skipped.len(),
+        entries.values().filter(|e| e.is_prestige).count(),
+        prestige_skipped.len(),
+    );
+    summarize(&population, builds, prestige_skipped, rows)
 }
 
 // ---------------------------------------------------------------------------
