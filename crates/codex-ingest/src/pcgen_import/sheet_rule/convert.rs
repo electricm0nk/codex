@@ -1076,7 +1076,23 @@ fn convert_token(ctx: &mut RecordCtx, acc: &mut Acc, out: &mut Converted, key: &
         }
         "NATURALATTACKS" => {
             // Row NATURALATTACKS: one Dice line per entry (name, count, die).
-            for (i, entry) in v.split('|').enumerate() {
+            //
+            // SD-36 Epic F1 rule-gap investigation (`docs/release/SD-36-consolidation/
+            // artifacts/epic-f/stage4/rule-gap-receipt.md`): the suffix used to be
+            // `format!("natural{i}")` where `i` is this ONE token occurrence's own
+            // `v.split('|')` position, reset to 0 every time this arm runs. A record whose
+            // source row carries the tag more than once (either two `|`-separated groups in
+            // one `NATURALATTACKS:` field across two rows, or -- the shape every real
+            // collision in the corpus turned out to be -- two or three separate
+            // `NATURALATTACKS:` tab fields on the SAME `.lst` line, each a single entry) hits
+            // this arm multiple times, each restarting `i` at 0: two single-entry occurrences
+            // both mint `#natural0`, and `SheetRulePackage::insert_rule`'s `BTreeMap<RuleId,
+            // _>` silently keeps only the last write, dropping the earlier attack's rule from
+            // the live package with no diagnostic. `acc.lines.len()` is the running,
+            // record-global line count every OTHER multi-emit arm in this match already uses
+            // for exactly this reason (`weapon{}` / `bonus{}` / `spell{}_` a few arms below) --
+            // unique per record regardless of how many times a token occurs, unlike `i`.
+            for entry in v.split('|') {
                 let parts: Vec<&str> = entry.split(',').map(|s| s.trim()).collect();
                 if parts.len() < 4 {
                     return Err("NATURALATTACKS (shape)".into());
@@ -1093,13 +1109,13 @@ fn convert_token(ctx: &mut RecordCtx, acc: &mut Acc, out: &mut Converted, key: &
                         // A fixed damage amount (Fine creatures deal 1 point): a final number.
                         let n: i32 = parts[3].trim().parse().unwrap_or(0);
                         let label = if count > 1 { format!("{count} {name}") } else { name.clone() };
-                        acc.lines.push(Line { seq: ctx.current_seq, suffix: Some(format!("natural{i}")), label, value: SheetValue::Number(Expr::Const(n)), also: Vec::new(), target: None, bonus_type: None, applies: Applies::Always, prose: Vec::new() });
+                        acc.lines.push(Line { seq: ctx.current_seq, suffix: Some(format!("natural{}", acc.lines.len())), label, value: SheetValue::Number(Expr::Const(n)), also: Vec::new(), target: None, bonus_type: None, applies: Applies::Always, prose: Vec::new() });
                         continue;
                     }
                     None if parts[3].trim() == "0" => {
                         // A touch attack with no damage die: words, like `DAMAGE:0`.
                         let label = if count > 1 { format!("{count} {name}") } else { name.clone() };
-                        acc.lines.push(Line { seq: ctx.current_seq, suffix: Some(format!("natural{i}")), label, value: SheetValue::Text, also: Vec::new(), target: None, bonus_type: None, applies: Applies::Always, prose: vec![ProseSegment { family: ProseFamily::Special, pieces: vec![ProsePiece::Text("touch attack, no damage".into())], applies: None, pick_last: false, suppress_when_all_zero: false }] });
+                        acc.lines.push(Line { seq: ctx.current_seq, suffix: Some(format!("natural{}", acc.lines.len())), label, value: SheetValue::Text, also: Vec::new(), target: None, bonus_type: None, applies: Applies::Always, prose: vec![ProseSegment { family: ProseFamily::Special, pieces: vec![ProsePiece::Text("touch attack, no damage".into())], applies: None, pick_last: false, suppress_when_all_zero: false }] });
                         continue;
                     }
                     None => return Err("NATURALATTACKS (die shape)".into()),
@@ -1115,7 +1131,7 @@ fn convert_token(ctx: &mut RecordCtx, acc: &mut Acc, out: &mut Converted, key: &
                     }
                 }
                 let label = if count > 1 { format!("{count} {name}") } else { name.clone() };
-                acc.lines.push(Line { seq: ctx.current_seq, suffix: Some(format!("natural{i}")), label, value: SheetValue::Dice { dice, modifier, size_steps: None }, also: Vec::new(), target: None, bonus_type: None, applies: Applies::Always, prose });
+                acc.lines.push(Line { seq: ctx.current_seq, suffix: Some(format!("natural{}", acc.lines.len())), label, value: SheetValue::Dice { dice, modifier, size_steps: None }, also: Vec::new(), target: None, bonus_type: None, applies: Applies::Always, prose });
             }
         }
         // ---- stat-block numbers --------------------------------------------------------------

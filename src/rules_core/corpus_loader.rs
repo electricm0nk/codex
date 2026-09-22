@@ -232,7 +232,11 @@ pub struct SheetRuleLoad {
 ///
 /// `_refused.json`, `_report.json`, `_defects/` and `GENERATED` are the converter's own
 /// reports, not rules, and are skipped. Files are parsed on `available_parallelism` threads
-/// (the package is ~52,000 files); the result is deterministic because rules are keyed by id.
+/// (the package is ~52,000 files); the result is deterministic because rules are keyed by id
+/// -- but a key collision between two DIFFERENT rules is a real defect, not mere
+/// non-determinism, and is surfaced as a [`SourceContentDiagnosticKind::DuplicateRuleId`]
+/// (`crate::rules_core::source_content::SourceContentDiagnosticKind::DuplicateRuleId`)
+/// diagnostic rather than dropped silently.
 pub fn load_sheet_rules(dir: &Path) -> SheetRuleLoad {
     load_sheet_rules_filtered(dir, &|_, _| true)
 }
@@ -304,9 +308,24 @@ pub fn load_sheet_rules_filtered(dir: &Path, keep: &dyn Fn(&str, &str) -> bool) 
     let mut package = SheetRulePackage::new();
     let rule_files = rule_paths.len();
     let var_files = var_paths.len();
-    for parsed in parse_all::<Vec<SheetRule>>(&rule_paths) {
+    // SD-36 Epic F1 rule-gap investigation: `package.rules` is a `BTreeMap<RuleId,
+    // SheetRule>` -- inserting a second rule under an id already present silently drops the
+    // first one, with no diagnostic, no error, nothing (`_report.json`'s `rules_written` read
+    // 369 more than the loaded package ever held before this loop started checking). Every
+    // write is checked against what is already in the map BEFORE it overwrites, so a
+    // collision becomes a named, loud `DuplicateRuleId` diagnostic naming the exact id and
+    // the file that lost -- never a silent shadow (`docs/release/SD-36-consolidation/
+    // artifacts/epic-f/stage4/rule-gap-receipt.md`).
+    for (path, parsed) in rule_paths.iter().zip(parse_all::<Vec<SheetRule>>(&rule_paths)) {
         match parsed {
-            Ok(rules) => rules.into_iter().for_each(|r| package.insert_rule(r)),
+            Ok(rules) => {
+                for rule in rules {
+                    if package.rules.contains_key(&rule.id) {
+                        diagnostics.push(duplicate_rule_id_diagnostic(path, &rule.id));
+                    }
+                    package.insert_rule(rule);
+                }
+            }
             Err((path, message)) => diagnostics.push(load_diagnostic(&path, message)),
         }
     }
@@ -355,6 +374,24 @@ fn load_diagnostic(path: &Path, message: &str) -> crate::rules_core::source_cont
         severity: SourceContentSeverity::Error,
         kind: SourceContentDiagnosticKind::MalformedRecord,
         message: message.to_string(),
+        source_ref: SourceRef { source_path: path.display().to_string(), line: 0 },
+    }
+}
+
+/// A `SheetRule` at `path` collided with an id already in the package -- the id's EARLIER
+/// rule is dropped, silently, unless this diagnostic is read. `path` is the file carrying
+/// the colliding (later, kept) write; the earlier write it shadows may be in the same file
+/// or a different one.
+fn duplicate_rule_id_diagnostic(path: &Path, id: &crate::rules_core::sheet_rule::RuleId) -> crate::rules_core::source_content::SourceContentDiagnostic {
+    use crate::rules_core::source_content::{SourceContentDiagnostic, SourceContentDiagnosticKind, SourceContentSeverity};
+    SourceContentDiagnostic {
+        severity: SourceContentSeverity::Error,
+        kind: SourceContentDiagnosticKind::DuplicateRuleId,
+        message: format!(
+            "duplicate rule id `{id}` in {}: an earlier rule under the same id is shadowed and \
+             dropped from the live package",
+            path.display()
+        ),
         source_ref: SourceRef { source_path: path.display().to_string(), line: 0 },
     }
 }
@@ -628,6 +665,77 @@ mod tests {
             .expect("this record's real +4 competence bonus to Diplomacy must be settled");
         assert_eq!(bonus.skill, "Diplomacy");
         assert_eq!(bonus.bonus, 4);
+    }
+
+    /// SD-36 Epic F1 rule-gap investigation
+    /// (`docs/release/SD-36-consolidation/artifacts/epic-f/stage4/rule-gap-receipt.md`):
+    /// `data/sheet_rules/_report.json`'s `rules_written` -- the converter's own count of
+    /// `SheetRule` JSON entries it wrote -- must equal the loaded package's rule count PLUS
+    /// every rule a [`DuplicateRuleId`](crate::rules_core::source_content::
+    /// SourceContentDiagnosticKind::DuplicateRuleId) diagnostic named as shadowed. Anything
+    /// left over is a rule that vanished for some OTHER, unnamed reason (a file the walk
+    /// never reached, a silent deserialize failure, ...) and this test fails loudly rather
+    /// than letting that happen quietly.
+    ///
+    /// This checkout's TRACKED `data/sheet_rules/` is deliberately NOT regenerated in this
+    /// stage, so today every one of these diagnostics is the SAME already-fixed, single
+    /// named class: a `NATURALATTACKS` suffix collision
+    /// (`crates/codex-ingest/src/pcgen_import/sheet_rule/convert.rs`'s `#naturalN` suffix,
+    /// fixed to be record-global rather than reset per token occurrence --
+    /// `sheet_rule_natural_attack_suffix_collision.rs` proves the fix directly against the
+    /// converter). The pinned count below is that class's current, exact size: it can only
+    /// move to 0 (the next `sheet_rule_convert -- --write` regen, once this stage's
+    /// invariant against touching `data/sheet_rules/` no longer applies) -- if it moves any
+    /// OTHER way, or a diagnostic shows up whose message is not a `#natural` suffix, this
+    /// test names the surprise instead of silently re-pinning a bigger or different number.
+    #[test]
+    fn the_real_package_accounts_for_every_converted_rule() {
+        let dir = crate::support::paths::repo_root().join("data/sheet_rules");
+        let load = load_sheet_rules(&dir);
+
+        let report_text = std::fs::read_to_string(dir.join("_report.json")).expect("_report.json is tracked alongside the rule files it reports on");
+        let report: serde_json::Value = serde_json::from_str(&report_text).expect("_report.json is valid JSON");
+        let rules_written = report["rules_written"].as_u64().expect("_report.json carries a rules_written count") as usize;
+
+        let parse_failures: Vec<_> = load
+            .diagnostics
+            .iter()
+            .filter(|d| d.kind != crate::rules_core::source_content::SourceContentDiagnosticKind::DuplicateRuleId)
+            .collect();
+        assert!(parse_failures.is_empty(), "every rule file must parse cleanly: {:?}", &parse_failures[..parse_failures.len().min(3)]);
+
+        let not_natural_attack_suffix: Vec<_> = load.diagnostics.iter().filter(|d| !d.message.contains("#natural")).collect();
+        assert!(
+            not_natural_attack_suffix.is_empty(),
+            "an unjustified duplicate-id class appeared (only the NATURALATTACKS #naturalN \
+             collision is a known, already-fixed cause) -- investigate and re-derive this \
+             test before re-pinning: {:?}",
+            not_natural_attack_suffix
+        );
+
+        const KNOWN_NATURALATTACKS_SUFFIX_COLLISION_COUNT: usize = 369;
+        assert_eq!(
+            load.diagnostics.len(),
+            KNOWN_NATURALATTACKS_SUFFIX_COLLISION_COUNT,
+            "the known NATURALATTACKS-suffix duplicate-id count moved -- if it dropped to 0, \
+             `data/sheet_rules/` was regenerated with the convert.rs fix and this whole test \
+             (and its sibling exclusion in sheet_rule.rs's evaluate_tests::package()) can be \
+             deleted; if it changed any other way, re-derive it with \
+             /tmp/claude-1000/-home-ubuntu-workspace-repos-codex/\
+             6badc5b8-ae3b-4359-80c5-cd0b1598973e/scratchpad/sd36/f1/rule_gap_scan.py before \
+             updating the pin"
+        );
+
+        assert_eq!(
+            load.package.rules.len() + load.diagnostics.len(),
+            rules_written,
+            "package.rules.len() ({}) + shadowed-duplicate count ({}) must equal \
+             _report.json's rules_written ({rules_written}) -- every converted rule is \
+             accounted for as either LIVE or a named, justified exclusion, never an \
+             unexplained gap",
+            load.package.rules.len(),
+            load.diagnostics.len()
+        );
     }
 }
 
