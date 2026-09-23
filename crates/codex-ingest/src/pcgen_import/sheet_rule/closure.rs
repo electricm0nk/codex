@@ -163,6 +163,17 @@ pub struct PinnedTree {
     /// them, so an ambiguous child category resolves exactly like one with no known parent (a
     /// miss, which reaches `resolve_holdable_rule`'s own defect row, same as today).
     pub ability_category_parent: BTreeMap<String, String>,
+    /// SD-36 F1c-3 (D6): a child `ABILITYCATEGORY`'s member filter -- name (upper) ->
+    /// `TYPE:` tags, for every child category in [`Self::ability_category_parent`] that selects
+    /// its members by `TYPE:` and names no explicit `ABILITYLIST:`. A name declared with two
+    /// different tag sets is left out (never guessed), like an ambiguous parent.
+    pub ability_category_type: BTreeMap<String, Vec<String>>,
+    /// SD-36 F1c-5 (D8): a category's `POOL:` variable -- category name (upper) -> (the `POOL:`
+    /// value upper, the declaring row), for every `ABILITYCATEGORY:` row carrying one. PCGen sizes
+    /// the category's pool by that formula (`apg_abilitycategories.lst:267`
+    /// `POOL:Pool_Summoner_Class_Selection`). A name declared with two different `POOL:` values is
+    /// left out (never guessed).
+    pub ability_category_pool: BTreeMap<String, (String, RowRef)>,
 }
 
 /// Split a raw row into its name field and `(KEY, VALUE)` tokens, tab-separated. A field with
@@ -377,6 +388,8 @@ impl PinnedTree {
             fact_index: BTreeMap::new(),
             pfs_base_keys: BTreeSet::new(),
             ability_category_parent: BTreeMap::new(),
+            ability_category_type: BTreeMap::new(),
+            ability_category_pool: BTreeMap::new(),
         };
         tree.build_indexes();
         Ok(tree)
@@ -394,6 +407,10 @@ impl PinnedTree {
         let mut pfs_base_keys = BTreeSet::new();
         let mut ability_category_parent: BTreeMap<String, String> = BTreeMap::new();
         let mut ability_category_ambiguous: BTreeSet<String> = BTreeSet::new();
+        let mut ability_category_type: BTreeMap<String, Vec<String>> = BTreeMap::new();
+        let mut ability_category_listed: BTreeSet<String> = BTreeSet::new();
+        let mut ability_category_pool: BTreeMap<String, (String, RowRef)> = BTreeMap::new();
+        let mut ability_category_pool_ambiguous: BTreeSet<String> = BTreeSet::new();
         // `CATEGORY:Aligned Class` `BONUS:VAR` contributions (name upper, row, the row's own
         // `id.key` upper) buffered here instead of indexed inline -- see the comment where they
         // are pushed, below. Deferred to a second pass over `class_rows` because a row's OWNER
@@ -467,11 +484,42 @@ impl PinnedTree {
                         if !parent.is_empty() && parent != own {
                             match ability_category_parent.get(&own) {
                                 Some(existing) if existing != &parent => {
+                                    ability_category_ambiguous.insert(own.clone());
+                                }
+                                Some(_) => {}
+                                None => {
+                                    ability_category_parent.insert(own.clone(), parent);
+                                }
+                            }
+                        }
+                    }
+                    if !own.is_empty()
+                        && let Some((_, v)) = tokens.iter().find(|(k, _)| k == "POOL")
+                    {
+                        let pool = v.trim().to_ascii_uppercase();
+                        match ability_category_pool.get(&own) {
+                            Some((existing, _)) if existing != &pool => {
+                                ability_category_pool_ambiguous.insert(own.clone());
+                            }
+                            Some(_) => {}
+                            None => {
+                                ability_category_pool.insert(own.clone(), (pool, row));
+                            }
+                        }
+                    }
+                    if !own.is_empty() {
+                        if tokens.iter().any(|(k, _)| k.eq_ignore_ascii_case("ABILITYLIST")) {
+                            ability_category_listed.insert(own.clone());
+                        }
+                        if let Some((_, v)) = tokens.iter().find(|(k, _)| k.eq_ignore_ascii_case("TYPE")) {
+                            let tags: Vec<String> = v.split('.').map(str::trim).filter(|t| !t.is_empty()).map(str::to_string).collect();
+                            match ability_category_type.get(&own) {
+                                Some(existing) if existing != &tags => {
                                     ability_category_ambiguous.insert(own);
                                 }
                                 Some(_) => {}
                                 None => {
-                                    ability_category_parent.insert(own, parent);
+                                    ability_category_type.insert(own, tags);
                                 }
                             }
                         }
@@ -556,8 +604,15 @@ impl PinnedTree {
                 }
             }
         }
+        for name in ability_category_ambiguous.iter().chain(&ability_category_listed) {
+            ability_category_type.remove(name);
+        }
+        ability_category_type.retain(|name, tags| !tags.is_empty() && ability_category_parent.contains_key(name));
         for name in &ability_category_ambiguous {
             ability_category_parent.remove(name);
+        }
+        for name in &ability_category_pool_ambiguous {
+            ability_category_pool.remove(name);
         }
         // Resolve the buffered `Aligned Class` `BONUS:VAR` contributions now that `class_rows`
         // holds every file's `CLASS:` headers, tree-wide: a contribution is indexed only when NO
@@ -579,6 +634,8 @@ impl PinnedTree {
         self.fact_index = fact_index;
         self.pfs_base_keys = pfs_base_keys;
         self.ability_category_parent = ability_category_parent;
+        self.ability_category_type = ability_category_type;
+        self.ability_category_pool = ability_category_pool;
     }
 
     pub fn row_text(&self, r: RowRef) -> &str {
@@ -706,6 +763,20 @@ impl PinnedTree {
             kind: ClosureRowKind::Base,
             level_gate: None,
         });
+        // A class is found by the name its OWN base row declares (`CLASS:<name>`), never by the
+        // corpus record's key: a class whose name is product identity ships a codex-named
+        // placeholder key (`Codex-Named Unit (class_..._lst_136)`), and keying on it silently
+        // dropped the class's continuation rows, level lines and `.MOD` rows -- its prerequisites,
+        // class skills and `ABILITY:` grants (SD-36 F1c-3; 21 of 189 class records, e.g. Golden
+        // Legionnaire's `ABILITY:Internal|AUTOMATIC|Weapon Prof ~ ...`, `ag_classes.lst:140`).
+        let key_u = if family == FileFamily::Class
+            && base_row_text.trim_start().to_ascii_uppercase().starts_with("CLASS:")
+            && !base_identity.key.is_empty()
+        {
+            base_identity.key.clone()
+        } else {
+            key_u
+        };
         // A class: continuation rows and numbered level lines (B5).
         if family == FileFamily::Class {
             if let Some(rows) = self.class_rows.get(&key_u) {
@@ -815,6 +886,8 @@ mod tests {
             fact_index: BTreeMap::new(),
             pfs_base_keys: BTreeSet::new(),
             ability_category_parent: BTreeMap::new(),
+            ability_category_type: BTreeMap::new(),
+            ability_category_pool: BTreeMap::new(),
         };
         tree.build_indexes();
         tree

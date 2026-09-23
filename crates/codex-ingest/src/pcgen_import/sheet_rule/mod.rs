@@ -26,10 +26,14 @@
 //! sees the real string. The source-name -> `VarId` map goes to
 //! `scripts/oracle_harness/var_names.json` (tool side, for the oracle harness only).
 
+pub mod always_held;
+pub mod attest;
 pub mod closure;
 pub mod convert;
 pub mod ctx;
 pub mod formula;
+pub mod pool_link;
+pub mod pool_pick;
 pub mod prereq;
 pub mod prose;
 pub mod table;
@@ -235,6 +239,7 @@ fn record_from_json(tree: &PinnedTree, unit: &InventoryUnit, path: &Path) -> Opt
         pi_fields,
         description: data.get("description").and_then(|v| v.as_str()).map(|s| s.to_string()),
         class_name,
+        class_selection_of: None,
         joined: true,
     })
 }
@@ -311,6 +316,7 @@ pub fn load_population(repo: &Path, tree: &PinnedTree) -> Result<Vec<RecordRef>,
         by_key.entry((e.book.clone(), e.kind.clone(), e.slug.clone())).or_insert(i);
     }
     let mut out = Vec::with_capacity(inv.units.len());
+    let mut joined_entries: BTreeSet<usize> = BTreeSet::new();
     for u in &inv.units {
         let idx = u
             .source_file
@@ -330,6 +336,9 @@ pub fn load_population(repo: &Path, tree: &PinnedTree) -> Result<Vec<RecordRef>,
                 }
             })
             .copied();
+        if let Some(i) = idx {
+            joined_entries.insert(i);
+        }
         let rec = idx.and_then(|i| record_from_json(tree, u, &entries[i].path));
         out.push(rec.unwrap_or_else(|| {
             let (rel_path, line) = source_row_in_tree(tree, u).unwrap_or_default();
@@ -351,11 +360,41 @@ pub fn load_population(repo: &Path, tree: &PinnedTree) -> Result<Vec<RecordRef>,
                 pi_fields: Vec::new(),
                 description: None,
                 class_name: None,
+                class_selection_of: None,
                 joined,
             }
         }));
     }
+    mark_class_selections(&entries, &joined_entries, &mut out);
     Ok(out)
+}
+
+/// SD-36 F1c-3 (defect D3). A corpus CLASS record no inventory unit joined, which names a
+/// `base_class_key` and whose `category` is `CLASS`, is a class-selection class: PCGen declares
+/// no `CLASS:` object for it, only a `CATEGORY:CLASS` ability on the base class's line. The
+/// inventory unit that joined the SAME source row (the ability) is marked with the base KEY, and
+/// [`run`] writes the class principal it stands for ([`class_selection_principal`]). Only an
+/// unambiguous row match is marked. Measured over the shipped corpus: exactly Pathfinder
+/// Unchained's four (`data/corpus/pathfinder_unchained/class/*_unchained_class.json`).
+fn mark_class_selections(entries: &[CorpusEntry], joined: &BTreeSet<usize>, records: &mut [RecordRef]) {
+    for (i, e) in entries.iter().enumerate() {
+        if e.kind != "class" || joined.contains(&i) {
+            continue;
+        }
+        let Some(line) = e.line else { continue };
+        let Some(rec) = std::fs::read_to_string(&e.path).ok().and_then(|t| serde_json::from_str::<CorpusRecord>(&t).ok()) else { continue };
+        let is_class_category = rec.data.get("category").and_then(|v| v.as_str()).is_some_and(|c| c.eq_ignore_ascii_case("CLASS"));
+        let Some(base) = rec.data.get("base_class_key").and_then(|v| v.as_str()).filter(|_| is_class_category) else { continue };
+        let at_row: Vec<usize> = records
+            .iter()
+            .enumerate()
+            .filter(|(_, r)| r.book == e.book && r.line == line && r.rel_path.rsplit('/').next() == Some(e.basename.as_str()))
+            .map(|(j, _)| j)
+            .collect();
+        if let [only] = at_row.as_slice() {
+            records[*only].class_selection_of = Some(base.to_string());
+        }
+    }
 }
 
 // ---- indexes ----------------------------------------------------------------------------------
@@ -401,15 +440,27 @@ pub fn build_index(tree: &PinnedTree, records: Vec<RecordRef>) -> (CorpusIndex, 
         index.by_kind_name.entry((r.kind.clone(), key_u.clone())).or_insert(r.id.clone());
         index.by_kind_name.entry((r.kind.clone(), name_u.clone())).or_insert(r.id.clone());
         if r.kind == "class" {
-            index.classes.entry(key_u.clone()).or_insert((r.id.clone(), slug(&r.key)));
-            index.classes.entry(name_u.clone()).or_insert((r.id.clone(), slug(&r.key)));
+            let own = ctx::own_class_id(r);
+            index.classes.entry(key_u.clone()).or_insert((r.id.clone(), own.clone()));
+            index.classes.entry(name_u.clone()).or_insert((r.id.clone(), own.clone()));
+            // The name the class's own base row declares (`CLASS:<name>`): other records name
+            // the class by it, and a product-identity class's corpus key is a placeholder.
+            if let Some(i) = tree.file_index(&r.rel_path)
+                && r.line > 0
+                && tree.files[i].lines.get(r.line - 1).is_some_and(|l| l.trim_start().to_ascii_uppercase().starts_with("CLASS:"))
+            {
+                let declared = closure::row_identity(tree.row_text(RowRef { file: i, line: r.line })).key;
+                if !declared.is_empty() {
+                    index.classes.entry(declared).or_insert((r.id.clone(), own));
+                }
+            }
         }
         if r.kind == "skill" {
             index.skills.entry(name_u.clone()).or_insert(slug(&r.name));
             index.skills.entry(key_u.clone()).or_insert(slug(&r.name));
         }
         let owning_class: Option<ClassId> = match r.kind.as_str() {
-            "class" => Some(slug(&r.key)),
+            "class" => Some(ctx::own_class_id(r)),
             _ => r.class_name.as_ref().map(|c| slug(c)),
         };
         for row in &closure.rows {
@@ -456,9 +507,11 @@ pub fn build_index(tree: &PinnedTree, records: Vec<RecordRef>) -> (CorpusIndex, 
             }
         }
         index.own_rows.insert(r.id.clone(), closure.own_rows.clone());
+        index.facets.insert(r.id.clone(), convert::accumulated_facets(r, &closure));
         closures.push(closure);
     }
     index.records = records;
+    index.filled_pools = pool_pick::filled_pools(tree, &index);
     (index, closures)
 }
 
@@ -537,6 +590,61 @@ pub struct KindCount {
 pub fn rule_file_rel(book: &str, kind: &str, id: &str) -> String {
     let s = id.splitn(3, ':').nth(2).unwrap_or(id);
     format!("{book}/{kind}/{s}.json")
+}
+
+/// SD-36 F1c-3 (defect D3): the class principal a class-selection record stands for.
+///
+/// PCGen declares no `CLASS:` object for a class-selection class: Pathfinder Unchained's four
+/// are `CATEGORY:CLASS` abilities in the base class's `<Base> Class Selection` pool
+/// (`pu_abilities_class.lst:114-117`), taken on the base class's own class line. The corpus
+/// files them as classes (`data/corpus/<book>/class/`, `base_class_key` naming the base), the
+/// inventory files each as a `class_feature` unit, and the converter used to write the ability
+/// and no `class` record -- so `find("class", "unchained_monk")` found nothing.
+///
+/// One rule, read off the record itself ([`RecordRef::class_selection_of`]): the class
+/// principal is `<book>:class:<slug(name)>`, carries [`Effect::TakenOnClass`] naming the base
+/// class (every level in it is a level in the base class; the fixpoint then holds the base
+/// class's own line exactly as PCGen does), the selection's tags, and a class-line grant
+/// (`Granter::Class { <slug>, 1 }`) onto the selection ability, which carries everything the
+/// oracle row states. It adds no inventory unit: the record count does not move.
+///
+/// `Err` names the base KEY when no converted class answers to it.
+pub fn class_selection_principal(index: &CorpusIndex, record: &RecordRef, selection: &SheetRule) -> Result<(SheetRule, Grant), String> {
+    let base_key = record.class_selection_of.as_deref().ok_or_else(|| "not a class-selection record".to_string())?;
+    let (_, base) = index
+        .classes
+        .get(&base_key.to_ascii_uppercase())
+        .ok_or_else(|| format!("{}: base class {base_key} has no converted class record", record.id))?;
+    let class_slug = slug(&record.name);
+    let id = format!("{}:class:{class_slug}", record.book);
+    let principal = SheetRule {
+        id,
+        label: display_label(&record.name),
+        value: SheetValue::Text,
+        also: Vec::new(),
+        prose: Vec::new(),
+        applies: Applies::Always,
+        target: None,
+        bonus_type: None,
+        print: true,
+        pool: String::new(),
+        tags: selection.tags.clone(),
+        subject: Subject::Character,
+        repeatable: false,
+        granted_by: Vec::new(),
+        offers: None,
+        grants: vec![Effect::TakenOnClass(base.clone())],
+        // The one row the class is declared on (the selection's own base row); the rows the
+        // selection's closure reads stay on the selection.
+        closure_complete: false,
+        always_held: false,
+        provenance: Provenance {
+            kind: "class".into(),
+            closure_rows: selection.provenance.closure_rows.iter().take(1).cloned().collect(),
+            ..selection.provenance.clone()
+        },
+    };
+    Ok((principal, Grant { by: Granter::Class { id: class_slug, at_level: 1 }, when: Applies::Always }))
 }
 
 /// Convert the whole population in memory.
@@ -618,6 +726,8 @@ fn description_only_rules(r: &RecordRef) -> Option<Vec<SheetRule>> {
         granted_by: Vec::new(),
         offers: None,
         grants: Vec::new(),
+        closure_complete: false,
+        always_held: false,
         provenance: Provenance {
             book: r.book.clone(),
             kind: r.kind.clone(),
@@ -798,6 +908,27 @@ pub fn run(tree: &PinnedTree, index: &CorpusIndex, closures: &[Closure]) -> Run 
         }
         files.insert(rule_file_rel(&r.book, &r.kind, &r.id), rules);
     }
+    // D3: every class-selection record gets the class principal it stands for.
+    for r in &index.records {
+        if r.class_selection_of.is_none() {
+            continue;
+        }
+        let Some(selection) = files.get(&rule_file_rel(&r.book, &r.kind, &r.id)).and_then(|rules| rules.first()).cloned() else { continue };
+        match class_selection_principal(index, r, &selection) {
+            Ok((principal, grant)) => {
+                let rel = rule_file_rel(&r.book, "class", &principal.id);
+                if files.contains_key(&rel) {
+                    defects.entry("class-selection-principal-collision".into()).or_default().push(format!("{}: {rel}", r.id));
+                    continue;
+                }
+                grants_out.entry(selection.id.clone()).or_default().push(grant);
+                files.insert(rel, vec![principal]);
+            }
+            Err(e) => defects.entry("unresolved-references".into()).or_default().push(e),
+        }
+    }
+    // D6: a pick into a one-member weapon-choice pool is linked to its options.
+    pool_link::link_weapon_choice_pools(&pool_link::category_views(tree), weapon_membership::index(tree), &mut files);
     // Attach grant edges to the principal rule of each target.
     for rules in files.values_mut() {
         if let Some(first) = rules.first_mut()
@@ -808,6 +939,19 @@ pub fn run(tree: &PinnedTree, index: &CorpusIndex, closures: &[Closure]) -> Run 
     }
     for (target, g) in &grants_out {
         defects.entry("grants-to-unconverted-targets".into()).or_default().push(format!("{target}: {} grant(s)", g.len()));
+    }
+    // D4: the closure-complete attestation on every class principal.
+    let defective = attest::defective_records(&defects, &grants_out);
+    attest::attest_class_closures(&mut files, &defective);
+    // D7: the global abilities every character holds unconditionally (`always_held.rs`).
+    let (_, unresolved_globals) = always_held::mark_always_held(tree, &mut files, index, &always_held::global_grants(tree));
+    if !unresolved_globals.is_empty() {
+        defects.entry("unresolved-references".into()).or_default().extend(unresolved_globals);
+    }
+    // D8: an oracle member of a filled variable pool no converted record stands for.
+    let unconverted_members = pool_pick::unconverted_member_defects(&index.filled_pools);
+    if !unconverted_members.is_empty() {
+        defects.entry("pool-member-unconverted".into()).or_default().extend(unconverted_members);
     }
     // Variable tables for every referenced id.
     let mut referenced: BTreeSet<VarId> = BTreeSet::new();
@@ -1105,7 +1249,14 @@ pub fn convert_one(repo: &Path, unit_id: &str) -> Result<(convert::Converted, Ve
     let records = load_population(repo, &tree)?;
     let (index, closures) = build_index(&tree, records);
     let pos = index.records.iter().position(|r| r.id == unit_id).ok_or_else(|| format!("no unit {unit_id}"))?;
-    let c = convert::convert_record(&tree, &index, &index.records[pos], &closures[pos]);
+    let mut c = convert::convert_record(&tree, &index, &index.records[pos], &closures[pos]);
+    // D3: a class-selection record also yields its class principal (printed with the rules).
+    if let Some(selection) = c.rules.first().cloned()
+        && let Ok((principal, grant)) = class_selection_principal(&index, &index.records[pos], &selection)
+    {
+        c.grants_out.push((selection.id.clone(), grant));
+        c.rules.push(principal);
+    }
     let mut rows: Vec<String> = closures[pos].rows.iter().map(|r| format!("{} {:?}", r.cite, r.tokens.iter().map(|(k, v)| format!("{k}:{v}")).collect::<Vec<_>>())).collect();
     for (id, name) in &c.var_names {
         let cites: Vec<String> = tree.variable_rows(name).into_iter().map(|r| tree.cite(r)).collect();
@@ -1218,7 +1369,12 @@ mod term_level_refusal_gate {
         numbered.truncate(10);
         assert!(still_refused.is_empty(), "degraded records must still convert: {still_refused:?}");
         assert!(missing.is_empty(), "degraded records must have a rule file: {missing:?}");
-        assert_eq!(numbered_count, 624, "numbered-lines-inside-a-degraded-record count moved (CONV-05 baseline) -- re-derive and update this pin, or investigate if it jumped unexpectedly: sample {numbered:?}");
+        // 624 -> 636 (SD-36 F1c-3): six degraded product-identity class records now read their
+        // own `CLASS:<name>` continuation rows and level lines -- Hellknight (both printings) +4
+        // each, Hellknight Signifer, Red Mantis Assassin (both printings) and Cyphermage
+        // (`inner_sea_magic`) +1 each. Their degradation (`BONUS:[redacted PI]`, a redacted
+        // DEFINE) is unchanged.
+        assert_eq!(numbered_count, 636, "numbered-lines-inside-a-degraded-record count moved (CONV-05 baseline) -- re-derive and update this pin, or investigate if it jumped unexpectedly: sample {numbered:?}");
     }
 
     /// The report's own sums: a degraded record is a CONVERTED record, and the per-shape

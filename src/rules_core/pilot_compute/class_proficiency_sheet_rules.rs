@@ -32,8 +32,10 @@
 //!
 //! The answer is [`ProficiencyAnswer::Unknown`] with its reason when:
 //! - the package cannot be loaded, or carries no converted record for the class;
-//! - the walk reaches no weapon-proficiency grant at all: §3.4 allows an empty answer only when
-//!   the converter attests the closure complete, and the package carries no such attestation;
+//! - the walk reaches no weapon-proficiency grant at all, unless the converter attests the class's
+//!   closure complete (`SheetRule::closure_complete`, SD-36 F1c-3 D4) AND no rule the class line
+//!   reaches at or below the level leads to a weapon grant -- then the answer is Known and empty
+//!   (the class grants none);
 //! - the walk meets a [`Holdable::MissingRule`] on a grant edge leading to a
 //!   weapon-proficiency grant: the closure is incomplete there, so the reader does not guess
 //!   which way that edge goes;
@@ -42,6 +44,14 @@
 //!   conjunct the weapon table answers (tier, `Melee`, `Ranged`), or a `WeaponSet` with members
 //!   (review finding 15 -- a bare `Auto` reaching the reader as a tag is Unknown; the converter
 //!   resolves the real `TYPE=Auto` selector to a `WeaponSet` at ingest).
+//!
+//! # A pick of one weapon from a named list
+//!
+//! A held pick the converter linked to its pool's one member (SD-36 F1c-3, D6: `offers: Rules`
+//! on the pick, the member offering a weapon list resolved at ingest -- the Commoner's one
+//! Simple weapon) is carried in [`ClassWeaponProficiencyView::weapon_picks`] with its choice id
+//! and options. The class level cannot say which weapon the player took; the character's own
+//! recorded choice decides it, and the sheet prints the choice.
 //!
 //! # A pick the reader cannot resolve
 //!
@@ -59,7 +69,7 @@ use std::sync::{Mutex, OnceLock};
 use crate::rules_core::level_up_option_filter::{describe_gate, describe_prof};
 use crate::rules_core::rules_tables::crb::weapon_tables::WeaponProficiency;
 use crate::rules_core::sheet_rule::{
-    held_set, resolve_gated_fact_grant, split_rule_id, Applies, BonusTarget, CharacterFacts, Effect, EvalContext, Expr,
+    held_set, resolve_gated_fact_grant, split_rule_id, Applies, BonusTarget, CharacterFacts, Choice, Effect, EvalContext, Expr,
     Fact, GatedFact, Granter, HeldSeed, HeldSet, Holdable, OptionSet, ProfRef, RuleId, SheetRule, SheetRulePackage,
     SheetValue,
 };
@@ -71,6 +81,20 @@ use crate::rules_core::sheet_rule_package;
 pub struct WeaponSetView {
     pub label: String,
     pub members: Vec<String>,
+}
+
+/// A held player's pick of ONE weapon from a list the converter resolved at ingest (SD-36
+/// F1c-3, D6: the pick's pool linked to its one member's weapon options). The class-level walk
+/// cannot know which weapon the player takes; the character's own recorded choice under
+/// `choice` decides it, and the sheet prints it.
+#[derive(Debug, Clone, PartialEq, Eq, PartialOrd, Ord)]
+pub struct WeaponPickView {
+    /// The choice id a character records its pick under (`SelectedChoice::choice_set_id`).
+    pub choice: String,
+    /// The picking rule's words (`Weapon and Armor Proficiency`).
+    pub label: String,
+    /// Every weapon-proficiency name the pick may take, as the oracle spells it.
+    pub options: Vec<String>,
 }
 
 /// What the converted record says one class is proficient with at one level.
@@ -92,6 +116,14 @@ pub struct ClassWeaponProficiencyView {
     /// the package cannot resolve (see [`unresolved_weapon_pick`]). The closure is incomplete
     /// there: every weapon the counted grants do not cover is Unknown, never Known(false).
     pub unresolved_picks: Vec<String>,
+    /// A held weapon pick whose options the package names ([`WeaponPickView`]): decided by the
+    /// character's recorded choice, never by the class level.
+    pub weapon_picks: Vec<WeaponPickView>,
+    /// SD-36 F1c-5 (D8): a pick among an ability category's members (`offers: Rules` with
+    /// `Granter::Choice` edges onto the members) that the walk decided from the class's Path-A
+    /// canonical default (`class_seeds::canonical_seeds_for`), printed once so the sheet says
+    /// which member the answer assumes.
+    pub seeded_picks: Vec<String>,
 }
 
 /// The reader's answer: known (possibly with printed conditions) or unknown with its reason.
@@ -139,7 +171,11 @@ pub fn class_weapon_proficiency_view_in(package: &SheetRulePackage, class_slug: 
     };
     let level = i64::from(class_level);
     let seed = HeldSeed { classes: vec![(class_slug.to_string(), level)], ..HeldSeed::default() };
-    let facts = CharacterFacts { level, class_levels: vec![(class_slug.to_string(), level)], ..CharacterFacts::default() };
+    let mut facts = CharacterFacts { level, class_levels: vec![(class_slug.to_string(), level)], ..CharacterFacts::default() };
+    let seeded = canonical_member_picks(package, class_slug);
+    for pick in &seeded {
+        facts.choices.entry(pick.choice.clone()).or_default().push((pick.member.clone(), pick.member.clone()));
+    }
     let held = held_set(package, &seed, &facts);
     if !held.rules.contains_key(principal) {
         return ProficiencyAnswer::Unknown { reason: format!("the class principal rule {principal} is not held at level {class_level}") };
@@ -159,8 +195,27 @@ pub fn class_weapon_proficiency_view_in(package: &SheetRulePackage, class_slug: 
             continue;
         }
         let Some(rule) = package.rule(id) else { continue };
-        if let Some(pick) = unresolved_weapon_pick(package, rule, &mut pool_reaches_weapon) {
-            acc.unresolved.insert(pick);
+        match linked_pick(package, rule) {
+            Some(LinkedPick::Weapon(pick)) => {
+                acc.picks.insert(pick);
+            }
+            Some(LinkedPick::NotAProficiency) => {}
+            None => {
+                if let Some(pick) = unresolved_weapon_pick(package, rule, &mut pool_reaches_weapon)
+                    .or_else(|| unrecorded_member_pick(package, rule, &held, &facts))
+                {
+                    acc.unresolved.insert(pick);
+                }
+            }
+        }
+        if let Some(pick) = seeded.iter().find(|p| &p.choice == id) {
+            acc.seeded.insert(format!(
+                "{} ({}) picks {} ({}) -- the Path-A canonical default",
+                rule.label,
+                id,
+                package.rule(&pick.member).map_or(pick.member.as_str(), |m| m.label.as_str()),
+                pick.member
+            ));
         }
         let ctx = EvalContext { holder_class: entry.holder_class.clone(), ..EvalContext::default() };
         for effect in &rule.grants {
@@ -198,18 +253,60 @@ pub fn class_weapon_proficiency_view_in(package: &SheetRulePackage, class_slug: 
         && view.sets.is_empty()
         && view.printed_conditions.is_empty()
         && view.unresolved_picks.is_empty()
+        && view.weapon_picks.is_empty()
     {
-        // §3.4 "Known-empty vs unknown": an empty answer is only honest when the converter has
-        // attested the closure complete, and the package carries no such attestation -- so an
-        // empty walk is a closure the converter did not finish, never "proficient with nothing".
-        return ProficiencyAnswer::Unknown {
-            reason: format!(
-                "the converted closure of `{class_slug}` at level {class_level} grants no weapon proficiency, and the \
-                 package carries no closure-complete attestation that none is owed"
-            ),
-        };
+        // §3.4 "Known-empty vs unknown" (SD-36 F1c-3, D4): an empty answer is honest only when
+        // the converter attests the closure complete (`closure_complete` on the class principal)
+        // AND no rule the class line reaches at or below this level leads to a weapon grant --
+        // otherwise the walk is empty because a gate the class-level facts cannot open shut it,
+        // not because the class grants nothing.
+        let attested = package.rule(principal).is_some_and(|r| r.closure_complete);
+        if !attested {
+            return ProficiencyAnswer::Unknown {
+                reason: format!(
+                    "the converted closure of `{class_slug}` at level {class_level} grants no weapon proficiency, and the \
+                     package carries no closure-complete attestation that none is owed"
+                ),
+            };
+        }
+        if let Some(reached) = class_line_reaches_a_weapon_grant(package, principal, class_slug, class_level) {
+            return ProficiencyAnswer::Unknown {
+                reason: format!(
+                    "the converted closure of `{class_slug}` is attested complete, but {reached} leads to a weapon \
+                     proficiency grant the level-{class_level} walk did not admit"
+                ),
+            };
+        }
     }
     ProficiencyAnswer::Known(view)
+}
+
+/// `Some(rule id)` when the class principal, or any rule the class line grants at or below
+/// `class_level` (a class-selection class's base class line included), leads to a weapon grant.
+fn class_line_reaches_a_weapon_grant(package: &SheetRulePackage, principal: &str, class_slug: &str, class_level: u8) -> Option<RuleId> {
+    let mut memo = BTreeMap::new();
+    if reaches_a_weapon_grant(package, principal, &mut memo) {
+        return Some(principal.to_string());
+    }
+    let lines = package.class_lines_held(&[(class_slug.to_string(), i64::from(class_level))]);
+    for (class, _) in &lines {
+        if class != class_slug
+            && let Some(base) = package.find("class", class)
+            && reaches_a_weapon_grant(package, base, &mut memo)
+        {
+            return Some(base.clone());
+        }
+    }
+    package
+        .rules
+        .values()
+        .filter(|rule| {
+            rule.granted_by.iter().any(|g| {
+                matches!(&g.by, Granter::Class { id, at_level } if lines.iter().any(|(c, _)| c == id) && *at_level <= class_level)
+            })
+        })
+        .find(|rule| reaches_a_weapon_grant(package, &rule.id, &mut memo))
+        .map(|rule| rule.id.clone())
 }
 
 /// `Some(words)` when `fact` is a WEAPON proficiency fact (armor and shield proficiencies are
@@ -226,6 +323,92 @@ fn weapon_fact_words(rule: &SheetRule, fact: &Fact) -> Option<String> {
         },
         _ => None,
     }
+}
+
+enum LinkedPick {
+    Weapon(WeaponPickView),
+    /// The pick's one member offers weapons but grants no proficiency with the pick (a Weapon
+    /// Focus-style choice): not this reader's business.
+    NotAProficiency,
+}
+
+/// A pick the converter linked to its pool's members (`offers: Rules { pool, tags }` on a
+/// `target: Pool(_)` rule, `pool_link.rs`): `Some` when exactly one member answers, and that
+/// member offers a weapon list; `None` for any other rule (the unlinked path decides it).
+fn linked_pick(package: &SheetRulePackage, rule: &SheetRule) -> Option<LinkedPick> {
+    let Some(BonusTarget::Pool(_)) = &rule.target else { return None };
+    let Some(Choice { from: OptionSet::Rules { pool, tags, .. }, .. }) = &rule.offers else { return None };
+    let mut members = package.rules.values().filter(|r| {
+        !r.id.contains('#') && &r.pool == pool && tags.iter().all(|t| r.tags.iter().any(|o| o.eq_ignore_ascii_case(t)))
+    });
+    let (Some(member), None) = (members.next(), members.next()) else { return None };
+    let Some(Choice { id: choice, from: OptionSet::Weapons(options), .. }) = &member.offers else { return None };
+    let grants_the_pick = member.grants.iter().any(|e| {
+        matches!(e, Effect::FactGrant(Fact::Proficiency(ProfRef::Chosen(c))) | Effect::FactGrant(Fact::Chosen(c)) if c == choice)
+    });
+    if !grants_the_pick {
+        return Some(LinkedPick::NotAProficiency);
+    }
+    Some(LinkedPick::Weapon(WeaponPickView { choice: choice.clone(), label: rule.label.clone(), options: options.clone() }))
+}
+
+/// One Path-A canonical pick among an ability category's members (SD-36 F1c-5, D8).
+struct MemberPick {
+    /// The picking rule's choice id (the rule's own id).
+    choice: RuleId,
+    /// The member the default takes.
+    member: RuleId,
+}
+
+/// The class's Path-A canonical defaults (`class_seeds::canonical_seeds_for`) that are a pick
+/// among an ability category's members: the choice id is a converted rule offering
+/// `OptionSet::Rules` under its own id, and the selection is a rule that choice grants
+/// (`Granter::Choice`). Every other seed (a legacy `choice:*` id, a weapon pick) is not this
+/// reader's to apply.
+fn canonical_member_picks(package: &SheetRulePackage, class_slug: &str) -> Vec<MemberPick> {
+    let (choices, _) = crate::rules_core::class_seeds::canonical_seeds_for(class_slug);
+    choices
+        .into_iter()
+        .filter(|c| {
+            package.rule(&c.choice_set_id).is_some_and(|picker| {
+                matches!(&picker.offers, Some(Choice { id, from: OptionSet::Rules { .. }, .. }) if id == &c.choice_set_id)
+            }) && package.rule(&c.selection_id).is_some_and(|member| {
+                member.granted_by.iter().any(|g| matches!(&g.by, Granter::Choice(ch) if ch == &c.choice_set_id))
+            })
+        })
+        .map(|c| MemberPick { choice: c.choice_set_id, member: c.selection_id })
+        .collect()
+}
+
+/// `Some(words)` when `rule` is a held pick among an ability category's members (SD-36 F1c-5,
+/// D8: `offers: Rules` under the rule's own id, members granted by `Granter::Choice(<rule>)`)
+/// that no recorded choice fills and no member the walk already holds fills, and some member
+/// leads to a weapon-proficiency grant. The class level cannot say which member the player takes.
+fn unrecorded_member_pick(package: &SheetRulePackage, rule: &SheetRule, held: &HeldSet, facts: &CharacterFacts) -> Option<String> {
+    let Some(Choice { id: choice, from: OptionSet::Rules { .. }, .. }) = &rule.offers else { return None };
+    if choice != &rule.id || facts.choices.get(choice).is_some_and(|v| !v.is_empty()) {
+        return None;
+    }
+    let members: Vec<&SheetRule> = package
+        .rules
+        .values()
+        .filter(|m| m.granted_by.iter().any(|g| matches!(&g.by, Granter::Choice(ch) if ch == choice)))
+        .collect();
+    if members.iter().any(|m| held.rules.contains_key(&m.id)) {
+        return None;
+    }
+    let mut memo = BTreeMap::new();
+    let reaching: Vec<&str> = members.iter().filter(|m| reaches_a_weapon_grant(package, &m.id, &mut memo)).map(|m| m.id.as_str()).collect();
+    if reaching.is_empty() {
+        return None;
+    }
+    Some(format!(
+        "{} ({}) picks from {} members, and the character records no choice; {} lead(s) to a weapon proficiency grant",
+        rule.label,
+        rule.id,
+        members.len(),
+        reaching.join(", ")
+    ))
 }
 
 /// `Some(words)` when `rule` is a held player's pick (`target: Pool(p)` with a non-zero count)
@@ -334,6 +517,8 @@ struct Accumulator {
     sets: BTreeSet<WeaponSetView>,
     printed: BTreeSet<String>,
     unresolved: BTreeSet<String>,
+    picks: BTreeSet<WeaponPickView>,
+    seeded: BTreeSet<String>,
 }
 
 impl Accumulator {
@@ -384,6 +569,8 @@ impl Accumulator {
         self.view.sets = self.sets.into_iter().collect();
         self.view.printed_conditions = self.printed.into_iter().collect();
         self.view.unresolved_picks = self.unresolved.into_iter().collect();
+        self.view.weapon_picks = self.picks.into_iter().collect();
+        self.view.seeded_picks = self.seeded.into_iter().collect();
         self.view
     }
 }
@@ -516,9 +703,11 @@ fn missing_rule_on_a_proficiency_edge(
 /// A grant the CLASS LINE itself makes at or below `class_level` (`Granter::Class`) whose target
 /// leads to a weapon-proficiency grant, but which the fixpoint did not admit: the closure the
 /// class-level facts reach is not the closure the class line grants, so the reader does not
-/// guess which one is right. (Measured shape: a token-level PRE of a different row hoisted onto
-/// the granted record's own `applies` -- `fighter_class` carries the level-20 Weapon Mastery
-/// pool's `PREVARGTEQ`, so levels 1-19 would otherwise read "no fighter proficiency".) A
+/// guess which one is right. (Measured shape, until SD-36 F1c-2 fixed it in the converter: a
+/// token-level PRE of a different row hoisted onto the granted record's own `applies` --
+/// `fighter_class` carried the level-20 Weapon Mastery pool's `PREVARGTEQ`, so levels 1-19 would
+/// otherwise have read "no fighter proficiency". The guard stays for any closure it still
+/// catches.) A
 /// `Granter::Rule` edge out of a held rule is NOT held to this: those legitimately stay shut on
 /// an optional rule or a feat the class does not grant (the firearm grant behind Simple Weapon
 /// Proficiency).
@@ -599,6 +788,8 @@ mod tests {
             granted_by,
             offers: None,
             grants,
+            closure_complete: false,
+            always_held: false,
             provenance: Default::default(),
         }
     }
@@ -627,6 +818,86 @@ mod tests {
     fn an_empty_walk_is_unknown_not_proficient_with_nothing() {
         let answer = class_weapon_proficiency_view_in(&package_of(Vec::new()), "fx", 1);
         assert!(matches!(answer, ProficiencyAnswer::Unknown { ref reason } if reason.contains("no weapon proficiency")), "{answer:?}");
+    }
+
+    fn attested_package(rules: Vec<SheetRule>) -> SheetRulePackage {
+        let mut package = SheetRulePackage::new();
+        let mut principal = rule("fx_book:class:fx", Vec::new(), Applies::Always, Vec::new());
+        principal.closure_complete = true;
+        package.insert_rule(principal);
+        for r in rules {
+            package.insert_rule(r);
+        }
+        package.finish();
+        package
+    }
+
+    /// D4: the converter attests the closure complete and the walk finds no weapon grant --
+    /// the class grants none: Known, empty.
+    #[test]
+    fn a_complete_closure_with_no_weapon_grant_answers_known_empty() {
+        let armor = Effect::FactGrant(Fact::Proficiency(ProfRef::ArmorGroup("Light".into())));
+        let package = attested_package(vec![rule("fx_book:class_feature:fx_armor", class_line(1), Applies::Always, vec![armor])]);
+        for level in [1, 10] {
+            let answer = class_weapon_proficiency_view_in(&package, "fx", level);
+            assert_eq!(answer, ProficiencyAnswer::Known(ClassWeaponProficiencyView::default()), "level {level}");
+        }
+    }
+
+    /// D4: without the attestation (or with a closure rule that reaches a weapon grant the walk
+    /// did not admit) an empty walk stays Unknown.
+    #[test]
+    fn an_incomplete_closure_still_answers_unknown() {
+        let unattested = package_of(vec![rule("fx_book:class_feature:fx_misc", class_line(1), Applies::Always, Vec::new())]);
+        let answer = class_weapon_proficiency_view_in(&unattested, "fx", 1);
+        assert!(matches!(answer, ProficiencyAnswer::Unknown { ref reason } if reason.contains("closure-complete")), "{answer:?}");
+        // Attested, but a rule the closure reaches grants a weapon behind a gate the class-level
+        // facts shut (a variable no held rule contributes): not "proficient with nothing".
+        let shut = Applies::Compare { lhs: Expr::Var("v_outside".into()), op: crate::rules_core::sheet_rule::Cmp::Eq, rhs: Expr::Const(1) };
+        let standard = rule("fx_book:class_feature:fx_standard", Vec::new(), shut, vec![Effect::FactGrant(dagger())]);
+        let mut standard = standard;
+        standard.granted_by = vec![crate::rules_core::sheet_rule::Grant { by: Granter::Rule("fx_book:class_feature:fx_misc".into()), when: Applies::Always }];
+        let gated = attested_package(vec![rule("fx_book:class_feature:fx_misc", class_line(1), Applies::Always, Vec::new()), standard]);
+        let answer = class_weapon_proficiency_view_in(&gated, "fx", 1);
+        assert!(matches!(answer, ProficiencyAnswer::Unknown { .. }), "{answer:?}");
+    }
+
+    /// D8 (SD-36 F1c-5): a held pick among an ability category's members (`offers: Rules` under
+    /// the rule's own id, members granted by `Granter::Choice`) that no recorded choice fills, one
+    /// of whose members leads to a weapon grant, is an unresolved pick -- never Known(empty) and
+    /// never a guessed member. A member the walk already holds (a class that IS the pick) fills it.
+    #[test]
+    fn an_unrecorded_member_pick_is_unresolved_until_a_member_is_held() {
+        use crate::rules_core::sheet_rule::Grant;
+        let picker_id = "fx_book:class_feature:fx_selection";
+        let mut picker = rule(picker_id, class_line(1), Applies::Always, Vec::new());
+        picker.offers = Some(Choice {
+            id: picker_id.into(),
+            count: Expr::Const(1),
+            from: OptionSet::Rules { pool: "class".into(), tags: vec!["Fx Selection".into()], requires: Applies::Always },
+        });
+        let by_choice = vec![Grant { by: Granter::Choice(picker_id.into()), when: Applies::Always }];
+        let standard = rule("fx_book:class_feature:fx_standard", by_choice.clone(), Applies::Always, vec![Effect::FactGrant(dagger())]);
+        let other = rule("fx_book:class_feature:fx_other", by_choice, Applies::Always, Vec::new());
+        let package = attested_package(vec![picker.clone(), standard, other.clone()]);
+        let answer = class_weapon_proficiency_view_in(&package, "fx", 1);
+        let view = answer.known().unwrap_or_else(|| panic!("the walk itself is Known: {answer:?}"));
+        assert!(view.named.is_empty(), "the pick is not guessed: {view:?}");
+        assert_eq!(view.unresolved_picks.len(), 1, "{view:?}");
+        assert!(view.unresolved_picks[0].contains(picker_id) && view.unresolved_picks[0].contains("fx_standard"), "{view:?}");
+
+        // The class line holds a member itself: the pick is filled, nothing is unresolved.
+        let mut held_other = other;
+        held_other.granted_by.extend(class_line(1));
+        let standard = rule(
+            "fx_book:class_feature:fx_standard",
+            vec![Grant { by: Granter::Choice(picker_id.into()), when: Applies::Always }],
+            Applies::Always,
+            vec![Effect::FactGrant(dagger())],
+        );
+        let filled = attested_package(vec![picker, standard, held_other]);
+        let answer = class_weapon_proficiency_view_in(&filled, "fx", 1);
+        assert_eq!(answer, ProficiencyAnswer::Known(ClassWeaponProficiencyView::default()), "{answer:?}");
     }
 
     /// A class-line grant at or below the level that leads to a weapon grant but is shut by its
@@ -700,6 +971,136 @@ mod tests {
         assert!(view.named.contains("Club"), "{view:?}");
         assert_eq!(view.unresolved_picks.len(), 1, "{view:?}");
         assert!(view.unresolved_picks[0].contains("fx simple weapon proficiency choice"), "{view:?}");
+    }
+
+    /// D6: a pick the converter linked to its pool's one member (`offers: Rules` on the pick;
+    /// the member offers a weapon list and grants the chosen proficiency) is a weapon pick with
+    /// its choice id and options -- not an unresolved pick, and not a counted grant.
+    #[test]
+    fn a_linked_weapon_pick_is_a_weapon_pick_with_its_options() {
+        let mut linked = pick("fx_book:class_feature:fx_weapon_and_armor_proficiency", "fx_simple_weapon_proficiency_choice", 1);
+        linked.offers = Some(Choice {
+            id: linked.id.clone(),
+            count: Expr::Const(1),
+            from: OptionSet::Rules { pool: "special_ability".into(), tags: vec!["FxSingleSimple".into()], requires: Applies::Always },
+        });
+        let member_id = "fx_book:class_feature:fx_single_simple_weapon_proficiency";
+        let mut member = rule(member_id, Vec::new(), Applies::Always, vec![Effect::FactGrant(Fact::Proficiency(ProfRef::Chosen(member_id.into())))]);
+        member.pool = "special_ability".into();
+        member.tags = vec!["FxSingleSimple".into()];
+        member.offers = Some(Choice { id: member_id.into(), count: Expr::Const(1), from: OptionSet::Weapons(vec!["Club".into(), "Dagger".into()]) });
+        let package = package_of(vec![linked, member]);
+        let answer = class_weapon_proficiency_view_in(&package, "fx", 1);
+        let view = answer.known().expect("a linked pick is Known with its pick");
+        assert!(view.unresolved_picks.is_empty(), "{view:?}");
+        assert_eq!(
+            view.weapon_picks,
+            vec![WeaponPickView { choice: member_id.into(), label: "fx_book:class_feature:fx_weapon_and_armor_proficiency".into(), options: vec!["Club".into(), "Dagger".into()] }]
+        );
+        assert!(view.named.is_empty() && view.tiers.is_empty(), "the pick is never a counted grant: {view:?}");
+    }
+
+    /// SD-36 F1c-4 (D7), on the real package: the Summoner's own gates read variables set only
+    /// by the global Internal `Default` ability every character holds (`cr__stats.lst:4` grants
+    /// it; `apg_abilities_class.lst:715` declares CLASS_SummonerAllowed / StandardSummonerAllowed
+    /// 0 and sets CLASS_SummonerAllowed from StandardSummonerAllowed, `:717` sets
+    /// StandardSummonerAllowed 1). With `Default` attested always held, a summoner walk starts
+    /// from that base state: the class's own BAB line (`applies` CLASS_SummonerAllowed == 1,
+    /// `apg_classes.lst:141`) and the Standard Class selection's gate
+    /// (`PREVAREQ:StandardSummonerAllowed,1`, `apg_abilities_class.lst:741`) both open. Before
+    /// D7 both read 0 and were shut for every summoner.
+    ///
+    /// The reader still answers Unknown for the Summoner: the Standard Class is a player's pick
+    /// from the Summoner Class Selection pool (`apg_abilities_class.lst:739`
+    /// `BONUS:VAR|Pool_Summoner_Class_Selection|1`, `apg_abilitycategories.lst:267`
+    /// `POOL:Pool_Summoner_Class_Selection`), which the converter writes as neither a pick nor a
+    /// grant edge -- a separate mechanism (D8), not a gate.
+    #[test]
+    fn summoner_standard_summoner_gate_opens_from_the_always_held_base_state() {
+        use crate::rules_core::sheet_rule::{evaluate_applies, Gate};
+        let package = sheet_rule_package::package().as_ref().expect("package loads");
+        assert!(package.is_always_held("advanced_players_guide:class_feature:default"), "Default must be attested always held");
+        let seed = HeldSeed { classes: vec![("summoner".into(), 1)], ..HeldSeed::default() };
+        let facts = CharacterFacts { level: 1, class_levels: vec![("summoner".into(), 1)], ..CharacterFacts::default() };
+        let held = held_set(package, &seed, &facts);
+        for id in ["advanced_players_guide:class_feature:summoner_standard_class", "advanced_players_guide:class:summoner#bonus0"] {
+            let rule = package.rule(id).unwrap_or_else(|| panic!("{id} is converted"));
+            let gate = evaluate_applies(&rule.applies, &held, package, &facts, EvalContext { holder_class: Some("summoner".into()), ..EvalContext::default() });
+            assert_eq!(gate, Gate::Include, "{id}: {}", describe_gate(package, &rule.applies));
+        }
+    }
+
+    fn var_table(var: &str, declarer: &str, contributor: &str) -> crate::rules_core::sheet_rule::VarTable {
+        crate::rules_core::sheet_rule::VarTable {
+            var: var.into(),
+            label: var.into(),
+            declared_by: vec![declarer.into()],
+            contributions: vec![crate::rules_core::sheet_rule::VarContribution {
+                rule_id: contributor.into(),
+                expr: Expr::Const(1),
+                bonus_type: None,
+                when: Applies::Always,
+            }],
+            provenance: Default::default(),
+        }
+    }
+
+    /// A class line whose weapon grant sits behind `v_global == 1`, where `v_global` is declared
+    /// and set to 1 by `global` -- a record nothing grants. `always_held` says whether the
+    /// converter attested `global` as held by every character.
+    fn global_gate_package(always_held: bool, table: Option<crate::rules_core::sheet_rule::VarTable>) -> SheetRulePackage {
+        let gate = Applies::Compare { lhs: Expr::Var("v_global".into()), op: crate::rules_core::sheet_rule::Cmp::Eq, rhs: Expr::Const(1) };
+        let mut standard = rule("fx_book:class_feature:fx_standard", Vec::new(), gate, vec![Effect::FactGrant(dagger())]);
+        standard.granted_by =
+            vec![crate::rules_core::sheet_rule::Grant { by: Granter::Rule("fx_book:class_feature:fx_selection".into()), when: Applies::Always }];
+        let mut global = rule("fx_book:class_feature:default", Vec::new(), Applies::Always, Vec::new());
+        global.always_held = always_held;
+        let mut package = SheetRulePackage::new();
+        let mut principal = rule("fx_book:class:fx", Vec::new(), Applies::Always, Vec::new());
+        principal.closure_complete = true;
+        package.insert_rule(principal);
+        package.insert_rule(rule("fx_book:class_feature:fx_selection", class_line(1), Applies::Always, Vec::new()));
+        package.insert_rule(standard);
+        package.insert_rule(global);
+        if let Some(table) = table {
+            package.insert_var(table);
+        }
+        package.finish();
+        package
+    }
+
+    /// D7, synthetic: an always-held global's unconditional variable setting is part of the base
+    /// state every walk starts from -- the gate it opens opens for the held-set fixpoint and for
+    /// the reader alike.
+    #[test]
+    fn an_always_held_global_seeds_every_walk() {
+        let global = "fx_book:class_feature:default";
+        let package = global_gate_package(true, Some(var_table("v_global", global, global)));
+        let seed = HeldSeed { classes: vec![("fx".into(), 1)], ..HeldSeed::default() };
+        let facts = CharacterFacts { level: 1, class_levels: vec![("fx".into(), 1)], ..CharacterFacts::default() };
+        let held = held_set(&package, &seed, &facts);
+        assert!(held.rules.contains_key("fx_book:class_feature:fx_standard"), "the fixpoint must open the global's gate");
+        assert!(!held.rules.contains_key(global), "an always-held global seeds variables, it is not a held sheet line");
+        let answer = class_weapon_proficiency_view_in(&package, "fx", 1);
+        let view = answer.known().unwrap_or_else(|| panic!("Known through the global's gate: {answer:?}"));
+        assert!(view.named.contains("Dagger"), "{view:?}");
+    }
+
+    /// D7, the converse: a gate on a variable nobody the character holds sets -- set only by a
+    /// record NOT attested always-held, or with no variable table at all -- stays shut, and the
+    /// attested-complete class whose line reaches the shut grant answers Unknown, never empty.
+    #[test]
+    fn a_gate_on_a_variable_nobody_sets_stays_unknown() {
+        let global = "fx_book:class_feature:default";
+        for package in [global_gate_package(false, Some(var_table("v_global", global, global))), global_gate_package(true, None)] {
+            let answer = class_weapon_proficiency_view_in(&package, "fx", 1);
+            assert!(matches!(answer, ProficiencyAnswer::Unknown { .. }), "{answer:?}");
+        }
+        // Attested always-held, but its only contribution is conditional: not base state.
+        let mut table = var_table("v_global", global, global);
+        table.contributions[0].when = Applies::Holds { what: Holdable::Race("elf".into()), count: 1 };
+        let answer = class_weapon_proficiency_view_in(&global_gate_package(true, Some(table)), "fx", 1);
+        assert!(matches!(answer, ProficiencyAnswer::Unknown { .. }), "{answer:?}");
     }
 
     #[test]

@@ -9,7 +9,7 @@
 use std::collections::{BTreeMap, BTreeSet};
 
 use super::closure::{Closure, ClosureRowKind, PinnedTree};
-use super::ctx::{parse_bonus_type, slug, split_gates, split_top_level, CorpusIndex, RecordCtx, RecordRef};
+use super::ctx::{parse_bonus_type, slug, split_gates, split_top_level, CorpusIndex, RecordCtx, RecordRef, RuleLookup};
 use super::formula::{convert_formula, integer_literal};
 use super::prereq::{convert_pre_token, resolve_holdable_rule};
 use super::prose::{convert_desc_like, convert_labelled, convert_positional, decode_entities, expand_output_name, pi_hit, strip_editorial_not_implemented_markers};
@@ -105,6 +105,9 @@ struct Acc {
     subject: Subject,
     desc_redacted: bool,
     tempdesc_seen: bool,
+    /// SD-36 F1c-5 (D8): the variable pools (variable name, original case) this record's own
+    /// `BONUS:VAR` rows raise, in row order.
+    pool_picks: Vec<String>,
 }
 
 /// A die literal with an optional flat modifier: `"1d8"` -> `("1d8", None)`, `"1d8+2"` ->
@@ -428,6 +431,55 @@ fn weapon_type_selector(ctx: &mut RecordCtx, membership: &WeaponMembershipIndex,
     Some(ProfRef::WeaponSet { label: segments.join("."), members })
 }
 
+/// SD-36 F1c-3 (D6): a `CHOOSE:WEAPONPROFICIENCY` argument list resolved AT INGEST to the
+/// oracle weapon-proficiency names it offers (name-sorted, deduplicated), or `None` when any
+/// argument is not a character-independent weapon set -- then the caller keeps the old words.
+///
+/// Each `|`-separated argument is one alternative (union). An argument resolves when it is:
+/// - a weapon-proficiency name some oracle row carries (`Crossbow (Hand)`);
+/// - a `,`-joined conjunction of `TYPE=`/`TYPE.` tags (`TYPE=Simple,TYPE=Piercing`): every
+///   oracle weapon carrying all of them ([`WeaponMembershipIndex::members_with_all`]; an
+///   alternative no weapon satisfies adds nothing);
+/// - either of those wrapped in `ANY[...]` or `!PC[...]` -- `!PC` ("not already held") narrows
+///   by the character's own proficiencies, so the options printed are the wrapped set, the
+///   superset the rule offers.
+///
+/// Never resolved here (character- or equipment-dependent, or not a proficiency list): `PC`
+/// (already held), a bare `!PC`, `ALL`/`ANY`/`QUALIFIED`, `DEITYWEAPON`, `EQUIPMENT[...]`,
+/// `ABILITY=`/`FEAT=` filters, or a union that names no weapon at all.
+fn weapon_choice_options(membership: &WeaponMembershipIndex, args: &[String]) -> Option<Vec<String>> {
+    let mut out: BTreeSet<String> = BTreeSet::new();
+    if args.is_empty() {
+        return None;
+    }
+    for arg in args {
+        let a = arg.trim();
+        let inner = a
+            .strip_prefix("!PC[")
+            .or_else(|| a.strip_prefix("ANY["))
+            .and_then(|x| x.strip_suffix(']'))
+            .unwrap_or(a);
+        if inner.is_empty() || inner.contains(['[', ']', '%', '=']) && !inner.starts_with("TYPE") {
+            return None;
+        }
+        let parts: Vec<&str> = inner.split(',').map(str::trim).collect();
+        let tags: Option<Vec<String>> =
+            parts.iter().map(|p| p.strip_prefix("TYPE=").or_else(|| p.strip_prefix("TYPE.")).map(str::to_string)).collect();
+        match tags {
+            Some(tags) if !tags.is_empty() && tags.iter().all(|t| !t.is_empty() && !t.contains(['[', ']', '='])) => {
+                // An alternative no oracle weapon satisfies adds nothing (PCGen offers nothing
+                // for it either); the union must still name at least one weapon.
+                out.extend(membership.members_with_all(&tags));
+            }
+            _ if parts.len() == 1 => {
+                out.insert(membership.weapon_named(inner)?.to_string());
+            }
+            _ => return None,
+        }
+    }
+    (!out.is_empty()).then(|| out.into_iter().collect())
+}
+
 /// A `WeaponSet` grant's dedup key: what the selector actually resolves to (its member list,
 /// already name-sorted and case-normalized by `WeaponMembershipIndex::members_with_all`), plus
 /// whether the grant is gated and on what -- never the raw per-book selector spelling that
@@ -463,6 +515,132 @@ fn dedup_weapon_set_grants(grants: Vec<Effect>) -> Vec<Effect> {
         out.push(g);
     }
     out
+}
+
+/// Resolve an `ABILITY:<category>|<nature>|TYPE=<tags>` target -- "every ability of this
+/// category whose own `TYPE` facet carries all of these tags" -- to the converted records it
+/// grants, AT INGEST, from the corpus index's accumulated facets (`CorpusIndex::facets`, SD-36
+/// Epic F1c-1, defect D1). This is PCGen's own selection: the category's abilities filtered on
+/// their accumulated `TYPE:` tags (base row, `.COPY=` base and `.MOD` rows alike),
+/// case-insensitively (PCGen resolves `TYPE=` case-insensitively; the weapon membership index
+/// relies on the same fact). No selector spelling is mapped to a meaning here -- the target
+/// records carry their own effects (`Weapon Prof ~ Martial` carries `AUTO:WEAPONPROF|TYPE=Martial`),
+/// so the grant reaches exactly what a by-name grant of the same record reaches.
+///
+/// - The category is matched as written first; only when it selects nothing and the category is
+///   a CHILD `ABILITYCATEGORY` (the tree's own `ability_category_parent`) is its parent tried --
+///   the same retry order `resolve_rule_in_checked` uses for a by-name target.
+/// - Every hit is canonicalised through the same `(category, KEY)` join a by-name grant uses
+///   (`resolve_rule_checked`), so a reprint of one ability in two books becomes one edge, never
+///   two; a hit that join does not index (its corpus record ships no `CATEGORY` token, so only
+///   its closure names the category) is its own target; an ambiguous join is skipped (never
+///   guessed), and the record never grants itself.
+/// - An empty result is the NAMED defect `grant-by-type` (never a fabricated grant) and returns
+///   no target.
+fn ability_type_selector_targets(ctx: &mut RecordCtx, category: &str, selector: &str) -> Vec<RuleId> {
+    let raw = selector.strip_prefix("TYPE=").or_else(|| selector.strip_prefix("TYPE.")).unwrap_or(selector);
+    let tags = tags_of(raw);
+    let mut targets: Vec<RuleId> = Vec::new();
+    if !tags.is_empty() {
+        let cat_u = category.trim().to_ascii_uppercase();
+        let parent = ctx.tree.ability_category_parent.get(&cat_u).cloned();
+        for cat in std::iter::once(cat_u).chain(parent) {
+            let mut seen: BTreeSet<String> = BTreeSet::new();
+            for r in &ctx.index.records {
+                if r.id == ctx.record.id {
+                    continue;
+                }
+                let Some((own_cat, own_tags)) = ctx.index.facets.get(&r.id) else { continue };
+                if !own_cat.eq_ignore_ascii_case(&cat) || !tags.iter().all(|t| own_tags.iter().any(|o| o.eq_ignore_ascii_case(t))) {
+                    continue;
+                }
+                // One PCGen ability, one edge: a reprint of the same (category, KEY) in another
+                // book joins to the record a by-name grant reaches, never a second edge.
+                let ident = if r.key.trim().is_empty() { r.name.as_str() } else { r.key.as_str() };
+                if !seen.insert(ident.trim().to_ascii_uppercase()) {
+                    continue;
+                }
+                let id = match ctx.resolve_rule_checked(&cat, ident) {
+                    RuleLookup::Found(id) => id,
+                    RuleLookup::Missing => r.id.clone(),
+                    RuleLookup::Ambiguous => continue,
+                };
+                if id != ctx.record.id && !targets.contains(&id) {
+                    targets.push(id);
+                }
+            }
+            if !targets.is_empty() {
+                break;
+            }
+        }
+    }
+    if targets.is_empty() {
+        ctx.defect("grant-by-type", format!("{}: {category}|{selector}", ctx.record.id));
+    }
+    targets
+}
+
+/// SD-36 F1c-5 (D8): the first variable pool the record raises becomes the record's choice --
+/// `count` the pool variable itself (PCGen sizes the pool by it), options the category's members
+/// -- and every member gets a `Granter::Choice(<record>)` edge. A record that already offers a
+/// choice, or raises a second pool, keeps one choice and names the rest `pool-pick-collision`.
+fn offer_pool_pick(ctx: &mut RecordCtx, acc: &mut Acc, out: &mut Converted) {
+    let picks = std::mem::take(&mut acc.pool_picks);
+    for (i, var) in picks.iter().enumerate() {
+        let Some((pool, members)) = ctx.index.filled_pools.get(&var.to_ascii_uppercase()) else { continue };
+        if i > 0 || acc.offers.is_some() {
+            ctx.defect(
+                "pool-pick-collision",
+                format!("{}: raises the {} pool ({}), but the record already offers another choice", ctx.record.id, slug(&pool.category), pool.decl),
+            );
+            continue;
+        }
+        acc.offers = Some(Choice {
+            id: ctx.record.id.clone(),
+            count: Expr::Var(super::ctx::var_id(var)),
+            from: OptionSet::Rules { pool: pool.pool.clone(), tags: pool.tags.clone(), requires: Applies::Always },
+        });
+        for m in &members.resolved {
+            if m != &ctx.record.id {
+                out.grants_out.push((m.clone(), Grant { by: Granter::Choice(ctx.record.id.clone()), when: Applies::Always }));
+            }
+        }
+    }
+}
+
+/// A record's `(CATEGORY, TYPE tags)` accumulated over its whole closure, in application order
+/// -- the same fold the `CATEGORY`/`TYPE` arms of `convert_token` apply to the converted rule's
+/// `pool`/`tags` (a `.MOD` row's `TYPE` adds, `.CLEAR` / `.CLEAR.<x>` reset, any other `TYPE`
+/// replaces). `build_index` stores it per record so a `TYPE=` grant selects on exactly what the
+/// converted target record carries.
+pub fn accumulated_facets(record: &RecordRef, closure: &Closure) -> (String, Vec<String>) {
+    let mut category = record.category.clone();
+    let mut tags = tags_of(&record.type_facet);
+    for row in &closure.rows {
+        for (k, v) in &row.tokens {
+            let v = v.trim();
+            match k.as_str() {
+                "CATEGORY" => category = v.to_string(),
+                "TYPE" => {
+                    if v == ".CLEAR" {
+                        tags.clear();
+                    } else if let Some(rest) = v.strip_prefix(".CLEAR.") {
+                        tags = tags_of(rest);
+                    } else if row.kind == ClosureRowKind::Mod {
+                        for t in tags_of(v) {
+                            if !tags.contains(&t) {
+                                tags.push(t);
+                            }
+                        }
+                    } else {
+                        tags = tags_of(v);
+                    }
+                }
+                _ => {}
+            }
+        }
+    }
+    (category, tags)
 }
 
 /// Which prose families the corpus record declares product identity for.
@@ -503,6 +681,7 @@ pub fn convert_record(tree: &PinnedTree, index: &CorpusIndex, record: &RecordRef
         subject: Subject::Character,
         desc_redacted: pi_desc,
         tempdesc_seen: false,
+        pool_picks: Vec::new(),
     };
     // The choice id is the record's own id when it carries a CHOOSE (pre-scan so %CHOICE
     // markers before the CHOOSE token still bind).
@@ -598,6 +777,8 @@ pub fn convert_record(tree: &PinnedTree, index: &CorpusIndex, record: &RecordRef
     // to (its member list), never by which book's capitalization produced the label, so once
     // two grants resolve to the same member set only the first survives.
     acc.grants = dedup_weapon_set_grants(acc.grants);
+    // SD-36 F1c-5 (D8): a record that raises a variable pool offers the pick (`pool_pick.rs`).
+    offer_pool_pick(&mut ctx, &mut acc, &mut out);
     // ---- assemble -------------------------------------------------------------------------
     let label = {
         let base = record.name.clone();
@@ -674,6 +855,23 @@ pub fn convert_record(tree: &PinnedTree, index: &CorpusIndex, record: &RecordRef
     let mut lines: Vec<Line> = std::mem::take(&mut acc.lines).into_iter().filter(|l| l.applies != Applies::Never).collect();
     if lines.is_empty() {
         lines.push(Line { seq: None, suffix: None, label: label.clone(), value: SheetValue::Text, also: Vec::new(), target: None, bonus_type: None, applies: Applies::Always, prose: Vec::new() });
+    } else if lines[0].applies != Applies::Always && principal_carries_more_than_its_line(&lines, &acc, &out, &record.id) {
+        // SD-36 Epic F1c-2 (defect D2): a line's own condition gates only that line. The
+        // principal rule (index 0, `id == record.id`) is the RECORD: the held-set fixpoint admits
+        // it by its `applies`, every outgoing `Granter::Rule(record.id)` edge hangs off it, its
+        // siblings are held with it, and it carries the record's grants, offers and prose. When
+        // the first line pushed carries a PRE of its own (a `BONUS:...|PRE...` token), making it
+        // the principal hoisted that line's condition onto everything the record holds --
+        // `fighter_class`'s level-20 `BONUS:ABILITYPOOL|Weapon Mastery` gate shut the whole
+        // fighter closure at levels 1-19. The record gets its own principal line carrying only
+        // the record's gates, and the gated line becomes a sibling carrying its own condition.
+        // A record that IS its one line (no sibling, grant, offer or outgoing edge) keeps the
+        // line as its principal (CONV-02): there is nothing else for the condition to shut.
+        // The principal keeps the label it carried before the split (CONV-02: the record's own
+        // label for a single-line record, else the first line's), so every join over principal
+        // labels resolves exactly as before.
+        let principal_label = if lines.len() > 1 { lines[0].label.clone() } else { label.clone() };
+        lines.insert(0, Line { seq: None, suffix: None, label: principal_label, value: SheetValue::Text, also: Vec::new(), target: None, bonus_type: None, applies: Applies::Always, prose: Vec::new() });
     }
     // SD-36 Epic E CONV-02: a single-line record's one line IS the record -- the assembled
     // (OUTPUTNAME/PI-aware) `label` above is always right for it, and must never be second-
@@ -738,6 +936,8 @@ pub fn convert_record(tree: &PinnedTree, index: &CorpusIndex, record: &RecordRef
             granted_by: if i == 0 { acc.granted_by.clone() } else { Vec::new() },
             offers: if i == 0 { acc.offers.clone() } else { None },
             grants: if i == 0 { acc.grants.clone() } else { Vec::new() },
+            closure_complete: false,
+            always_held: false,
             provenance: provenance.clone(),
         });
     }
@@ -750,6 +950,16 @@ pub fn convert_record(tree: &PinnedTree, index: &CorpusIndex, record: &RecordRef
     out.var_names = ctx.var_names;
     out.var_labels = ctx.var_labels;
     out
+}
+
+/// SD-36 Epic F1c-2: whether the record's principal rule carries anything beyond its first line
+/// -- a sibling line, a grant or offer of its own, or a grant edge it hands to another record
+/// (`Granter::Rule(record id)`) -- that the first line's own condition must not gate.
+fn principal_carries_more_than_its_line(lines: &[Line], acc: &Acc, out: &Converted, record_id: &str) -> bool {
+    lines.len() > 1
+        || !acc.grants.is_empty()
+        || acc.offers.is_some()
+        || out.grants_out.iter().any(|(_, g)| matches!(&g.by, Granter::Rule(r) if r == record_id))
 }
 
 fn dedup(mut v: Vec<String>) -> Vec<String> {
@@ -850,7 +1060,9 @@ fn convert_token(ctx: &mut RecordCtx, acc: &mut Acc, out: &mut Converted, key: &
         }
         // SD-35 AT-35-E4-001, row PROHIBITSPELL: the class's barred schools/descriptors are
         // the rule's own words on the sheet (`decisions.md` §1 form 3), never a number.
-        "PROHIBITSPELL" => {
+        // `PROHIBITED:<school>,...` (a class's barred schools, read since SD-36 F1c-3 on the
+        // product-identity classes' continuation rows) prints exactly as `PROHIBITSPELL` does.
+        "PROHIBITSPELL" | "PROHIBITED" => {
             let (fields, gates) = split_gates(v);
             let when = gates_of(ctx, &gates, level_gate)?;
             let barred: Vec<String> = fields
@@ -1339,6 +1551,13 @@ fn convert_token(ctx: &mut RecordCtx, acc: &mut Acc, out: &mut Converted, key: &
                         return Err("BONUS:VAR ([redacted PI] value)".into());
                     }
                     for name in target.split(',') {
+                        let upper = name.trim().to_ascii_uppercase();
+                        if ctx.index.filled_pools.contains_key(&upper)
+                            && super::pool_pick::raises_the_pool(&formula)
+                            && !acc.pool_picks.iter().any(|p| p.eq_ignore_ascii_case(&upper))
+                        {
+                            acc.pool_picks.push(name.trim().to_string());
+                        }
                         let id = super::ctx::var_id(name);
                         out.var_labels.entry(id.clone()).or_insert_with(|| name.trim().to_string());
                         out.var_contribs.push((id, name.trim().to_ascii_uppercase(), VarContribution { rule_id: ctx.record.id.clone(), expr: expr.clone(), bonus_type: bonus_type.clone(), when: when.clone() }));
@@ -1485,15 +1704,19 @@ fn convert_token(ctx: &mut RecordCtx, acc: &mut Acc, out: &mut Converted, key: &
                 if t.contains("%LIST") || t.contains("%CHOICE") {
                     continue; // the holder's choice grants the picked option (Choice lane)
                 }
-                if t.starts_with("TYPE=") || t.starts_with("TYPE.") {
-                    ctx.defect("grant-by-type", format!("{}: {category}|{t}", ctx.record.id));
-                    continue;
-                }
                 let by = if nature == "NORMAL" { Granter::Choice(ctx.record.id.clone()) } else { Granter::Rule(ctx.record.id.clone()) };
                 let by = match level_gate {
-                    Some(l) if ctx.record.kind == "class" => Granter::Class { id: ctx.owning_class.clone().unwrap_or_else(|| slug(&ctx.record.key)), at_level: l },
+                    Some(l) if ctx.record.kind == "class" => Granter::Class { id: ctx.owning_class.clone().unwrap_or_else(|| super::ctx::own_class_id(ctx.record)), at_level: l },
                     _ => by,
                 };
+                if t.starts_with("TYPE=") || t.starts_with("TYPE.") {
+                    // "Every ability of this category carrying these tags" (F1c-1, defect D1):
+                    // one edge per resolved record, the same edge a by-name grant makes.
+                    for id in ability_type_selector_targets(ctx, &category, t) {
+                        out.grants_out.push((id, Grant { by: by.clone(), when: when.clone() }));
+                    }
+                    continue;
+                }
                 if let Holdable::Rule(id) = resolve_holdable_rule(ctx, &category, t) {
                     out.grants_out.push((id, Grant { by, when: when.clone() }));
                 }
@@ -1612,7 +1835,7 @@ fn convert_token(ctx: &mut RecordCtx, acc: &mut Acc, out: &mut Converted, key: &
             // granter either way, so the base row is `level_gate` 1 rather than a refusal.
             let (fields, gates) = split_gates(v);
             let when = gates_of(ctx, &gates, level_gate)?;
-            let cls = ctx.owning_class.clone().unwrap_or_else(|| slug(&ctx.record.key));
+            let cls = ctx.owning_class.clone().unwrap_or_else(|| super::ctx::own_class_id(ctx.record));
             for d in fields.iter().flat_map(|f| f.split(',')) {
                 let d = d.trim();
                 if d.is_empty() {
@@ -1657,7 +1880,7 @@ fn convert_token(ctx: &mut RecordCtx, acc: &mut Acc, out: &mut Converted, key: &
                 }
                 let id = ctx.resolve_kind("template", &n).unwrap_or_else(|| slug(&n));
                 let by = match level_gate {
-                    Some(l) if ctx.record.kind == "class" => Granter::Class { id: ctx.owning_class.clone().unwrap_or_else(|| slug(&ctx.record.key)), at_level: l },
+                    Some(l) if ctx.record.kind == "class" => Granter::Class { id: ctx.owning_class.clone().unwrap_or_else(|| super::ctx::own_class_id(ctx.record)), at_level: l },
                     _ => Granter::Rule(ctx.record.id.clone()),
                 };
                 out.grants_out.push((id, Grant { by, when: when.clone() }));
@@ -1758,7 +1981,13 @@ fn convert_token(ctx: &mut RecordCtx, acc: &mut Acc, out: &mut Converted, key: &
                     OptionSet::Rules { pool, tags, requires }
                 }
                 "SKILL" | "SKILLBONUS" => OptionSet::Skills(args.iter().filter(|a| !a.starts_with("TYPE") && !a.contains('%')).map(|a| ctx.skill_id(a)).collect()),
-                "WEAPONPROFICIENCY" => OptionSet::Weapons(args.iter().filter(|a| !a.contains('%')).map(|a| tag_word(a)).collect()),
+                "WEAPONPROFICIENCY" => {
+                    let membership = weapon_membership::index(ctx.tree);
+                    match weapon_choice_options(membership, &args) {
+                        Some(names) => OptionSet::Weapons(names),
+                        None => OptionSet::Weapons(args.iter().filter(|a| !a.contains('%')).map(|a| tag_word(a)).collect()),
+                    }
+                }
                 "SHIELDPROFICIENCY" | "ARMORPROFICIENCY" => OptionSet::Weapons(args.iter().filter(|a| !a.contains('%')).map(|a| tag_word(a)).collect()),
                 "LANG" => OptionSet::Languages(args.iter().filter(|a| !a.contains('%')).map(|a| tag_word(a)).collect()),
                 "SCHOOLS" => OptionSet::Schools,
@@ -1828,4 +2057,139 @@ fn convert_token(ctx: &mut RecordCtx, acc: &mut Acc, out: &mut Converted, key: &
         other => return Err(format!("unmapped:{other}")),
     }
     Ok(())
+}
+
+#[cfg(test)]
+mod ability_type_selector_tests {
+    use super::*;
+    use super::super::closure::ClosureRow;
+    use std::path::PathBuf;
+
+    fn empty_tree() -> PinnedTree {
+        PinnedTree {
+            root: PathBuf::new(),
+            book_paths: BTreeMap::new(),
+            files: Vec::new(),
+            mod_index: BTreeMap::new(),
+            base_index: BTreeMap::new(),
+            keyed_index: BTreeMap::new(),
+            define_index: BTreeMap::new(),
+            bonus_var_index: BTreeMap::new(),
+            class_rows: BTreeMap::new(),
+            level_lines: BTreeMap::new(),
+            fact_index: BTreeMap::new(),
+            pfs_base_keys: BTreeSet::new(),
+            ability_category_parent: BTreeMap::new(),
+            ability_category_type: BTreeMap::new(),
+            ability_category_pool: BTreeMap::new(),
+        }
+    }
+
+    fn record(id: &str, name: &str, category: &str, type_facet: &str) -> RecordRef {
+        RecordRef {
+            id: id.to_string(),
+            book: "book".into(),
+            kind: "class_feature".into(),
+            name: name.into(),
+            key: name.into(),
+            category: category.into(),
+            type_facet: type_facet.into(),
+            rel_path: "book/abilities.lst".into(),
+            line: 1,
+            shipped_tokens: None,
+            prerequisites: Vec::new(),
+            copy_base_key: None,
+            license_pi: false,
+            pi_fields: Vec::new(),
+            description: None,
+            class_name: None,
+            class_selection_of: None,
+            joined: true,
+        }
+    }
+
+    /// A corpus index holding the granting record plus the given targets, joined the same way
+    /// `build_index` joins them (`(CATEGORY upper, KEY upper)` and NAME).
+    fn index_of(records: Vec<RecordRef>) -> CorpusIndex {
+        let mut index = CorpusIndex::default();
+        for r in &records {
+            let cat = r.category.to_ascii_uppercase();
+            index.by_cat_key.entry((cat.clone(), r.key.to_ascii_uppercase())).or_insert(r.id.clone());
+            index.by_cat_name.entry((cat, r.name.to_ascii_uppercase())).or_insert(r.id.clone());
+        }
+        for r in &records {
+            index.facets.insert(r.id.clone(), accumulated_facets(r, &Closure::default()));
+        }
+        index.records = records;
+        index
+    }
+
+    fn convert_with_row(index: &CorpusIndex, token: &str) -> Converted {
+        let tree = empty_tree();
+        let granter = index.records.iter().find(|r| r.id == "book:class_feature:granter").expect("granter present");
+        let closure = Closure {
+            rows: vec![ClosureRow { cite: "book/abilities.lst:1".into(), row: None, tokens: vec![("ABILITY".into(), token.into())], kind: ClosureRowKind::Base, level_gate: None }],
+            ..Closure::default()
+        };
+        convert_record(&tree, index, granter, &closure)
+    }
+
+    fn fixture() -> CorpusIndex {
+        index_of(vec![
+            record("book:class_feature:granter", "Granter Proficiencies", "Special Ability", ""),
+            record("book:class_feature:prof_simple", "Prof ~ Simple", "Internal", "ProfSimple.ProfMartial"),
+            record("book:class_feature:prof_martial", "Prof ~ Martial", "Internal", "ProfMartial"),
+            record("book:class_feature:unrelated", "Unrelated", "Internal", "SomethingElse"),
+        ])
+    }
+
+    /// RED before F1c-1: the row was dropped into `grant-by-type`. Now every record of the
+    /// category carrying the tag gets the same grant edge a by-name grant would make, and no
+    /// defect is recorded.
+    #[test]
+    fn a_type_selector_grants_every_record_of_the_category_carrying_the_tag() {
+        let c = convert_with_row(&fixture(), "Internal|AUTOMATIC|TYPE=ProfMartial");
+        let targets: Vec<&str> = c.grants_out.iter().map(|(id, _)| id.as_str()).collect();
+        assert_eq!(targets, vec!["book:class_feature:prof_simple", "book:class_feature:prof_martial"], "{:?}", c.grants_out);
+        assert!(c.grants_out.iter().all(|(_, g)| g.by == Granter::Rule("book:class_feature:granter".into())));
+        assert!(!c.defects.contains_key("grant-by-type"), "a resolved selector carries no defect: {:?}", c.defects);
+
+        // Case-insensitive, conjunctive: `TYPE=profsimple.PROFMARTIAL` selects only the record
+        // carrying both tags.
+        let c = convert_with_row(&fixture(), "Internal|AUTOMATIC|TYPE=profsimple.PROFMARTIAL");
+        let targets: Vec<&str> = c.grants_out.iter().map(|(id, _)| id.as_str()).collect();
+        assert_eq!(targets, vec!["book:class_feature:prof_simple"]);
+    }
+
+    /// The facet fold matches the converted rule's own: a `.MOD` row's `TYPE` ADDS a tag (the
+    /// Skinwalker `Change Shape (Claw).MOD TYPE:Skinwalker Change Shape Default` shape), a base
+    /// row's `TYPE` replaces, `.CLEAR.` resets, and a closure `CATEGORY` names the category.
+    #[test]
+    fn accumulated_facets_fold_mod_rows_like_the_converted_rule() {
+        let r = record("book:class_feature:x", "X", "", "Base");
+        let row = |kind, tokens: Vec<(&str, &str)>| ClosureRow { cite: String::new(), row: None, tokens: tokens.into_iter().map(|(k, v)| (k.to_string(), v.to_string())).collect(), kind, level_gate: None };
+        let closure = Closure {
+            rows: vec![
+                row(ClosureRowKind::Base, vec![("CATEGORY", "Special Ability"), ("TYPE", "RacialTraits.SpecialQuality")]),
+                row(ClosureRowKind::Mod, vec![("TYPE", "Skinwalker Change Shape Default")]),
+            ],
+            ..Closure::default()
+        };
+        assert_eq!(accumulated_facets(&r, &closure), ("Special Ability".to_string(), vec!["RacialTraits".to_string(), "SpecialQuality".to_string(), "Skinwalker Change Shape Default".to_string()]));
+        let cleared = Closure { rows: vec![row(ClosureRowKind::Mod, vec![("TYPE", ".CLEAR.Only")])], ..Closure::default() };
+        assert_eq!(accumulated_facets(&r, &cleared).1, vec!["Only".to_string()]);
+    }
+
+    /// A selector no record of the category carries (or a real tag under the wrong category)
+    /// stays the NAMED `grant-by-type` defect and grants nothing -- never a guess.
+    #[test]
+    fn an_unexpandable_type_selector_stays_a_named_defect() {
+        for token in ["Internal|AUTOMATIC|TYPE=ProfNobodyCarries", "Special Ability|AUTOMATIC|TYPE=ProfMartial"] {
+            let c = convert_with_row(&fixture(), token);
+            assert!(c.grants_out.is_empty(), "{token}: an unexpandable selector must grant nothing: {:?}", c.grants_out);
+            let (category, rest) = token.split_once("|AUTOMATIC|").unwrap();
+            let expected = format!("book:class_feature:granter: {category}|{rest}");
+            assert_eq!(c.defects.get("grant-by-type"), Some(&vec![expected]), "{token}: {:?}", c.defects);
+        }
+    }
 }

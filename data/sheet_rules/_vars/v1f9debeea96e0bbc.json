@@ -1,0 +1,1 @@
+{"var":"v1f9debeea96e0bbc","label":"Caster Level Red Mantis Assassin","declared_by":["adventurers_guide:class:red_mantis_assassin"],"contributions":[{"rule_id":"adventurers_guide:class:red_mantis_assassin","expr":{"Sum":[{"Var":"v4a96c39b5a3ebb79"},{"Var":"vf8c7584cc6eb44a6"},{"Var":"v9d30222a06163cbd"}]},"when":"Always"}],"provenance":{}}

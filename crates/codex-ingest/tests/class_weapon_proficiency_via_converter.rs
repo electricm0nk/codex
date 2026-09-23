@@ -170,36 +170,23 @@ enum Disagreement {
 ///
 /// - **Converter defects** (the package says less than the oracle; the reader is faithful to
 ///   the package and, where the walk is empty or a class-line grant is shut, says Unknown):
-///   `grant-by-type` -- `ABILITY:Internal|AUTOMATIC|TYPE=WeaponProf{Simple,Martial}` is not
-///   converted (`_defects/grant-by-type.json`, spec §3.1(3)); `pre-hoist` -- a token-level PRE of
-///   another row is hoisted onto the class-feature record's own `applies`, so the class line's
-///   grant is never admitted; `no-class-record` -- the package carries no
-///   `pathfinder_unchained` `class` records at all.
-/// - **Stale static rows** (the reader is right per the pinned oracle; the hand-typed row is
-///   not; this step does not edit the static rows).
-const KNOWN_DISAGREEMENTS: &[(&str, Disagreement, &str)] = &[
-    ("alchemist", Disagreement::Differs, "converter grant-by-type: advanced_players_guide:ability:alchemist TYPE=WeaponProfSimple dropped; reader lacks Simple"),
-    ("cavalier", Disagreement::ReaderUnknown, "converter grant-by-type: advanced_players_guide:ability:cavalier TYPE=WeaponProfMartial dropped; empty walk"),
-    ("fighter", Disagreement::ReaderUnknown, "converter pre-hoist: fighter_class applies carries the Weapon Mastery pool's PREVARGTEQ:Fighter_CFP_Level,20 (cr_abilities_class.lst BONUS:ABILITYPOOL row); unadmitted below level 20"),
-    ("inquisitor", Disagreement::Differs, "converter grant-by-type: advanced_players_guide:ability:inquisitor TYPE=WeaponProfSimple dropped; reader lacks Simple"),
-    ("monk", Disagreement::Differs, "stale static row: omits Flurry of Blows (cr_abilities_class.lst:2794,2817) and Sword (Temple) (apg_abilities_class.lst:41 .MOD); its Unarmed Strike is granted via the Auto/Monk sets"),
-    ("oracle", Disagreement::ReaderUnknown, "converter grant-by-type: advanced_players_guide:ability:oracle TYPE=WeaponProfSimple dropped; empty walk"),
-    ("summoner", Disagreement::ReaderUnknown, "converter grant-by-type: summoner_weapon_and_armor_proficiency TYPE=WeaponProfSimple dropped; empty walk"),
-    ("unchained_barbarian", Disagreement::ReaderUnknown, "converter no-class-record: data/sheet_rules/pathfinder_unchained has no class kind"),
-    ("unchained_monk", Disagreement::ReaderUnknown, "converter no-class-record: data/sheet_rules/pathfinder_unchained has no class kind"),
-    ("unchained_rogue", Disagreement::ReaderUnknown, "converter no-class-record: data/sheet_rules/pathfinder_unchained has no class kind"),
-    ("unchained_summoner", Disagreement::ReaderUnknown, "converter no-class-record: data/sheet_rules/pathfinder_unchained has no class kind"),
-    ("gunslinger", Disagreement::Differs, "converter grant-by-type: gunslinger_proficiencies TYPE=WeaponProfMartial dropped; reader lacks Martial"),
-    ("kineticist", Disagreement::ReaderUnknown, "converter grant-by-type: kineticist_weapon_and_armor_proficiency TYPE=WeaponProfSimple dropped; empty walk"),
-    ("medium", Disagreement::ReaderUnknown, "converter pre-hoist: medium_class applies carries Medium_CF_Knacks == 1; unadmitted"),
-    ("mesmerist", Disagreement::ReaderUnknown, "converter pre-hoist: mesmerist_class applies carries Mesmerist_CF_Knacks == 1; unadmitted"),
-    ("occultist", Disagreement::ReaderUnknown, "converter grant-by-type: occultist_weapon_and_armor_proficiency TYPE=WeaponProfMartial dropped; empty walk"),
-    ("vigilante", Disagreement::ReaderUnknown, "converter grant-by-type: vigilante_weapon_and_armor_proficiencies TYPE=WeaponProfMartial dropped; empty walk"),
-    ("psychic", Disagreement::ReaderUnknown, "converter grant-by-type: psychic_weapon_and_armor_proficiency TYPE=WeaponProfSimple dropped; empty walk"),
-    ("spiritualist", Disagreement::ReaderUnknown, "converter pre-hoist (spiritualist_class applies carries Spiritualist_CF_Knacks == 1) plus grant-by-type (TYPE=WeaponProfSimple)"),
-    ("psion", Disagreement::Differs, "stale static row: omits All Automatic Proficiencies (Unarmed Strike, Spells (Ray), Spells (Touch), Splash Weapon), up_classes.lst:258"),
-    ("ninja", Disagreement::Differs, "stale static row: omits ABILITY:FEAT|AUTOMATIC|Simple Weapon Proficiency and All Automatic Proficiencies, uc_abilities_globalvar.lst:178"),
-];
+///   (`grant-by-type` -- `ABILITY:Internal|AUTOMATIC|TYPE=WeaponProf{Simple,Martial}` -- converts
+///   since F1c-1 and is no longer a mechanism here; nor is `pre-hoist` -- one line's PRE
+///   hoisted onto the class-feature record's own `applies` -- since F1c-2, which un-pinned
+///   fighter, medium, mesmerist, psychic and spiritualist: all five now reproduce their static
+///   row exactly; nor is `no-class-record` since F1c-3, which gave the four Pathfinder
+///   Unchained classes their class principal: three reproduce their static row exactly, and the
+///   Unchained Monk's is stale the same way the Monk's is -- see its pin).
+/// - **Class-selection pick** (summoner, D8): none since F1c-5. The proficiency record is
+///   reached only through `summoner_standard_class`, a member of the Summoner Class Selection
+///   pool (`apg_abilitycategories.lst:267`) the Summoner ability fills with one pick
+///   (`apg_abilities_class.lst:739`); the converter now writes that pick as a choice with its
+///   members, and the census input seeds its Path-A default
+///   (`summoner_reads_simple_through_the_standard_class_pick`).
+/// - **Stale static rows**: none since F1c D5 (2026-09-23), which corrected the six the reader
+///   exposed -- monk, unchained_monk, psion, ninja, occultist, vigilante -- in
+///   `weapon_tables.rs` FROM the oracle rows these pins cited.
+const KNOWN_DISAGREEMENTS: &[(&str, Disagreement, &str)] = &[];
 
 /// (a) F1.2: for each of the 42 static rows, the reader's level-1 answer equals the row (tiers,
 /// named, groups as sets) -- except the rows [`KNOWN_DISAGREEMENTS`] names with their mechanism.
@@ -305,6 +292,24 @@ fn every_census_class_answer_is_rederivable_from_the_oracle() {
     assert!(problems.is_empty(), "{} reader rows are not re-derivable from the oracle:\n{}", problems.len(), problems.join("\n"));
 }
 
+/// D8 (SD-36 F1c-5): the Summoner's weapon proficiency is granted by `Summoner ~ Standard Class`
+/// (`apg_abilities_class.lst:741`, its `.MOD` at `:747` grants `Summoner ~ Weapon and Armor
+/// Proficiency`), a member of the Summoner Class Selection pool the Summoner ability fills with
+/// one pick (`:739`). With the Path-A canonical default seeded (`class_seeds`, the Standard class:
+/// the row the oracle makes the no-pick default, `:739`'s
+/// `BONUS:VAR|StandardSummoner|1|...|!PREABILITY:1,CATEGORY=Class,TYPE.Summoner Class Selection`),
+/// the reader answers Known with the Simple tier and names the seeded pick once.
+#[test]
+fn summoner_reads_simple_through_the_standard_class_pick() {
+    let answer = class_weapon_proficiency_view("summoner", 1);
+    let view = answer.known().unwrap_or_else(|| panic!("summoner must be Known after the canonical pick: {answer:?}"));
+    assert_eq!(view.tiers, vec![WeaponProficiency::Simple], "{view:?}");
+    assert!(view.named.is_empty() && view.groups.is_empty(), "{view:?}");
+    assert!(view.unresolved_picks.is_empty(), "the seeded pick is decided: {view:?}");
+    assert_eq!(view.seeded_picks.len(), 1, "the seeded pick is printed once: {view:?}");
+    assert!(view.seeded_picks[0].contains("summoner_standard_class"), "{view:?}");
+}
+
 /// (c) F1.8 (review finding 1): a PRE-gated weapon grant the class-level facts cannot decide is
 /// printed with its condition, never counted. Marksman's `Sling Staff (Halfling)`
 /// (`marksman_ranged_weapon_proficiency`) is gated on holding Weapon Familiarity (Halfling), a
@@ -372,6 +377,8 @@ fn fixture_rule(id: &str, granted_by: Vec<Grant>, grants: Vec<Effect>) -> SheetR
         granted_by,
         offers: None,
         grants,
+        closure_complete: false,
+        always_held: false,
         provenance: Provenance::default(),
     }
 }

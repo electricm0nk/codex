@@ -127,7 +127,14 @@ fn collect_values() -> BTreeMap<(String, String), BTreeMap<String, String>> {
                 if slug == "default" {
                     continue;
                 }
-                let value_json = serde_json::to_string(&first.get("value")).unwrap_or_default();
+                // SD-36 Epic F1c-2: the record's first converted VALUE, not blindly `rules[0]`'s.
+                // When a record's first line carries a condition of its own, the converter now
+                // gives the record an ungated `Text` principal and moves that line to a sibling
+                // (a line's condition gates only that line); comparing `rules[0]` alone would then
+                // read `Text` for both printings and hide a real value difference. Before F1c-2
+                // this reads the same 32 collisions `rules[0]` did.
+                let value = rules.iter().map(|r| r.get("value")).find(|v| v.and_then(|v| v.as_str()) != Some("Text")).unwrap_or(first.get("value"));
+                let value_json = serde_json::to_string(&value).unwrap_or_default();
                 groups.entry((kind.clone(), slug)).or_default().insert(book.clone(), value_json);
             }
         }

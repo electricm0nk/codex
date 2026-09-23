@@ -359,6 +359,9 @@ pub fn row_for_head(head: &str, value: &str) -> Option<&'static Row> {
             return Some(aspect_row(sub));
         }
         "DAMAGE" | "ALTDAMAGE" => "DAMAGE / ALTDAMAGE",
+        // SD-36 F1c-3: a class's barred schools print as `PROHIBITSPELL` does (the row's
+        // `covers_token_heads` names both heads).
+        "PROHIBITED" | "PROHIBITSPELL" => "PROHIBITSPELL",
         "CRITRANGE" | "ALTCRITRANGE" => "CRITRANGE / ALTCRITRANGE",
         "CRITMULT" | "ALTCRITMULT" => "CRITMULT / ALTCRITMULT",
         "RANGE" => "RANGE (spell / power keyword)",

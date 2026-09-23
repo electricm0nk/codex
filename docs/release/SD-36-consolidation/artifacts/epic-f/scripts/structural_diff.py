@@ -184,6 +184,128 @@ NATURALATTACKS_RENAMED_OLD_IDS, NATURALATTACKS_RENAMED_NEW_IDS, NATURALATTACKS_C
 _NATURALATTACKS_CONTENT_SHIFT_ALLOWED_FIELDS = {"label", "value"}
 
 
+# SD-36 Epic F1c (defects D1-D6, commits 1e6b2db9ee / 5979ef4668 / e61473e9c9): the F1c converter
+# batch's field deltas and added ids, each classified into ONE named mechanism by
+# `f1c_delta_pins.py` (this directory; see its docstring) and pinned as exact (rule id, field)
+# pairs / exact ids in `structural_diff_f1c_deltas.json`. A pinned pair is accepted only when its
+# class's own shape check below ALSO holds on the two records being compared -- never a blanket
+# allowance: an off-list pair, or a pinned pair failing its check, still gates.
+_F1C_DELTAS_PATH = os.path.join(os.path.dirname(os.path.abspath(__file__)), "structural_diff_f1c_deltas.json")
+_LINE_FIELDS = ("value", "target", "bonus_type", "applies")
+_MULTISET_FIELDS = ("also", "prose")
+F1C_CLASS_CAUSES = {
+    "d2_line_split": "D2: a record's first line carried its own condition; the record gets a Text principal with only the record's gates and the line moves, condition intact, to a new #<suffix> sibling",
+    "d4_closure_complete": "D4: closure_complete=true attested on a class principal whose whole closure is defect-free (sheet_rule/attest.rs)",
+    "d4_pi_reclosure": "D4 soundness: 21 product-identity class records re-keyed from the codex-named placeholder to the class's own base row, so their continuation rows, level lines and .MOD rows convert",
+    "d3_unchained_class": "D3: a Pathfinder Unchained class principal (TakenOnClass <base>), one per class-selection ability",
+    "d6_weapon_choice": "D6: a CHOOSE:WEAPONPROFICIENCY option list resolved to oracle weapon names, or a pick linked to its child pool's one member",
+    "f1c3_preability_bracket": "F1c-3: a PREABILITY `[<key>]` item no longer converts to an unholdable MissingRule alternative",
+    "d7_always_held": "D7: always_held=true attested on the principal of a record every character holds unconditionally -- the target of an unconditional ABILITY|AUTOMATIC grant on a STAT/SAVE row (sheet_rule/always_held.rs)",
+    "d8_pool_pick": "D8: a record that raises an ability category's POOL variable offers the pick -- offers {id: <the record>, count: Var(<pool variable>), from: Rules {pool, tags}} on its principal (sheet_rule/pool_pick.rs)",
+}
+
+
+def _f1c_ms(v: object) -> Counter:
+    return Counter(json.dumps(e, sort_keys=True) for e in (v or []))
+
+
+def has_bracket_missing_rule(v: object) -> bool:
+    """Whether a field's JSON holds a `MissingRule` named `[<key>]` -- the pre-F1c conversion of a
+    PREABILITY bracket item as an alternative that can never be held."""
+    return '"name": "[' in json.dumps(v, sort_keys=True)
+
+
+def d2_split_conserves(old: dict, new: dict, sib: dict | None) -> bool:
+    """The D2 split's shape: the fresh principal is Text; the new sibling carries the OLD
+    principal's line exactly (value/target/bonus_type/applies -- applies may differ only by a
+    removed PREABILITY bracket MissingRule, the one composed case); and the `also`/`prose`
+    multisets are conserved (old == fresh principal + sibling). Nothing dropped, only moved."""
+    if not isinstance(sib, dict) or new.get("value") != "Text":
+        return False
+    for k in _LINE_FIELDS:
+        if sib.get(k) == old.get(k):
+            continue
+        if k == "applies" and has_bracket_missing_rule(old.get(k)) and not has_bracket_missing_rule(sib.get(k)):
+            continue
+        return False
+    return all(_f1c_ms(old.get(f)) == _f1c_ms(new.get(f)) + _f1c_ms(sib.get(f)) for f in _MULTISET_FIELDS)
+
+
+def d6_shape(old: object, new: object) -> str | None:
+    """`resolved` when a Weapons option list is rewritten to (other) weapon names, `linked` when
+    an absent offer becomes a `Rules {pool, tags}` link; anything else is not the D6 class."""
+    of = old.get("from") if isinstance(old, dict) else None
+    nf = new.get("from") if isinstance(new, dict) else None
+    if isinstance(of, dict) and isinstance(nf, dict) and "Weapons" in of and "Weapons" in nf:
+        return "resolved"
+    if old is None and isinstance(nf, dict) and "Rules" in nf:
+        return "linked"
+    return None
+
+
+def d8_shape(rid: str, old: object, new: object, rule: dict | None) -> bool:
+    """D8: an absent offer becomes the record's own pool pick -- `id` the rule itself, `count`
+    exactly one variable (the pool variable), `from` a `Rules` set with no extra requirement.
+    D6's `linked` pick is told apart by its count: a D6 link counts the pick rule's own `Pool`
+    value (`count == value`), a D8 pick counts the pool variable."""
+    if old is not None or not isinstance(new, dict) or "#" in rid:
+        return False
+    count, frm = new.get("count"), new.get("from")
+    target = (rule or {}).get("target")
+    if isinstance(target, dict) and "Pool" in target and (rule or {}).get("value") == {"Number": count}:
+        return False
+    return (
+        new.get("id") == rid
+        and isinstance(count, dict) and set(count) == {"Var"}
+        and isinstance(frm, dict) and set(frm) == {"Rules"}
+        and frm["Rules"].get("requires") == "Always"
+        and isinstance(frm["Rules"].get("pool"), str) and isinstance(frm["Rules"].get("tags"), list)
+    )
+
+
+def _load_f1c_deltas() -> tuple[dict[tuple[str, str], str], dict[str, str], dict[str, str]]:
+    try:
+        with open(_F1C_DELTAS_PATH, "r", encoding="utf-8") as fh:
+            data = json.load(fh)
+    except (OSError, json.JSONDecodeError):
+        return {}, {}, {}
+    pairs: dict[tuple[str, str], str] = {}
+    new_ids: dict[str, str] = {}
+    for name, c in data.get("classes", {}).items():
+        assert len(c["field_deltas"]) == c["_field_delta_count"], f"{_F1C_DELTAS_PATH}: {name} _field_delta_count mismatch -- regenerate with _command"
+        assert len(c["new_rule_ids"]) == c["_new_rule_id_count"], f"{_F1C_DELTAS_PATH}: {name} _new_rule_id_count mismatch -- regenerate with _command"
+        for rid, field in c["field_deltas"]:
+            assert (rid, field) not in pairs, f"{_F1C_DELTAS_PATH}: ({rid}, {field}) pinned in two classes"
+            pairs[(rid, field)] = name
+        for rid in c["new_rule_ids"]:
+            new_ids[rid] = name
+    return pairs, new_ids, dict(data.get("d2_splits", {}))
+
+
+F1C_FIELD_DELTA_CLASS, F1C_NEW_RULE_ID_CLASS, F1C_D2_SPLITS = _load_f1c_deltas()
+KNOWN_ADDED_RULE_CAUSES.update({rid: F1C_CLASS_CAUSES[name] for rid, name in F1C_NEW_RULE_ID_CLASS.items()})
+
+
+def f1c_delta_holds(name: str, rid: str, field: str, old: dict, new: dict, fresh_rules: dict[str, dict]) -> bool:
+    """Re-run the pinned class's own shape check on the two records actually being compared."""
+    o, n = old.get(field), new.get(field)
+    if name == "d2_line_split":
+        return d2_split_conserves(old, new, fresh_rules.get(F1C_D2_SPLITS.get(rid, "")))
+    if name == "d4_closure_complete":
+        return o is None and n is True
+    if name == "d4_pi_reclosure":
+        return field != "provenance" or _provenance_delta_is_closure_rows_growth_only(o, n)
+    if name == "d6_weapon_choice":
+        return d6_shape(o, n) is not None
+    if name == "f1c3_preability_bracket":
+        return has_bracket_missing_rule(o) and not has_bracket_missing_rule(n)
+    if name == "d7_always_held":
+        return field == "always_held" and o is None and n is True and "#" not in rid
+    if name == "d8_pool_pick":
+        return field == "offers" and d8_shape(rid, o, n, new)
+    return False
+
+
 def edge_diff(old_list: object, new_list: object) -> tuple[list[str], list[str]]:
     """Diff two `granted_by`/`grants` lists as SETS of edges (each edge serialized to a stable
     JSON key), never by length or shallow equality. Returns `(removed, added)` -- both sorted --
@@ -543,6 +665,7 @@ def main() -> int:
     expected_provenance_deltas: list[str] = []
     naturalattacks_content_shift_deltas: list[tuple[str, str]] = []
     expected_bonus_var_split_deltas: list[tuple[str, str]] = []
+    f1c_deltas: dict[str, list[tuple[str, str]]] = defaultdict(list)
     added_edges_by_target_kind: Counter[str] = Counter()
     added_edges_total = 0
     removed_granted_by: list[tuple[str, str]] = []
@@ -566,6 +689,13 @@ def main() -> int:
             # delta on this same id, or any delta on an id off the pinned list, still gates.
             if rid in NATURALATTACKS_CONTENT_SHIFT_IDS and field in _NATURALATTACKS_CONTENT_SHIFT_ALLOWED_FIELDS:
                 naturalattacks_content_shift_deltas.append((rid, field))
+                continue
+            # SD-36 Epic F1c: an exact pinned (rule id, field) pair of a named F1c class whose
+            # own shape check holds on these two records (checked BEFORE the older pins, so a
+            # pair both lists name is attributed to the mechanism that moved it now).
+            f1c_class = F1C_FIELD_DELTA_CLASS.get((rid, field))
+            if f1c_class is not None and f1c_delta_holds(f1c_class, rid, field, old, new, fresh_rules):
+                f1c_deltas[f1c_class].append((rid, field))
                 continue
             # SD-36 Epic F1 stage 6 (merge-readiness blocker 2): a field the comma-split
             # BONUS:VAR index fix (stage5 receipt §1a) newly resolves through to a real,
@@ -617,7 +747,7 @@ def main() -> int:
     print("== expected delta classes (named, counted, explained -- never a blanket allowance) ==")
     print(f"  added granted_by edges: {added_edges_total}  (F1's own declared purpose -- a bare AUTO reference now resolving through its parent ability category; SS3.5 permits growth)")
     print(f"  added grants: {added_grants_total}  (F1-2 GatedFactGrant wrapping / F1-3 WeaponSet expansion of a previously-bare selector; see grant_signature/grant_covers)")
-    print(f"  added _vars/ tables: {len(added_vars)}  (condition variables an added GatedFactGrant's `when` now references)")
+    print(f"  added _vars/ tables: {len(added_vars)}  (condition variables an added GatedFactGrant's `when` now references, and the pool variables a D8 pick's `count` references)")
     print(f"  added _defects/ files: {len(added_defects)}")
     print(f"  provenance deltas on the pinned current_class-fix record list: {len(expected_provenance_deltas)} of {len(EXPECTED_PROVENANCE_DELTA_RECORDS)} pinned records (see structural_diff_expected_provenance_deltas.json)")
     print(
@@ -635,8 +765,13 @@ def main() -> int:
         f"(see structural_diff_bonus_var_split_record_deltas.json for the per-family mechanism and "
         f"reachability)"
     )
+    f1c_added = Counter(F1C_NEW_RULE_ID_CLASS[r] for r in added_rule_ids if r in F1C_NEW_RULE_ID_CLASS)
+    for name, cause in F1C_CLASS_CAUSES.items():
+        pairs = f1c_deltas.get(name, [])
+        print(f"  F1c {name}: {len(pairs)} field deltas on {len(set(r for r, _ in pairs))} records, {f1c_added.get(name, 0)} added rule ids -- {cause} (see structural_diff_f1c_deltas.json)")
     if added_rule_ids:
-        print(f"  added rule ids: {len(added_rule_ids)}")
+        unnamed = [r for r in added_rule_ids if r not in KNOWN_ADDED_RULE_CAUSES]
+        print(f"  added rule ids: {len(added_rule_ids)} ({len(unnamed)} with no named cause)")
         for rid in added_rule_ids[: args.max_examples]:
             cause = KNOWN_ADDED_RULE_CAUSES.get(rid, "cause not yet named -- explain before treating this as expected")
             print(f"    {rid}: {cause}")

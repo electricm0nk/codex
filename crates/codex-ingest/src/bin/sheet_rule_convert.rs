@@ -87,6 +87,9 @@ fn main() {
                 }
                 println!("refusals={:?}", c.refusals);
                 println!("defects={:?}", c.defects);
+                for (target, grant) in &c.grants_out {
+                    println!("grant_out {target} {}", serde_json::to_string(grant).unwrap());
+                }
                 println!("{}", serde_json::to_string_pretty(&c.rules).unwrap());
                 for (id, name, contrib) in &c.var_contribs {
                     println!("contrib {id} ({name}) {}", serde_json::to_string(contrib).unwrap());

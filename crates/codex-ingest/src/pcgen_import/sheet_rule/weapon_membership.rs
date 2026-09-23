@@ -101,6 +101,13 @@ impl WeaponMembershipIndex {
         let needles: Vec<String> = tags.iter().map(|t| t.to_ascii_lowercase()).collect();
         self.by_weapon.iter().filter(|(_, t)| needles.iter().all(|tag| t.contains(tag))).map(|(name, _)| name.clone()).collect()
     }
+
+    /// The oracle's own spelling of a weapon-proficiency identity, matched case-insensitively
+    /// (PCGen keys a proficiency name case-insensitively), or `None` when no row carries it.
+    pub fn weapon_named(&self, name: &str) -> Option<&str> {
+        let name = name.trim();
+        self.by_weapon.keys().find(|k| k.eq_ignore_ascii_case(name)).map(String::as_str)
+    }
 }
 
 /// Process-wide cache: the pinned tree is loaded once per process (`PinnedTree::load`), and
@@ -143,6 +150,8 @@ mod tests {
             fact_index: BTreeMap::new(),
             pfs_base_keys: BTreeSet::new(),
             ability_category_parent: BTreeMap::new(),
+            ability_category_type: BTreeMap::new(),
+            ability_category_pool: BTreeMap::new(),
         }
     }
 

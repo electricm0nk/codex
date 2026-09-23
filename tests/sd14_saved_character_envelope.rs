@@ -261,19 +261,41 @@ fn sd14_envelope_missing_revision_id_fails_honestly() {
 
 #[test]
 fn sd14_save_rejects_selected_choice_that_cannot_round_trip() {
-    // The fixture grammar renders a selected choice as
+    // The fixture grammar renders a two-segment choice set as
     // `choice={choice_set_id}:{selection_id}` and the loader re-splits on colons,
     // taking the first two segments as choice_set_id and the rest as selection_id.
-    // A choice whose ids do not match that segment shape would save fine and then
-    // reload as a *different* choice (or fail to load at all). Save must refuse it.
+    // Any other choice set (a converted rule's own `book:kind:slug` id, SD-36 F1c) is
+    // rendered as `rule_choice={choice_set_id}|{selection_id}`. A choice that neither
+    // line can carry would save fine and then reload as a *different* choice (or fail
+    // to load at all). Save must refuse it.
     let root = fresh_temp_dir("sd14-choice-grammar");
 
-    // Loses a segment on reload: ("choice:fighter:bonus_feat", "feat:dodge")
-    // would come back as ("choice:fighter", "bonus_feat:feat:dodge").
+    // A three-segment choice set once lost a segment on reload
+    // (("choice:fighter:bonus_feat", "feat:dodge") came back as
+    // ("choice:fighter", "bonus_feat:feat:dodge")), so save refused it. Since SD-36 F1c
+    // it rides the `rule_choice=` line and must reload as the SAME choice.
+    let three_segment = codex::rules_core::character_input::SelectedChoice {
+        choice_set_id: "choice:fighter:bonus_feat".to_owned(),
+        selection_id: "feat:dodge".to_owned(),
+    };
+    let mut envelope = pilot_envelope();
+    envelope.character_input.chosen.selected_choices.push(three_segment.clone());
+    SavedCharacterStore::save(&envelope, &root)
+        .expect("a three-segment choice set round-trips on the rule_choice= line");
+    let reloaded = SavedCharacterStore::load(&root).expect("reload should succeed");
+    assert_eq!(
+        reloaded.character_input.chosen.selected_choices.last(),
+        Some(&three_segment),
+        "the three-segment choice must reload unchanged, never as a different choice"
+    );
+    std::fs::remove_dir_all(&root).ok();
+    let root = fresh_temp_dir("sd14-choice-grammar");
+
+    // An id carrying the rule_choice= separator cannot round-trip: refused.
     let mut envelope = pilot_envelope();
     envelope.character_input.chosen.selected_choices.push(
         codex::rules_core::character_input::SelectedChoice {
-            choice_set_id: "choice:fighter:bonus_feat".to_owned(),
+            choice_set_id: "choice:fighter:bonus|feat".to_owned(),
             selection_id: "feat:dodge".to_owned(),
         },
     );

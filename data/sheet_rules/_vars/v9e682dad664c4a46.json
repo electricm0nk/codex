@@ -1,0 +1,1 @@
+{"var":"v9e682dad664c4a46","label":"Disable Race Type Granted Profs","declared_by":["bestiary:race_trait:outsider_traits"],"contributions":[{"rule_id":"advanced_players_guide:companion:eidolon","expr":{"Const":1},"when":"Always"}],"provenance":{"outside_corpus_rows":["pathfinder/paizo/roleplaying_game/bestiary_3/b3_abilities_race.lst:104"]}}

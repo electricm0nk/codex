@@ -809,7 +809,15 @@ mod prerequisite_tests {
         // carry a gate that can actually be checked. `unconverted` below falls 12 -> 1 by
         // exactly those eleven -- the two counts move by the same set, which is why they are
         // asserted together.
-        assert_eq!(eligible, 537, "a starting Fighter's real eligible-feat count");
+        // **537 -> 539 with SD-36 Epic F1c-2** (defect D2: a line's condition gates only its own
+        // line). `core_rulebook:class_feature:fighter_class` carried its level-20 Weapon Mastery
+        // pool line's condition on the whole record, so at level 1 the fighter held none of the
+        // closure it grants -- Shield Prof included. With the condition back on its own line the
+        // level-1 fighter holds Shield Proficiency, and exactly two feats leave the denied set,
+        // both previously denied "requires Shield Proficiency": `Saving Shield` (APG) and its
+        // Mythic row. Attributed by diffing the eligible set on the pre-fix and post-fix packages,
+        // not adjusted to fit.
+        assert_eq!(eligible, 539, "a starting Fighter's real eligible-feat count");
         // A catalog record `data/sheet_rules/` carries no converted rule for is a number to
         // report, never an exemption: it is still offered, with one "not verified" note.
         // **21 -> 12 with SD-35 operator ruling B18** (`decisions.md §21`): the nine

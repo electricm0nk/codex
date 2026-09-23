@@ -1,0 +1,1 @@
+{"var":"ve749fd3fdfaa5551","label":"POOL GUARDDEDICATION","declared_by":["inner_sea_combat:class_feature:ulfen_guard_guard_dedications"],"contributions":[{"rule_id":"inner_sea_combat:class_feature:ulfen_guard_guard_dedications","expr":{"Div":[{"Sum":[{"Var":"v96936e9cb6a36039"},{"Const":1}]},{"Const":2}]},"when":"Always"}],"provenance":{}}

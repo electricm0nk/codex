@@ -628,6 +628,98 @@ class StructuralDiffGateTest(unittest.TestCase):
         self.assertIn("unexpected field deltas: 1", out)
         self.assertIn("racial_sla_levitate: label", out)
 
+    def _f1c_split_fixture(self, sibling_applies):
+        rid = "advanced_class_guide:class_feature:arcanist_archetype_elemental_master"
+        rel = "advanced_class_guide/class_feature/arcanist_archetype_elemental_master.json"
+        self.assertEqual(structural_diff.F1C_FIELD_DELTA_CLASS.get((rid, "value")), "d2_line_split", "fixture assumption: pinned D2 pair")
+        self.assertEqual(structural_diff.F1C_D2_SPLITS.get(rid), rid + "#bonus0", "fixture assumption: pinned D2 sibling")
+        gate = {"Compare": {"lhs": {"Var": "v1"}, "op": "Gte", "rhs": {"Const": 1}}}
+        base = base_rules()
+        base[rel] = [{"id": rid, "label": "Elemental Master", "value": {"Number": {"Const": 1}}, "target": {"Pool": "elemental_master_type"}, "applies": gate, "granted_by": [], "grants": []}]
+        fresh = base_rules()
+        fresh[rel] = [
+            {"id": rid, "label": "Elemental Master", "value": "Text", "applies": gate, "granted_by": [], "grants": []},
+            {"id": rid + "#bonus0", "label": "Elemental Master (picks)", "value": {"Number": {"Const": 1}}, "target": {"Pool": "elemental_master_type"}, "applies": sibling_applies, "granted_by": [], "grants": []},
+        ]
+        return base, fresh
+
+    def test_f1c_a_pinned_d2_line_split_does_not_gate(self):
+        """SD-36 Epic F1c (D2): a pinned principal whose line moved, condition intact, to its pinned
+        `#<suffix>` sibling is the named d2_line_split class, not a field-delta failure."""
+        gate = {"Compare": {"lhs": {"Var": "v1"}, "op": "Gte", "rhs": {"Const": 1}}}
+        base, fresh = self._f1c_split_fixture(gate)
+        code, out = self.run_diff(base, fresh)
+        self.assertEqual(code, 0, out)
+        self.assertIn("unexpected field deltas: 0", out)
+        self.assertIn("F1c d2_line_split: 2 field deltas on 1 records, 1 added rule ids", out)
+
+    def test_f1c_a_d2_split_that_drops_the_line_condition_gates(self):
+        """The pin is not a blanket allowance: the same pinned pairs gate when the sibling does not
+        carry the old line's condition (the moved line lost its gate -- the defect D2 must never
+        introduce)."""
+        base, fresh = self._f1c_split_fixture("Always")
+        code, out = self.run_diff(base, fresh)
+        self.assertEqual(code, 1, out)
+        self.assertIn("unexpected field deltas: 2", out)
+
+    def test_f1c_a_pinned_closure_complete_false_gates(self):
+        """A pinned d4_closure_complete pair passes only as absent -> true."""
+        rid, rel = "advanced_class_guide:class:ex_warpriest", "advanced_class_guide/class/ex_warpriest.json"
+        self.assertEqual(structural_diff.F1C_FIELD_DELTA_CLASS.get((rid, "closure_complete")), "d4_closure_complete")
+        base = base_rules()
+        base[rel] = [{"id": rid, "label": "Ex Warpriest", "value": "Text", "granted_by": [], "grants": []}]
+        fresh = base_rules()
+        fresh[rel] = [{"id": rid, "label": "Ex Warpriest", "value": "Text", "closure_complete": True, "granted_by": [], "grants": []}]
+        code, out = self.run_diff(base, fresh)
+        self.assertEqual(code, 0, out)
+        fresh[rel][0]["closure_complete"] = False
+        code, out = self.run_diff(base, fresh)
+        self.assertEqual(code, 1, out)
+        self.assertIn("ex_warpriest: closure_complete", out)
+
+    def test_f1c4_a_pinned_always_held_passes_only_absent_to_true(self):
+        """A pinned d7_always_held pair passes only as absent -> true on the principal."""
+        rid, rel = "advanced_players_guide:class_feature:default", "advanced_players_guide/class_feature/default.json"
+        self.assertEqual(structural_diff.F1C_FIELD_DELTA_CLASS.get((rid, "always_held")), "d7_always_held")
+        base = base_rules()
+        base[rel] = [{"id": rid, "label": "Default", "value": "Text", "granted_by": [], "grants": []}]
+        fresh = base_rules()
+        fresh[rel] = [{"id": rid, "label": "Default", "value": "Text", "always_held": True, "granted_by": [], "grants": []}]
+        code, out = self.run_diff(base, fresh)
+        self.assertEqual(code, 0, out)
+        fresh[rel][0]["always_held"] = False
+        code, out = self.run_diff(base, fresh)
+        self.assertEqual(code, 1, out)
+        self.assertIn("default: always_held", out)
+
+    def test_f1c5_a_pinned_pool_pick_passes_only_its_shape(self):
+        """A pinned d8_pool_pick pair passes only as absent -> the record's own pick counted by one
+        variable; a planted Const count, a foreign choice id, or the same offer on an unpinned
+        record FAILS."""
+        rid, rel = "advanced_players_guide:class_feature:summoner", "advanced_players_guide/class_feature/summoner.json"
+        self.assertEqual(structural_diff.F1C_FIELD_DELTA_CLASS.get((rid, "offers")), "d8_pool_pick")
+        pick = {"id": rid, "count": {"Var": "v5064279ed9539fc5"},
+                "from": {"Rules": {"pool": "class", "tags": ["Summoner Class Selection"], "requires": "Always"}}}
+        base = base_rules()
+        base[rel] = [{"id": rid, "label": "Summoner", "value": "Text", "granted_by": [], "grants": []}]
+        fresh = base_rules()
+        fresh[rel] = [{"id": rid, "label": "Summoner", "value": "Text", "offers": pick, "granted_by": [], "grants": []}]
+        code, out = self.run_diff(base, fresh)
+        self.assertEqual(code, 0, out)
+        for planted in ({**pick, "count": {"Const": 1}}, {**pick, "id": "advanced_players_guide:class_feature:other"}):
+            fresh[rel][0]["offers"] = planted
+            code, out = self.run_diff(base, fresh)
+            self.assertEqual(code, 1, out)
+            self.assertIn("summoner: offers", out)
+        other_rid, other_rel = "core_rulebook:class_feature:unpinned_fixture", "core_rulebook/class_feature/unpinned_fixture.json"
+        base = base_rules()
+        base[other_rel] = [{"id": other_rid, "label": "X", "value": "Text", "granted_by": [], "grants": []}]
+        fresh = base_rules()
+        fresh[other_rel] = [{"id": other_rid, "label": "X", "value": "Text", "offers": {**pick, "id": other_rid}, "granted_by": [], "grants": []}]
+        code, out = self.run_diff(base, fresh)
+        self.assertEqual(code, 1, out)
+        self.assertIn("unpinned_fixture: offers", out)
+
     def test_report_only_flag_keeps_exit_zero(self):
         base = base_rules()
         fresh = base_rules()

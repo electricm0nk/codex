@@ -26,7 +26,7 @@
 //!   directly against the pinned oracle (`uc_abilities_class_um.lst:16`, `KEY:Kensai ~ Weapon
 //!   and Armor Proficiency`): that record's only weapon-facing row is `ABILITY:Internal|
 //!   AUTOMATIC|TYPE=WeaponProfSimple` -- a grant-BY-TYPE ABILITY row (mechanism unrelated to
-//!   this gate-drop; today it is a `grant-by-type` defect, `convert.rs:1376-1378`), not an
+//!   this gate-drop; it converts to grant edges since SD-36 Epic F1c-1), not an
 //!   `AUTO:WEAPONPROF` row with its own PRE-gate at all; §1's own count places "Kensai" in
 //!   mechanism F (unfindable references), explicitly out of Epic F1's scope
 //!   (`epic-f-class-completion.md` line 206). Kensai does not exhibit the shape this test needs.

@@ -389,6 +389,8 @@ mod tests {
             granted_by: vec![],
             offers: None,
             grants: vec![],
+            closure_complete: false,
+            always_held: false,
             provenance: Provenance::default(),
         }
     }

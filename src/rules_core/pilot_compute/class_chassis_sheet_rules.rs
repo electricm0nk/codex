@@ -402,15 +402,19 @@ mod tests {
 
     #[test]
     fn a_record_whose_class_id_is_redacted_still_binds_its_own_level() {
-        // Pathfinder Delver's converted expressions name a codex-neutral class
-        // id, not the file slug. Binding the file slug would make every level
-        // evaluate to zero and still LOOK like a resolved chassis -- so the
-        // binding is read off the expressions. Moderate BAB (`level*3/4`) at
-        // level 10 is 7, and the three saves (`(level+1)/2` Reflex, `(level+1)/3`
+        // Pathfinder Delver's name is product identity; its corpus record ships
+        // a codex-named placeholder key. Until SD-36 F1c-3 its converted
+        // expressions named `slug(placeholder)`, not the file slug, and binding
+        // the file slug would have made every level evaluate to zero while
+        // still LOOKING like a resolved chassis -- so the binding is read off
+        // the expressions. Since F1c-3 the converter keys every class by its
+        // unit slug (`ctx::own_class_id`), so the two agree; the binding is
+        // still read off the expressions. Moderate BAB (`level*3/4`) at level
+        // 10 is 7, and the three saves (`(level+1)/2` Reflex, `(level+1)/3`
         // Fortitude and Will) are 5, 3 and 3.
         let delver =
             record("adventurers_guide", "pathfinder_delver").expect("the record is present");
-        assert_ne!(delver.level_var, delver.slug, "this record's ids genuinely differ");
+        assert_eq!(delver.level_var, delver.slug, "the class is keyed by its unit slug since F1c-3");
         let row = delver.row_at(10).expect("level 10 resolves");
         assert_ne!(row.base_attack_bonus, 0, "a zero here is the wrong-binding failure");
         assert_eq!(row.base_attack_bonus, 7);
@@ -633,6 +637,8 @@ mod tests {
             granted_by: Vec::new(),
             offers: None,
             grants: Vec::new(),
+            closure_complete: false,
+            always_held: false,
             provenance: Provenance::default(),
         };
         let level = Expr::ClassLevel("order_of_the_rack".to_owned());
