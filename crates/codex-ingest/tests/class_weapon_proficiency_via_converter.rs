@@ -180,16 +180,11 @@ enum Disagreement {
 /// - **Class-selection gate** (summoner): the proficiency record is reached only through a
 ///   class-selection pick whose `applies` reads a variable no record in the class closure
 ///   contributes.
-/// - **Stale static rows** (the reader is right per the pinned oracle; the hand-typed row is
-///   not; this step does not edit the static rows).
+/// - **Stale static rows**: none since F1c D5 (2026-09-23), which corrected the six the reader
+///   exposed -- monk, unchained_monk, psion, ninja, occultist, vigilante -- in
+///   `weapon_tables.rs` FROM the oracle rows these pins cited.
 const KNOWN_DISAGREEMENTS: &[(&str, Disagreement, &str)] = &[
-    ("monk", Disagreement::Differs, "stale static row: omits Flurry of Blows (cr_abilities_class.lst:2794,2817) and Sword (Temple) (apg_abilities_class.lst:41 .MOD); its Unarmed Strike is granted via the Auto/Monk sets"),
-    ("unchained_monk", Disagreement::Differs, "stale static row (F1c-3 gave the class its record): the Unchained Monk is taken on the Monk's class line, whose `Monk` class ability grants Weapon and Armor Proficiency ~ Monk (Flurry of Blows) under PREVAREQ:Monk_CF_Proficiencies,0 (cr_abilities_globalvar.lst:581, cr_abilities_class.lst:2817) -- a variable the Unchained selection does not set -- and apg_abilities_class.lst:41 .MOD adds Sword (Temple); the static row omits both, as the Monk's does"),
     ("summoner", Disagreement::ReaderUnknown, "class-selection gate: summoner_weapon_and_armor_proficiency (Weapon Prof ~ Simple since F1c-1) is reached only via summoner_standard_class, whose applies reads Standard Summoner Allowed == 1, contributed only by advanced_players_guide:class_feature:default (apg_abilities_class.lst:715,717), outside the class closure; empty walk"),
-    ("occultist", Disagreement::Differs, "stale static row: omits Simple; the oracle's TYPE=WeaponProfMartial grant (occultist_weapon_and_armor_proficiency) reaches Weapon Prof ~ Simple, tagged WeaponProfSimple.WeaponProfMartial (cr_abilities_class.lst:2800)"),
-    ("vigilante", Disagreement::Differs, "stale static row: omits Simple; the oracle's TYPE=WeaponProfMartial grant (vigilante_weapon_and_armor_proficiencies) reaches Weapon Prof ~ Simple, tagged WeaponProfSimple.WeaponProfMartial (cr_abilities_class.lst:2800)"),
-    ("psion", Disagreement::Differs, "stale static row: omits All Automatic Proficiencies (Unarmed Strike, Spells (Ray), Spells (Touch), Splash Weapon), up_classes.lst:258"),
-    ("ninja", Disagreement::Differs, "stale static row: omits ABILITY:FEAT|AUTOMATIC|Simple Weapon Proficiency and All Automatic Proficiencies, uc_abilities_globalvar.lst:178"),
 ];
 
 /// (a) F1.2: for each of the 42 static rows, the reader's level-1 answer equals the row (tiers,
