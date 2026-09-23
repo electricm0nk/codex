@@ -1443,11 +1443,20 @@ pub struct HeldSet {
 }
 
 impl HeldSet {
+    /// Whether a gate naming `id` is satisfied: held, counted-as, or a class the character has.
     pub fn holds(&self, id: &str) -> bool {
+        self.holds_itself(id) || (!self.removed.contains(id) && self.counts_as.contains(id))
+    }
+
+    /// Whether `id` itself is held -- [`HeldSet::holds`] without counts-as. A rule the character
+    /// only COUNTS AS holding (the source's SERVESAS) satisfies a prerequisite naming it but
+    /// brings none of its own effects: its variable declarations and contributions never fold
+    /// (SD-36 Epic F1c merge-readiness blocker 2).
+    pub fn holds_itself(&self, id: &str) -> bool {
         if self.removed.contains(id) {
             return false;
         }
-        if self.rules.contains_key(id) || self.counts_as.contains(id) {
+        if self.rules.contains_key(id) {
             return true;
         }
         let (_, kind, slug) = split_rule_id(id);
@@ -1502,11 +1511,53 @@ struct Evaluator<'a> {
     /// declarations count even before `held` contains it -- set only for that one pre-check, by
     /// `held_set` itself, never for ordinary already-held line evaluation.
     evaluating_self: Option<RuleId>,
+    /// Set only by [`render_sheet`], for the gate that decides whether a line prints and the
+    /// condition it prints with (SD-36 Epic F1c merge-readiness blocker 1). A `Holds` leaf over
+    /// a fact the character record does not carry ([`Evaluator::undecided_leaf`]) then reads
+    /// `Situational(<the leaf in words>)` instead of `Exclude`: the paper sheet prints the rule
+    /// with its condition rather than dropping it as though the character had been checked.
+    /// The held-set fixpoint, the var fold and every other consumer of a gate keep the
+    /// two-valued reading, so no total moves.
+    print_undecided: bool,
 }
 
 impl<'a> Evaluator<'a> {
     fn new(package: &'a SheetRulePackage, held: &'a HeldSet, facts: &'a CharacterFacts, ctx: EvalContext) -> Self {
-        Evaluator { package, held, facts, ctx, unresolved: std::cell::Cell::new(false), visiting: std::cell::RefCell::new(Vec::new()), evaluating_self: None }
+        Evaluator { package, held, facts, ctx, unresolved: std::cell::Cell::new(false), visiting: std::cell::RefCell::new(Vec::new()), evaluating_self: None, print_undecided: false }
+    }
+
+    /// See [`Evaluator::print_undecided`].
+    fn printing_undecided(mut self) -> Self {
+        self.print_undecided = true;
+        self
+    }
+
+    /// A `Holds` leaf this character's facts cannot decide: the fact it reads is one
+    /// `CharacterFacts::from_character` documents the character record as not carrying and
+    /// the facts in hand leave empty (alignment, deity, gender, age category, languages, class
+    /// skills), or one this evaluator never decides at all (a deity's pantheon, domains or
+    /// alignment, alignment-matches-deity). One rule
+    /// over the fact, never over the record naming it; once a caller fills the fact the leaf
+    /// is decided again.
+    fn undecided_leaf(&self, what: &Holdable) -> bool {
+        let f = self.facts;
+        match what {
+            Holdable::Alignment(_) => f.alignment.is_none(),
+            Holdable::Deity(_) => f.deity.is_none(),
+            Holdable::AlignmentMatchesDeity
+            | Holdable::DeityInPantheon(_)
+            | Holdable::DeityGrantsDomain(_)
+            | Holdable::DeityAlignment(_) => true,
+            Holdable::ClassSkill(_) => f.class_skills.is_empty(),
+            Holdable::Language(_) => f.languages.is_empty(),
+            Holdable::Gender(_) => f.gender.is_none(),
+            Holdable::AgeCategory(_) => f.age_category.is_none(),
+            // Proficiency is NOT undecided here: the sheet answers it through its own
+            // proficiency reader (`pilot_compute::class_proficiency_sheet_rules`), so printing
+            // "requires proficiency with Medium armor" beside a fighter's Heavy Armor
+            // Proficiency would state as open a condition the same sheet already settles.
+            _ => false,
+        }
     }
 
     /// See [`Evaluator::evaluating_self`]'s doc comment: `held_set`'s fixpoint uses this, and
@@ -1517,8 +1568,10 @@ impl<'a> Evaluator<'a> {
         self
     }
 
+    /// Whether `id`'s own variable declarations and contributions fold: held itself (never
+    /// merely counted-as, [`HeldSet::holds_itself`]), or the candidate under its own pre-check.
     fn rule_counts_as_held(&self, id: &str) -> bool {
-        self.held.holds(id) || self.evaluating_self.as_deref().is_some_and(|s| s == id)
+        self.held.holds_itself(id) || self.evaluating_self.as_deref().is_some_and(|s| s == id)
     }
 
     fn class_level(&self, class: &str) -> i64 {
@@ -1761,9 +1814,12 @@ impl<'a> Evaluator<'a> {
                     Gate::Situational(conditions.join("; "))
                 }
             }
-            Applies::Not(inner) => {
-                if self.applies(inner).includes() { Gate::Exclude } else { Gate::Include }
-            }
+            Applies::Not(inner) => match self.applies(inner) {
+                // Printing: the negation of an undecided condition is undecided too.
+                Gate::Situational(text) if self.print_undecided => Gate::Situational(format!("not ({text})")),
+                g if g.includes() => Gate::Exclude,
+                _ => Gate::Include,
+            },
             Applies::Compare { lhs, op, rhs } => {
                 let result = self.compare(lhs, *op, rhs);
                 // SD-36 Epic E engine-P1-2: a gate comparing a `MasterVar`/`MasterLevel` term
@@ -1782,7 +1838,13 @@ impl<'a> Evaluator<'a> {
                 }
             }
             Applies::Holds { what, count } => {
-                if self.holds(what, *count) { Gate::Include } else { Gate::Exclude }
+                if self.holds(what, *count) {
+                    Gate::Include
+                } else if self.print_undecided && self.undecided_leaf(what) {
+                    Gate::Situational(crate::rules_core::level_up_option_filter::describe_gate(self.package, a))
+                } else {
+                    Gate::Exclude
+                }
             }
             Applies::Chosen { choice, option } => {
                 let chosen = self.facts.choices.get(choice);
@@ -1933,6 +1995,12 @@ impl<'a> Evaluator<'a> {
     }
 
     fn line(&self, rule: &SheetRule) -> SheetLine {
+        self.line_gated(rule, &rule.applies)
+    }
+
+    /// [`Evaluator::line`] with the condition read from `gate` rather than `rule.applies` --
+    /// `render_sheet` passes a sibling's own line gate ([`line_gate`]).
+    fn line_gated(&self, rule: &SheetRule, gate: &Applies) -> SheetLine {
         let value = self.value(&rule.value);
         let printed = match &value {
             SheetLineValue::Resolved(n) if rule.target.is_some() => format!("{n:+}"),
@@ -1959,7 +2027,7 @@ impl<'a> Evaluator<'a> {
                 (printed, val)
             })
             .collect();
-        let condition = match self.applies(&rule.applies) {
+        let condition = match self.applies(gate) {
             Gate::Situational(text) => Some(text),
             _ => None,
         };
@@ -2232,6 +2300,15 @@ type SheetLineDedupKey = (String, String, String, Vec<(String, SheetLineValue)>,
 /// principal: it prints only when that gate includes -- an unbroken chain shirt's "Broken"
 /// line, a Climb bonus gated on a climb speed, a Skill Focus line on a character without the
 /// feat stay off the sheet.
+///
+/// SD-36 Epic F1c merge-readiness blocker 1 -- two class-agnostic rules for a sibling's gate:
+/// - A principal's own `applies` is a holding condition (a class's entry requirements, a
+///   feat's prerequisites), settled by the principal being held and never re-checked here. The
+///   converter's line split (D2) copies it onto every sibling it splits off the record, so the
+///   sibling's LINE gate is its `applies` minus that copy ([`line_gate`]).
+/// - A leaf of the line gate over a fact the character record does not carry (an alignment, a
+///   class-skill list, ...) is undecided, not failed: the line prints with that condition in
+///   words ([`Evaluator::undecided_leaf`]).
 pub fn render_sheet(package: &SheetRulePackage, seed: &HeldSeed, facts: &CharacterFacts) -> Vec<SheetLine> {
     let held = held_set(package, seed, facts);
     let mut lines: Vec<SheetLine> = held
@@ -2246,10 +2323,15 @@ pub fn render_sheet(package: &SheetRulePackage, seed: &HeldSeed, facts: &Charact
                 spell_level: entry.spell_level.unwrap_or(0),
                 item_tags: if r.subject == Subject::Item { r.tags.clone() } else { Vec::new() },
             };
-            if r.id.contains('#') && !Evaluator::new(package, &held, facts, ctx.clone()).applies(&r.applies).includes() {
+            if !r.id.contains('#') {
+                return Some(Evaluator::new(package, &held, facts, ctx).line(r));
+            }
+            let gate = line_gate(package, r);
+            let evaluator = Evaluator::new(package, &held, facts, ctx.clone()).printing_undecided();
+            if !evaluator.applies(&gate).includes() {
                 return None;
             }
-            Some(evaluate(r, &held, package, facts, ctx))
+            Some(Evaluator::new(package, &held, facts, ctx).printing_undecided().line_gated(r, &gate))
         })
         .collect();
     lines.sort_by(|a, b| a.kind.cmp(&b.kind).then(a.label.cmp(&b.label)).then(a.id.cmp(&b.id)));
@@ -2278,6 +2360,36 @@ pub fn render_sheet(package: &SheetRulePackage, seed: &HeldSeed, facts: &Charact
         }
     });
     lines
+}
+
+/// The gate `render_sheet` decides a `#` sibling's line by: the sibling's `applies` with the
+/// copy of its principal's own holding condition removed. The copy is recognised structurally,
+/// never by record: every decided term of the principal's `applies` (its `All` terms, or the
+/// gate itself) appears among the sibling's `All` terms, and those terms are dropped. A
+/// `Situational` term is kept -- "when active" belongs on every line of the record. A sibling
+/// whose gate does not contain the whole copy keeps its own gate unchanged.
+fn line_gate(package: &SheetRulePackage, rule: &SheetRule) -> Applies {
+    fn terms(a: &Applies) -> Vec<&Applies> {
+        match a {
+            Applies::Always => Vec::new(),
+            Applies::All(ts) => ts.iter().collect(),
+            other => vec![other],
+        }
+    }
+    let Some((principal_id, _)) = rule.id.split_once('#') else { return rule.applies.clone() };
+    let Some(principal) = package.rule(principal_id) else { return rule.applies.clone() };
+    let copied: Vec<&Applies> =
+        terms(&principal.applies).into_iter().filter(|t| !matches!(t, Applies::Situational { .. })).collect();
+    let own = terms(&rule.applies);
+    if copied.is_empty() || !copied.iter().all(|c| own.contains(c)) {
+        return rule.applies.clone();
+    }
+    let mut rest: Vec<Applies> = own.into_iter().filter(|t| !copied.contains(t)).cloned().collect();
+    match rest.len() {
+        0 => Applies::Always,
+        1 => rest.remove(0),
+        _ => Applies::All(rest),
+    }
 }
 
 /// AT-35-E2-002 -- the evaluator, proven once per value form on real records and once per
@@ -2729,6 +2841,172 @@ mod evaluate_tests {
         assert_eq!(ids, vec!["core_rulebook:feat:acrobatic"], "only the unrelated rule prints; the unjoinable facet contributes no line of its own here (the bespoke explanation, not this join, is what still shows its number)");
     }
 
+    /// SD-36 Epic F1c merge-readiness blocker 1: a line gated on a fact the character record
+    /// does not carry (`CharacterFacts::from_character`'s own doc: alignment, deity, gender,
+    /// age category, languages, class skills) is UNDECIDED, not failed. On the
+    /// sheet it prints with its condition in words -- never silently dropped as if the
+    /// character had been checked and found not to qualify. A gate over a fact the record
+    /// DOES carry (a movement speed, a held feat) is still decided and still drops the line;
+    /// the negation of an undecided leaf is undecided too.
+    #[test]
+    fn a_line_gated_on_an_uncarried_fact_prints_with_its_condition_never_drops() {
+        let mut package = SheetRulePackage::new();
+        let principal = |id: &str| {
+            let mut r = rule_with_value(SheetValue::Text);
+            r.id = id.into();
+            r.label = "Probe".into();
+            r
+        };
+        let sibling = |id: &str, n: i32, applies: Applies| {
+            let mut r = rule_with_value(SheetValue::Number(Expr::Const(n)));
+            r.id = id.into();
+            r.label = "Probe".into();
+            r.applies = applies;
+            r
+        };
+        let class_skill = Applies::All(vec![
+            Applies::Holds { what: Holdable::ClassSkill("climb".into()), count: 1 },
+            Applies::Compare { lhs: Expr::SkillRanks("climb".into()), op: Cmp::Gte, rhs: Expr::Const(1) },
+        ]);
+        let alignment = Applies::Holds { what: Holdable::Alignment(vec!["LG".into()]), count: 1 };
+        for r in [
+            principal("core_rulebook:skill:climb"),
+            sibling("core_rulebook:skill:climb#bonus0", 3, class_skill),
+            sibling("core_rulebook:skill:climb#bonus1", 8, Applies::Holds { what: Holdable::Movement { mode: "Climb".into(), min: 1 }, count: 1 }),
+            principal("core_rulebook:class:paladin"),
+            sibling("core_rulebook:class:paladin#bonus0", 1, alignment.clone()),
+            sibling("core_rulebook:class:paladin#bonus1", 2, Applies::Not(Box::new(alignment))),
+        ] {
+            package.insert_rule(r);
+        }
+        package.finish();
+        let seed = HeldSeed {
+            skills: vec!["climb".into()],
+            rule_ids: vec![
+                "core_rulebook:skill:climb#bonus0".into(),
+                "core_rulebook:skill:climb#bonus1".into(),
+                "core_rulebook:class:paladin".into(),
+                "core_rulebook:class:paladin#bonus0".into(),
+                "core_rulebook:class:paladin#bonus1".into(),
+            ],
+            ..Default::default()
+        };
+        let mut facts = CharacterFacts { level: 1, ..Default::default() };
+        facts.skill_ranks.insert("climb".into(), 1);
+        let lines = render_sheet(&package, &seed, &facts);
+        let line = |id: &str| lines.iter().find(|l| l.id == id);
+
+        let climb = line("core_rulebook:skill:climb#bonus0").expect("the class-skill line prints: the record carries no class-skill list");
+        assert_eq!(climb.printed, "3");
+        assert!(climb.condition.as_deref().is_some_and(|c| c.contains("class skill")), "{:?}", climb.condition);
+        assert!(line("core_rulebook:skill:climb#bonus1").is_none(), "a climb speed is a carried fact: decided, and this character has none");
+
+        let lg = line("core_rulebook:class:paladin#bonus0").expect("the alignment-gated line prints with its condition");
+        assert!(lg.condition.as_deref().is_some_and(|c| c.contains("LG")), "{:?}", lg.condition);
+        let not_lg = line("core_rulebook:class:paladin#bonus1").expect("the negated undecided gate is undecided too");
+        assert!(not_lg.condition.as_deref().is_some_and(|c| c.starts_with("not ") && c.contains("LG")), "{:?}", not_lg.condition);
+
+        // Once the record DOES carry the fact, the gate decides it: no condition, and a
+        // failing gate drops the line.
+        facts.alignment = Some("CG".into());
+        facts.class_skills.insert("climb".into());
+        let lines = render_sheet(&package, &seed, &facts);
+        let line = |id: &str| lines.iter().find(|l| l.id == id);
+        assert_eq!(line("core_rulebook:skill:climb#bonus0").map(|l| l.condition.clone()), Some(None));
+        assert!(line("core_rulebook:class:paladin#bonus0").is_none(), "CG is decided: not LG");
+        assert_eq!(line("core_rulebook:class:paladin#bonus1").map(|l| l.condition.clone()), Some(None));
+    }
+
+    /// SD-36 Epic F1c merge-readiness blocker 1, second half: the converter's line split (D2)
+    /// copies a record's own `applies` -- a prestige class's entry requirements, a feat's
+    /// prerequisites -- onto every sibling it splits off. That copy is the principal's holding
+    /// condition, settled by the principal being held (tranche/16 never re-checked it on the
+    /// principal line), so it never drops a line: a fighter 6 / duelist 1 who lacks Dodge still
+    /// prints "Duelist +1" (base attack). A term the sibling adds beyond the copy still decides
+    /// the line, and a `Situational` term of the copy still prints as the line's condition.
+    #[test]
+    fn a_sibling_line_is_gated_by_its_own_terms_not_its_principals_holding_condition() {
+        let mut package = SheetRulePackage::new();
+        let entry = vec![
+            Applies::Holds { what: Holdable::Rule("core_rulebook:feat:dodge".into()), count: 1 },
+            Applies::Compare { lhs: Expr::ClassLevel("duelist".into()), op: Cmp::Lte, rhs: Expr::Const(10) },
+        ];
+        let rule = |id: &str, value: SheetValue, applies: Applies| {
+            let mut r = rule_with_value(value);
+            r.id = id.into();
+            r.label = id.rsplit(':').next().unwrap().into();
+            r.applies = applies;
+            r
+        };
+        let mut with = entry.clone();
+        with.push(Applies::Compare { lhs: Expr::Const(0), op: Cmp::Gte, rhs: Expr::Const(1) });
+        let active = Applies::Situational { text: "when active".into() };
+        let raging = vec![active.clone(), Applies::Holds { what: Holdable::Rule("core_rulebook:feat:dodge".into()), count: 1 }];
+        for r in [
+            rule("core_rulebook:class:duelist", SheetValue::Text, Applies::All(entry.clone())),
+            rule("core_rulebook:class:duelist#bonus0", SheetValue::Number(Expr::Const(1)), Applies::All(entry.clone())),
+            rule("core_rulebook:class:duelist#bonus1", SheetValue::Number(Expr::Const(2)), Applies::All(with)),
+            rule("core_rulebook:class_feature:rage", SheetValue::Text, Applies::All(raging.clone())),
+            rule("core_rulebook:class_feature:rage#bonus0", SheetValue::Number(Expr::Const(3)), Applies::All(raging)),
+        ] {
+            package.insert_rule(r);
+        }
+        package.finish();
+        let seed = HeldSeed {
+            rule_ids: ["core_rulebook:class:duelist", "core_rulebook:class:duelist#bonus0", "core_rulebook:class:duelist#bonus1", "core_rulebook:class_feature:rage", "core_rulebook:class_feature:rage#bonus0"]
+                .map(String::from)
+                .to_vec(),
+            ..Default::default()
+        };
+        let facts = CharacterFacts { level: 7, class_levels: vec![("fighter".into(), 6), ("duelist".into(), 1)], ..Default::default() };
+        let lines = render_sheet(&package, &seed, &facts);
+        let line = |id: &str| lines.iter().find(|l| l.id == id);
+        let bab = line("core_rulebook:class:duelist#bonus0").expect("the entry requirements copied onto the line never drop it");
+        assert_eq!((bab.printed.as_str(), bab.condition.as_deref()), ("1", None));
+        assert!(line("core_rulebook:class:duelist#bonus1").is_none(), "the line's own extra term still decides it");
+        let rage = line("core_rulebook:class_feature:rage#bonus0").expect("prints");
+        assert_eq!(rage.condition.as_deref(), Some("when active"), "a Situational term of the copy stays the line's condition");
+    }
+
+    /// SD-36 Epic F1c merge-readiness blocker 2 (found by the 249-build render): a rule held
+    /// only by COUNTS-AS (the source's SERVESAS -- Unchained Rogue ~ Trapfinding serves as the
+    /// Core Rulebook Rogue ~ Trapfinding) satisfies a gate that names it, but it is not held:
+    /// its own variable contributions never fold. Folding them counted the one Trapfinding
+    /// twice, +10 at unchained rogue 5 where PF1 (Pathfinder Unchained, Trapfinding: "a bonus
+    /// equal to 1/2 her rogue level (minimum 1)") and the chassis both say +2.
+    #[test]
+    fn a_counted_as_rule_satisfies_a_gate_but_contributes_nothing_to_a_variable() {
+        let mut package = SheetRulePackage::new();
+        let mut real = rule_with_value(SheetValue::Number(Expr::Var("vbonus".into())));
+        real.id = "pathfinder_unchained:class_feature:real".into();
+        real.grants = vec![Effect::CountsAs(CountsAs::Rule("core_rulebook:class_feature:served".into()))];
+        let mut served = rule_with_value(SheetValue::Text);
+        served.id = "core_rulebook:class_feature:served".into();
+        let mut gated = rule_with_value(SheetValue::Number(Expr::Const(1)));
+        gated.id = "pathfinder_unchained:class_feature:real#bonus1".into();
+        gated.applies = Applies::Holds { what: Holdable::Rule("core_rulebook:class_feature:served".into()), count: 1 };
+        for r in [real, served, gated] {
+            package.insert_rule(r);
+        }
+        let contribution = |rule: &str| VarContribution { rule_id: rule.into(), expr: Expr::Const(2), bonus_type: None, when: Applies::Always };
+        package.insert_var(VarTable {
+            var: "vbonus".into(),
+            label: String::new(),
+            declared_by: vec!["core_rulebook:class_feature:served".into(), "pathfinder_unchained:class_feature:real".into()],
+            contributions: vec![contribution("core_rulebook:class_feature:served"), contribution("pathfinder_unchained:class_feature:real")],
+            provenance: VarProvenance::default(),
+        });
+        package.finish();
+        let seed = HeldSeed { rule_ids: vec!["pathfinder_unchained:class_feature:real".into(), "pathfinder_unchained:class_feature:real#bonus1".into()], ..Default::default() };
+        let facts = CharacterFacts { level: 5, ..Default::default() };
+        let held = held_set(&package, &seed, &facts);
+        assert!(held.holds("core_rulebook:class_feature:served"), "counts-as still satisfies a gate naming it");
+        let lines = render_sheet(&package, &seed, &facts);
+        let real = lines.iter().find(|l| l.id == "pathfinder_unchained:class_feature:real").unwrap();
+        assert_eq!(real.value, SheetLineValue::Resolved(2), "only the really-held rule's contribution folds");
+        assert!(lines.iter().any(|l| l.id == "pathfinder_unchained:class_feature:real#bonus1"), "the gate naming the served rule includes");
+    }
+
     /// The corrected join finds a real, more specific rule when one exists, and it prints
     /// exactly once (`held_set`'s `add` already refuses a second insert of the same rule id --
     /// R1's "nothing to build").
@@ -2856,11 +3134,14 @@ mod evaluate_tests {
 
     /// A `#bonusN` sibling is a bonus line with its own gate: it prints, and folds into its
     /// target, only when that gate includes. The deterministic fighter has no Climb speed and
-    /// no Skill Focus, so `core_rulebook:skill:climb`'s three gated siblings (+8 Racial with a
-    /// climb speed, +3 / +6 Skill Focus) stay off the sheet and the class-skill +3 is the only
-    /// line on the target; PCGen's `SKILL.n.MISC` for the same character carries exactly that
-    /// +3 (AT-35-E2-005 cycle 1, disagreements 1-4). A sibling whose gate includes still
-    /// prints (Acrobatic's Fly half is `Always`).
+    /// no Skill Focus, so `core_rulebook:skill:climb`'s three decided-false siblings (+8 Racial
+    /// with a climb speed, +3 / +6 Skill Focus) stay off the sheet and the class-skill +3 is the
+    /// only bonus line on the target; PCGen's `SKILL.n.MISC` for the same character carries
+    /// exactly that +3 (AT-35-E2-005 cycle 1, disagreements 1-4). Since F1c's D2 line split the
+    /// +3 is its own `#bonus0` sibling gated on "Climb is a class skill", a fact the character
+    /// record does not carry, so it prints WITH that condition (F1c merge-readiness blocker 1)
+    /// rather than dropping. A sibling whose gate includes still prints (Acrobatic's Fly half is
+    /// `Always`).
     #[test]
     fn a_sibling_line_prints_only_when_its_own_gate_includes() {
         let package = package();
@@ -2870,9 +3151,12 @@ mod evaluate_tests {
         let computation = computation.with_sheet_rules(&input, package, &[]);
         let lines = &computation.sheet_lines;
         let climb: Vec<&str> = lines.iter().filter(|l| l.id.starts_with("core_rulebook:skill:climb")).map(|l| l.id.as_str()).collect();
-        assert_eq!(climb, vec!["core_rulebook:skill:climb"], "the gated siblings stay off the sheet");
+        assert_eq!(climb, vec!["core_rulebook:skill:climb", "core_rulebook:skill:climb#bonus0"], "the decided-false siblings stay off the sheet");
+        let class_skill = lines.iter().find(|l| l.id == "core_rulebook:skill:climb#bonus0").unwrap();
+        assert_eq!(class_skill.printed, "+3");
+        assert!(class_skill.condition.as_deref().is_some_and(|c| c.contains("class skill")), "{:?}", class_skill.condition);
         let swim: Vec<&str> = lines.iter().filter(|l| l.id.starts_with("core_rulebook:skill:swim")).map(|l| l.id.as_str()).collect();
-        assert_eq!(swim, vec!["core_rulebook:skill:swim"]);
+        assert_eq!(swim, vec!["core_rulebook:skill:swim", "core_rulebook:skill:swim#bonus0"]);
         assert!(lines.iter().any(|l| l.id == "core_rulebook:feat:acrobatic#bonus1"), "an `Always` sibling prints");
         assert!(
             !lines.iter().any(|l| l.id == "core_rulebook:equipment:chain_shirt#bonus1"),

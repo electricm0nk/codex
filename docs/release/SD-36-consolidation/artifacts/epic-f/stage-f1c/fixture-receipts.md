@@ -48,3 +48,7 @@ Other checks:
 - **Ingest crate.** It uses `load_character_input_fixture` in 10 test files plus `oracle_validation/selected_parity_dimensions.rs`, and was not re-run. The loader change only adds a match arm for a key that no ingest fixture or package file contains (`grep -rn rule_choice crates data/sheet_rules`: 0 hits). Every existing input parses exactly as before.
 
 Classification A: 0 re-baselined. Classification B: 1 defect fixed (converted-rule-id picks could not be saved). Test premise updated by the fix: 1 (sd14). Classification C: 1 (desktop clippy dead code, not a gate here). Changed sheet values without a PF1 citation: none. STOPs: none.
+
+## Render comparison
+
+The statements "Changed sheet values without a PF1 citation: none" above cover test pass/fail only. The rendered-sheet comparison against tranche/16 (249 builds, every added, removed and changed `LINE|` row with mechanism and PF1 citation) is `render-receipt.md`.
