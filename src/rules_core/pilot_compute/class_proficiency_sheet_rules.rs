@@ -708,6 +708,7 @@ mod tests {
             offers: None,
             grants,
             closure_complete: false,
+            always_held: false,
             provenance: Default::default(),
         }
     }
@@ -878,6 +879,109 @@ mod tests {
             vec![WeaponPickView { choice: member_id.into(), label: "fx_book:class_feature:fx_weapon_and_armor_proficiency".into(), options: vec!["Club".into(), "Dagger".into()] }]
         );
         assert!(view.named.is_empty() && view.tiers.is_empty(), "the pick is never a counted grant: {view:?}");
+    }
+
+    /// SD-36 F1c-4 (D7), on the real package: the Summoner's own gates read variables set only
+    /// by the global Internal `Default` ability every character holds (`cr__stats.lst:4` grants
+    /// it; `apg_abilities_class.lst:715` declares CLASS_SummonerAllowed / StandardSummonerAllowed
+    /// 0 and sets CLASS_SummonerAllowed from StandardSummonerAllowed, `:717` sets
+    /// StandardSummonerAllowed 1). With `Default` attested always held, a summoner walk starts
+    /// from that base state: the class's own BAB line (`applies` CLASS_SummonerAllowed == 1,
+    /// `apg_classes.lst:141`) and the Standard Class selection's gate
+    /// (`PREVAREQ:StandardSummonerAllowed,1`, `apg_abilities_class.lst:741`) both open. Before
+    /// D7 both read 0 and were shut for every summoner.
+    ///
+    /// The reader still answers Unknown for the Summoner: the Standard Class is a player's pick
+    /// from the Summoner Class Selection pool (`apg_abilities_class.lst:739`
+    /// `BONUS:VAR|Pool_Summoner_Class_Selection|1`, `apg_abilitycategories.lst:267`
+    /// `POOL:Pool_Summoner_Class_Selection`), which the converter writes as neither a pick nor a
+    /// grant edge -- a separate mechanism (D8), not a gate.
+    #[test]
+    fn summoner_standard_summoner_gate_opens_from_the_always_held_base_state() {
+        use crate::rules_core::sheet_rule::{evaluate_applies, Gate};
+        let package = sheet_rule_package::package().as_ref().expect("package loads");
+        assert!(package.is_always_held("advanced_players_guide:class_feature:default"), "Default must be attested always held");
+        let seed = HeldSeed { classes: vec![("summoner".into(), 1)], ..HeldSeed::default() };
+        let facts = CharacterFacts { level: 1, class_levels: vec![("summoner".into(), 1)], ..CharacterFacts::default() };
+        let held = held_set(package, &seed, &facts);
+        for id in ["advanced_players_guide:class_feature:summoner_standard_class", "advanced_players_guide:class:summoner#bonus0"] {
+            let rule = package.rule(id).unwrap_or_else(|| panic!("{id} is converted"));
+            let gate = evaluate_applies(&rule.applies, &held, package, &facts, EvalContext { holder_class: Some("summoner".into()), ..EvalContext::default() });
+            assert_eq!(gate, Gate::Include, "{id}: {}", describe_gate(package, &rule.applies));
+        }
+    }
+
+    fn var_table(var: &str, declarer: &str, contributor: &str) -> crate::rules_core::sheet_rule::VarTable {
+        crate::rules_core::sheet_rule::VarTable {
+            var: var.into(),
+            label: var.into(),
+            declared_by: vec![declarer.into()],
+            contributions: vec![crate::rules_core::sheet_rule::VarContribution {
+                rule_id: contributor.into(),
+                expr: Expr::Const(1),
+                bonus_type: None,
+                when: Applies::Always,
+            }],
+            provenance: Default::default(),
+        }
+    }
+
+    /// A class line whose weapon grant sits behind `v_global == 1`, where `v_global` is declared
+    /// and set to 1 by `global` -- a record nothing grants. `always_held` says whether the
+    /// converter attested `global` as held by every character.
+    fn global_gate_package(always_held: bool, table: Option<crate::rules_core::sheet_rule::VarTable>) -> SheetRulePackage {
+        let gate = Applies::Compare { lhs: Expr::Var("v_global".into()), op: crate::rules_core::sheet_rule::Cmp::Eq, rhs: Expr::Const(1) };
+        let mut standard = rule("fx_book:class_feature:fx_standard", Vec::new(), gate, vec![Effect::FactGrant(dagger())]);
+        standard.granted_by =
+            vec![crate::rules_core::sheet_rule::Grant { by: Granter::Rule("fx_book:class_feature:fx_selection".into()), when: Applies::Always }];
+        let mut global = rule("fx_book:class_feature:default", Vec::new(), Applies::Always, Vec::new());
+        global.always_held = always_held;
+        let mut package = SheetRulePackage::new();
+        let mut principal = rule("fx_book:class:fx", Vec::new(), Applies::Always, Vec::new());
+        principal.closure_complete = true;
+        package.insert_rule(principal);
+        package.insert_rule(rule("fx_book:class_feature:fx_selection", class_line(1), Applies::Always, Vec::new()));
+        package.insert_rule(standard);
+        package.insert_rule(global);
+        if let Some(table) = table {
+            package.insert_var(table);
+        }
+        package.finish();
+        package
+    }
+
+    /// D7, synthetic: an always-held global's unconditional variable setting is part of the base
+    /// state every walk starts from -- the gate it opens opens for the held-set fixpoint and for
+    /// the reader alike.
+    #[test]
+    fn an_always_held_global_seeds_every_walk() {
+        let global = "fx_book:class_feature:default";
+        let package = global_gate_package(true, Some(var_table("v_global", global, global)));
+        let seed = HeldSeed { classes: vec![("fx".into(), 1)], ..HeldSeed::default() };
+        let facts = CharacterFacts { level: 1, class_levels: vec![("fx".into(), 1)], ..CharacterFacts::default() };
+        let held = held_set(&package, &seed, &facts);
+        assert!(held.rules.contains_key("fx_book:class_feature:fx_standard"), "the fixpoint must open the global's gate");
+        assert!(!held.rules.contains_key(global), "an always-held global seeds variables, it is not a held sheet line");
+        let answer = class_weapon_proficiency_view_in(&package, "fx", 1);
+        let view = answer.known().unwrap_or_else(|| panic!("Known through the global's gate: {answer:?}"));
+        assert!(view.named.contains("Dagger"), "{view:?}");
+    }
+
+    /// D7, the converse: a gate on a variable nobody the character holds sets -- set only by a
+    /// record NOT attested always-held, or with no variable table at all -- stays shut, and the
+    /// attested-complete class whose line reaches the shut grant answers Unknown, never empty.
+    #[test]
+    fn a_gate_on_a_variable_nobody_sets_stays_unknown() {
+        let global = "fx_book:class_feature:default";
+        for package in [global_gate_package(false, Some(var_table("v_global", global, global))), global_gate_package(true, None)] {
+            let answer = class_weapon_proficiency_view_in(&package, "fx", 1);
+            assert!(matches!(answer, ProficiencyAnswer::Unknown { .. }), "{answer:?}");
+        }
+        // Attested always-held, but its only contribution is conditional: not base state.
+        let mut table = var_table("v_global", global, global);
+        table.contributions[0].when = Applies::Holds { what: Holdable::Race("elf".into()), count: 1 };
+        let answer = class_weapon_proficiency_view_in(&global_gate_package(true, Some(table)), "fx", 1);
+        assert!(matches!(answer, ProficiencyAnswer::Unknown { .. }), "{answer:?}");
     }
 
     #[test]

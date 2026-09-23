@@ -677,6 +677,21 @@ class StructuralDiffGateTest(unittest.TestCase):
         self.assertEqual(code, 1, out)
         self.assertIn("ex_warpriest: closure_complete", out)
 
+    def test_f1c4_a_pinned_always_held_passes_only_absent_to_true(self):
+        """A pinned d7_always_held pair passes only as absent -> true on the principal."""
+        rid, rel = "advanced_players_guide:class_feature:default", "advanced_players_guide/class_feature/default.json"
+        self.assertEqual(structural_diff.F1C_FIELD_DELTA_CLASS.get((rid, "always_held")), "d7_always_held")
+        base = base_rules()
+        base[rel] = [{"id": rid, "label": "Default", "value": "Text", "granted_by": [], "grants": []}]
+        fresh = base_rules()
+        fresh[rel] = [{"id": rid, "label": "Default", "value": "Text", "always_held": True, "granted_by": [], "grants": []}]
+        code, out = self.run_diff(base, fresh)
+        self.assertEqual(code, 0, out)
+        fresh[rel][0]["always_held"] = False
+        code, out = self.run_diff(base, fresh)
+        self.assertEqual(code, 1, out)
+        self.assertIn("default: always_held", out)
+
     def test_report_only_flag_keeps_exit_zero(self):
         base = base_rules()
         fresh = base_rules()

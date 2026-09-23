@@ -26,6 +26,9 @@ Classes (field deltas are pinned as exact (rule id, field) pairs; added ids as e
   d3_unchained_class   the 4 Pathfinder Unchained class principals (new ids, whole new files).
   d6_weapon_choice     `offers` of a CHOOSE:WEAPONPROFICIENCY pick resolved to oracle weapon names,
                        or linked to the one member of a child ABILITYCATEGORY pool.
+  d7_always_held       (F1c-4) `always_held: true` on the principal of a record every character
+                       holds unconditionally (sheet_rule/always_held.rs). Check: a principal id,
+                       absent before, `true` after.
   f1c3_preability_bracket  PREABILITY `[<key>]` items: an unresolved `MissingRule "[...]"`
                        alternative (never holdable) is removed or becomes a HeldCount exclusion.
                        Check: the old field text holds a `"name": "[` MissingRule and the fresh
@@ -88,12 +91,17 @@ def main() -> int:
                     break
 
     classes: dict[str, dict] = {k: {"field_deltas": [], "new_rule_ids": []} for k in (
-        "d2_line_split", "d4_closure_complete", "d4_pi_reclosure", "d3_unchained_class", "d6_weapon_choice", "f1c3_preability_bracket")}
+        "d2_line_split", "d4_closure_complete", "d4_pi_reclosure", "d3_unchained_class", "d6_weapon_choice", "f1c3_preability_bracket", "d7_always_held")}
     problems: list[str] = []
     for rid, fields in deltas.items():
         for field in fields:
             o, n = br[rid].get(field), fr[rid].get(field)
-            if field == "closure_complete":
+            if field == "always_held":
+                if o is None and n is True and "#" not in rid:
+                    classes["d7_always_held"]["field_deltas"].append([rid, field])
+                else:
+                    problems.append(f"{rid}: always_held {o!r} -> {n!r}")
+            elif field == "closure_complete":
                 if o is None and n is True and rid.split(":")[1] == "class" and "#" not in rid:
                     classes["d4_closure_complete"]["field_deltas"].append([rid, field])
                 else:

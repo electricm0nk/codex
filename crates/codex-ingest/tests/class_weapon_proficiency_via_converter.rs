@@ -177,14 +177,20 @@ enum Disagreement {
 ///   row exactly; nor is `no-class-record` since F1c-3, which gave the four Pathfinder
 ///   Unchained classes their class principal: three reproduce their static row exactly, and the
 ///   Unchained Monk's is stale the same way the Monk's is -- see its pin).
-/// - **Class-selection gate** (summoner): the proficiency record is reached only through a
-///   class-selection pick whose `applies` reads a variable no record in the class closure
-///   contributes.
+/// - **Class-selection pick** (summoner, D8): the proficiency record is reached only through
+///   `summoner_standard_class`, a member of the Summoner Class Selection pool
+///   (`apg_abilitycategories.lst:267` `POOL:Pool_Summoner_Class_Selection`), which the Summoner
+///   ability fills with one pick (`apg_abilities_class.lst:739`
+///   `BONUS:VAR|Pool_Summoner_Class_Selection|1`). The converter writes that pick as neither a
+///   `Pool` pick rule nor a `granted_by` edge, so no walk reaches the Standard Class. Its gate
+///   (`PREVAREQ:StandardSummonerAllowed,1`, `:741`) is no longer the blocker: since F1c-4 (D7)
+///   the always-held `Default` ability's settings (`:715,717`) are the base state every walk
+///   starts from, and the gate reads open.
 /// - **Stale static rows**: none since F1c D5 (2026-09-23), which corrected the six the reader
 ///   exposed -- monk, unchained_monk, psion, ninja, occultist, vigilante -- in
 ///   `weapon_tables.rs` FROM the oracle rows these pins cited.
 const KNOWN_DISAGREEMENTS: &[(&str, Disagreement, &str)] = &[
-    ("summoner", Disagreement::ReaderUnknown, "class-selection gate: summoner_weapon_and_armor_proficiency (Weapon Prof ~ Simple since F1c-1) is reached only via summoner_standard_class, whose applies reads Standard Summoner Allowed == 1, contributed only by advanced_players_guide:class_feature:default (apg_abilities_class.lst:715,717), outside the class closure; empty walk"),
+    ("summoner", Disagreement::ReaderUnknown, "D8 class-selection pick: summoner_weapon_and_armor_proficiency (Weapon Prof ~ Simple) is reached only via summoner_standard_class, a member of the Summoner Class Selection pool (apg_abilitycategories.lst:267) the Summoner ability fills with one pick (apg_abilities_class.lst:739 BONUS:VAR Pool_Summoner_Class_Selection 1); the converter writes no pick rule and no granted_by edge for it, so the walk is empty. The Standard Class gate (StandardSummonerAllowed == 1, :741) reads open since D7"),
 ];
 
 /// (a) F1.2: for each of the 42 static rows, the reader's level-1 answer equals the row (tiers,
@@ -359,6 +365,7 @@ fn fixture_rule(id: &str, granted_by: Vec<Grant>, grants: Vec<Effect>) -> SheetR
         offers: None,
         grants,
         closure_complete: false,
+        always_held: false,
         provenance: Provenance::default(),
     }
 }

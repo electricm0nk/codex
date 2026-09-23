@@ -26,6 +26,7 @@
 //! sees the real string. The source-name -> `VarId` map goes to
 //! `scripts/oracle_harness/var_names.json` (tool side, for the oracle harness only).
 
+pub mod always_held;
 pub mod attest;
 pub mod closure;
 pub mod convert;
@@ -634,6 +635,7 @@ pub fn class_selection_principal(index: &CorpusIndex, record: &RecordRef, select
         // The one row the class is declared on (the selection's own base row); the rows the
         // selection's closure reads stay on the selection.
         closure_complete: false,
+        always_held: false,
         provenance: Provenance {
             kind: "class".into(),
             closure_rows: selection.provenance.closure_rows.iter().take(1).cloned().collect(),
@@ -723,6 +725,7 @@ fn description_only_rules(r: &RecordRef) -> Option<Vec<SheetRule>> {
         offers: None,
         grants: Vec::new(),
         closure_complete: false,
+        always_held: false,
         provenance: Provenance {
             book: r.book.clone(),
             kind: r.kind.clone(),
@@ -938,6 +941,11 @@ pub fn run(tree: &PinnedTree, index: &CorpusIndex, closures: &[Closure]) -> Run 
     // D4: the closure-complete attestation on every class principal.
     let defective = attest::defective_records(&defects, &grants_out);
     attest::attest_class_closures(&mut files, &defective);
+    // D7: the global abilities every character holds unconditionally (`always_held.rs`).
+    let (_, unresolved_globals) = always_held::mark_always_held(tree, &mut files, index, &always_held::global_grants(tree));
+    if !unresolved_globals.is_empty() {
+        defects.entry("unresolved-references".into()).or_default().extend(unresolved_globals);
+    }
     // Variable tables for every referenced id.
     let mut referenced: BTreeSet<VarId> = BTreeSet::new();
     for rules in files.values() {

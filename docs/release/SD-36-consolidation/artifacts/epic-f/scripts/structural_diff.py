@@ -200,6 +200,7 @@ F1C_CLASS_CAUSES = {
     "d3_unchained_class": "D3: a Pathfinder Unchained class principal (TakenOnClass <base>), one per class-selection ability",
     "d6_weapon_choice": "D6: a CHOOSE:WEAPONPROFICIENCY option list resolved to oracle weapon names, or a pick linked to its child pool's one member",
     "f1c3_preability_bracket": "F1c-3: a PREABILITY `[<key>]` item no longer converts to an unholdable MissingRule alternative",
+    "d7_always_held": "D7: always_held=true attested on the principal of a record every character holds unconditionally -- the target of an unconditional ABILITY|AUTOMATIC grant on a STAT/SAVE row (sheet_rule/always_held.rs)",
 }
 
 
@@ -277,6 +278,8 @@ def f1c_delta_holds(name: str, rid: str, field: str, old: dict, new: dict, fresh
         return d6_shape(o, n) is not None
     if name == "f1c3_preability_bracket":
         return has_bracket_missing_rule(o) and not has_bracket_missing_rule(n)
+    if name == "d7_always_held":
+        return field == "always_held" and o is None and n is True and "#" not in rid
     return False
 
 

@@ -903,6 +903,7 @@ pub fn convert_record(tree: &PinnedTree, index: &CorpusIndex, record: &RecordRef
             offers: if i == 0 { acc.offers.clone() } else { None },
             grants: if i == 0 { acc.grants.clone() } else { Vec::new() },
             closure_complete: false,
+            always_held: false,
             provenance: provenance.clone(),
         });
     }

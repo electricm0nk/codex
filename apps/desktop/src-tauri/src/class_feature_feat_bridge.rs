@@ -564,6 +564,7 @@ mod tests {
             offers: None,
             grants: Vec::new(),
             closure_complete: false,
+            always_held: false,
             provenance: Provenance::default(),
         };
 

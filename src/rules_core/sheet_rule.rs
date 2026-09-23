@@ -97,6 +97,17 @@ pub struct SheetRule {
     /// a reader may answer a known EMPTY set only when this is true.
     #[serde(default, skip_serializing_if = "std::ops::Not::not")]
     pub closure_complete: bool,
+    /// On a record principal only (SD-36 F1c-4, defect D7): the converter attests that EVERY
+    /// character holds this record unconditionally -- a global ability the oracle grants from an
+    /// object every character holds (PCGen gives every character every `STAT:` and `SAVE:` row,
+    /// `PlayerCharacter.java:572-573`; the Pathfinder Strength row carries
+    /// `ABILITY:Internal|AUTOMATIC|Default`, `cr__stats.lst:4`). What it changes is the BASE
+    /// STATE every evaluation starts from, and nothing else: the record's variable declarations,
+    /// and its contributions whose own gate is `Always`, count as held for every character
+    /// ([`SheetRulePackage::is_always_held`], read by the variable fold). The record itself is
+    /// not seeded into the held set -- it prints no line and folds no bonus of its own.
+    #[serde(default, skip_serializing_if = "std::ops::Not::not")]
+    pub always_held: bool,
     pub provenance: Provenance,
 }
 
@@ -950,6 +961,9 @@ pub struct SheetRulePackage {
     /// `class slug -> base class slug`, from every class principal carrying
     /// [`Effect::TakenOnClass`].
     taken_on_class: BTreeMap<ClassId, ClassId>,
+    /// Record ids (`book:kind:slug`, no `#suffix`) whose principal carries
+    /// [`SheetRule::always_held`].
+    always_held: BTreeSet<RuleId>,
 }
 
 /// `"Trait ~ Magical Knack"` -> `"trait_magical_knack"`; the slug the converter names a
@@ -1040,7 +1054,11 @@ impl SheetRulePackage {
         self.fact_granted.clear();
         self.by_closure_row.clear();
         self.taken_on_class.clear();
+        self.always_held.clear();
         for (id, rule) in &self.rules {
+            if rule.always_held && !id.contains('#') {
+                self.always_held.insert(id.clone());
+            }
             let (_, kind, slug) = split_rule_id(id);
             if kind == "class" && !id.contains('#') {
                 for effect in &rule.grants {
@@ -1083,6 +1101,17 @@ impl SheetRulePackage {
 
     pub fn rule(&self, id: &str) -> Option<&SheetRule> {
         self.rules.get(id)
+    }
+
+    /// Whether `id` (a principal or one of its `#suffix` siblings) belongs to a record every
+    /// character holds unconditionally ([`SheetRule::always_held`], SD-36 F1c-4 D7).
+    pub fn is_always_held(&self, id: &str) -> bool {
+        !self.always_held.is_empty() && self.always_held.contains(id.split('#').next().unwrap_or(id))
+    }
+
+    /// Every always-held record id, in id order.
+    pub fn always_held_ids(&self) -> impl Iterator<Item = &RuleId> {
+        self.always_held.iter()
     }
 
     /// The base class a class-selection class is taken on ([`Effect::TakenOnClass`]), if any.
@@ -1584,7 +1613,11 @@ impl<'a> Evaluator<'a> {
     /// type that also has `Replace` contributions is `max(plain + stack, replace)`.
     fn var(&self, id: &str) -> Rat {
         let Some(table) = self.package.vars.get(id) else { return Rat::ZERO };
-        if !table.declared_by.iter().any(|d| self.rule_counts_as_held(d)) {
+        // SD-36 F1c-4 (D7): an always-held global's declarations and unconditional contributions
+        // are the base state every evaluation starts from ([`SheetRule::always_held`]) -- the
+        // held-set fixpoint, the rendered sheet and the class proficiency reader all fold
+        // variables here, so all three read the same value.
+        if !table.declared_by.iter().any(|d| self.rule_counts_as_held(d) || self.package.is_always_held(d)) {
             return Rat::ZERO;
         }
         if self.visiting.borrow().iter().any(|v| v == id) {
@@ -1595,7 +1628,8 @@ impl<'a> Evaluator<'a> {
         let mut plain_max: BTreeMap<&str, Rat> = BTreeMap::new();
         let mut replace_max: BTreeMap<&str, Rat> = BTreeMap::new();
         for c in &table.contributions {
-            if !self.rule_counts_as_held(&c.rule_id) {
+            let base_state = c.when == Applies::Always && self.package.is_always_held(&c.rule_id);
+            if !base_state && !self.rule_counts_as_held(&c.rule_id) {
                 continue;
             }
             let holder = self.held.rules.get(&c.rule_id).cloned().unwrap_or_default();
@@ -2324,6 +2358,7 @@ mod evaluate_tests {
             offers: None,
             grants: vec![],
             closure_complete: false,
+            always_held: false,
             provenance: Provenance::default(),
         }
     }
@@ -2997,6 +3032,7 @@ mod tests {
             offers: None,
             grants: vec![],
             closure_complete: false,
+            always_held: false,
             provenance: Provenance::default(),
         };
         let json = serde_json::to_string(&rule).unwrap();
@@ -3037,6 +3073,7 @@ mod tests {
                 },
             }],
             closure_complete: false,
+            always_held: false,
             provenance: Provenance::default(),
         };
 

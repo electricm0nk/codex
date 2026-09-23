@@ -19224,6 +19224,78 @@
     ]
    ],
    "new_rule_ids": []
+  },
+  "d7_always_held": {
+   "_field_delta_count": 16,
+   "_record_count": 16,
+   "_new_rule_id_count": 0,
+   "field_deltas": [
+    [
+     "advanced_class_guide:class_feature:default",
+     "always_held"
+    ],
+    [
+     "advanced_players_guide:ability:default",
+     "always_held"
+    ],
+    [
+     "advanced_players_guide:class_feature:default",
+     "always_held"
+    ],
+    [
+     "adventurers_guide:class_feature:default",
+     "always_held"
+    ],
+    [
+     "core_rulebook:class_feature:default",
+     "always_held"
+    ],
+    [
+     "horror_adventures:class_feature:default",
+     "always_held"
+    ],
+    [
+     "inner_sea_combat:class_feature:default",
+     "always_held"
+    ],
+    [
+     "inner_sea_world_guide:ability:default",
+     "always_held"
+    ],
+    [
+     "mythic_adventures:ability:default",
+     "always_held"
+    ],
+    [
+     "occult_adventures:class_feature:default",
+     "always_held"
+    ],
+    [
+     "pathfinder_unchained:class_feature:default",
+     "always_held"
+    ],
+    [
+     "ultimate_combat:class_feature:default",
+     "always_held"
+    ],
+    [
+     "ultimate_equipment:ability:default",
+     "always_held"
+    ],
+    [
+     "ultimate_intrigue:class_feature:default",
+     "always_held"
+    ],
+    [
+     "ultimate_magic:class_feature:default",
+     "always_held"
+    ],
+    [
+     "ultimate_wilderness:class_feature:default",
+     "always_held"
+    ]
+   ],
+   "new_rule_ids": []
   }
  }
 }

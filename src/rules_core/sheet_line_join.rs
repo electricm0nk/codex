@@ -390,6 +390,7 @@ mod tests {
             offers: None,
             grants: vec![],
             closure_complete: false,
+            always_held: false,
             provenance: Provenance::default(),
         }
     }
