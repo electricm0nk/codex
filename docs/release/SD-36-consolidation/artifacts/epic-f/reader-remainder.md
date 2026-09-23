@@ -27,6 +27,13 @@ on sd36/epic-f1c after F1c-1 (grant-by-type selectors convert; package regenerat
   `Weapon Prof ~ Auto` / `~ Simple` / `~ Martial` Internal abilities for the weapon case), so
   antipaladin, magus, holy_vindicator, low_templar and sentinel (65 -> 60 Unknown) answer Known.
   `_defects/grant-by-type.json`: 613 -> 24 rows, 0 of them `TYPE=WeaponProf*` (was 47).
+- F1c-2 (2026-09-23, defect D2: a line's condition gates only its own line) did not move this
+  table: the Unknown set is the same 60 of 93. What it moved is the 42 static-row classes the
+  reader is checked against (`every_static_row_equals_the_reader_answer`): fighter, medium,
+  mesmerist, psychic and spiritualist read Unknown because one line's condition (fighter's
+  level-20 Weapon Mastery pool, the four occult classes' `<Class>_CF_Knacks` spell-cast line) had
+  been hoisted onto the whole class-feature record; all five now reproduce their static row
+  exactly, **32 of 42** static rows reproduced at level 1 (was 27).
 - Commoner joined 2026-09-22 (reader batch blocker 2): it was Known with an incomplete closure --
   its one-simple-weapon pick is unseen, so every simple weapon read Known(false) and a Club took a
   wrong -4 on a sheet marked Computed. A Known view that carries an unresolved weapon pick now

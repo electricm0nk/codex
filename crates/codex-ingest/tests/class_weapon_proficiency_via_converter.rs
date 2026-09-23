@@ -171,9 +171,10 @@ enum Disagreement {
 /// - **Converter defects** (the package says less than the oracle; the reader is faithful to
 ///   the package and, where the walk is empty or a class-line grant is shut, says Unknown):
 ///   (`grant-by-type` -- `ABILITY:Internal|AUTOMATIC|TYPE=WeaponProf{Simple,Martial}` -- converts
-///   since F1c-1 and is no longer a mechanism here); `pre-hoist` -- a token-level PRE of
-///   another row is hoisted onto the class-feature record's own `applies`, so the class line's
-///   grant is never admitted; `no-class-record` -- the package carries no
+///   since F1c-1 and is no longer a mechanism here; nor is `pre-hoist` -- one line's PRE
+///   hoisted onto the class-feature record's own `applies` -- since F1c-2, which un-pinned
+///   fighter, medium, mesmerist, psychic and spiritualist: all five now reproduce their static
+///   row exactly); `no-class-record` -- the package carries no
 ///   `pathfinder_unchained` `class` records at all.
 /// - **Class-selection gate** (summoner): the proficiency record is reached only through a
 ///   class-selection pick whose `applies` reads a variable no record in the class closure
@@ -181,19 +182,14 @@ enum Disagreement {
 /// - **Stale static rows** (the reader is right per the pinned oracle; the hand-typed row is
 ///   not; this step does not edit the static rows).
 const KNOWN_DISAGREEMENTS: &[(&str, Disagreement, &str)] = &[
-    ("fighter", Disagreement::ReaderUnknown, "converter pre-hoist: fighter_class applies carries the Weapon Mastery pool's PREVARGTEQ:Fighter_CFP_Level,20 (cr_abilities_class.lst BONUS:ABILITYPOOL row); unadmitted below level 20"),
     ("monk", Disagreement::Differs, "stale static row: omits Flurry of Blows (cr_abilities_class.lst:2794,2817) and Sword (Temple) (apg_abilities_class.lst:41 .MOD); its Unarmed Strike is granted via the Auto/Monk sets"),
     ("summoner", Disagreement::ReaderUnknown, "class-selection gate: summoner_weapon_and_armor_proficiency (Weapon Prof ~ Simple since F1c-1) is reached only via summoner_standard_class, whose applies reads Standard Summoner Allowed == 1, contributed only by advanced_players_guide:class_feature:default (apg_abilities_class.lst:715,717), outside the class closure; empty walk"),
     ("unchained_barbarian", Disagreement::ReaderUnknown, "converter no-class-record: data/sheet_rules/pathfinder_unchained has no class kind"),
     ("unchained_monk", Disagreement::ReaderUnknown, "converter no-class-record: data/sheet_rules/pathfinder_unchained has no class kind"),
     ("unchained_rogue", Disagreement::ReaderUnknown, "converter no-class-record: data/sheet_rules/pathfinder_unchained has no class kind"),
     ("unchained_summoner", Disagreement::ReaderUnknown, "converter no-class-record: data/sheet_rules/pathfinder_unchained has no class kind"),
-    ("medium", Disagreement::ReaderUnknown, "converter pre-hoist: medium_class applies carries Medium_CF_Knacks == 1; unadmitted"),
-    ("mesmerist", Disagreement::ReaderUnknown, "converter pre-hoist: mesmerist_class applies carries Mesmerist_CF_Knacks == 1; unadmitted"),
     ("occultist", Disagreement::Differs, "stale static row: omits Simple; the oracle's TYPE=WeaponProfMartial grant (occultist_weapon_and_armor_proficiency) reaches Weapon Prof ~ Simple, tagged WeaponProfSimple.WeaponProfMartial (cr_abilities_class.lst:2800)"),
     ("vigilante", Disagreement::Differs, "stale static row: omits Simple; the oracle's TYPE=WeaponProfMartial grant (vigilante_weapon_and_armor_proficiencies) reaches Weapon Prof ~ Simple, tagged WeaponProfSimple.WeaponProfMartial (cr_abilities_class.lst:2800)"),
-    ("psychic", Disagreement::ReaderUnknown, "converter pre-hoist: psychic_class applies carries Psychic_CF_Knacks == 1; unadmitted"),
-    ("spiritualist", Disagreement::ReaderUnknown, "converter pre-hoist: spiritualist_class applies carries Spiritualist_CF_Knacks == 1; unadmitted"),
     ("psion", Disagreement::Differs, "stale static row: omits All Automatic Proficiencies (Unarmed Strike, Spells (Ray), Spells (Touch), Splash Weapon), up_classes.lst:258"),
     ("ninja", Disagreement::Differs, "stale static row: omits ABILITY:FEAT|AUTOMATIC|Simple Weapon Proficiency and All Automatic Proficiencies, uc_abilities_globalvar.lst:178"),
 ];

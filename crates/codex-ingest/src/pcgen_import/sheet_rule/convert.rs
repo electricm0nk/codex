@@ -772,6 +772,23 @@ pub fn convert_record(tree: &PinnedTree, index: &CorpusIndex, record: &RecordRef
     let mut lines: Vec<Line> = std::mem::take(&mut acc.lines).into_iter().filter(|l| l.applies != Applies::Never).collect();
     if lines.is_empty() {
         lines.push(Line { seq: None, suffix: None, label: label.clone(), value: SheetValue::Text, also: Vec::new(), target: None, bonus_type: None, applies: Applies::Always, prose: Vec::new() });
+    } else if lines[0].applies != Applies::Always && principal_carries_more_than_its_line(&lines, &acc, &out, &record.id) {
+        // SD-36 Epic F1c-2 (defect D2): a line's own condition gates only that line. The
+        // principal rule (index 0, `id == record.id`) is the RECORD: the held-set fixpoint admits
+        // it by its `applies`, every outgoing `Granter::Rule(record.id)` edge hangs off it, its
+        // siblings are held with it, and it carries the record's grants, offers and prose. When
+        // the first line pushed carries a PRE of its own (a `BONUS:...|PRE...` token), making it
+        // the principal hoisted that line's condition onto everything the record holds --
+        // `fighter_class`'s level-20 `BONUS:ABILITYPOOL|Weapon Mastery` gate shut the whole
+        // fighter closure at levels 1-19. The record gets its own principal line carrying only
+        // the record's gates, and the gated line becomes a sibling carrying its own condition.
+        // A record that IS its one line (no sibling, grant, offer or outgoing edge) keeps the
+        // line as its principal (CONV-02): there is nothing else for the condition to shut.
+        // The principal keeps the label it carried before the split (CONV-02: the record's own
+        // label for a single-line record, else the first line's), so every join over principal
+        // labels resolves exactly as before.
+        let principal_label = if lines.len() > 1 { lines[0].label.clone() } else { label.clone() };
+        lines.insert(0, Line { seq: None, suffix: None, label: principal_label, value: SheetValue::Text, also: Vec::new(), target: None, bonus_type: None, applies: Applies::Always, prose: Vec::new() });
     }
     // SD-36 Epic E CONV-02: a single-line record's one line IS the record -- the assembled
     // (OUTPUTNAME/PI-aware) `label` above is always right for it, and must never be second-
@@ -848,6 +865,16 @@ pub fn convert_record(tree: &PinnedTree, index: &CorpusIndex, record: &RecordRef
     out.var_names = ctx.var_names;
     out.var_labels = ctx.var_labels;
     out
+}
+
+/// SD-36 Epic F1c-2: whether the record's principal rule carries anything beyond its first line
+/// -- a sibling line, a grant or offer of its own, or a grant edge it hands to another record
+/// (`Granter::Rule(record id)`) -- that the first line's own condition must not gate.
+fn principal_carries_more_than_its_line(lines: &[Line], acc: &Acc, out: &Converted, record_id: &str) -> bool {
+    lines.len() > 1
+        || !acc.grants.is_empty()
+        || acc.offers.is_some()
+        || out.grants_out.iter().any(|(_, g)| matches!(&g.by, Granter::Rule(r) if r == record_id))
 }
 
 fn dedup(mut v: Vec<String>) -> Vec<String> {

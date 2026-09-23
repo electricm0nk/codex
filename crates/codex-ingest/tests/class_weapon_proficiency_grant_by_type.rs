@@ -52,11 +52,11 @@ fn alchemist_inquisitor_gunslinger_gain_their_missing_tier() {
 }
 
 /// The classes whose whole weapon closure was the dropped grant read Unknown (an empty walk);
-/// with the grant converted they answer Known with the tier the oracle names. Three classes whose
-/// proficiency records now carry the converted grant are NOT in this list, each for a named
-/// mechanism this step does not touch:
-/// - psychic and spiritualist: each class-feature record is also shut by the hoisted
-///   `Psychic_CF_Knacks` / `Spiritualist_CF_Knacks` condition (defect D2, F1c-2);
+/// with the grant converted they answer Known with the tier the oracle names. Psychic and
+/// spiritualist joined this list with F1c-2 (defect D2): each class-feature record had also been
+/// shut by the `Psychic_CF_Knacks` / `Spiritualist_CF_Knacks` condition of one `BONUS:SPELLCAST`
+/// line hoisted onto the whole record. One class whose proficiency record now carries the
+/// converted grant is NOT in this list, for a named mechanism neither step touches:
 /// - summoner: `summoner_weapon_and_armor_proficiency` now grants `Weapon Prof ~ Simple`, but it
 ///   is reached only through `summoner_standard_class` (the `Summoner Class Selection` pick,
 ///   `apg_abilities_class.lst:741`), whose `applies` reads `Standard Summoner Allowed == 1` -- a
@@ -71,6 +71,8 @@ fn cavalier_oracle_and_the_occult_classes_answer_known() {
         ("kineticist", &[WeaponProficiency::Simple]),
         ("occultist", &[WeaponProficiency::Simple, WeaponProficiency::Martial]),
         ("vigilante", &[WeaponProficiency::Simple, WeaponProficiency::Martial]),
+        ("psychic", &[WeaponProficiency::Simple]),
+        ("spiritualist", &[WeaponProficiency::Simple]),
     ];
     for (class, tiers) in cases {
         assert_tiers(class, tiers);

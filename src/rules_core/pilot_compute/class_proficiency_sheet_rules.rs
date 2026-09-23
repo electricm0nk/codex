@@ -516,9 +516,11 @@ fn missing_rule_on_a_proficiency_edge(
 /// A grant the CLASS LINE itself makes at or below `class_level` (`Granter::Class`) whose target
 /// leads to a weapon-proficiency grant, but which the fixpoint did not admit: the closure the
 /// class-level facts reach is not the closure the class line grants, so the reader does not
-/// guess which one is right. (Measured shape: a token-level PRE of a different row hoisted onto
-/// the granted record's own `applies` -- `fighter_class` carries the level-20 Weapon Mastery
-/// pool's `PREVARGTEQ`, so levels 1-19 would otherwise read "no fighter proficiency".) A
+/// guess which one is right. (Measured shape, until SD-36 F1c-2 fixed it in the converter: a
+/// token-level PRE of a different row hoisted onto the granted record's own `applies` --
+/// `fighter_class` carried the level-20 Weapon Mastery pool's `PREVARGTEQ`, so levels 1-19 would
+/// otherwise have read "no fighter proficiency". The guard stays for any closure it still
+/// catches.) A
 /// `Granter::Rule` edge out of a held rule is NOT held to this: those legitimately stay shut on
 /// an optional rule or a feat the class does not grant (the firearm grant behind Simple Weapon
 /// Proficiency).
