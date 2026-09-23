@@ -466,6 +466,9 @@ fn effect_words(package: &SheetRulePackage, effect: &Effect) -> String {
         Effect::GatedFactGrant { fact, when } => {
             format!("Grants {} when {}", fact_words(fact), describe_gate(package, when))
         }
+        Effect::TakenOnClass(base) => {
+            format!("Taken on the {} class: every level is a {} level", words_of_id(base), words_of_id(base))
+        }
     }
 }
 
@@ -706,6 +709,7 @@ mod tests {
             granted_by: Vec::new(),
             offers: None,
             grants: Vec::new(),
+            closure_complete: false,
             provenance: Provenance::default(),
         }
     }

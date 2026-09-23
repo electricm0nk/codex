@@ -3,7 +3,7 @@
 
 use super::ctx::{split_top_level, RecordCtx, RuleLookup};
 use super::formula::{ability, cmp_expr, convert_formula};
-use codex::rules_core::sheet_rule::{Applies, Cmp, DeityRef, Expr, Holdable, ProfRef, SpellKind};
+use codex::rules_core::sheet_rule::{Applies, Cmp, DeityRef, Expr, HeldFilter, Holdable, ProfRef, RuleId, SpellKind};
 
 /// `F/D/T/S/M/L/H/G/C` -> 0..8.
 pub fn size_rank(code: &str) -> Option<i32> {
@@ -37,6 +37,50 @@ fn at_least(n: u8, of: Vec<Applies>) -> Applies {
         1 if n <= 1 => of.into_iter().next().unwrap(),
         _ => Applies::AtLeast { n, of },
     }
+}
+
+/// A `Holds { RuleTag { pool, tag }, count }` term with the excluded rules that the tag count
+/// would otherwise include (same pool, carrying the tag -- read from the excluded record's own
+/// accumulated facets) subtracted: `HeldCount(pool, tag) - Σ HeldCount(excluded) >= count`. Any
+/// other term, or an exclusion the tag count never includes, is left unchanged.
+fn exclude_from_tag_count(ctx: &RecordCtx, term: Applies, excluded: &[RuleId]) -> Applies {
+    let Applies::Holds { what: Holdable::RuleTag { pool, tag }, count } = &term else { return term };
+    let subtract: Vec<Expr> = excluded
+        .iter()
+        .filter(|id| {
+            ctx.index.facets.get(*id).is_some_and(|(cat, tags)| {
+                super::ctx::slug(cat) == *pool && tags.iter().any(|t| t.eq_ignore_ascii_case(tag))
+            })
+        })
+        .map(|id| Expr::Mul(Box::new(Expr::Const(-1)), Box::new(Expr::HeldCount { pool: String::new(), filter: HeldFilter::Rule(id.clone()) })))
+        .collect();
+    if subtract.is_empty() {
+        return term;
+    }
+    let mut sum = vec![Expr::HeldCount { pool: pool.clone(), filter: HeldFilter::Tag(tag.clone()) }];
+    sum.extend(subtract);
+    Applies::Compare { lhs: Expr::Sum(sum), op: Cmp::Gte, rhs: Expr::Const(i32::from(*count)) }
+}
+
+/// `PRETEXT:<words>`: the words print as a situational requirement. SD-36 F1c-3: some oracle rows
+/// write the requirement in PRE syntax inside the text (`iswg_classes.lst:7`, Harrower:
+/// `PRETEXT:PRESPELLSCHOOL:3,Divination=0; PRESPELLTYPE:1,Arcane=3,Divine=3`) -- those parts are
+/// converted as the PRE tokens they are (all of them required), never printed as source syntax. A
+/// part that does not convert prints codex-neutral words instead of the token.
+fn pretext(ctx: &mut RecordCtx, body: &str) -> Applies {
+    let parts: Vec<&str> = body.split(';').map(str::trim).filter(|p| !p.is_empty()).collect();
+    let is_pre = |p: &str| {
+        let head = p.trim_start_matches('!').split(':').next().unwrap_or("");
+        head.len() > 3 && head.starts_with("PRE") && head[3..].chars().all(|c| c.is_ascii_uppercase())
+    };
+    if parts.is_empty() || !parts.iter().all(|p| is_pre(p)) {
+        return situational(body.trim());
+    }
+    let terms: Vec<Applies> = parts
+        .into_iter()
+        .map(|p| convert_pre_token(ctx, p).unwrap_or_else(|_| situational("a further requirement the source states only in rule syntax")))
+        .collect();
+    Applies::all(terms)
 }
 
 fn holds(what: Holdable) -> Applies {
@@ -238,6 +282,7 @@ fn convert_pre(ctx: &mut RecordCtx, kind: &str, body: &str) -> Result<Applies, S
             let (n, items) = count_prefix(body);
             let mut category = String::new();
             let mut of = Vec::new();
+            let mut excluded: Vec<RuleId> = Vec::new();
             for item in items {
                 if item == "CHECKMULT" {
                     continue;
@@ -250,7 +295,21 @@ fn convert_pre(ctx: &mut RecordCtx, kind: &str, body: &str) -> Result<Applies, S
                     of.push(holds(Holdable::RuleTag { pool: super::ctx::slug(&category), tag: t.to_string() }));
                     continue;
                 }
+                // SD-36 F1c-3: `[<key>]` EXCLUDES that ability from what the other items count
+                // (PCGen `PREABILITY` bracket syntax) -- `!PREABILITY:1,CATEGORY=Archetype,
+                // TYPE.MonkArchetype,[Archetype Monk]` is "any MonkArchetype archetype other than
+                // the standard placeholder". It is never an alternative to hold.
+                if let Some(key) = item.trim().strip_prefix('[').and_then(|k| k.strip_suffix(']')) {
+                    match resolve_holdable_rule(ctx, &category, key) {
+                        Holdable::Rule(id) => excluded.push(id),
+                        missing => of.push(holds(missing)),
+                    }
+                    continue;
+                }
                 of.push(holds(resolve_holdable_rule(ctx, &category, &item)));
+            }
+            if !excluded.is_empty() {
+                of = of.into_iter().map(|term| exclude_from_tag_count(ctx, term, &excluded)).collect();
             }
             at_least(n, of)
         }
@@ -578,7 +637,7 @@ fn convert_pre(ctx: &mut RecordCtx, kind: &str, body: &str) -> Result<Applies, S
         "PREDR" => situational("requires damage reduction"),
         "PREHANDSGTEQ" | "PREHANDSGT" | "PREHANDSEQ" | "PREHANDSLT" | "PREHANDSLTEQ" => situational(&format!("requires {} hands", body.trim())),
         "PREREACHGTEQ" | "PREREACHGT" | "PREREACHEQ" => situational(&format!("requires reach {} ft. or more", body.trim())),
-        "PRETEXT" => situational(body.trim()),
+        "PRETEXT" => pretext(ctx, body),
         "PREITEM" => {
             let (_, items) = count_prefix(body);
             situational(&format!("requires {}", items.iter().map(|i| i.to_ascii_lowercase()).collect::<Vec<_>>().join(" or ")))
@@ -744,6 +803,7 @@ mod tests {
             fact_index: BTreeMap::new(),
             pfs_base_keys: BTreeSet::new(),
             ability_category_parent: pairs.iter().map(|(c, p)| (c.to_string(), p.to_string())).collect(),
+            ability_category_type: BTreeMap::new(),
         }
     }
 
@@ -765,6 +825,7 @@ mod tests {
             pi_fields: Vec::new(),
             description: None,
             class_name: None,
+            class_selection_of: None,
             joined: true,
         }
     }

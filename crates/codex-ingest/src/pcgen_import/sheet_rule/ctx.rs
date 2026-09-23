@@ -68,6 +68,12 @@ pub struct RecordRef {
     pub pi_fields: Vec<String>,
     pub description: Option<String>,
     pub class_name: Option<String>,
+    /// SD-36 F1c-3 (D3): the base class KEY, when the corpus also files this record's source
+    /// row as a CLASS (`data/corpus/<book>/class/`, a `base_class_key`) that no inventory unit
+    /// joined, because the oracle declares no `CLASS:` object for it -- a `CATEGORY:CLASS`
+    /// selection ability taken on its base class (Pathfinder Unchained's four). The converter
+    /// writes the class principal it stands for ([`super::class_selection_principal`]).
+    pub class_selection_of: Option<String>,
     /// The inventory unit joined to a shipped corpus record.
     pub joined: bool,
 }
@@ -339,10 +345,21 @@ pub struct RecordCtx<'a> {
     pub pi_term_hits: Vec<String>,
 }
 
+/// A class record's own class id: its inventory unit's slug (`adventurers_guide:class:
+/// golden_legionnaire` -> `golden_legionnaire`), the id the census and every seed name the class
+/// by. Never `slug(key)`: a class whose name is product identity ships a codex-named placeholder
+/// KEY (`Codex-Named Unit (class_..._lst_136)`), and its own level-line grants and class-level
+/// expressions keyed under that placeholder's slug were reachable by no seed (SD-36 F1c-3; 21 of
+/// 185 class units). For every other class the two are identical (185 of 185 inventory units:
+/// the unit slug equals the slug of its corpus key).
+pub fn own_class_id(record: &RecordRef) -> ClassId {
+    record.id.rsplit(':').next().filter(|s| !s.is_empty()).map(str::to_string).unwrap_or_else(|| slug(&record.key))
+}
+
 impl<'a> RecordCtx<'a> {
     pub fn new(tree: &'a PinnedTree, index: &'a CorpusIndex, record: &'a RecordRef, closure: &'a Closure) -> Self {
         let owning_class = match record.kind.as_str() {
-            "class" => Some(slug(&record.key)),
+            "class" => Some(own_class_id(record)),
             _ => record.class_name.as_deref().and_then(|c| index.classes.get(&c.to_ascii_uppercase()).map(|(_, id)| id.clone()).or_else(|| Some(slug(c)))),
         };
         RecordCtx {
@@ -593,6 +610,7 @@ mod tests {
             fact_index: BTreeMap::new(),
             pfs_base_keys: BTreeSet::new(),
             ability_category_parent: pairs.iter().map(|(c, p)| (c.to_string(), p.to_string())).collect(),
+            ability_category_type: BTreeMap::new(),
         }
     }
 

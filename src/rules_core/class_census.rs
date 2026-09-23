@@ -1882,6 +1882,12 @@ mod tests {
         // antipaladin and magus, Blocked only on the proficiency answer, now read
         // their Simple + Martial tiers from the converted record; logged as a
         // scripts/retro.py correction. Commoner is the one non-prestige remainder.
+        // Raised 60 -> 61 on 2026-09-23 by SD-36 Epic F1c-3 (defect D6): the
+        // Commoner's one-simple-weapon pick is linked at ingest to the Simple-tier
+        // weapon list its pool's one member offers, and its canonical seed
+        // (`class_seeds::COMMONER_CANONICAL_WEAPON`) records the pick; the census
+        // Longsword is outside the pick's options, so it reads Known(false).
+        // 61 of 61 non-prestige; logged as a scripts/retro.py correction.
         let fixture = load_sweep_fixture().expect("shared deterministic fixture must load cleanly");
         let previous_hook = std::panic::take_hook();
         std::panic::set_hook(Box::new(|_| {}));
@@ -1890,9 +1896,9 @@ mod tests {
         assert_eq!(results.len(), 61, "non-prestige sweep population moved off the published 61");
         let computed = results.iter().filter(|r| r.computed()).count();
         assert_eq!(
-            computed, 60,
-            "measured non-prestige Computed count moved off the published 60 of 61 -- \
-             log a scripts/retro.py correction before raising this pin"
+            computed, 61,
+            "measured non-prestige Computed count moved off the published 61 of 61 -- \
+             log a scripts/retro.py correction before moving this pin"
         );
     }
 
@@ -2241,18 +2247,30 @@ mod tests {
         // --locked -j 2 --lib \
         // class_census::tests::every_prestige_class_gets_a_carrier_or_is_named_unknown \
         // -- --nocapture`.
+        // Raised 7 -> 11 on 2026-09-23 by SD-36 Epic F1c-3: a class whose name
+        // is product identity ships a placeholder corpus key, and its closure
+        // used to miss its own `CLASS:<name>` continuation rows -- its
+        // prerequisites among them. Read now, four gates carry a caster term
+        // reachable only through an `AtLeast` (arcane OR divine):
+        // `harrower` (its `PRETEXT` states `PRESPELLTYPE:1,Arcane=3,Divine=3`
+        // in rule syntax, converted as the token it is), `hellknight_signifer`,
+        // `pathfinder_savant`, `storm_kindler`.
         assert_eq!(
             ungroundable.len(),
-            7,
-            "measured ungroundable-gate prestige count moved off 7: {ungroundable:?}"
+            11,
+            "measured ungroundable-gate prestige count moved off 11: {ungroundable:?}"
         );
         for expected in [
             "class:dark_tempest",
             "class:dragon_disciple",
             "class:elocater",
             "class:evangelist",
+            "class:harrower",
+            "class:hellknight_signifer",
+            "class:pathfinder_savant",
             "class:psion_uncarnate",
             "class:pure_legion_enforcer",
+            "class:storm_kindler",
             "class:thrallherd",
         ] {
             assert!(
@@ -2430,9 +2448,15 @@ mod tests {
         // carrier rule actually measures (`scripts/retro.py` correction
         // logged in this cycle's F0-check-fix commit body), not only the
         // dual count.
-        assert_eq!(wizard_only, 6, "measured wizard-only prestige carrier count moved off 6");
+        // SD-36 Epic F1c-3 (2026-09-23): the product-identity classes' own
+        // `CLASS:<name>` continuation rows (their prerequisites) are read now.
+        // Magaambyan Arcanist's mandatory arcane term moves it fighter ->
+        // wizard (6 -> 7); it and the four new ungroundable gates (harrower,
+        // hellknight_signifer, pathfinder_savant, storm_kindler) leave the
+        // fighter floor (55 -> 50).
+        assert_eq!(wizard_only, 7, "measured wizard-only prestige carrier count moved off 7");
         assert_eq!(cleric_only, 5, "measured cleric-only prestige carrier count moved off 5");
-        assert_eq!(fighter, 55, "measured fighter-floor prestige carrier count moved off 55");
+        assert_eq!(fighter, 50, "measured fighter-floor prestige carrier count moved off 50");
         // Measured after the F0-check fix for findings 1/4: mystic_theurge
         // is the only class whose Arcane AND Divine terms are BOTH
         // mandatory, positive, top-level clauses (grounding independently
@@ -2455,9 +2479,11 @@ mod tests {
         // comment (three Not/AtLeast-only caster mentions, four mandatory
         // top-level `HighestSpellLevel(Any)` terms this model cannot assign
         // to either carrier without guessing).
+        // 7 -> 11 on 2026-09-23 (SD-36 Epic F1c-3): see
+        // `every_prestige_class_gets_a_carrier_or_is_named_unknown`.
         assert_eq!(
-            unknown, 7,
-            "measured ungroundable-gate prestige count moved off the F0-check-fixed 7: \
+            unknown, 11,
+            "measured ungroundable-gate prestige count moved off 11: \
              got {unknown_names:?}"
         );
         for expected in [
@@ -2465,8 +2491,12 @@ mod tests {
             "class:dragon_disciple",
             "class:elocater",
             "class:evangelist",
+            "class:harrower",
+            "class:hellknight_signifer",
+            "class:pathfinder_savant",
             "class:psion_uncarnate",
             "class:pure_legion_enforcer",
+            "class:storm_kindler",
             "class:thrallherd",
         ] {
             assert!(

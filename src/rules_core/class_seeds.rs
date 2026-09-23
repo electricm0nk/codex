@@ -33,6 +33,18 @@ use crate::rules_core::character_input::{
 pub const FIXTURE_RELATIVE_PATH: &str =
     "tests/fixtures/rules_core/pf1_human_fighter_level1_ge06_deterministic_input.txt";
 
+/// SD-36 F1c-3 (D6): the choice a Commoner records its one Simple weapon under -- the converted
+/// choice id of `Single Simple Weapon Proficiency` (`cr_abilities_class.lst:2736`,
+/// `CHOOSE:WEAPONPROFICIENCY|!PC[TYPE=Simple]`), the one member of the `Simple Weapon Proficiency
+/// Choice` pool the Commoner's `Weapon and Armor Proficiency` picks into
+/// (`cr_abilities_class.lst:2825`, linked at ingest by `pool_link.rs`).
+pub const COMMONER_WEAPON_CHOICE_ID: &str = "core_rulebook:class_feature:single_simple_weapon_proficiency";
+
+/// The Commoner's canonical Simple weapon: Club, the first Simple weapon the CRB weapon table
+/// (`weapon_tables::WEAPON_TABLE`) lists that is usable in melee (the census baseline attack is a
+/// melee attack; Blowgun, listed first, is ranged only). A Path-A default, not a player's pick.
+pub const COMMONER_CANONICAL_WEAPON: &str = "weapon:Club";
+
 /// The class-conditional canonical seeds `compose_character_input`
 /// (`apps/desktop/src-tauri/src/pf1_adapter.rs`) applies at creation time.
 /// Returned as `(selected_choices, spells_selected)`.
@@ -223,6 +235,10 @@ pub fn canonical_seeds_for(class_name: &str) -> (Vec<SelectedChoice>, Vec<SpellS
             ],
             Vec::new(),
         ),
+        // pf1_adapter.rs: the Commoner Path A seed (SD-36 F1c-3, D6). The Commoner is
+        // proficient with ONE Simple weapon of the player's choice; the converted record links
+        // that pick to its options, and the sheet prints the weapon recorded here.
+        "commoner" => (vec![choice(COMMONER_WEAPON_CHOICE_ID, COMMONER_CANONICAL_WEAPON)], Vec::new()),
         _ => (Vec::new(), Vec::new()),
     }
 }

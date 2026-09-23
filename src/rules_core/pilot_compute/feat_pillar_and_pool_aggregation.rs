@@ -2613,8 +2613,52 @@ pub(crate) fn character_weapon_proficiency(
                 unknown.push(format!("{} level {}: {reason}", class_level.class_id, class_level.level));
             }
             ProficiencyAnswer::Known(view) => {
+                // SD-36 F1c-3 (D6): a pick of one weapon from a named list is decided by the
+                // character's own recorded choice, and the sheet prints the choice.
+                let mut pick_undecided: Vec<String> = Vec::new();
+                for pick in &view.weapon_picks {
+                    let chosen: Vec<&str> = input
+                        .chosen
+                        .selected_choices
+                        .iter()
+                        .filter(|c| c.choice_set_id == pick.choice)
+                        .map(|c| c.selection_id.strip_prefix(crate::rules_core::feat_effects::WEAPON_SELECTION_PREFIX).unwrap_or(&c.selection_id))
+                        .collect();
+                    if chosen.is_empty() {
+                        printed.push(format!(
+                            "{} (converted record): {}: one weapon of the player's choice ({} options), not recorded",
+                            class_level.class_id,
+                            pick.label,
+                            pick.options.len()
+                        ));
+                        if pick_offers_weapon(pick, weapon) {
+                            pick_undecided.push(format!(
+                                "{} level {}: {} picks one weapon of {} options (this weapon among them) and the character records no choice under {}",
+                                class_level.class_id,
+                                class_level.level,
+                                pick.label,
+                                pick.options.len(),
+                                pick.choice
+                            ));
+                        }
+                        continue;
+                    }
+                    printed.push(format!(
+                        "{} (converted record): {}: proficient with the chosen weapon ({})",
+                        class_level.class_id,
+                        pick.label,
+                        chosen.join(", ")
+                    ));
+                    if pick_offers_weapon(pick, weapon)
+                        && chosen.iter().any(|c| normalize_weapon_identity(c) == weapon_identity(weapon))
+                    {
+                        any_proficient = true;
+                    }
+                }
                 if converted_view_covers_weapon(&view, weapon) {
                     any_proficient = true;
+                } else if !pick_undecided.is_empty() {
+                    unknown.extend(pick_undecided);
                 } else if !view.unresolved_picks.is_empty() {
                     // The closure is incomplete: an unseen pick could cover this weapon.
                     unknown.push(format!(
@@ -2634,6 +2678,21 @@ pub(crate) fn character_weapon_proficiency(
         return WeaponProficiencyVerdict::Unknown { reason: unknown.join("; ") };
     }
     WeaponProficiencyVerdict::Known { proficient: any_proficient, printed }
+}
+
+/// The identity a weapon is compared on against a converted proficiency name: its
+/// `proficiency_name` when it has one, else its record key -- normalized.
+fn weapon_identity(weapon: &weapon_tables::WeaponTableEntry) -> String {
+    normalize_weapon_identity(weapon.proficiency_name.unwrap_or(weapon.key))
+}
+
+/// Whether a converted weapon pick's options include `weapon`.
+fn pick_offers_weapon(
+    pick: &crate::rules_core::pilot_compute::class_proficiency_sheet_rules::WeaponPickView,
+    weapon: &weapon_tables::WeaponTableEntry,
+) -> bool {
+    let wanted = weapon_identity(weapon);
+    pick.options.iter().any(|o| normalize_weapon_identity(o) == wanted)
 }
 
 /// Whether a class's CONVERTED proficiency answer covers `weapon`. Only
@@ -3336,37 +3395,63 @@ mod converted_record_proficiency_fallback_tests {
         assert!(!blocking.iter().any(|(id, _)| id == PROFICIENCY_UNKNOWN), "{blocking:?}");
     }
 
-    /// Commoner (reader batch blocker 2): its converted proficiency record
-    /// (`weapon_and_armor_proficiency_commoner`) grants one pick into pool
-    /// `simple_weapon_proficiency_choice`, and no converted rule is a member of that pool, so the
-    /// reader cannot see what the pick covers. The closure is incomplete, so every weapon the
-    /// counted grants do NOT cover is Unknown -- never Known(false) with a -4 on a Computed sheet
-    /// (the Club measured exactly that before this fix). A weapon a counted grant covers
-    /// (`all_automatic_proficiencies`' Unarmed Strike) stays Known(true).
+    /// Commoner (SD-36 F1c-3, D6): its converted proficiency record
+    /// (`weapon_and_armor_proficiency_commoner`) picks one Single Simple Weapon Proficiency, the
+    /// one member of pool `simple_weapon_proficiency_choice`, linked at ingest (`pool_link.rs`)
+    /// to the Simple-tier weapon list that member offers. The reader carries it as a weapon pick;
+    /// the character's recorded choice decides it, and the verdict prints the choice.
+    ///
+    /// - No choice recorded: a Simple weapon (Club) is Unknown -- the pick could cover it --
+    ///   while a weapon outside the options (Longsword, Martial) is Known(false): no pick of a
+    ///   Simple weapon can cover it.
+    /// - The canonical seed (`class_seeds::COMMONER_CANONICAL_WEAPON`, Club): Club is Known(true),
+    ///   Dagger Known(false), and the printed words carry the chosen weapon.
     #[test]
-    fn commoner_unlinked_weapon_pick_leaves_every_uncovered_weapon_unknown() {
+    fn commoner_weapon_pick_is_decided_by_the_recorded_choice() {
+        use crate::rules_core::class_seeds::{COMMONER_CANONICAL_WEAPON, COMMONER_WEAPON_CHOICE_ID};
         use crate::rules_core::pilot_compute::class_proficiency_sheet_rules::{
             class_weapon_proficiency_view, ProficiencyAnswer,
         };
-        let input = single_class("class:commoner", 1);
         let ProficiencyAnswer::Known(view) = class_weapon_proficiency_view("commoner", 1) else {
-            panic!("commoner reads Known (with its unresolved pick) from the converted record");
+            panic!("commoner reads Known (with its weapon pick) from the converted record");
         };
-        assert_eq!(view.unresolved_picks.len(), 1, "{view:?}");
-        assert!(view.unresolved_picks[0].contains("simple weapon proficiency choice"), "{view:?}");
-        for weapon in ["Club", "Longsword"] {
-            match character_weapon_proficiency(&input, crb_weapon(weapon)) {
-                WeaponProficiencyVerdict::Unknown { reason } => assert!(
-                    reason.contains("class:commoner level 1") && reason.contains("simple weapon proficiency choice"),
-                    "{weapon}: {reason}"
-                ),
-                known => panic!("{weapon}: an unseen pick must leave it Unknown, got {known:?}"),
-            }
+        assert!(view.unresolved_picks.is_empty(), "the pick is linked: {view:?}");
+        assert_eq!(view.weapon_picks.len(), 1, "{view:?}");
+        let pick = &view.weapon_picks[0];
+        assert_eq!(pick.choice, COMMONER_WEAPON_CHOICE_ID);
+        for simple in ["Club", "Dagger", "Quarterstaff", "Crossbow (Light)"] {
+            assert!(pick.options.iter().any(|o| o == simple), "{simple} must be an option: {:?}", pick.options);
         }
-        let blocking = blocking_ids(&input);
-        assert!(blocking.iter().any(|(id, _)| id == PROFICIENCY_UNKNOWN), "{blocking:?}");
-        // The per-weapon total for an equipped Club carries no invented -4.
-        let mut club = input.clone();
+        assert!(!pick.options.iter().any(|o| o == "Longsword"), "a Martial weapon is no option: {:?}", pick.options);
+
+        let unseeded = single_class("class:commoner", 1);
+        assert!(!unseeded.chosen.selected_choices.iter().any(|c| c.choice_set_id == COMMONER_WEAPON_CHOICE_ID));
+        match character_weapon_proficiency(&unseeded, crb_weapon("Club")) {
+            WeaponProficiencyVerdict::Unknown { reason } => {
+                assert!(reason.contains("class:commoner level 1") && reason.contains("records no choice"), "{reason}")
+            }
+            known => panic!("an unrecorded pick that could cover the Club must leave it Unknown, got {known:?}"),
+        }
+        assert_eq!(character_is_proficient_with(&unseeded, crb_weapon("Longsword")), Some(false));
+        let blocking = blocking_ids(&unseeded);
+        assert!(!blocking.iter().any(|(id, _)| id == PROFICIENCY_UNKNOWN), "Longsword is decided: {blocking:?}");
+
+        let mut seeded = unseeded.clone();
+        seeded.chosen.selected_choices.push(crate::rules_core::character_input::SelectedChoice {
+            choice_set_id: COMMONER_WEAPON_CHOICE_ID.to_owned(),
+            selection_id: COMMONER_CANONICAL_WEAPON.to_owned(),
+        });
+        match character_weapon_proficiency(&seeded, crb_weapon("Club")) {
+            WeaponProficiencyVerdict::Known { proficient, printed } => {
+                assert!(proficient, "the chosen Club is proficient");
+                assert!(printed.iter().any(|p| p.contains("proficient with the chosen weapon (Club)")), "{printed:?}");
+            }
+            unknown => panic!("a recorded pick decides the Club, got {unknown:?}"),
+        }
+        assert_eq!(character_is_proficient_with(&seeded, crb_weapon("Dagger")), Some(false));
+        assert_eq!(character_is_proficient_with(&seeded, crb_weapon("Longsword")), Some(false));
+        // The per-weapon total for an equipped Club carries no -4.
+        let mut club = seeded.clone();
         for selection in &mut club.chosen.equipment_selections {
             if selection.item_id == "item:longsword" {
                 selection.item_id = "item:club".to_owned();
@@ -3397,11 +3482,11 @@ mod converted_record_proficiency_fallback_tests {
     /// A class with no static row whose converted answer is Unknown keeps the claim-blocking
     /// diagnostic, and the answer now carries the reader's reason. Synthetic: a class id with
     /// no converted record at all (it has no chassis either, so the combat baseline never runs
-    /// for it -- the verdict itself is asserted). Real, through the whole receipt: Commoner, whose
-    /// converted closure holds a one-simple-weapon pick into a pool with no converted member
-    /// (`reader-remainder.md` mechanism F). Magus was the real case until SD-36 Epic F1c-1
-    /// converted its `TYPE=WeaponProfMartial` grant-by-type; it is asserted as the flip: it now
-    /// reads Longsword from the converted record and carries no proficiency diagnostic.
+    /// for it -- the verdict itself is asserted). Magus was the real case until SD-36 Epic F1c-1
+    /// converted its `TYPE=WeaponProfMartial` grant-by-type, and Commoner until F1c-3 linked its
+    /// one-simple-weapon pick (`commoner_weapon_pick_is_decided_by_the_recorded_choice`); Magus is
+    /// asserted as the flip: it reads Longsword from the converted record and carries no
+    /// proficiency diagnostic.
     #[test]
     fn a_class_with_no_row_and_incomplete_closure_keeps_the_diagnostic() {
         let synthetic = single_class("class:fixture_class_with_no_record", 1);
@@ -3412,21 +3497,6 @@ mod converted_record_proficiency_fallback_tests {
             ),
             known => panic!("a class with no row and no record must be Unknown, got {known:?}"),
         }
-
-        assert!(weapon_tables::class_weapon_proficiency("class:commoner").is_none());
-        let commoner = single_class("class:commoner", 1);
-        assert_eq!(character_is_proficient_with(&commoner, crb_weapon("Club")), None);
-        let blocking = blocking_ids(&commoner);
-        let diagnostic = blocking
-            .iter()
-            .find(|(id, _)| id == PROFICIENCY_UNKNOWN)
-            .unwrap_or_else(|| panic!("commoner must keep {PROFICIENCY_UNKNOWN}: {blocking:?}"));
-        assert!(
-            diagnostic.1.contains("class:commoner level 1: Weapon and Armor Proficiency")
-                && diagnostic.1.contains("whose options the converted package does not link"),
-            "the diagnostic must name the reader's reason: {}",
-            diagnostic.1
-        );
 
         assert!(weapon_tables::class_weapon_proficiency("class:magus").is_none());
         let magus = single_class("class:magus", 1);

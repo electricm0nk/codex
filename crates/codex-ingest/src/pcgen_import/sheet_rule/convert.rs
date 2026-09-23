@@ -428,6 +428,55 @@ fn weapon_type_selector(ctx: &mut RecordCtx, membership: &WeaponMembershipIndex,
     Some(ProfRef::WeaponSet { label: segments.join("."), members })
 }
 
+/// SD-36 F1c-3 (D6): a `CHOOSE:WEAPONPROFICIENCY` argument list resolved AT INGEST to the
+/// oracle weapon-proficiency names it offers (name-sorted, deduplicated), or `None` when any
+/// argument is not a character-independent weapon set -- then the caller keeps the old words.
+///
+/// Each `|`-separated argument is one alternative (union). An argument resolves when it is:
+/// - a weapon-proficiency name some oracle row carries (`Crossbow (Hand)`);
+/// - a `,`-joined conjunction of `TYPE=`/`TYPE.` tags (`TYPE=Simple,TYPE=Piercing`): every
+///   oracle weapon carrying all of them ([`WeaponMembershipIndex::members_with_all`]; an
+///   alternative no weapon satisfies adds nothing);
+/// - either of those wrapped in `ANY[...]` or `!PC[...]` -- `!PC` ("not already held") narrows
+///   by the character's own proficiencies, so the options printed are the wrapped set, the
+///   superset the rule offers.
+///
+/// Never resolved here (character- or equipment-dependent, or not a proficiency list): `PC`
+/// (already held), a bare `!PC`, `ALL`/`ANY`/`QUALIFIED`, `DEITYWEAPON`, `EQUIPMENT[...]`,
+/// `ABILITY=`/`FEAT=` filters, or a union that names no weapon at all.
+fn weapon_choice_options(membership: &WeaponMembershipIndex, args: &[String]) -> Option<Vec<String>> {
+    let mut out: BTreeSet<String> = BTreeSet::new();
+    if args.is_empty() {
+        return None;
+    }
+    for arg in args {
+        let a = arg.trim();
+        let inner = a
+            .strip_prefix("!PC[")
+            .or_else(|| a.strip_prefix("ANY["))
+            .and_then(|x| x.strip_suffix(']'))
+            .unwrap_or(a);
+        if inner.is_empty() || inner.contains(['[', ']', '%', '=']) && !inner.starts_with("TYPE") {
+            return None;
+        }
+        let parts: Vec<&str> = inner.split(',').map(str::trim).collect();
+        let tags: Option<Vec<String>> =
+            parts.iter().map(|p| p.strip_prefix("TYPE=").or_else(|| p.strip_prefix("TYPE.")).map(str::to_string)).collect();
+        match tags {
+            Some(tags) if !tags.is_empty() && tags.iter().all(|t| !t.is_empty() && !t.contains(['[', ']', '='])) => {
+                // An alternative no oracle weapon satisfies adds nothing (PCGen offers nothing
+                // for it either); the union must still name at least one weapon.
+                out.extend(membership.members_with_all(&tags));
+            }
+            _ if parts.len() == 1 => {
+                out.insert(membership.weapon_named(inner)?.to_string());
+            }
+            _ => return None,
+        }
+    }
+    (!out.is_empty()).then(|| out.into_iter().collect())
+}
+
 /// A `WeaponSet` grant's dedup key: what the selector actually resolves to (its member list,
 /// already name-sorted and case-normalized by `WeaponMembershipIndex::members_with_all`), plus
 /// whether the grant is gated and on what -- never the raw per-book selector spelling that
@@ -853,6 +902,7 @@ pub fn convert_record(tree: &PinnedTree, index: &CorpusIndex, record: &RecordRef
             granted_by: if i == 0 { acc.granted_by.clone() } else { Vec::new() },
             offers: if i == 0 { acc.offers.clone() } else { None },
             grants: if i == 0 { acc.grants.clone() } else { Vec::new() },
+            closure_complete: false,
             provenance: provenance.clone(),
         });
     }
@@ -975,7 +1025,9 @@ fn convert_token(ctx: &mut RecordCtx, acc: &mut Acc, out: &mut Converted, key: &
         }
         // SD-35 AT-35-E4-001, row PROHIBITSPELL: the class's barred schools/descriptors are
         // the rule's own words on the sheet (`decisions.md` §1 form 3), never a number.
-        "PROHIBITSPELL" => {
+        // `PROHIBITED:<school>,...` (a class's barred schools, read since SD-36 F1c-3 on the
+        // product-identity classes' continuation rows) prints exactly as `PROHIBITSPELL` does.
+        "PROHIBITSPELL" | "PROHIBITED" => {
             let (fields, gates) = split_gates(v);
             let when = gates_of(ctx, &gates, level_gate)?;
             let barred: Vec<String> = fields
@@ -1612,7 +1664,7 @@ fn convert_token(ctx: &mut RecordCtx, acc: &mut Acc, out: &mut Converted, key: &
                 }
                 let by = if nature == "NORMAL" { Granter::Choice(ctx.record.id.clone()) } else { Granter::Rule(ctx.record.id.clone()) };
                 let by = match level_gate {
-                    Some(l) if ctx.record.kind == "class" => Granter::Class { id: ctx.owning_class.clone().unwrap_or_else(|| slug(&ctx.record.key)), at_level: l },
+                    Some(l) if ctx.record.kind == "class" => Granter::Class { id: ctx.owning_class.clone().unwrap_or_else(|| super::ctx::own_class_id(ctx.record)), at_level: l },
                     _ => by,
                 };
                 if t.starts_with("TYPE=") || t.starts_with("TYPE.") {
@@ -1741,7 +1793,7 @@ fn convert_token(ctx: &mut RecordCtx, acc: &mut Acc, out: &mut Converted, key: &
             // granter either way, so the base row is `level_gate` 1 rather than a refusal.
             let (fields, gates) = split_gates(v);
             let when = gates_of(ctx, &gates, level_gate)?;
-            let cls = ctx.owning_class.clone().unwrap_or_else(|| slug(&ctx.record.key));
+            let cls = ctx.owning_class.clone().unwrap_or_else(|| super::ctx::own_class_id(ctx.record));
             for d in fields.iter().flat_map(|f| f.split(',')) {
                 let d = d.trim();
                 if d.is_empty() {
@@ -1786,7 +1838,7 @@ fn convert_token(ctx: &mut RecordCtx, acc: &mut Acc, out: &mut Converted, key: &
                 }
                 let id = ctx.resolve_kind("template", &n).unwrap_or_else(|| slug(&n));
                 let by = match level_gate {
-                    Some(l) if ctx.record.kind == "class" => Granter::Class { id: ctx.owning_class.clone().unwrap_or_else(|| slug(&ctx.record.key)), at_level: l },
+                    Some(l) if ctx.record.kind == "class" => Granter::Class { id: ctx.owning_class.clone().unwrap_or_else(|| super::ctx::own_class_id(ctx.record)), at_level: l },
                     _ => Granter::Rule(ctx.record.id.clone()),
                 };
                 out.grants_out.push((id, Grant { by, when: when.clone() }));
@@ -1887,7 +1939,13 @@ fn convert_token(ctx: &mut RecordCtx, acc: &mut Acc, out: &mut Converted, key: &
                     OptionSet::Rules { pool, tags, requires }
                 }
                 "SKILL" | "SKILLBONUS" => OptionSet::Skills(args.iter().filter(|a| !a.starts_with("TYPE") && !a.contains('%')).map(|a| ctx.skill_id(a)).collect()),
-                "WEAPONPROFICIENCY" => OptionSet::Weapons(args.iter().filter(|a| !a.contains('%')).map(|a| tag_word(a)).collect()),
+                "WEAPONPROFICIENCY" => {
+                    let membership = weapon_membership::index(ctx.tree);
+                    match weapon_choice_options(membership, &args) {
+                        Some(names) => OptionSet::Weapons(names),
+                        None => OptionSet::Weapons(args.iter().filter(|a| !a.contains('%')).map(|a| tag_word(a)).collect()),
+                    }
+                }
                 "SHIELDPROFICIENCY" | "ARMORPROFICIENCY" => OptionSet::Weapons(args.iter().filter(|a| !a.contains('%')).map(|a| tag_word(a)).collect()),
                 "LANG" => OptionSet::Languages(args.iter().filter(|a| !a.contains('%')).map(|a| tag_word(a)).collect()),
                 "SCHOOLS" => OptionSet::Schools,
@@ -1980,6 +2038,7 @@ mod ability_type_selector_tests {
             fact_index: BTreeMap::new(),
             pfs_base_keys: BTreeSet::new(),
             ability_category_parent: BTreeMap::new(),
+            ability_category_type: BTreeMap::new(),
         }
     }
 
@@ -2001,6 +2060,7 @@ mod ability_type_selector_tests {
             pi_fields: Vec::new(),
             description: None,
             class_name: None,
+            class_selection_of: None,
             joined: true,
         }
     }

@@ -174,8 +174,9 @@ enum Disagreement {
 ///   since F1c-1 and is no longer a mechanism here; nor is `pre-hoist` -- one line's PRE
 ///   hoisted onto the class-feature record's own `applies` -- since F1c-2, which un-pinned
 ///   fighter, medium, mesmerist, psychic and spiritualist: all five now reproduce their static
-///   row exactly); `no-class-record` -- the package carries no
-///   `pathfinder_unchained` `class` records at all.
+///   row exactly; nor is `no-class-record` since F1c-3, which gave the four Pathfinder
+///   Unchained classes their class principal: three reproduce their static row exactly, and the
+///   Unchained Monk's is stale the same way the Monk's is -- see its pin).
 /// - **Class-selection gate** (summoner): the proficiency record is reached only through a
 ///   class-selection pick whose `applies` reads a variable no record in the class closure
 ///   contributes.
@@ -183,11 +184,8 @@ enum Disagreement {
 ///   not; this step does not edit the static rows).
 const KNOWN_DISAGREEMENTS: &[(&str, Disagreement, &str)] = &[
     ("monk", Disagreement::Differs, "stale static row: omits Flurry of Blows (cr_abilities_class.lst:2794,2817) and Sword (Temple) (apg_abilities_class.lst:41 .MOD); its Unarmed Strike is granted via the Auto/Monk sets"),
+    ("unchained_monk", Disagreement::Differs, "stale static row (F1c-3 gave the class its record): the Unchained Monk is taken on the Monk's class line, whose `Monk` class ability grants Weapon and Armor Proficiency ~ Monk (Flurry of Blows) under PREVAREQ:Monk_CF_Proficiencies,0 (cr_abilities_globalvar.lst:581, cr_abilities_class.lst:2817) -- a variable the Unchained selection does not set -- and apg_abilities_class.lst:41 .MOD adds Sword (Temple); the static row omits both, as the Monk's does"),
     ("summoner", Disagreement::ReaderUnknown, "class-selection gate: summoner_weapon_and_armor_proficiency (Weapon Prof ~ Simple since F1c-1) is reached only via summoner_standard_class, whose applies reads Standard Summoner Allowed == 1, contributed only by advanced_players_guide:class_feature:default (apg_abilities_class.lst:715,717), outside the class closure; empty walk"),
-    ("unchained_barbarian", Disagreement::ReaderUnknown, "converter no-class-record: data/sheet_rules/pathfinder_unchained has no class kind"),
-    ("unchained_monk", Disagreement::ReaderUnknown, "converter no-class-record: data/sheet_rules/pathfinder_unchained has no class kind"),
-    ("unchained_rogue", Disagreement::ReaderUnknown, "converter no-class-record: data/sheet_rules/pathfinder_unchained has no class kind"),
-    ("unchained_summoner", Disagreement::ReaderUnknown, "converter no-class-record: data/sheet_rules/pathfinder_unchained has no class kind"),
     ("occultist", Disagreement::Differs, "stale static row: omits Simple; the oracle's TYPE=WeaponProfMartial grant (occultist_weapon_and_armor_proficiency) reaches Weapon Prof ~ Simple, tagged WeaponProfSimple.WeaponProfMartial (cr_abilities_class.lst:2800)"),
     ("vigilante", Disagreement::Differs, "stale static row: omits Simple; the oracle's TYPE=WeaponProfMartial grant (vigilante_weapon_and_armor_proficiencies) reaches Weapon Prof ~ Simple, tagged WeaponProfSimple.WeaponProfMartial (cr_abilities_class.lst:2800)"),
     ("psion", Disagreement::Differs, "stale static row: omits All Automatic Proficiencies (Unarmed Strike, Spells (Ray), Spells (Touch), Splash Weapon), up_classes.lst:258"),
@@ -365,6 +363,7 @@ fn fixture_rule(id: &str, granted_by: Vec<Grant>, grants: Vec<Effect>) -> SheetR
         granted_by,
         offers: None,
         grants,
+        closure_complete: false,
         provenance: Provenance::default(),
     }
 }

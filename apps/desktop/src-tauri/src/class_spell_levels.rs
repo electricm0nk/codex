@@ -346,34 +346,26 @@ mod tests {
         }
     }
 
-    /// `pathfinder_unchained`'s `class` kind has no `data/sheet_rules/
-    /// pathfinder_unchained/class/` directory at all -- verified by `find
-    /// data/sheet_rules -maxdepth 1 -iname pathfinder_unchained -type d`
-    /// then listing it: `ability`, `class_feature`, `equipment_modifier`,
-    /// `feat`, `monster_ability`, `race_trait`, `skill`, `template`, no
-    /// `class`. Every one of its four "`<Base> Class Selection`" records
-    /// (Unchained Barbarian/Monk/Rogue/Summoner) is therefore absent from
-    /// [`corpus_class_facts`]'s index by any id, base-selection hop
-    /// included, so all three report `ClassNotInCorpus` -- the honest
-    /// answer, not a regression. Before this module ported off
-    /// `data/corpus/<book>/class/*.json` `raw_tokens` (`decisions.md
-    /// §11`), reading that un-ingested PCGen record directly could still
-    /// answer `NonCaster` for the two martial shells and
-    /// `CasterListNotIngested` for the caster one; this module no longer
-    /// reads the token that made that answer, so it does not know it.
-    /// Re-derive if a future cycle converts this book's `class` kind.
+    /// SD-36 F1c-3 (defect D3) converted `pathfinder_unchained`'s `class` kind: each of its four
+    /// "`<Base> Class Selection`" classes (Unchained Barbarian/Monk/Rogue/Summoner) now has a
+    /// class principal (`data/sheet_rules/pathfinder_unchained/class/unchained_<base>.json`)
+    /// carrying the selection's `<Base> Class Selection` tag, so [`corpus_class_facts`] indexes it
+    /// and the one base-selection hop answers with the base class's converted fact -- the answer
+    /// this test's earlier form said a converting cycle should re-derive. The three martial
+    /// shells are non-casters (their bases declare no `FACT:SpellType`); the Unchained Summoner
+    /// is the Summoner's `Arcane`, whose list is not ingested -- exactly as `class:summoner`
+    /// reports in `oracle_summoner_and_magus_are_casters_whose_list_is_not_ingested`.
     #[test]
-    fn unchained_classes_report_class_not_in_corpus_until_their_book_converts() {
-        for class_id in
-            ["class:unchained_summoner", "class:unchained_barbarian", "class:unchained_rogue"]
-        {
-            assert_eq!(
-                status_of(class_id),
-                (SpellcastingStatus::ClassNotInCorpus, None),
-                "{class_id}"
-            );
+    fn unchained_classes_answer_through_their_base_class_selection() {
+        for class_id in ["class:unchained_barbarian", "class:unchained_monk", "class:unchained_rogue"] {
+            assert_eq!(status_of(class_id), (SpellcastingStatus::NonCaster, None), "{class_id}");
             assert!(!levels_for(class_id).known, "{class_id}");
         }
+        assert_eq!(
+            status_of("class:unchained_summoner"),
+            (SpellcastingStatus::CasterListNotIngested, Some("Arcane".to_owned()))
+        );
+        assert!(!levels_for("class:unchained_summoner").known);
     }
 
     #[test]

@@ -1,5 +1,5 @@
 {
-  "blocked": 1,
+  "blocked": 0,
   "classes": [
     {
       "blocking_diagnostics": [],
@@ -435,40 +435,14 @@
       "status": "Computed"
     },
     {
-      "blocking_diagnostics": [
-        {
-          "id": "combat.baseline_weapon_proficiency_unknown",
-          "levels": [
-            1,
-            2,
-            3,
-            4,
-            5,
-            6,
-            7,
-            8,
-            9,
-            10,
-            11,
-            12,
-            13,
-            14,
-            15,
-            16,
-            17,
-            18,
-            19,
-            20
-          ],
-          "message": "the baseline melee attack bonus applies PF1's -4 nonproficiency penalty only when this character's proficiency with item:longsword is actually known, and it is not: at least one class in [\"class:commoner\"] has neither a rules_tables::crb::weapon_tables::CLASS_WEAPON_PROFICIENCIES row nor a Known answer from the converted rule package (class:commoner level 1: Weapon and Armor Proficiency (core_rulebook:class_feature:weapon_and_armor_proficiency_commoner) picks 1 from the simple weapon proficiency choice pool, whose options the converted package does not link (no converted rule is a member of it)), so the attack total below is NOT claimed to be correct"
-        }
-      ],
+      "blocking_diagnostics": [],
       "books": [
         "core_rulebook"
       ],
       "class_id": "class:commoner",
       "family": "CRB NPC / Ex-* classes",
-      "levels_blocked": [
+      "levels_blocked": [],
+      "levels_computed": [
         1,
         2,
         3,
@@ -490,12 +464,11 @@
         19,
         20
       ],
-      "levels_computed": [],
       "max_level": 20,
       "registries": [
         "crb_untabled_class_chassis"
       ],
-      "status": "Blocked"
+      "status": "Computed"
     },
     {
       "blocking_diagnostics": [],
@@ -2247,8 +2220,8 @@
       "status": "Computed"
     }
   ],
-  "computed": 60,
-  "generated_at": "2026-09-23T04:52:47Z",
+  "computed": 61,
+  "generated_at": "2026-09-23T08:10:45Z",
   "generated_by": "cargo run --bin class_census -- --json <path>",
   "ids": 135,
   "input_posture": "tests/fixtures/rules_core/pf1_human_fighter_level1_ge06_deterministic_input.txt with the class swapped to the class under test, swept over 1..=max_level (per the merged registry's own max_level, not a fixed 20), plus the canonical per-class choice/spell seeds compose_character_input applies (pf1_adapter.rs, mirrored in codex::rules_core::class_seeds). A non-prestige class counts as computed only when every level in its own sweep reaches HeadlessReceiptStatus::Computed. A prestige class is never measured alone -- 'alone_status' is a negative control, expected Blocked -- its real Computed measurement is the carrier-mix sweep in 'mixes' (§2, epic-f-class-completion.md, review finding 14): the carrier(s) its own converted entry gate selects (wizard/cleric/fighter, or both independently for the dual-caster case), at the smallest level meeting every translatable numeric entry-gate term (floor 5, capped at carrier + prestige max_level <= 20). 'entry_gate' is printed rule text, non-blocking by design -- it never gates 'mixes[].status'.",
@@ -5629,7 +5602,7 @@
       ],
       "carrier_unknown_reason": null,
       "class_id": "class:aldori_swordlord",
-      "entry_gate": "met",
+      "entry_gate": "unmet",
       "load_error": null,
       "max_level": 10,
       "mixes": [
@@ -5704,9 +5677,12 @@
           "carrier_level": 5,
           "entry_gate": {
             "met": [],
-            "status": "met",
+            "status": "unmet",
             "unknown": [],
-            "unmet": []
+            "unmet": [
+              "special: at least 4 of [Holds { what: Rule(\"core_rulebook:feat:dazzling_display\"), count: 1 }, Holds { what: Rule(\"core_rulebook:feat:exotic_weapon_proficiency\"), count: 1 }, Holds { what: Rule(\"core_rulebook:feat:weapon_finesse\"), count: 1 }, Holds { what: Rule(\"core_rulebook:feat:weapon_focus\"), count: 1 }]",
+              "special: at least 4 of [Compare { lhs: SkillRanks(\"acrobatics\"), op: Gte, rhs: Const(3) }, Compare { lhs: SkillRanks(\"intimidate\"), op: Gte, rhs: Const(5) }, Compare { lhs: SkillRanks(\"knowledge_nobility\"), op: Gte, rhs: Const(3) }, Compare { lhs: SkillRanks(\"sense_motive\"), op: Gte, rhs: Const(3) }]"
+            ]
           },
           "levels_blocked": [
             1,
@@ -6502,7 +6478,7 @@
       ],
       "carrier_unknown_reason": null,
       "class_id": "class:aspis_agent",
-      "entry_gate": "met",
+      "entry_gate": "unmet",
       "load_error": null,
       "max_level": 10,
       "mixes": [
@@ -6577,9 +6553,13 @@
           "carrier_level": 5,
           "entry_gate": {
             "met": [],
-            "status": "met",
+            "status": "unmet",
             "unknown": [],
-            "unmet": []
+            "unmet": [
+              "special: at least 7 of [Compare { lhs: SkillRanks(\"appraise\"), op: Gte, rhs: Const(5) }, Compare { lhs: SkillRanks(\"bluff\"), op: Gte, rhs: Const(5) }, Compare { lhs: SkillRanks(\"craft_traps\"), op: Gte, rhs: Const(5) }, Compare { lhs: SkillRanks(\"disable_device\"), op: Gte, rhs: Const(5) }, Compare { lhs: SkillRanks(\"intimidate\"), op: Gte, rhs: Const(5) }, Compare { lhs: SkillRanks(\"knowledge_history\"), op: Gte, rhs: Const(5) }, Compare { lhs: SkillRanks(\"perception\"), op: Gte, rhs: Const(5) }]",
+              "Holds Proficiency(Weapon(\"Whip\"))",
+              "special: at least 1 of [Holds { what: Rule(\"core_rulebook:class_feature:trap_sense\"), count: 1 }, Holds { what: Spell(\"core_rulebook:spell:detect_secret_doors\"), count: 1 }]"
+            ]
           },
           "levels_blocked": [
             1,
@@ -7045,7 +7025,7 @@
       ],
       "carrier_unknown_reason": null,
       "class_id": "class:bellflower_tiller",
-      "entry_gate": "met",
+      "entry_gate": "unmet",
       "load_error": null,
       "max_level": 10,
       "mixes": [
@@ -7120,9 +7100,14 @@
           "carrier_level": 5,
           "entry_gate": {
             "met": [],
-            "status": "met",
+            "status": "unmet",
             "unknown": [],
-            "unmet": []
+            "unmet": [
+              "Holds Alignment([\"CG\"])",
+              "special: at least 2 of [Holds { what: RuleTag { pool: \"feat\", tag: \"Teamwork\" }, count: 1 }]",
+              "special: at least 4 of [Compare { lhs: SkillRanks(\"disguise\"), op: Gte, rhs: Const(5) }, Compare { lhs: SkillRanks(\"knowledge_local\"), op: Gte, rhs: Const(3) }, Compare { lhs: SkillRanks(\"stealth\"), op: Gte, rhs: Const(5) }, Compare { lhs: SkillRanks(\"survival\"), op: Gte, rhs: Const(5) }]",
+              "special: at least 1 of [Compare { lhs: Var(\"v5c590188ce40343d\"), op: Gte, rhs: Const(2) }, AtLeast { n: 2, of: [Holds { what: RuleTag { pool: \"special_ability\", tag: \"Vigilante Talent\" }, count: 1 }] }]"
+            ]
           },
           "levels_blocked": [
             1,
@@ -9320,7 +9305,7 @@
       ],
       "carrier_unknown_reason": null,
       "class_id": "class:golden_legionnaire",
-      "entry_gate": "met",
+      "entry_gate": "unmet",
       "load_error": null,
       "max_level": 10,
       "mixes": [
@@ -9394,10 +9379,16 @@
           "carrier": "fighter",
           "carrier_level": 5,
           "entry_gate": {
-            "met": [],
-            "status": "met",
+            "met": [
+              "BaseAttack >= 5"
+            ],
+            "status": "unmet",
             "unknown": [],
-            "unmet": []
+            "unmet": [
+              "Holds Alignment([\"LG\", \"NG\", \"CG\"])",
+              "Holds Rule(\"core_rulebook:feat:armor_proficiency_heavy\")",
+              "special: at least 2 of [Compare { lhs: SkillRanks(\"diplomacy\"), op: Gte, rhs: Const(5) }, Compare { lhs: SkillRanks(\"intimidate\"), op: Gte, rhs: Const(5) }]"
+            ]
           },
           "levels_blocked": [
             1,
@@ -9633,107 +9624,14 @@
       "books": [
         "inner_sea_world_guide"
       ],
-      "carrier": [
-        "fighter"
-      ],
-      "carrier_unknown_reason": null,
+      "carrier": [],
+      "carrier_unknown_reason": "class:harrower: gate references a caster level or spell-kind term only inside a Not/AtLeast clause -- never as a mandatory, positive top-level term -- so no carrier can be named with confidence: All([Compare { lhs: ClassLevel(\"harrower\"), op: Lte, rhs: Const(10) }, Holds { what: Rule(\"inner_sea_world_guide:feat:harrowed\"), count: 1 }, Not(Holds { what: Alignment([\"TN\"]), count: 1 }), AtLeast { n: 1, of: [Compare { lhs: SkillRanks(\"knowledge_arcana\"), op: Gte, rhs: Const(5) }, Compare { lhs: SkillRanks(\"knowledge_religion\"), op: Gte, rhs: Const(5) }] }, Situational { text: \"requires 5 ranks in a perform skill\" }, Situational { text: \"requires 3 Divination school spells of level 0 or higher\" }, AtLeast { n: 1, of: [Compare { lhs: HighestSpellLevel(Arcane), op: Gte, rhs: Const(3) }, Compare { lhs: HighestSpellLevel(Divine), op: Gte, rhs: Const(3) }] }, Situational { text: \"Must own a Harrow deck\" }])",
       "class_id": "class:harrower",
-      "entry_gate": "met",
+      "entry_gate": "unknown",
       "load_error": null,
       "max_level": 10,
-      "mixes": [
-        {
-          "blocking_diagnostics": [
-            {
-              "id": "class_chassis.unsupported",
-              "levels": [
-                1,
-                2,
-                3,
-                4,
-                5,
-                6,
-                7,
-                8,
-                9,
-                10
-              ],
-              "message": "base class chassis is only supported for a single-class class:fighter at levels 1-20 or a single-class class:wizard at levels 1-20; chosen class levels [CharacterClassLevel { class_id: \"class:fighter\", level: 5 }, CharacterClassLevel { class_id: \"class:harrower\", level: 1 }] do not provide it (either a multiclass mix, deferred to Epic 7, or a class this per-class dispatch does not yet recognize), so no chassis values were computed"
-            },
-            {
-              "id": "combat.baseline_unsupported",
-              "levels": [
-                1,
-                2,
-                3,
-                4,
-                5,
-                6,
-                7,
-                8,
-                9,
-                10
-              ],
-              "message": "baseline combat totals are only computed for the exact GE-06 deterministic Longsword/Chain Shirt/Dodge/no-shield posture; unmet conditions: missing supported class:fighter levels 1-20 or class:wizard levels 1-20 chassis"
-            },
-            {
-              "id": "defense.total_save.unsupported",
-              "levels": [
-                1,
-                2,
-                3,
-                4,
-                5,
-                6,
-                7,
-                8,
-                9,
-                10
-              ],
-              "message": "total saving throws are only computed from a grounded base-save chassis this engine currently supports (class:fighter levels 1-20, class:wizard levels 1-20, a supported multiclass mix, a supported generic single class, or a supported single-class Skald, Bloodrager, Brawler, Hunter, Cavalier, Alchemist, Inquisitor, Oracle, Arcanist, Warpriest, Slayer, Swashbuckler, Investigator, Witch, Shaman, or Summoner chassis, or a supported single-class Unchained Barbarian, Unchained Monk, Unchained Rogue, or Unchained Summoner chassis (Pathfinder Unchained), or a supported single-class Gunslinger, Ninja, or Samurai chassis (Ultimate Combat), or a supported single-class untabled real base class (Aegis, Antipaladin, Cryptic, Dread, Kineticist, Magus, Marksman, Medium, Mesmerist, Occultist, Psion, Psychic, Psychic Warrior, Shifter, Soulknife, Spiritualist, Tactician, Vigilante, Vitalist, or Wilder) or CRB NPC/Ex-* class (Adept, Aristocrat, Commoner, Expert, Warrior, Ex-Barbarian, or Ex-Paladin) chassis); chosen class levels [CharacterClassLevel { class_id: \"class:fighter\", level: 5 }, CharacterClassLevel { class_id: \"class:harrower\", level: 1 }] do not provide them, so no total saves were computed"
-            },
-            {
-              "id": "skill.selected_modifier.unsupported",
-              "levels": [
-                1,
-                2,
-                3,
-                4,
-                5,
-                6,
-                7,
-                8,
-                9,
-                10
-              ],
-              "message": "selected skill modifiers are only computed for the exact GE-06 deterministic level-1 Climb/Intimidate/Swim rank-1 posture (on a grounded class:fighter levels 1-20, class:wizard levels 1-20, a supported multiclass mix, a supported generic single class, or a supported single-class Skald, Bloodrager, Brawler, Hunter, Cavalier, Alchemist, Inquisitor, Oracle, Arcanist, Warpriest, Slayer, Swashbuckler, Investigator, Witch, Shaman, or Summoner chassis, or a supported single-class Unchained Barbarian, Unchained Monk, Unchained Rogue, or Unchained Summoner chassis (Pathfinder Unchained), or a supported single-class Gunslinger, Ninja, or Samurai chassis (Ultimate Combat), or a supported single-class untabled real base class (Aegis, Antipaladin, Cryptic, Dread, Kineticist, Magus, Marksman, Medium, Mesmerist, Occultist, Psion, Psychic, Psychic Warrior, Shifter, Soulknife, Spiritualist, Tactician, Vigilante, Vitalist, or Wilder) or CRB NPC/Ex-* class (Adept, Aristocrat, Commoner, Expert, Warrior, Ex-Barbarian, or Ex-Paladin) chassis) with the grounded Chain Shirt armor-check penalty; unmet conditions: missing a supported chassis (needs one of: class:fighter levels 1-20, class:wizard levels 1-20, a supported multiclass mix, a supported generic single class, or a supported single-class Skald, Bloodrager, Brawler, Hunter, Cavalier, Alchemist, Inquisitor, Oracle, Arcanist, Warpriest, Slayer, Swashbuckler, Investigator, Witch, Shaman, or Summoner chassis, or a supported single-class Unchained Barbarian, Unchained Monk, Unchained Rogue, or Unchained Summoner chassis (Pathfinder Unchained), or a supported single-class Gunslinger, Ninja, or Samurai chassis (Ultimate Combat), or a supported single-class untabled real base class (Aegis, Antipaladin, Cryptic, Dread, Kineticist, Magus, Marksman, Medium, Mesmerist, Occultist, Psion, Psychic, Psychic Warrior, Shifter, Soulknife, Spiritualist, Tactician, Vigilante, Vitalist, or Wilder) or CRB NPC/Ex-* class (Adept, Aristocrat, Commoner, Expert, Warrior, Ex-Barbarian, or Ex-Paladin) chassis)"
-            }
-          ],
-          "carrier": "fighter",
-          "carrier_level": 5,
-          "entry_gate": {
-            "met": [],
-            "status": "met",
-            "unknown": [],
-            "unmet": []
-          },
-          "levels_blocked": [
-            1,
-            2,
-            3,
-            4,
-            5,
-            6,
-            7,
-            8,
-            9,
-            10
-          ],
-          "levels_computed": [],
-          "status": "Blocked"
-        }
-      ],
-      "status": "Blocked"
+      "mixes": [],
+      "status": "Unknown"
     },
     {
       "alone_blocking_diagnostics": [
@@ -9796,7 +9694,7 @@
       ],
       "carrier_unknown_reason": null,
       "class_id": "class:hellknight",
-      "entry_gate": "met",
+      "entry_gate": "unmet",
       "load_error": null,
       "max_level": 10,
       "mixes": [
@@ -9870,10 +9768,17 @@
           "carrier": "fighter",
           "carrier_level": 5,
           "entry_gate": {
-            "met": [],
-            "status": "met",
+            "met": [
+              "Situational: Must slay a devil with HD greater than your own. This must be witnessed by a Hellknight",
+              "BaseAttack >= 5"
+            ],
+            "status": "unmet",
             "unknown": [],
-            "unmet": []
+            "unmet": [
+              "Holds Rule(\"core_rulebook:feat:armor_proficiency_heavy\")",
+              "Holds Alignment([\"LG\", \"LN\", \"LE\"])",
+              "special: at least 2 of [Compare { lhs: SkillRanks(\"intimidate\"), op: Gte, rhs: Const(5) }, Compare { lhs: SkillRanks(\"knowledge_planes\"), op: Gte, rhs: Const(2) }]"
+            ]
           },
           "levels_blocked": [
             1,
@@ -9948,107 +9853,14 @@
       "books": [
         "adventurers_guide"
       ],
-      "carrier": [
-        "fighter"
-      ],
-      "carrier_unknown_reason": null,
+      "carrier": [],
+      "carrier_unknown_reason": "class:hellknight_signifer: gate references a caster level or spell-kind term only inside a Not/AtLeast clause -- never as a mandatory, positive top-level term -- so no carrier can be named with confidence: All([Compare { lhs: ClassLevel(\"hellknight_signifer\"), op: Lte, rhs: Const(10) }, Holds { what: Alignment([\"LG\", \"LN\", \"LE\"]), count: 1 }, Holds { what: Rule(\"core_rulebook:feat:armor_proficiency_medium\"), count: 1 }, AtLeast { n: 1, of: [Holds { what: Rule(\"core_rulebook:feat:arcane_armor_training\"), count: 1 }, Holds { what: Rule(\"mythic_adventures:feat:warrior_priest\"), count: 1 }] }, AtLeast { n: 3, of: [Compare { lhs: SkillRanks(\"intimidate\"), op: Gte, rhs: Const(2) }, Compare { lhs: SkillRanks(\"knowledge_planes\"), op: Gte, rhs: Const(5) }, Compare { lhs: SkillRanks(\"spellcraft\"), op: Gte, rhs: Const(5) }] }, Compare { lhs: HighestSpellLevel(Any), op: Gte, rhs: Const(3) }])",
       "class_id": "class:hellknight_signifer",
-      "entry_gate": "met",
+      "entry_gate": "unknown",
       "load_error": null,
       "max_level": 10,
-      "mixes": [
-        {
-          "blocking_diagnostics": [
-            {
-              "id": "class_chassis.unsupported",
-              "levels": [
-                1,
-                2,
-                3,
-                4,
-                5,
-                6,
-                7,
-                8,
-                9,
-                10
-              ],
-              "message": "base class chassis is only supported for a single-class class:fighter at levels 1-20 or a single-class class:wizard at levels 1-20; chosen class levels [CharacterClassLevel { class_id: \"class:fighter\", level: 5 }, CharacterClassLevel { class_id: \"class:hellknight_signifer\", level: 1 }] do not provide it (either a multiclass mix, deferred to Epic 7, or a class this per-class dispatch does not yet recognize), so no chassis values were computed"
-            },
-            {
-              "id": "combat.baseline_unsupported",
-              "levels": [
-                1,
-                2,
-                3,
-                4,
-                5,
-                6,
-                7,
-                8,
-                9,
-                10
-              ],
-              "message": "baseline combat totals are only computed for the exact GE-06 deterministic Longsword/Chain Shirt/Dodge/no-shield posture; unmet conditions: missing supported class:fighter levels 1-20 or class:wizard levels 1-20 chassis"
-            },
-            {
-              "id": "defense.total_save.unsupported",
-              "levels": [
-                1,
-                2,
-                3,
-                4,
-                5,
-                6,
-                7,
-                8,
-                9,
-                10
-              ],
-              "message": "total saving throws are only computed from a grounded base-save chassis this engine currently supports (class:fighter levels 1-20, class:wizard levels 1-20, a supported multiclass mix, a supported generic single class, or a supported single-class Skald, Bloodrager, Brawler, Hunter, Cavalier, Alchemist, Inquisitor, Oracle, Arcanist, Warpriest, Slayer, Swashbuckler, Investigator, Witch, Shaman, or Summoner chassis, or a supported single-class Unchained Barbarian, Unchained Monk, Unchained Rogue, or Unchained Summoner chassis (Pathfinder Unchained), or a supported single-class Gunslinger, Ninja, or Samurai chassis (Ultimate Combat), or a supported single-class untabled real base class (Aegis, Antipaladin, Cryptic, Dread, Kineticist, Magus, Marksman, Medium, Mesmerist, Occultist, Psion, Psychic, Psychic Warrior, Shifter, Soulknife, Spiritualist, Tactician, Vigilante, Vitalist, or Wilder) or CRB NPC/Ex-* class (Adept, Aristocrat, Commoner, Expert, Warrior, Ex-Barbarian, or Ex-Paladin) chassis); chosen class levels [CharacterClassLevel { class_id: \"class:fighter\", level: 5 }, CharacterClassLevel { class_id: \"class:hellknight_signifer\", level: 1 }] do not provide them, so no total saves were computed"
-            },
-            {
-              "id": "skill.selected_modifier.unsupported",
-              "levels": [
-                1,
-                2,
-                3,
-                4,
-                5,
-                6,
-                7,
-                8,
-                9,
-                10
-              ],
-              "message": "selected skill modifiers are only computed for the exact GE-06 deterministic level-1 Climb/Intimidate/Swim rank-1 posture (on a grounded class:fighter levels 1-20, class:wizard levels 1-20, a supported multiclass mix, a supported generic single class, or a supported single-class Skald, Bloodrager, Brawler, Hunter, Cavalier, Alchemist, Inquisitor, Oracle, Arcanist, Warpriest, Slayer, Swashbuckler, Investigator, Witch, Shaman, or Summoner chassis, or a supported single-class Unchained Barbarian, Unchained Monk, Unchained Rogue, or Unchained Summoner chassis (Pathfinder Unchained), or a supported single-class Gunslinger, Ninja, or Samurai chassis (Ultimate Combat), or a supported single-class untabled real base class (Aegis, Antipaladin, Cryptic, Dread, Kineticist, Magus, Marksman, Medium, Mesmerist, Occultist, Psion, Psychic, Psychic Warrior, Shifter, Soulknife, Spiritualist, Tactician, Vigilante, Vitalist, or Wilder) or CRB NPC/Ex-* class (Adept, Aristocrat, Commoner, Expert, Warrior, Ex-Barbarian, or Ex-Paladin) chassis) with the grounded Chain Shirt armor-check penalty; unmet conditions: missing a supported chassis (needs one of: class:fighter levels 1-20, class:wizard levels 1-20, a supported multiclass mix, a supported generic single class, or a supported single-class Skald, Bloodrager, Brawler, Hunter, Cavalier, Alchemist, Inquisitor, Oracle, Arcanist, Warpriest, Slayer, Swashbuckler, Investigator, Witch, Shaman, or Summoner chassis, or a supported single-class Unchained Barbarian, Unchained Monk, Unchained Rogue, or Unchained Summoner chassis (Pathfinder Unchained), or a supported single-class Gunslinger, Ninja, or Samurai chassis (Ultimate Combat), or a supported single-class untabled real base class (Aegis, Antipaladin, Cryptic, Dread, Kineticist, Magus, Marksman, Medium, Mesmerist, Occultist, Psion, Psychic, Psychic Warrior, Shifter, Soulknife, Spiritualist, Tactician, Vigilante, Vitalist, or Wilder) or CRB NPC/Ex-* class (Adept, Aristocrat, Commoner, Expert, Warrior, Ex-Barbarian, or Ex-Paladin) chassis)"
-            }
-          ],
-          "carrier": "fighter",
-          "carrier_level": 5,
-          "entry_gate": {
-            "met": [],
-            "status": "met",
-            "unknown": [],
-            "unmet": []
-          },
-          "levels_blocked": [
-            1,
-            2,
-            3,
-            4,
-            5,
-            6,
-            7,
-            8,
-            9,
-            10
-          ],
-          "levels_computed": [],
-          "status": "Blocked"
-        }
-      ],
-      "status": "Blocked"
+      "mixes": [],
+      "status": "Unknown"
     },
     {
       "alone_blocking_diagnostics": [
@@ -10499,7 +10311,7 @@
       ],
       "carrier_unknown_reason": null,
       "class_id": "class:lantern_bearer",
-      "entry_gate": "met",
+      "entry_gate": "unmet",
       "load_error": null,
       "max_level": 10,
       "mixes": [
@@ -10574,9 +10386,13 @@
           "carrier_level": 5,
           "entry_gate": {
             "met": [],
-            "status": "met",
+            "status": "unmet",
             "unknown": [],
-            "unmet": []
+            "unmet": [
+              "Holds Alignment([\"LG\", \"NG\", \"CG\"])",
+              "special: at least 3 of [Compare { lhs: SkillRanks(\"knowledge_dungeoneering\"), op: Gte, rhs: Const(5) }, Compare { lhs: SkillRanks(\"knowledge_nature\"), op: Gte, rhs: Const(2) }, Compare { lhs: SkillRanks(\"survival\"), op: Gte, rhs: Const(5) }]",
+              "special: at least 2 of [Holds { what: Proficiency(Weapon(\"Longbow\")), count: 1 }, Holds { what: Proficiency(WeaponTag(\"Martial\")), count: 1 }]"
+            ]
           },
           "levels_blocked": [
             1,
@@ -11175,11 +10991,11 @@
         "adventurers_guide"
       ],
       "carrier": [
-        "fighter"
+        "wizard"
       ],
       "carrier_unknown_reason": null,
       "class_id": "class:magaambyan_arcanist",
-      "entry_gate": "met",
+      "entry_gate": "unmet",
       "load_error": null,
       "max_level": 10,
       "mixes": [
@@ -11199,7 +11015,7 @@
                 9,
                 10
               ],
-              "message": "base class chassis is only supported for a single-class class:fighter at levels 1-20 or a single-class class:wizard at levels 1-20; chosen class levels [CharacterClassLevel { class_id: \"class:fighter\", level: 5 }, CharacterClassLevel { class_id: \"class:magaambyan_arcanist\", level: 1 }] do not provide it (either a multiclass mix, deferred to Epic 7, or a class this per-class dispatch does not yet recognize), so no chassis values were computed"
+              "message": "base class chassis is only supported for a single-class class:fighter at levels 1-20 or a single-class class:wizard at levels 1-20; chosen class levels [CharacterClassLevel { class_id: \"class:wizard\", level: 5 }, CharacterClassLevel { class_id: \"class:magaambyan_arcanist\", level: 1 }] do not provide it (either a multiclass mix, deferred to Epic 7, or a class this per-class dispatch does not yet recognize), so no chassis values were computed"
             },
             {
               "id": "combat.baseline_unsupported",
@@ -11231,7 +11047,7 @@
                 9,
                 10
               ],
-              "message": "total saving throws are only computed from a grounded base-save chassis this engine currently supports (class:fighter levels 1-20, class:wizard levels 1-20, a supported multiclass mix, a supported generic single class, or a supported single-class Skald, Bloodrager, Brawler, Hunter, Cavalier, Alchemist, Inquisitor, Oracle, Arcanist, Warpriest, Slayer, Swashbuckler, Investigator, Witch, Shaman, or Summoner chassis, or a supported single-class Unchained Barbarian, Unchained Monk, Unchained Rogue, or Unchained Summoner chassis (Pathfinder Unchained), or a supported single-class Gunslinger, Ninja, or Samurai chassis (Ultimate Combat), or a supported single-class untabled real base class (Aegis, Antipaladin, Cryptic, Dread, Kineticist, Magus, Marksman, Medium, Mesmerist, Occultist, Psion, Psychic, Psychic Warrior, Shifter, Soulknife, Spiritualist, Tactician, Vigilante, Vitalist, or Wilder) or CRB NPC/Ex-* class (Adept, Aristocrat, Commoner, Expert, Warrior, Ex-Barbarian, or Ex-Paladin) chassis); chosen class levels [CharacterClassLevel { class_id: \"class:fighter\", level: 5 }, CharacterClassLevel { class_id: \"class:magaambyan_arcanist\", level: 1 }] do not provide them, so no total saves were computed"
+              "message": "total saving throws are only computed from a grounded base-save chassis this engine currently supports (class:fighter levels 1-20, class:wizard levels 1-20, a supported multiclass mix, a supported generic single class, or a supported single-class Skald, Bloodrager, Brawler, Hunter, Cavalier, Alchemist, Inquisitor, Oracle, Arcanist, Warpriest, Slayer, Swashbuckler, Investigator, Witch, Shaman, or Summoner chassis, or a supported single-class Unchained Barbarian, Unchained Monk, Unchained Rogue, or Unchained Summoner chassis (Pathfinder Unchained), or a supported single-class Gunslinger, Ninja, or Samurai chassis (Ultimate Combat), or a supported single-class untabled real base class (Aegis, Antipaladin, Cryptic, Dread, Kineticist, Magus, Marksman, Medium, Mesmerist, Occultist, Psion, Psychic, Psychic Warrior, Shifter, Soulknife, Spiritualist, Tactician, Vigilante, Vitalist, or Wilder) or CRB NPC/Ex-* class (Adept, Aristocrat, Commoner, Expert, Warrior, Ex-Barbarian, or Ex-Paladin) chassis); chosen class levels [CharacterClassLevel { class_id: \"class:wizard\", level: 5 }, CharacterClassLevel { class_id: \"class:magaambyan_arcanist\", level: 1 }] do not provide them, so no total saves were computed"
             },
             {
               "id": "skill.selected_modifier.unsupported",
@@ -11250,13 +11066,20 @@
               "message": "selected skill modifiers are only computed for the exact GE-06 deterministic level-1 Climb/Intimidate/Swim rank-1 posture (on a grounded class:fighter levels 1-20, class:wizard levels 1-20, a supported multiclass mix, a supported generic single class, or a supported single-class Skald, Bloodrager, Brawler, Hunter, Cavalier, Alchemist, Inquisitor, Oracle, Arcanist, Warpriest, Slayer, Swashbuckler, Investigator, Witch, Shaman, or Summoner chassis, or a supported single-class Unchained Barbarian, Unchained Monk, Unchained Rogue, or Unchained Summoner chassis (Pathfinder Unchained), or a supported single-class Gunslinger, Ninja, or Samurai chassis (Ultimate Combat), or a supported single-class untabled real base class (Aegis, Antipaladin, Cryptic, Dread, Kineticist, Magus, Marksman, Medium, Mesmerist, Occultist, Psion, Psychic, Psychic Warrior, Shifter, Soulknife, Spiritualist, Tactician, Vigilante, Vitalist, or Wilder) or CRB NPC/Ex-* class (Adept, Aristocrat, Commoner, Expert, Warrior, Ex-Barbarian, or Ex-Paladin) chassis) with the grounded Chain Shirt armor-check penalty; unmet conditions: missing a supported chassis (needs one of: class:fighter levels 1-20, class:wizard levels 1-20, a supported multiclass mix, a supported generic single class, or a supported single-class Skald, Bloodrager, Brawler, Hunter, Cavalier, Alchemist, Inquisitor, Oracle, Arcanist, Warpriest, Slayer, Swashbuckler, Investigator, Witch, Shaman, or Summoner chassis, or a supported single-class Unchained Barbarian, Unchained Monk, Unchained Rogue, or Unchained Summoner chassis (Pathfinder Unchained), or a supported single-class Gunslinger, Ninja, or Samurai chassis (Ultimate Combat), or a supported single-class untabled real base class (Aegis, Antipaladin, Cryptic, Dread, Kineticist, Magus, Marksman, Medium, Mesmerist, Occultist, Psion, Psychic, Psychic Warrior, Shifter, Soulknife, Spiritualist, Tactician, Vigilante, Vitalist, or Wilder) or CRB NPC/Ex-* class (Adept, Aristocrat, Commoner, Expert, Warrior, Ex-Barbarian, or Ex-Paladin) chassis)"
             }
           ],
-          "carrier": "fighter",
+          "carrier": "wizard",
           "carrier_level": 5,
           "entry_gate": {
-            "met": [],
-            "status": "met",
+            "met": [
+              "Situational: requires a prepared caster",
+              "HighestSpellLevel Arcane >= 3"
+            ],
+            "status": "unmet",
             "unknown": [],
-            "unmet": []
+            "unmet": [
+              "Holds Alignment([\"LG\", \"NG\", \"CG\"])",
+              "special: at least 2 of [Holds { what: Rule(\"adventurers_guide:feat:scholar\"), count: 1 }, Holds { what: Rule(\"core_rulebook:feat:spell_mastery\"), count: 1 }]",
+              "special: at least 3 of [Compare { lhs: SkillRanks(\"spellcraft\"), op: Gte, rhs: Const(5) }, Compare { lhs: SkillRanks(\"knowledge_arcana\"), op: Gte, rhs: Const(5) }, Compare { lhs: SkillRanks(\"knowledge_nature\"), op: Gte, rhs: Const(5) }]"
+            ]
           },
           "levels_blocked": [
             1,
@@ -13186,7 +13009,7 @@
       ],
       "carrier_unknown_reason": null,
       "class_id": "class:pathfinder_delver",
-      "entry_gate": "met",
+      "entry_gate": "unmet",
       "load_error": null,
       "max_level": 10,
       "mixes": [
@@ -13261,9 +13084,11 @@
           "carrier_level": 5,
           "entry_gate": {
             "met": [],
-            "status": "met",
+            "status": "unmet",
             "unknown": [],
-            "unmet": []
+            "unmet": [
+              "special: at least 4 of [Compare { lhs: SkillRanks(\"acrobatics\"), op: Gte, rhs: Const(5) }, Compare { lhs: SkillRanks(\"disable_device\"), op: Gte, rhs: Const(4) }, Compare { lhs: SkillRanks(\"knowledge_history\"), op: Gte, rhs: Const(4) }, Compare { lhs: SkillRanks(\"perception\"), op: Gte, rhs: Const(5) }]"
+            ]
           },
           "levels_blocked": [
             1,
@@ -13338,107 +13163,14 @@
       "books": [
         "adventurers_guide"
       ],
-      "carrier": [
-        "fighter"
-      ],
-      "carrier_unknown_reason": null,
+      "carrier": [],
+      "carrier_unknown_reason": "class:pathfinder_savant: gate references a caster level or spell-kind term only inside a Not/AtLeast clause -- never as a mandatory, positive top-level term -- so no carrier can be named with confidence: All([Compare { lhs: ClassLevel(\"pathfinder_savant\"), op: Lte, rhs: Const(10) }, Holds { what: Rule(\"core_rulebook:feat:magical_aptitude\"), count: 1 }, Holds { what: RuleTag { pool: \"feat\", tag: \"ItemCreation\" }, count: 1 }, AtLeast { n: 3, of: [Compare { lhs: SkillRanks(\"knowledge_arcana\"), op: Gte, rhs: Const(5) }, Compare { lhs: SkillRanks(\"spellcraft\"), op: Gte, rhs: Const(5) }, Compare { lhs: SkillRanks(\"use_magic_device\"), op: Gte, rhs: Const(5) }] }, AtLeast { n: 1, of: [Compare { lhs: HighestSpellLevel(Arcane), op: Gte, rhs: Const(2) }, Compare { lhs: HighestSpellLevel(Divine), op: Gte, rhs: Const(2) }] }])",
       "class_id": "class:pathfinder_savant",
-      "entry_gate": "met",
+      "entry_gate": "unknown",
       "load_error": null,
       "max_level": 10,
-      "mixes": [
-        {
-          "blocking_diagnostics": [
-            {
-              "id": "class_chassis.unsupported",
-              "levels": [
-                1,
-                2,
-                3,
-                4,
-                5,
-                6,
-                7,
-                8,
-                9,
-                10
-              ],
-              "message": "base class chassis is only supported for a single-class class:fighter at levels 1-20 or a single-class class:wizard at levels 1-20; chosen class levels [CharacterClassLevel { class_id: \"class:fighter\", level: 5 }, CharacterClassLevel { class_id: \"class:pathfinder_savant\", level: 1 }] do not provide it (either a multiclass mix, deferred to Epic 7, or a class this per-class dispatch does not yet recognize), so no chassis values were computed"
-            },
-            {
-              "id": "combat.baseline_unsupported",
-              "levels": [
-                1,
-                2,
-                3,
-                4,
-                5,
-                6,
-                7,
-                8,
-                9,
-                10
-              ],
-              "message": "baseline combat totals are only computed for the exact GE-06 deterministic Longsword/Chain Shirt/Dodge/no-shield posture; unmet conditions: missing supported class:fighter levels 1-20 or class:wizard levels 1-20 chassis"
-            },
-            {
-              "id": "defense.total_save.unsupported",
-              "levels": [
-                1,
-                2,
-                3,
-                4,
-                5,
-                6,
-                7,
-                8,
-                9,
-                10
-              ],
-              "message": "total saving throws are only computed from a grounded base-save chassis this engine currently supports (class:fighter levels 1-20, class:wizard levels 1-20, a supported multiclass mix, a supported generic single class, or a supported single-class Skald, Bloodrager, Brawler, Hunter, Cavalier, Alchemist, Inquisitor, Oracle, Arcanist, Warpriest, Slayer, Swashbuckler, Investigator, Witch, Shaman, or Summoner chassis, or a supported single-class Unchained Barbarian, Unchained Monk, Unchained Rogue, or Unchained Summoner chassis (Pathfinder Unchained), or a supported single-class Gunslinger, Ninja, or Samurai chassis (Ultimate Combat), or a supported single-class untabled real base class (Aegis, Antipaladin, Cryptic, Dread, Kineticist, Magus, Marksman, Medium, Mesmerist, Occultist, Psion, Psychic, Psychic Warrior, Shifter, Soulknife, Spiritualist, Tactician, Vigilante, Vitalist, or Wilder) or CRB NPC/Ex-* class (Adept, Aristocrat, Commoner, Expert, Warrior, Ex-Barbarian, or Ex-Paladin) chassis); chosen class levels [CharacterClassLevel { class_id: \"class:fighter\", level: 5 }, CharacterClassLevel { class_id: \"class:pathfinder_savant\", level: 1 }] do not provide them, so no total saves were computed"
-            },
-            {
-              "id": "skill.selected_modifier.unsupported",
-              "levels": [
-                1,
-                2,
-                3,
-                4,
-                5,
-                6,
-                7,
-                8,
-                9,
-                10
-              ],
-              "message": "selected skill modifiers are only computed for the exact GE-06 deterministic level-1 Climb/Intimidate/Swim rank-1 posture (on a grounded class:fighter levels 1-20, class:wizard levels 1-20, a supported multiclass mix, a supported generic single class, or a supported single-class Skald, Bloodrager, Brawler, Hunter, Cavalier, Alchemist, Inquisitor, Oracle, Arcanist, Warpriest, Slayer, Swashbuckler, Investigator, Witch, Shaman, or Summoner chassis, or a supported single-class Unchained Barbarian, Unchained Monk, Unchained Rogue, or Unchained Summoner chassis (Pathfinder Unchained), or a supported single-class Gunslinger, Ninja, or Samurai chassis (Ultimate Combat), or a supported single-class untabled real base class (Aegis, Antipaladin, Cryptic, Dread, Kineticist, Magus, Marksman, Medium, Mesmerist, Occultist, Psion, Psychic, Psychic Warrior, Shifter, Soulknife, Spiritualist, Tactician, Vigilante, Vitalist, or Wilder) or CRB NPC/Ex-* class (Adept, Aristocrat, Commoner, Expert, Warrior, Ex-Barbarian, or Ex-Paladin) chassis) with the grounded Chain Shirt armor-check penalty; unmet conditions: missing a supported chassis (needs one of: class:fighter levels 1-20, class:wizard levels 1-20, a supported multiclass mix, a supported generic single class, or a supported single-class Skald, Bloodrager, Brawler, Hunter, Cavalier, Alchemist, Inquisitor, Oracle, Arcanist, Warpriest, Slayer, Swashbuckler, Investigator, Witch, Shaman, or Summoner chassis, or a supported single-class Unchained Barbarian, Unchained Monk, Unchained Rogue, or Unchained Summoner chassis (Pathfinder Unchained), or a supported single-class Gunslinger, Ninja, or Samurai chassis (Ultimate Combat), or a supported single-class untabled real base class (Aegis, Antipaladin, Cryptic, Dread, Kineticist, Magus, Marksman, Medium, Mesmerist, Occultist, Psion, Psychic, Psychic Warrior, Shifter, Soulknife, Spiritualist, Tactician, Vigilante, Vitalist, or Wilder) or CRB NPC/Ex-* class (Adept, Aristocrat, Commoner, Expert, Warrior, Ex-Barbarian, or Ex-Paladin) chassis)"
-            }
-          ],
-          "carrier": "fighter",
-          "carrier_level": 5,
-          "entry_gate": {
-            "met": [],
-            "status": "met",
-            "unknown": [],
-            "unmet": []
-          },
-          "levels_blocked": [
-            1,
-            2,
-            3,
-            4,
-            5,
-            6,
-            7,
-            8,
-            9,
-            10
-          ],
-          "levels_computed": [],
-          "status": "Blocked"
-        }
-      ],
-      "status": "Blocked"
+      "mixes": [],
+      "status": "Unknown"
     },
     {
       "alone_blocking_diagnostics": [
@@ -14477,7 +14209,7 @@
       ],
       "carrier_unknown_reason": null,
       "class_id": "class:red_mantis_assassin",
-      "entry_gate": "met",
+      "entry_gate": "unmet",
       "load_error": null,
       "max_level": 10,
       "mixes": [
@@ -14552,9 +14284,13 @@
           "carrier_level": 5,
           "entry_gate": {
             "met": [],
-            "status": "met",
+            "status": "unmet",
             "unknown": [],
-            "unmet": []
+            "unmet": [
+              "special: at least 4 of [Holds { what: Rule(\"core_rulebook:feat:alertness\"), count: 1 }, Holds { what: Rule(\"core_rulebook:feat:exotic_weapon_proficiency\"), count: 1 }, Holds { what: Rule(\"core_rulebook:feat:two_weapon_fighting\"), count: 1 }, Holds { what: Rule(\"core_rulebook:feat:weapon_focus\"), count: 1 }]",
+              "Holds Alignment([\"LE\"])",
+              "special: at least 3 of [Compare { lhs: SkillRanks(\"intimidate\"), op: Gte, rhs: Const(5) }, Compare { lhs: SkillRanks(\"perception\"), op: Gte, rhs: Const(5) }, Compare { lhs: SkillRanks(\"stealth\"), op: Gte, rhs: Const(5) }]"
+            ]
           },
           "levels_blocked": [
             1,
@@ -14634,7 +14370,7 @@
       ],
       "carrier_unknown_reason": null,
       "class_id": "class:rivethun_emissary",
-      "entry_gate": "met",
+      "entry_gate": "unknown",
       "load_error": null,
       "max_level": 10,
       "mixes": [
@@ -14709,9 +14445,14 @@
           "carrier_level": 5,
           "entry_gate": {
             "met": [],
-            "status": "met",
-            "unknown": [],
-            "unmet": []
+            "status": "unknown",
+            "unknown": [
+              "Compare { Var(\"vf8cfa6f9260be027\") Gte Const(1) }"
+            ],
+            "unmet": [
+              "special: at least 2 of [Holds { what: Rule(\"core_rulebook:feat:iron_will\"), count: 1 }, Holds { what: MissingRule { pool: \"feat\", name: \"Spirit Beacon\" }, count: 1 }]",
+              "special: at least 2 of [Compare { lhs: SkillRanks(\"diplomacy\"), op: Gte, rhs: Const(5) }, Compare { lhs: SkillRanks(\"knowledge_religion\"), op: Gte, rhs: Const(5) }]"
+            ]
           },
           "levels_blocked": [
             1,
@@ -15830,7 +15571,7 @@
       ],
       "carrier_unknown_reason": null,
       "class_id": "class:steel_falcon",
-      "entry_gate": "met",
+      "entry_gate": "unmet",
       "load_error": null,
       "max_level": 10,
       "mixes": [
@@ -15905,9 +15646,13 @@
           "carrier_level": 5,
           "entry_gate": {
             "met": [],
-            "status": "met",
+            "status": "unmet",
             "unknown": [],
-            "unmet": []
+            "unmet": [
+              "Holds Alignment([\"LG\", \"NG\", \"CG\", \"LN\", \"TN\", \"CN\"])",
+              "Holds Rule(\"core_rulebook:feat:iron_will\")",
+              "special: at least 4 of [Compare { lhs: SkillRanks(\"diplomacy\"), op: Gte, rhs: Const(5) }, Compare { lhs: SkillRanks(\"knowledge_history\"), op: Gte, rhs: Const(2) }, Compare { lhs: SkillRanks(\"knowledge_local\"), op: Gte, rhs: Const(2) }, Compare { lhs: SkillRanks(\"sense_motive\"), op: Gte, rhs: Const(5) }]"
+            ]
           },
           "levels_blocked": [
             1,
@@ -15982,107 +15727,14 @@
       "books": [
         "adventurers_guide"
       ],
-      "carrier": [
-        "fighter"
-      ],
-      "carrier_unknown_reason": null,
+      "carrier": [],
+      "carrier_unknown_reason": "class:storm_kindler: gate references a caster level or spell-kind term only inside a Not/AtLeast clause -- never as a mandatory, positive top-level term -- so no carrier can be named with confidence: All([Compare { lhs: ClassLevel(\"storm_kindler\"), op: Lte, rhs: Const(10) }, Holds { what: Alignment([\"NG\", \"LN\", \"TN\", \"CN\", \"NE\"]), count: 1 }, Holds { what: Deity(Named(\"gozreh\")), count: 1 }, Holds { what: Rule(\"adventurers_guide:feat:storm_lashed\"), count: 1 }, AtLeast { n: 4, of: [Compare { lhs: SkillRanks(\"fly\"), op: Gte, rhs: Const(3) }, Compare { lhs: SkillRanks(\"knowledge_history\"), op: Gte, rhs: Const(6) }, Compare { lhs: SkillRanks(\"knowledge_nature\"), op: Gte, rhs: Const(6) }, Compare { lhs: SkillRanks(\"swim\"), op: Gte, rhs: Const(3) }] }, Compare { lhs: HighestSpellLevel(Any), op: Gte, rhs: Const(2) }])",
       "class_id": "class:storm_kindler",
-      "entry_gate": "met",
+      "entry_gate": "unknown",
       "load_error": null,
       "max_level": 10,
-      "mixes": [
-        {
-          "blocking_diagnostics": [
-            {
-              "id": "class_chassis.unsupported",
-              "levels": [
-                1,
-                2,
-                3,
-                4,
-                5,
-                6,
-                7,
-                8,
-                9,
-                10
-              ],
-              "message": "base class chassis is only supported for a single-class class:fighter at levels 1-20 or a single-class class:wizard at levels 1-20; chosen class levels [CharacterClassLevel { class_id: \"class:fighter\", level: 5 }, CharacterClassLevel { class_id: \"class:storm_kindler\", level: 1 }] do not provide it (either a multiclass mix, deferred to Epic 7, or a class this per-class dispatch does not yet recognize), so no chassis values were computed"
-            },
-            {
-              "id": "combat.baseline_unsupported",
-              "levels": [
-                1,
-                2,
-                3,
-                4,
-                5,
-                6,
-                7,
-                8,
-                9,
-                10
-              ],
-              "message": "baseline combat totals are only computed for the exact GE-06 deterministic Longsword/Chain Shirt/Dodge/no-shield posture; unmet conditions: missing supported class:fighter levels 1-20 or class:wizard levels 1-20 chassis"
-            },
-            {
-              "id": "defense.total_save.unsupported",
-              "levels": [
-                1,
-                2,
-                3,
-                4,
-                5,
-                6,
-                7,
-                8,
-                9,
-                10
-              ],
-              "message": "total saving throws are only computed from a grounded base-save chassis this engine currently supports (class:fighter levels 1-20, class:wizard levels 1-20, a supported multiclass mix, a supported generic single class, or a supported single-class Skald, Bloodrager, Brawler, Hunter, Cavalier, Alchemist, Inquisitor, Oracle, Arcanist, Warpriest, Slayer, Swashbuckler, Investigator, Witch, Shaman, or Summoner chassis, or a supported single-class Unchained Barbarian, Unchained Monk, Unchained Rogue, or Unchained Summoner chassis (Pathfinder Unchained), or a supported single-class Gunslinger, Ninja, or Samurai chassis (Ultimate Combat), or a supported single-class untabled real base class (Aegis, Antipaladin, Cryptic, Dread, Kineticist, Magus, Marksman, Medium, Mesmerist, Occultist, Psion, Psychic, Psychic Warrior, Shifter, Soulknife, Spiritualist, Tactician, Vigilante, Vitalist, or Wilder) or CRB NPC/Ex-* class (Adept, Aristocrat, Commoner, Expert, Warrior, Ex-Barbarian, or Ex-Paladin) chassis); chosen class levels [CharacterClassLevel { class_id: \"class:fighter\", level: 5 }, CharacterClassLevel { class_id: \"class:storm_kindler\", level: 1 }] do not provide them, so no total saves were computed"
-            },
-            {
-              "id": "skill.selected_modifier.unsupported",
-              "levels": [
-                1,
-                2,
-                3,
-                4,
-                5,
-                6,
-                7,
-                8,
-                9,
-                10
-              ],
-              "message": "selected skill modifiers are only computed for the exact GE-06 deterministic level-1 Climb/Intimidate/Swim rank-1 posture (on a grounded class:fighter levels 1-20, class:wizard levels 1-20, a supported multiclass mix, a supported generic single class, or a supported single-class Skald, Bloodrager, Brawler, Hunter, Cavalier, Alchemist, Inquisitor, Oracle, Arcanist, Warpriest, Slayer, Swashbuckler, Investigator, Witch, Shaman, or Summoner chassis, or a supported single-class Unchained Barbarian, Unchained Monk, Unchained Rogue, or Unchained Summoner chassis (Pathfinder Unchained), or a supported single-class Gunslinger, Ninja, or Samurai chassis (Ultimate Combat), or a supported single-class untabled real base class (Aegis, Antipaladin, Cryptic, Dread, Kineticist, Magus, Marksman, Medium, Mesmerist, Occultist, Psion, Psychic, Psychic Warrior, Shifter, Soulknife, Spiritualist, Tactician, Vigilante, Vitalist, or Wilder) or CRB NPC/Ex-* class (Adept, Aristocrat, Commoner, Expert, Warrior, Ex-Barbarian, or Ex-Paladin) chassis) with the grounded Chain Shirt armor-check penalty; unmet conditions: missing a supported chassis (needs one of: class:fighter levels 1-20, class:wizard levels 1-20, a supported multiclass mix, a supported generic single class, or a supported single-class Skald, Bloodrager, Brawler, Hunter, Cavalier, Alchemist, Inquisitor, Oracle, Arcanist, Warpriest, Slayer, Swashbuckler, Investigator, Witch, Shaman, or Summoner chassis, or a supported single-class Unchained Barbarian, Unchained Monk, Unchained Rogue, or Unchained Summoner chassis (Pathfinder Unchained), or a supported single-class Gunslinger, Ninja, or Samurai chassis (Ultimate Combat), or a supported single-class untabled real base class (Aegis, Antipaladin, Cryptic, Dread, Kineticist, Magus, Marksman, Medium, Mesmerist, Occultist, Psion, Psychic, Psychic Warrior, Shifter, Soulknife, Spiritualist, Tactician, Vigilante, Vitalist, or Wilder) or CRB NPC/Ex-* class (Adept, Aristocrat, Commoner, Expert, Warrior, Ex-Barbarian, or Ex-Paladin) chassis)"
-            }
-          ],
-          "carrier": "fighter",
-          "carrier_level": 5,
-          "entry_gate": {
-            "met": [],
-            "status": "met",
-            "unknown": [],
-            "unmet": []
-          },
-          "levels_blocked": [
-            1,
-            2,
-            3,
-            4,
-            5,
-            6,
-            7,
-            8,
-            9,
-            10
-          ],
-          "levels_computed": [],
-          "status": "Blocked"
-        }
-      ],
-      "status": "Blocked"
+      "mixes": [],
+      "status": "Unknown"
     },
     {
       "alone_blocking_diagnostics": [
@@ -16656,7 +16308,7 @@
       ],
       "carrier_unknown_reason": null,
       "class_id": "class:twilight_talon",
-      "entry_gate": "met",
+      "entry_gate": "unmet",
       "load_error": null,
       "max_level": 10,
       "mixes": [
@@ -16731,9 +16383,13 @@
           "carrier_level": 5,
           "entry_gate": {
             "met": [],
-            "status": "met",
+            "status": "unmet",
             "unknown": [],
-            "unmet": []
+            "unmet": [
+              "Holds Alignment([\"LG\", \"NG\", \"CG\", \"LN\", \"TN\", \"CN\"])",
+              "special: at least 2 of [Holds { what: Rule(\"core_rulebook:feat:catch_off_guard\"), count: 1 }, Holds { what: Rule(\"adventurers_guide:feat:twilight_tattoo\"), count: 1 }]",
+              "special: at least 5 of [Compare { lhs: SkillRanks(\"bluff\"), op: Gte, rhs: Const(5) }, Compare { lhs: SkillRanks(\"disguise\"), op: Gte, rhs: Const(5) }, Compare { lhs: SkillRanks(\"knowledge_local\"), op: Gte, rhs: Const(2) }, Compare { lhs: SkillRanks(\"linguistics\"), op: Gte, rhs: Const(2) }, Compare { lhs: SkillRanks(\"stealth\"), op: Gte, rhs: Const(5) }]"
+            ]
           },
           "levels_blocked": [
             1,
@@ -17140,7 +16796,7 @@
       ],
       "carrier_unknown_reason": null,
       "class_id": "class:westcrown_devil",
-      "entry_gate": "met",
+      "entry_gate": "unknown",
       "load_error": null,
       "max_level": 10,
       "mixes": [
@@ -17214,10 +16870,19 @@
           "carrier": "fighter",
           "carrier_level": 5,
           "entry_gate": {
-            "met": [],
-            "status": "met",
-            "unknown": [],
-            "unmet": []
+            "met": [
+              "SkillRanks >= 5"
+            ],
+            "status": "unknown",
+            "unknown": [
+              "Compare { Var(\"v8d46f7a1af7005e2\") Eq Const(1) }"
+            ],
+            "unmet": [
+              "Holds Alignment([\"NG\", \"CG\", \"TN\", \"CN\", \"NE\", \"CE\"])",
+              "special: at least 1 of [Holds { what: Rule(\"core_rulebook:feat:alertness\"), count: 1 }, Holds { what: Rule(\"core_rulebook:feat:athletic\"), count: 1 }, Holds { what: Rule(\"core_rulebook:feat:deceitful\"), count: 1 }, Holds { what: Rule(\"core_rulebook:feat:deft_hands\"), count: 1 }, Holds { what: Rule(\"core_rulebook:feat:magical_aptitude\"), count: 1 }, Holds { what: Rule(\"core_rulebook:feat:persuasive\"), count: 1 }, Holds { what: Rule(\"core_rulebook:feat:stealthy\"), count: 1 }]",
+              "special: Not(Holds { what: Deity(Named(\"norgorber\")), count: 1 })",
+              "special: at least 3 of [Compare { lhs: SkillRanks(\"acrobatics\"), op: Gte, rhs: Const(5) }, Compare { lhs: SkillRanks(\"bluff\"), op: Gte, rhs: Const(5) }, Compare { lhs: SkillRanks(\"climb\"), op: Gte, rhs: Const(5) }, Compare { lhs: SkillRanks(\"disable_device\"), op: Gte, rhs: Const(5) }, Compare { lhs: SkillRanks(\"knowledge_history\"), op: Gte, rhs: Const(5) }, Compare { lhs: SkillRanks(\"knowledge_nobility\"), op: Gte, rhs: Const(5) }, Compare { lhs: SkillRanks(\"sense_motive\"), op: Gte, rhs: Const(5) }, Compare { lhs: SkillRanks(\"sleight_of_hand\"), op: Gte, rhs: Const(5) }, Compare { lhs: SkillRanks(\"stealth\"), op: Gte, rhs: Const(5) }, Compare { lhs: SkillRanks(\"use_magic_device\"), op: Gte, rhs: Const(5) }]"
+            ]
           },
           "levels_blocked": [
             1,
@@ -17240,7 +16905,7 @@
   ],
   "prestige_alone_blocked": 74,
   "prestige_mix_computed": 0,
-  "prestige_mix_unknown": 7,
+  "prestige_mix_unknown": 11,
   "prestige_swept": 74,
   "source_of_truth": "codex::rules_core::pilot_compute::build_pilot_headless_receipt"
 }

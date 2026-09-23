@@ -160,6 +160,23 @@ fn kind_gate(kind: &str) {
             assert_eq!(r.provenance.kind, kind, "{rel}: provenance kind");
         }
     }
+    // SD-36 F1c-3 (D3): a class-selection class's principal (`Effect::TakenOnClass`) is written
+    // for a unit of ANOTHER kind (the selection ability) and is no inventory unit of its own.
+    // Every such extra must carry the effect and name a base class the package converted.
+    if kind == "class" {
+        let selection: BTreeSet<String> = files
+            .iter()
+            .filter(|(rel, _)| rel.split('/').nth(1) == Some("class"))
+            .filter_map(|(_, bytes)| serde_json::from_slice::<Vec<SheetRule>>(bytes).ok()?.into_iter().next())
+            .filter(|r| r.grants.iter().any(|e| matches!(e, codex::rules_core::sheet_rule::Effect::TakenOnClass(base) if converted.iter().any(|c| c.ends_with(&format!(":class:{base}"))))))
+            .map(|r| r.id)
+            .collect();
+        for id in &selection {
+            assert!(!units.contains(id), "{id}: a class-selection principal is never an inventory unit");
+        }
+        assert_eq!(selection.len(), 4, "class-selection principals (Pathfinder Unchained's four): {selection:?}");
+        converted.retain(|id| !selection.contains(id));
+    }
     let refused: BTreeSet<String> = refused_ids().into_iter().filter(|id| id.split(':').nth(1) == Some(kind)).collect();
     let both: Vec<_> = converted.intersection(&refused).take(5).collect();
     assert!(both.is_empty(), "{kind}: converted AND refused: {both:?}");

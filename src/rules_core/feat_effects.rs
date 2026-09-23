@@ -670,7 +670,7 @@ const GREATER_WEAPON_FOCUS_FEAT_KEY: &str = "Greater Weapon Focus";
 const WEAPON_FOCUS_TARGET_CHOICE_SET: &str = "choice:weapon_focus_target";
 const GREATER_WEAPON_FOCUS_TARGET_CHOICE_SET: &str = "choice:greater_weapon_focus_target";
 const FIGHTER_BONUS_FEAT_CHOICE_SET: &str = "choice:fighter_bonus_feat";
-const WEAPON_SELECTION_PREFIX: &str = "weapon:";
+pub(crate) const WEAPON_SELECTION_PREFIX: &str = "weapon:";
 const LEGACY_WEAPON_FOCUS_COMPOUND_PREFIX: &str = "feat:weapon_focus:weapon:";
 
 /// Weapon Focus's and Greater Weapon Focus's real attack bonuses: `+1` **each**,

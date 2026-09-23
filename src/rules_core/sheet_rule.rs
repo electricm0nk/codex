@@ -88,6 +88,15 @@ pub struct SheetRule {
     /// What holding it does to the fact set.
     #[serde(default, skip_serializing_if = "Vec::is_empty")]
     pub grants: Vec<Effect>,
+    /// On a CLASS principal only (SD-36 F1c-3, defect D4; `epic-f-class-completion.md` §3.4):
+    /// the converter attests the class's grant closure complete -- every rule the class line
+    /// reaches through `Granter::Class` / `Granter::Rule` edges (a class-selection class's base
+    /// class line included) converted with ZERO closure defects (unresolved reference, ambiguous
+    /// target, grant-by-type, undefined variable, unrecognized proficiency tag, or a grant edge
+    /// onto an unconverted target). Absent (false) is "not attested", never "incomplete proven":
+    /// a reader may answer a known EMPTY set only when this is true.
+    #[serde(default, skip_serializing_if = "std::ops::Not::not")]
+    pub closure_complete: bool,
     pub provenance: Provenance,
 }
 
@@ -501,6 +510,14 @@ pub enum Effect {
     /// the character's own facts; otherwise its condition prints and the fact is withheld,
     /// never approximated as granted.
     GatedFactGrant { fact: Fact, when: Applies },
+    /// On a CLASS principal only: this class is a selection taken on the named base class, so
+    /// every level in it IS a level in the base class (SD-36 F1c-3, defect D3). PCGen declares no
+    /// `CLASS:` object for such a class -- Pathfinder Unchained's four are `CATEGORY:CLASS`
+    /// abilities in the base class's `<Base> Class Selection` pool (`pu_abilities_class.lst`) --
+    /// so the character's class line is the base class's, with the selection held on it. The
+    /// held-set fixpoint and `Expr::ClassLevel` read it through
+    /// [`SheetRulePackage::base_class_of`]; the character's total level is unchanged.
+    TakenOnClass(ClassId),
 }
 
 #[derive(Debug, Clone, PartialEq, Serialize, Deserialize)]
@@ -930,6 +947,9 @@ pub struct SheetRulePackage {
     /// `kind: trait`, 131 of 487 corpus records (the `codex_named_unit_*` rows, which carry a
     /// synthetic key). This index resolved **487 of 487** of the same population.
     by_closure_row: BTreeMap<String, Vec<RuleId>>,
+    /// `class slug -> base class slug`, from every class principal carrying
+    /// [`Effect::TakenOnClass`].
+    taken_on_class: BTreeMap<ClassId, ClassId>,
 }
 
 /// `"Trait ~ Magical Knack"` -> `"trait_magical_knack"`; the slug the converter names a
@@ -1019,8 +1039,16 @@ impl SheetRulePackage {
         self.grants_from_rule.clear();
         self.fact_granted.clear();
         self.by_closure_row.clear();
+        self.taken_on_class.clear();
         for (id, rule) in &self.rules {
             let (_, kind, slug) = split_rule_id(id);
+            if kind == "class" && !id.contains('#') {
+                for effect in &rule.grants {
+                    if let Effect::TakenOnClass(base) = effect {
+                        self.taken_on_class.insert(slug.to_string(), base.clone());
+                    }
+                }
+            }
             for row in &rule.provenance.closure_rows {
                 let ids = self.by_closure_row.entry(row.clone()).or_default();
                 if !ids.contains(id) {
@@ -1055,6 +1083,23 @@ impl SheetRulePackage {
 
     pub fn rule(&self, id: &str) -> Option<&SheetRule> {
         self.rules.get(id)
+    }
+
+    /// The base class a class-selection class is taken on ([`Effect::TakenOnClass`]), if any.
+    pub fn base_class_of(&self, class: &str) -> Option<&str> {
+        self.taken_on_class.get(class).map(String::as_str)
+    }
+
+    /// `classes` plus, for every class-selection class among them, its base class at the same
+    /// level ([`Effect::TakenOnClass`]): the class lines the character actually holds.
+    pub fn class_lines_held(&self, classes: &[(ClassId, i64)]) -> Vec<(ClassId, i64)> {
+        let mut out = classes.to_vec();
+        for (class, level) in classes {
+            if let Some(base) = self.base_class_of(class) {
+                out.push((base.to_string(), *level));
+            }
+        }
+        out
     }
 
     /// The rules this rule hands out, in package order (`Granter::Rule` read backwards).
@@ -1448,7 +1493,12 @@ impl<'a> Evaluator<'a> {
     }
 
     fn class_level(&self, class: &str) -> i64 {
-        self.facts.class_levels.iter().filter(|(c, _)| c == class).map(|(_, l)| *l).sum()
+        self.facts
+            .class_levels
+            .iter()
+            .filter(|(c, _)| c == class || self.package.base_class_of(c) == Some(class))
+            .map(|(_, l)| *l)
+            .sum()
     }
 
     fn expr(&self, e: &Expr) -> Rat {
@@ -1974,8 +2024,10 @@ pub fn held_set(package: &SheetRulePackage, seed: &HeldSeed, facts: &CharacterFa
     {
         add(&mut held, id, HeldRule::default());
     }
-    held.classes = seed.classes.iter().filter(|(_, level)| *level >= 1).map(|(class, _)| class.clone()).collect();
-    for (class, _) in &seed.classes {
+    // A class-selection class holds its base class's line too (`Effect::TakenOnClass`).
+    let seed_classes = package.class_lines_held(&seed.classes);
+    held.classes = seed_classes.iter().filter(|(_, level)| *level >= 1).map(|(class, _)| class.clone()).collect();
+    for (class, _) in &seed_classes {
         if let Some(id) = package.find("class", class) {
             add(&mut held, id, HeldRule { holder_class: Some(class.clone()), ..Default::default() });
         }
@@ -2031,7 +2083,7 @@ pub fn held_set(package: &SheetRulePackage, seed: &HeldSeed, facts: &CharacterFa
                 let (satisfied, via) = match &grant.by {
                     Granter::Rule(g) => (held.holds(g), held.rules.get(g).cloned()),
                     Granter::Class { id: class, at_level } => {
-                        let lvl = seed.classes.iter().filter(|(c, _)| c == class).map(|(_, l)| *l).sum::<i64>();
+                        let lvl = seed_classes.iter().filter(|(c, _)| c == class).map(|(_, l)| *l).sum::<i64>();
                         (lvl >= i64::from(*at_level), Some(HeldRule { holder_class: Some(class.clone()), ..Default::default() }))
                     }
                     Granter::ClassSpellList { .. } => (false, None),
@@ -2271,6 +2323,7 @@ mod evaluate_tests {
             granted_by: vec![],
             offers: None,
             grants: vec![],
+            closure_complete: false,
             provenance: Provenance::default(),
         }
     }
@@ -2943,6 +2996,7 @@ mod tests {
             granted_by: vec![],
             offers: None,
             grants: vec![],
+            closure_complete: false,
             provenance: Provenance::default(),
         };
         let json = serde_json::to_string(&rule).unwrap();
@@ -2982,6 +3036,7 @@ mod tests {
                     rhs: Expr::Const(0),
                 },
             }],
+            closure_complete: false,
             provenance: Provenance::default(),
         };
 
