@@ -1504,7 +1504,7 @@ mod untabled_class_chassis_gate_tests {
     fn every_untabled_class_outside_the_named_reader_remainder_reaches_computed() {
         let remainder = non_prestige_reader_remainder();
         assert!(
-            remainder.iter().all(|id| id == "class:antipaladin" || id == "class:magus" || id == "class:commoner"),
+            remainder.iter().all(|id| id == "class:commoner"),
             "the recorded non-prestige remainder moved: {remainder:?}"
         );
         let mut class_ids: Vec<String> = untabled_base_class_chassis::untabled_base_class_registry()

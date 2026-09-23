@@ -106,6 +106,12 @@ pub struct CorpusIndex {
     pub own_var_contribs: BTreeMap<RuleId, BTreeMap<String, Vec<OwnContribution>>>,
     /// rule id -> names the record's own rows DEFINE.
     pub own_defines: BTreeMap<RuleId, BTreeSet<String>>,
+    /// rule id -> the record's ACCUMULATED `(CATEGORY, TYPE tags)` over its whole closure (base,
+    /// `.COPY=` base, level lines, `.MOD` rows), folded exactly as the converter folds them into
+    /// the converted rule's `pool`/`tags` (`convert::accumulated_facets`). What an
+    /// `ABILITY:<category>|...|TYPE=<tag>` grant selects on (SD-36 Epic F1c-1): PCGen checks the
+    /// ability's accumulated TYPE, including tags a `.MOD` row adds.
+    pub facets: BTreeMap<RuleId, (String, Vec<String>)>,
 }
 
 /// Resolve `(category, name)` to a rule id: KEY-exact join first, then display-name-exact join,

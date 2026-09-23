@@ -3397,9 +3397,11 @@ mod converted_record_proficiency_fallback_tests {
     /// A class with no static row whose converted answer is Unknown keeps the claim-blocking
     /// diagnostic, and the answer now carries the reader's reason. Synthetic: a class id with
     /// no converted record at all (it has no chassis either, so the combat baseline never runs
-    /// for it -- the verdict itself is asserted). Real, through the whole receipt: Magus, whose
-    /// converted closure reaches no weapon grant (its `TYPE=WeaponProfMartial` grant-by-type is
-    /// not converted, `_defects/grant-by-type.json`).
+    /// for it -- the verdict itself is asserted). Real, through the whole receipt: Commoner, whose
+    /// converted closure holds a one-simple-weapon pick into a pool with no converted member
+    /// (`reader-remainder.md` mechanism F). Magus was the real case until SD-36 Epic F1c-1
+    /// converted its `TYPE=WeaponProfMartial` grant-by-type; it is asserted as the flip: it now
+    /// reads Longsword from the converted record and carries no proficiency diagnostic.
     #[test]
     fn a_class_with_no_row_and_incomplete_closure_keeps_the_diagnostic() {
         let synthetic = single_class("class:fixture_class_with_no_record", 1);
@@ -3411,18 +3413,28 @@ mod converted_record_proficiency_fallback_tests {
             known => panic!("a class with no row and no record must be Unknown, got {known:?}"),
         }
 
-        assert!(weapon_tables::class_weapon_proficiency("class:magus").is_none());
-        let magus = single_class("class:magus", 1);
-        assert_eq!(character_is_proficient_with(&magus, crb_weapon("Longsword")), None);
-        let blocking = blocking_ids(&magus);
+        assert!(weapon_tables::class_weapon_proficiency("class:commoner").is_none());
+        let commoner = single_class("class:commoner", 1);
+        assert_eq!(character_is_proficient_with(&commoner, crb_weapon("Club")), None);
+        let blocking = blocking_ids(&commoner);
         let diagnostic = blocking
             .iter()
             .find(|(id, _)| id == PROFICIENCY_UNKNOWN)
-            .unwrap_or_else(|| panic!("magus must keep {PROFICIENCY_UNKNOWN}: {blocking:?}"));
+            .unwrap_or_else(|| panic!("commoner must keep {PROFICIENCY_UNKNOWN}: {blocking:?}"));
         assert!(
-            diagnostic.1.contains("class:magus level 1: the converted closure of `magus` at level 1 grants no weapon proficiency"),
+            diagnostic.1.contains("class:commoner level 1: Weapon and Armor Proficiency")
+                && diagnostic.1.contains("whose options the converted package does not link"),
             "the diagnostic must name the reader's reason: {}",
             diagnostic.1
+        );
+
+        assert!(weapon_tables::class_weapon_proficiency("class:magus").is_none());
+        let magus = single_class("class:magus", 1);
+        assert_eq!(character_is_proficient_with(&magus, crb_weapon("Longsword")), Some(true));
+        let blocking = blocking_ids(&magus);
+        assert!(
+            !blocking.iter().any(|(id, _)| id == PROFICIENCY_UNKNOWN),
+            "magus reads its tiers from the converted record since F1c-1: {blocking:?}"
         );
     }
 

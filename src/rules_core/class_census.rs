@@ -1877,7 +1877,11 @@ mod tests {
         // batch blocker 2): Commoner was counted Computed off an incomplete
         // closure -- its one-simple-weapon pick is unseen, and it read Known(false)
         // for every simple weapon. It is Unknown now, logged as a scripts/retro.py
-        // correction (reader-remainder.md mechanism F).
+        // correction (reader-remainder.md mechanism F). Raised 58 -> 60 on
+        // 2026-09-22 by SD-36 Epic F1c-1 (grant-by-type selectors convert):
+        // antipaladin and magus, Blocked only on the proficiency answer, now read
+        // their Simple + Martial tiers from the converted record; logged as a
+        // scripts/retro.py correction. Commoner is the one non-prestige remainder.
         let fixture = load_sweep_fixture().expect("shared deterministic fixture must load cleanly");
         let previous_hook = std::panic::take_hook();
         std::panic::set_hook(Box::new(|_| {}));
@@ -1886,8 +1890,8 @@ mod tests {
         assert_eq!(results.len(), 61, "non-prestige sweep population moved off the published 61");
         let computed = results.iter().filter(|r| r.computed()).count();
         assert_eq!(
-            computed, 58,
-            "measured non-prestige Computed count moved off the published 58 of 61 -- \
+            computed, 60,
+            "measured non-prestige Computed count moved off the published 60 of 61 -- \
              log a scripts/retro.py correction before raising this pin"
         );
     }

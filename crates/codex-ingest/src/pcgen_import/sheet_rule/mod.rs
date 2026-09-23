@@ -456,6 +456,7 @@ pub fn build_index(tree: &PinnedTree, records: Vec<RecordRef>) -> (CorpusIndex, 
             }
         }
         index.own_rows.insert(r.id.clone(), closure.own_rows.clone());
+        index.facets.insert(r.id.clone(), convert::accumulated_facets(r, &closure));
         closures.push(closure);
     }
     index.records = records;

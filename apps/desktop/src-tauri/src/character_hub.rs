@@ -6656,10 +6656,9 @@ mod tests {
             std::fs::remove_dir_all(&root).ok();
         }
 
-        // SD-36 Epic F1 (2026-09-22): the converted-record proficiency reader closed Samurai, so
-        // of this roster only Magus is still Blocked (its converted closure grants no weapon
-        // proficiency -- `reader-remainder.md`), and that too closes once the converter converts
-        // grant-by-type. The non-vacuity guard therefore no longer rests on the wealth roster: a
+        // SD-36 Epic F1 (2026-09-22): the converted-record proficiency reader closed Samurai, and
+        // Epic F1c-1 (grant-by-type selectors convert) closed Magus, the last of this roster that
+        // was Blocked. The non-vacuity guard therefore no longer rests on the wealth roster: a
         // prestige class alone is a genuinely blocked build (no base-class levels; census
         // `prestige_alone_blocked` = 74 of 74) and stays Blocked through F2, which only replaces
         // its diagnostic with `prestige_class.requires_base_class_levels`.
