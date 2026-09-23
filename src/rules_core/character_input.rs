@@ -299,6 +299,7 @@ fn apply_fixture_field(key: &str, value: &str, parsed: &mut ParsedFixture) {
         "equipment" => apply_equipment_selection(value, parsed),
         "equipment_modifier" => apply_equipment_modifier(value, parsed),
         "choice" => apply_selected_choice(value, parsed),
+        "rule_choice" => apply_rule_choice(value, parsed),
         "spell" => apply_spell_selection(value, parsed),
         "activation" => apply_class_ability_activation(value, parsed),
         "provenance" => parsed.selection_provenance.push(SelectionProvenance {
@@ -583,6 +584,31 @@ fn apply_class_ability_activation(value: &str, parsed: &mut ParsedFixture) {
         active_state,
         rounds_consumed_today,
     });
+}
+
+/// The separator on a `rule_choice=<choice_set_id>|<selection_id>` line.
+pub const RULE_CHOICE_SEPARATOR: char = '|';
+
+/// A `rule_choice=` line: a pick recorded under a converted rule's own id (`book:kind:slug`,
+/// SD-36 F1c), whose colons the `choice=` line's segment split cannot carry. The two ids are
+/// separated by [`RULE_CHOICE_SEPARATOR`], and each is taken whole.
+fn apply_rule_choice(value: &str, parsed: &mut ParsedFixture) {
+    match value.split_once(RULE_CHOICE_SEPARATOR) {
+        Some((set, selection))
+            if !set.is_empty()
+                && !selection.is_empty()
+                && !selection.contains(RULE_CHOICE_SEPARATOR) =>
+        {
+            parsed.selected_choices.push(SelectedChoice {
+                choice_set_id: set.to_owned(),
+                selection_id: selection.to_owned(),
+            });
+        }
+        _ => parsed.diagnostics.push(diagnostic(
+            "selected_choices",
+            format!("invalid character input rule choice '{value}' is not '<choice>|<selection>'"),
+        )),
+    }
 }
 
 fn apply_selected_choice(value: &str, parsed: &mut ParsedFixture) {

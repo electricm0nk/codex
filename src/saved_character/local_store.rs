@@ -11,7 +11,8 @@ use std::fs;
 use std::path::Path;
 
 use crate::rules_core::character_input::{
-    AcquisitionMode, ActiveState, CharacterInput, load_character_input_fixture,
+    AcquisitionMode, ActiveState, CharacterInput, RULE_CHOICE_SEPARATOR,
+    load_character_input_fixture,
 };
 
 use super::{
@@ -230,12 +231,20 @@ fn summarize(envelope: &SavedCharacterEnvelope) -> SavedCharacterSummary {
 
 // --- Save-time validation ---
 
+/// `true` when a choice set id fits the `choice=` line's colon grammar (exactly two
+/// colon-segments; the loader re-splits the line after the second). Any other set id -- a
+/// converted rule's own `book:kind:slug` id -- is written on a `rule_choice=` line instead.
+fn is_colon_grammar_choice_set(choice_set_id: &str) -> bool {
+    choice_set_id.split(':').count() == 2
+}
+
 /// Rejects a `CharacterInput` whose rendered fixture lines the loader could not
 /// read back as the same record. The fixture grammar is line- and colon-based,
-/// so every persisted string must be single-line, and a selected choice must
-/// match the loader's segment shape (`choice_set_id` = exactly two
-/// colon-segments, `selection_id` = at least two) or it would reload as a
-/// different choice — or not at all.
+/// so every persisted string must be single-line, and a selected choice on a
+/// `choice=` line must match the loader's segment shape (`choice_set_id` =
+/// exactly two colon-segments, `selection_id` = at least two) or it would reload
+/// as a different choice — or not at all. A choice on a `rule_choice=` line
+/// must carry no `|` in either id.
 fn validate_character_input(input: &CharacterInput) -> Result<(), SavedCharacterStoreError> {
     let single_line = |field: &str, value: &str| -> Result<(), SavedCharacterStoreError> {
         if value.contains('\n') || value.contains('\r') {
@@ -279,14 +288,24 @@ fn validate_character_input(input: &CharacterInput) -> Result<(), SavedCharacter
     for choice in &input.chosen.selected_choices {
         single_line("selected choice choice_set_id", &choice.choice_set_id)?;
         single_line("selected choice selection_id", &choice.selection_id)?;
-        if choice.choice_set_id.split(':').count() != 2 {
-            return Err(SavedCharacterStoreError {
-                message: format!(
-                    "selected choice choice_set_id '{}' must have exactly two colon-segments \
-                     to round-trip through the fixture grammar",
-                    choice.choice_set_id
-                ),
-            });
+        if !is_colon_grammar_choice_set(&choice.choice_set_id) {
+            // A choice recorded under a converted rule's own id (`book:kind:slug`) is written
+            // on a `rule_choice=<set>|<selection>` line, which splits on `|`, not `:`.
+            for (field, value) in [
+                ("choice_set_id", &choice.choice_set_id),
+                ("selection_id", &choice.selection_id),
+            ] {
+                if value.is_empty() || value.contains(RULE_CHOICE_SEPARATOR) {
+                    return Err(SavedCharacterStoreError {
+                        message: format!(
+                            "selected choice {field} '{value}' must be non-empty and must not \
+                             contain '{RULE_CHOICE_SEPARATOR}' to round-trip through the \
+                             rule_choice= line"
+                        ),
+                    });
+                }
+            }
+            continue;
         }
         if choice.selection_id.split(':').count() < 2 {
             return Err(SavedCharacterStoreError {
@@ -406,11 +425,19 @@ fn render_character_input(input: &CharacterInput) -> String {
         );
     }
     for choice in &input.chosen.selected_choices {
-        let _ = writeln!(
-            out,
-            "choice={}:{}",
-            choice.choice_set_id, choice.selection_id
-        );
+        if is_colon_grammar_choice_set(&choice.choice_set_id) {
+            let _ = writeln!(
+                out,
+                "choice={}:{}",
+                choice.choice_set_id, choice.selection_id
+            );
+        } else {
+            let _ = writeln!(
+                out,
+                "rule_choice={}{RULE_CHOICE_SEPARATOR}{}",
+                choice.choice_set_id, choice.selection_id
+            );
+        }
     }
     for prov in &input.selection_provenance {
         let _ = writeln!(out, "provenance={}", prov.source_ref);
@@ -594,7 +621,7 @@ fn parse_error(message: impl Into<String>) -> SavedCharacterStoreError {
 mod tests {
     use super::*;
     use crate::rules_core::character_input::{
-        AbilityScores, CharacterClassLevel, ChosenCharacterState, EquipmentSelection,
+        AbilityScores, CharacterClassLevel, ChosenCharacterState, EquipmentSelection, SelectedChoice,
     };
     use crate::saved_character::CURRENT_SAVED_CHARACTER_SCHEMA_VERSION;
 
@@ -786,6 +813,56 @@ mod tests {
             reloaded.character_input.chosen.selected_traits,
             vec!["trait:trait_acrobat".to_owned(), "trait:trait_ease_of_faith".to_owned()]
         );
+
+        fs::remove_dir_all(&root).ok();
+    }
+
+    /// SD-36 F1c (f1c:suite-desktop): a pick whose choice is a converted rule records it under
+    /// that rule's own id -- `book:kind:slug`, three colon-segments (the Summoner Class
+    /// Selection, `class_seeds::SUMMONER_CLASS_SELECTION_CHOICE_ID`; the Commoner's one Simple
+    /// weapon, `class_seeds::COMMONER_WEAPON_CHOICE_ID`). The `choice=` line's colon grammar
+    /// cannot carry that id, so a create call for either class failed to save at all. It must
+    /// round-trip beside a legacy two-segment choice, unchanged and in order.
+    #[test]
+    fn save_and_load_round_trips_a_choice_recorded_under_a_converted_rule_id() {
+        let root = tempdir("rule-choice-round-trip");
+        let mut envelope = envelope_with(Vec::new());
+        let choices = vec![
+            SelectedChoice {
+                choice_set_id: "choice:summoner_eidolon_evolution".to_owned(),
+                selection_id: "evolution:improved_natural_armor".to_owned(),
+            },
+            SelectedChoice {
+                choice_set_id: crate::rules_core::class_seeds::SUMMONER_CLASS_SELECTION_CHOICE_ID.to_owned(),
+                selection_id: crate::rules_core::class_seeds::SUMMONER_CANONICAL_CLASS_SELECTION.to_owned(),
+            },
+            SelectedChoice {
+                choice_set_id: crate::rules_core::class_seeds::COMMONER_WEAPON_CHOICE_ID.to_owned(),
+                selection_id: crate::rules_core::class_seeds::COMMONER_CANONICAL_WEAPON.to_owned(),
+            },
+        ];
+        envelope.character_input.chosen.selected_choices = choices.clone();
+
+        SavedCharacterStore::save(&envelope, &root).expect("save should succeed");
+        let reloaded = SavedCharacterStore::load(&root).expect("load should succeed");
+
+        assert_eq!(reloaded.character_input.chosen.selected_choices, choices);
+
+        fs::remove_dir_all(&root).ok();
+    }
+
+    /// The `rule_choice=` line separates the two ids with `|`; an id carrying `|` could not
+    /// reload as the same pick, so the save refuses it rather than writing a different one.
+    #[test]
+    fn a_rule_choice_id_containing_the_separator_is_refused() {
+        let root = tempdir("rule-choice-separator-refused");
+        let mut envelope = envelope_with(Vec::new());
+        envelope.character_input.chosen.selected_choices = vec![SelectedChoice {
+            choice_set_id: "book:class_feature:a|b".to_owned(),
+            selection_id: "book:class_feature:c".to_owned(),
+        }];
+
+        assert!(SavedCharacterStore::save(&envelope, &root).is_err());
 
         fs::remove_dir_all(&root).ok();
     }

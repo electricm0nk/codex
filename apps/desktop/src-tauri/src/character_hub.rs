@@ -6688,6 +6688,41 @@ mod tests {
         );
     }
 
+    /// SD-36 F1c (f1c:suite-desktop): `compose_character_input` records the Summoner Class
+    /// Selection and the Commoner's one Simple weapon under the converted rule's own id
+    /// (`book:kind:slug`). Before the store's `rule_choice=` line, the save refused those ids
+    /// and a create call for either class errored before anything was written. The pick must
+    /// now persist and reload unchanged.
+    #[test]
+    fn create_character_at_root_persists_a_pick_recorded_under_a_converted_rule_id() {
+        use codex::rules_core::class_seeds::{
+            COMMONER_CANONICAL_WEAPON, COMMONER_WEAPON_CHOICE_ID, SUMMONER_CANONICAL_CLASS_SELECTION,
+            SUMMONER_CLASS_SELECTION_CHOICE_ID,
+        };
+        for (class_id, choice_set_id, selection_id) in [
+            ("class:summoner", SUMMONER_CLASS_SELECTION_CHOICE_ID, SUMMONER_CANONICAL_CLASS_SELECTION),
+            ("class:commoner", COMMONER_WEAPON_CHOICE_ID, COMMONER_CANONICAL_WEAPON),
+        ] {
+            let root = tempdir(&format!("create-character-rule-choice-{class_id}"));
+            let request = request_for_class("race:human", class_id, 1);
+            let response = create_character_at_root(&root, &request, "test-version".to_owned())
+                .unwrap_or_else(|e| panic!("{class_id}: create call should not error: {e}"));
+            assert!(
+                matches!(response, CreateCharacterResponse::Saved { .. }),
+                "{class_id}: Human level 1 must save, got {response:?}"
+            );
+            let reloaded = SavedCharacterStore::load(&root).expect("reload should succeed");
+            assert!(
+                reloaded.character_input.chosen.selected_choices.iter().any(|c| {
+                    c.choice_set_id == choice_set_id && c.selection_id == selection_id
+                }),
+                "{class_id}: the pick must reload under {choice_set_id}, got {:?}",
+                reloaded.character_input.chosen.selected_choices
+            );
+            std::fs::remove_dir_all(&root).ok();
+        }
+    }
+
     /// v0.6 alpha swarm item 7 (second phase, 2026-07-24), **rewritten
     /// 2026-07-29** (the four spellcasting-shaped classes).
     ///
