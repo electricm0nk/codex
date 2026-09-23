@@ -1081,6 +1081,12 @@ mod class_weapon_proficiency_tests {
             let slug = crate::rules_core::sheet_rule::id_slug(&entry.class_id);
             let first_unknown = (1..=entry.max_level).find_map(|level| {
                 match class_weapon_proficiency_view(&slug, level) {
+                    // A Known view carrying an unresolved weapon pick answers only the weapons
+                    // its counted grants cover; every other weapon is Unknown (reader batch
+                    // blocker 2), so the class is not "Known at every level".
+                    ProficiencyAnswer::Known(view) if !view.unresolved_picks.is_empty() => {
+                        Some(format!("level {level}: unresolved pick: {}", view.unresolved_picks.join("; ")))
+                    }
                     ProficiencyAnswer::Known(_) => None,
                     ProficiencyAnswer::Unknown { reason } => Some(format!("level {level}: {reason}")),
                 }

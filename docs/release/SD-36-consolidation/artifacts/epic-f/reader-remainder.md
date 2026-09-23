@@ -17,11 +17,15 @@ on tranche/16 (package unchanged since F1b, no converter run in this batch).
 
 - Census classes: **135** (61 non-prestige + 74 prestige). With a static row: **42** (all non-prestige).
   Walked by the reader: **93** (19 non-prestige + 74 prestige).
-- Known at every level: **29 of 93** (17 of the 19 non-prestige; 12 of the 74 prestige).
-- Unknown: **64 of 93** -- **2 non-prestige** (antipaladin, magus: the only two of the 61 non-prestige
-  census classes not Computed, `census-f1-reader.json`) and **62 prestige** (prestige classes are Blocked alone
-  until F2 regardless -- census `prestige_alone_blocked` = 74 of 74).
-- Every reason is the same reader verdict: "the converted closure of `<class>` at level 1 grants no
+- Known at every level: **28 of 93** (16 of the 19 non-prestige; 12 of the 74 prestige).
+- Unknown: **65 of 93** -- **3 non-prestige** (antipaladin, magus, commoner: the only three of the 61
+  non-prestige census classes not Computed, `census-f1-reader.json`) and **62 prestige** (prestige
+  classes are Blocked alone until F2 regardless -- census `prestige_alone_blocked` = 74 of 74).
+- Commoner joined 2026-09-22 (reader batch blocker 2): it was Known with an incomplete closure --
+  its one-simple-weapon pick is unseen, so every simple weapon read Known(false) and a Club took a
+  wrong -4 on a sheet marked Computed. A Known view that carries an unresolved weapon pick now
+  counts as Unknown here (mechanism F).
+- Every mechanism A-E reason is the same reader verdict: "the converted closure of `<class>` at level 1 grants no
   weapon proficiency, and the package carries no closure-complete attestation that none is owed".
   The mechanism column says WHY the closure is empty, classified from
   offline evidence (test-side, never read by live code): the oracle class lines
@@ -39,6 +43,7 @@ on tranche/16 (package unchanged since F1b, no converter run in this batch).
 | C | proficiency record not linked to the class | 2 | the proficiency record IS converted but carries no `granted_by` edge to this class (the oracle grants it from the class line) | converter: class-line link repair (F1 option A residue) + regenerate |
 | D | proficiency record converted without its grant | 2 | the class's `... ~ Weapon and Armor Proficiency` record is converted and linked, but carries no `Proficiency` fact | converter: convert the record's weapon grant + regenerate |
 | E | no weapon grant anywhere; attestation missing | 54 | neither the oracle class lines nor any rule in the converted closure names a weapon-proficiency grant (the class adds none), so the true answer is empty -- but spec §3.4 allows `Known(empty)` only with the per-class `closure_complete` attestation, which the converter does not write yet, so the reader answers Unknown rather than fabricate 'proficient with nothing' | converter: write `closure_complete` (spec §3.4) + regenerate |
+| F | proficiency pick into an unlinked pool | 1 | the class walk holds a player's pick (`target: Pool(p)`, count > 0) whose pool has no converted member rule, on a record whose own name or pool names a proficiency (`class_proficiency_sheet_rules::unresolved_weapon_pick`). The reader cannot see what the pick covers, so every weapon its counted grants do not cover is Unknown (reader batch blocker 2) -- never Known(false). Measured 2026-09-22: 1,090 of the 1,092 pools a converted rule picks into have no member rule | converter: carry the `ABILITYCATEGORY` `TYPE` link from a pool to its member records + regenerate; the pick is then read from the character's choices |
 
 Every mechanism closes in the converter + a package regeneration; none is closable in this batch
 (invariant: no converter run, data/sheet_rules not regenerated). None is a per-class special case
@@ -58,6 +63,7 @@ in live code, and none is closed by a new Rust row (rules_tables stay Rust until
 | class:bellflower_tiller | prestige | E: no weapon grant anywhere; attestation missing | oracle class lines: no weapon-proficiency grant; converted closure: no dropped `WeaponProf` grant-by-type |
 | class:body_snatcher | prestige | E: no weapon grant anywhere; attestation missing | oracle class lines: no weapon-proficiency grant; converted closure: no dropped `WeaponProf` grant-by-type |
 | class:cerebremancer | prestige | E: no weapon grant anywhere; attestation missing | oracle class lines: no weapon-proficiency grant; converted closure: no dropped `WeaponProf` grant-by-type |
+| class:commoner | base | F: proficiency pick into an unlinked pool | core_rulebook:class_feature:weapon_and_armor_proficiency_commoner picks 1 from pool `simple_weapon_proficiency_choice`; no converted rule is a member of it (the member, core_rulebook:class_feature:single_simple_weapon_proficiency, carries tag `SingleSimpleWeaponProficiency`; oracle `cr_abilitycategories.lst:136` `ABILITYCATEGORY:Simple Weapon Proficiency Choice ... TYPE:SingleSimpleWeaponProficiency` is the link the converter does not carry). The view is Known for `all_automatic_proficiencies`' four names and Unknown for every other weapon |
 | class:cyphermage | prestige | E: no weapon grant anywhere; attestation missing | oracle class lines: no weapon-proficiency grant; converted closure: no dropped `WeaponProf` grant-by-type |
 | class:dark_tempest | prestige | E: no weapon grant anywhere; attestation missing | oracle class lines: no weapon-proficiency grant; converted closure: no dropped `WeaponProf` grant-by-type |
 | class:death_slayer | prestige | E: no weapon grant anywhere; attestation missing | oracle class lines: no weapon-proficiency grant; converted closure: no dropped `WeaponProf` grant-by-type |

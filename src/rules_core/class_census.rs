@@ -1873,7 +1873,11 @@ mod tests {
         // (the proficiency fallback to the converted record: 17 of the 19
         // classes blocked only on `combat.baseline_weapon_proficiency_unknown`
         // gained an answer; antipaladin and magus stay Unknown), logged as a
-        // scripts/retro.py correction.
+        // scripts/retro.py correction. Corrected 59 -> 58 on 2026-09-22 (reader
+        // batch blocker 2): Commoner was counted Computed off an incomplete
+        // closure -- its one-simple-weapon pick is unseen, and it read Known(false)
+        // for every simple weapon. It is Unknown now, logged as a scripts/retro.py
+        // correction (reader-remainder.md mechanism F).
         let fixture = load_sweep_fixture().expect("shared deterministic fixture must load cleanly");
         let previous_hook = std::panic::take_hook();
         std::panic::set_hook(Box::new(|_| {}));
@@ -1882,8 +1886,8 @@ mod tests {
         assert_eq!(results.len(), 61, "non-prestige sweep population moved off the published 61");
         let computed = results.iter().filter(|r| r.computed()).count();
         assert_eq!(
-            computed, 59,
-            "measured non-prestige Computed count moved off the published 59 of 61 -- \
+            computed, 58,
+            "measured non-prestige Computed count moved off the published 58 of 61 -- \
              log a scripts/retro.py correction before raising this pin"
         );
     }

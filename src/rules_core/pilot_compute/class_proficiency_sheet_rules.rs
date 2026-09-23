@@ -43,6 +43,14 @@
 //!   (review finding 15 -- a bare `Auto` reaching the reader as a tag is Unknown; the converter
 //!   resolves the real `TYPE=Auto` selector to a `WeaponSet` at ingest).
 //!
+//! # A pick the reader cannot resolve
+//!
+//! A held player's pick that could grant a weapon proficiency (Commoner's one simple weapon) is
+//! carried in [`ClassWeaponProficiencyView::unresolved_picks`] ([`unresolved_weapon_pick`]
+//! names the rule). The answer stays Known for what the counted grants cover, and the caller
+//! answers Unknown for every other weapon -- never Known(false) from a closure known to be
+//! incomplete.
+//!
 //! Deterministic; no I/O beyond the package handle.
 
 use std::collections::{BTreeMap, BTreeSet};
@@ -51,8 +59,9 @@ use std::sync::{Mutex, OnceLock};
 use crate::rules_core::level_up_option_filter::{describe_gate, describe_prof};
 use crate::rules_core::rules_tables::crb::weapon_tables::WeaponProficiency;
 use crate::rules_core::sheet_rule::{
-    held_set, resolve_gated_fact_grant, split_rule_id, Applies, CharacterFacts, Effect, EvalContext, Expr, Fact,
-    GatedFact, Granter, HeldSeed, HeldSet, Holdable, OptionSet, ProfRef, RuleId, SheetRule, SheetRulePackage,
+    held_set, resolve_gated_fact_grant, split_rule_id, Applies, BonusTarget, CharacterFacts, Effect, EvalContext, Expr,
+    Fact, GatedFact, Granter, HeldSeed, HeldSet, Holdable, OptionSet, ProfRef, RuleId, SheetRule, SheetRulePackage,
+    SheetValue,
 };
 use crate::rules_core::sheet_rule_package;
 
@@ -79,6 +88,10 @@ pub struct ClassWeaponProficiencyView {
     pub sets: Vec<WeaponSetView>,
     /// A grant the class-level facts cannot decide: printed with its condition, never counted.
     pub printed_conditions: Vec<String>,
+    /// A player's pick the walk holds that could grant a weapon proficiency, but whose options
+    /// the package cannot resolve (see [`unresolved_weapon_pick`]). The closure is incomplete
+    /// there: every weapon the counted grants do not cover is Unknown, never Known(false).
+    pub unresolved_picks: Vec<String>,
 }
 
 /// The reader's answer: known (possibly with printed conditions) or unknown with its reason.
@@ -140,11 +153,15 @@ pub fn class_weapon_proficiency_view_in(package: &SheetRulePackage, class_slug: 
 
     let mut acc = Accumulator::default();
     let mut equipment_groups: Option<BTreeSet<String>> = None;
+    let mut pool_reaches_weapon: BTreeMap<String, Option<bool>> = BTreeMap::new();
     for (id, entry) in &held.rules {
         if held.removed.contains(id) {
             continue;
         }
         let Some(rule) = package.rule(id) else { continue };
+        if let Some(pick) = unresolved_weapon_pick(package, rule, &mut pool_reaches_weapon) {
+            acc.unresolved.insert(pick);
+        }
         let ctx = EvalContext { holder_class: entry.holder_class.clone(), ..EvalContext::default() };
         for effect in &rule.grants {
             let (fact, when) = match effect {
@@ -180,6 +197,7 @@ pub fn class_weapon_proficiency_view_in(package: &SheetRulePackage, class_slug: 
         && view.all_of.is_empty()
         && view.sets.is_empty()
         && view.printed_conditions.is_empty()
+        && view.unresolved_picks.is_empty()
     {
         // §3.4 "Known-empty vs unknown": an empty answer is only honest when the converter has
         // attested the closure complete, and the package carries no such attestation -- so an
@@ -208,6 +226,61 @@ fn weapon_fact_words(rule: &SheetRule, fact: &Fact) -> Option<String> {
         },
         _ => None,
     }
+}
+
+/// `Some(words)` when `rule` is a held player's pick (`target: Pool(p)` with a non-zero count)
+/// that could grant a weapon proficiency and whose options the reader cannot resolve.
+///
+/// One rule, two branches by what the package carries (reader batch blocker 2):
+/// - the pool has member rules in the package: the pick is a weapon pick when any member reaches
+///   a weapon-proficiency grant ([`reaches_a_weapon_grant`]); the member the player took is not
+///   a class-level fact, so it is unresolved either way;
+/// - the pool has NO member rule (measured: 1,090 of the 1,092 pools a converted rule picks
+///   into; the converter does not carry PCGen's `ABILITYCATEGORY` `TYPE` link from a pool to its
+///   members): the package cannot say what the pick covers. The pick is then treated as a weapon
+///   pick exactly when the picking record's own name or its pool's name says it grants a
+///   proficiency (`proficien`, any case) -- the only statement the converted package makes
+///   about that pick's subject. Commoner's `Weapon and Armor Proficiency` ->
+///   `simple_weapon_proficiency_choice` is one; Marksman's `Marksman Combat Style` is not.
+///
+/// A pick the reader cannot resolve is never guessed in either direction: the caller answers
+/// Unknown for every weapon the counted grants do not cover.
+fn unresolved_weapon_pick(
+    package: &SheetRulePackage,
+    rule: &SheetRule,
+    pool_reaches_weapon: &mut BTreeMap<String, Option<bool>>,
+) -> Option<String> {
+    let Some(BonusTarget::Pool(pool)) = &rule.target else { return None };
+    let count = match &rule.value {
+        SheetValue::Number(Expr::Const(0)) => return None,
+        SheetValue::Number(Expr::Const(n)) => n.to_string(),
+        SheetValue::Number(_) => "a computed number of".to_string(),
+        _ => return None,
+    };
+    let linked = *pool_reaches_weapon.entry(pool.clone()).or_insert_with(|| {
+        let mut memo = BTreeMap::new();
+        let members: Vec<&RuleId> = package.rules.values().filter(|r| &r.pool == pool).map(|r| &r.id).collect();
+        if members.is_empty() {
+            None
+        } else {
+            Some(members.into_iter().any(|id| reaches_a_weapon_grant(package, id, &mut memo)))
+        }
+    });
+    let names_proficiency = |text: &str| text.to_ascii_lowercase().contains("proficien");
+    let weapon_pick = match linked {
+        Some(reaches) => reaches,
+        None => names_proficiency(&rule.label) || names_proficiency(pool),
+    };
+    if !weapon_pick {
+        return None;
+    }
+    let pool_words = pool.replace('_', " ");
+    Some(format!(
+        "{} ({}) picks {count} from the {pool_words} pool, whose options the converted package does not {}",
+        rule.label,
+        rule.id,
+        if linked.is_some() { "decide at class level" } else { "link (no converted rule is a member of it)" }
+    ))
 }
 
 const TIERS: [(&str, WeaponProficiency); 3] =
@@ -260,6 +333,7 @@ struct Accumulator {
     view: ClassWeaponProficiencyView,
     sets: BTreeSet<WeaponSetView>,
     printed: BTreeSet<String>,
+    unresolved: BTreeSet<String>,
 }
 
 impl Accumulator {
@@ -309,6 +383,7 @@ impl Accumulator {
         self.view.tiers.sort_by_key(|t| TIERS.iter().position(|(_, x)| x == t));
         self.view.sets = self.sets.into_iter().collect();
         self.view.printed_conditions = self.printed.into_iter().collect();
+        self.view.unresolved_picks = self.unresolved.into_iter().collect();
         self.view
     }
 }
@@ -593,6 +668,38 @@ mod tests {
         assert!(!view.named.contains("Longbow"), "undecidable must not count: {view:?}");
         assert_eq!(view.printed_conditions.len(), 1, "{view:?}");
         assert!(view.printed_conditions[0].contains("Longbow") && view.printed_conditions[0].contains("elf"), "{view:?}");
+    }
+
+    fn pick(id: &str, pool: &str, count: i32) -> SheetRule {
+        let mut r = rule(id, class_line(1), Applies::Always, Vec::new());
+        r.value = crate::rules_core::sheet_rule::SheetValue::Number(Expr::Const(count));
+        r.target = Some(crate::rules_core::sheet_rule::BonusTarget::Pool(pool.to_string()));
+        r
+    }
+
+    /// Reader batch blocker 2: a held pick into a pool the package links no member to, on a
+    /// record whose own name (or pool) says it grants a proficiency, is an unresolved pick --
+    /// the view carries it, so the caller answers Unknown for every weapon not otherwise
+    /// covered. A pick of zero, a pick whose record/pool names no proficiency, and a pick into a
+    /// linked pool whose members reach no weapon grant are not.
+    #[test]
+    fn an_unlinked_proficiency_pick_is_an_unresolved_pick() {
+        let club = || Effect::FactGrant(Fact::Proficiency(ProfRef::Weapon("Club".into())));
+        let mut member = rule("fx_book:class_feature:fx_style_a", Vec::new(), Applies::Always, Vec::new());
+        member.pool = "fx_linked_style".into();
+        let package = package_of(vec![
+            rule("fx_book:class_feature:fx_autos", class_line(1), Applies::Always, vec![club()]),
+            pick("fx_book:class_feature:fx_weapon_and_armor_proficiency", "fx_simple_weapon_proficiency_choice", 1),
+            pick("fx_book:class_feature:fx_combat_style", "fx_combat_style", 1),
+            pick("fx_book:class_feature:fx_zero_proficiency", "fx_other_proficiency_choice", 0),
+            pick("fx_book:class_feature:fx_linked", "fx_linked_style", 1),
+            member,
+        ]);
+        let view = class_weapon_proficiency_view_in(&package, "fx", 1);
+        let view = view.known().expect("known: the Club grant is counted");
+        assert!(view.named.contains("Club"), "{view:?}");
+        assert_eq!(view.unresolved_picks.len(), 1, "{view:?}");
+        assert!(view.unresolved_picks[0].contains("fx simple weapon proficiency choice"), "{view:?}");
     }
 
     #[test]

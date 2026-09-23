@@ -2615,6 +2615,14 @@ pub(crate) fn character_weapon_proficiency(
             ProficiencyAnswer::Known(view) => {
                 if converted_view_covers_weapon(&view, weapon) {
                     any_proficient = true;
+                } else if !view.unresolved_picks.is_empty() {
+                    // The closure is incomplete: an unseen pick could cover this weapon.
+                    unknown.push(format!(
+                        "{} level {}: {}",
+                        class_level.class_id,
+                        class_level.level,
+                        view.unresolved_picks.join("; ")
+                    ));
                 }
                 printed.extend(
                     view.printed_conditions.iter().map(|c| format!("{} (converted record): {c}", class_level.class_id)),
@@ -2643,8 +2651,11 @@ pub(crate) fn character_weapon_proficiency(
 ///   conjunction is pinned answerable
 ///   (`every_converted_weapon_all_of_conjunct_is_answerable_by_the_weapon_table`);
 ///   an unanswerable conjunct here is therefore never counted;
-/// - set: membership by the weapon's own record name (`key`), the same
-///   identifier the converted equipment rules carry as their label.
+/// - set: membership by the weapon's `proficiency_name`, falling back to its
+///   record `key` -- the converted set members are PCGen proficiency names
+///   (`Sword (Short)`, `Pick (Light)`), not record keys (`Short Sword`);
+///   compared on the normalized identity, as the named branch compares
+///   case-insensitively.
 pub(crate) fn converted_view_covers_weapon(
     view: &crate::rules_core::pilot_compute::class_proficiency_sheet_rules::ClassWeaponProficiencyView,
     weapon: &weapon_tables::WeaponTableEntry,
@@ -2679,7 +2690,7 @@ pub(crate) fn converted_view_covers_weapon(
     if view.all_of.iter().any(|tags| !tags.is_empty() && tags.iter().all(conjunct_holds)) {
         return true;
     }
-    let wanted = normalize_weapon_identity(weapon.key);
+    let wanted = normalize_weapon_identity(weapon.proficiency_name.unwrap_or(weapon.key));
     view.sets
         .iter()
         .any(|set| set.members.iter().any(|member| normalize_weapon_identity(member) == wanted))
@@ -3325,30 +3336,62 @@ mod converted_record_proficiency_fallback_tests {
         assert!(!blocking.iter().any(|(id, _)| id == PROFICIENCY_UNKNOWN), "{blocking:?}");
     }
 
-    /// Commoner (measured, reader-19 caveat 1): its converted proficiency record grants one pick
-    /// into pool `simple_weapon_proficiency_choice`, a pool no converted rule is a member of, so
-    /// the reader cannot see the pick at all -- it is neither counted nor printed. The census
-    /// input seeds no Commoner weapon choice. What the converted record DOES answer is the
-    /// baseline's question: the Longsword (Martial) is covered by none of Commoner's grants,
-    /// and a one-simple-weapon pick never covers a Martial weapon. If the converter ever links
-    /// that pool, the printed-choice assertion below fails and this pin must be revisited.
+    /// Commoner (reader batch blocker 2): its converted proficiency record
+    /// (`weapon_and_armor_proficiency_commoner`) grants one pick into pool
+    /// `simple_weapon_proficiency_choice`, and no converted rule is a member of that pool, so the
+    /// reader cannot see what the pick covers. The closure is incomplete, so every weapon the
+    /// counted grants do NOT cover is Unknown -- never Known(false) with a -4 on a Computed sheet
+    /// (the Club measured exactly that before this fix). A weapon a counted grant covers
+    /// (`all_automatic_proficiencies`' Unarmed Strike) stays Known(true).
     #[test]
-    fn commoner_one_simple_weapon_pick_is_not_visible_so_only_the_longsword_answer_is_pinned() {
+    fn commoner_unlinked_weapon_pick_leaves_every_uncovered_weapon_unknown() {
         use crate::rules_core::pilot_compute::class_proficiency_sheet_rules::{
             class_weapon_proficiency_view, ProficiencyAnswer,
         };
         let input = single_class("class:commoner", 1);
         let ProficiencyAnswer::Known(view) = class_weapon_proficiency_view("commoner", 1) else {
-            panic!("commoner reads Known from the converted record");
+            panic!("commoner reads Known (with its unresolved pick) from the converted record");
         };
-        assert!(view.tiers.is_empty(), "no blanket tier: {view:?}");
-        assert!(
-            view.printed_conditions.is_empty(),
-            "the simple-weapon pick is not linked in the package, so nothing prints: {view:?}"
-        );
-        assert_eq!(character_is_proficient_with(&input, crb_weapon("Longsword")), Some(false));
+        assert_eq!(view.unresolved_picks.len(), 1, "{view:?}");
+        assert!(view.unresolved_picks[0].contains("simple weapon proficiency choice"), "{view:?}");
+        for weapon in ["Club", "Longsword"] {
+            match character_weapon_proficiency(&input, crb_weapon(weapon)) {
+                WeaponProficiencyVerdict::Unknown { reason } => assert!(
+                    reason.contains("class:commoner level 1") && reason.contains("simple weapon proficiency choice"),
+                    "{weapon}: {reason}"
+                ),
+                known => panic!("{weapon}: an unseen pick must leave it Unknown, got {known:?}"),
+            }
+        }
         let blocking = blocking_ids(&input);
-        assert!(!blocking.iter().any(|(id, _)| id == PROFICIENCY_UNKNOWN), "{blocking:?}");
+        assert!(blocking.iter().any(|(id, _)| id == PROFICIENCY_UNKNOWN), "{blocking:?}");
+        // The per-weapon total for an equipped Club carries no invented -4.
+        let mut club = input.clone();
+        for selection in &mut club.chosen.equipment_selections {
+            if selection.item_id == "item:longsword" {
+                selection.item_id = "item:club".to_owned();
+            }
+        }
+        let receipt = build_pilot_headless_receipt(&club);
+        let club_total = receipt
+            .computation
+            .explanations
+            .iter()
+            .find(|e| e.id == "combat.weapon_attack_bonus.club")
+            .expect("club attack total");
+        assert!(club_total.detail.contains("nonproficiency penalty (0)"), "{}", club_total.detail);
+    }
+
+    /// Reader batch blocker 1: a converted `WeaponSet` lists its members by PROFICIENCY name
+    /// (`Sword (Short)`, `Pick (Light)`), so set membership must join on `proficiency_name`, not
+    /// on the weapon's record key (`Short Sword`). Marksman holds `Light.Martial`.
+    #[test]
+    fn marksman_light_martial_set_covers_weapons_whose_key_differs_from_their_proficiency_name() {
+        assert!(weapon_tables::class_weapon_proficiency("class:marksman").is_none(), "no static row");
+        let input = single_class("class:marksman", 1);
+        for weapon in ["Short Sword", "Light Pick", "Kukri"] {
+            assert_eq!(character_is_proficient_with(&input, crb_weapon(weapon)), Some(true), "{weapon}");
+        }
     }
 
     /// A class with no static row whose converted answer is Unknown keeps the claim-blocking

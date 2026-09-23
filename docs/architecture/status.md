@@ -108,8 +108,8 @@ actually measures.
 |---|---|---|---|
 | Distinct class ids, corpus-wide, across all engine registries | **135** | — | `ids` |
 | Non-prestige ids actually swept (`ids` minus the 74 prestige ids, never swept alone here) | **61** | of 135 | `non_prestige_swept` |
-| ...reach `Computed` at every swept level (non-prestige) | **59** | of 61 | `computed` |
-| ...reach `Computed` at no level (non-prestige) | **2** | of 61 | `blocked` |
+| ...reach `Computed` at every swept level (non-prestige) | **58** | of 61 | `computed` |
+| ...reach `Computed` at no level (non-prestige) | **3** | of 61 | `blocked` |
 | Prestige ids swept (never measured alone — see the carrier rule below) | **74** | of 135 total ids | `prestige_swept` |
 | ...Blocked alone (negative control) | **74** | of 74 | `prestige_alone_blocked` |
 | ...`Computed` in their deterministic carrier mix | **0** | of 74 | `prestige_mix_computed` |
@@ -127,9 +127,9 @@ actually measures.
 | Pathfinder Unchained | pathfinder_unchained | 4 | 4 |
 | Ultimate Combat | ultimate_combat | 3 | 3 |
 | Untabled exotic base classes | advanced_players_guide, occult_adventures, ultimate_intrigue, ultimate_magic, ultimate_psionics, ultimate_wilderness | 20 | 18 |
-| CRB NPC / Ex-* classes | core_rulebook | 7 | 7 |
+| CRB NPC / Ex-* classes | core_rulebook | 7 | 6 |
 | Prestige | see per-class `books` in the census JSON (11 source books) | 74 | n/a alone (never a legitimate measurement — see headline numbers: 0 of 74 `Computed` in carrier mix) |
-| **Total** | | **135** (61 non-prestige + 74 prestige) | **59** of 61 non-prestige ids Computed alone (prestige carrier-mix result kept separate, per headline numbers above — the bin's own `--json` output never folds the two together) |
+| **Total** | | **135** (61 non-prestige + 74 prestige) | **58** of 61 non-prestige ids Computed alone (prestige carrier-mix result kept separate, per headline numbers above — the bin's own `--json` output never folds the two together) |
 <!-- class-census:end -->
 
 Row-by-row evidence:
@@ -140,16 +140,19 @@ Row-by-row evidence:
   `all_three_uc_classes_reach_computed_status_at_level_5` (Samurai closed by
   the SD-36 Epic F1 converted-record proficiency reader, 2026-09-22 — its
   `Samurai` weapon set reaches the katana).
-- **Untabled exotic + CRB NPC (27 = 20+7; 25 `Computed`)**:
+- **Untabled exotic + CRB NPC (27 = 20+7; 24 `Computed`)**:
   `untabled_base_class_features.rs`
   (`all_27_untabled_classes_pass_the_chassis_gate_at_every_real_level`;
   `every_untabled_class_outside_the_named_reader_remainder_reaches_computed`;
   `a_class_whose_converted_closure_is_incomplete_still_reports_proficiency_unknown`
-  — Antipaladin and Magus, the 2 still blocked on weapon proficiency: their
-  `TYPE=WeaponProfMartial` grant-by-type is not converted). Classes with no
+  — Antipaladin, Magus and Commoner, the 3 still blocked on weapon
+  proficiency: Antipaladin's and Magus's `TYPE=WeaponProfMartial`
+  grant-by-type is not converted; Commoner's one-simple-weapon pick goes into
+  a pool the package links no member to, so every weapon outside its
+  automatic proficiencies is Unknown, 2026-09-22 reader batch blocker 2). Classes with no
   static `CLASS_WEAPON_PROFICIENCIES` row (42 rows, unchanged) are answered by
   `class_proficiency_sheet_rules::class_weapon_proficiency_view`; the
-  census-wide remainder (64 of the 93 classes it walks, 2 non-prestige + 62
+  census-wide remainder (65 of the 93 classes it walks, 3 non-prestige + 62
   prestige) is named with a mechanism per class in
   `docs/release/SD-36-consolidation/artifacts/epic-f/reader-remainder.md`,
   pinned by `weapon_tables::every_census_class_has_a_known_proficiency_answer`.

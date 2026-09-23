@@ -1,5 +1,5 @@
 {
-  "blocked": 2,
+  "blocked": 3,
   "classes": [
     {
       "blocking_diagnostics": [],
@@ -462,14 +462,40 @@
       "status": "Computed"
     },
     {
-      "blocking_diagnostics": [],
+      "blocking_diagnostics": [
+        {
+          "id": "combat.baseline_weapon_proficiency_unknown",
+          "levels": [
+            1,
+            2,
+            3,
+            4,
+            5,
+            6,
+            7,
+            8,
+            9,
+            10,
+            11,
+            12,
+            13,
+            14,
+            15,
+            16,
+            17,
+            18,
+            19,
+            20
+          ],
+          "message": "the baseline melee attack bonus applies PF1's -4 nonproficiency penalty only when this character's proficiency with item:longsword is actually known, and it is not: at least one class in [\"class:commoner\"] has neither a rules_tables::crb::weapon_tables::CLASS_WEAPON_PROFICIENCIES row nor a Known answer from the converted rule package (class:commoner level 1: Weapon and Armor Proficiency (core_rulebook:class_feature:weapon_and_armor_proficiency_commoner) picks 1 from the simple weapon proficiency choice pool, whose options the converted package does not link (no converted rule is a member of it)), so the attack total below is NOT claimed to be correct"
+        }
+      ],
       "books": [
         "core_rulebook"
       ],
       "class_id": "class:commoner",
       "family": "CRB NPC / Ex-* classes",
-      "levels_blocked": [],
-      "levels_computed": [
+      "levels_blocked": [
         1,
         2,
         3,
@@ -491,11 +517,12 @@
         19,
         20
       ],
+      "levels_computed": [],
       "max_level": 20,
       "registries": [
         "crb_untabled_class_chassis"
       ],
-      "status": "Computed"
+      "status": "Blocked"
     },
     {
       "blocking_diagnostics": [],
@@ -2274,8 +2301,8 @@
       "status": "Computed"
     }
   ],
-  "computed": 59,
-  "generated_at": "2026-09-22T23:06:36Z",
+  "computed": 58,
+  "generated_at": "2026-09-23T00:07:18Z",
   "generated_by": "cargo run --bin class_census -- --json <path>",
   "ids": 135,
   "input_posture": "tests/fixtures/rules_core/pf1_human_fighter_level1_ge06_deterministic_input.txt with the class swapped to the class under test, swept over 1..=max_level (per the merged registry's own max_level, not a fixed 20), plus the canonical per-class choice/spell seeds compose_character_input applies (pf1_adapter.rs, mirrored in codex::rules_core::class_seeds). A non-prestige class counts as computed only when every level in its own sweep reaches HeadlessReceiptStatus::Computed. A prestige class is never measured alone -- 'alone_status' is a negative control, expected Blocked -- its real Computed measurement is the carrier-mix sweep in 'mixes' (§2, epic-f-class-completion.md, review finding 14): the carrier(s) its own converted entry gate selects (wizard/cleric/fighter, or both independently for the dual-caster case), at the smallest level meeting every translatable numeric entry-gate term (floor 5, capped at carrier + prestige max_level <= 20). 'entry_gate' is printed rule text, non-blocking by design -- it never gates 'mixes[].status'.",
