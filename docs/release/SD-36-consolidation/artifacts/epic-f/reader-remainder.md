@@ -9,10 +9,18 @@ level equals the `| class:` rows of the table below -- no silent tolerance in ei
 class that gains an answer must leave this table in the same commit; a class that loses one fails
 the test by name.
 
-Command: `cargo test --locked -j 8 --lib every_census_class_has_a_known_proficiency_answer -- --nocapture`
-(prints the population line and every Unknown class with the reader's reason). Measured 2026-09-23
-on sd36/epic-f1c after F1c-3 (Unchained class records, closure-complete attestation, weapon-choice
-pools linked; package regenerated with `sheet_rule_convert -- --write`, `--check` exit 0).
+Command: `cargo test --locked -j 8 --lib every_census_class_has_a_known_proficiency_answer -- --test-threads=8 --nocapture`
+(prints the population line and every Unknown class with the reader's reason). Regenerated 2026-09-23
+on sd36/epic-f1c at 641691e283 (F1c-1 through F1c-5: D1 type grants, D2 line split, D3 Unchained,
+D4 attestation, D6 weapon-choice offers, D7 always-held globals, D8 variable-pool picks; package
+`--check` exit 0, records 49,450). Result: 1 passed; `census classes: 135; with a static row: 42;
+walked by the reader: 93; Known at every level: 76; Unknown: 17`.
+
+Per-class evidence is re-derived from the committed package, read-only, with
+`python3 docs/release/SD-36-consolidation/artifacts/epic-f/scripts/closure_defects.py <slug>...`
+(the same walk as `attest.rs`; it prints each closure-defect row attributed to a record in the
+class's closure). Run over the 17 classes below it lists 45 rows: 38 `unresolved-references` and
+7 `undefined-variables` -- see the count table under Mechanisms.
 
 ## Measured
 
@@ -24,6 +32,14 @@ pools linked; package regenerated with `sheet_rule_convert -- --write`, `--check
 - F1c-1 (2026-09-22) closed mechanism A (grant-by-type): 65 -> 60 Unknown.
 - F1c-2 (2026-09-23, D2: a line's condition gates only its own line) did not move this table; it
   moved the static-row parity (27 -> 32 of 42 reproduced at level 1).
+- **Non-prestige remainder: empty** (0 of 19 walked non-prestige classes Unknown; with the 42
+  static rows, which reader-vs-static test (a) reproduces 42 of 42 at level 1, all 61 non-prestige
+  classes have a proficiency answer -- census `computed` 61 of 61, `blocked` 0,
+  `artifacts/epic-f/census-f1c.json`).
+- The D5 stale-row correction, F1c-4 (D7, always-held globals) and F1c-5 (D8, variable-pool picks),
+  all after F1c-3, did not move this table (17 before and after). They moved static-row parity: D5 to
+  41 of 42 (af70b72679), D7 none (ea4d64eca8), D8 41 -> 42 of 42 (641691e283; summoner, which has a
+  static row and so is not walked here).
 - F1c-3 (2026-09-23) moved it 60 -> 17:
   - **D4, closure-complete attestation** (`SheetRule::closure_complete`, written by
     `crates/codex-ingest/src/pcgen_import/sheet_rule/attest.rs`): true iff every rule the class line
@@ -55,7 +71,8 @@ pools linked; package regenerated with `sheet_rule_convert -- --write`, `--check
 - Evidence for each mechanism: the converted package's own `granted_by` edges and
   `data/sheet_rules/_defects/*.json` restricted to the class's closure (test-side and converter-side
   only; live code never reads `_defects/`). Re-derive with
-  `python3 <scratch>/closure_defects.py <slug>...` (same walk as `attest.rs`).
+  `python3 docs/release/SD-36-consolidation/artifacts/epic-f/scripts/closure_defects.py <slug>...`
+  (same walk as `attest.rs`; committed with this regeneration -- the earlier scratch copy was lost).
 
 ## Mechanisms
 
@@ -69,6 +86,17 @@ pools linked; package regenerated with `sheet_rule_convert -- --write`, `--check
 | F | proficiency pick into an unlinked pool | 0 | CLOSED by F1c-3 (D6) | converter -- done |
 | G | attestation false: an unresolved reference in the class closure | 13 | the class closure names a record the corpus does not carry (`_defects/unresolved-references.json`), so the converter cannot attest that no weapon grant was lost | corpus: ingest the named records, or the converter: resolve the reference |
 | H | attestation false: an undefined variable in the class closure | 4 | a rule in the closure reads a variable no oracle row defines (`_defects/undefined-variables.json`) | converter: variable declaration repair |
+
+Counts (`closure_defects.py` over the 17 classes; a class is G when its closure carries any
+unresolved reference, H when it carries only undefined variables):
+
+| mechanism | classes | defect rows in their closures | of which `unresolved-references` | of which `undefined-variables` |
+|---|---|---|---|---|
+| G | 13 | 41 | 38 | 3 (exalted 2, hellknight_signifer 1) |
+| H | 4 | 4 | 0 | 4 |
+| total | 17 prestige, 0 non-prestige | 45 | 38 | 7 |
+
+Attested `closure_complete`: 56 of 189 class principals (unchanged by F1c-4/F1c-5).
 
 Open outside this table (Known, not Unknown, so the test does not list it): Red Mantis Assassin
 reads Simple + Martial from its header grant, while its closure also carries the ambiguous
