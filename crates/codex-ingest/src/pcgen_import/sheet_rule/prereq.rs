@@ -804,6 +804,7 @@ mod tests {
             pfs_base_keys: BTreeSet::new(),
             ability_category_parent: pairs.iter().map(|(c, p)| (c.to_string(), p.to_string())).collect(),
             ability_category_type: BTreeMap::new(),
+            ability_category_pool: BTreeMap::new(),
         }
     }
 

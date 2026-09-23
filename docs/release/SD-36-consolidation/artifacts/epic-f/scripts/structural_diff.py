@@ -201,6 +201,7 @@ F1C_CLASS_CAUSES = {
     "d6_weapon_choice": "D6: a CHOOSE:WEAPONPROFICIENCY option list resolved to oracle weapon names, or a pick linked to its child pool's one member",
     "f1c3_preability_bracket": "F1c-3: a PREABILITY `[<key>]` item no longer converts to an unholdable MissingRule alternative",
     "d7_always_held": "D7: always_held=true attested on the principal of a record every character holds unconditionally -- the target of an unconditional ABILITY|AUTOMATIC grant on a STAT/SAVE row (sheet_rule/always_held.rs)",
+    "d8_pool_pick": "D8: a record that raises an ability category's POOL variable offers the pick -- offers {id: <the record>, count: Var(<pool variable>), from: Rules {pool, tags}} on its principal (sheet_rule/pool_pick.rs)",
 }
 
 
@@ -242,6 +243,26 @@ def d6_shape(old: object, new: object) -> str | None:
     return None
 
 
+def d8_shape(rid: str, old: object, new: object, rule: dict | None) -> bool:
+    """D8: an absent offer becomes the record's own pool pick -- `id` the rule itself, `count`
+    exactly one variable (the pool variable), `from` a `Rules` set with no extra requirement.
+    D6's `linked` pick is told apart by its count: a D6 link counts the pick rule's own `Pool`
+    value (`count == value`), a D8 pick counts the pool variable."""
+    if old is not None or not isinstance(new, dict) or "#" in rid:
+        return False
+    count, frm = new.get("count"), new.get("from")
+    target = (rule or {}).get("target")
+    if isinstance(target, dict) and "Pool" in target and (rule or {}).get("value") == {"Number": count}:
+        return False
+    return (
+        new.get("id") == rid
+        and isinstance(count, dict) and set(count) == {"Var"}
+        and isinstance(frm, dict) and set(frm) == {"Rules"}
+        and frm["Rules"].get("requires") == "Always"
+        and isinstance(frm["Rules"].get("pool"), str) and isinstance(frm["Rules"].get("tags"), list)
+    )
+
+
 def _load_f1c_deltas() -> tuple[dict[tuple[str, str], str], dict[str, str], dict[str, str]]:
     try:
         with open(_F1C_DELTAS_PATH, "r", encoding="utf-8") as fh:
@@ -280,6 +301,8 @@ def f1c_delta_holds(name: str, rid: str, field: str, old: dict, new: dict, fresh
         return has_bracket_missing_rule(o) and not has_bracket_missing_rule(n)
     if name == "d7_always_held":
         return field == "always_held" and o is None and n is True and "#" not in rid
+    if name == "d8_pool_pick":
+        return field == "offers" and d8_shape(rid, o, n, new)
     return False
 
 
@@ -724,7 +747,7 @@ def main() -> int:
     print("== expected delta classes (named, counted, explained -- never a blanket allowance) ==")
     print(f"  added granted_by edges: {added_edges_total}  (F1's own declared purpose -- a bare AUTO reference now resolving through its parent ability category; SS3.5 permits growth)")
     print(f"  added grants: {added_grants_total}  (F1-2 GatedFactGrant wrapping / F1-3 WeaponSet expansion of a previously-bare selector; see grant_signature/grant_covers)")
-    print(f"  added _vars/ tables: {len(added_vars)}  (condition variables an added GatedFactGrant's `when` now references)")
+    print(f"  added _vars/ tables: {len(added_vars)}  (condition variables an added GatedFactGrant's `when` now references, and the pool variables a D8 pick's `count` references)")
     print(f"  added _defects/ files: {len(added_defects)}")
     print(f"  provenance deltas on the pinned current_class-fix record list: {len(expected_provenance_deltas)} of {len(EXPECTED_PROVENANCE_DELTA_RECORDS)} pinned records (see structural_diff_expected_provenance_deltas.json)")
     print(

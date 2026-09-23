@@ -1,0 +1,1 @@
+{"var":"vc58a66821c0b935f","label":"POOL BACKGROUNDSKILL","declared_by":["pathfinder_unchained:class_feature:rule_use_background_skills"],"contributions":[{"rule_id":"pathfinder_unchained:class_feature:rule_use_background_skills","expr":{"Mul":[{"Const":2},{"Sum":["Level",{"Mul":[{"Const":-1},"HitDice"]}]}]},"when":"Always"}],"provenance":{}}

@@ -119,6 +119,11 @@ pub struct ClassWeaponProficiencyView {
     /// A held weapon pick whose options the package names ([`WeaponPickView`]): decided by the
     /// character's recorded choice, never by the class level.
     pub weapon_picks: Vec<WeaponPickView>,
+    /// SD-36 F1c-5 (D8): a pick among an ability category's members (`offers: Rules` with
+    /// `Granter::Choice` edges onto the members) that the walk decided from the class's Path-A
+    /// canonical default (`class_seeds::canonical_seeds_for`), printed once so the sheet says
+    /// which member the answer assumes.
+    pub seeded_picks: Vec<String>,
 }
 
 /// The reader's answer: known (possibly with printed conditions) or unknown with its reason.
@@ -166,7 +171,11 @@ pub fn class_weapon_proficiency_view_in(package: &SheetRulePackage, class_slug: 
     };
     let level = i64::from(class_level);
     let seed = HeldSeed { classes: vec![(class_slug.to_string(), level)], ..HeldSeed::default() };
-    let facts = CharacterFacts { level, class_levels: vec![(class_slug.to_string(), level)], ..CharacterFacts::default() };
+    let mut facts = CharacterFacts { level, class_levels: vec![(class_slug.to_string(), level)], ..CharacterFacts::default() };
+    let seeded = canonical_member_picks(package, class_slug);
+    for pick in &seeded {
+        facts.choices.entry(pick.choice.clone()).or_default().push((pick.member.clone(), pick.member.clone()));
+    }
     let held = held_set(package, &seed, &facts);
     if !held.rules.contains_key(principal) {
         return ProficiencyAnswer::Unknown { reason: format!("the class principal rule {principal} is not held at level {class_level}") };
@@ -192,10 +201,21 @@ pub fn class_weapon_proficiency_view_in(package: &SheetRulePackage, class_slug: 
             }
             Some(LinkedPick::NotAProficiency) => {}
             None => {
-                if let Some(pick) = unresolved_weapon_pick(package, rule, &mut pool_reaches_weapon) {
+                if let Some(pick) = unresolved_weapon_pick(package, rule, &mut pool_reaches_weapon)
+                    .or_else(|| unrecorded_member_pick(package, rule, &held, &facts))
+                {
                     acc.unresolved.insert(pick);
                 }
             }
+        }
+        if let Some(pick) = seeded.iter().find(|p| &p.choice == id) {
+            acc.seeded.insert(format!(
+                "{} ({}) picks {} ({}) -- the Path-A canonical default",
+                rule.label,
+                id,
+                package.rule(&pick.member).map_or(pick.member.as_str(), |m| m.label.as_str()),
+                pick.member
+            ));
         }
         let ctx = EvalContext { holder_class: entry.holder_class.clone(), ..EvalContext::default() };
         for effect in &rule.grants {
@@ -332,6 +352,65 @@ fn linked_pick(package: &SheetRulePackage, rule: &SheetRule) -> Option<LinkedPic
     Some(LinkedPick::Weapon(WeaponPickView { choice: choice.clone(), label: rule.label.clone(), options: options.clone() }))
 }
 
+/// One Path-A canonical pick among an ability category's members (SD-36 F1c-5, D8).
+struct MemberPick {
+    /// The picking rule's choice id (the rule's own id).
+    choice: RuleId,
+    /// The member the default takes.
+    member: RuleId,
+}
+
+/// The class's Path-A canonical defaults (`class_seeds::canonical_seeds_for`) that are a pick
+/// among an ability category's members: the choice id is a converted rule offering
+/// `OptionSet::Rules` under its own id, and the selection is a rule that choice grants
+/// (`Granter::Choice`). Every other seed (a legacy `choice:*` id, a weapon pick) is not this
+/// reader's to apply.
+fn canonical_member_picks(package: &SheetRulePackage, class_slug: &str) -> Vec<MemberPick> {
+    let (choices, _) = crate::rules_core::class_seeds::canonical_seeds_for(class_slug);
+    choices
+        .into_iter()
+        .filter(|c| {
+            package.rule(&c.choice_set_id).is_some_and(|picker| {
+                matches!(&picker.offers, Some(Choice { id, from: OptionSet::Rules { .. }, .. }) if id == &c.choice_set_id)
+            }) && package.rule(&c.selection_id).is_some_and(|member| {
+                member.granted_by.iter().any(|g| matches!(&g.by, Granter::Choice(ch) if ch == &c.choice_set_id))
+            })
+        })
+        .map(|c| MemberPick { choice: c.choice_set_id, member: c.selection_id })
+        .collect()
+}
+
+/// `Some(words)` when `rule` is a held pick among an ability category's members (SD-36 F1c-5,
+/// D8: `offers: Rules` under the rule's own id, members granted by `Granter::Choice(<rule>)`)
+/// that no recorded choice fills and no member the walk already holds fills, and some member
+/// leads to a weapon-proficiency grant. The class level cannot say which member the player takes.
+fn unrecorded_member_pick(package: &SheetRulePackage, rule: &SheetRule, held: &HeldSet, facts: &CharacterFacts) -> Option<String> {
+    let Some(Choice { id: choice, from: OptionSet::Rules { .. }, .. }) = &rule.offers else { return None };
+    if choice != &rule.id || facts.choices.get(choice).is_some_and(|v| !v.is_empty()) {
+        return None;
+    }
+    let members: Vec<&SheetRule> = package
+        .rules
+        .values()
+        .filter(|m| m.granted_by.iter().any(|g| matches!(&g.by, Granter::Choice(ch) if ch == choice)))
+        .collect();
+    if members.iter().any(|m| held.rules.contains_key(&m.id)) {
+        return None;
+    }
+    let mut memo = BTreeMap::new();
+    let reaching: Vec<&str> = members.iter().filter(|m| reaches_a_weapon_grant(package, &m.id, &mut memo)).map(|m| m.id.as_str()).collect();
+    if reaching.is_empty() {
+        return None;
+    }
+    Some(format!(
+        "{} ({}) picks from {} members, and the character records no choice; {} lead(s) to a weapon proficiency grant",
+        rule.label,
+        rule.id,
+        members.len(),
+        reaching.join(", ")
+    ))
+}
+
 /// `Some(words)` when `rule` is a held player's pick (`target: Pool(p)` with a non-zero count)
 /// that could grant a weapon proficiency and whose options the reader cannot resolve.
 ///
@@ -439,6 +518,7 @@ struct Accumulator {
     printed: BTreeSet<String>,
     unresolved: BTreeSet<String>,
     picks: BTreeSet<WeaponPickView>,
+    seeded: BTreeSet<String>,
 }
 
 impl Accumulator {
@@ -490,6 +570,7 @@ impl Accumulator {
         self.view.printed_conditions = self.printed.into_iter().collect();
         self.view.unresolved_picks = self.unresolved.into_iter().collect();
         self.view.weapon_picks = self.picks.into_iter().collect();
+        self.view.seeded_picks = self.seeded.into_iter().collect();
         self.view
     }
 }
@@ -779,6 +860,44 @@ mod tests {
         let gated = attested_package(vec![rule("fx_book:class_feature:fx_misc", class_line(1), Applies::Always, Vec::new()), standard]);
         let answer = class_weapon_proficiency_view_in(&gated, "fx", 1);
         assert!(matches!(answer, ProficiencyAnswer::Unknown { .. }), "{answer:?}");
+    }
+
+    /// D8 (SD-36 F1c-5): a held pick among an ability category's members (`offers: Rules` under
+    /// the rule's own id, members granted by `Granter::Choice`) that no recorded choice fills, one
+    /// of whose members leads to a weapon grant, is an unresolved pick -- never Known(empty) and
+    /// never a guessed member. A member the walk already holds (a class that IS the pick) fills it.
+    #[test]
+    fn an_unrecorded_member_pick_is_unresolved_until_a_member_is_held() {
+        use crate::rules_core::sheet_rule::Grant;
+        let picker_id = "fx_book:class_feature:fx_selection";
+        let mut picker = rule(picker_id, class_line(1), Applies::Always, Vec::new());
+        picker.offers = Some(Choice {
+            id: picker_id.into(),
+            count: Expr::Const(1),
+            from: OptionSet::Rules { pool: "class".into(), tags: vec!["Fx Selection".into()], requires: Applies::Always },
+        });
+        let by_choice = vec![Grant { by: Granter::Choice(picker_id.into()), when: Applies::Always }];
+        let standard = rule("fx_book:class_feature:fx_standard", by_choice.clone(), Applies::Always, vec![Effect::FactGrant(dagger())]);
+        let other = rule("fx_book:class_feature:fx_other", by_choice, Applies::Always, Vec::new());
+        let package = attested_package(vec![picker.clone(), standard, other.clone()]);
+        let answer = class_weapon_proficiency_view_in(&package, "fx", 1);
+        let view = answer.known().unwrap_or_else(|| panic!("the walk itself is Known: {answer:?}"));
+        assert!(view.named.is_empty(), "the pick is not guessed: {view:?}");
+        assert_eq!(view.unresolved_picks.len(), 1, "{view:?}");
+        assert!(view.unresolved_picks[0].contains(picker_id) && view.unresolved_picks[0].contains("fx_standard"), "{view:?}");
+
+        // The class line holds a member itself: the pick is filled, nothing is unresolved.
+        let mut held_other = other;
+        held_other.granted_by.extend(class_line(1));
+        let standard = rule(
+            "fx_book:class_feature:fx_standard",
+            vec![Grant { by: Granter::Choice(picker_id.into()), when: Applies::Always }],
+            Applies::Always,
+            vec![Effect::FactGrant(dagger())],
+        );
+        let filled = attested_package(vec![picker, standard, held_other]);
+        let answer = class_weapon_proficiency_view_in(&filled, "fx", 1);
+        assert_eq!(answer, ProficiencyAnswer::Known(ClassWeaponProficiencyView::default()), "{answer:?}");
     }
 
     /// A class-line grant at or below the level that leads to a weapon grant but is shut by its

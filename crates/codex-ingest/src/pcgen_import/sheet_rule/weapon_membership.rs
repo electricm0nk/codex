@@ -151,6 +151,7 @@ mod tests {
             pfs_base_keys: BTreeSet::new(),
             ability_category_parent: BTreeMap::new(),
             ability_category_type: BTreeMap::new(),
+            ability_category_pool: BTreeMap::new(),
         }
     }
 

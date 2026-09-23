@@ -29,6 +29,9 @@ Classes (field deltas are pinned as exact (rule id, field) pairs; added ids as e
   d7_always_held       (F1c-4) `always_held: true` on the principal of a record every character
                        holds unconditionally (sheet_rule/always_held.rs). Check: a principal id,
                        absent before, `true` after.
+  d8_pool_pick         (F1c-5) `offers` absent -> the record's own pool pick: id the rule, count
+                       Var(<pool variable>), from Rules {pool, tags} (sheet_rule/pool_pick.rs).
+                       Check: structural_diff.d8_shape.
   f1c3_preability_bracket  PREABILITY `[<key>]` items: an unresolved `MissingRule "[...]"`
                        alternative (never holdable) is removed or becomes a HeldCount exclusion.
                        Check: the old field text holds a `"name": "[` MissingRule and the fresh
@@ -91,7 +94,7 @@ def main() -> int:
                     break
 
     classes: dict[str, dict] = {k: {"field_deltas": [], "new_rule_ids": []} for k in (
-        "d2_line_split", "d4_closure_complete", "d4_pi_reclosure", "d3_unchained_class", "d6_weapon_choice", "f1c3_preability_bracket", "d7_always_held")}
+        "d2_line_split", "d4_closure_complete", "d4_pi_reclosure", "d3_unchained_class", "d6_weapon_choice", "f1c3_preability_bracket", "d7_always_held", "d8_pool_pick")}
     problems: list[str] = []
     for rid, fields in deltas.items():
         for field in fields:
@@ -115,6 +118,8 @@ def main() -> int:
                 classes["f1c3_preability_bracket"]["field_deltas"].append([rid, field])
             elif rid in splits and field in LINE_FIELDS + MULTISET_FIELDS:
                 classes["d2_line_split"]["field_deltas"].append([rid, field])
+            elif field == "offers" and sd.d8_shape(rid, o, n, fr[rid]):
+                classes["d8_pool_pick"]["field_deltas"].append([rid, field])
             elif field == "offers" and fields == ["offers"] and d6_shape(o, n):
                 classes["d6_weapon_choice"]["field_deltas"].append([rid, field])
             else:

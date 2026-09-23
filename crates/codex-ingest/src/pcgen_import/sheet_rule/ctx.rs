@@ -118,6 +118,9 @@ pub struct CorpusIndex {
     /// `ABILITY:<category>|...|TYPE=<tag>` grant selects on (SD-36 Epic F1c-1): PCGen checks the
     /// ability's accumulated TYPE, including tags a `.MOD` row adds.
     pub facets: BTreeMap<RuleId, (String, Vec<String>)>,
+    /// SD-36 F1c-5 (D8): every variable pool a record of the index fills, by pool variable
+    /// (upper), with its members (`pool_pick::filled_pools`).
+    pub filled_pools: BTreeMap<String, (super::pool_pick::VariablePool, super::pool_pick::PoolMembers)>,
 }
 
 /// Resolve `(category, name)` to a rule id: KEY-exact join first, then display-name-exact join,
@@ -611,6 +614,7 @@ mod tests {
             pfs_base_keys: BTreeSet::new(),
             ability_category_parent: pairs.iter().map(|(c, p)| (c.to_string(), p.to_string())).collect(),
             ability_category_type: BTreeMap::new(),
+            ability_category_pool: BTreeMap::new(),
         }
     }
 

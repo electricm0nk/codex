@@ -968,6 +968,13 @@ pub fn compose_character_input(request: &CreateCharacterRequest) -> CharacterInp
             choice_set_id: SUMMONER_EIDOLON_EVOLUTION_CHOICE_ID.to_owned(),
             selection_id: IMPROVED_NATURAL_ARMOR_EVOLUTION_SELECTION.to_owned(),
         });
+        // SD-36 F1c-5 (D8): the Summoner Class Selection pick's Path-A default, the Standard
+        // class (`class_seeds::SUMMONER_CANONICAL_CLASS_SELECTION` states why), so the sheet
+        // prints the recorded pick instead of an unknown one.
+        selected_choices.push(SelectedChoice {
+            choice_set_id: codex::rules_core::class_seeds::SUMMONER_CLASS_SELECTION_CHOICE_ID.to_owned(),
+            selection_id: codex::rules_core::class_seeds::SUMMONER_CANONICAL_CLASS_SELECTION.to_owned(),
+        });
     } else if request.class_id == CAVALIER_CLASS_ID {
         // v0.6 alpha swarm (Path A choice-picker gap closure for the three
         // APG chooser-shaped classes, 2026-07-29) -- see

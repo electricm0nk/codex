@@ -33,6 +33,7 @@ pub mod convert;
 pub mod ctx;
 pub mod formula;
 pub mod pool_link;
+pub mod pool_pick;
 pub mod prereq;
 pub mod prose;
 pub mod table;
@@ -510,6 +511,7 @@ pub fn build_index(tree: &PinnedTree, records: Vec<RecordRef>) -> (CorpusIndex, 
         closures.push(closure);
     }
     index.records = records;
+    index.filled_pools = pool_pick::filled_pools(tree, &index);
     (index, closures)
 }
 
@@ -945,6 +947,11 @@ pub fn run(tree: &PinnedTree, index: &CorpusIndex, closures: &[Closure]) -> Run 
     let (_, unresolved_globals) = always_held::mark_always_held(tree, &mut files, index, &always_held::global_grants(tree));
     if !unresolved_globals.is_empty() {
         defects.entry("unresolved-references".into()).or_default().extend(unresolved_globals);
+    }
+    // D8: an oracle member of a filled variable pool no converted record stands for.
+    let unconverted_members = pool_pick::unconverted_member_defects(&index.filled_pools);
+    if !unconverted_members.is_empty() {
+        defects.entry("pool-member-unconverted".into()).or_default().extend(unconverted_members);
     }
     // Variable tables for every referenced id.
     let mut referenced: BTreeSet<VarId> = BTreeSet::new();

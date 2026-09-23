@@ -692,6 +692,34 @@ class StructuralDiffGateTest(unittest.TestCase):
         self.assertEqual(code, 1, out)
         self.assertIn("default: always_held", out)
 
+    def test_f1c5_a_pinned_pool_pick_passes_only_its_shape(self):
+        """A pinned d8_pool_pick pair passes only as absent -> the record's own pick counted by one
+        variable; a planted Const count, a foreign choice id, or the same offer on an unpinned
+        record FAILS."""
+        rid, rel = "advanced_players_guide:class_feature:summoner", "advanced_players_guide/class_feature/summoner.json"
+        self.assertEqual(structural_diff.F1C_FIELD_DELTA_CLASS.get((rid, "offers")), "d8_pool_pick")
+        pick = {"id": rid, "count": {"Var": "v5064279ed9539fc5"},
+                "from": {"Rules": {"pool": "class", "tags": ["Summoner Class Selection"], "requires": "Always"}}}
+        base = base_rules()
+        base[rel] = [{"id": rid, "label": "Summoner", "value": "Text", "granted_by": [], "grants": []}]
+        fresh = base_rules()
+        fresh[rel] = [{"id": rid, "label": "Summoner", "value": "Text", "offers": pick, "granted_by": [], "grants": []}]
+        code, out = self.run_diff(base, fresh)
+        self.assertEqual(code, 0, out)
+        for planted in ({**pick, "count": {"Const": 1}}, {**pick, "id": "advanced_players_guide:class_feature:other"}):
+            fresh[rel][0]["offers"] = planted
+            code, out = self.run_diff(base, fresh)
+            self.assertEqual(code, 1, out)
+            self.assertIn("summoner: offers", out)
+        other_rid, other_rel = "core_rulebook:class_feature:unpinned_fixture", "core_rulebook/class_feature/unpinned_fixture.json"
+        base = base_rules()
+        base[other_rel] = [{"id": other_rid, "label": "X", "value": "Text", "granted_by": [], "grants": []}]
+        fresh = base_rules()
+        fresh[other_rel] = [{"id": other_rid, "label": "X", "value": "Text", "offers": {**pick, "id": other_rid}, "granted_by": [], "grants": []}]
+        code, out = self.run_diff(base, fresh)
+        self.assertEqual(code, 1, out)
+        self.assertIn("unpinned_fixture: offers", out)
+
     def test_report_only_flag_keeps_exit_zero(self):
         base = base_rules()
         fresh = base_rules()

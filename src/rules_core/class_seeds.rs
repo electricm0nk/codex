@@ -206,11 +206,17 @@ pub fn canonical_seeds_for(class_name: &str) -> (Vec<SelectedChoice>, Vec<SpellS
         // pf1_adapter.rs: the Summoner Path A seed. The Eidolon's one
         // genuinely built evolution purchase -- cost 1 out of a level-1
         // pool of 3, so it is affordable at every level in the sweep.
+        //
+        // SD-36 F1c-5 (D8): plus the Summoner Class Selection pick, whose Standard class carries
+        // the Summoner's weapon and armor proficiency (`apg_abilities_class.lst:747`).
         "summoner" => (
-            vec![choice(
-                "choice:summoner_eidolon_evolution",
-                "evolution:improved_natural_armor",
-            )],
+            vec![
+                choice(
+                    "choice:summoner_eidolon_evolution",
+                    "evolution:improved_natural_armor",
+                ),
+                choice(SUMMONER_CLASS_SELECTION_CHOICE_ID, SUMMONER_CANONICAL_CLASS_SELECTION),
+            ],
             Vec::new(),
         ),
         // pf1_adapter.rs: the Cavalier/Inquisitor/Oracle Path A block
@@ -242,6 +248,19 @@ pub fn canonical_seeds_for(class_name: &str) -> (Vec<SelectedChoice>, Vec<SpellS
         _ => (Vec::new(), Vec::new()),
     }
 }
+
+/// SD-36 F1c-5 (D8): the choice a Summoner records its Summoner Class Selection pick under -- the
+/// converted id of the Summoner ability (`apg_abilities_class.lst:739`), which fills the
+/// `Summoner Class Selection` pool (`apg_abilitycategories.lst:267`,
+/// `POOL:Pool_Summoner_Class_Selection`) with one pick (`BONUS:VAR|Pool_Summoner_Class_Selection|1`).
+pub const SUMMONER_CLASS_SELECTION_CHOICE_ID: &str = "advanced_players_guide:class_feature:summoner";
+
+/// The Summoner's canonical Class Selection: `Summoner ~ Standard Class` (`:741`). The oracle
+/// makes it the no-pick default -- `:739`'s `BONUS:VAR|StandardSummoner|1|TYPE=Base|
+/// !PREABILITY:1,CATEGORY=Class,TYPE.Summoner Class Selection` makes a Summoner with no pick in
+/// the pool a standard Summoner -- and it is also the pool's first member in oracle order (`:741`
+/// before `pu_abilities_class.lst:117`). A Path-A default, not a player's pick.
+pub const SUMMONER_CANONICAL_CLASS_SELECTION: &str = "advanced_players_guide:class_feature:summoner_standard_class";
 
 /// Build the real production-shaped input for one class at one level:
 /// `fixture` cloned, `case_id` re-stamped, the class swapped in as the sole

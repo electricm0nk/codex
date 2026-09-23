@@ -105,6 +105,9 @@ struct Acc {
     subject: Subject,
     desc_redacted: bool,
     tempdesc_seen: bool,
+    /// SD-36 F1c-5 (D8): the variable pools (variable name, original case) this record's own
+    /// `BONUS:VAR` rows raise, in row order.
+    pool_picks: Vec<String>,
 }
 
 /// A die literal with an optional flat modifier: `"1d8"` -> `("1d8", None)`, `"1d8+2"` ->
@@ -577,6 +580,34 @@ fn ability_type_selector_targets(ctx: &mut RecordCtx, category: &str, selector: 
     targets
 }
 
+/// SD-36 F1c-5 (D8): the first variable pool the record raises becomes the record's choice --
+/// `count` the pool variable itself (PCGen sizes the pool by it), options the category's members
+/// -- and every member gets a `Granter::Choice(<record>)` edge. A record that already offers a
+/// choice, or raises a second pool, keeps one choice and names the rest `pool-pick-collision`.
+fn offer_pool_pick(ctx: &mut RecordCtx, acc: &mut Acc, out: &mut Converted) {
+    let picks = std::mem::take(&mut acc.pool_picks);
+    for (i, var) in picks.iter().enumerate() {
+        let Some((pool, members)) = ctx.index.filled_pools.get(&var.to_ascii_uppercase()) else { continue };
+        if i > 0 || acc.offers.is_some() {
+            ctx.defect(
+                "pool-pick-collision",
+                format!("{}: raises the {} pool ({}), but the record already offers another choice", ctx.record.id, slug(&pool.category), pool.decl),
+            );
+            continue;
+        }
+        acc.offers = Some(Choice {
+            id: ctx.record.id.clone(),
+            count: Expr::Var(super::ctx::var_id(var)),
+            from: OptionSet::Rules { pool: pool.pool.clone(), tags: pool.tags.clone(), requires: Applies::Always },
+        });
+        for m in &members.resolved {
+            if m != &ctx.record.id {
+                out.grants_out.push((m.clone(), Grant { by: Granter::Choice(ctx.record.id.clone()), when: Applies::Always }));
+            }
+        }
+    }
+}
+
 /// A record's `(CATEGORY, TYPE tags)` accumulated over its whole closure, in application order
 /// -- the same fold the `CATEGORY`/`TYPE` arms of `convert_token` apply to the converted rule's
 /// `pool`/`tags` (a `.MOD` row's `TYPE` adds, `.CLEAR` / `.CLEAR.<x>` reset, any other `TYPE`
@@ -650,6 +681,7 @@ pub fn convert_record(tree: &PinnedTree, index: &CorpusIndex, record: &RecordRef
         subject: Subject::Character,
         desc_redacted: pi_desc,
         tempdesc_seen: false,
+        pool_picks: Vec::new(),
     };
     // The choice id is the record's own id when it carries a CHOOSE (pre-scan so %CHOICE
     // markers before the CHOOSE token still bind).
@@ -745,6 +777,8 @@ pub fn convert_record(tree: &PinnedTree, index: &CorpusIndex, record: &RecordRef
     // to (its member list), never by which book's capitalization produced the label, so once
     // two grants resolve to the same member set only the first survives.
     acc.grants = dedup_weapon_set_grants(acc.grants);
+    // SD-36 F1c-5 (D8): a record that raises a variable pool offers the pick (`pool_pick.rs`).
+    offer_pool_pick(&mut ctx, &mut acc, &mut out);
     // ---- assemble -------------------------------------------------------------------------
     let label = {
         let base = record.name.clone();
@@ -1517,6 +1551,13 @@ fn convert_token(ctx: &mut RecordCtx, acc: &mut Acc, out: &mut Converted, key: &
                         return Err("BONUS:VAR ([redacted PI] value)".into());
                     }
                     for name in target.split(',') {
+                        let upper = name.trim().to_ascii_uppercase();
+                        if ctx.index.filled_pools.contains_key(&upper)
+                            && super::pool_pick::raises_the_pool(&formula)
+                            && !acc.pool_picks.iter().any(|p| p.eq_ignore_ascii_case(&upper))
+                        {
+                            acc.pool_picks.push(name.trim().to_string());
+                        }
                         let id = super::ctx::var_id(name);
                         out.var_labels.entry(id.clone()).or_insert_with(|| name.trim().to_string());
                         out.var_contribs.push((id, name.trim().to_ascii_uppercase(), VarContribution { rule_id: ctx.record.id.clone(), expr: expr.clone(), bonus_type: bonus_type.clone(), when: when.clone() }));
@@ -2040,6 +2081,7 @@ mod ability_type_selector_tests {
             pfs_base_keys: BTreeSet::new(),
             ability_category_parent: BTreeMap::new(),
             ability_category_type: BTreeMap::new(),
+            ability_category_pool: BTreeMap::new(),
         }
     }
 

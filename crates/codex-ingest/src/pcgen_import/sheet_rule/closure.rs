@@ -168,6 +168,12 @@ pub struct PinnedTree {
     /// its members by `TYPE:` and names no explicit `ABILITYLIST:`. A name declared with two
     /// different tag sets is left out (never guessed), like an ambiguous parent.
     pub ability_category_type: BTreeMap<String, Vec<String>>,
+    /// SD-36 F1c-5 (D8): a category's `POOL:` variable -- category name (upper) -> (the `POOL:`
+    /// value upper, the declaring row), for every `ABILITYCATEGORY:` row carrying one. PCGen sizes
+    /// the category's pool by that formula (`apg_abilitycategories.lst:267`
+    /// `POOL:Pool_Summoner_Class_Selection`). A name declared with two different `POOL:` values is
+    /// left out (never guessed).
+    pub ability_category_pool: BTreeMap<String, (String, RowRef)>,
 }
 
 /// Split a raw row into its name field and `(KEY, VALUE)` tokens, tab-separated. A field with
@@ -383,6 +389,7 @@ impl PinnedTree {
             pfs_base_keys: BTreeSet::new(),
             ability_category_parent: BTreeMap::new(),
             ability_category_type: BTreeMap::new(),
+            ability_category_pool: BTreeMap::new(),
         };
         tree.build_indexes();
         Ok(tree)
@@ -402,6 +409,8 @@ impl PinnedTree {
         let mut ability_category_ambiguous: BTreeSet<String> = BTreeSet::new();
         let mut ability_category_type: BTreeMap<String, Vec<String>> = BTreeMap::new();
         let mut ability_category_listed: BTreeSet<String> = BTreeSet::new();
+        let mut ability_category_pool: BTreeMap<String, (String, RowRef)> = BTreeMap::new();
+        let mut ability_category_pool_ambiguous: BTreeSet<String> = BTreeSet::new();
         // `CATEGORY:Aligned Class` `BONUS:VAR` contributions (name upper, row, the row's own
         // `id.key` upper) buffered here instead of indexed inline -- see the comment where they
         // are pushed, below. Deferred to a second pass over `class_rows` because a row's OWNER
@@ -481,6 +490,20 @@ impl PinnedTree {
                                 None => {
                                     ability_category_parent.insert(own.clone(), parent);
                                 }
+                            }
+                        }
+                    }
+                    if !own.is_empty()
+                        && let Some((_, v)) = tokens.iter().find(|(k, _)| k == "POOL")
+                    {
+                        let pool = v.trim().to_ascii_uppercase();
+                        match ability_category_pool.get(&own) {
+                            Some((existing, _)) if existing != &pool => {
+                                ability_category_pool_ambiguous.insert(own.clone());
+                            }
+                            Some(_) => {}
+                            None => {
+                                ability_category_pool.insert(own.clone(), (pool, row));
                             }
                         }
                     }
@@ -588,6 +611,9 @@ impl PinnedTree {
         for name in &ability_category_ambiguous {
             ability_category_parent.remove(name);
         }
+        for name in &ability_category_pool_ambiguous {
+            ability_category_pool.remove(name);
+        }
         // Resolve the buffered `Aligned Class` `BONUS:VAR` contributions now that `class_rows`
         // holds every file's `CLASS:` headers, tree-wide: a contribution is indexed only when NO
         // genuine `CLASS:<key>` row (the row's own identity key) exists anywhere else in the tree
@@ -609,6 +635,7 @@ impl PinnedTree {
         self.pfs_base_keys = pfs_base_keys;
         self.ability_category_parent = ability_category_parent;
         self.ability_category_type = ability_category_type;
+        self.ability_category_pool = ability_category_pool;
     }
 
     pub fn row_text(&self, r: RowRef) -> &str {
@@ -860,6 +887,7 @@ mod tests {
             pfs_base_keys: BTreeSet::new(),
             ability_category_parent: BTreeMap::new(),
             ability_category_type: BTreeMap::new(),
+            ability_category_pool: BTreeMap::new(),
         };
         tree.build_indexes();
         tree
