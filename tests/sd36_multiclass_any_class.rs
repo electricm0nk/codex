@@ -151,24 +151,18 @@ fn check(oracle: &Oracle) {
     assert_eq!(c.total_saves, BaseSaves { fortitude: f, reflex: r, will: w }, "{:?} total saves", oracle.classes);
     assert_eq!(explanation_value(&receipt, "multiclass.hit_points"), oracle.hit_points, "{:?} HP", oracle.classes);
 
-    // Skill points: Unknown, named once per class, never a number.
-    assert!(
-        !c.explanations.iter().any(|e| e.id == "multiclass.skill_points"),
-        "{:?}: a skill-point total was printed although no class record states skill ranks \
-         per level (PF1 value would be {})",
-        oracle.classes,
-        oracle.skill_points_pf1
+    // Skill points (SD-36 F3b2): every class record now states its skill ranks per level
+    // (converted from `STARTSKILLPTS`), so the fold prints the class total, and it must be
+    // the hand-worked PF1 value written before F3b first ran (`f3b-hand-worked.md`).
+    assert_eq!(
+        explanation_value(&receipt, "multiclass.skill_points"),
+        oracle.skill_points_pf1,
+        "{:?} class skill points",
+        oracle.classes
     );
     let unknown: Vec<_> =
         c.diagnostics.iter().filter(|d| d.id == "class_chassis.skill_points.unknown").collect();
-    assert_eq!(unknown.len(), oracle.classes.len(), "{:?}: one Unknown per class: {unknown:?}", oracle.classes);
-    for (name, _) in oracle.classes {
-        assert!(
-            unknown.iter().any(|d| d.message.contains(&format!("class:{name}"))),
-            "{:?}: no skill-points Unknown names class:{name}: {unknown:?}",
-            oracle.classes
-        );
-    }
+    assert!(unknown.is_empty(), "{:?}: no class's skill points are Unknown now: {unknown:?}", oracle.classes);
 }
 
 #[test]

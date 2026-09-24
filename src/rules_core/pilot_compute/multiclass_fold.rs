@@ -28,8 +28,8 @@
 //!   die only for the first-listed class's first level (character level 1), + Con each
 //!   level; any class with no hit die => [`HIT_POINTS_UNKNOWN`], no total printed.
 //! - Skill points: per class `ClassChassis::skill_points`; a class whose record states no
-//!   skill ranks per level => [`SKILL_POINTS_UNKNOWN`], no total printed. Today that is
-//!   every class (no converted class record carries the row; F3a).
+//!   skill ranks per level => [`SKILL_POINTS_UNKNOWN`], no total printed. Since SD-36 F3b2
+//!   every chassis-bearing class record states its ranks (converted from `STARTSKILLPTS`).
 //! - Class-feature lines: each class's isolated single-class run, explanation ids
 //!   re-scoped `multiclass.<class>.<original id>` (skipped when the mix already printed
 //!   the same id itself; character-level totals -- a level-1 hit-point line, the chassis BAB/save rows

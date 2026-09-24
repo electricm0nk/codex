@@ -399,10 +399,31 @@ fn mark_class_selections(entries: &[CorpusEntry], joined: &BTreeSet<usize>, reco
 
 // ---- indexes ----------------------------------------------------------------------------------
 
+/// The prefix of the codex-named placeholder a product-identity record's corpus key carries in
+/// place of its real KEY (`Codex-Named Unit (<kind>_<book>_<file>_<line>)`).
+const CODEX_PLACEHOLDER_KEY_PREFIX: &str = "Codex-Named Unit (";
+
+fn is_codex_placeholder_key(key: &str) -> bool {
+    key.starts_with(CODEX_PLACEHOLDER_KEY_PREFIX)
+}
+
+/// The KEY (upper-cased) the record's own base row declares in the pinned tree -- its `KEY:`
+/// token, else its name field ([`closure::row_identity`]) -- or `None` when the record has no
+/// row there or the row is not a record declaration (plain or `.COPY=`).
+fn declared_row_key(tree: &PinnedTree, r: &RecordRef) -> Option<String> {
+    let file = tree.file_index(&r.rel_path)?;
+    if r.line == 0 || r.line > tree.files[file].lines.len() {
+        return None;
+    }
+    let id = closure::row_identity(tree.row_text(RowRef { file, line: r.line }));
+    (matches!(id.shape, closure::RowShape::Plain | closure::RowShape::Copy(_)) && !id.key.is_empty()).then_some(id.key)
+}
+
 /// Build the corpus-wide index and every record's closure.
 pub fn build_index(tree: &PinnedTree, records: Vec<RecordRef>) -> (CorpusIndex, Vec<Closure>) {
     let mut index = CorpusIndex::default();
     let mut closures: Vec<Closure> = Vec::with_capacity(records.len());
+    let mut placeholder_declared: Vec<((String, String), RuleId)> = Vec::new();
     for r in &records {
         let closure = if r.rel_path.is_empty() {
             Closure::default()
@@ -436,6 +457,18 @@ pub fn build_index(tree: &PinnedTree, records: Vec<RecordRef>) -> (CorpusIndex, 
             None => {
                 index.by_cat_name.insert(cat_name_pair, r.id.clone());
             }
+        }
+        // SD-36 F3b2: a product-identity record ships a codex-named placeholder corpus key
+        // (`Codex-Named Unit (class_feature_..._lst_9)`), but every other record names it by the
+        // KEY its own oracle row declares (`Aldori Swordlord ~ Adaptive Tactics`,
+        // `ag_abilities_class.lst:9`). Indexed only under the placeholder, each such reference
+        // missed and was written to `_defects/unresolved-references.json` although its target
+        // converts. The declared key is collected here and indexed after every corpus key (below).
+        if is_codex_placeholder_key(&r.key)
+            && let Some(declared) = declared_row_key(tree, r)
+            && declared != key_u
+        {
+            placeholder_declared.push(((cat_u.clone(), declared), r.id.clone()));
         }
         index.by_kind_name.entry((r.kind.clone(), key_u.clone())).or_insert(r.id.clone());
         index.by_kind_name.entry((r.kind.clone(), name_u.clone())).or_insert(r.id.clone());
@@ -509,6 +542,23 @@ pub fn build_index(tree: &PinnedTree, records: Vec<RecordRef>) -> (CorpusIndex, 
         index.own_rows.insert(r.id.clone(), closure.own_rows.clone());
         index.facets.insert(r.id.clone(), convert::accumulated_facets(r, &closure));
         closures.push(closure);
+    }
+    // SD-36 F3b2: the declared keys of placeholder-keyed records, indexed only where no corpus
+    // key already answers the pair -- a reference that resolved before keeps its target (a
+    // reprint's real key wins over a PI twin's declared one). Two placeholder records declaring
+    // one pair are ambiguous to each other, under the same rule as two corpus keys.
+    let mut claimed: BTreeSet<(String, String)> = BTreeSet::new();
+    for (pair, id) in placeholder_declared {
+        match index.by_cat_key.get(&pair) {
+            None => {
+                claimed.insert(pair.clone());
+                index.by_cat_key.insert(pair, id);
+            }
+            Some(existing) if *existing != id && claimed.contains(&pair) => {
+                index.ambiguous_cat_key.insert(pair);
+            }
+            Some(_) => {}
+        }
     }
     index.records = records;
     index.filled_pools = pool_pick::filled_pools(tree, &index);

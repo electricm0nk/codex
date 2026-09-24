@@ -677,3 +677,64 @@ fn a_sibling_terms_degradation_does_not_erase_a_convertible_terms_number() {
     let swim_bonus = c.rules.iter().find(|r| matches!(r.value, SheetValue::Number(_)) && matches!(&r.target, Some(BonusTarget::Skill(_))));
     assert!(swim_bonus.is_some(), "the convertible +4 Swim competence bonus must still print a Number, not be wiped by the sibling degradation: {:?}", c.rules);
 }
+
+/// The text of a rule's `StatBlock "<label>"` prose row, when every piece is text.
+fn stat_block_text(rule: &SheetRule, label: &str) -> Option<String> {
+    let seg = rule.prose.iter().find(|s| matches!(&s.family, ProseFamily::StatBlock(l) if l == label))?;
+    let mut out = String::new();
+    for p in &seg.pieces {
+        match p {
+            ProsePiece::Text(t) => out.push_str(t),
+            _ => return None,
+        }
+    }
+    Some(out)
+}
+
+/// SD-36 Epic F3b2 (1). PCGen's class-line `STARTSKILLPTS:x` ("how many skill points a character
+/// gains per level", `docs/listfilepages/datafilestagpages/datafilesclasses.html` in the pinned
+/// oracle; `StartskillptsToken.java`) converts to the class principal's
+/// `StatBlock "Skill ranks per level"` row, the same prose row shape `HD:` gives `"Hit die"`.
+/// Hand-read PF1 values (CRB): Rogue 8 (p.67), Wizard 2 (p.77), Loremaster 4 (p.385). Fighter's
+/// row states a variable (`STARTSKILLPTS:FighterSkillPoints`, `cr_classes.lst:141`) that the
+/// same row DEFINEs at 0 and raises by an unconditional `BONUS:VAR|FighterSkillPoints|2`:
+/// 2 (CRB p.55). A value that is not a literal and not such a variable prints no row.
+#[test]
+fn a_class_principal_states_its_skill_ranks_per_level() {
+    for (unit, want) in [
+        ("core_rulebook:class:rogue", "8"),
+        ("core_rulebook:class:wizard", "2"),
+        ("core_rulebook:class:loremaster", "4"),
+        ("core_rulebook:class:fighter", "2"),
+    ] {
+        let c = convert_unit(unit);
+        let principal = c.rules.first().expect("a class converts to at least its principal");
+        assert_eq!(principal.id, unit);
+        assert_eq!(stat_block_text(principal, "Skill ranks per level").as_deref(), Some(want), "{unit}");
+        let rows = c.rules.iter().flat_map(|r| r.prose.iter()).filter(|s| matches!(&s.family, ProseFamily::StatBlock(l) if l == "Skill ranks per level")).count();
+        assert_eq!(rows, 1, "{unit}: exactly one skill-ranks row");
+    }
+}
+
+/// SD-36 Epic F3b2 (2), mechanism "placeholder-keyed target". A product-identity record's corpus
+/// JSON ships a codex-named placeholder key (`Codex-Named Unit (class_feature_adventurers_guide_
+/// ag_abilities_class_lst_9)`), and the index held it only under that key, so every reference by the
+/// KEY its own oracle row declares (`Aldori Swordlord ~ Adaptive Tactics`, `ag_abilities_class.lst:9`)
+/// missed. Aldori Swordlord's ten level-line grants name such records. (The RED run of this test was
+/// named for an empty-category hypothesis; its category assertion passed at RED, and the defect
+/// assertion failed -- the mechanism is the key, re-traced before the fix.)
+#[test]
+fn a_placeholder_keyed_record_is_found_by_the_key_its_row_declares() {
+    let s = shared();
+    let r = s.index.records.iter().find(|r| r.id == "adventurers_guide:class_feature:aldori_swordlord_adaptive_tactics").expect("unit in inventory");
+    assert!(r.key.starts_with("Codex-Named Unit ("), "the shipped corpus key is the placeholder: {}", r.key);
+    assert_eq!(r.category, "Special Ability", "the oracle row's own CATEGORY");
+    let pair = ("SPECIAL ABILITY".to_string(), "ALDORI SWORDLORD ~ ADAPTIVE TACTICS".to_string());
+    assert_eq!(s.index.by_cat_key.get(&pair).map(String::as_str), Some(r.id.as_str()));
+    let c = convert_unit("adventurers_guide:class:aldori_swordlord");
+    assert!(c.defects.get("unresolved-references").is_none_or(|l| l.is_empty()), "{:?}", c.defects);
+    // A reprint's real corpus key keeps its target: `Unblinking Flame Feint` resolves to the
+    // record that ships that key, not to the adventurers_guide placeholder twin that declares it.
+    let feint = ("FEAT".to_string(), "UNBLINKING FLAME FEINT".to_string());
+    assert_eq!(s.index.by_cat_key.get(&feint).map(String::as_str), Some("inner_sea_combat:feat:unblinking_flame_feint"));
+}

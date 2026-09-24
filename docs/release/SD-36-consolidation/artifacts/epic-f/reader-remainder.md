@@ -2,40 +2,56 @@
 
 The named remainder of `every_census_class_has_a_known_proficiency_answer`
 (`src/rules_core/rules_tables/crb/weapon_tables.rs`). That test walks every class in
-`codex::rules_core::class_census::census()` (135) that has no static `CLASS_WEAPON_PROFICIENCIES`
-row, asks the converted-record reader (`class_proficiency_sheet_rules::class_weapon_proficiency_view`)
-at every level `1..=max_level`, and passes only when the set of classes answering Unknown at any
-level equals the `| class:` rows of the table below -- no silent tolerance in either direction. A
-class that gains an answer must leave this table in the same commit; a class that loses one fails
-the test by name.
+`codex::rules_core::class_census::census()` (137 since F2a) that has no static
+`CLASS_WEAPON_PROFICIENCIES` row, asks the converted-record reader
+(`class_proficiency_sheet_rules::class_weapon_proficiency_view`) at every level `1..=max_level`, and
+passes only when the set of classes answering Unknown at any level equals the `| class:` rows of the
+table below -- no silent tolerance in either direction. A class that gains an answer must leave this
+table in the same commit; a class that loses one fails the test by name.
 
 Command: `cargo test --locked -j 8 --lib every_census_class_has_a_known_proficiency_answer -- --test-threads=8 --nocapture`
-(prints the population line and every Unknown class with the reader's reason). Regenerated 2026-09-23
-on sd36/epic-f1c at 641691e283 (F1c-1 through F1c-5: D1 type grants, D2 line split, D3 Unchained,
-D4 attestation, D6 weapon-choice offers, D7 always-held globals, D8 variable-pool picks; package
-`--check` exit 0, records 49,450). Result: 1 passed; `census classes: 135; with a static row: 42;
-walked by the reader: 93; Known at every level: 76; Unknown: 17`.
+(prints the population line and every Unknown class with the reader's reason). Regenerated
+2026-09-24 on sd36/epic-f2-f3 after the F3b2 converter step (placeholder-keyed records indexed under
+their declared KEY; package `--check` exit 0, records 49,450). Result: 1 passed;
+`census classes: 137; with a static row: 42; walked by the reader: 95; Known at every level: 85;
+Unknown: 10`.
 
 Per-class evidence is re-derived from the committed package, read-only, with
 `python3 docs/release/SD-36-consolidation/artifacts/epic-f/scripts/closure_defects.py <slug>...`
 (the same walk as `attest.rs`; it prints each closure-defect row attributed to a record in the
-class's closure). Run over the 17 classes below it lists 45 rows: 38 `unresolved-references` and
-7 `undefined-variables` -- see the count table under Mechanisms.
+class's closure). Run over the 10 classes below it lists 12 rows: 5 `unresolved-references` and
+7 `undefined-variables` -- see the count table under Mechanisms. Run over the 17 classes of the
+F1c-3 table it listed 45 rows; F3b2 closed 33 of them (every one a reference to a product-identity
+record, see Measured).
 
 ## Measured
 
-- Census classes: **135** (61 non-prestige + 74 prestige). With a static row: **42** (all non-prestige).
-  Walked by the reader: **93** (19 non-prestige + 74 prestige).
-- Known at every level: **76 of 93** (19 of the 19 non-prestige; 57 of the 74 prestige).
-- Unknown: **17 of 93** -- **0 non-prestige** and **17 prestige** (prestige classes are Blocked alone
-  until F2 regardless -- census `prestige_alone_blocked` = 74 of 74).
+- Census classes: **137** (63 non-prestige + 74 prestige; F2a added the two APG Ex-* ids). With a
+  static row: **42** (all non-prestige). Walked by the reader: **95** (21 non-prestige + 74 prestige).
+- Known at every level: **85 of 95** (21 of the 21 non-prestige; 64 of the 74 prestige).
+- Unknown: **10 of 95** -- **0 non-prestige** and **10 prestige** (a prestige class alone is Blocked
+  regardless -- census `prestige_alone_blocked` = 74 of 74).
+- **F3b2 (2026-09-24) moved it 17 -> 10.** Mechanism closed: *a reference to a product-identity
+  record missed because the record was indexed only under its codex-named placeholder corpus key*
+  (`Codex-Named Unit (class_feature_adventurers_guide_ag_abilities_class_lst_9)`), not the KEY its
+  own oracle row declares (`Aldori Swordlord ~ Adaptive Tactics`, `ag_abilities_class.lst:9`). The
+  converter (`sheet_rule/mod.rs` `build_index`) now also indexes a placeholder-keyed record under
+  its row's declared KEY, after every corpus key and only where no corpus key already answers the
+  pair (a reprint's real key keeps its target). Package-wide: `_defects/unresolved-references.json`
+  7,503 -> 7,120 (383 rows resolved, 0 added, 0 of them parenthesised); 73 rule fields go
+  `MissingRule` -> `Rule`; 310 `granted_by` edges added; `closure_complete` attested on 8 more class
+  principals (56 -> 64 of 189). Classes that left this table, each now Known with no weapon grant in
+  its converted closure (the pinned oracle's class rows grant none): aldori_swordlord (10 rows
+  closed), bellflower_tiller (1), harrower (2), hellknight (2, both printings), magaambyan_arcanist
+  (11), sanguine_angel (4), steel_falcon (2). hellknight_signifer's reference row also closed (1);
+  it stays, on its undefined variable.
 - F1c-1 (2026-09-22) closed mechanism A (grant-by-type): 65 -> 60 Unknown.
 - F1c-2 (2026-09-23, D2: a line's condition gates only its own line) did not move this table; it
   moved the static-row parity (27 -> 32 of 42 reproduced at level 1).
-- **Non-prestige remainder: empty** (0 of 19 walked non-prestige classes Unknown; with the 42
-  static rows, which reader-vs-static test (a) reproduces 42 of 42 at level 1, all 61 non-prestige
-  classes have a proficiency answer -- census `computed` 61 of 61, `blocked` 0,
-  `artifacts/epic-f/census-f1c.json`).
+- **Non-prestige remainder: empty** (0 of 21 walked non-prestige classes Unknown; with the 42
+  static rows, which reader-vs-static test (a) reproduces 42 of 42 at level 1, all 63 non-prestige
+  classes have a proficiency answer -- census `computed` 63 of 63, `blocked` 0,
+  `artifacts/epic-f/census-f3b.json`; 61 of 61 at F1c, `census-f1c.json`).
 - The D5 stale-row correction, F1c-4 (D7, always-held globals) and F1c-5 (D8, variable-pool picks),
   all after F1c-3, did not move this table (17 before and after). They moved static-row parity: D5 to
   41 of 42 (af70b72679), D7 none (ea4d64eca8), D8 41 -> 42 of 42 (641691e283; summoner, which has a
@@ -82,21 +98,54 @@ class's closure). Run over the 17 classes below it lists 45 rows: 38 `unresolved
 | B | proficiency record not converted | 0 | re-traced in F1c-3: Lion Blade's own class lines grant none | -- |
 | C | proficiency record not linked to the class | 0 | CLOSED by F1c-3: the product-identity class's header `ABILITY:` row is read | converter -- done |
 | D | proficiency record converted without its grant | 0 | re-traced in F1c-3: Divine Scion's row grants none; Exalted's states it in DESC only (now G) | -- |
-| E | no weapon grant anywhere; attestation missing | 0 | CLOSED by F1c-3 (D4): 54 of 54 were attested or re-classified G/H | converter -- done |
+| E | no weapon grant anywhere; attestation missing | 0 | CLOSED by F1c-3 (D4) | converter -- done |
 | F | proficiency pick into an unlinked pool | 0 | CLOSED by F1c-3 (D6) | converter -- done |
-| G | attestation false: an unresolved reference in the class closure | 13 | the class closure names a record the corpus does not carry (`_defects/unresolved-references.json`), so the converter cannot attest that no weapon grant was lost | corpus: ingest the named records, or the converter: resolve the reference |
-| H | attestation false: an undefined variable in the class closure | 4 | a rule in the closure reads a variable no oracle row defines (`_defects/undefined-variables.json`) | converter: variable declaration repair |
+| G | attestation false: an unresolved reference in the class closure | 5 | the closure names a record the converter cannot resolve; sub-mechanism per class below (G-P, a placeholder-keyed target, CLOSED by F3b2: 7 classes left) | per row, below |
+| H | attestation false: an undefined variable in the class closure | 5 | a rule in the closure reads a variable NO row of the pinned oracle declares (`_defects/undefined-variables.json`); PCGen itself reads such a name as 0 (`PlayerCharacter.getVariable`: no `VariableKey`, so `getVariableValue` of the bare name, bonuses excluded) | the oracle data (declare the variable); not a converter defect |
 
-Counts (`closure_defects.py` over the 17 classes; a class is G when its closure carries any
+G sub-mechanisms (F3b2 re-trace against the pinned oracle, `7f818006e3`):
+
+- **G-P, placeholder-keyed target** -- CLOSED by F3b2 (33 rows, 7 classes).
+- **G-T, twin printing + dropped category parent** (cyphermage): `Cyphermage Class Feature|Cyphermage ~ Cypher Lore`
+  (`ism_classes.lst:79`). Two units declare the target (`adventurers_guide` and `inner_sea_magic`
+  `class_feature:cyphermage_cypher_lore`), so `(Special Ability, CYPHERMAGE ~ CYPHER LORE)` is
+  ambiguous by the F1 finding-4 rule (never guess). The child category is also dropped from the
+  parent map, because its two declarations (`ism_abilitycategories.lst:56`, `ag_abilitycategories.lst:7`)
+  agree on the parent (`Special Ability`) but not on `TYPE`, and `closure.rs` removes the parent for
+  a TYPE disagreement. Repairing that alone would turn this row into an
+  `ambiguous-parent-category-target` row, still a closure defect. Closes in: a ruling on which of two
+  printings a same-book reference names (a converter rule), not taken here.
+- **G-U, target declared nowhere in the pinned tree** (diabolist): `Special Ability|Hunter's Bond ~ Companion`
+  on `diabolist_imp_companion`. No row of the pinned tree declares that KEY (grep over
+  `data/pathfinder`: only `PREABILITY` references, `uw_feats.lst:65`). Closes in: the oracle data.
+- **G-N, target declared but not ingested** (dragon_disciple): `Internal|Bite` on
+  `dragon_disciple_dragon_bite`. The row exists (`core_essentials/ce_abilities_race.lst:249`,
+  `CATEGORY:Internal`, carrying `BONUS:WEAPONPROF=Bite|TOHIT|-5`) but no inventory unit stands for
+  it (frozen population 49,450). Closes in: the corpus (ingest the record).
+- **G-O, option dropped** (exalted): `FEAT|skill focus (knowledge (religion))`. The parameter split
+  splits at the last ` (` and misses a nested option. Splitting at the balanced group was measured
+  (F3b2 first pass) and reverted: `Holdable` carries no option, so the reference would hold
+  `Skill Focus` with ANY option. Measured effect: `_vars/v3ecc4923bf829539` ("Dwarven Waraxe Exotic
+  Use") would read `Holds(exotic_weapon_proficiency)` for any Exotic Weapon Proficiency -- a wrong
+  computed number. Exalted also carries 2 H rows (`IsProfane`, `IsSacred`: declared only on a
+  commented-out row, `isg_abilities.lst:85` `#DEFINE:IsSacred|0 DEFINE:IsProfane|0`). Closes in: an
+  option-carrying `Holdable` (schema) plus the oracle data.
+- **G-K, a key no record declares** (rivethun_emissary): `FEAT|Spirit Beacon` in the class's
+  `PREABILITY` (`ag_classes.lst:362`). The oracle declares only `Spirit Beacon (Fey)`,
+  `(Undead)`, `(Outsiders)` (`ag_feats.lst:60-62`), and PCGen's own `PREABILITY` test compares the
+  exact key (`PrerequisiteUtilities.passesAbilityTest`), so the oracle's prerequisite can never pass
+  in PCGen either. Closes in: the oracle data.
+
+Counts (`closure_defects.py` over the 10 classes; a class is G when its closure carries any
 unresolved reference, H when it carries only undefined variables):
 
 | mechanism | classes | defect rows in their closures | of which `unresolved-references` | of which `undefined-variables` |
 |---|---|---|---|---|
-| G | 13 | 41 | 38 | 3 (exalted 2, hellknight_signifer 1) |
-| H | 4 | 4 | 0 | 4 |
-| total | 17 prestige, 0 non-prestige | 45 | 38 | 7 |
+| G | 5 | 7 | 5 | 2 (exalted) |
+| H | 5 | 5 | 0 | 5 |
+| total | 10 prestige, 0 non-prestige | 12 | 5 | 7 |
 
-Attested `closure_complete`: 56 of 189 class principals (unchanged by F1c-4/F1c-5).
+Attested `closure_complete`: 64 of 189 class principals (56 before F3b2).
 
 Open outside this table (Known, not Unknown, so the test does not list it): Red Mantis Assassin
 reads Simple + Martial from its header grant, while its closure also carries the ambiguous
@@ -106,27 +155,19 @@ grants and does not yet turn a Known answer Unknown on an unresolved reference w
 carries a weapon grant (spec §3.4's full `closure_complete` wording). Mechanism: ambiguous
 parent-category target in a Known closure; closes in the converter's ambiguity rule.
 
-Every mechanism closes in the converter or the corpus + a package regeneration. None is a per-class
-special case in live code, and none is closed by a new Rust row.
+None of the remainder is closed by a per-class special case in live code or a new Rust row.
 
 ## Remainder (the test reads the `| class:` rows)
 
 | class | family | mechanism | evidence |
 |---|---|---|---|
-| class:aldori_swordlord | prestige | G: attestation false, unresolved reference in closure | 10 `unresolved-references` rows on the class record itself: its level-line `Special Ability\|Aldori Swordlord ~ <feature>` grants (e.g. `~ Adaptive Tactics`) name records the corpus does not carry; read since F1c-3 (continuation rows of a product-identity class) |
-| class:bellflower_tiller | prestige | G: attestation false, unresolved reference in closure | `unresolved-references`: `Special Ability\|Bellflower Tiller ~ Bellflower Crop` on the class record |
-| class:cyphermage | prestige | G: attestation false, unresolved reference in closure | two books declare the class (`adventurers_guide`, `inner_sea_magic`) under one class id, so the closure is their union; `inner_sea_magic:class:cyphermage` carries `unresolved-references` `Cyphermage Class Feature\|Cyphermage ~ Cypher Lore` |
-| class:diabolist | prestige | G: attestation false, unresolved reference in closure | `unresolved-references`: `diabolist_imp_companion` names `Special Ability\|Hunter's Bond ~ Companion` |
-| class:dragon_disciple | prestige | G: attestation false, unresolved reference in closure | `unresolved-references`: `dragon_disciple_dragon_bite` names `Internal\|Bite` |
-| class:exalted | prestige | G: attestation false, unresolved reference in closure | `unresolved-references` `FEAT\|skill focus (knowledge (religion))` on the class record, and 2 `undefined-variables` (`IsProfane`, `IsSacred`) on `exalted_vitality`. Note: the oracle row `Exalted ~ Weapon and Armor Proficiency` (`isg_abilities.lst:92`) states the deity's favored weapon in its DESC only, with no grant token |
-| class:harrower | prestige | G: attestation false, unresolved reference in closure | 2 `unresolved-references` on the class record: `Special Ability\|Blessing of the Harrow`, `\|Harrow Casting` |
-| class:hellknight | prestige | G: attestation false, unresolved reference in closure | `unresolved-references`: `Special Ability\|Hellknight Armor ~ HK` on the class record (`adventurers_guide` and `inner_sea_world_guide` both) |
-| class:hellknight_signifer | prestige | G: attestation false, unresolved reference in closure | `unresolved-references` `Special Ability\|Hellknight Signifer ~ Signifer Armor Training` on the class record; `undefined-variables` `CasterLevel_Highest` on `arcane_armor_mastery` |
-| class:loremaster | prestige | H: attestation false, undefined variable in closure | `undefined-variables`: `SecretLore` on `loremaster_secret_lore` |
-| class:magaambyan_arcanist | prestige | G: attestation false, unresolved reference in closure | 11 `unresolved-references` on the class record: its level-line `Special Ability\|Magaambyan Arcanist ~ <feature>` grants |
-| class:metaforge | prestige | H: attestation false, undefined variable in closure | `undefined-variables`: `MetaforgedLVL` on `metaforge_crystallized_mind_blade` |
-| class:mystic_theurge | prestige | H: attestation false, undefined variable in closure | `undefined-variables`: `MysticTheurgeLVL` on `core_rulebook:class_feature:mystic_theurge` |
-| class:pathfinder_delver | prestige | H: attestation false, undefined variable in closure | `undefined-variables`: `PaDTrueSeeingLvl` on `pathfinder_delver_true_seeing` |
-| class:rivethun_emissary | prestige | G: attestation false, unresolved reference in closure | `unresolved-references`: `FEAT\|Spirit Beacon` on the class record |
-| class:sanguine_angel | prestige | G: attestation false, unresolved reference in closure | 4 `unresolved-references` on the class record (`Special Ability\|Sanguine Angel ~ <feature>`) |
-| class:steel_falcon | prestige | G: attestation false, unresolved reference in closure | 2 `unresolved-references` on the class record: `Special Ability\|Steel Falcon ~ Talmandor's Blessing`, `~ Talmandor's Fury` |
+| class:cyphermage | prestige | G-T: twin printing + dropped category parent | `unresolved-references` `inner_sea_magic:class:cyphermage: Cyphermage Class Feature\|Cyphermage ~ Cypher Lore`; two books declare the class under one id, so the closure is their union |
+| class:diabolist | prestige | G-U: target declared nowhere in the pinned tree | `unresolved-references`: `diabolist_imp_companion` names `Special Ability\|Hunter's Bond ~ Companion` |
+| class:dragon_disciple | prestige | G-N: target declared but not ingested | `unresolved-references`: `dragon_disciple_dragon_bite` names `Internal\|Bite` (`ce_abilities_race.lst:249`, no inventory unit) |
+| class:exalted | prestige | G-O + H: option dropped; variables declared only on a commented row | `unresolved-references` `FEAT\|skill focus (knowledge (religion))` on the class record; `undefined-variables` `IsProfane`, `IsSacred` on `exalted_vitality` |
+| class:hellknight_signifer | prestige | H: undefined variable | `undefined-variables` `CasterLevel_Highest` on `core_rulebook:feat:arcane_armor_mastery` (read by `PREVARGTEQ` in 23 oracle files, declared by none); its `Signifer Armor Training` reference closed in F3b2 |
+| class:loremaster | prestige | H: undefined variable | `undefined-variables`: `SecretLore` on `loremaster_secret_lore` (`cr_abilities_class.lst:3017`; declared only in `data/3e`, outside the Pathfinder tree) |
+| class:metaforge | prestige | H: undefined variable | `undefined-variables`: `MetaforgedLVL` on `metaforge_crystallized_mind_blade` (`up_abilities_class.lst:1248`; the class row `up_classes.lst:812` declares no level variable) |
+| class:mystic_theurge | prestige | H: undefined variable | `undefined-variables`: `MysticTheurgeLVL` on `core_rulebook:class_feature:mystic_theurge` (`cr_abilities_class.lst:117`; the class row `cr_classes.lst:448` declares none) |
+| class:pathfinder_delver | prestige | H: undefined variable | `undefined-variables`: `PaDTrueSeeingLvl` on `pathfinder_delver_true_seeing` (`ag_abilities_class.lst:387`; the class row declares `PaDLVL` only) |
+| class:rivethun_emissary | prestige | G-K: a key no record declares | `unresolved-references`: `FEAT\|Spirit Beacon` on the class record (`ag_classes.lst:362`) |

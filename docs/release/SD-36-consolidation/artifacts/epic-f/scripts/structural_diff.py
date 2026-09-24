@@ -306,6 +306,117 @@ def f1c_delta_holds(name: str, rid: str, field: str, old: dict, new: dict, fresh
     return False
 
 
+# SD-36 Epic F3b2 (converter step on sd36/epic-f2-f3): the F3b2 package delta classes against the
+# tranche/16 package, each classified by `f3b2_delta_pins.py` (this directory) and pinned as exact
+# (rule id, field, pinned value) triples in `structural_diff_f3b2_deltas.json`. A pinned pair is
+# accepted only when its class's own shape check holds on the two records being compared AND the
+# fresh field equals the pinned value (the skill-ranks number, `true`, or the fresh field's
+# sha256). An off-list pair, a failed shape, or a moved value still gates.
+_F3B2_DELTAS_PATH = os.path.join(os.path.dirname(os.path.abspath(__file__)), "structural_diff_f3b2_deltas.json")
+F3B2_CLASS_CAUSES = {
+    "f3b2_skill_ranks": "F3b2 (1): a class line's STARTSKILLPTS is written as the principal's StatBlock \"Skill ranks per level\" prose row (one added row, a plain number)",
+    "f3b2_closure_complete": "F3b2 (2): closure_complete=true attested on a class principal whose closure is now defect-free because its references to placeholder-keyed records resolve",
+    "f3b2_placeholder_key_resolved": "F3b2 (2): a reference to a product-identity record by the KEY its oracle row declares resolves (the record was indexed only under its codex-named placeholder corpus key): MissingRule -> Rule, nothing else in the field moves",
+}
+F3B2_SKILL_LABEL = {"StatBlock": "Skill ranks per level"}
+
+
+def f3b2_field_sha(v: object) -> str:
+    import hashlib
+
+    return hashlib.sha256(json.dumps(v, sort_keys=True).encode("utf-8")).hexdigest()
+
+
+def f3b2_skill_ranks_row(old_prose: object, new_prose: object) -> str | None:
+    """The added row's number when the fresh prose is the old prose plus exactly one
+    `StatBlock "Skill ranks per level"` row of one plain-digit Text piece, and the old prose had
+    no such row; else None."""
+    old_ms, new_ms = _f1c_ms(old_prose), _f1c_ms(new_prose)
+    if any(json.loads(k).get("family") == F3B2_SKILL_LABEL for k in old_ms):
+        return None
+    added = new_ms - old_ms
+    if old_ms - new_ms or sum(added.values()) != 1:
+        return None
+    row = json.loads(next(iter(added)))
+    pieces = row.get("pieces")
+    if row.get("family") != F3B2_SKILL_LABEL or not isinstance(pieces, list) or len(pieces) != 1:
+        return None
+    text = pieces[0].get("Text") if isinstance(pieces[0], dict) else None
+    return text if isinstance(text, str) and text.isdigit() else None
+
+
+def f3b2_missing_to_rule(old: object, new: object) -> int:
+    """How many `{"MissingRule": ...}` nodes of `old` became `{"Rule": <id>}` in `new`, when the two
+    are otherwise identical; -1 when anything else differs."""
+    if isinstance(old, dict) and isinstance(new, dict):
+        if set(old) == {"MissingRule"} and set(new) == {"Rule"} and isinstance(new["Rule"], str):
+            return 1
+        if set(old) != set(new):
+            return -1
+        total = 0
+        for k in old:
+            n = f3b2_missing_to_rule(old[k], new[k])
+            if n < 0:
+                return -1
+            total += n
+        return total
+    if isinstance(old, list) and isinstance(new, list):
+        if len(old) != len(new):
+            return -1
+        total = 0
+        for a, b in zip(old, new):
+            n = f3b2_missing_to_rule(a, b)
+            if n < 0:
+                return -1
+            total += n
+        return total
+    return 0 if old == new else -1
+
+
+def f3b2_classify(rid: str, field: str, old: dict, new: dict) -> tuple[str, object] | None:
+    """The one F3b2 class a (rule id, field) delta belongs to, with the value to pin; None when it
+    fits none."""
+    o, n = old.get(field), new.get(field)
+    if field == "prose":
+        ranks = f3b2_skill_ranks_row(o, n)
+        if ranks is not None and "#" not in rid:
+            return "f3b2_skill_ranks", ranks
+    if field == "closure_complete" and o is None and n is True and "#" not in rid and kind_of(rid) == "class":
+        return "f3b2_closure_complete", True
+    if field in ("applies", "prose") and f3b2_missing_to_rule(o, n) > 0:
+        return "f3b2_placeholder_key_resolved", f3b2_field_sha(n)
+    return None
+
+
+def _load_f3b2_deltas() -> dict[tuple[str, str], tuple[str, object]]:
+    try:
+        with open(_F3B2_DELTAS_PATH, "r", encoding="utf-8") as fh:
+            data = json.load(fh)
+    except (OSError, json.JSONDecodeError):
+        return {}
+    pins: dict[tuple[str, str], tuple[str, object]] = {}
+    for name, c in data.get("classes", {}).items():
+        assert name in F3B2_CLASS_CAUSES, f"{_F3B2_DELTAS_PATH}: unknown class {name}"
+        assert len(c["pins"]) == c["_count"], f"{_F3B2_DELTAS_PATH}: {name} _count mismatch -- regenerate with _command"
+        for rid, field, value in c["pins"]:
+            assert (rid, field) not in pins, f"{_F3B2_DELTAS_PATH}: ({rid}, {field}) pinned twice"
+            pins[(rid, field)] = (name, value)
+    return pins
+
+
+F3B2_PINS = _load_f3b2_deltas()
+
+
+def f3b2_delta_holds(rid: str, field: str, old: dict, new: dict) -> str | None:
+    """The pinned F3b2 class when (rid, field) is pinned, its shape holds and the fresh value is the
+    pinned one; else None."""
+    pinned = F3B2_PINS.get((rid, field))
+    if pinned is None:
+        return None
+    got = f3b2_classify(rid, field, old, new)
+    return pinned[0] if got == pinned else None
+
+
 def edge_diff(old_list: object, new_list: object) -> tuple[list[str], list[str]]:
     """Diff two `granted_by`/`grants` lists as SETS of edges (each edge serialized to a stable
     JSON key), never by length or shallow equality. Returns `(removed, added)` -- both sorted --
@@ -666,6 +777,7 @@ def main() -> int:
     naturalattacks_content_shift_deltas: list[tuple[str, str]] = []
     expected_bonus_var_split_deltas: list[tuple[str, str]] = []
     f1c_deltas: dict[str, list[tuple[str, str]]] = defaultdict(list)
+    f3b2_deltas: dict[str, list[tuple[str, str]]] = defaultdict(list)
     added_edges_by_target_kind: Counter[str] = Counter()
     added_edges_total = 0
     removed_granted_by: list[tuple[str, str]] = []
@@ -689,6 +801,14 @@ def main() -> int:
             # delta on this same id, or any delta on an id off the pinned list, still gates.
             if rid in NATURALATTACKS_CONTENT_SHIFT_IDS and field in _NATURALATTACKS_CONTENT_SHIFT_ALLOWED_FIELDS:
                 naturalattacks_content_shift_deltas.append((rid, field))
+                continue
+            # SD-36 Epic F3b2: an exact pinned (rule id, field, value) triple whose class shape
+            # holds on these two records -- checked BEFORE the F1c pins, so a pair both name (the
+            # 9 product-identity class principals F1c pinned for `prose`) is attributed to the
+            # mechanism that moved it now, under its stricter pinned-value check.
+            f3b2_class = f3b2_delta_holds(rid, field, old, new)
+            if f3b2_class is not None:
+                f3b2_deltas[f3b2_class].append((rid, field))
                 continue
             # SD-36 Epic F1c: an exact pinned (rule id, field) pair of a named F1c class whose
             # own shape check holds on these two records (checked BEFORE the older pins, so a
@@ -769,6 +889,10 @@ def main() -> int:
     for name, cause in F1C_CLASS_CAUSES.items():
         pairs = f1c_deltas.get(name, [])
         print(f"  F1c {name}: {len(pairs)} field deltas on {len(set(r for r, _ in pairs))} records, {f1c_added.get(name, 0)} added rule ids -- {cause} (see structural_diff_f1c_deltas.json)")
+    for name, cause in F3B2_CLASS_CAUSES.items():
+        pairs = f3b2_deltas.get(name, [])
+        pinned = sum(1 for (n, _) in F3B2_PINS.values() if n == name)
+        print(f"  F3b2 {name}: {len(pairs)} of {pinned} pinned field deltas on {len(set(r for r, _ in pairs))} records -- {cause} (see structural_diff_f3b2_deltas.json)")
     if added_rule_ids:
         unnamed = [r for r in added_rule_ids if r not in KNOWN_ADDED_RULE_CAUSES]
         print(f"  added rule ids: {len(added_rule_ids)} ({len(unnamed)} with no named cause)")

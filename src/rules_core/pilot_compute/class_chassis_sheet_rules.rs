@@ -97,18 +97,13 @@ pub struct ClassChassis {
     pub hit_die: Option<u8>,
     /// This class's skill ranks gained per level, read off the principal
     /// rule's `StatBlock "Skill ranks per level"` prose row the same way
-    /// [`Self::hit_die`] reads `"Hit die"` — `None` when the row is absent.
-    /// Measured over the full corpus at authoring time (F0-check finding
-    /// 5): NO class record in this corpus carries a `StatBlock` prose row
-    /// under this or any other label besides `"Hit die"` (`grep -rho
-    /// '"StatBlock":"[^"]*"' data/sheet_rules/*/class/*.json | sort | uniq
-    /// -c` -> `178 "StatBlock":"Hit die"`, nothing else, across all 185
-    /// class files) -- this reader is real and wired, but today returns
-    /// `None` for every one of the 185 records, an honest absence rather
-    /// than a fabricated skill-point figure (`docs/governance/
-    /// no-stub-mvp-doctrine.md`). See `docs/retro/events/
-    /// sub-agent-f0-check-fix.jsonl` for the correction against §2's
-    /// assumption that this row already exists like `"Hit die"` does.
+    /// [`Self::hit_die`] reads `"Hit die"` — `None` when the row is absent,
+    /// never a fabricated value. The converter writes the row from PCGen's
+    /// class-line `STARTSKILLPTS` (SD-36 F3b2, `sheet_rule/convert.rs`):
+    /// every chassis-bearing class record carries it
+    /// (`skill_ranks_per_level_is_read_for_every_chassis_bearing_class`). Before
+    /// F3b2 no class record did (F0-check finding 5,
+    /// `docs/retro/events/sub-agent-f0-check-fix.jsonl`).
     pub skill_ranks_per_level: Option<u8>,
 }
 
@@ -294,8 +289,7 @@ impl ClassChassis {
     /// per level plus `intelligence_modifier`, at least 1 per level (PF1).
     /// Race and favored-class extras are not the class's and are not added
     /// here. A record with no skill-ranks-per-level row is
-    /// [`SKILL_POINTS_UNKNOWN`], never 0 -- which is every converted class
-    /// record today (see [`Self::skill_ranks_per_level`]).
+    /// [`SKILL_POINTS_UNKNOWN`], never 0 (see [`Self::skill_ranks_per_level`]).
     pub fn skill_points(&self, levels: u8, intelligence_modifier: i16) -> Result<i16, ChassisUnknown> {
         let ranks = self.skill_ranks_per_level.ok_or_else(|| ChassisUnknown {
             id: SKILL_POINTS_UNKNOWN,
@@ -430,11 +424,9 @@ fn parse_die_size(text: &str) -> Option<u8> {
 }
 
 /// Parses a skill-ranks-per-level StatBlock row's text into its numeric
-/// value. The corpus carries no such row today (see
-/// [`ClassChassis::skill_ranks_per_level`]'s own doc comment) so this is
-/// exercised by no real record yet, but is written to the same "plain
-/// digits, nothing else" contract [`parse_die_size`] uses — never a
-/// guessed rank count for a shape this parser does not recognize.
+/// value, to the same "plain digits, nothing else" contract [`parse_die_size`]
+/// uses — never a guessed rank count for a shape this parser does not
+/// recognize.
 fn parse_skill_ranks(text: &str) -> Option<u8> {
     text.trim().parse().ok()
 }
@@ -718,29 +710,58 @@ mod tests {
     }
 
     #[test]
-    fn skill_ranks_per_level_is_an_honest_absence_over_the_whole_corpus_today() {
-        // F0-check finding 5: §2's territory list assumed
-        // `skill_ranks_per_level` is converted the same way `hit_die` is
-        // (a `StatBlock` prose row, `None` only for the same 7 named
-        // exceptions). Measured directly instead (`grep -rho
-        // '"StatBlock":"[^"]*"' data/sheet_rules/*/class/*.json | sort |
-        // uniq -c` -> only `178 "StatBlock":"Hit die"`, no other label at
-        // all, across all 185 class files): this data does not exist in
-        // the corpus yet. The reader is real and wired (same
-        // `stat_block_prose_text` helper `hit_die` uses, generalized to
-        // any label) -- it is simply never fed a matching row today. This
-        // test pins that honest absence directly, over the full corpus,
-        // rather than letting a silently-`None` field look untested.
+    fn skill_ranks_per_level_is_read_for_every_chassis_bearing_class() {
+        // SD-36 Epic F3b2 replaces F0-check finding 5's "honest absence" pin:
+        // the converter now carries PCGen's class-line `STARTSKILLPTS` onto the
+        // class principal as a `StatBlock "Skill ranks per level"` row
+        // (`crates/codex-ingest/src/pcgen_import/sheet_rule/convert.rs`), and
+        // this reader (unchanged) reads it. 171 of the 177 chassis-bearing
+        // class records now state their ranks; the six that do not are named.
         let books = crate::rules_core::class_census::prestige_scan_books();
         let book_refs: Vec<&str> = books.iter().map(String::as_str).collect();
         let all = records(&book_refs);
         assert_eq!(all.len(), 177, "measured chassis-bearing population moved off 177");
-        assert!(
-            all.values().all(|chassis| chassis.skill_ranks_per_level.is_none()),
-            "a class record now carries a Skill ranks per level StatBlock row -- this test (and \
-             the F0-check finding 5 correction logged at docs/retro/events/\
-             sub-agent-f0-check-fix.jsonl) must be updated, not left silently green"
+        let mut missing: Vec<String> = all
+            .values()
+            .filter(|chassis| chassis.skill_ranks_per_level.is_none())
+            .map(|chassis| format!("{}:{}", chassis.book, chassis.slug))
+            .collect();
+        missing.sort();
+        // The six whose `STARTSKILLPTS` is a formula, not a number, so the
+        // converter writes no row and names them in
+        // `data/sheet_rules/_defects/skill-ranks-unresolved.json`: the five
+        // Bestiary creature-type classes (`0+BaseClassSkillPts`,
+        // `ce_classes_race.lst`) and the Eidolon (`EidolonSkillPoints`, a
+        // variable its own closure does not define, `apg_classes.lst:211`).
+        // None is a census class.
+        assert_eq!(
+            missing,
+            [
+                "advanced_players_guide:eidolon",
+                "bestiary:construct",
+                "bestiary:ooze",
+                "bestiary:plant",
+                "bestiary:undead",
+                "bestiary:vermin",
+            ],
+            "chassis-bearing class(es) with no skill ranks per level moved"
         );
+        // Oracle (hand-read PF1, Core Rulebook class tables): Fighter 2 (p.55),
+        // Rogue 8 (p.67), Wizard 2 (p.77), Bard 6 (p.35), Ranger 6 (p.64),
+        // Loremaster 4 (p.385), Mystic Theurge 2 (p.387); Warrior 2 (p.449).
+        for (slug, ranks) in [
+            ("fighter", 2),
+            ("rogue", 8),
+            ("wizard", 2),
+            ("bard", 6),
+            ("ranger", 6),
+            ("loremaster", 4),
+            ("mystic_theurge", 2),
+            ("warrior", 2),
+        ] {
+            let chassis = record("core_rulebook", slug).unwrap_or_else(|| panic!("CRB {slug}"));
+            assert_eq!(chassis.skill_ranks_per_level, Some(ranks), "{slug}");
+        }
     }
 
     // -----------------------------------------------------------------
@@ -993,27 +1014,31 @@ mod tests {
 
     #[test]
     fn a_class_missing_skill_ranks_reports_skill_points_unknown() {
-        // Every converted class record lacks the `StatBlock "Skill ranks per
-        // level"` row today (see
-        // `skill_ranks_per_level_is_an_honest_absence_over_the_whole_corpus_today`),
-        // so the real Warrior is the Unknown case -- named, not 0.
-        let warrior = record("core_rulebook", "warrior").expect("CRB Warrior");
-        assert_eq!(warrior.skill_ranks_per_level, None);
-        let unknown = warrior.skill_points(3, 1).expect_err("no ranks row -> Unknown, never 0");
+        // A chassis with no `StatBlock "Skill ranks per level"` row is the
+        // Unknown case -- named, never 0. Since SD-36 F3b2 every real
+        // chassis-bearing record states its ranks
+        // (`skill_ranks_per_level_is_read_for_every_chassis_bearing_class`),
+        // so the Unknown path is exercised on the synthetic chassis.
+        let mut chassis = synthetic_chassis_without_stat_block();
+        assert_eq!(chassis.skill_ranks_per_level, None);
+        let unknown = chassis.skill_points(3, 1).expect_err("no ranks row -> Unknown, never 0");
         assert_eq!(unknown.id, SKILL_POINTS_UNKNOWN);
-        assert!(unknown.message.contains("Warrior"), "names the class: {}", unknown.message);
+        assert!(unknown.message.contains(&chassis.display_name), "names the class: {}", unknown.message);
 
         // Oracle (hand-worked PF1: ranks + Int per level, minimum 1 per
         // level): 2 ranks, Int -2 over 3 levels -> 3 x max(0, 1) = 3;
         // 4 ranks, Int +1 over 5 levels -> 5 x 5 = 25.
-        let mut chassis = synthetic_chassis_without_stat_block();
         chassis.skill_ranks_per_level = Some(2);
         assert_eq!(chassis.skill_points(3, -2), Ok(3));
         chassis.skill_ranks_per_level = Some(4);
         assert_eq!(chassis.skill_points(5, 1), Ok(25));
 
+        // The real Warrior: 2 ranks (CRB p.449), Int -2 over 3 levels -> 3.
+        let warrior = record("core_rulebook", "warrior").expect("CRB Warrior");
+        assert_eq!(warrior.skill_points(3, -2), Ok(3));
+
         // Over every chassis record the registry knows: skill points are
-        // Unknown for 135 of 135 today, each named by class.
+        // Known for 135 of 135 (Unknown for none; any Unknown is named).
         let (records, _) = registry_chassis_records();
         assert_eq!(records.len(), 135);
         let unknown: Vec<&String> = records
@@ -1021,7 +1046,7 @@ mod tests {
             .filter(|(_, c)| matches!(c.skill_points(1, 0), Err(u) if u.id == SKILL_POINTS_UNKNOWN))
             .map(|(id, _)| id)
             .collect();
-        assert_eq!(unknown.len(), 135, "skill points Unknown count moved off 135 of 135");
+        assert!(unknown.is_empty(), "skill points Unknown (name them): {unknown:?}");
     }
 
     #[test]
