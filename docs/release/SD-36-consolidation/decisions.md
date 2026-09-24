@@ -499,5 +499,26 @@ converted fact). **Reasoning:**
 - `epic-f-class-completion.md` §6 (F4's roster rule: "Ex-* states: census-only, never offered at
   creation").
 
+### §14.1 — Prestige saves the oracle's formula cannot state stay Blocked (F3c2, 2026-09-24)
+
+Six prestige classes' carrier mixes stop at `multiclass.save_shape.unrecognized`: Evangelist,
+Exalted, Mammoth Rider, Pure Legion Enforcer, Sentinel and Ulfen Guard. Their converted save
+`Expr`s are faithful conversions of oracle `BONUS:SAVE` formulas that match no PF1 save form
+(PCGen divides before it adds, so `classlevel()+1/3` is level + 1/3 and prints +10 at 10th).
+
+**Decision.** They stay Blocked, a named remainder of **6 of 74** prestige carrier mixes in the
+census. Printing the oracle's number would put a save on the sheet that the book does not state;
+repairing the formula from memory (reading `CL+1/3` as `(CL+1)/3`) is a fabricated row. The
+mechanism is an **upstream oracle data defect**, closable only by a book-cited override: each
+class's save progression read from its own book's class table -- Inner Sea Gods p.198 (Evangelist),
+p.200 (Exalted), p.202 (Sentinel); Inner Sea Combat p.32 (Pure Legion Enforcer), p.34 (Ulfen
+Guard); Adventurer's Guide p.128 (Mammoth Rider) -- recorded with its citation and pinned by a
+hand-worked test. Recorded as `forward-scope-register.md` FS-15; evidence
+`artifacts/epic-f/stage-f2-f3/f3b3-receipt.md` §3, `f3c-remainder.md`, `f3c2-receipt.md`.
+
+**Enforced by:** `multiclass_fold::tests::the_four_unrecognized_prestige_saves_are_oracle_formula_defects_not_a_missed_shape`,
+`multiclass_fold::tests::two_more_prestige_saves_the_f3c_carriers_reach_are_the_same_oracle_formula_defect`,
+and the census floor `BASELINE_CENSUS_PRESTIGE_MIX_COMPUTED=67` (`scripts/verify-baselines.env`).
+
 ---
 

@@ -110,8 +110,8 @@ actually measures.
 |---|---|---|---|
 | Distinct class ids, corpus-wide, across all engine registries | **137** | — | `ids` |
 | Non-prestige ids actually swept (`ids` minus the 74 prestige ids, never swept alone here) | **63** | of 137 | `non_prestige_swept` |
-| ...reach `Computed` at every swept level (non-prestige) | **61** | of 63 | `computed` |
-| ...reach `Computed` at no level (non-prestige) | **2** | of 63 | `blocked` |
+| ...reach `Computed` at every swept level (non-prestige) | **62** | of 63 | `computed` |
+| ...reach `Computed` at no level (non-prestige) | **1** | of 63 | `blocked` |
 | Prestige ids swept (never measured alone — see the carrier rule below) | **74** | of 137 total ids | `prestige_swept` |
 | ...Blocked alone (negative control) | **74** | of 74 | `prestige_alone_blocked` |
 | ...`Computed` in their deterministic carrier mix | **67** | of 74 | `prestige_mix_computed` |
@@ -129,10 +129,10 @@ actually measures.
 | Pathfinder Unchained | pathfinder_unchained | 4 | 4 |
 | Ultimate Combat | ultimate_combat | 3 | 3 |
 | Untabled exotic base classes | advanced_players_guide, occult_adventures, ultimate_intrigue, ultimate_magic, ultimate_psionics, ultimate_wilderness | 20 | 19 |
-| CRB NPC / Ex-* classes | core_rulebook | 7 | 6 |
+| CRB NPC / Ex-* classes | core_rulebook | 7 | 7 |
 | generic_class_chassis-only (unclaimed by any of the eight canonical sources) | advanced_players_guide | 2 | 2 |
 | Prestige | see per-class `books` in the census JSON (11 source books) | 74 | n/a alone (never a legitimate measurement — see headline numbers: 67 of 74 `Computed` in carrier mix) |
-| **Total** | | **137** (63 non-prestige + 74 prestige) | **61** of 63 non-prestige ids Computed alone (prestige carrier-mix result kept separate, per headline numbers above — the bin's own `--json` output never folds the two together) |
+| **Total** | | **137** (63 non-prestige + 74 prestige) | **62** of 63 non-prestige ids Computed alone (prestige carrier-mix result kept separate, per headline numbers above — the bin's own `--json` output never folds the two together) |
 <!-- class-census:end -->
 
 Row-by-row evidence:
@@ -206,16 +206,22 @@ for):
   Occultist, Psion, Psychic, Shifter, Spiritualist, Vigilante (untabled
   exotic). A UI-surface gap, not an engine gap.
 - **Prestige in a carrier mix (67 of 74 `Computed`)**: census
-  `prestige_mix_computed=67 prestige_mix_unknown=1`, 2026-09-24, SD-36 F3c
-  (`artifacts/epic-f/census-f3c.json`). The carrier chooser walks an `AtLeast`
+  `prestige_mix_computed=67 prestige_mix_unknown=0`, 2026-09-24, SD-36 F3c2
+  (`artifacts/epic-f/census-f3c2.json`). The carrier chooser walks an `AtLeast`
   clause's branches in oracle order and takes the first that translates to a
   carrier + level, reads `HighestSpellLevel(Any)` as "at least 1 of Arcane,
   Divine", and reads a `Not` of a spell-kind term as a prohibition; each row's
   `carrier_reason` names the branch taken. Of the other 7: 6 are Blocked on
   `multiclass.save_shape.unrecognized`, an oracle `BONUS:SAVE` formula defect
   (Evangelist, Exalted, Mammoth Rider, Pure Legion Enforcer, Sentinel, Ulfen
-  Guard); 1 has no nameable carrier (Dragon Disciple: every branch of its caster
-  clause needs a spontaneous caster, a sorcerer level or a draconic bloodline).
+  Guard), closable only by a book-cited override (`forward-scope-register.md`
+  FS-15); 1 is Blocked in its sorcerer mix (Dragon Disciple: a gate branch that
+  names `ClassLevel(<class>) >= n` makes that class the carrier since F3c2, and
+  the gate-named draconic bloodline is seeded as the sorcerer's pick; the mix
+  stops on `combat.baseline_weapon_proficiency_unknown` -- Dragon Disciple's
+  converted closure grants no weapon proficiency and carries no closure-complete
+  attestation -- and on the Sorcerer seam, which grounds the Arcane bloodline
+  only).
   A prestige class alone is never `Computed` (74 of 74 Blocked, the game rule).
 - **Multiclass scope**: every family can mix since SD-36 F3b, with two named
   save-source remainders: the 4 Pathfinder Unchained classes (no CRB table row

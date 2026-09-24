@@ -68,3 +68,56 @@ fn every_census_class_prints_the_class_skill_bonus_its_record_grants() {
     assert!(checked > 0);
     assert!(mismatches.is_empty(), "{} of {checked} lines disagree with the record: {mismatches:#?}", mismatches.len());
 }
+
+/// SD-36 Epic F3c2 (1): the two classes F3b3 left Blocked on
+/// `skill.selected_modifier.class_skill_unknown`.
+///
+/// **Expert** (CRB p.450: "any 10 skills" are class skills). Its converted record carries the
+/// pick (`core_rulebook:class:expert#bonus4`, `BONUS:ABILITYPOOL|Expert Class Skills|10`,
+/// cr_classes.lst:549) and the chooser (`core_rulebook:class_feature:expert_class_skills`,
+/// cr_abilities_class.lst:2735, `CHOOSE:SKILL|ALL`, `CSKILL:LIST` -> `ClassSkillChosen`). The
+/// class's ten picks are a choice, so its Path-A canonical default is seeded through
+/// `class_seeds` like every other choice: the first ten single skills of the CRB skill list
+/// (Acrobatics, Appraise, Bluff, Climb, Diplomacy, Disable Device, Disguise, Escape Artist, Fly,
+/// Handle Animal). Hand-worked on the shared census fixture (Human, Str 18 (+4), Cha 8 (-1),
+/// 1 rank each, chain shirt ACP -2, CRB p.150):
+///   Expert 1 Climb      = 1 + 4 + 3 - 2 = 6   (a class skill: the +3, CRB p.87)
+///   Expert 1 Intimidate = 1 - 1         = 0   (not picked)
+///   Expert 1 Swim       = 1 + 4 - 2     = 3   (not picked)
+///
+/// **Psion** stays Unknown by name: its base class skills (Autohypnosis, Craft, Knowledge,
+/// Profession, Spellcraft) exist only on the discipline `SUBCLASS:` lines
+/// (ultimate_psionics up_classes.lst:221-248), which the converter does not carry, and the
+/// discipline's own `<Discipline> Class Skills` records have no granting edge. The record has no
+/// answer, so the refusal keeps firing.
+#[test]
+fn expert_prints_its_canonical_class_skill_picks_and_psion_stays_refused_by_name() {
+    let fixture = load_sweep_fixture().expect("fixture");
+    let ClassSkillAnswer::Known(view) = class_skill_view("expert", 1) else {
+        panic!("expert: {:?}", class_skill_view("expert", 1));
+    };
+    for skill in ["acrobatics", "appraise", "bluff", "climb", "diplomacy", "disable_device", "disguise", "escape_artist", "fly", "handle_animal"] {
+        assert!(view.contains(skill), "{skill}: {view:?}");
+    }
+    assert_eq!(view.skills.len(), 10, "CRB p.450: ten skills: {view:?}");
+    assert!(view.groups.is_empty() && !view.contains("intimidate") && !view.contains("swim"), "{view:?}");
+    for level in [1u8, 20] {
+        let receipt = build_pilot_headless_receipt(&input_for(&fixture, "expert", level));
+        assert_eq!(value(&receipt, "skill.selected_modifier.climb"), Some(6), "{:?}", detail(&receipt, "skill.selected_modifier.climb"));
+        assert_eq!(value(&receipt, "skill.selected_modifier.intimidate"), Some(0), "{:?}", detail(&receipt, "skill.selected_modifier.intimidate"));
+        assert_eq!(value(&receipt, "skill.selected_modifier.swim"), Some(3), "{:?}", detail(&receipt, "skill.selected_modifier.swim"));
+        assert!(
+            !receipt.computation.diagnostics.iter().any(|d| d.id == "skill.selected_modifier.class_skill_unknown"),
+            "expert {level}: {:?}",
+            receipt.computation.diagnostics
+        );
+    }
+
+    assert!(matches!(class_skill_view("psion", 1), ClassSkillAnswer::Unknown { .. }));
+    let receipt = build_pilot_headless_receipt(&input_for(&fixture, "psion", 1));
+    assert!(
+        receipt.computation.diagnostics.iter().any(|d| d.id == "skill.selected_modifier.class_skill_unknown" && d.claim_blocking),
+        "psion: {:?}",
+        receipt.computation.diagnostics
+    );
+}

@@ -1,0 +1,44 @@
+# F3c2 verify (sd36/epic-f2-f3, final tree; CARGO_TARGET_DIR scratch; -j 8, --test-threads=8)
+=== cargo test --locked -j 8 --lib class_census -- --test-threads=8
+running 33 tests
+test result: ok. 33 passed; 0 failed; 0 ignored; 0 measured; 2696 filtered out; finished in 233.35s
+rc=0
+=== cargo test --locked -j 8 --lib feat_pillar_and_pool_aggregation -- --test-threads=8
+running 9 tests
+test result: ok. 9 passed; 0 failed; 0 ignored; 0 measured; 2720 filtered out; finished in 12.39s
+rc=0
+=== cargo test --locked -j 8 --lib untabled_base_class_features -- --test-threads=8
+running 42 tests
+test result: ok. 42 passed; 0 failed; 0 ignored; 0 measured; 2687 filtered out; finished in 20.08s
+rc=0
+=== cargo test --locked -j 8 --lib class_skill_sheet_rules -- --test-threads=8
+running 4 tests
+test result: ok. 4 passed; 0 failed; 0 ignored; 0 measured; 2725 filtered out; finished in 15.46s
+rc=0
+=== cargo test --locked -j 8 --lib multiclass -- --test-threads=8
+running 37 tests
+test result: ok. 37 passed; 0 failed; 0 ignored; 0 measured; 2692 filtered out; finished in 16.02s
+rc=0
+=== cargo test --locked -j 8 --test sd36_class_skill_from_record -- --test-threads=8
+running 3 tests
+test result: ok. 3 passed; 0 failed; 0 ignored; 0 measured; 0 filtered out; finished in 52.23s
+rc=0
+=== cargo test --locked -j 8 --test sd36_multiclass_any_class -- --test-threads=8
+running 11 tests
+test result: ok. 11 passed; 0 failed; 0 ignored; 0 measured; 0 filtered out; finished in 49.28s
+rc=0
+=== cargo clippy --locked --tests -j 8 -- -D warnings
+rc=0
+=== python3 scripts/pcgen_residue_gate.py --check --closure
+shipped_data_files=0 shipped_data_hits=0 shipped_scanned=69720
+rc=0
+ALLDONE
+=== cargo test --locked -j 8 --lib -- --test-threads=8 (widening check)
+test result: ok. 2723 passed; 0 failed; 6 ignored; 0 measured; 0 filtered out; finished in 179.07s
+EXIT=0
+=== python3 scripts/gen_class_status_table.py --check --json docs/release/SD-36-consolidation/artifacts/epic-f/census-f3c2.json
+OK class-coverage table matches the census (ids=137 computed=62 prestige_swept=74 mix_panel_computed=185 of 185)
+=== census
+ids=137 computed=62 blocked=1
+prestige_swept=74 prestige_alone_blocked=74 prestige_mix_computed=67 prestige_mix_unknown=0
+mix_panel_swept=185 mix_panel_computed=185 mix_panel_blocked=0

@@ -53,7 +53,6 @@
 //! any further straggler is caught by name.
 
 use std::collections::BTreeMap;
-#[cfg(test)]
 use std::collections::BTreeSet;
 #[cfg(test)]
 use std::process::Command;
@@ -76,7 +75,8 @@ use crate::rules_core::rules_tables::apg::ApgClassId;
 use crate::rules_core::rules_tables::crb::class_tables::ClassId;
 use crate::rules_core::rules_tables::pathfinder_unchained::class_chassis::PuClassId;
 use crate::rules_core::rules_tables::ultimate_combat::UcClassId;
-use crate::rules_core::sheet_rule::{Applies, Cmp, Expr, SpellKind};
+use crate::rules_core::character_input::SelectedChoice;
+use crate::rules_core::sheet_rule::{Applies, Choice, Cmp, Expr, Granter, Holdable, OptionSet, SpellKind};
 use crate::support::paths::repo_root;
 
 /// PF1's own character-level cap -- the ceiling every fully tabled base
@@ -847,8 +847,8 @@ pub fn duplicate_scan(
         // (no converted gate at all, or a gate that does not resolve to a known carrier), so a
         // class this loop cannot build a carrier for is pushed to `prestige_skipped` with that
         // reason, never silently dropped from the denominator.
-        let carriers = match carrier_assignment(e) {
-            Ok(carriers) => carriers,
+        let (carriers, picks) = match carrier_choice(e) {
+            Ok(choice) => (choice.carriers, choice.picks),
             Err(reason) => {
                 prestige_skipped.push(reason);
                 continue;
@@ -861,7 +861,8 @@ pub fn duplicate_scan(
         let gate = prestige_applies_gate(&e.books, &slug)
             .expect("carrier_assignment already loaded this class's gate successfully above");
         let ge = evaluate_carrier(carrier, &gate, e.max_level);
-        let input = input_for_mix(fixture, &[(carrier.slug(), ge.carrier_level), (slug.as_str(), e.max_level)]);
+        let input =
+            input_for_mix_with_picks(fixture, &[(carrier.slug(), ge.carrier_level), (slug.as_str(), e.max_level)], &picks);
         let receipt = build_pilot_headless_receipt(&input);
         builds += 1;
         let label = format!("{}:{}+{}:{}", carrier.slug(), ge.carrier_level, slug, e.max_level);
@@ -902,12 +903,14 @@ pub fn duplicate_scan(
 
 /// The carrier class a prestige class's converted entry gate selects.
 /// Wizard/Cleric are always CRB `core_rulebook` records; Fighter is the
-/// caster-less floor.
+/// caster-less floor. `Named` (SD-36 F3c2) is a class the gate itself names
+/// by level (`ClassLevel(<class>) >= n`): that class is the carrier.
 #[derive(Debug, Clone, Copy, PartialEq, Eq, PartialOrd, Ord)]
 pub enum PrestigeCarrier {
     Wizard,
     Cleric,
     Fighter,
+    Named(&'static str),
 }
 
 impl PrestigeCarrier {
@@ -916,18 +919,113 @@ impl PrestigeCarrier {
             PrestigeCarrier::Wizard => "wizard",
             PrestigeCarrier::Cleric => "cleric",
             PrestigeCarrier::Fighter => "fighter",
+            PrestigeCarrier::Named(slug) => slug,
+        }
+    }
+
+    /// The carrier a gate's `ClassLevel(<slug>)` term names: the three §2 carriers by their own
+    /// variant, any other class as `Named` (slug interned once per process; the set is bounded by
+    /// the class ids the converted gates name).
+    fn for_class(slug: &str) -> PrestigeCarrier {
+        match slug {
+            "wizard" => PrestigeCarrier::Wizard,
+            "cleric" => PrestigeCarrier::Cleric,
+            "fighter" => PrestigeCarrier::Fighter,
+            other => {
+                static INTERNED: std::sync::OnceLock<std::sync::Mutex<BTreeSet<&'static str>>> =
+                    std::sync::OnceLock::new();
+                let set = INTERNED.get_or_init(|| std::sync::Mutex::new(BTreeSet::new()));
+                let mut guard = set.lock().unwrap_or_else(|poisoned| poisoned.into_inner());
+                let interned = match guard.get(other) {
+                    Some(existing) => *existing,
+                    None => {
+                        let leaked: &'static str = Box::leak(other.to_owned().into_boxed_str());
+                        guard.insert(leaked);
+                        leaked
+                    }
+                };
+                PrestigeCarrier::Named(interned)
+            }
         }
     }
 
     /// The spell tradition this carrier provides, or `None` for Fighter
-    /// (which provides no casting at all).
+    /// (which provides no casting at all). A `Named` carrier is never
+    /// credited with a tradition here: it is chosen for the class level the
+    /// gate names, and a spell-kind term alongside it does not translate
+    /// ([`choose_carriers`] refuses the pair by name).
     fn spell_kind(self) -> Option<SpellKind> {
         match self {
             PrestigeCarrier::Wizard => Some(SpellKind::Arcane),
             PrestigeCarrier::Cleric => Some(SpellKind::Divine),
-            PrestigeCarrier::Fighter => None,
+            PrestigeCarrier::Fighter | PrestigeCarrier::Named(_) => None,
         }
     }
+
+    /// This carrier's converted chassis (BAB row), from the book its converted class record is
+    /// in (CRB for the three §2 carriers).
+    fn chassis(self) -> Option<&'static class_chassis_sheet_rules::ClassChassis> {
+        match self {
+            PrestigeCarrier::Named(slug) => {
+                let package = live_sheet_rules()?;
+                let id = package.find("class", slug)?;
+                let book = id.split(':').next()?;
+                class_chassis_sheet_rules::record(book, slug)
+            }
+            other => class_chassis_sheet_rules::record("core_rulebook", other.slug()),
+        }
+    }
+}
+
+/// `lower_snake` of a converted tag or label, the way the converter slugs ids.
+fn snake(text: &str) -> String {
+    let mut out = String::new();
+    for ch in text.chars() {
+        if ch.is_ascii_alphanumeric() {
+            out.push(ch.to_ascii_lowercase());
+        } else if !out.ends_with('_') {
+            out.push('_');
+        }
+    }
+    out.trim_matches('_').to_owned()
+}
+
+/// SD-36 F3c2: the pick `class_slug` records when a gate names `option` (a converted rule id) as
+/// something the character holds -- `Some` only when `option` is an option of a choice the class
+/// offers, read from the class's own canonical seeds (`class_seeds`), in one of the two id spaces
+/// a seed uses:
+///
+/// - a converted chooser (`offers: Rules` under its own id) that grants `option`
+///   (`Granter::Choice(<chooser>)`): the pick is `(<chooser>, <option>)`;
+/// - a legacy `choice:<pool>` id whose selections are `<ns>:<member>`: `option` carries the pool
+///   as its own TYPE tag (`Sorcerer Bloodline` for `choice:sorcerer_bloodline`) AND its id is
+///   `<pool>_<member>` (the oracle key `Sorcerer Bloodline ~ Draconic`): the pick is
+///   `(choice:<pool>, <ns>:<member>)`.
+///
+/// Anything else is `None`: the term does not translate, and no pick is guessed.
+fn carrier_pick_for_option(class_slug: &str, option: &str) -> Option<SelectedChoice> {
+    let package = live_sheet_rules()?;
+    let rule = package.rule(option)?;
+    let option_slug = option.rsplit(':').next()?;
+    let (choices, _) = canonical_seeds_for(class_slug);
+    choices.into_iter().find_map(|seed| {
+        if let Some(chooser) = package.rule(&seed.choice_set_id)
+            && matches!(&chooser.offers, Some(Choice { id, from: OptionSet::Rules { .. }, .. }) if id == &seed.choice_set_id)
+        {
+            return rule
+                .granted_by
+                .iter()
+                .any(|g| matches!(&g.by, Granter::Choice(ch) if ch == &seed.choice_set_id))
+                .then(|| SelectedChoice { choice_set_id: seed.choice_set_id.clone(), selection_id: option.to_owned() });
+        }
+        let pool = seed.choice_set_id.strip_prefix("choice:")?;
+        let member = option_slug.strip_prefix(pool)?.strip_prefix('_')?;
+        let (namespace, _) = seed.selection_id.split_once(':')?;
+        (!member.is_empty() && rule.tags.iter().any(|t| snake(t) == pool)).then(|| SelectedChoice {
+            choice_set_id: seed.choice_set_id.clone(),
+            selection_id: format!("{namespace}:{member}"),
+        })
+    })
 }
 
 /// `true` when `expr` reads ANY caster signal -- a specific-kind
@@ -987,6 +1085,10 @@ fn gate_has_any_caster_signal(gate: &Applies) -> bool {
 #[derive(Debug, Clone, PartialEq, Eq)]
 pub struct CarrierChoice {
     pub carriers: Vec<PrestigeCarrier>,
+    /// SD-36 F3c2: `(carrier slug, pick)` -- a gate-named option of a choice the carrier offers,
+    /// recorded as that carrier's pick in its mix (replacing the carrier's canonical pick for
+    /// the same choice).
+    pub picks: Vec<(String, SelectedChoice)>,
     /// Why these carriers: the demanding term(s), every `AtLeast` branch
     /// taken, every prohibition met. Printed as the census's
     /// `carrier_reason`.
@@ -1000,10 +1102,24 @@ struct CarrierDemand {
     demands: Vec<SpellKind>,
     forbids: Vec<SpellKind>,
     notes: Vec<String>,
+    /// SD-36 F3c2: classes a `ClassLevel(<class>) >= n` term names.
+    classes: Vec<String>,
+    /// SD-36 F3c2: `Holds(Rule(<option>))` targets not yet resolved to a named class's pick
+    /// ([`settle_options`]).
+    options: Vec<String>,
+    /// SD-36 F3c2: options resolved to `(class, pick)`.
+    picks: Vec<(String, SelectedChoice)>,
 }
 
 impl CarrierDemand {
     fn merge(&mut self, other: CarrierDemand) {
+        for class in other.classes {
+            if !self.classes.contains(&class) {
+                self.classes.push(class);
+            }
+        }
+        self.options.extend(other.options);
+        self.picks.extend(other.picks);
         self.numeric.extend(other.numeric);
         for kind in other.demands {
             if !self.demands.contains(&kind) {
@@ -1028,39 +1144,86 @@ impl CarrierDemand {
 /// a feat, a situational text, another class's level, a choice, a bare
 /// `CasterLevel` -- does not translate.
 fn translate_clause(term: &Applies) -> Option<CarrierDemand> {
+    settle_options(translate_raw(term)?)
+}
+
+/// SD-36 F3c2: resolve every pending `Holds(Rule(<option>))` of `demand` to a pick of a class the
+/// same demand names by level ([`carrier_pick_for_option`]). `None` when any option is not an
+/// option of a choice a named class offers: the clause does not translate.
+fn settle_options(mut demand: CarrierDemand) -> Option<CarrierDemand> {
+    for option in std::mem::take(&mut demand.options) {
+        let (class, pick) = demand
+            .classes
+            .iter()
+            .find_map(|class| carrier_pick_for_option(class, &option).map(|pick| (class.clone(), pick)))?;
+        demand.notes.push(format!(
+            "Holds {option}: an option of {class}'s {} choice, seeded as its pick {}",
+            pick.choice_set_id, pick.selection_id
+        ));
+        demand.picks.push((class, pick));
+    }
+    Some(demand)
+}
+
+/// Every `k`-subset of `0..len` in lexicographic (oracle) order.
+fn combinations(len: usize, k: usize) -> Vec<Vec<usize>> {
+    if k == 0 {
+        return vec![Vec::new()];
+    }
+    if k > len {
+        return Vec::new();
+    }
+    let mut out = Vec::new();
+    for first in 0..=(len - k) {
+        for rest in combinations(len - first - 1, k - 1) {
+            let mut combo = vec![first];
+            combo.extend(rest.into_iter().map(|i| i + first + 1));
+            out.push(combo);
+        }
+    }
+    out
+}
+
+fn translate_raw(term: &Applies) -> Option<CarrierDemand> {
     match term {
         Applies::All(nested) => {
             let mut demand = CarrierDemand::default();
             for t in nested {
-                demand.merge(translate_clause(t)?);
+                demand.merge(translate_raw(t)?);
             }
             Some(demand)
         }
+        // The first `n` branches, in oracle order, that translate AND whose gate-named options
+        // settle together (F3c2: a `Holds` option settles only against a class level another
+        // taken branch names; without one it is the untranslatable term it always was).
         Applies::AtLeast { n, of } => {
             let need = usize::from(*n);
-            let mut demand = CarrierDemand::default();
-            let mut taken: Vec<usize> = Vec::new();
-            for (i, branch) in of.iter().enumerate() {
-                if taken.len() == need {
-                    break;
-                }
-                if let Some(mut branch_demand) = translate_clause(branch) {
-                    let label = format!("at least {n} of {}, branch {}", of.len(), i + 1);
+            let translated: Vec<(usize, CarrierDemand)> =
+                of.iter().enumerate().filter_map(|(i, branch)| translate_raw(branch).map(|d| (i + 1, d))).collect();
+            for combo in combinations(translated.len(), need) {
+                let mut demand = CarrierDemand::default();
+                let mut taken: Vec<usize> = Vec::new();
+                for index in combo {
+                    let (branch, branch_demand) = &translated[index];
+                    let mut branch_demand = branch_demand.clone();
+                    let label = format!("at least {n} of {}, branch {branch}", of.len());
                     for req in &mut branch_demand.numeric {
                         req.description = format!("{label}: {}", req.description);
                     }
                     demand.merge(branch_demand);
-                    taken.push(i + 1);
+                    taken.push(*branch);
                 }
+                let Some(mut demand) = settle_options(demand) else { continue };
+                demand.notes.push(format!(
+                    "at least {n} of {}: took branch(es) {taken:?} in oracle order",
+                    of.len()
+                ));
+                return Some(demand);
             }
-            if taken.len() < need {
-                return None;
-            }
-            demand.notes.push(format!(
-                "at least {n} of {}: took branch(es) {taken:?} in oracle order",
-                of.len()
-            ));
-            Some(demand)
+            None
+        }
+        Applies::Holds { what: Holdable::Rule(option), .. } => {
+            Some(CarrierDemand { options: vec![option.clone()], ..CarrierDemand::default() })
         }
         Applies::Not(inner) => match classify_term(inner) {
             TermClass::Numeric(NumericRequirement { axis: NumericAxis::HighestSpellLevel(kind), .. }) => {
@@ -1077,6 +1240,9 @@ fn translate_clause(term: &Applies) -> Option<CarrierDemand> {
                         return None;
                     }
                     demand.demands.push(kind.clone());
+                }
+                if let NumericAxis::ClassLevel(class) = &req.axis {
+                    demand.classes.push(class.clone());
                 }
                 demand.numeric.push(req);
                 Some(demand)
@@ -1114,6 +1280,22 @@ pub fn choose_carriers(gate: &Applies) -> Result<CarrierChoice, String> {
     let forbidden = |carrier: PrestigeCarrier| demand.forbids.iter().any(|k| carrier_casts(carrier, k));
     let mut carriers: Vec<PrestigeCarrier> = Vec::new();
     let mut reason: Vec<String> = Vec::new();
+    // SD-36 F3c2: a class the gate names by level is the carrier. A spell-kind demand beside it
+    // is not credited to the named class (its casting is not read here), so the pair is refused
+    // by name rather than a carrier shown to meet half the gate.
+    if !demand.classes.is_empty() {
+        if !demand.demands.is_empty() {
+            return Err(format!(
+                "the gate names class level(s) {:?} AND demands spell kind(s) {:?}; a named-class carrier is not \
+                 read for its casting, so no single carrier can be shown to meet both: {gate:?}",
+                demand.classes, demand.demands
+            ));
+        }
+        for class in &demand.classes {
+            carriers.push(PrestigeCarrier::for_class(class));
+            reason.push(format!("ClassLevel({class}) named -> {class}"));
+        }
+    }
     if demand.demands.contains(&SpellKind::Arcane) {
         carriers.push(PrestigeCarrier::Wizard);
         reason.push("HighestSpellLevel(Arcane) demanded -> wizard".to_owned());
@@ -1150,7 +1332,7 @@ pub fn choose_carriers(gate: &Applies) -> Result<CarrierChoice, String> {
         reason.push(format!("Not HighestSpellLevel({kind:?}) -- a prohibition the carrier meets"));
     }
     reason.extend(demand.notes);
-    Ok(CarrierChoice { carriers, reason: reason.join("; ") })
+    Ok(CarrierChoice { carriers, picks: demand.picks, reason: reason.join("; ") })
 }
 
 /// The carriers [`choose_carriers`] names, without the reason.
@@ -1164,6 +1346,8 @@ enum NumericAxis {
     BaseAttack,
     SkillRanks,
     HighestSpellLevel(SpellKind),
+    /// SD-36 F3c2: `ClassLevel(<class>) >= n` -- met only by that class as the carrier.
+    ClassLevel(String),
 }
 
 #[derive(Debug, Clone)]
@@ -1198,6 +1382,7 @@ fn numeric_axis_of(e: &Expr) -> Option<NumericAxis> {
         Expr::BaseAttack => Some(NumericAxis::BaseAttack),
         Expr::SkillRanks(_) => Some(NumericAxis::SkillRanks),
         Expr::HighestSpellLevel(kind) => Some(NumericAxis::HighestSpellLevel(kind.clone())),
+        Expr::ClassLevel(class) => Some(NumericAxis::ClassLevel(class.clone())),
         _ => None,
     }
 }
@@ -1269,6 +1454,7 @@ fn classify_term(term: &Applies) -> TermClass {
                 NumericAxis::HighestSpellLevel(kind) => {
                     format!("HighestSpellLevel {kind:?} >= {required}")
                 }
+                NumericAxis::ClassLevel(class) => format!("ClassLevel {class} >= {required}"),
             };
             TermClass::Numeric(NumericRequirement { description, axis, required })
         }
@@ -1310,7 +1496,7 @@ fn top_level_terms(gate: &Applies) -> Vec<&Applies> {
 fn level_meeting(carrier: PrestigeCarrier, req: &NumericRequirement) -> Option<u8> {
     match &req.axis {
         NumericAxis::BaseAttack => {
-            let chassis = class_chassis_sheet_rules::record("core_rulebook", carrier.slug())?;
+            let chassis = carrier.chassis()?;
             (1..=DEFAULT_TABLED_MAX_LEVEL).find(|&level| {
                 chassis
                     .row_at(level)
@@ -1331,6 +1517,13 @@ fn level_meeting(carrier: PrestigeCarrier, req: &NumericRequirement) -> Option<u
             let level = (2 * req.required - 1).max(1);
             (level <= i32::from(DEFAULT_TABLED_MAX_LEVEL)).then_some(level as u8)
         }
+        NumericAxis::ClassLevel(class) => {
+            if carrier.slug() != class {
+                return None;
+            }
+            let level = req.required.max(1);
+            (level <= i32::from(DEFAULT_TABLED_MAX_LEVEL)).then_some(level as u8)
+        }
     }
 }
 
@@ -1338,7 +1531,8 @@ fn level_meeting(carrier: PrestigeCarrier, req: &NumericRequirement) -> Option<u
 /// what an unmet-by-the-cap line prints (§2's stated precedence).
 fn value_reached(carrier: PrestigeCarrier, req: &NumericRequirement, level: u8) -> i32 {
     match &req.axis {
-        NumericAxis::BaseAttack => class_chassis_sheet_rules::record("core_rulebook", carrier.slug())
+        NumericAxis::BaseAttack => carrier
+            .chassis()
             .and_then(|chassis| chassis.row_at(level))
             .map(|r| i32::from(r.base_attack_bonus))
             .unwrap_or(0),
@@ -1346,6 +1540,13 @@ fn value_reached(carrier: PrestigeCarrier, req: &NumericRequirement, level: u8) 
         NumericAxis::HighestSpellLevel(kind) => {
             if carrier_casts(carrier, kind) {
                 (i32::from(level) + 1) / 2
+            } else {
+                0
+            }
+        }
+        NumericAxis::ClassLevel(class) => {
+            if carrier.slug() == class {
+                i32::from(level)
             } else {
                 0
             }
@@ -1386,6 +1587,14 @@ fn evaluate_carrier(carrier: PrestigeCarrier, gate: &Applies, prestige_max_level
             && let Some(demand) = translate_clause(term)
         {
             numeric.extend(demand.numeric);
+            for (class, pick) in &demand.picks {
+                if class == carrier.slug() {
+                    met.push(format!(
+                        "gate-named option seeded as {class}'s pick {} -> {}",
+                        pick.choice_set_id, pick.selection_id
+                    ));
+                }
+            }
             for kind in &demand.forbids {
                 if carrier_casts(carrier, kind) {
                     unmet.push(format!(
@@ -1476,11 +1685,16 @@ fn prestige_applies_gate(books: &[String], slug: &str) -> Option<Applies> {
 /// selects, with no engine sweep. `Err` only when the converted record
 /// cannot be loaded at all -- named by class id, never silently skipped.
 pub fn carrier_assignment(entry: &ClassCensusEntry) -> Result<Vec<PrestigeCarrier>, String> {
+    carrier_choice(entry).map(|choice| choice.carriers)
+}
+
+/// [`carrier_assignment`] with the gate-named carrier picks (SD-36 F3c2) and the reason.
+pub fn carrier_choice(entry: &ClassCensusEntry) -> Result<CarrierChoice, String> {
     let slug = entry.class_id.strip_prefix("class:").unwrap_or(&entry.class_id);
     let gate = prestige_applies_gate(&entry.books, slug).ok_or_else(|| {
         format!("{}: no converted class record found in {:?}", entry.class_id, entry.books)
     })?;
-    determine_carriers(&gate).map_err(|reason| format!("{}: {reason}", entry.class_id))
+    choose_carriers(&gate).map_err(|reason| format!("{}: {reason}", entry.class_id))
 }
 
 /// Build the real production-shaped multiclass input for a carrier class
@@ -1488,6 +1702,12 @@ pub fn carrier_assignment(entry: &ClassCensusEntry) -> Result<Vec<PrestigeCarrie
 /// Mirrors [`crate::rules_core::class_seeds::input_for`]'s single-class
 /// shape, widened to more than one class level.
 fn input_for_mix(fixture: &CharacterInput, classes: &[(&str, u8)]) -> CharacterInput {
+    input_for_mix_with_picks(fixture, classes, &[])
+}
+
+/// [`input_for_mix`] plus the carrier picks a gate names (SD-36 F3c2): each pick replaces the
+/// canonical pick its class seeds under the same choice.
+fn input_for_mix_with_picks(fixture: &CharacterInput, classes: &[(&str, u8)], picks: &[(String, SelectedChoice)]) -> CharacterInput {
     let mut input = fixture.clone();
     input.case_id = Some(format!(
         "class_census.prestige_mix.{}",
@@ -1498,7 +1718,12 @@ fn input_for_mix(fixture: &CharacterInput, classes: &[(&str, u8)]) -> CharacterI
         .map(|(name, level)| CharacterClassLevel { class_id: format!("class:{name}"), level: *level })
         .collect();
     for (name, _) in classes {
-        let (choices, spells) = canonical_seeds_for(name);
+        let (mut choices, spells) = canonical_seeds_for(name);
+        let own: Vec<&SelectedChoice> = picks.iter().filter(|(class, _)| class == name).map(|(_, pick)| pick).collect();
+        if !own.is_empty() {
+            choices.retain(|c| !own.iter().any(|pick| pick.choice_set_id == c.choice_set_id));
+            choices.extend(own.into_iter().cloned());
+        }
         input.chosen.selected_choices.extend(choices);
         input.chosen.spells_selected.extend(spells);
     }
@@ -1530,6 +1755,7 @@ pub fn sweep_prestige_mix(
     carrier: PrestigeCarrier,
     carrier_level: u8,
     entry: &ClassCensusEntry,
+    picks: &[(String, SelectedChoice)],
 ) -> PrestigeMixSweep {
     let prestige_slug = entry.class_id.strip_prefix("class:").unwrap_or(&entry.class_id);
     let mut levels_computed = Vec::new();
@@ -1537,7 +1763,7 @@ pub fn sweep_prestige_mix(
     let mut blocking: Vec<CensusBlockingDiagnostic> = Vec::new();
 
     for level in 1..=entry.max_level {
-        let input = input_for_mix(fixture, &[(carrier.slug(), carrier_level), (prestige_slug, level)]);
+        let input = input_for_mix_with_picks(fixture, &[(carrier.slug(), carrier_level), (prestige_slug, level)], picks);
 
         let outcome = std::panic::catch_unwind(std::panic::AssertUnwindSafe(|| {
             build_pilot_headless_receipt(&input)
@@ -1713,12 +1939,12 @@ pub fn build_prestige_row(fixture: &CharacterInput, entry: &ClassCensusEntry) ->
             };
         }
     };
-    let CarrierChoice { carriers, reason: carrier_reason } = choice;
+    let CarrierChoice { carriers, picks, reason: carrier_reason } = choice;
     let mixes: Vec<(PrestigeMixSweep, CarrierEntryGate)> = carriers
         .iter()
         .map(|carrier| {
             let ge = evaluate_carrier(*carrier, &gate, entry.max_level);
-            let sweep = sweep_prestige_mix(fixture, *carrier, ge.carrier_level, entry);
+            let sweep = sweep_prestige_mix(fixture, *carrier, ge.carrier_level, entry, &picks);
             (sweep, ge)
         })
         .collect();
@@ -2055,6 +2281,12 @@ mod tests {
         // resolve), so their Climb/Intimidate/Swim lines are refused by name
         // (`skill.selected_modifier.class_skill_unknown`) instead of printed without a +3 the
         // record cannot support. Logged as a scripts/retro.py correction.
+        // Raised 61 -> 62 of 63 on 2026-09-24 by SD-36 Epic F3c2: the Expert's ten class-skill
+        // picks are a choice, now seeded through `class_seeds::EXPERT_CANONICAL_CLASS_SKILLS`
+        // and read by the class-skill reader under the converted chooser
+        // (`core_rulebook:class_feature:expert_class_skills`, `ClassSkillChosen`). Psion stays
+        // refused: its base class skills exist only on the discipline SUBCLASS lines, which the
+        // converter does not carry (artifacts/epic-f/stage-f2-f3/f3c2-receipt.md).
         let fixture = load_sweep_fixture().expect("shared deterministic fixture must load cleanly");
         let previous_hook = std::panic::take_hook();
         std::panic::set_hook(Box::new(|_| {}));
@@ -2063,8 +2295,8 @@ mod tests {
         assert_eq!(results.len(), 63, "non-prestige sweep population moved off 63");
         let computed = results.iter().filter(|r| r.computed()).count();
         assert_eq!(
-            computed, 61,
-            "measured non-prestige Computed count moved off 61 of 63 -- \
+            computed, 62,
+            "measured non-prestige Computed count moved off 62 of 63 -- \
              log a scripts/retro.py correction before moving this pin"
         );
     }
@@ -2446,14 +2678,15 @@ mod tests {
         // fighter floor. dragon_disciple remains: every branch of its
         // caster clause needs a spontaneous caster, a sorcerer level or a
         // draconic bloodline -- none a carrier + level term.
+        // Lowered 1 -> 0 on 2026-09-24 by SD-36 Epic F3c2: a gate branch naming
+        // `ClassLevel(<class>) >= n` makes that class the carrier, and a `Holds` option of a
+        // choice it offers is seeded as its pick -- dragon_disciple's third branch names the
+        // sorcerer and the draconic bloodline
+        // (`dragon_disciple_names_its_sorcerer_carrier_and_seeds_the_draconic_bloodline`).
         assert_eq!(
             ungroundable.len(),
-            1,
-            "measured ungroundable-gate prestige count moved off 1: {ungroundable:?}"
-        );
-        assert!(
-            ungroundable[0].starts_with("class:dragon_disciple"),
-            "dragon_disciple expected as the one ungroundable prestige gate: {ungroundable:?}"
+            0,
+            "measured ungroundable-gate prestige count moved off 0: {ungroundable:?}"
         );
     }
 
@@ -2551,7 +2784,9 @@ mod tests {
         let entries = census();
         for (class_id, expected) in [
             ("class:pure_legion_enforcer", Some(vec![PrestigeCarrier::Fighter])),
-            ("class:dragon_disciple", None),
+            // F3c2: the gate's third caster branch names `ClassLevel(sorcerer) >= 1` -> the
+            // sorcerer carries it (never the wizard the F0-check finding refused).
+            ("class:dragon_disciple", Some(vec![PrestigeCarrier::Named("sorcerer")])),
             ("class:evangelist", Some(vec![PrestigeCarrier::Fighter])),
             ("class:harrower", Some(vec![PrestigeCarrier::Wizard])),
             ("class:dark_tempest", Some(vec![PrestigeCarrier::Wizard])),
@@ -2599,8 +2834,10 @@ mod tests {
         let mut dual = 0usize;
         let mut fighter = 0usize;
         let mut unknown = 0usize;
+        let mut named = 0usize;
         let mut dual_names: Vec<&str> = Vec::new();
         let mut unknown_names: Vec<&str> = Vec::new();
+        let mut named_names: Vec<&str> = Vec::new();
         for entry in &prestige {
             match carrier_assignment(entry) {
                 Ok(carriers) => match carriers.as_slice() {
@@ -2610,6 +2847,10 @@ mod tests {
                     [PrestigeCarrier::Wizard, PrestigeCarrier::Cleric] => {
                         dual += 1;
                         dual_names.push(&entry.class_id);
+                    }
+                    [PrestigeCarrier::Named(_)] => {
+                        named += 1;
+                        named_names.push(&entry.class_id);
                     }
                     other => panic!("{}: unexpected carrier shape {other:?}", entry.class_id),
                 },
@@ -2623,7 +2864,7 @@ mod tests {
             }
         }
         assert_eq!(
-            wizard_only + cleric_only + dual + fighter + unknown,
+            wizard_only + cleric_only + dual + fighter + unknown + named,
             74,
             "carrier buckets must partition all 74 prestige classes"
         );
@@ -2674,12 +2915,13 @@ mod tests {
         // 7 -> 11 on 2026-09-23 (SD-36 Epic F1c-3): see
         // `every_prestige_class_gets_a_carrier_or_is_named_unknown`.
         // 11 -> 1 on 2026-09-24 (SD-36 Epic F3c).
-        assert_eq!(
-            unknown_names,
-            vec!["class:dragon_disciple"],
-            "measured ungroundable-gate prestige set moved off [dragon_disciple]"
-        );
-        assert_eq!(unknown, 1);
+        // 1 -> 0 on 2026-09-24 (SD-36 Epic F3c2): dragon_disciple's gate names
+        // `ClassLevel(sorcerer) >= 1`, so the sorcerer is its (named) carrier -- the one gate of
+        // 74 that names a class level at all.
+        assert!(unknown_names.is_empty(), "measured ungroundable-gate prestige set moved off []: {unknown_names:?}");
+        assert_eq!(unknown, 0);
+        assert_eq!(named_names, vec!["class:dragon_disciple"], "named-class carriers moved off [dragon_disciple]");
+        assert_eq!(named, 1);
     }
 
     #[test]
@@ -2986,14 +3228,22 @@ mod tests {
             pure_legion_enforcer.mixes[0].0.blocking
         );
 
-        // No branch of the caster clause translates: still Unknown, named.
+        // F3c2: the third caster branch names the sorcerer and the draconic bloodline; the
+        // sorcerer 5 mix (draconic pick seeded) reaches the engine and is Blocked on two named
+        // lines: Dragon Disciple's converted closure grants no weapon proficiency and carries no
+        // closure-complete attestation, and the Sorcerer seam grounds the Arcane bloodline only.
         let dragon_disciple = row("class:dragon_disciple");
-        assert_eq!(dragon_disciple.status, "unknown");
-        assert!(dragon_disciple.mixes.is_empty());
-        assert!(
-            dragon_disciple.carrier_unknown_reason.as_deref().unwrap_or("").contains("no branch"),
-            "{:?}",
-            dragon_disciple.carrier_unknown_reason
+        assert_eq!(dragon_disciple.carriers, vec![PrestigeCarrier::Named("sorcerer")]);
+        assert_eq!(dragon_disciple.status, "blocked");
+        assert_eq!(dragon_disciple.mixes[0].1.carrier_level, 5);
+        let mut blocking: Vec<&str> = dragon_disciple.mixes[0].0.blocking.iter().map(|b| b.id.as_str()).collect();
+        blocking.sort_unstable();
+        assert_eq!(
+            blocking,
+            vec![
+                "class_feature.sorcerer.arcane_bond_and_bloodline_progression.unsupported",
+                "combat.baseline_weapon_proficiency_unknown"
+            ]
         );
     }
 
@@ -3274,5 +3524,47 @@ mod tests {
         // sibling test carries: 3 of the 5 synthetic rows are blocked.
         let blocked_count = synthetic.iter().filter(|r| !r.computed).count();
         assert_eq!(blocked_count, 3);
+    }
+
+    /// SD-36 F3c2 (2): a gate branch that names `ClassLevel(<class>) >= n` makes THAT class the
+    /// carrier, and a `Holds(Rule(<option>))` term in the same branch whose target is an option
+    /// of a choice the carrier offers is seeded as the carrier's pick for the mix. Dragon
+    /// Disciple (CRB p.380) is the one gate of 74 that names a class level: its caster clause's
+    /// third branch is "at least 2 of [ClassLevel(sorcerer) >= 1, Holds
+    /// sorcerer_bloodline_draconic]".
+    #[test]
+    fn dragon_disciple_names_its_sorcerer_carrier_and_seeds_the_draconic_bloodline() {
+        let gate = prestige_applies_gate(&["core_rulebook".to_owned()], "dragon_disciple").expect("dragon disciple gate");
+        let carriers = determine_carriers(&gate).map(|cs| cs.iter().map(|c| c.slug()).collect::<Vec<_>>());
+        assert_eq!(carriers, Ok(vec!["sorcerer"]), "{gate:?}");
+        let choice = choose_carriers(&gate).expect("named");
+        assert_eq!(
+            choice.picks,
+            vec![(
+                "sorcerer".to_owned(),
+                SelectedChoice { choice_set_id: "choice:sorcerer_bloodline".to_owned(), selection_id: "bloodline:draconic".to_owned() }
+            )],
+            "{}",
+            choice.reason
+        );
+        assert!(choice.reason.contains("took branch(es) [3]"), "{}", choice.reason);
+        // The carrier level: ClassLevel(sorcerer) >= 1 under the floor of 5; 5 + 10 <= 20.
+        let ge = evaluate_carrier(choice.carriers[0], &gate, 10);
+        assert_eq!(ge.carrier_level, 5, "{ge:?}");
+        assert!(ge.met.iter().any(|m| m.contains("ClassLevel sorcerer >= 1")), "{ge:?}");
+        // The mix carries the draconic pick INSTEAD of the sorcerer's canonical arcane one.
+        let fixture = load_sweep_fixture().expect("fixture");
+        let input = input_for_mix_with_picks(&fixture, &[("sorcerer", 5), ("dragon_disciple", 1)], &choice.picks);
+        let bloodlines: Vec<&str> = input
+            .chosen
+            .selected_choices
+            .iter()
+            .filter(|c| c.choice_set_id == "choice:sorcerer_bloodline")
+            .map(|c| c.selection_id.as_str())
+            .collect();
+        assert_eq!(bloodlines, vec!["bloodline:draconic"]);
+        // Negative control: an option no named class offers does not translate.
+        assert!(carrier_pick_for_option("sorcerer", "advanced_class_guide:class_feature:eldritch_scion_spells").is_none());
+        assert!(carrier_pick_for_option("wizard", "core_rulebook:class_feature:sorcerer_bloodline_draconic").is_none());
     }
 }

@@ -245,9 +245,40 @@ pub fn canonical_seeds_for(class_name: &str) -> (Vec<SelectedChoice>, Vec<SpellS
         // proficient with ONE Simple weapon of the player's choice; the converted record links
         // that pick to its options, and the sheet prints the weapon recorded here.
         "commoner" => (vec![choice(COMMONER_WEAPON_CHOICE_ID, COMMONER_CANONICAL_WEAPON)], Vec::new()),
+        // SD-36 F3c2: the Expert's class skills ARE a choice (CRB p.450, "any 10 skills"): its
+        // ten picks' Path-A default, recorded under the converted chooser like the Commoner's
+        // weapon (`EXPERT_CANONICAL_CLASS_SKILLS` states why these ten).
+        "expert" => (
+            EXPERT_CANONICAL_CLASS_SKILLS.iter().map(|skill| choice(EXPERT_CLASS_SKILL_CHOICE_ID, skill)).collect(),
+            Vec::new(),
+        ),
         _ => (Vec::new(), Vec::new()),
     }
 }
+
+/// SD-36 F3c2: the choice an Expert records each of its class-skill picks under -- the converted
+/// id of `Expert Class Skills` (`cr_abilities_class.lst:2735`, `CHOOSE:SKILL|ALL`, `CSKILL:LIST`,
+/// converted to `offers: Skills(all)` + `ClassSkillChosen(<own id>)`), the one member of the
+/// `Expert Class Skills` pool the class line fills with ten picks
+/// (`cr_classes.lst:549`, `BONUS:ABILITYPOOL|Expert Class Skills|10`).
+pub const EXPERT_CLASS_SKILL_CHOICE_ID: &str = "core_rulebook:class_feature:expert_class_skills";
+
+/// The Expert's canonical ten class skills: the first ten single skills of the CRB skill list in
+/// its own (alphabetical) order, skipping the four families (Craft, Knowledge, Perform,
+/// Profession) whose pick is itself a second choice. A Path-A default, not a player's pick, the
+/// same rule as the Commoner's weapon (the first row of the table that answers).
+pub const EXPERT_CANONICAL_CLASS_SKILLS: [&str; 10] = [
+    "skill:acrobatics",
+    "skill:appraise",
+    "skill:bluff",
+    "skill:climb",
+    "skill:diplomacy",
+    "skill:disable_device",
+    "skill:disguise",
+    "skill:escape_artist",
+    "skill:fly",
+    "skill:handle_animal",
+];
 
 /// SD-36 F1c-5 (D8): the choice a Summoner records its Summoner Class Selection pick under -- the
 /// converted id of the Summoner ability (`apg_abilities_class.lst:739`), which fills the

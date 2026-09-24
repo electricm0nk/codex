@@ -10,6 +10,10 @@
 //! and collect every class-skill fact a held rule grants. A gated grant counts only when its gate
 //! is decidable from class-level facts ([`gate_is_class_decidable`]) and evaluates true.
 //!
+//! A class whose class skills ARE a choice (Expert, CRB p.450: any ten) answers with its Path-A
+//! canonical picks from `class_seeds` (SD-36 F3c2, [`add_canonical_class_skill_picks`]): one rule
+//! over the converted chooser (`offers: Skills` + `ClassSkillChosen(<own id>)`).
+//!
 //! # Unknown, never "no class skills"
 //!
 //! Every PF1 class has class skills. A walk that reaches no class-skill grant at all, a class
@@ -125,6 +129,9 @@ pub fn class_skill_view_in(package: &SheetRulePackage, class_slug: &str, class_l
             }
         }
     }
+    if let Err(reason) = add_canonical_class_skill_picks(package, class_slug, &mut view) {
+        return ClassSkillAnswer::Unknown { reason };
+    }
     if view.skills.is_empty() && view.groups.is_empty() {
         return ClassSkillAnswer::Unknown {
             reason: format!(
@@ -134,6 +141,38 @@ pub fn class_skill_view_in(package: &SheetRulePackage, class_slug: &str, class_l
         };
     }
     ClassSkillAnswer::Known(view)
+}
+
+/// SD-36 F3c2: a class whose class skills are a CHOICE (Expert, CRB p.450) answers with its
+/// Path-A canonical picks, seeded through `class_seeds` like every other choice. One rule: a
+/// canonical seed whose choice id is a converted rule that offers `OptionSet::Skills` under its
+/// own id AND grants `ClassSkillChosen(<that id>)` (PCGen's `CHOOSE:SKILL` + `CSKILL:LIST`) makes
+/// the picked skill a class skill. A pick the chooser does not admit, or that names no converted
+/// skill, is `Err` (the class then answers Unknown by name) -- never dropped, never guessed.
+/// A class with no such seed is untouched: its answer stays what its record's walk says.
+fn add_canonical_class_skill_picks(package: &SheetRulePackage, class_slug: &str, view: &mut ClassSkillView) -> Result<(), String> {
+    let (choices, _) = crate::rules_core::class_seeds::canonical_seeds_for(class_slug);
+    for c in choices {
+        let Some(picker) = package.rule(&c.choice_set_id) else { continue };
+        let Some(Choice { id, from: OptionSet::Skills(options), .. }) = &picker.offers else { continue };
+        if id != &c.choice_set_id
+            || !picker.grants.iter().any(|e| matches!(e, Effect::FactGrant(Fact::ClassSkillChosen(ch)) if ch == id))
+        {
+            continue;
+        }
+        let skill = c.selection_id.strip_prefix("skill:").unwrap_or(&c.selection_id);
+        let admitted = options.iter().any(|o| o == "all" || o == "any" || o == skill);
+        if !admitted || package.find("skill", skill).is_none() {
+            return Err(format!(
+                "`{class_slug}`'s canonical class-skill pick `{}` under {id} is not a converted skill the chooser \
+                 admits (options {options:?})",
+                c.selection_id
+            ));
+        }
+        view.skills.insert(skill.to_string());
+        view.granted_by.insert(id.clone());
+    }
+    Ok(())
 }
 
 /// The class's Path-A canonical member picks (the proficiency reader's rule, SD-36 F1c-5 D8):

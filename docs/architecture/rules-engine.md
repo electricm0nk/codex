@@ -348,8 +348,11 @@ proficiency reader's walk) and collects `Fact::ClassSkill` / `ClassSkillGroup`. 
 the reader cannot answer uses its cited oracle row only if it has one (`UNREAD_RECORD_SELECTED_CLASS_SKILLS`,
 the 9 ACG classes whose `ABILITY:Class|AUTOMATIC|<Class>` edge is unresolved; a test retires each row when
 the converter closes it); otherwise the lines are refused by name
-(`skill.selected_modifier.class_skill_unknown`: Expert and Psion, whose class skills are the player's
-choice). Before F3b3 a hand-kept 13-class list decided it, and 35 of 52 classes (79 of 156 lines) printed a record-granted class
+(`skill.selected_modifier.class_skill_unknown`: Psion, whose base class skills exist only on the
+discipline `SUBCLASS:` lines the converter does not carry). A class whose class skills ARE a choice
+(Expert, CRB p.450: any ten) answers from its Path-A canonical picks, seeded through `class_seeds`
+(SD-36 F3c2): a seed under a converted chooser that offers `Skills` and grants `ClassSkillChosen(<own id>)`
+makes the picked skill a class skill. Before F3b3 a hand-kept 13-class list decided it, and 35 of 52 classes (79 of 156 lines) printed a record-granted class
 skill without its +3 (Barbarian Climb/Swim among them).
 
 Proved by `tests/sd36_multiclass_any_class.rs` (four mixes against hand-worked PF1 values,
