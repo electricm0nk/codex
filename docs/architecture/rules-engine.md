@@ -495,7 +495,7 @@ gave all 27 "untabled" base classes (20 exotic + 7 CRB NPC/Ex) a real BAB/save c
 `generic_class_chassis::resolve` — dispatched from `compute_class_chassis`
 (`class_occult_and_psionic.rs:997`) — independently gives a further 78 conventional PC classes across
 its 14 `CLASS_FAMILY_BOOKS` a real chassis too, test-asserted by
-`generic_class_records().len() == 78` (`generic_class_chassis.rs`, `all_seventy_eight_conventional_classes_resolve`,
+`generic_class_records().len() == 78` (`generic_class_chassis.rs`, then named `all_seventy_eight_conventional_classes_resolve`, now `every_conventional_class_in_class_family_books_resolves` at 122 since SD-36 Epic F2a appended CRB/APG,
 7/7 passing). **This "31 + 3 + 27 + 78 = 139" arithmetic is wave 27's own count, historical, and is
 now known to be wrong as a distinct-class total** — it double-counts classes that appear in more than
 one registry (19 of the 78 also appear in the untabled-exotic registry, 3 more in the Ultimate Combat

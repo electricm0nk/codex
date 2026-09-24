@@ -25,6 +25,10 @@ one by name).
 - `census-f0.json` — **F0e's final copy**, the full document (every field
   above) as measured at F0's closing commit. This is the file
   `docs/architecture/status.md`'s generated table was last produced from.
+- `census-f2a.json` — SD-36 Epic F2a's AFTER sweep (generic class-family gate
+  arm; `core_rulebook`/`advanced_players_guide` appended to
+  `CLASS_FAMILY_BOOKS`): ids 137, 63 of 63 non-prestige Computed. Before/after
+  write-up: `stage-f2-f3/f2a-census-before-after.md`.
 - `mix-panel-histogram.md` — F0d's human-readable write-up of the
   claim-blocking-diagnostic histogram across the 185-row mix panel.
 - `scripts/` — `unres2.py`/`closure.py`, the read-only planning-pass

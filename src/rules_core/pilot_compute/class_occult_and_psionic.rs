@@ -994,63 +994,15 @@ pub(super) fn compute_class_chassis(
         }
 
         Some((base_attack_bonus, base_saves))
-    } else if let Some(row) = generic_class_chassis::resolve(&class_level.class_id, class_level.level) {
-        // SD-32 T12 `epic-10-reference-library-residual-reach` row 20 cycle 5: the
-        // character-creation-time dispatch arm for all 61 conventional PC classes cycle 4
-        // already re-derived a reference-catalog BAB/save TABLE for but never wired a chassis
-        // dispatch arm for (Demoniac's own bare-`classlevel()` gap closed on this cycle's own
-        // rebase, row 18 cycle 9 — see `generic_class_chassis`'s own module doc). Same shape
-        // as the `untabled_base_class_chassis::resolve` arm above: real
-        // base attack bonus and all three base saves, computed from the class's own corpus
-        // the class record's own converted base-attack/save arithmetic, not a
-        // hand-typed table.
-        let base_attack_bonus = row.base_attack_bonus;
-        let base_saves =
-            BaseSaves { fortitude: row.fort_save, reflex: row.ref_save, will: row.will_save };
-        explanations.push(ComputationExplanation {
-            id: "class_chassis.base_attack_bonus".to_owned(),
-            value: base_attack_bonus,
-            detail: format!(
-                "{} ({}) level {} base attack bonus from \
-                 pilot_compute::generic_class_chassis::resolve's corpus-derived formula for this \
-                 class: {base_attack_bonus}",
-                row.display_name, class_level.class_id, class_level.level
-            ),
-        });
-        explanations.push(ComputationExplanation {
-            id: "class_chassis.base_save.fortitude".to_owned(),
-            value: base_saves.fortitude,
-            detail: format!(
-                "{} ({}) level {} base Fortitude save from \
-                 pilot_compute::generic_class_chassis::resolve's corpus-derived formula for this \
-                 class: {}",
-                row.display_name, class_level.class_id, class_level.level, base_saves.fortitude
-            ),
-        });
-        explanations.push(ComputationExplanation {
-            id: "class_chassis.base_save.reflex".to_owned(),
-            value: base_saves.reflex,
-            detail: format!(
-                "{} ({}) level {} base Reflex save from \
-                 pilot_compute::generic_class_chassis::resolve's corpus-derived formula for this \
-                 class: {}",
-                row.display_name, class_level.class_id, class_level.level, base_saves.reflex
-            ),
-        });
-        explanations.push(ComputationExplanation {
-            id: "class_chassis.base_save.will".to_owned(),
-            value: base_saves.will,
-            detail: format!(
-                "{} ({}) level {} base Will save from \
-                 pilot_compute::generic_class_chassis::resolve's corpus-derived formula for this \
-                 class: {}",
-                row.display_name, class_level.class_id, class_level.level, base_saves.will
-            ),
-        });
-        Some((base_attack_bonus, base_saves))
     } else if let Some(row) =
         crb_untabled_class_chassis::resolve(&class_level.class_id, class_level.level)
     {
+        // SD-36 Epic F2a: this arm sits ABOVE the `generic_class_chassis` arm.
+        // F2a appended `core_rulebook` to that module's books, so its
+        // population now carries these seven CRB records too; the bespoke arm
+        // that owns a class dispatches it first (the same values -- both read
+        // the one converted record -- but the owning arm's own explanations).
+        //
         // SD-34 `AT-34-E3-001` (`decisions.md §14`): CRB's five NPC classes
         // and two `Ex-*` variant states (Adept, Aristocrat, Commoner,
         // Expert, Warrior, Ex-Barbarian, Ex-Paladin) -- real corpus records
@@ -1104,6 +1056,86 @@ pub(super) fn compute_class_chassis(
             ),
         });
         Some((base_attack_bonus, base_saves))
+    } else if let Some(row) = generic_class_chassis::resolve(&class_level.class_id, class_level.level) {
+        // SD-36 Epic F2a: the LAST chassis arm. Its population now also covers
+        // `core_rulebook`/`advanced_players_guide` (122 classes); every base class
+        // a bespoke arm above owns is dispatched there first, so what this arm
+        // newly answers is the CRB/APG prestige classes and APG's two `Ex-*`
+        // classes, which no other arm owns.
+        //
+        // SD-32 T12 `epic-10-reference-library-residual-reach` row 20 cycle 5: the
+        // character-creation-time dispatch arm for all 61 conventional PC classes cycle 4
+        // already re-derived a reference-catalog BAB/save TABLE for but never wired a chassis
+        // dispatch arm for (Demoniac's own bare-`classlevel()` gap closed on this cycle's own
+        // rebase, row 18 cycle 9 — see `generic_class_chassis`'s own module doc). Same shape
+        // as the `untabled_base_class_chassis::resolve` arm above: real
+        // base attack bonus and all three base saves, computed from the class's own corpus
+        // the class record's own converted base-attack/save arithmetic, not a
+        // hand-typed table.
+        let base_attack_bonus = row.base_attack_bonus;
+        let base_saves =
+            BaseSaves { fortitude: row.fort_save, reflex: row.ref_save, will: row.will_save };
+        explanations.push(ComputationExplanation {
+            id: "class_chassis.base_attack_bonus".to_owned(),
+            value: base_attack_bonus,
+            detail: format!(
+                "{} ({}) level {} base attack bonus from \
+                 pilot_compute::generic_class_chassis::resolve's corpus-derived formula for this \
+                 class: {base_attack_bonus}",
+                row.display_name, class_level.class_id, class_level.level
+            ),
+        });
+        explanations.push(ComputationExplanation {
+            id: "class_chassis.base_save.fortitude".to_owned(),
+            value: base_saves.fortitude,
+            detail: format!(
+                "{} ({}) level {} base Fortitude save from \
+                 pilot_compute::generic_class_chassis::resolve's corpus-derived formula for this \
+                 class: {}",
+                row.display_name, class_level.class_id, class_level.level, base_saves.fortitude
+            ),
+        });
+        explanations.push(ComputationExplanation {
+            id: "class_chassis.base_save.reflex".to_owned(),
+            value: base_saves.reflex,
+            detail: format!(
+                "{} ({}) level {} base Reflex save from \
+                 pilot_compute::generic_class_chassis::resolve's corpus-derived formula for this \
+                 class: {}",
+                row.display_name, class_level.class_id, class_level.level, base_saves.reflex
+            ),
+        });
+        explanations.push(ComputationExplanation {
+            id: "class_chassis.base_save.will".to_owned(),
+            value: base_saves.will,
+            detail: format!(
+                "{} ({}) level {} base Will save from \
+                 pilot_compute::generic_class_chassis::resolve's corpus-derived formula for this \
+                 class: {}",
+                row.display_name, class_level.class_id, class_level.level, base_saves.will
+            ),
+        });
+        // SD-36 Epic F2a: a prestige class this arm dispatches still reports its
+        // real entry-requirement gate -- the same diagnostic the fallthrough arm
+        // below gives a registered prestige class with no chassis row. Since F2a
+        // appended `core_rulebook`/`advanced_players_guide` to `generic_class_
+        // chassis`, every one of the 74 registered prestige classes reaches THIS
+        // arm (all 74 carry a converted chassis row), so without this the gate
+        // would never run for any of them. The single-class receipt stays
+        // Blocked either way: `has_supported_class_chassis` excludes prestige.
+        if generic_class_chassis::is_prestige(&class_level.class_id)
+            && let Some(gate) =
+                prestige_class_entry_gate::evaluate_prestige_class_entry(&class_level.class_id, input)
+        {
+            push_prestige_entry_gate_diagnostic(
+                &gate,
+                &class_level.class_id,
+                "its converted chassis row is dispatched, but a prestige class cannot be a \
+                 character's only class",
+                diagnostics,
+            );
+        }
+        Some((base_attack_bonus, base_saves))
     } else if let Some(gate) =
         prestige_class_entry_gate::evaluate_prestige_class_entry(&class_level.class_id, input)
     {
@@ -1116,35 +1148,53 @@ pub(super) fn compute_class_chassis(
         // character's real chosen feats/skills/etc. satisfy the class's
         // real corpus PRE-token entry requirements, fixture-checked in
         // `prestige_class_entry_gate`'s own tests.
-        diagnostics.push(ComputationDiagnostic {
-            id: if gate.qualifies {
-                "class_chassis.prestige_entry_gate.met".to_owned()
-            } else {
-                "class_chassis.prestige_entry_gate.unmet".to_owned()
-            },
-            message: if gate.qualifies {
-                format!(
-                    "{} ({}): entry requirements met ({} clause(s) satisfied, {} unmodelled); \
-                     chassis magnitude still unsupported (see class_chassis.unsupported)",
-                    gate.display_name,
-                    class_level.class_id,
-                    gate.met.len(),
-                    gate.unmodelled.len()
-                )
-            } else {
-                format!(
-                    "{} ({}): entry requirements NOT met -- {}",
-                    gate.display_name,
-                    class_level.class_id,
-                    gate.unmet.join("; ")
-                )
-            },
-            claim_blocking: true,
-        });
+        push_prestige_entry_gate_diagnostic(
+            &gate,
+            &class_level.class_id,
+            "chassis magnitude still unsupported (see class_chassis.unsupported)",
+            diagnostics,
+        );
         None
     } else {
         None
     }
+}
+
+/// The claim-blocking entry-requirement diagnostic for a registered prestige
+/// class (`class_chassis.prestige_entry_gate.met` / `.unmet`), shared by the
+/// two `compute_class_chassis` arms that report it. `chassis_note` states what
+/// the calling arm did with the class's chassis, appended to the "met" message.
+fn push_prestige_entry_gate_diagnostic(
+    gate: &prestige_class_entry_gate::PrestigeEntryGateOutcome,
+    class_id: &str,
+    chassis_note: &str,
+    diagnostics: &mut Vec<ComputationDiagnostic>,
+) {
+    diagnostics.push(ComputationDiagnostic {
+        id: if gate.qualifies {
+            "class_chassis.prestige_entry_gate.met".to_owned()
+        } else {
+            "class_chassis.prestige_entry_gate.unmet".to_owned()
+        },
+        message: if gate.qualifies {
+            format!(
+                "{} ({}): entry requirements met ({} clause(s) satisfied, {} unmodelled); {}",
+                gate.display_name,
+                class_id,
+                gate.met.len(),
+                gate.unmodelled.len(),
+                chassis_note
+            )
+        } else {
+            format!(
+                "{} ({}): entry requirements NOT met -- {}",
+                gate.display_name,
+                class_id,
+                gate.unmet.join("; ")
+            )
+        },
+        claim_blocking: true,
+    });
 }
 
 /// SD-27 (Pathfinder Unchained class wiring, 2026-07-31): compute the

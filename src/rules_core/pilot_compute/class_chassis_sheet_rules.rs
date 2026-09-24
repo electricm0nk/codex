@@ -428,7 +428,7 @@ mod tests {
         // record (`convert.rs`'s old record-wide degradation policy). CONV-05
         // fixed that -- Evangelist now correctly resolves a real chassis (¾
         // BAB, good Reflex; see `generic_class_chassis.rs`'s
-        // `all_seventy_eight_conventional_classes_resolve`) -- so it no
+        // `every_conventional_class_in_class_family_books_resolves`) -- so it no
         // longer exercises "no chassis rows at all". `occult_adventures`'s
         // Psychic Detective genuinely converts no `BaseAttack`/`BaseSave` row
         // (verified: `data/sheet_rules/occult_adventures/class/psychic_

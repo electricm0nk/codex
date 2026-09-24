@@ -106,11 +106,11 @@ actually measures.
 
 | Quantity | Count | Denominator | Census JSON field |
 |---|---|---|---|
-| Distinct class ids, corpus-wide, across all engine registries | **135** | — | `ids` |
-| Non-prestige ids actually swept (`ids` minus the 74 prestige ids, never swept alone here) | **61** | of 135 | `non_prestige_swept` |
-| ...reach `Computed` at every swept level (non-prestige) | **61** | of 61 | `computed` |
-| ...reach `Computed` at no level (non-prestige) | **0** | of 61 | `blocked` |
-| Prestige ids swept (never measured alone — see the carrier rule below) | **74** | of 135 total ids | `prestige_swept` |
+| Distinct class ids, corpus-wide, across all engine registries | **137** | — | `ids` |
+| Non-prestige ids actually swept (`ids` minus the 74 prestige ids, never swept alone here) | **63** | of 137 | `non_prestige_swept` |
+| ...reach `Computed` at every swept level (non-prestige) | **63** | of 63 | `computed` |
+| ...reach `Computed` at no level (non-prestige) | **0** | of 63 | `blocked` |
+| Prestige ids swept (never measured alone — see the carrier rule below) | **74** | of 137 total ids | `prestige_swept` |
 | ...Blocked alone (negative control) | **74** | of 74 | `prestige_alone_blocked` |
 | ...`Computed` in their deterministic carrier mix | **0** | of 74 | `prestige_mix_computed` |
 | Multiclass mix-panel rows swept (existing negative-control inputs, re-used) | **185** | — | `mix_panel_swept` |
@@ -128,8 +128,9 @@ actually measures.
 | Ultimate Combat | ultimate_combat | 3 | 3 |
 | Untabled exotic base classes | advanced_players_guide, occult_adventures, ultimate_intrigue, ultimate_magic, ultimate_psionics, ultimate_wilderness | 20 | 20 |
 | CRB NPC / Ex-* classes | core_rulebook | 7 | 7 |
+| generic_class_chassis-only (unclaimed by any of the eight canonical sources) | advanced_players_guide | 2 | 2 |
 | Prestige | see per-class `books` in the census JSON (11 source books) | 74 | n/a alone (never a legitimate measurement — see headline numbers: 0 of 74 `Computed` in carrier mix) |
-| **Total** | | **135** (61 non-prestige + 74 prestige) | **61** of 61 non-prestige ids Computed alone (prestige carrier-mix result kept separate, per headline numbers above — the bin's own `--json` output never folds the two together) |
+| **Total** | | **137** (63 non-prestige + 74 prestige) | **63** of 63 non-prestige ids Computed alone (prestige carrier-mix result kept separate, per headline numbers above — the bin's own `--json` output never folds the two together) |
 <!-- class-census:end -->
 
 Row-by-row evidence:
@@ -156,16 +157,21 @@ Row-by-row evidence:
   prestige) is named with a mechanism per class in
   `docs/release/SD-36-consolidation/artifacts/epic-f/reader-remainder.md`,
   pinned by `weapon_tables::every_census_class_has_a_known_proficiency_answer`.
-- **Prestige (74 ingested of 131 named; 56 with chassis, 18 without; 0
+- **Prestige (74 ingested of 131 named; all 74 with a converted chassis row
+  dispatched since SD-36 Epic F2a -- 56 before it, the CRB/APG 18 not; 0
   `Computed`)**: `prestige_class_entry_gate.rs:1-30`; `python3 -c "import
   json;print(len(json.load(open('tests/fixtures/rules_core/prestige-class-entry-requirements.json'))['entries']))"`
-  → 74; `generic_class_chassis.rs`'s `all_seventy_eight_conventional_classes_resolve`
-  (78 total dispatched by that registry, of which 56 are these prestige
-  rows — the other 22 are the 19-of-20 untabled-exotic overlap + all 3 UC
-  classes, already counted in their own rows above, not double-counted
-  here); `class_shared_core.rs:3420-3427` (`has_supported_class_chassis` has
-  no dispatch arm for `generic_class_chassis::resolve` at all, which is why
-  a real chassis never becomes `Computed` for any of the 56).
+  → 74; `generic_class_chassis.rs`'s `every_conventional_class_in_class_family_books_resolves`
+  (78 over its original 14 books, of which 56 are these prestige rows — the
+  other 22 are the 19-of-20 untabled-exotic overlap + all 3 UC classes, already
+  counted in their own rows above, not double-counted here; 122 since SD-36
+  Epic F2a appended `core_rulebook`/`advanced_players_guide`: +18 prestige, +24
+  base classes a bespoke arm already owns, +2 APG `Ex-*` classes counted in the
+  `GenericOnly` row above — `artifacts/epic-f/stage-f2-f3/f2a-census-before-after.md`); `has_supported_class_chassis` (`class_shared_core.rs`) gained a
+  generic class-family arm in SD-36 Epic F2a, but it EXCLUDES `Prestige`-tagged
+  records by the game rule (a prestige class cannot be a character's first
+  class), so a real chassis still never becomes single-class `Computed` for any
+  of the 74; F3's multiclass gate is where it folds in.
 - **Multiclass (CRB-11 only)**: `class_shared_core.rs:3678-3715`
   (`table_class_id`, recognizes exactly the 11 CRB ids);
   `class_occult_and_psionic.rs:761-798` (`is_supported_multiclass_mix`

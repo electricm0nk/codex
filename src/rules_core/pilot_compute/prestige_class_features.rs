@@ -503,10 +503,15 @@ pub(super) fn ground_divine_scion_class_features(
 /// `compute_pilot_base_chassis`'s generic class_feature grant roster call
 /// (this module, just above `compute_class_chassis`'s prestige-entry-gate
 /// branch): a prestige-class-only character now gets the SAME generic
-/// roster every other modelled class already gets, even though
-/// `compute_class_chassis` genuinely produces no BAB/save chassis for any
-/// CRB prestige class (asserted directly, as this suite's own premise, not
-/// assumed).
+/// roster every other modelled class already gets.
+///
+/// SD-36 Epic F2a: the suite's original premise -- `compute_class_chassis`
+/// produced no BAB/save chassis for any CRB prestige class -- is no longer
+/// true. `generic_class_chassis` now reads `core_rulebook`, so a CRB prestige
+/// class alone dispatches its converted chassis row (as the other 56 prestige
+/// classes already did); the tests now assert that row against the book
+/// (oracle: the CRB prestige tables) alongside the features, and the receipt
+/// still stays Blocked -- a prestige class cannot be a character's only class.
 #[cfg(test)]
 mod prestige_class_feature_generic_grant_tests {
     use super::{
@@ -538,13 +543,10 @@ mod prestige_class_feature_generic_grant_tests {
     }
 
     #[test]
-    fn assassin_class_features_ground_even_though_no_bab_save_chassis_exists() {
+    fn assassin_class_features_ground_alongside_the_converted_chassis_row() {
         let input = character(ASSASSIN_CLASS_ID, 8);
-        assert!(
-            explanation(&input, "class_chassis.base_attack_bonus").is_none(),
-            "this test's own premise: a CRB prestige class's chassis is genuinely \
-             unsupported by compute_class_chassis today"
-        );
+        // CRB Assassin, level 8: 3/4 BAB -> +6.
+        assert_eq!(explanation(&input, "class_chassis.base_attack_bonus").map(|(v, _)| v), Some(6));
         let (value, detail) =
             explanation(&input, "class_feature.assassin.corpus_record.hidden_weapons")
                 .expect("a level-8 Assassin must be granted Hidden Weapons (real, level-4 grant)");
@@ -560,9 +562,10 @@ mod prestige_class_feature_generic_grant_tests {
     }
 
     #[test]
-    fn shadowdancer_class_features_ground_even_though_no_bab_save_chassis_exists() {
+    fn shadowdancer_class_features_ground_alongside_the_converted_chassis_row() {
         let input = character(SHADOWDANCER_CLASS_ID, 8);
-        assert!(explanation(&input, "class_chassis.base_attack_bonus").is_none());
+        // CRB Shadowdancer, level 8: 3/4 BAB -> +6.
+        assert_eq!(explanation(&input, "class_chassis.base_attack_bonus").map(|(v, _)| v), Some(6));
         let (value, detail) =
             explanation(&input, "class_feature.shadowdancer.corpus_record.darkvision")
                 .expect("a level-8 Shadowdancer must be granted Darkvision (real, level-2 grant)");
@@ -574,9 +577,10 @@ mod prestige_class_feature_generic_grant_tests {
     }
 
     #[test]
-    fn duelist_deflect_arrows_grounds_even_though_no_bab_save_chassis_exists() {
+    fn duelist_deflect_arrows_grounds_alongside_the_converted_chassis_row() {
         let input = character("class:duelist", 9);
-        assert!(explanation(&input, "class_chassis.base_attack_bonus").is_none());
+        // CRB Duelist, level 9: full BAB -> +9.
+        assert_eq!(explanation(&input, "class_chassis.base_attack_bonus").map(|(v, _)| v), Some(9));
         let (value, detail) =
             explanation(&input, "class_feature.duelist.corpus_record.deflect_arrows")
                 .expect("a level-9 Duelist must be granted Deflect Arrows (real, level-9 grant)");
@@ -637,21 +641,26 @@ mod prestige_class_entry_gate_wiring_tests {
             .map(|d| d.message.as_str())
     }
 
-    /// RED, confirmed manually before this wiring landed (SD-31 wave 27's
-    /// own investigation note above `compute_generic_table_chassis`): the
+    /// Was `prestige_class_dispatch_still_leaves_chassis_unsupported` (RED,
+    /// confirmed manually before the entry-gate wiring landed: the
     /// `else { None }` arm produced no diagnostic at all for a
-    /// `class:arcane_archer` single-class input -- entry requirements were
-    /// simply never asked about. GREEN below.
+    /// `class:arcane_archer` single-class input). SD-36 Epic F2a appended
+    /// `core_rulebook` to `generic_class_chassis`, so Arcane Archer now
+    /// dispatches its converted chassis row -- full BAB, +1 at level 1 -- and
+    /// `class_chassis.unsupported` no longer fires for it; the entry gate
+    /// still runs (the two tests below) and the shared gate still refuses a
+    /// prestige class alone, so the receipt stays Blocked.
     #[test]
-    fn prestige_class_dispatch_still_leaves_chassis_unsupported() {
+    fn prestige_class_dispatch_emits_its_converted_chassis_and_the_shared_gate_refuses_it() {
         let input = arcane_archer_input(vec![]);
         let computation = compute_pilot_base_chassis(&input);
-        assert_eq!(computation.base_attack_bonus, 0);
+        assert_eq!(computation.base_attack_bonus, 1);
         assert!(
-            diagnostic(&computation, "class_chassis.unsupported").is_some(),
-            "the generic unsupported-chassis diagnostic must still fire: {:?}",
+            diagnostic(&computation, "class_chassis.unsupported").is_none(),
+            "a known prestige id with a converted chassis row is not an unsupported class: {:?}",
             computation.diagnostics
         );
+        assert!(!super::has_supported_class_chassis(&input));
     }
 
     #[test]

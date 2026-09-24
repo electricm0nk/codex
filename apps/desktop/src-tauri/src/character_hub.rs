@@ -5812,7 +5812,7 @@ mod tests {
     /// player picking it at creation -- exactly the gap this cycle's brief
     /// asked to be either closed or precisely disproven with evidence.
     #[test]
-    fn all_81_generic_classes_reach_a_real_chassis_at_character_creation_altitude() {
+    fn all_generic_classes_reach_a_real_chassis_at_character_creation_altitude() {
         let repo_root = crate::authoring_workbench::codex_repo_root().expect("repo root");
         let (records, unresolved) =
             crate::class_catalog_generic::load_generic_class_progressions(&repo_root);
@@ -5835,7 +5835,13 @@ mod tests {
         // to words (verified by hand for `inner_sea_gods:class:evangelist`: a genuine PF1 3/4
         // BAB + good Reflex progression). 62 + 19 = 81. Re-derive:
         // `class_catalog_generic::load_generic_class_progressions(&repo_root).0.len()`.
-        assert_eq!(names.len(), 81, "must cover all 81, not a partial sweep");
+        //
+        // SD-36 Epic F2a: 81 -> 125, `core_rulebook` (+27) and
+        // `advanced_players_guide` (+17) appended to `CLASS_FAMILY_BOOKS` (see
+        // `class_catalog_generic`'s own pin). Every CRB/APG prestige class now
+        // reaches its converted chassis row here too, rather than
+        // `class_chassis.unsupported`.
+        assert_eq!(names.len(), 125, "must cover all 125, not a partial sweep");
 
         let mut checked = 0usize;
         for (name, slug) in &names {
@@ -5850,15 +5856,15 @@ mod tests {
             checked += 1;
         }
         assert_eq!(
-            checked, 81,
-            "must have exercised all 81 conventional classes, not a partial sweep"
+            checked, 125,
+            "must have exercised all 125 conventional class records, not a partial sweep"
         );
     }
 
     /// SD-32 T12 Epic 10 row 20 cycle 7: closes cycle 6's own named wiring
     /// gap ("`ground_companion_stat_block` has zero live callers anywhere
     /// in the crate") and proves it at the real character-creation
-    /// altitude, the same way `all_81_generic_classes_reach_a_real_
+    /// altitude, the same way `all_generic_classes_reach_a_real_
     /// chassis_at_character_creation_altitude` proved the class picker --
     /// through `CreateCharacterRequest` -> `compose_character_input` ->
     /// `build_pilot_headless_receipt`, never `generic_class_chassis::

@@ -40,19 +40,17 @@
 //! or Prestige, never two -- `no_class_id_sits_in_two_families` (below)
 //! proves that holds for the current corpus rather than assuming it.
 //!
-//! `generic_class_chassis`'s own 78-class population (`covered_classes()`,
-//! added by this batch) is a **ninth** source, folded in last. It never
-//! introduces a new family: every id it names is already claimed by one of
-//! the eight above (`docs/architecture/status.md`'s own evidence: 56 of its
-//! 78 are Prestige rows, the other 22 are the Ultimate Combat classes and
-//! 19 of the 20 untabled-exotic classes, each also reachable through
-//! `generic_class_chassis`'s own 14-book population). Folding it in only
-//! widens an existing entry's [`ClassCensusEntry::registries`] and
-//! [`ClassCensusEntry::books`]. If a future corpus change makes it name an
-//! id none of the eight claims, that id is recorded under
-//! [`ClassFamily::GenericOnly`] rather than silently guessed into one of
-//! the other eight -- `no_generic_only_stragglers_today` pins that this
-//! is currently empty, so a regression is caught by name.
+//! `generic_class_chassis`'s own population (`covered_classes()`, 122
+//! classes since SD-36 Epic F2a appended `core_rulebook` and
+//! `advanced_players_guide` to its books; 78 before) is a **ninth** source,
+//! folded in last. For 120 of its 122 ids it only widens an existing
+//! entry's [`ClassCensusEntry::registries`] and [`ClassCensusEntry::books`]:
+//! the id is already claimed by one of the eight above. An id none of the
+//! eight claims is recorded under [`ClassFamily::GenericOnly`] rather than
+//! silently guessed into one of the other eight --
+//! `generic_only_ids_are_exactly_the_two_apg_ex_classes` pins, by name,
+//! the two it holds since F2a (APG's Ex-Antipaladin and Ex-Inquisitor), so
+//! any further straggler is caught by name.
 
 use std::collections::BTreeMap;
 #[cfg(test)]
@@ -1817,7 +1815,16 @@ mod tests {
         assert_eq!(counts.get(&ClassFamily::UntabledExoticBase).copied().unwrap_or(0), 20, "{message}");
         assert_eq!(counts.get(&ClassFamily::CrbNpcEx).copied().unwrap_or(0), 7, "{message}");
         assert_eq!(counts.get(&ClassFamily::Prestige).copied().unwrap_or(0), 74, "{message}");
-        assert_eq!(entries.len(), 135, "measured census total moved off the previously published 135 -- {message}");
+        // SD-36 Epic F2a (2026-09-24): +2, `GenericOnly`. Appending
+        // `core_rulebook` and `advanced_players_guide` to `generic_class_
+        // chassis`'s `CLASS_FAMILY_BOOKS` brought APG's two `Ex-*` variant
+        // classes (Ex-Antipaladin, Ex-Inquisitor) into the ninth source, and
+        // none of the eight canonical sources claims them -- see
+        // `generic_only_ids_are_exactly_the_two_apg_ex_classes`. 135 + 2 = 137;
+        // every one of the 135 earlier ids keeps its family (the per-family
+        // asserts above are unchanged). Logged as a scripts/retro.py correction.
+        assert_eq!(counts.get(&ClassFamily::GenericOnly).copied().unwrap_or(0), 2, "{message}");
+        assert_eq!(entries.len(), 137, "measured census total moved off 137 (135 + F2a's 2 GenericOnly) -- {message}");
     }
 
     #[test]
@@ -1835,7 +1842,9 @@ mod tests {
         // own `cargo test ... census_id_set_matches_the_published_partition`
         // command matched zero tests and passed vacuously.
         let entries = census();
-        assert_eq!(entries.len(), 135, "merged census id set moved off the published 135");
+        // 137 since SD-36 Epic F2a: the published 135 plus the two
+        // `GenericOnly` APG `Ex-*` classes (see `every_registry_is_swept_once`).
+        assert_eq!(entries.len(), 137, "merged census id set moved off 137 (135 + 2 GenericOnly)");
 
         let mut by_family: BTreeMap<ClassFamily, BTreeSet<String>> = BTreeMap::new();
         for entry in entries.values() {
@@ -1846,7 +1855,7 @@ mod tests {
             .filter(|(family, _)| **family != ClassFamily::Prestige)
             .map(|(_, ids)| ids.len())
             .sum();
-        assert_eq!(non_prestige_total, 61, "non-prestige id SET moved off the published 31+3+20+7=61");
+        assert_eq!(non_prestige_total, 63, "non-prestige id SET moved off 31+3+20+7+2 GenericOnly=63");
         assert_eq!(
             by_family.get(&ClassFamily::Prestige).map(BTreeSet::len).unwrap_or(0),
             74,
@@ -1861,8 +1870,8 @@ mod tests {
         // either, since both would still read off the same underlying map.
         let union_of_family_sets: usize = by_family.values().map(BTreeSet::len).sum();
         assert_eq!(
-            union_of_family_sets, 135,
-            "family id sets do not partition the full published 135 -- {by_family:?}"
+            union_of_family_sets, 137,
+            "family id sets do not partition the full 137 -- {by_family:?}"
         );
 
         // The real, engine-derived half of review finding 12d's pin:
@@ -1888,16 +1897,23 @@ mod tests {
         // (`class_seeds::COMMONER_CANONICAL_WEAPON`) records the pick; the census
         // Longsword is outside the pick's options, so it reads Known(false).
         // 61 of 61 non-prestige; logged as a scripts/retro.py correction.
+        // Raised 61 -> 63 of 63 on 2026-09-24 by SD-36 Epic F2a: the population
+        // grew by the two `GenericOnly` APG `Ex-*` classes (Ex-Antipaladin,
+        // Ex-Inquisitor), and the new generic class-family gate arm computes
+        // both off their converted records (chassis hand-checked in
+        // `generic_class_chassis::tests::the_two_apg_ex_classes_resolve_their_parent_class_chassis`).
+        // No earlier id changed status (artifacts/epic-f/stage-f2-f3/
+        // f2a-census-before-after.md); logged as a scripts/retro.py correction.
         let fixture = load_sweep_fixture().expect("shared deterministic fixture must load cleanly");
         let previous_hook = std::panic::take_hook();
         std::panic::set_hook(Box::new(|_| {}));
         let results = sweep_non_prestige(&fixture, &entries);
         std::panic::set_hook(previous_hook);
-        assert_eq!(results.len(), 61, "non-prestige sweep population moved off the published 61");
+        assert_eq!(results.len(), 63, "non-prestige sweep population moved off 63");
         let computed = results.iter().filter(|r| r.computed()).count();
         assert_eq!(
-            computed, 61,
-            "measured non-prestige Computed count moved off the published 61 of 61 -- \
+            computed, 63,
+            "measured non-prestige Computed count moved off 63 of 63 -- \
              log a scripts/retro.py correction before moving this pin"
         );
     }
@@ -1984,20 +2000,35 @@ mod tests {
     }
 
     #[test]
-    fn no_generic_only_stragglers_today() {
-        // `docs/architecture/status.md`'s own evidence: `generic_class_
-        // chassis`'s 78 classes are fully subsumed by the other eight
-        // sources (56 Prestige + 19 of 20 untabled-exotic + 3 Ultimate
-        // Combat = 78). This pins that today; if it ever goes red, a real
-        // new class surfaced through `generic_class_chassis` alone and
-        // needs a named family decision, not a silent default.
+    fn generic_only_ids_are_exactly_the_two_apg_ex_classes() {
+        // Until SD-36 Epic F2a this pinned an EMPTY list: `generic_class_
+        // chassis`'s 78 classes were fully subsumed by the other eight sources
+        // (56 Prestige + 19 of 20 untabled-exotic + 3 Ultimate Combat = 78).
+        // F2a appended `core_rulebook` and `advanced_players_guide` to its
+        // `CLASS_FAMILY_BOOKS` (78 -> 122). 42 of the 44 new slugs are already
+        // claimed (CRB table 10, APG table 6, untabled Antipaladin, CRB NPC/Ex
+        // 7, 18 prestige); the remaining two are APG's `Ex-*` variant classes,
+        // the exact analogues of CRB's Ex-Barbarian/Ex-Paladin that
+        // `crb_untabled_class_chassis` registers -- no canonical source claims
+        // an APG `Ex-*` class. Named family decision: they stay `GenericOnly`,
+        // listed here by name; any other straggler is a new class needing its
+        // own decision, not a silent default.
         let entries = census();
         let stragglers: Vec<&str> = entries
             .values()
             .filter(|e| e.family == ClassFamily::GenericOnly)
             .map(|e| e.class_id.as_str())
             .collect();
-        assert!(stragglers.is_empty(), "generic_class_chassis named a class no other source claims: {stragglers:?}");
+        assert_eq!(
+            stragglers,
+            vec!["class:ex_antipaladin", "class:ex_inquisitor"],
+            "generic_class_chassis named a class no other source claims"
+        );
+        for id in &stragglers {
+            let entry = &entries[*id];
+            assert!(!entry.is_prestige, "{id} is a base (Ex-*) class, not prestige");
+            assert_eq!(entry.books, vec!["advanced_players_guide".to_string()], "{id}");
+        }
     }
 
     #[test]
@@ -2024,11 +2055,11 @@ mod tests {
         let entries = census();
         let expected: BTreeSet<String> =
             entries.values().filter(|e| !e.is_prestige).map(|e| e.class_id.clone()).collect();
-        // 61 = 135 - Prestige's 74, the same partition
+        // 63 = 137 - Prestige's 74, the same partition
         // `every_registry_is_swept_once` measures per family
         // (11+6+10+4=31 tabled + 3 UltimateCombat + 20 UntabledExoticBase +
-        // 7 CrbNpcEx = 61).
-        assert_eq!(expected.len(), 61, "non-prestige count moved off 135-74=61");
+        // 7 CrbNpcEx + 2 GenericOnly = 63; the 2 since SD-36 Epic F2a).
+        assert_eq!(expected.len(), 63, "non-prestige count moved off 137-74=63");
 
         let fixture = load_sweep_fixture().expect("shared deterministic fixture must load cleanly");
         let results = sweep_non_prestige(&fixture, &entries);
