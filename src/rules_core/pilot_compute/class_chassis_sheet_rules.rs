@@ -81,6 +81,14 @@ pub struct ClassChassis {
     base_attack: Expr,
     /// Fortitude, Reflex, Will.
     saves: [Expr; 3],
+    /// Per save index: `true` when the record also carries a `BaseSave` row
+    /// for that save whose value converted to WORDS (`SheetValue` other
+    /// than `Number`) -- the words-not-`Expr` degradation symptom
+    /// `generic_class_chassis.rs`'s population history documents (the old
+    /// record-wide policy that printed a class's own clean save formula as
+    /// its rule's words). [`Self::save_shape`] reports such a save
+    /// `Degraded` rather than trusting whichever sibling row did convert.
+    save_words: [bool; 3],
     /// This class's hit die size (`d10` -> `10`), read off the principal
     /// rule's `StatBlock "Hit die"` prose row — `None` for the 7 records
     /// (of 185) that carry no such row, never a fabricated value (F0-check
@@ -102,6 +110,46 @@ pub struct ClassChassis {
     /// sub-agent-f0-check-fix.jsonl` for the correction against §2's
     /// assumption that this row already exists like `"Hit die"` does.
     pub skill_ranks_per_level: Option<u8>,
+}
+
+/// A class's base-save progression as read off its converted `Expr`
+/// ([`ClassChassis::save_shape`]). PF1 prints two class-level save shapes,
+/// good and poor, each in a base-class and a prestige-class table form;
+/// anything else is named, never folded into one of them. The fold that
+/// consumes a shape reads the class's own `Expr` values for the totals --
+/// the enum names the category, not which table form produced it.
+#[derive(Debug, Clone, Copy, PartialEq, Eq)]
+pub enum SaveProgression {
+    /// `level/2 + 2` (base class good save) or `(level+1)/2` (prestige
+    /// class good save).
+    Good,
+    /// `level/3` (base class poor save) or `(level+1)/3` (prestige class
+    /// poor save).
+    Poor,
+    /// The record shows the words-not-`Expr` symptom for this save: a
+    /// `BaseSave` row whose value converted to words, or an unresolved
+    /// `Choice` term (which prints as words) inside the `Expr` itself.
+    Degraded,
+    /// A clean `Expr` whose values match neither closed form over the
+    /// class's own levels, or one that reads anything other than the
+    /// class's own level and constants.
+    Unrecognized,
+}
+
+/// The diagnostic id a class's HP contribution carries when its record
+/// states no hit die ([`ClassChassis::hit_points`]).
+pub const HIT_POINTS_UNKNOWN: &str = "class_chassis.hit_points.unknown";
+/// The diagnostic id a class's skill-point contribution carries when its
+/// record states no skill ranks per level ([`ClassChassis::skill_points`]).
+pub const SKILL_POINTS_UNKNOWN: &str = "class_chassis.skill_points.unknown";
+
+/// A sheet total the class's converted record cannot support: `id` is one of
+/// [`HIT_POINTS_UNKNOWN`] / [`SKILL_POINTS_UNKNOWN`], `message` names the
+/// class and the missing row. Printed as Unknown, never folded as 0.
+#[derive(Debug, Clone, PartialEq, Eq)]
+pub struct ChassisUnknown {
+    pub id: &'static str,
+    pub message: String,
 }
 
 /// One row of a class's printed progression table: `(level, base attack bonus,
@@ -151,6 +199,94 @@ impl ClassChassis {
         })
     }
 
+    /// The shape of save `index` (0 Fortitude, 1 Reflex, 2 Will), or `None`
+    /// for an index outside `0..3`. See [`SaveProgression`]. The shape is
+    /// decided by the values the `Expr` takes at every level
+    /// `1..=max_level`, compared against each closed form truncated the way
+    /// [`Self::row_at`] truncates -- after ruling out degradation (checked
+    /// structurally first) and any term other than this class's own level.
+    pub fn save_shape(&self, index: usize) -> Option<SaveProgression> {
+        let expr = self.saves.get(index)?;
+        if self.save_words[index] || expr_has_choice(expr) {
+            return Some(SaveProgression::Degraded);
+        }
+        if !reads_only_own_level(expr, &self.level_var) {
+            return Some(SaveProgression::Unrecognized);
+        }
+        let value_at = |level: i64| {
+            let facts = CharacterFacts {
+                level,
+                class_levels: vec![(self.level_var.clone(), level)],
+                ..CharacterFacts::default()
+            };
+            evaluate_expr_from_facts(expr, &facts).trunc()
+        };
+        let matches = |form: fn(i64) -> i64| (1..=i64::from(self.max_level)).all(|l| value_at(l) == form(l));
+        if SAVE_GOOD_FORMS.iter().any(|form| matches(*form)) {
+            return Some(SaveProgression::Good);
+        }
+        if SAVE_POOR_FORMS.iter().any(|form| matches(*form)) {
+            return Some(SaveProgression::Poor);
+        }
+        Some(SaveProgression::Unrecognized)
+    }
+
+    /// The hit points `levels` levels of this class contribute: the full
+    /// hit die for the level that is the character's 1st
+    /// (`includes_first_character_level`), the non-rolling average
+    /// ([`crate::rules_core::durability::average_hit_die_value`]) for every
+    /// other, each level plus `constitution_modifier` and floored at 1 --
+    /// the same per-level rule `durability::compute_max_hp` applies to the
+    /// tabled classes. A record with no hit die is
+    /// [`HIT_POINTS_UNKNOWN`], never 0.
+    ///
+    /// This is the per-class term of the sheet's HP total; no fold reads HP
+    /// off a `ClassChassis` before SD-36 F3b (the multiclass fold), so this is
+    /// where the Unknown is decided for every caller that does.
+    pub fn hit_points(
+        &self,
+        levels: u8,
+        includes_first_character_level: bool,
+        constitution_modifier: i16,
+    ) -> Result<i16, ChassisUnknown> {
+        let die = self.hit_die.ok_or_else(|| ChassisUnknown {
+            id: HIT_POINTS_UNKNOWN,
+            message: format!(
+                "{} ({}:class:{}): the converted record states no hit die, so this class's hit \
+                 points are Unknown",
+                self.display_name, self.book, self.slug
+            ),
+        })?;
+        let mut total = 0_i16;
+        for level in 1..=levels {
+            let die_value = if level == 1 && includes_first_character_level {
+                i16::from(die)
+            } else {
+                crate::rules_core::durability::average_hit_die_value(die)
+            };
+            total += (die_value + constitution_modifier).max(1);
+        }
+        Ok(total)
+    }
+
+    /// The skill points `levels` levels of this class contribute: skill ranks
+    /// per level plus `intelligence_modifier`, at least 1 per level (PF1).
+    /// Race and favored-class extras are not the class's and are not added
+    /// here. A record with no skill-ranks-per-level row is
+    /// [`SKILL_POINTS_UNKNOWN`], never 0 -- which is every converted class
+    /// record today (see [`Self::skill_ranks_per_level`]).
+    pub fn skill_points(&self, levels: u8, intelligence_modifier: i16) -> Result<i16, ChassisUnknown> {
+        let ranks = self.skill_ranks_per_level.ok_or_else(|| ChassisUnknown {
+            id: SKILL_POINTS_UNKNOWN,
+            message: format!(
+                "{} ({}:class:{}): the converted record states no skill ranks per level, so \
+                 this class's skill points are Unknown",
+                self.display_name, self.book, self.slug
+            ),
+        })?;
+        Ok(i16::from(levels) * (i16::from(ranks) + intelligence_modifier).max(1))
+    }
+
     /// Every level `1..=max_level` as `(level, bab, fort, ref, will)`, or
     /// `None` when any level fails to resolve — a partial progression is never
     /// returned.
@@ -161,6 +297,45 @@ impl ClassChassis {
             rows.push((level, row.base_attack_bonus, row.fort_save, row.ref_save, row.will_save));
         }
         Some(rows)
+    }
+}
+
+/// PF1's good class-level save progressions, as closed forms over the
+/// class's own level (integer division truncates, as [`ClassChassis::row_at`]
+/// does once at the boundary): the base-class table's `level/2 + 2` and the
+/// prestige-class table's `(level+1)/2` (CRB prestige tables: +1 at 1st,
+/// +5 at 10th).
+const SAVE_GOOD_FORMS: [fn(i64) -> i64; 2] = [|l| l / 2 + 2, |l| (l + 1) / 2];
+/// PF1's poor class-level save progressions: base `level/3`, prestige
+/// `(level+1)/3` (+0 at 1st, +3 at 10th).
+const SAVE_POOR_FORMS: [fn(i64) -> i64; 2] = [|l| l / 3, |l| (l + 1) / 3];
+
+/// `true` when `e` contains an unresolved `Choice` term -- a term that
+/// prints as words, not a number.
+fn expr_has_choice(e: &Expr) -> bool {
+    match e {
+        Expr::Choice(_) => true,
+        Expr::Sum(terms) => terms.iter().any(expr_has_choice),
+        Expr::Mul(a, b) | Expr::Div(a, b) | Expr::Min(a, b) | Expr::Max(a, b) => {
+            expr_has_choice(a) || expr_has_choice(b)
+        }
+        Expr::Floor(a) | Expr::Ceil(a) => expr_has_choice(a),
+        _ => false,
+    }
+}
+
+/// `true` when `e` reads nothing but constants and `ClassLevel(level_var)`
+/// through arithmetic -- the only inputs a class-level save progression has.
+fn reads_only_own_level(e: &Expr, level_var: &str) -> bool {
+    match e {
+        Expr::Const(_) => true,
+        Expr::ClassLevel(c) => c == level_var,
+        Expr::Sum(terms) => terms.iter().all(|t| reads_only_own_level(t, level_var)),
+        Expr::Mul(a, b) | Expr::Div(a, b) | Expr::Min(a, b) | Expr::Max(a, b) => {
+            reads_only_own_level(a, level_var) && reads_only_own_level(b, level_var)
+        }
+        Expr::Floor(a) | Expr::Ceil(a) => reads_only_own_level(a, level_var),
+        _ => false,
     }
 }
 
@@ -256,6 +431,7 @@ fn chassis_from_rules(book: &str, slug: &str, rules: &[SheetRule]) -> Option<Cla
     // toggle-off `,0` gate, made without reading a token.
     let base_attack = rules.iter().find(|r| r.target.as_ref() == Some(&BonusTarget::BaseAttack)).and_then(number_of)?;
     let mut saves: [Option<&Expr>; 3] = [None, None, None];
+    let mut save_words = [false; 3];
     for rule in rules {
         let Some(BonusTarget::BaseSave(save)) = rule.target.as_ref() else { continue };
         let index = match save {
@@ -263,8 +439,10 @@ fn chassis_from_rules(book: &str, slug: &str, rules: &[SheetRule]) -> Option<Cla
             Save::Reflex => 1,
             Save::Will => 2,
         };
-        if saves[index].is_none() {
-            saves[index] = number_of(rule);
+        match number_of(rule) {
+            Some(expr) if saves[index].is_none() => saves[index] = Some(expr),
+            Some(_) => {}
+            None => save_words[index] = true,
         }
     }
     let (Some(fort), Some(refl), Some(will)) = (saves[0], saves[1], saves[2]) else {
@@ -302,6 +480,7 @@ fn chassis_from_rules(book: &str, slug: &str, rules: &[SheetRule]) -> Option<Cla
         max_level,
         base_attack: base_attack.clone(),
         saves: [fort.clone(), refl.clone(), will.clone()],
+        save_words,
         hit_die,
         skill_ranks_per_level,
     })
@@ -541,6 +720,287 @@ mod tests {
              the F0-check finding 5 correction logged at docs/retro/events/\
              sub-agent-f0-check-fix.jsonl) must be updated, not left silently green"
         );
+    }
+
+    // -----------------------------------------------------------------
+    // SD-36 Epic F3a (spec §5, review finding 11; acceptance F3.0 context):
+    // `save_shape` over every class chassis record the class registry knows.
+    // -----------------------------------------------------------------
+
+    /// Every `(record id, chassis)` the class registry knows: for each
+    /// `class_census::census()` id (every canonical registry, the prestige
+    /// sweep, and `generic_class_chassis` -- generic families including the
+    /// CRB/APG prestige rows F2a appended, and every bespoke-owned class),
+    /// the converted chassis record in each book that census row names.
+    /// Ids whose books carry no chassis record are returned separately.
+    fn registry_chassis_records() -> (Vec<(String, &'static ClassChassis)>, Vec<String>) {
+        let mut found = Vec::new();
+        let mut without = Vec::new();
+        for (class_id, entry) in crate::rules_core::class_census::census() {
+            let slug = class_id.strip_prefix("class:").unwrap_or(&class_id).to_string();
+            let before = found.len();
+            for book in &entry.books {
+                if let Some(chassis) = record(book, &slug) {
+                    found.push((format!("{book}:class:{slug}"), chassis));
+                }
+            }
+            if found.len() == before {
+                without.push(class_id);
+            }
+        }
+        (found, without)
+    }
+
+    /// The save slots whose converted `Expr` is a faithful conversion of a
+    /// source formula that is not a PF1 class-level save progression --
+    /// named, one by one, with the source LST formula each converts
+    /// (`data/corpus/<book>/class/<slug>.json`, `SAVE|BASE.<save>|...`).
+    /// They stay `Unrecognized` (and so stay Blocked in a mix, F3b) rather
+    /// than folding as good or poor; correcting them is a source-data
+    /// question, not a classifier one. See
+    /// `docs/release/SD-36-consolidation/artifacts/epic-f/stage-f2-f3/f3a-save-shapes.md`.
+    const NAMED_UNRECOGNIZED_SAVES: [(&str, usize); 14] = [
+        ("adventurers_guide:class:mammoth_rider", 0), // (classlevel+2)/2
+        ("inner_sea_combat:class:pure_legion_enforcer", 0), // classlevel+3/2
+        ("inner_sea_combat:class:pure_legion_enforcer", 1), // classlevel+1/3
+        ("inner_sea_combat:class:pure_legion_enforcer", 2), // classlevel+3/2
+        ("inner_sea_combat:class:ulfen_guard", 0), // classlevel+3/2
+        ("inner_sea_combat:class:ulfen_guard", 1), // classlevel+1/3
+        ("inner_sea_combat:class:ulfen_guard", 2), // classlevel+3/2
+        ("inner_sea_gods:class:evangelist", 1),    // classlevel/3+1
+        ("inner_sea_gods:class:exalted", 0),       // classlevel+1/3
+        ("inner_sea_gods:class:exalted", 1),       // classlevel+1/3
+        ("inner_sea_gods:class:exalted", 2),       // classlevel+1/2
+        ("inner_sea_gods:class:sentinel", 0),      // classlevel+1/2
+        ("inner_sea_gods:class:sentinel", 1),      // classlevel+1/3
+        ("inner_sea_gods:class:sentinel", 2),      // classlevel+1/3
+    ];
+
+    #[test]
+    fn every_generic_class_save_shape_is_recognized_or_named() {
+        let (records, _) = registry_chassis_records();
+        // 135 chassis records for 132 of the census's 137 ids (F3a
+        // measurement; 3 ids resolve a record in two books, each listed per
+        // book -- cyphermage, hellknight, red_mantis_assassin -- and the
+        // 5 ids without one are named by
+        // `registry_ids_without_a_chassis_record_are_named`).
+        assert_eq!(records.len(), 135, "registry chassis-record population moved off 135");
+        let mut not_good_or_poor = Vec::new();
+        for (id, chassis) in &records {
+            for index in 0..3 {
+                let shape = chassis.save_shape(index);
+                if !matches!(shape, Some(SaveProgression::Good | SaveProgression::Poor)) {
+                    not_good_or_poor.push((id.clone(), index, shape));
+                }
+            }
+        }
+        let named: Vec<(String, usize, Option<SaveProgression>)> = NAMED_UNRECOGNIZED_SAVES
+            .iter()
+            .map(|(id, index)| (id.to_string(), *index, Some(SaveProgression::Unrecognized)))
+            .collect();
+        let unnamed: Vec<String> = not_good_or_poor
+            .iter()
+            .filter(|slot| !named.contains(slot))
+            .map(|(id, index, shape)| format!("({id}, {index}, {shape:?})"))
+            .collect();
+        let vanished: Vec<String> = named
+            .iter()
+            .filter(|slot| !not_good_or_poor.contains(slot))
+            .map(|(id, index, _)| format!("({id}, {index})"))
+            .collect();
+        assert!(
+            unnamed.is_empty() && vanished.is_empty(),
+            "{} of {} save slots ({} records x 3) are not Good/Poor.\n\
+             NOT NAMED (classify by mechanism, fix the classifier or name it):\n{}\n\
+             NAMED BUT NOW Good/Poor or gone (re-examine, then unpin):\n{}",
+            not_good_or_poor.len(),
+            records.len() * 3,
+            records.len(),
+            unnamed.join("\n"),
+            vanished.join("\n")
+        );
+    }
+
+    #[test]
+    fn registry_ids_without_a_chassis_record_are_named() {
+        // 5 of the census's 137 ids have no converted chassis record in any
+        // book their census row names (their BAB/saves come from bespoke
+        // tables, not a `ClassChassis`): Core Rulebook Monk, whose principal
+        // rule degraded to words and carries no `BaseAttack` row (see
+        // `every_chassis_bearing_class_in_the_corpus_has_a_hit_die`), and the
+        // four Pathfinder Unchained classes, whose converted records
+        // (`data/sheet_rules/pathfinder_unchained/class/*.json`) are one
+        // rule each with no `BaseAttack`/`BaseSave` target at all.
+        let (_, without) = registry_chassis_records();
+        assert_eq!(
+            without,
+            [
+                "class:monk",
+                "class:unchained_barbarian",
+                "class:unchained_monk",
+                "class:unchained_rogue",
+                "class:unchained_summoner",
+            ]
+        );
+    }
+
+    /// A minimal chassis-bearing rule set for `slug` with the three given
+    /// save values (BAB = class level).
+    fn synthetic_rules(slug: &str, saves: [SheetValue; 3]) -> Vec<SheetRule> {
+        let mut principal: SheetRule = serde_json::from_str(FIGHTER_PRINCIPAL_RULE_JSON)
+            .expect("fixture JSON must parse as a SheetRule");
+        principal.value = SheetValue::Number(Expr::ClassLevel(slug.to_owned()));
+        principal.applies = Applies::Always;
+        let mut rules = vec![principal.clone()];
+        for (save, value) in [Save::Fortitude, Save::Reflex, Save::Will].into_iter().zip(saves) {
+            let mut rule = principal.clone();
+            rule.target = Some(BonusTarget::BaseSave(save));
+            rule.value = value;
+            rules.push(rule);
+        }
+        rules
+    }
+
+    fn level(slug: &str) -> Box<Expr> {
+        Box::new(Expr::ClassLevel(slug.to_owned()))
+    }
+
+    #[test]
+    fn save_shape_reads_good_poor_and_names_the_rest() {
+        let slug = "synthetic";
+        let good = SheetValue::Number(Expr::Sum(vec![
+            Expr::Div(level(slug), Box::new(Expr::Const(2))),
+            Expr::Const(2),
+        ]));
+        let poor = SheetValue::Number(Expr::Div(level(slug), Box::new(Expr::Const(3))));
+        // `classlevel+1/3`, the Ulfen Guard source shape: full level, not a save.
+        let odd = SheetValue::Number(Expr::Sum(vec![
+            Expr::ClassLevel(slug.to_owned()),
+            Expr::Div(Box::new(Expr::Const(1)), Box::new(Expr::Const(3))),
+        ]));
+        let chassis = chassis_from_rules("core_rulebook", slug, &synthetic_rules(slug, [good, poor, odd]))
+            .expect("three Number saves build a chassis");
+        assert_eq!(chassis.save_shape(0), Some(SaveProgression::Good));
+        assert_eq!(chassis.save_shape(1), Some(SaveProgression::Poor));
+        assert_eq!(chassis.save_shape(2), Some(SaveProgression::Unrecognized));
+        assert_eq!(chassis.save_shape(3), None, "there is no fourth save");
+
+        // A save reading character level (not the class's own) is not a
+        // class-level progression, whatever values it takes single-class.
+        let char_level = SheetValue::Number(Expr::Div(Box::new(Expr::Level), Box::new(Expr::Const(3))));
+        let poor = SheetValue::Number(Expr::Div(level(slug), Box::new(Expr::Const(3))));
+        let chassis = chassis_from_rules(
+            "core_rulebook",
+            slug,
+            &synthetic_rules(slug, [char_level, poor.clone(), poor]),
+        )
+        .expect("builds");
+        assert_eq!(chassis.save_shape(0), Some(SaveProgression::Unrecognized));
+    }
+
+    #[test]
+    fn save_shape_names_the_words_not_expr_symptom_degraded() {
+        let slug = "synthetic";
+        let poor = || SheetValue::Number(Expr::Div(level(slug), Box::new(Expr::Const(3))));
+        // A Fortitude row that converted to WORDS, beside a sibling that did
+        // convert: never trusted as whatever the sibling says.
+        let mut rules = synthetic_rules(slug, [SheetValue::Text, poor(), poor()]);
+        let mut sibling = rules[1].clone();
+        sibling.value = poor();
+        rules.push(sibling);
+        let chassis = chassis_from_rules("core_rulebook", slug, &rules).expect("builds off the sibling");
+        assert_eq!(chassis.save_shape(0), Some(SaveProgression::Degraded));
+        assert_eq!(chassis.save_shape(1), Some(SaveProgression::Poor));
+
+        // An unresolved `Choice` term prints as words.
+        let choice = SheetValue::Number(Expr::Sum(vec![
+            Expr::Div(level(slug), Box::new(Expr::Const(3))),
+            Expr::Choice("pick".into()),
+        ]));
+        let chassis = chassis_from_rules("core_rulebook", slug, &synthetic_rules(slug, [poor(), poor(), choice]))
+            .expect("builds");
+        assert_eq!(chassis.save_shape(2), Some(SaveProgression::Degraded));
+    }
+
+    // -----------------------------------------------------------------
+    // SD-36 Epic F3.0 (spec §5 review finding 3): a missing hit die or
+    // skill-ranks-per-level is a named Unknown on HP / skill points, never
+    // a silent 0.
+    // -----------------------------------------------------------------
+
+    fn synthetic_chassis_without_stat_block() -> ClassChassis {
+        let slug = "synthetic";
+        let poor = || SheetValue::Number(Expr::Div(level(slug), Box::new(Expr::Const(3))));
+        chassis_from_rules("core_rulebook", slug, &synthetic_rules(slug, [poor(), poor(), poor()]))
+            .expect("builds")
+    }
+
+    #[test]
+    fn a_class_missing_hit_die_reports_hp_unknown() {
+        // The Unknown arm, on a chassis whose record carries no
+        // `StatBlock "Hit die"` row.
+        let chassis = synthetic_chassis_without_stat_block();
+        assert_eq!(chassis.hit_die, None);
+        let unknown = chassis.hit_points(3, true, 2).expect_err("no hit die -> Unknown, never 0");
+        assert_eq!(unknown.id, HIT_POINTS_UNKNOWN);
+        assert!(unknown.message.contains(&chassis.display_name), "names the class: {}", unknown.message);
+
+        // Oracle (hand-worked PF1, non-rolling average = die/2 + 1): Warrior
+        // d10, 3 levels including character level 1, Con +2:
+        // (10+2) + (6+2) + (6+2) = 28. Taken later (no maximized die): 3 x 8 = 24.
+        // Commoner d6, 2 levels, Con -3: max(6-3,1) + max(4-3,1) = 3 + 1 = 4.
+        let warrior = record("core_rulebook", "warrior").expect("CRB Warrior");
+        assert_eq!(warrior.hit_points(3, true, 2), Ok(28));
+        assert_eq!(warrior.hit_points(3, false, 2), Ok(24));
+        let commoner = record("core_rulebook", "commoner").expect("CRB Commoner");
+        assert_eq!(commoner.hit_points(2, true, -3), Ok(4));
+
+        // Over every chassis record the registry knows: HP is Unknown exactly
+        // where the hit die is absent (0 of 135 today), named by class.
+        let (records, _) = registry_chassis_records();
+        assert_eq!(records.len(), 135);
+        let mut unknown_hp = Vec::new();
+        for (id, chassis) in &records {
+            match (chassis.hit_die, chassis.hit_points(1, true, 0)) {
+                (Some(die), Ok(hp)) => assert_eq!(hp, i16::from(die), "{id}: level 1 = max die"),
+                (None, Err(u)) if u.id == HIT_POINTS_UNKNOWN => unknown_hp.push(id.clone()),
+                (die, got) => panic!("{id}: hit_die {die:?} but hit_points {got:?}"),
+            }
+        }
+        assert!(unknown_hp.is_empty(), "classes whose HP is Unknown (name them): {unknown_hp:?}");
+    }
+
+    #[test]
+    fn a_class_missing_skill_ranks_reports_skill_points_unknown() {
+        // Every converted class record lacks the `StatBlock "Skill ranks per
+        // level"` row today (see
+        // `skill_ranks_per_level_is_an_honest_absence_over_the_whole_corpus_today`),
+        // so the real Warrior is the Unknown case -- named, not 0.
+        let warrior = record("core_rulebook", "warrior").expect("CRB Warrior");
+        assert_eq!(warrior.skill_ranks_per_level, None);
+        let unknown = warrior.skill_points(3, 1).expect_err("no ranks row -> Unknown, never 0");
+        assert_eq!(unknown.id, SKILL_POINTS_UNKNOWN);
+        assert!(unknown.message.contains("Warrior"), "names the class: {}", unknown.message);
+
+        // Oracle (hand-worked PF1: ranks + Int per level, minimum 1 per
+        // level): 2 ranks, Int -2 over 3 levels -> 3 x max(0, 1) = 3;
+        // 4 ranks, Int +1 over 5 levels -> 5 x 5 = 25.
+        let mut chassis = synthetic_chassis_without_stat_block();
+        chassis.skill_ranks_per_level = Some(2);
+        assert_eq!(chassis.skill_points(3, -2), Ok(3));
+        chassis.skill_ranks_per_level = Some(4);
+        assert_eq!(chassis.skill_points(5, 1), Ok(25));
+
+        // Over every chassis record the registry knows: skill points are
+        // Unknown for 135 of 135 today, each named by class.
+        let (records, _) = registry_chassis_records();
+        assert_eq!(records.len(), 135);
+        let unknown: Vec<&String> = records
+            .iter()
+            .filter(|(_, c)| matches!(c.skill_points(1, 0), Err(u) if u.id == SKILL_POINTS_UNKNOWN))
+            .map(|(id, _)| id)
+            .collect();
+        assert_eq!(unknown.len(), 135, "skill points Unknown count moved off 135 of 135");
     }
 
     #[test]
