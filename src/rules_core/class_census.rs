@@ -2287,6 +2287,11 @@ mod tests {
         // (`core_rulebook:class_feature:expert_class_skills`, `ClassSkillChosen`). Psion stays
         // refused: its base class skills exist only on the discipline SUBCLASS lines, which the
         // converter does not carry (artifacts/epic-f/stage-f2-f3/f3c2-receipt.md).
+        // Raised 62 -> 63 of 63 on 2026-09-24 by SD-36 Epic F3c3: the converter carries PCGen's
+        // SUBCLASS lines as a class choice whose options carry each line's CSKILL / SUBCLASSLEVEL
+        // grants, and Psion's canonical discipline (Egoist, the first line in oracle order) is
+        // seeded through class_seeds; its class skills answer through that option
+        // (artifacts/epic-f/stage-f2-f3/f3c3-receipt.md). Logged as a scripts/retro.py correction.
         let fixture = load_sweep_fixture().expect("shared deterministic fixture must load cleanly");
         let previous_hook = std::panic::take_hook();
         std::panic::set_hook(Box::new(|_| {}));
@@ -2295,8 +2300,8 @@ mod tests {
         assert_eq!(results.len(), 63, "non-prestige sweep population moved off 63");
         let computed = results.iter().filter(|r| r.computed()).count();
         assert_eq!(
-            computed, 62,
-            "measured non-prestige Computed count moved off 62 of 63 -- \
+            computed, 63,
+            "measured non-prestige Computed count moved off 63 of 63 -- \
              log a scripts/retro.py correction before moving this pin"
         );
     }

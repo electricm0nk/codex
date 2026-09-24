@@ -741,6 +741,26 @@ class StructuralDiffGateTest(unittest.TestCase):
             self.assertEqual(code, 1, out)
             self.assertIn("loremaster_secret_lore: provenance", out)
 
+    def test_f3c3_pins_gate_a_dropped_or_unpinned_subclass_rule(self):
+        """SD-36 Epic F3c3: the rules the SUBCLASS conversion adds are pinned by content. With the
+        owning class principal present as a converted record (it states an oracle pin), a pinned
+        subclass rule that is missing gates, and so does a subclass rule nobody pinned."""
+        owner = structural_diff.F3C3["owner"]
+        self.assertEqual(owner, "ultimate_psionics:class:psion")
+        prov = {"book": "ultimate_psionics", "kind": "class", "closure_rows": ["x:1"], "oracle_pin": "p", "converter_version": "v"}
+        principal = {"id": owner, "label": "Psion", "value": "Text", "granted_by": [], "grants": [], "provenance": prov}
+        base = base_rules()
+        fresh = base_rules()
+        base["ultimate_psionics/class/psion.json"] = [dict(principal)]
+        fresh["ultimate_psionics/class/psion.json"] = [dict(principal)]
+        code, out = self.run_diff(base, fresh)
+        self.assertEqual(code, 1, out)
+        self.assertIn("F3c3 pinned f3c3_subclass_option rule missing: ultimate_psionics:subclass:psion_egoist", out)
+        fresh["x/subclass/y.json"] = [{"id": "x:subclass:y", "label": "Y", "value": "Text", "granted_by": [], "grants": []}]
+        code, out = self.run_diff(base, fresh)
+        self.assertEqual(code, 1, out)
+        self.assertIn("F3c3 unpinned f3c3_subclass_option rule x:subclass:y", out)
+
     def test_report_only_flag_keeps_exit_zero(self):
         base = base_rules()
         fresh = base_rules()

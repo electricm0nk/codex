@@ -38,6 +38,7 @@ pub mod pool_pick;
 pub mod prereq;
 pub mod prose;
 pub mod reprint;
+pub mod subclass;
 pub mod table;
 pub mod weapon_membership;
 
@@ -977,6 +978,62 @@ pub fn run(tree: &PinnedTree, index: &CorpusIndex, closures: &[Closure]) -> Run 
             });
         }
         files.insert(rule_file_rel(&r.book, &r.kind, &r.id), rules);
+    }
+    // SD-36 F3c3: PCGen `SUBCLASS:` lines -> one choice on the class record, whose options are
+    // `subclass` rules carrying each line's grants (`subclass.rs`). No inventory unit is added:
+    // the record count does not move.
+    let sub = subclass::convert_subclasses(tree, index, closures);
+    let mut attached_choosers: BTreeSet<RuleId> = BTreeSet::new();
+    for (class_id, chooser) in sub.choosers {
+        let class_record = index.records.iter().find(|r| r.id == class_id);
+        match class_record.and_then(|r| files.get_mut(&rule_file_rel(&r.book, &r.kind, &r.id))) {
+            Some(rules) => {
+                // Every line of a record carries the record's own gates (`record gates AND line
+                // gate`, F1c-2); the choice line has no gate of its own.
+                let mut chooser = chooser;
+                if let Some(principal) = rules.first() {
+                    chooser.applies = principal.applies.clone();
+                }
+                attached_choosers.insert(chooser.id.clone());
+                rules.push(chooser);
+            }
+            None => defects.entry("subclass-class-unconverted".into()).or_default().push(format!("{class_id}: {}", chooser.id)),
+        }
+    }
+    for opt in sub.options {
+        let chooser = format!("{}#{}", opt.class_record, subclass::CHOICE_SUFFIX);
+        if !attached_choosers.contains(&chooser) {
+            continue;
+        }
+        let c = opt.converted;
+        for (k, v) in c.defects {
+            defects.entry(k).or_default().extend(v);
+        }
+        for (id, name) in c.var_names {
+            var_names.insert(id, name);
+        }
+        for (id, label) in c.var_labels {
+            var_labels.entry(id).or_insert(label);
+        }
+        for (id, name) in c.var_declares {
+            declares.entry(id).or_insert_with(|| (name, BTreeSet::new())).1.insert(opt.rule.id.clone());
+        }
+        for (id, name, contrib) in c.var_contribs {
+            contribs.entry(id).or_insert_with(|| (name, Vec::new())).1.push(contrib);
+        }
+        for (target, grant) in opt.grants_out {
+            grants_out.entry(target).or_default().push(grant);
+        }
+        let rel = rule_file_rel(&opt.rule.provenance.book, subclass::SUBCLASS_KIND, &opt.rule.id);
+        let mut rules = vec![opt.rule];
+        rules.extend(opt.siblings);
+        files.insert(rel, rules);
+    }
+    for (k, v) in sub.defects {
+        defects.entry(k).or_default().extend(v);
+    }
+    if !sub.superseded.is_empty() {
+        defects.entry("subclass-superseded-reprint".into()).or_default().extend(sub.superseded);
     }
     // D3: every class-selection record gets the class principal it stands for.
     for r in &index.records {

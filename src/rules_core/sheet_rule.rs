@@ -2630,8 +2630,9 @@ mod evaluate_tests {
     }
 
     /// The per-kind gate: every rule of every kind in the live package evaluates for a probe
-    /// character to a well-formed line -- a number, dice, or words -- with its label. All 19
-    /// kinds are present. Counts per kind are printed for the receipt.
+    /// character to a well-formed line -- a number, dice, or words -- with its label. All 20
+    /// kinds are present (SD-36 F3c3 added `subclass`: the options of a class's converted
+    /// sub-class choice, 52 rules). Counts per kind are printed for the receipt.
     #[test]
     fn every_kind_in_the_package_evaluates_to_a_well_formed_line() {
         let package = package();
@@ -2666,7 +2667,7 @@ mod evaluate_tests {
         for (kind, [n, d, w]) in &per_kind {
             eprintln!("kind={kind} number={n} dice={d} words={w}");
         }
-        assert_eq!(per_kind.len(), 19, "every kind the converter wrote: {:?}", per_kind.keys().collect::<Vec<_>>());
+        assert_eq!(per_kind.len(), 20, "every kind the converter wrote: {:?}", per_kind.keys().collect::<Vec<_>>());
     }
 
     /// The held set is a fixpoint: a granted rule joins when its grant's `when` and its own

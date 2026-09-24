@@ -110,8 +110,8 @@ actually measures.
 |---|---|---|---|
 | Distinct class ids, corpus-wide, across all engine registries | **137** | — | `ids` |
 | Non-prestige ids actually swept (`ids` minus the 74 prestige ids, never swept alone here) | **63** | of 137 | `non_prestige_swept` |
-| ...reach `Computed` at every swept level (non-prestige) | **62** | of 63 | `computed` |
-| ...reach `Computed` at no level (non-prestige) | **1** | of 63 | `blocked` |
+| ...reach `Computed` at every swept level (non-prestige) | **63** | of 63 | `computed` |
+| ...reach `Computed` at no level (non-prestige) | **0** | of 63 | `blocked` |
 | Prestige ids swept (never measured alone — see the carrier rule below) | **74** | of 137 total ids | `prestige_swept` |
 | ...Blocked alone (negative control) | **74** | of 74 | `prestige_alone_blocked` |
 | ...`Computed` in their deterministic carrier mix | **67** | of 74 | `prestige_mix_computed` |
@@ -128,11 +128,11 @@ actually measures.
 | ACG | advanced_class_guide | 10 | 10 |
 | Pathfinder Unchained | pathfinder_unchained | 4 | 4 |
 | Ultimate Combat | ultimate_combat | 3 | 3 |
-| Untabled exotic base classes | advanced_players_guide, occult_adventures, ultimate_intrigue, ultimate_magic, ultimate_psionics, ultimate_wilderness | 20 | 19 |
+| Untabled exotic base classes | advanced_players_guide, occult_adventures, ultimate_intrigue, ultimate_magic, ultimate_psionics, ultimate_wilderness | 20 | 20 |
 | CRB NPC / Ex-* classes | core_rulebook | 7 | 7 |
 | generic_class_chassis-only (unclaimed by any of the eight canonical sources) | advanced_players_guide | 2 | 2 |
 | Prestige | see per-class `books` in the census JSON (11 source books) | 74 | n/a alone (never a legitimate measurement — see headline numbers: 67 of 74 `Computed` in carrier mix) |
-| **Total** | | **137** (63 non-prestige + 74 prestige) | **62** of 63 non-prestige ids Computed alone (prestige carrier-mix result kept separate, per headline numbers above — the bin's own `--json` output never folds the two together) |
+| **Total** | | **137** (63 non-prestige + 74 prestige) | **63** of 63 non-prestige ids Computed alone (prestige carrier-mix result kept separate, per headline numbers above — the bin's own `--json` output never folds the two together) |
 <!-- class-census:end -->
 
 Row-by-row evidence:
@@ -220,7 +220,9 @@ for):
   the gate-named draconic bloodline is seeded as the sorcerer's pick; the mix
   stops on `combat.baseline_weapon_proficiency_unknown` -- Dragon Disciple's
   converted closure grants no weapon proficiency and carries no closure-complete
-  attestation -- and on the Sorcerer seam, which grounds the Arcane bloodline
+  attestation, because its one closure defect is a reference to an oracle row
+  outside the 49,450-unit inventory (`Internal|Bite`, `ce_abilities_race.lst:249`;
+  re-checked F3c3) -- and on the Sorcerer seam, which grounds the Arcane bloodline
   only).
   A prestige class alone is never `Computed` (74 of 74 Blocked, the game rule).
 - **Multiclass scope**: every family can mix since SD-36 F3b, with two named

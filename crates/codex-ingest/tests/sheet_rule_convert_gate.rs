@@ -788,3 +788,79 @@ fn a_same_object_reprint_resolves_to_the_newest_printing() {
         c.grants_out.iter().map(|(t, _)| t).collect::<Vec<_>>()
     );
 }
+
+/// SD-36 Epic F3c3 (1). PCGen's `SUBCLASS:` lines (`datafilesclasses.html`, "The Sub-Class Line":
+/// placed between the class lines and the level lines; `SUBCLASSLEVEL:<n>` rows define the
+/// sub-class's level-dependent grants) are a choice the class makes once
+/// (`SubClassApplication.checkForSubClass`: one pick from the class's `SUB_CLASS` list in load
+/// order). The converter carries each class's list as ONE choice sibling on the class record
+/// (`<class id>#subclass`, `offers: Rules { pool: subclass, tags: [<Class> Subclass] }`), whose
+/// options are `subclass` rules granted by that choice, carrying the line's own grants: `CSKILL`
+/// as class-skill facts, `SUBCLASSLEVEL` `ABILITY` as grant edges from the option.
+///
+/// Psion (`up_classes.lst:221-256`, 17 lines): Egoist first; its line grants Autohypnosis,
+/// the Craft / Knowledge / Profession families and Spellcraft (`:221`), and its level-1 line
+/// grants `Psychometabolism Class Skills` (`:222`), the record that states Acrobatics and Heal
+/// (`up_abilities_class.lst:409`).
+#[test]
+fn a_subclass_choice_converts_with_its_class_skill_grants() {
+    use codex_ingest::pcgen_import::sheet_rule::subclass::convert_subclasses;
+    let s = shared();
+    let out = convert_subclasses(&s.tree, &s.index, &s.closures);
+    let chooser = out.choosers.iter().find(|(_, r)| r.id == "ultimate_psionics:class:psion#subclass").map(|(_, r)| r).expect("psion carries a subclass choice");
+    let Some(Choice { id, count, from: OptionSet::Rules { pool, tags, .. } }) = &chooser.offers else { panic!("{:?}", chooser.offers) };
+    assert_eq!(id, &chooser.id);
+    assert_eq!(count, &Expr::Const(1));
+    assert_eq!(pool, "subclass");
+    assert_eq!(tags, &vec!["Psion Subclass".to_string()]);
+    let psion: Vec<&SheetRule> = out.options.iter().filter(|o| o.rule.granted_by.iter().any(|g| g.by == Granter::Choice(chooser.id.clone()))).map(|o| &o.rule).collect();
+    assert_eq!(psion.len(), 17, "{:?}", psion.iter().map(|r| &r.id).collect::<Vec<_>>());
+    assert_eq!(psion[0].id, "ultimate_psionics:subclass:psion_egoist", "oracle order: the first line is the first option");
+    let egoist = psion[0];
+    assert_eq!(egoist.tags, vec!["Psion Subclass".to_string()]);
+    let facts: Vec<&Fact> = egoist.grants.iter().filter_map(|e| if let Effect::FactGrant(f) = e { Some(f) } else { None }).collect();
+    for want in [
+        Fact::ClassSkill("autohypnosis".into()),
+        Fact::ClassSkillGroup("Craft".into()),
+        Fact::ClassSkillGroup("Knowledge".into()),
+        Fact::ClassSkillGroup("Profession".into()),
+        Fact::ClassSkill("spellcraft".into()),
+    ] {
+        assert!(facts.contains(&&want), "{want:?} in {facts:?}");
+    }
+    let edges = &out.options.iter().find(|o| o.rule.id == egoist.id).expect("egoist option").grants_out;
+    assert!(
+        edges.iter().any(|(t, g)| t == "ultimate_psionics:class_feature:psychometabolism_class_skills" && g.by == Granter::Rule(egoist.id.clone())),
+        "{edges:?}"
+    );
+    // Ascendant Psion's line states `PRERACE:1,Elan` (`:255`): the option carries the gate.
+    let ascendant = psion.iter().find(|r| r.id == "ultimate_psionics:subclass:psion_ascendant_psion").expect("ascendant psion");
+    assert_ne!(ascendant.applies, Applies::Always);
+}
+
+/// SD-36 Epic F3c3 (1): the same rule on the second SUBCLASS-bearing class. Wizard's list is its
+/// CRB lines (`cr_classes.lst:283-300`, Abjurer first) plus the `.MOD` lines of four more books.
+/// The sin schools are printed twice, token-identical (`ism_classes.lst:36-49`, `SOURCEDATE:
+/// 2011-07`; `ag_classes.lst:492-505`, `SOURCEDATE:2017-06`): the standing supersession ruling
+/// keeps the newest printing. Each option's level-1 `ABILITY` grants its school
+/// (`Wizard Class Feature|AUTOMATIC|Evocation School`, `:292`).
+#[test]
+fn a_wizard_school_subclass_converts_through_the_same_rule() {
+    use codex_ingest::pcgen_import::sheet_rule::subclass::convert_subclasses;
+    let s = shared();
+    let out = convert_subclasses(&s.tree, &s.index, &s.closures);
+    let chooser_id = "core_rulebook:class:wizard#subclass".to_string();
+    assert!(out.choosers.iter().any(|(_, r)| r.id == chooser_id));
+    let wizard: Vec<_> = out.options.iter().filter(|o| o.rule.granted_by.iter().any(|g| g.by == Granter::Choice(chooser_id.clone()))).collect();
+    assert_eq!(wizard[0].rule.id, "core_rulebook:subclass:wizard_abjurer");
+    assert_eq!(wizard.len(), 9 + 4 + 2 + 7 + 1, "{:?}", wizard.iter().map(|o| &o.rule.id).collect::<Vec<_>>());
+    assert!(wizard.iter().any(|o| o.rule.id == "adventurers_guide:subclass:wizard_envy"));
+    assert!(!wizard.iter().any(|o| o.rule.id == "inner_sea_magic:subclass:wizard_envy"), "the older printing is superseded");
+    let evoker = wizard.iter().find(|o| o.rule.id == "core_rulebook:subclass:wizard_evoker").expect("evoker");
+    assert!(
+        evoker.grants_out.iter().any(|(t, g)| t == "core_rulebook:class_feature:evocation_school" && g.by == Granter::Rule(evoker.rule.id.clone())),
+        "{:?}",
+        evoker.grants_out
+    );
+    assert!(out.superseded.iter().any(|l| l.contains("inner_sea_magic:subclass:wizard_envy")), "{:?}", out.superseded);
+}

@@ -1506,9 +1506,10 @@ mod untabled_class_chassis_gate_tests {
     }
 
     /// SD-36 F3b3: classes whose selected-skill class-skill answer is Unknown. F3c2: Expert
-    /// answers from its seeded canonical picks; Psion remains (its base class skills exist only
-    /// on the discipline SUBCLASS lines, up_classes.lst:221-248, which the converter does not carry).
-    const CLASS_SKILL_REMAINDER: [&str; 1] = ["class:psion"];
+    /// answers from its seeded canonical picks. F3c3: Psion answers through its canonical
+    /// discipline (the converter now carries its SUBCLASS lines, up_classes.lst:221-256, as a
+    /// class choice), so the remainder is empty.
+    const CLASS_SKILL_REMAINDER: [&str; 0] = [];
 
     /// Meaning changed by SD-36 Epic F1 (was
     /// `the_nine_classes_with_a_real_proficiency_row_reach_computed`, which pinned only the nine

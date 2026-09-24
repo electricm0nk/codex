@@ -348,8 +348,14 @@ proficiency reader's walk) and collects `Fact::ClassSkill` / `ClassSkillGroup`. 
 the reader cannot answer uses its cited oracle row only if it has one (`UNREAD_RECORD_SELECTED_CLASS_SKILLS`,
 the 9 ACG classes whose `ABILITY:Class|AUTOMATIC|<Class>` edge is unresolved; a test retires each row when
 the converter closes it); otherwise the lines are refused by name
-(`skill.selected_modifier.class_skill_unknown`: Psion, whose base class skills exist only on the
-discipline `SUBCLASS:` lines the converter does not carry). A class whose class skills ARE a choice
+(`skill.selected_modifier.class_skill_unknown`; no census class since SD-36 F3c3). A class whose
+class skills sit on a sub-class line (Psion: its disciplines' `SUBCLASS:` lines carry the base class
+skills, `up_classes.lst:221-256`) answers through the converted sub-class choice (SD-36 F3c3): the
+converter writes each class's `SUBCLASS:` lines as one choice sibling on the class record
+(`<class id>#subclass`, `offers: Rules { pool: subclass }`) whose options are `subclass` rules
+carrying the line's `CSKILL` facts and `SUBCLASSLEVEL` grant edges (`sheet_rule/subclass.rs`); the
+canonical pick (the first line in oracle order) is seeded through `class_seeds` and walked like any
+other member pick. A class whose class skills ARE a choice
 (Expert, CRB p.450: any ten) answers from its Path-A canonical picks, seeded through `class_seeds`
 (SD-36 F3c2): a seed under a converted chooser that offers `Skills` and grants `ClassSkillChosen(<own id>)`
 makes the picked skill a class skill. Before F3b3 a hand-kept 13-class list decided it, and 35 of 52 classes (79 of 156 lines) printed a record-granted class

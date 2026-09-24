@@ -252,9 +252,25 @@ pub fn canonical_seeds_for(class_name: &str) -> (Vec<SelectedChoice>, Vec<SpellS
             EXPERT_CANONICAL_CLASS_SKILLS.iter().map(|skill| choice(EXPERT_CLASS_SKILL_CHOICE_ID, skill)).collect(),
             Vec::new(),
         ),
+        // SD-36 F3c3: the Psion's discipline IS a choice (UP p.49; `ALLOWBASECLASS:NO` makes the
+        // pick mandatory), converted from its `SUBCLASS:` lines as a choice on the class record.
+        // Its Path-A default is the first option in oracle order (`PSION_CANONICAL_DISCIPLINE`
+        // states why), recorded under the converted choice like the Commoner's weapon.
+        "psion" => (vec![choice(PSION_SUBCLASS_CHOICE_ID, PSION_CANONICAL_DISCIPLINE)], Vec::new()),
         _ => (Vec::new(), Vec::new()),
     }
 }
+
+/// SD-36 F3c3: the choice a Psion records its discipline under -- the converted choice sibling
+/// the converter writes on the class record for the class's sub-class lines
+/// (`up_classes.lst:221-256`; `codex-ingest` `sheet_rule/subclass.rs`).
+pub const PSION_SUBCLASS_CHOICE_ID: &str = "ultimate_psionics:class:psion#subclass";
+
+/// The Psion's canonical discipline: Egoist (`up_classes.lst:221`), the first sub-class line in
+/// oracle order. PCGen offers the class's sub-class list in load order
+/// (`SubClassApplication.checkForSubClass`) and no token marks a default pick, so the rule every
+/// other seed follows applies: the first row that answers. A Path-A default, not a player's pick.
+pub const PSION_CANONICAL_DISCIPLINE: &str = "ultimate_psionics:subclass:psion_egoist";
 
 /// SD-36 F3c2: the choice an Expert records each of its class-skill picks under -- the converted
 /// id of `Expert Class Skills` (`cr_abilities_class.lst:2735`, `CHOOSE:SKILL|ALL`, `CSKILL:LIST`,
