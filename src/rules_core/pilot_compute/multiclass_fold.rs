@@ -71,6 +71,8 @@ pub(crate) const PRESTIGE_ENTRY_GATE_UNMET: &str = "multiclass.prestige_entry_ga
 pub(crate) const MULTICLASS_HIT_POINTS: &str = "multiclass.hit_points";
 /// The character's class skill-point total across every class.
 pub(crate) const MULTICLASS_SKILL_POINTS: &str = "multiclass.skill_points";
+/// A single-class character's class skill-point total.
+pub(crate) const CLASS_CHASSIS_SKILL_POINTS: &str = "class_chassis.skill_points";
 
 const SAVE_NAMES: [&str; 3] = ["Fortitude", "Reflex", "Will"];
 
@@ -261,6 +263,7 @@ pub(crate) fn member_base_attack_bonus(
 /// when that class is the character's first level), not a class line.
 fn is_character_level_total(id: &str) -> bool {
     id == "class_chassis.base_attack_bonus"
+        || id == CLASS_CHASSIS_SKILL_POINTS
         || id.starts_with("class_chassis.base_save.")
         || id.ends_with(".level_1_hit_points")
 }
@@ -271,6 +274,63 @@ fn is_character_level_total(id: &str) -> bool {
 fn is_class_line(id: &str) -> bool {
     (id.starts_with("class_feature.") || id.starts_with("class_spell.") || id.starts_with("class_chassis."))
         && !is_character_level_total(id)
+}
+
+/// One class's class skill-point term: `levels x max(1, ranks + Int)` (CRB p.30), the ranks read
+/// from its chassis record, else from its converted class principal (or the base class a
+/// class-selection class is taken on, [`class_chassis_sheet_rules::skill_ranks_per_level_from_package`]).
+/// `Ok((total, ranks, source))`; a class neither states is [`SKILL_POINTS_UNKNOWN`], named.
+pub(crate) fn class_skill_points(
+    class_id: &str,
+    levels: u8,
+    intelligence_modifier: i16,
+) -> Result<(i16, u8, String), ChassisUnknown> {
+    let slug = class_id.strip_prefix("class:").unwrap_or(class_id);
+    let (ranks, source) = chassis_record(class_id)
+        .and_then(|r| r.skill_ranks_per_level.map(|ranks| (ranks, format!("{}:class:{}", r.book, r.slug))))
+        .or_else(|| class_chassis_sheet_rules::skill_ranks_per_level_from_package(slug))
+        .ok_or_else(|| ChassisUnknown {
+            id: SKILL_POINTS_UNKNOWN,
+            message: format!(
+                "{class_id}: no converted class record states this class's skill ranks per level, \
+                 so its skill points are Unknown"
+            ),
+        })?;
+    Ok((i16::from(levels) * (i16::from(ranks) + intelligence_modifier).max(1), ranks, source))
+}
+
+/// A single-class character's class skill points (SD-36 F3b3): the same per-class term the
+/// fold sums ([`ClassChassis::skill_points`]: skill ranks per level + Intelligence modifier, at
+/// least 1, times the class's levels), so a class alone and the same class in a mix print one
+/// number. Racial and favored-class extras are not the class's: the single-class path adds none
+/// to any skill-point total (Human's extra rank is a printed recognition line,
+/// `race.human.trait_bundle.extra_skill_ranks`), so neither does this line. A class whose record
+/// states no skill ranks per level is [`SKILL_POINTS_UNKNOWN`], named, never 0.
+pub(crate) fn explain_single_class_skill_points(
+    input: &CharacterInput,
+    ability_modifiers: &AbilityModifiers,
+    explanations: &mut Vec<ComputationExplanation>,
+    diagnostics: &mut Vec<ComputationDiagnostic>,
+) {
+    let [class_level] = input.chosen.class_levels.as_slice() else { return };
+    let class_id = &class_level.class_id;
+    match class_skill_points(class_id, class_level.level, ability_modifiers.intelligence) {
+        Ok((total, ranks, source)) => explanations.push(ComputationExplanation {
+            id: CLASS_CHASSIS_SKILL_POINTS.to_owned(),
+            value: total,
+            detail: format!(
+                "{class_id} {} skill points {total}: {ranks} skill ranks per level + Intelligence \
+                 modifier ({:+}), at least 1, times {} level(s) ({source}); class term only -- \
+                 racial and favored-class ranks are not the class's",
+                class_level.level, ability_modifiers.intelligence, class_level.level
+            ),
+        }),
+        Err(unknown) => diagnostics.push(ComputationDiagnostic {
+            id: unknown.id.to_owned(),
+            message: unknown.message,
+            claim_blocking: false,
+        }),
+    }
 }
 
 /// The fold's character-level totals and per-class lines for a supported mix (see the
@@ -302,9 +362,8 @@ pub(crate) fn explain_multiclass_fold(
         let hp = record
             .ok_or_else(|| no_record(HIT_POINTS_UNKNOWN, "hit points"))
             .and_then(|r| r.hit_points(class_level.level, index == 0, ability_modifiers.constitution));
-        let sp = record
-            .ok_or_else(|| no_record(SKILL_POINTS_UNKNOWN, "skill points"))
-            .and_then(|r| r.skill_points(class_level.level, ability_modifiers.intelligence));
+        let sp = class_skill_points(class_id, class_level.level, ability_modifiers.intelligence)
+            .map(|(total, ..)| total);
         for (result, terms, unknown) in [(hp, &mut hp_terms, &mut hp_unknown), (sp, &mut sp_terms, &mut sp_unknown)] {
             match result {
                 Ok(value) => terms.push((format!("{class_id} {}: {value}", class_level.level), value)),
@@ -429,6 +488,73 @@ mod tests {
         // Magus good Will `level/2 + 2` at 1st: 5/2, untruncated.
         let record = chassis_record("class:magus").expect("UM record");
         assert_eq!(record.save_value_exact(2, 1), Some(Rat { num: 5, den: 2 }));
+    }
+
+    /// SD-36 F3b3 (3): the four prestige classes whose carrier mix stays Blocked on
+    /// `multiclass.save_shape.unrecognized`. Each slot below is the converted `Expr`, a faithful
+    /// conversion of the oracle's own formula; the formula is not a PF1 save progression, so the
+    /// classifier is right and nothing is guessed. PCGen's parser divides before it adds, so
+    /// `classlevel+1/3` is `level + 1/3`, whose value at 10th level is 10 -- more than any PF1
+    /// save table gives a 10-level class (prestige good +5, CRB p.374+). Mammoth Rider's
+    /// `(classlevel+2)/2` gives +6 at 10th and +2 at 2nd, where the prestige good table gives
+    /// +5 and +1, and its own row declares `ClassSaveGood_Fortitude` (the oracle contradicting its
+    /// formula). The oracle lines: isg_classes.lst:25 (Exalted, Inner Sea Gods p.200),
+    /// isg_classes.lst:48 (Sentinel, p.202), isc_classes.lst:29 (Ulfen Guard, Inner Sea Combat
+    /// p.34), ag_classes.lst:260 (Mammoth Rider, Adventurer's Guide p.128).
+    #[test]
+    fn the_four_unrecognized_prestige_saves_are_oracle_formula_defects_not_a_missed_shape() {
+        // (class, [Fort, Ref, Will] unrecognized?, value at 10th of each unrecognized slot)
+        let cases: [(&str, [bool; 3], [i16; 3]); 4] = [
+            ("class:exalted", [true, true, true], [10, 10, 10]),
+            ("class:sentinel", [true, true, true], [10, 10, 10]),
+            ("class:ulfen_guard", [true, true, true], [11, 10, 11]),
+            ("class:mammoth_rider", [true, false, false], [6, 3, 3]),
+        ];
+        for (class_id, unrecognized, at_ten) in cases {
+            let record = chassis_record(class_id).unwrap_or_else(|| panic!("{class_id} record"));
+            let row = record.row_at(10).unwrap_or_else(|| panic!("{class_id} row 10"));
+            assert_eq!([row.fort_save, row.ref_save, row.will_save], at_ten, "{class_id} at 10th");
+            for (index, flagged) in unrecognized.into_iter().enumerate() {
+                let shape = record.save_shape(index);
+                if flagged {
+                    assert_eq!(shape, Some(SaveProgression::Unrecognized), "{class_id} {}", SAVE_NAMES[index]);
+                    // Above PF1's prestige good save at 10th (+5): not a progression the
+                    // classifier missed.
+                    assert!([row.fort_save, row.ref_save, row.will_save][index] > 5, "{class_id}");
+                } else {
+                    assert_eq!(shape, Some(SaveProgression::Poor), "{class_id} {}", SAVE_NAMES[index]);
+                }
+            }
+            let fixture = crate::rules_core::class_census::load_sweep_fixture().expect("fixture");
+            let level = CharacterClassLevel { class_id: class_id.to_owned(), level: 3 };
+            match multiclass_member(&fixture, &level) {
+                Err(d) => assert_eq!(d.id, SAVE_SHAPE_UNRECOGNIZED, "{d:?}"),
+                Ok(_) => panic!("{class_id} must not fold an unrecognized save"),
+            }
+        }
+    }
+
+    #[test]
+    fn a_class_whose_record_states_no_skill_ranks_is_named_unknown() {
+        // Eidolon: `STARTSKILLPTS:EidolonSkillPoints` (apg_classes.lst:211), a variable its
+        // closure does not define -- no row (`_defects/skill-ranks-unresolved.json`), never 0.
+        let err = class_skill_points("class:eidolon", 3, 0).expect_err("eidolon states no ranks");
+        assert_eq!(err.id, SKILL_POINTS_UNKNOWN);
+        assert!(err.message.contains("class:eidolon"), "{}", err.message);
+    }
+
+    #[test]
+    fn skill_ranks_come_from_the_record_or_the_base_class_it_is_taken_on() {
+        // Monk's CRB principal is not chassis-bearing (degraded BAB, F3a) but states 4
+        // (cr_classes.lst STARTSKILLPTS:4, CRB p.56): 3 levels, Int +1 = 15.
+        assert_eq!(class_skill_points("class:monk", 3, 1).map(|(t, r, _)| (t, r)).ok(), Some((15, 4)));
+        // Unchained Rogue is taken on Rogue (8, CRB p.67; Pathfinder Unchained p.20 keeps 8):
+        // 2 levels, Int -1 = 14.
+        let (total, ranks, source) = class_skill_points("class:unchained_rogue", 2, -1).expect("base class row");
+        assert_eq!((total, ranks), (14, 8), "{source}");
+        assert!(source.ends_with(":class:rogue"), "{source}");
+        // Int low enough: at least 1 per level (CRB p.30).
+        assert_eq!(class_skill_points("class:fighter", 4, -3).map(|(t, ..)| t).ok(), Some(4));
     }
 
     #[test]

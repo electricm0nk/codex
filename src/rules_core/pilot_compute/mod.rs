@@ -203,6 +203,7 @@ pub mod class_chassis_sheet_rules;
 /// source for every class without a `CLASS_WEAPON_PROFICIENCIES` row. `pub` so the
 /// codex-ingest oracle pin (`class_weapon_proficiency_via_converter.rs`) can call it.
 pub mod class_proficiency_sheet_rules;
+pub mod class_skill_sheet_rules;
 mod generic_class_chassis;
 mod multiclass_fold;
 /// SD-34 `AT-34-E3-001` (`decisions.md §14`, mechanism `class_absent_from_

@@ -1904,6 +1904,13 @@ mod tests {
         // `generic_class_chassis::tests::the_two_apg_ex_classes_resolve_their_parent_class_chassis`).
         // No earlier id changed status (artifacts/epic-f/stage-f2-f3/
         // f2a-census-before-after.md); logged as a scripts/retro.py correction.
+        // Corrected 63 -> 61 of 63 on 2026-09-24 by SD-36 Epic F3b3: the selected-skill check
+        // now reads each class's class skills from its converted record, and Expert and Psion
+        // answer Unknown there (their class skills are the player's choice -- Expert's ten
+        // chosen skills, Psion's discipline SUBCLASS-line CSKILL -- which the record does not
+        // resolve), so their Climb/Intimidate/Swim lines are refused by name
+        // (`skill.selected_modifier.class_skill_unknown`) instead of printed without a +3 the
+        // record cannot support. Logged as a scripts/retro.py correction.
         let fixture = load_sweep_fixture().expect("shared deterministic fixture must load cleanly");
         let previous_hook = std::panic::take_hook();
         std::panic::set_hook(Box::new(|_| {}));
@@ -1912,8 +1919,8 @@ mod tests {
         assert_eq!(results.len(), 63, "non-prestige sweep population moved off 63");
         let computed = results.iter().filter(|r| r.computed()).count();
         assert_eq!(
-            computed, 63,
-            "measured non-prestige Computed count moved off 63 of 63 -- \
+            computed, 61,
+            "measured non-prestige Computed count moved off 61 of 63 -- \
              log a scripts/retro.py correction before moving this pin"
         );
     }

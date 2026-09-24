@@ -110,11 +110,11 @@ actually measures.
 |---|---|---|---|
 | Distinct class ids, corpus-wide, across all engine registries | **137** | — | `ids` |
 | Non-prestige ids actually swept (`ids` minus the 74 prestige ids, never swept alone here) | **63** | of 137 | `non_prestige_swept` |
-| ...reach `Computed` at every swept level (non-prestige) | **63** | of 63 | `computed` |
-| ...reach `Computed` at no level (non-prestige) | **0** | of 63 | `blocked` |
+| ...reach `Computed` at every swept level (non-prestige) | **61** | of 63 | `computed` |
+| ...reach `Computed` at no level (non-prestige) | **2** | of 63 | `blocked` |
 | Prestige ids swept (never measured alone — see the carrier rule below) | **74** | of 137 total ids | `prestige_swept` |
 | ...Blocked alone (negative control) | **74** | of 74 | `prestige_alone_blocked` |
-| ...`Computed` in their deterministic carrier mix | **56** | of 74 | `prestige_mix_computed` |
+| ...`Computed` in their deterministic carrier mix | **59** | of 74 | `prestige_mix_computed` |
 | Multiclass mix-panel rows swept (existing negative-control inputs, re-used) | **185** | — | `mix_panel_swept` |
 | ...reach `Computed` | **185** | of 185 | `mix_panel_computed` |
 | ...stay `Blocked` | **0** | of 185 | `mix_panel_blocked` |
@@ -128,11 +128,11 @@ actually measures.
 | ACG | advanced_class_guide | 10 | 10 |
 | Pathfinder Unchained | pathfinder_unchained | 4 | 4 |
 | Ultimate Combat | ultimate_combat | 3 | 3 |
-| Untabled exotic base classes | advanced_players_guide, occult_adventures, ultimate_intrigue, ultimate_magic, ultimate_psionics, ultimate_wilderness | 20 | 20 |
-| CRB NPC / Ex-* classes | core_rulebook | 7 | 7 |
+| Untabled exotic base classes | advanced_players_guide, occult_adventures, ultimate_intrigue, ultimate_magic, ultimate_psionics, ultimate_wilderness | 20 | 19 |
+| CRB NPC / Ex-* classes | core_rulebook | 7 | 6 |
 | generic_class_chassis-only (unclaimed by any of the eight canonical sources) | advanced_players_guide | 2 | 2 |
-| Prestige | see per-class `books` in the census JSON (11 source books) | 74 | n/a alone (never a legitimate measurement — see headline numbers: 56 of 74 `Computed` in carrier mix) |
-| **Total** | | **137** (63 non-prestige + 74 prestige) | **63** of 63 non-prestige ids Computed alone (prestige carrier-mix result kept separate, per headline numbers above — the bin's own `--json` output never folds the two together) |
+| Prestige | see per-class `books` in the census JSON (11 source books) | 74 | n/a alone (never a legitimate measurement — see headline numbers: 59 of 74 `Computed` in carrier mix) |
+| **Total** | | **137** (63 non-prestige + 74 prestige) | **61** of 63 non-prestige ids Computed alone (prestige carrier-mix result kept separate, per headline numbers above — the bin's own `--json` output never folds the two together) |
 <!-- class-census:end -->
 
 Row-by-row evidence:

@@ -329,14 +329,28 @@ the prestige row). Saves sum each member's EXACT (`Rat`) save value -- `level/2 
 table class, the class's own converted `Expr` otherwise (a prestige class's `(level+1)/2` / `(level+1)/3`
 table form) -- and floor once. `multiclass_fold::explain_multiclass_fold` then adds the character-level
 totals: `multiclass.hit_points` (maximized die for the first-listed class's first level, `die/2 + 1`
-after, + Con per level) and skill points, which print Unknown (`class_chassis.skill_points.unknown`, one
-per class, non-blocking) because no converted class record states skill ranks per level. Each member's
+after, + Con per level) and `multiclass.skill_points` (each class's skill ranks per level + Int, at least 1,
+times its levels; the ranks are the converted record's `Skill ranks per level` row, from `STARTSKILLPTS`
+since F3b2, read off the class's chassis record, else its principal, else -- a class-selection class -- the
+base class it is taken on). A class alone prints the same term as `class_chassis.skill_points` (F3b3). A
+class whose record states no ranks is `class_chassis.skill_points.unknown`, named, non-blocking, and no
+total prints (0 of 63 census non-prestige classes since F3b3). Each member's
 own lines (`class_feature.*`, `class_spell.*`, `class_chassis.<class>.*`) come verbatim from its isolated
 single-class run, re-scoped `multiclass.<class>.<original id>`; its blocking class lines carry over the
 same way, so a class that cannot compute alone does not compute in a mix. Prestige entry requirements
 print (`multiclass.prestige_entry_gate.{met,unmet}`), never block. Class skills and weapon proficiency
 were already unions over `class_levels`; F3b made the weapon union decidable by any one granting class
 (a class with no answer no longer turns a Fighter's longsword into Unknown).
+
+Class skills for the selected Climb / Intimidate / Swim lines (SD-36 F3b3) come from each class's
+CONVERTED record: `pilot_compute::class_skill_sheet_rules` walks the class principal's held set (the
+proficiency reader's walk) and collects `Fact::ClassSkill` / `ClassSkillGroup`. Union over classes; a class
+the reader cannot answer uses its cited oracle row only if it has one (`UNREAD_RECORD_SELECTED_CLASS_SKILLS`,
+the 9 ACG classes whose `ABILITY:Class|AUTOMATIC|<Class>` edge is unresolved; a test retires each row when
+the converter closes it); otherwise the lines are refused by name
+(`skill.selected_modifier.class_skill_unknown`: Expert and Psion, whose class skills are the player's
+choice). Before F3b3 a hand-kept 13-class list decided it, and 35 of 52 classes (79 of 156 lines) printed a record-granted class
+skill without its +3 (Barbarian Climb/Swim among them).
 
 Proved by `tests/sd36_multiclass_any_class.rs` (four mixes against hand-worked PF1 values,
 `docs/release/SD-36-consolidation/artifacts/epic-f/stage-f2-f3/f3b-hand-worked.md`), and for

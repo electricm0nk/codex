@@ -39,6 +39,12 @@ one by name).
   Unknown, 7 Blocked by named mechanism); every other count identical to
   `census-f2b.json`. Write-up: `stage-f2-f3/f3b-multiclass-fold.md`;
   hand-worked oracle: `stage-f2-f3/f3b-hand-worked.md`.
+- `census-f3b3.json` — SD-36 Epic F3b3's sweep (class skills read from the
+  converted record; single-class skill points): non-prestige 61 of 63
+  `Computed` (Expert and Psion refused by name,
+  `skill.selected_modifier.class_skill_unknown`); prestige carrier mixes 59 of
+  74 (unchanged since F3b2b; 4 Blocked on an oracle save-formula defect, 11
+  Unknown); mix panel 185 of 185. Write-up: `stage-f2-f3/f3b3-receipt.md`.
 - `mix-panel-histogram.md` — F0d's human-readable write-up of the
   claim-blocking-diagnostic histogram across the 185-row mix panel.
 - `scripts/` — `unres2.py`/`closure.py`, the read-only planning-pass

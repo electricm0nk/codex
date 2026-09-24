@@ -272,3 +272,70 @@ fn a_class_with_no_proficiency_answer_cannot_undo_another_class_s_grant() {
     );
     assert_eq!(receipt.status, HeadlessReceiptStatus::Computed, "{:#?}", blocking(&receipt));
 }
+
+/// SD-36 F3b3: a class alone prints the same class skill-point term the fold sums, so a class
+/// alone and the same class in a mix print one number. Hand-worked (`f3b-hand-worked.md`,
+/// CRB p.30; Int 10, +0): Barbarian 12 x 4 = 48; Fighter 1 x 2 = 2 (the mix's 50 = 48 + 2);
+/// Wizard 5 x 2 = 10 (CRB p.77); Rogue 3 x 8 = 24 (CRB p.67).
+#[test]
+fn a_class_alone_prints_the_class_skill_points_term_the_fold_sums() {
+    for (class, level, expected) in [("barbarian", 12, 48), ("fighter", 1, 2), ("wizard", 5, 10), ("rogue", 3, 24)] {
+        let receipt = build_pilot_headless_receipt(&mix(&[(class, level)]));
+        assert_eq!(explanation_value(&receipt, "class_chassis.skill_points"), expected, "{class} {level}");
+        assert!(
+            !receipt.computation.diagnostics.iter().any(|d| d.id == "class_chassis.skill_points.unknown"),
+            "{class} {level}: {:?}",
+            receipt.computation.diagnostics
+        );
+    }
+    // The mix does not copy the per-class line; the fold prints the character total once.
+    let receipt = build_pilot_headless_receipt(&mix(&[("barbarian", 12), ("fighter", 1)]));
+    assert!(
+        !receipt.computation.explanations.iter().any(|e| e.id.ends_with(".class_chassis.skill_points")),
+        "a mix prints multiclass.skill_points, not per-class copies"
+    );
+}
+
+/// `class_chassis.skill_points.unknown` fires only for a class whose converted record still
+/// lacks a chassis with the skill-ranks row, and names it: over every census id whose class alone
+/// passes the chassis gate at level 1 (the population the line is written for), the Unknown set
+/// is exactly the named list below.
+#[test]
+fn skill_points_unknown_fires_only_for_a_class_still_lacking_the_row() {
+    use codex::rules_core::class_census::census;
+    let mut printed = 0usize;
+    let mut unknown = Vec::new();
+    let mut population = 0usize;
+    for entry in census().values() {
+        let slug = entry.class_id.strip_prefix("class:").unwrap_or(&entry.class_id);
+        let receipt = build_pilot_headless_receipt(&mix(&[(slug, 1)]));
+        let has_line = receipt.computation.explanations.iter().any(|e| e.id == "class_chassis.skill_points");
+        let named = receipt
+            .computation
+            .diagnostics
+            .iter()
+            .find(|d| d.id == "class_chassis.skill_points.unknown")
+            .map(|d| d.message.clone());
+        assert!(!(has_line && named.is_some()), "{}: both a total and an Unknown", entry.class_id);
+        if has_line || named.is_some() {
+            population += 1;
+        }
+        if has_line {
+            printed += 1;
+        }
+        if let Some(message) = named {
+            assert!(message.contains(&entry.class_id) || message.contains(slug), "{message}");
+            unknown.push(entry.class_id.clone());
+        }
+    }
+    println!("census ids with the line or its Unknown at level 1: {population}; printed {printed}; Unknown {}: {unknown:?}", unknown.len());
+    assert_eq!(unknown, EXPECTED_SKILL_POINTS_UNKNOWN, "the named remainder moved");
+}
+
+/// Census ids whose class alone reaches the line and whose converted record (or, for a
+/// class-selection class, its base class's) states no skill ranks per level. Empty since F3b3:
+/// Monk's degraded CRB principal still states `Skill ranks per level` (4), and the four Pathfinder
+/// Unchained class selections are taken on a base class whose row states it. The positive control
+/// (a record with no row answers Unknown, by name) is `multiclass_fold::tests::
+/// a_class_whose_record_states_no_skill_ranks_is_named_unknown`.
+const EXPECTED_SKILL_POINTS_UNKNOWN: &[&str] = &[];

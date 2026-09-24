@@ -2105,6 +2105,14 @@ pub fn compute_pilot_base_chassis(input: &CharacterInput) -> PilotBaseChassisCom
     // points) and each class's own lines, re-scoped `multiclass.<class>.*`,
     // taken from its isolated single-class run. Base (pre-rage) modifiers: hit
     // points and skill points are the character's standing figures.
+    if input.chosen.class_levels.len() == 1 && chassis_supported {
+        multiclass_fold::explain_single_class_skill_points(
+            input,
+            &base_ability_modifiers,
+            &mut explanations,
+            &mut diagnostics,
+        );
+    }
     if input.chosen.class_levels.len() >= 2 && chassis_supported {
         multiclass_fold::explain_multiclass_fold(
             input,

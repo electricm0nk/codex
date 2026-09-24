@@ -896,189 +896,142 @@ pub(super) fn compute_total_saves(
     total_saves
 }
 
-/// Compute the selected deterministic Climb / Intimidate / Swim skill modifiers,
-/// or block the claim if the selected-skill or Chain Shirt posture is absent or
-/// widened beyond this slice.
-///
-/// This is intentionally not a skill engine. It computes only the three
-/// selected deterministic-posture skills (Climb/Intimidate/Swim -- Fighter
-/// and Rogue class skills, but NOT Wizard's; see
-/// `selected_skill_class_skill_bonus_applies`'s own doc comment for the
-/// v0.6 alpha swarm class-skill-bonus fix) from the accepted deterministic
-/// rank allocations, applying the already-grounded Chain Shirt armor-check
-/// penalty to the armor-check skills (Climb, Swim) only. It does not handle
-/// other skills, arbitrary classes,
-/// feat/racial/item skill bonuses, encumbrance, or speed-dependent adjustments.
-/// Any deviation from the exact supported posture is refused with a claim-blocking
-/// diagnostic and withheld selected-skill explanations rather than fabricated
-/// totals.
-/// v0.6 alpha swarm (QA-found real correctness bug): whether Climb/
-/// Intimidate/Swim are real PF1 Core Rulebook class skills for at least one
-/// of the character's classes -- the class-skill trained bonus (`+3`) only
-/// applies when true, PF1's real per-skill rule. `CLASS_SKILL_BONUS` was
-/// originally written for Fighter alone (whose real class-skill list
-/// genuinely includes all three -- cr_abilities_class.lst:2835,
-/// `CSKILL:Climb|...|Intimidate|...|Swim`) and applied unconditionally; the
-/// `has_supported_class_chassis` gate was later widened to Wizard and
-/// Rogue without this bonus being made class-aware to match. Rogue is
-/// coincidentally correct today (its own real class-skill list,
-/// cr_abilities_class.lst:2838, also includes all three) -- but Wizard's
-/// real class-skill list (cr_abilities_class.lst:2565: Appraise, Craft,
-/// Fly, Knowledge (all), Linguistics, Profession, Spellcraft) includes
-/// NONE of Climb/Intimidate/Swim, so a Wizard with this deterministic
-/// posture was silently getting a false +3 on all three -- wrong, with no
-/// diagnostic to flag it. Multiclass characters get the class-skill bonus
-/// if ANY of their classes grants it (PF1's real union rule, matching
-/// `skill_allocation.rs`'s own `class_skill_set` framing) -- this is
-/// hardcoded per-class fact data, the same "bounded, cited" shape
-/// `skill_allocation.rs`'s own class-skill lists use (as of AT-34-E3-003,
-/// `full_fighter_class_skills`/`FULL_WIZARD_CLASS_SKILLS`, superseding the
-/// old `GROUNDED_FIGHTER_CLASS_SKILLS`/`GROUNDED_WIZARD_CLASS_SKILLS`
-/// consts this comment used to name); no corpus access needed. Applying the same boolean uniformly across all three
-/// skills is correct only because this function's own scope is already
-/// hardcoded to exactly these three skills -- not a general "all class
-/// skills match across the board" assumption to rely on if the class set
-/// ever widens.
-///
-/// v0.6 alpha swarm, risks item 8 (Warpriest full-build closure): the
-/// note above that "only Fighter/Wizard/Rogue can ever reach this
-/// function" is now stale -- `has_supported_class_chassis` has widened
-/// to many more classes since (Skald, Bloodrager, Brawler, Hunter,
-/// Cavalier, Alchemist, Inquisitor, Arcanist, Warpriest), but this
-/// function's own per-class fact-check must still be updated one class
-/// at a time as each is genuinely verified, not assumed. Warpriest was
-/// the SECOND real bug found here (the mirror image of Wizard's own
-/// false positive): its real class-skill list
-/// (`acg_abilities_class.lst`'s own `KEY:Warpriest ~ Class Skills`
-/// record) genuinely INCLUDES Climb, Intimidate, and Swim, so without
-/// this widening a Warpriest would silently get a false ZERO bonus on
-/// all three, despite genuinely earning one per RAW. Slayer is the
-/// THIRD, same shape: its own class-skill list
-/// (`acg_abilities_class.lst`'s own `KEY:Slayer ~ Class Skills` record)
-/// also genuinely includes all three -- proven with a dedicated failing
-/// test (`slayer_gets_the_class_skill_bonus_on_all_three_skills`)
-/// written before this widening landed, per the lead's own instruction
-/// to verify rather than assume.
-///
-/// **Split into three per-skill functions (v0.6 alpha swarm, risks item
-/// 8, Investigator full-build closure, 2026-07-26)**, replacing the
-/// single scalar `selected_skill_class_skill_bonus_applies` this doc
-/// comment used to document: Investigator's own real class-skill list
-/// (`acg_abilities_class.lst`'s own `KEY:Investigator ~ Class Skills`
-/// record) is a genuine 2-of-3 PARTIAL match -- Climb and Intimidate
-/// present, Swim absent -- the first partial match on the whole roster.
-/// A single boolean cannot represent "true for Climb/Intimidate, false
-/// for Swim" for the same character, so the shared scalar had to become
-/// three independent per-skill determinations. Behavior-preserving for
-/// every class verified before Investigator (Fighter/Rogue/Warpriest/
-/// Slayer/Swashbuckler are all cleanly all-three, Wizard/Arcanist/Oracle
-/// are cleanly none-of-three) -- each of those six classes still yields
-/// the identical bonus on all three skills as before; only Investigator
-/// produces a genuinely different answer per skill.
-///
-/// Brawler is the SIXTH class needing the "all three" widening (v0.6
-/// alpha swarm, risks item 8, Brawler deepening, 2026-07-26), found
-/// while grounding Brawler's own Cunning/Strike features for an
-/// unrelated reason: its real class-skill list
-/// (`acg_abilities_class.lst`'s own `KEY:Brawler ~ Class Skills` record)
-/// genuinely includes Climb, Intimidate, and Swim, the same clean
-/// all-three shape as Warpriest/Slayer/Swashbuckler -- proven with a
-/// dedicated failing test
-/// (`brawler_gets_the_class_skill_bonus_on_all_three_skills`) written
-/// before this widening landed.
-///
-/// Monk, Inquisitor, Hunter, and Skald are a FOURTH batch of missing
-/// arms, independently re-verified by the lead and a scout teammate
-/// against the raw PCGen corpus: all four classes' real
-/// `KEY:<Class> ~ Class Skills` records (`KEY:Class Skills ~ Monk` for
-/// Monk specifically -- note the reversed key order) genuinely include
-/// Climb, Intimidate, AND Swim, the same clean all-three shape as
-/// Warpriest/Slayer/Swashbuckler/Brawler. Inquisitor, Hunter, and Skald
-/// are proven live end-to-end with dedicated failing-then-passing tests
-/// (`inquisitor_.../hunter_.../skald_gets_the_class_skill_bonus_on_all_three_skills`).
-/// Monk's arm is added for the same corpus-verified reason but is
-/// currently UNREACHABLE through `compute_selected_skill_modifiers`:
-/// `unmet_selected_skill_posture_conditions` gates on
-/// `has_supported_class_chassis`, which never calls the Monk-specific
-/// `supported_monk_level` the rest of this file's Monk chassis functions
-/// use -- a Monk character is claim-blocked (`class_chassis.unsupported`)
-/// before this predicate is ever reached, empirically confirmed against
-/// this file's own `with_class` test fixture. That gap is a separate,
-/// pre-existing gate omission outside this fix's bounded scope (widening
-/// `has_supported_class_chassis` touches base-attack/save/combat-baseline
-/// dispatch well beyond these three skill predicates) and should be
-/// tracked as its own follow-up so Monk's class-skill bonus can be
-/// exercised and verified the same way the other three now are.
+// Compute the selected deterministic Climb / Intimidate / Swim skill modifiers,
+// or block the claim if the selected-skill or Chain Shirt posture is absent or
+// widened beyond this slice.
+//
+// This is intentionally not a skill engine. It computes only the three
+// selected deterministic-posture skills (Climb/Intimidate/Swim -- Fighter
+// and Rogue class skills, but NOT Wizard's; see
+// `selected_skill_class_skill_bonus_applies`'s own doc comment for the
+// v0.6 alpha swarm class-skill-bonus fix) from the accepted deterministic
+// rank allocations, applying the already-grounded Chain Shirt armor-check
+// penalty to the armor-check skills (Climb, Swim) only. It does not handle
+// other skills, arbitrary classes,
+// feat/racial/item skill bonuses, encumbrance, or speed-dependent adjustments.
+// Any deviation from the exact supported posture is refused with a claim-blocking
+// diagnostic and withheld selected-skill explanations rather than fabricated
+// totals.
+//
+// # Class skills (SD-36 Epic F3b3)
+//
+// Whether Climb / Intimidate / Swim is a class skill is read from each class's CONVERTED
+// record ([`class_skill_sheet_rules::class_skill_view`]); see [`selected_skill_class_skill`].
+
+/// Whether one of the three selected skills is a class skill for the character.
+#[derive(Debug, Clone, PartialEq, Eq)]
+pub(crate) enum SelectedClassSkill {
+    /// At least one of the character's classes grants it: the +3 applies.
+    Yes,
+    /// Every class answered, and none grants it.
+    No,
+    /// No class that answered grants it, and at least one class could not answer (named).
+    Unknown(Vec<String>),
+}
+
+/// The classes whose converted record the class-skill reader cannot answer, with the verified
+/// oracle row for the three selected skills (`[climb, intimidate, swim]`). Each is a named
+/// converter remainder: the class line's `ABILITY:Class|AUTOMATIC|<Class>` grant is an
+/// unresolved reference (`_defects/unresolved-references.json`, `<book>:class:<slug>: Class|<Class>`),
+/// so the walk never reaches the class's own `<Class> ~ Class Skills` record, which the package
+/// does carry. A row is consulted ONLY when the reader answers Unknown for the class;
+/// `every_fallback_row_is_a_class_the_reader_cannot_answer` fails the day the converter closes
+/// the edge, and the row must then be deleted.
+const UNREAD_RECORD_SELECTED_CLASS_SKILLS: [(&str, [bool; 3], &str); 9] = [
+    // CSKILL:Appraise|TYPE=Craft|Fly|TYPE=Knowledge|Linguistics|TYPE=Profession|Spellcraft|Use Magic Device
+    ("class:arcanist", [false, false, false], "acg_abilities_class.lst:65"),
+    // CSKILL:Acrobatics|Climb|TYPE=Craft|Escape Artist|Handle Animal|Intimidate|...|Swim
+    ("class:brawler", [true, true, true], "acg_abilities_class.lst:891"),
+    // CSKILL:Climb|TYPE=Craft|Handle Animal|Heal|Intimidate|...|Survival|Swim
+    ("class:hunter", [true, true, true], "acg_abilities_class.lst:1169"),
+    // CSKILL:Acrobatics|Appraise|Bluff|Climb|...|Intimidate|...|Use Magic Device (no Swim)
+    ("class:investigator", [true, true, false], "acg_abilities_class.lst:1241"),
+    // CSKILL:TYPE=Craft|Diplomacy|Fly|Handle Animal|Heal|Knowledge (Nature)|...|Survival
+    ("class:shaman", [false, false, false], "acg_abilities_class.lst:1384"),
+    // CSKILL:Acrobatics|Appraise|Bluff|Climb|...|Intimidate|...|Swim|Use Magic Device
+    ("class:skald", [true, true, true], "acg_abilities_class.lst:1720"),
+    // CSKILL:Acrobatics|Bluff|Climb|...|Intimidate|...|Survival|Swim
+    ("class:slayer", [true, true, true], "acg_abilities_class.lst:1786"),
+    // CSKILL:Acrobatics|Bluff|Climb|...|Intimidate|...|Sleight of Hand|Swim
+    ("class:swashbuckler", [true, true, true], "acg_abilities_class.lst:1951"),
+    // CSKILL:Climb|TYPE=Craft|Diplomacy|Handle Animal|Heal|Intimidate|...|Survival|Swim
+    ("class:warpriest", [true, true, true], "acg_abilities_class.lst:2133"),
+];
+
+const SELECTED_SKILLS: [&str; 3] = ["climb", "intimidate", "swim"];
+
+/// The oracle fallback row for `class_id`, when it has one ([`UNREAD_RECORD_SELECTED_CLASS_SKILLS`]).
+pub(crate) fn unread_record_selected_class_skills(class_id: &str) -> Option<[bool; 3]> {
+    UNREAD_RECORD_SELECTED_CLASS_SKILLS.iter().find(|(id, ..)| *id == class_id).map(|(_, row, _)| *row)
+}
+
+/// The class ids the fallback table covers (for the test that retires a row).
+#[cfg(test)]
+pub(crate) fn unread_record_selected_class_skill_ids() -> impl Iterator<Item = &'static str> {
+    UNREAD_RECORD_SELECTED_CLASS_SKILLS.iter().map(|(id, ..)| *id)
+}
+
+/// Whether `skill` (`"climb"`, `"intimidate"` or `"swim"`) is a class skill for the character:
+/// PF1's union rule (CRB p.87 -- a skill is a class skill when ANY of the character's classes
+/// lists it), each class answered by its converted record at its own level
+/// ([`class_skill_sheet_rules::class_skill_view`]). One rule for every class. A class the
+/// reader cannot answer falls back to its verified oracle row
+/// ([`UNREAD_RECORD_SELECTED_CLASS_SKILLS`]) when it has one; otherwise it is Unknown, named, and
+/// the +3 is never silently withheld (nor granted).
+pub(crate) fn selected_skill_class_skill(input: &CharacterInput, skill: &str) -> SelectedClassSkill {
+    let index = SELECTED_SKILLS.iter().position(|s| *s == skill);
+    let mut unknown = Vec::new();
+    for class_level in &input.chosen.class_levels {
+        let slug = class_level.class_id.strip_prefix("class:").unwrap_or(&class_level.class_id);
+        let grants = match class_skill_sheet_rules::class_skill_view(slug, class_level.level) {
+            class_skill_sheet_rules::ClassSkillAnswer::Known(view) => view.contains(skill),
+            class_skill_sheet_rules::ClassSkillAnswer::Unknown { reason } => {
+                match (unread_record_selected_class_skills(&class_level.class_id), index) {
+                    (Some(row), Some(i)) => row[i],
+                    _ => {
+                        unknown.push(format!("{} {}: {reason}", class_level.class_id, class_level.level));
+                        continue;
+                    }
+                }
+            }
+        };
+        if grants {
+            return SelectedClassSkill::Yes;
+        }
+    }
+    if unknown.is_empty() { SelectedClassSkill::No } else { SelectedClassSkill::Unknown(unknown) }
+}
+
+/// The claim-blocking diagnostic id for a selected skill whose class-skill status no class
+/// answers.
+pub(crate) const SELECTED_SKILL_CLASS_SKILL_UNKNOWN: &str = "skill.selected_modifier.class_skill_unknown";
+
+/// Whether Climb is a class skill for the character (`Yes` only; see
+/// [`selected_skill_class_skill`] for the Unknown case callers must name).
 pub(crate) fn selected_skill_climb_is_class_skill(input: &CharacterInput) -> bool {
-    input.chosen.class_levels.iter().any(|class_level| {
-        class_level.class_id == FIGHTER_CLASS_ID
-            || class_level.class_id == ROGUE_CLASS_ID
-            || class_level.class_id == WARPRIEST_CLASS_ID
-            || class_level.class_id == SLAYER_CLASS_ID
-            || class_level.class_id == SWASHBUCKLER_CLASS_ID
-            || class_level.class_id == INVESTIGATOR_CLASS_ID
-            || class_level.class_id == BRAWLER_CLASS_ID
-            || class_level.class_id == BLOODRAGER_CLASS_ID
-            || class_level.class_id == CAVALIER_CLASS_ID
-            || class_level.class_id == MONK_CLASS_ID
-            || class_level.class_id == INQUISITOR_CLASS_ID
-            || class_level.class_id == HUNTER_CLASS_ID
-            || class_level.class_id == SKALD_CLASS_ID
-    })
+    selected_skill_class_skill(input, "climb") == SelectedClassSkill::Yes
 }
 
-/// Whether Intimidate is a real class skill for at least one of the
-/// character's classes -- see `selected_skill_climb_is_class_skill`'s
-/// own doc comment for the full history of this per-skill split. Same
-/// class set as Climb for Investigator (whose own list includes both),
-/// but genuinely diverges for Witch (v0.6 alpha swarm, risks item 8,
-/// Witch full-build closure): Witch's own real class-skill list
-/// (`apg_abilities_class.lst`'s own `KEY:Witch ~ Class Skills` record)
-/// includes Intimidate but NOT Climb or Swim -- a second, different
-/// partial-match shape, proving this function needed to stay
-/// independent from Climb's rather than delegate to it.
+/// Whether Intimidate is a class skill for the character (see [`selected_skill_class_skill`]).
 pub(crate) fn selected_skill_intimidate_is_class_skill(input: &CharacterInput) -> bool {
-    input.chosen.class_levels.iter().any(|class_level| {
-        class_level.class_id == FIGHTER_CLASS_ID
-            || class_level.class_id == ROGUE_CLASS_ID
-            || class_level.class_id == WARPRIEST_CLASS_ID
-            || class_level.class_id == SLAYER_CLASS_ID
-            || class_level.class_id == SWASHBUCKLER_CLASS_ID
-            || class_level.class_id == INVESTIGATOR_CLASS_ID
-            || class_level.class_id == WITCH_CLASS_ID
-            || class_level.class_id == BRAWLER_CLASS_ID
-            || class_level.class_id == BLOODRAGER_CLASS_ID
-            || class_level.class_id == CAVALIER_CLASS_ID
-            || class_level.class_id == MONK_CLASS_ID
-            || class_level.class_id == INQUISITOR_CLASS_ID
-            || class_level.class_id == HUNTER_CLASS_ID
-            || class_level.class_id == SKALD_CLASS_ID
-    })
+    selected_skill_class_skill(input, "intimidate") == SelectedClassSkill::Yes
 }
 
-/// Whether Swim is a real class skill for at least one of the
-/// character's classes -- see `selected_skill_climb_is_class_skill`'s
-/// own doc comment for the full history of this per-skill split.
-/// Investigator is deliberately EXCLUDED here: its real class-skill
-/// list (`acg_abilities_class.lst`'s own `KEY:Investigator ~ Class
-/// Skills` record) genuinely does not include Swim, verified directly
-/// -- the first class this segment has found with a real partial match
-/// rather than all-three-or-none.
+/// Whether Swim is a class skill for the character (see [`selected_skill_class_skill`]).
 pub(crate) fn selected_skill_swim_is_class_skill(input: &CharacterInput) -> bool {
-    input.chosen.class_levels.iter().any(|class_level| {
-        class_level.class_id == FIGHTER_CLASS_ID
-            || class_level.class_id == ROGUE_CLASS_ID
-            || class_level.class_id == WARPRIEST_CLASS_ID
-            || class_level.class_id == SLAYER_CLASS_ID
-            || class_level.class_id == SWASHBUCKLER_CLASS_ID
-            || class_level.class_id == BRAWLER_CLASS_ID
-            || class_level.class_id == BLOODRAGER_CLASS_ID
-            || class_level.class_id == CAVALIER_CLASS_ID
-            || class_level.class_id == MONK_CLASS_ID
-            || class_level.class_id == INQUISITOR_CLASS_ID
-            || class_level.class_id == HUNTER_CLASS_ID
-            || class_level.class_id == SKALD_CLASS_ID
-    })
+    selected_skill_class_skill(input, "swim") == SelectedClassSkill::Yes
+}
+
+/// Every selected skill whose class-skill status is Unknown, as `"<skill>: <reasons>"` -- the
+/// claim-blocking words both the headless and the corpus path raise.
+pub(crate) fn selected_skill_class_skill_unknowns(input: &CharacterInput) -> Vec<String> {
+    SELECTED_SKILLS
+        .iter()
+        .filter_map(|skill| match selected_skill_class_skill(input, skill) {
+            SelectedClassSkill::Unknown(reasons) => Some(format!("{skill}: {}", reasons.join("; "))),
+            _ => None,
+        })
+        .collect()
 }
 
 /// The `RagePowersLVL` magnitude Raging Climber/Raging Swimmer contribute
@@ -1287,6 +1240,23 @@ pub(super) fn compute_selected_skill_modifiers(
                  grounded Chain Shirt armor-check penalty; unmet conditions: {}",
                 supported_class_chassis_description(),
                 unmet.join("; ")
+            ),
+            claim_blocking: true,
+        });
+        return SelectedSkillModifiers::default();
+    }
+
+    // SD-36 Epic F3b3: a selected skill whose class-skill status no class answers is refused
+    // by name -- never printed without (or with) a +3 the record cannot support.
+    let class_skill_unknowns = selected_skill_class_skill_unknowns(input);
+    if !class_skill_unknowns.is_empty() {
+        diagnostics.push(ComputationDiagnostic {
+            id: SELECTED_SKILL_CLASS_SKILL_UNKNOWN.to_owned(),
+            message: format!(
+                "the class-skill bonus on the selected skills cannot be decided: no class the \
+                 character has grants the skill, and a class's converted record does not answer \
+                 its class skills ({})",
+                class_skill_unknowns.join(" | ")
             ),
             claim_blocking: true,
         });

@@ -431,6 +431,23 @@ fn parse_skill_ranks(text: &str) -> Option<u8> {
     text.trim().parse().ok()
 }
 
+/// SD-36 F3b3: a class's skill ranks per level read from its converted class principal's
+/// `StatBlock "Skill ranks per level"` row in the process-wide package, whether or not the record
+/// is chassis-bearing, and -- for a class-selection class that declares no class line of its own
+/// ([`SheetRulePackage::base_class_of`], Pathfinder Unchained's four) -- from the base class it is
+/// taken on, whose line the character holds. `Some((ranks, rule id read))`; `None` when neither
+/// principal states the row.
+pub fn skill_ranks_per_level_from_package(class_slug: &str) -> Option<(u8, String)> {
+    let package = crate::rules_core::sheet_rule_package::package().as_ref().ok()?;
+    let read = |slug: &str| {
+        let id = package.find("class", slug)?;
+        let rule = package.rule(id)?;
+        let ranks = stat_block_prose_text(rule, "Skill ranks per level").and_then(|text| parse_skill_ranks(&text))?;
+        Some((ranks, id.clone()))
+    };
+    read(class_slug).or_else(|| read(package.base_class_of(class_slug)?))
+}
+
 /// Builds one class's chassis from its converted rule file's rows, or `None`
 /// when the file is not a chassis-bearing class record.
 fn chassis_from_rules(book: &str, slug: &str, rules: &[SheetRule]) -> Option<ClassChassis> {
