@@ -256,6 +256,7 @@ fn run_json(json_path: &str) -> i32 {
                 "entry_gate": row.entry_gate_status,
                 "load_error": row.load_error,
                 "carrier_unknown_reason": row.carrier_unknown_reason,
+                "carrier_reason": row.carrier_reason,
                 "mixes": row.mixes.iter().map(|(sweep, gate)| serde_json::json!({
                     "carrier": sweep.carrier.slug(),
                     "carrier_level": sweep.carrier_level,

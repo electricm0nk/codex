@@ -45,6 +45,12 @@ one by name).
   `skill.selected_modifier.class_skill_unknown`); prestige carrier mixes 59 of
   74 (unchanged since F3b2b; 4 Blocked on an oracle save-formula defect, 11
   Unknown); mix panel 185 of 185. Write-up: `stage-f2-f3/f3b3-receipt.md`.
+- `census-f3c.json` — SD-36 Epic F3c's sweep. The carrier chooser now walks
+  `AtLeast` branches in oracle order (`carrier_reason` on every carried row).
+  Prestige carrier mixes: 67 of 74 `Computed`, up from 59. Of the other 7, 6 are
+  Blocked on an oracle save-formula defect and 1 is Unknown (dragon_disciple).
+  Every other count is identical to `census-f3b3.json`. Histogram and movement:
+  `stage-f2-f3/f3c-blocker-histogram.md`. Remainder: `stage-f2-f3/f3c-remainder.md`.
 - `mix-panel-histogram.md` — F0d's human-readable write-up of the
   claim-blocking-diagnostic histogram across the 185-row mix panel.
 - `scripts/` — `unres2.py`/`closure.py`, the read-only planning-pass

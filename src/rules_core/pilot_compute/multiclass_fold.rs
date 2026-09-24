@@ -535,6 +535,44 @@ mod tests {
     }
 
     #[test]
+    fn two_more_prestige_saves_the_f3c_carriers_reach_are_the_same_oracle_formula_defect() {
+        // SD-36 F3c: the carrier rule now names a carrier for Pure Legion Enforcer and Evangelist,
+        // so their mixes reach the save gate for the first time. Both oracle `BONUS:SAVE` lines
+        // are the same defect as F3b3 §3, converted faithfully:
+        // - Pure Legion Enforcer (isc_classes.lst, Inner Sea Combat): `classlevel()+3/2`,
+        //   `classlevel()+1/3`, `classlevel()+3/2` -- level + 3/2 (Ulfen Guard's shape), +11 at 10th.
+        // - Evangelist (isg_classes.lst, Inner Sea Gods): Reflex `classlevel()/3+1` under its own
+        //   `ClassSaveGood_Reflex` declaration; +4 at 10th, which is none of PF1's four save forms
+        //   at 10th (base good 7, base poor 3, prestige good 5, prestige poor 3).
+        let pf1_forms_at_ten = [7i16, 3, 5];
+        let cases: [(&str, [bool; 3], [i16; 3]); 2] = [
+            ("class:pure_legion_enforcer", [true, true, true], [11, 10, 11]),
+            ("class:evangelist", [false, true, false], [3, 4, 3]),
+        ];
+        for (class_id, unrecognized, at_ten) in cases {
+            let record = chassis_record(class_id).unwrap_or_else(|| panic!("{class_id} record"));
+            let row = record.row_at(10).unwrap_or_else(|| panic!("{class_id} row 10"));
+            let values = [row.fort_save, row.ref_save, row.will_save];
+            assert_eq!(values, at_ten, "{class_id} at 10th");
+            for (index, flagged) in unrecognized.into_iter().enumerate() {
+                let shape = record.save_shape(index);
+                if flagged {
+                    assert_eq!(shape, Some(SaveProgression::Unrecognized), "{class_id} {}", SAVE_NAMES[index]);
+                    assert!(!pf1_forms_at_ten.contains(&values[index]), "{class_id} {}", SAVE_NAMES[index]);
+                } else {
+                    assert_eq!(shape, Some(SaveProgression::Poor), "{class_id} {}", SAVE_NAMES[index]);
+                }
+            }
+            let fixture = crate::rules_core::class_census::load_sweep_fixture().expect("fixture");
+            let level = CharacterClassLevel { class_id: class_id.to_owned(), level: 3 };
+            match multiclass_member(&fixture, &level) {
+                Err(d) => assert_eq!(d.id, SAVE_SHAPE_UNRECOGNIZED, "{d:?}"),
+                Ok(_) => panic!("{class_id} must not fold an unrecognized save"),
+            }
+        }
+    }
+
+    #[test]
     fn a_class_whose_record_states_no_skill_ranks_is_named_unknown() {
         // Eidolon: `STARTSKILLPTS:EidolonSkillPoints` (apg_classes.lst:211), a variable its
         // closure does not define -- no row (`_defects/skill-ranks-unresolved.json`), never 0.
