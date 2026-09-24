@@ -1455,13 +1455,25 @@ mod untabled_class_chassis_gate_tests {
         }
     }
 
-    /// The gate widening did not touch the prestige-entry-gate arm --
-    /// prestige classes correctly stay unsupported here, since no BAB/save
-    /// chassis exists for them to fold into a total save or combat
-    /// baseline.
+    /// The gate widening did not admit a prestige class: it still fails the
+    /// shared single-class gate. SD-36 Epic F2b: the reason is now stated as
+    /// the game rule -- `prestige_class.requires_base_class_levels`, not
+    /// `class_chassis.unsupported` (Arcane Archer carries a real converted
+    /// chassis row; it just cannot be a first class).
     #[test]
     fn a_prestige_class_id_still_fails_the_gate() {
-        assert!(!has_supported_class_chassis(&single_class("class:arcane_archer", 5)));
+        let input = single_class("class:arcane_archer", 5);
+        assert!(!has_supported_class_chassis(&input));
+        let receipt = build_pilot_headless_receipt(&input);
+        let diagnostics = &receipt.computation.diagnostics;
+        assert!(
+            diagnostics
+                .iter()
+                .any(|d| d.id == "prestige_class.requires_base_class_levels" && d.claim_blocking),
+            "{diagnostics:?}"
+        );
+        assert!(!diagnostics.iter().any(|d| d.id == "class_chassis.unsupported"), "{diagnostics:?}");
+        assert_ne!(receipt.status, HeadlessReceiptStatus::Computed);
     }
 
     /// The Epic F1 proficiency-reader remainder, read from its committed record

@@ -1752,8 +1752,19 @@ pub fn compute_pilot_base_chassis(input: &CharacterInput) -> PilotBaseChassisCom
     // that means "not computed" would silently ship a stamina pool short by the
     // character's whole base attack bonus.
     let chassis_supported = computed_chassis.is_some();
+    // SD-36 Epic F2b: a prestige class alone already carries its game-rule
+    // diagnostic (`prestige_class.requires_base_class_levels`); the class is
+    // known, so the "unrecognized class" fallback below stands down for it.
+    // The `0`s it substitutes stay gated: that rule id is claim-blocking and
+    // `contract::printed_sheet_cell_map` blocks the chassis cells on it.
+    let prestige_alone = diagnostics
+        .iter()
+        .any(|d| d.id == PRESTIGE_REQUIRES_BASE_CLASS_LEVELS_DIAGNOSTIC_ID);
     let (base_attack_bonus, base_saves) = computed_chassis
             .unwrap_or_else(|| {
+            if prestige_alone {
+                return (0, BaseSaves::default());
+            }
             diagnostics.push(ComputationDiagnostic {
                 id: "class_chassis.unsupported".to_owned(),
                 message: format!(

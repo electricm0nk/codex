@@ -2684,16 +2684,14 @@ mod tests {
     }
 
     #[test]
-    #[ignore = "RED until Epic F2"]
     fn prestige_alone_is_blocked_with_the_game_rule() {
         // §2: "every prestige class alone must be Blocked with the F2
-        // game-rule diagnostic (74 of 74)." F2 has not landed yet (it adds
-        // the prestige-alone entry-requirement diagnostic itself), so today
-        // a prestige class alone is Blocked for whatever engine reason
-        // happens to fire first (usually an unsupported-chassis diagnostic,
-        // never the real game-rule one) -- this test is the pinned future
-        // shape, RED until F2 names that diagnostic id.
-        const F2_GAME_RULE_DIAGNOSTIC_ID: &str = "class_chassis.prestige_requires_a_carrier_class";
+        // game-rule diagnostic (74 of 74)." Pinned RED until Epic F2b named
+        // that id (this test's placeholder was
+        // `class_chassis.prestige_requires_a_carrier_class`); F2b's rule is
+        // `compute_class_chassis`'s prestige-alone branch, swept here at every
+        // level of every prestige class, not only level 1.
+        const F2_GAME_RULE_DIAGNOSTIC_ID: &str = "prestige_class.requires_base_class_levels";
 
         let entries = census();
         let prestige = prestige_entries(&entries);

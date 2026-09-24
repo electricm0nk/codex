@@ -29,6 +29,11 @@ one by name).
   arm; `core_rulebook`/`advanced_players_guide` appended to
   `CLASS_FAMILY_BOOKS`): ids 137, 63 of 63 non-prestige Computed. Before/after
   write-up: `stage-f2-f3/f2a-census-before-after.md`.
+- `census-f2b.json` — SD-36 Epic F2b's sweep (prestige-alone game rule):
+  counts identical to `census-f2a.json`; every one of the 74 prestige rows'
+  `alone_blocking_diagnostics` now carries
+  `prestige_class.requires_base_class_levels` at every level, and none carries
+  `class_chassis.unsupported`. Write-up: `stage-f2-f3/f2b-prestige-alone.md`.
 - `mix-panel-histogram.md` — F0d's human-readable write-up of the
   claim-blocking-diagnostic histogram across the 185-row mix panel.
 - `scripts/` — `unres2.py`/`closure.py`, the read-only planning-pass

@@ -767,6 +767,14 @@ pub(super) fn is_supported_multiclass_mix(input: &CharacterInput) -> bool {
             .all(multiclass_class_level_supported)
 }
 
+/// SD-36 Epic F2b: the claim-blocking diagnostic a prestige class as a
+/// character's only class gets (see `compute_class_chassis`).
+pub(crate) const PRESTIGE_REQUIRES_BASE_CLASS_LEVELS_DIAGNOSTIC_ID: &str =
+    "prestige_class.requires_base_class_levels";
+/// The game rule's own words, printed as the diagnostic message.
+pub(crate) const PRESTIGE_REQUIRES_BASE_CLASS_LEVELS_MESSAGE: &str =
+    "A prestige class cannot be a character's first class. Add levels in a base class first.";
+
 pub(super) fn compute_class_chassis(
     input: &CharacterInput,
     ability_modifiers: &AbilityModifiers,
@@ -779,6 +787,36 @@ pub(super) fn compute_class_chassis(
     let [class_level] = input.chosen.class_levels.as_slice() else {
         return None;
     };
+    if generic_class_chassis::is_prestige(&class_level.class_id) {
+        // SD-36 Epic F2b (`epic-f-class-completion.md` §4, F2.2): the
+        // prestige-alone game rule. A prestige class cannot be a character's
+        // first class, so a single-class prestige input is not a legal
+        // character: it gets ONE claim-blocking rule diagnostic and no chassis
+        // numbers (no half sheet), and -- the class being known -- never
+        // `class_chassis.unsupported` (`compute_pilot_base_chassis`'s fallback
+        // stands down for this id). Keyed on the converted record's own
+        // `Prestige` tag, the same test `has_supported_class_chassis` uses to
+        // exclude prestige classes; no class is named. The class's real
+        // chassis row is folded in only beside a base class (F3's multiclass
+        // gate). Its entry requirements are still reported, as rule text.
+        diagnostics.push(ComputationDiagnostic {
+            id: PRESTIGE_REQUIRES_BASE_CLASS_LEVELS_DIAGNOSTIC_ID.to_owned(),
+            message: PRESTIGE_REQUIRES_BASE_CLASS_LEVELS_MESSAGE.to_owned(),
+            claim_blocking: true,
+        });
+        if let Some(gate) =
+            prestige_class_entry_gate::evaluate_prestige_class_entry(&class_level.class_id, input)
+        {
+            push_prestige_entry_gate_diagnostic(
+                &gate,
+                &class_level.class_id,
+                "no chassis values are printed for a prestige class alone (see \
+                 prestige_class.requires_base_class_levels)",
+                diagnostics,
+            );
+        }
+        return None;
+    }
     if class_level.class_id == FIGHTER_CLASS_ID {
         Some(compute_fighter_chassis(input, explanations, diagnostics))
     } else if class_level.class_id == WIZARD_CLASS_ID {
@@ -1060,8 +1098,9 @@ pub(super) fn compute_class_chassis(
         // SD-36 Epic F2a: the LAST chassis arm. Its population now also covers
         // `core_rulebook`/`advanced_players_guide` (122 classes); every base class
         // a bespoke arm above owns is dispatched there first, so what this arm
-        // newly answers is the CRB/APG prestige classes and APG's two `Ex-*`
-        // classes, which no other arm owns.
+        // newly answers is APG's two `Ex-*` classes, which no other arm owns.
+        // (F2b: a prestige class alone never reaches here -- the prestige-alone
+        // rule at the top of this function returns first.)
         //
         // SD-32 T12 `epic-10-reference-library-residual-reach` row 20 cycle 5: the
         // character-creation-time dispatch arm for all 61 conventional PC classes cycle 4
@@ -1115,26 +1154,6 @@ pub(super) fn compute_class_chassis(
                 row.display_name, class_level.class_id, class_level.level, base_saves.will
             ),
         });
-        // SD-36 Epic F2a: a prestige class this arm dispatches still reports its
-        // real entry-requirement gate -- the same diagnostic the fallthrough arm
-        // below gives a registered prestige class with no chassis row. Since F2a
-        // appended `core_rulebook`/`advanced_players_guide` to `generic_class_
-        // chassis`, every one of the 74 registered prestige classes reaches THIS
-        // arm (all 74 carry a converted chassis row), so without this the gate
-        // would never run for any of them. The single-class receipt stays
-        // Blocked either way: `has_supported_class_chassis` excludes prestige.
-        if generic_class_chassis::is_prestige(&class_level.class_id)
-            && let Some(gate) =
-                prestige_class_entry_gate::evaluate_prestige_class_entry(&class_level.class_id, input)
-        {
-            push_prestige_entry_gate_diagnostic(
-                &gate,
-                &class_level.class_id,
-                "its converted chassis row is dispatched, but a prestige class cannot be a \
-                 character's only class",
-                diagnostics,
-            );
-        }
         Some((base_attack_bonus, base_saves))
     } else if let Some(gate) =
         prestige_class_entry_gate::evaluate_prestige_class_entry(&class_level.class_id, input)
@@ -4541,3 +4560,104 @@ pub(super) fn explain_hybrid_level1_chassis(
     // See this function's own doc comment.
 }
 
+
+/// SD-36 Epic F2b (`epic-f-class-completion.md` §4, acceptance F2.2): a
+/// prestige class as a character's ONLY class states the game rule -- one
+/// claim-blocking `prestige_class.requires_base_class_levels` -- instead of a
+/// half sheet or an "unsupported class" claim the engine no longer makes.
+#[cfg(test)]
+mod prestige_alone_tests {
+    use crate::rules_core::class_census::{census, load_sweep_fixture};
+    use crate::rules_core::class_seeds::input_for;
+    use crate::rules_core::pilot_compute::build_pilot_headless_receipt;
+
+    const RULE_ID: &str = "prestige_class.requires_base_class_levels";
+    const RULE_TEXT: &str =
+        "A prestige class cannot be a character's first class. Add levels in a base class first.";
+
+    /// Every one of the census prestige ids at level 1: the rule diagnostic
+    /// appears exactly once among the claim-blocking diagnostics, with the
+    /// rule's own text; `class_chassis.unsupported` is absent (the class IS
+    /// known); and no chassis number is emitted (no half sheet).
+    #[test]
+    fn a_prestige_class_alone_states_the_game_rule() {
+        let entries = census();
+        let fixture = load_sweep_fixture().expect("shared deterministic fixture must load");
+        let mut checked = 0usize;
+        let mut failures: Vec<String> = Vec::new();
+        for entry in entries.values().filter(|e| e.is_prestige) {
+            let slug = entry.class_id.strip_prefix("class:").unwrap_or(&entry.class_id);
+            let receipt = build_pilot_headless_receipt(&input_for(&fixture, slug, 1));
+            let diagnostics = &receipt.computation.diagnostics;
+            let rule: Vec<_> =
+                diagnostics.iter().filter(|d| d.claim_blocking && d.id == RULE_ID).collect();
+            if rule.len() != 1 {
+                failures.push(format!("{}: {} x {RULE_ID}", entry.class_id, rule.len()));
+            } else if rule[0].message != RULE_TEXT {
+                failures.push(format!("{}: message {:?}", entry.class_id, rule[0].message));
+            }
+            if diagnostics.iter().any(|d| d.id == "class_chassis.unsupported") {
+                failures.push(format!("{}: class_chassis.unsupported still fires", entry.class_id));
+            }
+            if let Some(e) = receipt
+                .computation
+                .explanations
+                .iter()
+                .find(|e| e.id.starts_with("class_chassis.base_"))
+            {
+                failures.push(format!("{}: half sheet -- emitted {}", entry.class_id, e.id));
+            }
+            checked += 1;
+        }
+        assert_eq!(checked, 74, "census prestige ids (denominator)");
+        assert!(failures.is_empty(), "{} failure(s):\n{}", failures.len(), failures.join("\n"));
+    }
+
+    /// No half sheet on paper either: the chassis-fed printed cells render
+    /// `Blocked`, never the `0` the chassis fallback substitutes. Checked for
+    /// a CRB prestige class (Arcane Archer) and a Psionics one (War Mind).
+    #[test]
+    fn a_prestige_class_alone_prints_no_chassis_cell() {
+        use crate::rules_core::contract::{
+            printed_sheet_cell_map, to_pilot_receipt, PrintedSheetCellValue,
+        };
+        use crate::rules_core::pilot_compute_corpus::compute_pilot_with_corpus;
+        use crate::rules_core::source_content::{SourcePackageContent, SourceRef};
+
+        let fixture = load_sweep_fixture().expect("shared deterministic fixture must load");
+        let corpus = SourcePackageContent::empty(
+            "prestige_alone_tests",
+            SourceRef { source_path: "prestige_alone_tests".to_owned(), line: 1 },
+        );
+        for slug in ["arcane_archer", "war_mind"] {
+            let input = input_for(&fixture, slug, 1);
+            let receipt = to_pilot_receipt(&compute_pilot_with_corpus(&input, &corpus), &input, &corpus);
+            let cells = printed_sheet_cell_map(&receipt);
+            for cell_id in [
+                "sheet.base_attack_bonus",
+                "sheet.save.fortitude",
+                "sheet.save.reflex",
+                "sheet.save.will",
+            ] {
+                let cell = cells
+                    .iter()
+                    .find(|c| c.cell_id == cell_id)
+                    .unwrap_or_else(|| panic!("class:{slug}: {cell_id} missing from the cell map"));
+                assert_eq!(cell.value, PrintedSheetCellValue::Blocked, "class:{slug}: {cell_id}");
+            }
+        }
+    }
+
+    /// Negative control: a base class alone never gets the prestige rule.
+    #[test]
+    fn a_base_class_alone_never_gets_the_prestige_alone_rule() {
+        let fixture = load_sweep_fixture().expect("shared deterministic fixture must load");
+        for slug in ["fighter", "kineticist", "ninja", "ex_antipaladin"] {
+            let receipt = build_pilot_headless_receipt(&input_for(&fixture, slug, 1));
+            assert!(
+                !receipt.computation.diagnostics.iter().any(|d| d.id == RULE_ID),
+                "class:{slug} is a base class"
+            );
+        }
+    }
+}

@@ -6666,15 +6666,25 @@ mod tests {
         // Epic F1c-1 (grant-by-type selectors convert) closed Magus, the last of this roster that
         // was Blocked. The non-vacuity guard therefore no longer rests on the wealth roster: a
         // prestige class alone is a genuinely blocked build (no base-class levels; census
-        // `prestige_alone_blocked` = 74 of 74) and stays Blocked through F2, which only replaces
-        // its diagnostic with `prestige_class.requires_base_class_levels`.
+        // `prestige_alone_blocked` = 74 of 74). SD-36 Epic F2b: it is Blocked BY the game rule,
+        // `prestige_class.requires_base_class_levels` -- asserted, so this guard fails (rather
+        // than passing on some unrelated blocker) if that rule ever stops firing.
         let prestige_alone = "class:eldritch_knight";
         let root = tempdir("create-character-starting-wealth-blocked-prestige-alone");
         let request = request_for_class("race:human", prestige_alone, 1);
         let response = create_character_at_root(&root, &request, "test-version".to_owned())
             .expect("create call should not error");
         match response {
-            CreateCharacterResponse::Blocked { .. } => blocked_classes_seen.push(prestige_alone),
+            CreateCharacterResponse::Blocked { diagnostics } => {
+                assert!(
+                    diagnostics
+                        .iter()
+                        .any(|d| d.id == "prestige_class.requires_base_class_levels"),
+                    "{prestige_alone} alone must be Blocked by the prestige-alone game rule: \
+                     {diagnostics:?}"
+                );
+                blocked_classes_seen.push(prestige_alone)
+            }
             CreateCharacterResponse::Saved { .. } => panic!(
                 "{prestige_alone} alone must be Blocked -- a prestige class cannot be a first class"
             ),
