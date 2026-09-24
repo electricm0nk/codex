@@ -668,3 +668,27 @@ Nothing above was deleted; this is inventory only, for the operator to action af
     branch; D2-D6 bundle closure (including the final graphify run) stays
     blocked on F5 per the standing "graphify runs against the FINAL repo
     state" rule.
+
+## Epic F1c landed (2026-09-24)
+
+- merge_sha: 03836d09ec ("merge(sd36,epic-f1c): converter fixes the proficiency reader exposed — type grants, line-scoped conditions, Unchained records, closure attestation; regenerated package")
+- post_merge_fix_sha: 247c7a023f ("fix(sd36,epic-f1c): post-merge verify fixes round 1" — token-coverage ledger refresh, no sheet value changed)
+- branch: tranche/16
+- verify_log: /tmp/claude-1000/-home-ubuntu-workspace-repos-codex/6badc5b8-ae3b-4359-80c5-cd0b1598973e/scratchpad/sd36/f1c/verify-f1c-2.log
+- verify_result: "verify.sh full: PASS (51 PASS, 0 FAIL; class-census ids=135 computed=61 prestige_alone_blocked=74 mix_panel_computed=185)"
+- stage_receipts: docs/release/SD-36-consolidation/artifacts/epic-f/stage-f1c/ (regenerate-receipt.md, render-receipt.md, fixture-receipts.md, render/); census docs/release/SD-36-consolidation/artifacts/epic-f/census-f1c.json; remainder artifacts/epic-f/reader-remainder.md
+- defects_closed: D1 grant-by-type (1e6b2db9ee), D2 line-scoped conditions (5979ef4668), D3 Unchained class records + D4 closure-complete attestation + D6 weapon-choice offers (e61473e9c9), D5 stale static rows monk/psion/ninja (af70b72679), D7 always-held globals (ea4d64eca8), D8 variable-pool picks (641691e283)
+- headline_numbers:
+  - census_non_prestige_computed: 61 of 61 (was 42 of 61 at F0, 58 of 61 at F1-reader); `cargo run --locked -j 8 --bin class_census` -> ids=135 computed=61 blocked=0
+  - f1_2_reader_vs_static: 42 of 42 static rows reproduced at level 1, 0 disagreements
+  - f1_5_blocked_on_proficiency: 0 of 135
+  - prestige_reader_remainder: 17 of 74 prestige classes Unknown (0 of 19 walked non-prestige); prestige Blocked alone until F2 (74 of 74)
+  - package: records 49,450 -> 49,450; rules_written 71,869 -> 73,016; removed rule ids 0
+- gate_checks:
+  - structural_diff: "structural_diff.py data/sheet_rules --baseline <pre-merge tranche/16>" → verdict=PASS
+  - pcgen_residue_gate: "python3 scripts/pcgen_residue_gate.py --check --closure" → PASS (0 hits)
+  - sheet_rule_convert_check: "cargo run --locked --quiet -j 8 -p codex-ingest --bin sheet_rule_convert -- --check" → exit 0
+  - class_status_table_check: "python3 scripts/gen_class_status_table.py --check" → OK (ids=135 computed=61 prestige_swept=74 mix_panel_computed=185 of 185)
+  - frozen_corpus_record_count: 49,450 — unmoved
+  - data/corpus/** and site/**: untouched
+- receipt_note: F1 and F1-reader close with this landing. F2-F5 remain open; D2-D6 bundle closure (graphify last) stays blocked on F5.

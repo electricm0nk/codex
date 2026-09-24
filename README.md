@@ -8,7 +8,7 @@ Codex is a Rust + Tauri replacement effort for PCGen. PCGen is the heritage appl
 
 ## Current state
 
-**Current truthful posture:** Codex's PF1e compute engine is not a single-class proof slice. Across the 38-book corpus it has ingested, all 31 fully-tabled classes (Core Rulebook, Advanced Player's Guide, Advanced Class Guide, Pathfinder Unchained) reach a fully `Computed` sheet at every level 1-20 (proven by a fresh instrument run that sweeps class and level, not race — see status.md for the exact scope), 2 of Ultimate Combat's 3 classes and 9 further "untabled" exotic base classes reach `Computed` too (42 of 135 distinct class ids corpus-wide — see status.md's class/level compute-coverage table), and the desktop app is a real, wired, end-to-end character-creation/leveling/equipment/DM-toolkit/encounter-builder/campaign-manager product, independently verified at 66 of 69 automated UI flows green. **Separately** — this is a different measurement and must not be conflated with the compute claim above (status.md says so explicitly) — the corpus's ingestion/classification state is a frozen snapshot at 100% of 49,450 catalogued units as of 2026-09-15 (see status.md's "Corpus coverage"): that figure answers "is every corpus unit present and classified," not "does the compute engine produce a value for it today." See [`docs/architecture/status.md`](docs/architecture/status.md) for the evidence-backed capability matrix and the real named limitations (Samurai, 18 of 27 "untabled" base classes, prestige classes, and multiclass beyond the 11 CRB base classes each have a specific, documented gap).
+**Current truthful posture:** Codex's PF1e compute engine is not a single-class proof slice. Across the 38-book corpus it has ingested, all 31 fully-tabled classes (Core Rulebook, Advanced Player's Guide, Advanced Class Guide, Pathfinder Unchained) reach a fully `Computed` sheet at every level 1-20 (proven by a fresh instrument run that sweeps class and level, not race — see status.md for the exact scope), all 3 of Ultimate Combat's classes and every remaining non-prestige base class reach `Computed` too (61 of 61 non-prestige class ids, of 135 distinct class ids corpus-wide; the 74 prestige ids are measured only through carrier mixes — see status.md's class/level compute-coverage table), and the desktop app is a real, wired, end-to-end character-creation/leveling/equipment/DM-toolkit/encounter-builder/campaign-manager product, independently verified at 66 of 69 automated UI flows green. **Separately** — this is a different measurement and must not be conflated with the compute claim above (status.md says so explicitly) — the corpus's ingestion/classification state is a frozen snapshot at 100% of 49,450 catalogued units as of 2026-09-15 (see status.md's "Corpus coverage"): that figure answers "is every corpus unit present and classified," not "does the compute engine produce a value for it today." See [`docs/architecture/status.md`](docs/architecture/status.md) for the evidence-backed capability matrix and the real named limitations (prestige classes taken alone and multiclass beyond the 11 CRB base classes each have a specific, documented gap).
 
 The maintained, closure-updated statement of what is real vs stubbed today is
 [`docs/architecture/status.md`](docs/architecture/status.md) — it supersedes any
@@ -188,7 +188,7 @@ Expected current behavior:
   (`v06_class_state_dump`: `class_count=31, computed_count=31, blocked_count=0`). The engine itself
   computes more than the picker currently offers — see [`docs/architecture/status.md`](docs/architecture/status.md)'s
   capability matrix, which also lists the classes that do **not** reach a fully computed sheet
-  (Samurai, 18 of 27 "untabled" base classes, and every prestige class)
+  (every prestige class taken alone; all 61 non-prestige class ids now compute — 61 of 61, class census 2026-09-24)
 - the DM Toolkit, encounter builder, campaign manager, and equipment/spell/class/race/monster
   catalogs are all real, wired features reachable from here, not stubs or placeholders
 - the GE-08 homebrew authoring workbench (the Guard Stance proof package's validate/persist/preview
@@ -204,10 +204,8 @@ app" — the `run-desktop` skill launches and drives it under a virtual (Xvfb) d
 
 - the desktop's own class-creation picker currently offers only the 31 fully-tabled classes
   (CRB/APG/ACG/Unchained); the engine can already compute more (Ultimate Combat's Gunslinger and
-  Ninja, plus 9 further "untabled" exotic base classes) but the picker does not yet expose them —
+  Ninja, Samurai, and all 27 "untabled" base classes) but the picker does not yet expose them —
   a UI-surface gap, not an engine gap
-- Samurai and 18 of 27 "untabled" base classes have a real BAB/save chassis but do not reach a
-  fully `Computed` sheet — each is blocked only on unknown weapon-proficiency data
 - no prestige class ever reaches `Computed` — entry-requirement gating is real for the ingested
   prestige classes, and most of those have a real BAB/save chassis too, but the reason none reach
   `Computed` is a missing gate arm, not an absence of chassis data — see

@@ -182,12 +182,11 @@ Row-by-row evidence:
 
 **Named exceptions** (the four lists this table's headline numbers stand
 for):
-- **Blocked only on weapon-proficiency data (19 of 135)**: Samurai
-  (Ultimate Combat) + 18 untabled-family classes — 11 exotic (Aegis,
-  Antipaladin, Cryptic, Dread, Magus, Marksman, Psychic Warrior, Soulknife,
-  Tactician, Vitalist, Wilder) + 7 CRB NPC/Ex (Adept, Aristocrat, Commoner,
-  Expert, Warrior, Ex-Barbarian, Ex-Paladin). Each has a real BAB/save
-  chassis; each is missing only a `CLASS_WEAPON_PROFICIENCIES` row.
+- **Blocked only on weapon-proficiency data (0 of 135)** (was 19 of 135
+  before SD-36 F1/F1c): the converted-record proficiency reader now answers
+  every non-prestige class from `data/sheet_rules` (census `ids=135
+  computed=61 blocked=0`, 2026-09-24). Samurai and the 18 untabled-family
+  classes formerly listed here all reach `Computed`.
 - **`Computed` but not in the desktop Create picker (11 of 42)**:
   Gunslinger, Ninja (Ultimate Combat); Kineticist, Medium, Mesmerist,
   Occultist, Psion, Psychic, Shifter, Spiritualist, Vigilante (untabled
@@ -251,7 +250,7 @@ one duplicate = 38, the correct headline denominator.
 | Feats | 2,227 entries (1,578 hand-authored + 649 corpus-gap rows) | 23 books | `src/rules_core/rules_tables/feats_all.rs:722-767,819` |
 | Monsters | 330 Bestiary-1 creatures (46 hand-modelled + 284 chassis-only) + per-book counts | **22** books, exhaustive (`book_display_name`/`book_wire_code` each have exactly 22 match arms and panic on an unregistered book) | `apps/desktop/src-tauri/src/monster_catalog.rs:216-262` |
 | Races / race traits | `RACE_CATALOG_BOOKS` | 6 books: CRB, B1, B2, B5, B6, ARG | `apps/desktop/src-tauri/src/race_catalog.rs:170` |
-| Classes / class features | 135 distinct ids corpus-wide (all engine registries merged); 117 of 135 have a real chassis, 42 of 135 reach `Computed` | 18 source books carry class content | see "Class/level compute coverage — corpus-wide" above for the full breakdown, set algebra, and re-derive commands — not restated here |
+| Classes / class features | 135 distinct ids corpus-wide (all engine registries merged); 117 of 135 have a real chassis, 61 of 135 (61 of 61 non-prestige) reach `Computed` | 18 source books carry class content | see "Class/level compute coverage — corpus-wide" above for the full breakdown, set algebra, and re-derive commands — not restated here |
 
 **Exact book rosters for the three rows above that used to read "11+", "at
 least 8", and "~20"** (each denominator is a count of book codes with a
@@ -339,8 +338,8 @@ form, or the rule's own words; "the engine cannot model X" is a number to report
 **It is not the same measurement as the Posture section's class/level `Computed`-receipt matrix
 above** — this figure counts corpus *content units* (one per race/spell/feat/equipment row/etc.)
 against the sheet rule; the Posture section counts *class/level combinations* reaching a full
-compute receipt. Both are now wide (100% of 49,450 units; 42 of 135 distinct
-class ids — the 31 fully-tabled classes plus 11 more, all swept and
+compute receipt. Both are now wide (100% of 49,450 units; 61 of 135 distinct
+class ids — every one of the 61 non-prestige ids, all swept and
 `Computed` at every level 1-20, not a single tested level — see "Class/level
 compute coverage — corpus-wide" above for the full breakdown), but they
 measure different things and must not be conflated.
@@ -392,7 +391,7 @@ Anyone who needs it can read the superseded commits under `docs/release/SD-29-*`
 
 | Item | Status | Where (re-verified) |
 |---|---|---|
-| Class/level compute coverage | Wide, not narrow, corpus-wide — 42 of 135 distinct class ids reach `Computed`; full breakdown, per-family table, and the four named-exception lists (blocked-only-on-weapon-proficiency, computed-but-not-in-picker, prestige with/without chassis, multiclass scope) live in "Class/level compute coverage — corpus-wide" above; not restated here. | see table above |
+| Class/level compute coverage | Wide, not narrow, corpus-wide — 61 of 135 distinct class ids (61 of 61 non-prestige) reach `Computed`; full breakdown, per-family table, and the four named-exception lists (blocked-only-on-weapon-proficiency, computed-but-not-in-picker, prestige with/without chassis, multiclass scope) live in "Class/level compute coverage — corpus-wide" above; not restated here. | see table above |
 | Oracle-parity comparator | The in-crate harness (`oracle_validation::comparator::compare`, now under `crates/codex-ingest`) exists and is tested — normalizes PCGen output, reports per-dimension matches/mismatches, renders a real `PASS`/`FAIL` report. A *passing* end-to-end parity claim is a separate, further-out question this doc does not re-verify this pass. | `crates/codex-ingest/src/oracle_validation/` |
 | Bestiary 1 monster parser | `monster_stat_block.rs`'s row parser is still unwired — no `ParsedLstRecord`/`SourceContentPayload` variant references it outside its own test file (0 hits, re-confirmed this pass). Bestiary 1 table content is hand-transcribed, not parsed through the canonical-IR path. | grep across `src/rules_core/source_content.rs` / ingest converter |
 | Failure-owner classifier | `pilot_failure.rs`'s `primary_owner` still only ever returns `OracleGap` (on `Computed`) or `EngineFlaw` (on `Blocked`) — the other two `PrimaryOwner` variants remain unreachable from the current receipt surface (re-confirmed this pass). | `src/rules_core/pilot_failure.rs` |
