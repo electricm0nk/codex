@@ -58,8 +58,8 @@ other files keep a local headline number in sync by hand rather than only
 linking here, because each needs the figure inline for its own sentence to
 read (a README opening claim, a desktop create-picker fact, an instrument's
 own scope, a dispatch-history figure): README.md's opening posture
-paragraph (line ~11: "31 fully-tabled classes", "42 of 135 distinct class
-ids") and its create-picker/"Known limitations" section (lines ~186, 205,
+paragraph (line ~11: "31 fully-tabled classes", "61 of 61 non-prestige
+class ids") and its create-picker/"Known limitations" section (lines ~186, 205,
 209: "31 fully-tabled classes", "18 of 27"); `desktop-app.md`'s Create-flow
 section (line ~412: `CLASS_OPTIONS` offers **31** classes);
 `rules-data-tables.md`'s state-dump description (line ~668: `v06_class_state_dump`
@@ -67,7 +67,7 @@ sweeps all **31** classes); and `rules-engine.md`'s dispatch-history section
 (lines ~494-498: "27 \"untabled\" base classes", "78 conventional PC
 classes"). These four are the ones to update together with this table
 whenever the census changes — find all of them with:
-`grep -rn '31 fully-tabled classes\|42 of 135\|135 distinct class ids\|78 conventional\|27 "untabled" base classes\|CLASS_OPTIONS.*31\|sweeps all \*\*31\*\*' README.md docs/architecture/*.md`.
+`grep -rn '31 fully-tabled classes\|61 of 61 non-prestige\|61 of 135\|135 distinct class ids\|78 conventional\|27 "untabled" base classes\|CLASS_OPTIONS.*31\|sweeps all \*\*31\*\*' README.md docs/architecture/*.md`.
 
 **What has changed since the last full pass**: several desktop-facing actions
 this doc used to describe as session-local or inert are now real, persisted

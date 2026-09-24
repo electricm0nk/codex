@@ -674,7 +674,7 @@ Nothing above was deleted; this is inventory only, for the operator to action af
 - merge_sha: 03836d09ec ("merge(sd36,epic-f1c): converter fixes the proficiency reader exposed — type grants, line-scoped conditions, Unchained records, closure attestation; regenerated package")
 - post_merge_fix_sha: 247c7a023f ("fix(sd36,epic-f1c): post-merge verify fixes round 1" — token-coverage ledger refresh, no sheet value changed)
 - branch: tranche/16
-- verify_log: /tmp/claude-1000/-home-ubuntu-workspace-repos-codex/6badc5b8-ae3b-4359-80c5-cd0b1598973e/scratchpad/sd36/f1c/verify-f1c-2.log
+- verify_log: docs/release/SD-36-consolidation/artifacts/epic-f/stage-f1c/verify-f1c-2.log
 - verify_result: "verify.sh full: PASS (51 PASS, 0 FAIL; class-census ids=135 computed=61 prestige_alone_blocked=74 mix_panel_computed=185)"
 - stage_receipts: docs/release/SD-36-consolidation/artifacts/epic-f/stage-f1c/ (regenerate-receipt.md, render-receipt.md, fixture-receipts.md, render/); census docs/release/SD-36-consolidation/artifacts/epic-f/census-f1c.json; remainder artifacts/epic-f/reader-remainder.md
 - defects_closed: D1 grant-by-type (1e6b2db9ee), D2 line-scoped conditions (5979ef4668), D3 Unchained class records + D4 closure-complete attestation + D6 weapon-choice offers (e61473e9c9), D5 stale static rows monk/psion/ninja (af70b72679), D7 always-held globals (ea4d64eca8), D8 variable-pool picks (641691e283)
