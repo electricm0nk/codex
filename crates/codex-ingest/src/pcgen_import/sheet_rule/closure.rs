@@ -131,6 +131,11 @@ pub struct LevelLine {
 pub struct PinnedTree {
     pub root: PathBuf,
     pub book_paths: BTreeMap<String, PathBuf>,
+    /// SD-36 F3b2b: book id -> its publication date, the `SOURCEDATE:` header of the book
+    /// directory's own `.pcc` file(s) (`YYYY-MM`). A book whose `.pcc` files state no date, or
+    /// two different dates, has no entry: its printings are never ordered (the supersession
+    /// ruling dates books from the headers, never from memory).
+    pub source_dates: BTreeMap<String, String>,
     pub files: Vec<LstFile>,
     /// `(family, CATEGORY upper, KEY-else-name upper)` -> `.MOD` rows targeting it, tree order,
     /// `_pfs/` files excluded (B9 / R3).
@@ -333,6 +338,30 @@ fn walk_lst(dir: &Path, out: &mut Vec<PathBuf>) {
     out.sort();
 }
 
+/// Each book's `SOURCEDATE:` from the `.pcc` files directly in its directory
+/// ([`PinnedTree::source_dates`]).
+fn book_source_dates(book_paths: &BTreeMap<String, PathBuf>) -> BTreeMap<String, String> {
+    let mut out = BTreeMap::new();
+    for (book, dir) in book_paths {
+        let Ok(entries) = std::fs::read_dir(dir) else { continue };
+        let mut dates: BTreeSet<String> = BTreeSet::new();
+        let mut pccs: Vec<PathBuf> = entries.flatten().map(|e| e.path()).filter(|p| p.extension().is_some_and(|x| x == "pcc")).collect();
+        pccs.sort();
+        for p in pccs {
+            let Ok(text) = std::fs::read_to_string(&p) else { continue };
+            for line in text.lines() {
+                if let Some(d) = line.trim().strip_prefix("SOURCEDATE:") {
+                    dates.insert(d.trim().to_string());
+                }
+            }
+        }
+        if dates.len() == 1 {
+            out.insert(book.clone(), dates.into_iter().next().unwrap_or_default());
+        }
+    }
+    out
+}
+
 impl PinnedTree {
     /// Read every `.lst` file under every known book directory and build the indexes.
     pub fn load(root: &Path) -> Result<PinnedTree, String> {
@@ -357,6 +386,7 @@ impl PinnedTree {
             let id = path.file_name().map(|n| n.to_string_lossy().into_owned()).unwrap_or_default();
             book_paths.insert(id, path);
         }
+        let source_dates = book_source_dates(&book_paths);
         let mut files: Vec<LstFile> = Vec::new();
         for (book, dir) in &book_paths {
             let mut paths = Vec::new();
@@ -377,6 +407,7 @@ impl PinnedTree {
         let mut tree = PinnedTree {
             root: root.to_path_buf(),
             book_paths,
+            source_dates,
             files,
             mod_index: BTreeMap::new(),
             base_index: BTreeMap::new(),
@@ -408,6 +439,13 @@ impl PinnedTree {
         let mut ability_category_parent: BTreeMap<String, String> = BTreeMap::new();
         let mut ability_category_ambiguous: BTreeSet<String> = BTreeSet::new();
         let mut ability_category_type: BTreeMap<String, Vec<String>> = BTreeMap::new();
+        // SD-36 F3b2b: a child category whose declarations disagree only on `TYPE:` has an
+        // ambiguous member FILTER, not an ambiguous PARENT. Kept apart from
+        // `ability_category_ambiguous` (parent disagreement), which drops the parent too: before,
+        // one set served both, so `Cyphermage Class Feature` (`ism_abilitycategories.lst:56` and
+        // `ag_abilitycategories.lst:7`, both `CATEGORY:Special Ability`, different `TYPE:`) lost
+        // its parent and every reference under it missed.
+        let mut ability_category_type_ambiguous: BTreeSet<String> = BTreeSet::new();
         let mut ability_category_listed: BTreeSet<String> = BTreeSet::new();
         let mut ability_category_pool: BTreeMap<String, (String, RowRef)> = BTreeMap::new();
         let mut ability_category_pool_ambiguous: BTreeSet<String> = BTreeSet::new();
@@ -515,7 +553,7 @@ impl PinnedTree {
                             let tags: Vec<String> = v.split('.').map(str::trim).filter(|t| !t.is_empty()).map(str::to_string).collect();
                             match ability_category_type.get(&own) {
                                 Some(existing) if existing != &tags => {
-                                    ability_category_ambiguous.insert(own);
+                                    ability_category_type_ambiguous.insert(own);
                                 }
                                 Some(_) => {}
                                 None => {
@@ -604,7 +642,7 @@ impl PinnedTree {
                 }
             }
         }
-        for name in ability_category_ambiguous.iter().chain(&ability_category_listed) {
+        for name in ability_category_ambiguous.iter().chain(&ability_category_type_ambiguous).chain(&ability_category_listed) {
             ability_category_type.remove(name);
         }
         ability_category_type.retain(|name, tags| !tags.is_empty() && ability_category_parent.contains_key(name));
@@ -866,6 +904,7 @@ mod tests {
         let mut tree = PinnedTree {
             root: PathBuf::new(),
             book_paths: BTreeMap::new(),
+            source_dates: BTreeMap::new(),
             files: files
                 .into_iter()
                 .map(|(name, lines)| LstFile {

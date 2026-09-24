@@ -68,9 +68,8 @@ struct Oracle {
     base_saves: (i16, i16, i16),
     total_saves: (i16, i16, i16),
     hit_points: i16,
-    /// The PF1 class-term skill points. The engine cannot reach this today (no
-    /// converted class record carries skill ranks per level), so it is asserted
-    /// Unknown; this is the value the ingest change must meet.
+    /// The PF1 class-term skill points (hand-worked, `f3b-hand-worked.md`); asserted as
+    /// the fold's printed total since F3b2 converted skill ranks per level.
     skill_points_pf1: i16,
     /// `None`: the mix reaches `Computed`. `Some((id, class))`: the ONLY claim-blocking
     /// diagnostic is `id`, naming `class` -- a named data remainder, never a silent pass.
@@ -112,13 +111,13 @@ const ORACLES: [Oracle; 4] = [
         total_saves: (4, 4, 7),
         hit_points: 44,
         skill_points_pf1: 18,
-        // Loremaster "gains no proficiency with any weapon or armor" (CRB p.385), but its
-        // converted closure carries no closure-complete attestation (32 of 77 prestige
-        // records unattested), so the proficiency reader answers Unknown rather than
-        // Known-empty, and Wizard grants no longsword: the baseline attack's -4 cannot be
-        // decided. The attestation is the converter's (`codex-ingest` `attest.rs`), outside
-        // this batch; every number below still computes.
-        blocked_only_by: Some(("combat.baseline_weapon_proficiency_unknown", "class:loremaster")),
+        // Loremaster "gains no proficiency with any weapon or armor" (CRB p.385). Its
+        // converted closure is attested complete since F3b2b: its one closure defect was
+        // `SecretLore`, a variable no row of the pinned oracle declares, which the oracle
+        // reads as 0 (`VariableProcessor.java:394-402`), so the proficiency reader answers
+        // Known-empty and the mix reaches Computed (F3b2 and before: Blocked on
+        // `combat.baseline_weapon_proficiency_unknown` naming class:loremaster).
+        blocked_only_by: None,
     },
 ];
 
@@ -181,7 +180,7 @@ fn magus4_samurai2_computes_the_hand_worked_sheet() {
 }
 
 #[test]
-fn wizard5_loremaster2_computes_the_hand_worked_numbers_and_names_its_one_blocker() {
+fn wizard5_loremaster2_computes_the_hand_worked_sheet() {
     check(&ORACLES[3]);
 }
 
@@ -254,13 +253,14 @@ fn an_unrecognized_save_shape_blocks_the_mix_by_name() {
 }
 
 /// Weapon proficiency is a union: one class that grants the weapon decides it, whatever
-/// another class's answer. Fighter grants every martial weapon (CRB p.55); Loremaster's
-/// converted closure has no answer (no closure-complete attestation), which may only
-/// leave the verdict Unknown when NO class grants the longsword (Wizard 5 / Loremaster 2
-/// above), never beside Fighter.
+/// another class's answer. Fighter grants every martial weapon (CRB p.55); Dragon
+/// Disciple's converted closure has no answer (its `Internal|Bite` reference names a row no
+/// inventory unit stands for, `reader-remainder.md` G-N), which may only leave the verdict
+/// Unknown when NO class grants the longsword, never beside Fighter. (Loremaster served
+/// here until F3b2b attested its closure.)
 #[test]
 fn a_class_with_no_proficiency_answer_cannot_undo_another_class_s_grant() {
-    let receipt = build_pilot_headless_receipt(&mix(&[("fighter", 6), ("loremaster", 2)]));
+    let receipt = build_pilot_headless_receipt(&mix(&[("fighter", 6), ("dragon_disciple", 2)]));
     assert!(
         !receipt
             .computation

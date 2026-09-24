@@ -130,6 +130,7 @@ mod tests {
         PinnedTree {
             root: PathBuf::new(),
             book_paths: BTreeMap::new(),
+            source_dates: BTreeMap::new(),
             files: files
                 .into_iter()
                 .map(|(name, lines)| LstFile {

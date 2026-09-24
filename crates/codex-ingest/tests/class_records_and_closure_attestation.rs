@@ -16,7 +16,9 @@ use codex::rules_core::sheet_rule_package;
 fn every_census_class_has_a_converted_class_record() {
     let package = sheet_rule_package::package().as_ref().expect("package loads");
     let ids: Vec<String> = census().into_keys().collect();
-    assert_eq!(ids.len(), 135, "census carries 135 class ids");
+    // 137 since F2a (028cde4e3f appended the two Advanced Player's Guide Ex-* ids); this pin
+    // still read 135 and was re-pinned in F3b2b.
+    assert_eq!(ids.len(), 137, "census carries 137 class ids");
     let misses: Vec<&String> = ids
         .iter()
         .filter(|id| package.find("class", id.strip_prefix("class:").unwrap_or(id)).is_none())
@@ -77,10 +79,12 @@ fn the_real_package_attests_complete_closures_only() {
     let attested = principals.iter().filter(|r| r.closure_complete).count();
     println!("class principals attested closure-complete: {attested} of {}", principals.len());
     assert!(attested > 0 && attested < principals.len(), "{attested} of {}", principals.len());
-    // Aldori Swordlord's own level lines name ten class features the corpus does not carry.
-    let aldori = package.rule(package.find("class", "aldori_swordlord").expect("aldori")).expect("rule");
-    assert!(!aldori.closure_complete);
-    assert!(matches!(class_weapon_proficiency_view("aldori_swordlord", 1), ProficiencyAnswer::Unknown { .. }));
+    // Diabolist's closure names `Special Ability|Hunter's Bond ~ Companion`, a KEY no row of the
+    // pinned oracle declares (`reader-remainder.md` G-U). (Aldori Swordlord served here until F3b2
+    // resolved its ten placeholder-keyed references and attested its closure.)
+    let diabolist = package.rule(package.find("class", "diabolist").expect("diabolist")).expect("rule");
+    assert!(!diabolist.closure_complete);
+    assert!(matches!(class_weapon_proficiency_view("diabolist", 1), ProficiencyAnswer::Unknown { .. }));
     // Divine Scion: "gains no additional weapon or armor proficiencies" (`ism_abilities_class.lst:29`).
     let scion = package.rule(package.find("class", "divine_scion").expect("scion")).expect("rule");
     assert!(scion.closure_complete);

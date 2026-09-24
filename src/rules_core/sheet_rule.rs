@@ -575,6 +575,11 @@ pub struct Provenance {
     /// `"pfs"` when the record's own base row sits in an organized-play overlay file.
     #[serde(default, skip_serializing_if = "Option::is_none")]
     pub overlay: Option<String>,
+    /// SD-36 F3b2b: variable names this record's formulas read that no row of the pinned oracle
+    /// tree declares and that are not oracle built-in terms. The oracle evaluates each as 0, so
+    /// the converter wrote `Const(0)` for it; the names are kept here so the reading is visible.
+    #[serde(default, skip_serializing_if = "Vec::is_empty")]
+    pub undeclared_in_pinned_tree: Vec<String>,
 }
 
 #[derive(Debug, Clone, PartialEq, Default, Serialize, Deserialize)]

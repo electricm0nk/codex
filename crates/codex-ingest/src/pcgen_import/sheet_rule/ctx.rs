@@ -96,6 +96,17 @@ pub struct CorpusIndex {
     pub ambiguous_cat_key: BTreeSet<(String, String)>,
     /// The `by_cat_name` twin of [`CorpusIndex::ambiguous_cat_key`].
     pub ambiguous_cat_name: BTreeSet<(String, String)>,
+    /// SD-36 F3b2b: every candidate record id of each [`CorpusIndex::ambiguous_cat_key`] pair,
+    /// in index order.
+    pub cat_key_candidates: BTreeMap<(String, String), Vec<RuleId>>,
+    /// The `by_cat_name` twin of [`CorpusIndex::cat_key_candidates`].
+    pub cat_name_candidates: BTreeMap<(String, String), Vec<RuleId>>,
+    /// SD-36 F3b2b, the standing supersession ruling (operator 2026-08-16, `decisions.md` §12):
+    /// an ambiguous pair whose candidates are printings of ONE object (`super::reprint`) ->
+    /// the newest printing. A pair missing here stays ambiguous.
+    pub reprint_newest_key: BTreeMap<(String, String), RuleId>,
+    /// The `by_cat_name` twin of [`CorpusIndex::reprint_newest_key`].
+    pub reprint_newest_name: BTreeMap<(String, String), RuleId>,
     /// `(kind, KEY-or-NAME upper)` -> rule id.
     pub by_kind_name: BTreeMap<(String, String), RuleId>,
     /// class NAME upper -> (rule id, class id).
@@ -183,16 +194,18 @@ pub fn resolve_rule_in_checked(tree: &PinnedTree, index: &CorpusIndex, category:
     // must never silently fall through to the NAME map, which could return an entirely
     // different (and equally unchosen) candidate.
     let key_pair = (parent.clone(), n.clone());
+    // An ambiguous pair whose candidates are printings of one object resolves to the newest
+    // printing (SD-36 F3b2b, `decisions.md` §12); any other ambiguous pair stays ambiguous.
     if index.by_cat_key.contains_key(&key_pair) {
         return if index.ambiguous_cat_key.contains(&key_pair) {
-            RuleLookup::Ambiguous
+            index.reprint_newest_key.get(&key_pair).map_or(RuleLookup::Ambiguous, |id| RuleLookup::Found(id.clone()))
         } else {
             RuleLookup::Found(index.by_cat_key[&key_pair].clone())
         };
     }
     if index.by_cat_name.contains_key(&key_pair) {
         return if index.ambiguous_cat_name.contains(&key_pair) {
-            RuleLookup::Ambiguous
+            index.reprint_newest_name.get(&key_pair).map_or(RuleLookup::Ambiguous, |id| RuleLookup::Found(id.clone()))
         } else {
             RuleLookup::Found(index.by_cat_name[&key_pair].clone())
         };
@@ -346,6 +359,9 @@ pub struct RecordCtx<'a> {
     /// Fields omitted for product identity: declared / term hits.
     pub pi_declared: Vec<String>,
     pub pi_term_hits: Vec<String>,
+    /// SD-36 F3b2b: names read as 0 under oracle semantics (declared nowhere in the pinned
+    /// tree, not a built-in term; [`super::oracle_terms`]), sorted, deduplicated.
+    pub undeclared_in_pinned_tree: BTreeSet<String>,
 }
 
 /// A class record's own class id: its inventory unit's slug (`adventurers_guide:class:
@@ -386,6 +402,7 @@ impl<'a> RecordCtx<'a> {
             inlining: Vec::new(),
             pi_declared: Vec::new(),
             pi_term_hits: Vec::new(),
+            undeclared_in_pinned_tree: BTreeSet::new(),
         }
     }
 
@@ -475,7 +492,17 @@ impl<'a> RecordCtx<'a> {
             if strict {
                 return Err(format!("FORMULA:identifier DEFINEd nowhere ({name} inside a function or under * /)"));
             }
-            self.defect("undefined-variables", format!("{}: {name}", self.record.id));
+            // SD-36 F3b2b: a name the oracle cannot read as a built-in term evaluates as 0 there
+            // (`oracle_terms.rs`), so `Const(0)` IS the oracle's reading and the closure is
+            // complete: an informational row, and a provenance note. A name the oracle might
+            // read as a built-in term, or a token that is not one plain identifier, keeps the
+            // closure defect (its oracle value is not proved to be 0).
+            if super::oracle_terms::undeclared_reads_as_zero(name) {
+                self.defect("undeclared-in-pinned-tree", format!("{}: {name}", self.record.id));
+                self.undeclared_in_pinned_tree.insert(name.trim().to_string());
+            } else {
+                self.defect("undefined-variables", format!("{}: {name}", self.record.id));
+            }
             return Ok(Expr::Const(0));
         }
         let own = &self.closure.own_rows;
@@ -602,6 +629,7 @@ mod tests {
         PinnedTree {
             root: std::path::PathBuf::new(),
             book_paths: BTreeMap::new(),
+            source_dates: BTreeMap::new(),
             files: Vec::new(),
             mod_index: BTreeMap::new(),
             base_index: BTreeMap::new(),

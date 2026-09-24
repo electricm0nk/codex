@@ -32,10 +32,12 @@ pub mod closure;
 pub mod convert;
 pub mod ctx;
 pub mod formula;
+pub mod oracle_terms;
 pub mod pool_link;
 pub mod pool_pick;
 pub mod prereq;
 pub mod prose;
+pub mod reprint;
 pub mod table;
 pub mod weapon_membership;
 
@@ -419,6 +421,16 @@ fn declared_row_key(tree: &PinnedTree, r: &RecordRef) -> Option<String> {
     (matches!(id.shape, closure::RowShape::Plain | closure::RowShape::Copy(_)) && !id.key.is_empty()).then_some(id.key)
 }
 
+/// Record both ids of a newly seen ambiguous pair (the first-indexed one once).
+fn push_candidates(map: &mut BTreeMap<(String, String), Vec<RuleId>>, pair: &(String, String), existing: &RuleId, id: &RuleId) {
+    let list = map.entry(pair.clone()).or_default();
+    for candidate in [existing, id] {
+        if !list.contains(candidate) {
+            list.push(candidate.clone());
+        }
+    }
+}
+
 /// Build the corpus-wide index and every record's closure.
 pub fn build_index(tree: &PinnedTree, records: Vec<RecordRef>) -> (CorpusIndex, Vec<Closure>) {
     let mut index = CorpusIndex::default();
@@ -441,6 +453,7 @@ pub fn build_index(tree: &PinnedTree, records: Vec<RecordRef>) -> (CorpusIndex, 
         let cat_key_pair = (cat_u.clone(), key_u.clone());
         match index.by_cat_key.get(&cat_key_pair) {
             Some(existing) if *existing != r.id => {
+                push_candidates(&mut index.cat_key_candidates, &cat_key_pair, existing, &r.id);
                 index.ambiguous_cat_key.insert(cat_key_pair);
             }
             Some(_) => {}
@@ -451,6 +464,7 @@ pub fn build_index(tree: &PinnedTree, records: Vec<RecordRef>) -> (CorpusIndex, 
         let cat_name_pair = (cat_u.clone(), name_u.clone());
         match index.by_cat_name.get(&cat_name_pair) {
             Some(existing) if *existing != r.id => {
+                push_candidates(&mut index.cat_name_candidates, &cat_name_pair, existing, &r.id);
                 index.ambiguous_cat_name.insert(cat_name_pair);
             }
             Some(_) => {}
@@ -555,11 +569,17 @@ pub fn build_index(tree: &PinnedTree, records: Vec<RecordRef>) -> (CorpusIndex, 
                 index.by_cat_key.insert(pair, id);
             }
             Some(existing) if *existing != id && claimed.contains(&pair) => {
+                let existing = existing.clone();
+                push_candidates(&mut index.cat_key_candidates, &pair, &existing, &id);
                 index.ambiguous_cat_key.insert(pair);
             }
             Some(_) => {}
         }
     }
+    // SD-36 F3b2b: the standing supersession ruling, applied to every ambiguous pair.
+    let by_id: BTreeMap<&str, &RecordRef> = records.iter().map(|r| (r.id.as_str(), r)).collect();
+    index.reprint_newest_key = reprint::newest_printings(tree, &by_id, &index.cat_key_candidates);
+    index.reprint_newest_name = reprint::newest_printings(tree, &by_id, &index.cat_name_candidates);
     index.records = records;
     index.filled_pools = pool_pick::filled_pools(tree, &index);
     (index, closures)

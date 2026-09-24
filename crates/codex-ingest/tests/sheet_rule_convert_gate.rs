@@ -738,3 +738,53 @@ fn a_placeholder_keyed_record_is_found_by_the_key_its_row_declares() {
     let feint = ("FEAT".to_string(), "UNBLINKING FLAME FEINT".to_string());
     assert_eq!(s.index.by_cat_key.get(&feint).map(String::as_str), Some("inner_sea_combat:feat:unblinking_flame_feint"));
 }
+
+/// SD-36 Epic F3b2b (1), mechanism H. A variable no row of the pinned tree declares, and that is
+/// not a PCGen built-in term, evaluates as 0 in the oracle (`VariableProcessor.java:394-402`,
+/// see `oracle_terms.rs`). The converter reads it as `Const(0)` with a provenance note, and the
+/// reference is an informational `undeclared-in-pinned-tree` row, not a closure defect: the
+/// closure is complete under oracle semantics. A name the oracle could read as a built-in term
+/// (`CRITMULT`) keeps its `undefined-variables` closure defect.
+#[test]
+fn an_undeclared_non_builtin_variable_reads_zero_and_is_not_a_closure_defect() {
+    let c = convert_unit("core_rulebook:class_feature:loremaster_secret_lore");
+    assert!(c.defects.get("undefined-variables").is_none_or(|l| l.is_empty()), "{:?}", c.defects);
+    // The package writes each defect row once (the record reads the name in two formulas).
+    let rows: BTreeSet<String> = c.defects.get("undeclared-in-pinned-tree").cloned().unwrap_or_default().into_iter().collect();
+    assert_eq!(rows, BTreeSet::from(["core_rulebook:class_feature:loremaster_secret_lore: SecretLore".to_string()]));
+    let principal = c.rules.first().expect("principal");
+    assert_eq!(principal.provenance.undeclared_in_pinned_tree, vec!["SecretLore".to_string()]);
+    let builtin = convert_unit("core_rulebook:ability:unarmed_flaming_burst");
+    assert!(
+        builtin.defects.get("undefined-variables").is_some_and(|l| l.iter().any(|r| r.ends_with(": CRITMULT"))),
+        "a name the oracle may read as a built-in term stays a closure defect: {:?}",
+        builtin.defects
+    );
+    assert!(builtin.rules.first().expect("principal").provenance.undeclared_in_pinned_tree.is_empty());
+}
+
+/// SD-36 Epic F3b2b (2), mechanism T. The standing supersession ruling (operator 2026-08-16:
+/// the newest printing wins; publication order from the `.pcc` `SOURCEDATE:`; a variant is not a
+/// reprint). Cyphermage (`inner_sea_magic`, `ism_classes.lst:79`) grants
+/// `Cyphermage Class Feature|Cyphermage ~ Cypher Lore`. The child category's two declarations
+/// (`ism_abilitycategories.lst:56`, `ag_abilitycategories.lst:7`) agree on the parent
+/// (`Special Ability`) and differ only in `TYPE:`, so the parent is kept; the target is printed
+/// twice (`ism_abilities_class.lst:8`, `SOURCEDATE:2011-07`; `ag_abilities_class.lst:103`,
+/// `SOURCEDATE:2017-06`), the same object (same KEY, name and category; the older DESC is a
+/// prefix of the newer), so it resolves to the Adventurer's Guide printing.
+#[test]
+fn a_same_object_reprint_resolves_to_the_newest_printing() {
+    let s = shared();
+    assert_eq!(s.tree.source_dates.get("inner_sea_magic").map(String::as_str), Some("2011-07"));
+    assert_eq!(s.tree.source_dates.get("adventurers_guide").map(String::as_str), Some("2017-06"));
+    assert_eq!(s.tree.ability_category_parent.get("CYPHERMAGE CLASS FEATURE").map(String::as_str), Some("SPECIAL ABILITY"));
+    let c = convert_unit("inner_sea_magic:class:cyphermage");
+    for kind in ["unresolved-references", "ambiguous-parent-category-target"] {
+        assert!(c.defects.get(kind).is_none_or(|l| l.is_empty()), "{kind}: {:?}", c.defects);
+    }
+    assert!(
+        c.grants_out.iter().any(|(t, _)| t == "adventurers_guide:class_feature:cyphermage_cypher_lore"),
+        "the grant lands on the newest printing: {:?}",
+        c.grants_out.iter().map(|(t, _)| t).collect::<Vec<_>>()
+    );
+}

@@ -792,6 +792,7 @@ mod tests {
         PinnedTree {
             root: PathBuf::new(),
             book_paths: BTreeMap::new(),
+            source_dates: BTreeMap::new(),
             files: Vec::new(),
             mod_index: BTreeMap::new(),
             base_index: BTreeMap::new(),

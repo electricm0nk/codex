@@ -720,6 +720,27 @@ class StructuralDiffGateTest(unittest.TestCase):
         self.assertEqual(code, 1, out)
         self.assertIn("unpinned_fixture: offers", out)
 
+    def test_f3b2b_a_pinned_undeclared_note_passes_only_its_exact_shape(self):
+        rid = "core_rulebook:class_feature:loremaster_secret_lore"
+        rel = "core_rulebook/class_feature/loremaster_secret_lore.json"
+        self.assertEqual(structural_diff.F3B2B_PINS.get((rid, "provenance")), ("f3b2b_undeclared_note", ["SecretLore"]))
+        prov = {"book": "core_rulebook", "kind": "class_feature", "closure_rows": ["x:1"], "oracle_pin": "p", "converter_version": "v"}
+        base = base_rules()
+        base[rel] = [{"id": rid, "label": "Secret Lore", "value": "Text", "provenance": prov, "granted_by": [], "grants": []}]
+        fresh = base_rules()
+        fresh[rel] = [{"id": rid, "label": "Secret Lore", "value": "Text", "provenance": {**prov, "undeclared_in_pinned_tree": ["SecretLore"]}, "granted_by": [], "grants": []}]
+        code, out = self.run_diff(base, fresh)
+        self.assertEqual(code, 0, out)
+        for planted in (
+            {**prov, "undeclared_in_pinned_tree": ["SecretLore", "Other"]},
+            {**prov, "oracle_pin": "moved", "undeclared_in_pinned_tree": ["SecretLore"]},
+            {**prov, "undeclared_in_pinned_tree": []},
+        ):
+            fresh[rel][0]["provenance"] = planted
+            code, out = self.run_diff(base, fresh)
+            self.assertEqual(code, 1, out)
+            self.assertIn("loremaster_secret_lore: provenance", out)
+
     def test_report_only_flag_keeps_exit_zero(self):
         base = base_rules()
         fresh = base_rules()
