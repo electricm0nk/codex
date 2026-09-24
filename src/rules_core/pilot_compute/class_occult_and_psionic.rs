@@ -1,5 +1,6 @@
 #[allow(unused_imports)]
 pub(crate) use super::*;
+use crate::rules_core::sheet_rule::Rat;
 
 // ---------------------------------------------------------------------------
 // SD-31 wave 27 -- prestige-class investigation (CRB shape), NOT a
@@ -217,12 +218,13 @@ pub(super) fn compute_generic_table_chassis(
 /// SD-22 cycle, deliberately left unwired -- see
 /// `class-multiclass-breadth-scoping.md`'s "central finding"). Deliberately
 /// single-class-only by construction: this is only ever reached from
-/// `compute_class_chassis`'s single-class branch, and is never registered
-/// with `table_class_id`/`multiclass_class_level_supported`, so an
-/// APG-class-containing multiclass mix cannot reach this path at all --
-/// avoiding the exact multiclass loophole the Ranger slice's adversarial
-/// review found and fixed (see `class_spell.ranger.partial_caster.unsupported`'s
-/// own doc comment).
+/// `compute_class_chassis`'s single-class branch. Since SD-36 F3b an
+/// APG-class-containing multiclass mix reaches it only through that class's
+/// ISOLATED single-class run (`multiclass_fold`), whose blocking class lines
+/// the mix carries re-scoped -- so the multiclass loophole the Ranger slice's
+/// adversarial review found (a mix silently dropping a class's own blocker;
+/// see `class_spell.ranger.partial_caster.unsupported`'s own doc comment)
+/// stays closed.
 ///
 /// Unlike `compute_generic_table_chassis` (CRB classes, which each have
 /// their own `explain_<class>_...` function separately deciding what else
@@ -310,11 +312,9 @@ pub(super) fn compute_apg_class_chassis(
     // exact original unconditional diagnostic unchanged. These branches
     // are reached only for single-class Cavalier/Alchemist/Inquisitor/
     // Oracle/Witch (this function is only ever called from
-    // `compute_class_chassis`'s single-class-only section;
-    // `ApgClassId::from_class_id_str` is deliberately not registered with
-    // `multiclass_class_level_supported`, so a Cavalier-, Alchemist-,
-    // Inquisitor-, Oracle-, or Witch-containing multiclass mix never
-    // reaches this function at all).
+    // `compute_class_chassis`'s single-class-only section; since SD-36 F3b a
+    // mix reaches it only through the class's isolated single-class run,
+    // `multiclass_fold`, which carries its blocking lines into the mix).
     if class_id == ApgClassId::Cavalier {
         ground_cavalier_mount_and_defer_the_rest(
             input,
@@ -530,10 +530,10 @@ pub(super) fn key_titlecase(key: &str) -> String {
 /// risks item 8, fourth slice) -- identical shape, sourcing from
 /// `rules_tables::acg::class_chassis_resolve` instead of
 /// `rules_tables::apg::class_chassis_resolve`. Deliberately NOT registered
-/// with `table_class_id`/`multiclass_class_level_supported` for the same
-/// reason: only reachable from `compute_class_chassis`'s already-single-
-/// class-only section, so an ACG-class-containing multiclass mix cannot
-/// reach this path at all.
+/// with `table_class_id` for the same reason: only reachable from
+/// `compute_class_chassis`'s already-single-class-only section (a mix
+/// reaches it only through the class's isolated run, SD-36 F3b
+/// `multiclass_fold`).
 pub(super) fn compute_acg_class_chassis(
     class_id: AcgClassId,
     class_id_str: &str,
@@ -614,10 +614,9 @@ pub(super) fn compute_acg_class_chassis(
     // unchanged. These branches are reached only for single-class
     // Skald/Bloodrager/Brawler/Hunter/Arcanist/Warpriest/Slayer/
     // Swashbuckler/Investigator/Shaman (this function is only ever
-    // called from `compute_class_chassis`'s single-class-only section;
-    // `AcgClassId::from_class_id_str` is deliberately not registered
-    // with `multiclass_class_level_supported`, so any of these ten
-    // classes in a multiclass mix never reaches this function at all),
+    // called from `compute_class_chassis`'s single-class-only section; a
+    // mix reaches it only through the class's isolated run, SD-36 F3b
+    // `multiclass_fold`, which carries its blocking lines into the mix),
     // so no separate gate-ordering/hoisting fix is needed the way CRB
     // classes required once `table_class_id` recognized them
     // generically.
@@ -730,22 +729,14 @@ pub(super) fn effective_combat_feat_intelligence_score(
     intelligence_score.max(substitute_score)
 }
 
-/// Whether `class_level` is a class this dispatch grounds a base-chassis
-/// computation for (a bespoke `compute_<class>_chassis` for Fighter/Wizard,
-/// or the generic table-driven path for every other class `table_class_id`
-/// recognizes), at a level within that class's own `class_tables()`-declared
-/// ceiling.
+/// Whether `class_level` is one of the CRB table classes `table_class_id`
+/// recognizes, at a level within that class's own `class_tables()` ceiling --
+/// the table-driven single-class chassis path (`is_supported_generic_single_class`).
 ///
-/// **Doc-accuracy correction (v0.6 alpha swarm, risks item 8, 2026-07-24)**:
-/// this comment previously claimed the widening covered "every core class"
-/// `class_tables()` carries data for (naming all 11). That was never true
-/// of the code -- this function has always bottomed out in
-/// `table_class_id`, which recognizes only the classes named on that
-/// function's own doc comment (Fighter, Wizard, Rogue, and now Ranger --
-/// see `table_class_id`'s doc comment for the real, current allowlist and
-/// why it isn't wider yet). Corrected here rather than left to mislead a
-/// future reader into believing multiclass already supports all 11.
-pub(super) fn multiclass_class_level_supported(class_level: &CharacterClassLevel) -> bool {
+/// Before SD-36 F3b this was also the whole multiclass gate (only the 11 CRB
+/// classes could mix); [`is_supported_multiclass_mix`] now admits every
+/// class with a chassis, and this keeps only its single-class job.
+pub(super) fn table_class_level_supported(class_level: &CharacterClassLevel) -> bool {
     let Some(class_id) = table_class_id(&class_level.class_id) else {
         return false;
     };
@@ -754,17 +745,19 @@ pub(super) fn multiclass_class_level_supported(class_level: &CharacterClassLevel
         .any(|row| row.class_id == class_id && row.level == class_level.level)
 }
 
-/// Whether `input` is a length-2+ `class_levels` mix every entry of which is
-/// individually a supported class/level (SD-21 E7.28; widened v0.6 alpha
-/// swarm task 4 from Fighter-or-Wizard-only to any class/level pair
-/// `multiclass_class_level_supported` recognizes).
+/// Whether `input` is a length-2+ `class_levels` mix every entry of which can
+/// join a mix and at least one of which is not a prestige class (SD-21 E7.28;
+/// widened v0.6 alpha swarm task 4 to the 11 CRB table classes; SD-36 F3b
+/// (`epic-f-class-completion.md` §5) to every class with a chassis). The
+/// per-class gate -- the isolated single-class input passes
+/// `has_supported_class_chassis`, or a prestige class has a converted chassis
+/// row at that level, and every save has a Good/Poor source -- is
+/// `multiclass_fold::multiclass_member`, which names the reason when a class
+/// cannot join. Replaces the pre-F3b `multiclass_class_level_supported`, whose
+/// table-only body is now [`table_class_level_supported`].
 pub(super) fn is_supported_multiclass_mix(input: &CharacterInput) -> bool {
     input.chosen.class_levels.len() >= 2
-        && input
-            .chosen
-            .class_levels
-            .iter()
-            .all(multiclass_class_level_supported)
+        && multiclass_fold::multiclass_mix_rejections(input).is_empty()
 }
 
 /// SD-36 Epic F2b: the claim-blocking diagnostic a prestige class as a
@@ -3732,75 +3725,53 @@ pub(super) fn render_class_skill_list(
 }
 
 /// Compute the base-attack-bonus / base-save chassis pillar for a length-2+
-/// multiclass `class_levels` mix (SD-21 E7.28), or return `None` when any class
-/// in the mix is not one Epic 6 grounds a `compute_<class>_chassis` for.
+/// multiclass `class_levels` mix (SD-21 E7.28; SD-36 F3b: every class with a
+/// chassis, `multiclass_fold`), or return `None` -- with each named reason
+/// pushed -- when the mix is not supported.
 ///
-/// Each class level is run through its own `compute_<class>_chassis` in
-/// isolation — a synthetic single-class `CharacterInput` clone carrying only
-/// that one `CharacterClassLevel` — so Fighter's and Wizard's existing,
-/// independently-verified chassis functions run completely unmodified. The
-/// per-class explanations/diagnostics from each isolated sub-computation are
-/// deliberately discarded (not merged into the outer `explanations` /
-/// `diagnostics`): merging them verbatim would push the same generic
-/// `class_chassis.base_attack_bonus` / `class_chassis.base_save.*` ids twice —
-/// once per class — silently clobbering one class's explanation record with
-/// the other's under a `Vec` lookup-by-id. Instead, this function pushes its
-/// own single combined explanation per field, naming both classes in the
-/// detail text.
+/// Each class's base attack bonus comes from its own isolated single-class
+/// chassis (a synthetic single-class `CharacterInput` clone carrying only that
+/// `CharacterClassLevel`), or a prestige class's converted chassis row. The
+/// isolated sub-computations' explanations/diagnostics are discarded here: merging
+/// them would push the generic `class_chassis.base_attack_bonus` /
+/// `class_chassis.base_save.*` ids once per class. This function pushes one
+/// combined explanation per field instead (per-class lines are re-scoped by
+/// `multiclass_fold::explain_multiclass_fold`).
 ///
-/// Base attack bonus is a plain sum of the per-class results. Base saves use
-/// the same per-class-round-then-sum shape for now; E7.29 replaces the save
-/// combination with PF1's fractional-progression stacking rule (summing each
-/// class's un-rounded fractional save contribution before rounding down once),
-/// which is not a naive sum and diverges from this shape at some level pairs.
+/// Base attack bonus is a plain sum. Base saves follow the fractional rule
+/// (E7.29): each class's exact save value summed, floored once.
 pub(super) fn compute_multiclass_base_chassis(
     input: &CharacterInput,
     ability_modifiers: &AbilityModifiers,
     explanations: &mut Vec<ComputationExplanation>,
-    // Every class in a supported multiclass mix (per `is_supported_multiclass_mix`)
-    // resolves its own isolated `compute_class_chassis` to `Some`, so no
-    // `class_chassis.unsupported`-style diagnostic is ever pushed here; the
-    // parameter is kept only for signature symmetry with `compute_class_chassis`.
-    _diagnostics: &mut Vec<ComputationDiagnostic>,
+    diagnostics: &mut Vec<ComputationDiagnostic>,
 ) -> Option<(i16, BaseSaves)> {
-    if !is_supported_multiclass_mix(input) {
+    // SD-36 F3b: an unsupported mix names why (each class that cannot join, or
+    // the prestige-only game rule) instead of leaving only the generic
+    // `class_chassis.unsupported` fallback.
+    let rejections = multiclass_fold::multiclass_mix_rejections(input);
+    if !rejections.is_empty() {
+        diagnostics.extend(rejections);
         return None;
     }
 
     let mut total_bab: i16 = 0;
-    let mut fort_fraction = 0.0_f64;
-    let mut ref_fraction = 0.0_f64;
-    let mut will_fraction = 0.0_f64;
+    let mut fractions = [Rat::ZERO; 3];
     let mut class_summaries: Vec<String> = Vec::new();
 
     for class_level in &input.chosen.class_levels {
-        let mut isolated = input.clone();
-        isolated.chosen.class_levels = vec![class_level.clone()];
-
-        let mut isolated_explanations = Vec::new();
-        let mut isolated_diagnostics = Vec::new();
-        let (bab, _isolated_saves) = compute_class_chassis(
-            &isolated,
-            ability_modifiers,
-            &mut isolated_explanations,
-            &mut isolated_diagnostics,
-        )?;
+        let bab = multiclass_fold::member_base_attack_bonus(input, class_level, ability_modifiers)?;
         total_bab += bab;
 
-        // SD-21 E7.29: PF1's multiclass base-save rule sums each class's
-        // *un-rounded* fractional save contribution before rounding down once
-        // for the total -- it is not a naive per-class-round-then-sum (which
-        // would round each class's contribution down separately first, losing
-        // any fractional remainder that would otherwise carry into the next
-        // integer once combined with another class's remainder). The
-        // good/poor classification per save mirrors `class_tables.rs`'s
-        // `GoodSaves` row for whatever class this loop iteration is on
-        // (widened v0.6 alpha swarm task 4 from a Fighter/Wizard-only pair
-        // to every class `table_class_id` recognizes).
-        let (fort_good, ref_good, will_good) = multiclass_good_saves(&class_level.class_id)?;
-        fort_fraction += fractional_save_value(class_level.level, fort_good);
-        ref_fraction += fractional_save_value(class_level.level, ref_good);
-        will_fraction += fractional_save_value(class_level.level, will_good);
+        // SD-21 E7.29 / SD-36 F3b: each class's UN-ROUNDED save value is summed
+        // and the total is floored once. The per-class value is exact: a CRB
+        // table class's `level/2 + 2` or `level/3`, or any other class's own
+        // converted `Expr` (its base or prestige table form), and only for a save
+        // whose shape is Good or Poor (`multiclass_fold::multiclass_member`).
+        let member = multiclass_fold::multiclass_member(input, class_level).ok()?;
+        for (sum, value) in fractions.iter_mut().zip(member.saves) {
+            *sum = *sum + value;
+        }
 
         class_summaries.push(format!(
             "{} {}: base attack bonus {bab}",
@@ -3808,11 +3779,15 @@ pub(super) fn compute_multiclass_base_chassis(
         ));
     }
 
+    let floor_once = |r: Rat| i16::try_from(r.floor().num).ok();
     let total_saves = BaseSaves {
-        fortitude: fort_fraction.floor() as i16,
-        reflex: ref_fraction.floor() as i16,
-        will: will_fraction.floor() as i16,
+        fortitude: floor_once(fractions[0])?,
+        reflex: floor_once(fractions[1])?,
+        will: floor_once(fractions[2])?,
     };
+    let shown = |r: Rat| r.num as f64 / r.den as f64;
+    let (fort_fraction, ref_fraction, will_fraction) =
+        (shown(fractions[0]), shown(fractions[1]), shown(fractions[2]));
 
     let class_summary = class_summaries.join("; ");
 
@@ -3853,29 +3828,6 @@ pub(super) fn compute_multiclass_base_chassis(
     });
 
     Some((total_bab, total_saves))
-}
-
-/// PF1's per-class base-save fractional value at a class level, before
-/// rounding (SD-21 E7.29). A "good" save's fractional formula is
-/// `level/2 + 2`; a "poor" save's is `level/3` -- the same formulas
-/// `compute_fighter_chassis` and `class_tables.rs`'s `save_bonus` already
-/// apply, just evaluated as a real number instead of floored per-class. The
-/// canonical multiclass rule sums these fractional values across every class
-/// in the mix and rounds down only once for the total.
-pub(super) fn fractional_save_value(level: u8, good: bool) -> f64 {
-    let level = f64::from(level);
-    if good { level / 2.0 + 2.0 } else { level / 3.0 }
-}
-
-/// Whether `class_id` grounds a "good" progression for Fortitude, Reflex, and
-/// Will respectively (SD-21 E7.29; widened v0.6 alpha swarm task 4 to every
-/// class `table_class_id` recognizes, not just Fighter/Wizard). Reads
-/// `class_tables.rs`'s own ingested `good_saves_for` classification directly
-/// (SD-24 Epic 5 criterion 5.3) rather than re-declaring a second,
-/// independently-maintained copy that could silently drift from it. Returns
-/// `None` for any other class id.
-pub(super) fn multiclass_good_saves(class_id: &str) -> Option<(bool, bool, bool)> {
-    good_saves_for(table_class_id(class_id)?)
 }
 
 /// PF1's own class-level ceiling, and the `MAXLEVEL:20` every CRB/APG/ACG

@@ -46,7 +46,7 @@ use crate::support::paths::repo_root;
 
 use crate::rules_core::sheet_rule::{
     evaluate_expr_from_facts, Applies, BonusTarget, CharacterFacts, Cmp, Expr, ProseFamily,
-    ProsePiece, Save, SheetRule, SheetValue,
+    ProsePiece, Rat, Save, SheetRule, SheetValue,
 };
 
 /// The default level ceiling for a class whose converted record states none:
@@ -229,6 +229,27 @@ impl ClassChassis {
             return Some(SaveProgression::Poor);
         }
         Some(SaveProgression::Unrecognized)
+    }
+
+    /// Save `index`'s EXACT value at `level` -- the converted `Expr` evaluated
+    /// as a rational with no truncation (`level/2 + 2` at 1st is `5/2`), or
+    /// `None` for an index outside `0..3` or a level outside
+    /// `1..=max_level`. SD-36 F3b: the multiclass fold sums these across
+    /// classes and floors once, so a class's own table form (base or
+    /// prestige) is what it contributes, never a re-derived closed form.
+    /// Callers check [`Self::save_shape`] first: only a `Good`/`Poor` save
+    /// is folded.
+    pub fn save_value_exact(&self, index: usize, level: u8) -> Option<Rat> {
+        let expr = self.saves.get(index)?;
+        if level < 1 || level > self.max_level {
+            return None;
+        }
+        let facts = CharacterFacts {
+            level: i64::from(level),
+            class_levels: vec![(self.level_var.clone(), i64::from(level))],
+            ..CharacterFacts::default()
+        };
+        Some(evaluate_expr_from_facts(expr, &facts))
     }
 
     /// The hit points `levels` levels of this class contribute: the full

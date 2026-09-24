@@ -310,35 +310,39 @@ records or pushes a named claim-blocking diagnostic and stops. This gate-then-ex
 at every level band; the functions' own doc comments record which named sub-features are grounded
 versus still claim-blocked as of the current level ceiling for that class.
 
-**Multiclass base-chassis dispatch (SD-24 Epic 5; widened v0.6 alpha swarm task 4).**
-`compute_multiclass_base_chassis` (`class_occult_and_psionic.rs`) fires whenever
-`input.chosen.class_levels.len() >= 2`; `is_supported_multiclass_mix` gates it to combinations where
-every class level is individually supported. **This is no longer Fighter+Wizard-only**: the gate's
-own doc comment records the widening — `multiclass_class_level_supported` bottoms out in
-`table_class_id` (`class_shared_core.rs`), which today recognizes all **11 Core Rulebook classes**
-(Fighter, Wizard, Rogue, Ranger, Paladin, Sorcerer, Cleric, Druid, Barbarian, Bard, Monk — Monk was
-the last one added, closing a gap where its chassis table existed but no string mapping reached it).
-So: any length-2+ mix of these 11 classes, at any per-class level within each class's own 20-level
-ceiling, gets real base-chassis (BAB/save) stacking. Base attack bonus and saves stack per PF1's
-canonical additive multiclass rule: each class's own fractional BAB/save progression is summed
-*before* flooring once for the total, reading the fractional classification from `class_tables.rs`'s
-own `good_saves_for(ClassId) -> Option<(bool, bool, bool)>` (`multiclass_good_saves`) rather than a
-second, independently-maintained copy. `fighter_level_in_mix`/`wizard_level_in_mix`-shaped helpers
-resolve each class's own sub-level from the mix so that class's per-level named-feature/spell-baseline
-explainers (e.g. `explain_wizard_level1_prepared_spell_baseline`) keep firing once a second class
-joins, instead of silently going quiet the moment the build stops being single-class.
-`tests/sd21_multiclass_fighter_wizard_chassis_computes.rs` and the `sd24_multiclass_*` deterministic
-suite prove the mechanism concretely for Fighter+Wizard (originally to total level 10; the gate itself
-carries no total-level cap beyond each class's own 20-level ceiling) — no test file exercises every
-other pair of the 11 individually, so treat "the gate accepts them" (proven directly from
-`table_class_id`'s own source, not a test) and "a given untested pair reaches `Computed` end-to-end"
-as two different claims. This grounds the base-chassis/explanation layer only — it does not by itself
-get any multiclass build to `HeadlessReceiptStatus::Computed` end-to-end (spellbook and other
-per-domain diagnostics can still block). A multiclass mix containing an APG/ACG/Unchained/Ultimate
-Combat/exotic-untabled class is a real, separate limitation: `table_class_id` never registers those
-classes, so `compute_class_chassis`'s own APG/ACG/Unchained/UC dispatch arms each carry a comment
-stating that class-containing multiclass mix "cannot reach this path at all" — see
-`class_occult_and_psionic.rs`'s dispatch arms for each family's own comment.
+**Multiclass base-chassis dispatch and fold (SD-24 Epic 5; widened v0.6 alpha swarm task 4; generalised
+SD-36 Epic F3b).** `compute_multiclass_base_chassis` (`class_occult_and_psionic.rs`) fires whenever
+`input.chosen.class_levels.len() >= 2`. `is_supported_multiclass_mix` admits the mix when every member
+passes `multiclass_fold::multiclass_member` and at least one member is not a prestige class:
+
+- A non-prestige member's ISOLATED single-class input (the same input with only that class level) passes
+  `has_supported_class_chassis`; a prestige member's converted record has a chassis row at that level.
+- Each of the member's three saves has a source the fold can sum: the CRB class table (`good_saves_for`,
+  the 11 tabled classes) or else `ClassChassis::save_shape` is `Good` or `Poor`. `Degraded`,
+  `Unrecognized` or no record is a named claim-blocking diagnostic
+  (`multiclass.save_shape.{degraded,unrecognized,unknown}`), never a silent poor save. A class that cannot
+  join at all is `multiclass.class_unsupported`; a prestige-only mix states
+  `prestige_class.requires_base_class_levels`.
+
+The fold is one generic rule, no class named. BAB is the sum of each member's own BAB (isolated chassis, or
+the prestige row). Saves sum each member's EXACT (`Rat`) save value -- `level/2 + 2` / `level/3` for a
+table class, the class's own converted `Expr` otherwise (a prestige class's `(level+1)/2` / `(level+1)/3`
+table form) -- and floor once. `multiclass_fold::explain_multiclass_fold` then adds the character-level
+totals: `multiclass.hit_points` (maximized die for the first-listed class's first level, `die/2 + 1`
+after, + Con per level) and skill points, which print Unknown (`class_chassis.skill_points.unknown`, one
+per class, non-blocking) because no converted class record states skill ranks per level. Each member's
+own lines (`class_feature.*`, `class_spell.*`, `class_chassis.<class>.*`) come verbatim from its isolated
+single-class run, re-scoped `multiclass.<class>.<original id>`; its blocking class lines carry over the
+same way, so a class that cannot compute alone does not compute in a mix. Prestige entry requirements
+print (`multiclass.prestige_entry_gate.{met,unmet}`), never block. Class skills and weapon proficiency
+were already unions over `class_levels`; F3b made the weapon union decidable by any one granting class
+(a class with no answer no longer turns a Fighter's longsword into Unknown).
+
+Proved by `tests/sd36_multiclass_any_class.rs` (four mixes against hand-worked PF1 values,
+`docs/release/SD-36-consolidation/artifacts/epic-f/stage-f2-f3/f3b-hand-worked.md`), and for
+Fighter+Wizard by `tests/sd21_multiclass_fighter_wizard_chassis_computes.rs` and the `sd24_multiclass_*`
+suite. The fractional save rule (+2 per good-save class, floored once) differs from CRB p.30's core rule
+(sum of per-class rounded saves) on some mixes; the hand-worked sheet names where.
 
 **Core output types** (`PilotBaseChassisComputation`, `ComputationExplanation`, `ComputationDiagnostic`,
 `HeadlessReceiptStatus` and `PilotHeadlessReceipt` are all defined in `class_shared_core.rs` beside

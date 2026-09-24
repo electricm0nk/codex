@@ -165,6 +165,14 @@ pub(crate) fn is_prestige(class_id_str: &str) -> bool {
         .is_some_and(|record| record.tags.iter().any(|t| t == "Prestige"))
 }
 
+/// The converted chassis record behind `class_id_str` (a `"class:<slug>"`
+/// id), book precedence applied -- or `None` for a bare slug or a class this
+/// population does not carry. SD-36 F3b: the multiclass fold reads a class's
+/// save shapes, exact save values and hit die off this record.
+pub(crate) fn record(class_id_str: &str) -> Option<&'static ClassChassis> {
+    generic_class_records().get(class_id_str.strip_prefix("class:")?)
+}
+
 /// Resolves `class_id_str` (a `"class:<slug>"` string) at `level` into a
 /// real BAB/save chassis row, or `None` when the class is not one of this
 /// table's 60 (either genuinely unresolved, like Demoniac, or simply not a

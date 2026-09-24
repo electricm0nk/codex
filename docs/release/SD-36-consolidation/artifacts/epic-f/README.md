@@ -34,6 +34,11 @@ one by name).
   `alone_blocking_diagnostics` now carries
   `prestige_class.requires_base_class_levels` at every level, and none carries
   `class_chassis.unsupported`. Write-up: `stage-f2-f3/f2b-prestige-alone.md`.
+- `census-f3b.json` — SD-36 Epic F3b's sweep (multiclass gate + fold for every
+  class with a chassis): prestige carrier mixes 0 -> 56 of 74 `Computed` (11
+  Unknown, 7 Blocked by named mechanism); every other count identical to
+  `census-f2b.json`. Write-up: `stage-f2-f3/f3b-multiclass-fold.md`;
+  hand-worked oracle: `stage-f2-f3/f3b-hand-worked.md`.
 - `mix-panel-histogram.md` — F0d's human-readable write-up of the
   claim-blocking-diagnostic histogram across the 185-row mix panel.
 - `scripts/` — `unres2.py`/`closure.py`, the read-only planning-pass

@@ -1492,7 +1492,7 @@ pub(super) fn explain_paladin_level1_chassis_and_spell_burden_separation(
     // the Ranger fix exactly (`ranger_dispatch_widening_safety_tests`'
     // own doc comment has the full history of why this ordering matters:
     // `table_class_id` recognizing Paladin makes
-    // `multiclass_class_level_supported`/`is_supported_multiclass_mix`
+    // `is_supported_multiclass_mix`
     // accept a Paladin-containing mix too, and `compute_multiclass_base_chassis`
     // deliberately discards each isolated per-class sub-computation's own
     // diagnostics, so nothing else in the multiclass path would ever
@@ -2743,7 +2743,7 @@ pub(super) fn explain_ranger_level1_chassis_and_class_feature_separation(
     // requires an exact one-element `class_levels` slice) specifically so a
     // Ranger+Fighter/Wizard/Rogue multiclass cannot silently bypass it. This
     // matters because `table_class_id` recognizing Ranger makes
-    // `multiclass_class_level_supported`/`is_supported_multiclass_mix`
+    // `is_supported_multiclass_mix`
     // newly accept a Ranger-containing mix too -- `compute_multiclass_base_chassis`
     // deliberately discards each isolated per-class sub-computation's own
     // diagnostics (see that function's own doc comment), so nothing else in
@@ -5279,8 +5279,8 @@ pub(super) fn ground_ranger_prepared_spells(
 /// Ranger-containing multiclass mix. The first version of this module
 /// (written after an adversarial scoping review found widening
 /// `table_class_id` to recognize Ranger was a real, not theoretical, false-
-/// `Computed` risk: `multiclass_class_level_supported`/
-/// `is_supported_multiclass_mix` accept a Ranger+Fighter/Wizard/Rogue mix,
+/// `Computed` risk: `is_supported_multiclass_mix` accepts a
+/// Ranger+Fighter/Wizard/Rogue mix,
 /// and `compute_multiclass_base_chassis` deliberately discards each
 /// isolated per-class sub-computation's own diagnostics) asserted Ranger
 /// stayed `Blocked` unconditionally. That is no longer true: Ranger's spell

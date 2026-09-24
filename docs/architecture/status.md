@@ -39,9 +39,11 @@ offered race roster does so for Fighter, levels 1-3 only
 Ultimate Combat's three classes (Gunslinger, Ninja) reach `Computed` too,
 and so do 9 of 27 "untabled" exotic/NPC base classes (Kineticist, Medium,
 Mesmerist, Occultist, Vigilante, Psychic, Spiritualist, Psion, Shifter).
-Multiclass grounds real BAB/save stacking (the base-chassis layer, not by
-itself a full `Computed` receipt) for any combination of the 11 CRB base
-classes. The desktop app ships a real, end-to-end character-creation,
+Multiclass grounds BAB/save stacking, a hit-point total and each class's own
+feature lines for any mix of classes that each have a chassis and a Good/Poor
+save source, with at least one non-prestige class (SD-36 F3b,
+`pilot_compute/multiclass_fold.rs`); class skill points print Unknown (no
+converted class record states skill ranks per level). The desktop app ships a real, end-to-end character-creation,
 leveling, equipment, spellcasting, DM-toolkit, encounter-builder, and
 campaign-manager surface, independently verified at 66 of 69 automated UI
 flows green (`docs/release/SD-36-consolidation/artifacts/ui-smoke/final/RECEIPT.md`,
@@ -112,7 +114,7 @@ actually measures.
 | ...reach `Computed` at no level (non-prestige) | **0** | of 63 | `blocked` |
 | Prestige ids swept (never measured alone — see the carrier rule below) | **74** | of 137 total ids | `prestige_swept` |
 | ...Blocked alone (negative control) | **74** | of 74 | `prestige_alone_blocked` |
-| ...`Computed` in their deterministic carrier mix | **0** | of 74 | `prestige_mix_computed` |
+| ...`Computed` in their deterministic carrier mix | **56** | of 74 | `prestige_mix_computed` |
 | Multiclass mix-panel rows swept (existing negative-control inputs, re-used) | **185** | — | `mix_panel_swept` |
 | ...reach `Computed` | **185** | of 185 | `mix_panel_computed` |
 | ...stay `Blocked` | **0** | of 185 | `mix_panel_blocked` |
@@ -129,7 +131,7 @@ actually measures.
 | Untabled exotic base classes | advanced_players_guide, occult_adventures, ultimate_intrigue, ultimate_magic, ultimate_psionics, ultimate_wilderness | 20 | 20 |
 | CRB NPC / Ex-* classes | core_rulebook | 7 | 7 |
 | generic_class_chassis-only (unclaimed by any of the eight canonical sources) | advanced_players_guide | 2 | 2 |
-| Prestige | see per-class `books` in the census JSON (11 source books) | 74 | n/a alone (never a legitimate measurement — see headline numbers: 0 of 74 `Computed` in carrier mix) |
+| Prestige | see per-class `books` in the census JSON (11 source books) | 74 | n/a alone (never a legitimate measurement — see headline numbers: 56 of 74 `Computed` in carrier mix) |
 | **Total** | | **137** (63 non-prestige + 74 prestige) | **63** of 63 non-prestige ids Computed alone (prestige carrier-mix result kept separate, per headline numbers above — the bin's own `--json` output never folds the two together) |
 <!-- class-census:end -->
 
@@ -172,12 +174,18 @@ Row-by-row evidence:
   records by the game rule (a prestige class cannot be a character's first
   class), so a real chassis still never becomes single-class `Computed` for any
   of the 74; F3's multiclass gate is where it folds in.
-- **Multiclass (CRB-11 only)**: `class_shared_core.rs:3678-3715`
-  (`table_class_id`, recognizes exactly the 11 CRB ids);
-  `class_occult_and_psionic.rs:761-798` (`is_supported_multiclass_mix`
-  requires every mix member to be one of those 11; the APG/ACG/Unchained/UC
-  dispatch arms each disclaim multiclass support in their own comments);
-  proved by `tests/sd21_multiclass_fighter_wizard_chassis_computes.rs`.
+- **Multiclass (every class with a chassis, SD-36 F3b)**:
+  `is_supported_multiclass_mix` (`class_occult_and_psionic.rs`) admits a mix
+  when every member passes `multiclass_fold::multiclass_member` (the isolated
+  single-class input passes `has_supported_class_chassis`, or a prestige class
+  has a converted row at that level; every save is Good/Poor from the CRB table
+  or the converted record) and one member is not prestige. A member that
+  cannot join is named (`multiclass.class_unsupported`,
+  `multiclass.save_shape.{degraded,unrecognized,unknown}`); a prestige-only mix
+  states `prestige_class.requires_base_class_levels`. Proved by
+  `tests/sd36_multiclass_any_class.rs` (four hand-worked mixes,
+  `artifacts/epic-f/stage-f2-f3/f3b-hand-worked.md`) and
+  `tests/sd21_multiclass_fighter_wizard_chassis_computes.rs`.
 - **Desktop picker (31 of 42 `Computed` classes offered)**:
   `apps/desktop/src/characterHub/characterHubModel.ts:409` `CLASS_OPTIONS`,
   31 entries — all 31 fully-tabled classes, none of the 11
@@ -197,19 +205,21 @@ for):
   Gunslinger, Ninja (Ultimate Combat); Kineticist, Medium, Mesmerist,
   Occultist, Psion, Psychic, Shifter, Spiritualist, Vigilante (untabled
   exotic). A UI-surface gap, not an engine gap.
-- **Prestige, with vs. without a chassis (56 / 18, of 74 ingested)**: 56 of
-  the 74 ingested prestige classes have a real BAB/save chassis dispatched
-  via `generic_class_chassis::resolve` but never reach `Computed` (missing
-  gate arm, not missing data); the other 18 have no chassis registry at
-  all. No prestige class of either kind ever reaches `Computed`.
-- **Multiclass scope (1 family of 8)**: only combinations of the 11 CRB
-  base classes are supported; a mix containing any APG/ACG/Unchained/
-  UC/untabled-exotic/CRB-NPC/prestige class is not reachable through the
-  supported-chassis gate at all — 8 is the per-family breakdown table's own
-  row count above (`compute_class_chassis`'s dispatch chain,
-  `class_occult_and_psionic.rs:770-1063`, has 8 chassis-bearing arms plus a
-  9th, non-chassis prestige-entry-gate arm; "6" undercounted by dropping the
-  untabled-exotic, CRB-NPC, and prestige rows from the denominator).
+- **Prestige in a carrier mix (56 of 74 `Computed`)**: census
+  `prestige_mix_computed=56`, 2026-09-24, SD-36 F3b
+  (`artifacts/epic-f/census-f3b.json`). Of the other 18: 11 have no nameable
+  carrier (their entry gate states the caster-level/spell term only inside an
+  AtLeast/Not clause); 4 are Blocked on `multiclass.save_shape.unrecognized`
+  (Exalted, Mammoth Rider, Sentinel, Ulfen Guard -- F3a's named source-formula
+  saves); 3 are Blocked on `combat.baseline_weapon_proficiency_unknown` with a
+  Wizard/Cleric carrier that does not grant the longsword while the prestige
+  record has no closure-complete attestation (Cyphermage, Magaambyan Arcanist,
+  Mystic Theurge). A prestige class alone is never `Computed` (74 of 74
+  Blocked, the game rule).
+- **Multiclass scope**: every family can mix since SD-36 F3b, with two named
+  save-source remainders: the 4 Pathfinder Unchained classes (no CRB table row
+  and no converted chassis record: `multiclass.save_shape.unknown`) and the 6
+  prestige records with an Unrecognized save (`multiclass.save_shape.unrecognized`).
 
 **Refuted claims — corrected here, not restated anywhere else in this
 repo**:
@@ -375,7 +385,7 @@ Anyone who needs it can read the superseded commits under `docs/release/SD-29-*`
 | IPC bridge liveness | `load_backend_health` returns the real crate version and compile-time git SHA | [desktop-app.md](./desktop-app.md) |
 | Homebrew authoring workbench | The Guard Stance proof package's validate/persist/preview round trip, read-only bridged to the desktop tester workbench | [homebrew-and-oracle.md](./homebrew-and-oracle.md) |
 | Encounter difficulty / party CR compute | `Encounter::new` and `party_challenge_rating` are real, grounded compute, now reachable through the real DM Toolkit UI (see above — no longer blocked behind a stub screen) | [rules-engine.md](./rules-engine.md) |
-| Fighter+Wizard multiclass base-chassis dispatch | `compute_multiclass_base_chassis` grounds BAB/save stacking + per-class named-feature explanations for any Fighter+Wizard split — proven by test to total level 10, though the gate itself carries no total-level cap beyond each class's own 20-level ceiling — grounds the base-chassis layer only, not a full `Computed` receipt end-to-end | [rules-engine.md](./rules-engine.md) §"Multiclass base-chassis dispatch" |
+| Multiclass base-chassis dispatch + fold | `compute_multiclass_base_chassis` grounds BAB/save stacking (exact fractions, floored once) for any mix of classes with a chassis and a Good/Poor save source (SD-36 F3b); `multiclass_fold::explain_multiclass_fold` adds the hit-point total, Unknown skill points (named), each class's own lines re-scoped `multiclass.<class>.*`, and prestige entry requirements printed, never enforced — four hand-worked mixes in `tests/sd36_multiclass_any_class.rs` | [rules-engine.md](./rules-engine.md) §"Multiclass base-chassis dispatch" |
 | Repo-resident JSON corpus cache | `data/corpus/<book>/**/*.json` — see [rules-data-tables.md](./rules-data-tables.md) for the current book/file-count figures (not re-derived here); a sanitized runtime mirror of the same data ships in the desktop installer as `resources/corpus_bundle/` (64 MiB, 14,029 JSON files) — see [desktop-app.md](./desktop-app.md) |
 
 ## Known gaps and stubs, by area

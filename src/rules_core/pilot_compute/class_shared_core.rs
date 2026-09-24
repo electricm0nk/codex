@@ -2101,6 +2101,19 @@ pub fn compute_pilot_base_chassis(input: &CharacterInput) -> PilotBaseChassisCom
     // unrecognized class id, which still grounds nothing here (see
     // `prestige_class_feature_generic_grant_tests::
     // an_unrecognized_class_id_still_grounds_nothing_from_the_widened_gate`).
+    // SD-36 Epic F3b: a supported mix's character-level totals (HP, skill
+    // points) and each class's own lines, re-scoped `multiclass.<class>.*`,
+    // taken from its isolated single-class run. Base (pre-rage) modifiers: hit
+    // points and skill points are the character's standing figures.
+    if input.chosen.class_levels.len() >= 2 && chassis_supported {
+        multiclass_fold::explain_multiclass_fold(
+            input,
+            &base_ability_modifiers,
+            &mut explanations,
+            &mut diagnostics,
+        );
+    }
+
     if let [class_level] = input.chosen.class_levels.as_slice()
         && (chassis_supported
             || prestige_class_entry_gate::is_registered(&class_level.class_id))
@@ -3600,7 +3613,7 @@ pub(super) fn is_supported_generic_single_class(input: &CharacterInput) -> bool 
     if class_level.class_id == FIGHTER_CLASS_ID || class_level.class_id == WIZARD_CLASS_ID {
         return false;
     }
-    multiclass_class_level_supported(class_level)
+    table_class_level_supported(class_level)
 }
 
 /// A human-readable class label for explanation text (e.g. "Fighter",

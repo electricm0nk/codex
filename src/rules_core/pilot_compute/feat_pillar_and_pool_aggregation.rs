@@ -2550,7 +2550,9 @@ impl WeaponProficiencyVerdict {
 /// classes, so a Fighter/Wizard is proficient with everything Fighter is.
 /// A single non-proficient class in the mix must not remove a
 /// proficiency another class genuinely grants. A class with no answer
-/// makes the whole verdict Unknown (unchanged from before the fallback).
+/// makes the verdict Unknown only when no other class grants the weapon
+/// (SD-36 F3b: before, it made the whole verdict Unknown even beside a
+/// class that grants it, which a union cannot be).
 ///
 /// **Feats are checked before classes, and before the unknown-class
 /// bail-out.** The three CRB proficiency-granting feats (Simple/Martial/
@@ -2674,7 +2676,10 @@ pub(crate) fn character_weapon_proficiency(
             }
         }
     }
-    if !unknown.is_empty() {
+    // SD-36 F3b: a union is decided by any one member that grants it -- a class
+    // with no answer can only ADD a proficiency, never take one away, so it
+    // leaves the verdict Unknown only when no class grants this weapon.
+    if !unknown.is_empty() && !any_proficient {
         return WeaponProficiencyVerdict::Unknown { reason: unknown.join("; ") };
     }
     WeaponProficiencyVerdict::Known { proficient: any_proficient, printed }
