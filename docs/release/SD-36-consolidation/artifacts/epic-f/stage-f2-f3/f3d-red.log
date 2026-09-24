@@ -1,0 +1,137 @@
+# RED run of the flipped assertion (b), attempt reverted
+# cmd: cargo test --locked -j 8 --no-fail-fast --test sd18_widening --test sd13_progression <43 --test top-level bins> multiclass_ -- --test-threads=8
+     Running tests/sd13_barbarian_level1_chassis_baseline.rs (/home/ubuntu/workspace/worktrees/codex-epic-f2-target/debug/deps/sd13_barbarian_level1_chassis_baseline-6abc5f7738d82d4f)
+test result: FAILED. 0 passed; 1 failed; 0 ignored; 0 measured; 10 filtered out; finished in 12.04s
+error: test failed, to rerun pass `--test sd13_barbarian_level1_chassis_baseline`
+     Running tests/sd13_barbarian_rage_power_slots.rs (/home/ubuntu/workspace/worktrees/codex-epic-f2-target/debug/deps/sd13_barbarian_rage_power_slots-ed817262984aea35)
+test result: FAILED. 0 passed; 1 failed; 0 ignored; 0 measured; 5 filtered out; finished in 11.90s
+error: test failed, to rerun pass `--test sd13_barbarian_rage_power_slots`
+     Running tests/sd13_bard_bonus_spells.rs (/home/ubuntu/workspace/worktrees/codex-epic-f2-target/debug/deps/sd13_bard_bonus_spells-768328b53b5eaef1)
+test result: FAILED. 0 passed; 1 failed; 0 ignored; 0 measured; 5 filtered out; finished in 11.77s
+error: test failed, to rerun pass `--test sd13_bard_bonus_spells`
+     Running tests/sd13_bard_spell_level_thresholds.rs (/home/ubuntu/workspace/worktrees/codex-epic-f2-target/debug/deps/sd13_bard_spell_level_thresholds-e4fcf73848b4fcf5)
+test result: FAILED. 0 passed; 1 failed; 0 ignored; 0 measured; 4 filtered out; finished in 11.61s
+error: test failed, to rerun pass `--test sd13_bard_spell_level_thresholds`
+     Running tests/sd13_bard_spell_save_dcs.rs (/home/ubuntu/workspace/worktrees/codex-epic-f2-target/debug/deps/sd13_bard_spell_save_dcs-668036ffeeea21a0)
+test result: FAILED. 0 passed; 1 failed; 0 ignored; 0 measured; 5 filtered out; finished in 11.89s
+error: test failed, to rerun pass `--test sd13_bard_spell_save_dcs`
+     Running tests/sd13_bard_spells_known_counts.rs (/home/ubuntu/workspace/worktrees/codex-epic-f2-target/debug/deps/sd13_bard_spells_known_counts-9067aaea71b114d6)
+test result: FAILED. 0 passed; 1 failed; 0 ignored; 0 measured; 4 filtered out; finished in 12.04s
+error: test failed, to rerun pass `--test sd13_bard_spells_known_counts`
+     Running tests/sd13_bard_spells_per_day_counts.rs (/home/ubuntu/workspace/worktrees/codex-epic-f2-target/debug/deps/sd13_bard_spells_per_day_counts-3058d6b2457aad01)
+test result: FAILED. 0 passed; 1 failed; 0 ignored; 0 measured; 4 filtered out; finished in 11.89s
+error: test failed, to rerun pass `--test sd13_bard_spells_per_day_counts`
+     Running tests/sd13_bard_total_spells_per_day.rs (/home/ubuntu/workspace/worktrees/codex-epic-f2-target/debug/deps/sd13_bard_total_spells_per_day-2d3b243f4e5a5008)
+test result: FAILED. 0 passed; 1 failed; 0 ignored; 0 measured; 5 filtered out; finished in 11.59s
+error: test failed, to rerun pass `--test sd13_bard_total_spells_per_day`
+     Running tests/sd13_bard_versatile_performance_slots.rs (/home/ubuntu/workspace/worktrees/codex-epic-f2-target/debug/deps/sd13_bard_versatile_performance_slots-442a053c9857b582)
+test result: FAILED. 0 passed; 1 failed; 0 ignored; 0 measured; 5 filtered out; finished in 11.63s
+error: test failed, to rerun pass `--test sd13_bard_versatile_performance_slots`
+     Running tests/sd13_monk_bonus_feats_three_and_four.rs (/home/ubuntu/workspace/worktrees/codex-epic-f2-target/debug/deps/sd13_monk_bonus_feats_three_and_four-89f06296f07ee2c0)
+test result: FAILED. 0 passed; 1 failed; 0 ignored; 0 measured; 6 filtered out; finished in 15.82s
+error: test failed, to rerun pass `--test sd13_monk_bonus_feats_three_and_four`
+     Running tests/sd13_monk_level1_chassis_baseline.rs (/home/ubuntu/workspace/worktrees/codex-epic-f2-target/debug/deps/sd13_monk_level1_chassis_baseline-ea6cec0c15713aa0)
+test result: FAILED. 0 passed; 1 failed; 0 ignored; 0 measured; 11 filtered out; finished in 15.22s
+error: test failed, to rerun pass `--test sd13_monk_level1_chassis_baseline`
+     Running tests/sd13_monk_second_bonus_feat.rs (/home/ubuntu/workspace/worktrees/codex-epic-f2-target/debug/deps/sd13_monk_second_bonus_feat-b01b21fdd5c83eea)
+test result: FAILED. 0 passed; 1 failed; 0 ignored; 0 measured; 6 filtered out; finished in 14.98s
+error: test failed, to rerun pass `--test sd13_monk_second_bonus_feat`
+     Running tests/sd13_paladin_bonus_spells.rs (/home/ubuntu/workspace/worktrees/codex-epic-f2-target/debug/deps/sd13_paladin_bonus_spells-09a8c2027a8ec29a)
+test result: FAILED. 0 passed; 1 failed; 0 ignored; 0 measured; 6 filtered out; finished in 11.84s
+error: test failed, to rerun pass `--test sd13_paladin_bonus_spells`
+     Running tests/sd13_paladin_mercies_two_and_three.rs (/home/ubuntu/workspace/worktrees/codex-epic-f2-target/debug/deps/sd13_paladin_mercies_two_and_three-6b7b1b9619fbdd65)
+test result: FAILED. 0 passed; 1 failed; 0 ignored; 0 measured; 4 filtered out; finished in 11.89s
+error: test failed, to rerun pass `--test sd13_paladin_mercies_two_and_three`
+     Running tests/sd13_paladin_spell_level_thresholds.rs (/home/ubuntu/workspace/worktrees/codex-epic-f2-target/debug/deps/sd13_paladin_spell_level_thresholds-e93ef876e7d5a2dc)
+test result: FAILED. 0 passed; 1 failed; 0 ignored; 0 measured; 5 filtered out; finished in 11.71s
+error: test failed, to rerun pass `--test sd13_paladin_spell_level_thresholds`
+     Running tests/sd13_paladin_spell_save_dcs.rs (/home/ubuntu/workspace/worktrees/codex-epic-f2-target/debug/deps/sd13_paladin_spell_save_dcs-7f9f519be3cd19f1)
+test result: FAILED. 0 passed; 1 failed; 0 ignored; 0 measured; 6 filtered out; finished in 11.68s
+error: test failed, to rerun pass `--test sd13_paladin_spell_save_dcs`
+     Running tests/sd13_paladin_spells_per_day_counts.rs (/home/ubuntu/workspace/worktrees/codex-epic-f2-target/debug/deps/sd13_paladin_spells_per_day_counts-0c2e311b48543aeb)
+test result: FAILED. 0 passed; 1 failed; 0 ignored; 0 measured; 5 filtered out; finished in 11.67s
+error: test failed, to rerun pass `--test sd13_paladin_spells_per_day_counts`
+     Running tests/sd13_paladin_total_spells_per_day.rs (/home/ubuntu/workspace/worktrees/codex-epic-f2-target/debug/deps/sd13_paladin_total_spells_per_day-fb09dd5e81d07fb1)
+test result: FAILED. 0 passed; 1 failed; 0 ignored; 0 measured; 6 filtered out; finished in 11.63s
+error: test failed, to rerun pass `--test sd13_paladin_total_spells_per_day`
+     Running tests/sd13_progression/main.rs (/home/ubuntu/workspace/worktrees/codex-epic-f2-target/debug/deps/sd13_progression-662c0b27a440b00a)
+test result: FAILED. 9 passed; 75 failed; 0 ignored; 0 measured; 1052 filtered out; finished in 19.89s
+error: test failed, to rerun pass `--test sd13_progression`
+     Running tests/sd13_ranger_bonus_spells.rs (/home/ubuntu/workspace/worktrees/codex-epic-f2-target/debug/deps/sd13_ranger_bonus_spells-609420ee774bc4b5)
+test result: FAILED. 0 passed; 1 failed; 0 ignored; 0 measured; 6 filtered out; finished in 11.71s
+error: test failed, to rerun pass `--test sd13_ranger_bonus_spells`
+     Running tests/sd13_ranger_second_favored_terrain.rs (/home/ubuntu/workspace/worktrees/codex-epic-f2-target/debug/deps/sd13_ranger_second_favored_terrain-9eb99f13db5e15ff)
+test result: FAILED. 0 passed; 1 failed; 0 ignored; 0 measured; 8 filtered out; finished in 11.93s
+error: test failed, to rerun pass `--test sd13_ranger_second_favored_terrain`
+     Running tests/sd13_ranger_spell_level_thresholds.rs (/home/ubuntu/workspace/worktrees/codex-epic-f2-target/debug/deps/sd13_ranger_spell_level_thresholds-086cf15f0bcd2873)
+test result: FAILED. 0 passed; 1 failed; 0 ignored; 0 measured; 5 filtered out; finished in 11.82s
+error: test failed, to rerun pass `--test sd13_ranger_spell_level_thresholds`
+     Running tests/sd13_ranger_spell_save_dcs.rs (/home/ubuntu/workspace/worktrees/codex-epic-f2-target/debug/deps/sd13_ranger_spell_save_dcs-61c812acbfc4b9e4)
+test result: FAILED. 0 passed; 1 failed; 0 ignored; 0 measured; 6 filtered out; finished in 11.92s
+error: test failed, to rerun pass `--test sd13_ranger_spell_save_dcs`
+     Running tests/sd13_ranger_spells_per_day_counts.rs (/home/ubuntu/workspace/worktrees/codex-epic-f2-target/debug/deps/sd13_ranger_spells_per_day_counts-90f7e3233b21cef1)
+test result: FAILED. 0 passed; 1 failed; 0 ignored; 0 measured; 5 filtered out; finished in 11.84s
+error: test failed, to rerun pass `--test sd13_ranger_spells_per_day_counts`
+     Running tests/sd13_ranger_third_favored_enemy.rs (/home/ubuntu/workspace/worktrees/codex-epic-f2-target/debug/deps/sd13_ranger_third_favored_enemy-3e3c98a553c5a180)
+test result: FAILED. 0 passed; 1 failed; 0 ignored; 0 measured; 9 filtered out; finished in 11.89s
+error: test failed, to rerun pass `--test sd13_ranger_third_favored_enemy`
+     Running tests/sd13_ranger_total_spells_per_day.rs (/home/ubuntu/workspace/worktrees/codex-epic-f2-target/debug/deps/sd13_ranger_total_spells_per_day-91e7174e0aca5d04)
+test result: FAILED. 0 passed; 1 failed; 0 ignored; 0 measured; 6 filtered out; finished in 12.11s
+error: test failed, to rerun pass `--test sd13_ranger_total_spells_per_day`
+     Running tests/sd13_rogue_level1_chassis_baseline.rs (/home/ubuntu/workspace/worktrees/codex-epic-f2-target/debug/deps/sd13_rogue_level1_chassis_baseline-380e77efbde6f643)
+test result: FAILED. 0 passed; 1 failed; 0 ignored; 0 measured; 10 filtered out; finished in 12.25s
+error: test failed, to rerun pass `--test sd13_rogue_level1_chassis_baseline`
+     Running tests/sd13_rogue_second_talent.rs (/home/ubuntu/workspace/worktrees/codex-epic-f2-target/debug/deps/sd13_rogue_second_talent-0aca07166ff70714)
+test result: FAILED. 0 passed; 1 failed; 0 ignored; 0 measured; 4 filtered out; finished in 12.32s
+error: test failed, to rerun pass `--test sd13_rogue_second_talent`
+     Running tests/sd13_rogue_talent_choice.rs (/home/ubuntu/workspace/worktrees/codex-epic-f2-target/debug/deps/sd13_rogue_talent_choice-35573cfadc0fa472)
+test result: FAILED. 0 passed; 1 failed; 0 ignored; 0 measured; 4 filtered out; finished in 11.75s
+error: test failed, to rerun pass `--test sd13_rogue_talent_choice`
+     Running tests/sd13_rogue_talents_three_through_five.rs (/home/ubuntu/workspace/worktrees/codex-epic-f2-target/debug/deps/sd13_rogue_talents_three_through_five-31efdae8f6a074d6)
+test result: FAILED. 0 passed; 1 failed; 0 ignored; 0 measured; 5 filtered out; finished in 12.63s
+error: test failed, to rerun pass `--test sd13_rogue_talents_three_through_five`
+     Running tests/sd13_sorcerer_bonus_spells.rs (/home/ubuntu/workspace/worktrees/codex-epic-f2-target/debug/deps/sd13_sorcerer_bonus_spells-bebb708a9d30345d)
+test result: FAILED. 0 passed; 1 failed; 0 ignored; 0 measured; 5 filtered out; finished in 16.62s
+error: test failed, to rerun pass `--test sd13_sorcerer_bonus_spells`
+     Running tests/sd13_sorcerer_spell_level_thresholds.rs (/home/ubuntu/workspace/worktrees/codex-epic-f2-target/debug/deps/sd13_sorcerer_spell_level_thresholds-21ccb804f0b7e928)
+test result: FAILED. 0 passed; 1 failed; 0 ignored; 0 measured; 4 filtered out; finished in 15.05s
+error: test failed, to rerun pass `--test sd13_sorcerer_spell_level_thresholds`
+     Running tests/sd13_sorcerer_spell_save_dcs.rs (/home/ubuntu/workspace/worktrees/codex-epic-f2-target/debug/deps/sd13_sorcerer_spell_save_dcs-950b41385c2cf19f)
+test result: FAILED. 0 passed; 1 failed; 0 ignored; 0 measured; 5 filtered out; finished in 15.33s
+error: test failed, to rerun pass `--test sd13_sorcerer_spell_save_dcs`
+     Running tests/sd13_sorcerer_spells_known_counts.rs (/home/ubuntu/workspace/worktrees/codex-epic-f2-target/debug/deps/sd13_sorcerer_spells_known_counts-167d96371efbb614)
+test result: FAILED. 0 passed; 1 failed; 0 ignored; 0 measured; 4 filtered out; finished in 16.11s
+error: test failed, to rerun pass `--test sd13_sorcerer_spells_known_counts`
+     Running tests/sd13_sorcerer_spells_per_day_counts.rs (/home/ubuntu/workspace/worktrees/codex-epic-f2-target/debug/deps/sd13_sorcerer_spells_per_day_counts-a35ad18f798a7156)
+test result: FAILED. 0 passed; 1 failed; 0 ignored; 0 measured; 4 filtered out; finished in 14.98s
+error: test failed, to rerun pass `--test sd13_sorcerer_spells_per_day_counts`
+     Running tests/sd13_sorcerer_total_spells_per_day.rs (/home/ubuntu/workspace/worktrees/codex-epic-f2-target/debug/deps/sd13_sorcerer_total_spells_per_day-4f2a0bb312752ffc)
+test result: FAILED. 0 passed; 1 failed; 0 ignored; 0 measured; 5 filtered out; finished in 15.23s
+error: test failed, to rerun pass `--test sd13_sorcerer_total_spells_per_day`
+     Running tests/sd18_barbarian_level11_greater_rage.rs (/home/ubuntu/workspace/worktrees/codex-epic-f2-target/debug/deps/sd18_barbarian_level11_greater_rage-91a2b88d2dffc86a)
+test result: FAILED. 0 passed; 1 failed; 0 ignored; 0 measured; 8 filtered out; finished in 11.55s
+error: test failed, to rerun pass `--test sd18_barbarian_level11_greater_rage`
+     Running tests/sd18_monk_level11_diamond_body.rs (/home/ubuntu/workspace/worktrees/codex-epic-f2-target/debug/deps/sd18_monk_level11_diamond_body-a9b6ae85745478e5)
+test result: FAILED. 0 passed; 1 failed; 0 ignored; 0 measured; 7 filtered out; finished in 15.22s
+error: test failed, to rerun pass `--test sd18_monk_level11_diamond_body`
+     Running tests/sd18_paladin_level11_aura_of_justice.rs (/home/ubuntu/workspace/worktrees/codex-epic-f2-target/debug/deps/sd18_paladin_level11_aura_of_justice-a321564f74c192a1)
+test result: FAILED. 0 passed; 1 failed; 0 ignored; 0 measured; 11 filtered out; finished in 11.62s
+error: test failed, to rerun pass `--test sd18_paladin_level11_aura_of_justice`
+     Running tests/sd18_ranger_level11_quarry.rs (/home/ubuntu/workspace/worktrees/codex-epic-f2-target/debug/deps/sd18_ranger_level11_quarry-897c88ba4f22725b)
+test result: FAILED. 0 passed; 1 failed; 0 ignored; 0 measured; 11 filtered out; finished in 11.81s
+error: test failed, to rerun pass `--test sd18_ranger_level11_quarry`
+     Running tests/sd18_ranger_level16_improved_evasion.rs (/home/ubuntu/workspace/worktrees/codex-epic-f2-target/debug/deps/sd18_ranger_level16_improved_evasion-e992cae579b9e354)
+test result: FAILED. 0 passed; 1 failed; 0 ignored; 0 measured; 10 filtered out; finished in 11.99s
+error: test failed, to rerun pass `--test sd18_ranger_level16_improved_evasion`
+     Running tests/sd18_ranger_level17_hide_in_plain_sight.rs (/home/ubuntu/workspace/worktrees/codex-epic-f2-target/debug/deps/sd18_ranger_level17_hide_in_plain_sight-79a44b48e60730bd)
+test result: FAILED. 0 passed; 1 failed; 0 ignored; 0 measured; 10 filtered out; finished in 11.97s
+error: test failed, to rerun pass `--test sd18_ranger_level17_hide_in_plain_sight`
+     Running tests/sd18_rogue_level11_sneak_attack.rs (/home/ubuntu/workspace/worktrees/codex-epic-f2-target/debug/deps/sd18_rogue_level11_sneak_attack-3d4a733f5dd66aa3)
+test result: FAILED. 0 passed; 1 failed; 0 ignored; 0 measured; 9 filtered out; finished in 11.66s
+error: test failed, to rerun pass `--test sd18_rogue_level11_sneak_attack`
+     Running tests/sd18_widening/main.rs (/home/ubuntu/workspace/worktrees/codex-epic-f2-target/debug/deps/sd18_widening-1998376b37621187)
+test result: FAILED. 19 passed; 69 failed; 0 ignored; 0 measured; 803 filtered out; finished in 19.96s
+error: test failed, to rerun pass `--test sd18_widening`
+     Running tests/v06_druid_level16_to_20_widening.rs (/home/ubuntu/workspace/worktrees/codex-epic-f2-target/debug/deps/v06_druid_level16_to_20_widening-f11d4b8f78b84f15)
+test result: FAILED. 0 passed; 1 failed; 0 ignored; 0 measured; 12 filtered out; finished in 11.62s
+error: test failed, to rerun pass `--test v06_druid_level16_to_20_widening`
