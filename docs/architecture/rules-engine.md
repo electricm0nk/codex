@@ -369,6 +369,18 @@ criteria select that no inventory unit stands for (Sorcerer's `CATEGORY:Sorcerer
 edges are what switch a bloodline's lines on: a Draconic pick holds the record, its class skill, arcana,
 bonus spells and powers at the levels CRB p.75 states (`tests/sd36_bloodline_pick_option.rs`).
 
+A natural-attack helper (SD-36 F3c5): a `CATEGORY:Internal` row whose `TYPE:` carries `NaturalAttack`
+and that no inventory unit stands for (`Bite`, `ce_abilities_race.lst:249`; `Internal` is
+`VISIBLE:NO EDITABLE:NO`, `system/gameModes/Pathfinder/miscinfo.lst:303`) converts, when its whole
+object (its row, its `.MOD` rows, the size helpers it grants and their templates) carries nothing but
+one natural attack's bookkeeping, as `Fact::NaturalAttack(<attack>)` on the rule whose `ABILITY:`
+grants it (`sheet_rule/natural_attack.rs`; 770 helper rows, 681 fact grants on 546 rules). No rule is
+added. The fact is never a proficiency, so Dragon Disciple's `Internal|Bite` resolves, its closure is
+attested and the proficiency reader answers Known(empty). A helper whose object carries anything else
+is named (`_defects/natural-attack-helper-carries-more.json`; 0 rows at F3c5) and its references stay
+unresolved. A gate that names a helper (`PREABILITY:1,CATEGORY=Internal,Bite`) stays a `MissingRule`
+term: a fact is not holdable (6 rows).
+
 A character's legacy Path-A pick (SD-36 F3c4): `choice:<pool> -> <ns>:<member>` is linked to the
 converted option it names by one rule, `sheet_rule::link_path_a_picks` -- the record whose slug is
 `<pool>_<member>` and which carries the pool as its own tag, and the option granting it that a choice

@@ -11,16 +11,17 @@ table in the same commit; a class that loses one fails the test by name.
 
 Command: `cargo test --locked -j 8 --lib every_census_class_has_a_known_proficiency_answer -- --test-threads=8 --nocapture`
 (prints the population line and every Unknown class with the reader's reason). Regenerated
-2026-09-24 on sd36/epic-f2-f3 after the F3b2b converter step (undeclared oracle variables read as 0;
-same-object reprints resolve to the newest printing; package `--check` exit 0, records 49,450).
+2026-09-25 on sd36/epic-f2-f3 after the F3c5 converter step (Internal natural-attack helper rows
+convert as `Fact::NaturalAttack` on the granting rule; package `--check` exit 0, records 49,450).
 Result: 1 passed; `census classes: 137; with a static row: 42; walked by the reader: 95; Known at
-every level: 91; Unknown: 4`.
+every level: 92; Unknown: 3`.
 
 Per-class evidence is re-derived from the committed package, read-only, with
 `python3 docs/release/SD-36-consolidation/artifacts/epic-f/scripts/closure_defects.py <slug>...`
 (the same walk as `attest.rs`; it prints each closure-defect row attributed to a record in the
-class's closure). Run over the 4 classes below it lists 4 rows, all `unresolved-references` -- see
-the count table under Mechanisms. Run over the 10 classes of the F3b2 table it listed 12 rows; F3b2b
+class's closure). Run over the 3 classes below it lists 3 rows, all `unresolved-references` -- see
+the count table under Mechanisms. Run over the 4 classes of the F3b2b table it listed 4 rows; F3c5
+closed 1 of them (dragon_disciple's `Internal|Bite`). Run over the 10 classes of the F3b2 table it listed 12 rows; F3b2b
 closed 8 of them (7 undeclared-variable rows, 1 twin-printing reference). Run over the 17 classes of
 the F1c-3 table it listed 45 rows; F3b2 closed 33 of them.
 
@@ -28,9 +29,19 @@ the F1c-3 table it listed 45 rows; F3b2 closed 33 of them.
 
 - Census classes: **137** (63 non-prestige + 74 prestige; F2a added the two APG Ex-* ids). With a
   static row: **42** (all non-prestige). Walked by the reader: **95** (21 non-prestige + 74 prestige).
-- Known at every level: **91 of 95** (21 of the 21 non-prestige; 70 of the 74 prestige).
-- Unknown: **4 of 95** -- **0 non-prestige** and **4 prestige** (a prestige class alone is Blocked
+- Known at every level: **92 of 95** (21 of the 21 non-prestige; 71 of the 74 prestige).
+- Unknown: **3 of 95** -- **0 non-prestige** and **3 prestige** (a prestige class alone is Blocked
   regardless -- census `prestige_alone_blocked` = 74 of 74).
+- **F3c5 (2026-09-25) moved it 4 -> 3.** Mechanism G-N closed without a new record: a
+  `CATEGORY:Internal` natural-attack helper row no inventory unit stands for (`Bite`,
+  `ce_abilities_race.lst:249`; `ABILITYCATEGORY:Internal VISIBLE:NO EDITABLE:NO`,
+  `system/gameModes/Pathfinder/miscinfo.lst:303`) whose whole object carries nothing but one
+  natural attack's bookkeeping converts as `Fact::NaturalAttack(<attack>)` on the rule that grants
+  it (`sheet_rule/natural_attack.rs`). Package-wide: 771 helper rows no unit stands for, 770
+  classified natural-attack-only answering 771 pairs, 0 named; `unresolved-references` 6,932 ->
+  6,252 (680 rows, all naming a helper). The class that left this table: dragon_disciple ("Dragon
+  disciples gain no proficiency with any weapon or armor", CRB p.380), now Known(empty) with its
+  closure attested. `closure_complete` attested on 136 of 189 class principals (135 before).
 - **F3b2b (2026-09-24) moved it 10 -> 4.** Two mechanisms closed, neither by class:
   - **H, undeclared variable (5 classes).** PCGen evaluates a formula term that no loaded row
     declares and that is not a built-in term as 0 (`VariableProcessor.java:394-402` in the pinned
@@ -125,7 +136,7 @@ the F1c-3 table it listed 45 rows; F3b2 closed 33 of them.
 | D | proficiency record converted without its grant | 0 | re-traced in F1c-3: Divine Scion's row grants none; Exalted's states it in DESC only (now G) | -- |
 | E | no weapon grant anywhere; attestation missing | 0 | CLOSED by F1c-3 (D4) | converter -- done |
 | F | proficiency pick into an unlinked pool | 0 | CLOSED by F1c-3 (D6) | converter -- done |
-| G | attestation false: an unresolved reference in the class closure | 4 | the closure names a record the converter cannot resolve; sub-mechanism per class below (G-P CLOSED by F3b2, 7 classes; G-T CLOSED by F3b2b, 1 class) | per row, below |
+| G | attestation false: an unresolved reference in the class closure | 3 | the closure names a record the converter cannot resolve; sub-mechanism per class below (G-P CLOSED by F3b2, 7 classes; G-T CLOSED by F3b2b, 1 class; G-N CLOSED by F3c5, 1 class) | per row, below |
 | H | attestation false: an undefined variable in the class closure | 0 | CLOSED by F3b2b: an undeclared non-built-in variable is the oracle's 0 (`VariableProcessor.java:394-402`), so it is no longer a closure defect (informational `_defects/undeclared-in-pinned-tree.json`) | converter -- done |
 
 G sub-mechanisms (F3b2 re-trace against the pinned oracle, `7f818006e3`):
@@ -138,10 +149,11 @@ G sub-mechanisms (F3b2 re-trace against the pinned oracle, `7f818006e3`):
 - **G-U, target declared nowhere in the pinned tree** (diabolist): `Special Ability|Hunter's Bond ~ Companion`
   on `diabolist_imp_companion`. No row of the pinned tree declares that KEY (grep over
   `data/pathfinder`: only `PREABILITY` references, `uw_feats.lst:65`). Closes in: the oracle data.
-- **G-N, target declared but not ingested** (dragon_disciple): `Internal|Bite` on
-  `dragon_disciple_dragon_bite`. The row exists (`core_essentials/ce_abilities_race.lst:249`,
-  `CATEGORY:Internal`, carrying `BONUS:WEAPONPROF=Bite|TOHIT|-5`) but no inventory unit stands for
-  it (frozen population 49,450). Closes in: the corpus (ingest the record).
+- **G-N, target declared but not ingested** (dragon_disciple) -- CLOSED by F3c5: `Internal|Bite`
+  on `dragon_disciple_dragon_bite` names a natural-attack helper row
+  (`core_essentials/ce_abilities_race.lst:249`) no inventory unit stands for; it now converts as
+  `Fact::NaturalAttack("Bite")` on Dragon Bite (`sheet_rule/natural_attack.rs`), with no new record
+  (frozen population 49,450).
 - **G-O, option dropped** (exalted): `FEAT|skill focus (knowledge (religion))`. The parameter split
   splits at the last ` (` and misses a nested option. Splitting at the balanced group was measured
   (F3b2 first pass) and reverted: `Holdable` carries no option, so the reference would hold
@@ -158,15 +170,16 @@ G sub-mechanisms (F3b2 re-trace against the pinned oracle, `7f818006e3`):
   exact key (`PrerequisiteUtilities.passesAbilityTest`), so the oracle's prerequisite can never pass
   in PCGen either. Closes in: the oracle data.
 
-Counts (`closure_defects.py` over the 4 classes):
+Counts (`closure_defects.py` over the 3 classes):
 
 | mechanism | classes | defect rows in their closures | of which `unresolved-references` | of which `undefined-variables` |
 |---|---|---|---|---|
-| G | 4 | 4 | 4 | 0 |
+| G | 3 | 3 | 3 | 0 |
 | H | 0 | 0 | 0 | 0 |
-| total | 4 prestige, 0 non-prestige | 4 | 4 | 0 |
+| total | 3 prestige, 0 non-prestige | 3 | 3 | 0 |
 
-Attested `closure_complete`: 73 of 189 class principals (64 before F3b2b, 56 before F3b2).
+Attested `closure_complete`: 136 of 189 class principals at F3c5 (135 at F3c4b, 73 at F3b2b, 64
+before F3b2b, 56 before F3b2).
 
 Red Mantis Assassin (was open outside this table): its `Class Feature|RMA Weapon Proficiencies`
 reference, ambiguous between the `inner_sea_world_guide` and `adventurers_guide` printings
@@ -183,6 +196,5 @@ None of the remainder is closed by a per-class special case in live code or a ne
 | class | family | mechanism | evidence |
 |---|---|---|---|
 | class:diabolist | prestige | G-U: target declared nowhere in the pinned tree | `unresolved-references`: `diabolist_imp_companion` names `Special Ability\|Hunter's Bond ~ Companion` |
-| class:dragon_disciple | prestige | G-N: target declared but not ingested | `unresolved-references`: `dragon_disciple_dragon_bite` names `Internal\|Bite` (`ce_abilities_race.lst:249`, no inventory unit) |
 | class:exalted | prestige | G-O: option-carrying reference needs an option-carrying `Holdable` | `unresolved-references` `FEAT\|skill focus (knowledge (religion))` on the class record (`isg_classes.lst:27`, its `PREABILITY`); F3b2 measured the naive split as a wrong number (FS-14) |
 | class:rivethun_emissary | prestige | G-K: a key no record declares | `unresolved-references`: `FEAT\|Spirit Beacon` on the class record (`ag_classes.lst:362`) |

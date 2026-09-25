@@ -1791,6 +1791,20 @@ fn convert_token(ctx: &mut RecordCtx, acc: &mut Acc, out: &mut Converted, key: &
                     }
                     continue;
                 }
+                // SD-36 F3c5: a natural-attack helper no unit stands for (`natural_attack.rs`)
+                // converts as its attack fact on this rule.
+                if ctx.resolve_rule_checked(&category, t) == super::ctx::RuleLookup::Missing
+                    && let Some(helper) = ctx.index.natural_attack_helpers.get(&(category.to_ascii_uppercase(), t.to_ascii_uppercase()))
+                {
+                    for attack in &helper.attacks {
+                        let fact = Fact::NaturalAttack(attack.clone());
+                        match &when {
+                            Applies::Always => acc.grants.push(Effect::FactGrant(fact)),
+                            w => acc.grants.push(Effect::GatedFactGrant { fact, when: w.clone() }),
+                        }
+                    }
+                    continue;
+                }
                 if let Holdable::Rule(id) = resolve_holdable_rule(ctx, &category, t) {
                     out.grants_out.push((id, Grant { by, when: when.clone() }));
                 }

@@ -76,7 +76,7 @@ struct Oracle {
     blocked_only_by: Option<(&'static str, &'static str)>,
 }
 
-const ORACLES: [Oracle; 4] = [
+const ORACLES: [Oracle; 5] = [
     Oracle {
         classes: &[("barbarian", 12), ("fighter", 1)],
         bab: 13,
@@ -117,6 +117,22 @@ const ORACLES: [Oracle; 4] = [
         // reads as 0 (`VariableProcessor.java:394-402`), so the proficiency reader answers
         // Known-empty and the mix reaches Computed (F3b2 and before: Blocked on
         // `combat.baseline_weapon_proficiency_unknown` naming class:loremaster).
+        blocked_only_by: None,
+    },
+    // SD-36 F3c5 (`f3c5-hand-worked.md`, written first). Dragon Disciple "gains no
+    // proficiency with any weapon or armor" (CRB p.380). Its converted closure is attested
+    // complete since F3c5: its one closure defect was `Internal|Bite`
+    // (`ce_abilities_race.lst:249`), a natural-attack helper that now converts as
+    // `Fact::NaturalAttack("Bite")` on Dragon Bite, so the proficiency reader answers
+    // Known-empty. F3c4 and before: Blocked on `combat.baseline_weapon_proficiency_unknown`
+    // naming class:dragon_disciple.
+    Oracle {
+        classes: &[("sorcerer", 5), ("dragon_disciple", 3)],
+        bab: 4,
+        base_saves: (3, 3, 6),
+        total_saves: (5, 5, 7),
+        hit_points: 59,
+        skill_points_pf1: 16,
         blocked_only_by: None,
     },
 ];
@@ -182,6 +198,11 @@ fn magus4_samurai2_computes_the_hand_worked_sheet() {
 #[test]
 fn wizard5_loremaster2_computes_the_hand_worked_sheet() {
     check(&ORACLES[3]);
+}
+
+#[test]
+fn sorcerer5_dragon_disciple3_computes_the_hand_worked_sheet() {
+    check(&ORACLES[4]);
 }
 
 /// A prestige class in a mix PRINTS its entry requirements (met or unmet), never
@@ -253,14 +274,15 @@ fn an_unrecognized_save_shape_blocks_the_mix_by_name() {
 }
 
 /// Weapon proficiency is a union: one class that grants the weapon decides it, whatever
-/// another class's answer. Fighter grants every martial weapon (CRB p.55); Dragon
-/// Disciple's converted closure has no answer (its `Internal|Bite` reference names a row no
-/// inventory unit stands for, `reader-remainder.md` G-N), which may only leave the verdict
-/// Unknown when NO class grants the longsword, never beside Fighter. (Loremaster served
-/// here until F3b2b attested its closure.)
+/// another class's answer. Fighter grants every martial weapon (CRB p.55). Dragon Disciple
+/// served as the class with no answer until F3c5 attested its closure (its `Internal|Bite`
+/// helper now converts as a natural-attack fact); Diabolist serves now: its closure names
+/// `Special Ability|Hunter's Bond ~ Companion`, a KEY no row of the pinned oracle declares
+/// (`reader-remainder.md` G-U), so the reader has no answer for it. (Loremaster served here
+/// until F3b2b.)
 #[test]
 fn a_class_with_no_proficiency_answer_cannot_undo_another_class_s_grant() {
-    let receipt = build_pilot_headless_receipt(&mix(&[("fighter", 6), ("dragon_disciple", 2)]));
+    let receipt = build_pilot_headless_receipt(&mix(&[("fighter", 6), ("diabolist", 2)]));
     assert!(
         !receipt
             .computation

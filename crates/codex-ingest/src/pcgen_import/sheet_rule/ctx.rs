@@ -142,6 +142,10 @@ pub struct CorpusIndex {
     pub mod_fragments: BTreeMap<(String, String), Vec<RuleId>>,
     /// The pick choosers (`pool_option.rs`).
     pub pool_option_choosers: Vec<super::pool_option::PickChooser>,
+    /// SD-36 F3c5: `(INTERNAL, KEY-or-name upper)` -> the natural-attack helper that answers it
+    /// (`natural_attack.rs`). Only pairs no unit or option answers. An `ABILITY:` grant naming
+    /// one converts as `Fact::NaturalAttack` on the granting rule.
+    pub natural_attack_helpers: BTreeMap<(String, String), super::natural_attack::NaturalAttackHelper>,
     /// Defect rows the index build itself names (the pick-row scan, a declared-category pair two
     /// records claim), by `_defects/<kind>.json`.
     pub index_defects: BTreeMap<String, Vec<String>>,

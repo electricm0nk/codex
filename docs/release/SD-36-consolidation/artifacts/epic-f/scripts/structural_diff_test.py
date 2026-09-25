@@ -807,6 +807,40 @@ class StructuralDiffGateTest(unittest.TestCase):
         code, out = self.run_diff(base, fresh)
         self.assertIn("removed granted_by edges: 0", out)
 
+    def test_f3c5_pins_gate_a_dropped_natural_attack_fact_and_an_unpinned_line_sibling(self):
+        """SD-36 Epic F3c5: with the owner (Dragon Disciple's class principal) present as a
+        converted record, a pinned NaturalAttack grant that is missing gates, a pinned
+        closure_complete attestation that is withdrawn gates, and a #weapon sibling nobody pinned
+        on a record that carries a NaturalAttack fact gates."""
+        owner = structural_diff.F3C5["owner"]
+        self.assertEqual(owner, "core_rulebook:class:dragon_disciple")
+        prov = {"book": "core_rulebook", "kind": "class", "closure_rows": ["x:1"], "oracle_pin": "p", "converter_version": "v"}
+        dd = {"id": owner, "label": "Dragon Disciple", "value": "Text", "granted_by": [], "grants": [], "provenance": prov}
+        base = base_rules()
+        fresh = base_rules()
+        base["core_rulebook/class/dragon_disciple.json"] = [dict(dd)]
+        fresh["core_rulebook/class/dragon_disciple.json"] = [dict(dd)]
+        code, out = self.run_diff(base, fresh)
+        self.assertEqual(code, 1, out)
+        self.assertIn("F3c5 pinned NaturalAttack grant missing on ", out)
+        self.assertIn("F3c5 pinned f3c5_line_sibling rule missing: ", out)
+        # An unpinned #weapon sibling on a record that carries a NaturalAttack fact (owner absent,
+        # so the pin set is inactive; the unpinned-rule check still runs).
+        base = base_rules()
+        fresh = base_rules()
+        fact = {"FactGrant": {"NaturalAttack": "Claw"}}
+        base["x/class_feature/claws.json"] = [{"id": "x:class_feature:claws", "label": "Claws", "value": "Text", "granted_by": [], "grants": []}]
+        fresh["x/class_feature/claws.json"] = [
+            {"id": "x:class_feature:claws", "label": "Claws", "value": "Text", "granted_by": [], "grants": [fact]},
+            {"id": "x:class_feature:claws#weapon0", "label": "Claw damage", "value": "Text", "granted_by": [], "grants": []},
+        ]
+        code, out = self.run_diff(base, fresh)
+        self.assertEqual(code, 1, out)
+        self.assertIn("F3c5 unpinned f3c5_line_sibling rule x:class_feature:claws#weapon0", out)
+        # The grant classifier reads only NaturalAttack facts.
+        self.assertTrue(structural_diff._is_natural_attack_grant({"GatedFactGrant": {"fact": {"NaturalAttack": "Bite"}, "when": "Always"}}))
+        self.assertFalse(structural_diff._is_natural_attack_grant({"FactGrant": {"Proficiency": {"Weapon": "Bite"}}}))
+
     def test_report_only_flag_keeps_exit_zero(self):
         base = base_rules()
         fresh = base_rules()

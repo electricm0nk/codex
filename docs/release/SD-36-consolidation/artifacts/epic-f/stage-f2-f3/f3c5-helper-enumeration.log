@@ -1,0 +1,16 @@
+    Finished `test` profile [unoptimized + debuginfo] target(s) in 1.95s
+     Running tests/zz_probe_f3c5.rs (<target>/debug/deps/zz_probe_f3c5-a23b0b35bd710536)
+
+running 1 test
+internal natural-attack-typed rows in the pinned tree (ability family), by shape: {"plain": 794}
+test f3c5_helper_enumeration has been running for over 60 seconds
+helpers no unit stands for (plain, outside _pfs): 771
+classified natural-attack-only: 770 rows, answering 771 (Internal, key-or-name) pairs
+pairs by attack: {"Bite": 64, "Claw": 57, "Crush": 9, "Gore": 63, "Hair": 29, "Hoof": 56, "Pincers": 64, "Rake": 8, "Ranged Slam": 57, "Slam": 56, "Sting": 57, "Tail Slap": 65, "Tail Sweep": 9, "Talons": 56, "Tentacle": 65, "Wing": 56}
+package: 546 rules carry a NaturalAttack fact; effects {"FactGrant": 645, "GatedFactGrant": 36}; rules by kind {"ability": 11, "class_feature": 19, "companion": 254, "equipment": 1, "feat": 2, "monster": 190, "monster_ability": 3, "race": 2, "race_trait": 22, "template": 42}
+facts by attack: {"Bite": 414, "Claw": 181, "Hair": 1, "Pincers": 4, "Rake": 8, "Ranged Slam": 2, "Sting": 15, "Tail Slap": 38, "Tentacle": 18}
+test f3c5_helper_enumeration ... ok
+
+test result: ok. 1 passed; 0 failed; 0 ignored; 0 measured; 0 filtered out; finished in 260.28s
+
+EXIT=0

@@ -32,6 +32,7 @@ pub mod closure;
 pub mod convert;
 pub mod ctx;
 pub mod formula;
+pub mod natural_attack;
 pub mod oracle_terms;
 pub mod pool_link;
 pub mod pool_option;
@@ -653,6 +654,21 @@ pub fn build_index(tree: &PinnedTree, records: Vec<RecordRef>) -> (CorpusIndex, 
     }
     index.pool_options = scan.options;
     index.pool_option_choosers = scan.choosers;
+    // SD-36 F3c5: `CATEGORY:Internal` natural-attack helper rows no unit or option stands for
+    // (`natural_attack.rs`). Scanned after the options are registered, so a pair an option
+    // answers is never claimed twice.
+    let helpers = {
+        let answered = |cat: &str, key: &str| {
+            let pair = (cat.to_string(), key.to_string());
+            index.by_cat_key.contains_key(&pair) || index.by_cat_name.contains_key(&pair)
+        };
+        let owned = |row: RowRef| index.row_owner.contains_key(&row);
+        natural_attack::scan(tree, &owned, &answered)
+    };
+    for (k, v) in helpers.defects {
+        index.index_defects.entry(k).or_default().extend(v);
+    }
+    index.natural_attack_helpers = helpers.helpers;
     index.records = records;
     index.filled_pools = pool_pick::filled_pools(tree, &index);
     (index, closures)

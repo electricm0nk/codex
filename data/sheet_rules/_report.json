@@ -2,8 +2,8 @@
   "records": 49450,
   "converted": 49450,
   "refused": 0,
-  "rules_written": 73360,
-  "var_tables": 6209,
+  "rules_written": 73363,
+  "var_tables": 6211,
   "by_kind": {
     "ability": {
       "records": 4337,

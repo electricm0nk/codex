@@ -927,3 +927,42 @@ fn a_category_less_record_is_found_under_the_category_its_row_declares() {
     let unresolved: Vec<String> = serde_json::from_slice(files.get("_defects/unresolved-references.json").expect("defects")).expect("parses");
     assert!(!unresolved.iter().any(|u| u.ends_with(": Internal|Bloodline Tracker")), "still unresolved");
 }
+
+/// SD-36 Epic F3c5: a `CATEGORY:Internal` natural-attack helper row no inventory unit stands for
+/// converts as a `Fact::NaturalAttack` on the rule that grants it (`natural_attack.rs`).
+/// Dragon Disciple's `Dragon Bite` (`cr_abilities_class.lst:2968`) carries
+/// `ABILITY:Internal|AUTOMATIC|Bite`; `Bite` (`ce_abilities_race.lst:249`) is a natural-attack
+/// helper whose object ends in `NATURALATTACKS:Bite,...` (`ce_templates.lst:26`). The reference
+/// resolves, so Dragon Disciple's closure is attested complete; the class grants no weapon
+/// proficiency (CRB p.382: "Dragon disciples gain no proficiency with any weapon or armor").
+#[test]
+fn an_internal_natural_attack_helper_converts_as_a_fact_on_the_rule_that_grants_it() {
+    let files = package_files();
+    let rules_in = |rel: &str| -> Vec<SheetRule> {
+        serde_json::from_slice(files.get(rel).unwrap_or_else(|| panic!("{rel} is in the package"))).expect("rule file parses")
+    };
+    let bite = &rules_in("core_rulebook/class_feature/dragon_disciple_dragon_bite.json")[0];
+    assert!(
+        bite.grants.iter().any(|e| *e == Effect::FactGrant(Fact::NaturalAttack("Bite".into()))),
+        "Dragon Bite grants the Bite natural attack: {:?}",
+        bite.grants
+    );
+    assert!(
+        !bite.grants.iter().any(|e| matches!(e, Effect::FactGrant(Fact::Proficiency(_)) | Effect::GatedFactGrant { fact: Fact::Proficiency(_), .. })),
+        "a natural attack is not a proficiency grant: {:?}",
+        bite.grants
+    );
+    let unresolved: Vec<String> = serde_json::from_slice(files.get("_defects/unresolved-references.json").expect("defects")).expect("parses");
+    assert!(!unresolved.iter().any(|u| u == "core_rulebook:class_feature:dragon_disciple_dragon_bite: Internal|Bite"), "still unresolved");
+    let principal = &rules_in("core_rulebook/class/dragon_disciple.json")[0];
+    assert!(principal.closure_complete, "Dragon Disciple's closure is attested complete");
+    // Draconic Claws (`cr_abilities_class.lst:2444`, CRB p.75: claws from 1st level, one damage
+    // step at 7th) grants `Internal|Claw`: the Claw fact sits on the record, whose own gate holds
+    // from 1st level; the damage-step line keeps its `>= 7` gate as its own sibling.
+    let claws = rules_in("core_rulebook/class_feature/draconic_bloodline_claws.json");
+    assert!(claws[0].grants.iter().any(|e| *e == Effect::FactGrant(Fact::NaturalAttack("Claw".into()))), "{:?}", claws[0].grants);
+    let gate_7 = |a: &Applies| format!("{a:?}").contains("Const(7)");
+    assert!(!gate_7(&claws[0].applies), "the Claws record is held from 1st level: {:?}", claws[0].applies);
+    let step = claws.iter().find(|r| r.id.ends_with("#weapon0")).expect("the damage-step line is its own sibling");
+    assert!(gate_7(&step.applies), "the damage step comes at 7th: {:?}", step.applies);
+}

@@ -771,6 +771,10 @@ def f3c4b_check(fresh_rules: dict[str, dict], base_rules: dict[str, dict], added
     for rel, count in F3C4B["defect_rows"].items():
         if not active:
             continue
+        # A later step's pin of the same file supersedes this count (F3c5: fewer unresolved
+        # references); that step's check gates it.
+        if rel in _F3C5_DEFECT_FILES():
+            continue
         try:
             rows = json.loads(fresh_other.get(rel, b"null") or b"null")
         except json.JSONDecodeError:
@@ -778,6 +782,170 @@ def f3c4b_check(fresh_rules: dict[str, dict], base_rules: dict[str, dict], added
         if not isinstance(rows, list) or len(rows) != count:
             failures.append(f"F3c4b {rel}: {len(rows) if isinstance(rows, list) else 'absent'} rows, pinned {count}")
     return found, failures
+
+
+# SD-36 Epic F3c5 (converter step 5): a `CATEGORY:Internal` natural-attack helper row no inventory
+# unit stands for converts as `Fact::NaturalAttack(<attack>)` on the rule that grants it
+# (`sheet_rule/natural_attack.rs`). Pinned by `f3c5_delta_pins.py` into
+# `structural_diff_f3c5_deltas.json`:
+#   required_added_grants  every `grants` entry the fresh package carries that the F3c4b package did
+#                          not -- each a (Gated)FactGrant of a NaturalAttack fact -- by exact JSON;
+#                          a dropped one fails (`grants` growth is otherwise unpinned);
+#   added_rules            f3c5_line_sibling: a record that now carries the fact is no longer a
+#                          single-line principal (SD-36 Epic E CONV-02), so its one line moves,
+#                          value / target / gate intact, to a `#weapon<n>` sibling (sha256 pinned);
+#   field_deltas           f3c5_line_split (applies / target / value on that record's principal:
+#                          a Text principal with no target whose gate terms are a subset of the
+#                          sibling's) and f3c5_closure_complete (a class principal newly attested:
+#                          Dragon Disciple, whose one closure defect was `Internal|Bite`), by sha256
+#                          of the new value;
+#   added_var_tables       `_vars/` tables first written because a fact's `when` reads them, by sha256;
+#   defect_rows            `_defects/` row counts (supersedes the F3c4b count of the same file).
+_F3C5_DELTAS_PATH = os.path.join(os.path.dirname(os.path.abspath(__file__)), "structural_diff_f3c5_deltas.json")
+F3C5_CLASS_CAUSES = {
+    "f3c5_line_sibling": "F3c5: a record that now carries its Internal natural-attack helper as a NaturalAttack fact is no longer a single-line principal (CONV-02), so its one line moves, value/target/gate intact, to a #weapon<n> sibling",
+    "f3c5_line_split": "F3c5: that record's principal becomes a Text principal with no target, gated by a subset of the sibling's gate terms (the line's own level term moves with the line)",
+    "f3c5_closure_complete": "F3c5: closure_complete=true attested on a class principal whose one closure defect was an Internal natural-attack helper reference (Dragon Disciple: Internal|Bite)",
+}
+
+
+def _is_natural_attack_grant(effect: object) -> bool:
+    if not isinstance(effect, dict):
+        return False
+    if isinstance(effect.get("FactGrant"), dict):
+        return set(effect["FactGrant"]) == {"NaturalAttack"}
+    g = effect.get("GatedFactGrant")
+    return isinstance(g, dict) and isinstance(g.get("fact"), dict) and set(g["fact"]) == {"NaturalAttack"}
+
+
+def _gate_terms(applies: object) -> list[str]:
+    if isinstance(applies, dict) and set(applies) == {"All"} and isinstance(applies["All"], list):
+        return [json.dumps(t, sort_keys=True) for t in applies["All"]]
+    if applies in (None, "Always"):
+        return []
+    return [json.dumps(applies, sort_keys=True)]
+
+
+def f3c5_sibling_of(rid: str, fresh_rules: dict[str, dict]) -> str | None:
+    """The `<rid>#weapon<n>` sibling of a principal that carries a NaturalAttack fact, if any."""
+    principal = fresh_rules.get(rid) or {}
+    if "#" in rid or not any(_is_natural_attack_grant(e) for e in (principal.get("grants") or [])):
+        return None
+    sibs = [r for r in fresh_rules if r.startswith(rid + "#weapon")]
+    return sibs[0] if len(sibs) == 1 else None
+
+
+def f3c5_classify_added(rid: str, fresh_rules: dict[str, dict]) -> str | None:
+    if "#weapon" in rid and f3c5_sibling_of(rid.split("#")[0], fresh_rules) == rid:
+        return "f3c5_line_sibling"
+    return None
+
+
+def f3c5_classify_field(rid: str, field: str, old: dict, new: dict, fresh_rules: dict[str, dict]) -> str | None:
+    if field == "closure_complete" and kind_of(rid) == "class" and "#" not in rid and new.get(field) is True and old.get(field) is not True:
+        return "f3c5_closure_complete"
+    sib_id = f3c5_sibling_of(rid, fresh_rules)
+    if sib_id is None or field not in ("applies", "target", "value"):
+        return None
+    sib = fresh_rules[sib_id]
+    if field == "value" and new.get("value") == "Text" and sib.get("value") == old.get("value"):
+        return "f3c5_line_split"
+    if field == "target" and new.get("target") is None and sib.get("target") == old.get("target"):
+        return "f3c5_line_split"
+    if field == "applies" and set(_gate_terms(new.get("applies"))) <= set(_gate_terms(sib.get("applies"))) and f3c4b_missing_to_rule(old.get("applies"), sib.get("applies")):
+        return "f3c5_line_split"
+    return None
+
+
+def _load_f3c5() -> dict:
+    empty = {"added_rules": {}, "field_deltas": {}, "required_added_grants": [], "added_var_tables": [], "defect_rows": {}, "owner": ""}
+    try:
+        with open(_F3C5_DELTAS_PATH, "r", encoding="utf-8") as fh:
+            data = json.load(fh)
+    except (OSError, json.JSONDecodeError):
+        return empty
+    added: dict[str, tuple[str, str, str]] = {}
+    for name, c in data.get("added_rules", {}).items():
+        assert name in F3C5_CLASS_CAUSES, f"{_F3C5_DELTAS_PATH}: unknown class {name}"
+        assert len(c["pins"]) == c["_count"], f"{_F3C5_DELTAS_PATH}: {name} _count mismatch -- regenerate with _command"
+        for rid, owner, sha in c["pins"]:
+            added[rid] = (name, owner, sha)
+    fields: dict[tuple[str, str], tuple[str, str]] = {}
+    for name, c in data.get("field_deltas", {}).items():
+        assert name in F3C5_CLASS_CAUSES, f"{_F3C5_DELTAS_PATH}: unknown class {name}"
+        assert len(c["pins"]) == c["_count"], f"{_F3C5_DELTAS_PATH}: {name} _count mismatch"
+        for rid, field, sha in c["pins"]:
+            fields[(rid, field)] = (name, sha)
+    out = dict(empty)
+    for key in ("required_added_grants", "added_var_tables"):
+        block = data.get(key, {})
+        assert len(block.get("pins", [])) == block.get("_count", 0), f"{_F3C5_DELTAS_PATH}: {key} _count mismatch"
+        out[key] = [tuple(p) for p in block.get("pins", [])]
+    out.update({"added_rules": added, "field_deltas": fields, "defect_rows": dict(data.get("defect_rows", {})), "owner": data.get("owner", "")})
+    return out
+
+
+F3C5 = _load_f3c5()
+
+
+def f3c5_field_delta_holds(rid: str, field: str, old: dict, new: dict, fresh_rules: dict[str, dict]) -> str | None:
+    pin = F3C5["field_deltas"].get((rid, field))
+    if pin is None:
+        return None
+    if f3c5_classify_field(rid, field, old, new, fresh_rules) != pin[0] or f3b2_field_sha(new.get(field)) != pin[1]:
+        return None
+    return pin[0]
+
+
+def f3c5_check(fresh_rules: dict[str, dict], base_rules: dict[str, dict], added_rule_ids: list[str], fresh_other: dict[str, bytes]) -> tuple[Counter, list[str]]:
+    """(pinned added rule ids found per class, failure lines) for the F3c5 pins (module comment)."""
+    found: Counter = Counter()
+    failures: list[str] = []
+    active = bool((fresh_rules.get(F3C5["owner"], {}).get("provenance") or {}).get("oracle_pin"))
+    for rid in added_rule_ids:
+        cls = f3c5_classify_added(rid, fresh_rules)
+        pin = F3C5["added_rules"].get(rid)
+        if pin is None:
+            if cls is not None:
+                failures.append(f"F3c5 unpinned {cls} rule {rid}")
+            continue
+        if cls != pin[0]:
+            failures.append(f"F3c5 {rid}: class {cls} != pinned {pin[0]}")
+        elif f3b2_field_sha(fresh_rules[rid]) != pin[2]:
+            failures.append(f"F3c5 {rid}: content moved from its pinned sha256")
+        else:
+            found[pin[0]] += 1
+    if not active:
+        return found, failures
+    added = set(added_rule_ids)
+    for rid, (cls, _owner, _sha) in F3C5["added_rules"].items():
+        if rid not in added and rid not in base_rules:
+            failures.append(f"F3c5 pinned {cls} rule missing: {rid}")
+    for (rid, field), (cls, sha) in F3C5["field_deltas"].items():
+        if rid in fresh_rules and f3b2_field_sha(fresh_rules[rid].get(field)) != sha:
+            failures.append(f"F3c5 pinned {cls} field delta withdrawn or moved: {rid}: {field}")
+    for rid, key in F3C5["required_added_grants"]:
+        have = {json.dumps(e, sort_keys=True) for e in (fresh_rules.get(rid, {}).get("grants") or [])}
+        if key not in have:
+            failures.append(f"F3c5 pinned NaturalAttack grant missing on {rid}: {key}")
+    for rel, sha in F3C5["added_var_tables"]:
+        raw = fresh_other.get(rel)
+        if raw is None:
+            failures.append(f"F3c5 pinned _vars table missing: {rel}")
+        elif f3b2_field_sha(json.loads(raw)) != sha:
+            failures.append(f"F3c5 pinned _vars table moved: {rel}")
+    for rel, count in F3C5["defect_rows"].items():
+        try:
+            rows = json.loads(fresh_other.get(rel, b"[]") or b"[]")
+        except json.JSONDecodeError:
+            rows = None
+        if not isinstance(rows, list) or len(rows) != count:
+            failures.append(f"F3c5 {rel}: {len(rows) if isinstance(rows, list) else 'absent'} rows, pinned {count}")
+    return found, failures
+
+
+def _F3C5_DEFECT_FILES() -> set[str]:
+    return set(F3C5["defect_rows"])
 
 
 def edge_diff(old_list: object, new_list: object) -> tuple[list[str], list[str]]:
@@ -1143,6 +1311,7 @@ def main() -> int:
     f3b2_deltas: dict[str, list[tuple[str, str]]] = defaultdict(list)
     f3b2b_deltas: dict[str, list[tuple[str, str]]] = defaultdict(list)
     f3c4b_deltas: dict[str, list[tuple[str, str]]] = defaultdict(list)
+    f3c5_deltas: dict[str, list[tuple[str, str]]] = defaultdict(list)
     f3c4b_replaced: list[tuple[str, str]] = []
     added_edges_by_target_kind: Counter[str] = Counter()
     added_edges_total = 0
@@ -1173,6 +1342,10 @@ def main() -> int:
             # 9 product-identity class principals F1c pinned for `prose`) is attributed to the
             # mechanism that moved it now, under its stricter pinned-value check.
             # SD-36 Epic F3b2b: the same rule, one step later, checked first.
+            f3c5_class = f3c5_field_delta_holds(rid, field, old, new, fresh_rules)
+            if f3c5_class is not None:
+                f3c5_deltas[f3c5_class].append((rid, field))
+                continue
             f3c4b_class = f3c4b_field_delta_holds(rid, field, old, new)
             if f3c4b_class is not None:
                 f3c4b_deltas[f3c4b_class].append((rid, field))
@@ -1290,11 +1463,21 @@ def main() -> int:
             pinned = sum(1 for (n, _s) in F3C4B["field_deltas"].values() if n == name)
             print(f"  F3c4b {name}: {len(pairs)} of {pinned} pinned field deltas on {len(set(r for r, _ in pairs))} records -- {cause} (see structural_diff_f3c4b_deltas.json)")
     print(f"  F3c4b replaced self-edges: {len(f3c4b_replaced)} of {len(F3C4B['replaced_edges'])} pinned; pinned added granted_by edges: {len(F3C4B['required_added_edges'])}; pinned _vars/ contributions: {len(F3C4B['var_contributions'])}; pinned _defects/ row counts: {F3C4B['defect_rows']}")
+    f3c5_found, f3c5_failures = f3c5_check(fresh_rules, base_rules, added_rule_ids, fresh["other_files"])
+    for name, cause in F3C5_CLASS_CAUSES.items():
+        if name == "f3c5_line_sibling":
+            pinned = sum(1 for (n, _o, _s) in F3C5["added_rules"].values() if n == name)
+            print(f"  F3c5 {name}: {f3c5_found.get(name, 0)} of {pinned} pinned added rule ids (content sha256 held) -- {cause} (see structural_diff_f3c5_deltas.json)")
+        else:
+            pairs = f3c5_deltas.get(name, [])
+            pinned = sum(1 for (n, _s) in F3C5["field_deltas"].values() if n == name)
+            print(f"  F3c5 {name}: {len(pairs)} of {pinned} pinned field deltas on {len(set(r for r, _ in pairs))} records -- {cause} (see structural_diff_f3c5_deltas.json)")
+    print(f"  F3c5 pinned NaturalAttack grants: {len(F3C5['required_added_grants'])}; pinned added _vars/ tables: {len(F3C5['added_var_tables'])}; pinned _defects/ row counts: {F3C5['defect_rows']}")
     if added_rule_ids:
-        unnamed = [r for r in added_rule_ids if r not in KNOWN_ADDED_RULE_CAUSES and r not in F3C3["added_rules"] and r not in F3C4B["added_rules"]]
+        unnamed = [r for r in added_rule_ids if r not in KNOWN_ADDED_RULE_CAUSES and r not in F3C3["added_rules"] and r not in F3C4B["added_rules"] and r not in F3C5["added_rules"]]
         print(f"  added rule ids: {len(added_rule_ids)} ({len(unnamed)} with no named cause)")
         for rid in added_rule_ids[: args.max_examples]:
-            cause = KNOWN_ADDED_RULE_CAUSES.get(rid) or (F3C3_CLASS_CAUSES[F3C3["added_rules"][rid][0]] if rid in F3C3["added_rules"] else F3C4B_CLASS_CAUSES[F3C4B["added_rules"][rid][0]] if rid in F3C4B["added_rules"] else "cause not yet named -- explain before treating this as expected")
+            cause = KNOWN_ADDED_RULE_CAUSES.get(rid) or (F3C3_CLASS_CAUSES[F3C3["added_rules"][rid][0]] if rid in F3C3["added_rules"] else F3C4B_CLASS_CAUSES[F3C4B["added_rules"][rid][0]] if rid in F3C4B["added_rules"] else F3C5_CLASS_CAUSES[F3C5["added_rules"][rid][0]] if rid in F3C5["added_rules"] else "cause not yet named -- explain before treating this as expected")
             print(f"    {rid}: {cause}")
         if len(added_rule_ids) > args.max_examples:
             print(f"    ... and {len(added_rule_ids) - args.max_examples} more")
@@ -1356,6 +1539,10 @@ def main() -> int:
         for line in f3c4b_failures[: args.max_examples]:
             print(f"  {line}")
         failures.append(f"F3c4b pin failures: {len(f3c4b_failures)}")
+    if f3c5_failures:
+        for line in f3c5_failures[: args.max_examples]:
+            print(f"  {line}")
+        failures.append(f"F3c5 pin failures: {len(f3c5_failures)}")
     for key, old_v, new_v in moved_counts:
         failures.append(f"{key} moved: {old_v} -> {new_v}")
 

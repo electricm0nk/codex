@@ -3235,21 +3235,18 @@ mod tests {
 
         // F3c2: the third caster branch names the sorcerer and the draconic bloodline; the
         // sorcerer 5 mix (draconic pick seeded) reaches the engine. F3c4 (pin moved,
-        // retro-logged): the Draconic pick now links to its converted option and the Sorcerer
-        // seam yields to the record, so ONE named line remains: Dragon Disciple's converted
-        // closure grants no weapon proficiency and carries no closure-complete attestation (its
-        // one closure defect is `Internal|Bite`, ce_abilities_race.lst:249, a natural-attack
-        // helper row outside the inventory -- mechanism N, forward-scope FS-20).
+        // retro-logged): the Draconic pick links to its converted option, leaving ONE line,
+        // `combat.baseline_weapon_proficiency_unknown` (closure defect `Internal|Bite`). F3c5
+        // (pin moved, retro-logged): that Internal natural-attack helper row converts as
+        // `Fact::NaturalAttack("Bite")` on Dragon Bite, so Dragon Disciple's closure is attested
+        // and the proficiency reader answers Known(empty) -- "Dragon disciples gain no
+        // proficiency with any weapon or armor" (CRB p.380). The mix computes at every level.
         let dragon_disciple = row("class:dragon_disciple");
         assert_eq!(dragon_disciple.carriers, vec![PrestigeCarrier::Named("sorcerer")]);
-        assert_eq!(dragon_disciple.status, "blocked");
         assert_eq!(dragon_disciple.mixes[0].1.carrier_level, 5);
-        let mut blocking: Vec<&str> = dragon_disciple.mixes[0].0.blocking.iter().map(|b| b.id.as_str()).collect();
-        blocking.sort_unstable();
-        assert_eq!(
-            blocking,
-            vec!["combat.baseline_weapon_proficiency_unknown"]
-        );
+        let blocking: Vec<&str> = dragon_disciple.mixes[0].0.blocking.iter().map(|b| b.id.as_str()).collect();
+        assert!(blocking.is_empty(), "{blocking:?}");
+        assert_eq!(dragon_disciple.status, "computed");
     }
 
     // -----------------------------------------------------------------

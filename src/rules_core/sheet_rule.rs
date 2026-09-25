@@ -545,6 +545,15 @@ pub enum Fact {
     CompanionSlots { role: String, count: Expr },
     /// The fact the player chose on this rule (a language, a proficiency) is granted.
     Chosen(ChoiceId),
+    /// The character has this natural attack (SD-36 F3c5). A PCGen `CATEGORY:Internal` helper
+    /// row (`Bite`, `ce_abilities_race.lst:249`) whose whole object -- its own row, its `.MOD`
+    /// rows, the size helpers it grants and their templates -- carries nothing but one natural
+    /// attack's bookkeeping (`DEFINE`, `BONUS:VAR`, `BONUS:WEAPONPROF=<the attack>`, `PRE*`,
+    /// `TEMPLATE`, `NATURALATTACKS`) converts as this fact on the rule that grants the helper,
+    /// named by the attack its `NATURALATTACKS` entries name. A fact, never a proficiency: a
+    /// natural attack grants no weapon proficiency. The printed rule's own text states the
+    /// attack's damage; nothing is computed from this fact.
+    NaturalAttack(String),
 }
 
 #[derive(Debug, Clone, PartialEq, Serialize, Deserialize)]

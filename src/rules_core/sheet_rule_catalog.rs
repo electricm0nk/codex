@@ -498,6 +498,7 @@ fn fact_words(fact: &Fact) -> String {
             None => format!("{} companion slot(s)", words_of_id(role)),
         },
         Fact::Chosen(choice) => format!("the option chosen for {}", words_of_id(choice)),
+        Fact::NaturalAttack(attack) => format!("the {attack} natural attack"),
     }
 }
 

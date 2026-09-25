@@ -51,6 +51,12 @@ one by name).
   Blocked on an oracle save-formula defect and 1 is Unknown (dragon_disciple).
   Every other count is identical to `census-f3b3.json`. Histogram and movement:
   `stage-f2-f3/f3c-blocker-histogram.md`. Remainder: `stage-f2-f3/f3c-remainder.md`.
+- `census-f3c5.json` — SD-36 Epic F3c5's sweep (Internal natural-attack helper rows convert as
+  `Fact::NaturalAttack` facts). Prestige carrier mixes: 68 of 74 `Computed`, up from 67.
+  dragon_disciple is the one row that moves: its `Internal|Bite` closure defect resolves. The other 6
+  are Blocked on the oracle save-formula defect (FS-15). Every other count is identical to
+  `census-f3c4.json`. Write-up: `stage-f2-f3/f3c5-receipt.md`; hand-worked oracle:
+  `stage-f2-f3/f3c5-hand-worked.md`.
 - `mix-panel-histogram.md` — F0d's human-readable write-up of the
   claim-blocking-diagnostic histogram across the 185-row mix panel.
 - `scripts/` — `unres2.py`/`closure.py`, the read-only planning-pass

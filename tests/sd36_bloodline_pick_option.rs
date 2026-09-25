@@ -54,14 +54,12 @@ fn a_draconic_pick_reaches_its_lines_at_the_levels_the_book_states() {
         for (at, s) in powers {
             assert_eq!(has(&lines, &id(s)), level >= at, "level {level}: {s} is held from level {at} (CRB p.75)");
         }
-        // Claws (1st level, CRB p.75) converts to ONE line -- its claw-size bonus, gated
-        // `Sorcerer_Draconic_BloodlinePower1LVL >= 7` (`cr_abilities_class.lst:2444`) -- and a
-        // single-line record keeps that line as its principal (SD-36 Epic E CONV-02), so the
-        // record is held from sorcerer 7, not 1. A named converter remainder
-        // (`f3c4b-receipt.md` §5), asserted here only where the package and the book agree.
-        if level >= 7 {
-            assert!(has(&lines, &id("draconic_bloodline_claws")), "level {level}: claws is held");
-        }
+        // Claws (1st level, CRB p.75). Since F3c5 the record carries its `Internal|Claw` natural
+        // attack as a fact (`natural_attack.rs`), so it is no longer a single-line principal
+        // (CONV-02): the record is held from 1st level, and its claw-size line
+        // (`Sorcerer_Draconic_BloodlinePower1LVL >= 7`, `cr_abilities_class.lst:2444`) is its own
+        // `#weapon0` sibling. F3c4b held the record from 7 (FS-18).
+        assert!(has(&lines, &id("draconic_bloodline_claws")), "level {level}: claws is held");
     }
 }
 

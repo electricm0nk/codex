@@ -114,7 +114,7 @@ actually measures.
 | ...reach `Computed` at no level (non-prestige) | **0** | of 63 | `blocked` |
 | Prestige ids swept (never measured alone — see the carrier rule below) | **74** | of 137 total ids | `prestige_swept` |
 | ...Blocked alone (negative control) | **74** | of 74 | `prestige_alone_blocked` |
-| ...`Computed` in their deterministic carrier mix | **67** | of 74 | `prestige_mix_computed` |
+| ...`Computed` in their deterministic carrier mix | **68** | of 74 | `prestige_mix_computed` |
 | Multiclass mix-panel rows swept (existing negative-control inputs, re-used) | **185** | — | `mix_panel_swept` |
 | ...reach `Computed` | **185** | of 185 | `mix_panel_computed` |
 | ...stay `Blocked` | **0** | of 185 | `mix_panel_blocked` |
@@ -131,7 +131,7 @@ actually measures.
 | Untabled exotic base classes | advanced_players_guide, occult_adventures, ultimate_intrigue, ultimate_magic, ultimate_psionics, ultimate_wilderness | 20 | 20 |
 | CRB NPC / Ex-* classes | core_rulebook | 7 | 7 |
 | generic_class_chassis-only (unclaimed by any of the eight canonical sources) | advanced_players_guide | 2 | 2 |
-| Prestige | see per-class `books` in the census JSON (11 source books) | 74 | n/a alone (never a legitimate measurement — see headline numbers: 67 of 74 `Computed` in carrier mix) |
+| Prestige | see per-class `books` in the census JSON (11 source books) | 74 | n/a alone (never a legitimate measurement — see headline numbers: 68 of 74 `Computed` in carrier mix) |
 | **Total** | | **137** (63 non-prestige + 74 prestige) | **63** of 63 non-prestige ids Computed alone (prestige carrier-mix result kept separate, per headline numbers above — the bin's own `--json` output never folds the two together) |
 <!-- class-census:end -->
 
@@ -205,25 +205,26 @@ for):
   Gunslinger, Ninja (Ultimate Combat); Kineticist, Medium, Mesmerist,
   Occultist, Psion, Psychic, Shifter, Spiritualist, Vigilante (untabled
   exotic). A UI-surface gap, not an engine gap.
-- **Prestige in a carrier mix (67 of 74 `Computed`)**: census
-  `prestige_mix_computed=67 prestige_mix_unknown=0`, 2026-09-24, SD-36 F3c2
-  (`artifacts/epic-f/census-f3c2.json`). The carrier chooser walks an `AtLeast`
-  clause's branches in oracle order and takes the first that translates to a
-  carrier + level, reads `HighestSpellLevel(Any)` as "at least 1 of Arcane,
-  Divine", and reads a `Not` of a spell-kind term as a prohibition; each row's
-  `carrier_reason` names the branch taken. Of the other 7: 6 are Blocked on
-  `multiclass.save_shape.unrecognized`, an oracle `BONUS:SAVE` formula defect
-  (Evangelist, Exalted, Mammoth Rider, Pure Legion Enforcer, Sentinel, Ulfen
-  Guard), closable only by a book-cited override (`forward-scope-register.md`
-  FS-15); 1 is Blocked in its sorcerer mix (Dragon Disciple: a gate branch that
-  names `ClassLevel(<class>) >= n` makes that class the carrier since F3c2, and
-  the gate-named draconic bloodline is seeded as the sorcerer's pick; the mix
-  stops on `combat.baseline_weapon_proficiency_unknown` -- Dragon Disciple's
-  converted closure grants no weapon proficiency and carries no closure-complete
-  attestation, because its one closure defect is a reference to an oracle row
-  outside the 49,450-unit inventory (`Internal|Bite`, `ce_abilities_race.lst:249`;
-  re-checked F3c3) -- and on the Sorcerer seam, which grounds the Arcane bloodline
-  only).
+- **Prestige in a carrier mix (68 of 74 `Computed`)**: census
+  `prestige_mix_computed=68 prestige_mix_unknown=0`, 2026-09-25, SD-36 F3c5
+  (`artifacts/epic-f/census-f3c5.json`).
+  - **How the carrier is chosen.** The carrier chooser walks an `AtLeast`
+    clause's branches in oracle order and takes the first branch that
+    translates to a carrier and a level. It reads `HighestSpellLevel(Any)` as
+    "at least 1 of Arcane, Divine", and it reads a `Not` of a spell-kind term
+    as a prohibition. Each row's `carrier_reason` names the branch taken.
+  - **Dragon Disciple has computed in its sorcerer-5 mix since F3c5.** Its
+    carrier comes from a gate branch that names `ClassLevel(sorcerer) >= 1`,
+    with the draconic bloodline seeded as the sorcerer's pick. Its one closure
+    defect, `Internal|Bite` (`ce_abilities_race.lst:249`), is a natural-attack
+    helper row. That row now converts as `Fact::NaturalAttack("Bite")` on
+    Dragon Bite (`sheet_rule/natural_attack.rs`), so the closure is attested.
+    The proficiency reader answers Known(empty): "Dragon disciples gain no
+    proficiency with any weapon or armor" (CRB p.380).
+  - **The other 6 are Blocked on `multiclass.save_shape.unrecognized`.** This
+    is an oracle `BONUS:SAVE` formula defect, in Evangelist, Exalted, Mammoth
+    Rider, Pure Legion Enforcer, Sentinel and Ulfen Guard. It can be closed
+    only by a book-cited override (`forward-scope-register.md` FS-15).
   A prestige class alone is never `Computed` (74 of 74 Blocked, the game rule).
 - **Multiclass scope**: every family can mix since SD-36 F3b, with two named
   save-source remainders: the 4 Pathfinder Unchained classes (no CRB table row
