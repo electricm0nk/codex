@@ -617,6 +617,44 @@ the rows back. `AT-33-E3-004` runs the corpus-wide scan with `--corpus-wide --ou
 — the binary's own default output path is SD-32's closed `gate-2-engines/` evidence file and is
 never overwritten; `--output` is always passed explicitly.
 
+### 3d. SD-36 Epic F2/F3 — class dispatch: the generic gate arm, the prestige rule, the multiclass fold
+
+**Generic gate arm (F2a).** `has_supported_class_chassis` (`class_shared_core.rs`) gained one arm,
+`is_supported_generic_class_family_single_class`: a single-class, non-prestige character whose class
+`generic_class_chassis::resolve` answers with a converted BAB/base-save row at that level is admitted.
+No class is named; the population is whatever `CLASS_FAMILY_BOOKS` holds (F2a appended the CRB and APG,
+so the resolver pin `every_conventional_class_in_class_family_books_resolves` measures 122 distinct
+slugs, was 78). Census before/after (`cargo run --locked -j 8 --bin class_census -- --json <path>`,
+`docs/release/SD-36-consolidation/artifacts/epic-f/stage-f2-f3/f2a-census-before-after.md`): no existing
+id moved; `ids` 135 -> 137 and `computed` 61 -> 63 of 63 non-prestige, the +2 being the APG
+Ex-Antipaladin/Ex-Inquisitor records the widened book list brought in.
+
+**Prestige rule (F2b).** A character whose only class is tagged `Prestige`
+(`generic_class_chassis::is_prestige`) gets one claim-blocking diagnostic,
+`prestige_class.requires_base_class_levels` ("A prestige class cannot be a character's first class. Add
+levels in a base class first."), and no chassis number: BAB, saves and HP print `Blocked`. One branch at
+the top of `compute_class_chassis`'s single-class section, keyed on the tag. The entry-requirement report
+(`class_chassis.prestige_entry_gate.{met,unmet}`) still prints beside it. Census: 74 of 74 prestige ids
+Blocked alone.
+
+**Multiclass fold (F3).** `src/rules_core/pilot_compute/multiclass_fold.rs` is one mechanical rule for
+every class with a chassis. Gate (`multiclass_member`): a non-prestige class joins a mix when its isolated
+single-class input passes `has_supported_class_chassis`; a prestige class joins when its converted record
+has a chassis row at that level; the mix needs at least one non-prestige class; each save progression must
+come from the CRB table or a converted `ClassChassis::save_shape` of `Good`/`Poor` (base forms `L/2+2`,
+`L/3`; prestige forms `(L+1)/2`, `(L+1)/3`). `Degraded`, `Unrecognized` or no record is a named
+claim-blocking diagnostic (`multiclass.save_shape.{degraded,unrecognized,unknown}`), never folded in as a
+poor save. Fold: BAB is the sum of each class's BAB; saves sum each class's exact rational value and floor
+once; HP (`multiclass.hit_points`) takes the maximized die only for the first-listed class's first level,
+`die/2+1` elsewhere, plus Con each level, and a class with no hit die makes HP `Unknown`
+(`class_chassis.hit_points.unknown`), never 0; skill points (`multiclass.skill_points`) sum ranks x levels
+per class, `Unknown` when a record states no ranks. Class-feature lines come from each class's isolated run,
+re-scoped `multiclass.<class>.<id>`, and their claim-blocking class-line diagnostics carry over the same
+way. Measured: prestige carrier mixes 68 of 74 `Computed` (6 Blocked on `multiclass.save_shape.unrecognized`,
+source formulas with a precedence error), mix panel 185 of 185; 187 multiclass negative controls flipped
+to status parity with the class alone; sabotage of the carry-over reddens 14 of 187, 0 restored
+(`artifacts/epic-f/stage-f2-f3/f3d-sabotage-log.md`).
+
 ### 4. `src/rules_core/pilot_compute_corpus.rs` — the corpus-aware wrapping seam
 
 `compute_pilot_with_corpus(input: &CharacterInput, corpus: &SourcePackageContent) ->

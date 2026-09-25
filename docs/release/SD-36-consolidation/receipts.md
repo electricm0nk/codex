@@ -692,3 +692,26 @@ Nothing above was deleted; this is inventory only, for the operator to action af
   - frozen_corpus_record_count: 49,450 — unmoved
   - data/corpus/** and site/**: untouched
 - receipt_note: F1 and F1-reader close with this landing. F2-F5 remain open; D2-D6 bundle closure (graphify last) stays blocked on F5.
+
+## Epic F2/F3 landed (2026-09-25)
+
+- merge_sha: bb1c4251a3 ("merge(sd36,epic-f2-f3): generic gate arm, prestige-alone rule, multiclass for every class with a chassis, prestige carrier mixes Computed")
+- branch: tranche/16
+- verify_log: docs/release/SD-36-consolidation/artifacts/epic-f/stage-f2-f3/verify-f2f3-1.log
+- verify_result: "verify.sh full: PASS (51 PASS, 0 FAIL; class-census ids=137 computed=63 prestige_alone_blocked=74 mix_panel_computed=185 prestige_mix_computed=68)"
+- stage_receipts: docs/release/SD-36-consolidation/artifacts/epic-f/stage-f2-f3/ (f2a-census-before-after.md, f2b-prestige-alone.md, f3a-save-shapes.md, f3b-multiclass-fold.md, f3b-hand-worked.md, f3c-remainder.md, f3c5-receipt.md, f3d-sabotage-log.md, f3d-sites.tsv, merge-readiness-receipt.md, per-step red/verify logs and structural diffs)
+- headline_numbers (command `cargo run --locked -j 8 --bin class_census -- --json <path>`):
+  - census: ids 135 -> 137; non-prestige Computed 61 of 61 -> 63 of 63 (the +2 are APG Ex-Antipaladin/Ex-Inquisitor, new ids; no existing id moved)
+  - prestige_alone_blocked: 74 of 74 (`prestige_class.requires_base_class_levels`)
+  - prestige_mix_computed: 0 of 74 -> 68 of 74; remainder 6 of 74 Blocked on `multiclass.save_shape.unrecognized` (FS-15)
+  - mix_panel_computed: 185 of 185
+  - generic resolver pin: 78 -> 122 distinct slugs
+  - negative controls flipped to status parity: 187 of 187; sabotage 14 of 187 red, 0 of 187 restored
+  - `--list` parity: sd18_widening 891 of 891, sd13_progression 1,136 of 1,136
+  - hand-worked oracle: 16 of 16 builds match the rendered sheet
+- gate_checks:
+  - class_status_table_check: "python3 scripts/gen_class_status_table.py --check" → OK (ids=137 computed=63 prestige_swept=74 mix_panel_computed=185 of 185)
+  - pcgen_residue_gate: "python3 scripts/pcgen_residue_gate.py --check --closure" → PASS
+  - frozen_corpus_record_count: 49,450 — unmoved
+  - data/corpus/** and site/**: untouched; data/sheet_rules/** regenerated on the branch (converter receipts per step)
+- receipt_note: F2 and F3 close with this landing. F4 (desktop roster) and F5 (closure deltas) remain open; D2-D6 bundle closure (graphify last) stays blocked on F5.
