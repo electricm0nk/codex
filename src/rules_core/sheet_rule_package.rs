@@ -81,6 +81,73 @@ pub fn package() -> &'static Result<SheetRulePackage, String> {
     PACKAGE.get_or_init(|| load_package_from(&repo_root()))
 }
 
+/// SD-36 F3c4: the character's legacy Path-A picks (`choice:<pool> -> <ns>:<member>`) linked to
+/// the converted options its held choosers offer for them
+/// ([`crate::rules_core::sheet_rule::link_path_a_picks`], one rule), over the process-wide
+/// package. The held set it links against is the character's classes and race alone -- the
+/// chooser a class offers is held through the class. Each link says whether the option is held
+/// once the pick is recorded (`option_held`). Empty when the package does not load or no pick
+/// links. Cached per (race, class levels, picks).
+pub fn linked_picks(
+    input: &crate::rules_core::character_input::CharacterInput,
+) -> Vec<crate::rules_core::sheet_rule::LinkedPick> {
+    use crate::rules_core::sheet_rule::{held_set, id_slug, link_path_a_picks, CharacterFacts, HeldSeed};
+    use std::collections::BTreeMap;
+    use std::sync::Mutex;
+    type Key = (String, Vec<(String, u8)>, Vec<(String, String)>);
+    static CACHE: OnceLock<Mutex<BTreeMap<Key, Vec<crate::rules_core::sheet_rule::LinkedPick>>>> = OnceLock::new();
+    let Ok(package) = package() else { return Vec::new() };
+    let chosen = &input.chosen;
+    let picks: Vec<(String, String)> = chosen
+        .selected_choices
+        .iter()
+        .filter(|c| c.choice_set_id.starts_with("choice:"))
+        .map(|c| (c.choice_set_id.clone(), id_slug(&c.selection_id)))
+        .collect();
+    // Cheap pre-check: a pick can link only when its `<pool>_<member>` record exists.
+    if !picks.iter().any(|(set, member)| {
+        let pool = set.strip_prefix("choice:").unwrap_or(set);
+        !package.find_all("class_feature", &format!("{pool}_{member}")).is_empty()
+    }) {
+        return Vec::new();
+    }
+    let classes: Vec<(String, u8)> = chosen.class_levels.iter().map(|c| (id_slug(&c.class_id), c.level)).collect();
+    let key: Key = (chosen.race_id.clone(), classes.clone(), picks.clone());
+    let cache = CACHE.get_or_init(|| Mutex::new(BTreeMap::new()));
+    if let Ok(guard) = cache.lock()
+        && let Some(hit) = guard.get(&key)
+    {
+        return hit.clone();
+    }
+    let class_levels: Vec<(String, i64)> = classes.iter().map(|(c, l)| (c.clone(), i64::from(*l))).collect();
+    let race = Some(id_slug(&chosen.race_id));
+    let seed = HeldSeed { race: race.clone(), classes: class_levels.clone(), ..HeldSeed::default() };
+    let mut facts = CharacterFacts {
+        level: class_levels.iter().map(|(_, l)| *l).sum(),
+        class_levels,
+        race,
+        ..CharacterFacts::default()
+    };
+    for (set, member) in &picks {
+        facts.choices.entry(set.clone()).or_default().push((member.clone(), member.clone()));
+    }
+    let held = held_set(package, &seed, &facts);
+    let mut links = link_path_a_picks(package, &held, &facts);
+    if !links.is_empty() {
+        for link in &links {
+            facts.choices.entry(link.chooser.clone()).or_default().push((link.option.clone(), link.option.clone()));
+        }
+        let with_picks = held_set(package, &seed, &facts);
+        for link in &mut links {
+            link.option_held = with_picks.holds_itself(&link.option);
+        }
+    }
+    if let Ok(mut guard) = cache.lock() {
+        guard.insert(key, links.clone());
+    }
+    links
+}
+
 #[cfg(test)]
 mod tests {
     use super::*;

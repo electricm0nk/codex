@@ -779,7 +779,7 @@ pub(crate) fn feat_options_for(
     seed.race_traits.extend(
         resolve_racial_traits_for_character(input).applied_traits.iter().map(|t| t.key.clone()),
     );
-    let facts = CharacterFacts::from_character(input, &base);
+    let facts = CharacterFacts::from_character(input, &base).with_linked_picks(package, &seed);
     let held = held_set(package, &seed, &facts);
 
     let filtered = filter_option_pool(package, &held, &facts, FEAT_POOL, &[]);

@@ -25,7 +25,7 @@ use std::sync::{Mutex, OnceLock};
 
 use super::class_proficiency_sheet_rules::gate_is_class_decidable;
 use crate::rules_core::sheet_rule::{
-    held_set, resolve_gated_fact_grant, CharacterFacts, Choice, Effect, EvalContext, Fact, GatedFact, Granter, HeldSeed,
+    chooser_offered, held_set, resolve_gated_fact_grant, CharacterFacts, Choice, Effect, EvalContext, Fact, GatedFact, Granter, HeldSeed,
     OptionSet, SheetRulePackage,
 };
 use crate::rules_core::sheet_rule_package;
@@ -63,16 +63,37 @@ pub enum ClassSkillAnswer {
 /// The class's class skills at `class_level`, from the process-wide converted package.
 /// Cached per `(class, level)`.
 pub fn class_skill_view(class_slug: &str, class_level: u8) -> ClassSkillAnswer {
-    static CACHE: OnceLock<Mutex<BTreeMap<(String, u8), ClassSkillAnswer>>> = OnceLock::new();
+    cached_view(class_slug, class_level, &[])
+}
+
+/// SD-36 F3c4: the class's class skills for THIS character -- [`class_skill_view`] plus the
+/// character's own Path-A picks linked to the converted options they name
+/// ([`sheet_rule_package::linked_picks`]; a sorcerer's `bloodline:aquatic` holds the Aquatic
+/// pick option, whose record grants Swim). One rule for every class and every pick; a pick
+/// whose chooser this class does not hold is ignored here. With no linked pick it is exactly
+/// [`class_skill_view`].
+pub fn class_skill_view_for(
+    input: &crate::rules_core::character_input::CharacterInput,
+    class_slug: &str,
+    class_level: u8,
+) -> ClassSkillAnswer {
+    let picks: Vec<(String, String)> =
+        sheet_rule_package::linked_picks(input).into_iter().map(|l| (l.chooser, l.option)).collect();
+    cached_view(class_slug, class_level, &picks)
+}
+
+fn cached_view(class_slug: &str, class_level: u8, picks: &[(String, String)]) -> ClassSkillAnswer {
+    type Key = (String, u8, Vec<(String, String)>);
+    static CACHE: OnceLock<Mutex<BTreeMap<Key, ClassSkillAnswer>>> = OnceLock::new();
     let cache = CACHE.get_or_init(|| Mutex::new(BTreeMap::new()));
-    let key = (class_slug.to_string(), class_level);
+    let key = (class_slug.to_string(), class_level, picks.to_vec());
     if let Ok(guard) = cache.lock()
         && let Some(answer) = guard.get(&key)
     {
         return answer.clone();
     }
     let answer = match sheet_rule_package::package() {
-        Ok(package) => class_skill_view_in(package, class_slug, class_level),
+        Ok(package) => class_skill_view_with(package, class_slug, class_level, picks),
         Err(reason) => ClassSkillAnswer::Unknown { reason: format!("the converted rule package did not load: {reason}") },
     };
     if let Ok(mut guard) = cache.lock() {
@@ -83,6 +104,17 @@ pub fn class_skill_view(class_slug: &str, class_level: u8) -> ClassSkillAnswer {
 
 /// The same answer over an explicit package.
 pub fn class_skill_view_in(package: &SheetRulePackage, class_slug: &str, class_level: u8) -> ClassSkillAnswer {
+    class_skill_view_with(package, class_slug, class_level, &[])
+}
+
+/// [`class_skill_view_in`] with the character's linked picks `(chooser, option)`: a pick counts
+/// only when this class's own walk offers its chooser.
+pub fn class_skill_view_with(
+    package: &SheetRulePackage,
+    class_slug: &str,
+    class_level: u8,
+    picks: &[(String, String)],
+) -> ClassSkillAnswer {
     let Some(principal) = package.find("class", class_slug) else {
         return ClassSkillAnswer::Unknown { reason: format!("no converted class record for `{class_slug}`") };
     };
@@ -92,7 +124,18 @@ pub fn class_skill_view_in(package: &SheetRulePackage, class_slug: &str, class_l
     for (choice, member) in canonical_member_picks(package, class_slug) {
         facts.choices.entry(choice).or_default().push((member.clone(), member));
     }
-    let held = held_set(package, &seed, &facts);
+    let mut held = held_set(package, &seed, &facts);
+    let own: Vec<&(String, String)> =
+        picks.iter().filter(|(chooser, _)| chooser_offered(package, &held, &facts, chooser)).collect();
+    if !own.is_empty() {
+        for (chooser, option) in own {
+            let entry = facts.choices.entry(chooser.clone()).or_default();
+            if !entry.iter().any(|(o, _)| o == option) {
+                entry.push((option.clone(), option.clone()));
+            }
+        }
+        held = held_set(package, &seed, &facts);
+    }
     if !held.rules.contains_key(principal) {
         return ClassSkillAnswer::Unknown {
             reason: format!("the class principal rule {principal} is not held at level {class_level}"),

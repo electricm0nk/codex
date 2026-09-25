@@ -651,7 +651,7 @@ pub fn sheet_dump_with_rules_text(
     match crate::rules_core::sheet_rule_package::package() {
         Ok(package) => {
             let seed = HeldSeed::from_character(&input, &receipt.computation);
-            let facts = CharacterFacts::from_character(&input, &receipt.computation);
+            let facts = CharacterFacts::from_character(&input, &receipt.computation).with_linked_picks(package, &seed);
             let held = held_set(package, &seed, &facts);
             let mut held_ids: Vec<&str> =
                 held.rules.keys().filter(|id| !held.removed.contains(*id)).map(String::as_str).collect();
@@ -3234,9 +3234,12 @@ mod tests {
         );
 
         // F3c2: the third caster branch names the sorcerer and the draconic bloodline; the
-        // sorcerer 5 mix (draconic pick seeded) reaches the engine and is Blocked on two named
-        // lines: Dragon Disciple's converted closure grants no weapon proficiency and carries no
-        // closure-complete attestation, and the Sorcerer seam grounds the Arcane bloodline only.
+        // sorcerer 5 mix (draconic pick seeded) reaches the engine. F3c4 (pin moved,
+        // retro-logged): the Draconic pick now links to its converted option and the Sorcerer
+        // seam yields to the record, so ONE named line remains: Dragon Disciple's converted
+        // closure grants no weapon proficiency and carries no closure-complete attestation (its
+        // one closure defect is `Internal|Bite`, ce_abilities_race.lst:249, a natural-attack
+        // helper row outside the inventory -- mechanism N, forward-scope FS-20).
         let dragon_disciple = row("class:dragon_disciple");
         assert_eq!(dragon_disciple.carriers, vec![PrestigeCarrier::Named("sorcerer")]);
         assert_eq!(dragon_disciple.status, "blocked");
@@ -3245,10 +3248,7 @@ mod tests {
         blocking.sort_unstable();
         assert_eq!(
             blocking,
-            vec![
-                "class_feature.sorcerer.arcane_bond_and_bloodline_progression.unsupported",
-                "combat.baseline_weapon_proficiency_unknown"
-            ]
+            vec!["combat.baseline_weapon_proficiency_unknown"]
         );
     }
 

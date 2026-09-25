@@ -367,10 +367,24 @@ criteria select that no inventory unit stands for (Sorcerer's `CATEGORY:Sorcerer
 `cr_abilities_class.lst:2435`) converts as a `pool_option` rule granted by `Granter::Choice(<chooser>)`
 (`sheet_rule/pool_option.rs`, 274 options over 12 pools). Its `BONUS:VAR` contributions and `ABILITY:`
 edges are what switch a bloodline's lines on: a Draconic pick holds the record, its class skill, arcana,
-bonus spells and powers at the levels CRB p.75 states (`tests/sd36_bloodline_pick_option.rs`). The
-Sorcerer module does not yet link a character's Path-A `bloodline:<x>` pick to its option, so every
-non-Arcane bloodline still refuses by name
-(`class_feature.sorcerer.arcane_bond_and_bloodline_progression.unsupported`).
+bonus spells and powers at the levels CRB p.75 states (`tests/sd36_bloodline_pick_option.rs`).
+
+A character's legacy Path-A pick (SD-36 F3c4): `choice:<pool> -> <ns>:<member>` is linked to the
+converted option it names by one rule, `sheet_rule::link_path_a_picks` -- the record whose slug is
+`<pool>_<member>` and which carries the pool as its own tag, and the option granting it that a choice
+the character is offered (`chooser_offered`) grants. `CharacterFacts::with_linked_picks` records the
+link for the sheet (`with_sheet_rules`), the feat-prerequisite facts and the desktop's feat options;
+`sheet_rule_package::linked_picks` gives the pilot compute the same links, each marked with whether the
+held set holds the option. The class-skill union reads the character's picks
+(`class_skill_sheet_rules::class_skill_view_for`: an Aquatic sorcerer's Swim carries its +3). The
+Sorcerer module yields to the record for any bloodline it does not model when the option is held
+(`class_feature.sorcerer.bloodline.converted_record`), and names a linked option the held set does not
+hold (`class_feature.sorcerer.bloodline.converted_option_not_held`: Imperious and Kobold, FS-19). The
+SD-32 generic pool-group pass (`push_generic_pool_group_selection_magnitude`) yields for a linked, held
+selection: it had printed member values with no level gate (Draconic 5: Breath Weapon DC 14, a 9th-level
+power), and the held set prints each member line from the record at the level it states. Measured:
+30 of 32 bloodlines Computed single-class at every level
+(`artifacts/epic-f/stage-f2-f3/f3c4-bloodline-sweep-after.md`).
 
 Proved by `tests/sd36_multiclass_any_class.rs` (four mixes against hand-worked PF1 values,
 `docs/release/SD-36-consolidation/artifacts/epic-f/stage-f2-f3/f3b-hand-worked.md`), and for

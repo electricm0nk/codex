@@ -388,7 +388,9 @@ impl PrereqFacts {
             .map(|base| crate::rules_core::sheet_rule::id_slug(&base))
             .collect();
         seed.feats.extend(bases);
-        let facts = CharacterFacts::from_character(input, computation);
+        // SD-36 F3c4: the character's Path-A picks linked to the converted options they name,
+        // the same way the sheet reads them (`with_sheet_rules`).
+        let facts = CharacterFacts::from_character(input, computation).with_linked_picks(package, &seed);
         let held = held_set(package, &seed, &facts);
         PrereqFacts { package, held, facts, feat_index: feat_rule_index(package) }
     }

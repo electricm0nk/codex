@@ -373,6 +373,25 @@ fn sorcerer_level1_with_non_arcane_bloodline_choice_stays_bloodline_agnostic() {
     );
     assert_eq!(bloodline_choice.value, 0);
 
+    // SD-36 F3c4 (pin moved, retro-logged): Draconic now links to its converted pick option
+    // and the seam yields to the record -- no blocker, and the recognition record names the
+    // Draconic option, never an Arcane fact.
+    assert!(
+        !computation.diagnostics.iter().any(|d| d.id == ARCANE_BOND_BLOCKER_ID),
+        "a linked Draconic pick yields to the converted record: {:?}",
+        computation.diagnostics
+    );
+    let converted = explanation(&computation, "class_feature.sorcerer.bloodline.converted_record");
+    assert!(
+        converted.detail.contains("sorcerer_bloodline_draconic_bloodline") && !converted.detail.contains("Arcane"),
+        "{}",
+        converted.detail
+    );
+    assert_eq!(converted.value, 0);
+
+    // A non-Arcane selection the package does not link keeps the bloodline-agnostic blocker.
+    let fixture = SORCERER_FIXTURE.replace("bloodline:arcane", "bloodline:not_a_real_bloodline");
+    let computation = compute_pilot_base_chassis(&load(&fixture));
     let arcane_bond = claim_blocking(&computation, ARCANE_BOND_BLOCKER_ID);
     assert!(
         !arcane_bond.message.contains("Arcane Bond") && !arcane_bond.message.contains("Arcane"),

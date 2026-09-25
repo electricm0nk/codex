@@ -1169,6 +1169,11 @@ impl SheetRulePackage {
             .or_else(|| ids.iter().min())
     }
 
+    /// Every rule of `kind` with this slug, one per book that carries it (empty when none).
+    pub fn find_all(&self, kind: &str, slug: &str) -> &[RuleId] {
+        self.by_kind_slug.get(kind).and_then(|m| m.get(slug)).map_or(&[], Vec::as_slice)
+    }
+
     /// Every principal rule (no `#` sibling suffix) of `kind`, plus each one's siblings.
     pub fn rules_of_kind<'a>(&'a self, kind: &'a str) -> impl Iterator<Item = &'a SheetRule> + 'a {
         self.rules.values().filter(move |r| split_rule_id(&r.id).1 == kind)
@@ -2257,6 +2262,112 @@ pub fn held_set(package: &SheetRulePackage, seed: &HeldSeed, facts: &CharacterFa
         }
     }
     held
+}
+
+/// SD-36 F3c4: a Path-A pick recorded in the legacy `choice:<pool>` id space
+/// (`choice:sorcerer_bloodline -> bloodline:draconic`), linked to the converted option the
+/// character's held chooser offers for it.
+#[derive(Debug, Clone, PartialEq, Eq)]
+pub struct LinkedPick {
+    /// The legacy choice id (`choice:sorcerer_bloodline`).
+    pub choice_set_id: ChoiceId,
+    /// The legacy selection's member slug (`draconic`).
+    pub member: String,
+    /// The converted chooser (`offers: Rules`) the character holds.
+    pub chooser: RuleId,
+    /// The converted option that chooser offers for the pick.
+    pub option: RuleId,
+    /// Whether the held set holds the option once the pick is recorded -- `false` when the
+    /// option's own gate excludes this character (a race-gated pick row, FS-19). Filled by
+    /// [`crate::rules_core::sheet_rule_package::linked_picks`]; `false` from
+    /// [`link_path_a_picks`] itself, which does not re-run the fixpoint.
+    pub option_held: bool,
+}
+
+/// SD-36 F3c4: link every legacy Path-A pick in `facts.choices` to the converted option it
+/// names. ONE rule, the inverse of the census's carrier translation
+/// (`class_census::carrier_pick_for_option`), no per-pool case:
+///
+/// - the pick `choice:<pool> -> <ns>:<member>` names the converted record whose slug is
+///   `<pool>_<member>` and which carries the pool as its own tag (`Sorcerer Bloodline` for
+///   `choice:sorcerer_bloodline`; the oracle key `Sorcerer Bloodline ~ Draconic`);
+/// - that record's option is a rule granting it (`Granter::Rule(<option>)`) that is itself
+///   granted by a choice (`Granter::Choice(<chooser>)`) the character is offered in `held`
+///   ([`chooser_offered`]) -- the
+///   converter's ability-category pick (`pool_option`, F3c4b), so the option is exactly the row
+///   PCGen applies when the character picks it.
+///
+/// A pick that names no such record, or whose record several held choosers or options answer,
+/// is not linked (never guessed); the caller keeps its own answer for it.
+pub fn link_path_a_picks(package: &SheetRulePackage, held: &HeldSet, facts: &CharacterFacts) -> Vec<LinkedPick> {
+    let mut out = Vec::new();
+    for (choice_set_id, picks) in &facts.choices {
+        let Some(pool) = choice_set_id.strip_prefix("choice:") else { continue };
+        for (member, _) in picks {
+            let record_slug = format!("{pool}_{member}");
+            let mut found: BTreeSet<(RuleId, RuleId)> = BTreeSet::new();
+            for record_id in package.find_all("class_feature", &record_slug) {
+                let Some(record) = package.rule(record_id) else { continue };
+                if !record.tags.iter().any(|t| slug(t) == pool) {
+                    continue;
+                }
+                for g in &record.granted_by {
+                    let Granter::Rule(option_id) = &g.by else { continue };
+                    let Some(option) = package.rule(option_id) else { continue };
+                    for og in &option.granted_by {
+                        if let Granter::Choice(chooser) = &og.by
+                            && chooser_offered(package, held, facts, chooser)
+                        {
+                            found.insert((chooser.clone(), option_id.clone()));
+                        }
+                    }
+                }
+            }
+            if found.len() == 1 {
+                let (chooser, option) = found.into_iter().next().expect("len 1");
+                out.push(LinkedPick { choice_set_id: choice_set_id.clone(), member: member.clone(), chooser, option, option_held: false });
+            }
+        }
+    }
+    out
+}
+
+/// Whether the character is offered `chooser`: it is held, or it is a standalone choice rule
+/// (no granter of its own -- the converter writes `Standard Bloodline`'s pick as
+/// `sorcerer_standard_bloodline_selection`, gated `Holds(sorcerer_standard_bloodline)`) whose own
+/// gate states a condition and includes against `held`. A standalone chooser with no granter
+/// and no gate (`Applies::Always`, e.g. `arcanist_bloodline_development_selection`, whose
+/// grant is an unresolved reference) states nothing that ties it to this character, so it is
+/// not offered -- never assumed.
+pub fn chooser_offered(package: &SheetRulePackage, held: &HeldSet, facts: &CharacterFacts, chooser: &str) -> bool {
+    if held.holds(chooser) {
+        return true;
+    }
+    package.rule(chooser).is_some_and(|rule| {
+        rule.granted_by.is_empty()
+            && rule.offers.is_some()
+            && rule.applies != Applies::Always
+            && evaluate_applies(&rule.applies, held, package, facts, EvalContext::default()) == Gate::Include
+    })
+}
+
+impl CharacterFacts {
+    /// These facts with every linked Path-A pick ([`link_path_a_picks`]) recorded under its
+    /// converted chooser, so the held set holds the picked option (and, through it, the record
+    /// and its lines at the levels the record states). A chooser the character already records
+    /// a pick under directly keeps that pick; the legacy entry itself is left as it is.
+    pub fn with_linked_picks(&self, package: &SheetRulePackage, seed: &HeldSeed) -> CharacterFacts {
+        let held = held_set(package, seed, self);
+        let links = link_path_a_picks(package, &held, self);
+        let mut facts = self.clone();
+        for link in links {
+            let entry = facts.choices.entry(link.chooser.clone()).or_default();
+            if !entry.iter().any(|(o, _)| o == &link.option) {
+                entry.push((link.option.clone(), link.option.clone()));
+            }
+        }
+        facts
+    }
 }
 
 /// How a gated fact grant (`Effect::GatedFactGrant`) resolved against a held set (paper-sheet

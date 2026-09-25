@@ -973,8 +973,10 @@ pub(crate) fn unread_record_selected_class_skill_ids() -> impl Iterator<Item = &
 
 /// Whether `skill` (`"climb"`, `"intimidate"` or `"swim"`) is a class skill for the character:
 /// PF1's union rule (CRB p.87 -- a skill is a class skill when ANY of the character's classes
-/// lists it), each class answered by its converted record at its own level
-/// ([`class_skill_sheet_rules::class_skill_view`]). One rule for every class. A class the
+/// lists it), each class answered by its converted record at its own level, with the
+/// character's own Path-A picks linked to the converted options they name (SD-36 F3c4:
+/// [`class_skill_sheet_rules::class_skill_view_for`]; an Aquatic sorcerer's bloodline grants
+/// Swim). One rule for every class. A class the
 /// reader cannot answer falls back to its verified oracle row
 /// ([`UNREAD_RECORD_SELECTED_CLASS_SKILLS`]) when it has one; otherwise it is Unknown, named, and
 /// the +3 is never silently withheld (nor granted).
@@ -983,7 +985,7 @@ pub(crate) fn selected_skill_class_skill(input: &CharacterInput, skill: &str) ->
     let mut unknown = Vec::new();
     for class_level in &input.chosen.class_levels {
         let slug = class_level.class_id.strip_prefix("class:").unwrap_or(&class_level.class_id);
-        let grants = match class_skill_sheet_rules::class_skill_view(slug, class_level.level) {
+        let grants = match class_skill_sheet_rules::class_skill_view_for(input, slug, class_level.level) {
             class_skill_sheet_rules::ClassSkillAnswer::Known(view) => view.contains(skill),
             class_skill_sheet_rules::ClassSkillAnswer::Unknown { reason } => {
                 match (unread_record_selected_class_skills(&class_level.class_id), index) {

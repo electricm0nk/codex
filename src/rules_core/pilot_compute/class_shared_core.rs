@@ -46,7 +46,8 @@ impl PilotBaseChassisComputation {
         use crate::rules_core::sheet_rule::{render_sheet, CharacterFacts, HeldSeed};
         let mut seed = HeldSeed::from_character(input, &self);
         seed.race_traits.extend(extra_race_traits.iter().cloned());
-        let facts = CharacterFacts::from_character(input, &self);
+        // SD-36 F3c4: the character's Path-A picks linked to the converted options they name.
+        let facts = CharacterFacts::from_character(input, &self).with_linked_picks(package, &seed);
         self.sheet_lines = render_sheet(package, &seed, &facts);
         self
     }
