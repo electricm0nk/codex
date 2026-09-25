@@ -34,6 +34,7 @@ pub mod ctx;
 pub mod formula;
 pub mod oracle_terms;
 pub mod pool_link;
+pub mod pool_option;
 pub mod pool_pick;
 pub mod prereq;
 pub mod prose;
@@ -437,6 +438,7 @@ pub fn build_index(tree: &PinnedTree, records: Vec<RecordRef>) -> (CorpusIndex, 
     let mut index = CorpusIndex::default();
     let mut closures: Vec<Closure> = Vec::with_capacity(records.len());
     let mut placeholder_declared: Vec<((String, String), RuleId)> = Vec::new();
+    let mut row_declared_category: Vec<((String, String), RuleId, bool)> = Vec::new();
     for r in &records {
         let closure = if r.rel_path.is_empty() {
             Closure::default()
@@ -484,6 +486,22 @@ pub fn build_index(tree: &PinnedTree, records: Vec<RecordRef>) -> (CorpusIndex, 
             && declared != key_u
         {
             placeholder_declared.push(((cat_u.clone(), declared), r.id.clone()));
+        }
+        // SD-36 F3c4b: a record whose shipped tokens state no `CATEGORY:` (the corpus record
+        // sits at a `.MOD` row, `CATEGORY=Internal|Bloodline Tracker.MOD`,
+        // `cr_abilities_class.lst:1705`) is named by every other record under the category its
+        // own source row declares (`ABILITY:Internal|AUTOMATIC|Bloodline Tracker`). Indexed
+        // under it below, only where no record answers the pair (the F3b2 declared-key rule).
+        if cat_u.is_empty()
+            && let Some(i) = tree.file_index(&r.rel_path)
+            && r.line > 0
+        {
+            let ident = closure::row_identity(tree.row_text(RowRef { file: i, line: r.line }));
+            let is_mod = ident.shape == closure::RowShape::Mod;
+            if !ident.category.is_empty() {
+                row_declared_category.push(((ident.category.clone(), key_u.clone()), r.id.clone(), is_mod));
+                row_declared_category.push(((ident.category, name_u.clone()), r.id.clone(), is_mod));
+            }
         }
         index.by_kind_name.entry((r.kind.clone(), key_u.clone())).or_insert(r.id.clone());
         index.by_kind_name.entry((r.kind.clone(), name_u.clone())).or_insert(r.id.clone());
@@ -577,10 +595,64 @@ pub fn build_index(tree: &PinnedTree, records: Vec<RecordRef>) -> (CorpusIndex, 
             Some(_) => {}
         }
     }
+    // SD-36 F3c4b: the category a CATEGORY-less record's own source row declares. A pair
+    // several such records claim, every one of them from a `.MOD` row, is ONE object whose `.MOD`
+    // rows the inventory filed as one record per book (`Bloodline Tracker`: 8 books): PCGen
+    // applies every `.MOD` row to the object its key names, so a grant of the object holds each
+    // fragment (`CorpusIndex::mod_fragments`). Any other shared pair is left out (never guessed)
+    // and named.
+    let mut declared_claims: BTreeMap<(String, String), (BTreeSet<RuleId>, bool)> = BTreeMap::new();
+    for (pair, id, is_mod) in row_declared_category {
+        let e = declared_claims.entry(pair).or_insert_with(|| (BTreeSet::new(), true));
+        e.0.insert(id);
+        e.1 &= is_mod;
+    }
+    for (pair, (ids, all_mod)) in declared_claims {
+        if index.by_cat_key.contains_key(&pair) || index.by_cat_name.contains_key(&pair) {
+            continue;
+        }
+        if ids.len() == 1 {
+            index.by_cat_key.insert(pair, ids.into_iter().next().unwrap_or_default());
+        } else if all_mod {
+            index.mod_fragments.insert(pair, ids.into_iter().collect());
+        } else {
+            index.index_defects.entry("row-declared-category-shared".into()).or_default().push(format!("{}|{}: {}", pair.0, pair.1, ids.into_iter().collect::<Vec<_>>().join(", ")));
+        }
+    }
     // SD-36 F3b2b: the standing supersession ruling, applied to every ambiguous pair.
     let by_id: BTreeMap<&str, &RecordRef> = records.iter().map(|r| (r.id.as_str(), r)).collect();
     index.reprint_newest_key = reprint::newest_printings(tree, &by_id, &index.cat_key_candidates);
     index.reprint_newest_name = reprint::newest_printings(tree, &by_id, &index.cat_name_candidates);
+    // SD-36 F3c4b: ability-category pick rows no unit stands for become options of the choice
+    // that picks them (`pool_option.rs`); their pairs are registered BEFORE any record converts,
+    // so a record naming one resolves to it. Only pairs no unit answers are registered.
+    let scan = {
+        let answered = |cat: &str, key: &str| {
+            let pair = (cat.to_string(), key.to_string());
+            index.by_cat_key.contains_key(&pair) || index.by_cat_name.contains_key(&pair)
+        };
+        let owned = |row: RowRef| index.row_owner.contains_key(&row);
+        pool_option::scan(tree, &records, &closures, &owned, &answered)
+    };
+    for d in &scan.options {
+        for pair in [(d.category.clone(), d.key.clone()), (d.category.clone(), d.name.to_ascii_uppercase())] {
+            let taken = index.by_cat_key.get(&pair).or_else(|| index.by_cat_name.get(&pair)).cloned();
+            match taken {
+                None => {
+                    index.by_cat_key.insert(pair, d.id.clone());
+                }
+                Some(first) if first != d.id => {
+                    index.index_defects.entry("pool-option-pair-shared".into()).or_default().push(format!("{}: {}|{} (resolves to {first})", d.id, pair.0, pair.1));
+                }
+                Some(_) => {}
+            }
+        }
+    }
+    for (k, v) in scan.defects {
+        index.index_defects.entry(k).or_default().extend(v);
+    }
+    index.pool_options = scan.options;
+    index.pool_option_choosers = scan.choosers;
     index.records = records;
     index.filled_pools = pool_pick::filled_pools(tree, &index);
     (index, closures)
@@ -1035,6 +1107,46 @@ pub fn run(tree: &PinnedTree, index: &CorpusIndex, closures: &[Closure]) -> Run 
     if !sub.superseded.is_empty() {
         defects.entry("subclass-superseded-reprint".into()).or_default().extend(sub.superseded);
     }
+    // SD-36 F3c4b: ability-category pick rows -> options of the choice that picks them
+    // (`pool_option.rs`). No inventory unit is added: the record count does not move.
+    let mut option_rows: BTreeSet<RowRef> = BTreeSet::new();
+    {
+        let offered = |chooser: &str, pool: &str| {
+            index.records.iter().find(|r| r.id == chooser).and_then(|r| files.get(&rule_file_rel(&r.book, &r.kind, &r.id))).and_then(|rules| rules.first()).is_some_and(|p| {
+                matches!(&p.offers, Some(Choice { id, from: OptionSet::Rules { pool: q, .. }, .. }) if id == chooser && q == pool)
+            })
+        };
+        let (options, option_defects) = pool_option::convert_options(tree, index, &offered);
+        for (k, v) in option_defects.into_iter().chain(index.index_defects.clone()).filter(|(_, v)| !v.is_empty()) {
+            defects.entry(k).or_default().extend(v);
+        }
+        for opt in options {
+            let c = opt.converted;
+            for (k, v) in c.defects {
+                defects.entry(k).or_default().extend(v);
+            }
+            for (id, name) in c.var_names {
+                var_names.insert(id, name);
+            }
+            for (id, label) in c.var_labels {
+                var_labels.entry(id).or_insert(label);
+            }
+            for (id, name) in c.var_declares {
+                declares.entry(id).or_insert_with(|| (name, BTreeSet::new())).1.insert(opt.rule.id.clone());
+            }
+            for (id, name, contrib) in c.var_contribs {
+                contribs.entry(id).or_insert_with(|| (name, Vec::new())).1.push(contrib);
+            }
+            for (target, grant) in opt.grants_out {
+                grants_out.entry(target).or_default().push(grant);
+            }
+            option_rows.extend(opt.own_rows.iter().copied());
+            let rel = rule_file_rel(&opt.rule.provenance.book, pool_option::POOL_OPTION_KIND, &opt.rule.id);
+            let mut rules = vec![opt.rule];
+            rules.extend(opt.siblings);
+            files.insert(rel, rules);
+        }
+    }
     // D3: every class-selection record gets the class principal it stands for.
     for r in &index.records {
         if r.class_selection_of.is_none() {
@@ -1095,7 +1207,8 @@ pub fn run(tree: &PinnedTree, index: &CorpusIndex, closures: &[Closure]) -> Run 
             referenced.extend(ids);
         }
     }
-    let owned_rows: BTreeSet<RowRef> = index.row_owner.keys().copied().collect();
+    let mut owned_rows: BTreeSet<RowRef> = index.row_owner.keys().copied().collect();
+    owned_rows.extend(option_rows);
     let mut vars: BTreeMap<VarId, VarTable> = BTreeMap::new();
     for id in &referenced {
         let name = var_names.get(id).cloned().or_else(|| contribs.get(id).map(|(n, _)| n.clone())).or_else(|| declares.get(id).map(|(n, _)| n.clone()));

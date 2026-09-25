@@ -1781,6 +1781,16 @@ fn convert_token(ctx: &mut RecordCtx, acc: &mut Acc, out: &mut Converted, key: &
                     }
                     continue;
                 }
+                // One object filed as several `.MOD`-row records (`CorpusIndex::mod_fragments`):
+                // the grant holds each.
+                if let Some(ids) = ctx.index.mod_fragments.get(&(category.to_ascii_uppercase(), t.to_ascii_uppercase()))
+                    && ctx.resolve_rule_checked(&category, t) == super::ctx::RuleLookup::Missing
+                {
+                    for id in ids {
+                        out.grants_out.push((id.clone(), Grant { by: by.clone(), when: when.clone() }));
+                    }
+                    continue;
+                }
                 if let Holdable::Rule(id) = resolve_holdable_rule(ctx, &category, t) {
                     out.grants_out.push((id, Grant { by, when: when.clone() }));
                 }

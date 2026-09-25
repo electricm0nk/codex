@@ -361,6 +361,17 @@ other member pick. A class whose class skills ARE a choice
 makes the picked skill a class skill. Before F3b3 a hand-kept 13-class list decided it, and 35 of 52 classes (79 of 156 lines) printed a record-granted class
 skill without its +3 (Barbarian Climb/Swim among them).
 
+An ability-category pick (SD-36 F3c4b): a record carrying `CHOOSE:ABILITYSELECTION|<C>|<criteria>`
+and `ABILITY:<C>|<nature>|%LIST` applies the picked row, so every oracle row of category `<C>` its
+criteria select that no inventory unit stands for (Sorcerer's `CATEGORY:Sorcerer Bloodline` pick rows,
+`cr_abilities_class.lst:2435`) converts as a `pool_option` rule granted by `Granter::Choice(<chooser>)`
+(`sheet_rule/pool_option.rs`, 274 options over 12 pools). Its `BONUS:VAR` contributions and `ABILITY:`
+edges are what switch a bloodline's lines on: a Draconic pick holds the record, its class skill, arcana,
+bonus spells and powers at the levels CRB p.75 states (`tests/sd36_bloodline_pick_option.rs`). The
+Sorcerer module does not yet link a character's Path-A `bloodline:<x>` pick to its option, so every
+non-Arcane bloodline still refuses by name
+(`class_feature.sorcerer.arcane_bond_and_bloodline_progression.unsupported`).
+
 Proved by `tests/sd36_multiclass_any_class.rs` (four mixes against hand-worked PF1 values,
 `docs/release/SD-36-consolidation/artifacts/epic-f/stage-f2-f3/f3b-hand-worked.md`), and for
 Fighter+Wizard by `tests/sd21_multiclass_fighter_wizard_chassis_computes.rs` and the `sd24_multiclass_*`

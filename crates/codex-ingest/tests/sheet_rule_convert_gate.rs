@@ -864,3 +864,66 @@ fn a_wizard_school_subclass_converts_through_the_same_rule() {
     );
     assert!(out.superseded.iter().any(|l| l.contains("inner_sea_magic:subclass:wizard_envy")), "{:?}", out.superseded);
 }
+
+/// SD-36 Epic F3c4b: an ability-category pick row converts as an option of the choice that picks
+/// it (`pool_option.rs`), read off the package on disk.
+///
+/// The oracle: `Standard Bloodline` (`cr_abilities_class.lst:2329`) picks with
+/// `CHOOSE:ABILITYSELECTION|Sorcerer Bloodline|!PC,QUALIFIED[TYPE=SorcererBloodlineChoice]` and
+/// applies the pick with `ABILITY:Sorcerer Bloodline|AUTOMATIC|%LIST`. The pick row
+/// `Draconic Bloodline` (`:2435`, `CATEGORY:Sorcerer Bloodline`, `TYPE:SorcererBloodlineChoice`)
+/// grants `Sorcerer Bloodline ~ Draconic` and raises `Sorcerer_Draconic_BloodlineClassSkill1` by
+/// `if(Sorcerer_CF_BloodlineClassSkill==0,1,0)`. `Draconic Bloodline ~ Standard` (`:2976`) names
+/// the pick row (`ABILITY:Sorcerer Bloodline|AUTOMATIC|Draconic Bloodline`). Aquatic's pick row
+/// (`apg_abilities_class.lst:3089`) grants `Sorcerer Bloodline ~ Aquatic` (`:3088`, class skill
+/// Swim).
+#[test]
+fn a_sorcerer_bloodline_pick_row_converts_as_an_option_of_the_bloodline_choice() {
+    use codex_ingest::pcgen_import::sheet_rule::ctx::var_id;
+    let files = package_files();
+    let rules_in = |rel: &str| -> Vec<SheetRule> {
+        serde_json::from_slice(files.get(rel).unwrap_or_else(|| panic!("{rel} is in the package"))).expect("rule file parses")
+    };
+    let chooser = "core_rulebook:class_feature:sorcerer_standard_bloodline_selection";
+    let draconic = &rules_in("core_rulebook/pool_option/sorcerer_bloodline_draconic_bloodline.json")[0];
+    assert_eq!(draconic.id, "core_rulebook:pool_option:sorcerer_bloodline_draconic_bloodline");
+    assert_eq!(draconic.pool, "sorcerer_bloodline");
+    assert!(draconic.granted_by.iter().any(|g| g.by == Granter::Choice(chooser.into())), "{:?}", draconic.granted_by);
+    // The pick row names the record, and so does Dragon Disciple's Blood of Dragons row.
+    assert!(draconic.granted_by.iter().any(|g| g.by == Granter::Rule("core_rulebook:class_feature:draconic_bloodline_standard".into())), "{:?}", draconic.granted_by);
+    let record = &rules_in("core_rulebook/class_feature/sorcerer_bloodline_draconic.json")[0];
+    assert!(record.granted_by.iter().any(|g| g.by == Granter::Rule(draconic.id.clone())), "{:?}", record.granted_by);
+    // Its BONUS:VAR is a contribution from the option.
+    let var = var_id("Sorcerer_Draconic_BloodlineClassSkill1");
+    let table: VarTable = serde_json::from_slice(files.get(&format!("_vars/{var}.json")).expect("var table")).expect("parses");
+    assert!(table.contributions.iter().any(|c| c.rule_id == draconic.id), "{:?}", table.contributions);
+    assert!(!table.provenance.outside_corpus_rows.iter().any(|r| r.ends_with("cr_abilities_class.lst:2435")), "{:?}", table.provenance);
+    // Aquatic: the option grants its record.
+    let aquatic = &rules_in("advanced_players_guide/pool_option/sorcerer_bloodline_aquatic_bloodline.json")[0];
+    assert!(aquatic.granted_by.iter().any(|g| g.by == Granter::Choice(chooser.into())));
+    let aq_record = &rules_in("advanced_players_guide/class_feature/sorcerer_bloodline_aquatic.json")[0];
+    assert!(aq_record.granted_by.iter().any(|g| g.by == Granter::Rule(aquatic.id.clone())), "{:?}", aq_record.granted_by);
+    // No `Sorcerer Bloodline|<X> Bloodline` reference stays unresolved.
+    let unresolved: Vec<String> = serde_json::from_slice(files.get("_defects/unresolved-references.json").expect("defects")).expect("parses");
+    let left: Vec<&String> = unresolved.iter().filter(|u| u.contains(": Sorcerer Bloodline|")).collect();
+    assert!(left.is_empty(), "{left:?}");
+}
+
+/// SD-36 Epic F3c4b: a record whose shipped tokens state no `CATEGORY:` is found under the
+/// category its own source row declares. `Bloodline Tracker`'s corpus record sits at the `.MOD`
+/// row `CATEGORY=Internal|Bloodline Tracker.MOD` (`cr_abilities_class.lst:1705`); the sorcerer's
+/// `Sorcerer ~ Standard Bloodline` (`:1698`) grants it by `ABILITY:Internal|AUTOMATIC|Bloodline
+/// Tracker`, and it raises `BloodlineProgressionLVL` by `SorcererLVL` (`:1707`) -- the variable
+/// every bloodline power's gate reads.
+#[test]
+fn a_category_less_record_is_found_under_the_category_its_row_declares() {
+    let files = package_files();
+    let tracker: Vec<SheetRule> = serde_json::from_slice(files.get("core_rulebook/class_feature/bloodline_tracker.json").expect("tracker")).expect("parses");
+    assert!(
+        tracker[0].granted_by.iter().any(|g| g.by == Granter::Rule("core_rulebook:class_feature:sorcerer_standard_bloodline".into())),
+        "{:?}",
+        tracker[0].granted_by
+    );
+    let unresolved: Vec<String> = serde_json::from_slice(files.get("_defects/unresolved-references.json").expect("defects")).expect("parses");
+    assert!(!unresolved.iter().any(|u| u.ends_with(": Internal|Bloodline Tracker")), "still unresolved");
+}

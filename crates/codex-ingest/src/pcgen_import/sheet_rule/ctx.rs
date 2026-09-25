@@ -132,6 +132,19 @@ pub struct CorpusIndex {
     /// SD-36 F1c-5 (D8): every variable pool a record of the index fills, by pool variable
     /// (upper), with its members (`pool_pick::filled_pools`).
     pub filled_pools: BTreeMap<String, (super::pool_pick::VariablePool, super::pool_pick::PoolMembers)>,
+    /// SD-36 F3c4b: every ability-category pick row no inventory unit stands for, as an option
+    /// of the choice that picks it (`pool_option.rs`). Its `(CATEGORY, KEY)` / `(CATEGORY, name)`
+    /// pairs are in `by_cat_key` / `by_cat_name` where no unit answered them.
+    pub pool_options: Vec<super::pool_option::PoolOptionDecl>,
+    /// SD-36 F3c4b: `(CATEGORY upper, KEY-or-name upper)` -> every record filed from a `.MOD`
+    /// row of that one object (one record per book, no shipped `CATEGORY:`). A grant of the
+    /// object holds each fragment.
+    pub mod_fragments: BTreeMap<(String, String), Vec<RuleId>>,
+    /// The pick choosers (`pool_option.rs`).
+    pub pool_option_choosers: Vec<super::pool_option::PickChooser>,
+    /// Defect rows the index build itself names (the pick-row scan, a declared-category pair two
+    /// records claim), by `_defects/<kind>.json`.
+    pub index_defects: BTreeMap<String, Vec<String>>,
 }
 
 /// Resolve `(category, name)` to a rule id: KEY-exact join first, then display-name-exact join,
