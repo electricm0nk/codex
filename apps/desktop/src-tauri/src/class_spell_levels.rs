@@ -33,7 +33,7 @@ use std::collections::BTreeMap;
 use std::sync::OnceLock;
 
 use codex::rules_core::rules_tables::class_spell_levels;
-use codex::rules_core::sheet_rule::{Effect, SheetRule};
+use codex::rules_core::sheet_rule::{self, Effect, SheetRule};
 
 use crate::authoring_workbench::codex_repo_root;
 
@@ -166,7 +166,12 @@ fn corpus_class_facts() -> &'static BTreeMap<String, CorpusClassFacts> {
             for file in files {
                 let Ok(text) = std::fs::read_to_string(&file) else { continue };
                 let Ok(rules) = serde_json::from_str::<Vec<SheetRule>>(&text) else { continue };
-                let Some(identity) = rules.first().map(|r| r.label.clone()) else { continue };
+                // SD-36 Epic E code-review finding 6: resolve through the shared placeholder-label
+                // resolver (`sheet_rule::display_label`), never the raw `label` field -- a record
+                // whose only converted label is the ingest placeholder (`"Codex-Named Unit
+                // (...)"`) must still be indexed under its real, source-derived id, the same
+                // fallback the four other audited read paths already use.
+                let Some(identity) = rules.first().map(sheet_rule::display_label) else { continue };
                 let spell_type = rules.iter().find_map(|rule| {
                     rule.grants.iter().find_map(|effect| match effect {
                         Effect::FactDeclare { name, value } if name == "SpellType" => {
@@ -307,12 +312,11 @@ mod tests {
             .map(|entry| entry.level)
     }
 
+    // ----- v0.8 B-9: caster-with-no-ingested-list vs non-caster -----
     /// The bug, at the surface the player actually reads: the catalog
     /// serves Hideous Laughter as level 1 (its record's minimum across
     /// classes), and this command supplies the real per-class answer that
     /// corrects it — 2 for a Wizard, 1 for a Bard.
-    // ----- v0.8 B-9: caster-with-no-ingested-list vs non-caster -----
-
     fn status_of(class_id: &str) -> (SpellcastingStatus, Option<String>) {
         let answer = levels_for(class_id);
         (answer.spellcasting, answer.spell_type)
@@ -342,34 +346,26 @@ mod tests {
         }
     }
 
-    /// `pathfinder_unchained`'s `class` kind has no `data/sheet_rules/
-    /// pathfinder_unchained/class/` directory at all -- verified by `find
-    /// data/sheet_rules -maxdepth 1 -iname pathfinder_unchained -type d`
-    /// then listing it: `ability`, `class_feature`, `equipment_modifier`,
-    /// `feat`, `monster_ability`, `race_trait`, `skill`, `template`, no
-    /// `class`. Every one of its four "`<Base> Class Selection`" records
-    /// (Unchained Barbarian/Monk/Rogue/Summoner) is therefore absent from
-    /// [`corpus_class_facts`]'s index by any id, base-selection hop
-    /// included, so all three report `ClassNotInCorpus` -- the honest
-    /// answer, not a regression. Before this module ported off
-    /// `data/corpus/<book>/class/*.json` `raw_tokens` (`decisions.md
-    /// §11`), reading that un-ingested PCGen record directly could still
-    /// answer `NonCaster` for the two martial shells and
-    /// `CasterListNotIngested` for the caster one; this module no longer
-    /// reads the token that made that answer, so it does not know it.
-    /// Re-derive if a future cycle converts this book's `class` kind.
+    /// SD-36 F1c-3 (defect D3) converted `pathfinder_unchained`'s `class` kind: each of its four
+    /// "`<Base> Class Selection`" classes (Unchained Barbarian/Monk/Rogue/Summoner) now has a
+    /// class principal (`data/sheet_rules/pathfinder_unchained/class/unchained_<base>.json`)
+    /// carrying the selection's `<Base> Class Selection` tag, so [`corpus_class_facts`] indexes it
+    /// and the one base-selection hop answers with the base class's converted fact -- the answer
+    /// this test's earlier form said a converting cycle should re-derive. The three martial
+    /// shells are non-casters (their bases declare no `FACT:SpellType`); the Unchained Summoner
+    /// is the Summoner's `Arcane`, whose list is not ingested -- exactly as `class:summoner`
+    /// reports in `oracle_summoner_and_magus_are_casters_whose_list_is_not_ingested`.
     #[test]
-    fn unchained_classes_report_class_not_in_corpus_until_their_book_converts() {
-        for class_id in
-            ["class:unchained_summoner", "class:unchained_barbarian", "class:unchained_rogue"]
-        {
-            assert_eq!(
-                status_of(class_id),
-                (SpellcastingStatus::ClassNotInCorpus, None),
-                "{class_id}"
-            );
+    fn unchained_classes_answer_through_their_base_class_selection() {
+        for class_id in ["class:unchained_barbarian", "class:unchained_monk", "class:unchained_rogue"] {
+            assert_eq!(status_of(class_id), (SpellcastingStatus::NonCaster, None), "{class_id}");
             assert!(!levels_for(class_id).known, "{class_id}");
         }
+        assert_eq!(
+            status_of("class:unchained_summoner"),
+            (SpellcastingStatus::CasterListNotIngested, Some("Arcane".to_owned()))
+        );
+        assert!(!levels_for("class:unchained_summoner").known);
     }
 
     #[test]
@@ -389,6 +385,23 @@ mod tests {
     #[test]
     fn an_id_with_no_corpus_class_record_is_reported_unknown_not_non_caster() {
         assert_eq!(status_of("class:no_such_class"), (SpellcastingStatus::ClassNotInCorpus, None));
+    }
+
+    /// SD-36 Epic E code-review finding 6 (independent verifier, second fix cycle):
+    /// `corpus_class_facts` used to key each file's index entry on `rules.first().map(|r|
+    /// r.label.clone())` -- the RAW converted label, never resolved through
+    /// `sheet_rule::display_label` the way the four other read paths this epic already fixed
+    /// were. `data/sheet_rules/inner_sea_world_guide/class/hellknight.json` (one of 21 files
+    /// under `data/sheet_rules/*/class/*.json`, `grep -rl "Codex-Named Unit"
+    /// data/sheet_rules/*/class/*.json | wc -l`) carries a placeholder `"Codex-Named Unit
+    /// (...)"` first label, so the old code indexed it under a normalized ingest-identifier
+    /// slug, never under `class:hellknight` -- every real lookup for it missed silently and
+    /// reported `ClassNotInCorpus` even though the record is genuinely converted and present.
+    /// Hellknight carries no `FACT:SpellType`, so once correctly indexed under its real id the
+    /// honest answer is `NonCaster`, not `ClassNotInCorpus`.
+    #[test]
+    fn a_class_whose_only_label_is_a_placeholder_is_still_indexed_under_its_real_id() {
+        assert_eq!(status_of("class:hellknight"), (SpellcastingStatus::NonCaster, None));
     }
 
     /// The corpus token and the engine's own transcribed-list set agree:

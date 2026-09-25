@@ -1,0 +1,155 @@
+{
+  "id": "beginner_box",
+  "title": "Beginner Box",
+  "kinds": [
+    {
+      "kind": "equipment",
+      "label": "Equipment",
+      "done": 19,
+      "partial": 0,
+      "not_started": 0,
+      "denominator": 19,
+      "pct": 100.0,
+      "excluded_from_percentage": 0,
+      "standing_breakdown": {
+        "unclassified": 6,
+        "origin": 13
+      },
+      "items": [
+        {
+          "name": "Bandages of Rapid Recovery",
+          "doneness": "done",
+          "type_facet": "Magic.Wondrous.Chest.Consumable",
+          "standing": "unclassified",
+          "display_name": "Bandages of Rapid Recovery"
+        },
+        {
+          "name": "Campfire Bead",
+          "doneness": "done",
+          "type_facet": "Magic.Wondrous.Consumable",
+          "standing": "unclassified",
+          "display_name": "Campfire Bead"
+        },
+        {
+          "name": "Cloak of the Dark Tapestry",
+          "doneness": "done",
+          "type_facet": "Magic.Wondrous.Cloak",
+          "standing": "origin",
+          "display_name": "Cloak of the Dark Tapestry"
+        },
+        {
+          "name": "Dawnflower Sash",
+          "doneness": "done",
+          "type_facet": "Magic.Wondrous.Belt",
+          "standing": "unclassified",
+          "display_name": "Dawnflower Sash"
+        },
+        {
+          "name": "Energy Heart",
+          "doneness": "done",
+          "type_facet": "Magic.Wondrous",
+          "standing": "origin",
+          "display_name": "Energy Heart"
+        },
+        {
+          "name": "Feathered Shield",
+          "doneness": "done",
+          "type_facet": null,
+          "standing": "origin",
+          "display_name": "Feathered Shield"
+        },
+        {
+          "name": "Flying Ointment",
+          "doneness": "done",
+          "type_facet": "Magic.Wondrous.Consumable",
+          "standing": "unclassified",
+          "display_name": "Flying Ointment"
+        },
+        {
+          "name": "Glowing Glove",
+          "doneness": "done",
+          "type_facet": "Magic.Wondrous.Glove",
+          "standing": "unclassified",
+          "display_name": "Glowing Glove"
+        },
+        {
+          "name": "Heroic Tabard",
+          "doneness": "done",
+          "type_facet": "Magic.Wondrous.Shirt",
+          "standing": "origin",
+          "display_name": "Heroic Tabard"
+        },
+        {
+          "name": "Ioun Stone (Mossy Disk)",
+          "doneness": "done",
+          "type_facet": "Magic.Wondrous.Ioun.IounKnow",
+          "standing": "origin",
+          "display_name": "Ioun Stone (Mossy Disk)"
+        },
+        {
+          "name": "Poison-Resistant Scale Mail",
+          "doneness": "done",
+          "type_facet": null,
+          "standing": "origin",
+          "display_name": "Poison-Resistant Scale Mail"
+        },
+        {
+          "name": "Scroll of New Life",
+          "doneness": "done",
+          "type_facet": "Magic.Wondrous.Scroll.Consumable",
+          "standing": "origin",
+          "display_name": "Scroll of New Life"
+        },
+        {
+          "name": "Shadow Helm",
+          "doneness": "done",
+          "type_facet": "Magic.Wondrous.Headgear",
+          "standing": "origin",
+          "display_name": "Shadow Helm"
+        },
+        {
+          "name": "Staff of Curing",
+          "doneness": "done",
+          "type_facet": "Magic.Staff",
+          "standing": "origin",
+          "display_name": "Staff of Curing"
+        },
+        {
+          "name": "Staff of Guarding",
+          "doneness": "done",
+          "type_facet": "Magic.Staff",
+          "standing": "origin",
+          "display_name": "Staff of Guarding"
+        },
+        {
+          "name": "Staff of Scorching",
+          "doneness": "done",
+          "type_facet": "Magic.Staff",
+          "standing": "origin",
+          "display_name": "Staff of Scorching"
+        },
+        {
+          "name": "Staff of Swampy Dread",
+          "doneness": "done",
+          "type_facet": "Magic.Staff",
+          "standing": "origin",
+          "display_name": "Staff of Swampy Dread"
+        },
+        {
+          "name": "Sustaining Bowl",
+          "doneness": "done",
+          "type_facet": "Magic.Wondrous",
+          "standing": "origin",
+          "display_name": "Sustaining Bowl"
+        },
+        {
+          "name": "[redacted PI]",
+          "doneness": "done",
+          "type_facet": "Neck.Amulet",
+          "standing": "unclassified",
+          "display_name": "[redacted PI]"
+        }
+      ]
+    }
+  ]
+}

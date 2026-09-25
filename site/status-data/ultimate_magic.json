@@ -5,12 +5,12 @@
     {
       "kind": "ability",
       "label": "Abilities",
-      "done": 490,
+      "done": 511,
       "partial": 0,
       "not_started": 0,
-      "denominator": 490,
+      "denominator": 511,
       "pct": 100.0,
-      "excluded_from_percentage": 21,
+      "excluded_from_percentage": 0,
       "standing_breakdown": {
         "unclassified": 21,
         "origin": 490
@@ -3598,12 +3598,12 @@
     {
       "kind": "class_feature",
       "label": "Class Features",
-      "done": 1146,
-      "partial": 7,
+      "done": 1778,
+      "partial": 0,
       "not_started": 0,
-      "denominator": 1153,
-      "pct": 99.4,
-      "excluded_from_percentage": 625,
+      "denominator": 1778,
+      "pct": 100.0,
+      "excluded_from_percentage": 0,
       "standing_breakdown": {
         "origin": 1153,
         "unclassified": 625
@@ -3793,7 +3793,7 @@
         },
         {
           "name": "Age Resistance (Greater)",
-          "doneness": "partial",
+          "doneness": "done",
           "type_facet": "Sorcerer Bloodline Bonus Spell",
           "standing": "origin",
           "display_name": "Age Resistance (Greater) (Sorcerer Bloodline Bonus Spell)"
@@ -5893,7 +5893,7 @@
         },
         {
           "name": "Create Demiplane",
-          "doneness": "partial",
+          "doneness": "done",
           "type_facet": "Sorcerer Bloodline Bonus Spell",
           "standing": "origin",
           "display_name": "Create Demiplane (Sorcerer Bloodline Bonus Spell)"
@@ -6201,7 +6201,7 @@
         },
         {
           "name": "Defensive Shock",
-          "doneness": "partial",
+          "doneness": "done",
           "type_facet": "Sorcerer Bloodline Bonus Spell",
           "standing": "origin",
           "display_name": "Defensive Shock (Sorcerer Bloodline Bonus Spell)"
@@ -6782,7 +6782,7 @@
         },
         {
           "name": "Echolocation",
-          "doneness": "partial",
+          "doneness": "done",
           "type_facet": "Sorcerer Bloodline Bonus Spell",
           "standing": "origin",
           "display_name": "Echolocation (Sorcerer Bloodline Bonus Spell)"
@@ -7545,7 +7545,7 @@
         },
         {
           "name": "Fighter Training",
-          "doneness": "partial",
+          "doneness": "done",
           "type_facet": "MagusClassFeatures.SpecialQuality.Extraordinary",
           "standing": "unclassified",
           "display_name": "Fighter Training"
@@ -9512,7 +9512,7 @@
         },
         {
           "name": "Joyful Rapture",
-          "doneness": "partial",
+          "doneness": "done",
           "type_facet": "Sorcerer Bloodline Bonus Spell",
           "standing": "origin",
           "display_name": "Joyful Rapture (Sorcerer Bloodline Bonus Spell)"
@@ -11122,7 +11122,7 @@
         },
         {
           "name": "Overwhelming Presence",
-          "doneness": "partial",
+          "doneness": "done",
           "type_facet": "Sorcerer Bloodline Bonus Spell",
           "standing": "unclassified",
           "display_name": "Overwhelming Presence (Sorcerer Bloodline Bonus Spell)"
@@ -11934,7 +11934,7 @@
         },
         {
           "name": "Prediction of Failure",
-          "doneness": "partial",
+          "doneness": "done",
           "type_facet": "Sorcerer Bloodline Bonus Spell",
           "standing": "origin",
           "display_name": "Prediction of Failure (Sorcerer Bloodline Bonus Spell)"
@@ -14027,7 +14027,7 @@
         },
         {
           "name": "Surmount Affliction",
-          "doneness": "partial",
+          "doneness": "done",
           "type_facet": "Sorcerer Bloodline Bonus Spell",
           "standing": "origin",
           "display_name": "Surmount Affliction"
@@ -16082,12 +16082,12 @@
     {
       "kind": "companion",
       "label": "Companions",
-      "done": 178,
-      "partial": 2,
+      "done": 198,
+      "partial": 0,
       "not_started": 0,
-      "denominator": 180,
-      "pct": 98.9,
-      "excluded_from_percentage": 18,
+      "denominator": 198,
+      "pct": 100.0,
+      "excluded_from_percentage": 0,
       "standing_breakdown": {
         "unclassified": 18,
         "origin": 180
@@ -16095,7 +16095,7 @@
       "items": [
         {
           "name": "1",
-          "doneness": "partial",
+          "doneness": "done",
           "type_facet": null,
           "standing": "unclassified",
           "display_name": "1"
@@ -17467,14 +17467,14 @@
         },
         {
           "name": "Water Dependency",
-          "doneness": "partial",
+          "doneness": "done",
           "type_facet": "SpecialQuality.Extraordinary.Weakness",
           "standing": "origin",
           "display_name": "Water Dependency (SpecialQuality.Extraordinary.Weakness)"
         },
         {
           "name": "Water Dependency",
-          "doneness": "partial",
+          "doneness": "done",
           "type_facet": "Weakness.Extraordinary",
           "standing": "origin",
           "display_name": "Water Dependency (Weakness.Extraordinary)"
@@ -17590,12 +17590,12 @@
     {
       "kind": "equipment",
       "label": "Equipment",
-      "done": 18,
+      "done": 26,
       "partial": 0,
       "not_started": 0,
-      "denominator": 18,
+      "denominator": 26,
       "pct": 100.0,
-      "excluded_from_percentage": 8,
+      "excluded_from_percentage": 0,
       "standing_breakdown": {
         "origin": 18,
         "unclassified": 8
@@ -17788,11 +17788,11 @@
     {
       "kind": "feat",
       "label": "Feats",
-      "done": 153,
-      "partial": 2,
+      "done": 155,
+      "partial": 0,
       "not_started": 0,
       "denominator": 155,
-      "pct": 98.7,
+      "pct": 100.0,
       "excluded_from_percentage": 0,
       "standing_breakdown": {
         "origin": 155
@@ -18248,7 +18248,7 @@
         },
         {
           "name": "Judgment Surge",
-          "doneness": "partial",
+          "doneness": "done",
           "type_facet": "General",
           "standing": "origin",
           "display_name": "Judgment Surge"
@@ -18598,7 +18598,7 @@
         },
         {
           "name": "Spell Hex",
-          "doneness": "partial",
+          "doneness": "done",
           "type_facet": "General",
           "standing": "origin",
           "display_name": "Spell Hex"
@@ -18888,11 +18888,11 @@
     {
       "kind": "monster_ability",
       "label": "Monster Abilities",
-      "done": 3,
-      "partial": 10,
+      "done": 13,
+      "partial": 0,
       "not_started": 0,
       "denominator": 13,
-      "pct": 23.1,
+      "pct": 100.0,
       "excluded_from_percentage": 0,
       "standing_breakdown": {
         "origin": 13
@@ -18914,7 +18914,7 @@
         },
         {
           "name": "Exceptional Reach (All Attacks/2 CP)",
-          "doneness": "partial",
+          "doneness": "done",
           "type_facet": "SpecialQuality.AnimatedObjectAbility",
           "standing": "origin",
           "display_name": "Exceptional Reach (All Attacks/2 CP)"
@@ -18928,63 +18928,63 @@
         },
         {
           "name": "Improved Attack (Melee/1 CP)",
-          "doneness": "partial",
+          "doneness": "done",
           "type_facet": "SpecialQuality.AnimatedObjectAbility",
           "standing": "origin",
           "display_name": "Improved Attack (Melee/1 CP)"
         },
         {
           "name": "Improved Attack (Ranged/1 CP)",
-          "doneness": "partial",
+          "doneness": "done",
           "type_facet": "SpecialQuality.AnimatedObjectAbility",
           "standing": "origin",
           "display_name": "Improved Attack (Ranged/1 CP)"
         },
         {
           "name": "Piercing Attack (All Attacks/2 CP)",
-          "doneness": "partial",
+          "doneness": "done",
           "type_facet": "SpecialQuality.AnimatedObjectAbility",
           "standing": "origin",
           "display_name": "Piercing Attack (All Attacks/2 CP)"
         },
         {
           "name": "Piercing Attack (One Attack/1 CP)",
-          "doneness": "partial",
+          "doneness": "done",
           "type_facet": "SpecialQuality.AnimatedObjectAbility",
           "standing": "origin",
           "display_name": "Piercing Attack (One Attack/1 CP)"
         },
         {
           "name": "Ranged Attack (All Attacks/4 CP)",
-          "doneness": "partial",
+          "doneness": "done",
           "type_facet": "SpecialQuality.AnimatedObjectAbility",
           "standing": "origin",
           "display_name": "Ranged Attack (All Attacks/4 CP)"
         },
         {
           "name": "Ranged Attack (One Attack/2 CP)",
-          "doneness": "partial",
+          "doneness": "done",
           "type_facet": "SpecialQuality.AnimatedObjectAbility",
           "standing": "origin",
           "display_name": "Ranged Attack (One Attack/2 CP)"
         },
         {
           "name": "Slashing Attack (All Attacks/2 CP)",
-          "doneness": "partial",
+          "doneness": "done",
           "type_facet": "SpecialQuality.AnimatedObjectAbility",
           "standing": "origin",
           "display_name": "Slashing Attack (All Attacks/2 CP)"
         },
         {
           "name": "Slashing Attack (One Attack/1 CP)",
-          "doneness": "partial",
+          "doneness": "done",
           "type_facet": "SpecialQuality.AnimatedObjectAbility",
           "standing": "origin",
           "display_name": "Slashing Attack (One Attack/1 CP)"
         },
         {
           "name": "Trip (2 CP)",
-          "doneness": "partial",
+          "doneness": "done",
           "type_facet": "SpecialQuality.AnimatedObjectAbility",
           "standing": "origin",
           "display_name": "Trip (2 CP)"
@@ -19030,12 +19030,12 @@
     {
       "kind": "spell",
       "label": "Spells",
-      "done": 281,
-      "partial": 4,
+      "done": 291,
+      "partial": 0,
       "not_started": 0,
-      "denominator": 285,
-      "pct": 98.6,
-      "excluded_from_percentage": 6,
+      "denominator": 291,
+      "pct": 100.0,
+      "excluded_from_percentage": 0,
       "standing_breakdown": {
         "origin": 285,
         "unclassified": 6
@@ -20121,7 +20121,7 @@
         },
         {
           "name": "Major Creation (Metal Items Only)",
-          "doneness": "partial",
+          "doneness": "done",
           "type_facet": "Divine",
           "standing": "origin",
           "display_name": "Major Creation (Metal Items Only)"
@@ -20261,7 +20261,7 @@
         },
         {
           "name": "Minor Creation (Wood Items Only)",
-          "doneness": "partial",
+          "doneness": "done",
           "type_facet": "Divine",
           "standing": "origin",
           "display_name": "Minor Creation (Wood Items Only)"
@@ -20506,7 +20506,7 @@
         },
         {
           "name": "Resist Energy (Cold Only)",
-          "doneness": "partial",
+          "doneness": "done",
           "type_facet": "Arcane",
           "standing": "origin",
           "display_name": "Resist Energy (Cold Only)"
@@ -20702,7 +20702,7 @@
         },
         {
           "name": "Statue (Metal Statue Instead of Iron)",
-          "doneness": "partial",
+          "doneness": "done",
           "type_facet": "Divine",
           "standing": "origin",
           "display_name": "Statue (Metal Statue Instead of Iron)"

@@ -53,11 +53,7 @@
 //! Barbarian level-1..level-16 truth (unchanged), the Fighter negative
 //! control, and the multiclass negative control.
 
-use codex::rules_core::pilot_compute::compute_pilot_base_chassis;
-use codex::rules_core::support_state_matrix::{
-    EvidenceFreshness, EvidenceTier, SupportState, seeded_current_truth,
-};
-use crate::common::{load, explanation};
+use crate::common::explanation;
 
 const BARBARIAN_LEVEL16_FIXTURE: &str = include_str!(
     "../fixtures/rules_core/pf1_human_barbarian_level16_sd18_widening_deterministic_input.txt"
@@ -67,9 +63,6 @@ const BARBARIAN_LEVEL17_FIXTURE: &str = include_str!(
     "../fixtures/rules_core/pf1_human_barbarian_level17_sd18_widening_deterministic_input.txt"
 );
 
-const FIGHTER_FIXTURE: &str = include_str!(
-    "../fixtures/rules_core/pf1_human_fighter_level1_ge06_deterministic_input.txt"
-);
 
 const BARBARIAN_UNCANNY_DODGE_ID: &str = "class_feature.barbarian.uncanny_dodge";
 const BARBARIAN_TRAP_SENSE_ID: &str = "class_feature.barbarian.trap_sense";
@@ -83,8 +76,7 @@ const BARBARIAN_TIRELESS_RAGE_ID: &str = "class_chassis.barbarian.tireless_rage"
 
 #[test]
 fn barbarian_level17_base_attack_rises_saves_stay() {
-    let input = load(BARBARIAN_LEVEL17_FIXTURE);
-    let computation = compute_pilot_base_chassis(&input);
+    let computation = crate::support::compute(BARBARIAN_LEVEL17_FIXTURE);
 
     let base_attack = explanation(&computation, "class_chassis.barbarian.base_attack_bonus");
     assert_eq!(
@@ -117,8 +109,7 @@ fn barbarian_level17_base_attack_rises_saves_stay() {
 
 #[test]
 fn barbarian_level17_rage_rounds_rise_to_thirty_nine() {
-    let input = load(BARBARIAN_LEVEL17_FIXTURE);
-    let computation = compute_pilot_base_chassis(&input);
+    let computation = crate::support::compute(BARBARIAN_LEVEL17_FIXTURE);
 
     let rage_rounds = explanation(&computation, "class_chassis.barbarian.rage_rounds_per_day");
     assert_eq!(
@@ -133,8 +124,7 @@ fn barbarian_level17_rage_rounds_rise_to_thirty_nine() {
 
 #[test]
 fn barbarian_level17_gains_tireless_rage_grant_only() {
-    let input = load(BARBARIAN_LEVEL17_FIXTURE);
-    let computation = compute_pilot_base_chassis(&input);
+    let computation = crate::support::compute(BARBARIAN_LEVEL17_FIXTURE);
 
     let tireless_rage = explanation(&computation, BARBARIAN_TIRELESS_RAGE_ID);
     assert_eq!(
@@ -166,8 +156,7 @@ fn barbarian_level17_gains_tireless_rage_grant_only() {
 
 #[test]
 fn barbarian_level16_does_not_have_tireless_rage() {
-    let input = load(BARBARIAN_LEVEL16_FIXTURE);
-    let computation = compute_pilot_base_chassis(&input);
+    let computation = crate::support::compute(BARBARIAN_LEVEL16_FIXTURE);
 
     let tireless_rage = explanation(&computation, BARBARIAN_TIRELESS_RAGE_ID);
     assert_eq!(
@@ -186,8 +175,7 @@ fn barbarian_level16_does_not_have_tireless_rage() {
 
 #[test]
 fn barbarian_level17_gains_no_ninth_rage_power_slot() {
-    let input = load(BARBARIAN_LEVEL17_FIXTURE);
-    let computation = compute_pilot_base_chassis(&input);
+    let computation = crate::support::compute(BARBARIAN_LEVEL17_FIXTURE);
 
     assert!(
         !computation
@@ -212,8 +200,7 @@ fn barbarian_level17_gains_no_ninth_rage_power_slot() {
 
 #[test]
 fn barbarian_level17_remaining_pillars_carry_over() {
-    let input = load(BARBARIAN_LEVEL17_FIXTURE);
-    let computation = compute_pilot_base_chassis(&input);
+    let computation = crate::support::compute(BARBARIAN_LEVEL17_FIXTURE);
 
     let trap_sense = explanation(&computation, BARBARIAN_TRAP_SENSE_ID);
     assert_eq!(
@@ -270,8 +257,7 @@ fn barbarian_level17_remaining_pillars_carry_over() {
 
 #[test]
 fn barbarian_level17_still_claim_blocks_the_rage_execution_burden() {
-    let input = load(BARBARIAN_LEVEL17_FIXTURE);
-    let computation = compute_pilot_base_chassis(&input);
+    let computation = crate::support::compute(BARBARIAN_LEVEL17_FIXTURE);
 
     match computation
         .diagnostics
@@ -298,8 +284,7 @@ fn barbarian_level17_still_claim_blocks_the_rage_execution_burden() {
 
 #[test]
 fn barbarian_level16_truth_is_unchanged_by_this_slice() {
-    let input = load(BARBARIAN_LEVEL16_FIXTURE);
-    let computation = compute_pilot_base_chassis(&input);
+    let computation = crate::support::compute(BARBARIAN_LEVEL16_FIXTURE);
 
     let base_attack = explanation(&computation, "class_chassis.barbarian.base_attack_bonus");
     assert_eq!(base_attack.value, 16, "Barbarian level 16 base attack bonus must stay 16");
@@ -313,78 +298,11 @@ fn barbarian_level16_truth_is_unchanged_by_this_slice() {
 
 // ----- Negative control: the barbarian path must not leak onto other classes -----
 
-#[test]
-fn fighter_does_not_gain_barbarian_level17_recognition() {
-    let fighter = load(FIGHTER_FIXTURE);
-    let fighter_computation = compute_pilot_base_chassis(&fighter);
-    assert!(
-        !fighter_computation
-            .explanations
-            .iter()
-            .any(|e| e.id.starts_with("class_chassis.barbarian.")
-                || e.id.starts_with("class_feature.barbarian.")),
-        "the Fighter chassis must not surface any barbarian-namespaced explanation: {:?}",
-        fighter_computation.explanations
-    );
-}
+crate::sd18_fighter_neg_control_test!(fighter_does_not_gain_barbarian_level17_recognition, "barbarian");
 
 // ----- Negative control: multiclass Barbarian is not promoted -----
 
-#[test]
-fn multiclass_barbarian_level17_is_not_promoted_by_this_slice() {
-    let multiclass = BARBARIAN_LEVEL17_FIXTURE.replace(
-        "class_level=class:barbarian:17",
-        "class_level=class:barbarian:17\nclass_level=class:fighter:1",
-    );
-    let input = load(&multiclass);
-    let computation = compute_pilot_base_chassis(&input);
-    assert!(
-        !computation
-            .explanations
-            .iter()
-            .any(|e| (e.id.starts_with("class_chassis.barbarian.")
-                || e.id.starts_with("class_feature.barbarian."))
-                // (v0.6 alpha swarm, risks item 8) rage-execution's
-                // not-raging explanation is checked unconditionally,
-                // regardless of level bound or single-class status
-                // (mirrors the spell-posture classes' gate-ordering fix)
-                && e.id != "class_feature.barbarian.rage_execution.not_raging"),
-        "multiclass Barbarian must not gain any bounded barbarian explanation: {:?}",
-        computation.explanations
-    );
-    assert!(
-        computation.diagnostics.iter().any(|d| d.claim_blocking),
-        "multiclass Barbarian must stay claim-blocked in this slice"
-    );
-}
+crate::sd18_multiclass_neg_control_test!(multiclass_barbarian_level17_is_not_promoted_by_this_slice, "barbarian_level17", BARBARIAN_LEVEL17_FIXTURE);
 
 // ----- Control plane: the matrix note names the level-17 widening -----
 
-#[test]
-fn matrix_barbarian_row_names_level_17_widening() {
-    let matrix = seeded_current_truth();
-    let barbarian = matrix
-        .row("class.barbarian.bounded_progression")
-        .expect("barbarian bounded_progression row must exist");
-
-    // Later promoted to Supported/ProductVisible by SD-19's Class
-    // Progression Catalog browser UI-surfacing work (2026-07-16).
-    assert_eq!(barbarian.support_state, SupportState::Supported);
-    assert_eq!(barbarian.evidence_tier, EvidenceTier::ProductVisible);
-    assert_eq!(
-        barbarian.evidence_freshness,
-        EvidenceFreshness::RefreshableFromLiveProof
-    );
-    assert!(
-        barbarian
-            .grounding_ref
-            .contains("sd18_barbarian_level17_widening"),
-        "barbarian row must cite the live SD18 level-17 widening proof surface: {}",
-        barbarian.grounding_ref
-    );
-    let note = barbarian.blocker_or_lossiness_note;
-    assert!(
-        note.contains("level 17") || note.contains("level-17"),
-        "barbarian partial note must name the level-17 widening: {note}"
-    );
-}

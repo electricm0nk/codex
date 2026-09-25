@@ -727,7 +727,7 @@ fn sheet_rule_package() -> &'static Result<codex::rules_core::sheet_rule::SheetR
         let load = codex::rules_core::corpus_loader::load_sheet_rules(&dir);
         if load.package.rules.is_empty() {
             return Err(format!(
-                "no sheet rules under {} ({} file diagnostics; regenerate with `cargo run --locked --bin sheet_rule_convert`)",
+                "no sheet rules under {} ({} file diagnostics; regenerate with `cargo run --locked -p codex-ingest --bin sheet_rule_convert -- --write`)",
                 dir.display(),
                 load.diagnostics.len()
             ));
@@ -779,7 +779,7 @@ pub(crate) fn feat_options_for(
     seed.race_traits.extend(
         resolve_racial_traits_for_character(input).applied_traits.iter().map(|t| t.key.clone()),
     );
-    let facts = CharacterFacts::from_character(input, &base);
+    let facts = CharacterFacts::from_character(input, &base).with_linked_picks(package, &seed);
     let held = held_set(package, &seed, &facts);
 
     let filtered = filter_option_pool(package, &held, &facts, FEAT_POOL, &[]);
@@ -1482,7 +1482,8 @@ fn resolve_alternate_trait_choices(
             id: "race.alternate_trait.mutually_exclusive".to_owned(),
             message: format!(
                 "{} and {} cannot both be taken: ARG's own PREMULT self-exclusion guard on {} \
-                 names {}, which {} sets (arg_abilities_race.lst)",
+                 names {}, which {} sets (per the Advanced Race Guide's own exclusion rule for \
+                 that trait)",
                 conflict.name, conflict.blocked_by_name, conflict.name, conflict.flag,
                 conflict.blocked_by_name
             ),
@@ -3591,6 +3592,36 @@ fn resolve_characters_root(app: &tauri::AppHandle) -> Result<PathBuf, String> {
     Ok(characters_root_from_app_data_dir(&app_data_dir))
 }
 
+/// SD-36 Epic E desktop-P1-01 (SD-34 R11-01). `resolve_character_root` joined
+/// a client-supplied `character_id` straight onto the characters root with no
+/// validation at all — a `character_id` of `"../../../../Documents"` (or any
+/// string containing a path separator or an absolute-path prefix) escaped the
+/// characters directory entirely, and `delete_character` routes through this
+/// same function to `std::fs::remove_dir_all`. This is the ONE choke point
+/// (`resolve_character_root` backs 40+ command call sites): reject the shape
+/// here, once, rather than at each caller.
+///
+/// Rejects: empty, any `..` path component (Windows and Unix separators
+/// both), a leading path separator, and a Windows drive prefix (`C:`) — a
+/// real character id is always the bare UUID this app itself generated.
+pub(crate) fn validate_character_id(character_id: &str) -> Result<(), String> {
+    if character_id.is_empty() {
+        return Err("character_id must not be empty".to_string());
+    }
+    if character_id.starts_with('/') || character_id.starts_with('\\') {
+        return Err(format!("character_id must not be an absolute path: {character_id:?}"));
+    }
+    if character_id.chars().nth(1) == Some(':') {
+        return Err(format!("character_id must not carry a drive prefix: {character_id:?}"));
+    }
+    for component in character_id.split(['/', '\\']) {
+        if component == ".." {
+            return Err(format!("character_id must not contain a '..' path component: {character_id:?}"));
+        }
+    }
+    Ok(())
+}
+
 /// `pub(crate)` (rather than private) so the `characterHub` submodule's
 /// commands (e.g. `appendToCharacter` — SD-24 Epic 7, Criterion 7.1) can
 /// resolve the same on-disk character root this module's own commands use,
@@ -3599,6 +3630,7 @@ pub(crate) fn resolve_character_root(
     app: &tauri::AppHandle,
     character_id: &str,
 ) -> Result<PathBuf, String> {
+    validate_character_id(character_id)?;
     Ok(resolve_characters_root(app)?.join(character_id))
 }
 
@@ -4751,6 +4783,55 @@ mod tests {
     use codex::rules_core::pilot_compute::HeadlessReceiptStatus;
     use std::collections::BTreeSet;
 
+    // ----- SD-36 Epic E desktop-P1-01: character_id path-traversal validation -----
+
+    #[test]
+    fn a_real_generated_character_id_validates() {
+        assert!(validate_character_id("3f2a9c7e-1b4d-4a5f-9e6c-2d8b7a1f0c3e").is_ok());
+        assert!(validate_character_id("plain-alphanumeric-id-123").is_ok());
+    }
+
+    #[test]
+    fn an_empty_character_id_is_rejected() {
+        assert!(validate_character_id("").is_err());
+    }
+
+    #[test]
+    fn a_dotdot_traversal_is_rejected_in_any_position_or_separator_style() {
+        for id in [
+            "..",
+            "../../../../Documents",
+            "..\\..\\Windows",
+            "safe/../../etc/passwd",
+            "safe\\..\\..\\secrets",
+            "foo/..",
+        ] {
+            assert!(validate_character_id(id).is_err(), "{id:?} must be rejected");
+        }
+    }
+
+    #[test]
+    fn an_absolute_path_is_rejected() {
+        for id in ["/etc/passwd", "\\\\server\\share", "/tmp/x"] {
+            assert!(validate_character_id(id).is_err(), "{id:?} must be rejected");
+        }
+    }
+
+    #[test]
+    fn a_windows_drive_prefix_is_rejected() {
+        assert!(validate_character_id("C:\\Windows\\System32").is_err());
+        assert!(validate_character_id("C:/Windows").is_err());
+    }
+
+    #[test]
+    fn resolve_character_root_rejects_a_traversal_id_before_touching_the_filesystem() {
+        // No AppHandle available in a unit test; the validator runs and returns Err
+        // BEFORE `resolve_characters_root` (which needs the handle) is ever reached --
+        // confirmed here by calling `validate_character_id` directly, the exact guard
+        // `resolve_character_root` now runs first.
+        assert!(validate_character_id("../../elsewhere").is_err());
+    }
+
     // ----- Race-creation roster (the 7 -> 18 widening) -----
 
     fn roster_race(race_id: &str) -> RaceCreationChassisDto {
@@ -5230,7 +5311,7 @@ mod tests {
     /// one.
     #[test]
     fn every_racial_trait_on_a_loaded_sheet_carries_rendered_prose_and_names_what_it_replaced() {
-        use codex::pcgen_import::pcgen_desc::leaked_pcgen_syntax;
+        use codex_ingest::pcgen_import::pcgen_desc::leaked_pcgen_syntax;
 
         let root = tempdir("sheet-racial-trait-coverage");
         saved_or_panic(
@@ -5392,6 +5473,14 @@ mod tests {
                     .expect("the refusal must name the guard");
                 assert!(diagnostic.claim_blocking);
                 assert!(diagnostic.message.contains("Dwarf_Replace"), "{}", diagnostic.message);
+                // SD-36 Epic A / D6: a player-facing diagnostic must never name
+                // a PCGen source file. `arg_abilities_race.lst` leaked through
+                // here; the wording now names the rule neutrally instead.
+                assert!(
+                    !diagnostic.message.contains(".lst"),
+                    "diagnostic must not name a PCGen source file: {}",
+                    diagnostic.message
+                );
             }
         }
     }
@@ -5723,7 +5812,7 @@ mod tests {
     /// player picking it at creation -- exactly the gap this cycle's brief
     /// asked to be either closed or precisely disproven with evidence.
     #[test]
-    fn all_62_generic_classes_reach_a_real_chassis_at_character_creation_altitude() {
+    fn all_generic_classes_reach_a_real_chassis_at_character_creation_altitude() {
         let repo_root = crate::authoring_workbench::codex_repo_root().expect("repo root");
         let (records, unresolved) =
             crate::class_catalog_generic::load_generic_class_progressions(&repo_root);
@@ -5737,7 +5826,22 @@ mod tests {
         // class no dispatcher knows.
         let names: Vec<(String, String)> =
             records.into_iter().map(|record| (record.name, record.slug)).collect();
-        assert_eq!(names.len(), 62, "must cover all 62, not a partial sweep");
+        // SD-36 Epic E CONV-05: was 62. `load_generic_class_progressions` iterates
+        // `class_chassis_sheet_rules::records(&CLASS_FAMILY_BOOKS)` per (book, slug) pair,
+        // never deduplicated by slug the way `generic_class_chassis::generic_class_records()`
+        // is -- CONV-05 fixed degradation to be per-occurrence rather than record-wide
+        // (`convert.rs`), un-hiding 19 (book, slug) pairs within `CLASS_FAMILY_BOOKS` whose
+        // clean BAB/save formulas an unrelated degrading token on the same record used to wipe
+        // to words (verified by hand for `inner_sea_gods:class:evangelist`: a genuine PF1 3/4
+        // BAB + good Reflex progression). 62 + 19 = 81. Re-derive:
+        // `class_catalog_generic::load_generic_class_progressions(&repo_root).0.len()`.
+        //
+        // SD-36 Epic F2a: 81 -> 125, `core_rulebook` (+27) and
+        // `advanced_players_guide` (+17) appended to `CLASS_FAMILY_BOOKS` (see
+        // `class_catalog_generic`'s own pin). Every CRB/APG prestige class now
+        // reaches its converted chassis row here too, rather than
+        // `class_chassis.unsupported`.
+        assert_eq!(names.len(), 125, "must cover all 125, not a partial sweep");
 
         let mut checked = 0usize;
         for (name, slug) in &names {
@@ -5752,15 +5856,15 @@ mod tests {
             checked += 1;
         }
         assert_eq!(
-            checked, 62,
-            "must have exercised all 62 conventional classes, not a partial sweep"
+            checked, 125,
+            "must have exercised all 125 conventional class records, not a partial sweep"
         );
     }
 
     /// SD-32 T12 Epic 10 row 20 cycle 7: closes cycle 6's own named wiring
     /// gap ("`ground_companion_stat_block` has zero live callers anywhere
     /// in the crate") and proves it at the real character-creation
-    /// altitude, the same way `all_62_generic_classes_reach_a_real_
+    /// altitude, the same way `all_generic_classes_reach_a_real_
     /// chassis_at_character_creation_altitude` proved the class picker --
     /// through `CreateCharacterRequest` -> `compose_character_input` ->
     /// `build_pilot_headless_receipt`, never `generic_class_chassis::
@@ -6558,12 +6662,81 @@ mod tests {
             std::fs::remove_dir_all(&root).ok();
         }
 
+        // SD-36 Epic F1 (2026-09-22): the converted-record proficiency reader closed Samurai, and
+        // Epic F1c-1 (grant-by-type selectors convert) closed Magus, the last of this roster that
+        // was Blocked. The non-vacuity guard therefore no longer rests on the wealth roster: a
+        // prestige class alone is a genuinely blocked build (no base-class levels; census
+        // `prestige_alone_blocked` = 74 of 74). SD-36 Epic F2b: it is Blocked BY the game rule,
+        // `prestige_class.requires_base_class_levels` -- asserted, so this guard fails (rather
+        // than passing on some unrelated blocker) if that rule ever stops firing.
+        let prestige_alone = "class:eldritch_knight";
+        let root = tempdir("create-character-starting-wealth-blocked-prestige-alone");
+        let request = request_for_class("race:human", prestige_alone, 1);
+        let response = create_character_at_root(&root, &request, "test-version".to_owned())
+            .expect("create call should not error");
+        match response {
+            CreateCharacterResponse::Blocked { diagnostics } => {
+                assert!(
+                    diagnostics
+                        .iter()
+                        .any(|d| d.id == "prestige_class.requires_base_class_levels"),
+                    "{prestige_alone} alone must be Blocked by the prestige-alone game rule: \
+                     {diagnostics:?}"
+                );
+                blocked_classes_seen.push(prestige_alone)
+            }
+            CreateCharacterResponse::Saved { .. } => panic!(
+                "{prestige_alone} alone must be Blocked -- a prestige class cannot be a first class"
+            ),
+        }
+        assert_eq!(
+            load_character_money_at_root(&root).unwrap().total_copper,
+            0,
+            "{prestige_alone} alone is Blocked, so it must never be granted wealth"
+        );
+        std::fs::remove_dir_all(&root).ok();
+
         assert!(
             !blocked_classes_seen.is_empty(),
-            "every wealth-recognized class now reaches Computed, so this test proves nothing \
-             about the Blocked path any more -- replace it with a genuinely blocked fixture \
-             (e.g. an unsupported multiclass build) rather than deleting the invariant"
+            "no build in this test is Blocked, so it proves nothing about the Blocked path -- \
+             replace the prestige-alone fixture with another genuinely blocked build rather than \
+             deleting the invariant"
         );
+    }
+
+    /// SD-36 F1c (f1c:suite-desktop): `compose_character_input` records the Summoner Class
+    /// Selection and the Commoner's one Simple weapon under the converted rule's own id
+    /// (`book:kind:slug`). Before the store's `rule_choice=` line, the save refused those ids
+    /// and a create call for either class errored before anything was written. The pick must
+    /// now persist and reload unchanged.
+    #[test]
+    fn create_character_at_root_persists_a_pick_recorded_under_a_converted_rule_id() {
+        use codex::rules_core::class_seeds::{
+            COMMONER_CANONICAL_WEAPON, COMMONER_WEAPON_CHOICE_ID, SUMMONER_CANONICAL_CLASS_SELECTION,
+            SUMMONER_CLASS_SELECTION_CHOICE_ID,
+        };
+        for (class_id, choice_set_id, selection_id) in [
+            ("class:summoner", SUMMONER_CLASS_SELECTION_CHOICE_ID, SUMMONER_CANONICAL_CLASS_SELECTION),
+            ("class:commoner", COMMONER_WEAPON_CHOICE_ID, COMMONER_CANONICAL_WEAPON),
+        ] {
+            let root = tempdir(&format!("create-character-rule-choice-{class_id}"));
+            let request = request_for_class("race:human", class_id, 1);
+            let response = create_character_at_root(&root, &request, "test-version".to_owned())
+                .unwrap_or_else(|e| panic!("{class_id}: create call should not error: {e}"));
+            assert!(
+                matches!(response, CreateCharacterResponse::Saved { .. }),
+                "{class_id}: Human level 1 must save, got {response:?}"
+            );
+            let reloaded = SavedCharacterStore::load(&root).expect("reload should succeed");
+            assert!(
+                reloaded.character_input.chosen.selected_choices.iter().any(|c| {
+                    c.choice_set_id == choice_set_id && c.selection_id == selection_id
+                }),
+                "{class_id}: the pick must reload under {choice_set_id}, got {:?}",
+                reloaded.character_input.chosen.selected_choices
+            );
+            std::fs::remove_dir_all(&root).ok();
+        }
     }
 
     /// v0.6 alpha swarm item 7 (second phase, 2026-07-24), **rewritten

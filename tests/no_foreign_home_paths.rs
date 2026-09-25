@@ -53,9 +53,9 @@ const SCANNED_DIRS: &[&str] = &["tests", "src", "scripts"];
 /// keep, so they stay exactly as they were written.
 const ALLOWLIST: &[&str] = &["scripts/verify-baselines.env"];
 
-fn repo_root() -> PathBuf {
-    PathBuf::from(env!("CARGO_MANIFEST_DIR"))
-}
+#[path = "support/paths.rs"]
+mod paths;
+use paths::repo_root;
 
 /// Recursively collects every regular file under `dir`, skipping build
 /// output and VCS metadata.

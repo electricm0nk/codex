@@ -72,18 +72,25 @@
 //! than silently narrowed: the catalog browser reads every one of the 61
 //! today; character creation does not yet.
 
+use std::collections::BTreeSet;
 use std::path::Path;
 
 use codex::rules_core::pilot_compute::class_chassis_sheet_rules;
+use codex::rules_core::rules_tables::crb::class_tables::class_tables;
+use codex::rules_core::rules_tables::pathfinder_unchained::class_chassis::PuClassId;
 
 use crate::class_catalog::ClassCatalogEntryDto;
 
-/// The 14 `classes`-family book directories that hold at least one
-/// conventional PC class. Shared, deliberately identical to
-/// `codex::rules_core::pilot_compute::generic_class_chassis`'s own list --
-/// the two modules serve the same population, one for the browser and one for
-/// character creation.
-const CLASS_FAMILY_BOOKS: [&str; 14] = [
+/// The `classes`-family book directories that hold at least one conventional
+/// class. Shared, deliberately identical -- same books, same ORDER -- to
+/// `codex::rules_core::pilot_compute::generic_class_chassis`'s own list: the
+/// two modules serve the same population, one for the browser and one for
+/// character creation. SD-36 Epic F2a appended `core_rulebook` and
+/// `advanced_players_guide` LAST in both lists: their 18 prestige classes,
+/// CRB's NPC and `Ex-*` classes and APG's base and `Ex-*` classes join the
+/// browser; the ten CRB base classes the tabled catalog already prints are not
+/// re-listed (see [`generic_class_catalog_entries`]).
+const CLASS_FAMILY_BOOKS: [&str; 16] = [
     "adventurers_guide",
     "book_of_the_damned_volume_1",
     "book_of_the_damned_volume_2",
@@ -98,6 +105,8 @@ const CLASS_FAMILY_BOOKS: [&str; 14] = [
     "ultimate_magic",
     "ultimate_wilderness",
     "ultimate_psionics",
+    "core_rulebook",
+    "advanced_players_guide",
 ];
 
 /// One conventional class's evaluated progression, still in the raw record
@@ -135,7 +144,10 @@ pub fn load_generic_class_progressions(
 ) -> (Vec<GenericClassRecord>, Vec<(String, String)>) {
     let mut out = Vec::new();
     let mut unresolved = Vec::new();
-    for ((book, slug), chassis) in class_chassis_sheet_rules::records(&CLASS_FAMILY_BOOKS) {
+    // One book at a time, in `CLASS_FAMILY_BOOKS` order (`records` keys by
+    // `(book, slug)` and would otherwise walk books alphabetically).
+    let per_book = CLASS_FAMILY_BOOKS.iter().flat_map(|book| class_chassis_sheet_rules::records(&[book]));
+    for ((book, slug), chassis) in per_book {
         if !chassis.is_conventional() {
             continue;
         }
@@ -153,10 +165,32 @@ pub fn load_generic_class_progressions(
     (out, unresolved)
 }
 
+/// The display names `class_catalog::build_class_catalog` already lists from
+/// its own tables before this module's rows are appended: the eleven CRB
+/// classes (`class_tables()`, named by their `ClassId` variant, e.g.
+/// `"Fighter"`) and Pathfinder Unchained's four (`PuClassId::display_name`).
+fn tabled_catalog_names() -> BTreeSet<String> {
+    class_tables()
+        .iter()
+        .map(|row| format!("{:?}", row.class_id))
+        .chain(PuClassId::ALL.iter().map(|id| id.display_name().to_owned()))
+        .collect()
+}
+
+/// Every generic class's rows for the catalog browser. A class whose display
+/// name the tabled catalog rows already print (the ten CRB base classes that
+/// `core_rulebook` brings into `CLASS_FAMILY_BOOKS` since SD-36 Epic F2a) is
+/// not listed a second time: the catalog is keyed by display name, so a second
+/// copy would silently double that class's rows. The table printed first
+/// wins, the same first-listed-wins rule `CLASS_FAMILY_BOOKS` itself follows.
 pub fn generic_class_catalog_entries(repo_root: &Path) -> Vec<ClassCatalogEntryDto> {
     let (records, _unresolved) = load_generic_class_progressions(repo_root);
+    let tabled = tabled_catalog_names();
     let mut entries = Vec::new();
     for record in records {
+        if tabled.contains(&record.name) {
+            continue;
+        }
         for (level, bab, fort, refl, will) in record.rows {
             entries.push(ClassCatalogEntryDto {
                 class_id: record.name.clone(),
@@ -195,6 +229,54 @@ mod tests {
         assert!(!records.iter().any(|r| r.name == "Astral Warrior"));
     }
 
+    /// SD-36 Epic F2a: the same order as `generic_class_chassis`'s list (CRB
+    /// then APG LAST), and every (book, slug) pair whose slug an earlier book
+    /// already gave, by name -- the two appended books shadow none.
+    #[test]
+    fn class_family_books_end_with_crb_then_apg_and_every_shadowed_slug_is_named() {
+        let n = CLASS_FAMILY_BOOKS.len();
+        assert_eq!(n, 16);
+        assert_eq!(&CLASS_FAMILY_BOOKS[n - 2..], &["core_rulebook", "advanced_players_guide"]);
+        let (records, _) = load_generic_class_progressions(&repo());
+        let mut first: std::collections::BTreeMap<String, String> = Default::default();
+        let mut shadowed: Vec<(String, String, String)> = Vec::new();
+        for record in &records {
+            match first.get(&record.slug) {
+                Some(book) => shadowed.push((record.slug.clone(), book.clone(), record.book.clone())),
+                None => {
+                    first.insert(record.slug.clone(), record.book.clone());
+                }
+            }
+        }
+        shadowed.sort();
+        let expected: Vec<(String, String, String)> = [
+            ("cyphermage", "adventurers_guide", "inner_sea_magic"),
+            ("hellknight", "adventurers_guide", "inner_sea_world_guide"),
+            ("red_mantis_assassin", "adventurers_guide", "inner_sea_world_guide"),
+        ]
+        .iter()
+        .map(|(s, a, b)| (s.to_string(), a.to_string(), b.to_string()))
+        .collect();
+        assert_eq!(shadowed, expected, "(slug, first book, shadowed book)");
+        // Distinct slugs: the same 122 `generic_class_chassis` resolves.
+        assert_eq!(first.len(), 122);
+    }
+
+    #[test]
+    fn a_crb_base_class_the_table_already_prints_is_not_listed_twice() {
+        let entries = generic_class_catalog_entries(&repo());
+        for name in ["Fighter", "Wizard", "Barbarian"] {
+            assert!(
+                !entries.iter().any(|e| e.class_id == name),
+                "{name} is printed by class_tables(); the generic rows must not repeat it"
+            );
+        }
+        // A CRB prestige class and an APG class the tables do not print ARE listed.
+        let rows = |name: &str| entries.iter().filter(|e| e.class_id == name).count();
+        assert_eq!(rows("Arcane Archer"), 10);
+        assert_eq!(rows("Alchemist"), 20);
+    }
+
     #[test]
     fn a_support_shell_is_excluded() {
         // ultimate_intrigue's "VCabalist": `TYPE: Support`, no BASEAB/SAVE, so
@@ -203,7 +285,7 @@ mod tests {
     }
 
     #[test]
-    fn the_converted_package_carries_sixty_two_conventional_classes() {
+    fn the_converted_package_carries_every_conventional_class_record() {
         let (records, unresolved) = load_generic_class_progressions(&repo());
         assert!(
             unresolved.is_empty(),
@@ -211,7 +293,21 @@ mod tests {
         );
         // 62, not the old 61 -- see the module doc's "Population" section for
         // the two movements and how to re-derive each.
-        assert_eq!(records.len(), 62);
+        //
+        // SD-36 Epic E CONV-05: 62 -> 81. Degradation is now per-occurrence
+        // rather than record-wide (`convert.rs`), un-hiding 19 (book, slug)
+        // pairs across `CLASS_FAMILY_BOOKS` whose clean BAB/save formulas an
+        // unrelated degrading token on the same record used to wipe to
+        // words -- Evangelist's own real chassis (3/4 BAB, good Reflex) is
+        // one of them. See `character_hub.rs`'s
+        // `all_generic_classes_reach_a_real_chassis_at_character_creation_altitude`.
+        //
+        // SD-36 Epic F2a: 81 -> 125, `core_rulebook` (+27: 10 base, 5 NPC, 2
+        // `Ex-*`, 10 prestige; Monk converts no chassis row) and
+        // `advanced_players_guide` (+17: 6 base, Antipaladin, 2 `Ex-*`, 8
+        // prestige; Eidolon is `Monster`) appended -- the same +44 as
+        // `generic_class_chassis`'s 78 -> 122, since neither book repeats a slug.
+        assert_eq!(records.len(), 125);
     }
 
     #[test]
@@ -273,7 +369,29 @@ mod tests {
         let entries = generic_class_catalog_entries(&repo());
         let distinct: std::collections::BTreeSet<_> =
             entries.iter().map(|e| e.class_id.as_str()).collect();
-        assert_eq!(distinct.len(), 62);
+        // SD-36 Epic E fix cycle (review finding 2/12): before engine-P1-4's
+        // `display_label` fix, a redacted class's raw `Codex-Named Unit (<source_file>_
+        // <line>)` placeholder label was unique per (book, slug) pair by construction (it
+        // embeds the source line), so this count came out to 81 -- the SAME as the raw,
+        // undeduplicated (book, slug) row count `the_converted_package_carries_eighty_one_
+        // conventional_classes` still asserts. That was an artifact of the bug, not a real
+        // invariant: it hid that 3 slugs are genuinely reprinted, same name, across two
+        // different `CLASS_FAMILY_BOOKS` books each. Re-derive: group
+        // `load_generic_class_progressions(&repo()).0` by `.name` and print every group
+        // with more than one member -- exactly `Cyphermage` (slug `cyphermage`),
+        // `Hellknight` (slug `hellknight`), and `Red Mantis Assassin` (slug
+        // `red_mantis_assassin`) each appear twice, once per book -- 81 rows, 3 collapsed
+        // pairs, 78 distinct real names. This is the SAME 78 `generic_class_chassis.rs`'s own
+        // `every_conventional_class_in_class_family_books_resolves` asserted over the
+        // identical `CLASS_FAMILY_BOOKS` set (that module dedupes by slug directly, keeping
+        // book-precedence order; this one dedupes implicitly by display name once the name
+        // is the real one). The two populations now agree because they are measuring the
+        // same real classes, not two different denominators (review finding 12).
+        //
+        // SD-36 Epic F2a: 78 -> 112 = 122 distinct slugs (`generic_class_chassis`)
+        // less the 10 CRB base classes `generic_class_catalog_entries` does not
+        // re-list because `class_tables()` already prints them.
+        assert_eq!(distinct.len(), 112);
         // None shares a display name with an existing CRB/PU row (would
         // silently merge into an unrelated progression otherwise).
         let crb_pu_names = [

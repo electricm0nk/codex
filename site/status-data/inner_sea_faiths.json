@@ -1,0 +1,1390 @@
+{
+  "id": "inner_sea_faiths",
+  "title": "Inner Sea Faiths",
+  "kinds": [
+    {
+      "kind": "ability",
+      "label": "Abilities",
+      "done": 187,
+      "partial": 0,
+      "not_started": 0,
+      "denominator": 187,
+      "pct": 100.0,
+      "excluded_from_percentage": 0,
+      "standing_breakdown": {
+        "origin": 133,
+        "unclassified": 54
+      },
+      "items": [
+        {
+          "name": "All Who Live Suffer Loss",
+          "doneness": "done",
+          "type_facet": "Faith Based Boon.SpecialQuality.Supernatural",
+          "standing": "origin",
+          "display_name": "All Who Live Suffer Loss"
+        },
+        {
+          "name": "Alleyport",
+          "doneness": "done",
+          "type_facet": "Faith Based Boon.SpecialQuality.SpellLike",
+          "standing": "origin",
+          "display_name": "Alleyport"
+        },
+        {
+          "name": "Alone Among Many",
+          "doneness": "done",
+          "type_facet": "Faith Based Boon.SpecialQuality.SpellLike",
+          "standing": "origin",
+          "display_name": "Alone Among Many"
+        },
+        {
+          "name": "Bleeding Wounds",
+          "doneness": "done",
+          "type_facet": "Faith Based Boon.SpecialQuality.Extraordinary",
+          "standing": "unclassified",
+          "display_name": "Bleeding Wounds"
+        },
+        {
+          "name": "Blessed Runner",
+          "doneness": "done",
+          "type_facet": "Faith Based Boon.SpecialQuality.SpellLike",
+          "standing": "origin",
+          "display_name": "Blessed Runner"
+        },
+        {
+          "name": "Blessing of the Mantis",
+          "doneness": "done",
+          "type_facet": "Faith Based Boon.SpecialQuality.SpellLike",
+          "standing": "origin",
+          "display_name": "Blessing of the Mantis"
+        },
+        {
+          "name": "Blighting Channel",
+          "doneness": "done",
+          "type_facet": "Faith Based Boon.SpecialQuality.Supernatural",
+          "standing": "origin",
+          "display_name": "Blighting Channel"
+        },
+        {
+          "name": "Blood Must Flow",
+          "doneness": "done",
+          "type_facet": "Faith Based Boon.SpecialQuality.SpellLike",
+          "standing": "origin",
+          "display_name": "Blood Must Flow"
+        },
+        {
+          "name": "Blood Scent",
+          "doneness": "done",
+          "type_facet": "Faith Based Boon.SpecialQuality.SpellLike",
+          "standing": "origin",
+          "display_name": "Blood Scent"
+        },
+        {
+          "name": "Bloodletter",
+          "doneness": "done",
+          "type_facet": "Faith Based Boon.SpecialQuality.Extraordinary",
+          "standing": "origin",
+          "display_name": "Bloodletter"
+        },
+        {
+          "name": "Bow Before Your End",
+          "doneness": "done",
+          "type_facet": "Faith Based Boon.SpecialQuality.Supernatural",
+          "standing": "origin",
+          "display_name": "Bow Before Your End"
+        },
+        {
+          "name": "Break the Anvil",
+          "doneness": "done",
+          "type_facet": "Faith Based Boon.SpecialQuality.Supernatural",
+          "standing": "origin",
+          "display_name": "Break the Anvil"
+        },
+        {
+          "name": "Bribed Sea Monster",
+          "doneness": "done",
+          "type_facet": "Faith Based Boon.SpecialQuality.SpellLike",
+          "standing": "origin",
+          "display_name": "Bribed Sea Monster"
+        },
+        {
+          "name": "Bronze Warrior",
+          "doneness": "done",
+          "type_facet": "Faith Based Boon.SpecialQuality.SpellLike",
+          "standing": "origin",
+          "display_name": "Bronze Warrior"
+        },
+        {
+          "name": "Call to Battle",
+          "doneness": "done",
+          "type_facet": "Faith Based Boon.SpecialQuality.Supernatural",
+          "standing": "origin",
+          "display_name": "Call to Battle"
+        },
+        {
+          "name": "Captain's Bluster",
+          "doneness": "done",
+          "type_facet": "Faith Based Boon.SpecialQuality.SpellLike",
+          "standing": "origin",
+          "display_name": "Captain's Bluster"
+        },
+        {
+          "name": "Catalyst of Destruction",
+          "doneness": "done",
+          "type_facet": "Faith Based Boon.SpecialQuality.SpellLike",
+          "standing": "origin",
+          "display_name": "Catalyst of Destruction"
+        },
+        {
+          "name": "Champion of Cruel Chance",
+          "doneness": "done",
+          "type_facet": "Faith Based Boon.SpecialQuality.SpellLike",
+          "standing": "origin",
+          "display_name": "Champion of Cruel Chance"
+        },
+        {
+          "name": "Chromatic Scourge",
+          "doneness": "done",
+          "type_facet": "Faith Based Boon.SpecialQuality.Supernatural",
+          "standing": "origin",
+          "display_name": "Chromatic Scourge"
+        },
+        {
+          "name": "Cloak of Curses",
+          "doneness": "done",
+          "type_facet": "Faith Based Boon.SpecialQuality.Supernatural",
+          "standing": "origin",
+          "display_name": "Cloak of Curses"
+        },
+        {
+          "name": "Coerce Service",
+          "doneness": "done",
+          "type_facet": "Faith Based Boon.SpecialQuality.Supernatural",
+          "standing": "origin",
+          "display_name": "Coerce Service"
+        },
+        {
+          "name": "Come by Night",
+          "doneness": "done",
+          "type_facet": "Faith Based Boon.SpecialQuality.Extraordinary",
+          "standing": "origin",
+          "display_name": "Come by Night"
+        },
+        {
+          "name": "Constructed Form",
+          "doneness": "done",
+          "type_facet": "Faith Based Boon.SpecialQuality.Supernatural",
+          "standing": "origin",
+          "display_name": "Constructed Form"
+        },
+        {
+          "name": "Consume Essence",
+          "doneness": "done",
+          "type_facet": "Faith Based Boon.SpecialQuality.Supernatural",
+          "standing": "origin",
+          "display_name": "Consume Essence"
+        },
+        {
+          "name": "Coordinated Escape",
+          "doneness": "done",
+          "type_facet": "Faith Based Boon.SpecialQuality.Supernatural",
+          "standing": "origin",
+          "display_name": "Coordinated Escape"
+        },
+        {
+          "name": "Crafter's Pride",
+          "doneness": "done",
+          "type_facet": "Faith Based Boon.SpecialQuality.SpellLike",
+          "standing": "origin",
+          "display_name": "Crafter's Pride"
+        },
+        {
+          "name": "Creator",
+          "doneness": "done",
+          "type_facet": "Faith Based Boon.SpecialQuality.SpellLike",
+          "standing": "origin",
+          "display_name": "Creator"
+        },
+        {
+          "name": "Crimson Decree",
+          "doneness": "done",
+          "type_facet": "Faith Based Boon.SpecialQuality.SpellLike",
+          "standing": "origin",
+          "display_name": "Crimson Decree"
+        },
+        {
+          "name": "Cult of Contagion",
+          "doneness": "done",
+          "type_facet": "Faith Based Boon.SpecialQuality.SpellLike",
+          "standing": "origin",
+          "display_name": "Cult of Contagion"
+        },
+        {
+          "name": "Curdled Trust",
+          "doneness": "done",
+          "type_facet": "Faith Based Boon.SpecialQuality.Supernatural",
+          "standing": "origin",
+          "display_name": "Curdled Trust"
+        },
+        {
+          "name": "Debilitating Blight",
+          "doneness": "done",
+          "type_facet": "Faith Based Boon.SpecialQuality.SpellLike",
+          "standing": "origin",
+          "display_name": "Debilitating Blight"
+        },
+        {
+          "name": "Depths of the Maelstrom",
+          "doneness": "done",
+          "type_facet": "Faith Based Boon.SpecialQuality.Supernatural",
+          "standing": "origin",
+          "display_name": "Depths of the Maelstrom"
+        },
+        {
+          "name": "Doom of Sailors",
+          "doneness": "done",
+          "type_facet": "Faith Based Boon.SpecialQuality.SpellLike",
+          "standing": "origin",
+          "display_name": "Doom of Sailors"
+        },
+        {
+          "name": "Doomsayer",
+          "doneness": "done",
+          "type_facet": "Faith Based Boon.SpecialQuality.SpellLike",
+          "standing": "origin",
+          "display_name": "Doomsayer"
+        },
+        {
+          "name": "Draconic Decoys",
+          "doneness": "done",
+          "type_facet": "Faith Based Boon.SpecialQuality.Supernatural",
+          "standing": "origin",
+          "display_name": "Draconic Decoys"
+        },
+        {
+          "name": "Dragon Bite",
+          "doneness": "done",
+          "type_facet": null,
+          "standing": "origin",
+          "display_name": "Dragon Bite"
+        },
+        {
+          "name": "Dread Gifts",
+          "doneness": "done",
+          "type_facet": "Faith Based Boon.SpecialQuality.SpellLike",
+          "standing": "origin",
+          "display_name": "Dread Gifts"
+        },
+        {
+          "name": "Elemental Outrage",
+          "doneness": "done",
+          "type_facet": "Faith Based Boon.SpecialQuality.Extraordinary",
+          "standing": "origin",
+          "display_name": "Elemental Outrage"
+        },
+        {
+          "name": "Endbringer",
+          "doneness": "done",
+          "type_facet": "Faith Based Boon.SpecialQuality.SpellLike",
+          "standing": "origin",
+          "display_name": "Endbringer"
+        },
+        {
+          "name": "Enemy of Dragonkind",
+          "doneness": "done",
+          "type_facet": "Faith Based Boon.SpecialQuality.Supernatural",
+          "standing": "origin",
+          "display_name": "Enemy of Dragonkind"
+        },
+        {
+          "name": "Ever Vigilant",
+          "doneness": "done",
+          "type_facet": "Faith Based Boon.SpecialQuality.Supernatural",
+          "standing": "origin",
+          "display_name": "Ever Vigilant"
+        },
+        {
+          "name": "Eviction",
+          "doneness": "done",
+          "type_facet": "Faith Based Boon.SpecialQuality.SpellLike",
+          "standing": "origin",
+          "display_name": "Eviction"
+        },
+        {
+          "name": "Exiled's Wrath",
+          "doneness": "done",
+          "type_facet": "Faith Based Boon.SpecialQuality.SpellLike",
+          "standing": "origin",
+          "display_name": "Exiled's Wrath"
+        },
+        {
+          "name": "Eyes of the Pursued",
+          "doneness": "done",
+          "type_facet": "Faith Based Boon.SpecialQuality.Supernatural",
+          "standing": "origin",
+          "display_name": "Eyes of the Pursued"
+        },
+        {
+          "name": "Farmer's Brawn",
+          "doneness": "done",
+          "type_facet": "Faith Based Boon.SpecialQuality.Supernatural",
+          "standing": "origin",
+          "display_name": "Farmer's Brawn"
+        },
+        {
+          "name": "Fearsome Boast",
+          "doneness": "done",
+          "type_facet": "Faith Based Boon.SpecialQuality.SpellLike",
+          "standing": "origin",
+          "display_name": "Fearsome Boast"
+        },
+        {
+          "name": "Final Strike",
+          "doneness": "done",
+          "type_facet": "Faith Based Boon.SpecialQuality.SpellLike",
+          "standing": "origin",
+          "display_name": "Final Strike"
+        },
+        {
+          "name": "Flaming Vengeance",
+          "doneness": "done",
+          "type_facet": "Faith Based Boon.SpecialQuality.Supernatural",
+          "standing": "origin",
+          "display_name": "Flaming Vengeance"
+        },
+        {
+          "name": "Focused Assassin",
+          "doneness": "done",
+          "type_facet": "Faith Based Boon.SpecialQuality.Supernatural",
+          "standing": "origin",
+          "display_name": "Focused Assassin"
+        },
+        {
+          "name": "Frightful Presence",
+          "doneness": "done",
+          "type_facet": "Faith Based Boon.SpecialQuality.Supernatural",
+          "standing": "origin",
+          "display_name": "Frightful Presence"
+        },
+        {
+          "name": "Frozen Despair",
+          "doneness": "done",
+          "type_facet": "Faith Based Boon.SpecialQuality.SpellLike",
+          "standing": "origin",
+          "display_name": "Frozen Despair"
+        },
+        {
+          "name": "Ghlaunder Spellcasting",
+          "doneness": "done",
+          "type_facet": null,
+          "standing": "origin",
+          "display_name": "Ghlaunder Spellcasting"
+        },
+        {
+          "name": "Hard to Pin Down",
+          "doneness": "done",
+          "type_facet": "Faith Based Boon.SpecialQuality.SpellLike",
+          "standing": "origin",
+          "display_name": "Hard to Pin Down"
+        },
+        {
+          "name": "Healing Waters",
+          "doneness": "done",
+          "type_facet": "Faith Based Boon.SpecialQuality.Supernatural",
+          "standing": "origin",
+          "display_name": "Healing Waters"
+        },
+        {
+          "name": "Holy Strength",
+          "doneness": "done",
+          "type_facet": "Faith Based Boon.SpecialQuality.SpellLike",
+          "standing": "origin",
+          "display_name": "Holy Strength"
+        },
+        {
+          "name": "Homeward Bound",
+          "doneness": "done",
+          "type_facet": "Faith Based Boon.SpecialQuality.Supernatural",
+          "standing": "origin",
+          "display_name": "Homeward Bound"
+        },
+        {
+          "name": "Horrible Blow",
+          "doneness": "done",
+          "type_facet": "Faith Based Boon.SpecialQuality.SpellLike",
+          "standing": "origin",
+          "display_name": "Horrible Blow"
+        },
+        {
+          "name": "Illusion Expert",
+          "doneness": "done",
+          "type_facet": "Faith Based Boon.SpecialQuality.Supernatural",
+          "standing": "origin",
+          "display_name": "Illusion Expert"
+        },
+        {
+          "name": "Illusive Revenge",
+          "doneness": "done",
+          "type_facet": "Faith Based Boon.SpecialQuality.SpellLike",
+          "standing": "origin",
+          "display_name": "Illusive Revenge"
+        },
+        {
+          "name": "Infectious Blighter",
+          "doneness": "done",
+          "type_facet": "Faith Based Boon.SpecialQuality.SpellLike",
+          "standing": "origin",
+          "display_name": "Infectious Blighter"
+        },
+        {
+          "name": "Infinite Patience",
+          "doneness": "done",
+          "type_facet": "Faith Based Boon.SpecialQuality.Supernatural",
+          "standing": "origin",
+          "display_name": "Infinite Patience"
+        },
+        {
+          "name": "Inspired Crafting",
+          "doneness": "done",
+          "type_facet": "Faith Based Boon.SpecialQuality.Supernatural",
+          "standing": "origin",
+          "display_name": "Inspired Crafting"
+        },
+        {
+          "name": "Inspiring Presence",
+          "doneness": "done",
+          "type_facet": "Faith Based Boon.SpecialQuality.Supernatural",
+          "standing": "origin",
+          "display_name": "Inspiring Presence"
+        },
+        {
+          "name": "Invoke Uprising",
+          "doneness": "done",
+          "type_facet": "Faith Based Boon.SpecialQuality.SpellLike",
+          "standing": "origin",
+          "display_name": "Invoke Uprising"
+        },
+        {
+          "name": "Keeper of Keys",
+          "doneness": "done",
+          "type_facet": "Faith Based Boon.SpecialQuality.SpellLike",
+          "standing": "origin",
+          "display_name": "Keeper of Keys"
+        },
+        {
+          "name": "Killer Illusion",
+          "doneness": "done",
+          "type_facet": "Faith Based Boon.SpecialQuality.SpellLike",
+          "standing": "origin",
+          "display_name": "Killer Illusion"
+        },
+        {
+          "name": "Living Construct",
+          "doneness": "done",
+          "type_facet": "Faith Based Boon.SpecialQuality.Supernatural",
+          "standing": "origin",
+          "display_name": "Living Construct"
+        },
+        {
+          "name": "Maddening Voice",
+          "doneness": "done",
+          "type_facet": "Faith Based Boon.SpecialQuality.SpellLike",
+          "standing": "origin",
+          "display_name": "Maddening Voice"
+        },
+        {
+          "name": "Maker's Ways",
+          "doneness": "done",
+          "type_facet": "Faith Based Boon.SpecialQuality.SpellLike",
+          "standing": "origin",
+          "display_name": "Maker's Ways"
+        },
+        {
+          "name": "Malice",
+          "doneness": "done",
+          "type_facet": "Faith Based Boon.SpecialQuality.SpellLike",
+          "standing": "origin",
+          "display_name": "Malice"
+        },
+        {
+          "name": "Mantis Style Mastery",
+          "doneness": "done",
+          "type_facet": "Faith Based Boon.SpecialQuality.Extraordinary",
+          "standing": "origin",
+          "display_name": "Mantis Style Mastery"
+        },
+        {
+          "name": "Mantle of Tragic Grace",
+          "doneness": "done",
+          "type_facet": "Faith Based Boon.SpecialQuality.SpellLike",
+          "standing": "origin",
+          "display_name": "Mantle of Tragic Grace"
+        },
+        {
+          "name": "Martyrdom",
+          "doneness": "done",
+          "type_facet": "Faith Based Boon.SpecialQuality.Supernatural",
+          "standing": "origin",
+          "display_name": "Martyrdom"
+        },
+        {
+          "name": "Masks and Veils",
+          "doneness": "done",
+          "type_facet": "Faith Based Boon.SpecialQuality.SpellLike",
+          "standing": "origin",
+          "display_name": "Masks and Veils"
+        },
+        {
+          "name": "Master of Games",
+          "doneness": "done",
+          "type_facet": "Faith Based Boon.SpecialQuality.SpellLike",
+          "standing": "origin",
+          "display_name": "Master of Games"
+        },
+        {
+          "name": "Mother of Curses",
+          "doneness": "done",
+          "type_facet": "Faith Based Boon.SpecialQuality.Supernatural",
+          "standing": "origin",
+          "display_name": "Mother of Curses"
+        },
+        {
+          "name": "Nauseating Strike",
+          "doneness": "done",
+          "type_facet": "Faith Based Boon.SpecialQuality.Extraordinary",
+          "standing": "origin",
+          "display_name": "Nauseating Strike"
+        },
+        {
+          "name": "Neighborhood Guardian",
+          "doneness": "done",
+          "type_facet": "Faith Based Boon.SpecialQuality.SpellLike",
+          "standing": "origin",
+          "display_name": "Neighborhood Guardian"
+        },
+        {
+          "name": "Never Suffer Alone",
+          "doneness": "done",
+          "type_facet": "Faith Based Boon.SpecialQuality.Extraordinary",
+          "standing": "origin",
+          "display_name": "Never Suffer Alone"
+        },
+        {
+          "name": "No Rest for the Living",
+          "doneness": "done",
+          "type_facet": "Faith Based Boon.SpecialQuality.SpellLike",
+          "standing": "origin",
+          "display_name": "No Rest for the Living"
+        },
+        {
+          "name": "Nothing Left to Lose",
+          "doneness": "done",
+          "type_facet": "Faith Based Boon.SpecialQuality.Supernatural",
+          "standing": "origin",
+          "display_name": "Nothing Left to Lose"
+        },
+        {
+          "name": "Nothing is What It Seems",
+          "doneness": "done",
+          "type_facet": "Faith Based Boon.SpecialQuality.SpellLike",
+          "standing": "origin",
+          "display_name": "Nothing is What It Seems"
+        },
+        {
+          "name": "Past and Future",
+          "doneness": "done",
+          "type_facet": "Faith Based Boon.SpecialQuality.Extraordinary",
+          "standing": "origin",
+          "display_name": "Past and Future"
+        },
+        {
+          "name": "Pirate Queen's Curse",
+          "doneness": "done",
+          "type_facet": "Faith Based Boon.SpecialQuality.Supernatural",
+          "standing": "origin",
+          "display_name": "Pirate Queen's Curse"
+        },
+        {
+          "name": "Poisonous Penitent",
+          "doneness": "done",
+          "type_facet": "Faith Based Boon.SpecialQuality.SpellLike",
+          "standing": "origin",
+          "display_name": "Poisonous Penitent"
+        },
+        {
+          "name": "Polluted Servant",
+          "doneness": "done",
+          "type_facet": "Faith Based Boon.SpecialQuality.SpellLike",
+          "standing": "origin",
+          "display_name": "Polluted Servant"
+        },
+        {
+          "name": "Portal to Safety",
+          "doneness": "done",
+          "type_facet": "Faith Based Boon.SpecialQuality.SpellLike",
+          "standing": "origin",
+          "display_name": "Portal to Safety"
+        },
+        {
+          "name": "Protected by the Machine",
+          "doneness": "done",
+          "type_facet": "Faith Based Boon.SpecialQuality.Supernatural",
+          "standing": "origin",
+          "display_name": "Protected by the Machine"
+        },
+        {
+          "name": "Protection of the Veiled Goddess",
+          "doneness": "done",
+          "type_facet": "Faith Based Boon.SpecialQuality.SpellLike",
+          "standing": "origin",
+          "display_name": "Protection of the Veiled Goddess"
+        },
+        {
+          "name": "Rally Crew",
+          "doneness": "done",
+          "type_facet": "Faith Based Boon.SpecialQuality.Supernatural",
+          "standing": "origin",
+          "display_name": "Rally Crew"
+        },
+        {
+          "name": "Resiliency",
+          "doneness": "done",
+          "type_facet": "Faith Based Boon.SpecialQuality.Extraordinary",
+          "standing": "origin",
+          "display_name": "Resiliency"
+        },
+        {
+          "name": "Reveal Frauds",
+          "doneness": "done",
+          "type_facet": "Faith Based Boon.SpecialQuality.SpellLike",
+          "standing": "origin",
+          "display_name": "Reveal Frauds"
+        },
+        {
+          "name": "Rites of the False Wyrm",
+          "doneness": "done",
+          "type_facet": "Faith Based Boon.SpecialQuality.SpellLike",
+          "standing": "origin",
+          "display_name": "Rites of the False Wyrm"
+        },
+        {
+          "name": "River Champion",
+          "doneness": "done",
+          "type_facet": "Faith Based Boon.SpecialQuality.Supernatural",
+          "standing": "origin",
+          "display_name": "River Champion"
+        },
+        {
+          "name": "River Guide",
+          "doneness": "done",
+          "type_facet": "Faith Based Boon.SpecialQuality.SpellLike",
+          "standing": "origin",
+          "display_name": "River Guide"
+        },
+        {
+          "name": "River Sage",
+          "doneness": "done",
+          "type_facet": "Faith Based Boon.SpecialQuality.SpellLike",
+          "standing": "origin",
+          "display_name": "River Sage"
+        },
+        {
+          "name": "River Scion",
+          "doneness": "done",
+          "type_facet": "Faith Based Boon.SpecialQuality.Supernatural",
+          "standing": "origin",
+          "display_name": "River Scion"
+        },
+        {
+          "name": "River Traveler",
+          "doneness": "done",
+          "type_facet": "Faith Based Boon.SpecialQuality.Supernatural",
+          "standing": "origin",
+          "display_name": "River Traveler"
+        },
+        {
+          "name": "River Warden",
+          "doneness": "done",
+          "type_facet": "Faith Based Boon.SpecialQuality.SpellLike",
+          "standing": "origin",
+          "display_name": "River Warden"
+        },
+        {
+          "name": "River's Depths",
+          "doneness": "done",
+          "type_facet": "Faith Based Boon.SpecialQuality.Supernatural",
+          "standing": "origin",
+          "display_name": "River's Depths"
+        },
+        {
+          "name": "River's Embodiment",
+          "doneness": "done",
+          "type_facet": "Faith Based Boon.SpecialQuality.SpellLike",
+          "standing": "origin",
+          "display_name": "River's Embodiment"
+        },
+        {
+          "name": "River's Renewal",
+          "doneness": "done",
+          "type_facet": "Faith Based Boon.SpecialQuality.Supernatural",
+          "standing": "origin",
+          "display_name": "River's Renewal"
+        },
+        {
+          "name": "Rot Their Minds",
+          "doneness": "done",
+          "type_facet": "Faith Based Boon.SpecialQuality.Supernatural",
+          "standing": "origin",
+          "display_name": "Rot Their Minds"
+        },
+        {
+          "name": "Sacred Partisan",
+          "doneness": "done",
+          "type_facet": "Faith Based Boon.SpecialQuality.SpellLike",
+          "standing": "origin",
+          "display_name": "Sacred Partisan"
+        },
+        {
+          "name": "Safe Passage",
+          "doneness": "done",
+          "type_facet": "Faith Based Boon.SpecialQuality.Extraordinary",
+          "standing": "origin",
+          "display_name": "Safe Passage"
+        },
+        {
+          "name": "Second Face",
+          "doneness": "done",
+          "type_facet": "Faith Based Boon.SpecialQuality.Supernatural",
+          "standing": "origin",
+          "display_name": "Second Face"
+        },
+        {
+          "name": "Shared Mask",
+          "doneness": "done",
+          "type_facet": "Faith Based Boon.SpecialQuality.SpellLike",
+          "standing": "origin",
+          "display_name": "Shared Mask"
+        },
+        {
+          "name": "Silent Witness",
+          "doneness": "done",
+          "type_facet": "Faith Based Boon.SpecialQuality.Supernatural",
+          "standing": "origin",
+          "display_name": "Silent Witness"
+        },
+        {
+          "name": "Sorrowmaker's Pact",
+          "doneness": "done",
+          "type_facet": "Faith Based Boon.SpecialQuality.SpellLike",
+          "standing": "origin",
+          "display_name": "Sorrowmaker's Pact"
+        },
+        {
+          "name": "Standard Divine Spells",
+          "doneness": "done",
+          "type_facet": "SpecialQuality.GhlaunderSpellcastingChoice",
+          "standing": "origin",
+          "display_name": "Standard Divine Spells"
+        },
+        {
+          "name": "Stoic Guardian",
+          "doneness": "done",
+          "type_facet": "Faith Based Boon.SpecialQuality.Extraordinary",
+          "standing": "origin",
+          "display_name": "Stoic Guardian"
+        },
+        {
+          "name": "Strong One",
+          "doneness": "done",
+          "type_facet": "Faith Based Boon.SpecialQuality.Supernatural",
+          "standing": "origin",
+          "display_name": "Strong One"
+        },
+        {
+          "name": "Summon Door",
+          "doneness": "done",
+          "type_facet": "Faith Based Boon.SpecialQuality.SpellLike",
+          "standing": "origin",
+          "display_name": "Summon Door"
+        },
+        {
+          "name": "Teeth of the Dragon",
+          "doneness": "done",
+          "type_facet": "Faith Based Boon.SpecialQuality.Extraordinary",
+          "standing": "origin",
+          "display_name": "Teeth of the Dragon"
+        },
+        {
+          "name": "The Protecting Veil",
+          "doneness": "done",
+          "type_facet": "Faith Based Boon.SpecialQuality.Supernatural",
+          "standing": "origin",
+          "display_name": "The Protecting Veil"
+        },
+        {
+          "name": "Time Bounce",
+          "doneness": "done",
+          "type_facet": "Faith Based Boon.SpecialQuality.SpellLike",
+          "standing": "origin",
+          "display_name": "Time Bounce"
+        },
+        {
+          "name": "Touch of the Artificer",
+          "doneness": "done",
+          "type_facet": "Faith Based Boon.SpecialQuality.Supernatural",
+          "standing": "origin",
+          "display_name": "Touch of the Artificer"
+        },
+        {
+          "name": "Tragic Accident",
+          "doneness": "done",
+          "type_facet": "Faith Based Boon.SpecialQuality.Supernatural",
+          "standing": "origin",
+          "display_name": "Tragic Accident"
+        },
+        {
+          "name": "Tragic Minion",
+          "doneness": "done",
+          "type_facet": "Faith Based Boon.SpecialQuality.Supernatural",
+          "standing": "origin",
+          "display_name": "Tragic Minion"
+        },
+        {
+          "name": "Treacherous Mirage",
+          "doneness": "done",
+          "type_facet": "Faith Based Boon.SpecialQuality.SpellLike",
+          "standing": "origin",
+          "display_name": "Treacherous Mirage"
+        },
+        {
+          "name": "Tricky Adversary",
+          "doneness": "done",
+          "type_facet": "Faith Based Boon.SpecialQuality.SpellLike",
+          "standing": "origin",
+          "display_name": "Tricky Adversary"
+        },
+        {
+          "name": "Turning of the Seasons",
+          "doneness": "done",
+          "type_facet": "Faith Based Boon.SpecialQuality.SpellLike",
+          "standing": "origin",
+          "display_name": "Turning of the Seasons"
+        },
+        {
+          "name": "Unchained Savior",
+          "doneness": "done",
+          "type_facet": "Faith Based Boon.SpecialQuality.Supernatural",
+          "standing": "origin",
+          "display_name": "Unchained Savior"
+        },
+        {
+          "name": "Unfairness of the World",
+          "doneness": "done",
+          "type_facet": "Faith Based Boon.SpecialQuality.Supernatural",
+          "standing": "origin",
+          "display_name": "Unfairness of the World"
+        },
+        {
+          "name": "Variant Divine Spells",
+          "doneness": "done",
+          "type_facet": "SpecialQuality.GhlaunderSpellcastingChoice",
+          "standing": "origin",
+          "display_name": "Variant Divine Spells"
+        },
+        {
+          "name": "Visions of the End",
+          "doneness": "done",
+          "type_facet": "Faith Based Boon.SpecialQuality.Supernatural",
+          "standing": "origin",
+          "display_name": "Visions of the End"
+        },
+        {
+          "name": "Voice of Bronze",
+          "doneness": "done",
+          "type_facet": "Faith Based Boon.SpecialQuality.SpellLike",
+          "standing": "origin",
+          "display_name": "Voice of Bronze"
+        },
+        {
+          "name": "Walk Unseen",
+          "doneness": "done",
+          "type_facet": "Faith Based Boon.SpecialQuality.Supernatural",
+          "standing": "origin",
+          "display_name": "Walk Unseen"
+        },
+        {
+          "name": "Walking Disaster",
+          "doneness": "done",
+          "type_facet": "Faith Based Boon.SpecialQuality.SpellLike",
+          "standing": "origin",
+          "display_name": "Walking Disaster"
+        },
+        {
+          "name": "Wall of Roses",
+          "doneness": "done",
+          "type_facet": "Faith Based Boon.SpecialQuality.SpellLike",
+          "standing": "origin",
+          "display_name": "Wall of Roses"
+        },
+        {
+          "name": "Warden",
+          "doneness": "done",
+          "type_facet": "Faith Based Boon.SpecialQuality.SpellLike",
+          "standing": "origin",
+          "display_name": "Warden"
+        },
+        {
+          "name": "Watchful",
+          "doneness": "done",
+          "type_facet": "Faith Based Boon.SpecialQuality.SpellLike",
+          "standing": "origin",
+          "display_name": "Watchful"
+        },
+        {
+          "name": "Watery Souls",
+          "doneness": "done",
+          "type_facet": "Faith Based Boon.SpecialQuality.SpellLike",
+          "standing": "origin",
+          "display_name": "Watery Souls"
+        },
+        {
+          "name": "Whispers of Insanity",
+          "doneness": "done",
+          "type_facet": "Faith Based Boon.SpecialQuality.Supernatural",
+          "standing": "origin",
+          "display_name": "Whispers of Insanity"
+        },
+        {
+          "name": "[redacted PI]",
+          "doneness": "done",
+          "type_facet": "Faith Based Obedience.SpecialQuality",
+          "standing": "unclassified",
+          "display_name": "[redacted PI] (Faith Based Obedience.SpecialQuality)"
+        },
+        {
+          "name": "[redacted PI]",
+          "doneness": "done",
+          "type_facet": "Faith Based Obedience.SpecialQuality",
+          "standing": "unclassified",
+          "display_name": "[redacted PI] (Faith Based Obedience.SpecialQuality) #2"
+        },
+        {
+          "name": "[redacted PI]",
+          "doneness": "done",
+          "type_facet": "Faith Based Obedience.SpecialQuality",
+          "standing": "unclassified",
+          "display_name": "[redacted PI] (Faith Based Obedience.SpecialQuality) #3"
+        },
+        {
+          "name": "[redacted PI]",
+          "doneness": "done",
+          "type_facet": "Faith Based Obedience.SpecialQuality",
+          "standing": "unclassified",
+          "display_name": "[redacted PI] (Faith Based Obedience.SpecialQuality) #4"
+        },
+        {
+          "name": "[redacted PI]",
+          "doneness": "done",
+          "type_facet": "Faith Based Obedience.SpecialQuality",
+          "standing": "unclassified",
+          "display_name": "[redacted PI] (Faith Based Obedience.SpecialQuality) #5"
+        },
+        {
+          "name": "[redacted PI]",
+          "doneness": "done",
+          "type_facet": "Faith Based Obedience.SpecialQuality",
+          "standing": "unclassified",
+          "display_name": "[redacted PI] (Faith Based Obedience.SpecialQuality) #6"
+        },
+        {
+          "name": "[redacted PI]",
+          "doneness": "done",
+          "type_facet": "Faith Based Obedience.SpecialQuality",
+          "standing": "unclassified",
+          "display_name": "[redacted PI] (Faith Based Obedience.SpecialQuality) #7"
+        },
+        {
+          "name": "[redacted PI]",
+          "doneness": "done",
+          "type_facet": "Faith Based Obedience.SpecialQuality",
+          "standing": "unclassified",
+          "display_name": "[redacted PI] (Faith Based Obedience.SpecialQuality) #8"
+        },
+        {
+          "name": "[redacted PI]",
+          "doneness": "done",
+          "type_facet": "Faith Based Obedience.SpecialQuality",
+          "standing": "unclassified",
+          "display_name": "[redacted PI] (Faith Based Obedience.SpecialQuality) #9"
+        },
+        {
+          "name": "[redacted PI]",
+          "doneness": "done",
+          "type_facet": "Faith Based Obedience.SpecialQuality",
+          "standing": "unclassified",
+          "display_name": "[redacted PI] (Faith Based Obedience.SpecialQuality) #10"
+        },
+        {
+          "name": "[redacted PI]",
+          "doneness": "done",
+          "type_facet": "Faith Based Obedience.SpecialQuality",
+          "standing": "unclassified",
+          "display_name": "[redacted PI] (Faith Based Obedience.SpecialQuality) #11"
+        },
+        {
+          "name": "[redacted PI]",
+          "doneness": "done",
+          "type_facet": "Faith Based Obedience.SpecialQuality",
+          "standing": "unclassified",
+          "display_name": "[redacted PI] (Faith Based Obedience.SpecialQuality) #12"
+        },
+        {
+          "name": "[redacted PI]",
+          "doneness": "done",
+          "type_facet": "Faith Based Obedience.SpecialQuality",
+          "standing": "unclassified",
+          "display_name": "[redacted PI] (Faith Based Obedience.SpecialQuality) #13"
+        },
+        {
+          "name": "[redacted PI]",
+          "doneness": "done",
+          "type_facet": "Faith Based Obedience.SpecialQuality",
+          "standing": "unclassified",
+          "display_name": "[redacted PI] (Faith Based Obedience.SpecialQuality) #14"
+        },
+        {
+          "name": "[redacted PI]",
+          "doneness": "done",
+          "type_facet": "Faith Based Obedience.SpecialQuality",
+          "standing": "unclassified",
+          "display_name": "[redacted PI] (Faith Based Obedience.SpecialQuality) #15"
+        },
+        {
+          "name": "[redacted PI]",
+          "doneness": "done",
+          "type_facet": "Faith Based Boon.SpecialQuality.SpellLike",
+          "standing": "unclassified",
+          "display_name": "[redacted PI] (Faith Based Boon.SpecialQuality.SpellLike)"
+        },
+        {
+          "name": "[redacted PI]",
+          "doneness": "done",
+          "type_facet": "Faith Based Boon.SpecialQuality.SpellLike",
+          "standing": "unclassified",
+          "display_name": "[redacted PI] (Faith Based Boon.SpecialQuality.SpellLike) #17"
+        },
+        {
+          "name": "[redacted PI]",
+          "doneness": "done",
+          "type_facet": "Faith Based Boon.SpecialQuality.SpellLike",
+          "standing": "unclassified",
+          "display_name": "[redacted PI] (Faith Based Boon.SpecialQuality.SpellLike) #18"
+        },
+        {
+          "name": "[redacted PI]",
+          "doneness": "done",
+          "type_facet": "Faith Based Boon.SpecialQuality.Supernatural",
+          "standing": "unclassified",
+          "display_name": "[redacted PI] (Faith Based Boon.SpecialQuality.Supernatural)"
+        },
+        {
+          "name": "[redacted PI]",
+          "doneness": "done",
+          "type_facet": "Faith Based Boon.SpecialQuality.SpellLike",
+          "standing": "unclassified",
+          "display_name": "[redacted PI] (Faith Based Boon.SpecialQuality.SpellLike) #20"
+        },
+        {
+          "name": "[redacted PI]",
+          "doneness": "done",
+          "type_facet": null,
+          "standing": "unclassified",
+          "display_name": "[redacted PI]"
+        },
+        {
+          "name": "[redacted PI]",
+          "doneness": "done",
+          "type_facet": null,
+          "standing": "unclassified",
+          "display_name": "[redacted PI] #22"
+        },
+        {
+          "name": "[redacted PI]",
+          "doneness": "done",
+          "type_facet": null,
+          "standing": "unclassified",
+          "display_name": "[redacted PI] #23"
+        },
+        {
+          "name": "[redacted PI]",
+          "doneness": "done",
+          "type_facet": null,
+          "standing": "unclassified",
+          "display_name": "[redacted PI] #24"
+        },
+        {
+          "name": "[redacted PI]",
+          "doneness": "done",
+          "type_facet": null,
+          "standing": "unclassified",
+          "display_name": "[redacted PI] #25"
+        },
+        {
+          "name": "[redacted PI]",
+          "doneness": "done",
+          "type_facet": null,
+          "standing": "unclassified",
+          "display_name": "[redacted PI] #26"
+        },
+        {
+          "name": "[redacted PI]",
+          "doneness": "done",
+          "type_facet": null,
+          "standing": "unclassified",
+          "display_name": "[redacted PI] #27"
+        },
+        {
+          "name": "[redacted PI]",
+          "doneness": "done",
+          "type_facet": null,
+          "standing": "unclassified",
+          "display_name": "[redacted PI] #28"
+        },
+        {
+          "name": "[redacted PI]",
+          "doneness": "done",
+          "type_facet": null,
+          "standing": "unclassified",
+          "display_name": "[redacted PI] #29"
+        },
+        {
+          "name": "[redacted PI]",
+          "doneness": "done",
+          "type_facet": null,
+          "standing": "unclassified",
+          "display_name": "[redacted PI] #30"
+        },
+        {
+          "name": "[redacted PI]",
+          "doneness": "done",
+          "type_facet": null,
+          "standing": "unclassified",
+          "display_name": "[redacted PI] #31"
+        },
+        {
+          "name": "[redacted PI]",
+          "doneness": "done",
+          "type_facet": null,
+          "standing": "unclassified",
+          "display_name": "[redacted PI] #32"
+        },
+        {
+          "name": "[redacted PI]",
+          "doneness": "done",
+          "type_facet": null,
+          "standing": "unclassified",
+          "display_name": "[redacted PI] #33"
+        },
+        {
+          "name": "[redacted PI]",
+          "doneness": "done",
+          "type_facet": null,
+          "standing": "unclassified",
+          "display_name": "[redacted PI] #34"
+        },
+        {
+          "name": "[redacted PI]",
+          "doneness": "done",
+          "type_facet": null,
+          "standing": "unclassified",
+          "display_name": "[redacted PI] #35"
+        },
+        {
+          "name": "[redacted PI]",
+          "doneness": "done",
+          "type_facet": null,
+          "standing": "unclassified",
+          "display_name": "[redacted PI] #36"
+        },
+        {
+          "name": "[redacted PI]",
+          "doneness": "done",
+          "type_facet": null,
+          "standing": "unclassified",
+          "display_name": "[redacted PI] #37"
+        },
+        {
+          "name": "[redacted PI]",
+          "doneness": "done",
+          "type_facet": null,
+          "standing": "unclassified",
+          "display_name": "[redacted PI] #38"
+        },
+        {
+          "name": "[redacted PI]",
+          "doneness": "done",
+          "type_facet": null,
+          "standing": "unclassified",
+          "display_name": "[redacted PI] #39"
+        },
+        {
+          "name": "[redacted PI]",
+          "doneness": "done",
+          "type_facet": null,
+          "standing": "unclassified",
+          "display_name": "[redacted PI] #40"
+        },
+        {
+          "name": "[redacted PI]",
+          "doneness": "done",
+          "type_facet": null,
+          "standing": "unclassified",
+          "display_name": "[redacted PI] #41"
+        },
+        {
+          "name": "[redacted PI]",
+          "doneness": "done",
+          "type_facet": null,
+          "standing": "unclassified",
+          "display_name": "[redacted PI] #42"
+        },
+        {
+          "name": "[redacted PI]",
+          "doneness": "done",
+          "type_facet": null,
+          "standing": "unclassified",
+          "display_name": "[redacted PI] #43"
+        },
+        {
+          "name": "[redacted PI]",
+          "doneness": "done",
+          "type_facet": null,
+          "standing": "unclassified",
+          "display_name": "[redacted PI] #44"
+        },
+        {
+          "name": "[redacted PI]",
+          "doneness": "done",
+          "type_facet": null,
+          "standing": "unclassified",
+          "display_name": "[redacted PI] #45"
+        },
+        {
+          "name": "[redacted PI]",
+          "doneness": "done",
+          "type_facet": null,
+          "standing": "unclassified",
+          "display_name": "[redacted PI] #46"
+        },
+        {
+          "name": "[redacted PI]",
+          "doneness": "done",
+          "type_facet": null,
+          "standing": "unclassified",
+          "display_name": "[redacted PI] #47"
+        },
+        {
+          "name": "[redacted PI]",
+          "doneness": "done",
+          "type_facet": null,
+          "standing": "unclassified",
+          "display_name": "[redacted PI] #48"
+        },
+        {
+          "name": "[redacted PI]",
+          "doneness": "done",
+          "type_facet": null,
+          "standing": "unclassified",
+          "display_name": "[redacted PI] #49"
+        },
+        {
+          "name": "[redacted PI]",
+          "doneness": "done",
+          "type_facet": null,
+          "standing": "unclassified",
+          "display_name": "[redacted PI] #50"
+        },
+        {
+          "name": "[redacted PI]",
+          "doneness": "done",
+          "type_facet": null,
+          "standing": "unclassified",
+          "display_name": "[redacted PI] #51"
+        },
+        {
+          "name": "[redacted PI]",
+          "doneness": "done",
+          "type_facet": null,
+          "standing": "unclassified",
+          "display_name": "[redacted PI] #52"
+        },
+        {
+          "name": "[redacted PI]",
+          "doneness": "done",
+          "type_facet": null,
+          "standing": "unclassified",
+          "display_name": "[redacted PI] #53"
+        }
+      ]
+    },
+    {
+      "kind": "feat",
+      "label": "Feats",
+      "done": 1,
+      "partial": 0,
+      "not_started": 0,
+      "denominator": 1,
+      "pct": 100.0,
+      "excluded_from_percentage": 0,
+      "standing_breakdown": {
+        "unclassified": 1
+      },
+      "items": [
+        {
+          "name": "Deific Obedience",
+          "doneness": "done",
+          "type_facet": "General",
+          "standing": "unclassified",
+          "display_name": "Deific Obedience"
+        }
+      ]
+    },
+    {
+      "kind": "spell",
+      "label": "Spells",
+      "done": 3,
+      "partial": 0,
+      "not_started": 0,
+      "denominator": 3,
+      "pct": 100.0,
+      "excluded_from_percentage": 0,
+      "standing_breakdown": {
+        "origin": 2,
+        "unclassified": 1
+      },
+      "items": [
+        {
+          "name": "Curse of Disgust (Besmaran)",
+          "doneness": "done",
+          "type_facet": "Divine",
+          "standing": "origin",
+          "display_name": "Curse of Disgust (Besmaran)"
+        },
+        {
+          "name": "Geas (Lesser/Besmaran)",
+          "doneness": "done",
+          "type_facet": "Divine",
+          "standing": "origin",
+          "display_name": "Geas (Lesser/Besmaran)"
+        },
+        {
+          "name": "[redacted PI]",
+          "doneness": "done",
+          "type_facet": "Arcane.Divine",
+          "standing": "unclassified",
+          "display_name": "[redacted PI]"
+        }
+      ]
+    }
+  ]
+}

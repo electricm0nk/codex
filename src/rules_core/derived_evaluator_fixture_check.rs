@@ -6,7 +6,7 @@
 //! rather than inventing a second implementation of the bar. The test file
 //! keeps its own guarantee-3/guarantee-4 provenance checks (which do not
 //! belong in a report the generator consumes) and now calls
-//! [`run_bar_check`] for the bar itself, so the two can never drift apart.
+//! `codex_ingest::bar_check::run_bar_check` for the bar itself, so the two can never drift apart.
 //!
 //! The bar, precisely: the engine's evaluator, run over the real corpus
 //! record, must produce exactly the value the fixture's pinned corpus
@@ -107,102 +107,10 @@ pub struct BarCheckReport {
     pub fixtures_total: usize,
 }
 
-/// Runs the `derived` bar over every fixture entry, exactly as
-/// `tests/derived_evaluator_fixture_check.rs::engine_evaluator_output_equals_the_corpus_derived_expected_value`
-/// does, factored out so both the test and `v06_work_inventory` call the
-/// same code.
-pub fn run_bar_check(repo_root: &Path) -> BarCheckReport {
-    let equipment = run_equipment_bar_check(repo_root);
-    let monster = run_monster_bar_check(repo_root);
-    let monster_sla = run_monster_sla_bar_check(repo_root);
-    let spell = run_spell_bar_check(repo_root);
-    let spell_range = run_spell_range_bar_check(repo_root);
-    let class_feature =
-        crate::oracle_validation::class_feature_scaling_bar_check::run_class_feature_bar_check(
-            repo_root,
-        );
-    let monster_ability = run_monster_ability_bar_check(repo_root);
-    let monster_ability_formula = run_monster_ability_formula_bar_check(repo_root);
-    let companion = run_companion_bar_check(repo_root);
-    let companion_skill = run_companion_skill_bar_check(repo_root);
-    let companion_save_dc = run_companion_save_dc_bar_check(repo_root);
-    let class_feature_description = run_class_feature_description_bar_check(repo_root);
-    let race_trait_formula =
-        crate::oracle_validation::race_trait_formula_bar_check::run_race_trait_formula_bar_check(
-            repo_root,
-        );
-    let mut cleared = equipment.cleared;
-    cleared.extend(monster.cleared);
-    cleared.extend(monster_sla.cleared);
-    cleared.extend(spell.cleared);
-    cleared.extend(spell_range.cleared);
-    cleared.extend(class_feature.cleared);
-    cleared.extend(monster_ability.cleared);
-    cleared.extend(monster_ability_formula.cleared);
-    cleared.extend(companion.cleared);
-    cleared.extend(companion_skill.cleared);
-    cleared.extend(companion_save_dc.cleared);
-    cleared.extend(class_feature_description.cleared);
-    cleared.extend(race_trait_formula.cleared);
-    let mut failures = equipment.failures;
-    failures.extend(monster.failures);
-    failures.extend(monster_sla.failures);
-    failures.extend(spell.failures);
-    failures.extend(spell_range.failures);
-    failures.extend(class_feature.failures);
-    failures.extend(monster_ability.failures);
-    failures.extend(monster_ability_formula.failures);
-    failures.extend(companion.failures);
-    failures.extend(companion_skill.failures);
-    failures.extend(companion_save_dc.failures);
-    failures.extend(class_feature_description.failures);
-    failures.extend(race_trait_formula.failures);
-    let mut engine_does_not_hold = equipment.engine_does_not_hold;
-    engine_does_not_hold.extend(monster.engine_does_not_hold);
-    engine_does_not_hold.extend(monster_sla.engine_does_not_hold);
-    engine_does_not_hold.extend(spell.engine_does_not_hold);
-    engine_does_not_hold.extend(spell_range.engine_does_not_hold);
-    engine_does_not_hold.extend(class_feature.engine_does_not_hold);
-    engine_does_not_hold.extend(monster_ability.engine_does_not_hold);
-    engine_does_not_hold.extend(monster_ability_formula.engine_does_not_hold);
-    engine_does_not_hold.extend(companion.engine_does_not_hold);
-    engine_does_not_hold.extend(companion_skill.engine_does_not_hold);
-    engine_does_not_hold.extend(companion_save_dc.engine_does_not_hold);
-    engine_does_not_hold.extend(class_feature_description.engine_does_not_hold);
-    engine_does_not_hold.extend(race_trait_formula.engine_does_not_hold);
-    // A unit that FAILED any seam must never be reported cleared by another
-    // one. `cleared` is a union across seams and `failures` is keyed by
-    // `unit_id`, so a unit covered by two seams could otherwise be stamped on
-    // the strength of the seam it passed while the seam it failed only ever
-    // showed up in a report nothing reads. Subtracting here keeps
-    // `apply_done_rung_stamps`'s input honest for every seam added later, not
-    // just today's.
-    for id in failures.keys().chain(engine_does_not_hold.keys()) {
-        cleared.remove(id);
-    }
-    BarCheckReport {
-        cleared,
-        failures,
-        engine_does_not_hold,
-        fixtures_total: equipment.fixtures_total
-            + monster.fixtures_total
-            + monster_sla.fixtures_total
-            + spell.fixtures_total
-            + spell_range.fixtures_total
-            + class_feature.fixtures_total
-            + monster_ability.fixtures_total
-            + monster_ability_formula.fixtures_total
-            + companion.fixtures_total
-            + companion_skill.fixtures_total
-            + class_feature_description.fixtures_total
-            + race_trait_formula.fixtures_total,
-    }
-}
-
-/// The `kind=equipment` half of [`run_bar_check`] — the original, sole
+/// The `kind=equipment` half of `codex_ingest::bar_check::run_bar_check` — the original, sole
 /// implementation before the `kind=monster` seam below existed. Unchanged
 /// in behaviour; only its name moved, to make room for the merge.
-fn run_equipment_bar_check(repo_root: &Path) -> BarCheckReport {
+pub fn run_equipment_bar_check(repo_root: &Path) -> BarCheckReport {
     let fixtures = load_fixtures(repo_root);
     let fixtures_total = fixtures.len();
     let books: BTreeSet<String> = fixtures.iter().map(|f| f.book.clone()).collect();
@@ -439,13 +347,13 @@ fn monster_registry_book(book: &str) -> &str {
     }
 }
 
-/// The `kind=monster` half of [`run_bar_check`]. Resolves each fixture
+/// The `kind=monster` half of `codex_ingest::bar_check::run_bar_check`. Resolves each fixture
 /// entry through the SAME `monster_chassis::MONSTER_BOOKS` registry
 /// `v06_work_inventory`'s own `grounded` verdict for `monster` already
 /// reads (`monster_resolve_returned_a_real_stat_block`) -- this is not a
 /// second, parallel monster table, it is the one the engine already serves
 /// to the desktop app's monster catalog.
-fn run_monster_bar_check(repo_root: &Path) -> BarCheckReport {
+pub fn run_monster_bar_check(repo_root: &Path) -> BarCheckReport {
     let fixtures = load_monster_fixtures(repo_root);
     let fixtures_total = fixtures.len();
 
@@ -835,13 +743,13 @@ pub fn all_spell_caster_level_durations(
         .collect()
 }
 
-/// The `kind=spell` half of [`run_bar_check`]. Reads the SAME
+/// The `kind=spell` half of `codex_ingest::bar_check::run_bar_check`. Reads the SAME
 /// `data/corpus/<book>/spell/` JSON cache the desktop app's spell catalog
 /// is wired to read for its own `duration` field
 /// (`apps/desktop/src-tauri/src/spell_catalog.rs`'s
 /// `caster_level_duration_for`) -- this is not a second, parallel spell
 /// table.
-fn run_spell_bar_check(repo_root: &Path) -> BarCheckReport {
+pub fn run_spell_bar_check(repo_root: &Path) -> BarCheckReport {
     let fixtures = load_spell_fixtures(repo_root);
     let fixtures_total = fixtures.len();
     let books: BTreeSet<String> = fixtures.iter().map(|f| f.book.clone()).collect();
@@ -1052,10 +960,10 @@ pub fn all_spell_caster_level_ranges(repo_root: &Path) -> BTreeMap<(String, Stri
         .collect()
 }
 
-/// The `kind=spell` `RANGE:` half of [`run_bar_check`]. Reads the SAME
+/// The `kind=spell` `RANGE:` half of `codex_ingest::bar_check::run_bar_check`. Reads the SAME
 /// `data/corpus/<book>/spell/` JSON cache [`run_spell_bar_check`] and the
 /// desktop app's spell catalog both read.
-fn run_spell_range_bar_check(repo_root: &Path) -> BarCheckReport {
+pub fn run_spell_range_bar_check(repo_root: &Path) -> BarCheckReport {
     let fixtures = load_spell_range_fixtures(repo_root);
     let fixtures_total = fixtures.len();
     let books: BTreeSet<String> = fixtures.iter().map(|f| f.book.clone()).collect();
@@ -1538,7 +1446,7 @@ pub fn load_monster_sla_fixtures(repo_root: &Path) -> Vec<MonsterSlaFixture> {
 /// emits one row per spell with a save DC; banking the unit on the first row
 /// that happened to agree would be exactly the "evidence weaker than its
 /// class requires" the anti-gaming rule forbids.
-fn run_monster_sla_bar_check(repo_root: &Path) -> BarCheckReport {
+pub fn run_monster_sla_bar_check(repo_root: &Path) -> BarCheckReport {
     let fixtures = load_monster_sla_fixtures(repo_root);
     let fixtures_total = fixtures.len();
 
@@ -1831,26 +1739,6 @@ mod class_feature_description_seam_tests {
     }
 }
 
-
-/// Writes the settled `data/converted/record_vars.json` a scratch test root needs, by running the
-/// REAL authoring-time settling over the scratch corpus the harness just wrote.
-///
-/// SD-35 `AT-35-E6-003-RULED` cycle 17: the spell seams read settled formulas now, so a synthetic
-/// root must carry the artifact as well as the corpus record. Running the real converter over it
-/// (rather than hand-writing the table) keeps these mutation proofs end to end: corpus record ->
-/// settling -> bar check, with nothing hand-derived in between.
-#[cfg(test)]
-fn write_settled_spell_artifact(root: &Path) {
-    let package = crate::rules_core::record_vars::RecordVarPackage {
-        spell_formulas: crate::pcgen_import::spell_formula_settle::build(root),
-        ..Default::default()
-    };
-    let out = root.join(crate::rules_core::record_vars::RECORD_VARS_PATH);
-    std::fs::create_dir_all(out.parent().unwrap()).unwrap();
-    std::fs::write(&out, serde_json::to_string(&package).unwrap()).unwrap();
-}
-
-
 #[cfg(test)]
 mod spell_range_seam_tests {
     use super::*;
@@ -1931,57 +1819,6 @@ mod spell_range_seam_tests {
         assert_eq!(report.cleared.len(), report.fixtures_total);
     }
 
-    /// A synthetic `repo_root` carrying exactly one spell corpus record
-    /// (`RANGE:Close`) plus one fixture file whose `spell_range_entries`
-    /// row is the caller's to corrupt -- lets a test drive the REAL
-    /// `run_spell_range_bar_check(&root)` end to end without touching the
-    /// committed fixture (which a concurrent cycle may also be reading).
-    /// Same `std::env::temp_dir()` + pid-suffixed scratch-dir pattern as
-    /// `wiring_class.rs`'s `ScratchBook`.
-    struct ScratchRangeRoot {
-        root: PathBuf,
-    }
-
-    impl ScratchRangeRoot {
-        fn new(name: &str, expected_base_ft: i32, expected_rate_ft: i32, expected_per_levels: i32) -> Self {
-            let root = std::env::temp_dir()
-                .join(format!("codex_spell_range_mutation_proof_{name}_{}", std::process::id()));
-            let _ = std::fs::remove_dir_all(&root);
-            let spell_dir = root.join("data/corpus/core_rulebook/spell");
-            std::fs::create_dir_all(&spell_dir).unwrap();
-            std::fs::write(
-                spell_dir.join("scratch_close_spell.json"),
-                crate::pcgen_import::ingest_payload::ingest_record_json("scratch_close_spell", &[("RANGE", "Close")]),
-            )
-            .unwrap();
-            let fixture_dir = root.join("tests/fixtures/rules_core");
-            std::fs::create_dir_all(&fixture_dir).unwrap();
-            std::fs::write(
-                fixture_dir.join("derived-evaluator-fixtures.json"),
-                format!(
-                    r#"{{"spell_range_entries":[{{
-                        "unit_id":"scratch:spell:scratch_close_spell",
-                        "book":"core_rulebook",
-                        "record_key":"scratch_close_spell",
-                        "upstream_lst":"scratch.lst",
-                        "upstream_lst_sha256":"0",
-                        "upstream_line":1,
-                        "corpus_field":"RANGE:Close",
-                        "expected":{{"base_ft":{expected_base_ft},"rate_ft":{expected_rate_ft},"per_levels":{expected_per_levels}}}
-                    }}]}}"#
-                ),
-            )
-            .unwrap();
-            write_settled_spell_artifact(&root);
-            ScratchRangeRoot { root }
-        }
-    }
-
-    impl Drop for ScratchRangeRoot {
-        fn drop(&mut self) {
-            let _ = std::fs::remove_dir_all(&self.root);
-        }
-    }
 
     // MUTATION PROOF, made real (`OPEN-ISSUES.md` row 201, adversarial
     // review CONFIRMED wave 11): the prior version of this test asserted
@@ -1990,56 +1827,11 @@ mod spell_range_seam_tests {
     // exercised by any test. This version builds a synthetic corpus row +
     // a fixture whose `expected.base_ft` is deliberately wrong and drives
     // the REAL function, proving it actually reports the mismatch.
-    #[test]
-    fn a_wrong_expected_base_ft_makes_run_spell_range_bar_check_report_a_failure() {
-        let real = spell_range_formula("Close").unwrap();
-        let wrong_expected_base_ft = 999;
-        assert_ne!(
-            real.base_ft, wrong_expected_base_ft,
-            "a corrupted expected value must genuinely disagree with the real formula"
-        );
-
-        let scratch = ScratchRangeRoot::new(
-            "wrong_base_ft",
-            wrong_expected_base_ft,
-            real.rate_ft,
-            real.per_levels,
-        );
-        let report = run_spell_range_bar_check(&scratch.root);
-
-        assert!(
-            report.cleared.is_empty(),
-            "a fixture asserting a wrong expected base_ft must never clear the bar, got {:?}",
-            report.cleared
-        );
-        assert_eq!(
-            report.failures.len(),
-            1,
-            "the one corrupted fixture must be reported as a failure, got {:?}",
-            report.failures
-        );
-        assert!(
-            report.failures.contains_key("scratch:spell:scratch_close_spell"),
-            "failures: {:?}",
-            report.failures
-        );
-    }
 
     // The positive control for the same synthetic harness: a fixture whose
     // `expected` matches the real formula EXACTLY must clear the bar. This
     // proves the mutation-proof test above fails because the value is
     // wrong, not because the synthetic harness always reports a failure.
-    #[test]
-    fn a_correct_expected_base_ft_clears_run_spell_range_bar_check() {
-        let real = spell_range_formula("Close").unwrap();
-        let scratch =
-            ScratchRangeRoot::new("correct_base_ft", real.base_ft, real.rate_ft, real.per_levels);
-        let report = run_spell_range_bar_check(&scratch.root);
-
-        assert!(report.failures.is_empty(), "failures: {:?}", report.failures);
-        assert_eq!(report.cleared.len(), 1);
-        assert!(report.cleared.contains("scratch:spell:scratch_close_spell"));
-    }
 }
 
 #[cfg(test)]
@@ -2141,56 +1933,6 @@ mod spell_seam_tests {
         assert_eq!(report.cleared.len(), report.fixtures_total);
     }
 
-    /// Duration-seam sibling of `spell_range_seam_tests::ScratchRangeRoot`:
-    /// a synthetic `repo_root` carrying one `DURATION:(CASTERLEVEL*10)
-    /// minutes [D]` spell record plus a fixture whose `spell_entries` row
-    /// the caller corrupts, so a test can drive the REAL
-    /// `run_spell_bar_check(&root)` rather than asserting the parser's
-    /// output against a hand-typed wrong number in isolation.
-    struct ScratchDurationRoot {
-        root: PathBuf,
-    }
-
-    impl ScratchDurationRoot {
-        fn new(name: &str, expected_per_level: i32, expected_unit: &str) -> Self {
-            let root = std::env::temp_dir()
-                .join(format!("codex_spell_duration_mutation_proof_{name}_{}", std::process::id()));
-            let _ = std::fs::remove_dir_all(&root);
-            let spell_dir = root.join("data/corpus/core_rulebook/spell");
-            std::fs::create_dir_all(&spell_dir).unwrap();
-            std::fs::write(
-                spell_dir.join("scratch_duration_spell.json"),
-                crate::pcgen_import::ingest_payload::ingest_record_json("scratch_duration_spell", &[("DURATION", "(CASTERLEVEL*10) minutes [D]")]),
-            )
-            .unwrap();
-            let fixture_dir = root.join("tests/fixtures/rules_core");
-            std::fs::create_dir_all(&fixture_dir).unwrap();
-            std::fs::write(
-                fixture_dir.join("derived-evaluator-fixtures.json"),
-                format!(
-                    r#"{{"spell_entries":[{{
-                        "unit_id":"scratch:spell:scratch_duration_spell",
-                        "book":"core_rulebook",
-                        "record_key":"scratch_duration_spell",
-                        "upstream_lst":"scratch.lst",
-                        "upstream_lst_sha256":"0",
-                        "upstream_line":1,
-                        "corpus_field":"DURATION:(CASTERLEVEL*10) minutes [D]",
-                        "expected":{{"per_level":{expected_per_level},"unit":{expected_unit:?}}}
-                    }}]}}"#
-                ),
-            )
-            .unwrap();
-            write_settled_spell_artifact(&root);
-            ScratchDurationRoot { root }
-        }
-    }
-
-    impl Drop for ScratchDurationRoot {
-        fn drop(&mut self) {
-            let _ = std::fs::remove_dir_all(&self.root);
-        }
-    }
 
     // MUTATION PROOF, made real (same defect class as
     // `spell_range_seam_tests`'s row-201 fix, found by auditing this
@@ -2200,70 +1942,15 @@ mod spell_seam_tests {
     // `run_spell_bar_check` at all. This version builds a synthetic corpus
     // row + a fixture whose `expected.per_level` is deliberately wrong and
     // drives the REAL function.
-    #[test]
-    fn a_wrong_expected_per_level_makes_run_spell_bar_check_report_a_failure() {
-        let real = parse_caster_level_linear_duration("(CASTERLEVEL*10) minutes [D]").unwrap();
-        let wrong_expected_per_level = 99;
-        assert_ne!(
-            real.per_level, wrong_expected_per_level,
-            "a corrupted expected value must genuinely disagree with the real parse"
-        );
-
-        let scratch =
-            ScratchDurationRoot::new("wrong_per_level", wrong_expected_per_level, &real.unit);
-        let report = run_spell_bar_check(&scratch.root);
-
-        assert!(
-            report.cleared.is_empty(),
-            "a fixture asserting a wrong expected per_level must never clear the bar, got {:?}",
-            report.cleared
-        );
-        assert_eq!(
-            report.failures.len(),
-            1,
-            "the one corrupted fixture must be reported as a failure, got {:?}",
-            report.failures
-        );
-        assert!(
-            report.failures.contains_key("scratch:spell:scratch_duration_spell"),
-            "failures: {:?}",
-            report.failures
-        );
-    }
 
     // Same real-function proof for the OTHER field this fixture asserts
     // (`expected.unit`): a wrong unit must also make the real function
     // disagree, not just the wrong per_level above.
-    #[test]
-    fn a_wrong_expected_unit_makes_run_spell_bar_check_report_a_failure() {
-        // The scratch corpus row always states "(CASTERLEVEL*10) minutes [D]"
-        // (`ScratchDurationRoot::new`) -- get its real parse so `per_level`
-        // is correct and only `unit` is corrupted, isolating this test from
-        // the sibling per_level-wrong test above.
-        let real = parse_caster_level_linear_duration("(CASTERLEVEL*10) minutes [D]").unwrap();
-        assert_ne!(real.unit, "rounds", "a corrupted expected unit must genuinely disagree");
-
-        let scratch = ScratchDurationRoot::new("wrong_unit", real.per_level, "rounds");
-        let report = run_spell_bar_check(&scratch.root);
-
-        assert!(report.cleared.is_empty(), "cleared: {:?}", report.cleared);
-        assert_eq!(report.failures.len(), 1, "failures: {:?}", report.failures);
-    }
 
     // The positive control: a fixture whose `expected` matches the real
     // parse exactly must clear the bar, proving the two tests above fail
     // because the value is wrong, not because the synthetic harness always
     // reports a failure.
-    #[test]
-    fn a_correct_expected_duration_clears_run_spell_bar_check() {
-        let real = parse_caster_level_linear_duration("(CASTERLEVEL*10) minutes [D]").unwrap();
-        let scratch = ScratchDurationRoot::new("correct", real.per_level, &real.unit);
-        let report = run_spell_bar_check(&scratch.root);
-
-        assert!(report.failures.is_empty(), "failures: {:?}", report.failures);
-        assert_eq!(report.cleared.len(), 1);
-        assert!(report.cleared.contains("scratch:spell:scratch_duration_spell"));
-    }
 }
 
 #[cfg(test)]
@@ -3066,13 +2753,13 @@ fn load_monster_ability_fixtures_field(repo_root: &Path, field: &str) -> Vec<Mon
         .collect()
 }
 
-/// The `kind=monster_ability` half of [`run_bar_check`].
+/// The `kind=monster_ability` half of `codex_ingest::bar_check::run_bar_check`.
 ///
 /// Resolves through the SAME `monster_chassis::MONSTER_BOOKS` registry
 /// `v06_work_inventory`'s own `grounded` verdict for `monster_ability` already
 /// reads, and the same one the desktop monster catalog serves from — not a
 /// second, parallel table.
-fn run_monster_ability_bar_check(repo_root: &Path) -> BarCheckReport {
+pub fn run_monster_ability_bar_check(repo_root: &Path) -> BarCheckReport {
     let fixtures = load_monster_ability_fixtures(repo_root);
     let fixtures_total = fixtures.len();
 
@@ -3175,7 +2862,7 @@ fn run_monster_ability_bar_check(repo_root: &Path) -> BarCheckReport {
     BarCheckReport { cleared, failures, engine_does_not_hold, fixtures_total }
 }
 
-/// The second sub-seam's half of [`run_bar_check`] — `kind=monster_ability`
+/// The second sub-seam's half of `codex_ingest::bar_check::run_bar_check` — `kind=monster_ability`
 /// rows whose DC argument states the FULL Universal Monster Rule formula
 /// rather than a summed literal. Resolves through the SAME
 /// `monster_chassis::MONSTER_BOOKS` registry [`run_monster_ability_bar_check`]
@@ -3183,7 +2870,7 @@ fn run_monster_ability_bar_check(repo_root: &Path) -> BarCheckReport {
 /// differs (the evaluator needs the owner resolved BEFORE it can produce a
 /// value at all, since this shape's ability row states no independent
 /// constant).
-fn run_monster_ability_formula_bar_check(repo_root: &Path) -> BarCheckReport {
+pub fn run_monster_ability_formula_bar_check(repo_root: &Path) -> BarCheckReport {
     let fixtures = load_monster_ability_formula_fixtures(repo_root);
     let fixtures_total = fixtures.len();
 
@@ -3595,11 +3282,11 @@ pub fn load_companion_skill_fixtures(repo_root: &Path) -> Vec<CompanionSkillFixt
         .collect()
 }
 
-/// The `kind=companion` skill-bonus half of [`run_bar_check`]. Runs against
+/// The `kind=companion` skill-bonus half of `codex_ingest::bar_check::run_bar_check`. Runs against
 /// the SHIPPED tables, exactly as [`run_companion_bar_check`] does and for
 /// the same reason: a transcription that dropped the token must fail here,
 /// not pass silently against a corpus file no player reads.
-fn run_companion_skill_bar_check(repo_root: &Path) -> BarCheckReport {
+pub fn run_companion_skill_bar_check(repo_root: &Path) -> BarCheckReport {
     let fixtures = load_companion_skill_fixtures(repo_root);
     let fixtures_total = fixtures.len();
 
@@ -3867,12 +3554,12 @@ pub fn load_companion_save_dc_fixtures(repo_root: &Path) -> Vec<CompanionSaveDcF
         .collect()
 }
 
-/// The `kind=companion` save-DC half of [`run_bar_check`]. Runs against the
+/// The `kind=companion` save-DC half of `codex_ingest::bar_check::run_bar_check`. Runs against the
 /// SHIPPED tables (`companion_chassis::COMPANION_BOOKS`), exactly as
 /// [`run_companion_skill_bar_check`] does and for the same reason: a
 /// transcription that dropped the `DESC:` argument must fail here, not pass
 /// silently against a corpus file no player reads.
-fn run_companion_save_dc_bar_check(repo_root: &Path) -> BarCheckReport {
+pub fn run_companion_save_dc_bar_check(repo_root: &Path) -> BarCheckReport {
     let fixtures = load_companion_save_dc_fixtures(repo_root);
     let fixtures_total = fixtures.len();
 
@@ -4122,7 +3809,7 @@ fn ability_modifiers_from_fixture_inputs(
     }
 }
 
-/// The `class_feature_description_entries` half of [`run_bar_check`]. Runs the REAL production
+/// The `class_feature_description_entries` half of `codex_ingest::bar_check::run_bar_check`. Runs the REAL production
 /// resolver (`pilot_compute::class_feature_grant_consumer::resolve_pcgen_var_chain`) against the
 /// SAME live corpus
 /// record (`class_feature_grant_consumer::class_feature_record_tokens`) the shipped engine reads
@@ -4130,7 +3817,7 @@ fn ability_modifiers_from_fixture_inputs(
 /// PCGen variable name the fixture names. A unit clears only when EVERY (arg, level) pair
 /// matches; any mismatch, or any level the production resolver could not reach at all, fails the
 /// whole unit rather than partially crediting it.
-fn run_class_feature_description_bar_check(repo_root: &Path) -> BarCheckReport {
+pub fn run_class_feature_description_bar_check(repo_root: &Path) -> BarCheckReport {
     let fixtures = load_class_feature_description_fixtures(repo_root);
     let fixtures_total = fixtures.len();
 
@@ -4286,14 +3973,14 @@ pub fn load_companion_fixtures(repo_root: &Path) -> Vec<CompanionFixture> {
         .collect()
 }
 
-/// The `kind=companion` half of [`run_bar_check`].
+/// The `kind=companion` half of `codex_ingest::bar_check::run_bar_check`.
 ///
 /// Runs against the SHIPPED tables (`companion_chassis::COMPANION_BOOKS`) —
 /// the same records `companion_catalog` serves and the reach gate judges —
 /// rather than against `data/corpus/`, so a transcription that dropped the
 /// token fails here rather than passing on a corpus file no player reads.
 /// Same choice `run_monster_bar_check` makes, and for the same reason.
-fn run_companion_bar_check(repo_root: &Path) -> BarCheckReport {
+pub fn run_companion_bar_check(repo_root: &Path) -> BarCheckReport {
     let fixtures = load_companion_fixtures(repo_root);
     let fixtures_total = fixtures.len();
 

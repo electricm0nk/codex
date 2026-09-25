@@ -1,0 +1,1 @@
+{"var":"v9ddeed86ec13a6a8","label":"POOL UNCHAINEDEIDOLONABILITYINCREASE","declared_by":["pathfinder_unchained:race_trait:unchained_evolution_ability_increase"],"contributions":[{"rule_id":"pathfinder_unchained:race_trait:unchained_evolution_ability_increase","expr":{"Const":1},"when":"Always"}],"provenance":{}}

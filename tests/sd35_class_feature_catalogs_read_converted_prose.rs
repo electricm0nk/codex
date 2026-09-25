@@ -26,11 +26,10 @@ use codex::rules_core::class_feature_pool_catalog::{
     load_pool_catalog, load_standalone_class_feature_catalog,
 };
 use codex::rules_core::converted_prose;
-use std::path::PathBuf;
 
-fn repo_root() -> PathBuf {
-    PathBuf::from(env!("CARGO_MANIFEST_DIR"))
-}
+#[path = "support/paths.rs"]
+mod paths;
+use paths::repo_root;
 
 #[test]
 fn every_record_the_class_feature_catalogs_serve_has_converted_prose() {

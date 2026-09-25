@@ -1,16 +1,24 @@
 # Rules Data Tables
 
 > Scope: the hand-transcribed, per-book Paizo table store rules-core queries for class chassis, race traits, feats, spells, equipment, and monster stat blocks.
-> Last verified: **2026-09-15 against `tranche/15`** (SD-35 closure epilogue) for the new
-> §"Two data stores, and which one a new rule goes in" section — verified against
+> Last verified: **2026-09-20 against `tranche/16` (`424e93e93c`)** for the `RuleSetId` enum, now
+> **37** populated variants, not the prior pass's 30 — four Inner Sea setting books (`InnerSeaFaiths`,
+> `InnerSeaMagic`, `InnerSeaTaverns`, `InnerSeaTemples`) were added since, re-derived directly with
+> `python3 -c "import re; src=open('src/rules_core/rules_tables/mod.rs').read(); src=re.sub(r'//.*','',src); body=re.search(r'pub enum RuleSetId \{(.*?)\n\}', src, re.S).group(1); print(len(re.findall(r'^\s*([A-Za-z0-9_]+)\s*,', body, re.M)))"`
+> — the `re.S`/`.group(1)` scopes the match to the enum body (`{` to the closing `}`) and `re.M`
+> makes `^` match per-line rather than only at the start of the file; a version dropping either
+> flag silently returns 0. See the corrected block below. This pass also added the module-map
+> diagram, the "How to extend" and "Pitfalls" sections, and confirmed no other content in this doc
+> changed shape since the prior pass. Prior pass **2026-09-15 against `tranche/15`** (SD-35 closure
+> epilogue) for §"Two data stores, and which one a new rule goes in", verified against
 > `src/rules_core/rules_tables/mod.rs`, `data/sheet_rules/_report.json`, and
 > `src/rules_core/corpus_loader.rs`. **The §"Chassis fields carry the TOKEN, never a computed
-> number" convention below is now scoped to this store only**: the sheet-rule package carries no
+> number" convention below is scoped to this store only**: the sheet-rule package carries no
 > token at all (`grep -rlE 'BONUS:|DEFINE:|PRE[A-Z]+:|%CHOICE|CL=' data/sheet_rules/ | wc -l` → `0`).
-> Prior pass **2026-08-19 against `tranche/11`** (SD-31 wave 15, `SD31-W15-INTEGRATE-001`) for §"Chassis fields carry the TOKEN, never a computed number"; prior pass 2026-08-07 against tranche/8 (wiring_class/PI-screening convergence cycle). **Touched 2026-08-21 (SD-31 wave 29, integration cycle)**: added `RuleSetId::AdventurersGuide` (Adventurer's Guide's first compiled rule set, spell family only — `rules_tables::adventurers_guide::spell_list`) to the enum block below; every other row unchanged. **Path correction 2026-08-22**
-> (SD-32 closure epilogue): src/bin/ingest_race_traits_arg.rs cite updated to
-> `src/bin/ingest_apg_race_traits.rs` (renamed by the function-based naming sweep, `8b6dd7511`);
-> no other content in this doc re-verified.
+> **This pass** (capability-claims audit, same day) corrected §"Engine state dumps"'s stale claim that
+> `v06_class_state_dump` sweeps 27 classes — it sweeps 31 (CRB/APG/ACG/Pathfinder Unchained) — and
+> added the scope caveat for `v06_content_state_dump`'s 13-book coverage so it is never cited as a
+> corpus-coverage instrument.
 > Maintenance: updated at SD closure — see [README.md](./README.md) §Maintenance contract
 
 ## Purpose
@@ -26,6 +34,67 @@ authored by transcribing values out of the real PCGen `.lst` corpus by
 hand (or, in one documented case, generated programmatically from it),
 not produced by running the ingest pipeline's parsers at build time.
 
+## Module map
+
+`src/rules_core/rules_tables/mod.rs` declares 45 `pub mod` items today
+(`grep -cE "^pub mod " src/rules_core/rules_tables/mod.rs`) — far more than
+the four this doc describes in per-book structural detail below. Of those
+45 declarations, 37 are book/support **directories**
+(`find src/rules_core/rules_tables -mindepth 1 -maxdepth 1 -type d | wc -l`)
+and 8 are single **files** with no sibling directory (`archetype_swap`,
+`class_spell_levels`, `companion_chassis`, `equipment_gap_tables`,
+`feat_gap_tables`, `simple_kind_tables`, `feats_all`, `monster_chassis`).
+The four (`crb`, `apg`, `acg`, `beastiary1`) are the fully-authored books
+with a rich per-class/per-monster file layout; the remaining 41 `pub mod`
+items (45 minus the four — 33 directories plus all 8 files) are narrower —
+often a single record family (feats-only, spells-only, companion-only)
+registered under their own `RuleSetId` per the table below, following
+`monster_chassis`/`feats_all`'s shared cross-book table shape (both are
+among the 8 files, not directories) rather than a bespoke per-book
+directory layout.
+
+```mermaid
+flowchart TD
+    mod_rs["rules_tables/mod.rs\nRuleSetId enum (37 variants),\nCOMPILED_RULE_SETS, monster_chassis::MONSTER_BOOKS"]
+
+    subgraph rich["Fully-authored books (per-class/per-monster files)"]
+        crb["crb/\nclass_tables, race_tables, feats,\nspell_list, equipment_tables, json_cache"]
+        apg["apg/\n6 per-class files + feats/spells/equipment"]
+        acg["acg/\n10 per-class files + feats/spells/equipment"]
+        beastiary1["beastiary1/\n9 monster_subset_NN files"]
+    end
+
+    subgraph crossbook["Book-spanning tables"]
+        feats_all["feats_all.rs\nBookFeatTable rows, 23 books joined,\n1578 hand-authored entries total"]
+        class_spell_levels["class_spell_levels.rs\nclass:&lt;id&gt; -&gt; per-class spell-level table dispatch"]
+        monster_chassis["monster_chassis::MONSTER_BOOKS\nregistry every monster-bearing book joins"]
+    end
+
+    subgraph narrow["Narrow, single-family book directories (~35 of the 39 total)"]
+        arg["advanced_race_guide/, pathfinder_unchained/, ultimate_*/\n(SD-27/28 — feats, spells, or race_trait)"]
+        bestiaries["bestiary/, bestiary_2..6/, bonus_bestiary/,\nmonster_codex/, book_of_the_damned_*/\n(monster/monster_ability/companion families)"]
+        inner_sea["inner_sea_*/ (7 books)\n(race_trait, monster, companion, or spell-only)"]
+        setting["adventurers_guide/, occult_adventures/,\nmythic_adventures/ (feat_gap_tables shape)"]
+    end
+
+    mod_rs --> rich
+    mod_rs --> crossbook
+    mod_rs --> narrow
+    crb --> feats_all
+    apg --> feats_all
+    acg --> feats_all
+    narrow --> feats_all
+    crb --> class_spell_levels
+    apg --> class_spell_levels
+    acg --> class_spell_levels
+    narrow --> monster_chassis
+    beastiary1 -.->|shares key namespace with| bestiaries
+```
+
+*A book's presence in this tree states which record families the engine has ingested from it, not
+that the book is "done" — several narrow directories compile exactly one family (see
+§"`RuleSetId` and per-book resolution" below for the full per-book accounting).*
+
 ## Two data stores, and which one a new rule goes in
 
 *New 2026-09-15 (SD-35 closure).* Since SD-35 the engine reads rule data from **two** stores, and
@@ -34,7 +103,7 @@ the choice between them is not a matter of taste:
 | | `src/rules_core/rules_tables/` (this doc) | `data/sheet_rules/` ([corpus-ingest.md](./corpus-ingest.md)) |
 |---|---|---|
 | **What it holds** | the class/race/feat/spell/equipment **chassis** — the tables the PF1 core math needs | every corpus rules record, all 49,450 of them, as a renderable sheet line |
-| **How it is authored** | hand-transcribed from the books, in Rust, per book directory | generated whole by `cargo run --locked --bin sheet_rule_convert` from the pinned PCGen tree |
+| **How it is authored** | hand-transcribed from the books, in Rust, per book directory | generated whole by `cargo run --locked -p codex-ingest --bin sheet_rule_convert` from the pinned PCGen tree |
 | **Format** | Rust `const`/`fn` tables, per-book module, gated by `RuleSetId` | JSON in the `SheetRule` schema, `<book>/<kind>/<key>.json` |
 | **Carries source tokens?** | yes — a chassis field carries the TOKEN, never a computed number (see below) | **no**, never — the converter is the only thing that reads a token |
 | **Edited by hand?** | yes, that is the point | **never** — regenerated whole; `data/sheet_rules/GENERATED` says so |
@@ -52,8 +121,10 @@ classes' worth of core math, the sheet-rule package is the corpus.
 
 ## Per-book directory pattern
 
-Four book directories exist under `src/rules_core/rules_tables/`,
-declared in `src/rules_core/rules_tables/mod.rs`:
+Four book directories carry the rich, per-class/per-monster file layout this section documents in
+full — the rest of the 45 declared `pub mod` items (37 directories, 8 shared-table files; see the
+module map above) are narrower, single-family books following the pattern in "Adding a new book"
+below, not this one:
 
 ```
 pub mod acg;
@@ -97,22 +168,41 @@ pub mod crb;
   scope had not counted at all; plus
   `feats.rs` + `feat_data/{general,combat,teamwork,panache}.rs`
   (129-feat catalog).
-- **`feats_all.rs`** (book-spanning) — the one place the three per-book
-  feat catalogs are joined, as `BookFeatTable { rule_set, entries }`
-  rows: 486 records total (185 CRB + 172 APG + 129 ACG). Provenance
-  lives on the table, not on each record. This is what the desktop
-  `list_feats` command and `description_completion::feat_description_completion`
-  both read, so the Feat picker offers every ingested book's feats and
-  the description-reachability audit resolves them.
-- **`beastiary1/`** (Bestiary 1) — `mod.rs` plus eight
-  `monster_subset_01.rs` .. `monster_subset_08.rs` files, five (or six,
-  for subset 06) monsters each, 41 monsters total as of this
-  verification. Subsets are appended in CR-band order as ingest cycles
-  land; `mod.rs`'s doc comment documents each subset's exact roster and
-  any correction against an earlier planning-doc sample list. SD-25 Epic 7
-  added `equipment_data.rs` + `equipment_tables.rs` (mirroring the CRB/APG
-  equipment split) — the book's small 4-record equipment table, its first
-  non-monster content.
+- **`feats_all.rs`** (book-spanning) — the one place EVERY book's feat
+  catalog is joined, as `BookFeatTable { rule_set, entries }` rows: 23 books
+  (`hand_authored_feat_tables().len()`, `feats_all.rs`'s own
+  `spans_every_ingested_book_with_their_real_counts` test), summing to
+  **1578** hand-authored entries total across all 23 (185 CRB + 172 APG +
+  129 ACG + 187 ARG + 17 PU + 23 UCA + 104 UI + 135 UW + 261 UC + 144 UM +
+  221 UPsi, the remaining 12 books each contributing 0 hand-authored rows
+  because their feats come in only via the corpus-gap lane below —
+  re-derive by summing `hand_authored_feat_tables()[i].entries.len()` for
+  every `i`, the same test's own final `assert_eq!(total, 1578, ...)`).
+  Provenance lives on the table, not on each record. `all_feat_tables()`
+  additionally joins in the per-book corpus-gap rows (real `*_feats.lst`
+  rows not hand-transcribed into a table), so the picker a player actually
+  sees is larger than 1578 and covers every ingested book, not just the
+  three richest ones. This is what the desktop `list_feats` command and
+  `description_completion::feat_description_completion` both read, so the
+  Feat picker offers every ingested book's feats and the
+  description-reachability audit resolves them.
+- **`beastiary1/`** (Bestiary 1) — `mod.rs` plus nine
+  `monster_subset_01.rs` .. `monster_subset_09.rs` files, five (or six,
+  for subset 06) monsters each, 46 monsters total as of this
+  verification (re-derive: each monster function has both a `->
+  MonsterStatBlock` return-type line and a `MonsterStatBlock {` literal, so
+  `grep -c 'MonsterStatBlock {' <file>` must be halved per file — 5,5,5,5,5,
+  6,5,5,5 across subsets 01..09). Subsets are appended in CR-band order as
+  ingest cycles land; `mod.rs`'s doc comment documents each subset's exact
+  roster and any correction against an earlier planning-doc sample list.
+  SD-25 Epic 7 added `equipment_data.rs` + `equipment_tables.rs` (mirroring
+  the CRB/APG equipment split) — the book's small 4-record equipment table,
+  its first non-monster content. **Naming hazard:** `monster_chassis.rs`
+  (the narrow-book lane below) defines its own, separate
+  `struct MonsterStatBlock` — the two types share a name but are not the
+  same type; `grep -rn 'struct MonsterStatBlock'` finds both
+  (`beastiary1/mod.rs` and `monster_chassis.rs`), and importing the wrong
+  one is a real, silent type-mismatch hazard.
 
 Every book directory follows the same two-tier shape: a `mod.rs`
 defining the book's `RuleSetId`-scoped resolver function(s) plus a
@@ -166,15 +256,13 @@ ingests. Both figures are pinned in `class_spell_levels.rs`'s tests.
 
 ## `RuleSetId` and per-book resolution
 
-`RuleSetId` (`src/rules_core/rules_tables/mod.rs`) currently has **30**
-populated variants. **Corrected twice.** The 2026-08-11 pass raised this from
-"four populated variants plus a placeholder comment for future books" to 14,
-but that pass belonged to a closure the operator rescinded the same day
-(`SD-29 decisions.md §42`); sixteen further lane rounds ran afterwards and
-registered sixteen more rule sets. Re-derived at SD-29's real closure
-(2026-08-13) from the source with
-`sed -n '/pub enum RuleSetId/,/^}/p' src/rules_core/rules_tables/mod.rs` —
-each arm's own doc comment in that file is the authority on what it compiles,
+`RuleSetId` (`src/rules_core/rules_tables/mod.rs`) currently has **37**
+populated variants (re-derived 2026-09-20, same command as the doc header above,
+scoped to the enum body with `re.S`/`.group(1)` and `re.M` — a naive line-count undercounts,
+because several variant names like `B2`/`B5` contain digits a simpler regex misses). Four rows —
+`InnerSeaFaiths`, `InnerSeaMagic`, `InnerSeaTaverns`, `InnerSeaTemples` — were added after the prior
+30-variant count, all as SD-32 Gate 0 book-onboarding preconditions (see below). Every arm's own doc
+comment in the source file is the authority on what it compiles,
 and several compile only ONE record family:
 
 ```rust
@@ -219,8 +307,25 @@ pub enum RuleSetId {
     Oa,             // Occult Adventures            (SD31-E6-F2-003; spells)
     Mythic,         // Mythic Adventures            (SD31-E6-F2-007; feats)
     AdventurersGuide, // Adventurer's Guide         (SD-31 wave 29; spells only — feat/equipment/class_feature-chassis families still not compiled)
+    InnerSeaFaiths,   // Inner Sea Faiths           (SD-32 Gate 0; spells only)
+    InnerSeaMagic,    // Inner Sea Magic            (SD-32 Gate 0; spells — 218 class_feature units already
+                      // ingested corpus-wide but unreachable through this gate before this variant)
+    InnerSeaTaverns,  // Inner Sea Taverns          (SD-32 Gate 0; feats only — no *_spells.lst in this book,
+                      // so it has no dedicated rules_tables::<book> module, mirroring Mythic's feat_gap_tables shape)
+    InnerSeaTemples,  // Inner Sea Temples          (SD-32 Gate 0; spells only)
 }
 ```
+
+All four SD-32 Gate 0 additions share one purpose, stated on each of their own doc comments: without
+the variant, `v06_work_inventory::classify`'s book-level gate (`engine_book_for` → `rule_set_for` →
+`None`) short-circuits *every* unit of that book to `not-started`/`no_compiled_rule_set_for_book`
+regardless of what any per-kind table ships — registering the rule set, even for one record family,
+is what makes the book's other already-ingested content (e.g. Inner Sea Magic's 218 `class_feature`
+units) reachable through the gate at all. See `crates/codex-ingest/src/bin/ingest_spells.rs` for the
+shared ingest path the three spell-bearing rows above use (the codebase's own doc comments on these
+`RuleSetId` arms still cite a since-collapsed `ingest_inner_sea_setting_spells.rs`, folded into
+`ingest_spells.rs`'s generic, config-driven pass by SD-32 `decisions.md §17` — a pre-existing
+comment/reality drift in the source, not introduced by this doc).
 
 **Registering a rule set is not the same as compiling a whole book**, and
 seven of the arms above prove it: `Isc`, `Isi`, `B5`, `B6` and `B2` compile a
@@ -243,7 +348,17 @@ the reach gate — so registering a book there is the whole of the wiring cost.
 `rules_tables::beastiary1` (SD-22: 46 hand-modelled stat blocks with
 natural-attack provenance, keyed `beastiary1:monster:<slug>`) *and* in
 `rules_tables::bestiary` (SD-29 Epic 5 round 8: the book's other 280 rows in the
-ordinary chassis shape, keyed `beastiary:monster:<slug>`). The two are disjoint
+ordinary chassis shape, keyed `beastiary:monster:<slug>`) — 326 total,
+`apps/desktop/src-tauri/src/monster_catalog.rs`'s own
+`the_catalog_serves_every_ingested_bestiary_1_monster` test pins both halves
+(46 and 280) and their sum. The book's full monster-unit count is 330; the
+remaining 4 are `.MOD` overlay rows that do not reach the wire as their own
+entries. **Naming hazard, second occurrence:** that same file's module-level
+doc comment (not its test) instead states "284" for the chassis half and
+"330" for the total — an internal drift inside that one source file between
+its own prose and its own proof; trust the test (280/326), the same way
+`beastiary1`'s and `monster_chassis`'s two `MonsterStatBlock` types share a
+name above without being the same type. The two monster tables are disjoint
 and both reach the player under one wire code, `B1`. `decisions.md §58.3` records
 why the chassis sits alongside rather than absorbing: absorbing means retiring a
 shipped, grounded, player-visible key space across bundles. Three consequences
@@ -253,16 +368,20 @@ are load-bearing for anyone touching this area:
   apart by field — SD-22's carry `data.id`, chassis records carry `data.key` —
   and `gen_book_cache` sweeps only the records whose key is in its own namespace
   rather than clearing the directory.
-* `v06_work_inventory::EngineFacts::holds_key` grounds `bestiary_1` monsters from
-  the **union** of the two tables. Either half alone silently reports the other
-  half's records as `not-ingested`.
+* `v06_work_inventory::EngineFacts::holds_key` (the generator is retired,
+  SD-36 D3; `docs/work-inventory.json` is now a frozen snapshot) grounded
+  `bestiary_1` monsters from the **union** of the two tables. Either half
+  alone silently reports the other half's records as `not-ingested`.
 * Assertions written about "Bestiary 1" before round 8 mean "the SD-22 table";
   the wire code no longer separates them, so those tests filter on the key
   namespace.
 
-The counts in this section's Bestiary 1 paragraphs below (41 monsters, subsets
-01-08) predate SD28-E16 subset 09 and this round; they are flagged rather than
-edited here, and `beastiary1::mod.rs`'s own roster doc comments are current.
+The counts in this section's Bestiary 1 paragraph above (46 monsters, subsets
+01-09) are current as of this pass — an earlier version of this doc quoted a
+stale 41-monster/8-subset figure that predated SD28-E16 subset 09 and this
+round; that figure has been corrected in place rather than left flagged.
+`beastiary1::mod.rs`'s own roster doc comments remain the per-monster source
+of truth.
 
 Each book's resolver function takes a book-scoped ID enum plus a
 `RuleSetId` and returns `None` immediately if the `RuleSetId` does not
@@ -391,60 +510,80 @@ never fabricated). Exact per-book counts are asserted by
 | ACG | 269/269 (100%; 221 `acg_equip.lst` + 48 `acg_equipmods.lst`) | 135/269 (50.2%; Equipmods genuinely 0/48) | 264/269 (98.1%) | corpus `SPROP:` token (ACG also has zero `DESC:` tokens, but its `SPROP:` — "Special Property" — token is a near-universal convention here; a trailing `\|<conditional-tag>` qualifier is stripped) |
 | Bestiary 1 | 4/4 (100%; 1 general + 2 arms_armor + 1 magic_items — newly ingested by SD-25 Epic 7) | 4/4 | 4/4 (3 from `SPROP:`, 1 web-sourced) | corpus `SPROP:` token + one cited web second-source |
 
-Spell records carry an equivalent `description`/full-text field. CRB reaches
-652/652 (100%, sourced from the fullest available corpus text — a matching
+Spell records carry an equivalent `description`/full-text field. CRB reaches full text on
+652 of 652 records (sourced from the fullest available corpus text — a matching
 `.MOD` record's text where one exists, 623/652, else the base record's own
-text); ACG reaches 144/144 (100%, its base record already carries full text
+text); ACG reaches full text on 144 of 144 records (its base record already carries full text
 natively — the reverse of CRB's `.MOD`-record convention); APG reaches
 297/297 record ingestion with `description` 285/297 and full SRD/PRD text
-284/297 (both raised by SD-25 Epic 7's `apg-spell-text` pass, from 281 and 261
-respectively — the remainder are real corpus gaps that cap it below 100%).
+284 of 297 (both raised by SD-25 Epic 7's `apg-spell-text` pass, from 281 and 261
+respectively — the remainder are real corpus gaps below full coverage).
 
 Record-count coverage (the count of rows ingested at all, independent of
-which fields are populated) is 100% for equipment and spells across CRB,
+which fields are populated) reaches its full denominator — every equipment and spell record — across CRB,
 APG, ACG, and — as of SD-25 Epic 7 — Bestiary 1's own small equipment
 corpus. See [status.md](./status.md) for the full stub/gap ledger.
 
 ## JSON corpus cache (`data/corpus/`)
 
-**Correction (2026-08-07, `arch-docs-refresh`):** this section previously
-described only four in-scope books and four generator binaries. As of the
-wiring_class/PI-screening convergence cycle, `data/corpus/` holds **six**
-book directories — `core_rulebook/`, `advanced_players_guide/`,
-`advanced_class_guide/`, `beastiary/`, plus `advanced_race_guide/` (637 JSON
-files) and `pathfinder_unchained/` (129 JSON files), the latter two added by
-SD-27/SD-28 ingest — and there are **eight** distinct writers, not four.
+`data/corpus/` holds **39** book directories (`ls data/corpus | wc -l`) — one
+per ingested book, spanning CRB through the SD-32 Inner Sea setting-book
+wave. This has grown steadily since the four-book start (SD-26 Epic 3): every
+new book onboarded since (SD-27 through SD-32, per
+[corpus-ingest.md](./corpus-ingest.md) §"Book onboarding") gets its own
+directory the first time any ingest binary writes a record for its
+`RuleSetId`. Per-book file counts vary widely by book size and how much of it
+is ingested — for example (`find data/corpus/<book> -name '*.json' | wc -l`,
+run per book):
 
-**Updated 2026-08-11 (SD-29 Epic 11 closure).** `data/corpus/` now holds
-**seven** book directories: SD-29's Epic 5 monster-lane pilot added
-`bonus_bestiary/` (**32** JSON files across `monster/`, `monster_ability/`,
-plus its `LICENSE.json`), written by the existing `src/bin/gen_book_cache.rs`
-— no ninth writer was minted. Re-derived with `ls data/corpus/` and
-`find data/corpus/bonus_bestiary -name '*.json' | wc -l`.
-`ultimate_campaign` (the `Uca` rule set) has no corpus cache directory yet;
-its 23 feat records live only in `rules_tables::ultimate_campaign`.
+| Book directory | JSON files |
+| --- | --- |
+| `advanced_race_guide/` | 2212 |
+| `pathfinder_unchained/` | 1270 |
+| `bonus_bestiary/` | 35 |
+| `ultimate_campaign/` | 419 |
 
-Enumerated directly (grep every `CorpusRecordV1 {` / `CorpusRecord {` /
-`CacheRecord {` construction site under `src/`, 2026-08-07):
+`ultimate_campaign` **does** have a corpus cache directory (contrary to an
+earlier pass of this doc, which is why the number above matters): its feat
+records are cached under `data/corpus/ultimate_campaign/` like any other
+onboarded book, not served only from `rules_tables::ultimate_campaign`. Do
+not trust a stale per-book count carried forward in prose — re-run the `find`
+command above for the book you're touching.
 
-- `src/pcgen_import/cache_gen/acg.rs`, `apg.rs`, `beastiary1.rs` — the three
-  original per-book dump generators (SD-26 Epic 3 shape). **Path corrected
-  2026-09-15:** the whole `cache_gen/` tree moved from `src/rules_core/` to
-  `src/pcgen_import/` in SD-35 `AT-35-E6-002` — it reads PCGen tokens, so it is
-  converter-side code (see [overview.md](./overview.md) §"The converter/live boundary").
-  The code is unchanged; only its side of the boundary is.
-- `src/bin/gen_core_rulebook_cache.rs` — CRB.
-- `src/bin/gen_book_cache.rs` — Pathfinder Unchained + Advanced Race
+This is populated by a broad and still-growing set of generator, enrichment
+and repair binaries under `crates/codex-ingest/src/bin/` and
+`crates/codex-ingest/src/pcgen_import/cache_gen/` (`grep -rl 'data/corpus'
+crates/codex-ingest/src/bin/*.rs | wc -l` currently matches dozens of files,
+though most of those are enrichment/repair passes over already-written
+records rather than first writers of a book directory). The three
+oldest, still-present per-book dump generators are enumerated below for
+their historical shape; treat the full current set as "whatever's under
+`crates/codex-ingest/src/bin/` and `crates/codex-ingest/src/pcgen_import/cache_gen/`
+that constructs a `CorpusRecordV1`/`CorpusRecord`/`CacheRecord`" rather than a
+fixed number — `grep -rln 'CorpusRecordV1 {\|CorpusRecord {\|CacheRecord {'
+crates/codex-ingest/src/ src/` finds every current construction site.
+
+- `crates/codex-ingest/src/pcgen_import/cache_gen/acg.rs`, `apg.rs`, `beastiary1.rs` — the three
+  original per-book dump generators (SD-26 Epic 3 shape). **Moved twice since**: the whole
+  `cache_gen/` tree started under `src/rules_core/`, moved to a (since also relocated) src/pcgen_import/ in SD-35
+  `AT-35-E6-002` (it reads PCGen tokens, so it is converter-side code — see
+  [overview.md](./overview.md) §"The converter/live boundary"), then moved again, with the rest of
+  `pcgen_import`, to `crates/codex-ingest/src/pcgen_import/` in SD-36 Epic A (operator ruling D1 —
+  see [corpus-ingest.md](./corpus-ingest.md) §"The crate wall"). The code itself is unchanged both
+  times; only its address is.
+- `crates/codex-ingest/src/bin/gen_core_rulebook_cache.rs` — CRB.
+- `crates/codex-ingest/src/bin/gen_book_cache.rs` — Pathfinder Unchained + Advanced Race
   Guide (both books share one binary).
-- `src/bin/ingest_races.rs`, `src/bin/ingest_pu_classes.rs`,
-  `src/bin/ingest_apg_race_traits.rs` (renamed from `ingest_race_traits_arg.rs` by the
+- `crates/codex-ingest/src/bin/ingest_races.rs`, `crates/codex-ingest/src/bin/ingest_pu_classes.rs`,
+  `crates/codex-ingest/src/bin/ingest_apg_race_traits.rs` (renamed from `ingest_race_traits_arg.rs` by the
   function-based naming sweep, `8b6dd7511`) — the three later single-purpose
   ingest binaries added as ARG/PU widened.
 
-(`src/bin/gen_cache_apg.rs`, `gen_cache_acg.rs`, `gen_cache_beastiary.rs` are
+(`crates/codex-ingest/src/bin/gen_cache_apg.rs`, `gen_cache_acg.rs`, `gen_cache_beastiary.rs` are
 older, still-present binaries retained for historical/manual regeneration;
 `gen_core_rulebook_cache.rs` is the one wired into the current
-regeneration path for CRB.)
+regeneration path for CRB. All of these binaries moved from `src/bin/` to
+`crates/codex-ingest/src/bin/` in the same SD-36 Epic A crate move.)
 
 This is a **dump of the already-landed `rules_tables` module state, not a
 second data source.** Each generator walks the compiled Rust table module
@@ -456,44 +595,60 @@ and writes each record out in the Shape-B on-disk form defined by
 module; the only reason any generator touches the LST corpus at all is to
 recover a real, checkable line-number citation for a value it already has.
 Every book's cache is round-trip-tested by
-`tests/sd26_cache_core_rulebook.rs`, `tests/sd26_cache_apg.rs`,
-`tests/sd26_cache_acg.rs`, and `tests/sd26_cache_beastiary.rs`. Out-of-scope books
+`tests/sd26_cache_core_rulebook.rs` (root crate) and
+`crates/codex-ingest/tests/sd26_cache_apg.rs`,
+`crates/codex-ingest/tests/sd26_cache_acg.rs`, and
+`crates/codex-ingest/tests/sd26_cache_beastiary.rs` (moved with the converter in SD-36 Epic A).
+Out-of-scope books
 carry no corpus cache; they are registered instead as `book_stub` future-state
 placeholders under `data/stubs/` (see [status.md](./status.md)).
 
-### PI screening (converged into all eight writers)
+### PI screening (converged into the corpus writers)
 
-Every one of the eight writers above now calls
+Every corpus-writing binary calls
 `rules_core::pi_screening::classify_field`/`classify_optional_field`
-(`src/rules_core/pi_screening.rs`), a single shared 55-term blacklist
-(`PI_BLACKLIST_TERMS`, asserted at exactly 55 by its own unit test). Before
-this convergence, the `license`/`pi_field`/`pi_marker` fields existed on disk
-**only** because a one-off post-hoc script
+(`src/rules_core/pi_screening.rs`), a single shared blacklist
+(`PI_BLACKLIST_TERMS`, asserted at exactly 61 by its own unit test,
+`src/rules_core/pi_screening.rs`'s
+`term_list_matches_the_reference_copy_plus_the_documented_acg_addition` —
+re-derive with `python3 -c "import re; src=open('src/rules_core/pi_screening.rs').read(); src=re.sub(r'//.*','',src); body=re.search(r'PI_BLACKLIST_TERMS: &\[&str\] = &\[(.*?)\n\];', src, re.S).group(1); print(len(re.findall(r'\"([^\"]*)\"', body)))"`
+— comments must be stripped first, since several of them quote a term name
+inline and a naive `"` count over-counts). The array grows by per-book
+amendment, so re-run the command above rather than trusting this number.
+Before this convergence (SD-27, at which point there were eight
+corpus-writing binaries total), the `license`/`pi_field`/`pi_marker` fields
+existed on disk **only** because a one-off post-hoc script
 (`scripts/apg_license_retrofit.py`) had stamped them after the fact —
 any full regeneration silently destroyed that stamping, including
-un-redacting a record that had been marked `PI-REDACTED`. Five of the eight
-writers lacked the screening call before this cycle (`fix(ge): screen
+un-redacting a record that had been marked `PI-REDACTED`. Five of those
+eight writers lacked the screening call before this cycle (`fix(ge): screen
 license/pi_field/pi_marker inline in the 5 unscreened writers`,
 commit `f7c709a9`); a differential regeneration round-trip test now guards
 against the same class of loss:
-`tests/pi_screening_regeneration_round_trip.rs`.
+`tests/pi_screening_regeneration_round_trip.rs`. Every corpus-writing binary
+added since (`grep -rln 'pi_screening::classify_field\|classify_optional_field'
+crates/codex-ingest/src/ | wc -l` — currently 25, since the same call is also
+used by later audit/repair binaries, not just corpus writers) has picked up
+the call from the start rather than needing a retrofit.
 
 ### `wiring_class` (GE-01 taxonomy)
 
 Every corpus record now carries a `wiring_class` — one of `Display`,
 `Static`, `Derived`, `Computed` (a strict lattice, highest-bar-wins) or
-`Ambiguous` — determined by `src/pcgen_import/wiring_class.rs` (moved there from
-`src/rules_core/` by SD-35 `AT-35-E6-002`), the single
+`Ambiguous` — determined by `crates/codex-ingest/src/pcgen_import/wiring_class.rs` (moved out of
+`src/rules_core/` by SD-35 `AT-35-E6-002`, then out of the (since also relocated) src/pcgen_import/ entirely by SD-36 Epic
+A's crate move), the single
 production port of the GE-01 reference determinator
 (`docs/release/GE-01-legacy-corpus-and-conversion-matrix/artifacts/wiring-class-determination.md`).
 Determination reads a unit's full **token closure**: its base `.lst` row
-plus every `.MOD` row that targets it, not the base row alone. Both
-`v06_work_inventory`'s classifier and every `cache_gen`/ingest generator
-call this one module, so the two surfaces cannot drift against each other.
-The result is emitted per-unit into `docs/work-inventory.json`, stamped onto
+plus every `.MOD` row that targets it, not the base row alone. Both the
+now-retired `v06_work_inventory`'s classifier (SD-36 D3) and every
+`cache_gen`/ingest generator called this one module, so the two surfaces
+could not drift against each other. The result was emitted per-unit into
+`docs/work-inventory.json` (now a frozen snapshot), stamped onto
 every `data/corpus/**/*.json` record, and surfaced live on the operator
 dashboard as `by_wiring_class`. `Trap::WiringClassMismatch`
-(`src/pcgen_import/corpus_traps.rs`) fails when a record's stored flag
+(`crates/codex-ingest/src/pcgen_import/corpus_traps.rs`) fails when a record's stored flag
 disagrees with what the determinator recomputes from source, so a stale
 stamp cannot silently survive a partial regeneration.
 
@@ -501,7 +656,7 @@ stamp cannot silently survive a partial regeneration.
 
 Unlike every other field above, equipment's `raw_tokens`/`raw_bonus_chains`
 are **not** produced by any of the eight typed writers — they are populated
-by a dedicated post-hoc tool, `src/bin/enrich_equipment_raw_tokens.rs`, run
+by a dedicated post-hoc tool, `crates/codex-ingest/src/bin/enrich_equipment_raw_tokens.rs`, run
 as a separate step after regeneration. This is intentional, not an
 oversight: an earlier attempt to converge these fields into the typed
 writers dropped data (`weight` vs `weight_lbs`, `equip_type`, `plus`) because
@@ -519,21 +674,45 @@ and both exist for the same reason: the operator's status dashboard used to
 derive its numbers by regex-scraping hand-written English prose, and prose
 goes stale the moment somebody forgets to edit it.
 
-- **`v06_class_state_dump`** — sweeps all 27 CRB/APG/ACG classes across
-  levels 1-20 through the real `build_pilot_headless_receipt` pipeline,
-  reporting per class whether every level reaches
-  `HeadlessReceiptStatus::Computed` and, when it does not, the claim-blocking
-  diagnostics that name the remaining gap.
+- **`v06_class_state_dump`** — sweeps all **31** CRB/APG/ACG/Pathfinder Unchained classes (11 + 6 + 10
+  + 4 — the binary imports `ClassId`, `ApgClassId`, `AcgClassId`, and `PuClassId`,
+  `src/bin/v06_class_state_dump.rs:61-65`) across levels 1-20 through the real
+  `build_pilot_headless_receipt` pipeline, reporting per class whether every level reaches
+  `HeadlessReceiptStatus::Computed` and, when it does not, the claim-blocking diagnostics that name
+  the remaining gap. Run fresh (2026-09-20): `class_count=31`, `computed_count=31`,
+  `blocked_count=0` — every swept class reaches `Computed` at every level 1-20, zero blocked levels.
+  **It does not sweep** Ultimate Combat's 3 classes, the 27 "untabled" exotic/NPC base classes, or any
+  prestige class — those are covered by inline tests in `combat.rs` and
+  `untabled_base_class_features.rs` instead (see [rules-engine.md](./rules-engine.md) §"Entry points"
+  and §"Multiclass base-chassis dispatch" for that coverage and for multiclass's own real scope).
 - **`v06_content_state_dump`** — reports per-book ingested record counts
   (counted from `ClassId::ALL`, `SPELL_LIST`, `equipment_tables()`,
-  `MonsterId::ALL`, `feat_tables()`), the full Bestiary 1 monster roster
-  resolved through the real `beastiary1::monster_resolve` entry point with
-  each monster's JSON-cache presence, every CRB race's real computed state,
-  and a behavioural probe of which of the 486 catalogued feats genuinely
+  `MonsterId::ALL`, `all_feat_tables()` — see `feats_all.rs` above for that
+  function, not a separate `feat_tables()`), the full Bestiary 1 monster
+  roster resolved through the real `beastiary1::monster_resolve` entry point
+  with each monster's JSON-cache presence, every CRB race's real computed
+  state, and a behavioural probe of which of the feats in `all_feat_tables()`
+  (the deduplicated key set across all 23 books' hand-authored entries plus
+  their corpus-gap rows — run the binary for the live count, since it
+  changes as gap rows are onboarded) genuinely
   change a computed number when added to a character. The feat probe is an
   explicit lower bound: a feat whose effect needs a context this engine does
   not model (an opponent, an ally, a combat action) cannot show up as a delta
   and is reported unwired.
+
+  **Scope caveat, stated plainly so this binary is never mistaken for a corpus-coverage instrument:**
+  its own `use` block only ever imported `ClassId`/`SPELL_LIST`/`equipment_tables()`/`MonsterId::ALL`/
+  `all_feat_tables()` (`src/bin/v06_content_state_dump.rs:14-27,36-58`), a fixed set that covers 13 of
+  the corpus's 38 tracked books (`core_rulebook`, `advanced_players_guide`, `advanced_class_guide`,
+  `bestiary_1`, `advanced_race_guide`, `pathfinder_unchained`, `ultimate_campaign`,
+  `ultimate_intrigue`, `ultimate_equipment`, `ultimate_wilderness`, `ultimate_combat`,
+  `ultimate_magic`, `ultimate_psionics`) and never grew past it. Its only historical caller
+  (`scripts/observer/pf1e_dashboard_producer.py`) is itself retired, and nothing in
+  `scripts/verify.sh` runs this binary (`grep -n content_state_dump scripts/verify.sh` → no hits) — it
+  is retired ops tooling kept in the tree, not a measure of the engine's real content breadth. The
+  desktop catalogs' own test-pinned counts (equipment 8,119, spells 2,481, feats 2,227 across 23
+  books, race traits across 6 books — see [desktop-app.md](./desktop-app.md)'s command inventory) are
+  the wider, current, correct source for "how much content does the engine actually serve."
 
 The counting discipline is shared with
 `apps/desktop/src-tauri/src/corpus_ingest_diagnostic.rs`, which reports the
@@ -575,3 +754,57 @@ See [corpus-ingest.md](./corpus-ingest.md) for how corpus text is
 parsed upstream of this hand-transcription step, and
 [rules-engine.md](./rules-engine.md) for how `rules_tables` resolvers
 are consumed by rules-core compute.
+
+## How to extend
+
+- **Registering a narrow, single-family book** (feats-only, spells-only, monster-only, or
+  companion-only — the ~40-book common case, not the four rich books): follow "Adding a new book"
+  above, but skip steps that don't apply to the one family you're ingesting — e.g. a feats-only book
+  needs no `ClassTableRow`/monster shape at all, only `feat_gap_tables`'s shape (see `Mythic`'s and
+  `InnerSeaTaverns`'s doc comments above for a worked feats-only example with no dedicated module
+  directory).
+- **Widening a monster-bearing book onto the shared chassis**: register it in
+  `rules_tables::monster_chassis::MONSTER_BOOKS` rather than rebuilding the chassis — every consumer
+  (work inventory, corpus cache generator, monster catalog, the reach gate) iterates that one
+  registry, so joining it is the whole of the wiring cost (see `BonusBestiary`'s doc comment, the
+  first book to carry the merged `monster` + `monster_ability` chassis).
+- **Widening a spell-bearing class**: add the class to `class_spell_levels.rs`'s dispatch and its own
+  `<book>::<class>_spell_list.rs` table, never by trusting a spell record's own `level` field for a
+  specific class — see §"Spell level is per class, not per record" above; that field is the minimum
+  across every class the record names, not any one class's real answer.
+- **Adding a feat catalog entry**: CRB/APG/ACG's feat catalogs are "generated programmatically from
+  the live corpus," not hand-transcribed row by row — extend the category derivation rule (the
+  `TYPE:` facet) and the book's own excluded-record list in `<book>/feats.rs`'s doc comment, then
+  regenerate, rather than hand-adding a row.
+- **A field that needs a DERIVED magnitude** (not a value literally printed on the corpus row): store
+  the corpus token verbatim (mirroring `MonsterStatBlock.spell_like_abilities`'s `save_dc_token` or
+  `NaturalAttackDamageBonus`'s raw `BONUS:WEAPONPROF=...` string) and evaluate it in a fixture-checked
+  function — never bake a computed number into the table. Remember the corollary: adding such a field
+  to a shared chassis shape means re-running the transcriber for **every** registered book that shape
+  covers, not just the one that motivated the change (wave 15's companion field touched all 16
+  companion-bearing books).
+
+## Pitfalls
+
+- **A book's presence in `RuleSetId` does not mean the book is "done."** Several arms compile exactly
+  one record family and nothing else — `Isc`/`Isi`/`B5`/`B6`/`B2` compile `companion` only, `Isr`/`Ce`
+  compile a disk-served `race_trait` only. A subtree check or count that assumes a registered book is
+  fully ingested will report a false completeness. `B5` and `B6` are the sharpest case: both are named
+  "Bestiary" and both carry **zero** monsters.
+- **Chassis fields carry the corpus token, never a computed number, and that rule is easy to violate
+  by accident** the first time a new engineer transcribes a formula-shaped field: it feels natural to
+  "just compute it," but doing so fabricates a value nothing in the corpus states as a constant, and
+  breaks the fixture-checkable evaluator downstream consumers rely on. Grep the sibling chassis fields
+  in the same book before writing a new one.
+- **`Ce` (Core Essentials) is not a book** — it is a PCGen packaging bundle, retained only as a
+  feat-gap host for 15 rows. Do not add new content under it on the assumption it names a real
+  sourcebook; its own doc comment states it "must end at zero units" for anything else.
+- **Bestiary 1's records live in two disjoint tables under one wire code** (`rules_tables::beastiary1`
+  and `rules_tables::bestiary`, both keyed under book id `B1`). Forgetting the union when grounding a
+  "how many Bestiary 1 monsters does the engine hold" claim silently reports half the population as
+  `not-ingested` — see §"One book is served by two tables, deliberately" above.
+- **A feat's `PRE`-family prerequisite tokens are carried, not evaluated**, by the mere act of
+  ingesting them into a catalog. Carrying a feat's `PRE` tokens lifts `feat_prereqs/general.rs`'s
+  blocker (the tokens now exist to check against) but does not itself perform the check — conflating
+  "the token is in the table" with "the prerequisite is enforced" is a common false-completeness
+  claim in this area.

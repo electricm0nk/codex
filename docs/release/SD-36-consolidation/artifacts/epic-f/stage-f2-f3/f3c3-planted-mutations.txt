@@ -1,0 +1,20 @@
+control (unmodified): exit=0 verdict=PASS
+M1 egoist loses its Spellcraft class-skill grant: exit=1 verdict=FAIL (F3c3 pin failures: 1)
+    F3c3 ultimate_psionics:subclass:psion_egoist: content moved from its pinned sha256
+M2 psion's subclass choice dropped from the class record: exit=1 verdict=FAIL (F3c3 pin failures: 1)
+    F3c3 pinned f3c3_subclass_choice rule missing: ultimate_psionics:class:psion#subclass
+M3 the Egoist -> Psychometabolism Class Skills edge dropped: exit=1 verdict=FAIL (F3c3 pin failures: 1)
+    F3c3 pinned granted_by edge missing on ultimate_psionics:class_feature:psychometabolism_class_skills: {"by": {"Rule": "ultimate_psionics:subclass:psion_egoist"}, "when": {"All": [{"Not": {"Holds": {"count": 1, "what": {"RuleTag": {"pool": "archetype", "tag": "PsionDisciplineClassSkills"}}}}}, {"Compare": {"lhs": {"ClassLevel": "psion"}, "op": "Gte", "rhs": {"Const": 1}}}]}}
+M4 Egoist's Psychometabolism Discipline LVL contribution dropped: exit=1 verdict=FAIL (F3c3 pin failures: 1)
+    F3c3 pinned contribution missing in _vars/v308fe013e550a1ef.json: {"expr": {"ClassLevel": "psion"}, "rule_id": "ultimate_psionics:subclass:psion_egoist", "when": {"Compare": {"lhs": {"ClassLevel": "psion"}, "op": "Gte", "rhs": {"Const": 1}}}}
+M5 one subclass-token-unconverted row dropped: exit=1 verdict=FAIL (F3c3 pin failures: 1)
+    F3c3 _defects/subclass-token-unconverted.json: 116 rows, pinned 117
+M6 an unpinned subclass rule planted: exit=1 verdict=FAIL (F3c3 pin failures: 1)
+    F3c3 unpinned f3c3_subclass_option rule core_rulebook:subclass:wizard_planted
+M7 Evoker's tag moved off the Wizard choice: exit=1 verdict=FAIL (F3c3 pin failures: 1)
+    F3c3 core_rulebook:subclass:wizard_evoker: content moved from its pinned sha256
+M8 every Psion subclass file deleted: exit=1 verdict=FAIL (F3c3 pin failures: 19)
+    F3c3 pinned f3c3_subclass_option rule missing: ultimate_psionics:subclass:psion_ascendant_psion
+    F3c3 pinned f3c3_subclass_option rule missing: ultimate_psionics:subclass:psion_bombardier
+    F3c3 pinned f3c3_subclass_option rule missing: ultimate_psionics:subclass:psion_bombardier#bonus0
+control (restored): exit=0 verdict=PASS

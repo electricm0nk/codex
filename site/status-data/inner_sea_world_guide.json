@@ -5,12 +5,12 @@
     {
       "kind": "ability",
       "label": "Abilities",
-      "done": 2,
+      "done": 67,
       "partial": 0,
       "not_started": 0,
-      "denominator": 2,
+      "denominator": 67,
       "pct": 100.0,
-      "excluded_from_percentage": 65,
+      "excluded_from_percentage": 0,
       "standing_breakdown": {
         "unclassified": 65,
         "origin": 2
@@ -490,12 +490,12 @@
     {
       "kind": "class_feature",
       "label": "Class Features",
-      "done": 52,
+      "done": 176,
       "partial": 0,
       "not_started": 0,
-      "denominator": 52,
+      "denominator": 176,
       "pct": 100.0,
-      "excluded_from_percentage": 124,
+      "excluded_from_percentage": 0,
       "standing_breakdown": {
         "unclassified": 124,
         "origin": 52
@@ -594,7 +594,7 @@
         },
         {
           "name": "Detect Chaos",
-          "doneness": "partial",
+          "doneness": "done",
           "type_facet": "SpecialQuality.SpellLike",
           "standing": "unclassified",
           "display_name": "Detect Chaos"
@@ -622,7 +622,7 @@
         },
         {
           "name": "Discern Lies",
-          "doneness": "partial",
+          "doneness": "done",
           "type_facet": "SpecialQuality.SpellLike",
           "standing": "unclassified",
           "display_name": "Discern Lies"
@@ -1112,7 +1112,7 @@
         },
         {
           "name": "Scalykind",
-          "doneness": "partial",
+          "doneness": "done",
           "type_facet": "Internal.DomainAbility",
           "standing": "unclassified",
           "display_name": "Scalykind (Internal.DomainAbility)"
@@ -1329,7 +1329,7 @@
         },
         {
           "name": "Smite Chaos",
-          "doneness": "partial",
+          "doneness": "done",
           "type_facet": "SpecialAttack.Supernatural",
           "standing": "unclassified",
           "display_name": "Smite Chaos"
@@ -1483,7 +1483,7 @@
         },
         {
           "name": "Void",
-          "doneness": "partial",
+          "doneness": "done",
           "type_facet": "Internal.DomainAbility",
           "standing": "unclassified",
           "display_name": "Void (Internal.DomainAbility)"
@@ -1738,12 +1738,12 @@
     {
       "kind": "class",
       "label": "Classes",
-      "done": 1,
+      "done": 5,
       "partial": 0,
       "not_started": 0,
-      "denominator": 1,
+      "denominator": 5,
       "pct": 100.0,
-      "excluded_from_percentage": 4,
+      "excluded_from_percentage": 0,
       "standing_breakdown": {
         "origin": 1,
         "unclassified": 4
@@ -1789,12 +1789,12 @@
     {
       "kind": "deity",
       "label": "Deities",
-      "done": 0,
+      "done": 63,
       "partial": 0,
       "not_started": 0,
-      "denominator": 0,
-      "pct": 0.0,
-      "excluded_from_percentage": 63,
+      "denominator": 63,
+      "pct": 100.0,
+      "excluded_from_percentage": 0,
       "standing_breakdown": {
         "unclassified": 63
       },
@@ -2245,12 +2245,12 @@
     {
       "kind": "domain",
       "label": "Domains",
-      "done": 0,
+      "done": 6,
       "partial": 0,
       "not_started": 0,
-      "denominator": 0,
-      "pct": 0.0,
-      "excluded_from_percentage": 6,
+      "denominator": 6,
+      "pct": 100.0,
+      "excluded_from_percentage": 0,
       "standing_breakdown": {
         "unclassified": 6
       },
@@ -2302,12 +2302,12 @@
     {
       "kind": "equipment",
       "label": "Equipment",
-      "done": 18,
+      "done": 47,
       "partial": 0,
       "not_started": 0,
-      "denominator": 18,
+      "denominator": 47,
       "pct": 100.0,
-      "excluded_from_percentage": 29,
+      "excluded_from_percentage": 0,
       "standing_breakdown": {
         "unclassified": 29,
         "origin": 18
@@ -2647,12 +2647,12 @@
     {
       "kind": "equipment_modifier",
       "label": "Equipment Modifiers",
-      "done": 4,
+      "done": 6,
       "partial": 0,
       "not_started": 0,
-      "denominator": 4,
+      "denominator": 6,
       "pct": 100.0,
-      "excluded_from_percentage": 2,
+      "excluded_from_percentage": 0,
       "standing_breakdown": {
         "origin": 4,
         "unclassified": 2
@@ -2705,12 +2705,12 @@
     {
       "kind": "feat",
       "label": "Feats",
-      "done": 25,
+      "done": 37,
       "partial": 0,
       "not_started": 0,
-      "denominator": 25,
+      "denominator": 37,
       "pct": 100.0,
-      "excluded_from_percentage": 12,
+      "excluded_from_percentage": 0,
       "standing_breakdown": {
         "origin": 25,
         "unclassified": 12
@@ -2980,12 +2980,12 @@
     {
       "kind": "language",
       "label": "Languages",
-      "done": 4,
+      "done": 18,
       "partial": 0,
       "not_started": 0,
-      "denominator": 4,
+      "denominator": 18,
       "pct": 100.0,
-      "excluded_from_percentage": 14,
+      "excluded_from_percentage": 0,
       "standing_breakdown": {
         "origin": 4,
         "unclassified": 14
@@ -3122,12 +3122,12 @@
     {
       "kind": "monster_ability",
       "label": "Monster Abilities",
-      "done": 10,
-      "partial": 4,
+      "done": 30,
+      "partial": 0,
       "not_started": 0,
-      "denominator": 14,
-      "pct": 71.4,
-      "excluded_from_percentage": 16,
+      "denominator": 30,
+      "pct": 100.0,
+      "excluded_from_percentage": 0,
       "standing_breakdown": {
         "origin": 14,
         "unclassified": 16
@@ -3142,14 +3142,14 @@
         },
         {
           "name": "Aura of Corruption",
-          "doneness": "partial",
+          "doneness": "done",
           "type_facet": "SpecialQuality.Supernatural.Aura",
           "standing": "origin",
           "display_name": "Aura of Corruption"
         },
         {
           "name": "Bay",
-          "doneness": "partial",
+          "doneness": "done",
           "type_facet": "SpecialAttack.Supernatural",
           "standing": "unclassified",
           "display_name": "Bay"
@@ -3177,7 +3177,7 @@
         },
         {
           "name": "Defoliation",
-          "doneness": "partial",
+          "doneness": "done",
           "type_facet": "SpecialAttack.Supernatural",
           "standing": "origin",
           "display_name": "Defoliation"
@@ -3233,7 +3233,7 @@
         },
         {
           "name": "Hellfire Breath",
-          "doneness": "partial",
+          "doneness": "done",
           "type_facet": "SpecialAttack.Supernatural",
           "standing": "origin",
           "display_name": "Hellfire Breath"
@@ -3254,7 +3254,7 @@
         },
         {
           "name": "Magic Weapon",
-          "doneness": "partial",
+          "doneness": "done",
           "type_facet": "SpecialQuality.SpellLike",
           "standing": "unclassified",
           "display_name": "Magic Weapon"
@@ -3275,7 +3275,7 @@
         },
         {
           "name": "Regeneration",
-          "doneness": "partial",
+          "doneness": "done",
           "type_facet": "SpecialQuality.Extraordinary.ModifyHP",
           "standing": "unclassified",
           "display_name": "Regeneration"
@@ -3289,7 +3289,7 @@
         },
         {
           "name": "Soul Shriek",
-          "doneness": "partial",
+          "doneness": "done",
           "type_facet": "SpecialAttack.Supernatural",
           "standing": "origin",
           "display_name": "Soul Shriek"
@@ -3303,7 +3303,7 @@
         },
         {
           "name": "Spines",
-          "doneness": "partial",
+          "doneness": "done",
           "type_facet": "SpecialAttack.Extraordinary",
           "standing": "unclassified",
           "display_name": "Spines"
@@ -3317,7 +3317,7 @@
         },
         {
           "name": "Swift Reactions",
-          "doneness": "partial",
+          "doneness": "done",
           "type_facet": "SpecialQuality.Extraordinary",
           "standing": "unclassified",
           "display_name": "Swift Reactions"
@@ -3331,7 +3331,7 @@
         },
         {
           "name": "Water Breathing",
-          "doneness": "partial",
+          "doneness": "done",
           "type_facet": "SpecialQuality.SpellLike",
           "standing": "unclassified",
           "display_name": "Water Breathing"
@@ -3348,12 +3348,12 @@
     {
       "kind": "monster",
       "label": "Monsters",
-      "done": 4,
-      "partial": 5,
+      "done": 14,
+      "partial": 0,
       "not_started": 0,
-      "denominator": 9,
-      "pct": 44.4,
-      "excluded_from_percentage": 5,
+      "denominator": 14,
+      "pct": 100.0,
+      "excluded_from_percentage": 0,
       "standing_breakdown": {
         "origin": 9,
         "unclassified": 5
@@ -3389,35 +3389,35 @@
         },
         {
           "name": "Fennec (Firefoot)",
-          "doneness": "partial",
+          "doneness": "done",
           "type_facet": null,
           "standing": "origin",
           "display_name": "Fennec (Firefoot)"
         },
         {
           "name": "Gecko (Giant)",
-          "doneness": "partial",
+          "doneness": "done",
           "type_facet": null,
           "standing": "origin",
           "display_name": "Gecko (Giant)"
         },
         {
           "name": "Rat (Donkey)",
-          "doneness": "partial",
+          "doneness": "done",
           "type_facet": null,
           "standing": "origin",
           "display_name": "Rat (Donkey)"
         },
         {
           "name": "Shark (Jigsaw)",
-          "doneness": "partial",
+          "doneness": "done",
           "type_facet": null,
           "standing": "origin",
           "display_name": "Shark (Jigsaw)"
         },
         {
           "name": "Spider (Drain)",
-          "doneness": "partial",
+          "doneness": "done",
           "type_facet": null,
           "standing": "origin",
           "display_name": "Spider (Drain)"
@@ -3462,12 +3462,12 @@
     {
       "kind": "race_trait",
       "label": "Race Traits",
-      "done": 31,
+      "done": 54,
       "partial": 0,
       "not_started": 0,
-      "denominator": 31,
+      "denominator": 54,
       "pct": 100.0,
-      "excluded_from_percentage": 23,
+      "excluded_from_percentage": 0,
       "standing_breakdown": {
         "unclassified": 23,
         "origin": 31
@@ -3969,12 +3969,12 @@
     {
       "kind": "spell",
       "label": "Spells",
-      "done": 8,
+      "done": 22,
       "partial": 0,
       "not_started": 0,
-      "denominator": 8,
+      "denominator": 22,
       "pct": 100.0,
-      "excluded_from_percentage": 14,
+      "excluded_from_percentage": 0,
       "standing_breakdown": {
         "origin": 8,
         "unclassified": 14
@@ -4059,7 +4059,7 @@
         },
         {
           "name": "Summon Demons (Nascent Demon Lord)",
-          "doneness": "partial",
+          "doneness": "done",
           "type_facet": "Divine",
           "standing": "unclassified",
           "display_name": "Summon Demons (Nascent Demon Lord)"
@@ -4139,12 +4139,12 @@
     {
       "kind": "template",
       "label": "Templates",
-      "done": 8,
+      "done": 84,
       "partial": 0,
       "not_started": 0,
-      "denominator": 8,
+      "denominator": 84,
       "pct": 100.0,
-      "excluded_from_percentage": 76,
+      "excluded_from_percentage": 0,
       "standing_breakdown": {
         "unclassified": 76,
         "origin": 8

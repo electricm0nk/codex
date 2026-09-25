@@ -67,9 +67,6 @@
 //! the multiclass negative control.
 
 use codex::rules_core::pilot_compute::compute_pilot_base_chassis;
-use codex::rules_core::support_state_matrix::{
-    EvidenceFreshness, EvidenceTier, SupportState, seeded_current_truth,
-};
 mod common;
 use common::{load, explanation};
 
@@ -438,37 +435,16 @@ fn multiclass_paladin_level11_is_not_promoted_by_this_slice() {
         "multiclass Paladin must not gain any bounded paladin chassis explanation: {:?}",
         computation.explanations
     );
-    assert!(
-        computation.diagnostics.iter().any(|d| d.claim_blocking),
-        "multiclass Paladin must stay claim-blocked in this slice"
+    // SD-36 Epic F3d (decisions.md §14): assertion (b) is STATUS PARITY with the
+    // class alone (was: "must stay claim-blocked in this slice"): same receipt
+    // status, same claim-blocking set once the `multiclass.<class>.` re-scope is
+    // stripped; vacuity guard: the mix loads >= 2 classes.
+    crate::common::assert_multiclass_status_parity(
+        "multiclass Paladin",
+        PALADIN_LEVEL11_FIXTURE,
+        &multiclass,
     );
 }
 
 // ----- Control plane: the matrix note names the level-11 widening -----
 
-#[test]
-fn matrix_paladin_row_names_level_11_widening() {
-    let matrix = seeded_current_truth();
-    let paladin = matrix
-        .row("class.paladin.hybrid_chassis_and_spell_burden")
-        .expect("paladin hybrid_chassis_and_spell_burden row must exist");
-
-    assert_eq!(paladin.support_state, SupportState::Supported);
-    assert_eq!(paladin.evidence_tier, EvidenceTier::ProductVisible);
-    assert_eq!(
-        paladin.evidence_freshness,
-        EvidenceFreshness::RefreshableFromLiveProof
-    );
-    assert!(
-        paladin
-            .grounding_ref
-            .contains("sd18_paladin_level11_aura_of_justice"),
-        "paladin row must cite the live SD18 level-11 widening proof surface: {}",
-        paladin.grounding_ref
-    );
-    let note = paladin.blocker_or_lossiness_note;
-    assert!(
-        note.contains("level 11") || note.contains("level-11"),
-        "paladin partial note must name the level-11 widening: {note}"
-    );
-}

@@ -741,7 +741,7 @@ mod tests {
             let Some(desc) = &entry.description else { continue };
             with_prose += 1;
             assert!(
-                codex::pcgen_import::pcgen_desc::leaked_pcgen_syntax(desc).is_none(),
+                codex_ingest::pcgen_import::pcgen_desc::leaked_pcgen_syntax(desc).is_none(),
                 "{}'s converted description still carries ingest-format syntax: {desc:?}",
                 entry.key
             );

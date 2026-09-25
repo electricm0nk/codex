@@ -42,6 +42,7 @@ use super::class_feature_pool_catalog::SettledPoolGates;
 use super::derived_evaluator_fixture_check::SettledSpellFormulas;
 use super::desc_template::DescTemplate;
 use super::sheet_rule::{Ability, CharacterFacts, Expr, VarId, evaluate_expr_from_facts, var_id};
+use crate::support::paths::repo_root;
 
 /// The relative path of the converted artifact, from the repo root.
 pub const RECORD_VARS_PATH: &str = "data/converted/record_vars.json";
@@ -110,10 +111,6 @@ impl RecordVarPackage {
             .map_err(|e| format!("reading {}: {e}", path.display()))?;
         serde_json::from_str(&text).map_err(|e| format!("parsing {}: {e}", path.display()))
     }
-}
-
-fn repo_root() -> PathBuf {
-    PathBuf::from(env!("CARGO_MANIFEST_DIR"))
 }
 
 /// The shipped converted artifact. An absent or unreadable artifact is an EMPTY package, never a

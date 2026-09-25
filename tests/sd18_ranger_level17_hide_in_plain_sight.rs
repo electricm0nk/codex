@@ -97,9 +97,6 @@
 //! level-N-to-level-(N+1) sibling-fix precedent exactly.
 
 use codex::rules_core::pilot_compute::{PilotBaseChassisComputation, compute_pilot_base_chassis};
-use codex::rules_core::support_state_matrix::{
-    EvidenceFreshness, EvidenceTier, SupportState, seeded_current_truth,
-};
 mod common;
 use common::{load, explanation};
 
@@ -358,35 +355,16 @@ fn multiclass_ranger_level17_is_not_promoted_by_this_slice() {
         "multiclass Ranger must not gain any bounded ranger chassis explanation: {:?}",
         computation.explanations
     );
-    assert!(
-        computation.diagnostics.iter().any(|d| d.claim_blocking),
-        "multiclass Ranger must stay claim-blocked in this slice"
+    // SD-36 Epic F3d (decisions.md §14): assertion (b) is STATUS PARITY with the
+    // class alone (was: "must stay claim-blocked in this slice"): same receipt
+    // status, same claim-blocking set once the `multiclass.<class>.` re-scope is
+    // stripped; vacuity guard: the mix loads >= 2 classes.
+    crate::common::assert_multiclass_status_parity(
+        "multiclass Ranger",
+        RANGER_LEVEL17_FIXTURE,
+        &multiclass,
     );
 }
 
 // ----- Control plane: the matrix note names the level-17 widening -----
 
-#[test]
-fn matrix_ranger_row_names_level_17_widening() {
-    let matrix = seeded_current_truth();
-    let ranger = matrix
-        .row("class.ranger.hybrid_chassis_and_spell_burden")
-        .expect("ranger hybrid_chassis_and_spell_burden row must exist");
-
-    assert_eq!(ranger.support_state, SupportState::Supported);
-    assert_eq!(ranger.evidence_tier, EvidenceTier::ProductVisible);
-    assert_eq!(
-        ranger.evidence_freshness,
-        EvidenceFreshness::RefreshableFromLiveProof
-    );
-    assert!(
-        ranger.grounding_ref.contains("sd18_ranger_level17_hide_in_plain_sight"),
-        "ranger row must cite the live SD18 level-17 proof surface: {}",
-        ranger.grounding_ref
-    );
-    let note = ranger.blocker_or_lossiness_note;
-    assert!(
-        note.contains("level 17") || note.contains("level-17"),
-        "ranger partial note must name the level-17 widening: {note}"
-    );
-}

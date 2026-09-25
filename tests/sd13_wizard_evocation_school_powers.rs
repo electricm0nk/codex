@@ -41,7 +41,6 @@ use codex::rules_core::pilot_compute::{
     PilotBaseChassisComputation,
     compute_pilot_base_chassis,
 };
-use codex::rules_core::support_state_matrix::{SupportState, seeded_current_truth};
 mod common;
 use common::{load, explanation, has_explanation};
 
@@ -217,25 +216,3 @@ fn wizard_without_canonical_specialization_choices_gains_no_school_power_groundi
 
 // ----- Control plane: the matrix row stays Partial and names the narrowed burden -----
 
-#[test]
-fn matrix_wizard_row_names_school_power_magnitudes_grounded_and_execution_unproven() {
-    let matrix = seeded_current_truth();
-    let wizard = matrix
-        .row("class.wizard.progression_and_spell_burden")
-        .expect("wizard row must exist");
-
-    // Later promoted to Supported/ProductVisible by SD-19's Class Progression
-    // Catalog browser UI-surfacing work (2026-07-17).
-    assert_eq!(wizard.support_state, SupportState::Supported);
-    assert!(
-        wizard.blocker_or_lossiness_note.contains("Intense Spells")
-            && wizard.blocker_or_lossiness_note.contains("Force Missile"),
-        "wizard blocker note must name both grounded school powers: {}",
-        wizard.blocker_or_lossiness_note
-    );
-    assert!(
-        wizard.blocker_or_lossiness_note.contains("opposed-school"),
-        "wizard blocker note must still name the unproven opposed-school preparation cost: {}",
-        wizard.blocker_or_lossiness_note
-    );
-}

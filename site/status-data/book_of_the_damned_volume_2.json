@@ -5,12 +5,12 @@
     {
       "kind": "ability",
       "label": "Abilities",
-      "done": 1,
+      "done": 2,
       "partial": 0,
       "not_started": 0,
-      "denominator": 1,
+      "denominator": 2,
       "pct": 100.0,
-      "excluded_from_percentage": 1,
+      "excluded_from_percentage": 0,
       "standing_breakdown": {
         "unclassified": 1,
         "origin": 1
@@ -35,12 +35,12 @@
     {
       "kind": "class_feature",
       "label": "Class Features",
-      "done": 154,
-      "partial": 2,
+      "done": 170,
+      "partial": 0,
       "not_started": 0,
-      "denominator": 156,
-      "pct": 98.7,
-      "excluded_from_percentage": 14,
+      "denominator": 170,
+      "pct": 100.0,
+      "excluded_from_percentage": 0,
       "standing_breakdown": {
         "origin": 156,
         "unclassified": 14
@@ -853,14 +853,14 @@
         },
         {
           "name": "Summon Demon I",
-          "doneness": "partial",
+          "doneness": "done",
           "type_facet": "SpecialQuality.SpellLike",
           "standing": "origin",
           "display_name": "Summon Demon I"
         },
         {
           "name": "Summon Demon II",
-          "doneness": "partial",
+          "doneness": "done",
           "type_facet": "SpecialQuality.SpellLike",
           "standing": "origin",
           "display_name": "Summon Demon II"
@@ -1263,12 +1263,12 @@
     {
       "kind": "deity",
       "label": "Deities",
-      "done": 0,
+      "done": 48,
       "partial": 0,
       "not_started": 0,
-      "denominator": 0,
-      "pct": 0.0,
-      "excluded_from_percentage": 48,
+      "denominator": 48,
+      "pct": 100.0,
+      "excluded_from_percentage": 0,
       "standing_breakdown": {
         "unclassified": 48
       },
@@ -1614,12 +1614,12 @@
     {
       "kind": "equipment",
       "label": "Equipment",
-      "done": 5,
+      "done": 6,
       "partial": 0,
       "not_started": 0,
-      "denominator": 5,
+      "denominator": 6,
       "pct": 100.0,
-      "excluded_from_percentage": 1,
+      "excluded_from_percentage": 0,
       "standing_breakdown": {
         "origin": 5,
         "unclassified": 1
@@ -1988,12 +1988,12 @@
     {
       "kind": "monster_ability",
       "label": "Monster Abilities",
-      "done": 12,
+      "done": 17,
       "partial": 0,
       "not_started": 0,
-      "denominator": 12,
+      "denominator": 17,
       "pct": 100.0,
-      "excluded_from_percentage": 5,
+      "excluded_from_percentage": 0,
       "standing_breakdown": {
         "origin": 12,
         "unclassified": 5
@@ -2188,12 +2188,12 @@
     {
       "kind": "spell",
       "label": "Spells",
-      "done": 1,
-      "partial": 7,
+      "done": 12,
+      "partial": 0,
       "not_started": 0,
-      "denominator": 8,
-      "pct": 12.5,
-      "excluded_from_percentage": 4,
+      "denominator": 12,
+      "pct": 100.0,
+      "excluded_from_percentage": 0,
       "standing_breakdown": {
         "unclassified": 4,
         "origin": 8
@@ -2208,7 +2208,7 @@
         },
         {
           "name": "Portal Jump",
-          "doneness": "partial",
+          "doneness": "done",
           "type_facet": "Arcane.Divine",
           "standing": "origin",
           "display_name": "Portal Jump"
@@ -2229,42 +2229,42 @@
         },
         {
           "name": "Summon Monster II (Vermlek)",
-          "doneness": "partial",
+          "doneness": "done",
           "type_facet": "Arcane.Divine",
           "standing": "origin",
           "display_name": "Summon Monster II (Vermlek)"
         },
         {
           "name": "Summon Monster III (Brimorak)",
-          "doneness": "partial",
+          "doneness": "done",
           "type_facet": "Arcane.Divine",
           "standing": "origin",
           "display_name": "Summon Monster III (Brimorak)"
         },
         {
           "name": "Summon Monster V (Seraptis)",
-          "doneness": "partial",
+          "doneness": "done",
           "type_facet": "Arcane.Divine",
           "standing": "origin",
           "display_name": "Summon Monster V (Seraptis)"
         },
         {
           "name": "Summon Monster VI (Demoniac)",
-          "doneness": "partial",
+          "doneness": "done",
           "type_facet": "Arcane.Divine",
           "standing": "origin",
           "display_name": "Summon Monster VI (Demoniac)"
         },
         {
           "name": "Summon Monster VI (Vavakia)",
-          "doneness": "partial",
+          "doneness": "done",
           "type_facet": "Arcane.Divine",
           "standing": "origin",
           "display_name": "Summon Monster VI (Vavakia)"
         },
         {
           "name": "Summon Monster VIII (Demoniac)",
-          "doneness": "partial",
+          "doneness": "done",
           "type_facet": "Arcane.Divine",
           "standing": "origin",
           "display_name": "Summon Monster VIII (Demoniac)"
@@ -2288,12 +2288,12 @@
     {
       "kind": "template",
       "label": "Templates",
-      "done": 50,
+      "done": 52,
       "partial": 0,
       "not_started": 0,
-      "denominator": 50,
+      "denominator": 52,
       "pct": 100.0,
-      "excluded_from_percentage": 2,
+      "excluded_from_percentage": 0,
       "standing_breakdown": {
         "origin": 50,
         "unclassified": 2

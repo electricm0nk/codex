@@ -35,7 +35,7 @@
       },
       "source_ref": {
         "line": 1,
-        "lst_file": ""
+        "source_path": ""
       }
     },
     "censuring_placard.json": {
@@ -72,7 +72,7 @@
       },
       "source_ref": {
         "line": 1,
-        "lst_file": ""
+        "source_path": ""
       }
     },
     "clay_whippoorwill.json": {
@@ -109,7 +109,7 @@
       },
       "source_ref": {
         "line": 1,
-        "lst_file": ""
+        "source_path": ""
       }
     },
     "dervish_sikke_knowledge_arcana.json": {
@@ -146,7 +146,7 @@
       },
       "source_ref": {
         "line": 1,
-        "lst_file": ""
+        "source_path": ""
       }
     },
     "dervish_sikke_knowledge_dungeoneering.json": {
@@ -183,7 +183,7 @@
       },
       "source_ref": {
         "line": 1,
-        "lst_file": ""
+        "source_path": ""
       }
     },
     "dervish_sikke_knowledge_engineering.json": {
@@ -220,7 +220,7 @@
       },
       "source_ref": {
         "line": 1,
-        "lst_file": ""
+        "source_path": ""
       }
     },
     "dervish_sikke_knowledge_geography.json": {
@@ -257,7 +257,7 @@
       },
       "source_ref": {
         "line": 1,
-        "lst_file": ""
+        "source_path": ""
       }
     },
     "dervish_sikke_knowledge_history.json": {
@@ -294,7 +294,7 @@
       },
       "source_ref": {
         "line": 1,
-        "lst_file": ""
+        "source_path": ""
       }
     },
     "dervish_sikke_knowledge_local.json": {
@@ -331,7 +331,7 @@
       },
       "source_ref": {
         "line": 1,
-        "lst_file": ""
+        "source_path": ""
       }
     },
     "dervish_sikke_knowledge_nature.json": {
@@ -368,7 +368,7 @@
       },
       "source_ref": {
         "line": 1,
-        "lst_file": ""
+        "source_path": ""
       }
     },
     "dervish_sikke_knowledge_nobility.json": {
@@ -405,7 +405,7 @@
       },
       "source_ref": {
         "line": 1,
-        "lst_file": ""
+        "source_path": ""
       }
     },
     "dervish_sikke_knowledge_planes.json": {
@@ -442,7 +442,7 @@
       },
       "source_ref": {
         "line": 1,
-        "lst_file": ""
+        "source_path": ""
       }
     },
     "dervish_sikke_knowledge_religion.json": {
@@ -479,7 +479,7 @@
       },
       "source_ref": {
         "line": 1,
-        "lst_file": ""
+        "source_path": ""
       }
     },
     "dervish_sikke_perform_act.json": {
@@ -516,7 +516,7 @@
       },
       "source_ref": {
         "line": 1,
-        "lst_file": ""
+        "source_path": ""
       }
     },
     "dervish_sikke_perform_comedy.json": {
@@ -553,7 +553,7 @@
       },
       "source_ref": {
         "line": 1,
-        "lst_file": ""
+        "source_path": ""
       }
     },
     "dervish_sikke_perform_dance.json": {
@@ -590,7 +590,7 @@
       },
       "source_ref": {
         "line": 1,
-        "lst_file": ""
+        "source_path": ""
       }
     },
     "dervish_sikke_perform_keyboard_instruments.json": {
@@ -627,7 +627,7 @@
       },
       "source_ref": {
         "line": 1,
-        "lst_file": ""
+        "source_path": ""
       }
     },
     "dervish_sikke_perform_oratory.json": {
@@ -664,7 +664,7 @@
       },
       "source_ref": {
         "line": 1,
-        "lst_file": ""
+        "source_path": ""
       }
     },
     "dervish_sikke_perform_percussion_instruments.json": {
@@ -701,7 +701,7 @@
       },
       "source_ref": {
         "line": 1,
-        "lst_file": ""
+        "source_path": ""
       }
     },
     "dervish_sikke_perform_sing.json": {
@@ -738,7 +738,7 @@
       },
       "source_ref": {
         "line": 1,
-        "lst_file": ""
+        "source_path": ""
       }
     },
     "dervish_sikke_perform_string_instruments.json": {
@@ -775,7 +775,7 @@
       },
       "source_ref": {
         "line": 1,
-        "lst_file": ""
+        "source_path": ""
       }
     },
     "dervish_sikke_perform_wind_instruments.json": {
@@ -812,7 +812,7 @@
       },
       "source_ref": {
         "line": 1,
-        "lst_file": ""
+        "source_path": ""
       }
     },
     "elixir_of_emulation.json": {
@@ -849,7 +849,7 @@
       },
       "source_ref": {
         "line": 1,
-        "lst_file": ""
+        "source_path": ""
       }
     },
     "fist_of_the_pit.json": {
@@ -886,7 +886,7 @@
       },
       "source_ref": {
         "line": 1,
-        "lst_file": ""
+        "source_path": ""
       }
     },
     "hateful_sting.json": {
@@ -923,7 +923,7 @@
       },
       "source_ref": {
         "line": 1,
-        "lst_file": ""
+        "source_path": ""
       }
     },
     "key_cloak.json": {
@@ -960,7 +960,7 @@
       },
       "source_ref": {
         "line": 1,
-        "lst_file": ""
+        "source_path": ""
       }
     },
     "mace_of_keys.json": {
@@ -997,7 +997,7 @@
       },
       "source_ref": {
         "line": 1,
-        "lst_file": ""
+        "source_path": ""
       }
     },
     "meltdown_safe.json": {
@@ -1034,7 +1034,7 @@
       },
       "source_ref": {
         "line": 1,
-        "lst_file": ""
+        "source_path": ""
       }
     },
     "neverspill_goblet.json": {
@@ -1071,7 +1071,7 @@
       },
       "source_ref": {
         "line": 1,
-        "lst_file": ""
+        "source_path": ""
       }
     },
     "nightpiercer.json": {
@@ -1108,7 +1108,7 @@
       },
       "source_ref": {
         "line": 1,
-        "lst_file": ""
+        "source_path": ""
       }
     },
     "parting_glass.json": {
@@ -1145,7 +1145,7 @@
       },
       "source_ref": {
         "line": 1,
-        "lst_file": ""
+        "source_path": ""
       }
     },
     "raiment_of_chains.json": {
@@ -1182,7 +1182,7 @@
       },
       "source_ref": {
         "line": 1,
-        "lst_file": ""
+        "source_path": ""
       }
     },
     "ring_of_the_faithful_dead.json": {
@@ -1219,7 +1219,7 @@
       },
       "source_ref": {
         "line": 1,
-        "lst_file": ""
+        "source_path": ""
       }
     },
     "saliharion.json": {
@@ -1256,7 +1256,7 @@
       },
       "source_ref": {
         "line": 1,
-        "lst_file": ""
+        "source_path": ""
       }
     },
     "scabbard_of_the_lost_kiss.json": {
@@ -1293,7 +1293,7 @@
       },
       "source_ref": {
         "line": 1,
-        "lst_file": ""
+        "source_path": ""
       }
     },
     "secure_paypack.json": {
@@ -1330,7 +1330,7 @@
       },
       "source_ref": {
         "line": 1,
-        "lst_file": ""
+        "source_path": ""
       }
     },
     "soul_candle.json": {
@@ -1367,7 +1367,7 @@
       },
       "source_ref": {
         "line": 1,
-        "lst_file": ""
+        "source_path": ""
       }
     },
     "stone_of_tomb_warding.json": {
@@ -1404,7 +1404,7 @@
       },
       "source_ref": {
         "line": 1,
-        "lst_file": ""
+        "source_path": ""
       }
     },
     "sunlord_s_feather.json": {
@@ -1441,7 +1441,7 @@
       },
       "source_ref": {
         "line": 1,
-        "lst_file": ""
+        "source_path": ""
       }
     },
     "thundering_collar.json": {
@@ -1478,7 +1478,7 @@
       },
       "source_ref": {
         "line": 1,
-        "lst_file": ""
+        "source_path": ""
       }
     },
     "universal_lock.json": {
@@ -1515,7 +1515,7 @@
       },
       "source_ref": {
         "line": 1,
-        "lst_file": ""
+        "source_path": ""
       }
     },
     "vaultbow.json": {
@@ -1552,7 +1552,7 @@
       },
       "source_ref": {
         "line": 1,
-        "lst_file": ""
+        "source_path": ""
       }
     },
     "watchful_tankard.json": {
@@ -1589,7 +1589,7 @@
       },
       "source_ref": {
         "line": 1,
-        "lst_file": ""
+        "source_path": ""
       }
     }
   }

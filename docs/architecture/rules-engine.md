@@ -1,16 +1,22 @@
 # Rules engine
 
 > Scope: The headless PF1 rules-computation spine — from chosen character input through the deterministic chassis engine to the boundary contract the GUI consumes.
-> Last verified: **2026-09-15 against `tranche/15`** (SD-35 closure epilogue) for the new
-> §"The sheet rule — the sixth layer, and the one the corpus now enters through" section, verified
-> against `src/rules_core/sheet_rule.rs`, `src/rules_core/sheet_rule_catalog.rs`,
-> `src/rules_core/corpus_loader.rs` and `src/rules_core/pilot_compute/mod.rs:250`; and for the
-> statement that no module in this tree reads a PCGen token
-> (`python3 scripts/pcgen_residue_gate.py --check --closure` → `live_files=0`). Prior pass
-> **2026-08-25 against `tranche/13`** (SD-33 closure epilogue) for the §3c
-> subsection and the equipment-bonus-shape-widening paragraph in the per-domain engine catalog's
-> `equipment_effects.rs` entry; every other section carries its 2026-08-21 tranche/11 (SD-31 wave
-> 26) verification, path-corrected 2026-08-22, and is otherwise unchanged.
+> Last verified: **2026-09-20 against `tranche/16` (`424e93e93c`)** for the SD-36 Epic C1 split of the
+> old, single `pilot_compute.rs` file into `src/rules_core/pilot_compute/` (41 submodules; `mod.rs`
+> itself is now a 297-line module-declaration/re-export shim, not the compute body), for
+> `src/support/paths.rs` (Epic C1.3's shared path-helper module), and for the module map, compute
+> pipeline, and sequence diagrams below. Also verified: no module under `src/rules_core/` reads a
+> PCGen token (`python3 scripts/pcgen_residue_gate.py --check --closure` → `live_files=0
+> live_hits=0`), and the old `oracle_validation` and `pcgen_import` trees under `src/` have both
+> moved to `crates/codex-ingest/` (SD-36 Epic A / operator ruling D1) — nothing under
+> `src/rules_core/` names either any more; see [corpus-ingest.md](./corpus-ingest.md) §"The crate
+> wall." Prior pass 2026-09-15 against tranche/15 (SD-35 closure) verified the sheet-rule layer
+> (§"The sheet rule" below) and the fail-honest/per-domain-engine catalog sections, which are
+> otherwise unchanged by the C1 split — it moved code, not behavior. **This pass** (capability-claims
+> audit, same day) re-checked every class/level/multiclass capability and limitation claim in this
+> file against a fresh `v06_class_state_dump` run and the dispatch code, and corrected the multiclass
+> section's stale "Fighter+Wizard only" claim — `table_class_id` recognizes all 11 CRB classes today
+> (see §"Multiclass base-chassis dispatch" below).
 > Maintenance: updated at SD closure — see [README.md](./README.md) §Maintenance contract
 
 This document orients a contributor entering `src/rules_core/` cold. It describes the compute spine
@@ -18,10 +24,130 @@ end-to-end, the fail-honest convention every engine in this tree follows, and a 
 per-domain engines with their entry points. It does not restate per-line rules content — read the
 cited modules for that.
 
+## Module map
+
+`src/rules_core/` has no subdirectories of its own besides `pilot_compute/`, `equipment_effects/`,
+`feat_prereqs/`, `level_up/`, `spellbook/` and `rules_tables/` (the last is
+[rules-data-tables.md](./rules-data-tables.md)'s territory). Every other file listed here is a flat
+sibling module. Grouped by role, not alphabetically — this is what
+`ls src/rules_core/*.rs src/rules_core/*/` groups into by reading each module's own doc comment:
+
+```mermaid
+flowchart TD
+    subgraph input["Input & bridging"]
+        character_input["character_input.rs\nCharacterInput, fixture loader"]
+        composed_input["composed_input.rs\ncompose(): input + corpus -> ComposedCharacterInput"]
+        source_content["source_content.rs\nSourceRef, SourcePackageContent"]
+    end
+
+    subgraph chassis["Deterministic chassis"]
+        pilot_compute["pilot_compute/\ncompute_pilot_base_chassis, build_pilot_headless_receipt"]
+        pilot_compute_corpus["pilot_compute_corpus.rs\ncompute_pilot_with_corpus"]
+    end
+
+    subgraph sheetrule["Sheet-rule layer (the corpus)"]
+        sheet_rule["sheet_rule.rs\nrender_sheet(), SheetLineValue"]
+        sheet_rule_catalog["sheet_rule_catalog.rs\ncatalog rendering, no character"]
+        corpus_loader["corpus_loader.rs\nload_sheet_rules, load_equipment_corpus"]
+        settled_corpus["settled_corpus.rs\nread_*_bundle()"]
+        race_resolver["race_resolver.rs\nload_race_corpus, RaceCorpus::resolve"]
+    end
+
+    subgraph domain["Per-domain engines"]
+        spellbook["spellbook.rs + spellbook/*"]
+        skill_allocation["skill_allocation.rs"]
+        feat_prereqs["feat_prereqs.rs + feat_prereqs/*"]
+        feat_effects["feat_effects.rs"]
+        equipment_effects["equipment_effects.rs + equipment_effects/*"]
+        damage_total["damage_total.rs"]
+        level_up["level_up.rs + level_up/*"]
+        encounters["encounters.rs / party_cr.rs"]
+    end
+
+    subgraph boundary["Boundary"]
+        contract["contract.rs\nPilotReceipt, to_pilot_receipt, printed_sheet_cell_map"]
+        pilot_view_model["pilot_view_model.rs"]
+        pilot_failure["pilot_failure.rs"]
+    end
+
+    character_input --> composed_input
+    source_content --> composed_input
+    composed_input --> pilot_compute
+    pilot_compute --> pilot_compute_corpus
+    corpus_loader --> pilot_compute_corpus
+    settled_corpus --> corpus_loader
+    race_resolver --> pilot_compute_corpus
+    corpus_loader --> sheet_rule
+    sheet_rule --> pilot_compute
+    pilot_compute_corpus --> contract
+    domain --> contract
+    sheet_rule_catalog -.->|no character, catalog/picker use only| domain
+    contract --> pilot_view_model
+    contract --> pilot_failure
+```
+
+*This module never simulates a rule it cannot settle to a number, dice, or the rule's own words —
+see §"The sheet rule" below; the diagram's `sheetrule` box is what carries that discipline into the
+spine.*
+
+`src/support/paths.rs` (new, Epic C1.3) is the shared filesystem-path helper module every one of the
+boxes above that touches `data/corpus/` calls into: `repo_root()`, `corpus_root()` (`data/corpus`
+joined onto `repo_root()`), and `find_json_files()` (a sorted, deterministic recursive `*.json`
+walk that skips `_parity/` directories and `LICENSE.json` files — sorted specifically because
+`corpus_loader`/`race_resolver` push records into a `Vec` in walk order, and a resolver breaks a
+key collision by position, so filesystem read-order non-determinism would make record precedence
+non-deterministic across checkouts). Before this module existed, `repo_root()` was defined
+byte-identically in six places and `find_json_files()` in three more; this is a pure move (no
+behavior change), consolidating them into one file every caller now imports from.
+
 ## The compute spine, end to end
 
-The engine has five layers. Data flows strictly downward; nothing later in the list mutates or
-re-derives what an earlier layer already produced.
+The engine has six layers (five hand-transcribed chassis layers, plus the sheet-rule layer added by
+SD-35 — see §"The sheet rule" below). Data flows strictly downward; nothing later in the list
+mutates or re-derives what an earlier layer already produced.
+
+```mermaid
+flowchart LR
+    A["CharacterInput\n(character_input.rs)"] --> B["ComposedCharacterInput\n(composed_input.rs)"]
+    B --> C["PilotBaseChassisComputation\n(pilot_compute/, entry: class_shared_core.rs)"]
+    C --> D["CorpusPilotReceipt\n(pilot_compute_corpus.rs)"]
+    D --> E["PilotReceipt\n(contract.rs::to_pilot_receipt)"]
+    E --> F["Vec&lt;PrintedSheetCell&gt;\n(contract.rs::printed_sheet_cell_map)"]
+    G["data/sheet_rules/**\n(converted corpus, read via corpus_loader)"] --> C
+    H["rules_tables::&lt;book&gt;::*\n(hand-transcribed chassis)"] --> C
+```
+
+*One character request, six inputs converge on `compute_pilot_base_chassis`, one receipt exits
+through `printed_sheet_cell_map` — nothing downstream of `contract.rs` reaches into any earlier
+layer directly.*
+
+```mermaid
+sequenceDiagram
+    participant UI as Desktop screen
+    participant Contract as contract.rs
+    participant Corpus as pilot_compute_corpus.rs
+    participant Chassis as pilot_compute/ (class dispatch)
+    participant Pillars as feat_pillars.rs / feat_pillar_and_pool_aggregation.rs
+    participant Seams as race_seams.rs
+    participant SheetRule as sheet_rule.rs
+
+    UI->>Contract: to_pilot_receipt(receipt, input, corpus)
+    Contract->>Corpus: compute_pilot_with_corpus(input, corpus)
+    Corpus->>Chassis: compute_pilot_base_chassis(input)
+    Chassis->>Chassis: compute_class_chassis (class_occult_and_psionic.rs)
+    Chassis->>Pillars: class-granted feats, pool-group aggregation,\ntotal saves, selected skill modifiers
+    Chassis->>Seams: explain race seam for the chosen race
+    Chassis->>SheetRule: render_sheet(package, seed, facts)
+    SheetRule-->>Chassis: a Vec of SheetLine
+    Chassis-->>Corpus: PilotBaseChassisComputation
+    Corpus-->>Contract: CorpusPilotReceipt
+    Contract->>Contract: resolve feats/equipment,\ncompute weapon damage
+    Contract-->>UI: PilotReceipt, printed_sheet_cell_map
+```
+
+*The class dispatch call fans out into the per-domain pillar/seam functions cataloged below before
+the sheet-rule layer renders the corpus's own words; every arrow is a real function call, not an
+illustrative simplification — see the cited modules for the exact call sites.*
 
 ### 1. `src/rules_core/character_input.rs` — chosen picks only
 
@@ -71,86 +197,246 @@ was chosen over `unsafe` lifetime transmutes to keep the borrow auditable.
 `ComposedCharacterInput<'a>` (the `Some` case of `composed`) is the actual input the rest of the
 spine consumes: it owns the `CharacterInput` and holds the borrowed `SourcePackageContent`.
 
-### 3. `src/rules_core/pilot_compute/mod.rs` — the deterministic chassis engine
+### 3. `src/rules_core/pilot_compute/` — the deterministic chassis engine
 
-This is the core engine, and at roughly 17,800 lines it is by a wide margin the largest file in
-`rules_core`. Its structure is not a grab-bag: it is one long orchestrator function,
-`compute_pilot_base_chassis`, that calls a fixed, ordered sequence of per-domain helper functions,
-each of which appends to two shared accumulators (`explanations: Vec<ComputationExplanation>`,
-`diagnostics: Vec<ComputationDiagnostic>`) rather than returning independent state. Reading the file
-productively means reading `compute_pilot_base_chassis`'s body first (it is the table of contents)
-and then jumping to the specific helper you need — not reading top to bottom.
+**A naming note, once, for a newcomer:** "pilot" here is a historical module name (`pilot_compute`,
+`PilotReceipt`, `build_pilot_headless_receipt`, …) inherited from this engine's original prototype
+phase, well before all 31 fully-tabled classes reached `Computed`. It is not a scope statement and
+does not mean this subsystem is a limited trial today — it is the live compute spine for every
+class/level combination named in the [class/level coverage catalog](#3-src_rules_corepilot_compute---the-deterministic-chassis-engine)
+below.
 
-**Entry points** (the only two `pub fn`s the module exports beyond its types):
+*Restructured 2026-09-20, SD-36 Epic C1.* Before Epic C1, `pilot_compute.rs` was one ~88,800-line
+file (test code included) — by far the largest in `rules_core`. Epic C1 split it into a directory of
+41 submodules plus a 297-line `mod.rs`, **as a pure code-move**: every submodule opens with `use
+super::*;` (a child module sees a parent's private items in Rust, so nothing needed to be made more
+visible than it already was) and `mod.rs` blanket-`pub use`s each submodule back into its own
+namespace, so every pre-existing `pilot_compute::<name>` call site outside this directory — the
+desktop crate, `crates/codex-ingest`, this file's own inline tests — keeps resolving unqualified,
+name for name, with zero call sites edited and zero behavior changed. `mod.rs` itself is now just
+module declarations and re-exports (no compute logic); read `class_shared_core.rs` first instead —
+it holds the actual entry points.
+
+**The split is by rough file-position windows from the original monolith, not by rewritten
+semantics** — several submodule names describe what was locally *around* the code better than what
+the code *is*. `compute_class_chassis` and `compute_multiclass_base_chassis` (the class dispatch
+table itself) both landed in `class_occult_and_psionic.rs`, not `class_dispatch.rs`; `compute_total_saves`
+and `compute_selected_skill_modifiers` both landed in `feat_pillar_and_pool_aggregation.rs`, not
+`skills_and_saves.rs`. `class_dispatch.rs`, `skills_and_saves.rs`, `spellcasting.rs`, and
+`pool_groups.rs` are, today, almost entirely `#[cfg(test)]` regression suites for logic implemented
+in a *different* submodule — a residue of the monolith's own test placement, preserved as-is by the
+move. **Treat a submodule's name as a hint, not ground truth; `grep -rn 'pub(super) fn <name>'
+src/rules_core/pilot_compute/` is.**
+
+**Entry points** (`src/rules_core/pilot_compute/class_shared_core.rs`, `mod.rs`'s re-export makes
+both reachable as `pilot_compute::<name>` from outside this directory exactly as before the split):
 
 - `compute_pilot_base_chassis(input: &CharacterInput) -> PilotBaseChassisComputation` — the core computation. Produces ability modifiers, base attack bonus, base saves, the deterministic combat baseline (melee attack bonus / armor class for a fixed Longsword + Chain Shirt + Dodge posture), total saves, selected skill modifiers, and a long tail of per-race and per-class explanation/diagnostic records, all accumulated into one `PilotBaseChassisComputation`.
 - `build_pilot_headless_receipt(input: &CharacterInput) -> PilotHeadlessReceipt` — a thin wrapper that runs `compute_pilot_base_chassis` and derives one `HeadlessReceiptStatus` (`Computed` or `Blocked`) from whether any diagnostic in the result is claim-blocking. This is the receipt shape `src/rules_core/pilot_view_model.rs` and `src/rules_core/pilot_failure.rs` consume (see below); it predates and is narrower than the SD-20 boundary contract's `PilotReceipt` (§5).
+- `has_supported_class_chassis(input: &CharacterInput) -> bool` (`class_shared_core.rs`) — the single shared gate every other per-domain pillar (`compute_total_saves`, `compute_combat_baseline`, `compute_selected_skill_modifiers`) checks independently of `compute_class_chassis`. It is a long `||` chain of per-class-family `is_supported_<x>_single_class`/`supported_<x>_level` predicates — the module's own comments record more than one wave where a class's chassis dispatched correctly through `compute_class_chassis` but its receipt still never reached `Computed`, because this shared gate had no matching arm. **Adding chassis dispatch for a class and not adding it here is the single most common way a "done" class stays claim-blocked.**
 
-**Internal organization**, in the order `compute_pilot_base_chassis` calls them:
+**The pilot_compute/ submodule map** (grouped by role; `pub`/`pub(crate)` visibility per `mod.rs`'s
+own declarations — everything else is a private submodule reachable only via the blanket re-export):
 
-| Stage | Representative functions | What it grounds |
+```mermaid
+flowchart TD
+    modrs["mod.rs\n(module decls + pub use re-export only)"]
+
+    subgraph entry["Entry points & dispatch"]
+        class_shared_core["class_shared_core.rs\ncompute_pilot_base_chassis, build_pilot_headless_receipt,\nhas_supported_class_chassis"]
+        class_occult["class_occult_and_psionic.rs\ncompute_class_chassis (the dispatch table),\ncompute_multiclass_base_chassis"]
+    end
+
+    subgraph perclass["Per-class-family pillar/spell explainers (11 files)"]
+        pc1["class_fighter.rs / class_barbarian.rs /\nclass_monk.rs / class_rogue.rs"]
+        pc2["class_cleric.rs / class_druid_shaman.rs /\nclass_paladin_ranger.rs"]
+        pc3["class_sorcerer_wizard.rs /\nclass_wizard_prepared_spellbook.rs / class_bard_skald.rs"]
+        pc4["class_alchemist_investigator.rs /\nclass_inquisitor_warpriest.rs /\nclass_hunter_cavalier_swashbuckler.rs"]
+        pc5["class_summoner_witch.rs / class_oracle.rs /\nclass_slayer.rs / class_ultimate_combat.rs"]
+    end
+
+    subgraph untabled["Classes with no hand-authored chassis table"]
+        crb_untabled["crb_untabled_class_chassis.rs\nCRB's 7 NPC/Ex-* classes"]
+        base_untabled["untabled_base_class_chassis.rs +\nuntabled_base_class_feature_roster.rs\n20 real base classes, no table"]
+        generic_chassis["generic_class_chassis.rs\n78 more PC classes across 14 books,\nlive-dispatched BAB/save chassis (no\nper-class hand-authored explainer)"]
+    end
+
+    subgraph converted["Converted-corpus readers"]
+        sheet_rules_chassis["class_chassis_sheet_rules.rs\nthe ONE live reader of\ndata/sheet_rules/&lt;book&gt;/class/*.json"]
+        resolved_prose["resolved_prose.rs\nrule prose + this character's numbers"]
+        grant_consumer["class_feature_grant_consumer.rs\ngeneric class_feature GRANT-fact consumer"]
+        domain_power["domain_power.rs\nCleric/Inquisitor domain-power formulas"]
+    end
+
+    subgraph shared["Cross-cutting pillars"]
+        combat["combat.rs\ncompute_combat_baseline"]
+        feat_agg["feat_pillars.rs +\nfeat_pillar_and_pool_aggregation.rs\ncompute_total_saves, compute_selected_skill_modifiers,\nclass-granted feats, generic pool-group aggregation"]
+        race_seams["race_seams.rs\nper-race trait recognition family"]
+        prestige["prestige_class_entry_gate.rs +\nprestige_class_features.rs +\nprestige_class_features_campaign.rs"]
+        companion["companion.rs +\ncompanion_base_stat_table.rs"]
+    end
+
+    testonly["class_dispatch.rs, skills_and_saves.rs,\nspellcasting.rs, pool_groups.rs,\nuntabled_base_class_features.rs\n(almost entirely #cfg-test regression suites\nfor logic that lives in the boxes above)"]
+
+    modrs -.->|declares + re-exports| entry
+    modrs -.->|declares + re-exports| perclass
+    modrs -.->|declares + re-exports| untabled
+    modrs -.->|declares + re-exports| converted
+    modrs -.->|declares + re-exports| shared
+    modrs -.->|declares + re-exports| testonly
+    class_shared_core --> class_occult
+    class_occult --> perclass
+    class_occult --> untabled
+```
+
+**Internal organization**, in the order `compute_pilot_base_chassis` calls its helpers (unchanged by
+the split — this is the orchestrator's own call sequence, not a file boundary):
+
+| Stage | Representative functions (real location) | What it grounds |
 |---|---|---|
-| Ability modifiers | `compute_ability_modifiers` | `floor(score/2) - 5` per ability |
-| Class chassis dispatch | `compute_class_chassis`, `compute_fighter_chassis`, `compute_wizard_chassis`, `compute_multiclass_base_chassis`, `has_supported_class_chassis` | Base attack bonus + base saves for the classes/levels the dispatch table recognizes; unsupported input pushes `class_chassis.unsupported` |
-| Combat baseline | `compute_combat_baseline`, `unmet_combat_posture_conditions` | Baseline melee attack bonus / armor class for the exact deterministic Longsword/Chain Shirt/Dodge/no-shield posture |
-| Total saves | `compute_total_saves` | Base save + relevant ability modifier, gated on `has_supported_class_chassis` |
-| Selected skill modifiers | `compute_selected_skill_modifiers`, `unmet_selected_skill_posture_conditions` | Climb/Intimidate/Swim only, gated on an exact rank-1 + Chain Shirt posture |
-| Per-class feature/spell explainers | `explain_fighter_class_features`, `explain_hybrid_level1_chassis`, `explain_paladin_level1_chassis_and_spell_burden_separation`, `explain_ranger_level1_chassis_and_class_feature_separation`, `explain_barbarian_level1_chassis`, `explain_monk_level1_chassis`, `explain_rogue_level1_chassis`, `explain_sorcerer_level1_spell_baseline`, `explain_wizard_level1_prepared_spell_baseline`, `explain_cleric_level1_spell_baseline`, `explain_druid_level1_spell_baseline`, `explain_bard_level1_spell_baseline` | Per-class, per-level named feature and spell-baseline explanation/diagnostic records — one function family per one of the 11 core classes |
-| Per-race seams | `explain_human_pilot_race_seam`, `explain_human_trait_bundle`, `explain_dwarf_race_seam`, `explain_elf_race_seam`, `explain_gnome_race_seam`, `explain_half_elf_race_seam`, `explain_half_orc_race_seam`, `explain_halfling_race_seam` | Per-race trait recognition and (where grounded) numeric contribution — one function family per one of the 7 core races (Human's is split across two functions) |
+| Ability modifiers | `compute_ability_modifiers` (`class_shared_core.rs`) | `floor(score/2) - 5` per ability |
+| Class chassis dispatch | `compute_class_chassis`, `compute_multiclass_base_chassis`, `is_supported_multiclass_mix` (`class_occult_and_psionic.rs`); `has_supported_class_chassis` (`class_shared_core.rs`) | Base attack bonus + base saves for the classes/levels the dispatch table recognizes; unsupported input pushes `class_chassis.unsupported` |
+| Combat baseline | `compute_combat_baseline`, `unmet_combat_posture_conditions` (`combat.rs`) | Baseline melee attack bonus / armor class for the exact deterministic Longsword/Chain Shirt/Dodge/no-shield posture |
+| Total saves | `compute_total_saves` (`feat_pillar_and_pool_aggregation.rs`) | Base save + relevant ability modifier, gated on `has_supported_class_chassis` |
+| Selected skill modifiers | `compute_selected_skill_modifiers` (`feat_pillar_and_pool_aggregation.rs`), `unmet_selected_skill_posture_conditions` | Climb/Intimidate/Swim only, gated on an exact rank-1 + Chain Shirt posture |
+| Per-class feature/spell explainers | `explain_fighter_class_features` (`class_fighter.rs`), `explain_hybrid_level1_chassis`/`explain_paladin_level1_chassis_and_spell_burden_separation`/`explain_ranger_level1_chassis_and_class_feature_separation` (`class_paladin_ranger.rs`), `explain_barbarian_level1_chassis` (`class_barbarian.rs`), `explain_monk_level1_chassis` (`class_monk.rs`), `explain_rogue_level1_chassis` (`class_rogue.rs`), `explain_sorcerer_level1_spell_baseline` (`class_sorcerer_wizard.rs`), `explain_wizard_level1_prepared_spell_baseline` (`class_wizard_prepared_spellbook.rs`), `explain_cleric_level1_spell_baseline` (`class_cleric.rs`), `explain_druid_level1_spell_baseline` (`class_druid_shaman.rs`), `explain_bard_level1_spell_baseline` (`class_bard_skald.rs`) | Per-class, per-level named feature and spell-baseline explanation/diagnostic records — one function family per one of the 11 core classes, now spread across the per-class-family submodules above |
+| Per-race seams | `explain_human_pilot_race_seam`, `explain_human_trait_bundle`, `explain_dwarf_race_seam`, `explain_elf_race_seam`, `explain_gnome_race_seam`, `explain_half_elf_race_seam`, `explain_half_orc_race_seam`, `explain_halfling_race_seam` (all `race_seams.rs`) | Per-race trait recognition and (where grounded) numeric contribution — one function family per one of the 7 core races (Human's is split across two functions) |
 | Cross-cutting validation | `validate_fighter_feat_choice_legality` | Input-legality checks that produce diagnostics without computing a value |
 
 Each per-class/per-race function follows the same internal shape: a `supported_<class>_level(input)
 -> Option<u8>` gate function decides whether the input's class/level combination is inside the
 function's proven range, and the `explain_*`/`compute_*` function either produces real explanation
 records or pushes a named claim-blocking diagnostic and stops. This gate-then-explain pairing recurs
-at every level band; the file's per-function doc comments record which named sub-features are
-grounded versus still claim-blocked as of the current level ceiling for that class.
+at every level band; the functions' own doc comments record which named sub-features are grounded
+versus still claim-blocked as of the current level ceiling for that class.
 
-**Multiclass base-chassis dispatch (SD-24 Epic 5).** `compute_multiclass_base_chassis` fires whenever
-`input.chosen.class_levels.len() >= 2`; `is_supported_multiclass_mix` gates it to combinations where
-every class level is individually supported — today that means Fighter + Wizard only, at any split of
-total level 1-10 (deterministically proven level-by-level, both solo-to-multiclass transition
-directions, in `tests/sd24_multiclass_deterministic.rs`/`tests/sd24_multiclass_integration.rs`). Base
-attack bonus and saves stack per PF1's canonical additive multiclass rule: each class's own
-fractional BAB/save progression is summed *before* flooring once for the total, reading the
-fractional classification from `class_tables.rs`'s own `good_saves_for(ClassId) -> Option<(bool, bool,
-bool)>` (`multiclass_good_saves`) rather than a second, independently-maintained copy. `fighter_level_in_mix`/
-`wizard_level_in_mix` (`pilot_compute.rs`) resolve each class's own sub-level from the mix so that
-class's per-level named-feature/spell-baseline explainers (e.g. `explain_wizard_level1_prepared_spell_baseline`)
-keep firing once a second class joins, instead of silently going quiet the moment the build stops
-being single-class. This grounds the base-chassis/explanation layer only — it does not by itself get
-a Fighter+Wizard multiclass build to `HeadlessReceiptStatus::Computed` end-to-end (spellbook and
-other per-domain diagnostics can still block); see [status.md](./status.md) for the current
-`Computed`-reachability ceiling.
+**Multiclass base-chassis dispatch and fold (SD-24 Epic 5; widened v0.6 alpha swarm task 4; generalised
+SD-36 Epic F3b).** `compute_multiclass_base_chassis` (`class_occult_and_psionic.rs`) fires whenever
+`input.chosen.class_levels.len() >= 2`. `is_supported_multiclass_mix` admits the mix when every member
+passes `multiclass_fold::multiclass_member` and at least one member is not a prestige class:
 
-**Core output types** (`PilotBaseChassisComputation`, `ComputationExplanation`, and `ComputationDiagnostic`
-are defined near the top of the file; `HeadlessReceiptStatus` and `PilotHeadlessReceipt` are defined
-later, immediately before the two entry-point functions — all five precede the roughly 13,000 lines of
-per-class/per-race function logic that populate them):
+- A non-prestige member's ISOLATED single-class input (the same input with only that class level) passes
+  `has_supported_class_chassis`; a prestige member's converted record has a chassis row at that level.
+- Each of the member's three saves has a source the fold can sum: the CRB class table (`good_saves_for`,
+  the 11 tabled classes) or else `ClassChassis::save_shape` is `Good` or `Poor`. `Degraded`,
+  `Unrecognized` or no record is a named claim-blocking diagnostic
+  (`multiclass.save_shape.{degraded,unrecognized,unknown}`), never a silent poor save. A class that cannot
+  join at all is `multiclass.class_unsupported`; a prestige-only mix states
+  `prestige_class.requires_base_class_levels`.
+
+The fold is one generic rule, no class named. BAB is the sum of each member's own BAB (isolated chassis, or
+the prestige row). Saves sum each member's EXACT (`Rat`) save value -- `level/2 + 2` / `level/3` for a
+table class, the class's own converted `Expr` otherwise (a prestige class's `(level+1)/2` / `(level+1)/3`
+table form) -- and floor once. `multiclass_fold::explain_multiclass_fold` then adds the character-level
+totals: `multiclass.hit_points` (maximized die for the first-listed class's first level, `die/2 + 1`
+after, + Con per level) and `multiclass.skill_points` (each class's skill ranks per level + Int, at least 1,
+times its levels; the ranks are the converted record's `Skill ranks per level` row, from `STARTSKILLPTS`
+since F3b2, read off the class's chassis record, else its principal, else -- a class-selection class -- the
+base class it is taken on). A class alone prints the same term as `class_chassis.skill_points` (F3b3). A
+class whose record states no ranks is `class_chassis.skill_points.unknown`, named, non-blocking, and no
+total prints (0 of 63 census non-prestige classes since F3b3). Each member's
+own lines (`class_feature.*`, `class_spell.*`, `class_chassis.<class>.*`) come verbatim from its isolated
+single-class run, re-scoped `multiclass.<class>.<original id>`; its blocking class lines carry over the
+same way, so a class that cannot compute alone does not compute in a mix. Prestige entry requirements
+print (`multiclass.prestige_entry_gate.{met,unmet}`), never block. Class skills and weapon proficiency
+were already unions over `class_levels`; F3b made the weapon union decidable by any one granting class
+(a class with no answer no longer turns a Fighter's longsword into Unknown).
+
+Class skills for the selected Climb / Intimidate / Swim lines (SD-36 F3b3) come from each class's
+CONVERTED record: `pilot_compute::class_skill_sheet_rules` walks the class principal's held set (the
+proficiency reader's walk) and collects `Fact::ClassSkill` / `ClassSkillGroup`. Union over classes; a class
+the reader cannot answer uses its cited oracle row only if it has one (`UNREAD_RECORD_SELECTED_CLASS_SKILLS`,
+the 9 ACG classes whose `ABILITY:Class|AUTOMATIC|<Class>` edge is unresolved; a test retires each row when
+the converter closes it); otherwise the lines are refused by name
+(`skill.selected_modifier.class_skill_unknown`; no census class since SD-36 F3c3). A class whose
+class skills sit on a sub-class line (Psion: its disciplines' `SUBCLASS:` lines carry the base class
+skills, `up_classes.lst:221-256`) answers through the converted sub-class choice (SD-36 F3c3): the
+converter writes each class's `SUBCLASS:` lines as one choice sibling on the class record
+(`<class id>#subclass`, `offers: Rules { pool: subclass }`) whose options are `subclass` rules
+carrying the line's `CSKILL` facts and `SUBCLASSLEVEL` grant edges (`sheet_rule/subclass.rs`); the
+canonical pick (the first line in oracle order) is seeded through `class_seeds` and walked like any
+other member pick. A class whose class skills ARE a choice
+(Expert, CRB p.450: any ten) answers from its Path-A canonical picks, seeded through `class_seeds`
+(SD-36 F3c2): a seed under a converted chooser that offers `Skills` and grants `ClassSkillChosen(<own id>)`
+makes the picked skill a class skill. Before F3b3 a hand-kept 13-class list decided it, and 35 of 52 classes (79 of 156 lines) printed a record-granted class
+skill without its +3 (Barbarian Climb/Swim among them).
+
+An ability-category pick (SD-36 F3c4b): a record carrying `CHOOSE:ABILITYSELECTION|<C>|<criteria>`
+and `ABILITY:<C>|<nature>|%LIST` applies the picked row, so every oracle row of category `<C>` its
+criteria select that no inventory unit stands for (Sorcerer's `CATEGORY:Sorcerer Bloodline` pick rows,
+`cr_abilities_class.lst:2435`) converts as a `pool_option` rule granted by `Granter::Choice(<chooser>)`
+(`sheet_rule/pool_option.rs`, 274 options over 12 pools). Its `BONUS:VAR` contributions and `ABILITY:`
+edges are what switch a bloodline's lines on: a Draconic pick holds the record, its class skill, arcana,
+bonus spells and powers at the levels CRB p.75 states (`tests/sd36_bloodline_pick_option.rs`).
+
+A natural-attack helper (SD-36 F3c5): a `CATEGORY:Internal` row whose `TYPE:` carries `NaturalAttack`
+and that no inventory unit stands for (`Bite`, `ce_abilities_race.lst:249`; `Internal` is
+`VISIBLE:NO EDITABLE:NO`, `system/gameModes/Pathfinder/miscinfo.lst:303`) converts, when its whole
+object (its row, its `.MOD` rows, the size helpers it grants and their templates) carries nothing but
+one natural attack's bookkeeping, as `Fact::NaturalAttack(<attack>)` on the rule whose `ABILITY:`
+grants it (`sheet_rule/natural_attack.rs`; 770 helper rows, 681 fact grants on 546 rules). No rule is
+added. The fact is never a proficiency, so Dragon Disciple's `Internal|Bite` resolves, its closure is
+attested and the proficiency reader answers Known(empty). A helper whose object carries anything else
+is named (`_defects/natural-attack-helper-carries-more.json`; 0 rows at F3c5) and its references stay
+unresolved. A gate that names a helper (`PREABILITY:1,CATEGORY=Internal,Bite`) stays a `MissingRule`
+term: a fact is not holdable (6 rows).
+
+A character's legacy Path-A pick (SD-36 F3c4): `choice:<pool> -> <ns>:<member>` is linked to the
+converted option it names by one rule, `sheet_rule::link_path_a_picks` -- the record whose slug is
+`<pool>_<member>` and which carries the pool as its own tag, and the option granting it that a choice
+the character is offered (`chooser_offered`) grants. `CharacterFacts::with_linked_picks` records the
+link for the sheet (`with_sheet_rules`), the feat-prerequisite facts and the desktop's feat options;
+`sheet_rule_package::linked_picks` gives the pilot compute the same links, each marked with whether the
+held set holds the option. The class-skill union reads the character's picks
+(`class_skill_sheet_rules::class_skill_view_for`: an Aquatic sorcerer's Swim carries its +3). The
+Sorcerer module yields to the record for any bloodline it does not model when the option is held
+(`class_feature.sorcerer.bloodline.converted_record`), and names a linked option the held set does not
+hold (`class_feature.sorcerer.bloodline.converted_option_not_held`: Imperious and Kobold, FS-19). The
+SD-32 generic pool-group pass (`push_generic_pool_group_selection_magnitude`) yields for a linked, held
+selection: it had printed member values with no level gate (Draconic 5: Breath Weapon DC 14, a 9th-level
+power), and the held set prints each member line from the record at the level it states. Measured:
+30 of 32 bloodlines Computed single-class at every level
+(`artifacts/epic-f/stage-f2-f3/f3c4-bloodline-sweep-after.md`).
+
+Proved by `tests/sd36_multiclass_any_class.rs` (four mixes against hand-worked PF1 values,
+`docs/release/SD-36-consolidation/artifacts/epic-f/stage-f2-f3/f3b-hand-worked.md`), and for
+Fighter+Wizard by `tests/sd21_multiclass_fighter_wizard_chassis_computes.rs` and the `sd24_multiclass_*`
+suite. The fractional save rule (+2 per good-save class, floored once) differs from CRB p.30's core rule
+(sum of per-class rounded saves) on some mixes; the hand-worked sheet names where.
+
+**Core output types** (`PilotBaseChassisComputation`, `ComputationExplanation`, `ComputationDiagnostic`,
+`HeadlessReceiptStatus` and `PilotHeadlessReceipt` are all defined in `class_shared_core.rs` beside
+the two entry points that build them):
 
 - `PilotBaseChassisComputation` — the aggregate struct `compute_pilot_base_chassis` returns: `ability_modifiers`, `base_attack_bonus`, `base_saves`, `baseline_melee_attack_bonus`, `baseline_armor_class`, `total_saves`, `selected_skill_modifiers`, `explanations`, `diagnostics`.
 - `ComputationExplanation { id, value, detail }` — one machine-checkable record per computed value.
 - `ComputationDiagnostic { id, message, claim_blocking }` — see the fail-honest pattern below.
 - `HeadlessReceiptStatus` (`Computed` | `Blocked`) and `PilotHeadlessReceipt { case_id, source_package_id, status, computation }` — the receipt `build_pilot_headless_receipt` returns.
 
-The module's own header doc comment is explicit about what it is not: "not a full rules engine" — it
-names the specific PF1 mechanics still out of scope (feat/item/condition-based save modifiers,
-weapon damage, active Power Attack math, initiative, general skill modifiers beyond the three
-selected skills, armor-check penalties beyond the deterministic posture, feat prerequisites, oracle
-parity). Several of those gaps are exactly what the later per-domain engines in the
-[per-domain engine catalog](#per-domain-engine-catalog) below exist to fill, without editing this file.
+`mod.rs`'s own module doc comment is explicit about what the engine as a whole is not: "not a full
+rules engine" — it names the specific PF1 mechanics still out of scope (feat/item/condition-based
+save modifiers, weapon damage, active Power Attack math, initiative, general skill modifiers beyond
+the three selected skills, armor-check penalties beyond the deterministic posture, feat
+prerequisites, oracle parity). Several of those gaps are exactly what the later per-domain engines in
+the [per-domain engine catalog](#per-domain-engine-catalog) below exist to fill, without editing this
+directory.
 
-**Path note (SD31-E4-F1-005, since 2026-08-20):** `pilot_compute` is now a directory module
-(`src/rules_core/pilot_compute/mod.rs` holds the ~17,800-line orchestrator this section describes;
-`src/rules_core/pilot_compute/class_feature_grant_consumer.rs`, `class_slayer.rs`, and
-`class_ultimate_combat.rs` are per-class submodules split out as a pure code-move — same behaviour,
-same call sites via `mod.rs`'s own `use super::*` re-export). This document's `pilot_compute.rs`
-references above predate that split and describe `mod.rs`'s content; not fully swept to the new path
-throughout this file as of this note — treat `pilot_compute.rs` and `pilot_compute/mod.rs` as the
-same file wherever this document names the former.
-
-### 3a. `src/pcgen_import/formula_interpreter.rs` and `pilot_compute/domain_power.rs` — the formula
+### 3a. `crates/codex-ingest/src/pcgen_import/formula_interpreter.rs` and `pilot_compute/domain_power.rs` — the formula
 interpreter (SD-31 wave 25/25b, a real architecture change, not an extension of the pattern above)
+
+**Superseded as a live-runtime path by the sheet rule (§ below), current as history.** This
+subsection and 3b/3c describe SD-31's wave 25-27 formula-interpreter work as it happened, when the
+interpreter was still a candidate for a *runtime* consumer inside `pilot_compute`. SD-35's sheet-rule
+converter (§"The sheet rule" below) closed that path instead: the interpreter now runs once, at
+ingest time, inside the converter, and the live side reads only its already-resolved JSON output.
+`formula_interpreter.rs`/`formula_reproduction_harness.rs`/`formula_interpreter_corpus_wide.rs` also
+physically moved off the live side in SD-36 Epic A — they live at
+`crates/codex-ingest/src/pcgen_import/` today, not under `src/` at all (see
+[corpus-ingest.md](./corpus-ingest.md) §"The crate wall"). `pilot_compute/domain_power.rs` is the one
+exception that stayed live: it is a narrow, hand-written arithmetic evaluator over a fixed catalog of
+five domain-power formulas, not a general PCGen-formula reader, so it carries no live PCGen token
+outside its own `#[cfg(test)]` module (which the residue gate's `cfg_test_ranges`/`code_only` masking
+does not count — see [Pitfalls](#pitfalls) below).
 
 **Every function cataloged in the table above is a hand-written, bespoke Rust closed-form
 expression, independently derived and verified against the corpus per feature.** That was a pinned
@@ -263,11 +549,26 @@ this wave).
 
 Wave 27's dispatch reframed the program's remaining wall as "features for characters that cannot
 exist" and asked how many of the 157 not-done `class` units are Monk-shaped — a chassis table
-present, only the `table_class_id` dispatch mapping missing. **The census answer is zero**: every
-class with a real chassis table anywhere in the codebase (34 total, across CRB/APG/ACG/Pathfinder
-Unchained/Ultimate Combat) is already dispatched. See [status.md](./status.md)'s wave 27 section for
-the full breakdown of where the remaining 157 classes actually sit (prestige entry-requirement gap,
-net-new base-class tables, structurally-non-PC-class records, unstarted books).
+present, only the `table_class_id` dispatch mapping missing. **The census answer, as of wave 27, was
+zero**: every class with a real chassis table anywhere in the codebase *at that time* (34 total,
+across CRB/APG/ACG/Pathfinder Unchained/Ultimate Combat) was already dispatched. **This count is now
+stale and current work has widened it far past 34, corpus-wide, not just within CRB/APG/ACG/Unchained/
+UC**: `untabled_base_class_chassis::resolve` and `crb_untabled_class_chassis::resolve`
+(`src/rules_core/pilot_compute/untabled_base_class_chassis.rs`, `class_shared_core.rs:3411-3413`) since
+gave all 27 "untabled" base classes (20 exotic + 7 CRB NPC/Ex) a real BAB/save chassis, and
+`generic_class_chassis::resolve` — dispatched from `compute_class_chassis`
+(`class_occult_and_psionic.rs:997`) — independently gives a further 78 conventional PC classes across
+its 14 `CLASS_FAMILY_BOOKS` a real chassis too, test-asserted by
+`generic_class_records().len() == 78` (`generic_class_chassis.rs`, then named `all_seventy_eight_conventional_classes_resolve`, now `every_conventional_class_in_class_family_books_resolves` at 122 since SD-36 Epic F2a appended CRB/APG,
+7/7 passing). **This "31 + 3 + 27 + 78 = 139" arithmetic is wave 27's own count, historical, and is
+now known to be wrong as a distinct-class total** — it double-counts classes that appear in more than
+one registry (19 of the 78 also appear in the untabled-exotic registry, 3 more in the Ultimate Combat
+registry). Do not cite 139, 78, or any other total from this subsection as current — the real,
+overlap-corrected corpus-wide count and the full per-family breakdown live in
+[status.md](./status.md)'s "Class/level compute coverage — corpus-wide" table, the one place this
+repo's class head-counts are maintained; not restated here. The wave-by-wave narrative that used to live in status.md
+(including its own former "wave 27" section) was deleted outright by SD-36 Epic B — see `docs/retro/`
+for the retired history.
 
 - **`class_feature_grant_consumer.rs`'s `resolve_pcgen_var_chain` now seeds the six ability-modifier
   abbreviations** (STR/DEX/CON/INT/WIS/CHA) before its fixed-point `BONUS:VAR` pass, so a
@@ -298,7 +599,7 @@ net-new base-class tables, structurally-non-PC-class records, unstarted books).
 
 ### 3c. SD-33 — `formula_interpreter_corpus_wide.rs` regenerates its own population census fresh, never from a frozen file
 
-`src/pcgen_import/formula_interpreter_corpus_wide.rs` is the corpus-wide *coverage*
+`crates/codex-ingest/src/pcgen_import/formula_interpreter_corpus_wide.rs` is the corpus-wide *coverage*
 harness for `formula_interpreter.rs` above (SD-32 Gate 2, `AT-32-G2-004`) — it runs every
 formula-bearing F1..F9 corpus unit through the interpreter and reports agreement/refusal, distinct
 from `formula_reproduction_harness.rs`'s narrower 22-function proof set. Before SD-33 it sourced its
@@ -315,6 +616,44 @@ the rows back. `AT-33-E3-004` runs the corpus-wide scan with `--corpus-wide --ou
 `docs/release/SD-33-computed-value-verification/artifacts/epic-3-engine-coverage/formula_interpreter.corpus-wide.json`
 — the binary's own default output path is SD-32's closed `gate-2-engines/` evidence file and is
 never overwritten; `--output` is always passed explicitly.
+
+### 3d. SD-36 Epic F2/F3 — class dispatch: the generic gate arm, the prestige rule, the multiclass fold
+
+**Generic gate arm (F2a).** `has_supported_class_chassis` (`class_shared_core.rs`) gained one arm,
+`is_supported_generic_class_family_single_class`: a single-class, non-prestige character whose class
+`generic_class_chassis::resolve` answers with a converted BAB/base-save row at that level is admitted.
+No class is named; the population is whatever `CLASS_FAMILY_BOOKS` holds (F2a appended the CRB and APG,
+so the resolver pin `every_conventional_class_in_class_family_books_resolves` measures 122 distinct
+slugs, was 78). Census before/after (`cargo run --locked -j 8 --bin class_census -- --json <path>`,
+`docs/release/SD-36-consolidation/artifacts/epic-f/stage-f2-f3/f2a-census-before-after.md`): no existing
+id moved; `ids` 135 -> 137 and `computed` 61 -> 63 of 63 non-prestige, the +2 being the APG
+Ex-Antipaladin/Ex-Inquisitor records the widened book list brought in.
+
+**Prestige rule (F2b).** A character whose only class is tagged `Prestige`
+(`generic_class_chassis::is_prestige`) gets one claim-blocking diagnostic,
+`prestige_class.requires_base_class_levels` ("A prestige class cannot be a character's first class. Add
+levels in a base class first."), and no chassis number: BAB, saves and HP print `Blocked`. One branch at
+the top of `compute_class_chassis`'s single-class section, keyed on the tag. The entry-requirement report
+(`class_chassis.prestige_entry_gate.{met,unmet}`) still prints beside it. Census: 74 of 74 prestige ids
+Blocked alone.
+
+**Multiclass fold (F3).** `src/rules_core/pilot_compute/multiclass_fold.rs` is one mechanical rule for
+every class with a chassis. Gate (`multiclass_member`): a non-prestige class joins a mix when its isolated
+single-class input passes `has_supported_class_chassis`; a prestige class joins when its converted record
+has a chassis row at that level; the mix needs at least one non-prestige class; each save progression must
+come from the CRB table or a converted `ClassChassis::save_shape` of `Good`/`Poor` (base forms `L/2+2`,
+`L/3`; prestige forms `(L+1)/2`, `(L+1)/3`). `Degraded`, `Unrecognized` or no record is a named
+claim-blocking diagnostic (`multiclass.save_shape.{degraded,unrecognized,unknown}`), never folded in as a
+poor save. Fold: BAB is the sum of each class's BAB; saves sum each class's exact rational value and floor
+once; HP (`multiclass.hit_points`) takes the maximized die only for the first-listed class's first level,
+`die/2+1` elsewhere, plus Con each level, and a class with no hit die makes HP `Unknown`
+(`class_chassis.hit_points.unknown`), never 0; skill points (`multiclass.skill_points`) sum ranks x levels
+per class, `Unknown` when a record states no ranks. Class-feature lines come from each class's isolated run,
+re-scoped `multiclass.<class>.<id>`, and their claim-blocking class-line diagnostics carry over the same
+way. Measured: prestige carrier mixes 68 of 74 `Computed` (6 Blocked on `multiclass.save_shape.unrecognized`,
+source formulas with a precedence error), mix panel 185 of 185; 187 multiclass negative controls flipped
+to status parity with the class alone; sabotage of the carry-over reddens 14 of 187, 0 restored
+(`artifacts/epic-f/stage-f2-f3/f3d-sabotage-log.md`).
 
 ### 4. `src/rules_core/pilot_compute_corpus.rs` — the corpus-aware wrapping seam
 
@@ -333,8 +672,8 @@ Resolution here is deliberately generic: it reads a resolved corpus record's own
 field rather than dispatching through per-school or per-category code, per the module's doc comment.
 `TableCellRef { rule_set, table, row_key, column_key }` is the shared "this claim is anchored to a
 specific Paizo source-book table cell, not just a corpus record's existence" proof type — it recurs
-across `src/rules_core/pilot_compute_corpus.rs`, `src/rules_core/equipment_effects.rs`, and the support-state matrix's
-grounding-reference pattern (see [support-state-matrix.md](./support-state-matrix.md)).
+across `src/rules_core/pilot_compute_corpus.rs` and `src/rules_core/equipment_effects.rs`. (The
+retired support-state matrix's `grounding_ref` field used the same pattern, SD-36 D3.)
 
 ### 5. `src/rules_core/contract.rs` — the boundary contract and the only sanctioned exit surface
 
@@ -372,7 +711,7 @@ pub enum SheetLineValue {
 ```
 
 **The data it reads.** `data/sheet_rules/` — our own schema, written once at ingest by
-`src/bin/sheet_rule_convert.rs` (see [corpus-ingest.md](./corpus-ingest.md) and
+`crates/codex-ingest/src/bin/sheet_rule_convert.rs` (see [corpus-ingest.md](./corpus-ingest.md) and
 [overview.md](./overview.md) §"The converter/live boundary"). **Nothing in `src/rules_core/`
 reads a PCGen token**; the engine's input is JSON in our shape. `corpus_loader::load_sheet_rules`
 builds a `SheetRulePackage` from `<book>/<kind>/**/*.json` plus the per-variable contribution
@@ -392,17 +731,95 @@ rule. A `SheetLine` carries `printed: String` — the value **as the player writ
 `"15"`, `"1d8+2"`, `""` for words) — so no consumer re-derives a number to display it.
 
 **Where it meets the spine.** `PilotReceipt`-side computation carries the result:
-`sheet_lines: Vec<sheet_rule::SheetLine>` on the computation result
-(`src/rules_core/pilot_compute/mod.rs:250`), filled by `render_sheet` at
-`pilot_compute/mod.rs:267`. The desktop shell maps it to `SheetLineDto`
-(`apps/desktop/src-tauri/src/character_hub.rs:634`) with `form` ∈ `number | dice | words` — see
-[desktop-app.md](./desktop-app.md).
+`sheet_lines: Vec<sheet_rule::SheetLine>` on the computation result, a field of
+`PilotBaseChassisComputation` (`src/rules_core/pilot_compute/class_shared_core.rs:33`, moved there
+by the Epic C1 split — the field and the `render_sheet` call that fills it both used to sit directly
+in `pilot_compute/mod.rs`), filled by `render_sheet` inside `class_shared_core.rs`'s own
+`compute_pilot_base_chassis` body (`class_shared_core.rs:46-50`). The desktop shell maps it to
+`SheetLineDto` (`apps/desktop/src-tauri/src/character_hub.rs:634`) with `form` ∈ `number | dice |
+words` — see [desktop-app.md](./desktop-app.md).
 
 **Catalog rendering without a character.** `src/rules_core/sheet_rule_catalog.rs` renders the
 same records for pickers and reference lists, where no character exists to settle a slot:
 `catalog_prose`, `catalog_description`, `catalog_field_summary`, and
 `prose_has_a_slot_no_character_settles` — the last is the explicit test for "this line cannot be
 a number here", which is why a catalog entry shows words rather than a fabricated value.
+
+## The corpus loaders: `source_content`, `settled_corpus`, `corpus_loader`, `race_resolver`
+
+These four modules are `rules_core`'s own side of the converter/live boundary
+([overview.md](./overview.md) §"The converter/live boundary"): they read data the converter already
+produced, never a PCGen token, and every one of them treats a whole book directory going missing as
+a **named, loud** fact rather than a silent empty result.
+
+### `src/rules_core/source_content.rs` — the canonical envelope and `SourceRef`
+
+This is the type home the ingest pipeline (now `crates/codex-ingest/src/pcgen_import/`) builds into
+and every book-agnostic resolver reads back out of. Full stage-by-stage derivation lives in
+[corpus-ingest.md](./corpus-ingest.md) §"Stage 6"; the two facts a `rules_core` contributor needs
+directly:
+
+- **`SourceRef { source_path: String, line: u32 }`** — the provenance anchor every record and
+  diagnostic carries. `source_path` is a `String`, not a `PathBuf`, deliberately: records built by
+  `rules_core`'s own live loaders (`corpus_loader`, `race_resolver`) cite a JSON file's repo-relative
+  path, not an LST line, so the field is a general "where this came from" string rather than a
+  filesystem-typed value. `line == 0` is the canonical placeholder for a container-level diagnostic
+  with no specific line (see `IRDiagnostic::to_canonical`'s doc comment, cited in
+  [corpus-ingest.md](./corpus-ingest.md)).
+- **`SourcePackageContent<'a> { package_id, source_ref, records, diagnostics }`** — the corpus-rooted
+  aggregate every resolver (`equipment_id_resolve`, `spell_id_resolve`, `load_sheet_rules`) is handed.
+  `records_by_kind` returns a deterministically ordered (sorted by `(lst_file, line)`, ties broken by
+  insertion order) filtered `Vec` — this ordering, not filesystem read order, is what makes a
+  duplicate-key resolution deterministic across two checkouts of the same corpus.
+
+### `src/rules_core/settled_corpus.rs` — the per-book settled bundle
+
+The live loaders below do not re-derive a corpus record's meaning from its raw JSON `data` object at
+run time any more (SD-35 `AT-35-E6-003-RULED` cycles 13-15, `decisions.md` §11/§19 — "no PCGen in
+live code"). Instead, `crates/codex-ingest/src/bin/gen_settled_corpus.rs` converts each record **once, at authoring
+time**, into a typed settled record (`CorpusEquipmentRecord`, `CorpusRaceRecord`,
+`CorpusRaceTraitRecord`) and writes the whole book's bundle to
+`data/corpus/<book>/_settled/<kind>.json` — a file sitting *beside* the kind directories
+(`equipment/`, `race/`, `race_trait/`), not inside one, so no existing corpus walk needed a new skip
+rule to avoid it. `settled_bundle_path(book_dir, kind)` and `bundle_key(kind_dir, record_path)` (the
+`/`-joined, platform-independent key every bundle indexes by) are the two functions
+`corpus_loader.rs`/`race_resolver.rs` call to read a bundle back with serde.
+
+**Staleness is loud, not silent.** `gen_settled_corpus --check` regenerates every bundle in memory
+and byte-compares, the same contract `sheet_rule_convert --check` uses; a corpus record present on
+disk with no matching bundle entry is a named loader diagnostic, not a record that quietly vanishes.
+
+### `src/rules_core/corpus_loader.rs` and `src/rules_core/race_resolver.rs` — the loud missing-book diagnostics
+
+Both modules load every given book's corpus directory (`BookCorpusRoot { book_id, dir }`, a shared
+input type `race_resolver` reuses rather than re-declaring) and both distinguish **two different
+kinds of absence**, because conflating them once shipped a real defect: a packaged build whose
+resolved corpus root had no bundled `data/corpus` at all produced "No race could be read from the
+corpus" with nothing in the diagnostics naming why.
+
+| Case | What it means | What happens |
+|---|---|---|
+| A whole book directory (`root.dir`) does not exist | A packaged build's resolved root has no bundled `data/corpus`, or a book was removed/renamed | **Loud**: a diagnostic naming the exact missing path is pushed (`"book directory not found: {}"`), and the loop `continue`s to the next book — one missing book never aborts the others |
+| A present book simply has no `equipment/`/`race/`/`race_trait/` subdirectory | Legitimate — books are wired in incrementally, and not every book carries every content family (APG and Inner Sea Races, for example, legitimately have only one of `race`/`race_trait`) | **Silent**: `continue`s with no diagnostic — this is not an error |
+
+`corpus_loader::load_equipment_corpus` and `race_resolver::load_race_corpus` both implement this
+same two-way split (`corpus_loader.rs`'s comment cites `race_resolver`'s identical guard as its own
+precedent, and vice versa — the two modules were built to mirror each other's shape exactly, per
+`race_resolver.rs`'s own module doc comment). A settled-bundle read failure gets the same loud
+treatment: `settled_corpus::read_equipment_bundle` returning `Err` pushes a diagnostic naming the
+bundle path and the error, and that book contributes nothing rather than degrading to a
+partially-populated result.
+
+`race_resolver.rs` additionally resolves PF1's alternate-racial-trait swap rule declaratively (a
+standard trait applies **iff** no selected alternate trait has set its `suppressed_by_flag` —
+`decisions.md §26`), classifying every corpus trait into one of four roles
+(`TraitRole::Default`/`Alternate`/`FlagGranted`/`Unclassified`, in strict precedence order) without
+interpreting any `BONUS:` formula itself — it hands resolved traits' raw tokens/bonus chains back for
+downstream hand-modelled functions to read, exactly as a raw-LST-parsed record would have been read
+before the settled-bundle cutover. `ResolvedTraits.unmatched_selections` (a saved character's trait
+selection that matched nothing) and `.inert_flags` (an alternate's swap target missing from the
+loaded books) are two more named "this input is not what we expected" surfaces, distinct from a
+missing book directory, that a caller can render as a real diagnostic instead of a silent drop.
 
 ## The fail-honest pattern
 
@@ -476,8 +893,10 @@ and `Panache`, which only APG/ACG records use; those two dispatch arms have no l
 evaluation path (every submodule above evaluates against the CRB catalog, which by construction
 holds no record of either) and say so rather than reporting a real APG/ACG feat as unrecognized.
 The book-spanning catalog the desktop Feat picker serves is
-`rules_tables::feats_all::all_feat_tables()` (486 records across CRB/APG/ACG) — see
-[rules-data-tables.md](./rules-data-tables.md). Ingesting those records does **not** ground their
+`rules_tables::feats_all::all_feat_tables()` (23 books joined, 1578 hand-authored entries plus
+per-book corpus-gap rows — not just CRB/APG/ACG) — see
+[rules-data-tables.md](./rules-data-tables.md) §"Per-book directory pattern"'s `feats_all.rs` entry.
+Ingesting those records does **not** ground their
 mechanical effects: `src/rules_core/feat_effects.rs` still grounds computed effects for a small
 subset of CRB feats only.
 
@@ -615,8 +1034,8 @@ API, not `#[cfg(test)]` unit tests inside `rules_core`). Representative files ac
 this document:
 
 - `tests/ge06_pilot_base_computation.rs` — proves `compute_pilot_base_chassis` against the deterministic GE-06 Human Fighter level-1 fixture (`tests/fixtures/rules_core/pf1_human_fighter_level1_ge06_deterministic_input.txt`), asserting ability modifiers and base chassis values only.
-- `tests/sd20_tabletop_readiness_integration.rs` — the Epic 8 integration-closure test: runs the full boundary-contract pipeline (`classify_character_input` → `compute_pilot_with_corpus` → `to_pilot_receipt` → `printed_sheet_cell_map`) against a fixture and asserts every defined sheet cell is a real, non-`Blocked` number matching a golden `expected_output`.
-- `tests/sd13_progression/barbarian_level6.rs` (representative of ~400 per-class/per-level widening tests; one module of the single `sd13_progression` binary since SD-35 `AT-35-E1-003` — run it with `cargo test --test sd13_progression barbarian_level6::`) — imports `support_state_matrix::seeded_current_truth` alongside chassis assertions, so a class/level widening and its matrix-row transition are proven together, not separately.
+- `crates/codex-ingest/tests/sd20_tabletop_readiness_integration.rs` — the Epic 8 integration-closure test (lives in `codex-ingest`, not the root crate's `tests/`, because building its fixture corpus needs the real converter): runs the full boundary-contract pipeline (`classify_character_input` → `compute_pilot_with_corpus` → `to_pilot_receipt` → `printed_sheet_cell_map`) against a fixture and asserts every defined sheet cell is a real, non-`Blocked` number matching a golden `expected_output`.
+- `tests/sd13_progression/barbarian_level6.rs` (representative of ~400 per-class/per-level widening tests; one module of the single `sd13_progression` binary since SD-35 `AT-35-E1-003` — run it with `cargo test --test sd13_progression barbarian_level6::`) — chassis assertions only; the matrix-row assertion this file used to pair them with was stripped when the support-state matrix was retired (SD-36 D3).
 
 See [testing.md](./testing.md) for the full test-organization convention.
 
@@ -624,17 +1043,94 @@ See [testing.md](./testing.md) for the full test-organization convention.
 
 | If you're changing... | Start here |
 |---|---|
-| A new class's level-1 chassis or an existing class's level ceiling | `src/rules_core/pilot_compute/mod.rs`: find the class's `supported_<class>_level` and `explain_<class>_level1_chassis` (or equivalent) functions; add the gate condition and explanation records following the existing pattern |
-| A new race's trait recognition | `src/rules_core/pilot_compute/mod.rs`: the `explain_<race>_race_seam` function family |
+| A new class's level-1 chassis or an existing class's level ceiling | The class's own submodule under `src/rules_core/pilot_compute/` (e.g. `class_fighter.rs`, `class_cleric.rs` — `grep -rn 'fn supported_<class>_level' src/rules_core/pilot_compute/` if unsure which file); find `supported_<class>_level` and `explain_<class>_level1_chassis` (or equivalent), add the gate condition and explanation records following the existing pattern, then check `has_supported_class_chassis` in `class_shared_core.rs` grew a matching arm too |
+| A new race's trait recognition | `src/rules_core/pilot_compute/race_seams.rs`: the `explain_<race>_race_seam` function family |
 | Spell slot/prepared/known math for a school | `src/rules_core/spellbook.rs` + the specific `spellbook/<school>.rs` submodule |
 | Skill rank totals, cross-class penalties, untrained use | `src/rules_core/skill_allocation.rs` |
-| Feat prerequisites or feat-granted effects | `src/rules_core/feat_prereqs.rs` + the category submodule under `feat_prereqs/` matching the feat's `FeatCategory` |
+| Feat prerequisites or feat-granted effects | `src/rules_core/feat_prereqs.rs` + the category submodule under `feat_prereqs/` matching the feat's `FeatCategory`; a computed feat *effect* (not just prerequisites) goes in `src/rules_core/feat_effects.rs` |
 | Equipment-derived AC/skill/ability/weapon bonuses | `src/rules_core/equipment_effects.rs` + the category submodule under `equipment_effects/` |
 | Weapon damage rolls (base dice, STR, enhancement, feats, crits) | `src/rules_core/damage_total.rs` |
 | What grants happen on level-up for a class | `src/rules_core/level_up.rs` + the per-class submodule under `level_up/` |
 | Encounter difficulty or party CR | `src/rules_core/encounters.rs` / `src/rules_core/party_cr.rs` |
 | What the GUI is allowed to render, or a new sheet cell | `src/rules_core/contract.rs`: `PilotReceipt`, `to_pilot_receipt`, `printed_sheet_cell_map` |
 | Corpus resolution for a chosen item/spell id | `src/rules_core/equipment_resolver.rs` / `src/rules_core/spell_resolver.rs` |
+| A whole book's worth of corpus content, or why a book reads empty | `src/rules_core/corpus_loader.rs` / `src/rules_core/race_resolver.rs` (§"The corpus loaders" above) — check the diagnostics before assuming a resolver bug |
+| An animal companion's or familiar's computed stat block (AC, HP, saves, attacks — the PLAYER-side pet, ground live) | `src/rules_core/pilot_compute/companion.rs` (`ground_*_companion_stat_block`) + `src/rules_core/pilot_compute/companion_base_stat_table.rs`; natural armor is one of the bonuses these compute — `grep -rli 'natural.armor' src/rules_core/pilot_compute/*.rs` finds every contributor |
+| A monster catalog stat block (Bestiary 1 and other book-side monsters, served READ-ONLY, never computed) | `src/rules_core/rules_tables/beastiary1/` (46 hand-modelled) and `src/rules_core/rules_tables/monster_chassis.rs` (the other 284 rows, `MONSTER_BOOKS` registry) via `apps/desktop/src-tauri/src/monster_catalog.rs` — see [rules-data-tables.md](./rules-data-tables.md) §"One book is served by two tables, deliberately." **AC, HP and saves are deliberately not served here**: they are not corpus tokens (PCGen computes them at runtime from `MONSTERCLASS:`/ability scores, not a literal row), and an empty AC column would be exactly the placeholder `docs/governance/no-stub-mvp-doctrine.md` forbids — see `monster_catalog.rs`'s own module doc for the full reasoning. Two same-named `struct MonsterStatBlock` types exist (`beastiary1/mod.rs` and `monster_chassis.rs`) — they are not the same type. |
 | Whether something should count as claim-blocked | Re-read "The fail-honest pattern" above before writing a diagnostic |
-| Whether a capability is officially supported yet | [support-state-matrix.md](./support-state-matrix.md) |
+
+## How to add X: three worked examples
+
+### Add a class feature (gate-then-explain)
+
+1. Find the class's submodule under `src/rules_core/pilot_compute/` — `grep -rln 'fn explain_<class>' src/rules_core/pilot_compute/` if the class already has any grounded content, otherwise pick the submodule the class's *family* lives in (barbarian-shaped classes are in `class_barbarian.rs`, spontaneous-caster-shaped classes near `class_sorcerer_wizard.rs`, etc. — see the [pilot_compute/ submodule map](#3-src_rules_corepilot_compute---the-deterministic-chassis-engine) above; when genuinely unsure, `class_shared_core.rs`'s `has_supported_class_chassis` names every class with any supported chassis today).
+2. Write (or extend) `supported_<class>_level(input: &CharacterInput) -> Option<u8>` — the gate. It returns the class's own level from `input.chosen.class_levels` only when that class/level combination is inside the range this function proves, `None` otherwise.
+3. Write `explain_<class>_level<N>_<feature>(input, out: &mut PilotBaseChassisComputation)` (or extend the class's existing per-level explainer) following an existing sibling's shape exactly: on the gated path, push a real `ComputationExplanation` with a stable `id` naming the feature (e.g. `"class_feature.rogue.trapfinding"`); on the ungated path, push a `ComputationDiagnostic { claim_blocking: true, .. }` naming exactly what is still unsupported — never a partial or fabricated value.
+4. Wire the new function into `compute_pilot_base_chassis`'s call sequence (`class_shared_core.rs`) in the same relative position as its sibling per-class calls.
+5. If this is the class's *first* grounded chassis content, add its predicate to `has_supported_class_chassis` (`class_shared_core.rs`) — skipping this step is the most common way a class's receipt stays `Blocked` despite real, correct explanation records (see §3's own note on this).
+6. Write the test first (TDD is non-negotiable, `AGENTS.md` rule 1): a `tests/sd<NN>_<class>_<feature>.rs` integration test, or a widening row in the `sd13_progression` binary (`tests/sd13_progression/<class>_level<N>.rs`) if this is a per-level-ceiling widening — see [testing.md](./testing.md).
+
+### Add a feat effect
+
+1. `src/rules_core/feat_prereqs.rs` + its category submodule (`feat_prereqs/general.rs`, `combat.rs`, `item_creation.rs`, or `metamagic.rs`, matching the feat's `FeatCategory` in `rules_tables::crb::feats::feat_tables()`) is where *prerequisite evaluation* lives — start here only if the feat isn't reachable at all yet.
+2. A feat's computed **mechanical effect** (not just whether it's legal to take) is a distinct, smaller surface: `src/rules_core/feat_effects.rs`, which grounds a bounded subset of CRB feats today. Add the feat's effect function there, following an existing entry's shape — it composes with `damage_total.rs`/`equipment_effects.rs` rather than duplicating either.
+3. A feat a class grants *automatically* (never appears in `selected_feats` because the player never picks it) is a third, separate case: `src/rules_core/pilot_compute/feat_pillars.rs`'s `class_granted_feats`.
+4. Prove it with a fixture-backed test under `tests/`, following the fail-honest pattern: an untriggered feat's absence is `None`/no explanation, never a zeroed placeholder.
+
+### Add a race seam
+
+1. `src/rules_core/pilot_compute/race_seams.rs` is the one file — every core race's `explain_<race>_race_seam` function, the flat-override race-trait seams (`explain_<race>_flat_override_race_trait`), and the formula-shaped ones (`explain_undine_formula_race_trait`) all live here.
+2. Decide the shape first, because it determines which existing sibling to copy: a flat, level-independent numeric override (Speed/Vision/a natural weapon) is the flat-override shape; a value that depends on evaluating a real corpus formula is the formula shape (`domain_power.rs`-style narrow evaluator, not the general interpreter — see §3a); anything else is the plain `explain_<race>_race_seam` shape.
+3. If the race trait is genuinely a corpus-wide, book-agnostic seam (not one of the 7 CRB races' hand-modelled functions), check `race_ids_with_a_magnitude_consumer` first — a race only belongs on that list once it has a *real* magnitude consumer, not just a registration (SD-31 wave 26's Undine finding, cited in §3b above, is the cautionary tale: a coarse race-level allowlist entry awarded credit to 11 records with no consumer at all).
+4. Wire it through `race_resolver::load_race_corpus`/`RaceCorpus::resolve` if the seam needs to read the corpus's own alternate-trait swap graph (§"The corpus loaders" above) rather than a hand-authored constant.
+5. Test both directions: the trait applies under its base race, and resolves to `None`/absent under every other race — mirroring `rules-data-tables.md`'s guard-then-dispatch acceptance-test convention.
+
+## How to extend
+
+- **A new per-domain engine** (a whole new mechanical surface, not a widening of an existing one): give it its own flat file under `src/rules_core/` (mirroring `damage_total.rs`'s "one sequential computation, no subdirectory" shape) or its own subdirectory with category submodules (mirroring `equipment_effects/`, `feat_prereqs/`, `level_up/`, `spellbook/`) if the domain naturally splits by category. Wire it into `contract.rs::to_pilot_receipt` as a new `PilotReceipt` field, following the fail-honest pattern from the first line of code. Add it to the [per-domain engine catalog](#per-domain-engine-catalog) and the "Where to start" table above in the same PR.
+- **A new pilot_compute/ submodule**: only split `pilot_compute/` further when a submodule has grown large enough to be its own review unit — follow the Epic C1 shape exactly (`use super::*;` at the top, re-exported via `mod.rs`'s blanket `pub use`), and update this doc's submodule map and Pitfalls note if the split changes which file a commonly-searched function lives in.
+- **A new claim-blocking diagnostic**: re-read "The fail-honest pattern" first. Every diagnostic needs a stable `id`, a human-readable `message` naming exactly what's missing, and an honest `claim_blocking` value — `true` only when no real value exists yet, `false` when a real (possibly capped/adjusted) value was already computed and the diagnostic is informational.
+- **A new sheet-rule consumer**: never write a second formula evaluator against `data/sheet_rules/` — `sheet_rule::render_sheet` is the one entry point, and a new consumer reads its `Vec<SheetLine>` output, not the underlying `SheetRule` records directly, unless it's `sheet_rule_catalog.rs`'s catalog-rendering (no-character) case.
+
+## Pitfalls
+
+- **A `pilot_compute/` submodule's filename does not reliably predict its content.** The Epic C1
+  split moved code by rough file-position windows from the original ~88,800-line monolith, not by
+  rewritten semantics. `compute_class_chassis` lives in `class_occult_and_psionic.rs`;
+  `compute_total_saves` lives in `feat_pillar_and_pool_aggregation.rs`; `class_dispatch.rs`,
+  `skills_and_saves.rs`, `spellcasting.rs`, and `pool_groups.rs` are almost entirely `#[cfg(test)]`
+  regression suites for logic that lives elsewhere. Grep for the function, don't guess from the
+  filename.
+- **Adding chassis dispatch for a class without adding it to `has_supported_class_chassis`
+  (`class_shared_core.rs`) is a real, recurring defect class, not a hypothetical one.** SD-31 wave 20
+  (Ultimate Combat's three classes) and SD-34 wave 33 (27 untabled classes) both shipped correct,
+  dispatching chassis code whose receipts still never reached `Computed`, because `compute_total_saves`,
+  `compute_combat_baseline`, and `compute_selected_skill_modifiers` each check this shared gate
+  independently of `compute_class_chassis` itself.
+- **A `#[cfg(test)]` region does not trip the PCGen residue gate, and new production code must not
+  rely on that to justify a shortcut.** `scripts/pcgen_residue_gate.py`'s `cfg_test_ranges`/`code_only`
+  masking excludes comments and test-only code from the live-hit count (operator rulings B14/B15) —
+  this is why `pilot_compute/domain_power.rs` can carry a literal `"PREVARLT:..."` string in its own
+  test module while the gate still reports `live_hits=0`. That masking exists to avoid false
+  positives on legitimate test fixtures, not to create a loophole for a live formula reader; the
+  correct home for anything that genuinely needs to parse a PCGen token is
+  `crates/codex-ingest/src/pcgen_import/`, never `src/rules_core/`.
+- **A missing book directory and a present book with no content subdirectory are different facts,
+  and conflating them has shipped a real defect before** ("No race could be read from the corpus,"
+  with nothing in the diagnostics naming why — the incident `corpus_loader.rs`/`race_resolver.rs`'s
+  own comments cite directly). Always check for the loud, named `"book directory not found: {}"`
+  diagnostic before assuming a resolver bug; a silent zero-record book is expected when the book
+  legitimately doesn't carry that content family yet.
+- **`compute_level_up_grants` (`level_up.rs`) silently returns an honestly-empty `LevelUpPlan::default()`
+  for any multiclass mix** — it has no per-class-delta parameter. This is a documented, not a hidden,
+  gap (the desktop's `RuleSystemAdapter::level_up` seam is built to eventually take
+  `&[ClassLevelDelta]`), but a caller that doesn't know this will silently get "no grants" for a
+  multiclass character rather than an error.
+- **The formula-interpreter subsections (§3a-3c) describe SD-31 history, not the current live
+  path.** The interpreter now runs once at ingest inside the converter
+  (`crates/codex-ingest/src/pcgen_import/`); the live side reads only its resolved
+  `data/sheet_rules/` output through `sheet_rule::render_sheet`. Do not add a new runtime call into
+  `formula_interpreter.rs` from `src/rules_core/` — it would both violate the crate wall (`codex`
+  cannot depend on `codex-ingest` in its normal dependency graph) and duplicate work the sheet-rule
+  converter already does once, correctly, at authoring time.
 

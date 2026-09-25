@@ -1,17 +1,100 @@
 # Corpus Ingest
 
-> Scope: how real PCGen corpus files (`.pcc` entry files + `.lst` data files) are parsed and projected into the canonical source-IR the rules engine consumes.
-> Last verified: **2026-09-15 against `tranche/15`** (SD-35 closure epilogue) for the new
-> §"The sheet-rule converter (`data/sheet_rules/`)" section and the `cache_gen` relocation, verified
-> against `src/pcgen_import/sheet_rule/`, `src/bin/sheet_rule_convert.rs`, `src/pcgen_import/cache_gen/`
-> and `data/sheet_rules/_report.json`. Prior pass **2026-08-25 against `tranche/13`** (SD-33 closure epilogue) for the §"`raw_tokens` enrichment and the corpus-literal sweep's own closure builder" section; the 2026-08-18 `tranche/11` pass for §"Provenance is per-FIELD, not per-record" (SD-31 wave 14, `SD31-W14-INTEGRATE-001`) still stands; prior pass 2026-08-07 against tranche/8 (wiring_class/PI-screening convergence cycle) — parsing-pipeline sections (Stage 1-6) re-verified structurally only; the cache-layer additions are documented in [rules-data-tables.md](./rules-data-tables.md)
+> Scope: the crate wall between the PCGen converter/oracle and the live engine, and how real PCGen corpus files (`.pcc`/`.lst` data files) are parsed and projected into the canonical source-IR the rules engine consumes.
+> Last verified: **2026-09-20 against `tranche/16` (`424e93e93c`)** — SD-36 docs-truth capability pass:
+> corrected the "how to onboard a book" section's book-count framing (was a vague "~30+"; now the
+> reconciled 37 `RuleSetId` variants / 38 tracked books / 39 `data/corpus/` directories, each with its
+> own denominator and re-derive command) and the stale pre-Epic-A paths this document's own §"The
+> crate wall" pass had already corrected elsewhere but had not swept from
+> `docs/work-inventory.FROZEN.md`'s reader list (fixed there, not here — see that file). Prior pass
+> **2026-09-20 against `b22ea9e113`** added §"The crate wall" and the path corrections it required
+> throughout this document: the old src/pcgen_import/ and src/oracle_validation/ directories do not
+> exist any more — SD-36 Epic A (operator ruling D1) moved the whole converter/oracle tree to
+> `crates/codex-ingest/src/pcgen_import/` and `crates/codex-ingest/src/oracle_validation/`, and every
+> generator/enrichment binary that used to live at `src/bin/*` moved to `crates/codex-ingest/src/bin/*`
+> (only `pi_sweep_rules_tables.rs`, `v06_class_state_dump.rs`, and `v06_content_state_dump.rs` remain
+> in `src/bin/`, re-derived with `ls src/bin/` vs `ls crates/codex-ingest/src/bin/`). That pass also
+> added the converter-pipeline flowchart, the corpus record erDiagram, and the generated PCGen-free
+> desktop corpus bundle section. Prior pass **2026-09-15 against `tranche/15`** (SD-35 closure
+> epilogue) verified §"The sheet-rule converter" and the `cache_gen` relocation (unaffected in
+> substance by the Epic A crate move — only the path prefix changed); the parsing-pipeline stages
+> (1-6) are otherwise unchanged since the 2026-08-07 tranche/8 pass.
 > Maintenance: updated at SD closure — see [README.md](./README.md) §Maintenance contract
+
+## The crate wall
+
+*New 2026-09-20, SD-36 Epic A / operator ruling D1.* The whole of this document's subject — the
+PCGen converter, its `.lst`/`.pcc` parsers, and the oracle-parity harness — lives in a **separate
+Cargo crate**, `codex-ingest` (`crates/codex-ingest/`), not in the root `codex` crate that ships in
+the desktop binary. This is the mechanical enforcement of the same boundary
+[overview.md](./overview.md) describes as "the converter/live boundary": before Epic A that boundary
+was a `grep`-checked convention (`scripts/pcgen_residue_gate.py` scanning `src/rules_core/**` for
+PCGen token syntax); after Epic A it is also a **build-graph fact** `cargo tree` can show directly.
+
+```mermaid
+flowchart LR
+    subgraph ingest["crates/codex-ingest (codex-ingest crate)"]
+        pcgen_import["pcgen_import/\nparsers, ir_converter, sheet_rule/, cache_gen/,\nformula_interpreter, wiring_class, corpus_traps"]
+        oracle_validation["oracle_validation/\ngolden_fixture, comparator, normalization,\nparity_report, pcgen_runner, bar checks"]
+        bin["bin/\nsheet_rule_convert, gen_*, enrich_*,\ningest_*, repair_*"]
+    end
+    subgraph root["codex (root crate, ships in the desktop binary)"]
+        rules_core["rules_core/**\ncompute engine, sheet_rule.rs reader,\ncorpus_loader.rs, race_resolver.rs"]
+        support["support/paths.rs"]
+    end
+    subgraph desktop["codex-desktop (apps/desktop/src-tauri)"]
+        tauri["Tauri commands"]
+    end
+
+    ingest -->|normal dependency, one direction only| root
+    tauri -->|normal dependency| root
+    tauri -.->|dev-dependency ONLY\n9 cfg-test sites proving no PCGen\nsyntax leaks into a description| ingest
+    pcgen_import -->|writes, at authoring time| datafiles["data/sheet_rules/**\ndata/corpus/**\ndata/class_feature_grants/**"]
+    rules_core -->|reads, at run time, via serde| datafiles
+```
+
+*Dependency direction is `codex-ingest -> codex`, never the reverse, in the normal/build graph —
+`codex` may only reach `codex-ingest` as a `[dev-dependencies]` entry (`apps/desktop/src-tauri/Cargo.toml`),
+and only for tests. A `codex` production path that imported `codex-ingest` would make the crate wall
+meaningless; the `crate-wall` verify stage below fails the build before that ships.*
+
+**Why a separate crate, not just separate files.** `Cargo.toml` at the repo root declares a
+`[workspace] members = ["crates/*"]` with **no `default-members`** — `cargo build`/`cargo test` run
+at the repo root therefore build only the root `codex` package by default, "the wall's cheapest
+proof" per the workspace manifest's own comment. `crates/codex-ingest/Cargo.toml` depends on `codex`
+by path (`codex = { path = "../.." }`), the *opposite* direction from what a converter-in-the-same-crate
+arrangement would have allowed silently.
+
+**What may depend on what:**
+
+| Crate | May depend on (normal graph) | May depend on (dev-only) |
+|---|---|---|
+| `codex` (root, `Cargo.toml`) | nothing under `crates/` | never `codex-ingest` |
+| `codex-ingest` (`crates/codex-ingest/`) | `codex` | — |
+| `codex-desktop` (`apps/desktop/src-tauri/`) | `codex` | `codex-ingest` (9 `#[cfg(test)]` sites proving a player-facing description never leaks raw PCGen syntax — see `apps/desktop/src-tauri/Cargo.toml`'s own comment on the entry) |
+
+**The `crate-wall` verify stage** (`scripts/verify.sh`, `run_crate_wall`) proves this structurally,
+not by convention: it runs `cargo tree -e normal,build` from the desktop crate and asserts zero
+`codex-ingest` entries in that edge set, an awk check that every mention of `codex-ingest` in
+`apps/desktop/src-tauri/Cargo.toml` sits under the `[dev-dependencies]` header specifically, and then
+re-runs `scripts/pcgen_residue_gate.py --check` as a second, independent proof of the same boundary
+from the token-content side. Both must pass for the stage to pass.
+
+**What moved, and what stayed.** Every file that reads a PCGen token — the whole parsing pipeline
+below, the sheet-rule converter, `wiring_class.rs`, `corpus_traps.rs`, the formula interpreter, and
+`oracle_validation/`'s six submodules — moved from `src/` to `crates/codex-ingest/src/`. Every
+generator/enrichment/ingest binary that used to live at `src/bin/*.rs` moved to
+`crates/codex-ingest/src/bin/*.rs` with it, because each one reads or re-derives from raw corpus
+text. Nothing about *what* any of these modules do changed — this was a pure relocation, verified by
+`crate-wall`'s and `pcgen-residue-gate`'s stages both passing unchanged in substance, only in which
+crate they run against.
 
 ## Purpose
 
-`src/pcgen_import/` turns real PCGen corpus text — `.pcc` campaign entry
+`crates/codex-ingest/src/pcgen_import/` turns real PCGen corpus text — `.pcc` campaign entry
 files and the `.lst` object-data files they include — into the canonical
-source-IR envelope (`src/rules_core/source_content.rs`) that the rules
+source-IR envelope (`src/rules_core/source_content.rs`, still in the root `codex` crate — see
+[rules-engine.md](./rules-engine.md) §"The corpus loaders") that the rules
 engine consumes. The corpus itself is never vendored into this repo: it
 is an external checkout of PCGen data, located by the `PCGEN_CORPUS_ROOT`
 environment variable at test time. Every corpus-gated test skips gracefully
@@ -20,17 +103,46 @@ present — see [testing.md](./testing.md) §"Corpus-gated tests" for the full
 catalog of patterns and which one to copy for a new test.
 
 Parsing and semantic conversion are deliberately separate stages, per
-`src/pcgen_import/mod.rs`'s module doc comment. Nothing in this module
+`crates/codex-ingest/src/pcgen_import/mod.rs`'s module doc comment. Nothing in this module
 interprets PF1 rule semantics (BONUS trees, pipe-delimited qualifiers,
 spell-slot math); it only recognizes directive shapes and carries their
 tokens forward with source provenance.
+
+## The converter pipeline, end to end
+
+```mermaid
+flowchart TD
+    pcc["pcc.rs\nparse_pcc_entry"] --> include["include_resolver.rs\nresolve_pcc_includes_from"]
+    include --> lst["lst_parser/*.rs\nparse_&lt;kind&gt;_entries\n(class, spellcasting_class, race_ability,\nspell, equipment, metadata, monster_stat_block)"]
+    lst --> ir["ir_converter.rs\nconvert_to_ir"]
+    ir --> source_content["rules_core::source_content\nSourceContentPayload, SourcePackageContent\n(root codex crate)"]
+
+    lst -->|raw token closure| enrich["enrich_*.rs bins\nraw_tokens / raw_bonus_chains"]
+    source_content -->|read by| cache_gen["cache_gen/ + gen_*.rs bins\nJSON corpus cache writer"]
+    enrich --> corpus_data["data/corpus/&lt;book&gt;/&lt;kind&gt;/*.json\n(git-tracked, ingest residue included)"]
+    cache_gen --> corpus_data
+
+    corpus_data --> settled_gen["gen_settled_corpus.rs"]
+    settled_gen --> settled["data/corpus/&lt;book&gt;/_settled/&lt;kind&gt;.json\n(residue-free settled records)"]
+
+    pcc -->|token closure, .MOD chain| sheet_rule_convert["sheet_rule/*.rs +\nbin/sheet_rule_convert.rs"]
+    sheet_rule_convert --> sheet_rules["data/sheet_rules/&lt;book&gt;/&lt;kind&gt;/&lt;key&gt;.json\n(SheetRule schema, no token, no formula string)"]
+
+    corpus_data -->|desktop build step| bundle_gen["scripts/gen-corpus-bundle.mjs\n(repo root, not apps/desktop/)"]
+    bundle_gen --> bundle["apps/desktop/src-tauri/resources/corpus_bundle/\n(sanitized mirror, ships in the installer)"]
+```
+
+*Everything left of the dotted line between `corpus_data`/`settled`/`sheet_rules` and the desktop
+lives in `codex-ingest`; `data/corpus/`, `data/sheet_rules/`, and the desktop's `corpus_bundle/`
+mirror are ordinary committed data files any crate can read — the crate wall is about which CODE may
+read a PCGen TOKEN, not about who may read the JSON these tools produce.*
 
 ## The sheet-rule converter (`data/sheet_rules/`) — new 2026-09-15, SD-35
 
 The stages below produce the source-IR the engine's hand-transcribed chassis consumes. SD-35
 added a **second, terminal output** of this module, and it is the one that carries the whole
-corpus: `src/pcgen_import/sheet_rule/` (`closure.rs`, `convert.rs`, `ctx.rs`, `formula.rs`,
-`mod.rs`, `prereq.rs`, `prose.rs`, `table.rs`), driven by the `src/bin/sheet_rule_convert.rs`
+corpus: `crates/codex-ingest/src/pcgen_import/sheet_rule/` (`closure.rs`, `convert.rs`, `ctx.rs`, `formula.rs`,
+`mod.rs`, `prereq.rs`, `prose.rs`, `table.rs`), driven by the `crates/codex-ingest/src/bin/sheet_rule_convert.rs`
 binary.
 
 **Why it exists.** It is the whole of the converter/live boundary
@@ -43,7 +155,7 @@ and is never called at run time.
 read in PCGen's own order (`.COPY=` base → own row → `.MOD` rows in file order), from the pinned
 tree named by `scripts/pcgen-oracle-pin.env`. `_pfs/` files are skipped by path; `.MOD` rows match
 on (file kind, CATEGORY, KEY-else-name); a base record resolves corpus-wide
-(`src/pcgen_import/sheet_rule/closure.rs`). The closure also reads the numbered class level lines
+(`crates/codex-ingest/src/pcgen_import/sheet_rule/closure.rs`). The closure also reads the numbered class level lines
 (`PinnedTree.level_lines`) that `data/corpus/` never held.
 
 **Output.** `data/sheet_rules/<book>/<kind>/<key>.json` — one `SheetRule` per record in **our**
@@ -56,7 +168,11 @@ by this stage. Every emitted rule carries its own `provenance`: the `book`, the 
 `converter_version`.
 
 **Its own report is the gate.** `data/sheet_rules/_report.json`, re-derivable with
-`cargo run --locked --bin sheet_rule_convert -- --check`:
+`cargo run --locked -p codex-ingest --bin sheet_rule_convert -- --check` (the
+`-p codex-ingest` is required — the root `Cargo.toml` has no
+`default-members`, so a bare `--bin sheet_rule_convert` from the repo root
+cannot resolve the binary; `scripts/verify.sh`'s `sheet-rules-check` stage
+runs the same `-p`-qualified form):
 
 | figure | value | re-derive |
 |---|---|---|
@@ -76,7 +192,7 @@ $ grep -rlE 'BONUS:|DEFINE:|PRE[A-Z]+:|%CHOICE|CL=' data/sheet_rules/ | wc -l
 0
 ```
 
-**`cache_gen` moved.** The corpus-cache generators live at `src/pcgen_import/cache_gen/` as of
+**`cache_gen` moved.** The corpus-cache generators live at `crates/codex-ingest/src/pcgen_import/cache_gen/` as of
 SD-35 (`AT-35-E6-002`). They were under a `cache_gen/` directory in `src/rules_core/`, which put
 PCGen-reading code on the live side of the boundary; the code is unchanged, only its side is.
 There is no `cache_gen/` under `src/rules_core/` any more — the path in any older doc or comment
@@ -98,7 +214,7 @@ rules_core::source_content SourcePackageContent<'a>  (corpus-rooted aggregate)
 
 ### Stage 1 — `pcc.rs`: structural include edges
 
-`src/pcgen_import/pcc.rs`'s `parse_pcc_entry(source_path, input_text)`
+`crates/codex-ingest/src/pcgen_import/pcc.rs`'s `parse_pcc_entry(source_path, input_text)`
 walks a `.pcc` file line by line and recognizes exactly one construct:
 `PCC:` include directives. Every other line (`CLASS:`, `RACE:`,
 `SKILL:`, ...) is ignored at this stage — no LST semantics are
@@ -113,7 +229,7 @@ interpreted here. The result is a `PccEntryFile` carrying:
 
 ### Stage 2 — `include_resolver.rs`: deterministic include graph
 
-`src/pcgen_import/include_resolver.rs` composes `pcc::parse_pcc_entry`
+`crates/codex-ingest/src/pcgen_import/include_resolver.rs` composes `pcc::parse_pcc_entry`
 (it does not shadow it) and resolves the raw include-directive text into
 an actual filesystem graph. `resolve_pcc_includes_from(corpus_root,
 source_pcc_path)` performs a deterministic DFS over `PCC:` edges,
@@ -141,7 +257,7 @@ itself.
 
 ### Stage 3 — `lst_parser/`: per-kind LST parsers
 
-`src/pcgen_import/lst_parser/mod.rs` partitions LST parsing by object
+`crates/codex-ingest/src/pcgen_import/lst_parser/mod.rs` partitions LST parsing by object
 kind, one module per kind:
 
 - `class.rs` — `parse_class_entries` recognizes `CLASS:<name>` lines for
@@ -188,15 +304,15 @@ kind, one module per kind:
   row. **This parser is not wired into `ir_converter.rs` or
   `SourceContentPayload`** — there is no `MonsterStatBlockRecord`
   variant on either enum, and its only caller in the repo is the
-  parser's own test suite (`tests/sd17_b_monster_stat_block.rs`). Its
+  parser's own test suite (`crates/codex-ingest/tests/sd17_b_monster_stat_block.rs`). Its
   output is read and hand-transcribed into `rules_tables` book modules
   rather than flowing through the canonical-IR projection path
   automatically (see [rules-data-tables.md](./rules-data-tables.md)'s
   hand-transcription convention).
 
 Every per-kind parser's outputs are reachable through one kind-tagged
-union: `ParsedLstRecord<'a>` (`src/pcgen_import/lst_parser/mod.rs`,
-canonical home; re-exported from `src/pcgen_import/mod.rs` and from
+union: `ParsedLstRecord<'a>` (`crates/codex-ingest/src/pcgen_import/lst_parser/mod.rs`,
+canonical home; re-exported from `crates/codex-ingest/src/pcgen_import/mod.rs` and from
 `ir_converter.rs` for backward compatibility). Its seven variants —
 `Class`, `SpellcastingClass`, `Race`, `Ability`, `Spell`, `Equipment`,
 `Metadata` — each borrow (`&'a ...`) the corresponding B-family entry
@@ -206,7 +322,7 @@ canonical-IR pipeline.
 
 ### Stage 4 — `ir_converter.rs`: canonical projection
 
-`src/pcgen_import/ir_converter.rs` is the canonical projection path. Its
+`crates/codex-ingest/src/pcgen_import/ir_converter.rs` is the canonical projection path. Its
 public entry point, `convert_to_ir(parsed_record: &ParsedLstRecord<'a>,
 _schema: &IRSchema) -> SourceContentRecord<'a>`, is a total,
 enum-discriminated trampoline over seven per-family converters
@@ -237,7 +353,7 @@ converter-originated code maps to `SourceContentSeverity::Info` +
 ### Stage 5 — `source_content.rs`: the payload enum
 
 `SourceContentPayload<'a>` (`src/rules_core/source_content.rs`; until 2026-09-15 this doc
-cited a `source_content_payload.rs` under `src/pcgen_import/` that has never existed —
+cited a `source_content_payload.rs` under `crates/codex-ingest/src/pcgen_import/` that has never existed —
 path corrected at the SD-35 closure)
 is the typed, kind-tagged union of borrowed B-family entries
 (`Class(&'a ClassEntry)`, `SpellcastingClass(&'a SpellcastingClassEntry)`,
@@ -329,16 +445,132 @@ container-level diagnostics with no specific line, which anchor to
 `line == 0` as the canonical placeholder (see
 `IRDiagnostic::to_canonical`'s doc comment).
 
+## The corpus record schema (`data/corpus/**/*.json`)
+
+`src/rules_core/shape_b_v1.rs` (still in the root `codex` crate — this is the on-disk schema, not
+converter logic) defines `CorpusRecordV1<T>`, the JSON shape every record in `data/corpus/` is
+written in, generic over a book-specific `data: T` payload (an equipment record, a race record, a
+spell record, ...).
+
+```mermaid
+erDiagram
+    CorpusRecordV1 {
+        Population population
+        Completeness completeness
+        string ingested_at
+        T data
+        CorpusSource source
+        License license "optional; None before license-stripping"
+        string pi_field "optional; which field was redacted"
+        string pi_marker "optional; Some(redacted) when pi_field was replaced"
+        string wiring_class "Display Static Derived Computed Ambiguous"
+        string_array wiring_class_signals
+        CorpusSource description_source "optional; set only when it differs from source"
+    }
+    CorpusSource {
+        string kind "lst_token lst_inherited_copy lst_corrected_ingest web_second_source same_book_fallback"
+        string path "lst_* variants only"
+        string sha256 "lst_* variants only"
+        int line "lst_* variants only"
+        string record_key "lst_* variants only"
+        string url "web_second_source only"
+        string identity_match_basis "web_second_source only"
+    }
+    CorpusRecordV1 ||--|| CorpusSource : "source"
+    CorpusRecordV1 ||--o| CorpusSource : "description_source (when it differs)"
+```
+
+*`source` answers "where did the RECORD come from" and `description_source` separately answers
+"where did the DESCRIPTION come from, when that differs" (see §"Provenance is per-FIELD, not
+per-record" below) — the two-slot split exists because 412 equipment records' identity/cost/weight
+were corpus-derived while their prose was web-sourced, and collapsing both into one `source` field
+would misattribute one or the other.*
+
+`license`/`pi_field`/`pi_marker` are `#[serde(default)]` specifically so a pre-license-stripping
+record deserializes with `license: None` rather than a hard parse failure or a silently-assumed-safe
+`Ogl` default — an unreviewed record must never be treated as cleared for redistribution by default.
+`wiring_class` is the GE-01 taxonomy (`Display` < `Static` < `Derived` < `Computed`, or `Ambiguous`)
+every writer now stamps — see [rules-data-tables.md](./rules-data-tables.md) §"`wiring_class`" for
+the full determination and drift-guard story.
+
+## `data/corpus/` directory layout
+
+```
+data/corpus/
+  <book>/                    # one directory per ingested book, e.g. core_rulebook/
+    equipment/*.json         # one file per record, CorpusRecordV1<EquipmentCacheData>
+    race/*.json               # CorpusRecordV1<CorpusRaceRecord>-shaped
+    race_trait/*.json
+    spell/*.json
+    class_feature/*.json
+    monster/*.json
+    monster_ability/*.json
+    companion/*.json
+    _settled/                 # SD-35 AT-35-E6-003-RULED: per-book settled bundles
+      equipment.json          # keyed by record path relative to equipment/
+      race.json
+      race_trait.json
+    _parity/                  # generator-internal scratch; every corpus walk skips this
+    LICENSE.json              # book-level license metadata; every corpus walk skips this file by name
+```
+
+See [rules-engine.md](./rules-engine.md) §"The corpus loaders" for how `corpus_loader.rs` and
+`race_resolver.rs` walk this tree at run time (via the `_settled/` bundles, not the raw per-record
+JSON) and what a settled bundle adds over the raw per-record JSON.
+
+## The generated PCGen-free corpus bundle for the packaged app
+
+*New since the prior pass — SD-36 consolidation, "corpus-bundle correctness follow-up,"
+`decisions.md` §8.* `data/corpus/**/*.json` is **not** what ships inside the Tauri installer. It
+carries ingest-time PCGen residue no live consumer reads (`data.raw_tokens`/`raw_bonus_chains`
+arrays, an unstripped trailing PCGen token clause on some `description` fields, and free-text
+provenance fields that can themselves quote token syntax) — shipping any of that verbatim would put
+PCGen token text on a user's disk, which the residue gate's ruling B17 forbids on the shipped side.
+
+**The generator.** `scripts/gen-corpus-bundle.mjs` — deliberately at the **repo root**, not under
+`apps/desktop/`, because the script's own source text necessarily names the PCGen token vocabulary it
+strips, and `apps/desktop/**` is a zero-carve-out live root for `scripts/pcgen_residue_gate.py`. It
+runs as a `pre`-build step of `npm run build` (`apps/desktop/package.json`, before `vite build`) and
+as its own `scripts/verify.sh` stage, `corpus-bundle`.
+
+**What it strips**, mirroring exactly what the live loaders actually read (grep-verified against
+`src/rules_core/corpus_loader.rs`, `race_resolver.rs`, `trait_pool.rs` — no other kind directory is
+read by any live/packaged code path):
+
+| Kind directory | What ships |
+|---|---|
+| `_settled/` | kept, sanitized — already residue-free; `settled_corpus::read_*_bundle` deserializes it fully |
+| `equipment/` | `{}` — `load_equipment_corpus` never opens these files; it derives the record key from the file PATH and reads content from `_settled/equipment.json`. Only the file's on-disk presence (for key enumeration) matters |
+| `race/`, `race_trait/` | trimmed `CorpusRecordV1` envelope — `data` → `{}` (ignored); `source` kept (`path`/`line` feed `lst_citation`); `license`/`pi_field`/`pi_marker` kept (`race_trait`'s `description_redacted` flag reads them) — sanitized |
+| `spell/` | `{"data": {"key", "school"}}` only — the two fields `load_spell_corpus`/`spell_record_from_json` actually read |
+
+As a defense-in-depth net over every string value that survives the trim, the generator additionally
+strips every occurrence of the residue gate's own pattern vocabulary
+(`scripts/pcgen_residue_gate.py`'s `DATA_PATTERNS`) — **duplicated**, not imported, in the `.mjs`
+script, because it must run on every OS the release workflow builds on (Linux, macOS, Windows) and
+only Node, not Python, is guaranteed on all three. The `corpus-bundle` verify stage checks the
+duplication hasn't drifted (re-expresses `DATA_PATTERNS` and diffs) before trusting the generator's
+own residue-free claim.
+
+**The parity/correctness gate.** The `corpus-bundle` verify stage (re)runs the generator, requires a
+positive `files_copied=` count in its own log, requires the output directory to actually exist, and
+then runs `pcgen_residue_gate.py --check` against the regenerated bundle specifically — all *before*
+the general `pcgen-residue-gate`/`crate-wall`/`desktop` stages run, so a defect here is attributed to
+the bundle generator rather than surfacing later as an unattributed residue-gate failure. This closes
+a real incident: commit `217f712bab` (tranche/16) had bundled the raw, git-tracked `data/corpus/`
+tree wholesale into the Tauri installer (to fix an empty race roster in off-checkout packaged
+builds), which fixed the roster but shipped the residue this generator now strips instead.
+
 ## Adding support for a new record kind
 
 To add a seventh (or eighth) B-family record kind end to end, touch, in
 order:
 
-1. `src/pcgen_import/lst_parser/<new_kind>.rs` — new parser module,
+1. `crates/codex-ingest/src/pcgen_import/lst_parser/<new_kind>.rs` — new parser module,
    producing a parse-result struct and an entry struct with source
    provenance (`source_path`/`line_number` or a container-level
    equivalent), following the existing per-kind modules' shape.
-2. `src/pcgen_import/lst_parser/mod.rs` — register `pub mod <new_kind>;`,
+2. `crates/codex-ingest/src/pcgen_import/lst_parser/mod.rs` — register `pub mod <new_kind>;`,
    re-export the new entry type, add a `ParsedLstRecord::<NewKind>(&'a NewKindEntry)`
    variant and a `from_<new_kind>` convenience constructor.
 3. `src/rules_core/source_content.rs` — add a matching
@@ -347,14 +579,14 @@ order:
 4. `src/rules_core/source_content.rs` — add the matching
    `SourceContentKind::<NewKind>` variant, and wire it into `token()`
    and `source_slice()`.
-5. `src/pcgen_import/ir_converter.rs` — add a `convert_<new_kind>_entry`
+5. `crates/codex-ingest/src/pcgen_import/ir_converter.rs` — add a `convert_<new_kind>_entry`
    per-family converter, wire it into `convert_to_ir`'s match, and add a
    `forward_<new_kind>_diagnostics` helper plus a per-document/
    corpus-rooted converter if the new kind's parser groups records into
    a document container.
 6. If the new kind needs its own include-graph discovery convention
    (a new PCC directive prefix), extend
-   `src/pcgen_import/include_resolver.rs`'s LST-reference recognizer —
+   `crates/codex-ingest/src/pcgen_import/include_resolver.rs`'s LST-reference recognizer —
    otherwise the existing generic `<KIND>:<path>.lst` scan already
    covers it.
 
@@ -382,7 +614,7 @@ them **outside `corpus_literal_sweep`'s population entirely** (it walks
 the oracle.
 
 `rules_core::cache_gen::lst_provenance_repair` (driven by
-`bin/repair_lst_provenance`, `--check` for a dry run) narrows such a record:
+`crates/codex-ingest/src/bin/repair_lst_provenance.rs`, `--check` for a dry run) narrows such a record:
 it resolves the real row with `equipment_gap::find_citation`, verifies it
 against the closure `corpus_literal_sweep::token_closure` itself builds,
 **refuses** unless every claimed `cost_gp`/`weight` is numerically stated by a
@@ -414,7 +646,7 @@ tables with a `weight` field name instead of CRB's `weight_lbs`; ARG/PU
 parse raw LST directly) — but every Shape B v1 equipment record, regardless
 of pipeline, already carries an exact citation back to its real PCGen LST
 source line (`source.path` + `source.line`, a `lst_token`-kind source).
-`src/bin/enrich_equipment_raw_tokens.rs` uses that citation directly: it
+`crates/codex-ingest/src/bin/enrich_equipment_raw_tokens.rs` uses that citation directly: it
 re-parses the cited raw LST file, finds the record whose header line matches
 `source.line`, and adds `raw_tokens`/`raw_bonus_chains` keys onto the
 on-disk JSON's `data` object — without touching any other field. It
@@ -427,7 +659,7 @@ caught-before-commit data loss). Records whose `source.kind` is not
 LST line to enrich from) are left untouched and counted separately, not
 treated as an error.
 
-`src/pcgen_import/corpus_literal_sweep.rs` (see above, "the closure, not the
+`crates/codex-ingest/src/pcgen_import/corpus_literal_sweep.rs` (see above, "the closure, not the
 base row alone, is the correct comparand") is the independent verifier that
 byte-compares those populated `raw_tokens` against its own `.MOD`-chain
 closure derived from the pinned oracle. Two real defects in the sweep's own
@@ -465,11 +697,11 @@ See [rules-data-tables.md](./rules-data-tables.md) for what happens
 downstream once a corpus record is projected: transcribing its values
 into the hand-authored `rules_tables` book modules, and — new as of the
 wiring_class/PI-screening convergence cycle — the GE-01 `wiring_class`
-taxonomy every corpus record now carries (`src/pcgen_import/wiring_class.rs` —
+taxonomy every corpus record now carries (`crates/codex-ingest/src/pcgen_import/wiring_class.rs` —
 moved out of `src/rules_core/` by SD-35 `AT-35-E6-002`, because it reads PCGen
 tokens and so belongs on the converter side,
 determined from a unit's full token closure, not the base row alone),
-`Trap::WiringClassMismatch` (`src/pcgen_import/corpus_traps.rs`) which
+`Trap::WiringClassMismatch` (`crates/codex-ingest/src/pcgen_import/corpus_traps.rs`) which
 guards that stamp against drift, and the shared PI-screening pass
 (`src/rules_core/pi_screening.rs`) every JSON-cache writer now runs
 through. See
@@ -477,3 +709,110 @@ through. See
 `SourcePackageContent` once corpus content is wired into compute, and
 [testing.md](./testing.md) for the corpus-gated test conventions beyond
 the graceful-skip pattern shown above.
+
+## How to onboard a book (historical process; PF1e ingestion is closed)
+
+**PF1e ingestion is closed.** `docs/governance/book-ingestion-playbook.md`, the procedure this
+section summarizes, is itself marked RETIRED as of SD-36 Epic B (operator ruling D3, 2026-09-15):
+`docs/work-inventory.json` reached 49,450 of 49,450 units and is now a frozen snapshot
+(`docs/work-inventory.FROZEN.md`); the two tools the playbook was built around
+(the `v06_work_inventory` binary and the desktop crate's former reach_gate.rs) are both deleted, and none of its
+commands run any more. It stays as the historical record of how this repo's 38 tracked books were
+actually onboarded — `data/corpus/` holds 39 directories (`ls -d data/corpus/*/ | wc -l`), one more
+than the tracked-book count because `beastiary/` and `bestiary/` are Bestiary 1's chassis half and
+hand-modelled half served under one `RuleSetId::Bestiary1`/one display name, not two books (see
+`apps/desktop/src-tauri/src/monster_catalog.rs:222-231`); the compiled `RuleSetId` enum has 37
+variants (`awk '/pub enum RuleSetId/,/^}/' src/rules_core/rules_tables/mod.rs | grep -cE "^\s+[A-Z][A-Za-z0-9_]*,\s*$"`),
+one of which (`Ce`, `core_essentials`) is folded into other books' race data rather than tracked as
+its own book in `docs/work-inventory.json`'s `totals.by_book` (37 keys there, not 38: it has
+Beginner Box, 19 units, but not `core_essentials` — `python3 -c "import json;print(len(json.load(open('docs/work-inventory.json'))['totals']['by_book']))"`
+→ 37); so tracked books = `RuleSetId` (37) − `core_essentials` (1) + Beginner Box (1) = 38 — see
+[rules-data-tables.md](./rules-data-tables.md)'s module map for the per-book table. All three figures
+(37/38/39) are correct for what each one denominates; they are not in tension with each other once
+each is read against its own denominator, and it is the starting point a future ingestion effort
+(Starfinder, most plausibly — this is why the converter and
+oracle harness were *kept*, not deleted, in `crates/codex-ingest/`) would adapt rather than redesign
+from nothing.
+
+**The per-file count-pinning tax, the one lesson worth carrying forward regardless of tooling.**
+Every real book-onboarding cycle in this project's history found that **the cost is per file, not
+per record** — a book with 3,000 equipment records and one with 30 cost roughly the same amount of
+onboarding labor, because the tax is touching each of ~7 places that pin a *count*, not transcribing
+each record by hand:
+
+1. The `rules_tables/<book>/` (or shared cross-book table's) resolver and its acceptance test.
+2. The corpus-cache generator/enrichment binary and its round-trip test.
+3. Every hand-pinned count assertion anywhere in `tests/` that names the book (spell counts, feat
+   counts, description-population percentages — `docs/governance/book-ingestion-playbook.md §6`'s own
+   table of "claimed vs. actual" corrections exists because every one of these was wrong on a first
+   pass).
+4. `RuleSetId` and whatever cross-book registry the new content family joins (`feats_all.rs`,
+   `monster_chassis::MONSTER_BOOKS`, `class_spell_levels.rs`) — see
+   [rules-data-tables.md](./rules-data-tables.md).
+5. The PI-screening/`wiring_class` stamping path, if the book introduces a genuinely new record
+   shape the shared blacklist (`PI_BLACKLIST_TERMS`, 61 terms as of this pass — see
+   [rules-data-tables.md](./rules-data-tables.md) §"PI screening" for the re-derive command) or the
+   wiring-class determinator hasn't seen before.
+
+The playbook's own §6 rule is the one to keep regardless of which tool enforces it in a future
+ingestion effort: **derive every count mechanically, cite the command that produced it, and re-derive
+at time of use rather than quoting a remembered figure** — a shared checkout's inventory decays
+silently, and a number without a reproducing command is a number nobody can re-check.
+
+## How to extend
+
+- **A new record kind end to end** (a seventh/eighth `ParsedLstRecord` family): follow "Adding
+  support for a new record kind" above — every touch point in that six-step list is inside
+  `crates/codex-ingest/`, except the two `source_content.rs` steps, which are in the root `codex`
+  crate (`src/rules_core/source_content.rs`) because that is where the canonical envelope lives.
+- **A new converter output** (a second thing produced at ingest time, alongside `data/corpus/**` and
+  `data/sheet_rules/**`): write the generator as a new `crates/codex-ingest/src/bin/*.rs`, give it its
+  own `--check` mode that regenerates in memory and byte-compares (the shared contract
+  `sheet_rule_convert --check`/`gen_settled_corpus --check`/`gen_desktop_fixture_corpus --check` all
+  follow), and wire that `--check` into a new `scripts/verify.sh` stage rather than trusting a
+  developer to remember to re-run it — see the count-pinning tax above for what happens when a
+  regeneration step is undocumented.
+- **A new desktop-shipped data mirror** (a second sanitized bundle alongside `corpus_bundle/`): put
+  the generator at repo-root `scripts/`, not under `apps/desktop/`, for the same reason
+  `gen-corpus-bundle.mjs` is there — a script that must name PCGen token vocabulary in order to strip
+  it cannot itself live inside a zero-carve-out live root. Add its own residue-gate proof as a
+  `scripts/verify.sh` stage following `corpus-bundle`'s shape (regenerate, require non-empty output,
+  re-run `pcgen_residue_gate.py --check` against the regenerated output specifically, before the
+  general stages run).
+- **Widening `codex-ingest`'s dependency surface**: remember the wall only runs one direction.
+  `codex-ingest` may depend on `codex` freely; `codex` must never gain a dependency — normal or
+  dev — on `codex-ingest`, and `codex-desktop`'s one dev-dependency on it exists only to prove
+  descriptions stay clean, not as a precedent for a second use.
+
+## Pitfalls
+
+- **A path cited as starting src/pcgen_import/ or src/oracle_validation/ no longer exists
+  anywhere in this repo** — SD-36 Epic A moved both trees under `crates/codex-ingest/src/`. Any older
+  doc, comment, or dispatch prompt that still uses the old `src/`-rooted spelling is citing a path
+  from before 2026-09-20; verify before trusting it (this document itself needed the same correction
+  this pass).
+- **Almost every generator/enrichment/ingest binary moved to `crates/codex-ingest/src/bin/`, but not
+  all three remaining `src/bin/*.rs` files did** (`pi_sweep_rules_tables.rs`,
+  `v06_class_state_dump.rs`, `v06_content_state_dump.rs` stay in the root crate, because none of them
+  reads a raw corpus token — they walk already-compiled `rules_tables` state). Don't assume every
+  `src/bin/` binary moved, or that every `crates/codex-ingest/src/bin/` binary is new; check both
+  directories.
+- **Regenerating an equipment cache without re-running `enrich_equipment_raw_tokens` afterward
+  silently reverts `raw_tokens`/`raw_bonus_chains` to absent or stale** — no generator populates those
+  fields itself; the enricher is a mandatory, separate post-step (`book-ingestion-playbook.md` DoD
+  item 9), and this has been the cause of a real, previously-shipped regression.
+- **`corpus_literal_sweep`'s closure builder had its own defects, independent of the data it was
+  checking** — `copy_base_row`'s unsorted `read_dir` walk and `compare_tokens`'s `DESC` blacklist
+  exemption both produced false mismatches while the underlying `raw_tokens` were already correct.
+  When a sweep/gate disagrees with data that was hand-verified correct, check the checker's own
+  reconstruction logic before assuming the data is wrong.
+- **`SourceContentPayload` and `SourceContentKind` both live in `src/rules_core/source_content.rs`
+  today, not in `pcgen_import`** — an earlier draft of this document (corrected 2026-09-15) described
+  an arrangement where the payload enum lived on the converter side to avoid an import cycle; that
+  arrangement never shipped. The dependency is one-directional the other way: `ir_converter`
+  (converter side) constructs the enum from types the root crate defines.
+- **A malformed record is diagnosed, never dropped silently** — every stage from `pcc.rs` through
+  `ir_converter.rs` accumulates diagnostics rather than aborting. A resolver that returns fewer
+  records than expected should be traced through the diagnostics list before being treated as a
+  parser bug; the record may be present with a `MalformedRecord`/`Error` diagnostic explaining why
+  the consumer must treat it as absent.

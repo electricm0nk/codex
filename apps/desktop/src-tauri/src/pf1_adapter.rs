@@ -236,6 +236,7 @@ const ORDER_OF_THE_SWORD_SELECTION: &str = "order:sword";
 const INQUISITOR_CLASS_ID: &str = "class:inquisitor";
 const INQUISITOR_DOMAIN_CHOICE_ID: &str = "choice:inquisitor_domain";
 const ORACLE_CLASS_ID: &str = "class:oracle";
+const COMMONER_CLASS_ID: &str = "class:commoner";
 const ORACLE_MYSTERY_CHOICE_ID: &str = "choice:oracle_mystery";
 const BATTLE_MYSTERY_SELECTION: &str = "mystery:battle";
 const ORACLE_REVELATION_CHOICE_ID: &str = "choice:oracle_revelation";
@@ -871,13 +872,15 @@ pub fn compose_character_input(request: &CreateCharacterRequest) -> CharacterInp
         // for why Dodge specifically, of the seven corpus options at
         // `MonkBonusFeatLVL,1`, and for the Human double-grant caveat.
         //
-        // ONE seeding site only, unlike Wizard/Arcanist: Monk's whole
-        // bonus-feat seam sits behind `supported_monk_level`, which matches
-        // a SINGLE-class Monk only, so `apply_level_up`'s multiclass-dip
-        // branch never reaches it and needs no mirrored seed -- established
-        // empirically by
+        // TWO seeding sites since SD-36 F3b, like Wizard/Arcanist: Monk's
+        // bonus-feat seam sits behind `supported_monk_level` (a SINGLE-class
+        // Monk), and a multiclass mix now carries each class's isolated
+        // single-class blocking lines (`pilot_compute::multiclass_fold`), so a
+        // Fighter who dips Monk with no bonus-feat choice is honestly Blocked
+        // on Monk's own `bonus_feat.unsupported` line. `apply_level_up`'s
+        // multiclass-dip branch mirrors this seed (pinned by
         // `monk_multiclass_dip_reaches_computed_from_apply_level_up_alone`,
-        // which passes without one. Leveling a Monk 1 -> 2 takes
+        // which failed without it once F3b landed). Leveling a Monk 1 -> 2 takes
         // `apply_level_up`'s increment-existing-level branch, so this
         // creation-time seed simply persists -- pinned all the way to the
         // PF1 cap by `monk_stays_computed_leveling_all_the_way_to_20`.
@@ -967,6 +970,13 @@ pub fn compose_character_input(request: &CreateCharacterRequest) -> CharacterInp
             choice_set_id: SUMMONER_EIDOLON_EVOLUTION_CHOICE_ID.to_owned(),
             selection_id: IMPROVED_NATURAL_ARMOR_EVOLUTION_SELECTION.to_owned(),
         });
+        // SD-36 F1c-5 (D8): the Summoner Class Selection pick's Path-A default, the Standard
+        // class (`class_seeds::SUMMONER_CANONICAL_CLASS_SELECTION` states why), so the sheet
+        // prints the recorded pick instead of an unknown one.
+        selected_choices.push(SelectedChoice {
+            choice_set_id: codex::rules_core::class_seeds::SUMMONER_CLASS_SELECTION_CHOICE_ID.to_owned(),
+            selection_id: codex::rules_core::class_seeds::SUMMONER_CANONICAL_CLASS_SELECTION.to_owned(),
+        });
     } else if request.class_id == CAVALIER_CLASS_ID {
         // v0.6 alpha swarm (Path A choice-picker gap closure for the three
         // APG chooser-shaped classes, 2026-07-29) -- see
@@ -980,10 +990,12 @@ pub fn compose_character_input(request: &CreateCharacterRequest) -> CharacterInp
         // ONE seeding site only, the same reason Monk needs only one:
         // Cavalier's, Inquisitor's and Oracle's class-feature seams all sit
         // behind `compute_apg_class_chassis`, which
-        // `compute_class_chassis` reaches only for a SINGLE-class
-        // character (`ApgClassId::from_class_id_str` is deliberately not
-        // registered with `multiclass_class_level_supported`), so
-        // `apply_level_up`'s multiclass-dip branch never reaches it.
+        // `compute_class_chassis` reaches only for a SINGLE-class input --
+        // since SD-36 F3b a multiclass mix reaches it too, but only through
+        // each class's isolated single-class run (`multiclass_fold`), whose
+        // blocking class lines the mix carries re-scoped. `apply_level_up`'s
+        // multiclass-dip branch does not seed, so a dip into one of these
+        // classes without this choice blocks on that class's own line.
         // Leveling an existing character takes the increment-existing-level
         // branch, so this creation-time seed simply persists.
         selected_choices.push(SelectedChoice {
@@ -1019,6 +1031,14 @@ pub fn compose_character_input(request: &CreateCharacterRequest) -> CharacterInp
         selected_choices.push(SelectedChoice {
             choice_set_id: ORACLE_CURSE_CHOICE_ID.to_owned(),
             selection_id: CLOUDED_VISION_CURSE_SELECTION.to_owned(),
+        });
+    } else if request.class_id == COMMONER_CLASS_ID {
+        // SD-36 F1c-3 (D6): a Commoner is proficient with ONE Simple weapon of the player's
+        // choice. Path A: the canonical default `class_seeds` states, so the sheet prints a
+        // recorded weapon instead of an unknown pick.
+        selected_choices.push(SelectedChoice {
+            choice_set_id: codex::rules_core::class_seeds::COMMONER_WEAPON_CHOICE_ID.to_owned(),
+            selection_id: codex::rules_core::class_seeds::COMMONER_CANONICAL_WEAPON.to_owned(),
         });
     }
 
@@ -1547,6 +1567,17 @@ pub fn apply_level_up(character_input: &mut CharacterInput, class_id: &str) {
                 spell_id: WIZARD_STARTER_SPELL_ID.to_owned(),
                 source_class_id: WIZARD_CLASS_ID.to_owned(),
                 acquisition_mode: AcquisitionMode::Prepared,
+            });
+        } else if class_id == MONK_CLASS_ID {
+            // SD-36 F3b: the same Path-A bonus-feat seed
+            // `compose_character_input` gives a fresh Monk (see the Monk
+            // branch there for why Dodge, and the Human double-grant
+            // caveat), mirrored here because a mix now carries Monk's own
+            // isolated-run blocker for a missing choice. Same once-only
+            // guarantee as the Wizard block above.
+            character_input.chosen.selected_choices.push(SelectedChoice {
+                choice_set_id: MONK_BONUS_FEAT_CHOICE_ID.to_owned(),
+                selection_id: DODGE_FEAT_SELECTION.to_owned(),
             });
         } else if class_id == ARCANIST_CLASS_ID {
             // v0.6 alpha swarm (Path A choice-picker gap closure,
@@ -3782,16 +3813,15 @@ mod tests {
         );
     }
 
-    /// The multiclass-dip mirror. Unlike Wizard -- whose
-    /// `unmet_wizard_spellbook_conditions` gate is race/multiclass-blind and
-    /// therefore genuinely needed a SECOND seeding site in
-    /// `apply_level_up`'s new-class-entry branch -- Monk's whole
-    /// bonus-feat seam sits behind `supported_monk_level`, which matches
-    /// only a SINGLE-class Monk (`[class_level]`). A Fighter who dips Monk
-    /// never reaches that seam at all. This test pins that empirically, so
-    /// the "one site or two?" question is answered by the engine rather
-    /// than assumed -- and it is a real Computed assertion, not merely
-    /// "the Monk diagnostic is absent".
+    /// The multiclass-dip mirror. Monk's bonus-feat seam sits behind
+    /// `supported_monk_level` (a SINGLE-class Monk). Before SD-36 F3b a
+    /// Fighter who dipped Monk never reached it, so this passed with no Monk
+    /// seed -- the mix silently dropped Monk's own "no bonus feat chosen"
+    /// blocker. Since F3b a mix carries each class's isolated-run blocking
+    /// lines, so the dip needs the same second seeding site Wizard and
+    /// Arcanist have; this pins that the real UI level-up path supplies it.
+    /// A real Computed assertion, not merely "the Monk diagnostic is
+    /// absent".
     #[test]
     fn monk_multiclass_dip_reaches_computed_from_apply_level_up_alone() {
         let mut character_input = compose_character_input(&request_for("fighter-then-monk-dip", 1));

@@ -482,6 +482,10 @@ fn race_corpus() -> &'static Result<RaceCorpus, String> {
     static CORPUS: OnceLock<Result<RaceCorpus, String>> = OnceLock::new();
     CORPUS.get_or_init(|| {
         let corpus_root = corpus_root_dir()?;
+        if !corpus_root.is_dir() {
+            // See `race_catalog::race_corpus`'s identical guard.
+            return Err(format!("corpus root not found: {}", corpus_root.display()));
+        }
         let book_dirs: Vec<PathBuf> = RACE_CORPUS_BOOKS.iter().map(|book| corpus_root.join(book)).collect();
         let roots: Vec<BookCorpusRoot<'_>> = RACE_CORPUS_BOOKS
             .iter()
@@ -1075,7 +1079,7 @@ pub fn resolve_race_alternate_selection(
 #[cfg(test)]
 mod tests {
     use super::*;
-    use codex::pcgen_import::pcgen_desc::leaked_pcgen_syntax;
+    use codex_ingest::pcgen_import::pcgen_desc::leaked_pcgen_syntax;
 
     /// Every count below was derived by running this module against the real
     /// on-disk corpus:

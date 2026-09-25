@@ -82,6 +82,8 @@ use codex::rules_core::corpus_loader::live_sheet_rules;
 use codex::rules_core::sheet_rule::SheetRulePackage;
 use codex::rules_core::sheet_rule_catalog::{catalog_description_or_fields, DescriptionTier};
 
+use crate::authoring_workbench::codex_repo_root;
+
 /// The twelve corpus content-kind directories with no reach mechanism, per
 /// `reach_gate.rs::CORPUS_KIND_NAMES`'s own comment. Kept as the singular
 /// directory name (the form `data/corpus/<book>/<dir>/` uses) — the plural
@@ -116,8 +118,64 @@ pub struct ReferenceLibraryEntryDto {
     pub is_mechanical_summary: bool,
 }
 
+/// Dev/test convenience: the real repo root, used only where a fixture test
+/// already assumes a full source checkout. Production code resolves the
+/// corpus root through [`codex_repo_root`] instead (via
+/// [`load_reference_library_entries_prod`]), because that function alone
+/// also knows how to find a packaged build's resource directory — this
+/// module used to hardcode the `CARGO_MANIFEST_DIR`-relative dev path even
+/// in production, which resolves to a build-time path that does not exist
+/// on a tester's machine at all, so `list_reference_library_catalog` was
+/// silently empty on every packaged build regardless of kind.
 fn repo_root() -> PathBuf {
-    Path::new(env!("CARGO_MANIFEST_DIR")).join("../../..")
+    codex_repo_root().unwrap_or_else(|e| panic!("cannot resolve codex repo root: {e}"))
+}
+
+/// The subset of [`REFERENCE_LIBRARY_KIND_DIRS`] the packaged corpus bundle
+/// (`scripts/gen-corpus-bundle.mjs`'s `KIND_DIRS`) also mirrors. Everything
+/// else in this list exists only in a source checkout's `data/corpus/` --
+/// serving it from a packaged build's resolved root would be a silent, wrong
+/// EMPTY catalog (the directory simply is not there), not a real "this book
+/// has none of this kind" answer. Kept honest by
+/// `tests::packaged_bundle_kind_dirs_matches_the_generator_script`, which
+/// reads the generator script's own `KIND_DIRS` literal so this constant
+/// cannot drift from it unnoticed.
+const PACKAGED_BUNDLE_KIND_DIRS: &[&str] = &["trait_generic"];
+
+/// True when `repo_root/data/corpus` is a full source checkout rather than
+/// the sanitized packaged bundle. Proxied by `core_rulebook/class`: a kind
+/// directory the bundle never mirrors (its `KIND_DIRS` has no `class` entry)
+/// but the raw corpus always ships one for `core_rulebook`. A wrong answer
+/// here only ever makes [`reference_library_entries_for_root`] MORE
+/// cautious, never less: it can only turn a real full checkout's request
+/// into a spurious error, never turn a packaged build's missing directory
+/// into a served (and wrong) empty catalog.
+fn corpus_root_is_full_checkout(repo_root: &Path) -> bool {
+    repo_root.join("data/corpus/core_rulebook/class").is_dir()
+}
+
+/// [`load_reference_library_entries`], gated so a kind this repo root cannot
+/// actually serve fails loudly instead of returning a silently-empty
+/// catalog that looks like "this book has none of this kind." `repo_root`
+/// here may be a packaged build's resolved resource directory -- see
+/// [`load_reference_library_entries_prod`].
+fn reference_library_entries_for_root(
+    repo_root: &Path,
+    book_dir: &str,
+    kind_dir: &str,
+) -> Result<Vec<ReferenceLibraryEntryDto>, String> {
+    if !repo_root.join("data/corpus").is_dir() {
+        return Err(format!("corpus root not found: {}", repo_root.join("data/corpus").display()));
+    }
+    if !PACKAGED_BUNDLE_KIND_DIRS.contains(&kind_dir) && !corpus_root_is_full_checkout(repo_root) {
+        return Err(format!(
+            "'{kind_dir}' reference-library catalog is not available from a packaged build's \
+             corpus bundle -- scripts/gen-corpus-bundle.mjs mirrors only \
+             {PACKAGED_BUNDLE_KIND_DIRS:?} of the twelve reference-library kinds; run against a \
+             source checkout instead"
+        ));
+    }
+    Ok(load_reference_library_entries(repo_root, book_dir, kind_dir))
 }
 
 fn json_files_under(dir: &Path) -> Vec<PathBuf> {
@@ -266,13 +324,17 @@ pub fn load_reference_library_entries(
     out
 }
 
-/// Convenience wrapper for production call sites, which always want the real
-/// repo root.
+/// Convenience wrapper for production call sites: resolves the real corpus
+/// root -- a packaged build's resource directory if one exists, else a
+/// source checkout's own root, via [`codex_repo_root`] -- and refuses a kind
+/// that root cannot actually serve rather than answering with a silently
+/// empty catalog.
 pub fn load_reference_library_entries_prod(
     book_dir: &str,
     kind_dir: &str,
-) -> Vec<ReferenceLibraryEntryDto> {
-    load_reference_library_entries(&repo_root(), book_dir, kind_dir)
+) -> Result<Vec<ReferenceLibraryEntryDto>, String> {
+    let repo_root = codex_repo_root()?;
+    reference_library_entries_for_root(&repo_root, book_dir, kind_dir)
 }
 
 #[derive(Debug, Clone, Serialize)]
@@ -300,7 +362,7 @@ pub fn list_reference_library_catalog(
              {REFERENCE_LIBRARY_KIND_DIRS:?}"
         ));
     }
-    let entries = load_reference_library_entries_prod(&book, &kind_dir);
+    let entries = load_reference_library_entries_prod(&book, &kind_dir)?;
     Ok(ReferenceLibraryCatalogResponse { book, kind_dir, entries })
 }
 
@@ -311,7 +373,7 @@ mod tests {
     fn pkg() -> &'static SheetRulePackage {
         live_sheet_rules().expect(
             "data/sheet_rules/ must be present -- regenerate with \
-             `cargo run --locked --bin sheet_rule_convert`",
+             `cargo run --locked -p codex-ingest --bin sheet_rule_convert -- --write`",
         )
     }
 
@@ -496,5 +558,102 @@ mod tests {
         println!("reference-library join: records={total} misses={}", misses.len());
         assert!(total > 9_000, "the reference-library population collapsed to {total}");
         assert!(misses.is_empty(), "records with no converted rule on their own source row: {misses:?}");
+    }
+
+    /// Pins the fix at the module's own root-resolution bug: production must
+    /// resolve through [`codex_repo_root`], not a hardcoded dev-only path.
+    /// Run over the real checkout, this must actually serve real records —
+    /// the exact regression that made every packaged build return empty for
+    /// every kind, regardless of bundle coverage.
+    #[test]
+    fn load_reference_library_entries_prod_serves_real_records_over_the_real_checkout() {
+        let entries = load_reference_library_entries_prod("ultimate_psionics", "power")
+            .expect("a full source checkout must serve a bundled-or-not kind alike");
+        assert!(
+            entries.iter().any(|e| e.key == "Control Object"),
+            "expected the same real record the direct-load test above finds"
+        );
+    }
+
+    /// `core_rulebook/class` is the full-checkout proxy; it must read true
+    /// against this repo's own real, git-tracked corpus.
+    #[test]
+    fn corpus_root_is_full_checkout_is_true_for_the_real_checkout() {
+        assert!(corpus_root_is_full_checkout(&repo_root()));
+    }
+
+    fn packaged_style_tempdir(label: &str) -> PathBuf {
+        std::env::temp_dir().join(format!(
+            "codex-reference-library-catalog-test-{label}-{}-{:?}",
+            std::process::id(),
+            std::thread::current().id()
+        ))
+    }
+
+    /// A packaged-bundle-shaped root -- `data/corpus/<book>` exists but never
+    /// carries `class` -- must refuse a kind the bundle does not mirror
+    /// LOUDLY, rather than answering with a catalog that looks like "this
+    /// book has none of this kind."
+    #[test]
+    fn reference_library_entries_for_root_errors_for_an_unbundled_kind_on_a_packaged_style_root() {
+        let root = packaged_style_tempdir("unbundled");
+        fs::create_dir_all(root.join("data/corpus/core_rulebook")).expect("fixture dir");
+
+        let result = reference_library_entries_for_root(&root, "core_rulebook", "ability");
+
+        let _ = fs::remove_dir_all(&root);
+
+        let err = result.expect_err("an unbundled kind on a non-full-checkout root must error");
+        assert!(err.contains("ability"), "error must name the refused kind: {err}");
+        assert!(err.contains("packaged"), "error must say why: {err}");
+    }
+
+    /// The same packaged-bundle-shaped root must still succeed for a kind
+    /// [`PACKAGED_BUNDLE_KIND_DIRS`] says the bundle really does mirror, even
+    /// though this particular fixture book has no such subdirectory on disk
+    /// -- that is a legitimate empty catalog, not a refused one.
+    #[test]
+    fn reference_library_entries_for_root_succeeds_for_a_bundled_kind_on_a_packaged_style_root() {
+        let root = packaged_style_tempdir("bundled");
+        fs::create_dir_all(root.join("data/corpus/core_rulebook")).expect("fixture dir");
+
+        let result = reference_library_entries_for_root(&root, "core_rulebook", "trait_generic");
+
+        let _ = fs::remove_dir_all(&root);
+
+        assert_eq!(result, Ok(Vec::new()), "a bundled kind must succeed even when this book lacks it");
+    }
+
+    /// [`PACKAGED_BUNDLE_KIND_DIRS`] is a hand-kept constant; this proves it
+    /// cannot silently drift from `scripts/gen-corpus-bundle.mjs`'s own
+    /// `KIND_DIRS` literal, the actual source of truth for what a packaged
+    /// build ships.
+    #[test]
+    fn packaged_bundle_kind_dirs_matches_the_generator_script() {
+        let script_path =
+            Path::new(env!("CARGO_MANIFEST_DIR")).join("../../../scripts/gen-corpus-bundle.mjs");
+        let text = fs::read_to_string(&script_path)
+            .unwrap_or_else(|e| panic!("cannot read {}: {e}", script_path.display()));
+        let line = text
+            .lines()
+            .find(|l| l.trim_start().starts_with("const KIND_DIRS"))
+            .expect("gen-corpus-bundle.mjs must define KIND_DIRS as a single-line const");
+        let bracketed = line
+            .split('[')
+            .nth(1)
+            .and_then(|rest| rest.split(']').next())
+            .expect("KIND_DIRS must be a bracketed array literal");
+        let bundled: Vec<&str> = bracketed
+            .split(',')
+            .map(|s| s.trim().trim_matches(|c| c == '\'' || c == '"'))
+            .filter(|s| !s.is_empty())
+            .collect();
+        let overlap: Vec<&str> =
+            REFERENCE_LIBRARY_KIND_DIRS.iter().copied().filter(|k| bundled.contains(k)).collect();
+        assert_eq!(
+            overlap, PACKAGED_BUNDLE_KIND_DIRS,
+            "PACKAGED_BUNDLE_KIND_DIRS must equal REFERENCE_LIBRARY_KIND_DIRS intersected with \
+             gen-corpus-bundle.mjs's own KIND_DIRS -- update whichever side went stale"
+        );
     }
 }

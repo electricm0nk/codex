@@ -629,6 +629,143 @@ function verifiesANoticeWithASheetRuleLeavesTheNotComputedLane() {
   assertEqual(withLines.notComputed[0].id, 'class_feature.fighter.weapon_training.unsupported', 'the notice with no class_feature line stays -- a feat line of the same slug is not its rule');
 }
 
+/**
+ * Review finding 5 (SD-36 Epic F1b stage-4 adversarial check): the frontend's join was still the
+ * pre-R2 exact-slug walk (`candidates = [\`${classToken}_${feature}\`, feature]`), stale relative
+ * to the corrected `rule_for_explanation` -- so a facet the Rust join now matches to a real STEM
+ * rule (`class_feature.acg.brawler.knockout_dc` -> `brawler_knockout`, spec 3b.2's own worked
+ * example) kept BOTH its printed rule line AND its "not computed" notice, since the old TS walk
+ * only ever tried the exact slugs `brawler_knockout_dc`/`knockout_dc`, neither of which exists.
+ * The ported join must suppress the notice here, exactly as `HeldSeed::from_character` would.
+ */
+function verifiesANoticeIsDroppedByTheSameStemMatchTheRustJoinUses() {
+  const brawler: HeldClass[] = [{ classId: 'class:brawler', classLabel: 'Brawler', level: 20 }];
+  const notices = [explanation('class_feature.acg.brawler.knockout_dc.unsupported', 0, 'knockout DC is not grounded here')];
+  const surface = buildClassFeatureSurface(notices, brawler, [], [
+    {
+      id: 'advanced_class_guide:class_feature:brawler_knockout',
+      kind: 'class_feature',
+      label: 'Knockout',
+      form: 'words',
+      value: '',
+      also: [],
+      prose: 'A brawler can attempt to knock an opponent unconscious with an unarmed strike.',
+      condition: null,
+    },
+  ]);
+  assertEqual(surface.notComputed.length, 0, 'the stem match (brawler_knockout) drops the notice, same as the Rust join');
+  assertEqual(surface.features.length, 0, 'the sheet line itself is not an ExplanationDto and does not become a feature row');
+}
+
+/**
+ * Review finding 1's own confirmed-wrong-join evidence, mirrored here: a one-word coincidence
+ * must never suppress a real "not computed" notice either. If the frontend's ported join ever
+ * regressed to accepting a partial match with its own leftover words, this notice would
+ * wrongly disappear behind an unrelated, only-superficially-similar sheet line.
+ */
+function verifiesAOneWordCoincidenceNeverDropsTheNotice() {
+  const skald: HeldClass[] = [{ classId: 'class:skald', classLabel: 'Skald', level: 20 }];
+  const notices = [explanation('class_feature.acg.skald.raging_climber.unsupported', 0, 'raging climber is not grounded here')];
+  const surface = buildClassFeatureSurface(notices, skald, [], [
+    {
+      id: 'advanced_class_guide:class_feature:skald_raging_song',
+      kind: 'class_feature',
+      label: 'Raging Song',
+      form: 'words',
+      value: '',
+      also: [],
+      prose: 'unrelated rule text sharing only the word "raging"',
+      condition: null,
+    },
+  ]);
+  assertEqual(surface.notComputed.length, 1, 'a one-word coincidence must never suppress the notice');
+}
+
+/**
+ * SD-36 Epic F1b stage-4 fix pass (dedup receipt §7.1, "the 11 dropped matches"): the TS
+ * mirror's own `wordsOf`/`wordsEq` port of the two tokenisation-normalisation rules
+ * (`sheet_line_join.rs`'s possessive-apostrophe merge and plural/singular equivalence) must drop
+ * the notice exactly where the Rust join now matches, so the frontend never shows a stale
+ * "not computed" notice next to a rule line the engine already prints.
+ */
+function verifiesTokenisationVariantsDropTheNoticeSameAsTheRustJoin() {
+  const druid: HeldClass[] = [{ classId: 'class:druid', classLabel: 'Druid', level: 20 }];
+  const possessiveNotices = [explanation('class_feature.druid.resist_natures_lure.unsupported', 0, 'resist nature’s lure is not grounded here')];
+  const possessiveSurface = buildClassFeatureSurface(possessiveNotices, druid, [], [
+    {
+      id: 'core_rulebook:class_feature:druid_resist_nature_s_lure',
+      kind: 'class_feature',
+      label: 'Resist Nature’s Lure',
+      form: 'words',
+      value: '',
+      also: [],
+      prose: 'A druid gains a bonus on saving throws against the spell-like and supernatural abilities of fey.',
+      condition: null,
+    },
+  ]);
+  assertEqual(
+    possessiveSurface.notComputed.length,
+    0,
+    'the possessive-apostrophe stem match (nature_s <-> natures) drops the notice, same as the Rust join'
+  );
+
+  const brawler: HeldClass[] = [{ classId: 'class:brawler', classLabel: 'Brawler', level: 20 }];
+  const pluralNotices = [explanation('class_feature.acg.brawler.bonus_feat_count.unsupported', 0, 'bonus feat count is not grounded here')];
+  const pluralSurface = buildClassFeatureSurface(pluralNotices, brawler, [], [
+    {
+      id: 'advanced_class_guide:class_feature:brawler_bonus_feats',
+      kind: 'class_feature',
+      label: 'Bonus Feats',
+      form: 'words',
+      value: '',
+      also: [],
+      prose: 'A brawler gains a bonus feat at 5th level and every four levels thereafter.',
+      condition: null,
+    },
+  ]);
+  assertEqual(pluralSurface.notComputed.length, 0, 'the singular/plural stem match (feat <-> feats) drops the notice, same as the Rust join');
+}
+
+/**
+ * SD-36 Epic F1b stage-4 fix pass (dedup receipt §7.1): the plural/singular normalisation must
+ * never manufacture a tie between an already-correct EXACT match and a real, distinct GENERIC
+ * pool-container record that only ties because of the normalisation (`swashbuckler_deeds`, the
+ * whole-family umbrella record, sharing "deed(s)" with the facet's own generic word) -- the
+ * ported `exact` tiebreak must keep dropping the notice here, matching the Rust join's own
+ * `real_package_an_exact_match_beats_a_normalised_tie_against_a_generic_pool_container` test.
+ */
+function verifiesAnExactMatchBeatsANormalisedTieAndStillDropsTheNotice() {
+  const swashbuckler: HeldClass[] = [{ classId: 'class:swashbuckler', classLabel: 'Swashbuckler', level: 20 }];
+  const notices = [explanation('class_feature.acg.swashbuckler.deed.evasive_grant.unsupported', 0, 'evasive grant is not grounded here')];
+  const surface = buildClassFeatureSurface(notices, swashbuckler, [], [
+    {
+      id: 'advanced_class_guide:class_feature:swashbuckler_deeds',
+      kind: 'class_feature',
+      label: 'Deeds',
+      form: 'words',
+      value: '',
+      also: [],
+      prose: 'Swashbucklers spend panache points to accomplish deeds.',
+      condition: null,
+    },
+    {
+      id: 'advanced_class_guide:class_feature:swashbuckler_evasive',
+      kind: 'class_feature',
+      label: 'Evasive',
+      form: 'words',
+      value: '',
+      also: [],
+      prose: 'At 11th level, while a swashbuckler has at least 1 panache point, she gains the benefits of evasion.',
+      condition: null,
+    },
+  ]);
+  assertEqual(
+    surface.notComputed.length,
+    0,
+    'the exact match (swashbuckler_evasive) must win outright, not tie with the generic swashbuckler_deeds container'
+  );
+}
+
 async function main() {
   verifiesANoticeWithASheetRuleLeavesTheNotComputedLane();
   verifiesALevel11RoguesSneakAttackKeepsItsMagnitudeAndCitation();
@@ -659,6 +796,10 @@ async function main() {
   verifiesABridgeRecordNeverSurfacesWhenTheGrantedFeatIsNotHeld();
   verifiesTheFeatHeldCheckFoldsBothSelectedFeatsShapes();
   verifiesABridgeRecordIgnoresTheClassHeldArmEvenIfClassSlugCoincidentallyMatchesAHeldClass();
+  verifiesANoticeIsDroppedByTheSameStemMatchTheRustJoinUses();
+  verifiesAOneWordCoincidenceNeverDropsTheNotice();
+  verifiesTokenisationVariantsDropTheNoticeSameAsTheRustJoin();
+  verifiesAnExactMatchBeatsANormalisedTieAndStillDropsTheNotice();
 }
 
 main().catch((error: unknown) => {

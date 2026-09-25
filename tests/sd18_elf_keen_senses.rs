@@ -24,9 +24,6 @@ use codex::rules_core::pilot_compute::{
     PilotBaseChassisComputation,
     compute_pilot_base_chassis,
 };
-use codex::rules_core::support_state_matrix::{
-    EvidenceFreshness, EvidenceTier, SupportState, seeded_current_truth,
-};
 mod common;
 use common::{load, explanation};
 
@@ -125,42 +122,3 @@ fn elf_bounded_semantics_note_moves_keen_senses_out_of_unproven_list() {
 
 // ----- Control plane: the matrix row stays Partial/Computed, widened note -----
 
-#[test]
-fn matrix_elf_row_stays_partial_computed_and_grounding_ref_names_this_slice() {
-    let matrix = seeded_current_truth();
-    let elf = matrix
-        .row("race.elf.bounded_semantics")
-        .expect("elf row must exist");
-
-    // NOTE (2026-07-16, SD-19 Full-matrix closure): this slice's own honest
-    // Partial -> Partial widening claim below is historically accurate for THIS
-    // slice, but the row was later promoted to Supported/ProductVisible by the
-    // separate SD-19 Race Trait Catalog browser UI-surfacing work, which is why
-    // the assertions after this comment now read Supported/ProductVisible.
-    // Honest promotion: Partial -> Partial widening, NOT a jump to Supported.
-    // Keen Senses is one more grounded family among several still-unproven
-    // ones (Elven Immunities, weapon familiarity, bonus languages), so the
-    // row does not reach Supported this cycle.
-    assert_eq!(elf.support_state, SupportState::Supported);
-    assert_eq!(elf.evidence_tier, EvidenceTier::ProductVisible);
-    assert_eq!(
-        elf.evidence_freshness,
-        EvidenceFreshness::RefreshableFromLiveProof
-    );
-    assert!(
-        elf.grounding_ref.contains("sd18_elf_keen_senses"),
-        "elf row grounding_ref must cite this slice's proof surface: {}",
-        elf.grounding_ref
-    );
-    assert!(
-        elf.blocker_or_lossiness_note.contains("Keen Senses"),
-        "elf row note must still mention Keen Senses by name: {}",
-        elf.blocker_or_lossiness_note
-    );
-    assert!(
-        elf.blocker_or_lossiness_note.contains("Elven Immunities"),
-        "elf row note must name the distinct, still-unproven Elven Immunities \
-         trait: {}",
-        elf.blocker_or_lossiness_note
-    );
-}

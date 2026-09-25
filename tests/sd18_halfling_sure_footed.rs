@@ -24,9 +24,6 @@ use codex::rules_core::pilot_compute::{
     PilotBaseChassisComputation,
     compute_pilot_base_chassis,
 };
-use codex::rules_core::support_state_matrix::{
-    EvidenceFreshness, EvidenceTier, SupportState, seeded_current_truth,
-};
 mod common;
 use common::{load, explanation};
 
@@ -143,42 +140,3 @@ fn halfling_bounded_semantics_note_moves_sure_footed_out_of_unproven_list() {
 
 // ----- Control plane: the matrix row stays Partial/Computed, widened note -----
 
-#[test]
-fn matrix_halfling_row_stays_partial_computed_and_grounding_ref_names_this_slice() {
-    let matrix = seeded_current_truth();
-    let halfling = matrix
-        .row("race.halfling.bounded_semantics")
-        .expect("halfling row must exist");
-
-    // NOTE (2026-07-16, SD-19 Full-matrix closure): this slice's own honest
-    // Partial -> Partial widening claim below is historically accurate for THIS
-    // slice, but the row was later promoted to Supported/ProductVisible by the
-    // separate SD-19 Race Trait Catalog browser UI-surfacing work, which is why
-    // the assertions after this comment now read Supported/ProductVisible.
-    // Honest promotion: Partial -> Partial widening, NOT a jump to Supported.
-    // Sure-Footed is one more grounded family among several still-unproven
-    // ones (Fearless, Halfling Luck, weapon familiarity), so the row does not
-    // reach Supported this cycle.
-    assert_eq!(halfling.support_state, SupportState::Supported);
-    assert_eq!(halfling.evidence_tier, EvidenceTier::ProductVisible);
-    assert_eq!(
-        halfling.evidence_freshness,
-        EvidenceFreshness::RefreshableFromLiveProof
-    );
-    assert!(
-        halfling.grounding_ref.contains("sd18_halfling_sure_footed"),
-        "halfling row grounding_ref must cite this slice's proof surface: {}",
-        halfling.grounding_ref
-    );
-    assert!(
-        halfling.blocker_or_lossiness_note.contains("Sure-Footed"),
-        "halfling row note must still mention Sure-Footed by name: {}",
-        halfling.blocker_or_lossiness_note
-    );
-    assert!(
-        halfling.blocker_or_lossiness_note.contains("Fearless"),
-        "halfling row note must name the distinct, still-unproven Fearless \
-         trait: {}",
-        halfling.blocker_or_lossiness_note
-    );
-}

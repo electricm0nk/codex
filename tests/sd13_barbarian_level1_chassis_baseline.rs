@@ -45,9 +45,6 @@ use codex::rules_core::pilot_compute::{
 };
 use codex::rules_core::pilot_failure::PrimaryOwner;
 use codex::rules_core::pilot_view_model::PilotViewModel;
-use codex::rules_core::support_state_matrix::{
-    EvidenceFreshness, EvidenceTier, SupportState, seeded_current_truth,
-};
 mod common;
 use common::{load, explanation, has_explanation};
 
@@ -596,161 +593,16 @@ fn multiclass_barbarian_is_not_promoted_by_this_slice() {
         "multiclass Barbarian must not surface the level-1 barbarian chassis explanations: {:?}",
         computation.explanations
     );
-    assert!(
-        computation.diagnostics.iter().any(|d| d.claim_blocking),
-        "multiclass Barbarian must stay claim-blocked in this slice"
+    // SD-36 Epic F3d (decisions.md §14): assertion (b) is STATUS PARITY with the
+    // class alone (was: "must stay claim-blocked in this slice"): same receipt
+    // status, same claim-blocking set once the `multiclass.<class>.` re-scope is
+    // stripped; vacuity guard: the mix loads >= 2 classes.
+    crate::common::assert_multiclass_status_parity(
+        "multiclass Barbarian",
+        BARBARIAN_FIXTURE,
+        &multiclass,
     );
 }
 
 // ----- Control plane: the matrix reclassifies the barbarian row to Partial/Computed -----
 
-#[test]
-fn matrix_barbarian_row_is_partial_computed_and_names_rage_execution_as_still_unproven() {
-    let matrix = seeded_current_truth();
-    let barbarian = matrix
-        .row("class.barbarian.bounded_progression")
-        .expect("barbarian bounded_progression row must exist");
-
-    // NOTE: this test's name and the original comment here ("Stays Partial/
-    // Computed. The slice is bounded; we are not claiming Supported.")
-    // reflect this row's state as of the SD13-E3 slice this file proves.
-    // Later promoted to Supported/ProductVisible by SD-19's Class
-    // Progression Catalog browser UI-surfacing work (2026-07-16).
-    assert_eq!(barbarian.support_state, SupportState::Supported);
-    assert_eq!(barbarian.evidence_tier, EvidenceTier::ProductVisible);
-    assert_eq!(
-        barbarian.evidence_freshness,
-        EvidenceFreshness::RefreshableFromLiveProof
-    );
-    assert!(
-        barbarian
-            .grounding_ref
-            .contains("sd13_barbarian_level1_chassis_baseline"),
-        "barbarian row must cite the barbarian proof surface: {}",
-        barbarian.grounding_ref
-    );
-    let note = barbarian.blocker_or_lossiness_note;
-    assert!(!note.is_empty(), "barbarian partial row must carry a note");
-    // The illiteracy burden is resolved as vacuous (a rules correction, not an
-    // uplift): the PF1 Core Rulebook Barbarian is not illiterate.
-    for token in ["illiteracy", "vacuous", "3.5"] {
-        assert!(
-            note.contains(token),
-            "barbarian partial note must record the illiteracy rules correction ('{token}'): {note}"
-        );
-    }
-    // Rage's flat numeric surface is grounded (across level 1 and the later SD13-E5
-    // level-2 through level-10 widenings plus the SD18 level-11 Greater Rage
-    // widening); the
-    // rage-state execution engine is the named remaining burden, and weapon
-    // familiarity / level-12+ stay unclaimed.
-    for token in [
-        "base attack",
-        "base save",
-        "fast movement",
-        "rage rounds",
-        "rage execution",
-        "weapon familiarity",
-        "level-12+",
-    ] {
-        assert!(
-            note.contains(token),
-            "barbarian partial note must name '{token}': {note}"
-        );
-    }
-}
-
-#[test]
-fn matrix_preserves_accepted_truth_and_unchanged_rows() {
-    let matrix = seeded_current_truth();
-
-    // Fighter rows were later promoted to Supported/ProductVisible by SD-19's
-    // Class Progression Catalog browser UI-surfacing work (2026-07-16).
-    for id in ["class.fighter.level_1_pilot", "class.fighter.levels_2_10"] {
-        let row = matrix.row(id).unwrap_or_else(|| panic!("row {id} must exist"));
-        assert_eq!(
-            row.support_state,
-            SupportState::Supported,
-            "row {id} must be Supported after the SD-19 class-row promotion"
-        );
-        assert_eq!(row.evidence_tier, EvidenceTier::ProductVisible);
-    }
-
-    // Paladin was later promoted to Partial/Computed by its own SD13-E5
-    // level-gate slice (lay on hands / divine grace / mercy grounded as
-    // correct level-1 absences), then to Supported/ProductVisible by SD-19's
-    // Class Progression Catalog browser UI-surfacing work (2026-07-17).
-    let paladin = matrix
-        .row("class.paladin.hybrid_chassis_and_spell_burden")
-        .expect("paladin row must exist");
-    assert_eq!(
-        paladin.support_state,
-        SupportState::Supported,
-        "paladin row must be Supported after the SD-19 class-row promotion"
-    );
-
-    // Ranger was later promoted to Partial/Computed by its own SD13-E3 Ranger
-    // decomposition slice (Track grounded for real).
-    let ranger = matrix
-        .row("class.ranger.hybrid_chassis_and_spell_burden")
-        .expect("ranger row must exist");
-    assert_eq!(
-        ranger.support_state,
-        SupportState::Supported,
-        "ranger row must be Supported after the SD-19 class-row promotion"
-    );
-
-    // Rogue was later promoted to Supported/ProductVisible by SD-19's Class
-    // Progression Catalog browser UI-surfacing work (2026-07-17).
-    let rogue = matrix
-        .row("class.rogue.bounded_progression")
-        .expect("rogue row must exist");
-    assert_eq!(rogue.support_state, SupportState::Supported);
-    assert_eq!(rogue.evidence_tier, EvidenceTier::ProductVisible);
-
-    // No row is silently promoted to Supported or Lossy by this slice.
-    assert!(
-        !matrix
-            .rows
-            .iter()
-            // school.abjuration/illusion.spell_reachability were later promoted to
-            // Supported/Product-visible by SD-19's operator-driven UI-surfacing work
-            // (2026-07-16) -- excluded here, not an unintended promotion by this slice.
-            .any(|r| (r.support_state == SupportState::Supported
-                && r.row_id != "school.abjuration.spell_reachability"
-                && r.row_id != "school.illusion.spell_reachability"
-                && r.row_id != "school.conjuration.spell_reachability"
-                && r.row_id != "school.divination.spell_reachability"
-                && r.row_id != "school.enchantment.spell_reachability"
-                && r.row_id != "school.evocation.spell_reachability"
-                && r.row_id != "school.necromancy.spell_reachability"
-                && r.row_id != "school.transmutation.spell_reachability"
-                && r.row_id != "school.universal.spell_reachability"
-                && r.row_id != "equipment.arms_armor.equipment_reachability"
-                && r.row_id != "equipment.general.equipment_reachability"
-                && r.row_id != "equipment.magic_items.equipment_reachability"
-                && r.row_id != "race.human.pilot_semantics"
-                && r.row_id != "race.dwarf.bounded_semantics"
-                && r.row_id != "race.elf.bounded_semantics"
-                && r.row_id != "race.gnome.bounded_semantics"
-                && r.row_id != "race.half_elf.bounded_semantics"
-                && r.row_id != "race.half_orc.bounded_semantics"
-                && r.row_id != "race.halfling.bounded_semantics"
-                && r.row_id != "class.fighter.level_1_pilot"
-                && r.row_id != "class.fighter.levels_2_10"
-                && r.row_id != "class.monk.bounded_progression"
-                && r.row_id != "class.druid.progression_and_spell_burden"
-                && r.row_id != "class.barbarian.bounded_progression"
-                && r.row_id != "class.cleric.progression_and_spell_burden"
-                && r.row_id != "class.wizard.progression_and_spell_burden"
-                && r.row_id != "class.rogue.bounded_progression"
-                && r.row_id != "class.sorcerer.progression_and_spell_burden"
-                && r.row_id != "class.bard.progression_and_spell_burden"
-                && r.row_id != "class.paladin.hybrid_chassis_and_spell_burden"
-                && r.row_id != "class.ranger.hybrid_chassis_and_spell_burden"
-                && r.row_id != "interaction.human_bonus_feat_ability_bonus.pilot_pressure"
-                && r.row_id != "equipment.equipmods.equipment_reachability")
-                || r.support_state == SupportState::Lossy),
-        "the barbarian slice must not promote any row to Supported or Lossy"
-    );
-}

@@ -25,9 +25,9 @@ use std::path::{Path, PathBuf};
 
 use serde_json::Value;
 
-fn repo_root() -> PathBuf {
-    PathBuf::from(env!("CARGO_MANIFEST_DIR"))
-}
+#[path = "support/paths.rs"]
+mod paths;
+use paths::repo_root;
 
 fn cache_dir() -> PathBuf {
     repo_root().join("data/corpus/pathfinder_unchained")

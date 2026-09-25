@@ -1,0 +1,27 @@
+== control: unmutated copy
+exit=0
+verdict=PASS
+== M1 pinned undeclared note gains a second name
+exit=1
+verdict=FAIL (unexpected field deltas: 1)
+== M2 another provenance field moves beside the pinned note
+exit=1
+verdict=FAIL (unexpected field deltas: 1)
+== M3 closure_complete planted on unpinned diabolist
+exit=1
+verdict=FAIL (unexpected field deltas: 1)
+== M4 undeclared note planted on unpinned power_attack
+exit=1
+verdict=FAIL (unexpected field deltas: 1)
+== M5 the reprint-resolved RMA Weapon Proficiencies class edge dropped (an F3b2b-added edge)
+exit=1
+verdict=FAIL (missing F3b2b pinned edges: 1)
+== M6 cyphermage cypher lore's class edges dropped
+exit=1
+verdict=FAIL (removed granted_by edges: 1)
+== M7 records count moved 49450 -> 49449
+exit=1
+verdict=FAIL (records moved: 49450 -> 49449)
+== control after reset
+exit=0
+verdict=PASS

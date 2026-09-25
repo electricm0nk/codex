@@ -1,0 +1,1 @@
+{"var":"v9f8507bb2a63e7d8","label":"Reflex Save Luck Bonus","declared_by":["core_rulebook:class_feature:default"],"contributions":[{"rule_id":"core_rulebook:equipment:staff_of_power","expr":{"Const":2},"bonus_type":{"name":"Luck","mode":"Plain"},"when":"Always"}],"provenance":{"outside_corpus_rows":["pathfinder/paizo/roleplaying_game/core_rulebook/cr_abilities.lst:326"]}}

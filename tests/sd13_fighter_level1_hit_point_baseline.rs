@@ -19,9 +19,6 @@
 //! - no promotion of the `class.fighter.level_1_pilot` row beyond Partial
 
 use codex::rules_core::pilot_compute::compute_pilot_base_chassis;
-use codex::rules_core::support_state_matrix::{
-    EvidenceTier, SupportState, seeded_current_truth,
-};
 mod common;
 use common::{load, explanation};
 
@@ -100,60 +97,3 @@ fn fighter_level1_golden_path_still_emits_zero_claim_blocking_diagnostics() {
 
 // ----- Control plane: the matrix row reclassifies hit points as proven -----
 
-#[test]
-fn matrix_fighter_level_1_row_moves_hit_points_to_the_proven_surface() {
-    let matrix = seeded_current_truth();
-    let level_1 = matrix
-        .row("class.fighter.level_1_pilot")
-        .expect("level-1 pilot row must exist");
-    let note = level_1.blocker_or_lossiness_note;
-
-    // Hit points join the proven (computed) level-1 surface enumeration.
-    assert!(
-        note.contains("level-1 hit points"),
-        "Fighter L1 note must name the proven level-1 hit-point milestone: {note}"
-    );
-    // The old remaining-unproven phrasing must be gone.
-    assert!(
-        !note.contains("hit point computation (Fighter d10 HD"),
-        "Fighter L1 note must no longer list level-1 hit-point computation as unproven: {note}"
-    );
-    // The honest residue stays named.
-    for token in ["favored-class", "levels 2+", "Toughness"] {
-        assert!(
-            note.contains(token),
-            "Fighter L1 note must keep the unproven hit-point burden '{token}' named: {note}"
-        );
-    }
-}
-
-#[test]
-fn matrix_fighter_level_1_row_stays_partial_and_cites_this_proof_surface() {
-    let matrix = seeded_current_truth();
-    let level_1 = matrix
-        .row("class.fighter.level_1_pilot")
-        .expect("level-1 pilot row must exist");
-
-    // Grounding one more milestone did not silently promote the row at this
-    // slice; it was later promoted to Supported/ProductVisible by SD-19's
-    // Class Progression Catalog browser UI-surfacing work (2026-07-16).
-    assert_eq!(level_1.support_state, SupportState::Supported);
-    assert_eq!(level_1.evidence_tier, EvidenceTier::ProductVisible);
-
-    // The row must cite this slice's proof surface alongside the existing
-    // mandatory-milestone classification proof (combined-literal idiom).
-    assert!(
-        level_1
-            .grounding_ref
-            .contains("sd13_fighter_level1_hit_point_baseline"),
-        "Fighter L1 row must cite the hit-point baseline proof surface: {}",
-        level_1.grounding_ref
-    );
-    assert!(
-        level_1
-            .grounding_ref
-            .contains("sd13_fighter_level1_mandatory_milestone_classification"),
-        "Fighter L1 row must keep citing the mandatory-milestone proof surface: {}",
-        level_1.grounding_ref
-    );
-}

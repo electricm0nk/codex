@@ -1,0 +1,968 @@
+//! SD-35 AT-35-E2-001 -- the converter exists and writes our schema.
+//!
+//! Three value-form tests on REAL corpus records (the racial spell-like ability's save DC as
+//! `Sum([Const(10), Const(1), AbilityMod(Cha)])`, a weapon as `Dice{"1d8", None}`, a choice
+//! trait as `Text` with the choice bound), one converter gate PER KIND reading the live
+//! `data/sheet_rules/` package (every unit of that kind converts or is in `_refused.json`), the
+//! source-format literal scan, and the freshness check the `--check` flag runs. No per-unit
+//! fixture carries a hand-derived value (`decisions.md` §4): the expected shapes are the
+//! mapping table's own rows.
+
+use std::collections::{BTreeMap, BTreeSet};
+use std::path::PathBuf;
+use std::sync::OnceLock;
+
+use codex_ingest::pcgen_import::sheet_rule::closure::{corpus_root, Closure, PinnedTree};
+use codex_ingest::pcgen_import::sheet_rule::convert::{convert_record, Converted};
+use codex_ingest::pcgen_import::sheet_rule::ctx::CorpusIndex;
+use codex_ingest::pcgen_import::sheet_rule::{build_index, check, load_population, read_output, run, shape_violations};
+use codex::rules_core::sheet_rule::*;
+
+fn repo() -> PathBuf {
+    codex_ingest::repo_root()
+}
+
+struct Shared {
+    tree: PinnedTree,
+    index: CorpusIndex,
+    closures: Vec<Closure>,
+}
+
+fn shared() -> &'static Shared {
+    static S: OnceLock<Shared> = OnceLock::new();
+    S.get_or_init(|| {
+        let tree = PinnedTree::load(&corpus_root()).expect("pinned corpus checkout present (scripts/fetch-pcgen-oracle.sh)");
+        let records = load_population(&repo(), &tree).expect("docs/work-inventory.json and data/corpus readable");
+        let (index, closures) = build_index(&tree, records);
+        Shared { tree, index, closures }
+    })
+}
+
+fn convert_unit(id: &str) -> Converted {
+    let s = shared();
+    let pos = s.index.records.iter().position(|r| r.id == id).unwrap_or_else(|| panic!("unit {id} is in docs/work-inventory.json"));
+    convert_record(&s.tree, &s.index, &s.index.records[pos], &s.closures[pos])
+}
+
+/// The racial SLA DC: table row `FORMULA:corpus variable, SAME-record contributors only`
+/// ("DC = Sum([Const(10), Const(1), AbilityMod(Cha)])") on the row's own example record
+/// `advanced_players_guide:race_trait_generic:Racial SLA ~ Ill Omen` (`apg_abilities_race.lst:324`,
+/// a 1st-level spell), and the same shape with the spell's own level on `Racial SLA ~ Ironskin`
+/// (`mc_abilities_race.lst:95`, a 2nd-level spell -- the level is the record's own setter, not
+/// a hand-derived value).
+#[test]
+fn racial_sla_dc_converts_to_ten_plus_spell_level_plus_charisma() {
+    for (unit, spell_level, base_row) in [
+        ("advanced_players_guide:race_trait:racial_sla_ill_omen", 1, "apg_abilities_race.lst:324"),
+        ("monster_codex:race_trait:racial_sla_ironskin", 2, "mc_abilities_race.lst:95"),
+    ] {
+        let c = convert_unit(unit);
+        assert!(c.refusals.is_empty(), "{unit} refusals: {:?}", c.refusals);
+        let dc = c
+            .rules
+            .iter()
+            .flat_map(|r| r.also.iter())
+            .find_map(|(role, v)| if *role == ValueRole::SaveDc { Some(v.clone()) } else { None })
+            .expect("the SPELLS line carries a SaveDc");
+        assert_eq!(dc, SheetValue::Number(Expr::Sum(vec![Expr::Const(10), Expr::Const(spell_level), Expr::AbilityMod(Ability::Cha)])), "{unit}");
+        let cl = c.rules.iter().flat_map(|r| r.also.iter()).find_map(|(role, v)| if *role == ValueRole::CasterLevel { Some(v.clone()) } else { None }).unwrap();
+        assert_eq!(cl, SheetValue::Number(Expr::Level), "{unit}: CASTERLEVEL=<LVL var> folds to Level (row FORMULA:TL)");
+        let uses = c.rules.iter().flat_map(|r| r.also.iter()).find_map(|(role, v)| if matches!(role, ValueRole::Uses { .. }) { Some(v.clone()) } else { None }).unwrap();
+        assert_eq!(uses, SheetValue::Number(Expr::Const(1)), "{unit}");
+        for r in &c.rules {
+            assert!(r.provenance.closure_rows.iter().any(|c| c.ends_with(base_row)), "{unit}: provenance cites the base row: {:?}", r.provenance.closure_rows);
+        }
+    }
+}
+
+/// A weapon: table row `DAMAGE / ALTDAMAGE` -> `Dice{dice:'1d8', modifier:None}` on the
+/// core longsword (`cr_equip_arms_armor.lst:223`, a `.COPY=` row resolved to its base). The
+/// `+2` of a "1d8+2" line is a held damage bonus the evaluator folds into `Dice.modifier`; no
+/// corpus record carries a `NdM+K` damage literal, so the modifier form is proven on the die
+/// literal reader alone (see `dice_literal_reads_a_modifier`).
+#[test]
+fn weapon_converts_to_dice() {
+    let c = convert_unit("core_rulebook:equipment:longsword");
+    assert!(c.refusals.is_empty(), "refusals: {:?}", c.refusals);
+    let principal = &c.rules[0];
+    assert_eq!(principal.value, SheetValue::Dice { dice: "1d8".into(), modifier: None, size_steps: None });
+    assert!(principal.prose.iter().any(|s| matches!(&s.family, ProseFamily::StatBlock(l) if l == "Critical threat")), "the crit line is a stat-block segment");
+}
+
+/// A choice trait: synthesis row `%CHOICE / %LIST (all positions)` -- `Text` with the choice
+/// bound: `offers` carries the CHOOSE and the prose slot is `ChoiceName(choice)`
+/// (`advanced_players_guide:trait_generic:Trait ~ Magical Knack`: `CHOOSE:NUMCHOICES=1|CLASS|SPELLCASTER`,
+/// a DESC with `%CHOICE`, no bonus token).
+#[test]
+fn choice_trait_converts_to_text_with_the_choice_bound() {
+    let c = convert_unit("advanced_players_guide:trait:trait_magical_knack");
+    assert!(c.refusals.is_empty(), "refusals: {:?}", c.refusals);
+    let r = &c.rules[0];
+    assert_eq!(r.value, SheetValue::Text);
+    let offers = r.offers.as_ref().expect("CHOOSE:NUMCHOICES=1|CLASS|... makes the record choice-bearing");
+    assert_eq!(offers.id, r.id);
+    assert!(matches!(offers.from, OptionSet::Classes(_)), "a class to pick: {:?}", offers.from);
+    assert!(r.prose.iter().any(|seg| seg.pieces.iter().any(|p| *p == ProsePiece::ChoiceName(r.id.clone()))), "the DESC %CHOICE slot is the chosen name: {:?}", r.prose);
+    assert!(!serde_json::to_string(r).unwrap().contains('%'), "no marker survives into the rule");
+}
+
+#[test]
+fn dice_literal_reads_a_modifier() {
+    // The `Dice.modifier` form the design names ("1d8" + Const(2) -> "1d8+2"), on the reader
+    // every DAMAGE / NATURALATTACKS die goes through.
+    use codex_ingest::pcgen_import::sheet_rule::convert::dice_literal;
+    assert_eq!(dice_literal("1d8+2"), Some(("1d8".to_string(), Some(Expr::Const(2)))));
+    assert_eq!(dice_literal("1d8"), Some(("1d8".to_string(), None)));
+    assert_eq!(dice_literal("2d6-1"), Some(("2d6".to_string(), Some(Expr::Const(-1)))));
+    assert_eq!(dice_literal("Special"), None);
+    assert_eq!(dice_literal("0"), None);
+}
+
+fn package_files() -> BTreeMap<String, Vec<u8>> {
+    let out = read_output(&repo().join("data/sheet_rules"));
+    assert!(!out.is_empty(), "data/sheet_rules/ is generated (cargo run --locked -p codex-ingest --bin sheet_rule_convert -- --write)");
+    out
+}
+
+fn inventory_ids_by_kind() -> BTreeMap<String, BTreeSet<String>> {
+    let text = std::fs::read_to_string(repo().join("docs/work-inventory.json")).unwrap();
+    let json: serde_json::Value = serde_json::from_str(&text).unwrap();
+    let mut out: BTreeMap<String, BTreeSet<String>> = BTreeMap::new();
+    for u in json["units"].as_array().unwrap() {
+        out.entry(u["kind"].as_str().unwrap().to_string()).or_default().insert(u["id"].as_str().unwrap().to_string());
+    }
+    out
+}
+
+fn refused_ids() -> BTreeSet<String> {
+    let text = std::fs::read_to_string(repo().join("data/sheet_rules/_refused.json")).unwrap();
+    let json: serde_json::Value = serde_json::from_str(&text).unwrap();
+    json["entries"].as_array().unwrap().iter().map(|e| e["id"].as_str().unwrap().to_string()).collect()
+}
+
+/// One gate per kind: every inventory unit of the kind has a rule file whose principal rule id
+/// is the unit id, or an entry in `_refused.json` -- never neither, never both.
+fn kind_gate(kind: &str) {
+    let inventory = inventory_ids_by_kind();
+    let units = inventory.get(kind).cloned().unwrap_or_default();
+    assert!(!units.is_empty(), "kind {kind} exists in docs/work-inventory.json");
+    let files = package_files();
+    let mut converted: BTreeSet<String> = BTreeSet::new();
+    for (rel, bytes) in &files {
+        let parts: Vec<&str> = rel.split('/').collect();
+        if parts.len() != 3 || parts[1] != kind {
+            continue;
+        }
+        let rules: Vec<SheetRule> = serde_json::from_slice(bytes).unwrap_or_else(|e| panic!("{rel}: {e}"));
+        assert!(!rules.is_empty(), "{rel}: at least one rule");
+        converted.insert(rules[0].id.clone());
+        for r in &rules {
+            assert_eq!(r.provenance.kind, kind, "{rel}: provenance kind");
+        }
+    }
+    // SD-36 F1c-3 (D3): a class-selection class's principal (`Effect::TakenOnClass`) is written
+    // for a unit of ANOTHER kind (the selection ability) and is no inventory unit of its own.
+    // Every such extra must carry the effect and name a base class the package converted.
+    if kind == "class" {
+        let selection: BTreeSet<String> = files
+            .iter()
+            .filter(|(rel, _)| rel.split('/').nth(1) == Some("class"))
+            .filter_map(|(_, bytes)| serde_json::from_slice::<Vec<SheetRule>>(bytes).ok()?.into_iter().next())
+            .filter(|r| r.grants.iter().any(|e| matches!(e, codex::rules_core::sheet_rule::Effect::TakenOnClass(base) if converted.iter().any(|c| c.ends_with(&format!(":class:{base}"))))))
+            .map(|r| r.id)
+            .collect();
+        for id in &selection {
+            assert!(!units.contains(id), "{id}: a class-selection principal is never an inventory unit");
+        }
+        assert_eq!(selection.len(), 4, "class-selection principals (Pathfinder Unchained's four): {selection:?}");
+        converted.retain(|id| !selection.contains(id));
+    }
+    let refused: BTreeSet<String> = refused_ids().into_iter().filter(|id| id.split(':').nth(1) == Some(kind)).collect();
+    let both: Vec<_> = converted.intersection(&refused).take(5).collect();
+    assert!(both.is_empty(), "{kind}: converted AND refused: {both:?}");
+    let covered: BTreeSet<String> = converted.union(&refused).cloned().collect();
+    let missing: Vec<_> = units.difference(&covered).take(5).collect();
+    let extra: Vec<_> = covered.difference(&units).take(5).collect();
+    assert!(missing.is_empty() && extra.is_empty(), "{kind}: units={} converted={} refused={} missing={missing:?} extra={extra:?}", units.len(), converted.len(), refused.len());
+}
+
+macro_rules! kind_gates {
+    ($($name:ident => $kind:literal),* $(,)?) => {
+        $(#[test] fn $name() { kind_gate($kind); })*
+    };
+}
+
+kind_gates! {
+    gate_ability => "ability",
+    gate_class => "class",
+    gate_class_feature => "class_feature",
+    gate_companion => "companion",
+    gate_deity => "deity",
+    gate_domain => "domain",
+    gate_equipment => "equipment",
+    gate_equipment_modifier => "equipment_modifier",
+    gate_feat => "feat",
+    gate_language => "language",
+    gate_monster => "monster",
+    gate_monster_ability => "monster_ability",
+    gate_power => "power",
+    gate_race => "race",
+    gate_race_trait => "race_trait",
+    gate_skill => "skill",
+    gate_spell => "spell",
+    gate_template => "template",
+    gate_trait => "trait",
+}
+
+/// `grep -rlE 'BONUS:|DEFINE:|PRE[A-Z]+:|%CHOICE|CL=' data/sheet_rules/ | wc -l` is 0, plus
+/// the `TYPE=` / `%<digit>` / `DESC:` / `SAB:` literals the residue gate names.
+#[test]
+fn package_carries_no_source_format_literal() {
+    let files = package_files();
+    let hits = shape_violations(&files);
+    assert!(hits.is_empty(), "{} files carry a source-format literal, e.g. {:?}", hits.len(), hits.iter().take(5).collect::<Vec<_>>());
+}
+
+/// SD-36 Epic F1 re-check round 2, finding 2 (round 3 fix): fix 1 made every spelling of an
+/// `AUTO:WEAPONPROF|TYPE=` selector resolve (rather than silently drop), so a record whose
+/// PCGen source states the same selector under two or three differently-capitalized book
+/// spellings (`OnehandedFirearm` / `OneHandedFirearm` / `OneHandedFireArm`, all the identical
+/// 9-weapon oracle set) converted to that many identical-content grants -- duplicate lines on
+/// the printed sheet. `convert_record` now dedupes a record's own `WeaponSet` grants by
+/// resolved member set (`dedup_weapon_set_grants`, `convert.rs`).
+///
+/// This gate reads a FRESH in-process conversion (`run(&s.tree, &s.index, &s.closures)`), never
+/// `package_files()` -- the tracked `data/sheet_rules` on this branch predates F1
+/// (`package_on_disk_is_fresh_and_clean` fails on it: `grep -rl WeaponSet data/sheet_rules | wc
+/// -l` is 0, so a `package_files()`-backed version of this test would pass vacuously no matter
+/// whether `dedup_weapon_set_grants` runs). Running the whole corpus through the converter
+/// in-process, not only the picaroon unit the finding named, means a future selector change
+/// anywhere cannot silently reopen the duplicate-grant defect. Proved load-bearing by hand:
+/// red (offenders non-empty, `advanced_class_guide:class_feature:picaroon_weapon_proficiency`
+/// among them) with the `dedup_weapon_set_grants` call in `convert_record` commented out, green
+/// with it restored.
+#[test]
+fn no_rule_carries_two_weapon_set_grants_with_the_same_resolved_member_set() {
+    let s = shared();
+    let r = run(&s.tree, &s.index, &s.closures);
+    let mut offenders: Vec<String> = Vec::new();
+    for (rel, rules) in &r.files {
+        for rule in rules {
+            let mut seen: Vec<&Vec<String>> = Vec::new();
+            for g in &rule.grants {
+                let members = match g {
+                    Effect::FactGrant(Fact::Proficiency(ProfRef::WeaponSet { members, .. })) => Some(members),
+                    Effect::GatedFactGrant { fact: Fact::Proficiency(ProfRef::WeaponSet { members, .. }), .. } => Some(members),
+                    _ => None,
+                };
+                if let Some(members) = members {
+                    if seen.contains(&members) {
+                        offenders.push(format!("{rel}:{}", rule.id));
+                    } else {
+                        seen.push(members);
+                    }
+                }
+            }
+        }
+    }
+    assert!(offenders.is_empty(), "records with a duplicate-content WeaponSet grant (same resolved member set, different raw label), from a fresh in-process conversion: {offenders:?}");
+}
+
+/// SD-36 Epic F1 re-check round 3, finding 4: enumerates every `WeaponSet` member set that
+/// carries more than one raw label, from a FRESH in-process conversion (never a fixture), so a
+/// fourth multi-label family cannot appear silently -- a future selector spelling divergence
+/// fails this test by name instead of quietly printing two different lines for the one
+/// proficiency (`src/rules_core/level_up_option_filter.rs`'s `pretty_weapon_set_label` doc
+/// comment cites this test and this test's own denominator). Measured today: 63 `WeaponSet`
+/// grants / 27 distinct member sets, exactly 3 multi-label (the one/two-handed firearm families
+/// and the siege family) -- every one of the 3 must fold to a single printed phrase via
+/// `describe_prof`, the same public entry point the sheet renderer calls.
+#[test]
+fn no_fifth_multi_label_weapon_set_family_appears_silently() {
+    use codex::rules_core::level_up_option_filter::describe_prof;
+    use std::collections::{BTreeMap, BTreeSet};
+
+    let s = shared();
+    let r = run(&s.tree, &s.index, &s.closures);
+
+    let mut sets: BTreeMap<Vec<String>, BTreeSet<String>> = BTreeMap::new();
+    let mut total_ws_grants = 0usize;
+    for rules in r.files.values() {
+        for rule in rules {
+            for g in &rule.grants {
+                let fact = match g {
+                    Effect::FactGrant(f) => Some(f),
+                    Effect::GatedFactGrant { fact, .. } => Some(fact),
+                    _ => None,
+                };
+                if let Some(Fact::Proficiency(ProfRef::WeaponSet { label, members })) = fact {
+                    total_ws_grants += 1;
+                    let mut sorted_members = members.clone();
+                    sorted_members.sort();
+                    sets.entry(sorted_members).or_default().insert(label.clone());
+                }
+            }
+        }
+    }
+    let multi: Vec<(&Vec<String>, &BTreeSet<String>)> = sets.iter().filter(|(_, labels)| labels.len() > 1).collect();
+    assert_eq!(total_ws_grants, 63, "WeaponSet grant count moved -- re-derive this test's denominator");
+    assert_eq!(sets.len(), 27, "distinct WeaponSet member-set count moved -- re-derive this test's denominator");
+    assert_eq!(
+        multi.len(),
+        3,
+        "a new multi-label member set appeared: {:?}",
+        multi.iter().map(|(_, l)| l).collect::<Vec<_>>()
+    );
+    for (members, labels) in &multi {
+        let pretty: BTreeSet<String> = labels
+            .iter()
+            .map(|l| describe_prof(&ProfRef::WeaponSet { label: l.clone(), members: (*members).clone() }))
+            .collect();
+        assert_eq!(pretty.len(), 1, "member set with labels {labels:?} still prints {pretty:?} -- a multi-label family must fold to one phrase");
+    }
+}
+
+/// SD-35 AT-35-E5-003 -- the live-package gate for bucket U's
+/// `feat_served_description_is_a_placeholder_marker_not_prose` sub-cause. Upstream PCGen's own
+/// editorial not-implemented admission is an annotation about PCGen's automation, not the
+/// rule's words; under the sheet rule (`decisions.md §1`) the paper sheet prints the rule's
+/// words and nothing of the source tool. Reads the LIVE package -- never a per-unit fixture
+/// (`decisions.md §4`) -- and uses the same detector the classifier demotes on
+/// (`wiring_class::carries_editorial_not_implemented_marker`), so the gate and the demotion
+/// can never disagree about what a marker is.
+#[test]
+fn package_prose_carries_no_upstream_editorial_marker() {
+    let mut hits: Vec<String> = Vec::new();
+    for (name, bytes) in package_files() {
+        let text = String::from_utf8_lossy(&bytes);
+        if codex_ingest::pcgen_import::wiring_class::carries_editorial_not_implemented_marker(&text) {
+            hits.push(name);
+        }
+    }
+    assert!(
+        hits.is_empty(),
+        "{} package files carry upstream PCGen's editorial not-implemented marker, e.g. {:?}",
+        hits.len(),
+        hits.iter().take(5).collect::<Vec<_>>()
+    );
+}
+
+/// The `--check` gate: the package on disk equals a fresh conversion byte for byte, every
+/// referenced variable has a table, and converted + refused sums to the population.
+#[test]
+fn package_on_disk_is_fresh_and_clean() {
+    let s = shared();
+    let r = run(&s.tree, &s.index, &s.closures);
+    // **49,438 -> 49,450 with SD-35 operator ruling B18** (`decisions.md §21`): the widened
+    // `has_classifying_token` admitted 12 units that carry their own rule prose but not the
+    // classifying token their kind used to demand. This figure is the inventory's own unit count,
+    // so it moves whenever the inventory's population legitimately does; re-derive it with
+    // `python3 -c "import json;print(json.load(open('docs/work-inventory.json'))['totals']['units'])"`.
+    assert_eq!(r.report.records, 49_450, "records = every docs/work-inventory.json unit");
+    assert_eq!(r.report.converted + r.report.refused, r.report.records);
+    if let Err(problems) = check(&repo().join("data/sheet_rules"), &r) {
+        panic!("{} problem(s), e.g. {:?}", problems.len(), problems.iter().take(8).collect::<Vec<_>>());
+    }
+}
+
+/// Two consecutive conversions of the unchanged tree are identical (the `--check` premise).
+#[test]
+fn conversion_is_deterministic() {
+    let s = shared();
+    let a = codex_ingest::pcgen_import::sheet_rule::render(&run(&s.tree, &s.index, &s.closures));
+    let b = codex_ingest::pcgen_import::sheet_rule::render(&run(&s.tree, &s.index, &s.closures));
+    assert_eq!(a.len(), b.len());
+    for (k, v) in &a {
+        assert_eq!(Some(v), b.get(k), "{k} differs between two runs");
+    }
+}
+
+/// SD-35 AT-35-E2-004 -- the token census `scripts/token_coverage.py` reads. Every token the
+/// converter processed names the mapping-table row it resolved to (or `unmapped:<HEAD>` /
+/// `BONUS:<SUB>` when the table has none), and every refusal names the token type it arose
+/// under, so "units carrying it" and "units refused because of this token" are counted from
+/// the closure the converter actually read -- never from a second reading of the corpus.
+#[test]
+fn token_census_names_the_row_for_every_token_and_the_head_under_each_refusal() {
+    // A converted record carries the rows its tokens resolve to and no refusal.
+    let c = convert_unit("core_rulebook:equipment:longsword");
+    assert!(c.tokens.contains("DAMAGE / ALTDAMAGE"), "the longsword's DAMAGE token names its row: {:?}", c.tokens);
+    assert!(c.refusals.is_empty() && c.refusal_under.is_empty());
+    // SD-35 AT-35-E4-001. The Arcanist used to degrade under `unmapped:STARTSKILLPTS` and
+    // `unmapped:MEMORIZE` -- not because either term was unreadable, but because the mapping
+    // table carried no row for the head. Both heads now have a `Metadata` row (the class
+    // chassis holds the value and prints it), so the census names the ROW and the record does
+    // not degrade for them. The degradation-recording behaviour the old assertion pinned is
+    // proved on `eldritch_scion_spells` below, on a shape that is still genuinely unreadable.
+    let c = convert_unit("advanced_class_guide:class:arcanist");
+    assert!(c.refusals.is_empty(), "an unmapped head is not a RECORD-level refusal: {:?}", c.refusals);
+    for row in ["STARTSKILLPTS", "MEMORIZE"] {
+        assert!(c.tokens.contains(row), "the census names the row the head resolved to: {:?}", c.tokens);
+        assert!(!c.degradations.contains(&format!("unmapped:{row}")), "{row} has a mapping row, so it degrades nothing: {:?}", c.degradations);
+    }
+    // A formula-shaped degradation names the TOKEN it arose under, not the formula family.
+    let c = convert_unit("advanced_class_guide:class_feature:eldritch_scion_spells");
+    let under = c.degraded_under.get("BONUS:STAT (target BASESPELLSTAT;Class)").expect("the degradation is recorded");
+    assert_eq!(under.iter().collect::<Vec<_>>(), vec!["BONUS:STAT"], "degraded under the BONUS:STAT row");
+    // The whole run's census: one entry per record, ids unique, and the refused id set equals
+    // `_refused.json`'s -- the sum `token_coverage.py --check` re-checks.
+    let s = shared();
+    let r = run(&s.tree, &s.index, &s.closures);
+    assert_eq!(r.tokens.entries.len(), r.report.records, "one census entry per record");
+    let ids: BTreeSet<&String> = r.tokens.entries.iter().map(|e| &e.id).collect();
+    assert_eq!(ids.len(), r.report.records, "no record appears twice in the census");
+    let census_refused: BTreeSet<&String> = r.tokens.entries.iter().filter(|e| !e.refusals.is_empty()).map(|e| &e.id).collect();
+    let refused: BTreeSet<&String> = r.refused.entries.iter().map(|e| &e.id).collect();
+    assert_eq!(census_refused, refused, "the census refuses exactly the records _refused.json refuses");
+    // SD-35 AT-35-E4-001's own bar: the census carries NO `unmapped:<HEAD>` token type at all.
+    // Every head the corpus's closures carry resolves to a mapping-table row, so a degradation
+    // can only mean a term the converter genuinely could not read -- never a table gap.
+    let unmapped: BTreeSet<&String> = r.tokens.entries.iter().flat_map(|e| e.tokens.iter()).filter(|t| t.starts_with("unmapped:")).collect();
+    assert!(unmapped.is_empty(), "every head has a mapping row; still unmapped: {unmapped:?}");
+    let rendered = codex_ingest::pcgen_import::sheet_rule::render(&r);
+    assert!(rendered.contains_key("_tokens.json"), "the census is written into the package");
+}
+
+/// SD-35 `AT-35-E3-002`: the two token-less refusal shapes are closed against the LIVE
+/// population, never against a hand-derived fixture (`decisions.md §4`).
+///
+/// A record the converter still refuses as `no_corpus_record` or `no_source_row` must
+/// genuinely have nothing to print: no source row resolvable in the pinned tree by the
+/// coordinates the inventory itself carries, **and** no printable `description` in a shipped
+/// `data/corpus` record. If either exists, the sheet rule (`decisions.md §1` form 3) says the
+/// record prints those words and the converter must emit them, so the refusal is a defect.
+#[test]
+fn no_token_less_refusal_still_has_words_to_print() {
+    let s = shared();
+    let inv_text = std::fs::read_to_string(repo().join("docs/work-inventory.json")).unwrap();
+    let inv: serde_json::Value = serde_json::from_str(&inv_text).unwrap();
+    let by_id: BTreeMap<&str, &serde_json::Value> =
+        inv["units"].as_array().unwrap().iter().map(|u| (u["id"].as_str().unwrap(), u)).collect();
+
+    let refused_text = std::fs::read_to_string(repo().join("data/sheet_rules/_refused.json")).unwrap();
+    let refused: serde_json::Value = serde_json::from_str(&refused_text).unwrap();
+    let token_less: Vec<&serde_json::Value> = refused["entries"]
+        .as_array()
+        .unwrap()
+        .iter()
+        .filter(|e| {
+            e["token_types"]
+                .as_array()
+                .map(|t| t.iter().all(|x| matches!(x.as_str(), Some("no_corpus_record") | Some("no_source_row"))))
+                .unwrap_or(false)
+        })
+        .collect();
+
+    let mut with_words: Vec<String> = Vec::new();
+    for e in &token_less {
+        let id = e["id"].as_str().unwrap();
+        let Some(u) = by_id.get(id) else { continue };
+        let book = u["book"].as_str().unwrap_or("");
+        // 1. Is the unit's own source row resolvable in the pinned tree?
+        if let (Some(file), Some(line)) = (u["source_file"].as_str(), u["source_line"].as_u64())
+            && s.tree.files.iter().any(|f| {
+                f.book == book && !f.is_pfs && f.rel_path.rsplit('/').next() == Some(file) && (line as usize) <= f.lines.len() && line > 0
+            })
+        {
+            with_words.push(format!("{id} (pinned row {file}:{line})"));
+            continue;
+        }
+        // 2. Does a shipped corpus record carry a printable description?
+        let kind = u["kind"].as_str().unwrap_or("");
+        let slug = id.splitn(3, ':').nth(2).unwrap_or("");
+        let path = repo().join(format!("data/corpus/{book}/{kind}/{slug}.json"));
+        if let Ok(text) = std::fs::read_to_string(&path)
+            && let Ok(json) = serde_json::from_str::<serde_json::Value>(&text)
+            && let Some(desc) = json["data"]["description"].as_str().or_else(|| json["data"]["full_text"].as_str())
+            && !desc.trim().is_empty()
+            && !desc.contains("[redacted PI]")
+        {
+            with_words.push(format!("{id} (corpus description)"));
+        }
+    }
+    assert!(
+        with_words.is_empty(),
+        "{} token-less refusal(s) of {} still have words to print, e.g. {:?}",
+        with_words.len(),
+        token_less.len(),
+        with_words.iter().take(5).collect::<Vec<_>>()
+    );
+}
+
+/// A **converted** record whose corpus row states the book's own sentence must carry that
+/// sentence in the package.
+///
+/// SD-35 `AT-35-E6-003-SWEEP` cycle 16. The mirror of
+/// [`no_token_less_refusal_still_has_words_to_print`], which only ever looked at records the
+/// converter *refused*. A record the token path converts takes its prose from `DESC:` /
+/// `BENEFIT:` / `SPROP:` / `SAB:` / `TEMPDESC:` rows and from nowhere else, so a record that
+/// carries structured tokens (`CLASSES:`, `DOMAINS:`) **and** a `description` field, but no
+/// `DESC:` row, converted to a rule with no prose at all and the book's sentence was dropped
+/// on the floor. `data/corpus/advanced_players_guide/spell/blindness_deafness_only_cause_blindness.json`
+/// is the shape: its record states *"You call upon the powers of unlife to render the subject
+/// blinded or deafened, as you choose."* and its only tokens are `CLASSES` and `DOMAINS`.
+///
+/// `decisions.md §1` form 3 rules the other way: the words ARE the sheet line. This gate reads
+/// the live package and the live corpus directory -- never a fixture with a hand-derived value
+/// (`decisions.md §4`) -- and refuses to pass on an empty walk, so a walk that stopped finding
+/// records cannot agree with itself about nothing.
+#[test]
+fn a_converted_record_never_drops_the_description_its_corpus_row_states() {
+    let pkg = package_files();
+    let mut examined = 0usize;
+    let mut with_description = 0usize;
+    let mut dropped: Vec<String> = Vec::new();
+    for (rel, bytes) in &pkg {
+        let Some((book, rest)) = rel.split_once('/') else { continue };
+        let Some((kind, file)) = rest.split_once('/') else { continue };
+        if book.starts_with('_') || !file.ends_with(".json") {
+            continue;
+        }
+        let Ok(rules) = serde_json::from_slice::<Vec<serde_json::Value>>(bytes) else { continue };
+        examined += 1;
+        let corpus = repo().join(format!("data/corpus/{book}/{kind}/{file}"));
+        let Ok(text) = std::fs::read_to_string(&corpus) else { continue };
+        let Ok(json) = serde_json::from_str::<serde_json::Value>(&text) else { continue };
+        let Some(desc) = json["data"]["description"].as_str() else { continue };
+        let desc = desc.trim();
+        if desc.is_empty() || desc.contains("[redacted PI]") {
+            continue;
+        }
+        if json["license_pi"].as_bool().unwrap_or(false)
+            || json["pi_fields"].as_array().is_some_and(|a| a.iter().any(|f| f.as_str() == Some("description")))
+        {
+            continue;
+        }
+        with_description += 1;
+        let has_prose = rules.iter().any(|r| r["prose"].as_array().is_some_and(|p| !p.is_empty()));
+        if !has_prose {
+            dropped.push(format!("{book}:{kind}:{file}"));
+        }
+    }
+    assert!(examined > 1000, "package walk collapsed: only {examined} rule file(s) examined");
+    assert!(with_description > 100, "corpus walk collapsed: only {with_description} record(s) state a description");
+    eprintln!("converted rule files={examined} whose corpus record states a description={with_description} dropping it={}", dropped.len());
+    assert!(
+        dropped.is_empty(),
+        "{} converted record(s) of {with_description} drop the description their corpus row states, e.g. {:?}",
+        dropped.len(),
+        dropped.iter().take(8).collect::<Vec<_>>()
+    );
+}
+
+/// No converted rule's prose carries the ingest format's **literal-percent escape**, `%%`.
+///
+/// SD-35 `AT-35-E6-003-SWEEP` cycle 17. `%%` is how the source writes a literal `%`; the
+/// `DESC:` path has always collapsed it (`prose::template_pieces`), so a converted sentence
+/// states *"roll d%"* and a player reads percentile dice. The `description` fallback added in
+/// cycle 16 took the corpus row verbatim and applied no such collapse, so
+/// `core_rulebook:spell:plane_shift_to_shadow_or_material_plane` reached the Spell Catalog
+/// screen reading *"you appear 5 to 500 miles [5d%%] from your intended destination"* — the
+/// ingest format's own escape on a player's screen, which `decisions.md §1` and `§11` both
+/// rule out. Four package files carried it; the desktop crate's own catalogs caught two of
+/// them, and had been red since cycle 16 because that cycle did not run the crate.
+///
+/// Reads the live package, not a fixture (`decisions.md §4`), and refuses an empty walk.
+#[test]
+fn no_converted_prose_carries_the_source_literal_percent_escape() {
+    let mut hits: Vec<String> = Vec::new();
+    let mut examined = 0usize;
+    for (name, bytes) in package_files() {
+        examined += 1;
+        if String::from_utf8_lossy(&bytes).contains("%%") {
+            hits.push(name);
+        }
+    }
+    println!("package files examined={examined} carrying a '%%' escape={}", hits.len());
+    assert!(examined > 1000, "the walk examined only {examined} files -- agreement about nothing");
+    assert!(
+        hits.is_empty(),
+        "{} package file(s) state the source's literal-percent escape: {:?}",
+        hits.len(),
+        hits.iter().take(12).collect::<Vec<_>>()
+    );
+}
+
+// ---- SD-36 Epic E: SD-35 code-review correctness fixes ----------------------------------------
+
+/// CONV-01: PCGen's `CRITRANGE:<n>` is a COUNT of the top d20 values that threaten, so the real
+/// range is `(21-n)-20`, not `<n>-20`. The CRB Longsword (`CRITRANGE:2`) really threatens on
+/// 19-20; `cr_equip_arms_armor.lst:167`'s Rapier (`CRITRANGE:3`) really threatens on 18-20.
+#[test]
+fn critrange_prints_the_real_low_bound_not_the_raw_token_count() {
+    let longsword = convert_unit("core_rulebook:equipment:longsword");
+    let principal = &longsword.rules[0];
+    assert!(
+        principal.prose.iter().any(|s| matches!(&s.family, ProseFamily::StatBlock(l) if l == "Critical threat")
+            && s.pieces.iter().any(|p| *p == ProsePiece::Text("19-20".to_string()))),
+        "CRITRANGE:2 must read 19-20, not 2-20: {:?}",
+        principal.prose
+    );
+
+    let rapier = convert_unit("core_rulebook:equipment:rapier");
+    let principal = &rapier.rules[0];
+    assert!(
+        principal.prose.iter().any(|s| matches!(&s.family, ProseFamily::StatBlock(l) if l == "Critical threat")
+            && s.pieces.iter().any(|p| *p == ProsePiece::Text("18-20".to_string()))),
+        "CRITRANGE:3 must read 18-20, not 3-20: {:?}",
+        principal.prose
+    );
+}
+
+/// CONV-02: the Wolf's `BONUS:SITUATION|Survival=Track by scent|4|TYPE=Racial` row
+/// (`b1_races.lst:414`) must keep its own descriptive label (mentioning Survival), not the bare
+/// record name "Wolf" -- the label every OTHER line on this same record already keeps correctly.
+#[test]
+fn multi_line_records_keep_every_lines_own_label() {
+    let wolf = convert_unit("bestiary:monster:wolf");
+    assert!(wolf.refusals.is_empty(), "refusals: {:?}", wolf.refusals);
+    let survival = wolf
+        .rules
+        .iter()
+        .find(|r| matches!(&r.target, Some(BonusTarget::SkillSituation { situation, .. }) if situation == "track by scent"))
+        .expect("the Survival track-by-scent line converted");
+    assert_ne!(survival.label, "Wolf", "the Survival bonus must not print as the bare record name: {:?}", survival);
+    assert!(survival.label.to_ascii_lowercase().contains("survival"), "label should describe the Survival bonus: {}", survival.label);
+}
+
+/// CONV-03: PCGen's indirect natural-armor idiom (`BONUS:VAR|AC_Natural_Armor|X|TYPE=Base`, used
+/// by the Wolf at `b1_races.lst:414`) must fold into a real AC line; today it silently becomes
+/// only a variable contribution with no consumer, so no AC line exists at all.
+#[test]
+fn ac_natural_armor_var_idiom_becomes_an_ac_line() {
+    let wolf = convert_unit("bestiary:monster:wolf");
+    let ac_line = wolf.rules.iter().find(|r| matches!(&r.target, Some(BonusTarget::Ac)));
+    let ac_line = ac_line.unwrap_or_else(|| panic!("an AC line must exist for the Wolf's natural armor: rules={:?}", wolf.rules.iter().map(|r| (&r.id, &r.target)).collect::<Vec<_>>()));
+    assert_eq!(ac_line.value, SheetValue::Number(Expr::Const(2)), "the Wolf's AC_Natural_Armor value is 2");
+    assert_eq!(ac_line.bonus_type.as_ref().map(|b| b.name.as_str()), Some("NaturalArmor"));
+}
+
+/// CONV-04: a `.COPY=` equipment record's printed label must be the specific item's own name,
+/// never the generic base-item-type word before `.COPY=`.
+#[test]
+fn copy_equipment_records_keep_the_specific_items_own_name() {
+    for (unit, expected) in [
+        ("core_rulebook:equipment:oil_of_darkness", "Oil of Darkness"),
+        ("core_rulebook:equipment:staff_of_abjuration", "Staff of Abjuration"),
+        ("core_rulebook:equipment:scroll_of_power_word_stun", "Scroll of Power Word Stun"),
+        ("core_rulebook:equipment:longsword", "Longsword"),
+    ] {
+        let c = convert_unit(unit);
+        assert_eq!(c.rules[0].label, expected, "{unit} must print its own name, not the .COPY= base word");
+    }
+}
+
+/// engine-P2-1: a source `.lst` row doubles the `SPROP:` token key into its own free-text
+/// value (`SPROP:SPROP:On command...`); the doubled echo must not reach player-facing prose.
+#[test]
+fn sprop_does_not_leak_a_doubled_token_key_into_prose() {
+    let c = convert_unit("inner_sea_intrigue:equipment_modifier:special_ability_transformative_greater_melee");
+    let special = c.rules[0].prose.iter().find(|s| matches!(s.family, ProseFamily::Special)).expect("a Special prose segment");
+    for piece in &special.pieces {
+        if let ProsePiece::Text(t) = piece {
+            assert!(!t.contains("SPROP:"), "the doubled token key leaked into prose: {t:?}");
+        }
+    }
+}
+
+/// CONV-05: a record with two independent BONUS terms, one convertible and one not, must still
+/// print the term the converter CAN read -- degradation must be per-line, not record-wide.
+/// `advanced_race_guide:equipment:elixir_of_forceful_exhalation` carries a trivial +4 Swim
+/// competence bonus (`TEMPBONUS:ANYPC|SKILL|Swim|4|TYPE=Competence`) alongside a SITUATION-shaped
+/// TEMPBONUS the converter can't lower; the +4 Swim bonus must still reach the sheet.
+#[test]
+fn a_sibling_terms_degradation_does_not_erase_a_convertible_terms_number() {
+    let c = convert_unit("advanced_race_guide:equipment:elixir_of_forceful_exhalation");
+    assert!(!c.degradations.is_empty(), "the record still carries a genuinely unconvertible term");
+    let swim_bonus = c.rules.iter().find(|r| matches!(r.value, SheetValue::Number(_)) && matches!(&r.target, Some(BonusTarget::Skill(_))));
+    assert!(swim_bonus.is_some(), "the convertible +4 Swim competence bonus must still print a Number, not be wiped by the sibling degradation: {:?}", c.rules);
+}
+
+/// The text of a rule's `StatBlock "<label>"` prose row, when every piece is text.
+fn stat_block_text(rule: &SheetRule, label: &str) -> Option<String> {
+    let seg = rule.prose.iter().find(|s| matches!(&s.family, ProseFamily::StatBlock(l) if l == label))?;
+    let mut out = String::new();
+    for p in &seg.pieces {
+        match p {
+            ProsePiece::Text(t) => out.push_str(t),
+            _ => return None,
+        }
+    }
+    Some(out)
+}
+
+/// SD-36 Epic F3b2 (1). PCGen's class-line `STARTSKILLPTS:x` ("how many skill points a character
+/// gains per level", `docs/listfilepages/datafilestagpages/datafilesclasses.html` in the pinned
+/// oracle; `StartskillptsToken.java`) converts to the class principal's
+/// `StatBlock "Skill ranks per level"` row, the same prose row shape `HD:` gives `"Hit die"`.
+/// Hand-read PF1 values (CRB): Rogue 8 (p.67), Wizard 2 (p.77), Loremaster 4 (p.385). Fighter's
+/// row states a variable (`STARTSKILLPTS:FighterSkillPoints`, `cr_classes.lst:141`) that the
+/// same row DEFINEs at 0 and raises by an unconditional `BONUS:VAR|FighterSkillPoints|2`:
+/// 2 (CRB p.55). A value that is not a literal and not such a variable prints no row.
+#[test]
+fn a_class_principal_states_its_skill_ranks_per_level() {
+    for (unit, want) in [
+        ("core_rulebook:class:rogue", "8"),
+        ("core_rulebook:class:wizard", "2"),
+        ("core_rulebook:class:loremaster", "4"),
+        ("core_rulebook:class:fighter", "2"),
+    ] {
+        let c = convert_unit(unit);
+        let principal = c.rules.first().expect("a class converts to at least its principal");
+        assert_eq!(principal.id, unit);
+        assert_eq!(stat_block_text(principal, "Skill ranks per level").as_deref(), Some(want), "{unit}");
+        let rows = c.rules.iter().flat_map(|r| r.prose.iter()).filter(|s| matches!(&s.family, ProseFamily::StatBlock(l) if l == "Skill ranks per level")).count();
+        assert_eq!(rows, 1, "{unit}: exactly one skill-ranks row");
+    }
+}
+
+/// SD-36 Epic F3b2 (2), mechanism "placeholder-keyed target". A product-identity record's corpus
+/// JSON ships a codex-named placeholder key (`Codex-Named Unit (class_feature_adventurers_guide_
+/// ag_abilities_class_lst_9)`), and the index held it only under that key, so every reference by the
+/// KEY its own oracle row declares (`Aldori Swordlord ~ Adaptive Tactics`, `ag_abilities_class.lst:9`)
+/// missed. Aldori Swordlord's ten level-line grants name such records. (The RED run of this test was
+/// named for an empty-category hypothesis; its category assertion passed at RED, and the defect
+/// assertion failed -- the mechanism is the key, re-traced before the fix.)
+#[test]
+fn a_placeholder_keyed_record_is_found_by_the_key_its_row_declares() {
+    let s = shared();
+    let r = s.index.records.iter().find(|r| r.id == "adventurers_guide:class_feature:aldori_swordlord_adaptive_tactics").expect("unit in inventory");
+    assert!(r.key.starts_with("Codex-Named Unit ("), "the shipped corpus key is the placeholder: {}", r.key);
+    assert_eq!(r.category, "Special Ability", "the oracle row's own CATEGORY");
+    let pair = ("SPECIAL ABILITY".to_string(), "ALDORI SWORDLORD ~ ADAPTIVE TACTICS".to_string());
+    assert_eq!(s.index.by_cat_key.get(&pair).map(String::as_str), Some(r.id.as_str()));
+    let c = convert_unit("adventurers_guide:class:aldori_swordlord");
+    assert!(c.defects.get("unresolved-references").is_none_or(|l| l.is_empty()), "{:?}", c.defects);
+    // A reprint's real corpus key keeps its target: `Unblinking Flame Feint` resolves to the
+    // record that ships that key, not to the adventurers_guide placeholder twin that declares it.
+    let feint = ("FEAT".to_string(), "UNBLINKING FLAME FEINT".to_string());
+    assert_eq!(s.index.by_cat_key.get(&feint).map(String::as_str), Some("inner_sea_combat:feat:unblinking_flame_feint"));
+}
+
+/// SD-36 Epic F3b2b (1), mechanism H. A variable no row of the pinned tree declares, and that is
+/// not a PCGen built-in term, evaluates as 0 in the oracle (`VariableProcessor.java:394-402`,
+/// see `oracle_terms.rs`). The converter reads it as `Const(0)` with a provenance note, and the
+/// reference is an informational `undeclared-in-pinned-tree` row, not a closure defect: the
+/// closure is complete under oracle semantics. A name the oracle could read as a built-in term
+/// (`CRITMULT`) keeps its `undefined-variables` closure defect.
+#[test]
+fn an_undeclared_non_builtin_variable_reads_zero_and_is_not_a_closure_defect() {
+    let c = convert_unit("core_rulebook:class_feature:loremaster_secret_lore");
+    assert!(c.defects.get("undefined-variables").is_none_or(|l| l.is_empty()), "{:?}", c.defects);
+    // The package writes each defect row once (the record reads the name in two formulas).
+    let rows: BTreeSet<String> = c.defects.get("undeclared-in-pinned-tree").cloned().unwrap_or_default().into_iter().collect();
+    assert_eq!(rows, BTreeSet::from(["core_rulebook:class_feature:loremaster_secret_lore: SecretLore".to_string()]));
+    let principal = c.rules.first().expect("principal");
+    assert_eq!(principal.provenance.undeclared_in_pinned_tree, vec!["SecretLore".to_string()]);
+    let builtin = convert_unit("core_rulebook:ability:unarmed_flaming_burst");
+    assert!(
+        builtin.defects.get("undefined-variables").is_some_and(|l| l.iter().any(|r| r.ends_with(": CRITMULT"))),
+        "a name the oracle may read as a built-in term stays a closure defect: {:?}",
+        builtin.defects
+    );
+    assert!(builtin.rules.first().expect("principal").provenance.undeclared_in_pinned_tree.is_empty());
+}
+
+/// SD-36 Epic F3b2b (2), mechanism T. The standing supersession ruling (operator 2026-08-16:
+/// the newest printing wins; publication order from the `.pcc` `SOURCEDATE:`; a variant is not a
+/// reprint). Cyphermage (`inner_sea_magic`, `ism_classes.lst:79`) grants
+/// `Cyphermage Class Feature|Cyphermage ~ Cypher Lore`. The child category's two declarations
+/// (`ism_abilitycategories.lst:56`, `ag_abilitycategories.lst:7`) agree on the parent
+/// (`Special Ability`) and differ only in `TYPE:`, so the parent is kept; the target is printed
+/// twice (`ism_abilities_class.lst:8`, `SOURCEDATE:2011-07`; `ag_abilities_class.lst:103`,
+/// `SOURCEDATE:2017-06`), the same object (same KEY, name and category; the older DESC is a
+/// prefix of the newer), so it resolves to the Adventurer's Guide printing.
+#[test]
+fn a_same_object_reprint_resolves_to_the_newest_printing() {
+    let s = shared();
+    assert_eq!(s.tree.source_dates.get("inner_sea_magic").map(String::as_str), Some("2011-07"));
+    assert_eq!(s.tree.source_dates.get("adventurers_guide").map(String::as_str), Some("2017-06"));
+    assert_eq!(s.tree.ability_category_parent.get("CYPHERMAGE CLASS FEATURE").map(String::as_str), Some("SPECIAL ABILITY"));
+    let c = convert_unit("inner_sea_magic:class:cyphermage");
+    for kind in ["unresolved-references", "ambiguous-parent-category-target"] {
+        assert!(c.defects.get(kind).is_none_or(|l| l.is_empty()), "{kind}: {:?}", c.defects);
+    }
+    assert!(
+        c.grants_out.iter().any(|(t, _)| t == "adventurers_guide:class_feature:cyphermage_cypher_lore"),
+        "the grant lands on the newest printing: {:?}",
+        c.grants_out.iter().map(|(t, _)| t).collect::<Vec<_>>()
+    );
+}
+
+/// SD-36 Epic F3c3 (1). PCGen's `SUBCLASS:` lines (`datafilesclasses.html`, "The Sub-Class Line":
+/// placed between the class lines and the level lines; `SUBCLASSLEVEL:<n>` rows define the
+/// sub-class's level-dependent grants) are a choice the class makes once
+/// (`SubClassApplication.checkForSubClass`: one pick from the class's `SUB_CLASS` list in load
+/// order). The converter carries each class's list as ONE choice sibling on the class record
+/// (`<class id>#subclass`, `offers: Rules { pool: subclass, tags: [<Class> Subclass] }`), whose
+/// options are `subclass` rules granted by that choice, carrying the line's own grants: `CSKILL`
+/// as class-skill facts, `SUBCLASSLEVEL` `ABILITY` as grant edges from the option.
+///
+/// Psion (`up_classes.lst:221-256`, 17 lines): Egoist first; its line grants Autohypnosis,
+/// the Craft / Knowledge / Profession families and Spellcraft (`:221`), and its level-1 line
+/// grants `Psychometabolism Class Skills` (`:222`), the record that states Acrobatics and Heal
+/// (`up_abilities_class.lst:409`).
+#[test]
+fn a_subclass_choice_converts_with_its_class_skill_grants() {
+    use codex_ingest::pcgen_import::sheet_rule::subclass::convert_subclasses;
+    let s = shared();
+    let out = convert_subclasses(&s.tree, &s.index, &s.closures);
+    let chooser = out.choosers.iter().find(|(_, r)| r.id == "ultimate_psionics:class:psion#subclass").map(|(_, r)| r).expect("psion carries a subclass choice");
+    let Some(Choice { id, count, from: OptionSet::Rules { pool, tags, .. } }) = &chooser.offers else { panic!("{:?}", chooser.offers) };
+    assert_eq!(id, &chooser.id);
+    assert_eq!(count, &Expr::Const(1));
+    assert_eq!(pool, "subclass");
+    assert_eq!(tags, &vec!["Psion Subclass".to_string()]);
+    let psion: Vec<&SheetRule> = out.options.iter().filter(|o| o.rule.granted_by.iter().any(|g| g.by == Granter::Choice(chooser.id.clone()))).map(|o| &o.rule).collect();
+    assert_eq!(psion.len(), 17, "{:?}", psion.iter().map(|r| &r.id).collect::<Vec<_>>());
+    assert_eq!(psion[0].id, "ultimate_psionics:subclass:psion_egoist", "oracle order: the first line is the first option");
+    let egoist = psion[0];
+    assert_eq!(egoist.tags, vec!["Psion Subclass".to_string()]);
+    let facts: Vec<&Fact> = egoist.grants.iter().filter_map(|e| if let Effect::FactGrant(f) = e { Some(f) } else { None }).collect();
+    for want in [
+        Fact::ClassSkill("autohypnosis".into()),
+        Fact::ClassSkillGroup("Craft".into()),
+        Fact::ClassSkillGroup("Knowledge".into()),
+        Fact::ClassSkillGroup("Profession".into()),
+        Fact::ClassSkill("spellcraft".into()),
+    ] {
+        assert!(facts.contains(&&want), "{want:?} in {facts:?}");
+    }
+    let edges = &out.options.iter().find(|o| o.rule.id == egoist.id).expect("egoist option").grants_out;
+    assert!(
+        edges.iter().any(|(t, g)| t == "ultimate_psionics:class_feature:psychometabolism_class_skills" && g.by == Granter::Rule(egoist.id.clone())),
+        "{edges:?}"
+    );
+    // Ascendant Psion's line states `PRERACE:1,Elan` (`:255`): the option carries the gate.
+    let ascendant = psion.iter().find(|r| r.id == "ultimate_psionics:subclass:psion_ascendant_psion").expect("ascendant psion");
+    assert_ne!(ascendant.applies, Applies::Always);
+}
+
+/// SD-36 Epic F3c3 (1): the same rule on the second SUBCLASS-bearing class. Wizard's list is its
+/// CRB lines (`cr_classes.lst:283-300`, Abjurer first) plus the `.MOD` lines of four more books.
+/// The sin schools are printed twice, token-identical (`ism_classes.lst:36-49`, `SOURCEDATE:
+/// 2011-07`; `ag_classes.lst:492-505`, `SOURCEDATE:2017-06`): the standing supersession ruling
+/// keeps the newest printing. Each option's level-1 `ABILITY` grants its school
+/// (`Wizard Class Feature|AUTOMATIC|Evocation School`, `:292`).
+#[test]
+fn a_wizard_school_subclass_converts_through_the_same_rule() {
+    use codex_ingest::pcgen_import::sheet_rule::subclass::convert_subclasses;
+    let s = shared();
+    let out = convert_subclasses(&s.tree, &s.index, &s.closures);
+    let chooser_id = "core_rulebook:class:wizard#subclass".to_string();
+    assert!(out.choosers.iter().any(|(_, r)| r.id == chooser_id));
+    let wizard: Vec<_> = out.options.iter().filter(|o| o.rule.granted_by.iter().any(|g| g.by == Granter::Choice(chooser_id.clone()))).collect();
+    assert_eq!(wizard[0].rule.id, "core_rulebook:subclass:wizard_abjurer");
+    assert_eq!(wizard.len(), 9 + 4 + 2 + 7 + 1, "{:?}", wizard.iter().map(|o| &o.rule.id).collect::<Vec<_>>());
+    assert!(wizard.iter().any(|o| o.rule.id == "adventurers_guide:subclass:wizard_envy"));
+    assert!(!wizard.iter().any(|o| o.rule.id == "inner_sea_magic:subclass:wizard_envy"), "the older printing is superseded");
+    let evoker = wizard.iter().find(|o| o.rule.id == "core_rulebook:subclass:wizard_evoker").expect("evoker");
+    assert!(
+        evoker.grants_out.iter().any(|(t, g)| t == "core_rulebook:class_feature:evocation_school" && g.by == Granter::Rule(evoker.rule.id.clone())),
+        "{:?}",
+        evoker.grants_out
+    );
+    assert!(out.superseded.iter().any(|l| l.contains("inner_sea_magic:subclass:wizard_envy")), "{:?}", out.superseded);
+}
+
+/// SD-36 Epic F3c4b: an ability-category pick row converts as an option of the choice that picks
+/// it (`pool_option.rs`), read off the package on disk.
+///
+/// The oracle: `Standard Bloodline` (`cr_abilities_class.lst:2329`) picks with
+/// `CHOOSE:ABILITYSELECTION|Sorcerer Bloodline|!PC,QUALIFIED[TYPE=SorcererBloodlineChoice]` and
+/// applies the pick with `ABILITY:Sorcerer Bloodline|AUTOMATIC|%LIST`. The pick row
+/// `Draconic Bloodline` (`:2435`, `CATEGORY:Sorcerer Bloodline`, `TYPE:SorcererBloodlineChoice`)
+/// grants `Sorcerer Bloodline ~ Draconic` and raises `Sorcerer_Draconic_BloodlineClassSkill1` by
+/// `if(Sorcerer_CF_BloodlineClassSkill==0,1,0)`. `Draconic Bloodline ~ Standard` (`:2976`) names
+/// the pick row (`ABILITY:Sorcerer Bloodline|AUTOMATIC|Draconic Bloodline`). Aquatic's pick row
+/// (`apg_abilities_class.lst:3089`) grants `Sorcerer Bloodline ~ Aquatic` (`:3088`, class skill
+/// Swim).
+#[test]
+fn a_sorcerer_bloodline_pick_row_converts_as_an_option_of_the_bloodline_choice() {
+    use codex_ingest::pcgen_import::sheet_rule::ctx::var_id;
+    let files = package_files();
+    let rules_in = |rel: &str| -> Vec<SheetRule> {
+        serde_json::from_slice(files.get(rel).unwrap_or_else(|| panic!("{rel} is in the package"))).expect("rule file parses")
+    };
+    let chooser = "core_rulebook:class_feature:sorcerer_standard_bloodline_selection";
+    let draconic = &rules_in("core_rulebook/pool_option/sorcerer_bloodline_draconic_bloodline.json")[0];
+    assert_eq!(draconic.id, "core_rulebook:pool_option:sorcerer_bloodline_draconic_bloodline");
+    assert_eq!(draconic.pool, "sorcerer_bloodline");
+    assert!(draconic.granted_by.iter().any(|g| g.by == Granter::Choice(chooser.into())), "{:?}", draconic.granted_by);
+    // The pick row names the record, and so does Dragon Disciple's Blood of Dragons row.
+    assert!(draconic.granted_by.iter().any(|g| g.by == Granter::Rule("core_rulebook:class_feature:draconic_bloodline_standard".into())), "{:?}", draconic.granted_by);
+    let record = &rules_in("core_rulebook/class_feature/sorcerer_bloodline_draconic.json")[0];
+    assert!(record.granted_by.iter().any(|g| g.by == Granter::Rule(draconic.id.clone())), "{:?}", record.granted_by);
+    // Its BONUS:VAR is a contribution from the option.
+    let var = var_id("Sorcerer_Draconic_BloodlineClassSkill1");
+    let table: VarTable = serde_json::from_slice(files.get(&format!("_vars/{var}.json")).expect("var table")).expect("parses");
+    assert!(table.contributions.iter().any(|c| c.rule_id == draconic.id), "{:?}", table.contributions);
+    assert!(!table.provenance.outside_corpus_rows.iter().any(|r| r.ends_with("cr_abilities_class.lst:2435")), "{:?}", table.provenance);
+    // Aquatic: the option grants its record.
+    let aquatic = &rules_in("advanced_players_guide/pool_option/sorcerer_bloodline_aquatic_bloodline.json")[0];
+    assert!(aquatic.granted_by.iter().any(|g| g.by == Granter::Choice(chooser.into())));
+    let aq_record = &rules_in("advanced_players_guide/class_feature/sorcerer_bloodline_aquatic.json")[0];
+    assert!(aq_record.granted_by.iter().any(|g| g.by == Granter::Rule(aquatic.id.clone())), "{:?}", aq_record.granted_by);
+    // No `Sorcerer Bloodline|<X> Bloodline` reference stays unresolved.
+    let unresolved: Vec<String> = serde_json::from_slice(files.get("_defects/unresolved-references.json").expect("defects")).expect("parses");
+    let left: Vec<&String> = unresolved.iter().filter(|u| u.contains(": Sorcerer Bloodline|")).collect();
+    assert!(left.is_empty(), "{left:?}");
+}
+
+/// SD-36 Epic F3c4b: a record whose shipped tokens state no `CATEGORY:` is found under the
+/// category its own source row declares. `Bloodline Tracker`'s corpus record sits at the `.MOD`
+/// row `CATEGORY=Internal|Bloodline Tracker.MOD` (`cr_abilities_class.lst:1705`); the sorcerer's
+/// `Sorcerer ~ Standard Bloodline` (`:1698`) grants it by `ABILITY:Internal|AUTOMATIC|Bloodline
+/// Tracker`, and it raises `BloodlineProgressionLVL` by `SorcererLVL` (`:1707`) -- the variable
+/// every bloodline power's gate reads.
+#[test]
+fn a_category_less_record_is_found_under_the_category_its_row_declares() {
+    let files = package_files();
+    let tracker: Vec<SheetRule> = serde_json::from_slice(files.get("core_rulebook/class_feature/bloodline_tracker.json").expect("tracker")).expect("parses");
+    assert!(
+        tracker[0].granted_by.iter().any(|g| g.by == Granter::Rule("core_rulebook:class_feature:sorcerer_standard_bloodline".into())),
+        "{:?}",
+        tracker[0].granted_by
+    );
+    let unresolved: Vec<String> = serde_json::from_slice(files.get("_defects/unresolved-references.json").expect("defects")).expect("parses");
+    assert!(!unresolved.iter().any(|u| u.ends_with(": Internal|Bloodline Tracker")), "still unresolved");
+}
+
+/// SD-36 Epic F3c5: a `CATEGORY:Internal` natural-attack helper row no inventory unit stands for
+/// converts as a `Fact::NaturalAttack` on the rule that grants it (`natural_attack.rs`).
+/// Dragon Disciple's `Dragon Bite` (`cr_abilities_class.lst:2968`) carries
+/// `ABILITY:Internal|AUTOMATIC|Bite`; `Bite` (`ce_abilities_race.lst:249`) is a natural-attack
+/// helper whose object ends in `NATURALATTACKS:Bite,...` (`ce_templates.lst:26`). The reference
+/// resolves, so Dragon Disciple's closure is attested complete; the class grants no weapon
+/// proficiency (CRB p.382: "Dragon disciples gain no proficiency with any weapon or armor").
+#[test]
+fn an_internal_natural_attack_helper_converts_as_a_fact_on_the_rule_that_grants_it() {
+    let files = package_files();
+    let rules_in = |rel: &str| -> Vec<SheetRule> {
+        serde_json::from_slice(files.get(rel).unwrap_or_else(|| panic!("{rel} is in the package"))).expect("rule file parses")
+    };
+    let bite = &rules_in("core_rulebook/class_feature/dragon_disciple_dragon_bite.json")[0];
+    assert!(
+        bite.grants.iter().any(|e| *e == Effect::FactGrant(Fact::NaturalAttack("Bite".into()))),
+        "Dragon Bite grants the Bite natural attack: {:?}",
+        bite.grants
+    );
+    assert!(
+        !bite.grants.iter().any(|e| matches!(e, Effect::FactGrant(Fact::Proficiency(_)) | Effect::GatedFactGrant { fact: Fact::Proficiency(_), .. })),
+        "a natural attack is not a proficiency grant: {:?}",
+        bite.grants
+    );
+    let unresolved: Vec<String> = serde_json::from_slice(files.get("_defects/unresolved-references.json").expect("defects")).expect("parses");
+    assert!(!unresolved.iter().any(|u| u == "core_rulebook:class_feature:dragon_disciple_dragon_bite: Internal|Bite"), "still unresolved");
+    let principal = &rules_in("core_rulebook/class/dragon_disciple.json")[0];
+    assert!(principal.closure_complete, "Dragon Disciple's closure is attested complete");
+    // Draconic Claws (`cr_abilities_class.lst:2444`, CRB p.75: claws from 1st level, one damage
+    // step at 7th) grants `Internal|Claw`: the Claw fact sits on the record, whose own gate holds
+    // from 1st level; the damage-step line keeps its `>= 7` gate as its own sibling.
+    let claws = rules_in("core_rulebook/class_feature/draconic_bloodline_claws.json");
+    assert!(claws[0].grants.iter().any(|e| *e == Effect::FactGrant(Fact::NaturalAttack("Claw".into()))), "{:?}", claws[0].grants);
+    let gate_7 = |a: &Applies| format!("{a:?}").contains("Const(7)");
+    assert!(!gate_7(&claws[0].applies), "the Claws record is held from 1st level: {:?}", claws[0].applies);
+    let step = claws.iter().find(|r| r.id.ends_with("#weapon0")).expect("the damage-step line is its own sibling");
+    assert!(gate_7(&step.applies), "the damage step comes at 7th: {:?}", step.applies);
+}

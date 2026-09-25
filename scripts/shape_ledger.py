@@ -103,7 +103,6 @@ DEFAULT_INVENTORY = os.path.join(REPO_ROOT, "docs", "work-inventory.json")
 DEFAULT_CORPUS_ROOT = os.path.join(REPO_ROOT, "data", "corpus")
 
 sys.path.insert(0, os.path.join(REPO_ROOT, "scripts", "observer"))
-import pf1e_dashboard_producer as P  # noqa: E402  (path set above)
 
 # Reuse coverage_ledger.py's not-done population definition (same
 # EXCLUDED_BOOKS, same doneness_verdict) so Gate 1's population matches the

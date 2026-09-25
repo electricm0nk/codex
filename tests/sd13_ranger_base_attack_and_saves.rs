@@ -40,7 +40,6 @@
 //! update)" below for the exact current truth.
 
 use codex::rules_core::pilot_compute::compute_pilot_base_chassis;
-use codex::rules_core::support_state_matrix::{SupportState, seeded_current_truth};
 mod common;
 use common::{load, explanation, has_explanation};
 
@@ -291,28 +290,3 @@ fn fighter_and_paladin_do_not_gain_ranger_base_attack_or_save_grounding() {
 
 // ----- Control plane: the matrix row's note names the newly grounded pillar -----
 
-#[test]
-fn matrix_ranger_row_note_names_base_attack_and_base_save_as_grounded() {
-    let matrix = seeded_current_truth();
-    let ranger = matrix
-        .row("class.ranger.hybrid_chassis_and_spell_burden")
-        .expect("ranger row must exist");
-
-    assert_eq!(ranger.support_state, SupportState::Supported);
-    for token in ["base attack", "base save", "standalone"] {
-        assert!(
-            ranger.blocker_or_lossiness_note.contains(token),
-            "ranger blocker note must name '{token}' now that base attack/base save are \
-             grounded: {}",
-            ranger.blocker_or_lossiness_note
-        );
-    }
-    // The still-unproven burdens stay named.
-    for token in ["combat-style", "spell"] {
-        assert!(
-            ranger.blocker_or_lossiness_note.contains(token),
-            "ranger blocker note must still name the unproven '{token}' burden: {}",
-            ranger.blocker_or_lossiness_note
-        );
-    }
-}

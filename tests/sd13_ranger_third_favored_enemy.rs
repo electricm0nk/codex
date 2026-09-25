@@ -48,9 +48,6 @@
 //! the multiclass negative control.
 
 use codex::rules_core::pilot_compute::compute_pilot_base_chassis;
-use codex::rules_core::support_state_matrix::{
-    EvidenceFreshness, EvidenceTier, SupportState, seeded_current_truth,
-};
 mod common;
 use common::{load, explanation, has_explanation};
 
@@ -335,39 +332,16 @@ fn multiclass_ranger_does_not_gain_third_favored_enemy_recognition() {
         "multiclass Ranger must not gain any third-favored-enemy record: {:?}",
         computation.explanations
     );
-    assert!(
-        computation.diagnostics.iter().any(|d| d.claim_blocking),
-        "multiclass Ranger must stay claim-blocked in this slice"
+    // SD-36 Epic F3d (decisions.md §14): assertion (b) is STATUS PARITY with the
+    // class alone (was: "must stay claim-blocked in this slice"): same receipt
+    // status, same claim-blocking set once the `multiclass.<class>.` re-scope is
+    // stripped; vacuity guard: the mix loads >= 2 classes.
+    crate::common::assert_multiclass_status_parity(
+        "multiclass Ranger",
+        RANGER_THIRD_ENEMY_FIXTURE,
+        &multiclass,
     );
 }
 
 // ----- Control plane: the matrix names the third-favored-enemy grounding -----
 
-#[test]
-fn matrix_ranger_row_names_the_third_favored_enemy_grounding() {
-    let matrix = seeded_current_truth();
-    let ranger = matrix
-        .row("class.ranger.hybrid_chassis_and_spell_burden")
-        .expect("ranger hybrid_chassis_and_spell_burden row must exist");
-
-    assert_eq!(ranger.support_state, SupportState::Supported);
-    assert_eq!(ranger.evidence_tier, EvidenceTier::ProductVisible);
-    assert_eq!(
-        ranger.evidence_freshness,
-        EvidenceFreshness::RefreshableFromLiveProof
-    );
-    assert!(
-        ranger
-            .grounding_ref
-            .contains("sd13_ranger_third_favored_enemy"),
-        "ranger row must cite the live third-favored-enemy proof surface: {}",
-        ranger.grounding_ref
-    );
-    assert!(
-        ranger
-            .blocker_or_lossiness_note
-            .contains("favored_enemy_3"),
-        "ranger partial note must name the grounded third-favored-enemy records: {}",
-        ranger.blocker_or_lossiness_note
-    );
-}

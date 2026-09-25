@@ -196,15 +196,9 @@ fn feat_effect_counts_match_the_live_corpus_bonus_token_census() {
     );
 }
 
-fn corpus_root() -> Option<PathBuf> {
-    match std::env::var("CORPUS_ROOT") {
-        Ok(value) => {
-            let path = PathBuf::from(value);
-            if path.is_dir() { Some(path) } else { None }
-        }
-        Err(_) => None,
-    }
-}
+#[path = "support/paths.rs"]
+mod paths;
+use paths::corpus_root_if_set as corpus_root;
 
 fn cr_feats_path(root: &std::path::Path) -> PathBuf {
     root.join("pathfinder/paizo/roleplaying_game/core_rulebook/cr_feats.lst")

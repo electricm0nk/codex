@@ -27,7 +27,6 @@ use codex::rules_core::pilot_compute::{
     PilotBaseChassisComputation,
     compute_pilot_base_chassis,
 };
-use codex::rules_core::support_state_matrix::{SupportState, seeded_current_truth};
 mod common;
 use common::{load, explanation, has_explanation};
 
@@ -149,20 +148,3 @@ fn paladin_effective_caster_level_gate_does_not_leak_to_ranger_or_fighter() {
     );
 }
 
-#[test]
-fn matrix_paladin_row_note_still_names_the_partial_caster_facts_and_stays_partial() {
-    let matrix = seeded_current_truth();
-    let paladin = matrix
-        .row("class.paladin.hybrid_chassis_and_spell_burden")
-        .expect("paladin hybrid row must exist");
-
-    // This slice grounds one more flat arithmetic gate; the row is now
-    // Supported via the Class Progression Catalog browser's UI-surfacing.
-    assert_eq!(paladin.support_state, SupportState::Supported);
-
-    let note = paladin.blocker_or_lossiness_note;
-    assert!(
-        note.contains("level - 3") && note.contains("level 4"),
-        "paladin note must still carry the corrected partial-caster facts: {note}"
-    );
-}

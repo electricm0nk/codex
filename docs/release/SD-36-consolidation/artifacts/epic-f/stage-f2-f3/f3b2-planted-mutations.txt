@@ -1,0 +1,21 @@
+== M1 rogue skill ranks 8 -> 9
+exit=1
+verdict=FAIL (unexpected field deltas: 1)
+== M2 closure_complete planted on unpinned loremaster
+exit=1
+verdict=FAIL (unexpected field deltas: 1)
+== M3 resolved Rule target swapped
+exit=1
+verdict=FAIL (unexpected field deltas: 1)
+== M4 skill row planted on unpinned eidolon
+exit=1
+verdict=FAIL (unexpected field deltas: 1)
+== M5 rogue Hit die row dropped alongside the pinned skill row
+exit=1
+verdict=FAIL (unexpected field deltas: 1)
+== control: unmutated copy
+exit=0
+verdict=PASS
+== M6 records count moved 49450 -> 49449
+exit=1
+verdict=FAIL (records moved: 49450 -> 49449)

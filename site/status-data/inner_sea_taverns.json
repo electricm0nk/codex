@@ -1,0 +1,177 @@
+{
+  "id": "inner_sea_taverns",
+  "title": "Inner Sea Taverns",
+  "kinds": [
+    {
+      "kind": "class_feature",
+      "label": "Class Features",
+      "done": 11,
+      "partial": 0,
+      "not_started": 0,
+      "denominator": 11,
+      "pct": 100.0,
+      "excluded_from_percentage": 0,
+      "standing_breakdown": {
+        "origin": 10,
+        "unclassified": 1
+      },
+      "items": [
+        {
+          "name": "Alcoholic Alchemy",
+          "doneness": "done",
+          "type_facet": "Alchemist Class Feature.MixologistClassFeatures.SpecialQuality.Supernatural",
+          "standing": "origin",
+          "display_name": "Alcoholic Alchemy"
+        },
+        {
+          "name": "Alcoholic Bombs",
+          "doneness": "done",
+          "type_facet": "Alchemist Class Feature.MixologistClassFeatures.SpecialQuality.Supernatural",
+          "standing": "origin",
+          "display_name": "Alcoholic Bombs"
+        },
+        {
+          "name": "Alcoholic Resistance",
+          "doneness": "done",
+          "type_facet": "Alchemist Class Feature.MixologistClassFeatures.SpecialQuality.Extraordinary",
+          "standing": "origin",
+          "display_name": "Alcoholic Resistance"
+        },
+        {
+          "name": "Bar Fight Mastery",
+          "doneness": "done",
+          "type_facet": "Brawler Class Feature.BouncerClassFeatures.SpecialQuality.Extraordinary",
+          "standing": "origin",
+          "display_name": "Bar Fight Mastery"
+        },
+        {
+          "name": "Bouncer",
+          "doneness": "done",
+          "type_facet": "Archetype.BrawlerArchetype",
+          "standing": "origin",
+          "display_name": "Bouncer"
+        },
+        {
+          "name": "Crowd Control",
+          "doneness": "done",
+          "type_facet": "Brawler Class Feature.BouncerClassFeatures.SpecialQuality.Extraordinary",
+          "standing": "unclassified",
+          "display_name": "Crowd Control"
+        },
+        {
+          "name": "Drunk Handler",
+          "doneness": "done",
+          "type_facet": "Brawler Class Feature.BouncerClassFeatures.SpecialQuality.Extraordinary",
+          "standing": "origin",
+          "display_name": "Drunk Handler"
+        },
+        {
+          "name": "Drunk Knockout",
+          "doneness": "done",
+          "type_facet": "Brawler Class Feature.BouncerClassFeatures.SpecialQuality.Extraordinary",
+          "standing": "origin",
+          "display_name": "Drunk Knockout"
+        },
+        {
+          "name": "Lesser Flexibility",
+          "doneness": "done",
+          "type_facet": "Brawler Class Feature.BouncerClassFeatures.SpecialQuality.Extraordinary",
+          "standing": "origin",
+          "display_name": "Lesser Flexibility"
+        },
+        {
+          "name": "Mixologist",
+          "doneness": "done",
+          "type_facet": "Archetype.AlchemistArchetype",
+          "standing": "origin",
+          "display_name": "Mixologist"
+        },
+        {
+          "name": "Mixologist Master",
+          "doneness": "done",
+          "type_facet": "Alchemist Class Feature.MixologistClassFeatures.SpecialQuality.Supernatural",
+          "standing": "origin",
+          "display_name": "Mixologist Master"
+        }
+      ]
+    },
+    {
+      "kind": "feat",
+      "label": "Feats",
+      "done": 9,
+      "partial": 0,
+      "not_started": 0,
+      "denominator": 9,
+      "pct": 100.0,
+      "excluded_from_percentage": 0,
+      "standing_breakdown": {
+        "origin": 9
+      },
+      "items": [
+        {
+          "name": "Drinking Buddy",
+          "doneness": "done",
+          "type_facet": "Teamwork",
+          "standing": "origin",
+          "display_name": "Drinking Buddy"
+        },
+        {
+          "name": "Drunken God's Blessings",
+          "doneness": "done",
+          "type_facet": "General",
+          "standing": "origin",
+          "display_name": "Drunken God's Blessings"
+        },
+        {
+          "name": "Drunken Sing-Along",
+          "doneness": "done",
+          "type_facet": "General",
+          "standing": "origin",
+          "display_name": "Drunken Sing-Along"
+        },
+        {
+          "name": "Extreme Mood Swings",
+          "doneness": "done",
+          "type_facet": "General",
+          "standing": "origin",
+          "display_name": "Extreme Mood Swings"
+        },
+        {
+          "name": "Hardy Liver",
+          "doneness": "done",
+          "type_facet": "General",
+          "standing": "origin",
+          "display_name": "Hardy Liver"
+        },
+        {
+          "name": "Implacable",
+          "doneness": "done",
+          "type_facet": "Combat",
+          "standing": "origin",
+          "display_name": "Implacable"
+        },
+        {
+          "name": "Muddled Morals",
+          "doneness": "done",
+          "type_facet": "General",
+          "standing": "origin",
+          "display_name": "Muddled Morals"
+        },
+        {
+          "name": "Read the Room",
+          "doneness": "done",
+          "type_facet": "General",
+          "standing": "origin",
+          "display_name": "Read the Room"
+        },
+        {
+          "name": "Tavern Regular",
+          "doneness": "done",
+          "type_facet": "General",
+          "standing": "origin",
+          "display_name": "Tavern Regular"
+        }
+      ]
+    }
+  ]
+}

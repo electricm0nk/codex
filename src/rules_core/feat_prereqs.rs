@@ -388,7 +388,9 @@ impl PrereqFacts {
             .map(|base| crate::rules_core::sheet_rule::id_slug(&base))
             .collect();
         seed.feats.extend(bases);
-        let facts = CharacterFacts::from_character(input, computation);
+        // SD-36 F3c4: the character's Path-A picks linked to the converted options they name,
+        // the same way the sheet reads them (`with_sheet_rules`).
+        let facts = CharacterFacts::from_character(input, computation).with_linked_picks(package, &seed);
         let held = held_set(package, &seed, &facts);
         PrereqFacts { package, held, facts, feat_index: feat_rule_index(package) }
     }
@@ -809,7 +811,24 @@ mod prerequisite_tests {
         // carry a gate that can actually be checked. `unconverted` below falls 12 -> 1 by
         // exactly those eleven -- the two counts move by the same set, which is why they are
         // asserted together.
-        assert_eq!(eligible, 537, "a starting Fighter's real eligible-feat count");
+        // **537 -> 539 with SD-36 Epic F1c-2** (defect D2: a line's condition gates only its own
+        // line). `core_rulebook:class_feature:fighter_class` carried its level-20 Weapon Mastery
+        // pool line's condition on the whole record, so at level 1 the fighter held none of the
+        // closure it grants -- Shield Prof included. With the condition back on its own line the
+        // level-1 fighter holds Shield Proficiency, and exactly two feats leave the denied set,
+        // both previously denied "requires Shield Proficiency": `Saving Shield` (APG) and its
+        // Mythic row. Attributed by diffing the eligible set on the pre-fix and post-fix packages,
+        // not adjusted to fit.
+        // **539 -> 534 with SD-36 Epic F3b2**, same direction: a reference to a
+        // product-identity record by the KEY its oracle row declares now resolves (the converter
+        // had indexed such a record only under its codex-named placeholder key, so the reference
+        // was an unholdable `MissingRule` and the clause was reported, not checked). Five Inner
+        // Sea Races human-ethnicity feats now check their ethnicity and this Fighter holds none:
+        // `Friendly Rivalry` (requires Taldan), `Loyal to the Death` (Tian), `Pursuit of Glory`
+        // (Ulfen), `Ruthless Opportunist` (Chelaxian), `Scion of the Lost Empire` (Chelaxian or
+        // Taldan). Attributed by diffing the eligible set on the tranche/16 and F3b2 packages
+        // (every other record's verdict is unchanged), not adjusted to fit.
+        assert_eq!(eligible, 534, "a starting Fighter's real eligible-feat count");
         // A catalog record `data/sheet_rules/` carries no converted rule for is a number to
         // report, never an exemption: it is still offered, with one "not verified" note.
         // **21 -> 12 with SD-35 operator ruling B18** (`decisions.md §21`): the nine

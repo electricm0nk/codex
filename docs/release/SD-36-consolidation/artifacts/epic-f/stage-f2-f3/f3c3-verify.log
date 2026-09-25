@@ -1,0 +1,66 @@
+# F3c3 verify log (SD-36 Epic F3c3), final tree
+
+== cargo test --locked -j 8 -p codex-ingest --no-fail-fast -- --test-threads=8
+result lines 167 passed 1757 failed 0 ignored 43
+test no_principal_carries_one_lines_condition ... ok
+test a_wizard_school_subclass_converts_through_the_same_rule ... ok
+test a_subclass_choice_converts_with_its_class_skill_grants ... ok
+test package_on_disk_is_fresh_and_clean ... ok
+EXIT=0
+
+== cargo test --locked -j 8 --no-fail-fast -- --test-threads=8 (root; before the kind-pin move)
+result lines 289 passed 6355 failed 1 ignored 27
+test rules_core::sheet_rule::evaluate_tests::every_kind_in_the_package_evaluates_to_a_well_formed_line ... FAILED
+test rules_core::pilot_compute::untabled_base_class_features::untabled_class_chassis_gate_tests::every_untabled_class_outside_the_named_reader_remainder_reaches_computed ... ok
+test rules_core::class_census::tests::census_id_set_matches_the_published_partition ... ok
+test rules_core::rules_tables::crb::weapon_tables::class_weapon_proficiency_tests::every_census_class_has_a_known_proficiency_answer ... ok
+test psion_class_skills_answer_through_its_canonical_discipline ... ok
+test expert_prints_its_canonical_class_skill_picks ... ok
+test a_seeded_subclass_pick_is_scanned_for_double_grants_against_the_bespoke_join ... ok
+test every_census_class_prints_the_class_skill_bonus_its_record_grants ... ok
+
+== cargo test --locked -j 8 --lib -- --test-threads=8 (after moving the kind pin 19 -> 20)
+test result: ok. 2723 passed; 0 failed; 6 ignored; 0 measured; 0 filtered out; finished in 181.36s
+test rules_core::sheet_rule::evaluate_tests::every_kind_in_the_package_evaluates_to_a_well_formed_line ... ok
+
+== cargo test --locked -j 8 --no-fail-fast --manifest-path apps/desktop/src-tauri/Cargo.toml -- --test-threads=8
+result lines 1 passed 615 failed 0 ignored 0
+
+== cargo clippy --locked -j 8 -p codex-ingest --tests -- -D warnings
+    Finished `dev` profile [unoptimized + debuginfo] target(s) in 45.18s
+0
+
+== cargo clippy --locked --tests -j 8 -- -D warnings
+    Finished `dev` profile [unoptimized + debuginfo] target(s) in 41.39s
+0
+
+== cargo run --locked -j 8 --bin class_census -- --json <scratch>/census-f3c3.json
+ids=137 computed=63 blocked=0
+prestige_swept=74 prestige_alone_blocked=74 prestige_mix_computed=67 prestige_mix_unknown=0
+mix_panel_swept=185 mix_panel_computed=185 mix_panel_blocked=0
+
+== sheet_rule_convert --write (final)
+records=49450 converted=49450 refused=0 rules=73070 var_tables=6205 files=55721 (398.4s)
+EXIT=0
+== sheet_rule_convert --check on the final package
+records=49450 converted=49450 refused=0 rules=73070 var_tables=6205 verdict=PASS (422.0s)
+EXIT=0
+
+== python3 scripts/pcgen_residue_gate.py --check --closure
+shipped_data_files=0 shipped_data_hits=0 shipped_scanned=69762
+live_files=0 live_hits=0 verdict=PASS
+
+== python3 scripts/site/check_frozen_status.py --check
+OK: /home/ubuntu/workspace/worktrees/codex-epic-f2/site/status-data.json is frozen at 100% (49450 units)
+
+== python3 .../scripts/structural_diff_test.py
+Ran 33 tests in 0.326s
+
+OK
+
+== python3 scripts/gen_class_status_table.py --check --json .../census-f3c3.json
+OK class-coverage table matches the census (ids=137 computed=63 prestige_swept=74 mix_panel_computed=185 of 185)
+
+== double-grant scan (cargo test --locked -j 8 --test sd36_class_skill_from_record -- --test-threads=8 --nocapture a_seeded_subclass_pick)
+census ids 137; classes seeding a subclass pick: 1 ["psion"]; rules held only through the pick (levels 1 + 20): 10; of those also joined from a bespoke explanation: 0 []
+classes carrying a converted subclass choice: ["psion", "wizard"]; records their options grant: 53; of those the bespoke module already joins to: 0 []

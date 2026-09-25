@@ -21,11 +21,10 @@
 //! other direction) — as of 2026-08-07 that direction is clean.
 
 use std::collections::BTreeSet;
-use std::path::Path;
 
-fn repo_root() -> &'static Path {
-    Path::new(env!("CARGO_MANIFEST_DIR"))
-}
+#[path = "support/paths.rs"]
+mod paths;
+use paths::repo_root;
 
 /// `book_id`s declared in the registry via `### NNNN — `book_stub`:
 /// `<book_id>` ...` headers.

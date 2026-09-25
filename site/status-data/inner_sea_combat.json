@@ -5,12 +5,12 @@
     {
       "kind": "ability",
       "label": "Abilities",
-      "done": 1,
+      "done": 4,
       "partial": 0,
       "not_started": 0,
-      "denominator": 1,
+      "denominator": 4,
       "pct": 100.0,
-      "excluded_from_percentage": 3,
+      "excluded_from_percentage": 0,
       "standing_breakdown": {
         "origin": 1,
         "unclassified": 3
@@ -49,12 +49,12 @@
     {
       "kind": "class_feature",
       "label": "Class Features",
-      "done": 146,
-      "partial": 1,
+      "done": 316,
+      "partial": 0,
       "not_started": 0,
-      "denominator": 147,
-      "pct": 99.3,
-      "excluded_from_percentage": 169,
+      "denominator": 316,
+      "pct": 100.0,
+      "excluded_from_percentage": 0,
       "standing_breakdown": {
         "origin": 147,
         "unclassified": 169
@@ -986,7 +986,7 @@
         },
         {
           "name": "Guard Dedications",
-          "doneness": "partial",
+          "doneness": "done",
           "type_facet": "[redacted PI]",
           "standing": "origin",
           "display_name": "Guard Dedications"
@@ -2306,11 +2306,11 @@
     {
       "kind": "companion",
       "label": "Companions",
-      "done": 9,
-      "partial": 1,
+      "done": 10,
+      "partial": 0,
       "not_started": 0,
       "denominator": 10,
-      "pct": 90.0,
+      "pct": 100.0,
       "excluded_from_percentage": 0,
       "standing_breakdown": {
         "origin": 10
@@ -2381,7 +2381,7 @@
         },
         {
           "name": "Unable to carry a rider while flying",
-          "doneness": "partial",
+          "doneness": "done",
           "type_facet": "SpecialQuality",
           "standing": "origin",
           "display_name": "Unable to carry a rider while flying"
@@ -2391,12 +2391,12 @@
     {
       "kind": "equipment",
       "label": "Equipment",
-      "done": 64,
+      "done": 72,
       "partial": 0,
       "not_started": 0,
-      "denominator": 64,
+      "denominator": 72,
       "pct": 100.0,
-      "excluded_from_percentage": 8,
+      "excluded_from_percentage": 0,
       "standing_breakdown": {
         "origin": 64,
         "unclassified": 8
@@ -2911,12 +2911,12 @@
     {
       "kind": "feat",
       "label": "Feats",
-      "done": 15,
-      "partial": 4,
+      "done": 24,
+      "partial": 0,
       "not_started": 0,
-      "denominator": 19,
-      "pct": 78.9,
-      "excluded_from_percentage": 5,
+      "denominator": 24,
+      "pct": 100.0,
+      "excluded_from_percentage": 0,
       "standing_breakdown": {
         "origin": 19,
         "unclassified": 5
@@ -3008,14 +3008,14 @@
         },
         {
           "name": "Perfect Style",
-          "doneness": "partial",
+          "doneness": "done",
           "type_facet": "Combat.Style",
           "standing": "unclassified",
           "display_name": "Perfect Style"
         },
         {
           "name": "Redirected Shot",
-          "doneness": "partial",
+          "doneness": "done",
           "type_facet": "Combat.Grit",
           "standing": "origin",
           "display_name": "Redirected Shot"
@@ -3064,21 +3064,21 @@
         },
         {
           "name": "Unfolding Wind Strike",
-          "doneness": "partial",
+          "doneness": "done",
           "type_facet": "Combat.Style",
           "standing": "origin",
           "display_name": "Unfolding Wind Strike"
         },
         {
           "name": "Untwisting Iron Skin",
-          "doneness": "partial",
+          "doneness": "done",
           "type_facet": "Combat.Style",
           "standing": "origin",
           "display_name": "Untwisting Iron Skin"
         },
         {
           "name": "Untwisting Iron Strength",
-          "doneness": "partial",
+          "doneness": "done",
           "type_facet": "Combat.Style",
           "standing": "origin",
           "display_name": "Untwisting Iron Strength"

@@ -99,6 +99,21 @@ class _Fixture(unittest.TestCase):
             json.dump(self.report, fh)
         with open(self.table_path, "w", encoding="utf-8") as fh:
             json.dump(self.table, fh)
+        self._write_rule_files()
+
+    def _write_rule_files(self):
+        """SD-36 Epic E GATE-01: a rule file per NON-refused unit, matching what the real
+        converter writes (`{book}/{kind}/{key}.json`, an array whose first rule's own `id` is
+        the unit's id) -- the content `RULE_FILES` opens and checks."""
+        refused_ids = {e["id"] for e in self.refused.get("entries") or []}
+        for unit in self.units:
+            if unit["id"] in refused_ids:
+                continue
+            rel = tc._rule_file_rel(unit["book"], unit["kind"], unit["id"])
+            path = os.path.join(self.package, rel)
+            os.makedirs(os.path.dirname(path), exist_ok=True)
+            with open(path, "w", encoding="utf-8") as fh:
+                json.dump([{"id": unit["id"], "label": unit["id"], "value": "Text"}], fh)
 
     def _run(self, *extra):
         argv = ["--inventory", self.inventory_path, "--package", self.package,
@@ -263,6 +278,80 @@ class RedGreen(_Fixture):
         os.remove(os.path.join(self.package, "_tokens.json"))
         code, out, last = self._run("--check")
         self.assertEqual(code, 2, out)
+
+
+class RuleFilesGate(_Fixture):
+    """SD-36 Epic E GATE-01: every check above this one is a closed loop over the converter's
+    own bookkeeping files and never opens a real `data/sheet_rules/<book>/<kind>/*.json` rule
+    file -- so a systematically wrong (or corrupted) conversion passed every check undetected.
+    `RULE_FILES` is the mutation probe the finding asked for: corrupt one real rule file, the
+    gate goes red; restore it, the gate goes green again."""
+
+    def test_a_healthy_fixture_passes_the_rule_files_check(self):
+        self._run()   # derive the committed ledger first
+        code, out, last = self._run("--check")
+        self.assertEqual(code, 0, out)
+        self.assertTrue(last.endswith("verdict=PASS"), last)
+
+    def test_corrupting_one_rule_file_to_invalid_json_fails_the_check(self):
+        path = os.path.join(self.package, "b1", "feat", "u1.json")
+        with open(path, "w", encoding="utf-8") as fh:
+            fh.write("{not valid json")
+        code, out, last = self._run("--check")
+        self.assertEqual(code, 1, out)
+        self.assertTrue(last.endswith("verdict=FAIL_RULE_FILES"), last)
+        self.assertIn("b1:feat:u1", out)
+
+    def test_deleting_one_converted_rule_file_fails_the_check(self):
+        path = os.path.join(self.package, "b1", "feat", "u1.json")
+        os.remove(path)
+        code, out, last = self._run("--check")
+        self.assertEqual(code, 1, out)
+        self.assertTrue(last.endswith("verdict=FAIL_RULE_FILES"), last)
+        self.assertIn("no rule file", out)
+
+    def test_a_rule_file_whose_principal_id_does_not_match_its_own_unit_fails_the_check(self):
+        path = os.path.join(self.package, "b1", "feat", "u1.json")
+        with open(path, "w", encoding="utf-8") as fh:
+            json.dump([{"id": "b1:feat:WRONG", "label": "x", "value": "Text"}], fh)
+        code, out, last = self._run("--check")
+        self.assertEqual(code, 1, out)
+        self.assertTrue(last.endswith("verdict=FAIL_RULE_FILES"), last)
+
+    def test_an_empty_rule_array_fails_the_check(self):
+        path = os.path.join(self.package, "b1", "feat", "u1.json")
+        with open(path, "w", encoding="utf-8") as fh:
+            json.dump([], fh)
+        code, out, last = self._run("--check")
+        self.assertEqual(code, 1, out)
+        self.assertTrue(last.endswith("verdict=FAIL_RULE_FILES"), last)
+
+    def test_restoring_the_corrupted_file_returns_to_a_clean_pass(self):
+        self._run()   # derive the committed ledger first
+        path = os.path.join(self.package, "b1", "feat", "u1.json")
+        with open(path, encoding="utf-8") as fh:
+            original = fh.read()
+        with open(path, "w", encoding="utf-8") as fh:
+            fh.write("{not valid json")
+        code, _out, last = self._run("--check")
+        self.assertEqual(code, 1)
+        self.assertTrue(last.endswith("verdict=FAIL_RULE_FILES"), last)
+
+        with open(path, "w", encoding="utf-8") as fh:
+            fh.write(original)
+        self._run()   # re-derive the committed ledger for the now-healthy tree
+        code, out, last = self._run("--check")
+        self.assertEqual(code, 0, out)
+        self.assertTrue(last.endswith("verdict=PASS"), last)
+
+    def test_a_refused_units_missing_rule_file_is_not_flagged(self):
+        # b1:feat:u3 is refused -- it is never expected to have a rule file at all.
+        path = os.path.join(self.package, "b1", "feat", "u3.json")
+        self.assertFalse(os.path.exists(path), "the fixture must not have written one")
+        self._run()   # derive the committed ledger first
+        code, out, last = self._run("--check")
+        self.assertEqual(code, 0, out)
+        self.assertTrue(last.endswith("verdict=PASS"), last)
 
 
 if __name__ == "__main__":

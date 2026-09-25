@@ -25,9 +25,6 @@ use codex::rules_core::pilot_compute::{
 };
 use codex::rules_core::pilot_failure::PrimaryOwner;
 use codex::rules_core::pilot_view_model::PilotViewModel;
-use codex::rules_core::support_state_matrix::{
-    EvidenceTier, SupportState, seeded_current_truth,
-};
 use crate::common::{load, explanation, has_explanation};
 
 const LEVEL_9_FIXTURE: &str =
@@ -355,112 +352,6 @@ fn non_fighter_class_does_not_leak_level_10_seams() {
 }
 
 // ----- Control plane: the matrix widens the levels-2-10 row's proven range to level 10 -----
-
-#[test]
-fn matrix_levels_2_10_names_levels_9_and_10_as_proven_and_the_honest_remaining_burdens() {
-    let matrix = seeded_current_truth();
-    let row = matrix
-        .row("class.fighter.levels_2_10")
-        .expect("row must exist");
-
-    // Later promoted to Supported/ProductVisible by SD-19's Class
-    // Progression Catalog browser UI-surfacing work (2026-07-16).
-    assert_eq!(row.support_state, SupportState::Supported);
-    assert_eq!(row.evidence_tier, EvidenceTier::ProductVisible);
-    assert!(
-        row.grounding_ref
-            .contains("sd13_fighter_level9_level10_progression"),
-        "levels-2-10 row must cite the live SD13-E5 level-9/level-10 proof surface: {}",
-        row.grounding_ref
-    );
-    assert!(
-        row.blocker_or_lossiness_note.contains("Weapon Training 2"),
-        "levels-2-10 row note must name the level-9 Weapon Training 2 milestone: {}",
-        row.blocker_or_lossiness_note
-    );
-    assert!(
-        row.blocker_or_lossiness_note.contains("level-10 bonus")
-            || row.blocker_or_lossiness_note.contains("level 10 bonus"),
-        "levels-2-10 row note must name the level-10 bonus-feat milestone: {}",
-        row.blocker_or_lossiness_note
-    );
-    // The row must NOT keep the falsified "no new PF1 milestone at level 9" claim.
-    assert!(
-        !row.blocker_or_lossiness_note
-            .contains("no new class-feature milestone at level 9"),
-        "levels-2-10 row must drop the falsified level-9 no-milestone claim: {}",
-        row.blocker_or_lossiness_note
-    );
-    // Honest remaining burdens: the Weapon Training damage-roll half and Bravery.
-    assert!(
-        row.blocker_or_lossiness_note.contains("damage"),
-        "levels-2-10 row must keep naming the unproven Weapon Training damage-roll half: {}",
-        row.blocker_or_lossiness_note
-    );
-    assert!(
-        row.blocker_or_lossiness_note.contains("Bravery"),
-        "levels-2-10 row must name the unproven Bravery milestone (+1 Will vs fear at L2, \
-         +2 at L6, +3 at L10): {}",
-        row.blocker_or_lossiness_note
-    );
-}
-
-#[test]
-fn matrix_preserves_fighter_level_1_and_other_accepted_rows() {
-    let matrix = seeded_current_truth();
-
-    let level_1 = matrix
-        .row("class.fighter.level_1_pilot")
-        .expect("level-1 row must exist");
-    // Later promoted to Supported/ProductVisible by SD-19's Class
-    // Progression Catalog browser UI-surfacing work (2026-07-16).
-    assert_eq!(level_1.support_state, SupportState::Supported);
-
-    assert!(
-        !matrix
-            .rows
-            .iter()
-            // school.abjuration/illusion.spell_reachability were later promoted to
-            // Supported/Product-visible by SD-19's operator-driven UI-surfacing work
-            // (2026-07-16) -- excluded here, not an unintended promotion by this slice.
-            .any(|r| (r.support_state == SupportState::Supported
-                && r.row_id != "school.abjuration.spell_reachability"
-                && r.row_id != "school.illusion.spell_reachability"
-                && r.row_id != "school.conjuration.spell_reachability"
-                && r.row_id != "school.divination.spell_reachability"
-                && r.row_id != "school.enchantment.spell_reachability"
-                && r.row_id != "school.evocation.spell_reachability"
-                && r.row_id != "school.necromancy.spell_reachability"
-                && r.row_id != "school.transmutation.spell_reachability"
-                && r.row_id != "school.universal.spell_reachability"
-                && r.row_id != "equipment.arms_armor.equipment_reachability"
-                && r.row_id != "equipment.general.equipment_reachability"
-                && r.row_id != "equipment.magic_items.equipment_reachability"
-                && r.row_id != "race.human.pilot_semantics"
-                && r.row_id != "race.dwarf.bounded_semantics"
-                && r.row_id != "race.elf.bounded_semantics"
-                && r.row_id != "race.gnome.bounded_semantics"
-                && r.row_id != "race.half_elf.bounded_semantics"
-                && r.row_id != "race.half_orc.bounded_semantics"
-                && r.row_id != "race.halfling.bounded_semantics"
-                && r.row_id != "class.fighter.level_1_pilot"
-                && r.row_id != "class.fighter.levels_2_10"
-                && r.row_id != "class.monk.bounded_progression"
-                && r.row_id != "class.druid.progression_and_spell_burden"
-                && r.row_id != "class.barbarian.bounded_progression"
-                && r.row_id != "class.cleric.progression_and_spell_burden"
-                && r.row_id != "class.wizard.progression_and_spell_burden"
-                && r.row_id != "class.rogue.bounded_progression"
-                && r.row_id != "class.sorcerer.progression_and_spell_burden"
-                && r.row_id != "class.bard.progression_and_spell_burden"
-                && r.row_id != "class.paladin.hybrid_chassis_and_spell_burden"
-                && r.row_id != "class.ranger.hybrid_chassis_and_spell_burden"
-                && r.row_id != "interaction.human_bonus_feat_ability_bonus.pilot_pressure"
-                && r.row_id != "equipment.equipmods.equipment_reachability")
-                || r.support_state == SupportState::Lossy),
-        "the level-9/level-10 slice must not promote any row to Supported or Lossy"
-    );
-}
 
 // Preserve the level-8-only fixture as a still-valid, unchanged reference point.
 #[test]

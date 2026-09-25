@@ -30,7 +30,6 @@
 //! Fascinate flat DC / affected-creature-count formulas are unaffected.
 
 use codex::rules_core::pilot_compute::compute_pilot_base_chassis;
-use codex::rules_core::support_state_matrix::{SupportState, seeded_current_truth};
 mod common;
 use common::{load, explanation, has_explanation};
 
@@ -291,17 +290,3 @@ fn bard_level_4_was_later_widened_into_the_supported_tranche() {
 
 // ----- The matrix row is Supported/ProductVisible via the Class Progression Catalog browser -----
 
-#[test]
-fn bard_row_stays_partial_and_cites_this_test_file_family() {
-    let matrix = seeded_current_truth();
-    let row = matrix
-        .rows
-        .iter()
-        .find(|r| r.row_id == "class.bard.progression_and_spell_burden")
-        .expect("bard row must exist in the matrix");
-    assert_eq!(
-        row.support_state,
-        SupportState::Supported,
-        "bard row is Supported after SD-19's Class Progression Catalog browser UI-surfacing work"
-    );
-}

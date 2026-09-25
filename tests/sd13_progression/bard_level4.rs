@@ -45,10 +45,8 @@
 //! negative control, and the multiclass negative control.
 
 use codex::rules_core::pilot_compute::compute_pilot_base_chassis;
-use codex::rules_core::support_state_matrix::{
-    EvidenceFreshness, EvidenceTier, SupportState, seeded_current_truth,
-};
 use crate::common::{load, explanation};
+use crate::rows::{multiclass_negative_controls, recognition_negative_controls};
 
 const BARD_LEVEL3_FIXTURE: &str =
     include_str!("../fixtures/rules_core/pf1_human_bard_level3_sd13_deterministic_input.txt");
@@ -417,72 +415,23 @@ fn bard_level_5_was_later_widened_into_the_supported_tranche() {
     );
 }
 
-// ----- Negative control: the bard path must not leak onto other classes -----
-
-#[test]
-fn fighter_does_not_gain_bard_level4_recognition() {
-    let fighter = load(FIGHTER_FIXTURE);
-    let fighter_computation = compute_pilot_base_chassis(&fighter);
-    assert!(
-        !fighter_computation
-            .explanations
-            .iter()
-            .any(|e| e.id.starts_with("class_chassis.bard.")
-                || e.id == "class_chassis.spell_baseline.bard"
-                || e.id == WELL_VERSED_ID
-                || e.id == INSPIRE_COMPETENCE_ID),
-        "the Fighter chassis must not surface any bard-namespaced explanation: {:?}",
-        fighter_computation.explanations
-    );
-}
-
-// ----- Negative control: multiclass Bard is not promoted -----
-
-#[test]
-fn multiclass_bard_level4_is_not_promoted_by_this_slice() {
-    let multiclass = BARD_LEVEL4_FIXTURE.replace(
-        "class_level=class:bard:4",
-        "class_level=class:bard:4\nclass_level=class:fighter:1",
-    );
-    let input = load(&multiclass);
-    let computation = compute_pilot_base_chassis(&input);
-    assert!(
-        !computation
-            .explanations
-            .iter()
-            .any(|e| e.id.starts_with("class_chassis.bard.")
-                || e.id == "class_chassis.spell_baseline.bard"
-                || e.id == WELL_VERSED_ID
-                || e.id == INSPIRE_COMPETENCE_ID),
-        "multiclass Bard must not gain any bounded bard chassis explanation: {:?}",
-        computation.explanations
-    );
-    assert!(
-        computation.diagnostics.iter().any(|d| d.claim_blocking),
-        "multiclass Bard must stay claim-blocked in this slice"
-    );
-}
-
 // ----- Control plane: the matrix note names the level-4 widening -----
 
-#[test]
-fn matrix_bard_row_names_level_4_widening() {
-    let matrix = seeded_current_truth();
-    let bard = matrix
-        .row("class.bard.progression_and_spell_burden")
-        .expect("bard progression_and_spell_burden row must exist");
+// ----- Table-driven negative controls (SD-36 Epic C2.1/C2.2) -----
 
-    assert_eq!(bard.support_state, SupportState::Supported);
-    assert_eq!(bard.evidence_tier, EvidenceTier::ProductVisible);
-    assert_eq!(bard.evidence_freshness, EvidenceFreshness::RefreshableFromLiveProof);
-    assert!(
-        bard.grounding_ref.contains("sd13_bard_level4_progression"),
-        "bard row must cite the live SD13-E5 level-4 proof surface: {}",
-        bard.grounding_ref
-    );
-    let note = bard.blocker_or_lossiness_note;
-    assert!(
-        note.contains("level 4") || note.contains("level-4"),
-        "bard partial note must name the level-4 widening: {note}"
-    );
+recognition_negative_controls! {
+    fighter_does_not_gain_bard_level4_recognition(FIGHTER_FIXTURE) {
+        prefixes: ["class_chassis.bard."],
+        exact: ["class_chassis.spell_baseline.bard", WELL_VERSED_ID, INSPIRE_COMPETENCE_ID],
+        message: "the Fighter chassis must not surface any bard-namespaced explanation: {:?}",
+    },
 }
+
+multiclass_negative_controls! {
+    multiclass_bard_level4_is_not_promoted_by_this_slice(BARD_LEVEL4_FIXTURE, "class_level=class:bard:4" => "class_level=class:bard:4\nclass_level=class:fighter:1") {
+        prefixes: ["class_chassis.bard."],
+        exact: ["class_chassis.spell_baseline.bard", WELL_VERSED_ID, INSPIRE_COMPETENCE_ID],
+        message: "multiclass Bard must not gain any bounded bard chassis explanation: {:?}",
+    },
+}
+

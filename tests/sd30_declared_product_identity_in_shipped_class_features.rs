@@ -109,9 +109,9 @@ use std::path::{Path, PathBuf};
 use codex::rules_core::codex_neutral_name::NAME_PREFIX;
 use codex::rules_core::shape_b_v1::{PI_MARKER_REDACTED, REDACTED_PI_MARKER};
 
-fn corpus_root() -> PathBuf {
-    PathBuf::from(env!("CARGO_MANIFEST_DIR")).join("data/corpus")
-}
+#[path = "support/paths.rs"]
+mod paths;
+use paths::corpus_root;
 
 /// Every shipped `class_feature` record, as `(path, parsed json)`, walking
 /// `data/corpus/<any book>/class_feature/**`.

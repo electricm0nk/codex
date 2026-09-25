@@ -73,11 +73,7 @@
 //! level-N cycle's own siblings (Barbarian, Cleric, Fighter, Bard, Paladin,
 //! Ranger, Rogue, Sorcerer).
 
-use codex::rules_core::pilot_compute::compute_pilot_base_chassis;
-use codex::rules_core::support_state_matrix::{
-    EvidenceFreshness, EvidenceTier, SupportState, seeded_current_truth,
-};
-use crate::common::{load, explanation};
+use crate::common::explanation;
 
 const WIZARD_LEVEL18_FIXTURE: &str = include_str!(
     "../fixtures/rules_core/pf1_human_wizard_level18_sd18_widening_deterministic_input.txt"
@@ -87,16 +83,12 @@ const WIZARD_LEVEL19_FIXTURE: &str = include_str!(
     "../fixtures/rules_core/pf1_human_wizard_level19_sd18_widening_deterministic_input.txt"
 );
 
-const FIGHTER_FIXTURE: &str = include_str!(
-    "../fixtures/rules_core/pf1_human_fighter_level1_ge06_deterministic_input.txt"
-);
 
 // ----- Base attack bonus stays flat at level 19 (integer-division coincidence) -----
 
 #[test]
 fn wizard_level19_base_attack_bonus_stays_flat() {
-    let input = load(WIZARD_LEVEL19_FIXTURE);
-    let computation = compute_pilot_base_chassis(&input);
+    let computation = crate::support::compute(WIZARD_LEVEL19_FIXTURE);
 
     let base_attack = explanation(&computation, "class_chassis.wizard.base_attack_bonus");
     assert_eq!(
@@ -111,8 +103,7 @@ fn wizard_level19_base_attack_bonus_stays_flat() {
 
 #[test]
 fn wizard_level19_base_saves_stay_flat() {
-    let input = load(WIZARD_LEVEL19_FIXTURE);
-    let computation = compute_pilot_base_chassis(&input);
+    let computation = crate::support::compute(WIZARD_LEVEL19_FIXTURE);
 
     let fortitude = explanation(&computation, "class_chassis.wizard.base_save.fortitude");
     assert_eq!(
@@ -140,8 +131,7 @@ fn wizard_level19_base_saves_stay_flat() {
 
 #[test]
 fn wizard_level19_specialist_bonus_slot_stays_flat_at_nine() {
-    let input = load(WIZARD_LEVEL19_FIXTURE);
-    let computation = compute_pilot_base_chassis(&input);
+    let computation = crate::support::compute(WIZARD_LEVEL19_FIXTURE);
 
     let slot = explanation(&computation, "class_chassis.wizard.specialist_bonus_slot");
     assert_eq!(
@@ -158,8 +148,7 @@ fn wizard_level19_specialist_bonus_slot_stays_flat_at_nine() {
 
 #[test]
 fn wizard_level19_intense_spells_bonus_damage_stays_flat() {
-    let input = load(WIZARD_LEVEL19_FIXTURE);
-    let computation = compute_pilot_base_chassis(&input);
+    let computation = crate::support::compute(WIZARD_LEVEL19_FIXTURE);
 
     let intense = explanation(&computation, "class_chassis.wizard.intense_bonus_damage");
     assert_eq!(
@@ -174,8 +163,7 @@ fn wizard_level19_intense_spells_bonus_damage_stays_flat() {
 
 #[test]
 fn wizard_level19_grants_carry_over_unchanged() {
-    let input = load(WIZARD_LEVEL19_FIXTURE);
-    let computation = compute_pilot_base_chassis(&input);
+    let computation = crate::support::compute(WIZARD_LEVEL19_FIXTURE);
 
     let force_missile = explanation(
         &computation,
@@ -200,8 +188,7 @@ fn wizard_level19_grants_carry_over_unchanged() {
 
 #[test]
 fn wizard_level19_still_recognizes_the_spell_bearing_baseline_and_claim_blocks_burdens() {
-    let input = load(WIZARD_LEVEL19_FIXTURE);
-    let computation = compute_pilot_base_chassis(&input);
+    let computation = crate::support::compute(WIZARD_LEVEL19_FIXTURE);
 
     assert!(
         computation
@@ -234,8 +221,7 @@ fn wizard_level19_still_recognizes_the_spell_bearing_baseline_and_claim_blocks_b
 
 #[test]
 fn wizard_level18_truth_is_unchanged_by_this_slice() {
-    let input = load(WIZARD_LEVEL18_FIXTURE);
-    let computation = compute_pilot_base_chassis(&input);
+    let computation = crate::support::compute(WIZARD_LEVEL18_FIXTURE);
 
     let base_attack = explanation(&computation, "class_chassis.wizard.base_attack_bonus");
     assert_eq!(base_attack.value, 9, "Wizard level 18 base attack bonus must stay 9");
@@ -249,20 +235,7 @@ fn wizard_level18_truth_is_unchanged_by_this_slice() {
 
 // ----- Negative control: the wizard path must not leak onto other classes -----
 
-#[test]
-fn fighter_does_not_gain_wizard_level19_recognition() {
-    let fighter = load(FIGHTER_FIXTURE);
-    let fighter_computation = compute_pilot_base_chassis(&fighter);
-    assert!(
-        !fighter_computation
-            .explanations
-            .iter()
-            .any(|e| e.id.starts_with("class_chassis.wizard.")
-                || e.id.starts_with("class_feature.wizard.")),
-        "the Fighter chassis must not surface any wizard-namespaced explanation: {:?}",
-        fighter_computation.explanations
-    );
-}
+crate::sd18_fighter_neg_control_test!(fighter_does_not_gain_wizard_level19_recognition, "wizard");
 
 // ----- Negative control: multiclass Wizard is not promoted -----
 
@@ -281,8 +254,7 @@ fn multiclass_wizard_level19_is_not_promoted_by_this_slice() {
         "class_level=class:wizard:19",
         "class_level=class:wizard:19\nclass_level=class:rogue:1",
     );
-    let input = load(&multiclass);
-    let computation = compute_pilot_base_chassis(&input);
+    let computation = crate::support::compute(&multiclass);
 // (v0.6 swarm update) The v0.6 alpha swarm's multiclass BAB/save-stacking
     // generalization (task 4) widened the Wizard+Rogue multiclass mix into a
     // genuinely supported combination (Rogue now joins Fighter as a class
@@ -311,24 +283,3 @@ fn multiclass_wizard_level19_is_not_promoted_by_this_slice() {
 
 // ----- Control plane: the matrix note names the level-19 widening -----
 
-#[test]
-fn matrix_wizard_row_names_level_19_widening() {
-    let matrix = seeded_current_truth();
-    let wizard = matrix
-        .row("class.wizard.progression_and_spell_burden")
-        .expect("wizard progression_and_spell_burden row must exist");
-
-    assert_eq!(wizard.support_state, SupportState::Supported); // Later promoted to Supported/ProductVisible by SD-19's Class Progression Catalog browser UI-surfacing work (2026-07-17).
-    assert_eq!(wizard.evidence_tier, EvidenceTier::ProductVisible);
-    assert_eq!(wizard.evidence_freshness, EvidenceFreshness::RefreshableFromLiveProof);
-    assert!(
-        wizard.grounding_ref.contains("sd18_wizard_level19_widening"),
-        "wizard row must cite the live SD18 level-19 widening proof surface: {}",
-        wizard.grounding_ref
-    );
-    let note = wizard.blocker_or_lossiness_note;
-    assert!(
-        note.contains("level 19") || note.contains("level-19"),
-        "wizard partial note must name the level-19 widening: {note}"
-    );
-}

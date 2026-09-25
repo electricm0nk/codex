@@ -533,6 +533,15 @@ const TOTAL_SAVE_UNSUPPORTED_DIAGNOSTIC_ID: &str = "defense.total_save.unsupport
 /// `CLASS_CHASSIS_UNSUPPORTED_DIAGNOSTIC_ID`.
 const COMBAT_BASELINE_UNSUPPORTED_DIAGNOSTIC_ID: &str = "combat.baseline_unsupported";
 
+/// SD-36 Epic F2b: the claim-blocking game-rule diagnostic a prestige class as
+/// a character's ONLY class gets (`pilot_compute::compute_class_chassis`). It
+/// replaces `class_chassis.unsupported` for that build (the class is known),
+/// and like it leaves the chassis fields at an unreal `0` -- so every
+/// chassis-dependent cell is gated on it exactly as on
+/// `CLASS_CHASSIS_UNSUPPORTED_DIAGNOSTIC_ID`: no half sheet.
+const PRESTIGE_REQUIRES_BASE_CLASS_LEVELS_DIAGNOSTIC_ID: &str =
+    "prestige_class.requires_base_class_levels";
+
 /// A single row of the printed PF1 character sheet
 /// (`technical-design.md` §1.1 "Cells"): a stable cell id and the value
 /// resolved from exactly one named `PilotReceipt` field. The GUI cannot
@@ -649,8 +658,8 @@ fn diagnostic_blocking(receipt: &PilotReceipt, diagnostic_id: &str) -> bool {
 /// to `PrintedSheetCellValue::Number(i16)` cleanly -- and stays reachable
 /// only via `receipt.equipment_effects.spell_failure_chance` directly.
 pub fn printed_sheet_cell_map(receipt: &PilotReceipt) -> Vec<PrintedSheetCell> {
-    let chassis_unsupported =
-        diagnostic_blocking(receipt, CLASS_CHASSIS_UNSUPPORTED_DIAGNOSTIC_ID);
+    let chassis_unsupported = diagnostic_blocking(receipt, CLASS_CHASSIS_UNSUPPORTED_DIAGNOSTIC_ID)
+        || diagnostic_blocking(receipt, PRESTIGE_REQUIRES_BASE_CLASS_LEVELS_DIAGNOSTIC_ID);
     let total_save_unsupported = diagnostic_blocking(receipt, TOTAL_SAVE_UNSUPPORTED_DIAGNOSTIC_ID);
     let combat_baseline_unsupported =
         diagnostic_blocking(receipt, COMBAT_BASELINE_UNSUPPORTED_DIAGNOSTIC_ID);

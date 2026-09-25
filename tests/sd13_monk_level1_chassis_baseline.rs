@@ -37,9 +37,6 @@ use codex::rules_core::pilot_compute::{
 };
 use codex::rules_core::pilot_failure::PrimaryOwner;
 use codex::rules_core::pilot_view_model::PilotViewModel;
-use codex::rules_core::support_state_matrix::{
-    EvidenceFreshness, EvidenceTier, SupportState, seeded_current_truth,
-};
 mod common;
 use common::{load, explanation, has_explanation};
 
@@ -485,9 +482,14 @@ fn multiclass_monk_is_not_promoted_by_this_slice() {
         !has_explanation(&computation, "class_chassis.monk.bounded_progression"),
         "multiclass Monk must not gain the bounded level-1 single-class martial recognition record"
     );
-    assert!(
-        computation.diagnostics.iter().any(|d| d.claim_blocking),
-        "multiclass Monk must stay claim-blocked in this slice"
+    // SD-36 Epic F3d (decisions.md §14): assertion (b) is STATUS PARITY with the
+    // class alone (was: "must stay claim-blocked in this slice"): same receipt
+    // status, same claim-blocking set once the `multiclass.<class>.` re-scope is
+    // stripped; vacuity guard: the mix loads >= 2 classes.
+    crate::common::assert_multiclass_status_parity(
+        "multiclass Monk",
+        MONK_FIXTURE,
+        &multiclass,
     );
 }
 
@@ -495,187 +497,3 @@ fn multiclass_monk_is_not_promoted_by_this_slice() {
 // Originally Partial/Computed; later promoted to Supported/ProductVisible by
 // SD-19's Class Progression Catalog browser UI-surfacing work (2026-07-16).
 
-#[test]
-fn matrix_monk_row_is_partial_computed_and_names_remaining_burdens() {
-    let matrix = seeded_current_truth();
-    let monk = matrix
-        .row("class.monk.bounded_progression")
-        .expect("monk bounded_progression row must exist");
-
-    assert_eq!(monk.support_state, SupportState::Supported);
-    assert_eq!(monk.evidence_tier, EvidenceTier::ProductVisible);
-    assert_eq!(
-        monk.evidence_freshness,
-        EvidenceFreshness::RefreshableFromLiveProof
-    );
-    assert!(
-        monk.grounding_ref
-            .contains("sd13_monk_level1_chassis_baseline"),
-        "monk row must cite the SD13-E3 monk proof surface: {}",
-        monk.grounding_ref
-    );
-    let note = monk.blocker_or_lossiness_note;
-    assert!(!note.is_empty(), "monk partial row must carry a note");
-    // Base-attack, base-save, AC Bonus, the unarmed strike damage die, and the
-    // flurry flat surface are now grounded; only the level-1 bonus feat grant
-    // remains named as still-unproven, and the note must scope what the grounded
-    // unarmed/flurry surface deliberately does not prove.
-    for token in ["1d6", "Flurry of Blows", "bonus feat"] {
-        assert!(
-            note.contains(token),
-            "monk partial note must name the '{token}' surface: {note}"
-        );
-    }
-    for honesty_token in ["die size only", "attack-resolution", "level 7+"] {
-        assert!(
-            note.contains(honesty_token),
-            "monk partial note must keep the '{honesty_token}' honesty scope: {note}"
-        );
-    }
-    assert!(
-        monk.next_required_uplift.contains("bonus feat"),
-        "monk next uplift must point at the remaining bonus-feat burden: {}",
-        monk.next_required_uplift
-    );
-}
-
-#[test]
-fn matrix_preserves_accepted_truth_and_unchanged_rows() {
-    let matrix = seeded_current_truth();
-
-    // Fighter, Druid, Barbarian, and Cleric rows were later promoted to
-    // Supported/ProductVisible by SD-19's Class Progression Catalog browser
-    // UI-surfacing work (2026-07-16).
-    for id in [
-        "class.fighter.level_1_pilot",
-        "class.fighter.levels_2_10",
-        "class.druid.progression_and_spell_burden",
-        "class.barbarian.bounded_progression",
-        "class.cleric.progression_and_spell_burden",
-    ] {
-        let row = matrix.row(id).unwrap_or_else(|| panic!("row {id} must exist"));
-        assert_eq!(
-            row.support_state,
-            SupportState::Supported,
-            "row {id} must be Supported after the SD-19 class-row promotion"
-        );
-        assert_eq!(row.evidence_tier, EvidenceTier::ProductVisible);
-    }
-
-    // Paladin was later promoted to Partial/Computed by its own SD13-E5
-    // level-gate slice (lay on hands / divine grace / mercy grounded as
-    // correct level-1 absences).
-    let paladin = matrix
-        .row("class.paladin.hybrid_chassis_and_spell_burden")
-        .expect("paladin row must exist");
-    assert_eq!(
-        paladin.support_state,
-        SupportState::Supported,
-        "paladin row must be Supported after the SD-19 class-row promotion"
-    );
-
-    // Ranger was later promoted to Partial/Computed by its own SD13-E3 Ranger
-    // decomposition slice (Track grounded for real).
-    let ranger = matrix
-        .row("class.ranger.hybrid_chassis_and_spell_burden")
-        .expect("ranger row must exist");
-    assert_eq!(
-        ranger.support_state,
-        SupportState::Supported,
-        "ranger row must be Supported after the SD-19 class-row promotion"
-    );
-
-    // Rogue was later promoted to Supported/ProductVisible by SD-19's Class
-    // Progression Catalog browser UI-surfacing work (2026-07-17).
-    let rogue = matrix
-        .row("class.rogue.bounded_progression")
-        .expect("rogue row must exist");
-    assert_eq!(rogue.support_state, SupportState::Supported);
-    assert_eq!(rogue.evidence_tier, EvidenceTier::ProductVisible);
-
-    // Sorcerer was later promoted to Partial/Computed by its own SD13-E4
-    // decomposition slice (Eschew Materials grounded for real), then to
-    // Supported/ProductVisible by SD-19's Class Progression Catalog browser
-    // UI-surfacing work (2026-07-17).
-    let sorcerer = matrix
-        .row("class.sorcerer.progression_and_spell_burden")
-        .unwrap_or_else(|| panic!("row class.sorcerer.progression_and_spell_burden must exist"));
-    assert_eq!(
-        sorcerer.support_state,
-        SupportState::Supported,
-        "sorcerer row must be Supported after the SD-19 class-row promotion"
-    );
-    assert_eq!(sorcerer.evidence_tier, EvidenceTier::ProductVisible);
-
-    // Bard was later promoted to Partial/Computed by its own SD13-E4
-    // decomposition slice (Bardic Knowledge grounded for real), then to
-    // Supported/ProductVisible by SD-19's Class Progression Catalog browser
-    // UI-surfacing work (2026-07-16).
-    let bard = matrix
-        .row("class.bard.progression_and_spell_burden")
-        .unwrap_or_else(|| panic!("row class.bard.progression_and_spell_burden must exist"));
-    assert_eq!(
-        bard.support_state,
-        SupportState::Supported,
-        "bard row must be Supported after the SD-19 class-row promotion"
-    );
-    assert_eq!(bard.evidence_tier, EvidenceTier::ProductVisible);
-
-    // Wizard was later promoted to Partial/Computed by its own SD13-E4 Scribe
-    // Scroll decomposition slice, then to Supported/ProductVisible by SD-19's
-    // Class Progression Catalog browser UI-surfacing work (2026-07-17).
-    let wizard = matrix
-        .row("class.wizard.progression_and_spell_burden")
-        .expect("wizard row must exist");
-    assert_eq!(
-        wizard.support_state,
-        SupportState::Supported,
-        "wizard row must keep its later-accepted Supported posture after the monk slice"
-    );
-
-    assert!(
-        !matrix
-            .rows
-            .iter()
-            // school.abjuration/illusion.spell_reachability were later promoted to
-            // Supported/Product-visible by SD-19's operator-driven UI-surfacing work
-            // (2026-07-16) -- excluded here, not an unintended promotion by this slice.
-            .any(|r| (r.support_state == SupportState::Supported
-                && r.row_id != "school.abjuration.spell_reachability"
-                && r.row_id != "school.illusion.spell_reachability"
-                && r.row_id != "school.conjuration.spell_reachability"
-                && r.row_id != "school.divination.spell_reachability"
-                && r.row_id != "school.enchantment.spell_reachability"
-                && r.row_id != "school.evocation.spell_reachability"
-                && r.row_id != "school.necromancy.spell_reachability"
-                && r.row_id != "school.transmutation.spell_reachability"
-                && r.row_id != "school.universal.spell_reachability"
-                && r.row_id != "equipment.arms_armor.equipment_reachability"
-                && r.row_id != "equipment.general.equipment_reachability"
-                && r.row_id != "equipment.magic_items.equipment_reachability"
-                && r.row_id != "race.human.pilot_semantics"
-                && r.row_id != "race.dwarf.bounded_semantics"
-                && r.row_id != "race.elf.bounded_semantics"
-                && r.row_id != "race.gnome.bounded_semantics"
-                && r.row_id != "race.half_elf.bounded_semantics"
-                && r.row_id != "race.half_orc.bounded_semantics"
-                && r.row_id != "race.halfling.bounded_semantics"
-                && r.row_id != "class.fighter.level_1_pilot"
-                && r.row_id != "class.fighter.levels_2_10"
-                && r.row_id != "class.monk.bounded_progression"
-                && r.row_id != "class.druid.progression_and_spell_burden"
-                && r.row_id != "class.barbarian.bounded_progression"
-                && r.row_id != "class.cleric.progression_and_spell_burden"
-                && r.row_id != "class.wizard.progression_and_spell_burden"
-                && r.row_id != "class.rogue.bounded_progression"
-                && r.row_id != "class.sorcerer.progression_and_spell_burden"
-                && r.row_id != "class.bard.progression_and_spell_burden"
-                && r.row_id != "class.paladin.hybrid_chassis_and_spell_burden"
-                && r.row_id != "class.ranger.hybrid_chassis_and_spell_burden"
-                && r.row_id != "interaction.human_bonus_feat_ability_bonus.pilot_pressure"
-                && r.row_id != "equipment.equipmods.equipment_reachability")
-                || r.support_state == SupportState::Lossy),
-        "no row may be silently promoted to Supported or Lossy outside the \
-         intentionally-promoted SD-19 rows"
-    );
-}

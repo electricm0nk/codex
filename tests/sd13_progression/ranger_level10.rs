@@ -51,10 +51,8 @@
 //! the multiclass negative control.
 
 use codex::rules_core::pilot_compute::compute_pilot_base_chassis;
-use codex::rules_core::support_state_matrix::{
-    EvidenceFreshness, EvidenceTier, SupportState, seeded_current_truth,
-};
 use crate::common::{load, explanation};
+use crate::rows::{recognition_negative_controls};
 
 const RANGER_LEVEL9_FIXTURE: &str =
     include_str!("../fixtures/rules_core/pf1_human_ranger_level9_sd13_deterministic_input.txt");
@@ -293,23 +291,6 @@ fn ranger_level_21_is_not_promoted_by_this_slice() {
     );
 }
 
-// ----- Negative control: the ranger path must not leak onto other classes -----
-
-#[test]
-fn fighter_does_not_gain_ranger_level10_recognition() {
-    let fighter = load(FIGHTER_FIXTURE);
-    let fighter_computation = compute_pilot_base_chassis(&fighter);
-    assert!(
-        !fighter_computation
-            .explanations
-            .iter()
-            .any(|e| e.id.starts_with("class_chassis.ranger.")
-                || e.id.starts_with("class_feature.ranger.")),
-        "the Fighter chassis must not surface any ranger-namespaced explanation: {:?}",
-        fighter_computation.explanations
-    );
-}
-
 // ----- Negative control: multiclass Ranger is not promoted -----
 
 #[test]
@@ -337,37 +318,26 @@ fn multiclass_ranger_level10_is_not_promoted_by_this_slice() {
         "multiclass Ranger must not gain any bounded ranger explanation: {:?}",
         computation.explanations
     );
-    assert!(
-        computation.diagnostics.iter().any(|d| d.claim_blocking),
-        "multiclass Ranger must stay claim-blocked in this slice"
+    // SD-36 Epic F3d (decisions.md §14): assertion (b) is STATUS PARITY with the
+    // class alone (was: "must stay claim-blocked in this slice"): same receipt
+    // status, same claim-blocking set once the `multiclass.<class>.` re-scope is
+    // stripped; vacuity guard: the mix loads >= 2 classes.
+    crate::common::assert_multiclass_status_parity(
+        "multiclass Ranger",
+        RANGER_LEVEL10_FIXTURE,
+        &multiclass,
     );
 }
 
 // ----- Control plane: the matrix note names the level-10 widening -----
 
-#[test]
-fn matrix_ranger_row_names_level_10_widening() {
-    let matrix = seeded_current_truth();
-    let ranger = matrix
-        .row("class.ranger.hybrid_chassis_and_spell_burden")
-        .expect("ranger hybrid_chassis_and_spell_burden row must exist");
+// ----- Table-driven negative controls (SD-36 Epic C2.1/C2.2) -----
 
-    assert_eq!(ranger.support_state, SupportState::Supported);
-    assert_eq!(ranger.evidence_tier, EvidenceTier::ProductVisible);
-    assert_eq!(
-        ranger.evidence_freshness,
-        EvidenceFreshness::RefreshableFromLiveProof
-    );
-    assert!(
-        ranger
-            .grounding_ref
-            .contains("sd13_ranger_level10_progression"),
-        "ranger row must cite the live SD13-E5 level-10 proof surface: {}",
-        ranger.grounding_ref
-    );
-    let note = ranger.blocker_or_lossiness_note;
-    assert!(
-        note.contains("level 10") || note.contains("level-10"),
-        "ranger partial note must name the level-10 widening: {note}"
-    );
+recognition_negative_controls! {
+    fighter_does_not_gain_ranger_level10_recognition(FIGHTER_FIXTURE) {
+        prefixes: ["class_chassis.ranger.", "class_feature.ranger."],
+        exact: [],
+        message: "the Fighter chassis must not surface any ranger-namespaced explanation: {:?}",
+    },
 }
+

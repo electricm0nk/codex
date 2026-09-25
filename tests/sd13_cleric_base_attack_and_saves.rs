@@ -29,7 +29,6 @@
 //! Death partial) are unaffected.
 
 use codex::rules_core::pilot_compute::compute_pilot_base_chassis;
-use codex::rules_core::support_state_matrix::{SupportState, seeded_current_truth};
 mod common;
 use common::{load, explanation, has_explanation};
 
@@ -246,30 +245,3 @@ fn fighter_and_druid_do_not_gain_cleric_base_attack_or_save_grounding() {
 
 // ----- Control plane: the matrix row's note names the newly grounded pillar -----
 
-#[test]
-fn matrix_cleric_row_note_names_base_attack_and_base_save_as_grounded() {
-    let matrix = seeded_current_truth();
-    let cleric = matrix
-        .row("class.cleric.progression_and_spell_burden")
-        .expect("cleric row must exist");
-
-    // Later promoted to Supported/ProductVisible by SD-19's Class Progression
-    // Catalog browser UI-surfacing work (2026-07-16).
-    assert_eq!(cleric.support_state, SupportState::Supported);
-    for token in ["base attack", "base save", "standalone"] {
-        assert!(
-            cleric.blocker_or_lossiness_note.contains(token),
-            "cleric blocker note must name '{token}' now that base attack/base save are \
-             grounded: {}",
-            cleric.blocker_or_lossiness_note
-        );
-    }
-    // The still-unproven burdens stay named.
-    for token in ["domain spell-list", "prepared"] {
-        assert!(
-            cleric.blocker_or_lossiness_note.contains(token),
-            "cleric blocker note must still name the unproven '{token}' burden: {}",
-            cleric.blocker_or_lossiness_note
-        );
-    }
-}

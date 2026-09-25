@@ -866,4 +866,17 @@ against the exports pinned at `PCGEN_ORACLE_SHA=7f818006e3…` —
 154 → **157**, disagree **2 → 2**, chassis **382 / 376 / 6 / 140 unchanged**, the **same 8**
 disagreements. The 142 added three compared lines, all three agreeing, and no new disagreement.
 
-**`§3a` is therefore met verbatim and is not amended on this point.**
+**Denominator (SD-36 Epic E GATE-02, AGENTS "every figure states its denominator"):** these
+159 lines / 382 chassis cells are drawn from a synthetic roster of 29 vanilla characters
+restricted to `CAMPAIGN:Core Rulebook` (`scripts/oracle_harness/sheet_parity.py roster_members`)
+-- roughly 0.2% of the corpus's 70,317+ converted rules at the time this figure was measured, and
+no other book's feats/spells/equipment/monsters/prestige classes, and no player-chosen feats,
+skills or equipment. Widening the roster to a stratified cross-book sample (the fix this finding
+asks for) is a real PCGen `BatchExporter` re-run per new character, not a doc change, and is
+deferred as its own follow-up rather than attempted under this cycle's time budget; see
+`docs/retro/events/sd36-epic-e.jsonl` and the epic-e receipt's NEEDS HUMAN RULING note. The 2
+named line disagreements and 6 chassis disagreements are not hidden by any allow-list, but were
+also not previously tracked as open items in `risks-and-open-questions.md` -- see that doc.
+
+**`§3a` is therefore met verbatim and is not amended on this point** for the 29-character
+Core-Rulebook slice this figure actually covers; it is not evidence of corpus-wide parity.

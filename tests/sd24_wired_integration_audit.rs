@@ -190,9 +190,18 @@ fn placeholder_findings_are_ui_text_prose_or_the_one_documented_deferral() {
     // Bucket A: real UI-affordance text (HTML/JSX `placeholder="…"` /
     // `placeholder={…}` prop, its TS type declaration, or the CSS
     // `::placeholder` pseudo-class) — a legitimate product feature, not a
-    // stub marker.
-    let is_ui_placeholder_text =
-        |line: &str| line.contains("placeholder=") || line.contains("placeholder:") || line.contains("::placeholder");
+    // stub marker. Widened SD-36 (ui-smoke harness, 2026-09-17) to
+    // `uiProbe.ts`'s `nameOf()` reading the same real DOM `placeholder`
+    // attribute (`el.getAttribute('placeholder')` / the local it's bound
+    // to) as one more accessible-name source, same non-stub category as the
+    // JSX prop -- it reads the attribute, it does not fabricate one.
+    let is_ui_placeholder_text = |line: &str| {
+        line.contains("placeholder=")
+            || line.contains("placeholder:")
+            || line.contains("::placeholder")
+            || (line.starts_with("apps/desktop/src/testSupport/uiProbe.ts:")
+                && (line.contains("getAttribute('placeholder')") || line.contains("placeholder.trim()")))
+    };
 
     // Bucket B: the one genuine, documented, deferred finding (see module
     // doc comment). Matched by its distinctive literal markers so any
@@ -293,32 +302,26 @@ fn placeholder_findings_are_ui_text_prose_or_the_one_documented_deferral() {
             || line.contains("must carry real corpus prose, not a fabricated placeholder")
     };
 
-    // Bucket G (AT-34-E6-001 gate lane A, 2026-09-02): one string-literal hit inside
-    // `reach_gate.rs`'s `OPEN_FINDINGS` table, reviewed this cycle and confirmed to be the
-    // OPPOSITE of the forbidden pattern -- the same discipline as buckets D/E/F, matched by
-    // the hit's own distinctive phrase so no *different* future stub can ride along.
-    //
-    // `OPEN_FINDINGS` is not a suppression list and this exclusion does not touch it. Its own
-    // doc comment states it is "pinned in both directions":
-    // `unsurfaced_families_are_exactly_the_recorded_findings` computes the unsurfaced set from
-    // live behaviour and requires it to EQUAL the table, so an unreached family that is not
-    // listed fails the gate, and a listed family that someone surfaces also fails until the
-    // entry is deleted. Each entry states its remedy, making the table a work queue. An entry
-    // is therefore a *declaration* that something does not reach a player -- it cannot make a
-    // gap pass, and the reachability gate still counts this family as unsurfaced.
-    //
-    // The word in the excluded line describes PCGen's own corpus data, not this codebase: the
-    // `Human Ethnicity ~ None`/`~ Unknown` rows (`cr_abilities_race.lst:157`/`:158`) are flavor
-    // placeholder rows upstream ships, which AT-34-E3-001 ingested for shape-coverage. That is
-    // bucket E/F's shape exactly (an assertion or description ABOUT an upstream placeholder).
-    // Introduced by `170c9219c4`.
-    //
-    // NOTE for the record: wave 26 characterized this hit as "legitimate UI text". It is not --
-    // `reach_gate.rs` renders no UI, and bucket A (`is_ui_placeholder_text`) neither does nor
-    // should match it. It is reviewed corpus-shape prose, and is excluded as such.
-    let is_reach_gate_open_finding_corpus_prose = |line: &str| {
-        line.starts_with("apps/desktop/src-tauri/src/reach_gate.rs:")
-            && line.contains("ingesting the two placeholder rows for shape-coverage")
+    // Bucket G's `reach_gate.rs` `OPEN_FINDINGS`-table exclusion is retired
+    // (SD-36 D3): `apps/desktop/src-tauri/src/reach_gate.rs` is deleted, so
+    // no hit can ever start with that path again.
+
+    // Bucket H (SD-36 ui-smoke harness, 2026-09-17): `spec.json`'s own
+    // `$comment` schema note and three rows' `notes` fields document the
+    // real DOM `placeholder` attribute the harness reads/avoids (e.g. "the
+    // account field's own `placeholder` attribute can NEVER appear in
+    // bodyText" -- explaining why a row's `marker` was reassigned AWAY from
+    // placeholder text, the opposite of fabricating one). JSON prose has no
+    // `//` comment syntax for Bucket C's filter to catch, so this is scoped
+    // the same way buckets D-F are: by path AND by each hit's own
+    // distinctive substring, so an unrelated future stub marker landing in
+    // this same file still fails.
+    let is_ui_smoke_spec_placeholder_prose = |line: &str| {
+        line.starts_with("apps/desktop/scripts/ui-smoke/spec.json:")
+            && (line.contains("trimmed textContent || aria-label || placeholder || title || id")
+                || line.contains("the account field's own `placeholder` attribute) can NEVER appear in bodyText")
+                || line.contains("matched by their own `placeholder`, per uiProbe.ts's nameOf() chain")
+                || line.contains("one member email (by placeholder, same shape as CreateCampaignScreen"))
     };
 
     let unexplained: Vec<&String> = hits
@@ -330,7 +333,7 @@ fn placeholder_findings_are_ui_text_prose_or_the_one_documented_deferral() {
                 && !is_anti_fabrication_explanation_text(line)
                 && !is_pcgen_pxx_source_page_token(line)
                 && !is_reviewed_placeholder_shape_text(line)
-                && !is_reach_gate_open_finding_corpus_prose(line)
+                && !is_ui_smoke_spec_placeholder_prose(line)
         })
         .collect();
 

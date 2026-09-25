@@ -29,7 +29,7 @@ import {
   applyRacialAbilityAdjustments,
   composeCreateCharacterRequest,
 } from './composeCreateCharacterRequest';
-import { loadRaceRosterSurface, type RaceRosterSurface } from './raceRoster';
+import { loadRaceRosterSurface, rosterErrorMessage, type RaceRosterSurface } from './raceRoster';
 import { createCharacterRuntime } from './characterHubRuntime';
 import {
   buildAlternateTraitRows,
@@ -221,12 +221,9 @@ export function CreateCharacterForm(props: { onCreated: () => void }) {
         if (!live) {
           return;
         }
-        if (surface.options.length === 0) {
-          setRosterError(
-            surface.diagnostics.length > 0
-              ? `No race could be read from the corpus: ${surface.diagnostics.join('; ')}`
-              : 'No race could be read from the corpus.'
-          );
+        const message = rosterErrorMessage(surface);
+        if (message !== null) {
+          setRosterError(message);
           return;
         }
         setRoster(surface);

@@ -1,7 +1,6 @@
 import { loadAuthoringWorkbench } from '../boundary/loadAuthoringWorkbench';
 import { loadPilotShellSnapshot } from '../boundary/loadPilotShellSnapshot';
 import { loadReleaseTruth } from '../boundary/loadReleaseTruth';
-import { loadSupportStateMatrix } from '../boundary/loadSupportStateMatrix';
 import { loadBackendHealth } from '../boundary/loadBackendHealth';
 import {
   loadTesterWorkbenchSurface,
@@ -16,7 +15,6 @@ export async function loadTesterWorkbenchSurfaceRuntime(
     loadAuthoringWorkbench,
     loadPilotShellSnapshot,
     loadReleaseTruth,
-    loadSupportStateMatrix,
     loadBackendHealth,
   });
 }
