@@ -192,9 +192,14 @@ fn multiclass_monk_does_not_gain_slot_2_recognition() {
         "multiclass Monk must not gain a slot-2 record: {:?}",
         computation.explanations
     );
-    assert!(
-        computation.diagnostics.iter().any(|d| d.claim_blocking),
-        "multiclass Monk must stay claim-blocked in this slice"
+    // SD-36 Epic F3d (decisions.md §14): assertion (b) is STATUS PARITY with the
+    // class alone (was: "must stay claim-blocked in this slice"): same receipt
+    // status, same claim-blocking set once the `multiclass.<class>.` re-scope is
+    // stripped; vacuity guard: the mix loads >= 2 classes.
+    crate::common::assert_multiclass_status_parity(
+        "multiclass Monk",
+        MONK_SECOND_FEAT_FIXTURE,
+        &multiclass,
     );
 }
 

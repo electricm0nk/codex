@@ -131,9 +131,14 @@ fn multiclass_rogue_does_not_gain_talent_recognition() {
         "multiclass Rogue must not gain a talent record: {:?}",
         computation.explanations
     );
-    assert!(
-        computation.diagnostics.iter().any(|d| d.claim_blocking),
-        "multiclass Rogue must stay claim-blocked in this slice"
+    // SD-36 Epic F3d (decisions.md §14): assertion (b) is STATUS PARITY with the
+    // class alone (was: "must stay claim-blocked in this slice"): same receipt
+    // status, same claim-blocking set once the `multiclass.<class>.` re-scope is
+    // stripped; vacuity guard: the mix loads >= 2 classes.
+    crate::common::assert_multiclass_status_parity(
+        "multiclass Rogue",
+        ROGUE_TALENT_FIXTURE,
+        &multiclass,
     );
 }
 

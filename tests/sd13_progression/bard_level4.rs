@@ -432,7 +432,6 @@ multiclass_negative_controls! {
         prefixes: ["class_chassis.bard."],
         exact: ["class_chassis.spell_baseline.bard", WELL_VERSED_ID, INSPIRE_COMPETENCE_ID],
         message: "multiclass Bard must not gain any bounded bard chassis explanation: {:?}",
-        blocked_message: "multiclass Bard must stay claim-blocked in this slice",
     },
 }
 

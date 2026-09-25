@@ -416,9 +416,14 @@ fn multiclass_rogue_is_not_promoted_by_this_slice() {
          explanation: {:?}",
         computation.explanations
     );
-    assert!(
-        computation.diagnostics.iter().any(|d| d.claim_blocking),
-        "multiclass Rogue must stay claim-blocked in this slice"
+    // SD-36 Epic F3d (decisions.md §14): assertion (b) is STATUS PARITY with the
+    // class alone (was: "must stay claim-blocked in this slice"): same receipt
+    // status, same claim-blocking set once the `multiclass.<class>.` re-scope is
+    // stripped; vacuity guard: the mix loads >= 2 classes.
+    crate::common::assert_multiclass_status_parity(
+        "multiclass Rogue",
+        ROGUE_FIXTURE,
+        &multiclass,
     );
 }
 

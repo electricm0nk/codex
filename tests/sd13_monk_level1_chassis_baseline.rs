@@ -482,9 +482,14 @@ fn multiclass_monk_is_not_promoted_by_this_slice() {
         !has_explanation(&computation, "class_chassis.monk.bounded_progression"),
         "multiclass Monk must not gain the bounded level-1 single-class martial recognition record"
     );
-    assert!(
-        computation.diagnostics.iter().any(|d| d.claim_blocking),
-        "multiclass Monk must stay claim-blocked in this slice"
+    // SD-36 Epic F3d (decisions.md §14): assertion (b) is STATUS PARITY with the
+    // class alone (was: "must stay claim-blocked in this slice"): same receipt
+    // status, same claim-blocking set once the `multiclass.<class>.` re-scope is
+    // stripped; vacuity guard: the mix loads >= 2 classes.
+    crate::common::assert_multiclass_status_parity(
+        "multiclass Monk",
+        MONK_FIXTURE,
+        &multiclass,
     );
 }
 

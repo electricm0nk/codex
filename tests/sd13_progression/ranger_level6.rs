@@ -281,7 +281,6 @@ multiclass_negative_controls! {
         prefixes: ["class_chassis.ranger."],
         exact: [ENDURANCE_ID, FAVORED_TERRAIN_ID, HUNTERS_BOND_ID],
         message: "multiclass Ranger must not gain any bounded ranger chassis explanation: {:?}",
-        blocked_message: "multiclass Ranger must stay claim-blocked in this slice",
     },
 }
 

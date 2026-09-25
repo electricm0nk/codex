@@ -520,5 +520,40 @@ hand-worked test. Recorded as `forward-scope-register.md` FS-15; evidence
 `multiclass_fold::tests::two_more_prestige_saves_the_f3c_carriers_reach_are_the_same_oracle_formula_defect`,
 and the census floor `BASELINE_CENSUS_PRESTIGE_MIX_COMPUTED=67` (`scripts/verify-baselines.env`).
 
+### §14.2 — Multiclass negative controls assert status parity with the class alone (F3d, 2026-09-25)
+
+**Orchestrator ruling (autonomous mode), 2026-09-25**, on the F3d blocker
+(`artifacts/epic-f/stage-f2-f3/f3d-blocker.md`, commit `157dc5496a`).
+
+**Measurement.** The 187 "multiclass X must stay claim-blocked in this slice" tests
+(`f3d-sites.tsv`: 64 `MULTICLASS_NEG_ROWS` + 59 `multiclass_negative_controls!` rows + 64
+hand-written, in `sd18_widening`, `sd13_progression` and 43 top-level binaries) widen a
+class-specific fixture to a Class+Fighter mix. Those fixtures are not in the GE-06 posture, so
+the class ALONE is Blocked on `combat.baseline_unsupported` + `skill.selected_modifier.unsupported`
+(187 of 187), and every mix's claim-blocking set equals the class-alone set apart from the
+`multiclass.<class>.` re-scope (187 of 187). Flipping assertion (b) to `Computed` ran 187 of 187
+red (`f3d-red.log`): asserting it would fabricate a success. The Computed proof for mixes already
+lives in the census (mix panel 185 of 185 under the GE-06 fixture; prestige carrier mixes, floor
+`BASELINE_CENSUS_PRESTIGE_MIX_COMPUTED`) and in `tests/sd36_multiclass_any_class.rs`.
+
+**Decision.** Assertion (b) becomes **status parity** (the F3b `class_dispatch` precedent,
+`..._computes_exactly_when_it_computes_alone`): the mix's receipt status equals the unmodified
+class-alone fixture's, AND the mix's claim-blocking set, with the fold's `multiclass.<class>.`
+re-scope stripped, equals the class-alone set. A class that computes alone computes in a mix; a
+class blocked alone stays blocked on exactly its own lines -- none lost, no multiclass-only line
+added. Assertion (a) (the bounded single-class explanations stay withheld) is kept verbatim. Vacuity
+guard: the mix loads >= 2 classes (and more than the class alone). Test names unchanged; `--list`
+byte-identical (sd18_widening 891, sd13_progression 1,136). One helper,
+`tests/common/mod.rs::assert_multiclass_status_parity`, serves all 187 sites.
+
+**Sabotage parity, re-measured.** Disabling the fold's carry-over of each class's own claim-blocking
+lines turns **14 of 187** red (the Monk mixes, whose bonus-feat line only the carry-over supplies);
+restored, 0 red. The other 173 are held by lines the mix raises itself -- the character-level
+pillars (129) and class-feature checks that run for the class mixed as well as alone (sorcerer 25,
+cleric 19) -- so this sabotage cannot move them; the status/set assertion guards them against any
+change to those. Evidence `artifacts/epic-f/stage-f2-f3/f3d-sabotage-log.md`, `f3d-verify.log`.
+
+**Enforced by:** the 187 tests; `epic-breakdown.md` F3.1–F3.3 (rewritten to this measurement).
+
 ---
 

@@ -331,7 +331,6 @@ multiclass_negative_controls! {
         prefixes: ["class_chassis.cleric."],
         exact: ["class_chassis.spell_baseline.cleric"],
         message: "multiclass Cleric must not gain any bounded cleric chassis explanation: {:?}",
-        blocked_message: "multiclass Cleric must stay claim-blocked in this slice",
     },
 }
 

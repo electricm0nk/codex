@@ -241,7 +241,6 @@ multiclass_negative_controls! {
         prefixes: ["class_chassis.sorcerer."],
         exact: ["class_chassis.spell_baseline.sorcerer"],
         message: "multiclass Sorcerer must not gain any bounded sorcerer chassis explanation: {:?}",
-        blocked_message: "multiclass Sorcerer must stay claim-blocked in this slice",
     },
 }
 

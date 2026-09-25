@@ -356,7 +356,6 @@ multiclass_negative_controls! {
         prefixes: ["class_chassis.barbarian."],
         exact: [BARBARIAN_UNCANNY_DODGE_ID, BARBARIAN_TRAP_SENSE_ID],
         message: "multiclass Barbarian must not gain any bounded barbarian chassis explanation: {:?}",
-        blocked_message: "multiclass Barbarian must stay claim-blocked in this slice",
     },
 }
 

@@ -190,9 +190,14 @@ fn multiclass_bard_does_not_gain_versatile_performance_records() {
         "multiclass Bard must not gain versatile performance records: {:?}",
         computation.explanations
     );
-    assert!(
-        computation.diagnostics.iter().any(|d| d.claim_blocking),
-        "multiclass Bard must stay claim-blocked in this slice"
+    // SD-36 Epic F3d (decisions.md §14): assertion (b) is STATUS PARITY with the
+    // class alone (was: "must stay claim-blocked in this slice"): same receipt
+    // status, same claim-blocking set once the `multiclass.<class>.` re-scope is
+    // stripped; vacuity guard: the mix loads >= 2 classes.
+    crate::common::assert_multiclass_status_parity(
+        "multiclass Bard",
+        BARD_THREE_VP_FIXTURE,
+        &multiclass,
     );
 }
 
