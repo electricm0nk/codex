@@ -277,7 +277,6 @@ multiclass_negative_controls! {
         prefixes: ["class_chassis.monk.", "class_feature.monk."],
         exact: [],
         message: "multiclass Monk must not gain any bounded monk explanation: {:?}",
-        blocked_message: "multiclass Monk must stay claim-blocked in this slice",
     },
 }
 

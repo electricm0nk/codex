@@ -336,6 +336,21 @@ mod generic_pool_group_selection_wiring_tests {
         input
     }
 
+    /// SD-36 F3c4: the sheet lines the held-set path prints for `input` whose rule id carries
+    /// `fragment` (`"celestial_bloodline_"`): where a selection is linked to its converted pick
+    /// option, the bloodline's member lines print from the record at the levels it states, and
+    /// the generic pass yields (`push_generic_pool_group_selection_magnitude`).
+    fn held_member_lines(input: &CharacterInput, fragment: &str) -> Vec<String> {
+        let package = crate::rules_core::sheet_rule_package::package().as_ref().expect("package");
+        crate::rules_core::pilot_compute::compute_pilot_base_chassis(input)
+            .with_sheet_rules(input, package, &[])
+            .sheet_lines
+            .into_iter()
+            .filter(|l| l.id.contains(fragment))
+            .map(|l| l.id)
+            .collect()
+    }
+
     fn generic_explanation_count(input: &CharacterInput, id_prefix: &str) -> usize {
         build_pilot_headless_receipt(input)
             .computation
@@ -990,11 +1005,12 @@ mod generic_pool_group_selection_wiring_tests {
     fn sorcerer_generic_bloodline_pass_grounds_a_never_hand_modelled_bloodline() {
         let input =
             class_input(SORCERER_CLASS_ID, 5, SORCERER_BLOODLINE_CHOICE_ID, "bloodline:celestial");
+        // SD-36 F3c4 (pin moved, retro-logged): the pick links to its converted option, so the
+        // generic pass yields and the record prints Celestial's members at their own levels.
         let count = generic_explanation_count(&input, "class_feature.sorcerer.bloodline.generic");
-        assert!(
-            count > 0,
-            "Celestial Bloodline must ground at least one real corpus member generically"
-        );
+        assert_eq!(count, 0, "a linked Celestial pick yields to the held-set path");
+        let lines = held_member_lines(&input, "celestial_bloodline_");
+        assert!(!lines.is_empty(), "Celestial Bloodline's members print from the converted record: {lines:?}");
     }
 
     /// SD-32 T12 Epic 8 row 18 cycle 22 (`§27b`): Karmic is a real Wildblooded Sorcerer
@@ -1212,8 +1228,11 @@ mod generic_pool_group_selection_wiring_tests {
     #[test]
     fn bloodrager_generic_bloodline_pass_grounds_a_never_hand_modelled_bloodline() {
         let input = class_input(BLOODRAGER_CLASS_ID, 5, BLOODRAGER_BLOODLINE_CHOICE_ID, "bloodline:undead");
+        // SD-36 F3c4 (pin moved, retro-logged): a linked pick yields to the held-set path.
         let count = generic_explanation_count(&input, "class_feature.acg.bloodrager.bloodline.generic");
-        assert!(count > 0, "Undead Bloodline must ground at least one real corpus member generically");
+        assert_eq!(count, 0, "a linked Undead pick yields to the held-set path");
+        let lines = held_member_lines(&input, "undead");
+        assert!(!lines.is_empty(), "Undead Bloodline's members print from the converted record: {lines:?}");
     }
 
     /// Safety: the generic Bloodrager Bloodline pass never fires for Arcane, the ONE bloodline
@@ -1235,10 +1254,12 @@ mod generic_pool_group_selection_wiring_tests {
         let hand_modelled_count =
             generic_explanation_count(&input, "class_feature.acg.bloodrager.bloodline.arcane");
         assert!(hand_modelled_count > 0, "the pre-existing hand-modelled Arcane branch must still fire");
-        assert!(
-            generic_count > 0,
-            "the generic pass must independently ground Arcane's own resolvable corpus members too"
-        );
+        // SD-36 F3c4 (pin moved, retro-logged): the Arcane pick links to its converted option,
+        // so the generic pass yields (no collision is possible) and the record prints Arcane's
+        // members at their own levels.
+        assert_eq!(generic_count, 0, "a linked Arcane pick yields to the held-set path");
+        let lines = held_member_lines(&input, "arcane");
+        assert!(!lines.is_empty(), "Arcane Bloodline's members print from the converted record: {lines:?}");
     }
 
     /// Green is a real Cavalier order (`data/corpus/*/class_feature/order_of_the_green/*.json`)
@@ -1323,8 +1344,11 @@ mod generic_pool_group_selection_wiring_tests {
     #[test]
     fn sorcerer_generic_bloodline_pass_grounds_abyssal_via_the_cross_book_tracker_merge() {
         let input = class_input(SORCERER_CLASS_ID, 5, SORCERER_BLOODLINE_CHOICE_ID, "bloodline:abyssal");
+        // SD-36 F3c4 (pin moved, retro-logged): a linked pick yields to the held-set path.
         let count = generic_explanation_count(&input, "class_feature.sorcerer.bloodline.generic");
-        assert!(count > 0, "Abyssal Bloodline must ground at least one real corpus member generically");
+        assert_eq!(count, 0, "a linked Abyssal pick yields to the held-set path");
+        let lines = held_member_lines(&input, "abyssal_bloodline_");
+        assert!(!lines.is_empty(), "Abyssal Bloodline's members print from the converted record: {lines:?}");
     }
 
     /// Verdant is a real Bloodrager bloodline cycle 7 found blocked, needing `BloodragerBloodlineLVL`

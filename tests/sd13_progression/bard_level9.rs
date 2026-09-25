@@ -254,7 +254,6 @@ multiclass_negative_controls! {
         prefixes: ["class_chassis.bard."],
         exact: [],
         message: "multiclass Bard must not gain any bounded bard chassis explanation: {:?}",
-        blocked_message: "multiclass Bard must stay claim-blocked in this slice",
     },
 }
 

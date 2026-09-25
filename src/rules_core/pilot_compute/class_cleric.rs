@@ -1868,10 +1868,10 @@ mod cleric_dispatch_widening_safety_tests {
     }
 
     /// Multiclass safety, verified directly. A Cleric-containing multiclass
-    /// mix with a genuine posture violation must still stay Blocked, since
-    /// `CLERIC_CLASS_ID` is deliberately not registered with
-    /// `multiclass_class_level_supported` beyond `table_class_id` itself
-    /// (the same construction Ranger/Paladin/Sorcerer already proved safe).
+    /// mix with a genuine posture violation must still stay Blocked: the
+    /// posture check runs for Cleric alone or mixed, and since SD-36 F3b the
+    /// mix also carries Cleric's isolated-run blocking lines
+    /// (`multiclass_fold`).
     #[test]
     fn cleric_fighter_multiclass_with_an_invalid_prepared_spell_stays_blocked() {
         let result = load_character_input_fixture(FIGHTER_LEVEL_1_FIXTURE);

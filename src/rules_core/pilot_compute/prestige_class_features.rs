@@ -503,10 +503,14 @@ pub(super) fn ground_divine_scion_class_features(
 /// `compute_pilot_base_chassis`'s generic class_feature grant roster call
 /// (this module, just above `compute_class_chassis`'s prestige-entry-gate
 /// branch): a prestige-class-only character now gets the SAME generic
-/// roster every other modelled class already gets, even though
-/// `compute_class_chassis` genuinely produces no BAB/save chassis for any
-/// CRB prestige class (asserted directly, as this suite's own premise, not
-/// assumed).
+/// roster every other modelled class already gets.
+///
+/// SD-36 Epic F2a/F2b: every CRB prestige class now carries a converted
+/// chassis row (`generic_class_chassis` reads `core_rulebook`), but a
+/// prestige class ALONE prints none of it -- F2b's game rule
+/// (`prestige_class.requires_base_class_levels`): a prestige class cannot be
+/// a character's first class, so there is no half sheet. The features still
+/// ground; the tests assert both halves.
 #[cfg(test)]
 mod prestige_class_feature_generic_grant_tests {
     use super::{
@@ -538,13 +542,11 @@ mod prestige_class_feature_generic_grant_tests {
     }
 
     #[test]
-    fn assassin_class_features_ground_even_though_no_bab_save_chassis_exists() {
+    fn assassin_class_features_ground_without_a_half_sheet() {
         let input = character(ASSASSIN_CLASS_ID, 8);
-        assert!(
-            explanation(&input, "class_chassis.base_attack_bonus").is_none(),
-            "this test's own premise: a CRB prestige class's chassis is genuinely \
-             unsupported by compute_class_chassis today"
-        );
+        // SD-36 Epic F2b: a prestige class alone prints no chassis (no half
+        // sheet); its features still ground.
+        assert!(explanation(&input, "class_chassis.base_attack_bonus").is_none());
         let (value, detail) =
             explanation(&input, "class_feature.assassin.corpus_record.hidden_weapons")
                 .expect("a level-8 Assassin must be granted Hidden Weapons (real, level-4 grant)");
@@ -560,7 +562,7 @@ mod prestige_class_feature_generic_grant_tests {
     }
 
     #[test]
-    fn shadowdancer_class_features_ground_even_though_no_bab_save_chassis_exists() {
+    fn shadowdancer_class_features_ground_without_a_half_sheet() {
         let input = character(SHADOWDANCER_CLASS_ID, 8);
         assert!(explanation(&input, "class_chassis.base_attack_bonus").is_none());
         let (value, detail) =
@@ -574,7 +576,7 @@ mod prestige_class_feature_generic_grant_tests {
     }
 
     #[test]
-    fn duelist_deflect_arrows_grounds_even_though_no_bab_save_chassis_exists() {
+    fn duelist_deflect_arrows_grounds_without_a_half_sheet() {
         let input = character("class:duelist", 9);
         assert!(explanation(&input, "class_chassis.base_attack_bonus").is_none());
         let (value, detail) =
@@ -637,21 +639,34 @@ mod prestige_class_entry_gate_wiring_tests {
             .map(|d| d.message.as_str())
     }
 
-    /// RED, confirmed manually before this wiring landed (SD-31 wave 27's
-    /// own investigation note above `compute_generic_table_chassis`): the
+    /// Was `prestige_class_dispatch_still_leaves_chassis_unsupported` (RED,
+    /// confirmed manually before the entry-gate wiring landed: the
     /// `else { None }` arm produced no diagnostic at all for a
-    /// `class:arcane_archer` single-class input -- entry requirements were
-    /// simply never asked about. GREEN below.
+    /// `class:arcane_archer` single-class input). SD-36 Epic F2a gave Arcane
+    /// Archer a converted chassis row; SD-36 Epic F2b states the game rule for
+    /// it alone: `prestige_class.requires_base_class_levels`, no chassis
+    /// explanation (no half sheet), and no `class_chassis.unsupported` (the
+    /// class is known). The entry gate still runs (the two tests below) and
+    /// the shared gate still refuses a prestige class alone.
     #[test]
-    fn prestige_class_dispatch_still_leaves_chassis_unsupported() {
+    fn prestige_class_alone_dispatch_states_the_game_rule_and_the_shared_gate_refuses_it() {
         let input = arcane_archer_input(vec![]);
         let computation = compute_pilot_base_chassis(&input);
-        assert_eq!(computation.base_attack_bonus, 0);
         assert!(
-            diagnostic(&computation, "class_chassis.unsupported").is_some(),
-            "the generic unsupported-chassis diagnostic must still fire: {:?}",
+            diagnostic(&computation, "prestige_class.requires_base_class_levels").is_some(),
+            "{:?}",
             computation.diagnostics
         );
+        assert!(
+            !computation.explanations.iter().any(|e| e.id == "class_chassis.base_attack_bonus"),
+            "a prestige class alone prints no chassis number"
+        );
+        assert!(
+            diagnostic(&computation, "class_chassis.unsupported").is_none(),
+            "a known prestige id is not an unsupported class: {:?}",
+            computation.diagnostics
+        );
+        assert!(!super::has_supported_class_chassis(&input));
     }
 
     #[test]

@@ -21,6 +21,7 @@ BASELINES = {
     "BASELINE_CENSUS_COMPUTED": 42,
     "BASELINE_CENSUS_PRESTIGE_ALONE_BLOCKED": 74,
     "BASELINE_CENSUS_MIX_COMPUTED": 185,
+    "BASELINE_CENSUS_PRESTIGE_MIX_COMPUTED": 67,
 }
 
 
@@ -31,6 +32,7 @@ def make_doc(**overrides):
         "blocked": 19,
         "prestige_alone_blocked": 74,
         "mix_panel_computed": 185,
+        "prestige_mix_computed": 67,
     }
     doc.update(overrides)
     return doc
@@ -41,7 +43,9 @@ class CheckTests(unittest.TestCase):
         self.assertEqual(C.check(make_doc(), BASELINES), [])
 
     def test_every_baseline_exceeded_passes_with_no_failures(self):
-        doc = make_doc(ids=136, computed=43, prestige_alone_blocked=75, mix_panel_computed=186)
+        doc = make_doc(
+            ids=136, computed=43, prestige_alone_blocked=75, mix_panel_computed=186, prestige_mix_computed=68
+        )
         self.assertEqual(C.check(doc, BASELINES), [])
 
     def test_ids_drop_by_one_fails_by_name(self):
@@ -83,6 +87,19 @@ class CheckTests(unittest.TestCase):
         self.assertEqual(len(failures), 1)
         self.assertIn("mix_panel_computed 0 below baseline 185", failures[0])
 
+    def test_prestige_mix_computed_drop_by_one_fails_by_name(self):
+        # SD-36 F3c: the prestige carrier-mix floor (67 of 74 on 2026-09-24).
+        failures = C.check(make_doc(prestige_mix_computed=66), BASELINES)
+        self.assertEqual(len(failures), 1)
+        self.assertIn("prestige_mix_computed 66 below baseline 67", failures[0])
+        self.assertIn("BASELINE_CENSUS_PRESTIGE_MIX_COMPUTED", failures[0])
+
+    def test_missing_prestige_mix_computed_raises_keyerror(self):
+        doc = make_doc()
+        del doc["prestige_mix_computed"]
+        with self.assertRaises(KeyError):
+            C.check(doc, BASELINES)
+
     def test_multiple_simultaneous_drops_report_one_line_each(self):
         doc = make_doc(computed=41, mix_panel_computed=184)
         failures = C.check(doc, BASELINES)
@@ -117,6 +134,7 @@ class MainCliTests(unittest.TestCase):
                 "--baseline-computed", "42",
                 "--baseline-prestige-alone-blocked", "74",
                 "--baseline-mix-computed", "185",
+                "--baseline-prestige-mix-computed", "67",
             ])
             self.assertEqual(rc, 0)
 
@@ -132,6 +150,7 @@ class MainCliTests(unittest.TestCase):
                 "--baseline-computed", "42",
                 "--baseline-prestige-alone-blocked", "74",
                 "--baseline-mix-computed", "185",
+                "--baseline-prestige-mix-computed", "67",
             ])
             self.assertEqual(rc, 1)
 
@@ -148,6 +167,7 @@ class MainCliTests(unittest.TestCase):
                 "--baseline-computed", "42",
                 "--baseline-prestige-alone-blocked", "74",
                 "--baseline-mix-computed", "185",
+                "--baseline-prestige-mix-computed", "67",
             ])
             self.assertEqual(rc, 1)
 

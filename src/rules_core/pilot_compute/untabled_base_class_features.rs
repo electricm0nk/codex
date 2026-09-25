@@ -1455,13 +1455,25 @@ mod untabled_class_chassis_gate_tests {
         }
     }
 
-    /// The gate widening did not touch the prestige-entry-gate arm --
-    /// prestige classes correctly stay unsupported here, since no BAB/save
-    /// chassis exists for them to fold into a total save or combat
-    /// baseline.
+    /// The gate widening did not admit a prestige class: it still fails the
+    /// shared single-class gate. SD-36 Epic F2b: the reason is now stated as
+    /// the game rule -- `prestige_class.requires_base_class_levels`, not
+    /// `class_chassis.unsupported` (Arcane Archer carries a real converted
+    /// chassis row; it just cannot be a first class).
     #[test]
     fn a_prestige_class_id_still_fails_the_gate() {
-        assert!(!has_supported_class_chassis(&single_class("class:arcane_archer", 5)));
+        let input = single_class("class:arcane_archer", 5);
+        assert!(!has_supported_class_chassis(&input));
+        let receipt = build_pilot_headless_receipt(&input);
+        let diagnostics = &receipt.computation.diagnostics;
+        assert!(
+            diagnostics
+                .iter()
+                .any(|d| d.id == "prestige_class.requires_base_class_levels" && d.claim_blocking),
+            "{diagnostics:?}"
+        );
+        assert!(!diagnostics.iter().any(|d| d.id == "class_chassis.unsupported"), "{diagnostics:?}");
+        assert_ne!(receipt.status, HeadlessReceiptStatus::Computed);
     }
 
     /// The Epic F1 proficiency-reader remainder, read from its committed record
@@ -1492,6 +1504,12 @@ mod untabled_class_chassis_gate_tests {
             .map(|d| d.id.clone())
             .collect()
     }
+
+    /// SD-36 F3b3: classes whose selected-skill class-skill answer is Unknown. F3c2: Expert
+    /// answers from its seeded canonical picks. F3c3: Psion answers through its canonical
+    /// discipline (the converter now carries its SUBCLASS lines, up_classes.lst:221-256, as a
+    /// class choice), so the remainder is empty.
+    const CLASS_SKILL_REMAINDER: [&str; 0] = [];
 
     /// Meaning changed by SD-36 Epic F1 (was
     /// `the_nine_classes_with_a_real_proficiency_row_reach_computed`, which pinned only the nine
@@ -1524,6 +1542,18 @@ mod untabled_class_chassis_gate_tests {
                     blocking,
                     vec!["combat.baseline_weapon_proficiency_unknown".to_string()],
                     "{class_id} (recorded remainder) must be blocked on the proficiency answer alone"
+                );
+            } else if CLASS_SKILL_REMAINDER.contains(&class_id.as_str()) {
+                // SD-36 F3b3: the selected-skill check reads class skills from the converted
+                // record. F3c2: Expert's ten picks (CRB p.450) are seeded as its canonical
+                // default and answer; Psion's base class skills sit on its discipline's
+                // SUBCLASS-line CSKILL (up_classes.lst:221-248), which the converter does not
+                // carry, so the +3 on Climb/Intimidate/Swim is Unknown -- named, never guessed.
+                held_back += 1;
+                assert_eq!(
+                    blocking,
+                    vec!["skill.selected_modifier.class_skill_unknown".to_string()],
+                    "{class_id} (class-skill remainder) must be blocked on the class-skill answer alone"
                 );
             } else {
                 computed += 1;

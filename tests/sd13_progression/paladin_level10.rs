@@ -321,7 +321,6 @@ multiclass_negative_controls! {
         prefixes: ["class_chassis.paladin."],
         exact: [],
         message: "multiclass Paladin must not gain any bounded paladin chassis explanation: {:?}",
-        blocked_message: "multiclass Paladin must stay claim-blocked in this slice",
     },
 }
 

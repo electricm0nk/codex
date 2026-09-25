@@ -53,8 +53,18 @@ use std::sync::OnceLock;
 use super::class_chassis_sheet_rules::{self, ClassChassis};
 
 /// See `class_catalog_generic.rs`'s own doc comment, "Reachability, honestly
-/// scoped" — same 14 books, same population.
-const CLASS_FAMILY_BOOKS: [&str; 14] = [
+/// scoped" — same books, same order, same population.
+///
+/// A slug two books both state keeps the FIRST book in this list
+/// ([`generic_class_records`] reads the books one at a time, in this order).
+/// SD-36 Epic F2a appended `core_rulebook` and `advanced_players_guide` LAST,
+/// so they can never displace a class an earlier book already gave;
+/// `class_family_books_end_with_crb_then_apg_and_every_shadowed_slug_is_named`
+/// lists every shadowed slug by name (the two appended books shadow none).
+/// Their base classes also have their own, earlier dispatch arms in
+/// `compute_class_chassis`, so what the append newly reaches is their 18
+/// prestige classes' converted chassis rows.
+const CLASS_FAMILY_BOOKS: [&str; 16] = [
     "adventurers_guide",
     "book_of_the_damned_volume_1",
     "book_of_the_damned_volume_2",
@@ -69,6 +79,8 @@ const CLASS_FAMILY_BOOKS: [&str; 14] = [
     "ultimate_magic",
     "ultimate_wilderness",
     "ultimate_psionics",
+    "core_rulebook",
+    "advanced_players_guide",
 ];
 
 pub(crate) struct GenericChassisRow {
@@ -96,9 +108,9 @@ pub(crate) struct GenericChassisMeta {
 }
 
 /// The full registration list -- every conventional class
-/// [`generic_class_records`] actually resolved a chassis for (78 as of
-/// this batch; see `all_seventy_eight_conventional_classes_resolve` below
-/// for how that count is itself re-derived).
+/// [`generic_class_records`] actually resolved a chassis for (122 as of
+/// SD-36 Epic F2a; see `every_conventional_class_in_class_family_books_resolves`
+/// below for how that count is itself re-derived).
 pub(crate) fn covered_classes() -> Vec<GenericChassisMeta> {
     generic_class_records()
         .iter()
@@ -120,14 +132,45 @@ fn generic_class_records() -> &'static BTreeMap<String, ClassChassis> {
     static TABLE: OnceLock<BTreeMap<String, ClassChassis>> = OnceLock::new();
     TABLE.get_or_init(|| {
         let mut out: BTreeMap<String, ClassChassis> = BTreeMap::new();
-        for ((_, slug), chassis) in class_chassis_sheet_rules::records(&CLASS_FAMILY_BOOKS) {
-            if !chassis.is_conventional() {
-                continue;
+        // One book at a time, in `CLASS_FAMILY_BOOKS` order: `records` keys its
+        // map by `(book, slug)`, so reading every book in one call would visit
+        // books alphabetically and let an appended book (`advanced_players_guide`
+        // sorts first) win a slug an earlier-listed book already gave.
+        for book in CLASS_FAMILY_BOOKS {
+            for ((_, slug), chassis) in class_chassis_sheet_rules::records(&[book]) {
+                if !chassis.is_conventional() {
+                    continue;
+                }
+                out.entry(slug).or_insert(chassis);
             }
-            out.entry(slug).or_insert(chassis);
         }
         out
     })
+}
+
+/// `true` when `class_id_str` (a `"class:<slug>"` id) is one of
+/// this module's classes AND its converted record's principal rule is tagged
+/// `Prestige` (the record's own `TYPE:` head). A slug this population does not
+/// carry answers `false`: this reads the record, it never guesses. SD-36 Epic
+/// F2a: the shared chassis gate's generic class-family arm
+/// (`class_shared_core::is_supported_generic_class_family_single_class`)
+/// excludes exactly these, since a prestige class cannot be a character's
+/// only class.
+pub(crate) fn is_prestige(class_id_str: &str) -> bool {
+    let Some(bare) = class_id_str.strip_prefix("class:") else {
+        return false;
+    };
+    generic_class_records()
+        .get(bare)
+        .is_some_and(|record| record.tags.iter().any(|t| t == "Prestige"))
+}
+
+/// The converted chassis record behind `class_id_str` (a `"class:<slug>"`
+/// id), book precedence applied -- or `None` for a bare slug or a class this
+/// population does not carry. SD-36 F3b: the multiclass fold reads a class's
+/// save shapes, exact save values and hit die off this record.
+pub(crate) fn record(class_id_str: &str) -> Option<&'static ClassChassis> {
+    generic_class_records().get(class_id_str.strip_prefix("class:")?)
 }
 
 /// Resolves `class_id_str` (a `"class:<slug>"` string) at `level` into a
@@ -138,7 +181,12 @@ fn generic_class_records() -> &'static BTreeMap<String, ClassChassis> {
 /// falls through to the same `class_chassis.unsupported` diagnostic every
 /// other unrecognized class id already produces).
 pub(crate) fn resolve(class_id_str: &str, level: u8) -> Option<GenericChassisRow> {
-    let bare = class_id_str.strip_prefix("class:").unwrap_or(class_id_str);
+    // Only a real `"class:<slug>"` id. A bare slug (`"wizard"`) is not a class
+    // id any other dispatch arm accepts either (`sd20_contract_pilot_receipt`
+    // relies on bare `"wizard"` being unsupported); before SD-36 Epic F2a no
+    // bare slug collided with this population, but `core_rulebook`'s base
+    // classes would.
+    let bare = class_id_str.strip_prefix("class:")?;
     let record = generic_class_records().get(bare)?;
     let row = record.row_at(level)?;
     Some(GenericChassisRow {
@@ -155,7 +203,7 @@ mod tests {
     use super::*;
 
     #[test]
-    fn all_seventy_eight_conventional_classes_resolve() {
+    fn every_conventional_class_in_class_family_books_resolves() {
         // SD-35 `AT-35-E6-001`: 62, not the 61 this module counted while it
         // read `data/corpus/<book>/class/`. Two independent movements, both
         // re-derivable and neither a relabel:
@@ -189,9 +237,31 @@ mod tests {
         // counts the previously-masked, now-resolving records (20 corpus-wide;
         // the subset inside `CLASS_FAMILY_BOOKS`, deduplicated by slug against
         // book precedence order, is this test's +16).
+        //
+        // SD-36 Epic F2a: 78 -> 122, `core_rulebook` and `advanced_players_guide`
+        // appended LAST. +44, zero shadowed (the shadowed-slug pin below lists
+        // every collision; neither appended book has one):
+        //   core_rulebook          +27 = 10 base PC (every CRB base class but
+        //                                Monk, whose converted record carries no
+        //                                `BaseAttack` row) + 5 NPC + 2 `Ex-*` +
+        //                                10 prestige
+        //   advanced_players_guide +17 = 6 base (the `ApgClassId` six) +
+        //                                Antipaladin + 2 `Ex-*` (Ex-Antipaladin,
+        //                                Ex-Inquisitor) + 8 prestige (Eidolon is
+        //                                `Monster`-tagged, not conventional)
+        // The spec's ceiling (`epic-f-class-completion.md` §4, F2.1) was 96 =
+        // 78 + the 18 CRB/APG prestige classes, "less any slug a bespoke arm or
+        // earlier book already owns". The other 26 are base classes: 24 of them
+        // a bespoke arm already owns and dispatches FIRST (CRB table 10, APG
+        // table 6, `untabled_base_class_chassis` Antipaladin, `crb_untabled_
+        // class_chassis` 5 NPC + Ex-Barbarian + Ex-Paladin), so this module's
+        // `resolve` -- the LAST arm of `compute_class_chassis` -- never answers
+        // for them; the remaining 2 (Ex-Antipaladin, Ex-Inquisitor) no other
+        // registry claims. 78 + 18 + 24 + 2 = 122. Re-derive:
+        // `generic_class_records().len()`.
         assert_eq!(
             generic_class_records().len(),
-            78,
+            122,
             "the converted chassis population over CLASS_FAMILY_BOOKS"
         );
         let mut resolved = 0usize;
@@ -200,7 +270,7 @@ mod tests {
             assert!(resolve(&class_id, 1).is_some(), "{bare} must resolve a real chassis at level 1");
             resolved += 1;
         }
-        assert_eq!(resolved, 78, "every conventional class must resolve a real chassis");
+        assert_eq!(resolved, 122, "every conventional class must resolve a real chassis");
     }
 
     #[test]
@@ -227,7 +297,7 @@ mod tests {
     #[test]
     fn a_class_whose_converted_record_is_words_is_not_a_chassis() {
         // Evangelist now DOES resolve (a real, correct chassis CONV-05 un-hid,
-        // see `all_seventy_eight_conventional_classes_resolve` above), so it
+        // see `every_conventional_class_in_class_family_books_resolves` above), so it
         // no longer exercises this guard. `occult_adventures:class:psychic_
         // detective` genuinely carries no `BaseAttack`/`BaseSave` row at all
         // (verified: `data/sheet_rules/occult_adventures/class/psychic_
@@ -275,8 +345,123 @@ mod tests {
         assert!(resolve("class:ulfen_guard", 10).is_some());
     }
 
+    /// SD-36 Epic F2a (`epic-f-class-completion.md` §4): Core Rulebook and
+    /// Advanced Player's Guide are appended LAST, and a slug two books both
+    /// state keeps the FIRST book in `CLASS_FAMILY_BOOKS` order. This pin
+    /// names every shadowed slug, by name, so an appended book can never
+    /// silently lose (or silently take over) a class an earlier book gave.
+    #[test]
+    fn class_family_books_end_with_crb_then_apg_and_every_shadowed_slug_is_named() {
+        let n = CLASS_FAMILY_BOOKS.len();
+        assert_eq!(
+            &CLASS_FAMILY_BOOKS[n - 2..],
+            &["core_rulebook", "advanced_players_guide"],
+            "CRB then APG must be the last two books (first-in-list wins)"
+        );
+        let mut winner: BTreeMap<String, String> = BTreeMap::new();
+        let mut shadowed: Vec<(String, String, String)> = Vec::new();
+        for book in CLASS_FAMILY_BOOKS {
+            for ((_, slug), chassis) in class_chassis_sheet_rules::records(&[book]) {
+                if !chassis.is_conventional() {
+                    continue;
+                }
+                match winner.get(&slug) {
+                    Some(first) => shadowed.push((slug, first.clone(), book.to_string())),
+                    None => {
+                        winner.insert(slug, book.to_string());
+                    }
+                }
+            }
+        }
+        let expected: Vec<(String, String, String)> = [
+            ("cyphermage", "adventurers_guide", "inner_sea_magic"),
+            ("hellknight", "adventurers_guide", "inner_sea_world_guide"),
+            ("red_mantis_assassin", "adventurers_guide", "inner_sea_world_guide"),
+        ]
+        .iter()
+        .map(|(s, a, b)| (s.to_string(), a.to_string(), b.to_string()))
+        .collect();
+        let mut shadowed_sorted = shadowed.clone();
+        shadowed_sorted.sort();
+        assert_eq!(
+            shadowed_sorted, expected,
+            "(slug, winning book, shadowed book): every slug an earlier book already gave; \
+             core_rulebook and advanced_players_guide shadow none"
+        );
+        // The winning book is the one `generic_class_records` actually kept.
+        for (slug, book) in &winner {
+            assert_eq!(&generic_class_records()[slug].book, book, "{slug}: first-in-list must win");
+        }
+    }
+
+    #[test]
+    fn is_prestige_reads_the_record_s_own_prestige_tag() {
+        // CRB/APG prestige classes, reachable now that both books are appended.
+        assert!(is_prestige("class:arcane_archer"));
+        assert!(is_prestige("class:loremaster"));
+        // A bare slug is not a class id.
+        assert!(!is_prestige("loremaster"));
+        assert!(is_prestige("class:battle_herald"));
+        // A prestige class from the original 14 books.
+        assert!(is_prestige("class:hellknight"));
+        // Base classes -- the tag is `Base`, never `Prestige`.
+        assert!(!is_prestige("class:ninja"));
+        assert!(!is_prestige("class:kineticist"));
+        assert!(!is_prestige("class:fighter"));
+        // Not in the population at all: not a prestige class this module knows.
+        assert!(!is_prestige("class:not_a_real_class"));
+    }
+
+    #[test]
+    fn crb_and_apg_prestige_classes_resolve_a_real_chassis() {
+        // Hand-worked from the PF1 Core Rulebook's own prestige tables (oracle
+        // first): prestige classes use the prestige save progressions, good
+        // `(level+1)/2` and poor `(level+1)/3`, NOT the base-class `level/2+2`.
+        // Arcane Archer: full BAB, good Fort and Ref, poor Will -- the book's
+        // level-10 row prints +10 / +5 / +5 / +3.
+        let row = resolve("class:arcane_archer", 10).expect("arcane archer resolves at 10");
+        assert_eq!(
+            (row.base_attack_bonus, row.fort_save, row.ref_save, row.will_save),
+            (10, 5, 5, 3)
+        );
+        // Loremaster: half BAB, good Will only -- level 10 prints +5 / +3 / +3 / +5.
+        let row = resolve("class:loremaster", 10).expect("loremaster resolves at 10");
+        assert_eq!(
+            (row.base_attack_bonus, row.fort_save, row.ref_save, row.will_save),
+            (5, 3, 3, 5)
+        );
+        // A prestige class never runs past its own ceiling of 10.
+        assert!(resolve("class:loremaster", 11).is_none());
+    }
+
+    /// The two classes the CRB/APG append brings in that no other registry
+    /// claims (`class_census`'s `GenericOnly`): APG's `Ex-*` variant classes.
+    /// Hand-worked from PF1 (oracle first): an ex-antipaladin keeps the
+    /// Antipaladin's table (full BAB, good Fortitude and Will), an
+    /// ex-inquisitor the Inquisitor's (3/4 BAB, good Fortitude and Will).
+    #[test]
+    fn the_two_apg_ex_classes_resolve_their_parent_class_chassis() {
+        // Antipaladin level 10: +10 / +7 / +3 / +7.
+        let row = resolve("class:ex_antipaladin", 10).expect("ex-antipaladin resolves at 10");
+        assert_eq!(
+            (row.base_attack_bonus, row.fort_save, row.ref_save, row.will_save),
+            (10, 7, 3, 7)
+        );
+        // Inquisitor level 8: +6 / +6 / +2 / +6.
+        let row = resolve("class:ex_inquisitor", 8).expect("ex-inquisitor resolves at 8");
+        assert_eq!(
+            (row.base_attack_bonus, row.fort_save, row.ref_save, row.will_save),
+            (6, 6, 2, 6)
+        );
+        assert!(!is_prestige("class:ex_antipaladin"));
+        assert!(!is_prestige("class:ex_inquisitor"));
+    }
+
     #[test]
     fn an_unrecognized_class_id_refuses() {
         assert!(resolve("class:not_a_real_class", 1).is_none());
+        // A bare slug is not a class id, even for a class this module carries.
+        assert!(resolve("class:wizard", 1).is_some());
+        assert!(resolve("wizard", 1).is_none());
     }
 }

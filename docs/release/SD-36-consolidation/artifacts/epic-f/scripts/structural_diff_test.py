@@ -720,6 +720,127 @@ class StructuralDiffGateTest(unittest.TestCase):
         self.assertEqual(code, 1, out)
         self.assertIn("unpinned_fixture: offers", out)
 
+    def test_f3b2b_a_pinned_undeclared_note_passes_only_its_exact_shape(self):
+        rid = "core_rulebook:class_feature:loremaster_secret_lore"
+        rel = "core_rulebook/class_feature/loremaster_secret_lore.json"
+        self.assertEqual(structural_diff.F3B2B_PINS.get((rid, "provenance")), ("f3b2b_undeclared_note", ["SecretLore"]))
+        prov = {"book": "core_rulebook", "kind": "class_feature", "closure_rows": ["x:1"], "oracle_pin": "p", "converter_version": "v"}
+        base = base_rules()
+        base[rel] = [{"id": rid, "label": "Secret Lore", "value": "Text", "provenance": prov, "granted_by": [], "grants": []}]
+        fresh = base_rules()
+        fresh[rel] = [{"id": rid, "label": "Secret Lore", "value": "Text", "provenance": {**prov, "undeclared_in_pinned_tree": ["SecretLore"]}, "granted_by": [], "grants": []}]
+        code, out = self.run_diff(base, fresh)
+        self.assertEqual(code, 0, out)
+        for planted in (
+            {**prov, "undeclared_in_pinned_tree": ["SecretLore", "Other"]},
+            {**prov, "oracle_pin": "moved", "undeclared_in_pinned_tree": ["SecretLore"]},
+            {**prov, "undeclared_in_pinned_tree": []},
+        ):
+            fresh[rel][0]["provenance"] = planted
+            code, out = self.run_diff(base, fresh)
+            self.assertEqual(code, 1, out)
+            self.assertIn("loremaster_secret_lore: provenance", out)
+
+    def test_f3c3_pins_gate_a_dropped_or_unpinned_subclass_rule(self):
+        """SD-36 Epic F3c3: the rules the SUBCLASS conversion adds are pinned by content. With the
+        owning class principal present as a converted record (it states an oracle pin), a pinned
+        subclass rule that is missing gates, and so does a subclass rule nobody pinned."""
+        owner = structural_diff.F3C3["owner"]
+        self.assertEqual(owner, "ultimate_psionics:class:psion")
+        prov = {"book": "ultimate_psionics", "kind": "class", "closure_rows": ["x:1"], "oracle_pin": "p", "converter_version": "v"}
+        principal = {"id": owner, "label": "Psion", "value": "Text", "granted_by": [], "grants": [], "provenance": prov}
+        base = base_rules()
+        fresh = base_rules()
+        base["ultimate_psionics/class/psion.json"] = [dict(principal)]
+        fresh["ultimate_psionics/class/psion.json"] = [dict(principal)]
+        code, out = self.run_diff(base, fresh)
+        self.assertEqual(code, 1, out)
+        self.assertIn("F3c3 pinned f3c3_subclass_option rule missing: ultimate_psionics:subclass:psion_egoist", out)
+        fresh["x/subclass/y.json"] = [{"id": "x:subclass:y", "label": "Y", "value": "Text", "granted_by": [], "grants": []}]
+        code, out = self.run_diff(base, fresh)
+        self.assertEqual(code, 1, out)
+        self.assertIn("F3c3 unpinned f3c3_subclass_option rule x:subclass:y", out)
+
+    def test_f3c4b_pins_gate_a_dropped_or_unpinned_pool_option_and_an_unreplaced_edge(self):
+        """SD-36 Epic F3c4b: the pool_option rules the pick-row conversion adds are pinned by
+        content; with the owning chooser present as a converted record, a pinned option that is
+        missing gates, an option nobody pinned gates, a MissingRule -> Rule gate delta off the pin
+        list gates, and a removed fallback edge whose pool_option replacement is absent gates."""
+        owner = structural_diff.F3C4B["owner"]
+        self.assertEqual(owner, "core_rulebook:class_feature:sorcerer_standard_bloodline_selection")
+        prov = {"book": "core_rulebook", "kind": "class_feature", "closure_rows": ["x:1"], "oracle_pin": "p", "converter_version": "v"}
+        chooser = {"id": owner, "label": "Standard Bloodline", "value": "Text", "granted_by": [], "grants": [], "provenance": prov}
+        base = base_rules()
+        fresh = base_rules()
+        base["core_rulebook/class_feature/sorcerer_standard_bloodline_selection.json"] = [dict(chooser)]
+        fresh["core_rulebook/class_feature/sorcerer_standard_bloodline_selection.json"] = [dict(chooser)]
+        code, out = self.run_diff(base, fresh)
+        self.assertEqual(code, 1, out)
+        self.assertIn("F3c4b pinned f3c4b_pool_option rule missing: ", out)
+        # An unpinned pool option (checked on its own, owner absent so the pin set is inactive).
+        base = base_rules()
+        fresh = base_rules()
+        fresh["x/pool_option/y.json"] = [{"id": "x:pool_option:y", "label": "Y", "value": "Text", "granted_by": [], "grants": []}]
+        code, out = self.run_diff(base, fresh)
+        self.assertEqual(code, 1, out)
+        self.assertIn("F3c4b unpinned f3c4b_pool_option rule x:pool_option:y", out)
+        # A MissingRule -> Rule gate delta on a record off the pin list.
+        base = base_rules()
+        fresh = base_rules()
+        rel = "core_rulebook/class_feature/arcane_bloodline_school_power.json"
+        base[rel][0]["applies"] = {"Holds": {"what": {"MissingRule": {"pool": "p", "name": "N"}}, "count": 1}}
+        fresh[rel][0]["applies"] = {"Holds": {"what": {"Rule": "a:b:c"}, "count": 1}}
+        code, out = self.run_diff(base, fresh)
+        self.assertEqual(code, 1, out)
+        self.assertIn("arcane_bloodline_school_power: applies", out)
+        # A pinned replaced edge whose pool_option replacement is absent.
+        rid, key = structural_diff.F3C4B["replaced_edges"][0]
+        base = base_rules()
+        fresh = base_rules()
+        pa = {"id": rid, "label": "Power Attack", "value": "Text", "granted_by": [json.loads(key)], "grants": []}
+        base["core_rulebook/feat/power_attack.json"] = [dict(pa)]
+        fresh["core_rulebook/feat/power_attack.json"] = [{**pa, "granted_by": []}]
+        code, out = self.run_diff(base, fresh)
+        self.assertEqual(code, 1, out)
+        self.assertIn("removed granted_by edges: 1", out)
+        fresh["core_rulebook/pool_option/feat_power_attack_x.json"] = [{"id": "core_rulebook:pool_option:feat_power_attack_x", "label": "Power Attack (X)", "value": "Text", "granted_by": [json.loads(key)], "grants": []}]
+        code, out = self.run_diff(base, fresh)
+        self.assertIn("removed granted_by edges: 0", out)
+
+    def test_f3c5_pins_gate_a_dropped_natural_attack_fact_and_an_unpinned_line_sibling(self):
+        """SD-36 Epic F3c5: with the owner (Dragon Disciple's class principal) present as a
+        converted record, a pinned NaturalAttack grant that is missing gates, a pinned
+        closure_complete attestation that is withdrawn gates, and a #weapon sibling nobody pinned
+        on a record that carries a NaturalAttack fact gates."""
+        owner = structural_diff.F3C5["owner"]
+        self.assertEqual(owner, "core_rulebook:class:dragon_disciple")
+        prov = {"book": "core_rulebook", "kind": "class", "closure_rows": ["x:1"], "oracle_pin": "p", "converter_version": "v"}
+        dd = {"id": owner, "label": "Dragon Disciple", "value": "Text", "granted_by": [], "grants": [], "provenance": prov}
+        base = base_rules()
+        fresh = base_rules()
+        base["core_rulebook/class/dragon_disciple.json"] = [dict(dd)]
+        fresh["core_rulebook/class/dragon_disciple.json"] = [dict(dd)]
+        code, out = self.run_diff(base, fresh)
+        self.assertEqual(code, 1, out)
+        self.assertIn("F3c5 pinned NaturalAttack grant missing on ", out)
+        self.assertIn("F3c5 pinned f3c5_line_sibling rule missing: ", out)
+        # An unpinned #weapon sibling on a record that carries a NaturalAttack fact (owner absent,
+        # so the pin set is inactive; the unpinned-rule check still runs).
+        base = base_rules()
+        fresh = base_rules()
+        fact = {"FactGrant": {"NaturalAttack": "Claw"}}
+        base["x/class_feature/claws.json"] = [{"id": "x:class_feature:claws", "label": "Claws", "value": "Text", "granted_by": [], "grants": []}]
+        fresh["x/class_feature/claws.json"] = [
+            {"id": "x:class_feature:claws", "label": "Claws", "value": "Text", "granted_by": [], "grants": [fact]},
+            {"id": "x:class_feature:claws#weapon0", "label": "Claw damage", "value": "Text", "granted_by": [], "grants": []},
+        ]
+        code, out = self.run_diff(base, fresh)
+        self.assertEqual(code, 1, out)
+        self.assertIn("F3c5 unpinned f3c5_line_sibling rule x:class_feature:claws#weapon0", out)
+        # The grant classifier reads only NaturalAttack facts.
+        self.assertTrue(structural_diff._is_natural_attack_grant({"GatedFactGrant": {"fact": {"NaturalAttack": "Bite"}, "when": "Always"}}))
+        self.assertFalse(structural_diff._is_natural_attack_grant({"FactGrant": {"Proficiency": {"Weapon": "Bite"}}}))
+
     def test_report_only_flag_keeps_exit_zero(self):
         base = base_rules()
         fresh = base_rules()

@@ -310,35 +310,99 @@ records or pushes a named claim-blocking diagnostic and stops. This gate-then-ex
 at every level band; the functions' own doc comments record which named sub-features are grounded
 versus still claim-blocked as of the current level ceiling for that class.
 
-**Multiclass base-chassis dispatch (SD-24 Epic 5; widened v0.6 alpha swarm task 4).**
-`compute_multiclass_base_chassis` (`class_occult_and_psionic.rs`) fires whenever
-`input.chosen.class_levels.len() >= 2`; `is_supported_multiclass_mix` gates it to combinations where
-every class level is individually supported. **This is no longer Fighter+Wizard-only**: the gate's
-own doc comment records the widening — `multiclass_class_level_supported` bottoms out in
-`table_class_id` (`class_shared_core.rs`), which today recognizes all **11 Core Rulebook classes**
-(Fighter, Wizard, Rogue, Ranger, Paladin, Sorcerer, Cleric, Druid, Barbarian, Bard, Monk — Monk was
-the last one added, closing a gap where its chassis table existed but no string mapping reached it).
-So: any length-2+ mix of these 11 classes, at any per-class level within each class's own 20-level
-ceiling, gets real base-chassis (BAB/save) stacking. Base attack bonus and saves stack per PF1's
-canonical additive multiclass rule: each class's own fractional BAB/save progression is summed
-*before* flooring once for the total, reading the fractional classification from `class_tables.rs`'s
-own `good_saves_for(ClassId) -> Option<(bool, bool, bool)>` (`multiclass_good_saves`) rather than a
-second, independently-maintained copy. `fighter_level_in_mix`/`wizard_level_in_mix`-shaped helpers
-resolve each class's own sub-level from the mix so that class's per-level named-feature/spell-baseline
-explainers (e.g. `explain_wizard_level1_prepared_spell_baseline`) keep firing once a second class
-joins, instead of silently going quiet the moment the build stops being single-class.
-`tests/sd21_multiclass_fighter_wizard_chassis_computes.rs` and the `sd24_multiclass_*` deterministic
-suite prove the mechanism concretely for Fighter+Wizard (originally to total level 10; the gate itself
-carries no total-level cap beyond each class's own 20-level ceiling) — no test file exercises every
-other pair of the 11 individually, so treat "the gate accepts them" (proven directly from
-`table_class_id`'s own source, not a test) and "a given untested pair reaches `Computed` end-to-end"
-as two different claims. This grounds the base-chassis/explanation layer only — it does not by itself
-get any multiclass build to `HeadlessReceiptStatus::Computed` end-to-end (spellbook and other
-per-domain diagnostics can still block). A multiclass mix containing an APG/ACG/Unchained/Ultimate
-Combat/exotic-untabled class is a real, separate limitation: `table_class_id` never registers those
-classes, so `compute_class_chassis`'s own APG/ACG/Unchained/UC dispatch arms each carry a comment
-stating that class-containing multiclass mix "cannot reach this path at all" — see
-`class_occult_and_psionic.rs`'s dispatch arms for each family's own comment.
+**Multiclass base-chassis dispatch and fold (SD-24 Epic 5; widened v0.6 alpha swarm task 4; generalised
+SD-36 Epic F3b).** `compute_multiclass_base_chassis` (`class_occult_and_psionic.rs`) fires whenever
+`input.chosen.class_levels.len() >= 2`. `is_supported_multiclass_mix` admits the mix when every member
+passes `multiclass_fold::multiclass_member` and at least one member is not a prestige class:
+
+- A non-prestige member's ISOLATED single-class input (the same input with only that class level) passes
+  `has_supported_class_chassis`; a prestige member's converted record has a chassis row at that level.
+- Each of the member's three saves has a source the fold can sum: the CRB class table (`good_saves_for`,
+  the 11 tabled classes) or else `ClassChassis::save_shape` is `Good` or `Poor`. `Degraded`,
+  `Unrecognized` or no record is a named claim-blocking diagnostic
+  (`multiclass.save_shape.{degraded,unrecognized,unknown}`), never a silent poor save. A class that cannot
+  join at all is `multiclass.class_unsupported`; a prestige-only mix states
+  `prestige_class.requires_base_class_levels`.
+
+The fold is one generic rule, no class named. BAB is the sum of each member's own BAB (isolated chassis, or
+the prestige row). Saves sum each member's EXACT (`Rat`) save value -- `level/2 + 2` / `level/3` for a
+table class, the class's own converted `Expr` otherwise (a prestige class's `(level+1)/2` / `(level+1)/3`
+table form) -- and floor once. `multiclass_fold::explain_multiclass_fold` then adds the character-level
+totals: `multiclass.hit_points` (maximized die for the first-listed class's first level, `die/2 + 1`
+after, + Con per level) and `multiclass.skill_points` (each class's skill ranks per level + Int, at least 1,
+times its levels; the ranks are the converted record's `Skill ranks per level` row, from `STARTSKILLPTS`
+since F3b2, read off the class's chassis record, else its principal, else -- a class-selection class -- the
+base class it is taken on). A class alone prints the same term as `class_chassis.skill_points` (F3b3). A
+class whose record states no ranks is `class_chassis.skill_points.unknown`, named, non-blocking, and no
+total prints (0 of 63 census non-prestige classes since F3b3). Each member's
+own lines (`class_feature.*`, `class_spell.*`, `class_chassis.<class>.*`) come verbatim from its isolated
+single-class run, re-scoped `multiclass.<class>.<original id>`; its blocking class lines carry over the
+same way, so a class that cannot compute alone does not compute in a mix. Prestige entry requirements
+print (`multiclass.prestige_entry_gate.{met,unmet}`), never block. Class skills and weapon proficiency
+were already unions over `class_levels`; F3b made the weapon union decidable by any one granting class
+(a class with no answer no longer turns a Fighter's longsword into Unknown).
+
+Class skills for the selected Climb / Intimidate / Swim lines (SD-36 F3b3) come from each class's
+CONVERTED record: `pilot_compute::class_skill_sheet_rules` walks the class principal's held set (the
+proficiency reader's walk) and collects `Fact::ClassSkill` / `ClassSkillGroup`. Union over classes; a class
+the reader cannot answer uses its cited oracle row only if it has one (`UNREAD_RECORD_SELECTED_CLASS_SKILLS`,
+the 9 ACG classes whose `ABILITY:Class|AUTOMATIC|<Class>` edge is unresolved; a test retires each row when
+the converter closes it); otherwise the lines are refused by name
+(`skill.selected_modifier.class_skill_unknown`; no census class since SD-36 F3c3). A class whose
+class skills sit on a sub-class line (Psion: its disciplines' `SUBCLASS:` lines carry the base class
+skills, `up_classes.lst:221-256`) answers through the converted sub-class choice (SD-36 F3c3): the
+converter writes each class's `SUBCLASS:` lines as one choice sibling on the class record
+(`<class id>#subclass`, `offers: Rules { pool: subclass }`) whose options are `subclass` rules
+carrying the line's `CSKILL` facts and `SUBCLASSLEVEL` grant edges (`sheet_rule/subclass.rs`); the
+canonical pick (the first line in oracle order) is seeded through `class_seeds` and walked like any
+other member pick. A class whose class skills ARE a choice
+(Expert, CRB p.450: any ten) answers from its Path-A canonical picks, seeded through `class_seeds`
+(SD-36 F3c2): a seed under a converted chooser that offers `Skills` and grants `ClassSkillChosen(<own id>)`
+makes the picked skill a class skill. Before F3b3 a hand-kept 13-class list decided it, and 35 of 52 classes (79 of 156 lines) printed a record-granted class
+skill without its +3 (Barbarian Climb/Swim among them).
+
+An ability-category pick (SD-36 F3c4b): a record carrying `CHOOSE:ABILITYSELECTION|<C>|<criteria>`
+and `ABILITY:<C>|<nature>|%LIST` applies the picked row, so every oracle row of category `<C>` its
+criteria select that no inventory unit stands for (Sorcerer's `CATEGORY:Sorcerer Bloodline` pick rows,
+`cr_abilities_class.lst:2435`) converts as a `pool_option` rule granted by `Granter::Choice(<chooser>)`
+(`sheet_rule/pool_option.rs`, 274 options over 12 pools). Its `BONUS:VAR` contributions and `ABILITY:`
+edges are what switch a bloodline's lines on: a Draconic pick holds the record, its class skill, arcana,
+bonus spells and powers at the levels CRB p.75 states (`tests/sd36_bloodline_pick_option.rs`).
+
+A natural-attack helper (SD-36 F3c5): a `CATEGORY:Internal` row whose `TYPE:` carries `NaturalAttack`
+and that no inventory unit stands for (`Bite`, `ce_abilities_race.lst:249`; `Internal` is
+`VISIBLE:NO EDITABLE:NO`, `system/gameModes/Pathfinder/miscinfo.lst:303`) converts, when its whole
+object (its row, its `.MOD` rows, the size helpers it grants and their templates) carries nothing but
+one natural attack's bookkeeping, as `Fact::NaturalAttack(<attack>)` on the rule whose `ABILITY:`
+grants it (`sheet_rule/natural_attack.rs`; 770 helper rows, 681 fact grants on 546 rules). No rule is
+added. The fact is never a proficiency, so Dragon Disciple's `Internal|Bite` resolves, its closure is
+attested and the proficiency reader answers Known(empty). A helper whose object carries anything else
+is named (`_defects/natural-attack-helper-carries-more.json`; 0 rows at F3c5) and its references stay
+unresolved. A gate that names a helper (`PREABILITY:1,CATEGORY=Internal,Bite`) stays a `MissingRule`
+term: a fact is not holdable (6 rows).
+
+A character's legacy Path-A pick (SD-36 F3c4): `choice:<pool> -> <ns>:<member>` is linked to the
+converted option it names by one rule, `sheet_rule::link_path_a_picks` -- the record whose slug is
+`<pool>_<member>` and which carries the pool as its own tag, and the option granting it that a choice
+the character is offered (`chooser_offered`) grants. `CharacterFacts::with_linked_picks` records the
+link for the sheet (`with_sheet_rules`), the feat-prerequisite facts and the desktop's feat options;
+`sheet_rule_package::linked_picks` gives the pilot compute the same links, each marked with whether the
+held set holds the option. The class-skill union reads the character's picks
+(`class_skill_sheet_rules::class_skill_view_for`: an Aquatic sorcerer's Swim carries its +3). The
+Sorcerer module yields to the record for any bloodline it does not model when the option is held
+(`class_feature.sorcerer.bloodline.converted_record`), and names a linked option the held set does not
+hold (`class_feature.sorcerer.bloodline.converted_option_not_held`: Imperious and Kobold, FS-19). The
+SD-32 generic pool-group pass (`push_generic_pool_group_selection_magnitude`) yields for a linked, held
+selection: it had printed member values with no level gate (Draconic 5: Breath Weapon DC 14, a 9th-level
+power), and the held set prints each member line from the record at the level it states. Measured:
+30 of 32 bloodlines Computed single-class at every level
+(`artifacts/epic-f/stage-f2-f3/f3c4-bloodline-sweep-after.md`).
+
+Proved by `tests/sd36_multiclass_any_class.rs` (four mixes against hand-worked PF1 values,
+`docs/release/SD-36-consolidation/artifacts/epic-f/stage-f2-f3/f3b-hand-worked.md`), and for
+Fighter+Wizard by `tests/sd21_multiclass_fighter_wizard_chassis_computes.rs` and the `sd24_multiclass_*`
+suite. The fractional save rule (+2 per good-save class, floored once) differs from CRB p.30's core rule
+(sum of per-class rounded saves) on some mixes; the hand-worked sheet names where.
 
 **Core output types** (`PilotBaseChassisComputation`, `ComputationExplanation`, `ComputationDiagnostic`,
 `HeadlessReceiptStatus` and `PilotHeadlessReceipt` are all defined in `class_shared_core.rs` beside
@@ -495,7 +559,7 @@ gave all 27 "untabled" base classes (20 exotic + 7 CRB NPC/Ex) a real BAB/save c
 `generic_class_chassis::resolve` — dispatched from `compute_class_chassis`
 (`class_occult_and_psionic.rs:997`) — independently gives a further 78 conventional PC classes across
 its 14 `CLASS_FAMILY_BOOKS` a real chassis too, test-asserted by
-`generic_class_records().len() == 78` (`generic_class_chassis.rs`, `all_seventy_eight_conventional_classes_resolve`,
+`generic_class_records().len() == 78` (`generic_class_chassis.rs`, then named `all_seventy_eight_conventional_classes_resolve`, now `every_conventional_class_in_class_family_books_resolves` at 122 since SD-36 Epic F2a appended CRB/APG,
 7/7 passing). **This "31 + 3 + 27 + 78 = 139" arithmetic is wave 27's own count, historical, and is
 now known to be wrong as a distinct-class total** — it double-counts classes that appear in more than
 one registry (19 of the 78 also appear in the untabled-exotic registry, 3 more in the Ultimate Combat

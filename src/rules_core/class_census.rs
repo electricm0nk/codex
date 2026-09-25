@@ -40,22 +40,19 @@
 //! or Prestige, never two -- `no_class_id_sits_in_two_families` (below)
 //! proves that holds for the current corpus rather than assuming it.
 //!
-//! `generic_class_chassis`'s own 78-class population (`covered_classes()`,
-//! added by this batch) is a **ninth** source, folded in last. It never
-//! introduces a new family: every id it names is already claimed by one of
-//! the eight above (`docs/architecture/status.md`'s own evidence: 56 of its
-//! 78 are Prestige rows, the other 22 are the Ultimate Combat classes and
-//! 19 of the 20 untabled-exotic classes, each also reachable through
-//! `generic_class_chassis`'s own 14-book population). Folding it in only
-//! widens an existing entry's [`ClassCensusEntry::registries`] and
-//! [`ClassCensusEntry::books`]. If a future corpus change makes it name an
-//! id none of the eight claims, that id is recorded under
-//! [`ClassFamily::GenericOnly`] rather than silently guessed into one of
-//! the other eight -- `no_generic_only_stragglers_today` pins that this
-//! is currently empty, so a regression is caught by name.
+//! `generic_class_chassis`'s own population (`covered_classes()`, 122
+//! classes since SD-36 Epic F2a appended `core_rulebook` and
+//! `advanced_players_guide` to its books; 78 before) is a **ninth** source,
+//! folded in last. For 120 of its 122 ids it only widens an existing
+//! entry's [`ClassCensusEntry::registries`] and [`ClassCensusEntry::books`]:
+//! the id is already claimed by one of the eight above. An id none of the
+//! eight claims is recorded under [`ClassFamily::GenericOnly`] rather than
+//! silently guessed into one of the other eight --
+//! `generic_only_ids_are_exactly_the_two_apg_ex_classes` pins, by name,
+//! the two it holds since F2a (APG's Ex-Antipaladin and Ex-Inquisitor), so
+//! any further straggler is caught by name.
 
 use std::collections::BTreeMap;
-#[cfg(test)]
 use std::collections::BTreeSet;
 #[cfg(test)]
 use std::process::Command;
@@ -78,7 +75,8 @@ use crate::rules_core::rules_tables::apg::ApgClassId;
 use crate::rules_core::rules_tables::crb::class_tables::ClassId;
 use crate::rules_core::rules_tables::pathfinder_unchained::class_chassis::PuClassId;
 use crate::rules_core::rules_tables::ultimate_combat::UcClassId;
-use crate::rules_core::sheet_rule::{Applies, Cmp, Expr, SpellKind};
+use crate::rules_core::character_input::SelectedChoice;
+use crate::rules_core::sheet_rule::{Applies, Choice, Cmp, Expr, Granter, Holdable, OptionSet, SpellKind};
 use crate::support::paths::repo_root;
 
 /// PF1's own character-level cap -- the ceiling every fully tabled base
@@ -653,7 +651,7 @@ pub fn sheet_dump_with_rules_text(
     match crate::rules_core::sheet_rule_package::package() {
         Ok(package) => {
             let seed = HeldSeed::from_character(&input, &receipt.computation);
-            let facts = CharacterFacts::from_character(&input, &receipt.computation);
+            let facts = CharacterFacts::from_character(&input, &receipt.computation).with_linked_picks(package, &seed);
             let held = held_set(package, &seed, &facts);
             let mut held_ids: Vec<&str> =
                 held.rules.keys().filter(|id| !held.removed.contains(*id)).map(String::as_str).collect();
@@ -849,8 +847,8 @@ pub fn duplicate_scan(
         // (no converted gate at all, or a gate that does not resolve to a known carrier), so a
         // class this loop cannot build a carrier for is pushed to `prestige_skipped` with that
         // reason, never silently dropped from the denominator.
-        let carriers = match carrier_assignment(e) {
-            Ok(carriers) => carriers,
+        let (carriers, picks) = match carrier_choice(e) {
+            Ok(choice) => (choice.carriers, choice.picks),
             Err(reason) => {
                 prestige_skipped.push(reason);
                 continue;
@@ -863,7 +861,8 @@ pub fn duplicate_scan(
         let gate = prestige_applies_gate(&e.books, &slug)
             .expect("carrier_assignment already loaded this class's gate successfully above");
         let ge = evaluate_carrier(carrier, &gate, e.max_level);
-        let input = input_for_mix(fixture, &[(carrier.slug(), ge.carrier_level), (slug.as_str(), e.max_level)]);
+        let input =
+            input_for_mix_with_picks(fixture, &[(carrier.slug(), ge.carrier_level), (slug.as_str(), e.max_level)], &picks);
         let receipt = build_pilot_headless_receipt(&input);
         builds += 1;
         let label = format!("{}:{}+{}:{}", carrier.slug(), ge.carrier_level, slug, e.max_level);
@@ -904,12 +903,14 @@ pub fn duplicate_scan(
 
 /// The carrier class a prestige class's converted entry gate selects.
 /// Wizard/Cleric are always CRB `core_rulebook` records; Fighter is the
-/// caster-less floor.
+/// caster-less floor. `Named` (SD-36 F3c2) is a class the gate itself names
+/// by level (`ClassLevel(<class>) >= n`): that class is the carrier.
 #[derive(Debug, Clone, Copy, PartialEq, Eq, PartialOrd, Ord)]
 pub enum PrestigeCarrier {
     Wizard,
     Cleric,
     Fighter,
+    Named(&'static str),
 }
 
 impl PrestigeCarrier {
@@ -918,30 +919,113 @@ impl PrestigeCarrier {
             PrestigeCarrier::Wizard => "wizard",
             PrestigeCarrier::Cleric => "cleric",
             PrestigeCarrier::Fighter => "fighter",
+            PrestigeCarrier::Named(slug) => slug,
+        }
+    }
+
+    /// The carrier a gate's `ClassLevel(<slug>)` term names: the three §2 carriers by their own
+    /// variant, any other class as `Named` (slug interned once per process; the set is bounded by
+    /// the class ids the converted gates name).
+    fn for_class(slug: &str) -> PrestigeCarrier {
+        match slug {
+            "wizard" => PrestigeCarrier::Wizard,
+            "cleric" => PrestigeCarrier::Cleric,
+            "fighter" => PrestigeCarrier::Fighter,
+            other => {
+                static INTERNED: std::sync::OnceLock<std::sync::Mutex<BTreeSet<&'static str>>> =
+                    std::sync::OnceLock::new();
+                let set = INTERNED.get_or_init(|| std::sync::Mutex::new(BTreeSet::new()));
+                let mut guard = set.lock().unwrap_or_else(|poisoned| poisoned.into_inner());
+                let interned = match guard.get(other) {
+                    Some(existing) => *existing,
+                    None => {
+                        let leaked: &'static str = Box::leak(other.to_owned().into_boxed_str());
+                        guard.insert(leaked);
+                        leaked
+                    }
+                };
+                PrestigeCarrier::Named(interned)
+            }
         }
     }
 
     /// The spell tradition this carrier provides, or `None` for Fighter
-    /// (which provides no casting at all).
+    /// (which provides no casting at all). A `Named` carrier is never
+    /// credited with a tradition here: it is chosen for the class level the
+    /// gate names, and a spell-kind term alongside it does not translate
+    /// ([`choose_carriers`] refuses the pair by name).
     fn spell_kind(self) -> Option<SpellKind> {
         match self {
             PrestigeCarrier::Wizard => Some(SpellKind::Arcane),
             PrestigeCarrier::Cleric => Some(SpellKind::Divine),
-            PrestigeCarrier::Fighter => None,
+            PrestigeCarrier::Fighter | PrestigeCarrier::Named(_) => None,
+        }
+    }
+
+    /// This carrier's converted chassis (BAB row), from the book its converted class record is
+    /// in (CRB for the three §2 carriers).
+    fn chassis(self) -> Option<&'static class_chassis_sheet_rules::ClassChassis> {
+        match self {
+            PrestigeCarrier::Named(slug) => {
+                let package = live_sheet_rules()?;
+                let id = package.find("class", slug)?;
+                let book = id.split(':').next()?;
+                class_chassis_sheet_rules::record(book, slug)
+            }
+            other => class_chassis_sheet_rules::record("core_rulebook", other.slug()),
         }
     }
 }
 
-fn expr_mentions_spell_kind(expr: &Expr, kind: &SpellKind) -> bool {
-    match expr {
-        Expr::HighestSpellLevel(k) => k == kind,
-        Expr::Sum(terms) => terms.iter().any(|e| expr_mentions_spell_kind(e, kind)),
-        Expr::Mul(a, b) | Expr::Div(a, b) | Expr::Min(a, b) | Expr::Max(a, b) => {
-            expr_mentions_spell_kind(a, kind) || expr_mentions_spell_kind(b, kind)
+/// `lower_snake` of a converted tag or label, the way the converter slugs ids.
+fn snake(text: &str) -> String {
+    let mut out = String::new();
+    for ch in text.chars() {
+        if ch.is_ascii_alphanumeric() {
+            out.push(ch.to_ascii_lowercase());
+        } else if !out.ends_with('_') {
+            out.push('_');
         }
-        Expr::Floor(inner) | Expr::Ceil(inner) => expr_mentions_spell_kind(inner, kind),
-        _ => false,
     }
+    out.trim_matches('_').to_owned()
+}
+
+/// SD-36 F3c2: the pick `class_slug` records when a gate names `option` (a converted rule id) as
+/// something the character holds -- `Some` only when `option` is an option of a choice the class
+/// offers, read from the class's own canonical seeds (`class_seeds`), in one of the two id spaces
+/// a seed uses:
+///
+/// - a converted chooser (`offers: Rules` under its own id) that grants `option`
+///   (`Granter::Choice(<chooser>)`): the pick is `(<chooser>, <option>)`;
+/// - a legacy `choice:<pool>` id whose selections are `<ns>:<member>`: `option` carries the pool
+///   as its own TYPE tag (`Sorcerer Bloodline` for `choice:sorcerer_bloodline`) AND its id is
+///   `<pool>_<member>` (the oracle key `Sorcerer Bloodline ~ Draconic`): the pick is
+///   `(choice:<pool>, <ns>:<member>)`.
+///
+/// Anything else is `None`: the term does not translate, and no pick is guessed.
+fn carrier_pick_for_option(class_slug: &str, option: &str) -> Option<SelectedChoice> {
+    let package = live_sheet_rules()?;
+    let rule = package.rule(option)?;
+    let option_slug = option.rsplit(':').next()?;
+    let (choices, _) = canonical_seeds_for(class_slug);
+    choices.into_iter().find_map(|seed| {
+        if let Some(chooser) = package.rule(&seed.choice_set_id)
+            && matches!(&chooser.offers, Some(Choice { id, from: OptionSet::Rules { .. }, .. }) if id == &seed.choice_set_id)
+        {
+            return rule
+                .granted_by
+                .iter()
+                .any(|g| matches!(&g.by, Granter::Choice(ch) if ch == &seed.choice_set_id))
+                .then(|| SelectedChoice { choice_set_id: seed.choice_set_id.clone(), selection_id: option.to_owned() });
+        }
+        let pool = seed.choice_set_id.strip_prefix("choice:")?;
+        let member = option_slug.strip_prefix(pool)?.strip_prefix('_')?;
+        let (namespace, _) = seed.selection_id.split_once(':')?;
+        (!member.is_empty() && rule.tags.iter().any(|t| snake(t) == pool)).then(|| SelectedChoice {
+            choice_set_id: seed.choice_set_id.clone(),
+            selection_id: format!("{namespace}:{member}"),
+        })
+    })
 }
 
 /// `true` when `expr` reads ANY caster signal -- a specific-kind
@@ -960,41 +1044,12 @@ fn expr_mentions_any_caster_signal(expr: &Expr) -> bool {
     }
 }
 
-/// `true` only when `term` is a MANDATORY, POSITIVE clause naming `kind` --
-/// a bare `Applies::Compare` (never a clause reachable only through
-/// `Applies::Not`, which NEGATES the requirement, or `Applies::AtLeast`,
-/// which makes it one OPTIONAL alternative among several, not something
-/// every carrier build must satisfy). This is the fix for the F0-check
-/// finding: `gate_mentions_spell_kind` used to recurse into both, so
-/// `class:pure_legion_enforcer`'s "Special: Cannot cast divine spells"
-/// (`Not(HighestSpellLevel(Divine) >= 1)`) picked cleric -- the one carrier
-/// its own gate forbids -- and `class:dragon_disciple`'s
-/// `AtLeast{3, [..., HighestSpellLevel(Arcane) >= 1, ...]}` (an optional
-/// alternative, not the class's real "spontaneous arcane caster"
-/// requirement) picked wizard, a prepared caster the gate never asks for.
-fn top_level_mandatory_positive_term_mentions_spell_kind(term: &Applies, kind: &SpellKind) -> bool {
-    matches!(term, Applies::Compare { lhs, rhs, .. }
-        if expr_mentions_spell_kind(lhs, kind) || expr_mentions_spell_kind(rhs, kind))
-}
-
-/// `true` when a MANDATORY, POSITIVE top-level term of `gate` names `kind`
-/// -- see [`top_level_mandatory_positive_term_mentions_spell_kind`]. Only
-/// looks at `top_level_terms(gate)`, i.e. the top-level `Applies::All`
-/// flattened one level; a `Not`/`AtLeast` term stays exactly that (never
-/// unwrapped further), so a caster mention nested inside either is never
-/// counted as mandatory.
-fn gate_mentions_spell_kind(gate: &Applies, kind: &SpellKind) -> bool {
-    top_level_terms(gate)
-        .iter()
-        .any(|term| top_level_mandatory_positive_term_mentions_spell_kind(term, kind))
-}
-
 /// `true` when ANY clause of `gate`, at any depth (including inside
 /// `Applies::Not`/`Applies::AtLeast`), reads a caster signal -- a
 /// `HighestSpellLevel` of any kind, or a bare `CasterLevel` term. This is
 /// the full recursive scan the old, over-eager `gate_mentions_spell_kind`
-/// used to be; kept only to detect a gate [`determine_carriers`] cannot
-/// ground with confidence (finding 4's guard), never to select a carrier.
+/// used to be; kept only to detect a clause [`choose_carriers`] cannot
+/// translate (finding 4's guard), never to select a carrier.
 fn gate_has_any_caster_signal(gate: &Applies) -> bool {
     match gate {
         Applies::All(terms) => terms.iter().any(gate_has_any_caster_signal),
@@ -1007,42 +1062,282 @@ fn gate_has_any_caster_signal(gate: &Applies) -> bool {
     }
 }
 
-/// The carrier-selection rule, fully specified in `epic-f-class-completion.md`
-/// §2 (review finding 14) and tightened by the F0-check fix for findings 1
-/// and 4: wizard if a MANDATORY, POSITIVE top-level term of the gate names
-/// Arcane (and not Divine); cleric if Divine (and not Arcane); a SECOND,
-/// independent carrier for the dual-caster case (both Arcane AND Divine as
-/// two separate mandatory terms -- `mystic_theurge`); fighter when no
-/// mandatory caster term is present AND the gate carries no caster signal
-/// anywhere else either (the floor-5 case). When neither branch applies --
-/// the gate carries a caster signal (`HighestSpellLevel`/`CasterLevel`)
-/// ONLY inside a `Not` or `AtLeast` clause, so no carrier can be named
-/// without either violating the class's own gate (`pure_legion_enforcer`)
-/// or guessing past an unmodelled requirement (`dragon_disciple`'s
-/// spontaneous-caster clause, `evangelist`'s optional dual-caster
-/// alternative) -- this returns `Err`, named by the gate itself, rather
-/// than a confidently-wrong carrier. A class only otherwise goes unnamed
-/// when its converted record cannot be loaded at all (handled one layer
-/// up, in [`carrier_assignment`]).
-pub fn determine_carriers(gate: &Applies) -> Result<Vec<PrestigeCarrier>, String> {
-    let arcane = gate_mentions_spell_kind(gate, &SpellKind::Arcane);
-    let divine = gate_mentions_spell_kind(gate, &SpellKind::Divine);
-    match (arcane, divine) {
-        (true, true) => Ok(vec![PrestigeCarrier::Wizard, PrestigeCarrier::Cleric]),
-        (true, false) => Ok(vec![PrestigeCarrier::Wizard]),
-        (false, true) => Ok(vec![PrestigeCarrier::Cleric]),
-        (false, false) => {
-            if gate_has_any_caster_signal(gate) {
-                Err(format!(
-                    "gate references a caster level or spell-kind term only inside a Not/AtLeast \
-                     clause -- never as a mandatory, positive top-level term -- so no carrier can \
-                     be named with confidence: {gate:?}"
-                ))
-            } else {
-                Ok(vec![PrestigeCarrier::Fighter])
+/// The carrier-selection rule, specified in `epic-f-class-completion.md` §2
+/// (review finding 14), tightened by the F0-check fix for findings 1 and 4,
+/// and widened by F3c to walk `AtLeast` / `Not` clauses with ONE rule.
+///
+/// Every top-level clause of the gate is translated by [`translate_clause`]
+/// into what it asks of the carrier build: numeric requirements (the three
+/// §2 axes), caster kinds demanded, caster kinds forbidden. An `AtLeast`
+/// clause is translated by trying its branches in oracle order and taking
+/// the first `n` that translate; which branch was taken is recorded in the
+/// reason. `HighestSpellLevel(Any)` is read the same way, as "at least 1 of
+/// Arcane, Divine" in that order. Then: wizard for a demanded Arcane term,
+/// cleric for Divine, both for the dual-caster case (`mystic_theurge`),
+/// wizard-else-cleric for an `Any` term (the first carrier the gate does not
+/// forbid), and the fighter floor when nothing is demanded (a `Not` of a
+/// spell-kind term is a prohibition, which the fighter meets). A clause that
+/// carries a caster signal but does not translate -- a caster term only
+/// reachable through a situational, feat, class-level or choice branch
+/// (`dragon_disciple`'s spontaneous-caster clause), or a bare
+/// `CasterLevel` -- makes the class `Err`, named by the clause itself,
+/// never a guessed carrier.
+#[derive(Debug, Clone, PartialEq, Eq)]
+pub struct CarrierChoice {
+    pub carriers: Vec<PrestigeCarrier>,
+    /// SD-36 F3c2: `(carrier slug, pick)` -- a gate-named option of a choice the carrier offers,
+    /// recorded as that carrier's pick in its mix (replacing the carrier's canonical pick for
+    /// the same choice).
+    pub picks: Vec<(String, SelectedChoice)>,
+    /// Why these carriers: the demanding term(s), every `AtLeast` branch
+    /// taken, every prohibition met. Printed as the census's
+    /// `carrier_reason`.
+    pub reason: String,
+}
+
+/// What one entry-gate clause asks of the carrier build once translated.
+#[derive(Debug, Clone, Default)]
+struct CarrierDemand {
+    numeric: Vec<NumericRequirement>,
+    demands: Vec<SpellKind>,
+    forbids: Vec<SpellKind>,
+    notes: Vec<String>,
+    /// SD-36 F3c2: classes a `ClassLevel(<class>) >= n` term names.
+    classes: Vec<String>,
+    /// SD-36 F3c2: `Holds(Rule(<option>))` targets not yet resolved to a named class's pick
+    /// ([`settle_options`]).
+    options: Vec<String>,
+    /// SD-36 F3c2: options resolved to `(class, pick)`.
+    picks: Vec<(String, SelectedChoice)>,
+}
+
+impl CarrierDemand {
+    fn merge(&mut self, other: CarrierDemand) {
+        for class in other.classes {
+            if !self.classes.contains(&class) {
+                self.classes.push(class);
             }
         }
+        self.options.extend(other.options);
+        self.picks.extend(other.picks);
+        self.numeric.extend(other.numeric);
+        for kind in other.demands {
+            if !self.demands.contains(&kind) {
+                self.demands.push(kind);
+            }
+        }
+        for kind in other.forbids {
+            if !self.forbids.contains(&kind) {
+                self.forbids.push(kind);
+            }
+        }
+        self.notes.extend(other.notes);
     }
+}
+
+/// `Some` when every term of `term` translates to a carrier + level: a
+/// numeric requirement on one of the three §2 axes (a spell-kind term also
+/// demands that kind; `Psychic` has no carrier and does not translate), a
+/// `Not` of a spell-kind term (a prohibition), the converter's two
+/// bookkeeping rows, an `All` of translatable terms, or an `AtLeast` whose
+/// first `n` translatable branches in oracle order exist. Anything else --
+/// a feat, a situational text, another class's level, a choice, a bare
+/// `CasterLevel` -- does not translate.
+fn translate_clause(term: &Applies) -> Option<CarrierDemand> {
+    settle_options(translate_raw(term)?)
+}
+
+/// SD-36 F3c2: resolve every pending `Holds(Rule(<option>))` of `demand` to a pick of a class the
+/// same demand names by level ([`carrier_pick_for_option`]). `None` when any option is not an
+/// option of a choice a named class offers: the clause does not translate.
+fn settle_options(mut demand: CarrierDemand) -> Option<CarrierDemand> {
+    for option in std::mem::take(&mut demand.options) {
+        let (class, pick) = demand
+            .classes
+            .iter()
+            .find_map(|class| carrier_pick_for_option(class, &option).map(|pick| (class.clone(), pick)))?;
+        demand.notes.push(format!(
+            "Holds {option}: an option of {class}'s {} choice, seeded as its pick {}",
+            pick.choice_set_id, pick.selection_id
+        ));
+        demand.picks.push((class, pick));
+    }
+    Some(demand)
+}
+
+/// Every `k`-subset of `0..len` in lexicographic (oracle) order.
+fn combinations(len: usize, k: usize) -> Vec<Vec<usize>> {
+    if k == 0 {
+        return vec![Vec::new()];
+    }
+    if k > len {
+        return Vec::new();
+    }
+    let mut out = Vec::new();
+    for first in 0..=(len - k) {
+        for rest in combinations(len - first - 1, k - 1) {
+            let mut combo = vec![first];
+            combo.extend(rest.into_iter().map(|i| i + first + 1));
+            out.push(combo);
+        }
+    }
+    out
+}
+
+fn translate_raw(term: &Applies) -> Option<CarrierDemand> {
+    match term {
+        Applies::All(nested) => {
+            let mut demand = CarrierDemand::default();
+            for t in nested {
+                demand.merge(translate_raw(t)?);
+            }
+            Some(demand)
+        }
+        // The first `n` branches, in oracle order, that translate AND whose gate-named options
+        // settle together (F3c2: a `Holds` option settles only against a class level another
+        // taken branch names; without one it is the untranslatable term it always was).
+        Applies::AtLeast { n, of } => {
+            let need = usize::from(*n);
+            let translated: Vec<(usize, CarrierDemand)> =
+                of.iter().enumerate().filter_map(|(i, branch)| translate_raw(branch).map(|d| (i + 1, d))).collect();
+            for combo in combinations(translated.len(), need) {
+                let mut demand = CarrierDemand::default();
+                let mut taken: Vec<usize> = Vec::new();
+                for index in combo {
+                    let (branch, branch_demand) = &translated[index];
+                    let mut branch_demand = branch_demand.clone();
+                    let label = format!("at least {n} of {}, branch {branch}", of.len());
+                    for req in &mut branch_demand.numeric {
+                        req.description = format!("{label}: {}", req.description);
+                    }
+                    demand.merge(branch_demand);
+                    taken.push(*branch);
+                }
+                let Some(mut demand) = settle_options(demand) else { continue };
+                demand.notes.push(format!(
+                    "at least {n} of {}: took branch(es) {taken:?} in oracle order",
+                    of.len()
+                ));
+                return Some(demand);
+            }
+            None
+        }
+        Applies::Holds { what: Holdable::Rule(option), .. } => {
+            Some(CarrierDemand { options: vec![option.clone()], ..CarrierDemand::default() })
+        }
+        Applies::Not(inner) => match classify_term(inner) {
+            TermClass::Numeric(NumericRequirement { axis: NumericAxis::HighestSpellLevel(kind), .. }) => {
+                Some(CarrierDemand { forbids: vec![kind], ..CarrierDemand::default() })
+            }
+            _ => None,
+        },
+        other => match classify_term(other) {
+            TermClass::AlwaysMet => Some(CarrierDemand::default()),
+            TermClass::Numeric(req) => {
+                let mut demand = CarrierDemand::default();
+                if let NumericAxis::HighestSpellLevel(kind) = &req.axis {
+                    if *kind == SpellKind::Psychic {
+                        return None;
+                    }
+                    demand.demands.push(kind.clone());
+                }
+                if let NumericAxis::ClassLevel(class) = &req.axis {
+                    demand.classes.push(class.clone());
+                }
+                demand.numeric.push(req);
+                Some(demand)
+            }
+            _ => None,
+        },
+    }
+}
+
+/// `true` when `carrier` casts spells of `kind` (`Any` = casts at all).
+fn carrier_casts(carrier: PrestigeCarrier, kind: &SpellKind) -> bool {
+    match (carrier.spell_kind(), kind) {
+        (Some(_), SpellKind::Any) => true,
+        (Some(own), k) => own == *k,
+        (None, _) => false,
+    }
+}
+
+pub fn choose_carriers(gate: &Applies) -> Result<CarrierChoice, String> {
+    let mut demand = CarrierDemand::default();
+    for term in top_level_terms(gate) {
+        match translate_clause(term) {
+            Some(d) => demand.merge(d),
+            None if gate_has_any_caster_signal(term) => {
+                return Err(format!(
+                    "a clause carries a caster term but no branch of it translates to a carrier + \
+                     level (every branch needs a term outside BaseAttack / SkillRanks / \
+                     HighestSpellLevel(Arcane|Divine|Any) / Not of a spell-kind term), so no \
+                     carrier can be named: {term:?}"
+                ));
+            }
+            None => {}
+        }
+    }
+    let forbidden = |carrier: PrestigeCarrier| demand.forbids.iter().any(|k| carrier_casts(carrier, k));
+    let mut carriers: Vec<PrestigeCarrier> = Vec::new();
+    let mut reason: Vec<String> = Vec::new();
+    // SD-36 F3c2: a class the gate names by level is the carrier. A spell-kind demand beside it
+    // is not credited to the named class (its casting is not read here), so the pair is refused
+    // by name rather than a carrier shown to meet half the gate.
+    if !demand.classes.is_empty() {
+        if !demand.demands.is_empty() {
+            return Err(format!(
+                "the gate names class level(s) {:?} AND demands spell kind(s) {:?}; a named-class carrier is not \
+                 read for its casting, so no single carrier can be shown to meet both: {gate:?}",
+                demand.classes, demand.demands
+            ));
+        }
+        for class in &demand.classes {
+            carriers.push(PrestigeCarrier::for_class(class));
+            reason.push(format!("ClassLevel({class}) named -> {class}"));
+        }
+    }
+    if demand.demands.contains(&SpellKind::Arcane) {
+        carriers.push(PrestigeCarrier::Wizard);
+        reason.push("HighestSpellLevel(Arcane) demanded -> wizard".to_owned());
+    }
+    if demand.demands.contains(&SpellKind::Divine) {
+        carriers.push(PrestigeCarrier::Cleric);
+        reason.push("HighestSpellLevel(Divine) demanded -> cleric".to_owned());
+    }
+    if carriers.is_empty() && demand.demands.contains(&SpellKind::Any) {
+        let Some(carrier) =
+            [PrestigeCarrier::Wizard, PrestigeCarrier::Cleric].into_iter().find(|c| !forbidden(*c))
+        else {
+            return Err(format!(
+                "the gate demands HighestSpellLevel(Any) but forbids both caster carriers: {gate:?}"
+            ));
+        };
+        carriers.push(carrier);
+        reason.push(format!(
+            "HighestSpellLevel(Any) demanded, read as at least 1 of [Arcane, Divine] in that order -> {}",
+            carrier.slug()
+        ));
+    }
+    if carriers.is_empty() {
+        carriers.push(PrestigeCarrier::Fighter);
+        reason.push("no caster term demanded -> fighter floor".to_owned());
+    }
+    if let Some(bad) = carriers.iter().find(|c| forbidden(**c)) {
+        return Err(format!(
+            "the gate both demands and forbids the {} carrier's spell kind: {gate:?}",
+            bad.slug()
+        ));
+    }
+    for kind in &demand.forbids {
+        reason.push(format!("Not HighestSpellLevel({kind:?}) -- a prohibition the carrier meets"));
+    }
+    reason.extend(demand.notes);
+    Ok(CarrierChoice { carriers, picks: demand.picks, reason: reason.join("; ") })
+}
+
+/// The carriers [`choose_carriers`] names, without the reason.
+pub fn determine_carriers(gate: &Applies) -> Result<Vec<PrestigeCarrier>, String> {
+    choose_carriers(gate).map(|choice| choice.carriers)
 }
 
 /// One translatable numeric entry-gate axis: the three shapes §2 names.
@@ -1051,6 +1346,8 @@ enum NumericAxis {
     BaseAttack,
     SkillRanks,
     HighestSpellLevel(SpellKind),
+    /// SD-36 F3c2: `ClassLevel(<class>) >= n` -- met only by that class as the carrier.
+    ClassLevel(String),
 }
 
 #[derive(Debug, Clone)]
@@ -1085,6 +1382,7 @@ fn numeric_axis_of(e: &Expr) -> Option<NumericAxis> {
         Expr::BaseAttack => Some(NumericAxis::BaseAttack),
         Expr::SkillRanks(_) => Some(NumericAxis::SkillRanks),
         Expr::HighestSpellLevel(kind) => Some(NumericAxis::HighestSpellLevel(kind.clone())),
+        Expr::ClassLevel(class) => Some(NumericAxis::ClassLevel(class.clone())),
         _ => None,
     }
 }
@@ -1156,6 +1454,7 @@ fn classify_term(term: &Applies) -> TermClass {
                 NumericAxis::HighestSpellLevel(kind) => {
                     format!("HighestSpellLevel {kind:?} >= {required}")
                 }
+                NumericAxis::ClassLevel(class) => format!("ClassLevel {class} >= {required}"),
             };
             TermClass::Numeric(NumericRequirement { description, axis, required })
         }
@@ -1197,7 +1496,7 @@ fn top_level_terms(gate: &Applies) -> Vec<&Applies> {
 fn level_meeting(carrier: PrestigeCarrier, req: &NumericRequirement) -> Option<u8> {
     match &req.axis {
         NumericAxis::BaseAttack => {
-            let chassis = class_chassis_sheet_rules::record("core_rulebook", carrier.slug())?;
+            let chassis = carrier.chassis()?;
             (1..=DEFAULT_TABLED_MAX_LEVEL).find(|&level| {
                 chassis
                     .row_at(level)
@@ -1210,12 +1509,19 @@ fn level_meeting(carrier: PrestigeCarrier, req: &NumericRequirement) -> Option<u
             (level <= i32::from(DEFAULT_TABLED_MAX_LEVEL)).then_some(level as u8)
         }
         NumericAxis::HighestSpellLevel(kind) => {
-            if carrier.spell_kind().as_ref() != Some(kind) {
+            if !carrier_casts(carrier, kind) {
                 return None;
             }
             // A full caster's spell level L is first reachable at class
             // level 2L-1 (§2's own stated formula).
             let level = (2 * req.required - 1).max(1);
+            (level <= i32::from(DEFAULT_TABLED_MAX_LEVEL)).then_some(level as u8)
+        }
+        NumericAxis::ClassLevel(class) => {
+            if carrier.slug() != class {
+                return None;
+            }
+            let level = req.required.max(1);
             (level <= i32::from(DEFAULT_TABLED_MAX_LEVEL)).then_some(level as u8)
         }
     }
@@ -1225,14 +1531,22 @@ fn level_meeting(carrier: PrestigeCarrier, req: &NumericRequirement) -> Option<u
 /// what an unmet-by-the-cap line prints (§2's stated precedence).
 fn value_reached(carrier: PrestigeCarrier, req: &NumericRequirement, level: u8) -> i32 {
     match &req.axis {
-        NumericAxis::BaseAttack => class_chassis_sheet_rules::record("core_rulebook", carrier.slug())
+        NumericAxis::BaseAttack => carrier
+            .chassis()
             .and_then(|chassis| chassis.row_at(level))
             .map(|r| i32::from(r.base_attack_bonus))
             .unwrap_or(0),
         NumericAxis::SkillRanks => i32::from(level),
         NumericAxis::HighestSpellLevel(kind) => {
-            if carrier.spell_kind().as_ref() == Some(kind) {
+            if carrier_casts(carrier, kind) {
                 (i32::from(level) + 1) / 2
+            } else {
+                0
+            }
+        }
+        NumericAxis::ClassLevel(class) => {
+            if carrier.slug() == class {
+                i32::from(level)
             } else {
                 0
             }
@@ -1264,6 +1578,35 @@ fn evaluate_carrier(carrier: PrestigeCarrier, gate: &Applies, prestige_max_level
     let mut unknown: Vec<String> = Vec::new();
 
     for term in top_level_terms(gate) {
+        // F3c: an `AtLeast` / `Not` / nested `All` clause the carrier rule
+        // translates (see [`translate_clause`]) joins the level solve with
+        // the branch(es) it took, and a spell-kind prohibition is judged
+        // against this carrier. One that does not translate prints as the
+        // "special" clause it always was.
+        if matches!(term, Applies::AtLeast { .. } | Applies::Not(_) | Applies::All(_))
+            && let Some(demand) = translate_clause(term)
+        {
+            numeric.extend(demand.numeric);
+            for (class, pick) in &demand.picks {
+                if class == carrier.slug() {
+                    met.push(format!(
+                        "gate-named option seeded as {class}'s pick {} -> {}",
+                        pick.choice_set_id, pick.selection_id
+                    ));
+                }
+            }
+            for kind in &demand.forbids {
+                if carrier_casts(carrier, kind) {
+                    unmet.push(format!(
+                        "Not HighestSpellLevel {kind:?} (carrier {} casts it)",
+                        carrier.slug()
+                    ));
+                } else {
+                    met.push(format!("Not HighestSpellLevel {kind:?}"));
+                }
+            }
+            continue;
+        }
         match classify_term(term) {
             TermClass::AlwaysMet => {}
             TermClass::Situational(text) => met.push(format!("Situational: {text}")),
@@ -1342,11 +1685,16 @@ fn prestige_applies_gate(books: &[String], slug: &str) -> Option<Applies> {
 /// selects, with no engine sweep. `Err` only when the converted record
 /// cannot be loaded at all -- named by class id, never silently skipped.
 pub fn carrier_assignment(entry: &ClassCensusEntry) -> Result<Vec<PrestigeCarrier>, String> {
+    carrier_choice(entry).map(|choice| choice.carriers)
+}
+
+/// [`carrier_assignment`] with the gate-named carrier picks (SD-36 F3c2) and the reason.
+pub fn carrier_choice(entry: &ClassCensusEntry) -> Result<CarrierChoice, String> {
     let slug = entry.class_id.strip_prefix("class:").unwrap_or(&entry.class_id);
     let gate = prestige_applies_gate(&entry.books, slug).ok_or_else(|| {
         format!("{}: no converted class record found in {:?}", entry.class_id, entry.books)
     })?;
-    determine_carriers(&gate).map_err(|reason| format!("{}: {reason}", entry.class_id))
+    choose_carriers(&gate).map_err(|reason| format!("{}: {reason}", entry.class_id))
 }
 
 /// Build the real production-shaped multiclass input for a carrier class
@@ -1354,6 +1702,12 @@ pub fn carrier_assignment(entry: &ClassCensusEntry) -> Result<Vec<PrestigeCarrie
 /// Mirrors [`crate::rules_core::class_seeds::input_for`]'s single-class
 /// shape, widened to more than one class level.
 fn input_for_mix(fixture: &CharacterInput, classes: &[(&str, u8)]) -> CharacterInput {
+    input_for_mix_with_picks(fixture, classes, &[])
+}
+
+/// [`input_for_mix`] plus the carrier picks a gate names (SD-36 F3c2): each pick replaces the
+/// canonical pick its class seeds under the same choice.
+fn input_for_mix_with_picks(fixture: &CharacterInput, classes: &[(&str, u8)], picks: &[(String, SelectedChoice)]) -> CharacterInput {
     let mut input = fixture.clone();
     input.case_id = Some(format!(
         "class_census.prestige_mix.{}",
@@ -1364,7 +1718,12 @@ fn input_for_mix(fixture: &CharacterInput, classes: &[(&str, u8)]) -> CharacterI
         .map(|(name, level)| CharacterClassLevel { class_id: format!("class:{name}"), level: *level })
         .collect();
     for (name, _) in classes {
-        let (choices, spells) = canonical_seeds_for(name);
+        let (mut choices, spells) = canonical_seeds_for(name);
+        let own: Vec<&SelectedChoice> = picks.iter().filter(|(class, _)| class == name).map(|(_, pick)| pick).collect();
+        if !own.is_empty() {
+            choices.retain(|c| !own.iter().any(|pick| pick.choice_set_id == c.choice_set_id));
+            choices.extend(own.into_iter().cloned());
+        }
         input.chosen.selected_choices.extend(choices);
         input.chosen.spells_selected.extend(spells);
     }
@@ -1396,6 +1755,7 @@ pub fn sweep_prestige_mix(
     carrier: PrestigeCarrier,
     carrier_level: u8,
     entry: &ClassCensusEntry,
+    picks: &[(String, SelectedChoice)],
 ) -> PrestigeMixSweep {
     let prestige_slug = entry.class_id.strip_prefix("class:").unwrap_or(&entry.class_id);
     let mut levels_computed = Vec::new();
@@ -1403,7 +1763,7 @@ pub fn sweep_prestige_mix(
     let mut blocking: Vec<CensusBlockingDiagnostic> = Vec::new();
 
     for level in 1..=entry.max_level {
-        let input = input_for_mix(fixture, &[(carrier.slug(), carrier_level), (prestige_slug, level)]);
+        let input = input_for_mix_with_picks(fixture, &[(carrier.slug(), carrier_level), (prestige_slug, level)], picks);
 
         let outcome = std::panic::catch_unwind(std::panic::AssertUnwindSafe(|| {
             build_pilot_headless_receipt(&input)
@@ -1494,6 +1854,10 @@ pub struct PrestigeCensusRow {
     /// the gate itself, distinct from [`Self::load_error`] (record missing
     /// entirely).
     pub carrier_unknown_reason: Option<String>,
+    /// Set whenever a carrier is named: [`CarrierChoice::reason`] -- the
+    /// demanding term(s), every `AtLeast` branch taken, every prohibition
+    /// met (F3c).
+    pub carrier_reason: Option<String>,
     pub alone: ClassSweepResult,
     pub load_error: Option<String>,
 }
@@ -1545,6 +1909,7 @@ pub fn build_prestige_row(fixture: &CharacterInput, entry: &ClassCensusEntry) ->
             entry_gate_status: "unknown",
             status: "unknown",
             carrier_unknown_reason: None,
+            carrier_reason: None,
             alone,
             load_error: Some(format!(
                 "no converted class record found for {} in {:?} -- reported unknown, never defaulted",
@@ -1553,8 +1918,8 @@ pub fn build_prestige_row(fixture: &CharacterInput, entry: &ClassCensusEntry) ->
         };
     };
 
-    let carriers = match determine_carriers(&gate) {
-        Ok(carriers) => carriers,
+    let choice = match choose_carriers(&gate) {
+        Ok(choice) => choice,
         // The gate loads but no carrier can be named with confidence
         // (F0-check findings 1/4): report unknown by the class's own name,
         // never a carrier the gate forbids or a guessed dual requirement.
@@ -1568,16 +1933,18 @@ pub fn build_prestige_row(fixture: &CharacterInput, entry: &ClassCensusEntry) ->
                 entry_gate_status: "unknown",
                 status: "unknown",
                 carrier_unknown_reason: Some(format!("{}: {reason}", entry.class_id)),
+                carrier_reason: None,
                 alone,
                 load_error: None,
             };
         }
     };
+    let CarrierChoice { carriers, picks, reason: carrier_reason } = choice;
     let mixes: Vec<(PrestigeMixSweep, CarrierEntryGate)> = carriers
         .iter()
         .map(|carrier| {
             let ge = evaluate_carrier(*carrier, &gate, entry.max_level);
-            let sweep = sweep_prestige_mix(fixture, *carrier, ge.carrier_level, entry);
+            let sweep = sweep_prestige_mix(fixture, *carrier, ge.carrier_level, entry, &picks);
             (sweep, ge)
         })
         .collect();
@@ -1594,6 +1961,7 @@ pub fn build_prestige_row(fixture: &CharacterInput, entry: &ClassCensusEntry) ->
         entry_gate_status,
         status,
         carrier_unknown_reason: None,
+        carrier_reason: Some(carrier_reason),
         alone,
         load_error: None,
     }
@@ -1817,7 +2185,16 @@ mod tests {
         assert_eq!(counts.get(&ClassFamily::UntabledExoticBase).copied().unwrap_or(0), 20, "{message}");
         assert_eq!(counts.get(&ClassFamily::CrbNpcEx).copied().unwrap_or(0), 7, "{message}");
         assert_eq!(counts.get(&ClassFamily::Prestige).copied().unwrap_or(0), 74, "{message}");
-        assert_eq!(entries.len(), 135, "measured census total moved off the previously published 135 -- {message}");
+        // SD-36 Epic F2a (2026-09-24): +2, `GenericOnly`. Appending
+        // `core_rulebook` and `advanced_players_guide` to `generic_class_
+        // chassis`'s `CLASS_FAMILY_BOOKS` brought APG's two `Ex-*` variant
+        // classes (Ex-Antipaladin, Ex-Inquisitor) into the ninth source, and
+        // none of the eight canonical sources claims them -- see
+        // `generic_only_ids_are_exactly_the_two_apg_ex_classes`. 135 + 2 = 137;
+        // every one of the 135 earlier ids keeps its family (the per-family
+        // asserts above are unchanged). Logged as a scripts/retro.py correction.
+        assert_eq!(counts.get(&ClassFamily::GenericOnly).copied().unwrap_or(0), 2, "{message}");
+        assert_eq!(entries.len(), 137, "measured census total moved off 137 (135 + F2a's 2 GenericOnly) -- {message}");
     }
 
     #[test]
@@ -1835,7 +2212,9 @@ mod tests {
         // own `cargo test ... census_id_set_matches_the_published_partition`
         // command matched zero tests and passed vacuously.
         let entries = census();
-        assert_eq!(entries.len(), 135, "merged census id set moved off the published 135");
+        // 137 since SD-36 Epic F2a: the published 135 plus the two
+        // `GenericOnly` APG `Ex-*` classes (see `every_registry_is_swept_once`).
+        assert_eq!(entries.len(), 137, "merged census id set moved off 137 (135 + 2 GenericOnly)");
 
         let mut by_family: BTreeMap<ClassFamily, BTreeSet<String>> = BTreeMap::new();
         for entry in entries.values() {
@@ -1846,7 +2225,7 @@ mod tests {
             .filter(|(family, _)| **family != ClassFamily::Prestige)
             .map(|(_, ids)| ids.len())
             .sum();
-        assert_eq!(non_prestige_total, 61, "non-prestige id SET moved off the published 31+3+20+7=61");
+        assert_eq!(non_prestige_total, 63, "non-prestige id SET moved off 31+3+20+7+2 GenericOnly=63");
         assert_eq!(
             by_family.get(&ClassFamily::Prestige).map(BTreeSet::len).unwrap_or(0),
             74,
@@ -1861,8 +2240,8 @@ mod tests {
         // either, since both would still read off the same underlying map.
         let union_of_family_sets: usize = by_family.values().map(BTreeSet::len).sum();
         assert_eq!(
-            union_of_family_sets, 135,
-            "family id sets do not partition the full published 135 -- {by_family:?}"
+            union_of_family_sets, 137,
+            "family id sets do not partition the full 137 -- {by_family:?}"
         );
 
         // The real, engine-derived half of review finding 12d's pin:
@@ -1888,16 +2267,41 @@ mod tests {
         // (`class_seeds::COMMONER_CANONICAL_WEAPON`) records the pick; the census
         // Longsword is outside the pick's options, so it reads Known(false).
         // 61 of 61 non-prestige; logged as a scripts/retro.py correction.
+        // Raised 61 -> 63 of 63 on 2026-09-24 by SD-36 Epic F2a: the population
+        // grew by the two `GenericOnly` APG `Ex-*` classes (Ex-Antipaladin,
+        // Ex-Inquisitor), and the new generic class-family gate arm computes
+        // both off their converted records (chassis hand-checked in
+        // `generic_class_chassis::tests::the_two_apg_ex_classes_resolve_their_parent_class_chassis`).
+        // No earlier id changed status (artifacts/epic-f/stage-f2-f3/
+        // f2a-census-before-after.md); logged as a scripts/retro.py correction.
+        // Corrected 63 -> 61 of 63 on 2026-09-24 by SD-36 Epic F3b3: the selected-skill check
+        // now reads each class's class skills from its converted record, and Expert and Psion
+        // answer Unknown there (their class skills are the player's choice -- Expert's ten
+        // chosen skills, Psion's discipline SUBCLASS-line CSKILL -- which the record does not
+        // resolve), so their Climb/Intimidate/Swim lines are refused by name
+        // (`skill.selected_modifier.class_skill_unknown`) instead of printed without a +3 the
+        // record cannot support. Logged as a scripts/retro.py correction.
+        // Raised 61 -> 62 of 63 on 2026-09-24 by SD-36 Epic F3c2: the Expert's ten class-skill
+        // picks are a choice, now seeded through `class_seeds::EXPERT_CANONICAL_CLASS_SKILLS`
+        // and read by the class-skill reader under the converted chooser
+        // (`core_rulebook:class_feature:expert_class_skills`, `ClassSkillChosen`). Psion stays
+        // refused: its base class skills exist only on the discipline SUBCLASS lines, which the
+        // converter does not carry (artifacts/epic-f/stage-f2-f3/f3c2-receipt.md).
+        // Raised 62 -> 63 of 63 on 2026-09-24 by SD-36 Epic F3c3: the converter carries PCGen's
+        // SUBCLASS lines as a class choice whose options carry each line's CSKILL / SUBCLASSLEVEL
+        // grants, and Psion's canonical discipline (Egoist, the first line in oracle order) is
+        // seeded through class_seeds; its class skills answer through that option
+        // (artifacts/epic-f/stage-f2-f3/f3c3-receipt.md). Logged as a scripts/retro.py correction.
         let fixture = load_sweep_fixture().expect("shared deterministic fixture must load cleanly");
         let previous_hook = std::panic::take_hook();
         std::panic::set_hook(Box::new(|_| {}));
         let results = sweep_non_prestige(&fixture, &entries);
         std::panic::set_hook(previous_hook);
-        assert_eq!(results.len(), 61, "non-prestige sweep population moved off the published 61");
+        assert_eq!(results.len(), 63, "non-prestige sweep population moved off 63");
         let computed = results.iter().filter(|r| r.computed()).count();
         assert_eq!(
-            computed, 61,
-            "measured non-prestige Computed count moved off the published 61 of 61 -- \
+            computed, 63,
+            "measured non-prestige Computed count moved off 63 of 63 -- \
              log a scripts/retro.py correction before moving this pin"
         );
     }
@@ -1984,20 +2388,35 @@ mod tests {
     }
 
     #[test]
-    fn no_generic_only_stragglers_today() {
-        // `docs/architecture/status.md`'s own evidence: `generic_class_
-        // chassis`'s 78 classes are fully subsumed by the other eight
-        // sources (56 Prestige + 19 of 20 untabled-exotic + 3 Ultimate
-        // Combat = 78). This pins that today; if it ever goes red, a real
-        // new class surfaced through `generic_class_chassis` alone and
-        // needs a named family decision, not a silent default.
+    fn generic_only_ids_are_exactly_the_two_apg_ex_classes() {
+        // Until SD-36 Epic F2a this pinned an EMPTY list: `generic_class_
+        // chassis`'s 78 classes were fully subsumed by the other eight sources
+        // (56 Prestige + 19 of 20 untabled-exotic + 3 Ultimate Combat = 78).
+        // F2a appended `core_rulebook` and `advanced_players_guide` to its
+        // `CLASS_FAMILY_BOOKS` (78 -> 122). 42 of the 44 new slugs are already
+        // claimed (CRB table 10, APG table 6, untabled Antipaladin, CRB NPC/Ex
+        // 7, 18 prestige); the remaining two are APG's `Ex-*` variant classes,
+        // the exact analogues of CRB's Ex-Barbarian/Ex-Paladin that
+        // `crb_untabled_class_chassis` registers -- no canonical source claims
+        // an APG `Ex-*` class. Named family decision: they stay `GenericOnly`,
+        // listed here by name; any other straggler is a new class needing its
+        // own decision, not a silent default.
         let entries = census();
         let stragglers: Vec<&str> = entries
             .values()
             .filter(|e| e.family == ClassFamily::GenericOnly)
             .map(|e| e.class_id.as_str())
             .collect();
-        assert!(stragglers.is_empty(), "generic_class_chassis named a class no other source claims: {stragglers:?}");
+        assert_eq!(
+            stragglers,
+            vec!["class:ex_antipaladin", "class:ex_inquisitor"],
+            "generic_class_chassis named a class no other source claims"
+        );
+        for id in &stragglers {
+            let entry = &entries[*id];
+            assert!(!entry.is_prestige, "{id} is a base (Ex-*) class, not prestige");
+            assert_eq!(entry.books, vec!["advanced_players_guide".to_string()], "{id}");
+        }
     }
 
     #[test]
@@ -2024,11 +2443,11 @@ mod tests {
         let entries = census();
         let expected: BTreeSet<String> =
             entries.values().filter(|e| !e.is_prestige).map(|e| e.class_id.clone()).collect();
-        // 61 = 135 - Prestige's 74, the same partition
+        // 63 = 137 - Prestige's 74, the same partition
         // `every_registry_is_swept_once` measures per family
         // (11+6+10+4=31 tabled + 3 UltimateCombat + 20 UntabledExoticBase +
-        // 7 CrbNpcEx = 61).
-        assert_eq!(expected.len(), 61, "non-prestige count moved off 135-74=61");
+        // 7 CrbNpcEx + 2 GenericOnly = 63; the 2 since SD-36 Epic F2a).
+        assert_eq!(expected.len(), 63, "non-prestige count moved off 137-74=63");
 
         let fixture = load_sweep_fixture().expect("shared deterministic fixture must load cleanly");
         let results = sweep_non_prestige(&fixture, &entries);
@@ -2255,29 +2674,25 @@ mod tests {
         // `harrower` (its `PRETEXT` states `PRESPELLTYPE:1,Arcane=3,Divine=3`
         // in rule syntax, converted as the token it is), `hellknight_signifer`,
         // `pathfinder_savant`, `storm_kindler`.
+        // Lowered 11 -> 1 on 2026-09-24 by SD-36 Epic F3c: the carrier rule
+        // walks `AtLeast` branches in oracle order, reads
+        // `HighestSpellLevel(Any)` as "at least 1 of Arcane, Divine", and
+        // reads a `Not` of a spell-kind term as a prohibition. Six `Any`
+        // gates and harrower / pathfinder_savant name wizard; evangelist
+        // (BAB +5 branch) and pure_legion_enforcer (prohibition) name the
+        // fighter floor. dragon_disciple remains: every branch of its
+        // caster clause needs a spontaneous caster, a sorcerer level or a
+        // draconic bloodline -- none a carrier + level term.
+        // Lowered 1 -> 0 on 2026-09-24 by SD-36 Epic F3c2: a gate branch naming
+        // `ClassLevel(<class>) >= n` makes that class the carrier, and a `Holds` option of a
+        // choice it offers is seeded as its pick -- dragon_disciple's third branch names the
+        // sorcerer and the draconic bloodline
+        // (`dragon_disciple_names_its_sorcerer_carrier_and_seeds_the_draconic_bloodline`).
         assert_eq!(
             ungroundable.len(),
-            11,
-            "measured ungroundable-gate prestige count moved off 11: {ungroundable:?}"
+            0,
+            "measured ungroundable-gate prestige count moved off 0: {ungroundable:?}"
         );
-        for expected in [
-            "class:dark_tempest",
-            "class:dragon_disciple",
-            "class:elocater",
-            "class:evangelist",
-            "class:harrower",
-            "class:hellknight_signifer",
-            "class:pathfinder_savant",
-            "class:psion_uncarnate",
-            "class:pure_legion_enforcer",
-            "class:storm_kindler",
-            "class:thrallherd",
-        ] {
-            assert!(
-                ungroundable.iter().any(|r| r.starts_with(expected)),
-                "{expected} expected among the ungroundable prestige gates: {ungroundable:?}"
-            );
-        }
     }
 
     #[test]
@@ -2300,11 +2715,11 @@ mod tests {
                 rhs: Expr::Const(1),
             })),
         ]);
-        let err = determine_carriers(&pure_legion_enforcer_gate)
-            .expect_err("a Not-wrapped Divine term must never select cleric");
-        assert!(
-            err.contains("Not") || err.contains("AtLeast"),
-            "reason should name why the gate could not be grounded: {err}"
+        // F3c: the prohibition is read as one -- the fighter floor, which
+        // casts nothing, never the cleric the gate forbids.
+        assert_eq!(
+            determine_carriers(&pure_legion_enforcer_gate).expect("a prohibition names the fighter floor"),
+            vec![PrestigeCarrier::Fighter]
         );
 
         let dragon_disciple_gate = Applies::AtLeast {
@@ -2323,6 +2738,8 @@ mod tests {
                 })),
             ],
         };
+        // Still Err under F3c: n = 3 of 3 needs the situational
+        // spontaneous-caster clause, which translates to no carrier.
         determine_carriers(&dragon_disciple_gate)
             .expect_err("an AtLeast-wrapped Arcane term must never select wizard");
 
@@ -2348,8 +2765,11 @@ mod tests {
                 Applies::Situational { text: "5 ranks".to_owned() },
             ],
         };
-        determine_carriers(&evangelist_gate)
-            .expect_err("an optional dual-caster alternative must never select both wizard and cleric");
+        // F3c: the first branch in oracle order (BAB +5) translates, so the
+        // fighter floor carries it -- never both wizard and cleric.
+        let evangelist = choose_carriers(&evangelist_gate).expect("the BAB branch translates");
+        assert_eq!(evangelist.carriers, vec![PrestigeCarrier::Fighter]);
+        assert!(evangelist.reason.contains("took branch(es) [1]"), "reason: {}", evangelist.reason);
 
         // A bare `Expr::CasterLevel` (no `HighestSpellLevel` at all) buried
         // in a `Not` is caster-shaped too and must also report Unknown --
@@ -2367,13 +2787,21 @@ mod tests {
         // the same behaviour through the full `carrier_assignment` path,
         // not only the synthetic-gate unit coverage above.
         let entries = census();
-        for class_id in ["class:pure_legion_enforcer", "class:dragon_disciple", "class:evangelist"] {
+        for (class_id, expected) in [
+            ("class:pure_legion_enforcer", Some(vec![PrestigeCarrier::Fighter])),
+            // F3c2: the gate's third caster branch names `ClassLevel(sorcerer) >= 1` -> the
+            // sorcerer carries it (never the wizard the F0-check finding refused).
+            ("class:dragon_disciple", Some(vec![PrestigeCarrier::Named("sorcerer")])),
+            ("class:evangelist", Some(vec![PrestigeCarrier::Fighter])),
+            ("class:harrower", Some(vec![PrestigeCarrier::Wizard])),
+            ("class:dark_tempest", Some(vec![PrestigeCarrier::Wizard])),
+        ] {
             let entry = entries.get(class_id).unwrap_or_else(|| panic!("{class_id} must be in the census"));
             let result = carrier_assignment(entry);
-            assert!(
-                result.is_err(),
-                "{class_id}: expected Unknown (Err) -- got {result:?}"
-            );
+            match expected {
+                Some(carriers) => assert_eq!(result.as_ref().ok(), Some(&carriers), "{class_id}: {result:?}"),
+                None => assert!(result.is_err(), "{class_id}: expected Unknown (Err) -- got {result:?}"),
+            }
         }
 
         // A class whose caster term IS mandatory and top-level (never
@@ -2411,8 +2839,10 @@ mod tests {
         let mut dual = 0usize;
         let mut fighter = 0usize;
         let mut unknown = 0usize;
+        let mut named = 0usize;
         let mut dual_names: Vec<&str> = Vec::new();
         let mut unknown_names: Vec<&str> = Vec::new();
+        let mut named_names: Vec<&str> = Vec::new();
         for entry in &prestige {
             match carrier_assignment(entry) {
                 Ok(carriers) => match carriers.as_slice() {
@@ -2422,6 +2852,10 @@ mod tests {
                     [PrestigeCarrier::Wizard, PrestigeCarrier::Cleric] => {
                         dual += 1;
                         dual_names.push(&entry.class_id);
+                    }
+                    [PrestigeCarrier::Named(_)] => {
+                        named += 1;
+                        named_names.push(&entry.class_id);
                     }
                     other => panic!("{}: unexpected carrier shape {other:?}", entry.class_id),
                 },
@@ -2435,7 +2869,7 @@ mod tests {
             }
         }
         assert_eq!(
-            wizard_only + cleric_only + dual + fighter + unknown,
+            wizard_only + cleric_only + dual + fighter + unknown + named,
             74,
             "carrier buckets must partition all 74 prestige classes"
         );
@@ -2454,9 +2888,13 @@ mod tests {
         // wizard (6 -> 7); it and the four new ungroundable gates (harrower,
         // hellknight_signifer, pathfinder_savant, storm_kindler) leave the
         // fighter floor (55 -> 50).
-        assert_eq!(wizard_only, 7, "measured wizard-only prestige carrier count moved off 7");
+        // SD-36 Epic F3c (2026-09-24): the carrier rule walks `AtLeast` /
+        // `Any` / `Not` (see `every_prestige_class_gets_a_carrier_or_is_named_unknown`):
+        // wizard 7 -> 15 (+6 `Any` gates, +harrower, +pathfinder_savant),
+        // fighter 50 -> 52 (+evangelist, +pure_legion_enforcer).
+        assert_eq!(wizard_only, 15, "measured wizard-only prestige carrier count moved off 15");
         assert_eq!(cleric_only, 5, "measured cleric-only prestige carrier count moved off 5");
-        assert_eq!(fighter, 50, "measured fighter-floor prestige carrier count moved off 50");
+        assert_eq!(fighter, 52, "measured fighter-floor prestige carrier count moved off 52");
         // Measured after the F0-check fix for findings 1/4: mystic_theurge
         // is the only class whose Arcane AND Divine terms are BOTH
         // mandatory, positive, top-level clauses (grounding independently
@@ -2481,29 +2919,14 @@ mod tests {
         // to either carrier without guessing).
         // 7 -> 11 on 2026-09-23 (SD-36 Epic F1c-3): see
         // `every_prestige_class_gets_a_carrier_or_is_named_unknown`.
-        assert_eq!(
-            unknown, 11,
-            "measured ungroundable-gate prestige count moved off 11: \
-             got {unknown_names:?}"
-        );
-        for expected in [
-            "class:dark_tempest",
-            "class:dragon_disciple",
-            "class:elocater",
-            "class:evangelist",
-            "class:harrower",
-            "class:hellknight_signifer",
-            "class:pathfinder_savant",
-            "class:psion_uncarnate",
-            "class:pure_legion_enforcer",
-            "class:storm_kindler",
-            "class:thrallherd",
-        ] {
-            assert!(
-                unknown_names.contains(&expected),
-                "{expected} expected Unknown, got bucketed: {unknown_names:?}"
-            );
-        }
+        // 11 -> 1 on 2026-09-24 (SD-36 Epic F3c).
+        // 1 -> 0 on 2026-09-24 (SD-36 Epic F3c2): dragon_disciple's gate names
+        // `ClassLevel(sorcerer) >= 1`, so the sorcerer is its (named) carrier -- the one gate of
+        // 74 that names a class level at all.
+        assert!(unknown_names.is_empty(), "measured ungroundable-gate prestige set moved off []: {unknown_names:?}");
+        assert_eq!(unknown, 0);
+        assert_eq!(named_names, vec!["class:dragon_disciple"], "named-class carriers moved off [dragon_disciple]");
+        assert_eq!(named, 1);
     }
 
     #[test]
@@ -2568,15 +2991,17 @@ mod tests {
             vec![PrestigeCarrier::Wizard, PrestigeCarrier::Cleric]
         );
 
-        // A caster signal reachable only through Not/AtLeast must never
-        // fall through to Fighter (F0-check findings 1/4).
+        // F3c: a `Not` of a spell-kind term is a prohibition -- the
+        // fighter floor meets it, and it is never read as a demand.
         let not_wrapped = Applies::Not(Box::new(Applies::Compare {
             lhs: Expr::HighestSpellLevel(SpellKind::Arcane),
             op: Cmp::Gte,
             rhs: Expr::Const(1),
         }));
-        assert!(determine_carriers(&not_wrapped).is_err());
+        assert_eq!(determine_carriers(&not_wrapped).unwrap(), vec![PrestigeCarrier::Fighter]);
 
+        // F3c: an `AtLeast` takes its first translatable branch in oracle
+        // order, and the reason names the branch.
         let at_least_wrapped = Applies::AtLeast {
             n: 1,
             of: vec![Applies::Compare {
@@ -2585,7 +3010,68 @@ mod tests {
                 rhs: Expr::Const(1),
             }],
         };
-        assert!(determine_carriers(&at_least_wrapped).is_err());
+        assert_eq!(determine_carriers(&at_least_wrapped).unwrap(), vec![PrestigeCarrier::Cleric]);
+        let skips_an_untranslatable_branch = Applies::AtLeast {
+            n: 1,
+            of: vec![
+                Applies::Situational { text: "requires a spontaneous caster".to_owned() },
+                Applies::Compare {
+                    lhs: Expr::HighestSpellLevel(SpellKind::Arcane),
+                    op: Cmp::Gte,
+                    rhs: Expr::Const(3),
+                },
+                Applies::Compare {
+                    lhs: Expr::HighestSpellLevel(SpellKind::Divine),
+                    op: Cmp::Gte,
+                    rhs: Expr::Const(3),
+                },
+            ],
+        };
+        let choice = choose_carriers(&skips_an_untranslatable_branch).unwrap();
+        assert_eq!(choice.carriers, vec![PrestigeCarrier::Wizard]);
+        assert!(choice.reason.contains("took branch(es) [2]"), "reason: {}", choice.reason);
+
+        // F3c: `HighestSpellLevel(Any)` is "at least 1 of Arcane, Divine" in
+        // that order -- wizard, unless the gate forbids arcane casting.
+        let any_caster = Applies::Compare {
+            lhs: Expr::HighestSpellLevel(SpellKind::Any),
+            op: Cmp::Gte,
+            rhs: Expr::Const(2),
+        };
+        assert_eq!(determine_carriers(&any_caster).unwrap(), vec![PrestigeCarrier::Wizard]);
+        let any_but_not_arcane = Applies::All(vec![
+            any_caster.clone(),
+            Applies::Not(Box::new(Applies::Compare {
+                lhs: Expr::HighestSpellLevel(SpellKind::Arcane),
+                op: Cmp::Gte,
+                rhs: Expr::Const(1),
+            })),
+        ]);
+        assert_eq!(determine_carriers(&any_but_not_arcane).unwrap(), vec![PrestigeCarrier::Cleric]);
+
+        // A gate that demands and forbids the same kind names no carrier.
+        let contradiction = Applies::All(vec![
+            Applies::Compare {
+                lhs: Expr::HighestSpellLevel(SpellKind::Divine),
+                op: Cmp::Gte,
+                rhs: Expr::Const(1),
+            },
+            Applies::Not(Box::new(Applies::Compare {
+                lhs: Expr::HighestSpellLevel(SpellKind::Divine),
+                op: Cmp::Gte,
+                rhs: Expr::Const(1),
+            })),
+        ]);
+        assert!(determine_carriers(&contradiction).is_err());
+
+        // A caster term only reachable through a branch that does not
+        // translate (a psychic kind: no carrier casts it) stays Err.
+        let psychic_only = Applies::Compare {
+            lhs: Expr::HighestSpellLevel(SpellKind::Psychic),
+            op: Cmp::Gte,
+            rhs: Expr::Const(1),
+        };
+        assert!(determine_carriers(&psychic_only).is_err());
 
         // A gate with no caster signal at all, anywhere, still floors to
         // Fighter -- the guard only fires for a caster signal it can see
@@ -2653,16 +3139,14 @@ mod tests {
     }
 
     #[test]
-    #[ignore = "RED until Epic F2"]
     fn prestige_alone_is_blocked_with_the_game_rule() {
         // §2: "every prestige class alone must be Blocked with the F2
-        // game-rule diagnostic (74 of 74)." F2 has not landed yet (it adds
-        // the prestige-alone entry-requirement diagnostic itself), so today
-        // a prestige class alone is Blocked for whatever engine reason
-        // happens to fire first (usually an unsupported-chassis diagnostic,
-        // never the real game-rule one) -- this test is the pinned future
-        // shape, RED until F2 names that diagnostic id.
-        const F2_GAME_RULE_DIAGNOSTIC_ID: &str = "class_chassis.prestige_requires_a_carrier_class";
+        // game-rule diagnostic (74 of 74)." Pinned RED until Epic F2b named
+        // that id (this test's placeholder was
+        // `class_chassis.prestige_requires_a_carrier_class`); F2b's rule is
+        // `compute_class_chassis`'s prestige-alone branch, swept here at every
+        // level of every prestige class, not only level 1.
+        const F2_GAME_RULE_DIAGNOSTIC_ID: &str = "prestige_class.requires_base_class_levels";
 
         let entries = census();
         let prestige = prestige_entries(&entries);
@@ -2714,6 +3198,55 @@ mod tests {
                 row.entry_gate_status
             );
         }
+    }
+
+    #[test]
+    fn f3c_carriers_named_through_at_least_any_and_not_reach_the_engine() {
+        // SD-36 F3c. Before F3c these rows had no carrier (`mixes` empty, status
+        // "unknown"); the census measured 11 such rows (census-f3c-0.json).
+        let entries = census();
+        let fixture = load_sweep_fixture().expect("shared deterministic fixture must load cleanly");
+        let row = |id: &str| build_prestige_row(&fixture, entries.get(id).unwrap_or_else(|| panic!("{id}")));
+
+        // An `AtLeast` of Arcane-or-Divine: branch 1 (Arcane) in oracle order.
+        let harrower = row("class:harrower");
+        assert_eq!(harrower.status, "computed", "{:?}", harrower.mixes.iter().map(|m| &m.0.blocking).collect::<Vec<_>>());
+        assert_eq!(harrower.carriers, vec![PrestigeCarrier::Wizard]);
+        let reason = harrower.carrier_reason.as_deref().expect("a named carrier carries its reason");
+        assert!(reason.contains("at least 1 of 2: took branch(es) [1]"), "{reason}");
+
+        // A mandatory `HighestSpellLevel(Any) >= 2`, plus an at-least-4-of-4 skill clause
+        // whose 6-rank terms lift the carrier to level 6.
+        let storm_kindler = row("class:storm_kindler");
+        assert_eq!(storm_kindler.status, "computed");
+        assert_eq!(storm_kindler.mixes[0].1.carrier_level, 6);
+        assert!(storm_kindler.carrier_reason.as_deref().unwrap_or("").contains("HighestSpellLevel(Any)"));
+
+        // A prohibition names the fighter floor; the mix then stops at the save gate, the
+        // oracle-formula defect pinned in multiclass_fold -- a refusal, never a number.
+        let pure_legion_enforcer = row("class:pure_legion_enforcer");
+        assert_eq!(pure_legion_enforcer.carriers, vec![PrestigeCarrier::Fighter]);
+        assert_eq!(pure_legion_enforcer.status, "blocked");
+        assert!(
+            pure_legion_enforcer.mixes[0].0.blocking.iter().any(|b| b.id == "multiclass.save_shape.unrecognized"),
+            "{:?}",
+            pure_legion_enforcer.mixes[0].0.blocking
+        );
+
+        // F3c2: the third caster branch names the sorcerer and the draconic bloodline; the
+        // sorcerer 5 mix (draconic pick seeded) reaches the engine. F3c4 (pin moved,
+        // retro-logged): the Draconic pick links to its converted option, leaving ONE line,
+        // `combat.baseline_weapon_proficiency_unknown` (closure defect `Internal|Bite`). F3c5
+        // (pin moved, retro-logged): that Internal natural-attack helper row converts as
+        // `Fact::NaturalAttack("Bite")` on Dragon Bite, so Dragon Disciple's closure is attested
+        // and the proficiency reader answers Known(empty) -- "Dragon disciples gain no
+        // proficiency with any weapon or armor" (CRB p.380). The mix computes at every level.
+        let dragon_disciple = row("class:dragon_disciple");
+        assert_eq!(dragon_disciple.carriers, vec![PrestigeCarrier::Named("sorcerer")]);
+        assert_eq!(dragon_disciple.mixes[0].1.carrier_level, 5);
+        let blocking: Vec<&str> = dragon_disciple.mixes[0].0.blocking.iter().map(|b| b.id.as_str()).collect();
+        assert!(blocking.is_empty(), "{blocking:?}");
+        assert_eq!(dragon_disciple.status, "computed");
     }
 
     // -----------------------------------------------------------------
@@ -2993,5 +3526,47 @@ mod tests {
         // sibling test carries: 3 of the 5 synthetic rows are blocked.
         let blocked_count = synthetic.iter().filter(|r| !r.computed).count();
         assert_eq!(blocked_count, 3);
+    }
+
+    /// SD-36 F3c2 (2): a gate branch that names `ClassLevel(<class>) >= n` makes THAT class the
+    /// carrier, and a `Holds(Rule(<option>))` term in the same branch whose target is an option
+    /// of a choice the carrier offers is seeded as the carrier's pick for the mix. Dragon
+    /// Disciple (CRB p.380) is the one gate of 74 that names a class level: its caster clause's
+    /// third branch is "at least 2 of [ClassLevel(sorcerer) >= 1, Holds
+    /// sorcerer_bloodline_draconic]".
+    #[test]
+    fn dragon_disciple_names_its_sorcerer_carrier_and_seeds_the_draconic_bloodline() {
+        let gate = prestige_applies_gate(&["core_rulebook".to_owned()], "dragon_disciple").expect("dragon disciple gate");
+        let carriers = determine_carriers(&gate).map(|cs| cs.iter().map(|c| c.slug()).collect::<Vec<_>>());
+        assert_eq!(carriers, Ok(vec!["sorcerer"]), "{gate:?}");
+        let choice = choose_carriers(&gate).expect("named");
+        assert_eq!(
+            choice.picks,
+            vec![(
+                "sorcerer".to_owned(),
+                SelectedChoice { choice_set_id: "choice:sorcerer_bloodline".to_owned(), selection_id: "bloodline:draconic".to_owned() }
+            )],
+            "{}",
+            choice.reason
+        );
+        assert!(choice.reason.contains("took branch(es) [3]"), "{}", choice.reason);
+        // The carrier level: ClassLevel(sorcerer) >= 1 under the floor of 5; 5 + 10 <= 20.
+        let ge = evaluate_carrier(choice.carriers[0], &gate, 10);
+        assert_eq!(ge.carrier_level, 5, "{ge:?}");
+        assert!(ge.met.iter().any(|m| m.contains("ClassLevel sorcerer >= 1")), "{ge:?}");
+        // The mix carries the draconic pick INSTEAD of the sorcerer's canonical arcane one.
+        let fixture = load_sweep_fixture().expect("fixture");
+        let input = input_for_mix_with_picks(&fixture, &[("sorcerer", 5), ("dragon_disciple", 1)], &choice.picks);
+        let bloodlines: Vec<&str> = input
+            .chosen
+            .selected_choices
+            .iter()
+            .filter(|c| c.choice_set_id == "choice:sorcerer_bloodline")
+            .map(|c| c.selection_id.as_str())
+            .collect();
+        assert_eq!(bloodlines, vec!["bloodline:draconic"]);
+        // Negative control: an option no named class offers does not translate.
+        assert!(carrier_pick_for_option("sorcerer", "advanced_class_guide:class_feature:eldritch_scion_spells").is_none());
+        assert!(carrier_pick_for_option("wizard", "core_rulebook:class_feature:sorcerer_bloodline_draconic").is_none());
     }
 }

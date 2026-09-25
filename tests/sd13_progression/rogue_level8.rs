@@ -362,7 +362,6 @@ multiclass_negative_controls! {
         prefixes: ["class_chassis.rogue."],
         exact: [ROGUE_EVASION_ID, ROGUE_TRAP_SENSE_ID, ROGUE_UNCANNY_DODGE_ID, ROGUE_IMPROVED_UNCANNY_DODGE_ID],
         message: "multiclass Rogue must not gain any bounded rogue chassis explanation: {:?}",
-        blocked_message: "multiclass Rogue must stay claim-blocked in this slice",
     },
 }
 

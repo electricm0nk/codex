@@ -46,7 +46,8 @@ impl PilotBaseChassisComputation {
         use crate::rules_core::sheet_rule::{render_sheet, CharacterFacts, HeldSeed};
         let mut seed = HeldSeed::from_character(input, &self);
         seed.race_traits.extend(extra_race_traits.iter().cloned());
-        let facts = CharacterFacts::from_character(input, &self);
+        // SD-36 F3c4: the character's Path-A picks linked to the converted options they name.
+        let facts = CharacterFacts::from_character(input, &self).with_linked_picks(package, &seed);
         self.sheet_lines = render_sheet(package, &seed, &facts);
         self
     }
@@ -1752,8 +1753,19 @@ pub fn compute_pilot_base_chassis(input: &CharacterInput) -> PilotBaseChassisCom
     // that means "not computed" would silently ship a stamina pool short by the
     // character's whole base attack bonus.
     let chassis_supported = computed_chassis.is_some();
+    // SD-36 Epic F2b: a prestige class alone already carries its game-rule
+    // diagnostic (`prestige_class.requires_base_class_levels`); the class is
+    // known, so the "unrecognized class" fallback below stands down for it.
+    // The `0`s it substitutes stay gated: that rule id is claim-blocking and
+    // `contract::printed_sheet_cell_map` blocks the chassis cells on it.
+    let prestige_alone = diagnostics
+        .iter()
+        .any(|d| d.id == PRESTIGE_REQUIRES_BASE_CLASS_LEVELS_DIAGNOSTIC_ID);
     let (base_attack_bonus, base_saves) = computed_chassis
             .unwrap_or_else(|| {
+            if prestige_alone {
+                return (0, BaseSaves::default());
+            }
             diagnostics.push(ComputationDiagnostic {
                 id: "class_chassis.unsupported".to_owned(),
                 message: format!(
@@ -2090,6 +2102,27 @@ pub fn compute_pilot_base_chassis(input: &CharacterInput) -> PilotBaseChassisCom
     // unrecognized class id, which still grounds nothing here (see
     // `prestige_class_feature_generic_grant_tests::
     // an_unrecognized_class_id_still_grounds_nothing_from_the_widened_gate`).
+    // SD-36 Epic F3b: a supported mix's character-level totals (HP, skill
+    // points) and each class's own lines, re-scoped `multiclass.<class>.*`,
+    // taken from its isolated single-class run. Base (pre-rage) modifiers: hit
+    // points and skill points are the character's standing figures.
+    if input.chosen.class_levels.len() == 1 && chassis_supported {
+        multiclass_fold::explain_single_class_skill_points(
+            input,
+            &base_ability_modifiers,
+            &mut explanations,
+            &mut diagnostics,
+        );
+    }
+    if input.chosen.class_levels.len() >= 2 && chassis_supported {
+        multiclass_fold::explain_multiclass_fold(
+            input,
+            &base_ability_modifiers,
+            &mut explanations,
+            &mut diagnostics,
+        );
+    }
+
     if let [class_level] = input.chosen.class_levels.as_slice()
         && (chassis_supported
             || prestige_class_entry_gate::is_registered(&class_level.class_id))
@@ -3417,14 +3450,44 @@ pub(crate) fn has_supported_class_chassis(input: &CharacterInput) -> bool {
         // each check independently of `compute_class_chassis` itself --
         // never grew a matching arm, so all 27 of those classes' receipts
         // still never reached `Computed` despite a real, correct chassis.
-        // Deliberately NOT extended to `prestige_class_entry_gate`: that
-        // registry's own module doc comment states it "still returns no
-        // chassis magnitude" by design (`class_chassis.unsupported` stays
-        // claim-blocking for prestige classes on purpose, since no BAB/save
-        // row exists to fold into a total save or combat baseline -- adding
-        // it here would fabricate zeroes as if they were real numbers).
         || is_supported_untabled_base_class_single_class(input)
         || is_supported_crb_untabled_class_single_class(input)
+        // SD-36 Epic F2a (`epic-f-class-completion.md` §4): the generic
+        // class-family arm -- every non-prestige class
+        // `generic_class_chassis::resolve` carries a converted BAB/base-save
+        // row for, across its `CLASS_FAMILY_BOOKS` (14 class-family books,
+        // then `core_rulebook` and `advanced_players_guide` last).
+        //
+        // Prestige classes stay OUT of the single-class gate, and the reason
+        // is the game rule, not missing data. The earlier comment here said
+        // "no BAB/save row exists" for prestige classes; that premise is
+        // false: 56 of the 74 prestige ids carried a converted BAB and three
+        // base-save rows in the original 14 books, and with CRB/APG appended
+        // all 74 do (`a_prestige_class_never_passes_the_generic_family_arm`
+        // counts them; e.g. Arcane Archer's full BAB and `(level+1)/2` good
+        // Fortitude). A prestige class is excluded because it cannot be a
+        // character's FIRST class: entering one requires levels in a base
+        // class, so a single-class prestige input is not a legal character
+        // and computing a half-sheet for it would print numbers for a build
+        // the rules forbid. F2's prestige-alone diagnostic states that rule
+        // by name; the multiclass gate (F3) is where a prestige class's real
+        // chassis row is folded in, alongside a base class.
+        || is_supported_generic_class_family_single_class(input)
+}
+
+/// A single-class, non-prestige character at a level `generic_class_chassis::
+/// resolve` carries a real converted BAB/base-save row for (SD-36 Epic F2a).
+/// Shaped like [`is_supported_untabled_base_class_single_class`]; returns
+/// `false` for a record tagged `Prestige` (see the comment at this arm's call
+/// site in [`has_supported_class_chassis`]).
+pub(super) fn is_supported_generic_class_family_single_class(input: &CharacterInput) -> bool {
+    let [class_level] = input.chosen.class_levels.as_slice() else {
+        return false;
+    };
+    if generic_class_chassis::is_prestige(&class_level.class_id) {
+        return false;
+    }
+    generic_class_chassis::resolve(&class_level.class_id, class_level.level).is_some()
 }
 
 /// A single-class character at a level `untabled_base_class_chassis::
@@ -3559,7 +3622,7 @@ pub(super) fn is_supported_generic_single_class(input: &CharacterInput) -> bool 
     if class_level.class_id == FIGHTER_CLASS_ID || class_level.class_id == WIZARD_CLASS_ID {
         return false;
     }
-    multiclass_class_level_supported(class_level)
+    table_class_level_supported(class_level)
 }
 
 /// A human-readable class label for explanation text (e.g. "Fighter",
@@ -3716,3 +3779,101 @@ pub(crate) fn table_class_id(class_id_str: &str) -> Option<ClassId> {
     }
 }
 
+
+/// SD-36 Epic F2a (`epic-f-class-completion.md` §4): the shared chassis gate's
+/// generic class-family arm, [`is_supported_generic_class_family_single_class`].
+#[cfg(test)]
+mod generic_class_family_gate_tests {
+    use super::{
+        generic_class_chassis, has_supported_class_chassis,
+        is_supported_generic_class_family_single_class, CharacterClassLevel, CharacterInput,
+    };
+    use crate::rules_core::character_input::load_character_input_fixture;
+
+    const FIGHTER_LEVEL_1_FIXTURE: &str = include_str!(
+        "../../../tests/fixtures/rules_core/pf1_human_fighter_level1_ge06_deterministic_input.txt"
+    );
+
+    fn single_class(class_id: &str, level: u8) -> CharacterInput {
+        let result = load_character_input_fixture(FIGHTER_LEVEL_1_FIXTURE);
+        assert!(result.diagnostics.is_empty(), "fixture should load cleanly");
+        let mut input = result.character_input.expect("valid fixture");
+        input.chosen.class_levels =
+            vec![CharacterClassLevel { class_id: class_id.to_owned(), level }];
+        input
+    }
+
+    /// Every non-prestige class the generic family resolves a chassis for passes
+    /// the new arm (and so the shared gate) at every level of its own ceiling;
+    /// Kineticist (`occult_adventures`) and Ninja (`ultimate_combat`) are named so a
+    /// vacuous population cannot pass.
+    #[test]
+    fn a_generic_family_base_class_passes_the_shared_gate() {
+        for class_id in ["class:kineticist", "class:ninja"] {
+            assert!(
+                is_supported_generic_class_family_single_class(&single_class(class_id, 5)),
+                "{class_id} level 5 must pass the generic class-family arm"
+            );
+        }
+        let mut checked = 0usize;
+        for meta in generic_class_chassis::covered_classes() {
+            if generic_class_chassis::is_prestige(&meta.class_id) {
+                continue;
+            }
+            for level in 1..=meta.max_level {
+                let input = single_class(&meta.class_id, level);
+                assert!(
+                    is_supported_generic_class_family_single_class(&input),
+                    "{} level {level} must pass the generic class-family arm",
+                    meta.class_id
+                );
+                assert!(has_supported_class_chassis(&input), "{} level {level}", meta.class_id);
+            }
+            checked += 1;
+        }
+        assert!(checked >= 2, "the non-prestige generic population must not be empty");
+    }
+
+    /// A prestige class never passes the generic arm, even though its record
+    /// carries a real BAB/save row: it cannot be a character's only class
+    /// (F2.2 states that rule by its own diagnostic). Every prestige record in
+    /// the population is checked, not one.
+    #[test]
+    fn a_prestige_class_never_passes_the_generic_family_arm() {
+        let mut checked = 0usize;
+        for meta in generic_class_chassis::covered_classes() {
+            if !generic_class_chassis::is_prestige(&meta.class_id) {
+                continue;
+            }
+            let input = single_class(&meta.class_id, 1);
+            assert!(
+                !is_supported_generic_class_family_single_class(&input),
+                "{} is Prestige-tagged and must not pass the generic arm",
+                meta.class_id
+            );
+            checked += 1;
+        }
+        // All 74 census prestige ids carry a converted chassis row since F2a:
+        // 56 from the original 14 class-family books + 18 from CRB/APG.
+        assert_eq!(checked, 74, "prestige classes with a real chassis row in the generic population");
+    }
+
+    /// Past a class's own ceiling, or for a multiclass input, the arm refuses.
+    #[test]
+    fn the_generic_family_arm_refuses_past_the_ceiling_and_for_a_mix() {
+        let ceiling = generic_class_chassis::covered_classes()
+            .into_iter()
+            .find(|m| m.class_id == "class:kineticist")
+            .expect("kineticist is in the generic population")
+            .max_level;
+        assert!(!is_supported_generic_class_family_single_class(&single_class(
+            "class:kineticist",
+            ceiling + 1
+        )));
+        let mut mix = single_class("class:kineticist", 3);
+        mix.chosen
+            .class_levels
+            .push(CharacterClassLevel { class_id: "class:ninja".to_owned(), level: 2 });
+        assert!(!is_supported_generic_class_family_single_class(&mix));
+    }
+}

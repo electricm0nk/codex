@@ -1,0 +1,577 @@
+{
+ "_purpose": "SD-36 Epic F3c3: the rules the SUBCLASS conversion adds (pinned by content sha256), the granted_by edges and _vars/ contributions it adds against the F3c2 package, and the row counts of its two _defects/ files; structural_diff.py gates on each (f3c3_check).",
+ "_command": "python3 f3c3_delta_pins.py <tranche/16 package dir, git archive cc21cac195> data/sheet_rules structural_diff_f3c3_deltas.json <F3c2 package dir, git archive de01bf571a>",
+ "owner": "ultimate_psionics:class:psion",
+ "added_rules": {
+  "f3c3_subclass_choice": {
+   "_count": 2,
+   "pins": [
+    [
+     "core_rulebook:class:wizard#subclass",
+     "core_rulebook:class:wizard",
+     "de9e03ce108d75c59fd90e222abdf5ed7890bfbf6b7ca3c228abb79b9701668c"
+    ],
+    [
+     "ultimate_psionics:class:psion#subclass",
+     "ultimate_psionics:class:psion",
+     "2b3e257fa201dbeadcb11906dbc236fc8d5ad1e777453c83ac0acc0ca706efa5"
+    ]
+   ]
+  },
+  "f3c3_subclass_option": {
+   "_count": 52,
+   "pins": [
+    [
+     "advanced_players_guide:subclass:wizard_air",
+     "core_rulebook:class:wizard",
+     "c7373fb107a9d69d3b81deb84f2547ce536263f30b550468464eb596604b1aa5"
+    ],
+    [
+     "advanced_players_guide:subclass:wizard_air#bonus0",
+     "core_rulebook:class:wizard",
+     "c4c9c4fb57ff29253a5471f6a37c4a29423e5ae829c10c5816b3d20ec0ff9f54"
+    ],
+    [
+     "advanced_players_guide:subclass:wizard_earth",
+     "core_rulebook:class:wizard",
+     "57faba977e96a6fe5d793de1386ed59288a77a1ede25f96c479bd8c0c299390c"
+    ],
+    [
+     "advanced_players_guide:subclass:wizard_earth#bonus0",
+     "core_rulebook:class:wizard",
+     "b6b0025e80ed2dc06495bea94ba54e3eae0bd49f0b068c5575db5b5071db315f"
+    ],
+    [
+     "advanced_players_guide:subclass:wizard_fire",
+     "core_rulebook:class:wizard",
+     "39ced1e8ab67e1827c2e3a976dffc01d2f0e4568d99a1f83db2cf5dd5f8d5fec"
+    ],
+    [
+     "advanced_players_guide:subclass:wizard_fire#bonus0",
+     "core_rulebook:class:wizard",
+     "c1c81cb94c7681b6e7d9a429908722319f85efa847f145dc642b0dde2fec4c76"
+    ],
+    [
+     "advanced_players_guide:subclass:wizard_water",
+     "core_rulebook:class:wizard",
+     "7323c062b7eb330e47bd4801fa63489ff75771c8fa8621f0b403030ba4df8f7a"
+    ],
+    [
+     "advanced_players_guide:subclass:wizard_water#bonus0",
+     "core_rulebook:class:wizard",
+     "ffdafdbcc255c2698b9147193694333b13ab6e7568ba7336a0009af4e1c1e1c5"
+    ],
+    [
+     "adventurers_guide:subclass:wizard_envy",
+     "core_rulebook:class:wizard",
+     "9ab8f1508ef6117c8c55566d8a36570464b9921af07b06db670ed1d32b7a72d8"
+    ],
+    [
+     "adventurers_guide:subclass:wizard_envy#bonus0",
+     "core_rulebook:class:wizard",
+     "7cfbd96635889c55e29090b440c29a61f91a4db14df83377729a4fb901528a3a"
+    ],
+    [
+     "adventurers_guide:subclass:wizard_gluttony",
+     "core_rulebook:class:wizard",
+     "0a29be0fb656dc2d0c2edb5f7fe78eb37bb593b964121951d9567b045620da49"
+    ],
+    [
+     "adventurers_guide:subclass:wizard_gluttony#bonus0",
+     "core_rulebook:class:wizard",
+     "7c6ab148e0684bf9a5500a15eec07ed6f4c7a24b5e1b8be3ffc653d6312de847"
+    ],
+    [
+     "adventurers_guide:subclass:wizard_greed",
+     "core_rulebook:class:wizard",
+     "e0e7e911fb6dd963de92f26862c8fee943d4011602b398cd17e74df6ad7e414f"
+    ],
+    [
+     "adventurers_guide:subclass:wizard_greed#bonus0",
+     "core_rulebook:class:wizard",
+     "d53f250881a77e933f852d24a8c002f83d9e49a135c6879bcb3f5f5c9634235c"
+    ],
+    [
+     "adventurers_guide:subclass:wizard_lust",
+     "core_rulebook:class:wizard",
+     "db23554f398e0e1646f8b8e36882eedec6cf1f96f8b90c30d35845d6215f0835"
+    ],
+    [
+     "adventurers_guide:subclass:wizard_lust#bonus0",
+     "core_rulebook:class:wizard",
+     "737e3822956e8d1c528a45f33cf567d49e602b00ee2e35e8de7ff318e12ec02f"
+    ],
+    [
+     "adventurers_guide:subclass:wizard_pride",
+     "core_rulebook:class:wizard",
+     "395ed3086ade466211c2ed558fc643e5c6528e24cdfa723c421af3448d1b175c"
+    ],
+    [
+     "adventurers_guide:subclass:wizard_pride#bonus0",
+     "core_rulebook:class:wizard",
+     "3d76d82a95ef9f3dcc33013fc592f9c8374f7201cb111cb46cf2841bb6cfb53c"
+    ],
+    [
+     "adventurers_guide:subclass:wizard_sloth",
+     "core_rulebook:class:wizard",
+     "8f5bcbfb8958ae3bd5c9ccea81ddda84453eccdbd05bbd9149e5ac7e5f47d57a"
+    ],
+    [
+     "adventurers_guide:subclass:wizard_sloth#bonus0",
+     "core_rulebook:class:wizard",
+     "d5aafcae1026268b349f66e2a81406727d59d5f9310402b1c2eaccf290e281fa"
+    ],
+    [
+     "adventurers_guide:subclass:wizard_wrath",
+     "core_rulebook:class:wizard",
+     "66018006372ec2217e1f6f52a01c9b844d3a3b3fedd0e45e403166acde0d5439"
+    ],
+    [
+     "adventurers_guide:subclass:wizard_wrath#bonus0",
+     "core_rulebook:class:wizard",
+     "f450ee66d59dc9a392f5c3a88ab6845ced8a149c59c11cb4a43783b8b5f98faa"
+    ],
+    [
+     "core_rulebook:subclass:wizard_abjurer",
+     "core_rulebook:class:wizard",
+     "7f49784a9724cad130297ac3732282447dd8ee92a74edb1ca2a52bed166051dd"
+    ],
+    [
+     "core_rulebook:subclass:wizard_conjurer",
+     "core_rulebook:class:wizard",
+     "4e153fe8cec9b4ace48bd2eef92e704a45f5e437c3fc5d86bd2e2182a8ac7911"
+    ],
+    [
+     "core_rulebook:subclass:wizard_diviner",
+     "core_rulebook:class:wizard",
+     "07d7494c9540c10d747ed20ce480204e0aaa0a4d5b330ca788c127023d60ad23"
+    ],
+    [
+     "core_rulebook:subclass:wizard_enchanter",
+     "core_rulebook:class:wizard",
+     "18827cfb84c706203fabd8565bf2e073b8bfaf000c07234f34daf7af070aea14"
+    ],
+    [
+     "core_rulebook:subclass:wizard_evoker",
+     "core_rulebook:class:wizard",
+     "e87a47f120b4d48af81513245ba10c5caae61f09aefe2ba377730aa9010a7d03"
+    ],
+    [
+     "core_rulebook:subclass:wizard_illusionist",
+     "core_rulebook:class:wizard",
+     "93fa7a348615a51fcccc19e4d387d7573dc9ca2c7ac7e6935723216fe0f8acca"
+    ],
+    [
+     "core_rulebook:subclass:wizard_necromancer",
+     "core_rulebook:class:wizard",
+     "d8d8c1007879c3e985f4a1f758ba8f919b0df6744ca2ff34dcdc579d632c0421"
+    ],
+    [
+     "core_rulebook:subclass:wizard_transmuter",
+     "core_rulebook:class:wizard",
+     "c978589bb8b84c8c16006e8135bd09cfe01c087cf24517def6382e3365a92cc0"
+    ],
+    [
+     "core_rulebook:subclass:wizard_universalist",
+     "core_rulebook:class:wizard",
+     "e813e1e038fedbc294c799c9f52551720097816f72677e170df025fd9d2c4acc"
+    ],
+    [
+     "ultimate_magic:subclass:wizard_metal",
+     "core_rulebook:class:wizard",
+     "a58d386dd2b6c541a9f32ea54076f80345ea6099656adbbec3c9c0403052b2cc"
+    ],
+    [
+     "ultimate_magic:subclass:wizard_wood",
+     "core_rulebook:class:wizard",
+     "e7440a217d4e0899b3a1da065c1cd5ca55e0736267809f197584a8708eaea4e8"
+    ],
+    [
+     "ultimate_psionics:subclass:psion_ascendant_psion",
+     "ultimate_psionics:class:psion",
+     "83db9c40e13546c7183fdeae4c4c5b729b670a42ad0fa717957a60554498d686"
+    ],
+    [
+     "ultimate_psionics:subclass:psion_bombardier",
+     "ultimate_psionics:class:psion",
+     "dbdafad633e860131e3acb26cddcbe0584be7ea01376ed18295ca2e99bcfb742"
+    ],
+    [
+     "ultimate_psionics:subclass:psion_bombardier#bonus0",
+     "ultimate_psionics:class:psion",
+     "95af789dd424df64105e543f5b956afad1d4ba46fd05f1d2e789241da501b0ff"
+    ],
+    [
+     "ultimate_psionics:subclass:psion_constructor",
+     "ultimate_psionics:class:psion",
+     "4531afe83aa160bd257bb7ef7fbdb5343fe7a0eb7fe388e380aebad677680714"
+    ],
+    [
+     "ultimate_psionics:subclass:psion_egoist",
+     "ultimate_psionics:class:psion",
+     "02c0b132030fb1aa7f0b0d40ba268b5f285b5b3d0bafd38cc9c0be990ac07b7e"
+    ],
+    [
+     "ultimate_psionics:subclass:psion_erudite",
+     "ultimate_psionics:class:psion",
+     "f5b306883f6c1c704484d533a6da5988d9334a0d8e7c7d32571016767d0b0ffc"
+    ],
+    [
+     "ultimate_psionics:subclass:psion_generalist",
+     "ultimate_psionics:class:psion",
+     "70158a7b9681035dd50670e3abcca7defe119e6348a82442f2c5a7df63c3884d"
+    ],
+    [
+     "ultimate_psionics:subclass:psion_insight",
+     "ultimate_psionics:class:psion",
+     "abac2bc41b997d414dd100d64f151527e4a902396c88a4f70e113c7da3d0c7fa"
+    ],
+    [
+     "ultimate_psionics:subclass:psion_jaunting",
+     "ultimate_psionics:class:psion",
+     "d30a3bc9216f11b2f91718b6928707e52d91c1cc51ccea7bcf6fe45d64142929"
+    ],
+    [
+     "ultimate_psionics:subclass:psion_kineticist_psion",
+     "ultimate_psionics:class:psion",
+     "92a16e0078244baf8977061c984e5623f60a01c82a84d1ab8eb8018c3b76def1"
+    ],
+    [
+     "ultimate_psionics:subclass:psion_mindbender",
+     "ultimate_psionics:class:psion",
+     "53c6990994e6ce1eb49f10620c255aced3008d5a77ff14b2285fe073690e3f34"
+    ],
+    [
+     "ultimate_psionics:subclass:psion_mindwright",
+     "ultimate_psionics:class:psion",
+     "6e583747e81446d4be737b7581b29d1dd34e08ce1a2185a873c86ee1a76226f5"
+    ],
+    [
+     "ultimate_psionics:subclass:psion_nomad",
+     "ultimate_psionics:class:psion",
+     "77b2af29e83f3ed4c9a07adf64664b279c49ea858a1a928b6aebcd3492836f51"
+    ],
+    [
+     "ultimate_psionics:subclass:psion_seer",
+     "ultimate_psionics:class:psion",
+     "9b9540c707cc547e40d35eab7a16a9858edd249117e630a5352249b6c907bda1"
+    ],
+    [
+     "ultimate_psionics:subclass:psion_shaper",
+     "ultimate_psionics:class:psion",
+     "1429fb233f626eb03749a6ec6c68035846eb798682e2ff4f9a7205d715734da3"
+    ],
+    [
+     "ultimate_psionics:subclass:psion_telepath",
+     "ultimate_psionics:class:psion",
+     "5b3799a8b32c7e76bfbe331fc206e578eb507510bbe0f702098e7fff05ece117"
+    ],
+    [
+     "ultimate_psionics:subclass:psion_transmogrifist",
+     "ultimate_psionics:class:psion",
+     "37f15386cfc076563d47627c4d59f67e488afd185cacb4df96eb06c197ba5fb5"
+    ],
+    [
+     "ultimate_psionics:subclass:psion_unseen_hand",
+     "ultimate_psionics:class:psion",
+     "13868d9f83c7a7881ec94933837f8dbbe894e88a9f0ee71a6f6a912ceebe4c5e"
+    ],
+    [
+     "ultimate_psionics:subclass:wizard_psychic_mage",
+     "core_rulebook:class:wizard",
+     "a6050c97786bccddea1a29e5d956b6e5fa471d929ee20d46c3886671d874823d"
+    ]
+   ]
+  }
+ },
+ "required_added_edges": {
+  "_count": 53,
+  "pins": [
+   [
+    "advanced_players_guide:class_feature:air_opposition_school",
+    "{\"by\": {\"Rule\": \"advanced_players_guide:subclass:wizard_earth\"}, \"when\": {\"Compare\": {\"lhs\": {\"ClassLevel\": \"wizard\"}, \"op\": \"Gte\", \"rhs\": {\"Const\": 1}}}}"
+   ],
+   [
+    "advanced_players_guide:class_feature:air_school",
+    "{\"by\": {\"Rule\": \"advanced_players_guide:subclass:wizard_air\"}, \"when\": {\"Compare\": {\"lhs\": {\"ClassLevel\": \"wizard\"}, \"op\": \"Gte\", \"rhs\": {\"Const\": 1}}}}"
+   ],
+   [
+    "advanced_players_guide:class_feature:earth_opposition_school",
+    "{\"by\": {\"Rule\": \"advanced_players_guide:subclass:wizard_air\"}, \"when\": {\"Compare\": {\"lhs\": {\"ClassLevel\": \"wizard\"}, \"op\": \"Gte\", \"rhs\": {\"Const\": 1}}}}"
+   ],
+   [
+    "advanced_players_guide:class_feature:earth_school",
+    "{\"by\": {\"Rule\": \"advanced_players_guide:subclass:wizard_earth\"}, \"when\": {\"Compare\": {\"lhs\": {\"ClassLevel\": \"wizard\"}, \"op\": \"Gte\", \"rhs\": {\"Const\": 1}}}}"
+   ],
+   [
+    "advanced_players_guide:class_feature:fire_opposition_school",
+    "{\"by\": {\"Rule\": \"advanced_players_guide:subclass:wizard_water\"}, \"when\": {\"Compare\": {\"lhs\": {\"ClassLevel\": \"wizard\"}, \"op\": \"Gte\", \"rhs\": {\"Const\": 1}}}}"
+   ],
+   [
+    "advanced_players_guide:class_feature:fire_school",
+    "{\"by\": {\"Rule\": \"advanced_players_guide:subclass:wizard_fire\"}, \"when\": {\"Compare\": {\"lhs\": {\"ClassLevel\": \"wizard\"}, \"op\": \"Gte\", \"rhs\": {\"Const\": 1}}}}"
+   ],
+   [
+    "advanced_players_guide:class_feature:water_opposition_school",
+    "{\"by\": {\"Rule\": \"advanced_players_guide:subclass:wizard_fire\"}, \"when\": {\"Compare\": {\"lhs\": {\"ClassLevel\": \"wizard\"}, \"op\": \"Gte\", \"rhs\": {\"Const\": 1}}}}"
+   ],
+   [
+    "advanced_players_guide:class_feature:water_school",
+    "{\"by\": {\"Rule\": \"advanced_players_guide:subclass:wizard_water\"}, \"when\": {\"Compare\": {\"lhs\": {\"ClassLevel\": \"wizard\"}, \"op\": \"Gte\", \"rhs\": {\"Const\": 1}}}}"
+   ],
+   [
+    "adventurers_guide:class_feature:envy_abjuration_school",
+    "{\"by\": {\"Rule\": \"adventurers_guide:subclass:wizard_envy\"}, \"when\": {\"Compare\": {\"lhs\": {\"ClassLevel\": \"wizard\"}, \"op\": \"Gte\", \"rhs\": {\"Const\": 1}}}}"
+   ],
+   [
+    "adventurers_guide:class_feature:gluttony_necromancy_school",
+    "{\"by\": {\"Rule\": \"adventurers_guide:subclass:wizard_gluttony\"}, \"when\": {\"Compare\": {\"lhs\": {\"ClassLevel\": \"wizard\"}, \"op\": \"Gte\", \"rhs\": {\"Const\": 1}}}}"
+   ],
+   [
+    "adventurers_guide:class_feature:greed_transmutation_school",
+    "{\"by\": {\"Rule\": \"adventurers_guide:subclass:wizard_greed\"}, \"when\": {\"Compare\": {\"lhs\": {\"ClassLevel\": \"wizard\"}, \"op\": \"Gte\", \"rhs\": {\"Const\": 1}}}}"
+   ],
+   [
+    "adventurers_guide:class_feature:lust_enchantment_school",
+    "{\"by\": {\"Rule\": \"adventurers_guide:subclass:wizard_lust\"}, \"when\": {\"Compare\": {\"lhs\": {\"ClassLevel\": \"wizard\"}, \"op\": \"Gte\", \"rhs\": {\"Const\": 1}}}}"
+   ],
+   [
+    "adventurers_guide:class_feature:pride_illusion_school",
+    "{\"by\": {\"Rule\": \"adventurers_guide:subclass:wizard_pride\"}, \"when\": {\"Compare\": {\"lhs\": {\"ClassLevel\": \"wizard\"}, \"op\": \"Gte\", \"rhs\": {\"Const\": 1}}}}"
+   ],
+   [
+    "adventurers_guide:class_feature:sloth_conjuration_school",
+    "{\"by\": {\"Rule\": \"adventurers_guide:subclass:wizard_sloth\"}, \"when\": {\"Compare\": {\"lhs\": {\"ClassLevel\": \"wizard\"}, \"op\": \"Gte\", \"rhs\": {\"Const\": 1}}}}"
+   ],
+   [
+    "adventurers_guide:class_feature:wrath_evocation_school",
+    "{\"by\": {\"Rule\": \"adventurers_guide:subclass:wizard_wrath\"}, \"when\": {\"Compare\": {\"lhs\": {\"ClassLevel\": \"wizard\"}, \"op\": \"Gte\", \"rhs\": {\"Const\": 1}}}}"
+   ],
+   [
+    "core_rulebook:class_feature:abjuration_school",
+    "{\"by\": {\"Rule\": \"core_rulebook:subclass:wizard_abjurer\"}, \"when\": {\"Compare\": {\"lhs\": {\"ClassLevel\": \"wizard\"}, \"op\": \"Gte\", \"rhs\": {\"Const\": 1}}}}"
+   ],
+   [
+    "core_rulebook:class_feature:conjuration_school",
+    "{\"by\": {\"Rule\": \"core_rulebook:subclass:wizard_conjurer\"}, \"when\": {\"Compare\": {\"lhs\": {\"ClassLevel\": \"wizard\"}, \"op\": \"Gte\", \"rhs\": {\"Const\": 1}}}}"
+   ],
+   [
+    "core_rulebook:class_feature:divination_school",
+    "{\"by\": {\"Rule\": \"core_rulebook:subclass:wizard_diviner\"}, \"when\": {\"Compare\": {\"lhs\": {\"ClassLevel\": \"wizard\"}, \"op\": \"Gte\", \"rhs\": {\"Const\": 1}}}}"
+   ],
+   [
+    "core_rulebook:class_feature:enchantment_school",
+    "{\"by\": {\"Rule\": \"core_rulebook:subclass:wizard_enchanter\"}, \"when\": {\"Compare\": {\"lhs\": {\"ClassLevel\": \"wizard\"}, \"op\": \"Gte\", \"rhs\": {\"Const\": 1}}}}"
+   ],
+   [
+    "core_rulebook:class_feature:evocation_school",
+    "{\"by\": {\"Rule\": \"core_rulebook:subclass:wizard_evoker\"}, \"when\": {\"Compare\": {\"lhs\": {\"ClassLevel\": \"wizard\"}, \"op\": \"Gte\", \"rhs\": {\"Const\": 1}}}}"
+   ],
+   [
+    "core_rulebook:class_feature:illusion_school",
+    "{\"by\": {\"Rule\": \"core_rulebook:subclass:wizard_illusionist\"}, \"when\": {\"Compare\": {\"lhs\": {\"ClassLevel\": \"wizard\"}, \"op\": \"Gte\", \"rhs\": {\"Const\": 1}}}}"
+   ],
+   [
+    "core_rulebook:class_feature:necromancy_school",
+    "{\"by\": {\"Rule\": \"core_rulebook:subclass:wizard_necromancer\"}, \"when\": {\"Compare\": {\"lhs\": {\"ClassLevel\": \"wizard\"}, \"op\": \"Gte\", \"rhs\": {\"Const\": 1}}}}"
+   ],
+   [
+    "core_rulebook:class_feature:transmutation_school",
+    "{\"by\": {\"Rule\": \"core_rulebook:subclass:wizard_transmuter\"}, \"when\": {\"Compare\": {\"lhs\": {\"ClassLevel\": \"wizard\"}, \"op\": \"Gte\", \"rhs\": {\"Const\": 1}}}}"
+   ],
+   [
+    "core_rulebook:class_feature:universal_school",
+    "{\"by\": {\"Rule\": \"core_rulebook:subclass:wizard_universalist\"}, \"when\": {\"All\": [{\"Compare\": {\"lhs\": {\"Var\": \"vc1a04c070f904dc4\"}, \"op\": \"Eq\", \"rhs\": {\"Const\": 0}}}, {\"Compare\": {\"lhs\": {\"Var\": \"ve837a1dde59fb926\"}, \"op\": \"Eq\", \"rhs\": {\"Const\": 0}}}, {\"Compare\": {\"lhs\": {\"ClassLevel\": \"wizard\"}, \"op\": \"Gte\", \"rhs\": {\"Const\": 1}}}]}}"
+   ],
+   [
+    "core_rulebook:feat:scribe_scroll",
+    "{\"by\": {\"Rule\": \"ultimate_psionics:subclass:psion_bombardier\"}, \"when\": {\"Compare\": {\"lhs\": {\"ClassLevel\": \"psion\"}, \"op\": \"Gte\", \"rhs\": {\"Const\": 1}}}}"
+   ],
+   [
+    "ultimate_magic:class_feature:metal_school",
+    "{\"by\": {\"Rule\": \"ultimate_magic:subclass:wizard_metal\"}, \"when\": {\"Compare\": {\"lhs\": {\"ClassLevel\": \"wizard\"}, \"op\": \"Gte\", \"rhs\": {\"Const\": 1}}}}"
+   ],
+   [
+    "ultimate_magic:class_feature:wood_school",
+    "{\"by\": {\"Rule\": \"ultimate_magic:subclass:wizard_wood\"}, \"when\": {\"Compare\": {\"lhs\": {\"ClassLevel\": \"wizard\"}, \"op\": \"Gte\", \"rhs\": {\"Const\": 1}}}}"
+   ],
+   [
+    "ultimate_psionics:class_feature:bombardier_exploding_stone",
+    "{\"by\": {\"Rule\": \"ultimate_psionics:subclass:psion_bombardier\"}, \"when\": {\"Compare\": {\"lhs\": {\"ClassLevel\": \"psion\"}, \"op\": \"Gte\", \"rhs\": {\"Const\": 1}}}}"
+   ],
+   [
+    "ultimate_psionics:class_feature:bombardier_talents",
+    "{\"by\": {\"Rule\": \"ultimate_psionics:subclass:psion_bombardier\"}, \"when\": {\"Compare\": {\"lhs\": {\"ClassLevel\": \"psion\"}, \"op\": \"Gte\", \"rhs\": {\"Const\": 1}}}}"
+   ],
+   [
+    "ultimate_psionics:class_feature:clairsentience_class_skills",
+    "{\"by\": {\"Rule\": \"ultimate_psionics:subclass:psion_seer\"}, \"when\": {\"All\": [{\"Not\": {\"Holds\": {\"count\": 1, \"what\": {\"RuleTag\": {\"pool\": \"archetype\", \"tag\": \"PsionDisciplineClassSkills\"}}}}}, {\"Compare\": {\"lhs\": {\"ClassLevel\": \"psion\"}, \"op\": \"Gte\", \"rhs\": {\"Const\": 1}}}]}}"
+   ],
+   [
+    "ultimate_psionics:class_feature:clairsentience_discipline",
+    "{\"by\": {\"Rule\": \"ultimate_psionics:subclass:psion_seer\"}, \"when\": {\"Compare\": {\"lhs\": {\"ClassLevel\": \"psion\"}, \"op\": \"Gte\", \"rhs\": {\"Const\": 1}}}}"
+   ],
+   [
+    "ultimate_psionics:class_feature:constructor_advanced_discipline",
+    "{\"by\": {\"Rule\": \"ultimate_psionics:subclass:psion_constructor\"}, \"when\": {\"Compare\": {\"lhs\": {\"ClassLevel\": \"psion\"}, \"op\": \"Gte\", \"rhs\": {\"Const\": 1}}}}"
+   ],
+   [
+    "ultimate_psionics:class_feature:erudite_advanced_discipline",
+    "{\"by\": {\"Rule\": \"ultimate_psionics:subclass:psion_erudite\"}, \"when\": {\"Compare\": {\"lhs\": {\"ClassLevel\": \"psion\"}, \"op\": \"Gte\", \"rhs\": {\"Const\": 1}}}}"
+   ],
+   [
+    "ultimate_psionics:class_feature:generalist_class_skills",
+    "{\"by\": {\"Rule\": \"ultimate_psionics:subclass:psion_generalist\"}, \"when\": {\"All\": [{\"Not\": {\"Holds\": {\"count\": 1, \"what\": {\"RuleTag\": {\"pool\": \"archetype\", \"tag\": \"PsionDisciplineClassSkills\"}}}}}, {\"Compare\": {\"lhs\": {\"ClassLevel\": \"psion\"}, \"op\": \"Gte\", \"rhs\": {\"Const\": 1}}}]}}"
+   ],
+   [
+    "ultimate_psionics:class_feature:generalist_discipline",
+    "{\"by\": {\"Rule\": \"ultimate_psionics:subclass:psion_generalist\"}, \"when\": {\"Compare\": {\"lhs\": {\"ClassLevel\": \"psion\"}, \"op\": \"Gte\", \"rhs\": {\"Const\": 1}}}}"
+   ],
+   [
+    "ultimate_psionics:class_feature:insight_advanced_discipline",
+    "{\"by\": {\"Rule\": \"ultimate_psionics:subclass:psion_insight\"}, \"when\": {\"Compare\": {\"lhs\": {\"ClassLevel\": \"psion\"}, \"op\": \"Gte\", \"rhs\": {\"Const\": 1}}}}"
+   ],
+   [
+    "ultimate_psionics:class_feature:jaunting_advanced_discipline",
+    "{\"by\": {\"Rule\": \"ultimate_psionics:subclass:psion_jaunting\"}, \"when\": {\"Compare\": {\"lhs\": {\"ClassLevel\": \"psion\"}, \"op\": \"Gte\", \"rhs\": {\"Const\": 1}}}}"
+   ],
+   [
+    "ultimate_psionics:class_feature:metacreativity_class_skills",
+    "{\"by\": {\"Rule\": \"ultimate_psionics:subclass:psion_shaper\"}, \"when\": {\"All\": [{\"Not\": {\"Holds\": {\"count\": 1, \"what\": {\"RuleTag\": {\"pool\": \"archetype\", \"tag\": \"PsionDisciplineClassSkills\"}}}}}, {\"Compare\": {\"lhs\": {\"ClassLevel\": \"psion\"}, \"op\": \"Gte\", \"rhs\": {\"Const\": 1}}}]}}"
+   ],
+   [
+    "ultimate_psionics:class_feature:metacreativity_discipline",
+    "{\"by\": {\"Rule\": \"ultimate_psionics:subclass:psion_shaper\"}, \"when\": {\"Compare\": {\"lhs\": {\"ClassLevel\": \"psion\"}, \"op\": \"Gte\", \"rhs\": {\"Const\": 1}}}}"
+   ],
+   [
+    "ultimate_psionics:class_feature:mindbender_advanced_discipline",
+    "{\"by\": {\"Rule\": \"ultimate_psionics:subclass:psion_mindbender\"}, \"when\": {\"Compare\": {\"lhs\": {\"ClassLevel\": \"psion\"}, \"op\": \"Gte\", \"rhs\": {\"Const\": 1}}}}"
+   ],
+   [
+    "ultimate_psionics:class_feature:mindwright_abilities",
+    "{\"by\": {\"Rule\": \"ultimate_psionics:subclass:psion_mindwright\"}, \"when\": {\"Compare\": {\"lhs\": {\"ClassLevel\": \"psion\"}, \"op\": \"Gte\", \"rhs\": {\"Const\": 1}}}}"
+   ],
+   [
+    "ultimate_psionics:class_feature:psion_archetype_ascendant_psion",
+    "{\"by\": {\"Rule\": \"ultimate_psionics:subclass:psion_ascendant_psion\"}, \"when\": {\"Compare\": {\"lhs\": {\"ClassLevel\": \"psion\"}, \"op\": \"Gte\", \"rhs\": {\"Const\": 1}}}}"
+   ],
+   [
+    "ultimate_psionics:class_feature:psychokinesis_class_skills",
+    "{\"by\": {\"Rule\": \"ultimate_psionics:subclass:psion_kineticist_psion\"}, \"when\": {\"All\": [{\"Not\": {\"Holds\": {\"count\": 1, \"what\": {\"RuleTag\": {\"pool\": \"archetype\", \"tag\": \"PsionDisciplineClassSkills\"}}}}}, {\"Compare\": {\"lhs\": {\"ClassLevel\": \"psion\"}, \"op\": \"Gte\", \"rhs\": {\"Const\": 1}}}]}}"
+   ],
+   [
+    "ultimate_psionics:class_feature:psychokinesis_discipline",
+    "{\"by\": {\"Rule\": \"ultimate_psionics:subclass:psion_kineticist_psion\"}, \"when\": {\"Compare\": {\"lhs\": {\"ClassLevel\": \"psion\"}, \"op\": \"Gte\", \"rhs\": {\"Const\": 1}}}}"
+   ],
+   [
+    "ultimate_psionics:class_feature:psychometabolism_class_skills",
+    "{\"by\": {\"Rule\": \"ultimate_psionics:subclass:psion_egoist\"}, \"when\": {\"All\": [{\"Not\": {\"Holds\": {\"count\": 1, \"what\": {\"RuleTag\": {\"pool\": \"archetype\", \"tag\": \"PsionDisciplineClassSkills\"}}}}}, {\"Compare\": {\"lhs\": {\"ClassLevel\": \"psion\"}, \"op\": \"Gte\", \"rhs\": {\"Const\": 1}}}]}}"
+   ],
+   [
+    "ultimate_psionics:class_feature:psychometabolism_discipline",
+    "{\"by\": {\"Rule\": \"ultimate_psionics:subclass:psion_egoist\"}, \"when\": {\"Compare\": {\"lhs\": {\"ClassLevel\": \"psion\"}, \"op\": \"Gte\", \"rhs\": {\"Const\": 1}}}}"
+   ],
+   [
+    "ultimate_psionics:class_feature:psychoportation_class_skills",
+    "{\"by\": {\"Rule\": \"ultimate_psionics:subclass:psion_nomad\"}, \"when\": {\"All\": [{\"Not\": {\"Holds\": {\"count\": 1, \"what\": {\"RuleTag\": {\"pool\": \"archetype\", \"tag\": \"PsionDisciplineClassSkills\"}}}}}, {\"Compare\": {\"lhs\": {\"ClassLevel\": \"psion\"}, \"op\": \"Gte\", \"rhs\": {\"Const\": 1}}}]}}"
+   ],
+   [
+    "ultimate_psionics:class_feature:psychoportation_discipline",
+    "{\"by\": {\"Rule\": \"ultimate_psionics:subclass:psion_nomad\"}, \"when\": {\"Compare\": {\"lhs\": {\"ClassLevel\": \"psion\"}, \"op\": \"Gte\", \"rhs\": {\"Const\": 1}}}}"
+   ],
+   [
+    "ultimate_psionics:class_feature:telepathy_class_skills",
+    "{\"by\": {\"Rule\": \"ultimate_psionics:subclass:psion_telepath\"}, \"when\": {\"All\": [{\"Not\": {\"Holds\": {\"count\": 1, \"what\": {\"RuleTag\": {\"pool\": \"archetype\", \"tag\": \"PsionDisciplineClassSkills\"}}}}}, {\"Compare\": {\"lhs\": {\"ClassLevel\": \"psion\"}, \"op\": \"Gte\", \"rhs\": {\"Const\": 1}}}]}}"
+   ],
+   [
+    "ultimate_psionics:class_feature:telepathy_discipline",
+    "{\"by\": {\"Rule\": \"ultimate_psionics:subclass:psion_telepath\"}, \"when\": {\"Compare\": {\"lhs\": {\"ClassLevel\": \"psion\"}, \"op\": \"Gte\", \"rhs\": {\"Const\": 1}}}}"
+   ],
+   [
+    "ultimate_psionics:class_feature:transmogrifist_advanced_discipline",
+    "{\"by\": {\"Rule\": \"ultimate_psionics:subclass:psion_transmogrifist\"}, \"when\": {\"Compare\": {\"lhs\": {\"ClassLevel\": \"psion\"}, \"op\": \"Gte\", \"rhs\": {\"Const\": 1}}}}"
+   ],
+   [
+    "ultimate_psionics:class_feature:unseen_hand_advanced_discipline",
+    "{\"by\": {\"Rule\": \"ultimate_psionics:subclass:psion_unseen_hand\"}, \"when\": {\"Compare\": {\"lhs\": {\"ClassLevel\": \"psion\"}, \"op\": \"Gte\", \"rhs\": {\"Const\": 1}}}}"
+   ],
+   [
+    "ultimate_psionics:class_feature:wizard_archetype_psychic_mage",
+    "{\"by\": {\"Rule\": \"ultimate_psionics:subclass:wizard_psychic_mage\"}, \"when\": {\"All\": [{\"Compare\": {\"lhs\": {\"Var\": \"vc1a04c070f904dc4\"}, \"op\": \"Eq\", \"rhs\": {\"Const\": 0}}}, {\"Compare\": {\"lhs\": {\"ClassLevel\": \"wizard\"}, \"op\": \"Gte\", \"rhs\": {\"Const\": 1}}}]}}"
+   ]
+  ]
+ },
+ "var_contributions": {
+  "_count": 16,
+  "pins": [
+   [
+    "_vars/v2722a61b88e04397.json",
+    "{\"expr\": {\"ClassLevel\": \"psion\"}, \"rule_id\": \"ultimate_psionics:subclass:psion_erudite\", \"when\": {\"Compare\": {\"lhs\": {\"ClassLevel\": \"psion\"}, \"op\": \"Gte\", \"rhs\": {\"Const\": 1}}}}"
+   ],
+   [
+    "_vars/v2722a61b88e04397.json",
+    "{\"expr\": {\"ClassLevel\": \"psion\"}, \"rule_id\": \"ultimate_psionics:subclass:psion_generalist\", \"when\": {\"Compare\": {\"lhs\": {\"ClassLevel\": \"psion\"}, \"op\": \"Gte\", \"rhs\": {\"Const\": 1}}}}"
+   ],
+   [
+    "_vars/v308fe013e550a1ef.json",
+    "{\"expr\": {\"ClassLevel\": \"psion\"}, \"rule_id\": \"ultimate_psionics:subclass:psion_egoist\", \"when\": {\"Compare\": {\"lhs\": {\"ClassLevel\": \"psion\"}, \"op\": \"Gte\", \"rhs\": {\"Const\": 1}}}}"
+   ],
+   [
+    "_vars/v308fe013e550a1ef.json",
+    "{\"expr\": {\"ClassLevel\": \"psion\"}, \"rule_id\": \"ultimate_psionics:subclass:psion_transmogrifist\", \"when\": {\"Compare\": {\"lhs\": {\"ClassLevel\": \"psion\"}, \"op\": \"Gte\", \"rhs\": {\"Const\": 1}}}}"
+   ],
+   [
+    "_vars/v4e7c44ee66efe418.json",
+    "{\"expr\": {\"ClassLevel\": \"psion\"}, \"rule_id\": \"ultimate_psionics:subclass:psion_mindbender\", \"when\": {\"Compare\": {\"lhs\": {\"ClassLevel\": \"psion\"}, \"op\": \"Gte\", \"rhs\": {\"Const\": 1}}}}"
+   ],
+   [
+    "_vars/v4e7c44ee66efe418.json",
+    "{\"expr\": {\"ClassLevel\": \"psion\"}, \"rule_id\": \"ultimate_psionics:subclass:psion_telepath\", \"when\": {\"Compare\": {\"lhs\": {\"ClassLevel\": \"psion\"}, \"op\": \"Gte\", \"rhs\": {\"Const\": 1}}}}"
+   ],
+   [
+    "_vars/v66d7dbe076068546.json",
+    "{\"expr\": {\"ClassLevel\": \"wizard\"}, \"rule_id\": \"ultimate_psionics:subclass:wizard_psychic_mage\", \"when\": {\"Compare\": {\"lhs\": {\"ClassLevel\": \"wizard\"}, \"op\": \"Gte\", \"rhs\": {\"Const\": 1}}}}"
+   ],
+   [
+    "_vars/v8ff2b36492c0b125.json",
+    "{\"expr\": {\"ClassLevel\": \"psion\"}, \"rule_id\": \"ultimate_psionics:subclass:psion_kineticist_psion\", \"when\": {\"Compare\": {\"lhs\": {\"ClassLevel\": \"psion\"}, \"op\": \"Gte\", \"rhs\": {\"Const\": 1}}}}"
+   ],
+   [
+    "_vars/v8ff2b36492c0b125.json",
+    "{\"expr\": {\"ClassLevel\": \"psion\"}, \"rule_id\": \"ultimate_psionics:subclass:psion_unseen_hand\", \"when\": {\"Compare\": {\"lhs\": {\"ClassLevel\": \"psion\"}, \"op\": \"Gte\", \"rhs\": {\"Const\": 1}}}}"
+   ],
+   [
+    "_vars/vb0642c0c4742fb16.json",
+    "{\"expr\": {\"ClassLevel\": \"psion\"}, \"rule_id\": \"ultimate_psionics:subclass:psion_insight\", \"when\": {\"Compare\": {\"lhs\": {\"ClassLevel\": \"psion\"}, \"op\": \"Gte\", \"rhs\": {\"Const\": 1}}}}"
+   ],
+   [
+    "_vars/vb0642c0c4742fb16.json",
+    "{\"expr\": {\"ClassLevel\": \"psion\"}, \"rule_id\": \"ultimate_psionics:subclass:psion_seer\", \"when\": {\"Compare\": {\"lhs\": {\"ClassLevel\": \"psion\"}, \"op\": \"Gte\", \"rhs\": {\"Const\": 1}}}}"
+   ],
+   [
+    "_vars/vb68c0d62fa12a4b5.json",
+    "{\"expr\": {\"ClassLevel\": \"psion\"}, \"rule_id\": \"ultimate_psionics:subclass:psion_jaunting\", \"when\": {\"Compare\": {\"lhs\": {\"ClassLevel\": \"psion\"}, \"op\": \"Gte\", \"rhs\": {\"Const\": 1}}}}"
+   ],
+   [
+    "_vars/vb68c0d62fa12a4b5.json",
+    "{\"expr\": {\"ClassLevel\": \"psion\"}, \"rule_id\": \"ultimate_psionics:subclass:psion_nomad\", \"when\": {\"Compare\": {\"lhs\": {\"ClassLevel\": \"psion\"}, \"op\": \"Gte\", \"rhs\": {\"Const\": 1}}}}"
+   ],
+   [
+    "_vars/vb87a35c801172f45.json",
+    "{\"expr\": {\"ClassLevel\": \"psion\"}, \"rule_id\": \"ultimate_psionics:subclass:psion_constructor\", \"when\": {\"Compare\": {\"lhs\": {\"ClassLevel\": \"psion\"}, \"op\": \"Gte\", \"rhs\": {\"Const\": 1}}}}"
+   ],
+   [
+    "_vars/vb87a35c801172f45.json",
+    "{\"expr\": {\"ClassLevel\": \"psion\"}, \"rule_id\": \"ultimate_psionics:subclass:psion_shaper\", \"when\": {\"Compare\": {\"lhs\": {\"ClassLevel\": \"psion\"}, \"op\": \"Gte\", \"rhs\": {\"Const\": 1}}}}"
+   ],
+   [
+    "_vars/ve837a1dde59fb926.json",
+    "{\"expr\": {\"Const\": 1}, \"rule_id\": \"ultimate_psionics:subclass:wizard_psychic_mage\", \"when\": {\"Compare\": {\"lhs\": {\"ClassLevel\": \"wizard\"}, \"op\": \"Gte\", \"rhs\": {\"Const\": 1}}}}"
+   ]
+  ]
+ },
+ "defect_rows": {
+  "_defects/subclass-token-unconverted.json": 117,
+  "_defects/subclass-superseded-reprint.json": 7
+ }
+}

@@ -23,6 +23,11 @@ has real, fast unit-test coverage (`scripts/tests/
 test_check_class_census_baselines.py`) that proves each of the four red
 paths actually fires, rather than only the two `run_class_census` used to
 exercise.
+
+SD-36 Epic F3c (2026-09-24) adds a fifth floor,
+`BASELINE_CENSUS_PRESTIGE_MIX_COMPUTED` (the census's `prestige_mix_computed`:
+prestige classes whose deterministic carrier mix reaches Computed at every
+prestige level).
 """
 
 from __future__ import annotations
@@ -37,7 +42,7 @@ def check(doc: dict, baselines: dict) -> list[str]:
     falls below -- empty when every one of the four counts meets or
     exceeds its floor. Raises `KeyError` (loud, not a silent default) if
     the document is missing one of the four required integer fields."""
-    required = ["ids", "computed", "prestige_alone_blocked", "mix_panel_computed"]
+    required = ["ids", "computed", "prestige_alone_blocked", "mix_panel_computed", "prestige_mix_computed"]
     for field in required:
         if not isinstance(doc.get(field), int):
             raise KeyError(
@@ -51,6 +56,7 @@ def check(doc: dict, baselines: dict) -> list[str]:
         ("computed", "BASELINE_CENSUS_COMPUTED"),
         ("prestige_alone_blocked", "BASELINE_CENSUS_PRESTIGE_ALONE_BLOCKED"),
         ("mix_panel_computed", "BASELINE_CENSUS_MIX_COMPUTED"),
+        ("prestige_mix_computed", "BASELINE_CENSUS_PRESTIGE_MIX_COMPUTED"),
     ]
     for field, baseline_name in checks:
         actual = doc[field]
@@ -67,6 +73,7 @@ def main(argv=None):
     parser.add_argument("--baseline-computed", type=int, required=True)
     parser.add_argument("--baseline-prestige-alone-blocked", type=int, required=True)
     parser.add_argument("--baseline-mix-computed", type=int, required=True)
+    parser.add_argument("--baseline-prestige-mix-computed", type=int, required=True)
     args = parser.parse_args(argv)
 
     try:
@@ -81,6 +88,7 @@ def main(argv=None):
         "BASELINE_CENSUS_COMPUTED": args.baseline_computed,
         "BASELINE_CENSUS_PRESTIGE_ALONE_BLOCKED": args.baseline_prestige_alone_blocked,
         "BASELINE_CENSUS_MIX_COMPUTED": args.baseline_mix_computed,
+        "BASELINE_CENSUS_PRESTIGE_MIX_COMPUTED": args.baseline_prestige_mix_computed,
     }
 
     try:
@@ -97,12 +105,14 @@ def main(argv=None):
     print(
         f"OK ids={doc['ids']} computed={doc['computed']} "
         f"prestige_alone_blocked={doc['prestige_alone_blocked']} "
-        f"mix_panel_computed={doc['mix_panel_computed']}"
+        f"mix_panel_computed={doc['mix_panel_computed']} "
+        f"prestige_mix_computed={doc['prestige_mix_computed']}"
     )
     print(f"ACTUAL BASELINE_CENSUS_IDS={doc['ids']}")
     print(f"ACTUAL BASELINE_CENSUS_COMPUTED={doc['computed']}")
     print(f"ACTUAL BASELINE_CENSUS_PRESTIGE_ALONE_BLOCKED={doc['prestige_alone_blocked']}")
     print(f"ACTUAL BASELINE_CENSUS_MIX_COMPUTED={doc['mix_panel_computed']}")
+    print(f"ACTUAL BASELINE_CENSUS_PRESTIGE_MIX_COMPUTED={doc['prestige_mix_computed']}")
     return 0
 
 

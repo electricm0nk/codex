@@ -6108,6 +6108,18 @@ pub(super) fn push_generic_pool_group_selection_magnitude(
     if level < min_level {
         return;
     }
+    // SD-36 F3c4: a selection the converted package links to its pick option, which the held
+    // set holds for this character (`sheet_rule_package::linked_picks`), YIELDS to the held-set
+    // path. This pass evaluates every
+    // `<group> ~ <member>` record at the character's level with no level gate (a Draconic
+    // sorcerer 5 printed Breath Weapon, a 9th-level power, and Power of Wyrms, a 20th-level one;
+    // an Arcane sorcerer 5 printed Arcane Apotheosis), and it reads members of the group that
+    // belong to other classes' records (`Draconic Bloodline ~ Bloodrager`). The held set holds the
+    // picked option, its record and each member line only at the level the record's own grant
+    // gate states, and the sheet prints each line's value from the record -- so for a linked
+    // selection this pass prints nothing. A selection the package does not link keeps this
+    // pass's answer (a named remainder: its level gate is not decidable here).
+    let linked = crate::rules_core::sheet_rule_package::linked_picks(input);
     for selection_id in input
         .chosen
         .selected_choices
@@ -6116,45 +6128,84 @@ pub(super) fn push_generic_pool_group_selection_magnitude(
         .map(|c| c.selection_id.as_str())
     {
         let Some(slug) = selection_id.strip_prefix(namespace) else { continue };
-        let Some(group) = real_pool_group_for_selection_slug(class, registered_name, slug) else {
+        let member = crate::rules_core::sheet_rule::id_slug(selection_id);
+        if linked.iter().any(|l| l.choice_set_id == choice_set_id && l.member == member && l.option_held) {
             continue;
-        };
-        let prefix = format!("{group} ~ ");
-        let group_slug = class_feature_id_slug(&group);
-        for (key, _record) in class_feature_grant_consumer::class_feature_record_tokens_pre_gate_safe()
-            .iter()
-        {
-            let Some(member_name) = key.strip_prefix(&prefix) else { continue };
-            // SD-32 T12 Epic 8 row 18 cycle 20: every independent terminal (1-3), not a
-            // sole-terminal refusal -- closes `Forbidden Rites Domain` and its Starsoul/
-            // Celestial/Fey Bloodline siblings' genuine multi-terminal records. See
-            // `resolve_pool_member_all_magnitudes`'s own doc.
-            let member_slug = class_feature_id_slug(member_name);
-            for (target, value) in resolve_pool_member_all_magnitudes(
-                key,
-                &group,
-                level,
-                ability_modifiers,
-                Some(class),
-                Some(registered_name),
-            ) {
-                let Ok(value) = i16::try_from(value) else { continue };
-                let target_slug = class_feature_id_slug(&target);
-                explanations.push(ComputationExplanation {
-                    id: format!("{id_prefix}.{group_slug}.{member_slug}.{target_slug}"),
-                    value,
-                    detail: format!(
-                        "{group} member \"{member_name}\" (corpus key `{key}`, real level {level}): \
-                         {target} = {value}. Resolved generically -- not a hand-picked, per-member \
-                         function -- through resolve_pcgen_var_chain's real PCGen formula evaluator, \
-                         seeded with this character's real class level and real ability modifiers, \
-                         after resolving the recorded {choice_set_id} -> {selection_id} selection to \
-                         its real corpus group {group} (SD-32 T12 Epic 8, decisions.md §17 generic \
-                         pool-group-selection magnitude resolver)."
-                    ),
-                });
-            }
+        }
+        for line in generic_pool_group_member_lines(level, ability_modifiers, class, registered_name, slug) {
+            let GenericPoolGroupMemberLine { key, group, group_slug, member_name, member_slug, target, target_slug, value } =
+                line;
+            explanations.push(ComputationExplanation {
+                id: format!("{id_prefix}.{group_slug}.{member_slug}.{target_slug}"),
+                value,
+                detail: format!(
+                    "{group} member \"{member_name}\" (corpus key `{key}`, real level {level}): \
+                     {target} = {value}. Resolved generically -- not a hand-picked, per-member \
+                     function -- through resolve_pcgen_var_chain's real PCGen formula evaluator, \
+                     seeded with this character's real class level and real ability modifiers, \
+                     after resolving the recorded {choice_set_id} -> {selection_id} selection to \
+                     its real corpus group {group} (SD-32 T12 Epic 8, decisions.md §17 generic \
+                     pool-group-selection magnitude resolver)."
+                ),
+            });
         }
     }
+}
+
+/// One member value [`push_generic_pool_group_selection_magnitude`] prints for a selection.
+#[derive(Debug, Clone, PartialEq, Eq)]
+pub(super) struct GenericPoolGroupMemberLine {
+    /// The corpus key, `"<group> ~ <member>"`.
+    pub key: String,
+    pub group: String,
+    pub group_slug: String,
+    pub member_name: String,
+    pub member_slug: String,
+    pub target: String,
+    pub target_slug: String,
+    pub value: i16,
+}
+
+/// Every member value the SD-32 generic pass resolves for the selection slug `slug` of
+/// `class`'s `registered_name` pool at `level` -- the pass's own answer before the SD-36 F3c4
+/// yield (kept separate so the level-gate scan can measure what the pass would print).
+pub(super) fn generic_pool_group_member_lines(
+    level: u8,
+    ability_modifiers: &AbilityModifiers,
+    class: &str,
+    registered_name: &str,
+    slug: &str,
+) -> Vec<GenericPoolGroupMemberLine> {
+    let mut out = Vec::new();
+    let Some(group) = real_pool_group_for_selection_slug(class, registered_name, slug) else {
+        return out;
+    };
+    let prefix = format!("{group} ~ ");
+    let group_slug = class_feature_id_slug(&group);
+    for (key, _record) in class_feature_grant_consumer::class_feature_record_tokens_pre_gate_safe().iter() {
+        let Some(member_name) = key.strip_prefix(&prefix) else { continue };
+        // SD-32 T12 Epic 8 row 18 cycle 20: every independent terminal (1-3), not a
+        // sole-terminal refusal -- closes `Forbidden Rites Domain` and its Starsoul/
+        // Celestial/Fey Bloodline siblings' genuine multi-terminal records. See
+        // `resolve_pool_member_all_magnitudes`'s own doc.
+        let member_slug = class_feature_id_slug(member_name);
+        for (target, value) in
+            resolve_pool_member_all_magnitudes(key, &group, level, ability_modifiers, Some(class), Some(registered_name))
+        {
+            let Ok(value) = i16::try_from(value) else { continue };
+            let target_slug = class_feature_id_slug(&target);
+            out.push(GenericPoolGroupMemberLine {
+                key: key.clone(),
+                group: group.clone(),
+                group_slug: group_slug.clone(),
+                member_name: member_name.to_owned(),
+                member_slug: member_slug.clone(),
+                target,
+                target_slug,
+                value,
+            });
+        }
+    }
+    out
 }
 

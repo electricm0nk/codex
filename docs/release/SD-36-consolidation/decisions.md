@@ -369,6 +369,54 @@ row is a genuine forward-scope deferral, not a closure gap.
 - F1.3/F1.6 in `epic-breakdown.md` (links closed = 11,925 - 4,456 = 7,469 of 11,925, or the
   difference explained row by row; structural diff proves no other field moved).
 
+### §12.1 — Resolver scope addendum (F3b2b, 2026-09-24): same-object reprints resolve to the newest printing
+
+**Rule applied, not a new ruling.** The standing supersession ruling (operator, 2026-08-16, SD-31:
+*"if a duplicate is found, the most recent publishing takes precedence and the older one is flagged
+as superseded"*, with its amendment the same day: *"rogue and unchained rogue are two completely
+different classes - one does not replace the other"*) now applies inside the converter's reference
+resolver. Before F3b2b, a reference whose `(category, key)` named two printings of one object was
+left ambiguous (`ambiguous-parent-category-target`, F1 adversarial finding 4: never guess).
+
+**Mechanism** (`crates/codex-ingest/src/pcgen_import/sheet_rule/reprint.rs`, one rule, no
+per-record case). An ambiguous pair resolves to its newest printing when every candidate is a
+printing of the same object:
+
+- same kind; no candidate in a variant-line book (`mythic_adventures`, `pathfinder_unchained`:
+  the amendment's default answer is "variant");
+- each candidate's base oracle row agrees on name, `KEY:` (else name) and `CATEGORY:`;
+- identity is proved field by field: every row states a `DESC:` and the descriptions (lower-cased,
+  whitespace collapsed) are prefix-ordered (the reprint repeats the older text and may extend it),
+  OR the rows are identical token for token apart from `SOURCE*` bookkeeping;
+- publication order from each book's `.pcc` `SOURCEDATE:` header (`PinnedTree::source_dates`),
+  never from memory; exactly one candidate carries the latest date.
+
+Anything else stays ambiguous, named. Also in F3b2b: a child ability category whose declarations
+disagree only on `TYPE:` keeps its parent (`closure.rs`; before, the TYPE disagreement also dropped
+the parent -- Cyphermage Class Feature, `ism_abilitycategories.lst:56` / `ag_abilitycategories.lst:7`).
+
+**Measured** (`_defects/ambiguous-parent-category-target.json`, F3b2 package -> F3b2b package): the
+ambiguous-target population under the repaired parent map is 31 rows (the 30 F3b2 rows plus
+Cyphermage's, reachable once its parent is kept); **13 of 31 resolve**, 18 stay:
+
+- resolved: 10 Advanced Race Guide racial-subtype choices whose target Advanced Player's Guide
+  printed first (`SOURCEDATE:2010-08` vs `2012-06`, same KEY, the two descriptions equal after
+  normalisation); Red Mantis Assassin's `Class Feature|RMA Weapon Proficiencies` in both class printings
+  (`iswg_abilities_class.lst:151` and `ag_abilities_class.lst:419`, token-identical; newest
+  `adventurers_guide`, 2017-06); Cyphermage's `Cyphermage ~ Cypher Lore`
+  (`ism_abilities_class.lst:8`, 2011-07, is a prefix of `ag_abilities_class.lst:103`, 2017-06).
+- stay ambiguous, 17: Advanced Race Guide reprints of Advanced Player's Guide racial traits whose
+  text was reworded (not a prefix; e.g. `Dwarf ~ Stubborn`: "renowned for being stubborn" vs
+  "renowned for their stubbornness"). Mechanism: *reworded reprint -- identity not provable by the
+  prefix or token-identity test*. Closes in: a field comparison over the mechanical tokens, not
+  taken here.
+- stays ambiguous, 1: `Master Of Many Styles ~ Perfect Style`, declared twice inside one book
+  (`uc_abilities_class.lst:1096` and `support/uc_abilities_class_ag.lst:80`, both `ultimate_combat`,
+  2011-01). Mechanism: *same-book double declaration -- no newest printing*.
+
+The direct (non-parent-retry) lookup keeps its first-wins behaviour (unchanged; F1 finding 4's
+scope note).
+
 ---
 
 ## §13 — Weapon proficiency is read from the converted record, not authored as new Rust rows
@@ -450,6 +498,62 @@ converted fact). **Reasoning:**
 - `epic-breakdown.md` F0.1/F2.2/F4 criteria; census `alone_blocked=74` of 74.
 - `epic-f-class-completion.md` §6 (F4's roster rule: "Ex-* states: census-only, never offered at
   creation").
+
+### §14.1 — Prestige saves the oracle's formula cannot state stay Blocked (F3c2, 2026-09-24)
+
+Six prestige classes' carrier mixes stop at `multiclass.save_shape.unrecognized`: Evangelist,
+Exalted, Mammoth Rider, Pure Legion Enforcer, Sentinel and Ulfen Guard. Their converted save
+`Expr`s are faithful conversions of oracle `BONUS:SAVE` formulas that match no PF1 save form
+(PCGen divides before it adds, so `classlevel()+1/3` is level + 1/3 and prints +10 at 10th).
+
+**Decision.** They stay Blocked, a named remainder of **6 of 74** prestige carrier mixes in the
+census. Printing the oracle's number would put a save on the sheet that the book does not state;
+repairing the formula from memory (reading `CL+1/3` as `(CL+1)/3`) is a fabricated row. The
+mechanism is an **upstream oracle data defect**, closable only by a book-cited override: each
+class's save progression read from its own book's class table -- Inner Sea Gods p.198 (Evangelist),
+p.200 (Exalted), p.202 (Sentinel); Inner Sea Combat p.32 (Pure Legion Enforcer), p.34 (Ulfen
+Guard); Adventurer's Guide p.128 (Mammoth Rider) -- recorded with its citation and pinned by a
+hand-worked test. Recorded as `forward-scope-register.md` FS-15; evidence
+`artifacts/epic-f/stage-f2-f3/f3b3-receipt.md` §3, `f3c-remainder.md`, `f3c2-receipt.md`.
+
+**Enforced by:** `multiclass_fold::tests::the_four_unrecognized_prestige_saves_are_oracle_formula_defects_not_a_missed_shape`,
+`multiclass_fold::tests::two_more_prestige_saves_the_f3c_carriers_reach_are_the_same_oracle_formula_defect`,
+and the census floor `BASELINE_CENSUS_PRESTIGE_MIX_COMPUTED=67` (`scripts/verify-baselines.env`).
+
+### §14.2 — Multiclass negative controls assert status parity with the class alone (F3d, 2026-09-25)
+
+**Orchestrator ruling (autonomous mode), 2026-09-25**, on the F3d blocker
+(`artifacts/epic-f/stage-f2-f3/f3d-blocker.md`, commit `157dc5496a`).
+
+**Measurement.** The 187 "multiclass X must stay claim-blocked in this slice" tests
+(`f3d-sites.tsv`: 64 `MULTICLASS_NEG_ROWS` + 59 `multiclass_negative_controls!` rows + 64
+hand-written, in `sd18_widening`, `sd13_progression` and 43 top-level binaries) widen a
+class-specific fixture to a Class+Fighter mix. Those fixtures are not in the GE-06 posture, so
+the class ALONE is Blocked on `combat.baseline_unsupported` + `skill.selected_modifier.unsupported`
+(187 of 187), and every mix's claim-blocking set equals the class-alone set apart from the
+`multiclass.<class>.` re-scope (187 of 187). Flipping assertion (b) to `Computed` ran 187 of 187
+red (`f3d-red.log`): asserting it would fabricate a success. The Computed proof for mixes already
+lives in the census (mix panel 185 of 185 under the GE-06 fixture; prestige carrier mixes, floor
+`BASELINE_CENSUS_PRESTIGE_MIX_COMPUTED`) and in `tests/sd36_multiclass_any_class.rs`.
+
+**Decision.** Assertion (b) becomes **status parity** (the F3b `class_dispatch` precedent,
+`..._computes_exactly_when_it_computes_alone`): the mix's receipt status equals the unmodified
+class-alone fixture's, AND the mix's claim-blocking set, with the fold's `multiclass.<class>.`
+re-scope stripped, equals the class-alone set. A class that computes alone computes in a mix; a
+class blocked alone stays blocked on exactly its own lines -- none lost, no multiclass-only line
+added. Assertion (a) (the bounded single-class explanations stay withheld) is kept verbatim. Vacuity
+guard: the mix loads >= 2 classes (and more than the class alone). Test names unchanged; `--list`
+byte-identical (sd18_widening 891, sd13_progression 1,136). One helper,
+`tests/common/mod.rs::assert_multiclass_status_parity`, serves all 187 sites.
+
+**Sabotage parity, re-measured.** Disabling the fold's carry-over of each class's own claim-blocking
+lines turns **14 of 187** red (the Monk mixes, whose bonus-feat line only the carry-over supplies);
+restored, 0 red. The other 173 are held by lines the mix raises itself -- the character-level
+pillars (129) and class-feature checks that run for the class mixed as well as alone (sorcerer 25,
+cleric 19) -- so this sabotage cannot move them; the status/set assertion guards them against any
+change to those. Evidence `artifacts/epic-f/stage-f2-f3/f3d-sabotage-log.md`, `f3d-verify.log`.
+
+**Enforced by:** the 187 tests; `epic-breakdown.md` F3.1–F3.3 (rewritten to this measurement).
 
 ---
 

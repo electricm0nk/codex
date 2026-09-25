@@ -677,3 +677,292 @@ fn a_sibling_terms_degradation_does_not_erase_a_convertible_terms_number() {
     let swim_bonus = c.rules.iter().find(|r| matches!(r.value, SheetValue::Number(_)) && matches!(&r.target, Some(BonusTarget::Skill(_))));
     assert!(swim_bonus.is_some(), "the convertible +4 Swim competence bonus must still print a Number, not be wiped by the sibling degradation: {:?}", c.rules);
 }
+
+/// The text of a rule's `StatBlock "<label>"` prose row, when every piece is text.
+fn stat_block_text(rule: &SheetRule, label: &str) -> Option<String> {
+    let seg = rule.prose.iter().find(|s| matches!(&s.family, ProseFamily::StatBlock(l) if l == label))?;
+    let mut out = String::new();
+    for p in &seg.pieces {
+        match p {
+            ProsePiece::Text(t) => out.push_str(t),
+            _ => return None,
+        }
+    }
+    Some(out)
+}
+
+/// SD-36 Epic F3b2 (1). PCGen's class-line `STARTSKILLPTS:x` ("how many skill points a character
+/// gains per level", `docs/listfilepages/datafilestagpages/datafilesclasses.html` in the pinned
+/// oracle; `StartskillptsToken.java`) converts to the class principal's
+/// `StatBlock "Skill ranks per level"` row, the same prose row shape `HD:` gives `"Hit die"`.
+/// Hand-read PF1 values (CRB): Rogue 8 (p.67), Wizard 2 (p.77), Loremaster 4 (p.385). Fighter's
+/// row states a variable (`STARTSKILLPTS:FighterSkillPoints`, `cr_classes.lst:141`) that the
+/// same row DEFINEs at 0 and raises by an unconditional `BONUS:VAR|FighterSkillPoints|2`:
+/// 2 (CRB p.55). A value that is not a literal and not such a variable prints no row.
+#[test]
+fn a_class_principal_states_its_skill_ranks_per_level() {
+    for (unit, want) in [
+        ("core_rulebook:class:rogue", "8"),
+        ("core_rulebook:class:wizard", "2"),
+        ("core_rulebook:class:loremaster", "4"),
+        ("core_rulebook:class:fighter", "2"),
+    ] {
+        let c = convert_unit(unit);
+        let principal = c.rules.first().expect("a class converts to at least its principal");
+        assert_eq!(principal.id, unit);
+        assert_eq!(stat_block_text(principal, "Skill ranks per level").as_deref(), Some(want), "{unit}");
+        let rows = c.rules.iter().flat_map(|r| r.prose.iter()).filter(|s| matches!(&s.family, ProseFamily::StatBlock(l) if l == "Skill ranks per level")).count();
+        assert_eq!(rows, 1, "{unit}: exactly one skill-ranks row");
+    }
+}
+
+/// SD-36 Epic F3b2 (2), mechanism "placeholder-keyed target". A product-identity record's corpus
+/// JSON ships a codex-named placeholder key (`Codex-Named Unit (class_feature_adventurers_guide_
+/// ag_abilities_class_lst_9)`), and the index held it only under that key, so every reference by the
+/// KEY its own oracle row declares (`Aldori Swordlord ~ Adaptive Tactics`, `ag_abilities_class.lst:9`)
+/// missed. Aldori Swordlord's ten level-line grants name such records. (The RED run of this test was
+/// named for an empty-category hypothesis; its category assertion passed at RED, and the defect
+/// assertion failed -- the mechanism is the key, re-traced before the fix.)
+#[test]
+fn a_placeholder_keyed_record_is_found_by_the_key_its_row_declares() {
+    let s = shared();
+    let r = s.index.records.iter().find(|r| r.id == "adventurers_guide:class_feature:aldori_swordlord_adaptive_tactics").expect("unit in inventory");
+    assert!(r.key.starts_with("Codex-Named Unit ("), "the shipped corpus key is the placeholder: {}", r.key);
+    assert_eq!(r.category, "Special Ability", "the oracle row's own CATEGORY");
+    let pair = ("SPECIAL ABILITY".to_string(), "ALDORI SWORDLORD ~ ADAPTIVE TACTICS".to_string());
+    assert_eq!(s.index.by_cat_key.get(&pair).map(String::as_str), Some(r.id.as_str()));
+    let c = convert_unit("adventurers_guide:class:aldori_swordlord");
+    assert!(c.defects.get("unresolved-references").is_none_or(|l| l.is_empty()), "{:?}", c.defects);
+    // A reprint's real corpus key keeps its target: `Unblinking Flame Feint` resolves to the
+    // record that ships that key, not to the adventurers_guide placeholder twin that declares it.
+    let feint = ("FEAT".to_string(), "UNBLINKING FLAME FEINT".to_string());
+    assert_eq!(s.index.by_cat_key.get(&feint).map(String::as_str), Some("inner_sea_combat:feat:unblinking_flame_feint"));
+}
+
+/// SD-36 Epic F3b2b (1), mechanism H. A variable no row of the pinned tree declares, and that is
+/// not a PCGen built-in term, evaluates as 0 in the oracle (`VariableProcessor.java:394-402`,
+/// see `oracle_terms.rs`). The converter reads it as `Const(0)` with a provenance note, and the
+/// reference is an informational `undeclared-in-pinned-tree` row, not a closure defect: the
+/// closure is complete under oracle semantics. A name the oracle could read as a built-in term
+/// (`CRITMULT`) keeps its `undefined-variables` closure defect.
+#[test]
+fn an_undeclared_non_builtin_variable_reads_zero_and_is_not_a_closure_defect() {
+    let c = convert_unit("core_rulebook:class_feature:loremaster_secret_lore");
+    assert!(c.defects.get("undefined-variables").is_none_or(|l| l.is_empty()), "{:?}", c.defects);
+    // The package writes each defect row once (the record reads the name in two formulas).
+    let rows: BTreeSet<String> = c.defects.get("undeclared-in-pinned-tree").cloned().unwrap_or_default().into_iter().collect();
+    assert_eq!(rows, BTreeSet::from(["core_rulebook:class_feature:loremaster_secret_lore: SecretLore".to_string()]));
+    let principal = c.rules.first().expect("principal");
+    assert_eq!(principal.provenance.undeclared_in_pinned_tree, vec!["SecretLore".to_string()]);
+    let builtin = convert_unit("core_rulebook:ability:unarmed_flaming_burst");
+    assert!(
+        builtin.defects.get("undefined-variables").is_some_and(|l| l.iter().any(|r| r.ends_with(": CRITMULT"))),
+        "a name the oracle may read as a built-in term stays a closure defect: {:?}",
+        builtin.defects
+    );
+    assert!(builtin.rules.first().expect("principal").provenance.undeclared_in_pinned_tree.is_empty());
+}
+
+/// SD-36 Epic F3b2b (2), mechanism T. The standing supersession ruling (operator 2026-08-16:
+/// the newest printing wins; publication order from the `.pcc` `SOURCEDATE:`; a variant is not a
+/// reprint). Cyphermage (`inner_sea_magic`, `ism_classes.lst:79`) grants
+/// `Cyphermage Class Feature|Cyphermage ~ Cypher Lore`. The child category's two declarations
+/// (`ism_abilitycategories.lst:56`, `ag_abilitycategories.lst:7`) agree on the parent
+/// (`Special Ability`) and differ only in `TYPE:`, so the parent is kept; the target is printed
+/// twice (`ism_abilities_class.lst:8`, `SOURCEDATE:2011-07`; `ag_abilities_class.lst:103`,
+/// `SOURCEDATE:2017-06`), the same object (same KEY, name and category; the older DESC is a
+/// prefix of the newer), so it resolves to the Adventurer's Guide printing.
+#[test]
+fn a_same_object_reprint_resolves_to_the_newest_printing() {
+    let s = shared();
+    assert_eq!(s.tree.source_dates.get("inner_sea_magic").map(String::as_str), Some("2011-07"));
+    assert_eq!(s.tree.source_dates.get("adventurers_guide").map(String::as_str), Some("2017-06"));
+    assert_eq!(s.tree.ability_category_parent.get("CYPHERMAGE CLASS FEATURE").map(String::as_str), Some("SPECIAL ABILITY"));
+    let c = convert_unit("inner_sea_magic:class:cyphermage");
+    for kind in ["unresolved-references", "ambiguous-parent-category-target"] {
+        assert!(c.defects.get(kind).is_none_or(|l| l.is_empty()), "{kind}: {:?}", c.defects);
+    }
+    assert!(
+        c.grants_out.iter().any(|(t, _)| t == "adventurers_guide:class_feature:cyphermage_cypher_lore"),
+        "the grant lands on the newest printing: {:?}",
+        c.grants_out.iter().map(|(t, _)| t).collect::<Vec<_>>()
+    );
+}
+
+/// SD-36 Epic F3c3 (1). PCGen's `SUBCLASS:` lines (`datafilesclasses.html`, "The Sub-Class Line":
+/// placed between the class lines and the level lines; `SUBCLASSLEVEL:<n>` rows define the
+/// sub-class's level-dependent grants) are a choice the class makes once
+/// (`SubClassApplication.checkForSubClass`: one pick from the class's `SUB_CLASS` list in load
+/// order). The converter carries each class's list as ONE choice sibling on the class record
+/// (`<class id>#subclass`, `offers: Rules { pool: subclass, tags: [<Class> Subclass] }`), whose
+/// options are `subclass` rules granted by that choice, carrying the line's own grants: `CSKILL`
+/// as class-skill facts, `SUBCLASSLEVEL` `ABILITY` as grant edges from the option.
+///
+/// Psion (`up_classes.lst:221-256`, 17 lines): Egoist first; its line grants Autohypnosis,
+/// the Craft / Knowledge / Profession families and Spellcraft (`:221`), and its level-1 line
+/// grants `Psychometabolism Class Skills` (`:222`), the record that states Acrobatics and Heal
+/// (`up_abilities_class.lst:409`).
+#[test]
+fn a_subclass_choice_converts_with_its_class_skill_grants() {
+    use codex_ingest::pcgen_import::sheet_rule::subclass::convert_subclasses;
+    let s = shared();
+    let out = convert_subclasses(&s.tree, &s.index, &s.closures);
+    let chooser = out.choosers.iter().find(|(_, r)| r.id == "ultimate_psionics:class:psion#subclass").map(|(_, r)| r).expect("psion carries a subclass choice");
+    let Some(Choice { id, count, from: OptionSet::Rules { pool, tags, .. } }) = &chooser.offers else { panic!("{:?}", chooser.offers) };
+    assert_eq!(id, &chooser.id);
+    assert_eq!(count, &Expr::Const(1));
+    assert_eq!(pool, "subclass");
+    assert_eq!(tags, &vec!["Psion Subclass".to_string()]);
+    let psion: Vec<&SheetRule> = out.options.iter().filter(|o| o.rule.granted_by.iter().any(|g| g.by == Granter::Choice(chooser.id.clone()))).map(|o| &o.rule).collect();
+    assert_eq!(psion.len(), 17, "{:?}", psion.iter().map(|r| &r.id).collect::<Vec<_>>());
+    assert_eq!(psion[0].id, "ultimate_psionics:subclass:psion_egoist", "oracle order: the first line is the first option");
+    let egoist = psion[0];
+    assert_eq!(egoist.tags, vec!["Psion Subclass".to_string()]);
+    let facts: Vec<&Fact> = egoist.grants.iter().filter_map(|e| if let Effect::FactGrant(f) = e { Some(f) } else { None }).collect();
+    for want in [
+        Fact::ClassSkill("autohypnosis".into()),
+        Fact::ClassSkillGroup("Craft".into()),
+        Fact::ClassSkillGroup("Knowledge".into()),
+        Fact::ClassSkillGroup("Profession".into()),
+        Fact::ClassSkill("spellcraft".into()),
+    ] {
+        assert!(facts.contains(&&want), "{want:?} in {facts:?}");
+    }
+    let edges = &out.options.iter().find(|o| o.rule.id == egoist.id).expect("egoist option").grants_out;
+    assert!(
+        edges.iter().any(|(t, g)| t == "ultimate_psionics:class_feature:psychometabolism_class_skills" && g.by == Granter::Rule(egoist.id.clone())),
+        "{edges:?}"
+    );
+    // Ascendant Psion's line states `PRERACE:1,Elan` (`:255`): the option carries the gate.
+    let ascendant = psion.iter().find(|r| r.id == "ultimate_psionics:subclass:psion_ascendant_psion").expect("ascendant psion");
+    assert_ne!(ascendant.applies, Applies::Always);
+}
+
+/// SD-36 Epic F3c3 (1): the same rule on the second SUBCLASS-bearing class. Wizard's list is its
+/// CRB lines (`cr_classes.lst:283-300`, Abjurer first) plus the `.MOD` lines of four more books.
+/// The sin schools are printed twice, token-identical (`ism_classes.lst:36-49`, `SOURCEDATE:
+/// 2011-07`; `ag_classes.lst:492-505`, `SOURCEDATE:2017-06`): the standing supersession ruling
+/// keeps the newest printing. Each option's level-1 `ABILITY` grants its school
+/// (`Wizard Class Feature|AUTOMATIC|Evocation School`, `:292`).
+#[test]
+fn a_wizard_school_subclass_converts_through_the_same_rule() {
+    use codex_ingest::pcgen_import::sheet_rule::subclass::convert_subclasses;
+    let s = shared();
+    let out = convert_subclasses(&s.tree, &s.index, &s.closures);
+    let chooser_id = "core_rulebook:class:wizard#subclass".to_string();
+    assert!(out.choosers.iter().any(|(_, r)| r.id == chooser_id));
+    let wizard: Vec<_> = out.options.iter().filter(|o| o.rule.granted_by.iter().any(|g| g.by == Granter::Choice(chooser_id.clone()))).collect();
+    assert_eq!(wizard[0].rule.id, "core_rulebook:subclass:wizard_abjurer");
+    assert_eq!(wizard.len(), 9 + 4 + 2 + 7 + 1, "{:?}", wizard.iter().map(|o| &o.rule.id).collect::<Vec<_>>());
+    assert!(wizard.iter().any(|o| o.rule.id == "adventurers_guide:subclass:wizard_envy"));
+    assert!(!wizard.iter().any(|o| o.rule.id == "inner_sea_magic:subclass:wizard_envy"), "the older printing is superseded");
+    let evoker = wizard.iter().find(|o| o.rule.id == "core_rulebook:subclass:wizard_evoker").expect("evoker");
+    assert!(
+        evoker.grants_out.iter().any(|(t, g)| t == "core_rulebook:class_feature:evocation_school" && g.by == Granter::Rule(evoker.rule.id.clone())),
+        "{:?}",
+        evoker.grants_out
+    );
+    assert!(out.superseded.iter().any(|l| l.contains("inner_sea_magic:subclass:wizard_envy")), "{:?}", out.superseded);
+}
+
+/// SD-36 Epic F3c4b: an ability-category pick row converts as an option of the choice that picks
+/// it (`pool_option.rs`), read off the package on disk.
+///
+/// The oracle: `Standard Bloodline` (`cr_abilities_class.lst:2329`) picks with
+/// `CHOOSE:ABILITYSELECTION|Sorcerer Bloodline|!PC,QUALIFIED[TYPE=SorcererBloodlineChoice]` and
+/// applies the pick with `ABILITY:Sorcerer Bloodline|AUTOMATIC|%LIST`. The pick row
+/// `Draconic Bloodline` (`:2435`, `CATEGORY:Sorcerer Bloodline`, `TYPE:SorcererBloodlineChoice`)
+/// grants `Sorcerer Bloodline ~ Draconic` and raises `Sorcerer_Draconic_BloodlineClassSkill1` by
+/// `if(Sorcerer_CF_BloodlineClassSkill==0,1,0)`. `Draconic Bloodline ~ Standard` (`:2976`) names
+/// the pick row (`ABILITY:Sorcerer Bloodline|AUTOMATIC|Draconic Bloodline`). Aquatic's pick row
+/// (`apg_abilities_class.lst:3089`) grants `Sorcerer Bloodline ~ Aquatic` (`:3088`, class skill
+/// Swim).
+#[test]
+fn a_sorcerer_bloodline_pick_row_converts_as_an_option_of_the_bloodline_choice() {
+    use codex_ingest::pcgen_import::sheet_rule::ctx::var_id;
+    let files = package_files();
+    let rules_in = |rel: &str| -> Vec<SheetRule> {
+        serde_json::from_slice(files.get(rel).unwrap_or_else(|| panic!("{rel} is in the package"))).expect("rule file parses")
+    };
+    let chooser = "core_rulebook:class_feature:sorcerer_standard_bloodline_selection";
+    let draconic = &rules_in("core_rulebook/pool_option/sorcerer_bloodline_draconic_bloodline.json")[0];
+    assert_eq!(draconic.id, "core_rulebook:pool_option:sorcerer_bloodline_draconic_bloodline");
+    assert_eq!(draconic.pool, "sorcerer_bloodline");
+    assert!(draconic.granted_by.iter().any(|g| g.by == Granter::Choice(chooser.into())), "{:?}", draconic.granted_by);
+    // The pick row names the record, and so does Dragon Disciple's Blood of Dragons row.
+    assert!(draconic.granted_by.iter().any(|g| g.by == Granter::Rule("core_rulebook:class_feature:draconic_bloodline_standard".into())), "{:?}", draconic.granted_by);
+    let record = &rules_in("core_rulebook/class_feature/sorcerer_bloodline_draconic.json")[0];
+    assert!(record.granted_by.iter().any(|g| g.by == Granter::Rule(draconic.id.clone())), "{:?}", record.granted_by);
+    // Its BONUS:VAR is a contribution from the option.
+    let var = var_id("Sorcerer_Draconic_BloodlineClassSkill1");
+    let table: VarTable = serde_json::from_slice(files.get(&format!("_vars/{var}.json")).expect("var table")).expect("parses");
+    assert!(table.contributions.iter().any(|c| c.rule_id == draconic.id), "{:?}", table.contributions);
+    assert!(!table.provenance.outside_corpus_rows.iter().any(|r| r.ends_with("cr_abilities_class.lst:2435")), "{:?}", table.provenance);
+    // Aquatic: the option grants its record.
+    let aquatic = &rules_in("advanced_players_guide/pool_option/sorcerer_bloodline_aquatic_bloodline.json")[0];
+    assert!(aquatic.granted_by.iter().any(|g| g.by == Granter::Choice(chooser.into())));
+    let aq_record = &rules_in("advanced_players_guide/class_feature/sorcerer_bloodline_aquatic.json")[0];
+    assert!(aq_record.granted_by.iter().any(|g| g.by == Granter::Rule(aquatic.id.clone())), "{:?}", aq_record.granted_by);
+    // No `Sorcerer Bloodline|<X> Bloodline` reference stays unresolved.
+    let unresolved: Vec<String> = serde_json::from_slice(files.get("_defects/unresolved-references.json").expect("defects")).expect("parses");
+    let left: Vec<&String> = unresolved.iter().filter(|u| u.contains(": Sorcerer Bloodline|")).collect();
+    assert!(left.is_empty(), "{left:?}");
+}
+
+/// SD-36 Epic F3c4b: a record whose shipped tokens state no `CATEGORY:` is found under the
+/// category its own source row declares. `Bloodline Tracker`'s corpus record sits at the `.MOD`
+/// row `CATEGORY=Internal|Bloodline Tracker.MOD` (`cr_abilities_class.lst:1705`); the sorcerer's
+/// `Sorcerer ~ Standard Bloodline` (`:1698`) grants it by `ABILITY:Internal|AUTOMATIC|Bloodline
+/// Tracker`, and it raises `BloodlineProgressionLVL` by `SorcererLVL` (`:1707`) -- the variable
+/// every bloodline power's gate reads.
+#[test]
+fn a_category_less_record_is_found_under_the_category_its_row_declares() {
+    let files = package_files();
+    let tracker: Vec<SheetRule> = serde_json::from_slice(files.get("core_rulebook/class_feature/bloodline_tracker.json").expect("tracker")).expect("parses");
+    assert!(
+        tracker[0].granted_by.iter().any(|g| g.by == Granter::Rule("core_rulebook:class_feature:sorcerer_standard_bloodline".into())),
+        "{:?}",
+        tracker[0].granted_by
+    );
+    let unresolved: Vec<String> = serde_json::from_slice(files.get("_defects/unresolved-references.json").expect("defects")).expect("parses");
+    assert!(!unresolved.iter().any(|u| u.ends_with(": Internal|Bloodline Tracker")), "still unresolved");
+}
+
+/// SD-36 Epic F3c5: a `CATEGORY:Internal` natural-attack helper row no inventory unit stands for
+/// converts as a `Fact::NaturalAttack` on the rule that grants it (`natural_attack.rs`).
+/// Dragon Disciple's `Dragon Bite` (`cr_abilities_class.lst:2968`) carries
+/// `ABILITY:Internal|AUTOMATIC|Bite`; `Bite` (`ce_abilities_race.lst:249`) is a natural-attack
+/// helper whose object ends in `NATURALATTACKS:Bite,...` (`ce_templates.lst:26`). The reference
+/// resolves, so Dragon Disciple's closure is attested complete; the class grants no weapon
+/// proficiency (CRB p.382: "Dragon disciples gain no proficiency with any weapon or armor").
+#[test]
+fn an_internal_natural_attack_helper_converts_as_a_fact_on_the_rule_that_grants_it() {
+    let files = package_files();
+    let rules_in = |rel: &str| -> Vec<SheetRule> {
+        serde_json::from_slice(files.get(rel).unwrap_or_else(|| panic!("{rel} is in the package"))).expect("rule file parses")
+    };
+    let bite = &rules_in("core_rulebook/class_feature/dragon_disciple_dragon_bite.json")[0];
+    assert!(
+        bite.grants.iter().any(|e| *e == Effect::FactGrant(Fact::NaturalAttack("Bite".into()))),
+        "Dragon Bite grants the Bite natural attack: {:?}",
+        bite.grants
+    );
+    assert!(
+        !bite.grants.iter().any(|e| matches!(e, Effect::FactGrant(Fact::Proficiency(_)) | Effect::GatedFactGrant { fact: Fact::Proficiency(_), .. })),
+        "a natural attack is not a proficiency grant: {:?}",
+        bite.grants
+    );
+    let unresolved: Vec<String> = serde_json::from_slice(files.get("_defects/unresolved-references.json").expect("defects")).expect("parses");
+    assert!(!unresolved.iter().any(|u| u == "core_rulebook:class_feature:dragon_disciple_dragon_bite: Internal|Bite"), "still unresolved");
+    let principal = &rules_in("core_rulebook/class/dragon_disciple.json")[0];
+    assert!(principal.closure_complete, "Dragon Disciple's closure is attested complete");
+    // Draconic Claws (`cr_abilities_class.lst:2444`, CRB p.75: claws from 1st level, one damage
+    // step at 7th) grants `Internal|Claw`: the Claw fact sits on the record, whose own gate holds
+    // from 1st level; the damage-step line keeps its `>= 7` gate as its own sibling.
+    let claws = rules_in("core_rulebook/class_feature/draconic_bloodline_claws.json");
+    assert!(claws[0].grants.iter().any(|e| *e == Effect::FactGrant(Fact::NaturalAttack("Claw".into()))), "{:?}", claws[0].grants);
+    let gate_7 = |a: &Applies| format!("{a:?}").contains("Const(7)");
+    assert!(!gate_7(&claws[0].applies), "the Claws record is held from 1st level: {:?}", claws[0].applies);
+    let step = claws.iter().find(|r| r.id.ends_with("#weapon0")).expect("the damage-step line is its own sibling");
+    assert!(gate_7(&step.applies), "the damage step comes at 7th: {:?}", step.applies);
+}

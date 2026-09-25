@@ -1,0 +1,79 @@
+# F3c4 verify (engine step; base 07f02c6387 + the F3c4 working tree)
+## pass 1 (scripts in order)
+HEAD 07f02c6387 + working tree
+=== $ cargo test --locked -j 8 --lib -- --test-threads=8 sorcerer
+    Finished `test` profile [unoptimized + debuginfo] target(s) in 32.76s
+test result: ok. 44 passed; 0 failed; 0 ignored; 0 measured; 2685 filtered out; finished in 20.74s
+exit=0
+=== $ cargo test --locked -j 8 --lib -- --test-threads=8 multiclass
+    Finished `test` profile [unoptimized + debuginfo] target(s) in 0.05s
+test result: ok. 37 passed; 0 failed; 0 ignored; 0 measured; 2692 filtered out; finished in 13.78s
+exit=0
+=== $ cargo test --locked -j 8 --lib -- --test-threads=8 class_census
+    Finished `test` profile [unoptimized + debuginfo] target(s) in 0.05s
+test result: ok. 33 passed; 0 failed; 0 ignored; 0 measured; 2696 filtered out; finished in 299.87s
+exit=0
+=== $ cargo test --locked -j 8 --lib -- --test-threads=8
+    Finished `test` profile [unoptimized + debuginfo] target(s) in 0.06s
+test result: ok. 2723 passed; 0 failed; 6 ignored; 0 measured; 0 filtered out; finished in 241.85s
+exit=0
+=== $ cargo test --locked -j 8 --test sd36_bloodline_pick_option -- --test-threads=8
+    Finished `test` profile [unoptimized + debuginfo] target(s) in 1.34s
+test result: ok. 2 passed; 0 failed; 0 ignored; 0 measured; 0 filtered out; finished in 4.38s
+exit=0
+=== $ cargo test --locked -j 8 --test sd36_class_skill_from_record -- --test-threads=8
+    Finished `test` profile [unoptimized + debuginfo] target(s) in 1.14s
+test result: ok. 5 passed; 0 failed; 0 ignored; 0 measured; 0 filtered out; finished in 56.28s
+exit=0
+=== $ cargo test --locked -j 8 --test sd36_multiclass_any_class -- --test-threads=8
+    Finished `test` profile [unoptimized + debuginfo] target(s) in 0.99s
+test result: ok. 11 passed; 0 failed; 0 ignored; 0 measured; 0 filtered out; finished in 56.47s
+exit=0
+=== $ cargo test --locked -j 8 --test sd36_sorcerer_bloodline_record -- --test-threads=8
+    Finished `test` profile [unoptimized + debuginfo] target(s) in 1.12s
+test result: ok. 11 passed; 0 failed; 0 ignored; 0 measured; 0 filtered out; finished in 36.84s
+exit=0
+=== $ cargo test --locked -j 8 --test sd13_sorcerer_level1_spell_baseline -- --test-threads=8
+    Finished `test` profile [unoptimized + debuginfo] target(s) in 0.92s
+test sorcerer_level1_with_non_arcane_bloodline_choice_stays_bloodline_agnostic ... FAILED
+thread 'sorcerer_level1_with_non_arcane_bloodline_choice_stays_bloodline_agnostic' (1370402) panicked at tests/sd13_sorcerer_level1_spell_baseline.rs:74:13:
+test result: FAILED. 14 passed; 1 failed; 0 ignored; 0 measured; 0 filtered out; finished in 15.51s
+error: test failed, to rerun pass `--test sd13_sorcerer_level1_spell_baseline`
+exit=101
+=== arcane/sorcerer test list (lib) before vs after
+IDENTICAL: 51 lines
+=== $ cargo clippy --locked --tests -j 8 -- -D warnings
+error: items after a test module
+error: could not compile `codex` (lib test) due to 1 previous error
+exit=101
+=== $ cargo check --locked -j 8 --manifest-path apps/desktop/src-tauri/Cargo.toml --tests
+    Finished `dev` profile [unoptimized + debuginfo] target(s) in 45.85s
+exit=0
+=== residue
+identifier_files=0 identifier_hits=0
+shipped_data_files=0 shipped_data_hits=0 shipped_scanned=70043
+live_files=0 live_hits=0 verdict=PASS
+=== frozen
+OK: /home/ubuntu/workspace/worktrees/codex-epic-f2/site/status-data.json is frozen at 100% (49450 units)
+=== data untouched
+data/corpus data/sheet_rules site: clean
+VERIFY_DONE
+EXIT=0
+
+## pass 1 fixes: sd13 pin moved (retro-logged); clippy items_after_test_module (linked_picks moved above the tests module in sheet_rule_package.rs)
+=== $ cargo test --locked -j 8 --test sd13_sorcerer_level1_spell_baseline -- --test-threads=8
+test result: ok. 15 passed; 0 failed
+=== $ cargo clippy --locked --tests -j 8 -- -D warnings
+Finished (clean)
+
+## root sweep, final tree: cargo test --locked -j 8 --no-fail-fast -- --test-threads=8
+291 result lines; passed 6369; failed 0; ignored 27
+EXIT=0
+
+## desktop: cargo test --locked -j 8 --no-fail-fast --manifest-path apps/desktop/src-tauri/Cargo.toml -- --test-threads=8
+test result: ok. 615 passed; 0 failed; 0 ignored; 0 measured; 0 filtered out; finished in 390.15s
+EXIT=0
+
+## census baselines
+check_class_census_baselines.py census-f3c4.json (137/63/74/185/67): OK ids=137 computed=63 prestige_alone_blocked=74 mix_panel_computed=185 prestige_mix_computed=67
+gen_class_status_table.py --check --json census-f3c4.json: OK class-coverage table matches the census

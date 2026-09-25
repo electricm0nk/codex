@@ -822,6 +822,7 @@ pub fn convert_record(tree: &PinnedTree, index: &CorpusIndex, record: &RecordRef
         converter_version: CONVERTER_VERSION.into(),
         pi: PiStamp { declared: dedup(ctx.pi_declared.clone()), term_hits: dedup(ctx.pi_term_hits.clone()) },
         overlay: closure.overlay.clone(),
+        undeclared_in_pinned_tree: ctx.undeclared_in_pinned_tree.iter().cloned().collect(),
     };
     let pool = slug(&acc.category);
     // SD-35 AT-35-E3-001. A term this record carried could not be lowered, so no number the
@@ -985,6 +986,54 @@ fn gates_of(ctx: &mut RecordCtx, gates: &[String], level_gate: Option<u8>) -> Re
     Ok(Applies::all(terms))
 }
 
+/// The class principal's skill-ranks row label; `class_chassis_sheet_rules` reads it by name.
+const SKILL_RANKS_LABEL: &str = "Skill ranks per level";
+
+/// A `STARTSKILLPTS` value as one number: a literal (`STARTSKILLPTS:4`), or a bare variable the
+/// record's own closure `DEFINE`s with a literal and raises only by unconditional literal
+/// `BONUS:VAR` rows outside any level line (`STARTSKILLPTS:FighterSkillPoints` +
+/// `DEFINE:FighterSkillPoints|0` + `BONUS:VAR|FighterSkillPoints|2`, `cr_classes.lst:141` -> 2).
+/// Anything else -- an arithmetic formula, a variable some row raises behind a condition or on a
+/// level line, a variable the closure does not define -- is `None`.
+fn start_skill_points(ctx: &RecordCtx, value: &str) -> Option<u32> {
+    if let Ok(n) = value.parse::<u32>() {
+        return Some(n);
+    }
+    if value.is_empty() || !value.chars().all(|c| c.is_ascii_alphanumeric() || c == '_') {
+        return None;
+    }
+    let mut initial: Option<i64> = None;
+    let mut raised: i64 = 0;
+    for row in &ctx.closure.rows {
+        for (key, val) in &row.tokens {
+            match key.as_str() {
+                "DEFINE" => {
+                    let Some((name, init)) = val.split_once('|') else { continue };
+                    if !name.trim().eq_ignore_ascii_case(value) {
+                        continue;
+                    }
+                    if row.level_gate.is_some() || initial.is_some() {
+                        return None;
+                    }
+                    initial = Some(init.trim().parse().ok()?);
+                }
+                "BONUS" => {
+                    let fields: Vec<&str> = val.split('|').collect();
+                    if fields.first() != Some(&"VAR") || !fields.get(1).is_some_and(|names| names.split(',').any(|n| n.trim().eq_ignore_ascii_case(value))) {
+                        continue;
+                    }
+                    if fields.len() != 3 || row.level_gate.is_some() {
+                        return None;
+                    }
+                    raised += fields[2].trim().parse::<i64>().ok()?;
+                }
+                _ => {}
+            }
+        }
+    }
+    u32::try_from(initial? + raised).ok()
+}
+
 fn push_stat(acc: &mut Acc, label: &str, pieces: Vec<ProsePiece>) {
     if pieces.is_empty() {
         return;
@@ -1036,7 +1085,22 @@ fn convert_token(ctx: &mut RecordCtx, acc: &mut Acc, out: &mut Converted, key: &
         // rather than degrading the record for a head the table had no row for.
         | "ALTTYPE" | "ARMORTYPE" | "BONUSSPELLSTAT" | "GROUP" | "ITEMCREATE" | "KNOWNSPELLS"
         | "MEMORIZE" | "MODTOSKILLS" | "NUMPAGES" | "PAGEUSAGE" | "SLOTS" | "SPELLBOOK"
-        | "SPELLLIST" | "SPELLSTAT" | "STARTSKILLPTS" => {}
+        | "SPELLLIST" | "SPELLSTAT" => {}
+        // SD-36 Epic F3b2. `STARTSKILLPTS:x` -- "how many skill points a character gains per
+        // level" (PCGen `datafilesclasses.html`, `StartskillptsToken`: a class-line formula) --
+        // prints as the class principal's `StatBlock "Skill ranks per level"` row, the same
+        // prose-row shape `HD:` gives `"Hit die"`, so the class chassis reads it with the parser
+        // it already has. A later row restates it (PCGen: base row, then `.MOD` rows), so the
+        // last statement wins. A value this converter cannot fix to one number prints no row and
+        // is named in `_defects/skill-ranks-unresolved.json` -- never a guessed count.
+        "STARTSKILLPTS" => {
+            let fixed = if level_gate.is_none() { start_skill_points(ctx, v) } else { None };
+            acc.stat_block.retain(|seg| !matches!(&seg.family, ProseFamily::StatBlock(l) if l == SKILL_RANKS_LABEL));
+            match fixed {
+                Some(n) => push_stat(acc, SKILL_RANKS_LABEL, vec![ProsePiece::Text(n.to_string())]),
+                None => ctx.defect("skill-ranks-unresolved", format!("{}: {v}", ctx.record.id)),
+            }
+        }
         // SD-35 AT-35-E6-001 (`epic-breakdown.md` `### AT-35-E6-001`, cycle 1 Discovery 3).
         // `MAXLEVEL:<n>` is the class's own level ceiling: above it the class's chassis rows
         // (base attack bonus, the three base saves) do not apply at all. The table
@@ -1717,6 +1781,30 @@ fn convert_token(ctx: &mut RecordCtx, acc: &mut Acc, out: &mut Converted, key: &
                     }
                     continue;
                 }
+                // One object filed as several `.MOD`-row records (`CorpusIndex::mod_fragments`):
+                // the grant holds each.
+                if let Some(ids) = ctx.index.mod_fragments.get(&(category.to_ascii_uppercase(), t.to_ascii_uppercase()))
+                    && ctx.resolve_rule_checked(&category, t) == super::ctx::RuleLookup::Missing
+                {
+                    for id in ids {
+                        out.grants_out.push((id.clone(), Grant { by: by.clone(), when: when.clone() }));
+                    }
+                    continue;
+                }
+                // SD-36 F3c5: a natural-attack helper no unit stands for (`natural_attack.rs`)
+                // converts as its attack fact on this rule.
+                if ctx.resolve_rule_checked(&category, t) == super::ctx::RuleLookup::Missing
+                    && let Some(helper) = ctx.index.natural_attack_helpers.get(&(category.to_ascii_uppercase(), t.to_ascii_uppercase()))
+                {
+                    for attack in &helper.attacks {
+                        let fact = Fact::NaturalAttack(attack.clone());
+                        match &when {
+                            Applies::Always => acc.grants.push(Effect::FactGrant(fact)),
+                            w => acc.grants.push(Effect::GatedFactGrant { fact, when: w.clone() }),
+                        }
+                    }
+                    continue;
+                }
                 if let Holdable::Rule(id) = resolve_holdable_rule(ctx, &category, t) {
                     out.grants_out.push((id, Grant { by, when: when.clone() }));
                 }
@@ -2069,6 +2157,7 @@ mod ability_type_selector_tests {
         PinnedTree {
             root: PathBuf::new(),
             book_paths: BTreeMap::new(),
+            source_dates: BTreeMap::new(),
             files: Vec::new(),
             mod_index: BTreeMap::new(),
             base_index: BTreeMap::new(),

@@ -1,0 +1,76 @@
+$ python3 scripts/check_class_census_baselines.py census-f3c5.json (env floors)
+OK ids=137 computed=63 prestige_alone_blocked=74 mix_panel_computed=185 prestige_mix_computed=68
+ACTUAL BASELINE_CENSUS_IDS=137
+ACTUAL BASELINE_CENSUS_COMPUTED=63
+ACTUAL BASELINE_CENSUS_PRESTIGE_ALONE_BLOCKED=74
+ACTUAL BASELINE_CENSUS_MIX_COMPUTED=185
+ACTUAL BASELINE_CENSUS_PRESTIGE_MIX_COMPUTED=68
+exit=0
+$ python3 scripts/gen_class_status_table.py --check --json census-f3c5.json
+FAIL <repo>/docs/architecture/status.md's class-coverage table has drifted from a fresh census sweep — re-run `python3 scripts/gen_class_status_table.py` (no --check) to regenerate it, then review and commit the diff
+exit=1
+(regenerated status.md class table from census-f3c5.json)
+$ python3 scripts/gen_class_status_table.py --check --json census-f3c5.json
+OK class-coverage table matches the census (ids=137 computed=63 prestige_swept=74 mix_panel_computed=185 of 185)
+exit=0
+$ cargo run --locked --quiet -j 8 -p codex-ingest --bin sheet_rule_convert -- --write
+records=49450 converted=49450 refused=0 rules=73363 var_tables=6211 files=56004 (409.3s)
+EXIT=0
+$ ... -- --check
+records=49450 converted=49450 refused=0 rules=73363 var_tables=6211 verdict=PASS (416.3s)
+kind ability: records=4337 converted=4337 refused=0
+EXIT=0
+$ python3 scripts/pcgen_residue_gate.py --check --closure
+identifier_files=0 identifier_hits=0
+shipped_data_files=0 shipped_data_hits=0 shipped_scanned=70045
+live_files=0 live_hits=0 verdict=PASS
+exit=0
+$ python3 scripts/site/check_frozen_status.py --check
+OK: <repo>/site/status-data.json is frozen at 100% (49450 units)
+exit=0
+$ node scripts/gen-corpus-bundle.mjs
+files_copied=14029 dst=<repo>/apps/desktop/src-tauri/resources/corpus_bundle
+exit=0
+$ git diff --quiet -- data/corpus site
+clean
+$ python3 scripts/gen_class_status_table.py --check --json census-f3c5.json (after status.md prose edit)
+OK class-coverage table matches the census (ids=137 computed=63 prestige_swept=74 mix_panel_computed=185 of 185)
+exit=0
+$ python3 .../scripts/f3c5_delta_pins.py <tranche/16 cc21cac195> data/sheet_rules .../structural_diff_f3c5_deltas.json <F3c4 5bdf879c24>
+f3c5_line_sibling: 3 pins; f3c5_line_split: 9 pins on 3 rule ids; f3c5_closure_complete: 1 pin; required_added_grants: 681 on 546 rule ids; added_var_tables: 2; defect_rows: unresolved-references 6252, natural-attack-helper-* 0/0/0
+$ python3 .../scripts/structural_diff.py data/sheet_rules --baseline <tranche/16>/data/sheet_rules
+  added rule ids: 347 (0 with no named cause)
+unexpected field deltas: 0
+removed granted_by edges: 0  (never allowed -- SS3.5 permits growth only)
+removed grants: 0  (a grant SIGNATURE lost with no replacement of the same target -- gating-wrapper and WeaponGroup/WeaponTag/WeaponAllOf/WeaponSet-tag-case changes are NOT counted here, only a genuine loss or a fabricated replacement)
+verdict=PASS
+$ python3 .../scripts/structural_diff_test.py
+
+OK
+$ python3 .../scripts/f3c5_planted_mutations.py <scratch> <repo> <tranche/16>
+mutations FAIL: 10
+control (unmodified): exit=0 verdict=PASS
+control (restored): exit=0 verdict=PASS
+$ cargo test --locked -j 8 -p codex-ingest --no-fail-fast -- --test-threads=8
+167 result lines, passed 1763, failed 0, ignored 43
+$ cargo test --locked -j 8 --no-fail-fast -- --test-threads=8 (root)
+291 result lines, passed 6370, failed 0, ignored 27
+  lib: test result: ok. 2723 passed; 0 failed; 6 ignored; 0 measured; 0 filtered out; finished in 246.82s
+$ cargo test --locked -j 8 --lib every_census_class_has_a_known_proficiency_answer -- --test-threads=8 --nocapture
+census classes: 137; with a static row: 42; walked by the reader: 95; Known at every level: 92; Unknown: 3
+test result: ok. 1 passed; 0 failed; 0 ignored; 0 measured; 2728 filtered out; finished in 220.86s
+$ cargo test --locked -j 8 --no-fail-fast --manifest-path apps/desktop/src-tauri/Cargo.toml -- --test-threads=8
+1 result lines, passed 615, failed 0
+$ cargo clippy --locked -j 8 -p codex-ingest --tests -- -D warnings
+exit=0, no warnings
+$ cargo clippy --locked --tests -j 8 -- -D warnings (root)
+EXIT=0
+$ unres2.py over the F3c4 package / this package (mechanism totals)
+  before: 63 B child category; target exists in oracle but is NOT a converted unit
+  before: 2646 D plain category; target IS a converted record (resolver misses it for another cause)
+  before: 3444 E plain category; target exists in oracle but is NOT a converted unit (book/file not ingested)
+  before: 779 F plain category; target found nowhere (dangling, bracketed, or odd syntax)
+  after:  63 B child category; target exists in oracle but is NOT a converted unit
+  after:  2646 D plain category; target IS a converted record (resolver misses it for another cause)
+  after:  2764 E plain category; target exists in oracle but is NOT a converted unit (book/file not ingested)
+  after:  779 F plain category; target found nowhere (dangling, bracketed, or odd syntax)

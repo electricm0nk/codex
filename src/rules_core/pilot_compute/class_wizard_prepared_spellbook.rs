@@ -2518,9 +2518,9 @@ mod sorcerer_dispatch_widening_safety_tests {
 
     /// Multiclass safety, verified directly. A Sorcerer-containing
     /// multiclass mix with a genuine posture violation must still stay
-    /// Blocked, since `SORCERER_CLASS_ID` is deliberately not registered
-    /// with `multiclass_class_level_supported` beyond `table_class_id`
-    /// itself (the same construction Ranger/Paladin already proved safe).
+    /// Blocked: the posture check runs for Sorcerer alone or mixed, and
+    /// since SD-36 F3b the mix also carries Sorcerer's isolated-run blocking
+    /// lines (`multiclass_fold`).
     #[test]
     fn sorcerer_fighter_multiclass_with_an_invalid_known_spell_stays_blocked() {
         let result = load_character_input_fixture(FIGHTER_LEVEL_1_FIXTURE);

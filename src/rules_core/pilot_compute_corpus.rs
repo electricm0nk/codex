@@ -39,6 +39,7 @@ use crate::rules_core::pilot_compute::{
     fighter_weapon_training_attack_bonus, has_supported_class_chassis, require_active_state,
     require_selected_skill_rank, selected_skill_climb_is_class_skill,
     selected_skill_intimidate_is_class_skill, selected_skill_swim_is_class_skill,
+    selected_skill_class_skill_unknowns,
     supported_fighter_level, PilotBaseChassisComputation, ARMOR_CLASS_BASE, CLASS_SKILL_BONUS,
     CLIMB_SKILL_ID, FIGHTER_BONUS_FEAT_CHOICE_ID, FIGHTER_CLASS_ID,
     INTIMIDATE_SKILL_ID, LONGSWORD_ITEM_ID, MAX_SUPPORTED_FIGHTER_LEVEL, MAX_SUPPORTED_WIZARD_LEVEL,
@@ -702,6 +703,11 @@ pub fn compute_selected_skill_modifiers_from_corpus(
     // `compute_combat_baseline_from_corpus`'s own doc comment for the real
     // regression this caused and why `compute_equipment_effects`'s existing
     // graceful-skip tolerance is trusted instead of re-blocking on top of it.
+    // SD-36 Epic F3b3: the same named refusal the headless path raises when no class answers a
+    // selected skill's class-skill status.
+    for unknown in selected_skill_class_skill_unknowns(input) {
+        unmet.push(format!("class-skill status unknown for {unknown}"));
+    }
     if !unmet.is_empty() {
         return Err(unmet);
     }

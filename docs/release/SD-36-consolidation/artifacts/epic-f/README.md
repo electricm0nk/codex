@@ -25,6 +25,38 @@ one by name).
 - `census-f0.json` — **F0e's final copy**, the full document (every field
   above) as measured at F0's closing commit. This is the file
   `docs/architecture/status.md`'s generated table was last produced from.
+- `census-f2a.json` — SD-36 Epic F2a's AFTER sweep (generic class-family gate
+  arm; `core_rulebook`/`advanced_players_guide` appended to
+  `CLASS_FAMILY_BOOKS`): ids 137, 63 of 63 non-prestige Computed. Before/after
+  write-up: `stage-f2-f3/f2a-census-before-after.md`.
+- `census-f2b.json` — SD-36 Epic F2b's sweep (prestige-alone game rule):
+  counts identical to `census-f2a.json`; every one of the 74 prestige rows'
+  `alone_blocking_diagnostics` now carries
+  `prestige_class.requires_base_class_levels` at every level, and none carries
+  `class_chassis.unsupported`. Write-up: `stage-f2-f3/f2b-prestige-alone.md`.
+- `census-f3b.json` — SD-36 Epic F3b's sweep (multiclass gate + fold for every
+  class with a chassis): prestige carrier mixes 0 -> 56 of 74 `Computed` (11
+  Unknown, 7 Blocked by named mechanism); every other count identical to
+  `census-f2b.json`. Write-up: `stage-f2-f3/f3b-multiclass-fold.md`;
+  hand-worked oracle: `stage-f2-f3/f3b-hand-worked.md`.
+- `census-f3b3.json` — SD-36 Epic F3b3's sweep (class skills read from the
+  converted record; single-class skill points): non-prestige 61 of 63
+  `Computed` (Expert and Psion refused by name,
+  `skill.selected_modifier.class_skill_unknown`); prestige carrier mixes 59 of
+  74 (unchanged since F3b2b; 4 Blocked on an oracle save-formula defect, 11
+  Unknown); mix panel 185 of 185. Write-up: `stage-f2-f3/f3b3-receipt.md`.
+- `census-f3c.json` — SD-36 Epic F3c's sweep. The carrier chooser now walks
+  `AtLeast` branches in oracle order (`carrier_reason` on every carried row).
+  Prestige carrier mixes: 67 of 74 `Computed`, up from 59. Of the other 7, 6 are
+  Blocked on an oracle save-formula defect and 1 is Unknown (dragon_disciple).
+  Every other count is identical to `census-f3b3.json`. Histogram and movement:
+  `stage-f2-f3/f3c-blocker-histogram.md`. Remainder: `stage-f2-f3/f3c-remainder.md`.
+- `census-f3c5.json` — SD-36 Epic F3c5's sweep (Internal natural-attack helper rows convert as
+  `Fact::NaturalAttack` facts). Prestige carrier mixes: 68 of 74 `Computed`, up from 67.
+  dragon_disciple is the one row that moves: its `Internal|Bite` closure defect resolves. The other 6
+  are Blocked on the oracle save-formula defect (FS-15). Every other count is identical to
+  `census-f3c4.json`. Write-up: `stage-f2-f3/f3c5-receipt.md`; hand-worked oracle:
+  `stage-f2-f3/f3c5-hand-worked.md`.
 - `mix-panel-histogram.md` — F0d's human-readable write-up of the
   claim-blocking-diagnostic histogram across the 185-row mix panel.
 - `scripts/` — `unres2.py`/`closure.py`, the read-only planning-pass

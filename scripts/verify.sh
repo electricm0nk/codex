@@ -2830,7 +2830,8 @@ run_class_census() {
         --baseline-ids "$BASELINE_CENSUS_IDS" \
         --baseline-computed "$BASELINE_CENSUS_COMPUTED" \
         --baseline-prestige-alone-blocked "$BASELINE_CENSUS_PRESTIGE_ALONE_BLOCKED" \
-        --baseline-mix-computed "$BASELINE_CENSUS_MIX_COMPUTED")
+        --baseline-mix-computed "$BASELINE_CENSUS_MIX_COMPUTED" \
+        --baseline-prestige-mix-computed "$BASELINE_CENSUS_PRESTIGE_MIX_COMPUTED")
     local py_status=$?
 
     while IFS= read -r line; do

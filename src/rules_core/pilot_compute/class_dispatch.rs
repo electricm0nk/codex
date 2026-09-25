@@ -61,7 +61,7 @@ mod multiclass_bab_save_stacking_generalization_tests {
 
     /// The task's own literal reproducer: "a Fighter/X character across
     /// levels 1-6" -- Fighter 3 / Rogue 3 (total level 6). Before this task,
-    /// Rogue was not one of the two classes `multiclass_class_level_supported`
+    /// Rogue was not one of the two classes the multiclass gate
     /// recognized (only Fighter/Wizard), so this mix tripped the universal
     /// `class_chassis.unsupported` diagnostic and produced a fabricated
     /// `base_attack_bonus: 0` / `base_saves: BaseSaves::default()` exactly
@@ -97,9 +97,9 @@ mod multiclass_bab_save_stacking_generalization_tests {
 
     /// Proves the generalization is not anchored to Fighter specifically --
     /// a Wizard/Rogue mix (Fighter is not part of it at all) must also
-    /// stack correctly, since `multiclass_class_level_supported` and
-    /// `multiclass_good_saves` route by `table_class_id`, not a Fighter
-    /// special case.
+    /// stack correctly, since the multiclass gate and save fold
+    /// (`multiclass_fold::multiclass_member`) route by class data, not a
+    /// Fighter special case.
     ///
     /// Wizard 4 (1/2 BAB): 4/2 = 2. Rogue 2 (3/4 BAB): floor(2*3/4) = 1. Summed: 3.
     /// Fortitude: Wizard4 poor (4/3=1.333) + Rogue2 poor (2/3=0.667) = 2.0 -> 2.
@@ -763,14 +763,17 @@ mod apg_class_chassis_dispatch_tests {
         );
     }
 
-    /// Multiclass safety, verified directly (not assumed from "this path is
-    /// unreachable") -- the same discipline the Ranger slice's adversarial
-    /// review established. An APG-class-containing multiclass mix must
-    /// stay Blocked, since `ApgClassId::from_class_id_str` is deliberately
-    /// not registered with `table_class_id`/`multiclass_class_level_supported`.
+    /// SD-36 F3b (`multiclass_fold`): an APG class joins a mix like every
+    /// class with a chassis. On the same input the mix computes exactly when the
+    /// class computes alone, and when it does not, every claim-blocking line is
+    /// that class's own isolated-run line re-scoped `multiclass.<class>.*` -- the
+    /// mix neither hides a blocker nor invents one. (Before F3b an APG class
+    /// could not mix at all, because the gate read only `table_class_id`.)
     #[test]
-    fn an_apg_class_multiclassed_with_fighter_stays_blocked() {
+    fn an_apg_class_multiclassed_with_fighter_computes_exactly_when_it_computes_alone() {
+        let mut computed = Vec::new();
         for (class_id, ..) in EXPECTED_LEVEL_1 {
+            let alone = build_pilot_headless_receipt(&ranger_style_input(class_id, 4));
             let mut input = ranger_style_input(class_id, 4);
             input
                 .chosen
@@ -780,12 +783,19 @@ mod apg_class_chassis_dispatch_tests {
             let receipt = build_pilot_headless_receipt(&input);
 
             assert_eq!(
-                receipt.status,
-                HeadlessReceiptStatus::Blocked,
-                "{class_id}+Fighter multiclass must not reach Computed: {:?}",
+                receipt.status, alone.status,
+                "{class_id}+Fighter must compute exactly when {class_id} computes alone: {:?}",
                 receipt.computation.diagnostics
             );
+            let prefix = format!("multiclass.{}.", class_id.trim_start_matches("class:"));
+            for d in receipt.computation.diagnostics.iter().filter(|d| d.claim_blocking) {
+                assert!(d.id.starts_with(&prefix), "{class_id}+Fighter blocker not re-scoped: {d:?}");
+            }
+            if receipt.status == HeadlessReceiptStatus::Computed {
+                computed.push(class_id);
+            }
         }
+        assert_eq!(computed, Vec::<&str>::new(), "the classes that compute alone at 4 on this fixture");
     }
 
     /// A level beyond an APG class's real `MAXLEVEL:20` ceiling stays
@@ -2182,13 +2192,17 @@ mod acg_class_chassis_dispatch_tests {
         );
     }
 
-    /// Multiclass safety, verified directly. An ACG-class-containing
-    /// multiclass mix must stay Blocked, since `AcgClassId::from_class_id_str`
-    /// is deliberately not registered with
-    /// `table_class_id`/`multiclass_class_level_supported`.
+    /// SD-36 F3b (`multiclass_fold`): an ACG class joins a mix like every
+    /// class with a chassis. On the same input the mix computes exactly when the
+    /// class computes alone, and when it does not, every claim-blocking line is
+    /// that class's own isolated-run line re-scoped `multiclass.<class>.*` -- the
+    /// mix neither hides a blocker nor invents one. (Before F3b an ACG class
+    /// could not mix at all, because the gate read only `table_class_id`.)
     #[test]
-    fn an_acg_class_multiclassed_with_fighter_stays_blocked() {
+    fn an_acg_class_multiclassed_with_fighter_computes_exactly_when_it_computes_alone() {
+        let mut computed = Vec::new();
         for (class_id, ..) in EXPECTED_LEVEL_1 {
+            let alone = build_pilot_headless_receipt(&acg_style_input(class_id, 4));
             let mut input = acg_style_input(class_id, 4);
             input
                 .chosen
@@ -2198,12 +2212,19 @@ mod acg_class_chassis_dispatch_tests {
             let receipt = build_pilot_headless_receipt(&input);
 
             assert_eq!(
-                receipt.status,
-                HeadlessReceiptStatus::Blocked,
-                "{class_id}+Fighter multiclass must not reach Computed: {:?}",
+                receipt.status, alone.status,
+                "{class_id}+Fighter must compute exactly when {class_id} computes alone: {:?}",
                 receipt.computation.diagnostics
             );
+            let prefix = format!("multiclass.{}.", class_id.trim_start_matches("class:"));
+            for d in receipt.computation.diagnostics.iter().filter(|d| d.claim_blocking) {
+                assert!(d.id.starts_with(&prefix), "{class_id}+Fighter blocker not re-scoped: {d:?}");
+            }
+            if receipt.status == HeadlessReceiptStatus::Computed {
+                computed.push(class_id);
+            }
         }
+        assert_eq!(computed, vec!["class:brawler", "class:hunter", "class:skald", "class:slayer", "class:swashbuckler"], "the classes that compute alone at 4 on this fixture");
     }
 
     /// A level beyond an ACG class's real `MAXLEVEL:20` ceiling stays

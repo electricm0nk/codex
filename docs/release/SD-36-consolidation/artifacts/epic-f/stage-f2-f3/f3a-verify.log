@@ -1,0 +1,23 @@
+# F3a GREEN verify (worktree sd36/epic-f2-f3, CARGO_TARGET_DIR scratch)
+== save_shape
+test rules_core::pilot_compute::class_chassis_sheet_rules::tests::save_shape_names_the_words_not_expr_symptom_degraded ... ok
+test rules_core::pilot_compute::class_chassis_sheet_rules::tests::save_shape_reads_good_poor_and_names_the_rest ... ok
+test rules_core::pilot_compute::class_chassis_sheet_rules::tests::every_generic_class_save_shape_is_recognized_or_named ... ok
+test result: ok. 3 passed; 0 failed; 0 ignored; 0 measured; 2714 filtered out; finished in 2.55s
+== F3.0
+test rules_core::pilot_compute::class_chassis_sheet_rules::tests::a_class_missing_hit_die_reports_hp_unknown ... ok
+test result: ok. 1 passed; 0 failed; 0 ignored; 0 measured; 2716 filtered out; finished in 2.51s
+test rules_core::pilot_compute::class_chassis_sheet_rules::tests::a_class_missing_skill_ranks_reports_skill_points_unknown ... ok
+test result: ok. 1 passed; 0 failed; 0 ignored; 0 measured; 2716 filtered out; finished in 2.55s
+== class_chassis_sheet_rules
+test result: ok. 18 passed; 0 failed; 0 ignored; 0 measured; 2699 filtered out; finished in 2.65s
+== generic_class_chassis + class_census
+test result: ok. 11 passed; 0 failed; 0 ignored; 0 measured; 2706 filtered out; finished in 0.12s
+test result: ok. 31 passed; 0 failed; 0 ignored; 0 measured; 2686 filtered out; finished in 230.59s
+== clippy
+    Finished `dev` profile [unoptimized + debuginfo] target(s) in 1m 18s
+CLIPPY_EXIT=0
+EXIT=0
+== pcgen_residue_gate --check --closure
+shipped_data_files=0 shipped_data_hits=0 shipped_scanned=69717
+live_files=0 live_hits=0 verdict=PASS

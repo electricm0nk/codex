@@ -9,7 +9,8 @@
 //!      family).
 //!   2. `multiclass_negative_controls!` — "this class's own fixture, widened
 //!      to a Class+Fighter multiclass mix, must still withhold the bounded
-//!      chassis explanation and stay claim-blocked" (the
+//!      chassis explanation, and (since SD-36 Epic F3d) get the same receipt
+//!      status and claim-blocking set as the class alone" (the
 //!      `multiclass_<class>_level<N>_is_not_promoted_by_this_slice` family).
 //!
 //! Each macro expands ONE `#[test]` fn per row it is fed, with the row's
@@ -74,8 +75,10 @@ macro_rules! recognition_negative_controls {
 /// class's own single-class fixture, widened to a Class+Fighter multiclass
 /// mix via a literal `.replace(from, to)` (the exact strings the original
 /// body used), must still withhold the bounded chassis explanation (same
-/// predicate shape as `recognition_negative_controls!`) AND the computation
-/// must stay claim-blocked.
+/// predicate shape as `recognition_negative_controls!`) AND -- since SD-36
+/// Epic F3d, a change of meaning from the former "must stay claim-blocked" --
+/// STATUS PARITY: the mix's headless receipt status and claim-blocking set
+/// (the `multiclass.<class>.` re-scope stripped) equal the class alone's.
 ///
 /// SD-36 Epic C2 vacuity-guard addendum (operator ruling 2026-09-20): the
 /// sibling `sd18_widening` family's own multiclass macro was found with 64
@@ -92,8 +95,7 @@ macro_rules! multiclass_negative_controls {
         $name:ident($fixture:ident, $from:literal => $to:literal) {
             prefixes: [ $($p:literal),* $(,)? ],
             exact: [ $($x:expr),* $(,)? ],
-            message: $msg:literal,
-            blocked_message: $msg2:literal $(,)?
+            message: $msg:literal $(,)?
         }
     ),* $(,)? ) => {
         $(
@@ -150,10 +152,13 @@ macro_rules! multiclass_negative_controls {
                     $msg,
                     computation.explanations
                 );
-                assert!(
-                    computation.diagnostics.iter().any(|d| d.claim_blocking),
-                    $msg2
-                );
+                // SD-36 Epic F3d (decisions.md §14): assertion (b) is STATUS PARITY
+                // with the class alone (was: "must stay claim-blocked in this slice"):
+                // same receipt status as `$fixture` unmodified, same claim-blocking set
+                // once the fold's `multiclass.<class>.` re-scope is stripped. The
+                // vacuity guards above (two class_level lines, two loaded class entries
+                // matching `$to`) keep this from passing on a single-class input.
+                crate::common::assert_multiclass_status_parity(stringify!($name), $fixture, &multiclass);
             }
         )*
     };

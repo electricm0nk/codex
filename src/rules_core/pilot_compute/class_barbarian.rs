@@ -3544,13 +3544,14 @@ mod raging_climber_and_swimmer_tests {
         assert_eq!(swimmer.value, 0, "no bonus while not raging: {swimmer:?}");
 
         // Baseline: rank 1 + Strength modifier (16+2 Human bonus = 18 -> +4)
-        // + no class-skill bonus (this engine's `selected_skill_climb_is_
-        // class_skill`/`swim` do not list Barbarian) + Chain Shirt ACP (-2,
-        // no Fighter armor training since this isn't a Fighter) + 0 feat
-        // bonus = 3.
+        // + class-skill bonus +3 (SD-36 F3b3: read from Barbarian's converted
+        // record, `class_skills_barbarian`, cr_abilities_class.lst:2831 CSKILL
+        // ...|Climb|...|Swim; this pin was 3 while the hand-kept class list
+        // omitted Barbarian) + Chain Shirt ACP (-2, no Fighter armor training
+        // since this isn't a Fighter) + 0 feat bonus = 6.
         let (climb, swim) = climb_and_swim(&input);
-        assert_eq!(climb, 3, "unraged Barbarian Climb total must carry no Raging Climber bonus");
-        assert_eq!(swim, 3, "unraged Barbarian Swim total must carry no Raging Swimmer bonus");
+        assert_eq!(climb, 6, "unraged Barbarian Climb total must carry no Raging Climber bonus");
+        assert_eq!(swim, 6, "unraged Barbarian Swim total must carry no Raging Swimmer bonus");
     }
 
     #[test]
@@ -3569,13 +3570,13 @@ mod raging_climber_and_swimmer_tests {
         assert_eq!(swimmer.value, 5, "RagePowersLVL = BarbarianLVL = 5 while raging: {swimmer:?}");
 
         let (climb, swim) = climb_and_swim(&input);
-        // Baseline 3 (see the not-raging test) + RagePowersLVL 5 + the extra
+        // Baseline 6 (see the not-raging test) + RagePowersLVL 5 + the extra
         // +2 Strength modifier Rage's own tier-4 Strength score bonus adds
-        // (18 -> 22, +4 -> +6 modifier) = 10. Proves the two bonuses
+        // (18 -> 22, +4 -> +6 modifier) = 13. Proves the two bonuses
         // genuinely stack through the shared Strength-modifier term rather
         // than double-counting or clobbering each other.
-        assert_eq!(climb, 10, "Raging Climber's +5 enhancement bonus must land on the real Climb total");
-        assert_eq!(swim, 10, "Raging Swimmer's +5 enhancement bonus must land on the real Swim total");
+        assert_eq!(climb, 13, "Raging Climber's +5 enhancement bonus must land on the real Climb total");
+        assert_eq!(swim, 13, "Raging Swimmer's +5 enhancement bonus must land on the real Swim total");
     }
 
     #[test]
@@ -3592,7 +3593,7 @@ mod raging_climber_and_swimmer_tests {
         assert_eq!(climber.value, 0, "available but not raging must carry no bonus: {climber:?}");
 
         let (climb, _swim) = climb_and_swim(&input);
-        assert_eq!(climb, 3, "an available-but-inactive rage must not inflate the Climb total");
+        assert_eq!(climb, 6, "an available-but-inactive rage must not inflate the Climb total");
     }
 
     #[test]

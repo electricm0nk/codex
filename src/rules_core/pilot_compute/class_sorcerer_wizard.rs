@@ -330,6 +330,22 @@ pub(super) const SORCERER_BLOODLINE_CHOICE_ID: &str = "choice:sorcerer_bloodline
 /// PF1 Core Rulebook Draconic bloodline's 3rd-level "Dragon Resistances" power
 /// (corpus: cr_abilities_class.lst, KEY:Draconic Bloodline ~ Dragon Resistances,
 /// PREVARGTEQ:Sorcerer_Draconic_BloodlineProgressionLVL,3).
+/// SD-36 F3c4: the recognition record of a bloodline that prints from its converted record.
+pub(super) const SORCERER_CONVERTED_BLOODLINE_EXPLANATION_ID: &str = "class_feature.sorcerer.bloodline.converted_record";
+
+/// SD-36 F3c4: a linked bloodline pick whose converted option the held set does not hold.
+pub(super) const SORCERER_CONVERTED_BLOODLINE_OPTION_NOT_HELD_ID: &str =
+    "class_feature.sorcerer.bloodline.converted_option_not_held";
+
+/// SD-36 F3c4: the character's sorcerer bloodline pick linked to its converted pick option, when
+/// the package links it (`sheet_rule_package::linked_picks`). `None` for a pick the package
+/// does not answer (an invented bloodline, or no package): the bespoke blocker then stands.
+pub(super) fn converted_bloodline_pick(input: &CharacterInput) -> Option<crate::rules_core::sheet_rule::LinkedPick> {
+    crate::rules_core::sheet_rule_package::linked_picks(input)
+        .into_iter()
+        .find(|l| l.choice_set_id == SORCERER_BLOODLINE_CHOICE_ID)
+}
+
 pub(super) const SORCERER_DRACONIC_DRAGON_RESISTANCES_LEVEL: u8 = 3;
 
 pub(super) const SORCERER_DRACONIC_DRAGON_RESISTANCES_NATURAL_ARMOR_EXPLANATION_ID: &str =
@@ -1704,6 +1720,33 @@ pub(super) fn explain_sorcerer_level1_spell_baseline(
                 explanations,
                 diagnostics,
             );
+        } else if let Some(link) = (!recognized_arcane_bloodline)
+            .then(|| converted_bloodline_pick(input))
+            .flatten()
+            .filter(|link| link.option_held)
+        {
+            // SD-36 F3c4 (FS-17, engine half): a bloodline this module does not model yields
+            // to its CONVERTED record (the F1b precedent: the bespoke number wins where it
+            // computes; the record prints the text). The character's Path-A pick is linked to
+            // the converted pick option (`sheet_rule_package::linked_picks`, one rule for every
+            // bloodline), so the held set holds the option, the bloodline record and each of its
+            // lines at the level the record states: the class skill joins the class-skill union
+            // (`class_skill_sheet_rules::class_skill_view_for`), the bonus spells and bonus
+            // feats print as their lines and choices, the arcana and powers print as text. No
+            // bloodline number is claimed here, so nothing is fabricated (+0).
+            explanations.push(ComputationExplanation {
+                id: SORCERER_CONVERTED_BLOODLINE_EXPLANATION_ID.to_owned(),
+                value: 0,
+                detail: format!(
+                    "Sorcerer level {sorcerer_level} bloodline {} prints from its converted record: \
+                     the pick is linked to {} (offered by {}), which the held set holds with the \
+                     bloodline record and its lines at the levels the record states (class skill, \
+                     bonus spells, bonus feats, arcana, powers). A recognition record only (+0)",
+                    bloodline_selection.unwrap_or_default(),
+                    link.option,
+                    link.chooser
+                ),
+            });
         } else {
             // Reachable only when the bloodline itself is unrecognized, or when
             // it is Arcane but no Arcane Bond choice was recorded — the
@@ -1744,6 +1787,27 @@ pub(super) fn explain_sorcerer_level1_spell_baseline(
             } else {
                 String::new()
             };
+            // SD-36 F3c4: a pick the package links whose option this character is not held
+            // (the option's own gate excludes it -- the Imperious and Kobold pick rows are
+            // race-gated through a template the package's race does not grant, FS-19) prints
+            // none of the bloodline's lines, so it is named, never passed as Computed.
+            if !recognized_arcane_bloodline
+                && let Some(link) = converted_bloodline_pick(input)
+            {
+                diagnostics.push(ComputationDiagnostic {
+                    id: SORCERER_CONVERTED_BLOODLINE_OPTION_NOT_HELD_ID.to_owned(),
+                    message: format!(
+                        "Sorcerer bloodline pick {} links to the converted option {} (offered by {}), \
+                         but the held set does not hold it for this character: the option's own gate \
+                         excludes it, so none of the bloodline's lines (class skill, bonus spells, bonus \
+                         feats, arcana, powers) would print",
+                        bloodline_selection.unwrap_or_default(),
+                        link.option,
+                        link.chooser
+                    ),
+                    claim_blocking: true,
+                });
+            }
             diagnostics.push(ComputationDiagnostic {
                 id: "class_feature.sorcerer.arcane_bond_and_bloodline_progression.unsupported"
                     .to_owned(),
