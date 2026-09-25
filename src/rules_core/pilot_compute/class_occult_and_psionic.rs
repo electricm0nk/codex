@@ -3758,6 +3758,8 @@ pub(super) fn compute_multiclass_base_chassis(
     let mut total_bab: i16 = 0;
     let mut fractions = [Rat::ZERO; 3];
     let mut class_summaries: Vec<String> = Vec::new();
+    // SD-36 F3 polish P2: each save's detail lists each class's own exact term for THAT save.
+    let mut save_terms: [Vec<String>; 3] = [Vec::new(), Vec::new(), Vec::new()];
 
     for class_level in &input.chosen.class_levels {
         let bab = multiclass_fold::member_base_attack_bonus(input, class_level, ability_modifiers)?;
@@ -3769,8 +3771,15 @@ pub(super) fn compute_multiclass_base_chassis(
         // converted `Expr` (its base or prestige table form), and only for a save
         // whose shape is Good or Poor (`multiclass_fold::multiclass_member`).
         let member = multiclass_fold::multiclass_member(input, class_level).ok()?;
-        for (sum, value) in fractions.iter_mut().zip(member.saves) {
+        for (index, (sum, value)) in fractions.iter_mut().zip(member.saves).enumerate() {
             *sum = *sum + value;
+            save_terms[index].push(format!(
+                "{} {}: {} {}",
+                class_level.class_id,
+                class_level.level,
+                ["Fortitude", "Reflex", "Will"][index],
+                shown_exact(value)
+            ));
         }
 
         class_summaries.push(format!(
@@ -3785,9 +3794,9 @@ pub(super) fn compute_multiclass_base_chassis(
         reflex: floor_once(fractions[1])?,
         will: floor_once(fractions[2])?,
     };
-    let shown = |r: Rat| r.num as f64 / r.den as f64;
     let (fort_fraction, ref_fraction, will_fraction) =
-        (shown(fractions[0]), shown(fractions[1]), shown(fractions[2]));
+        (shown_exact(fractions[0]), shown_exact(fractions[1]), shown_exact(fractions[2]));
+    let [fort_terms, ref_terms, will_terms] = save_terms.map(|terms| terms.join("; "));
 
     let class_summary = class_summaries.join("; ");
 
@@ -3804,7 +3813,7 @@ pub(super) fn compute_multiclass_base_chassis(
         value: total_saves.fortitude,
         detail: format!(
             "Multiclass base Fortitude save {}: PF1's sum-fractions-then-round-down-once rule, \
-             fractional total {fort_fraction:.3} across ({class_summary})",
+             fractional total {fort_fraction} across ({fort_terms})",
             total_saves.fortitude
         ),
     });
@@ -3813,7 +3822,7 @@ pub(super) fn compute_multiclass_base_chassis(
         value: total_saves.reflex,
         detail: format!(
             "Multiclass base Reflex save {}: PF1's sum-fractions-then-round-down-once rule, \
-             fractional total {ref_fraction:.3} across ({class_summary})",
+             fractional total {ref_fraction} across ({ref_terms})",
             total_saves.reflex
         ),
     });
@@ -3822,12 +3831,22 @@ pub(super) fn compute_multiclass_base_chassis(
         value: total_saves.will,
         detail: format!(
             "Multiclass base Will save {}: PF1's sum-fractions-then-round-down-once rule, \
-             fractional total {will_fraction:.3} across ({class_summary})",
+             fractional total {will_fraction} across ({will_terms})",
             total_saves.will
         ),
     });
 
     Some((total_bab, total_saves))
+}
+
+/// An exact save value as the explanation prints it: a whole number bare (`8`), otherwise three
+/// decimals with trailing zeros trimmed (`2.5`, `0.333`).
+fn shown_exact(r: Rat) -> String {
+    if r.den == 1 {
+        return r.num.to_string();
+    }
+    let text = format!("{:.3}", r.num as f64 / r.den as f64);
+    text.trim_end_matches('0').trim_end_matches('.').to_owned()
 }
 
 /// PF1's own class-level ceiling, and the `MAXLEVEL:20` every CRB/APG/ACG

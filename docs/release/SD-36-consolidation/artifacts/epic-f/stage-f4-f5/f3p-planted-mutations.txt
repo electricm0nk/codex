@@ -1,0 +1,34 @@
+control (unmodified): exit=0 verdict=PASS
+    F3p f3p_option_gate: 465 of 465 pinned field deltas and 414 of 414 pinned _vars/ tables, 1741 of 1741 option terms undone before the diff -- F3p P5: a parameterised PREABILITY item whose base is a chooser holds the base WITH that option chosen -- All[Holds(base), Chosen{base, option}], or for a TYPE= selector option the printed condition 'requires a <type> option chosen for <Base>' -- never the bare base (see structural_diff_f3p_deltas.json)
+M1 the firearms grant's option gate withdrawn (bare Exotic Weapon Proficiency again): exit=1 verdict=FAIL (removed granted_by edges: 2; F3p pin failures: 1)
+    F3p f3p_option_gate: 464 of 465 pinned field deltas and 414 of 414 pinned _vars/ tables, 1738 of 1741 option terms undone before the diff -- F3p P5: a parameterised PREABILITY item whose base is a chooser holds the base WITH that option chosen -- All[Holds(base), Chosen{base, option}], or for a TYPE= selector option the printed condition 'requires a <type> option chosen for <Base>' -- never the bare base (see structural_diff_f3p_deltas.json)
+    F3p pinned option gate withdrawn or moved: ultimate_combat:class_feature:exotic_weapon_proficiency_firearms: granted_by
+    removed granted_by edges: 2  (never allowed -- SS3.5 permits growth only)
+M2 the firearms grant's option becomes katana: exit=1 verdict=FAIL (removed granted_by edges: 3; F3p pin failures: 1)
+    F3p f3p_option_gate: 464 of 465 pinned field deltas and 414 of 414 pinned _vars/ tables, 1738 of 1741 option terms undone before the diff -- F3p P5: a parameterised PREABILITY item whose base is a chooser holds the base WITH that option chosen -- All[Holds(base), Chosen{base, option}], or for a TYPE= selector option the printed condition 'requires a <type> option chosen for <Base>' -- never the bare base (see structural_diff_f3p_deltas.json)
+    F3p pinned option gate withdrawn or moved: ultimate_combat:class_feature:exotic_weapon_proficiency_firearms: granted_by
+    removed granted_by edges: 3  (never allowed -- SS3.5 permits growth only)
+M3 the option term names another chooser: exit=1 verdict=FAIL (removed granted_by edges: 3; F3p pin failures: 1)
+    F3p f3p_option_gate: 464 of 465 pinned field deltas and 414 of 414 pinned _vars/ tables, 1738 of 1741 option terms undone before the diff -- F3p P5: a parameterised PREABILITY item whose base is a chooser holds the base WITH that option chosen -- All[Holds(base), Chosen{base, option}], or for a TYPE= selector option the printed condition 'requires a <type> option chosen for <Base>' -- never the bare base (see structural_diff_f3p_deltas.json)
+    F3p pinned option gate withdrawn or moved: ultimate_combat:class_feature:exotic_weapon_proficiency_firearms: granted_by
+    removed granted_by edges: 3  (never allowed -- SS3.5 permits growth only)
+M4 a second option term added to the pinned gate: exit=1 verdict=FAIL (removed granted_by edges: 3; F3p pin failures: 1)
+    F3p f3p_option_gate: 464 of 465 pinned field deltas and 414 of 414 pinned _vars/ tables, 1738 of 1741 option terms undone before the diff -- F3p P5: a parameterised PREABILITY item whose base is a chooser holds the base WITH that option chosen -- All[Holds(base), Chosen{base, option}], or for a TYPE= selector option the printed condition 'requires a <type> option chosen for <Base>' -- never the bare base (see structural_diff_f3p_deltas.json)
+    F3p pinned option gate withdrawn or moved: ultimate_combat:class_feature:exotic_weapon_proficiency_firearms: granted_by
+    removed granted_by edges: 3  (never allowed -- SS3.5 permits growth only)
+M5 an unpinned option gate planted on Power Attack: exit=1 verdict=FAIL (unexpected field deltas: 1)
+    F3p f3p_option_gate: 465 of 465 pinned field deltas and 414 of 414 pinned _vars/ tables, 1741 of 1741 option terms undone before the diff -- F3p P5: a parameterised PREABILITY item whose base is a chooser holds the base WITH that option chosen -- All[Holds(base), Chosen{base, option}], or for a TYPE= selector option the printed condition 'requires a <type> option chosen for <Base>' -- never the bare base (see structural_diff_f3p_deltas.json)
+    unexpected field deltas: 1
+M6 a pinned _vars table (_vars/v00994c773b8dd46b.json) loses its option term: exit=1 verdict=FAIL (F3p pin failures: 1)
+    F3p f3p_option_gate: 465 of 465 pinned field deltas and 413 of 414 pinned _vars/ tables, 1739 of 1741 option terms undone before the diff -- F3p P5: a parameterised PREABILITY item whose base is a chooser holds the base WITH that option chosen -- All[Holds(base), Chosen{base, option}], or for a TYPE= selector option the printed condition 'requires a <type> option chosen for <Base>' -- never the bare base (see structural_diff_f3p_deltas.json)
+    F3p pinned _vars table withdrawn or moved: _vars/v00994c773b8dd46b.json
+M8 a TYPE= selector condition (inner_sea_world_guide/class/low_templar.json) becomes an option id no pick carries (type_martial): exit=1 verdict=FAIL (unexpected field deltas: 1; F3p pin failures: 1)
+    F3p f3p_option_gate: 464 of 465 pinned field deltas and 414 of 414 pinned _vars/ tables, 1740 of 1741 option terms undone before the diff -- F3p P5: a parameterised PREABILITY item whose base is a chooser holds the base WITH that option chosen -- All[Holds(base), Chosen{base, option}], or for a TYPE= selector option the printed condition 'requires a <type> option chosen for <Base>' -- never the bare base (see structural_diff_f3p_deltas.json)
+    F3p pinned option gate withdrawn or moved: inner_sea_world_guide:class:low_templar: applies
+    unexpected field deltas: 1
+M7 the firearms grant's Exotic Weapon Proficiency edge dropped: exit=1 verdict=FAIL (removed granted_by edges: 3; F3p pin failures: 1)
+    F3p f3p_option_gate: 464 of 465 pinned field deltas and 414 of 414 pinned _vars/ tables, 1738 of 1741 option terms undone before the diff -- F3p P5: a parameterised PREABILITY item whose base is a chooser holds the base WITH that option chosen -- All[Holds(base), Chosen{base, option}], or for a TYPE= selector option the printed condition 'requires a <type> option chosen for <Base>' -- never the bare base (see structural_diff_f3p_deltas.json)
+    F3p pinned option gate withdrawn or moved: ultimate_combat:class_feature:exotic_weapon_proficiency_firearms: granted_by
+    removed granted_by edges: 3  (never allowed -- SS3.5 permits growth only)
+control (restored): exit=0 verdict=PASS
+    F3p f3p_option_gate: 465 of 465 pinned field deltas and 414 of 414 pinned _vars/ tables, 1741 of 1741 option terms undone before the diff -- F3p P5: a parameterised PREABILITY item whose base is a chooser holds the base WITH that option chosen -- All[Holds(base), Chosen{base, option}], or for a TYPE= selector option the printed condition 'requires a <type> option chosen for <Base>' -- never the bare base (see structural_diff_f3p_deltas.json)

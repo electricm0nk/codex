@@ -1245,6 +1245,36 @@ pub struct CharacterFacts {
     pub class_tags: BTreeSet<Tag>,
     pub gender: Option<Tag>,
     pub age_category: Option<Tag>,
+    /// SD-36 F3p: every feat the character records WITH its sub-choice, as `(base feat slug,
+    /// option words)` ([`feat_sub_choices`]). [`CharacterFacts::with_linked_picks`] records each
+    /// under the feat's converted chooser, so a gate on the feat's option reads the pick.
+    pub feat_sub_choices: Vec<(String, String)>,
+}
+
+/// SD-36 F3p: every feat `chosen` records together with its sub-choice, as `(base feat slug, option
+/// words)`. ONE rule over the two shapes a pick takes: a selected feat `<Base> (<Option>)` (the
+/// catalog picker's `"Weapon Focus (Longbow)"`), and a selected choice whose selection id is
+/// `feat:<base>:<kind>:<option>` (`feat:weapon_focus:weapon:longsword`). A feat recorded without
+/// one contributes nothing.
+pub fn feat_sub_choices(chosen: &crate::rules_core::character_input::ChosenCharacterState) -> Vec<(String, String)> {
+    let mut out: Vec<(String, String)> = Vec::new();
+    for feat in &chosen.selected_feats {
+        // The FIRST parenthesis opens the option (`Exotic Weapon Proficiency (Waraxe (Dwarven))`).
+        if let Some((base, option)) = feat.split_once('(')
+            && let Some(option) = option.trim_end().strip_suffix(')')
+        {
+            out.push((id_slug(base.trim()), option.trim().to_string()));
+        }
+    }
+    for choice in &chosen.selected_choices {
+        let parts: Vec<&str> = choice.selection_id.split(':').collect();
+        if let ["feat", base, _kind, option] = parts.as_slice() {
+            out.push((slug(base), (*option).to_string()));
+        }
+    }
+    out.sort();
+    out.dedup();
+    out
 }
 
 fn ability_index(a: Ability) -> usize {
@@ -1368,6 +1398,7 @@ impl CharacterFacts {
             master_level: 0,
             choices,
             race,
+            feat_sub_choices: feat_sub_choices(chosen),
             ..CharacterFacts::default()
         }
     }
@@ -1417,10 +1448,19 @@ impl HeldSeed {
                 .unwrap_or_else(|| classes.first().map(|(c, _)| c.clone()).unwrap_or_default());
             class_features.push((owner, e.id.clone()));
         }
+        // A feat recorded with its sub-choice (`"Weapon Focus (Longbow)"`) names the same converted
+        // record as `weapon_focus`: the seed carries both shapes, so the feat is held either way
+        // (SD-36 F3p; was local to `feat_prereqs::PrereqFacts::new`).
+        let mut feats: Vec<String> = chosen.selected_feats.iter().map(|f| id_slug(f)).collect();
+        for (base, _) in feat_sub_choices(chosen) {
+            if !feats.contains(&base) {
+                feats.push(base);
+            }
+        }
         HeldSeed {
             race: Some(id_slug(&chosen.race_id)),
             classes,
-            feats: chosen.selected_feats.iter().map(|f| id_slug(f)).collect(),
+            feats,
             traits: chosen.selected_traits.iter().map(|t| id_slug(t)).collect(),
             equipment: chosen.equipment_selections.iter().map(|e| id_slug(&e.item_id)).collect(),
             spells: chosen.spells_selected.iter().map(|s| id_slug(&s.spell_id)).collect(),
@@ -2373,6 +2413,20 @@ impl CharacterFacts {
             let entry = facts.choices.entry(link.chooser.clone()).or_default();
             if !entry.iter().any(|(o, _)| o == &link.option) {
                 entry.push((link.option.clone(), link.option.clone()));
+            }
+        }
+        // SD-36 F3p: a feat recorded with its sub-choice records that option under the feat's
+        // converted chooser (the feat record whose `offers.id` is its own id) -- the key an option
+        // gate (`Applies::Chosen`) and the feat's own `Chosen` target read.
+        for (base, option) in &self.feat_sub_choices {
+            let Some(id) = package.find("feat", base) else { continue };
+            if package.rule(id).and_then(|r| r.offers.as_ref()).is_none_or(|o| &o.id != id) {
+                continue;
+            }
+            let option_id = slug(option);
+            let entry = facts.choices.entry(id.clone()).or_default();
+            if !entry.iter().any(|(o, _)| o == &option_id) {
+                entry.push((option_id, option.clone()));
             }
         }
         facts

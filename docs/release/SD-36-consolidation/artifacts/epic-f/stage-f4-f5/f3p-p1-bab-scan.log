@@ -1,0 +1,28 @@
+
+running 1 test
+test p1_scan_every_class_line_that_speaks_of_a_base_attack_bonus_is_classified has been running for over 60 seconds
+P1 scan: 1988 single-class builds; 1692 distinct class-line ids; 19 speak of a base attack bonus
+  class_chassis.barbarian.base_attack_bonus -- barbarian 1: Barbarian level 1 base attack bonus from the PF1 Core Rulebook Barbarian class table (full base-attack progression, same formula shape as Fighter's cr_classes.lst:139): classlevel = 1. Th
+  class_chassis.bard.base_attack_bonus -- bard 1: Bard level 1 base attack bonus from the PF1 Core Rulebook Bard class table's 3/4-BAB progression, the same formula shape as Rogue/Monk/Druid/Cleric: classlevel * 3 / 4 = 0. This is a standalon
+  class_chassis.cavalier.mount.base_attack_bonus -- cavalier 1: Horse companion base attack bonus at 2 HD (PF1 Core Rulebook Animal Companion Base Statistics: HD*3/4 = 1) + Strength modifier (+3, Str 16 = base 16 + 0 from the companion class's own floo
+  class_chassis.cleric.base_attack_bonus -- cleric 1: Cleric level 1 base attack bonus from the PF1 Core Rulebook Cleric class table's 3/4-BAB progression, the same formula shape as Rogue/Monk/Druid: classlevel * 3 / 4 = 0. This is a standalone
+  class_chassis.druid.animal_companion.base_attack_bonus -- druid 1: Wolf companion base attack bonus at 2 HD (PF1 Core Rulebook Animal Companion Base Statistics: HD*3/4 = 1) + Strength modifier (+1, Str 13 = base 13 + 0 from the companion class's own floor(ma
+  class_chassis.druid.base_attack_bonus -- druid 1: Druid level 1 base attack bonus from the PF1 Core Rulebook Druid class table's 3/4-BAB progression, the same formula shape as Rogue/Monk: classlevel * 3 / 4 = 0. This is a standalone explanat
+  class_chassis.hunter.animal_companion.base_attack_bonus -- hunter 1: Wolf companion base attack bonus at 2 HD (PF1 Core Rulebook Animal Companion Base Statistics: HD*3/4 = 1) + Strength modifier (+1, Str 13 = base 13 + 0 from the companion class's own floor(m
+  class_chassis.monk.base_attack_bonus -- monk 1: Monk level 1 base attack bonus from the PF1 Core Rulebook Monk class table's 3/4-BAB progression: classlevel * 3 / 4 = 0
+  class_chassis.monk.flurry_of_blows_attack_bonus -- monk 1: Monk level 1 Flurry of Blows flat attack modifier from the PF1 Core Rulebook: when using flurry as a full-attack action the monk uses her monk level in place of her base attack bonus and takes
+  class_chassis.monk.maneuver_training_cmb_bonus -- monk 3: Monk Maneuver Training at monk level 3: +1 to combat maneuver bonus only (corpus CMB_BAB = MonkLVL - MonkLVL*3/4). A monk uses his full monk level in place of his 3/4 base attack bonus when ca
+  class_chassis.paladin.base_attack_bonus -- paladin 1: Paladin level 1 base attack bonus from the PF1 Core Rulebook Paladin class table (full base-attack progression, the same formula shape as Fighter/Barbarian/Ranger): classlevel = 1. This is 
+  class_chassis.ranger.base_attack_bonus -- ranger 1: Ranger level 1 base attack bonus from the PF1 Core Rulebook Ranger class table (full base-attack progression, the same formula shape as Fighter/Barbarian/Paladin): classlevel = 1. This is a 
+  class_chassis.rogue.base_attack_bonus -- rogue 1: Rogue level 1 base attack bonus from the PF1 Core Rulebook Rogue class table's 3/4-BAB progression: level * 3 / 4 = 0
+  class_chassis.sorcerer.base_attack_bonus -- sorcerer 1: Sorcerer level 1 base attack bonus from the PF1 Core Rulebook Sorcerer class table's 1/2-BAB progression — UNLIKE the 3/4-BAB shape shared by Rogue/Monk/Druid/Cleric/Bard: classlevel / 2
+  class_chassis.wizard.base_attack_bonus -- wizard 1: Wizard level 1 base attack bonus from the PF1 Core Rulebook Wizard class table's 1/2-BAB progression — the same shape as Sorcerer, UNLIKE the 3/4-BAB shape shared by Rogue/Monk/Druid/Cleri
+  class_feature.apg.alchemist.discovery.feral_mutagen_claw_damage_die -- alchemist 2: Alchemist level 2 selected the Feral Mutagen discovery: whenever he imbibes a mutagen he gains TWO claw attacks dealing 1d6 each (1d4 if Small -- this codebase's own fixture race is Mediu
+  class_feature.apg.summoner.eidolon.base_attack_bonus -- summoner 1: Quadruped Eidolon base attack bonus: +1, FULL progression (equal to the summoner's own level), not the three-quarters an animal companion gets. The Eidolon also uses a d10 hit die and take
+  class_feature.pu.unchained_monk.flurry_attack_count -- unchained_monk 1: Unchained Monk level 1 Flurry of Blows: 2 attacks at a total base attack bonus of 1 (2 + (bab>=6) + 2 x (bab>=11) + (bab>=16)). The Unchained Monk reaches 6 where the Core Rulebook M
+  class_feature.pu.unchained_monk.other_features_deferred.unsupported -- unchained_monk 1: class:unchained_monk grounds every Unchained Monk magnitude this book states as a formula token: its own chassis (d10 hit die, FULL base attack bonus, good Fortitude and Reflex and P
+test p1_scan_every_class_line_that_speaks_of_a_base_attack_bonus_is_classified ... ok
+
+test result: ok. 1 passed; 0 failed; 0 ignored; 0 measured; 5 filtered out; finished in 102.72s
+
+EXIT=0

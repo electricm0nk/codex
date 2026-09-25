@@ -374,20 +374,12 @@ impl PrereqFacts {
         computation: &PilotBaseChassisComputation,
         extra_race_traits: &[String],
     ) -> PrereqFacts {
+        // A feat recorded with its sub-choice (`"Weapon Focus (Longbow)"`, the shape the catalog
+        // picker sends) is seeded under its base slug too, and its option recorded under the
+        // feat's chooser, by the shared constructors (`HeldSeed::from_character`,
+        // `CharacterFacts::with_linked_picks`, SD-36 F3p).
         let mut seed = HeldSeed::from_character(input, computation);
         seed.race_traits.extend(extra_race_traits.iter().cloned());
-        // A feat recorded with its sub-choice -- `"Weapon Focus (Longbow)"`, the shape the
-        // catalog picker sends -- names the same converted record as `weapon_focus`. The
-        // seed carries both so a gate over the feat resolves for either shape; a record that
-        // genuinely is its own feat keeps its own slug and is unaffected.
-        let bases: Vec<String> = input
-            .chosen
-            .selected_feats
-            .iter()
-            .filter_map(|f| f.split_once('(').map(|(base, _)| base.trim().to_owned()))
-            .map(|base| crate::rules_core::sheet_rule::id_slug(&base))
-            .collect();
-        seed.feats.extend(bases);
         // SD-36 F3c4: the character's Path-A picks linked to the converted options they name,
         // the same way the sheet reads them (`with_sheet_rules`).
         let facts = CharacterFacts::from_character(input, computation).with_linked_picks(package, &seed);

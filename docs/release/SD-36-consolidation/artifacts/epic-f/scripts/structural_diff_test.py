@@ -841,6 +841,45 @@ class StructuralDiffGateTest(unittest.TestCase):
         self.assertTrue(structural_diff._is_natural_attack_grant({"GatedFactGrant": {"fact": {"NaturalAttack": "Bite"}, "when": "Always"}}))
         self.assertFalse(structural_diff._is_natural_attack_grant({"FactGrant": {"Proficiency": {"Weapon": "Bite"}}}))
 
+    def test_f3p_option_gate_pins_gate_a_withdrawn_gate_and_an_unpinned_one(self):
+        """SD-36 F3p: `f3p_normalize` undoes exactly the option gate; with the owner carrying an
+        option gate, a pinned gate that is absent (a bare Holds again) gates, and an option gate
+        on a record nobody pinned gates as an ordinary field delta."""
+        holds = {"Holds": {"what": {"Rule": "core_rulebook:feat:exotic_weapon_proficiency"}, "count": 1}}
+        opt = {"Chosen": {"choice": "core_rulebook:feat:exotic_weapon_proficiency", "option": "firearms"}}
+        terms: list = []
+        self.assertEqual(structural_diff.f3p_normalize({"All": [holds, opt]}, terms), holds)
+        self.assertEqual(terms, [("core_rulebook:feat:exotic_weapon_proficiency", "firearms")])
+        other = {"Holds": {"what": {"Rule": "x:feat:other"}, "count": 1}}
+        self.assertEqual(structural_diff.f3p_normalize({"All": [other, holds, opt]}), {"All": [other, holds]})
+        sel = {"Situational": {"text": "requires a martial option chosen for Weapon Focus"}}
+        wf = {"Holds": {"what": {"Rule": "core_rulebook:feat:weapon_focus"}, "count": 1}}
+        self.assertEqual(structural_diff.f3p_normalize({"All": [wf, sel]}), wf)
+        self.assertEqual(structural_diff.f3p_normalize({"All": [other, sel]}), other)
+        self.assertEqual(structural_diff.f3p_normalize({"All": [sel]}), {"All": [sel]})
+        # An option term whose choice is not held alongside it is not the F3p gate.
+        self.assertEqual(structural_diff.f3p_normalize({"All": [other, opt]}), {"All": [other, opt]})
+        owner = structural_diff.F3P["owner"]
+        self.assertEqual(owner, "ultimate_combat:class_feature:exotic_weapon_proficiency_firearms")
+        edge = {"by": {"Rule": "core_rulebook:feat:exotic_weapon_proficiency"}, "when": {"All": [holds, opt]}}
+        own = {"id": owner, "label": "Exotic Weapon Proficiency ~ Firearms", "value": "Text", "granted_by": [edge], "grants": []}
+        base = base_rules()
+        fresh = base_rules()
+        base["ultimate_combat/class_feature/exotic_weapon_proficiency_firearms.json"] = [{**own, "granted_by": [{**edge, "when": holds}]}]
+        fresh["ultimate_combat/class_feature/exotic_weapon_proficiency_firearms.json"] = [dict(own)]
+        code, out = self.run_diff(base, fresh)
+        self.assertEqual(code, 1, out)
+        self.assertIn("F3p pinned option gate on a missing rule: ", out)
+        # An unpinned option gate (on the synthetic samurai record) is an ordinary delta.
+        base = base_rules()
+        fresh = base_rules()
+        rel = "ultimate_combat/class_feature/samurai_proficiencies.json"
+        base[rel][0]["applies"] = holds
+        fresh[rel][0]["applies"] = {"All": [holds, opt]}
+        code, out = self.run_diff(base, fresh)
+        self.assertEqual(code, 1, out)
+        self.assertIn("samurai_proficiencies: applies", out)
+
     def test_report_only_flag_keeps_exit_zero(self):
         base = base_rules()
         fresh = base_rules()

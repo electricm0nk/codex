@@ -173,6 +173,22 @@ impl ClassChassis {
         !self.tags.iter().any(|t| t == "Monster")
     }
 
+    /// Whether `other` states the same chassis as `self` on every field a sheet total reads: the
+    /// level ceiling, hit die, skill ranks per level, each save's shape, and the base attack bonus
+    /// and every exact save value at every level. Book, slug, display name and the class-level
+    /// variable's spelling (a redacted printing carries a codex-neutral one) are not the chassis.
+    /// SD-36 F3 polish P3: two printings of one slug are interchangeable only when this holds.
+    pub fn same_chassis(&self, other: &ClassChassis) -> bool {
+        self.max_level == other.max_level
+            && self.hit_die == other.hit_die
+            && self.skill_ranks_per_level == other.skill_ranks_per_level
+            && (0..3).all(|i| self.save_shape(i) == other.save_shape(i))
+            && (1..=self.max_level).all(|level| {
+                self.row_at(level) == other.row_at(level)
+                    && (0..3).all(|i| self.save_value_exact(i, level) == other.save_value_exact(i, level))
+            })
+    }
+
     /// This class's chassis row at `level`, or `None` when `level` is outside
     /// `1..=max_level` or a progression does not evaluate to a whole number
     /// that fits.

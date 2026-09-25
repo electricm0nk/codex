@@ -71,6 +71,7 @@ import argparse
 import glob
 import json
 import os
+import re
 import sys
 from collections import Counter, defaultdict
 
@@ -948,6 +949,137 @@ def _F3C5_DEFECT_FILES() -> set[str]:
     return set(F3C5["defect_rows"])
 
 
+# SD-36 Epic F3 polish P5 (converter step): a parameterised `PREABILITY` item `<Base> (<Option>)`
+# whose base is a chooser converts as `All[Holds(base), Chosen{choice: base, option}]`, never the
+# bare base (`sheet_rule/prereq.rs::holdable_gate`). Pinned by `f3p_delta_pins.py` into
+# `structural_diff_f3p_deltas.json`: every (rule id, field) and `_vars/` table that moved, each
+# EXACTLY that option gate (`f3p_normalize(new) == old`), by sha256 of the new value. `f3p_apply`
+# runs FIRST, on the fresh tree: a pinned value whose sha256 holds is replaced by its normalized
+# form (so every earlier step's check, and the whole diff below, sees the pre-F3p value); a pinned
+# value that moved or was withdrawn fails; an UNPINNED option gate is left in place and surfaces as
+# an ordinary field delta / removed edge, which gates.
+_F3P_DELTAS_PATH = os.path.join(os.path.dirname(os.path.abspath(__file__)), "structural_diff_f3p_deltas.json")
+F3P_CLASS_CAUSE = "F3p P5: a parameterised PREABILITY item whose base is a chooser holds the base WITH that option chosen -- All[Holds(base), Chosen{base, option}], or for a TYPE= selector option the printed condition 'requires a <type> option chosen for <Base>' -- never the bare base"
+
+
+def _f3p_holds_rule(t: object) -> str | None:
+    if isinstance(t, dict) and set(t) == {"Holds"} and isinstance(t["Holds"], dict):
+        w = t["Holds"].get("what")
+        if isinstance(w, dict) and set(w) == {"Rule"}:
+            return w["Rule"]
+    return None
+
+
+def _f3p_is_option_term(t: object) -> bool:
+    return isinstance(t, dict) and set(t) == {"Chosen"} and isinstance(t["Chosen"], dict) and t["Chosen"].get("option") is not None
+
+
+_F3P_SELECTOR = re.compile(r"^requires a \S.* option chosen for \S")
+
+
+def _f3p_is_selector_term(t: object) -> bool:
+    """The printed option-selector condition `prereq.rs::holdable_gate` writes for a `TYPE=` option."""
+    return isinstance(t, dict) and set(t) == {"Situational"} and isinstance(t["Situational"], dict) and bool(_F3P_SELECTOR.match(str(t["Situational"].get("text", ""))))
+
+
+def f3p_normalize(x: object, terms: list | None = None) -> object:
+    """`x` with the F3p option gate undone: every `Chosen{choice: X, option: Some}` term of an `All`
+    list that also holds `Rule X` dropped (appended to `terms` as (X, option)), and every
+    option-selector condition `Situational{"requires a <type> option chosen for <Base>"}` of an
+    `All` list that also holds a rule dropped (appended as (None, text)); an `All` left with one
+    term collapsed to it."""
+    if isinstance(x, list):
+        return [f3p_normalize(i, terms) for i in x]
+    if not isinstance(x, dict):
+        return x
+    if set(x) == {"All"} and isinstance(x["All"], list):
+        inner = [f3p_normalize(t, terms) for t in x["All"]]
+        held = {_f3p_holds_rule(t) for t in inner}
+        kept = []
+        for t in inner:
+            if _f3p_is_option_term(t) and t["Chosen"]["choice"] in held:
+                if terms is not None:
+                    terms.append((t["Chosen"]["choice"], t["Chosen"]["option"]))
+                continue
+            if _f3p_is_selector_term(t) and held - {None}:
+                if terms is not None:
+                    terms.append((None, t["Situational"]["text"]))
+                continue
+            kept.append(t)
+        if len(kept) == 1 and len(kept) < len(inner):
+            return kept[0]
+        return {"All": kept}
+    return {k: f3p_normalize(v, terms) for k, v in x.items()}
+
+
+def _load_f3p() -> dict:
+    empty = {"field_deltas": {}, "var_tables": {}, "owner": "", "option_terms": {}}
+    try:
+        with open(_F3P_DELTAS_PATH, "r", encoding="utf-8") as fh:
+            data = json.load(fh)
+    except (OSError, json.JSONDecodeError):
+        return empty
+    fields: dict[tuple[str, str], tuple[str, int]] = {}
+    block = data.get("field_deltas", {})
+    assert len(block.get("pins", [])) == block.get("_count", 0), f"{_F3P_DELTAS_PATH}: field_deltas _count mismatch -- regenerate with _command"
+    for rid, field, sha, n in block.get("pins", []):
+        assert (rid, field) not in fields, f"{_F3P_DELTAS_PATH}: ({rid}, {field}) pinned twice"
+        fields[(rid, field)] = (sha, n)
+    tables: dict[str, tuple[str, int]] = {}
+    block = data.get("var_tables", {})
+    assert len(block.get("pins", [])) == block.get("_count", 0), f"{_F3P_DELTAS_PATH}: var_tables _count mismatch -- regenerate with _command"
+    for rel, sha, n in block.get("pins", []):
+        tables[rel] = (sha, n)
+    total = sum(n for _s, n in fields.values()) + sum(n for _s, n in tables.values())
+    assert total == data.get("option_terms", {}).get("_total", 0), f"{_F3P_DELTAS_PATH}: option_terms _total mismatch"
+    return {"field_deltas": fields, "var_tables": tables, "owner": data.get("owner", ""), "option_terms": data.get("option_terms", {})}
+
+
+F3P = _load_f3p()
+
+
+def f3p_apply(fresh_rules: dict[str, dict], fresh_other: dict[str, bytes]) -> tuple[Counter, list[str]]:
+    """Undo every PINNED F3p option gate on the fresh tree, in place (module comment above).
+    Returns (found counts, failure lines). Inactive -- no failures -- when the fresh package's owner
+    record carries no option gate at all (a package that predates F3p)."""
+    found: Counter = Counter()
+    failures: list[str] = []
+    owner = fresh_rules.get(F3P["owner"], {})
+    active = bool(F3P["owner"]) and '"Chosen"' in json.dumps(owner.get("granted_by"))
+    if not active:
+        return found, failures
+    for (rid, field), (sha, n) in F3P["field_deltas"].items():
+        rule = fresh_rules.get(rid)
+        if rule is None:
+            failures.append(f"F3p pinned option gate on a missing rule: {rid}: {field}")
+            continue
+        if f3b2_field_sha(rule.get(field)) != sha:
+            failures.append(f"F3p pinned option gate withdrawn or moved: {rid}: {field}")
+            continue
+        terms: list = []
+        rule[field] = f3p_normalize(rule.get(field), terms)
+        if len(terms) != n:
+            failures.append(f"F3p {rid}: {field}: {len(terms)} option terms, pinned {n}")
+        found["field_deltas"] += 1
+        found["option_terms"] += len(terms)
+    for rel, (sha, n) in F3P["var_tables"].items():
+        raw = fresh_other.get(rel)
+        if raw is None:
+            failures.append(f"F3p pinned _vars table missing: {rel}")
+            continue
+        table = json.loads(raw)
+        if f3b2_field_sha(table) != sha:
+            failures.append(f"F3p pinned _vars table withdrawn or moved: {rel}")
+            continue
+        terms = []
+        fresh_other[rel] = json.dumps(f3p_normalize(table, terms)).encode()
+        if len(terms) != n:
+            failures.append(f"F3p {rel}: {len(terms)} option terms, pinned {n}")
+        found["var_tables"] += 1
+        found["option_terms"] += len(terms)
+    return found, failures
+
+
 def edge_diff(old_list: object, new_list: object) -> tuple[list[str], list[str]]:
     """Diff two `granted_by`/`grants` lists as SETS of edges (each edge serialized to a stable
     JSON key), never by length or shallow equality. Returns `(removed, added)` -- both sorted --
@@ -1291,6 +1423,9 @@ def main() -> int:
 
     base_rules = rules_by_id(base["rule_files"])
     fresh_rules = rules_by_id(fresh["rule_files"])
+    # SD-36 F3p: undo every pinned option gate first (see `f3p_apply`); everything below compares
+    # the normalized fresh tree.
+    f3p_found, f3p_failures = f3p_apply(fresh_rules, fresh["other_files"])
     base_ids = set(base_rules)
     fresh_ids = set(fresh_rules)
     added_rule_ids_raw = sorted(fresh_ids - base_ids)
@@ -1472,6 +1607,11 @@ def main() -> int:
             pairs = f3c5_deltas.get(name, [])
             pinned = sum(1 for (n, _s) in F3C5["field_deltas"].values() if n == name)
             print(f"  F3c5 {name}: {len(pairs)} of {pinned} pinned field deltas on {len(set(r for r, _ in pairs))} records -- {cause} (see structural_diff_f3c5_deltas.json)")
+    print(
+        f"  F3p f3p_option_gate: {f3p_found.get('field_deltas', 0)} of {len(F3P['field_deltas'])} pinned field deltas and "
+        f"{f3p_found.get('var_tables', 0)} of {len(F3P['var_tables'])} pinned _vars/ tables, {f3p_found.get('option_terms', 0)} of "
+        f"{F3P['option_terms'].get('_total', 0)} option terms undone before the diff -- {F3P_CLASS_CAUSE} (see structural_diff_f3p_deltas.json)"
+    )
     print(f"  F3c5 pinned NaturalAttack grants: {len(F3C5['required_added_grants'])}; pinned added _vars/ tables: {len(F3C5['added_var_tables'])}; pinned _defects/ row counts: {F3C5['defect_rows']}")
     if added_rule_ids:
         unnamed = [r for r in added_rule_ids if r not in KNOWN_ADDED_RULE_CAUSES and r not in F3C3["added_rules"] and r not in F3C4B["added_rules"] and r not in F3C5["added_rules"]]
@@ -1543,6 +1683,10 @@ def main() -> int:
         for line in f3c5_failures[: args.max_examples]:
             print(f"  {line}")
         failures.append(f"F3c5 pin failures: {len(f3c5_failures)}")
+    if f3p_failures:
+        for line in f3p_failures[: args.max_examples]:
+            print(f"  {line}")
+        failures.append(f"F3p pin failures: {len(f3p_failures)}")
     for key, old_v, new_v in moved_counts:
         failures.append(f"{key} moved: {old_v} -> {new_v}")
 

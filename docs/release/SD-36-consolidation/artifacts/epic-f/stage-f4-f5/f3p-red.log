@@ -1,0 +1,70 @@
+   Compiling codex v0.1.0 (/home/ubuntu/workspace/worktrees/codex-epic-f4)
+    Finished `test` profile [unoptimized + debuginfo] target(s) in 1.53s
+     Running tests/sd36_f3_polish.rs (/home/ubuntu/workspace/worktrees/codex-epic-f4-target/debug/deps/sd36_f3_polish-2b3088d512d05512)
+
+running 6 tests
+
+thread 'p5_the_firearms_option_pick_holds_the_firearms_record_and_another_option_does_not' (1755921) panicked at tests/sd36_f3_polish.rs:135:5:
+EWP (Katana) must not hold the firearms proficiency record
+note: run with `RUST_BACKTRACE=1` environment variable to display a backtrace
+test p5_the_firearms_option_pick_holds_the_firearms_record_and_another_option_does_not ... FAILED
+
+thread 'p5_samurai_alone_prints_no_firearms_line' (1755920) panicked at tests/sd36_f3_polish.rs:117:9:
+[("samurai", 1)] holds the firearms record
+test p5_samurai_alone_prints_no_firearms_line ... FAILED
+
+thread 'p2_multiclass_save_explanation_lists_each_class_s_save_term' (1755918) panicked at tests/sd36_f3_polish.rs:78:9:
+fortitude: Multiclass base Fortitude save 10: PF1's sum-fractions-then-round-down-once rule, fractional total 10.500 across (class:barbarian 12: base attack bonus 12; class:fighter 1: base attack bonus 1)
+test p2_multiclass_save_explanation_lists_each_class_s_save_term ... FAILED
+
+thread 'p1_flurry_attack_bonus_in_a_mix_adds_the_other_classes_bab' (1755916) panicked at tests/sd36_f3_polish.rs:58:9:
+assertion `left == right` failed: [("monk", 4), ("rogue", 3)]: Monk level 4 Flurry of Blows flat attack modifier from the PF1 Core Rulebook: when using flurry as a full-attack action the monk uses her monk level in place of her base attack bonus and takes a -2 penalty on all attack rolls, so the flat modifier is monk level - 2 = 4 - 2 = 2 on each flurry attack, before ability modifiers. Only this flat pre-ability modifier is grounded; no attack-resolution engine, no monk-weapon flurry, and no wiring into integrated combat totals is implemented
+  left: 2
+ right: 4
+test p1_flurry_attack_bonus_in_a_mix_adds_the_other_classes_bab ... FAILED
+
+thread 'p4_hit_points_unknown_names_the_missing_chassis_record' (1755919) panicked at tests/sd36_f3_polish.rs:100:5:
+class:monk: no converted class record states this class's hit points, so its hit points are Unknown
+test p4_hit_points_unknown_names_the_missing_chassis_record ... FAILED
+test p1_scan_every_class_line_that_speaks_of_a_base_attack_bonus_is_classified has been running for over 60 seconds
+P1 scan: 1988 single-class builds; 1692 distinct class-line ids; 19 speak of a base attack bonus
+  class_chassis.barbarian.base_attack_bonus -- barbarian 1: Barbarian level 1 base attack bonus from the PF1 Core Rulebook Barbarian class table (full base-attack progression, same formula shape as Fighter's cr_classes.lst:139): classlevel = 1. This is a standalone e
+  class_chassis.bard.base_attack_bonus -- bard 1: Bard level 1 base attack bonus from the PF1 Core Rulebook Bard class table's 3/4-BAB progression, the same formula shape as Rogue/Monk/Druid/Cleric: classlevel * 3 / 4 = 0. This is a standalone explanation record
+  class_chassis.cavalier.mount.base_attack_bonus -- cavalier 1: Horse companion base attack bonus at 2 HD (PF1 Core Rulebook Animal Companion Base Statistics: HD*3/4 = 1) + Strength modifier (+3, Str 16 = base 16 + 0 from the companion class's own floor(master level/3) St
+  class_chassis.cleric.base_attack_bonus -- cleric 1: Cleric level 1 base attack bonus from the PF1 Core Rulebook Cleric class table's 3/4-BAB progression, the same formula shape as Rogue/Monk/Druid: classlevel * 3 / 4 = 0. This is a standalone explanation record;
+  class_chassis.druid.animal_companion.base_attack_bonus -- druid 1: Wolf companion base attack bonus at 2 HD (PF1 Core Rulebook Animal Companion Base Statistics: HD*3/4 = 1) + Strength modifier (+1, Str 13 = base 13 + 0 from the companion class's own floor(master level/3) Streng
+  class_chassis.druid.base_attack_bonus -- druid 1: Druid level 1 base attack bonus from the PF1 Core Rulebook Druid class table's 3/4-BAB progression, the same formula shape as Rogue/Monk: classlevel * 3 / 4 = 0. This is a standalone explanation record; it is no
+  class_chassis.hunter.animal_companion.base_attack_bonus -- hunter 1: Wolf companion base attack bonus at 2 HD (PF1 Core Rulebook Animal Companion Base Statistics: HD*3/4 = 1) + Strength modifier (+1, Str 13 = base 13 + 0 from the companion class's own floor(master level/3) Stren
+  class_chassis.monk.base_attack_bonus -- monk 1: Monk level 1 base attack bonus from the PF1 Core Rulebook Monk class table's 3/4-BAB progression: classlevel * 3 / 4 = 0
+  class_chassis.monk.flurry_of_blows_attack_bonus -- monk 1: Monk level 1 Flurry of Blows flat attack modifier from the PF1 Core Rulebook: when using flurry as a full-attack action the monk uses her monk level in place of her base attack bonus and takes a -2 penalty on all
+  class_chassis.monk.maneuver_training_cmb_bonus -- monk 3: Monk Maneuver Training at monk level 3: +1 to combat maneuver bonus only (corpus CMB_BAB = MonkLVL - MonkLVL*3/4). A monk uses his full monk level in place of his 3/4 base attack bonus when calculating CMB, so th
+  class_chassis.paladin.base_attack_bonus -- paladin 1: Paladin level 1 base attack bonus from the PF1 Core Rulebook Paladin class table (full base-attack progression, the same formula shape as Fighter/Barbarian/Ranger): classlevel = 1. This is a standalone explana
+  class_chassis.ranger.base_attack_bonus -- ranger 1: Ranger level 1 base attack bonus from the PF1 Core Rulebook Ranger class table (full base-attack progression, the same formula shape as Fighter/Barbarian/Paladin): classlevel = 1. This is a standalone explanati
+  class_chassis.rogue.base_attack_bonus -- rogue 1: Rogue level 1 base attack bonus from the PF1 Core Rulebook Rogue class table's 3/4-BAB progression: level * 3 / 4 = 0
+  class_chassis.sorcerer.base_attack_bonus -- sorcerer 1: Sorcerer level 1 base attack bonus from the PF1 Core Rulebook Sorcerer class table's 1/2-BAB progression — UNLIKE the 3/4-BAB shape shared by Rogue/Monk/Druid/Cleric/Bard: classlevel / 2 = 0. This is a stan
+  class_chassis.wizard.base_attack_bonus -- wizard 1: Wizard level 1 base attack bonus from the PF1 Core Rulebook Wizard class table's 1/2-BAB progression — the same shape as Sorcerer, UNLIKE the 3/4-BAB shape shared by Rogue/Monk/Druid/Cleric/Bard: classlevel /
+  class_feature.apg.alchemist.discovery.feral_mutagen_claw_damage_die -- alchemist 2: Alchemist level 2 selected the Feral Mutagen discovery: whenever he imbibes a mutagen he gains TWO claw attacks dealing 1d6 each (1d4 if Small -- this codebase's own fixture race is Medium). Primary attacks 
+  class_feature.apg.summoner.eidolon.base_attack_bonus -- summoner 1: Quadruped Eidolon base attack bonus: +1, FULL progression (equal to the summoner's own level), not the three-quarters an animal companion gets. The Eidolon also uses a d10 hit die and takes its hit dice from 
+  class_feature.pu.unchained_monk.flurry_attack_count -- unchained_monk 1: Unchained Monk level 1 Flurry of Blows: 2 attacks at a total base attack bonus of 1 (2 + (bab>=6) + 2 x (bab>=11) + (bab>=16)). The Unchained Monk reaches 6 where the Core Rulebook Monk stops at 4
+  class_feature.pu.unchained_monk.other_features_deferred.unsupported -- unchained_monk 1: class:unchained_monk grounds every Unchained Monk magnitude this book states as a formula token: its own chassis (d10 hit die, FULL base attack bonus, good Fortitude and Reflex and POOR Will -- all four
+
+thread 'p1_scan_every_class_line_that_speaks_of_a_base_attack_bonus_is_classified' (1755917) panicked at tests/sd36_f3_polish.rs:180:5:
+assertion `left == right` failed: a class line speaking of a base attack bonus is unclassified (or a pinned one vanished)
+  left: {"class_chassis.barbarian.base_attack_bonus", "class_chassis.bard.base_attack_bonus", "class_chassis.cavalier.mount.base_attack_bonus", "class_chassis.cleric.base_attack_bonus", "class_chassis.druid.animal_companion.base_attack_bonus", "class_chassis.druid.base_attack_bonus", "class_chassis.hunter.animal_companion.base_attack_bonus", "class_chassis.monk.base_attack_bonus", "class_chassis.monk.flurry_of_blows_attack_bonus", "class_chassis.monk.maneuver_training_cmb_bonus", "class_chassis.paladin.base_attack_bonus", "class_chassis.ranger.base_attack_bonus", "class_chassis.rogue.base_attack_bonus", "class_chassis.sorcerer.base_attack_bonus", "class_chassis.wizard.base_attack_bonus", "class_feature.apg.alchemist.discovery.feral_mutagen_claw_damage_die", "class_feature.apg.summoner.eidolon.base_attack_bonus", "class_feature.pu.unchained_monk.flurry_attack_count", "class_feature.pu.unchained_monk.other_features_deferred.unsupported"}
+ right: {"class_chassis.monk.flurry_of_blows_attack_bonus"}
+test p1_scan_every_class_line_that_speaks_of_a_base_attack_bonus_is_classified ... FAILED
+
+failures:
+
+failures:
+    p1_flurry_attack_bonus_in_a_mix_adds_the_other_classes_bab
+    p1_scan_every_class_line_that_speaks_of_a_base_attack_bonus_is_classified
+    p2_multiclass_save_explanation_lists_each_class_s_save_term
+    p4_hit_points_unknown_names_the_missing_chassis_record
+    p5_samurai_alone_prints_no_firearms_line
+    p5_the_firearms_option_pick_holds_the_firearms_record_and_another_option_does_not
+
+test result: FAILED. 0 passed; 6 failed; 0 ignored; 0 measured; 0 filtered out; finished in 585.38s
+
+error: test failed, to rerun pass `--test sd36_f3_polish`
+EXIT=101
