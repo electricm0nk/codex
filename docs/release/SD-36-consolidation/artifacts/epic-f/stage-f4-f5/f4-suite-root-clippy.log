@@ -1,0 +1,4 @@
+# f4:suite-root — cargo clippy --locked -j 8 --all-targets -- -D warnings (worktree HEAD 2a17695258)
+    Checking codex v0.1.0 (/home/ubuntu/workspace/worktrees/codex-epic-f4)
+    Finished `dev` profile [unoptimized + debuginfo] target(s) in 0.65s
+EXIT=0
