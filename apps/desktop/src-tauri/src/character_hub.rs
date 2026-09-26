@@ -9932,6 +9932,46 @@ mod tests {
         assert!(opposed.contains(&"school:transmutation"));
     }
 
+    /// SD-36 F4a: a class ADDED at level-up gets its canonical seeds through the one seed
+    /// function (`class_seeds::canonical_seeds_for`), so a Fighter 1 who dips Cavalier,
+    /// Inquisitor or Oracle reaches the same status the census mix (`fighter 1 + <class> 1`,
+    /// seeded by the same function) reaches -- before F4a the dip recorded no choice and
+    /// blocked on the added class's own choice line.
+    #[test]
+    fn apply_level_up_seeds_an_added_class_the_way_the_census_mix_does() {
+        use codex::rules_core::class_census::{load_sweep_fixture, sweep_mix_panel_row, MixPanelRow};
+        let fixture = load_sweep_fixture().expect("census fixture loads");
+        let mut report = Vec::new();
+        for dip in ["cavalier", "inquisitor", "oracle"] {
+            let census = sweep_mix_panel_row(
+                &fixture,
+                &MixPanelRow {
+                    key: format!("f4a::fighter1_{dip}1"),
+                    source_file: "apps/desktop/src-tauri/src/character_hub.rs".to_owned(),
+                    test_fn: "apply_level_up_seeds_an_added_class_the_way_the_census_mix_does".to_owned(),
+                    classes: vec![("fighter".to_owned(), 1), (dip.to_owned(), 1)],
+                },
+            );
+            let mut input = compose_character_input(&request_for("race:human", 1));
+            apply_level_up(&mut input, &format!("class:{dip}"));
+            let receipt = build_pilot_headless_receipt(&input);
+            let blocking: Vec<&str> = receipt
+                .computation
+                .diagnostics
+                .iter()
+                .filter(|d| d.claim_blocking)
+                .map(|d| d.id.as_str())
+                .collect();
+            let desktop_computed = receipt.status == HeadlessReceiptStatus::Computed;
+            report.push(format!(
+                "fighter 1 + {dip} 1: census computed={} {:?}; apply_level_up computed={desktop_computed} {blocking:?}",
+                census.computed, census.blocking_diagnostic_ids
+            ));
+            assert_eq!(desktop_computed, census.computed, "{}", report.join("\n"));
+            assert!(census.computed, "the census mix itself must be Computed: {}", report.join("\n"));
+        }
+    }
+
     /// A second consecutive level-up within Wizard (not a fresh dip) must
     /// not re-seed the choices -- `wizard_has_canonical_specialization_selections`
     /// requires *exactly* two opposed-school entries, so a duplicate pair

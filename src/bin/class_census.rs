@@ -90,7 +90,7 @@ use std::process::Command;
 
 use codex::rules_core::class_census::{
     ClassSweepResult, census, duplicate_scan, load_mix_panel, load_sweep_fixture,
-    mix_panel_blocking_histogram, parse_sheet_dump_build, sheet_dump_text,
+    mix_panel_blocking_histogram, parse_sheet_dump_build, roster_reason, sheet_dump_text,
     sheet_dump_with_rules_text, sweep_mix_panel, sweep_non_prestige, sweep_prestige,
 };
 
@@ -198,11 +198,28 @@ fn run_json(json_path: &str) -> i32 {
     // `partition_non_prestige_never_folds_in_the_prestige_ids` below.
     let (computed, blocked) = partition_non_prestige(&results);
 
+    // SD-36 F4a: every row states whether the desktop creation roster offers it, and if not,
+    // the one named reason (`class_census::roster_reason`, the rule the roster itself reads).
+    let roster_reason_json = |class_id: &str, computed: bool| {
+        let reason = entries.get(class_id).map(|entry| roster_reason(entry, computed));
+        (
+            serde_json::json!(reason.is_some_and(|r| r.in_desktop_roster())),
+            serde_json::to_value(reason).unwrap_or(serde_json::Value::Null),
+        )
+    };
+    let roster_offered = results
+        .iter()
+        .filter(|r| entries.get(&r.class_id).is_some_and(|entry| roster_reason(entry, r.computed()).in_desktop_roster()))
+        .count();
+
     let classes: Vec<serde_json::Value> = results
         .iter()
         .map(|r| {
+            let (in_desktop_roster, reason) = roster_reason_json(&r.class_id, r.computed());
             serde_json::json!({
                 "class_id": r.class_id,
+                "in_desktop_roster": in_desktop_roster,
+                "roster_reason": reason,
                 "family": r.family.label(),
                 "books": r.books,
                 "registries": r.registries,
@@ -243,8 +260,11 @@ fn run_json(json_path: &str) -> i32 {
     let prestige: Vec<serde_json::Value> = prestige_rows
         .iter()
         .map(|row| {
+            let (in_desktop_roster, reason) = roster_reason_json(&row.class_id, false);
             serde_json::json!({
                 "class_id": row.class_id,
+                "in_desktop_roster": in_desktop_roster,
+                "roster_reason": reason,
                 "books": row.books,
                 "max_level": row.max_level,
                 "carrier": row.carriers.iter().map(|c| c.slug()).collect::<Vec<_>>(),
@@ -329,8 +349,8 @@ fn run_json(json_path: &str) -> i32 {
         "input_posture": format!(
             "{} with the class swapped to the class under test, swept over 1..=max_level (per \
              the merged registry's own max_level, not a fixed 20), plus the canonical per-class \
-             choice/spell seeds compose_character_input applies (pf1_adapter.rs, mirrored in \
-             codex::rules_core::class_seeds). A non-prestige class counts as computed only when \
+             choice/spell seeds at that level (codex::rules_core::class_seeds::canonical_seeds_for, \
+             the one seed table pf1_adapter.rs's compose_character_input imports). A non-prestige class counts as computed only when \
              every level in its own sweep reaches HeadlessReceiptStatus::Computed. A prestige \
              class is never measured alone -- 'alone_status' is a negative control, expected \
              Blocked -- its real Computed measurement is the carrier-mix sweep in 'mixes' (§2, \
@@ -346,6 +366,7 @@ fn run_json(json_path: &str) -> i32 {
         "computed": computed,
         "blocked": blocked,
         "non_prestige_swept": results.len(),
+        "roster_offered": roster_offered,
         "prestige_swept": prestige_rows.len(),
         "prestige_alone_blocked": prestige_alone_blocked,
         "prestige_mix_computed": prestige_mix_computed,

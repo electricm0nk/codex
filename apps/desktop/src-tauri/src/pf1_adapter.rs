@@ -50,6 +50,7 @@ use codex::rules_core::character_input::{
     AbilityScores, AcquisitionMode, ActiveState, CharacterClassLevel, CharacterInput,
     ChosenCharacterState, EquipmentSelection, SelectedChoice, SkillAllocation, SpellSelection,
 };
+use codex::rules_core::class_seeds::canonical_seeds_for;
 use codex::rules_core::feat_effects;
 use codex::rules_core::level_up::{compute_level_up_grants_for_class, LevelUpPlan};
 use codex::rules_core::pilot_compute::{
@@ -84,12 +85,6 @@ use crate::characterHub::reSaveCharacter::{re_save_character_at_root, ReSaveChar
 use crate::corpus_fixtures::corpus_fixture_bundle;
 use crate::rule_system_adapter::{ClassLevelDelta, RuleSystemAdapter};
 
-/// v0.6 alpha swarm: needed by `compose_character_input`'s Wizard-only
-/// canonical school-choice seeding. Not re-exported from `character_hub.rs`
-/// (unlike `HUMAN_RACE_ID`/`SOURCE_PACKAGE_ID`) since nothing outside this
-/// file needs it yet.
-const WIZARD_CLASS_ID: &str = "class:wizard";
-
 /// v0.6 alpha swarm (bootstrap-deadlock fix): the canonical starter spell
 /// seeded for every Wizard at class-acquisition time (`compose_character_input`
 /// and `apply_level_up`'s new-class-entry branch) — a 0-level Evocation
@@ -107,6 +102,7 @@ const WIZARD_CLASS_ID: &str = "class:wizard";
 /// value (which still resolves too, via that function's fallback, but
 /// there's no reason to keep seeding a placeholder now that the real path
 /// exists).
+#[cfg(test)]
 const WIZARD_STARTER_SPELL_ID: &str = "Light";
 
 /// v0.6 alpha swarm (Path A choice-picker gap closure): needed by
@@ -117,8 +113,6 @@ const WIZARD_STARTER_SPELL_ID: &str = "Light";
 /// present, and no picker anywhere in the creation UI can submit one (see
 /// `docs/release/v0.6/choice-picker-ui-gap-scoping.md`). Not re-exported
 /// from `character_hub.rs` since nothing outside this file needs them yet.
-const SORCERER_CLASS_ID: &str = "class:sorcerer";
-const CLERIC_CLASS_ID: &str = "class:cleric";
 const DRUID_CLASS_ID: &str = "class:druid";
 
 /// v0.6 alpha swarm (Path A choice-picker gap closure, Arcanist's own):
@@ -134,8 +128,11 @@ const DRUID_CLASS_ID: &str = "class:druid";
 /// precondition, to reach `Computed`. See
 /// `docs/release/v0.6/arcanist-metamagic-knowledge-exploit-scoping.md`
 /// and `risks-and-open-questions.md` for the full record of this gap.
+#[cfg(test)]
 const ARCANIST_CLASS_ID: &str = "class:arcanist";
+#[cfg(test)]
 const ARCANIST_STARTER_SPELL_ID: &str = "Light";
+#[cfg(test)]
 const ARCANIST_METAMAGIC_KNOWLEDGE_CHOICE_ID: &str = "choice:arcanist_metamagic_knowledge";
 /// **Real bug found and fixed (2026-07-25)**: this used to be the bare
 /// literal `"Empower Spell"` (zero colons), which live-testing before
@@ -149,6 +146,7 @@ const ARCANIST_METAMAGIC_KNOWLEDGE_CHOICE_ID: &str = "choice:arcanist_metamagic_
 /// `arcanist_metamagic_knowledge_feat_name` before ever reaching the feat
 /// catalog, so this seed must stay in sync with that translation's own
 /// `metamagic:<snake_case_slug>` convention.
+#[cfg(test)]
 const EMPOWER_SPELL_METAMAGIC_SELECTION: &str = "metamagic:empower_spell";
 
 /// v0.6 alpha swarm (Path A choice-picker gap closure, Monk's own): needed
@@ -163,21 +161,9 @@ const EMPOWER_SPELL_METAMAGIC_SELECTION: &str = "metamagic:empower_spell";
 /// default posture never exercises a seam that already works. No picker in
 /// the creation UI can submit one (Path B in
 /// `docs/release/v0.6/choice-picker-ui-gap-scoping.md`).
+#[cfg(test)]
 const MONK_CLASS_ID: &str = "class:monk";
 const MONK_BONUS_FEAT_CHOICE_ID: &str = "choice:monk_bonus_feat";
-
-/// v0.6 alpha swarm (Summoner Eidolon evolution canonical-narrowing
-/// closure, 2026-07-29). Summoner was the last class on the 27-class
-/// roster with no closure path: its Eidolon's evolution point-buy
-/// economy was deliberately deferred as a product decision rather than
-/// half-built. The engine now genuinely builds ONE corpus-verified
-/// evolution purchase, and this seed is what lets a composed Summoner
-/// reach `Computed` -- the same Path A shape as Cleric's domain and
-/// Monk's bonus feat, and blocked on the same missing picker UI. See
-/// `pilot_compute.rs`'s `SUMMONER_EIDOLON_EVOLUTION_CHOICE_ID`.
-const SUMMONER_CLASS_ID: &str = "class:summoner";
-const SUMMONER_EIDOLON_EVOLUTION_CHOICE_ID: &str = "choice:summoner_eidolon_evolution";
-const IMPROVED_NATURAL_ARMOR_EVOLUTION_SELECTION: &str = "evolution:improved_natural_armor";
 
 /// v0.6 alpha swarm (Path A choice-picker gap closure for the three APG
 /// chooser-shaped classes, 2026-07-29): Cavalier, Inquisitor and Oracle
@@ -231,18 +217,6 @@ const IMPROVED_NATURAL_ARMOR_EVOLUTION_SELECTION: &str = "evolution:improved_nat
 /// sufficient at every level 1-20 with no other precondition, AND that
 /// every other posture stays `Blocked` exactly as before.
 const CAVALIER_CLASS_ID: &str = "class:cavalier";
-const CAVALIER_ORDER_CHOICE_ID: &str = "choice:cavalier_order";
-const ORDER_OF_THE_SWORD_SELECTION: &str = "order:sword";
-const INQUISITOR_CLASS_ID: &str = "class:inquisitor";
-const INQUISITOR_DOMAIN_CHOICE_ID: &str = "choice:inquisitor_domain";
-const ORACLE_CLASS_ID: &str = "class:oracle";
-const COMMONER_CLASS_ID: &str = "class:commoner";
-const ORACLE_MYSTERY_CHOICE_ID: &str = "choice:oracle_mystery";
-const BATTLE_MYSTERY_SELECTION: &str = "mystery:battle";
-const ORACLE_REVELATION_CHOICE_ID: &str = "choice:oracle_revelation";
-const ORACLE_BATTLECRY_REVELATION: &str = "revelation:battlecry";
-const ORACLE_CURSE_CHOICE_ID: &str = "choice:oracle_curse";
-const CLOUDED_VISION_CURSE_SELECTION: &str = "curse:clouded_vision";
 
 /// **Why Dodge, of the seven feats the corpus offers at
 /// `MonkBonusFeatLVL,1`.** Verified directly against the PCGen corpus
@@ -320,9 +294,13 @@ const HUMAN_BONUS_FEAT_CHOICE_ID: &str = "choice:human_bonus_feat";
 /// so the default posture never exercised a seam that already worked. No
 /// picker in the creation UI can submit one (Path B in
 /// `docs/release/v0.6/choice-picker-ui-gap-scoping.md`).
+#[cfg(test)]
 const WITCH_CLASS_ID: &str = "class:witch";
+#[cfg(test)]
 const WITCH_HEX_CHOICE_ID: &str = "choice:witch_hex";
+#[cfg(test)]
 const SHAMAN_CLASS_ID: &str = "class:shaman";
+#[cfg(test)]
 const SHAMAN_SPIRIT_CHOICE_ID: &str = "choice:shaman_spirit";
 
 /// SD31-E4-F2-003 (2026-08-17): Barbarian's Rage Power chooser
@@ -349,15 +327,20 @@ const SHAMAN_SPIRIT_CHOICE_ID: &str = "choice:shaman_spirit";
 /// corpus pool, so this and the board's own `--class-feature-probe` (which
 /// generates the bare form, per `CLASS_FEATURE_POOLS`'s registered EMPTY
 /// namespace for this pool) both ground the identical real value.
+#[cfg(test)]
 const BARBARIAN_CLASS_ID: &str = "class:barbarian";
+#[cfg(test)]
 const BARBARIAN_RAGE_POWER_CHOICE_ID: &str = "choice:barbarian_rage_power";
+#[cfg(test)]
 const SUPERSTITION_RAGE_POWER_SELECTION: &str = "rage_power:superstition";
 
 /// SD31-E4-F2-004: the Unchained Barbarian's own, SEPARATE Rage Power
 /// chooser slot -- see the seeding block below (`request.class_id ==
 /// UNCHAINED_BARBARIAN_CLASS_ID`) for why this must never share
 /// `BARBARIAN_RAGE_POWER_CHOICE_ID`'s id (`decisions.md §10` AMENDMENT).
+#[cfg(test)]
 const UNCHAINED_BARBARIAN_CLASS_ID: &str = "class:unchained_barbarian";
+#[cfg(test)]
 const UNCHAINED_BARBARIAN_RAGE_POWER_CHOICE_ID: &str = "choice:unchained_barbarian_rage_power";
 
 /// **Why Flight, of the corpus's 53 base Witch hexes.** Verified directly
@@ -377,6 +360,7 @@ const UNCHAINED_BARBARIAN_RAGE_POWER_CHOICE_ID: &str = "choice:unchained_barbari
 /// this seed makes the engine compute a real, visible effect rather than
 /// handing a player a token that merely silences a diagnostic
 /// (`docs/governance/no-stub-mvp-doctrine.md`).
+#[cfg(test)]
 const FLIGHT_HEX_SELECTION: &str = "hex:flight";
 
 /// **Why Life, of the ten primary Shaman Spirits.** Unlike Witch -- where
@@ -402,68 +386,8 @@ const FLIGHT_HEX_SELECTION: &str = "hex:flight";
 /// abilities that DO land on real totals (Heavens' Manifestation
 /// a bonus to all saves, Life's own Healer's Touch a +4 Heal bonus) are
 /// all in the level-8+/16+ gated tiers, which stay deferred.
+#[cfg(test)]
 const LIFE_SPIRIT_SELECTION: &str = "spirit:life";
-
-/// v0.6 alpha swarm (Path A choice-picker gap closure, the four
-/// spellcasting-shaped classes): Alchemist, Investigator, Warpriest and
-/// Bloodrager each reach `Computed` at every level 1-20 today, but only
-/// once their own real, recognized creation-time choices are present, and
-/// no picker anywhere in the creation UI can submit one -- the same gap,
-/// and the same fix, as the Wizard/Arcanist/Sorcerer/Cleric/Druid/Monk
-/// seeds above.
-///
-/// Three of the four need BOTH a spell/extract seed AND a chooser seed
-/// (Arcanist's shape); Bloodrager needs only the chooser (Sorcerer's
-/// shape), since its own spell posture is genuinely valid with zero known
-/// spells. Every value below is verified directly against
-/// `pilot_compute.rs`'s own
-/// `spellcasting_shaped_class_closure_tests::all_four_spellcasting_shaped_classes_reach_computed_at_every_level`,
-/// which runs this exact seed set over the whole 1-20 sweep.
-const ALCHEMIST_CLASS_ID: &str = "class:alchemist";
-const INVESTIGATOR_CLASS_ID: &str = "class:investigator";
-const WARPRIEST_CLASS_ID: &str = "class:warpriest";
-const BLOODRAGER_CLASS_ID: &str = "class:bloodrager";
-
-/// Alchemist and Investigator share one formula list
-/// (`SPELLLIST:1|Alchemist` on Investigator's own class record), so they
-/// share one canonical starter extract. `"Cure Light Wounds"` is a real
-/// `ALCHEMIST_SPELL_LIST` key at extract level 1 -- the only extract level
-/// either class can reach at class level 1 -- so a single value is inside
-/// the slot budget at every level of the sweep for both. Each is recorded
-/// under its OWN `source_class_id`; the two formula books never
-/// cross-satisfy.
-const CANONICAL_EXTRACT_SPELL_ID: &str = "Cure Light Wounds";
-
-/// Alchemist's canonical Discovery, one of the corpus's 35. Feral Mutagen
-/// is the only one whose record carries real self-contained magnitudes
-/// attaching to an already-grounded feature of this class (Mutagen).
-const ALCHEMIST_DISCOVERY_CHOICE_ID: &str = "choice:alchemist_discovery";
-const FERAL_MUTAGEN_DISCOVERY_SELECTION: &str = "discovery:feral_mutagen";
-
-/// Investigator's canonical Talent. Resiliency is the one entry of her own
-/// 40-record Rogue Talent whitelist this codebase grounds (task #58); the
-/// slot itself does not open until investigator level 3, so the seed is
-/// correctly inert at levels 1-2 and simply takes effect when it opens.
-const INVESTIGATOR_TALENT_CHOICE_ID: &str = "choice:investigator_talent";
-const RESILIENCY_TALENT_SELECTION: &str = "talent:resiliency";
-
-/// Warpriest's canonical Blessing (Destruction, whose Destructive Attacks
-/// minor power is grounded) plus its canonical starter spell. `"Light"` is
-/// a real level-0 `SPELL_LIST` key and a real Cleric orison -- Warpriest
-/// casts from `SPELLLIST:1|Cleric` -- and level-0 slots are 3+ at every
-/// warpriest level, so one seed covers the whole sweep. Deliberately the
-/// same literal `WIZARD_STARTER_SPELL_ID`/`ARCANIST_STARTER_SPELL_ID` use.
-const WARPRIEST_BLESSING_CHOICE_ID: &str = "choice:warpriest_blessing";
-const DESTRUCTION_BLESSING_SELECTION: &str = "blessing:destruction";
-const WARPRIEST_STARTER_SPELL_ID: &str = "Light";
-
-/// Bloodrager's canonical Bloodline, one of ten. Arcane keeps one
-/// bloodline NAME shared with the Sorcerer seed above, but Bloodrager's
-/// bloodlines are PARALLEL to Sorcerer's rather than shared with them
-/// (task #59) -- the grounding underneath is Bloodrager's own separate
-/// corpus records.
-const BLOODRAGER_BLOODLINE_CHOICE_ID: &str = "choice:bloodrager_bloodline";
-const ARCANE_BLOODRAGER_BLOODLINE_SELECTION: &str = "bloodline:arcane";
 
 /// The Pathfinder 1e `RuleSystemAdapter` implementation. Zero-sized today —
 /// every operation below is stateless (it takes the on-disk root / mutation
@@ -657,390 +581,20 @@ pub fn compose_character_input(request: &CreateCharacterRequest) -> CharacterInp
         });
     }
 
-    // v0.6 alpha swarm: without this, `unmet_wizard_spellbook_conditions`
-    // (pilot_compute.rs) unconditionally blocks a Wizard from ever reaching
-    // Computed, no matter what spells a tester later selects -- it requires
-    // the canonical Evocation specialization (opposed Necromancy/
-    // Transmutation) before it even looks at spellbook content, and nothing
-    // anywhere seeded that choice for a freshly created character. Mirrors
-    // this function's own existing precedent (Fighter's fixed Power Attack/
-    // Dodge/Weapon Focus loadout, Human's fixed bonus-feat/ability-bonus
-    // choices): a fixed, canonical default for the one class/level range
-    // this engine's chassis dispatch actually supports (Wizard 1-3's
-    // spellbook grounding), not a real in-game "pick your school" choice --
-    // that UI is separate, larger, out-of-scope future work.
-    let mut spells_selected = Vec::new();
-    if request.class_id == WIZARD_CLASS_ID {
-        selected_choices.push(SelectedChoice {
-            choice_set_id: "choice:wizard_school_specialization".to_owned(),
-            selection_id: "school:evocation".to_owned(),
-        });
-        selected_choices.push(SelectedChoice {
-            choice_set_id: "choice:wizard_opposed_schools".to_owned(),
-            selection_id: "school:necromancy".to_owned(),
-        });
-        selected_choices.push(SelectedChoice {
-            choice_set_id: "choice:wizard_opposed_schools".to_owned(),
-            selection_id: "school:transmutation".to_owned(),
-        });
-
-        // v0.6 alpha swarm (bootstrap-deadlock fix): see this function's own
-        // doc comment above for why a Wizard specifically needs a non-empty
-        // spellbook to ever be saved at all.
-        spells_selected.push(SpellSelection {
-            spell_id: WIZARD_STARTER_SPELL_ID.to_owned(),
-            source_class_id: WIZARD_CLASS_ID.to_owned(),
-            acquisition_mode: AcquisitionMode::Known,
-        });
-        spells_selected.push(SpellSelection {
-            spell_id: WIZARD_STARTER_SPELL_ID.to_owned(),
-            source_class_id: WIZARD_CLASS_ID.to_owned(),
-            acquisition_mode: AcquisitionMode::Prepared,
-        });
-    } else if request.class_id == ARCANIST_CLASS_ID {
-        // v0.6 alpha swarm (Path A choice-picker gap closure, Arcanist's
-        // own): see `ARCANIST_CLASS_ID`'s own doc comment above. Needs
-        // BOTH a starter spell (Wizard's own bootstrap-deadlock shape)
-        // AND a recognized Metamagic Knowledge choice (Sorcerer/Cleric/
-        // Druid's own "no picker for this choice" shape) -- verified
-        // together, not either alone, per
-        // `single_class_arcanist_with_a_valid_spellbook_and_recognized_metamagic_knowledge_reaches_computed`.
-        selected_choices.push(SelectedChoice {
-            choice_set_id: ARCANIST_METAMAGIC_KNOWLEDGE_CHOICE_ID.to_owned(),
-            selection_id: EMPOWER_SPELL_METAMAGIC_SELECTION.to_owned(),
-        });
-        spells_selected.push(SpellSelection {
-            spell_id: ARCANIST_STARTER_SPELL_ID.to_owned(),
-            source_class_id: ARCANIST_CLASS_ID.to_owned(),
-            acquisition_mode: AcquisitionMode::Known,
-        });
-        spells_selected.push(SpellSelection {
-            spell_id: ARCANIST_STARTER_SPELL_ID.to_owned(),
-            source_class_id: ARCANIST_CLASS_ID.to_owned(),
-            acquisition_mode: AcquisitionMode::Prepared,
-        });
-    } else if request.class_id == ALCHEMIST_CLASS_ID {
-        // v0.6 alpha swarm (the four spellcasting-shaped classes): Arcanist's
-        // own "chooser seed AND starter-spell seed, both required" shape.
-        // Alchemist's prepared-extract validator needs at least one extract
-        // recorded in the formula book AND one prepared today before it will
-        // ground anything, and its Discovery chooser is the canonical
-        // narrowing that resolves the remaining class-feature blocker.
-        selected_choices.push(SelectedChoice {
-            choice_set_id: ALCHEMIST_DISCOVERY_CHOICE_ID.to_owned(),
-            selection_id: FERAL_MUTAGEN_DISCOVERY_SELECTION.to_owned(),
-        });
-        spells_selected.push(SpellSelection {
-            spell_id: CANONICAL_EXTRACT_SPELL_ID.to_owned(),
-            source_class_id: ALCHEMIST_CLASS_ID.to_owned(),
-            acquisition_mode: AcquisitionMode::Known,
-        });
-        spells_selected.push(SpellSelection {
-            spell_id: CANONICAL_EXTRACT_SPELL_ID.to_owned(),
-            source_class_id: ALCHEMIST_CLASS_ID.to_owned(),
-            acquisition_mode: AcquisitionMode::Prepared,
-        });
-    } else if request.class_id == INVESTIGATOR_CLASS_ID {
-        // Same shape as Alchemist immediately above, and genuinely the same
-        // underlying mechanism: Investigator's `SPELLLIST:1|Alchemist` token
-        // makes the formula list literally shared. The two are still seeded
-        // separately because each formula book is keyed on its own
-        // `source_class_id` and neither satisfies the other.
-        selected_choices.push(SelectedChoice {
-            choice_set_id: INVESTIGATOR_TALENT_CHOICE_ID.to_owned(),
-            selection_id: RESILIENCY_TALENT_SELECTION.to_owned(),
-        });
-        spells_selected.push(SpellSelection {
-            spell_id: CANONICAL_EXTRACT_SPELL_ID.to_owned(),
-            source_class_id: INVESTIGATOR_CLASS_ID.to_owned(),
-            acquisition_mode: AcquisitionMode::Known,
-        });
-        spells_selected.push(SpellSelection {
-            spell_id: CANONICAL_EXTRACT_SPELL_ID.to_owned(),
-            source_class_id: INVESTIGATOR_CLASS_ID.to_owned(),
-            acquisition_mode: AcquisitionMode::Prepared,
-        });
-    } else if request.class_id == WARPRIEST_CLASS_ID {
-        // Warpriest needs THREE seeds, not two: a Blessing choice (its own
-        // Blessing-powers blocker), and a spellbook entry recorded plus
-        // prepared (its prepared-spellbook blocker). The Blessing choice
-        // also resolves the class-feature blocker, the same way Cleric's
-        // Good domain does.
-        selected_choices.push(SelectedChoice {
-            choice_set_id: WARPRIEST_BLESSING_CHOICE_ID.to_owned(),
-            selection_id: DESTRUCTION_BLESSING_SELECTION.to_owned(),
-        });
-        spells_selected.push(SpellSelection {
-            spell_id: WARPRIEST_STARTER_SPELL_ID.to_owned(),
-            source_class_id: WARPRIEST_CLASS_ID.to_owned(),
-            acquisition_mode: AcquisitionMode::Known,
-        });
-        spells_selected.push(SpellSelection {
-            spell_id: WARPRIEST_STARTER_SPELL_ID.to_owned(),
-            source_class_id: WARPRIEST_CLASS_ID.to_owned(),
-            acquisition_mode: AcquisitionMode::Prepared,
-        });
-    } else if request.class_id == BLOODRAGER_CLASS_ID {
-        // Sorcerer/Cleric/Druid's shape, not Arcanist's: NO spell seed. A
-        // Bloodrager with zero known spells is a genuinely valid posture
-        // (`unmet_bloodrager_known_spell_conditions` returns no unmet
-        // conditions for an empty known list), and the class casts nothing
-        // at all below level 4. Only the Bloodline chooser is needed.
-        selected_choices.push(SelectedChoice {
-            choice_set_id: BLOODRAGER_BLOODLINE_CHOICE_ID.to_owned(),
-            selection_id: ARCANE_BLOODRAGER_BLOODLINE_SELECTION.to_owned(),
-        });
-    }
-
-    // v0.6 alpha swarm (Path A choice-picker gap closure, per
-    // `docs/release/v0.6/choice-picker-ui-gap-scoping.md`): Sorcerer,
-    // Cleric, and Druid can each genuinely reach `Computed` today, but
-    // only once their own real, recognized choice is present -- and, same
-    // as Wizard's own school-specialization gap before this fix, nothing
-    // in the creation UI has ever had a way to submit one (no picker, no
-    // wire-contract field). Mirrors the Wizard block immediately above:
-    // a fixed, canonical default, silently applied to every character of
-    // that class, NOT a real in-game choice -- that picker is separate,
-    // larger, out-of-scope future work (Path B in the scoping doc). Unlike
-    // Wizard, none of these three classes need a bootstrapped
-    // known/prepared spell to avoid a save-time deadlock (each engine's
-    // own known-spell posture is genuinely valid with zero known spells,
-    // proven directly by each closure's own `..._reaches_computed` test),
-    // so no `spells_selected` entries are seeded here.
-    if request.class_id == SORCERER_CLASS_ID {
-        // Verified directly against `pilot_compute.rs`'s own
-        // `single_class_sorcerer_with_arcane_bond_recognized_reaches_computed`
-        // test: Arcane bloodline + a familiar Arcane Bond (chosen over
-        // bonded object as the more commonly played, equally-supported
-        // option -- both are recognized identically) is sufficient, with
-        // no other precondition, to reach `Computed`.
-        selected_choices.push(SelectedChoice {
-            choice_set_id: "choice:sorcerer_bloodline".to_owned(),
-            selection_id: "bloodline:arcane".to_owned(),
-        });
-        selected_choices.push(SelectedChoice {
-            choice_set_id: "choice:sorcerer_arcane_bond".to_owned(),
-            selection_id: "bond:familiar".to_owned(),
-        });
-    } else if request.class_id == CLERIC_CLASS_ID {
-        // Verified directly against `pilot_compute.rs`'s own Cleric
-        // closure: a recognized Good domain (with no Healing domain also
-        // chosen, and Touch of Good correctly left inactive -- a
-        // genuinely valid PF1 posture, not every Good-domain Cleric is
-        // using this limited-use power at every moment) is sufficient to
-        // reach `Computed`. No `class_ability_activations` entry is
-        // seeded for Touch of Good -- "not currently active" is the
-        // honest default, mirroring how Barbarian Rage's own "not raging"
-        // default needs no activation entry either.
-        selected_choices.push(SelectedChoice {
-            choice_set_id: "choice:cleric_domain".to_owned(),
-            selection_id: "domain:good".to_owned(),
-        });
-    } else if request.class_id == DRUID_CLASS_ID {
-        // Verified directly against `pilot_compute.rs`'s own
-        // `single_class_druid_level1_with_animal_companion_reaches_computed`
-        // test: a recognized animal-companion nature bond is sufficient,
-        // with no other precondition, to reach `Computed`. No species
-        // choice is seeded -- Wolf is the only companion species this
-        // codebase's Druid/Hunter seam ever grounds, assumed automatically
-        // once the bond type is recognized (no species-selection input is
-        // modeled for this class at all).
-        selected_choices.push(SelectedChoice {
-            choice_set_id: "choice:druid_nature_bond".to_owned(),
-            selection_id: "bond:animal_companion".to_owned(),
-        });
-    } else if request.class_id == MONK_CLASS_ID {
-        // v0.6 alpha swarm (Path A choice-picker gap closure, Monk's own) --
-        // the same shape as the three above, and for the same reason: the
-        // engine can already compute a complete Monk, but only once a real
-        // recognized choice is present, and no picker can submit one.
-        //
-        // Verified directly against `pilot_compute.rs`'s own
-        // `monk_with_dodge_bonus_feat_genuinely_active_does_not_trip_the_diagnostic`
-        // test: a recognized `choice:monk_bonus_feat -> feat:dodge`, PLUS
-        // `feat:dodge` genuinely present on `selected_feats`, is sufficient
-        // with no other precondition to reach `Computed`. Seeding this
-        // choice is precisely what puts `feat:dodge` on `selected_feats`
-        // for a Monk -- the `selected_feats` construction below claims the
-        // feat only when a slot like this one really granted it, so the two
-        // halves are one decision, not a coincidence of a fixed loadout.
-        // And it is genuinely RESOLVED, not merely
-        // tolerated: the engine emits a real
-        // `class_feature.monk.bounded_progression.bonus_feat.dodge_active`
-        // record carrying the +1 dodge AC bonus `compute_combat_baseline`
-        // is already applying. See `DODGE_FEAT_SELECTION`'s own doc comment
-        // for why Dodge specifically, of the seven corpus options at
-        // `MonkBonusFeatLVL,1`, and for the Human double-grant caveat.
-        //
-        // TWO seeding sites since SD-36 F3b, like Wizard/Arcanist: Monk's
-        // bonus-feat seam sits behind `supported_monk_level` (a SINGLE-class
-        // Monk), and a multiclass mix now carries each class's isolated
-        // single-class blocking lines (`pilot_compute::multiclass_fold`), so a
-        // Fighter who dips Monk with no bonus-feat choice is honestly Blocked
-        // on Monk's own `bonus_feat.unsupported` line. `apply_level_up`'s
-        // multiclass-dip branch mirrors this seed (pinned by
-        // `monk_multiclass_dip_reaches_computed_from_apply_level_up_alone`,
-        // which failed without it once F3b landed). Leveling a Monk 1 -> 2 takes
-        // `apply_level_up`'s increment-existing-level branch, so this
-        // creation-time seed simply persists -- pinned all the way to the
-        // PF1 cap by `monk_stays_computed_leveling_all_the_way_to_20`.
-        selected_choices.push(SelectedChoice {
-            choice_set_id: MONK_BONUS_FEAT_CHOICE_ID.to_owned(),
-            selection_id: DODGE_FEAT_SELECTION.to_owned(),
-        });
-    } else if request.class_id == WITCH_CLASS_ID {
-        // v0.6 alpha swarm (Path A choice-picker gap closure, the
-        // chooser-shaped power lists): the same one-choice shape as
-        // Sorcerer/Cleric/Druid/Monk. See `FLIGHT_HEX_SELECTION`'s own doc
-        // comment for why Flight specifically, of the corpus's 53 base
-        // hexes.
-        //
-        // Verified directly against `pilot_compute.rs`'s own
-        // `single_class_witch_with_the_canonical_flight_hex_reaches_computed`
-        // and `witch_with_the_canonical_flight_hex_stays_computed_at_every_level`
-        // tests: a recognized `choice:witch_hex -> hex:flight` is
-        // sufficient, with no other precondition, to reach `Computed` at
-        // every level 1-20. No spell is seeded -- a Witch's prepared-spell
-        // posture is genuinely valid with zero spells, so Wizard's
-        // bootstrap-deadlock shape does not apply here.
-        selected_choices.push(SelectedChoice {
-            choice_set_id: WITCH_HEX_CHOICE_ID.to_owned(),
-            selection_id: FLIGHT_HEX_SELECTION.to_owned(),
-        });
-    } else if request.class_id == SHAMAN_CLASS_ID {
-        // See `LIFE_SPIRIT_SELECTION`'s own doc comment for why Life, of
-        // the ten primary Spirits. Verified directly against
-        // `shaman_with_the_canonical_life_spirit_stays_computed_at_every_level`.
-        selected_choices.push(SelectedChoice {
-            choice_set_id: SHAMAN_SPIRIT_CHOICE_ID.to_owned(),
-            selection_id: LIFE_SPIRIT_SELECTION.to_owned(),
-        });
-    } else if request.class_id == BARBARIAN_CLASS_ID && request.level >= 2 {
-        // See `BARBARIAN_RAGE_POWER_CHOICE_ID`'s own doc comment: unlike
-        // Witch/Shaman above, Barbarian already reaches `Computed` without
-        // this seed -- it exists only to put a real, corpus-verified
-        // Rage Power selection on-screen. Gated on level >= 2 because the
-        // corpus's own Rage Power grant ("Starting at 2nd level, a
-        // barbarian gains a rage power") makes the choice slot itself a
-        // no-op below that level; the level selector already lets a
-        // creation request pick 2+ directly, so no separate level-up step
-        // is needed to observe it.
-        selected_choices.push(SelectedChoice {
-            choice_set_id: BARBARIAN_RAGE_POWER_CHOICE_ID.to_owned(),
-            selection_id: SUPERSTITION_RAGE_POWER_SELECTION.to_owned(),
-        });
-    } else if request.class_id == UNCHAINED_BARBARIAN_CLASS_ID && request.level >= 2 {
-        // SD31-E4-F2-004: the Unchained Barbarian's OWN Rage Power chooser
-        // (`UNCHAINED_BARBARIAN_RAGE_POWER_CHOICE_ID`, `pilot_compute.rs`),
-        // a SEPARATE slot family from `BARBARIAN_RAGE_POWER_CHOICE_ID` above
-        // (`decisions.md §10` AMENDMENT: distinct classes, distinct chooser
-        // slots -- never folded together). Same posture as the base class's
-        // own seed just above: this class already reaches `Computed` without
-        // it, so this exists only to put a real, corpus-verified selection
-        // on-screen for DoD-8. Reuses `SUPERSTITION_RAGE_POWER_SELECTION`'s
-        // own value (`"rage_power:superstition"`) -- both classes' pools
-        // name the identical real corpus slug for the identical real
-        // ability, just under two separate choice-set ids, so no separate
-        // constant is needed for the selection string itself.
-        selected_choices.push(SelectedChoice {
-            choice_set_id: UNCHAINED_BARBARIAN_RAGE_POWER_CHOICE_ID.to_owned(),
-            selection_id: SUPERSTITION_RAGE_POWER_SELECTION.to_owned(),
-        });
-    } else if request.class_id == SUMMONER_CLASS_ID {
-        // v0.6 alpha swarm (Summoner Eidolon evolution canonical-narrowing
-        // closure, 2026-07-29) -- the same Path A shape as the five above.
-        //
-        // Verified directly against `pilot_compute.rs`'s own
-        // `summoner_with_a_recognized_eidolon_evolution_reaches_computed_at_every_level`
-        // test: a recognized `choice:summoner_eidolon_evolution ->
-        // evolution:improved_natural_armor` is sufficient, with no other
-        // precondition, to reach `Computed` at every level 1-20. The
-        // evolution costs 1 point out of a level-1 pool of 3, so it is
-        // affordable at every level -- there is no level at which this
-        // seed becomes illegal, unlike a cost-4 evolution would be.
-        //
-        // ONE seeding site only, like Monk and for the same reason:
-        // Summoner's eidolon seam sits behind
-        // `is_supported_summoner_single_class`, which matches a
-        // SINGLE-class Summoner only, so `apply_level_up`'s
-        // multiclass-dip branch never reaches it. Leveling a Summoner
-        // 1 -> 2 takes the increment-existing-level branch, so this
-        // creation-time seed simply persists.
-        selected_choices.push(SelectedChoice {
-            choice_set_id: SUMMONER_EIDOLON_EVOLUTION_CHOICE_ID.to_owned(),
-            selection_id: IMPROVED_NATURAL_ARMOR_EVOLUTION_SELECTION.to_owned(),
-        });
-        // SD-36 F1c-5 (D8): the Summoner Class Selection pick's Path-A default, the Standard
-        // class (`class_seeds::SUMMONER_CANONICAL_CLASS_SELECTION` states why), so the sheet
-        // prints the recorded pick instead of an unknown one.
-        selected_choices.push(SelectedChoice {
-            choice_set_id: codex::rules_core::class_seeds::SUMMONER_CLASS_SELECTION_CHOICE_ID.to_owned(),
-            selection_id: codex::rules_core::class_seeds::SUMMONER_CANONICAL_CLASS_SELECTION.to_owned(),
-        });
-    } else if request.class_id == CAVALIER_CLASS_ID {
-        // v0.6 alpha swarm (Path A choice-picker gap closure for the three
-        // APG chooser-shaped classes, 2026-07-29) -- see
-        // `CAVALIER_CLASS_ID`'s own doc comment above for each seed's
-        // corpus record and for why these particular options, and
-        // `pilot_compute.rs`'s `apg_canonical_choice_path_a_tests` for the
-        // proof they are sufficient at every level 1-20. Like
-        // Sorcerer/Cleric/Druid/Monk and unlike Wizard/Arcanist, these are
-        // a silently-applied canonical default, not a real in-game choice.
-        //
-        // ONE seeding site only, the same reason Monk needs only one:
-        // Cavalier's, Inquisitor's and Oracle's class-feature seams all sit
-        // behind `compute_apg_class_chassis`, which
-        // `compute_class_chassis` reaches only for a SINGLE-class input --
-        // since SD-36 F3b a multiclass mix reaches it too, but only through
-        // each class's isolated single-class run (`multiclass_fold`), whose
-        // blocking class lines the mix carries re-scoped. `apply_level_up`'s
-        // multiclass-dip branch does not seed, so a dip into one of these
-        // classes without this choice blocks on that class's own line.
-        // Leveling an existing character takes the increment-existing-level
-        // branch, so this creation-time seed simply persists.
-        selected_choices.push(SelectedChoice {
-            choice_set_id: CAVALIER_ORDER_CHOICE_ID.to_owned(),
-            selection_id: ORDER_OF_THE_SWORD_SELECTION.to_owned(),
-        });
-    } else if request.class_id == INQUISITOR_CLASS_ID {
-        selected_choices.push(SelectedChoice {
-            choice_set_id: INQUISITOR_DOMAIN_CHOICE_ID.to_owned(),
-            // The same canonical domain Cleric's own block above seeds --
-            // both classes share `active_touch_of_good_bonus`, and Good is
-            // the one domain either engine grounds a power for.
-            selection_id: "domain:good".to_owned(),
-        });
-    } else if request.class_id == ORACLE_CLASS_ID {
-        // Oracle needs THREE seeds now, not two: a PF1 oracle has a
-        // Mystery, a Curse, AND (for Battle Mystery specifically) a
-        // budgeted Revelation pick, and the engine claim-blocks on each
-        // independently. Battle Mystery + Battlecry replaces the prior
-        // Life Mystery default (SD31-E4-F2-002, `OPEN-ISSUES.md` row
-        // 185) so this creation-time seed is DoD-8's own on-screen proof
-        // that `archetype_resolver::chooser_option_selected`'s first
-        // production consumer reaches a real player-created character,
-        // not only a headless receipt.
-        selected_choices.push(SelectedChoice {
-            choice_set_id: ORACLE_MYSTERY_CHOICE_ID.to_owned(),
-            selection_id: BATTLE_MYSTERY_SELECTION.to_owned(),
-        });
-        selected_choices.push(SelectedChoice {
-            choice_set_id: ORACLE_REVELATION_CHOICE_ID.to_owned(),
-            selection_id: ORACLE_BATTLECRY_REVELATION.to_owned(),
-        });
-        selected_choices.push(SelectedChoice {
-            choice_set_id: ORACLE_CURSE_CHOICE_ID.to_owned(),
-            selection_id: CLOUDED_VISION_CURSE_SELECTION.to_owned(),
-        });
-    } else if request.class_id == COMMONER_CLASS_ID {
-        // SD-36 F1c-3 (D6): a Commoner is proficient with ONE Simple weapon of the player's
-        // choice. Path A: the canonical default `class_seeds` states, so the sheet prints a
-        // recorded weapon instead of an unknown pick.
-        selected_choices.push(SelectedChoice {
-            choice_set_id: codex::rules_core::class_seeds::COMMONER_WEAPON_CHOICE_ID.to_owned(),
-            selection_id: codex::rules_core::class_seeds::COMMONER_CANONICAL_WEAPON.to_owned(),
-        });
-    }
+    // SD-36 F4a (acceptance F4.3): the class's canonical seeds -- the Path-A
+    // defaults a freshly created character of that class records for the
+    // choices no picker submits yet (Wizard's school + starter spellbook,
+    // Sorcerer's bloodline, Cleric's domain, Oracle's mystery/revelation/curse,
+    // the Barbarian's first rage power from 2nd level, ...) -- come from the ONE
+    // seed table, `class_seeds::canonical_seeds_for`, which the census,
+    // `v06_class_state_dump` and `apply_level_up` read too. Each seed's reason
+    // is stated there; this function keeps no copy, so the app and the census
+    // can never measure two different postures again (before F4a the Oracle
+    // seeds, the Barbarian rage powers and the Expert/Psion picks had drifted
+    // apart between the two tables).
+    let class_slug = request.class_id.strip_prefix("class:").unwrap_or(&request.class_id);
+    let (class_choices, spells_selected) = canonical_seeds_for(class_slug, request.level);
+    selected_choices.extend(class_choices);
 
     // v0.6 alpha swarm (creation-seed honesty fix): `feat:dodge` is claimed
     // ONLY when one of the seeded choice slots above actually granted it --
@@ -1525,84 +1079,21 @@ pub fn apply_level_up(character_input: &mut CharacterInput, class_id: &str) {
             level: 1,
         });
 
-        // v0.6 alpha swarm: the same fix `compose_character_input` got for
-        // fresh Wizard creation, applied to the multiclass-dip path. This
-        // `else` branch only runs the first time `class_id` is added to
-        // `class_levels` -- if it were already Wizard, the `if` branch
-        // above (increment existing level) would have fired instead -- so
-        // it can never fire twice for the same character and cannot
-        // duplicate the seeded choices (which would break
+        // SD-36 F4a: a class ADDED at level-up records its canonical seeds at
+        // its new level (1) through the one seed table
+        // (`class_seeds::canonical_seeds_for`) creation reads -- never a copy
+        // of its own. This branch runs only the first time `class_id` joins
+        // `class_levels` (a class already held takes the increment branch
+        // above), so a seed is never recorded twice (which would break, e.g.,
         // `wizard_has_canonical_specialization_selections`'s exact-2
-        // opposed-schools count). Without this, multiclassing Wizard onto
-        // an existing character hits the same unconditional
-        // "requires the canonical Evocation specialization" block
-        // `compose_character_input`'s fix already solved for creation --
-        // frontend verified this live before this fix landed.
-        if class_id == WIZARD_CLASS_ID {
-            character_input.chosen.selected_choices.push(SelectedChoice {
-                choice_set_id: "choice:wizard_school_specialization".to_owned(),
-                selection_id: "school:evocation".to_owned(),
-            });
-            character_input.chosen.selected_choices.push(SelectedChoice {
-                choice_set_id: "choice:wizard_opposed_schools".to_owned(),
-                selection_id: "school:necromancy".to_owned(),
-            });
-            character_input.chosen.selected_choices.push(SelectedChoice {
-                choice_set_id: "choice:wizard_opposed_schools".to_owned(),
-                selection_id: "school:transmutation".to_owned(),
-            });
-
-            // v0.6 alpha swarm (bootstrap-deadlock fix): the same starter-spell
-            // seed `compose_character_input` gets for fresh Wizard creation,
-            // applied to the multiclass-dip path for the identical reason --
-            // see `compose_character_input`'s own doc comment. Same
-            // once-only guarantee as the choice seeding immediately above
-            // (this whole block only runs the first time Wizard is added).
-            character_input.chosen.spells_selected.push(SpellSelection {
-                spell_id: WIZARD_STARTER_SPELL_ID.to_owned(),
-                source_class_id: WIZARD_CLASS_ID.to_owned(),
-                acquisition_mode: AcquisitionMode::Known,
-            });
-            character_input.chosen.spells_selected.push(SpellSelection {
-                spell_id: WIZARD_STARTER_SPELL_ID.to_owned(),
-                source_class_id: WIZARD_CLASS_ID.to_owned(),
-                acquisition_mode: AcquisitionMode::Prepared,
-            });
-        } else if class_id == MONK_CLASS_ID {
-            // SD-36 F3b: the same Path-A bonus-feat seed
-            // `compose_character_input` gives a fresh Monk (see the Monk
-            // branch there for why Dodge, and the Human double-grant
-            // caveat), mirrored here because a mix now carries Monk's own
-            // isolated-run blocker for a missing choice. Same once-only
-            // guarantee as the Wizard block above.
-            character_input.chosen.selected_choices.push(SelectedChoice {
-                choice_set_id: MONK_BONUS_FEAT_CHOICE_ID.to_owned(),
-                selection_id: DODGE_FEAT_SELECTION.to_owned(),
-            });
-        } else if class_id == ARCANIST_CLASS_ID {
-            // v0.6 alpha swarm (Path A choice-picker gap closure,
-            // Arcanist's own): the same starter-spell-plus-Metamagic-
-            // Knowledge-choice seed `compose_character_input` gets for
-            // fresh Arcanist creation, applied to the multiclass-dip
-            // path for the identical reason -- see `ARCANIST_CLASS_ID`'s
-            // own doc comment. Same once-only guarantee as the Wizard
-            // block above (this whole branch only runs the first time
-            // Arcanist is added).
-            character_input.chosen.selected_choices.push(SelectedChoice {
-                choice_set_id: ARCANIST_METAMAGIC_KNOWLEDGE_CHOICE_ID.to_owned(),
-                selection_id: EMPOWER_SPELL_METAMAGIC_SELECTION.to_owned(),
-            });
-            character_input.chosen.spells_selected.push(SpellSelection {
-                spell_id: ARCANIST_STARTER_SPELL_ID.to_owned(),
-                source_class_id: ARCANIST_CLASS_ID.to_owned(),
-                acquisition_mode: AcquisitionMode::Known,
-            });
-            character_input.chosen.spells_selected.push(SpellSelection {
-                spell_id: ARCANIST_STARTER_SPELL_ID.to_owned(),
-                source_class_id: ARCANIST_CLASS_ID.to_owned(),
-                acquisition_mode: AcquisitionMode::Prepared,
-            });
-        }
+        // opposed-schools count). Before F4a only Wizard, Monk and Arcanist
+        // were seeded here, so a Fighter dipping Cavalier, Inquisitor or
+        // Oracle blocked on the added class's own choice line
+        // (`apply_level_up_seeds_an_added_class_the_way_the_census_mix_does`).
+        let class_slug = class_id.strip_prefix("class:").unwrap_or(class_id);
+        let (choices, spells) = canonical_seeds_for(class_slug, 1);
+        character_input.chosen.selected_choices.extend(choices);
+        character_input.chosen.spells_selected.extend(spells);
     }
 }
 
@@ -1964,6 +1455,48 @@ mod tests {
 
     fn wizard_request_for(character_id: &str, level: u8) -> CreateCharacterRequest {
         CreateCharacterRequest { class_id: WIZARD_CLASS_ID.to_owned(), ..request_for(character_id, level) }
+    }
+
+    /// SD-36 F4a (acceptance F4.3): the seeds `compose_character_input` records for a class are
+    /// exactly `class_seeds::canonical_seeds_for`'s, for every census class at every level of
+    /// its own sweep -- the adapter keeps no seed table of its own. A non-Human race and no
+    /// caller choices, so the only other entries are the two fixed Fighter feat slots.
+    #[test]
+    fn compose_character_input_seeds_every_census_class_exactly_as_class_seeds_does() {
+        let fixed = compose_character_input(&CreateCharacterRequest {
+            race_id: "race:dwarf".to_owned(),
+            ..request_for("seed-parity-base", 1)
+        })
+        .chosen
+        .selected_choices;
+        assert_eq!(fixed.len(), 2, "a Dwarf Fighter records only the two fixed feat slots: {fixed:?}");
+        let entries = codex::rules_core::class_census::census();
+        assert_eq!(entries.len(), 137, "census id count moved off 137");
+        let mut mismatches = Vec::new();
+        for entry in entries.values() {
+            let slug = entry.class_id.strip_prefix("class:").expect("census ids are class:<slug>");
+            for level in 1..=entry.max_level {
+                let input = compose_character_input(&CreateCharacterRequest {
+                    race_id: "race:dwarf".to_owned(),
+                    class_id: entry.class_id.clone(),
+                    ..request_for("seed-parity", level)
+                });
+                let (choices, spells) = canonical_seeds_for(slug, level);
+                let mut expected = fixed.clone();
+                expected.extend(choices);
+                if input.chosen.selected_choices != expected || input.chosen.spells_selected != spells {
+                    mismatches.push(format!(
+                        "{} {level}: adapter {:?} / {:?} vs class_seeds {:?} / {:?}",
+                        entry.class_id,
+                        &input.chosen.selected_choices[fixed.len().min(input.chosen.selected_choices.len())..],
+                        input.chosen.spells_selected,
+                        &expected[fixed.len()..],
+                        spells
+                    ));
+                }
+            }
+        }
+        assert!(mismatches.is_empty(), "{} class-level seed mismatch(es):\n{}", mismatches.len(), mismatches.join("\n"));
     }
 
     /// SD-27 `decisions.md §28` defect 1, reproduced exactly as it was measured

@@ -89,7 +89,8 @@ const DEFAULT_TABLED_MAX_LEVEL: u8 = 20;
 /// every class id is in exactly one family (`no_class_id_sits_in_two_families`).
 /// Mirrors `docs/architecture/status.md`'s "Per-family breakdown" table
 /// row for row.
-#[derive(Debug, Clone, Copy, PartialEq, Eq, PartialOrd, Ord)]
+#[derive(Debug, Clone, Copy, PartialEq, Eq, PartialOrd, Ord, serde::Serialize)]
+#[serde(rename_all = "snake_case")]
 pub enum ClassFamily {
     Crb,
     Apg,
@@ -135,6 +136,11 @@ pub struct ClassCensusEntry {
     pub registries: Vec<&'static str>,
     pub max_level: u8,
     pub is_prestige: bool,
+    /// The position this id was first claimed at, over the registries in [`census`]'s claim
+    /// order (CRB, APG, ACG, Unchained, UC, untabled, CRB NPC/Ex, Prestige, then the ninth
+    /// source) and each registry's own order -- what "registry order" means for the creation
+    /// roster ([`class_creation_roster`]), since the map itself is keyed by id.
+    pub registry_order: usize,
 }
 
 fn add_unique(list: &mut Vec<String>, value: &str) {
@@ -234,6 +240,7 @@ pub fn census() -> BTreeMap<String, ClassCensusEntry> {
                  registry: &'static str,
                  max_level: u8,
                  is_prestige: bool| {
+        let registry_order = entries.len();
         entries
             .entry(class_id.clone())
             .and_modify(|e| {
@@ -247,6 +254,7 @@ pub fn census() -> BTreeMap<String, ClassCensusEntry> {
                 registries: vec![registry],
                 max_level,
                 is_prestige,
+                registry_order,
             });
     };
 
@@ -315,6 +323,7 @@ pub fn census() -> BTreeMap<String, ClassCensusEntry> {
     // family.
     for meta in generic_class_chassis_covered_classes() {
         let is_prestige = meta.tags.iter().any(|t| t == "Prestige");
+        let registry_order = entries.len();
         entries
             .entry(meta.class_id.clone())
             .and_modify(|e| {
@@ -328,6 +337,7 @@ pub fn census() -> BTreeMap<String, ClassCensusEntry> {
                 registries: vec!["generic_class_chassis"],
                 max_level: meta.max_level,
                 is_prestige,
+                registry_order,
             });
     }
 
@@ -1007,7 +1017,10 @@ fn carrier_pick_for_option(class_slug: &str, option: &str) -> Option<SelectedCho
     let package = live_sheet_rules()?;
     let rule = package.rule(option)?;
     let option_slug = option.rsplit(':').next()?;
-    let (choices, _) = canonical_seeds_for(class_slug);
+    // Every choice the class seeds by the PF1 level cap: the question is which of the class's
+    // choices offers `option`, not whether that pick is due yet -- the mix is seeded at its own
+    // levels by `input_for_mix_with_picks`.
+    let (choices, _) = canonical_seeds_for(class_slug, DEFAULT_TABLED_MAX_LEVEL);
     choices.into_iter().find_map(|seed| {
         if let Some(chooser) = package.rule(&seed.choice_set_id)
             && matches!(&chooser.offers, Some(Choice { id, from: OptionSet::Rules { .. }, .. }) if id == &seed.choice_set_id)
@@ -1717,8 +1730,8 @@ fn input_for_mix_with_picks(fixture: &CharacterInput, classes: &[(&str, u8)], pi
         .iter()
         .map(|(name, level)| CharacterClassLevel { class_id: format!("class:{name}"), level: *level })
         .collect();
-    for (name, _) in classes {
-        let (mut choices, spells) = canonical_seeds_for(name);
+    for (name, level) in classes {
+        let (mut choices, spells) = canonical_seeds_for(name, *level);
         let own: Vec<&SelectedChoice> = picks.iter().filter(|(class, _)| class == name).map(|(_, pick)| pick).collect();
         if !own.is_empty() {
             choices.retain(|c| !own.iter().any(|pick| pick.choice_set_id == c.choice_set_id));
@@ -2123,6 +2136,158 @@ pub fn mix_panel_blocking_histogram(results: &[MixPanelSweepResult]) -> BTreeMap
         }
     }
     histogram
+}
+
+// ---------------------------------------------------------------------------
+// SD-36 F4a: the desktop creation roster and its named reasons
+// (`epic-f-class-completion.md` §6, acceptance F4.1 / F4.5).
+//
+// ONE rule, read off the census itself so the picker and the census can never
+// diverge: a class is offered at creation iff it is Computed at every level of
+// its own sweep AND its converted principal states a hit die (the HP line
+// needs one) AND it is not a prestige class (prestige is legal only in a mix,
+// §9) AND it is not an Ex-* state (census-only, ruled 2026-09-21, §9/§14).
+// Every class the roster leaves out carries exactly one named reason -- never
+// a bare `false`.
+// ---------------------------------------------------------------------------
+
+/// Why a census class is, or is not, on the desktop creation roster. A closed set: a class is
+/// never left off without one of the four named reasons.
+#[derive(Debug, Clone, Copy, PartialEq, Eq, PartialOrd, Ord, serde::Serialize)]
+#[serde(rename_all = "snake_case")]
+pub enum RosterReason {
+    /// Offered at creation.
+    Offered,
+    /// Computed at every level, but the class's converted principal states no hit die, so the
+    /// sheet has no HP figure to print.
+    HitDieAbsent,
+    /// Blocked at one or more levels of its own sweep.
+    NotComputed,
+    /// A prestige class: offered only at level-up, in a mix (§9).
+    Prestige,
+    /// An Ex-* state (a class a character falls into, not one taken): census-only.
+    ExState,
+}
+
+impl RosterReason {
+    pub fn in_desktop_roster(self) -> bool {
+        self == RosterReason::Offered
+    }
+}
+
+/// `true` when `entry` is an Ex-* state: its id is `ex_<class>` AND its converted class
+/// principal is a hidden record (`print: false`, the oracle's `VISIBLE:NO` -- the tag PCGen
+/// marks a class state a character falls into rather than takes). Read off the record, not the
+/// name alone: an `ex_` id whose record prints is not one.
+pub fn is_ex_state(entry: &ClassCensusEntry) -> bool {
+    let Some(slug) = entry.class_id.strip_prefix("class:") else { return false };
+    if !slug.starts_with("ex_") {
+        return false;
+    }
+    let Some(package) = live_sheet_rules() else { return false };
+    package.find("class", slug).and_then(|id| package.rule(id)).is_some_and(|rule| !rule.print)
+}
+
+/// The hit die the roster reads for `entry` -- [`class_chassis_sheet_rules::hit_die_from_package`],
+/// the class principal's own `Hit die` row.
+pub fn roster_hit_die(entry: &ClassCensusEntry) -> Option<u8> {
+    let slug = entry.class_id.strip_prefix("class:")?;
+    class_chassis_sheet_rules::hit_die_from_package(slug).map(|(die, _)| die)
+}
+
+/// The roster rule, for one census row. `computed_every_level` is the row's own sweep result
+/// ([`ClassSweepResult::computed`]); a prestige row is never swept alone for the roster, so its
+/// value is not read. Precedence when more than one reason applies: prestige, Ex-* state,
+/// not computed, hit die absent.
+pub fn roster_reason(entry: &ClassCensusEntry, computed_every_level: bool) -> RosterReason {
+    if entry.is_prestige {
+        RosterReason::Prestige
+    } else if is_ex_state(entry) {
+        RosterReason::ExState
+    } else if !computed_every_level {
+        RosterReason::NotComputed
+    } else if roster_hit_die(entry).is_none() {
+        RosterReason::HitDieAbsent
+    } else {
+        RosterReason::Offered
+    }
+}
+
+/// One class the desktop's Create picker offers.
+#[derive(Debug, Clone, PartialEq, Eq, serde::Serialize)]
+pub struct ClassRosterEntry {
+    /// `class:<slug>`.
+    pub id: String,
+    /// The converted class principal's own label.
+    pub display_name: String,
+    pub family: ClassFamily,
+    /// The first book the census found the class in.
+    pub book: String,
+    pub hit_die: u8,
+    pub max_level: u8,
+}
+
+/// Every census row's roster reason, sweeping each non-prestige class once. Returns
+/// `(entry, sweep, reason)` in census id order; a prestige row carries no sweep.
+pub fn roster_reasons(
+    fixture: &CharacterInput,
+    entries: &BTreeMap<String, ClassCensusEntry>,
+) -> Vec<(ClassCensusEntry, Option<ClassSweepResult>, RosterReason)> {
+    entries
+        .values()
+        .map(|entry| {
+            if entry.is_prestige {
+                (entry.clone(), None, roster_reason(entry, false))
+            } else {
+                let sweep = sweep_class(fixture, entry);
+                let reason = roster_reason(entry, sweep.computed());
+                (entry.clone(), Some(sweep), reason)
+            }
+        })
+        .collect()
+}
+
+fn roster_display_name(entry: &ClassCensusEntry) -> String {
+    let slug = entry.class_id.strip_prefix("class:").unwrap_or(&entry.class_id);
+    live_sheet_rules()
+        .and_then(|package| package.find("class", slug).and_then(|id| package.rule(id)))
+        .map(crate::rules_core::sheet_rule::display_label)
+        .unwrap_or_else(|| slug.to_string())
+}
+
+/// The desktop's class creation roster: every census class whose [`roster_reason`] is
+/// [`RosterReason::Offered`], grouped by family (in [`ClassFamily`] order) and, within a
+/// family, in registry order ([`ClassCensusEntry::registry_order`]). Engine-derived -- each
+/// class is swept at every level -- and computed once per process. `Err` names why the census
+/// could not be swept (the shared fixture did not load), never an empty roster.
+pub fn class_creation_roster() -> Result<Vec<ClassRosterEntry>, String> {
+    static ROSTER: std::sync::OnceLock<Result<Vec<ClassRosterEntry>, String>> = std::sync::OnceLock::new();
+    ROSTER
+        .get_or_init(|| {
+            let fixture = load_sweep_fixture()?;
+            let mut offered: Vec<ClassCensusEntry> = roster_reasons(&fixture, &census())
+                .into_iter()
+                .filter(|(_, _, reason)| reason.in_desktop_roster())
+                .map(|(entry, _, _)| entry)
+                .collect();
+            offered.sort_by_key(|entry| (entry.family, entry.registry_order));
+            offered
+                .into_iter()
+                .map(|entry| {
+                    let hit_die = roster_hit_die(&entry)
+                        .ok_or_else(|| format!("{}: offered with no hit die", entry.class_id))?;
+                    Ok(ClassRosterEntry {
+                        display_name: roster_display_name(&entry),
+                        family: entry.family,
+                        book: entry.books.first().cloned().unwrap_or_default(),
+                        hit_die,
+                        max_level: entry.max_level,
+                        id: entry.class_id,
+                    })
+                })
+                .collect()
+        })
+        .clone()
 }
 
 #[cfg(test)]
@@ -3568,5 +3733,90 @@ mod tests {
         // Negative control: an option no named class offers does not translate.
         assert!(carrier_pick_for_option("sorcerer", "advanced_class_guide:class_feature:eldritch_scion_spells").is_none());
         assert!(carrier_pick_for_option("wizard", "core_rulebook:class_feature:sorcerer_bloodline_draconic").is_none());
+    }
+
+    /// SD-36 F4a (acceptance F4.5, review finding 13): a census row the desktop roster leaves
+    /// out always carries a NAMED reason from the closed [`RosterReason`] set -- never a bare
+    /// boolean -- and the count per reason is the measured census. Measured 2026-09-26 over the
+    /// 137 census ids: offered 59, prestige 74, ex_state 4, not_computed 0, hit_die_absent 0.
+    /// §0.4's 7 hit-die-absent class RECORDS are not census ids at all (none carries a
+    /// chassis, `the_seven_hit_die_absent_records_have_no_chassis_at_all`), so they are
+    /// asserted absent from the census by id rather than present under `hit_die_absent`.
+    #[test]
+    fn no_computed_class_is_unoffered_without_a_named_reason() {
+        let fixture = load_sweep_fixture().expect("shared fixture loads");
+        let entries = census();
+        let rows = roster_reasons(&fixture, &entries);
+        assert_eq!(rows.len(), 137, "census id count moved off 137");
+
+        let mut by_reason: BTreeMap<RosterReason, Vec<String>> = BTreeMap::new();
+        for (entry, sweep, reason) in &rows {
+            by_reason.entry(*reason).or_default().push(entry.class_id.clone());
+            match reason {
+                RosterReason::Offered => {
+                    let sweep = sweep.as_ref().expect("an offered class was swept");
+                    assert!(sweep.computed() && !sweep.levels_computed.is_empty(), "{} offered but not Computed", entry.class_id);
+                    assert!(roster_hit_die(entry).is_some(), "{} offered with no hit die", entry.class_id);
+                    assert!(!entry.is_prestige && !is_ex_state(entry), "{} offered but prestige/Ex-*", entry.class_id);
+                }
+                RosterReason::NotComputed => {
+                    assert!(!sweep.as_ref().expect("swept").computed(), "{} named not_computed but is Computed", entry.class_id);
+                }
+                RosterReason::HitDieAbsent => {
+                    assert!(roster_hit_die(entry).is_none(), "{} named hit_die_absent but states one", entry.class_id);
+                }
+                RosterReason::Prestige => assert!(entry.is_prestige, "{}", entry.class_id),
+                RosterReason::ExState => assert!(is_ex_state(entry), "{}", entry.class_id),
+            }
+            assert_eq!(reason.in_desktop_roster(), *reason == RosterReason::Offered);
+        }
+        let count = |reason: RosterReason| by_reason.get(&reason).map_or(0, Vec::len);
+        let summary = format!("{by_reason:?}");
+        assert_eq!(count(RosterReason::Offered), 59, "offered: {summary}");
+        assert_eq!(count(RosterReason::Prestige), 74, "prestige: {summary}");
+        assert_eq!(count(RosterReason::ExState), 4, "ex_state: {summary}");
+        assert_eq!(count(RosterReason::NotComputed), 0, "not_computed: {summary}");
+        assert_eq!(count(RosterReason::HitDieAbsent), 0, "hit_die_absent: {summary}");
+        assert_eq!(
+            by_reason.get(&RosterReason::ExState).cloned().unwrap_or_default(),
+            vec!["class:ex_antipaladin", "class:ex_barbarian", "class:ex_inquisitor", "class:ex_paladin"],
+        );
+        for slug in [
+            "psychic_detective",
+            "gifted_blade",
+            "gifted_blade_marksman_power_list",
+            "unlocked_talent",
+            "sorcerer_cleric_arcane",
+            "vwarlock",
+            "vcabalist",
+        ] {
+            assert!(
+                !entries.contains_key(&format!("class:{slug}")),
+                "§0.4 hit-die-absent record `{slug}` is now a census id: it must carry a named roster reason"
+            );
+        }
+
+        // The roster the desktop reads is exactly the offered rows, grouped by family.
+        let roster = class_creation_roster().expect("roster builds");
+        let mut offered_ids: Vec<String> = by_reason.get(&RosterReason::Offered).cloned().unwrap_or_default();
+        let mut roster_ids: Vec<String> = roster.iter().map(|r| r.id.clone()).collect();
+        let families: Vec<ClassFamily> = roster.iter().map(|r| r.family).collect();
+        let mut sorted_families = families.clone();
+        sorted_families.sort();
+        assert_eq!(families, sorted_families, "roster is grouped by family");
+        offered_ids.sort();
+        roster_ids.sort();
+        assert_eq!(roster_ids, offered_ids);
+    }
+
+    /// An `ex_` id is an Ex-* state because its record is hidden, not because of its name.
+    #[test]
+    fn ex_state_reads_the_record_not_the_name() {
+        let entries = census();
+        assert!(is_ex_state(&entries["class:ex_paladin"]));
+        let mut renamed = entries["class:fighter"].clone();
+        assert!(!is_ex_state(&renamed));
+        renamed.class_id = "class:ex_fighter".to_string();
+        assert!(!is_ex_state(&renamed), "an ex_ id with no hidden record is not an Ex-* state");
     }
 }

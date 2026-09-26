@@ -57,7 +57,7 @@ use std::path::PathBuf;
 use std::process::Command;
 
 use codex::rules_core::character_input::{CharacterInput, load_character_input_fixture};
-use codex::rules_core::class_seeds::{FIXTURE_RELATIVE_PATH, input_for};
+use codex::rules_core::class_seeds::{FIXTURE_RELATIVE_PATH, canonical_seeds_for, input_for};
 use codex::rules_core::pilot_compute::{HeadlessReceiptStatus, build_pilot_headless_receipt};
 use codex::rules_core::rules_tables::acg::AcgClassId;
 use codex::rules_core::rules_tables::apg::ApgClassId;
@@ -87,6 +87,11 @@ struct ClassState {
     levels_computed: Vec<u8>,
     levels_blocked: Vec<u8>,
     blocking: Vec<BlockingDiagnostic>,
+    /// SD-36 F4a: every canonical choice seed the sweep applied
+    /// (`class_seeds::canonical_seeds_for`, the one seed table the app's
+    /// `compose_character_input` also imports), with the first level it is
+    /// applied at -- so the dump states the posture it measured.
+    seeds: Vec<(String, String, u8)>,
 }
 
 /// Lowercase corpus name for a CRB class. `ApgClassId`/`AcgClassId` already
@@ -116,8 +121,14 @@ fn state_for(fixture: &CharacterInput, class_name: &str, book: &'static str) -> 
     // Preserves first-seen diagnostic order rather than sorting, so the
     // dashboard reads the engine's own emission order.
     let mut blocking: Vec<BlockingDiagnostic> = Vec::new();
+    let mut seeds: Vec<(String, String, u8)> = Vec::new();
 
     for level in 1..=MAX_LEVEL {
+        for choice in canonical_seeds_for(class_name, level).0 {
+            if !seeds.iter().any(|(set, selection, _)| *set == choice.choice_set_id && *selection == choice.selection_id) {
+                seeds.push((choice.choice_set_id, choice.selection_id, level));
+            }
+        }
         let input = input_for(fixture, class_name, level);
 
         // A panic inside the compute pipeline is itself a real, reportable
@@ -187,6 +198,7 @@ fn state_for(fixture: &CharacterInput, class_name: &str, book: &'static str) -> 
         levels_computed,
         levels_blocked,
         blocking,
+        seeds,
     }
 }
 
@@ -264,6 +276,15 @@ fn main() {
                 "computed_at_level_1": s.computed_at_level_1,
                 "levels_computed": s.levels_computed,
                 "levels_blocked": s.levels_blocked,
+                "canonical_seeds": s
+                    .seeds
+                    .iter()
+                    .map(|(set, selection, from_level)| serde_json::json!({
+                        "choice_set_id": set,
+                        "selection_id": selection,
+                        "from_level": from_level,
+                    }))
+                    .collect::<Vec<_>>(),
                 "blocking_diagnostics": s
                     .blocking
                     .iter()

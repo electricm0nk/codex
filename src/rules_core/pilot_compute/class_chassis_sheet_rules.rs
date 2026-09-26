@@ -464,6 +464,23 @@ pub fn skill_ranks_per_level_from_package(class_slug: &str) -> Option<(u8, Strin
     read(class_slug).or_else(|| read(package.base_class_of(class_slug)?))
 }
 
+/// SD-36 F4a: a class's hit die read from its converted class principal's `StatBlock "Hit die"`
+/// row in the process-wide package -- the same row [`ClassChassis::hit_die`] reads, whether or not
+/// the record is chassis-bearing (the CRB Monk states `d8` on a principal whose progressions
+/// degraded to text), and, for a class-selection class that declares no class line of its own,
+/// from the base class it is taken on. `Some((size, rule id read))`; `None` when neither principal
+/// states the row -- never a fabricated die.
+pub fn hit_die_from_package(class_slug: &str) -> Option<(u8, String)> {
+    let package = crate::rules_core::sheet_rule_package::package().as_ref().ok()?;
+    let read = |slug: &str| {
+        let id = package.find("class", slug)?;
+        let rule = package.rule(id)?;
+        let die = stat_block_prose_text(rule, "Hit die").and_then(|text| parse_die_size(&text))?;
+        Some((die, id.clone()))
+    };
+    read(class_slug).or_else(|| read(package.base_class_of(class_slug)?))
+}
+
 /// Builds one class's chassis from its converted rule file's rows, or `None`
 /// when the file is not a chassis-bearing class record.
 fn chassis_from_rules(book: &str, slug: &str, rules: &[SheetRule]) -> Option<ClassChassis> {

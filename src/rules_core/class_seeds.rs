@@ -57,11 +57,17 @@ pub const COMMONER_CANONICAL_WEAPON: &str = "weapon:Club";
 ///
 /// A class name this table does not recognize (most of the untabled
 /// exotic/CRB-NPC/Ultimate Combat classes F0b's census sweeps for the first
-/// time) gets no seed at all (`(Vec::new(), Vec::new())`) -- the same bare
-/// posture `compose_character_input` itself falls back to for a class it
-/// has no canonical-choice block for. This function never invents a seed
-/// for a class `pf1_adapter.rs` does not already seed.
-pub fn canonical_seeds_for(class_name: &str) -> (Vec<SelectedChoice>, Vec<SpellSelection>) {
+/// time) gets no seed at all (`(Vec::new(), Vec::new())`).
+///
+/// **The single source (SD-36 F4a, acceptance F4.3).** This is the ONE
+/// definition of the class seeds: `pf1_adapter.rs`'s `compose_character_input`
+/// (creation) and `apply_level_up` (a class added at level-up) import it, as do
+/// `v06_class_state_dump` and the census; no caller keeps a copy of its own.
+/// `class_level` is the level the class is held at: a seed whose pick the class
+/// only gains at a later level (the Barbarian's first rage power, 2nd level) is
+/// returned only once the class reaches that level, never a pick the class does
+/// not have yet.
+pub fn canonical_seeds_for(class_name: &str, class_level: u8) -> (Vec<SelectedChoice>, Vec<SpellSelection>) {
     let choice = |set: &str, selection: &str| SelectedChoice {
         choice_set_id: set.to_owned(),
         selection_id: selection.to_owned(),
@@ -234,13 +240,28 @@ pub fn canonical_seeds_for(class_name: &str) -> (Vec<SelectedChoice>, Vec<SpellS
             Vec::new(),
         ),
         "inquisitor" => (vec![choice("choice:inquisitor_domain", "domain:good")], Vec::new()),
+        // SD-36 F4a: the Battle Mystery + Battlecry revelation the desktop has seeded since
+        // SD31-E4-F2-002 (`OPEN-ISSUES.md` row 185), replacing the Life Mystery this table
+        // still carried -- the two had drifted apart, which a single source ends.
         "oracle" => (
             vec![
-                choice("choice:oracle_mystery", "mystery:life"),
+                choice("choice:oracle_mystery", "mystery:battle"),
+                choice("choice:oracle_revelation", "revelation:battlecry"),
                 choice("choice:oracle_curse", "curse:clouded_vision"),
             ],
             Vec::new(),
         ),
+        // pf1_adapter.rs: the Barbarian / Unchained Barbarian Rage Power seed (Superstition, a
+        // real corpus rage power both classes' pools name under the same slug). Each class
+        // gains its first rage power at 2nd level ("Starting at 2nd level, a barbarian gains a
+        // rage power"), so below that the class has no pick to record. Two DISTINCT choice
+        // families (`decisions.md` §10 AMENDMENT), never folded together.
+        "barbarian" if class_level >= 2 => {
+            (vec![choice("choice:barbarian_rage_power", "rage_power:superstition")], Vec::new())
+        }
+        "unchained_barbarian" if class_level >= 2 => {
+            (vec![choice("choice:unchained_barbarian_rage_power", "rage_power:superstition")], Vec::new())
+        }
         // pf1_adapter.rs: the Commoner Path A seed (SD-36 F1c-3, D6). The Commoner is
         // proficient with ONE Simple weapon of the player's choice; the converted record links
         // that pick to its options, and the sheet prints the weapon recorded here.
@@ -322,7 +343,7 @@ pub fn input_for(fixture: &CharacterInput, class_name: &str, level: u8) -> Chara
         level,
     }];
 
-    let (choices, spells) = canonical_seeds_for(class_name);
+    let (choices, spells) = canonical_seeds_for(class_name, level);
     input.chosen.selected_choices.extend(choices);
     input.chosen.spells_selected.extend(spells);
     input
