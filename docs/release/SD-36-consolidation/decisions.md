@@ -289,8 +289,8 @@ per-doc breakdown recorded in `release-notes.md`'s "Architecture-docs rewrite (D
 > *"Close the class gaps INSIDE SD-36 before PR #393 merges."*
 
 **Decision.** A permanent census instrument (`tests/zz_class_census.rs`, run once, then deleted —
-`docs/release/SD-36-consolidation/artifacts/epic-f/docs-truth/class-census.md`, generated
-2026-09-20 against `tranche/16` @ `424e93e93c`) measured the engine's true class coverage,
+first run 2026-09-20 against `tranche/16` @ `424e93e93c`, report never committed; the committed F0
+baseline census, same 42 of 135, is `docs/release/SD-36-consolidation/artifacts/epic-f/census-f0.json`, generated 2026-09-21 by `class_census`) measured the engine's true class coverage,
 corpus-wide across every registry `compute_class_chassis`'s dispatch chain reads: **42 of 135**
 distinct class ids reach `HeadlessReceiptStatus::Computed` at every swept level. The prior
 "31 of 31" / "42 of 42" figures quoted elsewhere in this bundle's own docs were each true of a

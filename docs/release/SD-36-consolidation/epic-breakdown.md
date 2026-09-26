@@ -104,8 +104,9 @@ Total: 55,827 lines.
 
 Measured baseline: **42 of 135** class ids reach `HeadlessReceiptStatus::Computed` at every
 swept level, corpus-wide, across every registry the engine's dispatch chain reads
-(`docs/release/SD-36-consolidation/artifacts/epic-f/docs-truth/class-census.md`, generated
-2026-09-20 against `424e93e93c`). Target: **135 of 135**. Full plan, every command, every
+(first measured 2026-09-20 against `424e93e93c` by a one-off test whose report was never
+committed; the committed F0 baseline census, same 42 of 135, is
+`docs/release/SD-36-consolidation/artifacts/epic-f/census-f0.json`, generated 2026-09-21 by `class_census`, committed in `258301b9bf`). Target: **135 of 135**. Full plan, every command, every
 file:line, RED-first tests, flip lists, risk, size and order:
 `docs/release/SD-36-consolidation/epic-f-class-completion.md`.
 

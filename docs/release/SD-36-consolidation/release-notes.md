@@ -74,7 +74,7 @@ F5.3.
 
 ## Measured baselines (at Epic C2 closure, 2026-09-20 — kept as recorded)
 
-| Figure | Before (SD-35 cut, 2026-09-15) | After (current HEAD `5ee77f8d85` + uncommitted C2.1/C2.2 rewrite) | Command | Change / why |
+| Figure | Before (SD-35 cut, 2026-09-15) | After (HEAD `5ee77f8d85` + the then-uncommitted C2.1/C2.2 rewrite, since landed in `909942637d`) | Command | Change / why |
 |---|---|---|---|---|
 | src lines, root | 465,469 | **337,790** | `find src -name '*.rs' \| xargs cat \| wc -l` | down 127,679: Epic B deleted 55,827 lines outright; Epic A moved `src/pcgen_import`/`src/oracle_validation` (and their `#[cfg(test)]` modules) into `crates/codex-ingest`, which is why this row is NOT the whole story — see the next row |
 | src lines, `crates/codex-ingest` | 0 (crate did not exist) | **81,177** | `find crates/codex-ingest/src -name '*.rs' \| xargs cat \| wc -l` | new crate; Epic A moves, not new code (`technical-design.md §2`) |
@@ -164,30 +164,31 @@ half of each genuinely a multi-cycle infrastructure item), 4 deferred with a nam
 
 ## Architecture-docs rewrite (D1)
 
-`docs/architecture/README.md`'s own "Last verified" header now reads **2026-09-20 against
-`tranche/16` (`b22ea9e113`, SD-36 Epic D)**. Nine existing docs updated for topics this bundle
-touched (boundary, rules-engine, desktop-app, status, testing, conventions, corpus-ingest,
-homebrew-and-oracle, overview, persistence, release-pipeline, rules-data-tables), one doc deleted
-(`support-state-matrix.md`, retired with Epic B's own machinery), two new docs added
-(`getting-started.md`, `glossary.md`). The rewrite itself is entirely uncommitted (HEAD is still
-`b22ea9e113`), so the committed-range diffstat undercounts it by two full orders of magnitude — it
-measures nothing of this pass. The real figure, working-tree diff against the tranche/15 cut:
+**Landed.** The D1 rewrite is committed in `4369b61a1d` (2026-09-20, `docs(sd36,epic-d): complete
+architecture docs rewrite ...`): 15 files, 4,239 insertions, 2,576 deletions (`git show --stat
+4369b61a1d`), including the two new docs `getting-started.md` (343 lines) and `glossary.md`
+(275 lines). `tests/support/paths.rs` (Epic C2.3) landed in `45ef7e2327`. Later passes, including
+Epic F5a (`a857be8959`), edited `docs/architecture/**` again; each file's own "Last verified"
+header names its current pass.
 
-```
-$ git diff --stat 50572eebad -- docs/architecture/
- 14 files changed, 3639 insertions(+), 2763 deletions(-)
-```
+The paragraph below is the record written at C2 time, before that commit, kept as written except
+that its tense is past:
 
-That command's own file list still misses the two brand-new docs — `git diff --stat` only shows
-tracked-file deltas, and `getting-started.md` / `glossary.md` are untracked (`git status
---porcelain docs/architecture/` shows both `??`), 343 and 275 lines respectively (`wc -l`). Adding
-them: **16 files touched, 4,257 lines added, 2,763 removed**, net +1,494, none of it yet committed.
-
-This is a completed, uncommitted-as-of-this-writing pass; do not edit `docs/architecture/**`
-further from this bundle — link to it (as this document does) rather than duplicating its content.
-Stage and commit the two new docs by name alongside the modified ones when this bundle lands
-(`git add docs/architecture/getting-started.md docs/architecture/glossary.md`) — neither is
-gitignored, both are simply pending their own commit like `tests/support/paths.rs` (Epic C2.3).
+> `docs/architecture/README.md`'s "Last verified" header then read **2026-09-20 against
+> `tranche/16` (`b22ea9e113`, SD-36 Epic D)**. The pass updated the existing docs for topics this
+> bundle touched (boundary, rules-engine, desktop-app, status, testing, conventions,
+> corpus-ingest, homebrew-and-oracle, overview, persistence, release-pipeline, rules-data-tables),
+> deleted one (`support-state-matrix.md`, retired with Epic B's own machinery) and added two
+> (`getting-started.md`, `glossary.md`). At that writing the rewrite was uncommitted (HEAD was
+> `b22ea9e113`), so it was measured as a working-tree diff against the tranche/15 cut:
+>
+> ```
+> $ git diff --stat 50572eebad -- docs/architecture/
+>  14 files changed, 3639 insertions(+), 2763 deletions(-)
+> ```
+>
+> That diff missed the two new docs, which were untracked then (343 and 275 lines, `wc -l`).
+> Adding them gave **16 files touched, 4,257 lines added, 2,763 removed**, net +1,494.
 
 ---
 
@@ -214,8 +215,8 @@ gitignored, both are simply pending their own commit like `tests/support/paths.r
    (branch-promotion test moved), C2.5 (both oracle test sets — 21 in root `tests/`, 31 in
    `crates/codex-ingest/tests` — re-run once against the real PCGen corpus, 52/52 green) and C2.6
    (`scripts/verify-baselines.env` C2D block re-synced) were already closed in an earlier pass. All
-   of C2.1–C2.6 are now done; nothing of Epic C2 remains open. (Uncommitted as of this docs pass —
-   this cycle's brief does not authorize a commit; the rewrite lands in the commit that follows.)
+   of C2.1–C2.6 are now done; nothing of Epic C2 remains open. (Uncommitted when this entry was
+   written; the rewrite landed in `909942637d`, and `tests/support/paths.rs` in `45ef7e2327`.)
 3. **Settled-only loader** (named in the Epic D brief as a known follow-up; not otherwise detailed
    in this bundle's own package documents at time of writing — carry forward to the next STC
    scoping pass rather than left unstated here).
@@ -274,3 +275,9 @@ formula (FS-15, a book-cited override path); 3 prestige classes whose proficienc
 mechanism G (diabolist and rivethun_emissary still compute in their fighter carrier mix, whose
 weapon union the fighter decides; exalted is one of the FS-15 six); unresolved references
 6,252 by mechanism (B 63, D 2,646, E 2,764, F 779; FS-10..FS-13); FS-14, FS-18, FS-19, FS-21, FS-22, FS-23.
+Desktop remainders on the 59-class roster (F4c receipt §6): hit points `Unknown` for 5 of 59 (monk,
+unchained_barbarian, unchained_monk, unchained_rogue, unchained_summoner; no chassis record, so
+`hitPointsDie` is null; FS-24, behind FS-23); no class-skill list for 47 of 59 (`CLASS_SKILLS` is a
+12-row hand table; FS-25, read the converted `CSKILL` grants); caster level and the Martial weapon
+tier still read the hand tables `CASTER_CLASSES` (6 ids) and `MARTIAL_WEAPON_CLASSES` (5 ids) in
+`characterProgression.ts` (FS-26).

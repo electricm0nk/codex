@@ -1,7 +1,7 @@
 # Desktop App
 
 > Scope: How the Tauri desktop shell is built, how it talks to the Rust backend, and how its frontend surfaces are organized.
-> Last verified: **2026-09-26 against `tranche/16`, HEAD `e70a8745ed`** (SD-36 Epic F5: the class roster from the engine, level-up with prestige classes, and the command count re-derived — **77**, the two roster commands SD-36 Epic F4 added). Earlier pass: **2026-09-20 against `tranche/16`, HEAD `424e93e93c`** (SD-36 consolidation, architecture-docs truth-up; capability-claims pass). Full re-derivation of the command inventory (**75** registered commands, re-counted directly from `generate_handler![...]`), the `CharacterHubPage` Mode machine, the boundary layer, the corpus-root resolution chain, the ui-smoke harness, and the character-mutation surfaces added since the 2026-09-15 pass (equipment purchase/attach, feat/trait selection, skill allocation, bio/money/HP sidecars, DM Toolkit). Several claims in the prior pass were stale and are corrected here (see "Corrections since the last pass" below) rather than annotated as deprecated. This pass additionally re-audits every capability/limitation claim in the file against a fresh instrument run and the code, correcting the "Create" section's Fighter-1-3-only claim (see §"Character flow" — the create-flow class picker offers all 31 classes the engine computes end to end, with a precisely-named 11-class UI-surface gap, not the single-class ceiling this doc previously stated).
+> Last verified: **2026-09-26 against `tranche/16`, HEAD `e70a8745ed`** (SD-36 Epic F5: the class roster from the engine, level-up with prestige classes, and the command count re-derived — **77**, the two roster commands SD-36 Epic F4 added). Earlier pass: **2026-09-20 against `tranche/16`, HEAD `424e93e93c`** (SD-36 consolidation, architecture-docs truth-up; capability-claims pass). Full re-derivation of the command inventory (**75** registered commands, re-counted directly from `generate_handler![...]`), the `CharacterHubPage` Mode machine, the boundary layer, the corpus-root resolution chain, the ui-smoke harness, and the character-mutation surfaces added since the 2026-09-15 pass (equipment purchase/attach, feat/trait selection, skill allocation, bio/money/HP sidecars, DM Toolkit). Several claims in the prior pass were stale and are corrected here (see "Corrections since the last pass" below) rather than annotated as deprecated. This pass additionally re-audits every capability/limitation claim in the file against a fresh instrument run and the code, correcting the "Create" section's Fighter-1-3-only claim (at that pass the create-flow class picker was a hardcoded list of 31 classes; SD-36 Epic F4 replaced it with the engine-served roster — see §"Character flow" for the current roster count).
 > Maintenance: updated at SD closure — see [README.md](./README.md) §Maintenance contract
 
 ## Corrections since the last pass
@@ -417,9 +417,18 @@ states a hit die (63 of 63 non-prestige Computed, less the 4 Ex-* states, census
 grouped by family (`<optgroup>`), each with its own `max_level`. Census `roster_offered=59`
 (`cargo run --locked -j 8 --bin class_census -- --json <path>`, 2026-09-26). While the roster loads,
 nothing is offered; if the command fails, the form prints `class roster unavailable: <diagnostic>`
-and falls back to the compiled-in 31-row `CLASS_OPTIONS_FALLBACK` (`characterHubModel.ts:409`).
+and falls back to the compiled-in 31-row `CLASS_OPTIONS_FALLBACK` (`characterHubModel.ts:421`).
 The census sweep holds race fixed to a single Human fixture, so "every level" is proven, "every race"
 is not proven by this instrument — see [status.md](./status.md) §Posture for race-creation breadth.
+
+Offered is not the same as every sheet line computed. Three frontend remainders stay open on the
+59 offered classes (SD-36 F4c receipt §6; [status.md](./status.md) §"Known gaps and stubs"):
+hit points print `Unknown` for **5 of 59** (monk, unchained_barbarian, unchained_monk,
+unchained_rogue, unchained_summoner — no chassis record, so the roster's `hitPointsDie` is null;
+FS-24); `skillsModel.ts`'s `CLASS_SKILLS` is a 12-row hand table, so **47 of 59** have no
+class-skill list and are named on the Skills panel (FS-25); and `characterProgression.ts` still
+decides caster level from `CASTER_CLASSES` (6 ids) and the Martial weapon tier from
+`MARTIAL_WEAPON_CLASSES` (5 ids), hand tables rather than the class records (FS-26).
 
 **Level Up** (`LevelUpDialog.tsx`) reads `list_level_up_class_options`: advance a held class, add a
 roster base class, or add any census prestige class. Prestige classes are always offered; each

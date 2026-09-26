@@ -183,7 +183,7 @@ remainder is not "Core Rulebook only" — it spans untabled exotic classes block
 missing weapon-proficiency answer, 56 chassis-bearing prestige classes with no gate arm checking
 their chassis at all, and a corpus-wide link defect that drops class-feature grants (including
 proficiency, class skills, languages) before the converted path ever sees them. Full measurement:
-`docs/release/SD-36-consolidation/artifacts/epic-f/docs-truth/class-census.md`; full plan:
+`docs/release/SD-36-consolidation/artifacts/epic-f/census-f0.json` (F0 baseline census); full plan:
 `epic-f-class-completion.md`.
 
 ### Solution — six architectural pieces, each read-not-invent (paper-sheet doctrine)
