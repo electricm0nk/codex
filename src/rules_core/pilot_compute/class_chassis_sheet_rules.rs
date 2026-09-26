@@ -173,6 +173,22 @@ impl ClassChassis {
         !self.tags.iter().any(|t| t == "Monster")
     }
 
+    /// Whether `other` states the same chassis as `self` on every field a sheet total reads: the
+    /// level ceiling, hit die, skill ranks per level, each save's shape, and the base attack bonus
+    /// and every exact save value at every level. Book, slug, display name and the class-level
+    /// variable's spelling (a redacted printing carries a codex-neutral one) are not the chassis.
+    /// SD-36 F3 polish P3: two printings of one slug are interchangeable only when this holds.
+    pub fn same_chassis(&self, other: &ClassChassis) -> bool {
+        self.max_level == other.max_level
+            && self.hit_die == other.hit_die
+            && self.skill_ranks_per_level == other.skill_ranks_per_level
+            && (0..3).all(|i| self.save_shape(i) == other.save_shape(i))
+            && (1..=self.max_level).all(|level| {
+                self.row_at(level) == other.row_at(level)
+                    && (0..3).all(|i| self.save_value_exact(i, level) == other.save_value_exact(i, level))
+            })
+    }
+
     /// This class's chassis row at `level`, or `None` when `level` is outside
     /// `1..=max_level` or a progression does not evaluate to a whole number
     /// that fits.
@@ -444,6 +460,23 @@ pub fn skill_ranks_per_level_from_package(class_slug: &str) -> Option<(u8, Strin
         let rule = package.rule(id)?;
         let ranks = stat_block_prose_text(rule, "Skill ranks per level").and_then(|text| parse_skill_ranks(&text))?;
         Some((ranks, id.clone()))
+    };
+    read(class_slug).or_else(|| read(package.base_class_of(class_slug)?))
+}
+
+/// SD-36 F4a: a class's hit die read from its converted class principal's `StatBlock "Hit die"`
+/// row in the process-wide package -- the same row [`ClassChassis::hit_die`] reads, whether or not
+/// the record is chassis-bearing (the CRB Monk states `d8` on a principal whose progressions
+/// degraded to text), and, for a class-selection class that declares no class line of its own,
+/// from the base class it is taken on. `Some((size, rule id read))`; `None` when neither principal
+/// states the row -- never a fabricated die.
+pub fn hit_die_from_package(class_slug: &str) -> Option<(u8, String)> {
+    let package = crate::rules_core::sheet_rule_package::package().as_ref().ok()?;
+    let read = |slug: &str| {
+        let id = package.find("class", slug)?;
+        let rule = package.rule(id)?;
+        let die = stat_block_prose_text(rule, "Hit die").and_then(|text| parse_die_size(&text))?;
+        Some((die, id.clone()))
     };
     read(class_slug).or_else(|| read(package.base_class_of(class_slug)?))
 }

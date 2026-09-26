@@ -1183,6 +1183,13 @@ impl SheetRulePackage {
         self.by_kind_slug.get(kind).and_then(|m| m.get(slug)).map_or(&[], Vec::as_slice)
     }
 
+    /// The rule with this slug in every kind that carries it (SD-36 F4pre), one per kind: the
+    /// [`SheetRulePackage::find`] printing (`core_rulebook`, else the first book id), never one
+    /// per printing -- a domain three books print (Scalykind) is one option.
+    pub fn find_in_every_kind(&self, slug: &str) -> Vec<&RuleId> {
+        self.by_kind_slug.keys().filter_map(|kind| self.find(kind, slug)).collect()
+    }
+
     /// Every principal rule (no `#` sibling suffix) of `kind`, plus each one's siblings.
     pub fn rules_of_kind<'a>(&'a self, kind: &'a str) -> impl Iterator<Item = &'a SheetRule> + 'a {
         self.rules.values().filter(move |r| split_rule_id(&r.id).1 == kind)
@@ -1245,6 +1252,42 @@ pub struct CharacterFacts {
     pub class_tags: BTreeSet<Tag>,
     pub gender: Option<Tag>,
     pub age_category: Option<Tag>,
+    /// SD-36 F3p: every feat the character records WITH its sub-choice, as `(base feat slug,
+    /// option words)` ([`feat_sub_choices`]). [`CharacterFacts::with_linked_picks`] records each
+    /// under the feat's converted chooser, so a gate on the feat's option reads the pick.
+    pub feat_sub_choices: Vec<(String, String)>,
+    /// SD-36 F4 merge-readiness blocker 1: the namespace each legacy pick's selection id names,
+    /// `choice id -> option id -> namespace` (`choice:cleric_domain -> air -> domain` for
+    /// `domain:air`; the segment just before the member). [`link_path_a_picks`] reads it: a bare
+    /// `<member>` names an option only of the kind its namespace names. Filled by
+    /// [`CharacterFacts::record_pick`].
+    pub pick_namespaces: BTreeMap<ChoiceId, BTreeMap<OptionId, String>>,
+}
+
+/// SD-36 F3p: every feat `chosen` records together with its sub-choice, as `(base feat slug, option
+/// words)`. ONE rule over the two shapes a pick takes: a selected feat `<Base> (<Option>)` (the
+/// catalog picker's `"Weapon Focus (Longbow)"`), and a selected choice whose selection id is
+/// `feat:<base>:<kind>:<option>` (`feat:weapon_focus:weapon:longsword`). A feat recorded without
+/// one contributes nothing.
+pub fn feat_sub_choices(chosen: &crate::rules_core::character_input::ChosenCharacterState) -> Vec<(String, String)> {
+    let mut out: Vec<(String, String)> = Vec::new();
+    for feat in &chosen.selected_feats {
+        // The FIRST parenthesis opens the option (`Exotic Weapon Proficiency (Waraxe (Dwarven))`).
+        if let Some((base, option)) = feat.split_once('(')
+            && let Some(option) = option.trim_end().strip_suffix(')')
+        {
+            out.push((id_slug(base.trim()), option.trim().to_string()));
+        }
+    }
+    for choice in &chosen.selected_choices {
+        let parts: Vec<&str> = choice.selection_id.split(':').collect();
+        if let ["feat", base, _kind, option] = parts.as_slice() {
+            out.push((slug(base), (*option).to_string()));
+        }
+    }
+    out.sort();
+    out.dedup();
+    out
 }
 
 fn ability_index(a: Ability) -> usize {
@@ -1340,12 +1383,9 @@ impl CharacterFacts {
         {
             speeds.insert("Walk".to_string(), i64::from(speed.value));
         }
-        let mut choices: BTreeMap<ChoiceId, Vec<(OptionId, String)>> = BTreeMap::new();
+        let mut picks = CharacterFacts::default();
         for c in &chosen.selected_choices {
-            choices
-                .entry(c.choice_set_id.clone())
-                .or_default()
-                .push((id_slug(&c.selection_id), c.selection_id.rsplit(':').next().unwrap_or("").to_string()));
+            picks.record_pick(&c.choice_set_id, &c.selection_id);
         }
         CharacterFacts {
             level,
@@ -1366,9 +1406,27 @@ impl CharacterFacts {
             challenge_rating: 0,
             highest_spell_level: 0,
             master_level: 0,
-            choices,
+            choices: picks.choices,
+            pick_namespaces: picks.pick_namespaces,
             race,
+            feat_sub_choices: feat_sub_choices(chosen),
             ..CharacterFacts::default()
+        }
+    }
+
+    /// Record one selected choice `choice_set_id -> selection_id` (`choice:cleric_domain ->
+    /// domain:air`): the option is the selection's member slug ([`id_slug`], `air`), named by
+    /// its last segment (`air`), and the segment before it (`domain`) is kept as the pick's
+    /// namespace ([`CharacterFacts::pick_namespaces`]). A selection with no namespace
+    /// (`air`) records none.
+    pub fn record_pick(&mut self, choice_set_id: &str, selection_id: &str) {
+        let member = id_slug(selection_id);
+        self.choices
+            .entry(choice_set_id.to_owned())
+            .or_default()
+            .push((member.clone(), selection_id.rsplit(':').next().unwrap_or("").to_string()));
+        if let Some(namespace) = selection_id.rsplit(':').nth(1) {
+            self.pick_namespaces.entry(choice_set_id.to_owned()).or_default().insert(member, slug(namespace));
         }
     }
 }
@@ -1417,10 +1475,19 @@ impl HeldSeed {
                 .unwrap_or_else(|| classes.first().map(|(c, _)| c.clone()).unwrap_or_default());
             class_features.push((owner, e.id.clone()));
         }
+        // A feat recorded with its sub-choice (`"Weapon Focus (Longbow)"`) names the same converted
+        // record as `weapon_focus`: the seed carries both shapes, so the feat is held either way
+        // (SD-36 F3p; was local to `feat_prereqs::PrereqFacts::new`).
+        let mut feats: Vec<String> = chosen.selected_feats.iter().map(|f| id_slug(f)).collect();
+        for (base, _) in feat_sub_choices(chosen) {
+            if !feats.contains(&base) {
+                feats.push(base);
+            }
+        }
         HeldSeed {
             race: Some(id_slug(&chosen.race_id)),
             classes,
-            feats: chosen.selected_feats.iter().map(|f| id_slug(f)).collect(),
+            feats,
             traits: chosen.selected_traits.iter().map(|t| id_slug(t)).collect(),
             equipment: chosen.equipment_selections.iter().map(|e| id_slug(&e.item_id)).collect(),
             spells: chosen.spells_selected.iter().map(|s| id_slug(&s.spell_id)).collect(),
@@ -2243,6 +2310,30 @@ pub fn held_set(package: &SheetRulePackage, seed: &HeldSeed, facts: &CharacterFa
                 additions.push((id, e));
             }
         }
+        // SD-36 F4pre (FS-21): an option recorded under a choice the character holds is held
+        // when the choice's option set selects it (`offer_selects`) and its own gate includes --
+        // the pick PCGen applies (`BONUS:ABILITYPOOL`, `BONUS:DOMAIN|NUMBER`,
+        // `pool_link::link_pool_choices`). Choices whose members carry `Granter::Choice` edges
+        // (D8, F3c3, F3c4b) are held through those edges above; this reads the option set.
+        for (choice_id, picks) in &facts.choices {
+            let Some(chooser) = package.rule(choice_id) else { continue };
+            let Some(offer) = chooser.offers.as_ref().filter(|o| &o.id == choice_id) else { continue };
+            if !matches!(offer.from, OptionSet::Rules { .. } | OptionSet::Domains) || !held.holds(choice_id) || !offer_open(package, &held, facts, chooser) {
+                continue;
+            }
+            let via = held.rules.get(choice_id).cloned().unwrap_or_default();
+            for (option, _) in picks {
+                if held.rules.contains_key(option) || additions.iter().any(|(a, _)| a == option) {
+                    continue;
+                }
+                let Some(rule) = package.rule(option) else { continue };
+                let ctx = EvalContext { holder_class: via.holder_class.clone(), spell_level: via.spell_level.unwrap_or(0), item_tags: Vec::new() };
+                let self_ev = Evaluator::new(package, &held, facts, ctx).evaluating(option);
+                if offer_selects(offer, rule) && self_ev.applies(&offer_requires(offer)).includes() && self_ev.applies(&rule.applies).includes() {
+                    additions.push((option.clone(), HeldRule { via: Some(choice_id.clone()), ..via.clone() }));
+                }
+            }
+        }
         for (id, e) in additions {
             add(&mut held, &id, e);
         }
@@ -2271,6 +2362,44 @@ pub fn held_set(package: &SheetRulePackage, seed: &HeldSeed, facts: &CharacterFa
         }
     }
     held
+}
+
+/// SD-36 F4pre: whether `offer`'s option set names `rule` as one of its options -- a principal
+/// rule (no `#` sibling) of the offered pool carrying every offered tag (`Rules`, the PCGen
+/// ability-category member test, `TYPE` matched without case), or a domain (`Domains`). The
+/// set's own `requires` gate is read separately ([`offer_requires`]).
+pub fn offer_selects(offer: &Choice, rule: &SheetRule) -> bool {
+    if rule.id.contains('#') {
+        return false;
+    }
+    match &offer.from {
+        OptionSet::Rules { pool, tags, .. } => {
+            &rule.pool == pool && tags.iter().all(|t| rule.tags.iter().any(|o| o.eq_ignore_ascii_case(t)))
+        }
+        OptionSet::Domains => split_rule_id(&rule.id).1 == "domain",
+        _ => false,
+    }
+}
+
+/// SD-36 F4 merge-readiness blocker 1: whether the held `chooser`'s own offer is open -- its
+/// count evaluates above 0 for this character. A chooser whose count is 0 offers nothing (the
+/// paladin's `Paladin (domains)` count prints +0). A count the evaluator cannot settle is not
+/// assumed open or closed: it reads as the evaluator returns it.
+pub fn offer_open(package: &SheetRulePackage, held: &HeldSet, facts: &CharacterFacts, chooser: &SheetRule) -> bool {
+    let Some(offer) = chooser.offers.as_ref() else { return false };
+    let via = held.rules.get(&chooser.id).cloned().unwrap_or_default();
+    let ctx = EvalContext { holder_class: via.holder_class, spell_level: via.spell_level.unwrap_or(0), item_tags: Vec::new() };
+    let n = Evaluator::new(package, held, facts, ctx).evaluating(&chooser.id).expr(&offer.count);
+    n.num > 0
+}
+
+/// The condition an offered option must meet besides membership (`OptionSet::Rules.requires`;
+/// `Always` for every other set).
+pub fn offer_requires(offer: &Choice) -> Applies {
+    match &offer.from {
+        OptionSet::Rules { requires, .. } => requires.clone(),
+        _ => Applies::Always,
+    }
 }
 
 /// SD-36 F3c4: a Path-A pick recorded in the legacy `choice:<pool>` id space
@@ -2332,6 +2461,41 @@ pub fn link_path_a_picks(package: &SheetRulePackage, held: &HeldSet, facts: &Cha
                     }
                 }
             }
+            // SD-36 F4pre: no pick-row option answers, so the pick names the option itself --
+            // a rule whose slug is `<member>` or `<pool>_<member>` (the oracle's
+            // `<Category> ~ <Member>` key) that a choice the character holds offers
+            // ([`offer_selects`]): `domain:air` under the cleric's domain count,
+            // `Shaman Spirit ~ Battle` under `Shaman ~ Spirit`'s pool pick.
+            //
+            // Merge-readiness blocker 1: the bare `<member>` names an option only of the kind
+            // the pick's own namespace names (`domain:air` -> kind `domain`;
+            // `ability:strength` never names `domain:strength`), and a chooser whose count
+            // evaluates to 0 offers nothing ([`offer_open`]).
+            if found.is_empty() {
+                let offered: Vec<&SheetRule> = held
+                    .rules
+                    .keys()
+                    .filter_map(|id| package.rule(id))
+                    .filter(|r| r.offers.as_ref().is_some_and(|o| o.id == r.id && matches!(o.from, OptionSet::Rules { .. } | OptionSet::Domains)))
+                    .filter(|r| offer_open(package, held, facts, r))
+                    .collect();
+                let namespace = facts.pick_namespaces.get(choice_set_id).and_then(|m| m.get(member));
+                let bare: Vec<&RuleId> = package
+                    .find_in_every_kind(member)
+                    .into_iter()
+                    .filter(|id| namespace.is_some_and(|ns| split_rule_id(id).1 == ns))
+                    .collect();
+                for option_id in bare.into_iter().chain(package.find_in_every_kind(&record_slug)) {
+                    {
+                        let Some(option) = package.rule(option_id) else { continue };
+                        for chooser in &offered {
+                            if chooser.offers.as_ref().is_some_and(|o| offer_selects(o, option)) {
+                                found.insert((chooser.id.clone(), option_id.clone()));
+                            }
+                        }
+                    }
+                }
+            }
             if found.len() == 1 {
                 let (chooser, option) = found.into_iter().next().expect("len 1");
                 out.push(LinkedPick { choice_set_id: choice_set_id.clone(), member: member.clone(), chooser, option, option_held: false });
@@ -2373,6 +2537,20 @@ impl CharacterFacts {
             let entry = facts.choices.entry(link.chooser.clone()).or_default();
             if !entry.iter().any(|(o, _)| o == &link.option) {
                 entry.push((link.option.clone(), link.option.clone()));
+            }
+        }
+        // SD-36 F3p: a feat recorded with its sub-choice records that option under the feat's
+        // converted chooser (the feat record whose `offers.id` is its own id) -- the key an option
+        // gate (`Applies::Chosen`) and the feat's own `Chosen` target read.
+        for (base, option) in &self.feat_sub_choices {
+            let Some(id) = package.find("feat", base) else { continue };
+            if package.rule(id).and_then(|r| r.offers.as_ref()).is_none_or(|o| &o.id != id) {
+                continue;
+            }
+            let option_id = slug(option);
+            let entry = facts.choices.entry(id.clone()).or_default();
+            if !entry.iter().any(|(o, _)| o == &option_id) {
+                entry.push((option_id, option.clone()));
             }
         }
         facts

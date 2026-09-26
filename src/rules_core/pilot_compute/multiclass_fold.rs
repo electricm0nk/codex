@@ -84,33 +84,59 @@ pub(crate) fn isolated_input(input: &CharacterInput, class_level: &CharacterClas
     isolated
 }
 
-/// Every chassis-bearing converted class record in every book, keyed by slug (first
-/// book in directory order wins; the three slugs two books share are all prestige
-/// classes [`generic_class_chassis::record`] answers first).
+/// Every chassis-bearing converted class record in every book, keyed by slug, one answer per
+/// slug by [`resolve_printings`] (SD-36 F3 polish P3: never "the alphabetically-first book wins").
 fn all_book_records() -> &'static BTreeMap<String, ClassChassis> {
     static TABLE: OnceLock<BTreeMap<String, ClassChassis>> = OnceLock::new();
     TABLE.get_or_init(|| {
-        let root = crate::support::paths::repo_root().join("data/sheet_rules");
-        let mut books: Vec<String> = std::fs::read_dir(&root)
-            .map(|entries| {
-                entries
-                    .flatten()
-                    .filter(|e| e.path().join("class").is_dir())
-                    .filter_map(|e| e.file_name().to_str().map(str::to_owned))
-                    .collect()
-            })
-            .unwrap_or_default();
-        books.sort();
-        let mut out = BTreeMap::new();
-        for book in &books {
-            for ((_, slug), chassis) in class_chassis_sheet_rules::records(&[book.as_str()]) {
-                if chassis.is_conventional() {
-                    out.entry(slug).or_insert(chassis);
-                }
+        printings_by_slug()
+            .into_iter()
+            .filter_map(|(slug, printings)| resolve_printings(printings).map(|chassis| (slug, chassis)))
+            .collect()
+    })
+}
+
+/// Every conventional chassis-bearing class record in every book, grouped by slug (each group in
+/// book-directory order).
+pub(crate) fn printings_by_slug() -> BTreeMap<String, Vec<ClassChassis>> {
+    let root = crate::support::paths::repo_root().join("data/sheet_rules");
+    let mut books: Vec<String> = std::fs::read_dir(&root)
+        .map(|entries| {
+            entries
+                .flatten()
+                .filter(|e| e.path().join("class").is_dir())
+                .filter_map(|e| e.file_name().to_str().map(str::to_owned))
+                .collect()
+        })
+        .unwrap_or_default();
+    books.sort();
+    let mut out: BTreeMap<String, Vec<ClassChassis>> = BTreeMap::new();
+    for book in &books {
+        for ((_, slug), chassis) in class_chassis_sheet_rules::records(&[book.as_str()]) {
+            if chassis.is_conventional() {
+                out.entry(slug).or_default().push(chassis);
             }
         }
-        out
-    })
+    }
+    out
+}
+
+/// One slug's chassis from its printings. The supersession ruling (`decisions.md` §12: the newest
+/// printing of ONE object wins) needs publication order (`.pcc` `SOURCEDATE:`) and a
+/// field-by-field proof that the printings are one object; only the converter's resolver
+/// (`codex-ingest` `sheet_rule::reprint`) holds both, and the runtime package carries neither.
+/// Applied to today's three shared class slugs, that resolver proves one (Hellknight: identical
+/// class rows, Adventurer's Guide 2017-06 over Inner Sea World Guide 2011-03) and leaves two
+/// unordered (Cyphermage and Red Mantis Assassin rows differ in non-`SOURCE` tokens and state no
+/// `DESC:`), `f3p-receipt.md` §P3. So a slug several books state is answered only when every
+/// printing states the SAME chassis ([`ClassChassis::same_chassis`]): then no printing can change
+/// a number, and the first in directory order is kept for its citation. Printings that disagree
+/// answer nothing (the class's saves and hit points are then named Unknown by the fold), never a
+/// book chosen by its directory name.
+pub(crate) fn resolve_printings(printings: Vec<ClassChassis>) -> Option<ClassChassis> {
+    let mut printings = printings.into_iter();
+    let first = printings.next()?;
+    printings.all(|other| first.same_chassis(&other)).then_some(first)
 }
 
 /// The converted chassis record for `class_id` (`"class:<slug>"`): the generic
@@ -258,6 +284,31 @@ pub(crate) fn member_base_attack_bonus(
     Some(bab)
 }
 
+/// SD-36 F3 polish P1: the class lines whose value reads the CHARACTER's base attack bonus with
+/// this class's own levels substituted per the class's rule (the line's value is that substituted
+/// BAB plus a constant). ONE rule for every such line: in a mix, the base attack bonus the OTHER
+/// classes give adds to it (the fold's total BAB minus this class's own). Monk's Flurry of Blows
+/// (CRB p.57): "the monk's base attack bonus from monk levels is equal to her monk level", and
+/// BAB from other classes adds. Classification of every class line that speaks of a base attack
+/// bonus: `tests/sd36_f3_polish.rs::p1_scan_every_class_line_that_speaks_of_a_base_attack_bonus_is_classified`.
+pub(crate) const LINES_READING_CHARACTER_BAB: &[&str] = &["class_chassis.monk.flurry_of_blows_attack_bonus"];
+
+/// `explanation` (a [`LINES_READING_CHARACTER_BAB`] line from a class's isolated run) with the
+/// other classes' base attack bonus `others` added.
+fn with_other_classes_bab(explanation: ComputationExplanation, others: i16) -> ComputationExplanation {
+    let value = explanation.value + others;
+    ComputationExplanation {
+        detail: format!(
+            "{}. In this mix the base attack bonus from the character's other classes ({others:+}) \
+             adds (the class's own levels stand in for its own base attack bonus only): {} {others:+} \
+             = {value}",
+            explanation.detail, explanation.value
+        ),
+        value,
+        ..explanation
+    }
+}
+
 /// `true` for an isolated-run explanation that is a character-level total the fold
 /// computes once (the chassis BAB/save rows, a class's own level-1 hit-point total, which holds only
 /// when that class is the character's first level), not a class line.
@@ -352,15 +403,20 @@ pub(crate) fn explain_multiclass_fold(
     for (index, class_level) in class_levels.iter().enumerate() {
         let class_id = &class_level.class_id;
         let record = chassis_record(class_id);
-        let no_record = |id: &'static str, what: &str| ChassisUnknown {
-            id,
+        // SD-36 F3 polish P4: the fold reads a class's hit die off its converted CHASSIS record
+        // (a class record whose base attack bonus and saves converted); a class without one may
+        // still state a hit die on its principal (the CRB Monk's `Hit die`), so the Unknown names
+        // the missing chassis, not a missing hit die.
+        let no_chassis = || ChassisUnknown {
+            id: HIT_POINTS_UNKNOWN,
             message: format!(
-                "{class_id}: no converted class record states this class's {what}, so its \
-                 {what} are Unknown"
+                "{class_id}: no converted class chassis record (a class record whose base attack \
+                 bonus and save progressions converted, the record the fold reads a hit die from), \
+                 so its hit points are Unknown"
             ),
         };
         let hp = record
-            .ok_or_else(|| no_record(HIT_POINTS_UNKNOWN, "hit points"))
+            .ok_or_else(no_chassis)
             .and_then(|r| r.hit_points(class_level.level, index == 0, ability_modifiers.constitution));
         let sp = class_skill_points(class_id, class_level.level, ability_modifiers.intelligence)
             .map(|(total, ..)| total);
@@ -409,14 +465,26 @@ pub(crate) fn explain_multiclass_fold(
         });
     }
 
-    // Each class's own lines, verbatim from its isolated single-class run.
-    for class_level in class_levels {
+    // The character's BAB, for a class line that reads it (`LINES_READING_CHARACTER_BAB`).
+    let member_babs: Vec<Option<i16>> = class_levels
+        .iter()
+        .map(|class_level| member_base_attack_bonus(input, class_level, ability_modifiers))
+        .collect();
+    let total_bab: Option<i16> = member_babs.iter().copied().sum();
+
+    // Each class's own lines, verbatim from its isolated single-class run -- except a line that
+    // reads the character's base attack bonus, which gets the other classes' BAB added.
+    for (class_level, own_bab) in class_levels.iter().zip(member_babs) {
         let slug = class_level.class_id.strip_prefix("class:").unwrap_or(&class_level.class_id);
         let isolated = compute_pilot_base_chassis(&isolated_input(input, class_level));
         for explanation in isolated.explanations {
             if !is_class_line(&explanation.id) || explanations.iter().any(|e| e.id == explanation.id) {
                 continue;
             }
+            let explanation = match (LINES_READING_CHARACTER_BAB.contains(&explanation.id.as_str()), total_bab, own_bab) {
+                (true, Some(total), Some(own)) => with_other_classes_bab(explanation, total - own),
+                _ => explanation,
+            };
             explanations.push(ComputationExplanation {
                 id: format!("multiclass.{slug}.{}", explanation.id),
                 ..explanation
@@ -570,6 +638,57 @@ mod tests {
                 Ok(_) => panic!("{class_id} must not fold an unrecognized save"),
             }
         }
+    }
+
+    /// SD-36 F3 polish P3, the pin: every class slug more than one book states (denominator:
+    /// every conventional chassis-bearing class record in every book), named, and each one's
+    /// printings state the same chassis -- so neither this table nor
+    /// `generic_class_chassis`'s book-precedence table can print a number that depends on which
+    /// printing answered. A printing that differs fails here, naming the slug.
+    #[test]
+    fn every_slug_two_books_state_has_one_chassis_across_its_printings() {
+        let printings = printings_by_slug();
+        let records: usize = printings.values().map(Vec::len).sum();
+        let shared: Vec<(&str, Vec<&str>)> = printings
+            .iter()
+            .filter(|(_, p)| p.len() > 1)
+            .map(|(slug, p)| (slug.as_str(), p.iter().map(|c| c.book.as_str()).collect()))
+            .collect();
+        println!("{records} chassis records over {} slugs; shared by 2+ books: {shared:?}", printings.len());
+        assert_eq!(
+            shared,
+            vec![
+                ("cyphermage", vec!["adventurers_guide", "inner_sea_magic"]),
+                ("hellknight", vec!["adventurers_guide", "inner_sea_world_guide"]),
+                ("red_mantis_assassin", vec!["adventurers_guide", "inner_sea_world_guide"]),
+            ],
+            "the shared-slug population moved"
+        );
+        for (slug, group) in printings.iter().filter(|(_, p)| p.len() > 1) {
+            for other in &group[1..] {
+                assert!(
+                    group[0].same_chassis(other),
+                    "{slug}: {} and {} state different chassis -- the fold would print a number \
+                     that depends on which printing answered",
+                    group[0].book,
+                    other.book
+                );
+            }
+            assert!(chassis_record(&format!("class:{slug}")).is_some(), "{slug}");
+        }
+    }
+
+    /// P3, the rule: printings that agree answer; printings that disagree answer nothing (never
+    /// the first book by directory name).
+    #[test]
+    fn printings_that_disagree_answer_nothing() {
+        let warrior = class_chassis_sheet_rules::record("core_rulebook", "warrior").expect("warrior").clone();
+        let commoner = class_chassis_sheet_rules::record("core_rulebook", "commoner").expect("commoner").clone();
+        assert!(!warrior.same_chassis(&commoner));
+        assert!(resolve_printings(vec![warrior.clone(), commoner.clone()]).is_none());
+        assert!(resolve_printings(vec![commoner.clone(), warrior.clone()]).is_none());
+        assert_eq!(resolve_printings(vec![warrior.clone(), warrior.clone()]).map(|c| c.slug), Some("warrior".to_owned()));
+        assert!(resolve_printings(Vec::new()).is_none());
     }
 
     #[test]

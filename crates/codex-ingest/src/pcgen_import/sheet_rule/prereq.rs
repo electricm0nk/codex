@@ -306,7 +306,7 @@ fn convert_pre(ctx: &mut RecordCtx, kind: &str, body: &str) -> Result<Applies, S
                     }
                     continue;
                 }
-                of.push(holds(resolve_holdable_rule(ctx, &category, &item)));
+                of.push(holdable_gate(ctx, &category, &item));
             }
             if !excluded.is_empty() {
                 of = of.into_iter().map(|term| exclude_from_tag_count(ctx, term, &excluded)).collect();
@@ -749,33 +749,75 @@ fn convert_pre(ctx: &mut RecordCtx, kind: &str, body: &str) -> Result<Applies, S
 /// its own named defect, `ambiguous-parent-category-target`, distinct from a plain
 /// `unresolved-references` miss -- never silently resolved to whichever candidate loaded first.
 pub fn resolve_holdable_rule(ctx: &mut RecordCtx, category: &str, name: &str) -> Holdable {
+    resolve_holdable_rule_with_option(ctx, category, name).0
+}
+
+/// A `PREABILITY` item as a gate (SD-36 F3 polish P5). ONE rule: a parameterised reference
+/// `<Base> (<Option>)` whose base resolves to a CHOOSER record (its own rows carry a `CHOOSE:`,
+/// so its pick is recorded under its own id -- `convert_record`'s `has_choose`, the same key the
+/// record's own `Proficiency::Chosen` / `Scope::Chosen` reads) holds the base WITH that option
+/// chosen: `All[Holds(base), Chosen { choice: base, option: slug(<Option>) }]`, never the bare
+/// base (`uc_feats.lst:345`: `Exotic Weapon Proficiency ~ Firearms` needs `Exotic Weapon
+/// Proficiency (Firearms)`, not any Exotic Weapon Proficiency). An option written as a type
+/// selector (`Weapon Focus (TYPE=Martial)`: any martial weapon) names no one option id, so the
+/// option term is the printed condition `requires a <type> option chosen for <Base>` instead --
+/// never an option id no pick carries, never the bare base. Anything else is `Holds` as before.
+pub fn holdable_gate(ctx: &mut RecordCtx, category: &str, name: &str) -> Applies {
+    match resolve_holdable_rule_with_option(ctx, category, name) {
+        (Holdable::Rule(id), Some((base, option))) if is_chooser(ctx, &id) => {
+            let selector = option.get(..5).filter(|h| h.eq_ignore_ascii_case("TYPE=") || h.eq_ignore_ascii_case("TYPE.")).map(|_| &option[5..]);
+            let term = match selector {
+                Some(tag) => situational(&format!("requires a {} option chosen for {base}", tag.trim().to_ascii_lowercase())),
+                None => Applies::Chosen { choice: id.clone(), option: Some(codex::rules_core::sheet_rule::slug(&option)) },
+            };
+            Applies::All(vec![holds(Holdable::Rule(id)), term])
+        }
+        (what, _) => holds(what),
+    }
+}
+
+/// Whether rule `id`'s own rows carry a `CHOOSE:` other than `NOCHOICE` -- the record offers a
+/// choice keyed by its own id.
+fn is_chooser(ctx: &RecordCtx, id: &str) -> bool {
+    ctx.index.own_rows.get(id).is_some_and(|rows| {
+        rows.iter().any(|r| {
+            super::closure::tokenize_row(ctx.tree.row_text(*r))
+                .1
+                .iter()
+                .any(|(k, v)| k == "CHOOSE" && !v.trim().eq_ignore_ascii_case("NOCHOICE"))
+        })
+    })
+}
+
+/// [`resolve_holdable_rule`], plus the `(base, option)` a parameterised `<Base> (<Option>)` name
+/// carried when only its base resolved (`None` for a name that resolved whole, or did not resolve).
+fn resolve_holdable_rule_with_option(ctx: &mut RecordCtx, category: &str, name: &str) -> (Holdable, Option<(String, String)>) {
     match ctx.resolve_rule_checked(category, name) {
-        RuleLookup::Found(id) => return Holdable::Rule(id),
+        RuleLookup::Found(id) => return (Holdable::Rule(id), None),
         RuleLookup::Ambiguous => {
             ctx.defect("ambiguous-parent-category-target", format!("{}: {category}|{name}", ctx.record.id));
-            return Holdable::MissingRule { pool: super::ctx::slug(category), name: name.to_string() };
+            return (Holdable::MissingRule { pool: super::ctx::slug(category), name: name.to_string() }, None);
         }
         RuleLookup::Missing => {}
     }
     if let Some((base, option)) = name.rsplit_once(" (")
-        && option.ends_with(')')
+        && let Some(option) = option.strip_suffix(')')
     {
         match ctx.resolve_rule_checked(category, base) {
             RuleLookup::Found(id) => {
-                // Parameterised: base rule held with the option chosen. Expressed as the rule;
-                // the option narrows at pick time through the record's own choice.
-                let _ = option;
-                return Holdable::Rule(id);
+                // Parameterised: the base rule, with the option the caller may gate on
+                // ([`holdable_gate`]).
+                return (Holdable::Rule(id), Some((base.trim().to_string(), option.trim().to_string())));
             }
             RuleLookup::Ambiguous => {
                 ctx.defect("ambiguous-parent-category-target", format!("{}: {category}|{base}", ctx.record.id));
-                return Holdable::MissingRule { pool: super::ctx::slug(category), name: name.to_string() };
+                return (Holdable::MissingRule { pool: super::ctx::slug(category), name: name.to_string() }, None);
             }
             RuleLookup::Missing => {}
         }
     }
     ctx.defect("unresolved-references", format!("{}: {category}|{name}", ctx.record.id));
-    Holdable::MissingRule { pool: super::ctx::slug(category), name: name.to_string() }
+    (Holdable::MissingRule { pool: super::ctx::slug(category), name: name.to_string() }, None)
 }
 
 #[cfg(test)]

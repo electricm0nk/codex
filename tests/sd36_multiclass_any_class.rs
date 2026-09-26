@@ -28,8 +28,8 @@ fn mix(classes: &[(&str, u8)]) -> CharacterInput {
         .iter()
         .map(|(name, level)| CharacterClassLevel { class_id: format!("class:{name}"), level: *level })
         .collect();
-    for (name, _) in classes {
-        let (choices, spells) = canonical_seeds_for(name);
+    for (name, level) in classes {
+        let (choices, spells) = canonical_seeds_for(name, *level);
         input.chosen.selected_choices.extend(choices);
         input.chosen.spells_selected.extend(spells);
     }

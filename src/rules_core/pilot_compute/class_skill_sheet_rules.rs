@@ -121,7 +121,7 @@ pub fn class_skill_view_with(
     let level = i64::from(class_level);
     let seed = HeldSeed { classes: vec![(class_slug.to_string(), level)], ..HeldSeed::default() };
     let mut facts = CharacterFacts { level, class_levels: vec![(class_slug.to_string(), level)], ..CharacterFacts::default() };
-    for (choice, member) in canonical_member_picks(package, class_slug) {
+    for (choice, member) in canonical_member_picks(package, class_slug, class_level) {
         facts.choices.entry(choice).or_default().push((member.clone(), member));
     }
     let mut held = held_set(package, &seed, &facts);
@@ -172,7 +172,7 @@ pub fn class_skill_view_with(
             }
         }
     }
-    if let Err(reason) = add_canonical_class_skill_picks(package, class_slug, &mut view) {
+    if let Err(reason) = add_canonical_class_skill_picks(package, class_slug, class_level, &mut view) {
         return ClassSkillAnswer::Unknown { reason };
     }
     if view.skills.is_empty() && view.groups.is_empty() {
@@ -193,8 +193,13 @@ pub fn class_skill_view_with(
 /// the picked skill a class skill. A pick the chooser does not admit, or that names no converted
 /// skill, is `Err` (the class then answers Unknown by name) -- never dropped, never guessed.
 /// A class with no such seed is untouched: its answer stays what its record's walk says.
-fn add_canonical_class_skill_picks(package: &SheetRulePackage, class_slug: &str, view: &mut ClassSkillView) -> Result<(), String> {
-    let (choices, _) = crate::rules_core::class_seeds::canonical_seeds_for(class_slug);
+fn add_canonical_class_skill_picks(
+    package: &SheetRulePackage,
+    class_slug: &str,
+    class_level: u8,
+    view: &mut ClassSkillView,
+) -> Result<(), String> {
+    let (choices, _) = crate::rules_core::class_seeds::canonical_seeds_for(class_slug, class_level);
     for c in choices {
         let Some(picker) = package.rule(&c.choice_set_id) else { continue };
         let Some(Choice { id, from: OptionSet::Skills(options), .. }) = &picker.offers else { continue };
@@ -221,8 +226,8 @@ fn add_canonical_class_skill_picks(package: &SheetRulePackage, class_slug: &str,
 /// The class's Path-A canonical member picks (the proficiency reader's rule, SD-36 F1c-5 D8):
 /// `(choice id, selected member id)` where the choice is a converted rule offering
 /// `OptionSet::Rules` under its own id and the member is granted by that choice.
-fn canonical_member_picks(package: &SheetRulePackage, class_slug: &str) -> Vec<(String, String)> {
-    let (choices, _) = crate::rules_core::class_seeds::canonical_seeds_for(class_slug);
+fn canonical_member_picks(package: &SheetRulePackage, class_slug: &str, class_level: u8) -> Vec<(String, String)> {
+    let (choices, _) = crate::rules_core::class_seeds::canonical_seeds_for(class_slug, class_level);
     choices
         .into_iter()
         .filter(|c| {

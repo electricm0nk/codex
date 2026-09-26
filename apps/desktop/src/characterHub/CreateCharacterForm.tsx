@@ -9,7 +9,6 @@ import {
   ABILITY_KEYS,
   ALIGNMENT_OPTIONS,
   AGE_OPTIONS,
-  CLASS_OPTIONS,
   DEFAULT_ABILITY_SCORES,
   abilityModifier,
   clampLevelForClass,
@@ -21,6 +20,7 @@ import {
   type AbilityKey,
   type AgeCategory,
   type BodyProfile,
+  type ClassOption,
   type RaceOption,
   type Sex,
 } from './characterHubModel';
@@ -30,6 +30,7 @@ import {
   composeCreateCharacterRequest,
 } from './composeCreateCharacterRequest';
 import { loadRaceRosterSurface, rosterErrorMessage, type RaceRosterSurface } from './raceRoster';
+import { ensureClassRosterLoaded, groupClassOptionsByFamily, useClassCatalog } from './classRoster';
 import { createCharacterRuntime } from './characterHubRuntime';
 import {
   buildAlternateTraitRows,
@@ -213,6 +214,14 @@ const NO_BODY_PROFILE = 'No height/weight profile';
 export function CreateCharacterForm(props: { onCreated: () => void }) {
   const [roster, setRoster] = useState<RaceRosterSurface | null>(null);
   const [rosterError, setRosterError] = useState<string | null>(null);
+  // SD-36 F4c: the class picker is the engine's served roster (`list_class_creation_roster`).
+  // If the command fails the catalog carries `CLASS_OPTIONS_FALLBACK` plus a notice, which the
+  // form prints above the class select.
+  const classRoster = useClassCatalog();
+
+  useEffect(() => {
+    void ensureClassRosterLoaded();
+  }, []);
 
   useEffect(() => {
     let live = true;
@@ -245,26 +254,41 @@ export function CreateCharacterForm(props: { onCreated: () => void }) {
       </div>
     );
   }
-  if (roster === null) {
+  if (roster === null || classRoster.source === 'loading') {
     return (
       <div style={{ border: '1px solid var(--color-border)', borderRadius: 12, padding: '1.25rem' }}>
-        <p style={{ color: 'var(--color-text-muted)', margin: 0 }}>Loading races from the corpus…</p>
+        <p style={{ color: 'var(--color-text-muted)', margin: 0 }}>
+          {roster === null ? 'Loading races from the corpus…' : 'Loading classes from the rules engine…'}
+        </p>
       </div>
     );
   }
-  return <CreateCharacterFields races={roster.options} rosterDiagnostics={roster.diagnostics} onCreated={props.onCreated} />;
+  return (
+    <CreateCharacterFields
+      races={roster.options}
+      rosterDiagnostics={roster.diagnostics}
+      classOptions={classRoster.options}
+      classRosterNotice={classRoster.notice}
+      onCreated={props.onCreated}
+    />
+  );
 }
 
 function CreateCharacterFields(props: {
   races: RaceOption[];
   rosterDiagnostics: string[];
+  /** The served class roster, or the announced fallback (never empty: an empty roster is a failure). */
+  classOptions: readonly ClassOption[];
+  /** `class roster unavailable: <diagnostic>` when the fallback is in use; printed, never hidden. */
+  classRosterNotice: string | null;
   onCreated: () => void;
 }) {
   const races = props.races;
+  const classOptions = props.classOptions;
   const [displayLabel, setDisplayLabel] = useState('');
   const [playerName, setPlayerName] = useState('');
   const [raceId, setRaceId] = useState(races[0].id);
-  const [classId, setClassId] = useState(CLASS_OPTIONS[0].id);
+  const [classId, setClassId] = useState(classOptions[0].id);
   const [level, setLevel] = useState(STARTING_LEVEL);
   const [abilityScores, setAbilityScores] = useState({ ...DEFAULT_ABILITY_SCORES });
   const [allocation, setAllocation] = useState<Allocation>({ ...ZERO_ALLOCATION });
@@ -310,7 +334,7 @@ function CreateCharacterFields(props: {
   // never a first-guessed default (see that function's own doc comment).
   const [traitSkillChoices, setTraitSkillChoices] = useState<Record<string, string>>({});
 
-  const selectedClass = CLASS_OPTIONS.find((option) => option.id === classId) ?? CLASS_OPTIONS[0];
+  const selectedClass = classOptions.find((option) => option.id === classId) ?? classOptions[0];
   const selectedRace = races.find((option) => option.id === raceId) ?? races[0];
   const body = selectedRace.body?.[sex] ?? null;
 
@@ -530,7 +554,7 @@ function CreateCharacterFields(props: {
   );
   const alternateTraitWarnings = creationSelectionWarnings(alternateResolution);
   const racialTraitsPreview = buildCreationRacialTraitsPreview(alternateResolution);
-  const classPreview = buildClassPreview(classCatalog, selectedClass.label, level);
+  const classPreview = buildClassPreview(classCatalog, selectedClass, level);
 
   function toggleAlternateTrait(key: string) {
     setSelectedAlternateTraitKeys((current) =>
@@ -717,15 +741,30 @@ function CreateCharacterFields(props: {
                 Class
               </label>
               <select id="character-class" style={INPUT_STYLE} value={classId} onChange={(event) => handleClassChange(event.target.value)}>
-                {CLASS_OPTIONS.map((option) => (
-                  <option key={option.id} value={option.id}>
-                    {option.label}
-                    {classSupportLevelSuffix(option.supportLevel)}
-                  </option>
-                ))}
+                {groupClassOptionsByFamily(classOptions).map((group) => {
+                  const rows = group.options.map((option) => (
+                    <option key={option.id} value={option.id}>
+                      {option.label}
+                      {classSupportLevelSuffix(option.supportLevel)}
+                    </option>
+                  ));
+                  // A fallback row carries no family: its run renders ungrouped.
+                  return group.familyLabel ? (
+                    <optgroup key={group.family} label={group.familyLabel}>
+                      {rows}
+                    </optgroup>
+                  ) : (
+                    rows
+                  );
+                })}
               </select>
             </div>
           </div>
+          {props.classRosterNotice !== null ? (
+            <p role="alert" style={{ color: 'var(--color-warn)', fontSize: '0.8rem', margin: '-0.5rem 0 0.5rem' }}>
+              {props.classRosterNotice} — offering the built-in list of {classOptions.length} classes instead.
+            </p>
+          ) : null}
           <p style={{ color: 'var(--color-text-muted)', fontSize: '0.8rem', margin: '-0.5rem 0 0.5rem' }}>
             {describeClassSupportLevel(selectedClass.supportLevel, selectedClass.label)}
           </p>
@@ -763,7 +802,9 @@ function CreateCharacterFields(props: {
               </select>
             </LabeledField>
             <LabeledField label="HP" flex="0 0 96px">
-              <ReadOnlyBox value={String(maxHp)} />
+              {/* `null`: the engine's hit-point fold states no hit die for this class (no chassis
+                  record), so its HP is Unknown — never a total built on a guessed die. */}
+              <ReadOnlyBox value={maxHp === null ? 'Unknown' : String(maxHp)} />
             </LabeledField>
             <LabeledField label="Alignment" htmlFor="character-alignment">
               <select id="character-alignment" style={INPUT_STYLE} value={alignment} onChange={(event) => setAlignment(event.target.value)}>

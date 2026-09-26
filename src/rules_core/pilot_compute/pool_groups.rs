@@ -1050,11 +1050,19 @@ mod generic_pool_group_selection_wiring_tests {
     /// chain. (A direct corpus survey found only 5 of the 67 remaining real
     /// Domain groups -- Heresy, Oblivion, Plant, Tactics, Wolf -- carry such a
     /// member; the rest correctly refuse, see this cycle's receipt.)
+    ///
+    /// SD-36 F4pre (FS-21): the cleric's `BONUS:DOMAIN|NUMBER` now converts as a choice over the
+    /// domains, so the `domain:plant` pick links to `core_rulebook:domain:plant` and the pass
+    /// YIELDS (it printed with no level gate); the held set prints the domain's own powers at the
+    /// levels CRB p.46 states -- Wooden Fist at 1st, Bramble Armor not before 6th.
     #[test]
     fn cleric_generic_domain_pass_grounds_a_never_hand_modelled_domain() {
         let input = class_input(CLERIC_CLASS_ID, 5, CLERIC_DOMAIN_CHOICE_ID, "domain:plant");
         let count = generic_explanation_count(&input, "class_feature.cleric.domain.generic");
-        assert!(count > 0, "Plant Domain must ground at least one real corpus member generically");
+        assert_eq!(count, 0, "a linked, held Plant pick yields to the held set");
+        let held = held_member_lines(&input, "domain_power_");
+        assert!(held.iter().any(|id| id == "core_rulebook:class_feature:domain_power_wooden_fist"), "{held:#?}");
+        assert!(!held.iter().any(|id| id == "core_rulebook:class_feature:domain_power_bramble_armor"), "{held:#?}");
     }
 
     /// SD-32 T12 Epic 8 row 18 cycle 19: the desc-formula resolver's own missing header-merge
@@ -1375,11 +1383,19 @@ mod generic_pool_group_selection_wiring_tests {
     /// into `resolve_pool_member_sole_magnitude` unconditionally (every owning class, not gated by
     /// a family flag). Its "Animal Companion" member (`AnimalCompanionMasterLVL|DomainAnimalLVL-3`)
     /// is a genuine two-hop chain terminating on the class record.
+    ///
+    /// SD-36 F4pre (FS-21): the `domain:animal` pick now links to `core_rulebook:domain:animal`,
+    /// so the pass YIELDS; the held set prints Speak with Animals (1st) and the Animal Companion
+    /// power (4th) at cleric 5 (CRB p.40).
     #[test]
     fn cleric_generic_domain_pass_grounds_animal_via_the_class_record_merge() {
         let input = class_input(CLERIC_CLASS_ID, 5, CLERIC_DOMAIN_CHOICE_ID, "domain:animal");
         let count = generic_explanation_count(&input, "class_feature.cleric.domain.generic");
-        assert!(count > 0, "Animal Domain must ground at least one real corpus member generically");
+        assert_eq!(count, 0, "a linked, held Animal pick yields to the held set");
+        let held = held_member_lines(&input, "domain_power_");
+        for id in ["core_rulebook:class_feature:domain_power_speak_with_animals", "core_rulebook:class_feature:domain_power_animal_companion"] {
+            assert!(held.iter().any(|h| h == id), "{id}: {held:#?}");
+        }
     }
 
     /// SD-32 T12 Epic 8 row 18 cycle 20 (`§27b`/`§17`): proves the SIXTH real header shape,

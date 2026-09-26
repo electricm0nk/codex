@@ -1,0 +1,9 @@
+rules 73363; chooser-bearing rules (offers.id == own id) 1597
+granted_by edges: 44606 total; 569 conditioned on holding a chooser-bearing rule -- 402 option-gated, 167 bare hold (no option term)
+record applies gates: 73363 total; 1472 conditioned on holding a chooser-bearing rule -- 384 option-gated, 1088 bare hold (no option term)
+_vars contributions: 22057 total; 920 conditioned on holding a chooser-bearing rule -- 906 option-gated, 14 bare hold (no option term)
+--- baseline tranche/16 070c253e93
+rules 73363; chooser-bearing rules (offers.id == own id) 1597
+granted_by edges: 44606 total; 569 conditioned on holding a chooser-bearing rule -- 0 option-gated, 569 bare hold (no option term)
+record applies gates: 73363 total; 1472 conditioned on holding a chooser-bearing rule -- 0 option-gated, 1472 bare hold (no option term)
+_vars contributions: 22057 total; 920 conditioned on holding a chooser-bearing rule -- 0 option-gated, 920 bare hold (no option term)

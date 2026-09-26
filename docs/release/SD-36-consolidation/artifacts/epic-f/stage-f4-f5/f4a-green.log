@@ -1,0 +1,51 @@
+== GREEN census: cargo test --locked -j 8 --lib class_census -- --test-threads=8
+test rules_core::class_census::tests::carrier_rule_is_pure_over_synthetic_gates ... ok
+test rules_core::class_census::tests::a_dual_caster_prestige_class_gets_two_independent_carriers ... ok
+test rules_core::class_census::tests::a_bare_bab_prestige_class_gets_the_fighter_floor ... ok
+test rules_core::class_census::tests::dragon_disciple_names_its_sorcerer_carrier_and_seeds_the_draconic_bloodline ... ok
+test rules_core::class_census::tests::a_prestige_row_referencing_caster_level_names_a_caster_carrier_or_reports_unknown ... ok
+test rules_core::class_census::tests::every_registry_is_swept_once ... ok
+test rules_core::class_census::tests::ex_state_reads_the_record_not_the_name ... ok
+test rules_core::class_census::tests::mix_panel_blocking_histogram_counts_rows_not_raw_occurrences ... ok
+test rules_core::class_census::tests::every_prestige_class_gets_a_carrier_or_is_named_unknown ... ok
+test rules_core::class_census::tests::mix_panel_loads_and_matches_its_own_row_count ... ok
+test rules_core::class_census::tests::generic_only_ids_are_exactly_the_two_apg_ex_classes ... ok
+test rules_core::class_census::tests::mix_panel_size_matches_the_measured_multiclass_negative_control_count ... ok
+test rules_core::class_census::tests::no_class_id_sits_in_two_families ... ok
+test rules_core::class_census::tests::parse_sheet_dump_build_reads_a_multiclass_mix ... ok
+test rules_core::class_census::tests::parse_sheet_dump_build_reads_a_single_class ... ok
+test rules_core::class_census::tests::parse_sheet_dump_build_rejects_malformed_segments ... ok
+test rules_core::class_census::tests::every_line_in_sheet_dump_with_rules_text_carries_a_known_stable_prefix ... ok
+test rules_core::class_census::tests::prestige_carrier_distribution_is_measured_and_printed ... ok
+test rules_core::class_census::tests::prestige_carrier_is_deterministic ... ok
+test rules_core::class_census::tests::prestige_list_matches_the_entry_requirement_fixture ... ok
+test rules_core::class_census::tests::prestige_scan_books_is_measured_not_guessed ... ok
+test rules_core::class_census::tests::sheet_dump_text_is_deterministic_across_two_runs ... ok
+test rules_core::class_census::tests::sheet_dump_with_rules_text_applies_a_race_override ... ok
+test rules_core::class_census::tests::sheet_dump_with_rules_text_covers_a_multiclass_mix_build ... ok
+test rules_core::class_census::tests::mix_panel_blocking_histogram_sums_to_the_blocked_row_count ... ok
+test rules_core::class_census::tests::sheet_dump_with_rules_text_is_deterministic_across_two_runs ... ok
+test rules_core::class_census::tests::build_prestige_row_covers_every_prestige_class_with_a_mix_per_carrier ... ok
+test rules_core::class_census::tests::the_bab_cap_precedent_never_bites_today ... ok
+test rules_core::class_census::tests::f3c_carriers_named_through_at_least_any_and_not_reach_the_engine ... ok
+test rules_core::class_census::tests::census_id_set_matches_the_published_partition has been running for over 60 seconds
+test rules_core::class_census::tests::every_prestige_class_alone_is_measured_today has been running for over 60 seconds
+test rules_core::class_census::tests::no_computed_class_is_unoffered_without_a_named_reason has been running for over 60 seconds
+test rules_core::class_census::tests::prestige_alone_is_blocked_with_the_game_rule has been running for over 60 seconds
+test rules_core::class_census::tests::sweep_covers_exactly_the_non_prestige_ids has been running for over 60 seconds
+test rules_core::class_census::tests::sweep_mix_panel_row_reports_a_real_status_and_dedupes_blocking_ids has been running for over 60 seconds
+test rules_core::class_census::tests::sweep_mix_panel_row_reports_a_real_status_and_dedupes_blocking_ids ... ok
+test rules_core::class_census::tests::prestige_alone_is_blocked_with_the_game_rule ... ok
+test rules_core::class_census::tests::every_prestige_class_alone_is_measured_today ... ok
+test rules_core::class_census::tests::sweep_covers_exactly_the_non_prestige_ids ... ok
+test rules_core::class_census::tests::census_id_set_matches_the_published_partition ... ok
+test rules_core::class_census::tests::no_computed_class_is_unoffered_without_a_named_reason ... ok
+test result: ok. 35 passed; 0 failed; 0 ignored; 0 measured; 2698 filtered out; finished in 382.23s
+real	7m34.298s
+EXIT=0
+
+== GREEN desktop: cargo test --locked -j 8 --manifest-path apps/desktop/src-tauri/Cargo.toml -- --test-threads=8 pf1_adapter character_hub
+test character_hub::tests::apply_level_up_seeds_an_added_class_the_way_the_census_mix_does ... ok
+test pf1_adapter::tests::compose_character_input_seeds_every_census_class_exactly_as_class_seeds_does ... ok
+test result: ok. 223 passed; 0 failed; 0 ignored; 0 measured; 394 filtered out; finished in 193.14s
+EXIT=0

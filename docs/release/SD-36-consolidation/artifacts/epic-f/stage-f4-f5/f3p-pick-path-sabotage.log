@@ -1,0 +1,18 @@
+== SABOTAGE: with_linked_picks records no feat sub-choice
+test p5_the_firearms_option_pick_holds_the_firearms_record_and_another_option_does_not ... ok
+test p5_samurai_alone_prints_no_firearms_line ... ok
+test p5_a_feat_recorded_with_its_option_holds_exactly_that_option_s_records ... FAILED
+thread 'p5_a_feat_recorded_with_its_option_holds_exactly_that_option_s_records' (1798372) panicked at tests/sd36_f3_polish.rs:156:5:
+EWP (Firearms): feat held true, firearms held false, picks []
+test result: FAILED. 2 passed; 1 failed; 0 ignored; 0 measured; 4 filtered out; finished in 17.51s
+EXIT[sabotaged sd36_f3_polish p5]=101
+test rules_core::pilot_compute::prestige_class_entry_gate::prestige_class_entry_gate_tests::arcane_archer_with_the_real_feats_qualifies ... FAILED
+test rules_core::pilot_compute::prestige_class_features::prestige_class_entry_gate_wiring_tests::real_feats_surface_the_met_entry_gate_diagnostic ... FAILED
+test result: FAILED. 6 passed; 2 failed; 0 ignored; 0 measured; 2723 filtered out; finished in 14.28s
+EXIT[sabotaged lib prestige_class_entry]=101
+== RESTORED
+test p5_the_firearms_option_pick_holds_the_firearms_record_and_another_option_does_not ... ok
+test p5_samurai_alone_prints_no_firearms_line ... ok
+test p5_a_feat_recorded_with_its_option_holds_exactly_that_option_s_records ... ok
+test result: ok. 3 passed; 0 failed; 0 ignored; 0 measured; 4 filtered out; finished in 19.18s
+EXIT[restored]=0

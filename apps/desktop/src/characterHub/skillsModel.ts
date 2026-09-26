@@ -41,10 +41,13 @@ export const SKILLS: ReadonlyArray<{ name: string; ability: keyof AbilityScoresD
 ];
 
 /**
- * Class skill lists by class id — one entry per class in `characterHubModel`'s
- * `CLASS_OPTIONS`. A selectable class missing from here is not a harmless gap:
- * `isClassSkill` would report every skill as cross-class, so the Skills tab
- * would quietly show the wrong ranks-to-bonus math rather than showing nothing.
+ * Class skill lists by class id, hand-entered for 12 classes. The Create picker offers the
+ * engine's served roster (59 classes, SD-36 F4c), so most selectable classes have no list here.
+ * A held class missing from here is not a harmless gap: `isClassSkill` cannot answer for it, so
+ * the Skills panel prints `heldClassesWithoutClassSkillList` by name rather than quietly scoring
+ * every skill as cross-class. The mechanism that closes the remainder is reading the converted
+ * records' `CSKILL` grants (`data/sheet_rules/**` `*_class_skills` class features), not widening
+ * this table.
  */
 const CLASS_SKILLS: Record<string, ReadonlySet<string>> = {
   // ACG Arcanist: Appraise, Craft, Fly, Knowledge (all), Linguistics,
@@ -127,7 +130,28 @@ export function skillIdFor(skillName: string): string {
   return `skill:${normalized}`;
 }
 
-/** Whether `skillName` is a class skill for any class the character holds (multiclass union). */
+/** Whether this module holds a class-skill list for `classId`. */
+export function hasClassSkillList(classId: string): boolean {
+  return classId in CLASS_SKILLS;
+}
+
+/** Held class ids with no class-skill list here: the Skills panel names them. */
+export function heldClassesWithoutClassSkillList(heldClasses: HeldClass[]): string[] {
+  return heldClasses.filter((held) => !hasClassSkillList(held.classId)).map((held) => held.classId);
+}
+
+/** Splits `classIds` (e.g. the served roster's) into those with and without a class-skill list. */
+export function classSkillListCoverage(classIds: readonly string[]): { covered: string[]; uncovered: string[] } {
+  return {
+    covered: classIds.filter(hasClassSkillList),
+    uncovered: classIds.filter((classId) => !hasClassSkillList(classId)),
+  };
+}
+
+/**
+ * Whether `skillName` is a class skill for any class the character holds (multiclass union).
+ * A held class with no list contributes nothing here; `heldClassesWithoutClassSkillList` names it.
+ */
 export function isClassSkill(heldClasses: HeldClass[], skillName: string): boolean {
   return heldClasses.some((held) => CLASS_SKILLS[held.classId]?.has(skillName));
 }
@@ -165,10 +189,18 @@ export const DEFAULT_SKILL_ALLOCATION: Record<string, number> = {
   Swim: 1,
 };
 
-/** Total skill points earned across every class level already taken. */
-export function totalSkillPointsAvailable(heldClasses: HeldClass[], intelligenceModifier: number, isHuman: boolean): number {
-  return buildLevelEntries(heldClasses).reduce(
-    (sum, entry) => sum + totalSkillPoints(entry.skillPointsBase, intelligenceModifier, isHuman),
-    0
-  );
+/**
+ * Total skill points earned across every class level already taken; `null` when any level's
+ * class states no skill ranks (the roster is loading, or the record states none).
+ */
+export function totalSkillPointsAvailable(heldClasses: HeldClass[], intelligenceModifier: number, isHuman: boolean): number | null {
+  let total = 0;
+  for (const entry of buildLevelEntries(heldClasses)) {
+    const points = totalSkillPoints(entry.skillPointsBase, intelligenceModifier, isHuman);
+    if (points === null) {
+      return null;
+    }
+    total += points;
+  }
+  return total;
 }

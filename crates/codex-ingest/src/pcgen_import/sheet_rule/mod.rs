@@ -1183,7 +1183,11 @@ pub fn run(tree: &PinnedTree, index: &CorpusIndex, closures: &[Closure]) -> Run 
         }
     }
     // D6: a pick into a one-member weapon-choice pool is linked to its options.
-    pool_link::link_weapon_choice_pools(&pool_link::category_views(tree), weapon_membership::index(tree), &mut files);
+    let category_views = pool_link::category_views(tree);
+    pool_link::link_weapon_choice_pools(&category_views, weapon_membership::index(tree), &mut files);
+    // SD-36 F4pre (FS-21): every other pick into a child ability category, and every domain
+    // count, as a converted choice over the members (`pool_link::link_pool_choices`).
+    pool_link::link_pool_choices(&category_views, &mut files);
     // Attach grant edges to the principal rule of each target.
     for rules in files.values_mut() {
         if let Some(first) = rules.first_mut()

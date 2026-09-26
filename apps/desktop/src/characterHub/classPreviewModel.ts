@@ -1,12 +1,14 @@
 import type { ClassCatalogEntryDto } from '../boundary/loadClassCatalog';
+import type { ClassOption } from './characterHubModel';
 
 /**
  * The class preview beside the create form's class select (v0.8 F-11,
  * scout audit item 9): the `list_class_catalog` row for the picked class
  * at the picked level, formatted. Every number is the engine's; the only
- * work here is the join (the catalog keys rows by display name, the form
- * by `CLASS_OPTIONS` id, and the option's label is that display name) and
- * sign formatting. Skill points per level are not on the catalog DTO and
+ * work here is the join (the catalog keys rows by display name; the form
+ * picks a served roster option — SD-36 F4c — whose label is that display
+ * name) and sign formatting. A roster class the catalog carries no rows for
+ * is named by its label and roster id. Skill points per level are not on the catalog DTO and
  * are not derived here.
  */
 export type ClassPreview =
@@ -20,19 +22,19 @@ function signed(value: number): string {
 
 export function buildClassPreview(
   catalog: readonly ClassCatalogEntryDto[] | null,
-  classLabel: string,
+  option: Pick<ClassOption, 'id' | 'label'>,
   level: number,
 ): ClassPreview {
   if (catalog === null) {
     return { kind: 'Loading' };
   }
-  const forClass = catalog.filter((entry) => entry.classId === classLabel);
+  const forClass = catalog.filter((entry) => entry.classId === option.label);
   if (forClass.length === 0) {
-    return { kind: 'Unavailable', message: `The class catalog has no progression rows for ${classLabel} yet.` };
+    return { kind: 'Unavailable', message: `The class catalog has no progression rows for ${option.label} (${option.id}) yet.` };
   }
   const row = forClass.find((entry) => entry.level === level);
   if (!row) {
-    return { kind: 'Unavailable', message: `The class catalog has no level ${level} row for ${classLabel}.` };
+    return { kind: 'Unavailable', message: `The class catalog has no level ${level} row for ${option.label} (${option.id}).` };
   }
   return {
     kind: 'Row',

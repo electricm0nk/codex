@@ -178,7 +178,7 @@ fn a_seeded_subclass_pick_is_scanned_for_double_grants_against_the_bespoke_join(
     let mut joined_overlap: Vec<String> = Vec::new();
     for entry in classes.values() {
         let slug = entry.class_id.strip_prefix("class:").unwrap_or(&entry.class_id);
-        let (choices, _) = canonical_seeds_for(slug);
+        let (choices, _) = canonical_seeds_for(slug, entry.max_level);
         if !choices.iter().any(|c| c.choice_set_id.ends_with("#subclass")) {
             continue;
         }

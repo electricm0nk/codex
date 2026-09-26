@@ -1,0 +1,2787 @@
+{
+  "addBase": [
+    {
+      "classId": "class:barbarian",
+      "currentLevel": 0,
+      "family": "crb",
+      "familyLabel": "CRB",
+      "label": "Barbarian",
+      "maxLevel": 20,
+      "nextLevel": 1
+    },
+    {
+      "classId": "class:bard",
+      "currentLevel": 0,
+      "family": "crb",
+      "familyLabel": "CRB",
+      "label": "Bard",
+      "maxLevel": 20,
+      "nextLevel": 1
+    },
+    {
+      "classId": "class:cleric",
+      "currentLevel": 0,
+      "family": "crb",
+      "familyLabel": "CRB",
+      "label": "Cleric",
+      "maxLevel": 20,
+      "nextLevel": 1
+    },
+    {
+      "classId": "class:druid",
+      "currentLevel": 0,
+      "family": "crb",
+      "familyLabel": "CRB",
+      "label": "Druid",
+      "maxLevel": 20,
+      "nextLevel": 1
+    },
+    {
+      "classId": "class:monk",
+      "currentLevel": 0,
+      "family": "crb",
+      "familyLabel": "CRB",
+      "label": "Monk",
+      "maxLevel": 20,
+      "nextLevel": 1
+    },
+    {
+      "classId": "class:paladin",
+      "currentLevel": 0,
+      "family": "crb",
+      "familyLabel": "CRB",
+      "label": "Paladin",
+      "maxLevel": 20,
+      "nextLevel": 1
+    },
+    {
+      "classId": "class:ranger",
+      "currentLevel": 0,
+      "family": "crb",
+      "familyLabel": "CRB",
+      "label": "Ranger",
+      "maxLevel": 20,
+      "nextLevel": 1
+    },
+    {
+      "classId": "class:rogue",
+      "currentLevel": 0,
+      "family": "crb",
+      "familyLabel": "CRB",
+      "label": "Rogue",
+      "maxLevel": 20,
+      "nextLevel": 1
+    },
+    {
+      "classId": "class:sorcerer",
+      "currentLevel": 0,
+      "family": "crb",
+      "familyLabel": "CRB",
+      "label": "Sorcerer",
+      "maxLevel": 20,
+      "nextLevel": 1
+    },
+    {
+      "classId": "class:wizard",
+      "currentLevel": 0,
+      "family": "crb",
+      "familyLabel": "CRB",
+      "label": "Wizard",
+      "maxLevel": 20,
+      "nextLevel": 1
+    },
+    {
+      "classId": "class:alchemist",
+      "currentLevel": 0,
+      "family": "apg",
+      "familyLabel": "APG",
+      "label": "Alchemist",
+      "maxLevel": 20,
+      "nextLevel": 1
+    },
+    {
+      "classId": "class:cavalier",
+      "currentLevel": 0,
+      "family": "apg",
+      "familyLabel": "APG",
+      "label": "Cavalier",
+      "maxLevel": 20,
+      "nextLevel": 1
+    },
+    {
+      "classId": "class:inquisitor",
+      "currentLevel": 0,
+      "family": "apg",
+      "familyLabel": "APG",
+      "label": "Inquisitor",
+      "maxLevel": 20,
+      "nextLevel": 1
+    },
+    {
+      "classId": "class:oracle",
+      "currentLevel": 0,
+      "family": "apg",
+      "familyLabel": "APG",
+      "label": "Oracle",
+      "maxLevel": 20,
+      "nextLevel": 1
+    },
+    {
+      "classId": "class:summoner",
+      "currentLevel": 0,
+      "family": "apg",
+      "familyLabel": "APG",
+      "label": "Summoner",
+      "maxLevel": 20,
+      "nextLevel": 1
+    },
+    {
+      "classId": "class:witch",
+      "currentLevel": 0,
+      "family": "apg",
+      "familyLabel": "APG",
+      "label": "Witch",
+      "maxLevel": 20,
+      "nextLevel": 1
+    },
+    {
+      "classId": "class:arcanist",
+      "currentLevel": 0,
+      "family": "acg",
+      "familyLabel": "ACG",
+      "label": "Arcanist",
+      "maxLevel": 20,
+      "nextLevel": 1
+    },
+    {
+      "classId": "class:bloodrager",
+      "currentLevel": 0,
+      "family": "acg",
+      "familyLabel": "ACG",
+      "label": "Bloodrager",
+      "maxLevel": 20,
+      "nextLevel": 1
+    },
+    {
+      "classId": "class:brawler",
+      "currentLevel": 0,
+      "family": "acg",
+      "familyLabel": "ACG",
+      "label": "Brawler",
+      "maxLevel": 20,
+      "nextLevel": 1
+    },
+    {
+      "classId": "class:hunter",
+      "currentLevel": 0,
+      "family": "acg",
+      "familyLabel": "ACG",
+      "label": "Hunter",
+      "maxLevel": 20,
+      "nextLevel": 1
+    },
+    {
+      "classId": "class:investigator",
+      "currentLevel": 0,
+      "family": "acg",
+      "familyLabel": "ACG",
+      "label": "Investigator",
+      "maxLevel": 20,
+      "nextLevel": 1
+    },
+    {
+      "classId": "class:shaman",
+      "currentLevel": 0,
+      "family": "acg",
+      "familyLabel": "ACG",
+      "label": "Shaman",
+      "maxLevel": 20,
+      "nextLevel": 1
+    },
+    {
+      "classId": "class:skald",
+      "currentLevel": 0,
+      "family": "acg",
+      "familyLabel": "ACG",
+      "label": "Skald",
+      "maxLevel": 20,
+      "nextLevel": 1
+    },
+    {
+      "classId": "class:slayer",
+      "currentLevel": 0,
+      "family": "acg",
+      "familyLabel": "ACG",
+      "label": "Slayer",
+      "maxLevel": 20,
+      "nextLevel": 1
+    },
+    {
+      "classId": "class:swashbuckler",
+      "currentLevel": 0,
+      "family": "acg",
+      "familyLabel": "ACG",
+      "label": "Swashbuckler",
+      "maxLevel": 20,
+      "nextLevel": 1
+    },
+    {
+      "classId": "class:warpriest",
+      "currentLevel": 0,
+      "family": "acg",
+      "familyLabel": "ACG",
+      "label": "Warpriest",
+      "maxLevel": 20,
+      "nextLevel": 1
+    },
+    {
+      "classId": "class:unchained_barbarian",
+      "currentLevel": 0,
+      "family": "pathfinder_unchained",
+      "familyLabel": "Pathfinder Unchained",
+      "label": "Unchained Barbarian",
+      "maxLevel": 20,
+      "nextLevel": 1
+    },
+    {
+      "classId": "class:unchained_monk",
+      "currentLevel": 0,
+      "family": "pathfinder_unchained",
+      "familyLabel": "Pathfinder Unchained",
+      "label": "Unchained Monk",
+      "maxLevel": 20,
+      "nextLevel": 1
+    },
+    {
+      "classId": "class:unchained_rogue",
+      "currentLevel": 0,
+      "family": "pathfinder_unchained",
+      "familyLabel": "Pathfinder Unchained",
+      "label": "Unchained Rogue",
+      "maxLevel": 20,
+      "nextLevel": 1
+    },
+    {
+      "classId": "class:unchained_summoner",
+      "currentLevel": 0,
+      "family": "pathfinder_unchained",
+      "familyLabel": "Pathfinder Unchained",
+      "label": "Unchained Summoner",
+      "maxLevel": 20,
+      "nextLevel": 1
+    },
+    {
+      "classId": "class:gunslinger",
+      "currentLevel": 0,
+      "family": "ultimate_combat",
+      "familyLabel": "Ultimate Combat",
+      "label": "Gunslinger",
+      "maxLevel": 20,
+      "nextLevel": 1
+    },
+    {
+      "classId": "class:ninja",
+      "currentLevel": 0,
+      "family": "ultimate_combat",
+      "familyLabel": "Ultimate Combat",
+      "label": "Ninja",
+      "maxLevel": 20,
+      "nextLevel": 1
+    },
+    {
+      "classId": "class:samurai",
+      "currentLevel": 0,
+      "family": "ultimate_combat",
+      "familyLabel": "Ultimate Combat",
+      "label": "Samurai",
+      "maxLevel": 20,
+      "nextLevel": 1
+    },
+    {
+      "classId": "class:aegis",
+      "currentLevel": 0,
+      "family": "untabled_exotic_base",
+      "familyLabel": "Untabled exotic base classes",
+      "label": "Aegis",
+      "maxLevel": 20,
+      "nextLevel": 1
+    },
+    {
+      "classId": "class:antipaladin",
+      "currentLevel": 0,
+      "family": "untabled_exotic_base",
+      "familyLabel": "Untabled exotic base classes",
+      "label": "Antipaladin",
+      "maxLevel": 20,
+      "nextLevel": 1
+    },
+    {
+      "classId": "class:cryptic",
+      "currentLevel": 0,
+      "family": "untabled_exotic_base",
+      "familyLabel": "Untabled exotic base classes",
+      "label": "Cryptic",
+      "maxLevel": 20,
+      "nextLevel": 1
+    },
+    {
+      "classId": "class:dread",
+      "currentLevel": 0,
+      "family": "untabled_exotic_base",
+      "familyLabel": "Untabled exotic base classes",
+      "label": "Dread",
+      "maxLevel": 20,
+      "nextLevel": 1
+    },
+    {
+      "classId": "class:kineticist",
+      "currentLevel": 0,
+      "family": "untabled_exotic_base",
+      "familyLabel": "Untabled exotic base classes",
+      "label": "Kineticist",
+      "maxLevel": 20,
+      "nextLevel": 1
+    },
+    {
+      "classId": "class:magus",
+      "currentLevel": 0,
+      "family": "untabled_exotic_base",
+      "familyLabel": "Untabled exotic base classes",
+      "label": "Magus",
+      "maxLevel": 20,
+      "nextLevel": 1
+    },
+    {
+      "classId": "class:marksman",
+      "currentLevel": 0,
+      "family": "untabled_exotic_base",
+      "familyLabel": "Untabled exotic base classes",
+      "label": "Marksman",
+      "maxLevel": 20,
+      "nextLevel": 1
+    },
+    {
+      "classId": "class:medium",
+      "currentLevel": 0,
+      "family": "untabled_exotic_base",
+      "familyLabel": "Untabled exotic base classes",
+      "label": "Medium",
+      "maxLevel": 20,
+      "nextLevel": 1
+    },
+    {
+      "classId": "class:mesmerist",
+      "currentLevel": 0,
+      "family": "untabled_exotic_base",
+      "familyLabel": "Untabled exotic base classes",
+      "label": "Mesmerist",
+      "maxLevel": 20,
+      "nextLevel": 1
+    },
+    {
+      "classId": "class:occultist",
+      "currentLevel": 0,
+      "family": "untabled_exotic_base",
+      "familyLabel": "Untabled exotic base classes",
+      "label": "Occultist",
+      "maxLevel": 20,
+      "nextLevel": 1
+    },
+    {
+      "classId": "class:psion",
+      "currentLevel": 0,
+      "family": "untabled_exotic_base",
+      "familyLabel": "Untabled exotic base classes",
+      "label": "Psion",
+      "maxLevel": 20,
+      "nextLevel": 1
+    },
+    {
+      "classId": "class:psychic",
+      "currentLevel": 0,
+      "family": "untabled_exotic_base",
+      "familyLabel": "Untabled exotic base classes",
+      "label": "Psychic",
+      "maxLevel": 20,
+      "nextLevel": 1
+    },
+    {
+      "classId": "class:psychic_warrior",
+      "currentLevel": 0,
+      "family": "untabled_exotic_base",
+      "familyLabel": "Untabled exotic base classes",
+      "label": "Psychic Warrior",
+      "maxLevel": 20,
+      "nextLevel": 1
+    },
+    {
+      "classId": "class:shifter",
+      "currentLevel": 0,
+      "family": "untabled_exotic_base",
+      "familyLabel": "Untabled exotic base classes",
+      "label": "Shifter",
+      "maxLevel": 20,
+      "nextLevel": 1
+    },
+    {
+      "classId": "class:soulknife",
+      "currentLevel": 0,
+      "family": "untabled_exotic_base",
+      "familyLabel": "Untabled exotic base classes",
+      "label": "Soulknife",
+      "maxLevel": 20,
+      "nextLevel": 1
+    },
+    {
+      "classId": "class:spiritualist",
+      "currentLevel": 0,
+      "family": "untabled_exotic_base",
+      "familyLabel": "Untabled exotic base classes",
+      "label": "Spiritualist",
+      "maxLevel": 20,
+      "nextLevel": 1
+    },
+    {
+      "classId": "class:tactician",
+      "currentLevel": 0,
+      "family": "untabled_exotic_base",
+      "familyLabel": "Untabled exotic base classes",
+      "label": "Tactician",
+      "maxLevel": 20,
+      "nextLevel": 1
+    },
+    {
+      "classId": "class:vigilante",
+      "currentLevel": 0,
+      "family": "untabled_exotic_base",
+      "familyLabel": "Untabled exotic base classes",
+      "label": "Vigilante",
+      "maxLevel": 20,
+      "nextLevel": 1
+    },
+    {
+      "classId": "class:vitalist",
+      "currentLevel": 0,
+      "family": "untabled_exotic_base",
+      "familyLabel": "Untabled exotic base classes",
+      "label": "Vitalist",
+      "maxLevel": 20,
+      "nextLevel": 1
+    },
+    {
+      "classId": "class:wilder",
+      "currentLevel": 0,
+      "family": "untabled_exotic_base",
+      "familyLabel": "Untabled exotic base classes",
+      "label": "Wilder",
+      "maxLevel": 20,
+      "nextLevel": 1
+    },
+    {
+      "classId": "class:adept",
+      "currentLevel": 0,
+      "family": "crb_npc_ex",
+      "familyLabel": "CRB NPC / Ex-* classes",
+      "label": "Adept",
+      "maxLevel": 20,
+      "nextLevel": 1
+    },
+    {
+      "classId": "class:aristocrat",
+      "currentLevel": 0,
+      "family": "crb_npc_ex",
+      "familyLabel": "CRB NPC / Ex-* classes",
+      "label": "Aristocrat",
+      "maxLevel": 20,
+      "nextLevel": 1
+    },
+    {
+      "classId": "class:commoner",
+      "currentLevel": 0,
+      "family": "crb_npc_ex",
+      "familyLabel": "CRB NPC / Ex-* classes",
+      "label": "Commoner",
+      "maxLevel": 20,
+      "nextLevel": 1
+    },
+    {
+      "classId": "class:expert",
+      "currentLevel": 0,
+      "family": "crb_npc_ex",
+      "familyLabel": "CRB NPC / Ex-* classes",
+      "label": "Expert",
+      "maxLevel": 20,
+      "nextLevel": 1
+    },
+    {
+      "classId": "class:warrior",
+      "currentLevel": 0,
+      "family": "crb_npc_ex",
+      "familyLabel": "CRB NPC / Ex-* classes",
+      "label": "Warrior",
+      "maxLevel": 20,
+      "nextLevel": 1
+    }
+  ],
+  "addPrestige": [
+    {
+      "book": "ultimate_psionics",
+      "classId": "class:adaptive_warrior",
+      "entryRequirements": [
+        {
+          "condition": null,
+          "status": "unmet",
+          "text": "at least 2 of: requires Combat Expertise (AC), requires Improved Feint"
+        },
+        {
+          "condition": null,
+          "status": "unmet",
+          "text": "at least 2 of: autohypnosis ranks at least 5, sense motive ranks at least 5"
+        },
+        {
+          "condition": null,
+          "status": "met",
+          "text": "base attack bonus at least 5"
+        },
+        {
+          "condition": null,
+          "status": "unmet",
+          "text": "Total Power Points above 0"
+        }
+      ],
+      "hitDie": 10,
+      "label": "Adaptive Warrior",
+      "maxLevel": 10,
+      "nextLevel": 1,
+      "requirementsAllMet": false
+    },
+    {
+      "book": "adventurers_guide",
+      "classId": "class:aldori_swordlord",
+      "entryRequirements": [
+        {
+          "condition": null,
+          "status": "unmet",
+          "text": "at least 4 of: requires Dazzling Display, requires Exotic Weapon Proficiency and requires aldori dueling sword chosen for core rulebook:feat:exotic weapon proficiency, requires Weapon Finesse, requires Weapon Focus and requires aldori dueling sword chosen for core rulebook:feat:weapon focus"
+        },
+        {
+          "condition": null,
+          "status": "unmet",
+          "text": "at least 4 of: acrobatics ranks at least 3, intimidate ranks at least 5, knowledge nobility ranks at least 3, sense motive ranks at least 3"
+        }
+      ],
+      "hitDie": 10,
+      "label": "Aldori Swordlord",
+      "maxLevel": 10,
+      "nextLevel": 1,
+      "requirementsAllMet": false
+    },
+    {
+      "book": "core_rulebook",
+      "classId": "class:arcane_archer",
+      "entryRequirements": [
+        {
+          "condition": null,
+          "status": "unmet",
+          "text": "at least 2 of: requires Point-Blank Shot (attack), requires Precise Shot"
+        },
+        {
+          "condition": null,
+          "status": "unmet",
+          "text": "at least 1 of: requires Weapon Focus and requires longbow chosen for core rulebook:feat:weapon focus, requires Weapon Focus and requires shortbow chosen for core rulebook:feat:weapon focus"
+        },
+        {
+          "condition": null,
+          "status": "unmet",
+          "text": "highest arcane spell level at least 1"
+        },
+        {
+          "condition": null,
+          "status": "met",
+          "text": "base attack bonus at least 6"
+        }
+      ],
+      "hitDie": 10,
+      "label": "Arcane Archer",
+      "maxLevel": 10,
+      "nextLevel": 1,
+      "requirementsAllMet": false
+    },
+    {
+      "book": "core_rulebook",
+      "classId": "class:arcane_trickster",
+      "entryRequirements": [
+        {
+          "condition": null,
+          "status": "unmet",
+          "text": "at least 1 of: requires alignment NG or TN or NE or CG or CN or CE, Bypass Class Alignment Arcane Trickster exactly 1"
+        },
+        {
+          "condition": null,
+          "status": "unmet",
+          "text": "at least 3 of: disable device ranks at least 4, escape artist ranks at least 4, knowledge arcana ranks at least 4"
+        },
+        {
+          "condition": null,
+          "status": "unmet",
+          "text": "requires Mage Hand"
+        },
+        {
+          "condition": null,
+          "status": "unmet",
+          "text": "highest arcane spell level at least 2"
+        },
+        {
+          "condition": null,
+          "status": "unmet",
+          "text": "Sneak Attack Dice at least 2"
+        }
+      ],
+      "hitDie": 6,
+      "label": "Arcane Trickster",
+      "maxLevel": 10,
+      "nextLevel": 1,
+      "requirementsAllMet": false
+    },
+    {
+      "book": "adventurers_guide",
+      "classId": "class:argent_dramaturge",
+      "entryRequirements": [
+        {
+          "condition": null,
+          "status": "unmet",
+          "text": "requires Skill Focus"
+        },
+        {
+          "condition": null,
+          "status": "unmet",
+          "text": "requires perform chosen for core rulebook:feat:skill focus"
+        },
+        {
+          "condition": null,
+          "status": "unmet",
+          "text": "at least 4 of: knowledge arcana ranks at least 2, knowledge history ranks at least 2, perform sing ranks at least 6, spellcraft ranks at least 6"
+        },
+        {
+          "condition": "requires a spell with the named descriptor",
+          "status": "situational",
+          "text": "requires a spell with the named descriptor"
+        }
+      ],
+      "hitDie": 6,
+      "label": "Argent Dramaturge",
+      "maxLevel": 10,
+      "nextLevel": 1,
+      "requirementsAllMet": false
+    },
+    {
+      "book": "adventurers_guide",
+      "classId": "class:asavir",
+      "entryRequirements": [
+        {
+          "condition": null,
+          "status": "unmet",
+          "text": "requires Mounted Combat"
+        },
+        {
+          "condition": null,
+          "status": "met",
+          "text": "base attack bonus at least 4"
+        },
+        {
+          "condition": null,
+          "status": "unmet",
+          "text": "at least 2 of: handle animal ranks at least 5, ride ranks at least 5"
+        }
+      ],
+      "hitDie": 10,
+      "label": "Asavir",
+      "maxLevel": 10,
+      "nextLevel": 1,
+      "requirementsAllMet": false
+    },
+    {
+      "book": "adventurers_guide",
+      "classId": "class:aspis_agent",
+      "entryRequirements": [
+        {
+          "condition": null,
+          "status": "unmet",
+          "text": "at least 7 of: appraise ranks at least 5, bluff ranks at least 5, craft traps ranks at least 5, disable device ranks at least 5, intimidate ranks at least 5, knowledge history ranks at least 5, perception ranks at least 5"
+        },
+        {
+          "condition": null,
+          "status": "unmet",
+          "text": "requires proficiency with Whip"
+        },
+        {
+          "condition": null,
+          "status": "unmet",
+          "text": "at least 1 of: requires Trap Sense, requires Detect Secret Doors"
+        }
+      ],
+      "hitDie": 8,
+      "label": "Aspis Agent",
+      "maxLevel": 10,
+      "nextLevel": 1,
+      "requirementsAllMet": false
+    },
+    {
+      "book": "core_rulebook",
+      "classId": "class:assassin",
+      "entryRequirements": [
+        {
+          "condition": null,
+          "status": "unmet",
+          "text": "at least 1 of: requires alignment LE or NE or CE, Bypass Class Alignment Assassin exactly 1"
+        },
+        {
+          "condition": null,
+          "status": "unmet",
+          "text": "at least 2 of: disguise ranks at least 2, stealth ranks at least 5"
+        }
+      ],
+      "hitDie": 8,
+      "label": "Assassin",
+      "maxLevel": 10,
+      "nextLevel": 1,
+      "requirementsAllMet": false
+    },
+    {
+      "book": "advanced_players_guide",
+      "classId": "class:battle_herald",
+      "entryRequirements": [
+        {
+          "condition": null,
+          "status": "unmet",
+          "text": "at least 2 of: requires Challenge, requires Inspire Courage"
+        },
+        {
+          "condition": null,
+          "status": "unmet",
+          "text": "at least 4 of: diplomacy ranks at least 5, intimidate ranks at least 5, perform oratory ranks at least 5, profession soldier ranks at least 2"
+        },
+        {
+          "condition": null,
+          "status": "met",
+          "text": "base attack bonus at least 4"
+        }
+      ],
+      "hitDie": 10,
+      "label": "Battle Herald",
+      "maxLevel": 10,
+      "nextLevel": 1,
+      "requirementsAllMet": false
+    },
+    {
+      "book": "adventurers_guide",
+      "classId": "class:bellflower_tiller",
+      "entryRequirements": [
+        {
+          "condition": null,
+          "status": "unmet",
+          "text": "requires alignment CG"
+        },
+        {
+          "condition": null,
+          "status": "unmet",
+          "text": "at least 2 of: requires 1 Teamwork from feat"
+        },
+        {
+          "condition": null,
+          "status": "unmet",
+          "text": "at least 4 of: disguise ranks at least 5, knowledge local ranks at least 3, stealth ranks at least 5, survival ranks at least 5"
+        },
+        {
+          "condition": null,
+          "status": "unmet",
+          "text": "at least 1 of: Sneak Attack Dice at least 2, at least 2 of: requires 1 Vigilante Talent from special ability"
+        }
+      ],
+      "hitDie": 8,
+      "label": "Bellflower Tiller",
+      "maxLevel": 10,
+      "nextLevel": 1,
+      "requirementsAllMet": false
+    },
+    {
+      "book": "ultimate_psionics",
+      "classId": "class:body_snatcher",
+      "entryRequirements": [
+        {
+          "condition": null,
+          "status": "unmet",
+          "text": "requires Extend Power"
+        },
+        {
+          "condition": null,
+          "status": "unmet",
+          "text": "at least 2 of: requires 1 Metapsionic from feat"
+        },
+        {
+          "condition": null,
+          "status": "unmet",
+          "text": "at least 3 of: bluff ranks at least 10, perform act ranks at least 3, sense motive ranks at least 3"
+        },
+        {
+          "condition": null,
+          "status": "unmet",
+          "text": "at least 2 of: requires , requires "
+        },
+        {
+          "condition": null,
+          "status": "unmet",
+          "text": "Max Manifester LVL at least 10"
+        }
+      ],
+      "hitDie": 6,
+      "label": "Body Snatcher",
+      "maxLevel": 6,
+      "nextLevel": 1,
+      "requirementsAllMet": false
+    },
+    {
+      "book": "ultimate_psionics",
+      "classId": "class:cerebremancer",
+      "entryRequirements": [
+        {
+          "condition": null,
+          "status": "unmet",
+          "text": "at least 2 of: knowledge arcana ranks at least 3, knowledge psionics ranks at least 3"
+        },
+        {
+          "condition": null,
+          "status": "unmet",
+          "text": "highest arcane spell level at least 2"
+        },
+        {
+          "condition": null,
+          "status": "unmet",
+          "text": "highest spell level at least 2"
+        }
+      ],
+      "hitDie": 6,
+      "label": "Cerebremancer",
+      "maxLevel": 10,
+      "nextLevel": 1,
+      "requirementsAllMet": false
+    },
+    {
+      "book": "adventurers_guide",
+      "classId": "class:cyphermage",
+      "entryRequirements": [
+        {
+          "condition": null,
+          "status": "unmet",
+          "text": "at least 2 of: requires Cypher Magic, requires Scribe Scroll"
+        },
+        {
+          "condition": null,
+          "status": "unmet",
+          "text": "at least 2 of: requires the Aklo language, requires the Draconic language, requires the Giant language, requires the Shoanti language, requires the Thassilonian language, requires the Varisian language"
+        },
+        {
+          "condition": null,
+          "status": "unmet",
+          "text": "at least 3 of: knowledge arcana ranks at least 5, knowledge history ranks at least 5, linguistics ranks at least 5"
+        },
+        {
+          "condition": null,
+          "status": "unmet",
+          "text": "highest arcane spell level at least 1"
+        }
+      ],
+      "hitDie": 6,
+      "label": "Cyphermage",
+      "maxLevel": 10,
+      "nextLevel": 1,
+      "requirementsAllMet": false
+    },
+    {
+      "book": "ultimate_psionics",
+      "classId": "class:dark_tempest",
+      "entryRequirements": [
+        {
+          "condition": null,
+          "status": "unmet",
+          "text": "requires Form Mind Blade"
+        },
+        {
+          "condition": null,
+          "status": "unmet",
+          "text": "at least 1 of: requires Mind Blade Knight, Mnd Blade Enhancement at least 2"
+        },
+        {
+          "condition": null,
+          "status": "unmet",
+          "text": "knowledge psionics ranks at least 6"
+        },
+        {
+          "condition": null,
+          "status": "unmet",
+          "text": "highest spell level at least 1"
+        }
+      ],
+      "hitDie": 10,
+      "label": "Dark Tempest",
+      "maxLevel": 10,
+      "nextLevel": 1,
+      "requirementsAllMet": false
+    },
+    {
+      "book": "adventurers_guide",
+      "classId": "class:death_slayer",
+      "entryRequirements": [
+        {
+          "condition": null,
+          "status": "unmet",
+          "text": "at least 3 of: requires Exotic Weapon Proficiency and requires sawtooth sabre chosen for core rulebook:feat:exotic weapon proficiency, requires Great Fortitude, requires Weapon Focus and requires sawtooth sabre chosen for core rulebook:feat:weapon focus"
+        },
+        {
+          "condition": null,
+          "status": "unmet",
+          "text": "at least 3 of: knowledge religion ranks at least 5, perception ranks at least 5, stealth ranks at least 5"
+        },
+        {
+          "condition": null,
+          "status": "unmet",
+          "text": "highest divine spell level at least 3"
+        }
+      ],
+      "hitDie": 8,
+      "label": "Death Slayer",
+      "maxLevel": 10,
+      "nextLevel": 1,
+      "requirementsAllMet": false
+    },
+    {
+      "book": "book_of_the_damned_volume_2",
+      "classId": "class:demoniac",
+      "entryRequirements": [
+        {
+          "condition": null,
+          "status": "unmet",
+          "text": "at least 2 of: requires Iron Will, requires Demonic Obedience"
+        },
+        {
+          "condition": null,
+          "status": "unmet",
+          "text": "requires alignment CE"
+        },
+        {
+          "condition": null,
+          "status": "unmet",
+          "text": "requires a deity of the Demon Lords pantheon"
+        },
+        {
+          "condition": null,
+          "status": "unmet",
+          "text": "requires the Abyssal language"
+        },
+        {
+          "condition": null,
+          "status": "unmet",
+          "text": "at least 3 of: knowledge planes ranks at least 7, intimidate ranks at least 7, spellcraft ranks at least 7"
+        },
+        {
+          "condition": "Must have been physically traumatized by a demon",
+          "status": "situational",
+          "text": "Must have been physically traumatized by a demon"
+        }
+      ],
+      "hitDie": 8,
+      "label": "Demoniac",
+      "maxLevel": 10,
+      "nextLevel": 1,
+      "requirementsAllMet": false
+    },
+    {
+      "book": "book_of_the_damned_volume_1",
+      "classId": "class:diabolist",
+      "entryRequirements": [
+        {
+          "condition": null,
+          "status": "unmet",
+          "text": "requires alignment LN or LE or NE"
+        },
+        {
+          "condition": null,
+          "status": "unmet",
+          "text": "requires the Infernal language"
+        },
+        {
+          "condition": null,
+          "status": "unmet",
+          "text": "at least 3 of: knowledge planes ranks at least 5, knowledge religion ranks at least 3, spellcraft ranks at least 5"
+        },
+        {
+          "condition": "Must have conjured a devil using Lesser Planar Ally or Lesser Planar Binding (or a similar spell) and successfully coaxed the fiend into performing a task lasting longer than 1 day.",
+          "status": "situational",
+          "text": "Must have conjured a devil using Lesser Planar Ally or Lesser Planar Binding (or a similar spell) and successfully coaxed the fiend into performing a task lasting longer than 1 day."
+        }
+      ],
+      "hitDie": 6,
+      "label": "Diabolist",
+      "maxLevel": 10,
+      "nextLevel": 1,
+      "requirementsAllMet": false
+    },
+    {
+      "book": "inner_sea_magic",
+      "classId": "class:divine_scion",
+      "entryRequirements": [
+        {
+          "condition": null,
+          "status": "unmet",
+          "text": "at least 2 of: requires Iron Will, requires Weapon Focus"
+        },
+        {
+          "condition": null,
+          "status": "unmet",
+          "text": "requires an alignment matching the deity"
+        },
+        {
+          "condition": null,
+          "status": "unmet",
+          "text": "requires a specific deity"
+        },
+        {
+          "condition": null,
+          "status": "unmet",
+          "text": "at least 3 of: knowledge planes ranks at least 5, knowledge religion ranks at least 5, spellcraft ranks at least 5"
+        },
+        {
+          "condition": null,
+          "status": "unmet",
+          "text": "highest divine spell level at least 1"
+        }
+      ],
+      "hitDie": 8,
+      "label": "Divine Scion",
+      "maxLevel": 10,
+      "nextLevel": 1,
+      "requirementsAllMet": false
+    },
+    {
+      "book": "core_rulebook",
+      "classId": "class:dragon_disciple",
+      "entryRequirements": [
+        {
+          "condition": null,
+          "status": "unmet",
+          "text": "requires the Draconic language"
+        },
+        {
+          "condition": null,
+          "status": "unmet",
+          "text": "at least 1 of: requires Spells, at least 3 of: requires a spontaneous caster, highest arcane spell level at least 1, not sorcerer level at least 1, at least 2 of: sorcerer level at least 1, requires Draconic Bloodline"
+        },
+        {
+          "condition": null,
+          "status": "met",
+          "text": "not requires a Dragon creature"
+        },
+        {
+          "condition": null,
+          "status": "unmet",
+          "text": "knowledge arcana ranks at least 5"
+        },
+        {
+          "condition": null,
+          "status": "met",
+          "text": "not requires "
+        }
+      ],
+      "hitDie": 12,
+      "label": "Dragon Disciple",
+      "maxLevel": 10,
+      "nextLevel": 1,
+      "requirementsAllMet": false
+    },
+    {
+      "book": "core_rulebook",
+      "classId": "class:duelist",
+      "entryRequirements": [
+        {
+          "condition": null,
+          "status": "unmet",
+          "text": "at least 3 of: requires Dodge, requires Mobility, requires Weapon Finesse"
+        },
+        {
+          "condition": null,
+          "status": "unmet",
+          "text": "at least 2 of: acrobatics ranks at least 2, requires 2 ranks in a perform skill"
+        },
+        {
+          "condition": null,
+          "status": "met",
+          "text": "base attack bonus at least 6"
+        }
+      ],
+      "hitDie": 10,
+      "label": "Duelist",
+      "maxLevel": 10,
+      "nextLevel": 1,
+      "requirementsAllMet": false
+    },
+    {
+      "book": "core_rulebook",
+      "classId": "class:eldritch_knight",
+      "entryRequirements": [
+        {
+          "condition": null,
+          "status": "met",
+          "text": "requires Weapon Prof ~ Martial"
+        },
+        {
+          "condition": null,
+          "status": "unmet",
+          "text": "highest arcane spell level at least 3"
+        }
+      ],
+      "hitDie": 10,
+      "label": "Eldritch Knight",
+      "maxLevel": 10,
+      "nextLevel": 1,
+      "requirementsAllMet": false
+    },
+    {
+      "book": "ultimate_psionics",
+      "classId": "class:elocater",
+      "entryRequirements": [
+        {
+          "condition": null,
+          "status": "unmet",
+          "text": "at least 2 of: requires Dodge, requires Mobility"
+        },
+        {
+          "condition": null,
+          "status": "unmet",
+          "text": "at least 1 of: requires Spring Attack, requires Nomad's Step ~ Psychoportation from special ability (no record in the corpus)"
+        },
+        {
+          "condition": null,
+          "status": "unmet",
+          "text": "acrobatics ranks at least 5"
+        },
+        {
+          "condition": null,
+          "status": "unmet",
+          "text": "highest spell level at least 1"
+        },
+        {
+          "condition": null,
+          "status": "met",
+          "text": "base attack bonus at least 3"
+        }
+      ],
+      "hitDie": 8,
+      "label": "Elocater",
+      "maxLevel": 10,
+      "nextLevel": 1,
+      "requirementsAllMet": false
+    },
+    {
+      "book": "inner_sea_intrigue",
+      "classId": "class:enchanting_courtesan",
+      "entryRequirements": [
+        {
+          "condition": null,
+          "status": "unmet",
+          "text": "at least 1 of: requires Spell Focus and requires divination chosen for core rulebook:feat:spell focus, requires Spell Focus and requires enchantment chosen for core rulebook:feat:spell focus"
+        },
+        {
+          "condition": null,
+          "status": "unmet",
+          "text": "at least 1 of: perform act ranks at least 2, perform dance ranks at least 2"
+        },
+        {
+          "condition": null,
+          "status": "unmet",
+          "text": "at least 3 of: bluff ranks at least 5, knowledge arcana ranks at least 2, sense motive ranks at least 5"
+        },
+        {
+          "condition": "requires 2 Divination school spells of level 1 or higher",
+          "status": "situational",
+          "text": "requires 2 Divination school spells of level 1 or higher"
+        },
+        {
+          "condition": "requires 1 Divination school spells of level 2 or higher",
+          "status": "situational",
+          "text": "requires 1 Divination school spells of level 2 or higher"
+        },
+        {
+          "condition": "requires 2 Enchantment school spells of level 1 or higher",
+          "status": "situational",
+          "text": "requires 2 Enchantment school spells of level 1 or higher"
+        },
+        {
+          "condition": "requires 1 Enchantment school spells of level 2 or higher",
+          "status": "situational",
+          "text": "requires 1 Enchantment school spells of level 2 or higher"
+        }
+      ],
+      "hitDie": 6,
+      "label": "Enchanting Courtesan",
+      "maxLevel": 10,
+      "nextLevel": 1,
+      "requirementsAllMet": false
+    },
+    {
+      "book": "inner_sea_gods",
+      "classId": "class:evangelist",
+      "entryRequirements": [
+        {
+          "condition": null,
+          "status": "unmet",
+          "text": "requires Deific Obedience"
+        },
+        {
+          "condition": "requires 5 ranks in a base skill",
+          "status": "situational",
+          "text": "at least 1 of: base attack bonus at least 5, at least 1 of: highest divine spell level at least 3, highest arcane spell level at least 3, requires 5 ranks in a base skill"
+        },
+        {
+          "condition": "Alignment: Within one step of chosen deity. Deity: Must worship a single, specific deity. Feat: Deific Obedience* Special: Any one of the following: base attack bonus +5, 5 ranks in any skill other than Knowledge (religion), or ability to cast 3rd-level spells.",
+          "status": "situational",
+          "text": "Alignment: Within one step of chosen deity. Deity: Must worship a single, specific deity. Feat: Deific Obedience* Special: Any one of the following: base attack bonus +5, 5 ranks in any skill other than Knowledge (religion), or ability to cast 3rd-level spells."
+        }
+      ],
+      "hitDie": 8,
+      "label": "Evangelist",
+      "maxLevel": 10,
+      "nextLevel": 1,
+      "requirementsAllMet": false
+    },
+    {
+      "book": "inner_sea_gods",
+      "classId": "class:exalted",
+      "entryRequirements": [
+        {
+          "condition": null,
+          "status": "unmet",
+          "text": "at least 2 of: requires Deific Obedience, requires skill focus (knowledge (religion)) from feat (no record in the corpus)"
+        },
+        {
+          "condition": null,
+          "status": "unmet",
+          "text": "requires an alignment matching the deity"
+        },
+        {
+          "condition": null,
+          "status": "unmet",
+          "text": "requires a specific deity"
+        },
+        {
+          "condition": null,
+          "status": "unmet",
+          "text": "at least 2 of: diplomacy ranks at least 5, knowledge religion ranks at least 5"
+        },
+        {
+          "condition": null,
+          "status": "unmet",
+          "text": "highest divine spell level at least 3"
+        },
+        {
+          "condition": "Alignment: Same as chosen deity. Deity: Must worship a single, specific deity. Feats: Deific Obedience*, Skill Focus (Knowledge [religion]). Skills: Diplomacy 5 ranks, Knowledge (religion) 5 ranks. Spells: Ability to cast 3rd-level divine spells.",
+          "status": "situational",
+          "text": "Alignment: Same as chosen deity. Deity: Must worship a single, specific deity. Feats: Deific Obedience*, Skill Focus (Knowledge [religion]). Skills: Diplomacy 5 ranks, Knowledge (religion) 5 ranks. Spells: Ability to cast 3rd-level divine spells."
+        }
+      ],
+      "hitDie": 8,
+      "label": "Exalted",
+      "maxLevel": 10,
+      "nextLevel": 1,
+      "requirementsAllMet": false
+    },
+    {
+      "book": "adventurers_guide",
+      "classId": "class:golden_legionnaire",
+      "entryRequirements": [
+        {
+          "condition": null,
+          "status": "unmet",
+          "text": "requires alignment LG or NG or CG"
+        },
+        {
+          "condition": null,
+          "status": "met",
+          "text": "requires Armor Proficiency, Heavy"
+        },
+        {
+          "condition": null,
+          "status": "met",
+          "text": "base attack bonus at least 5"
+        },
+        {
+          "condition": null,
+          "status": "unmet",
+          "text": "at least 2 of: diplomacy ranks at least 5, intimidate ranks at least 5"
+        }
+      ],
+      "hitDie": 10,
+      "label": "Golden Legionnaire",
+      "maxLevel": 10,
+      "nextLevel": 1,
+      "requirementsAllMet": false
+    },
+    {
+      "book": "adventurers_guide",
+      "classId": "class:gray_corsair",
+      "entryRequirements": [
+        {
+          "condition": null,
+          "status": "unmet",
+          "text": "requires alignment LG or NG or CG or LN or TN or CN"
+        },
+        {
+          "condition": null,
+          "status": "unmet",
+          "text": "requires Sea Legs (Acrobatics)"
+        },
+        {
+          "condition": null,
+          "status": "unmet",
+          "text": "at least 3 of: acrobatics ranks at least 5, profession sailor ranks at least 5, stealth ranks at least 5"
+        }
+      ],
+      "hitDie": 8,
+      "label": "Gray Corsair",
+      "maxLevel": 10,
+      "nextLevel": 1,
+      "requirementsAllMet": false
+    },
+    {
+      "book": "inner_sea_world_guide",
+      "classId": "class:harrower",
+      "entryRequirements": [
+        {
+          "condition": null,
+          "status": "unmet",
+          "text": "requires Harrowed"
+        },
+        {
+          "condition": null,
+          "status": "met",
+          "text": "not requires alignment TN"
+        },
+        {
+          "condition": null,
+          "status": "unmet",
+          "text": "at least 1 of: knowledge arcana ranks at least 5, knowledge religion ranks at least 5"
+        },
+        {
+          "condition": "requires 5 ranks in a perform skill",
+          "status": "situational",
+          "text": "requires 5 ranks in a perform skill"
+        },
+        {
+          "condition": "requires 3 Divination school spells of level 0 or higher",
+          "status": "situational",
+          "text": "requires 3 Divination school spells of level 0 or higher"
+        },
+        {
+          "condition": null,
+          "status": "unmet",
+          "text": "at least 1 of: highest arcane spell level at least 3, highest divine spell level at least 3"
+        },
+        {
+          "condition": "Must own a Harrow deck",
+          "status": "situational",
+          "text": "Must own a Harrow deck"
+        }
+      ],
+      "hitDie": 6,
+      "label": "Harrower",
+      "maxLevel": 10,
+      "nextLevel": 1,
+      "requirementsAllMet": false
+    },
+    {
+      "book": "adventurers_guide",
+      "classId": "class:hellknight",
+      "entryRequirements": [
+        {
+          "condition": null,
+          "status": "met",
+          "text": "requires Armor Proficiency, Heavy"
+        },
+        {
+          "condition": null,
+          "status": "unmet",
+          "text": "requires alignment LG or LN or LE"
+        },
+        {
+          "condition": null,
+          "status": "unmet",
+          "text": "at least 2 of: intimidate ranks at least 5, knowledge planes ranks at least 2"
+        },
+        {
+          "condition": "Must slay a devil with HD greater than your own. This must be witnessed by a Hellknight",
+          "status": "situational",
+          "text": "Must slay a devil with HD greater than your own. This must be witnessed by a Hellknight"
+        },
+        {
+          "condition": null,
+          "status": "met",
+          "text": "base attack bonus at least 5"
+        }
+      ],
+      "hitDie": 10,
+      "label": "Hellknight",
+      "maxLevel": 10,
+      "nextLevel": 1,
+      "requirementsAllMet": false
+    },
+    {
+      "book": "adventurers_guide",
+      "classId": "class:hellknight_signifer",
+      "entryRequirements": [
+        {
+          "condition": null,
+          "status": "unmet",
+          "text": "requires alignment LG or LN or LE"
+        },
+        {
+          "condition": null,
+          "status": "met",
+          "text": "requires Armor Proficiency, Medium"
+        },
+        {
+          "condition": null,
+          "status": "unmet",
+          "text": "at least 1 of: requires Arcane Armor Training, requires Warrior Priest (Mythic)"
+        },
+        {
+          "condition": null,
+          "status": "unmet",
+          "text": "at least 3 of: intimidate ranks at least 2, knowledge planes ranks at least 5, spellcraft ranks at least 5"
+        },
+        {
+          "condition": null,
+          "status": "unmet",
+          "text": "highest spell level at least 3"
+        }
+      ],
+      "hitDie": 8,
+      "label": "Hellknight Signifer",
+      "maxLevel": 10,
+      "nextLevel": 1,
+      "requirementsAllMet": false
+    },
+    {
+      "book": "advanced_players_guide",
+      "classId": "class:holy_vindicator",
+      "entryRequirements": [
+        {
+          "condition": null,
+          "status": "unmet",
+          "text": "requires 1 Channel Energy from special ability"
+        },
+        {
+          "condition": null,
+          "status": "unmet",
+          "text": "at least 1 of: requires Alignment Channel, requires Elemental Channel"
+        },
+        {
+          "condition": null,
+          "status": "unmet",
+          "text": "knowledge religion ranks at least 5"
+        },
+        {
+          "condition": null,
+          "status": "unmet",
+          "text": "highest divine spell level at least 1"
+        },
+        {
+          "condition": null,
+          "status": "met",
+          "text": "base attack bonus at least 5"
+        }
+      ],
+      "hitDie": 10,
+      "label": "Holy Vindicator",
+      "maxLevel": 10,
+      "nextLevel": 1,
+      "requirementsAllMet": false
+    },
+    {
+      "book": "advanced_players_guide",
+      "classId": "class:horizon_walker",
+      "entryRequirements": [
+        {
+          "condition": null,
+          "status": "unmet",
+          "text": "requires Endurance"
+        },
+        {
+          "condition": null,
+          "status": "unmet",
+          "text": "knowledge geography ranks at least 6"
+        }
+      ],
+      "hitDie": 10,
+      "label": "Horizon Walker",
+      "maxLevel": 10,
+      "nextLevel": 1,
+      "requirementsAllMet": false
+    },
+    {
+      "book": "adventurers_guide",
+      "classId": "class:lantern_bearer",
+      "entryRequirements": [
+        {
+          "condition": null,
+          "status": "unmet",
+          "text": "requires alignment LG or NG or CG"
+        },
+        {
+          "condition": null,
+          "status": "unmet",
+          "text": "at least 3 of: knowledge dungeoneering ranks at least 5, knowledge nature ranks at least 2, survival ranks at least 5"
+        },
+        {
+          "condition": null,
+          "status": "unmet",
+          "text": "at least 2 of: requires proficiency with Longbow, requires proficiency with Martial weapons"
+        }
+      ],
+      "hitDie": 10,
+      "label": "Lantern Bearer",
+      "maxLevel": 10,
+      "nextLevel": 1,
+      "requirementsAllMet": false
+    },
+    {
+      "book": "inner_sea_intrigue",
+      "classId": "class:lion_blade",
+      "entryRequirements": [
+        {
+          "condition": null,
+          "status": "unmet",
+          "text": "at least 3 of: requires Deceitful (Bluff), requires Improved Initiative, requires Skill Focus and requires a perform option chosen for Skill Focus"
+        },
+        {
+          "condition": null,
+          "status": "unmet",
+          "text": "at least 1 of: requires Inspire Competence, requires Bardic Performance"
+        },
+        {
+          "condition": null,
+          "status": "unmet",
+          "text": "at least 3 of: bluff ranks at least 3, disguise ranks at least 5, stealth ranks at least 5"
+        },
+        {
+          "condition": null,
+          "status": "unmet",
+          "text": "at least 1 of: perform sing ranks at least 3, perform act ranks at least 3"
+        },
+        {
+          "condition": "Servant of Taldor or the Sovereign Court affiliation",
+          "status": "situational",
+          "text": "Servant of Taldor or the Sovereign Court affiliation"
+        },
+        {
+          "condition": null,
+          "status": "unmet",
+          "text": "Sneak Attack Dice at least 2"
+        }
+      ],
+      "hitDie": 8,
+      "label": "Lion Blade",
+      "maxLevel": 10,
+      "nextLevel": 1,
+      "requirementsAllMet": false
+    },
+    {
+      "book": "core_rulebook",
+      "classId": "class:loremaster",
+      "entryRequirements": [
+        {
+          "condition": null,
+          "status": "unmet",
+          "text": "requires Skill Focus"
+        },
+        {
+          "condition": null,
+          "status": "unmet",
+          "text": "requires knowledge chosen for core rulebook:feat:skill focus"
+        },
+        {
+          "condition": null,
+          "status": "unmet",
+          "text": "at least 3 of: requires 1 Metamagic from feat, requires 1 ItemCreation from feat"
+        },
+        {
+          "condition": "requires 7 ranks in a knowledge skill; requires 7 ranks in a knowledge skill",
+          "status": "situational",
+          "text": "at least 2 of: requires 7 ranks in a knowledge skill, requires 7 ranks in a knowledge skill"
+        },
+        {
+          "condition": "requires 1 Divination school spells of level 3 or higher",
+          "status": "situational",
+          "text": "requires 1 Divination school spells of level 3 or higher"
+        },
+        {
+          "condition": "requires 7 Divination school spells of level 0 or higher",
+          "status": "situational",
+          "text": "requires 7 Divination school spells of level 0 or higher"
+        }
+      ],
+      "hitDie": 6,
+      "label": "Loremaster",
+      "maxLevel": 10,
+      "nextLevel": 1,
+      "requirementsAllMet": false
+    },
+    {
+      "book": "inner_sea_world_guide",
+      "classId": "class:low_templar",
+      "entryRequirements": [
+        {
+          "condition": null,
+          "status": "unmet",
+          "text": "at least 2 of: requires Mounted Combat, requires Weapon Focus and requires a martial option chosen for Weapon Focus"
+        },
+        {
+          "condition": null,
+          "status": "unmet",
+          "text": "at least 2 of: bluff ranks at least 5, ride ranks at least 5"
+        },
+        {
+          "condition": null,
+          "status": "unmet",
+          "text": "at least 1 of: knowledge nobility ranks at least 2, knowledge planes ranks at least 2"
+        }
+      ],
+      "hitDie": 10,
+      "label": "Low Templar",
+      "maxLevel": 10,
+      "nextLevel": 1,
+      "requirementsAllMet": false
+    },
+    {
+      "book": "adventurers_guide",
+      "classId": "class:magaambyan_arcanist",
+      "entryRequirements": [
+        {
+          "condition": null,
+          "status": "unmet",
+          "text": "requires alignment LG or NG or CG"
+        },
+        {
+          "condition": null,
+          "status": "unmet",
+          "text": "at least 2 of: requires Scholar, requires Spell Mastery"
+        },
+        {
+          "condition": null,
+          "status": "unmet",
+          "text": "at least 3 of: spellcraft ranks at least 5, knowledge arcana ranks at least 5, knowledge nature ranks at least 5"
+        },
+        {
+          "condition": null,
+          "status": "unmet",
+          "text": "highest arcane spell level at least 3"
+        },
+        {
+          "condition": "requires a prepared caster",
+          "status": "situational",
+          "text": "requires a prepared caster"
+        }
+      ],
+      "hitDie": 6,
+      "label": "Magaambyan Arcanist",
+      "maxLevel": 10,
+      "nextLevel": 1,
+      "requirementsAllMet": false
+    },
+    {
+      "book": "adventurers_guide",
+      "classId": "class:mammoth_rider",
+      "entryRequirements": [
+        {
+          "condition": null,
+          "status": "met",
+          "text": "base attack bonus at least 6"
+        },
+        {
+          "condition": null,
+          "status": "unmet",
+          "text": "at least 3 of: handle animal ranks at least 9, ride ranks at least 9, survival ranks at least 5"
+        },
+        {
+          "condition": null,
+          "status": "unmet",
+          "text": "at least 1 of: Animal Companion LVL at least 6, Cavalier Mount LVL at least 6, Special Mount LVL at least 6"
+        }
+      ],
+      "hitDie": 12,
+      "label": "Mammoth Rider",
+      "maxLevel": 10,
+      "nextLevel": 1,
+      "requirementsAllMet": false
+    },
+    {
+      "book": "advanced_players_guide",
+      "classId": "class:master_chymist",
+      "entryRequirements": [
+        {
+          "condition": null,
+          "status": "unmet",
+          "text": "at least 2 of: requires Mutagen, at least 1 of: requires Bite damage die steps, requires Infuse Mutagen"
+        },
+        {
+          "condition": null,
+          "status": "unmet",
+          "text": "highest arcane spell level at least 3"
+        }
+      ],
+      "hitDie": 10,
+      "label": "Master Chymist",
+      "maxLevel": 10,
+      "nextLevel": 1,
+      "requirementsAllMet": false
+    },
+    {
+      "book": "advanced_players_guide",
+      "classId": "class:master_spy",
+      "entryRequirements": [
+        {
+          "condition": null,
+          "status": "unmet",
+          "text": "at least 2 of: requires Deceitful (Bluff), requires Iron Will"
+        },
+        {
+          "condition": null,
+          "status": "unmet",
+          "text": "at least 4 of: bluff ranks at least 7, disguise ranks at least 7, perception ranks at least 5, sense motive ranks at least 5"
+        }
+      ],
+      "hitDie": 8,
+      "label": "Master Spy",
+      "maxLevel": 10,
+      "nextLevel": 1,
+      "requirementsAllMet": false
+    },
+    {
+      "book": "ultimate_psionics",
+      "classId": "class:metaforge",
+      "entryRequirements": [
+        {
+          "condition": null,
+          "status": "unmet",
+          "text": "at least 2 of: requires Enhanced Mind Blade, requires Invigorating Suit"
+        },
+        {
+          "condition": "requires 3 ranks in a craft skill",
+          "status": "situational",
+          "text": "requires 3 ranks in a craft skill"
+        }
+      ],
+      "hitDie": 10,
+      "label": "Metaforge",
+      "maxLevel": 10,
+      "nextLevel": 1,
+      "requirementsAllMet": false
+    },
+    {
+      "book": "ultimate_psionics",
+      "classId": "class:metamind",
+      "entryRequirements": [
+        {
+          "condition": null,
+          "status": "unmet",
+          "text": "requires Psicrystal Affinity"
+        },
+        {
+          "condition": null,
+          "status": "unmet",
+          "text": "at least 2 of: knowledge psionics ranks at least 5, spellcraft ranks at least 2"
+        },
+        {
+          "condition": null,
+          "status": "unmet",
+          "text": "Max Manifester LVL at least 4"
+        }
+      ],
+      "hitDie": 6,
+      "label": "Metamind",
+      "maxLevel": 10,
+      "nextLevel": 1,
+      "requirementsAllMet": false
+    },
+    {
+      "book": "ultimate_psionics",
+      "classId": "class:metamorph",
+      "entryRequirements": [
+        {
+          "condition": null,
+          "status": "unmet",
+          "text": "requires Improved Metamorphosis"
+        },
+        {
+          "condition": null,
+          "status": "unmet",
+          "text": "at least 2 of: autohypnosis ranks at least 5, knowledge psionics ranks at least 5"
+        },
+        {
+          "condition": null,
+          "status": "unmet",
+          "text": "requires "
+        }
+      ],
+      "hitDie": 8,
+      "label": "Metamorph",
+      "maxLevel": 10,
+      "nextLevel": 1,
+      "requirementsAllMet": false
+    },
+    {
+      "book": "ultimate_psionics",
+      "classId": "class:mystic_archer",
+      "entryRequirements": [
+        {
+          "condition": null,
+          "status": "unmet",
+          "text": "at least 3 of: requires Intuitive Shot, requires Point-Blank Shot (attack), requires Psionic Shot"
+        },
+        {
+          "condition": null,
+          "status": "unmet",
+          "text": "perception ranks at least 6"
+        },
+        {
+          "condition": null,
+          "status": "met",
+          "text": "base attack bonus at least 6"
+        },
+        {
+          "condition": null,
+          "status": "unmet",
+          "text": "Is Psionic above 0"
+        }
+      ],
+      "hitDie": 10,
+      "label": "Mystic Archer",
+      "maxLevel": 7,
+      "nextLevel": 1,
+      "requirementsAllMet": false
+    },
+    {
+      "book": "core_rulebook",
+      "classId": "class:mystic_theurge",
+      "entryRequirements": [
+        {
+          "condition": null,
+          "status": "unmet",
+          "text": "at least 2 of: knowledge arcana ranks at least 3, knowledge religion ranks at least 3"
+        },
+        {
+          "condition": null,
+          "status": "unmet",
+          "text": "highest divine spell level at least 2"
+        },
+        {
+          "condition": null,
+          "status": "unmet",
+          "text": "highest arcane spell level at least 2"
+        }
+      ],
+      "hitDie": 6,
+      "label": "Mystic Theurge",
+      "maxLevel": 10,
+      "nextLevel": 1,
+      "requirementsAllMet": false
+    },
+    {
+      "book": "advanced_players_guide",
+      "classId": "class:nature_warden",
+      "entryRequirements": [
+        {
+          "condition": null,
+          "status": "unmet",
+          "text": "requires 1 FavoredTerrain from special ability"
+        },
+        {
+          "condition": null,
+          "status": "unmet",
+          "text": "requires Wild Empathy"
+        },
+        {
+          "condition": null,
+          "status": "unmet",
+          "text": "at least 4 of: handle animal ranks at least 5, knowledge geography ranks at least 5, knowledge nature ranks at least 5, survival ranks at least 5"
+        },
+        {
+          "condition": null,
+          "status": "unmet",
+          "text": "highest divine spell level at least 2"
+        },
+        {
+          "condition": null,
+          "status": "met",
+          "text": "base attack bonus at least 4"
+        },
+        {
+          "condition": null,
+          "status": "unmet",
+          "text": "Animal Companion LVL above 0"
+        }
+      ],
+      "hitDie": 8,
+      "label": "Nature Warden",
+      "maxLevel": 10,
+      "nextLevel": 1,
+      "requirementsAllMet": false
+    },
+    {
+      "book": "core_rulebook",
+      "classId": "class:pathfinder_chronicler",
+      "entryRequirements": [
+        {
+          "condition": null,
+          "status": "unmet",
+          "text": "at least 3 of: linguistics ranks at least 3, perform oratory ranks at least 5, profession scribe ranks at least 5"
+        }
+      ],
+      "hitDie": 8,
+      "label": "Pathfinder Chronicler",
+      "maxLevel": 10,
+      "nextLevel": 1,
+      "requirementsAllMet": false
+    },
+    {
+      "book": "adventurers_guide",
+      "classId": "class:pathfinder_delver",
+      "entryRequirements": [
+        {
+          "condition": null,
+          "status": "unmet",
+          "text": "at least 4 of: acrobatics ranks at least 5, disable device ranks at least 4, knowledge history ranks at least 4, perception ranks at least 5"
+        }
+      ],
+      "hitDie": 8,
+      "label": "Pathfinder Delver",
+      "maxLevel": 10,
+      "nextLevel": 1,
+      "requirementsAllMet": false
+    },
+    {
+      "book": "adventurers_guide",
+      "classId": "class:pathfinder_savant",
+      "entryRequirements": [
+        {
+          "condition": null,
+          "status": "unmet",
+          "text": "requires Magical Aptitude (Spellcraft)"
+        },
+        {
+          "condition": null,
+          "status": "unmet",
+          "text": "requires 1 ItemCreation from feat"
+        },
+        {
+          "condition": null,
+          "status": "unmet",
+          "text": "at least 3 of: knowledge arcana ranks at least 5, spellcraft ranks at least 5, use magic device ranks at least 5"
+        },
+        {
+          "condition": null,
+          "status": "unmet",
+          "text": "at least 1 of: highest arcane spell level at least 2, highest divine spell level at least 2"
+        }
+      ],
+      "hitDie": 6,
+      "label": "Pathfinder Savant",
+      "maxLevel": 10,
+      "nextLevel": 1,
+      "requirementsAllMet": false
+    },
+    {
+      "book": "ultimate_psionics",
+      "classId": "class:phrenic_slayer",
+      "entryRequirements": [
+        {
+          "condition": null,
+          "status": "unmet",
+          "text": "at least 1 of: requires Skill Focus and requires survival chosen for core rulebook:feat:skill focus, requires Track"
+        },
+        {
+          "condition": null,
+          "status": "unmet",
+          "text": "knowledge psionics ranks at least 1"
+        },
+        {
+          "condition": "Must have had hostile encouter with the psionic creature to be selected as a favored enemy, alone or with a small group.",
+          "status": "situational",
+          "text": "Must have had hostile encouter with the psionic creature to be selected as a favored enemy, alone or with a small group."
+        },
+        {
+          "condition": null,
+          "status": "met",
+          "text": "base attack bonus at least 4"
+        },
+        {
+          "condition": null,
+          "status": "unmet",
+          "text": "Total Power Points above 0"
+        }
+      ],
+      "hitDie": 10,
+      "label": "Phrenic Slayer",
+      "maxLevel": 10,
+      "nextLevel": 1,
+      "requirementsAllMet": false
+    },
+    {
+      "book": "ultimate_psionics",
+      "classId": "class:psicrystal_imprinter",
+      "entryRequirements": [
+        {
+          "condition": null,
+          "status": "unmet",
+          "text": "at least 2 of: requires Craft Cognizance Crystal, requires Scribe Scroll"
+        },
+        {
+          "condition": null,
+          "status": "unmet",
+          "text": "at least 2 of: knowledge psionics ranks at least 1, spellcraft ranks at least 5"
+        }
+      ],
+      "hitDie": 6,
+      "label": "Psicrystal Imprinter",
+      "maxLevel": 10,
+      "nextLevel": 1,
+      "requirementsAllMet": false
+    },
+    {
+      "book": "ultimate_psionics",
+      "classId": "class:psion_uncarnate",
+      "entryRequirements": [
+        {
+          "condition": null,
+          "status": "unmet",
+          "text": "requires Psionic Body"
+        },
+        {
+          "condition": null,
+          "status": "unmet",
+          "text": "at least 2 of: knowledge psionics ranks at least 5, spellcraft ranks at least 5"
+        },
+        {
+          "condition": null,
+          "status": "unmet",
+          "text": "highest spell level at least 3"
+        },
+        {
+          "condition": "Must have had some instruction by another psion uncarnate or one of the Unbodied.",
+          "status": "situational",
+          "text": "Must have had some instruction by another psion uncarnate or one of the Unbodied."
+        }
+      ],
+      "hitDie": 6,
+      "label": "Psion Uncarnate",
+      "maxLevel": 10,
+      "nextLevel": 1,
+      "requirementsAllMet": false
+    },
+    {
+      "book": "ultimate_psionics",
+      "classId": "class:psychic_fist",
+      "entryRequirements": [
+        {
+          "condition": null,
+          "status": "unmet",
+          "text": "at least 1 of: requires Psionic Fist, requires Psionic Weapon"
+        },
+        {
+          "condition": null,
+          "status": "unmet",
+          "text": "acrobatics ranks at least 6"
+        },
+        {
+          "condition": null,
+          "status": "met",
+          "text": "base attack bonus at least 4"
+        },
+        {
+          "condition": null,
+          "status": "unmet",
+          "text": "Total Power Points above 0"
+        },
+        {
+          "condition": null,
+          "status": "unmet",
+          "text": "Ki Points above 0"
+        }
+      ],
+      "hitDie": 8,
+      "label": "Psychic Fist",
+      "maxLevel": 10,
+      "nextLevel": 1,
+      "requirementsAllMet": false
+    },
+    {
+      "book": "inner_sea_combat",
+      "classId": "class:pure_legion_enforcer",
+      "entryRequirements": [
+        {
+          "condition": null,
+          "status": "unmet",
+          "text": "requires Godless Healing"
+        },
+        {
+          "condition": null,
+          "status": "unmet",
+          "text": "requires alignment LG or LN or LE"
+        },
+        {
+          "condition": null,
+          "status": "met",
+          "text": "at least 1 of: not highest divine spell level at least 1, Caster Level Highest Divine below 1"
+        },
+        {
+          "condition": null,
+          "status": "met",
+          "text": "at least 1 of: not requires a specific deity, requires a specific deity"
+        },
+        {
+          "condition": null,
+          "status": "unmet",
+          "text": "at least 2 of: knowledge religion ranks at least 5, sense motive ranks at least 4"
+        },
+        {
+          "condition": null,
+          "status": "met",
+          "text": "not highest divine spell level at least 1"
+        },
+        {
+          "condition": "Alignment: Any lawful. Deity: Cannot worship a deity. Feats: Godless Healing. Skills: Knowledge (religion) 5 ranks, Sense Motive 4 ranks. Special: Cannot cast divine spells.",
+          "status": "situational",
+          "text": "Alignment: Any lawful. Deity: Cannot worship a deity. Feats: Godless Healing. Skills: Knowledge (religion) 5 ranks, Sense Motive 4 ranks. Special: Cannot cast divine spells."
+        }
+      ],
+      "hitDie": 10,
+      "label": "Pure Legion Enforcer",
+      "maxLevel": 10,
+      "nextLevel": 1,
+      "requirementsAllMet": false
+    },
+    {
+      "book": "ultimate_psionics",
+      "classId": "class:pyrokineticist",
+      "entryRequirements": [
+        {
+          "condition": null,
+          "status": "unmet",
+          "text": "requires alignment CG or CN or CE"
+        },
+        {
+          "condition": null,
+          "status": "unmet",
+          "text": "at least 3 of: autohypnosis ranks at least 5, craft alchemy ranks at least 1, knowledge psionics ranks at least 2"
+        },
+        {
+          "condition": "Must have set fire to a structure of any size just to watch it burn.",
+          "status": "situational",
+          "text": "Must have set fire to a structure of any size just to watch it burn."
+        },
+        {
+          "condition": null,
+          "status": "unmet",
+          "text": "Total Power Points above 0"
+        }
+      ],
+      "hitDie": 8,
+      "label": "Pyrokineticist",
+      "maxLevel": 10,
+      "nextLevel": 1,
+      "requirementsAllMet": false
+    },
+    {
+      "book": "advanced_players_guide",
+      "classId": "class:rage_prophet",
+      "entryRequirements": [
+        {
+          "condition": null,
+          "status": "unmet",
+          "text": "at least 2 of: requires Oracle's Curse, requires Moment of Clarity"
+        },
+        {
+          "condition": null,
+          "status": "unmet",
+          "text": "knowledge religion ranks at least 5"
+        },
+        {
+          "condition": null,
+          "status": "met",
+          "text": "base attack bonus at least 5"
+        }
+      ],
+      "hitDie": 10,
+      "label": "Rage Prophet",
+      "maxLevel": 10,
+      "nextLevel": 1,
+      "requirementsAllMet": false
+    },
+    {
+      "book": "adventurers_guide",
+      "classId": "class:red_mantis_assassin",
+      "entryRequirements": [
+        {
+          "condition": null,
+          "status": "unmet",
+          "text": "at least 4 of: requires Alertness (Perception), requires Exotic Weapon Proficiency and requires sawtooth sabre chosen for core rulebook:feat:exotic weapon proficiency, requires Two-Weapon Fighting (attack), requires Weapon Focus and requires sawtooth sabre chosen for core rulebook:feat:weapon focus"
+        },
+        {
+          "condition": null,
+          "status": "unmet",
+          "text": "requires alignment LE"
+        },
+        {
+          "condition": null,
+          "status": "unmet",
+          "text": "at least 3 of: intimidate ranks at least 5, perception ranks at least 5, stealth ranks at least 5"
+        }
+      ],
+      "hitDie": 8,
+      "label": "Red Mantis Assassin",
+      "maxLevel": 10,
+      "nextLevel": 1,
+      "requirementsAllMet": false
+    },
+    {
+      "book": "adventurers_guide",
+      "classId": "class:rivethun_emissary",
+      "entryRequirements": [
+        {
+          "condition": null,
+          "status": "unmet",
+          "text": "at least 2 of: requires Iron Will, requires Spirit Beacon from feat (no record in the corpus)"
+        },
+        {
+          "condition": null,
+          "status": "unmet",
+          "text": "at least 2 of: diplomacy ranks at least 5, knowledge religion ranks at least 5"
+        },
+        {
+          "condition": null,
+          "status": "unmet",
+          "text": "Familiar Master LVL at least 1"
+        }
+      ],
+      "hitDie": 8,
+      "label": "Rivethun Emissary",
+      "maxLevel": 10,
+      "nextLevel": 1,
+      "requirementsAllMet": false
+    },
+    {
+      "book": "adventurers_guide",
+      "classId": "class:sanguine_angel",
+      "entryRequirements": [
+        {
+          "condition": null,
+          "status": "unmet",
+          "text": "requires alignment LE or LN or NE"
+        },
+        {
+          "condition": null,
+          "status": "met",
+          "text": "requires Armor Proficiency, Heavy"
+        },
+        {
+          "condition": null,
+          "status": "met",
+          "text": "base attack bonus at least 5"
+        },
+        {
+          "condition": null,
+          "status": "unmet",
+          "text": "at least 3 of: requires Improved Shield Bash, requires Iron Will, requires Weapon Focus and requires longsword chosen for core rulebook:feat:weapon focus"
+        },
+        {
+          "condition": null,
+          "status": "unmet",
+          "text": "requires a Female character"
+        },
+        {
+          "condition": null,
+          "status": "unmet",
+          "text": "requires the Infernal language"
+        }
+      ],
+      "hitDie": 10,
+      "label": "Sanguine Angel",
+      "maxLevel": 10,
+      "nextLevel": 1,
+      "requirementsAllMet": false
+    },
+    {
+      "book": "inner_sea_gods",
+      "classId": "class:sentinel",
+      "entryRequirements": [
+        {
+          "condition": null,
+          "status": "unmet",
+          "text": "at least 2 of: requires Deific Obedience, requires Weapon Focus"
+        },
+        {
+          "condition": null,
+          "status": "unmet",
+          "text": "requires a specific deity"
+        },
+        {
+          "condition": "Alignment: Within one step of chosen deity. Deity: Must worship a single, specific deity. Feats: Deific Obedience*, Weapon Focus (deity's favored weapon). Special: Base attack bonus +5 or higher.",
+          "status": "situational",
+          "text": "Alignment: Within one step of chosen deity. Deity: Must worship a single, specific deity. Feats: Deific Obedience*, Weapon Focus (deity's favored weapon). Special: Base attack bonus +5 or higher."
+        },
+        {
+          "condition": null,
+          "status": "met",
+          "text": "base attack bonus at least 5"
+        }
+      ],
+      "hitDie": 10,
+      "label": "Sentinel",
+      "maxLevel": 10,
+      "nextLevel": 1,
+      "requirementsAllMet": false
+    },
+    {
+      "book": "core_rulebook",
+      "classId": "class:shadowdancer",
+      "entryRequirements": [
+        {
+          "condition": null,
+          "status": "unmet",
+          "text": "at least 3 of: requires Combat Reflexes, requires Dodge, requires Mobility"
+        },
+        {
+          "condition": null,
+          "status": "unmet",
+          "text": "at least 2 of: stealth ranks at least 5, perform dance ranks at least 2"
+        }
+      ],
+      "hitDie": 8,
+      "label": "Shadowdancer",
+      "maxLevel": 10,
+      "nextLevel": 1,
+      "requirementsAllMet": false
+    },
+    {
+      "book": "ultimate_psionics",
+      "classId": "class:sighted_seeker",
+      "entryRequirements": [
+        {
+          "condition": null,
+          "status": "unmet",
+          "text": "at least 1 of: requires Skill Focus and requires survival chosen for core rulebook:feat:skill focus, requires Track"
+        },
+        {
+          "condition": null,
+          "status": "unmet",
+          "text": "at least 3 of: diplomacy ranks at least 2, perception ranks at least 5, survival ranks at least 2"
+        },
+        {
+          "condition": null,
+          "status": "met",
+          "text": "base attack bonus at least 4"
+        },
+        {
+          "condition": null,
+          "status": "unmet",
+          "text": "Total Power Points above 0"
+        }
+      ],
+      "hitDie": 8,
+      "label": "Sighted Seeker",
+      "maxLevel": 10,
+      "nextLevel": 1,
+      "requirementsAllMet": false
+    },
+    {
+      "book": "ultimate_psionics",
+      "classId": "class:soul_archer",
+      "entryRequirements": [
+        {
+          "condition": null,
+          "status": "unmet",
+          "text": "at least 1 of: requires Enhanced Mind Blade, requires Enhanced Mind Bolt"
+        },
+        {
+          "condition": null,
+          "status": "unmet",
+          "text": "at least 2 of: requires Point-Blank Shot (attack), requires Precise Shot"
+        },
+        {
+          "condition": null,
+          "status": "met",
+          "text": "base attack bonus at least 5"
+        }
+      ],
+      "hitDie": 10,
+      "label": "Soul Archer",
+      "maxLevel": 10,
+      "nextLevel": 1,
+      "requirementsAllMet": false
+    },
+    {
+      "book": "advanced_players_guide",
+      "classId": "class:stalwart_defender",
+      "entryRequirements": [
+        {
+          "condition": null,
+          "status": "unmet",
+          "text": "at least 5 of: requires Dodge, requires Endurance, requires Toughness, requires Armor Proficiency, Light, requires Armor Proficiency, Medium"
+        },
+        {
+          "condition": null,
+          "status": "unmet",
+          "text": "base attack bonus at least 7"
+        }
+      ],
+      "hitDie": 12,
+      "label": "Stalwart Defender",
+      "maxLevel": 10,
+      "nextLevel": 1,
+      "requirementsAllMet": false
+    },
+    {
+      "book": "adventurers_guide",
+      "classId": "class:steel_falcon",
+      "entryRequirements": [
+        {
+          "condition": null,
+          "status": "unmet",
+          "text": "requires alignment LG or NG or CG or LN or TN or CN"
+        },
+        {
+          "condition": null,
+          "status": "unmet",
+          "text": "requires Iron Will"
+        },
+        {
+          "condition": null,
+          "status": "unmet",
+          "text": "at least 4 of: diplomacy ranks at least 5, knowledge history ranks at least 2, knowledge local ranks at least 2, sense motive ranks at least 5"
+        }
+      ],
+      "hitDie": 10,
+      "label": "Steel Falcon",
+      "maxLevel": 10,
+      "nextLevel": 1,
+      "requirementsAllMet": false
+    },
+    {
+      "book": "adventurers_guide",
+      "classId": "class:storm_kindler",
+      "entryRequirements": [
+        {
+          "condition": null,
+          "status": "unmet",
+          "text": "requires alignment NG or LN or TN or CN or NE"
+        },
+        {
+          "condition": null,
+          "status": "unmet",
+          "text": "requires a specific deity"
+        },
+        {
+          "condition": null,
+          "status": "unmet",
+          "text": "requires Storm-Lashed"
+        },
+        {
+          "condition": null,
+          "status": "unmet",
+          "text": "at least 4 of: fly ranks at least 3, knowledge history ranks at least 6, knowledge nature ranks at least 6, swim ranks at least 3"
+        },
+        {
+          "condition": null,
+          "status": "unmet",
+          "text": "highest spell level at least 2"
+        }
+      ],
+      "hitDie": 8,
+      "label": "Storm Kindler",
+      "maxLevel": 10,
+      "nextLevel": 1,
+      "requirementsAllMet": false
+    },
+    {
+      "book": "adventurers_guide",
+      "classId": "class:student_of_perfection",
+      "entryRequirements": [
+        {
+          "condition": null,
+          "status": "unmet",
+          "text": "requires alignment LG or LN or LE"
+        },
+        {
+          "condition": null,
+          "status": "unmet",
+          "text": "at least 2 of: requires Improved Unarmed Strike, requires Perfect Style"
+        },
+        {
+          "condition": null,
+          "status": "unmet",
+          "text": "at least 1 of: acrobatics ranks at least 5, climb ranks at least 5, escape artist ranks at least 5, stealth ranks at least 5, swim ranks at least 5"
+        },
+        {
+          "condition": "requires 5 ranks in a craft skill; requires 5 ranks in a knowledge skill; requires 5 ranks in a perform skill",
+          "status": "situational",
+          "text": "at least 1 of: requires 5 ranks in a craft skill, requires 5 ranks in a knowledge skill, perception ranks at least 5, requires 5 ranks in a perform skill, sense motive ranks at least 5"
+        }
+      ],
+      "hitDie": 10,
+      "label": "Student of Perfection",
+      "maxLevel": 10,
+      "nextLevel": 1,
+      "requirementsAllMet": false
+    },
+    {
+      "book": "adventurers_guide",
+      "classId": "class:student_of_war",
+      "entryRequirements": [
+        {
+          "condition": null,
+          "status": "met",
+          "text": "base attack bonus at least 5"
+        },
+        {
+          "condition": null,
+          "status": "unmet",
+          "text": "at least 2 of: requires Combat Expertise (AC), requires Dodge"
+        },
+        {
+          "condition": null,
+          "status": "unmet",
+          "text": "requires Skill Focus"
+        },
+        {
+          "condition": null,
+          "status": "unmet",
+          "text": "requires knowledge chosen for core rulebook:feat:skill focus"
+        },
+        {
+          "condition": null,
+          "status": "unmet",
+          "text": "at least 2 of: requires 4 ranks in a knowledge skill"
+        },
+        {
+          "condition": null,
+          "status": "unmet",
+          "text": "at least 2 of: requires proficiency with Martial weapons, requires proficiency with Martial weapons"
+        }
+      ],
+      "hitDie": 10,
+      "label": "Student of War",
+      "maxLevel": 10,
+      "nextLevel": 1,
+      "requirementsAllMet": false
+    },
+    {
+      "book": "ultimate_psionics",
+      "classId": "class:telekinetic_weaponmaster",
+      "entryRequirements": [
+        {
+          "condition": null,
+          "status": "unmet",
+          "text": "at least 2 of: requires Psionic Meditation, requires Psionic Weapon"
+        },
+        {
+          "condition": null,
+          "status": "unmet",
+          "text": "at least 1 of: requires , requires "
+        },
+        {
+          "condition": null,
+          "status": "met",
+          "text": "base attack bonus at least 5"
+        }
+      ],
+      "hitDie": 10,
+      "label": "Telekinetic Weaponmaster",
+      "maxLevel": 5,
+      "nextLevel": 1,
+      "requirementsAllMet": false
+    },
+    {
+      "book": "ultimate_psionics",
+      "classId": "class:thrallherd",
+      "entryRequirements": [
+        {
+          "condition": null,
+          "status": "unmet",
+          "text": "at least 1 of: requires Inquisitor, requires Skill Focus and requires diplomacy chosen for core rulebook:feat:skill focus"
+        },
+        {
+          "condition": null,
+          "status": "unmet",
+          "text": "highest spell level at least 1"
+        },
+        {
+          "condition": null,
+          "status": "unmet",
+          "text": "at least 1 of: at least 1 of: requires Mindlink, requires , requires 1 ThrallherdLinkMinds from special ability"
+        },
+        {
+          "condition": null,
+          "status": "unmet",
+          "text": "at least 2 of: knowledge psionics ranks at least 5, diplomacy ranks at least 4"
+        }
+      ],
+      "hitDie": 6,
+      "label": "Thrallherd",
+      "maxLevel": 10,
+      "nextLevel": 1,
+      "requirementsAllMet": false
+    },
+    {
+      "book": "adventurers_guide",
+      "classId": "class:twilight_talon",
+      "entryRequirements": [
+        {
+          "condition": null,
+          "status": "unmet",
+          "text": "requires alignment LG or NG or CG or LN or TN or CN"
+        },
+        {
+          "condition": null,
+          "status": "unmet",
+          "text": "at least 2 of: requires Catch Off-Guard, requires Twilight Tattoo (Disguise)"
+        },
+        {
+          "condition": null,
+          "status": "unmet",
+          "text": "at least 5 of: bluff ranks at least 5, disguise ranks at least 5, knowledge local ranks at least 2, linguistics ranks at least 2, stealth ranks at least 5"
+        }
+      ],
+      "hitDie": 8,
+      "label": "Twilight Talon",
+      "maxLevel": 10,
+      "nextLevel": 1,
+      "requirementsAllMet": false
+    },
+    {
+      "book": "inner_sea_combat",
+      "classId": "class:ulfen_guard",
+      "entryRequirements": [
+        {
+          "condition": null,
+          "status": "unmet",
+          "text": "at least 3 of: knowledge nobility ranks at least 2, perception ranks at least 5, sense motive ranks at least 3"
+        },
+        {
+          "condition": "Base Attack Bonus: +5. Skills: Knowledge (nobility) 2 ranks, Perception 5 ranks, Sense Motive 3 ranks. Special: Ulfen descent.",
+          "status": "situational",
+          "text": "Base Attack Bonus: +5. Skills: Knowledge (nobility) 2 ranks, Perception 5 ranks, Sense Motive 3 ranks. Special: Ulfen descent."
+        },
+        {
+          "condition": null,
+          "status": "met",
+          "text": "base attack bonus at least 5"
+        }
+      ],
+      "hitDie": 10,
+      "label": "Ulfen Guard",
+      "maxLevel": 10,
+      "nextLevel": 1,
+      "requirementsAllMet": false
+    },
+    {
+      "book": "ultimate_psionics",
+      "classId": "class:war_mind",
+      "entryRequirements": [
+        {
+          "condition": null,
+          "status": "met",
+          "text": "not requires alignment CG or CN or CE"
+        },
+        {
+          "condition": null,
+          "status": "unmet",
+          "text": "at least 2 of: knowledge history ranks at least 2, knowledge psionics ranks at least 5"
+        },
+        {
+          "condition": "Instruction from another war mind or Codex of War.",
+          "status": "situational",
+          "text": "Instruction from another war mind or Codex of War."
+        },
+        {
+          "condition": null,
+          "status": "met",
+          "text": "base attack bonus at least 3"
+        },
+        {
+          "condition": null,
+          "status": "unmet",
+          "text": "Total Power Points above 0"
+        }
+      ],
+      "hitDie": 10,
+      "label": "War Mind",
+      "maxLevel": 10,
+      "nextLevel": 1,
+      "requirementsAllMet": false
+    },
+    {
+      "book": "adventurers_guide",
+      "classId": "class:westcrown_devil",
+      "entryRequirements": [
+        {
+          "condition": null,
+          "status": "unmet",
+          "text": "requires alignment NG or CG or TN or CN or NE or CE"
+        },
+        {
+          "condition": null,
+          "status": "unmet",
+          "text": "Has Weapon Finesse Feat exactly 1"
+        },
+        {
+          "condition": null,
+          "status": "unmet",
+          "text": "at least 1 of: requires Alertness (Perception), requires Athletic (Climb), requires Deceitful (Bluff), requires Deft Hands (Disable Device), requires Magical Aptitude (Spellcraft), requires Persuasive (Diplomacy), requires Stealthy (Escape Artist)"
+        },
+        {
+          "condition": null,
+          "status": "met",
+          "text": "not requires a specific deity"
+        },
+        {
+          "condition": null,
+          "status": "unmet",
+          "text": "knowledge local ranks at least 5"
+        },
+        {
+          "condition": null,
+          "status": "unmet",
+          "text": "at least 3 of: acrobatics ranks at least 5, bluff ranks at least 5, climb ranks at least 5, disable device ranks at least 5, knowledge history ranks at least 5, knowledge nobility ranks at least 5, sense motive ranks at least 5, sleight of hand ranks at least 5, stealth ranks at least 5, use magic device ranks at least 5"
+        }
+      ],
+      "hitDie": 8,
+      "label": "Westcrown Devil",
+      "maxLevel": 10,
+      "nextLevel": 1,
+      "requirementsAllMet": false
+    }
+  ],
+  "advance": [
+    {
+      "classId": "class:fighter",
+      "currentLevel": 6,
+      "family": "crb",
+      "familyLabel": "CRB",
+      "label": "Fighter",
+      "maxLevel": 20,
+      "nextLevel": 7
+    }
+  ],
+  "atLevelCap": false,
+  "characterLevel": 6,
+  "diagnostics": [],
+  "levelCap": 20
+}

@@ -5,7 +5,7 @@
 // hard-coded pixel coordinates or a screenshot a human has to eyeball.
 //
 // Usage:
-//   RUN_DESKTOP_AGENT=<unique> node scripts/ui-smoke/run.mjs [--only <id>]
+//   RUN_DESKTOP_AGENT=<unique> node scripts/ui-smoke/run.mjs [--only <id>[,<id>...]]
 //     [--from <id>] [--out <dir>] [--keep]
 //
 // See spec.json's own top-level "$comment" for the row schema, and
@@ -18,7 +18,7 @@ import { fileURLToPath } from 'node:url';
 
 import * as driver from './lib/driver.mjs';
 import { extractScreenText } from './lib/clipboard.mjs';
-import { sendCommand } from './lib/commandChannel.mjs';
+import { sendUntilOk } from './lib/commandChannel.mjs';
 import {
   centerOf,
   findSelect,
@@ -29,6 +29,7 @@ import {
   sleepMs,
 } from './lib/probe.mjs';
 import { applyResult, buildResumeState, buildSkeleton, hasNotRun, summaryLine } from './lib/resultsSkeleton.mjs';
+import { selectRows } from './lib/rowSelection.mjs';
 
 const HERE = dirname(fileURLToPath(import.meta.url));
 const SPEC_PATH = join(HERE, 'spec.json');
@@ -130,25 +131,6 @@ function writeResults(outDir, results) {
   writeFileSync(join(outDir, 'results.json'), JSON.stringify(results, null, 2));
 }
 
-function selectRows(spec, args) {
-  let rows = spec.rows;
-  if (args.only) {
-    const row = spec.byId.get(args.only);
-    if (!row) {
-      throw new Error(`--only ${args.only}: no such row id in spec.json`);
-    }
-    return [row];
-  }
-  if (args.from) {
-    const startIndex = rows.findIndex((row) => row.id === args.from);
-    if (startIndex === -1) {
-      throw new Error(`--from ${args.from}: no such row id in spec.json`);
-    }
-    rows = rows.slice(startIndex);
-  }
-  return rows;
-}
-
 // ------------------------------------------------------------- probe access
 let probePath;
 let cmdPath;
@@ -229,18 +211,15 @@ class TargetNotFoundError extends Error {
  * mount its own content -- a search box, a tab bar -- a beat later, see
  * `CLICK_TARGET_WAIT_MS`'s own comment); a single command's own
  * `sendCommand` ack timeout is much shorter and is not what's being waited
- * out here.
+ * out here. The send is repeated only when the webview ANSWERED "not
+ * found"; an unanswered command is waited for, never sent twice (SD-36 F4d:
+ * a late-acknowledged `click Load` had already opened the sheet, and every
+ * re-send then failed on the vanished button).
  */
 function clickByNameChannel(name) {
-  const deadline = Date.now() + CLICK_TARGET_WAIT_MS;
-  let result;
-  for (;;) {
-    result = sendCommand(cmdPath, probePath, { op: 'click', target: name }, { timeoutMs: 2000 });
-    if (result.ok || Date.now() >= deadline) {
-      break;
-    }
-    sleepMs(150);
-  }
+  // Re-sends only on a 'not there yet' answer; a late acknowledgement is waited for, never
+  // answered with a second send (lib/commandChannel.mjs's sendUntilOk).
+  const result = sendUntilOk(cmdPath, probePath, { op: 'click', target: name }, { ackTimeoutMs: 2000, deadlineMs: CLICK_TARGET_WAIT_MS });
   if (!result.ok) {
     throw new TargetNotFoundError(`${name}${result.error ? ` (${result.error})` : ''}`);
   }
@@ -310,15 +289,9 @@ function typeText(text) {
     driver.type(text);
     return;
   }
-  const deadline = Date.now() + CLICK_TARGET_WAIT_MS;
-  let result;
-  for (;;) {
-    result = sendCommand(cmdPath, probePath, { op: 'type', text }, { timeoutMs: 2000 });
-    if (result.ok || Date.now() >= deadline) {
-      break;
-    }
-    sleepMs(150);
-  }
+  // Re-sends only on a 'not there yet' answer; a late acknowledgement is waited for, never
+  // answered with a second send (lib/commandChannel.mjs's sendUntilOk).
+  const result = sendUntilOk(cmdPath, probePath, { op: 'type', text }, { ackTimeoutMs: 2000, deadlineMs: CLICK_TARGET_WAIT_MS });
   if (!result.ok) {
     throw new Error(`type command failed: ${result.error ?? 'unknown error'}`);
   }
@@ -337,15 +310,9 @@ function typeText(text) {
  * xdotool-based behavior to preserve parity with.
  */
 function selectByName(target, text) {
-  const deadline = Date.now() + CLICK_TARGET_WAIT_MS;
-  let result;
-  for (;;) {
-    result = sendCommand(cmdPath, probePath, { op: 'select', target, text }, { timeoutMs: 2000 });
-    if (result.ok || Date.now() >= deadline) {
-      break;
-    }
-    sleepMs(150);
-  }
+  // Re-sends only on a 'not there yet' answer; a late acknowledgement is waited for, never
+  // answered with a second send (lib/commandChannel.mjs's sendUntilOk).
+  const result = sendUntilOk(cmdPath, probePath, { op: 'select', target, text }, { ackTimeoutMs: 2000, deadlineMs: CLICK_TARGET_WAIT_MS });
   if (!result.ok) {
     throw new TargetNotFoundError(`${target}${result.error ? ` (${result.error})` : ''}`);
   }
@@ -380,15 +347,9 @@ function pressKey(key) {
     driver.key(key);
     return;
   }
-  const deadline = Date.now() + CLICK_TARGET_WAIT_MS;
-  let result;
-  for (;;) {
-    result = sendCommand(cmdPath, probePath, { op: 'key', key }, { timeoutMs: 2000 });
-    if (result.ok || Date.now() >= deadline) {
-      break;
-    }
-    sleepMs(150);
-  }
+  // Re-sends only on a 'not there yet' answer; a late acknowledgement is waited for, never
+  // answered with a second send (lib/commandChannel.mjs's sendUntilOk).
+  const result = sendUntilOk(cmdPath, probePath, { op: 'key', key }, { ackTimeoutMs: 2000, deadlineMs: CLICK_TARGET_WAIT_MS });
   if (!result.ok) {
     throw new Error(`key command failed: ${result.error ?? 'unknown error'}`);
   }

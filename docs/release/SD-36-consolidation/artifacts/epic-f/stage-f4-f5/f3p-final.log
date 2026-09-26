@@ -1,0 +1,20 @@
+== clippy root
+    Finished `dev` profile [unoptimized + debuginfo] target(s) in 42.05s
+EXIT[clippy root]=0
+== clippy ingest
+    Finished `dev` profile [unoptimized + debuginfo] target(s) in 11.38s
+EXIT[clippy ingest]=0
+== sd36_f3_polish
+test p5_the_firearms_option_pick_holds_the_firearms_record_and_another_option_does_not ... ok
+test p5_samurai_alone_prints_no_firearms_line ... ok
+test p2_multiclass_save_explanation_lists_each_class_s_save_term ... ok
+test p4_hit_points_unknown_names_the_missing_chassis_record ... ok
+test p1_flurry_attack_bonus_in_a_mix_adds_the_other_classes_bab ... ok
+test p5_a_feat_recorded_with_its_option_holds_exactly_that_option_s_records ... ok
+test p1_scan_every_class_line_that_speaks_of_a_base_attack_bonus_is_classified has been running for over 60 seconds
+test p1_scan_every_class_line_that_speaks_of_a_base_attack_bonus_is_classified ... ok
+test result: ok. 7 passed; 0 failed; 0 ignored; 0 measured; 0 filtered out; finished in 92.76s
+EXIT[sd36_f3_polish]=0
+== lib (all)
+test result: ok. 2725 passed; 0 failed; 6 ignored; 0 measured; 0 filtered out; finished in 240.58s
+EXIT[lib all]=0

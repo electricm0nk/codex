@@ -172,7 +172,7 @@ pub fn class_weapon_proficiency_view_in(package: &SheetRulePackage, class_slug: 
     let level = i64::from(class_level);
     let seed = HeldSeed { classes: vec![(class_slug.to_string(), level)], ..HeldSeed::default() };
     let mut facts = CharacterFacts { level, class_levels: vec![(class_slug.to_string(), level)], ..CharacterFacts::default() };
-    let seeded = canonical_member_picks(package, class_slug);
+    let seeded = canonical_member_picks(package, class_slug, class_level);
     for pick in &seeded {
         facts.choices.entry(pick.choice.clone()).or_default().push((pick.member.clone(), pick.member.clone()));
     }
@@ -365,8 +365,8 @@ struct MemberPick {
 /// `OptionSet::Rules` under its own id, and the selection is a rule that choice grants
 /// (`Granter::Choice`). Every other seed (a legacy `choice:*` id, a weapon pick) is not this
 /// reader's to apply.
-fn canonical_member_picks(package: &SheetRulePackage, class_slug: &str) -> Vec<MemberPick> {
-    let (choices, _) = crate::rules_core::class_seeds::canonical_seeds_for(class_slug);
+fn canonical_member_picks(package: &SheetRulePackage, class_slug: &str, class_level: u8) -> Vec<MemberPick> {
+    let (choices, _) = crate::rules_core::class_seeds::canonical_seeds_for(class_slug, class_level);
     choices
         .into_iter()
         .filter(|c| {
