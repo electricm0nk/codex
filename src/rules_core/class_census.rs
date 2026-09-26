@@ -1685,7 +1685,16 @@ fn evaluate_carrier(carrier: PrestigeCarrier, gate: &Applies, prestige_max_level
 /// than one book pre-dedupe). `None` only when no book's record can be
 /// loaded at all.
 fn prestige_applies_gate(books: &[String], slug: &str) -> Option<Applies> {
-    let package = live_sheet_rules()?;
+    prestige_entry_gate_in(live_sheet_rules()?, books, slug)
+}
+
+/// [`prestige_applies_gate`] against a package the caller already holds (the desktop loads its
+/// own copy of `data/sheet_rules/`), so both read the same record the same way.
+pub fn prestige_entry_gate_in(
+    package: &crate::rules_core::sheet_rule::SheetRulePackage,
+    books: &[String],
+    slug: &str,
+) -> Option<Applies> {
     for book in books {
         if let Some(rule) = package.rule(&format!("{book}:class:{slug}")) {
             return Some(rule.applies.clone());
@@ -2229,25 +2238,57 @@ pub struct ClassRosterEntry {
 
 /// Every census row's roster reason, sweeping each non-prestige class once. Returns
 /// `(entry, sweep, reason)` in census id order; a prestige row carries no sweep.
+///
+/// SD-36 F4b: the sweeps run on up to [`ROSTER_SWEEP_THREADS`] scoped threads. The sweep is
+/// ~1,200 engine computations (63 classes x their levels); single-threaded it measured 463 s in
+/// a debug build (`f4b-receipt.md`), which the desktop's Create picker cannot wait on. Each
+/// class's sweep is independent and the result order is the census id order either way, so the
+/// output is identical to the sequential sweep.
 pub fn roster_reasons(
     fixture: &CharacterInput,
     entries: &BTreeMap<String, ClassCensusEntry>,
 ) -> Vec<(ClassCensusEntry, Option<ClassSweepResult>, RosterReason)> {
-    entries
-        .values()
-        .map(|entry| {
-            if entry.is_prestige {
-                (entry.clone(), None, roster_reason(entry, false))
-            } else {
-                let sweep = sweep_class(fixture, entry);
-                let reason = roster_reason(entry, sweep.computed());
-                (entry.clone(), Some(sweep), reason)
+    let rows: Vec<&ClassCensusEntry> = entries.values().collect();
+    let threads = std::thread::available_parallelism()
+        .map(|n| n.get())
+        .unwrap_or(1)
+        .clamp(1, ROSTER_SWEEP_THREADS);
+    let mut sweeps: Vec<Option<ClassSweepResult>> = vec![None; rows.len()];
+    std::thread::scope(|scope| {
+        let workers: Vec<_> = (0..threads)
+            .map(|worker| {
+                let rows = &rows;
+                scope.spawn(move || {
+                    rows.iter()
+                        .enumerate()
+                        .skip(worker)
+                        .step_by(threads)
+                        .filter(|(_, entry)| !entry.is_prestige)
+                        .map(|(index, entry)| (index, sweep_class(fixture, entry)))
+                        .collect::<Vec<_>>()
+                })
+            })
+            .collect();
+        for worker in workers {
+            for (index, sweep) in worker.join().expect("a roster sweep worker panicked outside catch_unwind") {
+                sweeps[index] = Some(sweep);
             }
+        }
+    });
+    rows.into_iter()
+        .zip(sweeps)
+        .map(|(entry, sweep)| {
+            let computed = sweep.as_ref().is_some_and(ClassSweepResult::computed);
+            (entry.clone(), sweep, roster_reason(entry, computed))
         })
         .collect()
 }
 
-fn roster_display_name(entry: &ClassCensusEntry) -> String {
+/// The most threads [`roster_reasons`] sweeps on (the box's memory guard: 8 concurrent lanes).
+pub const ROSTER_SWEEP_THREADS: usize = 8;
+
+/// The converted class principal's own label for `entry` (its slug when no record is found).
+pub fn roster_display_name(entry: &ClassCensusEntry) -> String {
     let slug = entry.class_id.strip_prefix("class:").unwrap_or(&entry.class_id);
     live_sheet_rules()
         .and_then(|package| package.find("class", slug).and_then(|id| package.rule(id)))
@@ -2264,11 +2305,10 @@ pub fn class_creation_roster() -> Result<Vec<ClassRosterEntry>, String> {
     static ROSTER: std::sync::OnceLock<Result<Vec<ClassRosterEntry>, String>> = std::sync::OnceLock::new();
     ROSTER
         .get_or_init(|| {
-            let fixture = load_sweep_fixture()?;
-            let mut offered: Vec<ClassCensusEntry> = roster_reasons(&fixture, &census())
+            let mut offered: Vec<ClassCensusEntry> = class_roster_reasons()?
                 .into_iter()
-                .filter(|(_, _, reason)| reason.in_desktop_roster())
-                .map(|(entry, _, _)| entry)
+                .filter(|(_, reason)| reason.in_desktop_roster())
+                .map(|(entry, _)| entry)
                 .collect();
             offered.sort_by_key(|entry| (entry.family, entry.registry_order));
             offered
@@ -2286,6 +2326,93 @@ pub fn class_creation_roster() -> Result<Vec<ClassRosterEntry>, String> {
                     })
                 })
                 .collect()
+        })
+        .clone()
+}
+
+// ---------------------------------------------------------------------------
+// SD-36 F4b: a prestige class's entry requirements, printed and judged against a REAL
+// character (`epic-f-class-completion.md` §6; ruling §9.2: PRINT met/unmet, never block).
+//
+// The census judges the same gate against a synthetic carrier build (`evaluate_carrier`). A
+// player at level-up has a real build, so each printed term is judged by the engine's own gate
+// evaluator (`sheet_rule::evaluate_applies`) against the character's held set and facts -- the
+// same evaluator, held set and facts the feat option filter and the sheet use. The term split
+// and the bookkeeping filter are the census translator's own (`top_level_terms`,
+// `classify_term`), so the census and the level-up dialog print the same requirements.
+// ---------------------------------------------------------------------------
+
+/// A printed entry requirement's verdict for one character. Never a block (§9.2).
+#[derive(Debug, Clone, Copy, PartialEq, Eq, serde::Serialize)]
+#[serde(rename_all = "snake_case")]
+pub enum EntryRequirementVerdict {
+    Met,
+    Unmet,
+    /// The evaluator cannot decide it from the build; the condition prints for the table.
+    Situational,
+}
+
+impl EntryRequirementVerdict {
+    pub fn as_str(self) -> &'static str {
+        match self {
+            EntryRequirementVerdict::Met => "met",
+            EntryRequirementVerdict::Unmet => "unmet",
+            EntryRequirementVerdict::Situational => "situational",
+        }
+    }
+}
+
+/// One top-level term of a prestige class's converted entry gate, in words, with its verdict.
+#[derive(Debug, Clone, PartialEq, Eq)]
+pub struct PrestigeEntryRequirement {
+    pub text: String,
+    pub verdict: EntryRequirementVerdict,
+    /// `Some` only for [`EntryRequirementVerdict::Situational`]: the condition, in the rule's words.
+    pub condition: Option<String>,
+}
+
+/// `entry`'s entry requirements (a prestige class), one per top-level term of its converted
+/// gate, judged against `held` / `facts`. The two converter bookkeeping rows every prestige
+/// gate carries (its own level ceiling and the archetype off-switch; see [`classify_term`]) are
+/// not PF1 requirements and are not printed. `Err` names the class when its record cannot be
+/// found -- never an empty list standing in for "no requirements".
+pub fn prestige_entry_requirements(
+    package: &crate::rules_core::sheet_rule::SheetRulePackage,
+    entry: &ClassCensusEntry,
+    held: &crate::rules_core::sheet_rule::HeldSet,
+    facts: &crate::rules_core::sheet_rule::CharacterFacts,
+) -> Result<Vec<PrestigeEntryRequirement>, String> {
+    use crate::rules_core::level_up_option_filter::describe_gate;
+    use crate::rules_core::sheet_rule::{EvalContext, Gate, evaluate_applies};
+    if !entry.is_prestige {
+        return Err(format!("{}: not a prestige class; it has no entry requirements", entry.class_id));
+    }
+    let slug = entry.class_id.strip_prefix("class:").unwrap_or(&entry.class_id);
+    let gate = prestige_entry_gate_in(package, &entry.books, slug)
+        .ok_or_else(|| format!("{}: no converted class record found in {:?}", entry.class_id, entry.books))?;
+    Ok(top_level_terms(&gate)
+        .into_iter()
+        .filter(|term| !matches!(classify_term(term), TermClass::AlwaysMet))
+        .map(|term| {
+            let (verdict, condition) = match evaluate_applies(term, held, package, facts, EvalContext::default()) {
+                Gate::Include => (EntryRequirementVerdict::Met, None),
+                Gate::Exclude => (EntryRequirementVerdict::Unmet, None),
+                Gate::Situational(condition) => (EntryRequirementVerdict::Situational, Some(condition)),
+            };
+            PrestigeEntryRequirement { text: describe_gate(package, term), verdict, condition }
+        })
+        .collect())
+}
+
+/// Every census row's roster reason, computed once per process -- the one sweep both
+/// [`class_creation_roster`] and the desktop's withheld list read, so they cannot diverge.
+pub fn class_roster_reasons() -> Result<Vec<(ClassCensusEntry, RosterReason)>, String> {
+    static REASONS: std::sync::OnceLock<Result<Vec<(ClassCensusEntry, RosterReason)>, String>> =
+        std::sync::OnceLock::new();
+    REASONS
+        .get_or_init(|| {
+            let fixture = load_sweep_fixture()?;
+            Ok(roster_reasons(&fixture, &census()).into_iter().map(|(entry, _, reason)| (entry, reason)).collect())
         })
         .clone()
 }

@@ -54,7 +54,7 @@ use character_hub::{
     import_character, level_up_character, list_feats_for_character, list_saved_characters,
     load_character_bio,
     load_character_durability, load_character_money, load_character_portrait,
-    list_race_creation_roster, load_saved_character, preview_level_up, purchase_equipment,
+    list_class_creation_roster, list_level_up_class_options, list_race_creation_roster, load_saved_character, preview_level_up, purchase_equipment,
     record_and_prepare_spell_selection, remove_equipment_selection, remove_feat_selection,
     add_trait_selection, remove_trait_selection, set_equipment_active_state,
     remove_spell_selection,
@@ -165,6 +165,16 @@ fn main() {
             if let Err(err) = character_hub::seed_default_character_if_needed(app.handle()) {
                 eprintln!("Failed to seed default character: {err}");
             }
+
+            // SD-36 F4b: the class creation roster is swept from the census (every class at
+            // every level) once per process. Start that sweep now, off the UI thread, so the
+            // Create picker's `list_class_creation_roster` normally reads a warm cache. A failed
+            // sweep is not swallowed: the command returns the same `Err` when it is called.
+            std::thread::spawn(|| {
+                if let Err(err) = codex::rules_core::class_census::class_creation_roster() {
+                    eprintln!("Class creation roster unavailable: {err}");
+                }
+            });
             Ok(())
         })
         .invoke_handler(tauri::generate_handler![
@@ -267,6 +277,8 @@ fn main() {
             list_class_spell_levels,
             list_race_catalog,
             list_race_creation_roster,
+            list_class_creation_roster,
+            list_level_up_class_options,
             list_alternate_racial_traits,
             resolve_race_alternate_selection,
             list_available_character_traits,

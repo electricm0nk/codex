@@ -1,0 +1,4 @@
+== single-threaded sweep (roster_reasons before the scoped-thread change), same GREEN command
+build_class_creation_roster: 463.129847425s (first call, this process)
+test result: ok. 15 passed; 0 failed; 0 ignored; 0 measured; 605 filtered out; finished in 478.25s
+EXIT=0

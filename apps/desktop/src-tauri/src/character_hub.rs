@@ -4777,6 +4777,297 @@ pub fn list_race_creation_roster() -> RaceCreationRosterResponse {
     build_race_creation_roster()
 }
 
+// ----- SD-36 Epic F4b: the class creation roster and the level-up class options -----
+//
+// Both are read off the census (`codex::rules_core::class_census`), never a hand list: the
+// creation roster is exactly the census rows whose roster reason is `offered` (Computed at
+// every level of their own sweep, a stated hit die, not prestige, not an Ex-* state), and a
+// prestige class is offered only at level-up, with its converted entry requirements printed
+// and each judged met/unmet against the character -- never blocking (ruling §9.2).
+
+/// PF1's character level cap: the sum of class levels never exceeds 20.
+pub(crate) const CHARACTER_LEVEL_CAP: u8 = 20;
+
+#[derive(Debug, Clone, PartialEq, Eq, Serialize, Deserialize)]
+#[serde(rename_all = "camelCase")]
+pub struct ClassCreationEntryDto {
+    /// `class:<slug>`.
+    pub class_id: String,
+    /// The converted class principal's own label.
+    pub label: String,
+    /// The census family (`ClassFamily`, snake_case), the roster's grouping key.
+    pub family: String,
+    /// The family's printed heading.
+    pub family_label: String,
+    /// The first book the census found the class in.
+    pub book: String,
+    pub hit_die: u8,
+    pub max_level: u8,
+}
+
+/// A census class the creation roster leaves out, and the named reason.
+#[derive(Debug, Clone, PartialEq, Eq, Serialize, Deserialize)]
+#[serde(rename_all = "camelCase")]
+pub struct WithheldClassDto {
+    pub class_id: String,
+    pub label: String,
+    /// One of `prestige | ex_state | not_computed | hit_die_absent`.
+    pub reason: String,
+}
+
+#[derive(Debug, Clone, PartialEq, Eq, Serialize, Deserialize)]
+#[serde(rename_all = "camelCase")]
+pub struct ClassCreationRosterResponse {
+    /// Every class offered at creation, grouped by family (census family order), registry order
+    /// within a family.
+    pub classes: Vec<ClassCreationEntryDto>,
+    /// Every census class not offered, each with its reason. Prestige classes (offered at
+    /// level-up) and Ex-* states (census-only) are here by rule, not as a gap.
+    pub withheld: Vec<WithheldClassDto>,
+    /// One line per class withheld for a GAP (`not_computed`, `hit_die_absent`). Empty in a
+    /// healthy checkout.
+    pub diagnostics: Vec<String>,
+}
+
+fn roster_reason_word(reason: codex::rules_core::class_census::RosterReason) -> &'static str {
+    use codex::rules_core::class_census::RosterReason;
+    match reason {
+        RosterReason::Offered => "offered",
+        RosterReason::HitDieAbsent => "hit_die_absent",
+        RosterReason::NotComputed => "not_computed",
+        RosterReason::Prestige => "prestige",
+        RosterReason::ExState => "ex_state",
+    }
+}
+
+fn family_word(family: codex::rules_core::class_census::ClassFamily) -> String {
+    serde_json::to_value(family)
+        .ok()
+        .and_then(|value| value.as_str().map(str::to_owned))
+        .unwrap_or_else(|| format!("{family:?}"))
+}
+
+/// Builds the class creation roster from the census. `Err` names why the census could not be
+/// swept (the sweep fixture did not load); a sweep that offers nothing is also an `Err` naming
+/// that -- never an empty picker.
+pub fn build_class_creation_roster() -> Result<ClassCreationRosterResponse, String> {
+    use codex::rules_core::class_census::{class_creation_roster, class_roster_reasons, roster_display_name, RosterReason};
+    let offered = class_creation_roster().map_err(|e| format!("class creation roster unavailable: {e}"))?;
+    if offered.is_empty() {
+        return Err("class creation roster unavailable: the census offered no class at all \
+                    (every census row carried a withholding reason)"
+            .to_owned());
+    }
+    let reasons = class_roster_reasons().map_err(|e| format!("class creation roster unavailable: {e}"))?;
+    let classes = offered
+        .into_iter()
+        .map(|entry| ClassCreationEntryDto {
+            class_id: entry.id,
+            label: entry.display_name,
+            family: family_word(entry.family),
+            family_label: entry.family.label().to_owned(),
+            book: entry.book,
+            hit_die: entry.hit_die,
+            max_level: entry.max_level,
+        })
+        .collect();
+    let mut withheld = Vec::new();
+    let mut diagnostics = Vec::new();
+    for (entry, reason) in reasons.iter().filter(|(_, reason)| !reason.in_desktop_roster()) {
+        if matches!(reason, RosterReason::NotComputed | RosterReason::HitDieAbsent) {
+            diagnostics.push(format!(
+                "{}: withheld from character creation — {}",
+                entry.class_id,
+                roster_reason_word(*reason)
+            ));
+        }
+        withheld.push(WithheldClassDto {
+            class_id: entry.class_id.clone(),
+            label: roster_display_name(entry),
+            reason: roster_reason_word(*reason).to_owned(),
+        });
+    }
+    Ok(ClassCreationRosterResponse { classes, withheld, diagnostics })
+}
+
+/// Serves the census-derived class roster the creation form builds its class picker from.
+///
+/// `async` so the first call -- which sweeps every census class unless the startup warm-up
+/// (`main.rs`) already has -- runs off the UI thread; later calls read the per-process cache.
+#[tauri::command(async)]
+pub fn list_class_creation_roster() -> Result<ClassCreationRosterResponse, String> {
+    build_class_creation_roster()
+}
+
+#[derive(Debug, Clone, Deserialize)]
+#[serde(rename_all = "camelCase")]
+pub struct ListLevelUpClassOptionsRequest {
+    pub character_id: String,
+}
+
+/// A class the next character level may be taken in (advance a held class, or add a base class).
+#[derive(Debug, Clone, PartialEq, Eq, Serialize, Deserialize)]
+#[serde(rename_all = "camelCase")]
+pub struct LevelUpClassOptionDto {
+    pub class_id: String,
+    pub label: String,
+    pub family: String,
+    pub family_label: String,
+    /// The class level the character holds now (`0` for a class it would add).
+    pub current_level: u8,
+    pub next_level: u8,
+    pub max_level: u8,
+}
+
+/// One printed entry requirement and its met/unmet note for this character.
+#[derive(Debug, Clone, PartialEq, Eq, Serialize, Deserialize)]
+#[serde(rename_all = "camelCase")]
+pub struct EntryRequirementDto {
+    /// The requirement in the rule's words.
+    pub text: String,
+    /// `met | unmet | situational`.
+    pub status: String,
+    /// The condition that prints, for a `situational` requirement.
+    pub condition: Option<String>,
+}
+
+/// A prestige class the character may add. Offered whether or not its requirements are met
+/// (ruling §9.2): the requirements print, each with its note.
+#[derive(Debug, Clone, PartialEq, Eq, Serialize, Deserialize)]
+#[serde(rename_all = "camelCase")]
+pub struct PrestigeClassOptionDto {
+    pub class_id: String,
+    pub label: String,
+    pub book: String,
+    pub next_level: u8,
+    pub max_level: u8,
+    /// `None` when the converted record states no hit die (the HP line then names the gap).
+    pub hit_die: Option<u8>,
+    /// Empty when the record states no entry requirement.
+    pub entry_requirements: Vec<EntryRequirementDto>,
+    /// `true` when no printed requirement is `unmet`. A note, never a gate.
+    pub requirements_all_met: bool,
+}
+
+#[derive(Debug, Clone, PartialEq, Eq, Serialize, Deserialize)]
+#[serde(rename_all = "camelCase")]
+pub struct LevelUpClassOptionsResponse {
+    pub character_level: u8,
+    pub level_cap: u8,
+    /// `true` when the character is already at the cap: every list is empty for that reason.
+    pub at_level_cap: bool,
+    /// Held classes below their own max level, in held order.
+    pub advance: Vec<LevelUpClassOptionDto>,
+    /// Creation-roster classes the character does not hold, in roster order.
+    pub add_base: Vec<LevelUpClassOptionDto>,
+    /// Every census prestige class the character does not hold, in census id order.
+    pub add_prestige: Vec<PrestigeClassOptionDto>,
+    /// Anything the options could not be read for, named (a held class at its max level, a
+    /// held class the census does not know, a prestige record that failed to load).
+    pub diagnostics: Vec<String>,
+}
+
+/// The level-up class options for `input`: advance a held class, add a base class, or add a
+/// prestige class with its entry requirements printed and judged against this character.
+pub fn build_level_up_class_options(input: &CharacterInput) -> Result<LevelUpClassOptionsResponse, String> {
+    use codex::rules_core::class_census::{census, prestige_entry_requirements, roster_display_name, roster_hit_die, EntryRequirementVerdict};
+    let level = character_level(input);
+    let mut response = LevelUpClassOptionsResponse {
+        character_level: level,
+        level_cap: CHARACTER_LEVEL_CAP,
+        at_level_cap: level >= CHARACTER_LEVEL_CAP,
+        advance: Vec::new(),
+        add_base: Vec::new(),
+        add_prestige: Vec::new(),
+        diagnostics: Vec::new(),
+    };
+    if response.at_level_cap {
+        response.diagnostics.push(format!(
+            "character level {level} is the PF1 cap of {CHARACTER_LEVEL_CAP}: no further level can be taken"
+        ));
+        return Ok(response);
+    }
+
+    let census = census();
+    let roster = build_class_creation_roster()?;
+    let held_level = |class_id: &str| {
+        input.chosen.class_levels.iter().find(|held| held.class_id == class_id).map(|held| held.level)
+    };
+
+    for held in &input.chosen.class_levels {
+        let Some(entry) = census.get(&held.class_id) else {
+            response.diagnostics.push(format!("{}: held, but not a census class; its max level is unknown", held.class_id));
+            continue;
+        };
+        if held.level >= entry.max_level {
+            response.diagnostics.push(format!("{}: at its max class level {}", held.class_id, entry.max_level));
+            continue;
+        }
+        response.advance.push(LevelUpClassOptionDto {
+            class_id: held.class_id.clone(),
+            label: roster_display_name(entry),
+            family: family_word(entry.family),
+            family_label: entry.family.label().to_owned(),
+            current_level: held.level,
+            next_level: held.level + 1,
+            max_level: entry.max_level,
+        });
+    }
+
+    response.add_base = roster
+        .classes
+        .iter()
+        .filter(|class| held_level(&class.class_id).is_none())
+        .map(|class| LevelUpClassOptionDto {
+            class_id: class.class_id.clone(),
+            label: class.label.clone(),
+            family: class.family.clone(),
+            family_label: class.family_label.clone(),
+            current_level: 0,
+            next_level: 1,
+            max_level: class.max_level,
+        })
+        .collect();
+
+    let package = sheet_rule_package().as_ref().map_err(|reason| format!("prestige entry requirements unavailable: {reason}"))?;
+    let base = compute_pilot_base_chassis(input);
+    let mut seed = HeldSeed::from_character(input, &base);
+    seed.race_traits.extend(resolve_racial_traits_for_character(input).applied_traits.iter().map(|t| t.key.clone()));
+    let facts = CharacterFacts::from_character(input, &base).with_linked_picks(package, &seed);
+    let held = held_set(package, &seed, &facts);
+
+    for entry in census.values().filter(|entry| entry.is_prestige && held_level(&entry.class_id).is_none()) {
+        match prestige_entry_requirements(package, entry, &held, &facts) {
+            Ok(requirements) => response.add_prestige.push(PrestigeClassOptionDto {
+                class_id: entry.class_id.clone(),
+                label: roster_display_name(entry),
+                book: entry.books.first().cloned().unwrap_or_default(),
+                next_level: 1,
+                max_level: entry.max_level,
+                hit_die: roster_hit_die(entry),
+                requirements_all_met: requirements.iter().all(|r| r.verdict != EntryRequirementVerdict::Unmet),
+                entry_requirements: requirements
+                    .into_iter()
+                    .map(|r| EntryRequirementDto { text: r.text, status: r.verdict.as_str().to_owned(), condition: r.condition })
+                    .collect(),
+            }),
+            Err(reason) => response.diagnostics.push(format!("prestige option withheld — {reason}")),
+        }
+    }
+    Ok(response)
+}
+
+/// Serves the level-up class options for a saved character (`async`: it reads the same roster).
+#[tauri::command(async)]
+pub fn list_level_up_class_options(
+    app: tauri::AppHandle,
+    request: ListLevelUpClassOptionsRequest,
+) -> Result<LevelUpClassOptionsResponse, String> {
+    let root = resolve_character_root(&app, &request.character_id)?;
+    let envelope = SavedCharacterStore::load(&root).map_err(|err| err.message)?;
+    build_level_up_class_options(&envelope.character_input)
+}
+
 #[cfg(test)]
 mod tests {
     use super::*;
@@ -9970,6 +10261,190 @@ mod tests {
             assert_eq!(desktop_computed, census.computed, "{}", report.join("\n"));
             assert!(census.computed, "the census mix itself must be Computed: {}", report.join("\n"));
         }
+    }
+
+    // ----- SD-36 Epic F4b: the class creation roster and the level-up class options -----
+
+    /// The census rows `census-f4a.json` marks `in_desktop_roster`, read from the committed
+    /// census artifact -- the acceptance denominator (F4.1: "roster length == census computed
+    /// base count"). A roster that drifts from the census fails here by id.
+    fn census_in_desktop_roster_ids() -> BTreeSet<String> {
+        let path = crate::authoring_workbench::codex_repo_root()
+            .expect("repo root")
+            .join("docs/release/SD-36-consolidation/artifacts/epic-f/census-f4a.json");
+        let raw = std::fs::read_to_string(&path).unwrap_or_else(|e| panic!("{}: {e}", path.display()));
+        let census: serde_json::Value = serde_json::from_str(&raw).expect("census JSON parses");
+        let mut ids = BTreeSet::new();
+        for section in ["classes", "prestige"] {
+            for row in census[section].as_array().expect("census section is an array") {
+                if row["in_desktop_roster"].as_bool() == Some(true) {
+                    ids.insert(row["class_id"].as_str().expect("class_id").to_owned());
+                }
+            }
+        }
+        assert_eq!(
+            ids.len() as u64,
+            census["roster_offered"].as_u64().expect("roster_offered"),
+            "the census's own roster_offered must equal its in_desktop_roster rows"
+        );
+        ids
+    }
+
+    #[test]
+    fn list_class_creation_roster_offers_exactly_the_census_roster() {
+        let started = std::time::Instant::now();
+        let roster = build_class_creation_roster().expect("the class roster must load");
+        eprintln!("build_class_creation_roster: {:?} (first call, this process)", started.elapsed());
+
+        let census_ids = census_in_desktop_roster_ids();
+        let roster_ids: BTreeSet<String> = roster.classes.iter().map(|c| c.class_id.clone()).collect();
+        assert_eq!(roster.classes.len(), roster_ids.len(), "a class is offered at most once");
+        assert_eq!(
+            roster_ids, census_ids,
+            "roster vs census in_desktop_roster: only-roster {:?}, only-census {:?}",
+            roster_ids.difference(&census_ids).collect::<Vec<_>>(),
+            census_ids.difference(&roster_ids).collect::<Vec<_>>()
+        );
+        assert!(roster.diagnostics.is_empty(), "a healthy checkout names no roster gap: {:?}", roster.diagnostics);
+        eprintln!(
+            "class creation roster: {} offered, {} withheld, {} diagnostics; census in_desktop_roster {}",
+            roster.classes.len(),
+            roster.withheld.len(),
+            roster.diagnostics.len(),
+            census_ids.len()
+        );
+
+        let census = codex::rules_core::class_census::census();
+        for class in &roster.classes {
+            let entry = census.get(&class.class_id).unwrap_or_else(|| panic!("{}: not a census id", class.class_id));
+            assert!(!entry.is_prestige, "{}: prestige is never offered at creation (§9)", class.class_id);
+            assert!(!class.class_id.starts_with("class:ex_"), "{}: Ex-* states are census-only (§9)", class.class_id);
+            assert!(class.hit_die > 0, "{}: an offered class prints a hit die", class.class_id);
+            assert!(!class.label.is_empty() && !class.family_label.is_empty(), "{class:?}");
+        }
+
+        // Grouped by family: once a family's run ends it never starts again.
+        let mut families_closed: Vec<String> = Vec::new();
+        for pair in roster.classes.windows(2) {
+            if pair[0].family != pair[1].family {
+                families_closed.push(pair[0].family.clone());
+                assert!(
+                    !families_closed.contains(&pair[1].family),
+                    "family {} appears in two runs",
+                    pair[1].family
+                );
+            }
+        }
+
+        // Every withheld census row carries its named reason; none is offered.
+        assert_eq!(roster.withheld.len() + roster.classes.len(), census.len(), "every census id is offered or withheld");
+        for withheld in &roster.withheld {
+            assert!(!roster_ids.contains(&withheld.class_id), "{withheld:?}");
+            assert!(
+                ["prestige", "ex_state", "not_computed", "hit_die_absent"].contains(&withheld.reason.as_str()),
+                "{withheld:?}"
+            );
+        }
+
+        // Every offered class is Computed through the desktop's own create path, at level 1 and
+        // at its own max level (the census swept every level; this re-proves the ends through
+        // `compose_character_input`, not the census fixture).
+        let mut blocked = Vec::new();
+        for class in &roster.classes {
+            for level in [1, class.max_level] {
+                let input = compose_character_input(&request_for_class("race:human", &class.class_id, level));
+                if build_pilot_headless_receipt(&input).status != HeadlessReceiptStatus::Computed {
+                    blocked.push(format!("{} @ {level}", class.class_id));
+                }
+            }
+        }
+        assert!(blocked.is_empty(), "offered classes Blocked through the create path: {blocked:?}");
+    }
+
+    fn fighter_at(level: u8) -> CharacterInput {
+        compose_character_input(&request_for("race:human", level))
+    }
+
+    #[test]
+    fn list_level_up_class_options_offers_prestige_with_printed_requirements() {
+        let options = build_level_up_class_options(&fighter_at(6)).expect("options load");
+        assert_eq!(options.character_level, 6);
+        assert_eq!(options.level_cap, 20);
+        assert!(!options.at_level_cap);
+
+        // Advance the held class.
+        let advance: Vec<(&str, u8)> =
+            options.advance.iter().map(|o| (o.class_id.as_str(), o.next_level)).collect();
+        assert_eq!(advance, vec![(FIGHTER_CLASS_ID, 7)]);
+
+        // Add a base class: the creation roster minus the held Fighter.
+        let roster = build_class_creation_roster().expect("roster");
+        assert_eq!(options.add_base.len(), roster.classes.len() - 1, "every roster class but the held one");
+        assert!(options.add_base.iter().all(|o| o.class_id != FIGHTER_CLASS_ID && o.next_level == 1));
+
+        // Add a prestige class: every census prestige class, none blocked.
+        let census = codex::rules_core::class_census::census();
+        let prestige_total = census.values().filter(|e| e.is_prestige).count();
+        assert_eq!(options.add_prestige.len(), prestige_total, "every prestige class is offered at level-up");
+        assert!(options.diagnostics.is_empty(), "{:?}", options.diagnostics);
+
+        let archer = options
+            .add_prestige
+            .iter()
+            .find(|o| o.class_id == "class:arcane_archer")
+            .expect("arcane archer offered to a fighter 6");
+        let lines: Vec<(String, String)> =
+            archer.entry_requirements.iter().map(|r| (r.text.clone(), r.status.clone())).collect();
+        eprintln!(
+            "fighter 6 level-up options: advance {}, add_base {}, add_prestige {} (of {prestige_total} census prestige); \
+             arcane archer entry lines: {lines:#?}",
+            options.advance.len(),
+            options.add_base.len(),
+            options.add_prestige.len()
+        );
+        let status_of = |needle: &str| {
+            lines
+                .iter()
+                .find(|(text, _)| text.contains(needle))
+                .map(|(_, status)| status.as_str())
+                .unwrap_or_else(|| panic!("no entry line mentions {needle:?}: {lines:?}"))
+        };
+        // Fighter 6: BAB +6 (met); no arcane spells (unmet); the fixture's feats decide the rest.
+        assert_eq!(status_of("base attack bonus at least 6"), "met", "{lines:?}");
+        assert_eq!(status_of("highest arcane spell level at least 1"), "unmet", "{lines:?}");
+        assert!(lines.iter().any(|(text, _)| text.contains("Point-Blank Shot") || text.contains("Point Blank Shot")), "{lines:?}");
+        assert!(lines.iter().any(|(text, _)| text.contains("Weapon Focus")), "{lines:?}");
+        assert!(!archer.requirements_all_met, "an unmet line means not all met: {lines:?}");
+        // The level's own ceiling (`arcane_archer level at most 10`) is converter bookkeeping,
+        // not a PF1 entry requirement: never printed.
+        assert!(!lines.iter().any(|(text, _)| text.contains("at most 10")), "{lines:?}");
+        assert_eq!(archer.next_level, 1);
+        assert_eq!(archer.max_level, 10);
+
+        // Every line is judged: met, unmet, or situational -- never blank.
+        for option in &options.add_prestige {
+            for requirement in &option.entry_requirements {
+                assert!(!requirement.text.is_empty(), "{}: blank requirement", option.class_id);
+                assert!(["met", "unmet", "situational"].contains(&requirement.status.as_str()), "{requirement:?}");
+            }
+        }
+    }
+
+    #[test]
+    fn list_level_up_class_options_advances_a_held_prestige_class_to_its_own_max_and_keeps_the_cap() {
+        // Fighter 6 / Arcane Archer 1: advance both, never offer the held prestige again.
+        let mut input = fighter_at(6);
+        apply_level_up(&mut input, "class:arcane_archer");
+        let options = build_level_up_class_options(&input).expect("options load");
+        let advance: Vec<(&str, u8)> =
+            options.advance.iter().map(|o| (o.class_id.as_str(), o.next_level)).collect();
+        assert_eq!(advance, vec![(FIGHTER_CLASS_ID, 7), ("class:arcane_archer", 2)]);
+        assert!(options.add_prestige.iter().all(|o| o.class_id != "class:arcane_archer"));
+
+        // Character level 20: the PF1 cap -- nothing to offer, and it says why.
+        let capped = build_level_up_class_options(&fighter_at(20)).expect("options load");
+        assert!(capped.at_level_cap);
+        assert!(capped.advance.is_empty() && capped.add_base.is_empty() && capped.add_prestige.is_empty());
     }
 
     /// A second consecutive level-up within Wizard (not a fresh dip) must
