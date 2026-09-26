@@ -46,7 +46,7 @@ fn with_pick(class: &str, level: u8, choice: &str, selection: &str) -> Character
 
 /// The held set the sheet builds for a single-class character with one Path-A pick, the same
 /// construction `sheet_rule_package::linked_picks` uses.
-fn held_for(class: &str, level: u8, choice: &str, member: &str) -> HeldSet {
+fn held_for(class: &str, level: u8, choice: &str, selection: &str) -> HeldSet {
     let package = sheet_rule_package::package().as_ref().expect("package");
     let seed = HeldSeed { race: Some("human".into()), classes: vec![(class.into(), i64::from(level))], ..HeldSeed::default() };
     let mut facts = CharacterFacts {
@@ -55,7 +55,7 @@ fn held_for(class: &str, level: u8, choice: &str, member: &str) -> HeldSet {
         class_levels: vec![(class.into(), i64::from(level))],
         ..CharacterFacts::default()
     };
-    facts.choices.insert(choice.to_owned(), vec![(member.to_owned(), member.to_owned())]);
+    facts.record_pick(choice, selection);
     let facts = facts.with_linked_picks(package, &seed);
     held_set(package, &seed, &facts)
 }
@@ -98,11 +98,11 @@ fn a_cleric_domain_pick_links_to_the_domain_choice_and_holds_the_domain() {
 fn an_air_cleric_holds_each_domain_power_at_the_level_the_book_grants_it() {
     let arc = "core_rulebook:class_feature:domain_power_lightning_arc";
     let resist = "core_rulebook:class_feature:domain_power_electricity_resistance";
-    let at5 = held_for("cleric", 5, "choice:cleric_domain", "air");
+    let at5 = held_for("cleric", 5, "choice:cleric_domain", "domain:air");
     assert!(at5.holds("core_rulebook:domain:air"));
     assert!(at5.holds(arc), "Lightning Arc is a 1st-level power");
     assert!(!at5.holds(resist), "Electricity Resistance comes at 6th");
-    let at6 = held_for("cleric", 6, "choice:cleric_domain", "air");
+    let at6 = held_for("cleric", 6, "choice:cleric_domain", "domain:air");
     assert!(at6.holds(arc) && at6.holds(resist));
 }
 
@@ -128,12 +128,12 @@ fn a_battle_shaman_holds_each_spirit_ability_at_the_level_the_book_grants_it() {
     let base = "advanced_class_guide:class_feature:battle_spirit_battle_spirit";
     let greater = "advanced_class_guide:class_feature:battle_spirit_enemies_bane";
     let true_ = "advanced_class_guide:class_feature:battle_spirit_paragon_of_battle";
-    let at5 = held_for("shaman", 5, "choice:shaman_spirit", "battle");
+    let at5 = held_for("shaman", 5, "choice:shaman_spirit", "spirit:battle");
     assert!(at5.holds(base));
     assert!(!at5.holds(greater) && !at5.holds(true_));
-    let at8 = held_for("shaman", 8, "choice:shaman_spirit", "battle");
+    let at8 = held_for("shaman", 8, "choice:shaman_spirit", "spirit:battle");
     assert!(at8.holds(base) && at8.holds(greater) && !at8.holds(true_));
-    let at16 = held_for("shaman", 16, "choice:shaman_spirit", "battle");
+    let at16 = held_for("shaman", 16, "choice:shaman_spirit", "spirit:battle");
     assert!(at16.holds(base) && at16.holds(greater) && at16.holds(true_));
 }
 

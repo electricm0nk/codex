@@ -69,7 +69,7 @@ mod f4pre_pool_pass_scan {
                     sel_linked_levels += 1;
                     let seed = HeldSeed { race: Some("human".into()), classes: vec![(class_slug.into(), i64::from(level))], ..HeldSeed::default() };
                     let mut facts = CharacterFacts { level: i64::from(level), race: Some("human".into()), class_levels: vec![(class_slug.into(), i64::from(level))], ..CharacterFacts::default() };
-                    facts.choices.insert(choice.to_owned(), vec![(sel_slug.clone(), sel_slug.clone())]);
+                    facts.record_pick(choice, &format!("{ns}{sel_slug}"));
                     let facts = facts.with_linked_picks(package, &seed);
                     let held = held_set(package, &seed, &facts);
                     for l in &lines {

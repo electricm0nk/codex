@@ -102,11 +102,13 @@ pub fn linked_picks(
         .selected_choices
         .iter()
         .filter(|c| c.choice_set_id.starts_with("choice:"))
-        .map(|c| (c.choice_set_id.clone(), id_slug(&c.selection_id)))
+        .map(|c| (c.choice_set_id.clone(), c.selection_id.clone()))
         .collect();
     // Cheap pre-check: a pick can link only when a rule named `<pool>_<member>` or `<member>`
-    // exists (`link_path_a_picks`).
-    if !picks.iter().any(|(set, member)| {
+    // exists (`link_path_a_picks`). The cache key keeps the whole selection id: its namespace
+    // decides what a bare `<member>` names.
+    if !picks.iter().any(|(set, selection)| {
+        let member = &id_slug(selection);
         let pool = set.strip_prefix("choice:").unwrap_or(set);
         !package.find_in_every_kind(&format!("{pool}_{member}")).is_empty() || !package.find_in_every_kind(member).is_empty()
     }) {
@@ -129,8 +131,8 @@ pub fn linked_picks(
         race,
         ..CharacterFacts::default()
     };
-    for (set, member) in &picks {
-        facts.choices.entry(set.clone()).or_default().push((member.clone(), member.clone()));
+    for c in chosen.selected_choices.iter().filter(|c| c.choice_set_id.starts_with("choice:")) {
+        facts.record_pick(&c.choice_set_id, &c.selection_id);
     }
     let held = held_set(package, &seed, &facts);
     let mut links = link_path_a_picks(package, &held, &facts);

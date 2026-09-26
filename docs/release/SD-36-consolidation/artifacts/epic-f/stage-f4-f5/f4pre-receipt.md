@@ -167,7 +167,7 @@ No seed changed. The new choices' defaults are **the fixture's existing picks**
 - **Cleric: `domain:good`**, linked to `(cleric#bonus1, core_rulebook:domain:good)` but **not
   held**. Good is `PREALIGN:LG,NG,CG` (`cr_domains.lst`), and the character record carries no
   alignment. This is pinned by `the_canonical_seeds_are_the_new_choices_defaults`. The cleric's
-  second domain slot (`ClericDomainCount` = 2) stays unrecorded, as before. No default was invented.
+  second domain slot (`ClericDomainCount` = 2) stays unrecorded, as before. No default was invented among the seeds. **Correction (merge-readiness blocker 1):** the F4pre fallback did link the fixture's `ability:strength` pick to `domain:strength` under any held domain count; fixed and receipted in `merge-readiness-blockers-receipt.md`.
 
 ## 7. Census (`census-f4pre.json`)
 

@@ -1,0 +1,20 @@
+== sabotage A: bare <member> ignores the namespace
+1
+test the_fixture_is_a_human_who_puts_the_ability_bonus_on_strength ... ok
+test a_domain_count_of_zero_offers_no_domain ... ok
+test the_ability_bonus_pick_links_to_nothing ... FAILED
+test no_linked_pick_over_the_non_prestige_population_comes_from_a_foreign_pool ... FAILED
+test a_human_shaman_holds_no_strength_domain ... FAILED
+test a_human_cleric_with_the_bonus_on_strength_holds_no_strength_domain ... FAILED
+test a_human_paladin_holds_no_domain ... ok
+test result: FAILED. 3 passed; 4 failed; 0 ignored; 0 measured; 0 filtered out; finished in 13.77s
+== sabotage B: link fallback ignores the chooser count
+1
+test the_fixture_is_a_human_who_puts_the_ability_bonus_on_strength ... ok
+test the_ability_bonus_pick_links_to_nothing ... ok
+test a_domain_count_of_zero_offers_no_domain ... FAILED
+test no_linked_pick_over_the_non_prestige_population_comes_from_a_foreign_pool ... ok
+test a_human_shaman_holds_no_strength_domain ... ok
+test a_human_paladin_holds_no_domain ... ok
+test a_human_cleric_with_the_bonus_on_strength_holds_no_strength_domain ... ok
+test result: FAILED. 6 passed; 1 failed; 0 ignored; 0 measured; 0 filtered out; finished in 17.25s

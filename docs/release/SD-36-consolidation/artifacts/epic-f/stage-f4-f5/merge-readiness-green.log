@@ -1,0 +1,30 @@
+   Compiling codex v0.1.0 (/home/ubuntu/workspace/worktrees/codex-epic-f4)
+    Finished `test` profile [unoptimized + debuginfo] target(s) in 25.54s
+     Running tests/sd36_f4_link_pick_namespace.rs (/home/ubuntu/workspace/worktrees/codex-epic-f4-target/debug/deps/sd36_f4_link_pick_namespace-caa5bade4b5ed959)
+
+running 6 tests
+test the_fixture_is_a_human_who_puts_the_ability_bonus_on_strength ... ok
+test the_ability_bonus_pick_links_to_nothing ... ok
+test no_linked_pick_over_the_non_prestige_population_comes_from_a_foreign_pool ... ok
+test a_human_shaman_holds_no_strength_domain ... ok
+test a_human_paladin_holds_no_domain ... ok
+test a_human_cleric_with_the_bonus_on_strength_holds_no_strength_domain ... ok
+
+test result: ok. 6 passed; 0 failed; 0 ignored; 0 measured; 0 filtered out; finished in 17.50s
+
+     Running tests/sd36_f4pre_pool_choices.rs (/home/ubuntu/workspace/worktrees/codex-epic-f4-target/debug/deps/sd36_f4pre_pool_choices-3e1ffb1d3d5bf42d)
+
+running 10 tests
+test the_domain_count_and_the_spirit_pool_convert_as_choices ... ok
+test a_shaman_spirit_pick_links_to_the_spirit_choice_and_holds_the_spirit ... ok
+test an_invented_domain_links_to_nothing ... ok
+test a_cleric_domain_pick_links_to_the_domain_choice_and_holds_the_domain ... ok
+test a_domain_three_books_print_links_to_one_printing ... ok
+test the_canonical_seeds_are_the_new_choices_defaults ... ok
+test a_battle_shaman_holds_each_spirit_ability_at_the_level_the_book_grants_it ... ok
+test an_air_cleric_holds_each_domain_power_at_the_level_the_book_grants_it ... ok
+test the_pool_pass_prints_no_battle_spirit_value_for_a_linked_pick ... ok
+test the_pool_pass_prints_no_air_domain_value_for_a_linked_pick ... ok
+
+test result: ok. 10 passed; 0 failed; 0 ignored; 0 measured; 0 filtered out; finished in 12.79s
+
