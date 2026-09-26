@@ -1,0 +1,53 @@
+closure rows 67010
+63 B child category; target exists in oracle but is NOT a converted unit
+     advanced_race_guide:ability:racial_type_humanoid: Humanoid Subrace|Humanoid Subrace Placeholder
+     pathfinder_unchained:monster_ability:agathion_unchained_eidolon_lvl01: Unchained Eidolon Resistance|Eidolon Resistance to electricity
+     pathfinder_unchained:monster_ability:agathion_unchained_eidolon_lvl16: Unchained Eidolon Immunity|Eidolon Immunity to electricity
+2646 D plain category; target IS a converted record (resolver misses it for another cause)
+     advanced_players_guide:companion:evolution_flight_magic: Special Ability|Flight ~ Su
+     advanced_players_guide:companion:evolution_flight_winged: Special Ability|Flight ~ Ex
+     advanced_players_guide:companion:evolution_rake: Internal|Rake
+2764 E plain category; target exists in oracle but is NOT a converted unit (book/file not ingested)
+     advanced_class_guide:ability:arcanist_school_void_aura_of_prescience: Special Ability|Void Elemental School ~ Aura of Prescience
+     advanced_class_guide:ability:arcanist_school_void_reveal_weakness: Special Ability|Void Elemental School ~ Reveal Weakness
+     advanced_class_guide:ability:arcanist_school_void_void_awareness: Special Ability|Void Elemental School ~ Void Awareness
+779 F plain category; target found nowhere (dangling, bracketed, or odd syntax)
+     advanced_class_guide:ability:warpriest_bonus_feat_cloven_helm: FEAT|Hard Headed
+     advanced_class_guide:ability:warpriest_bonus_feat_dented_helm: FEAT|Hard Headed
+     advanced_class_guide:ability:warpriest_bonus_feat_improved_low_blow: Special Ability|Halfling ~ Low-Blow
+proficiency rows by mechanism {'F': 17, 'D': 7}
+A by source kind []
+distinct class sources in A 0
+D categories [('Special Ability', 2604), ('Kobold Scale Color', 15), ('Ability Focus', 15), ('Mythic Feat', 11), ('Internal', 1)]
+D where oracle has >1 definition of the key 124 of 2646
+D where some definitions unconverted 64
+    bestiary:monster:rakshasa: Special Ability|Rakshasa ~ Detect Thoughts 2 2
+    ultimate_magic:companion:house_centipede: Special Ability|House Centipede ~ Poison 1 1
+    bestiary:monster:devil_horned: Special Ability|Horned Devil ~ Stun 1 1
+    bestiary_2:monster:elemental_ice_greater: Special Ability|Ice Elemental ~ Icewalking 1 1
+    bestiary:monster:mohrg: Special Ability|Mohrg ~ Paralysis 1 1
+    inner_sea_bestiary:monster:golem_noqual: Special Ability|Noqual Golem ~ Immunity to Magic 1 1
+    bestiary_5:companion:companion_troodon: Special Ability|Companion Advancement ~ Troodon 1 1
+    book_of_the_damned_volume_2:monster:demon_vermlek: Special Ability|Vermlek ~ Abandon Flesh 1 1
+    bestiary_2:monster_ability:crawling_hand_grab: Special Ability|Grab ~ Claw 1 1
+    bestiary_2:monster:carnivorous_blob: Special Ability|Carnivorous Blob ~ Absorb Flesh 1 1
+    bestiary:monster:giant_storm: Special Ability|Storm Giant ~ Water Breathing 1 1
+    horror_adventures:race_trait:race_subtype_hive: Special Ability|Hive ~ Heat Adaptability 1 1
+prof F rows:
+    advanced_race_guide:class_feature:airborne_ambusher_weapon_and_armor_proficiency: FEAT|Armor Proficiency (Heavy),Tower Shield Proficiency
+    advanced_race_guide:class_feature:feral_child_weapon_and_armor_proficiency: FEAT|Martial Weapon Proficiency (Scimitar),Martial Weapon Proficiency (Scy
+    advanced_race_guide:class_feature:skulking_slayer_weapon_and_armor_proficiency: FEAT|Martial Weapon Proficiency (Crossbow (Hand)),Martial Weapon Profi
+    bestiary_2:monster:inevitable_kolyarut: FEAT|Exotic Weapon Proficiency (Sword (Bastard))
+    core_rulebook:class_feature:default: FEAT|Exotic Weapon Proficiency (Sword (Bastard))
+    core_rulebook:class_feature:default: FEAT|Exotic Weapon Proficiency (Waraxe (Dwarven))
+    horror_adventures:feat:kyton_style: FEAT|Exotic Weapon Proficiency (Chain (Spiked))
+    inner_sea_combat:class_feature:ranger_combat_style_feat_exotic_weapon_proficiency_spiked_chain: FEAT|Exotic Weapon Proficiency (chain (spiked))
+    inner_sea_combat:class_feature:ranger_combat_style_feat_exotic_weapon_proficiency_spiked_chain: Feat|Exotic Weapon Proficiency (chain (spiked))
+    inner_sea_magic:class_feature:bard_archetype_chelish_diva: Special Ability|Codex-Named Unit (class_feature_inner_sea_magic_ism_abilities_class_lst_160
+    inner_sea_magic:class_feature:spire_defender_bonus_feats: FEAT|Heavy Armor Proficiency
+    inner_sea_magic:class_feature:spire_defender_bonus_feats: FEAT|Light Armor Proficiency
+    inner_sea_magic:class_feature:spire_defender_bonus_feats: FEAT|Medium Armor Proficiency
+    inner_sea_temples:equipment:vaultbow: FEAT|Exotic Weapon Proficiency (Crossbow (Repeating Light))
+    ultimate_combat:class_feature:kensai_weapon_proficiency: FEAT|Exotic Weapon Proficiency (Sword (Bastard))
+    ultimate_combat:class_feature:kensai_weapon_proficiency: Special Ability|Kensai ~ Weapon Proficiency (Sword (Bastard))
+    ultimate_psionics:class_feature:marksman_ranged_weapon_proficiency: Special Ability|Weapon Familiarity ~ Halfling

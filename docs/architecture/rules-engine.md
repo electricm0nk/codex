@@ -1,7 +1,11 @@
 # Rules engine
 
 > Scope: The headless PF1 rules-computation spine — from chosen character input through the deterministic chassis engine to the boundary contract the GUI consumes.
-> Last verified: **2026-09-20 against `tranche/16` (`424e93e93c`)** for the SD-36 Epic C1 split of the
+> Last verified: **2026-09-26 against `tranche/16` (`e70a8745ed`)** for §3d (SD-36 Epic F class dispatch:
+> the generic gate arm, the prestige rule, the multiclass fold, the proficiency reader, converted-record class
+> skills / sub-classes / bloodlines, the pick-to-option link, and the census that measures them; figures from
+> `class_census --json`, `docs/release/SD-36-consolidation/artifacts/epic-f/stage-f4-f5/census-f5.json`).
+> Earlier pass: **2026-09-20 against `tranche/16` (`424e93e93c`)** for the SD-36 Epic C1 split of the
 > old, single `pilot_compute.rs` file into `src/rules_core/pilot_compute/` (41 submodules; `mod.rs`
 > itself is now a 297-line module-declaration/re-export shim, not the compute body), for
 > `src/support/paths.rs` (Epic C1.3's shared path-helper module), and for the module map, compute
@@ -629,7 +633,36 @@ the rows back. `AT-33-E3-004` runs the corpus-wide scan with `--corpus-wide --ou
 — the binary's own default output path is SD-32's closed `gate-2-engines/` evidence file and is
 never overwritten; `--output` is always passed explicitly.
 
-### 3d. SD-36 Epic F2/F3 — class dispatch: the generic gate arm, the prestige rule, the multiclass fold
+### 3d. SD-36 Epic F — class dispatch: the generic gate arm, the prestige rule, the multiclass fold, the proficiency reader
+
+**Where it stands** (`cargo run --locked -j 8 --bin class_census -- --json <path>`, 2026-09-26): 137
+distinct class ids; 63 of 63 non-prestige `Computed` at every level of their own sweep; 74 of 74 prestige
+ids Blocked alone (the game rule) and 68 of 74 `Computed` in a carrier mix; mix panel 185 of 185. Every
+figure is one mechanical rule applied to converted data, never a per-class case. The census itself is
+`src/rules_core/class_census.rs` + `src/bin/class_census.rs` (see [testing.md](./testing.md)); its
+canonical per-class picks come from one seed table, `class_seeds::canonical_seeds_for`
+(`src/rules_core/class_seeds.rs`), which the desktop's `pf1_adapter.rs` and `v06_class_state_dump` import.
+
+**Proficiency reader (F1/F1c).** `CLASS_WEAPON_PROFICIENCIES` (`rules_tables/crb/weapon_tables.rs`)
+keeps its 42 hand-transcribed rows, first precedence. Every other class is answered by
+`class_proficiency_sheet_rules::class_weapon_proficiency_view(class, level)` from the converted package:
+it seeds that one class, runs the held-set fixpoint, and collects `Fact::Proficiency` grants from the
+held rules (`Effect::FactGrant`, and `Effect::GatedFactGrant` when the grant's own gate holds — a gated
+AUTO grant is never granted unconditionally). It answers `ProficiencyAnswer::Known` (possibly empty,
+with any weapon pick the character's recorded choice decides) only when the class principal's
+`closure_complete` attestation holds — every rule its class line reaches converted with zero closure
+defects — and `Unknown { reason }` otherwise, never a fabricated set. The reader reproduces 42 of 42
+static rows at level 1; of the 95 classes it walks, 92 are Known at every level and 3 prestige classes
+stay Unknown by named mechanism (`every_census_class_has_a_known_proficiency_answer`,
+`docs/release/SD-36-consolidation/artifacts/epic-f/reader-remainder.md`). The weapon union over a mix is
+decidable by any one granting class.
+
+**Class skills, sub-classes, bloodlines, picks.** Class skills are read from the converted record
+(`class_skill_sheet_rules`); a sub-class choice (`SUBCLASS:`), an ability-category pick (a bloodline), a
+natural-attack helper, a selection pool the oracle fills, and a character's Path-A pick linked to its
+converted option (`sheet_rule::link_path_a_picks`) are each described under "Multiclass base-chassis
+dispatch and fold" above.
+
 
 **Generic gate arm (F2a).** `has_supported_class_chassis` (`class_shared_core.rs`) gained one arm,
 `is_supported_generic_class_family_single_class`: a single-class, non-prestige character whose class

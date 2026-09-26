@@ -14,13 +14,23 @@ Per-cycle launch procedure, eligibility checks, and dispatch discipline.
 ## 0. Bundle at a glance
 
 - **Branch:** `tranche/16`
-- **Epics / criteria:** 5 / 1+ (B: 9 criteria; A: 11; C: 10; D: 6; F: 25 — F0.1-4, F1.1-9, F1b.0-5,
-  F2.1-3, F3.0-4, F4.1-4, F5.1-3)
+- **Epics / criteria:** 6 / 1+ (B: 9 criteria; A: 11; C: 10; D: 6; E: disposition table in
+  `receipts/epic-e_receipt.md`; F: 35 — F0.1-4, F1.1-9, F1b.0-5, F2.1-3, F3.0-4, F4.1-5, F5.1-3;
+  `grep -cE '^\| F[0-9]b?\.[0-9]' epic-breakdown.md` -> 35)
 - **Dispatch mechanism:** Workflow tool from live orchestrating session
 - **First concrete build value:** 0.16.0
 - **Epic F (2026-09-21 addition):** class completion, scoped between D1 and D2–D6 per operator
-  ruling `decisions.md §11`. Own worktree + own `CARGO_TARGET_DIR` for every converter run — never
-  the shared tree; one `cargo` command at a time, `-j 2`. Full plan: `epic-f-class-completion.md`.
+  ruling `decisions.md §11`. Full plan: `epic-f-class-completion.md`. **Status 2026-09-26:** F0–F4
+  done, F5a (closure docs) done, F5.3 (baselines, PR #393 body, graphify last) open; census 137 ids,
+  63 of 63 non-prestige `Computed`, prestige 68 of 74 in a carrier mix, mix panel 185 of 185, roster 59
+  (`artifacts/epic-f/stage-f4-f5/census-f5.json`). Converter changes land only in a step named a
+  converter step, under the structural-diff protocol (`decisions.md §11.1`).
+- **Resource discipline (revised after the 2026-09-23 out-of-memory crash, see
+  `docs/retro/sd36-retrospective.md`):** one `cargo` process at a time, `-j 8`, every `cargo test`
+  with `-- --test-threads=8`; `free -g` before a long run; commands past 10 minutes run under `nohup`
+  with a log and a pid file and are polled; at most one launched desktop app, never while
+  `scripts/verify.sh` runs; scratch on tmpfs is lost on a crash, so anything a receipt cites is copied
+  into the repo.
 
 ---
 
@@ -120,14 +130,16 @@ Run to completion inside the turn — commit and push before ending. No "waiting
 | F1b (print-path reconciliation) | F1b.0–F1b.5 | no, shared tree, Rust only | `src/rules_core/sheet_rule.rs` (`rule_for_explanation`), `src/rules_core/pilot_compute/class_shared_core.rs:40-52` | F1's converter change authored + n=1 (not the population commit) |
 | F2 (gate arm, prestige alone) | F2.1–F2.3 | no | `class_shared_core.rs`, `generic_class_chassis.rs`, `apps/desktop/src-tauri/src/class_catalog_generic.rs`, `class_occult_and_psionic.rs` | F1 population commit + F1b landed |
 | F3 (multiclass fold) | F3.0–F3.4 | no, same files as F2 -> strictly sequential after F2 | `class_shared_core.rs`, `class_occult_and_psionic.rs`, `tests/sd18_widening/`, `tests/sd13_progression/`, new `tests/sd36_multiclass_any_class.rs` | F2 complete |
-| F4 (desktop) | F4.1–F4.4 | frontend authoring MAY overlap F1 converter authoring (disjoint files, no cargo); Rust roster command after F3 | `apps/desktop/src-tauri/src/character_hub.rs`, `apps/desktop/src-tauri/src/main.rs`, `apps/desktop/src-tauri/src/pf1_adapter.rs`, new `src/rules_core/class_seeds.rs`, `apps/desktop/src/characterHub/`, `apps/desktop/scripts/ui-smoke/spec.json` | F3 complete (Rust roster); frontend may start earlier |
-| F5 (Epic F closure deltas) | F5.1–F5.3 | no | `docs/architecture/status.md`, `docs/architecture/rules-engine.md`, `docs/release/SD-36-consolidation/**`, `scripts/verify-baselines.env` | F4 complete |
+| F4 (desktop) | F4.1–F4.5 | frontend authoring MAY overlap F1 converter authoring (disjoint files, no cargo); Rust roster command after F3 | `apps/desktop/src-tauri/src/character_hub.rs`, `apps/desktop/src-tauri/src/main.rs`, `apps/desktop/src-tauri/src/pf1_adapter.rs`, new `src/rules_core/class_seeds.rs`, `apps/desktop/src/characterHub/`, `apps/desktop/scripts/ui-smoke/spec.json` | F3 complete (Rust roster); frontend may start earlier |
+| F5 (Epic F closure deltas) | F5.1–F5.3 | no; F5a (docs) then F5b (baselines, PR body, graphify last) | `README.md`, `docs/architecture/{status,rules-engine,desktop-app,corpus-ingest,testing,glossary,rules-data-tables}.md`, `docs/release/SD-36-consolidation/**`, `docs/retro/sd36-retrospective.md`, `scripts/verify-baselines.env` (F5b) | F4 complete (done 2026-09-26); F5a done 2026-09-26 |
 | D2–D6 (bundle closure) | D2–D6 | no | `docs/retro/`, `docs/release/SD-36-consolidation/`, GitHub PR | F5 complete (Epic F must close before graphify/PR per the standing "graphify runs against the FINAL repo state" rule) |
 
 **Converter-run discipline (F1, F1b's regeneration step):** one agent, own `git worktree`, own
 `CARGO_TARGET_DIR` (`mkdir -p "$CARGO_TARGET_DIR"`, deleted after), never the shared checkout.
-`cargo` always `-j 2`, one `cargo` command running at a time across the whole session (22 GiB RAM,
-no swap — a second concurrent `cargo` invocation is a resource hazard, not a speed gain). The
+`cargo` `-j 2` as first written (22 GiB RAM, no swap), `-j 8` with `-- --test-threads=8` on the
+current box (`free -g`: 134 GiB total, 2026-09-26) and since the 2026-09-23 out-of-memory crash; one `cargo` command running at a time across
+the whole session either way — a second concurrent `cargo` invocation is a resource hazard, not a
+speed gain. The
 `--check` gate (`cargo run --locked --quiet -j 2 -p codex-ingest --bin sheet_rule_convert --
 --check`) must be green BEFORE the resolver change is authored, and the structural diff after the
 full run must show only the allowed deltas (`granted_by`/`grants`/`closure_complete` additions;

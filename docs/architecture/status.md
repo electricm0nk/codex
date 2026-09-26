@@ -1,29 +1,35 @@
 # Status
 
 > Scope: what is real, working product surface today across the whole repo, and what is stubbed, partially wired, or deferred — superseding the root README's "Current state" section.
-> Last verified: **2026-09-20 against `tranche/16`, HEAD `424e93e93c`** (SD-36 consolidation docs-truth pass: corrected the Posture section's stale Fighter-1-3 ceiling claim against a fresh `v06_class_state_dump` run and the class/prestige/multiclass compute-path code). Earlier pass on the same date (HEAD `b22ea9e113`) trimmed the file substantially (from ~1,400 lines to the shape below): the wave-by-wave corpus-coverage narrative (SD-29 through SD-31 wave 27, plus the SD-33 `unknown`-reaches-zero account) documented the history of an instrument — *src/bin/v06_work_inventory.rs*, *support_state_matrix.rs*, *reach_gate.rs* (italicized because SD-36 Epic B deleted all three; none of these paths exists in this checkout any more) — that SD-36 Epic B **deleted outright** (55,827 lines removed: `git show --stat` on the Epic B commit, or `docs/release/SD-36-consolidation/epic-breakdown.md`'s own per-file line counts). Per this doc set's own rule ("obsolete statements are REMOVED, not annotated as deprecated") and the maintenance contract's instruction that release-bundle narrative belongs under `docs/release/`/`docs/retro/`, not here, that history is removed from this file rather than kept as a growing appendix — it remains readable at `docs/retro/` and in the superseded commits' own diffs for anyone who needs the historical account. The one corpus-completion figure that is still current-state truth is the frozen public status site — see "Corpus coverage" below.
+> Last verified: **2026-09-26 against `tranche/16`, HEAD `e70a8745ed`** (SD-36 Epic F5 closure pass: Posture, class evidence, named exceptions and the head-count grep re-derived from a fresh `class_census --json` run, `docs/release/SD-36-consolidation/artifacts/epic-f/stage-f4-f5/census-f5.json`, and the fact sheet beside it, `f5-facts.md`). Earlier pass: **2026-09-20 against `tranche/16`, HEAD `424e93e93c`** (SD-36 consolidation docs-truth pass: corrected the Posture section's stale Fighter-1-3 ceiling claim against a fresh `v06_class_state_dump` run and the class/prestige/multiclass compute-path code). Earlier pass on the same date (HEAD `b22ea9e113`) trimmed the file substantially (from ~1,400 lines to the shape below): the wave-by-wave corpus-coverage narrative (SD-29 through SD-31 wave 27, plus the SD-33 `unknown`-reaches-zero account) documented the history of an instrument — *src/bin/v06_work_inventory.rs*, *support_state_matrix.rs*, *reach_gate.rs* (italicized because SD-36 Epic B deleted all three; none of these paths exists in this checkout any more) — that SD-36 Epic B **deleted outright** (55,827 lines removed: `git show --stat` on the Epic B commit, or `docs/release/SD-36-consolidation/epic-breakdown.md`'s own per-file line counts). Per this doc set's own rule ("obsolete statements are REMOVED, not annotated as deprecated") and the maintenance contract's instruction that release-bundle narrative belongs under `docs/release/`/`docs/retro/`, not here, that history is removed from this file rather than kept as a growing appendix — it remains readable at `docs/retro/` and in the superseded commits' own diffs for anyone who needs the historical account. The one corpus-completion figure that is still current-state truth is the frozen public status site — see "Corpus coverage" below.
 > Maintenance: pre-PR truth-up cycle per [README.md](./README.md) §Maintenance contract — fires before every PR via the architecture-truth-up skill
 
 ## Posture
 
 Codex is a real, wired, end-to-end PF1e character-sheet product across the
-whole 38-book corpus it has ingested, not a single-class proof harness. The
-corpus-ingest pipeline, the deterministic compute chassis, the boundary
-contract, and every persistence store are real, tested, and exercised end to
-end by `cargo test --locked` and `npm test`. **All 31 fully-tabled classes —
-every Core Rulebook, Advanced Player's Guide, Advanced Class Guide, and
-Pathfinder Unchained class — reach a fully `Computed` character-sheet
-receipt at every level 1-20, with zero blocked levels**:
-`cargo run --locked --bin v06_class_state_dump`, run 2026-09-20,
-reports `class_count=31, computed_count=31, blocked_count=0, max_level=20`
-across barbarian, bard, cleric, druid, fighter, monk, paladin, ranger,
-rogue, sorcerer, wizard (CRB); alchemist, cavalier, inquisitor, oracle,
-summoner, witch (APG); arcanist, bloodrager, brawler, hunter, investigator,
-shaman, skald, slayer, swashbuckler, warpriest (ACG); and the 4 Unchained
-classes. **That dump sweeps class and level only — race is held fixed to a
-single Human fixture** (its own `input_posture` field;
-`src/bin/v06_class_state_dump.rs:307-330` never varies race), so it proves
-the level-1-20 range for that one race, not a race sweep. Race-creation
+whole corpus it has ingested, not a single-class proof harness. The engine
+reads all **37** books of the converted sheet-rule package
+(`ls -d data/sheet_rules/*/ | grep -v '/_' | wc -l` → 37; 49,450 records,
+0 refused, `data/sheet_rules/_report.json`). The corpus-ingest pipeline, the
+deterministic compute chassis, the boundary contract, and every persistence
+store are real, tested, and exercised end to end by `cargo test --locked`
+and `npm test`.
+
+**Classes, corpus-wide** (`cargo run --locked -j 8 --bin class_census -- --json <path>`,
+2026-09-26, `docs/release/SD-36-consolidation/artifacts/epic-f/stage-f4-f5/census-f5.json`):
+the census merges every engine registry into **137** distinct class ids. **Every
+one of the 63 non-prestige ids reaches a fully `Computed` receipt at every
+level of its own sweep (63 of 63, 0 blocked)** — the classes of the Core
+Rulebook, Advanced Player's Guide, Advanced Class Guide, Pathfinder
+Unchained, Ultimate Combat, Occult Adventures, Ultimate Intrigue, Ultimate
+Magic, Ultimate Psionics and Ultimate Wilderness alike, and the CRB NPC
+classes. The **74** prestige ids are Blocked taken alone, by the game rule
+(74 of 74, `prestige_class.requires_base_class_levels`), and **68 of 74**
+reach `Computed` in their carrier mix; the named exception is 6 of 74 whose
+oracle save formula states no PF1 save (`multiclass.save_shape.unrecognized`,
+`forward-scope-register.md` FS-15). The multiclass mix panel is **185 of
+185** `Computed`. The census holds race fixed to one Human fixture (its own
+`input_posture` field), so it proves every level, not every race. Race-creation
 breadth is a separate, corpus-wide figure: 39 race records are ingested
 across 6 books (CRB, Bestiary 1, Bestiary 2, Bestiary 5, Bestiary 6, ARG —
 the 39 is pinned at `race_catalog.rs:548`, the 6-book list at `:170`). A
@@ -35,42 +41,45 @@ accounting: 18 + 12 = 30, the test's own denominator). The 9 races from
 Bestiary 2/5/6 sit outside this instrument's scope entirely and were not
 measured either way by it — **18-of-30, not 18-of-39**; the only test that sweeps the entire
 offered race roster does so for Fighter, levels 1-3 only
-(`character_hub.rs:6007-6021`), not for every class at every level. Two of
-Ultimate Combat's three classes (Gunslinger, Ninja) reach `Computed` too,
-and so do 9 of 27 "untabled" exotic/NPC base classes (Kineticist, Medium,
-Mesmerist, Occultist, Vigilante, Psychic, Spiritualist, Psion, Shifter).
-Multiclass grounds BAB/save stacking, a hit-point total and each class's own
-feature lines for any mix of classes that each have a chassis and a Good/Poor
-save source, with at least one non-prestige class (SD-36 F3b,
-`pilot_compute/multiclass_fold.rs`); class skill points print Unknown (no
-converted class record states skill ranks per level). The desktop app ships a real, end-to-end character-creation,
+(`character_hub.rs:6007-6021`), not for every class at every level.
+Multiclass grounds BAB/save stacking, a hit-point total, skill points from
+each class's converted ranks, and each class's own feature lines for any mix
+of classes that each have a chassis and a Good/Poor save source, with at
+least one non-prestige class (SD-36 F3, `pilot_compute/multiclass_fold.rs`).
+The desktop Create picker reads the engine's class roster and offers **59**
+classes: the 63 Computed non-prestige ids less the 4 Ex-* states
+(ex_antipaladin, ex_barbarian, ex_inquisitor, ex_paladin), census-only by
+operator ruling (census `roster_offered=59`). Prestige classes are offered at
+level-up with their entry requirements printed met/unmet, never blocked. The desktop app ships a real, end-to-end character-creation,
 leveling, equipment, spellcasting, DM-toolkit, encounter-builder, and
-campaign-manager surface, independently verified at 66 of 69 automated UI
-flows green (`docs/release/SD-36-consolidation/artifacts/ui-smoke/final/RECEIPT.md`,
-dated 2026-09-18); the other 3 rows are native OS file dialogs outside
-browser-automation's reach, not feature gaps.
+campaign-manager surface, independently verified by 76 automated UI-smoke
+rows: 66 of the first 69 green (`docs/release/SD-36-consolidation/artifacts/ui-smoke/final/RECEIPT.md`,
+dated 2026-09-18; the other 3 are native OS file dialogs outside
+browser-automation's reach, not feature gaps) and the 7 Epic F4 class-roster
+and prestige level-up rows 7 of 7 green, with 4 of 4 regression rows
+(`artifacts/ui-smoke/f4/results.json`, 2026-09-26).
 
-**This is not the whole corpus-wide class picture** — it is the 31
-fully-tabled classes plus the 11 more this doc used to omit. The full,
-corpus-wide census (137 distinct class ids, all engine registries merged,
-63 of them — 63 of 63 non-prestige — reaching `Computed` alone, and 68 of
-74 prestige ids `Computed` in their carrier mix) is the "Class/level compute coverage —
-corpus-wide" table below, and that table is the SOURCE OF TRUTH for these
-figures — but it is not the *only* place a class head-count appears. Four
-other files keep a local headline number in sync by hand rather than only
-linking here, because each needs the figure inline for its own sentence to
-read (a README opening claim, a desktop create-picker fact, an instrument's
-own scope, a dispatch-history figure): README.md's opening posture
-paragraph (line ~11: "31 fully-tabled classes", "63 of 63 non-prestige
-class ids") and its create-picker/"Known limitations" section (lines ~186, 205:
-"59 classes", "59 Computed non-prestige"); `desktop-app.md`'s Create-flow
-section (line ~412: the roster offers **59** classes);
-`rules-data-tables.md`'s state-dump description (line ~668: `v06_class_state_dump`
-sweeps all **31** classes); and `rules-engine.md`'s dispatch-history section
-(lines ~494-498: "27 \"untabled\" base classes", "78 conventional PC
-classes"). These four are the ones to update together with this table
-whenever the census changes — find all of them with:
-`grep -rn '31 fully-tabled classes\|63 of 63 non-prestige\|63 of 137\|137 distinct class ids\|78 conventional\|27 "untabled" base classes\|roster offers \*\*59\*\*\|59 of 63\|sweeps all \*\*31\*\*' README.md docs/architecture/*.md`.
+**Where these figures live.** The full, corpus-wide census is the "Class/level
+compute coverage — corpus-wide" table below, and that table is the SOURCE OF
+TRUTH for them. Four other files keep a local headline number in sync by
+hand, because each needs the figure inline for its own sentence to read:
+README.md's opening posture paragraph ("63 of 63 non-prestige", "137
+distinct class ids", "68 of 74") and its create-picker / "Known limitations"
+sections ("59 classes", "the other 59"); `desktop-app.md`'s Create-flow
+section (the roster offers **59** classes); `rules-data-tables.md`'s
+state-dump description (`v06_class_state_dump` sweeps all **31** of its own
+four registries — a scope statement about that instrument, not a class
+total); and `rules-engine.md`'s dispatch section §3d (137 ids, 63 of 63, 68
+of 74, 185 of 185). Update all five together whenever the census changes —
+find the current-figure sites with:
+`grep -rn '63 of 63 non-prestige\|137 distinct class ids\|68 of 74\|roster offers \*\*59\*\*\|59 of 63\|sweeps all \*\*31\*\*' README.md docs/architecture/*.md`
+and prove no retired figure survives with the grep below (it must print
+nothing; each alternative is a figure this table once replaced — the Epic F
+baseline, the pre-F2a count, the hardcoded picker, the untabled remainder
+before F1c, the reader remainder before F3, the prestige-mix count before
+F3c5 — and a bracketed digit keeps the command from matching its own line):
+`grep -rnE '4[2] of 135|6[1] of 61|computed=6[1]|ids=13[5] |[9] of 27 "untabled"|2[6] .Computed.\)|6[0] of the 93|6[7] of 74|All 3[1] fully-tabled classes|offers 3[1] of|3[1] of the 63' README.md docs/architecture/*.md`
+(2026-09-26: 0 hits).
 
 **What has changed since the last full pass**: several desktop-facing actions
 this doc used to describe as session-local or inert are now real, persisted
@@ -144,25 +153,23 @@ Row-by-row evidence:
   `all_three_uc_classes_reach_computed_status_at_level_5` (Samurai closed by
   the SD-36 Epic F1 converted-record proficiency reader, 2026-09-22 — its
   `Samurai` weapon set reaches the katana).
-- **Untabled exotic + CRB NPC (27 = 20+7; 26 `Computed`)**:
+- **Untabled exotic + CRB NPC (27 = 20+7; 27 `Computed`)**:
   `untabled_base_class_features.rs`
   (`all_27_untabled_classes_pass_the_chassis_gate_at_every_real_level`;
-  `every_untabled_class_outside_the_named_reader_remainder_reaches_computed`;
-  `a_class_whose_converted_closure_is_incomplete_still_reports_proficiency_unknown`
-  — Commoner, the 1 still blocked on weapon proficiency: its one-simple-weapon
-  pick goes into a pool the package links no member to, so every weapon
-  outside its automatic proficiencies is Unknown, 2026-09-22 reader batch
-  blocker 2. Antipaladin and Magus closed 2026-09-22 by SD-36 Epic F1c-1: their
-  `TYPE=WeaponProfMartial` grant-by-type now converts). Classes with no
-  static `CLASS_WEAPON_PROFICIENCIES` row (42 rows, unchanged) are answered by
+  `every_untabled_class_outside_the_named_reader_remainder_reaches_computed`).
+  Commoner closed by SD-36 Epic F1c-3 (D6: its one-simple-weapon pick is linked
+  at ingest to the Simple-tier list its pool offers); Antipaladin and Magus
+  closed by F1c-1 (their `TYPE=WeaponProfMartial` grant-by-type converts).
+  Classes with no static `CLASS_WEAPON_PROFICIENCIES` row (42 rows,
+  unchanged) are answered by
   `class_proficiency_sheet_rules::class_weapon_proficiency_view`; the
-  census-wide remainder (60 of the 93 classes it walks, 1 non-prestige + 59
-  prestige) is named with a mechanism per class in
+  census-wide remainder (3 of the 95 classes it walks, 0 non-prestige + 3
+  prestige: diabolist, exalted, rivethun_emissary) is named with a mechanism per class in
   `docs/release/SD-36-consolidation/artifacts/epic-f/reader-remainder.md`,
   pinned by `weapon_tables::every_census_class_has_a_known_proficiency_answer`.
 - **Prestige (74 ingested of 131 named; all 74 with a converted chassis row
-  dispatched since SD-36 Epic F2a -- 56 before it, the CRB/APG 18 not; 0
-  `Computed`)**: `prestige_class_entry_gate.rs:1-30`; `python3 -c "import
+  dispatched since SD-36 Epic F2a -- 56 before it, the CRB/APG 18 not; 0 of 74
+  `Computed` alone, by the game rule; 68 of 74 `Computed` in a carrier mix)**: `prestige_class_entry_gate.rs:1-30`; `python3 -c "import
   json;print(len(json.load(open('tests/fixtures/rules_core/prestige-class-entry-requirements.json'))['entries']))"`
   → 74; `generic_class_chassis.rs`'s `every_conventional_class_in_class_family_books_resolves`
   (78 over its original 14 books, of which 56 are these prestige rows — the
@@ -203,11 +210,11 @@ Row-by-row evidence:
 
 **Named exceptions** (the four lists this table's headline numbers stand
 for):
-- **Blocked only on weapon-proficiency data (0 of 137)** (was 19 of 135
-  before SD-36 F1/F1c; census `ids=137 computed=63 blocked=0` since F2a, 2026-09-24): the converted-record proficiency reader now answers
-  every non-prestige class from `data/sheet_rules` (census `ids=135
-  computed=61 blocked=0`, 2026-09-24). Samurai and the 18 untabled-family
-  classes formerly listed here all reach `Computed`.
+- **Blocked only on weapon-proficiency data (0 of 137)** (was 19 of the
+  Epic F baseline's 135 before SD-36 F1/F1c; census `ids=137 computed=63
+  blocked=0`, 2026-09-26): the converted-record proficiency reader answers
+  every non-prestige class from `data/sheet_rules`. Samurai and the 18
+  untabled-family classes formerly listed here all reach `Computed`.
 - **`Computed` but not in the desktop Create picker (0 of the 59 offered-eligible;
   4 of 63 by ruling)**: measured from the roster — census `roster_reason`
   is `offered` for 59 of 63 non-prestige ids and `ex_state` for the other 4
@@ -217,7 +224,8 @@ for):
   `class_census::tests::no_computed_class_is_unoffered_without_a_named_reason`.
 - **Prestige in a carrier mix (68 of 74 `Computed`)**: census
   `prestige_mix_computed=68 prestige_mix_unknown=0`, 2026-09-25, SD-36 F3c5
-  (`artifacts/epic-f/census-f3c5.json`).
+  (`artifacts/epic-f/census-f3c5.json`); re-measured unchanged 2026-09-26
+  (`artifacts/epic-f/stage-f4-f5/census-f5.json`).
   - **How the carrier is chosen.** The carrier chooser walks an `AtLeast`
     clause's branches in oracle order and takes the first branch that
     translates to a carrier and a level. It reads `HighestSpellLevel(Any)` as
@@ -257,8 +265,10 @@ repo**:
   itself is never actually invoked for those 11); all 11 are already counted
   in the Ultimate-Combat and untabled-exotic rows above, not a new count.
 - ~~"no prestige class has a chassis"~~ — **56 of 74** ingested prestige
-  classes do; the reason none reach `Computed` is a missing gate arm
-  (above), not an absent chassis.
+  classes do (all 74 since SD-36 Epic F2a); the reason none reached `Computed`
+  then was a missing gate arm, not an absent chassis — F2a added the arm, and
+  a prestige class is now Blocked alone by the game rule and `Computed` in a
+  carrier mix (68 of 74).
 
 ### Capability matrix: content kinds, corpus-wide
 
@@ -329,7 +339,8 @@ same test-pinned standard as the rows above).
   `Recompute`, `Clone`, `Export`, `Print` are all wired to real handlers.
 - **`StubScreen.tsx` is unreferenced dead code**, not a live placeholder for
   any current screen.
-- **The Tauri command count is 75**, re-derived directly from
+- **The Tauri command count is 77** (75 before SD-36 Epic F4 added
+  `list_class_creation_roster` and `list_level_up_class_options`), re-derived directly from
   `generate_handler![...]` (see [desktop-app.md](./desktop-app.md)); a saved
   character's on-disk bundle can now hold up to six files, not two (four new
   sidecar files: bio/money/HP/portrait — see [persistence.md](./persistence.md)).

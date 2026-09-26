@@ -1,7 +1,7 @@
 # Desktop App
 
 > Scope: How the Tauri desktop shell is built, how it talks to the Rust backend, and how its frontend surfaces are organized.
-> Last verified: **2026-09-20 against `tranche/16`, HEAD `424e93e93c`** (SD-36 consolidation, architecture-docs truth-up; capability-claims pass). Full re-derivation of the command inventory (**75** registered commands, re-counted directly from `generate_handler![...]`), the `CharacterHubPage` Mode machine, the boundary layer, the corpus-root resolution chain, the ui-smoke harness, and the character-mutation surfaces added since the 2026-09-15 pass (equipment purchase/attach, feat/trait selection, skill allocation, bio/money/HP sidecars, DM Toolkit). Several claims in the prior pass were stale and are corrected here (see "Corrections since the last pass" below) rather than annotated as deprecated. This pass additionally re-audits every capability/limitation claim in the file against a fresh instrument run and the code, correcting the "Create" section's Fighter-1-3-only claim (see §"Character flow" — the create-flow class picker offers all 31 classes the engine computes end to end, with a precisely-named 11-class UI-surface gap, not the single-class ceiling this doc previously stated).
+> Last verified: **2026-09-26 against `tranche/16`, HEAD `e70a8745ed`** (SD-36 Epic F5: the class roster from the engine, level-up with prestige classes, and the command count re-derived — **77**, the two roster commands SD-36 Epic F4 added). Earlier pass: **2026-09-20 against `tranche/16`, HEAD `424e93e93c`** (SD-36 consolidation, architecture-docs truth-up; capability-claims pass). Full re-derivation of the command inventory (**75** registered commands, re-counted directly from `generate_handler![...]`), the `CharacterHubPage` Mode machine, the boundary layer, the corpus-root resolution chain, the ui-smoke harness, and the character-mutation surfaces added since the 2026-09-15 pass (equipment purchase/attach, feat/trait selection, skill allocation, bio/money/HP sidecars, DM Toolkit). Several claims in the prior pass were stale and are corrected here (see "Corrections since the last pass" below) rather than annotated as deprecated. This pass additionally re-audits every capability/limitation claim in the file against a fresh instrument run and the code, correcting the "Create" section's Fighter-1-3-only claim (see §"Character flow" — the create-flow class picker offers all 31 classes the engine computes end to end, with a precisely-named 11-class UI-surface gap, not the single-class ceiling this doc previously stated).
 > Maintenance: updated at SD closure — see [README.md](./README.md) §Maintenance contract
 
 ## Corrections since the last pass
@@ -24,7 +24,7 @@ re-derives the same corrections independently:
   `Print` are all wired to real handlers (`CharacterSheet.tsx`'s `menuItems`).
 - **`StubScreen.tsx` still exists as a component but nothing imports it** (confirmed by grep across
   `apps/desktop/src`) — it is dead code today, not a live placeholder for any screen.
-- **The command count is 75, not 53 or 69** — re-derived by parsing `generate_handler![...]`
+- **The command count is 77, not 53, 69 or 75** (75 before SD-36 Epic F4 added `list_class_creation_roster` and `list_level_up_class_options`) — re-derived by parsing `generate_handler![...]`
   programmatically (`python3` script counting comma-separated entries after stripping comments); see
   the inventory below.
 - **`apps/desktop/src/boundary/` holds 52 non-test files today**, not 27 — `ls apps/desktop/src/boundary/*.ts | grep -v '\.test\.ts$' | wc -l`.
@@ -119,7 +119,7 @@ export function formatError(cause: unknown): string {
 
 ## The complete Tauri command inventory
 
-**75 commands are registered** (reachable via `invoke()`), re-derived by parsing every entry of
+**77 commands are registered** (reachable via `invoke()`), re-derived by parsing every entry of
 `tauri::generate_handler![...]` in `apps/desktop/src-tauri/src/main.rs` with comments stripped
 (`python3` one-liner splitting on `,` after a regex-stripped comment pass — a plain `grep -c ','`
 overcounts because several list entries carry inline `//` explanatory comments of their own with
@@ -136,7 +136,7 @@ Grouped by the Rust file that defines each command:
 | `main.rs` (inline) | `load_pilot_shell_snapshot`, `load_authoring_workbench_snapshot`, `load_backend_health` | Legacy scaffold snapshot; GE-08 authoring-workbench preview; crate-version + git-SHA IPC-liveness probe | superseded scaffold path; tester workbench "Backend" card |
 | `browser_handoff.rs` | `handoff_defect_report_to_browser` | Builds + validates a prefilled GitHub "new issue" URL and opens it via `tauri-plugin-opener` | feedback composers ([update-and-feedback.md](./update-and-feedback.md)) |
 | `update/transaction.rs` | `is_install_eligible`, `perform_install`, `perform_restore_previous`, `verify_relaunch_artifact` | Self-update eligibility/install/rollback/verify — `perform_install` is a governed stub | `App.tsx`'s `UpdateSection` ([update-and-feedback.md](./update-and-feedback.md)) |
-| `character_hub.rs` | `create_character`, `clone_character`, `list_saved_characters`, `load_saved_character`, `level_up_character`, `preview_level_up`, `add_equipment_selection`, `attach_equipment_modifier`, `purchase_equipment`, `add_spell_selection`, `record_and_prepare_spell_selection`, `add_feat_selection`, `list_feats_for_character`, `remove_feat_selection`, `set_equipment_active_state`, `add_trait_selection`, `remove_trait_selection`, `remove_spell_selection`, `remove_equipment_selection`, `set_skill_allocations`, `save_character_portrait`, `load_character_portrait`, `delete_character_portrait`, `export_character_json`, `update_character_bio`, `load_character_bio`, `load_character_money`, `adjust_character_money`, `load_character_durability`, `adjust_character_hp`, `delete_character`, `export_character`, `import_character`, `list_race_creation_roster` | The Character Hub's create/load/mutate/persist surface — by far the largest file in the crate (10,838 lines, `wc -l`); see "Character flow" below | `apps/desktop/src/characterHub/` |
+| `character_hub.rs` | `create_character`, `clone_character`, `list_saved_characters`, `load_saved_character`, `level_up_character`, `preview_level_up`, `add_equipment_selection`, `attach_equipment_modifier`, `purchase_equipment`, `add_spell_selection`, `record_and_prepare_spell_selection`, `add_feat_selection`, `list_feats_for_character`, `remove_feat_selection`, `set_equipment_active_state`, `add_trait_selection`, `remove_trait_selection`, `remove_spell_selection`, `remove_equipment_selection`, `set_skill_allocations`, `save_character_portrait`, `load_character_portrait`, `delete_character_portrait`, `export_character_json`, `update_character_bio`, `load_character_bio`, `load_character_money`, `adjust_character_money`, `load_character_durability`, `adjust_character_hp`, `delete_character`, `export_character`, `import_character`, `list_race_creation_roster`, `list_class_creation_roster`, `list_level_up_class_options` | The Character Hub's create/load/mutate/persist surface — by far the largest file in the crate (11,544 lines, `wc -l`, 2026-09-26); see "Character flow" below | `apps/desktop/src/characterHub/` |
 | `characterHub/appendToCharacter.rs` | `append_to_character` | Batch, corpus-validated equipment append, via `RuleSystemAdapter` | none — no frontend caller (see "Rule-system adapter seam" below) |
 | `characterHub/recomputeCharacter.rs` | `recompute_character` | Load + recompute without mutating, via `RuleSystemAdapter` | `CharacterSheet.tsx`'s `☰ Menu` "Recompute" |
 | `characterHub/reSaveCharacter.rs` | `re_save_character` | Re-saves under a freshly minted `{id}.rev.N`, via `RuleSystemAdapter` | none — no frontend caller |
@@ -286,12 +286,12 @@ flowchart LR
 *The ui-smoke harness closes the loop entirely through files, never through its own IPC — one JSON
 probe file and one JSON command file, both write-temp-then-rename for atomicity.*
 
-`apps/desktop/scripts/ui-smoke/spec.json` (**64,683 bytes**, `wc -c`) declares one row per scenario:
+`apps/desktop/scripts/ui-smoke/spec.json` (**79,319 bytes**, `wc -c`, 76 rows, 2026-09-26) declares one row per scenario:
 `{id, screen, setup?: [rowIds], steps: [{op, target?, text?, key?, ticks?, ms?}], marker, expect:
 [string], forbid?: [string], allowGlobalForbid?: [string], selectsNonEmpty?: [selectName], manual?:
 reason, notes}`. `setup` is flat (a row's `setup` list runs only those rows' own `steps`, never their
 own `setup` transitively) — a row reused as another's setup must list every ancestor it needs
-explicitly, in order. `run.mjs` (**41,723 bytes**) applies a `GLOBAL_FORBID` list to every row on top
+explicitly, in order. `run.mjs` (**41,698 bytes**) applies a `GLOBAL_FORBID` list to every row on top
 of its own `forbid` (`'could be read from the corpus'`, `'failure'`, `'Failed to load'`, `'requires the
 desktop runtime'`, `'undefined'`, `'NaN'`, `'[object Object]'`), calls `resetToLanding()` before every
 row's own setup/steps (clicking `RESET_CLICK_NAMES` in order against whatever is on screen), and

@@ -685,6 +685,10 @@ goes stale the moment somebody forgets to edit it.
   prestige class — those are covered by inline tests in `combat.rs` and
   `untabled_base_class_features.rs` instead (see [rules-engine.md](./rules-engine.md) §"Entry points"
   and §"Multiclass base-chassis dispatch" for that coverage and for multiclass's own real scope).
+  The corpus-wide instrument is the class census (`cargo run --locked -j 8 --bin class_census --
+  --json <path>`, SD-36 Epic F0): 137 ids, 63 of 63 non-prestige `Computed` at every level, 68 of 74
+  prestige ids `Computed` in a carrier mix (2026-09-26; [status.md](./status.md) carries the table).
+  This dump's 31 is its own scope, not a class total.
 - **`v06_content_state_dump`** — reports per-book ingested record counts
   (counted from `ClassId::ALL`, `SPELL_LIST`, `equipment_tables()`,
   `MonsterId::ALL`, `all_feat_tables()` — see `feats_all.rs` above for that

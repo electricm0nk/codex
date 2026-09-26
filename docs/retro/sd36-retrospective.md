@@ -3,6 +3,7 @@ canonical: true
 owner: sd36-epic-d
 purpose: SD-36 retrospective, grounded in scripts/retro.py's event log and in re-derivable commands rather than recollection.
 date: 2026-09-20
+updated: 2026-09-26 (Epic F addendum, SD-36 F5a)
 board: 465,469 src lines / 419 root test binaries at the tranche/15 cut -> see the figures table below for the current, mid-closure state
 bundle: docs/release/SD-36-consolidation/
 cited_from: docs/release/SD-36-consolidation/references/README.md
@@ -398,6 +399,79 @@ should read this deferral before opening the PR, not after hitting the conflict 
 
 ---
 
+## Epic F addendum (2026-09-26) — class completion
+
+Epic F was scoped in by the operator on 2026-09-21 ("close the class gaps INSIDE SD-36 before PR #393
+merges", `decisions.md` §11) and ran F0 → F1/F1b → F1c → F2 → F3 (F3a–F3d, F3b2/F3b2b/F3b3, F3c–F3c5,
+F3p) → F4pre → F4 → F5a. Outcome, measured (`cargo run --locked -j 8 --bin class_census -- --json <path>`,
+`docs/release/SD-36-consolidation/artifacts/epic-f/stage-f4-f5/census-f5.json`): 137 class ids;
+non-prestige 63 of 63 `Computed` at every level (the baseline was 42 of 135 overall); prestige 74 of 74
+Blocked alone and 68 of 74 `Computed` in a carrier mix (0 before); mix panel 185 of 185; desktop roster
+31 -> 59; unresolved references 11,925 -> 6,252; records 49,450 unmoved. Every figure with its command:
+`artifacts/epic-f/stage-f4-f5/f5-facts.md`.
+
+```
+python3 scripts/retro.py summary --since 2026-09-21
+EVENTS  47 total: 27 correction, 12 verification, 6 note, 1 deferral, 1 rework (29 agent, 18 derived)
+corrections: 8 of 27 had already propagated when caught
+verification: 12 runs, 2 with a failing stage (token-coverage both times)
+git (same window): 89 commits, 1 author, 0.53 events per commit
+```
+
+(Saved: `artifacts/epic-f/stage-f4-f5/f5-retro-summary-since-2026-09-21.txt`; the whole-bundle window,
+`--since 2026-09-15`, in `f5-retro-summary-since-2026-09-15.txt`.)
+
+### 10. The VM went down out of memory mid-workflow, and tmpfs scratch went with it
+
+On 2026-09-23 the box ran out of memory while an F1c workflow agent ran a full workspace `cargo test`
+pass; the host stopped the VM, and the operator reported the crash and asked for recovery. The session scratchpad is tmpfs, so every nohup log, backup and planned worktree under it
+was gone after the reboot; the side worktree kept its uncommitted half-done work. Recovery kept that
+worktree (the resumed agent read its diff, kept what was right, finished and re-verified) and patched
+only the prompts of agents that had not run, so cached steps did not replay. What changed: every
+dispatch since carries a MEMORY GUARD — one `cargo` process at a time, `-j 8`, `-- --test-threads=8`,
+`free -g` before a long run, re-create the scratch directory — and anything a receipt cites is copied
+into `docs/release/SD-36-consolidation/artifacts/` because scratch does not survive a crash
+(`workflow-instruction.md` §0). This session crashed once more, before F5a started (2026-09-26): the
+tree was clean, F4 was committed and pushed (`git status` empty, branch up to date with
+`origin/tranche/16`), no cargo process was left running, so the restart lost nothing and re-ran F5a
+from its first step.
+
+### 11. A refuted premise stopped the step instead of sliding through
+
+Lesson 8's fix held in Epic F. Two steps were stopped by their own measurement, not by review:
+F3d (`157dc5496a`, `artifacts/epic-f/stage-f2-f3/f3d-blocker.md`) wrote the flip of 187 multiclass
+negative controls to `Computed`, ran it, got 187 of 187 red because every fixture is Blocked alone,
+reverted it, and committed only the evidence — the ruling that followed replaced the assertion with
+status parity (`decisions.md` §14.2); F3c4 (`713bcfba74`) stopped with 31 of 32 bloodlines Blocked and
+named why (pick rows outside the inventory), which became F3c4b's converter step. In both the workflow
+stopped on a declined or refuted criterion and the commit subject said "blocked", never a success.
+The brief-level expectations the steps overturned are in the log as corrections (e.g. "F3c4 brief
+expected prestige mix figure": claimed 67 -> 68, actual 67 until F3c5).
+
+### 12. Most of the class gap was converter-owned, and an engine-only brief kept rediscovering that
+
+The census and the proficiency reader kept stopping on defects that lived in the converter: a type
+grant never converted, a condition gating a whole record instead of its line, missing Unchained class
+records, dropped `SUBCLASS:` lines, pick rows and natural-attack helper rows no inventory unit stood
+for, undeclared variables read as defects. Engine batches were briefed "no converter change", so such a
+finding first arrived as a blocker and then needed its own converter step: FS-16 was filed as "a converter
+change ... `data/sheet_rules/**` is frozen in the F3c2 engine batch" before F3c3 closed it, and F3c4
+stopped on pick rows outside the inventory before F3c4b converted them. The resolution was a protocol, not a
+per-case exception: a converter change lands only in a step named a converter step, under the
+structural-diff gate with pinned delta classes and planted mutations (`decisions.md` §11.1); 8 such
+steps landed with records unmoved at 49,450. For the next bundle: when an instrument's remainder is
+named by mechanism, route each mechanism to the layer that owns it at planning time, and plan the
+converter steps up front rather than as blockers.
+
+### 13. Figures in briefs and pins went stale inside the epic
+
+27 corrections in the Epic F window, and the most repeated "who was wrong" rows are the converter (3)
+and the sheet-rule kind pin (2), then a long tail of pinned test figures and brief expectations
+(census pins, carrier pins, pool-pass pins) that a later step legitimately moved. 8 of 27 had already
+propagated when caught. The standing mitigation worked where it was applied — each pin moved in the
+same commit as the change that moved it, with a retro correction — and failed where a brief quoted a
+figure forward (the F5a brief's "rules 71,869" was the pre-F1c figure; the Epic F start was 71,862).
+
 ## Changes for the next bundle
 
 | change | where it must be enforced |
@@ -408,6 +482,8 @@ should read this deferral before opening the PR, not after hitting the conflict 
 | State the long-run dispatch contract (nohup+pid+poll, not-run skeleton, explicit `PATH`/`CARGO_TARGET_DIR` exports) once, at the top of the workflow script, rather than rediscovering it per epic | `workflow-instruction.md §2.1`, `§6` |
 | Read a named, pre-scoped merge-conflict deferral before opening the closing PR, not after hitting the conflict cold | `workflow-instruction.md §11 step 5` |
 | Tier long-running unattended verification (survive-20-minutes-unsupervised work) to Sonnet explicitly in the dispatch prompt, not left implicit in "housekeeping vs. implementation" | `workflow-instruction.md §2` |
+| Put the MEMORY GUARD (one cargo, `-j 8`, `--test-threads=8`, `free -g`) and "copy cited artifacts into the repo" in every dispatch prefix from the first step, not after a crash | `workflow-instruction.md §0`, the workflow script's shared prefix |
+| Route each named remainder mechanism to the layer that owns it (converter vs engine vs oracle data) at planning time; plan converter steps under the structural-diff protocol up front | `epic-breakdown.md`, `decisions.md §11.1` |
 
 ---
 
@@ -420,7 +496,8 @@ should read this deferral before opening the PR, not after hitting the conflict 
 | E — SD-35 code-review correctness (not in kanban) | (absent) | **done**, 2 fix cycles, 16/22 fixed whole, 3 partial, 4 deferred-with-retro | `receipts/epic-e_receipt.md` |
 | C1 — source refactor | done, 1 cycle | matches | `b22ea9e113` |
 | C2 — test rewrite | open, 0 cycles | **done** (corrected 2026-09-20, second pass after this document was first written): C2.3/C2.4/C2.5/C2.6 done in the earlier C2D gap-closure pass; C2.1/C2.2 (the table-driven rewrite) landed this pass — `tests/sd18_widening/rows.rs` (182 rows) and `tests/sd13_progression/rows.rs` (143 rows) both exist, `--list` byte-identical both families, 891/1,136 passed 0 failed, three-sabotage mutation gate identical failing-name sets before/after | `find tests -iname rows.rs` (2 hits); `receipts.md` Epic C2.1/C2.2 evidence section; `docs/retro/events/epic-c2d-gap-closure.jsonl`, `docs/retro/events/sd36-epic-c2-docs.jsonl` |
-| D — closure | open, 0 cycles | in progress: D1 (architecture docs) done; D2/D3 (this document + release-notes.md) in progress; D4-D6 not started | `docs/architecture/README.md` "Last verified" header |
+| D — closure | open, 0 cycles | in progress: D1 (architecture docs) done; D2/D3 (this document + release-notes.md) re-written at F5a, 2026-09-26; D4 (graphify) re-runs last against the final tree; D5/D6 not started | `docs/architecture/README.md` "Last verified" header; `kanban.md` D2–D6 row |
+| F — class completion (added 2026-09-21) | (added) | F0–F4 **done**, F5a **done** 2026-09-26, F5.3 open | `kanban.md` F rows; `epic-breakdown.md` Epic F measured column; census `ids=137 computed=63 prestige_mix_computed=68 mix_panel_computed=185` |
 
 This table, and the corrected `kanban.md`/`progress.md` rows alongside it, are themselves subject
 to the same "figures rot the moment the tree moves past them" caveat as everything else in this

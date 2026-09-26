@@ -3,7 +3,9 @@
 > Scope: testing philosophy and the full verification command set for this repo — this file
 > doubles as the "how do I verify my change" runbook and as the reference for how this repo
 > writes a test.
-> Last verified: **2026-09-20 against `tranche/16` (`424e93e93c`)** (SD-36 Epic D truth-up +
+> Last verified: **2026-09-26 against `tranche/16` (`e70a8745ed`)** for §"`scripts/verify.sh`" item 10 and
+> §"The SD-36 Epic F instruments" (census, structural diff, sabotage parity, status-parity negative
+> controls, ui-smoke). Earlier pass: **2026-09-20 against `tranche/16` (`424e93e93c`)** (SD-36 Epic D truth-up +
 > this cycle's Epic C2 landed state: the `crates/codex-ingest` split (Epic A), the
 > `pilot_compute` submodule split (Epic C1), and the table-driven `tests/sd18_widening`/
 > `tests/sd13_progression` rewrite with vacuity guards and sabotage-parity proof (Epic C2.1/C2.2)
@@ -262,6 +264,11 @@ What each group actually protects:
 8. **Clippy** — three crates, `-D warnings`, described above.
 9. **`class-dump`** — a structural dump of every compiled class's chassis, used to eyeball a
    widening's shape without reading the full engine.
+10. **`class-census`** — `cargo run --locked --bin class_census -- --json` (SD-36 Epic F0), then
+   `scripts/check_class_census_baselines.py` (five floors in `scripts/verify-baselines.env`:
+   `BASELINE_CENSUS_{IDS,COMPUTED,MIX_COMPUTED,PRESTIGE_ALONE_BLOCKED,PRESTIGE_MIX_COMPUTED}`, which
+   can only rise) and `scripts/gen_class_status_table.py --check` (status.md's class table matches the
+   run). See "The SD-36 Epic F instruments" below.
 
 **No normalized red.** A gate stage that fails twice with the same attribution (e.g.
 "environmental fixture") is treated as an incident, not an environment quirk — `root-full` was RED
@@ -303,6 +310,58 @@ The second is the shape rule: our sheet-rule data files carry none of the source
 syntax — see `src/rules_core/sheet_rule.rs`'s module doc and
 [conventions.md](./conventions.md)'s "print the rule, not simulate" doctrine row. See
 [corpus-ingest.md](./corpus-ingest.md) for the converter that produces this data.
+
+## The SD-36 Epic F instruments
+
+Epic F (class completion) added five instruments. Each answers a question a green suite cannot.
+
+**The class census** (`src/rules_core/class_census.rs`, `src/bin/class_census.rs`). One command,
+`cargo run --locked -j 8 --bin class_census -- --json <path>`, merges every engine class registry into
+one id set and sweeps it through `build_pilot_headless_receipt`: each non-prestige class at every level
+of its own `max_level` on the GE-06 Human fixture with the class swapped in and the canonical seeds of
+`class_seeds::canonical_seeds_for`; each prestige class alone (a negative control, expected Blocked) and
+in the carrier mix its own converted entry gate selects; and the multiclass mix panel. It prints
+`ids=... computed=... blocked=...` and writes per-class JSON (blocking diagnostics per level,
+`roster_reason`, `entry_gate`). 2026-09-26: `ids=137 computed=63 blocked=0`, `prestige_alone_blocked=74
+prestige_mix_computed=68`, `mix_panel_computed=185` of 185, `roster_offered=59`
+(`docs/release/SD-36-consolidation/artifacts/epic-f/stage-f4-f5/census-f5.json`; a debug build runs about
+half an hour single-threaded). `--sheet-dump <dir> --only <class>` renders the sheet lines of one build for
+a before/after diff. status.md's class table is generated from it
+(`python3 scripts/gen_class_status_table.py [--check] [--json <census.json>]`), and the desktop's class
+roster is served from it (`class_census::class_creation_roster`), pinned by
+`no_computed_class_is_unoffered_without_a_named_reason`.
+
+**The structural diff** (`docs/release/SD-36-consolidation/artifacts/epic-f/scripts/structural_diff.py
+<scratch_dir> [--baseline data/sheet_rules]`). Every converter change inside Epic F was accepted only
+under this protocol: regenerate into a scratch directory, diff it against the read-only committed
+package field by field, and require every delta to belong to a pinned delta class
+(`structural_diff_<step>_deltas.json`: exact rule id + field pairs, each class re-running its own shape
+check on the two records compared); `unexpected field deltas: 0` and `records 49450 -> 49450`. Planted
+mutations (`<step>_planted_mutations.py`) must make the diff FAIL, so a pin set that admits anything is
+caught. `structural_diff_test.py` is its own unit test. The rest of the gate set: `sheet_rule_convert
+--check` exit 0, `pcgen_residue_gate.py --check --closure` PASS, `check_frozen_status.py --check`.
+
+**Sabotage parity.** A test refactor or a flipped assertion is proved by breaking the engine on purpose:
+record the set of tests a named sabotage turns red before the change, require the identical set after,
+and restore to 0 red. Epic C2's table-driven rewrite used three sabotages; F3d disabled the multiclass
+fold's carry-over of each class's claim-blocking lines (14 of 187 negative controls red — the Monk mixes —
+0 restored; `artifacts/epic-f/stage-f2-f3/f3d-sabotage-log.md`). A sabotage that reddens nothing is
+reported with the mechanism that holds the tests, never as proof.
+
+**Status-parity negative controls** (`tests/common/mod.rs::assert_multiclass_status_parity`). The 187
+"multiclass X stays claim-blocked" tests (`sd18_widening`, `sd13_progression`, 43 top-level binaries)
+assert that a mix's receipt status equals the class-alone status and that its claim-blocking set, with
+the fold's `multiclass.<class>.` re-scope stripped, equals the class-alone set; vacuity guard: the mix
+loads at least two classes. Their fixtures are Blocked alone, so asserting `Computed` would fabricate a
+success; the Computed proof for mixes is the census mix panel (`decisions.md` §14.2).
+
+**The ui-smoke harness** (`apps/desktop/scripts/ui-smoke/`: `spec.json` 76 rows across 18 screens, 3
+manual; `run.mjs`; the DEV-only `ui_probe` DOM snapshot, see [desktop-app.md](./desktop-app.md)). Run with
+`npm run ui-smoke` against one launched app; `results.json` is written as a `not-run` skeleton first, so a
+killed run keeps its denominator. `docs/testing/ui-smoke-inventory.md` is generated by
+`render-inventory.mjs` (`npm run ui-smoke:doc`). Receipts live under
+`docs/release/SD-36-consolidation/artifacts/ui-smoke/` (`final/`: 66 of 69 green, 3 manual, 2026-09-18;
+`f4/`: the 7 class-roster and prestige level-up rows 7 of 7 green, regression 4 of 4, 2026-09-26).
 
 ## The corpus bundle and its parity test
 

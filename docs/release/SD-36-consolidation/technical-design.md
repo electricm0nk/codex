@@ -310,5 +310,21 @@ process-wide package handle, not a fresh 135x20-receipt census sweep at picker-o
 5. Full detail, every acceptance command, every RED-first test and the adversarial review log:
    `epic-f-class-completion.md`.
 
+### Outcome as built (F5, 2026-09-26)
+
+- **Measured:** census 137 ids; non-prestige 63 of 63 `Computed`; prestige 74 of 74 Blocked alone and
+  68 of 74 `Computed` in a carrier mix (6 Blocked on an oracle save formula, FS-15); mix panel 185 of
+  185; Create roster 59 (`cargo run --locked -j 8 --bin class_census -- --json <path>`,
+  `artifacts/epic-f/stage-f4-f5/census-f5.json`).
+- **Where the build departed from the design, and why:** the structural-diff gate's "every rule's JSON
+  minus `granted_by`/`grants`/`closure_complete` byte-identical" became "every field delta in a pinned
+  delta class, re-checked by that class's own shape check, planted mutations FAIL" — the proficiency
+  reader exposed converter defects that only a converter change could fix (type grants, line-scoped
+  conditions, Unchained records, sub-classes, pick rows, helper rows, ...), and the operator accepted
+  converter changes inside Epic F under that protocol (`decisions.md` §11.1). The 187 multiclass
+  negative controls assert status parity, not `Computed` (`decisions.md` §14.2). The converter
+  mechanisms are listed in `docs/architecture/corpus-ingest.md` §"Converter mechanisms added by SD-36
+  Epic F"; the dispatch in `docs/architecture/rules-engine.md` §3d.
+
 ---
 

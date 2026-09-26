@@ -315,6 +315,45 @@ from an original 81-115: `docs/release/SD-36-consolidation/epic-f-class-completi
   never fall) in `scripts/verify-baselines.env`, set once F0 lands.
 - `kanban.md` / `progress.md` Epic F rows, all `open` until each batch's acceptance commands pass.
 
+**Outcome (measured at F5, 2026-09-26;** `cargo run --locked -j 8 --bin class_census -- --json <path>`,
+`artifacts/epic-f/stage-f4-f5/census-f5.json`**):** the census id set is **137**, not 135 (F2a's widened
+book list brought in the APG Ex-Antipaladin and Ex-Inquisitor records); non-prestige **63 of 63**
+`Computed` at every level (from 42 of 135 overall at the baseline); prestige **74 of 74** Blocked alone
+and **68 of 74** `Computed` in a carrier mix (from 0); mix panel **185 of 185**; desktop Create roster
+**59** (from a hardcoded 31). The named remainder is 6 of 74 prestige carrier mixes, Blocked on an oracle
+save formula that states no PF1 save (§14.1, FS-15). The census floors in `scripts/verify-baselines.env`
+stand at `BASELINE_CENSUS_COMPUTED=63`, `_MIX_COMPUTED=185`, `_PRESTIGE_ALONE_BLOCKED=74`,
+`_PRESTIGE_MIX_COMPUTED=68` (`BASELINE_CENSUS_IDS` is still 135, a floor below the measured 137, re-derived
+in F5.3).
+
+### §11.1 — Converter changes accepted inside Epic F under the structural-diff protocol (F1c–F4pre, 2026-09-22 → 2026-09-26)
+
+**Orchestrator ruling (autonomous mode), applied from F1c onward and recorded here at closure,** under
+the operator's standing directives for this bundle (close the class gaps inside SD-36, §11; no
+carve-outs; a remainder is named by mechanism, never deferred as "the rest").
+
+**Measurement that forced it.** The proficiency reader (§13) and the census kept stopping on defects
+the converter owned, not the engine: a type grant never converted, a condition gating a whole record
+instead of its line, Unchained class records missing, `SUBCLASS:` lines dropped, pick rows and
+natural-attack helper rows no inventory unit stood for, undeclared variables read as defects. An
+engine-side workaround would be a per-class special case or a fabricated row; the fix belonged in the
+converter.
+
+**Decision.** A converter change is accepted inside Epic F, in a step named a converter step, only under
+the structural-diff protocol: regenerate into scratch; `structural_diff.py` against a read-only archive of
+the branch HEAD with every field delta in a pinned delta class and each class's own shape check re-run;
+planted mutations FAIL; `sheet_rule_convert -- --check` exit 0; `pcgen_residue_gate.py --check --closure`
+PASS; frozen record count 49,450 unmoved; `check_frozen_status.py --check` OK. A step that is not a
+converter step leaves `data/sheet_rules/**` untouched. Steps landed this way: F1c (D1–D8), F3b2, F3b2b,
+F3c3, F3c4b, F3c5, F3p, F4pre (receipts under `artifacts/epic-f/stage-f1c/`, `stage-f2-f3/`,
+`stage-f4-f5/`; the mechanisms in `docs/architecture/corpus-ingest.md` §"Converter mechanisms added by
+SD-36 Epic F"). Records stayed 49,450 through every step; rules written went 71,862 -> 73,363;
+unresolved references 11,925 -> 6,252.
+
+**Enforced by:** `artifacts/epic-f/scripts/structural_diff.py` + `structural_diff_test.py`; the per-step
+`structural_diff_<step>_deltas.json` pins and `<step>_planted_mutations.py`; `verify.sh`'s
+`sheet-rules-check` stage.
+
 ---
 
 ## §12 — Converter link fix scope = Option A (all 4,456 parent-category links)
@@ -368,6 +407,14 @@ row is a genuine forward-scope deferral, not a closure gap.
   re-derive command, and naming which D/F rows Epic F itself closes.
 - F1.3/F1.6 in `epic-breakdown.md` (links closed = 11,925 - 4,456 = 7,469 of 11,925, or the
   difference explained row by row; structural diff proves no other field moved).
+
+**Outcome (F5, 2026-09-26;** `python3 docs/release/SD-36-consolidation/artifacts/epic-f/scripts/unres2.py`,
+`artifacts/epic-f/stage-f4-f5/f5-unres2.txt`**):** `unresolved-references.json` 11,925 -> **6,252**.
+By mechanism: A 4,456 -> **0**; B 63 -> 63; D 3,033 -> **2,646**; E 3,565 -> **2,764**; F 808 -> **779**.
+D, E and F moved below their out-of-scope counts because later converter steps (§11.1) resolved rows
+of those mechanisms as a side effect of their own rule (F3b2's placeholder-keyed index, F3b2b's newest
+printing, F3c5's natural-attack helpers: 680 mechanism-E rows), never by a per-row fix. The open rows
+are `forward-scope-register.md` FS-10..FS-13.
 
 ### §12.1 — Resolver scope addendum (F3b2b, 2026-09-24): same-object reprints resolve to the newest printing
 
@@ -461,6 +508,14 @@ converted fact). **Reasoning:**
   row is independently re-derived from oracle rows.
 - `scripts/pcgen_residue_gate.py --check --closure` stays 0 of 0 through F1 (F1.7).
 
+**Outcome (F5, 2026-09-26).** The reader reproduces **42 of 42** static rows at level 1 with 0
+disagreements (`cargo test --locked -j 8 -p codex-ingest --test class_weapon_proficiency_via_converter`);
+of the 95 census classes it walks, **92** answer Known at every level and **3** prestige classes stay
+Unknown by named mechanism (G-U diabolist, G-O exalted, G-K rivethun_emissary;
+`artifacts/epic-f/reader-remainder.md`, `cargo test --locked -j 8 --lib every_census_class_has_a_known_proficiency_answer`).
+0 of 137 census classes are Blocked on `combat.baseline_weapon_proficiency_unknown`. No hand-typed Rust
+proficiency row was added.
+
 ---
 
 ## §14 — Prestige classes: legal only in a mix, entry gate printed; Ex-* classes census-only
@@ -499,6 +554,13 @@ converted fact). **Reasoning:**
 - `epic-f-class-completion.md` §6 (F4's roster rule: "Ex-* states: census-only, never offered at
   creation").
 
+**Outcome (F5, 2026-09-26).** Census `prestige_alone_blocked` 74 of 74; the carrier mix prints the
+entry gate met/unmet and 68 of 74 mixes are `Computed`. The Ex-* states are 4 ids, not 2 or 3:
+`ex_antipaladin`, `ex_barbarian`, `ex_inquisitor`, `ex_paladin` (census `roster_reason=ex_state`),
+counted in the census (137) and never offered at creation; the Create roster offers the other 59 of
+the 63 Computed non-prestige ids. Prestige classes are offered at level-up
+(`list_level_up_class_options`), requirements printed, never blocked.
+
 ### §14.1 — Prestige saves the oracle's formula cannot state stay Blocked (F3c2, 2026-09-24)
 
 Six prestige classes' carrier mixes stop at `multiclass.save_shape.unrecognized`: Evangelist,
@@ -518,7 +580,17 @@ hand-worked test. Recorded as `forward-scope-register.md` FS-15; evidence
 
 **Enforced by:** `multiclass_fold::tests::the_four_unrecognized_prestige_saves_are_oracle_formula_defects_not_a_missed_shape`,
 `multiclass_fold::tests::two_more_prestige_saves_the_f3c_carriers_reach_are_the_same_oracle_formula_defect`,
-and the census floor `BASELINE_CENSUS_PRESTIGE_MIX_COMPUTED=67` (`scripts/verify-baselines.env`).
+and the census floor `BASELINE_CENSUS_PRESTIGE_MIX_COMPUTED` (67 when ruled; 68 since F3c5 closed
+Dragon Disciple, `scripts/verify-baselines.env`).
+
+**The book-cited override path (recorded at F5).** A row closes only this way, one class at a time: read
+the class's save progression from its own book's class table (the pages above), record it as an override
+carrying that citation (book, page, table) beside the oracle line it corrects, and pin it with a
+hand-worked test against the table at every level. No formula is re-read from memory, and no class is
+special-cased in engine code. The same path applies to FS-23 (Core Rulebook Monk hit die: the oracle
+states d10, CRB p.56 states d8), which must land before any Monk chassis record makes Monk hit points
+computable. Not taken inside SD-36 (each override needs its own book-table reading and pin, a
+data-correction pass of its own); FS-15 and FS-23 stay open in `forward-scope-register.md`.
 
 ### §14.2 — Multiclass negative controls assert status parity with the class alone (F3d, 2026-09-25)
 
@@ -555,5 +627,25 @@ change to those. Evidence `artifacts/epic-f/stage-f2-f3/f3d-sabotage-log.md`, `f
 
 **Enforced by:** the 187 tests; `epic-breakdown.md` F3.1–F3.3 (rewritten to this measurement).
 
----
+### §14.3 — FS-21 outcome: selection pools the oracle fills convert as choices (F4pre, 2026-09-26)
 
+**Measured.** The SD-32 generic pool-group pass printed member values with no level gate for selections
+the package did not link (cleric domains, shaman spirits, sorcerer and bloodrager bloodlines): 5,460 such
+values over 6 pools, 191 selections, levels 1–20 (`artifacts/epic-f/scripts/f4pre_pool_pass_scan.rs`,
+the census fixture).
+
+**Decision (converter step, §11.1).** The two oracle tokens that hand out a pick among a category's
+objects convert as a choice on the pick itself, one rule, no member edge (`sheet_rule/pool_link.rs::
+link_pool_choices`): `BONUS:ABILITYPOOL` into a `TYPE`-filtered child category (1,686 picks) and
+`BONUS:DOMAIN|NUMBER` (47 lines). The held set holds an option recorded under a held choice that selects
+it, and a Path-A pick links to the option it names, so the generic pass yields for 42 more selections
+(Cleric Domain 30 of 73, Shaman Spirit 12 of 14). **Ungated values 5,460 -> 3,420.**
+
+**The remainder, 3,420, named by mechanism, none feeding a sheet total:** (a) not a pick the pool offers
+1,700; (b) a wildblooded mutation, not a bloodline, 560; (c) the option's own gate excludes this
+character 920 (druid-only domains 320, alignment-gated 120, FS-19's race-gated Imperious/Kobold 480);
+(d) an inquisition, not a domain, 60; (e) no converted pick option 180. Each names where it closes
+(`forward-scope-register.md` FS-21). Evidence `artifacts/epic-f/stage-f4-f5/f4pre-receipt.md`,
+`f4pre-pool-pass-scan-{before,after}.log`.
+
+---

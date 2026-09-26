@@ -1,7 +1,9 @@
 # Corpus Ingest
 
 > Scope: the crate wall between the PCGen converter/oracle and the live engine, and how real PCGen corpus files (`.pcc`/`.lst` data files) are parsed and projected into the canonical source-IR the rules engine consumes.
-> Last verified: **2026-09-20 against `tranche/16` (`424e93e93c`)** — SD-36 docs-truth capability pass:
+> Last verified: **2026-09-26 against `tranche/16` (`e70a8745ed`)** for §"The sheet-rule converter" and
+> §"Converter mechanisms added by SD-36 Epic F" (report figures re-read from `data/sheet_rules/_report.json`
+> and `_defects/*.json`). Earlier pass: **2026-09-20 against `tranche/16` (`424e93e93c`)** — SD-36 docs-truth capability pass:
 > corrected the "how to onboard a book" section's book-count framing (was a vague "~30+"; now the
 > reconciled 37 `RuleSetId` variants / 38 tracked books / 39 `data/corpus/` directories, each with its
 > own denominator and re-derive command) and the stale pre-Epic-A paths this document's own §"The
@@ -142,7 +144,7 @@ read a PCGen TOKEN, not about who may read the JSON these tools produce.*
 The stages below produce the source-IR the engine's hand-transcribed chassis consumes. SD-35
 added a **second, terminal output** of this module, and it is the one that carries the whole
 corpus: `crates/codex-ingest/src/pcgen_import/sheet_rule/` (`closure.rs`, `convert.rs`, `ctx.rs`, `formula.rs`,
-`mod.rs`, `prereq.rs`, `prose.rs`, `table.rs`), driven by the `crates/codex-ingest/src/bin/sheet_rule_convert.rs`
+`mod.rs`, `prereq.rs`, `prose.rs`, `table.rs`, plus the SD-36 Epic F modules named below), driven by the `crates/codex-ingest/src/bin/sheet_rule_convert.rs`
 binary.
 
 **Why it exists.** It is the whole of the converter/live boundary
@@ -177,9 +179,44 @@ runs the same `-p`-qualified form):
 | figure | value | re-derive |
 |---|---|---|
 | records converted | 49,450 of 49,450, **0 refused** | `python3 -c "import json;d=json.load(open('data/sheet_rules/_report.json'));print(d['converted'],d['records'],d['refused'])"` |
-| rules written | 70,317 | `python3 -c "import json;print(json.load(open('data/sheet_rules/_report.json'))['rules_written'])"` |
-| variable contribution tables | 5,294 | `python3 -c "import json;print(json.load(open('data/sheet_rules/_report.json'))['var_tables'])"` |
-| degraded records (converted, some token dropped to words) | 423 | `python3 -c "import json;print(json.load(open('data/sheet_rules/_report.json'))['degraded_records'])"` |
+| rules written | 73,363 (70,317 at the SD-35 closure; 71,862 when SD-36 Epic F started) | `python3 -c "import json;print(json.load(open('data/sheet_rules/_report.json'))['rules_written'])"` |
+| variable contribution tables | 6,211 | `python3 -c "import json;print(json.load(open('data/sheet_rules/_report.json'))['var_tables'])"` |
+| degraded records (converted, some token dropped to words) | 424 | `python3 -c "import json;print(json.load(open('data/sheet_rules/_report.json'))['degraded_records'])"` |
+
+### Converter mechanisms added by SD-36 Epic F
+
+Epic F (class completion, `docs/release/SD-36-consolidation/epic-f-class-completion.md`) changed the
+converter inside the bundle, each change one mechanical rule over the pinned oracle, never a per-class
+case, and each landed under the structural-diff protocol ([testing.md](./testing.md) §"Structural
+diff"): records stay 49,450, every field delta is a pinned class, planted mutations fail. Unresolved
+references fell **11,925 -> 6,252** (`python3 -c "import json;print(len(json.load(open('data/sheet_rules/_defects/unresolved-references.json'))))"`);
+by mechanism (`python3 docs/release/SD-36-consolidation/artifacts/epic-f/scripts/unres2.py`): A 4,456 -> 0,
+B 63 -> 63, D 3,033 -> 2,646, E 3,565 -> 2,764, F 808 -> 779. The mechanisms, in landing order:
+
+| mechanism | rule | where | measured |
+|---|---|---|---|
+| parent-category retry (F1) | a reference into a child ability category that misses retries under the category's parent; a target two printings claim stays ambiguous, named | `closure.rs`, `prereq.rs`, `ctx.rs` | mechanism A 4,456 -> 0; `_defects/ambiguous-parent-category-target.json` 19 rows |
+| gated grants (F1) | an `AUTO:` proficiency grant under a `PRE` gate converts as `Effect::GatedFactGrant { fact, when }`, never unconditionally | `convert.rs` | `a_pre_gated_weapon_proficiency_is_not_granted_unconditionally` |
+| weapon sets (F1) | a `TYPE=` weapon selector resolves to the weapons the oracle's own proficiency rows put in it | `weapon_membership.rs` | adds no record kind; moves no report count |
+| type grants (F1c-1, D1) | `ABILITY:<cat>\|AUTOMATIC\|TYPE=<tag>` becomes one edge onto every converted record of the category carrying the tag | `convert.rs` | `_defects/grant-by-type.json` 613 -> 24; +1,958 `granted_by` edges |
+| line-scoped conditions (F1c-2, D2) | a line's condition gates only its own line: the record gets a text principal, the first line moves to a `#<suffix>` sibling | `convert.rs` | 1,108 records split (`artifacts/epic-f/stage-f1c/regenerate-receipt.md` §2) |
+| Unchained records (F1c-3, D3) | a class-selection ability yields a class principal `TakenOnClass <base>` | `convert.rs` | 4 class ids (`unchained_barbarian`, `_monk`, `_rogue`, `_summoner`) |
+| closure attestation (F1c-3, D4) | `SheetRule::closure_complete` is true iff every rule the class line reaches converted with zero closure defects | `attest.rs` | 136 of 189 class principals attested (`data/sheet_rules/*/class/*.json`, first rule) |
+| always-held globals (F1c-4, D7) | the target of an unconditional `ABILITY\|AUTOMATIC` grant on a STAT/SAVE row (PCGen gives every character every stat and check) is `always_held` | `always_held.rs` | 16 records (`artifacts/epic-f/scripts/d7_always_held_scan.py`) |
+| variable-pool picks (F1c-5, D8) | a record raising a category's `POOL:` variable offers the pick; members get `Choice` edges | `pool_pick.rs` | 86 offering records, 5,083 `Choice` edges |
+| placeholder-keyed index (F3b2) | a record filed under a codex-named placeholder key is also indexed under its row's own `KEY:` | `mod.rs` (`build_index`) | 383 references resolved |
+| skill ranks (F3b2) | `STARTSKILLPTS` converts as the class's `Skill ranks per level` row | `convert.rs` | 0 census classes without ranks; `_defects/skill-ranks-unresolved.json` 7 rows (eidolon, 5 creature-type classes, companion) |
+| undeclared variables (F3b2b) | a formula term no row declares and PCGen does not build in evaluates to 0, as in PCGen (`VariableProcessor.java:394-402`) — an informational row, not a closure defect | `oracle_terms.rs`, `ctx.rs` | `undefined-variables` 739 -> 89; `undeclared-in-pinned-tree` 776 rows |
+| newest printing (F3b2b) | an ambiguous target whose candidates are provably one object resolves to its newest printing (`.pcc` `SOURCEDATE:`), per the standing supersession ruling | `reprint.rs` | 13 of 31 ambiguous rows resolved (`decisions.md` §12.1) |
+| `SUBCLASS:` lines (F3c3) | each class's sub-class lines convert as one choice on the class record, options carrying the line's `CSKILL` facts and `SUBCLASSLEVEL` grants | `subclass.rs` | 47 lines, 40 converted after 7 superseded reprints (`subclass-superseded-reprint.json` 7) |
+| category pick rows (F3c4b) | an ability-category pick row no inventory unit stands for converts as a `pool_option` rule granted by the choice | `pool_option.rs` | 274 options over 12 pools |
+| Internal helper rows (F3c5) | a `CATEGORY:Internal` natural-attack helper whose object carries only that attack converts as `Fact::NaturalAttack` on the granting rule; no record added | `natural_attack.rs` | 770 helper rows, 681 fact grants on 546 rules; unresolved references 6,932 -> 6,252 |
+| pool choices (F4pre) | `BONUS:ABILITYPOOL` into a `TYPE`-filtered child category and `BONUS:DOMAIN\|NUMBER` convert as a choice on the pick | `pool_link.rs` (`link_pool_choices`) | 1,686 picks and 47 lines |
+
+Each row's receipt is under `docs/release/SD-36-consolidation/artifacts/epic-f/` (`stage-f1c/`,
+`stage-f2-f3/f3b2-converter-receipt.md`, `f3b2b-receipt.md`, `f3c3-receipt.md`, `f3c4b-receipt.md`,
+`f3c5-receipt.md`, `stage-f4-f5/f4pre-receipt.md`). What the converter still leaves open is named by
+mechanism in `docs/release/SD-36-consolidation/forward-scope-register.md` (FS-10..FS-23).
 
 `scripts/token_coverage.py --check` is the companion instrument: it names the remainder **by
 token type** and checks the type counts sum to the record count, so "the rest" can never be a

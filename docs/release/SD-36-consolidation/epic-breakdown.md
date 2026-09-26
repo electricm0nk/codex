@@ -107,78 +107,87 @@ swept level, corpus-wide, across every registry the engine's dispatch chain read
 (`docs/release/SD-36-consolidation/artifacts/epic-f/docs-truth/class-census.md`, generated
 2026-09-20 against `424e93e93c`). Target: **135 of 135**. Full plan, every command, every
 file:line, RED-first tests, flip lists, risk, size and order:
-`docs/release/SD-36-consolidation/epic-f-class-completion.md`. Batches F0–F5 are **open** —
-see `kanban.md` / `progress.md` — nothing in this section is a completion claim.
+`docs/release/SD-36-consolidation/epic-f-class-completion.md`.
+
+**Measured at F5 (2026-09-26, `cargo run --locked -j 8 --bin class_census -- --json <path>`,
+`artifacts/epic-f/stage-f4-f5/census-f5.json`):** the census id set is **137** (F2a added the APG
+Ex-Antipaladin and Ex-Inquisitor records); non-prestige **63 of 63** `Computed` at every level; prestige
+**74 of 74** Blocked alone (the game rule) and **68 of 74** `Computed` in a carrier mix, the other 6
+Blocked on an oracle save formula (FS-15); mix panel **185 of 185**; Create roster **59** (the 4 Ex-*
+states census-only by ruling). The target "135 of 135" reads, measured: every non-prestige id Computed,
+every prestige id Computed in its mix except the 6 named. F0–F4 are done; F5a (docs) is done; F5.3
+(baselines, PR body, graphify) is open (`kanban.md`). Artifacts cited below are under
+`docs/release/SD-36-consolidation/artifacts/epic-f/`.
 
 ### F0 — Permanent census instrument (RED first)
 
-| Criterion | Acceptance command / evidence |
-|---|---|
-| F0.1 RED truth (review finding 12d) | `cargo run --locked --bin class_census -- --json /tmp/census.json` prints `ids=135 computed=42 blocked=93`; AND `cargo test --locked --lib class_census::tests::census_id_set_matches_the_published_partition` green (merged id set == `status.md`'s partition 31+3+20+7+74, pinned before the instrument may move) |
-| F0.2 stage (review finding 10) | `bash scripts/verify.sh --list \| grep -E '^class-census +yes +yes'` prints the row (membership in both stage sets by the columns — `--list` is one row per stage headed `stage full quick`, so `-> 2` cannot pass for a correctly registered stage); `bash scripts/verify.sh --only class-census` green |
-| F0.3 generated table | `python3 scripts/gen_class_status_table.py --check` exits 0; `python3 -m pytest scripts/tests/test_gen_class_status_table.py -q` green |
-| F0.4 list parity | `cargo test --locked --lib class_census` green (prestige list == fixture's 74 of 74; no id in two families) |
+| Criterion | Acceptance command / evidence | Measured (command in the evidence cell) |
+|---|---|---|
+| F0.1 RED truth (review finding 12d) | `cargo run --locked --bin class_census -- --json /tmp/census.json` prints `ids=135 computed=42 blocked=93`; AND `cargo test --locked --lib class_census::tests::census_id_set_matches_the_published_partition` green (merged id set == `status.md`'s partition 31+3+20+7+74, pinned before the instrument may move) | met 2026-09-21: `ids=135 computed=42 blocked=93` (`census-f0*.json`); partition test green. Id set later widened by F2a to 137 (two APG Ex-* ids), pin updated in the same commit |
+| F0.2 stage (review finding 10) | `bash scripts/verify.sh --list \| grep -E '^class-census +yes +yes'` prints the row (membership in both stage sets by the columns — `--list` is one row per stage headed `stage full quick`, so `-> 2` cannot pass for a correctly registered stage); `bash scripts/verify.sh --only class-census` green | met: `class-census` in both stage sets; `verify.sh --only class-census` green; last full run PASS 51/0 (`stage-f4-f5/verify-f4-1.log`) |
+| F0.3 generated table | `python3 scripts/gen_class_status_table.py --check` exits 0; `python3 -m pytest scripts/tests/test_gen_class_status_table.py -q` green | met: `gen_class_status_table.py --check --json stage-f4-f5/census-f5.json` exit 0, 2026-09-26 (`ids=137 computed=63 prestige_swept=74 mix_panel_computed=185 of 185`) |
+| F0.4 list parity | `cargo test --locked --lib class_census` green (prestige list == fixture's 74 of 74; no id in two families) | met: prestige list 74 of 74; no id in two families (census `family` partition sums to 63 + 74 = 137) |
 
 ### F1 — Link repair corpus-wide (Option A) + class weapon proficiency
 
-| Criterion | Acceptance command / evidence |
-|---|---|
-| F1.1 reproducible before | `cargo run --locked --quiet -j 2 -p codex-ingest --bin sheet_rule_convert -- --check` exits 0 at the pre-change commit |
-| F1.2 oracle pin for the reader (extended, review finding 15) | `cargo test --locked -p codex-ingest --test class_weapon_proficiency_via_converter` green (reader output == each of the 42 static rows AND every other reader row re-derived from a named oracle row — tier, `Weapon Group <x>`, or expanded `WeaponSet`); `an_unrecognized_proficiency_tag_makes_the_class_unknown` green (e.g. `Auto`, `KoboldTailAttachment` -> `Unknown`, never fabricated) |
-| F1.3 links closed (per-edge pin, review finding 12a) | `data/sheet_rules/_defects/unresolved-references.json` length: 11,925 - 4,456 = **7,469** (or the difference explained per row); mechanism A = 0 AND D/E/F unchanged at 3,033/3,565/808; per-edge: each added edge's target rule `provenance.closure_rows` contains the named oracle line (a count match alone does not rule out an edge landing on a colliding slug, e.g. `wizard`) |
-| F1.4 no silent drop | `cargo test --locked -p codex-ingest automatic_grants_are_never_dropped_silently` green |
-| F1.5 coverage | census: classes blocked on `combat.baseline_weapon_proficiency_unknown` -> 0 of 135 |
-| F1.6 structural diff | `unexpected field deltas: 0`, `records 49450 -> 49450`, added edges per kind == mechanism A's per-kind table |
-| F1.7 gates | `python3 scripts/pcgen_residue_gate.py --check --closure` 0 of 0; `python3 scripts/site/check_frozen_status.py --check`; `git status --porcelain -- data/corpus site \| wc -l` -> 0 |
-| F1.8 gate carried, not dropped | `cargo test --locked -p codex-ingest a_pre_gated_weapon_proficiency_is_not_granted_unconditionally` green; `grep -n 'let _ = when' crates/codex-ingest/src/pcgen_import/sheet_rule/convert.rs` -> 0 hits |
-| F1.9 package handle | `cargo test --locked --lib rules_core::sheet_rule_package` green (named `Err`, never panic, never silent empty); load-time and memory figures recorded in the F1 receipt |
+| Criterion | Acceptance command / evidence | Measured (command in the evidence cell) |
+|---|---|---|
+| F1.1 reproducible before | `cargo run --locked --quiet -j 2 -p codex-ingest --bin sheet_rule_convert -- --check` exits 0 at the pre-change commit | met: `--check` exit 0 at the pre-change commit (`stage5/population-receipt.md` §4) |
+| F1.2 oracle pin for the reader (extended, review finding 15) | `cargo test --locked -p codex-ingest --test class_weapon_proficiency_via_converter` green (reader output == each of the 42 static rows AND every other reader row re-derived from a named oracle row — tier, `Weapon Group <x>`, or expanded `WeaponSet`); `an_unrecognized_proficiency_tag_makes_the_class_unknown` green (e.g. `Auto`, `KoboldTailAttachment` -> `Unknown`, never fabricated) | met 2026-09-24 (F1c): 42 of 42 static rows reproduced at level 1, 0 disagreements; unrecognized tag -> `Unknown` |
+| F1.3 links closed (per-edge pin, review finding 12a) | `data/sheet_rules/_defects/unresolved-references.json` length: 11,925 - 4,456 = **7,469** (or the difference explained per row); mechanism A = 0 AND D/E/F unchanged at 3,033/3,565/808; per-edge: each added edge's target rule `provenance.closure_rows` contains the named oracle line (a count match alone does not rule out an edge landing on a colliding slug, e.g. `wizard`) | met: 11,925 -> **7,469** exactly; A = 0; D/E/F 3,033/3,565/808 unchanged at F1 (`stage5/population-receipt.md` §3). Later steps took the file to **6,252** (A 0, B 63, D 2,646, E 2,764, F 779; `stage-f4-f5/f5-unres2.txt`) |
+| F1.4 no silent drop | `cargo test --locked -p codex-ingest automatic_grants_are_never_dropped_silently` green | met: green at the F1 merge `d56a93d1d8` |
+| F1.5 coverage | census: classes blocked on `combat.baseline_weapon_proficiency_unknown` -> 0 of 135 | met 2026-09-24: 0 of 135 blocked on `combat.baseline_weapon_proficiency_unknown` (`census-f1c.json`); 0 of 137 since F2a (`stage-f4-f5/census-f5.json`) |
+| F1.6 structural diff | `unexpected field deltas: 0`, `records 49450 -> 49450`, added edges per kind == mechanism A's per-kind table | met: `unexpected field deltas: 0`, `records 49450 -> 49450`, `granted_by` +4,491 (class_feature 3,722, race_trait 426, companion 192, ability 118, domain 33) (`stage5/population-receipt.md` §2) |
+| F1.7 gates | `python3 scripts/pcgen_residue_gate.py --check --closure` 0 of 0; `python3 scripts/site/check_frozen_status.py --check`; `git status --porcelain -- data/corpus site \| wc -l` -> 0 | met: residue gate PASS 0 of 0; frozen 100% of 49,450; `data/corpus` + `site` 0 changed (`stage5/population-receipt.md` §4); unchanged through F4 |
+| F1.8 gate carried, not dropped | `cargo test --locked -p codex-ingest a_pre_gated_weapon_proficiency_is_not_granted_unconditionally` green; `grep -n 'let _ = when' crates/codex-ingest/src/pcgen_import/sheet_rule/convert.rs` -> 0 hits | met: green; `let _ = when` 0 hits (`Effect::GatedFactGrant`) |
+| F1.9 package handle | `cargo test --locked --lib rules_core::sheet_rule_package` green (named `Err`, never panic, never silent empty); load-time and memory figures recorded in the F1 receipt | met: `rules_core::sheet_rule_package` returns a named `Err`; package held `rules.len() == rules_written` (71,863 at F1; `stage4/rule-gap-receipt.md`) |
 
 ### F1b — Print-path reconciliation
 
-| Criterion | Acceptance command / evidence |
-|---|---|
-| F1b.0 sibling-amplified count | offline script run against the real A-target list; table of `edges / (1+siblings) total / split by print:true` committed; 4,456 never reused as a print-surface size |
-| F1b.1 instrument | `cargo run --locked --bin class_census -- --sheet-dump /tmp/dump --only wizard` writes 3 files |
-| F1b.2 n=1 / n=5 receipts | both artifacts exist; each reports `changed-value=0 removed-unexplained=0 duplicate=0` |
-| F1b.3 join | `cargo test --locked --lib rule_for_explanation` green, including `a_facet_id_never_joins_to_the_class_principal_rule` and `the_three_known_good_pairs_still_join` |
-| F1b.4 agreement (test-only) | `cargo test --locked --test sd36_sheet_value_agreement` green (0 disagreements out of every joined pair, all census classes, levels 1/10/max) |
-| F1b.5 fixtures (script, review finding 12c) | `python3 scripts/tests/check_fixture_rebaseline_receipts.py` exits 0: diffs `git show --name-only HEAD`'s fixture paths against the `fixture-rebaseline-*.md` receipt filenames, non-zero on any mismatch |
+| Criterion | Acceptance command / evidence | Measured (command in the evidence cell) |
+|---|---|---|
+| F1b.0 sibling-amplified count | offline script run against the real A-target list; table of `edges / (1+siblings) total / split by print:true` committed; 4,456 never reused as a print-surface size | met: `stage3/blast-radius-receipt.md` §0 (705 HELD ids vs 357 printed LINE rows over 70 builds: sibling amplification measured, not assumed) |
+| F1b.1 instrument | `cargo run --locked --bin class_census -- --sheet-dump /tmp/dump --only wizard` writes 3 files | met: `--sheet-dump` writes the 3 files (`stage3/render_*_sheets.sh`) |
+| F1b.2 n=1 / n=5 receipts | both artifacts exist; each reports `changed-value=0 removed-unexplained=0 duplicate=0` | met with named outcome: changed-value 0 unexplained (6 accepted, each cited to PF1 text), removed 0, duplicate 8 named non-blocking (`stage4/dedup-receipt.md` §7.6.2) |
+| F1b.3 join | `cargo test --locked --lib rule_for_explanation` green, including `a_facet_id_never_joins_to_the_class_principal_rule` and `the_three_known_good_pairs_still_join` | met: green at the F1 merge |
+| F1b.4 agreement (test-only) | `cargo test --locked --test sd36_sheet_value_agreement` green (0 disagreements out of every joined pair, all census classes, levels 1/10/max) | met: green at the F1 merge (0 disagreements) |
+| F1b.5 fixtures (script, review finding 12c) | `python3 scripts/tests/check_fixture_rebaseline_receipts.py` exits 0: diffs `git show --name-only HEAD`'s fixture paths against the `fixture-rebaseline-*.md` receipt filenames, non-zero on any mismatch | met: exit 0 (`fixture-receipts.md` under `stage5/`, `stage-f1c/`, `stage-f2-f3/`, `stage-f4-f5/`) |
 
 ### F2 — Gate arm, CLASS_FAMILY_BOOKS, prestige alone
 
-| Criterion | Acceptance command / evidence |
-|---|---|
-| F2.1 | `cargo test --locked --lib generic_class_chassis` green with the re-measured pin (78 -> measured; ceiling 96) |
-| F2.2 | `cargo test --locked --lib prestige_alone` green; census `alone_blocked=74` of 74 |
-| F2.3 (falsifiable) | census `computed == 42` of 135 BEFORE F2's gate-arm change AND `computed == 42` of 135 AFTER it |
+| Criterion | Acceptance command / evidence | Measured (command in the evidence cell) |
+|---|---|---|
+| F2.1 | `cargo test --locked --lib generic_class_chassis` green with the re-measured pin (78 -> measured; ceiling 96) | met: 11 passed; pin 78 -> **122** distinct slugs (`stage-f2-f3/f2a-census-before-after.md`) |
+| F2.2 | `cargo test --locked --lib prestige_alone` green; census `alone_blocked=74` of 74 | met: `prestige_alone_blocked` **74 of 74** (`stage-f2-f3/f2b-prestige-alone.md`; re-measured 2026-09-26, `census-f5.json`) |
+| F2.3 (falsifiable) | census `computed == 42` of 135 BEFORE F2's gate-arm change AND `computed == 42` of 135 AFTER it | measured, not held as written: no existing id moved; `ids` 135 -> 137 and `computed` 61 -> 63 of 63, the +2 new APG Ex-* ids (`f2a-census-before-after.md`) |
 
 ### F3 — Multiclass for every class with a chassis
 
-| Criterion | Acceptance command / evidence |
-|---|---|
-| F3.0 unknown, not zero | every census class with `ClassChassis.hit_die`/`.skill_ranks_per_level == None` reports HP/skill-points `Unknown` (named list); `cargo test --locked --lib a_class_missing_hit_die_reports_hp_unknown` and `..._missing_skill_ranks_reports_skill_points_unknown` green |
-| F3.1 (re-measured at F3d, `decisions.md` §14.2) | (i) census `mix_computed == BASELINE_CENSUS_MIX_COMPUTED` (185 of 185 under the GE-06 canonical fixture) -- the Computed proof for mixes; (ii) the 187 multiclass negative controls (`artifacts/epic-f/stage-f2-f3/f3d-sites.tsv`) assert STATUS PARITY, not Computed: mix receipt status == class-alone status AND mix claim-blocking set (`multiclass.<class>.` re-scope stripped) == class-alone set; assertion (a) verbatim; vacuity guard `class_levels.len() >= 2`. Reason: measured at F3d, their class-specific fixtures are Blocked class-ALONE on `combat.baseline_unsupported` + `skill.selected_modifier.unsupported` (187 of 187, not the GE-06 posture) and every mix's set equals the alone set modulo re-scope (187 of 187), so a Computed assertion ran 187 of 187 red and would fabricate a success. `cargo test --locked -j 8 --no-fail-fast --test sd18_widening --test sd13_progression` + the 43 top-level bins: 187 of 187 green (`f3d-verify.log`) |
-| F3.2 | `--list` diffs for `sd18_widening` (891 of 891) and `sd13_progression` (1,136 of 1,136): IDENTICAL |
-| F3.3 (re-measured at F3d, `decisions.md` §14.2) | sabotage = disable the fold's carry-over of each class's own claim-blocking lines into the mix (`multiclass_fold::explain_multiclass_fold`): **14 of 187** negative controls red (the Monk mixes; the other 173 hold on lines the mix raises itself -- pillars 129, sorcerer 25, cleric 19 -- named by mechanism), 0 of 187 red restored; `artifacts/epic-f/stage-f2-f3/f3d-sabotage-log.md` |
-| F3.4 | `cargo test --locked --test sd21_multiclass_fighter_wizard_chassis_computes --test sd24_multiclass_integration` green |
+| Criterion | Acceptance command / evidence | Measured (command in the evidence cell) |
+|---|---|---|
+| F3.0 unknown, not zero | every census class with `ClassChassis.hit_die`/`.skill_ranks_per_level == None` reports HP/skill-points `Unknown` (named list); `cargo test --locked --lib a_class_missing_hit_die_reports_hp_unknown` and `..._missing_skill_ranks_reports_skill_points_unknown` green | met: 5 of 137 ids have no chassis record, named (`stage-f2-f3/f3a-save-shapes.md`); both tests green; 0 of 63 census classes print skill points Unknown since F3b3 |
+| F3.1 (re-measured at F3d, `decisions.md` §14.2) | (i) census `mix_computed == BASELINE_CENSUS_MIX_COMPUTED` (185 of 185 under the GE-06 canonical fixture) -- the Computed proof for mixes; (ii) the 187 multiclass negative controls (`artifacts/epic-f/stage-f2-f3/f3d-sites.tsv`) assert STATUS PARITY, not Computed: mix receipt status == class-alone status AND mix claim-blocking set (`multiclass.<class>.` re-scope stripped) == class-alone set; assertion (a) verbatim; vacuity guard `class_levels.len() >= 2`. Reason: measured at F3d, their class-specific fixtures are Blocked class-ALONE on `combat.baseline_unsupported` + `skill.selected_modifier.unsupported` (187 of 187, not the GE-06 posture) and every mix's set equals the alone set modulo re-scope (187 of 187), so a Computed assertion ran 187 of 187 red and would fabricate a success. `cargo test --locked -j 8 --no-fail-fast --test sd18_widening --test sd13_progression` + the 43 top-level bins: 187 of 187 green (`f3d-verify.log`) | met: mix panel **185 of 185**; 187 of 187 negative controls at status parity (`f3d-verify.log`); re-measured 185 of 185 on 2026-09-26 |
+| F3.2 | `--list` diffs for `sd18_widening` (891 of 891) and `sd13_progression` (1,136 of 1,136): IDENTICAL | met: IDENTICAL (891 of 891, 1,136 of 1,136) |
+| F3.3 (re-measured at F3d, `decisions.md` §14.2) | sabotage = disable the fold's carry-over of each class's own claim-blocking lines into the mix (`multiclass_fold::explain_multiclass_fold`): **14 of 187** negative controls red (the Monk mixes; the other 173 hold on lines the mix raises itself -- pillars 129, sorcerer 25, cleric 19 -- named by mechanism), 0 of 187 red restored; `artifacts/epic-f/stage-f2-f3/f3d-sabotage-log.md` | met: 14 of 187 red, 0 of 187 restored; reproduced at merge-readiness 201/14, restored 215/0 (`f3d-sabotage-log.md`, `merge-readiness-receipt.md`) |
+| F3.4 | `cargo test --locked --test sd21_multiclass_fighter_wizard_chassis_computes --test sd24_multiclass_integration` green | met: both green |
 
 ### F4 — Desktop
 
-| Criterion | Acceptance command / evidence |
-|---|---|
-| F4.1 | `cd apps/desktop/src-tauri && cargo test --locked list_class_creation_roster` green; roster length == census computed base count |
-| F4.2 | `cd apps/desktop && npm test -- classRoster characterHubModel characterProgression skillsModel` green; `npm run typecheck` green |
-| F4.3 (strengthened, review finding 12b) | `git grep -c 'fn canonical_seeds_for' -- src apps` -> 1 (the single definition) AND `git grep -n 'use .*canonical_seeds_for' -- src/bin apps` -> 2 (both call sites import it) |
-| F4.4 | ui-smoke rows green: `create-character-samurai`, `-magus`, `-warrior`, `-kineticist`, `-inquisitor-generic` and `level-up-fighter6-into-arcane-archer` |
-| F4.5 (new, review finding 13) | `cargo test --locked --lib no_computed_class_is_unoffered_without_a_named_reason` green: `in_desktop_roster == false` always carries `hit_die_absent \| not_computed \| prestige \| ex_state`; the 7 `hit_die_absent` classes (0.4) asserted present by id |
+| Criterion | Acceptance command / evidence | Measured (command in the evidence cell) |
+|---|---|---|
+| F4.1 | `cd apps/desktop/src-tauri && cargo test --locked list_class_creation_roster` green; roster length == census computed base count | met: roster 59 == census `roster_offered=59` (63 of 63 non-prestige Computed less 4 Ex-*; `stage-f4-f5/census-f5.json`) |
+| F4.2 | `cd apps/desktop && npm test -- classRoster characterHubModel characterProgression skillsModel` green; `npm run typecheck` green | met: green (`stage-f4-f5/f4c-green.log`, `f4-suite-desktop-frontend.log`) |
+| F4.3 (strengthened, review finding 12b) | `git grep -c 'fn canonical_seeds_for' -- src apps` -> 1 (the single definition) AND `git grep -n 'use .*canonical_seeds_for' -- src/bin apps` -> 2 (both call sites import it) | met: 1 definition; 2 importing call sites (`pf1_adapter.rs`, `v06_class_state_dump.rs`) |
+| F4.4 | ui-smoke rows green: `create-character-samurai`, `-magus`, `-warrior`, `-kineticist`, `-inquisitor-generic` and `level-up-fighter6-into-arcane-archer` | met: 7 of 7 green (6 rows + `-accept`), regression 4 of 4 (`artifacts/ui-smoke/f4/results.json`, 2026-09-26) |
+| F4.5 (new, review finding 13) | `cargo test --locked --lib no_computed_class_is_unoffered_without_a_named_reason` green: `in_desktop_roster == false` always carries `hit_die_absent \| not_computed \| prestige \| ex_state`; the 7 `hit_die_absent` classes (0.4) asserted present by id | met: green; 0 of 63 non-prestige withheld as `not_computed` or `hit_die_absent`; 4 `ex_state`, 74 `prestige` |
 
 ### F5 — Closure deltas
 
-| Criterion | Acceptance command / evidence |
-|---|---|
-| F5.1 | `docs/architecture/status.md` class table regenerated between markers, `scripts/gen_class_status_table.py --check` exits 0; five head-count sites updated together; grep at `status.md:70` re-run to zero stale hits |
-| F5.2 | `decisions.md` §11–§14, `technical-design.md` Epic F section, `workflow-instruction.md` §0/§3 rows, `kanban.md`/`progress.md`/`receipts.md`/`release-notes.md`/`forward-scope-register.md` all updated |
-| F5.3 | `scripts/verify-baselines.env` re-derived; PR #393 body updated; graphify run LAST against the final tree |
+| Criterion | Acceptance command / evidence | Measured (command in the evidence cell) |
+|---|---|---|
+| F5.1 | `docs/architecture/status.md` class table regenerated between markers, `scripts/gen_class_status_table.py --check` exits 0; five head-count sites updated together; grep at `status.md:70` re-run to zero stale hits | met 2026-09-26 (F5a): `--check` exit 0; five sites updated; retired-figure grep 0 hits (`status.md` §Posture) |
+| F5.2 | `decisions.md` §11–§14, `technical-design.md` Epic F section, `workflow-instruction.md` §0/§3 rows, `kanban.md`/`progress.md`/`receipts.md`/`release-notes.md`/`forward-scope-register.md` all updated | met 2026-09-26 (F5a): every file named, `technical-design.md` §6 "Outcome as built" added |
+| F5.3 | `scripts/verify-baselines.env` re-derived; PR #393 body updated; graphify run LAST against the final tree | open: F5b (baselines, PR #393 body, graphify last) |
 
 ---
 

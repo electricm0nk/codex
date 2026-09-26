@@ -9,21 +9,14 @@ date: 2026-09-20
 
 Measured baselines (before/after, each row re-derived with its own command) and bundle summary.
 
-**Status at time of writing:** Epics B, A, E, C1 and now C2 are committed-or-ready and closed. Epic
-C2's core deliverable — the table-driven test rewrite (C2.1/C2.2) — **is done**:
-`tests/sd18_widening/rows.rs` and `tests/sd13_progression/rows.rs` both exist, 182 and 143 tests
-respectively now expand from row + macro data instead of hand-written bodies, `--list` output is
-byte-identical before/after in both families, both families run green (891 / 1,136 passed, 0
-failed), and the three-sabotage mutation gate (`receipts.md`'s new Epic C2.1/C2.2 evidence section)
-confirms the same test NAMES fail before and after, three re-runs each. C2.3 (path-helper
-consolidation), C2.4 (branch-promotion test move) and C2.5 (oracle tests kept and re-run against the
-real corpus) were already done; C2.6's baseline drift is corrected
-(`scripts/verify-baselines.env`'s C2D block). Epic D's own D1 (architecture docs) is done; D2
-(`docs/retro/sd36-retrospective.md`) is written; D4 (graphify), D5 (PR/merge) and D6 (worktree
-sweep) have not run. The "After (SD-36)" column below reflects **current-HEAD (`5ee77f8d85`) plus
-this cycle's uncommitted C2.1/C2.2 rewrite and this docs pass — still not final-closure** (nothing
-in this docs pass was committed) — re-derive this table again once C2 lands and Epic D closes.
-
+**Status at time of writing (2026-09-26, `tranche/16` HEAD `e70a8745ed`):** Epics B, A, E, C1, C2
+and D1 are closed, and Epic F — class completion, scoped in by the operator's 2026-09-21 ruling — is
+closed through F5a (this docs pass): the class census measures **137** class ids, **63 of 63**
+non-prestige `Computed` at every level, prestige **68 of 74** `Computed` in a carrier mix, mix panel **185
+of 185**, and the desktop Create roster offers **59** classes from the engine. Still to run, in order: F5.3
+(`scripts/verify-baselines.env` re-derived, PR #393 body), graphify against the final tree, the PR merge
+(operator), the worktree sweep. The "Measured baselines at Epic F closure" table below is the current
+one; the table after it is kept as the C2-closure record it was written as.
 ---
 
 ## Build 0.16.0
@@ -33,12 +26,53 @@ in this docs pass was committed) — re-derive this table again once C2 lands an
 **What changed so far:** dashboard freeze and producer retirement (Epic B), a PCGen crate wall
 (Epic A), 22 SD-35 code-review correctness findings folded in as Epic E, a source-side bloat cut
 (`pilot_compute` split + path-helper consolidation, Epic C1), and now a test-side bloat cut
-(table-driven `sd18_widening`/`sd13_progression` rewrite, Epic C2.1/C2.2). Not yet landed: the rest
-of bundle closure (Epic D4–D6).
+(table-driven `sd18_widening`/`sd13_progression` rewrite, Epic C2.1/C2.2), and class completion across
+the whole corpus (Epic F: census instrument, converter link repair and 16 more converter mechanisms,
+proficiency reader, generic gate arm, prestige rule, multiclass fold for every class with a chassis,
+desktop class roster and prestige level-up). Not yet landed: F5.3 and the rest of bundle closure (D4–D6).
 
 ---
 
-## Measured baselines
+## Measured baselines at Epic F closure (2026-09-26)
+
+Before = the Epic F baseline, `tranche/16` @ `424e93e93c` (2026-09-20), unless the row says otherwise.
+After = HEAD `e70a8745ed`; the test rows are the last full `scripts/verify.sh` run at merge `c2b7e03dd5`
+(`artifacts/epic-f/stage-f4-f5/verify-f4-1.log`, PASS 51 stages, 0 failed; HEAD after it adds docs and
+config only). Fact sheet with every command: `artifacts/epic-f/stage-f4-f5/f5-facts.md`.
+
+| Figure | Before | After | Command |
+|---|---|---|---|
+| class ids, corpus-wide | 135 | **137** | `cargo run --locked -j 8 --bin class_census -- --json <path>` → `ids` (the +2 are APG Ex-Antipaladin/Ex-Inquisitor, brought in by F2a) |
+| class ids `Computed` at every swept level | 42 of 135 | **63 of 63** non-prestige (63 of 137 ids; prestige is never measured alone) | same → `computed`, `non_prestige_swept` |
+| prestige Blocked alone (the game rule) | not measured | **74 of 74** | same → `prestige_alone_blocked` |
+| prestige `Computed` in a carrier mix | 0 of 74 | **68 of 74** (6 Blocked on an oracle save formula, FS-15) | same → `prestige_mix_computed` |
+| multiclass mix panel `Computed` | not measured (185 of 185 at F0) | **185 of 185** | same → `mix_panel_computed` |
+| desktop Create picker | 31 (hardcoded `CLASS_OPTIONS`) | **59** (engine roster; 4 Ex-* states census-only by ruling) | same → `roster_offered`; `cargo test --locked -j 8 --manifest-path apps/desktop/src-tauri/Cargo.toml list_class_creation_roster` |
+| unresolved references | 11,925 | **6,252** (A 0, B 63, D 2,646, E 2,764, F 779) | `python3 -c "import json;print(len(json.load(open('data/sheet_rules/_defects/unresolved-references.json'))))"`; `python3 docs/release/SD-36-consolidation/artifacts/epic-f/scripts/unres2.py` |
+| grant-by-type defects | 613 | **24** | `python3 -c "import json;print(len(json.load(open('data/sheet_rules/_defects/grant-by-type.json'))))"` |
+| undefined-variable defects | 739 | **89** (+776 informational `undeclared-in-pinned-tree`) | same over `undefined-variables.json` |
+| sheet-rule records | 49,450 | **49,450** (0 refused, unmoved) | `python3 -c "import json;d=json.load(open('data/sheet_rules/_report.json'));print(d['records'],d['refused'])"` |
+| rules written | 71,862 (70,317 at the cut; the 71,869 quoted in F1c notes is the pre-F1c figure) | **73,363** | same → `rules_written` |
+| variable contribution tables | 5,309 | **6,211** | same → `var_tables` |
+| class principals with `closure_complete` | 0 (attestation did not exist) | **136 of 189** | `python3 -c "import json,glob;fs=glob.glob('data/sheet_rules/*/class/*.json');print(sum(bool((json.load(open(f))[0]).get('closure_complete')) for f in fs),len(fs))"` |
+| root lib tests | 2,587 (baseline floor) | **2,727** | `verify.sh` `root-lib` |
+| root full tests / suites | 6,203 / 285 | **6,398 / 293** | `verify.sh` `root-full` |
+| codex-ingest tests / suites | 1,679 / 157 | **1,764 / 166** | `verify.sh` `ingest-full` |
+| desktop Rust tests | 612 | **621** | `verify.sh` `desktop` |
+| frontend test files | 125 | **126** | `verify.sh` `frontend-test` |
+| clippy warnings root / desktop / ingest | 0 / 0 / 0 | **0 / 0 / 0** | `verify.sh` `clippy` |
+| src lines, root | 337,790 | **349,508** | `find src -name '*.rs' \| xargs cat \| wc -l` |
+| src lines, `crates/codex-ingest` | 81,185 | **85,906** | `find crates/codex-ingest/src -name '*.rs' \| xargs cat \| wc -l` |
+| tests lines, root | 132,264 | **134,255** | `find tests -name '*.rs' \| xargs cat \| wc -l` |
+| tests lines, `crates/codex-ingest/tests` | 37,163 | **39,323** | `find crates/codex-ingest/tests -name '*.rs' \| xargs cat \| wc -l` |
+| Tauri commands registered | 75 | **77** | comment-stripped count over `generate_handler![...]` in `apps/desktop/src-tauri/src/main.rs` |
+| ui-smoke rows | 69 (66 green, 3 manual) | **76** (69 as before + 7 F4 rows, 7 of 7 green; regression 4 of 4) | `python3 -c "import json;print(len(json.load(open('apps/desktop/scripts/ui-smoke/spec.json'))['rows']))"`; `artifacts/ui-smoke/{final,f4}/results.json` |
+| public status | 100.0% of 49,450 | **100.0% of 49,450** (frozen) | `python3 -c "import json;print(json.load(open('site/status-data.json'))['overall'])"` |
+
+The test floors in `scripts/verify-baselines.env` still read the "Before" values; re-recording them is
+F5.3.
+
+## Measured baselines (at Epic C2 closure, 2026-09-20 — kept as recorded)
 
 | Figure | Before (SD-35 cut, 2026-09-15) | After (current HEAD `5ee77f8d85` + uncommitted C2.1/C2.2 rewrite) | Command | Change / why |
 |---|---|---|---|---|
@@ -200,7 +234,8 @@ gitignored, both are simply pending their own commit like `tests/support/paths.r
 
 ## Deferred work
 
-See `forward-scope-register.md` for the full deferral register (FS-1 through FS-13): semantic
+See `forward-scope-register.md` for the full deferral register (FS-1 through FS-23, with a mechanism
+remainder table re-derived at Epic F closure): semantic
 dedups in `pilot_compute`, SD-34 correctness P1s, `rules_tables` → data-package migration,
 `pf1e_dashboard_producer.py` extraction, CI oracle fetch, GATE-03 vocabulary widening, the
 engine-P1-3 book-tie-break schema migration, GATE-02's roster widening (FS-8, the Warpriest
@@ -212,47 +247,30 @@ from the corpus-wide remainder that stays deferred).
 
 ---
 
-## Epic F — Class completion (IN PROGRESS — scoped 2026-09-21, no batch closed yet)
+## Epic F — Class completion (closed through F5a, 2026-09-26)
 
-**This section makes no completion claim.** Epic F is scoped into this bundle per the operator's
-2026-09-21 ruling (`decisions.md §11`) to close class-content gaps before PR #393 merges, rather
-than deferring them to a successor bundle. Full plan, every command, every file:line, RED-first
-tests and the adversarial review that sized it: `epic-f-class-completion.md`. Criteria tables:
-`epic-breakdown.md`'s "Epic F — Class completion" section.
+Scoped into this bundle by the operator's 2026-09-21 ruling (`decisions.md §11`) to close the class gaps
+before PR #393 merges. Plan: `epic-f-class-completion.md`; criteria with their measured figures:
+`epic-breakdown.md` "Epic F"; receipts: `receipts.md` and `artifacts/epic-f/`.
 
-**Measured baseline (not yet moved by any Epic F work):** a permanent census instrument
-(`docs/release/SD-36-consolidation/artifacts/epic-f/docs-truth/class-census.md`, generated
-2026-09-20 against `tranche/16` @ `424e93e93c`) found **42 of 135** distinct class ids
-corpus-wide reach `HeadlessReceiptStatus::Computed` at every swept level — a wider, corrected
-denominator than the "31 of 31" (desktop Create picker) and "42 of 42" (the four fully-tabled
-registries) figures quoted elsewhere in this bundle's own docs, each of which was true only of
-its own narrower registry population (`epic-f-class-completion.md §3` names the three specific
-corrections). **Target: 135 of 135.**
+**Outcome** (`cargo run --locked -j 8 --bin class_census -- --json <path>`,
+`artifacts/epic-f/stage-f4-f5/census-f5.json`): the engine covers classes across the whole corpus — every
+one of the 63 non-prestige class ids of the 137 the census merges (from the Core Rulebook to Ultimate
+Psionics and Ultimate Wilderness, and the CRB NPC classes) computes a full sheet at every level; every
+prestige class computes in its carrier mix except 6 of 74, named; every multiclass panel mix computes.
 
-**Status of each batch, all open, nothing closed:**
+| Batch | What it did | Status | Headline (denominator, command in `epic-breakdown.md`) |
+|---|---|---|---|
+| F0 | permanent census instrument, `verify.sh` stage, status table generated from it | done 2026-09-21 | baseline 42 of 135 measured |
+| F1 + F1b | converter link repair (Option A) + print-path reconciliation + proficiency reader | done 2026-09-22/24 | 4,456 links closed; +4,491 edges; reader 42 of 42 static rows |
+| F1c | converter fixes the reader exposed (type grants, line-scoped conditions, Unchained records, closure attestation, choice-pool options, always-held globals, variable-pool picks) | done 2026-09-24 | non-prestige 42 -> 61 of 61 |
+| F2 | generic gate arm; prestige-alone game rule | done 2026-09-25 | 63 of 63 (137 ids); prestige alone 74 of 74 Blocked |
+| F3 | multiclass fold for every class with a chassis; skill ranks, sub-classes, bloodline picks, helper rows | done 2026-09-25 | prestige mixes 0 -> 68 of 74; mix panel 185 of 185; 187 negative controls at status parity |
+| F4 | desktop class roster from the census; single-source seeds; prestige level-up | done 2026-09-26 | roster 31 -> 59; ui-smoke 7 of 7 |
+| F5 | closure deltas | F5a done 2026-09-26; F5.3 open | this document, status/architecture docs, decisions §11–§14, forward-scope register, retrospective |
 
-| Batch | What it does | Status |
-|---|---|---|
-| F0 | Permanent census instrument (replaces the deleted one-shot `zz_class_census.rs`) | open |
-| F1 | Converter link repair, Option A (all 4,456 of 11,925 fixable references) + weapon-proficiency reader | open |
-| F1b | Print-path reconciliation (new batch, required by Option A's blast radius) | open |
-| F2 | Gate arm for the `generic_class_chassis` registry + prestige-alone diagnostic | open |
-| F3 | Multiclass fold for every class with a chassis | open |
-| F4 | Desktop creation/level-up roster, engine-derived | open |
-| F5 | Epic F's own closure deltas (docs, baselines, forward-scope register) | open |
-
-**Sizing:** 100-140 agent-hours (`epic-f-class-completion.md §8`), risen from an original
-81-115 estimate after an adversarial review of the plan itself found and closed nine design
-gaps in the Option-A execution (§12 of that document — a dropped proficiency gate, a broken
-facet-to-rule join, a missing HP/skill-point prerequisite, a restated-not-resized F2 batch, a
-missing package-load architecture, a self-contradictory runtime-vs-test reconciliation rule, an
-under-counted print-surface blast radius, an unsourced "183" denominator now measured instead,
-and a broken converter command corrected everywhere it appeared).
-
-**What Epic D closure is waiting on:** D2 (retrospective) and D3 (this release-notes document)
-were written against the pre-Epic-F tree; D4 (graphify) ran once against that same pre-Epic-F
-tree and must re-run against the tree Epic F leaves, per the standing "graphify runs against the
-FINAL repo state" rule; D5 (PR merge) and D6 (worktree sweep) do not proceed until Epic F's F5
-closes. See `kanban.md`'s D2–D6 row for the current block state.
-
----
+**Named remainder** (`forward-scope-register.md`): 6 of 74 prestige carrier mixes on an oracle save
+formula (FS-15, a book-cited override path); 3 prestige classes whose proficiency answer is Unknown by
+mechanism G (diabolist and rivethun_emissary still compute in their fighter carrier mix, whose
+weapon union the fighter decides; exalted is one of the FS-15 six); unresolved references
+6,252 by mechanism (B 63, D 2,646, E 2,764, F 779; FS-10..FS-13); FS-14, FS-18, FS-19, FS-21, FS-22, FS-23.

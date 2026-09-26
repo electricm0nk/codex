@@ -736,3 +736,17 @@ Nothing above was deleted; this is inventory only, for the operator to action af
   - pcgen_residue_gate: PASS (verify-f4-1.log)
   - frozen_corpus_record_count: 49,450 — unmoved; data/corpus/** and site/** untouched
 - receipt_note: F4 closes with this landing. F5 (closure deltas) remains open; D2-D6 bundle closure (graphify last) stays blocked on F5.
+
+## Epic F5a closure deltas (2026-09-26)
+
+- head_at_start: e70a8745ed (tranche/16, clean, up to date with origin); session restarted after a crash, no work lost (F4 committed and pushed; no cargo process running)
+- fact_sheet: docs/release/SD-36-consolidation/artifacts/epic-f/stage-f4-f5/f5-facts.md (every figure with its command)
+- census: `cargo run --locked -j 8 --bin class_census -- --json <path>` -> `ids=137 computed=63 blocked=0`, `prestige_swept=74 prestige_alone_blocked=74 prestige_mix_computed=68 prestige_mix_unknown=0`, `mix_panel_swept=185 mix_panel_computed=185 mix_panel_blocked=0`, `roster_offered=59` (artifact stage-f4-f5/census-f5.json, generated_at 2026-09-26T21:55:17Z)
+- status_table_check: `python3 scripts/gen_class_status_table.py --check --json stage-f4-f5/census-f5.json` -> OK (exit 0), before and again after every doc edit of this step (the generated region was not touched); `denominator_gate.py --check` and `--check-provenance` 0 violations
+- unresolved_references: 6,252 (`unres2.py`: A 0, B 63, D 2,646, E 2,764, F 779; artifact stage-f4-f5/f5-unres2.txt)
+- package: records 49,450, converted 49,450, refused 0, rules_written 73,363, var_tables 6,211 (`data/sheet_rules/_report.json`); data/sheet_rules/**, data/corpus/**, site/** untouched this step
+- retired_figure_grep (status.md §Posture): 0 hits
+- retro_summary: `python3 scripts/retro.py summary --since 2026-09-21` -> 47 events, 27 corrections, 12 verification runs (2 with a failing stage); artifacts stage-f4-f5/f5-retro-summary-since-2026-09-{21,15}.txt
+- files: README.md; docs/architecture/{status,rules-engine,desktop-app,corpus-ingest,testing,glossary,rules-data-tables}.md; docs/release/SD-36-consolidation/{epic-breakdown,decisions,technical-design,workflow-instruction,forward-scope-register,release-notes,kanban,progress,receipts}.md; docs/retro/sd36-retrospective.md
+- open (F5.3): scripts/verify-baselines.env re-derived from the verify-f4-1.log stale notices (ROOT_LIB 2727, ROOT_FULL 6398, ROOT_BIN 293, INGEST 1764/166, DESKTOP 621, FRONTEND 126, CENSUS_IDS 137); PR #393 body; graphify last against the final tree
+

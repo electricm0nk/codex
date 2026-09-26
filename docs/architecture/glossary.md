@@ -2,7 +2,9 @@
 
 > Scope: every project-specific term a newcomer meets in this codebase or its docs, each with a
 > short definition and a link to the doc that treats it in full.
-> Last verified: **2026-09-20 against `tranche/16` (`b22ea9e113`, SD-36 Epic D)**. New this pass
+> Last verified: **2026-09-26 against `tranche/16` (`e70a8745ed`)** for the SD-36 Epic F terms (carrier mix,
+> class census, closure-complete attestation, class roster, mechanism, sabotage parity, status parity,
+> structural diff). Earlier: **2026-09-20 against `tranche/16` (`b22ea9e113`, SD-36 Epic D)**. New this pass
 > (`docs/architecture/glossary.md` did not exist before SD-36 Epic D).
 > Maintenance: updated at SD closure — see [README.md](./README.md) §Maintenance contract
 
@@ -37,6 +39,14 @@ Components never call `invoke()` inline; they call a boundary wrapper, which is 
 `hasTauriRuntime()` and falls back to a preview value outside a real Tauri runtime. See
 [conventions.md](./conventions.md) §"Boundary wrapper rule" and [desktop-app.md](./desktop-app.md).
 
+## Carrier mix
+
+The multiclass build a prestige class is measured in, because a prestige class taken alone is not a
+legal character (it is Blocked by the game rule, `prestige_class.requires_base_class_levels`). The
+census picks the carrier its own converted entry gate names (e.g. a wizard for an arcane gate) at the
+smallest level meeting every numeric entry term, and prints the entry requirements met/unmet — they
+never block. See [rules-engine.md](./rules-engine.md) §3d and [status.md](./status.md).
+
 ## Chassis
 
 Two related but distinct senses, both meaning "the load-bearing structural skeleton, not the
@@ -48,6 +58,21 @@ decoration":
    in `src/rules_core/rules_tables/`, which carry a source TOKEN (never a pre-computed number) for
    the compute side to read. See [rules-data-tables.md](./rules-data-tables.md) §"What it holds".
 
+## Class census
+
+`cargo run --locked -j 8 --bin class_census -- --json <path>` (`src/rules_core/class_census.rs`) —
+the one instrument that measures class coverage corpus-wide: every engine registry merged into one
+id set (137), each class swept at every level. status.md's class table is generated from it and the
+desktop class roster is served from it. See [testing.md](./testing.md) §"The SD-36 Epic F
+instruments".
+
+## Class roster
+
+The list of classes the desktop Create picker offers, served by `list_class_creation_roster` from
+the census: every non-prestige class `Computed` at every level that states a hit die, less the Ex-*
+states (census-only by ruling). Each class not offered carries a `roster_reason` (`prestige`,
+`ex_state`, `not_computed`, `hit_die_absent`). See [desktop-app.md](./desktop-app.md).
+
 ## Closure
 
 The state a bundle (or one of its epics) reaches when every acceptance criterion is done, its
@@ -56,6 +81,14 @@ merged, and its worktree/branches are swept — a fixed, sequential pipeline, ne
 subset. See `docs/release/<bundle>/workflow-instruction.md §11` for the exact steps a given
 bundle runs, and [README.md](./README.md) §Maintenance contract for what architecture-docs closure
 specifically requires.
+
+## Closure-complete attestation
+
+`SheetRule::closure_complete` on a converted class principal: true iff every rule the class line
+reaches converted with zero closure defects. The proficiency reader answers Known only when it
+holds, so "the class grants no weapon" is never confused with "the grant was lost at conversion".
+Written by `crates/codex-ingest/src/pcgen_import/sheet_rule/attest.rs`. Not the bundle sense of
+**Closure** above. See [corpus-ingest.md](./corpus-ingest.md).
 
 ## Corpus
 
@@ -135,6 +168,15 @@ An older naming lineage predating the `SD-NN` convention, still visible as a fil
 dispatch status (READY, blocked, complete). Read alongside `workflow-instruction.md`, not a
 substitute for it.
 
+## Mechanism (unresolved-reference)
+
+A letter naming WHY a converted reference did not resolve, so a remainder is named by cause, never
+"the rest": A child category with a converted target, B child category with an unconverted target,
+D plain category with a converted target the resolver still misses, E target in a book not
+ingested, F target found nowhere; G/H/N name closure-defect causes in the proficiency reader's
+remainder. Re-derive with `docs/release/SD-36-consolidation/artifacts/epic-f/scripts/unres2.py`;
+open rows are in `docs/release/SD-36-consolidation/forward-scope-register.md`.
+
 ## Oracle
 
 PCGen itself, treated as the **parity ground truth** for Codex's own computed output — never as a
@@ -200,6 +242,12 @@ One append-only JSON line in `docs/retro/events/<actor-slug>.jsonl`, emitted via
 to record a correction, incident, deferral, or rework — the things git itself never captures.
 See `AGENTS.md` §Retrospective Logging and `docs/retro/schema.json`.
 
+## Sabotage parity
+
+Proof that a test refactor or a flipped assertion still guards what it guarded: break the engine on
+purpose in a named way, record which tests turn red, require the identical set after the change, and
+0 red once restored. See [testing.md](./testing.md).
+
 ## Seam
 
 A deliberate composition/extension boundary between two pieces of code that could otherwise be
@@ -237,6 +285,12 @@ authoring time (`gen_settled_corpus`, now in `crates/codex-ingest`) so the live 
 Regenerate-and-diff (`gen_settled_corpus --check`) is its own idempotency proof. See
 [corpus-ingest.md](./corpus-ingest.md) and [rules-data-tables.md](./rules-data-tables.md).
 
+## Status parity
+
+The assertion the multiclass negative controls make since SD-36 F3d: a mix's receipt status equals
+the class-alone status, and its claim-blocking set (re-scope stripped) equals the class-alone set.
+See [testing.md](./testing.md) and `docs/release/SD-36-consolidation/decisions.md` §14.2.
+
 ## STC package
 
 The standard chassis every `docs/release/<bundle>/` folder follows: `scope-draft.md`,
@@ -246,6 +300,14 @@ The standard chassis every `docs/release/<bundle>/` folder follows: `scope-draft
 independently verified**: this repo's own docs use "STC" as an established proper noun (e.g. "STC
 chassis," "STC package") without spelling out the acronym anywhere in-repo; treat "STC" as a name
 for this chassis shape, not as an expansion this doc can confirm.
+
+## Structural diff
+
+The gate every converter change passes: regenerate the sheet-rule package into a scratch directory,
+diff it against the committed package field by field, and require every delta to fall in a pinned
+delta class, with records unmoved and planted mutations failing
+(`docs/release/SD-36-consolidation/artifacts/epic-f/scripts/structural_diff.py`). See
+[testing.md](./testing.md).
 
 ## Tranche
 
