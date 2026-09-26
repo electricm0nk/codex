@@ -5,7 +5,7 @@ headers of the rest), release-notes.md, epic-breakdown.md Epic F tables, forward
 Fact sheet: `stage-f4-f5/f5-facts.md` (identical to the scratch facts.md). Figures below re-derived by
 the critic unless marked "(from log)".
 
-Verdict: **NOT merge-ready: 4 blockers.** This file stays uncommitted until they are fixed.
+Verdict (round 1): **NOT merge-ready: 4 blockers.** Verdict (round 2 re-check, below): **merge-ready: 0 blockers**, 5 polish items open.
 
 ## Claims table
 
@@ -76,3 +76,34 @@ All four blockers fixed in "docs(sd36,epic-f5): claims-critic fixes round 1":
 - Polish also applied: #24 (`CLASS_OPTIONS_FALLBACK` at `characterHubModel.ts:421`); the C2-baseline
   table header no longer says "current HEAD ... uncommitted".
 - `python3 scripts/gen_class_status_table.py --check --json .../census-f5.json` exit 0 after the edits.
+
+## Round 2 re-check (2026-09-26, tranche/16 HEAD 4595596167)
+
+Each round-1 blocker re-verified against the tree, not against the resolution note above.
+
+| Blocker | Status | Evidence (command / file:line) |
+|---|---|---|
+| B1 desktop-app.md:4 31-class headline | CLOSED | :4 now reads "at that pass the create-flow class picker was a hardcoded list of 31 classes; SD-36 Epic F4 replaced it with the engine-served roster". status.md:81 widened grep re-run over README.md + docs/architecture/*.md: 0 hits (exit 1). Remaining "all 31 fully-tabled classes" hits (rules-engine.md:208, receipts.md:432) are past-tense history, not headcount claims. |
+| B2 F4c desktop remainders | CLOSED | Present in status.md Known gaps (3 rows), README Known limitations, desktop-app.md §Character flow, release-notes Named remainder (:278-283), FS-24/25/26. Figures re-derived: `CLASS_SKILLS` keys 12 (awk over skillsModel.ts); census-f5 `roster_reason=offered` 59, and all 16 ids named in the three rows (5 HP-Unknown, 6 caster, 5 martial) are in it; `classRoster.test.ts:87` pins the 5 HP-Unknown ids; `MARTIAL_WEAPON_CLASSES` at characterProgression.ts:62, `CASTER_CLASSES` at :240; `casterLevel` at CharacterSheet.tsx:3986, `—` at :4295; `maxHitPoints` at :4022 and CreateCharacterForm.tsx:371; `classWeaponProficiency` at :4052; the Skills panel prints the named list at CharacterSheet.tsx:619/:652. |
+| B3 broken `docs-truth/class-census.md` path | CLOSED | `grep -rn docs-truth/class-census` over docs/ and README.md: only this file. epic-breakdown.md:107, decisions.md:293, technical-design.md:186, progress.md:43 cite `artifacts/epic-f/census-f0.json`, which exists (ids 135, computed 42, generated 2026-09-21) and was added in 258301b9bf (`git log --diff-filter=A`). |
+| B4 release-notes "uncommitted" D1 claims | CLOSED | release-notes.md:165-192 says "Landed" in 4369b61a1d (ancestor of HEAD; `git show --stat`: 15 files, +4,239/-2,576; getting-started.md 343 lines, glossary.md 275 lines at that commit); the C2-time text is quoted in the past tense. Follow-up #2 names 909942637d and 45ef7e2327, both real commits. No present-tense "uncommitted/untracked/do not edit" claim remains. |
+
+Gates re-run: `python3 scripts/gen_class_status_table.py --check --json .../census-f5.json` exit 0
+(ids=137 computed=63 prestige_swept=74 mix_panel_computed=185 of 185). ui-smoke spec.json 76 rows,
+including the F4.4 rows f4c §6 had carried forward (samurai, kineticist, arcane-archer + accept).
+
+New-claims scan of the round-1 amendments: no new blocker. Polish (open, not merge-blocking):
+
+- P1 (#25, carried) forward-scope-register.md FS-13 row body "808"/FS-14 "203 of 7,119" predate the
+  6,252 figure the closure summary above the table states.
+- P2 (#26, carried) status.md:202 cites `census-merge-readiness.json` for roster 59; cite
+  census-f5.json like the rest (values equal).
+- P3 FS-26's "the engine's proficiency reader already answers the weapon tier for all 63
+  non-prestige census classes" names no command or artifact; reader-remainder.md's figure is
+  "3 of 95" (an earlier denominator). Cite the current run of
+  `every_census_class_has_a_known_proficiency_answer` with its denominator.
+- P4 f4c-receipt §6 "List screens do not subscribe to the catalog" (LoadCharacterScreen,
+  CampaignSheet, EditCampaignScreen show an id-derived class label until the catalog first loads)
+  is in no closure doc. It is a label, not a sheet value; name it in status.md Desktop gaps or FS.
+- (#28, carried) release-notes.md lacks `check_release_manifest.py`'s required sections; fix
+  before publish.
