@@ -381,10 +381,22 @@ is named (`_defects/natural-attack-helper-carries-more.json`; 0 rows at F3c5) an
 unresolved. A gate that names a helper (`PREABILITY:1,CATEGORY=Internal,Bite`) stays a `MissingRule`
 term: a fact is not holdable (6 rows).
 
+A selection pool the oracle fills (SD-36 F4pre, FS-21): the two tokens that hand out picks among a
+category's objects convert as a choice on the pick itself (`sheet_rule/pool_link.rs::link_pool_choices`,
+one rule, no member edge) -- `BONUS:ABILITYPOOL|<C>|<n>` into a child ability category with a `TYPE:`
+filter offers `Rules { pool: <parent>, tags: <TYPE tags> }` (`Shaman ~ Spirit`, `acg_abilities_class.lst:1386`;
+1,686 picks), and `BONUS:DOMAIN|NUMBER|<n>` offers `Domains` (the cleric's `ClericDomainCount`,
+`cr_classes.lst:55`; 47 lines). The held set holds an option recorded under a choice the character holds
+when the choice's option set selects it (`sheet_rule::offer_selects`) and its own gate includes; the
+option is the member record itself, which carries its own grants, so a Battle shaman holds Enemies' Bane
+from 8th and an Air cleric Electricity Resistance from 6th (`tests/sd36_f4pre_pool_choices.rs`).
+
 A character's legacy Path-A pick (SD-36 F3c4): `choice:<pool> -> <ns>:<member>` is linked to the
 converted option it names by one rule, `sheet_rule::link_path_a_picks` -- the record whose slug is
 `<pool>_<member>` and which carries the pool as its own tag, and the option granting it that a choice
-the character is offered (`chooser_offered`) grants. `CharacterFacts::with_linked_picks` records the
+the character is offered (`chooser_offered`) grants; failing that (SD-36 F4pre), the rule named
+`<member>` or `<pool>_<member>` that a choice the character holds offers (`domain:air` under the
+cleric's domain count, `Shaman Spirit ~ Battle` under `Shaman ~ Spirit`). `CharacterFacts::with_linked_picks` records the
 link for the sheet (`with_sheet_rules`), the feat-prerequisite facts and the desktop's feat options;
 `sheet_rule_package::linked_picks` gives the pilot compute the same links, each marked with whether the
 held set holds the option. The class-skill union reads the character's picks

@@ -880,6 +880,39 @@ class StructuralDiffGateTest(unittest.TestCase):
         self.assertEqual(code, 1, out)
         self.assertIn("samurai_proficiencies: applies", out)
 
+    def test_f4pre_offer_pins_gate_a_withdrawn_offer_and_an_unpinned_one(self):
+        """SD-36 F4pre: `f4pre_offer_kind` accepts exactly the pick's own choice; with the owner
+        carrying an offer, a pinned offer on a rule the tree lacks gates, and an offer nobody
+        pinned gates as an ordinary field delta."""
+        pick = {"id": "x:class_feature:p", "value": {"Number": {"Const": 1}}, "target": {"Pool": "fx"},
+                "offers": {"id": "x:class_feature:p", "count": {"Const": 1}, "from": {"Rules": {"pool": "special_ability", "tags": ["Fx"], "requires": "Always"}}}}
+        self.assertEqual(structural_diff.f4pre_offer_kind(pick), "ability_pool")
+        self.assertIsNone(structural_diff.f4pre_offer_kind({**pick, "offers": {**pick["offers"], "count": {"Const": 2}}}))
+        self.assertIsNone(structural_diff.f4pre_offer_kind({**pick, "offers": {**pick["offers"], "id": "x:class_feature:q"}}))
+        self.assertIsNone(structural_diff.f4pre_offer_kind({**pick, "offers": {**pick["offers"], "from": "Domains"}}))
+        dom = {"id": "x:class:c#bonus1", "value": {"Number": {"Var": "v1"}}, "target": {"Other": "domains"},
+               "offers": {"id": "x:class:c#bonus1", "count": {"Var": "v1"}, "from": "Domains"}}
+        self.assertEqual(structural_diff.f4pre_offer_kind(dom), "domain_count")
+        self.assertIsNone(structural_diff.f4pre_offer_kind({**dom, "target": {"Pool": "fx"}}))
+        owner = structural_diff.F4PRE["owner"]
+        self.assertEqual(owner, "core_rulebook:class:cleric#bonus1")
+        own = {"id": owner, "label": "domains", "value": {"Number": {"Var": "v1"}}, "target": {"Other": "domains"}, "granted_by": [], "grants": []}
+        base = base_rules()
+        fresh = base_rules()
+        base["core_rulebook/class/cleric.json"] = [dict(own)]
+        fresh["core_rulebook/class/cleric.json"] = [{**own, "offers": {"id": owner, "count": {"Var": "v1"}, "from": "Domains"}}]
+        code, out = self.run_diff(base, fresh)
+        self.assertEqual(code, 1, out)
+        self.assertIn("F4pre pinned offer on a missing rule: ", out)
+        # An unpinned offer is an ordinary field delta.
+        base = base_rules()
+        fresh = base_rules()
+        rel = "ultimate_combat/class_feature/samurai_proficiencies.json"
+        fresh[rel][0]["offers"] = {"id": fresh[rel][0]["id"], "count": {"Const": 1}, "from": "Domains"}
+        code, out = self.run_diff(base, fresh)
+        self.assertEqual(code, 1, out)
+        self.assertIn("samurai_proficiencies: offers", out)
+
     def test_report_only_flag_keeps_exit_zero(self):
         base = base_rules()
         fresh = base_rules()

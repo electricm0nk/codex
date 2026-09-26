@@ -104,10 +104,11 @@ pub fn linked_picks(
         .filter(|c| c.choice_set_id.starts_with("choice:"))
         .map(|c| (c.choice_set_id.clone(), id_slug(&c.selection_id)))
         .collect();
-    // Cheap pre-check: a pick can link only when its `<pool>_<member>` record exists.
+    // Cheap pre-check: a pick can link only when a rule named `<pool>_<member>` or `<member>`
+    // exists (`link_path_a_picks`).
     if !picks.iter().any(|(set, member)| {
         let pool = set.strip_prefix("choice:").unwrap_or(set);
-        !package.find_all("class_feature", &format!("{pool}_{member}")).is_empty()
+        !package.find_in_every_kind(&format!("{pool}_{member}")).is_empty() || !package.find_in_every_kind(member).is_empty()
     }) {
         return Vec::new();
     }

@@ -945,6 +945,81 @@ def f3c5_check(fresh_rules: dict[str, dict], base_rules: dict[str, dict], added_
     return found, failures
 
 
+# SD-36 Epic F4pre (converter step, FS-21): a selection pool the oracle fills becomes a converted
+# choice (`sheet_rule/pool_link.rs::link_pool_choices`): an `offers` field ADDED to a
+# `BONUS:ABILITYPOOL` pick (`target: Pool`) over its category's members, or to a
+# `BONUS:DOMAIN|NUMBER` line (`target: Other "domains"`) over the domains -- exactly the pick's own
+# id and count (`f4pre_offer_kind`). Pinned by `f4pre_delta_pins.py` into
+# `structural_diff_f4pre_deltas.json` by sha256 of the offer. `f4pre_apply` runs FIRST on the fresh
+# tree: a pinned offer whose sha256 holds and whose shape is the rule is removed (so the diff below
+# sees the pre-F4pre rule); a pinned offer that moved or was withdrawn fails; an UNPINNED offer is
+# left in place and surfaces as an ordinary field delta, which gates.
+_F4PRE_DELTAS_PATH = os.path.join(os.path.dirname(os.path.abspath(__file__)), "structural_diff_f4pre_deltas.json")
+F4PRE_CLASS_CAUSE = "F4pre: a selection pool the oracle fills (BONUS:ABILITYPOOL into a TYPE-filtered child category; BONUS:DOMAIN|NUMBER) offers the pick's own count over the category's members / the domains"
+
+
+def f4pre_offer_kind(rule: dict) -> str | None:
+    """`"ability_pool"` / `"domain_count"` when `rule["offers"]` is exactly the F4pre choice for this
+    rule (its own id, its own value as the count, the option set its target names); else None."""
+    offer = rule.get("offers")
+    value = rule.get("value")
+    target = rule.get("target")
+    if not isinstance(offer, dict) or set(offer) != {"id", "count", "from"} or offer["id"] != rule.get("id"):
+        return None
+    if not isinstance(value, dict) or set(value) != {"Number"} or offer["count"] != value["Number"]:
+        return None
+    frm = offer["from"]
+    if isinstance(target, dict) and set(target) == {"Pool"}:
+        if isinstance(frm, dict) and set(frm) == {"Rules"} and isinstance(frm["Rules"], dict) and frm["Rules"].get("requires") == "Always" and isinstance(frm["Rules"].get("pool"), str) and isinstance(frm["Rules"].get("tags"), list) and frm["Rules"]["tags"]:
+            return "ability_pool"
+        return None
+    if target == {"Other": "domains"} and frm == "Domains":
+        return "domain_count"
+    return None
+
+
+def _load_f4pre() -> dict:
+    try:
+        with open(_F4PRE_DELTAS_PATH, "r", encoding="utf-8") as fh:
+            data = json.load(fh)
+    except (OSError, json.JSONDecodeError):
+        return {"offers": {}, "owner": ""}
+    block = data.get("offers", {})
+    assert len(block.get("pins", [])) == block.get("_count", 0), f"{_F4PRE_DELTAS_PATH}: offers _count mismatch -- regenerate with _command"
+    offers: dict[str, tuple[str, str]] = {}
+    for rid, sha, kind in block.get("pins", []):
+        assert rid not in offers, f"{_F4PRE_DELTAS_PATH}: {rid} pinned twice"
+        offers[rid] = (sha, kind)
+    return {"offers": offers, "owner": data.get("owner", "")}
+
+
+F4PRE = _load_f4pre()
+
+
+def f4pre_apply(fresh_rules: dict[str, dict]) -> tuple[Counter, list[str]]:
+    """Remove every PINNED F4pre offer from the fresh tree, in place (module comment above).
+    Inactive -- no failures -- when the fresh package's owner rule carries no offer (a package that
+    predates F4pre)."""
+    found: Counter = Counter()
+    failures: list[str] = []
+    if not F4PRE["owner"] or not isinstance(fresh_rules.get(F4PRE["owner"], {}).get("offers"), dict):
+        return found, failures
+    for rid, (sha, kind) in F4PRE["offers"].items():
+        rule = fresh_rules.get(rid)
+        if rule is None:
+            failures.append(f"F4pre pinned offer on a missing rule: {rid}")
+            continue
+        if f3b2_field_sha(rule.get("offers")) != sha:
+            failures.append(f"F4pre pinned offer withdrawn or moved: {rid}")
+            continue
+        if f4pre_offer_kind(rule) != kind:
+            failures.append(f"F4pre {rid}: the offer is not the {kind} choice")
+            continue
+        del rule["offers"]
+        found[kind] += 1
+    return found, failures
+
+
 def _F3C5_DEFECT_FILES() -> set[str]:
     return set(F3C5["defect_rows"])
 
@@ -1426,6 +1501,8 @@ def main() -> int:
     # SD-36 F3p: undo every pinned option gate first (see `f3p_apply`); everything below compares
     # the normalized fresh tree.
     f3p_found, f3p_failures = f3p_apply(fresh_rules, fresh["other_files"])
+    # SD-36 F4pre: remove every pinned offer (see `f4pre_apply`) before the diff.
+    f4pre_found, f4pre_failures = f4pre_apply(fresh_rules)
     base_ids = set(base_rules)
     fresh_ids = set(fresh_rules)
     added_rule_ids_raw = sorted(fresh_ids - base_ids)
@@ -1612,6 +1689,10 @@ def main() -> int:
         f"{f3p_found.get('var_tables', 0)} of {len(F3P['var_tables'])} pinned _vars/ tables, {f3p_found.get('option_terms', 0)} of "
         f"{F3P['option_terms'].get('_total', 0)} option terms undone before the diff -- {F3P_CLASS_CAUSE} (see structural_diff_f3p_deltas.json)"
     )
+    print(
+        f"  F4pre f4pre_offer: {sum(f4pre_found.values())} of {len(F4PRE['offers'])} pinned offers removed before the diff "
+        f"({dict(sorted(f4pre_found.items()))}) -- {F4PRE_CLASS_CAUSE} (see structural_diff_f4pre_deltas.json)"
+    )
     print(f"  F3c5 pinned NaturalAttack grants: {len(F3C5['required_added_grants'])}; pinned added _vars/ tables: {len(F3C5['added_var_tables'])}; pinned _defects/ row counts: {F3C5['defect_rows']}")
     if added_rule_ids:
         unnamed = [r for r in added_rule_ids if r not in KNOWN_ADDED_RULE_CAUSES and r not in F3C3["added_rules"] and r not in F3C4B["added_rules"] and r not in F3C5["added_rules"]]
@@ -1687,6 +1768,10 @@ def main() -> int:
         for line in f3p_failures[: args.max_examples]:
             print(f"  {line}")
         failures.append(f"F3p pin failures: {len(f3p_failures)}")
+    if f4pre_failures:
+        for line in f4pre_failures[: args.max_examples]:
+            print(f"  {line}")
+        failures.append(f"F4pre pin failures: {len(f4pre_failures)}")
     for key, old_v, new_v in moved_counts:
         failures.append(f"{key} moved: {old_v} -> {new_v}")
 

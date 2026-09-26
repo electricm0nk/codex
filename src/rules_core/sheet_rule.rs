@@ -1183,6 +1183,13 @@ impl SheetRulePackage {
         self.by_kind_slug.get(kind).and_then(|m| m.get(slug)).map_or(&[], Vec::as_slice)
     }
 
+    /// The rule with this slug in every kind that carries it (SD-36 F4pre), one per kind: the
+    /// [`SheetRulePackage::find`] printing (`core_rulebook`, else the first book id), never one
+    /// per printing -- a domain three books print (Scalykind) is one option.
+    pub fn find_in_every_kind(&self, slug: &str) -> Vec<&RuleId> {
+        self.by_kind_slug.keys().filter_map(|kind| self.find(kind, slug)).collect()
+    }
+
     /// Every principal rule (no `#` sibling suffix) of `kind`, plus each one's siblings.
     pub fn rules_of_kind<'a>(&'a self, kind: &'a str) -> impl Iterator<Item = &'a SheetRule> + 'a {
         self.rules.values().filter(move |r| split_rule_id(&r.id).1 == kind)
@@ -2283,6 +2290,30 @@ pub fn held_set(package: &SheetRulePackage, seed: &HeldSeed, facts: &CharacterFa
                 additions.push((id, e));
             }
         }
+        // SD-36 F4pre (FS-21): an option recorded under a choice the character holds is held
+        // when the choice's option set selects it (`offer_selects`) and its own gate includes --
+        // the pick PCGen applies (`BONUS:ABILITYPOOL`, `BONUS:DOMAIN|NUMBER`,
+        // `pool_link::link_pool_choices`). Choices whose members carry `Granter::Choice` edges
+        // (D8, F3c3, F3c4b) are held through those edges above; this reads the option set.
+        for (choice_id, picks) in &facts.choices {
+            let Some(chooser) = package.rule(choice_id) else { continue };
+            let Some(offer) = chooser.offers.as_ref().filter(|o| &o.id == choice_id) else { continue };
+            if !matches!(offer.from, OptionSet::Rules { .. } | OptionSet::Domains) || !held.holds(choice_id) {
+                continue;
+            }
+            let via = held.rules.get(choice_id).cloned().unwrap_or_default();
+            for (option, _) in picks {
+                if held.rules.contains_key(option) || additions.iter().any(|(a, _)| a == option) {
+                    continue;
+                }
+                let Some(rule) = package.rule(option) else { continue };
+                let ctx = EvalContext { holder_class: via.holder_class.clone(), spell_level: via.spell_level.unwrap_or(0), item_tags: Vec::new() };
+                let self_ev = Evaluator::new(package, &held, facts, ctx).evaluating(option);
+                if offer_selects(offer, rule) && self_ev.applies(&offer_requires(offer)).includes() && self_ev.applies(&rule.applies).includes() {
+                    additions.push((option.clone(), HeldRule { via: Some(choice_id.clone()), ..via.clone() }));
+                }
+            }
+        }
         for (id, e) in additions {
             add(&mut held, &id, e);
         }
@@ -2311,6 +2342,32 @@ pub fn held_set(package: &SheetRulePackage, seed: &HeldSeed, facts: &CharacterFa
         }
     }
     held
+}
+
+/// SD-36 F4pre: whether `offer`'s option set names `rule` as one of its options -- a principal
+/// rule (no `#` sibling) of the offered pool carrying every offered tag (`Rules`, the PCGen
+/// ability-category member test, `TYPE` matched without case), or a domain (`Domains`). The
+/// set's own `requires` gate is read separately ([`offer_requires`]).
+pub fn offer_selects(offer: &Choice, rule: &SheetRule) -> bool {
+    if rule.id.contains('#') {
+        return false;
+    }
+    match &offer.from {
+        OptionSet::Rules { pool, tags, .. } => {
+            &rule.pool == pool && tags.iter().all(|t| rule.tags.iter().any(|o| o.eq_ignore_ascii_case(t)))
+        }
+        OptionSet::Domains => split_rule_id(&rule.id).1 == "domain",
+        _ => false,
+    }
+}
+
+/// The condition an offered option must meet besides membership (`OptionSet::Rules.requires`;
+/// `Always` for every other set).
+pub fn offer_requires(offer: &Choice) -> Applies {
+    match &offer.from {
+        OptionSet::Rules { requires, .. } => requires.clone(),
+        _ => Applies::Always,
+    }
 }
 
 /// SD-36 F3c4: a Path-A pick recorded in the legacy `choice:<pool>` id space
@@ -2368,6 +2425,29 @@ pub fn link_path_a_picks(package: &SheetRulePackage, held: &HeldSet, facts: &Cha
                             && chooser_offered(package, held, facts, chooser)
                         {
                             found.insert((chooser.clone(), option_id.clone()));
+                        }
+                    }
+                }
+            }
+            // SD-36 F4pre: no pick-row option answers, so the pick names the option itself --
+            // a rule whose slug is `<member>` or `<pool>_<member>` (the oracle's
+            // `<Category> ~ <Member>` key) that a choice the character holds offers
+            // ([`offer_selects`]): `domain:air` under the cleric's domain count,
+            // `Shaman Spirit ~ Battle` under `Shaman ~ Spirit`'s pool pick.
+            if found.is_empty() {
+                let offered: Vec<&SheetRule> = held
+                    .rules
+                    .keys()
+                    .filter_map(|id| package.rule(id))
+                    .filter(|r| r.offers.as_ref().is_some_and(|o| o.id == r.id && matches!(o.from, OptionSet::Rules { .. } | OptionSet::Domains)))
+                    .collect();
+                for candidate_slug in [member.clone(), record_slug.clone()] {
+                    for option_id in package.find_in_every_kind(&candidate_slug) {
+                        let Some(option) = package.rule(option_id) else { continue };
+                        for chooser in &offered {
+                            if chooser.offers.as_ref().is_some_and(|o| offer_selects(o, option)) {
+                                found.insert((chooser.id.clone(), option_id.clone()));
+                            }
                         }
                     }
                 }
