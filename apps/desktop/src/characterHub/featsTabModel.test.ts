@@ -189,6 +189,26 @@ function verifiesTheFoldIsWholeStringEqualityNotAPrefixMatch() {
   );
 }
 
+/**
+ * SD-36 F4d, found by the live ui-smoke row level-up-fighter6-into-arcane-archer-accept: the
+ * served catalog carries 145 Mythic Adventures records whose `key` is their base feat's key
+ * (`Alertness (Mythic)` has key `Alertness`, `src/rules_core/rules_tables/feat_gap_tables.rs`).
+ * A character that picked CRB Alertness holds `"Alertness"`, and the Feats tab printed it as
+ * Alertness (Mythic) with the mythic text, because the join kept the LAST record per identity.
+ * The engine's key lookup is first-match over the catalog order (gap rows are chained after the
+ * hand-authored book tables for exactly that reason, `feat_gap_tables::feat_gap_rows_for`), so
+ * the sheet names the record the engine resolves: the first one.
+ */
+function verifiesASharedKeyResolvesToTheFirstCatalogRecordLikeTheEngine() {
+  const catalog: ItemPickerEntry[] = [
+    { key: 'Alertness', name: 'Alertness', detail: 'CRB · General · You often notice things that others might miss.' },
+    { key: 'Alertness', name: 'Alertness (Mythic)', detail: "Mythic · Mythic · Your powers of perception surpass everyone's." },
+  ];
+  const [picked, seeded] = resolveSelectedFeatEntries(['Alertness', 'feat:alertness'], catalog);
+  assertEqual(picked.entry?.name, 'Alertness', 'the picked key resolves to the first (CRB) record, not the later Mythic one');
+  assertEqual(seeded.entry?.name, 'Alertness', 'the engine token form resolves to the same first record');
+}
+
 function main() {
   verifiesCatalogKeyFormatResolvesDirectly();
   verifiesEngineTokenFormatResolvesToSameCatalogEntry();
@@ -206,6 +226,7 @@ function main() {
   verifiesMergingANewChooserFeatAddsAnEntry();
   verifiesTheFoldMatchesTheEngineIdentityShapes();
   verifiesTheFoldIsWholeStringEqualityNotAPrefixMatch();
+  verifiesASharedKeyResolvesToTheFirstCatalogRecordLikeTheEngine();
   console.log('featsTabModel.test.ts: all assertions passed');
 }
 

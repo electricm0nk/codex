@@ -1,0 +1,30 @@
+[
+  {
+    "id": "create-character-render",
+    "status": "green",
+    "screenshot": "/home/ubuntu/workspace/worktrees/codex-epic-f4/docs/release/SD-36-consolidation/artifacts/ui-smoke/f4/regression/create-character-render.png",
+    "rendered_excerpt": "⚙\nCreate a character\nBack\nCharacter name\n\nPlayer name\n\nRace\n\nClass\n\nBarbarian is fully computed at every level offered here.\n\nBarbarian 1: BAB +1 · Fort +2 · Ref +0 · Will +0\n\nLevel\n\nHP\n15\nAlignment\n\nDeity\n\nPhysical Attributes\nSize\nMedium\nSex\n\nVision\nDarkvision 60 ft.\nHeight\n4'1\"\n🎲\nWeight\n192 lb\n🎲\nAge\n\nEyes\n\nHair\n\nRacial Traits\n+2 Constitution, +2 Wisdom, -2 Charisma · Racial trait (CRB)\nDwarves",
+    "reason": null
+  },
+  {
+    "id": "create-character-fill-and-submit",
+    "status": "green",
+    "screenshot": "/home/ubuntu/workspace/worktrees/codex-epic-f4/docs/release/SD-36-consolidation/artifacts/ui-smoke/f4/regression/create-character-fill-and-submit.png",
+    "rendered_excerpt": "⚙\nCreate a character\nBack\nCharacter name\n\nPlayer name\n\nRace\n\nClass\n\nWizard is fully computed at every level offered here.\n\nWizard 1: BAB +0 · Fort +0 · Ref +0 · Will +2\n\nLevel\n\nHP\n7\nAlignment\n\nDeity\n\nPhysical Attributes\nSize\nMedium\nSex\n\nVision\nLow-light vision\nHeight\n5'8\"\n🎲\nWeight\n115 lb\n🎲\nAge\n\nEyes\n\nHair\n\nRacial Traits\n+2 Dexterity, +2 Intelligence, -2 Constitution · Racial trait (CRB)\nElves ar",
+    "reason": null
+  },
+  {
+    "id": "create-character-back",
+    "status": "green",
+    "screenshot": "/home/ubuntu/workspace/worktrees/codex-epic-f4/docs/release/SD-36-consolidation/artifacts/ui-smoke/f4/regression/create-character-back.png",
+    "rendered_excerpt": "⚙\n\nP1\nPathfinder 1e\nFantasy d20\n\nSA\nSolarus Arcanum\nComing soon\n\nTM\nTraveller MGT 2e\nComing soon\n\nCR\nCyberpunk Red\nComing soon\n\nS1\nStarfinder 1e\nComing soon\n\nWOD\nWorld of Darkness\nComing soon\n\nNEW CHARACTER\n\nLOAD CHARACTER\n\nCAMPAIGN MANAGER\nChoose a local Drive-synced folder under ⚙ Settings → Google Drive to enable the Campaign Manager.\n\nDM TOOLKIT\nBrowse Equipment Catalog\nBrowse Spell Catalog\nBr",
+    "reason": null
+  },
+  {
+    "id": "sheet-action-level-up-dialog",
+    "status": "green",
+    "screenshot": "/home/ubuntu/workspace/worktrees/codex-epic-f4/docs/release/SD-36-consolidation/artifacts/ui-smoke/f4/regression/sheet-action-level-up-dialog.png",
+    "rendered_excerpt": "⚙\n☰ Menu\n✕\nSmoke Test PC — Wizard 1\nPROGRESSION\n«\n\nLevel\n1\n+\nCaster Level\n1\nRACE\nElf\nCLASS\nWizard 1\nLevel 1 Wizard\nSkill points: 3\nFeat\nNEXT\nLevel 2 Wizard\nSkill points: 3\nCharacter Name\nSmoke Test PC\nCampaign\n—\nABILITIES\n\nSTR\n16\n+3\nDEX\n16\n+3\nCON\n12\n+1\nINT\n12\n+1\nWIS\n12\n+1\nCHA\n8\n-1\nINITIATIVE\n+3\nHIT POINTS\n7 / 7\nARMOR CLASS\n\nAC\n17\nTOUCH\n13\nFLAT-FOOTED\n14\nATTACK\n\nBAB\n+0\nMELEE\n+0\nCMB\n+3\nCMD\n16\nSAVING",
+    "reason": null
+  }
+]

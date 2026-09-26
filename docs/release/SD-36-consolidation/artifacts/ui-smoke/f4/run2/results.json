@@ -1,0 +1,51 @@
+[
+  {
+    "id": "create-character-samurai",
+    "status": "green",
+    "screenshot": "/home/ubuntu/workspace/worktrees/codex-epic-f4/docs/release/SD-36-consolidation/artifacts/ui-smoke/f4/create-character-samurai.png",
+    "rendered_excerpt": "⚙\n☰ Menu\n✕\nF4 Smoke Alpha — Samurai 1\nPROGRESSION\n«\n\nLevel\n1\n+\nCaster Level\n—\nRACE\nHuman\nCLASS\nSamurai 1\nLevel 1 Samurai\nSkill points: 5\nFeat\nNEXT\nLevel 2 Samurai\nSkill points: 5\nCharacter Name\nF4 Smoke Alpha\nCampaign\n—\nABILITIES\n\nSTR\n18\n+4\nDEX\n14\n+2\nCON\n14\n+2\nINT\n10\n+0\nWIS\n12\n+1\nCHA\n8\n-1\nINITIATIVE\n+2\nHIT POINTS\n12 / 12\nARMOR CLASS\n\nAC\n17\nTOUCH\n13\nFLAT-FOOTED\n14\nATTACK\n\nBAB\n+1\nMELEE\n+6\nCMB\n+5\nCMD",
+    "reason": null
+  },
+  {
+    "id": "create-character-magus",
+    "status": "green",
+    "screenshot": "/home/ubuntu/workspace/worktrees/codex-epic-f4/docs/release/SD-36-consolidation/artifacts/ui-smoke/f4/create-character-magus.png",
+    "rendered_excerpt": "⚙\n☰ Menu\n✕\nF4 Smoke Bravo — Magus 1\nPROGRESSION\n«\n\nLevel\n1\n+\nCaster Level\n—\nRACE\nHuman\nCLASS\nMagus 1\nLevel 1 Magus\nSkill points: 3\nFeat\nNEXT\nLevel 2 Magus\nSkill points: 3\nCharacter Name\nF4 Smoke Bravo\nCampaign\n—\nABILITIES\n\nSTR\n18\n+4\nDEX\n14\n+2\nCON\n14\n+2\nINT\n10\n+0\nWIS\n12\n+1\nCHA\n8\n-1\nINITIATIVE\n+2\nHIT POINTS\n10 / 10\nARMOR CLASS\n\nAC\n17\nTOUCH\n13\nFLAT-FOOTED\n14\nATTACK\n\nBAB\n+0\nMELEE\n+5\nCMB\n+4\nCMD\n16\nSAVI",
+    "reason": null
+  },
+  {
+    "id": "create-character-warrior",
+    "status": "green",
+    "screenshot": "/home/ubuntu/workspace/worktrees/codex-epic-f4/docs/release/SD-36-consolidation/artifacts/ui-smoke/f4/create-character-warrior.png",
+    "rendered_excerpt": "⚙\n☰ Menu\n✕\nF4 Smoke Charlie — Warrior 1\nPROGRESSION\n«\n\nLevel\n1\n+\nCaster Level\n—\nRACE\nHuman\nCLASS\nWarrior 1\nLevel 1 Warrior\nSkill points: 3\nFeat\nNEXT\nLevel 2 Warrior\nSkill points: 3\nCharacter Name\nF4 Smoke Charlie\nCampaign\n—\nABILITIES\n\nSTR\n18\n+4\nDEX\n14\n+2\nCON\n14\n+2\nINT\n10\n+0\nWIS\n12\n+1\nCHA\n8\n-1\nINITIATIVE\n+2\nHIT POINTS\n12 / 12\nARMOR CLASS\n\nAC\n17\nTOUCH\n13\nFLAT-FOOTED\n14\nATTACK\n\nBAB\n+1\nMELEE\n+6\nCMB\n+5",
+    "reason": null
+  },
+  {
+    "id": "create-character-kineticist",
+    "status": "red",
+    "screenshot": null,
+    "rendered_excerpt": null,
+    "reason": "target not found: 'Load (no element named 'Load')'"
+  },
+  {
+    "id": "create-character-inquisitor-generic",
+    "status": "green",
+    "screenshot": "/home/ubuntu/workspace/worktrees/codex-epic-f4/docs/release/SD-36-consolidation/artifacts/ui-smoke/f4/create-character-inquisitor-generic.png",
+    "rendered_excerpt": "⚙\n☰ Menu\n✕\nF4 Smoke Echo — Inquisitor 1\nPROGRESSION\n«\n\nLevel\n1\n+\nCaster Level\n—\nRACE\nHuman\nCLASS\nInquisitor 1\nLevel 1 Inquisitor\nSkill points: 7\nFeat\nNEXT\nLevel 2 Inquisitor\nSkill points: 7\nCharacter Name\nF4 Smoke Echo\nCampaign\n—\nABILITIES\n\nSTR\n18\n+4\nDEX\n14\n+2\nCON\n14\n+2\nINT\n10\n+0\nWIS\n12\n+1\nCHA\n8\n-1\nINITIATIVE\n+2\nHIT POINTS\n10 / 10\nARMOR CLASS\n\nAC\n17\nTOUCH\n13\nFLAT-FOOTED\n14\nATTACK\n\nBAB\n+0\nMELEE\n+1\n",
+    "reason": null
+  },
+  {
+    "id": "level-up-fighter6-into-arcane-archer",
+    "status": "green",
+    "screenshot": "/home/ubuntu/workspace/worktrees/codex-epic-f4/docs/release/SD-36-consolidation/artifacts/ui-smoke/f4/level-up-fighter6-into-arcane-archer.png",
+    "rendered_excerpt": "⚙\n☰ Menu\n✕\nF4 Smoke Foxtrot — Fighter 6\nPROGRESSION\n«\n\nLevel\n6\n+\nCaster Level\n—\nRACE\nHuman\nCLASS\nFighter 6\nLevel 1 Fighter\nSkill points: 3\nFeat\nLevel 2 Fighter\nSkill points: 3\nLevel 3 Fighter\nSkill points: 3\nFeat\nLevel 4 Fighter\nSkill points: 3\nAbility score increase\nLevel 5 Fighter\nSkill points: 3\nFeat\nLevel 6 Fighter\nSkill points: 3\nNEXT\nLevel 7 Fighter\nSkill points: 3\nFeat\nCharacter Name\nF4 Smo",
+    "reason": null
+  },
+  {
+    "id": "level-up-fighter6-into-arcane-archer-accept",
+    "status": "red",
+    "screenshot": "/home/ubuntu/workspace/worktrees/codex-epic-f4/docs/release/SD-36-consolidation/artifacts/ui-smoke/f4/level-up-fighter6-into-arcane-archer-accept.FAILED.png",
+    "rendered_excerpt": "⚙\n☰ Menu\n✕\nF4 Smoke Golf — Fighter 6 / Arcane Archer 1\nPROGRESSION\n«\n\nLevel\n7\n+\nCaster Level\n—\nRACE\nHuman\nCLASS\nFighter 6 / Arcane Archer 1\nLevel 1 Fighter\nSkill points: 3\nFeat\nLevel 2 Fighter\nSkill points: 3\nLevel 3 Fighter\nSkill points: 3\nFeat\nLevel 4 Fighter\nSkill points: 3\nAbility score increase\nLevel 5 Fighter\nSkill points: 3\nFeat\nLevel 6 Fighter\nSkill points: 3\nLevel 1 Arcane Archer\nSkill po",
+    "reason": "expected string missing: 'You often notice things that others might miss.'"
+  }
+]

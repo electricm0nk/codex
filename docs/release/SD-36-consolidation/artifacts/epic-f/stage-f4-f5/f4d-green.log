@@ -1,0 +1,4 @@
+# f4d GREEN
+rowSelection.test.mjs: all assertions passed
+commandChannel.test.mjs: all assertions passed
+featsTabModel.test.ts: all assertions passed

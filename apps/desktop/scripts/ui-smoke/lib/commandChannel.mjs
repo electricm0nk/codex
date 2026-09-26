@@ -53,3 +53,53 @@ export function sendCommand(cmdPath, probePath, command, { timeoutMs = 5000, pol
     sleepMs(pollIntervalMs);
   }
 }
+
+/**
+ * Polls `probePath` for the acknowledgement of command `id` until `deadline` (epoch ms).
+ * Returns the acknowledgement, or `null` if none arrived in time.
+ */
+function awaitAck(probePath, id, deadline, pollIntervalMs = 100) {
+  for (;;) {
+    const snapshot = readProbeFile(probePath);
+    if (snapshot?.lastCommand?.id === id) {
+      return snapshot.lastCommand;
+    }
+    if (Date.now() >= deadline) {
+      return null;
+    }
+    sleepMs(pollIntervalMs);
+  }
+}
+
+/**
+ * Sends `command` and retries until the frontend answers `ok`, or `deadlineMs` runs out.
+ *
+ * Two different "not yet" answers, handled differently:
+ *  - the frontend ANSWERED `ok: false` (the target is not on screen yet — a screen the
+ *    previous step navigated to can mount its content a beat later): re-send after
+ *    `retryDelayMs`;
+ *  - NO answer within `ackTimeoutMs`: the command may already be running (the webview
+ *    drains the channel between `invoke()` round trips, and a heavy screen can hold it for
+ *    seconds). Keep waiting for THAT command's answer; never send it again. A re-send of a
+ *    click that already ran acts twice, or — the SD-36 F4d case — targets a control the
+ *    first click already navigated away from: `click Load` opened the Kineticist sheet
+ *    after its 2s ack window, and every re-send answered "no element named 'Load'" for the
+ *    whole budget while the sheet was on screen.
+ */
+export function sendUntilOk(cmdPath, probePath, command, { ackTimeoutMs = 2000, deadlineMs = 150000, retryDelayMs = 150 } = {}) {
+  const deadline = Date.now() + deadlineMs;
+  let result;
+  for (;;) {
+    result = sendCommand(cmdPath, probePath, command, { timeoutMs: ackTimeoutMs });
+    if (!result.ok && /^no probe report acknowledged/.test(result.error ?? '')) {
+      const late = awaitAck(probePath, result.id, deadline);
+      if (late) {
+        result = late;
+      }
+    }
+    if (result.ok || Date.now() >= deadline) {
+      return result;
+    }
+    sleepMs(retryDelayMs);
+  }
+}

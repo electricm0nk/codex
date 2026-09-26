@@ -107,9 +107,16 @@ export function resolveSelectedFeatEntries(
   catalog: ItemPickerEntry[],
   chosenFeatTargets: ChosenFeatTargetsDto[] = []
 ): ResolvedFeatEntry[] {
+  // First record per identity wins, as in the engine's own first-match key lookup over the same
+  // catalog order: 145 Mythic Adventures records reuse their base feat's key (`Alertness
+  // (Mythic)` has key `Alertness`), and a later record must not rename the feat the character
+  // holds.
   const byIdentity = new Map<string, ItemPickerEntry>();
   for (const entry of catalog) {
-    byIdentity.set(normalizeFeatIdentity(entry.key), entry);
+    const identity = normalizeFeatIdentity(entry.key);
+    if (!byIdentity.has(identity)) {
+      byIdentity.set(identity, entry);
+    }
   }
   // Joined on the same identity fold as the catalog, because the backend
   // reports `featId` verbatim from `selectedFeats` -- so it arrives in

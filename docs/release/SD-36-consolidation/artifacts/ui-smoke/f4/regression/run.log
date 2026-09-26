@@ -1,0 +1,9 @@
+Reusing live app for agent 'sd36-f4d'.
+PASS  create-character-render
+PASS  create-character-fill-and-submit
+PASS  create-character-back
+PASS  sheet-action-level-up-dialog
+
+4/4 green, 0 red, 0 blocked, 0 manual, 0 not-run (M = 4 rows)
+Evidence: /home/ubuntu/workspace/worktrees/codex-epic-f4/docs/release/SD-36-consolidation/artifacts/ui-smoke/f4/regression
+EXIT=0
