@@ -32,7 +32,8 @@ export function SkillAllocationDialog(props: {
   heldClasses: HeldClass[];
   characterLevel: number;
   abilities: AbilityScoresDto;
-  totalPoints: number;
+  /** `null` when a held class states no skill ranks per level: nothing can be allocated. */
+  totalPoints: number | null;
   allocation: Record<string, number>;
   onAccept: (allocation: Record<string, number>) => void;
 }) {
@@ -60,7 +61,9 @@ export function SkillAllocationDialog(props: {
     const ranks = draft[skill.name] ?? 0;
     return sum + ranks * skillRankCost(isClassSkill(props.heldClasses, skill.name));
   }, 0);
-  const remaining = props.totalPoints - spent;
+  const remaining = props.totalPoints === null ? null : props.totalPoints - spent;
+  /** Spendable budget for the +/- controls; an Unknown total allows no spend. */
+  const budget = remaining ?? 0;
 
   function adjustRank(skillName: string, classSkill: boolean, delta: 1 | -1) {
     setDraft((prev) => {
@@ -73,7 +76,7 @@ export function SkillAllocationDialog(props: {
       if (delta === 1) {
         const cost = skillRankCost(classSkill);
         const currentSpent = SKILLS.reduce((sum, skill) => sum + (prev[skill.name] ?? 0) * skillRankCost(isClassSkill(props.heldClasses, skill.name)), 0);
-        if (currentSpent + cost > props.totalPoints) {
+        if (props.totalPoints === null || currentSpent + cost > props.totalPoints) {
           return prev;
         }
       }
@@ -147,16 +150,16 @@ export function SkillAllocationDialog(props: {
                   type="button"
                   aria-label={`Increase ${skill.name}`}
                   onClick={() => adjustRank(skill.name, classSkill, 1)}
-                  disabled={ranks >= max || remaining < skillRankCost(classSkill)}
+                  disabled={ranks >= max || budget < skillRankCost(classSkill)}
                   style={{
                     background: 'var(--color-accent)',
                     border: '1px solid var(--color-border)',
                     borderRadius: 6,
                     color: 'var(--color-on-accent)',
-                    cursor: ranks < max && remaining >= skillRankCost(classSkill) ? 'pointer' : 'not-allowed',
+                    cursor: ranks < max && budget >= skillRankCost(classSkill) ? 'pointer' : 'not-allowed',
                     fontWeight: 800,
                     height: 22,
-                    opacity: ranks < max && remaining >= skillRankCost(classSkill) ? 1 : 0.5,
+                    opacity: ranks < max && budget >= skillRankCost(classSkill) ? 1 : 0.5,
                     width: 22,
                   }}
                 >
@@ -171,9 +174,15 @@ export function SkillAllocationDialog(props: {
         </div>
 
         <footer style={{ alignItems: 'center', borderTop: '1px solid var(--color-border)', display: 'flex', justifyContent: 'space-between', padding: '0.85rem 1.5rem' }}>
-          <span style={{ color: remaining >= 0 ? 'var(--color-accent)' : 'var(--color-error)', fontWeight: 700 }}>
-            {remaining} of {props.totalPoints} points remaining
-          </span>
+          {remaining === null ? (
+            <span style={{ color: 'var(--color-warn)', fontWeight: 700 }}>
+              Skill points Unknown: a held class states no skill ranks per level
+            </span>
+          ) : (
+            <span style={{ color: remaining >= 0 ? 'var(--color-accent)' : 'var(--color-error)', fontWeight: 700 }}>
+              {remaining} of {props.totalPoints} points remaining
+            </span>
+          )}
           <div style={{ display: 'flex', gap: '0.6rem' }}>
             <button
               type="button"

@@ -1,4 +1,4 @@
-import { CLASS_OPTIONS } from './characterHubModel';
+import { knownClass } from './classCatalog';
 import type { SpellCatalogEntryDto } from '../boundary/loadSpellCatalog';
 import type { ClassSpellLevelsDto } from '../boundary/loadClassSpellLevels';
 import type { SpellSelectionDto } from '../boundary/loadSavedCharacterDetail';
@@ -234,13 +234,14 @@ export function resolveSelectedSpellEntries(
 }
 
 /**
- * Human-readable label for a `class:foo` id, via the same `CLASS_OPTIONS`
- * table the rest of the hub uses, falling back to a title-cased derivation
+ * Human-readable label for a `class:foo` id, via the served class roster (`classCatalog.ts`:
+ * every census class, offered or withheld, so a prestige class taken at level-up reads its own
+ * label), falling back to a title-cased derivation
  * of the id itself (mirroring `characterProgression.ts`'s `parseOneClass`)
  * rather than showing the raw token or inventing a name.
  */
 function describeSourceClass(classId: string): string {
-  const option = CLASS_OPTIONS.find((entry) => entry.id === classId);
+  const option = knownClass(classId);
   if (option) {
     return option.label;
   }

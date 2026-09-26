@@ -1,0 +1,20 @@
+# SD-36 F4c verification
+
+## cargo clippy --locked --tests -j 8 --manifest-path apps/desktop/src-tauri/Cargo.toml -- -D warnings
+CLIPPY_EXIT=0
+
+## cargo test --locked -j 8 --no-fail-fast --manifest-path apps/desktop/src-tauri/Cargo.toml -- --test-threads=8 (wire artifacts compared, not rewritten)
+test character_hub::tests::list_class_creation_roster_offers_exactly_the_census_roster has been running for over 60 seconds
+test character_hub::tests::list_class_roster_wire_carries_hit_die_and_skill_ranks_for_every_census_class has been running for over 60 seconds
+test character_hub::tests::list_level_up_class_options_advances_a_held_prestige_class_to_its_own_max_and_keeps_the_cap has been running for over 60 seconds
+test class_feature_descriptions::tests::list_class_feature_descriptions_returns_the_cached_table ... ok
+test class_feature_feat_bridge::tests::list_class_feature_feat_bridge_descriptions_returns_the_cached_table ... ok
+test class_feature_pool_picker::tests::list_class_feature_pool_options_returns_real_rogue_talents ... ok
+test class_feature_pool_picker::tests::list_class_feature_pool_options_returns_the_cached_table ... ok
+test character_hub::tests::list_level_up_class_options_advances_a_held_prestige_class_to_its_own_max_and_keeps_the_cap ... ok
+test character_hub::tests::list_level_up_class_options_offers_prestige_with_printed_requirements has been running for over 60 seconds
+test character_hub::tests::list_class_roster_wire_carries_hit_die_and_skill_ranks_for_every_census_class ... ok
+test character_hub::tests::list_level_up_class_options_offers_prestige_with_printed_requirements ... ok
+test character_hub::tests::list_class_creation_roster_offers_exactly_the_census_roster ... ok
+test result: ok. 621 passed; 0 failed; 0 ignored; 0 measured; 0 filtered out; finished in 456.40s
+EXIT=0

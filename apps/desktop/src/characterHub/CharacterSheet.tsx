@@ -114,7 +114,17 @@ import { loadRaceRosterSurface } from './raceRoster';
 import { PortraitUpload } from './PortraitUpload';
 import { LevelUpDialog } from './LevelUpDialog';
 import { SkillAllocationDialog } from './SkillAllocationDialog';
-import { DEFAULT_SKILL_ALLOCATION, SKILLS, isClassSkill, skillIdFor, skillModifier, skillRankCost, totalSkillPointsAvailable } from './skillsModel';
+import {
+  DEFAULT_SKILL_ALLOCATION,
+  SKILLS,
+  heldClassesWithoutClassSkillList,
+  isClassSkill,
+  skillIdFor,
+  skillModifier,
+  skillRankCost,
+  totalSkillPointsAvailable,
+} from './skillsModel';
+import { ensureClassRosterLoaded, useClassCatalog } from './classRoster';
 import { setSkillAllocations } from '../boundary/setSkillAllocations';
 import { loadCharacterBio, updateCharacterBio } from '../boundary/characterBio';
 import { adjustCharacterMoney, gpToCopper, loadCharacterMoney, type CharacterMoneyDto } from '../boundary/characterMoney';
@@ -229,7 +239,7 @@ const EQUIPMODS_CATEGORY = 'Equipmods';
  */
 const GEAR_CATEGORIES = ['General', 'MagicItems'] as const;
 
-/** Matches `characterHubModel.ts`'s `CLASS_OPTIONS` id for Wizard. */
+/** The class id `list_class_creation_roster` serves for Wizard (`class:wizard`). */
 const WIZARD_CLASS_ID = 'class:wizard';
 
 export interface ItemPickerConfig {
@@ -377,7 +387,7 @@ function RacialTraitCard(props: { row: RacialTraitRow }) {
   );
 }
 
-function LevelBenefitCard(props: { benefit: LevelEntry; skillPoints: number; variant: 'current' | 'next' }) {
+function LevelBenefitCard(props: { benefit: LevelEntry; skillPoints: number | null; variant: 'current' | 'next' }) {
   const { benefit, variant } = props;
   return (
     <div
@@ -392,7 +402,7 @@ function LevelBenefitCard(props: { benefit: LevelEntry; skillPoints: number; var
         Level {benefit.classLevel} {benefit.classLabel}
       </p>
       <p style={{ color: 'var(--color-text-muted)', fontSize: '0.72rem', margin: '0.15rem 0 0.25rem' }}>
-        Skill points: {props.skillPoints}
+        Skill points: {props.skillPoints === null ? 'Unknown' : props.skillPoints}
       </p>
       <ul style={{ margin: 0, paddingLeft: '1.1rem' }}>
         {benefit.features.map((feature) => (
@@ -511,12 +521,16 @@ function SavingThrowsPanel(props: { saves: { fortitude: number; reflex: number; 
   );
 }
 
-function InitiativeHpPanel(props: { initiative: number; hp: number }) {
+/**
+ * `hp` is `null` when a held class's hit die is not known to the engine's hit-point fold (no
+ * chassis record, or the class roster is still loading): Unknown, never a guessed total.
+ */
+function InitiativeHpPanel(props: { initiative: number; hp: number | null }) {
   return (
     <StatBox>
       <div style={{ display: 'flex', gap: '0.5rem' }}>
         <StatTile label="Initiative" value={fmt(props.initiative)} />
-        <StatTile label="Hit Points" value={`${props.hp} / ${props.hp}`} />
+        <StatTile label="Hit Points" value={props.hp === null ? 'Unknown' : `${props.hp} / ${props.hp}`} />
       </div>
     </StatBox>
   );
@@ -598,7 +612,11 @@ function SkillsPanel(props: {
     (sum, skill) => sum + (props.allocation[skill.name] ?? 0) * skillRankCost(isClassSkill(props.heldClasses, skill.name)),
     0
   );
-  const remaining = totalSkillPointsAvailable(props.heldClasses, props.abilities.intelligence, props.isHuman) - spent;
+  const available = totalSkillPointsAvailable(props.heldClasses, props.abilities.intelligence, props.isHuman);
+  const remaining = available === null ? null : available - spent;
+  // SD-36 F4c: a held class with no class-skill list here is named, not silently scored as
+  // all-cross-class.
+  const withoutClassSkills = heldClassesWithoutClassSkillList(props.heldClasses);
 
   return (
     <StatBox title="Skills">
@@ -608,8 +626,8 @@ function SkillsPanel(props: {
         title="Manage skill allocation"
         style={{
           alignItems: 'center',
-          backgroundColor: remaining > 0 ? 'var(--color-surface-2)' : 'transparent',
-          border: `1px solid ${remaining > 0 ? 'var(--color-accent)' : 'var(--color-border)'}`,
+          backgroundColor: remaining !== null && remaining > 0 ? 'var(--color-surface-2)' : 'transparent',
+          border: `1px solid ${remaining !== null && remaining > 0 ? 'var(--color-accent)' : 'var(--color-border)'}`,
           borderRadius: 6,
           cursor: 'pointer',
           display: 'flex',
@@ -621,12 +639,20 @@ function SkillsPanel(props: {
         }}
       >
         <span style={{ color: 'var(--color-text-secondary)' }}>Manage skill allocation</span>
-        {remaining > 0 ? (
+        {remaining === null ? (
+          <span style={{ color: 'var(--color-warn)' }}>skill points Unknown</span>
+        ) : remaining > 0 ? (
           <span style={{ color: 'var(--color-accent)', fontWeight: 800 }}>{remaining} unallocated</span>
         ) : (
           <span style={{ color: 'var(--color-text-muted)' }}>fully allocated</span>
         )}
       </button>
+      {withoutClassSkills.length > 0 ? (
+        <p role="note" style={{ color: 'var(--color-warn)', fontSize: '0.72rem', margin: '0 0 0.4rem' }}>
+          Class skills not known for {withoutClassSkills.join(', ')}: no class-skill bonus is applied for
+          {withoutClassSkills.length === 1 ? ' it' : ' them'}.
+        </p>
+      ) : null}
       <div style={{ display: 'flex', flexDirection: 'column', gap: '0.15rem' }}>
         {SKILLS.map((skill) => {
           const classSkill = isClassSkill(props.heldClasses, skill.name);
@@ -2844,6 +2870,12 @@ export function CharacterSheet(props: {
   /** Top-menu "Clone": called after a successful clone so the parent can refresh its saved-character list; the sheet stays open on the original (un-cloned) character. */
   onCloned: () => void;
 }) {
+  // SD-36 F4c: class labels, hit dice and skill ranks read the engine's served class roster;
+  // re-render when it (or the announced fallback) is installed.
+  useClassCatalog();
+  useEffect(() => {
+    void ensureClassRosterLoaded();
+  }, []);
   const [tab, setTab] = useState<Tab>('Weapons');
   const [menuOpen, setMenuOpen] = useState(false);
   const [leftCollapsed, setLeftCollapsed] = useState(false);

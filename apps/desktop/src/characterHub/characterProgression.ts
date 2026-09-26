@@ -1,4 +1,4 @@
-import { CLASS_OPTIONS } from './characterHubModel';
+import { knownClass } from './classCatalog';
 
 /**
  * Pathfinder 1e level progression: per-class skill points and class features,
@@ -7,36 +7,14 @@ import { CLASS_OPTIONS } from './characterHubModel';
  * current level granted and what the next level of each held class offers.
  */
 
-/** Base skill ranks per level for each class, before the Intelligence modifier. */
-const CLASS_SKILL_POINTS: Record<string, number> = {
-  'class:arcanist': 3,
-  'class:barbarian': 4,
-  'class:bard': 6,
-  'class:cleric': 2,
-  'class:druid': 4,
-  'class:fighter': 2,
-  'class:monk': 4,
-  'class:paladin': 2,
-  'class:ranger': 6,
-  'class:rogue': 8,
-  'class:sorcerer': 2,
-  'class:wizard': 2,
-  /*
-   * Pathfinder Unchained (SD-27, 2026-07-31). Each is its base class's
-   * value, and that is a corpus fact rather than a copy: none of the four
-   * `data/corpus/pathfinder_unchained/class/*.json` records carries a
-   * `STARTSKILLPTS` token, i.e. the selection ability overrides no skill
-   * ranks per level, so the base `CLASS:` record's own value stands.
-   *
-   * `class:unchained_summoner` is deliberately absent: the APG Summoner it
-   * replaces is itself absent from this table and falls through to the
-   * default of 2, which is its correct value. Adding one and not the other
-   * would make the pair disagree for no reason.
-   */
-  'class:unchained_barbarian': 4,
-  'class:unchained_monk': 4,
-  'class:unchained_rogue': 8,
-};
+/*
+ * SD-36 F4c: skill ranks per level, hit dice and class labels are read off the class catalog
+ * (`classCatalog.ts`), which holds the engine's served roster: every census class's converted
+ * `Skill ranks per level` and `Hit die` rows. The per-class skill-points table that lived here
+ * was wrong for 33 of the 59 roster classes (Arcanist 3 against the record's 2; every class it
+ * did not list silently defaulted to 2) and is gone. A class the catalog does not know states
+ * nothing: its figures are `null` and the sheet prints Unknown.
+ */
 
 /*
  * Two hand-authored rules tables used to live here and are deliberately
@@ -106,8 +84,8 @@ export interface LevelEntry {
   classLabel: string;
   /** Which level of this class this entry represents (drives class features & spells). */
   classLevel: number;
-  /** Base skill ranks for this class before the Intelligence modifier. */
-  skillPointsBase: number;
+  /** Base skill ranks for this class before the Intelligence modifier; `null` when not stated. */
+  skillPointsBase: number | null;
   /**
    * The universal PF1 benefits this *character* level grants — a feat at
    * every odd level, an ability score increase every 4th. Both are general
@@ -121,8 +99,9 @@ export interface LevelEntry {
   features: string[];
 }
 
-export function classSkillPointsBase(classId: string): number {
-  return CLASS_SKILL_POINTS[classId] ?? 2;
+/** The class's skill ranks per level, off the served roster; `null` when not known. */
+export function classSkillPointsBase(classId: string): number | null {
+  return knownClass(classId)?.skillRanksPerLevel ?? null;
 }
 
 /**
@@ -178,8 +157,7 @@ export function buildNextEntries(heldClasses: HeldClass[]): LevelEntry[] {
 export function previewLevelUp(heldClasses: HeldClass[], classId: string): LevelEntry {
   const totalLevel = heldClasses.reduce((sum, held) => sum + held.level, 0);
   const held = heldClasses.find((entry) => entry.classId === classId);
-  const option = CLASS_OPTIONS.find((entry) => entry.id === classId);
-  const classLabel = held?.classLabel ?? option?.label ?? 'Adventurer';
+  const classLabel = held?.classLabel ?? knownClass(classId)?.label ?? 'Adventurer';
   return makeLevelEntry(classId, classLabel, (held?.level ?? 0) + 1, totalLevel + 1);
 }
 
@@ -218,7 +196,7 @@ function parseOneClass(segment: string): HeldClass {
   const parts = segment.split(':');
   const level = Number(parts[parts.length - 1]) || 1;
   const classId = parts.slice(0, -1).join(':');
-  const option = CLASS_OPTIONS.find((entry) => entry.id === classId);
+  const option = knownClass(classId);
   const derivedLabel = parts
     .slice(1, -1)
     .join(' ')
@@ -275,20 +253,27 @@ export function casterLevel(classSummary: string): number {
     .reduce((sum, held) => sum + held.level, 0);
 }
 
-export function classHitDie(classId: string): number {
-  return CLASS_OPTIONS.find((option) => option.id === classId)?.hitDie ?? 8;
+/** The class's hit die, off the served roster; `null` when not known (never an assumed d8). */
+export function classHitDie(classId: string): number | null {
+  return knownClass(classId)?.hitDie ?? null;
 }
 
 /**
  * PF1 max HP: the very first character level takes the maximum hit die; every
  * level after takes the class hit die's average (half + 1). The constitution
  * modifier applies at every level. Floored at 1.
+ *
+ * `null` when any held class's hit die is not known (the roster is still loading, or the class
+ * states none): the sheet then prints Unknown rather than a total built on a guessed die.
  */
-export function maxHitPoints(heldClasses: HeldClass[], constitutionModifier: number): number {
+export function maxHitPoints(heldClasses: HeldClass[], constitutionModifier: number): number | null {
   let hitPoints = 0;
   let isFirstLevel = true;
   for (const held of heldClasses) {
     const hitDie = classHitDie(held.classId);
+    if (hitDie === null) {
+      return null;
+    }
     for (let levelIndex = 0; levelIndex < held.level; levelIndex += 1) {
       hitPoints += isFirstLevel ? hitDie : Math.floor(hitDie / 2) + 1;
       hitPoints += constitutionModifier;
@@ -298,7 +283,13 @@ export function maxHitPoints(heldClasses: HeldClass[], constitutionModifier: num
   return Math.max(1, hitPoints);
 }
 
-/** Total skill ranks per level for this character: base + Int modifier (+1 for humans), floored at 1. */
-export function totalSkillPoints(base: number, intelligenceModifier: number, isHuman: boolean): number {
+/**
+ * Total skill ranks per level for this character: base + Int modifier (+1 for humans), floored
+ * at 1. `null` when the class's base is not known.
+ */
+export function totalSkillPoints(base: number | null, intelligenceModifier: number, isHuman: boolean): number | null {
+  if (base === null) {
+    return null;
+  }
   return Math.max(1, base + intelligenceModifier + (isHuman ? 1 : 0));
 }

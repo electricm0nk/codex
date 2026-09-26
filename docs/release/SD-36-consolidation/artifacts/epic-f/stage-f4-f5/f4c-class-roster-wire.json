@@ -1,0 +1,1280 @@
+{
+  "classes": [
+    {
+      "book": "core_rulebook",
+      "classId": "class:barbarian",
+      "family": "crb",
+      "familyLabel": "CRB",
+      "hitDie": 12,
+      "hitPointsDie": 12,
+      "label": "Barbarian",
+      "maxLevel": 20,
+      "skillRanksPerLevel": 4
+    },
+    {
+      "book": "core_rulebook",
+      "classId": "class:bard",
+      "family": "crb",
+      "familyLabel": "CRB",
+      "hitDie": 8,
+      "hitPointsDie": 8,
+      "label": "Bard",
+      "maxLevel": 20,
+      "skillRanksPerLevel": 6
+    },
+    {
+      "book": "core_rulebook",
+      "classId": "class:cleric",
+      "family": "crb",
+      "familyLabel": "CRB",
+      "hitDie": 8,
+      "hitPointsDie": 8,
+      "label": "Cleric",
+      "maxLevel": 20,
+      "skillRanksPerLevel": 2
+    },
+    {
+      "book": "core_rulebook",
+      "classId": "class:druid",
+      "family": "crb",
+      "familyLabel": "CRB",
+      "hitDie": 8,
+      "hitPointsDie": 8,
+      "label": "Druid",
+      "maxLevel": 20,
+      "skillRanksPerLevel": 4
+    },
+    {
+      "book": "core_rulebook",
+      "classId": "class:fighter",
+      "family": "crb",
+      "familyLabel": "CRB",
+      "hitDie": 10,
+      "hitPointsDie": 10,
+      "label": "Fighter",
+      "maxLevel": 20,
+      "skillRanksPerLevel": 2
+    },
+    {
+      "book": "core_rulebook",
+      "classId": "class:monk",
+      "family": "crb",
+      "familyLabel": "CRB",
+      "hitDie": 10,
+      "hitPointsDie": null,
+      "label": "Monk",
+      "maxLevel": 20,
+      "skillRanksPerLevel": 4
+    },
+    {
+      "book": "core_rulebook",
+      "classId": "class:paladin",
+      "family": "crb",
+      "familyLabel": "CRB",
+      "hitDie": 10,
+      "hitPointsDie": 10,
+      "label": "Paladin",
+      "maxLevel": 20,
+      "skillRanksPerLevel": 2
+    },
+    {
+      "book": "core_rulebook",
+      "classId": "class:ranger",
+      "family": "crb",
+      "familyLabel": "CRB",
+      "hitDie": 10,
+      "hitPointsDie": 10,
+      "label": "Ranger",
+      "maxLevel": 20,
+      "skillRanksPerLevel": 6
+    },
+    {
+      "book": "core_rulebook",
+      "classId": "class:rogue",
+      "family": "crb",
+      "familyLabel": "CRB",
+      "hitDie": 8,
+      "hitPointsDie": 8,
+      "label": "Rogue",
+      "maxLevel": 20,
+      "skillRanksPerLevel": 8
+    },
+    {
+      "book": "core_rulebook",
+      "classId": "class:sorcerer",
+      "family": "crb",
+      "familyLabel": "CRB",
+      "hitDie": 6,
+      "hitPointsDie": 6,
+      "label": "Sorcerer",
+      "maxLevel": 20,
+      "skillRanksPerLevel": 2
+    },
+    {
+      "book": "core_rulebook",
+      "classId": "class:wizard",
+      "family": "crb",
+      "familyLabel": "CRB",
+      "hitDie": 6,
+      "hitPointsDie": 6,
+      "label": "Wizard",
+      "maxLevel": 20,
+      "skillRanksPerLevel": 2
+    },
+    {
+      "book": "advanced_players_guide",
+      "classId": "class:alchemist",
+      "family": "apg",
+      "familyLabel": "APG",
+      "hitDie": 8,
+      "hitPointsDie": 8,
+      "label": "Alchemist",
+      "maxLevel": 20,
+      "skillRanksPerLevel": 4
+    },
+    {
+      "book": "advanced_players_guide",
+      "classId": "class:cavalier",
+      "family": "apg",
+      "familyLabel": "APG",
+      "hitDie": 10,
+      "hitPointsDie": 10,
+      "label": "Cavalier",
+      "maxLevel": 20,
+      "skillRanksPerLevel": 4
+    },
+    {
+      "book": "advanced_players_guide",
+      "classId": "class:inquisitor",
+      "family": "apg",
+      "familyLabel": "APG",
+      "hitDie": 8,
+      "hitPointsDie": 8,
+      "label": "Inquisitor",
+      "maxLevel": 20,
+      "skillRanksPerLevel": 6
+    },
+    {
+      "book": "advanced_players_guide",
+      "classId": "class:oracle",
+      "family": "apg",
+      "familyLabel": "APG",
+      "hitDie": 8,
+      "hitPointsDie": 8,
+      "label": "Oracle",
+      "maxLevel": 20,
+      "skillRanksPerLevel": 4
+    },
+    {
+      "book": "advanced_players_guide",
+      "classId": "class:summoner",
+      "family": "apg",
+      "familyLabel": "APG",
+      "hitDie": 8,
+      "hitPointsDie": 8,
+      "label": "Summoner",
+      "maxLevel": 20,
+      "skillRanksPerLevel": 2
+    },
+    {
+      "book": "advanced_players_guide",
+      "classId": "class:witch",
+      "family": "apg",
+      "familyLabel": "APG",
+      "hitDie": 6,
+      "hitPointsDie": 6,
+      "label": "Witch",
+      "maxLevel": 20,
+      "skillRanksPerLevel": 2
+    },
+    {
+      "book": "advanced_class_guide",
+      "classId": "class:arcanist",
+      "family": "acg",
+      "familyLabel": "ACG",
+      "hitDie": 6,
+      "hitPointsDie": 6,
+      "label": "Arcanist",
+      "maxLevel": 20,
+      "skillRanksPerLevel": 2
+    },
+    {
+      "book": "advanced_class_guide",
+      "classId": "class:bloodrager",
+      "family": "acg",
+      "familyLabel": "ACG",
+      "hitDie": 10,
+      "hitPointsDie": 10,
+      "label": "Bloodrager",
+      "maxLevel": 20,
+      "skillRanksPerLevel": 4
+    },
+    {
+      "book": "advanced_class_guide",
+      "classId": "class:brawler",
+      "family": "acg",
+      "familyLabel": "ACG",
+      "hitDie": 10,
+      "hitPointsDie": 10,
+      "label": "Brawler",
+      "maxLevel": 20,
+      "skillRanksPerLevel": 4
+    },
+    {
+      "book": "advanced_class_guide",
+      "classId": "class:hunter",
+      "family": "acg",
+      "familyLabel": "ACG",
+      "hitDie": 8,
+      "hitPointsDie": 8,
+      "label": "Hunter",
+      "maxLevel": 20,
+      "skillRanksPerLevel": 6
+    },
+    {
+      "book": "advanced_class_guide",
+      "classId": "class:investigator",
+      "family": "acg",
+      "familyLabel": "ACG",
+      "hitDie": 8,
+      "hitPointsDie": 8,
+      "label": "Investigator",
+      "maxLevel": 20,
+      "skillRanksPerLevel": 6
+    },
+    {
+      "book": "advanced_class_guide",
+      "classId": "class:shaman",
+      "family": "acg",
+      "familyLabel": "ACG",
+      "hitDie": 8,
+      "hitPointsDie": 8,
+      "label": "Shaman",
+      "maxLevel": 20,
+      "skillRanksPerLevel": 4
+    },
+    {
+      "book": "advanced_class_guide",
+      "classId": "class:skald",
+      "family": "acg",
+      "familyLabel": "ACG",
+      "hitDie": 8,
+      "hitPointsDie": 8,
+      "label": "Skald",
+      "maxLevel": 20,
+      "skillRanksPerLevel": 4
+    },
+    {
+      "book": "advanced_class_guide",
+      "classId": "class:slayer",
+      "family": "acg",
+      "familyLabel": "ACG",
+      "hitDie": 10,
+      "hitPointsDie": 10,
+      "label": "Slayer",
+      "maxLevel": 20,
+      "skillRanksPerLevel": 6
+    },
+    {
+      "book": "advanced_class_guide",
+      "classId": "class:swashbuckler",
+      "family": "acg",
+      "familyLabel": "ACG",
+      "hitDie": 10,
+      "hitPointsDie": 10,
+      "label": "Swashbuckler",
+      "maxLevel": 20,
+      "skillRanksPerLevel": 4
+    },
+    {
+      "book": "advanced_class_guide",
+      "classId": "class:warpriest",
+      "family": "acg",
+      "familyLabel": "ACG",
+      "hitDie": 8,
+      "hitPointsDie": 8,
+      "label": "Warpriest",
+      "maxLevel": 20,
+      "skillRanksPerLevel": 2
+    },
+    {
+      "book": "pathfinder_unchained",
+      "classId": "class:unchained_barbarian",
+      "family": "pathfinder_unchained",
+      "familyLabel": "Pathfinder Unchained",
+      "hitDie": 12,
+      "hitPointsDie": null,
+      "label": "Unchained Barbarian",
+      "maxLevel": 20,
+      "skillRanksPerLevel": 4
+    },
+    {
+      "book": "pathfinder_unchained",
+      "classId": "class:unchained_monk",
+      "family": "pathfinder_unchained",
+      "familyLabel": "Pathfinder Unchained",
+      "hitDie": 10,
+      "hitPointsDie": null,
+      "label": "Unchained Monk",
+      "maxLevel": 20,
+      "skillRanksPerLevel": 4
+    },
+    {
+      "book": "pathfinder_unchained",
+      "classId": "class:unchained_rogue",
+      "family": "pathfinder_unchained",
+      "familyLabel": "Pathfinder Unchained",
+      "hitDie": 8,
+      "hitPointsDie": null,
+      "label": "Unchained Rogue",
+      "maxLevel": 20,
+      "skillRanksPerLevel": 8
+    },
+    {
+      "book": "pathfinder_unchained",
+      "classId": "class:unchained_summoner",
+      "family": "pathfinder_unchained",
+      "familyLabel": "Pathfinder Unchained",
+      "hitDie": 8,
+      "hitPointsDie": null,
+      "label": "Unchained Summoner",
+      "maxLevel": 20,
+      "skillRanksPerLevel": 2
+    },
+    {
+      "book": "ultimate_combat",
+      "classId": "class:gunslinger",
+      "family": "ultimate_combat",
+      "familyLabel": "Ultimate Combat",
+      "hitDie": 10,
+      "hitPointsDie": 10,
+      "label": "Gunslinger",
+      "maxLevel": 20,
+      "skillRanksPerLevel": 4
+    },
+    {
+      "book": "ultimate_combat",
+      "classId": "class:ninja",
+      "family": "ultimate_combat",
+      "familyLabel": "Ultimate Combat",
+      "hitDie": 8,
+      "hitPointsDie": 8,
+      "label": "Ninja",
+      "maxLevel": 20,
+      "skillRanksPerLevel": 8
+    },
+    {
+      "book": "ultimate_combat",
+      "classId": "class:samurai",
+      "family": "ultimate_combat",
+      "familyLabel": "Ultimate Combat",
+      "hitDie": 10,
+      "hitPointsDie": 10,
+      "label": "Samurai",
+      "maxLevel": 20,
+      "skillRanksPerLevel": 4
+    },
+    {
+      "book": "ultimate_psionics",
+      "classId": "class:aegis",
+      "family": "untabled_exotic_base",
+      "familyLabel": "Untabled exotic base classes",
+      "hitDie": 10,
+      "hitPointsDie": 10,
+      "label": "Aegis",
+      "maxLevel": 20,
+      "skillRanksPerLevel": 4
+    },
+    {
+      "book": "advanced_players_guide",
+      "classId": "class:antipaladin",
+      "family": "untabled_exotic_base",
+      "familyLabel": "Untabled exotic base classes",
+      "hitDie": 10,
+      "hitPointsDie": 10,
+      "label": "Antipaladin",
+      "maxLevel": 20,
+      "skillRanksPerLevel": 2
+    },
+    {
+      "book": "ultimate_psionics",
+      "classId": "class:cryptic",
+      "family": "untabled_exotic_base",
+      "familyLabel": "Untabled exotic base classes",
+      "hitDie": 8,
+      "hitPointsDie": 8,
+      "label": "Cryptic",
+      "maxLevel": 20,
+      "skillRanksPerLevel": 4
+    },
+    {
+      "book": "ultimate_psionics",
+      "classId": "class:dread",
+      "family": "untabled_exotic_base",
+      "familyLabel": "Untabled exotic base classes",
+      "hitDie": 8,
+      "hitPointsDie": 8,
+      "label": "Dread",
+      "maxLevel": 20,
+      "skillRanksPerLevel": 6
+    },
+    {
+      "book": "occult_adventures",
+      "classId": "class:kineticist",
+      "family": "untabled_exotic_base",
+      "familyLabel": "Untabled exotic base classes",
+      "hitDie": 8,
+      "hitPointsDie": 8,
+      "label": "Kineticist",
+      "maxLevel": 20,
+      "skillRanksPerLevel": 4
+    },
+    {
+      "book": "ultimate_magic",
+      "classId": "class:magus",
+      "family": "untabled_exotic_base",
+      "familyLabel": "Untabled exotic base classes",
+      "hitDie": 8,
+      "hitPointsDie": 8,
+      "label": "Magus",
+      "maxLevel": 20,
+      "skillRanksPerLevel": 2
+    },
+    {
+      "book": "ultimate_psionics",
+      "classId": "class:marksman",
+      "family": "untabled_exotic_base",
+      "familyLabel": "Untabled exotic base classes",
+      "hitDie": 10,
+      "hitPointsDie": 10,
+      "label": "Marksman",
+      "maxLevel": 20,
+      "skillRanksPerLevel": 4
+    },
+    {
+      "book": "occult_adventures",
+      "classId": "class:medium",
+      "family": "untabled_exotic_base",
+      "familyLabel": "Untabled exotic base classes",
+      "hitDie": 8,
+      "hitPointsDie": 8,
+      "label": "Medium",
+      "maxLevel": 20,
+      "skillRanksPerLevel": 4
+    },
+    {
+      "book": "occult_adventures",
+      "classId": "class:mesmerist",
+      "family": "untabled_exotic_base",
+      "familyLabel": "Untabled exotic base classes",
+      "hitDie": 8,
+      "hitPointsDie": 8,
+      "label": "Mesmerist",
+      "maxLevel": 20,
+      "skillRanksPerLevel": 6
+    },
+    {
+      "book": "occult_adventures",
+      "classId": "class:occultist",
+      "family": "untabled_exotic_base",
+      "familyLabel": "Untabled exotic base classes",
+      "hitDie": 8,
+      "hitPointsDie": 8,
+      "label": "Occultist",
+      "maxLevel": 20,
+      "skillRanksPerLevel": 4
+    },
+    {
+      "book": "ultimate_psionics",
+      "classId": "class:psion",
+      "family": "untabled_exotic_base",
+      "familyLabel": "Untabled exotic base classes",
+      "hitDie": 6,
+      "hitPointsDie": 6,
+      "label": "Psion",
+      "maxLevel": 20,
+      "skillRanksPerLevel": 2
+    },
+    {
+      "book": "occult_adventures",
+      "classId": "class:psychic",
+      "family": "untabled_exotic_base",
+      "familyLabel": "Untabled exotic base classes",
+      "hitDie": 6,
+      "hitPointsDie": 6,
+      "label": "Psychic",
+      "maxLevel": 20,
+      "skillRanksPerLevel": 2
+    },
+    {
+      "book": "ultimate_psionics",
+      "classId": "class:psychic_warrior",
+      "family": "untabled_exotic_base",
+      "familyLabel": "Untabled exotic base classes",
+      "hitDie": 8,
+      "hitPointsDie": 8,
+      "label": "Psychic Warrior",
+      "maxLevel": 20,
+      "skillRanksPerLevel": 4
+    },
+    {
+      "book": "ultimate_wilderness",
+      "classId": "class:shifter",
+      "family": "untabled_exotic_base",
+      "familyLabel": "Untabled exotic base classes",
+      "hitDie": 10,
+      "hitPointsDie": 10,
+      "label": "Shifter",
+      "maxLevel": 20,
+      "skillRanksPerLevel": 4
+    },
+    {
+      "book": "ultimate_psionics",
+      "classId": "class:soulknife",
+      "family": "untabled_exotic_base",
+      "familyLabel": "Untabled exotic base classes",
+      "hitDie": 10,
+      "hitPointsDie": 10,
+      "label": "Soulknife",
+      "maxLevel": 20,
+      "skillRanksPerLevel": 4
+    },
+    {
+      "book": "occult_adventures",
+      "classId": "class:spiritualist",
+      "family": "untabled_exotic_base",
+      "familyLabel": "Untabled exotic base classes",
+      "hitDie": 8,
+      "hitPointsDie": 8,
+      "label": "Spiritualist",
+      "maxLevel": 20,
+      "skillRanksPerLevel": 4
+    },
+    {
+      "book": "ultimate_psionics",
+      "classId": "class:tactician",
+      "family": "untabled_exotic_base",
+      "familyLabel": "Untabled exotic base classes",
+      "hitDie": 8,
+      "hitPointsDie": 8,
+      "label": "Tactician",
+      "maxLevel": 20,
+      "skillRanksPerLevel": 4
+    },
+    {
+      "book": "ultimate_intrigue",
+      "classId": "class:vigilante",
+      "family": "untabled_exotic_base",
+      "familyLabel": "Untabled exotic base classes",
+      "hitDie": 8,
+      "hitPointsDie": 8,
+      "label": "Vigilante",
+      "maxLevel": 20,
+      "skillRanksPerLevel": 6
+    },
+    {
+      "book": "ultimate_psionics",
+      "classId": "class:vitalist",
+      "family": "untabled_exotic_base",
+      "familyLabel": "Untabled exotic base classes",
+      "hitDie": 6,
+      "hitPointsDie": 6,
+      "label": "Vitalist",
+      "maxLevel": 20,
+      "skillRanksPerLevel": 2
+    },
+    {
+      "book": "ultimate_psionics",
+      "classId": "class:wilder",
+      "family": "untabled_exotic_base",
+      "familyLabel": "Untabled exotic base classes",
+      "hitDie": 8,
+      "hitPointsDie": 8,
+      "label": "Wilder",
+      "maxLevel": 20,
+      "skillRanksPerLevel": 4
+    },
+    {
+      "book": "core_rulebook",
+      "classId": "class:adept",
+      "family": "crb_npc_ex",
+      "familyLabel": "CRB NPC / Ex-* classes",
+      "hitDie": 6,
+      "hitPointsDie": 6,
+      "label": "Adept",
+      "maxLevel": 20,
+      "skillRanksPerLevel": 2
+    },
+    {
+      "book": "core_rulebook",
+      "classId": "class:aristocrat",
+      "family": "crb_npc_ex",
+      "familyLabel": "CRB NPC / Ex-* classes",
+      "hitDie": 8,
+      "hitPointsDie": 8,
+      "label": "Aristocrat",
+      "maxLevel": 20,
+      "skillRanksPerLevel": 4
+    },
+    {
+      "book": "core_rulebook",
+      "classId": "class:commoner",
+      "family": "crb_npc_ex",
+      "familyLabel": "CRB NPC / Ex-* classes",
+      "hitDie": 6,
+      "hitPointsDie": 6,
+      "label": "Commoner",
+      "maxLevel": 20,
+      "skillRanksPerLevel": 2
+    },
+    {
+      "book": "core_rulebook",
+      "classId": "class:expert",
+      "family": "crb_npc_ex",
+      "familyLabel": "CRB NPC / Ex-* classes",
+      "hitDie": 8,
+      "hitPointsDie": 8,
+      "label": "Expert",
+      "maxLevel": 20,
+      "skillRanksPerLevel": 6
+    },
+    {
+      "book": "core_rulebook",
+      "classId": "class:warrior",
+      "family": "crb_npc_ex",
+      "familyLabel": "CRB NPC / Ex-* classes",
+      "hitDie": 10,
+      "hitPointsDie": 10,
+      "label": "Warrior",
+      "maxLevel": 20,
+      "skillRanksPerLevel": 2
+    }
+  ],
+  "diagnostics": [],
+  "withheld": [
+    {
+      "classId": "class:adaptive_warrior",
+      "hitDie": 10,
+      "hitPointsDie": 10,
+      "label": "Adaptive Warrior",
+      "reason": "prestige",
+      "skillRanksPerLevel": 2
+    },
+    {
+      "classId": "class:aldori_swordlord",
+      "hitDie": 10,
+      "hitPointsDie": 10,
+      "label": "Aldori Swordlord",
+      "reason": "prestige",
+      "skillRanksPerLevel": 2
+    },
+    {
+      "classId": "class:arcane_archer",
+      "hitDie": 10,
+      "hitPointsDie": 10,
+      "label": "Arcane Archer",
+      "reason": "prestige",
+      "skillRanksPerLevel": 4
+    },
+    {
+      "classId": "class:arcane_trickster",
+      "hitDie": 6,
+      "hitPointsDie": 6,
+      "label": "Arcane Trickster",
+      "reason": "prestige",
+      "skillRanksPerLevel": 4
+    },
+    {
+      "classId": "class:argent_dramaturge",
+      "hitDie": 6,
+      "hitPointsDie": 6,
+      "label": "Argent Dramaturge",
+      "reason": "prestige",
+      "skillRanksPerLevel": 4
+    },
+    {
+      "classId": "class:asavir",
+      "hitDie": 10,
+      "hitPointsDie": 10,
+      "label": "Asavir",
+      "reason": "prestige",
+      "skillRanksPerLevel": 4
+    },
+    {
+      "classId": "class:aspis_agent",
+      "hitDie": 8,
+      "hitPointsDie": 8,
+      "label": "Aspis Agent",
+      "reason": "prestige",
+      "skillRanksPerLevel": 4
+    },
+    {
+      "classId": "class:assassin",
+      "hitDie": 8,
+      "hitPointsDie": 8,
+      "label": "Assassin",
+      "reason": "prestige",
+      "skillRanksPerLevel": 4
+    },
+    {
+      "classId": "class:battle_herald",
+      "hitDie": 10,
+      "hitPointsDie": 10,
+      "label": "Battle Herald",
+      "reason": "prestige",
+      "skillRanksPerLevel": 4
+    },
+    {
+      "classId": "class:bellflower_tiller",
+      "hitDie": 8,
+      "hitPointsDie": 8,
+      "label": "Bellflower Tiller",
+      "reason": "prestige",
+      "skillRanksPerLevel": 6
+    },
+    {
+      "classId": "class:body_snatcher",
+      "hitDie": 6,
+      "hitPointsDie": 6,
+      "label": "Body Snatcher",
+      "reason": "prestige",
+      "skillRanksPerLevel": 2
+    },
+    {
+      "classId": "class:cerebremancer",
+      "hitDie": 6,
+      "hitPointsDie": 6,
+      "label": "Cerebremancer",
+      "reason": "prestige",
+      "skillRanksPerLevel": 2
+    },
+    {
+      "classId": "class:cyphermage",
+      "hitDie": 6,
+      "hitPointsDie": 6,
+      "label": "Cyphermage",
+      "reason": "prestige",
+      "skillRanksPerLevel": 4
+    },
+    {
+      "classId": "class:dark_tempest",
+      "hitDie": 10,
+      "hitPointsDie": 10,
+      "label": "Dark Tempest",
+      "reason": "prestige",
+      "skillRanksPerLevel": 2
+    },
+    {
+      "classId": "class:death_slayer",
+      "hitDie": 8,
+      "hitPointsDie": 8,
+      "label": "Death Slayer",
+      "reason": "prestige",
+      "skillRanksPerLevel": 4
+    },
+    {
+      "classId": "class:demoniac",
+      "hitDie": 8,
+      "hitPointsDie": 8,
+      "label": "Demoniac",
+      "reason": "prestige",
+      "skillRanksPerLevel": 2
+    },
+    {
+      "classId": "class:diabolist",
+      "hitDie": 6,
+      "hitPointsDie": 6,
+      "label": "Diabolist",
+      "reason": "prestige",
+      "skillRanksPerLevel": 2
+    },
+    {
+      "classId": "class:divine_scion",
+      "hitDie": 8,
+      "hitPointsDie": 8,
+      "label": "Divine Scion",
+      "reason": "prestige",
+      "skillRanksPerLevel": 2
+    },
+    {
+      "classId": "class:dragon_disciple",
+      "hitDie": 12,
+      "hitPointsDie": 12,
+      "label": "Dragon Disciple",
+      "reason": "prestige",
+      "skillRanksPerLevel": 2
+    },
+    {
+      "classId": "class:duelist",
+      "hitDie": 10,
+      "hitPointsDie": 10,
+      "label": "Duelist",
+      "reason": "prestige",
+      "skillRanksPerLevel": 4
+    },
+    {
+      "classId": "class:eldritch_knight",
+      "hitDie": 10,
+      "hitPointsDie": 10,
+      "label": "Eldritch Knight",
+      "reason": "prestige",
+      "skillRanksPerLevel": 2
+    },
+    {
+      "classId": "class:elocater",
+      "hitDie": 8,
+      "hitPointsDie": 8,
+      "label": "Elocater",
+      "reason": "prestige",
+      "skillRanksPerLevel": 6
+    },
+    {
+      "classId": "class:enchanting_courtesan",
+      "hitDie": 6,
+      "hitPointsDie": 6,
+      "label": "Enchanting Courtesan",
+      "reason": "prestige",
+      "skillRanksPerLevel": 6
+    },
+    {
+      "classId": "class:evangelist",
+      "hitDie": 8,
+      "hitPointsDie": 8,
+      "label": "Evangelist",
+      "reason": "prestige",
+      "skillRanksPerLevel": 6
+    },
+    {
+      "classId": "class:ex_antipaladin",
+      "hitDie": 10,
+      "hitPointsDie": 10,
+      "label": "Ex-Antipaladin",
+      "reason": "ex_state",
+      "skillRanksPerLevel": 2
+    },
+    {
+      "classId": "class:ex_barbarian",
+      "hitDie": 12,
+      "hitPointsDie": 12,
+      "label": "Ex-Barbarian",
+      "reason": "ex_state",
+      "skillRanksPerLevel": 4
+    },
+    {
+      "classId": "class:ex_inquisitor",
+      "hitDie": 8,
+      "hitPointsDie": 8,
+      "label": "Ex-Inquisitor",
+      "reason": "ex_state",
+      "skillRanksPerLevel": 6
+    },
+    {
+      "classId": "class:ex_paladin",
+      "hitDie": 10,
+      "hitPointsDie": 10,
+      "label": "Ex-Paladin",
+      "reason": "ex_state",
+      "skillRanksPerLevel": 2
+    },
+    {
+      "classId": "class:exalted",
+      "hitDie": 8,
+      "hitPointsDie": 8,
+      "label": "Exalted",
+      "reason": "prestige",
+      "skillRanksPerLevel": 2
+    },
+    {
+      "classId": "class:golden_legionnaire",
+      "hitDie": 10,
+      "hitPointsDie": 10,
+      "label": "Golden Legionnaire",
+      "reason": "prestige",
+      "skillRanksPerLevel": 2
+    },
+    {
+      "classId": "class:gray_corsair",
+      "hitDie": 8,
+      "hitPointsDie": 8,
+      "label": "Gray Corsair",
+      "reason": "prestige",
+      "skillRanksPerLevel": 4
+    },
+    {
+      "classId": "class:harrower",
+      "hitDie": 6,
+      "hitPointsDie": 6,
+      "label": "Harrower",
+      "reason": "prestige",
+      "skillRanksPerLevel": 2
+    },
+    {
+      "classId": "class:hellknight",
+      "hitDie": 10,
+      "hitPointsDie": 10,
+      "label": "Hellknight",
+      "reason": "prestige",
+      "skillRanksPerLevel": 2
+    },
+    {
+      "classId": "class:hellknight_signifer",
+      "hitDie": 8,
+      "hitPointsDie": 8,
+      "label": "Hellknight Signifer",
+      "reason": "prestige",
+      "skillRanksPerLevel": 2
+    },
+    {
+      "classId": "class:holy_vindicator",
+      "hitDie": 10,
+      "hitPointsDie": 10,
+      "label": "Holy Vindicator",
+      "reason": "prestige",
+      "skillRanksPerLevel": 2
+    },
+    {
+      "classId": "class:horizon_walker",
+      "hitDie": 10,
+      "hitPointsDie": 10,
+      "label": "Horizon Walker",
+      "reason": "prestige",
+      "skillRanksPerLevel": 6
+    },
+    {
+      "classId": "class:lantern_bearer",
+      "hitDie": 10,
+      "hitPointsDie": 10,
+      "label": "Lantern Bearer",
+      "reason": "prestige",
+      "skillRanksPerLevel": 4
+    },
+    {
+      "classId": "class:lion_blade",
+      "hitDie": 8,
+      "hitPointsDie": 8,
+      "label": "Lion Blade",
+      "reason": "prestige",
+      "skillRanksPerLevel": 6
+    },
+    {
+      "classId": "class:loremaster",
+      "hitDie": 6,
+      "hitPointsDie": 6,
+      "label": "Loremaster",
+      "reason": "prestige",
+      "skillRanksPerLevel": 4
+    },
+    {
+      "classId": "class:low_templar",
+      "hitDie": 10,
+      "hitPointsDie": 10,
+      "label": "Low Templar",
+      "reason": "prestige",
+      "skillRanksPerLevel": 2
+    },
+    {
+      "classId": "class:magaambyan_arcanist",
+      "hitDie": 6,
+      "hitPointsDie": 6,
+      "label": "Magaambyan Arcanist",
+      "reason": "prestige",
+      "skillRanksPerLevel": 2
+    },
+    {
+      "classId": "class:mammoth_rider",
+      "hitDie": 12,
+      "hitPointsDie": 12,
+      "label": "Mammoth Rider",
+      "reason": "prestige",
+      "skillRanksPerLevel": 4
+    },
+    {
+      "classId": "class:master_chymist",
+      "hitDie": 10,
+      "hitPointsDie": 10,
+      "label": "Master Chymist",
+      "reason": "prestige",
+      "skillRanksPerLevel": 2
+    },
+    {
+      "classId": "class:master_spy",
+      "hitDie": 8,
+      "hitPointsDie": 8,
+      "label": "Master Spy",
+      "reason": "prestige",
+      "skillRanksPerLevel": 6
+    },
+    {
+      "classId": "class:metaforge",
+      "hitDie": 10,
+      "hitPointsDie": 10,
+      "label": "Metaforge",
+      "reason": "prestige",
+      "skillRanksPerLevel": 4
+    },
+    {
+      "classId": "class:metamind",
+      "hitDie": 6,
+      "hitPointsDie": 6,
+      "label": "Metamind",
+      "reason": "prestige",
+      "skillRanksPerLevel": 2
+    },
+    {
+      "classId": "class:metamorph",
+      "hitDie": 8,
+      "hitPointsDie": 8,
+      "label": "Metamorph",
+      "reason": "prestige",
+      "skillRanksPerLevel": 2
+    },
+    {
+      "classId": "class:mystic_archer",
+      "hitDie": 10,
+      "hitPointsDie": 10,
+      "label": "Mystic Archer",
+      "reason": "prestige",
+      "skillRanksPerLevel": 2
+    },
+    {
+      "classId": "class:mystic_theurge",
+      "hitDie": 6,
+      "hitPointsDie": 6,
+      "label": "Mystic Theurge",
+      "reason": "prestige",
+      "skillRanksPerLevel": 2
+    },
+    {
+      "classId": "class:nature_warden",
+      "hitDie": 8,
+      "hitPointsDie": 8,
+      "label": "Nature Warden",
+      "reason": "prestige",
+      "skillRanksPerLevel": 4
+    },
+    {
+      "classId": "class:pathfinder_chronicler",
+      "hitDie": 8,
+      "hitPointsDie": 8,
+      "label": "Pathfinder Chronicler",
+      "reason": "prestige",
+      "skillRanksPerLevel": 8
+    },
+    {
+      "classId": "class:pathfinder_delver",
+      "hitDie": 8,
+      "hitPointsDie": 8,
+      "label": "Pathfinder Delver",
+      "reason": "prestige",
+      "skillRanksPerLevel": 8
+    },
+    {
+      "classId": "class:pathfinder_savant",
+      "hitDie": 6,
+      "hitPointsDie": 6,
+      "label": "Pathfinder Savant",
+      "reason": "prestige",
+      "skillRanksPerLevel": 2
+    },
+    {
+      "classId": "class:phrenic_slayer",
+      "hitDie": 10,
+      "hitPointsDie": 10,
+      "label": "Phrenic Slayer",
+      "reason": "prestige",
+      "skillRanksPerLevel": 4
+    },
+    {
+      "classId": "class:psicrystal_imprinter",
+      "hitDie": 6,
+      "hitPointsDie": 6,
+      "label": "Psicrystal Imprinter",
+      "reason": "prestige",
+      "skillRanksPerLevel": 2
+    },
+    {
+      "classId": "class:psion_uncarnate",
+      "hitDie": 6,
+      "hitPointsDie": 6,
+      "label": "Psion Uncarnate",
+      "reason": "prestige",
+      "skillRanksPerLevel": 2
+    },
+    {
+      "classId": "class:psychic_fist",
+      "hitDie": 8,
+      "hitPointsDie": 8,
+      "label": "Psychic Fist",
+      "reason": "prestige",
+      "skillRanksPerLevel": 4
+    },
+    {
+      "classId": "class:pure_legion_enforcer",
+      "hitDie": 10,
+      "hitPointsDie": 10,
+      "label": "Pure Legion Enforcer",
+      "reason": "prestige",
+      "skillRanksPerLevel": 4
+    },
+    {
+      "classId": "class:pyrokineticist",
+      "hitDie": 8,
+      "hitPointsDie": 8,
+      "label": "Pyrokineticist",
+      "reason": "prestige",
+      "skillRanksPerLevel": 2
+    },
+    {
+      "classId": "class:rage_prophet",
+      "hitDie": 10,
+      "hitPointsDie": 10,
+      "label": "Rage Prophet",
+      "reason": "prestige",
+      "skillRanksPerLevel": 4
+    },
+    {
+      "classId": "class:red_mantis_assassin",
+      "hitDie": 8,
+      "hitPointsDie": 8,
+      "label": "Red Mantis Assassin",
+      "reason": "prestige",
+      "skillRanksPerLevel": 6
+    },
+    {
+      "classId": "class:rivethun_emissary",
+      "hitDie": 8,
+      "hitPointsDie": 8,
+      "label": "Rivethun Emissary",
+      "reason": "prestige",
+      "skillRanksPerLevel": 4
+    },
+    {
+      "classId": "class:sanguine_angel",
+      "hitDie": 10,
+      "hitPointsDie": 10,
+      "label": "Sanguine Angel",
+      "reason": "prestige",
+      "skillRanksPerLevel": 2
+    },
+    {
+      "classId": "class:sentinel",
+      "hitDie": 10,
+      "hitPointsDie": 10,
+      "label": "Sentinel",
+      "reason": "prestige",
+      "skillRanksPerLevel": 2
+    },
+    {
+      "classId": "class:shadowdancer",
+      "hitDie": 8,
+      "hitPointsDie": 8,
+      "label": "Shadowdancer",
+      "reason": "prestige",
+      "skillRanksPerLevel": 6
+    },
+    {
+      "classId": "class:sighted_seeker",
+      "hitDie": 8,
+      "hitPointsDie": 8,
+      "label": "Sighted Seeker",
+      "reason": "prestige",
+      "skillRanksPerLevel": 6
+    },
+    {
+      "classId": "class:soul_archer",
+      "hitDie": 10,
+      "hitPointsDie": 10,
+      "label": "Soul Archer",
+      "reason": "prestige",
+      "skillRanksPerLevel": 4
+    },
+    {
+      "classId": "class:stalwart_defender",
+      "hitDie": 12,
+      "hitPointsDie": 12,
+      "label": "Stalwart Defender",
+      "reason": "prestige",
+      "skillRanksPerLevel": 2
+    },
+    {
+      "classId": "class:steel_falcon",
+      "hitDie": 10,
+      "hitPointsDie": 10,
+      "label": "Steel Falcon",
+      "reason": "prestige",
+      "skillRanksPerLevel": 4
+    },
+    {
+      "classId": "class:storm_kindler",
+      "hitDie": 8,
+      "hitPointsDie": 8,
+      "label": "Storm Kindler",
+      "reason": "prestige",
+      "skillRanksPerLevel": 4
+    },
+    {
+      "classId": "class:student_of_perfection",
+      "hitDie": 10,
+      "hitPointsDie": 10,
+      "label": "Student of Perfection",
+      "reason": "prestige",
+      "skillRanksPerLevel": 4
+    },
+    {
+      "classId": "class:student_of_war",
+      "hitDie": 10,
+      "hitPointsDie": 10,
+      "label": "Student of War",
+      "reason": "prestige",
+      "skillRanksPerLevel": 6
+    },
+    {
+      "classId": "class:telekinetic_weaponmaster",
+      "hitDie": 10,
+      "hitPointsDie": 10,
+      "label": "Telekinetic Weaponmaster",
+      "reason": "prestige",
+      "skillRanksPerLevel": 2
+    },
+    {
+      "classId": "class:thrallherd",
+      "hitDie": 6,
+      "hitPointsDie": 6,
+      "label": "Thrallherd",
+      "reason": "prestige",
+      "skillRanksPerLevel": 2
+    },
+    {
+      "classId": "class:twilight_talon",
+      "hitDie": 8,
+      "hitPointsDie": 8,
+      "label": "Twilight Talon",
+      "reason": "prestige",
+      "skillRanksPerLevel": 6
+    },
+    {
+      "classId": "class:ulfen_guard",
+      "hitDie": 10,
+      "hitPointsDie": 10,
+      "label": "Ulfen Guard",
+      "reason": "prestige",
+      "skillRanksPerLevel": 4
+    },
+    {
+      "classId": "class:war_mind",
+      "hitDie": 10,
+      "hitPointsDie": 10,
+      "label": "War Mind",
+      "reason": "prestige",
+      "skillRanksPerLevel": 2
+    },
+    {
+      "classId": "class:westcrown_devil",
+      "hitDie": 8,
+      "hitPointsDie": 8,
+      "label": "Westcrown Devil",
+      "reason": "prestige",
+      "skillRanksPerLevel": 6
+    }
+  ]
+}

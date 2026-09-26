@@ -1,0 +1,30 @@
+# SD-36 F4c GREEN
+
+## cd apps/desktop && npm test -- classRoster characterHubModel characterProgression skillsModel
+## (scripts/run-tests.mjs ignores its arguments: this runs every *.test.ts file)
+> node scripts/run-tests.mjs classRoster characterHubModel characterProgression skillsModel
+PASS src/characterHub/characterHubModel.test.ts
+PASS src/characterHub/characterProgression.test.ts
+classPreviewModel tests passed
+PASS src/characterHub/classPreviewModel.test.ts
+classRoster: all assertions passed
+PASS src/characterHub/classRoster.test.ts
+PASS src/characterHub/skillsModel.test.ts
+PASS src/characterHub/spellsTabModel.test.ts
+126/126 test files passed.
+
+## cd apps/desktop && npm run typecheck
+> codex@0.16.0 typecheck
+> tsc --noEmit
+
+exit 0
+
+## cd apps/desktop && npm test (full)
+126/126 test files passed.
+
+## CODEX_WRITE_F4C_WIRE=1 cargo test --locked -j 8 --manifest-path apps/desktop/src-tauri/Cargo.toml list_class_roster_wire -- --test-threads=8 --nocapture
+offered classes whose hit points are Unknown (no chassis record): 5 of 59: ["class:monk", "class:unchained_barbarian", "class:unchained_monk", "class:unchained_rogue", "class:unchained_summoner"]
+withheld prestige with a stated hit die: 74 of 74
+wrote docs/release/SD-36-consolidation/artifacts/epic-f/stage-f4-f5/f4c-class-roster-wire.json
+wrote docs/release/SD-36-consolidation/artifacts/epic-f/stage-f4-f5/f4c-level-up-fighter6-wire.json
+test result: ok. 1 passed; 0 failed; 0 ignored; 0 measured; 620 filtered out; finished in 107.27s

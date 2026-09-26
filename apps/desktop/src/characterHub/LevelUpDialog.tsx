@@ -1,7 +1,16 @@
 import { useEffect, useState } from 'react';
 import { createPortal } from 'react-dom';
-import { CLASS_OPTIONS, canTakeAnotherLevelIn, describeClassSupportLevel } from './characterHubModel';
 import { previewLevelUp, totalSkillPoints, type HeldClass } from './characterProgression';
+import { knownClass } from './classCatalog';
+import {
+  describeEntryRequirement,
+  ensureClassRosterLoaded,
+  fallbackLevelUpResponse,
+  levelUpChoiceGroups,
+  loadLevelUpClassOptions,
+  useClassCatalog,
+  type LevelUpClassOptionsResponse,
+} from './classRoster';
 import {
   previewLevelUp as previewLevelUpGrants,
   type PreviewLevelUpResponse,
@@ -17,6 +26,12 @@ import {
  * (`preview_level_up` -> `level_up::compute_level_up_grants_for_class`),
  * not from a hand-authored table. Every grant shown carries the engine's
  * own name and its own effect descriptions, verbatim.
+ *
+ * SD-36 F4c: the classes offered are the engine's (`list_level_up_class_options`), in three
+ * groups — advance a class the character has, add a base class, add a prestige class. A prestige
+ * class prints its entry requirements, each with its met/unmet note for this character, and is
+ * offered either way (ruling §9.2: print, never block). Character level 20 is the cap. If the
+ * command fails, advance/add-base come from the class catalog and the failure is printed.
  *
  * Accepting calls `onAccept(classId)` and closes; the caller
  * (`CharacterSheet`'s `handleLevelUpAccept`) persists the level-up via the
@@ -57,41 +72,56 @@ export function LevelUpDialog(props: {
    */
   const [showRefusedFeats, setShowRefusedFeats] = useState(false);
 
-  /**
-   * Only the classes whose *next* level this app actually claims to build.
-   * `levelOptions` (via `canTakeAnotherLevelIn`) is the same engine-dump-
-   * derived claim the creation picker makes, and leveling up is the other way
-   * into a level — so a class the dump reports `Blocked` past level 1 must not
-   * be reachable here either, and nothing may pass PF1's level-20 ceiling.
-   * Filtering rather than disabling: an option that can never be chosen is
-   * noise, and the character's current level is already shown in the sheet.
-   */
-  const levelableOptions = CLASS_OPTIONS.filter((option) =>
-    canTakeAnotherLevelIn(option.id, props.heldClasses.find((held) => held.classId === option.id)?.level ?? 0)
-  );
+  const catalog = useClassCatalog();
+  /** The engine's answer for this character; `null` while loading. */
+  const [classOptions, setClassOptions] = useState<LevelUpClassOptionsResponse | null>(null);
 
   useEffect(() => {
     if (!props.open) {
       return;
     }
-    setClassId((current) => {
-      if (current && levelableOptions.some((option) => option.id === current)) {
-        return current;
-      }
-      const firstHeldAndLevelable = props.heldClasses.find((held) =>
-        levelableOptions.some((option) => option.id === held.classId)
-      );
-      return firstHeldAndLevelable?.classId ?? levelableOptions[0]?.id ?? '';
-    });
+    let live = true;
+    setClassOptions(null);
+    void ensureClassRosterLoaded();
+    loadLevelUpClassOptions(props.characterId)
+      .then((response) => {
+        if (live) {
+          setClassOptions(response);
+        }
+      })
+      .catch((cause: unknown) => {
+        if (live) {
+          setClassOptions(
+            fallbackLevelUpResponse(props.heldClasses, catalog.options, cause instanceof Error ? cause.message : String(cause))
+          );
+        }
+      });
     const onKeyDown = (event: KeyboardEvent) => {
       if (event.key === 'Escape') {
         props.onClose();
       }
     };
     window.addEventListener('keydown', onKeyDown);
-    return () => window.removeEventListener('keydown', onKeyDown);
+    return () => {
+      live = false;
+      window.removeEventListener('keydown', onKeyDown);
+    };
     // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [props.open]);
+  }, [props.open, props.characterId]);
+
+  const groups = classOptions ? levelUpChoiceGroups(classOptions) : [];
+  const choices = groups.flatMap((group) => group.choices);
+
+  // Default to the first held class that can advance, else the first offered class.
+  useEffect(() => {
+    setClassId((current) => {
+      if (current && choices.some((choice) => choice.classId === current)) {
+        return current;
+      }
+      return choices[0]?.classId ?? '';
+    });
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [classOptions]);
 
   useEffect(() => {
     if (!props.open || !classId) {
@@ -122,9 +152,10 @@ export function LevelUpDialog(props: {
     return null;
   }
 
-  const selectedOption = CLASS_OPTIONS.find((option) => option.id === classId);
-  const preview = classId ? previewLevelUp(props.heldClasses, classId) : null;
-  const skillPoints = preview ? totalSkillPoints(preview.skillPointsBase, props.intelligenceModifier, props.isHuman) : 0;
+  const selectedChoice = choices.find((choice) => choice.classId === classId) ?? null;
+  const preview = selectedChoice ? previewLevelUp(props.heldClasses, classId) : null;
+  const skillPoints = preview ? totalSkillPoints(preview.skillPointsBase, props.intelligenceModifier, props.isHuman) : null;
+  const hitDie = selectedChoice ? knownClass(classId)?.hitDie ?? null : null;
   const isNewClass = !props.heldClasses.some((held) => held.classId === classId);
 
   return createPortal(
@@ -181,34 +212,92 @@ export function LevelUpDialog(props: {
           <label style={{ color: 'var(--color-text-muted)', display: 'block', fontSize: '0.75rem', fontWeight: 700, letterSpacing: '0.04em', marginBottom: '0.35rem', textTransform: 'uppercase' }}>
             Class
           </label>
-          <select
-            value={classId}
-            onChange={(event) => setClassId(event.target.value)}
-            style={{
-              backgroundColor: 'var(--color-surface-2)',
-              border: '1px solid var(--color-border)',
-              borderRadius: 6,
-              boxSizing: 'border-box',
-              color: 'var(--color-text)',
-              padding: '0.5rem 0.6rem',
-              width: '100%',
-            }}
-          >
-            {levelableOptions.map((option) => {
-              const held = props.heldClasses.find((entry) => entry.classId === option.id);
-              return (
-                <option key={option.id} value={option.id}>
-                  {option.label}
-                  {held ? ` (currently ${held.level})` : ' (new class)'}
-                </option>
-              );
-            })}
-          </select>
+          {classOptions === null ? (
+            <p style={{ color: 'var(--color-text-muted)', fontSize: '0.8rem', margin: 0 }}>Reading the classes you can take from the rules engine&hellip;</p>
+          ) : (
+            <>
+              {classOptions.diagnostics.length > 0 ? (
+                <ul role="alert" style={{ color: 'var(--color-warn)', fontSize: '0.75rem', margin: '0 0 0.5rem', paddingLeft: '1.1rem' }}>
+                  {classOptions.diagnostics.map((line) => (
+                    <li key={line}>{line}</li>
+                  ))}
+                </ul>
+              ) : null}
+              {choices.length === 0 ? (
+                <p style={{ color: 'var(--color-text-muted)', fontSize: '0.8rem', margin: 0 }}>
+                  {classOptions.atLevelCap
+                    ? `Character level ${classOptions.characterLevel} is the level cap of ${classOptions.levelCap}.`
+                    : 'No class can be taken at the next level.'}
+                </p>
+              ) : (
+                <select
+                  aria-label="Class to take the next level in"
+                  value={classId}
+                  onChange={(event) => setClassId(event.target.value)}
+                  style={{
+                    backgroundColor: 'var(--color-surface-2)',
+                    border: '1px solid var(--color-border)',
+                    borderRadius: 6,
+                    boxSizing: 'border-box',
+                    color: 'var(--color-text)',
+                    padding: '0.5rem 0.6rem',
+                    width: '100%',
+                  }}
+                >
+                  {groups
+                    .filter((group) => group.choices.length > 0)
+                    .map((group) => (
+                      <optgroup key={group.kind} label={`${group.heading} (${group.choices.length})`}>
+                        {group.choices.map((choice) => (
+                          <option key={`${group.kind}:${choice.classId}`} value={choice.classId}>
+                            {choice.label}
+                            {choice.kind === 'advance'
+                              ? ` (currently ${choice.currentLevel} → ${choice.nextLevel})`
+                              : choice.kind === 'add_base'
+                                ? ' (new class)'
+                                : choice.requirementsAllMet
+                                  ? ' (prestige — requirements met)'
+                                  : ' (prestige — requirements not all met)'}
+                          </option>
+                        ))}
+                      </optgroup>
+                    ))}
+                </select>
+              )}
+            </>
+          )}
 
-          {selectedOption && selectedOption.supportLevel !== 'full' ? (
-            <p style={{ color: 'var(--color-text-muted)', fontSize: '0.75rem', margin: '0.5rem 0 0' }}>
-              {describeClassSupportLevel(selectedOption.supportLevel, selectedOption.label)}
-            </p>
+          {/*
+            A prestige class's entry requirements, in the rule's words, each with its note for
+            this character. Printed, never a gate (§9.2): Accept stays enabled.
+          */}
+          {selectedChoice && selectedChoice.kind === 'add_prestige' ? (
+            <div style={{ marginTop: '0.6rem' }}>
+              <p style={{ color: 'var(--color-accent)', fontSize: '0.8rem', fontWeight: 700, margin: '0 0 0.25rem' }}>
+                Entry requirements{selectedChoice.requirementsAllMet ? ' — all met' : ' — not all met (you may still take it)'}
+              </p>
+              {selectedChoice.requirements.length === 0 ? (
+                <p style={{ color: 'var(--color-text-faint)', fontSize: '0.75rem', margin: 0 }}>
+                  The converted record states no entry requirement for this class.
+                </p>
+              ) : (
+                <ul aria-label="Entry requirements" style={{ margin: 0, paddingLeft: '1.1rem' }}>
+                  {selectedChoice.requirements.map((requirement) => (
+                    <li
+                      key={requirement.text}
+                      data-requirement-status={requirement.status}
+                      style={{
+                        color: requirement.status === 'unmet' ? 'var(--color-warn)' : 'var(--color-text-secondary)',
+                        fontSize: '0.78rem',
+                        marginBottom: '0.1rem',
+                      }}
+                    >
+                      {describeEntryRequirement(requirement)}
+                    </li>
+                  ))}
+                </ul>
+              )}
+            </div>
           ) : null}
 
           {preview ? (
@@ -225,7 +314,7 @@ export function LevelUpDialog(props: {
                 {isNewClass ? `${preview.classLabel} 1 (new class)` : `${preview.classLabel} ${preview.classLevel}`} — character level {preview.characterLevel}
               </p>
               <p style={{ color: 'var(--color-text-muted)', fontSize: '0.75rem', margin: '0.2rem 0 0.5rem' }}>
-                Hit die: d{selectedOption?.hitDie ?? 8} · Skill points: {skillPoints}
+                Hit die: {hitDie === null ? 'Unknown' : `d${hitDie}`} · Skill points: {skillPoints === null ? 'Unknown' : skillPoints}
               </p>
               <ul style={{ margin: 0, paddingLeft: '1.1rem' }}>
                 {preview.features.map((feature) => (

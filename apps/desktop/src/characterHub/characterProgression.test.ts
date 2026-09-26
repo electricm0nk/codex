@@ -15,16 +15,21 @@ import {
   type HeldClass,
 } from './characterProgression';
 import { assert, assertEqual } from '../testSupport/asserts';
+import { installClassRoster } from './classRoster';
+import { LOADING_CLASS_CATALOG, setClassCatalog } from './classCatalog';
+import { classRosterWire } from '../testSupport/classRosterWire';
 
 async function main() {
+  // SD-36 F4c: every class lookup reads the roster the engine serves (the real wire rows).
+  installClassRoster(classRosterWire());
   verifiesParseHeldClassesSingleClass();
   verifiesParseHeldClassesRealMulticlassSummary();
   verifiesParseHeldClassesFallsBackToDerivedLabelForAnUnknownClass();
   verifiesFormatHeldClassesJoinsWithSlash();
   verifiesTotalCharacterLevelSumsAcrossClasses();
   verifiesCasterLevelOnlyCountsFullCasterClasses();
-  verifiesClassSkillPointsBaseAndDefault();
-  verifiesClassHitDieAndDefault();
+  verifiesClassSkillPointsBaseReadsTheRoster();
+  verifiesClassHitDieReadsTheRoster();
   verifiesClassWeaponProficiency();
   verifiesMaxHitPointsSingleClass();
   verifiesMaxHitPointsMulticlassOnlyMaximizesTheVeryFirstLevel();
@@ -35,6 +40,9 @@ async function main() {
   verifiesPreviewLevelUpForAnExistingClassAndForANewClass();
   verifiesLevelGrantsFeatDetectsEveryRealFeatSource();
   verifiesFighterEvenLevelBonusFeatIsNoLongerClaimedLocally();
+  verifiesAHeldPrestigeClassReadsItsOwnFiguresOffTheRoster();
+  verifiesNothingIsAssumedWhileTheRosterIsLoading();
+  installClassRoster(classRosterWire());
 }
 
 /**
@@ -103,27 +111,52 @@ function verifiesCasterLevelOnlyCountsFullCasterClasses() {
   assertEqual(casterLevel('class:wizard:2,class:sorcerer:3'), 5, 'caster level sums across multiple caster classes held at once');
   assertEqual(casterLevel('class:fighter:5'), 0, 'a character with no caster class has caster level 0');
   // Arcanist is a full arcane caster (ACG): its caster level is its class
-  // level, exactly like Wizard's. Now that it is selectable in CLASS_OPTIONS,
+  // level, exactly like Wizard's. Now that it is selectable on the roster,
   // omitting it here would silently show every Arcanist a caster level of 0.
   assertEqual(casterLevel('class:arcanist:7'), 7, 'Arcanist is a full caster — caster level equals its class level');
   assertEqual(casterLevel('class:fighter:2,class:arcanist:3'), 3, 'a Fighter/Arcanist counts only the Arcanist levels');
 }
 
-function verifiesClassSkillPointsBaseAndDefault() {
+/**
+ * SD-36 F4c: skill ranks per level are the converted record's `Skill ranks per level` row, served
+ * on the roster. The frontend table this replaces was wrong for 33 of the 59 roster classes: it
+ * said Arcanist 3 (the record says 2) and defaulted every unlisted class to 2 (Inquisitor, Slayer,
+ * Investigator and Hunter are 6, Ninja 8, ...). A class the roster does not know states nothing.
+ */
+function verifiesClassSkillPointsBaseReadsTheRoster() {
   assertEqual(classSkillPointsBase('class:rogue'), 8, 'Rogue has 8 base skill points per level');
   assertEqual(classSkillPointsBase('class:fighter'), 2, 'Fighter has 2 base skill points per level');
-  assertEqual(classSkillPointsBase('class:some_future_class'), 2, 'an unrecognized class defaults to 2 base skill points');
-  // ACG Arcanist: 3 + Int modifier skill ranks per level. Without its own
-  // entry it would fall through to the unrecognized-class default of 2 and
-  // quietly under-report every Arcanist's skill ranks.
-  assertEqual(classSkillPointsBase('class:arcanist'), 3, 'Arcanist has 3 base skill points per level');
+  assertEqual(classSkillPointsBase('class:arcanist'), 2, 'Arcanist: 2 + Int (the record), not the old table’s 3');
+  assertEqual(classSkillPointsBase('class:inquisitor'), 6, 'Inquisitor: 6, not the old default 2');
+  assertEqual(classSkillPointsBase('class:ninja'), 8, 'Ninja: 8, a class the old table never listed');
+  assertEqual(classSkillPointsBase('class:some_future_class'), null, 'an unrecognized class states no skill ranks (no assumed 2)');
 }
 
-function verifiesClassHitDieAndDefault() {
+function verifiesClassHitDieReadsTheRoster() {
   assertEqual(classHitDie('class:wizard'), 6, 'Wizard has a d6 hit die');
   assertEqual(classHitDie('class:fighter'), 10, 'Fighter has a d10 hit die');
   assertEqual(classHitDie('class:arcanist'), 6, 'Arcanist has a d6 hit die');
-  assertEqual(classHitDie('class:some_future_class'), 8, 'an unrecognized class defaults to a d8 hit die');
+  assertEqual(classHitDie('class:monk'), null, 'Monk: no chassis record (FS-23 defect row): Unknown, never d10');
+  assertEqual(classHitDie('class:samurai'), 10, 'Samurai: a newly offered class');
+  assertEqual(classHitDie('class:some_future_class'), null, 'an unrecognized class has no hit die (no assumed d8)');
+}
+
+/** A prestige class taken at level-up is withheld from creation but known: its own die and ranks. */
+function verifiesAHeldPrestigeClassReadsItsOwnFiguresOffTheRoster() {
+  const held = parseHeldClasses('class:fighter:6,class:arcane_archer:1');
+  assertEqual(held[1].classLabel, 'Arcane Archer', 'prestige label off the withheld row');
+  assertEqual(formatHeldClasses('class:fighter:6,class:arcane_archer:1'), 'Fighter 6 / Arcane Archer 1', 'formatted');
+  assertEqual(classHitDie('class:arcane_archer'), 10, 'Arcane Archer d10');
+  assertEqual(maxHitPoints(held, 0), 10 + 5 * 6 + 6, 'Fighter 6 (10 + 5 x 6) then Arcane Archer 1 average 6');
+}
+
+/** While the roster is loading no class figure is known, so HP and skill points print Unknown. */
+function verifiesNothingIsAssumedWhileTheRosterIsLoading() {
+  setClassCatalog(LOADING_CLASS_CATALOG);
+  const held: HeldClass[] = [{ classId: 'class:fighter', classLabel: 'Fighter', level: 3 }];
+  assertEqual(maxHitPoints(held, 2), null, 'HP is Unknown, not a d8 guess');
+  assertEqual(buildLevelEntries(held)[0].skillPointsBase, null, 'skill ranks Unknown');
+  assertEqual(totalSkillPoints(null, 2, true), null, 'Unknown base stays Unknown');
 }
 
 function verifiesClassWeaponProficiency() {
@@ -221,7 +254,8 @@ function verifiesPreviewLevelUpForAnExistingClassAndForANewClass() {
 
   const dip = previewLevelUp(heldClasses, 'class:rogue');
   assertEqual(dip.classLevel, 1, 'a brand-new class dip starts at class level 1');
-  assertEqual(dip.classLabel, 'Rogue', 'a brand-new class dip resolves its label from CLASS_OPTIONS');
+  assertEqual(dip.classLabel, 'Rogue', 'a brand-new class dip resolves its label from the served roster');
+  assertEqual(dip.skillPointsBase, 8, 'and its skill ranks');
   assertEqual(dip.characterLevel, 3, 'a new class dip still advances the total character level by one');
 }
 
@@ -292,5 +326,5 @@ function verifiesFighterEvenLevelBonusFeatIsNoLongerClaimedLocally() {
 
 main().catch((error: unknown) => {
   console.error(error);
-  throw error;
+  process.exit(1);
 });

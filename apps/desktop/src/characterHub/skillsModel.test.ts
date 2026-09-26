@@ -1,4 +1,13 @@
-import { isClassSkill, skillIdFor } from './skillsModel';
+import {
+  classSkillListCoverage,
+  heldClassesWithoutClassSkillList,
+  isClassSkill,
+  skillIdFor,
+  totalSkillPointsAvailable,
+} from './skillsModel';
+import { classOptionsFromRoster, installClassRoster } from './classRoster';
+import { LOADING_CLASS_CATALOG, setClassCatalog } from './classCatalog';
+import { classRosterWire } from '../testSupport/classRosterWire';
 import type { HeldClass } from './characterProgression';
 import { assert, assertEqual } from '../testSupport/asserts';
 
@@ -39,7 +48,7 @@ function verifiesIsClassSkillMulticlassUnion() {
   );
 }
 
-// Arcanist became selectable in CLASS_OPTIONS once the engine dump confirmed
+// Arcanist became selectable in the class picker once the engine dump confirmed
 // it computes at every level 1-20. A selectable class with no entry in
 // CLASS_SKILLS silently reports *every* skill as a cross-class skill on the
 // Skills tab -- a wrong sheet, not an absent one -- so its list has to land
@@ -55,15 +64,45 @@ function verifiesIsClassSkillCoversArcanist() {
   assert(!isClassSkill(arcanist, 'Perception'), 'Perception is not an Arcanist class skill');
 }
 
+/**
+ * SD-36 F4c: the Create picker offers the served roster (59 classes), and this module's class-skill
+ * lists are a 12-row hand table. A held class with no list must be NAMED (the Skills panel prints
+ * it), never silently scored as all-cross-class. Denominator: the 59 roster ids.
+ */
+function verifiesEveryRosterClassWithoutAClassSkillListIsNamed() {
+  const rosterIds = classOptionsFromRoster(classRosterWire()).map((option) => option.id);
+  const coverage = classSkillListCoverage(rosterIds);
+  assertEqual(coverage.covered.length + coverage.uncovered.length, 59, 'every roster id counted once');
+  assertEqual(coverage.covered.length, 12, 'roster classes with a class-skill list here');
+  assertEqual(coverage.uncovered.length, 47, 'roster classes without one');
+  for (const classId of coverage.uncovered) {
+    const named = heldClassesWithoutClassSkillList([{ classId, classLabel: classId, level: 1 }]);
+    assertEqual(named.join(','), classId, `${classId} is named, not silently all-cross-class`);
+  }
+  assertEqual(heldClassesWithoutClassSkillList([heldClass('class:fighter')]).length, 0, 'Fighter has its list');
+}
+
+/** Skill points available read the served skill ranks; unknown ranks are Unknown, not 2. */
+function verifiesTotalSkillPointsAvailableReadsTheRoster() {
+  installClassRoster(classRosterWire());
+  // Inquisitor 2: (6 + 0 Int + 1 human) x 2.
+  assertEqual(totalSkillPointsAvailable([{ classId: 'class:inquisitor', classLabel: 'Inquisitor', level: 2 }], 0, true), 14, 'Inquisitor 6 ranks');
+  setClassCatalog(LOADING_CLASS_CATALOG);
+  assertEqual(totalSkillPointsAvailable([heldClass('class:fighter')], 0, false), null, 'Unknown while the roster loads');
+  installClassRoster(classRosterWire());
+}
+
 async function main() {
   verifiesSkillIdForOnAParentheticalSkillName();
   verifiesSkillIdForOnMultiWordNonParentheticalNames();
   verifiesIsClassSkillForAConfirmedBoundary();
   verifiesIsClassSkillMulticlassUnion();
   verifiesIsClassSkillCoversArcanist();
+  verifiesEveryRosterClassWithoutAClassSkillListIsNamed();
+  verifiesTotalSkillPointsAvailableReadsTheRoster();
 }
 
 main().catch((error: unknown) => {
   console.error(error);
-  throw error;
+  process.exit(1);
 });

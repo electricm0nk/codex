@@ -6,6 +6,8 @@
  * component redesign.
  */
 
+import { findClassOption } from './classCatalog';
+
 export const ABILITY_KEYS = ['strength', 'dexterity', 'constitution', 'intelligence', 'wisdom', 'charisma'] as const;
 export type AbilityKey = (typeof ABILITY_KEYS)[number];
 
@@ -164,8 +166,18 @@ export interface ClassOption {
   label: string;
   supportLevel: ClassSupportLevel;
   levelOptions: number[];
-  /** PF1 hit die size (e.g. 10 for a d10). Level-1 HP is the max of this plus the CON modifier. */
-  hitDie: number;
+  /**
+   * PF1 hit die size (e.g. 10 for a d10). Level-1 HP is the max of this plus the CON modifier.
+   * For a roster option this is the die the engine's hit-point fold reads (the class's chassis
+   * record); `null` when the class has none, and its HP then prints Unknown.
+   */
+  hitDie: number | null;
+  /** Census family key (`crb`, `apg`, …) for a roster option; absent on a fallback row. */
+  family?: string;
+  /** The family's printed heading (the Create picker's option-group label). */
+  familyLabel?: string;
+  /** The first book the census found the class in. */
+  book?: string;
 }
 
 /**
@@ -406,7 +418,7 @@ const EVERY_CLASS_LEVEL: number[] = Object.freeze(
  * individually opened; only Human was driven, and only the levels named
  * above.
  */
-export const CLASS_OPTIONS: ClassOption[] = [
+export const CLASS_OPTIONS_FALLBACK: readonly ClassOption[] = [
   { id: 'class:fighter', label: 'Fighter', supportLevel: 'full', levelOptions: EVERY_CLASS_LEVEL, hitDie: 10 },
   { id: 'class:paladin', label: 'Paladin', supportLevel: 'full', levelOptions: EVERY_CLASS_LEVEL, hitDie: 10 },
   { id: 'class:ranger', label: 'Ranger', supportLevel: 'full', levelOptions: EVERY_CLASS_LEVEL, hitDie: 10 },
@@ -473,8 +485,13 @@ export const CLASS_OPTIONS: ClassOption[] = [
 
 const DEFAULT_LEVEL_OPTIONS: number[] = [1];
 
+/**
+ * The levels the Create picker offers for `classId`: the installed class catalog's claim
+ * (`classCatalog.ts` — the engine's roster, or the announced fallback). A class the catalog does
+ * not offer (or any class while the roster is still loading) claims only level 1.
+ */
 export function getLevelOptionsForClass(classId: string): number[] {
-  return CLASS_OPTIONS.find((option) => option.id === classId)?.levelOptions ?? DEFAULT_LEVEL_OPTIONS;
+  return findClassOption(classId)?.levelOptions ?? DEFAULT_LEVEL_OPTIONS;
 }
 
 /**

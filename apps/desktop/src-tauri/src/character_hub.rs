@@ -4802,6 +4802,17 @@ pub struct ClassCreationEntryDto {
     /// The first book the census found the class in.
     pub book: String,
     pub hit_die: u8,
+    /// The hit die the engine's hit-point fold reads: the class's converted CHASSIS record's
+    /// (`class_chassis_sheet_rules::record`), `None` when the class has no chassis record -- the
+    /// fold then reports the class's hit points Unknown (`class_chassis.hit_points.unknown`), and
+    /// so does the frontend. Differs from [`Self::hit_die`] (the principal's printed `Hit die` row,
+    /// the roster rule's input) for exactly the classes with no chassis record, e.g. the CRB Monk,
+    /// whose printed row carries the FS-23 oracle defect (`HD:10`; CRB p.56 says d8).
+    pub hit_points_die: Option<u8>,
+    /// Skill ranks gained per level, off the converted principal's `Skill ranks per level` row
+    /// (`skill_ranks_per_level_from_package`); `None` when no principal states it -- the sheet
+    /// then names the gap rather than assuming a figure.
+    pub skill_ranks_per_level: Option<u8>,
     pub max_level: u8,
 }
 
@@ -4813,6 +4824,13 @@ pub struct WithheldClassDto {
     pub label: String,
     /// One of `prestige | ex_state | not_computed | hit_die_absent`.
     pub reason: String,
+    /// The class's hit die, when its converted principal states one (a character may hold a
+    /// withheld prestige class through level-up; its HP line reads this, or names the gap).
+    pub hit_die: Option<u8>,
+    /// Same rule as [`ClassCreationEntryDto::hit_points_die`].
+    pub hit_points_die: Option<u8>,
+    /// Skill ranks per level, when stated (same source as [`ClassCreationEntryDto`]'s).
+    pub skill_ranks_per_level: Option<u8>,
 }
 
 #[derive(Debug, Clone, PartialEq, Eq, Serialize, Deserialize)]
@@ -4840,6 +4858,33 @@ fn roster_reason_word(reason: codex::rules_core::class_census::RosterReason) -> 
     }
 }
 
+fn census_books(class_id: &str) -> Option<Vec<String>> {
+    codex::rules_core::class_census::census().get(class_id).map(|entry| entry.books.clone())
+}
+
+fn class_skill_ranks(class_id: &str) -> Option<u8> {
+    let slug = class_id.strip_prefix("class:")?;
+    codex::rules_core::pilot_compute::class_chassis_sheet_rules::skill_ranks_per_level_from_package(slug)
+        .map(|(ranks, _)| ranks)
+}
+
+/// The hit die the hit-point fold reads for `class_id`: its chassis record's, in the first census
+/// book that carries one (every chassis-bearing record, loaded once per process).
+fn class_hit_points_die(class_id: &str, books: &[String]) -> Option<u8> {
+    use codex::rules_core::pilot_compute::class_chassis_sheet_rules::{records, ClassChassis};
+    use std::collections::BTreeMap;
+    static CHASSIS: std::sync::OnceLock<BTreeMap<(String, String), ClassChassis>> = std::sync::OnceLock::new();
+    let chassis = CHASSIS.get_or_init(|| {
+        let census = codex::rules_core::class_census::census();
+        let mut all_books: Vec<&str> = census.values().flat_map(|entry| entry.books.iter().map(String::as_str)).collect();
+        all_books.sort_unstable();
+        all_books.dedup();
+        records(&all_books)
+    });
+    let slug = class_id.strip_prefix("class:")?;
+    books.iter().find_map(|book| chassis.get(&(book.clone(), slug.to_owned()))).and_then(|record| record.hit_die)
+}
+
 fn family_word(family: codex::rules_core::class_census::ClassFamily) -> String {
     serde_json::to_value(family)
         .ok()
@@ -4851,7 +4896,9 @@ fn family_word(family: codex::rules_core::class_census::ClassFamily) -> String {
 /// swept (the sweep fixture did not load); a sweep that offers nothing is also an `Err` naming
 /// that -- never an empty picker.
 pub fn build_class_creation_roster() -> Result<ClassCreationRosterResponse, String> {
-    use codex::rules_core::class_census::{class_creation_roster, class_roster_reasons, roster_display_name, RosterReason};
+    use codex::rules_core::class_census::{
+        class_creation_roster, class_roster_reasons, roster_display_name, roster_hit_die, RosterReason,
+    };
     let offered = class_creation_roster().map_err(|e| format!("class creation roster unavailable: {e}"))?;
     if offered.is_empty() {
         return Err("class creation roster unavailable: the census offered no class at all \
@@ -4862,6 +4909,8 @@ pub fn build_class_creation_roster() -> Result<ClassCreationRosterResponse, Stri
     let classes = offered
         .into_iter()
         .map(|entry| ClassCreationEntryDto {
+            skill_ranks_per_level: class_skill_ranks(&entry.id),
+            hit_points_die: census_books(&entry.id).and_then(|books| class_hit_points_die(&entry.id, &books)),
             class_id: entry.id,
             label: entry.display_name,
             family: family_word(entry.family),
@@ -4885,6 +4934,9 @@ pub fn build_class_creation_roster() -> Result<ClassCreationRosterResponse, Stri
             class_id: entry.class_id.clone(),
             label: roster_display_name(entry),
             reason: roster_reason_word(*reason).to_owned(),
+            hit_die: roster_hit_die(entry),
+            hit_points_die: class_hit_points_die(&entry.class_id, &entry.books),
+            skill_ranks_per_level: class_skill_ranks(&entry.class_id),
         });
     }
     Ok(ClassCreationRosterResponse { classes, withheld, diagnostics })
@@ -10363,6 +10415,70 @@ mod tests {
 
     fn fighter_at(level: u8) -> CharacterInput {
         compose_character_input(&request_for("race:human", level))
+    }
+
+    /// SD-36 F4c: the wire rows the frontend reads, pinned as on-disk artifacts the TypeScript
+    /// tests (`classRoster.test.ts`) read -- so the frontend is tested against what the command
+    /// actually serves, not a hand-written sample. `CODEX_WRITE_F4C_WIRE=1` rewrites them; without
+    /// it, this test fails on any drift between the live commands and the committed artifacts.
+    fn f4c_wire_artifact(name: &str) -> std::path::PathBuf {
+        crate::authoring_workbench::codex_repo_root()
+            .expect("repo root")
+            .join("docs/release/SD-36-consolidation/artifacts/epic-f/stage-f4-f5")
+            .join(name)
+    }
+
+    fn assert_or_write_wire(name: &str, value: &serde_json::Value) {
+        let path = f4c_wire_artifact(name);
+        let live = serde_json::to_string_pretty(value).expect("serialize") + "\n";
+        if std::env::var_os("CODEX_WRITE_F4C_WIRE").is_some() {
+            std::fs::write(&path, &live).unwrap_or_else(|e| panic!("{}: {e}", path.display()));
+            eprintln!("wrote {}", path.display());
+            return;
+        }
+        let committed = std::fs::read_to_string(&path).unwrap_or_else(|e| panic!("{}: {e}", path.display()));
+        assert!(committed == live, "{} drifted from the live command; rerun with CODEX_WRITE_F4C_WIRE=1", path.display());
+    }
+
+    #[test]
+    fn list_class_roster_wire_carries_hit_die_and_skill_ranks_for_every_census_class() {
+        let roster = build_class_creation_roster().expect("roster");
+        // Every offered class states its skill ranks per level: the sheet's skill points read it
+        // off this row, never a frontend table (§6).
+        let missing: Vec<&str> = roster
+            .classes
+            .iter()
+            .filter(|c| c.skill_ranks_per_level.is_none())
+            .map(|c| c.class_id.as_str())
+            .collect();
+        assert!(missing.is_empty(), "offered classes with no skill ranks per level: {missing:?}");
+        // The hit-point die is the chassis record's: stated for every offered class with a chassis
+        // record, equal to the printed die there; absent (HP Unknown) for exactly the five with none.
+        let no_chassis: Vec<&str> = roster
+            .classes
+            .iter()
+            .filter(|c| c.hit_points_die.is_none())
+            .map(|c| c.class_id.as_str())
+            .collect();
+        eprintln!("offered classes whose hit points are Unknown (no chassis record): {} of {}: {no_chassis:?}", no_chassis.len(), roster.classes.len());
+        assert_eq!(
+            no_chassis,
+            vec!["class:monk", "class:unchained_barbarian", "class:unchained_monk", "class:unchained_rogue", "class:unchained_summoner"],
+            "the classes with no converted chassis record"
+        );
+        for class in roster.classes.iter().filter(|c| c.hit_points_die.is_some()) {
+            assert_eq!(class.hit_points_die, Some(class.hit_die), "{}: chassis die vs printed die", class.class_id);
+        }
+        // A withheld prestige class carries its own chassis figures (or an explicit `None`), so a
+        // character holding one prints its HP and skill points or names the gap.
+        let prestige_with_die = roster.withheld.iter().filter(|w| w.reason == "prestige" && w.hit_die.is_some()).count();
+        let prestige = roster.withheld.iter().filter(|w| w.reason == "prestige").count();
+        eprintln!("withheld prestige with a stated hit die: {prestige_with_die} of {prestige}");
+        assert!(prestige_with_die > 0, "no prestige class stated a hit die");
+
+        assert_or_write_wire("f4c-class-roster-wire.json", &serde_json::to_value(&roster).expect("roster json"));
+        let fighter6 = build_level_up_class_options(&fighter_at(6)).expect("options");
+        assert_or_write_wire("f4c-level-up-fighter6-wire.json", &serde_json::to_value(&fighter6).expect("options json"));
     }
 
     #[test]
