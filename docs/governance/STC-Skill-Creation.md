@@ -43,7 +43,8 @@ A contributor's skill fails in three predictable ways:
 1. It **invents its own template shape** instead of mirroring `docs/release/template/template.md` —
    bundles ship inconsistent and the next cycle's verifier trips the dual-audit gate.
 2. It **disables the dual-audit gate** because the bundle's first cycles look noisy — the
-   `identifier-discipline` and `wired-integration-discipline` checks fire on every cycle, including
+   `identifier-discipline` check and the wired-integration doctrine's four-check audit
+   (`docs/governance/no-stub-mvp-doctrine.md` §"Per-cycle audit") fire on every cycle, including
    clean ones, and a contributor who doesn't know the gate is supposed to fail-and-self-heal will
    silence it.
 3. It **loads at the wrong phase** — the skill is invoked before the bundle is

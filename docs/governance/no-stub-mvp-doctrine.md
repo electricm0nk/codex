@@ -46,7 +46,7 @@ Stubs in shipped code are forbidden by default. The presence of a stub requires 
 
 Stubs the operator did not design or approve are treated as accidental debt and remediated by the next Wired Integration Cleanup epic (in SD-23, Epic 3 — the bundle's primary wired-integration deliverable; in future bundles whose scope is not primarily about wired-integration, by a defensive cleanup pass at the bundle's identifier-cleanup or wired-integration-cleanup epic as the bundle's epic structure dictates). The doctrine does not pin a single epic number — the cleanup epic is whatever bundle-internal epic handles stubs, and the Wired Integration Cleanup epic's criteria call it out by name. The operator's count of designed stubs as of 2026-07-20: 2-3. Anything beyond that count is accidental debt.
 
-The companion skill `wired-integration-discipline` carries the Stubs Registry authoring template; the doctrine-of-record for any given stub lives in the registry, not in source-code comments. Source-code comments naming a stub are themselves a forbidden pattern — the comment leaks governance into shipping code, which is the same anti-pattern as identifier-discipline's bundle-tag leak.
+The Stubs Registry authoring template lives in `./wired-integration-stubs-registry.md` itself; the doctrine-of-record for any given stub lives in the registry, not in source-code comments. Source-code comments naming a stub are themselves a forbidden pattern — the comment leaks governance into shipping code, which is the same anti-pattern as identifier-discipline's bundle-tag leak.
 
 ## Core doctrine
 
@@ -108,7 +108,7 @@ The member-invite stub (`invited: true` hardcoded, no actual invite flow) is **d
 
 ## Per-cycle audit (load-bearing control)
 
-The auditable unit is the diff between `develop` (or the slice's base branch) and the slice's branch at cycle commit time. The companion skill `wired-integration-discipline` defines the exact audit commands; the canonical checks are:
+The auditable unit is the diff between `develop` (or the slice's base branch) and the slice's branch at cycle commit time. This section defines the exact audit commands; the canonical checks are:
 
 1. `git diff --unified=0 develop...HEAD -- 'apps/desktop/**/*.ts*' 'apps/desktop/src-tauri/**/*.rs' 'src/**/*.rs' ':!**/__tests__/**' ':!**/*.test.ts' ':!**/*.test.rs' | grep -nE '\b(STUB|MOCK|placeholder|not yet implemented|todo|fixme|hack)\b' || echo OK_NO_TOKENS`
 2. `git diff --unified=0 develop...HEAD -- 'apps/desktop/**/*.tsx' 'apps/desktop/**/*.jsx' | grep -nE 'onClick=\{\s*\(\)\s*=>\s*\{\s*\}\s*\}|onClick=\{undefined' || echo OK_NO_NOOP_HANDLERS`
@@ -121,7 +121,7 @@ Each cycle commits these four commands' output as part of the cycle receipt (in 
 
 Every SD-N epic that adds or modifies shipping code carries at least one acceptance criterion in the form:
 
-> **Wired-Integration Audit:** the slice's diff against the base branch passes the four-check audit defined in `wired-integration-discipline/SKILL.md` §"Per-cycle audit." Audit output is captured in the cycle receipt.
+> **Wired-Integration Audit:** the slice's diff against the base branch passes the four-check audit defined in this doctrine's §"Per-cycle audit." Audit output is captured in the cycle receipt.
 
 This criterion is not optional and is not waivable except by an explicit operator override recorded in `risks-and-open-questions.md`. Bundles whose scope is purely documentary, research, or governance are exempt — the audit applies to code-bearing cycles only.
 
@@ -157,6 +157,5 @@ The Epic 3 acceptance criteria cover:
 - `~/workspace/governance/spec-domain-lifecycle.md` — sibling doctrine, "closed bundles stay closed; bundles don't own code."
 - `~/workspace/governance/agents/CLAUDE.md`, `~/workspace/governance/agents/AGENTS.md` — durable conduct surface; this doctrine is appended as Non-Negotiable Rule #6 (workspace-root numbering).
 - `~/workspace/governance/doctrine/no-stub-mvp-doctrine.md` — workspace citation copy. Same content; lives outside the repo for workspace-root loads.
-- `~/.hermes/profiles/god-emporer/skills/devops/wired-integration-discipline/SKILL.md` — procedural skill; loaded by the SD-23 loop and every subsequent bundle's code-bearing cycles.
 - `programs/codex/requirements/SD-23-character-mutation-and-wired-integration/epic-breakdown.md` §"Epic 3 — Wired Integration Cleanup" — first worked example under this doctrine.
 - `programs/codex/requirements/SD-21-campaign-manager-and-persistence/epic-breakdown.md` §"Epic 2 — Campaign Manager + Drive Persistence" — the SD-21 Epic 2 stub sources this doctrine was authored against.

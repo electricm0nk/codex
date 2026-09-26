@@ -4,12 +4,13 @@ This file is the lightweight activation surface for Claude Code and similar codi
 
 The primary durable conduct file is `./AGENTS.md`.
 
+@AGENTS.md
+
 ## Required read order
 
-1. Read this file.
-2. Read `./AGENTS.md`.
-3. Read the execution handoff or explicitly provided implementation brief.
-4. Read only the repo files and supporting docs explicitly required by that brief.
+1. Read this file. `AGENTS.md` is imported above and loads automatically with it.
+2. Read the execution handoff or explicitly provided implementation brief.
+3. Read only the repo files and supporting docs explicitly required by that brief.
 
 ## Activation rules
 
@@ -19,7 +20,7 @@ The primary durable conduct file is `./AGENTS.md`.
 - Stay inside the granted write scope.
 - Do not claim completion without concrete verification.
 - If scope, authority, or required reads are unclear, stop and surface the missing truth.
-- Code paths that ship must actually do what they claim to do. No stubs, no fixture-only data in production paths, no empty event handlers on user-facing affordances. Full doctrine at `./docs/governance/no-stub-mvp-doctrine.md`; companion skill `wired-integration-discipline`.
+- Code paths that ship must actually do what they claim to do. No stubs, no fixture-only data in production paths, no empty event handlers on user-facing affordances. Full doctrine at `./docs/governance/no-stub-mvp-doctrine.md`; the four-check audit lives in that doc's §"Per-cycle audit".
 
 ## Practical default
 
