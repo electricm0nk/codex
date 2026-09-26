@@ -715,3 +715,24 @@ Nothing above was deleted; this is inventory only, for the operator to action af
   - frozen_corpus_record_count: 49,450 — unmoved
   - data/corpus/** and site/**: untouched; data/sheet_rules/** regenerated on the branch (converter receipts per step)
 - receipt_note: F2 and F3 close with this landing. F4 (desktop roster) and F5 (closure deltas) remain open; D2-D6 bundle closure (graphify last) stays blocked on F5.
+
+## Epic F4 landed (2026-09-26)
+
+- merge_sha: c2b7e03dd5 ("merge(sd36,epic-f4): desktop class roster from the census, single-source seeds, prestige level-up, ui-smoke rows; F2/F3 polish; selection pools converted")
+- branch: tranche/16
+- verify_log: docs/release/SD-36-consolidation/artifacts/epic-f/stage-f4-f5/verify-f4-1.log
+- verify_result: "verify.sh full: PASS (51 PASS, 0 FAIL; class-census ids=137 computed=63 prestige_alone_blocked=74 mix_panel_computed=185 prestige_mix_computed=68)"
+- stage_receipts: docs/release/SD-36-consolidation/artifacts/epic-f/stage-f4-f5/ (f4pre-receipt.md, f4a-receipt.md, f4b-receipt.md, f4c-receipt.md, f4d-receipt.md, merge-readiness-blockers-receipt.md, fixture-receipts.md, per-step red/green/verify logs, suite logs, wire JSON, census-merge-readiness.json)
+- ui_smoke_evidence: docs/release/SD-36-consolidation/artifacts/ui-smoke/f4/ (results.json, run.log, one .png per row; regression/; run1-run3 red runs)
+- headline_numbers (command `cargo run --locked -j 8 --bin class_census -- --json <path>`, artifact census-merge-readiness.json):
+  - F4.1: Create roster 59 classes == census `roster_offered=59` (non-prestige 63 of 63 Computed; `roster_reason` offered 59, ex_state 4: ex_antipaladin, ex_barbarian, ex_inquisitor, ex_paladin; prestige 74 of 74 `prestige`)
+  - F4.2: `npm test -- classRoster characterHubModel characterProgression skillsModel` + `npm run typecheck` green (f4c-green.log, f4-suite-desktop-frontend.log)
+  - F4.3: `git grep -c 'fn canonical_seeds_for' -- src apps` -> 1; `git grep -n 'use .*canonical_seeds_for' -- src/bin apps` -> 2 (pf1_adapter.rs, v06_class_state_dump.rs)
+  - F4.4: ui-smoke 7 of 7 new rows green (6 F4.4 rows + arcane-archer accept), regression 4 of 4 green
+  - F4.5: `no_computed_class_is_unoffered_without_a_named_reason` green; 0 of 63 non-prestige ids withheld as `not_computed` or `hit_die_absent`
+  - desktop `CLASS_OPTIONS` (31) -> `CLASS_OPTIONS_FALLBACK`, read only when the roster command fails (failure printed)
+- gate_checks:
+  - class_status_table_check: "python3 scripts/gen_class_status_table.py --check" → OK (verify-f4-1.log class-census row)
+  - pcgen_residue_gate: PASS (verify-f4-1.log)
+  - frozen_corpus_record_count: 49,450 — unmoved; data/corpus/** and site/** untouched
+- receipt_note: F4 closes with this landing. F5 (closure deltas) remains open; D2-D6 bundle closure (graphify last) stays blocked on F5.

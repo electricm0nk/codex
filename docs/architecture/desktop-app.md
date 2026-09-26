@@ -409,30 +409,26 @@ fallback — `boundary/loadCreateCharacter.ts` throws outside a Tauri runtime, s
 Manager (gated), DM Toolkit (real, see above), and the seven catalog browsers.
 
 **Create** (`CreateCharacterForm.tsx`) drives the DI chain in the sequence diagram above.
-`characterHubModel.ts`'s `CLASS_OPTIONS` (`characterHubModel.ts:409-471`) offers **31** classes —
-every one of the 11 Core Rulebook classes, APG's 6, ACG's 10, and Pathfinder Unchained's 4
-(Unchained Barbarian/Monk/Rogue/Summoner) — each marked `supportLevel: 'full'` with
-`levelOptions: EVERY_CLASS_LEVEL` (every level 1-20). This is not an overclaim: a fresh
-`cargo run --bin v06_class_state_dump` run (2026-09-20, `class_count=31`, `computed_count=31`,
-`blocked_count=0`) confirms all 31 reach `HeadlessReceiptStatus::Computed` at every level 1-20, with
-zero blocked levels. **That dump sweeps class and level only — it holds race fixed to a single Human
-fixture** (`src/bin/v06_class_state_dump.rs:307-330`; the dump's own `input_posture` field names no
-race dimension), so "for every level 1-20" is proven, "for every race" is not proven by this
-instrument. Race-creation breadth is a separate, corpus-wide figure, not restated here — see
-[status.md](./status.md) §Posture for the exact 39-race / 30-chassis-tested / 18-complete breakdown,
-its book scope (CRB, Bestiary 1, Bestiary 2, Bestiary 5, Bestiary 6, ARG), and its evidence citations,
-and [rules-engine.md](./rules-engine.md) §"Entry points" and
-[rules-data-tables.md](./rules-data-tables.md) §"Engine state dumps" for the engine-side evidence.
+The class picker reads the engine's class roster: `list_class_creation_roster`
+(`apps/desktop/src-tauri/src/character_hub.rs`) serves `class_census::class_creation_roster()`, and
+`classRoster.ts` / `classCatalog.ts` install it. The roster offers **59** classes — every
+non-prestige class the class census measures `Computed` at every level of its own sweep and that
+states a hit die (63 of 63 non-prestige Computed, less the 4 Ex-* states, census-only by ruling),
+grouped by family (`<optgroup>`), each with its own `max_level`. Census `roster_offered=59`
+(`cargo run --locked -j 8 --bin class_census -- --json <path>`, 2026-09-26). While the roster loads,
+nothing is offered; if the command fails, the form prints `class roster unavailable: <diagnostic>`
+and falls back to the compiled-in 31-row `CLASS_OPTIONS_FALLBACK` (`characterHubModel.ts:409`).
+The census sweep holds race fixed to a single Human fixture, so "every level" is proven, "every race"
+is not proven by this instrument — see [status.md](./status.md) §Posture for race-creation breadth.
 
-The picker is, in one precise respect, narrower than the engine itself: 11 more classes reach
-`Computed` at the engine level (2 of Ultimate Combat's 3 — Gunslinger, Ninja — plus 9 of the 27
-"untabled" exotic base classes) but are not yet offered in this create-flow picker. This is a real,
-current UI-surface gap, not an engine gap. No prestige class ever reaches `Computed` (entry-gating
-only, by design), so its absence from this picker is correct rather than a gap. See
-[status.md](./status.md) §"Class/level compute coverage — corpus-wide" for the full corpus-wide
-class-coverage table (the distinct-class-id total, the per-family breakdown, and the named
-exceptions — blocked-only-on-weapon-proficiency, prestige with/without chassis,
-computed-but-not-in-picker) — not restated here.
+**Level Up** (`LevelUpDialog.tsx`) reads `list_level_up_class_options`: advance a held class, add a
+roster base class, or add any census prestige class. Prestige classes are always offered; each
+prints its entry requirements met/unmet/situational and never blocks the choice (SD-36 Epic F §9).
+UI evidence: ui-smoke rows `create-character-{samurai,magus,warrior,kineticist,inquisitor-generic}`
+and `level-up-fighter6-into-arcane-archer[-accept]`, 7 of 7 green
+(`docs/release/SD-36-consolidation/artifacts/ui-smoke/f4/results.json`). See
+[status.md](./status.md) §"Class/level compute coverage — corpus-wide" for the full class table —
+not restated here.
 
 **Sheet** (`CharacterSheet.tsx`) renders a Pathbuilder-style three-column layout, consuming
 `LoadSavedCharacterResponse`'s `PilotSnapshotDto` (ability modifiers, BAB, saves, baseline AC, skill

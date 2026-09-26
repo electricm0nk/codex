@@ -62,15 +62,15 @@ linking here, because each needs the figure inline for its own sentence to
 read (a README opening claim, a desktop create-picker fact, an instrument's
 own scope, a dispatch-history figure): README.md's opening posture
 paragraph (line ~11: "31 fully-tabled classes", "63 of 63 non-prestige
-class ids") and its create-picker/"Known limitations" section (lines ~186, 205,
-209: "31 fully-tabled classes", "18 of 27"); `desktop-app.md`'s Create-flow
-section (line ~412: `CLASS_OPTIONS` offers **31** classes);
+class ids") and its create-picker/"Known limitations" section (lines ~186, 205:
+"59 classes", "59 Computed non-prestige"); `desktop-app.md`'s Create-flow
+section (line ~412: the roster offers **59** classes);
 `rules-data-tables.md`'s state-dump description (line ~668: `v06_class_state_dump`
 sweeps all **31** classes); and `rules-engine.md`'s dispatch-history section
 (lines ~494-498: "27 \"untabled\" base classes", "78 conventional PC
 classes"). These four are the ones to update together with this table
 whenever the census changes — find all of them with:
-`grep -rn '31 fully-tabled classes\|63 of 63 non-prestige\|63 of 137\|137 distinct class ids\|78 conventional\|27 "untabled" base classes\|CLASS_OPTIONS.*31\|sweeps all \*\*31\*\*' README.md docs/architecture/*.md`.
+`grep -rn '31 fully-tabled classes\|63 of 63 non-prestige\|63 of 137\|137 distinct class ids\|78 conventional\|27 "untabled" base classes\|roster offers \*\*59\*\*\|59 of 63\|sweeps all \*\*31\*\*' README.md docs/architecture/*.md`.
 
 **What has changed since the last full pass**: several desktop-facing actions
 this doc used to describe as session-local or inert are now real, persisted
@@ -187,10 +187,16 @@ Row-by-row evidence:
   `tests/sd36_multiclass_any_class.rs` (four hand-worked mixes,
   `artifacts/epic-f/stage-f2-f3/f3b-hand-worked.md`) and
   `tests/sd21_multiclass_fighter_wizard_chassis_computes.rs`.
-- **Desktop picker (31 of 42 `Computed` classes offered)**:
-  `apps/desktop/src/characterHub/characterHubModel.ts:409` `CLASS_OPTIONS`,
-  31 entries — all 31 fully-tabled classes, none of the 11
-  additionally-`Computed` ones.
+- **Desktop picker (59 of 63 `Computed` non-prestige classes offered)**:
+  the Create picker reads `list_class_creation_roster`
+  (`apps/desktop/src-tauri/src/character_hub.rs`), which serves
+  `class_census::class_creation_roster()` — census `roster_offered=59`
+  (`cargo run --locked -j 8 --bin class_census -- --json <path>`, 2026-09-26,
+  `artifacts/epic-f/stage-f4-f5/census-merge-readiness.json`). The hardcoded
+  31-row list survives only as `CLASS_OPTIONS_FALLBACK`, used when the roster
+  command fails, with the failure printed. Prestige classes are offered at
+  level-up (`list_level_up_class_options`) with entry requirements printed
+  met/unmet, never blocked (SD-36 Epic F §9).
 - **Character level capped at 20** (PF1's own rule, not an engine gap):
   engine refuses level 21+ (`combat.rs:2141-2150`); desktop level-up picker
   filters it out (`apps/desktop/src/characterHub/LevelUpDialog.tsx:65-70`).
@@ -202,12 +208,13 @@ for):
   every non-prestige class from `data/sheet_rules` (census `ids=135
   computed=61 blocked=0`, 2026-09-24). Samurai and the 18 untabled-family
   classes formerly listed here all reach `Computed`.
-- **`Computed` but not in the desktop Create picker (32 of 63)**: the picker
-  offers the 31 fully-tabled classes; the other 32 Computed non-prestige ids are
-  Ultimate Combat (3: Gunslinger, Ninja, Samurai), the untabled exotic base
-  classes (20), the CRB NPC / Ex-* classes (7) and the APG Ex-Antipaladin /
-  Ex-Inquisitor pair (2) — per-family table above. A UI-surface gap, not an
-  engine gap (Epic F4 owns the roster).
+- **`Computed` but not in the desktop Create picker (0 of the 59 offered-eligible;
+  4 of 63 by ruling)**: measured from the roster — census `roster_reason`
+  is `offered` for 59 of 63 non-prestige ids and `ex_state` for the other 4
+  (ex_antipaladin, ex_barbarian, ex_inquisitor, ex_paladin), census-only by
+  operator ruling (SD-36 Epic F §9); 0 of 63 carry `not_computed` or
+  `hit_die_absent`. Pinned by
+  `class_census::tests::no_computed_class_is_unoffered_without_a_named_reason`.
 - **Prestige in a carrier mix (68 of 74 `Computed`)**: census
   `prestige_mix_computed=68 prestige_mix_unknown=0`, 2026-09-25, SD-36 F3c5
   (`artifacts/epic-f/census-f3c5.json`).

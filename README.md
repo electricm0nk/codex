@@ -8,7 +8,7 @@ Codex is a Rust + Tauri replacement effort for PCGen. PCGen is the heritage appl
 
 ## Current state
 
-**Current truthful posture:** Codex's PF1e compute engine is not a single-class proof slice. Across the 38-book corpus it has ingested, all 31 fully-tabled classes (Core Rulebook, Advanced Player's Guide, Advanced Class Guide, Pathfinder Unchained) reach a fully `Computed` sheet at every level 1-20 (proven by a fresh instrument run that sweeps class and level, not race — see status.md for the exact scope), all 3 of Ultimate Combat's classes and every remaining non-prestige base class reach `Computed` too (63 of 63 non-prestige class ids, of 137 distinct class ids corpus-wide; the 74 prestige ids are Blocked alone by the game rule and 68 of 74 reach `Computed` in a carrier mix — see status.md's class/level compute-coverage table), and the desktop app is a real, wired, end-to-end character-creation/leveling/equipment/DM-toolkit/encounter-builder/campaign-manager product, independently verified at 66 of 69 automated UI flows green. **Separately** — this is a different measurement and must not be conflated with the compute claim above (status.md says so explicitly) — the corpus's ingestion/classification state is a frozen snapshot at 100% of 49,450 catalogued units as of 2026-09-15 (see status.md's "Corpus coverage"): that figure answers "is every corpus unit present and classified," not "does the compute engine produce a value for it today." See [`docs/architecture/status.md`](docs/architecture/status.md) for the evidence-backed capability matrix and the real named limitations (6 of 74 prestige carrier mixes stay Blocked on an unrecognized source save formula, and the desktop picker offers 31 of the 63 Computed classes — each a specific, documented gap).
+**Current truthful posture:** Codex's PF1e compute engine is not a single-class proof slice. Across the 38-book corpus it has ingested, all 31 fully-tabled classes (Core Rulebook, Advanced Player's Guide, Advanced Class Guide, Pathfinder Unchained) reach a fully `Computed` sheet at every level 1-20 (proven by a fresh instrument run that sweeps class and level, not race — see status.md for the exact scope), all 3 of Ultimate Combat's classes and every remaining non-prestige base class reach `Computed` too (63 of 63 non-prestige class ids, of 137 distinct class ids corpus-wide; the 74 prestige ids are Blocked alone by the game rule and 68 of 74 reach `Computed` in a carrier mix — see status.md's class/level compute-coverage table), and the desktop app is a real, wired, end-to-end character-creation/leveling/equipment/DM-toolkit/encounter-builder/campaign-manager product, independently verified at 66 of 69 automated UI flows green. **Separately** — this is a different measurement and must not be conflated with the compute claim above (status.md says so explicitly) — the corpus's ingestion/classification state is a frozen snapshot at 100% of 49,450 catalogued units as of 2026-09-15 (see status.md's "Corpus coverage"): that figure answers "is every corpus unit present and classified," not "does the compute engine produce a value for it today." See [`docs/architecture/status.md`](docs/architecture/status.md) for the evidence-backed capability matrix and the real named limitations (6 of 74 prestige carrier mixes stay Blocked on an unrecognized source save formula, and 4 of the 63 Computed non-prestige ids — the Ex-* states ex_antipaladin, ex_barbarian, ex_inquisitor, ex_paladin — are census-only and never offered at creation, by ruling; the desktop Create picker offers the other 59 of 63 from the engine's class roster).
 
 The maintained, closure-updated statement of what is real vs stubbed today is
 [`docs/architecture/status.md`](docs/architecture/status.md) — it supersedes any
@@ -182,13 +182,14 @@ apps/desktop/src-tauri/target/debug/codex
 ```
 
 Expected current behavior:
-- the app opens on the real Character Hub — create, load, clone, and level up a character; every
-  class/level combination the create-flow's own picker offers (`CLASS_OPTIONS`, the 31 fully-tabled
-  CRB/APG/ACG/Pathfinder Unchained classes, at levels 1-20) reaches a fully computed sheet
-  (`v06_class_state_dump`: `class_count=31, computed_count=31, blocked_count=0`). The engine itself
-  computes more than the picker currently offers — see [`docs/architecture/status.md`](docs/architecture/status.md)'s
-  capability matrix, which also lists the classes that do **not** reach a fully computed sheet
-  (every prestige class taken alone; all 61 non-prestige class ids now compute — 61 of 61, class census 2026-09-24)
+- the app opens on the real Character Hub — create, load, clone, and level up a character; the
+  create-flow's picker reads the engine's class roster (`list_class_creation_roster`): it offers every
+  non-prestige class the class census measures `Computed` at every level of its own sweep and that
+  states a hit die — 59 classes (63 of 63 non-prestige Computed, less the 4 census-only Ex-* states;
+  `class_census --json`, `roster_offered=59`, 2026-09-26). Prestige classes are offered at level-up
+  with their entry requirements printed met/unmet, never blocked. See
+  [`docs/architecture/status.md`](docs/architecture/status.md)'s capability matrix for the classes that
+  do **not** reach a fully computed sheet (every prestige class taken alone; 6 of 74 prestige carrier mixes)
 - the DM Toolkit, encounter builder, campaign manager, and equipment/spell/class/race/monster
   catalogs are all real, wired features reachable from here, not stubs or placeholders
 - the GE-08 homebrew authoring workbench (the Guard Stance proof package's validate/persist/preview
@@ -202,17 +203,16 @@ app" — the `run-desktop` skill launches and drives it under a virtual (Xvfb) d
 
 ## Known limitations
 
-- the desktop's own class-creation picker currently offers only the 31 fully-tabled classes
-  (CRB/APG/ACG/Unchained); the engine can already compute more (Ultimate Combat's Gunslinger and
-  Ninja, Samurai, and all 27 "untabled" base classes) but the picker does not yet expose them —
-  a UI-surface gap, not an engine gap
-- no prestige class ever reaches `Computed` — entry-requirement gating is real for the ingested
-  prestige classes, and most of those have a real BAB/save chassis too, but the reason none reach
-  `Computed` is a missing gate arm, not an absence of chassis data — see
+- the 4 Ex-* states (ex_antipaladin, ex_barbarian, ex_inquisitor, ex_paladin) are Computed but
+  census-only — never offered at creation, by operator ruling (0 of the other 59 Computed
+  non-prestige classes are missing from the Create picker)
+- no prestige class reaches `Computed` taken alone (74 of 74 Blocked on
+  `prestige_class.requires_base_class_levels`, the game rule); 68 of 74 reach `Computed` in a carrier
+  mix, and the other 6 are Blocked on an unrecognized source save formula (FS-15) — see
   [`docs/architecture/status.md`](docs/architecture/status.md)'s class-coverage table for the exact
   figures and evidence
-- multiclass is limited to combinations of the 11 CRB base classes; a mix containing an
-  APG/ACG/Unchained/Ultimate-Combat/exotic class is not reachable through the supported-chassis gate
+- multiclass joins any class with a chassis (mix panel 185 of 185 `Computed`); a member that cannot
+  join is named (`multiclass.class_unsupported`, `multiclass.save_shape.*`)
 - character level is capped at 20, matching PF1's own rule; the engine refuses level 21+ rather
   than silently accepting it
 - only the Linux desktop onboarding/build path has been verified; do not assume parity on another
