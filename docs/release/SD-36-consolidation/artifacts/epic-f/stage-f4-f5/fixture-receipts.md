@@ -21,3 +21,20 @@ the sum of the 293 `test result` lines, `grep '^test result:' f4-suite-root-test
 
 Failing tests this step: **0**. Classified: (A) 0, (B) 0, (C) 0. Re-baselined tests: none.
 Fixed defects: none. Printed sheet values changed: none. STOPs: none.
+
+## f4:suite-ingest (worktree `sd36/epic-f4-f5` at `b269beacf3`)
+
+| what | command | result | receipt |
+|---|---|---|---|
+| ingest suite | `cargo test --locked -j 8 -p codex-ingest --no-fail-fast -- --test-threads=8` | exit 0; 167 `test result` lines, **1,764 passed, 0 failed**, 43 ignored | `f4-suite-ingest-test.log` (condensed: Running + result lines) |
+
+Before / after. Before: the last full ingest run on this branch (`f4pre-full-ingest.log`, committed
+in F4pre `4248733c1d`, after the converter step) was 167 result lines, 1,764 passed, 0 failed,
+43 ignored. After (this step, HEAD `b269beacf3` = F4pre + F4a–F4d + f4:suite-root): identical,
+167 / 1,764 / 0 / 43. F4a–F4d changed root `src/` (class census, seeds, pilot_compute sheet rules),
+desktop and tests; `git diff --stat 4248733c1d HEAD -- crates/` is empty, so no ingest test or
+source moved. Denominator: the sum of the 167 `test result` lines,
+`grep '^test result:' f4-suite-ingest-test.log`.
+
+Failing tests this step: **0**. Classified: (A) 0, (B) 0, (C) 0. Re-baselined tests: none.
+Fixed defects: none. Printed sheet values changed: none. STOPs: none.
