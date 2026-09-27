@@ -12,11 +12,10 @@
  * Arcanist 3 against the record's 2; every class it did not list silently defaulted to 2), and an
  * unknown class's hit die silently defaulted to d8.
  *
- * Hit points read `hitPointsDie`, the die the engine's own hit-point fold reads (the class's
- * chassis record). 5 of the 59 roster classes have no chassis record — the CRB Monk (whose printed
- * row carries the FS-23 oracle defect, `HD:10` against CRB p.56's d8) and the four Pathfinder
- * Unchained classes — so their HP prints Unknown, as the engine's does, rather than a total built
- * on a defective or borrowed die.
+ * Hit points read `hitPointsDie`, the die the engine's own hit-point fold reads. SD-36 F6b: that is
+ * the engine's one hit-die rule (`pilot_compute::hit_die_source`: the bespoke class module that
+ * computes the class's hit points first, then the converted record), so every one of the 59 roster
+ * classes has one — the CRB Monk's is the CRB table's d8, never its converted record's FS-23 `HD:10`.
  *
  * `CLASS_OPTIONS_FALLBACK` is that table, kept ONLY for the case the command fails, and then
  * installed with a visible notice (`class roster unavailable: <diagnostic>`) that the Create form
@@ -45,11 +44,11 @@ export interface ClassCreationEntryDto {
   family: string;
   familyLabel: string;
   book: string;
-  /** The principal's printed `Hit die` row (the roster rule's input). */
+  /** The class's hit die: the engine's one hit-die rule (the roster rule's input). */
   hitDie: number;
   /**
-   * The die the engine's hit-point fold reads (the chassis record's); `null` when the class has
-   * no chassis record — the engine then reports its HP Unknown, and so does every HP here.
+   * The die the engine's hit-point fold reads — the same rule as `hitDie` (SD-36 F6b); `null` only
+   * for a class no source states a die for, and then every HP here is Unknown too.
    */
   hitPointsDie: number | null;
   skillRanksPerLevel: number | null;
@@ -83,6 +82,18 @@ export interface LevelUpClassOptionDto {
   currentLevel: number;
   nextLevel: number;
   maxLevel: number;
+  /** SD-36 F6c: the engine's named refusal of this level-up; `null` when it can be taken. */
+  blocker: LevelUpBlockerDto | null;
+}
+
+/**
+ * `LevelUpBlockerDto`: why the engine refuses a level-up option, read before it is taken — the mix
+ * gate's diagnostic id, its plain reading, and the fold's full words.
+ */
+export interface LevelUpBlockerDto {
+  id: string;
+  summary: string;
+  message: string;
 }
 
 /** `EntryRequirementDto`: one printed prestige entry requirement and its note for this character. */
@@ -103,6 +114,8 @@ export interface PrestigeClassOptionDto {
   entryRequirements: EntryRequirementDto[];
   /** A note, never a gate (ruling §9.2). */
   requirementsAllMet: boolean;
+  /** SD-36 F6c: the engine's named refusal of this level-up; `null` when it can be taken. */
+  blocker: LevelUpBlockerDto | null;
 }
 
 /** `LevelUpClassOptionsResponse`. */
@@ -272,8 +285,13 @@ export interface LevelUpChoice {
   /** Prestige only: the printed entry requirements with their notes. Empty otherwise. */
   requirements: EntryRequirementDto[];
   requirementsAllMet: boolean;
-  /** Always `true`: an unmet prestige requirement is printed, never a block (§9.2). */
-  selectable: true;
+  /**
+   * The engine's named refusal (SD-36 F6c), shown on the option. An unmet prestige requirement is
+   * printed, never a block (§9.2); only an engine refusal makes an option unselectable.
+   */
+  blocker: LevelUpBlockerDto | null;
+  /** `false` exactly when `blocker` is set: Accept never reaches the engine's refusal. */
+  selectable: boolean;
 }
 
 export interface LevelUpChoiceGroup {
@@ -293,7 +311,8 @@ export function levelUpChoiceGroups(response: LevelUpClassOptionsResponse): Leve
     maxLevel: option.maxLevel,
     requirements: [],
     requirementsAllMet: true,
-    selectable: true,
+    blocker: option.blocker ?? null,
+    selectable: !option.blocker,
   });
   return [
     { kind: 'advance', heading: 'Advance a class you have', choices: response.advance.map(fromOption('advance')) },
@@ -310,10 +329,38 @@ export function levelUpChoiceGroups(response: LevelUpClassOptionsResponse): Leve
         maxLevel: option.maxLevel,
         requirements: option.entryRequirements,
         requirementsAllMet: option.requirementsAllMet,
-        selectable: true as const,
+        blocker: option.blocker ?? null,
+        selectable: !option.blocker,
       })),
     },
   ];
+}
+
+/** The text an option prints after its label in the Level Up picker. */
+export function levelUpChoiceSuffix(choice: LevelUpChoice): string {
+  if (choice.blocker) {
+    return ` (cannot be taken — ${choice.blocker.summary})`;
+  }
+  if (choice.kind === 'advance') {
+    return ` (currently ${choice.currentLevel} → ${choice.nextLevel})`;
+  }
+  if (choice.kind === 'add_base') {
+    return ' (new class)';
+  }
+  return choice.requirementsAllMet ? ' (prestige — requirements met)' : ' (prestige — requirements not all met)';
+}
+
+/** The choice Level Up selects first: the first selectable one, in group order. */
+export function defaultLevelUpChoice(choices: readonly LevelUpChoice[], current: string): string {
+  if (current && choices.some((choice) => choice.classId === current && choice.selectable)) {
+    return current;
+  }
+  return choices.find((choice) => choice.selectable)?.classId ?? '';
+}
+
+/** Whether Accept may run for `classId`: a selectable offered choice. */
+export function canAcceptLevelUp(choices: readonly LevelUpChoice[], classId: string): boolean {
+  return choices.some((choice) => choice.classId === classId && choice.selectable);
 }
 
 /** PF1's character level cap (`CHARACTER_LEVEL_CAP` in `character_hub.rs`). */
@@ -352,6 +399,7 @@ export function fallbackLevelUpResponse(
     currentLevel,
     nextLevel: currentLevel + 1,
     maxLevel: option.levelOptions[option.levelOptions.length - 1] ?? 1,
+    blocker: null,
   });
   for (const held of heldClasses) {
     const option = catalogOptions.find((entry) => entry.id === held.classId);

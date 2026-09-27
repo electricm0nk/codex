@@ -1,0 +1,27 @@
+{
+  "contributions": [
+    {
+      "bonusType": null,
+      "group": false,
+      "label": "Alertness (Perception)",
+      "ruleId": "core_rulebook:feat:alertness",
+      "skill": "perception",
+      "value": 2
+    },
+    {
+      "bonusType": null,
+      "group": false,
+      "label": "Alertness (Sense Motive)",
+      "ruleId": "core_rulebook:feat:alertness#bonus1",
+      "skill": "sense_motive",
+      "value": 2
+    }
+  ],
+  "groups": {},
+  "situational": [],
+  "skills": {
+    "perception": 2,
+    "sense_motive": 2
+  },
+  "unknown": []
+}

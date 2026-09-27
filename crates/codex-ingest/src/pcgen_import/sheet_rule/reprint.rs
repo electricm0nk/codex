@@ -33,7 +33,9 @@
 
 use std::collections::BTreeMap;
 
-use codex::rules_core::sheet_rule::RuleId;
+use codex::rules_core::sheet_rule::{split_rule_id, Printing, RuleId, SheetRule};
+
+use super::ctx::CorpusIndex;
 
 use super::closure::{row_identity, tokenize_row, PinnedTree, RowRef, RowShape};
 use super::ctx::RecordRef;
@@ -121,4 +123,58 @@ pub fn newest_printings(
     candidates: &BTreeMap<(String, String), Vec<RuleId>>,
 ) -> BTreeMap<(String, String), RuleId> {
     candidates.iter().filter_map(|(pair, ids)| newest_printing(tree, by_id, ids).map(|w| (pair.clone(), w))).collect()
+}
+
+/// SD-36 F6c: the supersession reading, exported where the runtime reads it. Every class principal
+/// (`<book>:class:<slug>`) whose slug another book's class principal also states gets
+/// `provenance.printing`: its book's `SOURCEDATE:`, the sorted list of those printings, and the
+/// resolver's verdict ([`newest_printing`], computed once per ambiguous pair in
+/// `CorpusIndex::reprint_newest_key` / `reprint_newest_name`) when an ambiguous pair holds every
+/// printing and names one of them. Returns the ids stamped.
+pub fn stamp_class_printings(
+    tree: &PinnedTree,
+    index: &CorpusIndex,
+    files: &mut BTreeMap<String, Vec<SheetRule>>,
+) -> Vec<RuleId> {
+    let mut groups: BTreeMap<String, Vec<RuleId>> = BTreeMap::new();
+    for rules in files.values() {
+        let Some(first) = rules.first() else { continue };
+        let (_, kind, slug) = split_rule_id(&first.id);
+        if kind == "class" && !first.id.contains('#') {
+            groups.entry(slug.to_owned()).or_default().push(first.id.clone());
+        }
+    }
+    groups.retain(|_, ids| ids.len() > 1);
+    let verdict = |ids: &[RuleId]| -> Option<RuleId> {
+        [(&index.cat_key_candidates, &index.reprint_newest_key), (&index.cat_name_candidates, &index.reprint_newest_name)]
+            .into_iter()
+            .flat_map(|(candidates, newest)| {
+                candidates
+                    .iter()
+                    .filter(|(_, c)| ids.iter().all(|id| c.contains(id)))
+                    .filter_map(|(pair, _)| newest.get(pair).cloned())
+            })
+            .find(|winner| ids.contains(winner))
+    };
+    let mut readings: BTreeMap<RuleId, (Vec<RuleId>, Option<RuleId>)> = BTreeMap::new();
+    for ids in groups.values_mut() {
+        ids.sort();
+        let newest = verdict(ids);
+        for id in ids.iter() {
+            readings.insert(id.clone(), (ids.clone(), newest.clone()));
+        }
+    }
+    let mut stamped = Vec::new();
+    for rules in files.values_mut() {
+        let Some(first) = rules.first_mut() else { continue };
+        let Some((printings, newest)) = readings.get(&first.id) else { continue };
+        first.provenance.printing = Some(Printing {
+            source_date: tree.source_dates.get(&first.provenance.book).cloned(),
+            printings: printings.clone(),
+            newest: newest.clone(),
+        });
+        stamped.push(first.id.clone());
+    }
+    stamped.sort();
+    stamped
 }

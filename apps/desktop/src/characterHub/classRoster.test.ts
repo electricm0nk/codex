@@ -15,6 +15,9 @@ import {
   installClassRoster,
   installClassRosterFailure,
   levelUpChoiceGroups,
+  levelUpChoiceSuffix,
+  canAcceptLevelUp,
+  defaultLevelUpChoice,
   describeEntryRequirement,
   fallbackLevelUpResponse,
   type ClassCreationRosterResponse,
@@ -24,6 +27,7 @@ import { LOADING_CLASS_CATALOG, findClassOption, getClassCatalog, knownClass, se
 import { CLASS_OPTIONS_FALLBACK, MAX_CLASS_LEVEL, getLevelOptionsForClass } from './characterHubModel';
 import { classRosterWire, levelUpFighter6Wire } from '../testSupport/classRosterWire';
 import { assert, assertEqual } from '../testSupport/asserts';
+import { maxHitPoints } from './characterProgression';
 
 const wire = classRosterWire();
 
@@ -80,11 +84,18 @@ function verifiesAnInstalledRosterIsWhatLookupsRead() {
   assertEqual(catalog.options.length, 59, 'options');
   assertEqual(findClassOption('class:samurai')?.label, 'Samurai', 'a newly offered class resolves');
   assertEqual(getLevelOptionsForClass('class:samurai').length, MAX_CLASS_LEVEL, 'Samurai 1-20');
-  // The CRB Monk has no chassis record; its printed row is the FS-23 oracle defect (HD:10 against
-  // CRB p.56's d8). Its HP is Unknown, as the engine's fold reports it — never the defective d10.
-  assertEqual(findClassOption('class:monk')?.hitDie, null, 'Monk: no chassis record, HP Unknown (FS-23)');
-  const noChassis = wire.classes.filter((row) => row.hitPointsDie === null).map((row) => row.classId);
-  assertEqual(noChassis.join(','), 'class:monk,class:unchained_barbarian,class:unchained_monk,class:unchained_rogue,class:unchained_summoner', '5 of 59 roster classes: HP Unknown');
+  // SD-36 F6b: the served die is the engine's one hit-die rule (the bespoke class module that
+  // computes the class's hit points first, then the converted record). The CRB Monk is the CRB
+  // table's d8 (CRB p.56) — never its converted record's FS-23 d10 — and the four Unchained classes
+  // read their own module's die. No offered class is HP Unknown.
+  assertEqual(findClassOption('class:monk')?.hitDie, 8, 'Monk d8 (CRB p.56), from the source that computes its HP');
+  assertEqual(findClassOption('class:unchained_monk')?.hitDie, 10, 'Unchained Monk d10 (Pathfinder Unchained)');
+  assertEqual(findClassOption('class:unchained_rogue')?.hitDie, 8, 'Unchained Rogue d8 (Pathfinder Unchained)');
+  const noDie = wire.classes.filter((row) => row.hitPointsDie === null).map((row) => row.classId);
+  assertEqual(noDie.join(','), '', '0 of 59 roster classes: HP Unknown');
+  // Monk 5 on Con +2: 8+2 + 4 x (5+2) = 38 (level 1 the full die, then the average die/2 + 1).
+  assertEqual(maxHitPoints([{ classId: 'class:monk', classLabel: 'Monk', level: 5 }], 2), 38, 'Monk 5 HP');
+  assertEqual(maxHitPoints([{ classId: 'class:unchained_rogue', classLabel: 'Unchained Rogue', level: 5 }], 2), 38, 'Unchained Rogue 5 HP');
   const archer = knownClass('class:arcane_archer');
   assert(archer !== undefined, 'a withheld prestige class is still known (label, hit die) for a character holding it');
   assertEqual(archer!.label, 'Arcane Archer', 'prestige label');
@@ -108,9 +119,8 @@ function verifiesAFailedCommandInstallsTheFallbackWithAVisibleNotice() {
 
 /**
  * The fallback may not drift from what the engine serves: every fallback id is served, with the
- * same label, and the same hit die wherever the engine's HP fold states one (26 of 31; the other
- * 5 — Monk and the four Unchained — have no chassis record, so the engine states no HP die to
- * compare against).
+ * same label and the same hit die (31 of 31 since SD-36 F6b: the engine states a die for every
+ * offered class).
  */
 function verifiesTheFallbackAgreesWithTheRosterOnEveryRowItCarries() {
   const served = new Map(wire.classes.map((row) => [row.classId, row]));
@@ -124,7 +134,7 @@ function verifiesTheFallbackAgreesWithTheRosterOnEveryRowItCarries() {
       compared += 1;
     }
   }
-  assertEqual(compared, 26, 'hit dice compared');
+  assertEqual(compared, 31, 'hit dice compared');
 }
 
 /** `ensureClassRosterLoaded` installs whichever outcome the command produced. */
@@ -164,11 +174,53 @@ function verifiesLevelUpChoiceGroupsForAFighter6() {
   assertEqual(archer!.requirements.length, 4, 'four printed requirement lines (f4b-receipt §3)');
   assertEqual(archer!.requirements.map((line) => line.status).join(','), 'unmet,unmet,unmet,met', 'met/unmet notes');
   assertEqual(archer!.requirements[3].text, 'base attack bonus at least 6', 'BAB line in the rule’s words');
-  assert(addPrestige.choices.every((choice) => choice.selectable), 'every prestige option is selectable');
+  // SD-36 F6c: the six FS-15 prestige classes are shown with the engine's named refusal and are
+  // not selectable; every other option is.
+  const blocked = addPrestige.choices.filter((choice) => !choice.selectable);
+  assertEqual(
+    blocked.map((choice) => choice.classId).sort().join(','),
+    'class:evangelist,class:exalted,class:mammoth_rider,class:pure_legion_enforcer,class:sentinel,class:ulfen_guard',
+    'the prestige options the engine refuses are the six FS-15 classes'
+  );
+  for (const choice of blocked) {
+    assertEqual(choice.blocker?.id ?? null, 'multiclass.save_shape.unrecognized', `${choice.classId} blocker id`);
+    assertEqual(
+      levelUpChoiceSuffix(choice),
+      ' (cannot be taken — save progression in the source data matches no PF1 form)',
+      `${choice.classId} prints its blocker on the option`
+    );
+    assert(!canAcceptLevelUp(groups.flatMap((group) => group.choices), choice.classId), `${choice.classId}: Accept is refused before the engine`);
+  }
+  assertEqual(addPrestige.choices.length - blocked.length, 68, 'the other 68 of 74 prestige options are selectable');
+  assert(advance.choices.every((choice) => choice.selectable), 'the held Fighter can advance');
+  assertEqual(
+    addBase.choices.filter((choice) => !choice.selectable).map((choice) => `${choice.classId}=${choice.blocker?.id}`).join(','),
+    'class:unchained_barbarian=multiclass.save_shape.unknown,class:unchained_monk=multiclass.save_shape.unknown,' +
+      'class:unchained_rogue=multiclass.save_shape.unknown,class:unchained_summoner=multiclass.save_shape.unknown',
+    'the base classes a Fighter 6 cannot add: the four Unchained classes, whose saves no table or record states'
+  );
+  assert(canAcceptLevelUp(groups.flatMap((group) => group.choices), 'class:arcane_archer'), 'Arcane Archer can be accepted');
+  assertEqual(
+    levelUpChoiceSuffix(archer!),
+    ' (prestige — requirements not all met)',
+    'an unmet requirement is a note, not a refusal'
+  );
   assert(
     addPrestige.choices.every((choice) => choice.requirements.every((line) => line.text.length > 0)),
     'no empty requirement line'
   );
+}
+
+/** SD-36 F6c: Level Up never selects an option the engine refuses, even when it is asked to. */
+function verifiesTheDefaultChoiceIsNeverARefusedOption() {
+  const response = levelUpFighter6Wire();
+  const choices = levelUpChoiceGroups(response).flatMap((group) => group.choices);
+  assertEqual(defaultLevelUpChoice(choices, ''), 'class:fighter', 'first selectable: the held Fighter');
+  assertEqual(defaultLevelUpChoice(choices, 'class:ulfen_guard'), 'class:fighter', 'a refused option is not kept as the selection');
+  assertEqual(defaultLevelUpChoice(choices, 'class:arcane_archer'), 'class:arcane_archer', 'a selectable option is kept');
+  const onlyRefused = choices.filter((choice) => !choice.selectable);
+  assertEqual(defaultLevelUpChoice(onlyRefused, ''), '', 'nothing is selected when every option is refused');
+  assert(!canAcceptLevelUp(onlyRefused, ''), 'Accept is disabled with nothing selectable');
 }
 
 function verifiesTheLevelCapEmptiesEveryGroupWithTheReason() {
@@ -217,6 +269,7 @@ async function main() {
   verifiesTheFallbackAgreesWithTheRosterOnEveryRowItCarries();
   await verifiesEnsureInstallsTheCommandOutcome();
   verifiesLevelUpChoiceGroupsForAFighter6();
+  verifiesTheDefaultChoiceIsNeverARefusedOption();
   verifiesTheLevelCapEmptiesEveryGroupWithTheReason();
   verifiesRequirementNotesPrintTheirStatus();
   verifiesTheLevelUpFallbackIsAnnouncedAndCapped();

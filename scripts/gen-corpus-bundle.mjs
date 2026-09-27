@@ -51,6 +51,17 @@
 //                          and reads content from the book's
 //                          `_settled/equipment.json` bundle. Only the file's
 //                          on-disk PRESENCE (for key enumeration) matters.
+//                          One exception, `equipment/equipmods/`:
+//                          `{"data": {"key","name","cost_gp"}, "source":
+//                          {"path","line"}}` -- exactly the identity fields
+//                          `apps/desktop/src-tauri/src/intelligent_item_catalog.rs`'s
+//                          `load_record_rows_in` reads (it joins the record to
+//                          its converted rule on `source.path:line`). SD-36 F6
+//                          merge-readiness B3: with `{}` here the packaged and
+//                          dev app served 0 of 152 Intelligent Item
+//                          components. Pinned by
+//                          `corpus_bundle_parity_test` (catalog read off the
+//                          bundle == catalog read off data/corpus/).
 //     race/, race_trait/   trimmed CorpusRecordV1 envelope -- `data` -> {}
 //                          (ignored), `source` kept (`path`/`line` feed
 //                          `lst_citation`), `license`/`pi_field`/`pi_marker`
@@ -165,9 +176,15 @@ function pick(obj, keys) {
   return out;
 }
 
-function transform(kind, doc) {
+function transform(kind, doc, relDir) {
   if (kind === '_settled') return sanitize(doc);
-  if (kind === 'equipment') return {};
+  if (kind === 'equipment') {
+    // `relDir` is `<book>/equipment[/<sub>...]`, `/`-joined on every OS.
+    if (relDir.split(/[\\/]/)[2] !== 'equipmods') return {};
+    const data = doc && typeof doc.data === 'object' && doc.data !== null ? doc.data : {};
+    const source = doc && typeof doc.source === 'object' && doc.source !== null ? doc.source : {};
+    return sanitize({ data: pick(data, ['key', 'name', 'cost_gp']), source: pick(source, ['path', 'line']) });
+  }
   if (kind === 'spell') {
     const data = doc && typeof doc.data === 'object' && doc.data !== null ? doc.data : {};
     return sanitize({ data: pick(data, ['key', 'school']) });
@@ -237,7 +254,7 @@ function main() {
         } catch {
           continue;
         }
-        const cleaned = transform(kind, doc);
+        const cleaned = transform(kind, doc, relDir);
         writeFileSync(join(outDir, name), JSON.stringify(cleaned));
         copied += 1;
       }

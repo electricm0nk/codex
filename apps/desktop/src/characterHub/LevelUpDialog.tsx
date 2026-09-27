@@ -3,10 +3,13 @@ import { createPortal } from 'react-dom';
 import { previewLevelUp, totalSkillPoints, type HeldClass } from './characterProgression';
 import { knownClass } from './classCatalog';
 import {
+  canAcceptLevelUp,
+  defaultLevelUpChoice,
   describeEntryRequirement,
   ensureClassRosterLoaded,
   fallbackLevelUpResponse,
   levelUpChoiceGroups,
+  levelUpChoiceSuffix,
   loadLevelUpClassOptions,
   useClassCatalog,
   type LevelUpClassOptionsResponse,
@@ -30,7 +33,9 @@ import {
  * SD-36 F4c: the classes offered are the engine's (`list_level_up_class_options`), in three
  * groups — advance a class the character has, add a base class, add a prestige class. A prestige
  * class prints its entry requirements, each with its met/unmet note for this character, and is
- * offered either way (ruling §9.2: print, never block). Character level 20 is the cap. If the
+ * offered either way (ruling §9.2: print, never block). SD-36 F6c: an option the engine itself
+ * refuses (its `blocker`, e.g. `multiclass.save_shape.unrecognized`) is shown with the named reason and
+ * cannot be selected, so Accept never reaches that refusal. Character level 20 is the cap. If the
  * command fails, advance/add-base come from the class catalog and the failure is printed.
  *
  * Accepting calls `onAccept(classId)` and closes; the caller
@@ -114,17 +119,15 @@ export function LevelUpDialog(props: {
 
   // Default to the first held class that can advance, else the first offered class.
   useEffect(() => {
-    setClassId((current) => {
-      if (current && choices.some((choice) => choice.classId === current)) {
-        return current;
-      }
-      return choices[0]?.classId ?? '';
-    });
+    // SD-36 F6c: an option the engine refuses is never the default.
+    setClassId((current) => defaultLevelUpChoice(choices, current));
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [classOptions]);
 
+  const acceptable = canAcceptLevelUp(choices, classId);
+
   useEffect(() => {
-    if (!props.open || !classId) {
+    if (!props.open || !classId || !acceptable) {
       setEnginePlan(null);
       setEnginePlanFailed(false);
       return;
@@ -146,7 +149,7 @@ export function LevelUpDialog(props: {
     return () => {
       cancelled = true;
     };
-  }, [props.open, props.characterId, classId]);
+  }, [props.open, props.characterId, classId, acceptable]);
 
   if (!props.open) {
     return null;
@@ -249,15 +252,15 @@ export function LevelUpDialog(props: {
                     .map((group) => (
                       <optgroup key={group.kind} label={`${group.heading} (${group.choices.length})`}>
                         {group.choices.map((choice) => (
-                          <option key={`${group.kind}:${choice.classId}`} value={choice.classId}>
+                          <option
+                            key={`${group.kind}:${choice.classId}`}
+                            value={choice.classId}
+                            disabled={!choice.selectable}
+                            data-blocker-id={choice.blocker?.id}
+                            title={choice.blocker?.message}
+                          >
                             {choice.label}
-                            {choice.kind === 'advance'
-                              ? ` (currently ${choice.currentLevel} → ${choice.nextLevel})`
-                              : choice.kind === 'add_base'
-                                ? ' (new class)'
-                                : choice.requirementsAllMet
-                                  ? ' (prestige — requirements met)'
-                                  : ' (prestige — requirements not all met)'}
+                            {levelUpChoiceSuffix(choice)}
                           </option>
                         ))}
                       </optgroup>
@@ -268,8 +271,35 @@ export function LevelUpDialog(props: {
           )}
 
           {/*
+            SD-36 F6c: the options the engine refuses, each with its named reason. A disabled
+            <option> is easy to miss (and its text is not in the page text), so the reasons print here.
+          */}
+          {(() => {
+            const refused = choices.filter((choice) => !choice.selectable);
+            return refused.length > 0 ? (
+              <div style={{ marginTop: '0.5rem' }}>
+                <p style={{ color: 'var(--color-text-muted)', fontSize: '0.75rem', fontWeight: 700, margin: 0 }}>
+                  {`Cannot be taken (${refused.length})`}
+                </p>
+                <ul aria-label="Classes that cannot be taken" style={{ margin: '0.25rem 0 0', paddingLeft: '1.1rem' }}>
+                  {refused.map((choice) => (
+                    <li
+                      key={`${choice.kind}:${choice.classId}`}
+                      data-blocker-id={choice.blocker?.id}
+                      title={choice.blocker?.message}
+                      style={{ color: 'var(--color-text-secondary)', fontSize: '0.75rem' }}
+                    >
+                      {`${choice.label} — ${choice.blocker?.summary ?? ''}`}
+                    </li>
+                  ))}
+                </ul>
+              </div>
+            ) : null;
+          })()}
+
+          {/*
             A prestige class's entry requirements, in the rule's words, each with its note for
-            this character. Printed, never a gate (§9.2): Accept stays enabled.
+            this character. Printed, never a gate (§9.2): Accept stays enabled for them.
           */}
           {selectedChoice && selectedChoice.kind === 'add_prestige' ? (
             <div style={{ marginTop: '0.6rem' }}>
@@ -481,10 +511,13 @@ export function LevelUpDialog(props: {
           <button
             type="button"
             onClick={() => {
+              if (!acceptable) {
+                return;
+              }
               props.onAccept(classId);
               props.onClose();
             }}
-            disabled={!classId}
+            disabled={!acceptable}
             style={{
               backgroundColor: 'var(--color-accent)',
               border: '1px solid var(--color-border)',
@@ -493,7 +526,7 @@ export function LevelUpDialog(props: {
               cursor: 'pointer',
               fontSize: '0.85rem',
               fontWeight: 600,
-              opacity: classId ? 1 : 0.6,
+              opacity: acceptable ? 1 : 0.6,
               padding: '0.45rem 0.9rem',
             }}
           >

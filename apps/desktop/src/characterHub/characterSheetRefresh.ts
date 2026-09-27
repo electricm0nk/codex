@@ -4,6 +4,7 @@ import type {
   LoadSavedCharacterResponse,
   SpellSelectionDto,
 } from '../boundary/loadSavedCharacterDetail';
+import { NO_FEAT_SKILL_BONUSES } from '../boundary/loadSavedCharacterDetail';
 
 /**
  * Maps a `CreateCharacterResponse`-shaped mutation outcome — the shape
@@ -123,6 +124,8 @@ export function toCharacterMutationRefresh(
       // changes what the character holds; absent until re-read, never stale.
       sheetLines: [],
       sheetRulesUnavailableReason: null,
+      // SD-36 F6b: the feat skill-bonus fold, same rule: absent until re-read, never stale.
+      featSkillBonuses: NO_FEAT_SKILL_BONUSES,
     },
   };
 }

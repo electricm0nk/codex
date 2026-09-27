@@ -16,7 +16,7 @@
 import { assert, assertEqual } from './asserts';
 import { __testables } from './uiProbe';
 
-const { matchCommandTarget } = __testables;
+const { matchCommandTarget, executeCommand } = __testables;
 
 function verifiesExactMatchWinsOverPrefixAndContains() {
   const names = ['Back to landing', 'Back', 'Go Back'];
@@ -84,3 +84,27 @@ if (failures > 0) {
   process.exit(1);
 }
 console.log(`All ${cases.length} matchCommandTarget cases passed.`);
+
+// `deleteCharacter` (SD-36 F6d): the harness's per-row cleanup deletes the
+// characters a row created through the app's own `delete_character` command.
+// Neither case below needs a DOM or a Tauri runtime: an empty id must be
+// refused before anything is invoked, and outside a Tauri window the
+// boundary's own "runtime not available" refusal must come back as an
+// ok:false answer the runner can report -- never an unhandled rejection that
+// would silently stall the command channel.
+async function verifiesDeleteCharacterCommand() {
+  const noId = await executeCommand({ id: 'c1', op: 'deleteCharacter' });
+  assertEqual(noId.ok, false, 'deleteCharacter without a target id is refused');
+  assert(/character id/.test(noId.error ?? ''), `the refusal names the missing id (got '${noId.error}')`);
+  const noRuntime = await executeCommand({ id: 'c2', op: 'deleteCharacter', target: 'character:x' });
+  assertEqual(noRuntime.ok, false, 'deleteCharacter outside a Tauri runtime answers ok:false');
+  assertEqual(noRuntime.id, 'c2', 'the answer echoes the command id');
+  assert(/runtime/i.test(noRuntime.error ?? ''), `the answer carries the boundary's error (got '${noRuntime.error}')`);
+}
+
+verifiesDeleteCharacterCommand()
+  .then(() => console.log('  ok - deleteCharacter command refuses a missing id and reports a boundary failure'))
+  .catch((cause: unknown) => {
+    console.error(`  FAIL - deleteCharacter command: ${cause instanceof Error ? cause.message : String(cause)}`);
+    process.exit(1);
+  });

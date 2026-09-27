@@ -1,10 +1,8 @@
 import {
   buildLevelEntries,
   buildNextEntries,
-  casterLevel,
   classHitDie,
   classSkillPointsBase,
-  classWeaponProficiency,
   formatHeldClasses,
   levelGrantsFeat,
   maxHitPoints,
@@ -27,10 +25,8 @@ async function main() {
   verifiesParseHeldClassesFallsBackToDerivedLabelForAnUnknownClass();
   verifiesFormatHeldClassesJoinsWithSlash();
   verifiesTotalCharacterLevelSumsAcrossClasses();
-  verifiesCasterLevelOnlyCountsFullCasterClasses();
   verifiesClassSkillPointsBaseReadsTheRoster();
   verifiesClassHitDieReadsTheRoster();
-  verifiesClassWeaponProficiency();
   verifiesMaxHitPointsSingleClass();
   verifiesMaxHitPointsMulticlassOnlyMaximizesTheVeryFirstLevel();
   verifiesTotalSkillPointsFlooredAndHumanBonus();
@@ -102,20 +98,7 @@ function verifiesTotalCharacterLevelSumsAcrossClasses() {
   assertEqual(totalCharacterLevel('class:rogue:2'), 2, 'total character level for a single class is just its level');
 }
 
-function verifiesCasterLevelOnlyCountsFullCasterClasses() {
-  assertEqual(
-    casterLevel('class:fighter:3,class:wizard:1'),
-    1,
-    'caster level only sums full-caster classes (Wizard), not Fighter'
-  );
-  assertEqual(casterLevel('class:wizard:2,class:sorcerer:3'), 5, 'caster level sums across multiple caster classes held at once');
-  assertEqual(casterLevel('class:fighter:5'), 0, 'a character with no caster class has caster level 0');
-  // Arcanist is a full arcane caster (ACG): its caster level is its class
-  // level, exactly like Wizard's. Now that it is selectable on the roster,
-  // omitting it here would silently show every Arcanist a caster level of 0.
-  assertEqual(casterLevel('class:arcanist:7'), 7, 'Arcanist is a full caster — caster level equals its class level');
-  assertEqual(casterLevel('class:fighter:2,class:arcanist:3'), 3, 'a Fighter/Arcanist counts only the Arcanist levels');
-}
+// SD-36 F6a: caster level and weapon proficiency are the engine's now (`classFactsModel.test.ts`).
 
 /**
  * SD-36 F4c: skill ranks per level are the converted record's `Skill ranks per level` row, served
@@ -136,7 +119,7 @@ function verifiesClassHitDieReadsTheRoster() {
   assertEqual(classHitDie('class:wizard'), 6, 'Wizard has a d6 hit die');
   assertEqual(classHitDie('class:fighter'), 10, 'Fighter has a d10 hit die');
   assertEqual(classHitDie('class:arcanist'), 6, 'Arcanist has a d6 hit die');
-  assertEqual(classHitDie('class:monk'), null, 'Monk: no chassis record (FS-23 defect row): Unknown, never d10');
+  assertEqual(classHitDie('class:monk'), 8, 'Monk d8 (CRB p.56): the die its HP is computed from, never the FS-23 d10 (SD-36 F6b)');
   assertEqual(classHitDie('class:samurai'), 10, 'Samurai: a newly offered class');
   assertEqual(classHitDie('class:some_future_class'), null, 'an unrecognized class has no hit die (no assumed d8)');
 }
@@ -157,14 +140,6 @@ function verifiesNothingIsAssumedWhileTheRosterIsLoading() {
   assertEqual(maxHitPoints(held, 2), null, 'HP is Unknown, not a d8 guess');
   assertEqual(buildLevelEntries(held)[0].skillPointsBase, null, 'skill ranks Unknown');
   assertEqual(totalSkillPoints(null, 2, true), null, 'Unknown base stays Unknown');
-}
-
-function verifiesClassWeaponProficiency() {
-  const fighter = classWeaponProficiency('class:fighter');
-  assert(fighter.simple && fighter.martial && !fighter.exotic, 'Fighter is proficient with simple and martial weapons, never exotic by default');
-
-  const wizard = classWeaponProficiency('class:wizard');
-  assert(wizard.simple && !wizard.martial && !wizard.exotic, 'Wizard is only proficient with simple weapons by default');
 }
 
 function verifiesMaxHitPointsSingleClass() {

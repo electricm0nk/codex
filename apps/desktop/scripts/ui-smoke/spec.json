@@ -445,6 +445,121 @@
       "notes": "SD-36 F4d (epic-f-class-completion.md §6, acceptance F4.4): one row per family the census roster newly offers at Create (CRB NPC class). Picks Race=Human (CRB) and Class=class:warrior by option VALUE (the class id) through the `select` op, so the option's own label/suffix text never has to be guessed; the target 'Warrior' is a substring of the class select's concatenated option text (the race select, earlier in document order, contains no such text). Submits, waits 3s for the save, backs out, loads the character by its unique name 'F4 Smoke Charlie' (Load Character lists newest first) and asserts the SHEET prints the held-class line 'Warrior 1' (formatHeldClasses over the saved classSummary, label from the served roster). A blocked build never reaches the Load list, so it fails here as 'target not found', never green."
     },
     {
+      "id": "sheet-f6a-samurai-weapons",
+      "screen": "sheet",
+      "setup": ["create-character-render", "create-character-samurai"],
+      "steps": [{ "op": "click", "target": "Weapons" }],
+      "marker": "Add Weapon",
+      "expect": ["✓ Martial Weapons"],
+      "forbid": ["✗ Martial Weapons", "Martial Weapons (Unknown)", "Class skills Unknown", "class facts unavailable"],
+      "notes": "SD-36 F6a: weapon proficiency, caster level and class skills come from the engine per held class (`list_class_facts`), not the deleted hand-kept tables (MARTIAL_WEAPON_CLASSES had 5 ids, CASTER_CLASSES 6, CLASS_SKILLS 12 lists). Samurai 1 (create-character-samurai's steps reach its sheet) opens the Weapons tab: the tier line reads '✓ Martial Weapons' (the deleted table printed '✗'), and the Skills panel names no class-skill Unknown."
+    },
+    {
+      "id": "sheet-f6a-warrior-weapons",
+      "screen": "sheet",
+      "setup": ["create-character-render", "create-character-warrior"],
+      "steps": [{ "op": "click", "target": "Weapons" }],
+      "marker": "Add Weapon",
+      "expect": ["✓ Martial Weapons"],
+      "forbid": ["✗ Martial Weapons", "Martial Weapons (Unknown)", "Class skills Unknown", "class facts unavailable"],
+      "notes": "SD-36 F6a: weapon proficiency, caster level and class skills come from the engine per held class (`list_class_facts`), not the deleted hand-kept tables (MARTIAL_WEAPON_CLASSES had 5 ids, CASTER_CLASSES 6, CLASS_SKILLS 12 lists). Warrior 1 (CRB NPC class): '✓ Martial Weapons'."
+    },
+    {
+      "id": "sheet-f6a-magus-caster-level",
+      "screen": "sheet",
+      "setup": ["create-character-render", "create-character-magus"],
+      "steps": [{ "op": "click", "target": "Weapons" }],
+      "marker": "Add Weapon",
+      "expect": ["✓ Martial Weapons", "Caster Level"],
+      "forbid": ["✗ Martial Weapons", "Martial Weapons (Unknown)", "Class skills Unknown", "class facts unavailable"],
+      "notes": "SD-36 F6a: weapon proficiency, caster level and class skills come from the engine per held class (`list_class_facts`), not the deleted hand-kept tables (MARTIAL_WEAPON_CLASSES had 5 ids, CASTER_CLASSES 6, CLASS_SKILLS 12 lists). Magus 1: '✓ Martial Weapons' and a Caster Level of 1 (the deleted table printed '—' for every caster outside six ids)."
+    },
+    {
+      "id": "sheet-f6c-shaman-no-domain-line",
+      "screen": "sheet",
+      "setup": [
+        "create-character-render"
+      ],
+      "steps": [
+        {
+          "op": "click",
+          "target": "character-name"
+        },
+        {
+          "op": "type",
+          "text": "F6 Smoke India"
+        },
+        {
+          "op": "click",
+          "target": "player-name"
+        },
+        {
+          "op": "type",
+          "text": "UI Smoke Harness"
+        },
+        {
+          "op": "select",
+          "target": "Human (CRB)",
+          "text": "Human (CRB)"
+        },
+        {
+          "op": "select",
+          "target": "Shaman",
+          "text": "class:shaman"
+        },
+        {
+          "op": "click",
+          "target": "Create character"
+        },
+        {
+          "op": "wait",
+          "ms": 3000
+        },
+        {
+          "op": "scroll",
+          "ticks": 40,
+          "direction": "up"
+        },
+        {
+          "op": "key",
+          "key": "Shift"
+        },
+        {
+          "op": "click",
+          "target": "Back"
+        },
+        {
+          "op": "click",
+          "target": "Load\nCharacter"
+        },
+        {
+          "op": "click",
+          "target": "F6 Smoke India"
+        },
+        {
+          "op": "click",
+          "target": "Load"
+        },
+        {
+          "op": "click",
+          "target": "Actions"
+        }
+      ],
+      "marker": "Spirit Magic",
+      "expect": [
+        "Shaman 1",
+        "Spirit Magic"
+      ],
+      "forbid": [
+        "(domains)",
+        "Domains\nLife (Spirit)"
+      ],
+      "allowGlobalForbid": [
+        "failure"
+      ],
+      "notes": "SD-36 F6c (polish.json F6-5). Creates Human Shaman 1 ('F6 Smoke India'), loads it and opens the Actions tab, where the Rules and features section prints the converted record's lines. Before F6c the shaman's BONUS:DOMAIN|NUMBER|1 (acg_classes.lst:221) printed 'Shaman (domains) +1'; ACG p.35 gives the shaman a spirit and spirit magic, never a domain. The converter now withholds a domain count its own class's DOMAIN: grants fill (pool_link::withhold_class_granted_domain_counts), and the domain records only that class grants (the ten '<X> (Spirit)' spirit-magic lists) print no line under a 'Domains' heading; the row forbids both and expects the Spirit Magic line. allowGlobalForbid 'failure': the sheet's Chain Shirt line prints the rule text 'Arcane spell failure: 20%' (first live run, 2026-09-27: the sole source of that string on this screen)."
+    },
+    {
       "id": "create-character-kineticist",
       "screen": "create",
       "setup": ["create-character-render"],
@@ -514,6 +629,16 @@
       "marker": "☰ Menu",
       "expect": ["☰ Menu"],
       "notes": "Real row+Load, confirmed live 2026-09-17. The setup mints a fresh 'Smoke Test PC' (see create-character-fill-and-submit's own note on why not the seeded/legacy 'Aldric Ironhand' -- ambiguous by exact-name match on this profile), then this row's own steps back out to landing, open Load Character, click the row by its own displayLabel (matches via the prefix tier: CharacterListRow's button textContent is displayLabel followed by raceLabel/classSummary/savedAt with no separator, so an exact name is a startsWith prefix of it, same mechanism the existing landing-render rows already rely on), and Load into the sheet. Every sheet-* row below points its own `setup` at this row."
+    },
+    {
+      "id": "load-seed-list-both",
+      "screen": "load",
+      "steps": [
+        { "op": "click", "target": "Load\nCharacter" }
+      ],
+      "marker": "Elowen Ashgrave",
+      "expect": ["Aldric Ironhand", "Fighter 3", "Elowen Ashgrave", "Wizard 5"],
+      "notes": "SD-36 F6e (operator ruling 2026-09-27, option 3): a fresh install's Load screen lists BOTH starter seeds -- Aldric Ironhand (Human Fighter 3) and Elowen Ashgrave (Human Wizard 5). run.mjs gives every run a fresh isolated app-data root (F6d), so the app seeds both on its first launch; no setup row is needed and nothing is created, so the row's cleanup deletes nothing. The seeds come from character_hub.rs seed_default_characters_at, built through compose_character_input (the create path)."
     },
     {
       "id": "load-character-delete-clone",
@@ -599,7 +724,8 @@
       "steps": [{ "op": "click", "target": "Actions" }],
       "marker": "Actions",
       "expect": ["Actions"],
-      "notes": "SHEET_TABS[6]. Trait-add control (sheet-action-trait-add) lives on this tab."
+      "allowGlobalForbid": ["failure"],
+      "notes": "SHEET_TABS[6]. Trait-add control (sheet-action-trait-add) lives on this tab. allowGlobalForbid 'failure' (SD-36 F6 merge-readiness B2): the Smoke Test PC (Elf Wizard 1) wears the create path's fixed Chain Shirt, and the Rules and features section prints its StatBlock rule text 'Arcane spell failure: 20%' (data/sheet_rules/core_rulebook/equipment/chain_shirt.json) -- correct PF1 text and the sole source of that string on this screen; the same exemption sheet-f6c-shaman-no-domain-line carries."
     },
     {
       "id": "sheet-action-add-armor-gear-picker",
@@ -707,6 +833,98 @@
       "marker": "You often notice things that others might miss.",
       "expect": ["☰ Menu", "Fighter 6 / Arcane Archer 1", "You often notice things that others might miss."],
       "notes": "SD-36 F4d: the Accept half of level-up-fighter6-into-arcane-archer (not in F4.4's list of six; added because F4c carried forward that the prestige accept path - level_up_character with a prestige class id - had never been driven). Same Human Fighter 6 build under its own name ('F4 Smoke Golf', so it never loads a character a previous run already leveled), Accept on Arcane Archer; character level 7 grants the universal odd-level feat, so the sheet opens the feat picker ('Pick a feat — level 1') and the row searches 'Alertness', picks it and Adds it, which runs level_up_character then addFeatSelection. The pick target is 'AlertnessCRB': a picker row's name is its feat name followed by its book with no separator, and a bare 'Alertness' also prefix-matches 'Alertness (Mythic)', which the first live run (2026-09-26) picked. Asserts the sheet's held-class line 'Fighter 6 / Arcane Archer 1' and, on the Feats tab, the CRB Alertness text 'You often notice things that others might miss.' That text is the row's marker, so the settle wait covers the Feats tab's async catalog load (run 3, 2026-09-26: with the sheet's '☰ Menu' as marker the snapshot was read before the tab had resolved its rows)"
+    },
+    {
+      "id": "level-up-fighter6-blockers-and-labels",
+      "screen": "sheet",
+      "setup": [
+        "create-character-render"
+      ],
+      "steps": [
+        {
+          "op": "click",
+          "target": "character-name"
+        },
+        {
+          "op": "type",
+          "text": "F6 Smoke Hotel"
+        },
+        {
+          "op": "click",
+          "target": "player-name"
+        },
+        {
+          "op": "type",
+          "text": "UI Smoke Harness"
+        },
+        {
+          "op": "select",
+          "target": "Human (CRB)",
+          "text": "Human (CRB)"
+        },
+        {
+          "op": "select",
+          "target": "Fighter",
+          "text": "class:fighter"
+        },
+        {
+          "op": "select",
+          "target": "12345678910",
+          "text": "6"
+        },
+        {
+          "op": "click",
+          "target": "Create character"
+        },
+        {
+          "op": "wait",
+          "ms": 3000
+        },
+        {
+          "op": "scroll",
+          "ticks": 40,
+          "direction": "up"
+        },
+        {
+          "op": "key",
+          "key": "Shift"
+        },
+        {
+          "op": "click",
+          "target": "Back"
+        },
+        {
+          "op": "click",
+          "target": "Load\nCharacter"
+        },
+        {
+          "op": "click",
+          "target": "F6 Smoke Hotel"
+        },
+        {
+          "op": "click",
+          "target": "Load"
+        },
+        {
+          "op": "click",
+          "target": "+"
+        },
+        {
+          "op": "select",
+          "target": "Arcane Archer",
+          "text": "class:arcane_archer"
+        }
+      ],
+      "marker": "Level up",
+      "expect": [
+        "Cannot be taken (10)",
+        "Ulfen Guard — save progression in the source data matches no PF1 form",
+        "Evangelist — save progression in the source data matches no PF1 form",
+        "Unchained Rogue — no source states this class's save progressions",
+        "requires Longbow chosen for Weapon Focus",
+        "Arcane Archer 1 (new class) — character level 7"
+      ],
+      "notes": "SD-36 F6c (polish.json F6-4). Same Human Fighter 6 build as level-up-fighter6-into-arcane-archer under its own name ('F6 Smoke Hotel'). Opens Level Up, whose 'Cannot be taken (10)' block lists the options the engine refuses (list_level_up_class_options' blocker: the six FS-15 prestige classes, multiclass.save_shape.unrecognized, and the four Unchained base classes, multiclass.save_shape.unknown), then picks Arcane Archer. The first live run (2026-09-27) had the list in a collapsed <details> whose <summary> the probe could not click; the list now always prints. Asserts two of the refused lines with their plain reasons and that Arcane Archer's entry requirement prints the Weapon Focus choice by its labels ('requires Longbow chosen for Weapon Focus'), never the raw id ('core rulebook:feat:weapon focus') it printed before F6c. Expected strings are the ones f4c-level-up-fighter6-wire.json serves for Human Fighter 6."
     },
     {
       "id": "sheet-action-skill-allocation-dialog",
@@ -989,6 +1207,22 @@
       "expect": [],
       "manual": "PortraitUpload opens a native OS file-open dialog for the image file.",
       "notes": "PortraitUpload control in the sheet's left rail (save_character_portrait)."
+    },
+    {
+      "id": "load-seed-wizard-fireball",
+      "screen": "sheet",
+      "steps": [
+        { "op": "click", "target": "Load\nCharacter" },
+        { "op": "click", "target": "Elowen Ashgrave" },
+        { "op": "click", "target": "Load" },
+        { "op": "click", "target": "Spells" },
+        { "op": "wait", "ms": 8000 },
+        { "op": "scroll", "ticks": 6, "direction": "down" },
+        { "op": "key", "key": "Shift" }
+      ],
+      "marker": "Wizard level 3",
+      "expect": ["Elowen Ashgrave", "Wizard 5", "HIT POINTS\n27", "Skill points: 7", "Fireball", "Wizard level 3"],
+      "notes": "SD-36 F6e: opens the second starter seed, Elowen Ashgrave (Human Wizard 5), on her Spells tab: Fireball, recorded and prepared, labelled with its Wizard spell level (3) from list_class_spell_levels -- the spell the operator named. Clicks the row by its displayLabel prefix (same mechanism as load-character-select-and-open). The seed is a real saved character built through the create path (compose_character_input + the record-and-prepare spell mutation), never a hand-written file. LAST row of the spec on purpose: it ends scrolled down so the screenshot shows the Fireball rows, and a row scrolled down is the one resetToLanding cannot recover from (see the $comment's scroll note) -- nothing runs after it."
     }
   ]
 }

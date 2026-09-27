@@ -230,6 +230,22 @@ fn sanitised_corpus_bundle_has_the_same_race_equipment_and_spell_population_as_t
         }
     }
 
+    // -- intelligent item catalog (SD-36 F6 merge-readiness B3) ---------
+    // `intelligent_item_catalog` reads `equipment/equipmods/*.json` records' identity fields
+    // (`data.key/name/cost_gp`, `source.path/line`) through `codex_repo_root()`, which in the
+    // dev app and in a packaged build resolves to the resource dir carrying THIS bundle. The
+    // served catalog read off the bundle must equal the one read off the raw corpus.
+    let package = crate::converted_prose::package().expect("the converted package is present in a `cargo test` build");
+    let raw_catalog = crate::intelligent_item_catalog::build_catalog_in(&raw_root, package);
+    let bundle_catalog = crate::intelligent_item_catalog::build_catalog_in(&bundle_root, package);
+    assert!(raw_catalog.len() >= 150, "raw intelligent item catalog shrank: {} served", raw_catalog.len());
+    assert!(
+        raw_catalog == bundle_catalog,
+        "intelligent item catalog differs between data/corpus/ ({} served) and the sanitised bundle ({} served)",
+        raw_catalog.len(),
+        bundle_catalog.len()
+    );
+
     assert!(
         equipment_mismatches.is_empty(),
         "{} book(s) with an equipment parity defect between data/corpus/ and the sanitised \

@@ -1020,6 +1020,85 @@ def f4pre_apply(fresh_rules: dict[str, dict]) -> tuple[Counter, list[str]]:
     return found, failures
 
 
+# SD-36 Epic F6c (converter step): two pinned delta classes.
+#   - `class_printing`: `provenance.printing` ADDED to a class principal another book's class
+#     principal shares its slug with (`sheet_rule/reprint.rs::stamp_class_printings`) -- the
+#     record's book SOURCEDATE, the sorted printings, and the reprint resolver's verdict.
+#   - `class_granted_domain_count`: a `BONUS:DOMAIN|NUMBER` count on a class whose own `DOMAIN:`
+#     rows grant its domains loses its F4pre `offers` and prints no line (`print: false`,
+#     `sheet_rule/pool_link.rs::withhold_class_granted_domain_counts`).
+#   - `class_granted_domain_record`: a domain principal only such a class grants prints no line
+#     (`print` true -> false only; the same function).
+# Pinned by `f6c_delta_pins.py` into `structural_diff_f6c_deltas.json`. `f6c_apply` runs FIRST on
+# the fresh tree: a pinned printing whose sha256 holds is removed; a pinned withheld count that is
+# exactly withheld gets back the F4pre offer and `print: true` (so `f4pre_apply` then checks the F4pre
+# pin as before). A pinned delta that moved fails; an unpinned one surfaces as an ordinary field
+# delta, which gates. Inactive when the pinned owner carries no printing (a package predating F6c).
+_F6C_DELTAS_PATH = os.path.join(os.path.dirname(os.path.abspath(__file__)), "structural_diff_f6c_deltas.json")
+F6C_CLASS_CAUSE = "F6c: class records several books state carry the converter's newest-printing reading; a class's domain count its own DOMAIN: grants fill is no pick and prints no line, nor do the domain records only that class grants"
+
+
+def _load_f6c() -> dict:
+    try:
+        with open(_F6C_DELTAS_PATH, "r", encoding="utf-8") as fh:
+            data = json.load(fh)
+    except (OSError, json.JSONDecodeError):
+        return {"printings": {}, "withheld": [], "unprinted": [], "owner": ""}
+    printings = data.get("class_printing", {})
+    withheld = data.get("class_granted_domain_count", {})
+    assert len(printings.get("pins", [])) == printings.get("_count", 0), f"{_F6C_DELTAS_PATH}: class_printing _count mismatch"
+    assert len(withheld.get("pins", [])) == withheld.get("_count", 0), f"{_F6C_DELTAS_PATH}: class_granted_domain_count _count mismatch"
+    unprinted = data.get("class_granted_domain_record", {})
+    assert len(unprinted.get("pins", [])) == unprinted.get("_count", 0), f"{_F6C_DELTAS_PATH}: class_granted_domain_record _count mismatch"
+    return {"printings": dict(printings.get("pins", [])), "withheld": list(withheld.get("pins", [])), "unprinted": list(unprinted.get("pins", [])), "owner": data.get("owner", "")}
+
+
+F6C = _load_f6c()
+
+
+def f6c_apply(fresh_rules: dict[str, dict]) -> tuple[Counter, list[str]]:
+    """Undo every PINNED F6c delta on the fresh tree, in place (module comment above)."""
+    found: Counter = Counter()
+    failures: list[str] = []
+    owner = fresh_rules.get(F6C["owner"], {})
+    if not F6C["owner"] or "printing" not in owner.get("provenance", {}):
+        return found, failures
+    for rid, sha in F6C["printings"].items():
+        rule = fresh_rules.get(rid)
+        prov = (rule or {}).get("provenance", {})
+        if rule is None or "printing" not in prov:
+            failures.append(f"F6c pinned printing withdrawn: {rid}")
+            continue
+        if f3b2_field_sha(prov["printing"]) != sha:
+            failures.append(f"F6c pinned printing moved: {rid}")
+            continue
+        del prov["printing"]
+        found["class_printing"] += 1
+    for rid in F6C["withheld"]:
+        rule = fresh_rules.get(rid)
+        if rule is None:
+            failures.append(f"F6c pinned withheld count on a missing rule: {rid}")
+            continue
+        value = rule.get("value")
+        if "offers" in rule or rule.get("print") is not False or rule.get("target") != {"Other": "domains"} or not isinstance(value, dict) or set(value) != {"Number"}:
+            failures.append(f"F6c {rid}: not exactly a withheld domain count (offers absent, print false)")
+            continue
+        rule["offers"] = {"id": rid, "count": value["Number"], "from": "Domains"}
+        rule["print"] = True
+        found["class_granted_domain_count"] += 1
+    for rid in F6C["unprinted"]:
+        rule = fresh_rules.get(rid)
+        if rule is None:
+            failures.append(f"F6c pinned unprinted domain record missing: {rid}")
+            continue
+        if rule.get("print") is not False:
+            failures.append(f"F6c {rid}: the pinned domain record prints again")
+            continue
+        rule["print"] = True
+        found["class_granted_domain_record"] += 1
+    return found, failures
+
+
 def _F3C5_DEFECT_FILES() -> set[str]:
     return set(F3C5["defect_rows"])
 
@@ -1498,11 +1577,29 @@ def main() -> int:
 
     base_rules = rules_by_id(base["rule_files"])
     fresh_rules = rules_by_id(fresh["rule_files"])
+    # SD-36 F6c: undo every pinned F6c delta first (see `f6c_apply`), so the F4pre pins below see
+    # the offer F6c withholds.
+    f6c_found, f6c_failures = f6c_apply(fresh_rules)
     # SD-36 F3p: undo every pinned option gate first (see `f3p_apply`); everything below compares
     # the normalized fresh tree.
     f3p_found, f3p_failures = f3p_apply(fresh_rules, fresh["other_files"])
     # SD-36 F4pre: remove every pinned offer (see `f4pre_apply`) before the diff.
     f4pre_found, f4pre_failures = f4pre_apply(fresh_rules)
+    # SD-36 F6c: a baseline that already CARRIES a pinned stage (tranche/16 after Epic F merged into
+    # it) is normalized by the same undo, so both sides are compared at the same point and only the
+    # stages the baseline lacks show as deltas. Each undo is inactive on a baseline predating its
+    # stage (its own owner guard), which keeps every earlier run's reading unchanged. A pinned
+    # value the baseline carries in another form is a failure, named `baseline`.
+    baseline_normalized: dict[str, int] = {}
+    for name, undo in (
+        ("F6c", lambda: f6c_apply(base_rules)),
+        ("F3p", lambda: f3p_apply(base_rules, base["other_files"])),
+        ("F4pre", lambda: f4pre_apply(base_rules)),
+    ):
+        b_found, b_failures = undo()
+        baseline_normalized[name] = sum(b_found.values())
+        f6c_failures.extend(f"baseline {line}" for line in b_failures)
+    print(f"baseline normalized (stages it already carries, undone on both sides): {baseline_normalized}")
     base_ids = set(base_rules)
     fresh_ids = set(fresh_rules)
     added_rule_ids_raw = sorted(fresh_ids - base_ids)
@@ -1693,6 +1790,12 @@ def main() -> int:
         f"  F4pre f4pre_offer: {sum(f4pre_found.values())} of {len(F4PRE['offers'])} pinned offers removed before the diff "
         f"({dict(sorted(f4pre_found.items()))}) -- {F4PRE_CLASS_CAUSE} (see structural_diff_f4pre_deltas.json)"
     )
+    print(
+        f"  F6c: {f6c_found.get('class_printing', 0)} of {len(F6C['printings'])} pinned class printings and "
+        f"{f6c_found.get('class_granted_domain_count', 0)} of {len(F6C['withheld'])} pinned withheld domain counts and "
+        f"{f6c_found.get('class_granted_domain_record', 0)} of {len(F6C['unprinted'])} pinned unprinted domain records undone before the diff "
+        f"-- {F6C_CLASS_CAUSE} (see structural_diff_f6c_deltas.json)"
+    )
     print(f"  F3c5 pinned NaturalAttack grants: {len(F3C5['required_added_grants'])}; pinned added _vars/ tables: {len(F3C5['added_var_tables'])}; pinned _defects/ row counts: {F3C5['defect_rows']}")
     if added_rule_ids:
         unnamed = [r for r in added_rule_ids if r not in KNOWN_ADDED_RULE_CAUSES and r not in F3C3["added_rules"] and r not in F3C4B["added_rules"] and r not in F3C5["added_rules"]]
@@ -1772,6 +1875,10 @@ def main() -> int:
         for line in f4pre_failures[: args.max_examples]:
             print(f"  {line}")
         failures.append(f"F4pre pin failures: {len(f4pre_failures)}")
+    if f6c_failures:
+        for line in f6c_failures[: args.max_examples]:
+            print(f"  {line}")
+        failures.append(f"F6c pin failures: {len(f6c_failures)}")
     for key, old_v, new_v in moved_counts:
         failures.append(f"{key} moved: {old_v} -> {new_v}")
 

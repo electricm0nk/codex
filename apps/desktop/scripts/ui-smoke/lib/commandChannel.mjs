@@ -1,5 +1,6 @@
 // Runner-side half of the DOM command channel: writes one queued command
-// (click/type/select/key/scroll) to CODEX_UI_PROBE_CMD_FILE, then polls the
+// (click/type/select/key/scroll, and deleteCharacter for per-row cleanup)
+// to CODEX_UI_PROBE_CMD_FILE, then polls the
 // probe file for a report whose `lastCommand.id` echoes back the command it
 // just sent. The Rust side (`poll_ui_probe_command` in ui_probe.rs) and the
 // frontend (`uiProbe.ts`'s `startCommandChannel`/`executeCommand`) are the

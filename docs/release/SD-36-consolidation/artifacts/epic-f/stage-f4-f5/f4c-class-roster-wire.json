@@ -60,8 +60,8 @@
       "classId": "class:monk",
       "family": "crb",
       "familyLabel": "CRB",
-      "hitDie": 10,
-      "hitPointsDie": null,
+      "hitDie": 8,
+      "hitPointsDie": 8,
       "label": "Monk",
       "maxLevel": 20,
       "skillRanksPerLevel": 4
@@ -303,7 +303,7 @@
       "family": "pathfinder_unchained",
       "familyLabel": "Pathfinder Unchained",
       "hitDie": 12,
-      "hitPointsDie": null,
+      "hitPointsDie": 12,
       "label": "Unchained Barbarian",
       "maxLevel": 20,
       "skillRanksPerLevel": 4
@@ -314,7 +314,7 @@
       "family": "pathfinder_unchained",
       "familyLabel": "Pathfinder Unchained",
       "hitDie": 10,
-      "hitPointsDie": null,
+      "hitPointsDie": 10,
       "label": "Unchained Monk",
       "maxLevel": 20,
       "skillRanksPerLevel": 4
@@ -325,7 +325,7 @@
       "family": "pathfinder_unchained",
       "familyLabel": "Pathfinder Unchained",
       "hitDie": 8,
-      "hitPointsDie": null,
+      "hitPointsDie": 8,
       "label": "Unchained Rogue",
       "maxLevel": 20,
       "skillRanksPerLevel": 8
@@ -336,7 +336,7 @@
       "family": "pathfinder_unchained",
       "familyLabel": "Pathfinder Unchained",
       "hitDie": 8,
-      "hitPointsDie": null,
+      "hitPointsDie": 8,
       "label": "Unchained Summoner",
       "maxLevel": 20,
       "skillRanksPerLevel": 2

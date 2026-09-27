@@ -125,26 +125,29 @@ pub(crate) fn covered_classes() -> Vec<GenericChassisMeta> {
 
 /// Loaded once per process, keyed by the converted record's own slug -- the
 /// same `"class:<slug>"` id convention every other dispatch arm in
-/// `compute_class_chassis` uses. Two books stating the same class slug keep
-/// the first in `CLASS_FAMILY_BOOKS` order, as the corpus read this replaces
-/// already did.
+/// `compute_class_chassis` uses. Two books stating the same class slug are
+/// resolved by the supersession ruling (`multiclass_fold::resolve_printings`,
+/// SD-36 F6c: the converter's newest-printing verdict, else the newest
+/// printing of an agreeing chassis), never by `CLASS_FAMILY_BOOKS` order.
 fn generic_class_records() -> &'static BTreeMap<String, ClassChassis> {
     static TABLE: OnceLock<BTreeMap<String, ClassChassis>> = OnceLock::new();
     TABLE.get_or_init(|| {
-        let mut out: BTreeMap<String, ClassChassis> = BTreeMap::new();
+        let mut printings: BTreeMap<String, Vec<ClassChassis>> = BTreeMap::new();
         // One book at a time, in `CLASS_FAMILY_BOOKS` order: `records` keys its
         // map by `(book, slug)`, so reading every book in one call would visit
-        // books alphabetically and let an appended book (`advanced_players_guide`
-        // sorts first) win a slug an earlier-listed book already gave.
+        // books alphabetically.
         for book in CLASS_FAMILY_BOOKS {
             for ((_, slug), chassis) in class_chassis_sheet_rules::records(&[book]) {
                 if !chassis.is_conventional() {
                     continue;
                 }
-                out.entry(slug).or_insert(chassis);
+                printings.entry(slug).or_default().push(chassis);
             }
         }
-        out
+        printings
+            .into_iter()
+            .filter_map(|(slug, group)| super::multiclass_fold::resolve_printings(group).map(|chassis| (slug, chassis)))
+            .collect()
     })
 }
 

@@ -6,6 +6,7 @@ mod character_hub;
 #[allow(non_snake_case)]
 mod characterHub;
 mod class_catalog;
+mod class_facts;
 mod class_catalog_generic;
 mod class_feature_descriptions;
 mod class_feature_feat_bridge;
@@ -64,6 +65,7 @@ use characterHub::appendToCharacter::append_to_character;
 use characterHub::recomputeCharacter::recompute_character;
 use characterHub::reSaveCharacter::re_save_character;
 use class_catalog::list_class_catalog;
+use class_facts::list_class_facts;
 use class_feature_descriptions::list_class_feature_descriptions;
 use class_feature_feat_bridge::list_class_feature_feat_bridge_descriptions;
 use class_feature_pool_picker::list_class_feature_pool_options;
@@ -278,6 +280,9 @@ fn main() {
             list_race_catalog,
             list_race_creation_roster,
             list_class_creation_roster,
+            // SD-36 F6a: weapon proficiency, caster level, class skills and hit die per held
+            // class, from the engine -- the sheet keeps no class table of its own.
+            list_class_facts,
             list_level_up_class_options,
             list_alternate_racial_traits,
             resolve_race_alternate_selection,

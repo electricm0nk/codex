@@ -376,7 +376,15 @@ struct RecordRow {
 /// equipmods/*.json` whose key contains `"Intelligent Item"`, hidden rows
 /// included -- the tests need the whole population, the catalog filters it.
 fn load_record_rows(repo_root: &Path) -> Vec<RecordRow> {
-    let corpus_root = repo_root.join("data/corpus");
+    load_record_rows_in(&repo_root.join("data/corpus"))
+}
+
+/// [`load_record_rows`] over an explicit corpus root -- the raw `data/corpus/` or the packaged
+/// app's generated bundle (`resources/corpus_bundle/`, which `tauri.conf.json` maps onto
+/// `data/corpus/`). SD-36 F6 merge-readiness B3: the bundle must carry the five fields read here
+/// (`data.key`, `data.name`, `data.cost_gp`, `source.path`, `source.line`) for every
+/// `equipment/equipmods/` record, or the served catalog is empty.
+fn load_record_rows_in(corpus_root: &Path) -> Vec<RecordRow> {
     let mut out = Vec::new();
     let Ok(books) = std::fs::read_dir(&corpus_root) else { return out };
     let mut book_dirs: Vec<_> = books.flatten().collect();
@@ -437,9 +445,14 @@ fn rules_by_source_row(package: &SheetRulePackage) -> std::collections::BTreeMap
 /// The served catalog: every record the package prints at least one rule
 /// for, in corpus order.
 fn build_catalog(repo_root: &Path, package: &SheetRulePackage) -> Vec<IntelligentItemComponentDto> {
+    build_catalog_in(&repo_root.join("data/corpus"), package)
+}
+
+/// [`build_catalog`] over an explicit corpus root (see [`load_record_rows_in`]).
+pub(crate) fn build_catalog_in(corpus_root: &Path, package: &SheetRulePackage) -> Vec<IntelligentItemComponentDto> {
     let index = rules_by_source_row(package);
     let mut out = Vec::new();
-    for row in load_record_rows(repo_root) {
+    for row in load_record_rows_in(corpus_root) {
         let Some(ids) = index.get(&row.source_row) else { continue };
         let rules: Vec<&SheetRule> = ids.iter().filter_map(|id| package.rules.get(id)).collect();
         if !rules.iter().any(|r| r.print) {

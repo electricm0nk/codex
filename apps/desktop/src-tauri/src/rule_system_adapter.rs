@@ -350,7 +350,7 @@ mod tests {
                     .clone(),
             };
 
-            let (sheet_lines, sheet_rules_unavailable_reason) =
+            let (sheet_lines, sheet_rules_unavailable_reason, feat_skill_bonuses) =
                 crate::character_hub::sheet_lines_for(&envelope.character_input, &corpus_receipt.base);
 
             Ok(LoadSavedCharacterResponse {
@@ -384,6 +384,7 @@ mod tests {
                 ),
                 sheet_lines,
                 sheet_rules_unavailable_reason,
+                feat_skill_bonuses,
             })
         }
     }

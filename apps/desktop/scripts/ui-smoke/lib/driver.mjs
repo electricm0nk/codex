@@ -25,8 +25,19 @@ function run(args, opts = {}) {
   };
 }
 
-export function launch() {
-  return run(['launch']);
+/**
+ * Launches the app. `env` is what driver.sh (and so `npx tauri dev` and the
+ * app binary) inherits -- run.mjs passes `launchEnv(...)` from
+ * appDataIsolation.mjs so the app gets the run's isolated RUN_DESKTOP_DATA_ROOT.
+ */
+export function launch(env = process.env) {
+  return run(['launch'], { env });
+}
+
+/** Pids of this agent's running app process(es) (driver.sh's own display-scoped match). */
+export function appPids() {
+  const result = run(['_app_pid']);
+  return result.status === 0 ? result.stdout.split(/\s+/).filter(Boolean) : [];
 }
 
 export function stop() {
@@ -34,8 +45,7 @@ export function stop() {
 }
 
 export function isAlive() {
-  const result = run(['_app_pid']);
-  return result.status === 0 && result.stdout.trim().length > 0;
+  return appPids().length > 0;
 }
 
 export function stateFilePath() {

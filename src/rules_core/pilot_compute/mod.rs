@@ -204,8 +204,19 @@ pub mod class_chassis_sheet_rules;
 /// codex-ingest oracle pin (`class_weapon_proficiency_via_converter.rs`) can call it.
 pub mod class_proficiency_sheet_rules;
 pub mod class_skill_sheet_rules;
+/// SD-36 Epic F6a: one class's weapon proficiency, caster level and class skills as the engine
+/// answers them -- the desktop's `list_class_facts` command reads this instead of a class table.
+pub mod class_facts_sheet_rules;
+/// SD-36 Epic F6b: the one hit-die rule -- the source that computes a class's hit points is the
+/// source the sheet prints and the roster reads (bespoke class module first, then the converted
+/// record).
+pub mod hit_die_source;
+/// SD-36 Epic F6b: skill bonuses from held feat records, folded per skill off the rendered lines.
+pub mod feat_skill_bonus_sheet_rules;
 mod generic_class_chassis;
 mod multiclass_fold;
+/// SD-36 F6c: the level-up mix gate, read before a level is taken (the desktop's Level Up options).
+pub use multiclass_fold::{level_up_mix_blocker, mix_blocker_summary, LevelUpMixBlocker};
 /// SD-34 `AT-34-E3-001` (`decisions.md §14`, mechanism `class_absent_from_
 /// ClassId_ALL_and_book_class_id_enums`) -- see its own module doc comment.
 /// `pub`: `modelled_class_books()` in `src/bin/v06_work_inventory.rs` (a

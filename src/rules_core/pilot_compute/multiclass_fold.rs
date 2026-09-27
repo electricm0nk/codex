@@ -24,7 +24,8 @@
 //!   class's converted row).
 //! - Saves: each class's EXACT (untruncated) save value summed, floored once
 //!   (`compute_multiclass_base_chassis`, unchanged rule, now in exact rationals).
-//! - HP ([`explain_multiclass_fold`]): per class `ClassChassis::hit_points`, the maximized
+//! - HP ([`explain_multiclass_fold`]): per class `hit_die_source::class_hit_points` (SD-36
+//!   F6b: the bespoke class module's die first, then the converted record's), the maximized
 //!   die only for the first-listed class's first level (character level 1), + Con each
 //!   level; any class with no hit die => [`HIT_POINTS_UNKNOWN`], no total printed.
 //! - Skill points: per class `ClassChassis::skill_points`; a class whose record states no
@@ -51,7 +52,7 @@ use std::sync::OnceLock;
 #[allow(unused_imports)]
 pub(crate) use super::*;
 use super::class_chassis_sheet_rules::{
-    self, ChassisUnknown, ClassChassis, SaveProgression, HIT_POINTS_UNKNOWN, SKILL_POINTS_UNKNOWN,
+    self, ChassisUnknown, ClassChassis, SaveProgression, SKILL_POINTS_UNKNOWN,
 };
 use crate::rules_core::sheet_rule::Rat;
 
@@ -121,22 +122,37 @@ pub(crate) fn printings_by_slug() -> BTreeMap<String, Vec<ClassChassis>> {
     out
 }
 
-/// One slug's chassis from its printings. The supersession ruling (`decisions.md` §12: the newest
-/// printing of ONE object wins) needs publication order (`.pcc` `SOURCEDATE:`) and a
-/// field-by-field proof that the printings are one object; only the converter's resolver
-/// (`codex-ingest` `sheet_rule::reprint`) holds both, and the runtime package carries neither.
-/// Applied to today's three shared class slugs, that resolver proves one (Hellknight: identical
-/// class rows, Adventurer's Guide 2017-06 over Inner Sea World Guide 2011-03) and leaves two
-/// unordered (Cyphermage and Red Mantis Assassin rows differ in non-`SOURCE` tokens and state no
-/// `DESC:`), `f3p-receipt.md` §P3. So a slug several books state is answered only when every
-/// printing states the SAME chassis ([`ClassChassis::same_chassis`]): then no printing can change
-/// a number, and the first in directory order is kept for its citation. Printings that disagree
-/// answer nothing (the class's saves and hit points are then named Unknown by the fold), never a
-/// book chosen by its directory name.
+/// One slug's chassis from its printings, by the supersession ruling (`decisions.md` §12: the
+/// newest printing of ONE object wins). Publication order and the one-object proof live only in the
+/// converter's resolver (`codex-ingest` `sheet_rule::reprint`), which since SD-36 F6c exports its
+/// reading on each printing (`ClassChassis::printing`, `reprint::stamp_class_printings`):
+///
+/// 1. the resolver proved the printings one object -> its newest printing answers (Hellknight:
+///    identical class rows, Adventurer's Guide 2017-06 over Inner Sea World Guide 2011-03);
+/// 2. not proved (Cyphermage, Red Mantis Assassin: rows differ in non-`SOURCE` tokens, no
+///    `DESC:`), but every printing states the SAME chassis ([`ClassChassis::same_chassis`]): no
+///    printing can change a number, and the newest by its book's `SOURCEDATE:` is cited (the
+///    first in the list when dates are missing or tie);
+/// 3. otherwise nothing answers (the fold then names the class's saves and hit points Unknown),
+///    never a book chosen by its directory name.
 pub(crate) fn resolve_printings(printings: Vec<ClassChassis>) -> Option<ClassChassis> {
-    let mut printings = printings.into_iter();
-    let first = printings.next()?;
-    printings.all(|other| first.same_chassis(&other)).then_some(first)
+    let verdict = printings.iter().find_map(|p| p.printing.as_ref()?.newest.clone());
+    if let Some(newest) = verdict
+        && let Some(winner) = printings.iter().find(|p| format!("{}:class:{}", p.book, p.slug) == newest)
+    {
+        return Some(winner.clone());
+    }
+    let first = printings.first()?;
+    if !printings.iter().all(|other| first.same_chassis(other)) {
+        return None;
+    }
+    let date = |p: &ClassChassis| p.printing.as_ref().and_then(|x| x.source_date.clone());
+    let latest = printings.iter().filter_map(date).max();
+    let mut newest = printings.iter().filter(|p| latest.is_some() && date(p) == latest);
+    match (newest.next(), newest.next()) {
+        (Some(only), None) => Some(only.clone()),
+        _ => Some(first.clone()),
+    }
 }
 
 /// The converted chassis record for `class_id` (`"class:<slug>"`): the generic
@@ -242,6 +258,44 @@ pub(crate) fn multiclass_member(
         }
     }
     Ok(MulticlassMember { prestige, saves })
+}
+
+/// SD-36 F6c (a): the named reason the engine would refuse a level-up, read BEFORE it is taken.
+/// `id` is the fold's own claim-blocking diagnostic id, `summary` its plain reading (one per
+/// diagnostic id, never per class), `message` the fold's full words.
+#[derive(Debug, Clone, PartialEq, Eq)]
+pub struct LevelUpMixBlocker {
+    pub id: String,
+    pub summary: String,
+    pub message: String,
+}
+
+/// The plain reading of a mix-gate diagnostic id, printed on a Level Up option.
+pub fn mix_blocker_summary(id: &str) -> String {
+    match id {
+        SAVE_SHAPE_UNRECOGNIZED => "save progression in the source data matches no PF1 form".to_owned(),
+        SAVE_SHAPE_DEGRADED => "save progression in the source data is words, not a number".to_owned(),
+        SAVE_SHAPE_UNKNOWN => "no source states this class's save progressions".to_owned(),
+        MULTICLASS_CLASS_UNSUPPORTED => "no class chassis at this class level".to_owned(),
+        PRESTIGE_REQUIRES_BASE_CLASS_LEVELS_DIAGNOSTIC_ID => PRESTIGE_REQUIRES_BASE_CLASS_LEVELS_MESSAGE.to_owned(),
+        other => other.to_owned(),
+    }
+}
+
+/// Whether `class_id`, at its level in `leveled` (the character AFTER the level-up is applied,
+/// with its seeds), can join the mix -- the same per-class gate ([`multiclass_member`]) the
+/// sheet's multiclass chassis runs, so an option this names is exactly one the engine refuses.
+/// `None` for a single-class build (no mix to join) or a class that joins.
+pub fn level_up_mix_blocker(leveled: &CharacterInput, class_id: &str) -> Option<LevelUpMixBlocker> {
+    if leveled.chosen.class_levels.len() < 2 {
+        return None;
+    }
+    let class_level = leveled.chosen.class_levels.iter().find(|held| held.class_id == class_id)?;
+    multiclass_member(leveled, class_level).err().map(|diagnostic| LevelUpMixBlocker {
+        summary: mix_blocker_summary(&diagnostic.id),
+        id: diagnostic.id,
+        message: diagnostic.message,
+    })
 }
 
 /// Why `input` (a length-2+ mix) is not a supported mix, as named claim-blocking
@@ -402,22 +456,16 @@ pub(crate) fn explain_multiclass_fold(
     let mut sp_unknown = false;
     for (index, class_level) in class_levels.iter().enumerate() {
         let class_id = &class_level.class_id;
-        let record = chassis_record(class_id);
-        // SD-36 F3 polish P4: the fold reads a class's hit die off its converted CHASSIS record
-        // (a class record whose base attack bonus and saves converted); a class without one may
-        // still state a hit die on its principal (the CRB Monk's `Hit die`), so the Unknown names
-        // the missing chassis, not a missing hit die.
-        let no_chassis = || ChassisUnknown {
-            id: HIT_POINTS_UNKNOWN,
-            message: format!(
-                "{class_id}: no converted class chassis record (a class record whose base attack \
-                 bonus and save progressions converted, the record the fold reads a hit die from), \
-                 so its hit points are Unknown"
-            ),
-        };
-        let hp = record
-            .ok_or_else(no_chassis)
-            .and_then(|r| r.hit_points(class_level.level, index == 0, ability_modifiers.constitution));
+        // SD-36 F6b: the one hit-die rule (`hit_die_source`): the bespoke class module that
+        // computes the class's hit points first (the CRB Monk's d8), then the converted record
+        // (a class-selection class reads the base class line it is taken on).
+        let hp = super::hit_die_source::class_hit_points(
+            class_id,
+            class_level.level,
+            index == 0,
+            ability_modifiers.constitution,
+        )
+        .map(|(value, _)| value);
         let sp = class_skill_points(class_id, class_level.level, ability_modifiers.intelligence)
             .map(|(total, ..)| total);
         for (result, terms, unknown) in [(hp, &mut hp_terms, &mut hp_unknown), (sp, &mut sp_terms, &mut sp_unknown)] {
@@ -676,6 +724,36 @@ mod tests {
             }
             assert!(chassis_record(&format!("class:{slug}")).is_some(), "{slug}");
         }
+    }
+
+    /// SD-36 F6c (P3): the chassis cites the converter's newest-printing verdict, in any input
+    /// order. Hellknight: the resolver proved one object, Adventurer's Guide (2017-06) over Inner
+    /// Sea World Guide (2011-03). Cyphermage: not proved one object (its rows differ in non-`SOURCE`
+    /// tokens and state no `DESC:`), but both printings state the same chassis, so the newest by
+    /// `SOURCEDATE:` is cited: Adventurer's Guide (2017-06) over Inner Sea Magic (2011-07).
+    #[test]
+    fn the_chassis_cites_the_newest_printing_in_any_order() {
+        let printings = printings_by_slug();
+        let cited = |slug: &str, reversed: bool| {
+            let mut group = printings[slug].clone();
+            if reversed {
+                group.reverse();
+            }
+            resolve_printings(group).map(|c| c.book)
+        };
+        for slug in ["cyphermage", "hellknight", "red_mantis_assassin"] {
+            for reversed in [false, true] {
+                assert_eq!(cited(slug, reversed).as_deref(), Some("adventurers_guide"), "{slug} (reversed: {reversed})");
+            }
+        }
+        let reading = |book: &str, slug: &str| class_chassis_sheet_rules::record(book, slug).and_then(|c| c.printing.clone());
+        let ag = reading("adventurers_guide", "hellknight").expect("hellknight printing reading");
+        assert_eq!(ag.newest.as_deref(), Some("adventurers_guide:class:hellknight"), "{ag:?}");
+        assert_eq!(ag.source_date.as_deref(), Some("2017-06"));
+        let ism = reading("inner_sea_magic", "cyphermage").expect("cyphermage printing reading");
+        assert_eq!(ism.newest, None, "the resolver does not prove the two Cyphermage rows one object: {ism:?}");
+        assert_eq!(ism.source_date.as_deref(), Some("2011-07"));
+        assert_eq!(chassis_record("class:cyphermage").map(|c| c.book.as_str()), Some("adventurers_guide"));
     }
 
     /// P3, the rule: printings that agree answer; printings that disagree answer nothing (never

@@ -105,6 +105,9 @@ pub struct ClassChassis {
     /// F3b2 no class record did (F0-check finding 5,
     /// `docs/retro/events/sub-agent-f0-check-fix.jsonl`).
     pub skill_ranks_per_level: Option<u8>,
+    /// SD-36 F6c: the converter's supersession reading of this record, present when another
+    /// book's class record states the same slug (`Provenance::printing`).
+    pub printing: Option<crate::rules_core::sheet_rule::Printing>,
 }
 
 /// A class's base-save progression as read off its converted `Expr`
@@ -289,16 +292,7 @@ impl ClassChassis {
                 self.display_name, self.book, self.slug
             ),
         })?;
-        let mut total = 0_i16;
-        for level in 1..=levels {
-            let die_value = if level == 1 && includes_first_character_level {
-                i16::from(die)
-            } else {
-                crate::rules_core::durability::average_hit_die_value(die)
-            };
-            total += (die_value + constitution_modifier).max(1);
-        }
-        Ok(total)
+        Ok(super::hit_die_source::hit_points_from_die(die, levels, includes_first_character_level, constitution_modifier))
     }
 
     /// The skill points `levels` levels of this class contribute: skill ranks
@@ -546,6 +540,7 @@ fn chassis_from_rules(book: &str, slug: &str, rules: &[SheetRule]) -> Option<Cla
         save_words,
         hit_die,
         skill_ranks_per_level,
+        printing: principal.provenance.printing.clone(),
     })
 }
 

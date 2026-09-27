@@ -589,6 +589,28 @@ pub struct Provenance {
     /// the converter wrote `Const(0)` for it; the names are kept here so the reading is visible.
     #[serde(default, skip_serializing_if = "Vec::is_empty")]
     pub undeclared_in_pinned_tree: Vec<String>,
+    /// SD-36 F6c: on a class record whose slug another book's class record also states, the
+    /// converter's supersession reading (`decisions.md` §12) -- the one place publication order
+    /// and the one-object proof exist (`codex-ingest` `sheet_rule::reprint`); the runtime package
+    /// carries neither otherwise. Absent on every other record.
+    #[serde(default, skip_serializing_if = "Option::is_none")]
+    pub printing: Option<Printing>,
+}
+
+/// SD-36 F6c: one printing of an object several books state, as the converter reads it.
+#[derive(Debug, Clone, PartialEq, Eq, Default, Serialize, Deserialize)]
+pub struct Printing {
+    /// This record's book's `.pcc` `SOURCEDATE:` (`YYYY-MM`); `None` when the book states none (or
+    /// two), so its printings are never ordered by it.
+    #[serde(default, skip_serializing_if = "Option::is_none")]
+    pub source_date: Option<String>,
+    /// Every record of this kind and slug across books, this one included, sorted.
+    pub printings: Vec<RuleId>,
+    /// The reprint resolver's verdict: the newest printing when it proved the printings one
+    /// object (`reprint::newest_printing`); `None` when it did not (a variant, or rows it cannot
+    /// prove identical).
+    #[serde(default, skip_serializing_if = "Option::is_none")]
+    pub newest: Option<RuleId>,
 }
 
 #[derive(Debug, Clone, PartialEq, Default, Serialize, Deserialize)]
@@ -2629,11 +2651,10 @@ pub fn render_sheet(package: &SheetRulePackage, seed: &HeldSeed, facts: &Charact
             if !r.id.contains('#') {
                 return Some(Evaluator::new(package, &held, facts, ctx).line(r));
             }
-            let gate = line_gate(package, r);
-            let evaluator = Evaluator::new(package, &held, facts, ctx.clone()).printing_undecided();
-            if !evaluator.applies(&gate).includes() {
+            if !sibling_line_gate(package, &held, facts, r, ctx.clone()).includes() {
                 return None;
             }
+            let gate = line_gate(package, r);
             Some(Evaluator::new(package, &held, facts, ctx).printing_undecided().line_gated(r, &gate))
         })
         .collect();
@@ -2663,6 +2684,27 @@ pub fn render_sheet(package: &SheetRulePackage, seed: &HeldSeed, facts: &Charact
         }
     });
     lines
+}
+
+/// Whether a held rule's line is open for this character -- the one decision [`render_sheet`]
+/// makes before it prints a `#` sibling: the sibling's [`line_gate`] (its `applies` minus the
+/// principal's copied holding condition), with a leaf over a fact the character record does
+/// not carry undecided rather than failed ([`Evaluator::undecided_leaf`]). A principal (no `#`)
+/// is held on its own `applies` and is always open here. A surface that answers one number
+/// off a held rule (the desktop's Caster Level box) calls this so it never prints a value the
+/// sheet itself would not print (SD-36 F6 merge-readiness B1: the Bloodrager's caster level
+/// opens at Bloodrager level 4).
+pub fn sibling_line_gate(
+    package: &SheetRulePackage,
+    held: &HeldSet,
+    facts: &CharacterFacts,
+    rule: &SheetRule,
+    ctx: EvalContext,
+) -> Gate {
+    if !rule.id.contains('#') {
+        return Gate::Include;
+    }
+    Evaluator::new(package, held, facts, ctx).printing_undecided().applies(&line_gate(package, rule))
 }
 
 /// The gate `render_sheet` decides a `#` sibling's line by: the sibling's `applies` with the

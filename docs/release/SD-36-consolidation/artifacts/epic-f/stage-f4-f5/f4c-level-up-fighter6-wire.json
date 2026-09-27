@@ -1,6 +1,7 @@
 {
   "addBase": [
     {
+      "blocker": null,
       "classId": "class:barbarian",
       "currentLevel": 0,
       "family": "crb",
@@ -10,6 +11,7 @@
       "nextLevel": 1
     },
     {
+      "blocker": null,
       "classId": "class:bard",
       "currentLevel": 0,
       "family": "crb",
@@ -19,6 +21,7 @@
       "nextLevel": 1
     },
     {
+      "blocker": null,
       "classId": "class:cleric",
       "currentLevel": 0,
       "family": "crb",
@@ -28,6 +31,7 @@
       "nextLevel": 1
     },
     {
+      "blocker": null,
       "classId": "class:druid",
       "currentLevel": 0,
       "family": "crb",
@@ -37,6 +41,7 @@
       "nextLevel": 1
     },
     {
+      "blocker": null,
       "classId": "class:monk",
       "currentLevel": 0,
       "family": "crb",
@@ -46,6 +51,7 @@
       "nextLevel": 1
     },
     {
+      "blocker": null,
       "classId": "class:paladin",
       "currentLevel": 0,
       "family": "crb",
@@ -55,6 +61,7 @@
       "nextLevel": 1
     },
     {
+      "blocker": null,
       "classId": "class:ranger",
       "currentLevel": 0,
       "family": "crb",
@@ -64,6 +71,7 @@
       "nextLevel": 1
     },
     {
+      "blocker": null,
       "classId": "class:rogue",
       "currentLevel": 0,
       "family": "crb",
@@ -73,6 +81,7 @@
       "nextLevel": 1
     },
     {
+      "blocker": null,
       "classId": "class:sorcerer",
       "currentLevel": 0,
       "family": "crb",
@@ -82,6 +91,7 @@
       "nextLevel": 1
     },
     {
+      "blocker": null,
       "classId": "class:wizard",
       "currentLevel": 0,
       "family": "crb",
@@ -91,6 +101,7 @@
       "nextLevel": 1
     },
     {
+      "blocker": null,
       "classId": "class:alchemist",
       "currentLevel": 0,
       "family": "apg",
@@ -100,6 +111,7 @@
       "nextLevel": 1
     },
     {
+      "blocker": null,
       "classId": "class:cavalier",
       "currentLevel": 0,
       "family": "apg",
@@ -109,6 +121,7 @@
       "nextLevel": 1
     },
     {
+      "blocker": null,
       "classId": "class:inquisitor",
       "currentLevel": 0,
       "family": "apg",
@@ -118,6 +131,7 @@
       "nextLevel": 1
     },
     {
+      "blocker": null,
       "classId": "class:oracle",
       "currentLevel": 0,
       "family": "apg",
@@ -127,6 +141,7 @@
       "nextLevel": 1
     },
     {
+      "blocker": null,
       "classId": "class:summoner",
       "currentLevel": 0,
       "family": "apg",
@@ -136,6 +151,7 @@
       "nextLevel": 1
     },
     {
+      "blocker": null,
       "classId": "class:witch",
       "currentLevel": 0,
       "family": "apg",
@@ -145,6 +161,7 @@
       "nextLevel": 1
     },
     {
+      "blocker": null,
       "classId": "class:arcanist",
       "currentLevel": 0,
       "family": "acg",
@@ -154,6 +171,7 @@
       "nextLevel": 1
     },
     {
+      "blocker": null,
       "classId": "class:bloodrager",
       "currentLevel": 0,
       "family": "acg",
@@ -163,6 +181,7 @@
       "nextLevel": 1
     },
     {
+      "blocker": null,
       "classId": "class:brawler",
       "currentLevel": 0,
       "family": "acg",
@@ -172,6 +191,7 @@
       "nextLevel": 1
     },
     {
+      "blocker": null,
       "classId": "class:hunter",
       "currentLevel": 0,
       "family": "acg",
@@ -181,6 +201,7 @@
       "nextLevel": 1
     },
     {
+      "blocker": null,
       "classId": "class:investigator",
       "currentLevel": 0,
       "family": "acg",
@@ -190,6 +211,7 @@
       "nextLevel": 1
     },
     {
+      "blocker": null,
       "classId": "class:shaman",
       "currentLevel": 0,
       "family": "acg",
@@ -199,6 +221,7 @@
       "nextLevel": 1
     },
     {
+      "blocker": null,
       "classId": "class:skald",
       "currentLevel": 0,
       "family": "acg",
@@ -208,6 +231,7 @@
       "nextLevel": 1
     },
     {
+      "blocker": null,
       "classId": "class:slayer",
       "currentLevel": 0,
       "family": "acg",
@@ -217,6 +241,7 @@
       "nextLevel": 1
     },
     {
+      "blocker": null,
       "classId": "class:swashbuckler",
       "currentLevel": 0,
       "family": "acg",
@@ -226,6 +251,7 @@
       "nextLevel": 1
     },
     {
+      "blocker": null,
       "classId": "class:warpriest",
       "currentLevel": 0,
       "family": "acg",
@@ -235,6 +261,11 @@
       "nextLevel": 1
     },
     {
+      "blocker": {
+        "id": "multiclass.save_shape.unknown",
+        "message": "class:unchained_barbarian 1: no class table and no converted chassis record states this class's save progressions, so its saves cannot be folded into a mix (never assumed poor)",
+        "summary": "no source states this class's save progressions"
+      },
       "classId": "class:unchained_barbarian",
       "currentLevel": 0,
       "family": "pathfinder_unchained",
@@ -244,6 +275,11 @@
       "nextLevel": 1
     },
     {
+      "blocker": {
+        "id": "multiclass.save_shape.unknown",
+        "message": "class:unchained_monk 1: no class table and no converted chassis record states this class's save progressions, so its saves cannot be folded into a mix (never assumed poor)",
+        "summary": "no source states this class's save progressions"
+      },
       "classId": "class:unchained_monk",
       "currentLevel": 0,
       "family": "pathfinder_unchained",
@@ -253,6 +289,11 @@
       "nextLevel": 1
     },
     {
+      "blocker": {
+        "id": "multiclass.save_shape.unknown",
+        "message": "class:unchained_rogue 1: no class table and no converted chassis record states this class's save progressions, so its saves cannot be folded into a mix (never assumed poor)",
+        "summary": "no source states this class's save progressions"
+      },
       "classId": "class:unchained_rogue",
       "currentLevel": 0,
       "family": "pathfinder_unchained",
@@ -262,6 +303,11 @@
       "nextLevel": 1
     },
     {
+      "blocker": {
+        "id": "multiclass.save_shape.unknown",
+        "message": "class:unchained_summoner 1: no class table and no converted chassis record states this class's save progressions, so its saves cannot be folded into a mix (never assumed poor)",
+        "summary": "no source states this class's save progressions"
+      },
       "classId": "class:unchained_summoner",
       "currentLevel": 0,
       "family": "pathfinder_unchained",
@@ -271,6 +317,7 @@
       "nextLevel": 1
     },
     {
+      "blocker": null,
       "classId": "class:gunslinger",
       "currentLevel": 0,
       "family": "ultimate_combat",
@@ -280,6 +327,7 @@
       "nextLevel": 1
     },
     {
+      "blocker": null,
       "classId": "class:ninja",
       "currentLevel": 0,
       "family": "ultimate_combat",
@@ -289,6 +337,7 @@
       "nextLevel": 1
     },
     {
+      "blocker": null,
       "classId": "class:samurai",
       "currentLevel": 0,
       "family": "ultimate_combat",
@@ -298,6 +347,7 @@
       "nextLevel": 1
     },
     {
+      "blocker": null,
       "classId": "class:aegis",
       "currentLevel": 0,
       "family": "untabled_exotic_base",
@@ -307,6 +357,7 @@
       "nextLevel": 1
     },
     {
+      "blocker": null,
       "classId": "class:antipaladin",
       "currentLevel": 0,
       "family": "untabled_exotic_base",
@@ -316,6 +367,7 @@
       "nextLevel": 1
     },
     {
+      "blocker": null,
       "classId": "class:cryptic",
       "currentLevel": 0,
       "family": "untabled_exotic_base",
@@ -325,6 +377,7 @@
       "nextLevel": 1
     },
     {
+      "blocker": null,
       "classId": "class:dread",
       "currentLevel": 0,
       "family": "untabled_exotic_base",
@@ -334,6 +387,7 @@
       "nextLevel": 1
     },
     {
+      "blocker": null,
       "classId": "class:kineticist",
       "currentLevel": 0,
       "family": "untabled_exotic_base",
@@ -343,6 +397,7 @@
       "nextLevel": 1
     },
     {
+      "blocker": null,
       "classId": "class:magus",
       "currentLevel": 0,
       "family": "untabled_exotic_base",
@@ -352,6 +407,7 @@
       "nextLevel": 1
     },
     {
+      "blocker": null,
       "classId": "class:marksman",
       "currentLevel": 0,
       "family": "untabled_exotic_base",
@@ -361,6 +417,7 @@
       "nextLevel": 1
     },
     {
+      "blocker": null,
       "classId": "class:medium",
       "currentLevel": 0,
       "family": "untabled_exotic_base",
@@ -370,6 +427,7 @@
       "nextLevel": 1
     },
     {
+      "blocker": null,
       "classId": "class:mesmerist",
       "currentLevel": 0,
       "family": "untabled_exotic_base",
@@ -379,6 +437,7 @@
       "nextLevel": 1
     },
     {
+      "blocker": null,
       "classId": "class:occultist",
       "currentLevel": 0,
       "family": "untabled_exotic_base",
@@ -388,6 +447,7 @@
       "nextLevel": 1
     },
     {
+      "blocker": null,
       "classId": "class:psion",
       "currentLevel": 0,
       "family": "untabled_exotic_base",
@@ -397,6 +457,7 @@
       "nextLevel": 1
     },
     {
+      "blocker": null,
       "classId": "class:psychic",
       "currentLevel": 0,
       "family": "untabled_exotic_base",
@@ -406,6 +467,7 @@
       "nextLevel": 1
     },
     {
+      "blocker": null,
       "classId": "class:psychic_warrior",
       "currentLevel": 0,
       "family": "untabled_exotic_base",
@@ -415,6 +477,7 @@
       "nextLevel": 1
     },
     {
+      "blocker": null,
       "classId": "class:shifter",
       "currentLevel": 0,
       "family": "untabled_exotic_base",
@@ -424,6 +487,7 @@
       "nextLevel": 1
     },
     {
+      "blocker": null,
       "classId": "class:soulknife",
       "currentLevel": 0,
       "family": "untabled_exotic_base",
@@ -433,6 +497,7 @@
       "nextLevel": 1
     },
     {
+      "blocker": null,
       "classId": "class:spiritualist",
       "currentLevel": 0,
       "family": "untabled_exotic_base",
@@ -442,6 +507,7 @@
       "nextLevel": 1
     },
     {
+      "blocker": null,
       "classId": "class:tactician",
       "currentLevel": 0,
       "family": "untabled_exotic_base",
@@ -451,6 +517,7 @@
       "nextLevel": 1
     },
     {
+      "blocker": null,
       "classId": "class:vigilante",
       "currentLevel": 0,
       "family": "untabled_exotic_base",
@@ -460,6 +527,7 @@
       "nextLevel": 1
     },
     {
+      "blocker": null,
       "classId": "class:vitalist",
       "currentLevel": 0,
       "family": "untabled_exotic_base",
@@ -469,6 +537,7 @@
       "nextLevel": 1
     },
     {
+      "blocker": null,
       "classId": "class:wilder",
       "currentLevel": 0,
       "family": "untabled_exotic_base",
@@ -478,6 +547,7 @@
       "nextLevel": 1
     },
     {
+      "blocker": null,
       "classId": "class:adept",
       "currentLevel": 0,
       "family": "crb_npc_ex",
@@ -487,6 +557,7 @@
       "nextLevel": 1
     },
     {
+      "blocker": null,
       "classId": "class:aristocrat",
       "currentLevel": 0,
       "family": "crb_npc_ex",
@@ -496,6 +567,7 @@
       "nextLevel": 1
     },
     {
+      "blocker": null,
       "classId": "class:commoner",
       "currentLevel": 0,
       "family": "crb_npc_ex",
@@ -505,6 +577,7 @@
       "nextLevel": 1
     },
     {
+      "blocker": null,
       "classId": "class:expert",
       "currentLevel": 0,
       "family": "crb_npc_ex",
@@ -514,6 +587,7 @@
       "nextLevel": 1
     },
     {
+      "blocker": null,
       "classId": "class:warrior",
       "currentLevel": 0,
       "family": "crb_npc_ex",
@@ -525,6 +599,7 @@
   ],
   "addPrestige": [
     {
+      "blocker": null,
       "book": "ultimate_psionics",
       "classId": "class:adaptive_warrior",
       "entryRequirements": [
@@ -556,13 +631,14 @@
       "requirementsAllMet": false
     },
     {
+      "blocker": null,
       "book": "adventurers_guide",
       "classId": "class:aldori_swordlord",
       "entryRequirements": [
         {
           "condition": null,
           "status": "unmet",
-          "text": "at least 4 of: requires Dazzling Display, requires Exotic Weapon Proficiency and requires aldori dueling sword chosen for core rulebook:feat:exotic weapon proficiency, requires Weapon Finesse, requires Weapon Focus and requires aldori dueling sword chosen for core rulebook:feat:weapon focus"
+          "text": "at least 4 of: requires Dazzling Display, requires Exotic Weapon Proficiency and requires Aldori dueling sword chosen for Exotic Weapon Proficiency, requires Weapon Finesse, requires Weapon Focus and requires Aldori dueling sword chosen for Weapon Focus"
         },
         {
           "condition": null,
@@ -577,6 +653,7 @@
       "requirementsAllMet": false
     },
     {
+      "blocker": null,
       "book": "core_rulebook",
       "classId": "class:arcane_archer",
       "entryRequirements": [
@@ -588,7 +665,7 @@
         {
           "condition": null,
           "status": "unmet",
-          "text": "at least 1 of: requires Weapon Focus and requires longbow chosen for core rulebook:feat:weapon focus, requires Weapon Focus and requires shortbow chosen for core rulebook:feat:weapon focus"
+          "text": "at least 1 of: requires Weapon Focus and requires Longbow chosen for Weapon Focus, requires Weapon Focus and requires Shortbow chosen for Weapon Focus"
         },
         {
           "condition": null,
@@ -608,6 +685,7 @@
       "requirementsAllMet": false
     },
     {
+      "blocker": null,
       "book": "core_rulebook",
       "classId": "class:arcane_trickster",
       "entryRequirements": [
@@ -644,6 +722,7 @@
       "requirementsAllMet": false
     },
     {
+      "blocker": null,
       "book": "adventurers_guide",
       "classId": "class:argent_dramaturge",
       "entryRequirements": [
@@ -655,7 +734,7 @@
         {
           "condition": null,
           "status": "unmet",
-          "text": "requires perform chosen for core rulebook:feat:skill focus"
+          "text": "requires Perform chosen for Skill Focus"
         },
         {
           "condition": null,
@@ -675,6 +754,7 @@
       "requirementsAllMet": false
     },
     {
+      "blocker": null,
       "book": "adventurers_guide",
       "classId": "class:asavir",
       "entryRequirements": [
@@ -701,6 +781,7 @@
       "requirementsAllMet": false
     },
     {
+      "blocker": null,
       "book": "adventurers_guide",
       "classId": "class:aspis_agent",
       "entryRequirements": [
@@ -727,6 +808,7 @@
       "requirementsAllMet": false
     },
     {
+      "blocker": null,
       "book": "core_rulebook",
       "classId": "class:assassin",
       "entryRequirements": [
@@ -748,6 +830,7 @@
       "requirementsAllMet": false
     },
     {
+      "blocker": null,
       "book": "advanced_players_guide",
       "classId": "class:battle_herald",
       "entryRequirements": [
@@ -774,6 +857,7 @@
       "requirementsAllMet": false
     },
     {
+      "blocker": null,
       "book": "adventurers_guide",
       "classId": "class:bellflower_tiller",
       "entryRequirements": [
@@ -805,6 +889,7 @@
       "requirementsAllMet": false
     },
     {
+      "blocker": null,
       "book": "ultimate_psionics",
       "classId": "class:body_snatcher",
       "entryRequirements": [
@@ -841,6 +926,7 @@
       "requirementsAllMet": false
     },
     {
+      "blocker": null,
       "book": "ultimate_psionics",
       "classId": "class:cerebremancer",
       "entryRequirements": [
@@ -867,6 +953,7 @@
       "requirementsAllMet": false
     },
     {
+      "blocker": null,
       "book": "adventurers_guide",
       "classId": "class:cyphermage",
       "entryRequirements": [
@@ -898,6 +985,7 @@
       "requirementsAllMet": false
     },
     {
+      "blocker": null,
       "book": "ultimate_psionics",
       "classId": "class:dark_tempest",
       "entryRequirements": [
@@ -929,13 +1017,14 @@
       "requirementsAllMet": false
     },
     {
+      "blocker": null,
       "book": "adventurers_guide",
       "classId": "class:death_slayer",
       "entryRequirements": [
         {
           "condition": null,
           "status": "unmet",
-          "text": "at least 3 of: requires Exotic Weapon Proficiency and requires sawtooth sabre chosen for core rulebook:feat:exotic weapon proficiency, requires Great Fortitude, requires Weapon Focus and requires sawtooth sabre chosen for core rulebook:feat:weapon focus"
+          "text": "at least 3 of: requires Exotic Weapon Proficiency and requires Sawtooth sabre chosen for Exotic Weapon Proficiency, requires Great Fortitude, requires Weapon Focus and requires Sawtooth sabre chosen for Weapon Focus"
         },
         {
           "condition": null,
@@ -955,6 +1044,7 @@
       "requirementsAllMet": false
     },
     {
+      "blocker": null,
       "book": "book_of_the_damned_volume_2",
       "classId": "class:demoniac",
       "entryRequirements": [
@@ -996,6 +1086,7 @@
       "requirementsAllMet": false
     },
     {
+      "blocker": null,
       "book": "book_of_the_damned_volume_1",
       "classId": "class:diabolist",
       "entryRequirements": [
@@ -1027,6 +1118,7 @@
       "requirementsAllMet": false
     },
     {
+      "blocker": null,
       "book": "inner_sea_magic",
       "classId": "class:divine_scion",
       "entryRequirements": [
@@ -1063,6 +1155,7 @@
       "requirementsAllMet": false
     },
     {
+      "blocker": null,
       "book": "core_rulebook",
       "classId": "class:dragon_disciple",
       "entryRequirements": [
@@ -1099,6 +1192,7 @@
       "requirementsAllMet": false
     },
     {
+      "blocker": null,
       "book": "core_rulebook",
       "classId": "class:duelist",
       "entryRequirements": [
@@ -1125,6 +1219,7 @@
       "requirementsAllMet": false
     },
     {
+      "blocker": null,
       "book": "core_rulebook",
       "classId": "class:eldritch_knight",
       "entryRequirements": [
@@ -1146,6 +1241,7 @@
       "requirementsAllMet": false
     },
     {
+      "blocker": null,
       "book": "ultimate_psionics",
       "classId": "class:elocater",
       "entryRequirements": [
@@ -1182,13 +1278,14 @@
       "requirementsAllMet": false
     },
     {
+      "blocker": null,
       "book": "inner_sea_intrigue",
       "classId": "class:enchanting_courtesan",
       "entryRequirements": [
         {
           "condition": null,
           "status": "unmet",
-          "text": "at least 1 of: requires Spell Focus and requires divination chosen for core rulebook:feat:spell focus, requires Spell Focus and requires enchantment chosen for core rulebook:feat:spell focus"
+          "text": "at least 1 of: requires Spell Focus and requires Divination chosen for Spell Focus, requires Spell Focus and requires Enchantment chosen for Spell Focus"
         },
         {
           "condition": null,
@@ -1228,6 +1325,11 @@
       "requirementsAllMet": false
     },
     {
+      "blocker": {
+        "id": "multiclass.save_shape.unrecognized",
+        "message": "class:evangelist 1: the converted Reflex save progression (inner_sea_gods:class:evangelist) is neither PF1's good nor poor class-level save, so it cannot be folded into a mix (never assumed poor)",
+        "summary": "save progression in the source data matches no PF1 form"
+      },
       "book": "inner_sea_gods",
       "classId": "class:evangelist",
       "entryRequirements": [
@@ -1254,6 +1356,11 @@
       "requirementsAllMet": false
     },
     {
+      "blocker": {
+        "id": "multiclass.save_shape.unrecognized",
+        "message": "class:exalted 1: the converted Fortitude save progression (inner_sea_gods:class:exalted) is neither PF1's good nor poor class-level save, so it cannot be folded into a mix (never assumed poor)",
+        "summary": "save progression in the source data matches no PF1 form"
+      },
       "book": "inner_sea_gods",
       "classId": "class:exalted",
       "entryRequirements": [
@@ -1295,6 +1402,7 @@
       "requirementsAllMet": false
     },
     {
+      "blocker": null,
       "book": "adventurers_guide",
       "classId": "class:golden_legionnaire",
       "entryRequirements": [
@@ -1326,6 +1434,7 @@
       "requirementsAllMet": false
     },
     {
+      "blocker": null,
       "book": "adventurers_guide",
       "classId": "class:gray_corsair",
       "entryRequirements": [
@@ -1352,6 +1461,7 @@
       "requirementsAllMet": false
     },
     {
+      "blocker": null,
       "book": "inner_sea_world_guide",
       "classId": "class:harrower",
       "entryRequirements": [
@@ -1398,6 +1508,7 @@
       "requirementsAllMet": false
     },
     {
+      "blocker": null,
       "book": "adventurers_guide",
       "classId": "class:hellknight",
       "entryRequirements": [
@@ -1434,6 +1545,7 @@
       "requirementsAllMet": false
     },
     {
+      "blocker": null,
       "book": "adventurers_guide",
       "classId": "class:hellknight_signifer",
       "entryRequirements": [
@@ -1470,6 +1582,7 @@
       "requirementsAllMet": false
     },
     {
+      "blocker": null,
       "book": "advanced_players_guide",
       "classId": "class:holy_vindicator",
       "entryRequirements": [
@@ -1506,6 +1619,7 @@
       "requirementsAllMet": false
     },
     {
+      "blocker": null,
       "book": "advanced_players_guide",
       "classId": "class:horizon_walker",
       "entryRequirements": [
@@ -1527,6 +1641,7 @@
       "requirementsAllMet": false
     },
     {
+      "blocker": null,
       "book": "adventurers_guide",
       "classId": "class:lantern_bearer",
       "entryRequirements": [
@@ -1553,6 +1668,7 @@
       "requirementsAllMet": false
     },
     {
+      "blocker": null,
       "book": "inner_sea_intrigue",
       "classId": "class:lion_blade",
       "entryRequirements": [
@@ -1594,6 +1710,7 @@
       "requirementsAllMet": false
     },
     {
+      "blocker": null,
       "book": "core_rulebook",
       "classId": "class:loremaster",
       "entryRequirements": [
@@ -1605,7 +1722,7 @@
         {
           "condition": null,
           "status": "unmet",
-          "text": "requires knowledge chosen for core rulebook:feat:skill focus"
+          "text": "requires Knowledge chosen for Skill Focus"
         },
         {
           "condition": null,
@@ -1635,6 +1752,7 @@
       "requirementsAllMet": false
     },
     {
+      "blocker": null,
       "book": "inner_sea_world_guide",
       "classId": "class:low_templar",
       "entryRequirements": [
@@ -1661,6 +1779,7 @@
       "requirementsAllMet": false
     },
     {
+      "blocker": null,
       "book": "adventurers_guide",
       "classId": "class:magaambyan_arcanist",
       "entryRequirements": [
@@ -1697,6 +1816,11 @@
       "requirementsAllMet": false
     },
     {
+      "blocker": {
+        "id": "multiclass.save_shape.unrecognized",
+        "message": "class:mammoth_rider 1: the converted Fortitude save progression (adventurers_guide:class:mammoth_rider) is neither PF1's good nor poor class-level save, so it cannot be folded into a mix (never assumed poor)",
+        "summary": "save progression in the source data matches no PF1 form"
+      },
       "book": "adventurers_guide",
       "classId": "class:mammoth_rider",
       "entryRequirements": [
@@ -1723,6 +1847,7 @@
       "requirementsAllMet": false
     },
     {
+      "blocker": null,
       "book": "advanced_players_guide",
       "classId": "class:master_chymist",
       "entryRequirements": [
@@ -1744,6 +1869,7 @@
       "requirementsAllMet": false
     },
     {
+      "blocker": null,
       "book": "advanced_players_guide",
       "classId": "class:master_spy",
       "entryRequirements": [
@@ -1765,6 +1891,7 @@
       "requirementsAllMet": false
     },
     {
+      "blocker": null,
       "book": "ultimate_psionics",
       "classId": "class:metaforge",
       "entryRequirements": [
@@ -1786,6 +1913,7 @@
       "requirementsAllMet": false
     },
     {
+      "blocker": null,
       "book": "ultimate_psionics",
       "classId": "class:metamind",
       "entryRequirements": [
@@ -1812,6 +1940,7 @@
       "requirementsAllMet": false
     },
     {
+      "blocker": null,
       "book": "ultimate_psionics",
       "classId": "class:metamorph",
       "entryRequirements": [
@@ -1838,6 +1967,7 @@
       "requirementsAllMet": false
     },
     {
+      "blocker": null,
       "book": "ultimate_psionics",
       "classId": "class:mystic_archer",
       "entryRequirements": [
@@ -1869,6 +1999,7 @@
       "requirementsAllMet": false
     },
     {
+      "blocker": null,
       "book": "core_rulebook",
       "classId": "class:mystic_theurge",
       "entryRequirements": [
@@ -1895,6 +2026,7 @@
       "requirementsAllMet": false
     },
     {
+      "blocker": null,
       "book": "advanced_players_guide",
       "classId": "class:nature_warden",
       "entryRequirements": [
@@ -1936,6 +2068,7 @@
       "requirementsAllMet": false
     },
     {
+      "blocker": null,
       "book": "core_rulebook",
       "classId": "class:pathfinder_chronicler",
       "entryRequirements": [
@@ -1952,6 +2085,7 @@
       "requirementsAllMet": false
     },
     {
+      "blocker": null,
       "book": "adventurers_guide",
       "classId": "class:pathfinder_delver",
       "entryRequirements": [
@@ -1968,6 +2102,7 @@
       "requirementsAllMet": false
     },
     {
+      "blocker": null,
       "book": "adventurers_guide",
       "classId": "class:pathfinder_savant",
       "entryRequirements": [
@@ -1999,13 +2134,14 @@
       "requirementsAllMet": false
     },
     {
+      "blocker": null,
       "book": "ultimate_psionics",
       "classId": "class:phrenic_slayer",
       "entryRequirements": [
         {
           "condition": null,
           "status": "unmet",
-          "text": "at least 1 of: requires Skill Focus and requires survival chosen for core rulebook:feat:skill focus, requires Track"
+          "text": "at least 1 of: requires Skill Focus and requires Survival chosen for Skill Focus, requires Track"
         },
         {
           "condition": null,
@@ -2035,6 +2171,7 @@
       "requirementsAllMet": false
     },
     {
+      "blocker": null,
       "book": "ultimate_psionics",
       "classId": "class:psicrystal_imprinter",
       "entryRequirements": [
@@ -2056,6 +2193,7 @@
       "requirementsAllMet": false
     },
     {
+      "blocker": null,
       "book": "ultimate_psionics",
       "classId": "class:psion_uncarnate",
       "entryRequirements": [
@@ -2087,6 +2225,7 @@
       "requirementsAllMet": false
     },
     {
+      "blocker": null,
       "book": "ultimate_psionics",
       "classId": "class:psychic_fist",
       "entryRequirements": [
@@ -2123,6 +2262,11 @@
       "requirementsAllMet": false
     },
     {
+      "blocker": {
+        "id": "multiclass.save_shape.unrecognized",
+        "message": "class:pure_legion_enforcer 1: the converted Fortitude save progression (inner_sea_combat:class:pure_legion_enforcer) is neither PF1's good nor poor class-level save, so it cannot be folded into a mix (never assumed poor)",
+        "summary": "save progression in the source data matches no PF1 form"
+      },
       "book": "inner_sea_combat",
       "classId": "class:pure_legion_enforcer",
       "entryRequirements": [
@@ -2169,6 +2313,7 @@
       "requirementsAllMet": false
     },
     {
+      "blocker": null,
       "book": "ultimate_psionics",
       "classId": "class:pyrokineticist",
       "entryRequirements": [
@@ -2200,6 +2345,7 @@
       "requirementsAllMet": false
     },
     {
+      "blocker": null,
       "book": "advanced_players_guide",
       "classId": "class:rage_prophet",
       "entryRequirements": [
@@ -2226,13 +2372,14 @@
       "requirementsAllMet": false
     },
     {
+      "blocker": null,
       "book": "adventurers_guide",
       "classId": "class:red_mantis_assassin",
       "entryRequirements": [
         {
           "condition": null,
           "status": "unmet",
-          "text": "at least 4 of: requires Alertness (Perception), requires Exotic Weapon Proficiency and requires sawtooth sabre chosen for core rulebook:feat:exotic weapon proficiency, requires Two-Weapon Fighting (attack), requires Weapon Focus and requires sawtooth sabre chosen for core rulebook:feat:weapon focus"
+          "text": "at least 4 of: requires Alertness (Perception), requires Exotic Weapon Proficiency and requires Sawtooth sabre chosen for Exotic Weapon Proficiency, requires Two-Weapon Fighting (attack), requires Weapon Focus and requires Sawtooth sabre chosen for Weapon Focus"
         },
         {
           "condition": null,
@@ -2252,6 +2399,7 @@
       "requirementsAllMet": false
     },
     {
+      "blocker": null,
       "book": "adventurers_guide",
       "classId": "class:rivethun_emissary",
       "entryRequirements": [
@@ -2278,6 +2426,7 @@
       "requirementsAllMet": false
     },
     {
+      "blocker": null,
       "book": "adventurers_guide",
       "classId": "class:sanguine_angel",
       "entryRequirements": [
@@ -2299,7 +2448,7 @@
         {
           "condition": null,
           "status": "unmet",
-          "text": "at least 3 of: requires Improved Shield Bash, requires Iron Will, requires Weapon Focus and requires longsword chosen for core rulebook:feat:weapon focus"
+          "text": "at least 3 of: requires Improved Shield Bash, requires Iron Will, requires Weapon Focus and requires Longsword chosen for Weapon Focus"
         },
         {
           "condition": null,
@@ -2319,6 +2468,11 @@
       "requirementsAllMet": false
     },
     {
+      "blocker": {
+        "id": "multiclass.save_shape.unrecognized",
+        "message": "class:sentinel 1: the converted Fortitude save progression (inner_sea_gods:class:sentinel) is neither PF1's good nor poor class-level save, so it cannot be folded into a mix (never assumed poor)",
+        "summary": "save progression in the source data matches no PF1 form"
+      },
       "book": "inner_sea_gods",
       "classId": "class:sentinel",
       "entryRequirements": [
@@ -2350,6 +2504,7 @@
       "requirementsAllMet": false
     },
     {
+      "blocker": null,
       "book": "core_rulebook",
       "classId": "class:shadowdancer",
       "entryRequirements": [
@@ -2371,13 +2526,14 @@
       "requirementsAllMet": false
     },
     {
+      "blocker": null,
       "book": "ultimate_psionics",
       "classId": "class:sighted_seeker",
       "entryRequirements": [
         {
           "condition": null,
           "status": "unmet",
-          "text": "at least 1 of: requires Skill Focus and requires survival chosen for core rulebook:feat:skill focus, requires Track"
+          "text": "at least 1 of: requires Skill Focus and requires Survival chosen for Skill Focus, requires Track"
         },
         {
           "condition": null,
@@ -2402,6 +2558,7 @@
       "requirementsAllMet": false
     },
     {
+      "blocker": null,
       "book": "ultimate_psionics",
       "classId": "class:soul_archer",
       "entryRequirements": [
@@ -2428,6 +2585,7 @@
       "requirementsAllMet": false
     },
     {
+      "blocker": null,
       "book": "advanced_players_guide",
       "classId": "class:stalwart_defender",
       "entryRequirements": [
@@ -2449,6 +2607,7 @@
       "requirementsAllMet": false
     },
     {
+      "blocker": null,
       "book": "adventurers_guide",
       "classId": "class:steel_falcon",
       "entryRequirements": [
@@ -2475,6 +2634,7 @@
       "requirementsAllMet": false
     },
     {
+      "blocker": null,
       "book": "adventurers_guide",
       "classId": "class:storm_kindler",
       "entryRequirements": [
@@ -2511,6 +2671,7 @@
       "requirementsAllMet": false
     },
     {
+      "blocker": null,
       "book": "adventurers_guide",
       "classId": "class:student_of_perfection",
       "entryRequirements": [
@@ -2542,6 +2703,7 @@
       "requirementsAllMet": false
     },
     {
+      "blocker": null,
       "book": "adventurers_guide",
       "classId": "class:student_of_war",
       "entryRequirements": [
@@ -2563,7 +2725,7 @@
         {
           "condition": null,
           "status": "unmet",
-          "text": "requires knowledge chosen for core rulebook:feat:skill focus"
+          "text": "requires Knowledge chosen for Skill Focus"
         },
         {
           "condition": null,
@@ -2583,6 +2745,7 @@
       "requirementsAllMet": false
     },
     {
+      "blocker": null,
       "book": "ultimate_psionics",
       "classId": "class:telekinetic_weaponmaster",
       "entryRequirements": [
@@ -2609,13 +2772,14 @@
       "requirementsAllMet": false
     },
     {
+      "blocker": null,
       "book": "ultimate_psionics",
       "classId": "class:thrallherd",
       "entryRequirements": [
         {
           "condition": null,
           "status": "unmet",
-          "text": "at least 1 of: requires Inquisitor, requires Skill Focus and requires diplomacy chosen for core rulebook:feat:skill focus"
+          "text": "at least 1 of: requires Inquisitor, requires Skill Focus and requires Diplomacy chosen for Skill Focus"
         },
         {
           "condition": null,
@@ -2640,6 +2804,7 @@
       "requirementsAllMet": false
     },
     {
+      "blocker": null,
       "book": "adventurers_guide",
       "classId": "class:twilight_talon",
       "entryRequirements": [
@@ -2666,6 +2831,11 @@
       "requirementsAllMet": false
     },
     {
+      "blocker": {
+        "id": "multiclass.save_shape.unrecognized",
+        "message": "class:ulfen_guard 1: the converted Fortitude save progression (inner_sea_combat:class:ulfen_guard) is neither PF1's good nor poor class-level save, so it cannot be folded into a mix (never assumed poor)",
+        "summary": "save progression in the source data matches no PF1 form"
+      },
       "book": "inner_sea_combat",
       "classId": "class:ulfen_guard",
       "entryRequirements": [
@@ -2692,6 +2862,7 @@
       "requirementsAllMet": false
     },
     {
+      "blocker": null,
       "book": "ultimate_psionics",
       "classId": "class:war_mind",
       "entryRequirements": [
@@ -2728,6 +2899,7 @@
       "requirementsAllMet": false
     },
     {
+      "blocker": null,
       "book": "adventurers_guide",
       "classId": "class:westcrown_devil",
       "entryRequirements": [
@@ -2771,6 +2943,7 @@
   ],
   "advance": [
     {
+      "blocker": null,
       "classId": "class:fighter",
       "currentLevel": 6,
       "family": "crb",

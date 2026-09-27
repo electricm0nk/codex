@@ -913,6 +913,34 @@ class StructuralDiffGateTest(unittest.TestCase):
         self.assertEqual(code, 1, out)
         self.assertIn("samurai_proficiencies: offers", out)
 
+    def test_f6c_apply_undoes_exactly_its_pins(self):
+        """SD-36 F6c: with the owner carrying a printing, a pinned printing whose sha holds is
+        removed, a moved one fails; a pinned withheld count gets its F4pre offer and print back,
+        one that still prints fails; a package with no printing on the owner is left alone."""
+        owner = structural_diff.F6C["owner"]
+        self.assertEqual(owner, "adventurers_guide:class:hellknight")
+        pinned = dict(structural_diff.F6C["printings"])
+        self.assertEqual(len(pinned), 6)
+        self.assertEqual(structural_diff.F6C["withheld"], ["advanced_class_guide:class:shaman#bonus1"])
+        fresh = {rid: {"id": rid, "provenance": {"book": rid.split(":")[0]}} for rid in pinned}
+        # Inactive: the owner carries no printing.
+        found, failures = structural_diff.f6c_apply(fresh)
+        self.assertEqual((sum(found.values()), failures), (0, []))
+        # A printing whose sha does not match its pin fails, naming the rule.
+        fresh[owner]["provenance"]["printing"] = {"printings": ["a", "b"]}
+        found, failures = structural_diff.f6c_apply(fresh)
+        self.assertIn(f"F6c pinned printing moved: {owner}", failures)
+        # A withheld count that still prints fails; one exactly withheld is restored.
+        shaman = "advanced_class_guide:class:shaman#bonus1"
+        fresh[shaman] = {"id": shaman, "value": {"Number": {"Const": 1}}, "target": {"Other": "domains"}, "print": True}
+        found, failures = structural_diff.f6c_apply(fresh)
+        self.assertTrue(any(f.startswith(f"F6c {shaman}: not exactly") for f in failures), failures)
+        fresh[shaman]["print"] = False
+        found, failures = structural_diff.f6c_apply(fresh)
+        self.assertEqual(found["class_granted_domain_count"], 1)
+        self.assertEqual(fresh[shaman]["offers"], {"id": shaman, "count": {"Const": 1}, "from": "Domains"})
+        self.assertIs(fresh[shaman]["print"], True)
+
     def test_report_only_flag_keeps_exit_zero(self):
         base = base_rules()
         fresh = base_rules()
