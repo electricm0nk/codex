@@ -17,6 +17,7 @@
  * browser/test) context.
  */
 import { invoke } from '@tauri-apps/api/core';
+import { loadDeleteCharacter } from '../boundary/loadDeleteCharacter';
 import { hasTauriRuntime } from '../boundary/runtime';
 
 export interface UiProbeRect {
@@ -46,7 +47,8 @@ export interface UiProbeSelect {
  */
 export interface UiProbeCommand {
   id: string;
-  op: 'click' | 'type' | 'select' | 'key' | 'scroll';
+  op: 'click' | 'type' | 'select' | 'key' | 'scroll' | 'deleteCharacter';
+  /** The element name for click/select; the character id for deleteCharacter. */
   target?: string;
   text?: string;
   key?: string;
@@ -292,9 +294,25 @@ function dispatchKey(keyName: string): void {
  * deterministic where `xdotool` under Xvfb+WebKitGTK is not (see this
  * module's own header comment).
  */
-function executeCommand(cmd: UiProbeCommand): UiProbeLastCommand {
+function executeCommand(cmd: UiProbeCommand): UiProbeLastCommand | Promise<UiProbeLastCommand> {
   try {
     switch (cmd.op) {
+      case 'deleteCharacter': {
+        // Harness cleanup (SD-36 F6d): a row that created a character deletes
+        // it again through the app's own `delete_character` command -- the
+        // same path Load Character's Delete button uses -- so even a
+        // `--keep-data` run leaves only the seeded starter behind. The one
+        // async op: the answer is reported once the command has actually
+        // resolved, never before.
+        const characterId = cmd.target ?? '';
+        if (!characterId) {
+          return { id: cmd.id, ok: false, error: 'deleteCharacter needs a character id in `target`' };
+        }
+        return loadDeleteCharacter(characterId).then(
+          (response) => ({ id: cmd.id, ok: response.ok, error: response.error, matchedName: characterId }),
+          (cause: unknown) => ({ id: cmd.id, ok: false, error: cause instanceof Error ? cause.message : String(cause) }),
+        );
+      }
       case 'click': {
         const found = findElementByName(cmd.target ?? '', cmd.index ?? 0);
         if (!found) {
@@ -399,7 +417,7 @@ function startCommandChannel(onExecuted: (result: UiProbeLastCommand) => void): 
         } catch {
           return;
         }
-        onExecuted(executeCommand(cmd));
+        return Promise.resolve(executeCommand(cmd)).then(onExecuted);
       })
       .catch(() => {
         // Same posture as record_ui_probe's own failure handling: never let
@@ -482,4 +500,4 @@ export function installUiProbe(): void {
 // Exported for the harness's own unit tests (target-name derivation and the
 // command channel's name-matching tiers must not silently regress) — not
 // part of the runtime's own call surface.
-export const __testables = { nameOf, deriveMode, matchCommandTarget };
+export const __testables = { nameOf, deriveMode, matchCommandTarget, executeCommand };

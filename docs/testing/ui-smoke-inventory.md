@@ -6,6 +6,8 @@
 
 **Denominator discipline**: `results.json` always carries one entry per selected row, written as `not-run` before any row executes and replaced in place as each finishes, so a killed/interrupted run's row count still matches its own denominator instead of a shorter file being mistaken for a complete run. **`--resume`** (with `--out <dir>` pointed at a directory already holding a `results.json`): skips re-running any row whose entry there is already `green` or `manual`, and re-runs every other row (`not-run`, `red`, `blocked`, or missing entirely). **Auto-recover**: two consecutive command-channel stalls trigger one app relaunch + retry of the current row (capped at 3 relaunches per run); a retry that then passes is logged with reason `auto-relaunch`. See `spec.json`'s own top-level `$comment` for the full contract.
 
+**Isolated app data**: every run launches the app against a fresh per-run app-data root under `os.tmpdir()` (Tauri's `app_data_dir()` follows `$XDG_DATA_HOME` on Linux; driver.sh exports `XDG_DATA_HOME`/`XDG_CONFIG_HOME`/`XDG_CACHE_HOME` from `RUN_DESKTOP_DATA_ROOT`), never the operator's real `~/.local/share/io.electricm0nk.codex` store. The runner refuses to start if the resolved root is (or is inside) the real one, checks the live app process's own environment resolves to the isolated root, deletes every character a row created through the app's `delete_character` command (recorded as `cleanup` on the row's `results.json` entry, with `app_data_root`), and removes the root at the end unless `--keep-data`. Guard tests: `scripts/ui-smoke/lib/appDataIsolation.test.mjs` (run by `npm test`).
+
 ## landing
 
 | id | steps | marker / expected | red condition | manual reason | notes |

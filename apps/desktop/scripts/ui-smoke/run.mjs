@@ -6,7 +6,17 @@
 //
 // Usage:
 //   RUN_DESKTOP_AGENT=<unique> node scripts/ui-smoke/run.mjs [--only <id>[,<id>...]]
-//     [--from <id>] [--out <dir>] [--keep]
+//     [--from <id>] [--out <dir>] [--keep] [--keep-data]
+//
+// The app ALWAYS runs against an isolated, per-run app-data root (SD-36 F6d):
+// a fresh mkdtemp dir under os.tmpdir() handed to driver.sh as
+// RUN_DESKTOP_DATA_ROOT, which exports it to the app as XDG_DATA_HOME/
+// XDG_CONFIG_HOME/XDG_CACHE_HOME (see lib/appDataIsolation.mjs for the Tauri
+// path-resolver citation). The run refuses to start if that root resolves onto
+// the operator's real store, every row deletes the characters it created
+// (via the app's own delete_character command), and the root is removed at the
+// end unless --keep-data (or --keep, which leaves the app running on it). Each
+// executed row's results.json entry records `app_data_root` and `cleanup`.
 //
 // See spec.json's own top-level "$comment" for the row schema, and
 // SKILL.md / verify-on-screen.sh for the concurrency rules this runner
@@ -17,6 +27,17 @@ import { dirname, join, resolve } from 'node:path';
 import { fileURLToPath } from 'node:url';
 
 import * as driver from './lib/driver.mjs';
+import {
+  appDataDirFor,
+  assertIsolated,
+  characterIds,
+  cleanupCreatedCharacters,
+  createIsolatedDataRoot,
+  isolatedXdg,
+  launchEnv,
+  readProcessEnv,
+  removeDataRoot,
+} from './lib/appDataIsolation.mjs';
 import { extractScreenText } from './lib/clipboard.mjs';
 import { sendUntilOk } from './lib/commandChannel.mjs';
 import {
@@ -61,7 +82,7 @@ const LANDING_TARGET_NAMES = ['New\nCharacter', 'Load\nCharacter'];
 const LANDING_MARKER_PREFIX = 'Browse ';
 
 function parseArgs(argv) {
-  const args = { only: null, from: null, out: null, keep: false, xdotool: false, resume: false };
+  const args = { only: null, from: null, out: null, keep: false, keepData: false, xdotool: false, resume: false };
   for (let i = 0; i < argv.length; i += 1) {
     const arg = argv[i];
     if (arg === '--only') {
@@ -72,6 +93,11 @@ function parseArgs(argv) {
       args.out = argv[++i];
     } else if (arg === '--keep') {
       args.keep = true;
+    } else if (arg === '--keep-data') {
+      // Keep the run's isolated app-data root on disk after the run (it is
+      // removed by default). Rows still delete what they created, so a kept
+      // root holds only the seeded starter character.
+      args.keepData = true;
     } else if (arg === '--resume') {
       // See this flag's own top-level $comment entry in spec.json for the
       // full contract. Short version: when --out already holds a
@@ -139,6 +165,35 @@ let lastSeenTs = 0;
 // click/type/select/key through the DOM command channel; true falls back to
 // driver.sh (xdotool) for direct comparison -- see parseArgs' own comment.
 let USE_XDOTOOL = false;
+// The isolated app_data_dir the running app resolves (set in main() before
+// any row runs; asserted never to be the operator's real store).
+let isolatedAppDataDir = null;
+
+/**
+ * Checks that every running app process of this agent resolves Tauri's
+ * app_data_dir to `isolatedAppDataDir`, read from the LIVE process's own
+ * environment (/proc/<pid>/environ) -- proof the isolation reached the
+ * binary, not just the env run.mjs built. Returns a problem string or null.
+ */
+function liveIsolationProblem() {
+  const pids = driver.appPids();
+  if (pids.length === 0) {
+    return 'no running app process found to check';
+  }
+  for (const pid of pids) {
+    const env = readProcessEnv(pid);
+    const resolved = env ? appDataDirFor(env) : null;
+    if (resolved !== isolatedAppDataDir) {
+      return `app pid ${pid} resolves app_data_dir to ${resolved ?? '<unreadable environ>'}, expected ${isolatedAppDataDir}`;
+    }
+  }
+  return null;
+}
+
+/** Deletes one character through the app's own delete_character command (DOM command channel). */
+function deleteCharacterById(characterId) {
+  return sendUntilOk(cmdPath, probePath, { op: 'deleteCharacter', target: characterId }, { ackTimeoutMs: 5000, deadlineMs: 30000 });
+}
 
 function latestSnapshot({ requireFresh = false, timeoutMs = 3000 } = {}) {
   const { snapshot, fresh } = pollForFreshProbe(probePath, requireFresh ? lastSeenTs : 0, timeoutMs);
@@ -722,7 +777,52 @@ function main() {
   }
   writeResults(outDir, results);
 
+  // ------------------------------------- isolated app-data root (SD-36 F6d)
+  // THE GUARD: resolve the store the app will use and refuse to run a single
+  // row against the operator's real one.
+  const realAppDataDir = appDataDirFor(process.env);
+  let dataRoot = null; // created -- and removed at exit -- by THIS run only
+  let childEnv = process.env;
   const alreadyAlive = driver.isAlive();
+  if (alreadyAlive) {
+    // Reusing a live app (--keep from an earlier run): its store is whatever
+    // IT was launched with, read from its own environment.
+    const liveEnv = readProcessEnv(driver.appPids()[0]);
+    isolatedAppDataDir = liveEnv ? appDataDirFor(liveEnv) : null;
+  } else {
+    dataRoot = createIsolatedDataRoot({ label: agent });
+    isolatedAppDataDir = appDataDirFor(isolatedXdg(dataRoot));
+    childEnv = launchEnv(process.env, dataRoot);
+  }
+  try {
+    assertIsolated(isolatedAppDataDir, realAppDataDir);
+  } catch (cause) {
+    console.error(`run.mjs: ${cause instanceof Error ? cause.message : String(cause)}`);
+    if (alreadyAlive) {
+      console.error(`          the live app for agent '${agent}' was not launched with an isolated root -- stop it (driver.sh stop) and re-run.`);
+    }
+    if (dataRoot) removeDataRoot(dataRoot, { realAppDataDir });
+    process.exitCode = 2;
+    return;
+  }
+  console.log(`App data root: ${isolatedAppDataDir} (isolated; the real store ${realAppDataDir} is never opened)`);
+  process.on('exit', () => {
+    if (!dataRoot) {
+      return;
+    }
+    const held = characterIds(isolatedAppDataDir);
+    if (args.keepData) {
+      console.log(`App data root kept (--keep-data): ${dataRoot} -- characters: ${held.join(', ') || '(none)'}`);
+      return;
+    }
+    if (driver.isAlive()) {
+      console.log(`App data root kept: the app is still running on it (--keep): ${dataRoot}`);
+      return;
+    }
+    removeDataRoot(dataRoot, { realAppDataDir });
+    console.log(`Removed isolated app-data root ${dataRoot} (it held ${held.length} character(s) at the end: ${held.join(', ') || 'none'}).`);
+  });
+
   if (!alreadyAlive) {
     // A probe file from a PREVIOUS session (this agent's earlier launch, a
     // manual test edit, anything) can still be sitting at `probePath` —
@@ -741,7 +841,7 @@ function main() {
     const staleTs = readProbeFile(probePath)?.ts ?? 0;
 
     console.log(`Launching app for agent '${agent}'...`);
-    const launchResult = driver.launch();
+    const launchResult = driver.launch(childEnv);
     if (launchResult.status !== 0) {
       console.error('run.mjs: driver.sh launch failed:');
       console.error(launchResult.stderr || launchResult.stdout);
@@ -774,6 +874,13 @@ function main() {
       return;
     }
     lastSeenTs = snapshot.ts ?? 0;
+    const isolationProblem = liveIsolationProblem();
+    if (isolationProblem) {
+      console.error(`run.mjs: isolation check failed -- ${isolationProblem}. Stopping the app; no row runs.`);
+      driver.stop();
+      process.exitCode = 2;
+      return;
+    }
     // A probe report proves React has painted, but not that WebKitGTK's
     // input pipeline is accepting synthetic (xdotool) events yet — observed
     // directly: the very first click issued immediately after this point
@@ -793,11 +900,21 @@ function main() {
   // Runs one row and always returns a definite result object (never lets an
   // uncaught exception propagate) -- shared by the main loop and the
   // auto-relaunch retry below so both go through identical error handling.
+  //
+  // Every executed row also cleans up after itself, whatever its outcome:
+  // any character id that appeared under the isolated store while the row
+  // ran is deleted through the app's own delete_character command once the
+  // app is back on the landing screen (never under an open sheet, whose
+  // autosave could write the directory back). The outcome -- created,
+  // deleted, leftover -- is recorded on the row's results.json entry along
+  // with the app-data root it ran against.
   function executeRow(row) {
+    const before = characterIds(isolatedAppDataDir);
+    let result;
     try {
-      return runRow(row, spec, outDir);
+      result = runRow(row, spec, outDir);
     } catch (cause) {
-      return {
+      result = {
         id: row.id,
         status: 'red',
         screenshot: null,
@@ -805,6 +922,23 @@ function main() {
         reason: `runner exception: ${cause instanceof Error ? cause.message : String(cause)}`,
       };
     }
+    let cleanup;
+    try {
+      if (characterIds(isolatedAppDataDir).some((id) => !before.includes(id))) {
+        resetToLanding();
+      }
+      cleanup = cleanupCreatedCharacters({
+        before,
+        listIds: () => characterIds(isolatedAppDataDir),
+        deleteById: deleteCharacterById,
+      });
+    } catch (cause) {
+      cleanup = { created: [], deleted: [], leftover: [], errors: { runner: cause instanceof Error ? cause.message : String(cause) } };
+    }
+    if (cleanup.leftover.length > 0) {
+      console.warn(`WARN  ${row.id}: cleanup left ${cleanup.leftover.join(', ')} in ${isolatedAppDataDir} (${JSON.stringify(cleanup.errors)})`);
+    }
+    return { ...result, app_data_root: isolatedAppDataDir, cleanup };
   }
 
   // Auto-recover: a "command-channel stall" is a row that never actually
@@ -849,10 +983,17 @@ function main() {
       );
       driver.stop();
       const staleTs = readProbeFile(probePath)?.ts ?? 0;
-      const launchResult = driver.launch();
+      const launchResult = driver.launch(childEnv);
       if (launchResult.status === 0) {
         const firstProbeTimeoutMs = Number(process.env.RUN_DESKTOP_FIRST_PROBE_TIMEOUT_MS) || 180000;
         const { snapshot } = pollForFreshProbe(probePath, staleTs, firstProbeTimeoutMs, 250);
+        const relaunchIsolationProblem = snapshot ? liveIsolationProblem() : null;
+        if (relaunchIsolationProblem) {
+          console.error(`run.mjs: relaunch isolation check failed -- ${relaunchIsolationProblem}. Stopping.`);
+          driver.stop();
+          process.exitCode = 2;
+          return;
+        }
         if (snapshot) {
           lastSeenTs = snapshot.ts ?? 0;
           sleepMs(1500); // same cold-launch settle as the initial launch above.
@@ -905,6 +1046,16 @@ function main() {
 
   console.log('');
   console.log(summaryLine(results));
+  {
+    const executed = results.filter((entry) => entry.cleanup);
+    const created = executed.reduce((n, entry) => n + entry.cleanup.created.length, 0);
+    const deleted = executed.reduce((n, entry) => n + entry.cleanup.deleted.length, 0);
+    const leftover = executed.reduce((n, entry) => n + entry.cleanup.leftover.length, 0);
+    console.log(
+      `Cleanup: ${created} character(s) created across ${executed.length} row(s) with a cleanup record, ${deleted} deleted, ` +
+        `${leftover} leftover; store ${isolatedAppDataDir} now holds: ${characterIds(isolatedAppDataDir).join(', ') || '(none)'}`,
+    );
+  }
   console.log(`Evidence: ${outDir}`);
 
   if (!args.keep) {

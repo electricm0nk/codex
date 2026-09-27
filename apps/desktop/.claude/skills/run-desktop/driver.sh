@@ -15,6 +15,10 @@
 #   driver.sh geometry            # print the window's position/size
 #   driver.sh logs                # tail the tauri dev launch log
 #   driver.sh stop                # kill the app + Vite + Xvfb, clean up
+#
+# The app always runs against an ISOLATED app-data root (RUN_DESKTOP_DATA_ROOT,
+# default /tmp/run-desktop-driver-<agent>.appdata) — never the operator's real
+# character store. See "ISOLATED APP-DATA ROOT" below.
 
 set -euo pipefail
 
@@ -74,6 +78,50 @@ WINDOW_TITLE="Codex"
 APP_BIN_NAME="codex-desktop"
 LOG_FILE="/tmp/run-desktop-driver-${AGENT_ID}.tauri-dev.log"
 XVFB_LOG_FILE="/tmp/run-desktop-driver-${AGENT_ID}.xvfb.log"
+
+# ISOLATED APP-DATA ROOT (SD-36 F6d; operator 2026-09-27: "a lot of test
+# characters littering the default database. We only want the one Ironhands
+# character"). Every launch through this driver hands the app its own XDG
+# roots, so nothing an agent or the ui-smoke harness creates can land in the
+# operator's real store. Tauri 2's `app_data_dir()` is
+# `dirs::data_dir()/<identifier>` (tauri 2.11.5 src/path/desktop.rs), and on
+# Linux `dirs::data_dir()` is $XDG_DATA_HOME when absolute, else
+# $HOME/.local/share (dirs 6.0.0 src/lin.rs); config/cache follow
+# $XDG_CONFIG_HOME/$XDG_CACHE_HOME the same way. Measured before this existed:
+# ~/.local/share/io.electricm0nk.codex/characters held 378 character dirs, 287
+# of them ui-smoke litter.
+#
+# RUN_DESKTOP_DATA_ROOT picks the root (ui-smoke's run.mjs passes a fresh
+# per-run mkdtemp dir and removes it afterwards); unset, it defaults to a
+# per-agent dir under /tmp that persists between launches so a manual session
+# can inspect what it wrote. Layout: <root>/data, <root>/config, <root>/cache —
+# scripts/ui-smoke/lib/appDataIsolation.mjs uses the same layout and its test
+# asks `_data_env` below rather than restating it. There is deliberately no
+# opt-out: to look at the real store, run the app normally, not via this driver.
+DATA_ROOT="${RUN_DESKTOP_DATA_ROOT:-/tmp/run-desktop-driver-${AGENT_ID}.appdata}"
+
+# Prints the three XDG_* assignments `launch` exports, or refuses (exit 3)
+# when the root is relative or its data dir is (or sits inside) the real one.
+# "Real" is resolved from the CALLER's environment, exactly as the app would
+# resolve it without this driver.
+resolve_data_env() {
+  case "$DATA_ROOT" in
+    /*) ;;
+    *) echo "driver.sh: RUN_DESKTOP_DATA_ROOT must be absolute, got '$DATA_ROOT'" >&2; return 3 ;;
+  esac
+  local real_data_home="$HOME/.local/share"
+  case "${XDG_DATA_HOME:-}" in /*) real_data_home="$XDG_DATA_HOME" ;; esac
+  local real iso
+  real="$(realpath -m "$real_data_home")"
+  iso="$(realpath -m "$DATA_ROOT/data")"
+  if [ "$iso" = "$real" ] || [[ "$iso/" == "$real/"* ]]; then
+    echo "driver.sh: refusing to launch against the real app-data root ($real) — RUN_DESKTOP_DATA_ROOT=$DATA_ROOT resolves onto it" >&2
+    return 3
+  fi
+  echo "XDG_DATA_HOME=$(realpath -m "$DATA_ROOT/data")"
+  echo "XDG_CONFIG_HOME=$(realpath -m "$DATA_ROOT/config")"
+  echo "XDG_CACHE_HOME=$(realpath -m "$DATA_ROOT/cache")"
+}
 
 # How long to wait for WebKitGTK to create the app window after the binary
 # process appears. Measured on the 4-core CI box, idle and solo: ~35s. The
@@ -197,6 +245,15 @@ cmd_launch() {
     exit 1
   fi
 
+  # Resolve (and guard) the isolated app-data root BEFORE anything starts.
+  local data_env
+  data_env="$(resolve_data_env)" || exit 3
+  local xdg_data_home xdg_config_home xdg_cache_home
+  xdg_data_home="$(sed -n 's/^XDG_DATA_HOME=//p' <<<"$data_env")"
+  xdg_config_home="$(sed -n 's/^XDG_CONFIG_HOME=//p' <<<"$data_env")"
+  xdg_cache_home="$(sed -n 's/^XDG_CACHE_HOME=//p' <<<"$data_env")"
+  mkdir -p "$xdg_data_home" "$xdg_config_home" "$xdg_cache_home"
+
   # Idempotent: clean up any previous run first.
   cmd_stop || true
 
@@ -226,7 +283,9 @@ cmd_launch() {
   # than whatever answers on the shared default. `CODEX_DEV_PORT` (exported
   # above) is what vite.config.ts reads for the matching listen port; both sides
   # must move together or tauri waits forever on a port nothing serves.
+  echo "App data root: $DATA_ROOT (XDG_DATA_HOME=$xdg_data_home)" >&2
   (cd "$app_root" && DISPLAY=":$DISPLAY_NUM" \
+     XDG_DATA_HOME="$xdg_data_home" XDG_CONFIG_HOME="$xdg_config_home" XDG_CACHE_HOME="$xdg_cache_home" \
      npx tauri dev --config "{\"build\":{\"devUrl\":\"http://localhost:$DEV_PORT\"}}") \
      >"$LOG_FILE" 2>&1 &
   local tauri_pid=$!
@@ -307,6 +366,7 @@ XVFB_PID=$xvfb_pid
 TAURI_PID=$tauri_pid
 WINDOW_ID=$window_id
 APP_ROOT=$app_root
+DATA_ROOT=$DATA_ROOT
 EOF
 
   trap - EXIT INT TERM
@@ -434,6 +494,7 @@ case "${1:-}" in
   _app_pid) our_app_pids ;;
   _window_timeout) echo "$WINDOW_TIMEOUT_SECS" ;;
   _launch_timeout) echo "$LAUNCH_TIMEOUT_SECS" ;;
+  _data_env) resolve_data_env ;;
   _diagnose) shift; cmd_diagnose "$@" ;;
   *)
     echo "Usage: driver.sh {launch|screenshot|focus|click|scroll|type|key|title|geometry|logs|diagnose|stop}" >&2
