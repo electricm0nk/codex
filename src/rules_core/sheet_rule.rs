@@ -2651,11 +2651,10 @@ pub fn render_sheet(package: &SheetRulePackage, seed: &HeldSeed, facts: &Charact
             if !r.id.contains('#') {
                 return Some(Evaluator::new(package, &held, facts, ctx).line(r));
             }
-            let gate = line_gate(package, r);
-            let evaluator = Evaluator::new(package, &held, facts, ctx.clone()).printing_undecided();
-            if !evaluator.applies(&gate).includes() {
+            if !sibling_line_gate(package, &held, facts, r, ctx.clone()).includes() {
                 return None;
             }
+            let gate = line_gate(package, r);
             Some(Evaluator::new(package, &held, facts, ctx).printing_undecided().line_gated(r, &gate))
         })
         .collect();
@@ -2685,6 +2684,27 @@ pub fn render_sheet(package: &SheetRulePackage, seed: &HeldSeed, facts: &Charact
         }
     });
     lines
+}
+
+/// Whether a held rule's line is open for this character -- the one decision [`render_sheet`]
+/// makes before it prints a `#` sibling: the sibling's [`line_gate`] (its `applies` minus the
+/// principal's copied holding condition), with a leaf over a fact the character record does
+/// not carry undecided rather than failed ([`Evaluator::undecided_leaf`]). A principal (no `#`)
+/// is held on its own `applies` and is always open here. A surface that answers one number
+/// off a held rule (the desktop's Caster Level box) calls this so it never prints a value the
+/// sheet itself would not print (SD-36 F6 merge-readiness B1: the Bloodrager's caster level
+/// opens at Bloodrager level 4).
+pub fn sibling_line_gate(
+    package: &SheetRulePackage,
+    held: &HeldSet,
+    facts: &CharacterFacts,
+    rule: &SheetRule,
+    ctx: EvalContext,
+) -> Gate {
+    if !rule.id.contains('#') {
+        return Gate::Include;
+    }
+    Evaluator::new(package, held, facts, ctx).printing_undecided().applies(&line_gate(package, rule))
 }
 
 /// The gate `render_sheet` decides a `#` sibling's line by: the sibling's `applies` with the

@@ -724,7 +724,8 @@
       "steps": [{ "op": "click", "target": "Actions" }],
       "marker": "Actions",
       "expect": ["Actions"],
-      "notes": "SHEET_TABS[6]. Trait-add control (sheet-action-trait-add) lives on this tab."
+      "allowGlobalForbid": ["failure"],
+      "notes": "SHEET_TABS[6]. Trait-add control (sheet-action-trait-add) lives on this tab. allowGlobalForbid 'failure' (SD-36 F6 merge-readiness B2): the Smoke Test PC (Elf Wizard 1) wears the create path's fixed Chain Shirt, and the Rules and features section prints its StatBlock rule text 'Arcane spell failure: 20%' (data/sheet_rules/core_rulebook/equipment/chain_shirt.json) -- correct PF1 text and the sole source of that string on this screen; the same exemption sheet-f6c-shaman-no-domain-line carries."
     },
     {
       "id": "sheet-action-add-armor-gear-picker",

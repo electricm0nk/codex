@@ -80,6 +80,10 @@ function verifiesCasterLevelIsTheEnginesPerClass() {
   assertEqual(summarizeCasterLevel([held('class:paladin', 'Paladin', 1)], served(1)).display, '—', 'Paladin 1 casts nothing yet');
   assertEqual(summarizeCasterLevel([held('class:samurai', 'Samurai', 7)], served(7)).display, '—', 'Samurai casts nothing');
   assertEqual(summarizeCasterLevel([held('class:psion', 'Psion', 7)], served(7)).display, '7', 'Psion 7: manifester level 7');
+  // F6 merge-readiness B1: the Bloodrager's caster-level rule opens at Bloodrager level 4
+  // (acg_classes.lst:44); the engine's chassis prints 0 below it.
+  assertEqual(summarizeCasterLevel([held('class:bloodrager', 'Bloodrager', 1)], served(1)).display, '—', 'Bloodrager 1 casts nothing yet');
+  assertEqual(summarizeCasterLevel([held('class:bloodrager', 'Bloodrager', 7)], served(7)).display, '7', 'Bloodrager 7: CL 7');
 }
 
 /** PF1 caster level is per class: a Wizard 7 / Cleric 1 prints both, never a summed 8. */

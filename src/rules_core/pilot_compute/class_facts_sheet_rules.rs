@@ -12,7 +12,9 @@
 //!   proficiency and class-skill readers make) holds whose target is
 //!   `BonusTarget::CasterLevel(Scope::Class(<slug>))`, evaluated by the one evaluator
 //!   ([`evaluate`]). No such rule and a converter-attested closure (`closure_complete`) is
-//!   [`CasterLevelFact::NotACaster`]; no such rule without that attestation is Unknown; a
+//!   [`CasterLevelFact::NotACaster`]; no such rule without that attestation is Unknown; a rule
+//!   whose line gate is closed at this level (the sheet's own [`sibling_line_gate`] = `Exclude`,
+//!   e.g. the Bloodrager's `ClassLevel(bloodrager) >= 4`) is "no caster level yet"; a
 //!   resolved value below 1 is "no caster level at this level" (the class casts nothing yet); a
 //!   value the evaluator leaves as words, or held rules that disagree, is Unknown by name.
 //!   A class-selection class (`TakenOnClass`) reads its base class line's caster-level rule.
@@ -26,7 +28,8 @@ use crate::rules_core::pilot_compute::class_proficiency_sheet_rules::{
 use crate::rules_core::pilot_compute::class_skill_sheet_rules::{class_skill_view, ClassSkillAnswer};
 use crate::rules_core::rules_tables::crb::weapon_tables::{class_weapon_proficiency, WeaponProficiency};
 use crate::rules_core::sheet_rule::{
-    evaluate, held_set, BonusTarget, CharacterFacts, EvalContext, HeldSeed, Scope, SheetLineValue, SheetRulePackage,
+    evaluate, held_set, sibling_line_gate, BonusTarget, CharacterFacts, EvalContext, Gate, HeldSeed, Scope, SheetLineValue,
+    SheetRulePackage,
 };
 use crate::rules_core::sheet_rule_package;
 
@@ -143,6 +146,7 @@ pub fn class_caster_level_in(package: &SheetRulePackage, class_slug: &str, class
         };
     }
     let mut values: Vec<(i64, String)> = Vec::new();
+    let mut closed: Vec<String> = Vec::new();
     for (id, entry) in &held.rules {
         if held.removed.contains(id) {
             continue;
@@ -155,6 +159,14 @@ pub fn class_caster_level_in(package: &SheetRulePackage, class_slug: &str, class
             continue;
         }
         let ctx = EvalContext { holder_class: entry.holder_class.clone(), ..EvalContext::default() };
+        // The rule's line gate first, decided exactly as the sheet decides it: a sibling of the
+        // principal is held from level 1 whatever its `applies` says, so a rule that opens later
+        // (the Bloodrager's `>= 4`) must not print before it opens. A leaf over a fact a
+        // class-and-level query does not carry (the paladin's alignment) is undecided, not failed.
+        if sibling_line_gate(package, &held, &facts, rule, ctx.clone()) == Gate::Exclude {
+            closed.push(id.clone());
+            continue;
+        }
         let line = evaluate(rule, &held, package, &facts, ctx);
         match line.value {
             SheetLineValue::Resolved(n) => values.push((i64::from(n), id.clone())),
@@ -166,6 +178,11 @@ pub fn class_caster_level_in(package: &SheetRulePackage, class_slug: &str, class
         }
     }
     let Some((first, rule)) = values.first().cloned() else {
+        if let Some(rule) = closed.first() {
+            return CasterLevelFact::NotACaster {
+                reason: format!("{rule} does not apply at `{class_slug}` level {class_level}: no caster level yet"),
+            };
+        }
         // The class's own declared `SpellType` fact is the engine's caster signal (the same one
         // `class_spell_levels` reads, v0.8 B-9). A class that declares none and holds
         // no caster-level rule casts nothing; one that declares a spell type but holds no
@@ -235,6 +252,18 @@ mod tests {
         assert!(matches!(caster("paladin", 4), CasterLevelFact::Caster { value: 1, .. }), "{:?}", caster("paladin", 4));
     }
 
+    /// SD-36 F6 merge-readiness B1: the Bloodrager's caster-level rule opens at Bloodrager
+    /// level 4 (`applies: ClassLevel(bloodrager) >= 4`, acg_classes.lst:44). Below it the class
+    /// casts nothing -- the engine's chassis prints 0 -- and from 4 the value is the class level.
+    #[test]
+    fn bloodrager_casts_nothing_before_four_then_at_class_level() {
+        for level in [1u8, 3] {
+            assert!(matches!(caster("bloodrager", level), CasterLevelFact::NotACaster { .. }), "bloodrager {level}: {:?}", caster("bloodrager", level));
+        }
+        assert!(matches!(caster("bloodrager", 4), CasterLevelFact::Caster { value: 4, .. }), "{:?}", caster("bloodrager", 4));
+        assert!(matches!(caster("bloodrager", 7), CasterLevelFact::Caster { value: 7, .. }), "{:?}", caster("bloodrager", 7));
+    }
+
     fn martial(class_id: &str) -> bool {
         match class_weapon_facts(class_id, 1) {
             WeaponFacts::Known { tiers, .. } => tiers.contains(&WeaponProficiency::Martial),
@@ -263,6 +292,7 @@ mod tests {
         let roster = crate::rules_core::class_census::class_creation_roster().expect("roster");
         let (mut weapons_known, mut skills_known, mut caster_known) = (0usize, 0usize, 0usize);
         let mut casters = 0usize;
+        let mut first_cast: std::collections::BTreeMap<String, Option<u8>> = std::collections::BTreeMap::new();
         for entry in &roster {
             let mut weapon_unknown: Option<String> = None;
             let mut skill_unknown: Option<String> = None;
@@ -294,6 +324,7 @@ mod tests {
             skills_known += usize::from(skill_unknown.is_none());
             caster_known += usize::from(caster_unknown.is_none());
             casters += usize::from(casts_at.is_some());
+            first_cast.insert(entry.id.clone(), casts_at);
             eprintln!(
                 "ROW | {} | weapons {} | martial {} | class skills {} | caster {} |",
                 entry.id,
@@ -314,5 +345,23 @@ mod tests {
         );
         assert_eq!(roster.len(), 59);
         assert_eq!((weapons_known, skills_known, caster_known, casters), (59, 50, 59, 37));
+        // F6 merge-readiness B1: the level each gated caster first casts at is the sheet's own
+        // line gate -- Bloodrager 1 and 3 cast nothing, Bloodrager 4 casts (a class-level gate);
+        // Paladin/Ranger/Antipaladin from 4 (value below 1 before it); an alignment leaf the
+        // class query does not carry is undecided, so the Druid casts from 1.
+        for (class_id, level) in [
+            ("class:bloodrager", 4u8),
+            ("class:paladin", 4),
+            ("class:ranger", 4),
+            ("class:antipaladin", 4),
+            ("class:druid", 1),
+            ("class:hunter", 1),
+        ] {
+            assert_eq!(first_cast.get(class_id).copied().flatten(), Some(level), "{class_id}");
+        }
+        for level in [1u8, 3] {
+            assert!(matches!(class_facts("class:bloodrager", level).caster_level, CasterLevelFact::NotACaster { .. }), "bloodrager {level}");
+        }
+        assert!(matches!(class_facts("class:bloodrager", 4).caster_level, CasterLevelFact::Caster { value: 4, .. }));
     }
 }

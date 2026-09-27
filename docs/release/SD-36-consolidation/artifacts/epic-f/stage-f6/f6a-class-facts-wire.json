@@ -609,7 +609,7 @@
       "casterLevel": {
         "status": "notACaster",
         "value": null,
-        "source": "core_rulebook:class:paladin#bonus5 resolves to -2 at level 1: no caster level yet"
+        "source": "core_rulebook:class:paladin#bonus5 does not apply at `paladin` level 1: no caster level yet"
       },
       "classSkills": {
         "status": "known",
@@ -691,7 +691,7 @@
       "casterLevel": {
         "status": "notACaster",
         "value": null,
-        "source": "core_rulebook:class:ranger#bonus4 resolves to -2 at level 1: no caster level yet"
+        "source": "core_rulebook:class:ranger#bonus4 does not apply at `ranger` level 1: no caster level yet"
       },
       "classSkills": {
         "status": "known",
@@ -1633,9 +1633,9 @@
         "reason": null
       },
       "casterLevel": {
-        "status": "caster",
-        "value": 1,
-        "source": "advanced_class_guide:class:bloodrager#bonus4"
+        "status": "notACaster",
+        "value": null,
+        "source": "advanced_class_guide:class:bloodrager#bonus4 does not apply at `bloodrager` level 1: no caster level yet"
       },
       "classSkills": {
         "status": "known",
@@ -3038,7 +3038,7 @@
       "casterLevel": {
         "status": "notACaster",
         "value": null,
-        "source": "advanced_players_guide:class:antipaladin#bonus4 resolves to -2 at level 1: no caster level yet"
+        "source": "advanced_players_guide:class:antipaladin#bonus4 does not apply at `antipaladin` level 1: no caster level yet"
       },
       "classSkills": {
         "status": "known",
