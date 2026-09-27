@@ -769,3 +769,28 @@ Nothing above was deleted; this is inventory only, for the operator to action af
 - pr: #393 body gains the Epic F closure Summary bullet and a Verification line (this step)
 - graphify: runs LAST against the final tree; its record follows this block
 - receipt_note: Epic F closes: F0, F1, F1b, F1c, F2, F3, F4, F5 = 8 of 8 batches. D5 (PR merge) is the operator's; D6 (worktree/branch sweep) is listed for the operator after merge, nothing deleted.
+
+- cycle_id: 2026-09-27T01:28:14Z
+  row_or_kind: graphify:update
+  bundle: SD-36
+  branch: 014e8a5d19cd81e1dcbeb4a8bc883d6385158080
+  integration_target: develop
+  branch_tip: 014e8a5d
+  graphify_exit_code: 1
+  outcome: failed
+  wall_clock_seconds: 1233.2
+  log_path: graphify-out/.truth-up-run-2026-09-27T01:28:14Z.log
+  evidence_tier_before: (recorded by operator at receipt read time)
+  evidence_tier_after: (recorded by operator at receipt read time)
+  receipt_note: graphify exited 1; operator to decide retry-vs-proceed (see log)
+
+## Graphify (Epic F final tree, 2026-09-26)
+
+- result: **graphify not refreshed: `cluster-only` exited 1 on its node-count guard ("new graph has 648327 nodes but existing graph.json has 648328 (net -1). Refusing to overwrite"), counts before/after 648,328 / 648,328**
+- tree: tranche/16 HEAD 014e8a5d19 (clean, pushed; Epic F closed)
+- command: `python3 ~/.hermes/profiles/god-emporer/skills/devops/graphify-update/scripts/update_graphify.py --integration-target develop --receipts-md docs/release/SD-36-consolidation/receipts.md --bundle SD-36` (workflow-instruction.md §"Graphify"), which ran `graphify cluster-only /home/ubuntu/workspace/repos/codex --budget 500000 --exclude node_modules,target,dist,build,.git,out,dist-ssr,.next,coverage`; wall 1,233 s; wrapper receipt block above (cycle 2026-09-27T01:28:14Z)
+- nodes_before: 648,328 (`python3 -c "import json;print(len(json.load(open('graphify-out/graph.json'))['nodes']))"`, graph.json 452,764,742 bytes, mtime 2026-09-15 17:39)
+- nodes_after: 648,328 (same command; graph.json byte size and mtime unchanged — not written)
+- mechanism: `cluster-only` loads the existing graph.json and re-clusters it (648,327 nodes loaded, 655,946 edges); it does not re-extract the tree, so the Epic F source changes are not in the graph either way. The -1 is its load/dedup of the existing file, not a shrink of the codebase.
+- not done, by rule: no retry with `--force`, nothing restored (nothing was overwritten). graphify's own pre-run backup landed at `graphify-out/2026-09-26/` (7 files, identical sizes to the live files). A full semantic re-extraction against the final tree is the operator's call.
+- log: graphify-out/.truth-up-run-2026-09-27T01:28:14Z.log (gitignored); graphify-out/ is gitignored, so no graphify output is committed
